@@ -60,9 +60,9 @@ class ProcessWorkspaceFile(HandlerBase):
             self.inDisplay = True
             self.displayIndex += 1
             self.displays.append({
-                "render"         : bool(attrs.get('render', False)),
+                "render"         : bool(int(attrs.get('render', "0"))),
                 "mode"           : int(attrs.get('mode', 0)),
-                "showCompExtent" : bool(attrs.get('showCompExtent', False))})
+                "showCompExtent" : bool(int(attrs.get('showCompExtent', "0")))})
             
         elif name == 'group':
             self.groupName    = attrs.get('name', None)
