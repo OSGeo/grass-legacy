@@ -52,9 +52,9 @@ int main (int argc, char *argv[])
     module = G_define_module();
     module->keywords = _("raster");
     module->description =
-		_("Creates a composite raster map layer by using "
-		  "known category values from one (or more) map layer(s) "
-		  "to fill in areas of \"no data\" in another map layer.");
+	_("Creates a composite raster map layer by using "
+	  "known category values from one (or more) map layer(s) "
+	  "to fill in areas of \"no data\" in another map layer.");
 
     /* Define the different options */
 
