@@ -1131,11 +1131,11 @@ proc MapCanvas::zoom_gregion {mon args} {
 				set parts($key) $value
 			}
 		}
-		
-		if {[catch {close $input} error]} {
-			GmLib::errmsg $error [G_msg "Error setting region"]
+
+		if { [catch {close $input} error] || ![info exists parts] } {
+			GmLib::errmsg $error [G_msg "Error setting region (Problem with g.region?)"]
 		}
-		
+
 		#set start point (sw corner)
 		set $parts(w) [expr round($parts(w)/$parts(ewres))*$parts(ewres)]
 		set $parts(s) [expr round($parts(s)/$parts(nsres))*$parts(nsres)]
