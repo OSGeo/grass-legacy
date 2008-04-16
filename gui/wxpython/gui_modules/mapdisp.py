@@ -3119,8 +3119,8 @@ class MapFrame(wx.Frame):
         if self.projinfo['proj'] != 'xy':
             units = self.projinfo['units']
             style = self.gismanager.goutput.cmd_output.StyleCommand
-            self.gismanager.goutput.WriteLog(_('Measuring distance ('
-                                               + units + '):'),
+            self.gismanager.goutput.WriteLog(_('Measuring distance') + ' ('
+                                             + units + '):',
                                              style)
         else:
             self.gismanager.goutput.WriteLog(_('Measuring distance:'),
