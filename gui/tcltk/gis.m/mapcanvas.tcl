@@ -1133,7 +1133,7 @@ proc MapCanvas::zoom_gregion {mon args} {
 		}
 		
 		if {[catch {close $input} error]} {
-			GmLib::errmsg $error [G_msg "Error setting region"]
+			GmLib::errmsg $error [G_msg "Error setting region (Problem with g.region?)"]
 		}
 		
 		#set start point (sw corner)
