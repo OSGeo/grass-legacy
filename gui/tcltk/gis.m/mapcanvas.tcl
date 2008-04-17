@@ -1184,7 +1184,7 @@ proc MapCanvas::set_wind {mon args overwrite} {
 		}
 		
 	} else {
-		GmLib::errmsg $error [G_msg "Error reading current resolution with g.region"]
+		GmLib::errmsg $input [G_msg "Error reading current resolution with g.region"]
 		return
 	}
 
