@@ -1271,11 +1271,18 @@ class EPSGPage(TitledPage):
         
     def OnBrowse(self, event):
         """Define path for EPSG code file"""
-        dlg = wx.FileDialog(self, _("Choose EPSG codes file:"),
-                            "/", "", "*.*", wx.OPEN)
+        path = os.path.dirname(self.tfile.GetValue())
+        if not path:
+            path = os.getcwd()
+
+        dlg = wx.FileDialog(parent=self, message=_("Choose EPSG codes file"),
+                            defaultDir=path, defaultFile="", wildcard="*", style=wx.OPEN)
+
         if dlg.ShowModal() == wx.ID_OK:
             path = dlg.GetPath()
             self.tfile.SetValue(path)
+            self.OnBrowseCodes(None)
+
         dlg.Destroy()
 
         event.Skip()
@@ -1321,6 +1328,7 @@ class EPSGPage(TitledPage):
             wx.MessageBox(parent=self,
                           message=_("Unable to read EPGS codes: %s") % e,
                           caption=_("Error"),  style=wx.OK | wx.ICON_ERROR | wx.CENTRE)
+            self.epsglist.Populate([], update=True)
 
 class CustomPage(TitledPage):
     """
