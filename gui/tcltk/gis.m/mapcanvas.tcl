@@ -1171,7 +1171,7 @@ proc MapCanvas::set_wind {mon args overwrite} {
 	global devnull
 
 	#get current region settings for resolution
-	if {![catch {open [concat "|g.region" "-ugp" $args "2> $devnull"] r} input]} {
+	if {![catch {open [concat "|g.region" "-ugp " "2> $devnull"] r} input]} {
 		while {[gets $input line] >= 0} {
 			if { [regexp -nocase {^([a-z]+)=(.*)$} $line trash key value] } {
 				set parts($key) $value
@@ -1180,10 +1180,12 @@ proc MapCanvas::set_wind {mon args overwrite} {
 		
 		if {[catch {close $input} error]} {
 			GmLib::errmsg $error [G_msg "Error reading current resolution with g.region"]
+			return
 		}
 		
 	} else {
-		puts $input
+		GmLib::errmsg $error [G_msg "Error reading current resolution with g.region"]
+		return
 	}
 
 	#set computational region extents while maintaining current resolution
