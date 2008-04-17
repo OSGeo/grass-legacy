@@ -20,15 +20,33 @@ import os
 import sys
 import locale
 
-### recursive import problem 
-# import utils
-# utils.CheckForWx()
-try:
-    import wx
-except locale.Error, e:
-    print >> sys.stderr, "Unable to set locale:", e
-    os.environ['LC_ALL'] = ''
-    import wx
+def CheckForWx():
+    """Try to import wx module and check its version"""
+    majorVersion = 2.8
+    minorVersion = 1.1
+
+    try:
+        import wxversion
+        wxversion.select(str(majorVersion))
+        import wx
+        version = wx.__version__
+        if float(version[:3]) < majorVersion:
+            raise ValueError('You are using wxPython version %s' % str(version))
+        if float(version[:3]) == 2.8 and \
+                float(version[4:]) < minorVersion:
+            raise ValueError('You are using wxPython version %s' % str(version))
+
+    except (ImportError, ValueError, wxversion.VersionError), e:
+        print >> sys.stderr, 'ERROR: ' + str(e) + \
+            '. wxPython >= %s.%s is required. Detailed information in README file.' % \
+            (str(majorVersion), str(minorVersion))
+        sys.exit(1)
+    except locale.Error, e:
+        print >> sys.stderr, "Unable to set locale:", e
+        os.environ['LC_ALL'] = ''
+
+CheckForWx()
+import wx
 import wx.lib.flatnotebook as FN
 
 try:
@@ -56,7 +74,13 @@ FNPageStyle = FN.FNB_VC8 | \
     FN.FNB_TABS_BORDER_SIMPLE 
 FNPageColor = wx.Colour(125,200,175)
 
-"""@brief File name extension binaries/scripts"""
+"""Dialog widget dimension"""
+DIALOG_SPIN_SIZE = (150, -1)
+DIALOG_COMBOBOX_SIZE = (300, -1)
+DIALOG_GSELECT_SIZE = (400, -1)
+DIALOG_TEXTCTRL_SIZE = (400, -1)
+
+"""File name extension binaries/scripts"""
 if subprocess.mswindows:
     EXT_BIN = '.exe'
     EXT_SCT = '.bat'
@@ -64,7 +88,7 @@ else:
     EXT_BIN = ''
     EXT_SCT = ''
 
-def __getGRASSCmds(bin=True, scripts=True, gui_scripts=True):
+def GetGRASSCmds(bin=True, scripts=True, gui_scripts=True):
     """
     Create list of all available GRASS commands to use when
     parsing string from the command line
@@ -88,28 +112,8 @@ def __getGRASSCmds(bin=True, scripts=True, gui_scripts=True):
 
 """@brief Collected GRASS-relared binaries/scripts"""
 grassCmd = {}
-grassCmd['all'] = __getGRASSCmds()
-grassCmd['script'] = __getGRASSCmds(bin=False)
+grassCmd['all'] = GetGRASSCmds()
+grassCmd['script'] = GetGRASSCmds(bin=False)
 
 """@Toolbar icon size"""
 toolbarSize = (24, 24)
-
-def CheckForWx():
-    """Try to import wx module and check its version"""
-    majorVersion = 2.8
-    minorVersion = 1.1
-    try:
-        import wx
-        version = wx.__version__
-        if float(version[:3]) < majorVersion:
-            raise ValueError('You are using wxPython version %s' % str(version))
-        if float(version[:3]) == 2.8 and \
-                float(version[4:]) < minorVersion:
-            raise ValueError('You are using wxPython version %s' % str(version))
-
-    except (ImportError, ValueError), e:
-        print >> sys.stderr, 'ERROR: ' + str(e) + \
-            '. wxPython >= %s.%s is required. Detailed information in README file.' % \
-            (str(majorVersion), str(minorVersion))
-        sys.exit(1)
-
