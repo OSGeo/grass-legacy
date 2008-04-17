@@ -125,8 +125,8 @@ class GRASSStartup(wx.Frame):
         self.bwizard = wx.Button(parent=self.panel, id=wx.ID_ANY,
                                  label=_("Location wizard"))
         self.manageloc = wx.Choice(parent=self.panel, id=wx.ID_ANY,
-                                   choices=['Rename mapset','Rename location',
-                                            'Delete mapset', 'Delete location'])
+                                   choices=[_('Rename mapset'), _('Rename location'),
+                                            _('Delete mapset'), _('Delete location')])
 	self.manageloc.SetSelection(0)
 
         # textinputs

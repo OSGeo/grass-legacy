@@ -2261,15 +2261,14 @@ class MapFrame(wx.Frame):
         self.statusbar = self.CreateStatusBar(number=3, style=0)
         self.statusbar.SetStatusWidths([-5, -2, -1])
         self.toggleStatus = wx.Choice(self.statusbar, wx.ID_ANY,
-                                      choices = ["Coordinates",
-                                                 "Extent",
-                                                 "Comp. region",
-                                                 "Show comp. extent",
-                                                 "Display mode",
-                                                 "Display geometry",
-                                                 "Map scale"])
-        self.statusText = "Coordinates"
-	self.toggleStatus.SetStringSelection(self.statusText)
+                                      choices = [_("Coordinates"),
+                                                 _("Extent"),
+                                                 _("Comp. region"),
+                                                 _("Show comp. extent"),
+                                                 _("Display mode"),
+                                                 _("Display geometry"),
+                                                 _("Map scale")])
+	self.toggleStatus.SetSelection(0)
         self.statusbar.Bind(wx.EVT_CHOICE, self.OnToggleStatus, self.toggleStatus)
         # auto-rendering checkbox
         self.autoRender = wx.CheckBox(parent=self.statusbar, id=wx.ID_ANY,
@@ -2492,7 +2491,7 @@ class MapFrame(wx.Frame):
         Track mouse motion and update status bar
         """
         # update statusbar if required
-        if self.statusText == "Coordinates":
+        if self.toggleStatus.GetSelection() == 0: # Coordinates
             e, n = self.MapWindow.Pixel2Cell(event.GetPositionTuple())
             self.statusbar.SetStatusText("%.2f, %.2f" % (e, n), 0)
 
@@ -2644,7 +2643,6 @@ class MapFrame(wx.Frame):
         
     def OnToggleStatus(self, event):
         """Toggle status text"""
-        self.statusText = event.GetString()
         self.StatusbarUpdate()
 
     def OnChangeMapScale(self, event):
@@ -2681,34 +2679,34 @@ class MapFrame(wx.Frame):
         self.mapScale.Hide()
         self.mapScaleValue = self.ppm = None
 
-        if self.statusText == "Coordinates":
+        if self.toggleStatus.GetSelection() == 0: # Coordinates
             self.statusbar.SetStatusText("", 0)
 
-        elif self.statusText == "Extent":
+        elif self.toggleStatus.GetSelection() == 1: # Extent
             self.statusbar.SetStatusText("%.2f - %.2f, %.2f - %.2f" %
                                          (self.Map.region["w"], self.Map.region["e"],
                                           self.Map.region["s"], self.Map.region["n"]), 0)
 
-        elif self.statusText == "Show comp. extent":
+        elif self.toggleStatus.GetSelection() == 2: # Show comp. extent
             self.statusbar.SetStatusText("", 0)
             self.showRegion.Show()
 
-        elif self.statusText == "Comp. region":
+        elif self.toggleStatus.GetSelection() == 3: # Comp. region
             compregion = self.Map.GetRegion()
             self.statusbar.SetStatusText("%.2f - %.2f, %.2f - %.2f (%.2f, %.2f)" %
                                          (compregion["w"], compregion["e"],
                                           compregion["s"], compregion["n"],
                                           compregion["ewres"], compregion["nsres"]), 0)
 
-        elif self.statusText == "Display mode":
+        elif self.toggleStatus.GetSelection() == 4: # Display mode
             self.statusbar.SetStatusText("", 0)
             self.compResolution.Show()
             
-        elif self.statusText == "Display geometry":
+        elif self.toggleStatus.GetSelection() == 5: # Display geometry
             self.statusbar.SetStatusText("rows=%d; cols=%d; nsres=%.2f; ewres=%.2f" %
                                          (self.Map.region["rows"], self.Map.region["cols"],
                                           self.Map.region["nsres"], self.Map.region["ewres"]), 0)
-        elif self.statusText == "Map scale":
+        elif self.toggleStatus.GetSelection() == 6: # Map scale
             # TODO: need to be fixed...
             ### screen X region problem
             ### user should specify ppm
@@ -3415,7 +3413,6 @@ class MapFrame(wx.Frame):
         """Set properies of map display window"""
         self.autoRender.SetValue(render)
         self.toggleStatus.SetSelection(mode)
-        self.statusText = self.toggleStatus.GetStringSelection()
         self.StatusbarUpdate()
         self.showRegion.SetValue(showCompExtent)
         if showCompExtent:
