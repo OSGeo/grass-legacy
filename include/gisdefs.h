@@ -372,7 +372,8 @@ int G_remove_commas(char *);
 int G_copy(void *, const void *, int);
 
 /* copy_file.c */
-int G_copy_file(const char *infile, const char *outfile);
+int G_copy_file(const char *, const char *);
+int G_recursive_copy(const char *, const char *);
 
 /* dalloc.c */
 double *G_alloc_vector(size_t);
