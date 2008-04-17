@@ -20,15 +20,33 @@ import os
 import sys
 import locale
 
-### recursive import problem 
-# import utils
-# utils.CheckForWx()
-try:
-    import wx
-except locale.Error, e:
-    print >> sys.stderr, "Unable to set locale:", e
-    os.environ['LC_ALL'] = ''
-    import wx
+def CheckForWx():
+    """Try to import wx module and check its version"""
+    majorVersion = 2.8
+    minorVersion = 1.1
+
+    try:
+        import wxversion
+        wxversion.select(str(majorVersion))
+        import wx
+        version = wx.__version__
+        if float(version[:3]) < majorVersion:
+            raise ValueError('You are using wxPython version %s' % str(version))
+        if float(version[:3]) == 2.8 and \
+                float(version[4:]) < minorVersion:
+            raise ValueError('You are using wxPython version %s' % str(version))
+
+    except (ImportError, ValueError, wxversion.VersionError), e:
+        print >> sys.stderr, 'ERROR: ' + str(e) + \
+            '. wxPython >= %s.%s is required. Detailed information in README file.' % \
+            (str(majorVersion), str(minorVersion))
+        sys.exit(1)
+    except locale.Error, e:
+        print >> sys.stderr, "Unable to set locale:", e
+        os.environ['LC_ALL'] = ''
+
+CheckForWx()
+import wx
 import wx.lib.flatnotebook as FN
 
 try:
@@ -99,23 +117,3 @@ grassCmd['script'] = GetGRASSCmds(bin=False)
 
 """@Toolbar icon size"""
 toolbarSize = (24, 24)
-
-def CheckForWx():
-    """Try to import wx module and check its version"""
-    majorVersion = 2.8
-    minorVersion = 1.1
-    try:
-        import wx
-        version = wx.__version__
-        if float(version[:3]) < majorVersion:
-            raise ValueError('You are using wxPython version %s' % str(version))
-        if float(version[:3]) == 2.8 and \
-                float(version[4:]) < minorVersion:
-            raise ValueError('You are using wxPython version %s' % str(version))
-
-    except (ImportError, ValueError), e:
-        print >> sys.stderr, 'ERROR: ' + str(e) + \
-            '. wxPython >= %s.%s is required. Detailed information in README file.' % \
-            (str(majorVersion), str(minorVersion))
-        sys.exit(1)
-
