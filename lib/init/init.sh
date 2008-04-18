@@ -885,7 +885,7 @@ csh|tcsh)
     tcshrc="$HOME/.tcshrc"
     rm -f "$cshrc" "$tcshrc"
     echo "set home = $USERHOME" > "$cshrc"
-    echo "set history = 500 savehist = 500  noclobber ignoreeof" >> "$cshrc"
+    echo "set history = 3000 savehist = 3000  noclobber ignoreeof" >> "$cshrc"
     echo "set histfile = $HOME/.history" >> "$cshrc"
 
     echo "set prompt = '\\" >> "$cshrc"
@@ -959,6 +959,15 @@ bash|msh)
     ;;
 
 cygwin)
+    # save command history in mapset dir and remember more
+    export HISTFILE="$LOCATION/.bash_history"
+    if [ -z "$HISTSIZE" ] && [ -z "$HISTFILESIZE" ] ; then 
+	export HISTSIZE=3000
+    fi
+
+    # instead of changing $HOME, start bash with: --rcfile "$LOCATION/.bashrc" ?
+    #   if so, must care be taken to explicity call .grass.bashrc et al for
+    #   non-interactive bash batch jobs?
     USERHOME="$HOME"      # save original home
     HOME="$LOCATION"      # save .bashrc in $LOCATION
     export HOME
