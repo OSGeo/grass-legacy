@@ -54,8 +54,12 @@ class Settings:
             # general
             #
             'general': {
-                'mapsetPath'  : { 'selection' : 0 }, # current mapset search path
-                'changeOpacityLevel' : { 'enabled' : False }, # show opacity level widget
+                # current mapset search path
+                'mapsetPath'  : { 'selection' : 0 }, 
+                # show opacity level widget
+                'changeOpacityLevel' : { 'enabled' : False }, 
+                # use default window layout (layer manager, displays, ...)
+                'defWindowPos' : { 'enabled' : False, 'dim' : '' }, 
                 },
             #
             # display
@@ -441,11 +445,27 @@ class PreferencesDialog(wx.Dialog):
                                     name="GetSelection")
         mapsetPath.SetSelection(self.settings.Get(group='general', key='mapsetPath', subkey='selection'))
         self.winId['general:mapsetPath:selection'] = mapsetPath.GetId()
-        
+
         gridSizer.Add(item=mapsetPath,
                       flag=wx.ALIGN_RIGHT |
                       wx.ALIGN_CENTER_VERTICAL,
                       pos=(row, 1))
+        
+
+        #
+        # default window layout
+        #
+        row += 1
+        defaultPos = wx.CheckBox(parent=panel, id=wx.ID_ANY,
+                                 label=_("Save current window layout as default"),
+                                 name='IsChecked')
+        defaultPos.SetValue(self.settings.Get(group='general', key='defWindowPos', subkey='enabled'))
+        defaultPos.SetToolTip(wx.ToolTip (_("Save current position and size of Layer Manager window and opened "
+                                            "Map Display window(s) and use as default for next sessions.")))
+        self.winId['general:defWindowPos:enabled'] = defaultPos.GetId()
+
+        gridSizer.Add(item=defaultPos,
+                      pos=(row, 0), span=(1, 2))
         
         sizer.Add(item=gridSizer, proportion=1, flag=wx.ALL | wx.EXPAND, border=5)
         border.Add(item=sizer, proportion=0, flag=wx.ALL | wx.EXPAND, border=3)
@@ -971,6 +991,26 @@ class PreferencesDialog(wx.Dialog):
             else:
                 value = win.GetValue()
             self.settings.Set(group, key, subkey, value)
+
+        #
+        # update default window dimension
+        #
+        if self.settings.Get(group='general', key='defWindowPos', subkey='enabled') is True:
+            dim = ''
+            # layer manager
+            pos = self.parent.GetPosition()
+            size = self.parent.GetSize()
+            dim = '%d,%d,%d,%d' % (pos[0], pos[1], size[0], size[1])
+            # opened displays
+            for page in range(0, self.parent.gm_cb.GetPageCount()):
+                pos = self.parent.gm_cb.GetPage(page).maptree.mapdisplay.GetPosition()
+                size = self.parent.gm_cb.GetPage(page).maptree.mapdisplay.GetSize()
+
+                dim += ',%d,%d,%d,%d' % (pos[0], pos[1], size[0], size[1])
+
+            self.settings.Set(group='general', key='defWindowPos', subkey='dim', value=dim)
+        else:
+            self.settings.Set(group='general', key='defWindowPos', subkey='dim', value='')
 
 class SetDefaultFont(wx.Dialog):
     """
