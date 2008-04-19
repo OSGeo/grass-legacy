@@ -152,6 +152,17 @@ class GMFrame(wx.Frame):
 
         wx.CallAfter(self.notebook.SetSelection, 0)
 
+        # use default window layout ?
+        if UserSettings.Get(group='general', key='defWindowPos', subkey='enabled') is True:
+            dim = UserSettings.Get(group='general', key='defWindowPos', subkey='dim')
+            try:
+               x, y = map(int, dim.split(',')[0:2])
+               w, h = map(int, dim.split(',')[2:4])
+               self.SetPosition((x, y))
+               self.SetSize((w, h))
+            except:
+                pass
+
         # load workspace file if requested
         if (self.workspaceFile):
             # load given workspace file
@@ -883,8 +894,6 @@ class GMFrame(wx.Frame):
                 displayPos = mapTree.mapdisplay.GetPosition()
                 displaySize = mapTree.mapdisplay.GetSize()
 
-
-
                 file.write('%s<display render="%d" '
                            'mode="%d" showCompExtent="%d" '
                            'dim="%d,%d,%d,%d">\n' % (' ' * self.indent,
@@ -1182,8 +1191,6 @@ class GMFrame(wx.Frame):
         self.curr_page.Layout()
         self.curr_page.maptree.Layout()
 
-        self.disp_idx += 1
-
         #        self._auimgr.SetManagedWindow(self.curr_page.maptree.testframe)
         #
         #        self._auimgr.AddPane(self.curr_page.maptree.testframe,
@@ -1193,6 +1200,20 @@ class GMFrame(wx.Frame):
         #                             DestroyOnClose(True).Layer(2))
         #
         #        self._auimgr.Update()
+
+        # use default window layout
+        if UserSettings.Get(group='general', key='defWindowPos', subkey='enabled') is True:
+            dim = UserSettings.Get(group='general', key='defWindowPos', subkey='dim')
+            idx = 4 + self.disp_idx * 4
+            try:
+                x, y = map(int, dim.split(',')[idx:idx + 2])
+                w, h = map(int, dim.split(',')[idx + 2:idx + 4])
+                self.curr_page.maptree.mapdisplay.SetPosition((x, y))
+                self.curr_page.maptree.mapdisplay.SetSize((w, h))
+            except:
+                pass
+ 
+        self.disp_idx += 1
 
         return self.curr_page.maptree.mapdisplay
 
