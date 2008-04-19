@@ -70,7 +70,7 @@ int main( int argc, char *argv[])
 	module = G_define_module();
 	module->keywords = _("raster, resample");
 	module->description =
-		_("Resamples raster map layers using interpolation.");
+		_("Resamples raster map layers to a finer grid using interpolation.");
 
 	rastin  = G_define_standard_option(G_OPT_R_INPUT);
 	rastout = G_define_standard_option(G_OPT_R_OUTPUT);

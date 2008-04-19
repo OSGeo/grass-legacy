@@ -264,7 +264,7 @@ int main( int argc, char *argv[])
 	module = G_define_module();
 	module->keywords = _("raster, resample");
 	module->description =
-		_("Resamples raster map layers using aggregation.");
+		_("Resamples raster map layers to a coarser grid using aggregation.");
 
 	parm.rastin  = G_define_standard_option(G_OPT_R_INPUT);
 
