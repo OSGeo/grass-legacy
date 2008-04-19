@@ -78,18 +78,25 @@ class Settings:
             # Attribute Table Manager
             #
             'atm' : {
-            'highlight' : { 'color' : (255, 255, 0, 255), 'width' : 2},
-            'leftDbClick' : { 'selection' : 0 },
+                'highlight' : { 'color' : (255, 255, 0, 255), 'width' : 2},
+                'leftDbClick' : { 'selection' : 0 },
             },
             #
             # Command
             #
             'cmd': {
-            'overwrite' : { 'enabled' : False },
-            'closeDlg' : { 'enabled' : False },
-            'verbosity' : { 'selection' : 'grassenv' },
-            'rasterOverlay' : { 'enabled' : False },
-            },
+                'overwrite' : { 'enabled' : False },
+                'closeDlg' : { 'enabled' : False },
+                'verbosity' : { 'selection' : 'grassenv' },
+                'rasterOverlay' : { 'enabled' : False },
+                },
+            #
+            # Workspace
+            #
+            'workspace' : {
+                'posDisplay' : { 'enabled' : False },
+                'posManager' : { 'enabled' : False },
+                },
             #
             # vdigit
             #
@@ -349,7 +356,7 @@ class PreferencesDialog(wx.Dialog):
         self.parent = parent # GMFrame
         self.title = title
         wx.Dialog.__init__(self, parent=parent, id=wx.ID_ANY, title=title,
-                           style=style)
+                           style=style, size=(-1, -1))
 
         self.settings = settings
         # notebook
@@ -363,6 +370,7 @@ class PreferencesDialog(wx.Dialog):
         self.__CreateDisplayPage(notebook)
         self.__CreateCmdPage(notebook)
         self.__CreateAttributeManagerPage(notebook)
+        self.__CreateWorkspacePage(notebook)
         self.__CreateAdvancedPage(notebook)
 
         # buttons
@@ -407,7 +415,7 @@ class PreferencesDialog(wx.Dialog):
         self.SetSize((500, 375))
 
     def __CreateGeneralPage(self, notebook):
-        """Create notebook page concerning with symbology settings"""
+        """Create notebook page for general settings"""
         panel = wx.Panel(parent=notebook, id=wx.ID_ANY)
         notebook.AddPage(page=panel, text=_("General"))
 
@@ -472,7 +480,7 @@ class PreferencesDialog(wx.Dialog):
         return panel
 
     def __CreateDisplayPage(self, notebook):
-        """Create notebook page concerning for display settings"""
+        """Create notebook page for display settings"""
         panel = wx.Panel(parent=notebook, id=wx.ID_ANY)
         notebook.AddPage(page=panel, text=_("Display"))
 
@@ -656,9 +664,9 @@ class PreferencesDialog(wx.Dialog):
         return panel
 
     def __CreateAttributeManagerPage(self, notebook):
-        """Create notebook page concerning for 'Attribute Table Manager' settings"""
+        """Create notebook page for 'Attribute Table Manager' settings"""
         panel = wx.Panel(parent=notebook, id=wx.ID_ANY)
-        notebook.AddPage(page=panel, text=_("Attribute Table Manager"))
+        notebook.AddPage(page=panel, text=_("Attributes"))
 
         pageSizer = wx.BoxSizer(wx.VERTICAL)
 
@@ -732,8 +740,52 @@ class PreferencesDialog(wx.Dialog):
 
         return panel
 
+    def __CreateWorkspacePage(self, notebook):
+        """Create notebook page for workspace settings"""
+        panel = wx.Panel(parent=notebook, id=wx.ID_ANY)
+        notebook.AddPage(page=panel, text=_("Workspace"))
+
+        border = wx.BoxSizer(wx.VERTICAL)
+        box   = wx.StaticBox (parent=panel, id=wx.ID_ANY, label=" %s " % _("Loading workspace"))
+        sizer = wx.StaticBoxSizer(box, wx.VERTICAL)
+
+        gridSizer = wx.GridBagSizer (hgap=3, vgap=3)
+        gridSizer.AddGrowableCol(0)
+
+        row = 0
+
+        #
+        # positioning
+        #
+        posDisplay = wx.CheckBox(parent=panel, id=wx.ID_ANY,
+                                 label=_("Suppress positioning Map Display Window(s)"),
+                                 name='IsChecked')
+        posDisplay.SetValue(self.settings.Get(group='workspace', key='posDisplay', subkey='enabled'))
+        self.winId['workspace:posDisplay:enabled'] = posDisplay.GetId()
+
+        gridSizer.Add(item=posDisplay,
+                      pos=(row, 0), span=(1, 2))
+
+        row +=1 
+
+        posManager = wx.CheckBox(parent=panel, id=wx.ID_ANY,
+                                 label=_("Suppress positioning Layer Manager window"),
+                                 name='IsChecked')
+        posManager.SetValue(self.settings.Get(group='workspace', key='posManager', subkey='enabled'))
+        self.winId['workspace:posManager:enabled'] = posManager.GetId()
+
+        gridSizer.Add(item=posManager,
+                      pos=(row, 0), span=(1, 2))
+
+        sizer.Add(item=gridSizer, proportion=1, flag=wx.ALL | wx.EXPAND, border=5)
+        border.Add(item=sizer, proportion=0, flag=wx.ALL | wx.EXPAND, border=3)
+
+        panel.SetSizer(border)
+        
+        return panel
+
     def __CreateAdvancedPage(self, notebook):
-        """Create notebook page concerning with symbology settings"""
+        """Create notebook page for advanced settings"""
         panel = wx.Panel(parent=notebook, id=wx.ID_ANY)
         notebook.AddPage(page=panel, text=_("Advanced"))
 
