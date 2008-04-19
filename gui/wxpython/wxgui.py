@@ -152,10 +152,6 @@ class GMFrame(wx.Frame):
 
         wx.CallAfter(self.notebook.SetSelection, 0)
 
-        # start default initial display
-        self.NewDisplay(show=False)
-        self.Show()
-
         # load workspace file if requested
         if (self.workspaceFile):
             # load given workspace file
@@ -163,10 +159,13 @@ class GMFrame(wx.Frame):
                 self.SetTitle(self.baseTitle + " - " +  os.path.basename(self.workspaceFile))
             else:
                 self.workspaceFile = None
+        else:
+            # start default initial display
+            self.NewDisplay(show=False)
 
         # show map display widnow
         # -> OnSize() -> UpdateMap()
-        if not self.curr_page.maptree.mapdisplay.IsShown():
+        if self.curr_page and not self.curr_page.maptree.mapdisplay.IsShown():
             self.curr_page.maptree.mapdisplay.Show()
 
     def __doLayout(self):
@@ -533,9 +532,8 @@ class GMFrame(wx.Frame):
 
         Debug.msg(4, "GMFrame.OnWorkspaceOpen(): filename=%s" % filename)
 
-        # start new map display if no display is available
-        if not self.curr_page:
-            self.NewDisplay()
+        # delete current layer tree content
+        self.OnWorkspaceClose()
 
         self.LoadWorkspaceFile(filename)
 
@@ -568,9 +566,6 @@ class GMFrame(wx.Frame):
         #             dlg.Destroy()
         #             return False
 
-        # delete current layer tree content
-        self.OnWorkspaceNew()
-
         # read file and fix patch to dtd
         try:
             file = open(filename, "r")
@@ -600,22 +595,42 @@ class GMFrame(wx.Frame):
                                parent=self)
             wx.Yield()
 
-            maptree = None
+            #
+            # load layer manager window properties
+            #
+            if UserSettings.Get(group='workspace', key='posManager', subkey='enabled') is False:
+                if gxwXml.layerManager['pos']:
+                    self.SetPosition(gxwXml.layerManager['pos'])
+                if gxwXml.layerManager['size']:
+                    self.SetSize(gxwXml.layerManager['size'])
+
+            #
+            # start map displays first (list of layers can be empty)
+            #
+            for display in gxwXml.displays:
+                mapdisplay = self.NewDisplay(show=False)
+                # set windows properties
+                mapdisplay.SetProperties(render=display['render'],
+                                         mode=display['mode'],
+                                         showCompExtent=display['showCompExtent'])
+
+                # set position and size of map display
+                if UserSettings.Get(group='workspace', key='posDisplay', subkey='enabled') is False:
+                    if display['pos']:
+                        mapdisplay.SetPosition(display['pos'])
+                    if display['size']:
+                        mapdisplay.SetSize(display['size'])
+
+                mapdisplay.Show()
+    
+            maptree = None 
             selected = [] # list of selected layers
+            # 
+            # load list of map layers
+            #
             for layer in gxwXml.layers:
-                if layer['display'] >= self.disp_idx:
-                    # start new map display if no display is available
-                    self.NewDisplay()
-                    
-                maptree = self.gm_cb.GetPage(layer['display']).maptree
-                mapdisplay = maptree.mapdisplay
-                mapdisplay.SetProperties(render=gxwXml.displays[layer['display']]['render'],
-                                         mode=gxwXml.displays[layer['display']]['mode'],
-                                         showCompExtent=gxwXml.displays[layer['display']]['showCompExtent'])
-                
-                if not maptree.mapdisplay.IsShown():
-                    # show map display
-                    maptree.mapdisplay.Show()
+                display = layer['display']
+                maptree = self.gm_cb.GetPage(display).maptree
 
                 newItem = maptree.AddLayer(ltype=layer['type'],
                                            lname=layer['name'],
@@ -846,22 +861,47 @@ class GMFrame(wx.Frame):
             file.write('<?xml version="1.0" encoding="UTF-8"?>\n')
             file.write('<!DOCTYPE gxw SYSTEM "grass-gxw.dtd">\n')
             file.write('%s<gxw>\n' % (' ' * self.indent))
+            
+            self.indent =+ 4
+
+            # layer manager
+            windowPos = self.GetPosition()
+            windowSize = self.GetSize()
+            file.write('%s<layer_manager dim="%d,%d,%d,%d">\n' % (' ' * self.indent,
+                                                                  windowPos[0],
+                                                                  windowPos[1],
+                                                                  windowSize[0],
+                                                                  windowSize[1]
+                                                                  ))
+            
+            file.write('%s</layer_manager>\n' % (' ' * self.indent))
+
             # list of displays
             for page in range(0, self.gm_cb.GetPageCount()):
                 mapTree = self.gm_cb.GetPage(page).maptree
 
-                self.indent =+ 4
+                displayPos = mapTree.mapdisplay.GetPosition()
+                displaySize = mapTree.mapdisplay.GetSize()
+
+
+
                 file.write('%s<display render="%d" '
-                           'mode="%d" showCompExtent="%d">\n' % (' ' * self.indent,
-                                                                 int(mapTree.mapdisplay.autoRender.IsChecked()),
-                                                                 mapTree.mapdisplay.toggleStatus.GetSelection(),
-                                                                 int(mapTree.mapdisplay.showRegion.IsChecked()),
-                                                                 ))
+                           'mode="%d" showCompExtent="%d" '
+                           'dim="%d,%d,%d,%d">\n' % (' ' * self.indent,
+                                                     int(mapTree.mapdisplay.autoRender.IsChecked()),
+                                                     mapTree.mapdisplay.toggleStatus.GetSelection(),
+                                                     int(mapTree.mapdisplay.showRegion.IsChecked()),
+                                                     displayPos[0],
+                                                     displayPos[1],
+                                                     displaySize[0],
+                                                     displaySize[1]
+                                                     ))
 
                 # list of layers
                 item = mapTree.GetFirstChild(mapTree.root)[0]
                 self.WriteLayersToWorkspaceFile(file, mapTree, item)
                 file.write('%s</display>\n' % (' ' * self.indent))
+
             self.indent =- 4
             file.write('%s</gxw>\n' % (' ' * self.indent))
             del self.indent
@@ -884,6 +924,16 @@ class GMFrame(wx.Frame):
         Debug.msg(4, "GMFrame.OnWorkspaceClose(): file=%s" % self.workspaceFile)
         self.workspaceFile = None
         self.SetTitle(self.baseTitle)
+
+        displays = []
+        for page in range(0, self.gm_cb.GetPageCount()):
+            displays.append(self.gm_cb.GetPage(page).maptree.mapdisplay)
+            
+        for display in displays:
+            display.Close()
+
+        self.disp_idx = 0
+        self.curr_page = None
 
     def RulesCmd(self, event):
         """
@@ -1104,6 +1154,10 @@ class GMFrame(wx.Frame):
     def NewDisplay(self, show=True):
         """Create new layer tree, which will
         create an associated map display frame
+
+        @param show show map display window if True
+
+        @return reference to mapdisplay intance
         """
         Debug.msg(1, "GMFrame.NewDisplay(): idx=%d" % self.disp_idx)
 
@@ -1139,6 +1193,8 @@ class GMFrame(wx.Frame):
         #                             DestroyOnClose(True).Layer(2))
         #
         #        self._auimgr.Update()
+
+        return self.curr_page.maptree.mapdisplay
 
     # toolBar button handlers
     def OnAddRaster(self, event):

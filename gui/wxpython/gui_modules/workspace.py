@@ -45,10 +45,17 @@ class ProcessWorkspaceFile(HandlerBase):
         self.inValue     = False
         self.inGroup     = False
         self.inDisplay   = False
-        
-        # list of layers
+        self.inLayerManager = False
+
+        # layer manager properties
+        self.layerManager = {}
+        self.layerManager['pos'] = None # window position
+        self.layerManager['size'] = None # window size
+        # list of mapdisplays
         self.displays = []
+        # list of map layers
         self.layers = []
+
         self.cmd    = []
         self.displayIndex = -1 # first display has index '0'
 
@@ -59,10 +66,25 @@ class ProcessWorkspaceFile(HandlerBase):
         elif name == 'display':
             self.inDisplay = True
             self.displayIndex += 1
+            posAttr = attrs.get('dim', '')
+            if posAttr:
+                posVal = map(int, posAttr.split(','))
+                try:
+                    pos = (posVal[0], posVal[1])
+                    size = (posVal[2], posVal[3])
+                except:
+                    pos = None
+                    size = None
+            else:
+                pos = None
+                size = None
+
             self.displays.append({
                 "render"         : bool(int(attrs.get('render', "0"))),
                 "mode"           : int(attrs.get('mode', 0)),
-                "showCompExtent" : bool(int(attrs.get('showCompExtent', "0")))})
+                "showCompExtent" : bool(int(attrs.get('showCompExtent', "0"))),
+                "pos"            : pos,
+                "size"           : size})
             
         elif name == 'group':
             self.groupName    = attrs.get('name', None)
@@ -107,7 +129,20 @@ class ProcessWorkspaceFile(HandlerBase):
         elif name == 'selected':
             if self.inLayer:
                 self.layerSelected = True;
-            
+
+        elif name == 'layer_manager':
+            self.inLayerManager = True
+            posAttr = attrs.get('dim', '')
+            if posAttr:
+                posVal = map(int, posAttr.split(','))
+                try:
+                    self.layerManager['pos'] = (posVal[0], posVal[1])
+                    self.layerManager['size'] = (posVal[2], posVal[3])
+                except:
+                    pass
+            else:
+                pass
+
     def endElement(self, name):
         if name == 'gxw':
             self.inGxw = False
@@ -152,6 +187,9 @@ class ProcessWorkspaceFile(HandlerBase):
 
         elif name == 'flag':
             self.inFlag = False
+
+        elif name == 'layer_manager':
+            self.inLayerManager = False
 
     def characters(self, ch):
         self.my_characters(ch)

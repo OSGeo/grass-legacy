@@ -14,7 +14,16 @@
 
 <!ELEMENT grass-gxw (gxw)>
 
-<!ELEMENT gxw (display*)>
+<!ELEMENT gxw (layer_manager?, display*)>
+
+<!--    a layer_manager defines properties of Layer Manager
+	GUI component
+
+	element added 2008/04
+-->
+<!ELEMENT layer_manager ANY>
+<!-- window dimenstion (x, y (ur), width, heigth -->
+<!ATTLIST layer_manager  dim       CDATA   #IMPLIED>
 
 <!--    a display element defines map layer connected to given
 	map display widnow
@@ -25,6 +34,8 @@
 <!ATTLIST display  render	   (0 | 1) #IMPLIED>
 <!ATTLIST display  mode            (0 | 1 | 2 | 3 | 4 | 5 | 6) #IMPLIED>
 <!ATTLIST display  showCompExtent  (0 | 1) #IMPLIED>
+<!-- window dimenstion (x, y (ur), width, heigth -->
+<!ATTLIST display  dim             CDATA   #IMPLIED>
 
 <!--    group of map layers
 -->
