@@ -403,8 +403,9 @@ static void define_module (void)
 	struct GModule *module;
 
 	module = G_define_module();
+	module->label = "Performs atmospheric correction using the 6S algorithm.";
 	module->description =
-	 " 6s - Second Simulation of Satellite Signal in the Solar Spectrum.";/*
+	 "6S - Second Simulation of Satellite Signal in the Solar Spectrum.";/*
 	 
 	 " Incorporated into Grass by Christo A. Zietsman, January 2003.\n"
 	 " Converted from Fortran to C by Christo A. Zietsman, November 2002.\n\n"
