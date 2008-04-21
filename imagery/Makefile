@@ -1,6 +1,6 @@
 MODULE_TOPDIR = ..
 
-SUBDIRS1 = \
+SUBDIRS = \
 	i.ask \
 	i.atcorr \
 	i.cluster \
