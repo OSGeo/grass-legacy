@@ -46,7 +46,7 @@ write_triple (struct Site *s1, struct Site *s2, struct Site *s3 )
 	    if ( node > 0  ) { /* node found */
 		int j, nlines;
 		int found = 0;
-		double x, y;
+		double x, y, z;
 		
 		nlines = Vect_get_node_n_lines ( &Out, node );
 
@@ -60,7 +60,7 @@ write_triple (struct Site *s1, struct Site *s2, struct Site *s3 )
 		    else 
 			Vect_get_line_nodes ( &Out, abs(line), &node2, NULL );
 		
-		    Vect_get_node_coor ( &Out, node2, &x, &y, NULL );
+		    Vect_get_node_coor ( &Out, node2, &x, &y, &z );
 		    
 		    if ( x == sb->coord.x && y == sb->coord.y ) {
 			found = 1;
@@ -73,11 +73,18 @@ write_triple (struct Site *s1, struct Site *s2, struct Site *s3 )
 
 	    /* Not found, write it */
 	    Vect_reset_line ( Points );
-	    Vect_append_point ( Points, sa->coord.x, sa->coord.y, 0.0 );
-	    Vect_append_point ( Points, sb->coord.x, sb->coord.y, 0.0 );
+	    if ( mode3d ) {
+		G_debug(3, "sa->coord.z: %f", sa->coord.z );
+	    	Vect_append_point ( Points, sa->coord.x, sa->coord.y, sa->coord.z );
+	    	Vect_append_point ( Points, sb->coord.x, sb->coord.y, sb->coord.z );	    
+	    } else {
+	    	Vect_append_point ( Points, sa->coord.x, sa->coord.y, 0.0 );
+	    	Vect_append_point ( Points, sb->coord.x, sb->coord.y, 0.0 );
+	    }
 	    Vect_write_line ( &Out, Type, Points, Cats );
 	}
     }
 
     return 0;
 }
+
