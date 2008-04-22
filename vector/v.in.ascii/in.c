@@ -208,6 +208,8 @@ int main(int argc, char *argv[])
 	fs = "\t";
     if (strcmp(fs, "space") == 0)
 	fs = " ";
+    if (strcmp(fs, "comma") == 0)
+        fs = ",";
 
     /* check dimension */
     if (zcoorf->answer) {
