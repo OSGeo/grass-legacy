@@ -44,7 +44,7 @@ int Gp_set_color(char *grassname, geopoint * gp)
 	    color = NULL_COLOR;
 
 	    if (G_get_color(cat, &r, &g, &b, &sc)) {
-		color = r & 0xff | ((g & 0xff) << 8) | ((b & 0xff) << 16);
+		color = (r & 0xff) | ((g & 0xff) << 8) | ((b & 0xff) << 16);
 	    }
 
 	    tp->iattr = color;
@@ -62,31 +62,27 @@ The other alternative may be to load to a tmp file. */
 geopoint *Gp_load_sites(char *grassname, int *nsites, int *has_z,
 			int *has_att)
 {
-    FILE *sfd;
-    char *mapset;
+    struct Map_info map;
+    static struct line_pnts *Points = NULL;
+    static struct line_cats *Cats = NULL;
     geopoint *top, *gpt, *prev;
-    int np;
+    int np, ltype, eof;
     struct Cell_head wind;
-    double e_ing, n_ing;
-    Site *nextsite;
     RASTER_MAP_TYPE rtype;
-    int ndim, nstr, ndec;
+    int ndim;
 
 
     /* TODO: handle error messages */
 
     np = 0;
+    eof = 0;
     *has_z = *has_att = 0;
 
-    if (NULL == (mapset = G_find_sites(grassname, ""))) {
-	fprintf(stderr, "Can't find sites file %s.\n", grassname);
-	return (NULL);
-    }
+    Vect_set_open_level (2);
+    Vect_open_old (&map, grassname, "");
 
-    if (NULL == (sfd = G_sites_open_old(grassname, mapset))) {
-	fprintf(stderr, "Can't open sites file %s.\n", grassname);
-	return (NULL);
-    }
+    Points = Vect_new_line_struct ();
+    Cats = Vect_new_cats_struct ();
 
     if (NULL == (top = gpt = (geopoint *) malloc(sizeof(geopoint)))) {
 	fprintf(stderr, "Can't malloc.\n");
@@ -95,72 +91,88 @@ geopoint *Gp_load_sites(char *grassname, int *nsites, int *has_z,
 
     G_get_set_window(&wind);
 
-    G_site_describe(sfd, &ndim, &rtype, &nstr, &ndec);
+    /* get ndim */
+    ndim = 2;
+    if ( Vect_is_3d(&map) ) {
+	ndim = 3;
+    }
+    
+    /* set rtype */
+    rtype = CELL_TYPE;
 
-    /* use these for allocation */
-    nextsite = G_site_new_struct(rtype, ndim, nstr, ndec);
-    fprintf(stdout, "Site dim: %d\n", ndim);
-
-    while (G_site_get(sfd, nextsite) != -1) {
-	n_ing = nextsite->north;
-	e_ing = G_adjust_easting(nextsite->east, &wind);
-
-	if (G_site_in_region(nextsite, &wind)) {
-	    np++;
-	    gpt->p3[X] = e_ing;
-	    gpt->p3[Y] = n_ing;
-
-	    if (ndim > 2) {
-		/* enables 3d site display */
-		*has_z = 1;
-		gpt->dims = 3;
-		gpt->p3[Z] = nextsite->dim[0];
-	    }
-	    else {
-		gpt->dims = 2;
-		*has_z = 0;
-	    }
-
-	    if (ndec > 0) {
-		*has_att = 1;
-		gpt->fattr = nextsite->dbl_att[0];
-/* ACS_MODIFY_OneLine site_attr management - new */
-		gpt->cat = nextsite->ccat;
-
-/* ACS_MODIFY_OneLine highlight management - new */
-		gpt->highlight_color = gpt->highlight_size = gpt->highlight_marker = FALSE;
-	    }
-	    else {
-		gpt->fattr = 0;
-		*has_att = 0;
-	    }
-
-	    gpt->iattr = gpt->fattr;
-
-	    /* TODO: use leftover text as cattr */
-	    gpt->cattr = NULL;
-
-	    if (NULL == (gpt->next = (geopoint *) malloc(sizeof(geopoint)))) {
-		fprintf(stderr, "Can't malloc.\n");	/* CLEAN UP */
-		return (NULL);
-	    }
-
-	    prev = gpt;
-	    gpt = gpt->next;
+    while(eof == 0)
+    {
+	ltype =  Vect_read_next_line (&map, Points, Cats);
+	switch (ltype)
+	{
+		case -1:
+		{
+			fprintf(stderr, "Can't read vector file");
+			return (NULL);
+		}
+		case -2: /* EOF */
+		{
+			eof = 1;
+			continue;
+		}
 	}
+	if ( (ltype & GV_POINTS))
+	{
+		np++;
+		gpt->p3[X] = Points->x[0]; 
+		gpt->p3[Y] = Points->y[0];
+
+		if (ndim > 2) {
+			*has_z = 1;
+			gpt->dims = 3;
+			gpt->p3[Z] = Points->z[0];
+		} else {
+			gpt->dims = 2;
+			*has_z = 0;
+		}
+
+		if (Cats->n_cats > 0) {
+			*has_att = 1;
+			gpt->fattr = Cats->field[0]; /* Is this correct? */
+			/* gpt->cat = ; ??***/
+			gpt->highlight_color = gpt->highlight_size = gpt->highlight_marker = FALSE;	
+		} else {
+			gpt->fattr = 0;
+			*has_att = 0;
+		}
+
+		gpt->iattr = gpt->fattr;
+		gpt->cattr = NULL;
+
+		G_debug(3, "loading vector point %d %f %f -- %d", 
+			np, Points->x[0], Points->y[0], Cats->n_cats);
+		if (NULL == 
+			(gpt->next = (geopoint *) malloc(sizeof(geopoint)))) {
+                		fprintf(stderr, "Can't malloc.\n");/*CLEAN UP*/
+                		return (NULL);
+            	}
+
+		prev = gpt;
+		gpt = gpt->next;
+	}
+
+    }
+    if (np > 0)
+    {
+	prev->next = NULL;
+	free(gpt);
     }
 
-    G_site_free_struct(nextsite);
-    prev->next = NULL;
-    free(gpt);
+    Vect_close (&map);
 
-    G_sites_close(sfd);
-
-    fprintf(stderr, "Sites file %s loaded.\n", grassname);
     if (!np) {
 	    fprintf(stderr, "Error: No points from %s fall within current region\n", grassname);
 	    return(NULL);
+    } else {
+            fprintf(stderr, "Vector file %s loaded with %d points.\n",
+		grassname, np);
     }
+
     *nsites = np;
 
     return (top);
