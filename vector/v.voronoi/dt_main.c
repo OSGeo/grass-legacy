@@ -74,12 +74,26 @@ main (int argc, char **argv)
   if ((mapset = G_find_vector2 (in_opt->answer, "")) == NULL) {
       G_fatal_error(_("Vector map <%s> not found"), in_opt->answer);
   }
-
+  
   Vect_set_open_level (2);
   Vect_open_old (&In, in_opt->answer, mapset);
 
-  if (0 > Vect_open_new (&Out, out_opt->answer, 0)) {
-    G_fatal_error(_("Unable to create vector map <%s>"), out_opt->answer);
+  /* check if we have a 3D input points map */
+  mode3d = 0;
+  if ( Vect_is_3d ( &In ) ) {
+    	mode3d = 1;
+  }
+
+
+  if ( mode3d ) {
+ 	if (0 > Vect_open_new (&Out, out_opt->answer, 1)) {
+    		G_fatal_error(_("Unable to create vector map <%s>"), out_opt->answer);
+  	}
+  } else {
+ 	if (0 > Vect_open_new (&Out, out_opt->answer, 0)) {
+    		G_fatal_error(_("Unable to create vector map <%s>"), out_opt->answer);
+  	}
+  
   }
 
   Vect_hist_copy (&In, &Out);
@@ -110,20 +124,26 @@ main (int argc, char **argv)
   nareas = Vect_get_num_areas ( &Out );
   G_debug ( 3, "nareas = %d", nareas );
   for ( area = 1; area <= nareas; area++ ) {
-      double x, y;
+      double x, y, z, angle, slope;
       int ret;
 
       Vect_reset_line ( Points );
       Vect_reset_cats ( Cats );
       
       ret = Vect_get_point_in_area ( &Out, area, &x, &y );
-
       if ( ret < 0 ) {
 	  G_warning ( _("Cannot calculate area centroid") );
 	  continue;
       }
+
+      ret = Vect_tin_get_z (&Out, x, y, &z, &angle, &slope);
+      G_debug(3, "area centroid z: %f",z);
+      if ( ret < 0 ) {
+          G_warning ( _("Cannot calculate area centroid z coordinate") );
+          continue;
+      }
       
-      Vect_append_point ( Points, x, y, 0.0 );
+      Vect_append_point ( Points, x, y, z );
       Vect_cat_set ( Cats, 1, area );
       
       Vect_write_line ( &Out, GV_CENTROID, Points, Cats );

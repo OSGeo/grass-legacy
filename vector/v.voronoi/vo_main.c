@@ -321,7 +321,7 @@ main (int argc, char **argv)
 		Vect_map_add_dblink ( &Out, OFi->number, OFi->name, OFi->table, 
 				      IFi->key, OFi->database, OFi->driver);
 	    }
-	    G_done_msg("");
+	    G_done_msg(" ");
 	}
   }
 	  

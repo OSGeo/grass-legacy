@@ -13,7 +13,7 @@ struct	Freelist	{
 
 
 struct Point	{
-    double x,y;
+    double x,y,z;
 };
 
 /* structure used both for sites and for vertices */
@@ -41,7 +41,7 @@ struct Halfedge {
 };
 
 #ifdef MAIN
-int triangulate, sorted, plot, debug;
+int triangulate, sorted, plot, debug, mode3d;
 struct	Site	*sites;
 int		nsites;
 int		siteidx;
@@ -61,7 +61,7 @@ struct	Halfedge *PQhash;
 int PQcount;
 int PQmin;
 #else
-extern int triangulate, sorted, plot, debug;
+extern int triangulate, sorted, plot, debug, mode3d;
 extern struct	Site	*sites;
 extern int		nsites;
 extern int		siteidx;

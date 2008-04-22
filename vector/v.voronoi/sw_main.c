@@ -42,12 +42,23 @@ void removeDuplicates()
 	i = j = 1;
 	foundDupe = 0;
 	while(i < nsites)
-		if(sites[i].coord.x == sites[i-1].coord.x && sites[i].coord.y == sites[i-1].coord.y)
-			i++;
-		else
-		{
-			if(i != j) sites[j] = sites[i];
-			i++; j++;;
+		if ( mode3d ) {
+			if(sites[i].coord.x == sites[i-1].coord.x && sites[i].coord.y == sites[i-1].coord.y 
+								  && sites[i].coord.z == sites[i-1].coord.z)
+				i++;
+			else
+			{
+				if(i != j) sites[j] = sites[i];
+				i++; j++;;
+			}		
+		} else {
+			if(sites[i].coord.x == sites[i-1].coord.x && sites[i].coord.y == sites[i-1].coord.y)
+				i++;
+			else
+			{
+				if(i != j) sites[j] = sites[i];
+				i++; j++;;
+			}
 		}
 
 	if(j != nsites)
@@ -67,10 +78,10 @@ readsites ( void )
 
     Points = Vect_new_line_struct ();
 
-    nsites = 0;
-    sites = (struct Site *) myalloc(4000*sizeof(*sites));
-
     nlines = Vect_get_num_lines ( &In );
+
+    nsites = 0;
+    sites = (struct Site *) myalloc(nlines * sizeof(*sites));
 
     for ( line = 1; line <= nlines; line++ ) {
 	int type;
@@ -84,6 +95,10 @@ readsites ( void )
 	
 	sites[nsites].coord.x = Points->x[0];
 	sites[nsites].coord.y = Points->y[0];
+	if ( mode3d ) {
+		G_debug(3, "Points->z[0]: %f", Points->z[0]);
+		sites[nsites].coord.z = Points->z[0];
+	}
 
 	sites[nsites].sitenbr = nsites;
 	sites[nsites].refcnt = 0;
