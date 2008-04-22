@@ -56,7 +56,7 @@ Vect_tin_get_z (
   }
 
   area = Vect_find_area ( Map, tx, ty );
-  G_debug (3, "area = %d", area ); 
+  G_debug (3, "TIN: area = %d", area ); 
   if ( area == 0 ) return 0;
   
   Area = Plus->Area[area];
@@ -70,7 +70,7 @@ Vect_tin_get_z (
   y = Points->y;
   z = Points->z;
   for (i = 0; i < 3; i++) {
-      G_debug(3, "%d %f %f %f", i, x[i], y[i], z[i] ); 
+      G_debug(3, "TIN: %d %f %f %f", i, x[i], y[i], z[i] ); 
   }
 
   vx1 = x[1] - x[0]; 
@@ -87,7 +87,7 @@ Vect_tin_get_z (
  
   /* OK ? */ 
   *tz = -(d + a*tx + b*ty) / c;
-  G_debug(3, "z = %f", *tz ); 
+  G_debug(3, "TIN: z = %f", *tz ); 
   
   return 1;
 }
