@@ -32,6 +32,7 @@ IconsSilk = {
     "addtext"    : 'textfield_add.png',
     "addbarscale": 'page_white_picture.png',
     "addlegend"  : 'page_green.png',
+    "quit"       : 'door_in.png',
     # digit
     ## add feature
     "digAddPoint": 'bullet_add.png',
@@ -56,7 +57,6 @@ IconsSilk = {
     "digUndo" : 'arrow_undo.png',
     "digSettings" : 'color_swatch.png',
     "digAdditionalTools" : 'plugin.png',
-    "digExit"     : 'door_in.png',
     # gis manager
     "newdisplay" : 'application_add.png',
     "workspaceNew" : 'page_white.png',
@@ -77,5 +77,9 @@ IconsSilk = {
     "addrgb"     : 'rgb.png',
     "addhis"     : 'his.png',
     "addthematic": 'thematic.png',
-    "addchart"   : 'chart_bar.png'
+    "addchart"   : 'chart_bar.png',
+    # profile analysis
+    "transect"   : 'image_edit.png',
+    "profiledraw"   : 'page_white_lightning.png',
+    "profileopt"   : 'color_swatch.png',
     }

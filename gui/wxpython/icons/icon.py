@@ -80,7 +80,6 @@ icons_default = {
     "digUndo" : wx.ART_ERROR,
     "digSettings" : 'settings.gif',
     "digAdditionalTools" : wx.ART_ERROR,
-    "digExit"    : 'exit.gif',
     # gis manager
     "newdisplay" : 'gui-startmon.gif',
     "workspaceNew" : 'file-new.gif',
@@ -109,7 +108,7 @@ icons_default = {
     "addtext"    : 'module-d.text.gif',
     "addbarscale": 'module-d.barscale.gif',
     "addlegend"  : 'module-d.legend.gif',
-    "quit"       : wx.ART_ERROR,
+    "quit"       : 'gui-exit.gif',
     # analyze raster
     "analyze"    : 'gui-rastanalyze.gif',
     "measure"    : 'gui-measure.gif',
@@ -298,7 +297,7 @@ Icons = {
                               desc="Settings dialog for digitization tool"),
     "digSplitLine": MetaIcon (img=icons_img["digSplitLine"], label="Split line/boundary",
                               desc="Left: Select; Middle: Unselect; Right: Confirm"),
-    "digExit"    : MetaIcon (img=icons_img["digExit"], label="Quit digitization tool"),
+    "digExit"    : MetaIcon (img=icons_img["quit"], label="Quit digitization tool"),
     "digAdditionalTools" : MetaIcon (img=icons_img["digAdditionalTools"], label="Additional tools " \
                                          "(copy, flip, connect, etc.)",
                                      desc="Left: Select; Middle: Unselect; Right: Confirm"),

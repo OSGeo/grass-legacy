@@ -3163,9 +3163,14 @@ class MapFrame(wx.Frame):
         """
         Init profile canvas and tools
         """
+        raster = []
+        if self.tree.layer_selected and \
+               self.tree.GetPyData(self.tree.layer_selected)[0]['type'] == 'raster':
+            raster.append(self.tree.GetPyData(self.tree.layer_selected)[0]['maplayer'].name)
+
         self.profile = profile.ProfileFrame(self,
-                                           id=wx.ID_ANY, pos=wx.DefaultPosition, size=(700,300),
-                                           style=wx.DEFAULT_FRAME_STYLE)
+                                            id=wx.ID_ANY, pos=wx.DefaultPosition, size=(700,300),
+                                            style=wx.DEFAULT_FRAME_STYLE, rasterList=raster)
         self.profile.Show()
 
     def FormatDist(self, dist):

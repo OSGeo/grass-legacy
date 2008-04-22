@@ -4,22 +4,25 @@ MODULE: profile
 CLASSES:
  * ProfileFrame
  * SetRaster
- * Textdialog
+ * TextDialog
  * OptDialog
 
 PURPOSE: Profile analysis of GRASS raster maps and images. Uses PyPlot (wx.lib.plot.py)
 
 AUTHORS: The GRASS Development Team. Michael Barton
 
-COPYRIGHT: (C) 2007 by the GRASS Development Team
+COPYRIGHT: (C) 2007-2008 by the GRASS Development Team
            This program is free software under the GNU General Public
            License (>=v2). Read the file COPYING that comes with GRASS
            for details.
 """
 
+import os
+import sys
+import math
+
 import wx
-import os, sys, math
-import  wx.lib.colourselect as  csel
+import wx.lib.colourselect as  csel
 
 try:
     import wx.lib.plot as plot
@@ -42,50 +45,41 @@ except:
     sys.path.append(CompatPath)
     from compat import subprocess as subprocess
 
-gmpath = os.path.join(globalvar.ETCWXDIR, "icons")
-sys.path.append(gmpath)
-
 import render
 import menuform
 import disp_print
 import gselect
 import gcmd
+import toolbars
 from debug import Debug as Debug
 from icon import Icons as Icons
-
-import images
-imagepath = images.__path__[0]
-sys.path.append(imagepath)
-
-icons = ""
-
-if not os.getenv("GRASS_ICONPATH"):
-    icons = os.getenv("GISBASE") + "/etc/gui/icons/"
-else:
-    icons = os.environ["GRASS_ICONPATH"]
 
 class ProfileFrame(wx.Frame):
     """
     Mainframe for displaying profile of raster map. Uses wx.lib.plot.
     """
 
-    def __init__(self, parent=None, id = wx.ID_ANY, title="Profile Analysis",
+    def __init__(self, parent=None, id=wx.ID_ANY, title=_("Profile Analysis"),
+                 rasterList=[],
                  pos=wx.DefaultPosition, size=wx.DefaultSize,
                  style=wx.DEFAULT_FRAME_STYLE):
 
-        wx.Frame.__init__(self, parent, id, title, pos, size, style)
-
-        toolbar = self.__createToolBar()
-
         self.parent = parent
-        self.mapwin = self.Parent.MapWindow
+        self.mapwin = self.parent.MapWindow
         self.Map = render.Map()  # instance of render.Map to be associated with display
 
+        wx.Frame.__init__(self, parent, id, title, pos, size, style)
+
+        #
+        # Add toolbar
+        #
+        toolbar = toolbars.ProfileToolbar(parent=self, mapdisplay=self.mapwin, map=self.Map).GetToolbar()
+        self.SetToolBar(toolbar)
+        
         #
         # Set the size & cursor
         #
         self.SetClientSize(size)
-        self.iconsize = (16, 16)
 
         #
         # Add statusbar
@@ -93,9 +87,9 @@ class ProfileFrame(wx.Frame):
         self.statusbar = self.CreateStatusBar(number=2, style=0)
         self.statusbar.SetStatusWidths([-2, -1])
 
-        # Bind various events
-        self.Bind(wx.EVT_CLOSE, self.OnCloseWindow)
-
+        #
+        # Define canvas
+        #
         # plot canvas settings
         self.client = plot.PlotCanvas(self)
         #define the function for drawing pointLabels
@@ -105,50 +99,58 @@ class ProfileFrame(wx.Frame):
         # Show closest point when enabled
         self.client.canvas.Bind(wx.EVT_MOTION, self.OnMotion)
 
+        #
         # Init variables
+        #
         self.rast1 = '' # default raster map to profile
+        if len(rasterList) == 1:
+            self.rast1 = rasterList[0]
         self.rast2 = '' # optional raster map to profile
+        if len(rasterList) == 2:
+            self.rast1 = rasterList[1]
         self.rast3 = '' # optional raster map to profile
+        if len(rasterList) == 3:
+            self.rast1 = rasterList[2]
         self.rastunits1 = '' # map data units (used for y axis legend)
         self.rastunits2 = '' # map data units (used for y axis legend)
         self.rastunits3 = '' # map data units (used for y axis legend)
-        self.coordstr = '' #string of coordinates for r.profile
+        self.coordstr = '' # string of coordinates for r.profile
         self.seglist = [] # segment endpoint list
         self.plotlist = [] # list of things to plot
         self.ppoints = '' # segment endpoints data
         self.profile = None # plot draw object
 
-        self.ptitle = 'Profile of %s %s %s' % (self.rast1, self.rast2, self.rast3)
+        self.ptitle = _('Profile of ') + '%s %s %s' % (self.rast1, self.rast2, self.rast3)
         if self.parent.projinfo['units'] != '':
-            self.xlabel = 'Distance (%s)' % self.parent.projinfo['units']
+            self.xlabel = _('Distance (%s)') % self.parent.projinfo['units']
         else:
-            self.xlabel = "Distance along transect"
-        self.ylabel = "Cell values"
+            self.xlabel = _("Distance along transect")
+        self.ylabel = _("Cell values")
 
         self.datalist1 = [] #list of distance,value pairs for plotting profile
         self.pline1 = None # first (default) profile line
         self.pcolor1 = wx.Colour(0,0,255) # profile line color
         self.pwidth1 = 1 # profile line width
         self.pstyle1 = wx.SOLID # profile line pen style
-        self.plegend1 = 'Profile' # profile legend string
+        self.plegend1 = _('Profile') # profile legend string
         self.datalist2 = [] #list of distance,value pairs for plotting profile
         self.pline2 = None # second (optional) profile line
         self.pcolor2 = wx.Colour(255,0,0) # profile line color
         self.pwidth2 = 1 # profile line width
         self.pstyle2 = wx.SOLID # profile line pen style
-        self.plegend2 = 'Profile' # profile legend string
+        self.plegend2 = _('Profile') # profile legend string
         self.datalist3 = [] #list of distance,value pairs for plotting profile
         self.pline3 = None # third (optional) profile line
         self.pcolor3 = wx.Colour(0,255,0) # profile line color
         self.pwidth3 = 1 # profile line width
         self.pstyle3 = wx.SOLID # profile line pen style
-        self.plegend3 = 'Profile' # profile legend string
+        self.plegend3 = _('Profile') # profile legend string
 
         self.ptcolor = wx.Colour(0,0,0) # segmenet marker point color
         self.ptfill = wx.TRANSPARENT # segment marker point fill style
         self.ptsize = 2 # segment marker point size
         self.pttype = 'triangle' # segment marker point type
-        self.ptlegend = 'Segment break' # segment marker point legend string
+        self.ptlegend = _('Segment break') # segment marker point legend string
 
         self.font = wx.Font(12,wx.FONTFAMILY_SWISS,wx.FONTSTYLE_NORMAL,wx.FONTWEIGHT_NORMAL) # text font
         self.titlefontsize = 14 # title font size
@@ -178,42 +180,10 @@ class ProfileFrame(wx.Frame):
         self.client.SetXSpec(self.xtype)
         self.client.SetYSpec(self.ytype)
 
-
-
-
-    def __createToolBar(self):
-        """Creates toolbar"""
-
-        toolbar = self.CreateToolBar()
-        for each in self.toolbarData():
-            self.AddToolbarButton(toolbar, *each)
-        toolbar.Realize()
-
-    def AddToolbarButton(self, toolbar, label, icon, help, handler):
-        """Adds buttons to the toolbar"""
-
-        if not label:
-            toolbar.AddSeparator()
-            return
-        tool = toolbar.AddLabelTool(id=wx.ID_ANY, label=label, bitmap=icon, shortHelp=help)
-        self.Bind(wx.EVT_TOOL, handler, tool)
-
-    def toolbarData(self):
-
-        return   (
-                 ('transect', Icons["transect"].GetBitmap(), Icons["transect"].GetLabel(), self.DrawTransect),
-                 ('raster', Icons["addrast"].GetBitmap(), Icons["addrast"].GetLabel(), self.SelectRaster),
-                 ('profiledraw', Icons["profiledraw"].GetBitmap(), Icons["profiledraw"].GetLabel(), self.CreateProfile),
-                 ('options', Icons["profileopt"].GetBitmap(), 'Profile options', self.ProfileOptionsMenu),
-                 ('drag', Icons['pan'].GetBitmap(), 'Enable drag', self.OnDrag),
-                 ('zoom', Icons['zoom_in'].GetBitmap(), 'Enable zoom', self.OnZoom),
-                 ('unzoom', Icons['zoom_back'].GetBitmap(), 'Unzoom profile', self.OnRedraw),
-                 ('erase', Icons["erase"].GetBitmap(), 'Erase profile', self.OnErase),
-                 ('', '', '', ''),
-                 ('save',  Icons["savefile"].GetBitmap(),  'Save profile',  self.SaveToFile),
-                 ('print',  Icons["printmap"].GetBitmap(),  'Print profile',  self.PrintMenu),
-                 ('quit',  wx.ArtProvider.GetBitmap(wx.ART_QUIT, wx.ART_TOOLBAR, (16,16)),  Icons["quit"].GetLabel(), self.OnQuit),
-                  )
+        #
+        # Bind various events
+        #
+        self.Bind(wx.EVT_CLOSE, self.OnCloseWindow)
 
     def DrawTransect(self, event):
         """
@@ -223,8 +193,10 @@ class ProfileFrame(wx.Frame):
         self.seglist = []
         self.mapwin.ClearLines(self.mapwin.pdc)
         self.ppoints = ''
-        self.Parent.SetFocus()
-        self.Parent.Raise()
+
+        self.parent.SetFocus()
+        self.parent.Raise()
+        
         self.mapwin.mouse['use'] = 'profile'
         self.mapwin.mouse['box'] = 'line'
         self.mapwin.pen = wx.Pen(colour='Red', width=2, style=wx.SHORT_DASH)
@@ -363,7 +335,6 @@ class ProfileFrame(wx.Frame):
                 self.seglist.pop()
             except:
                 pass
-
 
     def SetGraphStyle(self):
         """
@@ -1072,7 +1043,6 @@ class TextDialog(wx.Dialog):
         self.xlabelentry.SetFont(self.font)
         self.ylabelentry.SetFont(self.font)
         self.Layout()
-
 
 class OptDialog(wx.Dialog):
     def __init__(self, parent, id, title, pos=wx.DefaultPosition, size=wx.DefaultSize,
