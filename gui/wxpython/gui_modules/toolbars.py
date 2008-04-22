@@ -4,14 +4,16 @@ MODULE: toolbar
 CLASSES:
     * AbstractToolbar
     * MapToolbar
+    * GRToolbar
     * DigitToolbar
-
+    * ProfileToolbar
+    
 PURPOSE: Toolbars for Map Display window
 
 AUTHORS: The GRASS Development Team
          Michael Barton, Martin Landa, Jachym Cepicky
 
-COPYRIGHT: (C) 2007 by the GRASS Development Team
+COPYRIGHT: (C) 2007-2008 by the GRASS Development Team
            This program is free software under the GNU General Public
            License (>=v2). Read the file COPYING that comes with GRASS
            for details.
@@ -33,7 +35,7 @@ from preferences import globalSettings as UserSettings
 gmpath = os.path.join(globalvar.ETCWXDIR, "icons")
 sys.path.append(gmpath)
 
-class AbstractToolbar:
+class AbstractToolbar(object):
     """Abstract toolbar class"""
     def __init__():
         pass
@@ -46,7 +48,9 @@ class AbstractToolbar:
 
         for tool in toolData:
             self.CreateTool(parent, toolbar, *tool)
-            
+
+        self.toolbar = toolbar
+        
     def ToolbarData(self):
         """Toolbar data"""
 
@@ -70,6 +74,10 @@ class AbstractToolbar:
             toolbar.AddSeparator()
 
         return tool
+
+    def GetToolbar(self):
+        """Get toolbar widget reference"""
+        return self.toolbar
     
 class MapToolbar(AbstractToolbar):
     """
@@ -384,7 +392,7 @@ class DigitToolbar(AbstractToolbar):
             data.append((self.settings, "digSettings", Icons["digSettings"].GetBitmap(),
                          wx.ITEM_NORMAL, Icons["digSettings"].GetLabel(), Icons["digSettings"].GetDesc(),
                          self.OnSettings))
-            data.append((self.exit, "digExit", Icons["digExit"].GetBitmap(),
+            data.append((self.exit, "digExit", Icons["quit"].GetBitmap(),
                          wx.ITEM_NORMAL, Icons["digExit"].GetLabel(), Icons["digExit"].GetDesc(),
                          self.OnExit))
 
@@ -837,3 +845,75 @@ class DigitToolbar(AbstractToolbar):
             self.toolbar[self.numOfRows-1].Realize()
 
         return layerNameList
+
+class ProfileToolbar(AbstractToolbar):
+    """
+    Toolbar for digitization
+    """
+    def __init__(self, parent, mapdisplay, map):
+        self.parent     = parent
+        self.mapcontent = map
+        self.mapdisplay = mapdisplay
+
+        self.toolbar = wx.ToolBar(parent=self.mapdisplay, id=wx.ID_ANY)
+
+        # self.SetToolBar(self.toolbar)
+        self.toolbar.SetToolBitmapSize(globalvar.toolbarSize)
+
+        self.InitToolbar(self.mapdisplay, self.toolbar, self.ToolbarData())
+
+        # realize the toolbar
+        self.toolbar.Realize()
+
+    def ToolbarData(self):
+        """Toolbar data"""
+
+        self.transect = wx.NewId()
+        self.addraster = wx.NewId()
+        self.draw = wx.NewId()
+        self.options = wx.NewId()
+        self.drag = wx.NewId()
+        self.zoom = wx.NewId()
+        self.unzoom = wx.NewId()
+        self.erase = wx.NewId()
+        self.save = wx.NewId()
+        self.printer = wx.NewId()
+        self.quit = wx.NewId()
+                
+        # tool, label, bitmap, kind, shortHelp, longHelp, handler
+        return   (
+            (self.transect, 'transect', Icons["transect"].GetBitmap(),
+             wx.ITEM_NORMAL, Icons["transect"].GetLabel(), Icons["transect"].GetDesc(),
+             self.parent.DrawTransect),
+            (self.addraster, 'raster', Icons["addrast"].GetBitmap(),
+             wx.ITEM_NORMAL, Icons["addrast"].GetLabel(), Icons["addrast"].GetDesc(),
+             self.parent.SelectRaster),
+            (self.draw, 'profiledraw', Icons["profiledraw"].GetBitmap(),
+             wx.ITEM_NORMAL, Icons["profiledraw"].GetLabel(), Icons["profiledraw"].GetDesc(),
+             self.parent.CreateProfile),
+            (self.options, 'options', Icons["profileopt"].GetBitmap(),
+             wx.ITEM_NORMAL, Icons["profileopt"].GetLabel(), Icons["profileopt"].GetDesc(),
+             self.parent.ProfileOptionsMenu),
+            (self.drag, 'drag', Icons['pan'].GetBitmap(),
+             wx.ITEM_NORMAL, Icons["pan"].GetLabel(), Icons["pan"].GetDesc(),
+             self.parent.OnDrag),
+            (self.zoom, 'zoom', Icons['zoom_in'].GetBitmap(),
+             wx.ITEM_NORMAL, Icons["zoom_in"].GetLabel(), Icons["zoom_in"].GetDesc(),
+             self.parent.OnZoom),
+            (self.unzoom, 'unzoom', Icons['zoom_back'].GetBitmap(),
+             wx.ITEM_NORMAL, Icons["zoom_back"].GetLabel(), Icons["zoom_back"].GetDesc(),
+             self.parent.OnRedraw),
+            (self.erase, 'erase', Icons["erase"].GetBitmap(),
+             wx.ITEM_NORMAL, Icons["erase"].GetLabel(), Icons["erase"].GetDesc(),
+             self.parent.OnErase),
+            ("", "", "", "", "", "", ""),
+            (self.save, 'save', Icons["savefile"].GetBitmap(),
+             wx.ITEM_NORMAL, Icons["savefile"].GetLabel(), Icons["savefile"].GetDesc(),
+             self.parent.SaveToFile),
+            (self.printer, 'print', Icons["printmap"].GetBitmap(),
+             wx.ITEM_NORMAL, Icons["printmap"].GetLabel(), Icons["printmap"].GetDesc(),
+             self.parent.PrintMenu),
+            (self.quit, 'quit', Icons["quit"].GetBitmap(),
+             wx.ITEM_NORMAL, Icons["quit"].GetLabel(), Icons["quit"].GetDesc(),
+             self.parent.OnQuit),
+            )
