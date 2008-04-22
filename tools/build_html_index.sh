@@ -6,7 +6,7 @@
 #exclude following list of modules from help index:
 # escape it properly:
 ## TODO: better fix this in include/Make/Html.make, see bug #5361
-EXCLUDEHTML="v\.topo\.check\|i\.ask\|i\.find\|photo\.elev\|photo\.target\|helptext\.html\|r\.watershed\.ram\|r\.watershed\.seg\|gis.m\|wxGUI.*html"
+EXCLUDEHTML="v\.topo\.check\|i\.ask\|i\.find\|photo\.elev\|photo\.target\|helptext\.html\|r\.watershed\.ram\|r\.watershed\.seg\|gis.m\|wxGUI.*html\|d\.paint\.labels\|p\.out\.vrml\|r\.cats"
 ############# nothing to configure below ############
 
 #fetch the ARCH for store the files:
