@@ -31,7 +31,7 @@ let me know.
 James Darrell McCauley
 mccauley@ecn.purdue.edu
 
-
+-----------------------------------------
 UPDATE 1/5/2001
 I updtated McCauley file to address slowness, some numerical 
 problem related to line segment parameters in s.sweep output
@@ -44,9 +44,17 @@ time is spend in label output... Hoping to fix this in GRASS5.1
 Andrea Aime
 aaime@libero.it
 
-
+-----------------------------------------
 UPDATE 10/2004
 - Copy grass/src/sites/s.voronoi to grass51/vector/v.voronoi
 - Rewritten to read/write directly GRASS vector files.
 
 Radim Blazek
+
+-----------------------------------------
+UPDATE 4/2008
+- better memory management
+- 3D support for Delaunay
+- TODO: complete it for Voronoi if desired
+
+Benjamin Ducke

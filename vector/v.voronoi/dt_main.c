@@ -13,6 +13,8 @@
 ** Modification History:
 ** 06 Feb 93 - James Darrell McCauley <mccauley@ecn.purdue.edu> pieced
 **             this together from stuff he found on netlib (see the manpage).
+**
+** 4 2008: Benjamin Ducke - 3D support + better memory management
 **/
 
 #define MAIN
