@@ -49,7 +49,7 @@ class AbstractToolbar(object):
         for tool in toolData:
             self.CreateTool(parent, toolbar, *tool)
 
-        self.toolbar = toolbar
+        self._toolbar = toolbar
         
     def ToolbarData(self):
         """Toolbar data"""
@@ -77,7 +77,7 @@ class AbstractToolbar(object):
 
     def GetToolbar(self):
         """Get toolbar widget reference"""
-        return self.toolbar
+        return self._toolbar
     
 class MapToolbar(AbstractToolbar):
     """
