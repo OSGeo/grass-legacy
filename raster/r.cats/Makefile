@@ -8,4 +8,3 @@ DEPENDENCIES = $(GISDEP)
 include $(MODULE_TOPDIR)/include/Make/Module.make
 
 default: cmd
-	-ln -s -f $(PGM) $(BIN)/r.cats
