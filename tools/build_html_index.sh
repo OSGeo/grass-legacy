@@ -3,11 +3,30 @@
 #generates HTML man pages docs/html/index.html
 # Markus Neteler, 2003, 2004, 2005, 2006
 
-#exclude following list of modules from help index:
-# escape it properly:
+
 ## TODO: better fix this in include/Make/Html.make, see bug #5361
-EXCLUDEHTML="v\.topo\.check\|i\.ask\|i\.find\|photo\.elev\|photo\.target\|helptext\.html\|r\.watershed\.ram\|r\.watershed\.seg\|gis.m\|wxGUI.*html\|d\.paint\.labels\|p\.out\.vrml\|r\.cats"
+
+#exclude following list of modules from help index:
+EXCLUDEMODS="\
+v.topo.check \
+i.ask \
+i.find \
+photo.elev \
+photo.target \
+helptext.html \
+r.watershed.ram \
+r.watershed.seg \
+gis.m \
+wxGUI.*html \
+d.paint.labels \
+p.out.vrml \
+r.cats"
+
+
 ############# nothing to configure below ############
+
+# regex-proof module skip list
+EXCLUDEHTML="`echo "$EXCLUDEMODS" | tr ' ' '|' | sed -e 's+\.+\\\\.+g' -e 's+|+\\\\|+g'`"
 
 #fetch the ARCH for store the files:
 ARCH="`cat ../include/Make/Platform.make | grep '^ARCH'  | sed 's+ ++g' | cut -d'=' -f2`"
