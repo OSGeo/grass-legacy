@@ -7,4 +7,5 @@
 #               License (>=v2). Read the file COPYING that comes with GRASS
 #               for details.
 
+g.message -w "This module has been replaced by r.category" 
 exec r.category "$@"
