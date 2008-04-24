@@ -153,7 +153,7 @@ Contents
                        http://lists.osgeo.org/mailman/listinfo/grass-dev
                          <grass-dev@lists.osgeo.org>
                        http://lists.osgeo.org/mailman/listinfo/grassuser
-                         <grassuser@lists.osgeo.org>
+                         <grass-user@lists.osgeo.org>
                        http://lists.osgeo.org/mailman/listinfo/wingrass
                          <wingrass@lists.osgeo.org>
 
