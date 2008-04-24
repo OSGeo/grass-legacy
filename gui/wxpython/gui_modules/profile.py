@@ -1,20 +1,23 @@
 """
-MODULE: profile
+@package profile
 
-CLASSES:
- * ProfileFrame
- * SetRaster
- * TextDialog
- * OptDialog
+Profile analysis of GRASS raster maps and images.
 
-PURPOSE: Profile analysis of GRASS raster maps and images. Uses PyPlot (wx.lib.plot.py)
+Uses PyPlot (wx.lib.plot.py)
 
-AUTHORS: The GRASS Development Team. Michael Barton
+Classes:
+ - ProfileFrame
+ - SetRasterDialog
+ - TextDialog
+ - OptDialog
 
 COPYRIGHT: (C) 2007-2008 by the GRASS Development Team
            This program is free software under the GNU General Public
            License (>=v2). Read the file COPYING that comes with GRASS
            for details.
+
+@author Michael Barton
+Various updates: Martin Landa <landa.martin gmail.com>
 """
 
 import os
@@ -53,6 +56,7 @@ import gcmd
 import toolbars
 from debug import Debug as Debug
 from icon import Icons as Icons
+from preferences import globalSettings as UserSettings
 
 class ProfileFrame(wx.Frame):
     """
@@ -70,6 +74,11 @@ class ProfileFrame(wx.Frame):
 
         wx.Frame.__init__(self, parent, id, title, pos, size, style)
 
+        #
+        # Icon
+        #
+        self.SetIcon(wx.Icon(os.path.join(globalvar.ETCDIR, 'grass_map.ico'), wx.BITMAP_TYPE_ICO))
+        
         #
         # Add toolbar
         #
@@ -102,90 +111,81 @@ class ProfileFrame(wx.Frame):
         #
         # Init variables
         #
-        self.rast1 = '' # default raster map to profile
-        if len(rasterList) == 1:
-            self.rast1 = rasterList[0]
-        self.rast2 = '' # optional raster map to profile
-        if len(rasterList) == 2:
-            self.rast1 = rasterList[1]
-        self.rast3 = '' # optional raster map to profile
-        if len(rasterList) == 3:
-            self.rast1 = rasterList[2]
-        self.rastunits1 = '' # map data units (used for y axis legend)
-        self.rastunits2 = '' # map data units (used for y axis legend)
-        self.rastunits3 = '' # map data units (used for y axis legend)
-        self.coordstr = '' # string of coordinates for r.profile
-        self.seglist = [] # segment endpoint list
-        self.plotlist = [] # list of things to plot
-        self.ppoints = '' # segment endpoints data
-        self.profile = None # plot draw object
+        # 0    -> default raster map to profile
+        # 1, 2 -> optional raster map to profile
+        # units -> map data units (used for y axis legend)
+        self.raster = { 0 : UserSettings.Get(group='profile', key='raster0'),
+                        1 : UserSettings.Get(group='profile', key='raster1'),
+                        2 : UserSettings.Get(group='profile', key='raster2') }
+        for r in self.raster.itervalues():
+            r['name'] = ''
+            r['units'] = ''
+            r['datalist'] = [] # list of distance,value pairs for plotting profile
+            r['pline'] = None # first (default) profile line
 
-        self.ptitle = _('Profile of ') + '%s %s %s' % (self.rast1, self.rast2, self.rast3)
+        # set raster map name (if given)
+        for idx in range(len(rasterList)):
+            self.raster[idx]['name'] = rasterList[idx]
+
+        # string of coordinates for r.profile
+        self.coordstr = '' 
+        # segment endpoint list
+        self.seglist = []
+        # list of things to plot
+        self.plotlist = []
+        # segment endpoints data 
+        self.ppoints = '' 
+        # plot draw object
+        self.profile = None 
+
+        # title of window
+        self.ptitle = _('Profile of')
+        for r in self.raster.keys():
+            if self.raster[r]['name'] != '':
+                self.ptitle += ' %s' % self.raster[r]['name']
+
+        # determine units (axis labels)
         if self.parent.projinfo['units'] != '':
             self.xlabel = _('Distance (%s)') % self.parent.projinfo['units']
         else:
             self.xlabel = _("Distance along transect")
         self.ylabel = _("Cell values")
 
-        self.datalist1 = [] #list of distance,value pairs for plotting profile
-        self.pline1 = None # first (default) profile line
-        self.pcolor1 = wx.Colour(0,0,255) # profile line color
-        self.pwidth1 = 1 # profile line width
-        self.pstyle1 = wx.SOLID # profile line pen style
-        self.plegend1 = _('Profile') # profile legend string
-        self.datalist2 = [] #list of distance,value pairs for plotting profile
-        self.pline2 = None # second (optional) profile line
-        self.pcolor2 = wx.Colour(255,0,0) # profile line color
-        self.pwidth2 = 1 # profile line width
-        self.pstyle2 = wx.SOLID # profile line pen style
-        self.plegend2 = _('Profile') # profile legend string
-        self.datalist3 = [] #list of distance,value pairs for plotting profile
-        self.pline3 = None # third (optional) profile line
-        self.pcolor3 = wx.Colour(0,255,0) # profile line color
-        self.pwidth3 = 1 # profile line width
-        self.pstyle3 = wx.SOLID # profile line pen style
-        self.plegend3 = _('Profile') # profile legend string
+        self.properties = {}
+        self.properties['font'] = UserSettings.Get(group='profile', key='font')
+        self.properties['font']['wxfont'] = wx.Font(11, wx.FONTFAMILY_SWISS,
+                                                    wx.FONTSTYLE_NORMAL,
+                                                    wx.FONTWEIGHT_NORMAL)
+        self.properties['marker'] = UserSettings.Get(group='profile', key='marker')
 
-        self.ptcolor = wx.Colour(0,0,0) # segmenet marker point color
-        self.ptfill = wx.TRANSPARENT # segment marker point fill style
-        self.ptsize = 2 # segment marker point size
-        self.pttype = 'triangle' # segment marker point type
-        self.ptlegend = _('Segment break') # segment marker point legend string
+        self.properties['grid'] = UserSettings.Get(group='profile', key='grid')
+                                    
+        self.properties['x-axis'] = UserSettings.Get(group='profile', key='x-axis')
+        self.properties['x-axis']['axis'] = None
 
-        self.font = wx.Font(12,wx.FONTFAMILY_SWISS,wx.FONTSTYLE_NORMAL,wx.FONTWEIGHT_NORMAL) # text font
-        self.titlefontsize = 14 # title font size
-        self.axisfontsize = 12 # axis label font size
+        self.properties['y-axis'] = UserSettings.Get(group='profile', key='y-axis')
+        self.properties['x-axis']['axis'] = None
+        self.properties['legend'] = UserSettings.Get(group='profile', key='legend')
+        
+        # zooming disabled
+        self.zoom = False
+        # draging disabled
+        self.drag = False 
 
-        self.enablelegend = True # enable legend display
-        self.legendfontsize = 10 # legend font size
+        # vertical and horizontal scrollbars
+        self.client.SetShowScrollbars(True)
 
-        self.enablegrid = True # enable grid display
-        self.gridcolor = wx.Colour(200,200,200) # grid color
-
-        self.xtype = 'auto' # x axis format
-        self.ytype = 'auto' # y axis format
-        self.xmin = 0 # x axis min for custom axis range
-        self.xmax = 0 # x axis max for custom axis range
-        self.ymin = 0 # y axis min for custom axis range
-        self.ymax = 0 # y axis max for custom axis range
-        self.xaxis = None # x axis range tuple
-        self.yaxis = None # y axis range tuple
-        self.xlog = self.ylog = False
-
-        self.zoom = False # zooming disabled
-        self.drag = False # draging disabled
-
-        self.client.SetShowScrollbars(True) # vertical and horizontal scrollbars
-        self.client.setLogScale((False,False)) # x and y axis set to normal (non-log)
-        self.client.SetXSpec(self.xtype)
-        self.client.SetYSpec(self.ytype)
+        # x and y axis set to normal (non-log)
+        self.client.setLogScale((False, False)) 
+        self.client.SetXSpec(self.properties['x-axis']['type'])
+        self.client.SetYSpec(self.properties['y-axis']['type'])
 
         #
         # Bind various events
         #
         self.Bind(wx.EVT_CLOSE, self.OnCloseWindow)
 
-    def DrawTransect(self, event):
+    def OnDrawTransect(self, event):
         """
         Draws transect to profile in map display
         """
@@ -203,131 +203,114 @@ class ProfileFrame(wx.Frame):
         self.mapwin.polypen = wx.Pen(colour='dark green', width=2, style=wx.SHORT_DASH)
         self.mapwin.SetCursor(self.Parent.cursors["cross"])
 
-    def SelectRaster(self, event):
+    def OnSelectRaster(self, event):
         """
-        Select raster map to profile (i.e., to get distance,value data).
+        Select raster map(s) to profile
+        """
+        dlg = SetRasterDialog(parent=self)
+
+        if dlg.ShowModal() == wx.ID_OK:
+            for r in self.raster.keys():
+                self.raster[r]['name'] = dlg.raster[r]['name']
+
+            # plot profile
+            self.OnCreateProfile(event=None)
+
+        dlg.Destroy()
+
+    def SetRaster(self):
+        """
         Create coordinate string for profiling. Create segment list for
         transect segment markers.
         """
 
+        #
         # create list of coordinate points for r.profile
+        #
         dist = 0
         cumdist = 0
         self.coordstr = ''
-        units1 = ''
-        units2 = ''
-        units3 = ''
         lasteast = lastnorth = None
+
         if len(self.mapwin.polycoords) > 0:
             for point in self.mapwin.polycoords:
                 # build string of coordinate points for r.profile
                 if self.coordstr == '':
-                    self.coordstr = '%d,%d' % (point[0],point[1])
+                    self.coordstr = '%d,%d' % (point[0], point[1])
                 else:
-                    self.coordstr = '%s,%d,%d' % (self.coordstr,point[0],point[1])
+                    self.coordstr = '%s,%d,%d' % (self.coordstr, point[0], point[1])
 
         else:
-            dlg = wx.MessageDialog(self, 'You must draw a transect to profile in the map display window',
-                               'Nothing to profile', wx.OK | wx.ICON_INFORMATION)
-            dlg.ShowModal()
-            dlg.Destroy()
+            wx.MessageBox(parent=self,
+                          message=_('You must draw a transect to profile in the map display window.'),
+                          caption=_('Nothing to profile'),
+                          style=wx.OK | wx.ICON_INFORMATION | wx.CENTRE)
             return
 
-        dlg = SetRaster(self, wx.ID_ANY, "Select raster to profile",
-                          pos=wx.DefaultPosition, size=wx.DefaultSize,
-                          style=wx.DEFAULT_DIALOG_STYLE)
-
-        if dlg.ShowModal() == wx.ID_OK:
-            self.rast1 = dlg.rast1
-            self.rast2 = dlg.rast2
-            self.rast3 = dlg.rast3
-
-        elif dlg.ShowModal() == wx.ID_CANCEL:
-            dlg.Destroy()
+        if self.raster[0]['name'] == '':
             return
-
-        self.datalist1 = self.CreateDatalist(self.rast1, self.coordstr)
-        self.plegend1 = ' Profile of %s' % self.rast1
 
         # set default title and legend text
-        self.ptitle = 'Profile of %s' % self.rast1
+        self.ptitle = _('Profile of')
 
-        # set self.ylabel to match units if they exist
-        cmdlist = ['r.info', 'map=%s' % self.rast1, '-u', '--quiet']
-        p = gcmd.Command(cmdlist)
-        try:
-            units1 = p.module_stdout.read().strip().split('=')[1]
-        except:
-            pass
+        #
+        # create datalist for each raster map
+        #
+        for r in self.raster.itervalues():
+            if r['name'] == '':
+                continue
+            r['datalist'] = self.CreateDatalist(r['name'], self.coordstr)
+            r['plegend'] = _(' Profile of %s') % r['name']
 
-        if units1 == '': units1 = 'Raster values'
-        if units1 != 'Raster values':
-            self.ylabel = units1
 
-        if self.rast2 == '' and self.rast3 != '':
-            self.rast2 = self.rast3
-            self.rast3 = ''
+            p = gcmd.Command(['r.info',
+                              'map=%s' % self.raster[0]['name'],
+                              '-u',
+                              '--quiet'])
+            r['units'] = p.ReadStdOutput()[0].split('=')[1]
 
-        if self.rast2 != '':
-            self.datalist2 = self.CreateDatalist(self.rast2, self.coordstr)
-            cmdlist = ['r.info', 'map=%s' % self.rast2, '-u', '--quiet']
-            p = gcmd.Command(cmdlist)
-            try:
-                units2 = p.module_stdout.read().strip().split('=')[1]
-            except:
-                pass
+            # update title
+            self.ptitle += ' %s and' % r['name']
 
-            if units2 == '': units2 = 'Raster values'
+        self.ptitle = self.ptitle.rstrip('and')
+        
+        #
+        # set ylabel to match units if they exist
+        #
+        self.ylabel = ''
+        i = 0
+        for r in self.raster.itervalues():
+            if r['name'] == '':
+                continue
+            if r['units'] != '':
+                self.ylabel = '%s (%d),' % (r['units'], i)
+            i += 1
+        if self.ylabel == '':
+            self.ylabel = _('Raster values')
+        else:
+            self.ylabel = self.ylabel.rstrip(',')
 
-            self.ptitle += ' and %s' % self.rast2
-            self.plegend2 = 'Profile of %s' % self.rast2
-
-            if units1 == 'Raster values' and units2 == 'Raster values':
-                self.ylabel = 'Raster values'
-            else:
-                self.ylabel = '%s (1), %s (2)' % (units1,units2)
-
-        if self.rast3 != '':
-            self.datalist3 = self.CreateDatalist(self.rast3, self.coordstr)
-            cmdlist = ['r.info', 'map=%s' % self.rast3, '-u', '--quiet']
-            p = gcmd.Command(cmdlist)
-            try:
-                units3 = p.module_stdout.read().strip().split('=')[1]
-            except:
-                units3 = 'Raster values'
-
-            self.ptitle += ', %s, and %s' % (self.rast2,self.rast3)
-            self.plegend2 = 'Profile of %s' % self.rast2
-            self.plegend3 = 'Profile of %s' % self.rast3
-
-            if units1 == 'Raster values' and units2 == 'Raster values' and units3 == 'Raster values':
-                self.ylabel = 'Raster values'
-            else:
-                self.ylabel = '%s (1), %s (2), %s (3)' % (units1,units2,units3)
-
+        #
         # create list of coordinates for transect segment markers
-        if len(self.mapwin.polycoords) > 0 and self.rast1 != '':
+        #
+        if len(self.mapwin.polycoords) > 0:
             for point in self.mapwin.polycoords:
-
                 # get value of raster cell at coordinate point
-                try:
-                    cmdlist = ['r.what', 'input=%s' % self.rast1, 'east_north=%d,%d' % (point[0],point[1])]
-                    p = gcmd.Command(cmdlist)
-                    if p.returncode == 0:
-                        outlist = p.ReadStdOutput()
-                        val = outlist[0].split('|')[3]
+                p = gcmd.Command(['r.what',
+                                  'input=%s' % self.raster[0]['name'],
+                                  'east_north=%d,%d' % (point[0],point[1])])
+                outlist = p.ReadStdOutput()
+                val = outlist[0].split('|')[3]
+                
+                # calculate distance between coordinate points
+                if lasteast and lastnorth:
+                    dist = math.sqrt(math.pow((lasteast-point[0]),2) + math.pow((lastnorth-point[1]),2))
+                cumdist += dist
 
-                        # calculate distance between coordinate points
-                        if lasteast and lastnorth:
-                             dist = math.sqrt(math.pow((lasteast-point[0]),2) + math.pow((lastnorth-point[1]),2))
-                        cumdist += dist
-
-                        # build a list of distance,value pairs for each segment of transect
-                        self.seglist.append((cumdist,val))
-                        lasteast = point[0]
-                        lastnorth = point[1]
-                except:
-                    pass
+                # build a list of distance,value pairs for each segment of transect
+                self.seglist.append((cumdist,val))
+                lasteast = point[0]
+                lastnorth = point[1]
 
             # delete first and last segment point
             try:
@@ -340,47 +323,54 @@ class ProfileFrame(wx.Frame):
         """
         Set plot and text options
         """
-        self.client.SetFont(self.font)
-        self.client.SetFontSizeTitle(self.titlefontsize)
-        self.client.SetFontSizeAxis(self.axisfontsize)
+        self.client.SetFont(self.properties['font']['wxfont'])
+        self.client.SetFontSizeTitle(self.properties['font']['titleSize'])
+        self.client.SetFontSizeAxis(self.properties['font']['axisSize'])
 
         self.client.SetEnableZoom(self.zoom)
         self.client.SetEnableDrag(self.drag)
-        if self.xtype == 'custom':
+        
+        if self.properties['x-axis']['type'] == 'custom':
             self.client.SetXSpec('min')
         else:
-            self.client.SetXSpec(self.xtype)
+            self.client.SetXSpec(self.properties['x-axis']['type'])
 
-        if self.ytype == 'custom':
+        if self.properties['y-axis']['type'] == 'custom':
             self.client.SetYSpec('min')
         else:
-            self.client.SetYSpec(self.ytype)
+            self.client.SetYSpec(self.properties['y-axis']['type'])
 
-        if self.xtype == 'custom' and self.xmin != self.xmax:
-            self.xaxis = (self.xmin,self.xmax)
+        if self.properties['x-axis']['type'] == 'custom' and \
+               self.properties['x-axis']['min'] != self.properties['x-axis']['max']:
+            self.properties['x-axis']['axis'] = (self.properties['x-axis']['min'],
+                                                 self.properties['x-axis']['max'])
         else:
-            self.xaxis = None
+            self.properties['x-axis']['axis'] = None
 
-        if self.ytype == 'custom' and self.ymin != self.ymax:
-            self.yaxis = (self.ymin,self.ymax)
+        if self.properties['y-axis']['type'] == 'custom' and \
+               self.properties['y-axis']['min'] != self.properties['y-axis']['max']:
+            self.properties['y-axis']['axis'] = (self.properties['y-axis']['min'],
+                                                 self.properties['y-axis']['max'])
         else:
-            self.yaxis = None
+            self.properties['y-axis']['axis'] = None
 
-        self.client.SetEnableGrid(self.enablegrid)
-        self.client.SetGridColour(self.gridcolor)
+        self.client.SetEnableGrid(self.properties['grid']['enabled'])
+        self.client.SetGridColour(self.properties['grid']['color'])
 
-        self.client.SetFontSizeLegend(self.legendfontsize)
-        self.client.SetEnableLegend(self.enablelegend)
+        self.client.SetFontSizeLegend(self.properties['font']['legendSize'])
+        self.client.SetEnableLegend(self.properties['legend']['enabled'])
 
-        if self.xlog == True:
-            self.xaxis = None
+        if self.properties['x-axis']['log'] == True:
+            self.properties['x-axis']['axis'] = None
             self.client.SetXSpec('min')
-        if self.ylog == True:
-            self.yaxis = None
+        if self.properties['y-axis']['log'] == True:
+            self.properties['y-axis']['axis'] = None
             self.client.SetYSpec('min')
-        self.client.setLogScale((self.xlog,self.ylog))
+            
+        self.client.setLogScale((self.properties['x-axis']['log'],
+                                 self.properties['y-axis']['log']))
 
-#        self.client.SetPointLabelFunc(self.DrawPointLabel())
+        # self.client.SetPointLabelFunc(self.DrawPointLabel())
 
     def CreateDatalist(self, raster, coords):
         """
@@ -388,24 +378,22 @@ class ProfileFrame(wx.Frame):
         """
         datalist = []
         try:
-#            cmdlist = ['r.profile', 'input=%s' % raster, 'profile=%s' % coords, 'null=nan', '--quiet']
-#            p = gcmd.Command(cmdlist, wait=False)
-#            output = p.module_stdout.read().strip().split('\n')
-#            if p.returncode == 0:
-#                for outline in output:
-#                    dist,elev = outline.split(' ')
-#                    datalist.append((dist,elev))
-
-            output = os.popen('r.profile input=%s profile=%s null=nan --quiet' % (raster,coords), "r").read().strip().split('\n')
-            for outline in output:
-                dist,elev = outline.split(' ')
+            cmdlist = ['r.profile',
+                       'input=%s' % raster,
+                       'profile=%s' % coords,
+                       'null=nan',
+                       '--quiet']
+            p = gcmd.Command(cmdlist)
+            for outline in p.ReadStdOutput():
+                dist, elev = outline.split(' ')
                 datalist.append((dist,elev))
 
             return datalist
-        except:
+        except gcmd.CmdError, e:
+            print e
             return None
 
-    def CreateProfile(self, event):
+    def OnCreateProfile(self, event):
         """
         Main routine for creating a profile. Uses r.profile to create a list
         of distance,cell value pairs. This is passed to plot to create a
@@ -413,17 +401,21 @@ class ProfileFrame(wx.Frame):
         segments, these are drawn as points. Profile transect is drawn, using
         methods in mapdisp.py
         """
-        if self.rast1 == '':
-            dlg = wx.MessageDialog(self, 'You must select at least one raster map to profile',
-                               'Nothing to profile', wx.OK | wx.ICON_INFORMATION)
+        if self.raster[0]['name'] == '':
+            dlg = wx.MessageDialog(parent=self,
+                                   message=_('You must draw a transect to profile in the map display window.'),
+                                   caption=_('Nothing to profile'),
+                                   style=wx.OK | wx.ICON_INFORMATION | wx.CENTRE)
             dlg.ShowModal()
             dlg.Destroy()
             return
 
-        self.mapwin.SetCursor(self.Parent.cursors["default"])
-        self.SetCursor(self.Parent.cursors["default"])
+        self.mapwin.SetCursor(self.parent.cursors["default"])
+        self.SetCursor(self.parent.cursors["default"])
         self.SetGraphStyle()
 
+        self.SetRaster()
+            
         self.DrawPlot()
 
         # reset transect
@@ -439,32 +431,19 @@ class ProfileFrame(wx.Frame):
 
         # graph the distance, value pairs for the transect
         self.plotlist = []
-        if len(self.datalist1) > 0:
-            self.pline1 = plot.PolyLine(self.datalist1,
-                                        colour=self.pcolor1,
-                                        width=self.pwidth1,
-                                        style=self.pstyle1,
-                                        legend=' '+self.plegend1)
+        for r in self.raster.itervalues():
+            if len(r['datalist']) > 0:
+                col = wx.Color(r['pcolor'][0],
+                               r['pcolor'][1],
+                               r['pcolor'][2],
+                               r['pcolor'][3])
+                r['pline'] = plot.PolyLine(r['datalist'],
+                                           colour=col,
+                                           width=r['pwidth'],
+                                           style=r['pstyle'],
+                                           legend=' ' + r['plegend'])
 
-        self.plotlist.append(self.pline1)
-
-        if len(self.datalist2) > 0:
-            self.pline2 = plot.PolyLine(self.datalist2,
-                                        colour=self.pcolor2,
-                                        width=self.pwidth2,
-                                        style=self.pstyle2,
-                                        legend=' '+self.plegend2)
-            self.plotlist.append(self.pline2)
-
-
-
-        if len(self.datalist3) > 0:
-            self.pline3 = plot.PolyLine(self.datalist3,
-                                        colour=self.pcolor3,
-                                        width=self.pwidth3,
-                                        style=self.pstyle3,
-                                        legend=' '+self.plegend3)
-            self.plotlist.append(self.pline3)
+                self.plotlist.append(r['pline'])
 
         if len(self.seglist) > 0 :
             self.ppoints = plot.PolyMarker(self.seglist, legend=' '+self.ptlegend,
@@ -474,19 +453,23 @@ class ProfileFrame(wx.Frame):
                                            marker=self.pttype)
             self.plotlist.append(self.ppoints)
 
-        self.profile = plot.PlotGraphics(self.plotlist, self.ptitle, self.xlabel, self.ylabel)
+        self.profile = plot.PlotGraphics(self.plotlist,
+                                         self.ptitle,
+                                         self.xlabel,
+                                         self.ylabel)
 
-        if self.xtype == 'custom':
+        if self.properties['x-axis']['type'] == 'custom':
             self.client.SetXSpec('min')
         else:
-            self.client.SetXSpec(self.xtype)
+            self.client.SetXSpec(self.properties['x-axis']['type'])
 
-        if self.ytype == 'custom':
+        if self.properties['y-axis']['type'] == 'custom':
             self.client.SetYSpec('min')
         else:
-            self.client.SetYSpec(self.ytype)
+            self.client.SetYSpec(self.properties['y-axis']['type'])
 
-        self.client.Draw(self.profile, self.xaxis, self.yaxis)
+        self.client.Draw(self.profile, self.properties['x-axis']['axis'],
+                         self.properties['y-axis']['axis'])
 
     def OnZoom(self, event):
         """
@@ -532,20 +515,18 @@ class ProfileFrame(wx.Frame):
         self.mapwin.ClearLines(self.mapwin.pdcTmp)
         self.mapwin.polycoords = []
         self.mapwin.Refresh()
-#        try:
-#            self.mapwin.pdc.ClearId(self.mapwin.lineid)
-#            self.mapwin.pdc.ClearId(self.mapwin.plineid)
-#            self.mapwin.Refresh()
-#        except:
-#            pass
-
+        #        try:
+        #            self.mapwin.pdc.ClearId(self.mapwin.lineid)
+        #            self.mapwin.pdc.ClearId(self.mapwin.plineid)
+        #            self.mapwin.Refresh()
+        #        except:
+        #            pass
 
     def SaveToFile(self, event):
         """
         Save profile to graphics file
         """
         self.client.SaveFile()
-
 
     def DrawPointLabel(self, dc, mDataDict):
         """This is the fuction that defines how the pointLabels are plotted
@@ -629,27 +610,24 @@ class ProfileFrame(wx.Frame):
         Set custom text values for profile
         title and axis labels.
         """
-        dlg = TextDialog(self, -1, 'Profile text settings')
+        dlg = TextDialog(parent=self, id=wx.ID_ANY, title=_('Profile text settings'))
 
         if dlg.ShowModal() == wx.ID_OK:
             self.ptitle = dlg.ptitle
             self.xlabel = dlg.xlabel
             self.ylabel = dlg.ylabel
-            self.font = dlg.font
-            self.titlefontsize = dlg.titlefontsize
-            self.axisfontsize = dlg.axisfontsize
-            self.client.SetFont(dlg.font)
-            self.client.SetFontSizeTitle(self.titlefontsize)
-            self.client.SetFontSizeAxis(self.axisfontsize)
+            dlg.UpdateSettings()
 
-            try:
-                self.profile.setTitle(dlg.ptitle)
-                self.profile.setXLabel(dlg.xlabel)
-                self.profile.setYLabel(dlg.ylabel)
-            except:
-                pass
+            self.client.SetFont(self.properties['font']['wxfont'])
+            self.client.SetFontSizeTitle(self.properties['font']['titleSize'])
+            self.client.SetFontSizeAxis(self.properties['font']['axisSize'])
+
+            self.profile.setTitle(dlg.ptitle)
+            self.profile.setXLabel(dlg.xlabel)
+            self.profile.setYLabel(dlg.ylabel)
 
         dlg.Destroy()
+
         self.OnRedraw(event=None)
 
     def POptions(self, event):
@@ -658,47 +636,11 @@ class ProfileFrame(wx.Frame):
         marker size, color, fill, and style; grid and legend options.
         Calls OptDialog class.
         """
-        dlg = OptDialog(self, -1, 'Profile settings')
+        dlg = OptDialog(parent=self, id=wx.ID_ANY, title=_('Profile settings'))
 
         if dlg.ShowModal() == wx.ID_OK:
-            self.pcolor1 = dlg.pcolor1
-            self.pwidth1 = dlg.pwidth1
-            self.pstyle1 = dlg.pstyle1
-            self.plegend1 = dlg.plegend1
+            dlg.UpdateSettings()
 
-            self.pcolor2 = dlg.pcolor2
-            self.pwidth2 = dlg.pwidth2
-            self.pstyle2 = dlg.pstyle2
-            self.plegend2 = dlg.plegend2
-
-            self.pcolor3 = dlg.pcolor3
-            self.pwidth3 = dlg.pwidth3
-            self.pstyle3 = dlg.pstyle3
-            self.plegend3 = dlg.plegend3
-
-            self.ptcolor = dlg.ptcolor
-            self.ptfill = dlg.ptfill
-            self.ptsize = dlg.ptsize
-            self.pttype = dlg.pttype
-            self.ptlegend = dlg.ptlegend
-
-            self.xtype = dlg.xtype
-            self.ytype = dlg.ytype
-            self.xmin = dlg.xmin
-            self.xmax = dlg.xmax
-            self.xlog = dlg.xlog
-            self.ymin = dlg.ymin
-            self.ymax = dlg.ymax
-            self.ylog = dlg.ylog
-
-            self.gridcolor = dlg.gridcolor
-            self.enablegrid = dlg.enablegrid
-            self.enablelegend = dlg.enablelegend
-            self.legendfontsize = dlg.legendfontsize
-
-            self.Update()
-        else:
-            pass
         dlg.Destroy()
 
     def PrintMenu(self, event):
@@ -750,70 +692,66 @@ class ProfileFrame(wx.Frame):
 
         self.Destroy()
 
-class SetRaster(wx.Dialog):
-    def __init__(self, parent, id, title="", pos=wx.DefaultPosition, size=wx.DefaultSize,
-            style=wx.DEFAULT_DIALOG_STYLE):
-        wx.Dialog.__init__(self, parent, id, title, pos, size, style)
+class SetRasterDialog(wx.Dialog):
+    def __init__(self, parent, id=wx.ID_ANY, title=_("Select raster map to profile"),
+                 pos=wx.DefaultPosition, size=wx.DefaultSize,
+                 style=wx.DEFAULT_DIALOG_STYLE):
         """
         Dialog to select raster maps to profile.
         """
 
-        self.parent = parent
-        self.rast1 = self.parent.rast1
-        self.rast2 = self.parent.rast2
-        self.rast3 = self.parent.rast3
-        selection1 = selection2 = selection3 = None
-        self.datalist1 = self.datalist2 = self.datalist3 = []
+        wx.Dialog.__init__(self, parent, id, title, pos, size, style)
 
         self.parent = parent
-
         self.coordstr = self.parent.coordstr
+
         if self.coordstr == '':
-            dlg = wx.MessageDialog(self, 'You must draw a transect to profile in the map display window',
-                               'Nothing to profile', wx.OK | wx.ICON_INFORMATION)
+            dlg = wx.MessageDialog(parent=self,
+                                   message=_('You must draw a transect to profile in the map display window.'),
+                                   caption=_('Nothing to profile'),
+                                   style=wx.OK | wx.ICON_INFORMATION | wx.CENTRE)
             dlg.ShowModal()
             dlg.Destroy()
             self.Close(True)
             return
 
+        self.raster = { 0 : { 'name' : self.parent.raster[0]['name'],
+                              'id' : None },
+                        1 : { 'name' : self.parent.raster[1]['name'],
+                              'id' : None },
+                        2 : { 'name' : self.parent.raster[2]['name'],
+                              'id' : None }
+                        }
+
         sizer = wx.BoxSizer(wx.VERTICAL)
 
-        box = wx.BoxSizer(wx.HORIZONTAL)
-        label = wx.StaticText(self, -1, "Select raster 1 (required):")
-        box.Add(label, 0, wx.ALIGN_CENTRE|wx.ALL, 5)
-        selection1 = gselect.Select(self, id=wx.ID_ANY, size=(300,-1),type='cell')
-        try:
-            selection1.SetValue(self.rast1)
-        except:
-            pass
-        box.Add(selection1, 0, wx.ALIGN_CENTRE|wx.ALL, 5)
-        sizer.Add(box, 0, wx.GROW|wx.ALIGN_CENTER_VERTICAL|wx.ALL, 5)
+        box = wx.GridBagSizer (hgap=3, vgap=3)
+        
+        i = 0
+        for txt in [_("Select raster map 1 (required):"),
+                    _("Select raster map 2 (optional):"),
+                    _("Select raster map 3 (optional):")]:
+            label = wx.StaticText(parent=self, id=wx.ID_ANY, label=txt)
+            box.Add(item=label,
+                    flag=wx.ALIGN_CENTER_VERTICAL, pos=(i, 0))
+            
+            selection = gselect.Select(self, id=wx.ID_ANY,
+                                       size=globalvar.DIALOG_GSELECT_SIZE,
+                                       type='cell')
+            selection.SetValue(str(self.raster[i]['name']))
+            self.raster[i]['id'] = selection.GetChildren()[0].GetId()
+            selection.Bind(wx.EVT_TEXT, self.OnSelection)
+            
+            box.Add(item=selection, pos=(i, 1))
+            
+            i += 1 
+            
+        sizer.Add(item=box, proportion=0,
+                  flag=wx.ALL, border=10)
 
-        box = wx.BoxSizer(wx.HORIZONTAL)
-        label = wx.StaticText(self, -1, "Select raster 2 (optional):")
-        box.Add(label, 0, wx.ALIGN_CENTRE|wx.ALL, 5)
-        selection2 = gselect.Select(self, id=wx.ID_ANY, size=(300,-1),type='cell')
-        try:
-            selection2.SetValue(self.rast2)
-        except:
-            pass
-        box.Add(selection2, 0, wx.ALIGN_CENTRE|wx.ALL, 5)
-
-        sizer.Add(box, 0, wx.GROW|wx.ALIGN_CENTER_VERTICAL|wx.ALL, 5)
-
-        box = wx.BoxSizer(wx.HORIZONTAL)
-        label = wx.StaticText(self, -1, "Select raster 3 (optional):")
-        box.Add(label, 0, wx.ALIGN_CENTRE|wx.ALL, 5)
-        selection3 = gselect.Select(self, id=wx.ID_ANY, size=(300,-1),type='cell')
-        try:
-            selection3.SetValue(self.rast3)
-        except:
-            pass
-        box.Add(selection3, 0, wx.ALIGN_CENTRE|wx.ALL, 5)
-        sizer.Add(box, 0, wx.GROW|wx.ALIGN_CENTER_VERTICAL|wx.ALL, 5)
-
-        line = wx.StaticLine(self, -1, size=(20,-1), style=wx.LI_HORIZONTAL)
-        sizer.Add(line, 0, wx.EXPAND|wx.RIGHT|wx.TOP, 5)
+        line = wx.StaticLine(parent=self, id=wx.ID_ANY, size=(20, -1), style=wx.LI_HORIZONTAL)
+        sizer.Add(item=line, proportion=0,
+                  flag=wx.GROW|wx.ALIGN_CENTER_VERTICAL|wx.LEFT|wx.RIGHT, border=5)
 
         btnsizer = wx.StdDialogButtonSizer()
 
@@ -825,164 +763,184 @@ class SetRaster(wx.Dialog):
         btnsizer.AddButton(btn)
         btnsizer.Realize()
 
-        sizer.Add(btnsizer, 0, wx.ALIGN_CENTER_VERTICAL|wx.ALL, 5)
+        sizer.Add(item=btnsizer, proportion=0, flag=wx.ALIGN_RIGHT | wx.ALL, border=5)
 
         self.SetSizer(sizer)
         sizer.Fit(self)
 
-        selection1.Bind(wx.EVT_TEXT, self.OnSelection1)
-        selection2.Bind(wx.EVT_TEXT, self.OnSelection2)
-        selection3.Bind(wx.EVT_TEXT, self.OnSelection3)
-
-    def OnSelection1(self, event):
-        self.rast1 = event.GetString()
-
-    def OnSelection2(self, event):
-        self.rast2 = event.GetString()
-
-    def OnSelection3(self, event):
-        self.rast3 = event.GetString()
+    def OnSelection(self, event):
+        id = event.GetId()
+        for r in self.raster.itervalues():
+            if r['id'] == id:
+                r['name'] = event.GetString()
+                break
 
 class TextDialog(wx.Dialog):
     def __init__(self, parent, id, title, pos=wx.DefaultPosition, size=wx.DefaultSize,
-            style=wx.DEFAULT_DIALOG_STYLE):
+                 style=wx.DEFAULT_DIALOG_STYLE):
         wx.Dialog.__init__(self, parent, id, title, pos, size, style)
         """
         Dialog to set profile text options: font, title
         and font size, axis labels and font size
         """
+        #
         # initialize variables
-
+        #
         # combo box entry lists
-        self.ffamilydict = {'default':wx.FONTFAMILY_DEFAULT,
-                       'decorative':wx.FONTFAMILY_DECORATIVE,
-                       'roman':wx.FONTFAMILY_ROMAN,
-                       'script':wx.FONTFAMILY_SCRIPT,
-                       'swiss':wx.FONTFAMILY_SWISS,
-                       'modern':wx.FONTFAMILY_MODERN,
-                       'teletype':wx.FONTFAMILY_TELETYPE}
+        self.ffamilydict = { 'default' : wx.FONTFAMILY_DEFAULT,
+                             'decorative' : wx.FONTFAMILY_DECORATIVE,
+                             'roman' : wx.FONTFAMILY_ROMAN,
+                             'script' : wx.FONTFAMILY_SCRIPT,
+                             'swiss' : wx.FONTFAMILY_SWISS,
+                             'modern' : wx.FONTFAMILY_MODERN,
+                             'teletype' : wx.FONTFAMILY_TELETYPE }
 
-        self.fstyledict = {'normal':wx.FONTSTYLE_NORMAL,
-                      'slant':wx.FONTSTYLE_SLANT,
-                      'italic':wx.FONTSTYLE_ITALIC}
+        self.fstyledict = { 'normal' : wx.FONTSTYLE_NORMAL,
+                            'slant' : wx.FONTSTYLE_SLANT,
+                            'italic' : wx.FONTSTYLE_ITALIC }
 
-        self.fwtdict = {'normal':wx.FONTWEIGHT_NORMAL,
-                   'light':wx.FONTWEIGHT_LIGHT,
-                   'bold':wx.FONTWEIGHT_BOLD}
+        self.fwtdict = { 'normal' : wx.FONTWEIGHT_NORMAL,
+                         'light' : wx.FONTWEIGHT_LIGHT,
+                         'bold' : wx.FONTWEIGHT_BOLD }
 
         self.parent = parent
+
         self.ptitle = self.parent.ptitle
-        self.titlefontsize = self.parent.titlefontsize
         self.xlabel = self.parent.xlabel
         self.ylabel = self.parent.ylabel
-        self.axisfontsize = self.parent.axisfontsize
-        self.font = self.parent.font
-        self.fontfamily = self.parent.font.GetFamily()
-        for item in self.ffamilydict.items():
-            if self.fontfamily == item[1]:
-                ffamilykey = item[0]
-            else:
-                ffamilykey = 'swiss'
-        self.fontstyle = self.parent.font.GetStyle()
-        for item in self.fstyledict.items():
-            if self.fontstyle == item[1]:
-                fstylekey = item[0]
-            else:
-                fstylekey = 'normal'
-        self.fontweight = self.parent.font.GetWeight()
-        for item in self.fwtdict.items():
-            if self.fontweight == item[1]:
-                fwtkey = item[0]
-            else:
-                fwtkey = 'normal'
 
+        self.properties = self.parent.properties # read-only
+        
+        # font size
+        self.fontfamily = self.properties['font']['wxfont'].GetFamily()
+        self.fontstyle = self.properties['font']['wxfont'].GetStyle()
+        self.fontweight = self.properties['font']['wxfont'].GetWeight()
+
+        self._do_layout()
+        
+    def _do_layout(self):
+        """Do layout"""
         # dialog layout
         sizer = wx.BoxSizer(wx.VERTICAL)
 
-        box = wx.BoxSizer(wx.HORIZONTAL)
-        label = wx.StaticText(self, -1, "Profile title:")
-        box.Add(label, 0, wx.ALIGN_CENTER_VERTICAL|wx.ALIGN_RIGHT|wx.RIGHT|wx.LEFT, 5)
-        self.ptitleentry = wx.TextCtrl(self, -1, "", size=(200,-1))
-        self.ptitleentry.SetFont(self.font)
+        box = wx.StaticBox(parent=self, id=wx.ID_ANY,
+                           label=" %s " % _("Text settings"))
+        boxSizer = wx.StaticBoxSizer(box, wx.VERTICAL)
+        gridSizer = wx.GridBagSizer(vgap=5, hgap=5)
+
+        #
+        # profile title
+        #
+        label = wx.StaticText(parent=self, id=wx.ID_ANY, label=_("Profile title:"))
+        gridSizer.Add(item=label, flag=wx.ALIGN_CENTER_VERTICAL, pos=(0, 0))
+        self.ptitleentry = wx.TextCtrl(parent=self, id=wx.ID_ANY, value="", size=(200,-1))
+        # self.ptitleentry.SetFont(self.font)
         self.ptitleentry.SetValue(self.ptitle)
-        box.Add(self.ptitleentry, 0, wx.ALIGN_CENTER_VERTICAL|wx.ALIGN_RIGHT|wx.RIGHT|wx.LEFT, 5)
-        sizer.Add(box, 0, wx.ALIGN_CENTER_VERTICAL|wx.ALIGN_RIGHT|wx.ALL, 5)
+        gridSizer.Add(item=self.ptitleentry, pos=(0, 1))
 
-        box = wx.BoxSizer(wx.HORIZONTAL)
-        tlabel = wx.StaticText(self, -1, "Title font size (pts):")
-        box.Add(tlabel, 0, wx.ALIGN_CENTER_VERTICAL|wx.ALIGN_RIGHT|wx.RIGHT|wx.LEFT, 5)
-        self.ptitlesize = wx.SpinCtrl(self, id=wx.ID_ANY, value="", pos=(30, 50),
-                        size=(50,-1), style=wx.SP_ARROW_KEYS)
+        #
+        # title font
+        #
+        tlabel = wx.StaticText(parent=self, id=wx.ID_ANY, label=_("Title font size (pts):"))
+        gridSizer.Add(item=tlabel, flag=wx.ALIGN_CENTER_VERTICAL, pos=(1, 0))
+        self.ptitlesize = wx.SpinCtrl(parent=self, id=wx.ID_ANY, value="", pos=(30, 50),
+                                      size=(50,-1), style=wx.SP_ARROW_KEYS)
         self.ptitlesize.SetRange(5,100)
-        self.ptitlesize.SetValue(int(self.titlefontsize))
-        box.Add(self.ptitlesize, 0, wx.ALIGN_CENTER_VERTICAL|wx.ALIGN_RIGHT|wx.RIGHT|wx.LEFT, 5)
-        sizer.Add(box, 0, wx.ALIGN_CENTER_VERTICAL|wx.ALIGN_RIGHT|wx.ALL, 5)
+        self.ptitlesize.SetValue(int(self.properties['font']['titleSize']))
+        gridSizer.Add(item=self.ptitlesize, pos=(1, 1))
 
-        box = wx.BoxSizer(wx.HORIZONTAL)
-        label = wx.StaticText(self, -1, "X-axis label:")
-        box.Add(label, 0, wx.wx.ALIGN_CENTER_VERTICAL|wx.ALIGN_RIGHT|wx.RIGHT|wx.LEFT, 5)
-        self.xlabelentry = wx.TextCtrl(self, -1, "", size=(200,-1))
-        self.xlabelentry.SetFont(self.font)
+        #
+        # x-axis label
+        #
+        label = wx.StaticText(parent=self, id=wx.ID_ANY, label=("X-axis label:"))
+        gridSizer.Add(item=label, flag=wx.ALIGN_CENTER_VERTICAL, pos=(2, 0))
+        self.xlabelentry = wx.TextCtrl(parent=self, id=wx.ID_ANY, value="", size=(200,-1))
+        # self.xlabelentry.SetFont(self.font)
         self.xlabelentry.SetValue(self.xlabel)
-        box.Add(self.xlabelentry, 0, wx.ALIGN_CENTER_VERTICAL|wx.ALIGN_RIGHT|wx.RIGHT|wx.LEFT, 5)
-        sizer.Add(box, 0, wx.ALIGN_CENTER_VERTICAL|wx.ALIGN_RIGHT|wx.ALL, 5)
+        gridSizer.Add(item=self.xlabelentry, pos=(2, 1))
 
-        box = wx.BoxSizer(wx.HORIZONTAL)
-        label = wx.StaticText(self, -1, "Y-axis label:")
-        box.Add(label, 0, wx.wx.ALIGN_CENTER_VERTICAL|wx.ALIGN_RIGHT|wx.RIGHT|wx.LEFT, 5)
-        self.ylabelentry = wx.TextCtrl(self, -1, "", size=(200,-1))
-        self.ylabelentry.SetFont(self.font)
+        #
+        # y-axis label
+        #
+        label = wx.StaticText(parent=self, id=wx.ID_ANY, label=_("Y-axis label:"))
+        gridSizer.Add(item=label, flag=wx.ALIGN_CENTER_VERTICAL, pos=(3, 0))
+        self.ylabelentry = wx.TextCtrl(parent=self, id=wx.ID_ANY, value="", size=(200,-1))
+        # self.ylabelentry.SetFont(self.font)
         self.ylabelentry.SetValue(self.ylabel)
-        box.Add(self.ylabelentry, 0, wx.ALIGN_CENTER_VERTICAL|wx.ALIGN_RIGHT|wx.RIGHT|wx.LEFT, 5)
-        sizer.Add(box, 0, wx.ALIGN_CENTER_VERTICAL|wx.ALIGN_RIGHT|wx.ALL, 5)
+        gridSizer.Add(item=self.ylabelentry, pos=(3, 1))
 
-        box = wx.BoxSizer(wx.HORIZONTAL)
-        llabel = wx.StaticText(self, -1, "Label font size (pts):")
-        box.Add(llabel, 0, wx.ALIGN_CENTER_VERTICAL|wx.ALIGN_RIGHT|wx.RIGHT|wx.LEFT, 5)
-        self.axislabelsize = wx.SpinCtrl(self, id=wx.ID_ANY, value="", pos=(30, 50),
-                        size=(50,-1), style=wx.SP_ARROW_KEYS)
-        self.axislabelsize.SetRange(5,100)
-        self.axislabelsize.SetValue(int(self.axisfontsize))
-        box.Add(self.axislabelsize, 0, wx.ALIGN_CENTER_VERTICAL|wx.ALIGN_RIGHT|wx.RIGHT|wx.LEFT, 5)
-        sizer.Add(box, 0, wx.ALIGN_CENTER_VERTICAL|wx.ALIGN_RIGHT|wx.ALL, 5)
+        #
+        # font size
+        #
+        llabel = wx.StaticText(parent=self, id=wx.ID_ANY, label=_("Label font size (pts):"))
+        gridSizer.Add(item=llabel, flag=wx.ALIGN_CENTER_VERTICAL, pos=(4, 0))
+        self.axislabelsize = wx.SpinCtrl(parent=self, id=wx.ID_ANY, value="", pos=(30, 50),
+                                         size=(50, -1), style=wx.SP_ARROW_KEYS)
+        self.axislabelsize.SetRange(5, 100) 
+        self.axislabelsize.SetValue(int(self.properties['font']['axisSize']))
+        gridSizer.Add(item=self.axislabelsize, pos=(4,1))
 
-        box = wx.BoxSizer(wx.HORIZONTAL)
-        label = wx.StaticText(self, -1, "Font for title, axis labels, and legend")
-        box.Add(label, 0, wx.ALIGN_CENTRE|wx.RIGHT|wx.LEFT, 5)
-        sizer.Add(box, 0, wx.ALIGN_CENTER|wx.VERTICAL, 5)
+        boxSizer.Add(item=gridSizer)
+        sizer.Add(item=boxSizer, flag=wx.ALL | wx.EXPAND, border=3)
 
-        box = wx.BoxSizer(wx.HORIZONTAL)
-        label1 = wx.StaticText(self, -1, "Font family:")
-        box.Add(label1, 0, wx.ALIGN_CENTER_VERTICAL|wx.ALIGN_RIGHT|wx.RIGHT|wx.LEFT, 5)
-        ffamilycb = wx.ComboBox(
-            self, 500, ffamilykey, (90, 50),
-            (200, -1), self.ffamilydict.keys(), wx.CB_DROPDOWN #|wxTE_PROCESS_ENTER
-            )
-        box.Add(ffamilycb, 0, wx.ALIGN_CENTER_VERTICAL|wx.ALIGN_RIGHT|wx.RIGHT|wx.LEFT, 5)
-        sizer.Add(box, 0, wx.ALIGN_CENTER_VERTICAL|wx.ALIGN_RIGHT|wx.ALL, 2)
+        #
+        # font settings
+        #
+        box = wx.StaticBox(parent=self, id=wx.ID_ANY,
+                           label=" %s " % _("Font settings"))
+        boxSizer = wx.StaticBoxSizer(box, wx.VERTICAL)
+        gridSizer = wx.GridBagSizer(vgap=5, hgap=5)
+        gridSizer.AddGrowableCol(1)
 
-        box = wx.BoxSizer(wx.HORIZONTAL)
-        label2 = wx.StaticText(self, -1, " Style:")
-        box.Add(label2, 0, wx.ALIGN_CENTER_VERTICAL|wx.ALIGN_RIGHT|wx.RIGHT|wx.LEFT, 5)
-        fstylecb = wx.ComboBox(
-            self, 501, fstylekey, (90, 50),
-            (200, -1), self.fstyledict.keys(), wx.CB_DROPDOWN #|wxTE_PROCESS_ENTER
-            )
-        box.Add(fstylecb, 0, wx.ALIGN_CENTER_VERTICAL|wx.ALIGN_RIGHT|wx.RIGHT|wx.LEFT, 5)
-        sizer.Add(box, 0, wx.ALIGN_CENTER_VERTICAL|wx.ALIGN_RIGHT|wx.ALL, 2)
+        #
+        # font family
+        #
+        label1 = wx.StaticText(parent=self, id=wx.ID_ANY, label=_("Font family:"))
+        gridSizer.Add(item=label1, flag=wx.ALIGN_CENTER_VERTICAL, pos=(0, 0))
+        self.ffamilycb = wx.ComboBox(parent=self, id=wx.ID_ANY, size=(200, -1),
+                                choices=self.ffamilydict.keys(), style=wx.CB_DROPDOWN)
+        self.ffamilycb.SetStringSelection('swiss')
+        for item in self.ffamilydict.items():
+            if self.fontfamily == item[1]:
+                self.ffamilycb.SetStringSelection(item[0])
+                break
+        gridSizer.Add(item=self.ffamilycb, pos=(0, 1), flag=wx.ALIGN_RIGHT)
 
-        box = wx.BoxSizer(wx.HORIZONTAL)
-        label3 = wx.StaticText(self, -1, " Weight:")
-        box.Add(label3, 0, wx.ALIGN_CENTER_VERTICAL|wx.ALIGN_RIGHT|wx.RIGHT|wx.LEFT, 5)
-        fwtcb = wx.ComboBox(
-            self, 502, fwtkey, (90, 50),
-            (200, -1), self.fwtdict.keys(), wx.CB_DROPDOWN #|wxTE_PROCESS_ENTER
-            )
-        box.Add(fwtcb, 0, wx.ALIGN_CENTER_VERTICAL|wx.ALIGN_RIGHT|wx.RIGHT|wx.LEFT, 5)
-        sizer.Add(box, 0, wx.ALIGN_CENTER_VERTICAL|wx.ALIGN_RIGHT|wx.ALL, 2)
+        #
+        # font style
+        #
+        label = wx.StaticText(parent=self, id=wx.ID_ANY, label=_("Style:"))
+        gridSizer.Add(item=label, flag=wx.ALIGN_CENTER_VERTICAL, pos=(1, 0))
+        self.fstylecb = wx.ComboBox(parent=self, id=wx.ID_ANY, size=(200, -1),
+                                    choices=self.fstyledict.keys(), style=wx.CB_DROPDOWN)
+        self.fstylecb.SetStringSelection('normal')
+        for item in self.fstyledict.items():
+            if self.fontstyle == item[1]:
+                self.fstylecb.SetStringSelection(item[0])
+                break
+        gridSizer.Add(item=self.fstylecb, pos=(1, 1), flag=wx.ALIGN_RIGHT)
 
-        line = wx.StaticLine(self, -1, size=(20,-1), style=wx.LI_HORIZONTAL)
-        sizer.Add(line, 0, wx.EXPAND|wx.ALIGN_CENTER|wx.RIGHT|wx.TOP, 5)
+        #
+        # font weight
+        #
+        label = wx.StaticText(parent=self, id=wx.ID_ANY, label=_("Weight:"))
+        gridSizer.Add(item=label, flag=wx.ALIGN_CENTER_VERTICAL, pos=(2, 0))
+        self.fwtcb = wx.ComboBox(parent=self, size=(200, -1),
+                                 choices=self.fwtdict.keys(), style=wx.CB_DROPDOWN)
+        self.fwtcb.SetStringSelection('normal')
+        for item in self.fwtdict.items():
+            if self.fontweight == item[1]:
+                self.fwtcb.SetStringSelection(item[0])
+                break
+
+        gridSizer.Add(item=self.fwtcb, pos=(2, 1), flag=wx.ALIGN_RIGHT)
+                      
+        boxSizer.Add(item=gridSizer, flag=wx.EXPAND)
+        sizer.Add(item=boxSizer, flag=wx.LEFT | wx.RIGHT | wx.BOTTOM | wx.EXPAND, border=3)
+
+        line = wx.StaticLine(parent=self, id=wx.ID_ANY, size=(20, -1), style=wx.LI_HORIZONTAL)
+        sizer.Add(item=line, proportion=0,
+                  flag=wx.GROW|wx.ALIGN_CENTER_VERTICAL|wx.LEFT|wx.RIGHT, border=3)
 
         btnsizer = wx.StdDialogButtonSizer()
 
@@ -994,25 +952,17 @@ class TextDialog(wx.Dialog):
         btnsizer.AddButton(btn)
         btnsizer.Realize()
 
-        sizer.Add(btnsizer, 0, wx.ALIGN_CENTER_VERTICAL|wx.ALL, 5)
+        sizer.Add(item=btnsizer, proportion=0, flag=wx.ALIGN_RIGHT | wx.ALL, border=5)
 
-        self.SetSizer(sizer)
-        sizer.Fit(self)
-
+        #
+        # bindings
+        #
         self.ptitleentry.Bind(wx.EVT_TEXT, self.OnTitle)
         self.xlabelentry.Bind(wx.EVT_TEXT, self.OnXLabel)
         self.ylabelentry.Bind(wx.EVT_TEXT, self.OnYLabel)
-        self.ptitlesize.Bind(wx.EVT_TEXT, self.OnPtitlesize)
-        self.axislabelsize.Bind(wx.EVT_TEXT, self.OnAxislabelsize)
-        self.Bind(wx.EVT_COMBOBOX, self.OnFFamily, ffamilycb)
-        self.Bind(wx.EVT_COMBOBOX, self.OnFstyle, fstylecb)
-        self.Bind(wx.EVT_COMBOBOX, self.OnFWeight, fwtcb)
 
-    def OnPtitlesize(self, event):
-        self.titlefontsize = event.GetString()
-
-    def OnAxislabelsize(self, event):
-        self.axisfontsize = event.GetString()
+        self.SetSizer(sizer)
+        sizer.Fit(self)
 
     def OnTitle(self, event):
         self.ptitle = event.GetString()
@@ -1023,27 +973,17 @@ class TextDialog(wx.Dialog):
     def OnYLabel(self, event):
         self.ylabel = event.GetString()
 
-    def OnFFamily(self, event):
-        family = self.ffamilydict[event.GetString()]
-        self.font.SetFamily(family)
-        self.UpdateDialog()
+    def UpdateSettings(self):
+        self.properties['font']['titleSize'] = self.ptitlesize.GetValue()
+        self.properties['font']['axisSize'] = self.axislabelsize.GetValue()
 
-    def OnFstyle(self, event):
-        style = self.fstyledict[event.GetString()]
-        self.font.SetStyle(style)
-        self.UpdateDialog()
-
-    def OnFWeight(self, event):
-        weight = self.fwtdict[event.GetString()]
-        self.font.SetWeight(weight)
-        self.UpdateDialog()
-
-    def UpdateDialog(self):
-        self.ptitleentry.SetFont(self.font)
-        self.xlabelentry.SetFont(self.font)
-        self.ylabelentry.SetFont(self.font)
-        self.Layout()
-
+        family = self.ffamilydict[self.ffamilycb.GetStringSelection()]
+        self.properties['font']['wxfont'].SetFamily(family)
+        style = self.fstyledict[self.fstylecb.GetStringSelection()]
+        self.properties['font']['wxfont'].SetStyle(style)
+        weight = self.fwtdict[self.fwtcb.GetStringSelection()]
+        self.properties['font']['wxfont'].SetWeight(weight)
+        
 class OptDialog(wx.Dialog):
     def __init__(self, parent, id, title, pos=wx.DefaultPosition, size=wx.DefaultSize,
             style=wx.DEFAULT_DIALOG_STYLE):
@@ -1054,284 +994,280 @@ class OptDialog(wx.Dialog):
         """
         # init variables
 
-        self.pstyledict = {'solid': wx.SOLID,
-              'dot': wx.DOT,
-              'long-dash': wx.LONG_DASH,
-              'short-dash': wx.SHORT_DASH,
-              'dot-dash': wx.DOT_DASH}
+        self.pstyledict = { 'solid' : wx.SOLID,
+                            'dot' : wx.DOT,
+                            'long-dash' : wx.LONG_DASH,
+                            'short-dash' : wx.SHORT_DASH,
+                            'dot-dash' : wx.DOT_DASH }
 
-        pttypelist = ['circle','dot','square','triangle','triangle_down','cross','plus']
-        self.ptfilldict = {'transparent':wx.TRANSPARENT, 'solid':wx.SOLID}
+        self.pttypelist = ['circle',
+                           'dot',
+                           'square',
+                           'triangle',
+                           'triangle_down',
+                           'cross',
+                           'plus']
+        
+        self.ptfilldict = { 'transparent' : wx.TRANSPARENT,
+                            'solid' : wx.SOLID }
 
-        axislist = ['min','auto','custom']
+        self.axislist = ['min',
+                         'auto'
+                         'custom']
 
+        # widgets ids
+        self.wxId = {}
+        
         self.parent = parent
 
-        self.pcolor1 = self.parent.pcolor1
-        self.pwidth1 = self.parent.pwidth1
-        self.pstyle1 = self.parent.pstyle1
-        for item in self.pstyledict.items():
-            if self.pstyle1 == item[1]:
-                self.pstylekey1 = item[0]
-        self.plegend1 = self.parent.plegend1
+        # read-only
+        self.raster = self.parent.raster
+        self.properties = self.parent.properties
+        
+        self._do_layout()
 
-        self.pcolor2 = self.parent.pcolor2
-        self.pwidth2 = self.parent.pwidth2
-        self.pstyle2 = self.parent.pstyle2
-        for item in self.pstyledict.items():
-            if self.pstyle2 == item[1]:
-                self.pstylekey2 = item[0]
-        self.plegend2 = self.parent.plegend2
-
-        self.pcolor3 = self.parent.pcolor3
-        self.pwidth3 = self.parent.pwidth3
-        self.pstyle3 = self.parent.pstyle3
-        for item in self.pstyledict.items():
-            if self.pstyle3 == item[1]:
-                self.pstylekey3 = item[0]
-        self.plegend3 = self.parent.plegend3
-
-        self.ptcolor = self.parent.ptcolor
-        self.ptfill = self.parent.ptfill
-        for item in self.ptfilldict.items():
-            if self.ptfill == item[1]:
-                self.ptfillkey = item[0]
-        self.ptsize = self.parent.ptsize
-        self.pttype = self.parent.pttype
-        self.ptlegend = self.parent.ptlegend
-
-        self.xtype = self.parent.xtype
-        self.ytype = self.parent.ytype
-        self.xmin = self.parent.xmin
-        self.xmax = self.parent.xmax
-        self.xlog = self.parent.xlog
-        self.ymin = self.parent.ymin
-        self.ymax = self.parent.ymax
-        self.ylog = self.parent.ylog
-
-        self.gridcolor = self.parent.gridcolor
-        self.enablegrid = self.parent.enablegrid
-
-        self.enablelegend = self.parent.enablelegend
-        self.legendfontsize = self.parent.legendfontsize
-
+    def _do_layout(self):
+        """Do layout"""
         # dialog layout
         sizer = wx.BoxSizer(wx.VERTICAL)
 
-        box = wx.BoxSizer(wx.HORIZONTAL)
-        label = wx.StaticText(self, -1, "Profile Line Options")
-        box.Add(label, 0, wx.ALIGN_CENTER|wx.RIGHT|wx.LEFT, 5)
-        sizer.Add(box, 0, wx.ALIGN_CENTER|wx.ALL, 5)
+        #
+        # profile line settings
+        #
+        box = wx.StaticBox(parent=self, id=wx.ID_ANY,
+                           label=" %s " % _("Profile line settings"))
+        boxMainSizer = wx.StaticBoxSizer(box, wx.HORIZONTAL)
 
-        # profile 1 options
-        box = wx.BoxSizer(wx.HORIZONTAL)
-        label = wx.StaticText(self, -1, "Profile 1: color")
-        box.Add(label, 0, wx.ALIGN_CENTER_VERTICAL|wx.ALIGN_RIGHT|wx.RIGHT|wx.LEFT, 5)
-        pcolor1 = csel.ColourSelect(self, -1, '', self.pcolor1, size = wx.DefaultSize)
-        box.Add(pcolor1, 0, wx.ALIGN_CENTER_VERTICAL|wx.ALIGN_RIGHT|wx.RIGHT|wx.LEFT, 5)
+        idx = 1
+        self.wxId['pcolor'] = []
+        self.wxId['pwidth'] = []
+        self.wxId['pstyle'] = []
+        self.wxId['plegend'] = []
+        for r in self.raster.itervalues():
+            box = wx.StaticBox(parent=self, id=wx.ID_ANY,
+                               label=" %s %d " % (_("Profile"), idx))
+            boxSizer = wx.StaticBoxSizer(box, wx.VERTICAL)
+            
+            gridSizer = wx.GridBagSizer(vgap=5, hgap=5)
+            row = 0            
+            label = wx.StaticText(parent=self, id=wx.ID_ANY, label=_("Line color"))
+            gridSizer.Add(item=label, flag=wx.ALIGN_CENTER_VERTICAL, pos=(row, 0))
+            pcolor = csel.ColourSelect(parent=self, id=wx.ID_ANY, colour=r['pcolor'])
+            self.wxId['pcolor'].append(pcolor.GetId())
+            gridSizer.Add(item=pcolor, pos=(row, 1))
 
-        label = wx.StaticText(self, -1, "width")
-        box.Add(label, 0, wx.ALIGN_CENTER_VERTICAL|wx.ALIGN_RIGHT|wx.RIGHT|wx.LEFT, 5)
-        pwidth1 = wx.SpinCtrl(self, id=wx.ID_ANY, value="", pos=(30, 50),
-                        size=(50,-1), style=wx.SP_ARROW_KEYS)
-        pwidth1.SetRange(1,10)
-        pwidth1.SetValue(self.pwidth1)
-        box.Add(pwidth1, 0, wx.ALIGN_CENTER_VERTICAL|wx.ALIGN_RIGHT|wx.RIGHT|wx.LEFT, 5)
+            row += 1
+            label = wx.StaticText(parent=self, id=wx.ID_ANY, label=_("Line width"))
+            gridSizer.Add(item=label, flag=wx.ALIGN_CENTER_VERTICAL, pos=(row, 0))
+            pwidth = wx.SpinCtrl(parent=self, id=wx.ID_ANY, value="",
+                                 size=(50,-1), style=wx.SP_ARROW_KEYS)
+            pwidth.SetRange(1, 10)
+            pwidth.SetValue(r['pwidth'])
+            self.wxId['pwidth'].append(pwidth.GetId())
+            gridSizer.Add(item=pwidth, pos=(row, 1))
 
-        label = wx.StaticText(self, -1, "style")
-        box.Add(label, 0, wx.ALIGN_CENTER_VERTICAL|wx.ALIGN_RIGHT|wx.RIGHT|wx.LEFT, 5)
-        pstyle1 = wx.ComboBox(self, 500, self.pstylekey1, (90, 50),
-            (120, -1), self.pstyledict.keys(), wx.CB_DROPDOWN)
-        box.Add(pstyle1, 0, wx.ALIGN_CENTER_VERTICAL|wx.ALIGN_RIGHT|wx.RIGHT|wx.LEFT, 5)
+            row +=1
+            label = wx.StaticText(parent=self, id=wx.ID_ANY, label=_("Line style"))
+            gridSizer.Add(item=label, flag=wx.ALIGN_CENTER_VERTICAL, pos=(row, 0))
+            pstyle = wx.ComboBox(parent=self, id=wx.ID_ANY, 
+                                 size=(120, -1), choices=self.pstyledict.keys(), style=wx.CB_DROPDOWN)
+            self.wxId['pstyle'].append(pstyle.GetId())
+            gridSizer.Add(item=pstyle, pos=(row, 1))
 
-        label = wx.StaticText(self, -1, "legend")
-        box.Add(label, 0, wx.ALIGN_CENTER_VERTICAL|wx.ALIGN_RIGHT|wx.RIGHT|wx.LEFT, 5)
-        plegend1 = wx.TextCtrl(self, -1, "", size=(200,-1))
-        plegend1.SetValue(self.plegend1)
-        box.Add(plegend1, 0, wx.ALIGN_CENTER_VERTICAL|wx.ALIGN_RIGHT|wx.RIGHT|wx.LEFT, 5)
-        sizer.Add(box, 0, wx.ALIGN_CENTER_VERTICAL|wx.ALIGN_RIGHT|wx.ALL, 2)
+            row += 1
+            label = wx.StaticText(parent=self, id=wx.ID_ANY, label=_("Legend"))
+            gridSizer.Add(item=label, flag=wx.ALIGN_CENTER_VERTICAL, pos=(row, 0))
+            plegend = wx.TextCtrl(parent=self, id=wx.ID_ANY, value="", size=(200,-1))
+            plegend.SetValue(r['plegend'])
+            gridSizer.Add(item=plegend, pos=(row, 1))
+            self.wxId['plegend'].append(plegend.GetId())
+            boxSizer.Add(item=gridSizer)
 
-        # profile 2 options
-        box = wx.BoxSizer(wx.HORIZONTAL)
-        label = wx.StaticText(self, -1, "Profile 2: color")
-        box.Add(label, 0, wx.ALIGN_CENTER_VERTICAL|wx.ALIGN_RIGHT|wx.RIGHT|wx.LEFT, 5)
-        pcolor2 = csel.ColourSelect(self, -1, '', self.pcolor2, size = wx.DefaultSize)
-        box.Add(pcolor2, 0, wx.ALIGN_CENTER_VERTICAL|wx.ALIGN_RIGHT|wx.RIGHT|wx.LEFT, 5)
+            if idx == 0:
+                flag = wx.ALL
+            else:
+                flag = wx.TOP | wx.BOTTOM | wx.RIGHT
+            boxMainSizer.Add(item=boxSizer, flag=flag, border=3)
 
-        label = wx.StaticText(self, -1, "width")
-        box.Add(label, 0, wx.ALIGN_CENTER_VERTICAL|wx.ALIGN_RIGHT|wx.RIGHT|wx.LEFT, 5)
-        pwidth2 = wx.SpinCtrl(self, id=wx.ID_ANY, value="", pos=(30, 50),
-                        size=(50,-1), style=wx.SP_ARROW_KEYS)
-        pwidth2.SetRange(1,10)
-        pwidth2.SetValue(self.pwidth2)
-        box.Add(pwidth2, 0, wx.ALIGN_CENTER_VERTICAL|wx.ALIGN_RIGHT|wx.RIGHT|wx.LEFT, 5)
+            idx += 1
+            
+        sizer.Add(item=boxMainSizer, flag=wx.ALL | wx.EXPAND, border=3)
 
-        label = wx.StaticText(self, -1, "style")
-        box.Add(label, 0, wx.ALIGN_CENTER_VERTICAL|wx.ALIGN_RIGHT|wx.RIGHT|wx.LEFT, 5)
-        pstyle2 = wx.ComboBox(self, 500, self.pstylekey2, (90, 50),
-            (120, -1), self.pstyledict.keys(), wx.CB_DROPDOWN)
-        box.Add(pstyle2, 0, wx.ALIGN_CENTER_VERTICAL|wx.ALIGN_RIGHT|wx.RIGHT|wx.LEFT, 5)
+        middleSizer = wx.BoxSizer(wx.HORIZONTAL)
+        
+        #
+        # segment marker settings
+        #
+        box = wx.StaticBox(parent=self, id=wx.ID_ANY,
+                           label=" %s " % _("Transect segment marker settings"))
+        boxMainSizer = wx.StaticBoxSizer(box, wx.HORIZONTAL)
 
-        label = wx.StaticText(self, -1, "legend")
-        box.Add(label, 0, wx.ALIGN_CENTER_VERTICAL|wx.ALIGN_RIGHT|wx.RIGHT|wx.LEFT, 5)
-        plegend2 = wx.TextCtrl(self, -1, "", size=(200,-1))
-        plegend2.SetValue(self.plegend2)
-        box.Add(plegend2, 0, wx.ALIGN_CENTER_VERTICAL|wx.ALIGN_RIGHT|wx.RIGHT|wx.LEFT, 5)
-        sizer.Add(box, 0, wx.ALIGN_CENTER_VERTICAL|wx.ALIGN_RIGHT|wx.ALL, 2)
+        self.wxId['marker'] = {}
+        gridSizer = wx.GridBagSizer(vgap=5, hgap=5)
+        label = wx.StaticText(parent=self, id=wx.ID_ANY, label=_("Color"))
+        gridSizer.Add(item=label, flag=wx.ALIGN_CENTER_VERTICAL, pos=(0, 0))
+        ptcolor = csel.ColourSelect(parent=self, id=wx.ID_ANY, colour=self.properties['marker']['color'])
+        self.wxId['marker']['color'] = ptcolor.GetId()
+        gridSizer.Add(item=ptcolor, pos=(0, 1))
 
-        # profile 3 options
-        box = wx.BoxSizer(wx.HORIZONTAL)
-        label = wx.StaticText(self, -1, "Profile 3: color")
-        box.Add(label, 0, wx.ALIGN_CENTER_VERTICAL|wx.ALIGN_RIGHT|wx.RIGHT|wx.LEFT, 5)
-        pcolor3 = csel.ColourSelect(self, -1, '', self.pcolor3, size = wx.DefaultSize)
-        box.Add(pcolor3, 0, wx.ALIGN_CENTER_VERTICAL|wx.ALIGN_RIGHT|wx.RIGHT|wx.LEFT, 5)
+        label = wx.StaticText(parent=self, id=wx.ID_ANY, label=_("Size"))
+        gridSizer.Add(item=label, flag=wx.ALIGN_CENTER_VERTICAL, pos=(1, 0))
+        ptsize = wx.SpinCtrl(parent=self, id=wx.ID_ANY, value="",
+                             size=(50, -1), style=wx.SP_ARROW_KEYS)
+        ptsize.SetRange(1, 10)
+        ptsize.SetValue(self.properties['marker']['size'])
+        self.wxId['marker']['size'] = ptsize.GetId()
+        gridSizer.Add(item=ptsize, pos=(1, 1))
+        
+        label = wx.StaticText(parent=self, id=wx.ID_ANY, label=_("Style"))
+        gridSizer.Add(item=label, flag=wx.ALIGN_CENTER_VERTICAL, pos=(2, 0))
+        ptfill = wx.ComboBox(parent=self, id=wx.ID_ANY,
+                             size=(120, -1), choices=self.ptfilldict.keys(), style=wx.CB_DROPDOWN)
+        for item in self.ptfilldict.items():
+            if self.properties['marker']['fill'] == item[1]:
+                ptfill.SetStringSelection(item[0])
+                break
+        self.wxId['marker']['fill'] = ptfill.GetId()
+        gridSizer.Add(item=ptfill, pos=(2, 1))
+        #        self.ptfillkey = item[0]
+        # for item in self.pstyledict.items():
+        #    if self.pstyle1 == item[1]:
+        #        self.pstylekey1 = item[0]
 
-        label = wx.StaticText(self, -1, "width")
-        box.Add(label, 0, wx.ALIGN_CENTER_VERTICAL|wx.ALIGN_RIGHT|wx.RIGHT|wx.LEFT, 5)
-        pwidth3 = wx.SpinCtrl(self, id=wx.ID_ANY, value="", pos=(30, 50),
-                        size=(50,-1), style=wx.SP_ARROW_KEYS)
-        pwidth3.SetRange(1,10)
-        pwidth3.SetValue(self.pwidth3)
-        box.Add(pwidth3, 0, wx.ALIGN_CENTER_VERTICAL|wx.ALIGN_RIGHT|wx.RIGHT|wx.LEFT, 5)
 
-        label = wx.StaticText(self, -1, "style")
-        box.Add(label, 0, wx.ALIGN_CENTER_VERTICAL|wx.ALIGN_RIGHT|wx.RIGHT|wx.LEFT, 5)
-        pstyle3 = wx.ComboBox(self, 500, self.pstylekey3, (90, 50),
-            (120, -1), self.pstyledict.keys(), wx.CB_DROPDOWN)
-        box.Add(pstyle3, 0, wx.ALIGN_CENTER_VERTICAL|wx.ALIGN_RIGHT|wx.RIGHT|wx.LEFT, 5)
+        
+        label = wx.StaticText(parent=self, id=wx.ID_ANY, label=_("Legend"))
+        gridSizer.Add(item=label, flag=wx.ALIGN_CENTER_VERTICAL, pos=(3, 0))
+        ptlegend = wx.TextCtrl(parent=self, id=wx.ID_ANY, value="", size=(200,-1))
+        ptlegend.SetValue(self.properties['marker']['legend'])
+        self.wxId['marker']['legend'] = ptlegend.GetId()
+        gridSizer.Add(item=ptlegend, pos=(3, 1))
+                
+        label = wx.StaticText(parent=self, id=wx.ID_ANY, label=_("Type"))
+        gridSizer.Add(item=label, flag=wx.ALIGN_CENTER_VERTICAL, pos=(4, 0))
+        pttype = wx.ComboBox(parent=self, 
+                             size=(200, -1), choices=self.pttypelist, style=wx.CB_DROPDOWN)
+        pttype.SetStringSelection(self.properties['marker']['type'])
+        self.wxId['marker']['type'] = pttype.GetId()
+        gridSizer.Add(item=pttype, pos=(4, 1))
 
-        label = wx.StaticText(self, -1, "legend")
-        box.Add(label, 0, wx.ALIGN_CENTER_VERTICAL|wx.ALIGN_RIGHT|wx.RIGHT|wx.LEFT, 5)
-        plegend3 = wx.TextCtrl(self, -1, "", size=(200,-1))
-        plegend3.SetValue(self.plegend3)
-        box.Add(plegend3, 0, wx.ALIGN_CENTER_VERTICAL|wx.ALIGN_RIGHT|wx.RIGHT|wx.LEFT, 5)
-        sizer.Add(box, 0, wx.ALIGN_CENTER_VERTICAL|wx.ALIGN_RIGHT|wx.ALL, 2)
+        boxMainSizer.Add(item=gridSizer, flag=wx.ALL, border=3)
+        middleSizer.Add(item=boxMainSizer, flag=wx.ALL | wx.EXPAND, border=3)
 
-        # segment marker options
-        box = wx.BoxSizer(wx.HORIZONTAL)
-        label = wx.StaticText(self, -1, "Transect Segment Marker Options")
-        box.Add(label, 0, wx.ALIGN_CENTER|wx.RIGHT|wx.LEFT, 5)
-        sizer.Add(box, 0, wx.ALIGN_CENTER|wx.ALL, 5)
-
-        box = wx.BoxSizer(wx.HORIZONTAL)
-        label = wx.StaticText(self, -1, "Marker: color")
-        box.Add(label, 0, wx.ALIGN_CENTER_VERTICAL|wx.ALIGN_RIGHT|wx.RIGHT|wx.LEFT, 5)
-        ptcolor = csel.ColourSelect(self, -1, '', self.ptcolor, size = wx.DefaultSize)
-        box.Add(ptcolor, 0, wx.ALIGN_CENTER_VERTICAL|wx.ALIGN_RIGHT|wx.RIGHT|wx.LEFT, 5)
-
-        label = wx.StaticText(self, -1, "size")
-        box.Add(label, 0, wx.ALIGN_CENTER_VERTICAL|wx.ALIGN_RIGHT|wx.RIGHT|wx.LEFT, 5)
-        ptsize = wx.SpinCtrl(self, id=wx.ID_ANY, value="", pos=(30, 50),
-                        size=(50,-1), style=wx.SP_ARROW_KEYS)
-        ptsize.SetRange(1,10)
-        ptsize.SetValue(self.pwidth3)
-        box.Add(ptsize, 0, wx.ALIGN_CENTER_VERTICAL|wx.ALIGN_RIGHT|wx.RIGHT|wx.LEFT, 5)
-
-        label = wx.StaticText(self, -1, "style")
-        box.Add(label, 0, wx.ALIGN_CENTER_VERTICAL|wx.ALIGN_RIGHT|wx.RIGHT|wx.LEFT, 5)
-        ptfill = wx.ComboBox(self, 500, self.ptfillkey, (90, 50),
-            (120, -1), self.ptfilldict.keys(), wx.CB_DROPDOWN)
-        box.Add(ptfill, 0, wx.ALIGN_CENTER_VERTICAL|wx.ALIGN_RIGHT|wx.RIGHT|wx.LEFT, 5)
-
-        label = wx.StaticText(self, -1, "legend")
-        box.Add(label, 0, wx.ALIGN_CENTER_VERTICAL|wx.ALIGN_RIGHT|wx.RIGHT|wx.LEFT, 5)
-        ptlegend = wx.TextCtrl(self, -1, "", size=(200,-1))
-        ptlegend.SetValue(self.ptlegend)
-        box.Add(ptlegend, 0, wx.ALIGN_CENTER_VERTICAL|wx.ALIGN_RIGHT|wx.RIGHT|wx.LEFT, 5)
-        sizer.Add(box, 0, wx.ALIGN_CENTER_VERTICAL|wx.ALIGN_RIGHT|wx.ALL, 2)
-
-        box = wx.BoxSizer(wx.HORIZONTAL)
-        label = wx.StaticText(self, -1, "type")
-        box.Add(label, 0, wx.ALIGN_CENTER_VERTICAL|wx.ALIGN_RIGHT|wx.RIGHT|wx.LEFT, 5)
-        pttype = wx.ComboBox(self, 500, self.pttype, (90, 50),
-            (200, -1), pttypelist, wx.CB_DROPDOWN)
-        box.Add(pttype, 0, wx.ALIGN_CENTER_VERTICAL|wx.ALIGN_RIGHT|wx.RIGHT|wx.LEFT, 5)
-        sizer.Add(box, 0, wx.ALIGN_CENTER_VERTICAL|wx.ALIGN_RIGHT|wx.ALL, 2)
-
+        #
         # axis options
-        box = wx.BoxSizer(wx.HORIZONTAL)
-        label = wx.StaticText(self, -1, "Axis Options")
-        box.Add(label, 0, wx.ALIGN_CENTER|wx.RIGHT|wx.LEFT, 5)
-        sizer.Add(box, 0, wx.ALIGN_CENTER|wx.ALL, 5)
+        #
+        box = wx.StaticBox(parent=self, id=wx.ID_ANY,
+                           label=" %s " % _("Axis settings"))
+        boxMainSizer = wx.StaticBoxSizer(box, wx.HORIZONTAL)
 
-        box = wx.BoxSizer(wx.HORIZONTAL)
-        label = wx.StaticText(self, -1, "X-axis: style")
-        box.Add(label, 0, wx.ALIGN_CENTER_VERTICAL|wx.ALIGN_RIGHT|wx.RIGHT|wx.LEFT, 5)
-        xtype = wx.ComboBox(self, 500, self.xtype, (90, 50),
-            (100, -1), axislist, wx.CB_DROPDOWN)
-        box.Add(xtype, 0, wx.ALIGN_CENTER_VERTICAL|wx.ALIGN_RIGHT|wx.RIGHT|wx.LEFT, 5)
-        label = wx.StaticText(self, -1, "custom min")
-        box.Add(label, 0, wx.ALIGN_CENTER_VERTICAL|wx.ALIGN_RIGHT|wx.RIGHT|wx.LEFT, 5)
-        xmin = wx.TextCtrl(self, -1, "", size=(70,-1))
-        xmin.SetValue(str(self.xmin))
-        box.Add(xmin, 0, wx.ALIGN_CENTER_VERTICAL|wx.ALIGN_RIGHT|wx.RIGHT|wx.LEFT, 5)
-        label = wx.StaticText(self, -1, "custom max")
-        box.Add(label, 0, wx.ALIGN_CENTER_VERTICAL|wx.ALIGN_RIGHT|wx.RIGHT|wx.LEFT, 5)
-        xmax = wx.TextCtrl(self, -1, "", size=(70,-1))
-        xmax.SetValue(str(self.xmax))
-        box.Add(xmax, 0, wx.ALIGN_CENTER_VERTICAL|wx.ALIGN_RIGHT|wx.RIGHT|wx.LEFT, 5)
-        label = wx.StaticText(self, -1, "log scale")
-        box.Add(label, 0, wx.ALIGN_CENTER_VERTICAL|wx.ALIGN_RIGHT|wx.RIGHT|wx.LEFT, 5)
-        xlog = wx.CheckBox(self, -1, "")
-        xlog.SetValue(self.xlog)
-        box.Add(xlog, 0, wx.ALIGN_CENTER_VERTICAL|wx.ALIGN_RIGHT|wx.RIGHT|wx.LEFT, 5)
-        sizer.Add(box, 0, wx.ALIGN_CENTER|wx.ALL, 2)
+        self.wxId['x-axis'] = {}
+        self.wxId['y-axis'] = {}
+        idx = 0
+        for axis, atype in [(_("X-Axis"), 'x-axis'),
+                     (_("Y-Axis"), 'y-axis')]:
+            box = wx.StaticBox(parent=self, id=wx.ID_ANY,
+                               label=" %s " % _("X-Axis"))
+            boxSizer = wx.StaticBoxSizer(box, wx.HORIZONTAL)
+            gridSizer = wx.GridBagSizer(vgap=5, hgap=5)
 
-        box = wx.BoxSizer(wx.HORIZONTAL)
-        label = wx.StaticText(self, -1, "Y-axis: style")
-        box.Add(label, 0, wx.ALIGN_CENTER_VERTICAL|wx.ALIGN_RIGHT|wx.RIGHT|wx.LEFT, 5)
-        ytype = wx.ComboBox(self, 500, self.ytype, (90, 50),
-            (100, -1), axislist, wx.CB_DROPDOWN)
-        box.Add(ytype, 0, wx.ALIGN_CENTER_VERTICAL|wx.ALIGN_RIGHT|wx.RIGHT|wx.LEFT, 5)
-        label = wx.StaticText(self, -1, "custom min")
-        box.Add(label, 0, wx.ALIGN_CENTER_VERTICAL|wx.ALIGN_RIGHT|wx.RIGHT|wx.LEFT, 5)
-        ymin = wx.TextCtrl(self, -1, "", size=(70,-1))
-        ymin.SetValue(str(self.ymin))
-        box.Add(ymin, 0, wx.ALIGN_CENTER_VERTICAL|wx.ALIGN_RIGHT|wx.RIGHT|wx.LEFT, 5)
-        label = wx.StaticText(self, -1, "custom max")
-        box.Add(label, 0, wx.ALIGN_CENTER_VERTICAL|wx.ALIGN_RIGHT|wx.RIGHT|wx.LEFT, 5)
-        ymax = wx.TextCtrl(self, -1, "", size=(70,-1))
-        ymax.SetValue(str(self.ymax))
-        box.Add(ymax, 0, wx.ALIGN_CENTER_VERTICAL|wx.ALIGN_RIGHT|wx.RIGHT|wx.LEFT, 5)
-        label = wx.StaticText(self, -1, "log scale")
-        box.Add(label, 0, wx.ALIGN_CENTER_VERTICAL|wx.ALIGN_RIGHT|wx.RIGHT|wx.LEFT, 5)
-        ylog = wx.CheckBox(self, -1, "")
-        ylog.SetValue(self.ylog)
-        box.Add(ylog, 0, wx.ALIGN_CENTER_VERTICAL|wx.ALIGN_RIGHT|wx.RIGHT|wx.LEFT, 5)
-        sizer.Add(box, 0, wx.ALIGN_CENTER|wx.ALL, 2)
+            prop = self.properties[atype]
+            
+            row = 0
+            label = wx.StaticText(parent=self, id=wx.ID_ANY, label=_("Style"))
+            gridSizer.Add(item=label, flag=wx.ALIGN_CENTER_VERTICAL, pos=(row, 0))
+            type = wx.ComboBox(parent=self, id=wx.ID_ANY,
+                               size=(100, -1), choices=self.axislist, style=wx.CB_DROPDOWN)
+            type.SetStringSelection(prop['type']) 
+            self.wxId[atype]['type'] = type.GetId()
+            gridSizer.Add(item=type, pos=(row, 1))
+            
+            row += 1
+            label = wx.StaticText(parent=self, id=wx.ID_ANY, label=_("Custom min"))
+            gridSizer.Add(item=label, flag=wx.ALIGN_CENTER_VERTICAL, pos=(row, 0))
+            min = wx.TextCtrl(parent=self, id=wx.ID_ANY, value="", size=(70, -1))
+            min.SetValue(str(prop['min']))
+            self.wxId[atype]['min'] = min.GetId()
+            gridSizer.Add(item=min, pos=(row, 1))
 
+            row += 1
+            label = wx.StaticText(parent=self, id=wx.ID_ANY, label=_("Custom max"))
+            gridSizer.Add(item=label, flag=wx.ALIGN_CENTER_VERTICAL, pos=(row, 0))
+            max = wx.TextCtrl(parent=self, id=wx.ID_ANY, value="", size=(70, -1))
+            max.SetValue(str(prop['max']))
+            self.wxId[atype]['max'] = max.GetId()
+            gridSizer.Add(item=max, pos=(row, 1))
+            
+            row += 1
+            log = wx.CheckBox(parent=self, id=wx.ID_ANY, label=_("Log scale"))
+            log.SetValue(prop['log'])
+            self.wxId[atype]['log'] = log.GetId()
+            gridSizer.Add(item=log, pos=(row, 0), span=(1, 2))
+
+            if idx == 0:
+                flag = wx.ALL | wx.EXPAND
+            else:
+                flag = wx.TOP | wx.BOTTOM | wx.RIGHT | wx.EXPAND
+
+            boxSizer.Add(item=gridSizer, flag=wx.ALL, border=3)
+            boxMainSizer.Add(item=boxSizer, flag=flag, border=3)
+
+            idx += 1
+            
+        middleSizer.Add(item=boxMainSizer, flag=wx.ALL | wx.EXPAND, border=3)
+
+        #
         # grid & legend options
-        box = wx.BoxSizer(wx.HORIZONTAL)
-        label = wx.StaticText(self, -1, "Grid and Legend Options")
-        box.Add(label, 0, wx.ALIGN_CENTER|wx.RIGHT|wx.LEFT, 5)
-        sizer.Add(box, 0, wx.ALIGN_CENTER|wx.ALL, 5)
+        #
+        self.wxId['grid'] = {}
+        self.wxId['legend'] = {}
+        self.wxId['font'] = {}
+        box = wx.StaticBox(parent=self, id=wx.ID_ANY,
+                           label=" %s " % _("Grid and Legend settings"))
+        boxMainSizer = wx.StaticBoxSizer(box, wx.HORIZONTAL)
+        gridSizer = wx.GridBagSizer(vgap=5, hgap=5)
 
-        box = wx.BoxSizer(wx.HORIZONTAL)
-        label = wx.StaticText(self, -1, "Grid: color")
-        box.Add(label, 0, wx.ALIGN_CENTER_VERTICAL|wx.ALIGN_RIGHT|wx.RIGHT|wx.LEFT, 5)
-        gridcolor = csel.ColourSelect(self, -1, '', self.gridcolor, size = wx.DefaultSize)
-        box.Add(gridcolor, 0, wx.ALIGN_CENTER_VERTICAL|wx.ALIGN_RIGHT|wx.RIGHT|wx.LEFT, 5)
-        label = wx.StaticText(self, -1, "show")
-        box.Add(label, 0, wx.ALIGN_CENTER_VERTICAL|wx.ALIGN_RIGHT|wx.RIGHT|wx.LEFT, 5)
-        gridshow = wx.CheckBox(self, -1, "")
-        gridshow.SetValue(self.enablegrid)
-        box.Add(gridshow, 0, wx.ALIGN_CENTER_VERTICAL|wx.ALIGN_RIGHT|wx.RIGHT|wx.LEFT, 5)
-        label = wx.StaticText(self, -1, "Legend: font size")
-        box.Add(label, 0, wx.ALIGN_CENTER_VERTICAL|wx.ALIGN_RIGHT|wx.RIGHT|wx.LEFT, 5)
-        legendfontsize = wx.SpinCtrl(self, id=wx.ID_ANY, value="", pos=(30, 50),
-                        size=(50,-1), style=wx.SP_ARROW_KEYS)
+        row = 0
+        label = wx.StaticText(parent=self, id=wx.ID_ANY, label=_("Grid color"))
+        gridSizer.Add(item=label, flag=wx.ALIGN_CENTER_VERTICAL, pos=(row, 0))
+        gridcolor = csel.ColourSelect(parent=self, id=wx.ID_ANY, colour=self.properties['grid']['color'])
+        self.wxId['grid']['color'] = gridcolor.GetId()
+        gridSizer.Add(item=gridcolor, pos=(row, 1))
+
+        row +=1
+        gridshow = wx.CheckBox(parent=self, id=wx.ID_ANY, label=_("Show grid"))
+        gridshow.SetValue(self.properties['grid']['enabled'])
+        self.wxId['grid']['enabled'] = gridshow.GetId()
+        gridSizer.Add(item=gridshow, pos=(row, 0), span=(1, 2))
+
+        row +=1
+        label = wx.StaticText(parent=self, id=wx.ID_ANY, label=_("Legend font size"))
+        gridSizer.Add(item=label, flag=wx.ALIGN_CENTER_VERTICAL, pos=(row, 0))
+        legendfontsize = wx.SpinCtrl(parent=self, id=wx.ID_ANY, value="", 
+                                     size=(50, -1), style=wx.SP_ARROW_KEYS)
         legendfontsize.SetRange(5,100)
-        legendfontsize.SetValue(int(self.legendfontsize))
-        box.Add(legendfontsize, 0, wx.ALIGN_CENTER_VERTICAL|wx.ALIGN_RIGHT|wx.RIGHT|wx.LEFT, 5)
-        label = wx.StaticText(self, -1, "show")
-        box.Add(label, 0, wx.ALIGN_CENTER_VERTICAL|wx.ALIGN_RIGHT|wx.RIGHT|wx.LEFT, 5)
-        legendshow = wx.CheckBox(self, -1, "")
-        legendshow.SetValue(self.enablelegend)
-        box.Add(legendshow, 0, wx.ALIGN_CENTER_VERTICAL|wx.ALIGN_RIGHT|wx.RIGHT|wx.LEFT, 5)
-        sizer.Add(box, 0, wx.ALIGN_CENTER|wx.ALL, 2)
+        legendfontsize.SetValue(int(self.properties['font']['legendSize']))
+        self.wxId['font']['legendSize'] = legendfontsize.GetId()
+        gridSizer.Add(item=legendfontsize, pos=(row, 1))
 
-        line = wx.StaticLine(self, -1, size=(20,-1), style=wx.LI_HORIZONTAL)
-        sizer.Add(line, 0, wx.EXPAND|wx.ALIGN_CENTER|wx.RIGHT|wx.TOP, 5)
+        row += 1
+        legendshow = wx.CheckBox(parent=self, id=wx.ID_ANY, label=_("Show legend"))
+        legendshow.SetValue(self.properties['legend']['enabled'])
+        self.wxId['legend']['enabled'] = legendshow.GetId()
+        gridSizer.Add(item=legendshow, pos=(row, 0), span=(1, 2))
+
+        boxMainSizer.Add(item=gridSizer, flag=flag, border=3)
+
+        middleSizer.Add(item=boxMainSizer, flag=wx.LEFT | wx.RIGHT | wx.BOTTOM | wx.EXPAND, border=3)
+
+        sizer.Add(item=middleSizer, flag=wx.ALL, border=0)
+        
+        #
+        # line & buttons
+        #
+        line = wx.StaticLine(parent=self, id=wx.ID_ANY, size=(20, -1), style=wx.LI_HORIZONTAL)
+        sizer.Add(item=line, proportion=0,
+                  flag=wx.GROW|wx.ALIGN_CENTER_VERTICAL|wx.LEFT|wx.RIGHT, border=3)
 
         btnsizer = wx.StdDialogButtonSizer()
 
@@ -1343,128 +1279,37 @@ class OptDialog(wx.Dialog):
         btnsizer.AddButton(btn)
         btnsizer.Realize()
 
-        sizer.Add(btnsizer, 0, wx.ALIGN_CENTER_VERTICAL|wx.ALL, 5)
+        sizer.Add(item=btnsizer, proportion=0, flag=wx.ALIGN_RIGHT | wx.ALL, border=5)
 
         self.SetSizer(sizer)
         sizer.Fit(self)
 
-        pcolor1.Bind(csel.EVT_COLOURSELECT, self.OnPcolor1)
-        pwidth1.Bind(wx.EVT_TEXT, self.OnPwidth1)
-        pstyle1.Bind(wx.EVT_COMBOBOX, self.OnPstyle1)
-        plegend1.Bind(wx.EVT_TEXT, self.OnPlegend1)
-        pcolor2.Bind(csel.EVT_COLOURSELECT, self.OnPcolor2)
-        pwidth2.Bind(wx.EVT_TEXT, self.OnPwidth2)
-        pstyle2.Bind(wx.EVT_COMBOBOX, self.OnPstyle2)
-        plegend2.Bind(wx.EVT_TEXT, self.OnPlegend2)
-        pcolor3.Bind(csel.EVT_COLOURSELECT, self.OnPcolor3)
-        pwidth3.Bind(wx.EVT_TEXT, self.OnPwidth3)
-        pstyle3.Bind(wx.EVT_COMBOBOX, self.OnPstyle3)
-        plegend3.Bind(wx.EVT_TEXT, self.OnPlegend3)
-        ptcolor.Bind(csel.EVT_COLOURSELECT, self.OnPtColor)
-        ptfill.Bind(wx.EVT_COMBOBOX, self.OnPtFill)
-        ptsize.Bind(wx.EVT_TEXT, self.OnPtSize)
-        pttype.Bind(wx.EVT_COMBOBOX, self.OnPtType)
-        ptlegend.Bind(wx.EVT_TEXT, self.OnPtLegend)
-        xtype.Bind(wx.EVT_COMBOBOX, self.OnXtype)
-        xmin.Bind(wx.EVT_TEXT, self.OnXmin)
-        xmax.Bind(wx.EVT_TEXT, self.OnXmax)
-        xlog.Bind(wx.EVT_CHECKBOX, self.OnXlog)
-        ytype.Bind(wx.EVT_COMBOBOX, self.OnYtype)
-        ymin.Bind(wx.EVT_TEXT, self.OnYmin)
-        ymax.Bind(wx.EVT_TEXT, self.OnYmax)
-        ylog.Bind(wx.EVT_CHECKBOX, self.OnYlog)
-        gridcolor.Bind(csel.EVT_COLOURSELECT, self.OnGridColor)
-        gridshow.Bind(wx.EVT_CHECKBOX, self.OnGridshow)
-        legendfontsize.Bind(wx.EVT_TEXT, self.OnLegendSize)
-        legendshow.Bind(wx.EVT_CHECKBOX, self.OnLegendshow)
+    def UpdateSettings(self):
+        idx = 0
+        for r in self.raster.itervalues():
+            r['pcolor'] = self.FindWindowById(self.wxId['pcolor'][idx]).GetColour()[0:5] #?
+            r['pwidth'] = int(self.FindWindowById(self.wxId['pwidth'][idx]).GetValue())
+            r['pstyle'] = self.FindWindowById(self.wxId['pstyle'][idx]).GetStringSelection()
+            r['plegend'] = self.FindWindowById(self.wxId['plegend'][idx]).GetValue()
+            idx +=1
 
-    def OnPcolor1(self, event):
-        self.pcolor1 = event.GetValue()
+        self.properties['marker']['color'] = self.FindWindowById(self.wxId['marker']['color']).GetColour()
+        self.properties['marker']['fill'] = self.FindWindowById(self.wxId['marker']['fill']).GetStringSelection()
+        self.properties['marker']['size'] = self.FindWindowById(self.wxId['marker']['size']).GetValue()
+        self.properties['marker']['type'] = self.FindWindowById(self.wxId['marker']['type']).GetValue()
+        self.properties['marker']['legend'] = self.FindWindowById(self.wxId['marker']['legend']).GetValue()
 
-    def OnPwidth1(self, event):
-        self.pwidth1 = int(event.GetString())
+        for axis in ('x-axis', 'y-axis'):
+            self.properties[axis]['type'] = self.FindWindowById(self.wxId[axis]['type']).GetValue()
+            self.properties[axis]['min'] = self.FindWindowById(self.wxId[axis]['min']).GetValue()
+            self.properties[axis]['max'] = self.FindWindowById(self.wxId[axis]['max']).GetValue()
+            self.properties[axis]['log'] = self.FindWindowById(self.wxId[axis]['log']).IsChecked()
 
-    def OnPstyle1(self, event):
-        self.pstyle1 = self.pstyledict[event.GetString()]
+        self.properties['grid']['color'] = self.FindWindowById(self.wxId['grid']['color']).GetColour()
+        self.properties['grid']['enabled'] = self.FindWindowById(self.wxId['grid']['enabled']).IsChecked()
 
-    def OnPlegend1(self, event):
-        self.plegend1 = event.GetString()
-
-    def OnPcolor2(self, event):
-        self.pcolor2 = event.GetValue()
-
-    def OnPwidth2(self, event):
-        self.pwidth2 = int(event.GetString())
-
-    def OnPstyle2(self, event):
-        self.pstyle2 = self.pstyledict[event.GetString()]
-
-    def OnPlegend2(self, event):
-        self.plegend2 = event.GetString()
-
-    def OnPcolor3(self, event):
-        self.pcolor3 = event.GetValue()
-
-    def OnPwidth3(self, event):
-        self.pwidth3 = int(event.GetString())
-
-    def OnPstyle3(self, event):
-        self.pstyle3 = self.pstyledict[event.GetString()]
-
-    def OnPlegend3(self, event):
-        self.plegend3 = event.GetString()
-
-    def OnPtColor(self, event):
-        self.ptcolor = event.GetValue()
-
-    def OnPtFill(self, event):
-        self.ptfill = self.ptfilldict[event.GetString()]
-
-    def OnPtSize(self, event):
-        self.ptsize = int(event.GetString())
-
-    def OnPtType(self, event):
-        self.pttype = event.GetString()
-
-    def OnPtLegend(self, event):
-        self.ptlegend = event.GetString()
-
-    def OnXtype(self, event):
-        self.xtype = event.GetString()
-
-    def OnXmin(self, event):
-        self.xmin = float(event.GetString())
-
-    def OnXmax(self, event):
-        self.xmax = float(event.GetString())
-
-    def OnXlog(self, event):
-        self.xlog = event.IsChecked()
-
-    def OnYtype(self, event):
-        self.ytype = event.GetString()
-
-    def OnYmin(self, event):
-        self.ymin = float(event.GetString())
-
-    def OnYmax(self, event):
-        self.ymax = float(event.GetString())
-
-    def OnYlog(self, event):
-        self.ylog = event.IsChecked()
-
-    def OnGridColor(self, event):
-        self.gridcolor = event.GetValue()
-
-    def OnGridshow(self, event):
-        self.enablegrid = event.IsChecked()
-
-    def OnLegendSize(self, event):
-        self.legendfontsize = int(event.GetString())
-
-    def OnLegendshow(self, event):
-        self.enablelegend = event.IsChecked()
-
+        self.properties['font']['legendSize'] = self.FindWindowById(self.wxId['font']['legendSize']).GetValue()
+        self.properties['legend']['enabled'] = self.FindWindowById(self.wxId['legend']['enabled']).IsChecked()
 
 
 
