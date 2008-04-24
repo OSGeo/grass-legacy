@@ -8,7 +8,6 @@ static struct line_pnts *box_trans_rot(BOUND_BOX * bb, label_point_t * p, double
 static void label_point_candidates(label_t * label);
 static void label_line_candidates(label_t * label);
 static int candidate_compare(const void *a, const void *b);
-static struct line_pnts *skyline_trans_rot(struct line_pnts *skyline, label_point_t * p, double angle);
 static double label_avedist(label_t * label, label_candidate_t * candidate);
 static double label_flatness(label_t * label, label_candidate_t * candidate);
 static double label_pointover(label_t * label, label_candidate_t * candidate);
@@ -178,7 +177,7 @@ label_t *labels_init(struct params *p, int *n_labels)
 
 	G_debug(3, "Label: %s", db_get_string(&value));
 
-	/* ignor empty strings */
+	/* ignore empty strings */
 	if (strlen(db_get_string(&value)) == 0)
 	    continue;
 
@@ -517,6 +516,7 @@ static void label_line_candidates(label_t * label)
 	struct line_pnts *above_skyline, *below_skyline, *baseline;
 	double above_distance = 0.0, below_distance = 0.0,
 	    minimum_above_distance = 0.0, minimum_below_distance = 0.0, angle;
+	double flatness, centerdness;
 
 	seg1 =
 	    Vect_point_on_line(label->shape, pos, &p1.x, &p1.y, NULL, NULL,
@@ -550,7 +550,7 @@ static void label_line_candidates(label_t * label)
 
 	/* find the maximum above_distance and below_distance from the swath
 	 * "diagonal" to determine maximum deviation from a straight line
-	 * create the swath lines at the same time
+	 * create the swath lines at the same time.
 	 */
 	above_candidates[i].swathline = Vect_new_line_struct();
 	below_candidates[i].swathline = Vect_new_line_struct();
@@ -647,33 +647,48 @@ static void label_line_candidates(label_t * label)
 	above_candidates[i].rotation = angle;
 	below_candidates[i].rotation = angle;
 
+	/* AveDist */
 	above_candidates[i].score += label_avedist(label, &above_candidates[i]);
 	below_candidates[i].score += label_avedist(label, &below_candidates[i]);
 
-	above_candidates[i].score +=
-	    label_flatness(label, &above_candidates[i]);
-	below_candidates[i].score +=
-	    label_flatness(label, &below_candidates[i]);
+	/* flatness */
+	flatness = label_flatness(label, &above_candidates[i]);
+	above_candidates[i].score += flatness;
+	below_candidates[i].score += flatness;
 
 	/* centerdness */
-	above_candidates[i].score += 3.0 * fabs(2.0 * pos / length - 1.0);
-	below_candidates[i].score += 3.0 * fabs(2.0 * pos / length - 1.0);
+	centerdness = 3.0 * fabs(2.0 * pos / length - 1.0);
+	above_candidates[i].score += centerdness;
+	below_candidates[i].score += centerdness;
 
+	/* PointOver */
 	above_candidates[i].score += 10.0 *
 	    label_pointover(label, &above_candidates[i]);
 	below_candidates[i].score += 10.0 *
 	    label_pointover(label, &below_candidates[i]);
+
+	/* LineOver */
 	above_candidates[i].lineover = 15.0 *
 	    label_lineover(label, &above_candidates[i], GV_LINE);
 	above_candidates[i].score += above_candidates[i].lineover;
+if(label->cat == 1) {
+	printf("%s: above candidate %d: lineover=%lf score=%lf\n",label->text, i, above_candidates[i].lineover, above_candidates[i].score);
+}
+
 	below_candidates[i].lineover = 15.0 *
 	    label_lineover(label, &below_candidates[i], GV_LINE);
 	below_candidates[i].score += below_candidates[i].lineover;
+if(label->cat == 1) {
+	printf("%s: below candidate %d: lineover=%lf score=%lf\n",label->text, i, below_candidates[i].lineover, below_candidates[i].score);
+}
+
+	/* AreaOver */
 	above_candidates[i].score += 10.0 *
 	    label_lineover(label, &above_candidates[i], GV_BOUNDARY);
 	below_candidates[i].score += 10.0 *
 	    label_lineover(label, &below_candidates[i], GV_BOUNDARY);
 
+	/* aboveness */
 	below_candidates[i].score += 0.25;
 
 	i++;
@@ -766,17 +781,8 @@ static int candidate_compare(const void *a, const void *b)
     }
 }
 
-/**
- * This function rotates the label skyline and then translates it to the
- * given point.
- * @param skyline The skyline to translate
- * @param p The point to translate the skyline to
- * @param angle The angle (in radians) to rotate the label counter-clockwise
- * @return A lint_pnts structure containing the rotated and translated
- * skyline.
- */
-static struct line_pnts *skyline_trans_rot(struct line_pnts *skyline,
-					   label_point_t * p, double angle)
+struct line_pnts *skyline_trans_rot(struct line_pnts *skyline,
+				    label_point_t * p, double angle)
 {
     int i;
     struct line_pnts *Points;
@@ -879,29 +885,81 @@ static double label_avedist(label_t * label, label_candidate_t * candidate)
 static double label_flatness(label_t * label, label_candidate_t * candidate)
 {
     struct line_pnts *line;
-    double flatness = 0.0, x, y;
+    double flatness = 0.0, x0, y0, x1, y1, x2, y2;
     int i;
 
+/* first generate a line which is parallel to the baseline, 
+   but the ideal distance away from it.*/
     line = Vect_new_line_struct();
-    Vect_append_point(line, candidate->point.x, candidate->point.y, 0);
-    x = candidate->point.x +
-	(label->bb.E - label->bb.W) * cos(candidate->rotation);
-    y = candidate->point.y +
-	(label->bb.E - label->bb.W) * sin(candidate->rotation);
-    Vect_append_point(line, x, y, 0);
+    x0 = x1 = candidate->point.x + ideal_distance * cos(candidate->rotation);
+    y0 = y1 = candidate->point.y - ideal_distance * sin(candidate->rotation);
+    Vect_append_point(line, x1, y1, 0);
+    x2 = x1 + (label->bb.E - label->bb.W) * cos(candidate->rotation);
+    y2 = y1 + (label->bb.E - label->bb.W) * sin(candidate->rotation);
+    Vect_append_point(line, x2, y2, 0);
 
-    for (i = 0; i < candidate->swathline->n_points; i++) {
-	double d;
-	Vect_line_distance(line, candidate->swathline->x[i],
-			   candidate->swathline->y[i], 0, 0,
-			   NULL, NULL, NULL, &d, NULL, NULL);
-	flatness += d;
+    /* now calculate the are between candidate->swathline and line */
+
+    for (i = 1; i < candidate->swathline->n_points; i++) {
+	int r;
+	double b,h;
+	double px1, py1, pz1, px2, py2, pz2;
+	r = Vect_segment_intersection(x1, y1, 0, x2, y2, 0,
+				      candidate->swathline->x[i-1],
+				      candidate->swathline->y[i-1],
+				      0,
+				      candidate->swathline->x[i],
+				      candidate->swathline->y[i],
+				      0,
+				      &px1, &py1, &pz1, &px2, &py2, &pz2, 0);
+	/* Now calculate the area between the swath and the line */
+	switch(r) {
+	    case 0: /* no intersection */
+		dig_distance2_point_to_line(candidate->swathline->x[i],
+					    candidate->swathline->y[i], 0,
+					    x1, y1, 0, x2, y2, 0, 0,
+					    &px1, &py1, &pz1, &h, NULL);
+		h = (sqrt(pow(x1 - candidate->swathline->x[i-1], 2.0) + 
+			 pow(y1 - candidate->swathline->y[i-1], 2.0)) +
+		    h) / 2.0;
+		b = sqrt(pow(px1-x1, 2) + pow(py1 - y1, 2));
+		flatness += b * h;
+		x1 = px1;
+		y1 = py1;
+		break;
+	    case 1:
+		h = sqrt(pow(x1 - candidate->swathline->x[i-1], 2.0) + 
+			 pow(y1 - candidate->swathline->y[i-1], 2.0));
+		b = sqrt(pow(px1-x1, 2) + pow(py1 - y1, 2));
+		flatness += b * h * 0.5; /* the first triangle */
+		x1 = px1;
+		y1 = py1;
+		dig_distance2_point_to_line(candidate->swathline->x[i],
+					    candidate->swathline->y[i], 0,
+					    x1, y1, 0, x2, y2, 0, 0,
+					    &px1, &py1, &pz1, &h, NULL);
+		b = sqrt(pow(px1-x1, 2) + pow(py1 - y1, 2));
+		flatness += b * h * 0.5; /* the second triangle */
+		x1 = px1;
+		y1 = py1;
+		break;
+	    case 3:
+		x1 = px2;
+		y1 = py2;
+		break;
+	    case 5:
+		x1 = px2;
+		y1 = py2;
+		break;
+	    default:
+		G_fatal_error("Programming error!!\n");
+		break;
+	}
     }
 
-    flatness /= (candidate->swathline->n_points);
-    Vect_destroy_line_struct(line);
-
-    return (flatness * flatness) / (ideal_distance * ideal_distance);
+    flatness /= sqrt((x2-x0)*(x2-x0) + (y2-y0)*(y2-y0)); /* this is d'' */
+    flatness = (flatness * flatness) / (ideal_distance * ideal_distance);
+    return flatness;
 }
 
 /**
@@ -960,13 +1018,13 @@ static double label_lineover(label_t * label, label_candidate_t * candidate,
     b.x = (label->bb.E - label->bb.W) * cos(candidate->rotation);
     b.y = (label->bb.E - label->bb.W) * sin(candidate->rotation);
 
-    n = Vect_select_lines_by_polygon(&Map, trsk, 0, NULL, linetype, il);
+    trbb = box_trans_rot(&label->bb, &candidate->point, candidate->rotation);
+    n = Vect_select_lines_by_polygon(&Map, trbb, 0, NULL, linetype, il);
 
     if(n == 0) {
 	return 0.0;
     }
 
-    trbb = box_trans_rot(&label->bb, &candidate->point, candidate->rotation);
 
     for (i = 0; i < il->n_values; i++) {
 	int j, found=0;

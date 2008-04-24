@@ -149,6 +149,18 @@ void simulate_annealing(label_t * labels, int n_labels, struct params *p);
  */
 void print_label(FILE * labelf, label_t * label, struct params *p);
 
+/**
+ * This function rotates the label skyline and then translates it to the
+ * given point.
+ * @param skyline The skyline to translate
+ * @param p The point to translate the skyline to
+ * @param angle The angle (in radians) to rotate the label counter-clockwise
+ * @return A lint_pnts structure containing the rotated and translated
+ * skyline.
+ */
+struct line_pnts *skyline_trans_rot(struct line_pnts *skyline,
+				    label_point_t * p, double angle);
+
 void free_freetypecap(struct GFONT_CAP *ftcap);
 struct GFONT_CAP *find_font_from_freetypecap(const char *font);
 
