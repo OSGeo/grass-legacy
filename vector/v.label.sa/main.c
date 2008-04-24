@@ -68,20 +68,33 @@ int main(int argc, char *argv[])
 	G_percent(i, (n_labels - 1), 1);
     }
     fclose(labelf);
-/*
-    {
+
+/* dumping the skyline of the labels */
+/*    {
 	char *f;
+	FILE *skyf;
 	f = G_tempfile();
-	labelf = fopen(f, "w");
-	printf("Writing all labels to file %s", f);
+	skyf = fopen(f, "w");
+	printf("Writing label skylines to file %s", f);
+	fprintf(skyf, "VERTI:\n");
 	for (i = 0; i < n_labels; i++) {
-		if (labels[i].n_candidates > 0) {
-			print_labels(labelf, &labels[i], &p);
+	    int j;
+	    if (labels[i].n_candidates > 0) {
+		label_t *l = &labels[i];
+		label_candidate_t *cc = &l->candidates[l->current_candidate];
+		struct line_pnts *sky = skyline_trans_rot(l->skyline,
+							  &cc->point,
+							  cc->rotation);
+		fprintf(skyf, "L %d 1\n", sky->n_points);
+		for(j=0;j < sky->n_points; j++) {
+		    fprintf(skyf, " %.12f %.12f\n", sky->x[j], sky->y[j]);
 		}
-		G_percent(i, (n_labels - 1), 1);
+		fprintf(skyf, " %-5d %-10d\n", 1, i+1);
+	    }
+	    G_percent(i, (n_labels - 1), 1);
     	}
 	free(f);
-    	fclose(labelf);
+    	fclose(skyf);
     }
 */
     return EXIT_SUCCESS;
@@ -215,14 +228,14 @@ void print_label(FILE * labelf, label_t * label, struct params *p)
     fprintf(labelf, "north: %lf\n", label->candidates[cc].point.y);
     fprintf(labelf, "xoffset: %lf\n", 0.0); // * (size));
     fprintf(labelf, "yoffset: %lf\n", 0.0); // * (size));
-    fprintf(labelf, "ref: %s\n", "none none");
+    fprintf(labelf, "ref: %s\n", "center left");
 
     fprintf(labelf, "font: %s\n", p->font->answer);
     fprintf(labelf, "color: %s\n", p->color->answer);
 
     fprintf(labelf, "size: %lf\n", size);
 
-    fprintf(labelf, "width: %d\n", p->bowidth->answer);
+    fprintf(labelf, "width: %s\n", p->bowidth->answer);
     fprintf(labelf, "hcolor: %s\n", p->hlcolor->answer);
     fprintf(labelf, "hwidth: %d\n", hlwidth);
     fprintf(labelf, "background: %s\n", p->bgcolor->answer);
