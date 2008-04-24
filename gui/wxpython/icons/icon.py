@@ -118,7 +118,8 @@ icons_default = {
     "options"    : wx.ART_ERROR,
     "profile"    : 'gui-profile.gif',
     "transect"   : 'gui-profiledefine.gif',
-    "profiledraw": 'gui-profiledraw.gif',
+#    "profiledraw": 'gui-profiledraw.gif',
+    "profiledraw"  : 'gui-redraw.gif',
     "profileopt" : 'gui-profileopt.gif',
     # georectify
     'cleargcp'   : 'gui-gcperase.gif',
@@ -306,9 +307,9 @@ Icons = {
     # analyze raster
     "analyze"    : MetaIcon (img=icons_img["analyze"], label="Analyze map"),
     "measure"    : MetaIcon (img=icons_img["measure"], label="Measure distance"),
-    "transect"   : MetaIcon (img=icons_img["transect"], label="Draw transect to profile"),
+    "transect"   : MetaIcon (img=icons_img["transect"], label="Draw transect in map display window to profile"),
     "profile"    : MetaIcon (img=icons_img["profile"], label="Profile surface map"),
-    "profiledraw": MetaIcon (img=icons_img["profiledraw"], label="Create profile"),
+    "profiledraw": MetaIcon (img=icons_img["profiledraw"], label="Draw/re-draw profile"),
     "profileopt" : MetaIcon (img=icons_img["profileopt"], label="Profile options"),
     "histogram"  : MetaIcon (img=icons_img["histogram"], label="Create histogram of image or raster file"),
     "font"       : MetaIcon (img=icons_img["font"], label="Select font"),

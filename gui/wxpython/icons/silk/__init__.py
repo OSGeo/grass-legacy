@@ -80,6 +80,7 @@ IconsSilk = {
     "addchart"   : 'chart_bar.png',
     # profile analysis
     "transect"   : 'image_edit.png',
-    "profiledraw"   : 'page_white_lightning.png',
+#    "profiledraw"   : 'page_white_lightning.png',
+    "profiledraw"  : 'arrow_refresh.png',
     "profileopt"   : 'color_swatch.png',
     }

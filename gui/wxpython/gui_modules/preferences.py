@@ -143,7 +143,49 @@ class Settings:
                 'selectThresh'          : { 'value' : 10, 'units' : 'screen pixels'},
                 # exit
                 'saveOnExit'            : { 'enabled' : False },
-                }
+                },
+            'profile': {
+            'raster0' : { 'pcolor' : wx.Colour(0, 0, 255), # profile line color
+                          'pwidth' : 1, # profile line width
+                          'pstyle' : wx.SOLID, # profile line pen style
+                          'plegend' : _('Profile'), # profile legend string
+                          },
+            'raster1' : { 'pcolor' : wx.Colour(255, 0, 0), 
+                          'pwidth' : 1, 
+                          'pstyle' : wx.SOLID, 
+                          'plegend' : _('Profile'), 
+                          },
+            'raster2' : { 'pcolor' : wx.Colour(0, 255, 0), 
+                          'pwidth' : 1, 
+                          'pstyle' : wx.SOLID, 
+                          'plegend' : _('Profile'), 
+                          },
+            'font' : { 'titleSize' : 12,
+                       'axisSize' : 11,
+                       'legendSize' : 10,
+                       },
+            'marker' : { 'color' : wx.Colour(0, 0, 0),
+                         'fill' : wx.TRANSPARENT,
+                         'size' : 2,
+                         'type' : 'triangle',
+                         'legend' : _('Segment break'),
+                         },
+            'grid' : { 'color' : wx.Colour(200,200,200) ,
+                       'enabled' : True,
+                       },
+            'x-axis' : { 'type' : 'auto', # axis format
+                         'min' : 0, # axis min for custom axis range
+                         'max': 0, # axis max for custom axis range
+                         'log' : False,
+                         },
+            'y-axis' : { 'type' : 'auto', # axis format
+                         'min' : 0, # axis min for custom axis range
+                         'max': 0, # axis max for custom axis range
+                         'log' : False,
+                         },
+            'legend' : { 'enabled' : True
+                         },
+            },
             }
 
         #

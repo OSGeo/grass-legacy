@@ -37,6 +37,7 @@ import gcmd
 import grassenv
 import histogram
 import utils
+import profile
 from debug import Debug as Debug
 from icon import Icons as Icons
 from preferences import globalSettings as UserSettings
@@ -282,8 +283,10 @@ class LayerTree(CT.CustomTreeCtrl):
             self.popupMenu.AppendSeparator()
             self.popupMenu.Append(self.popupID4, _("Histogram"))
             self.Bind (wx.EVT_MENU, self.OnHistogram, id=self.popupID4)
-            self.popupMenu.Append(self.popupID5, _("Metadata"))
-            self.Bind (wx.EVT_MENU, self.OnMetadata, id=self.popupID5)
+            self.popupMenu.Append(self.popupID5, _("Profile"))
+            self.Bind (wx.EVT_MENU, self.OnProfile, id=self.popupID5)
+            self.popupMenu.Append(self.popupID6, _("Metadata"))
+            self.Bind (wx.EVT_MENU, self.OnMetadata, id=self.popupID6)
 
         ## self.PopupMenu(self.popupMenu, pos)
         self.PopupMenu(self.popupMenu)
@@ -305,17 +308,39 @@ class LayerTree(CT.CustomTreeCtrl):
         # print output to command log area
         self.gismgr.goutput.RunCmd(cmd)
 
+    def OnProfile(self, event):
+        """Plot profile of given raster map layer"""
+        mapLayer = self.GetPyData(self.layer_selected)[0]['maplayer']
+        if not mapLayer.name:
+            wx.MessageBox(parent=self,
+                          message=_("Unable to create profile of "
+                                    "raster map."),
+                          caption=_("Error"), style=wx.OK | wx.ICON_ERROR | wx.CENTRE)
+            return False
+
+        if not hasattr (self, "profileFrame"):
+            self.profileFrame = None
+
+        if hasattr (self.mapdisplay, "profile") and self.mapdisplay.profile:
+            self.profileFrame = self.mapdisplay.profile
+
+        if not self.profileFrame:
+            self.profileFrame = profile.ProfileFrame(self.mapdisplay,
+                                                     id=wx.ID_ANY, pos=wx.DefaultPosition, size=(700,300),
+                                                     style=wx.DEFAULT_FRAME_STYLE, rasterList=[mapLayer.name])
+            # show new display
+            self.profileFrame.Show()
+        
     def OnHistogram(self, event):
         """
         Plot histogram for given raster map layer
         """
         mapLayer = self.GetPyData(self.layer_selected)[0]['maplayer']
         if not mapLayer.name:
-            dlg = wx.MessageDialog(self, _("Unable to display histogram of "
-                                           "raster map."),
-                                   _("Error"), wx.OK | wx.ICON_ERROR)
-            dlg.ShowModal()
-            dlg.Destroy()
+            wx.MessageBox(parent=self,
+                          message=_("Unable to display histogram of "
+                                    "raster map."),
+                          caption=_("Error"), style=wx.OK | wx.ICON_ERROR | wx.CENTRE)
             return False
 
         if not hasattr (self, "histogramFrame"):
