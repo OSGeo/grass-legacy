@@ -1436,23 +1436,24 @@ class GMFrame(wx.Frame):
             self.MsgNoLayerSelected()
             return
 
-        layerName = str(self.curr_page.maptree.GetItemText(self.curr_page.maptree.layer_selected))
-        if layerName:
-            message = _("Do you want to remove map layer <%s> "
-                        "from layer tree?") % layerName
-        else:
-            message = _("Do you want to remove selected map layer "
-                        "from layer tree?")
+        if UserSettings.Get(group='manager', key='askOnRemoveLayer', subkey='enabled'):
+            layerName = str(self.curr_page.maptree.GetItemText(self.curr_page.maptree.layer_selected))
+            if layerName:
+                message = _("Do you want to remove map layer <%s> "
+                            "from layer tree?") % layerName
+            else:
+                message = _("Do you want to remove selected map layer "
+                            "from layer tree?")
 
-        dlg = wx.MessageDialog (parent=self, message=message,
-                                caption=_("Remove map layer"),
-                                style=wx.YES_NO | wx.YES_DEFAULT | wx.CANCEL | wx.ICON_QUESTION)
+            dlg = wx.MessageDialog (parent=self, message=message,
+                                    caption=_("Remove map layer"),
+                                    style=wx.YES_NO | wx.YES_DEFAULT | wx.CANCEL | wx.ICON_QUESTION)
 
-        if dlg.ShowModal() in [wx.ID_NO, wx.ID_CANCEL]:
+            if dlg.ShowModal() in [wx.ID_NO, wx.ID_CANCEL]:
+                dlg.Destroy()
+                return
+
             dlg.Destroy()
-            return
-
-        dlg.Destroy()
 
         for layer in self.curr_page.maptree.GetSelections():
             if self.curr_page.maptree.GetPyData(layer)[0]['type'] == 'group':

@@ -463,7 +463,7 @@ class LayerTree(CT.CustomTreeCtrl):
             self.groupnode += 1
         else:
             # all other items (raster, vector, ...)
-            if UserSettings.Get(group='general', key='changeOpacityLevel', subkey='enabled'):
+            if UserSettings.Get(group='manager', key='changeOpacityLevel', subkey='enabled'):
                 ctrl = wx.SpinCtrl(self, id=wx.ID_ANY, value="",
                                    style=wx.SP_ARROW_KEYS, initial=100, min=0, max=100,
                                    name='spinCtrl')
@@ -558,7 +558,7 @@ class LayerTree(CT.CustomTreeCtrl):
         if ltype != 'group':
             if lopacity:
                 opacity = lopacity
-                if UserSettings.Get(group='general', key='changeOpacityLevel', subkey='enabled'):
+                if UserSettings.Get(group='manager', key='changeOpacityLevel', subkey='enabled'):
                     ctrl.SetValue(int(lopacity * 100))
                 else:
                     if opacity < 1.0:
