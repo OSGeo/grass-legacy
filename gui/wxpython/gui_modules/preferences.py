@@ -56,10 +56,14 @@ class Settings:
             'general': {
                 # current mapset search path
                 'mapsetPath'  : { 'selection' : 0 }, 
+                # use default window layout (layer manager, displays, ...)
+                'defWindowPos' : { 'enabled' : False, 'dim' : '' },
+                },
+            'manager' : {
                 # show opacity level widget
                 'changeOpacityLevel' : { 'enabled' : False }, 
-                # use default window layout (layer manager, displays, ...)
-                'defWindowPos' : { 'enabled' : False, 'dim' : '' }, 
+                # ask when removing layer from layer tree
+                'askOnRemoveLayer' : { 'enabled' : True },
                 },
             #
             # display
@@ -528,12 +532,25 @@ class PreferencesDialog(wx.Dialog):
         changeOpacityLevel = wx.CheckBox(parent=panel, id=wx.ID_ANY,
                                        label=_("Opacity level editable"),
                                        name='IsChecked')
-        changeOpacityLevel.SetValue(self.settings.Get(group='general', key='changeOpacityLevel', subkey='enabled'))
-        self.winId['general:changeOpacityLevel:enabled'] = changeOpacityLevel.GetId()
+        changeOpacityLevel.SetValue(self.settings.Get(group='manager', key='changeOpacityLevel', subkey='enabled'))
+        self.winId['manager:changeOpacityLevel:enabled'] = changeOpacityLevel.GetId()
 
         gridSizer.Add(item=changeOpacityLevel,
                       pos=(row, 0), span=(1, 2))
-        
+
+        #
+        # ask when removing map layer from layer tree
+        #
+        row += 1
+        askOnRemoveLayer = wx.CheckBox(parent=panel, id=wx.ID_ANY,
+                                       label=_("Ask when removing map layer from layer tree"),
+                                       name='IsChecked')
+        askOnRemoveLayer.SetValue(self.settings.Get(group='manager', key='askOnRemoveLayer', subkey='enabled'))
+        self.winId['manager:askOnRemoveLayer:enabled'] = askOnRemoveLayer.GetId()
+
+        gridSizer.Add(item=askOnRemoveLayer,
+                      pos=(row, 0), span=(1, 2))
+
         sizer.Add(item=gridSizer, proportion=1, flag=wx.ALL | wx.EXPAND, border=5)
         border.Add(item=sizer, proportion=0, flag=wx.LEFT | wx.RIGHT | wx.BOTTOM | wx.EXPAND, border=3)
 
