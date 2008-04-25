@@ -149,20 +149,17 @@ class Settings:
                 'saveOnExit'            : { 'enabled' : False },
                 },
             'profile': {
-            'raster0' : { 'pcolor' : wx.Colour(0, 0, 255), # profile line color
+            'raster0' : { 'pcolor' : (0, 0, 255, 255), # profile line color
                           'pwidth' : 1, # profile line width
-                          'pstyle' : wx.SOLID, # profile line pen style
-                          'plegend' : _('Profile'), # profile legend string
+                          'pstyle' : 'solid', # profile line pen style
                           },
-            'raster1' : { 'pcolor' : wx.Colour(255, 0, 0), 
+            'raster1' : { 'pcolor' : (255, 0, 0, 255), 
                           'pwidth' : 1, 
-                          'pstyle' : wx.SOLID, 
-                          'plegend' : _('Profile'), 
+                          'pstyle' : 'solid', 
                           },
-            'raster2' : { 'pcolor' : wx.Colour(0, 255, 0), 
+            'raster2' : { 'pcolor' : (0, 255, 0, 255), 
                           'pwidth' : 1, 
-                          'pstyle' : wx.SOLID, 
-                          'plegend' : _('Profile'), 
+                          'pstyle' : 'solid', 
                           },
             'font' : { 'titleSize' : 12,
                        'axisSize' : 11,
