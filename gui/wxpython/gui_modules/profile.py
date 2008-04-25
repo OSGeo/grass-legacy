@@ -72,6 +72,13 @@ class ProfileFrame(wx.Frame):
         self.mapwin = self.parent.MapWindow
         self.Map = render.Map()  # instance of render.Map to be associated with display
 
+        self.pstyledict = { 'solid' : wx.SOLID,
+                            'dot' : wx.DOT,
+                            'long-dash' : wx.LONG_DASH,
+                            'short-dash' : wx.SHORT_DASH,
+                            'dot-dash' : wx.DOT_DASH }
+
+
         wx.Frame.__init__(self, parent, id, title, pos, size, style)
 
         #
@@ -114,14 +121,17 @@ class ProfileFrame(wx.Frame):
         # 0    -> default raster map to profile
         # 1, 2 -> optional raster map to profile
         # units -> map data units (used for y axis legend)
-        self.raster = { 0 : UserSettings.Get(group='profile', key='raster0'),
-                        1 : UserSettings.Get(group='profile', key='raster1'),
-                        2 : UserSettings.Get(group='profile', key='raster2') }
-        for r in self.raster.itervalues():
-            r['name'] = ''
-            r['units'] = ''
-            r['datalist'] = [] # list of distance,value pairs for plotting profile
-            r['pline'] = None # first (default) profile line
+        self.raster = {}
+        for idx in (0, 1, 2):
+            self.raster[idx] = {}
+            self.raster[idx]['name'] = ''
+            self.raster[idx]['units'] = ''
+            self.raster[idx]['plegend'] = ''
+            # list of distance,value pairs for plotting profile
+            self.raster[idx]['datalist'] = []
+            # first (default) profile line
+            self.raster[idx]['pline'] = None
+            self.raster[idx]['prop'] = UserSettings.Get(group='profile', key='raster' + str(idx))
 
         # set raster map name (if given)
         for idx in range(len(rasterList)):
@@ -140,9 +150,6 @@ class ProfileFrame(wx.Frame):
 
         # title of window
         self.ptitle = _('Profile of')
-        for r in self.raster.keys():
-            if self.raster[r]['name'] != '':
-                self.ptitle += ' %s' % self.raster[r]['name']
 
         # determine units (axis labels)
         if self.parent.projinfo['units'] != '':
@@ -152,19 +159,22 @@ class ProfileFrame(wx.Frame):
         self.ylabel = _("Cell values")
 
         self.properties = {}
-        self.properties['font'] = UserSettings.Get(group='profile', key='font')
+        self.properties['font'] = {}
+        self.properties['font']['prop'] = UserSettings.Get(group='profile', key='font')
         self.properties['font']['wxfont'] = wx.Font(11, wx.FONTFAMILY_SWISS,
                                                     wx.FONTSTYLE_NORMAL,
                                                     wx.FONTWEIGHT_NORMAL)
         self.properties['marker'] = UserSettings.Get(group='profile', key='marker')
 
         self.properties['grid'] = UserSettings.Get(group='profile', key='grid')
-                                    
-        self.properties['x-axis'] = UserSettings.Get(group='profile', key='x-axis')
+        
+        self.properties['x-axis'] = {}
+        self.properties['x-axis']['prop'] = UserSettings.Get(group='profile', key='x-axis')
         self.properties['x-axis']['axis'] = None
 
-        self.properties['y-axis'] = UserSettings.Get(group='profile', key='y-axis')
-        self.properties['x-axis']['axis'] = None
+        self.properties['y-axis'] = {}
+        self.properties['y-axis']['prop'] = UserSettings.Get(group='profile', key='y-axis')
+        self.properties['y-axis']['axis'] = None
         self.properties['legend'] = UserSettings.Get(group='profile', key='legend')
         
         # zooming disabled
@@ -177,8 +187,8 @@ class ProfileFrame(wx.Frame):
 
         # x and y axis set to normal (non-log)
         self.client.setLogScale((False, False)) 
-        self.client.SetXSpec(self.properties['x-axis']['type'])
-        self.client.SetYSpec(self.properties['y-axis']['type'])
+        self.client.SetXSpec(self.properties['x-axis']['prop']['type'])
+        self.client.SetYSpec(self.properties['y-axis']['prop']['type'])
 
         #
         # Bind various events
@@ -214,7 +224,8 @@ class ProfileFrame(wx.Frame):
                 self.raster[r]['name'] = dlg.raster[r]['name']
 
             # plot profile
-            self.OnCreateProfile(event=None)
+            if self.raster[0]['name']:
+                self.OnCreateProfile(event=None)
 
         dlg.Destroy()
 
@@ -240,18 +251,8 @@ class ProfileFrame(wx.Frame):
                 else:
                     self.coordstr = '%s,%d,%d' % (self.coordstr, point[0], point[1])
 
-        else:
-            wx.MessageBox(parent=self,
-                          message=_('You must draw a transect to profile in the map display window.'),
-                          caption=_('Nothing to profile'),
-                          style=wx.OK | wx.ICON_INFORMATION | wx.CENTRE)
-            return
-
         if self.raster[0]['name'] == '':
             return
-
-        # set default title and legend text
-        self.ptitle = _('Profile of')
 
         #
         # create datalist for each raster map
@@ -260,11 +261,11 @@ class ProfileFrame(wx.Frame):
             if r['name'] == '':
                 continue
             r['datalist'] = self.CreateDatalist(r['name'], self.coordstr)
-            r['plegend'] = _(' Profile of %s') % r['name']
+            r['plegend'] = _('Profile of %s') % r['name']
 
 
             p = gcmd.Command(['r.info',
-                              'map=%s' % self.raster[0]['name'],
+                              'map=%s' % r['name'],
                               '-u',
                               '--quiet'])
             r['units'] = p.ReadStdOutput()[0].split('=')[1]
@@ -324,51 +325,54 @@ class ProfileFrame(wx.Frame):
         Set plot and text options
         """
         self.client.SetFont(self.properties['font']['wxfont'])
-        self.client.SetFontSizeTitle(self.properties['font']['titleSize'])
-        self.client.SetFontSizeAxis(self.properties['font']['axisSize'])
+        self.client.SetFontSizeTitle(self.properties['font']['prop']['titleSize'])
+        self.client.SetFontSizeAxis(self.properties['font']['prop']['axisSize'])
 
         self.client.SetEnableZoom(self.zoom)
         self.client.SetEnableDrag(self.drag)
         
-        if self.properties['x-axis']['type'] == 'custom':
+        if self.properties['x-axis']['prop']['type'] == 'custom':
             self.client.SetXSpec('min')
         else:
-            self.client.SetXSpec(self.properties['x-axis']['type'])
+            self.client.SetXSpec(self.properties['x-axis']['prop']['type'])
 
-        if self.properties['y-axis']['type'] == 'custom':
+        if self.properties['y-axis']['prop']['type'] == 'custom':
             self.client.SetYSpec('min')
         else:
-            self.client.SetYSpec(self.properties['y-axis']['type'])
+            self.client.SetYSpec(self.properties['y-axis']['prop']['type'])
 
-        if self.properties['x-axis']['type'] == 'custom' and \
-               self.properties['x-axis']['min'] != self.properties['x-axis']['max']:
-            self.properties['x-axis']['axis'] = (self.properties['x-axis']['min'],
-                                                 self.properties['x-axis']['max'])
+        if self.properties['x-axis']['prop']['type'] == 'custom' and \
+               self.properties['x-axis']['prop']['min'] != self.properties['x-axis']['prop']['max']:
+            self.properties['x-axis']['prop']['axis'] = (self.properties['x-axis']['prop']['min'],
+                                                         self.properties['x-axis']['prop']['max'])
         else:
             self.properties['x-axis']['axis'] = None
 
-        if self.properties['y-axis']['type'] == 'custom' and \
-               self.properties['y-axis']['min'] != self.properties['y-axis']['max']:
-            self.properties['y-axis']['axis'] = (self.properties['y-axis']['min'],
-                                                 self.properties['y-axis']['max'])
+        if self.properties['y-axis']['prop']['type'] == 'custom' and \
+                self.properties['y-axis']['prop']['min'] != self.properties['y-axis']['prop']['max']:
+            self.properties['y-axis']['axis'] = (self.properties['y-axis']['prop']['min'],
+                                                 self.properties['y-axis']['prop']['max'])
         else:
             self.properties['y-axis']['axis'] = None
 
         self.client.SetEnableGrid(self.properties['grid']['enabled'])
-        self.client.SetGridColour(self.properties['grid']['color'])
+        self.client.SetGridColour(wx.Color(self.properties['grid']['color'][0],
+                                           self.properties['grid']['color'][1],
+                                           self.properties['grid']['color'][2],
+                                           255))
 
-        self.client.SetFontSizeLegend(self.properties['font']['legendSize'])
+        self.client.SetFontSizeLegend(self.properties['font']['prop']['legendSize'])
         self.client.SetEnableLegend(self.properties['legend']['enabled'])
 
-        if self.properties['x-axis']['log'] == True:
+        if self.properties['x-axis']['prop']['log'] == True:
             self.properties['x-axis']['axis'] = None
             self.client.SetXSpec('min')
-        if self.properties['y-axis']['log'] == True:
+        if self.properties['y-axis']['prop']['log'] == True:
             self.properties['y-axis']['axis'] = None
             self.client.SetYSpec('min')
             
-        self.client.setLogScale((self.properties['x-axis']['log'],
-                                 self.properties['y-axis']['log']))
+        self.client.setLogScale((self.properties['x-axis']['prop']['log'],
+                                 self.properties['y-axis']['prop']['log']))
 
         # self.client.SetPointLabelFunc(self.DrawPointLabel())
 
@@ -401,7 +405,7 @@ class ProfileFrame(wx.Frame):
         segments, these are drawn as points. Profile transect is drawn, using
         methods in mapdisp.py
         """
-        if self.raster[0]['name'] == '':
+        if len(self.mapwin.polycoords) == 0 or self.raster[0]['name'] == '':
             dlg = wx.MessageDialog(parent=self,
                                    message=_('You must draw a transect to profile in the map display window.'),
                                    caption=_('Nothing to profile'),
@@ -433,15 +437,15 @@ class ProfileFrame(wx.Frame):
         self.plotlist = []
         for r in self.raster.itervalues():
             if len(r['datalist']) > 0:
-                col = wx.Color(r['pcolor'][0],
-                               r['pcolor'][1],
-                               r['pcolor'][2],
-                               r['pcolor'][3])
+                col = wx.Color(r['prop']['pcolor'][0],
+                               r['prop']['pcolor'][1],
+                               r['prop']['pcolor'][2],
+                               255)
                 r['pline'] = plot.PolyLine(r['datalist'],
                                            colour=col,
-                                           width=r['pwidth'],
-                                           style=r['pstyle'],
-                                           legend=' ' + r['plegend'])
+                                           width=r['prop']['pwidth'],
+                                           style=self.pstyledict[r['prop']['pstyle']],
+                                           legend=r['plegend'])
 
                 self.plotlist.append(r['pline'])
 
@@ -458,15 +462,15 @@ class ProfileFrame(wx.Frame):
                                          self.xlabel,
                                          self.ylabel)
 
-        if self.properties['x-axis']['type'] == 'custom':
+        if self.properties['x-axis']['prop']['type'] == 'custom':
             self.client.SetXSpec('min')
         else:
-            self.client.SetXSpec(self.properties['x-axis']['type'])
+            self.client.SetXSpec(self.properties['x-axis']['prop']['type'])
 
-        if self.properties['y-axis']['type'] == 'custom':
+        if self.properties['y-axis']['prop']['type'] == 'custom':
             self.client.SetYSpec('min')
         else:
-            self.client.SetYSpec(self.properties['y-axis']['type'])
+            self.client.SetYSpec(self.properties['y-axis']['prop']['type'])
 
         self.client.Draw(self.profile, self.properties['x-axis']['axis'],
                          self.properties['y-axis']['axis'])
@@ -619,8 +623,8 @@ class ProfileFrame(wx.Frame):
             dlg.UpdateSettings()
 
             self.client.SetFont(self.properties['font']['wxfont'])
-            self.client.SetFontSizeTitle(self.properties['font']['titleSize'])
-            self.client.SetFontSizeAxis(self.properties['font']['axisSize'])
+            self.client.SetFontSizeTitle(self.properties['font']['prop']['titleSize'])
+            self.client.SetFontSizeAxis(self.properties['font']['prop']['axisSize'])
 
             self.profile.setTitle(dlg.ptitle)
             self.profile.setXLabel(dlg.xlabel)
@@ -846,7 +850,7 @@ class TextDialog(wx.Dialog):
         self.ptitlesize = wx.SpinCtrl(parent=self, id=wx.ID_ANY, value="", pos=(30, 50),
                                       size=(50,-1), style=wx.SP_ARROW_KEYS)
         self.ptitlesize.SetRange(5,100)
-        self.ptitlesize.SetValue(int(self.properties['font']['titleSize']))
+        self.ptitlesize.SetValue(int(self.properties['font']['prop']['titleSize']))
         gridSizer.Add(item=self.ptitlesize, pos=(1, 1))
 
         #
@@ -877,7 +881,7 @@ class TextDialog(wx.Dialog):
         self.axislabelsize = wx.SpinCtrl(parent=self, id=wx.ID_ANY, value="", pos=(30, 50),
                                          size=(50, -1), style=wx.SP_ARROW_KEYS)
         self.axislabelsize.SetRange(5, 100) 
-        self.axislabelsize.SetValue(int(self.properties['font']['axisSize']))
+        self.axislabelsize.SetValue(int(self.properties['font']['prop']['axisSize']))
         gridSizer.Add(item=self.axislabelsize, pos=(4,1))
 
         boxSizer.Add(item=gridSizer)
@@ -974,8 +978,8 @@ class TextDialog(wx.Dialog):
         self.ylabel = event.GetString()
 
     def UpdateSettings(self):
-        self.properties['font']['titleSize'] = self.ptitlesize.GetValue()
-        self.properties['font']['axisSize'] = self.axislabelsize.GetValue()
+        self.properties['font']['prop']['titleSize'] = self.ptitlesize.GetValue()
+        self.properties['font']['prop']['axisSize'] = self.axislabelsize.GetValue()
 
         family = self.ffamilydict[self.ffamilycb.GetStringSelection()]
         self.properties['font']['wxfont'].SetFamily(family)
@@ -993,12 +997,7 @@ class OptDialog(wx.Dialog):
         marker size, color, fill, and style; grid and legend options.
         """
         # init variables
-
-        self.pstyledict = { 'solid' : wx.SOLID,
-                            'dot' : wx.DOT,
-                            'long-dash' : wx.LONG_DASH,
-                            'short-dash' : wx.SHORT_DASH,
-                            'dot-dash' : wx.DOT_DASH }
+        self.pstyledict = parent.pstyledict
 
         self.pttypelist = ['circle',
                            'dot',
@@ -1012,7 +1011,7 @@ class OptDialog(wx.Dialog):
                             'solid' : wx.SOLID }
 
         self.axislist = ['min',
-                         'auto'
+                         'auto',
                          'custom']
 
         # widgets ids
@@ -1052,7 +1051,7 @@ class OptDialog(wx.Dialog):
             row = 0            
             label = wx.StaticText(parent=self, id=wx.ID_ANY, label=_("Line color"))
             gridSizer.Add(item=label, flag=wx.ALIGN_CENTER_VERTICAL, pos=(row, 0))
-            pcolor = csel.ColourSelect(parent=self, id=wx.ID_ANY, colour=r['pcolor'])
+            pcolor = csel.ColourSelect(parent=self, id=wx.ID_ANY, colour=r['prop']['pcolor'])
             self.wxId['pcolor'].append(pcolor.GetId())
             gridSizer.Add(item=pcolor, pos=(row, 1))
 
@@ -1062,7 +1061,7 @@ class OptDialog(wx.Dialog):
             pwidth = wx.SpinCtrl(parent=self, id=wx.ID_ANY, value="",
                                  size=(50,-1), style=wx.SP_ARROW_KEYS)
             pwidth.SetRange(1, 10)
-            pwidth.SetValue(r['pwidth'])
+            pwidth.SetValue(r['prop']['pwidth'])
             self.wxId['pwidth'].append(pwidth.GetId())
             gridSizer.Add(item=pwidth, pos=(row, 1))
 
@@ -1071,6 +1070,7 @@ class OptDialog(wx.Dialog):
             gridSizer.Add(item=label, flag=wx.ALIGN_CENTER_VERTICAL, pos=(row, 0))
             pstyle = wx.ComboBox(parent=self, id=wx.ID_ANY, 
                                  size=(120, -1), choices=self.pstyledict.keys(), style=wx.CB_DROPDOWN)
+            pstyle.SetStringSelection(r['prop']['pstyle'])
             self.wxId['pstyle'].append(pstyle.GetId())
             gridSizer.Add(item=pstyle, pos=(row, 1))
 
@@ -1171,7 +1171,7 @@ class OptDialog(wx.Dialog):
             boxSizer = wx.StaticBoxSizer(box, wx.HORIZONTAL)
             gridSizer = wx.GridBagSizer(vgap=5, hgap=5)
 
-            prop = self.properties[atype]
+            prop = self.properties[atype]['prop']
             
             row = 0
             label = wx.StaticText(parent=self, id=wx.ID_ANY, label=_("Style"))
@@ -1246,7 +1246,7 @@ class OptDialog(wx.Dialog):
         legendfontsize = wx.SpinCtrl(parent=self, id=wx.ID_ANY, value="", 
                                      size=(50, -1), style=wx.SP_ARROW_KEYS)
         legendfontsize.SetRange(5,100)
-        legendfontsize.SetValue(int(self.properties['font']['legendSize']))
+        legendfontsize.SetValue(int(self.properties['font']['prop']['legendSize']))
         self.wxId['font']['legendSize'] = legendfontsize.GetId()
         gridSizer.Add(item=legendfontsize, pos=(row, 1))
 
@@ -1287,9 +1287,9 @@ class OptDialog(wx.Dialog):
     def UpdateSettings(self):
         idx = 0
         for r in self.raster.itervalues():
-            r['pcolor'] = self.FindWindowById(self.wxId['pcolor'][idx]).GetColour()[0:5] #?
-            r['pwidth'] = int(self.FindWindowById(self.wxId['pwidth'][idx]).GetValue())
-            r['pstyle'] = self.FindWindowById(self.wxId['pstyle'][idx]).GetStringSelection()
+            r['prop']['pcolor'] = self.FindWindowById(self.wxId['pcolor'][idx]).GetColour()
+            r['prop']['pwidth'] = int(self.FindWindowById(self.wxId['pwidth'][idx]).GetValue())
+            r['prop']['pstyle'] = self.pstyledict[self.FindWindowById(self.wxId['pstyle'][idx]).GetStringSelection()]
             r['plegend'] = self.FindWindowById(self.wxId['plegend'][idx]).GetValue()
             idx +=1
 
@@ -1300,15 +1300,15 @@ class OptDialog(wx.Dialog):
         self.properties['marker']['legend'] = self.FindWindowById(self.wxId['marker']['legend']).GetValue()
 
         for axis in ('x-axis', 'y-axis'):
-            self.properties[axis]['type'] = self.FindWindowById(self.wxId[axis]['type']).GetValue()
-            self.properties[axis]['min'] = self.FindWindowById(self.wxId[axis]['min']).GetValue()
-            self.properties[axis]['max'] = self.FindWindowById(self.wxId[axis]['max']).GetValue()
-            self.properties[axis]['log'] = self.FindWindowById(self.wxId[axis]['log']).IsChecked()
+            self.properties[axis]['prop']['type'] = self.FindWindowById(self.wxId[axis]['type']).GetValue()
+            self.properties[axis]['prop']['min'] = self.FindWindowById(self.wxId[axis]['min']).GetValue()
+            self.properties[axis]['prop']['max'] = self.FindWindowById(self.wxId[axis]['max']).GetValue()
+            self.properties[axis]['prop']['log'] = self.FindWindowById(self.wxId[axis]['log']).IsChecked()
 
         self.properties['grid']['color'] = self.FindWindowById(self.wxId['grid']['color']).GetColour()
         self.properties['grid']['enabled'] = self.FindWindowById(self.wxId['grid']['enabled']).IsChecked()
 
-        self.properties['font']['legendSize'] = self.FindWindowById(self.wxId['font']['legendSize']).GetValue()
+        self.properties['font']['prop']['legendSize'] = self.FindWindowById(self.wxId['font']['legendSize']).GetValue()
         self.properties['legend']['enabled'] = self.FindWindowById(self.wxId['legend']['enabled']).IsChecked()
 
 
