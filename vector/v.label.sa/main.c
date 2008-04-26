@@ -71,32 +71,44 @@ int main(int argc, char *argv[])
 
 /* dumping the skyline of the labels */
 /*    {
+	int n=1;
 	char *f;
 	FILE *skyf;
 	f = G_tempfile();
 	skyf = fopen(f, "w");
-	printf("Writing label skylines to file %s", f);
+	printf("Writing label skylines & label points to file %s", f);
 	fprintf(skyf, "VERTI:\n");
+	printf("\n%d labels:\n", n_labels);
 	for (i = 0; i < n_labels; i++) {
-	    int j;
+	    printf("%s has %d candidates\n", labels[i].text, labels[i].n_candidates);
 	    if (labels[i].n_candidates > 0) {
+		int j;
 		label_t *l = &labels[i];
-		label_candidate_t *cc = &l->candidates[l->current_candidate];
-		struct line_pnts *sky = skyline_trans_rot(l->skyline,
-							  &cc->point,
-							  cc->rotation);
-		fprintf(skyf, "L %d 1\n", sky->n_points);
-		for(j=0;j < sky->n_points; j++) {
-		    fprintf(skyf, " %.12f %.12f\n", sky->x[j], sky->y[j]);
+		j = l->current_candidate;
+//		for(j=0; j < l->n_candidates; j++) {
+		{
+		    int k;
+		    label_candidate_t *cc = &l->candidates[j];
+		    struct line_pnts *sky = skyline_trans_rot(l->skyline,
+							      &cc->point,
+							      cc->rotation);
+		    fprintf(skyf, "L %d 1\n", sky->n_points);
+		    for(k=0;k < sky->n_points; k++) {
+			fprintf(skyf, " %.12f %.12f\n", sky->x[k], sky->y[k]);
+		    }
+		    fprintf(skyf, " %-5d %-10d\n", 1, 1000+n);
+		    // The label point
+		    fprintf(skyf, "P 1 1\n");
+		    fprintf(skyf, " %.12f %.12f\n", cc->point.x, cc->point.y);
+		    fprintf(skyf, " %-5d %-10d\n", 1, 2000+n);
+		    n++;
 		}
-		fprintf(skyf, " %-5d %-10d\n", 1, i+1);
 	    }
-	    G_percent(i, (n_labels - 1), 1);
     	}
 	free(f);
     	fclose(skyf);
-    }
-*/
+    }*/
+
     return EXIT_SUCCESS;
 }
 
@@ -228,7 +240,7 @@ void print_label(FILE * labelf, label_t * label, struct params *p)
     fprintf(labelf, "north: %lf\n", label->candidates[cc].point.y);
     fprintf(labelf, "xoffset: %lf\n", 0.0); // * (size));
     fprintf(labelf, "yoffset: %lf\n", 0.0); // * (size));
-    fprintf(labelf, "ref: %s\n", "center left");
+    fprintf(labelf, "ref: %s\n", "bottom left");
 
     fprintf(labelf, "font: %s\n", p->font->answer);
     fprintf(labelf, "color: %s\n", p->color->answer);

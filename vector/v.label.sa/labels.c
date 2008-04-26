@@ -101,7 +101,7 @@ label_t *labels_init(struct params *p, int *n_labels)
     buffer = atof(p->isize->answer);
 
     /* use 1 point = 1 map unit */
-    if (FT_Set_Char_Size(face, (int)(font_size * 64.0), 0, 100, 100))
+    if (FT_Set_Char_Size(face, (int)((font_size*0.95) * 64.0), 0, 100, 100))
 	G_fatal_error(_("Unable to set font size"));
 
     /* start reading the map */
@@ -331,7 +331,7 @@ void label_candidates(label_t * labels, int n_labels)
 	G_percent(i, n_labels - 1, 1);
 	switch (labels[i].type) {
 	case GV_POINT:
-	    G_debug(1, "Line (%d): %s", i, labels[i].text);
+	    G_debug(3, "Line (%d): %s", i, labels[i].text);
 	    label_point_candidates(&labels[i]);
 	    break;
 	case GV_LINE:
@@ -456,7 +456,7 @@ static void label_point_candidates(label_t * label)
 	candidates[i].score += 10.0 * label_pointover(label, &candidates[i]);
 	candidates[i].score += 15.0 * label_lineover(label, &candidates[i],
 						     GV_LINE);
-	G_debug(1, "calling label_lineover('%s', %d)", label->text, i);
+	G_debug(5, "calling label_lineover('%s', %d)", label->text, i);
 	candidates[i].score += 10.0 * label_lineover(label, &candidates[i],
 						     GV_BOUNDARY);
 	candidates[i].rotation = 0;
@@ -529,6 +529,7 @@ static void label_line_candidates(label_t * label)
 		pos, i, p1.x, p1.y, p2.x, p2.y);
 
 	angle = atan2((p2.y - p1.y), (p2.x - p1.x));
+	
 	if ((angle > M_PI / 2) || (angle < -M_PI / 2)) {
 	    /* turn label around 180 degrees if it would be upside down */
 	    double tmp;
@@ -540,8 +541,6 @@ static void label_line_candidates(label_t * label)
 	    p1.y = p2.y;
 	    p2.y = tmp;
 
-	    /*                              p1.x = p1.x + length * cos(angle);
-	     * p1.x = p1.x + length * sin(angle); */
 	    if (angle < 0)
 		angle += M_PI;
 	    else
@@ -601,16 +600,16 @@ static void label_line_candidates(label_t * label)
 	    below_distance = height - label->bb.S;
 	}
 
-	/* place a skyline at 1.1 * above_distance above line, and
-	 * 1.1 * below_distance + height below line */
+	/* place a skyline at above_distance above line, and
+	 * below_distance + height below line */
 	{
 	    label_point_t tp;
 
-	    tp.x = p1.x - 1.1 * above_distance * sin(angle);
-	    tp.y = p1.y + 1.1 * above_distance * cos(angle);
+	    tp.x = p1.x - above_distance * sin(angle);
+	    tp.y = p1.y + above_distance * cos(angle);
 	    above_skyline = skyline_trans_rot(label->skyline, &tp, angle);
-	    tp.x = p1.x + (1.1 * below_distance + height) * sin(angle);
-	    tp.y = p1.y - (1.1 * below_distance + height) * cos(angle);
+	    tp.x = p1.x + (below_distance + height) * sin(angle);
+	    tp.y = p1.y - (below_distance + height) * cos(angle);
 	    below_skyline = skyline_trans_rot(label->skyline, &tp, angle);
 	}
 	/* find minimum distance between swath line and skylines */
@@ -620,10 +619,9 @@ static void label_line_candidates(label_t * label)
 	minimum_below_distance = min_dist_2_lines(below_skyline,
 						  below_candidates[i].swathline,
 						  &minimum_below_distance_p);
-
+	
 	/* adjust skylines so that the minimum distance is equal to the ideal
 	 * distance (= 0.3 * glyph height of capital X) */
-
 	above_distance += ideal_distance - minimum_above_distance;
 	below_distance += ideal_distance - minimum_below_distance;
 
@@ -647,13 +645,16 @@ static void label_line_candidates(label_t * label)
 	above_candidates[i].rotation = angle;
 	below_candidates[i].rotation = angle;
 
+	above_candidates[i].score = 0.0;
+	below_candidates[i].score = 0.0;
 	/* AveDist */
 	above_candidates[i].score += label_avedist(label, &above_candidates[i]);
 	below_candidates[i].score += label_avedist(label, &below_candidates[i]);
-
+	
 	/* flatness */
 	flatness = label_flatness(label, &above_candidates[i]);
 	above_candidates[i].score += flatness;
+	flatness = label_flatness(label, &below_candidates[i]);
 	below_candidates[i].score += flatness;
 
 	/* centerdness */
@@ -671,16 +672,10 @@ static void label_line_candidates(label_t * label)
 	above_candidates[i].lineover = 15.0 *
 	    label_lineover(label, &above_candidates[i], GV_LINE);
 	above_candidates[i].score += above_candidates[i].lineover;
-if(label->cat == 1) {
-	printf("%s: above candidate %d: lineover=%lf score=%lf\n",label->text, i, above_candidates[i].lineover, above_candidates[i].score);
-}
 
 	below_candidates[i].lineover = 15.0 *
 	    label_lineover(label, &below_candidates[i], GV_LINE);
 	below_candidates[i].score += below_candidates[i].lineover;
-if(label->cat == 1) {
-	printf("%s: below candidate %d: lineover=%lf score=%lf\n",label->text, i, below_candidates[i].lineover, below_candidates[i].score);
-}
 
 	/* AreaOver */
 	above_candidates[i].score += 10.0 *
@@ -689,11 +684,12 @@ if(label->cat == 1) {
 	    label_lineover(label, &below_candidates[i], GV_BOUNDARY);
 
 	/* aboveness */
-	below_candidates[i].score += 0.25;
+	below_candidates[i].score += 1.25;
 
 	i++;
     }
     n = i;
+    
     if (n == 0) {
 	/* treat the line as a point feature */
 	struct line_pnts *tmp, *tmp_shape;
@@ -712,47 +708,33 @@ if(label->cat == 1) {
 	return;
     }
 
-    /* pick the 32 best candidates */
-    qsort(above_candidates, n, sizeof(label_candidate_t), candidate_compare);
-    qsort(below_candidates, n, sizeof(label_candidate_t), candidate_compare);
-
-    if (n > 32)
-	n_c = 32;
-    else
-	n_c = n;
-
-    candidates = calloc(n_c, sizeof(label_candidate_t));
-    for (i = 0; i < n_c; i++) {
-	if (candidate_compare(&below_candidates[i], &above_candidates[i]) < 0) {
-	    memcpy(&candidates[i], &below_candidates[i],
-		   sizeof(label_candidate_t));
-	    memset(&below_candidates[i], 0, sizeof(label_candidate_t));
-	}
-	else {
-	    memcpy(&candidates[i], &above_candidates[i],
-		   sizeof(label_candidate_t));
-	    memset(&above_candidates[i], 0, sizeof(label_candidate_t));
-	}
-
-	if (candidates[i].above) {
-	    Vect_destroy_line_struct(below_candidates[i].baseline);
-	    Vect_destroy_line_struct(below_candidates[i].swathline);
-	}
-	else {
-	    Vect_destroy_line_struct(above_candidates[i].baseline);
-	    Vect_destroy_line_struct(above_candidates[i].swathline);
-	}
-    }
-
-    for (; i < n; i++) {
-	Vect_destroy_line_struct(above_candidates[i].baseline);
-	Vect_destroy_line_struct(above_candidates[i].swathline);
-	Vect_destroy_line_struct(below_candidates[i].baseline);
-	Vect_destroy_line_struct(below_candidates[i].swathline);
+    candidates = calloc(n*2, sizeof(label_candidate_t));
+    for (i = 0; i < n; i++) {
+	memcpy(&candidates[i*2], &above_candidates[i],
+	       sizeof(label_candidate_t));
+	memcpy(&candidates[i*2+1], &below_candidates[i],
+	       sizeof(label_candidate_t));
     }
     free(above_candidates);
     free(below_candidates);
 
+    n_c = n*2;
+    /* pick the 32 best candidates */
+    qsort(candidates, n_c, sizeof(label_candidate_t), candidate_compare);
+
+    if(n_c > 32) {
+	label_candidate_t *tmp;
+	for (i=32; i < n; i++) {
+	    Vect_destroy_line_struct(candidates[i].baseline);
+	    Vect_destroy_line_struct(candidates[i].swathline);
+	}
+	
+	tmp = realloc(candidates, sizeof(label_candidate_t)*32);
+	if(tmp != NULL) {
+	    candidates = tmp;
+	}
+	n_c = 32;
+    }
     label->current_candidate =
 	(int)((double)(n_c) * (rand() / (RAND_MAX + 1.0)));
     label->candidates = candidates;
@@ -812,27 +794,30 @@ static struct line_pnts *box_trans_rot(BOUND_BOX * bb, label_point_t * p,
 				       double angle)
 {
     struct line_pnts *Points;
-    double x0, y0, x, y;
+    double x0, y0, x1, y1, x2, y2;
 
     Points = Vect_new_line_struct();
 
-    x0 = bb->W * cos(angle) - bb->N * sin(angle);
-    y0 = bb->W * sin(angle) + bb->E * cos(angle);
-    Vect_append_point(Points, x0 + p->x, y0 + p->y, 0);
+    /* Lower Left, no rotation needed */
+    x0 = p->x + bb->W;
+    y0 = p->y + bb->S;
+    Vect_append_point(Points, x0, y0, 0);
+    /* Lower Right */
+    x1 = (bb->E - bb->W) * cos(angle);
+    y1 = (bb->E - bb->W) * sin(angle);
+    Vect_append_point(Points, x0 + x1, y0 + y1, 0);
 
-    x = bb->E * cos(angle) - bb->N * sin(angle);
-    y = bb->E * sin(angle) + bb->N * cos(angle);
-    Vect_append_point(Points, x + p->x, y + p->y, 0);
+    /* Upper Right */
+    x2 = (bb->N - bb->S) * sin(angle);
+    y2 = (bb->N - bb->S) * cos(angle);	
+    /* First translate to LR, and then translate like UL */
+    Vect_append_point(Points, x0 + x1 - x2, y0 + y1 + y2, 0);
 
-    x = bb->E * cos(angle) - bb->S * sin(angle);
-    y = bb->E * sin(angle) + bb->S * cos(angle);
-    Vect_append_point(Points, x + p->x, y + p->y, 0);
+    /* Upper Left */
+    Vect_append_point(Points, x0 - x2, y0 + y2, 0);
 
-    x = bb->W * cos(angle) - bb->S * sin(angle);
-    y = bb->W * sin(angle) + bb->S * cos(angle);
-    Vect_append_point(Points, x + p->x, y + p->y, 0);
-    // close line;
-    Vect_append_point(Points, x0 + p->x, y0 + p->y, 0);
+    /* close polygon */
+    Vect_append_point(Points, x0, y0, 0);
 
     return Points;
 }
@@ -888,14 +873,22 @@ static double label_flatness(label_t * label, label_candidate_t * candidate)
     double flatness = 0.0, x0, y0, x1, y1, x2, y2;
     int i;
 
-/* first generate a line which is parallel to the baseline, 
-   but the ideal distance away from it.*/
+    /* first generate a line which is parallel to the baseline, 
+     but the ideal distance away from it, and is between the label and the
+     base line */
     line = Vect_new_line_struct();
-    x0 = x1 = candidate->point.x + ideal_distance * cos(candidate->rotation);
-    y0 = y1 = candidate->point.y - ideal_distance * sin(candidate->rotation);
+    if(candidate->above) {
+	x0 = x1 = candidate->point.x + ideal_distance * sin(candidate->rotation);
+	y0 = y1 = candidate->point.y - ideal_distance * cos(candidate->rotation);
+    }
+    else {
+	x0 = x1 = candidate->point.x - ideal_distance * sin(candidate->rotation);
+	y0 = y1 = candidate->point.y + ideal_distance * cos(candidate->rotation);
+    }
+
     Vect_append_point(line, x1, y1, 0);
-    x2 = x1 + (label->bb.E - label->bb.W) * cos(candidate->rotation);
-    y2 = y1 + (label->bb.E - label->bb.W) * sin(candidate->rotation);
+    x2 = x1 + (label->bb.E - label->bb.W) * sin(candidate->rotation);
+    y2 = y1 + (label->bb.E - label->bb.W) * cos(candidate->rotation);
     Vect_append_point(line, x2, y2, 0);
 
     /* now calculate the are between candidate->swathline and line */
@@ -973,21 +966,16 @@ static double label_pointover(label_t * label, label_candidate_t * candidate)
 {
     double pointover;
     struct ilist *il;
-    struct line_pnts *trsk;
-    BOUND_BOX bb;
-
+    struct line_pnts *trbb;
+    int n;
+    
     il = Vect_new_list();
 
-    trsk = skyline_trans_rot(label->skyline, &candidate->point,
+/*    trsk = skyline_trans_rot(label->skyline, &candidate->point,
 			     candidate->rotation);
-
-    bb.N = label->bb.N + candidate->point.y + buffer;
-    bb.E = label->bb.E + candidate->point.x + buffer;
-    bb.W = label->bb.W + candidate->point.x - buffer;
-    bb.S = label->bb.S + candidate->point.y - buffer;
-    bb.T = label->bb.T;
-    bb.B = label->bb.B;
-    Vect_select_lines_by_box(&Map, &bb, GV_POINT, il);
+*/
+    trbb = box_trans_rot(&label->bb, &candidate->point, candidate->rotation);
+    n = Vect_select_lines_by_polygon(&Map, trbb, 0, NULL, GV_POINT, il);
 
     pointover = (double)il->n_values;
     Vect_destroy_list(il);
@@ -1006,25 +994,24 @@ static double label_lineover(label_t * label, label_candidate_t * candidate,
 {
     double lineover = 0.0;
     struct ilist *il;
-    struct line_pnts *trsk, *trbb;
+    struct line_pnts *trbb;
     label_point_t b;
     int i, n;
 
     il = Vect_new_list();
-    G_debug(3, "Candidate point is: (%lf,%lf)",
+    G_debug(5, "Candidate point is: (%lf,%lf)",
 	    candidate->point.x, candidate->point.y);
-    trsk = skyline_trans_rot(label->skyline, &candidate->point,
-			     candidate->rotation);
-    b.x = (label->bb.E - label->bb.W) * cos(candidate->rotation);
-    b.y = (label->bb.E - label->bb.W) * sin(candidate->rotation);
+/*    trsk = skyline_trans_rot(label->skyline, &candidate->point,
+			     candidate->rotation);*/
+    b.x = abs((label->bb.E - label->bb.W) * cos(candidate->rotation));
+    b.y = abs((label->bb.E - label->bb.W) * sin(candidate->rotation));
 
     trbb = box_trans_rot(&label->bb, &candidate->point, candidate->rotation);
     n = Vect_select_lines_by_polygon(&Map, trbb, 0, NULL, linetype, il);
-
+    
     if(n == 0) {
 	return 0.0;
     }
-
 
     for (i = 0; i < il->n_values; i++) {
 	int j, found=0;
@@ -1045,8 +1032,8 @@ static double label_lineover(label_t * label, label_candidate_t * candidate,
 					      line->x[j],line->y[j],0,
 					      &x1, &y1, &z1, &x2, &y2, &z2, 0);
 		if (r > 0) { /* intersection at one point */
-		    if (!found) {
-			found++;
+		    if (found==0) {
+			found=1;
 			v1.x = x1;
 			v1.y = y1;
 		    }
@@ -1064,10 +1051,14 @@ static double label_lineover(label_t * label, label_candidate_t * candidate,
 		}
 	    }
 	}
-	v.x = v2.x - v1.x;
-	v.y = v2.y - v1.y;
-	lineover += 1.0 + 9.0 * fabs(v.x * b.x + v.y * b.y)
-		/ (sqrt(v.x * v.x + v.y * v.y) * sqrt(b.x * b.x + b.y * b.y));
+	if(found > 1) {
+	    double cosvb;
+	    v.x = abs(v2.x - v1.x);
+	    v.y = abs(v2.y - v1.y);
+	    cosvb = ((b.x*v.x+b.y*v.y) /
+		     (sqrt(b.x*b.x+b.y*b.y)*sqrt(v.x*v.x+v.y*v.y)));
+	    lineover += 1.0 + 9.0 * cosvb;
+	}
     }
 
     Vect_destroy_list(il);
