@@ -68,7 +68,7 @@ class ProfileFrame(wx.Frame):
                  pos=wx.DefaultPosition, size=wx.DefaultSize,
                  style=wx.DEFAULT_FRAME_STYLE):
 
-        self.parent = parent
+        self.parent = parent # MapFrame
         self.mapwin = self.parent.MapWindow
         self.Map = render.Map()  # instance of render.Map to be associated with display
 
@@ -78,6 +78,8 @@ class ProfileFrame(wx.Frame):
                             'short-dash' : wx.SHORT_DASH,
                             'dot-dash' : wx.DOT_DASH }
 
+        self.ptfilldict = { 'transparent' : wx.TRANSPARENT,
+                            'solid' : wx.SOLID }
 
         wx.Frame.__init__(self, parent, id, title, pos, size, style)
 
@@ -254,6 +256,9 @@ class ProfileFrame(wx.Frame):
         if self.raster[0]['name'] == '':
             return
 
+        # title of window
+        self.ptitle = _('Profile of')
+
         #
         # create datalist for each raster map
         #
@@ -331,6 +336,9 @@ class ProfileFrame(wx.Frame):
         self.client.SetEnableZoom(self.zoom)
         self.client.SetEnableDrag(self.drag)
         
+        #
+        # axis settings
+        #
         if self.properties['x-axis']['prop']['type'] == 'custom':
             self.client.SetXSpec('min')
         else:
@@ -342,14 +350,14 @@ class ProfileFrame(wx.Frame):
             self.client.SetYSpec(self.properties['y-axis']['prop']['type'])
 
         if self.properties['x-axis']['prop']['type'] == 'custom' and \
-               self.properties['x-axis']['prop']['min'] != self.properties['x-axis']['prop']['max']:
-            self.properties['x-axis']['prop']['axis'] = (self.properties['x-axis']['prop']['min'],
-                                                         self.properties['x-axis']['prop']['max'])
+               self.properties['x-axis']['prop']['min'] < self.properties['x-axis']['prop']['max']:
+            self.properties['x-axis']['axis'] = (self.properties['x-axis']['prop']['min'],
+                                                 self.properties['x-axis']['prop']['max'])
         else:
             self.properties['x-axis']['axis'] = None
 
         if self.properties['y-axis']['prop']['type'] == 'custom' and \
-                self.properties['y-axis']['prop']['min'] != self.properties['y-axis']['prop']['max']:
+                self.properties['y-axis']['prop']['min'] < self.properties['y-axis']['prop']['max']:
             self.properties['y-axis']['axis'] = (self.properties['y-axis']['prop']['min'],
                                                  self.properties['y-axis']['prop']['max'])
         else:
@@ -450,11 +458,15 @@ class ProfileFrame(wx.Frame):
                 self.plotlist.append(r['pline'])
 
         if len(self.seglist) > 0 :
-            self.ppoints = plot.PolyMarker(self.seglist, legend=' '+self.ptlegend,
-                                           colour=self.ptcolor,
-                                           size=self.ptsize,
-                                           fillstyle = self.ptfill,
-                                           marker=self.pttype)
+            self.ppoints = plot.PolyMarker(self.seglist,
+                                           legend=' ' + self.properties['marker']['legend'],
+                                           colour=wx.Color(self.properties['marker']['color'][0],
+                                                           self.properties['marker']['color'][1],
+                                                           self.properties['marker']['color'][2],
+                                                           255),
+                                           size=self.properties['marker']['size'],
+                                           fillstyle=self.ptfilldict[self.properties['marker']['fill']],
+                                           marker=self.properties['marker']['type'])
             self.plotlist.append(self.ppoints)
 
         self.profile = plot.PlotGraphics(self.plotlist,
@@ -626,9 +638,10 @@ class ProfileFrame(wx.Frame):
             self.client.SetFontSizeTitle(self.properties['font']['prop']['titleSize'])
             self.client.SetFontSizeAxis(self.properties['font']['prop']['axisSize'])
 
-            self.profile.setTitle(dlg.ptitle)
-            self.profile.setXLabel(dlg.xlabel)
-            self.profile.setYLabel(dlg.ylabel)
+            if self.profile:
+                self.profile.setTitle(dlg.ptitle)
+                self.profile.setXLabel(dlg.xlabel)
+                self.profile.setYLabel(dlg.ylabel)
 
         dlg.Destroy()
 
@@ -644,6 +657,10 @@ class ProfileFrame(wx.Frame):
 
         if dlg.ShowModal() == wx.ID_OK:
             dlg.UpdateSettings()
+
+            self.SetGraphStyle()
+            if self.profile:
+                self.DrawPlot()
 
         dlg.Destroy()
 
@@ -688,11 +705,13 @@ class ProfileFrame(wx.Frame):
         Close profile window and clean up
         """
         self.mapwin.ClearLines()
-        self.mapwin.mouse['begin'] = self.mapwin.mouse['end'] = (0.0,0.0)
+        self.mapwin.mouse['begin'] = self.mapwin.mouse['end'] = (0.0, 0.0)
         self.mapwin.mouse['use'] = 'pointer'
         self.mapwin.mouse['box'] = 'point'
         self.mapwin.polycoords = []
         self.mapwin.SetCursor(self.Parent.cursors["default"])
+
+        self.mapwin.UpdateMap(render=False, renderVector=False)
 
         self.Destroy()
 
@@ -946,17 +965,31 @@ class TextDialog(wx.Dialog):
         sizer.Add(item=line, proportion=0,
                   flag=wx.GROW|wx.ALIGN_CENTER_VERTICAL|wx.LEFT|wx.RIGHT, border=3)
 
-        btnsizer = wx.StdDialogButtonSizer()
+        #
+        # buttons
+        #
+        btnSave = wx.Button(self, wx.ID_SAVE)
+        btnApply = wx.Button(self, wx.ID_APPLY)
+        btnCancel = wx.Button(self, wx.ID_CANCEL)
+        btnSave.SetDefault()
 
-        btn = wx.Button(self, wx.ID_OK)
-        btn.SetDefault()
-        btnsizer.AddButton(btn)
+        # bindigs
+        btnApply.Bind(wx.EVT_BUTTON, self.OnApply)
+        btnApply.SetToolTipString(_("Apply changes for the current session"))
+        btnSave.Bind(wx.EVT_BUTTON, self.OnSave)
+        btnSave.SetToolTipString(_("Apply and save changes to user settings file (default for next sessions)"))
+        btnSave.SetDefault()
+        btnCancel.Bind(wx.EVT_BUTTON, self.OnCancel)
+        btnCancel.SetToolTipString(_("Close dialog and ignore changes"))
 
-        btn = wx.Button(self, wx.ID_CANCEL)
-        btnsizer.AddButton(btn)
-        btnsizer.Realize()
-
-        sizer.Add(item=btnsizer, proportion=0, flag=wx.ALIGN_RIGHT | wx.ALL, border=5)
+        # sizers
+        btnStdSizer = wx.StdDialogButtonSizer()
+        btnStdSizer.AddButton(btnCancel)
+        btnStdSizer.AddButton(btnSave)
+        btnStdSizer.AddButton(btnApply)
+        btnStdSizer.Realize()
+        
+        sizer.Add(item=btnStdSizer, proportion=0, flag=wx.ALIGN_RIGHT | wx.ALL, border=5)
 
         #
         # bindings
@@ -987,6 +1020,25 @@ class TextDialog(wx.Dialog):
         self.properties['font']['wxfont'].SetStyle(style)
         weight = self.fwtdict[self.fwtcb.GetStringSelection()]
         self.properties['font']['wxfont'].SetWeight(weight)
+
+    def OnSave(self, event):
+        """Button 'Save' pressed"""
+        self.UpdateSettings()
+        fileSettings = {}
+        UserSettings.ReadSettingsFile(settings=fileSettings)
+        fileSettings['profile'] = UserSettings.Get(group='profile')
+        file = UserSettings.SaveToFile(fileSettings)
+        self.parent.parent.gismanager.goutput.WriteLog(_('Profile settings saved to file \'%s\'.') % file)
+        self.Close()
+
+    def OnApply(self, event):
+        """Button 'Apply' pressed"""
+        self.UpdateSettings()
+        self.Close()
+
+    def OnCancel(self, event):
+        """Button 'Cancel' pressed"""
+        self.Close()
         
 class OptDialog(wx.Dialog):
     def __init__(self, parent, id, title, pos=wx.DefaultPosition, size=wx.DefaultSize,
@@ -998,6 +1050,7 @@ class OptDialog(wx.Dialog):
         """
         # init variables
         self.pstyledict = parent.pstyledict
+        self.ptfilldict = parent.ptfilldict
 
         self.pttypelist = ['circle',
                            'dot',
@@ -1007,9 +1060,6 @@ class OptDialog(wx.Dialog):
                            'cross',
                            'plus']
         
-        self.ptfilldict = { 'transparent' : wx.TRANSPARENT,
-                            'solid' : wx.SOLID }
-
         self.axislist = ['min',
                          'auto',
                          'custom']
@@ -1123,18 +1173,9 @@ class OptDialog(wx.Dialog):
         gridSizer.Add(item=label, flag=wx.ALIGN_CENTER_VERTICAL, pos=(2, 0))
         ptfill = wx.ComboBox(parent=self, id=wx.ID_ANY,
                              size=(120, -1), choices=self.ptfilldict.keys(), style=wx.CB_DROPDOWN)
-        for item in self.ptfilldict.items():
-            if self.properties['marker']['fill'] == item[1]:
-                ptfill.SetStringSelection(item[0])
-                break
+        ptfill.SetStringSelection(self.properties['marker']['fill'])
         self.wxId['marker']['fill'] = ptfill.GetId()
         gridSizer.Add(item=ptfill, pos=(2, 1))
-        #        self.ptfillkey = item[0]
-        # for item in self.pstyledict.items():
-        #    if self.pstyle1 == item[1]:
-        #        self.pstylekey1 = item[0]
-
-
         
         label = wx.StaticText(parent=self, id=wx.ID_ANY, label=_("Legend"))
         gridSizer.Add(item=label, flag=wx.ALIGN_CENTER_VERTICAL, pos=(3, 0))
@@ -1167,7 +1208,7 @@ class OptDialog(wx.Dialog):
         for axis, atype in [(_("X-Axis"), 'x-axis'),
                      (_("Y-Axis"), 'y-axis')]:
             box = wx.StaticBox(parent=self, id=wx.ID_ANY,
-                               label=" %s " % _("X-Axis"))
+                               label=" %s " % axis)
             boxSizer = wx.StaticBoxSizer(box, wx.HORIZONTAL)
             gridSizer = wx.GridBagSizer(vgap=5, hgap=5)
 
@@ -1269,17 +1310,31 @@ class OptDialog(wx.Dialog):
         sizer.Add(item=line, proportion=0,
                   flag=wx.GROW|wx.ALIGN_CENTER_VERTICAL|wx.LEFT|wx.RIGHT, border=3)
 
-        btnsizer = wx.StdDialogButtonSizer()
+        #
+        # buttons
+        #
+        btnSave = wx.Button(self, wx.ID_SAVE)
+        btnApply = wx.Button(self, wx.ID_APPLY)
+        btnCancel = wx.Button(self, wx.ID_CANCEL)
+        btnSave.SetDefault()
 
-        btn = wx.Button(self, wx.ID_OK)
-        btn.SetDefault()
-        btnsizer.AddButton(btn)
+        # bindigs
+        btnApply.Bind(wx.EVT_BUTTON, self.OnApply)
+        btnApply.SetToolTipString(_("Apply changes for the current session"))
+        btnSave.Bind(wx.EVT_BUTTON, self.OnSave)
+        btnSave.SetToolTipString(_("Apply and save changes to user settings file (default for next sessions)"))
+        btnSave.SetDefault()
+        btnCancel.Bind(wx.EVT_BUTTON, self.OnCancel)
+        btnCancel.SetToolTipString(_("Close dialog and ignore changes"))
 
-        btn = wx.Button(self, wx.ID_CANCEL)
-        btnsizer.AddButton(btn)
-        btnsizer.Realize()
-
-        sizer.Add(item=btnsizer, proportion=0, flag=wx.ALIGN_RIGHT | wx.ALL, border=5)
+        # sizers
+        btnStdSizer = wx.StdDialogButtonSizer()
+        btnStdSizer.AddButton(btnCancel)
+        btnStdSizer.AddButton(btnSave)
+        btnStdSizer.AddButton(btnApply)
+        btnStdSizer.Realize()
+        
+        sizer.Add(item=btnStdSizer, proportion=0, flag=wx.ALIGN_RIGHT | wx.ALL, border=5)
 
         self.SetSizer(sizer)
         sizer.Fit(self)
@@ -1289,7 +1344,7 @@ class OptDialog(wx.Dialog):
         for r in self.raster.itervalues():
             r['prop']['pcolor'] = self.FindWindowById(self.wxId['pcolor'][idx]).GetColour()
             r['prop']['pwidth'] = int(self.FindWindowById(self.wxId['pwidth'][idx]).GetValue())
-            r['prop']['pstyle'] = self.pstyledict[self.FindWindowById(self.wxId['pstyle'][idx]).GetStringSelection()]
+            r['prop']['pstyle'] = self.FindWindowById(self.wxId['pstyle'][idx]).GetStringSelection()
             r['plegend'] = self.FindWindowById(self.wxId['plegend'][idx]).GetValue()
             idx +=1
 
@@ -1301,8 +1356,8 @@ class OptDialog(wx.Dialog):
 
         for axis in ('x-axis', 'y-axis'):
             self.properties[axis]['prop']['type'] = self.FindWindowById(self.wxId[axis]['type']).GetValue()
-            self.properties[axis]['prop']['min'] = self.FindWindowById(self.wxId[axis]['min']).GetValue()
-            self.properties[axis]['prop']['max'] = self.FindWindowById(self.wxId[axis]['max']).GetValue()
+            self.properties[axis]['prop']['min'] = float(self.FindWindowById(self.wxId[axis]['min']).GetValue())
+            self.properties[axis]['prop']['max'] = float(self.FindWindowById(self.wxId[axis]['max']).GetValue())
             self.properties[axis]['prop']['log'] = self.FindWindowById(self.wxId[axis]['log']).IsChecked()
 
         self.properties['grid']['color'] = self.FindWindowById(self.wxId['grid']['color']).GetColour()
@@ -1311,5 +1366,21 @@ class OptDialog(wx.Dialog):
         self.properties['font']['prop']['legendSize'] = self.FindWindowById(self.wxId['font']['legendSize']).GetValue()
         self.properties['legend']['enabled'] = self.FindWindowById(self.wxId['legend']['enabled']).IsChecked()
 
+    def OnSave(self, event):
+        """Button 'Save' pressed"""
+        self.UpdateSettings()
+        fileSettings = {}
+        UserSettings.ReadSettingsFile(settings=fileSettings)
+        fileSettings['profile'] = UserSettings.Get(group='profile')
+        file = UserSettings.SaveToFile(fileSettings)
+        self.parent.parent.gismanager.goutput.WriteLog(_('Profile settings saved to file \'%s\'.') % file)
+        self.Close()
 
+    def OnApply(self, event):
+        """Button 'Apply' pressed"""
+        self.UpdateSettings()
+        self.Close()
 
+    def OnCancel(self, event):
+        """Button 'Cancel' pressed"""
+        self.Close()

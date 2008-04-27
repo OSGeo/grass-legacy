@@ -166,7 +166,7 @@ class Settings:
                        'legendSize' : 10,
                        },
             'marker' : { 'color' : wx.Colour(0, 0, 0),
-                         'fill' : wx.TRANSPARENT,
+                         'fill' : 'transparent',
                          'size' : 2,
                          'type' : 'triangle',
                          'legend' : _('Segment break'),
@@ -260,7 +260,7 @@ class Settings:
             self.filePath = gisdbase_file
         
         if self.filePath:
-            self.__ReadFile(self.filePath)
+            self.__ReadFile(self.filePath, settings)
             
     def __ReadFile(self, filename, settings=None):
         """Read settings from file to dict"""
@@ -278,7 +278,7 @@ class Settings:
                     subkey = kv[idx]
                     value = kv[idx+1]
                     if len(value) == 0:
-                        self.Set(group=group, key=key, subkey=subkey, value='')
+                        self.Append(settings, group, key, subkey, '')
                     else:
                         # casting
                         if value == 'True':
@@ -298,9 +298,8 @@ class Settings:
                                 value = int(value)
                             except:
                                 pass
-                        # Debug.msg(3, 'Settings(): group=%s, key=%s, subkey=%s, value=%s' %
-                        #          (group, key, subkey, value))
-                        self.Set(group=group, key=key, subkey=subkey, value=value)
+
+                        self.Append(settings, group, key, subkey, value)
                     idx += 2
         finally:
             file.close()
@@ -345,7 +344,7 @@ class Settings:
 
         return filePath
 
-    def Get(self, group, key, subkey=None, internal=False):
+    def Get(self, group, key=None, subkey=None, internal=False):
         """Get value by key/subkey
 
         Raise KeyError if key is not found
@@ -364,7 +363,10 @@ class Settings:
             
         try:
             if subkey is None:
-                return settings[group][key]
+                if key is None:
+                    return settings[group]
+                else:
+                    return settings[group][key]
             else:
                 return settings[group][key][subkey]
         except KeyError:
@@ -372,14 +374,14 @@ class Settings:
                                                        group, key, subkey))
         
     def Set(self, group, key, subkey, value, internal=False):
-        """Set value by key/subkey
+        """Set value of key/subkey
 
-        Raise KeyError if key is not found
+        Raise KeyError if group/key is not found
         
         @param group settings group
-        @param key
-        @param subkey
-        @param value 
+        @param key key
+        @param subkey subkey
+        @param value value
         """
         if internal is True:
             settings = self.internalSettings
@@ -392,6 +394,29 @@ class Settings:
             settings[group][key][subkey] = value
         except KeyError:
             raise gcmd.SettingsError("%s '%s:%s:%s'" % (_("Unable to set "), group, key, subkey))
+
+    def Append(self, dict, group, key, subkey, value):
+        """Set value of key/subkey
+
+        Create group/key/subkey if not exists
+        
+        @param dict settings dictionary to use
+        @param group settings group
+        @param key key
+        @param subkey subkey
+        @param value value
+        """
+        if not dict.has_key(group):
+            dict[group] = {}
+
+        if not dict[group].has_key(key):
+            dict[group][key] = {}
+
+        dict[group][key][subkey] = value
+
+    def GetDefaultSettings(self):
+        """Get default user settings"""
+        return self.defaultSettings
 
 globalSettings = Settings()
 
@@ -999,7 +1024,7 @@ class PreferencesDialog(wx.Dialog):
         """Button 'Save' pressed"""
         self.__UpdateSettings()
         file = self.settings.SaveToFile()
-        self.parent.goutput.cmd_stdout.write(_('Settings saved to file \'%s\'.') % file)
+        self.parent.goutput.WriteLog(_('Settings saved to file \'%s\'.') % file)
         self.Close()
 
     def OnApply(self, event):
