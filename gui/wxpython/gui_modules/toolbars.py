@@ -768,7 +768,7 @@ class VDigitToolbar(AbstractToolbar):
             if UserSettings.Get(group='advanced', key='digitInterface', subkey='type') == 'vdigit':
                 if UserSettings.Get(group='vdigit', key='saveOnExit', subkey='enabled') is False:
                     dlg = wx.MessageDialog(parent=self.parent, message=_("Do you want to save changes "
-                                                                         "to vector map <%s>?") % layerSelected.name,
+                                                                         "in vector map <%s>?") % layerSelected.name,
                                            caption=_("Save changes?"),
                                            style=wx.YES_NO | wx.YES_DEFAULT | wx.ICON_QUESTION)
                     if dlg.ShowModal() == wx.ID_NO:
