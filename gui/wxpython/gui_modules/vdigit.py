@@ -1,18 +1,17 @@
 """
-MODULE: digit
+MODULE: vdigit
 
 CLASSES:
- * DigitError
  * AbstractDigit 
  * VEdit
  * VDigit
  * AbstractDisplayDriver
  * CDisplayDriver
- * DigitSettingsDialog
- * DigitCategoryDialog
- * DigitZBulkDialog
+ * VDigitSettingsDialog
+ * VDigitCategoryDialog
+ * VDigitZBulkDialog
 
-PURPOSE: Digitization tool wxPython GUI prototype
+PURPOSE: Vector digitization tool for wxPython GUI
 
          Note: Initial version under development
 
@@ -21,7 +20,7 @@ PURPOSE: Digitization tool wxPython GUI prototype
           (2) Reimplentation of v.digit (VDigit)
 
          Import:
-          from digit import Digit as Digit
+          from vdigit import VDigit as VDigit
           
 AUTHORS: The GRASS Development Team
          Martin Landa <landa.martin gmail.com>
@@ -50,8 +49,8 @@ from preferences import globalSettings as UserSettings
 try:
     digitPath = os.path.join(globalvar.ETCWXDIR, "vdigit")
     sys.path.append(digitPath)
-    import grass6_wxvdigit as vdigit
-    GV_LINES = vdigit.GV_LINES
+    import grass6_wxvdigit as wxvdigit
+    GV_LINES = wxvdigit.GV_LINES
     digitErr = ''
 except ImportError, err:
     GV_LINES = None
@@ -181,10 +180,10 @@ class AbstractDigit:
         Used by SelectLinesByBox() and SelectLinesByPoint()"""
 
         type = 0
-        for feature in (('Point', vdigit.GV_POINT),
-                        ('Line', vdigit.GV_LINE),
-                        ('Centroid', vdigit.GV_CENTROID),
-                        ('Boundary', vdigit.GV_BOUNDARY)):
+        for feature in (('Point', wxvdigit.GV_POINT),
+                        ('Line', wxvdigit.GV_LINE),
+                        ('Centroid', wxvdigit.GV_CENTROID),
+                        ('Boundary', wxvdigit.GV_BOUNDARY)):
             if UserSettings.Get(group='vdigit', key='selectFeature'+feature[0], subkey='enabled') is True:
                 type |= feature[1]
 
@@ -761,7 +760,7 @@ class VDigit(AbstractDigit):
         AbstractDigit.__init__(self, mapwindow)
 
         try:
-            self.digit = vdigit.Digit(self.driver.GetDevice())
+            self.digit = wxvdigit.Digit(self.driver.GetDevice())
         except (ImportError, NameError):
             self.digit = None
 
@@ -781,9 +780,9 @@ class VDigit(AbstractDigit):
         cat   = self.SetCategory()
         
         if point:
-            type = vdigit.GV_POINT 
+            type = wxvdigit.GV_POINT 
         else:
-            type = vdigit.GV_CENTROID 
+            type = wxvdigit.GV_CENTROID 
 
         snap, thresh = self.__getSnapThreshold()
 
@@ -813,9 +812,9 @@ class VDigit(AbstractDigit):
         cat   = self.SetCategory()
 
         if line:
-            type = vdigit.GV_LINE
+            type = wxvdigit.GV_LINE
         else:
-            type = vdigit.GV_BOUNDARY
+            type = wxvdigit.GV_BOUNDARY
 
         listCoords = []
         for c in coords:
@@ -1073,13 +1072,13 @@ class VDigit(AbstractDigit):
         w, n = pos1
         e, s = pos2
 
-        query = vdigit.QUERY_UNKNOWN
+        query = wxvdigit.QUERY_UNKNOWN
         if UserSettings.Get(group='vdigit', key='query', subkey='type') == 'length':
-            query = vdigit.QUERY_LENGTH
+            query = wxvdigit.QUERY_LENGTH
         elif UserSettings.Get(group='vdigit', key='query', subkey='type') == 'dangle':
-            query = vdigit.QUERY_DANGLE
+            query = wxvdigit.QUERY_DANGLE
 
-        type = vdigit.GV_POINTS | vdigit.GV_LINES # TODO: 3D
+        type = wxvdigit.GV_POINTS | wxvdigit.GV_LINES # TODO: 3D
         
         ids = self.digit.SelectLinesByQuery(w, n, 0.0, e, s, 1000.0,
                                             UserSettings.Get(group='vdigit', key='query', subkey='box'),
@@ -1165,9 +1164,9 @@ class VDigit(AbstractDigit):
 
         if thresh > 0.0:
             if UserSettings.Get(group='vdigit', key='snapToVertex', subkey='enabled') is True:
-                snap = vdigit.SNAPVERTEX
+                snap = wxvdigit.SNAPVERTEX
             else:
-                snap = vdigit.SNAP
+                snap = wxvdigit.SNAP
         else:
             snap = v.digit.NO_SNAP
 
@@ -1247,7 +1246,7 @@ class CDisplayDriver(AbstractDisplayDriver):
 
         # initialize wx display driver
         try:
-            self.__display = vdigit.DisplayDriver(mapwindow.pdcVector)
+            self.__display = wxvdigit.DisplayDriver(mapwindow.pdcVector)
         except:
             self.__display = None
             
@@ -1319,8 +1318,8 @@ class CDisplayDriver(AbstractDisplayDriver):
         x1, y1 = begin
         x2, y2 = end
 
-        nselected = self.__display.SelectLinesByBox(x1, y1, -1.0 * vdigit.PORT_DOUBLE_MAX,
-                                                    x2, y2, vdigit.PORT_DOUBLE_MAX,
+        nselected = self.__display.SelectLinesByBox(x1, y1, -1.0 * wxvdigit.PORT_DOUBLE_MAX,
+                                                    x2, y2, wxvdigit.PORT_DOUBLE_MAX,
                                                     type)
         Debug.msg(4, "CDisplayDriver.SelectLinesByBox(): selected=%d" % \
                       nselected)
@@ -1481,7 +1480,7 @@ class CDisplayDriver(AbstractDisplayDriver):
                                                 255).GetRGB(),
                                        UserSettings.Get(group='vdigit', key='lineWidth', subkey='value'))
 
-class DigitSettingsDialog(wx.Dialog):
+class VDigitSettingsDialog(wx.Dialog):
     """
     Standard settings dialog for digitization purposes
     """
@@ -2044,7 +2043,7 @@ class DigitSettingsDialog(wx.Dialog):
         if self.parent.autoRender.GetValue(): 
             self.parent.OnRender(None)
 
-class DigitCategoryDialog(wx.Dialog, listmix.ColumnSorterMixin):
+class VDigitCategoryDialog(wx.Dialog, listmix.ColumnSorterMixin):
     """
     Dialog used to display/modify categories of vector objects
     
@@ -2076,7 +2075,7 @@ class DigitCategoryDialog(wx.Dialog, listmix.ColumnSorterMixin):
         # do not display dialog if no line is found (-> self.cats)
         if cats is None:
             if self.__GetCategories(query[0], query[1]) == 0 or not self.line:
-                Debug.msg(3, "DigitCategoryDialog(): nothing found!")
+                Debug.msg(3, "VDigitCategoryDialog(): nothing found!")
                 return
         else:
             # self.cats = dict(cats)
@@ -2087,7 +2086,7 @@ class DigitCategoryDialog(wx.Dialog, listmix.ColumnSorterMixin):
         # make copy of cats (used for 'reload')
         self.cats_orig = copy.deepcopy(self.cats)
 
-        Debug.msg(3, "DigitCategoryDialog(): line=%d, cats=%s" % \
+        Debug.msg(3, "VDigitCategoryDialog(): line=%d, cats=%s" % \
                       (self.line, self.cats))
 
         wx.Dialog.__init__(self, parent=self.parent, id=wx.ID_ANY, title=title,
@@ -2453,7 +2452,7 @@ class DigitCategoryDialog(wx.Dialog, listmix.ColumnSorterMixin):
             self.line = line
             ret = 1
         if ret == 0 or not self.line:
-            Debug.msg(3, "DigitCategoryDialog(): nothing found!")
+            Debug.msg(3, "VDigitCategoryDialog(): nothing found!")
             return False
         
         # make copy of cats (used for 'reload')
@@ -2515,7 +2514,7 @@ class CategoryListCtrl(wx.ListCtrl,
 
         return itemData
 
-class DigitZBulkDialog(wx.Dialog):
+class VDigitZBulkDialog(wx.Dialog):
     """
     Dialog used for Z bulk-labeling tool
     """
