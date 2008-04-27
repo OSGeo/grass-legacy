@@ -1965,8 +1965,13 @@ class DigitSettingsDialog(wx.Dialog):
         """Button 'Save' clicked"""
         self.UpdateSettings()
         self.parent.digittoolbar.settingsDialog = None
-        file = UserSettings.SaveToFile()
-        self.parent.gismanager.goutput.cmd_stdout.write('Settings saved to file <%s>.' % file)
+
+        fileSettings = {}
+        UserSettings.ReadSettingsFile(settings=fileSettings)
+        fileSettings['vdigit'] = UserSettings.Get(group='vdigit')
+        file = UserSettings.SaveToFile(fileSettings)
+        self.parent.gismanager.goutput.WriteLog('Vector digitizer settings saved to file <%s>.' % file)
+
         self.Close()
 
     def OnApply(self, event):
