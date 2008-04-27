@@ -117,14 +117,13 @@ class AbstractDigit:
                             return False
                         return True
             else:
+                cat = self.digit.GetCategory(UserSettings.Get(group='vdigit', key='layer', subkey='value'))
                 UserSettings.Set(group='vdigit', key='category', subkey='value',
-                                  value=self.digit.GetCategory(UserSettings.Get(group='vdigit', key='layer', subkey='value') + 1))
+                                  value=cat + 1)
     
     def SetCategory(self):
         """Return category number to use (according Settings)"""
-        if UserSettings.Get(group='vdigit', key="categoryMode", subkey='value') == "No category":
-            UserSettings.Set(group='vdigit', key="category", subkey='value', value=1)
-        elif UserSettings.Get(group='vdigit', key="categoryMode", subkey='value') == "Next to use":
+        if UserSettings.Get(group='vdigit', key="categoryMode", subkey='selection') == 0:
             self.SetCategoryNextToUse()
 
         return UserSettings.Get(group='vdigit', key="category", subkey='value')
@@ -163,13 +162,13 @@ class AbstractDigit:
         """Generic method used for SelectLinesByQuery()
         -- to get threshold value"""
         thresh = 0.0
-        if UserSettings.Get(group='vdigit', key='query', subkey='type') == "length":
+        if UserSettings.Get(group='vdigit', key='query', subkey='selection') == 0:
             thresh = UserSettings.Get(group='vdigit', key='queryLength', subkey='thresh')
-            if UserSettings.Get(group='vdigit', key="queryLength", subkey='than') == "shorter than":
+            if UserSettings.Get(group='vdigit', key="queryLength", subkey='than-selection') == 0:
                 thresh = -1 * thresh
         else:
             thresh = UserSettings.Get(group='vdigit', key='queryDangle', subkey='thresh')
-            if UserSettings.Get(group='vdigit', key="queryDangle", subkey='than') == "shorter than":
+            if UserSettings.Get(group='vdigit', key="queryDangle", subkey='than-selection') == 0:
                 thresh = -1 * thresh
 
         return thresh
@@ -248,9 +247,13 @@ class VEdit(AbstractDigit):
         else:
             key = "C"
 
-        layer = UserSettings.Get(group='vdigit', key="layer", subkey='value')
-        cat   = self.SetCategory()
-        
+        if UserSettings.Get(group='vdigit', key="categoryMode", subkey='selection') == 2:
+            layer = -1 # -> no category
+            cat   = -1
+        else:
+            layer = UserSettings.Get(group='vdigit', key="layer", subkey='value')
+            cat   = self.SetCategory()
+
         if layer > 0 and cat != "None":
             addstring =  "%s 1 1\n" % (key)
         else:
@@ -280,9 +283,13 @@ class VEdit(AbstractDigit):
         if len(coords) < 2:
             return
 
-        layer = UserSettings.Get(group='vdigit', key="layer", subkey='value')
-        cat   = self.SetCategory()
-        
+        if UserSettings.Get(group='vdigit', key="categoryMode", subkey='selection') == 2:
+            layer = -1 # -> no category
+            cat   = -1
+        else:
+            layer = UserSettings.Get(group='vdigit', key="layer", subkey='value')
+            cat   = self.SetCategory()
+
         if line:
             key = "L"
             flags = []
@@ -702,12 +709,17 @@ class VEdit(AbstractDigit):
                 elif 'west' in item:
                     w = float(item.split('=')[1])
 
+        if UserSettings.Get(group='vdigit', key='query', subkey='selection') == 0:
+            qtype = 'length'
+        else:
+            qtype = 'dangle'
+
         vEdit = (['v.edit',
                   '--q',
                   'map=%s' % self.map,
                   'tool=select',
                   'bbox=%f,%f,%f,%f' % (w, n, e, s),
-                  'query=%s' % UserSettings.Get(group='vdigit', key='query', subkey='type'),
+                  'query=%s' % qtype,
                   'thresh=0,0,%f' % thresh])
 
         vEditCmd = gcmd.Command(vEdit)
@@ -776,9 +788,13 @@ class VDigit(AbstractDigit):
         @param point feature type (if true point otherwise centroid)
         @param x,y,z coordinates
         """
-        layer = UserSettings.Get(group='vdigit', key="layer", subkey='value')
-        cat   = self.SetCategory()
-        
+        if UserSettings.Get(group='vdigit', key="categoryMode", subkey='selection') == 2:
+            layer = -1 # -> no category
+            cat   = -1
+        else:
+            layer = UserSettings.Get(group='vdigit', key="layer", subkey='value')
+            cat   = self.SetCategory()
+
         if point:
             type = wxvdigit.GV_POINT 
         else:
@@ -808,8 +824,12 @@ class VDigit(AbstractDigit):
         if len(coords) < 2:
             return
 
-        layer = UserSettings.Get(group='vdigit', key="layer", subkey='value')
-        cat   = self.SetCategory()
+        if UserSettings.Get(group='vdigit', key="categoryMode", subkey='selection') == 2:
+            layer = -1 # -> no category
+            cat   = -1
+        else:
+            layer = UserSettings.Get(group='vdigit', key="layer", subkey='value')
+            cat   = self.SetCategory()
 
         if line:
             type = wxvdigit.GV_LINE
@@ -1073,9 +1093,9 @@ class VDigit(AbstractDigit):
         e, s = pos2
 
         query = wxvdigit.QUERY_UNKNOWN
-        if UserSettings.Get(group='vdigit', key='query', subkey='type') == 'length':
+        if UserSettings.Get(group='vdigit', key='query', subkey='selection') == 0:
             query = wxvdigit.QUERY_LENGTH
-        elif UserSettings.Get(group='vdigit', key='query', subkey='type') == 'dangle':
+        else:
             query = wxvdigit.QUERY_DANGLE
 
         type = wxvdigit.GV_POINTS | wxvdigit.GV_LINES # TODO: 3D
@@ -1724,7 +1744,7 @@ class VDigitSettingsDialog(wx.Dialog):
         txt = wx.StaticText(parent=panel, id=wx.ID_ANY, label=_("Select lines"))
         self.queryLengthSL = wx.Choice (parent=panel, id=wx.ID_ANY, 
                                         choices = [_("shorter than"), _("longer than")])
-        self.queryLengthSL.SetStringSelection(UserSettings.Get(group='vdigit', key="queryLength", subkey='than'))
+        self.queryLengthSL.SetSelection(UserSettings.Get(group='vdigit', key="queryLength", subkey='than-selection'))
         self.queryLengthValue = wx.SpinCtrl(parent=panel, id=wx.ID_ANY, size=(100, -1),
                                             initial=1,
                                             min=0, max=1e6)
@@ -1747,7 +1767,7 @@ class VDigitSettingsDialog(wx.Dialog):
         txt = wx.StaticText(parent=panel, id=wx.ID_ANY, label=_("Select dangles"))
         self.queryDangleSL = wx.Choice (parent=panel, id=wx.ID_ANY, 
                                         choices = [_("shorter than"), _("longer than")])
-        self.queryDangleSL.SetStringSelection(UserSettings.Get(group='vdigit', key="queryDangle", subkey='than'))
+        self.queryDangleSL.SetSelection(UserSettings.Get(group='vdigit', key="queryDangle", subkey='than-selection'))
         self.queryDangleValue = wx.SpinCtrl(parent=panel, id=wx.ID_ANY, size=(100, -1),
                                        initial=1,
                                        min=0, max=1e6)
@@ -1759,7 +1779,7 @@ class VDigitSettingsDialog(wx.Dialog):
         flexSizer.Add(units, proportion=0, flag=wx.ALIGN_CENTER_VERTICAL)
         sizer.Add(item=flexSizer, proportion=0, flag=wx.ALL | wx.EXPAND, border=1)
 
-        if UserSettings.Get(group='vdigit', key="query", subkey='type') == "length":
+        if UserSettings.Get(group='vdigit', key="query", subkey='selection') == 0:
             self.queryLength.SetValue(True)
         else:
             self.queryDangle.SetValue(True)
@@ -1816,7 +1836,7 @@ class VDigitSettingsDialog(wx.Dialog):
         self.category = wx.SpinCtrl(parent=panel, id=wx.ID_ANY, size=(125, -1),
                                     initial=UserSettings.Get(group='vdigit', key="category", subkey='value'),
                                     min=-1e9, max=1e9) 
-        if UserSettings.Get(group='vdigit', key="categoryMode", subkey='value') != "Manual entry":
+        if UserSettings.Get(group='vdigit', key="categoryMode", subkey='selection') != 1:
             self.category.Enable(False)
         flexSizer.Add(item=text, proportion=0, flag=wx.ALIGN_CENTER_VERTICAL)
         flexSizer.Add(item=self.category, proportion=0,
@@ -1825,7 +1845,7 @@ class VDigitSettingsDialog(wx.Dialog):
         text = wx.StaticText(parent=panel, id=wx.ID_ANY, label=_("Category mode"))
         self.categoryMode = wx.Choice(parent=panel, id=wx.ID_ANY, size=(125, -1),
                                       choices=[_("Next to use"), _("Manual entry"), _("No category")])
-        self.categoryMode.SetStringSelection(UserSettings.Get(group='vdigit', key="categoryMode", subkey='value'))
+        self.categoryMode.SetSelection(UserSettings.Get(group='vdigit', key="categoryMode", subkey='selection'))
         flexSizer.Add(item=text, proportion=0, flag=wx.ALIGN_CENTER_VERTICAL)
         flexSizer.Add(item=self.categoryMode, proportion=0,
                       flag=wx.FIXED_MINSIZE | wx.ALIGN_CENTER_VERTICAL)
@@ -1866,31 +1886,32 @@ class VDigitSettingsDialog(wx.Dialog):
 
         return (
             #            ("Background", "symbolBackground"),
-            ("Highlight", "symbolHighlight"),
-            ("Point", "symbolPoint"),
-            ("Line", "symbolLine"),
-            ("Boundary (no area)", "symbolBoundaryNo"),
-            ("Boundary (one area)", "symbolBoundaryOne"),
-            ("Boundary (two areas)", "symbolBoundaryTwo"),
-            ("Centroid (in area)", "symbolCentroidIn"),
-            ("Centroid (outside area)", "symbolCentroidOut"),
-            ("Centroid (duplicate in area)", "symbolCentroidDup"),
-            ("Node (one line)", "symbolNodeOne"),
-            ("Node (two lines)", "symbolNodeTwo"),
-            ("Vertex", "symbolVertex"))
+            (_("Highlight"), "symbolHighlight"),
+            (_("Point"), "symbolPoint"),
+            (_("Line"), "symbolLine"),
+            (_("Boundary (no area)"), "symbolBoundaryNo"),
+            (_("Boundary (one area)"), "symbolBoundaryOne"),
+            (_("Boundary (two areas)"), "symbolBoundaryTwo"),
+            (_("Centroid (in area)"), "symbolCentroidIn"),
+            (_("Centroid (outside area)"), "symbolCentroidOut"),
+            (_("Centroid (duplicate in area)"), "symbolCentroidDup"),
+            (_("Node (one line)"), "symbolNodeOne"),
+            (_("Node (two lines)"), "symbolNodeTwo"),
+            (_("Vertex"), "symbolVertex"))
 
     def OnChangeCategoryMode(self, event):
         """Change category mode"""
 
-        mode = event.GetString()
-        UserSettings.Set(group='vdigit', key="categoryMode", subkey='value', value=mode)
-        if mode == "Manual entry": # enable
+        mode = event.GetSelection()
+        UserSettings.Set(group='vdigit', key="categoryMode", subkey='selection', value=mode)
+        if mode == 1: # manual entry
             self.category.Enable(True)
         elif self.category.IsEnabled(): # disable
             self.category.Enable(False)
 
-        if mode == "No category" and self.addRecord.IsChecked():
+        if mode == 2 and self.addRecord.IsChecked(): # no category
             self.addRecord.SetValue(False)
+
         self.parent.digit.SetCategory()
         self.category.SetValue(UserSettings.Get(group='vdigit', key='category', subkey='value'))
 
@@ -1988,53 +2009,71 @@ class VDigitSettingsDialog(wx.Dialog):
         # symbology
         for key, (enabled, color) in self.symbology.iteritems():
             if enabled:
-                UserSettings.Set(group='vdigit', key=key, subkey='enabled', value=enabled.IsChecked())
-                UserSettings.Set(group='vdigit', key=key, subkey='color', value=color.GetColour())
+                UserSettings.Set(group='vdigit', key=key, subkey='enabled',
+                                 value=enabled.IsChecked())
+                UserSettings.Set(group='vdigit', key=key, subkey='color',
+                                 value=color.GetColour())
             else:
-                UserSettings.Set(group='vdigit', key=key, subkey='color', value=color.GetColour())
+                UserSettings.Set(group='vdigit', key=key, subkey='color',
+                                 value=color.GetColour())
         # display
-        UserSettings.Set(group='vdigit', key="lineWidth", subkey='value', value=int(self.lineWidthValue.GetValue()))
+        UserSettings.Set(group='vdigit', key="lineWidth", subkey='value',
+                         value=int(self.lineWidthValue.GetValue()))
 
         # snapping
-        UserSettings.Set(group='vdigit', key="snapping", subkey='value', value=int(self.snappingValue.GetValue()))
-        UserSettings.Set(group='vdigit', key="snapping", subkey='units', value=self.snappingUnit.GetStringSelection())
-        UserSettings.Set(group='vdigit', key="snapToVertex", subkey='enabled', value=self.snapVertex.IsChecked())
+        UserSettings.Set(group='vdigit', key="snapping", subkey='value',
+                         value=int(self.snappingValue.GetValue()))
+        UserSettings.Set(group='vdigit', key="snapping", subkey='units',
+                         value=self.snappingUnit.GetStringSelection())
+        UserSettings.Set(group='vdigit', key="snapToVertex", subkey='enabled',
+                         value=self.snapVertex.IsChecked())
         
         # digitize new feature
-        UserSettings.Set(group='vdigit', key="addRecord", subkey='enabled', value=self.addRecord.IsChecked())
-        UserSettings.Set(group='vdigit', key="layer", subkey='value', value=int(self.layer.GetStringSelection()))
-        if UserSettings.Get(group='vdigit', key="categoryMode", subkey='value') == "No category":
-            UserSettings.Set(group='vdigit', key="category", subkey='value', value=None)
-        else:
-            UserSettings.Set(group='vdigit', key="category", subkey='value', value=int(self.category.GetValue()))
-        UserSettings.Set(group='vdigit', key="categoryMode", subkey='value', value=self.categoryMode.GetStringSelection())
+        UserSettings.Set(group='vdigit', key="addRecord", subkey='enabled',
+                         value=self.addRecord.IsChecked())
+        UserSettings.Set(group='vdigit', key="layer", subkey='value',
+                         value=int(self.layer.GetStringSelection()))
+        UserSettings.Set(group='vdigit', key="category", subkey='value',
+                         value=int(self.category.GetValue()))
+        UserSettings.Set(group='vdigit', key="categoryMode", subkey='selection',
+                         value=self.categoryMode.GetSelection())
 
         # delete existing feature
-        UserSettings.Set(group='vdigit', key="delRecord", subkey='enabled', value=self.deleteRecord.IsChecked())
+        UserSettings.Set(group='vdigit', key="delRecord", subkey='enabled',
+                         value=self.deleteRecord.IsChecked())
 
         # snapping threshold
         self.parent.digit.threshold = self.parent.digit.driver.GetThreshold()
 
         # query tool
         if self.queryLength.GetValue():
-            UserSettings.Set(group='vdigit', key="query", subkey='type', value="length")
+            UserSettings.Set(group='vdigit', key="query", subkey='selection',
+                             value=0)
         else:
-            UserSettings.Set(group='vdigit', key="query", subkey='type', value="dangle")
-        UserSettings.Set(group='vdigit', key="query", subkey='box', value=self.queryBox.IsChecked())
-        UserSettings.Set(group='vdigit', key="queryLength", subkey='than', value=self.queryLengthSL.GetStringSelection())
-        UserSettings.Set(group='vdigit', key="queryLength", subkey='thresh', value=int(self.queryLengthValue.GetValue()))
-        UserSettings.Set(group='vdigit', key="queryDangle", subkey='than', value=self.queryDangleSL.GetStringSelection())
-        UserSettings.Set(group='vdigit', key="queryDangle", subkey='thresh', value=int(self.queryDangleValue.GetValue()))
+            UserSettings.Set(group='vdigit', key="query", subkey='type',
+                             value=1)
+        UserSettings.Set(group='vdigit', key="query", subkey='box',
+                         value=self.queryBox.IsChecked())
+        UserSettings.Set(group='vdigit', key="queryLength", subkey='than-selection',
+                         value=self.queryLengthSL.GetSelection())
+        UserSettings.Set(group='vdigit', key="queryLength", subkey='thresh',
+                         value=int(self.queryLengthValue.GetValue()))
+        UserSettings.Set(group='vdigit', key="queryDangle", subkey='than-selection',
+                         value=self.queryDangleSL.GetSelection())
+        UserSettings.Set(group='vdigit', key="queryDangle", subkey='thresh',
+                         value=int(self.queryDangleValue.GetValue()))
 
         # select features
         for feature in ('Point', 'Line',
                         'Centroid', 'Boundary'):
             UserSettings.Set(group='vdigit', key='selectFeature'+feature, subkey='enabled',
                                            value=self.FindWindowById(self.selectFeature[feature]).IsChecked())
-        UserSettings.Set(group='vdigit', key="selectThresh", subkey='value', value=int(self.selectThreshValue.GetValue()))
+        UserSettings.Set(group='vdigit', key="selectThresh", subkey='value',
+                         value=int(self.selectThreshValue.GetValue()))
 
         # on-exit
-        UserSettings.Set(group='vdigit', key="saveOnExit", subkey='enabled', value=self.save.IsChecked())
+        UserSettings.Set(group='vdigit', key="saveOnExit", subkey='enabled',
+                         value=self.save.IsChecked())
         
         # update driver settings
         self.parent.digit.driver.UpdateSettings()
