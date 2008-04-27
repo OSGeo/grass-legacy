@@ -196,4 +196,20 @@ Contents
 ###########################################
 (B) HOWTO create a branch
 
-1. see SVN book
+1. see SVN book:
+   http://svnbook.red-bean.com/en/1.1/ch04s07.html
+
+   GRASS 6.4 development branch:
+          BRANCH=develbranch_6
+          URL=https://svn.osgeo.org/grass
+          svn copy $URL/grass/trunk \
+                   $URL/grass/branches/$BRANCH \
+                   -m "Development branch for GRASS 6.4.x"
+
+
+   Switching current local copy to above development branch:
+   (http://svnbook.red-bean.com/en/1.1/ch04s05.html)
+           cd /path/to/your/local/copy/trunk
+           svn switch https://svn.osgeo.org/grass/grass/branches/develbranch_6 .
+
+
