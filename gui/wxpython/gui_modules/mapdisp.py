@@ -2687,16 +2687,16 @@ class MapFrame(wx.Frame):
                                          (self.Map.region["w"], self.Map.region["e"],
                                           self.Map.region["s"], self.Map.region["n"]), 0)
 
-        elif self.toggleStatus.GetSelection() == 2: # Show comp. extent
-            self.statusbar.SetStatusText("", 0)
-            self.showRegion.Show()
-
-        elif self.toggleStatus.GetSelection() == 3: # Comp. region
+        elif self.toggleStatus.GetSelection() == 2: # Comp. region
             compregion = self.Map.GetRegion()
             self.statusbar.SetStatusText("%.2f - %.2f, %.2f - %.2f (%.2f, %.2f)" %
                                          (compregion["w"], compregion["e"],
                                           compregion["s"], compregion["n"],
                                           compregion["ewres"], compregion["nsres"]), 0)
+
+        elif self.toggleStatus.GetSelection() == 3: # Show comp. extent
+            self.statusbar.SetStatusText("", 0)
+            self.showRegion.Show()
 
         elif self.toggleStatus.GetSelection() == 4: # Display mode
             self.statusbar.SetStatusText("", 0)
