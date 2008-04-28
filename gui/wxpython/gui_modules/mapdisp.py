@@ -1985,7 +1985,7 @@ class BufferedWindow(wx.Window):
         zoomreg = {}
 
         # find selected map
-        if not self.tree.GetSelection():
+        if not self.tree or not self.tree.GetSelection():
             return
 
         item  = self.tree.GetSelection()
