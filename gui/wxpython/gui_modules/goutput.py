@@ -63,8 +63,7 @@ class GMConsole(wx.Panel):
                                    self.parent.notebook)
         if Debug.get_level() == 0:
             # don't redirect when debugging is enabled
-            # sys.stderr = self.cmd_stderr
-            pass
+            sys.stderr = self.cmd_stderr
         
         # buttons
         self.console_clear = wx.Button(parent=self, id=wx.ID_CLEAR)
