@@ -243,17 +243,7 @@ class GRToolbar(AbstractToolbar):
             (self.zoommenu, "zoommenu", Icons["zoommenu"].GetBitmap(),
              wx.ITEM_NORMAL, Icons["zoommenu"].GetLabel(), Icons["zoommenu"].GetDesc(),
              self.mapdisplay.OnZoomMenu),
-            ("", "", "", "", "", "", "")
             )
-
-    def OnSelect(self, event):
-        """
-        Select / enable tool available in tools list
-        """
-        tool =  event.GetString()
-
-        if tool == "Digitize" and not self.mapdisplay.digittoolbar:
-            self.mapdisplay.AddToolbar("digit")
 
 class VDigitToolbar(AbstractToolbar):
     """
