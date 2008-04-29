@@ -5,6 +5,7 @@ CLASSES:
     * AbstractToolbar
     * MapToolbar
     * GRToolbar
+    * GCPToolbar
     * VDigitToolbar
     * ProfileToolbar
     
@@ -67,8 +68,8 @@ class AbstractToolbar(object):
 
         if label:
             toolWin = toolbar.AddLabelTool(tool, label, bitmap,
-                                        bmpDisabled, kind,
-                                        shortHelp, longHelp)
+                                           bmpDisabled, kind,
+                                           shortHelp, longHelp)
             parent.Bind(wx.EVT_TOOL, handler, toolWin)
         else: # add separator
             toolbar.AddSeparator()
@@ -225,8 +226,8 @@ class GRToolbar(AbstractToolbar):
              wx.ITEM_NORMAL, Icons["erase"].GetLabel(), Icons["erase"].GetDesc(),
              self.mapdisplay.OnErase),
             ("", "", "", "", "", "", ""),
-            (self.gcpset, "gcpset", Icons["gcpset"].GetBitmap(),
-             wx.ITEM_RADIO, Icons["gcpset"].GetLabel(), Icons["gcpset"].GetDesc(),
+            (self.gcpset, "grGcpSet", Icons["grGcpSet"].GetBitmap(),
+             wx.ITEM_RADIO, Icons["grGcpSet"].GetLabel(), Icons["grGcpSet"].GetDesc(),
              self.mapdisplay.OnPointer),
             (self.pan, "pan", Icons["pan"].GetBitmap(),
              wx.ITEM_RADIO, Icons["pan"].GetLabel(), Icons["pan"].GetDesc(),
@@ -245,6 +246,69 @@ class GRToolbar(AbstractToolbar):
              self.mapdisplay.OnZoomMenu),
             )
 
+class GCPToolbar(AbstractToolbar):
+    """
+    Toolbar for digitization
+    """
+    def __init__(self, parent, mapdisplay, map):
+        self.parent     = parent # GCP
+        self.mapcontent = map
+        self.mapdisplay = mapdisplay
+
+        self.toolbar = wx.ToolBar(parent=self.mapdisplay, id=wx.ID_ANY)
+
+        # self.SetToolBar(self.toolbar)
+        self.toolbar.SetToolBitmapSize(globalvar.toolbarSize)
+
+        self.InitToolbar(self.mapdisplay, self.toolbar, self.ToolbarData())
+
+        # realize the toolbar
+        self.toolbar.Realize()
+
+    def ToolbarData(self):
+        
+        self.gcpSave = wx.NewId()
+        self.gcpAdd = wx.NewId()
+        self.gcpDelete = wx.NewId()
+        self.gcpClear = wx.NewId()
+        self.gcpRefresh = wx.NewId()
+        self.rms = wx.NewId()
+        self.georect = wx.NewId()
+        self.settings = wx.NewId()
+        self.quit = wx.NewId()
+
+        return (
+            (self.gcpSave, 'grGcpSave', Icons["grGcpSave"].GetBitmap(),
+             wx.ITEM_NORMAL, Icons["grGcpSave"].GetLabel(), Icons["grGcpSave"].GetDesc(),
+             self.parent.SaveGCPs),
+            (self.gcpAdd, 'grGrGcpAdd', Icons["grGcpAdd"].GetBitmap(),
+             wx.ITEM_NORMAL, Icons["grGcpAdd"].GetLabel(), Icons["grGcpAdd"].GetDesc(),
+             self.parent.AddGCP),
+            (self.gcpDelete, 'grGrGcpDelete', Icons["grGcpDelete"].GetBitmap(),
+             wx.ITEM_NORMAL, Icons["grGcpDelete"].GetLabel(), Icons["grGcpDelete"].GetDesc(), 
+             self.parent.DeleteGCP),
+            (self.gcpClear, 'grGcpClear', Icons["grGcpClear"].GetBitmap(),
+             wx.ITEM_NORMAL, Icons["grGcpClear"].GetLabel(), Icons["grGcpClear"].GetDesc(), 
+             self.parent.ClearGCP),
+            (self.gcpRefresh, 'grGcpRefresh', Icons["grGcpRefresh"].GetBitmap(),
+             wx.ITEM_NORMAL, Icons["grGcpRefresh"].GetLabel(), Icons["grGcpRefresh"].GetDesc(),
+             self.parent.RefreshGCPMarks),
+            ("", "", "", "", "", "", ""),
+            (self.rms, 'grGcpRms', Icons["grGcpRms"].GetBitmap(),
+             wx.ITEM_NORMAL, Icons["grGcpRms"].GetLabel(), Icons["grGcpRms"].GetDesc(),
+             self.parent.OnRMS),
+            (self.georect, 'grGeorect', Icons["grGeorect"].GetBitmap(), 
+             wx.ITEM_NORMAL, Icons["grGeorect"].GetLabel(), Icons["grGeorect"].GetDesc(),
+             self.parent.OnGeorect),
+            ("", "", "", "", "", "", ""),
+            (self.settings, 'grSettings', Icons["grSettings"].GetBitmap(), 
+             wx.ITEM_NORMAL, Icons["grSettings"].GetLabel(), Icons["grSettings"].GetDesc(),
+             self.parent.OnSettings),
+            (self.quit, 'grGcpQuit', Icons["grGcpQuit"].GetBitmap(), 
+             wx.ITEM_NORMAL, Icons["grGcpQuit"].GetLabel(), Icons["grGcpQuit"].GetDesc(),
+             self.parent.OnQuit)
+            )
+    
 class VDigitToolbar(AbstractToolbar):
     """
     Toolbar for digitization

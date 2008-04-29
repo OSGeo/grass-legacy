@@ -77,9 +77,9 @@ icons_default = {
     ## attributes
     "digDispAttr" : 'display.attributes.gif',
     ## general
-    "digUndo" : wx.ART_ERROR,
+    "digUndo" : wx.ART_ERROR, # FIXME
     "digSettings" : 'settings.gif',
-    "digAdditionalTools" : wx.ART_ERROR,
+    "digAdditionalTools" : wx.ART_ERROR, # FIXME
     # gis manager
     "newdisplay" : 'gui-startmon.gif',
     "workspaceNew" : 'file-new.gif',
@@ -115,18 +115,23 @@ icons_default = {
     "font"       : 'gui-font.gif',
     "histogram"  : 'module-d.histogram.gif',
     "color"      : 'edit-color.gif',
-    "options"    : wx.ART_ERROR,
+    "options"    :  wx.ART_ERROR, # FIXME
+    # profile 
     "profile"    : 'gui-profile.gif',
     "transect"   : 'gui-profiledefine.gif',
-#    "profiledraw": 'gui-profiledraw.gif',
-    "profiledraw"  : 'gui-redraw.gif',
+    # "profiledraw": 'gui-profiledraw.gif',
+    "profiledraw" : 'gui-redraw.gif',
     "profileopt" : 'gui-profileopt.gif',
     # georectify
-    'cleargcp'   : 'gui-gcperase.gif',
-    'gcpset'     : 'gui-gcpset.gif',
-    'georect'    : 'gui-georect.gif',
-    'rms'        : 'gui-rms.gif',
-    'refreshgcp' : 'gui-display.gif'
+    'grGcpClear'   : 'gui-gcperase.gif',
+    'grGcpSet'     : 'gui-gcpset.gif',
+    'grGeorect'    : 'gui-georect.gif',
+    'grGcpRms'     : 'gui-rms.gif',
+    'grGcpRefresh' : 'gui-display.gif',
+    "grGcpSave"    : 'file-save.gif', 
+    "grGcpAdd"     : wx.ART_ERROR, # FIXME
+    "grGcpDelete"  : wx.ART_ERROR, # FIXME
+    "grSettings"   : 'edit-color.gif', 
     }
 
 # merge icons dictionaries, join paths
@@ -388,17 +393,29 @@ Icons = {
     "analyze"    : MetaIcon (img=icons_img["analyze"],
                              label=_("Analyze")),
     # georectify
-    'cleargcp'   : MetaIcon (img=icons_img["cleargcp"],
-                             label=_("Clear selected GCP")),
-    'gcpset'     : MetaIcon (img=icons_img["gcpset"],
+    'grGcpSet'     : MetaIcon (img=icons_img["grGcpSet"],
                              label=_("Set GCP"),
                              desc=_("Define GCP (Ground Control Points)")),
-    'georect'    : MetaIcon (img=icons_img["georect"],
+    'grGeorect'    : MetaIcon (img=icons_img["grGeorect"],
                              label=_("Georectify")),
-    'rms'        : MetaIcon (img=icons_img["rms"],
-                             label=_("Recalculate RMS error")),
-    'refreshgcp' : MetaIcon (img=icons_img["refreshgcp"],
-                             label=_("Redraw GCP markers in map displays"))}
+    'grGcpRms'        : MetaIcon (img=icons_img["grGcpRms"],
+                                  label=_("Recalculate RMS error")),
+    'grGcpRefresh' : MetaIcon (img=icons_img["grGcpRefresh"],
+                               label=_("Redraw GCP markers in map displays")),
+    'grGcpSave' : MetaIcon (img=icons_img["grGcpSave"],
+                            label=_("Save GCPs to POINTS file")),
+    'grGcpAdd' : MetaIcon (img=icons_img["grGcpAdd"],
+                           label=_("Add new GCP")),
+    'grGcpDelete' : MetaIcon (img=icons_img["grGcpDelete"],
+                              label=_("Delete selected GCP")),
+    'grGcpClear' : MetaIcon (img=icons_img["grGcpClear"],
+                             label=_("Clear selected GCP")),
+    'grGcpQuit' : MetaIcon (img=icons_img["quit"],
+                            label=_("Quit georectification module")),
+    "grSettings": MetaIcon (img=icons_img["grSettings"],
+                            label=_("Settings"),
+                            desc=_("Settings dialog for georectification tool")),
+    }
 
 # testing ...
 if __name__ == "__main__":

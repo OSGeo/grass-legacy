@@ -117,8 +117,6 @@ class GMFrame(wx.Frame):
         self.encoding      = 'ISO-8859-1' # default encoding for display fonts
         self.workspaceFile = workspace    # workspace file
         self.menucmd       = {}           # menuId / cmd
-        self.georectifying = False        # says whether we're running the georectifier
-        self.gr            = ""           # ID of georectify instance
 
         # creating widgets
         # -> self.notebook, self.goutput, self.outpage
@@ -341,8 +339,7 @@ class GMFrame(wx.Frame):
         """
         Launch georectifier module
         """
-        self.gr = georect.GeorectWizard(self)
-        self.georectifying = True
+        georect.GeorectWizard(self)
         
     def OnMapsets(self, event):
         """
