@@ -83,5 +83,13 @@ IconsSilk = {
     "profiledraw"  : 'arrow_refresh.png',
     "profileopt"   : 'color_swatch.png',
     # georectify
-    "gcpset" : 'bullet_add.png',
+    "grGcpSet"     : 'bullet_add.png',
+    'grGcpClear'   : 'cross.png',
+    'grGeorect'    : 'application_lightning.png',
+    'grGcpRms'     : 'error.png',
+    'grGcpRefresh' : 'arrow_refresh.png',
+    "grGcpSave"    : 'picture_save.png',
+    "grGcpAdd"     : 'bullet_add.png', 
+    "grGcpDelete"  : 'bullet_delete.png',
+    "grSettings"   : 'color_swatch.png',
     }
