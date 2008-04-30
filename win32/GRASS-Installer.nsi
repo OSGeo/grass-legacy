@@ -20,6 +20,7 @@
 ;Version variables that may need to be modified
 
 !define VERSION_NUMBER "6.3.0"
+!define DEMOLOCATION_PATH "c:\msys\local\src\grass-6.3.0\demolocation"
 
 ;----------------------------------------------------------------------------------------------------------------------------
 
@@ -172,7 +173,7 @@ FunctionEnd
 ;Installer Pages
 
 !insertmacro MUI_PAGE_WELCOME
-!insertmacro MUI_PAGE_LICENSE ".\Extras\GPL.TXT"
+!insertmacro MUI_PAGE_LICENSE "${PACKAGE_FOLDER}\GPL.TXT"
 !insertmacro MUI_PAGE_DIRECTORY
 Page custom CheckInstDir
 !insertmacro MUI_PAGE_COMPONENTS
@@ -221,7 +222,7 @@ Section "GRASS" SecGRASS
 	
 	;Install demolocation into GIS_DATABASE directory
 	SetOutPath "$GIS_DATABASE\demolocation"
-	File /r .\Extras\demolocation\*.*
+	File /r ${DEMOLOCATION_PATH}\*.*
 	
 	;Create uninstaller
 	WriteUninstaller "$INSTDIR\Uninstall.exe"
@@ -329,11 +330,9 @@ Section "GRASS" SecGRASS
 
 	;Set USERNAME
 	Var /GLOBAL USERNAME
-  
-	SetShellVarContext current
-	StrCpy $USERNAME "$PROFILE" "" 3
-	${StrReplace} "$USERNAME" "Documents and Settings\" "" "$USERNAME"
 
+	ReadRegStr $USERNAME HKCU "Software\Microsoft\Windows\CurrentVersion\Explorer" "Logon User Name"
+  
 	;Create $INSTDIR\msys\home and $INSTDIR\msys\home\$USERNAME directories
 	CreateDirectory $INSTDIR\msys\home
 	CreateDirectory $INSTDIR\msys\home\$USERNAME
