@@ -131,6 +131,7 @@ icons_default = {
     "grGcpSave"    : 'file-save.gif', 
     "grGcpAdd"     : wx.ART_ERROR, # FIXME
     "grGcpDelete"  : wx.ART_ERROR, # FIXME
+    "grGcpReload"  : 'gui-redraw.gif',
     "grSettings"   : 'edit-color.gif', 
     }
 
@@ -410,6 +411,8 @@ Icons = {
                               label=_("Delete selected GCP")),
     'grGcpClear' : MetaIcon (img=icons_img["grGcpClear"],
                              label=_("Clear selected GCP")),
+    'grGcpReload' : MetaIcon (img=icons_img["grGcpReload"],
+                              label=_("Reload GCPs from selected POINTS file")),
     'grGcpQuit' : MetaIcon (img=icons_img["quit"],
                             label=_("Quit georectification module")),
     "grSettings": MetaIcon (img=icons_img["grSettings"],

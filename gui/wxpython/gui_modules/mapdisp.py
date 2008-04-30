@@ -231,7 +231,7 @@ class BufferedWindow(wx.Window):
         self.dragid   = -1
         self.lastpos  = (0, 0)
 
-    def Draw(self, pdc, img=None, drawid=None, pdctype='image', coords=[0,0,0,0]):
+    def Draw(self, pdc, img=None, drawid=None, pdctype='image', coords=[0, 0, 0, 0]):
         """
         Draws map and overlay decorations
         """
@@ -632,10 +632,19 @@ class BufferedWindow(wx.Window):
 
         self.DrawCompRegionExtent()
 
+        #
         # redraw pdcTmp if needed
+        #
         if len(self.polycoords) > 0:
             self.DrawLines(self.pdcTmp)
-
+        if self.parent.gismanager.georectifying:
+            # -> georectifier (redraw GCPs)
+            if self.parent.grtoolbar:
+                coordtype = 'gcpcoord'
+            else:
+                coordtype = 'mapcoord'
+            self.parent.gismanager.georectifying.DrawGCP(coordtype)
+            
         stop = time.clock()
 
         #
@@ -831,10 +840,18 @@ class BufferedWindow(wx.Window):
 
         return -1
 
-    def DrawCross(self, pdc, coords, size, rotation=0):
+    def DrawCross(self, pdc, coords, size, rotation=0,
+                  text=None, textAlign='lr', textOffset=(5, 5)):
         """Draw cross in PseudoDC
 
-           TODO: implement rotation
+        @todo implement rotation
+
+        @param pdc PseudoDC
+        @param coord center coordinates
+        @param rotation rotate symbol
+        @param text draw also text (text, font, color, rotation)
+        @param textAlign alignment (default 'lower-right')
+        @textOffset offset for text (from center point)
         """
         Debug.msg(4, "BufferedWindow.DrawCross(): pdc=%s, coords=%s, size=%d" % \
                   (pdc, coords, size))
@@ -844,6 +861,21 @@ class BufferedWindow(wx.Window):
         self.lineid = wx.NewId()
         for lineCoords in coordsCross:
             self.Draw(pdc, drawid=self.lineid, pdctype='line', coords=lineCoords)
+
+        if not text:
+            return self.lineid
+
+        if textAlign == 'ul':
+            coord = [coords[0] - textOffset[0], coords[1] - textOffset[1], 0, 0]
+        elif textAlign == 'ur':
+            coord = [coords[0] + textOffset[0], coords[1] - textOffset[1], 0, 0]
+        elif textAlign == 'lr':
+            coord = [coords[0] + textOffset[0], coords[1] + textOffset[1], 0, 0]
+        else:
+            coord = [coords[0] - textOffset[0], coords[1] + textOffset[1], 0, 0]
+        
+        self.Draw(pdc, img=text,
+                  pdctype='text', coords=coord)
 
         return self.lineid
 
@@ -1230,19 +1262,16 @@ class BufferedWindow(wx.Window):
             except:
                 pass
 
-        elif self.mouse["use"] == "pointer" and hasattr(self.parent.parent, "grwiz"):
+        elif self.mouse["use"] == "pointer" and self.parent.gismanager.georectifying:
             # -> georectifying
-            self.SetCursor(self.parent.cursors["cross"])
-            self.pen = wx.Pen(colour='blue', width=3, style=wx.SOLID)
-
             coord = self.Pixel2Cell(self.mouse['end'])
             if self.parent.grtoolbar:
                 coordtype = 'gcpcoord'
             else:
                 coordtype = 'mapcoord'
-            self.parent.parent.SetGCPData(coordtype, coord, self)
-            self.DrawCross(pdc=self.pdcTmp, coords=self.mouse['end'],
-                           size=5)
+
+            self.parent.gismanager.georectifying.SetGCPData(coordtype, coord, self)
+            self.UpdateMap(render=False, renderVector=False)
 
         elif self.mouse["use"] == "pointer" and self.parent.digittoolbar:
             # digitization tool active
@@ -2456,27 +2485,17 @@ class MapFrame(wx.Frame):
         Change choicebook page to match display.
         Or set display for georectifying
         """
-        if self.grtoolbar:
-            # display used to set GCPs in map to georectify
-            try:
-                if event.GetActive():
-                    self.gismanager.gr.SwitchEnv('new')
-                else:
-                    self.gismanager.gr.SwitchEnv('original')
-            except:
-                pass
-            
-        elif self.grtoolbar:
+        if self.gismanager.georectifying:
             # in georectifying session; display used to get get geographic
             # coordinates for GCPs
-            self.MapWindow.pen = wx.Pen(colour='black', width=2, style=wx.SOLID)
-            self.MapWindow.SetCursor(self.cursors["cross"])
+            self.OnPointer(event)
         else:
             # change bookcontrol page to page associated with display
-            if self.page :
+            if self.page:
                 pgnum = self.layerbook.GetPageIndex(self.page)
                 if pgnum > -1:
                     self.layerbook.SetSelection(pgnum)
+        
         event.Skip()
 
     def OnMotion(self, event):
@@ -2537,7 +2556,7 @@ class MapFrame(wx.Frame):
                 self.MapWindow.mouse['box'] = 'point'
             else: # moveLine, deleteLine
                 self.MapWindow.mouse['box'] = 'box'
-        elif self.grtoolbar:
+        elif self.gismanager.georectifying:
             self.MapWindow.SetCursor(self.cursors["cross"])
         else:
             self.MapWindow.SetCursor(self.cursors["default"])

@@ -271,7 +271,7 @@ class GCPToolbar(AbstractToolbar):
         self.gcpAdd = wx.NewId()
         self.gcpDelete = wx.NewId()
         self.gcpClear = wx.NewId()
-        self.gcpRefresh = wx.NewId()
+        self.gcpReload = wx.NewId()
         self.rms = wx.NewId()
         self.georect = wx.NewId()
         self.settings = wx.NewId()
@@ -290,9 +290,10 @@ class GCPToolbar(AbstractToolbar):
             (self.gcpClear, 'grGcpClear', Icons["grGcpClear"].GetBitmap(),
              wx.ITEM_NORMAL, Icons["grGcpClear"].GetLabel(), Icons["grGcpClear"].GetDesc(), 
              self.parent.ClearGCP),
-            (self.gcpRefresh, 'grGcpRefresh', Icons["grGcpRefresh"].GetBitmap(),
-             wx.ITEM_NORMAL, Icons["grGcpRefresh"].GetLabel(), Icons["grGcpRefresh"].GetDesc(),
-             self.parent.RefreshGCPMarks),
+            (self.gcpReload, 'grGcpReload', Icons["grGcpReload"].GetBitmap(),
+             wx.ITEM_NORMAL, Icons["grGcpReload"].GetLabel(), Icons["grGcpReload"].GetDesc(), 
+             self.parent.ReloadGCPs),
+
             ("", "", "", "", "", "", ""),
             (self.rms, 'grGcpRms', Icons["grGcpRms"].GetBitmap(),
              wx.ITEM_NORMAL, Icons["grGcpRms"].GetLabel(), Icons["grGcpRms"].GetDesc(),

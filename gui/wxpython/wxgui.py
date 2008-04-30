@@ -117,7 +117,8 @@ class GMFrame(wx.Frame):
         self.encoding      = 'ISO-8859-1' # default encoding for display fonts
         self.workspaceFile = workspace    # workspace file
         self.menucmd       = {}           # menuId / cmd
-
+        self.georectifying = None         # reference to GCP class or None
+        
         # creating widgets
         # -> self.notebook, self.goutput, self.outpage
         self.notebook  = self.__createNoteBook()

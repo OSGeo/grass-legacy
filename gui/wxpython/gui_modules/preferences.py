@@ -189,6 +189,7 @@ class Settings:
                 },
             'georect' : {
                 'symbol' : { 'color' : (0, 0, 255, 255),
+                             'width' : 2,
                              },
                 },
             }

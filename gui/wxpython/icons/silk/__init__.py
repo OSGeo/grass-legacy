@@ -91,5 +91,6 @@ IconsSilk = {
     "grGcpSave"    : 'picture_save.png',
     "grGcpAdd"     : 'bullet_add.png', 
     "grGcpDelete"  : 'bullet_delete.png',
+    "grGcpReload"  : 'arrow_refresh.png',
     "grSettings"   : 'color_swatch.png',
     }
