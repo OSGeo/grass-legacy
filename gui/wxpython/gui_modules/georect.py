@@ -610,10 +610,14 @@ class GCP(wx.Frame):
 
         wx.Frame.__init__(self, parent, id, title, size=(625, 300))
 
+        self.SetIcon(wx.Icon(os.path.join(globalvar.ETCDIR, 'grass_map.ico'), wx.BITMAP_TYPE_ICO))
+        
         #
         # init variables
         #
         self.parent = parent # GMFrame
+        self.parent.georectifying = self
+        
         self.mapdisp = mapdisp # XY-location Map Display
         self.grwiz = grwiz # GR Wizard
 
@@ -678,8 +682,7 @@ class GCP(wx.Frame):
         #
         # statusbar 
         #
-        self.CreateStatusBar(number=3)
-        self.SetStatusText(_('RMS error for selected points'), 0)
+        self.CreateStatusBar(number=1)
         
         # can put guage into custom statusbar for progress if can figure out how to get progress text from i.rectify
         # self.gr_gauge = wx.Gauge(self, -1, 100, (-1,-1), (100, 25))
@@ -705,7 +708,6 @@ class GCP(wx.Frame):
 
         # initialize list control for GCP management
         self.list = GCPList(parent=panel, gcp=self)
-        self.list.LoadData()
 
         boxSizer.Add(item=self.list, proportion=1,
                      flag=wx.EXPAND | wx.ALL, border=3)
@@ -723,11 +725,17 @@ class GCP(wx.Frame):
         panel.SetSizer(sizer)
         # sizer.Fit(self)
 
+    def __del__(self):
+        """Disable georectification mode"""
+        self.parent.georectifying = None
+        
     def SetMapDisplay(self, win):
         self.mapdisp = win
         if self.mapdisp:
             self.toolbar = toolbars.GCPToolbar(parent=self, mapdisplay=self.mapdisp, map=self.mapdisp.Map).GetToolbar()
             self.SetToolBar(self.toolbar)
+
+            self.list.LoadData()
         else:
             self.toolbar = None
 
@@ -752,20 +760,24 @@ class GCP(wx.Frame):
         """
         Appends an item to GCP list
         """
-        self.list.AddItem()
-        self.mapcoordlist.append((0.0, 0.0, None))
+        self.list.AddGCPItem()
+        # x, y, MapWindow instance
+        self.mapcoordlist.append({ 'gcpcoord' : (0.0, 0.0, None),
+                                   'mapcoord' : (0.0, 0.0, None) })
 
     def DeleteGCP(self, event):
         """
         Deletes selected item in GCP list
         """
-        if self.list.GetItemCount() < 4:
-            wx.MessageBox(parent=self, message=_("At least 3 GCP required. Operation cancelled."),
+        minNumOfItems = self.OnGRMethod(None)
+
+        if self.list.GetItemCount() <= minNumOfItems:
+            wx.MessageBox(parent=self, message=_("At least %d GCPs required. Operation cancelled.") % minNumOfItems,
                           caption=_("Delete GCP"), style=wx.OK | wx.ICON_INFORMATION)
             return
 
-        item = self.list.DeleteItem()
-        del self.gcp.mapcoordlist[self.selected]
+        item = self.list.DeleteGCPItem()
+        del self.mapcoordlist[item]
 
     def ClearGCP(self, event):
         """
@@ -779,38 +791,34 @@ class GCP(wx.Frame):
         self.list.SetStringItem(index, 5, '')
         self.list.CheckItem(index, False)
 
-        self.mapcoordlist[index] = (0.0, 0.0, '')        
+        self.mapcoordlist[index] = { 'gcpcoord' : (0.0, 0.0, None),
+                                     'mapcoord' : (0.0, 0.0, None) }
 
-    def SaveGCPs(self, event):
+    def DrawGCP(self, coordtype):
         """
-        Make a POINTS file or save GCP coordinates to existing POINTS file
+        Updates GCP and map coord maps and redraws
+        active (checked) GCP markers
         """
-        
-        self.GCPcount = 0
-        f = open(self.pointsfile, mode='w')
-        try:
-            f.write('# Ground Control Points File\n')
-            f.write("# \n")
-            f.write("# target location: "+self.currentlocation+'\n')
-            f.write("# target mapset: "+self.currentmapset+'\n')
-            f.write("#unrectified xy     georectified east north     1=use gcp point\n")
-            f.write("#--------------     -----------------------     ---------------\n")
+        col = UserSettings.Get(group='georect', key='symbol', subkey='color')
+        wxCol = wx.Colour(col[0], col[1], col[2], 255)
+        wpx = UserSettings.Get(group='georect', key='symbol', subkey='width')
+        font = self.GetFont()
 
-            for index in range(self.list.GetItemCount()):
-                if self.list.IsChecked(index) == True:
-                    check = "1"
-                    self.GCPcount += 1
-                else:
-                    check = "0"
-                coord0 = self.list.GetItem(index, 0).GetText()
-                coord1 = self.list.GetItem(index, 1).GetText()
-                coord2 = self.list.GetItem(index, 2).GetText()
-                coord3 = self.list.GetItem(index, 3).GetText()
-                f.write(coord0+' '+coord1+'     '+coord2+' '+coord3+'     '+check+'\n')
-        finally:
-            f.close()
-        pass
+        idx = 0
+        for gcp in self.mapcoordlist:
+            mapWin = gcp[coordtype][2]
+            if not self.list.IsChecked(idx) or not mapWin:
+                idx += 1
+                continue
 
+            mapWin.pen = wx.Pen(colour=wxCol, width=wpx, style=wx.SOLID)
+            mapWin.polypen = wx.Pen(colour=wxCol, width=wpx, style=wx.SOLID) # ?
+            coord = mapWin.Cell2Pixel((gcp[coordtype][0], gcp[coordtype][1]))
+            mapWin.DrawCross(pdc=mapWin.pdcTmp, coords=coord,
+                             size=5, text=('%s' % str(idx + 1), font, wxCol, 0.0))
+            
+            idx += 1
+            
     def SetGCPData(self, coordtype, coord, mapdisp=None, check=True):
         """
         Inserts coordinates from mouse click on map
@@ -827,14 +835,55 @@ class GCP(wx.Frame):
         if coordtype == 'gcpcoord':
             self.list.SetStringItem(index, 0, coord0)
             self.list.SetStringItem(index, 1, coord1)
+            self.mapcoordlist[index]['gcpcoord'] = (coord[0], coord[1], mapdisp)
         elif coordtype == 'mapcoord':
             self.list.SetStringItem(index, 2, coord0)
             self.list.SetStringItem(index, 3, coord1)
-            self.mapcoordlist[index] = (coord[0], coord[1], mapdisp)
+            
+        self.mapcoordlist[index][coordtype] = (coord[0], coord[1], mapdisp)
 
         self.list.CheckItem(index, check)
 
         # self.list.ResizeColumns()
+
+    def SaveGCPs(self, event):
+        """
+        Make a POINTS file or save GCP coordinates to existing POINTS file
+        """
+        
+        self.GCPcount = 0
+        try:
+            f = open(self.file['points'], mode='w')
+            # use os.linesep or '\n' here ???
+            f.write('# Ground Control Points File\n')
+            f.write("# \n")
+            f.write("# target location: " + self.currentlocation + '\n')
+            f.write("# target mapset: " + self.currentmapset + '\n')
+            f.write("#unrectified xy     georectified east north     1=use gcp point\n")
+            f.write("#--------------     -----------------------     ---------------\n")
+
+            for index in range(self.list.GetItemCount()):
+                if self.list.IsChecked(index) == True:
+                    check = "1"
+                    self.GCPcount += 1
+                else:
+                    check = "0"
+                coord0 = self.list.GetItem(index, 0).GetText()
+                coord1 = self.list.GetItem(index, 1).GetText()
+                coord2 = self.list.GetItem(index, 2).GetText()
+                coord3 = self.list.GetItem(index, 3).GetText()
+                f.write(coord0 + ' ' + coord1 + '     ' + coord2 + ' ' + coord3 + '     ' + check + '\n')
+
+            self.parent.goutput.WriteLog(_('POINTS file <%s> saved') % self.file['points'])
+            self.SetStatusText(_('POINTS file saved'))
+        except IOError, err:
+            wx.MessageBox(parent=self,
+                          message="%s <%s>. %s%s" % (_("Writing POINTS file failed"),
+                                                     self.file['points'], os.linesep, err),
+                          caption=_("Error"), style=wx.OK | wx.ICON_ERROR | wx.CENTRE)
+            return
+
+        f.close()
 
     def ReadGCPs(self):
         """
@@ -842,29 +891,55 @@ class GCP(wx.Frame):
         """
         
         self.GCPcount = 0
-        f = open(self.file['points'], 'r')
+
+        sourceMapWin = self.mapdisp.MapWindow
+        targetMapWin = self.parent.curr_page.maptree.mapdisplay.MapWindow
+            
         try:
+            f = open(self.file['points'], 'r')
             GCPcnt = 0
-            for line in f:
-                if line[0] != '#' and line !='':
-                    line = line.strip(' \n')
-                    coords = line.split()
-                    if coords[4] == '1':
-                        check = True
-                        self.GCPcount +=1
-                    else:
-                        check = False
-                    index = self.AddGCP(event=None)
-                    for i in range(4):
-                        self.list.SetStringItem(index, i, coords[i])
-                    self.list.CheckItem(index, check)
-        finally:
-            f.close()
-        self.RefreshGCPMarks(None)
+            
+            for line in f.readlines():
+                if line[0] == '#' or line =='':
+                    continue
+                line = line.replace('\n', '').strip()
+                coords = map(float, line.split())
+                if coords[4] == 1:
+                    check = True
+                    self.GCPcount +=1
+                else:
+                    check = False
+                index = self.AddGCP(event=None)
+                self.SetGCPData('gcpcoord', (coords[0], coords[1]), sourceMapWin, check)
+                self.SetGCPData('mapcoord', (coords[2], coords[3]), targetMapWin, check)
+            
+        except IOError, err:
+            wx.MessageBox(parent=self,
+                          message="%s <%s>. %s%s" % (_("Reading POINTS file failed"),
+                                                     self.file['points'], os.linesep, err),
+                          caption=_("Error"), style=wx.OK | wx.ICON_ERROR | wx.CENTRE)
+            return
 
+        f.close()
+
+        #
+        # draw GCPs (source and target)
+        #
+        sourceMapWin.UpdateMap(render=False, renderVector=False)
+        if targetMapWin:
+            targetMapWin.UpdateMap(render=False, renderVector=False)
+
+        #
+        # calculate RMS
+        #
         if self.CheckGCPcount():
-            self.RMSError(self.xygroup, self.gr_order)
+            # self.RMSError(self.xygroup, self.gr_order)
+            pass
 
+    def ReloadGCPs(self, event):
+        """Reload data from file"""
+        self.list.LoadData()
+    
     def OnFocus(self, event):
         self.grwiz.SwitchEnv('new')
         
@@ -883,13 +958,15 @@ class GCP(wx.Frame):
             (self.GCPcount < 6 and self.gr_order == 2) or \
             (self.GCPcount < 10 and self.gr_order == 3):
             if msg:
-                s1 = 'Insufficient points defined and active (checked)\n'
-                s2 = 'for selected rectification method.\n'
-                s3 = '3+ points needed for 1st order,\n'
-                s4 = '6+ points for 2nd order, and\n'
-                s5 = '10+ points for 3rd order.'
-                wx.MessageBox('%s%s%s%s%s' % (s1, s2, s3, s4, s5))
-            return False
+                wx.MessageBox(parent=self,
+                              caption=_("RMS Error"),
+                              message=_('Insufficient points defined and active (checked) '
+                                        'for selected rectification method.\n'
+                                        '3+ points needed for 1st order,\n'
+                                        '6+ points for 2nd order, and\n'
+                                        '10+ points for 3rd order.'),
+                              style=wx.ICON_INFORMATION | wx.ID_OK | wx.CENTRE)
+                return False
         else:
             return True
 
@@ -898,7 +975,7 @@ class GCP(wx.Frame):
         Georectifies map(s) in group using i.rectify or v.transform
         """
         global maptype
-        self.SaveGCPs()
+        self.SaveGCPs(None)
         
         if self.CheckGCPcount(msg=True) == False:
             return
@@ -971,75 +1048,65 @@ class GCP(wx.Frame):
         self.Destroy()
         # self.grwiz.Cleanup()
 
-    def RefreshGCPMarks(self, event):
-        """
-        Updates GCP and map coord maps and redraws
-        active (checked) GCP markers
-        """
-        self.grwiz.SwitchEnv("new")
-        self.grwiz.mapwin.UpdateMap()
-        self.grwiz.SwitchEnv("original")
-        mapid = ''
-        for map in self.mapcoordlist:
-            if map[2] != mapid and map[2] != '':
-                map[2].UpdateMap()
-                mapid = map[2]
-        for index in range(self.list.GetItemCount()):
-            if self.list.IsChecked(index) and (
-                (self.list.GetItem(index, 0).GetText() != '0.0' and 
-                 self.list.GetItem(index, 1).GetText() != '0.0') or 
-                (self.list.GetItem(index, 2).GetText() != '0.0' and 
-                 self.list.GetItem(index, 3).GetText() != '0.0')
-                ):
-                coord0 = float(self.list.GetItem(index, 0).GetText())
-                coord1 = float(self.list.GetItem(index, 1).GetText())
-                coord2 = float(self.list.GetItem(index, 2).GetText())
-                coord3 = float(self.list.GetItem(index, 3).GetText())
-                
-                self.grwiz.SwitchEnv("new")
-                pxcoord1 = self.grwiz.mapwin.Cell2Pixel((coord0, coord1))
-                self.grwiz.mapwin.DrawCross(pdc=self.grwiz.mapwin.pdcTmp,
-                                            coords=pxcoord1, size=5)
-                if self.mapcoordlist != [] and self.mapcoordlist[index][2] != '':
-                    self.grwiz.SwitchEnv("original")
-                    pxcoord2 = self.mapcoordlist[index][2].Cell2Pixel((coord2, coord3))
-                    self.mapcoordlist[index][2].DrawCross(pdc=self.mapcoordlist[index][2].pdcTmp,
-                                                      coords=pxcoord2, size=5)
-                
     def OnGRMethod(self, event):
         """
         sets transformation order for georectifying
         """
-        self.gr_order = event.GetInt() + 1
+        if event:
+            self.gr_order = event.GetInt() + 1
+
+        numOfItems = self.list.GetItemCount()
+        minNumOfItems = numOfItems
         
+        if self.gr_order == 1:
+            minNumOfItems = 3
+            # self.SetStatusText(_('Insufficient points, 3+ points needed for 1st order'))
+
+        elif self.gr_order == 2:
+            minNumOfItems = 6
+            diff = 6 - numOfItems
+            # self.SetStatusText(_('Insufficient points, 6+ points needed for 2nd order'))
+
+        elif self.gr_order == 3:
+            minNumOfItems = 10
+            # self.SetStatusText(_('Insufficient points, 10+ points needed for 3rd order'))
+
+        for i in range(minNumOfItems - numOfItems):
+            self.AddGCP(None)
+
+        return minNumOfItems
+    
     def RMSError(self, xygroup, order):
         """
         Uses g.transform to calculate forward and backward error for each used GCP
         in POINTS file and insert error values into GCP list.
         Calculates total forward and backward RMS error for all used points
         """
-        
         # save GCPs to points file to make sure that all checked GCPs are used
         self.SaveGCPs(None)
         
         if self.CheckGCPcount(msg=True) == False:
             return
         
-        #get list of forward and reverse rms error values for each point
+        # get list of forward and reverse rms error values for each point
         self.grwiz.SwitchEnv('new')
-        cmdlist = ['g.transform', 'group=%s' % xygroup, 'order=%s' % order]
-        p = gcmd.Command(cmdlist)
+        
+        p = gcmd.Command(['g.transform',
+                          'group=%s' % xygroup,
+                          'order=%s' % order])
+        
         errlist = p.ReadStdOutput()
         if errlist == []:
             return
         
-        #insert error values into GCP list for checked items
+        # insert error values into GCP list for checked items
         i = 0
         sumsq_fwd_err = 0.0
         sumsq_bkw_err = 0.0
+        
         for index in range(self.list.GetItemCount()):
             if self.list.IsChecked(index):
-                fwd_err,bkw_err = errlist[i].split()
+                fwd_err, bkw_err = errlist[i].split()
                 self.list.SetStringItem(index, 4, fwd_err)
                 self.list.SetStringItem(index, 5, bkw_err)
                 sumsq_fwd_err += float(fwd_err)**2
@@ -1049,13 +1116,16 @@ class GCP(wx.Frame):
                 self.list.SetStringItem(index, 4, '')
                 self.list.SetStringItem(index, 5, '')
         
-        #calculate RMS error
+        # calculate RMS error
         self.fwd_rmserror = round((sumsq_fwd_err/i)**0.5,4)
         self.bkw_rmserror = round((sumsq_bkw_err/i)**0.5,4)
-        self.ResizeColumns()
-        self.SetStatusText('forward: %s' % self.fwd_rmserror,1)
-        self.SetStatusText('backward: %s' % self.bkw_rmserror,2)
+        self.list.ResizeColumns()
 
+        self.SetStatusText(_('RMS error for selected points forward: %s backward: %s') % \
+                           (self.fwd_rmserror, self.bkw_rmserror))
+        
+        self.grwiz.SwitchEnv('original')
+        
 class GCPList(wx.ListCtrl,
               CheckListCtrlMixin,
               ListCtrlAutoWidthMixin):
@@ -1117,7 +1187,7 @@ class GCPList(wx.ListCtrl,
         """Item is checked/unchecked"""
         pass
     
-    def AddItem(self):
+    def AddGCPItem(self):
         """
         Appends an item to GCP list
         """
@@ -1138,17 +1208,17 @@ class GCPList(wx.ListCtrl,
 
         return self.selected
 
-    def DeleteItem(self):
+    def DeleteGCPItem(self):
         """
         Deletes selected item in GCP list
         """
         if self.selected == wx.NOT_FOUND:
             return
 
-        self.list.DeleteItem(self.selected)
+        self.DeleteItem(self.selected)
 
         if self.GetItemCount() > 0:
-            self.selected = GetItemCount() - 1
+            self.selected = self.GetItemCount() - 1
             self.SetItemState(self.selected,
                               wx.LIST_STATE_SELECTED,
                               wx.LIST_STATE_SELECTED)
@@ -1197,8 +1267,11 @@ class GCPList(wx.ListCtrl,
                 for i in range(len(values)):
                     if values[i] != coords[i]:
                         self.SetStringItem(index, i, values[i])
-                self.gcp.mapcoordlist[index] = (float(values[0]), float(values[1]), None)
-                    
+                mapdisp = self.gcp.mapcoordlist[index]['gcpcoord'][2]
+                self.gcp.mapcoordlist[index]['gcpcoord'] = (float(values[0]), float(values[1]), mapdisp)
+                mapdisp = self.gcp.mapcoordlist[index]['mapcoord'][2]
+                self.gcp.mapcoordlist[index]['mapcoord'] = (float(values[0]), float(values[1]), mapdisp)
+        
 class VectGroup(wx.Dialog):
     """
     Dialog to create a vector group (VREF file) for georectifying
@@ -1417,8 +1490,9 @@ class GrSettingsDialog(wx.Dialog):
         #
         # symbol color
         #
+        row = 0
         label = wx.StaticText(parent=self, id=wx.ID_ANY, label=_("Color:"))
-        gridSizer.Add(item=label, flag=wx.ALIGN_CENTER_VERTICAL, pos=(0, 0))
+        gridSizer.Add(item=label, flag=wx.ALIGN_CENTER_VERTICAL, pos=(row, 0))
         col = UserSettings.Get(group='georect', key='symbol', subkey='color')
         colWin = csel.ColourSelect(parent=self, id=wx.ID_ANY,
                                    colour=wx.Colour(col[0],
@@ -1428,8 +1502,23 @@ class GrSettingsDialog(wx.Dialog):
         self.symbol['color'] = colWin.GetId()
         gridSizer.Add(item=colWin,
                       flag=wx.ALIGN_RIGHT,
-                      pos=(0, 1))
+                      pos=(row, 1))
 
+        #
+        # symbol width
+        #
+        row += 1
+        label = wx.StaticText(parent=self, id=wx.ID_ANY, label=_("Width:"))
+        gridSizer.Add(item=label, flag=wx.ALIGN_CENTER_VERTICAL, pos=(row, 0))
+        width = int(UserSettings.Get(group='georect', key='symbol', subkey='width'))
+        widWin = wx.SpinCtrl(parent=self, id=wx.ID_ANY,
+                             min=1, max=10)
+        widWin.SetValue(width)
+        self.symbol['width'] = widWin.GetId()
+        gridSizer.Add(item=widWin,
+                      flag=wx.ALIGN_RIGHT,
+                      pos=(row, 1))
+        
         boxSizer.Add(item=gridSizer, flag=wx.EXPAND)
         sizer.Add(item=boxSizer, flag=wx.EXPAND | wx.ALL, border=5)
 
@@ -1469,6 +1558,8 @@ class GrSettingsDialog(wx.Dialog):
     def UpdateSettings(self):
         UserSettings.Set(group='georect', key='symbol', subkey='color',
                          value=wx.FindWindowById(self.symbol['color']).GetColour())
+        UserSettings.Set(group='georect', key='symbol', subkey='width',
+                         value=wx.FindWindowById(self.symbol['width']).GetValue())
 
     def OnSave(self, event):
         """Button 'Save' pressed"""
