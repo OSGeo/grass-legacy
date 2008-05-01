@@ -293,7 +293,7 @@ class GMFrame(wx.Frame):
         self.notebook.AddPage(self.gm_cb, text=_("Map layers for each display"))
 
         # create command output text area and add it to main notebook page
-        self.goutput = goutput.GMConsole(self)
+        self.goutput = goutput.GMConsole(self, pageid=1)
         self.outpage = self.notebook.AddPage(self.goutput, text=_("Command output"))
 
         # bingings
@@ -1422,9 +1422,6 @@ class GMFrame(wx.Frame):
 
         # show map display
         self.curr_page.maptree.mapdisplay.Show()
-
-    def GetSelectedDisplay(self):
-        return self.notebook.GetSelection()
 
     def OnDeleteLayer(self, event):
         """
