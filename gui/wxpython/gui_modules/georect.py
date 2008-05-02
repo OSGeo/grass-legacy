@@ -124,7 +124,7 @@ class GeorectWizard(object):
         self.wizard.FitToPage(self.startpage)
 
         # self.Bind(wx.EVT_CLOSE,    self.Cleanup)
-        self.parent.Bind(wx.EVT_ACTIVATE, self.OnGLMFocus)
+        # self.parent.Bind(wx.EVT_ACTIVATE, self.OnGLMFocus)
 
         success = False
 
@@ -244,22 +244,25 @@ class GeorectWizard(object):
         return True
     
     def OnWizFinished(self):
-        self.Cleanup()
+        # self.Cleanup()
 
         return True
         
     def OnGLMFocus(self, event):
+        """Layer Manager focus"""
         # self.SwitchEnv('original')
-        pass
+        
+        event.Skip()
 
     def Cleanup(self):
         """Return to current location and mapset"""
         self.SwitchEnv('original')
-        self.parent.georectifying = False
+        self.parent.georectifying = None
 
         if hasattr(self, "xy_mapdisp"):
-            self.xy_mapdisp.Destroy()
-            
+            self.xy_mapdisp.Close()
+            self.xy_mapdisp = None
+
         self.wizard.Destroy()
 
 class LocationPage(TitledPage):
@@ -460,9 +463,6 @@ class GroupPage(TitledPage):
         """Create new group in source location/mapset"""
         global maptype
 
-        # swith to source
-        self.parent.SwitchEnv('new')
-
         # open dialog
         if maptype == 'cell':
             menuform.GUI().ParseCommand(['i.group'],
@@ -528,7 +528,10 @@ class GroupPage(TitledPage):
             wx.FindWindowById(wx.ID_FORWARD).Enable(False)
         else:
             wx.FindWindowById(wx.ID_FORWARD).Enable(True)
-            
+
+        # switch to source
+        self.parent.SwitchEnv('new')
+
 class DispMapPage(TitledPage):
     """
     Select ungeoreferenced map to display for interactively
@@ -585,13 +588,7 @@ class DispMapPage(TitledPage):
         global maptype
         global xy_map
         
-        if event.GetDirection():
-            # switch to xy location if coming into the page from preceding
-            self.parent.SwitchEnv('new')
-            self.selection.SetElementList(maptype)
-        else:
-            # switch back to current location if leaving the page
-            self.parent.SwitchEnv('original')
+        self.selection.SetElementList(maptype)
 
         if xy_map == '':
             wx.FindWindowById(wx.ID_FORWARD).Enable(False)
@@ -720,7 +717,7 @@ class GCP(wx.Frame):
         #
         self.Bind(wx.EVT_RADIOBOX, self.OnGRMethod, self.rb_grmethod)
         self.Bind(wx.EVT_ACTIVATE, self.OnFocus)
-        # self.Bind(wx.EVT_CLOSE, self.grwiz.Cleanup)
+        self.Bind(wx.EVT_CLOSE, self.OnQuit)
 
         panel.SetSizer(sizer)
         # sizer.Fit(self)
@@ -754,7 +751,9 @@ class GCP(wx.Frame):
                        'group=%s' % tgroup,
                        'location=%s' % tlocation,
                        'mapset=%s' % tmapset]
-        gcmd.Command(cmd=cmdlist)
+        gcmd.Command(cmd=cmdlist, stderr=None)
+
+        self.grwiz.SwitchEnv('original')
 
     def AddGCP(self, event):
         """
@@ -912,7 +911,7 @@ class GCP(wx.Frame):
                 index = self.AddGCP(event=None)
                 self.SetGCPData('gcpcoord', (coords[0], coords[1]), sourceMapWin, check)
                 self.SetGCPData('mapcoord', (coords[2], coords[3]), targetMapWin, check)
-            
+
         except IOError, err:
             wx.MessageBox(parent=self,
                           message="%s <%s>. %s%s" % (_("Reading POINTS file failed"),
@@ -933,15 +932,15 @@ class GCP(wx.Frame):
         # calculate RMS
         #
         if self.CheckGCPcount():
-            # self.RMSError(self.xygroup, self.gr_order)
-            pass
+            self.RMSError(self.xygroup, self.gr_order)
 
     def ReloadGCPs(self, event):
         """Reload data from file"""
         self.list.LoadData()
     
     def OnFocus(self, event):
-        self.grwiz.SwitchEnv('new')
+        # self.grwiz.SwitchEnv('new')
+        pass
         
     def OnRMS(self, event):
         """
@@ -981,21 +980,16 @@ class GCP(wx.Frame):
             return
                 
         if maptype == 'cell':
-            cmdlist = ['i.rectify', '-ca', 'group=%s' % self.xygroup, 'extension=%s' % self.extension, 'order=%s' % self.gr_order]
-            p = gcmd.Command(cmd=cmdlist)
-            stdout = p.ReadStdOutput()
-            stderr = p.ReadErrOutput()
-            msg = err = ''
-            if p.returncode == 0:
-                for line in stdout:
-                    msg = msg+line+'\n'
-                for line in stderr:
-                    err = err+line+'\n'
-                wx.MessageBox('All maps georectified successfully\n'+msg+'\n'+err)
-            else:
-                for line in stderr:
-                    err = err+line+'\n'
-                wx.MessageBox(err)
+            self.grwiz.SwitchEnv('new')
+
+            self.parent.goutput.RunCmd(['i.rectify',
+                                        '-ca',
+                                        'group=%s' % self.xygroup,
+                                        'extension=%s' % self.extension,
+                                        'order=%s' % self.gr_order])
+
+            self.grwiz.SwitchEnv('original')
+
         elif maptype == 'vector':
             # loop through all vectors in VREF and move resulting vector to target location
             f = open(self.vgrpfile)
@@ -1045,8 +1039,11 @@ class GCP(wx.Frame):
 
     def OnQuit(self, event):
         """Quit georectifier"""
+        self.grwiz.Cleanup()
+
         self.Destroy()
-        # self.grwiz.Cleanup()
+
+        event.Skip()
 
     def OnGRMethod(self, event):
         """
@@ -1095,6 +1092,8 @@ class GCP(wx.Frame):
                           'group=%s' % xygroup,
                           'order=%s' % order])
         
+        self.grwiz.SwitchEnv('original')
+
         errlist = p.ReadStdOutput()
         if errlist == []:
             return
@@ -1123,8 +1122,6 @@ class GCP(wx.Frame):
 
         self.SetStatusText(_('RMS error for selected points forward: %s backward: %s') % \
                            (self.fwd_rmserror, self.bkw_rmserror))
-        
-        self.grwiz.SwitchEnv('original')
         
 class GCPList(wx.ListCtrl,
               CheckListCtrlMixin,
@@ -1175,11 +1172,12 @@ class GCPList(wx.ListCtrl,
             # 3 gcp is minimum
             for i in range(3):
                 self.gcp.AddGCP(None)
-            # select first point by default
-            self.selected = 0
-            self.SetItemState(self.selected,
-                              wx.LIST_STATE_SELECTED,
-                              wx.LIST_STATE_SELECTED)
+
+        # select first point by default
+        self.selected = 0
+        self.SetItemState(self.selected,
+                          wx.LIST_STATE_SELECTED,
+                          wx.LIST_STATE_SELECTED)
 
         self.ResizeColumns()
 
