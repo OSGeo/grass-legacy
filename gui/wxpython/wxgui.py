@@ -726,7 +726,7 @@ class GMFrame(wx.Frame):
                         file.write('%s<flag name="%s" />\n' %
                                    (' ' * self.indent, option[1]))
                     else: # parameter
-                        key, value = option.split('=')
+                        key, value = option.split('=', 1)
                         file.write('%s<parameter name="%s">\n' %
                                    (' ' * self.indent, key))
                         self.indent += 4

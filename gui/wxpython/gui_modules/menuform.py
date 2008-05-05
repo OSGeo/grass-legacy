@@ -1395,7 +1395,7 @@ class GUI:
                     cmd_validated.append(option)
                 else: # parameter
                     try:
-                        key, value = option.split('=')
+                        key, value = option.split('=', 1)
                     except:
                         if i == 0: # add key name of first parameter if not given
                             key = self.grass_task.firstParam
