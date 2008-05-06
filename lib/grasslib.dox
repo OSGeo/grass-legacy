@@ -9,7 +9,7 @@
 <a href="http://grass.osgeo.org">GRASS GIS</a> (Geographic Resources
 Analysis Support System) is an open source, Free Software
 <em>Geographical Information System</em> (GIS) with raster,
-topological vector, image processing, and graphics production
+topological %vector, image processing, and graphics production
 functionality that operates on various platforms through a graphical
 user interface (GUI) or command line interface (CLI). It is released under GNU
 General Public License (GPL).
