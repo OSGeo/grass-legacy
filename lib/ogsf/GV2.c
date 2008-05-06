@@ -1,10 +1,18 @@
-/*
-* $Id$
-*/
-
-/*  GV.c 
-    Bill Brown, USACERL  
-    October 1993
+/*!
+  \file GV2.c
+ 
+  \brief OGSF library - loading and manipulating vector sets
+ 
+  GRASS OpenGL gsurf OGSF Library 
+ 
+  (C) 1999-2008 by the GRASS Development Team
+ 
+  This program is free software under the 
+  GNU General Public License (>=v2). 
+  Read the file COPYING that comes with GRASS
+  for details.
+  
+  \author Bill Brown USACERL, GMSL/University of Illinois
 */
 
 #include <stdio.h>
@@ -74,8 +82,15 @@ int GV_num_vects(void)
     return (gv_num_vects());
 }
 
-/***********************************************************************/
-/* USER must free!! */
+/*!
+  \brief Get list of vector sets
+
+  Must free when no longer needed!
+
+  \param numvects number of vector sets
+
+  \return ADD
+*/
 int *GV_get_vect_list(int *numvects)
 {
     int i, *ret;
@@ -248,7 +263,14 @@ int GV_get_trans(int id, float *xtrans, float *ytrans, float *ztrans)
     return (-1);
 }
 
-/***********************************************************************/
+/*!
+  \brief Select surface identified by hs to have vector identified
+  by hv draped over it
+
+  \param ADD
+
+  \return ADD
+*/
 int GV_select_surf(int hv, int hs)
 {
     geovect *gv;

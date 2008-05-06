@@ -1,5 +1,18 @@
-/*
-* $Id$
+/*!
+  \file GK2.c
+ 
+  \brief OGSF library - setting and manipulating keyframes animation
+ 
+  GRASS OpenGL gsurf OGSF Library 
+ 
+  (C) 1999-2008 by the GRASS Development Team
+ 
+  This program is free software under the 
+  GNU General Public License (>=v2). 
+  Read the file COPYING that comes with GRASS
+  for details.
+  
+  \author Bill Brown USACERL, GMSL/University of Illinois
 */
 
 #include <stdlib.h>
@@ -115,6 +128,14 @@ static void _remove_key(Keylist * k)
     return;
 }
 
+/*!
+  \brief Set interpolation mode 
+
+  \param mode interpolation mode (KF_LINEAR or KF_SPLINE)
+
+  \return 1 on success
+  \return -1 on error (invalid interpolation mode)
+*/
 int GK_set_interpmode(int mode)
 {
     if (KF_LEGAL_MODE(mode)) {
@@ -125,6 +146,11 @@ int GK_set_interpmode(int mode)
     return (-1);
 }
 
+/*!
+  \brief Set value for tension when interpmode is KF_SPLINE. 
+
+  \param tens value tens should be between 0.0; 1.0.
+*/
 void GK_set_tension(float tens)
 {
     Tension = tens > 1.0 ? 1.0 : (tens < 0.0 ? 0.0 : tens);
@@ -150,6 +176,13 @@ void GK_showtension_start(void)
     return;
 }
 
+/*!
+  \brief ADD
+
+  Use GK_showtension_start/GK_update_tension/GK_showtension_stop to
+  initialize and stop multi-view display of path when changing
+  tension.
+*/
 void GK_showtension_stop(void)
 {
     return;
@@ -194,6 +227,12 @@ void GK_print_keys(char *name)
 
 }
 
+/*!
+  \brief Recalculate path using the current number of frames requested.
+
+  Call after changing number of frames or when
+  Keyframes change.
+*/
 void GK_update_frames(void)
 {
     Keylist *k;
@@ -245,6 +284,11 @@ void GK_update_frames(void)
     return;
 }
 
+/*!
+  \brief Set the number of frames to be interpolated from keyframes
+
+  \param newsteps number of frames
+*/
 void GK_set_numsteps(int newsteps)
 {
     Viewsteps = newsteps;
@@ -253,7 +297,11 @@ void GK_set_numsteps(int newsteps)
     return;
 }
 
+/*!
+  \brief Deletes all keyframes, resets field masks.
 
+  Doesn't change number of frames requested.
+*/
 void GK_clear_keys(void)
 {
     gk_free_key(Keys);
@@ -268,6 +316,16 @@ void GK_clear_keys(void)
     return;
 }
 
+/*!
+  \brief Move keyframe
+
+  Precis works as in other functions - to identify keyframe to move.
+  Only the first keyframe in the precis range will be moved.
+
+  \param ADD
+
+  \return number of keys moved (1 or 0)
+*/
 int GK_move_key(float oldpos, float precis, float newpos)
 {
     Keylist *k;
@@ -285,7 +343,18 @@ int GK_move_key(float oldpos, float precis, float newpos)
     return (0);
 }
 
-/* returns number of keys deleted */
+/*!
+  Delete key
+
+  The values pos and precis are used to determine which keyframes to
+  delete.  Any keyframes with their position within precis of pos will
+  be deleted if justone is zero.  If justone is non-zero, only the first
+  (lowest pos) keyframe in the range will be deleted.
+
+  \param ADD
+
+  \return number of keys deleted.
+*/
 int GK_delete_key(float pos, float precis, int justone)
 {
     Keylist *k, *next;
@@ -310,7 +379,41 @@ int GK_delete_key(float pos, float precis, int justone)
     return (cnt);
 }
 
-/* returns 1 if key added, otherwise -1 */
+/*!
+  \brief Add keyframe
+
+  The pos value is the relative position in the animation for this
+  particular keyframe - used to compare relative distance to neighboring
+  keyframes, it can be any floating point value.
+
+  The fmask value can be any of the following or'd together:    
+   - KF_FROMX_MASK    
+   - KF_FROMY_MASK    
+   - KF_FROMZ_MASK    
+   - KF_FROM_MASK (KF_FROMX_MASK | KF_FROMY_MASK | KF_FROMZ_MASK) 
+
+   - KF_DIRX_MASK    
+   - KF_DIRY_MASK    
+   - KF_DIRZ_MASK    
+   - KF_DIR_MASK (KF_DIRX_MASK | KF_DIRY_MASK | KF_DIRZ_MASK) 
+
+   - KF_FOV_MASK    
+   - KF_TWIST_MASK    
+
+   - KF_ALL_MASK (KF_FROM_MASK | KF_DIR_MASK | KF_FOV_MASK | KF_TWIST_MASK) 
+
+   Other fields will be added later.
+
+   The value precis and the boolean force_replace are used to determine
+   if a keyframe should be considered to be at the same position as a
+   pre-existing keyframe. e.g., if anykey.pos - newkey.pos &lt;= precis,
+   GK_add_key() will fail unless force_replace is TRUE.
+
+   \param ADD
+   
+   \return 1 if key is added
+   \return -1 key not added
+*/
 int GK_add_key(float pos, unsigned long fmask, int force_replace,
 	       float precis)
 {
@@ -363,6 +466,14 @@ int GK_add_key(float pos, unsigned long fmask, int force_replace,
     return (-1);
 }
 
+/*!
+  \brief Moves the animation to frame number "step".
+
+  Step should be a value between 1 and the number of frames.  If
+  render is non-zero, calls draw_all.
+
+  \param ADD
+*/
 void GK_do_framestep(int step, int render)
 {
     if (Views) {
@@ -374,7 +485,11 @@ void GK_do_framestep(int step, int render)
     return;
 }
 
+/*!
+  \brief Draw the current path
 
+  \param ADD
+*/
 void GK_show_path(int flag)
 {
     if (flag) {
