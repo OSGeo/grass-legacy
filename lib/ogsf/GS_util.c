@@ -1,10 +1,18 @@
-/*
-* $Id$
-*/
-
-/*  gs_util.c
-    Bill Brown, USACERL  
-    January 1993
+/*!
+  \file GS_util.c
+ 
+  \brief OGSF library - loading and manipulating surfaces
+ 
+  GRASS OpenGL gsurf OGSF Library 
+ 
+  (C) 1999-2008 by the GRASS Development Team
+ 
+  This program is free software under the 
+  GNU General Public License (>=v2). 
+  Read the file COPYING that comes with GRASS
+  for details.
+  
+  \author Bill Brown USACERL, GMSL/University of Illinois
 */
 
 #include <stdlib.h>
@@ -14,7 +22,35 @@
 
 #include <grass/gstypes.h>
 
-/************************************************************************/
+/*!
+  \brief Calculate distance between 2 coordinates
+
+  Units is one of:
+   - "meters",
+   - "miles",
+   - "kilometers",
+   - "feet",
+   - "yards",
+   - "nmiles" (nautical miles),
+   - "rods",
+   - "inches",
+   - "centimeters",
+   - "millimeters",
+   - "micron",
+   - "nanometers",
+   - "cubits",
+   - "hands",
+   - "furlongs",
+   - "chains"
+
+  Default is meters.
+
+  \param from starting point
+  \param to ending point
+  \param units map units
+
+  \return distance between two geographic coordinates in current projection
+*/
 double GS_geodistance(double *from, double *to, char *units)
 {
     double meters;
@@ -160,8 +196,11 @@ void GS_v3mult(float *v1, float k)
     return;
 }
 
-/************************************************************************/
-/* Changes v1 so that it is a unit vector */
+/*!
+  \brief Change v1 so that it is a unit vector
+
+  \param v1 vector
+*/
 int GS_v3norm(float *v1)
 {
     float n;
@@ -197,8 +236,14 @@ int GS_v2norm(float *v1)
     return (1);
 }
 
-/************************************************************************/
-/* Changes v1 so that it is a unit vector */
+/*!
+  \brief Changes v1 so that it is a unit vector
+
+  \param dv1 vector
+
+  \return 0
+  \return 1
+*/
 int GS_dv3norm(double *dv1)
 {
     double n;
@@ -217,8 +262,14 @@ int GS_dv3norm(double *dv1)
 }
 
 
-/************************************************************************/
-/* Changes v2 so that v1v2 is a unit vector */
+/*!
+  \brief Change v2 so that v1v2 is a unit vector
+
+  \param v1 first vector
+  \param v2 second vector
+
+  \return ADD
+*/
 int GS_v3normalize(float *v1, float *v2)
 {
     float n, dx, dy, dz;

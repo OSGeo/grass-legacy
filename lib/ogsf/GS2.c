@@ -1,15 +1,19 @@
-/*
-* $Id$
-*/
-
-/* updated 24 oct. 1999
- - Pierre de Mouveaux
- p_de_mouveaux@hotmail.com
-*/
-
-/*  GS.c
-    Bill Brown, USACERL
-    January 1993
+/*!
+  \file GS2.c
+ 
+  \brief OGSF library - loading and manipulating surfaces
+ 
+  GRASS OpenGL gsurf OGSF Library 
+ 
+  (C) 1999-2008 by the GRASS Development Team
+ 
+  This program is free software under the 
+  GNU General Public License (>=v2). 
+  Read the file COPYING that comes with GRASS
+  for details.
+  
+  \author Bill Brown USACERL, GMSL/University of Illinois
+  Pierre de Mouveaux (p_de_mouveaux hotmail.com) (updated 24 oct. 1999)
 */
 
 #include <stdlib.h>
@@ -267,7 +271,13 @@ void GS_getlight_position(int num, float *xpos, float *ypos, float *zpos,
     return;
 }
 
-/***********************************************************************/
+/*!
+  \brief ADD
+  
+  Red, green, blue from 0.0 to 1.0
+
+  \param ADD
+*/
 void GS_setlight_color(int num, float red, float green, float blue)
 {
     if (num) {
@@ -299,7 +309,13 @@ void GS_getlight_color(int num, float *red, float *green, float *blue)
     return;
 }
 
-/***********************************************************************/
+/*!
+  \brief ADD
+
+  Red, green, blue from 0.0 to 1.0
+
+  \param ADD
+*/
 void GS_setlight_ambient(int num, float red, float green, float blue)
 {
     if (num) {
@@ -395,9 +411,15 @@ void GS_get_modelposition1(float pos[])
     return;
 }
 
-/***********************************************************************/
-/* position at nearclip * 2: tried nearclip + siz, but since need to
-know position to calculate size, have two dependent variables */
+/*!
+  \brief Retrieves coordinates for lighting model position, at center of view
+
+  Position at nearclip * 2: tried nearclip + siz, but since need to
+  know position to calculate size, have two dependent variables
+  (nearclip * 2) from eye.
+
+  \param ADD
+*/
 void GS_get_modelposition(float *siz, float *pos)
 {
     float dist, near_h, dir[3];
@@ -492,8 +514,12 @@ void GS_set_Narrow(int *pt, int id, float *pos2)
     return;
 }
 
-/***********************************************************************/
-/* pt only has to have an X & Y value in true world coordinates */
+/*!
+  \brief ADD
+
+  \param id geographic object id
+  \param pt point, X, Y value in true world coordinates
+*/
 void GS_draw_X(int id, float *pt)
 {
     geosurf *gs;
@@ -1031,11 +1057,20 @@ int GS_get_norm_at_xy(int id, float x, float y, float *nv)
     return (1);
 }
 
-/***********************************************************************/
-/* prints "NULL" or the value (i.e., "921.5") to valstr
-*  returns -1 if point outside of window or masked, otherwise 1
-*  Colors are translated to rgb and returned as Rxxx Gxxx Bxxx
-*  Usually call after GS_get_selected_point_on_surface
+/*!
+  \brief Colors are translated to rgb and returned as Rxxx Gxxx Bxxx
+
+  Colors are translated to rgb and returned as Rxxx Gxxx Bxxx
+  Usually call after GS_get_selected_point_on_surface
+  
+  Prints "NULL" or the value (i.e., "921.5") to valstr
+
+  Usually call after GS_get_selected_point_on_surface()
+
+  \param ADD
+
+  \return -1 if point outside of window or masked
+  \return 1
 */
 int GS_get_val_at_xy(int id, int att, char *valstr, float x, float y)
 {
@@ -2024,7 +2059,11 @@ int GS_get_exag_guess(int id, float *exag)
     return (-1);
 }
 
-/***********************************************************************/
+/*!
+  Get Z extents for all loaded surfaces, treating zeros as "no data"
+
+  \param ADD
+*/
 void GS_get_zrange_nz(float *min, float *max)
 {
     int i, first = 1;
@@ -2115,7 +2154,11 @@ unsigned int GS_background_color(void)
     return ((unsigned int) Gd.bgcol);
 }
 
-/***********************************************************************/
+/*!
+  \brief Sets which buffer to draw to
+
+  \param where GSD_BOTH, GSD_FRONT, GSD_BACK
+*/
 void GS_set_draw(int where)
 {
     Buffermode = where;
@@ -2304,8 +2347,13 @@ void GS_moveto_real(float *pt)
     return;
 }
 
-/***********************************************************************/
-/* for a single surface */
+/*!
+  \brief Get Z extents for a single surface
+
+  \param ADD
+
+  \return ADD
+*/
 int GS_get_zextents(int id, float *min, float *max, float *mid)
 {
     geosurf *gs;
@@ -2323,8 +2371,13 @@ int GS_get_zextents(int id, float *min, float *max, float *mid)
     return (gs_get_zextents(gs, min, max, mid));
 }
 
-/***********************************************************************/
-/* for all surfaces */
+/*!
+  \brief Get Z extents for all loaded surfaces
+
+  \param ADD
+
+  \return ADD
+*/
 int GS_get_zrange(float *min, float *max, int doexag)
 {
     int ret_surf, ret_vol;
@@ -2465,7 +2518,11 @@ void GS_set_fov(int fov)
     return;
 }
 
-/***********************************************************************/
+/*!
+  \brief ADD
+
+  \return field of view, in 10ths of degrees
+*/
 int GS_get_fov(void)
 {
     return (Gv.fov);
@@ -2477,8 +2534,11 @@ int GS_get_twist(void)
     return (Gv.twist);
 }
 
-/***********************************************************************/
-/* 10ths of degrees off twelve o'clock */
+/*!
+  \brief 10ths of degrees off twelve o'clock (?)
+  
+  \params tenths of degrees clockwise from 12:00.
+*/
 void GS_set_twist(int t)
 {
     Gv.twist = t;
@@ -2536,10 +2596,19 @@ void GS_set_viewport(int left, int right, int bottom, int top)
     return;
 }
 
-/************************************************************************/
-/* Send screen coords sx & sy, lib traces through surfaces & sets new center
-to point of nearest intersection.  If no intersection, uses line of
-sight with length of current view ray (eye to center) to set new center */
+/*!
+  \brief Send screen coords sx and sy, lib traces through surfaces; sets
+  new center to point of nearest intersection.
+
+  If no intersection, uses line of sight with length of current view
+  ray (eye to center) to set new center.
+
+  Reset center of view to screen coordinates sx, sy.
+
+  \param sx,sy screen coordinates
+
+  \return ADD
+*/
 int GS_look_here(int sx, int sy)
 {
     float x, y, z, len, los[2][3];
@@ -2575,7 +2644,18 @@ int GS_look_here(int sx, int sy)
     return (0);
 }
 
-/************************************************************************/
+/*!
+  \brief Get selected point of surface
+
+  Given screen coordinates sx and sy, find closest intersection of
+  view ray with surfaces and return coordinates of intersection in x, y,
+  z, and identifier of surface in id.
+
+  \param ADD
+
+  \returns 0 if no intersections found
+  \return number of intersections
+*/
 int GS_get_selected_point_on_surface(int sx, int sy, int *id, float *x,
 				     float *y, float *z)
 {
@@ -2751,10 +2831,15 @@ int GS_get_fencecolor(void)
     return gsd_getfc();
 }
 
-/************************************************************************/
-/* measure distance "as the ball rolls" between two points on surface
-   returns 0 on error or if one or more points is not in region,
-   returns 1 on success.
+/*!
+  \brief Measure distance "as the ball rolls" between two points on surface
+
+  returns distance following terrain.
+
+  \param  ADD
+
+  \return on error or if one or more points is not in region,
+  \return 1 on success.
 */
 int GS_get_distance_alongsurf(int hs, float x1, float y1, float x2, float y2,
 			      float *dist, int use_exag)
