@@ -1,10 +1,18 @@
-/*
-* $Id$
-*/
-
-/*  gs.c
-    Bill Brown, USACERL  
-    January 1993
+/*!
+  \file gs.c
+ 
+  \brief OGSF library - loading and manipulating surfaces (lower level functions)
+ 
+  GRASS OpenGL gsurf OGSF Library 
+ 
+  (C) 1999-2008 by the GRASS Development Team
+ 
+  This program is free software under the 
+  GNU General Public License (>=v2). 
+  Read the file COPYING that comes with GRASS
+  for details.
+  
+  \author Bill Brown USACERL, GMSL/University of Illinois (January 1993)
 */
 
 #include <stdlib.h>
@@ -26,7 +34,7 @@ static int Invertmask;
 /***********************************************************************/
 void gs_err(char *msg)
 {
-    fprintf(stderr, "%s\n", msg);
+    G_warning ("%s", msg);
 
     return;
 }
