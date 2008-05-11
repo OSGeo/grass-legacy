@@ -64,10 +64,6 @@
 
 typedef int FILEDESC;
 
-/*
-#define TRACE_FUNCS
-*/
-
 #define NO_DATA_COL 0xffffff
 
 /*!

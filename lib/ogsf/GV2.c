@@ -23,10 +23,6 @@
 #include <grass/gstypes.h>
 #include "gsget.h"
 
-#ifdef TRACE_FUNCS
-#define TRACE_GV_FUNCS
-#endif
-
 static int Vect_ID[MAX_VECTS];
 static int Next_vect = 0;
 
@@ -42,11 +38,7 @@ int GV_vect_exists(int id)
 {
     int i, found = 0;
 
-#ifdef TRACE_GV_FUNCS
-    {
-	Gs_status("GV_vect_exists");
-    }
-#endif
+    G_debug(3, "GV_vect_exists");
 
     if (NULL == gv_get_vect(id)) {
 	return (0);
@@ -71,11 +63,7 @@ int GV_new_vector(void)
 {
     geovect *nv;
 
-#ifdef TRACE_GV_FUNCS
-    {
-	Gs_status("GV_new_vector");
-    }
-#endif
+    G_debug(3, "GV_new_vector");
 
     if (Next_vect < MAX_VECTS) {
 	nv = gv_get_new_vect();
@@ -143,11 +131,7 @@ int GV_delete_vector(int id)
 {
     int i, j, found = 0;
 
-#ifdef TRACE_GV_FUNCS
-    {
-	Gs_status("GV_delete_vect");
-    }
-#endif
+    G_debug(3, "GV_delete_vect");
 
     if (GV_vect_exists(id)) {
 	gv_delete_vect(id);
@@ -297,11 +281,7 @@ void GV_set_trans(int id, float xtrans, float ytrans, float ztrans)
 {
     geovect *gv;
 
-#ifdef TRACE_GV_FUNCS
-    {
-	Gs_status("GV_set_trans");
-    }
-#endif
+    G_debug(3, "GV_set_trans");
 
     gv = gv_get_vect(id);
 

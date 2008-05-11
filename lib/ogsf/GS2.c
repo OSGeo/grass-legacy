@@ -50,10 +50,6 @@
 #include "rowcol.h"
 #include "rgbpack.h"
 
-#ifdef TRACE_FUNCS
-#define TRACE_GS_FUNCS
-#endif
-
 /* Hack to make NVIZ2.2 query functions.("What's Here" and "Look at")
  * to work.
  * Uses gs_los_intersect1() instead of gs_los_intersect().
@@ -165,11 +161,7 @@ void GS_set_att_defaults(float *defs, float *null_defs)
 {
     int i;
 
-#ifdef TRACE_GS_FUNCS
-    {
-	Gs_status("GS_set_att_defaults");
-    }
-#endif
+    G_debug (3, "GS_set_att_defaults");
 
     for (i = 0; i < MAX_ATTS; i++) {
 	Default_const[i] = defs[i];
@@ -191,11 +183,8 @@ int GS_surf_exists(int id)
 {
     int i, found = 0;
 
-#ifdef TRACE_GS_FUNCS
-    {
-	Gs_status("GS_surf_exists");
-    }
-#endif
+    G_debug(3, "GS_surf_exists");
+
 
     if (NULL == gs_get_surf(id)) {
 	return (0);
@@ -224,11 +213,7 @@ int GS_new_surface(void)
 {
     geosurf *ns;
 
-#ifdef TRACE_GS_FUNCS
-    {
-	Gs_status("GS_new_surface");
-    }
-#endif
+    G_debug(3, "GS_new_surface");
 
     if (Next_surf < MAX_SURFS) {
 	ns = gs_get_new_surface();
@@ -1160,7 +1145,7 @@ int GS_get_att(int id, int att, int *set, float *constant, char *mapname)
 
   \param id surface id
   \param att
-  \param catstr
+  \param catstr cat string (must be allocated, dim?)
   \param x,y real coordinates
 
   \return -1 if no category info or point outside of window
@@ -1173,7 +1158,7 @@ int GS_get_cat_at_xy(int id, int att, char *catstr, float x, float y)
     typbuff *buff;
     geosurf *gs;
 
-    sprintf(catstr, "");
+    catstr[0] = '\0';
     gs = gs_get_surf(id);
 
     if (NULL == gs) {
@@ -1303,7 +1288,7 @@ int GS_get_val_at_xy(int id, int att, char *valstr, float x, float y)
     typbuff *buff;
     geosurf *gs;
 
-    sprintf(valstr, "");
+    valstr = '\0';
     gs = gs_get_surf(id);
 
     if (NULL == gs) {
@@ -1556,11 +1541,7 @@ int GS_delete_surface(int id)
 {
     int i, j, found = 0;
 
-#ifdef TRACE_GS_FUNCS
-    {
-	Gs_status("GS_delete_surface");
-    }
-#endif
+    G_debug(3, "GS_delete_surface");
 
     if (GS_surf_exists(id)) {
 	gs_delete_surf(id);
@@ -1606,12 +1587,6 @@ int GS_load_att_map(int id, char *filename, int att)
     struct Cell_head rast_head;
     int reuse = 0, begin, hdata, ret, neg = 0, has_null = 0;
     typbuff *tbuff;
-
-#ifdef TRACE_GS_FUNCS
-    {
-	Gs_status("GS_load_att_map");
-    }
-#endif
 
     G_debug (3, "GS_load_att_map(): att_map: %s", filename);
 
@@ -1882,11 +1857,7 @@ void GS_draw_surf(int id)
 {
     geosurf *gs;
 
-#ifdef TRACE_GS_FUNCS
-    {
-	Gs_status("GS_draw_surf");
-    }
-#endif
+    G_debug(3, "GS_draw_surf");
 
     gs = gs_get_surf(id);
     if (gs) {
@@ -1921,11 +1892,7 @@ void GS_draw_wire(int id)
 {
     geosurf *gs;
 
-#ifdef TRACE_GS_FUNCS
-    {
-	Gs_status("GS_draw_wire");
-    }
-#endif
+    G_debug(3, "GS_draw_wire");
 
     gs = gs_get_surf(id);
 
@@ -1979,11 +1946,7 @@ void GS_set_exag(int id, float exag)
 {
     geosurf *gs;
 
-#ifdef TRACE_GS_FUNCS
-    {
-	Gs_status("GS_set_exag");
-    }
-#endif
+    G_debug(3, "GS_set_exag");
 
     gs = gs_get_surf(id);
 
@@ -2006,11 +1969,7 @@ void GS_set_exag(int id, float exag)
 void GS_set_global_exag(float exag)
 {
 
-#ifdef TRACE_GS_FUNCS
-    {
-	Gs_status("GS_set_global_exag");
-    }
-#endif
+    G_debug(3, "GS_set_global_exag");
 
     Gv.vert_exag = exag;
     /* GL_NORMALIZE */
@@ -2031,11 +1990,7 @@ void GS_set_global_exag(float exag)
 */
 float GS_global_exag(void)
 {
-#ifdef TRACE_GS_FUNCS
-    {
-	Gs_status("GS_global_exag");
-    }
-#endif
+    G_debug(3, "GS_global_exag");
 
     return (Gv.vert_exag);
 }
@@ -2052,11 +2007,7 @@ void GS_set_wire_color(int id, int colr)
 {
     geosurf *gs;
 
-#ifdef TRACE_GS_FUNCS
-    {
-	Gs_status("GS_set_wire_color");
-    }
-#endif
+    G_debug(3, "GS_set_wire_color");
 
     gs = gs_get_surf(id);
 
@@ -2125,11 +2076,7 @@ int GS_set_drawmode(int id, int mode)
 {
     geosurf *gs;
 
-#ifdef TRACE_GS_FUNCS
-    {
-	Gs_status("GS_set_drawmode");
-    }
-#endif
+    G_debug(3, "GS_set_drawmode");
 
     gs = gs_get_surf(id);
 
@@ -2177,11 +2124,7 @@ void GS_set_nozero(int id, int att, int mode)
 {
     geosurf *gs;
 
-#ifdef TRACE_GS_FUNCS
-    {
-	Gs_status("GS_set_nozero");
-    }
-#endif
+    G_debug(3, "GS_set_nozero");
 
     gs = gs_get_surf(id);
 
@@ -2214,11 +2157,7 @@ int GS_get_nozero(int id, int att, int *mode)
 {
     geosurf *gs;
 
-#ifdef TRACE_GS_FUNCS
-    {
-	Gs_status("GS_set_nozero");
-    }
-#endif
+    G_debug(3, "GS_set_nozero");
 
     gs = gs_get_surf(id);
 
@@ -2275,11 +2214,7 @@ int GS_set_drawres(int id, int xres, int yres, int xwire, int ywire)
 {
     geosurf *gs;
 
-#ifdef TRACE_GS_FUNCS
-    {
-	Gs_status("GS_set_drawres");
-    }
-#endif
+    G_debug(3, "GS_set_drawres");
 
     if (xres < 1 || yres < 1 || xwire < 1 || ywire < 1) {
 	return (-1);
@@ -2312,11 +2247,7 @@ void GS_get_drawres(int id, int *xres, int *yres, int *xwire, int *ywire)
 {
     geosurf *gs;
 
-#ifdef TRACE_GS_FUNCS
-    {
-	Gs_status("GS_get_drawres");
-    }
-#endif
+    G_debug(3, "GS_get_drawres");
 
     gs = gs_get_surf(id);
 
@@ -2340,11 +2271,7 @@ void GS_get_dims(int id, int *rows, int *cols)
 {
     geosurf *gs;
 
-#ifdef TRACE_GS_FUNCS
-    {
-	Gs_status("GS_get_dims");
-    }
-#endif
+    G_debug(3, "GS_get_dims");
 
     gs = gs_get_surf(id);
 
@@ -2459,11 +2386,7 @@ void GS_set_trans(int id, float xtrans, float ytrans, float ztrans)
 {
     geosurf *gs;
 
-#ifdef TRACE_GS_FUNCS
-    {
-	Gs_status("GS_set_trans");
-    }
-#endif
+    G_debug(3, "GS_set_trans");
 
     gs = gs_get_surf(id);
 
@@ -2486,11 +2409,7 @@ void GS_get_trans(int id, float *xtrans, float *ytrans, float *ztrans)
 {
     geosurf *gs;
 
-#ifdef TRACE_GS_FUNCS
-    {
-	Gs_status("GS_get_trans");
-    }
-#endif
+    G_debug(3, "GS_get_trans");
 
     gs = gs_get_surf(id);
 
@@ -2512,11 +2431,7 @@ void GS_get_trans(int id, float *xtrans, float *ytrans, float *ztrans)
 unsigned int GS_default_draw_color(void)
 {
 
-#ifdef TRACE_GS_FUNCS
-    {
-	Gs_status("GS_default_draw_color");
-    }
-#endif
+    G_debug(3, "GS_default_draw_color");
 
     return ((unsigned int) Gd.bgcol);
 }
@@ -2568,11 +2483,7 @@ void GS_set_draw(int where)
 void GS_ready_draw(void)
 {
 
-#ifdef TRACE_GS_FUNCS
-    {
-	Gs_status("GS_ready_draw");
-    }
-#endif
+    G_debug(3, "GS_ready_draw");
 
     gsd_set_view(&Gv, &Gd);
 
@@ -2585,11 +2496,7 @@ void GS_ready_draw(void)
 void GS_done_draw(void)
 {
 
-#ifdef TRACE_GS_FUNCS
-    {
-	Gs_status("GS_done_draw");
-    }
-#endif
+    G_debug(3, "GS_done_draw");
 
     if (GSD_BACK == Buffermode) {
 	gsd_swapbuffers();
@@ -2608,11 +2515,8 @@ void GS_done_draw(void)
 void GS_set_focus(float *realto)
 {
 
-#ifdef TRACE_GS_FUNCS
-    {
-	Gs_status("GS_set_focus");
-    }
-#endif
+    G_debug(3, "GS_set_focus");
+
     Gv.infocus = 1;
     GS_v3eq(Gv.real_to, realto);
 
@@ -2654,11 +2558,7 @@ void GS_set_focus_real(float *realto)
 int GS_get_focus(float *realto)
 {
 
-#ifdef TRACE_GS_FUNCS
-    {
-	Gs_status("GS_get_focus");
-    }
-#endif
+    G_debug(3, "GS_get_focus");
 
     if (Gv.infocus) {
 	if (realto) {
@@ -2679,11 +2579,7 @@ void GS_set_focus_center_map(int id)
     float center[3];
     geosurf *gs;
 
-#ifdef TRACE_GS_FUNCS
-    {
-	Gs_status("GS_set_focus_center_map");
-    }
-#endif
+    G_debug(3, "GS_set_focus_center_map");
 
     gs = gs_get_surf(id);
 
@@ -2717,12 +2613,7 @@ void GS_moveto(float *pt)
 {
     float ft[3];
 
-
-#ifdef TRACE_GS_FUNCS
-    {
-	Gs_status("GS_moveto");
-    }
-#endif
+    G_debug(3, "GS_moveto");
 
     if (Gv.infocus) {
 	GS_v3eq(Gv.from_to[FROM], pt);
@@ -2771,11 +2662,7 @@ int GS_get_zextents(int id, float *min, float *max, float *mid)
 {
     geosurf *gs;
 
-#ifdef TRACE_GS_FUNCS
-    {
-	Gs_status("GS_get_zextents");
-    }
-#endif
+    G_debug(3, "GS_get_zextents");
 
     if (NULL == (gs = gs_get_surf(id))) {
 	return (-1);
@@ -2800,11 +2687,7 @@ int GS_get_zrange(float *min, float *max, int doexag)
     float surf_min, surf_max;
     float vol_min, vol_max;
     
-#ifdef TRACE_GS_FUNCS
-    {
-	Gs_status("GS_get_zrange");
-    }
-#endif
+    G_debug(3, "GS_get_zrange");
     
     ret_surf = gs_get_zrange(&surf_min, &surf_max);
     ret_vol = gvl_get_zrange(&vol_min, &vol_max);
@@ -2835,12 +2718,7 @@ int GS_get_zrange(float *min, float *max, int doexag)
 */
 void GS_get_from(float *fr)
 {
-
-#ifdef TRACE_GS_FUNCS
-    {
-	Gs_status("GS_get_from");
-    }
-#endif
+    G_debug(3, "GS_get_from");
 
     GS_v3eq(fr, Gv.from_to[FROM]);
 
@@ -2909,12 +2787,7 @@ void GS_zoom_setup(int *a, int *b, int *c, int *d, int *maxx, int *maxy)
 */
 void GS_get_to(float *to)
 {
-
-#ifdef TRACE_GS_FUNCS
-    {
-	Gs_status("GS_get_to");
-    }
-#endif
+    G_debug(3, "GS_get_to");
 
     GS_v3eq(to, Gv.from_to[TO]);
 
@@ -3006,12 +2879,7 @@ void GS_set_twist(int t)
 */
 void GS_set_nofocus(void)
 {
-
-#ifdef TRACE_GS_FUNCS
-    {
-	Gs_status("GS_set_nofocus");
-    }
-#endif
+    G_debug(3, "GS_set_nofocus");
 
     Gv.infocus = 0;
 
@@ -3025,12 +2893,7 @@ void GS_set_nofocus(void)
 */
 void GS_set_infocus(void)
 {
-
-#ifdef TRACE_GS_FUNCS
-    {
-        Gs_status("GS_set_infocus");
-    }
-#endif
+    G_debug(3, "GS_set_infocus");
 
     Gv.infocus = 1;
 
@@ -3046,12 +2909,7 @@ void GS_set_infocus(void)
 */
 void GS_set_viewport(int left, int right, int bottom, int top)
 {
-
-#ifdef TRACE_GS_FUNCS
-    {
-	Gs_status("GS_set_viewport");
-    }
-#endif
+    G_debug(3, "GS_set_viewport");
 
     gsd_viewport(left, right, bottom, top);
 
@@ -3414,11 +3272,7 @@ void GS_init_view(void)
 {
     static int first = 1;
 
-#ifdef TRACE_GS_FUNCS
-    {
-	Gs_status("GS_init_view");
-    }
-#endif
+    G_debug(3, "GS_init_view");
 
     if (first) {
 	first = 0;
@@ -3484,12 +3338,7 @@ void GS_init_view(void)
 */
 void GS_clear(int col)
 {
-
-#ifdef TRACE_GS_FUNCS
-    {
-	Gs_status("GS_clear");
-    }
-#endif
+    G_debug(3, "GS_clear");
 
     col = col | 0xFF000000;
 
@@ -3524,11 +3373,7 @@ double GS_get_aspect(void)
     int left, right, bottom, top;
     GLint tmp[4];
 
-#ifdef TRACE_GS_FUNCS
-    {
-	Gs_status("GS_get_aspect");
-    }
-#endif
+    G_debug(3, "GS_get_aspect");
 
     /* OGLXXX
      * get GL_VIEWPORT:

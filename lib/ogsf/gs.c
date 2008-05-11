@@ -24,10 +24,6 @@
 
 #define FIRST_SURF_ID 110658
 
-/*
-#define TRACE_FUNCS
-*/
-
 static geosurf *Surf_top;
 static int Invertmask;
 

@@ -23,10 +23,6 @@
 
 #define FIRST_VECT_ID 20656
 
-/*
-#define TRACE_FUNCS
-*/
-
 static geovect *Vect_top = NULL;
 
 /***********************************************************************/
