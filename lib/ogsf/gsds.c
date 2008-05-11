@@ -58,10 +58,6 @@
 
 #include <grass/gstypes.h>
 
-/*
-#define TRACE_FUNCS
-*/
-
 #define LUCKY 33
 #define BLOC 20
 #define MAX_DS 100

@@ -129,7 +129,14 @@ double GS_geodistance(double *from, double *to, char *units)
     return (meters);
 }
 
-/************************************************************************/
+/*!
+  \brief Calculate distance
+  
+  \param from 'from' point (X,Y,Z)
+  \param to 'to' point (X,Y,Z)
+
+  \return distance
+*/
 float GS_distance(float *from, float *to)
 {
     float x, y, z;
@@ -141,7 +148,14 @@ float GS_distance(float *from, float *to)
     return (float) sqrt(x * x + y * y + z * z);
 }
 
-/************************************************************************/
+/*!
+  \brief Calculate distance in plane
+
+  \param from 'from' point (X,Y)
+  \param to 'to' point (X,Y)
+
+  \return distance
+*/  
 float GS_P2distance(float *from, float *to)
 {
     float x, y;
@@ -152,8 +166,14 @@ float GS_P2distance(float *from, float *to)
     return (float) sqrt(x * x + y * y);
 }
 
-/************************************************************************/
-/* v1 = v2 */
+/*!
+  \brief Copy vector values
+
+  v1 = v2
+
+  \param[out] v1 first vector
+  \param v2 second vector
+*/
 void GS_v3eq(float *v1, float *v2)
 {
     v1[X] = v2[X];
@@ -163,8 +183,14 @@ void GS_v3eq(float *v1, float *v2)
     return;
 }
 
-/************************************************************************/
-/* v1 += v2 */
+/*!
+  \brief Sum vectors
+  
+  v1 += v2
+
+  \param[in,out] v1 first vector
+  \param v2 second vector
+*/
 void GS_v3add(float *v1, float *v2)
 {
     v1[X] += v2[X];
@@ -174,8 +200,14 @@ void GS_v3add(float *v1, float *v2)
     return;
 }
 
-/************************************************************************/
-/* v1 -= v2 */
+/*!
+  \brief Subtract vectors
+
+  v1 -= v2
+
+  \param[in,out] v1 first vector
+  \param v2 second vector
+*/  
 void GS_v3sub(float *v1, float *v2)
 {
     v1[X] -= v2[X];
@@ -185,8 +217,14 @@ void GS_v3sub(float *v1, float *v2)
     return;
 }
 
-/************************************************************************/
-/* v1 *= k */
+/*!
+  \brief Multiple vectors
+
+  v1 *= k
+
+  \param[in,out] v1 vector
+  \param k multiplicator
+*/
 void GS_v3mult(float *v1, float k)
 {
     v1[X] *= k;
@@ -197,9 +235,12 @@ void GS_v3mult(float *v1, float k)
 }
 
 /*!
-  \brief Change v1 so that it is a unit vector
+  \brief Change v1 so that it is a unit vector (2D)
 
-  \param v1 vector
+  \param[in,out] v1 vector
+
+  \return 0 if magnitude of v1 is zero
+  \return 1 if magnitude of v1 > 0
 */
 int GS_v3norm(float *v1)
 {
@@ -218,8 +259,14 @@ int GS_v3norm(float *v1)
     return (1);
 }
 
-/************************************************************************/
-/* Changes v1 so that it is a unit vector */
+/*!
+  \brief Change v1 so that it is a unit vector (3D)
+
+  \param[in,out] v1 vector
+
+  \return 0 if magnitude of v1 is zero
+  \return 1 if magnitude of v1 > 0
+*/
 int GS_v2norm(float *v1)
 {
     float n;
@@ -241,8 +288,8 @@ int GS_v2norm(float *v1)
 
   \param dv1 vector
 
-  \return 0
-  \return 1
+  \return 0 if magnitude of dv1 is zero
+  \return 1 if magnitude of dv1 > 0
 */
 int GS_dv3norm(double *dv1)
 {
@@ -266,9 +313,10 @@ int GS_dv3norm(double *dv1)
   \brief Change v2 so that v1v2 is a unit vector
 
   \param v1 first vector
-  \param v2 second vector
+  \param v2[in,out] second vector
 
-  \return ADD
+  \return 0 if magnitude of dx is zero
+  \return 1 if magnitude of dx > 0
 */
 int GS_v3normalize(float *v1, float *v2)
 {
@@ -291,8 +339,16 @@ int GS_v3normalize(float *v1, float *v2)
 }
 
 
-/************************************************************************/
-/* get a normalized direction from v1 to v2, store in v3 */
+/*!
+  \brief Get a normalized direction from v1 to v2, store in v3
+
+  \param v1 first vector
+  \param v2 second vector
+  \param[out] v3 output vector
+
+  \return 0 if magnitude of dx is zero
+  \return 1 if magnitude of dx > 0
+*/
 int GS_v3dir(float *v1, float *v2, float *v3)
 {
     float n, dx, dy, dz;
@@ -315,8 +371,16 @@ int GS_v3dir(float *v1, float *v2, float *v3)
 }
 
 
-/************************************************************************/
-/* get a normalized direction from v1 to v2, store in v3 */
+/*!
+  \brief Get a normalized direction from v1 to v2, store in v3 (2D)
+
+  \param v1 first vector
+  \param v2 second vector
+  \param[out] v3 output vector
+
+  \return 0 if magnitude of dx is zero
+  \return 1 if magnitude of dx > 0
+*/
 void GS_v2dir(float *v1, float *v2, float *v3)
 {
     float n, dx, dy;
@@ -331,8 +395,13 @@ void GS_v2dir(float *v1, float *v2, float *v3)
     return;
 }
 
-/************************************************************************/
-/* return the cross product v3 = v1 cross v2 */
+/*!
+  \brief Get the cross product v3 = v1 cross v2
+
+  \param v1 first vector
+  \param v2 second vector
+  \param[out] v3 output vector
+*/
 void GS_v3cross(float *v1, float *v2, float *v3)
 {
     v3[X] = (v1[Y] * v2[Z]) - (v1[Z] * v2[Y]);
@@ -342,8 +411,12 @@ void GS_v3cross(float *v1, float *v2, float *v3)
     return;
 }
 
-/************************************************************************/
-/* magnitude of vector */
+/*!
+  \brief Magnitude of vector
+
+  \param v1 vector
+  \param[out] mag magnitude value
+*/
 void GS_v3mag(float *v1, float *mag)
 {
     *mag = sqrt(v1[X] * v1[X] + v1[Y] * v1[Y] + v1[Z] * v1[Z]);
@@ -351,9 +424,20 @@ void GS_v3mag(float *v1, float *mag)
     return;
 }
 
-/************************************************************************/
-/* initialize by calling with a number nhist to represent number of
- * previous entrys to check, then call with zero as nhist
+/*!
+  \brief ADD
+
+  Initialize by calling with a number nhist to represent number of
+  previous entrys to check, then call with zero as nhist
+
+  \param p1 first point
+  \param p2 second point
+  \param nhist ?
+
+  \return -1 on error
+  \return -2
+  \return 1
+  \return 9
 */
 int GS_coordpair_repeats(float *p1, float *p2, int nhist)
 {
@@ -364,12 +448,13 @@ int GS_coordpair_repeats(float *p1, float *p2, int nhist)
 
     if (nhist) {
 	if (entrys) {
-	    free(entrys);
+	    G_free(entrys);
 	}
 
-	if (NULL == (entrys = (float *) malloc(4 * nhist * sizeof(float)))) {
-	    return (-1);
-	}
+	entrys = (float *) G_malloc(4 * nhist * sizeof(float));
+
+	if (!entrys)
+	  return (-1);
 
 	len = nhist;
 	next = 0;
