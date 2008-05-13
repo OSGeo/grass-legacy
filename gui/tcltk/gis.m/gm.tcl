@@ -31,27 +31,43 @@ package require -exact GisM 1.0
 # path to GIS Manager files
 set gmpath $env(GISBASE)/etc/gm
 
+# Load GUI stuff required for error reporting etc.
+source $env(GISBASE)/etc/gui.tcl
+
 # Load common procedure library
 source $gmpath/gmlib.tcl
 
+# gisenv errors are fatal. 
 if {[catch {set env(GISDBASE) [exec g.gisenv get=GISDBASE]} error]} {
-	Gm::errmsg $error
+	GmLib::errmsg $error
+	puts $error
+	exit 1
 }
 if {[catch {set env(LOCATION_NAME) [exec g.gisenv get=LOCATION_NAME]} error]} {
-	Gm::errmsg $error
+	GmLib::errmsg $error
+	puts $error
+	exit 1
 }
 if {[catch {set env(MAPSET) [exec g.gisenv get=MAPSET]} error]} {
-	Gm::errmsg $error
+	GmLib::errmsg $error
+	puts $error
+	exit 1
 }
 
 if {[catch {set gisdbase [exec g.gisenv get=GISDBASE]} error]} {
-	Gm::errmsg $error
+	GmLib::errmsg $error
+	puts $error
+	exit 1
 }
 if {[catch {set location_name [exec g.gisenv get=LOCATION_NAME]} error]} {
-	Gm::errmsg $error
+	GmLib::errmsg $error
+	puts $error
+	exit 1
 }
 if {[catch {set mapset [exec g.gisenv get=MAPSET]} error]} {
-	Gm::errmsg $error
+	GmLib::errmsg $error
+	puts $error
+	exit 1
 }
 
 
@@ -104,11 +120,11 @@ catch {set fp [open $env(GISBASE)/etc/VERSIONNUMBER r]}
 set GRASSVERSION [read -nonewline $fp]
 
 if {[catch {close $fp} error]} {
-	Gm::errmsg $error
+	GmLib::errmsg $error
 }
 
 
-source $env(GISBASE)/etc/gui.tcl
+#source $env(GISBASE)/etc/gui.tcl
 # gui.tcl also sources these:
 # $env(GISBASE)/etc/gtcltk/gmsg.tcl
 # $env(GISBASE)/etc/gtcltk/options.tcl
@@ -378,7 +394,7 @@ proc Gm::defaultfont { source } {
     wm title .dispfont [G_msg "Select GRASS display font"]
     
     if {[catch {set fontlist [exec d.font --q -l]} error]} {
-	    Gm::errmsg $error "d.font error"
+	    GmLib::errmsg $error "d.font error"
     }
     set fontlist [string trim $fontlist]
     set fontlist [split $fontlist "\n"]
