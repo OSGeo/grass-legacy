@@ -1161,6 +1161,7 @@ proc MapCanvas::zoom_gregion {mon args} {
 
 	} else {
 		puts $input
+		exit 1
 	}
 }
 

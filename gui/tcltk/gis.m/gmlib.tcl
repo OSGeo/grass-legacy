@@ -129,6 +129,10 @@ proc GmLib::errmsg { error args } {
 	
 	set message ""
 	
+	if { [winfo exists .intro]} {
+		destroy .intro
+	}
+	
 	if { $args != ""} { 
 	    set message [join $args]
 	    append message ": " 
