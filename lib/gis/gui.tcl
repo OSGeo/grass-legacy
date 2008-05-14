@@ -356,7 +356,11 @@ proc layout_make_frame {dlg guisection optn glabel} {
 			set guisection {Options}
 		}
 		set path $opt($dlg,path)
-		set optpane [$path.nb insert end $guisection -text $glabel]
+		if {$glabel == "Required"} {
+			set optpane [$path.nb insert 0 $guisection -text $glabel]
+		} else {
+			set optpane [$path.nb insert end $guisection -text $glabel]			
+		}
 		# Specials don't get scrolling frames:
 		if {$optn == -1} {
 			$path.nb raise $guisection
@@ -413,7 +417,12 @@ proc layout_raise_frame {dlg guisection optn} {
 		set guisection {{}}
 		set guisection {Options}
 	}
+	
+	set firstpg [$path.nb pages 0]
 	$path.nb raise $guisection
+	
+	#Make the first tab the active one instead of the "options" tab
+	$path.nb raise $firstpg
 }
 
 proc layout_raise_special_frame {dlg guisection key} {
@@ -710,6 +719,7 @@ proc begin_dialog {pgm optlist} {
 
 	foreach key {label desc} {
 		set opt($dlg,$key) $opts($key)
+		
 	}
 
 	# Replace all non-ascii chars, spaces, $ and braces in path with undescore
@@ -735,7 +745,7 @@ proc end_dialog {n} {
 	set root $opt($dlg,root)
 
 	make_dialog_end $dlg $path $root
-
+	
 	if {$n > 0} {
 		layout_raise_frame $dlg $opt($dlg,1,guisection) 1
 	}
