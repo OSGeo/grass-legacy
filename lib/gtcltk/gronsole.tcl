@@ -402,7 +402,7 @@ proc Gronsole::readout {path ci mark fh} {
 		Gronsole::add_data_tag $path $ci out
 	}
 	foreach line $lines {
-		Gronsole::output_to_gronsole $path $mark $ci [list cmd$ci cmd$ci-out] "$line\n"
+		Gronsole::output_to_gronsole $path $mark $ci [list cmd$ci cmd$ci-out] "\n$line"
 	}
 	$path.text see $mark
 }
