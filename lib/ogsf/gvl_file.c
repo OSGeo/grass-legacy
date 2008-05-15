@@ -459,8 +459,8 @@ void *open_g3d_file(char *filename, IFLAG *type, double *min, double *max)
 int close_g3d_file(void *map)
 {
     /* close opened g3d file */
-    if (G3d_closeCell(map) != 1) {
-	G_warning (_("Unable to close 3D raster map <%s>"), map->name);
+    if (G3d_closeCell((G3D_Map *)map) != 1) {
+	G_warning (_("Unable to close 3D raster map <%s>"), ((G3D_Map *)map)->fileName);
 	return (-1);
     }
     
