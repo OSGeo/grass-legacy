@@ -244,6 +244,13 @@ proc term {cmd args} {
 # Used in menus.
 
 proc guarantee_xmon {} {
+	global mingw
+	
+	if {$mingw == 1} {
+		tk_messageBox -type ok -icon error -title [G_msg "X Windows not available"] \
+			-message [G_msg "Functions that require X Windows are not available in Windows"]
+		return
+	}
 	if {![catch {open "|d.mon -L" r} input]} {
 		while {[gets $input line] >= 0 } {
 			if {[regexp -nocase {(x[0-9]+).*not running} $line dummy monitor]} {
