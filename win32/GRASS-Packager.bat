@@ -1,48 +1,56 @@
 @echo off
 
-rem ----------------------------------------------------------------------------------------------------------
+rem --------------------------------------------------------------------------------------------------------------------------
 rem Set the script variables
-rem ----------------------------------------------------------------------------------------------------------
+rem --------------------------------------------------------------------------------------------------------------------------
 
-set TRUNK_INSTALL_FOLDER=c:\msys\local\grass-trunk
-set TEST_PACKAGE_DIR=.\GRASS-Trunk-Package
+set GRASS_RELEASE_PACKAGE_DIR=.\GRASS-Release-Package
+set GRASS_6_DEV_PACKAGE_DIR=.\GRASS-6-Dev-Package
+set GRASS_7_DEV_PACKAGE_DIR=.\GRASS-7-Dev-Package
 
-set RELEASE_INSTALL_FOLDER=c:\msys\local\grass-6.3.0
-set RELEASE_PACKAGE_DIR=.\GRASS-Release-Package
+set GRASS_RELEASE_INSTALL_FOLDER=c:\msys\local\grass-6.3.0
+set GRASS_6_DEV_INSTALL_FOLDER=c:\msys\local\grass-6-svn
+set GRASS_7_DEV_INSTALL_FOLDER=c:\msys\local\grass-7-svn
 
 @echo -----------------------------------------------------------------------------------------------------------------------
 @echo Self Contained GRASS Automated Packager
 @echo -----------------------------------------------------------------------------------------------------------------------
-@echo GRASS Version: Current SVN Trunk/Release Tarball
-@echo.
 @echo Edited by: Marco Pasetti
-@echo Last Update: 21 April 2008
+@echo Last Update: 17 May 2008
 @echo -----------------------------------------------------------------------------------------------------------------------
-@echo Select if you want to create a Test Package from the Current SVN Trunk Build
-@echo or a Release Package from the Current GRASS Release Tarball Build
+@echo Select the GRASS version to pack:
 @echo.
-@echo 1. Current GRASS SVN Trunk Build
+@echo 1. Current GRASS Release Version
 @echo.
-@echo 2. Current GRASS Release Tarball Build
+@echo 2. Current GRASS-6 Development Version
+@echo.
+@echo 3. Current GRASS-7 Development Version
 @echo.
 
-set /p UPDATE_TYPE=Enter your selection (1/2):
+set /p SELECTION=Enter your selection (1/2/3):
 
-if %UPDATE_TYPE%==1 (
-set PACKAGE_DIR=%TEST_PACKAGE_DIR%
-set GRASS_PREFIX=%TRUNK_INSTALL_FOLDER%
+if %SELECTION%==1 (
+set PACKAGE_DIR=%GRASS_RELEASE_PACKAGE_DIR%
+set GRASS_PREFIX=%GRASS_RELEASE_INSTALL_FOLDER%
 )
 
-if %UPDATE_TYPE%==2 (
-set PACKAGE_DIR=%RELEASE_PACKAGE_DIR%
-set GRASS_PREFIX=%RELEASE_INSTALL_FOLDER%
+if %SELECTION%==2 (
+set PACKAGE_DIR=%GRASS_6_DEV_PACKAGE_DIR%
+set GRASS_PREFIX=%GRASS_6_DEV_INSTALL_FOLDER%
+)
+
+if %SELECTION%==3 (
+set PACKAGE_DIR=%GRASS_7_DEV_PACKAGE_DIR%
+set GRASS_PREFIX=%GRASS_7_DEV_INSTALL_FOLDER%
 )
 
 @echo.
 @echo -----------------------------------------------------------------------------------------------------------------------
-@echo Create PACKAGE_DIR
+@echo Remove the previous Selected Package and create a new PACKAGE_DIR
 @echo -----------------------------------------------------------------------------------------------------------------------
 @echo.
+
+pause
 
 if exist %PACKAGE_DIR% rmdir /S/Q %PACKAGE_DIR%
 mkdir %PACKAGE_DIR%
@@ -64,6 +72,7 @@ xcopy %GRASS_PREFIX% %PACKAGE_DIR% /S/V/F
 mkdir %PACKAGE_DIR%\extralib
 
 copy c:\msys\local\bin\*.dll %PACKAGE_DIR%\extralib
+copy c:\msys\local\sqlitel\bin\*.dll %PACKAGE_DIR%\extralib
 copy c:\msys\local\pgsql\lib\libpq.dll %PACKAGE_DIR%\extralib
 
 @echo.
@@ -74,6 +83,7 @@ copy c:\msys\local\pgsql\lib\libpq.dll %PACKAGE_DIR%\extralib
 
 mkdir %PACKAGE_DIR%\extrabin
 copy c:\msys\local\bin\*.exe %PACKAGE_DIR%\extrabin
+copy c:\msys\local\sqlite\bin\*.exe %PACKAGE_DIR%\extrabin
 
 @echo.
 @echo -----------------------------------------------------------------------------------------------------------------------
@@ -81,8 +91,7 @@ copy c:\msys\local\bin\*.exe %PACKAGE_DIR%\extrabin
 @echo -----------------------------------------------------------------------------------------------------------------------
 @echo.
 
-mkdir %PACKAGE_DIR%\sqlite
-xcopy c:\msys\local\sqlite %PACKAGE_DIR%\sqlite /S/V/F
+xcopy c:\msys\local\sqlite %PACKAGE_DIR%\sqlite /S/V/F/I
 
 @echo.
 @echo -----------------------------------------------------------------------------------------------------------------------
@@ -90,8 +99,7 @@ xcopy c:\msys\local\sqlite %PACKAGE_DIR%\sqlite /S/V/F
 @echo -----------------------------------------------------------------------------------------------------------------------
 @echo.
 
-mkdir %PACKAGE_DIR%\proj
-xcopy c:\msys\local\share\proj %PACKAGE_DIR%\proj /S/V/F
+xcopy c:\msys\local\share\proj %PACKAGE_DIR%\proj /S/V/F/I
 
 @echo.
 @echo -----------------------------------------------------------------------------------------------------------------------
@@ -100,7 +108,22 @@ xcopy c:\msys\local\share\proj %PACKAGE_DIR%\proj /S/V/F
 @echo.
 
 mkdir %PACKAGE_DIR%\tcl-tk
-xcopy c:\msys\local\tcl-tk %PACKAGE_DIR%\tcl-tk /S/V/F
+mkdir %PACKAGE_DIR%\tcl-tk\include
+mkdir %PACKAGE_DIR%\tcl-tk\lib
+mkdir %PACKAGE_DIR%\tcl-tk\lib\tcl8.5
+mkdir %PACKAGE_DIR%\tcl-tk\lib\tk8.5
+
+xcopy c:\msys\local\tcl-tk\bin %PACKAGE_DIR%\tcl-tk\bin /S/V/F/I
+
+copy c:\msys\local\tcl-tk\include\*.h %PACKAGE_DIR%\tcl-tk\include
+
+copy c:\msys\local\tcl-tk\lib\tcl8.5\*.tcl %PACKAGE_DIR%\tcl-tk\lib\tcl8.5
+copy c:\msys\local\tcl-tk\lib\tcl8.5\tclIndex %PACKAGE_DIR%\tcl-tk\lib\tcl8.5
+
+copy c:\msys\local\tcl-tk\lib\tk8.5\*.tcl %PACKAGE_DIR%\tcl-tk\lib\tk8.5
+copy c:\msys\local\tcl-tk\lib\tk8.5\tclIndex %PACKAGE_DIR%\tcl-tk\lib\tk8.5
+
+xcopy c:\msys\local\tcl-tk\lib\tk8.5\ttk %PACKAGE_DIR%\tcl-tk\lib\tk8.5\ttk /S/V/F/I
 
 @echo.
 @echo -----------------------------------------------------------------------------------------------------------------------
@@ -109,14 +132,15 @@ xcopy c:\msys\local\tcl-tk %PACKAGE_DIR%\tcl-tk /S/V/F
 @echo.
 
 mkdir %PACKAGE_DIR%\msys
-mkdir %PACKAGE_DIR%\msys\bin
-mkdir %PACKAGE_DIR%\msys\doc
-mkdir %PACKAGE_DIR%\msys\etc
 
 copy c:\msys\* %PACKAGE_DIR%\msys
-xcopy c:\msys\bin %PACKAGE_DIR%\msys\bin /S/V/F
-xcopy c:\msys\doc %PACKAGE_DIR%\msys\doc /S/V/F
-xcopy c:\msys\etc %PACKAGE_DIR%\msys\etc /S/V/F
+
+xcopy c:\msys\bin %PACKAGE_DIR%\msys\bin /S/V/F/I
+xcopy c:\msys\doc %PACKAGE_DIR%\msys\doc /S/V/F/I
+xcopy c:\msys\etc %PACKAGE_DIR%\msys\etc /S/V/F/I
+xcopy c:\msys\info %PACKAGE_DIR%\msys\info /S/V/F/I
+xcopy c:\msys\lib %PACKAGE_DIR%\msys\lib /S/V/F/I
+xcopy c:\msys\man %PACKAGE_DIR%\msys\man /S/V/F/I
 
 @echo.
 @echo -----------------------------------------------------------------------------------------------------------------------
