@@ -5,9 +5,9 @@
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
 <meta http-equiv="Content-Language" content="en" />
 <meta name="Author" content="Marco Pasetti" />
-<meta name="Description" content="SVN Win32 README" />
+<meta name="Description" content="SVN mswindows README" />
 
-<title>SVN Win32 README</title>
+<title>SVN mswindows README</title>
 
 <style type="text/css" />
 
@@ -353,9 +353,9 @@ Finished compilation: Thu Apr 24 10:54:25 GMT 2008</code></pre>
 
 <p>Copy all the content of the SVN Win32 folder to a temporary directory, for example <code>c:\temp</code>.</p>
 
-<p>Launch the file <code>c:\temp\GRASS-Packager.bat</code> and select the option number 2.</p>
+<p>Launch the file <code>c:\temp\GRASS-Packager.bat</code> and select the option number 1.</p>
 
-<p>When finished, you should have a GRASS self-contained release package in <code>c:\temp\GRASS-Release-Package</code>.</p>
+<p>When finished, you should have a GRASS self-contained release package in <code>c:\temp\GRASS-6-Release-Package</code>.</p>
 
 </div>
 
@@ -381,12 +381,12 @@ Finished compilation: Thu Apr 24 10:54:25 GMT 2008</code></pre>
 
 <p>Open the the file <code>c:\temp\GRASS-Installer.nsi</code>.</p>
 
-<p>At line 15 set the <code>INSTALLER_TYPE</code> variable to <code>"Release"</code>, then, at line 16, set the
-<code>SVN_REVISION</code> variable to the current SVN Revision Number.</p>
+<p>At line 17 set the <code>INSTALLER_TYPE</code> variable to <code>"Release"</code>, then, at lines 23-25, set the
+<code>RELEASE_VERSION_NUMBER</code>, the <code>RELEASE_SVN_REVISION</code> and the <code>RELEASE_BINARY_REVISION</code> variables.</p>
 
 <p>Finally, right click on the file <code>c:\temp\GRASS-Installer.nsi</code> and select <code>Compile NSIS Script</code>.</p>
 
-<p>When finished, you should have the WinGRASS release installer as <code>c:\temp\WinGRASS-6.3.0-Setup.exe</code>.</p>
+<p>When finished, you should have the WinGRASS release installer in <code>c:\temp</code>.</p>
 
 </div>
 
@@ -402,7 +402,7 @@ Finished compilation: Thu Apr 24 10:54:25 GMT 2008</code></pre>
 <p>To contact him, e-mail to: GRASS Development Mailing List
 (<a target="_blank" href="http://lists.osgeo.org/mailman/listinfo/grass-dev">http://lists.osgeo.org/mailman/listinfo/grass-dev</a>).</p>
 
-<p>Edited by Marco Pasetti on 24 April 2008.</p>
+<p>Edited by Marco Pasetti on 16 May 2008.</p>
 
 </div>
 
