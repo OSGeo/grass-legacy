@@ -339,7 +339,7 @@ proc Gronsole::output_to_gronsole {path mark ci tags str} {
 
 	set tagbase cmd$ci
 	# Back out backspaces:
-	if {0} {
+
 	while {[set idx [string first "\b" $str]] != -1} {
 		set last [expr $idx - 1]
 		set str1 [string range $str 1 $last]
@@ -349,8 +349,17 @@ proc Gronsole::output_to_gronsole {path mark ci tags str} {
 		$outtext delete $pos
 		$outtext insert $mark $str1 $tags
 	}
-	}
-	if { [regexp -- {^GRASS_INFO_([^(]+)\(([0-9]+),([0-9]+)\): (.+)$} $str match key message_pid message_id val rest] } {
+	
+	if { [regexp -- {^GRASS_INFO_PERCENT: (.+)$} $str match val rest] } {
+		if { $val >= 0 && $val < 100} { 
+			set Gronsole::_data($path,$ci,progress) $val
+#			Gronsole::progress $path $ci $val
+		} else {
+#			Gronsole::progress $path $ci -1
+			set Gronsole::_data($path,$ci,progress) -1
+			$outtext insert $mark "\n" $tags
+		}
+	} elseif { [regexp -- {^GRASS_INFO_([^(]+)\(([0-9]+),([0-9]+)\): (.+)$} $str match key message_pid message_id val rest] } {
 		set lkey [string tolower $key]
 		Gronsole::add_tag $path $ci $lkey
 		set icon [icon status $lkey]
@@ -359,16 +368,8 @@ proc Gronsole::output_to_gronsole {path mark ci tags str} {
 			# $outtext tag add $tagbase "$mark -1 char"
 		}
 		$outtext insert $mark $val $tagbase
-	} elseif { [regexp -- {^GRASS_INFO_PERCENT: (.+)$} $str match val rest] } {
-		if { $val > 0 && $val < 100} { 
-			set Gronsole::_data($path,$ci,progress) $val
-#			Gronsole::progress $path $ci $val
-		} else {
-#			Gronsole::progress $path $ci -1
-			set Gronsole::_data($path,$ci,progress) -1
-			$outtext insert $mark "\n" $tags
-		}
 	} elseif { [regexp -- {^GRASS_INFO_END.+} $str match key rest] } {
+		$outtext insert $mark "\n" $tags
 		# nothing
 	} else {
 		$outtext insert $mark $str $tags
@@ -393,17 +394,25 @@ proc Gronsole::readeof {path ci mark fh} {
 proc Gronsole::readout {path ci mark fh} {
 
 	set lines {}
-	
+
 	while {[gets $fh line] >= 0} {
-		lappend lines $line
+		if {[string trim $line] != "" } {
+			append line "\n"
+			lappend lines $line
+		}
 	}
-	
+
 	if {[llength $lines] != 0} {
 		Gronsole::add_data_tag $path $ci out
 	}
+
+	#output any messages from running the command
 	foreach line $lines {
-		Gronsole::output_to_gronsole $path $mark $ci [list cmd$ci cmd$ci-out] "\n$line"
+		Gronsole::output_to_gronsole $path $mark $ci [list cmd$ci cmd$ci-out] "$line"
+		update
 	}
+	
+	
 	$path.text see $mark
 }
 
@@ -435,9 +444,9 @@ proc Gronsole::execbg {path ci mark fh} {
 }
 
 proc Gronsole::execwait {path ci mark fh} {
-	while {! [eof $fh]} {
+	if {! [eof $fh]} {
 		Gronsole::readout $path $ci $mark $fh
-		update
+		#update
 	}
 	Gronsole::readeof $path $ci $mark $fh
 	update
