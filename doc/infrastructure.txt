@@ -20,6 +20,8 @@ Maintainer: M. Neteler
 *** Apache Server with PHP
 ** Further addresses: http://www.grass-gis.org
 *** Apache rewrite engine to http://grass.osgeo.org
+** Notes: Since OSGeo-SAC doesn't want to hand out too many ssh accesses to the osgeo1 and osgeo2 machines, we moved grass.osgeo.org as
+virtual host onto Telascience.org infrastructure (sharing with other OSGeo services there)
 
 * Web pages:
 ** hosted in SVN server (developers can modify, see
@@ -78,7 +80,12 @@ Maintainer: M. Neteler
 
 * Web statistics
 ** See URL at http://wiki.osgeo.org/wiki/Project_Stats
-** Mirror Webalizer (http://grass.fbk.eu/webalizer/) runs daily as cronjob
+** OSGeo: awstats (http://download.osgeo.org/logs-bin/awstats.pl?config=grass.osgeo.org)
+*** configuration at: /etc/awstats/awstats.grass.osgeo.org.conf
+*** httpd logs: /var/log/httpd/grass_*
+*** awstats processed log files: /osgeo/download/logs
+*** cronjob script: /osgeo/scripts/update_logs.sh
+** FBK Mirror: Webalizer (http://grass.fbk.eu/webalizer/) runs daily as cronjob
 ** Sitemeter: http://www.sitemeter.com/?a=stats&s=s24grassgis
 
 Summary: The system should run almost autonomously.
@@ -86,6 +93,7 @@ Summary: The system should run almost autonomously.
 == GRASS Mailing lists ==
 
 Maintainer: Markus Neteler
+
 
 Available lists:
 
