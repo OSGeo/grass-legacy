@@ -162,7 +162,7 @@ int main(int argc, char *argv[])
     tmap_opt->key_desc    = "name";
     tmap_opt->description = _("Terrain raster map (DEM)");
     tmap_opt->type        = TYPE_STRING;
-    tmap_opt->gisprompt   = "old,fcell,raster";
+    tmap_opt->gisprompt   = "old,cell,raster";
     tmap_opt->required    = YES;
 
     wlvl_opt = G_define_option() ;
@@ -176,7 +176,7 @@ int main(int argc, char *argv[])
     lake_opt->key_desc    = "name";
     lake_opt->description = _("Output raster map with lake");
     lake_opt->type        = TYPE_STRING;
-    lake_opt->gisprompt   = "new,fcell,raster";
+    lake_opt->gisprompt   = "new,cell,raster";
     lake_opt->required    = NO;
 
     sdxy_opt = G_define_option() ;
