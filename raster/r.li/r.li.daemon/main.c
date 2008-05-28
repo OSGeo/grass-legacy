@@ -63,7 +63,7 @@ int simple_index(int fd, char ** par, area_des ad, double *result){
 	CELL *buf, *sup;
 	int count, i,j, connected=0, complete_line=1;
 	double area;
-	char *mapset, c[150];
+	char *mapset, c[GPATH_MAX];
 	struct Cell_head hd;
 	CELL complete_value;
 	
