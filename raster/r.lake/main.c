@@ -178,7 +178,7 @@ int main(int argc, char *argv[])
     lake_opt->key_desc    = "name";
     lake_opt->description = _("Name for output raster map with lake");
     lake_opt->type        = TYPE_STRING;
-    lake_opt->gisprompt   = "new,fcell,raster";
+    lake_opt->gisprompt   = "new,cell,raster";
     lake_opt->required    = NO;
 
     sdxy_opt = G_define_option() ;
