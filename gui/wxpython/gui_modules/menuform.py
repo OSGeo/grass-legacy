@@ -1047,7 +1047,7 @@ class cmdPanel(wx.Panel):
                                 flag=wx.RIGHT | wx.LEFT | wx.TOP | wx.EXPAND, border=5)
 
                 if p.get('multiple','yes') == 'yes' or \
-                        p.get('type','string') == 'string':
+                       p.get('type', 'string') in ('string', 'float'):
                     txt3 = wx.TextCtrl(parent=which_panel, value = p.get('default',''),
                                    size=TEXTCTRL_SIZE)
                     txt3.Bind(wx.EVT_TEXT, self.OnSetValue)
