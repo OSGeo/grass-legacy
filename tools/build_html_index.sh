@@ -3,11 +3,30 @@
 #generates HTML man pages docs/html/index.html
 # Markus Neteler, 2003, 2004, 2005, 2006
 
-#exclude following list of modules from help index:
-# escape it properly:
+
 ## TODO: better fix this in include/Make/Html.make, see bug #5361
-EXCLUDEHTML="v\.topo\.check\|i\.ask\|i\.find\|photo\.elev\|photo\.target\|helptext\.html\|r\.watershed\.ram\|r\.watershed\.seg\|wxGUI.*html\|d\.paint\.labels\|p\.out\.vrml\|r\.cats"
+
+#exclude following list of modules from help index:
+EXCLUDEMODS="\
+v.topo.check \
+i.ask \
+i.find \
+photo.elev \
+photo.target \
+helptext.html \
+r.watershed.ram \
+r.watershed.seg \
+gis.m \
+wxGUI.* \
+d.paint.labels \
+p.out.vrml \
+r.cats"
+
+
 ############# nothing to configure below ############
+
+# regex-proof module skip list
+EXCLUDEHTML="`echo "$EXCLUDEMODS" | tr ' ' '|' | sed -e 's+\.+\\\\.+g' -e 's+|+\\\\|+g'`"
 
 #fetch the ARCH for store the files:
 ARCH="`cat ../include/Make/Platform.make | grep '^ARCH'  | sed 's+ ++g' | cut -d'=' -f2`"
@@ -29,11 +48,11 @@ echo "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0 Transitional//EN\">
 <head>
  <title>$2</title>
  <meta http-equiv=\"Content-Type\" content=\"text/html; charset=iso-8859-1\">
- <meta name=\"Author\" content=\"GRASS Development Team\">" > $1
+ <meta name=\"Author\" content=\"GRASS Development Team\">" > "$1"
 if [ "$3" ] && [ "$MACOSX" ] ; then
 	echo " <meta name=\"AppleTitle\" content=\"GRASS GIS $GRASSVERSION Help\">
  <meta name=\"AppleIcon\" content=\"GRASS-$GRASS_MMVER/grass_icon.png\">
- <meta name=\"robots\" content=\"anchors\">" >> $1
+ <meta name=\"robots\" content=\"anchors\">" >> "$1"
 fi
 echo " <link rel=\"stylesheet\" href=\"grassdocs.css\" type=\"text/css\">
 </head>
@@ -58,6 +77,10 @@ consulting companies.</p>
 Geographic Resources Analysis Support System (GRASS), an open source (GNU
 GPL'ed), image processing and geographic information system (GIS).</p>
 
+<BR><BR>
+<table align="center">
+<tr>
+<td valign=\"top\">
 <h3>Quick Introduction</h3>
 
 <!-- the files grass6.html & helptext.html file live in lib/init/ -->
@@ -80,18 +103,19 @@ GPL'ed), image processing and geographic information system (GIS).</p>
 </ul>
 <P>
 
-" >> $1
+" >> "$1"
 }
 
 write_html_footer()
 {
 # $1: filename
 # $2: help index url
-echo "<hr>" >> $1
-echo "<p><a href=\"$2\">Help Index</a> | <a href=\"full_index.html\">Full Index</a><br>" >> $1
-echo "&copy; 2003-2008 <a href=\"http://grass.osgeo.org\">GRASS Development Team</a></p>" >> $1
-echo "</body>" >> $1   
-echo "</html>" >> $1
+echo "<BR><BR>
+<hr>
+<p><a href=\"$2\">Help Index</a> | <a href=\"full_index.html\">Full Index</a><br>
+&copy; 2003-2008 <a href=\"http://grass.osgeo.org\">GRASS Development Team</a></p>
+</body>
+</html>" >> "$1"
 }
 
 expand_module_class_name()
@@ -128,7 +152,7 @@ expand_module_class_name()
 ls build_html_index.sh 2> /dev/null
 if [ $? -eq 1 ] ; then
  echo "ERROR: this script must be run from the tools/ directory"
- exit
+ exit 1
 fi
 
 FULLINDEX=full_index.html
@@ -173,7 +197,6 @@ echo "<tr><td>&nbsp;&nbsp;g.*  </td><td>general commands</td></tr>" >> $FULLINDE
 #echo "<tr><td>&nbsp;&nbsp;g3.* </td><td>general3D commands</td></tr>" >> $FULLINDEX
 echo "<tr><td>&nbsp;&nbsp;i.*  </td><td>imagery commands</td></tr>" >> $FULLINDEX
 echo "<tr><td>&nbsp;&nbsp;m.*  </td><td>miscellaneous commands</td></tr>" >> $FULLINDEX
-#echo "<tr><td>&nbsp;&nbsp;p.*  </td><td>paint commands</td></tr>" >> $FULLINDEX
 echo "<tr><td>&nbsp;&nbsp;ps.* </td><td>postscript commands</td></tr>" >> $FULLINDEX
 echo "<tr><td>&nbsp;&nbsp;r.*  </td><td>raster commands</td></tr>" >> $FULLINDEX
 echo "<tr><td>&nbsp;&nbsp;r3.* </td><td>raster3D commands</td></tr>" >> $FULLINDEX
@@ -248,6 +271,8 @@ FILENAME=index.html
 write_html_header $FILENAME "GRASS GIS $GRASSVERSION Reference Manual" 1
 
 #modules:
+echo "</td>" >> $FILENAME
+echo "<td valign=\"top\">" >> $FILENAME
 echo "<h3>Manual sections:</h3>" >> $FILENAME
 echo "<ul>" >> $FILENAME
 #for all module groups:
@@ -264,6 +289,8 @@ echo "<li><a href=\"wxGUI.html\">wxGUI</a> wxPython-based GUI frontend</li>" >> 
 echo "<li><a href=\"xganim.html\">xganim</a> tool  for animating a raster map series</li>" >> $FILENAME
 	      
 echo "</ul>" >> $FILENAME
+echo "</td></tr>" >> $FILENAME
+echo "</table>" >> $FILENAME
 
 #insert a special comment so that GEM will know where to merge docs of extensions
 echo >> "$FILENAME"
