@@ -105,6 +105,38 @@ Round trip:
 </pre></div>
 
 
+Import as a vector points map:
+<div class="code"><pre>
+   m.cogo -l in=cogo.dat | v.in.ascii out=cogo_points x=1 y=2 fs=space
+</pre></div>
+
+
+Shell script to import as a vector line map:
+<div class="code"><pre>
+    m.cogo -l in=cogo.dat | tac | awk '
+       BEGIN { FS=" " ; R=0 }
+       $1~/\d*\.\d*/ { printf(" %.8f %.8f\n", $1, $2) ; ++R }
+       END { printf("L %d\n", R) }' | tac | \
+       v.in.ascii -n format=standard out=cogo_line
+</pre></div>
+
+Unclosed lines may be snapped with <em>v.clean</em>, converted to
+boundaries with <em>v.type</em>, and closed boundaries may be
+converted to areas with <em>v.centroids</em>.
+
+
+<H2>SEE ALSO</H2>
+
+<em>
+<a HREF="v.centroids.html">v.centroids</a>,
+<a HREF="v.clean.html">v.clean</a>,
+<a HREF="v.digit.html">v.digit</a>,
+<a HREF="v.in.ascii.html">v.in.ascii</a>,
+<a HREF="v.type.html">v.type</a>
+</em>
+
+
+
 <H2>AUTHOR</H2>
 
 Eric G. Miller
