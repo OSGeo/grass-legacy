@@ -1,0 +1,496 @@
+<html>
+
+<head>
+
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<meta http-equiv="Content-Language" content="en" />
+<meta name="Author" content="Marco Pasetti" />
+<meta name="Description" content="WinGRASS 6.3.0 README" />
+
+<title>WinGRASS 6.3.0 README</title>
+
+<style type="text/css" />
+
+/* Wiki Pages Styles */
+
+/* TableOfContents */
+
+.table-of-contents	{ 
+					border: 1px solid #bbbbbb;
+					color: black; background-color: #eeeeee;
+					font-size: small;
+					text-align:left;
+					margin: 0.5em; padding-left: 1em;
+					width: 360;
+					}
+
+/* Contents */
+
+html	{
+		background-color: white;
+		color: black;
+		font-family: Arial, Lucida Grande, sans-serif;
+		font-size: 10pt;
+		}
+		
+body	{
+		margin: 30;
+		}
+		
+ol	{
+	font-family: Arial, Lucida Grande, sans-serif;
+	font-size: 10pt;
+	margin-top: 0;
+	margin-bottom: 0;
+	margin-left: 0;
+	}
+
+h1	{
+	font-family: Arial, Lucida Grande, sans-serif;
+	font-size: 18pt;
+	margin-top: 0;
+	margin-bottom: 50;
+	}
+
+h2	{
+	font-family: Arial, Lucida Grande, sans-serif;
+	font-size: 16pt;
+	margin-top: 60;
+	margin-bottom: 20;
+	}
+	
+h3	{
+	font-family: Arial, Lucida Grande, sans-serif;
+	font-size: 14pt;
+	margin-top: 60;
+	margin-bottom: 20;
+	}
+
+h4	{
+	font-family: Arial, Lucida Grande, sans-serif;
+	font-size: 11pt;
+	margin-top: 0;
+	margin-bottom: 0;
+	}
+
+p	{
+	font-family: Arial, Lucida Grande, sans-serif;
+	font-size: 10pt;
+	margin-top: 10;
+	margin-bottom: 10;
+	}
+
+code	{
+		font-family: Courier-new, monospace;
+		font-size: 10pt;
+		margin-top: 10;
+		margin-bottom: 10;
+		}
+		
+pre	{
+	padding: 1em;
+	border: 1px dashed #2f6fab;
+	color: black;
+	background-color: #f9f9f9;
+	line-height: 1.1em;
+	}
+	
+	
+/* Tables */
+
+table
+{
+	margin: 0.5em 0 0 0.5em;
+	border-collapse: collapse;
+}
+
+td
+{
+	padding: 0.25em 0.5em 0.25em 0.5em;
+	border: 0pt solid #ADB9CC;
+	font-family: Arial, Lucida Grande, sans-serif;
+	font-size: 10pt;
+}
+		
+
+/* Links */
+
+a	{
+	text-decoration: none;
+	color: #002bb8;
+	background: none;
+	}
+	
+a:hover {
+		text-decoration: underline;
+		color: green;
+		}
+	
+a:visited:hover	{
+				text-decoration: underline;
+				color: red;
+				}
+</style>
+
+</head>
+
+<body>
+
+<h1>WinGRASS 6.3.0 - GRASS Windows-Native Experimental Project</h1>
+
+<div class="table-of-contents">
+
+<p><strong>Table of Contents</strong></p>
+
+<li><a href="#Introduction">Introduction</a></li>
+<li><a href="#Release Notes">Release Notes</a></li>
+<li><a href="#Install GRASS">Install GRASS</a></li>
+<li><a href="#Sample Data">Sample Data</a></li>
+<li><a href="#Launching GRASS">Launching GRASS</a></li>
+<li><a href="#New GRASS Python GUI">New GRASS Python GUI</a></li>
+<li><a href="#Missing Modules">Missing Modules</a></li>
+<li><a href="#Known Issues">Known Issues</a></li>
+<li><a href="#How to Submit Bugs">How to Submit Bugs</a></li>
+<li><a href="#Build GRASS From Source">Build GRASS From Source</a></li>
+<li><a href="#GRASS Development Team">GRASS Development Team</a></li>
+<li><a href="#Credits and Contacts">Credits and Contacts</a></li>
+
+<br>
+
+</div>
+
+
+
+<div id="Introduction">
+
+<p><h3>Introduction</h3></p>
+
+
+<p>GRASS (Geographic Resources Analysis Support System) is a free, open source Geographical Information System (GIS)
+capable of handling raster, topological vector, image processing, and graphic data.</p>
+
+<p>GRASS is released under the GNU General Public License (GPL).</p>
+
+<p>Visit the GRASS GIS main web site at <a target="_blank" href="http://grass.osgeo.org/">http://grass.osgeo.org/</a></p>
+
+</div>
+
+
+<div id="Release Notes">
+
+<p><h3>Release Notes</h3></p>
+
+<p>WinGRASS is a GRASS Development Team project, with the goal of creating a Microsoft Windows native binary port of GRASS.</p>
+
+<p>WinGRASS is an experimental project, still at an alpha stage, and it can't be considered a complete and fully
+working release of GRASS for Windows. Some features are missing (see <a href="#Missing Modules">Missing Modules</a> section
+in this document), some known bugs still need to be fixed (see <a href="#Known Issues">Known Issues</a> section) and other
+features may not work.</p>
+
+<p>If you need a robust, bug-free release of GRASS on Windows you should install the Cygwin version of
+GRASS 6.3.0, available at <a target="_blank" href="http://grass.osgeo.org/grass63/binary/mswindows/cygwin/">
+http://grass.osgeo.org/grass63/binary/mswindows/cygwin/</a>.<p>
+
+<p>See also <a target="_blank" href="http://grass.osgeo.org/wiki/WinGRASS_Current_Status">
+http://grass.osgeo.org/wiki/WinGRASS_Current_Status</a>.</p>
+
+<p>The current release of WinGRASS, based on GRASS 6.3.0, has been built on a i686 machine in the MinGW environment
+and contains parts of the following open source softwares and libraries:</p>
+
+<p>Software/Library (Release):</p>
+
+<p>
+<li>MSYS (1.0.11)</li>
+<li>Flex (2.5.4a-1)</li>
+<li>Bison (2.1)</li>
+<li>Zlib (1.2.3)</li>
+<li>Libpng (1.2.24)</li>
+<li>Libtiff (3.8.2)</li>
+<li>Freetype (2.3.5)</li>
+<li>FFTW (3.1.2)</li>
+<li>PDCurses (3.3)</li>
+<li>PROJ.4 (4.6.0)</li>
+<li>GEOS (2.2.3)</li>
+<li>GSL (1.9)</li>
+<li>Expat (2.0.1)</li>
+<li>PostgreSQL (8.2.6)</li>
+<li>SQLite (3.5.6)</li>
+<li>GDAL (1.5.1) *</li>
+<li>Tcl/Tk (8.5.1)</li>
+</p>
+
+<p>* with GEOS, Expat, PostgreSQL and SQLite support enabled</p>
+
+<p>The current package contains a complete build (libraries and executables) of all the items listed above, except for PostgreSQL,
+for which the package provides only the main dynamic library.</p>
+
+<p> All the above softwares and libraries have been built from sources on a i686 machine in the MinGW environment,
+with the exception of MSYS, provided by MinGW Project on SourceForge.NET
+(<a target="_blank" href="http://www.mingw.org/msys.shtml">http://www.mingw.org/msys.shtml</a>),
+Flex and Bison, provided by GnuWin32 Project on SourceForge.NET
+(<a target="_blank" href="http://gnuwin32.sourceforge.net/">http://gnuwin32.sourceforge.net/</a>).</p>
+
+<p>The current release of GRASS 6.3.0 has been built with the following configuration:</p>
+
+<pre><code>GRASS is now configured for:  i686-pc-mingw32
+
+ Source directory:            /usr/local/src/grass-6.3.0
+ Build directory:             /usr/local/src/grass-6.3.0
+ Installation directory:      ${prefix}/grass-6.3.0
+ Startup script in directory: ${exec_prefix}/bin
+ C compiler:                  gcc -g -O2 
+ C++ compiler:                c++ -g -O2
+ Building shared libraries:   yes
+ 64bit support:               no
+ OpenGL platform:             Windows
+
+  NVIZ:                       yes
+
+  BLAS support:               no
+  C++ support:                yes
+  DWG support:                no
+  FFMPEG support:             no
+  FFTW support:               yes
+  FreeType support:           yes
+  GDAL support:               yes
+  GLw support:                no
+  JPEG support:               no
+  LAPACK support:             no
+  Large File Support (LFS):   yes
+  Motif support:              no
+  MySQL support:              no
+  NLS support:                no
+  ODBC support:               no
+  OGR support:                yes
+  OpenGL support:             yes
+  PNG support:                yes
+  PostgreSQL support:         yes
+  Python support:             no
+  Readline support:           no
+  SQLite support:             yes
+  Tcl/Tk support:             yes
+  wxWidgets support:          no
+  TIFF support:               yes
+  X11 support:                no
+  MacOSX application:         no</code></pre>
+
+</div>
+
+
+
+<div id="Install GRASS">
+
+<p><h3>Install GRASS</h3></p>
+
+<p>To install GRASS launch WinGRASS-6.3.0-3-Setup.exe and follow the instructions in it.</p>
+
+<p>If installed into a directory that has spaces in either its name or the path of directories leading up to it,
+some functionalities of GRASS might be hampered. We would highly appreciate if you tried and reported any problems,
+so that we can fix them. However, if you want to avoid any such issues, we recommend that you choose a simple
+installation path without spaces, such as <code>C:\GRASS</code>.</p>
+
+<p>The WinGRASS Installer has been made using the OpenSource NSIS (Nullsoft Scriptable Install System) software, available at:
+<a target="_blank" href="http://nsis.sourceforge.net">http://nsis.sourceforge.net</a></p>
+
+</div>
+
+
+
+<div id="Sample Data">
+
+<p><h3>Sample Data</h3></p>
+
+<p>As install option, you can also download and install the following GRASS sample data sets:</p>
+
+<table><tr>
+<td width="120" align="left" valign="top"><p><h4>North Carolina Data Set</h4></p></td>
+<td align="left">
+<p>Used as sample data in the book "Open Source GIS: A GRASS GIS Approach", 3rd edition, this data set is a comprehensive
+collection of raster, vector and imagery data covering parts of North Carolina (NC), USA (map), prepared from public data
+sources provided by the North Carolina state and local government agencies and Global Land Cover Facility (GLCF).</p>
+<p>See also <a target="_blank" href="http://www.grassbook.org/data_menu3rd.php">http://www.grassbook.org/data_menu3rd.php</a></p>
+</td>
+</tr></table>
+
+<table><tr>
+<td width="120" align="left" valign="top"><p><h4>South Dakota Data Set</h4></p></td>
+<td align="left">
+<p>Also known as Spearfish data set, it contains raster, vector and point data of South Dakota, USA
+(UTM projection, Clarke66 ellipsoid, NAD27 conus)</p>
+<p>See also <a target="_blank" href="http://grass.osgeo.org/download/data6.php">http://grass.osgeo.org/download/data6.php</a></p>
+</td>
+</tr></table>
+
+<p>The sample data files will be installed into a directory called GIS DataBase, that will be created in your Documents folder.</p>
+
+</div>
+
+
+
+<div id="Launching GRASS">
+
+<p><h3>Launching GRASS</h3></p>
+
+<p>You have three options for launching GRASS:</p>
+
+<p>The easiest is to click on the GRASS icon in the GRASS Start menu folder or on the Desktop.</p>
+
+<p>If you prefer working in text mode on the command line, you can also launch cmd.exe (Start Menu -> Run command ->
+type <code>cmd.exe</code> and click on Run) and type <code>c:\PathToYourGrassInstallation\grass63.bat -text</code> plus enter.
+If you want to launch the GUI, just type <code>gis.m</code> and then enter.</p>
+
+<p>Finally, if you want to work in a unix/linux-like shell environment, you can launch GRASS from MSYS shell: open MSYS
+from the GRASS Start menu folder, type <code>grass63</code> and then enter.</p>
+
+</div>
+
+
+
+<div id="New GRASS Python GUI">
+
+<p><h3>New GRASS Python GUI</h3></p>
+
+<p>We would highly appreciate if you also tested the new GRASS Python GUI.</p>
+
+<p>To do that you'll need to install the following additional third-party software components:</p>
+
+<table><tr>
+<td width="100" align="left" valign="top"><p><h4>Python</h4></p></td>
+<td align="left">
+<p>Download the <a target="_blank" href="http://www.python.org/ftp/python/2.5.2/python-2.5.2.msi">Python installer</a></p>
+<p>Install to <code>%PROGRAMFILES%\Python</code></p>
+<p>Add <code>%PROGRAMFILES%\Python</code> to your <code>PATH</code> system variable.</p>
+</td>
+</tr></table>
+
+<table><tr>
+<td width="100" align="left" valign="top"><p><h4>Python Extensions</h4></p></td>
+<td align="left">
+<p>Download the <a target="_blank" href="http://downloads.sourceforge.net/pywin32/pywin32-210.win32-py2.5.exe">
+Python Extensions installer</a></p>
+<p>Just launch the installer, it will automatically set the correct install path.</p>
+</td>
+</tr></table>
+
+<table><tr>
+<td width="100" align="left" valign="top"><p><h4>wxPython</h4></p></td>
+<td align="left">
+<p>Download the <a target="_blank" href="http://downloads.sourceforge.net/wxpython/wxPython2.8-win32-unicode-2.8.7.1-py25.exe">
+wxPython installer</a></p>
+<p>Install to <code>%PROGRAMFILES%\Python\Lib\site-packages</code></p>
+</td>
+</tr></table>
+
+<table><tr>
+<td width="100" align="left" valign="top"><p><h4>NumPy</h4></p></td>
+<td align="left">
+<p>Download <a target="_blank" href="http://downloads.sourceforge.net/numpy/numpy-1.0.4.win32-py2.5.msi">
+NumPy installer</a></p>
+<p>Install to <code>%PROGRAMFILES%\Python</code></p>
+</td>
+</tr></table>
+ 
+<p>Finally, to start GRASS with the new Python GUI, open a MSYS shell, type <code>grass63 -wxpython</code> and then enter.</p>
+
+<p>Please, note that the new GRASS Python GUI is still at a highly experimental stage, and that the
+vector digitizer is disabled in it.</p>
+
+<p>See also <a target="_blank" href="http://grass.osgeo.org/wiki/WxPython-based_GUI_for_GRASS">
+http://grass.osgeo.org/wiki/WxPython-based_GUI_for_GRASS</a></p>
+
+</div>
+
+
+
+<div id="Missing Modules">
+
+<p><h3>Missing Modules</h3></p>
+
+<p>The following modules are missing in the current WinGRASS release:</p>
+
+<li>r.li.daemon</li>
+<li>r.li.edgedensity</li>
+<li>r.li.patchdensity</li>
+<li>r.li.patchnum</li>
+<li>r.li.shape</li>
+<li>r.li.simpson</li>
+<li>r.li.shannon</li>
+<li>r.li.mps</li>
+<li>r.li.mpa</li>
+<li>r.li.padcv</li>
+<li>r.li.padsd</li>
+<li>r.li.padrange</li>
+<li>r.li.cwed</li>
+<li>r.li.richness</li>
+<li>r.li.dominance</li>
+
+</div>
+
+
+
+<div id="Known Issues">
+
+<p><h3>Known Issues</h3></p>
+
+<p>See <a target="_blank" href="http://grass.osgeo.org/wiki/WinGRASS_Current_Status#Known_Issues">
+http://grass.osgeo.org/wiki/WinGRASS_Current_Status#Known_Issues</a></p>
+
+</div>
+
+
+
+<div id="How to Submit Bugs">
+
+<p><h3>How to Submit Bugs</h3></p>
+
+<p>We would highly appreciate if you contributed to WinGRASS project by submitting bugs to
+<a target="_blank" href="http://trac.osgeo.org/grass/">http://trac.osgeo.org/grass/</a> or informing us about them through the
+Windows GRASS Mailing List (<a target="_blank"
+href="http://lists.osgeo.org/mailman/listinfo/grass-windows">http://lists.osgeo.org/mailman/listinfo/grass-windows</a>).</p>
+
+</div>
+
+
+
+<div id="Build GRASS From Source">
+
+<p><h3>Build GRASS From Source</h3></p>
+
+<p>Information on how to build GRASS from source code on Windows in a MinGW environment are available at
+<a target="_blank" href="http://trac.osgeo.org/grass/wiki/BuildingOnWindows">http://trac.osgeo.org/grass/wiki/BuildingOnWindows</a></p>
+
+</div>
+
+
+
+<div id="GRASS Development Team">
+
+<p><h3>GRASS Development Team</h3></p>
+
+<p>The GRASS Development Team is a multi-national group consisting of scientists and developers participating from various fields.</p>
+
+<p>For more information, see <a target="_blank" href="http://grass.osgeo.org/community/team.php">
+http://grass.osgeo.org/community/team.php</a></p>
+
+</div>
+
+
+
+<div id="Credits and Contacts">
+
+<p><h3>Credits and Contacts</h3></p>
+
+<p>WinGRASS project has been created and is currently developed by the GRASS Development Team.</p>
+
+<p>The WinGRASS self-contained binary package (including all the builds and the installer script) is provided by Marco Pasetti.</p>
+
+<p>This document has been written by Marco Pasetti, in agreement with the GRASS Development Team.</p>
+
+<p>To contact them, e-mail to: GRASS Development Mailing List
+(<a target="_blank" href="http://lists.osgeo.org/mailman/listinfo/grass-dev">http://lists.osgeo.org/mailman/listinfo/grass-dev</a>).</p>
+
+</div>
+
+</body>
+
+</html>
