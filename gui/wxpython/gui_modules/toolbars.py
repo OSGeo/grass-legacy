@@ -195,7 +195,7 @@ class MapToolbar(AbstractToolbar):
         tool =  event.GetString()
 
         if tool == "Digitize" and not self.mapdisplay.toolbars['vdigit']:
-            self.mapdisplay.AddToolbar("digit")
+            self.mapdisplay.AddToolbar("vdigit")
 
 class GRToolbar(AbstractToolbar):
     """
@@ -525,7 +525,7 @@ class VDigitToolbar(AbstractToolbar):
             self.parent.dialogs['attributes'].OnCancel(None)
 
         # disable the toolbar
-        self.parent.RemoveToolbar ("digit")
+        self.parent.RemoveToolbar ("vdigit")
 
     def OnMoveVertex(self, event):
         """Move line vertex"""
