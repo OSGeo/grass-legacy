@@ -2446,7 +2446,7 @@ class MapFrame(wx.Frame):
                               BottomDockable(False).TopDockable(True).
                               CloseButton(False).Layer(2))
 
-        if name == "digit":
+        if name == "vdigit":
             self.toolbars['vdigit'] = toolbars.VDigitToolbar(self, self.Map, self.tree)
 
             for toolRow in range(0, self.toolbars['vdigit'].numOfRows):
@@ -2487,7 +2487,7 @@ class MapFrame(wx.Frame):
         # cannot hide main toolbar
         if name == "map":
             return
-        elif name == "digit":
+        elif name == "vdigit":
             # TODO: not destroy only hide
             for toolRow in range(0, self.toolbars['vdigit'].numOfRows):
                 self._mgr.DetachPane (self.toolbars['vdigit'].toolbar[toolRow])
