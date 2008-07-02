@@ -6,7 +6,7 @@
  * @Copyright David D.Gray <ddgray@armadce.demon.co.uk>
  * 26th. Sep. 2000
  * Last updated:
- * $Id$
+ * 2006-11-23
 
  * This file is part of GRASS GIS. It is free software. You can 
  * redistribute it and/or modify it under the terms of 

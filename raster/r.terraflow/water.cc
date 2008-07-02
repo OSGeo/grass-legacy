@@ -30,11 +30,6 @@ using namespace std;
 #include "sortutils.h"
 
 
-
-
-/* $Id$ */
-
-
 #define WATER_DEBUG if(0)
 #define XXX if(0)
 
