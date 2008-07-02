@@ -1,6 +1,5 @@
 # GRASS 6.0 RPM spec file for Fedora
 # This file is Free Software under GNU GPL v>=2. 
-# $Id$
 
 %define PACKAGE_NAME grass
 %define PACKAGE_VERSION 6.0.0

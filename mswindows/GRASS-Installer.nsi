@@ -469,8 +469,6 @@ Section "GRASS" SecGRASS
 	FileWrite $0 '#$\r$\n'
 	FileWrite $0 '#########################################################################$\r$\n'
 	FileWrite $0 '#$\r$\n'
-	FileWrite $0 '# $$Id: grass.src 22360 2007-01-22 22:41:45Z markus $$$\r$\n'
-	FileWrite $0 '#$\r$\n'
 	FileWrite $0 '# MODULE:   	GRASS Initialization$\r$\n'
 	FileWrite $0 '# AUTHOR(S):	Justin Hickey - Thailand - jhickey@hpcc.nectec.or.th$\r$\n'
 	FileWrite $0 '# PURPOSE:  	The source file for this shell script is in$\r$\n'
