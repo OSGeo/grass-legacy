@@ -292,8 +292,9 @@ db__copy_table ( char *from_drvname, char *from_dbname, char *from_tblname,
 		        db_append_string ( &sql, "null" );
 		    } else {
 			db_double_quote_string ( &value_string );
-			sprintf (buf, "'%s'", db_get_string(&value_string) );
-			db_append_string ( &sql, buf);
+			db_append_string ( &sql, "'");
+			db_append_string ( &sql, db_get_string(&value_string));
+			db_append_string ( &sql, "'");
 		    }
 		    break;
 		case DB_C_TYPE_INT:
