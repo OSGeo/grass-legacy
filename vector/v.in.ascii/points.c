@@ -74,7 +74,7 @@ int points_analyse(FILE * ascii_in, FILE * ascii, char *fs,
     char *coorbuf, *tmp_token, *sav_buf;
     int skip = FALSE, skipped = 0;
 
-    buflen = 1000;
+    buflen = 4000;
     buf = (char *)G_malloc(buflen);
     buf_raw = (char *)G_malloc(buflen);
     coorbuf = (char *)G_malloc(256);
@@ -158,8 +158,10 @@ int points_analyse(FILE * ascii_in, FILE * ascii, char *fs,
 				   skip = TRUE;
 			    }
 			}
-			else
-			    G_fatal_error(_("Unparsable longitude value: %s"), tokens[i]);
+			else {
+			    fprintf(stderr, "Current row: '%s'\n", buf_raw);
+			    G_fatal_error(_("Unparsable longitude value in column <%d>: %s"), i, tokens[i]);
+			}
 		    }
 
 		    if (i == ycol) {
@@ -173,8 +175,10 @@ int points_analyse(FILE * ascii_in, FILE * ascii, char *fs,
 			 	    skip = TRUE;
 			    }
 			}
-			else
-			    G_fatal_error(_("Unparsable latitude value: %s"), tokens[i]);
+			else {
+			    fprintf(stderr, "Current row: '%s'\n", buf_raw);
+			    G_fatal_error(_("Unparsable latitude value in column <%d>: %s"), i, tokens[i]);
+			}
 		    }
  		} /* if (x or y) */
 
@@ -265,7 +269,7 @@ int points_to_bin(FILE * ascii, int rowlen, struct Map_info *Map,
 		  int *coltype, int xcol, int ycol, int zcol, int catcol,
 		  int skip_lines)
 {
-    char *buf, buf2[1000];
+    char *buf, buf2[4000];
     int cat = 0;
     int row = 1;
     struct line_pnts *Points;
