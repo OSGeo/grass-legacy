@@ -138,7 +138,7 @@ Currently two icon themes are available:
 User can change icon theme in Preferences dialog
 ('Config->Preferences').
 
-7 - DIGITIZATION TOOL
+7 - VECTOR DIGITIZER
 
 To enable digitizer you need to compile 'vdigit'
 component. Note that you must configure GRASS with C++ (--with-cxx),
