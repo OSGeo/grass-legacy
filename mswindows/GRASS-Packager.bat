@@ -16,7 +16,7 @@ set GRASS_7_DEV_INSTALL_FOLDER=c:\msys\local\grass-7-svn
 @echo Self Contained GRASS Automated Packager
 @echo -----------------------------------------------------------------------------------------------------------------------
 @echo Edited by: Marco Pasetti
-@echo Last Update: 17 May 2008
+@echo Last Update: 29 June 2008
 @echo -----------------------------------------------------------------------------------------------------------------------
 @echo Select the GRASS version to pack:
 @echo.
@@ -72,7 +72,6 @@ xcopy %GRASS_PREFIX% %PACKAGE_DIR% /S/V/F
 mkdir %PACKAGE_DIR%\extralib
 
 copy c:\msys\local\bin\*.dll %PACKAGE_DIR%\extralib
-copy c:\msys\local\sqlitel\bin\*.dll %PACKAGE_DIR%\extralib
 copy c:\msys\local\pgsql\lib\libpq.dll %PACKAGE_DIR%\extralib
 
 @echo.
@@ -82,8 +81,8 @@ copy c:\msys\local\pgsql\lib\libpq.dll %PACKAGE_DIR%\extralib
 @echo.
 
 mkdir %PACKAGE_DIR%\extrabin
+
 copy c:\msys\local\bin\*.exe %PACKAGE_DIR%\extrabin
-copy c:\msys\local\sqlite\bin\*.exe %PACKAGE_DIR%\extrabin
 
 @echo.
 @echo -----------------------------------------------------------------------------------------------------------------------
@@ -92,6 +91,17 @@ copy c:\msys\local\sqlite\bin\*.exe %PACKAGE_DIR%\extrabin
 @echo.
 
 xcopy c:\msys\local\sqlite %PACKAGE_DIR%\sqlite /S/V/F/I
+
+@echo.
+@echo -----------------------------------------------------------------------------------------------------------------------
+@echo Copy GPSBABEL executable and dll to PACKAGE_DIR\gpsbabel
+@echo -----------------------------------------------------------------------------------------------------------------------
+@echo.
+
+mkdir %PACKAGE_DIR%\gpsbabel
+
+copy c:\msys\local\gpsbabel\gpsbabel.exe %PACKAGE_DIR%\gpsbabel
+copy c:\msys\local\gpsbabel\libexpat.dll %PACKAGE_DIR%\gpsbabel
 
 @echo.
 @echo -----------------------------------------------------------------------------------------------------------------------
