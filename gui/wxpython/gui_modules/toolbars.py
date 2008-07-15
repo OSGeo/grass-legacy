@@ -8,7 +8,8 @@ CLASSES:
     * GCPToolbar
     * VDigitToolbar
     * ProfileToolbar
-    
+    * NvizToolbar
+
 PURPOSE: Toolbars for Map Display window
 
 AUTHORS: The GRASS Development Team
@@ -104,20 +105,24 @@ class MapToolbar(AbstractToolbar):
         self.mapcontent = map
         self.mapdisplay = mapdisplay
 
-	self.toolbar = wx.ToolBar(parent=self.mapdisplay, id=wx.ID_ANY)
+        self.toolbar = wx.ToolBar(parent=self.mapdisplay, id=wx.ID_ANY)
         self.toolbar.SetToolBitmapSize(globalvar.toolbarSize)
 
         self.InitToolbar(self.mapdisplay, self.toolbar, self.ToolbarData())
         
         # optional tools
         self.combo = wx.ComboBox(parent=self.toolbar, id=wx.ID_ANY, value='Tools',
-                                 choices=['Digitize'], style=wx.CB_READONLY, size=(90, -1))
+                                 choices=['Digitize', 'Nviz'], style=wx.CB_READONLY, size=(90, -1))
 
         self.comboid = self.toolbar.AddControl(self.combo)
-        self.mapdisplay.Bind(wx.EVT_COMBOBOX, self.OnSelect, self.comboid)
+        self.mapdisplay.Bind(wx.EVT_COMBOBOX, self.OnSelectTool, self.comboid)
 
         # realize the toolbar
         self.toolbar.Realize()
+        
+        #workaround for Mac bug. May be fixed by 2.8.8, but not before then.
+        self.combo.Hide()
+        self.combo.Show()
             
     def ToolbarData(self):
         """Toolbar data"""
@@ -188,7 +193,7 @@ class MapToolbar(AbstractToolbar):
             ("", "", "", "", "", "", "")
             )
 
-    def OnSelect(self, event):
+    def OnSelectTool(self, event):
         """
         Select / enable tool available in tools list
         """
@@ -196,6 +201,24 @@ class MapToolbar(AbstractToolbar):
 
         if tool == "Digitize" and not self.mapdisplay.toolbars['vdigit']:
             self.mapdisplay.AddToolbar("vdigit")
+
+        elif tool == "Nviz" and not self.mapdisplay.toolbars['nviz']:
+            self.mapdisplay.AddToolbar("nviz")
+
+    def Enable2D(self, enabled):
+        """Enable/Disable 2D display mode specific tools"""
+        for tool in (self.pointer,
+                     self.query,
+                     self.pan,
+                     self.zoomin,
+                     self.zoomout,
+                     self.zoomback,
+                     self.zoommenu,
+                     self.analyze,
+                     self.dec,
+                     self.savefile,
+                     self.printmap):
+            self.toolbar.EnableTool(tool, enabled)
 
 class GRToolbar(AbstractToolbar):
     """
@@ -992,3 +1015,51 @@ class ProfileToolbar(AbstractToolbar):
              wx.ITEM_NORMAL, Icons["quit"].GetLabel(), Icons["quit"].GetDesc(),
              self.parent.OnQuit),
             )
+
+class NvizToolbar(AbstractToolbar):
+    """
+    Nviz toolbar
+    """
+    def __init__(self, parent, map):
+        self.parent     = parent
+        self.mapcontent = map
+
+        self.toolbar = wx.ToolBar(parent=self.parent, id=wx.ID_ANY)
+
+        # self.SetToolBar(self.toolbar)
+        self.toolbar.SetToolBitmapSize(globalvar.toolbarSize)
+
+        self.InitToolbar(self.parent, self.toolbar, self.ToolbarData())
+
+        # realize the toolbar
+        self.toolbar.Realize()
+
+    def ToolbarData(self):
+        """Toolbar data"""
+
+        self.settings = wx.NewId()
+        self.quit = wx.NewId()
+                
+        # tool, label, bitmap, kind, shortHelp, longHelp, handler
+        return   (
+            (self.settings, "settings", Icons["nvizSettings"].GetBitmap(),
+             wx.ITEM_NORMAL, Icons["nvizSettings"].GetLabel(), Icons["nvizSettings"].GetDesc(),
+             self.OnSettings),
+            (self.quit, 'quit', Icons["quit"].GetBitmap(),
+             wx.ITEM_NORMAL, Icons["quit"].GetLabel(), Icons["quit"].GetDesc(),
+             self.OnExit),
+            )
+
+    def OnSettings(self, event):
+        win = self.parent.nvizToolWin
+        if not win.IsShown():
+            self.parent.nvizToolWin.Show()
+        else:
+            self.parent.nvizToolWin.Hide()
+
+    def OnExit (self, event=None):
+        """Quit nviz tool (swith to 2D mode)"""
+
+        # disable the toolbar
+        self.parent.RemoveToolbar ("nviz")
+
