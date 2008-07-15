@@ -138,6 +138,8 @@ class GRASSStartup(wx.Frame):
         self.lblocations = GListBox(parent=self.lpanel,
                                     id=wx.ID_ANY, size=(180, 200),
                                     choices=self.listOfLocations)
+        
+        self.lblocations.SetColumnWidth(0, 180)
 
         # TODO: sort; but keep PERMANENT on top of list
         # Mapsets
@@ -145,6 +147,8 @@ class GRASSStartup(wx.Frame):
         self.lbmapsets = GListBox(parent=self.mpanel,
                                   id=wx.ID_ANY, size=(180, 200),
                                   choices=self.listOfMapsets)
+        
+        self.lbmapsets.SetColumnWidth(0, 180)
 
         # layout & properties
         self._set_properties()
@@ -357,7 +361,7 @@ class GRASSStartup(wx.Frame):
 
     def _read_grassrc(self):
         """
-        Read variables from $HOME/.grassrc6 file
+        Read variables from $HOME/.grassrc7 file
         """
 
         grassrc = {}
@@ -759,6 +763,8 @@ class GListBox(wx.ListCtrl, listmix.ListCtrlAutoWidthMixin):
             if idx in disabled:
                 self.SetItemTextColour(idx, wx.Colour(150, 150, 150))
             idx += 1
+         
+        #self.SetColumnWidth(0, wx.LIST_AUTOSIZE)   
 
     def Clear(self):
         self.DeleteAllItems()
