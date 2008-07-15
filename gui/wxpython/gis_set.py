@@ -361,7 +361,7 @@ class GRASSStartup(wx.Frame):
 
     def _read_grassrc(self):
         """
-        Read variables from $HOME/.grassrc7 file
+        Read variables from $HOME/.grassrc6 file
         """
 
         grassrc = {}
