@@ -408,7 +408,7 @@ Section "GRASS" SecGRASS
 	;Set the INSTALL_DIR variable
 	Var /GLOBAL INSTALL_DIR
 	
-	${If} $UPDATE == "YES"	
+	${If} $ASK_FOR_PATH == "NO"	
 		StrCpy $INSTALL_DIR "$INSTALL_PATH"
 	${Else}
 		StrCpy $INSTALL_DIR "$INSTDIR"
