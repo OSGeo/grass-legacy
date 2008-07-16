@@ -56,146 +56,288 @@ class Settings:
             #
             'general': {
                 # use default window layout (layer manager, displays, ...)
-                'defWindowPos' : { 'enabled' : False, 'dim' : '' },
+                'defWindowPos' : {
+                    'enabled' : False,
+                    'dim' : ''
+                    },
                 # expand/collapse element list
-                'elementListExpand' : { 'selection' : 0 },
+                'elementListExpand' : {
+                    'selection' : 0 
+                    },
                 },
             'manager' : {
                 # show opacity level widget
-                'changeOpacityLevel' : { 'enabled' : False }, 
+                'changeOpacityLevel' : {
+                    'enabled' : False
+                    }, 
                 # ask when removing layer from layer tree
-                'askOnRemoveLayer' : { 'enabled' : True },
+                'askOnRemoveLayer' : {
+                    'enabled' : True
+                    },
                 },
             #
             # display
             #
             'display': {
-                'displayFont' : { 'value' : '' },
-                'driver': { 'type': 'default' },
-                'compResolution' : { 'enabled' : False },
-                'autoRendering': { 'enabled' : False },
-                'statusbarMode': { 'selection' : 0 },
+                'displayFont' : {
+                    'value' : ''
+                    },
+                'driver': {
+                    'type': 'default'
+                    },
+                'compResolution' : {
+                    'enabled' : False
+                    },
+                'autoRendering': {
+                    'enabled' : False
+                    },
+                'statusbarMode': {
+                    'selection' : 0
+                    },
                 },
             #
             # advanced
             #
             'advanced' : {
-                'settingsFile'   : { 'type' : 'home' }, # home, gisdbase, location, mapset
-                'digitInterface' : { 'type' : 'vdigit' }, # vedit, vdigit
-                'iconTheme'      : { 'type' : 'silk' }, # grass, silk
+                'settingsFile' : {
+                    'type' : 'home'
+                    }, # home, gisdbase, location, mapset
+                'digitInterface' : {
+                    'type' : 'vdigit'
+                    }, # vedit, vdigit
+                'iconTheme' : {
+                    'type' : 'silk'
+                    }, # grass, silk
                 },
             #
             # Attribute Table Manager
             #
             'atm' : {
-                'highlight' : { 'color' : (255, 255, 0, 255), 'width' : 2},
-                'leftDbClick' : { 'selection' : 0 },
+                'highlight' : {
+                    'color' : (255, 255, 0, 255),
+                    'width' : 2
+                    },
+                'leftDbClick' : {
+                    'selection' : 0
+                    },
             },
             #
             # Command
             #
             'cmd': {
-                'overwrite' : { 'enabled' : False },
-                'closeDlg' : { 'enabled' : False },
-                'verbosity' : { 'selection' : 'grassenv' },
-                'rasterOverlay' : { 'enabled' : False },
+                'overwrite' : {
+                    'enabled' : False
+                    },
+                'closeDlg' : {
+                    'enabled' : False
+                    },
+                'verbosity' : {
+                    'selection' : 'grassenv'
+                    },
+                'rasterOverlay' : {
+                    'enabled' : False
+                    },
                 },
             #
             # Workspace
             #
             'workspace' : {
-                'posDisplay' : { 'enabled' : False },
-                'posManager' : { 'enabled' : False },
+                'posDisplay' : {
+                    'enabled' : False
+                    },
+                'posManager' : {
+                    'enabled' : False
+                    },
                 },
             #
             # vdigit
             #
             'vdigit' : {
                 # symbology
-                'symbolHighlight'   : { 'enabled' : None,  'color' : (255, 255, 0, 255) }, # yellow
-                'symbolHighlightDupl' : { 'enabled' : None,  'color' : (255, 72, 0, 255) }, # red
-                'symbolPoint'       : { 'enabled' : True,  'color' : (0, 0, 0, 255) }, # black
-                'symbolLine'        : { 'enabled' : True,  'color' : (0, 0, 0, 255) }, # black
-                'symbolBoundaryNo'  : { 'enabled' : True,  'color' : (126, 126, 126, 255) }, # grey
-                'symbolBoundaryOne' : { 'enabled' : True,  'color' : (0, 255, 0, 255) }, # green
-                'symbolBoundaryTwo' : { 'enabled' : True,  'color' : (255, 135, 0, 255) }, # orange
-                'symbolCentroidIn'  : { 'enabled' : True,  'color' : (0, 0, 255, 255) }, # blue
-                'symbolCentroidOut' : { 'enabled' : True,  'color' : (165, 42, 42, 255) }, # brown
-                'symbolCentroidDup' : { 'enabled' : True,  'color' : (156, 62, 206, 255) }, # violet
-                'symbolNodeOne'     : { 'enabled' : True,  'color' : (255, 0, 0, 255) }, # red
-                'symbolNodeTwo'     : { 'enabled' : True,  'color' : (0, 86, 45, 255) }, # dark green
-                'symbolVertex'      : { 'enabled' : False, 'color' : (255, 20, 147, 255) }, # deep pink
-                'symbolDirection'   : { 'enabled' : False, 'color' : (255, 0, 0, 255) }, # red
+                'symbolHighlight' : {
+                    'enabled' : None,
+                    'color' : (255, 255, 0, 255)
+                    }, # yellow
+                'symbolHighlightDupl' : {
+                    'enabled' : None,
+                    'color' : (255, 72, 0, 255)
+                    }, # red
+                'symbolPoint' : {
+                    'enabled' : True,
+                    'color' : (0, 0, 0, 255)
+                    }, # black
+                'symbolLine' : {
+                    'enabled' : True,
+                    'color' : (0, 0, 0, 255)
+                    }, # black
+                'symbolBoundaryNo' : {
+                    'enabled' : True,
+                    'color' : (126, 126, 126, 255)
+                    }, # grey
+                'symbolBoundaryOne' : {
+                    'enabled' : True,
+                    'color' : (0, 255, 0, 255)
+                    }, # green
+                'symbolBoundaryTwo' : {
+                    'enabled' : True,
+                    'color' : (255, 135, 0, 255)
+                    }, # orange
+                'symbolCentroidIn' : {
+                    'enabled' : True,
+                    'color' : (0, 0, 255, 255)
+                    }, # blue
+                'symbolCentroidOut' : {
+                    'enabled' : True,
+                    'color' : (165, 42, 42, 255)
+                    }, # brown
+                'symbolCentroidDup' : {
+                    'enabled' : True,
+                    'color' : (156, 62, 206, 255)
+                    }, # violet
+                'symbolNodeOne' : {
+                    'enabled' : True,
+                    'color' : (255, 0, 0, 255)
+                    }, # red
+                'symbolNodeTwo' : {
+                    'enabled' : True,
+                    'color' : (0, 86, 45, 255)
+                    }, # dark green
+                'symbolVertex' : {
+                    'enabled' : False,
+                    'color' : (255, 20, 147, 255)
+                    }, # deep pink
+                'symbolArea' : {
+                    'enabled' : True,
+                    'color' : (217, 255, 217, 255)
+                    }, # green
+                'symbolDirection' : {
+                    'enabled' : False,
+                    'color' : (255, 0, 0, 255)
+                    }, # red
                 # display
-                'lineWidth' : { 'value' : 2, 'units' : 'screen pixels' },
+                'lineWidth' : {
+                    'value' : 2,
+                    'units' : 'screen pixels'
+                    },
                 # snapping
-                'snapping' : { 'value' : 10, 'units' : 'screen pixels' },
-                'snapToVertex' : { 'enabled' : False },
-                'backgroundMap' : {'value' : ''},
+                'snapping' : {
+                    'value' : 10,
+                    'units' : 'screen pixels'
+                    },
+                'snapToVertex' : {
+                    'enabled' : False
+                    },
+                'backgroundMap' : {
+                    'value' : ''
+                    },
                 # digitize new record
-                'addRecord' : { 'enabled' : True },
-                'layer' : {'value' : 1 },
-                'category' : {'value' : 1 },
-                'categoryMode' : {'selection' : 0 },
+                'addRecord' : {
+                    'enabled' : True
+                    },
+                'layer' :{
+                    'value' : 1
+                    },
+                'category' : {
+                    'value' : 1
+                    },
+                'categoryMode' : {
+                    'selection' : 0
+                    },
                 # delete existing feature(s)
-                'delRecord' : { 'enabled' : True },
+                'delRecord' : {
+                    'enabled' : True
+                    },
                 # query tool
-                'query'       : { 'selection' : 0, 'box' : True },
-                'queryLength' : { 'than-selection' : 0, 'thresh' : 0 },
-                'queryDangle' : { 'than-selection' : 0, 'thresh' : 0 },
+                'query' : {
+                    'selection' : 0,
+                    'box' : True
+                    },
+                'queryLength' : {
+                    'than-selection' : 0,
+                    'thresh' : 0
+                    },
+                'queryDangle' : {
+                    'than-selection' : 0,
+                    'thresh' : 0
+                    },
                 # select feature (point, line, centroid, boundary)
-                'selectFeaturePoint'    : { 'enabled' : True },
-                'selectFeatureLine'     : { 'enabled' : True },
-                'selectFeatureCentroid' : { 'enabled' : True },
-                'selectFeatureBoundary' : { 'enabled' : True },
-                'selectThresh'          : { 'value' : 10, 'units' : 'screen pixels'},
-                'checkForDupl'          : { 'enabled' : False },
+                'selectFeaturePoint' : {
+                    'enabled' : True
+                    },
+                'selectFeatureLine' : {
+                    'enabled' : True
+                    },
+                'selectFeatureCentroid' : {
+                    'enabled' : True
+                    },
+                'selectFeatureBoundary' : {
+                    'enabled' : True
+                    },
+                'selectThresh' : {
+                    'value' : 10,
+                    'units' : 'screen pixels'
+                    },
+                'checkForDupl' : {
+                    'enabled' : False
+                    },
                 # exit
-                'saveOnExit'            : { 'enabled' : False },
+                'saveOnExit' : {
+                    'enabled' : False
+                    },
                 },
             'profile': {
-                'raster0' : { 'pcolor' : (0, 0, 255, 255), # profile line color
-                              'pwidth' : 1, # profile line width
-                              'pstyle' : 'solid', # profile line pen style
-                              },
-                'raster1' : { 'pcolor' : (255, 0, 0, 255), 
-                              'pwidth' : 1, 
-                              'pstyle' : 'solid', 
-                              },
-                'raster2' : { 'pcolor' : (0, 255, 0, 255), 
-                              'pwidth' : 1, 
-                              'pstyle' : 'solid', 
-                              },
-                'font' : { 'titleSize' : 12,
-                           'axisSize' : 11,
-                           'legendSize' : 10,
-                           },
-                'marker' : { 'color' : wx.Colour(0, 0, 0),
-                             'fill' : 'transparent',
-                             'size' : 2,
-                             'type' : 'triangle',
-                             'legend' : _('Segment break'),
-                             },
-                'grid' : { 'color' : wx.Colour(200,200,200) ,
-                           'enabled' : True,
-                           },
-                'x-axis' : { 'type' : 'auto', # axis format
-                             'min' : 0, # axis min for custom axis range
-                             'max': 0, # axis max for custom axis range
-                             'log' : False,
-                             },
-                'y-axis' : { 'type' : 'auto', # axis format
-                             'min' : 0, # axis min for custom axis range
-                             'max': 0, # axis max for custom axis range
-                             'log' : False,
-                             },
-                'legend' : { 'enabled' : True
-                             },
+                'raster0' : {
+                    'pcolor' : (0, 0, 255, 255), # profile line color
+                    'pwidth' : 1, # profile line width
+                    'pstyle' : 'solid', # profile line pen style
+                    },
+                'raster1' : {
+                    'pcolor' : (255, 0, 0, 255), 
+                    'pwidth' : 1, 
+                    'pstyle' : 'solid', 
+                    },
+                'raster2' : {
+                    'pcolor' : (0, 255, 0, 255), 
+                    'pwidth' : 1, 
+                    'pstyle' : 'solid', 
+                    },
+                'font' : {
+                    'titleSize' : 12,
+                    'axisSize' : 11,
+                    'legendSize' : 10,
+                    },
+                'marker' : {
+                    'color' : wx.Colour(0, 0, 0),
+                    'fill' : 'transparent',
+                    'size' : 2,
+                    'type' : 'triangle',
+                    'legend' : _('Segment break'),
+                    },
+                'grid' : {
+                    'color' : wx.Colour(200,200,200) ,
+                    'enabled' : True,
+                    },
+                'x-axis' : {
+                    'type' : 'auto', # axis format
+                    'min' : 0, # axis min for custom axis range
+                    'max': 0, # axis max for custom axis range
+                    'log' : False,
+                    },
+                'y-axis' : {
+                    'type' : 'auto', # axis format
+                    'min' : 0, # axis min for custom axis range
+                    'max': 0, # axis max for custom axis range
+                    'log' : False,
+                    },
+                'legend' : {
+                    'enabled' : True
+                    },
                 },
             'georect' : {
-                'symbol' : { 'color' : (0, 0, 255, 255),
-                             'width' : 2,
-                             },
+                'symbol' : {
+                    'color' : (0, 0, 255, 255),
+                    'width' : 2,
+                    },
                 },
             }
 
