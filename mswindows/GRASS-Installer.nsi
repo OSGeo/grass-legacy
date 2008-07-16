@@ -2,7 +2,7 @@
 
 ;GRASS Installer for Windows
 ;Written by Marco Pasetti
-;Last Update: 14 July 2008
+;Last Update: 16 July 2008
 ;Mail to: marco.pasetti@alice.it 
 
 ;----------------------------------------------------------------------------------------------------------------------------
@@ -12,13 +12,13 @@
 !define DEMOLOCATION_PATH "c:\msys\local\src\grass-6.3.0\demolocation"
 
 ;Select if you are building a "Development Version" or a "Release Version" of the GRASS Installer
-;Change INSTALLER_TYPE variable to Release, Dev6 or Dev7
+;Change the INSTALLER_TYPE variable to Release, Dev6 or Dev7
 
 !define INSTALLER_TYPE "Release"
 
 ;----------------------------------------------------------------------------------------------------------------------------
 
-;Variables that may need to be modified
+;Version variables
 
 !define RELEASE_VERSION_NUMBER "6.3.0"
 !define RELEASE_SVN_REVISION "31095"
@@ -50,6 +50,8 @@
 !include "LogicLib.nsh"
 
 ;----------------------------------------------------------------------------------------------------------------------------
+
+;Set the installer variables, depending on the selected version to build
 
 !if ${INSTALLER_TYPE} == "Release"
 	!define VERSION_NUMBER "${RELEASE_VERSION_NUMBER}"
@@ -85,7 +87,7 @@
 
 ;----------------------------------------------------------------------------------------------------------------------------
 
-;Version variables
+;Publisher variables
 
 !define PUBLISHER "GRASS Development Team"
 !define WEB_SITE "http://grass.osgeo.org/"
@@ -113,7 +115,7 @@ ShowUnInstDetails show
 
 ;----------------------------------------------------------------------------------------------------------------------------
 
-;StrReplace
+;StrReplace Function
 ;Replaces all ocurrences of a given needle within a haystack with another string
 ;Written by dandaman32
  
@@ -167,10 +169,34 @@ FunctionEnd
 
 ;----------------------------------------------------------------------------------------------------------------------------
 
+;.onInit Function (called when the installer is nearly finished initializing)
+
+;Check if GRASS is already installed on the system and, if yes, what version and binary release;
+;depending on that, select the install procedure:
+
+;1. first installation = if GRASS is not already installed
+;install GRASS asking for the install PATH
+
+;2. upgrade installation = if an older release of GRASS is already installed
+;call the uninstaller of the currently installed GRASS release
+;if the uninstall procedure succeeded, call the current installer without asking for the install PATH
+;GRASS will be installed in the same PATH of the previous installation
+
+;3. downgrade installation = if a newer release of GRASS is already installed
+;call the uninstaller of the currently installed GRASS release
+;if the uninstall procedure succeeded, call the current installer without asking for the install PATH
+;GRASS will be installed in the same PATH of the previous installation
+
+;4. repair installation = if the same release of GRASS is already installed
+;call the uninstaller of the currently installed GRASS release
+;if the uninstall procedure succeeded, call the current installer asking for the install PATH
+
+;the currently installed release of GRASS is defined by the variable $INSTALLED_VERSION = $INSTALLED_SVN_REVISION + $INSTALLED_BINARY_REVISION 
+
 Function .onInit
 
-	Var /GLOBAL UPDATE
-	StrCpy $UPDATE "NO"
+	Var /GLOBAL ASK_FOR_PATH
+	StrCpy $ASK_FOR_PATH "YES"
 
 	Var /GLOBAL UNINSTALL_STRING
 	Var /GLOBAL INSTALL_PATH
@@ -242,7 +268,7 @@ Function .onInit
 		${If} $INSTALLED_VERSION < ${VERSION}
 			MessageBox MB_OKCANCEL "$MESSAGE_1_" IDOK upgrade IDCANCEL quit_upgrade
 			upgrade:
-				StrCpy $UPDATE "YES"
+				StrCpy $ASK_FOR_PATH "NO"
 				ExecWait '"$UNINSTALL_STRING" _?=$INSTALL_PATH' $0
 				Goto continue_upgrade
 			quit_upgrade:
@@ -251,7 +277,7 @@ Function .onInit
 		${ElseIf} $INSTALLED_VERSION > ${VERSION}
 			MessageBox MB_OKCANCEL "$MESSAGE_2_" IDOK downgrade IDCANCEL quit_downgrade
 			downgrade:
-				StrCpy $UPDATE "YES"
+				StrCpy $ASK_FOR_PATH "NO"
 				ExecWait '"$UNINSTALL_STRING" _?=$INSTALL_PATH' $0
 				Goto continue_downgrade
 			quit_downgrade:
@@ -260,6 +286,7 @@ Function .onInit
 		${ElseIf} $INSTALLED_VERSION = ${VERSION}
 			MessageBox MB_OKCANCEL "$MESSAGE_3_" IDOK reinstall IDCANCEL quit_reinstall
 			reinstall:
+				ExecWait '"$UNINSTALL_STRING" _?=$INSTALL_PATH' $0
 				Goto continue_reinstall
 			quit_reinstall:
 				Abort
@@ -267,7 +294,7 @@ Function .onInit
 		${EndIf}	
 	${EndIf}
 	
-	${If} $INSTALLED_VERSION = ${VERSION}
+	${If} $INSTALLED_VERSION_NUMBER == ""
 	${Else}
 		${If} $0 = 0
 		${Else}
@@ -280,10 +307,11 @@ FunctionEnd
 ;----------------------------------------------------------------------------------------------------------------------------
 
 ;CheckUpdate Function
+;Check if to show the MUI_PAGE_DIRECTORY during the installation (to ask for the install PATH)
 
 Function CheckUpdate
 
-	${If} $UPDATE == "YES"	
+	${If} $ASK_FOR_PATH == "NO"	
 		Abort
 	${EndIf}
 	
@@ -292,6 +320,8 @@ FunctionEnd
 ;----------------------------------------------------------------------------------------------------------------------------
 
 ;CheckInstDir Function
+;Check if GRASS is going to be installed in a directory containing spaces
+;if yes, show a warning message
 
 Function CheckInstDir
 
@@ -361,7 +391,7 @@ Page custom CheckInstDir
 
 ;Installer Sections
 
-;Declares variables for optional Sample Data Sections
+;Declares the variables for optional Sample Data Sections
 Var /GLOBAL HTTP_PATH
 Var /GLOBAL ARCHIVE_NAME
 Var /GLOBAL EXTENDED_ARCHIVE_NAME
@@ -387,12 +417,12 @@ Section "GRASS" SecGRASS
 	;Set to try to overwrite existing files
 	SetOverwrite try	
 	
-	;Set GIS_DATABASE directory
+	;Set the GIS_DATABASE directory
 	SetShellVarContext current
 	Var /GLOBAL GIS_DATABASE	
 	StrCpy $GIS_DATABASE "$DOCUMENTS\GIS DataBase"
 	
-	;Create GIS_DATABASE directory
+	;Create the GIS_DATABASE directory
 	CreateDirectory "$GIS_DATABASE"
 
 	;add Installer files
@@ -677,9 +707,11 @@ FunctionEnd
 
 Section /O "North Carolina Data Set" SecNorthCarolinaSDB
 
-	AddSize 293314
-	
+	;Set the size (in KB)  of the archive file
 	StrCpy $ARCHIVE_SIZE_KB 138629
+	
+	;Set the size (in KB) of the unpacked archive file
+	AddSize 293314
   
   	StrCpy $HTTP_PATH "http://grass.osgeo.org/sampledata"
 	StrCpy $ARCHIVE_NAME "nc_spm_latest.tar.gz"
@@ -693,16 +725,17 @@ SectionEnd
 
 Section /O "South Dakota (Spearfish) Data Set" SecSpearfishSDB
 
-	AddSize 42171
-	
+	;Set the size (in KB)  of the archive file
 	StrCpy $ARCHIVE_SIZE_KB 20803
+	
+	;Set the size (in KB) of the unpacked archive file
+	AddSize 42171
 	
 	StrCpy $HTTP_PATH "http://grass.osgeo.org/sampledata"
 	StrCpy $ARCHIVE_NAME "spearfish_grass60data-0.3.tar.gz"
 	StrCpy $EXTENDED_ARCHIVE_NAME "South Dakota (Spearfish)"
 	StrCpy $ORIGINAL_UNTAR_FOLDER "spearfish60"
 	StrCpy $CUSTOM_UNTAR_FOLDER "Spearfish60"
-	StrCpy $GIS_DATABASE "$DOCUMENTS\GIS DataBase"
 	
 	Call DownloadDataSet
 
@@ -759,7 +792,7 @@ Section "Uninstall"
 	SetShellVarContext current
 	Delete "$PROFILE\.grassrc6"	
 
-	;remove the Windows Start Menu Shortcuts
+	;remove the Registry Entries
 	DeleteRegKey HKLM "Software\${GRASS_BASE}"
 	DeleteRegKey HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${GRASS_BASE}"
 
