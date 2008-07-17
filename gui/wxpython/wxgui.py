@@ -812,64 +812,6 @@ class GMFrame(wx.Frame):
         else:
             self.OnWorkspaceSaveAs()
 
-    def WriteLayersToWorkspaceFile(self, file, mapTree, item):
-        """Write bunch of layers to GRASS Workspace XML file"""
-        self.indent += 4
-        while item and item.IsOk():
-            type = mapTree.GetPyData(item)[0]['type']
-            if type != 'group':
-                maplayer = mapTree.GetPyData(item)[0]['maplayer']
-            else:
-                maplayer = None
-
-            checked = int(item.IsChecked())
-            cmd = mapTree.GetPyData(item)[0]['cmd']
-            if type == 'command':
-                file.write('%s<layer type="%s" name="%s" checked="%d">\n' % \
-                               (' ' * self.indent, type, ' '.join(cmd), checked));
-                file.write('%s</layer>\n' % (' ' * self.indent));
-            elif type == 'group':
-                name = mapTree.GetItemText(item)
-                file.write('%s<group name="%s" checked="%d">\n' % \
-                               (' ' * self.indent, name, checked));
-                self.indent += 4
-                subItem = mapTree.GetFirstChild(item)[0]
-                self.WriteLayersToWorkspaceFile(file, mapTree, subItem)
-                self.indent -= 4
-                file.write('%s</group>\n' % (' ' * self.indent));
-            else:
-                name = mapTree.GetItemText(item)
-                opacity = maplayer.GetOpacity(float=True)
-                file.write('%s<layer type="%s" name="%s" checked="%d" opacity="%f">\n' % \
-                               (' ' * self.indent, type, name, checked, opacity));
-
-                self.indent += 4
-                # selected ?
-                if item == mapTree.layer_selected:
-                    file.write('%s<selected />\n' % (' ' * self.indent))
-                # layer properties
-                file.write('%s<task name="%s">\n' % (' ' * self.indent, cmd[0]))
-                self.indent += 4
-                for option in cmd[1:]:
-                    if option[0] == '-': # flag
-                        file.write('%s<flag name="%s" />\n' %
-                                   (' ' * self.indent, option[1]))
-                    else: # parameter
-                        key, value = option.split('=', 1)
-                        file.write('%s<parameter name="%s">\n' %
-                                   (' ' * self.indent, key))
-                        self.indent += 4
-                        file.write('%s<value>%s</value>\n' %
-                                   (' ' * self.indent, value))
-                        self.indent -= 4
-                        file.write('%s</parameter>\n' % (' ' * self.indent));
-                self.indent -= 4
-                file.write('%s</task>\n' % (' ' * self.indent));
-                self.indent -= 4
-                file.write('%s</layer>\n' % (' ' * self.indent));
-            item = mapTree.GetNextSibling(item)
-        self.indent -= 4
-
     def SaveToWorkspaceFile(self, filename):
         """Save layer tree layout to workspace file
 
@@ -885,59 +827,7 @@ class GMFrame(wx.Frame):
             return False
 
         try:
-            self.indent = 0 # number of spaces
-            # write header
-            file.write('<?xml version="1.0" encoding="UTF-8"?>\n')
-            file.write('<!DOCTYPE gxw SYSTEM "grass-gxw.dtd">\n')
-            file.write('%s<gxw>\n' % (' ' * self.indent))
-            
-            self.indent =+ 4
-
-            # layer manager
-            windowPos = self.GetPosition()
-            windowSize = self.GetSize()
-            file.write('%s<layer_manager dim="%d,%d,%d,%d">\n' % (' ' * self.indent,
-                                                                  windowPos[0],
-                                                                  windowPos[1],
-                                                                  windowSize[0],
-                                                                  windowSize[1]
-                                                                  ))
-            
-            file.write('%s</layer_manager>\n' % (' ' * self.indent))
-
-            # list of displays
-            for page in range(0, self.gm_cb.GetPageCount()):
-                mapTree = self.gm_cb.GetPage(page).maptree
-                region = mapTree.Map.region
-
-                displayPos = mapTree.mapdisplay.GetPosition()
-                displaySize = mapTree.mapdisplay.GetSize()
-
-                file.write('%s<display render="%d" '
-                           'mode="%d" showCompExtent="%d" '
-                           'dim="%d,%d,%d,%d" '
-                           'extent="%f,%f,%f,%f">\n' % (' ' * self.indent,
-                                                      int(mapTree.mapdisplay.autoRender.IsChecked()),
-                                                      mapTree.mapdisplay.toggleStatus.GetSelection(),
-                                                      int(mapTree.mapdisplay.showRegion.IsChecked()),
-                                                      displayPos[0],
-                                                      displayPos[1],
-                                                      displaySize[0],
-                                                      displaySize[1],
-                                                      region['w'],
-                                                      region['s'],
-                                                      region['e'],
-                                                      region['n']
-                                                      ))
-
-                # list of layers
-                item = mapTree.GetFirstChild(mapTree.root)[0]
-                self.WriteLayersToWorkspaceFile(file, mapTree, item)
-                file.write('%s</display>\n' % (' ' * self.indent))
-
-            self.indent =- 4
-            file.write('%s</gxw>\n' % (' ' * self.indent))
-            del self.indent
+            workspace.WriteWorkspaceFile(lmgr=self, file=file)
         except StandardError, e:
             file.close()
             wx.MessageBox(parent=self,
