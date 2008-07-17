@@ -5,6 +5,7 @@
 
 Classes:
  - ProcessWorkspaceFile
+ - WriteWorkspaceFile
  - ProcessGrcFile
 
 (C) 2007-2008 by the GRASS Development Team
@@ -37,20 +38,19 @@ class ProcessWorkspaceFile(HandlerBase):
     defined in grass-gxw.dtd.
     """
     def __init__(self):
-        self.inGxw       = False
-        self.inLayer     = False
-        self.inTask      = False
-        self.inParameter = False
-        self.inFlag      = False
-        self.inValue     = False
-        self.inGroup     = False
-        self.inDisplay   = False
-        self.inLayerManager = False
+        self.inTag = {}
+        for tag in ('gxw', 'layer', 'task', 'parameter',
+                    'flag', 'value', 'group', 'display',
+                    'layer_manager'):
+            self.inTag[tag] = False
 
+        #
         # layer manager properties
+        #
         self.layerManager = {}
         self.layerManager['pos'] = None # window position
         self.layerManager['size'] = None # window size
+
         # list of mapdisplays
         self.displays = []
         # list of map layers
@@ -60,11 +60,7 @@ class ProcessWorkspaceFile(HandlerBase):
         self.displayIndex = -1 # first display has index '0'
 
     def startElement(self, name, attrs):
-        if name == 'gxw':
-            self.inGxw = True
-
-        elif name == 'display':
-            self.inDisplay = True
+        if name == 'display':
             self.displayIndex += 1
 
             # window position and size
@@ -105,43 +101,36 @@ class ProcessWorkspaceFile(HandlerBase):
                 "checked" : int(self.groupChecked),
                 "opacity" : None,
                 "cmd"     : None,
-                "group"   : self.inGroup,
-                "display" : self.displayIndex})
-            self.inGroup = True
+                "group"   : self.inTag['group'],
+                "display" : self.displayIndex })
 
         elif name == 'layer':
-            self.inLayer = True
             self.layerType     = attrs.get('type', None)
             self.layerName     = attrs.get('name', None)
             self.layerChecked  = attrs.get('checked', None)
             self.layerOpacity  = attrs.get('opacity', None)
-            self.layerSelected = False;
+            self.layerSelected = False
             self.cmd = []
 
         elif name == 'task':
-            self.inTask = True;
             name = attrs.get('name', None)
             self.cmd.append(name)
 
         elif name == 'parameter':
-            self.inParameter = True;
             self.parameterName = attrs.get('name', None)
 
-        elif name == 'value':
-            self.inValue = True
+        elif name in ('value', 'x', 'y', 'z'):
             self.value = ''
 
         elif name == 'flag':
-            self.inFlag = True;
             name = attrs.get('name', None)
             self.cmd.append('-' + name)
 
         elif name == 'selected':
-            if self.inLayer:
+            if self.inTag['layer']:
                 self.layerSelected = True;
 
         elif name == 'layer_manager':
-            self.inLayerManager = True
             posAttr = attrs.get('dim', '')
             if posAttr:
                 posVal = map(int, posAttr.split(','))
@@ -153,28 +142,22 @@ class ProcessWorkspaceFile(HandlerBase):
             else:
                 pass
 
+        self.inTag[name] = True
+        
     def endElement(self, name):
-        if name == 'gxw':
-            self.inGxw = False
-
-        elif name == 'display':
-            self.inDisplay = False
-
-        elif name == 'group':
-            self.inGroup = False
+        if name == 'group':
             self.groupName = self.groupChecked = None
 
         elif name == 'layer':
-            self.inLayer = False
             self.layers.append({
                     "type"     : self.layerType,
                     "name"     : self.layerName,
                     "checked"  : int(self.layerChecked),
                     "opacity"  : None,
                     "cmd"      : None,
-                    "group"    : self.inGroup,
+                    "group"    : self.inTag['group'],
                     "display"  : self.displayIndex,
-                    "selected" : self.layerSelected})
+                    "selected" : self.layerSelected })
 
             if self.layerOpacity:
                 self.layers[-1]["opacity"] = float(self.layerOpacity)
@@ -184,29 +167,136 @@ class ProcessWorkspaceFile(HandlerBase):
             self.layerType = self.layerName = self.Checked = \
                 self.Opacity = self.cmd = None
 
-        elif name == 'task':
-            self.inTask = False
-
         elif name == 'parameter':
-            self.inParameter = False
             self.cmd.append('%s=%s' % (self.parameterName, self.value))
             self.parameterName = self.value = None
 
-        elif name == 'value':
-            self.inValue = False
-
-        elif name == 'flag':
-            self.inFlag = False
-
-        elif name == 'layer_manager':
-            self.inLayerManager = False
+        self.inTag[name] = False
 
     def characters(self, ch):
         self.my_characters(ch)
 
     def my_characters(self, ch):
-        if self.inValue:
+        if self.inTag['value']:
             self.value += ch
+
+class WriteWorkspaceFile(object):
+    """Generic class for writing workspace file"""
+    def __init__(self, lmgr, file):
+        self.file =  file
+        self.lmgr = lmgr
+        self.indent = 0
+
+        # write header
+        self.file.write('<?xml version="1.0" encoding="UTF-8"?>\n')
+        self.file.write('<!DOCTYPE gxw SYSTEM "grass-gxw.dtd">\n')
+        self.file.write('%s<gxw>\n' % (' ' * self.indent))
+        
+        self.indent =+ 4
+        
+        # layer manager
+        windowPos = self.lmgr.GetPosition()
+        windowSize = self.lmgr.GetSize()
+        file.write('%s<layer_manager dim="%d,%d,%d,%d">\n' % (' ' * self.indent,
+                                                              windowPos[0],
+                                                              windowPos[1],
+                                                              windowSize[0],
+                                                              windowSize[1]
+                                                              ))
+        
+        file.write('%s</layer_manager>\n' % (' ' * self.indent))
+        
+        # list of displays
+        for page in range(0, self.lmgr.gm_cb.GetPageCount()):
+            mapTree = self.lmgr.gm_cb.GetPage(page).maptree
+            region = mapTree.Map.region
+            
+            displayPos = mapTree.mapdisplay.GetPosition()
+            displaySize = mapTree.mapdisplay.GetSize()
+            
+            file.write('%s<display render="%d" '
+                       'mode="%d" showCompExtent="%d" '
+                       'dim="%d,%d,%d,%d" '
+                       'extent="%f,%f,%f,%f">\n' % (' ' * self.indent,
+                                                    int(mapTree.mapdisplay.autoRender.IsChecked()),
+                                                    mapTree.mapdisplay.toggleStatus.GetSelection(),
+                                                    int(mapTree.mapdisplay.showRegion.IsChecked()),
+                                                    displayPos[0],
+                                                    displayPos[1],
+                                                    displaySize[0],
+                                                    displaySize[1],
+                                                    region['w'],
+                                                    region['s'],
+                                                    region['e'],
+                                                    region['n']
+                                                    ))
+            
+            # list of layers
+            item = mapTree.GetFirstChild(mapTree.root)[0]
+            self.__writeLayer(mapTree, item)
+            file.write('%s</display>\n' % (' ' * self.indent))
+
+        self.indent =- 4
+        file.write('%s</gxw>\n' % (' ' * self.indent))
+
+    def __writeLayer(self, mapTree, item):
+        """Write bunch of layers to GRASS Workspace XML file"""
+        self.indent += 4
+        while item and item.IsOk():
+            type = mapTree.GetPyData(item)[0]['type']
+            if type != 'group':
+                maplayer = mapTree.GetPyData(item)[0]['maplayer']
+            else:
+                maplayer = None
+
+            checked = int(item.IsChecked())
+            cmd = mapTree.GetPyData(item)[0]['cmd']
+            if type == 'command':
+                self.file.write('%s<layer type="%s" name="%s" checked="%d">\n' % \
+                               (' ' * self.indent, type, ' '.join(cmd), checked));
+                self.file.write('%s</layer>\n' % (' ' * self.indent));
+            elif type == 'group':
+                name = mapTree.GetItemText(item)
+                self.file.write('%s<group name="%s" checked="%d">\n' % \
+                               (' ' * self.indent, name, checked));
+                self.indent += 4
+                subItem = mapTree.GetFirstChild(item)[0]
+                self.__writeLayer(mapTree, subItem)
+                self.indent -= 4
+                self.file.write('%s</group>\n' % (' ' * self.indent));
+            else:
+                name = mapTree.GetItemText(item)
+                opacity = maplayer.GetOpacity(float=True)
+                self.file.write('%s<layer type="%s" name="%s" checked="%d" opacity="%f">\n' % \
+                               (' ' * self.indent, type, name, checked, opacity));
+
+                self.indent += 4
+                # selected ?
+                if item == mapTree.layer_selected:
+                    self.file.write('%s<selected />\n' % (' ' * self.indent))
+                # layer properties
+                self.file.write('%s<task name="%s">\n' % (' ' * self.indent, cmd[0]))
+                self.indent += 4
+                for option in cmd[1:]:
+                    if option[0] == '-': # flag
+                        self.file.write('%s<flag name="%s" />\n' %
+                                   (' ' * self.indent, option[1]))
+                    else: # parameter
+                        key, value = option.split('=', 1)
+                        self.file.write('%s<parameter name="%s">\n' %
+                                   (' ' * self.indent, key))
+                        self.indent += 4
+                        self.file.write('%s<value>%s</value>\n' %
+                                   (' ' * self.indent, value))
+                        self.indent -= 4
+                        self.file.write('%s</parameter>\n' % (' ' * self.indent));
+                self.indent -= 4
+                self.file.write('%s</task>\n' % (' ' * self.indent));
+
+                self.indent -= 4
+                self.file.write('%s</layer>\n' % (' ' * self.indent));
+            item = mapTree.GetNextSibling(item)
+        self.indent -= 4
 
 class ProcessGrcFile(object):
     def __init__(self, filename):
