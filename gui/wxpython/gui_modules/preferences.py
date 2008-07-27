@@ -48,6 +48,11 @@ class Settings:
         self.filePath = None
 
         #
+        # key/value separator
+        #
+        self.sep = ';'
+
+        #
         # default settings
         #
         self.defaultSettings = {
@@ -314,14 +319,14 @@ class Settings:
                     'legendSize' : 10,
                     },
                 'marker' : {
-                    'color' : wx.Colour(0, 0, 0),
+                    'color' : (0, 0, 0, 255),
                     'fill' : 'transparent',
                     'size' : 2,
                     'type' : 'triangle',
                     'legend' : _('Segment break'),
                     },
                 'grid' : {
-                    'color' : wx.Colour(200,200,200) ,
+                    'color' : (200, 200, 200, 255),
                     'enabled' : True,
                     },
                 'x-axis' : {
@@ -347,7 +352,7 @@ class Settings:
                     },
                 },
             }
-
+        
         #
         # user settings
         #
@@ -388,7 +393,7 @@ class Settings:
                                                                 'quiet')
         self.internalSettings['display']['driver']['choices'] = ['default']
         self.internalSettings['display']['statusbarMode']['choices'] = globalvar.MAP_DISPLAY_STATUSBAR_MODE
-
+        
     def ReadSettingsFile(self, settings=None):
         """Reads settings file (mapset, location, gisdbase)"""
         if settings is None:
@@ -426,40 +431,32 @@ class Settings:
 
         try:
             file = open(filename, "r")
+            line = ''
             for line in file.readlines():
                 line = line.rstrip('%s' % os.linesep)
-                group, key = line.split(':')[0:2]
-                kv = line.split(':')[2:]
+                group, key = line.split(self.sep)[0:2]
+                kv = line.split(self.sep)[2:]
+                subkeyMaster = None
+                if len(kv) % 2 != 0: # multiple (e.g. nviz)
+                    subkeyMaster = kv[0]
+                    del kv[0]
                 idx = 0
                 while idx < len(kv):
-                    subkey = kv[idx]
-                    value = kv[idx+1]
-                    if len(value) == 0:
-                        self.Append(settings, group, key, subkey, '')
+                    if subkeyMaster:
+                        subkey = [subkeyMaster, kv[idx]]
                     else:
-                        # casting
-                        if value == 'True':
-                            value = True
-                        elif value == 'False':
-                            value = False
-                        elif value == 'None':
-                            value = None
-                        elif value[0] == '(':
-                            tmp = value.replace('(','').replace(')', '').split(',')
-                            try:
-                                value = tuple(map(int, tmp))
-                            except:
-                                value = tuple(tmp)
-                        else:
-                            try:
-                                value = int(value)
-                            except:
-                                pass
-
-                        self.Append(settings, group, key, subkey, value)
+                        subkey = kv[idx]
+                    value = kv[idx+1]
+                    value = self.__parseValue(value, read=True)
+                    self.Append(settings, group, key, subkey, value)
                     idx += 2
-        finally:
+        except ValueError, e:
+            print >> sys.stderr, _("Error: Reading settings from file <%s> failed.\n"
+                                   "       Details: %s\n"
+                                   "       Line: '%s'") % (filename, e, line)
             file.close()
+
+        file.close()
 
     def SaveToFile(self, settings=None):
         """Save settings to the file"""
@@ -487,22 +484,67 @@ class Settings:
         try:
             file = open(filePath, "w")
             for group in settings.keys():
-                for item in settings[group].keys():
-                    file.write('%s:%s:' % (group, item))
-                    items = settings[group][item].keys()
-                    for idx in range(len(items)):
-                        file.write('%s:%s' % (items[idx], settings[group][item][items[idx]]))
-                        if idx < len(items) - 1:
-                            file.write(':')
+                for key in settings[group].keys():
+                    file.write('%s%s%s%s' % (group, self.sep, key, self.sep))
+                    subkeys = settings[group][key].keys()
+                    for idx in range(len(subkeys)):
+                        value = settings[group][key][subkeys[idx]]
+                        if type(value) == type({}):
+                            if idx > 0:
+                                file.write('%s%s%s%s%s' % (os.linesep, group, self.sep, key, self.sep))
+                            file.write('%s%s' % (subkeys[idx], self.sep))
+                            kvalues = settings[group][key][subkeys[idx]].keys()
+                            srange = range(len(kvalues))
+                            for sidx in srange:
+                                svalue = self.__parseValue(settings[group][key][subkeys[idx]][kvalues[sidx]])
+                                file.write('%s%s%s' % (kvalues[sidx], self.sep,
+                                                       svalue))
+                                if sidx < len(kvalues) - 1:
+                                    file.write('%s' % self.sep)
+                        else:
+                            value = self.__parseValue(settings[group][key][subkeys[idx]])
+                            file.write('%s%s%s' % (subkeys[idx], self.sep, value))
+                            if idx < len(subkeys) - 1:
+                                file.write('%s' % self.sep)
                     file.write('%s' % os.linesep)
         except IOError, e:
-            raise gcmd.SettingsError(e)
-        except:
-            raise gcmd.SettingsError('Writing settings to file <%s> failed.' % filePath)
-
+            raise gcmd.SettingsError(message=e)
+        except StandardError, e:
+            raise gcmd.SettingsError(message=_('Writing settings to file <%s> failed.'
+                                               '\n\nDetails: %s') % (filePath, e))
+        
         file.close()
 
         return filePath
+
+    def __parseValue(self, value, read=False):
+        """Parse value to be store in settings file"""
+        if read: # -> read settings (cast values)
+            if value == 'True':
+                value = True
+            elif value == 'False':
+                value = False
+            elif value == 'None':
+                value = None
+            elif ':' in value: # -> color
+                value = tuple(map(int, value.split(':')))
+            else:
+                try:
+                    value = int(value)
+                except ValueError:
+                    try:
+                        value = float(value)
+                    except ValueError:
+                        pass
+        else: # -> write settings
+            if type(value) == type(wx.Colour(0, 0, 0, 0)):
+                print value, type(value)
+            if type(value) == type(()): # -> color
+                value = str(value[0]) + ':' +\
+                    str(value[1]) + ':' + \
+                    str(value[2])
+
+        return value
 
     def Get(self, group, key=None, subkey=None, internal=False):
         """Get value by key/subkey
@@ -510,11 +552,11 @@ class Settings:
         Raise KeyError if key is not found
         
         @param group settings group
-        @param key
-        @param subkey if not given return dict of key
-        
-        @return value
+        @param key (value, None)
+        @param subkey (value, list or None)
+        @param internal use internal settings instead
 
+        @return value
         """
         if internal is True:
             settings = self.internalSettings
@@ -528,20 +570,26 @@ class Settings:
                 else:
                     return settings[group][key]
             else:
-                return settings[group][key][subkey]
+                if type(subkey) == type([]) or \
+                        type(subkey) == type(()):
+                    return settings[group][key][subkey[0]][subkey[1]]
+                else:
+                    return settings[group][key][subkey]  
+
         except KeyError:
             raise gcmd.SettingsError("%s %s:%s:%s." % (_("Unable to get value"),
                                                        group, key, subkey))
         
-    def Set(self, group, key, subkey, value, internal=False):
+    def Set(self, group, value, key=None, subkey=None, internal=False):
         """Set value of key/subkey
 
         Raise KeyError if group/key is not found
         
         @param group settings group
-        @param key key
-        @param subkey subkey
+        @param key key (value, None)
+        @param subkey subkey (value, list or None)
         @param value value
+        @param internal use internal settings instead
         """
         if internal is True:
             settings = self.internalSettings
@@ -549,9 +597,16 @@ class Settings:
             settings = self.userSettings
 
         try:
-            if not settings[group][key].has_key(subkey):
-                raise KeyError
-            settings[group][key][subkey] = value
+            if subkey is None:
+                if key is None:
+                    settings[group] = value
+                else:
+                    settings[group][key] = value
+            else:
+                if type(subkey) == type([]):
+                    settings[group][key][subkey[0]][subkey[1]] = value
+                else:
+                    settings[group][key][subkey] = value
         except KeyError:
             raise gcmd.SettingsError("%s '%s:%s:%s'" % (_("Unable to set "), group, key, subkey))
 
@@ -563,7 +618,7 @@ class Settings:
         @param dict settings dictionary to use
         @param group settings group
         @param key key
-        @param subkey subkey
+        @param subkey subkey (value or list)
         @param value value
         """
         if not dict.has_key(group):
@@ -572,7 +627,13 @@ class Settings:
         if not dict[group].has_key(key):
             dict[group][key] = {}
 
-        dict[group][key][subkey] = value
+        if type(subkey) == type([]):
+            # TODO: len(subkey) > 2
+            if not dict[group][key].has_key(subkey[0]):
+                dict[group][key][subkey[0]] = {}
+            dict[group][key][subkey[0]][subkey[1]] = value
+        else:
+            dict[group][key][subkey] = value
 
     def GetDefaultSettings(self):
         """Get default user settings"""
@@ -960,10 +1021,12 @@ class PreferencesDialog(wx.Dialog):
 
         flexSizer = wx.FlexGridSizer (cols=2, hgap=5, vgap=5)
         flexSizer.AddGrowableCol(0)
+        
         label = wx.StaticText(parent=panel, id=wx.ID_ANY, label="Color")
         hlColor = csel.ColourSelect(parent=panel, id=wx.ID_ANY,
                                     colour=self.settings.Get(group='atm', key='highlight', subkey='color'),
                                     size=(25, 25))
+        hlColor.SetName('GetColour')
         self.winId['atm:highlight:color'] = hlColor.GetId()
 
         flexSizer.Add(label, proportion=0, flag=wx.ALIGN_CENTER_VERTICAL)
@@ -1258,11 +1321,13 @@ class PreferencesDialog(wx.Dialog):
                 value = win.IsChecked()
             elif win.GetName() == 'GetStringSelection':
                 value = win.GetStringSelection()
+            elif win.GetName() == 'GetColour':
+                value = tuple(win.GetValue())
             else:
                 value = win.GetValue()
 
-            self.settings.Set(group, key, subkey, value)
-
+            self.settings.Set(group, value, key, subkey)
+            
         #
         # update default window dimension
         #
