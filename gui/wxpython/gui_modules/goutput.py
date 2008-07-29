@@ -463,7 +463,8 @@ class GMStderr:
 
                 self.type = ''
                 self.message = ''
-
+                self.printMessage = False
+                
 class GMStc(wx.stc.StyledTextCtrl):
     """Styled GMConsole
 
