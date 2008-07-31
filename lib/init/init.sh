@@ -24,7 +24,7 @@
 
 trap "echo 'User break!' ; exit" 2 3 15
 
-# change to wxpython as needed
+# Set default GUI
 DEFAULT_GUI="tcltk"
 
 # the following is only meant to be an internal variable for debugging this script.
@@ -296,6 +296,13 @@ if [ ! "$GRASS_PYTHON" ] ; then
 fi
 export GRASS_PYTHON
 
+# Set PYTHONPATH to find GRASS Python modules
+if [ ! "PYTHONPATH" ] ; then
+  PYTHONPATH="$GISBASE/etc/python"
+else
+  PYTHONPATH="$GISBASE/etc/python:$PYTHONPATH"
+fi
+export PYTHONPATH
 
 # try and find a web browser if one isn't already specified
 if [ ! "$GRASS_HTML_BROWSER" ] ; then
@@ -793,18 +800,10 @@ case "$GRASS_GUI" in
     
     # Check for tcltk interface
     tcltk | gis.m)
-	if [ "$osxaqua" ] ; then
-		"$GISBASE/scripts/gis.m" | sh &
-	else
-		"$GISBASE/scripts/gis.m"
-	fi	
+	"$GISBASE/scripts/gis.m"
 	;;
     oldtcltk | d.m)
-	if [ "$osxaqua" ] ; then
-		"$GISBASE/scripts/d.m" | sh &
-	else
-		"$GISBASE/scripts/d.m"
-	fi
+	"$GISBASE/scripts/d.m"
 	;;
     wxpython)
         "$GISBASE/etc/wxpython/scripts/wxgui"
