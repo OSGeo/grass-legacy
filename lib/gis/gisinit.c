@@ -1,14 +1,16 @@
 /**
  * \file gisinit.c
  * 
- * \brief Handles program initialization.
+ * \brief GIS Library - Handles program initialization.
+ *
+ * (C) 2001-2008 by the GRASS Development Team
  *
  * This program is free software under the GNU General Public License
  * (>=v2). Read the file COPYING that comes with GRASS for details.
  *
  * \author GRASS GIS Development Team
  *
- * \date 2000-2006
+ * \date 2000-2008
  */
 
 #include <stdio.h>
@@ -27,8 +29,6 @@ static int gisinit(void);
 
 
 /**
- * \fn int G_gisinit (const char *pgm)
- *
  * \brief Initialize GRASS GIS engine.
  *
  * Initializes GIS engine and ensures a valid mapset is available.
@@ -68,8 +68,6 @@ int G_gisinit(const char *pgm)
 
 
 /**
- * \fn int G_no_gisinit (void)
- *
  * \brief Initialize GRASS GIS engine.
  *
  * Initializes GIS engine, but does not check for a valid mapset.
@@ -89,8 +87,6 @@ int G_no_gisinit(void)
 
 
 /**
- * \fn int G__check_gisinit (void)
- *
  * \brief Checks to see if GIS engine is initialized.
  *
  * \return 1 on success
