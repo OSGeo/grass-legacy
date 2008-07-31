@@ -451,9 +451,11 @@ class Settings:
                     self.Append(settings, group, key, subkey, value)
                     idx += 2
         except ValueError, e:
-            print >> sys.stderr, _("Error: Reading settings from file <%s> failed.\n"
-                                   "       Details: %s\n"
-                                   "       Line: '%s'") % (filename, e, line)
+            print >> sys.stderr, _("Error: Reading settings from file <%(file)s> failed.\n"
+                                   "       Details: %(detail)s\n"
+                                   "       Line: '%(line)s'") % { 'file' : filename,
+                                                                  'detail' : e,
+                                                                  'line' : line }
             file.close()
 
         file.close()
@@ -510,8 +512,9 @@ class Settings:
         except IOError, e:
             raise gcmd.SettingsError(message=e)
         except StandardError, e:
-            raise gcmd.SettingsError(message=_('Writing settings to file <%s> failed.'
-                                               '\n\nDetails: %s') % (filePath, e))
+            raise gcmd.SettingsError(message=_('Writing settings to file <%(file)s> failed.'
+                                               '\n\nDetails: %(detail)s') % { 'file' : filePath,
+                                                                              'detail' : e })
         
         file.close()
 
