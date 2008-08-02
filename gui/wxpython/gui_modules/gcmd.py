@@ -349,11 +349,11 @@ class Command:
                                     os.linesep, os.linesep,
                                     _("Details:"),
                                     os.linesep,
-                                    self.PrintModuleOutput()))
+                                    _("Error: ") + self.GetError()))
                 elif rerr == sys.stderr: # redirect message to sys
                     stderr.write("Execution failed: '%s'" % (' '.join(self.cmd)))
                     stderr.write("%sDetails:%s%s" % (os.linesep,
-                                                     self.PrintModuleOutput(),
+                                                     _("Error: ") + self.GetError(),
                                                      os.linesep))
             else:
                 pass # nop
@@ -408,7 +408,7 @@ class Command:
         if self.stderr is None:
             lines = self.ReadErrOutput()
         else:
-            lines = self.cmdThread.rerr.strip('%s' % os.linesep). \
+            lines = self.cmdThread.error.strip('%s' % os.linesep). \
                 split('%s' % os.linesep)
         
         msg = []
@@ -435,6 +435,14 @@ class Command:
 
         return msg
 
+    def GetError(self):
+        """Get error message or ''"""
+        for type, msg in self.__ProcessStdErr():
+            if type == 'ERROR':
+                return msg
+
+        return ''
+    
     def PrintModuleOutput(self, error=True, warning=False, message=False):
         """Print module errors, warnings, messages to output
 
@@ -480,9 +488,9 @@ class CommandThread(Thread):
         
         self._want_abort = False
         self.aborted = False
-
+        
         self.setDaemon(True)
-
+        
         # set message formatting
         self.message_format = os.getenv("GRASS_MESSAGE_FORMAT")
         os.environ["GRASS_MESSAGE_FORMAT"] = "gui"
@@ -511,7 +519,7 @@ class CommandThread(Thread):
         if self.stdin: # read stdin if requested ...
             self.module.stdin.write(self.stdin)
             self.module.stdin.close()
-
+            
         # redirect standard outputs...
         if self.stdout or self.stderr:
             self.__redirect_stream()
@@ -537,14 +545,15 @@ class CommandThread(Thread):
             if self._want_abort: # abort running process
                 self.module.kill()
                 self.aborted = True
-                return
+                return 
             if self.stdout:
                 line = recv_some(self.module, e=0, stderr=0)
                 self.stdout.write(line)
             if self.stderr:
                 line = recv_some(self.module, e=0, stderr=1)
                 self.stderr.write(line)
-                self.rerr = line
+                if len(line) > 0:
+                    self.error = line
 
         # get the last output
         if self.stdout:
@@ -554,8 +563,8 @@ class CommandThread(Thread):
             line = recv_some(self.module, e=0, stderr=1)
             self.stderr.write(line)
             if len(line) > 0:
-                self.rerr = line
-
+                self.error = line
+            
     def abort(self):
         """Abort running process, used by main thread to signal an abort"""
         self._want_abort = True

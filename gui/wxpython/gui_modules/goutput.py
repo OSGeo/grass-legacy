@@ -31,16 +31,18 @@ from wx.lib.newevent import NewEvent
 
 import globalvar
 import gcmd
+import utils
 from debug import Debug as Debug
 
 wxCmdOutput,   EVT_CMD_OUTPUT   = NewEvent()
 wxCmdProgress, EVT_CMD_PROGRESS = NewEvent()
+wxCmdRun,      EVT_CMD_RUN      = NewEvent()
 wxCmdDone,     EVT_CMD_DONE     = NewEvent()
 wxCmdAbort,    EVT_CMD_ABORT    = NewEvent()
 
 def GrassCmd(cmd, stdout, stderr):
     """Return GRASS command thread"""
-    return gcmd.CommandThread(cmd=cmd,
+    return gcmd.CommandThread(cmd,
                               stdout=stdout, stderr=stderr)
 
 class CmdThread(threading.Thread):
@@ -61,7 +63,6 @@ class CmdThread(threading.Thread):
     def RunCmd(self, callable, *args, **kwds):
         CmdThread.requestId += 1
 
-        self.requestTime = time.time()
         self.requestCmd = None
         self.requestQ.put((CmdThread.requestId, callable, args, kwds))
         
@@ -70,13 +71,24 @@ class CmdThread(threading.Thread):
     def run(self):
         while True:
             requestId, callable, args, kwds = self.requestQ.get()
+            
+            requestTime = time.time()
+            event = wxCmdRun(cmd=args[0],
+                             pid=requestId)
+            wx.PostEvent(self.parent, event)
+
+            time.sleep(.1)
+            
             self.requestCmd = callable(*args, **kwds)
+
             self.resultQ.put((requestId, self.requestCmd.run()))
 
             event = wxCmdDone(aborted=self.requestCmd.aborted,
-                              time=self.requestTime,
+                              time=requestTime,
                               pid=requestId)
+
             time.sleep(.1)
+
             wx.PostEvent(self.parent, event)
 
     def abort(self):
@@ -97,7 +109,9 @@ class GMConsole(wx.Panel):
         self.parent          = parent # GMFrame
         self.lineWidth       = 80
         self.pageid          = pageid
-
+        # remember position of line begining (used for '\r')
+        self.linePos         = -1
+        
         #
         # create queues
         #
@@ -120,6 +134,7 @@ class GMConsole(wx.Panel):
         self.cmd_output_timer = wx.Timer(self.cmd_output, id=wx.ID_ANY)
         self.cmd_output.Bind(EVT_CMD_OUTPUT, self.OnCmdOutput)
         self.cmd_output.Bind(wx.EVT_TIMER, self.OnProcessPendingOutputWindowEvents)
+        self.Bind(EVT_CMD_RUN, self.OnCmdRun)
         self.Bind(EVT_CMD_DONE, self.OnCmdDone)
         
         #
@@ -240,15 +255,12 @@ class GMConsole(wx.Panel):
         except:
             curr_disp = None
 
-        if not self.requestQ.empty():
-            # only one running command enabled (per GMConsole instance)
-            busy = wx.BusyInfo(message=_("Unable to run the command, another command is running..."),
-                               parent=self)
-            wx.Yield()
-            time.sleep(3)
-            busy.Destroy()
-            return  None
-
+        # switch to 'Command output'
+        # if hasattr(self.parent, "curr_page"):
+            # change notebook page only for Layer Manager
+            # if self.parent.notebook.GetSelection() != 1:
+            # self.parent.notebook.SetSelection(1)
+        
         # command given as a string ?
         try:
             cmdlist = command.strip().split(' ')
@@ -299,11 +311,9 @@ class GMConsole(wx.Panel):
                     menuform.GUI().ParseCommand(cmdlist, parentframe=self)
                 else:
                     # process GRASS command with argument
-                    cmdPID = self.cmdThread.requestId + 1
-                    self.WriteCmdLog('%s' % ' '.join(cmdlist), pid=cmdPID)
-
                     self.cmdThread.RunCmd(GrassCmd,
-                                          cmdlist, self.cmd_stdout, self.cmd_stderr)
+                                          cmdlist,
+                                          self.cmd_stdout, self.cmd_stderr)
                     
                     self.cmd_output_timer.Start(50)
 
@@ -314,10 +324,6 @@ class GMConsole(wx.Panel):
         else:
             # Send any other command to the shell. Send output to
             # console output window
-            if hasattr(self.parent, "curr_page"):
-                # change notebook page only for Layer Manager
-                if self.parent.notebook.GetSelection() != 1:
-                    self.parent.notebook.SetSelection(1)
 
             # if command is not a GRASS command, treat it like a shell command
             try:
@@ -369,7 +375,7 @@ class GMConsole(wx.Panel):
         """Print command output"""
         message = event.text
         type  = event.type
-
+        
         # message prefix
         if type == 'warning':
             messege = 'WARNING: ' + message
@@ -377,10 +383,10 @@ class GMConsole(wx.Panel):
             message = 'ERROR: ' + message
             
         p1 = self.cmd_output.GetCurrentPos()
-
-        message = message.replace('\r', '')
-
+        self.linePos = self.cmd_output.GetCurrentPos()
+        
         pc = -1
+        
         if '\b' in message:
             pc = p1
             last_c = ''
@@ -388,22 +394,26 @@ class GMConsole(wx.Panel):
                 if c == '\b':
                     pc -= 1
                 else:
-                    self.cmd_output.SetCurrentPos(pc)
+                    if c == '\r':
+                        self.cmd_output.SetCurrentPos(self.linePos)
+                    else:
+                        self.cmd_output.SetCurrentPos(pc)
                     self.cmd_output.ReplaceSelection(c)
                     pc = self.cmd_output.GetCurrentPos()
                     if c != ' ':
                         last_c = c
             if last_c not in ('0123456789'):
-                self.cmd_output.AddText('\n')
+                self.cmd_output.AddTextWrapped('\n', wrap=None)
                 pc = -1
         else:
             if os.linesep not in message:
                 self.cmd_output.AddTextWrapped(message, wrap=60)
             else:
-                self.cmd_output.AddText(message)
-
+                self.cmd_output.AddTextWrapped(message, wrap=None)
+        
         p2 = self.cmd_output.GetCurrentPos()
         self.cmd_output.StartStyling(p1, 0xff)
+        
         if type == 'error':
             self.cmd_output.SetStyling(p2 - p1 + 1, self.cmd_output.StyleError)
         elif type == 'warning':
@@ -425,7 +435,11 @@ class GMConsole(wx.Panel):
     def OnCmdAbort(self, event):
         """Abort running command"""
         self.cmdThread.abort()
-        
+
+    def OnCmdRun(self, event):
+        """Run command"""
+        self.WriteCmdLog('%s' % ' '.join(event.cmd), pid=event.pid)
+
     def OnCmdDone(self, event):
         """Command done (or aborted)"""
         if event.aborted:
@@ -465,6 +479,24 @@ class GMConsole(wx.Panel):
 
             dialog.btn_run.Enable(True)
 
+            if not event.aborted and hasattr(dialog, "addbox") and \
+                    dialog.addbox.IsChecked():
+                # add new map into layer tree
+                if dialog.outputType in ('raster', 'vector'):
+                    # add layer into layer tree
+                    cmd = dialog.notebookpanel.createCmd(ignoreErrors = True)
+                    name = utils.GetLayerNameFromCmd(cmd, fullyQualified=True, param='output')
+                    mapTree = self.parent.parent.parent.parent.curr_page.maptree
+                    if dialog.outputType == 'raster':
+                        lcmd = ['d.rast',
+                                'map=%s' % name]
+                    else:
+                        lcmd = ['d.vect',
+                                'map=%s' % name]
+                    mapTree.AddLayer(ltype=dialog.outputType,
+                                     lcmd=lcmd,
+                                     lname=name)
+            
             if dialog.get_dcmd is None and \
                    dialog.closebox.IsChecked():
                 time.sleep(1)
@@ -520,7 +552,7 @@ class GMStderr:
         self.type = ''
         self.message = ''
         self.printMessage = False
-
+        
     def write(self, s):
         s = s.replace('\n', os.linesep)
         # remove/replace escape sequences '\b' or '\r' from stream
@@ -529,6 +561,7 @@ class GMStderr:
         for line in s.split(os.linesep):
             if len(line) == 0:
                 continue
+
             if 'GRASS_INFO_PERCENT' in line:
                 value = int(line.rsplit(':', 1)[1].strip())
                 if value >= 0 and value < 100:
@@ -584,7 +617,6 @@ class GMStc(wx.stc.StyledTextCtrl):
     def __init__(self, parent, id, margin=False, wrap=None):
         wx.stc.StyledTextCtrl.__init__(self, parent, id)
         self.parent = parent
-        self.wrap = wrap
 
         #
         # styles
@@ -606,7 +638,7 @@ class GMStc(wx.stc.StyledTextCtrl):
         self.StyleMessageSpec = "face:Courier New,size:10,fore:#000000,back:#FFFFFF"
         # unknown
         self.StyleUnknown     = 6
-        self.StyleUnknownSpec = "face:Courier New,size:10,fore:#7F0000,back:#FFFFFF"
+        self.StyleUnknownSpec = "face:Courier New,size:10,fore:#000000,back:#FFFFFF"
         
         # default and clear => init
         self.StyleSetSpec(wx.stc.STC_STYLE_DEFAULT, self.StyleDefaultSpec)
@@ -657,25 +689,24 @@ class GMStc(wx.stc.StyledTextCtrl):
 
         String is wrapped and linesep is also added to the end
         of the string"""
-        if wrap is None and self.wrap:
-            wrap = self.wrap
-
-        if wrap is not None:
+        if wrap:
             txt = textwrap.fill(txt, wrap) + os.linesep
         else:
             txt += os.linesep
-
-        self.AddText(txt)
-
-
-    def SetWrap(self, wrap):
-        """Set wrapping value
-
-        @param wrap wrapping value
-
-        @return current wrapping value
-        """
-        if wrap > 0:
-            self.wrap = wrap
-
-        return self.wrap
+        
+        if '\r' in txt:
+            self.linePos = -1
+            for seg in txt.split('\r'):
+                if self.linePos > -1:
+                    self.cmd_output.SetCurrenPos()
+                    self.ReplaceText(iseg) + ' ' * (self.lineWidth - len(iseg))
+                else:
+                    self.AddText(iseg)
+                self.linePos = self.GetCurrentPos()
+                    
+                iseg += 1
+        else:
+            self.AddText(txt)
+            self.linePos = self.GetCurrentPos()
+            
+            
