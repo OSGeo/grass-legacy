@@ -690,7 +690,7 @@ class GMFrame(wx.Frame):
                 maptree.Map.ReverseListOfLayers()
 
             for mdisp in mapdisplay:
-                mdisp.MapWindow2D.UpdateMap()
+                mdisp.MapWindow.UpdateMap()
 
             file.close()
         except IOError, err:
