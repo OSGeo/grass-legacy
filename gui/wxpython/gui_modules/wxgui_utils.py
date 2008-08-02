@@ -511,23 +511,28 @@ class LayerTree(CT.CustomTreeCtrl):
         if self.layer_selected and self.layer_selected != self.GetRootItem():
             if self.GetPyData(self.layer_selected)[0]['type'] != 'group':
                 if lgroup is False:
-                    # last child of root
+                    # -> last child of root (loading from workspace)
                     layer = self.AppendItem(parentId=self.root,
                                             text='', ct_type=1, wnd=ctrl)
-                elif lgroup is None or lgroup is True:
-                    # insert item as last child
+                elif lgroup is True:
+                    # -> last child of group (loading from workspace)
                     parent = self.GetItemParent(self.layer_selected)
-                    # layer = self.InsertItem(parentId=parent, input=self.GetPrevSibling(self.layer_selected),
-                    #                        text='', ct_type=1, wnd=ctrl)
                     layer = self.AppendItem(parentId=parent,
                                             text='', ct_type=1, wnd=ctrl)
+                elif lgroup is None:
+                    # -> previous sibling of selected layer
+                    parent = self.GetItemParent(self.layer_selected)
+                    layer = self.InsertItem(parentId=parent,
+                                            input=self.GetPrevSibling(self.layer_selected),
+                                            text='', ct_type=1, wnd=ctrl)
 
-            else: # group (first child of self.layer_selected)
+            else: # group -> first child of selected layer
                 layer = self.PrependItem(parent=self.layer_selected,
                                          text='', ct_type=1, wnd=ctrl)
                 self.Expand(self.layer_selected)
-        else: # add first layer to the layer tree (first child of root)
-            layer = self.PrependItem(parent=self.root, text='', ct_type=1, wnd=ctrl)
+        else: # add first layer to the layer tree (i.e. first child of root)
+            layer = self.PrependItem(parent=self.root,
+                                     text='', ct_type=1, wnd=ctrl)
 
         # layer is initially unchecked as inactive (beside 'command')
         # use predefined value if given
@@ -537,10 +542,6 @@ class LayerTree(CT.CustomTreeCtrl):
             checked = True
 
         self.CheckItem(layer, checked=checked)
-
-        # select new item
-        self.SelectItem(layer, select=True)
-        self.layer_selected = layer
 
         # add text and icons for each layer ltype
         if ltype == 'raster':
@@ -622,7 +623,23 @@ class LayerTree(CT.CustomTreeCtrl):
                                     'prowin' : None}, 
                                    None))
 
-            maplayer = self.Map.AddLayer(type=ltype, command=self.GetPyData(layer)[0]['cmd'], name=name,
+            # find previous map layer instance
+            prevItem = self.GetLastChild(self.root)
+            prevMapLayer = None
+            while prevItem and prevItem.IsOk() and \
+                    prevItem != layer:
+                if self.GetPyData(prevItem)[0]['maplayer']:
+                    prevMapLayer = self.GetPyData(prevItem)[0]['maplayer']
+                
+                prevItem = self.GetPrevSibling(prevItem)
+            
+            if prevMapLayer:
+                pos = self.Map.GetLayerIndex(prevMapLayer) + 1
+            else:
+                pos = -1
+
+            maplayer = self.Map.AddLayer(pos=pos,
+                                         type=ltype, command=self.GetPyData(layer)[0]['cmd'], name=name,
                                          l_active=checked, l_hidden=False,
                                          l_opacity=opacity, l_render=render)
             self.GetPyData(layer)[0]['maplayer'] = maplayer
@@ -650,6 +667,10 @@ class LayerTree(CT.CustomTreeCtrl):
         if checked is True:
             self.mapdisplay.onRenderGauge.SetRange(len(self.Map.GetListOfLayers(l_active=True)))
 
+        # select new item
+        self.SelectItem(layer, select=True)
+        self.layer_selected = layer
+        
         # layer.SetHeight(TREE_ITEM_HEIGHT)
 
         return layer

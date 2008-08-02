@@ -684,7 +684,7 @@ class Map(object):
         Returns list of layers of selected properties or list of all
         layers. 
 
-        @param l_type layer type, e.g. raster/vector/wms/overlay
+        @param l_type layer type, e.g. raster/vector/wms/overlay (value or tuple of values)
         @param l_mapset all layers from given mapset (only for maplayers)
         @param l_name all layers with given name
         @param l_active only layers with 'active' attribute set to True or False
@@ -695,7 +695,12 @@ class Map(object):
 
         selected = []
 
-        if l_type == 'overlay':
+        if type(l_type) == type(''):
+            one_type = True
+        else:
+            one_type = False
+
+        if one_type and l_type == 'overlay':
             list = self.overlays
         else:
             list = self.layers
@@ -703,8 +708,11 @@ class Map(object):
         # ["raster", "vector", "wms", ... ]
         for layer in list:
             # specified type only
-            if l_type != None and layer.type != l_type:
-                continue
+            if l_type != None:
+                if one_type and layer.type != l_type:
+                    continue
+                elif not one_type and layer.type not in l_type:
+                    continue
 
             # mapset
             if (l_mapset != None and type != 'overlay') and \
@@ -789,7 +797,7 @@ class Map(object):
                (not os.path.isfile(layer.mapfile) or not os.path.getsize(layer.mapfile)):
                 if not layer.Render():
                     continue
-                    
+            
             # update process bar
             if mapWindow is not None:
                 mapWindow.onRenderCounter += 1
@@ -854,7 +862,8 @@ class Map(object):
         return self.mapfile
 
     def AddLayer(self, type, command, name=None,
-                 l_active=True, l_hidden=False, l_opacity=1.0, l_render=False):
+                 l_active=True, l_hidden=False, l_opacity=1.0, l_render=False,
+                 pos=-1):
         """
         Adds generic map layer to list of layers
 
@@ -865,6 +874,7 @@ class Map(object):
         @param l_hidden layer not displayed in layer tree if True
         @param l_opacity opacity level range from 0(transparent) - 1(not transparent)
         @param l_render render an image if True
+        @param pos position in layer list (-1 for append)
 
         @return new layer on success
         @return None on failure
@@ -878,14 +888,17 @@ class Map(object):
                          active=l_active, hidden=l_hidden, opacity=l_opacity)
 
         # add maplayer to the list of layers
-        self.layers.append(layer)
-
+        if pos > -1:
+            self.layers.insert(pos, layer)
+        else:
+            self.layers.append(layer)
+        
         Debug.msg (3, "Map.AddLayer(): layer=%s" % layer.name)
         if l_render:
             if not layer.Render():
                 raise gcmd.GStdError(_("Unable to render map layer <%s>.") % (name))
 
-        return self.layers[-1]
+        return layer
 
     def DeleteLayer(self, layer, overlay=False):
         """
