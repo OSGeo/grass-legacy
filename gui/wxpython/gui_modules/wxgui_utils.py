@@ -230,7 +230,7 @@ class LayerTree(CT.CustomTreeCtrl):
         if ltype != "group" and \
                 ltype != "command": # properties
             self.popupMenu.AppendSeparator()
-            self.popupMenu.Append(self.popupID8, text=_("Change opacity level"), kind=wx.ITEM_CHECK)
+            self.popupMenu.Append(self.popupID8, text=_("Change opacity level"))
             if self.FindWindowById(self.GetPyData(self.layer_selected)[0]['ctrl']).GetName() == 'spinCtrl':
                 checked = True
             else:
