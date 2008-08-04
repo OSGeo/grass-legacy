@@ -3,6 +3,6 @@
 #define MAIN extern
 #endif
 
-MAIN double hsize ;
-MAIN double vsize ;
-MAIN FILE *Infile ;
+MAIN double hsize;
+MAIN double vsize;
+MAIN FILE *Infile;

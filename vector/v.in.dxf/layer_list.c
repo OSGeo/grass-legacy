@@ -20,7 +20,7 @@ int is_layer_in_list(char *layer)
 {
     char **p;
 
-   /* capital column names are a pain in SQL */
+    /* capital column names are a pain in SQL */
     G_str_to_lower(layer);
 
     if (!layers)

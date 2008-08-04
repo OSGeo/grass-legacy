@@ -216,7 +216,8 @@ int class_equiprob(double *data, int count, int *nbreaks, double *classbreaks)
 }
 
 
-double class_discont(double *data, int count, int nbreaks, double *classbreaks)
+double class_discont(double *data, int count, int nbreaks,
+		     double *classbreaks)
 {
     int *num, nbclass, maxclass = 0;
     double *no, *zz, *nz, *xn, *co;
@@ -311,7 +312,7 @@ double class_discont(double *data, int count, int nbreaks, double *classbreaks)
 		dmax = d;
 		nmax = k;
 	    }
-	    nd--;	//A VERIFIER!
+	    nd--;		//A VERIFIER!
 	    if (x[nf] != x[nd]) {
 		if (nd != 0)
 		    co[j] = (xn[nf] - xn[nd]) / (x[nf] - x[nd]);
