@@ -906,14 +906,10 @@ class ImportDxfDialog(wx.Dialog):
                    not (c >= 'a' and c <= 'z') and \
                    not (c >= '0' and c <= '9'):
                 c = '_'
-
-        print retName
-
+        
         if not (retName[0] >= 'A' and retName[0] <= 'Z') and \
                not (retName[0] >= 'a' and retName[0] <= 'z'):
-            print retName
             retName = 'x' + retName[1:]
-            print retName
         
         return retName
 
