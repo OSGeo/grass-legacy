@@ -36,6 +36,7 @@ void basic_stats(double *data, int count, struct GASTATS *stats)
 void eqdrt(double vectx[], double vecty[], int i1, int i2, double *vabc)
 {
     double bn = 0, bd = 0, x1 = 0, y1 = 0;
+
     vabc[0] = 0;
     vabc[1] = 0;
     vabc[2] = 0;
@@ -60,4 +61,3 @@ void eqdrt(double vectx[], double vecty[], int i1, int i2, double *vabc)
 	G_debug(3, "Points are equal\n");
     return;
 }
-

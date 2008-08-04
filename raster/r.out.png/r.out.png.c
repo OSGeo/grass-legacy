@@ -49,6 +49,7 @@ int main(int argc, char *argv[])
 {
     struct GModule *module;
     struct Option *rast, *png_file;
+
     /* please, remove before GRASS 7 released */
     struct Flag *bequiet;
     char *cellmap, *map, *p, *basename = NULL, *ofile;
@@ -140,10 +141,10 @@ int main(int argc, char *argv[])
 	exit(EXIT_FAILURE);
 
     /* please, remove before GRASS 7 released */
-    if(bequiet->answer) {
-        putenv("GRASS_VERBOSE=0");
-        G_warning(_("The '-q' flag is superseded and will be removed "
-            "in future. Please use '--quiet' instead."));
+    if (bequiet->answer) {
+	putenv("GRASS_VERBOSE=0");
+	G_warning(_("The '-q' flag is superseded and will be removed "
+		    "in future. Please use '--quiet' instead."));
     }
 
 
@@ -165,8 +166,7 @@ int main(int argc, char *argv[])
 	basename = G_store(map);
     }
 
-    if(basename)
-    {
+    if (basename) {
 	G_basename(basename, "png");
 	ofile = G_malloc(strlen(basename) + 5);
 	sprintf(ofile, "%s.png", basename);
@@ -250,7 +250,7 @@ int main(int argc, char *argv[])
     png_set_compression_level(png_ptr, Z_DEFAULT_COMPRESSION);
     /* } */
 
-	G_message(_("Converting %s..."), rast->answer);
+    G_message(_("Converting %s..."), rast->answer);
 
     {
 	struct Colors colors;
@@ -267,7 +267,7 @@ int main(int argc, char *argv[])
 	else
 	    exit(EXIT_FAILURE);
 
-	/*if(!gscale->answer){ */       /* 24BIT COLOR IMAGE */
+	/*if(!gscale->answer){ *//* 24BIT COLOR IMAGE */
 
 	if (1) {
 
@@ -280,11 +280,11 @@ int main(int argc, char *argv[])
 	    png_set_packing(png_ptr);
 
 	    /* max: 3 color channels, one alpha channel, 16-bit */
-	    line = (png_byte *)G_malloc(w.cols * 8 * sizeof(char));
+	    line = (png_byte *) G_malloc(w.cols * 8 * sizeof(char));
 
 	    for (row = 0; row < w.rows; row++) {
 
-                G_percent(row, w.rows, 5);
+		G_percent(row, w.rows, 5);
 		if (G_get_raster_row(cellfile, (void *)voidc, row, rtype) < 0)
 		    exit(EXIT_FAILURE);
 		G_lookup_raster_colors((void *)voidc, ored, ogrn, oblu, set,
@@ -358,8 +358,8 @@ int main(int argc, char *argv[])
 static void pnmtopng_error_handler(png_structp png_ptr, png_const_charp msg)
 #else
 static void pnmtopng_error_handler(png_ptr, msg)
-    png_structp png_ptr;
-    png_const_charp msg;
+     png_structp png_ptr;
+     png_const_charp msg;
 #endif
 {
     jmpbuf_wrapper *jmpbuf_ptr;
@@ -377,7 +377,8 @@ static void pnmtopng_error_handler(png_ptr, msg)
 
     jmpbuf_ptr = png_get_error_ptr(png_ptr);
     if (jmpbuf_ptr == NULL) {	/* we are completely hosed now */
-	G_fatal_error("pnmtopng:  EXTREMELY fatal error: jmpbuf unrecoverable; terminating.");
+	G_fatal_error
+	    ("pnmtopng:  EXTREMELY fatal error: jmpbuf unrecoverable; terminating.");
     }
 
     longjmp(jmpbuf_ptr->jmpbuf, 1);

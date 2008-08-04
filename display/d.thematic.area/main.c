@@ -233,9 +233,11 @@ int main(int argc, char **argv)
     G_debug(2, "\n%d records selected from table", nrec);
 
     for (i = 0; i < cvarr.n_values; i++) {
-	G_debug(4, "cat = %d  %s = %d", cvarr.value[i].cat, column_opt->answer,
-		(cvarr.ctype == DB_C_TYPE_INT ? cvarr.value[i].val.i :
-		 (int)cvarr.value[i].val.d));
+	G_debug(4, "cat = %d  %s = %d", cvarr.value[i].cat,
+		column_opt->answer,
+		(cvarr.ctype ==
+		 DB_C_TYPE_INT ? cvarr.value[i].val.i : (int)cvarr.value[i].
+		 val.d));
     }
 
     /*Get the list of relevant cats if where option is given */
@@ -284,7 +286,7 @@ int main(int argc, char **argv)
 
     frequencies = (int *)G_malloc((nbreaks + 1) * sizeof(int));
     for (i = 0; i < nbreaks + 1; i++)
-	    frequencies[i] = 0;
+	frequencies[i] = 0;
 
     /* Fill colors */
     colors = (struct color_rgb *)G_malloc(nclass * sizeof(struct color_rgb));
@@ -310,74 +312,74 @@ int main(int argc, char **argv)
 
 
     /* Now's let's prepare the actual plotting */
-	if (R_open_driver() != 0)
-	    G_fatal_error(_("No graphics device selected"));
+    if (R_open_driver() != 0)
+	G_fatal_error(_("No graphics device selected"));
 
-	D_setup(0);
+    D_setup(0);
 
-	G_setup_plot(D_get_d_north(), D_get_d_south(),
-		     D_get_d_west(), D_get_d_east(), D_move_abs, D_cont_abs);
+    G_setup_plot(D_get_d_north(), D_get_d_south(),
+		 D_get_d_west(), D_get_d_east(), D_move_abs, D_cont_abs);
 
-	if (verbose)
-	    G_message(_("Plotting ..."));
+    if (verbose)
+	G_message(_("Plotting ..."));
 
-	Vect_get_map_box(&Map, &box);
+    Vect_get_map_box(&Map, &box);
 
-	if (window.north < box.S || window.south > box.N ||
-	    window.east < box.W ||
-	    window.west > G_adjust_easting(box.E, &window)) {
-	    G_message(_
-		      ("The bounding box of the map is outside the current region, "
-		       "nothing drawn."));
-	    stat = 0;
-	}
-	else {
-	    overlap =
-		G_window_percentage_overlap(&window, box.N, box.S, box.E,
-					    box.W);
-	    G_debug(1, "overlap = %f \n", overlap);
-	    if (overlap < 1)
-		Vect_set_constraint_region(&Map, window.north, window.south,
-					   window.east, window.west,
-					   PORT_DOUBLE_MAX, -PORT_DOUBLE_MAX);
+    if (window.north < box.S || window.south > box.N ||
+	window.east < box.W ||
+	window.west > G_adjust_easting(box.E, &window)) {
+	G_message(_
+		  ("The bounding box of the map is outside the current region, "
+		   "nothing drawn."));
+	stat = 0;
+    }
+    else {
+	overlap =
+	    G_window_percentage_overlap(&window, box.N, box.S, box.E, box.W);
+	G_debug(1, "overlap = %f \n", overlap);
+	if (overlap < 1)
+	    Vect_set_constraint_region(&Map, window.north, window.south,
+				       window.east, window.west,
+				       PORT_DOUBLE_MAX, -PORT_DOUBLE_MAX);
 
-	    /* default line width */
-	    D_line_width(default_width);
-
-
-	    stat = dareatheme(&Map, Clist, &cvarr, breakpoints, nbreaks, colors,
-			      has_color ? &bcolor : NULL, chcat, &window,
-			      default_width, frequencies, nodraw_flag->answer);
+	/* default line width */
+	D_line_width(default_width);
 
 
-	    /* reset line width: Do we need to get line width from display
-	     * driver (not implemented)?  It will help restore previous line
-	     * width (not just 0) determined by another module (e.g.,
-	     * d.linewidth). */
-	    R_line_width(0);
+	stat = dareatheme(&Map, Clist, &cvarr, breakpoints, nbreaks, colors,
+			  has_color ? &bcolor : NULL, chcat, &window,
+			  default_width, frequencies, nodraw_flag->answer);
 
-	}			/* end window check if */
 
-	if (!x_flag->answer) {
-	    D_add_to_list(G_recreate_command());
+	/* reset line width: Do we need to get line width from display
+	 * driver (not implemented)?  It will help restore previous line
+	 * width (not just 0) determined by another module (e.g.,
+	 * d.linewidth). */
+	R_line_width(0);
 
-	    D_set_dig_name(G_fully_qualified_name(map_name, mapset));
-	    D_add_to_dig_list(G_fully_qualified_name(map_name, mapset));
-	}
+    }				/* end window check if */
 
-	R_close_driver();
+    if (!x_flag->answer) {
+	D_add_to_list(G_recreate_command());
+
+	D_set_dig_name(G_fully_qualified_name(map_name, mapset));
+	D_add_to_dig_list(G_fully_qualified_name(map_name, mapset));
+    }
+
+    R_close_driver();
 
 
 
     if (legend_flag->answer) {
 
 	ret = db_CatValArray_sort_by_value(&cvarr);
-        if(cvarr.ctype == DB_C_TYPE_INT) {
-	     min=cvarr.value[0].val.i;
-	     max=cvarr.value[cvarr.n_values-1].val.i;
-	} else {
-	     min=cvarr.value[0].val.d;
-	     max=cvarr.value[cvarr.n_values-1].val.d;
+	if (cvarr.ctype == DB_C_TYPE_INT) {
+	    min = cvarr.value[0].val.i;
+	    max = cvarr.value[cvarr.n_values - 1].val.i;
+	}
+	else {
+	    min = cvarr.value[0].val.d;
+	    max = cvarr.value[cvarr.n_values - 1].val.d;
 	}
 
 

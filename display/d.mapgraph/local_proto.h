@@ -9,8 +9,10 @@ int do_size(char *);
 int do_text(char *);
 int check_alloc(int);
 int scan_en(char *, double *, double *, int);
+
 /* graphics.c */
 int graphics(void);
+
 /* read_line.c */
 int read_line(char *, int);
 int bad_line(char *);

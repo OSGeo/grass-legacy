@@ -1,3 +1,4 @@
+
 /**
  * \file gisinit.c
  * 
@@ -23,7 +24,8 @@
 #include "G.h"
 #include <grass/glocale.h>
 
-struct G__ G__ ;
+struct G__ G__;
+
 static int initialized = 0; /** Is set when engine is initialized */
 static int gisinit(void);
 
@@ -42,23 +44,22 @@ int G_gisinit(const char *pgm)
 {
     char *mapset;
 
-    if ( initialized )
+    if (initialized)
 	return 0;
 
-    G_set_program_name (pgm);
+    G_set_program_name(pgm);
 
-   /* Make sure location and mapset are set */
+    /* Make sure location and mapset are set */
     G_location_path();
-    switch (G__mapset_permissions (mapset = G_mapset()))
-    {
+    switch (G__mapset_permissions(mapset = G_mapset())) {
     case 1:
-	    break;
+	break;
     case 0:
-	    G_fatal_error (_("MAPSET %s - permission denied"), mapset);
-	    break;
+	G_fatal_error(_("MAPSET %s - permission denied"), mapset);
+	break;
     default:
-	    G_fatal_error (_("MAPSET %s not found"), mapset);
-	    break;
+	G_fatal_error(_("MAPSET %s not found"), mapset);
+	break;
     }
 
     gisinit();
@@ -77,7 +78,7 @@ int G_gisinit(const char *pgm)
 
 int G_no_gisinit(void)
 {
-    if ( initialized )
+    if (initialized)
 	return 0;
 
     gisinit();
@@ -95,8 +96,10 @@ int G_no_gisinit(void)
 
 int G__check_gisinit(void)
 {
-    if (initialized) return 1;
-    G_warning (_("System not initialized. Programmer forgot to call G_gisinit()."));
+    if (initialized)
+	return 1;
+    G_warning(_
+	      ("System not initialized. Programmer forgot to call G_gisinit()."));
     G_sleep(3);
     exit(EXIT_FAILURE);
 }
@@ -105,7 +108,7 @@ int G__check_gisinit(void)
 static int gisinit(void)
 {
     /* Mark window as not set */
-    G__.window_set = 0 ;
+    G__.window_set = 0;
 
     /* no histograms */
     G__.want_histogram = 0;
@@ -124,7 +127,7 @@ static int gisinit(void)
     G__.fp_nbytes = XDR_FLOAT_NBYTES;
 
     /* Set masking flag unknown */
-    G__.auto_mask = -1 ;
+    G__.auto_mask = -1;
 
     /* set architecture dependant bit patterns for embeded null vals */
     G__init_null_patterns();

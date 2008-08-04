@@ -148,7 +148,7 @@ int main(int argc, char *argv[])
     classbreaks = (double *)G_malloc((nbreaks) * sizeof(double));
     for (i = 0; i < nbreaks; i++)
 	classbreaks[i] = 0;
-     
+
 
     if (G_strcasecmp(algo_opt->answer, "int") == 0)
 	finfo = class_interval(data, nrec, nbreaks, classbreaks);
@@ -184,7 +184,8 @@ int main(int argc, char *argv[])
 	for (i = 0; i < nbreaks + 1; i++)
 	    frequencies[i] = 0;
 
-	ret = class_frequencies(data, nrec, nbreaks, classbreaks, frequencies);
+	ret =
+	    class_frequencies(data, nrec, nbreaks, classbreaks, frequencies);
 	basic_stats(data, nrec, &stats);
 
 	min = data[0];
@@ -200,7 +201,8 @@ int main(int argc, char *argv[])
 	if (G_strcasecmp(algo_opt->answer, "dis") == 0)
 	    fprintf(stdout, _("Last chi2 = %f\n"), finfo);
 	if (G_strcasecmp(algo_opt->answer, "std") == 0)
-	    fprintf(stdout, _("Stdev multiplied by %.4f to define step\n"), finfo);
+	    fprintf(stdout, _("Stdev multiplied by %.4f to define step\n"),
+		    finfo);
 	fprintf(stdout, "\n");
 	fprintf(stdout, _("%15s%15s%15s\n\n"), "From (excl.)", "To (incl.)",
 		"Frequency");
