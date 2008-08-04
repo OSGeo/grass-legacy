@@ -9,8 +9,9 @@ List of classes:
  - DecorationDialog
  - TextLayerDialog 
  - LoadMapLayersDialog
- - ImportDxfDialog
- - LayerList (used by ImportDxfDialog) 
+ - MultiImportDialog
+ - LayerList (used by MultiImport) 
+ - SetOpacityDialog
 
 (C) 2008 by the GRASS Development Team
 
@@ -24,6 +25,7 @@ for details.
 import os
 import sys
 import re
+import glob
 
 import wx
 import wx.lib.filebrowsebutton as filebrowse
@@ -708,12 +710,14 @@ class LoadMapLayersDialog(wx.Dialog):
         """Get selected layer type"""
         return self.layerType.GetStringSelection()
     
-class ImportDxfDialog(wx.Dialog):
+class MultiImportDialog(wx.Dialog):
     """Import dxf layers"""
-    def __init__(self, parent, id=wx.ID_ANY, title=_("Import DXF layers"), 
+    def __init__(self, parent, type,
+                 id=wx.ID_ANY, title=_("Multiple import"), 
                  style=wx.DEFAULT_DIALOG_STYLE | wx.RESIZE_BORDER):
 
-        self.parent = parent # GMFrame
+        self.parent = parent # GMFrame 
+        self.inputType = type
         
         wx.Dialog.__init__(self, parent, id, title, style=style)
 
@@ -722,14 +726,35 @@ class ImportDxfDialog(wx.Dialog):
         #
         # input
         #
-        self.input = filebrowse.FileBrowseButton(parent=self.panel, id=wx.ID_ANY, 
-                                                 size=globalvar.DIALOG_GSELECT_SIZE, labelText='',
-                                                 dialogTitle=_('Choose DXF file to import'),
-                                                 buttonText=_('Browse'),
-                                                 startDirectory=os.getcwd(), fileMode=0,
-                                                 changeCallback=self.OnSetInput) # TODO: wildcard
+        if self.inputType == 'dxf':
+            self.inputTitle = _("Input DXF file")
+            self.inputText = wx.StaticText(self.panel, id=wx.ID_ANY, label=_("Choose DXF file:"))
+            self.input = filebrowse.FileBrowseButton(parent=self.panel, id=wx.ID_ANY, 
+                                                     size=globalvar.DIALOG_GSELECT_SIZE, labelText='',
+                                                     dialogTitle=_('Choose DXF file to import'),
+                                                     buttonText=_('Browse'),
+                                                     startDirectory=os.getcwd(), fileMode=0,
+                                                     changeCallback=self.OnSetInput,
+                                                     fileMask="*.dxf")
+        else:
+            self.inputTitle = _("Input directory")
+            self.inputText = wx.StaticText(self.panel, id=wx.ID_ANY, label=_("Choose directory:"))
+            self.input = filebrowse.DirBrowseButton(parent=self.panel, id=wx.ID_ANY, 
+                                                     size=globalvar.DIALOG_GSELECT_SIZE, labelText='',
+                                                     dialogTitle=_('Choose input directory'),
+                                                     buttonText=_('Browse'),
+                                                     startDirectory=os.getcwd(),
+                                                     changeCallback=self.OnSetInput)
+            self.formatText = wx.StaticText(self.panel, id=wx.ID_ANY, label=_("Choose file extension:"))
+            self.format = wx.TextCtrl(parent=self.panel, id=wx.ID_ANY, size=(100, -1),
+                                      value="")
+            if self.inputType == 'gdal':
+                self.format.SetValue('tif')
+            else: # ogr
+                self.format.SetValue('shp')
+
+            self.format.Bind(wx.EVT_TEXT, self.OnSetInput)
         
-       
         #
         # list of layers
         #
@@ -763,15 +788,24 @@ class ImportDxfDialog(wx.Dialog):
         # input
         #
         inputBox = wx.StaticBox(parent=self.panel, id=wx.ID_ANY,
-                                label=" %s " % _("Input DXF file"))
+                                label=" %s " % self.inputTitle)
         inputSizer = wx.StaticBoxSizer(inputBox, wx.HORIZONTAL)
-
-        inputSizer.Add(item=wx.StaticText(self.panel, id=wx.ID_ANY, label=_("Choose DXF file:")),
-                       proportion=0,
-                       flag=wx.ALIGN_CENTER_VERTICAL)
-
-        inputSizer.Add(item=self.input, proportion=1,
-                       flag=wx.EXPAND, border=1)
+        gridSizer = wx.GridBagSizer(vgap=5, hgap=5)
+        
+        gridSizer.Add(item=self.inputText,
+                      flag=wx.ALIGN_CENTER_VERTICAL, pos=(0, 0))
+        gridSizer.Add(item=self.input,
+                      flag=wx.EXPAND, pos=(0, 1))
+        
+        if self.inputType != 'dxf':
+            gridSizer.Add(item=self.formatText,
+                          flag=wx.ALIGN_CENTER_VERTICAL, pos=(1, 0))
+            gridSizer.Add(item=self.format,
+                          pos=(1, 1))
+        
+        gridSizer.AddGrowableCol(1)
+        inputSizer.Add(item=gridSizer, proportion=0,
+                       flag=wx.EXPAND)
         
         dialogSizer.Add(item=inputSizer, proportion=0,
                         flag=wx.ALL | wx.EXPAND, border=5)
@@ -780,7 +814,7 @@ class ImportDxfDialog(wx.Dialog):
         # list of DXF layers
         #
         layerBox = wx.StaticBox(parent=self.panel, id=wx.ID_ANY,
-                                label=" %s " % _("List of DXF layers"))
+                                label=_(" List of %s layers ") % self.inputType.upper())
         layerSizer = wx.StaticBoxSizer(layerBox, wx.HORIZONTAL)
 
         layerSizer.Add(item=self.list, proportion=1,
@@ -815,7 +849,7 @@ class ImportDxfDialog(wx.Dialog):
         
         self.Layout()
         # auto-layout seems not work here - FIXME
-        self.SetMinSize((globalvar.DIALOG_GSELECT_SIZE[0] + 125, 300))
+        self.SetMinSize((globalvar.DIALOG_GSELECT_SIZE[0] + 175, 300))
         width = self.GetSize()[0]
         self.list.SetColumnWidth(col=1, width=width/2 - 50)
 
@@ -831,10 +865,20 @@ class ImportDxfDialog(wx.Dialog):
         self.Hide()
         
         for layer, output in data:
-            cmd = ['v.in.dxf',
-                   'input=%s' % self.input.GetValue(),
-                   'layers=%s' % layer,
-                   'output=%s' % output]
+            if self.inputType == 'dxf':
+                cmd = ['v.in.dxf',
+                       'input=%s' % self.input.GetValue(),
+                       'layers=%s' % layer,
+                       'output=%s' % output]
+            elif self.inputType == 'ogr':
+                cmd = ['v.in.ogr',
+                       'dsn=%s' % (os.path.join(self.input.GetValue(), layer)),
+                       'output=%s' % output]
+            else:
+                cmd = ['r.in.gdal', '-o', # override projection by default
+                       'input=%s' % (os.path.join(self.input.GetValue(), layer)),
+                       'output=%s' % output]
+            
             if UserSettings.Get(group='cmd', key='overwrite', subkey='enabled'):
                 cmd.append('--overwrite')
             
@@ -849,12 +893,22 @@ class ImportDxfDialog(wx.Dialog):
                 else:
                     name = output
                 # add imported layers into layer tree
-                maptree.AddLayer(ltype='vector',
-                                 lname=name,
-                                 lcmd=['d.vect',
-                                       'map=%s' % name])
+                if self.inputType == 'gdal':
+                    cmd = ['d.rast',
+                           'map=%s' % name]
+                    if UserSettings.Get(group='cmd', key='rasterOverlay', subkey='enabled'):
+                        cmd.append('-o')
 
-        self.parent.notebook.SetSelection(0)
+                    maptree.AddLayer(ltype='raster',
+                                     lname=name,
+                                     lcmd=cmd)
+                else:
+                    maptree.AddLayer(ltype='vector',
+                                     lname=name,
+                                     lcmd=['d.vect',
+                                           'map=%s' % name])
+        
+        wx.CallAfter(self.parent.notebook.SetSelection, 0)
         
         self.OnCancel()
         
@@ -867,54 +921,50 @@ class ImportDxfDialog(wx.Dialog):
         
     def OnSetInput(self, event):
         """Input DXF file/OGR dsn defined, update list of layer widget"""
-        filePath = event.GetString()
+        path = event.GetString()
 
-        try:
-            cmd = gcmd.Command(['v.in.dxf',
-                                'input=%s' % filePath,
-                                '-l', '--q'], stderr=None)
-        except gcmd.CmdError, e:
-            wx.MessageBox(parent=self, message=_("File <%(file)s>: Unable to get list of DXF layers.\n\n%(details)s") % \
-                          { 'file' : filePath, 'details' : e.message },
-                          caption=_("Error"), style=wx.ID_OK | wx.ICON_ERROR | wx.CENTRE)
-            self.list.LoadData()
-            self.btn_run.Enable(False)
-            return
+        if self.inputType == 'dxf':
+            try:
+                cmd = gcmd.Command(['v.in.dxf',
+                                    'input=%s' % path,
+                                    '-l', '--q'], stderr=None)
+            except gcmd.CmdError, e:
+                wx.MessageBox(parent=self, message=_("File <%(file)s>: Unable to get list of DXF layers.\n\n%(details)s") % \
+                              { 'file' : path, 'details' : e.message },
+                              caption=_("Error"), style=wx.ID_OK | wx.ICON_ERROR | wx.CENTRE)
+                self.list.LoadData()
+                self.btn_run.Enable(False)
+                return
 
         data = []
-        for line in cmd.ReadStdOutput():
-            layerId = line.split(':')[0].split(' ')[1]
-            layerName = line.split(':')[1].strip()
-            # layerName, grassName = layer.split('/')
-            grassName = self._layerNameToSql(layerName)
-            data.append((layerId, layerName.strip(), grassName.strip()))
-
+        if self.inputType == 'dxf':
+            for line in cmd.ReadStdOutput():
+                layerId = line.split(':')[0].split(' ')[1]
+                layer = line.split(':')[1]
+                try:
+                    layerName, grassName = layer.split('/')
+                except ValueError: # trunk/develbranch_6 -> v.in.dxf -l format changed
+                    layerName = layer.strip()
+                    grassName = utils.GetValidLayerName(layerName)
+                data.append((layerId, layerName.strip(), grassName.strip()))
+                
+        else: # gdal/ogr (for ogr maybe to use v.in.ogr -l)
+            layerId = 1
+            for file in glob.glob(os.path.join(self.input.GetValue(), "*.%s") % self.format.GetValue()):
+                baseName = os.path.basename(file)
+                grassName = utils.GetValidLayerName(baseName.split('.', -1)[0])
+                data.append((layerId, baseName, grassName))
+                layerId += 1
+            
         self.list.LoadData(data)
-        self.btn_run.Enable(True)
-
-    def _layerNameToSql(self, name):
-        """Make string SQL compliant, based on G_str_to_sql()
-
-        Note: not need in trunk, v.in.dxf -l output modified!
-        """
-        retName = str(name).strip()
+        if len(data) > 0:
+            self.btn_run.Enable(True)
+        else:
+            self.btn_run.Enable(False)
         
-        for c in retName:
-            # c = toascii(c)
-
-            if not (c >= 'A' and c <= 'Z') and \
-                   not (c >= 'a' and c <= 'z') and \
-                   not (c >= '0' and c <= '9'):
-                c = '_'
-        
-        if not (retName[0] >= 'A' and retName[0] <= 'Z') and \
-               not (retName[0] >= 'a' and retName[0] <= 'z'):
-            retName = 'x' + retName[1:]
-        
-        return retName
-
 class LayersList(wx.ListCtrl, listmix.ListCtrlAutoWidthMixin,
-                 listmix.CheckListCtrlMixin, listmix.TextEditMixin):
+                 listmix.CheckListCtrlMixin):
+#                 listmix.CheckListCtrlMixin, listmix.TextEditMixin):
     """List of layers to be imported (dxf, shp...)"""
     def __init__(self, parent, pos=wx.DefaultPosition,
                  log=None):
@@ -927,12 +977,12 @@ class LayersList(wx.ListCtrl, listmix.ListCtrlAutoWidthMixin,
 
         # setup mixins
         listmix.ListCtrlAutoWidthMixin.__init__(self)
-        listmix.TextEditMixin.__init__(self)
+        # listmix.TextEditMixin.__init__(self)
         
         self.InsertColumn(0, _('Layer'))
         self.InsertColumn(1, _('Layer name'))
-        self.InsertColumn(2, _('Output vector map name (editable)'))
-
+        self.InsertColumn(2, _('Output vector map name'))
+        
         self.Bind(wx.EVT_COMMAND_RIGHT_CLICK, self.OnPopupMenu) #wxMSW
         self.Bind(wx.EVT_RIGHT_UP,            self.OnPopupMenu) #wxGTK
 
@@ -941,6 +991,8 @@ class LayersList(wx.ListCtrl, listmix.ListCtrlAutoWidthMixin,
         if data is None:
             return
 
+        self.DeleteAllItems()
+        
         for id, name, grassName in data:
             index = self.InsertStringItem(sys.maxint, str(id))
             self.SetStringItem(index, 1, "%s" % str(name))
@@ -958,10 +1010,10 @@ class LayersList(wx.ListCtrl, listmix.ListCtrlAutoWidthMixin,
         if not hasattr(self, "popupDataID1"):
             self.popupDataID1 = wx.NewId()
             self.popupDataID2 = wx.NewId()
-
+            
             self.Bind(wx.EVT_MENU, self.OnSelectAll,  id=self.popupDataID1)
             self.Bind(wx.EVT_MENU, self.OnSelectNone, id=self.popupDataID2)
-
+        
         # generate popup-menu
         menu = wx.Menu()
         menu.Append(self.popupDataID1, _("Select all"))
