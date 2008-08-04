@@ -86,7 +86,7 @@ class LayerTree(CT.CustomTreeCtrl):
 
         # init associated map display
         self.mapdisplay = mapdisp.MapFrame(self,
-                                           id=wx.ID_ANY, pos=wx.DefaultPosition,
+                                           id=wx.ID_ANY, pos=wx.Point(50,50),
                                            size=globalvar.MAP_WINDOW_SIZE,
                                            style=wx.DEFAULT_FRAME_STYLE,
                                            tree=self, notebook=self.notebook,
@@ -443,6 +443,7 @@ class LayerTree(CT.CustomTreeCtrl):
         type = win.GetName()
 
         self.layer_selected.DeleteWindow()
+        dlg.CentreOnParent()
 
         opacity = self.GetPyData(self.layer_selected)[0]['maplayer'].GetOpacity()
         if type == 'staticText':
@@ -684,6 +685,7 @@ class LayerTree(CT.CustomTreeCtrl):
                 self.GetPyData(layer)[0]['propwin'].SetFocus()
             else:
                 self.GetPyData(layer)[0]['propwin'].Show()
+            
             return
         
         completed = ''
@@ -748,6 +750,8 @@ class LayerTree(CT.CustomTreeCtrl):
             pass
         elif ltype == 'group':
             pass
+        
+        self.GetPyData(layer)[0]['propwin'].CentreOnParent()
 
     def OnActivateLayer(self, event):
         """Click on the layer item.
