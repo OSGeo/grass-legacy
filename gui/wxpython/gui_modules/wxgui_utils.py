@@ -751,8 +751,6 @@ class LayerTree(CT.CustomTreeCtrl):
         elif ltype == 'group':
             pass
         
-        self.GetPyData(layer)[0]['propwin'].CentreOnParent()
-
     def OnActivateLayer(self, event):
         """Click on the layer item.
         Launch property dialog, or expand/collapse group of items, etc."""
