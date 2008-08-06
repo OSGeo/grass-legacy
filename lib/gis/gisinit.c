@@ -98,8 +98,7 @@ int G__check_gisinit(void)
 {
     if (initialized)
 	return 1;
-    G_warning(_
-	      ("System not initialized. Programmer forgot to call G_gisinit()."));
+    G_warning(_("System not initialized. Programmer forgot to call G_gisinit()."));
     G_sleep(3);
     exit(EXIT_FAILURE);
 }

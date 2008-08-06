@@ -143,8 +143,7 @@ int main(int argc, char *argv[])
 
     /* check arguments */
     if ((!parm.i->answer) && (!parm.route->answer))
-	G_fatal_error(_
-		      ("Either -i flag and/or route parameter must be used"));
+	G_fatal_error(_("Either -i flag and/or route parameter must be used"));
 
     /* get GRASS parameters */
     G_get_window(&window);
@@ -535,8 +534,7 @@ int read_rast
     if (row < 0 || row > nrows || col < 0 || col > ncols) {
 	G_debug(3, "Fail: row=%d  nrows=%d   col=%d  ncols=%d", row, nrows,
 		col, ncols);
-	G_warning(_
-		  ("Skipping this point, selected point is outside region. "
+	G_warning(_("Skipping this point, selected point is outside region. "
 		   "Perhaps the camera setback distance puts it beyond the edge?"));
 	frame++;
 	return 1;

@@ -774,8 +774,7 @@ int G_parser(int argc, char **argv)
 			j++;
 		    }
 		    if (!found) {
-			G_warning(_
-				  ("BUG in descriptions, option %s in %s does not exist"),
+			G_warning(_("BUG in descriptions, option %s in %s does not exist"),
 				  tokens[i], opt->key);
 		    }
 		    else {
@@ -877,8 +876,7 @@ int G_parser(int argc, char **argv)
 		sprintf(buff, "GRASS_VERBOSE=%d", G_verbose_max());
 		putenv(G_store(buff));
 		if (quiet == 1) {
-		    G_warning(_
-			      ("Use either --quiet or --verbose flag, not both. Assuming --verbose."));
+		    G_warning(_("Use either --quiet or --verbose flag, not both. Assuming --verbose."));
 		}
 		quiet = -1;
 	    }
@@ -892,8 +890,7 @@ int G_parser(int argc, char **argv)
 		sprintf(buff, "GRASS_VERBOSE=%d", G_verbose_min());
 		putenv(G_store(buff));
 		if (quiet == -1) {
-		    G_warning(_
-			      ("Use either --quiet or --verbose flag, not both. Assuming --quiet."));
+		    G_warning(_("Use either --quiet or --verbose flag, not both. Assuming --quiet."));
 		}
 		quiet = 1;	/* for passing to gui init */
 	    }

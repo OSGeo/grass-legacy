@@ -144,14 +144,12 @@ int main(int argc, char *argv[])
     /* please, remove before GRASS 7 released */
     if (q_flag->answer || n_flag->answer) {
 	G_putenv("GRASS_VERBOSE", "0");
-	G_warning(_
-		  ("The '-q' and '-n' flag is superseded and will be removed "
+	G_warning(_("The '-q' and '-n' flag is superseded and will be removed "
 		   "in future. Please use '--quiet' instead."));
     }
 
     if (!levels->answers && !step->answer) {
-	G_fatal_error(_
-		      ("Neither \"levels\" nor \"step\" parameter specified."));
+	G_fatal_error(_("Neither \"levels\" nor \"step\" parameter specified."));
     }
 
     name = map->answer;

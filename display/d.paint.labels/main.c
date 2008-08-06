@@ -99,8 +99,7 @@ int main(int argc, char **argv)
     if (minreg_opt->answer) {
 	minreg = atof(minreg_opt->answer);
 	if (reg < minreg) {
-	    G_warning(_
-		      ("Region size is lower than minreg, nothing displayed."));
+	    G_warning(_("Region size is lower than minreg, nothing displayed."));
 	    D_add_to_list(G_recreate_command());
 	    R_close_driver();
 	    exit(0);
@@ -109,8 +108,7 @@ int main(int argc, char **argv)
     if (maxreg_opt->answer) {
 	maxreg = atof(maxreg_opt->answer);
 	if (reg > maxreg) {
-	    G_warning(_
-		      ("Region size is greater than maxreg, nothing displayed."));
+	    G_warning(_("Region size is greater than maxreg, nothing displayed."));
 	    D_add_to_list(G_recreate_command());
 	    R_close_driver();
 	    exit(0);

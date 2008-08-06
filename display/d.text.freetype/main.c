@@ -643,8 +643,7 @@ read_capfile(char *capfile, capinfo ** fonts, int *fonts_count, int *cur_font,
     sprintf(file, "%s/etc/freetypecap", G_gisbase());
     if (capfile) {
 	if (access(capfile, R_OK))
-	    G_warning(_
-		      ("%s: Unable to read FreeType definition file; use the default"),
+	    G_warning(_("%s: Unable to read FreeType definition file; use the default"),
 		      capfile);
 	else
 	    ptr = capfile;
