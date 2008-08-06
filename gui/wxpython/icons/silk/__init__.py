@@ -57,13 +57,14 @@ IconsSilk = {
     "digUndo" : 'arrow_undo.png',
     "digSettings" : 'color_swatch.png',
     "digAdditionalTools" : 'plugin.png',
-    # gis manager
+    # layer manager
     "newdisplay" : 'application_add.png',
     "workspaceNew" : 'page_white.png',
     "workspaceLoad" : 'page_white_get.png',
     "workspaceOpen" : 'folder.png',
     "workspaceSave" : 'page_save.png',
     "addrast"    : 'image_add.png',
+    "addrast3d"  : 'bricks.png',
     "addshaded"  : 'picture_empty.png',
     "addrarrow"  : 'arrow_inout.png',
     "addvect"    : 'map_add.png',
@@ -78,6 +79,7 @@ IconsSilk = {
     "addhis"     : 'his.png',
     "addthematic": 'thematic.png',
     "addchart"   : 'chart_bar.png',
+    "layeropts"  : 'map_edit.png',
     # profile analysis
     "transect"   : 'image_edit.png',
     "profiledraw"  : 'arrow_refresh.png',
@@ -93,4 +95,6 @@ IconsSilk = {
     "grGcpDelete"  : 'bullet_delete.png',
     "grGcpReload"  : 'arrow_refresh.png',
     "grSettings"   : 'color_swatch.png',
+    # nviz
+    "nvizSettings"   : 'color_swatch.png',
     }

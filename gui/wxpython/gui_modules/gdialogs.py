@@ -1057,5 +1057,72 @@ class LayersList(wx.ListCtrl, listmix.ListCtrlAutoWidthMixin,
 
         return data
 
+class SetOpacityDialog(wx.Dialog):
+    """Set opacity of map layers"""
+    def __init__(self, parent, id=wx.ID_ANY, title=_("Set Map Layer Opacity"),
+                 size=wx.DefaultSize, pos=wx.DefaultPosition,
+                 style=wx.DEFAULT_DIALOG_STYLE, opacity=100):
+
+        self.parent = parent    # GMFrame
+        self.opacity = opacity  # current opacity
+
+        super(SetOpacityDialog, self).__init__(parent, id=id, pos=pos,
+                                               size=size, style=style, title=title)
+
+        panel = wx.Panel(parent=self, id=wx.ID_ANY)
+        
+        sizer = wx.BoxSizer(wx.VERTICAL)
+
+        box = wx.GridBagSizer(vgap=5, hgap=5)
+        self.value = wx.Slider(panel, id=wx.ID_ANY, value=self.opacity,
+                               style=wx.SL_HORIZONTAL | wx.SL_AUTOTICKS | \
+                                   wx.SL_TOP | wx.SL_LABELS,
+                               minValue=0, maxValue=100,
+                               size=(350, -1))
+
+        box.Add(item=self.value,
+                flag=wx.ALIGN_CENTRE, pos=(0, 0), span=(1, 2))
+        box.Add(item=wx.StaticText(parent=panel, id=wx.ID_ANY,
+                                   label=_("transparent")),
+                pos=(1, 0))
+        box.Add(item=wx.StaticText(parent=panel, id=wx.ID_ANY,
+                                   label=_("opaque")),
+                flag=wx.ALIGN_RIGHT,
+                pos=(1, 1))
+
+        sizer.Add(item=box, proportion=0,
+                  flag=wx.EXPAND | wx.ALIGN_CENTER_VERTICAL | wx.ALL, border=5)
+
+        line = wx.StaticLine(parent=panel, id=wx.ID_ANY,
+                             style=wx.LI_HORIZONTAL)
+        sizer.Add(item=line, proportion=0,
+                  flag=wx.EXPAND | wx.ALIGN_CENTER_VERTICAL | wx.ALL, border=5)
+
+        # buttons
+        btnsizer = wx.StdDialogButtonSizer()
+
+        btnOK = wx.Button(parent=panel, id=wx.ID_OK)
+        btnOK.SetDefault()
+        btnsizer.AddButton(btnOK)
+
+        btnCancel = wx.Button(parent=panel, id=wx.ID_CANCEL)
+        btnsizer.AddButton(btnCancel)
+        btnsizer.Realize()
+
+        sizer.Add(item=btnsizer, proportion=0,
+                  flag=wx.EXPAND | wx.ALIGN_CENTER_VERTICAL | wx.ALL, border=5)
+
+        panel.SetSizer(sizer)
+        sizer.Fit(panel)
+
+        self.SetSize(self.GetBestSize())
+
+        self.Layout()
+
+    def GetOpacity(self):
+        """Button 'OK' pressed"""
+        # return opacity value
+        opacity = float(self.value.GetValue()) / 100
+        return opacity
 
 
