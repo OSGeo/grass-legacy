@@ -129,7 +129,6 @@ class LayerTree(treemixin.DragAndDrop, CT.CustomTreeCtrl):
         self.rast_icon = il.Add(trgif)
 
         trgif = Icons["addrast3d"].GetBitmap(bmpsize)
-        print Icons["addrast3d"]
         self.rast3d_icon = il.Add(trgif)
 
         trgif = Icons["addrgb"].GetBitmap(bmpsize)
