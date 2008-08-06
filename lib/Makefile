@@ -39,7 +39,9 @@ SUBDIRS = \
 
 include $(MODULE_TOPDIR)/include/Make/Platform.make
 
-OPENGLBASED = ogsf
+OPENGLBASED = \
+	ogsf \
+	nviz
 
 #compile if OPENGLBASED present:
 ifneq ($(strip $(OPENGLLIB)),)

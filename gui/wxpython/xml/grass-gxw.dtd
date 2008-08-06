@@ -1,6 +1,6 @@
 <!--	grass-gxw.dtd
 
-	Copyright (C) 2007 by the GRASS Development Team
+	Copyright (C) 2007-2008 by the GRASS Development Team
 	Author: Martin Landa <landa.martin gmail.com>
 	
 	This program is free software under the GPL (>=v2)
@@ -45,7 +45,7 @@
 
 <!--    map layer
 -->
-<!ELEMENT layer (selected?, task?)>
+<!ELEMENT layer (selected?, task?, nviz?)>
 <!ATTLIST layer	type	CDATA   #REQUIRED>
 <!ATTLIST layer	name	CDATA   #REQUIRED>
 <!ATTLIST layer	checked (0 | 1) #REQUIRED>
@@ -70,8 +70,66 @@
 -->
 <!ELEMENT value         (#PCDATA)>
 
-
 <!--    enabled flag
 -->
 <!ELEMENT flag          EMPTY>
 <!ATTLIST flag          name            CDATA #REQUIRED>
+
+<!-- *********************** Nviz *********************** -->
+
+<!--    nviz layer properties
+-->
+<!ELEMENT nviz	        (surface? | (vlines | vpoints)?)>
+
+<!--    nviz surface properties
+-->
+<!ELEMENT surface       (attribute*, draw?, position?)>
+
+<!--    nviz surface attribute parameter
+-->
+<!ELEMENT attribute     (value)>
+<!ATTLIST attribute	name		CDATA   #REQUIRED>
+<!ATTLIST attribute	map		(0 | 1) #REQUIRED>
+
+<!--    nviz surface draw mode parameter
+-->
+<!ELEMENT draw          (resolution*, wire-color?)>
+<!ATTLIST draw	        mode		(coarse | fine | both) #IMPLIED>
+<!ATTLIST draw	        style		(wire | surface) #IMPLIED>
+<!ATTLIST draw	        shading		(gouraud | flat) #IMPLIED>
+
+<!--    nviz surface draw resolution
+-->
+<!ELEMENT resolution    (value)>
+
+<!--    nviz surface wire color
+-->
+<!ELEMENT wire_color    (value)>
+
+<!--    nviz surface position
+-->
+<!ELEMENT position     (x, y, z)>
+
+<!--    nviz surface position coordinate
+-->
+<!ELEMENT x         (#PCDATA)>
+<!ELEMENT y         (#PCDATA)>
+<!ELEMENT z         (#PCDATA)>
+
+<!--    nviz vector lines element
+-->
+<!ELEMENT vlines    (color?, width?, mode?, height?)>
+
+<!--    nviz vector points element
+-->
+<!ELEMENT vpoints   (color?, width?, mode?, height?, size?)>
+<!ATTLIST vpoints    marker (x | box | sphere | cube | diamond | dtree | ctree | aster | gyro | histogram) #REQUIRED>
+
+<!--    nviz vector elements
+-->
+<!ELEMENT color     (value)>
+<!ELEMENT width     (value)>
+<!ELEMENT height    (value)>
+<!ELEMENT mode      (map?)>
+<!ATTLIST mode	    type (flat | surface) #REQUIRED>
+<!ELEMENT size      (value)>

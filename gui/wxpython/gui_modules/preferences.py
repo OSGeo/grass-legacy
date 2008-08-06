@@ -111,7 +111,7 @@ class Settings:
                     'type' : 'vdigit'
                     }, # vedit, vdigit
                 'iconTheme' : {
-                    'type' : 'silk'
+                    'type' : 'grass'
                     }, # grass, silk
                 },
             #
@@ -354,6 +354,74 @@ class Settings:
                     'width' : 2,
                     },
                 },
+            'nviz' : {
+                'view' : {
+                    'persp' : {
+                        'value' : 40,
+                        'step' : 5,
+                        },
+                    'pos' : {
+                        'x' : 0.85,
+                        'y' : 0.85,
+                        },
+                    'height' : {
+                        'step' : 100,
+                        },
+                    'twist' : {
+                        'value' : 0,
+                        'step' : 5,
+                        },
+                    'z-exag' : {
+                        'value': 1,
+                        'step' : 1,
+                        },
+                    },
+                'surface' : {
+                    'shine': {
+                        'map' : False,
+                        'value' : 60.0,
+                        },
+                    'color' : {
+                        'map' : True,
+                        'value' : (0, 0, 0, 255), # constant: black
+                        },
+                    'draw' : {
+                        'wire-color' : (136, 136, 136, 255),
+                        'mode' : 1, # fine
+                        'style' : 1, # surface
+                        'shading' : 1, # gouraud
+                        'res-fine' : 6,
+                        'res-coarse' : 9,
+                        },
+                    'position' : {
+                        'x' : 0,
+                        'y' : 0,
+                        'z' : 0,
+                        },
+                    },
+                'vector' : {
+                    'lines' : {
+                        'show' : False,
+                        'width' : 2,
+                        'color' : (0, 0, 255, 255), # blue
+                        'flat' : False,
+                        'height' : 0,
+                        },
+                    'points' : {
+                        'show' : False,
+                        'size' : 100,
+                        'width' : 2,
+                        'marker' : 2,
+                        'color' : (0, 0, 255, 255), # blue
+                        'height' : 0,
+                        }
+                    },
+                'settings': {
+                    'general' : {
+                        'bgcolor' : (255, 255, 255, 255), # white
+                        },
+                    },
+                },
             }
         
         #
@@ -396,6 +464,28 @@ class Settings:
                                                                 'quiet')
         self.internalSettings['display']['driver']['choices'] = ['default']
         self.internalSettings['display']['statusbarMode']['choices'] = globalvar.MAP_DISPLAY_STATUSBAR_MODE
+
+        self.internalSettings['nviz']['view'] = {}
+        self.internalSettings['nviz']['view']['twist'] = {}
+        self.internalSettings['nviz']['view']['twist']['min'] = -180
+        self.internalSettings['nviz']['view']['twist']['max'] = 180
+        self.internalSettings['nviz']['view']['persp'] = {}
+        self.internalSettings['nviz']['view']['persp']['min'] = 1
+        self.internalSettings['nviz']['view']['persp']['max'] = 100
+        self.internalSettings['nviz']['view']['height'] = {}
+        self.internalSettings['nviz']['view']['height']['value'] = -1
+        self.internalSettings['nviz']['vector'] = {}
+        self.internalSettings['nviz']['vector']['points'] = {}
+        self.internalSettings['nviz']['vector']['points']['marker'] = ("x",
+                                                                       _("box"),
+                                                                       _("sphere"),
+                                                                       _("cube"),
+                                                                       _("diamond"),
+                                                                       _("dtree"),
+                                                                       _("ctree"),
+                                                                       _("aster"),
+                                                                       _("gyro"),
+                                                                       _("histogram"))
         
     def ReadSettingsFile(self, settings=None):
         """Reads settings file (mapset, location, gisdbase)"""
@@ -774,23 +864,11 @@ class PreferencesDialog(wx.Dialog):
         gridSizer = wx.GridBagSizer (hgap=3, vgap=3)
         gridSizer.AddGrowableCol(0)
 
-        #
-        # show opacily level
-        #
-        row = 0
-        changeOpacityLevel = wx.CheckBox(parent=panel, id=wx.ID_ANY,
-                                       label=_("Opacity level editable"),
-                                       name='IsChecked')
-        changeOpacityLevel.SetValue(self.settings.Get(group='manager', key='changeOpacityLevel', subkey='enabled'))
-        self.winId['manager:changeOpacityLevel:enabled'] = changeOpacityLevel.GetId()
-
-        gridSizer.Add(item=changeOpacityLevel,
-                      pos=(row, 0), span=(1, 2))
 
         #
         # ask when removing map layer from layer tree
         #
-        row += 1
+        row = 0
         askOnRemoveLayer = wx.CheckBox(parent=panel, id=wx.ID_ANY,
                                        label=_("Ask when removing map layer from layer tree"),
                                        name='IsChecked')

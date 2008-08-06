@@ -672,7 +672,8 @@ class GMFrame(wx.Frame):
                                            lchecked=layer['checked'],
                                            lopacity=layer['opacity'],
                                            lcmd=layer['cmd'],
-                                           lgroup=layer['group'])
+                                           lgroup=layer['group'],
+                                           lnviz=layer['nviz'])
                 
                 # tag 'selected' added 2008/04
                 if layer.has_key('selected'):
@@ -693,7 +694,7 @@ class GMFrame(wx.Frame):
                 maptree.Map.ReverseListOfLayers()
 
             for mdisp in mapdisplay:
-                mdisp.MapWindow.UpdateMap()
+                mdisp.MapWindow2D.UpdateMap()
 
             file.close()
         except IOError, err:
@@ -1128,7 +1129,7 @@ class GMFrame(wx.Frame):
         # create layer tree (tree control for managing GIS layers)  and put on new notebook page
         self.curr_page.maptree = wxgui_utils.LayerTree(self.curr_page, id=wx.ID_ANY, pos=wx.DefaultPosition,
                                                        size=wx.DefaultSize, style=wx.TR_HAS_BUTTONS
-                                                       |wx.TR_LINES_AT_ROOT|wx.TR_EDIT_LABELS|wx.TR_HIDE_ROOT
+                                                       |wx.TR_LINES_AT_ROOT|wx.TR_HIDE_ROOT
                                                        |wx.TR_DEFAULT_STYLE|wx.NO_BORDER|wx.FULL_REPAINT_ON_RESIZE,
                                                        idx=self.disp_idx, gismgr=self, notebook=self.gm_cb,
                                                        auimgr=self._auimgr, showMapDisplay=show)
@@ -1183,6 +1184,12 @@ class GMFrame(wx.Frame):
         rastmenu.AppendItem(addrast)
         self.Bind(wx.EVT_MENU, self.AddRaster, addrast)
 
+        if self.curr_page.maptree.mapdisplay.toolbars['nviz']:
+            addrast3d = wx.MenuItem(rastmenu, -1, Icons ["addrast3d"].GetLabel())
+            addrast3d.SetBitmap(Icons["addrast3d"].GetBitmap (self.iconsize))
+            rastmenu.AppendItem(addrast3d)
+            self.Bind(wx.EVT_MENU, self.AddRaster3d, addrast3d)
+
         addshaded = wx.MenuItem(rastmenu, -1, Icons ["addshaded"].GetLabel())
         addshaded.SetBitmap(Icons["addshaded"].GetBitmap (self.iconsize))
         rastmenu.AppendItem(addshaded)
@@ -1228,17 +1235,17 @@ class GMFrame(wx.Frame):
         addvect = wx.MenuItem(vectmenu, -1, Icons["addvect"].GetLabel())
         addvect.SetBitmap(Icons["addvect"].GetBitmap(self.iconsize))
         vectmenu.AppendItem(addvect)
-        self.Bind(wx.EVT_MENU, self.addVector, addvect)
+        self.Bind(wx.EVT_MENU, self.AddVector, addvect)
 
         addtheme = wx.MenuItem(vectmenu, -1, Icons["addthematic"].GetLabel())
         addtheme.SetBitmap(Icons["addthematic"].GetBitmap(self.iconsize))
         vectmenu.AppendItem(addtheme)
-        self.Bind(wx.EVT_MENU, self.addThemeMap, addtheme)
+        self.Bind(wx.EVT_MENU, self.AddThemeMap, addtheme)
 
         addchart = wx.MenuItem(vectmenu, -1, Icons["addchart"].GetLabel())
         addchart.SetBitmap(Icons["addchart"].GetBitmap(self.iconsize))
         vectmenu.AppendItem(addchart)
-        self.Bind(wx.EVT_MENU, self.addThemeChart, addchart)
+        self.Bind(wx.EVT_MENU, self.AddThemeChart, addchart)
 
         # Popup the menu.  If an item is selected then its handler
         # will be called before PopupMenu returns.
@@ -1284,6 +1291,10 @@ class GMFrame(wx.Frame):
         self.notebook.SetSelection(0)
         self.curr_page.maptree.AddLayer('raster')
 
+    def AddRaster3d(self, event):
+        self.notebook.SetSelection(0)
+        self.curr_page.maptree.AddLayer('3d-raster')
+
     def AddRGB(self, event):
         """Add RGB layer"""
         self.notebook.SetSelection(0)
@@ -1309,17 +1320,17 @@ class GMFrame(wx.Frame):
         self.notebook.SetSelection(0)
         self.curr_page.maptree.AddLayer('rastnum')
 
-    def addVector(self, event):
+    def AddVector(self, event):
         """Add vector layer"""
         self.notebook.SetSelection(0)
         self.curr_page.maptree.AddLayer('vector')
 
-    def addThemeMap(self, event):
+    def AddThemeMap(self, event):
         """Add thematic map layer"""
         self.notebook.SetSelection(0)
         self.curr_page.maptree.AddLayer('thememap')
 
-    def addThemeChart(self, event):
+    def AddThemeChart(self, event):
         """Add thematic chart layer"""
         self.notebook.SetSelection(0)
         self.curr_page.maptree.AddLayer('themechart')

@@ -164,17 +164,19 @@ class ProfileFrame(wx.Frame):
         self.properties['font']['wxfont'] = wx.Font(11, wx.FONTFAMILY_SWISS,
                                                     wx.FONTSTYLE_NORMAL,
                                                     wx.FONTWEIGHT_NORMAL)
+        
         self.properties['marker'] = UserSettings.Get(group='profile', key='marker')
 
         self.properties['grid'] = UserSettings.Get(group='profile', key='grid')
-        
         self.properties['x-axis'] = {}
+        
         self.properties['x-axis']['prop'] = UserSettings.Get(group='profile', key='x-axis')
         self.properties['x-axis']['axis'] = None
 
         self.properties['y-axis'] = {}
         self.properties['y-axis']['prop'] = UserSettings.Get(group='profile', key='y-axis')
         self.properties['y-axis']['axis'] = None
+        
         self.properties['legend'] = UserSettings.Get(group='profile', key='legend')
         
         # zooming disabled
@@ -186,14 +188,23 @@ class ProfileFrame(wx.Frame):
         self.client.SetShowScrollbars(True)
 
         # x and y axis set to normal (non-log)
-        self.client.setLogScale((False, False)) 
-        self.client.SetXSpec(self.properties['x-axis']['prop']['type'])
-        self.client.SetYSpec(self.properties['y-axis']['prop']['type'])
+        self.client.setLogScale((False, False))
+        if self.properties['x-axis']['prop']['type']:
+            self.client.SetXSpec(self.properties['x-axis']['prop']['type'])
+        else:
+            self.client.SetXSpec('auto')
+        
+        if self.properties['y-axis']['prop']['type']:
+            self.client.SetYSpec(self.properties['y-axis']['prop']['type'])
+        else:
+            self.client.SetYSpec('auto')
 
         #
         # Bind various events
         #
         self.Bind(wx.EVT_CLOSE, self.OnCloseWindow)
+        
+        self.CentreOnScreen()
 
     def OnDrawTransect(self, event):
         """
@@ -217,6 +228,7 @@ class ProfileFrame(wx.Frame):
         """
         Select raster map(s) to profile
         """
+        
         dlg = SetRasterDialog(parent=self)
 
         if dlg.ShowModal() == wx.ID_OK:
@@ -362,6 +374,7 @@ class ProfileFrame(wx.Frame):
             self.properties['y-axis']['axis'] = None
 
         self.client.SetEnableGrid(self.properties['grid']['enabled'])
+        
         self.client.SetGridColour(wx.Color(self.properties['grid']['color'][0],
                                            self.properties['grid']['color'][1],
                                            self.properties['grid']['color'][2],
@@ -411,6 +424,7 @@ class ProfileFrame(wx.Frame):
         segments, these are drawn as points. Profile transect is drawn, using
         methods in mapdisp.py
         """
+        
         if len(self.mapwin.polycoords) == 0 or self.raster[0]['name'] == '':
             dlg = wx.MessageDialog(parent=self,
                                    message=_('You must draw a transect to profile in the map display window.'),

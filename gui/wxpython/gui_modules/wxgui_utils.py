@@ -28,7 +28,9 @@ import wx
 import wx.lib.customtreectrl as CT
 import wx.combo
 import wx.lib.newevent
+import wx.lib.buttons  as  buttons
 
+import gdialogs
 import globalvar
 import menuform
 import mapdisp
@@ -45,22 +47,28 @@ try:
     import subprocess
 except:
     from compat import subprocess
+    
+try:
+    import treemixin 
+except ImportError:
+    from wx.lib.mixins import treemixin
+
 
 TREE_ITEM_HEIGHT = 25
 
-class LayerTree(CT.CustomTreeCtrl):
+class LayerTree(treemixin.DragAndDrop, CT.CustomTreeCtrl):
     """
     Creates layer tree structure
     """
-    #	def __init__(self, parent, id, pos, size, style):
     def __init__(self, parent,
                  id=wx.ID_ANY, pos=wx.DefaultPosition,
                  size=wx.DefaultSize, style=wx.SUNKEN_BORDER,
                  ctstyle=CT.TR_HAS_BUTTONS | CT.TR_HAS_VARIABLE_ROW_HEIGHT |
                  CT.TR_HIDE_ROOT | CT.TR_ROW_LINES | CT.TR_FULL_ROW_HIGHLIGHT |
-                 CT.TR_EDIT_LABELS | CT.TR_MULTIPLE,
-                 **kargs):
-        CT.CustomTreeCtrl.__init__(self, parent, id, pos, size, style, ctstyle)
+                 CT.TR_MULTIPLE,**kargs):
+        self.items = []
+        self.itemCounter = 0
+        super(LayerTree, self).__init__(parent, id, pos, size, style=style, ctstyle=ctstyle)
 
         ### SetAutoLayout() causes that no vertical scrollbar is displayed
         ### when some layers are not visible in layer tree
@@ -77,12 +85,12 @@ class LayerTree(CT.CustomTreeCtrl):
         self.layer_selected = None # ID of currently selected layer
         self.saveitem = {}         # dictionary to preserve layer attributes for drag and drop
         self.first = True          # indicates if a layer is just added or not
-        self.drag = False          # flag to indicate a drag event is in process
+        self.flag = ''             # flag for drag and drop hittest
         self.disp_idx = kargs['idx']
         self.gismgr = kargs['gismgr']
-        self.notebook = kargs['notebook'] # Layer Manager notebook for layer tree
-        self.treepg = parent              # notebook page holding layer tree
-        self.auimgr = kargs['auimgr']     # aui manager
+        self.notebook = kargs['notebook']   # GIS Manager notebook for layer tree
+        self.treepg = parent        # notebook page holding layer tree
+        self.auimgr = kargs['auimgr']       # aui manager
 
         # init associated map display
         self.mapdisplay = mapdisp.MapFrame(self,
@@ -106,6 +114,7 @@ class LayerTree(CT.CustomTreeCtrl):
 
         self.root = self.AddRoot(_("Map Layers"))
         self.SetPyData(self.root, (None,None))
+        self.items = []
 
         #create image list to use with layer tree
         il = wx.ImageList(16, 16, mask=False)
@@ -118,6 +127,10 @@ class LayerTree(CT.CustomTreeCtrl):
         bmpsize = (16, 16)
         trgif = Icons["addrast"].GetBitmap(bmpsize)
         self.rast_icon = il.Add(trgif)
+
+        trgif = Icons["addrast3d"].GetBitmap(bmpsize)
+        print Icons["addrast3d"]
+        self.rast3d_icon = il.Add(trgif)
 
         trgif = Icons["addrgb"].GetBitmap(bmpsize)
         self.rgb_icon = il.Add(trgif)
@@ -170,13 +183,13 @@ class LayerTree(CT.CustomTreeCtrl):
         self.Bind(wx.EVT_TREE_SEL_CHANGED,      self.OnChangeSel)
         self.Bind(CT.EVT_TREE_ITEM_CHECKED,     self.OnLayerChecked)
         self.Bind(wx.EVT_TREE_DELETE_ITEM,      self.OnDeleteLayer)
-        self.Bind(wx.EVT_TREE_BEGIN_DRAG,       self.OnBeginDrag)
-        self.Bind(wx.EVT_TREE_END_DRAG,         self.OnEndDrag)
         self.Bind(wx.EVT_TREE_ITEM_RIGHT_CLICK, self.OnLayerContextMenu)
-        self.Bind(wx.EVT_TREE_END_LABEL_EDIT,   self.OnChangeLayerName)
+        #self.Bind(wx.EVT_TREE_BEGIN_DRAG,       self.OnDrag)
+        self.Bind(wx.EVT_TREE_END_DRAG,         self.OnEndDrag)
+        #self.Bind(wx.EVT_TREE_END_LABEL_EDIT,   self.OnChangeLayerName)
         self.Bind(wx.EVT_KEY_UP,                self.OnKeyUp)
         # self.Bind(wx.EVT_CLOSE, self.OnCloseWindow)
-
+                
     def OnKeyUp(self, event):
         """Key pressed"""
         key = event.GetKeyCode()
@@ -185,9 +198,9 @@ class LayerTree(CT.CustomTreeCtrl):
 
         event.Skip()
 
-    def OnChangeLayerName (self, event):
-        """Change layer name"""
-        Debug.msg (3, "LayerTree.OnChangeLayerName: name=%s" % event.GetLabel())
+    #def OnChangeLayerName (self, event):
+    #    """Change layer name"""
+    #    Debug.msg (3, "LayerTree.OnChangeLayerName: name=%s" % event.GetLabel())
 
     def OnLayerContextMenu (self, event):
         """Contextual menu for item/layer"""
@@ -214,6 +227,7 @@ class LayerTree(CT.CustomTreeCtrl):
             self.popupID8 = wx.NewId()
             self.popupID9 = wx.NewId()
             self.popupID10 = wx.NewId()
+            self.popupID11 = wx.NewId() # nviz
             self.popupID12 = wx.NewId()
             self.popupID13 = wx.NewId()
             
@@ -231,11 +245,6 @@ class LayerTree(CT.CustomTreeCtrl):
                 ltype != "command": # properties
             self.popupMenu.AppendSeparator()
             self.popupMenu.Append(self.popupID8, text=_("Change opacity level"))
-            if self.FindWindowById(self.GetPyData(self.layer_selected)[0]['ctrl']).GetName() == 'spinCtrl':
-                checked = True
-            else:
-                checked = False
-            self.popupMenu.Check(self.popupID8, checked)
             self.Bind(wx.EVT_MENU, self.OnPopupOpacityLevel, id=self.popupID8)
             self.popupMenu.Append(self.popupID3, text=_("Properties"))
             self.Bind(wx.EVT_MENU, self.OnPopupProperties, id=self.popupID3)
@@ -249,7 +258,9 @@ class LayerTree(CT.CustomTreeCtrl):
             mltype = self.GetPyData(self.layer_selected)[0]['type']
         except:
             mltype = None
-        # vector specific items
+        #
+        # vector layers (specific items)
+        #
         if mltype and mltype == "vector":
             self.popupMenu.AppendSeparator()
             self.popupMenu.Append(self.popupID4, text=_("Show attribute data"))
@@ -280,8 +291,9 @@ class LayerTree(CT.CustomTreeCtrl):
             self.popupMenu.Append(self.popupID7, _("Metadata"))
             self.Bind (wx.EVT_MENU, self.OnMetadata, id=self.popupID7)
 
-
-        # raster
+        #
+        # raster layers (specific items)
+        #
         elif mltype and mltype == "raster":
             self.popupMenu.Append(self.popupID12, text=_("Zoom to selected map (ignore NULLs)"))
             self.Bind(wx.EVT_MENU, self.mapdisplay.MapWindow.OnZoomToRaster, id=self.popupID12)
@@ -294,6 +306,9 @@ class LayerTree(CT.CustomTreeCtrl):
             self.Bind (wx.EVT_MENU, self.OnProfile, id=self.popupID5)
             self.popupMenu.Append(self.popupID6, _("Metadata"))
             self.Bind (wx.EVT_MENU, self.OnMetadata, id=self.popupID6)
+            if self.mapdisplay.toolbars['nviz']:
+                self.popupMenu.Append(self.popupID11, _("Nviz properties"))
+                self.Bind (wx.EVT_MENU, self.OnNvizProperties, id=self.popupID11)
 
         ## self.PopupMenu(self.popupMenu, pos)
         self.PopupMenu(self.popupMenu)
@@ -318,7 +333,7 @@ class LayerTree(CT.CustomTreeCtrl):
     def OnSetCompRegFromRaster(self, event):
         """Set computational region from selected raster map (ignore NULLs)"""
         mapLayer = self.GetPyData(self.layer_selected)[0]['maplayer']
-
+        
         cmd = ['g.region',
                '-p',
                'zoom=%s' % mapLayer.name]
@@ -439,41 +454,58 @@ class LayerTree(CT.CustomTreeCtrl):
         if not self.GetPyData(self.layer_selected)[0]['ctrl']:
             return
 
-        win = self.FindWindowById(self.GetPyData(self.layer_selected)[0]['ctrl'])
-        type = win.GetName()
+        #win = self.FindWindowById(self.GetPyData(self.layer_selected)[0]['ctrl'])
+        #type = win.GetName()
+        #
+        #self.layer_selected.DeleteWindow()
 
-        self.layer_selected.DeleteWindow()
+        maplayer = self.GetPyData(self.layer_selected)[0]['maplayer']
+        current_opacity = maplayer.GetOpacity()
+        
+        dlg = gdialogs.SetOpacityDialog(self, opacity=current_opacity,
+                                        title=_("Set opacity <%s>") % maplayer.GetName())
         dlg.CentreOnParent()
 
-        opacity = self.GetPyData(self.layer_selected)[0]['maplayer'].GetOpacity()
-        if type == 'staticText':
-            ctrl = wx.SpinCtrl(self, id=wx.ID_ANY, value="",
-                               style=wx.SP_ARROW_KEYS, initial=100, min=0, max=100,
-                               name='spinCtrl')
-            ctrl.SetValue(opacity)
-            self.Bind(wx.EVT_SPINCTRL, self.OnOpacity, ctrl)
-        else:
-            ctrl = wx.StaticText(self, id=wx.ID_ANY,
-                                 name='staticText')
-            if opacity < 100:
-                ctrl.SetLabel('   (' + str(opacity) + '%)')
-                
-        self.GetPyData(self.layer_selected)[0]['ctrl'] = ctrl.GetId()
-        self.layer_selected.SetWindow(ctrl)
+        if dlg.ShowModal() == wx.ID_OK:
+            new_opacity = dlg.GetOpacity() # string            
+            self.Map.ChangeOpacity(maplayer, new_opacity)
+            maplayer.SetOpacity(new_opacity)
+            opacity_pct = int(new_opacity * 100)
+            layername = self.GetItemText(self.layer_selected)
+            layerbase = layername.split('(')[0].strip()
+            self.SetItemText(self.layer_selected,
+                             layerbase + ' (opacity: ' + str(opacity_pct) + '%)')
+            
+            # redraw map if auto-rendering is enabled
+            if self.mapdisplay.autoRender.GetValue(): 
+                self.mapdisplay.OnRender(None)
 
-        self.RefreshSelected()
-        self.Refresh()
-        
+    def OnNvizProperties(self, event):
+        """Nviz-related properties (raster/vector/volume)
+
+        @todo vector/volume
+        """
+        if not self.mapdisplay.nvizToolWin.IsShown():
+            self.mapdisplay.nvizToolWin.Show()
+
+        self.mapdisplay.nvizToolWin.SetPage('surface')
+
     def RenameLayer (self, event):
         """Rename layer"""
         self.EditLabel(self.layer_selected)
 
-    def AddLayer(self, ltype, lname=None, lchecked=None,
-                 lopacity=None, lcmd=None, lgroup=None):
+    def AddLayer(self, ltype, lname=None, lchecked=None, \
+                 lopacity=None, lcmd=None, lgroup=None, lnviz=None):
         """Add new item to the layer tree, create corresponding MapLayer instance.
         Launch property dialog if needed (raster, vector, etc.)
 
-        Note: lcmd is given as a list
+        @param ltype layer type (raster, vector, 3d-raster, ...)
+        @param lname layer name
+        @param lchecked if True layer is checked
+        @param lopacity layer opacity level
+        @param lcmd command (given as a list)
+        @param lgroup group name or None
+        @param lnviz layer Nviz properties
         """
 
         self.first = True
@@ -498,19 +530,20 @@ class LayerTree(CT.CustomTreeCtrl):
             grouptext = _('Layer group:') + str(self.groupnode)
             self.groupnode += 1
         else:
-            # all other items (raster, vector, ...)
-            if UserSettings.Get(group='manager', key='changeOpacityLevel', subkey='enabled'):
-                ctrl = wx.SpinCtrl(self, id=wx.ID_ANY, value="",
-                                   style=wx.SP_ARROW_KEYS, initial=100, min=0, max=100,
-                                   name='spinCtrl')
-                
-                self.Bind(wx.EVT_SPINCTRL, self.OnOpacity, ctrl)
-            else:
-                ctrl = wx.StaticText(self, id=wx.ID_ANY,
-                                     name='staticText')
+            btnbmp = Icons["layeropts"].GetBitmap((16,16))
+            ctrl = buttons.GenBitmapButton(self, id=wx.ID_ANY, bitmap=btnbmp, size=(24,24))
+            ctrl.SetToolTipString(_("Click to edit layer settings"))
+            self.Bind(wx.EVT_BUTTON, self.OnLayerContextMenu, ctrl)
         # add layer to the layer tree
         if self.layer_selected and self.layer_selected != self.GetRootItem():
-            if self.GetPyData(self.layer_selected)[0]['type'] != 'group':
+            
+            if self.GetPyData(self.layer_selected)[0]['type'] == 'group' \
+                and self.IsExpanded(self.layer_selected):
+                # add to group (first child of self.layer_selected) if group expanded
+                layer = self.PrependItem(parent=self.layer_selected,
+                                         text='', ct_type=1, wnd=ctrl)
+            else:
+                # prepend to individual layer or non-expanded group
                 if lgroup is False:
                     # -> last child of root (loading from workspace)
                     layer = self.AppendItem(parentId=self.root,
@@ -526,14 +559,8 @@ class LayerTree(CT.CustomTreeCtrl):
                     layer = self.InsertItem(parentId=parent,
                                             input=self.GetPrevSibling(self.layer_selected),
                                             text='', ct_type=1, wnd=ctrl)
-
-            else: # group -> first child of selected layer
-                layer = self.PrependItem(parent=self.layer_selected,
-                                         text='', ct_type=1, wnd=ctrl)
-                self.Expand(self.layer_selected)
-        else: # add first layer to the layer tree (i.e. first child of root)
-            layer = self.PrependItem(parent=self.root,
-                                     text='', ct_type=1, wnd=ctrl)
+        else: # add first layer to the layer tree (first child of root)
+            layer = self.PrependItem(parent=self.root, text='', ct_type=1, wnd=ctrl)
 
         # layer is initially unchecked as inactive (beside 'command')
         # use predefined value if given
@@ -544,10 +571,17 @@ class LayerTree(CT.CustomTreeCtrl):
 
         self.CheckItem(layer, checked=checked)
 
+        # select new item
+        self.SelectItem(layer, select=True)
+        self.layer_selected = layer
+
         # add text and icons for each layer ltype
         if ltype == 'raster':
             self.SetItemImage(layer, self.rast_icon)
             self.SetItemText(layer, '%s %s' % (_('raster'), _('(double click to set properties)')))
+        elif ltype == '3d-raster':
+            self.SetItemImage(layer, self.rast3d_icon)
+            self.SetItemText(layer, '%s %s' % (_('3d raster'), _('(double click to set properties)')))
         elif ltype == 'rgb':
             self.SetItemImage(layer, self.rgb_icon)
             self.SetItemText(layer, '%s %s' % (_('RGB'), _('(double click to set properties)')))
@@ -594,14 +628,10 @@ class LayerTree(CT.CustomTreeCtrl):
 
         if ltype != 'group':
             if lopacity:
-                opacity = lopacity
-                if UserSettings.Get(group='manager', key='changeOpacityLevel', subkey='enabled'):
-                    ctrl.SetValue(int(lopacity * 100))
-                else:
-                    if opacity < 1.0:
-                        ctrl.SetLabel('   (' + str(int(opacity * 100)) + '%)')
+                opacity = int(lopacity * 100)
             else:
-                opacity = 1.0
+                opacity = 100
+            
             if lcmd and len(lcmd) > 1:
                 cmd = lcmd
                 render = False
@@ -621,26 +651,11 @@ class LayerTree(CT.CustomTreeCtrl):
                                     'type' : ltype,
                                     'ctrl' : ctrlId,
                                     'maplayer' : None,
+                                    'nviz' : lnviz,
                                     'prowin' : None}, 
                                    None))
 
-            # find previous map layer instance
-            prevItem = self.GetLastChild(self.root)
-            prevMapLayer = None
-            while prevItem and prevItem.IsOk() and \
-                    prevItem != layer:
-                if self.GetPyData(prevItem)[0]['maplayer']:
-                    prevMapLayer = self.GetPyData(prevItem)[0]['maplayer']
-                
-                prevItem = self.GetPrevSibling(prevItem)
-            
-            if prevMapLayer:
-                pos = self.Map.GetLayerIndex(prevMapLayer) + 1
-            else:
-                pos = -1
-
-            maplayer = self.Map.AddLayer(pos=pos,
-                                         type=ltype, command=self.GetPyData(layer)[0]['cmd'], name=name,
+            maplayer = self.Map.AddLayer(type=ltype, command=self.GetPyData(layer)[0]['cmd'], name=name,
                                          l_active=checked, l_hidden=False,
                                          l_opacity=opacity, l_render=render)
             self.GetPyData(layer)[0]['maplayer'] = maplayer
@@ -660,7 +675,9 @@ class LayerTree(CT.CustomTreeCtrl):
         # use predefined layer name if given
         if lname:
             if ltype != 'command':
-                self.SetItemText(layer, lname)
+                if opacity:
+                    name = lname + ' (opacity: ' + str(opacity) + '%)'
+                self.SetItemText(layer, name )
             else:
                 ctrl.SetValue(lname)
 
@@ -668,10 +685,6 @@ class LayerTree(CT.CustomTreeCtrl):
         if checked is True:
             self.mapdisplay.onRenderGauge.SetRange(len(self.Map.GetListOfLayers(l_active=True)))
 
-        # select new item
-        self.SelectItem(layer, select=True)
-        self.layer_selected = layer
-        
         # layer.SetHeight(TREE_ITEM_HEIGHT)
 
         return layer
@@ -702,8 +715,13 @@ class LayerTree(CT.CustomTreeCtrl):
             self.GetPyData(layer)[0]['cmd'] = cmdValidated
         elif ltype == 'raster':
             cmd = ['d.rast']
+            
             if UserSettings.Get(group='cmd', key='rasterOverlay', subkey='enabled'):
                 cmd.append('-o')
+            menuform.GUI().ParseCommand(cmd, completed=(self.GetOptData,layer,params),
+                                        parentframe=self)
+        elif ltype == '3d-raster':
+            cmd = ['d.rast3d']
             menuform.GUI().ParseCommand(cmd, completed=(self.GetOptData,layer,params),
                                         parentframe=self)
         elif ltype == 'rgb':
@@ -752,7 +770,7 @@ class LayerTree(CT.CustomTreeCtrl):
             pass
         
     def OnActivateLayer(self, event):
-        """Click on the layer item.
+        """Double click on the layer item.
         Launch property dialog, or expand/collapse group of items, etc."""
         
         layer = event.GetItem()
@@ -805,11 +823,11 @@ class LayerTree(CT.CustomTreeCtrl):
         event.Skip()
 
     def OnLayerChecked(self, event):
-        """Enable/disable given layer item"""
+        """Enable/disable data layer"""
         item    = event.GetItem()
         checked = item.IsChecked()
         
-        if self.drag == False and self.first == False:
+        if self.first == False:
             # change active parameter for item in layers list in render.Map
             if self.GetPyData(item)[0]['type'] == 'group':
                 child, cookie = self.GetFirstChild(item)
@@ -822,6 +840,37 @@ class LayerTree(CT.CustomTreeCtrl):
 
         # update progress bar range (mapwindow statusbar)
         self.mapdisplay.onRenderGauge.SetRange(len(self.Map.GetListOfLayers(l_active=True)))
+
+        if self.mapdisplay.toolbars['nviz'] and \
+                self.GetPyData(item) is not None:
+            # nviz - load/unload data layer
+            mapLayer = self.GetPyData(item)[0]['maplayer']
+
+            self.mapdisplay.SetStatusText(_("Please wait, updating data..."), 0)
+
+            if checked: # enable
+                if mapLayer.type == 'raster':
+                    self.mapdisplay.MapWindow.LoadRaster(item)
+                elif mapLayer.type == 'vector':
+                    self.mapdisplay.MapWindow.LoadVector(item)
+
+            else: # disable
+                data = self.GetPyData(item)[0]['nviz']
+
+                if mapLayer.type == 'raster':
+                    self.mapdisplay.MapWindow.UnloadRaster(item)
+                elif mapLayer.type == 'vector':
+                    self.mapdisplay.MapWindow.UnloadVector(item)
+                    
+                    if hasattr(self.mapdisplay, "nvizToolWin"):
+                        toolWin = self.mapdisplay.nvizToolWin
+                        # remove vector page
+                        if toolWin.notebook.GetSelection() == toolWin.page['vector']['id']:
+                            toolWin.notebook.RemovePage(toolWin.page['vector']['id'])
+                            toolWin.page['vector']['id'] = -1
+                            toolWin.page['settings']['id'] = 1
+
+            self.mapdisplay.SetStatusText("", 0)
 
         # redraw map if auto-rendering is enabled
         if self.mapdisplay.autoRender.GetValue(): 
@@ -842,7 +891,7 @@ class LayerTree(CT.CustomTreeCtrl):
             layer = self.GetNextVisible(layer)
 
         # change parameters for item in layers list in render.Map
-        if layer and self.drag == False:
+        if layer == False:
             self.ChangeLayer(layer)
             self.GetPyData(layer)[0]['cmd'] = cmd.split(' ')
             maplayer = self.GetPyData(layer)[0]['maplayer']
@@ -852,39 +901,6 @@ class LayerTree(CT.CustomTreeCtrl):
                     self.Map.ChangeLayerName(maplayer, mapname)
 
         event.Skip()
-
-    def OnOpacity(self, event):
-        """
-        Set opacity level for map layer
-        """
-        Debug.msg (3, "LayerTree.OnOpacity(): %s" % event.GetInt())
-
-        ctrl = event.GetEventObject().GetId()
-        maplayer = None
-
-        vislayer = self.GetFirstVisibleItem()
-
-        layer = None
-        for item in range(0, self.GetCount()):
-            if self.GetPyData(vislayer)[0]['ctrl'] == ctrl:
-                layer = vislayer
-
-            if not self.GetNextVisible(vislayer):
-                break
-            else:
-                vislayer = self.GetNextVisible(vislayer)
-
-        if layer:
-            maplayer = self.GetPyData(layer)[0]['maplayer']
-
-        opacity = event.GetInt() / 100.
-        # change opacity parameter for item in layers list in render.Map
-        if maplayer and self.drag == False:
-            self.Map.ChangeOpacity(maplayer, opacity)
-
-        # redraw map if auto-rendering is enabled
-        if self.mapdisplay.autoRender.GetValue(): 
-            self.mapdisplay.OnRender(None)
 
     def OnChangeSel(self, event):
         """Selection changed"""
@@ -903,6 +919,28 @@ class LayerTree(CT.CustomTreeCtrl):
             cmd = self.GetPyData(layer)[0]['maplayer'].GetCmd(string=True)
             if len(cmd) > 0:
                 self.gismgr.SetStatusText(cmd)
+        
+        # update nviz tools
+        if self.mapdisplay.toolbars['nviz'] and \
+                self.GetPyData(self.layer_selected) is not None:
+
+            if self.layer_selected.IsChecked():
+                # update Nviz tool window
+                type = self.GetPyData(self.layer_selected)[0]['maplayer'].type
+
+                if type == 'raster':
+                    self.mapdisplay.nvizToolWin.UpdatePage('surface')
+                    self.mapdisplay.nvizToolWin.SetPage('surface')
+                elif type == 'vector':
+                    self.mapdisplay.nvizToolWin.UpdatePage('vector')
+                    self.mapdisplay.nvizToolWin.SetPage('vector')
+            else:
+                for page in ('surface', 'vector'):
+                    pageId = self.mapdisplay.nvizToolWin.page[page]['id']
+                    if pageId > -1:
+                        self.mapdisplay.nvizToolWin.notebook.RemovePage(pageId)
+                        self.mapdisplay.nvizToolWin.page[page]['id'] = -1
+                        self.mapdisplay.nvizToolWin.page['settings']['id'] = 1 
 
     def OnCollapseNode(self, event):
         """
@@ -918,146 +956,41 @@ class LayerTree(CT.CustomTreeCtrl):
         self.layer_selected = event.GetItem()
         if self.GetPyData(self.layer_selected)[0]['type'] == 'group':
             self.SetItemImage(self.layer_selected, self.folder_open)
-
-    def OnBeginDrag(self, event):
-        """
-        Drag and drop of tree nodes
-        """
-
-        item  = event.GetItem()
-        Debug.msg (3, "LayerTree.OnBeginDrag(): layer=%s" % \
-                   (self.GetItemText(item)))
-
-        event.Allow()
-        self.drag = True
-        self.DoSelectItem(item, unselect_others=True)
-
-        # save everthing associated with item to drag
-        self.dragItem = item
-
-    def RecreateItem (self, event, oldItem, parent=None):
-        """
-        Recreate item (needed for OnEndDrag())
-        """
-        Debug.msg (4, "LayerTree.RecreateItem(): layer=%s" % \
-                   self.GetItemText(oldItem))
-
-        # fetch data (olditem)
-        text    = self.GetItemText(oldItem)
-        image   = self.GetItemImage(oldItem, 0)
-        if self.GetPyData(oldItem)[0]['ctrl']:
-            oldctrl = self.FindWindowById(self.GetPyData(oldItem)[0]['ctrl'])
-        else:
-            oldctrl = None
-        checked = self.IsItemChecked(oldItem)
-        
-        # recreate spin/text control for layer
-        if self.GetPyData(oldItem)[0]['type'] == 'command':
-            newctrl = wx.TextCtrl(self, id=wx.ID_ANY, value='',
-                                  pos=wx.DefaultPosition, size=(250,25),
-                                  style=wx.TE_MULTILINE|wx.TE_WORDWRAP)
-            try:
-                newctrl.SetValue(self.GetPyData(oldItem)[0]['maplayer'].GetCmd(string=True))
-            except:
-                pass
-            newctrl.Bind(wx.EVT_TEXT_ENTER, self.OnCmdChanged)
-            newctrl.Bind(wx.EVT_TEXT,       self.OnCmdChanged)
-        elif self.GetPyData(oldItem)[0]['type'] == 'group' or oldctrl is None:
-            newctrl = None
-        else:
-            opacity = self.GetPyData(oldItem)[0]['maplayer'].GetOpacity()
-            if oldctrl.GetName() == 'staticText':
-                newctrl = wx.StaticText(self, id=wx.ID_ANY,
-                                        name='staticText')
-                if opacity < 100:
-                    newctrl.SetLabel('   (' + str(opacity) + '%)')
-            else:
-                newctrl = wx.SpinCtrl(self, id=wx.ID_ANY, value="",
-                                      style=wx.SP_ARROW_KEYS, min=0, max=100,
-                                      name='spinCtrl')
-                newctrl.SetValue(opacity)
-                self.Bind(wx.EVT_SPINCTRL, self.OnOpacity, newctrl)
-
-        # decide where to put new layer and put it there
-        if not parent:
-            flag = self.HitTest(event.GetPoint())[1]
-        else:
-            flag = 0
-
-        if self.GetPyData(oldItem)[0]['type'] == 'group':
-            windval = None
-            data    = None
-        else:
-            windval = self.GetPyData(self.layer_selected)[0]['maplayer'].GetOpacity()
-            data    = self.GetPyData(oldItem)
-
-        # create GenericTreeItem instance
-        if flag & wx.TREE_HITTEST_ABOVE:
-            newItem = self.PrependItem(self.root, text=text, \
-                                   ct_type=1, wnd=newctrl, image=image, \
-                                   data=data)
-        elif (flag &  wx.TREE_HITTEST_BELOW) or (flag & wx.TREE_HITTEST_NOWHERE) \
-                 or (flag & wx.TREE_HITTEST_TOLEFT) or (flag & wx.TREE_HITTEST_TORIGHT):
-            newItem = self.AppendItem(self.root, text=text, \
-                                  ct_type=1, wnd=newctrl, image=image, \
-                                  data=data)
-        else:
-            if parent:
-                afteritem = parent
-            else:
-                afteritem = event.GetItem()
-
-            if  self.GetPyData(afteritem)[0]['type'] == 'group':
-                parent = afteritem
-                newItem = self.AppendItem(parent, text=text, \
-                                      ct_type=1, wnd=newctrl, image=image, \
-                                      data=data)
-                self.Expand(afteritem)
-            else:
-                parent = self.GetItemParent(afteritem)
-                newItem = self.InsertItem(parent, afteritem, text=text, \
-                                      ct_type=1, wnd=newctrl, image=image, \
-                                      data=data)
-
-        # add layer at new position
-        self.SetPyData(newItem, self.GetPyData(oldItem))
-        if newctrl:
-            self.GetPyData(newItem)[0]['ctrl'] = newctrl.GetId()
-        else:
-            self.GetPyData(newItem)[0]['ctrl'] = None
-            
-        self.CheckItem(newItem, checked=checked)
-
-        # newItem.SetHeight(TREE_ITEM_HEIGHT)
-
-        return newItem
-
+    
     def OnEndDrag(self, event):
-        """
-        Insert copy of layer in new
-        position and delete original at old position
-        """
+        self.StopDragging()
+        dropTarget = event.GetItem()
+        self.flag = self.HitTest(event.GetPoint())[1]
+        if self.IsValidDropTarget(dropTarget):
+            self.UnselectAll()
+            if dropTarget != None:
+                self.SelectItem(dropTarget)
+            self.OnDrop(dropTarget, self._dragItem)
+        elif dropTarget == None:
+            self.OnDrop(dropTarget, self._dragItem)
 
-        self.drag = True
+    def OnDrop(self, dropTarget, dragItem):
+        # save everthing associated with item to drag
         try:
-            old = self.dragItem  # make sure this member exists
+            old = dragItem  # make sure this member exists
         except:
             return
 
-        Debug.msg (4, "LayerTree.OnEndDrag(): layer=%s" % \
-                   (self.GetItemText(self.dragItem)))
+        Debug.msg (4, "LayerTree.OnDrop(): layer=%s" % \
+                   (self.GetItemText(dragItem)))
+        
+        # recreate data layer, insert copy of layer in new position, and delete original at old position
+        newItem  = self.RecreateItem (dragItem, dropTarget)
 
-        newItem  = self.RecreateItem (event, self.dragItem)
-
+        # if recreated layer is a group, also recreate its children
         if  self.GetPyData(newItem)[0]['type'] == 'group':
-            (child, cookie) = self.GetFirstChild(self.dragItem)
+            (child, cookie) = self.GetFirstChild(dragItem)
             if child:
                 while child:
-                    self.RecreateItem(event, child, parent=newItem)
+                    self.RecreateItem(child, dropTarget, parent=newItem)
                     self.Delete(child)
                     child = self.GetNextChild(old, cookie)[0]
-
-            self.Expand(newItem)
+            #self.Expand(newItem)
 
         # delete layer at original position
         try:
@@ -1069,19 +1002,109 @@ class LayerTree(CT.CustomTreeCtrl):
         # reorder layers in render.Map to match new order after drag and drop
         self.ReorderLayers()
 
+        # redraw map if auto-rendering is enabled
+        if self.mapdisplay.autoRender.GetValue(): 
+            self.mapdisplay.OnRender(None)
+
         # select new item
         self.SelectItem(newItem)
+        
+    def RecreateItem (self, dragItem, dropTarget, parent=None):
+        """
+        Recreate item (needed for OnEndDrag())
+        """
+        Debug.msg (4, "LayerTree.RecreateItem(): layer=%s" % \
+                   self.GetItemText(dragItem))
 
-        # completed drag and drop
-        self.drag = False
+        # fetch data (dragItem)
+        checked = self.IsItemChecked(dragItem)
+        image   = self.GetItemImage(dragItem, 0)
+        text    = self.GetItemText(dragItem)
+        if self.GetPyData(dragItem)[0]['ctrl']:
+            # recreate spin/text control for layer
+            btnbmp = Icons["layeropts"].GetBitmap((16,16))
+            newctrl = buttons.GenBitmapButton(self, id=wx.ID_ANY, bitmap=btnbmp)
+            newctrl.SetToolTipString(_("Click to edit layer settings"))
+            self.Bind(wx.EVT_BUTTON, self.OnLayerContextMenu, newctrl)
+            opacity = self.GetPyData(dragItem)[0]['maplayer'].GetOpacity()
+            windval = self.GetPyData(dragItem)[0]['maplayer'].GetOpacity()
+            data    = self.GetPyData(dragItem)
+        
+        elif self.GetPyData(dragItem)[0]['type'] == 'command':
+            # recreate command layer
+            oldctrl = None
+            newctrl = wx.TextCtrl(self, id=wx.ID_ANY, value='',
+                                  pos=wx.DefaultPosition, size=(250,25),
+                                  style=wx.TE_MULTILINE|wx.TE_WORDWRAP)
+            try:
+                newctrl.SetValue(self.GetPyData(dragItem)[0]['maplayer'].GetCmd(string=True))
+            except:
+                pass
+            newctrl.Bind(wx.EVT_TEXT_ENTER, self.OnCmdChanged)
+            newctrl.Bind(wx.EVT_TEXT,       self.OnCmdChanged)
+            windval = self.GetPyData(dragItem)[0]['maplayer'].GetOpacity()
+            data    = self.GetPyData(dragItem)
+
+        elif self.GetPyData(dragItem)[0]['type'] == 'group':
+            #recreate group
+            newctrl = None
+            windval = None
+            data    = None
+            
+        # decide where to put recreated item
+        if dropTarget != None and dropTarget != self.GetRootItem():
+            if parent:
+                # new item is a group
+                afteritem = parent
+            else:
+                # new item is a single layer
+                afteritem = dropTarget
+
+            # dragItem dropped on group
+            if  self.GetPyData(afteritem)[0]['type'] == 'group':
+                newItem = self.PrependItem(afteritem, text=text, \
+                                      ct_type=1, wnd=newctrl, image=image, \
+                                      data=data)
+                self.Expand(afteritem)
+            else:
+                #dragItem dropped on single layer
+                newparent = self.GetItemParent(afteritem)
+                newItem = self.InsertItem(newparent, self.GetPrevSibling(afteritem), \
+                                       text=text, ct_type=1, wnd=newctrl, \
+                                       image=image, data=data)
+        else:
+            # if dragItem not dropped on a layer or group, append or prepend it to the layer tree
+            if self.flag & wx.TREE_HITTEST_ABOVE:
+                newItem = self.PrependItem(self.root, text=text, \
+                                      ct_type=1, wnd=newctrl, image=image, \
+                                      data=data)
+            elif (self.flag &  wx.TREE_HITTEST_BELOW) or (self.flag & wx.TREE_HITTEST_NOWHERE) \
+                     or (self.flag & wx.TREE_HITTEST_TOLEFT) or (self.flag & wx.TREE_HITTEST_TORIGHT):
+                newItem = self.AppendItem(self.root, text=text, \
+                                      ct_type=1, wnd=newctrl, image=image, \
+                                      data=data)
+
+        #update new layer 
+        self.SetPyData(newItem, self.GetPyData(dragItem))
+        if newctrl:
+            self.GetPyData(newItem)[0]['ctrl'] = newctrl.GetId()
+        else:
+            self.GetPyData(newItem)[0]['ctrl'] = None
+            
+        self.CheckItem(newItem, checked=checked)
+
+        # newItem.SetHeight(TREE_ITEM_HEIGHT)
+
+        return newItem
 
     def GetOptData(self, dcmd, layer, params, propwin):
         """Process layer data"""
 
         # set layer text to map name
         if dcmd:
+            opacity = int(self.GetPyData(layer)[0]['maplayer'].GetOpacity(float=True) * 100)
             mapname = utils.GetLayerNameFromCmd(dcmd, fullyQualified=True)
-            self.SetItemText(layer, mapname)
+            self.SetItemText(layer, mapname + ' (opacity: ' + str(opacity) + '%)')
 
         # update layer data
         if params:
@@ -1096,6 +1119,29 @@ class LayerTree(CT.CustomTreeCtrl):
         # change parameters for item in layers list in render.Map
         self.ChangeLayer(layer)
 
+        if self.mapdisplay.toolbars['nviz'] and dcmd:
+            # update nviz session
+            mapLayer = self.GetPyData(layer)[0]['maplayer']
+            mapWin = self.mapdisplay.MapWindow
+            if len(mapLayer.GetCmd()) > 0:
+                id = -1
+                if mapLayer.type == 'raster':
+                    if mapWin.IsLoaded(layer):
+                        mapWin.UnloadRaster(layer)
+                    
+                    mapWin.LoadRaster(layer)
+                elif mapLayer.type == 'vector':
+                    if mapWin.IsLoaded(layer):
+                        mapWin.UnloadVector(layer)
+                    
+                    mapWin.LoadVector(mapLayer)
+
+                # reset view when first layer loaded
+                nlayers = len(mapWin.Map.GetListOfLayers(l_type=('raster', 'vector'),
+                                                         l_active=True))
+                if nlayers < 2:
+                    mapWin.ResetView()
+        
     def ReorderLayers(self):
         """Add commands from data associated with
         any valid layers (checked or not) to layer list in order to
@@ -1111,7 +1157,7 @@ class LayerTree(CT.CustomTreeCtrl):
 
         itemList = ""
 
-        for item in range(0, self.GetCount()):
+        for item in range(self.GetCount()):
             itemList += self.GetItemText(vislayer) + ','
             if self.GetPyData(vislayer)[0]['type'] != 'group':
                 treelayers.append(self.GetPyData(vislayer)[0]['maplayer'])
@@ -1146,11 +1192,16 @@ class LayerTree(CT.CustomTreeCtrl):
                 opac = self.GetPyData(item)[0]['maplayer'].GetOpacity(float=True)
                 chk = self.IsItemChecked(item)
                 hidden = not self.IsVisible(item)
+        # determine layer name
+        layerName = utils.GetLayerNameFromCmd(cmdlist, fullyQualified=True)
+        if not layerName:
+            layerName = self.GetItemText(item)
+        maplayer = self.Map.ChangeLayer(layer=self.GetPyData(item)[0]['maplayer'], type=type,
+                                        command=cmdlist, name=layerName,
+                                        l_active=chk, l_hidden=hidden, l_opacity=opac, l_render=False)
 
-        self.Map.ChangeLayer(layer=self.GetPyData(item)[0]['maplayer'],
-                             command=cmdlist, name=self.GetItemText(item),
-                             active=chk, l_hidden=hidden, l_opacity=opac)
-        
+        self.GetPyData(item)[0]['maplayer'] = maplayer
+
         # if digitization tool enabled -> update list of available vector map layers
         if self.mapdisplay.toolbars['vdigit']:
             self.mapdisplay.toolbars['vdigit'].UpdateListOfLayers(updateTool=True)
@@ -1184,3 +1235,4 @@ class LayerTree(CT.CustomTreeCtrl):
             item = self.GetNextSibling(item)
 
         return None
+    

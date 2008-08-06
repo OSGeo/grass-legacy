@@ -189,13 +189,17 @@ class Layer(object):
         
         return int (self.opacity * 100)
 
+    def GetName(self):
+        """Get map layer name"""
+        return self.name
+    
     def IsActive(self):
         """Check if layer is activated for rendering"""
         return self.active
 
     def SetType(self, type):
         """Set layer type"""
-        if type not in ('raster', 'vector', 'overlay', 'command'):
+        if type not in ('raster', '3d-raster', 'vector', 'overlay', 'command'):
             raise gcmd.GStdError(_("Unsupported map layer type '%s'") % str(type))
         
         self.type = type

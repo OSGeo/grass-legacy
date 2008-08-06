@@ -80,13 +80,14 @@ icons_default = {
     "digUndo" : wx.ART_ERROR, # FIXME
     "digSettings" : 'settings.gif',
     "digAdditionalTools" : wx.ART_ERROR, # FIXME
-    # gis manager
+    # layer manager
     "newdisplay" : 'gui-startmon.gif',
     "workspaceNew" : 'file-new.gif',
     "workspaceLoad" : 'file-new.gif', # change the icon if possible
     "workspaceOpen" : 'file-open.gif',
     "workspaceSave" : 'file-save.gif',
     "addrast"    : 'element-cell.gif',
+    "addrast3d"  : 'element-grid3.gif',
     "addvect"    : 'element-vector.gif',
     "addcmd"     : 'gui-cmd.gif',
     "addgrp"     : 'gui-group.gif',
@@ -114,7 +115,7 @@ icons_default = {
     "font"       : 'gui-font.gif',
     "histogram"  : 'module-d.histogram.gif',
     "color"      : 'edit-color.gif',
-    "options"    :  wx.ART_ERROR, # FIXME
+    "layeropts"  : 'gui-layeroptions.gif',
     # profile 
     "profile"    : 'gui-profile.gif',
     "transect"   : 'gui-profiledefine.gif',
@@ -128,10 +129,12 @@ icons_default = {
     'grGcpRms'     : 'gui-rms.gif',
     'grGcpRefresh' : 'gui-display.gif',
     "grGcpSave"    : 'file-save.gif', 
-    "grGcpAdd"     : wx.ART_ERROR, # FIXME
-    "grGcpDelete"  : wx.ART_ERROR, # FIXME
+    "grGcpAdd"     : wx.ART_NEW, # FIXME
+    "grGcpDelete"  : wx.ART_DELETE, # FIXME
     "grGcpReload"  : 'gui-redraw.gif',
     "grSettings"   : 'edit-color.gif', 
+    # nviz 
+    "nvizSettings" : 'settings.gif',   
     }
 
 # merge icons dictionaries, join paths
@@ -312,6 +315,8 @@ Icons = {
                              label=_("Add labels")),
     "addtext"    : MetaIcon (img=icons_img["addtext"],
                              label=_("Add text layer")),
+    "addrast3d"  : MetaIcon (img=icons_img["addrast3d"],
+                             label=_("Add 3D raster map")),
     # digit
     "digAddPoint": MetaIcon (img=icons_img["digAddPoint"],
                              label=_("Digitize new point"),
@@ -386,8 +391,8 @@ Icons = {
                              label=_("Select font")),
     "color"      : MetaIcon (img=icons_img["color"],
                              label=_("Select color")),
-    "options"    : MetaIcon (img=icons_img["options"],
-                             label=_("Set histogram options")),
+    "layeropts"  : MetaIcon (img=icons_img["layeropts"],
+                             label=_("Set options")),
     "analyze"    : MetaIcon (img=icons_img["analyze"],
                              label=_("Analyze")),
     # georectify
@@ -415,6 +420,10 @@ Icons = {
     "grSettings": MetaIcon (img=icons_img["grSettings"],
                             label=_("Settings"),
                             desc=_("Settings dialog for georectification tool")),
+    # nviz
+    "nvizSettings": MetaIcon (img=icons_img["nvizSettings"],
+                              label=_("Settings"),
+                              desc=_("Show Nviz settings dialog")),
     }
 
 # testing ...
