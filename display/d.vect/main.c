@@ -407,8 +407,7 @@ int main(int argc, char **argv)
 	minreg = atof(minreg_opt->answer);
 
 	if (reg < minreg) {
-	    G_message(_
-		      ("Region size is lower than minreg, nothing displayed."));
+	    G_message(_("Region size is lower than minreg, nothing displayed."));
 	    D_add_to_list(G_recreate_command());
 	    exit(EXIT_SUCCESS);
 	}
@@ -417,8 +416,7 @@ int main(int argc, char **argv)
 	maxreg = atof(maxreg_opt->answer);
 
 	if (reg > maxreg) {
-	    G_message(_
-		      ("Region size is greater than maxreg, nothing displayed."));
+	    G_message(_("Region size is greater than maxreg, nothing displayed."));
 	    D_add_to_list(G_recreate_command());
 	    exit(EXIT_SUCCESS);
 	}
@@ -643,8 +641,7 @@ int main(int argc, char **argv)
     if (level >= 2 && (window.north < box.S || window.south > box.N ||
 		       window.east < box.W ||
 		       window.west > G_adjust_easting(box.E, &window))) {
-	G_message(_
-		  ("The bounding box of the map is outside the current region, "
+	G_message(_("The bounding box of the map is outside the current region, "
 		   "nothing drawn."));
 	stat = 0;
     }
@@ -683,8 +680,7 @@ int main(int argc, char **argv)
 
 	if (display & DISP_SHAPE) {
 	    if (id_flag->answer && level < 2) {
-		G_warning(_
-			  ("Cannot display lines by id, topology not available"));
+		G_warning(_("Cannot display lines by id, topology not available"));
 	    }
 	    else {
 		stat = plot1(&Map, type, area, Clist,

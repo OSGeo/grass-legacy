@@ -171,8 +171,7 @@ void create_location(char *location, int interactive)
 	struct Cell_head old_cellhd;
 
 	if (strcmp(mapset, "PERMANENT") != 0)
-	    G_fatal_error(_
-			  ("You must select the PERMANENT mapset before updating the "
+	    G_fatal_error(_("You must select the PERMANENT mapset before updating the "
 			   "current location's projection. (Current mapset is %s)"),
 			  mapset);
 
@@ -204,8 +203,7 @@ void create_location(char *location, int interactive)
 			"    GRASS will not re-project your data automatically\n\n");
 
 		if (G_yes
-		    (_
-		     ("Would you still like to overwrite the current projection information "),
+		    (_("Would you still like to overwrite the current projection information "),
 		     0))
 		    go_ahead = 1;
 	    }
@@ -243,8 +241,7 @@ void create_location(char *location, int interactive)
 		 * number or zone have changed */
 		G__put_window(&cellhd, "", "DEFAULT_WIND");
 		G__put_window(&cellhd, "", "WIND");
-		G_message(_
-			  ("N.B. The default region was updated to the new projection, but if you have "
+		G_message(_("N.B. The default region was updated to the new projection, but if you have "
 			   "multiple mapsets g.region -d should be run in each to update the region from "
 			   "the default."));
 	    }

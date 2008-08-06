@@ -192,8 +192,7 @@ int class_equiprob(double *data, int count, int *nbreaks, double *classbreaks)
     }
 
     if (j < (*nbreaks)) {
-	G_warning(_
-		  ("There are classbreaks outside the range min-max. Number of classes reduced to %i, but using probabilities for %i classes."),
+	G_warning(_("There are classbreaks outside the range min-max. Number of classes reduced to %i, but using probabilities for %i classes."),
 		  j + 1, *nbreaks + 1);
 	G_realloc(classbreaks, j * sizeof(double));
 	for (i = 0; i < j; i++)
@@ -388,8 +387,7 @@ double class_discont(double *data, int count, int nbreaks,
 	    chi2 = pow((double)((no1 - no2) - (xt1 - xt2)), 2) / (xt1 + xt2);
 	    if (chi2 < 3.84148) {
 
-		G_warning(_
-			  ("discontinuities algorithm: %i class breaks or more are not statistically significant at alpha=0.05"),
+		G_warning(_("discontinuities algorithm: %i class breaks or more are not statistically significant at alpha=0.05"),
 			  i);
 		maxclass = 1;
 	    }

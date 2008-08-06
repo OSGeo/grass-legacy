@@ -141,8 +141,7 @@ int main(int argc, char *argv[])
 
     else if ((sscanf(fprange->answer, "%lf,%lf", &new_dmin, &new_dmax) == 2)
 	     && (sscanf(range->answer, "%d,%d", &new_min, &new_max) == 2)) {
-	G_message(_
-		  ("Setting quant rules for input map(s) to (%f %f) -> (%d,%d)"),
+	G_message(_("Setting quant rules for input map(s) to (%f %f) -> (%d,%d)"),
 		  new_dmin, new_dmax, new_min, new_max);
 	G_quant_add_rule(&quant_struct, new_dmin, new_dmax, new_min, new_max);
     }
@@ -152,8 +151,7 @@ int main(int argc, char *argv[])
 
 	if (!read_rules()) {
 	    if (isatty(0))
-		G_message(_
-			  ("No rules specified. Quant table(s) not changed."));
+		G_message(_("No rules specified. Quant table(s) not changed."));
 	    else
 		G_fatal_error("No rules specified");
 	}

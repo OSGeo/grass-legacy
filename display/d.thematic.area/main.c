@@ -190,8 +190,7 @@ int main(int argc, char **argv)
     level = Vect_open_old(&Map, map_name, mapset);
 
     if (level < 2)
-	G_fatal_error(_
-		      ("%s: You must build topology on vector map. Run v.build."),
+	G_fatal_error(_("%s: You must build topology on vector map. Run v.build."),
 		      map_name);
 
     /* Check database connection and open it */
@@ -294,8 +293,7 @@ int main(int argc, char **argv)
     if (colors_opt->answers != NULL) {
 	for (i = 0; i < nclass; i++) {
 	    if (colors_opt->answers[i] == NULL)
-		G_fatal_error(_
-			      ("Not enough colors or error in color specifications.\nNeed %i colors."),
+		G_fatal_error(_("Not enough colors or error in color specifications.\nNeed %i colors."),
 			      nclass);
 
 	    ret = G_str_to_color(colors_opt->answers[i], &r, &g, &b);
@@ -328,8 +326,7 @@ int main(int argc, char **argv)
     if (window.north < box.S || window.south > box.N ||
 	window.east < box.W ||
 	window.west > G_adjust_easting(box.E, &window)) {
-	G_message(_
-		  ("The bounding box of the map is outside the current region, "
+	G_message(_("The bounding box of the map is outside the current region, "
 		   "nothing drawn."));
 	stat = 0;
     }

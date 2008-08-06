@@ -61,8 +61,7 @@ int REM_open_driver(void)
     if (!name) {
 	if (verbose) {
 	    G_warning(_("No graphics monitor has been selected for output."));
-	    G_warning(_
-		      ("Please run \"d.mon\" to select a graphics monitor."));
+	    G_warning(_("Please run \"d.mon\" to select a graphics monitor."));
 	}
 	return (NO_MON);
     }
@@ -96,8 +95,7 @@ int REM_open_driver(void)
     case ECONNREFUSED:
     case EADDRINUSE:
 	if (verbose) {
-	    G_warning(_
-		      ("Socket is already in use or not accepting connections."));
+	    G_warning(_("Socket is already in use or not accepting connections."));
 	    G_warning(_("Use d.mon to select a monitor"));
 	}
 	return (NO_RUN);
