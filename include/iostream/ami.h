@@ -1,6 +1,7 @@
+
 /****************************************************************************
  * 
- *  MODULE:	r.terraflow
+ *  MODULE:	iostream
  *
  *  COPYRIGHT (C) 2007 Laura Toma
  *   
@@ -16,29 +17,30 @@
  *
  *****************************************************************************/
 
-#include <ami.h>
-#include <minmaxheap.h>
+#ifndef _AMI_H
+#define _AMI_H
 
-#if(0)
-#define TEST_SIZE (1<<20)
+//debug flags
+#include "ami_config.h"
 
-int main() {
-  int m = TEST_SIZE/100;
-  MinMaxHeap<int> foo(TEST_SIZE);
+//typedefs, stream
+#include "ami_stream.h"
 
-  for(int i=0; i<TEST_SIZE; i++) {
-	foo.insert(i);
-  }
-  int z;
-  cout << " ------------------------------" << endl;
-  for(int i=0; i<TEST_SIZE; i++) {
-	bool r;
-	r = foo.extract_min(z);
-	r = foo.extract_max(z);
-	if(i%m == 0) {
-	  cerr << i << endl;
-	}
-  }
+//memory manager
+#include "mm.h"
+#include "mm_utils.h"
 
-}
-#endif
+#include "ami_sort.h"
+
+//data structures
+#include "queue.h"
+#include "pqheap.h"
+//#include "empq.h"
+#include "empq_impl.h"
+//#include "empq_adaptive.h"
+#include "empq_adaptive_impl.h"
+
+//timer
+#include "rtimer.h"
+
+#endif // _AMI_H 
