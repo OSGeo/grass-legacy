@@ -26,9 +26,8 @@
   \return DB_OK on success
   \return DB_FAILED on failure
  */
-int
-db_list_indexes(dbDriver * driver, dbString * table_name, dbIndex ** list,
-		int *count)
+int db_list_indexes(dbDriver * driver, dbString * table_name, dbIndex ** list,
+		    int *count)
 {
     int ret_code;
 
