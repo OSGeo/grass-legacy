@@ -1,6 +1,7 @@
+
 /****************************************************************************
  * 
- *  MODULE:	r.terraflow
+ *  MODULE:	iostream
  *
  *  COPYRIGHT (C) 2007 Laura Toma
  *   
@@ -16,37 +17,28 @@
  *
  *****************************************************************************/
 
-#include <sys/types.h>
-#include <ctype.h>
+#ifndef _ami_config_h
+#define _ami_config_h
 
-#if __GNUC__ > 3 || (__GNUC__ == 3 && __GNUC_MINOR__ >= 1)
-#include <ostream>
-#else
-#include <ostream.h>
+
+
+//CHOOSE PQUEUE IMPLEMENTATION 
+//------------------------------------------------------------
+//#define IM_PQUEUE
+//#define EM_PQUEUE
+#define EMPQ_ADAPTIVE
+
+
+//maximize memory usage by keeping streams on disk
+//------------------------------------------------------------
+#if (defined EM_PQUEUE || defined EMPQ_ADAPTIVE)
+//enables keeping streams on disk, rather than in memory;
+#define SAVE_MEMORY
 #endif
 
-#include <iostream>
-using namespace std;
-#include <stdio.h>
 
-#include <mm.h>
+#if (defined EMPQ_ADAPTIVE && !defined SAVE_MEMORY)
+#error  EMPQ_ADAPTIVE requires SAVE_MEMORY set
+#endif
 
-
-void 
-LOG_avail_memo() {
-  size_t sz_avail=0;
-  sz_avail = MM_manager.memory_available();
-  printf("available memory: %.2fMB\n", sz_avail/(float)(1<<20));
-}
-
-size_t
-getAvailableMemory() {
-  size_t fmem;
-  fmem = MM_manager.memory_available();
-  return fmem;
-}
-
-void MEMORY_LOG(std::string str) {
-  printf("%s", str.c_str());
-  fflush(stdout);
-}
+#endif

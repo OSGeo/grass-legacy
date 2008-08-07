@@ -1,6 +1,6 @@
 /****************************************************************************
  * 
- *  MODULE:	r.terraflow
+ *  MODULE:	iostream
  *
  *  COPYRIGHT (C) 2007 Laura Toma
  *   
@@ -16,28 +16,17 @@
  *
  *****************************************************************************/
 
-#ifndef _ami_config_h
-#define _ami_config_h
+#ifndef MM_UTIL_H
+#define MM_UTIL_H
+
+#include "mm.h"
+#include <string>
 
 
+void  LOG_avail_memo();
 
-//CHOOSE PQUEUE IMPLEMENTATION 
-//------------------------------------------------------------
-//#define IM_PQUEUE
-//#define EM_PQUEUE
-#define EMPQ_ADAPTIVE
+size_t getAvailableMemory();
 
-
-//maximize memory usage by keeping streams on disk
-//------------------------------------------------------------
-#if (defined EM_PQUEUE || defined EMPQ_ADAPTIVE)
-//enables keeping streams on disk, rather than in memory;
-#define SAVE_MEMORY
-#endif
-
-
-#if (defined EMPQ_ADAPTIVE && !defined SAVE_MEMORY)
-#error  EMPQ_ADAPTIVE requires SAVE_MEMORY set
-#endif
+void  MEMORY_LOG(std::string str);
 
 #endif

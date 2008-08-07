@@ -1,6 +1,6 @@
 /****************************************************************************
  * 
- *  MODULE:	r.terraflow
+ *  MODULE:	iostream
  *
  *  COPYRIGHT (C) 2007 Laura Toma
  *   
@@ -16,31 +16,32 @@
  *
  *****************************************************************************/
 
+#include <sys/time.h>
+#include <sys/resource.h>
+#include <stdio.h>
+#include <string.h>
+#include <strings.h>
 
-#ifndef _AMI_H
-#define _AMI_H
+//#include <rtimer.h>
+#include <grass/iostream/rtimer.h>
 
-//debug flags
-#include "ami_config.h"
+char *
+rt_sprint_safe(char *buf, Rtimer rt) {
+  if(rt_w_useconds(rt) == 0) {
+	sprintf(buf, "[%4.2fu (%.0f%%) %4.2fs (%.0f%%) %4.2f %.1f%%]",
+			0.0, 0.0, 0.0, 0.0, 0.0, 0.0);
+  } else {
+	sprintf(buf, "[%4.2fu (%.0f%%) %4.2fs (%.0f%%) %4.2f %.1f%%]",
+			rt_u_useconds(rt)/1000000,
+			100.0*rt_u_useconds(rt)/rt_w_useconds(rt),
+			rt_s_useconds(rt)/1000000,
+			100.0*rt_s_useconds(rt)/rt_w_useconds(rt),
+			rt_w_useconds(rt)/1000000,
+			100.0*(rt_u_useconds(rt)+rt_s_useconds(rt)) / rt_w_useconds(rt));
+  }
+  return buf;
+}
 
-//typedefs, stream
-#include "ami_stream.h"
 
-//memory manager
-#include "mm.h"
-#include "mm_utils.h"
 
-#include "ami_sort.h"
 
-//data structures
-#include "queue.h"
-#include "pqheap.h"
-//#include "empq.h"
-#include "empq_impl.h"
-//#include "empq_adaptive.h"
-#include "empq_adaptive_impl.h"
-
-//timer
-#include "rtimer.h"
-
-#endif // _AMI_H 

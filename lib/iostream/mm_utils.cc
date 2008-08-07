@@ -1,6 +1,6 @@
 /****************************************************************************
  * 
- *  MODULE:	r.terraflow
+ *  MODULE:	iostream
  *
  *  COPYRIGHT (C) 2007 Laura Toma
  *   
@@ -16,18 +16,34 @@
  *
  *****************************************************************************/
 
+#include <sys/types.h>
+#include <sys/mman.h>
+#include <ctype.h>
+#include <ostream>
+#include <iostream>
+using namespace std;
+#include <stdio.h>
 
-#ifndef MM_UTIL_H
-#define MM_UTIL_H
+//#include <mm.h>
+#include <grass/iostream/mm.h>
 
 
-#include "mm.h"
-#include <string>
+void 
+LOG_avail_memo() {
+  size_t sz_avail=0;
+  sz_avail = MM_manager.memory_available();
+  printf("available memory: %.2fMB\n", sz_avail/(float)(1<<20));
+}
 
-void  LOG_avail_memo();
+size_t
+getAvailableMemory() {
+  size_t fmem;
+  fmem = MM_manager.memory_available();
+  return fmem;
+}
 
-size_t getAvailableMemory();
-
-void  MEMORY_LOG(std::string str);
-
-#endif
+void 
+MEMORY_LOG(std::string str) {
+  printf("%s", str.c_str());
+  fflush(stdout);
+}
