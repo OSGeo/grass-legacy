@@ -46,10 +46,12 @@ int db_execute_immediate(dbDriver * driver, dbString * SQLstatement)
 }
 
 /*!
-   \fn int db_begin_transaction (dbDriver *driver)
-   \brief 
-   \return 
-   \param 
+  \brief Begin transaction
+
+  \return driver db driver
+
+  \return DB_OK on success
+  \return DB_FAILED on failure
  */
 int db_begin_transaction(dbDriver * driver)
 {
@@ -70,10 +72,12 @@ int db_begin_transaction(dbDriver * driver)
 }
 
 /*!
-   \fn int db_commit_transaction (dbDriver *driver)
-   \brief 
-   \return 
-   \param 
+  \brief Commit transaction
+  
+  \param driver db driver
+  
+  \return DB_OK on success
+  \return DB_FAILED on failure
  */
 int db_commit_transaction(dbDriver * driver)
 {
