@@ -1449,8 +1449,12 @@ class PreferencesDialog(wx.Dialog):
         
         # update widgets
         for gks in self.winId.keys():
-            group, key, subkey = gks.split(':')
-            value = self.settings.Get(group, key, subkey)
+            try:
+                group, key, subkey = gks.split(':')
+                value = self.settings.Get(group, key, subkey)
+            except ValueError:
+                group, key, subkey, subkey1 = gks.split(':')
+                value = self.settings.Get(group, key, [subkey, subkey1])
             win = self.FindWindowById(self.winId[gks])
             if win.GetName() in ('GetValue', 'IsChecked'):
                 value = win.SetValue(value)
