@@ -655,39 +655,60 @@ class VDigitToolbar(AbstractToolbar):
         point = wx.GetMousePosition()
         toolMenu = wx.Menu()
         # Add items to the menu
-        copy = wx.MenuItem(toolMenu, wx.ID_ANY, _('Copy features from (background) vector map'))
+        copy = wx.MenuItem(parentMenu=toolMenu, id=wx.ID_ANY,
+                           text=_('Copy features from (background) vector map'),
+                           kind=wx.ITEM_CHECK)
+        if self.action == "copyLine":
+            print copy.GetId()
+            toolMenu.Check(1, True)
         toolMenu.AppendItem(copy)
         self.parent.MapWindow.Bind(wx.EVT_MENU, self.OnCopy, copy)
 
-        flip = wx.MenuItem(toolMenu, wx.ID_ANY, _('Flip selected lines/boundaries'))
+        flip = wx.MenuItem(parentMenu=toolMenu, id=wx.ID_ANY,
+                           text=_('Flip selected lines/boundaries'),
+                           kind=wx.ITEM_CHECK)
         toolMenu.AppendItem(flip)
         self.parent.MapWindow.Bind(wx.EVT_MENU, self.OnFlip, flip)
 
-        merge = wx.MenuItem(toolMenu, wx.ID_ANY, _('Merge selected lines/boundaries'))
+        merge = wx.MenuItem(parentMenu=toolMenu, id=wx.ID_ANY,
+                            text=_('Merge selected lines/boundaries'),
+                            kind=wx.ITEM_CHECK)
         toolMenu.AppendItem(merge)
         self.parent.MapWindow.Bind(wx.EVT_MENU, self.OnMerge, merge)
 
-        breakL = wx.MenuItem(toolMenu, wx.ID_ANY, _('Break selected lines/boundaries at intersection'))
+        breakL = wx.MenuItem(parentMenu=toolMenu, id=wx.ID_ANY,
+                             text=_('Break selected lines/boundaries at intersection'),
+                             kind=wx.ITEM_CHECK)
         toolMenu.AppendItem(breakL)
         self.parent.MapWindow.Bind(wx.EVT_MENU, self.OnBreak, breakL)
 
-        snap = wx.MenuItem(toolMenu, wx.ID_ANY, _('Snap selected lines/boundaries (only to nodes)'))
+        snap = wx.MenuItem(parentMenu=toolMenu, id=wx.ID_ANY,
+                           text=_('Snap selected lines/boundaries (only to nodes)'),
+                           kind=wx.ITEM_CHECK)
         toolMenu.AppendItem(snap)
         self.parent.MapWindow.Bind(wx.EVT_MENU, self.OnSnap, snap)
 
-        connect = wx.MenuItem(toolMenu, wx.ID_ANY, _('Connect selected lines/boundaries'))
+        connect = wx.MenuItem(parentMenu=toolMenu, id=wx.ID_ANY,
+                              text=_('Connect selected lines/boundaries'),
+                              kind=wx.ITEM_CHECK)
         toolMenu.AppendItem(connect)
         self.parent.MapWindow.Bind(wx.EVT_MENU, self.OnConnect, connect)
 
-        query = wx.MenuItem(toolMenu, wx.ID_ANY, _('Query tool'))
+        query = wx.MenuItem(parentMenu=toolMenu, id=wx.ID_ANY,
+                            text=_('Query features'),
+                            kind=wx.ITEM_CHECK)
         toolMenu.AppendItem(query)
         self.parent.MapWindow.Bind(wx.EVT_MENU, self.OnQuery, query)
 
-        zbulk = wx.MenuItem(toolMenu, wx.ID_ANY, _('Z bulk-labeling of 3D lines'))
+        zbulk = wx.MenuItem(parentMenu=toolMenu, id=wx.ID_ANY,
+                            text=_('Z bulk-labeling of 3D lines'),
+                            kind=wx.ITEM_CHECK)
         toolMenu.AppendItem(zbulk)
         self.parent.MapWindow.Bind(wx.EVT_MENU, self.OnZBulk, zbulk)
 
-        typeconv = wx.MenuItem(toolMenu, wx.ID_ANY, _('Feature type conversion'))
+        typeconv = wx.MenuItem(parentMenu=toolMenu, id=wx.ID_ANY,
+                               text=_('Feature type conversion'),
+                               kind=wx.ITEM_CHECK)
         toolMenu.AppendItem(typeconv)
         self.parent.MapWindow.Bind(wx.EVT_MENU, self.OnTypeConversion, typeconv)
 
