@@ -70,8 +70,7 @@ int main(int argc, char *argv[])
     value_flg = G_define_flag();
     value_flg->key = 'v';
     value_flg->description =
-	_
-	("Use raster values as categories instead of unique sequence (CELL only)");
+	_("Use raster values as categories instead of unique sequence (CELL only)");
 
     z_flg = G_define_flag();
     z_flg->key = 'z';
@@ -82,8 +81,7 @@ int main(int argc, char *argv[])
     no_topol = G_define_flag();
     no_topol->key = 'b';
     no_topol->description =
-	_
-	("Do not build vector topology (use with care for massive point export)");
+	_("Do not build vector topology (use with care for massive point export)");
 
     /* please, remove before GRASS 7 released */
     quiet = G_define_flag();

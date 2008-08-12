@@ -54,8 +54,7 @@ int G_ask_datum_name(char *datumname, char *ellpsname)
 	    fprintf(stderr,
 		    _("Enter 'list' for the list of available datums\n"));
 	    fprintf(stderr,
-		    _
-		    ("or 'custom' if you wish to enter custom parameters\n"));
+		    _("or 'custom' if you wish to enter custom parameters\n"));
 	    fprintf(stderr, _("Hit RETURN to cancel request\n"));
 	    fprintf(stderr, ">");
 	} while (!G_gets(answer));

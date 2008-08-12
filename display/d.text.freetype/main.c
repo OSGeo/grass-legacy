@@ -137,8 +137,7 @@ int main(int argc, char **argv)
     module = G_define_module();
     module->keywords = _("display");
     module->description =
-	_
-	("Draws text in the graphics monitor's active display frame using TrueType fonts.");
+	_("Draws text in the graphics monitor's active display frame using TrueType fonts.");
 
     param.text = G_define_option();
     param.text->key = "text";

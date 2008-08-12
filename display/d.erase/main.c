@@ -31,8 +31,7 @@ int main(int argc, char *argv[])
     module = G_define_module();
     module->keywords = _("display");
     module->description =
-	_
-	("Erase the contents of the active display frame with user defined color");
+	_("Erase the contents of the active display frame with user defined color");
 
     color = G_define_option();
     color->key = "color";
@@ -40,8 +39,7 @@ int main(int argc, char *argv[])
     color->required = NO;
     color->answer = DEFAULT_BG_COLOR;
     color->description =
-	_
-	("Color to erase with, either a standard GRASS color or R:G:B triplet (separated by colons)");
+	_("Color to erase with, either a standard GRASS color or R:G:B triplet (separated by colons)");
     color->gisprompt = GISPROMPT_COLOR;
 
     eraseframe = G_define_flag();

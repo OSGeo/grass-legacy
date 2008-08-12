@@ -80,8 +80,7 @@ int main(int argc, char *argv[])
 #endif
 	    do {
 		fprintf(stderr,
-			_
-			("\nEnter database password for connection\n<%s:%s:user=%s>\n"),
+			_("\nEnter database password for connection\n<%s:%s:user=%s>\n"),
 			driver->answer, database->answer, user->answer);
 		fprintf(stderr, _("Hit RETURN to cancel request\n"));
 		fprintf(stderr, ">");
