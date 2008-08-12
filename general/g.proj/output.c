@@ -187,8 +187,7 @@ void create_location(char *location, int interactive)
 	    if (interactive) {
 		/* Warn as in g.setproj before overwriting current location */
 		fprintf(stderr,
-			_
-			("\n\nWARNING!  A projection file already exists for this location\n"));
+			_("\n\nWARNING!  A projection file already exists for this location\n"));
 		fprintf(stderr,
 			"\nThis file contains all the parameters for the\nlocation's projection: %s\n",
 			G_find_key_value("proj", old_projinfo));

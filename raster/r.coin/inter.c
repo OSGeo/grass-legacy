@@ -93,8 +93,7 @@ int interactive_version(void)
 
 	while (1) {
 	    fprintf(stderr,
-		    _
-		    ("Do you wish to save this report in a file? (y/n) [n] "));
+		    _("Do you wish to save this report in a file? (y/n) [n] "));
 	    *ans = 0;
 	    if (!G_gets(ans))
 		continue;
@@ -116,8 +115,7 @@ int interactive_version(void)
 	while (1) {
 	    *ans = 0;
 	    fprintf(stderr,
-		    _
-		    ("Do you wish to print this report (requires Unix lpr command)? (y/n) [n] "));
+		    _("Do you wish to print this report (requires Unix lpr command)? (y/n) [n] "));
 	    if (!G_gets(ans))
 		continue;
 	    G_strip(ans);

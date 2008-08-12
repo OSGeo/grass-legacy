@@ -93,8 +93,7 @@ int main(int argc, char **argv)
     colrow = G_define_flag();
     colrow->key = 'c';
     colrow->description =
-	_
-	("Print out col/row for the entire map in grid resolution of the region");
+	_("Print out col/row for the entire map in grid resolution of the region");
 
     if (!rast)
 	opt1->required = YES;

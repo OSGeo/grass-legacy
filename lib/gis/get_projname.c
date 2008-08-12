@@ -48,8 +48,7 @@ int G_ask_proj_name(char *proj_id, char *proj_name)
 	do {
 	    fprintf(stderr, _("\n\nPlease specify projection name\n"));
 	    fprintf(stderr,
-		    _
-		    ("Enter 'list' for the list of available projections\n"));
+		    _("Enter 'list' for the list of available projections\n"));
 	    fprintf(stderr, _("Hit RETURN to cancel request\n"));
 	    fprintf(stderr, ">");
 	} while (!G_gets(answer));

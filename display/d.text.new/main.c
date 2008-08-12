@@ -138,8 +138,7 @@ int main(int argc, char **argv)
     module = G_define_module();
     module->keywords = _("display");
     module->description =
-	_
-	("Draws text in the active display frame on the graphics monitor using the current font.");
+	_("Draws text in the active display frame on the graphics monitor using the current font.");
 
     opt.text = G_define_option();
     opt.text->key = "text";
@@ -179,8 +178,7 @@ int main(int argc, char **argv)
     opt.at->type = TYPE_DOUBLE;
     opt.at->required = NO;
     opt.at->description =
-	_
-	("Screen position at which text will begin to be drawn (percentage, [0,0] is lower left)");
+	_("Screen position at which text will begin to be drawn (percentage, [0,0] is lower left)");
 
     opt.align = G_define_option();
     opt.align->key = "align";
@@ -392,8 +390,7 @@ int main(int argc, char **argv)
 
     if (isatty(0))
 	fprintf(stdout,
-		_
-		("\nPlease enter text instructions.  Enter EOF (ctrl-d) on last line to quit\n"));
+		_("\nPlease enter text instructions.  Enter EOF (ctrl-d) on last line to quit\n"));
 
     cmd_file = G_tempfile();
     if ((cmd_fp = fopen(cmd_file, "w")) == NULL)
