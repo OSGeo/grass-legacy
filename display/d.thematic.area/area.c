@@ -16,8 +16,7 @@
 int dareatheme(struct Map_info *Map, struct cat_list *Clist,
 	       dbCatValArray * cvarr, double *breaks, int nbreaks,
 	       const struct color_rgb *colors, const struct color_rgb *bcolor,
-	       int chcat, struct Cell_head *window, int default_width,
-	       int *frequencies, int nodraw)
+	       int chcat, struct Cell_head *window, int default_width)
 {
 
     int num, area, isle, n_isles, n_points;
@@ -33,7 +32,6 @@ int dareatheme(struct Map_info *Map, struct cat_list *Clist,
     Points = Vect_new_line_struct();
     IPoints = Vect_new_line_struct();
     Cats = Vect_new_cats_struct();
-
 
     num = Vect_get_num_areas(Map);
     G_debug(2, "n_areas = %d", num);
@@ -148,33 +146,32 @@ int dareatheme(struct Map_info *Map, struct cat_list *Clist,
 	    }
 	}
 
-	/* find out into which class breakval falls */
-	i = 0;
-	while (breakval > breaks[i] && i < nbreaks)
-	    i++;
-	frequencies[i]++;
+        /* find out into which class breakval falls */
+        i = 0;
+        while (breakval > breaks[i] && i < nbreaks)
+        i++;
 
-	if (!nodraw) {
-	    /* plot polygon in class color */
-	    R_RGB_color(colors[i].r, colors[i].g, colors[i].b);
-	    plot_polygon(Points->x, Points->y, Points->n_points);
 
-	    /* XXX rewrite boundary */
-	    if (bcolor) {
-		int i;
 
-		Vect_get_area_points(Map, area, Points);
-		R_RGB_color(bcolor->r, bcolor->g, bcolor->b);
+	/* plot polygon in class color */
+	R_RGB_color(colors[i].r, colors[i].g, colors[i].b);
+	plot_polygon(Points->x, Points->y, Points->n_points);
+
+	/* XXX rewrite boundary */
+	if (bcolor) {
+	    int i;
+
+	    Vect_get_area_points(Map, area, Points);
+	    R_RGB_color(bcolor->r, bcolor->g, bcolor->b);
+	    /*use different user defined render methods */
+	    plot_polyline(Points->x, Points->y, Points->n_points);
+	    for (i = 0; i < n_isles; i++) {
+		isle = Vect_get_area_isle(Map, area, i);
+		Vect_get_isle_points(Map, isle, Points);
 		/*use different user defined render methods */
 		plot_polyline(Points->x, Points->y, Points->n_points);
-		for (i = 0; i < n_isles; i++) {
-		    isle = Vect_get_area_isle(Map, area, i);
-		    Vect_get_isle_points(Map, isle, Points);
-		    /*use different user defined render methods */
-		    plot_polyline(Points->x, Points->y, Points->n_points);
-		}
 	    }
-	}			/* end if !nodraw */
+	}
     }				/* end for loop over areas */
 
     Vect_destroy_line_struct(Points);
