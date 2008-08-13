@@ -69,8 +69,8 @@ int main(int argc, char *argv[])
     algo_opt->descriptions = _("int;simple intervals;"
 			       "std;standard deviations;"
 			       "qua;quantiles;"
-			       "equ;equiprobable (normal distribution);"
-			       "dis;discontinuities");
+			       "equ;equiprobable (normal distribution);");
+/*			       "dis;discontinuities"); currently disabled because of bugs*/
 
     nbclass_opt = G_define_option();
     nbclass_opt->key = "nbclasses";
@@ -100,16 +100,18 @@ int main(int argc, char *argv[])
     /* Read attributes */
     db_CatValArray_init(&Cvarr);
     Fi = Vect_get_field(&Map, ofield);
+
     if (Fi == NULL) {
 	G_fatal_error(_("Unable to get layer info for vector map"));
     }
+    Vect_close(&Map);
 
     Driver = db_start_driver_open_database(Fi->driver, Fi->database);
     if (Driver == NULL)
 	G_fatal_error("Unable to open database <%s> by driver <%s>",
 		      Fi->database, Fi->driver);
 
-    /* Note do not check if the column exists in the table because it may be an expression */
+    /* Note: do not check if the column exists in the table because it may be an expression */
 
     nrec =
 	db_select_CatValArray(Driver, Fi->table, Fi->key, col_opt->answer,
@@ -131,6 +133,9 @@ int main(int argc, char *argv[])
 
 
     data = (double *)G_malloc((nrec) * sizeof(double));
+    for (i = 0; i < nrec; i++)
+	data[i] = 0.0;
+
     if (ctype == DB_C_TYPE_INT) {
 	for (i = 0; i < nrec; i++)
 	    data[i] = Cvarr.value[i].val.i;
@@ -149,25 +154,16 @@ int main(int argc, char *argv[])
     for (i = 0; i < nbreaks; i++)
 	classbreaks[i] = 0;
 
-
-    if (G_strcasecmp(algo_opt->answer, "int") == 0)
-	finfo = class_interval(data, nrec, nbreaks, classbreaks);
-    else if (G_strcasecmp(algo_opt->answer, "std") == 0)
-	finfo = class_stdev(data, nrec, nbreaks, classbreaks);
-    else if (G_strcasecmp(algo_opt->answer, "qua") == 0)
-	finfo = class_quant(data, nrec, nbreaks, classbreaks);
-    else if (G_strcasecmp(algo_opt->answer, "equ") == 0)
-	finfo = class_equiprob(data, nrec, &nbreaks, classbreaks);
-    else if (G_strcasecmp(algo_opt->answer, "dis") == 0)
-	finfo = class_discont(data, nrec, nbreaks, classbreaks);
-    else
-	G_fatal_error("%s: Unknown algorithm", algo_opt->answer);
-
-    if (finfo == 0)
-	G_fatal_error(_("%s: Error in classification algorithm"),
-		      algo_opt->answer);
+    /* Get classbreaks for given algorithm and number of classbreaks.
+     * finfo takes any info coming from the classification algorithms
+     * equ algorithm can alter number of class breaks */
+    finfo =
+	class_apply_algorithm(algo_opt->answer, data, nrec, &nbreaks,
+			      classbreaks);
 
 
+    if (G_strcasecmp(algo_opt->answer, "dis") == 0 && finfo < 3.84148)
+	G_warning(_("The discontinuities algorithm indicates that some class breaks are not statistically significant at alpha=0.05. You are advised to reduce the number of classes."));
 
     /*output to be piped to other modules ? */
     if (shell_flag->answer) {
@@ -191,15 +187,18 @@ int main(int argc, char *argv[])
 	min = data[0];
 	max = data[nrec - 1];
 
-
+	/* as equ algorithm can modify number of breaks we recalculate number of
+	 * classes
+	 */
 	fprintf(stdout, _("\nClassification of %s into %i classes\n"),
-		col_opt->answer, nbclass);
+		col_opt->answer, nbreaks + 1);
 	fprintf(stdout, _("Using algorithm: *** %s ***\n"), algo_opt->answer);
 	fprintf(stdout, _("Mean: %f\tStandard deviation = %f\n"), stats.mean,
 		stats.stdev);
 
-	if (G_strcasecmp(algo_opt->answer, "dis") == 0)
-	    fprintf(stdout, _("Last chi2 = %f\n"), finfo);
+	if (G_strcasecmp(algo_opt->answer, "dis") == 0) {
+	    fprintf(stdout, _("Lowest chi2 = %f\n"), finfo);
+	}
 	if (G_strcasecmp(algo_opt->answer, "std") == 0)
 	    fprintf(stdout, _("Stdev multiplied by %.4f to define step\n"),
 		    finfo);
@@ -220,9 +219,9 @@ int main(int argc, char *argv[])
     }
 
 
+
     fflush(stdout);
 
-    Vect_close(&Map);
 
     exit(EXIT_SUCCESS);
 }

@@ -1,6 +1,32 @@
 /* functions to classify sorted arrays of doubles and fill a vector of classbreaks */
 
+#include <grass/glocale.h>
 #include <grass/arraystats.h>
+
+double class_apply_algorithm(char *algo, double *data, int nrec, int *nbreaks,
+			     double *classbreaks)
+{
+    double finfo = 0.0;
+
+    if (G_strcasecmp(algo, "int") == 0)
+	finfo = class_interval(data, nrec, *nbreaks, classbreaks);
+    else if (G_strcasecmp(algo, "std") == 0)
+	finfo = class_stdev(data, nrec, *nbreaks, classbreaks);
+    else if (G_strcasecmp(algo, "qua") == 0)
+	finfo = class_quant(data, nrec, *nbreaks, classbreaks);
+    else if (G_strcasecmp(algo, "equ") == 0)
+	finfo = class_equiprob(data, nrec, nbreaks, classbreaks);
+    else if (G_strcasecmp(algo, "dis") == 0)
+	    /*	finfo = class_discont(data, nrec, *nbreaks, classbreaks); disabled because of bugs */
+        G_fatal_error(_("Discont algorithm currently not available because of bugs"));
+    else
+	G_fatal_error(_("%s: Unknown algorithm"), algo);
+
+    if (finfo == 0)
+	G_fatal_error(_("%s: Error in classification algorithm"), algo);
+
+    return finfo;
+}
 
 int class_interval(double *data, int count, int nbreaks, double *classbreaks)
 {
@@ -214,11 +240,11 @@ int class_equiprob(double *data, int count, int *nbreaks, double *classbreaks)
     return (1);
 }
 
-
+/* FixMe: there seems to a problem with array overflow, probably due to the fact that the code was ported from fortran which has 1-based arrays*/
 double class_discont(double *data, int count, int nbreaks,
 		     double *classbreaks)
 {
-    int *num, nbclass, maxclass = 0;
+    int *num, nbclass;
     double *no, *zz, *nz, *xn, *co;
     double *x;			//Vecteur des observations standardisées
     int i, j, k;
@@ -233,7 +259,7 @@ double class_discont(double *data, int count, int nbreaks,
     int im = 0, ji = 0;
     int tmp = 0;
     int nff = 0, jj = 0, no1 = 0, no2 = 0;
-    double f = 0, xt1 = 0, xt2 = 0, chi2 = 0, xnj_1 = 0, xj_1 = 0;
+    double f = 0, xt1 = 0, xt2 = 0, chi2 = 1000.0, xnj_1 = 0, xj_1 = 0;
 
 
     /*get the number of values */
@@ -382,16 +408,10 @@ double class_discont(double *data, int count, int nbreaks,
 	    xt2 -= xt1;
 	}
 
-	/*if new class break not statistically significant (alpha > 0.05), give warning */
-	if (maxclass == 0) {
+	/* calculate chi-square to indicate statistical significance of new class, i.e. how probable would it be that the new class could be the result of purely random choice */
+	if (chi2 > pow((double)((no1 - no2) - (xt1 - xt2)), 2) / (xt1 + xt2))
 	    chi2 = pow((double)((no1 - no2) - (xt1 - xt2)), 2) / (xt1 + xt2);
-	    if (chi2 < 3.84148) {
 
-		G_warning(_("discontinuities algorithm: %i class breaks or more are not statistically significant at alpha=0.05"),
-			  i);
-		maxclass = 1;
-	    }
-	}
     }
 
     /*  Fill up classbreaks of i <=nbclass classes */
