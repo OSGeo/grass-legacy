@@ -72,7 +72,7 @@ if {[catch {set mapset [exec g.gisenv get=MAPSET]} error]} {
 
 
 # path to icons for GIS Manager
-set iconpath $env(GISBASE)/etc/gui/icons
+set iconpath $env(GISBASE)/etc/gui/icons/grass
 
 global iconpath
 global gmpath
