@@ -28,6 +28,8 @@ from threading import Thread
 import wx
 import wx.lib.colourselect as csel
 import wx.lib.scrolledpanel as scrolled
+from wx.lib.newevent import NewEvent
+
 errorMsg = ''
 try:
     from wx import glcanvas
@@ -57,6 +59,8 @@ try:
 except ImportError, e:
     haveNviz = False
     errorMsg = e
+
+wxUpdateProperties, EVT_UPDATE_PROP = NewEvent()
 
 class GLWindow(MapWindow, glcanvas.GLCanvas):
     """OpenGL canvas for Map Display Window"""
@@ -123,6 +127,8 @@ class GLWindow(MapWindow, glcanvas.GLCanvas):
         self.Bind(wx.EVT_LEFT_UP, self.OnLeftUp)
         self.Bind(wx.EVT_MOTION, self.OnMouseAction)
         self.Bind(wx.EVT_MOUSE_EVENTS, self.OnMouseAction)
+
+        self.Bind(EVT_UPDATE_PROP, self.UpdateLayerProperties)
         
     def OnEraseBackground(self, event):
         pass # do nothing, to avoid flashing on MSW
@@ -492,7 +498,8 @@ class GLWindow(MapWindow, glcanvas.GLCanvas):
         data = self.SetLayerData(item, id, nvizType)
         print data
         # update properties
-        self.UpdateLayerProperties(item)
+        event = wxUpdateProperties(layer=item)
+        wx.PostEvent(self, event)
         
         # update tools window
         if hasattr(self.parent, "nvizToolWin") and \
@@ -571,101 +578,7 @@ class GLWindow(MapWindow, glcanvas.GLCanvas):
                 toolWin.notebook.RemovePage(toolWin.page[nvizType]['id'])
                 toolWin.page[nvizType]['id'] = -1
                 toolWin.page['settings']['id'] = 1
-        
-    def GetSurfaceMode(self, mode, style, shade, string=False):
-        """Determine surface draw mode"""
-        value = 0
-        desc = {}
 
-        if string:
-            if mode == 'coarse':
-                value |= wxnviz.DM_WIRE
-            elif mode == 'fine':
-                value |= wxnviz.DM_POLY
-            else: # both
-                value |= wxnviz.DM_WIRE_POLY
-
-            if style == 'wire':
-                value |= wxnviz.DM_GRID_WIRE
-            else: # surface
-                value |= wxnviz.DM_GRID_SURF
-
-            if shade == 'flat':
-                value |= wxnviz.DM_FLAT
-            else: # surface
-                value |= wxnviz.DM_GOURAUD
-
-            return value
-
-        # -> string is False
-        if mode == 0: # coarse
-            value |= wxnviz.DM_WIRE
-            desc['mode'] = 'coarse'
-        elif mode == 1: # fine
-            value |= wxnviz.DM_POLY
-            desc['mode'] = 'fine'
-        else: # both
-            value |= wxnviz.DM_WIRE_POLY
-            desc['mode'] = 'both'
-
-        if style == 0: # wire
-            value |= wxnviz.DM_GRID_WIRE
-            desc['style'] = 'wire'
-        else: # surface
-            value |= wxnviz.DM_GRID_SURF
-            desc['style'] = 'surface'
-
-        if shade == 0:
-            value |= wxnviz.DM_FLAT
-            desc['shading'] = 'flat'
-        else: # surface
-            value |= wxnviz.DM_GOURAUD
-            desc['shading'] = 'gouraud'
-
-        return (value, desc)
-    
-    def SetSurfaceDefaultProp(self, data):
-        """Set default surface properties"""
-        #
-        # attributes
-        #
-        for attrb in ('shine', ):
-            data['attribute'][attrb] = {}
-            for key, value in UserSettings.Get(group='nviz', key='volume',
-                                               subkey=attrb).iteritems():
-                data['attribute'][attrb][key] = value
-                self.update.append('surface:attribute:%s' % value)#
-        
-        #
-        # draw
-        #
-        data['draw']['all'] = False # apply only for current surface
-        for control, value in UserSettings.Get(group='nviz', key='surface', subkey='draw').iteritems():
-            if control[:3] == 'res':
-                if 'surface:draw:%s' % 'resolution' not in self.update:
-                    self.update.append('surface:draw:%s' % 'resolution')
-                data['draw']['resolution'][control[4:]] = value
-                continue
-            
-            elif control not in ('style', 'shading'):
-                self.update.append('surface:draw:%s' % control)
-
-            if control == 'wire-color':
-                value = str(value[0]) + ':' + str(value[1]) + ':' + str(value[2])
-            elif control in ('mode', 'style', 'shading'):
-                if not data['draw'].has_key('mode'):
-                    data['draw']['mode'] = {}
-                continue
-
-            data['draw'][control] = { 'value' : value }
-            
-        value, desc = self.GetSurfaceMode(UserSettings.Get(group='nviz', key='surface', subkey=['draw', 'mode']),
-                                          UserSettings.Get(group='nviz', key='surface', subkey=['draw', 'style']),
-                                          UserSettings.Get(group='nviz', key='surface', subkey=['draw', 'shading']))
-
-        data['draw']['mode'] = { 'value' : value,
-                                 'desc' : desc, }
-        
     def LoadVector(self, item, vecType=None):
         """Load 2D or 3D vector map overlay
 
@@ -708,7 +621,8 @@ class GLWindow(MapWindow, glcanvas.GLCanvas):
             self.layers['v'  + type]['id'].append(id)
         
         # update properties
-        self.UpdateLayerProperties(item)
+        event = wxUpdateProperties(layer=item)
+        wx.PostEvent(self, event)
         
         # update tools window
         if hasattr(self.parent, "nvizToolWin") and \
@@ -769,10 +683,152 @@ class GLWindow(MapWindow, glcanvas.GLCanvas):
                 toolWin.notebook.RemovePage(toolWin.page['surface']['id'])
                 toolWin.page['surface']['id'] = -1
                 toolWin.page['settings']['id'] = 1
+        
+    def GetDrawMode(self, mode=None, style=None, shade=None, string=False):
+        """Get surface draw mode (value) from description/selection
 
+        @param mode,style,shade modes
+        @param string if True input parameters are strings otherwise
+        selections
+        """
+        value = 0
+        desc = {}
 
+        if string:
+            if mode is not None:
+                if mode == 'coarse':
+                    value |= wxnviz.DM_WIRE
+                elif mode == 'fine':
+                    value |= wxnviz.DM_POLY
+                else: # both
+                    value |= wxnviz.DM_WIRE_POLY
+
+            if style is not None:
+                if style == 'wire':
+                    value |= wxnviz.DM_GRID_WIRE
+                else: # surface
+                    value |= wxnviz.DM_GRID_SURF
+                    
+            if shade is not None:
+                if shade == 'flat':
+                    value |= wxnviz.DM_FLAT
+                else: # surface
+                    value |= wxnviz.DM_GOURAUD
+
+            return value
+
+        # -> string is False
+        if mode is not None:
+            if mode == 0: # coarse
+                value |= wxnviz.DM_WIRE
+                desc['mode'] = 'coarse'
+            elif mode == 1: # fine
+                value |= wxnviz.DM_POLY
+                desc['mode'] = 'fine'
+            else: # both
+                value |= wxnviz.DM_WIRE_POLY
+                desc['mode'] = 'both'
+
+        if style is not None:
+            if style == 0: # wire
+                value |= wxnviz.DM_GRID_WIRE
+                desc['style'] = 'wire'
+            else: # surface
+                value |= wxnviz.DM_GRID_SURF
+                desc['style'] = 'surface'
+
+        if shade is not None:
+            if shade == 0:
+                value |= wxnviz.DM_FLAT
+                desc['shading'] = 'flat'
+            else: # surface
+                value |= wxnviz.DM_GOURAUD
+                desc['shading'] = 'gouraud'
+        
+        return (value, desc)
+    
+    def SetSurfaceDefaultProp(self, data):
+        """Set default surface properties, add actions to update list"""
+        #
+        # attributes
+        #
+        for attrb in ('shine', ):
+            data['attribute'][attrb] = {}
+            for key, value in UserSettings.Get(group='nviz', key='volume',
+                                               subkey=attrb).iteritems():
+                data['attribute'][attrb][key] = value
+            self.update.append('surface:attribute:%s' % attrb)
+        
+        #
+        # draw
+        #
+        data['draw']['all'] = False # apply only for current surface
+        for control, value in UserSettings.Get(group='nviz', key='surface', subkey='draw').iteritems():
+            if control[:3] == 'res':
+                if not data['draw'].has_key('resolution'):
+                    data['draw']['resolution'] = {}
+                if 'surface:draw:%s' % 'resolution' not in self.update:
+                    self.update.append('surface:draw:%s' % 'resolution')
+                data['draw']['resolution'][control[4:]] = value
+                continue
+            
+            elif control not in ('style', 'shading'):
+                self.update.append('surface:draw:%s' % control)
+
+            if control == 'wire-color':
+                value = str(value[0]) + ':' + str(value[1]) + ':' + str(value[2])
+            elif control in ('mode', 'style', 'shading'):
+                if not data['draw'].has_key('mode'):
+                    data['draw']['mode'] = {}
+                continue
+
+            data['draw'][control] = { 'value' : value }
+            
+        value, desc = self.GetDrawMode(UserSettings.Get(group='nviz', key='surface', subkey=['draw', 'mode']),
+                                       UserSettings.Get(group='nviz', key='surface', subkey=['draw', 'style']),
+                                       UserSettings.Get(group='nviz', key='surface', subkey=['draw', 'shading']))
+
+        data['draw']['mode'] = { 'value' : value,
+                                 'desc' : desc, }
+
+    def SetVolumeDefaultProp(self, data):
+        """Set default volume properties and add actions to update list"""
+        #
+        # draw
+        #
+        for control, value in UserSettings.Get(group='nviz', key='volume', subkey='draw').iteritems():
+            if control == 'mode':
+                continue
+            if 'volume:draw:%s' % control not in self.update:
+                self.update.append('volume:draw:%s' % control)
+            if control == 'shading':
+                sel = UserSettings.Get(group='nviz', key='surface', subkey=['draw', 'shading'])
+                value, desc = self.GetDrawMode(shade=sel, string=False)
+
+                data['draw']['shading'] = { 'value' : value,
+                                            'desc' : desc['shading'] }
+            elif control == 'mode':
+                sel = UserSettings.Get(group='nviz', key='volume', subkey=['draw', 'mode'])
+                if sel == 0:
+                    desc = 'isosurface'
+                else:
+                    desc = 'slice'
+                data['draw']['mode'] = { 'value' : sel,
+                                         'desc' : desc, }
+            else:
+                data['draw'][control] = { 'value' : value }
+        
+        #
+        # isosurface attributes
+        #
+        for attrb in ('shine', ):
+            data['attribute'][attrb] = {}
+            for key, value in UserSettings.Get(group='nviz', key='volume',
+                                               subkey=attrb).iteritems():
+                data['attribute'][attrb][key] = value
+        
     def SetVectorDefaultProp(self, data):
-        """Set default vector properties"""
+        """Set default vector properties, add actions to update list"""
         self.SetVectorLinesDefaultProp(data['lines'])
         self.SetVectorPointsDefaultProp(data['points'])
 
@@ -854,27 +910,6 @@ class GLWindow(MapWindow, glcanvas.GLCanvas):
             self.update.append('vector:points:surface')
             self.update.append('vector:points:height')
 
-    def SetVolumeDefaultProp(self, data):
-        """Set default volume properties"""
-        #
-        # draw
-        #
-        data['draw']['all'] = False # apply only for current volume set
-        for control, value in UserSettings.Get(group='nviz', key='volume', subkey='draw').iteritems():
-            if 'volume:draw:%s' % control not in self.update:
-                self.update.append('volume:draw:%s' % control)
-            data['draw'][control] = { 'value' : value }
-        
-        #
-        # isosurface attributes
-        #
-        for attrb in ('shine', ):
-            data['attribute'][attrb] = {}
-            for key, value in UserSettings.Get(group='nviz', key='volume',
-                                               subkey=attrb).iteritems():
-                data['attribute'][attrb][key] = value
-                ### self.update.append('volume:attribute:%s' % value)
-
     def Reset(self):
         """Reset (unload data)"""
         self.nvizClass.Reset()
@@ -916,27 +951,28 @@ class GLWindow(MapWindow, glcanvas.GLCanvas):
 
         self.update.append('view')
 
-    def UpdateLayerProperties(self, layer=None):
-        """Update data layer properties
-
-        @param layer layer item or None (for selected item)
-        """
-        if not layer:
+    def UpdateLayerProperties(self, event):
+        """Update data layer properties"""
+        print self.update
+        if not hasattr(event, "layer"):
             mapLayer = self.GetSelectedLayer()
             data = self.GetSelectedLayer(type='nviz')
         else:
-            mapLayer = self.tree.GetPyData(layer)[0]['maplayer']
-            data = self.tree.GetPyData(layer)[0]['nviz']
+            mapLayer = self.tree.GetPyData(event.layer)[0]['maplayer']
+            data = self.tree.GetPyData(event.layer)[0]['nviz']
 
         if mapLayer.type == 'raster':
             id = data['surface']['object']['id']
-            self.UpdateRasterProperties(id, data['surface'])
+            self.UpdateSurfaceProperties(id, data['surface'])
             # -> initialized
             data['surface']['object']['init'] = True
 
         elif mapLayer.type == '3d-raster':
             id = data['volume']['object']['id']
-            self.UpdateVolumeProperties(id, data['volume'])
+            if hasattr(event, "isoSurfId"):
+                self.UpdateVolumeProperties(id, data['volume'], isosurfId)
+            else:
+                self.UpdateVolumeProperties(id, data['volume'])
             # -> initialized
             data['volume']['object']['init'] = True
 
@@ -947,12 +983,13 @@ class GLWindow(MapWindow, glcanvas.GLCanvas):
                     self.UpdateVectorProperties(id, data['vector'], type)
                     # -> initialized
                     data['vector'][type]['object']['init'] = True
-
-    def UpdateRasterProperties(self, id, data):
+        print self.update
+    def UpdateSurfaceProperties(self, id, data):
         """Update surface layer properties"""
         # surface attributes
         for attrb in ('topo', 'color', 'mask',
                      'transp', 'shine', 'emit'):
+            attrb, 'surface:attribute:%s' % attrb in self.update
             if 'surface:attribute:%s' % attrb in self.update:
                 map = data['attribute'][attrb]['map']
                 value = data['attribute'][attrb]['value']
@@ -1002,7 +1039,7 @@ class GLWindow(MapWindow, glcanvas.GLCanvas):
         if 'surface:draw:mode' in self.update:
             if data['draw']['mode']['value'] < 0: # need to calculate
                 data['draw']['mode']['value'] = \
-                    self.GetSurfaceMode(mode=data['draw']['mode']['desc']['mode'],
+                    self.GetDrawMode(mode=data['draw']['mode']['desc']['mode'],
                                         style=data['draw']['mode']['desc']['style'],
                                         shade=data['draw']['mode']['desc']['shading'],
                                         string=True)
@@ -1030,10 +1067,66 @@ class GLWindow(MapWindow, glcanvas.GLCanvas):
             self.nvizClass.SetSurfacePosition(id, x, y, z)
             self.update.remove('surface:position')
             
-    def UpdateRasterProperties(self, id, data):
+    def UpdateVolumeProperties(self, id, data, isosurfId=None):
         """Apply volume layer properties"""
-        pass
-    
+        #
+        # draw
+        #
+        if 'volume:draw:resolution' in self.update:
+            self.nvizClass.SetIsosurfaceRes(id, data['draw']['resolution']['value'])
+            self.update.remove('volume:draw:resolution')
+        
+        if 'volume:draw:shading' in self.update:
+            if data['draw']['shading']['value'] < 0: # need to calculate
+                data['draw']['shading']['value'] = \
+                    self.GetDrawMode(shade=data['draw']['shading'],
+                                     string=False)
+            self.update.remove('volume:draw:shading')
+            
+        #
+        # isosurface attributes
+        #
+        for attrb in ('color', 'mask',
+                      'transp', 'shine', 'emit'):
+            if 'volume:attribute:%s' % attrb in self.update:
+                map = data['attribute'][attrb]['map']
+                value = data['attribute'][attrb]['value']
+
+                if map is None: # unset
+                    # only optional attributes
+                    if attrb == 'mask':
+                        # TODO: invert mask
+                        # TODO: broken in NVIZ
+                        # self.nvizClass.UnsetSurfaceMask(id)
+                        pass
+                    elif attrb == 'transp':
+                        # self.nvizClass.UnsetSurfaceTransp(id)
+                        pass
+                    elif attrb == 'emit':
+                        # self.nvizClass.UnsetSurfaceEmit(id) 
+                        pass
+                else:
+                    if type(value) == type('') and \
+                            len(value) <= 0: # ignore empty values (TODO: warning)
+                        continue
+                    elif attrb == 'color' and isosurfId:
+                        self.nvizClass.SetIsosurfaceColor(id, isosurfId, map, str(value))
+                    elif attrb == 'mask':
+                        # TODO: invert mask
+                        # TODO: broken in NVIZ
+                        # self.nvizClass.SetSurfaceMask(id, False, str(value))
+                        pass
+                    elif attrb == 'transp':
+                        # self.nvizClass.SetSurfaceTransp(id, map, str(value)) 
+                        pass
+                    elif attrb == 'shine':
+                        # self.nvizClass.SetSurfaceShine(id, map, str(value)) 
+                        pass
+                    elif attrb == 'emit':
+                        # self.nvizClass.SetSurfaceEmit(id, map, str(value)) 
+                        pass
+                self.update.remove('volume:attribute:%s' % attrb)
+
     def UpdateVectorProperties(self, id, data, type):
         """Update vector layer properties
 
@@ -1961,7 +2054,7 @@ class NvizToolWindow(wx.Frame):
                                      size=(200, -1),
                                      type="grid3")
                 self.win['volume'][code]['map'] = map.GetId() - 1 # FIXME
-                map.Bind(wx.EVT_TEXT, self.OnSurfaceMap)
+                map.Bind(wx.EVT_TEXT, self.OnVolumeIsosurfMap)
                 gridSizer.Add(item=map, flag=wx.ALIGN_CENTER_VERTICAL,
                               pos=(row, 2))
             else:
@@ -1971,7 +2064,7 @@ class NvizToolWindow(wx.Frame):
                 value = csel.ColourSelect(panel, id=wx.ID_ANY,
                                           colour=UserSettings.Get(group='nviz', key='volume',
                                                                   subkey=['color', 'value']))
-                value.Bind(csel.EVT_COLOURSELECT, self.OnSurfaceMap)
+                value.Bind(csel.EVT_COLOURSELECT, self.OnVolumeIsosurfMap)
             elif code == 'mask':
                 value = None
             else:
@@ -2627,20 +2720,23 @@ class NvizToolWindow(wx.Frame):
             useMap = False
             if attrb == 'color':
                 value = self.FindWindowById(self.win[nvizType][attrb]['const']).GetColour()
-                value = str(value[0]) + ':' + str(value[1]) + ':' + str(value[2])
+                value = self._getColorString(value)
             else:
                 value = self.FindWindowById(self.win[nvizType][attrb]['const']).GetValue()
 
         self.SetMapObjUseMap(nvizType=nvizType,
                              attrb=attrb, map=useMap)
         
-        self.mapWindow.update.append('surface:attribute:%s' % attrb)
+        self.mapWindow.update.append('%s:attribute:%s' % (nvizType, attrb))
         data = self.mapWindow.GetSelectedLayer(type='nviz')
         data[nvizType]['attribute'][attrb] = { 'map' : useMap,
-                                                'value' : str(value),
-                                                }
-        self.mapWindow.UpdateLayerProperties()
+                                               'value' : str(value),
+                                               }
 
+        # update properties
+        event = wxUpdateProperties()
+        wx.PostEvent(self.mapWindow, event)
+        
         if self.parent.autoRender.IsChecked():
             self.mapWindow.Refresh(False)
 
@@ -2670,40 +2766,47 @@ class NvizToolWindow(wx.Frame):
 
     def OnSurfaceMap(self, event):
         """Set surface attribute"""
+        self.SetMapObjAttrb(nvizType='surface', winId=event.GetId())
+        
+    def SetMapObjAttrb(self, nvizType, winId):
+        """Set map object attrbite"""
         if not self.mapWindow.init:
             return
 
-        attrb = self.__GetWindowName(self.win['surface'], event.GetId()) 
+        attrb = self.__GetWindowName(self.win[nvizType], winId) 
         if not attrb:
             return
 
-        selection = self.FindWindowById(self.win['surface'][attrb]['use']).GetSelection()
-        if self.win['surface'][attrb]['required']:
+        selection = self.FindWindowById(self.win[nvizType][attrb]['use']).GetSelection()
+        if self.win[nvizType][attrb]['required']:
             selection += 1
 
         if selection == 0: # unset
             map = None
             value = ''
         elif selection == 1: # map
-            value = self.FindWindowById(self.win['surface'][attrb]['map']).GetValue()
+            value = self.FindWindowById(self.win[nvizType][attrb]['map']).GetValue()
             map = True
         else: # constant
             if attrb == 'color':
-                value = self.FindWindowById(self.win['surface'][attrb]['const']).GetColour()
+                value = self.FindWindowById(self.win[nvizType][attrb]['const']).GetColour()
                 # tuple to string
-                value = str(value[0]) + ':' + str(value[1]) + ':' + str(value[2])
+                value = self._getColorString(value)
             else:
-                value = self.FindWindowById(self.win['surface'][attrb]['const']).GetValue()
+                value = self.FindWindowById(self.win[nvizType][attrb]['const']).GetValue()
             map = False
         
         if not self.pageChanging:
-            self.mapWindow.update.append('surface:attribute:%s' % attrb)
+            self.mapWindow.update.append('%s:attribute:%s' % (nvizType, attrb))
             data = self.mapWindow.GetSelectedLayer(type='nviz')
-            data['surface']['attribute'][attrb] = { 'map' : map,
-                                                    'value' : str(value),
-                                                    }
-            self.mapWindow.UpdateLayerProperties()
-
+            data[nvizType]['attribute'][attrb] = { 'map' : map,
+                                                   'value' : str(value),
+                                                   }
+            
+            # update properties
+            event = wxUpdateProperties()
+            wx.PostEvent(self.mapWindow, event)
+            
             if self.parent.autoRender.IsChecked():
                 self.mapWindow.Refresh(False)
 
@@ -2724,8 +2827,10 @@ class NvizToolWindow(wx.Frame):
         data['surface']['draw']['resolution'] = { 'coarse' : coarse,
                                                   'fine' : fine }
         
-        self.mapWindow.UpdateLayerProperties()
-
+        # update properties
+        event = wxUpdateProperties(layer=item)
+        wx.PostEvent(self.mapWindow, event)
+        
     def SetSurfaceMode(self):
         """Set draw mode
 
@@ -2746,7 +2851,7 @@ class NvizToolWindow(wx.Frame):
 
         shade = self.FindWindowById(self.win['surface']['draw']['shading']).GetSelection()
 
-        value, desc = self.mapWindow.GetSurfaceMode(mode, style, shade)
+        value, desc = self.mapWindow.GetDrawMode(mode, style, shade)
 
         return value, desc
 
@@ -2758,9 +2863,11 @@ class NvizToolWindow(wx.Frame):
         data = self.mapWindow.GetSelectedLayer(type='nviz')
         data['surface']['draw']['mode'] = { 'value' : value,
                                             'desc' : desc }
-
-        self.mapWindow.UpdateLayerProperties()
-
+        
+        # update properties
+        event = wxUpdateProperties()
+        wx.PostEvent(self.mapWindow, event)
+        
         if apply and self.parent.autoRender.IsChecked():
             self.mapWindow.Refresh(False)
 
@@ -2768,26 +2875,27 @@ class NvizToolWindow(wx.Frame):
         """Set draw mode (including wire color) for all loaded surfaces"""
         self.SetSurfaceMode(all=True)
         self.SetSurfaceResolution(all=True)
-        color = self.FindWindowById(self.win['surface']['draw']['wire-color']).GetColour()
-        self.SetSurfaceWireColor(color, all=True)
+        ### color = self.FindWindowById(self.win['surface']['draw']['wire-color']).GetColour()
 
         if apply and self.parent.autoRender.IsChecked():
             self.mapWindow.Refresh(False)
 
-    def SetSurfaceWireColor(self, color, all=False, apply=True):
+    def _getColorString(self, color):
         """Set wire color"""
-        value = str(color[0]) + ':' + str(color[1]) + ':' + str(color[2])
+        return str(color[0]) + ':' + str(color[1]) + ':' + str(color[2])
 
     def OnSurfaceWireColor(self, event):
         """Set wire color"""
-        self.SetSurfaceWireColor(event.GetValue())
-
         self.mapWindow.update.append('surface:draw:wire-color')
         data = self.mapWindow.GetSelectedLayer(type='nviz')
+        value = self._getColorString(event.GetValue())
         data['surface']['draw']['wire-color'] = { 'value' : value }
         
-        self.mapWindow.UpdateLayerProperties()
-
+        
+        # update properties
+        event = wxUpdateProperties()
+        wx.PostEvent(self.mapWindow, event)
+        
         if self.parent.autoRender.IsChecked():
             self.mapWindow.Refresh(False)
 
@@ -2835,8 +2943,10 @@ class NvizToolWindow(wx.Frame):
         data['surface']['position']['y'] = y
         data['surface']['position']['z'] = z
         
-        self.mapWindow.UpdateLayerProperties()
-
+        # update properties
+        event = wxUpdateProperties(layer=item)
+        wx.PostEvent(self.mapWindow, event)
+        
         if self.parent.autoRender.IsChecked():
             self.mapWindow.Refresh(False)
 
@@ -2894,8 +3004,9 @@ class NvizToolWindow(wx.Frame):
                 self.mapWindow.SetLayerData(item, id, vecType)
         
                 # update properties
-                self.mapWindow.UpdateLayerProperties(item)
-
+                event = wxUpdateProperties(layer=item)
+                wx.PostEvent(self.mapWindow, event)
+                
         if self.parent.autoRender.IsChecked():
             self.mapWindow.Refresh(False)
         
@@ -2943,9 +3054,11 @@ class NvizToolWindow(wx.Frame):
         data['vector']['lines']['width'] = width
         data['vector']['lines']['color'] = color
         data['vector']['lines']['mode'] = mode
-
-        self.mapWindow.UpdateLayerProperties()
-                
+        
+        # update properties
+        event = wxUpdateProperties()
+        wx.PostEvent(self.mapWindow, event)
+                        
         if self.parent.autoRender.IsChecked():
             self.mapWindow.Refresh(False)
         
@@ -2971,8 +3084,10 @@ class NvizToolWindow(wx.Frame):
         
         data['vector'][vtype]['height'] = value
 
-        self.mapWindow.UpdateLayerProperties()
-
+        # update properties
+        event = wxUpdateProperties()
+        wx.PostEvent(self.mapWindow, event)
+        
         self.mapWindow.render['quick'] = True
         self.mapWindow.render['v' + vtype] = True
         self.mapWindow.Refresh(False)
@@ -3008,9 +3123,11 @@ class NvizToolWindow(wx.Frame):
         self.mapWindow.update.append('vector:%s:surface' % vtype)
         
         data['vector'][vtype]['mode']['surface'] = event.GetValue()
-
-        self.mapWindow.UpdateLayerProperties()
-
+        
+        # update properties
+        event = wxUpdateProperties()
+        wx.PostEvent(self.mapWindow, event)
+        
         if self.parent.autoRender.IsChecked():
             self.mapWindow.Refresh(False)
         
@@ -3034,8 +3151,10 @@ class NvizToolWindow(wx.Frame):
         data['color'] = color
         data['marker'] = marker
 
-        self.mapWindow.UpdateLayerProperties()
-                
+        # update properties
+        event = wxUpdateProperties()
+        wx.PostEvent(self.mapWindow, event)
+        
         if self.parent.autoRender.IsChecked():
             self.mapWindow.Refresh(False)
 
@@ -3073,13 +3192,16 @@ class NvizToolWindow(wx.Frame):
         
     def OnVolumeIsosurfMode(self, event):
         """Set isosurface draw mode"""
+        self.SetIsosurfaceMode(event.GetSelection())
+    
+    def SetIsosurfaceMode(self, selection):
+        """Set isosurface draw mode"""
         layer = self.mapWindow.GetSelectedLayer()
         data = self.mapWindow.GetSelectedLayer(type='nviz')['volume']
         id = data['object']['id']
 
         mode = 0
-        value = event.GetSelection()
-        if value == 0:
+        if selection == 0:
             mode |= wxnviz.DM_FLAT
         else:
             mode |= wxnviz.DM_GOURAUD
@@ -3091,14 +3213,22 @@ class NvizToolWindow(wx.Frame):
         
     def OnVolumeIsosurfResolution(self, event):
         """Set isosurface draw resolution"""
+        self.SetIsosurfaceResolution(event.GetInt())
+    
+    def SetIsosurfaceResolution(self, res):
+        """Set isosurface draw resolution"""
         layer = self.mapWindow.GetSelectedLayer()
         data = self.mapWindow.GetSelectedLayer(type='nviz')['volume']
         id = data['object']['id']
-        self.mapWindow.nvizClass.SetIsosurfaceRes(id, event.GetInt())
+        self.mapWindow.nvizClass.SetIsosurfaceRes(id, res)
         
         if self.parent.autoRender.IsChecked():
             self.mapWindow.Refresh(False)
-        
+
+    def OnVolumeIsosurfMap(self, event):
+        """Set surface attribute"""
+        self.SetMapObjAttrb(nvizType='surface', winId=event.GetId())
+                
     def OnVolumeIsosurfAdd(self, event):
         """Add new isosurface to the list"""
         list = self.FindWindowById(self.win['volume']['isosurfs'])
@@ -3139,10 +3269,15 @@ class NvizToolWindow(wx.Frame):
                 if sel == 1: # map
                     isosurfData[attrb]['map'] = True
                     vwin = self.FindWindowById(self.win['volume'][attrb]['map'])
+                    value = vwin.GetValue()
                 else: # const
                     isosurfData[attrb]['map'] = False
                     vwin = self.FindWindowById(self.win['volume'][attrb]['const'])
-                isosurfData[attrb]['value'] = vwin.GetValue()
+                    if vwin.GetName() == "color":
+                        value = self._getColorString(vwin.GetValue())
+                    else:
+                        value = vwin.GetValue()
+                isosurfData[attrb]['value'] = value
 
         data['isosurface'].insert(item, isosurfData)
         print '#', data
@@ -3398,8 +3533,7 @@ class NvizToolWindow(wx.Frame):
         # enable/disable res widget + set draw mode
         self.SetSurfaceMode()
         color = self.FindWindowById(self.win['surface']['draw']['wire-color'])
-        self.SetSurfaceWireColor(color.GetColour())
-
+        
     def UpdateVectorPage(self, layer, data):
         vInfo = gcmd.Command(['v.info',
                               'map=%s' % layer.name])
@@ -3508,6 +3642,8 @@ class NvizToolWindow(wx.Frame):
 
     def UpdateVolumePage(self, layer, data):
         """Update volume layer properties page"""
+        list = self.FindWindowById(self.win['volume']['isosurfs'])
+
         #
         # draw
         #
@@ -3516,12 +3652,22 @@ class NvizToolWindow(wx.Frame):
                 continue
 
             win = self.FindWindowById(self.win['volume']['draw'][control])
-            if win.GetName() == "selection":
-                win.SetSelection(dict['value'])
+
+            if control == 'shading':
+                if data['draw']['shading']['desc'] == 'flat':
+                    value = 0
+                else:
+                    value = 1
             else:
-                win.SetValue(dict['value'])
-        #self.SetIsosurfaceMode()
-        #self.SetIsosurfaceResolution()
+                value = dict['value']
+
+            if win.GetName() == "selection":
+                win.SetSelection(value)
+            else:
+                win.SetValue(value)
+
+        self.SetIsosurfaceMode(data['draw']['shading']['value'])
+        self.SetIsosurfaceResolution(data['draw']['resolution']['value'])
                 
         #
         # isosurface attributes
