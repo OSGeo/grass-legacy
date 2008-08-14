@@ -152,15 +152,11 @@ int Vedit_connect_lines(struct Map_info *Map, struct ilist *List,
 			double thresh)
 {
     int nlines_modified;
-    int i, j, k, node[2], n_nodes;
+    int i, j, node[2], n_nodes;
     int line, found;
     double x, y, z;
 
-    struct ilist *List_found;
-
     nlines_modified = 0;
-
-    List_found = Vect_new_list();
 
     /* collect lines to be modified */
     for (i = 0; i < List->n_values; i++) {
@@ -179,17 +175,8 @@ int Vedit_connect_lines(struct Map_info *Map, struct ilist *List,
 	for (j = 0; j < n_nodes; j++) {
 	    /* for each line node find lines in threshold */
 	    Vect_get_node_coor(Map, node[j], &x, &y, &z);
-	    Vect_find_line_list(Map, x, y, z,
-				GV_LINES, thresh, WITHOUT_Z,
-				NULL, List_found);
-
-	    found = 0;
-	    /* connect only selected lines */
-	    for (k = 0; k < List_found->n_values && !found; k++) {
-		if (List_found->value[k] != line &&
-		    Vect_val_in_list(List, List_found->value[k]))
-		    found = List_found->value[k];
-	    }
+	    found = Vect_find_line(Map, x, y, z,
+				   GV_LINES, thresh, WITHOUT_Z, line);
 
 	    if (found > 0 && Vect_line_alive(Map, found)) {
 		/* try to connect lines (given node) */
@@ -202,8 +189,6 @@ int Vedit_connect_lines(struct Map_info *Map, struct ilist *List,
 	    }
 	}
     }
-
-    Vect_destroy_list(List_found);
 
     return nlines_modified;
 }
