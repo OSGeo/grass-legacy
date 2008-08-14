@@ -30,6 +30,7 @@
 #include <errno.h>
 #include <unistd.h>
 
+#include <cstring>
 #include <iostream>
 using namespace std;
 
