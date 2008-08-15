@@ -655,7 +655,7 @@ class LayerTree(treemixin.DragAndDrop, CT.CustomTreeCtrl):
                                     'ctrl' : ctrlId,
                                     'maplayer' : None,
                                     'nviz' : lnviz,
-                                    'prowin' : None}, 
+                                    'propwin' : None}, 
                                    None))
 
             maplayer = self.Map.AddLayer(type=ltype, command=self.GetPyData(layer)[0]['cmd'], name=name,
@@ -676,7 +676,7 @@ class LayerTree(treemixin.DragAndDrop, CT.CustomTreeCtrl):
                                     'type' : ltype,
                                     'ctrl' : None,
                                     'maplayer' : None,
-                                    'prowin' : None}, 
+                                    'propwin' : None}, 
                                    None))
 
         # use predefined layer name if given
@@ -1131,7 +1131,6 @@ class LayerTree(treemixin.DragAndDrop, CT.CustomTreeCtrl):
 
     def GetOptData(self, dcmd, layer, params, propwin):
         """Process layer data"""
-
         # set layer text to map name
         if dcmd:
             mapLayer = self.GetPyData(layer)[0]['maplayer']
@@ -1147,7 +1146,7 @@ class LayerTree(treemixin.DragAndDrop, CT.CustomTreeCtrl):
                 return
             
             self.SetItemText(layer, mapname + ' (opacity: ' + str(opacity) + '%)')
-
+        
         # update layer data
         if params:
             self.SetPyData(layer, (self.GetPyData(layer)[0], params))
