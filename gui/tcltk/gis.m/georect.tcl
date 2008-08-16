@@ -69,10 +69,10 @@ namespace eval GRMap {
     variable scr_ns
     variable map2scrx_conv
     variable map2scry_conv
-	variable areaX1 
-	variable areaY1 
-	variable areaX2 
-	variable areaY2
+    variable areaX1 
+    variable areaY1 
+    variable areaX2 
+    variable areaY2
 
     #variable grcoords # geographic coordinates from mouse click
     # geographic coordinates from mouse movement to display in indicator widget
@@ -135,6 +135,8 @@ namespace eval GRMap {
     variable array rev_error
     # forward and backward projected error
     variable errorlist
+    # clip or not clip image to target region
+    variable clipregion
 
     variable gcpnum
     #forward projected rms error for GCP's, displayed in gcp manager status bar
@@ -203,6 +205,7 @@ namespace eval GRMap {
 	set xymset ""
 	set xyvect ""
 	set drawform 0
+	set clipregion 1
 
 
 }
@@ -953,6 +956,7 @@ proc GRMap::gcpwin {} {
     variable fwd_rmserror
     variable rev_rmserror
     variable drawform
+    variable clipregion
     global xyentry
     global geoentry
     global b1coords
@@ -1014,14 +1018,20 @@ proc GRMap::gcpwin {} {
     set second [radiobutton $row.c -variable GRMap::rectorder -value 2 \
         -text [G_msg "2nd order"] -highlightthickness 0 -state $rbstate]
         DynamicHelp::register $second balloon [G_msg "polynomial transformation \
-                (rasters only). Requires 6+ GCPs."]
+                (rasters only). Requires 7+ GCPs."]
 
     set third [radiobutton $row.d -variable GRMap::rectorder -value 3 \
         -text [G_msg "3rd order"] -highlightthickness 0 -state $rbstate]
         DynamicHelp::register $third balloon [G_msg "polynomial transformation \
                 (rasters only). Requires 10+ GCPs."]
+	
+    Label $row.e -text [G_msg "Clip map/image to target region"] \
+        -fg MediumBlue
+	
+    set clip [checkbutton $row.f -takefocus 0 -variable GRMap::clipregion]
 
     pack $row.a $row.b $row.c $row.d -side left
+    pack $row.f $row.e -side right
     pack $row -side top -fill both -expand yes
 
     set row [ frame $gcp.header ]
@@ -1363,8 +1373,9 @@ proc GRMap::rectify { } {
 # 			puts $error
 # 		}
 
-        set cmd "i.rectify -ca group=$xygroup extension=$mappid order=$rectorder"
-        
+        set cmd "i.rectify -a group=$xygroup extension=$mappid order=$rectorder"
+        if { $GRMap::clipregion == 1 } { append cmd " -c"}
+	
         run_panel $cmd
         # Return to georectified mapset
         GRMap::resetenv
