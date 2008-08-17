@@ -1197,7 +1197,7 @@ class LayerTree(treemixin.DragAndDrop, CT.CustomTreeCtrl):
 
         vislayer = self.GetFirstVisibleItem()
 
-        if not vislayer:
+        if not vislayer or self.GetPyData(vislayer) is None:
             return
 
         itemList = ""
