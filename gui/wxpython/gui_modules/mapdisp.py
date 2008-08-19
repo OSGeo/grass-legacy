@@ -644,7 +644,8 @@ class BufferedWindow(MapWindow, wx.Window):
         # render background image if needed
         #
         
-        self.tree.ReorderLayers()
+        if self.tree.rerender == True:
+            self.tree.ReorderLayers()
         if render:
             # update display size
             self.Map.ChangeMapSize(self.GetClientSize())
