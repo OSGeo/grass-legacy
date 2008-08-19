@@ -831,11 +831,11 @@ class Map(object):
                 if not layer.Render():
                     continue
             
-            # update process bar
+            # update progress bar
             if mapWindow is not None:
                 mapWindow.onRenderCounter += 1
 
-            wx.SafeYield(self.window)
+            #wx.SafeYield(self.window)
             
             # add image to compositing list
             if layer.type != "overlay":
