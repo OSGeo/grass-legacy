@@ -1230,7 +1230,6 @@ class LayerTree(treemixin.DragAndDrop, CT.CustomTreeCtrl):
         """Add commands from data associated with
         any valid layers (checked or not) to layer list in order to
         match layers in layer tree."""
-        print "in reorder*****************"
 
         # make a list of visible layers
         treelayers = []
