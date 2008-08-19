@@ -835,7 +835,7 @@ class Map(object):
             if mapWindow is not None:
                 mapWindow.onRenderCounter += 1
 
-            #wx.SafeYield(self.window)
+            wx.SafeYield(self.window)
             
             # add image to compositing list
             if layer.type != "overlay":
