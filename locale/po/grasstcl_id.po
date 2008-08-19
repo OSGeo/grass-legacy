@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: grasstcl_id\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-01-24 17:42+0100\n"
+"POT-Creation-Date: 2008-08-19 23:37+0200\n"
 "PO-Revision-Date: 2008-07-30 16:56+0700\n"
 "Last-Translator: Firman Hadi <jalmiburung@gmail.com>\n"
 "Language-Team: Indonesian <grass-translations@lists.osgeo.org>\n"
@@ -14,7 +14,8 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: KBabel 1.11.4\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n != 0 ? 1 : 2);\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n != 0 ? 1 : "
+"2);\n"
 "X-Poedit-Language: Indonesian\n"
 "X-Poedit-Country: INDONESIA\n"
 
@@ -38,11 +39,9 @@ msgstr "Tabel berhasil dibuat"
 msgid "Settings already opened"
 msgstr "Pengesetan telah dibuka sebelumnya"
 
-#: ../vector/v.digit/settings.tcl:160
-#: ../lib/init/epsg_option.tcl:311
-#: ../gui/tcltk/gis.m/gm.tcl:430
-#: ../gui/tcltk/gis.m/animate.tcl:536
-#: ../gui/tcltk/gis.m/dnviz.tcl:228
+#: ../vector/v.digit/settings.tcl:160 ../lib/init/epsg_option.tcl:311
+#: ../lib/init/file_option.tcl:263 ../gui/tcltk/gis.m/gm.tcl:446
+#: ../gui/tcltk/gis.m/animate.tcl:536 ../gui/tcltk/gis.m/dnviz.tcl:228
 #: ../gui/tcltk/gis.m/rules.tcl:170
 msgid "OK"
 msgstr "OK"
@@ -51,8 +50,7 @@ msgstr "OK"
 msgid "Symbology"
 msgstr "Simbolisasi"
 
-#: ../vector/v.digit/settings.tcl:173
-#: ../vector/v.digit/settings.tcl:326
+#: ../vector/v.digit/settings.tcl:173 ../vector/v.digit/settings.tcl:326
 msgid "Background"
 msgstr "Latar belakang"
 
@@ -212,19 +210,16 @@ msgstr "Perbesar tampilan"
 msgid "Zoom out"
 msgstr "Perkecil tampilan"
 
-#: ../vector/v.digit/toolbox.tcl:189
-#: ../gui/tcltk/gis.m/maptool.tcl:151
+#: ../vector/v.digit/toolbox.tcl:189 ../gui/tcltk/gis.m/maptool.tcl:151
 #: ../gui/tcltk/gis.m/georecttool.tcl:130
 msgid "Pan"
 msgstr "Geser"
 
 #: ../vector/v.digit/toolbox.tcl:194
-#: ../gui/tcltk/gis.m/maptool.tcl:196
 msgid "Zoom to default region"
 msgstr "Perbesaran sesuai dengan region default"
 
 #: ../vector/v.digit/toolbox.tcl:207
-#: ../gui/tcltk/gis.m/maptool.tcl:187
 msgid "Zoom to saved region"
 msgstr "Perbesaran sesuai dengan region yang disimpan"
 
@@ -252,8 +247,7 @@ msgstr "Simpan dan keluar"
 msgid "mouse button actions (left, middle, right)"
 msgstr "petunjuk tombol tetikus (kiri, tengah, kanan)"
 
-#: ../vector/v.digit/cats.tcl:20
-#: ../gui/tcltk/gis.m/gmmenu.tcl:172
+#: ../vector/v.digit/cats.tcl:20 ../gui/tcltk/gis.m/gmmenu.tcl:172
 msgid "Delete"
 msgstr "Hapus"
 
@@ -289,31 +283,23 @@ msgstr "Pilih obyek"
 msgid "Ok"
 msgstr "Ok"
 
-#: ../lib/gtcltk/select.tcl:209
-#: ../lib/init/epsg_option.tcl:167
-#: ../lib/init/epsg_option.tcl:314
-#: ../lib/init/file_option.tcl:114
-#: ../gui/tcltk/gis.m/gm.tcl:433
-#: ../gui/tcltk/gis.m/animate.tcl:538
-#: ../gui/tcltk/gis.m/dnviz.tcl:230
-#: ../gui/tcltk/gis.m/mapcanvas.tcl:855
-#: ../gui/tcltk/gis.m/georect.tcl:700
+#: ../lib/gtcltk/select.tcl:209 ../lib/init/epsg_option.tcl:167
+#: ../lib/init/epsg_option.tcl:314 ../lib/init/file_option.tcl:114
+#: ../lib/init/file_option.tcl:266 ../gui/tcltk/gis.m/gm.tcl:449
+#: ../gui/tcltk/gis.m/animate.tcl:538 ../gui/tcltk/gis.m/dnviz.tcl:230
+#: ../gui/tcltk/gis.m/mapcanvas.tcl:855 ../gui/tcltk/gis.m/georect.tcl:703
 #: ../gui/tcltk/gis.m/rules.tcl:172
 msgid "Cancel"
 msgstr "Batalkan"
 
-#: ../lib/gis/gui.tcl:11
-#: ../lib/gis/gui.tcl:15
-#: ../lib/gis/gui.tcl:19
-#: ../lib/gis/gui.tcl:310
-#: ../gui/tcltk/gis.m/runandoutput.tcl:258
-#: ../gui/tcltk/gis.m/grassabout.tcl:94
-#: ../gui/tcltk/gis.m/gmlib.tcl:131
+#: ../lib/gis/gui.tcl:11 ../lib/gis/gui.tcl:15 ../lib/gis/gui.tcl:19
+#: ../lib/gis/gui.tcl:310 ../gui/tcltk/gis.m/runandoutput.tcl:266
+#: ../gui/tcltk/gis.m/runandoutput.tcl:272
+#: ../gui/tcltk/gis.m/grassabout.tcl:94 ../gui/tcltk/gis.m/gmlib.tcl:141
 msgid "Error"
 msgstr "Kesalahan"
 
-#: ../lib/gis/gui.tcl:229
-#: ../gui/tcltk/gis.m/gmlib.tcl:113
+#: ../lib/gis/gui.tcl:229 ../gui/tcltk/gis.m/gmlib.tcl:119
 msgid "Save File"
 msgstr "Simpan berkas"
 
@@ -321,8 +307,7 @@ msgstr "Simpan berkas"
 msgid "Load File"
 msgstr "Buka berkas"
 
-#: ../lib/gis/gui.tcl:295
-#: ../lib/gis/gui.tcl:480
+#: ../lib/gis/gui.tcl:295 ../lib/gis/gui.tcl:489
 #: ../gui/tcltk/gis.m/gmmenu.tcl:326
 msgid "Output"
 msgstr "Output"
@@ -331,116 +316,74 @@ msgstr "Output"
 msgid "Options"
 msgstr "Opsi"
 
-#: ../lib/gis/gui.tcl:464
-#: ../gui/tcltk/gis.m/gmmenu.tcl:165
+#: ../lib/gis/gui.tcl:473 ../gui/tcltk/gis.m/gmmenu.tcl:165
 msgid "Copy"
 msgstr "Salin"
 
-#: ../lib/gis/gui.tcl:503
-#: ../gui/tcltk/gis.m/runandoutput.tcl:44
+#: ../lib/gis/gui.tcl:512 ../gui/tcltk/gis.m/runandoutput.tcl:44
 #: ../gui/tcltk/gis.m/runandoutput.tcl:116
 msgid "Run"
 msgstr "Jalankan"
 
-#: ../lib/gis/gui.tcl:504
-#: ../lib/init/gis_set.tcl:506
-#: ../gui/tcltk/gis.m/thematic.tcl:241
-#: ../gui/tcltk/gis.m/thematic.tcl:245
-#: ../gui/tcltk/gis.m/profile.tcl:131
-#: ../gui/tcltk/gis.m/profile.tcl:135
-#: ../gui/tcltk/gis.m/labels.tcl:136
-#: ../gui/tcltk/gis.m/labels.tcl:140
-#: ../gui/tcltk/gis.m/rastarrows.tcl:164
-#: ../gui/tcltk/gis.m/rastarrows.tcl:167
-#: ../gui/tcltk/gis.m/runandoutput.tcl:47
-#: ../gui/tcltk/gis.m/rastnums.tcl:163
-#: ../gui/tcltk/gis.m/rastnums.tcl:166
-#: ../gui/tcltk/gis.m/frames.tcl:118
-#: ../gui/tcltk/gis.m/frames.tcl:122
-#: ../gui/tcltk/gis.m/animate.tcl:408
-#: ../gui/tcltk/gis.m/animate.tcl:412
-#: ../gui/tcltk/gis.m/animate.tcl:481
-#: ../gui/tcltk/gis.m/animate.tcl:484
-#: ../gui/tcltk/gis.m/dnviz.tcl:208
-#: ../gui/tcltk/gis.m/dnviz.tcl:212
-#: ../gui/tcltk/gis.m/gridline.tcl:162
-#: ../gui/tcltk/gis.m/gridline.tcl:214
-#: ../gui/tcltk/gis.m/gridline.tcl:241
-#: ../gui/tcltk/gis.m/legend.tcl:189
-#: ../gui/tcltk/gis.m/legend.tcl:192
-#: ../gui/tcltk/gis.m/raster.tcl:192
-#: ../gui/tcltk/gis.m/raster.tcl:196
-#: ../gui/tcltk/gis.m/chart.tcl:184
-#: ../gui/tcltk/gis.m/chart.tcl:188
-#: ../gui/tcltk/gis.m/vector.tcl:330
-#: ../gui/tcltk/gis.m/vector.tcl:334
-#: ../gui/tcltk/gis.m/barscale.tcl:180
-#: ../gui/tcltk/gis.m/barscale.tcl:184
-#: ../gui/tcltk/gis.m/rgbhis.tcl:156
-#: ../gui/tcltk/gis.m/rgbhis.tcl:165
-#: ../gui/tcltk/gis.m/dtext.tcl:177
-#: ../gui/tcltk/gis.m/dtext.tcl:181
-#: ../gui/tcltk/gis.m/georect.tcl:705
-#: ../gui/tcltk/gis.m/georect.tcl:709
-#: ../gui/tcltk/gis.m/georect.tcl:1132
-#: ../gui/tcltk/gis.m/georect.tcl:1136
-#: ../gui/tcltk/gis.m/rules.tcl:139
-#: ../gui/tcltk/gis.m/rules.tcl:143
-#: ../gui/tcltk/gis.m/histogram.tcl:162
-#: ../gui/tcltk/gis.m/histogram.tcl:165
-#: ../gui/tcltk/d.m/thematic.tcl:121
-#: ../gui/tcltk/d.m/thematic.tcl:125
-#: ../gui/tcltk/d.m/labels.tcl:70
-#: ../gui/tcltk/d.m/labels.tcl:74
-#: ../gui/tcltk/d.m/frames.tcl:66
-#: ../gui/tcltk/d.m/frames.tcl:70
-#: ../gui/tcltk/d.m/gridline.tcl:81
-#: ../gui/tcltk/d.m/gridline.tcl:120
-#: ../gui/tcltk/d.m/gridline.tcl:150
-#: ../gui/tcltk/d.m/legend.tcl:86
-#: ../gui/tcltk/d.m/legend.tcl:90
-#: ../gui/tcltk/d.m/raster.tcl:90
-#: ../gui/tcltk/d.m/raster.tcl:94
-#: ../gui/tcltk/d.m/chart.tcl:96
-#: ../gui/tcltk/d.m/chart.tcl:100
-#: ../gui/tcltk/d.m/rgbhis.tcl:130
-#: ../gui/tcltk/d.m/rgbhis.tcl:137
-#: ../gui/tcltk/d.m/fttext.tcl:83
-#: ../gui/tcltk/d.m/fttext.tcl:87
-#: ../gui/tcltk/d.m/vector.tcl:202
-#: ../gui/tcltk/d.m/vector.tcl:206
-#: ../gui/tcltk/d.m/barscale.tcl:74
-#: ../gui/tcltk/d.m/barscale.tcl:78
-#: ../gui/tcltk/d.m/dtext.tcl:75
+#: ../lib/gis/gui.tcl:513 ../lib/init/gis_set.tcl:507
+#: ../gui/tcltk/gis.m/rastarrows.tcl:164 ../gui/tcltk/gis.m/rastarrows.tcl:167
+#: ../gui/tcltk/gis.m/thematic.tcl:241 ../gui/tcltk/gis.m/thematic.tcl:245
+#: ../gui/tcltk/gis.m/profile.tcl:131 ../gui/tcltk/gis.m/profile.tcl:135
+#: ../gui/tcltk/gis.m/labels.tcl:136 ../gui/tcltk/gis.m/labels.tcl:140
+#: ../gui/tcltk/gis.m/runandoutput.tcl:47 ../gui/tcltk/gis.m/rastnums.tcl:163
+#: ../gui/tcltk/gis.m/rastnums.tcl:166 ../gui/tcltk/gis.m/frames.tcl:118
+#: ../gui/tcltk/gis.m/frames.tcl:122 ../gui/tcltk/gis.m/animate.tcl:408
+#: ../gui/tcltk/gis.m/animate.tcl:412 ../gui/tcltk/gis.m/animate.tcl:481
+#: ../gui/tcltk/gis.m/animate.tcl:484 ../gui/tcltk/gis.m/dnviz.tcl:208
+#: ../gui/tcltk/gis.m/dnviz.tcl:212 ../gui/tcltk/gis.m/gridline.tcl:162
+#: ../gui/tcltk/gis.m/gridline.tcl:214 ../gui/tcltk/gis.m/gridline.tcl:241
+#: ../gui/tcltk/gis.m/legend.tcl:219 ../gui/tcltk/gis.m/legend.tcl:222
+#: ../gui/tcltk/gis.m/raster.tcl:192 ../gui/tcltk/gis.m/raster.tcl:196
+#: ../gui/tcltk/gis.m/chart.tcl:184 ../gui/tcltk/gis.m/chart.tcl:188
+#: ../gui/tcltk/gis.m/vector.tcl:330 ../gui/tcltk/gis.m/vector.tcl:334
+#: ../gui/tcltk/gis.m/barscale.tcl:180 ../gui/tcltk/gis.m/barscale.tcl:184
+#: ../gui/tcltk/gis.m/rgbhis.tcl:156 ../gui/tcltk/gis.m/rgbhis.tcl:165
+#: ../gui/tcltk/gis.m/dtext.tcl:177 ../gui/tcltk/gis.m/dtext.tcl:181
+#: ../gui/tcltk/gis.m/georect.tcl:708 ../gui/tcltk/gis.m/georect.tcl:712
+#: ../gui/tcltk/gis.m/georect.tcl:1142 ../gui/tcltk/gis.m/georect.tcl:1146
+#: ../gui/tcltk/gis.m/rules.tcl:139 ../gui/tcltk/gis.m/rules.tcl:143
+#: ../gui/tcltk/gis.m/histogram.tcl:162 ../gui/tcltk/gis.m/histogram.tcl:165
+#: ../gui/tcltk/d.m/thematic.tcl:121 ../gui/tcltk/d.m/thematic.tcl:125
+#: ../gui/tcltk/d.m/labels.tcl:70 ../gui/tcltk/d.m/labels.tcl:74
+#: ../gui/tcltk/d.m/frames.tcl:66 ../gui/tcltk/d.m/frames.tcl:70
+#: ../gui/tcltk/d.m/gridline.tcl:81 ../gui/tcltk/d.m/gridline.tcl:120
+#: ../gui/tcltk/d.m/gridline.tcl:150 ../gui/tcltk/d.m/legend.tcl:86
+#: ../gui/tcltk/d.m/legend.tcl:90 ../gui/tcltk/d.m/raster.tcl:90
+#: ../gui/tcltk/d.m/raster.tcl:94 ../gui/tcltk/d.m/chart.tcl:96
+#: ../gui/tcltk/d.m/chart.tcl:100 ../gui/tcltk/d.m/rgbhis.tcl:130
+#: ../gui/tcltk/d.m/rgbhis.tcl:137 ../gui/tcltk/d.m/fttext.tcl:83
+#: ../gui/tcltk/d.m/fttext.tcl:87 ../gui/tcltk/d.m/vector.tcl:202
+#: ../gui/tcltk/d.m/vector.tcl:206 ../gui/tcltk/d.m/barscale.tcl:74
+#: ../gui/tcltk/d.m/barscale.tcl:78 ../gui/tcltk/d.m/dtext.tcl:75
 #: ../gui/tcltk/d.m/dtext.tcl:79
 msgid "Help"
 msgstr "Bantuan"
 
-#: ../lib/gis/gui.tcl:505
-#: ../gui/tcltk/gis.m/runandoutput.tcl:127
+#: ../lib/gis/gui.tcl:514 ../gui/tcltk/gis.m/runandoutput.tcl:127
 msgid "Clear"
 msgstr "Bersihkan"
 
-#: ../lib/gis/gui.tcl:506
-#: ../lib/init/epsg_option.tcl:394
-#: ../lib/init/epsg_option.tcl:438
-#: ../gui/tcltk/gis.m/runandoutput.tcl:48
-#: ../gui/tcltk/gis.m/gmmenu.tcl:90
-#: ../gui/tcltk/gis.m/mapprint.tcl:366
-#: ../gui/tcltk/d.m/menu.tcl:174
-#: ../gui/tcltk/d.m/print.tcl:281
+#: ../lib/gis/gui.tcl:515 ../lib/init/epsg_option.tcl:394
+#: ../lib/init/epsg_option.tcl:438 ../gui/tcltk/gis.m/runandoutput.tcl:48
+#: ../gui/tcltk/gis.m/gmmenu.tcl:90 ../gui/tcltk/gis.m/mapprint.tcl:366
+#: ../gui/tcltk/d.m/menu.tcl:174 ../gui/tcltk/d.m/print.tcl:281
 msgid "Close"
 msgstr "Tutup"
 
-#: ../lib/gis/gui.tcl:577
+#: ../lib/gis/gui.tcl:586
 msgid "required"
 msgstr "dibutuhkan"
 
-#: ../lib/gis/gui.tcl:577
+#: ../lib/gis/gui.tcl:586
 msgid "optional"
 msgstr "opsional"
 
-#: ../lib/gis/gui.tcl:578
+#: ../lib/gis/gui.tcl:587
 msgid "multiple"
 msgstr "berganda"
 
@@ -452,7 +395,8 @@ msgstr "PERINGATAN: tidak dapat mengambil 'environmental variable'"
 msgid ""
 "Warning: Unable to get enviromental variable GRASS_PROJSHARE. \n"
 "This is a GRASS installation error. \n"
-"Set enviromental variable GRASS_PROJSHARE to point to directory with Proj4 EPSG file. "
+"Set enviromental variable GRASS_PROJSHARE to point to directory with Proj4 "
+"EPSG file. "
 msgstr ""
 "Peringatan: Tidak dapat memperoleh variabel GRASS_PROJSHARE. \n"
 "Ini adalah sebuah kesalahan instalasi GRASS. \n"
@@ -462,8 +406,7 @@ msgstr ""
 msgid "Define location using EPSG projection codes"
 msgstr "Definisikan lokasi dengan kode proyeksi EPSG"
 
-#: ../lib/init/epsg_option.tcl:122
-#: ../lib/init/file_option.tcl:92
+#: ../lib/init/epsg_option.tcl:122 ../lib/init/file_option.tcl:92
 msgid "Name of new location"
 msgstr "Nama location baru"
 
@@ -471,15 +414,12 @@ msgstr "Nama location baru"
 msgid "Enter name for location to be created"
 msgstr "Masukkan nama untuk location yang akan dibuat"
 
-#: ../lib/init/epsg_option.tcl:129
-#: ../lib/init/epsg_option.tcl:132
+#: ../lib/init/epsg_option.tcl:129 ../lib/init/epsg_option.tcl:132
 msgid "Path to the EPSG-codes file"
 msgstr "Path ke berkas EPSG-code"
 
-#: ../lib/init/epsg_option.tcl:135
-#: ../lib/init/epsg_option.tcl:148
-#: ../lib/init/gis_set.tcl:241
-#: ../lib/init/file_option.tcl:105
+#: ../lib/init/epsg_option.tcl:135 ../lib/init/epsg_option.tcl:148
+#: ../lib/init/gis_set.tcl:243 ../lib/init/file_option.tcl:105
 msgid "Browse..."
 msgstr "Jelajah..."
 
@@ -507,8 +447,7 @@ msgstr "PERINGATAN: berkas kode-epsg tidak dapat ditemukan"
 msgid "WARNING: The epsg-codes file was not found!"
 msgstr "Peringatan: berkas kode-epsg tidak dapat ditemukan!"
 
-#: ../lib/init/epsg_option.tcl:164
-#: ../lib/init/file_option.tcl:111
+#: ../lib/init/epsg_option.tcl:164 ../lib/init/file_option.tcl:111
 msgid "Define location"
 msgstr "Definisikan location"
 
@@ -528,15 +467,16 @@ msgstr "Location sudah pernah dibuat sebelumnya!"
 #: ../lib/init/epsg_option.tcl:199
 #, tcl-format
 msgid "WARNING: Location '%s' already exists: please try another name."
-msgstr "PERINGATAN: Location '%s' sudah ada: silakan gunakan nama yang lainnya."
+msgstr ""
+"PERINGATAN: Location '%s' sudah ada: silakan gunakan nama yang lainnya."
 
-#: ../lib/init/epsg_option.tcl:236
-#: ../lib/init/epsg_option.tcl:263
+#: ../lib/init/epsg_option.tcl:236 ../lib/init/epsg_option.tcl:263
+#: ../lib/init/file_option.tcl:185 ../lib/init/file_option.tcl:212
 msgid "Error creating location!"
 msgstr "Ada kesalahan saat membuat lokasi!"
 
-#: ../lib/init/epsg_option.tcl:237
-#: ../lib/init/epsg_option.tcl:264
+#: ../lib/init/epsg_option.tcl:237 ../lib/init/epsg_option.tcl:264
+#: ../lib/init/file_option.tcl:186 ../lib/init/file_option.tcl:213
 #, tcl-format
 msgid ""
 "g.proj returned the following message:\n"
@@ -545,13 +485,13 @@ msgstr ""
 "g.proj memberikan pesan berikut:\n"
 "%s"
 
-#: ../lib/init/epsg_option.tcl:244
-#: ../lib/init/epsg_option.tcl:268
+#: ../lib/init/epsg_option.tcl:244 ../lib/init/epsg_option.tcl:268
+#: ../lib/init/file_option.tcl:193 ../lib/init/file_option.tcl:217
 msgid "Informational output from g.proj"
 msgstr "Output informasi dari g.proj"
 
-#: ../lib/init/epsg_option.tcl:245
-#: ../lib/init/epsg_option.tcl:269
+#: ../lib/init/epsg_option.tcl:245 ../lib/init/epsg_option.tcl:269
+#: ../lib/init/file_option.tcl:194 ../lib/init/file_option.tcl:218
 #, tcl-format
 msgid ""
 "g.proj returned the following informational message:\n"
@@ -560,24 +500,31 @@ msgstr ""
 "g.proj memberikan pesan berikut:\n"
 "%s"
 
-#: ../lib/init/epsg_option.tcl:288
+#: ../lib/init/epsg_option.tcl:288 ../lib/init/file_option.tcl:240
 msgid "Select datum transformation parameters:"
 msgstr "Pilih parameter transformasi datum:"
 
-#: ../lib/init/epsg_option.tcl:292
-msgid "Continue without specifying parameters - if used when creating a location, other GRASS modules will use the \"default\" (likely non-optimum) parameters for this datum if necessary in the future."
-msgstr "Lanjutkan tanpa menentukan parameter - jika digunakan ketika membuat sebuah lokasi, modul GRASS yang lain akan menggunakan parameter \"default\" untuk datum ini jika diperlukan"
+#: ../lib/init/epsg_option.tcl:292 ../lib/init/file_option.tcl:244
+msgid ""
+"Continue without specifying parameters - if used when creating a location, "
+"other GRASS modules will use the \"default\" (likely non-optimum) parameters "
+"for this datum if necessary in the future."
+msgstr ""
+"Lanjutkan tanpa menentukan parameter - jika digunakan ketika membuat sebuah "
+"lokasi, modul GRASS yang lain akan menggunakan parameter \"default\" untuk "
+"datum ini jika diperlukan"
 
 #: ../lib/init/epsg_option.tcl:344
 msgid "You can select EPSG code (in <braces>) and copy it for later use."
-msgstr "Anda dapat memilih kode EPSG (dalam <kurung>) dan menyalinnya untuk digunakan nanti"
+msgstr ""
+"Anda dapat memilih kode EPSG (dalam <kurung>) dan menyalinnya untuk "
+"digunakan nanti"
 
 #: ../lib/init/epsg_option.tcl:381
 msgid "GUESS THAT IS NOT THE EPSG FILE"
 msgstr "MUNGKIN ITU BUKAN BERKAS EPSG YANG DICARI"
 
-#: ../lib/init/epsg_option.tcl:387
-#: ../lib/init/epsg_option.tcl:416
+#: ../lib/init/epsg_option.tcl:387 ../lib/init/epsg_option.tcl:416
 #: ../lib/init/epsg_option.tcl:435
 msgid "Search"
 msgstr "Cari"
@@ -602,11 +549,11 @@ msgstr "pencarian maju"
 msgid "backward search"
 msgstr "pencarian mundur"
 
-#: ../lib/init/gis_set.tcl:109
+#: ../lib/init/gis_set.tcl:107
 msgid "WARNING: can not save"
 msgstr "PERINGATAN: tidak dapat disimpan"
 
-#: ../lib/init/gis_set.tcl:110
+#: ../lib/init/gis_set.tcl:108
 #, tcl-format
 msgid ""
 "Warning: unable to save data to <%s> file.\n"
@@ -615,31 +562,31 @@ msgstr ""
 "Peringatan: tidak dapat menyimpan data ke berkas <%s>.\n"
 "Pesan kesalahan: %s"
 
-#: ../lib/init/gis_set.tcl:131
-#: ../lib/init/gis_set.tcl:377
-#: ../lib/init/gis_set.tcl:483
-#: ../lib/init/gis_set.tcl:608
-#: ../lib/init/gis_set.tcl:629
-#: ../lib/init/gis_set.tcl:647
+#: ../lib/init/gis_set.tcl:128 ../lib/init/gis_set.tcl:379
+#: ../lib/init/gis_set.tcl:485 ../lib/init/gis_set.tcl:609
+#: ../lib/init/gis_set.tcl:630 ../lib/init/gis_set.tcl:648
 #: ../lib/init/gis_set.tcl:676
 msgid "WARNING: invalid location"
 msgstr "PERINGATAN: location invalid"
 
-#: ../lib/init/gis_set.tcl:132
+#: ../lib/init/gis_set.tcl:129
 #, tcl-format
-msgid "Warning: location <%s> at GISDBASE <%s> is not a directory or does not exist."
-msgstr "Peringatan: location <%s> dalam GISDBASE <%s> bukan sebuah direktori atau tidak ada."
+msgid ""
+"Warning: location <%s> at GISDBASE <%s> is not a directory or does not exist."
+msgstr ""
+"Peringatan: location <%s> dalam GISDBASE <%s> bukan sebuah direktori atau "
+"tidak ada."
 
-#: ../lib/init/gis_set.tcl:177
+#: ../lib/init/gis_set.tcl:179
 #, tcl-format
 msgid "GRASS %s Startup"
 msgstr "GRASS %s Startup"
 
-#: ../lib/init/gis_set.tcl:200
+#: ../lib/init/gis_set.tcl:202
 msgid "Welcome to GRASS GIS Version"
 msgstr "Selamat datang di GRASS GIS Versi"
 
-#: ../lib/init/gis_set.tcl:202
+#: ../lib/init/gis_set.tcl:204
 msgid ""
 "The world's leading open source GIS\n"
 "\n"
@@ -647,43 +594,43 @@ msgstr ""
 "Open source GIS terunggul di dunia\n"
 "\n"
 
-#: ../lib/init/gis_set.tcl:203
+#: ../lib/init/gis_set.tcl:205
 msgid "Select an existing project location and mapset\n"
 msgstr "Pilih sebuah location dan mapset\n"
 
-#: ../lib/init/gis_set.tcl:204
+#: ../lib/init/gis_set.tcl:206
 msgid "or define a new location\n"
 msgstr "atau definisikan sebuah location baru\n"
 
-#: ../lib/init/gis_set.tcl:227
+#: ../lib/init/gis_set.tcl:229
 msgid "GIS Data Directory: "
 msgstr "Direktori Data GIS:"
 
-#: ../lib/init/gis_set.tcl:243
+#: ../lib/init/gis_set.tcl:245
 msgid "New GIS data directory"
 msgstr "Direktori Data GIS baru"
 
-#: ../lib/init/gis_set.tcl:266
+#: ../lib/init/gis_set.tcl:268
 msgid "Project Location (projection/coordinate system)"
 msgstr "Project Location (proyeksi/sistem koordinat)"
 
-#: ../lib/init/gis_set.tcl:299
+#: ../lib/init/gis_set.tcl:301
 msgid "Accessible Mapsets (directories of GIS files)"
 msgstr "Mapset yang bisa diakses (direktori dalam berkas GIS)"
 
-#: ../lib/init/gis_set.tcl:356
+#: ../lib/init/gis_set.tcl:358
 msgid "Create new mapset in selected location"
 msgstr "Buat sebuah mapset dalam location yang dipilih"
 
-#: ../lib/init/gis_set.tcl:364
+#: ../lib/init/gis_set.tcl:366
 msgid "Create new mapset"
 msgstr "Buat sebuah mapset baru"
 
-#: ../lib/init/gis_set.tcl:369
+#: ../lib/init/gis_set.tcl:371
 msgid "WARNING: invalid mapset name"
 msgstr "PERINGATAN: nama mapset tidak valid"
 
-#: ../lib/init/gis_set.tcl:370
+#: ../lib/init/gis_set.tcl:372
 #, tcl-format
 msgid ""
 "Warning: Mapset with name <%s> already exists. \n"
@@ -694,7 +641,7 @@ msgstr ""
 "Mapset baru TIDAK dibuat.\n"
 "Silakan pilih mapset dengan nama yang berbeda dan coba lagi."
 
-#: ../lib/init/gis_set.tcl:378
+#: ../lib/init/gis_set.tcl:380
 #, tcl-format
 msgid ""
 "Warning: selected location <%s> is not valid. \n"
@@ -705,11 +652,11 @@ msgstr ""
 "Mapset baru TIDAK dibuat. \n"
 "Pilih location yang valid dan coba lagi."
 
-#: ../lib/init/gis_set.tcl:385
+#: ../lib/init/gis_set.tcl:387
 msgid "WARNING: unable to mkdir"
 msgstr "PERINGATAN: tidak dapat melakukan perintah mkdir"
 
-#: ../lib/init/gis_set.tcl:386
+#: ../lib/init/gis_set.tcl:388
 #, tcl-format
 msgid ""
 "Warning: Unable to create directory for new mapset. \n"
@@ -718,27 +665,27 @@ msgstr ""
 "Peringatan: Tidak dapat membuat direktori untuk mapset baru. \n"
 "Pesan kesalahan: %s"
 
-#: ../lib/init/gis_set.tcl:411
+#: ../lib/init/gis_set.tcl:413
 msgid "Define new location with..."
 msgstr "Definisikan lokasi baru dengan .."
 
-#: ../lib/init/gis_set.tcl:415
+#: ../lib/init/gis_set.tcl:417
 msgid "Georeferenced file"
 msgstr "Berkas ber-georeferensi"
 
-#: ../lib/init/gis_set.tcl:428
+#: ../lib/init/gis_set.tcl:430
 msgid "EPSG codes"
 msgstr "Kode EPSG"
 
-#: ../lib/init/gis_set.tcl:441
+#: ../lib/init/gis_set.tcl:443
 msgid "Projection values"
 msgstr "Nilai Projection"
 
-#: ../lib/init/gis_set.tcl:479
+#: ../lib/init/gis_set.tcl:481
 msgid "Enter GRASS"
 msgstr "Enter GRASS"
 
-#: ../lib/init/gis_set.tcl:484
+#: ../lib/init/gis_set.tcl:486
 #, tcl-format
 msgid ""
 "Warning: selected location <%s> is not valid. \n"
@@ -747,36 +694,35 @@ msgstr ""
 "Peringatan: location terpilih <%s> tidak valid. \n"
 "Silakan pilih location yang valid dan coba lagi."
 
-#: ../lib/init/gis_set.tcl:489
-#: ../lib/init/gis_set.tcl:653
+#: ../lib/init/gis_set.tcl:491 ../lib/init/gis_set.tcl:654
 msgid "WARNING: invalid mapset"
 msgstr "PERINGATAN: mapset tidak valid"
 
-#: ../lib/init/gis_set.tcl:490
+#: ../lib/init/gis_set.tcl:492
 #, tcl-format
 msgid "Warning: <%s> is not a valid mapset"
 msgstr "Peringatan: <%s> bukanlah sebuah mapset yang valid"
 
-#: ../lib/init/gis_set.tcl:511
+#: ../lib/init/gis_set.tcl:512
 msgid "Help already opened"
 msgstr "Bantuan sudah dibuka sebelumnya"
 
-#: ../lib/init/gis_set.tcl:524
+#: ../lib/init/gis_set.tcl:525
 msgid "Exit"
 msgstr "Keluar"
 
-#: ../lib/init/gis_set.tcl:560
+#: ../lib/init/gis_set.tcl:561
 msgid "WARNING: Invalid Database"
 msgstr "PERINGATAN: Basisdata tidak valid"
 
-#: ../lib/init/gis_set.tcl:561
+#: ../lib/init/gis_set.tcl:562
 msgid "WARNING: Invalid database. Finding first valid directory in parent tree"
-msgstr "PERINGATAN: Basisdata tidak valid. Temukan direktori yang benar terlebih dahulu pada direktori di atasnya"
+msgstr ""
+"PERINGATAN: Basisdata tidak valid. Temukan direktori yang benar terlebih "
+"dahulu pada direktori di atasnya"
 
-#: ../lib/init/gis_set.tcl:609
-#: ../lib/init/gis_set.tcl:630
-#: ../lib/init/gis_set.tcl:648
-#: ../lib/init/gis_set.tcl:677
+#: ../lib/init/gis_set.tcl:610 ../lib/init/gis_set.tcl:631
+#: ../lib/init/gis_set.tcl:649 ../lib/init/gis_set.tcl:677
 #, tcl-format
 msgid ""
 "Warning: selected location <%%s> is not valid. \n"
@@ -785,7 +731,7 @@ msgstr ""
 "Peringatan: location terpilih <%%s> tidak valid. \n"
 "Silakan pilih location yang valid dan coba lagi"
 
-#: ../lib/init/gis_set.tcl:654
+#: ../lib/init/gis_set.tcl:655
 #, tcl-format
 msgid "Warning: <%%s> is not a valid mapset"
 msgstr "Peringatan: <%%s> bukanlah sebuah mapset yang valid"
@@ -805,7 +751,9 @@ msgstr ""
 
 #: ../lib/init/file_option.tcl:72
 msgid "Define location using projection information in georeferenced file"
-msgstr "Definisikan location dengan menggunakan informasi proyeksi dalam berkas bergeoreferensi"
+msgstr ""
+"Definisikan location dengan menggunakan informasi proyeksi dalam berkas "
+"bergeoreferensi"
 
 #: ../lib/init/file_option.tcl:95
 msgid "Enter name of location to be created"
@@ -817,14 +765,14 @@ msgstr "Jalur ke berkas bergeoreferensi"
 
 #: ../lib/init/file_option.tcl:102
 msgid "Path to georeferenced file (format must be readable by GDAL/OGR)"
-msgstr "Jalur ke berkas bergeoreferensi (format harus dapat dibaca oleh GDAL/OGR)"
+msgstr ""
+"Jalur ke berkas bergeoreferensi (format harus dapat dibaca oleh GDAL/OGR)"
 
 #: ../lib/init/file_option.tcl:106
 msgid "Browse to locate georeferenced file"
 msgstr "Jelajah untuk menemukan berkas bergeoreferensi"
 
-#: ../lib/init/file_option.tcl:131
-#: ../lib/init/file_option.tcl:134
+#: ../lib/init/file_option.tcl:131 ../lib/init/file_option.tcl:134
 msgid "Choose georeferenced file"
 msgstr "Silakan pilih berkas bergeoreferensi"
 
@@ -836,66 +784,106 @@ msgstr ""
 "PERINGATAN: Silakan sertakan sebuah \n"
 "berkas bergeoreferensi yang valid"
 
-#: ../lib/init/file_option.tcl:184
-msgid "WARNING: Error creating new location"
-msgstr "PERINGATAN: Ada kesalahan saat membuat location baru"
-
-#: ../lib/init/file_option.tcl:185
-#, tcl-format
-msgid ""
-"Error creating new location from georeferenced file.  g.proj returned following message:\n"
-"\n"
-"%s"
-msgstr ""
-"Ada kesalahan saat membuka location baru dari berkas bergeoreferensi. g.proj memberikan pesan kesalahan berikut: \n"
-"\n"
-"%s"
-
-#: ../gui/tcltk/gis.m/thematic.tcl:107
-#: ../gui/tcltk/gis.m/thematic.tcl:607
-#: ../gui/tcltk/gis.m/thematic.tcl:680
-#: ../gui/tcltk/gis.m/labels.tcl:78
-#: ../gui/tcltk/gis.m/labels.tcl:279
-#: ../gui/tcltk/gis.m/rastarrows.tcl:83
-#: ../gui/tcltk/gis.m/rastarrows.tcl:357
-#: ../gui/tcltk/gis.m/rastnums.tcl:79
-#: ../gui/tcltk/gis.m/rastnums.tcl:360
-#: ../gui/tcltk/gis.m/frames.tcl:78
-#: ../gui/tcltk/gis.m/frames.tcl:275
-#: ../gui/tcltk/gis.m/animate.tcl:91
-#: ../gui/tcltk/gis.m/mapprint.tcl:194
-#: ../gui/tcltk/gis.m/mapprint.tcl:201
-#: ../gui/tcltk/gis.m/gridline.tcl:99
-#: ../gui/tcltk/gis.m/gridline.tcl:406
-#: ../gui/tcltk/gis.m/legend.tcl:95
-#: ../gui/tcltk/gis.m/legend.tcl:476
-#: ../gui/tcltk/gis.m/raster.tcl:86
-#: ../gui/tcltk/gis.m/raster.tcl:463
-#: ../gui/tcltk/gis.m/chart.tcl:89
-#: ../gui/tcltk/gis.m/chart.tcl:441
-#: ../gui/tcltk/gis.m/vector.tcl:194
-#: ../gui/tcltk/gis.m/vector.tcl:819
-#: ../gui/tcltk/gis.m/cmd.tcl:75
-#: ../gui/tcltk/gis.m/cmd.tcl:206
-#: ../gui/tcltk/gis.m/mapcanvas.tcl:212
-#: ../gui/tcltk/gis.m/mapcanvas.tcl:221
-#: ../gui/tcltk/gis.m/barscale.tcl:91
-#: ../gui/tcltk/gis.m/barscale.tcl:401
-#: ../gui/tcltk/gis.m/rgbhis.tcl:83
-#: ../gui/tcltk/gis.m/rgbhis.tcl:362
-#: ../gui/tcltk/gis.m/dtext.tcl:92
-#: ../gui/tcltk/gis.m/dtext.tcl:401
-#: ../gui/tcltk/gis.m/georect.tcl:406
-#: ../gui/tcltk/gis.m/rules.tcl:207
-#: ../gui/tcltk/gis.m/histogram.tcl:84
-#: ../gui/tcltk/gis.m/histogram.tcl:368
+#: ../gui/tcltk/gis.m/rastarrows.tcl:83 ../gui/tcltk/gis.m/rastarrows.tcl:357
+#: ../gui/tcltk/gis.m/thematic.tcl:107 ../gui/tcltk/gis.m/thematic.tcl:607
+#: ../gui/tcltk/gis.m/thematic.tcl:680 ../gui/tcltk/gis.m/labels.tcl:78
+#: ../gui/tcltk/gis.m/labels.tcl:279 ../gui/tcltk/gis.m/rastnums.tcl:79
+#: ../gui/tcltk/gis.m/rastnums.tcl:360 ../gui/tcltk/gis.m/frames.tcl:78
+#: ../gui/tcltk/gis.m/frames.tcl:275 ../gui/tcltk/gis.m/animate.tcl:91
+#: ../gui/tcltk/gis.m/mapprint.tcl:194 ../gui/tcltk/gis.m/mapprint.tcl:201
+#: ../gui/tcltk/gis.m/gridline.tcl:99 ../gui/tcltk/gis.m/gridline.tcl:406
+#: ../gui/tcltk/gis.m/legend.tcl:95 ../gui/tcltk/gis.m/legend.tcl:506
+#: ../gui/tcltk/gis.m/raster.tcl:86 ../gui/tcltk/gis.m/raster.tcl:463
+#: ../gui/tcltk/gis.m/chart.tcl:89 ../gui/tcltk/gis.m/chart.tcl:441
+#: ../gui/tcltk/gis.m/vector.tcl:194 ../gui/tcltk/gis.m/vector.tcl:819
+#: ../gui/tcltk/gis.m/cmd.tcl:75 ../gui/tcltk/gis.m/cmd.tcl:206
+#: ../gui/tcltk/gis.m/mapcanvas.tcl:212 ../gui/tcltk/gis.m/mapcanvas.tcl:221
+#: ../gui/tcltk/gis.m/barscale.tcl:91 ../gui/tcltk/gis.m/barscale.tcl:401
+#: ../gui/tcltk/gis.m/rgbhis.tcl:83 ../gui/tcltk/gis.m/rgbhis.tcl:362
+#: ../gui/tcltk/gis.m/dtext.tcl:92 ../gui/tcltk/gis.m/dtext.tcl:401
+#: ../gui/tcltk/gis.m/georect.tcl:409 ../gui/tcltk/gis.m/rules.tcl:207
+#: ../gui/tcltk/gis.m/histogram.tcl:84 ../gui/tcltk/gis.m/histogram.tcl:368
 msgid "Error creating tempfile"
 msgstr "Ada kesalahan saat membuat berkas sementara"
 
-#: ../gui/tcltk/gis.m/thematic.tcl:129
-#: ../gui/tcltk/gis.m/vector.tcl:220
-#: ../gui/tcltk/d.m/menu.tcl:94
-#: ../gui/tcltk/d.m/menu.tcl:134
+#: ../gui/tcltk/gis.m/rastarrows.tcl:106
+msgid "Aspect map"
+msgstr "Peta aspect"
+
+#: ../gui/tcltk/gis.m/rastarrows.tcl:109 ../gui/tcltk/gis.m/rastarrows.tcl:121
+#, tcl-format
+msgid "arrows for %s"
+msgstr "simbol panah untuk %s"
+
+#: ../gui/tcltk/gis.m/rastarrows.tcl:118
+msgid "Slope/intensity map"
+msgstr "Peta kemiringan/intensitas"
+
+#: ../gui/tcltk/gis.m/rastarrows.tcl:134
+msgid "Display arrows whose orientations are based on raster aspect map"
+msgstr ""
+"Tampilkan simbol panah yang orientasinya berdasarkan pada peta aspect raster"
+
+#: ../gui/tcltk/gis.m/rastarrows.tcl:140
+msgid "  (optionally, arrow lengths are based on slope or intensity map)"
+msgstr ""
+"(opsional, panjang simbol panah didasarkan pada peta kemiringan atau "
+"intensitas)"
+
+#: ../gui/tcltk/gis.m/rastarrows.tcl:147 ../gui/tcltk/gis.m/thematic.tcl:223
+#: ../gui/tcltk/gis.m/labels.tcl:118 ../gui/tcltk/gis.m/rastnums.tcl:146
+#: ../gui/tcltk/gis.m/gridline.tcl:147 ../gui/tcltk/gis.m/legend.tcl:200
+#: ../gui/tcltk/gis.m/raster.tcl:168 ../gui/tcltk/gis.m/chart.tcl:166
+#: ../gui/tcltk/gis.m/vector.tcl:306 ../gui/tcltk/gis.m/cmd.tcl:105
+#: ../gui/tcltk/gis.m/barscale.tcl:160 ../gui/tcltk/gis.m/rgbhis.tcl:143
+#: ../gui/tcltk/gis.m/dtext.tcl:166 ../gui/tcltk/gis.m/histogram.tcl:145
+msgid "Opaque "
+msgstr "Opacity"
+
+#: ../gui/tcltk/gis.m/rastarrows.tcl:151 ../gui/tcltk/gis.m/thematic.tcl:227
+#: ../gui/tcltk/gis.m/labels.tcl:122 ../gui/tcltk/gis.m/rastnums.tcl:150
+#: ../gui/tcltk/gis.m/gridline.tcl:151 ../gui/tcltk/gis.m/legend.tcl:204
+#: ../gui/tcltk/gis.m/raster.tcl:172 ../gui/tcltk/gis.m/chart.tcl:170
+#: ../gui/tcltk/gis.m/cmd.tcl:109 ../gui/tcltk/gis.m/barscale.tcl:164
+#: ../gui/tcltk/gis.m/rgbhis.tcl:147 ../gui/tcltk/gis.m/dtext.tcl:170
+#: ../gui/tcltk/gis.m/histogram.tcl:149
+msgid " Transparent"
+msgstr "Transparan"
+
+#: ../gui/tcltk/gis.m/rastarrows.tcl:157
+msgid "Aspect map: "
+msgstr "Peta aspek:"
+
+#: ../gui/tcltk/gis.m/rastarrows.tcl:173
+msgid "    aspect value type"
+msgstr "Tipe nilai aspect"
+
+#: ../gui/tcltk/gis.m/rastarrows.tcl:181
+msgid "    draw arrows every Nth grid cell"
+msgstr "    gambarkan simbol panah untuk setiap sel grid ke-N"
+
+#: ../gui/tcltk/gis.m/rastarrows.tcl:189
+msgid "    arrow color      "
+msgstr "  warna simbol panah"
+
+#: ../gui/tcltk/gis.m/rastarrows.tcl:194
+msgid "     cell grid color"
+msgstr "    warna sel grid"
+
+#: ../gui/tcltk/gis.m/rastarrows.tcl:204
+msgid "    null value color"
+msgstr "warna nilai null"
+
+#: ../gui/tcltk/gis.m/rastarrows.tcl:219
+msgid "Slope/intensity map: "
+msgstr "Peta kemiringan/intensitas:"
+
+#: ../gui/tcltk/gis.m/rastarrows.tcl:230
+msgid "    scale factor for computing arrow length"
+msgstr "    faktor skala untuk menghitung panjang simbol panah"
+
+#: ../gui/tcltk/gis.m/thematic.tcl:129 ../gui/tcltk/gis.m/vector.tcl:220
+#: ../gui/tcltk/d.m/menu.tcl:94 ../gui/tcltk/d.m/menu.tcl:134
 msgid "Vector map"
 msgstr "Peta vektor"
 
@@ -904,22 +892,18 @@ msgstr "Peta vektor"
 msgid "thematic map for %s"
 msgstr "Peta tematik untuk %s"
 
-#: ../gui/tcltk/gis.m/thematic.tcl:141
-#: ../gui/tcltk/gis.m/thematic.tcl:148
-#: ../gui/tcltk/gis.m/thematic.tcl:154
-#: ../gui/tcltk/gis.m/maplabels.tcl:135
+#: ../gui/tcltk/gis.m/thematic.tcl:141 ../gui/tcltk/gis.m/thematic.tcl:148
+#: ../gui/tcltk/gis.m/thematic.tcl:154 ../gui/tcltk/gis.m/maplabels.tcl:135
 #: ../gui/tcltk/gis.m/maptext.tcl:80
 msgid "This is font sample text."
 msgstr "Ini adalah sebuah sampel jenis huruf teks"
 
-#: ../gui/tcltk/gis.m/thematic.tcl:141
-#: ../gui/tcltk/gis.m/thematic.tcl:148
+#: ../gui/tcltk/gis.m/thematic.tcl:141 ../gui/tcltk/gis.m/thematic.tcl:148
 #: ../gui/tcltk/gis.m/thematic.tcl:154
 msgid "Select font"
 msgstr "Silakan pilih jenis huruf"
 
-#: ../gui/tcltk/gis.m/thematic.tcl:194
-#: ../gui/tcltk/gis.m/vector.tcl:281
+#: ../gui/tcltk/gis.m/thematic.tcl:194 ../gui/tcltk/gis.m/vector.tcl:281
 msgid "Vector point symbol"
 msgstr "Simbol titik vektor"
 
@@ -931,41 +915,7 @@ msgstr "Tampilkan peta vektor secara tematis dengan gradasi warna (semua tipe)"
 msgid "  or by graduated sizes (points and lines)"
 msgstr "  atau dengan gradasi ukuran (titik dan garis)"
 
-#: ../gui/tcltk/gis.m/thematic.tcl:223
-#: ../gui/tcltk/gis.m/labels.tcl:118
-#: ../gui/tcltk/gis.m/rastarrows.tcl:147
-#: ../gui/tcltk/gis.m/rastnums.tcl:146
-#: ../gui/tcltk/gis.m/gridline.tcl:147
-#: ../gui/tcltk/gis.m/legend.tcl:172
-#: ../gui/tcltk/gis.m/raster.tcl:168
-#: ../gui/tcltk/gis.m/chart.tcl:166
-#: ../gui/tcltk/gis.m/vector.tcl:306
-#: ../gui/tcltk/gis.m/cmd.tcl:105
-#: ../gui/tcltk/gis.m/barscale.tcl:160
-#: ../gui/tcltk/gis.m/rgbhis.tcl:143
-#: ../gui/tcltk/gis.m/dtext.tcl:166
-#: ../gui/tcltk/gis.m/histogram.tcl:145
-msgid "Opaque "
-msgstr "Opacity"
-
-#: ../gui/tcltk/gis.m/thematic.tcl:227
-#: ../gui/tcltk/gis.m/labels.tcl:122
-#: ../gui/tcltk/gis.m/rastarrows.tcl:151
-#: ../gui/tcltk/gis.m/rastnums.tcl:150
-#: ../gui/tcltk/gis.m/gridline.tcl:151
-#: ../gui/tcltk/gis.m/legend.tcl:176
-#: ../gui/tcltk/gis.m/raster.tcl:172
-#: ../gui/tcltk/gis.m/chart.tcl:170
-#: ../gui/tcltk/gis.m/cmd.tcl:109
-#: ../gui/tcltk/gis.m/barscale.tcl:164
-#: ../gui/tcltk/gis.m/rgbhis.tcl:147
-#: ../gui/tcltk/gis.m/dtext.tcl:170
-#: ../gui/tcltk/gis.m/histogram.tcl:149
-msgid " Transparent"
-msgstr "Transparan"
-
-#: ../gui/tcltk/gis.m/thematic.tcl:233
-#: ../gui/tcltk/gis.m/vector.tcl:316
+#: ../gui/tcltk/gis.m/thematic.tcl:233 ../gui/tcltk/gis.m/vector.tcl:316
 #: ../gui/tcltk/d.m/thematic.tcl:116
 msgid "Vector map:"
 msgstr "Peta vektor"
@@ -974,8 +924,7 @@ msgstr "Peta vektor"
 msgid "vector for thematic mapping"
 msgstr "Vektor untuk pemetaan tematik"
 
-#: ../gui/tcltk/gis.m/thematic.tcl:251
-#: ../gui/tcltk/d.m/thematic.tcl:131
+#: ../gui/tcltk/gis.m/thematic.tcl:251 ../gui/tcltk/d.m/thematic.tcl:131
 msgid "    vector type"
 msgstr "tipe vektor"
 
@@ -987,27 +936,20 @@ msgstr "layer atribut"
 msgid "    NUMERIC attribute column to use for thematic map"
 msgstr "Kolom atribut NUMERIK yang akan digunakan untuk peta tematis"
 
-#: ../gui/tcltk/gis.m/thematic.tcl:268
-#: ../gui/tcltk/d.m/thematic.tcl:150
+#: ../gui/tcltk/gis.m/thematic.tcl:268 ../gui/tcltk/d.m/thematic.tcl:150
 #: ../gui/tcltk/d.m/vector.tcl:348
 msgid "    show attribute columns"
 msgstr "    perlihatkan kolom atribut"
 
-#: ../gui/tcltk/gis.m/thematic.tcl:269
-#: ../gui/tcltk/gis.m/chart.tcl:213
-#: ../gui/tcltk/gis.m/vector.tcl:484
-#: ../gui/tcltk/d.m/thematic.tcl:151
-#: ../gui/tcltk/d.m/chart.tcl:121
-#: ../gui/tcltk/d.m/vector.tcl:349
+#: ../gui/tcltk/gis.m/thematic.tcl:269 ../gui/tcltk/gis.m/chart.tcl:213
+#: ../gui/tcltk/gis.m/vector.tcl:484 ../gui/tcltk/d.m/thematic.tcl:151
+#: ../gui/tcltk/d.m/chart.tcl:121 ../gui/tcltk/d.m/vector.tcl:349
 msgid "columns"
 msgstr "kolom"
 
-#: ../gui/tcltk/gis.m/thematic.tcl:273
-#: ../gui/tcltk/gis.m/chart.tcl:217
-#: ../gui/tcltk/gis.m/vector.tcl:488
-#: ../gui/tcltk/d.m/thematic.tcl:155
-#: ../gui/tcltk/d.m/chart.tcl:125
-#: ../gui/tcltk/d.m/vector.tcl:353
+#: ../gui/tcltk/gis.m/thematic.tcl:273 ../gui/tcltk/gis.m/chart.tcl:217
+#: ../gui/tcltk/gis.m/vector.tcl:488 ../gui/tcltk/d.m/thematic.tcl:155
+#: ../gui/tcltk/d.m/chart.tcl:125 ../gui/tcltk/d.m/vector.tcl:353
 msgid "Show columns"
 msgstr "Perlihatkan kolom"
 
@@ -1015,29 +957,23 @@ msgstr "Perlihatkan kolom"
 msgid "   show data"
 msgstr "   perlihatkan data"
 
-#: ../gui/tcltk/gis.m/thematic.tcl:275
-#: ../gui/tcltk/gis.m/chart.tcl:219
-#: ../gui/tcltk/gis.m/vector.tcl:490
-#: ../gui/tcltk/d.m/thematic.tcl:157
+#: ../gui/tcltk/gis.m/thematic.tcl:275 ../gui/tcltk/gis.m/chart.tcl:219
+#: ../gui/tcltk/gis.m/vector.tcl:490 ../gui/tcltk/d.m/thematic.tcl:157
 #: ../gui/tcltk/d.m/vector.tcl:355
 msgid "data"
 msgstr "data"
 
-#: ../gui/tcltk/gis.m/thematic.tcl:279
-#: ../gui/tcltk/gis.m/chart.tcl:223
-#: ../gui/tcltk/gis.m/vector.tcl:494
-#: ../gui/tcltk/d.m/thematic.tcl:161
+#: ../gui/tcltk/gis.m/thematic.tcl:279 ../gui/tcltk/gis.m/chart.tcl:223
+#: ../gui/tcltk/gis.m/vector.tcl:494 ../gui/tcltk/d.m/thematic.tcl:161
 #: ../gui/tcltk/d.m/vector.tcl:359
 msgid "Show data"
 msgstr "Perlihatkan data"
 
-#: ../gui/tcltk/gis.m/thematic.tcl:285
-#: ../gui/tcltk/d.m/thematic.tcl:168
+#: ../gui/tcltk/gis.m/thematic.tcl:285 ../gui/tcltk/d.m/thematic.tcl:168
 msgid "Thematic map: type"
 msgstr "Peta tematik: tipe"
 
-#: ../gui/tcltk/gis.m/thematic.tcl:288
-#: ../gui/tcltk/d.m/thematic.tcl:171
+#: ../gui/tcltk/gis.m/thematic.tcl:288 ../gui/tcltk/d.m/thematic.tcl:171
 msgid " map by"
 msgstr "peta berdasarkan"
 
@@ -1057,19 +993,16 @@ msgstr "    kueri dengan perintah SQL 'where'"
 msgid "Graduated points & lines: "
 msgstr "Gradasi titik & garis:"
 
-#: ../gui/tcltk/gis.m/thematic.tcl:320
-#: ../gui/tcltk/d.m/thematic.tcl:205
+#: ../gui/tcltk/gis.m/thematic.tcl:320 ../gui/tcltk/d.m/thematic.tcl:205
 #: ../gui/tcltk/d.m/vector.tcl:245
 msgid "icon"
 msgstr "ikon"
 
-#: ../gui/tcltk/gis.m/thematic.tcl:324
-#: ../gui/tcltk/d.m/thematic.tcl:210
+#: ../gui/tcltk/gis.m/thematic.tcl:324 ../gui/tcltk/d.m/thematic.tcl:210
 msgid "point color"
 msgstr "warna titik"
 
-#: ../gui/tcltk/gis.m/thematic.tcl:326
-#: ../gui/tcltk/d.m/thematic.tcl:212
+#: ../gui/tcltk/gis.m/thematic.tcl:326 ../gui/tcltk/d.m/thematic.tcl:212
 msgid "line color"
 msgstr "warna garis"
 
@@ -1101,13 +1034,11 @@ msgstr "   Skema warna pilihan - warna awal"
 msgid " end color"
 msgstr "warna akhir"
 
-#: ../gui/tcltk/gis.m/thematic.tcl:358
-#: ../gui/tcltk/d.m/thematic.tcl:243
+#: ../gui/tcltk/gis.m/thematic.tcl:358 ../gui/tcltk/d.m/thematic.tcl:243
 msgid "draw border"
 msgstr "gambar batas"
 
-#: ../gui/tcltk/gis.m/thematic.tcl:365
-#: ../gui/tcltk/d.m/thematic.tcl:250
+#: ../gui/tcltk/gis.m/thematic.tcl:365 ../gui/tcltk/d.m/thematic.tcl:250
 msgid "save thematic colors to GRASSRGB column of vector file"
 msgstr "simpan warna tematik ke dalam kolom GRASSRGB dari berkas vektor"
 
@@ -1119,8 +1050,7 @@ msgstr "Legenda: jenis huruf judul"
 msgid "title font for legend"
 msgstr "jenis huruf judul untuk legenda"
 
-#: ../gui/tcltk/gis.m/thematic.tcl:379
-#: ../gui/tcltk/gis.m/thematic.tcl:405
+#: ../gui/tcltk/gis.m/thematic.tcl:379 ../gui/tcltk/gis.m/thematic.tcl:405
 msgid " font color"
 msgstr "warna jenis huruf"
 
@@ -1140,8 +1070,7 @@ msgstr "    jenis huruf untuk label"
 msgid "label font for legend"
 msgstr "jenis huruf label untuk legenda"
 
-#: ../gui/tcltk/gis.m/thematic.tcl:413
-#: ../gui/tcltk/d.m/thematic.tcl:260
+#: ../gui/tcltk/gis.m/thematic.tcl:413 ../gui/tcltk/d.m/thematic.tcl:260
 msgid "use math notation in legend"
 msgstr "gunakan notasi matematika dalam legenda"
 
@@ -1198,8 +1127,7 @@ msgstr "Simpan profil ke dalam berkas EPS"
 msgid "r.univar error"
 msgstr "Ada kesalahan dalam modul r.univar"
 
-#: ../gui/tcltk/gis.m/profile.tcl:415
-#: ../gui/tcltk/gis.m/mapcanvas.tcl:433
+#: ../gui/tcltk/gis.m/profile.tcl:415 ../gui/tcltk/gis.m/mapcanvas.tcl:433
 msgid "g.proj or projection error"
 msgstr "Ada kesalahan dalam g.proj atau proyeksi"
 
@@ -1235,8 +1163,7 @@ msgstr ""
 msgid "Zero elevation range"
 msgstr "Rentang elevasi nol"
 
-#: ../gui/tcltk/gis.m/profile.tcl:534
-#: ../gui/tcltk/gis.m/profile.tcl:619
+#: ../gui/tcltk/gis.m/profile.tcl:534 ../gui/tcltk/gis.m/profile.tcl:619
 msgid "r.profile error"
 msgstr "Ada kesalahan dalam r.profile"
 
@@ -1248,18 +1175,15 @@ msgstr "Label untuk vektor"
 msgid "Display labels for vector objects (created with v.label)"
 msgstr "Tampilkan label untuk obyek vektor (dibuat dengan v.label)"
 
-#: ../gui/tcltk/gis.m/labels.tcl:128
-#: ../gui/tcltk/gis.m/maplabels.tcl:172
+#: ../gui/tcltk/gis.m/labels.tcl:128 ../gui/tcltk/gis.m/maplabels.tcl:172
 msgid "Labels file:"
 msgstr "Label berkas:"
 
-#: ../gui/tcltk/gis.m/labels.tcl:131
-#: ../gui/tcltk/gis.m/maplabels.tcl:175
+#: ../gui/tcltk/gis.m/labels.tcl:131 ../gui/tcltk/gis.m/maplabels.tcl:175
 msgid "labels file to display"
 msgstr "label berkas untuk ditampilkan"
 
-#: ../gui/tcltk/gis.m/labels.tcl:146
-#: ../gui/tcltk/d.m/labels.tcl:80
+#: ../gui/tcltk/gis.m/labels.tcl:146 ../gui/tcltk/d.m/labels.tcl:80
 msgid "Display constraints:"
 msgstr "Tampilkan batasan:"
 
@@ -1271,124 +1195,64 @@ msgstr "min."
 msgid "max"
 msgstr "maks."
 
-#: ../gui/tcltk/gis.m/labels.tcl:151
-#: ../gui/tcltk/d.m/labels.tcl:85
+#: ../gui/tcltk/gis.m/labels.tcl:151 ../gui/tcltk/d.m/labels.tcl:85
 msgid "region size"
 msgstr "ukuran region"
 
-#: ../gui/tcltk/gis.m/labels.tcl:157
-#: ../gui/tcltk/d.m/labels.tcl:91
+#: ../gui/tcltk/gis.m/labels.tcl:157 ../gui/tcltk/d.m/labels.tcl:91
 msgid " ignore rotation setting and draw horizontally"
 msgstr "abaikan setting rotasi dan gambarkan secara horizontal"
 
-#: ../gui/tcltk/gis.m/labels.tcl:164
-#: ../gui/tcltk/gis.m/maplabels.tcl:279
+#: ../gui/tcltk/gis.m/labels.tcl:164 ../gui/tcltk/gis.m/maplabels.tcl:279
 msgid "Launch v.label to create labels file"
 msgstr "Jalankan v.label untuk membuat berkas label"
 
-#: ../gui/tcltk/gis.m/labels.tcl:165
-#: ../gui/tcltk/gis.m/maplabels.tcl:280
+#: ../gui/tcltk/gis.m/labels.tcl:165 ../gui/tcltk/gis.m/maplabels.tcl:280
 msgid "v.label"
 msgstr "v.label"
 
-#: ../gui/tcltk/gis.m/gm.tcl:197
-#: ../gui/tcltk/d.m/d.m.tcl:314
+#: ../gui/tcltk/gis.m/gm.tcl:213 ../gui/tcltk/d.m/d.m.tcl:314
 msgid "Loading GIS Manager"
 msgstr "Sedang menampilkan GIS Manager"
 
-#: ../gui/tcltk/gis.m/gm.tcl:204
+#: ../gui/tcltk/gis.m/gm.tcl:220
 msgid "Creating MainFrame..."
 msgstr "Sedang membuat MainFrame..."
 
-#: ../gui/tcltk/gis.m/gm.tcl:244
-#: ../gui/tcltk/d.m/d.m.tcl:404
+#: ../gui/tcltk/gis.m/gm.tcl:260 ../gui/tcltk/d.m/d.m.tcl:404
 msgid "Done"
 msgstr "Selesai"
 
-#: ../gui/tcltk/gis.m/gm.tcl:246
+#: ../gui/tcltk/gis.m/gm.tcl:262
 msgid "Welcome to GRASS GIS"
 msgstr "Selamat datang di GRASS GIS"
 
-#: ../gui/tcltk/gis.m/gm.tcl:279
+#: ../gui/tcltk/gis.m/gm.tcl:295
 #, tcl-format
 msgid "Map Display %d"
 msgstr "Tampilan Peta %d"
 
-#: ../gui/tcltk/gis.m/gm.tcl:304
+#: ../gui/tcltk/gis.m/gm.tcl:320
 #, tcl-format
 msgid "GRASS%s GIS Manager - %s"
 msgstr "GRASS%s GIS Manajer - %s"
 
-#: ../gui/tcltk/gis.m/gm.tcl:378
+#: ../gui/tcltk/gis.m/gm.tcl:394
 msgid "Select GRASS display font"
 msgstr "Silakan pilih jenis huruf tampilan GRASS"
 
-#: ../gui/tcltk/gis.m/gm.tcl:388
+#: ../gui/tcltk/gis.m/gm.tcl:404
 msgid "Font: "
 msgstr "Jenis huruf:"
 
-#: ../gui/tcltk/gis.m/gm.tcl:423
+#: ../gui/tcltk/gis.m/gm.tcl:439
 msgid "Character encoding: "
 msgstr "Enkoding karakter:"
 
-#: ../gui/tcltk/gis.m/gm.tcl:504
+#: ../gui/tcltk/gis.m/gm.tcl:520
 #, tcl-format
 msgid "GRASS%s GIS Manager - %s %s"
 msgstr "GRASS%s GIS Manager - %s %s"
-
-#: ../gui/tcltk/gis.m/rastarrows.tcl:106
-msgid "Aspect map"
-msgstr "Peta aspect"
-
-#: ../gui/tcltk/gis.m/rastarrows.tcl:109
-#: ../gui/tcltk/gis.m/rastarrows.tcl:121
-#, tcl-format
-msgid "arrows for %s"
-msgstr "simbol panah untuk %s"
-
-#: ../gui/tcltk/gis.m/rastarrows.tcl:118
-msgid "Slope/intensity map"
-msgstr "Peta kemiringan/intensitas"
-
-#: ../gui/tcltk/gis.m/rastarrows.tcl:134
-msgid "Display arrows whose orientations are based on raster aspect map"
-msgstr "Tampilkan simbol panah yang orientasinya berdasarkan pada peta aspect raster"
-
-#: ../gui/tcltk/gis.m/rastarrows.tcl:140
-msgid "  (optionally, arrow lengths are based on slope or intensity map)"
-msgstr "(opsional, panjang simbol panah didasarkan pada peta kemiringan atau intensitas)"
-
-#: ../gui/tcltk/gis.m/rastarrows.tcl:157
-msgid "Aspect map: "
-msgstr "Peta aspek:"
-
-#: ../gui/tcltk/gis.m/rastarrows.tcl:173
-msgid "    aspect value type"
-msgstr "Tipe nilai aspect"
-
-#: ../gui/tcltk/gis.m/rastarrows.tcl:181
-msgid "    draw arrows every Nth grid cell"
-msgstr "    gambarkan simbol panah untuk setiap sel grid ke-N"
-
-#: ../gui/tcltk/gis.m/rastarrows.tcl:189
-msgid "    arrow color      "
-msgstr "  warna simbol panah"
-
-#: ../gui/tcltk/gis.m/rastarrows.tcl:194
-msgid "     cell grid color"
-msgstr "    warna sel grid"
-
-#: ../gui/tcltk/gis.m/rastarrows.tcl:204
-msgid "    null value color"
-msgstr "warna nilai null"
-
-#: ../gui/tcltk/gis.m/rastarrows.tcl:219
-msgid "Slope/intensity map: "
-msgstr "Peta kemiringan/intensitas:"
-
-#: ../gui/tcltk/gis.m/rastarrows.tcl:230
-msgid "    scale factor for computing arrow length"
-msgstr "    faktor skala untuk menghitung panjang simbol panah"
 
 #: ../gui/tcltk/gis.m/runandoutput.tcl:118
 msgid "Run (background)"
@@ -1402,10 +1266,8 @@ msgstr "Jalankan (GUI)"
 msgid "Run (in Xterm)"
 msgstr "Jalankan (dalam Xterm)"
 
-#: ../gui/tcltk/gis.m/runandoutput.tcl:125
-#: ../gui/tcltk/gis.m/gmmenu.tcl:88
-#: ../gui/tcltk/gis.m/mapcanvas.tcl:859
-#: ../gui/tcltk/d.m/menu.tcl:172
+#: ../gui/tcltk/gis.m/runandoutput.tcl:125 ../gui/tcltk/gis.m/gmmenu.tcl:88
+#: ../gui/tcltk/gis.m/mapcanvas.tcl:859 ../gui/tcltk/d.m/menu.tcl:172
 msgid "Save"
 msgstr "Simpan"
 
@@ -1413,8 +1275,20 @@ msgstr "Simpan"
 msgid "Output - GIS.m"
 msgstr "Output - GIS.m"
 
-#: ../gui/tcltk/gis.m/maptool.tcl:41
-#: ../gui/tcltk/gis.m/georecttool.tcl:40
+#: ../gui/tcltk/gis.m/runandoutput.tcl:250
+#, fuzzy
+msgid "X Windows not available"
+msgstr "Ghostscript tidak tersedia"
+
+#: ../gui/tcltk/gis.m/runandoutput.tcl:251
+msgid "Functions that require X Windows are not available in Windows"
+msgstr ""
+
+#: ../gui/tcltk/gis.m/runandoutput.tcl:273
+msgid "This module requires X11 support, but no xmons were found"
+msgstr ""
+
+#: ../gui/tcltk/gis.m/maptool.tcl:41 ../gui/tcltk/gis.m/georecttool.tcl:40
 msgid "Display active layers"
 msgstr "Tampilkan layer aktif"
 
@@ -1430,8 +1304,7 @@ msgstr "Mulai NVIZ dengan menggunakan layer aktif dalam region saat ini"
 msgid "Create flythough path for NVIZ"
 msgstr "Membuat jalur terbang untuk NVIZ"
 
-#: ../gui/tcltk/gis.m/maptool.tcl:68
-#: ../gui/tcltk/gis.m/georecttool.tcl:47
+#: ../gui/tcltk/gis.m/maptool.tcl:68 ../gui/tcltk/gis.m/georecttool.tcl:47
 #: ../gui/tcltk/d.m/tool1.tcl:40
 msgid "Erase to white"
 msgstr "Hapus menjadi warna putih"
@@ -1440,18 +1313,15 @@ msgstr "Hapus menjadi warna putih"
 msgid "Pointer"
 msgstr "Pointer"
 
-#: ../gui/tcltk/gis.m/maptool.tcl:113
-#: ../gui/tcltk/gis.m/georecttool.tcl:92
+#: ../gui/tcltk/gis.m/maptool.tcl:113 ../gui/tcltk/gis.m/georecttool.tcl:92
 msgid "Zoom In"
 msgstr "Perbesar tampilan"
 
-#: ../gui/tcltk/gis.m/maptool.tcl:132
-#: ../gui/tcltk/gis.m/georecttool.tcl:111
+#: ../gui/tcltk/gis.m/maptool.tcl:132 ../gui/tcltk/gis.m/georecttool.tcl:111
 msgid "Zoom Out"
 msgstr "Perkecil tampilan"
 
-#: ../gui/tcltk/gis.m/maptool.tcl:165
-#: ../gui/tcltk/gis.m/georecttool.tcl:144
+#: ../gui/tcltk/gis.m/maptool.tcl:165 ../gui/tcltk/gis.m/georecttool.tcl:144
 #: ../gui/tcltk/d.m/tool1.tcl:87
 msgid "Return to previous zoom"
 msgstr "Kembali ke tampilan sebelumnya"
@@ -1461,25 +1331,37 @@ msgid "Zoom to..."
 msgstr "Fokus perbesaran ke .."
 
 #: ../gui/tcltk/gis.m/maptool.tcl:184
-msgid "Zoom to selected map"
+#, fuzzy
+msgid "Zoom display to selected map"
 msgstr "Perbesaran sesuai peta terpilih"
 
+#: ../gui/tcltk/gis.m/maptool.tcl:187
+#, fuzzy
+msgid "Zoom display to saved region"
+msgstr "Perbesaran sesuai dengan region yang disimpan"
+
 #: ../gui/tcltk/gis.m/maptool.tcl:190
-msgid "Save display geometry to named region"
+#, fuzzy
+msgid "Save display extents to named region"
 msgstr "Simpan geometri tampilan ke region bernama"
 
 #: ../gui/tcltk/gis.m/maptool.tcl:193
-msgid "Zoom to current region (set with g.region)"
+#, fuzzy
+msgid "Zoom display to computational region (set with g.region)"
 msgstr "Perbesaran sesuai region saat ini (tentukan dengan g.region)"
 
+#: ../gui/tcltk/gis.m/maptool.tcl:196
+#, fuzzy
+msgid "Zoom display to default region"
+msgstr "Perbesaran sesuai dengan region default"
+
 #: ../gui/tcltk/gis.m/maptool.tcl:199
-msgid "Set current region (WIND file) to match display"
+#, fuzzy
+msgid "Set computational region extents to match display"
 msgstr "Tentukan region saat ini (berkas WIND) sesuai dengan tampilan peta"
 
-#: ../gui/tcltk/gis.m/maptool.tcl:228
-#: ../gui/tcltk/gis.m/gmmenu.tcl:615
-#: ../gui/tcltk/gis.m/mapcanvas.tcl:1829
-#: ../gui/tcltk/d.m/menu.tcl:554
+#: ../gui/tcltk/gis.m/maptool.tcl:228 ../gui/tcltk/gis.m/gmmenu.tcl:615
+#: ../gui/tcltk/gis.m/mapcanvas.tcl:1860 ../gui/tcltk/d.m/menu.tcl:554
 msgid "Query"
 msgstr "Kueri"
 
@@ -1531,8 +1413,7 @@ msgstr "Penuhi tampilan dengan peta"
 msgid "Could not create BMP"
 msgstr "Tidak dapat membuat berkas BMP"
 
-#: ../gui/tcltk/gis.m/maptool.tcl:401
-#: ../gui/tcltk/gis.m/maptool.tcl:406
+#: ../gui/tcltk/gis.m/maptool.tcl:401 ../gui/tcltk/gis.m/maptool.tcl:406
 msgid "Could not create JPG"
 msgstr "Tidak dapat membuat berkas JPG"
 
@@ -1544,10 +1425,8 @@ msgstr "Tidak dapat membuat berkas PNG"
 msgid "Could not create TIF"
 msgstr "Tidak dapat membuat berkas TIF"
 
-#: ../gui/tcltk/gis.m/rastnums.tcl:103
-#: ../gui/tcltk/gis.m/raster.tcl:114
-#: ../gui/tcltk/d.m/menu.tcl:77
-#: ../gui/tcltk/d.m/menu.tcl:113
+#: ../gui/tcltk/gis.m/rastnums.tcl:103 ../gui/tcltk/gis.m/raster.tcl:114
+#: ../gui/tcltk/d.m/menu.tcl:77 ../gui/tcltk/d.m/menu.tcl:113
 msgid "Raster map"
 msgstr "Peta raster"
 
@@ -1576,12 +1455,9 @@ msgstr "Warna untuk grid sel:"
 msgid "  cell values font "
 msgstr "  jenis huruf dari nilai sel"
 
-#: ../gui/tcltk/gis.m/rastnums.tcl:180
-#: ../gui/tcltk/gis.m/gridline.tcl:187
-#: ../gui/tcltk/gis.m/legend.tcl:234
-#: ../gui/tcltk/gis.m/barscale.tcl:204
-#: ../gui/tcltk/gis.m/maptext.tcl:180
-#: ../gui/tcltk/gis.m/dtext.tcl:226
+#: ../gui/tcltk/gis.m/rastnums.tcl:180 ../gui/tcltk/gis.m/gridline.tcl:187
+#: ../gui/tcltk/gis.m/legend.tcl:264 ../gui/tcltk/gis.m/barscale.tcl:204
+#: ../gui/tcltk/gis.m/maptext.tcl:180 ../gui/tcltk/gis.m/dtext.tcl:226
 #: ../gui/tcltk/gis.m/histogram.tcl:177
 msgid "select font for text"
 msgstr "Pilih jenis huruf untuk teks"
@@ -1606,13 +1482,11 @@ msgstr ""
 msgid "Divide map display into frames for displaying multiple maps"
 msgstr "Membagi tampilan menjadi beberapa frame untuk menampilkan banyak peta"
 
-#: ../gui/tcltk/gis.m/frames.tcl:112
-#: ../gui/tcltk/d.m/frames.tcl:60
+#: ../gui/tcltk/gis.m/frames.tcl:112 ../gui/tcltk/d.m/frames.tcl:60
 msgid "create and select frame"
 msgstr "buat dan pilih frame"
 
-#: ../gui/tcltk/gis.m/frames.tcl:114
-#: ../gui/tcltk/d.m/frames.tcl:62
+#: ../gui/tcltk/gis.m/frames.tcl:114 ../gui/tcltk/d.m/frames.tcl:62
 msgid "select frame"
 msgstr "pilih frame"
 
@@ -1625,6 +1499,7 @@ msgid "Frame name (optional): "
 msgstr "Nama frame (opsional): "
 
 #: ../gui/tcltk/gis.m/frames.tcl:135
+#, fuzzy, tcl-format
 msgid "Set frame borders at 0-100% from lower left corner of display "
 msgstr "Tentukan batas frame pada 0-100% dari kiri bawah tampilan "
 
@@ -1710,7 +1585,9 @@ msgstr "Peta untuk animasi"
 
 #: ../gui/tcltk/gis.m/animate.tcl:479
 msgid "Select maps to animate in one or more frames (1 frame required)"
-msgstr "Pilih peta untuk dianimasikan dalam satu atau lebih frame (diperlukan minimal 1 frame)"
+msgstr ""
+"Pilih peta untuk dianimasikan dalam satu atau lebih frame (diperlukan "
+"minimal 1 frame)"
 
 #: ../gui/tcltk/gis.m/animate.tcl:492
 msgid "Maps for frame 1 (required): "
@@ -1728,8 +1605,7 @@ msgstr "Peta untuk frame 3 (opsional):"
 msgid "Maps for frame 4 (optional): "
 msgstr "Peta untuk frame 4 (opsional):"
 
-#: ../gui/tcltk/gis.m/animate.tcl:540
-#: ../gui/tcltk/gis.m/dnviz.tcl:232
+#: ../gui/tcltk/gis.m/animate.tcl:540 ../gui/tcltk/gis.m/dnviz.tcl:232
 #: ../gui/tcltk/gis.m/rules.tcl:174
 msgid "Apply"
 msgstr "Terapkan"
@@ -1750,13 +1626,11 @@ msgstr "Jendela Animasi"
 msgid "Start new map display monitor"
 msgstr "Jalankan tampilan baru"
 
-#: ../gui/tcltk/gis.m/gmtool1.tcl:42
-#: ../gui/tcltk/d.m/tool2.tcl:22
+#: ../gui/tcltk/gis.m/gmtool1.tcl:42 ../gui/tcltk/d.m/tool2.tcl:22
 msgid "Add raster layer"
 msgstr "Tambahkan layer raster"
 
-#: ../gui/tcltk/gis.m/gmtool1.tcl:49
-#: ../gui/tcltk/d.m/tool2.tcl:28
+#: ../gui/tcltk/gis.m/gmtool1.tcl:49 ../gui/tcltk/d.m/tool2.tcl:28
 msgid "Add RGB or HIS layer"
 msgstr "Tambahkan layer RGB atau HIS"
 
@@ -1776,18 +1650,15 @@ msgstr "Tambahkan layer arah panah"
 msgid "Add raster legend layer"
 msgstr "Tambahkan layer legenda raster"
 
-#: ../gui/tcltk/gis.m/gmtool1.tcl:92
-#: ../gui/tcltk/d.m/tool2.tcl:48
+#: ../gui/tcltk/gis.m/gmtool1.tcl:92 ../gui/tcltk/d.m/tool2.tcl:48
 msgid "Add vector layer"
 msgstr "Tambahkan peta vektor"
 
-#: ../gui/tcltk/gis.m/gmtool1.tcl:99
-#: ../gui/tcltk/d.m/tool2.tcl:62
+#: ../gui/tcltk/gis.m/gmtool1.tcl:99 ../gui/tcltk/d.m/tool2.tcl:62
 msgid "Add thematic map layer"
 msgstr "Tambahkan layer peta tematik"
 
-#: ../gui/tcltk/gis.m/gmtool1.tcl:108
-#: ../gui/tcltk/d.m/tool2.tcl:54
+#: ../gui/tcltk/gis.m/gmtool1.tcl:108 ../gui/tcltk/d.m/tool2.tcl:54
 msgid "Add thematic charts layer"
 msgstr "Tambahkan layer diagram tematik"
 
@@ -1795,8 +1666,7 @@ msgstr "Tambahkan layer diagram tematik"
 msgid "Add raster labels layer (using v.labels file)"
 msgstr "tambahkan layer label raster (dengan berkas v.labels)"
 
-#: ../gui/tcltk/gis.m/gmtool1.tcl:128
-#: ../gui/tcltk/d.m/tool2.tcl:88
+#: ../gui/tcltk/gis.m/gmtool1.tcl:128 ../gui/tcltk/d.m/tool2.tcl:88
 msgid "Add text layer"
 msgstr "Tambajkan layer teks"
 
@@ -1817,10 +1687,8 @@ msgstr "Layer peta yang akan ditampilkan %s"
 msgid "You must open a display before adding map layers"
 msgstr "Anda harus membuka sebuah display untuk menambahkan layer peta"
 
-#: ../gui/tcltk/gis.m/gmtree.tcl:483
-#: ../gui/tcltk/gis.m/gmtree.tcl:631
-#: ../gui/tcltk/gis.m/gmtree.tcl:1150
-#: ../gui/tcltk/gis.m/gmtree.tcl:1156
+#: ../gui/tcltk/gis.m/gmtree.tcl:483 ../gui/tcltk/gis.m/gmtree.tcl:631
+#: ../gui/tcltk/gis.m/gmtree.tcl:1150 ../gui/tcltk/gis.m/gmtree.tcl:1156
 msgid "No layer selected"
 msgstr "Tidak ada layer yang dipilih"
 
@@ -1832,62 +1700,62 @@ msgstr "Membuka layer ..."
 msgid "Layers loaded"
 msgstr "Layer telah ditampilkan"
 
-#: ../gui/tcltk/gis.m/gmtree.tcl:1171
+#: ../gui/tcltk/gis.m/gmtree.tcl:1166
+#, fuzzy
+msgid "Selected raster layer is empty"
+msgstr "Tambahkan layer raster"
+
+#: ../gui/tcltk/gis.m/gmtree.tcl:1177
+#, fuzzy
+msgid "Selected vector layer is empty"
+msgstr "Tambahkan peta vektor"
+
+#: ../gui/tcltk/gis.m/gmtree.tcl:1183
 msgid "You can digitize raster or vector maps only"
 msgstr "Anda hanya dapat melakukan digitasi peta raster atau vektor saja"
 
-#: ../gui/tcltk/gis.m/gmtool2.tcl:26
-#: ../gui/tcltk/d.m/tool2.tcl:100
+#: ../gui/tcltk/gis.m/gmtool2.tcl:26 ../gui/tcltk/d.m/tool2.tcl:100
 msgid "Scalebar and north arrow"
 msgstr "Skala garis dan arah utara"
 
-#: ../gui/tcltk/gis.m/gmtool2.tcl:32
-#: ../gui/tcltk/d.m/tool2.tcl:105
+#: ../gui/tcltk/gis.m/gmtool2.tcl:32 ../gui/tcltk/d.m/tool2.tcl:105
 msgid "Overlay grids and lines"
 msgstr "Tumpangsusunkan grid dan garis"
 
-#: ../gui/tcltk/gis.m/gmtool2.tcl:39
-#: ../gui/tcltk/d.m/tool2.tcl:116
+#: ../gui/tcltk/gis.m/gmtool2.tcl:39 ../gui/tcltk/d.m/tool2.tcl:116
 msgid "Add command layer"
 msgstr "Tambahkan layer perintah"
 
-#: ../gui/tcltk/gis.m/gmtool2.tcl:59
-#: ../gui/tcltk/d.m/tool2.tcl:130
+#: ../gui/tcltk/gis.m/gmtool2.tcl:59 ../gui/tcltk/d.m/tool2.tcl:130
 msgid "Add group"
 msgstr "Tambahkan grup"
 
-#: ../gui/tcltk/gis.m/gmtool2.tcl:65
-#: ../gui/tcltk/d.m/tool2.tcl:135
+#: ../gui/tcltk/gis.m/gmtool2.tcl:65 ../gui/tcltk/d.m/tool2.tcl:135
 msgid "Duplicate Layer"
 msgstr "Gandakan layer"
 
-#: ../gui/tcltk/gis.m/gmtool2.tcl:70
-#: ../gui/tcltk/d.m/tool2.tcl:139
+#: ../gui/tcltk/gis.m/gmtool2.tcl:70 ../gui/tcltk/d.m/tool2.tcl:139
 msgid "Delete layer"
 msgstr "Hapus layer"
 
-#: ../gui/tcltk/gis.m/gmtool2.tcl:84
-#: ../gui/tcltk/d.m/tool1.tcl:121
+#: ../gui/tcltk/gis.m/gmtool2.tcl:84 ../gui/tcltk/d.m/tool1.tcl:121
 msgid "Create new workspace file (erase current workspace settings first)"
-msgstr "Buat berkas workspace baru (hapus ubahan workspace saat ini terlebih dahulu)"
+msgstr ""
+"Buat berkas workspace baru (hapus ubahan workspace saat ini terlebih dahulu)"
 
-#: ../gui/tcltk/gis.m/gmtool2.tcl:90
-#: ../gui/tcltk/d.m/tool1.tcl:124
+#: ../gui/tcltk/gis.m/gmtool2.tcl:90 ../gui/tcltk/d.m/tool1.tcl:124
 msgid "Open existing workspace file"
 msgstr "Buka berkas workspace yang telah ada"
 
-#: ../gui/tcltk/gis.m/gmtool2.tcl:96
-#: ../gui/tcltk/d.m/tool1.tcl:127
+#: ../gui/tcltk/gis.m/gmtool2.tcl:96 ../gui/tcltk/d.m/tool1.tcl:127
 msgid "Save workspace file"
 msgstr "Simpan berkas workspace"
 
-#: ../gui/tcltk/gis.m/gmtool2.tcl:111
-#: ../gui/tcltk/d.m/tool1.tcl:66
+#: ../gui/tcltk/gis.m/gmtool2.tcl:111 ../gui/tcltk/d.m/tool1.tcl:66
 msgid "Animate raster map series"
 msgstr "Animasi serangkaian peta raster"
 
-#: ../gui/tcltk/gis.m/gmtool2.tcl:127
-#: ../gui/tcltk/d.m/tool2.tcl:153
+#: ../gui/tcltk/gis.m/gmtool2.tcl:127 ../gui/tcltk/d.m/tool2.tcl:153
 msgid "Digitize map (select or create new map first)"
 msgstr "Digitasi peta (pilih atau buat peta terlebih dahulu)"
 
@@ -1899,8 +1767,7 @@ msgstr "Tentukan titik kontrok tanah (GCP)"
 msgid "Zoom to map"
 msgstr "Pilih perbesaran sesuai peta"
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:85
-#: ../gui/tcltk/d.m/menu.tcl:75
+#: ../gui/tcltk/gis.m/gmmenu.tcl:85 ../gui/tcltk/d.m/menu.tcl:75
 msgid "&File"
 msgstr "&Berkas"
 
@@ -1908,13 +1775,11 @@ msgstr "&Berkas"
 msgid "Workspace"
 msgstr "Workspace"
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:87
-#: ../gui/tcltk/d.m/menu.tcl:171
+#: ../gui/tcltk/gis.m/gmmenu.tcl:87 ../gui/tcltk/d.m/menu.tcl:171
 msgid "Open..."
 msgstr "Buka..."
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:89
-#: ../gui/tcltk/d.m/menu.tcl:173
+#: ../gui/tcltk/gis.m/gmmenu.tcl:89 ../gui/tcltk/d.m/menu.tcl:173
 msgid "Save as..."
 msgstr "Simpan sebagai..."
 
@@ -1922,10 +1787,8 @@ msgstr "Simpan sebagai..."
 msgid "Import raster map"
 msgstr "Impor peta raster"
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:94
-#: ../gui/tcltk/gis.m/gmmenu.tcl:129
-#: ../gui/tcltk/d.m/menu.tcl:78
-#: ../gui/tcltk/d.m/menu.tcl:114
+#: ../gui/tcltk/gis.m/gmmenu.tcl:94 ../gui/tcltk/gis.m/gmmenu.tcl:129
+#: ../gui/tcltk/d.m/menu.tcl:78 ../gui/tcltk/d.m/menu.tcl:114
 msgid "Multiple formats using GDAL"
 msgstr "Beragam format dengan GDAL"
 
@@ -1933,8 +1796,7 @@ msgstr "Beragam format dengan GDAL"
 msgid "Aggregate ASCII xyz"
 msgstr "Rerata ASCII xyz"
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:97
-#: ../gui/tcltk/gis.m/gmmenu.tcl:131
+#: ../gui/tcltk/gis.m/gmmenu.tcl:97 ../gui/tcltk/gis.m/gmmenu.tcl:131
 msgid "ASCII grid"
 msgstr "grid ASCII"
 
@@ -1942,8 +1804,7 @@ msgstr "grid ASCII"
 msgid "ASCII polygons and lines"
 msgstr "Poligon dan garis ASCII"
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:100
-#: ../gui/tcltk/gis.m/gmmenu.tcl:138
+#: ../gui/tcltk/gis.m/gmmenu.tcl:100 ../gui/tcltk/gis.m/gmmenu.tcl:138
 msgid "Binary"
 msgstr "Biner"
 
@@ -1951,13 +1812,11 @@ msgstr "Biner"
 msgid "ESRI grid"
 msgstr "Grid ESRI"
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:102
-#: ../gui/tcltk/gis.m/gmmenu.tcl:135
+#: ../gui/tcltk/gis.m/gmmenu.tcl:102 ../gui/tcltk/gis.m/gmmenu.tcl:135
 msgid "GRIDATB.FOR"
 msgstr "GRIDATB.FOR"
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:103
-#: ../gui/tcltk/gis.m/gmmenu.tcl:136
+#: ../gui/tcltk/gis.m/gmmenu.tcl:103 ../gui/tcltk/gis.m/gmmenu.tcl:136
 msgid "MAT-File (v.4)"
 msgstr "MAT-File (v.4)"
 
@@ -1973,8 +1832,7 @@ msgstr "SRTM hgt"
 msgid "Terra ASTER"
 msgstr "Terra ASTER"
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:108
-#: ../gui/tcltk/d.m/menu.tcl:92
+#: ../gui/tcltk/gis.m/gmmenu.tcl:108 ../gui/tcltk/d.m/menu.tcl:92
 msgid "Web Mapping Server"
 msgstr "Web Mapping Server"
 
@@ -1982,13 +1840,11 @@ msgstr "Web Mapping Server"
 msgid "Import vector map"
 msgstr "Impor peta vektor"
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:111
-#: ../gui/tcltk/gis.m/gmmenu.tcl:150
+#: ../gui/tcltk/gis.m/gmmenu.tcl:111 ../gui/tcltk/gis.m/gmmenu.tcl:150
 msgid "Multiple formats using OGR"
 msgstr "Beragam format dengan OGR"
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:113
-#: ../gui/tcltk/gis.m/gmmenu.tcl:152
+#: ../gui/tcltk/gis.m/gmmenu.tcl:113 ../gui/tcltk/gis.m/gmmenu.tcl:152
 msgid "ASCII points or GRASS ASCII vector"
 msgstr "Titik ASCII atau vektor GRASS ASCII"
 
@@ -1996,8 +1852,7 @@ msgstr "Titik ASCII atau vektor GRASS ASCII"
 msgid "Old GRASS vector"
 msgstr "Vektor GRASS yang lama"
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:116
-#: ../gui/tcltk/gis.m/gmmenu.tcl:153
+#: ../gui/tcltk/gis.m/gmmenu.tcl:116 ../gui/tcltk/gis.m/gmmenu.tcl:153
 msgid "DXF"
 msgstr "DXF"
 
@@ -2025,13 +1880,11 @@ msgstr "Matlab dan MapGen"
 msgid "Import grid 3D volume"
 msgstr "Impor volume grid 3D "
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:124
-#: ../gui/tcltk/gis.m/gmmenu.tcl:159
+#: ../gui/tcltk/gis.m/gmmenu.tcl:124 ../gui/tcltk/gis.m/gmmenu.tcl:159
 msgid "ASCII 3D"
 msgstr "ASCII 3D"
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:125
-#: ../gui/tcltk/gis.m/gmmenu.tcl:160
+#: ../gui/tcltk/gis.m/gmmenu.tcl:125 ../gui/tcltk/gis.m/gmmenu.tcl:160
 msgid "Vis5D"
 msgstr "Vis5D"
 
@@ -2063,8 +1916,7 @@ msgstr "PPM"
 msgid "PPM from RGB"
 msgstr "PPM from RGB"
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:144
-#: ../gui/tcltk/gis.m/gmmenu.tcl:154
+#: ../gui/tcltk/gis.m/gmmenu.tcl:144 ../gui/tcltk/gis.m/gmmenu.tcl:154
 msgid "POV-Ray"
 msgstr "POV-Ray"
 
@@ -2076,8 +1928,7 @@ msgstr "TIFF"
 msgid "VRML"
 msgstr "VRML"
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:147
-#: ../gui/tcltk/gis.m/gmmenu.tcl:156
+#: ../gui/tcltk/gis.m/gmmenu.tcl:147 ../gui/tcltk/gis.m/gmmenu.tcl:156
 #: ../gui/tcltk/gis.m/gmmenu.tcl:161
 msgid "VTK"
 msgstr "VTK"
@@ -2094,8 +1945,7 @@ msgstr "SVG"
 msgid "Export grid 3D volume"
 msgstr "Ekspor volume grid 3D"
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:164
-#: ../gui/tcltk/d.m/menu.tcl:149
+#: ../gui/tcltk/gis.m/gmmenu.tcl:164 ../gui/tcltk/d.m/menu.tcl:149
 msgid "Manage maps and volumes"
 msgstr "Kelola peta dan volume"
 
@@ -2115,8 +1965,7 @@ msgstr "Ubah nama"
 msgid "Delete filtered"
 msgstr "Hapus tersaring"
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:175
-#: ../gui/tcltk/d.m/menu.tcl:157
+#: ../gui/tcltk/gis.m/gmmenu.tcl:175 ../gui/tcltk/d.m/menu.tcl:157
 msgid "Map type conversions"
 msgstr "Konversi tipe peta"
 
@@ -2132,8 +1981,7 @@ msgstr "Raster-raster ke volume"
 msgid "Raster 2.5D to volume"
 msgstr "Raster 2.5D ke volume"
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:180
-#: ../gui/tcltk/d.m/menu.tcl:161
+#: ../gui/tcltk/gis.m/gmmenu.tcl:180 ../gui/tcltk/d.m/menu.tcl:161
 msgid "Vector to raster"
 msgstr "Vektor ke raster"
 
@@ -2177,33 +2025,27 @@ msgstr "Jalur terbang NVIZ"
 msgid "PostScript plot"
 msgstr "Plot PostScript"
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:199
-#: ../gui/tcltk/d.m/menu.tcl:184
+#: ../gui/tcltk/gis.m/gmmenu.tcl:199 ../gui/tcltk/d.m/menu.tcl:184
 msgid "E&xit"
 msgstr "E&xit"
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:201
-#: ../gui/tcltk/d.m/menu.tcl:186
+#: ../gui/tcltk/gis.m/gmmenu.tcl:201 ../gui/tcltk/d.m/menu.tcl:186
 msgid "&Config"
 msgstr "&Konfigurasi"
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:202
-#: ../gui/tcltk/d.m/menu.tcl:187
+#: ../gui/tcltk/gis.m/gmmenu.tcl:202 ../gui/tcltk/d.m/menu.tcl:187
 msgid "Region"
 msgstr "Region"
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:203
-#: ../gui/tcltk/d.m/menu.tcl:188
+#: ../gui/tcltk/gis.m/gmmenu.tcl:203 ../gui/tcltk/d.m/menu.tcl:188
 msgid "Display region settings"
 msgstr "Pengaturan tampilan region"
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:204
-#: ../gui/tcltk/d.m/menu.tcl:189
+#: ../gui/tcltk/gis.m/gmmenu.tcl:204 ../gui/tcltk/d.m/menu.tcl:189
 msgid "Change region settings"
 msgstr "Ubah pengaturan region"
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:206
-#: ../gui/tcltk/d.m/menu.tcl:192
+#: ../gui/tcltk/gis.m/gmmenu.tcl:206 ../gui/tcltk/d.m/menu.tcl:192
 msgid "GRASS working environment"
 msgstr "Lingkungan kerja GRASS"
 
@@ -2227,13 +2069,11 @@ msgstr "Perlihatkan pengaturan"
 msgid "Change settings"
 msgstr "Ubah pengaturan"
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:212
-#: ../gui/tcltk/d.m/menu.tcl:198
+#: ../gui/tcltk/gis.m/gmmenu.tcl:212 ../gui/tcltk/d.m/menu.tcl:198
 msgid "Show current GRASS version"
 msgstr "Tampilkan versi GRASS saat ini"
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:214
-#: ../gui/tcltk/gis.m/gmmenu.tcl:215
+#: ../gui/tcltk/gis.m/gmmenu.tcl:214 ../gui/tcltk/gis.m/gmmenu.tcl:215
 #: ../gui/tcltk/d.m/menu.tcl:200
 msgid "Manage projections"
 msgstr "Mengatur proyeksi"
@@ -2250,20 +2090,16 @@ msgstr "Konversi koordinat"
 msgid "Display font"
 msgstr "Tampilkan jenis huruf"
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:222
-#: ../gui/tcltk/d.m/menu.tcl:218
+#: ../gui/tcltk/gis.m/gmmenu.tcl:222 ../gui/tcltk/d.m/menu.tcl:218
 msgid "&Raster"
 msgstr "&Raster"
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:223
-#: ../gui/tcltk/gis.m/gmmenu.tcl:419
-#: ../gui/tcltk/d.m/menu.tcl:219
-#: ../gui/tcltk/d.m/menu.tcl:376
+#: ../gui/tcltk/gis.m/gmmenu.tcl:223 ../gui/tcltk/gis.m/gmmenu.tcl:419
+#: ../gui/tcltk/d.m/menu.tcl:219 ../gui/tcltk/d.m/menu.tcl:376
 msgid "Develop map"
 msgstr "Pengembangan peta"
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:224
-#: ../gui/tcltk/d.m/menu.tcl:220
+#: ../gui/tcltk/gis.m/gmmenu.tcl:224 ../gui/tcltk/d.m/menu.tcl:220
 msgid "Digitize raster"
 msgstr "Digitasi raster"
 
@@ -2287,8 +2123,7 @@ msgstr "Kuantisasi"
 msgid "Timestamps"
 msgstr "Waktu tercatat"
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:237
-#: ../gui/tcltk/d.m/menu.tcl:231
+#: ../gui/tcltk/gis.m/gmmenu.tcl:237 ../gui/tcltk/d.m/menu.tcl:231
 msgid "Resample using aggregate statistics"
 msgstr "Cuplik-ulang menggunakan statistik rerata"
 
@@ -2320,8 +2155,7 @@ msgstr "Proyeksi-ulang"
 msgid "Tiling"
 msgstr "Tiling"
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:248
-#: ../gui/tcltk/d.m/menu.tcl:240
+#: ../gui/tcltk/gis.m/gmmenu.tcl:248 ../gui/tcltk/d.m/menu.tcl:240
 msgid "Manage map colors"
 msgstr "Kelola warna peta"
 
@@ -2341,13 +2175,11 @@ msgstr "Campurkan"
 msgid "Create RGB"
 msgstr "Buat RGB"
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:254
-#: ../gui/tcltk/gis.m/gmmenu.tcl:538
+#: ../gui/tcltk/gis.m/gmmenu.tcl:254 ../gui/tcltk/gis.m/gmmenu.tcl:538
 msgid "HIS to RGB"
 msgstr "HIS ke RGB"
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:257
-#: ../gui/tcltk/d.m/menu.tcl:249
+#: ../gui/tcltk/gis.m/gmmenu.tcl:257 ../gui/tcltk/d.m/menu.tcl:249
 #: ../gui/tcltk/d.m/menu.tcl:403
 msgid "Query by coordinate(s)"
 msgstr "Kueri dengan koordinat"
@@ -2364,13 +2196,11 @@ msgstr "Closest points"
 msgid "MASK"
 msgstr "MASK"
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:262
-#: ../gui/tcltk/d.m/menu.tcl:254
+#: ../gui/tcltk/gis.m/gmmenu.tcl:262 ../gui/tcltk/d.m/menu.tcl:254
 msgid "Map calculator"
 msgstr "Kalkulator peta"
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:263
-#: ../gui/tcltk/d.m/menu.tcl:255
+#: ../gui/tcltk/gis.m/gmmenu.tcl:263 ../gui/tcltk/d.m/menu.tcl:255
 #: ../gui/tcltk/d.m/menu.tcl:413
 msgid "Neighborhood analysis"
 msgstr "Analisis tetangga-terdekat"
@@ -2383,15 +2213,12 @@ msgstr "Window bergerak"
 msgid "Neighborhood points"
 msgstr "Titik tetangga-terdekat"
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:267
-#: ../gui/tcltk/gis.m/gmmenu.tcl:482
-#: ../gui/tcltk/d.m/menu.tcl:259
-#: ../gui/tcltk/d.m/menu.tcl:427
+#: ../gui/tcltk/gis.m/gmmenu.tcl:267 ../gui/tcltk/gis.m/gmmenu.tcl:482
+#: ../gui/tcltk/d.m/menu.tcl:259 ../gui/tcltk/d.m/menu.tcl:427
 msgid "Overlay maps"
 msgstr "Tumpang-susun peta"
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:268
-#: ../gui/tcltk/d.m/menu.tcl:260
+#: ../gui/tcltk/gis.m/gmmenu.tcl:268 ../gui/tcltk/d.m/menu.tcl:260
 msgid "Cross product"
 msgstr "Produk gabungan"
 
@@ -2399,8 +2226,7 @@ msgstr "Produk gabungan"
 msgid "Map series"
 msgstr "Seri peta"
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:270
-#: ../gui/tcltk/d.m/menu.tcl:262
+#: ../gui/tcltk/gis.m/gmmenu.tcl:270 ../gui/tcltk/d.m/menu.tcl:262
 msgid "Patch maps"
 msgstr "Tambal peta"
 
@@ -2408,8 +2234,7 @@ msgstr "Tambal peta"
 msgid "Statistical overlay"
 msgstr "Tumpang-susun berbasis statistik"
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:274
-#: ../gui/tcltk/d.m/menu.tcl:266
+#: ../gui/tcltk/gis.m/gmmenu.tcl:274 ../gui/tcltk/d.m/menu.tcl:266
 msgid "Solar radiance and shadows"
 msgstr "Radiansi matahari dan bayangan"
 
@@ -2421,8 +2246,7 @@ msgstr "Solar irradiance irradiation"
 msgid "Shadows map"
 msgstr "Peta bayangan"
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:278
-#: ../gui/tcltk/d.m/menu.tcl:270
+#: ../gui/tcltk/gis.m/gmmenu.tcl:278 ../gui/tcltk/d.m/menu.tcl:270
 msgid "Terrain analysis"
 msgstr "Analisis kontur"
 
@@ -2430,13 +2254,11 @@ msgstr "Analisis kontur"
 msgid "Cumulative movement costs"
 msgstr "Biaya pergerakan kumulatif"
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:280
-#: ../gui/tcltk/d.m/menu.tcl:272
+#: ../gui/tcltk/gis.m/gmmenu.tcl:280 ../gui/tcltk/d.m/menu.tcl:272
 msgid "Cost surface"
 msgstr "Permukaan biaya"
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:281
-#: ../gui/tcltk/d.m/menu.tcl:273
+#: ../gui/tcltk/gis.m/gmmenu.tcl:281 ../gui/tcltk/d.m/menu.tcl:273
 msgid "Least cost route or flow"
 msgstr "Rute atau aliran biaya termurah"
 
@@ -2444,18 +2266,15 @@ msgstr "Rute atau aliran biaya termurah"
 msgid "Shaded relief"
 msgstr "Relief berbayang"
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:285
-#: ../gui/tcltk/d.m/menu.tcl:276
+#: ../gui/tcltk/gis.m/gmmenu.tcl:285 ../gui/tcltk/d.m/menu.tcl:276
 msgid "Slope and aspect"
 msgstr "Kemiringan dan aspek"
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:286
-#: ../gui/tcltk/d.m/menu.tcl:277
+#: ../gui/tcltk/gis.m/gmmenu.tcl:286 ../gui/tcltk/d.m/menu.tcl:277
 msgid "Terrain parameters"
 msgstr "Parameter kontur"
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:287
-#: ../gui/tcltk/d.m/menu.tcl:278
+#: ../gui/tcltk/gis.m/gmmenu.tcl:287 ../gui/tcltk/d.m/menu.tcl:278
 msgid "Textural features"
 msgstr "Fitur tekstural"
 
@@ -2463,8 +2282,7 @@ msgstr "Fitur tekstural"
 msgid "Visibility"
 msgstr "Visibilitas"
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:291
-#: ../gui/tcltk/d.m/menu.tcl:281
+#: ../gui/tcltk/gis.m/gmmenu.tcl:291 ../gui/tcltk/d.m/menu.tcl:281
 msgid "Transform features"
 msgstr "Transformasi fitur"
 
@@ -2480,8 +2298,7 @@ msgstr "Kembangan"
 msgid "Thin"
 msgstr "Thin"
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:297
-#: ../gui/tcltk/d.m/menu.tcl:287
+#: ../gui/tcltk/gis.m/gmmenu.tcl:297 ../gui/tcltk/d.m/menu.tcl:287
 msgid "Hydrologic modeling"
 msgstr "Pemodelan hidrologis"
 
@@ -2505,13 +2322,11 @@ msgstr "Akumulasi aliran"
 msgid "Flow lines"
 msgstr "Garis aliran"
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:305
-#: ../gui/tcltk/gis.m/gmmenu.tcl:585
+#: ../gui/tcltk/gis.m/gmmenu.tcl:305 ../gui/tcltk/gis.m/gmmenu.tcl:585
 msgid "Groundwater flow model"
 msgstr "Model aliran air bawah tanah"
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:307
-#: ../gui/tcltk/d.m/menu.tcl:293
+#: ../gui/tcltk/gis.m/gmmenu.tcl:307 ../gui/tcltk/d.m/menu.tcl:293
 msgid "SIMWE overland flow modeling"
 msgstr "Pemodelan aliran air permukaan SIMWE"
 
@@ -2519,33 +2334,27 @@ msgstr "Pemodelan aliran air permukaan SIMWE"
 msgid "SIMWE sediment flux modeling"
 msgstr "Pemodelan fluks sedimen SIMWE"
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:310
-#: ../gui/tcltk/d.m/menu.tcl:295
+#: ../gui/tcltk/gis.m/gmmenu.tcl:310 ../gui/tcltk/d.m/menu.tcl:295
 msgid "Topographic index map"
 msgstr "Peta indeks topografi"
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:311
-#: ../gui/tcltk/d.m/menu.tcl:296
+#: ../gui/tcltk/gis.m/gmmenu.tcl:311 ../gui/tcltk/d.m/menu.tcl:296
 msgid "TOPMODEL simulation"
 msgstr "Simulasi TOPMODEL"
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:313
-#: ../gui/tcltk/d.m/menu.tcl:297
+#: ../gui/tcltk/gis.m/gmmenu.tcl:313 ../gui/tcltk/d.m/menu.tcl:297
 msgid "Watershed subbasins"
 msgstr "Subbasin tangkapan air"
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:314
-#: ../gui/tcltk/d.m/menu.tcl:298
+#: ../gui/tcltk/gis.m/gmmenu.tcl:314 ../gui/tcltk/d.m/menu.tcl:298
 msgid "Watershed analysis"
 msgstr "Analisis tangkapan air"
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:315
-#: ../gui/tcltk/d.m/menu.tcl:299
+#: ../gui/tcltk/gis.m/gmmenu.tcl:315 ../gui/tcltk/d.m/menu.tcl:299
 msgid "Watershed basin creation"
 msgstr "Pembuatan basis tangkapan air"
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:317
-#: ../gui/tcltk/d.m/menu.tcl:301
+#: ../gui/tcltk/gis.m/gmmenu.tcl:317 ../gui/tcltk/d.m/menu.tcl:301
 msgid "Landscape structure modeling"
 msgstr "Pemodelan struktur lansekap"
 
@@ -2565,8 +2374,7 @@ msgstr "Menganalisis bercak"
 msgid "Landscape patch analysis"
 msgstr "Analisis bercak lansekap"
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:329
-#: ../gui/tcltk/d.m/menu.tcl:302
+#: ../gui/tcltk/gis.m/gmmenu.tcl:329 ../gui/tcltk/d.m/menu.tcl:302
 msgid "Set up sampling and analysis framework"
 msgstr "Pengesetan kerangka cuplikan dan analisis"
 
@@ -2622,8 +2430,7 @@ msgstr "Keanekaan"
 msgid "Shape index"
 msgstr "Indeks bentuk"
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:348
-#: ../gui/tcltk/d.m/menu.tcl:308
+#: ../gui/tcltk/gis.m/gmmenu.tcl:348 ../gui/tcltk/d.m/menu.tcl:308
 msgid "Wildfire modeling"
 msgstr "Pemodelan kebakaran hutan"
 
@@ -2639,8 +2446,7 @@ msgstr "Jalur penyebaran berbasis biaya-termurah"
 msgid "Anisotropic spread simulation"
 msgstr "Simulasi penyebaran anisotropik"
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:354
-#: ../gui/tcltk/d.m/menu.tcl:314
+#: ../gui/tcltk/gis.m/gmmenu.tcl:354 ../gui/tcltk/d.m/menu.tcl:314
 msgid "Change category values and labels"
 msgstr "Ubah nilai kategori dan label"
 
@@ -2656,8 +2462,7 @@ msgstr "Klasifikasi-ulang berdasarkan ukuran"
 msgid "Reclassify interactively"
 msgstr "Klasifikasi-ulang secara interaktif"
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:359
-#: ../gui/tcltk/gis.m/gmmenu.tcl:490
+#: ../gui/tcltk/gis.m/gmmenu.tcl:359 ../gui/tcltk/gis.m/gmmenu.tcl:490
 msgid "Reclassify using rules file"
 msgstr "Klasifikasi-ulang dengan berkas aturan"
 
@@ -2681,8 +2486,7 @@ msgstr "Skala-ulang dengan histogram"
 msgid "Concentric circles"
 msgstr "Lingkaran konsentrik"
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:369
-#: ../gui/tcltk/d.m/menu.tcl:331
+#: ../gui/tcltk/gis.m/gmmenu.tcl:369 ../gui/tcltk/d.m/menu.tcl:331
 msgid "Generate random cells"
 msgstr "Hasilkan sel acak"
 
@@ -2694,8 +2498,7 @@ msgstr "Sel acak"
 msgid "Random cells and vector points"
 msgstr "Sel dan titik vektor acak"
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:373
-#: ../gui/tcltk/d.m/menu.tcl:334
+#: ../gui/tcltk/gis.m/gmmenu.tcl:373 ../gui/tcltk/d.m/menu.tcl:334
 msgid "Generate surfaces"
 msgstr "Hasilkan permukaan"
 
@@ -2727,8 +2530,7 @@ msgstr "Permukaan acak dengan dependensi spasial"
 msgid "Contour lines"
 msgstr "Garis kontur"
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:385
-#: ../gui/tcltk/d.m/menu.tcl:343
+#: ../gui/tcltk/gis.m/gmmenu.tcl:385 ../gui/tcltk/d.m/menu.tcl:343
 msgid "Interpolate surfaces"
 msgstr "Permukaan interpolasi"
 
@@ -2760,27 +2562,23 @@ msgstr "Regularized spline tension"
 msgid "Fill NULL cells"
 msgstr "Isi sel NULL"
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:398
-#: ../gui/tcltk/gis.m/gmmenu.tcl:517
-#: ../gui/tcltk/gis.m/gmmenu.tcl:571
-#: ../gui/tcltk/d.m/menu.tcl:354
-#: ../gui/tcltk/d.m/menu.tcl:459
-#: ../gui/tcltk/d.m/menu.tcl:515
+#: ../gui/tcltk/gis.m/gmmenu.tcl:398 ../gui/tcltk/gis.m/gmmenu.tcl:517
+#: ../gui/tcltk/gis.m/gmmenu.tcl:571 ../gui/tcltk/d.m/menu.tcl:354
+#: ../gui/tcltk/d.m/menu.tcl:459 ../gui/tcltk/d.m/menu.tcl:515
 msgid "Reports and statistics"
 msgstr "Laporan dan statistik"
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:399
-#: ../gui/tcltk/d.m/menu.tcl:355
+#: ../gui/tcltk/gis.m/gmmenu.tcl:399 ../gui/tcltk/d.m/menu.tcl:355
 #: ../gui/tcltk/d.m/menu.tcl:516
 msgid "Report basic file information"
 msgstr "Laporan informasi berkas dasar"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:400
-msgid "Report category information"
+#, fuzzy
+msgid "Manage category information"
 msgstr "Laporan informasi kategori"
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:402
-#: ../gui/tcltk/d.m/menu.tcl:358
+#: ../gui/tcltk/gis.m/gmmenu.tcl:402 ../gui/tcltk/d.m/menu.tcl:358
 msgid "General statistics"
 msgstr "Statistik umum"
 
@@ -2792,8 +2590,7 @@ msgstr "Rentang nilai kategori"
 msgid "Sum cell category values"
 msgstr "Jumlah nilai kategori sel"
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:405
-#: ../gui/tcltk/d.m/menu.tcl:361
+#: ../gui/tcltk/gis.m/gmmenu.tcl:405 ../gui/tcltk/d.m/menu.tcl:361
 msgid "Sum area by map and category"
 msgstr "Jumlah luas berdasarkan peta dan kategori"
 
@@ -2801,13 +2598,11 @@ msgstr "Jumlah luas berdasarkan peta dan kategori"
 msgid "Statistics for clumped cells (works with r.clump)"
 msgstr "Statistik untuk sel berkelompok (berfungsi dengan r.clump)"
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:407
-#: ../gui/tcltk/d.m/menu.tcl:363
+#: ../gui/tcltk/gis.m/gmmenu.tcl:407 ../gui/tcltk/d.m/menu.tcl:363
 msgid "Total surface area corrected for topography"
 msgstr "Luas permukaan total yang dikoreksi dengan topografi"
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:408
-#: ../gui/tcltk/d.m/menu.tcl:364
+#: ../gui/tcltk/gis.m/gmmenu.tcl:408 ../gui/tcltk/d.m/menu.tcl:364
 #: ../gui/tcltk/d.m/menu.tcl:463
 msgid "Univariate statistics"
 msgstr "Statistik univariat"
@@ -2820,8 +2615,7 @@ msgstr "Transek cuplikan"
 msgid "Sample transects (bearing/distance)"
 msgstr "Transek cuplikan (bearing/distance)"
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:413
-#: ../gui/tcltk/d.m/menu.tcl:370
+#: ../gui/tcltk/gis.m/gmmenu.tcl:413 ../gui/tcltk/d.m/menu.tcl:370
 msgid "Covariance/correlation"
 msgstr "Kovarians/korelasi"
 
@@ -2833,13 +2627,11 @@ msgstr "Regresi linier"
 msgid "Mutual category occurences"
 msgstr "Kejadian kategori mutual"
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:418
-#: ../gui/tcltk/d.m/menu.tcl:375
+#: ../gui/tcltk/gis.m/gmmenu.tcl:418 ../gui/tcltk/d.m/menu.tcl:375
 msgid "&Vector"
 msgstr "&Vektor"
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:420
-#: ../gui/tcltk/d.m/menu.tcl:377
+#: ../gui/tcltk/gis.m/gmmenu.tcl:420 ../gui/tcltk/d.m/menu.tcl:377
 msgid "Digitize"
 msgstr "Digitasi"
 
@@ -2855,61 +2647,61 @@ msgstr "Buat/bangun-ulang topologi:"
 msgid "Clean vector"
 msgstr "Bersihkan vektor"
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:426
+#: ../gui/tcltk/gis.m/gmmenu.tcl:425
+msgid "Generalization"
+msgstr "Generalisasi"
+
+#: ../gui/tcltk/gis.m/gmmenu.tcl:427
 msgid "Convert object types"
 msgstr "Konversi tipe obyek"
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:428
+#: ../gui/tcltk/gis.m/gmmenu.tcl:429
 msgid "Add centroids"
 msgstr "Tambahkan centroid"
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:430
+#: ../gui/tcltk/gis.m/gmmenu.tcl:431
 msgid "Build polylines"
 msgstr "Bangun polyline"
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:431
+#: ../gui/tcltk/gis.m/gmmenu.tcl:432
 msgid "Split polylines"
 msgstr "Pecah polyline"
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:432
+#: ../gui/tcltk/gis.m/gmmenu.tcl:433
 msgid "Parallel lines"
 msgstr "Garis paralel"
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:434
+#: ../gui/tcltk/gis.m/gmmenu.tcl:435
 msgid "Dissolve boundaries"
 msgstr "Pecah batas"
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:436
+#: ../gui/tcltk/gis.m/gmmenu.tcl:437
 msgid "Create 3D vector over raster"
 msgstr "Buat vektor 3D di atas raster"
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:437
+#: ../gui/tcltk/gis.m/gmmenu.tcl:438
 msgid "Extrude 3D vector"
 msgstr "Ekstrud vektor 3D"
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:439
+#: ../gui/tcltk/gis.m/gmmenu.tcl:440
 msgid "Link to OGR"
 msgstr "Tautkan dengan OGR"
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:441
+#: ../gui/tcltk/gis.m/gmmenu.tcl:442
 msgid "Create labels"
 msgstr "Buat label"
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:443
+#: ../gui/tcltk/gis.m/gmmenu.tcl:444
 msgid "Reposition vector"
 msgstr "Reposisi vektor"
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:444
+#: ../gui/tcltk/gis.m/gmmenu.tcl:445
 msgid "Reproject vector"
 msgstr "Proyeksi-ulang vektor"
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:446
+#: ../gui/tcltk/gis.m/gmmenu.tcl:447
 msgid "Metadata support"
 msgstr "Dukungan metadata"
-
-#: ../gui/tcltk/gis.m/gmmenu.tcl:448
-msgid "Generalization"
-msgstr "Generalisasi"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:451
 msgid "Query with attributes"
@@ -2967,18 +2759,15 @@ msgstr "Cari ID dan offset"
 msgid "Nearest features"
 msgstr "Fitur terdekat"
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:468
-#: ../gui/tcltk/d.m/menu.tcl:418
+#: ../gui/tcltk/gis.m/gmmenu.tcl:468 ../gui/tcltk/d.m/menu.tcl:418
 msgid "Network analysis"
 msgstr "Analisis jaringan"
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:469
-#: ../gui/tcltk/d.m/menu.tcl:419
+#: ../gui/tcltk/gis.m/gmmenu.tcl:469 ../gui/tcltk/d.m/menu.tcl:419
 msgid "Allocate subnets"
 msgstr "Alokasi subjaringan"
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:470
-#: ../gui/tcltk/d.m/menu.tcl:420
+#: ../gui/tcltk/gis.m/gmmenu.tcl:470 ../gui/tcltk/d.m/menu.tcl:420
 msgid "Network maintenance"
 msgstr "Pemeliharaan jaringan"
 
@@ -2986,8 +2775,7 @@ msgstr "Pemeliharaan jaringan"
 msgid "Visibility network"
 msgstr "Visibilitas jaringan"
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:472
-#: ../gui/tcltk/d.m/menu.tcl:421
+#: ../gui/tcltk/gis.m/gmmenu.tcl:472 ../gui/tcltk/d.m/menu.tcl:421
 msgid "Shortest route"
 msgstr "Rute terpendek"
 
@@ -2999,13 +2787,11 @@ msgstr "Tampilkan rute terpendek"
 msgid "Split net"
 msgstr "Pecah jaringan"
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:479
-#: ../gui/tcltk/d.m/menu.tcl:424
+#: ../gui/tcltk/gis.m/gmmenu.tcl:479 ../gui/tcltk/d.m/menu.tcl:424
 msgid "Steiner tree"
 msgstr "Steiner tree"
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:480
-#: ../gui/tcltk/d.m/menu.tcl:425
+#: ../gui/tcltk/gis.m/gmmenu.tcl:480 ../gui/tcltk/d.m/menu.tcl:425
 msgid "Traveling salesman analysis"
 msgstr "Analisis traveling salesman"
 
@@ -3017,8 +2803,7 @@ msgstr "Tumpang-susun"
 msgid "Patch (combine)"
 msgstr "Tambal (gabungkan)"
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:487
-#: ../gui/tcltk/d.m/menu.tcl:434
+#: ../gui/tcltk/gis.m/gmmenu.tcl:487 ../gui/tcltk/d.m/menu.tcl:434
 msgid "Change attributes"
 msgstr "Ubah atribut"
 
@@ -3034,8 +2819,7 @@ msgstr "Klasifikasi-ulang obyek secara interaktif"
 msgid "Generate area for current region"
 msgstr "Hasilkan area untuk region saat ini"
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:494
-#: ../gui/tcltk/d.m/menu.tcl:445
+#: ../gui/tcltk/gis.m/gmmenu.tcl:494 ../gui/tcltk/d.m/menu.tcl:445
 msgid "Generate areas from points"
 msgstr "Hasilkan area dari titik"
 
@@ -3055,8 +2839,7 @@ msgstr "Diagram Voronoi/Poligon Thiessen"
 msgid "Generate grid"
 msgstr "Hasilkan grid"
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:500
-#: ../gui/tcltk/d.m/menu.tcl:440
+#: ../gui/tcltk/gis.m/gmmenu.tcl:500 ../gui/tcltk/d.m/menu.tcl:440
 msgid "Generate points"
 msgstr "Hasilkan titik"
 
@@ -3068,8 +2851,7 @@ msgstr "Hasilkan titik dari basisdata"
 msgid "Generate points along lines"
 msgstr "Buat titik sepanjang garis"
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:503
-#: ../gui/tcltk/d.m/menu.tcl:442
+#: ../gui/tcltk/gis.m/gmmenu.tcl:503 ../gui/tcltk/d.m/menu.tcl:442
 msgid "Generate random points"
 msgstr "Hasilkan titik acak"
 
@@ -3097,18 +2879,15 @@ msgstr "Perbaharui atritbut titik dari area"
 msgid "Update point attributes from raster"
 msgstr "Perbaharui atribut titik dari raster"
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:513
-#: ../gui/tcltk/d.m/menu.tcl:452
+#: ../gui/tcltk/gis.m/gmmenu.tcl:513 ../gui/tcltk/d.m/menu.tcl:452
 msgid "Sample raster map at point locations"
 msgstr "Cuplik peta raster pada lokasi tertentu"
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:514
-#: ../gui/tcltk/d.m/menu.tcl:453
+#: ../gui/tcltk/gis.m/gmmenu.tcl:514 ../gui/tcltk/d.m/menu.tcl:453
 msgid "Sample raster neighborhood around points"
 msgstr "Cuplik ketetanggaan raster di sekitar titik"
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:518
-#: ../gui/tcltk/gis.m/gmmenu.tcl:588
+#: ../gui/tcltk/gis.m/gmmenu.tcl:518 ../gui/tcltk/gis.m/gmmenu.tcl:588
 #: ../gui/tcltk/d.m/menu.tcl:460
 msgid "Basic information"
 msgstr "Informasi dasar"
@@ -3133,13 +2912,11 @@ msgstr "Indeks kuadrat"
 msgid "Test normality"
 msgstr "Tes kenormalan"
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:529
-#: ../gui/tcltk/d.m/menu.tcl:470
+#: ../gui/tcltk/gis.m/gmmenu.tcl:529 ../gui/tcltk/d.m/menu.tcl:470
 msgid "&Imagery"
 msgstr "&Citra"
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:530
-#: ../gui/tcltk/d.m/menu.tcl:471
+#: ../gui/tcltk/gis.m/gmmenu.tcl:530 ../gui/tcltk/d.m/menu.tcl:471
 msgid "Develop images and groups"
 msgstr "Buat citra dan grup"
 
@@ -3155,8 +2932,7 @@ msgstr "Grup target"
 msgid "Mosaic images"
 msgstr "Gabungkan citra"
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:536
-#: ../gui/tcltk/d.m/menu.tcl:477
+#: ../gui/tcltk/gis.m/gmmenu.tcl:536 ../gui/tcltk/d.m/menu.tcl:477
 msgid "Manage image colors"
 msgstr "Kelola warna citra"
 
@@ -3168,8 +2944,7 @@ msgstr "Keseimbangan warna RGB"
 msgid "RGB to HIS"
 msgstr "RGB ke HIS"
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:541
-#: ../gui/tcltk/d.m/menu.tcl:488
+#: ../gui/tcltk/gis.m/gmmenu.tcl:541 ../gui/tcltk/d.m/menu.tcl:488
 msgid "Ortho photo rectification"
 msgstr "Rektifikasi foto-orto"
 
@@ -3177,28 +2952,23 @@ msgstr "Rektifikasi foto-orto"
 msgid "Brovey sharpening"
 msgstr "Penajaman citra dengan Brovey"
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:548
-#: ../gui/tcltk/d.m/menu.tcl:492
+#: ../gui/tcltk/gis.m/gmmenu.tcl:548 ../gui/tcltk/d.m/menu.tcl:492
 msgid "Classify image"
 msgstr "Klasifikasikan citra"
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:549
-#: ../gui/tcltk/d.m/menu.tcl:493
+#: ../gui/tcltk/gis.m/gmmenu.tcl:549 ../gui/tcltk/d.m/menu.tcl:493
 msgid "Clustering input for unsupervised classification"
 msgstr "Input klaster untuk klasifikasi tak-terbimbing"
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:551
-#: ../gui/tcltk/d.m/menu.tcl:495
+#: ../gui/tcltk/gis.m/gmmenu.tcl:551 ../gui/tcltk/d.m/menu.tcl:495
 msgid "Maximum likelyhood classification (MLC)"
 msgstr "Klasifikasi berdasarkan Maximum Likelihood (MLC)"
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:552
-#: ../gui/tcltk/d.m/menu.tcl:496
+#: ../gui/tcltk/gis.m/gmmenu.tcl:552 ../gui/tcltk/d.m/menu.tcl:496
 msgid "Sequential maximum a posteriory classification (SMAP)"
 msgstr "Sequential maximum a posteriory classification (SMAP)"
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:554
-#: ../gui/tcltk/d.m/menu.tcl:498
+#: ../gui/tcltk/gis.m/gmmenu.tcl:554 ../gui/tcltk/d.m/menu.tcl:498
 msgid "Interactive input for supervised classification"
 msgstr "Input interaktif untuk klasifikasi terbimbing"
 
@@ -3210,8 +2980,7 @@ msgstr "Input untuk klasifikasi terbimbing MLC"
 msgid "Input for supervised SMAP"
 msgstr "Input untuk klasifikasi terbimbing SMAP"
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:558
-#: ../gui/tcltk/d.m/menu.tcl:502
+#: ../gui/tcltk/gis.m/gmmenu.tcl:558 ../gui/tcltk/d.m/menu.tcl:502
 msgid "Filter image"
 msgstr "Filter citra"
 
@@ -3223,18 +2992,15 @@ msgstr "Deteksi tepian"
 msgid "Matrix/convolving filter"
 msgstr "Filter matriks/convolving"
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:562
-#: ../gui/tcltk/d.m/menu.tcl:506
+#: ../gui/tcltk/gis.m/gmmenu.tcl:562 ../gui/tcltk/d.m/menu.tcl:506
 msgid "Spectral response"
 msgstr "Respons spektral"
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:563
-#: ../gui/tcltk/d.m/menu.tcl:507
+#: ../gui/tcltk/gis.m/gmmenu.tcl:563 ../gui/tcltk/d.m/menu.tcl:507
 msgid "Tassled cap vegetation index"
 msgstr "Tasseled cap vegetation index"
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:564
-#: ../gui/tcltk/d.m/menu.tcl:508
+#: ../gui/tcltk/gis.m/gmmenu.tcl:564 ../gui/tcltk/d.m/menu.tcl:508
 msgid "Transform image"
 msgstr "Transformasikan citra"
 
@@ -3270,18 +3036,15 @@ msgstr "OIF untuk Landsat TM"
 msgid "&Volumes"
 msgstr "&Volume"
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:578
-#: ../gui/tcltk/d.m/menu.tcl:525
+#: ../gui/tcltk/gis.m/gmmenu.tcl:578 ../gui/tcltk/d.m/menu.tcl:525
 msgid "Develop grid3D volumes"
 msgstr "Membangung volume grid3D"
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:579
-#: ../gui/tcltk/d.m/menu.tcl:526
+#: ../gui/tcltk/gis.m/gmmenu.tcl:579 ../gui/tcltk/d.m/menu.tcl:526
 msgid "Manage nulls for grid3D volume"
 msgstr "Kelola null untuk volume grid3D"
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:580
-#: ../gui/tcltk/d.m/menu.tcl:527
+#: ../gui/tcltk/gis.m/gmmenu.tcl:580 ../gui/tcltk/d.m/menu.tcl:527
 msgid "Manage timestamp for grid3D volume"
 msgstr "Kelola waktu-tercatat untuk volume grid3D"
 
@@ -3301,58 +3064,47 @@ msgstr "Sayatan melintang dari volume"
 msgid "Interpolate volume from vector points"
 msgstr "Interpolasi volume dari titik vektor"
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:587
-#: ../gui/tcltk/d.m/menu.tcl:533
+#: ../gui/tcltk/gis.m/gmmenu.tcl:587 ../gui/tcltk/d.m/menu.tcl:533
 msgid "Report and Statistics"
 msgstr "Laporan dan statistik"
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:591
-#: ../gui/tcltk/d.m/menu.tcl:537
+#: ../gui/tcltk/gis.m/gmmenu.tcl:591 ../gui/tcltk/d.m/menu.tcl:537
 msgid "&Databases"
 msgstr "&Basisdata"
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:592
-#: ../gui/tcltk/d.m/menu.tcl:547
+#: ../gui/tcltk/gis.m/gmmenu.tcl:592 ../gui/tcltk/d.m/menu.tcl:547
 msgid "Database information"
 msgstr "Informasi basisdata"
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:593
-#: ../gui/tcltk/d.m/menu.tcl:548
+#: ../gui/tcltk/gis.m/gmmenu.tcl:593 ../gui/tcltk/d.m/menu.tcl:548
 msgid "Describe table"
 msgstr "Deskripsikan tabel"
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:594
-#: ../gui/tcltk/d.m/menu.tcl:549
+#: ../gui/tcltk/gis.m/gmmenu.tcl:594 ../gui/tcltk/d.m/menu.tcl:549
 msgid "List columns"
 msgstr "Daftar kolom"
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:595
-#: ../gui/tcltk/d.m/menu.tcl:550
+#: ../gui/tcltk/gis.m/gmmenu.tcl:595 ../gui/tcltk/d.m/menu.tcl:550
 msgid "List drivers"
 msgstr "Daftar driver"
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:596
-#: ../gui/tcltk/d.m/menu.tcl:551
+#: ../gui/tcltk/gis.m/gmmenu.tcl:596 ../gui/tcltk/d.m/menu.tcl:551
 msgid "List tables"
 msgstr "Daftar tabel"
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:599
-#: ../gui/tcltk/d.m/menu.tcl:538
+#: ../gui/tcltk/gis.m/gmmenu.tcl:599 ../gui/tcltk/d.m/menu.tcl:538
 msgid "Manage database"
 msgstr "Kelola basisdata"
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:600
-#: ../gui/tcltk/d.m/menu.tcl:539
+#: ../gui/tcltk/gis.m/gmmenu.tcl:600 ../gui/tcltk/d.m/menu.tcl:539
 msgid "Connect to database"
 msgstr "Sambungkan ke basisdata"
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:601
-#: ../gui/tcltk/d.m/menu.tcl:540
+#: ../gui/tcltk/gis.m/gmmenu.tcl:601 ../gui/tcltk/d.m/menu.tcl:540
 msgid "Login to database"
 msgstr "Login ke basisdata"
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:603
-#: ../gui/tcltk/d.m/menu.tcl:542
+#: ../gui/tcltk/gis.m/gmmenu.tcl:603 ../gui/tcltk/d.m/menu.tcl:542
 msgid "Copy table"
 msgstr "Salin tabel"
 
@@ -3380,8 +3132,7 @@ msgstr "Hapus kolom"
 msgid "Rename a column"
 msgstr "Ubah-nama sebuah kolom"
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:612
-#: ../gui/tcltk/d.m/menu.tcl:545
+#: ../gui/tcltk/gis.m/gmmenu.tcl:612 ../gui/tcltk/d.m/menu.tcl:545
 msgid "Test database"
 msgstr "Tes basisdata"
 
@@ -3397,8 +3148,7 @@ msgstr "Kueri tabel atribut vektor"
 msgid "SQL statement"
 msgstr "Pernyataan SQL"
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:620
-#: ../gui/tcltk/d.m/menu.tcl:396
+#: ../gui/tcltk/gis.m/gmmenu.tcl:620 ../gui/tcltk/d.m/menu.tcl:396
 msgid "Vector<->database connections"
 msgstr "Koneksi vektor <-> basisdata"
 
@@ -3410,48 +3160,39 @@ msgstr "Sambung-ulang vektor ke basisdata"
 msgid "Set vector - database connection"
 msgstr "Set koneksi vektor - basisdata"
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:625
-#: ../gui/tcltk/d.m/menu.tcl:559
+#: ../gui/tcltk/gis.m/gmmenu.tcl:625 ../gui/tcltk/d.m/menu.tcl:559
 msgid "&Help"
 msgstr "&Bantuan"
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:626
-#: ../gui/tcltk/d.m/menu.tcl:560
+#: ../gui/tcltk/gis.m/gmmenu.tcl:626 ../gui/tcltk/d.m/menu.tcl:560
 msgid "GRASS help"
 msgstr "Bantuan GRASS"
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:627
-#: ../gui/tcltk/d.m/menu.tcl:561
+#: ../gui/tcltk/gis.m/gmmenu.tcl:627 ../gui/tcltk/d.m/menu.tcl:561
 msgid "GIS Manager &help"
 msgstr "GIS Manager &bantuan"
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:627
-#: ../gui/tcltk/d.m/menu.tcl:561
+#: ../gui/tcltk/gis.m/gmmenu.tcl:627 ../gui/tcltk/d.m/menu.tcl:561
 msgid "GIS Manager help"
 msgstr "Bantuan GIS Manager"
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:628
-#: ../gui/tcltk/d.m/menu.tcl:562
+#: ../gui/tcltk/gis.m/gmmenu.tcl:628 ../gui/tcltk/d.m/menu.tcl:562
 msgid "About &GRASS"
 msgstr "Tentang &GRASS"
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:628
-#: ../gui/tcltk/d.m/menu.tcl:562
+#: ../gui/tcltk/gis.m/gmmenu.tcl:628 ../gui/tcltk/d.m/menu.tcl:562
 msgid "About GRASS"
 msgstr "Tentang GRASS"
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:629
-#: ../gui/tcltk/d.m/menu.tcl:563
+#: ../gui/tcltk/gis.m/gmmenu.tcl:629 ../gui/tcltk/d.m/menu.tcl:563
 msgid "About &System"
 msgstr "Tentang &Sistem"
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:629
-#: ../gui/tcltk/d.m/menu.tcl:563
+#: ../gui/tcltk/gis.m/gmmenu.tcl:629 ../gui/tcltk/d.m/menu.tcl:563
 msgid "About System"
 msgstr "Tentang Sistem"
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:637
-#: ../gui/tcltk/d.m/menu.tcl:571
+#: ../gui/tcltk/gis.m/gmmenu.tcl:637 ../gui/tcltk/d.m/menu.tcl:571
 msgid "&Xtns"
 msgstr "&Ekstensi"
 
@@ -3471,8 +3212,7 @@ msgstr "Pengesetan tipe kertas"
 msgid "Custom paper size"
 msgstr "Ukuran kertas bebas"
 
-#: ../gui/tcltk/gis.m/mapprint.tcl:276
-#: ../gui/tcltk/d.m/print.tcl:181
+#: ../gui/tcltk/gis.m/mapprint.tcl:276 ../gui/tcltk/d.m/print.tcl:181
 msgid "width:"
 msgstr "lebar:"
 
@@ -3512,12 +3252,9 @@ msgstr "Cetak pada "
 msgid "Save to PDF file*              "
 msgstr "Simpan ke dalam berkas PDF*"
 
-#: ../gui/tcltk/gis.m/mapprint.tcl:339
-#: ../gui/tcltk/gis.m/mapprint.tcl:351
-#: ../gui/tcltk/d.m/print.tcl:212
-#: ../gui/tcltk/d.m/print.tcl:223
-#: ../gui/tcltk/d.m/print.tcl:234
-#: ../gui/tcltk/d.m/print.tcl:261
+#: ../gui/tcltk/gis.m/mapprint.tcl:339 ../gui/tcltk/gis.m/mapprint.tcl:351
+#: ../gui/tcltk/d.m/print.tcl:212 ../gui/tcltk/d.m/print.tcl:223
+#: ../gui/tcltk/d.m/print.tcl:234 ../gui/tcltk/d.m/print.tcl:261
 msgid "Browse"
 msgstr "Jelajah"
 
@@ -3529,13 +3266,27 @@ msgstr "Simpan ke dalam berkas EPS"
 msgid "*requires ghostscript to be installed and in path"
 msgstr "*membutuhkan ghostscript untuk diinstal dan dalam path"
 
-#: ../gui/tcltk/gis.m/mapprint.tcl:365
-#: ../gui/tcltk/d.m/print.tcl:279
+#: ../gui/tcltk/gis.m/mapprint.tcl:365 ../gui/tcltk/d.m/print.tcl:279
 msgid "Print"
 msgstr "Cetak"
 
-#: ../gui/tcltk/gis.m/dnviz.tcl:49
-#: ../gui/tcltk/gis.m/rules.tcl:35
+#: ../gui/tcltk/gis.m/gmlib.tcl:85 ../gui/tcltk/gis.m/gmlib.tcl:114
+msgid "Map Resource File"
+msgstr "Berkas resource peta"
+
+#: ../gui/tcltk/gis.m/gmlib.tcl:86 ../gui/tcltk/gis.m/gmlib.tcl:116
+msgid "All Files"
+msgstr "Semua berkas"
+
+#: ../gui/tcltk/gis.m/gmlib.tcl:90
+msgid "Open File"
+msgstr "Buka berkas"
+
+#: ../gui/tcltk/gis.m/gmlib.tcl:115
+msgid "DM Resource File"
+msgstr "Berkas resource DM"
+
+#: ../gui/tcltk/gis.m/dnviz.tcl:49 ../gui/tcltk/gis.m/rules.tcl:35
 msgid "Select input map"
 msgstr "Pilih peta input"
 
@@ -3627,8 +3378,7 @@ msgstr "Nilai tinggi adalah elevasi"
 msgid "Output keyframe file"
 msgstr "Berkas output keyframe"
 
-#: ../gui/tcltk/gis.m/dnviz.tcl:219
-#: ../gui/tcltk/gis.m/rules.tcl:147
+#: ../gui/tcltk/gis.m/dnviz.tcl:219 ../gui/tcltk/gis.m/rules.tcl:147
 msgid "Overwrite existing file"
 msgstr "Tulis-ulang berkas yang telah ada"
 
@@ -3640,13 +3390,11 @@ msgstr "Set ulang"
 msgid "Clear all path coordinates"
 msgstr "Hapus semua jalur koordinat"
 
-#: ../gui/tcltk/gis.m/dnviz.tcl:359
-#: ../gui/tcltk/gis.m/rules.tcl:194
+#: ../gui/tcltk/gis.m/dnviz.tcl:359 ../gui/tcltk/gis.m/rules.tcl:194
 msgid "You must select an input map"
 msgstr "Anda harus memilih peta input"
 
-#: ../gui/tcltk/gis.m/dnviz.tcl:360
-#: ../gui/tcltk/gis.m/rules.tcl:194
+#: ../gui/tcltk/gis.m/dnviz.tcl:360 ../gui/tcltk/gis.m/rules.tcl:194
 msgid "No input map selected"
 msgstr "Tidak ada peta input yang dipilih"
 
@@ -3674,8 +3422,7 @@ msgstr "Tampilkan garis grid, dan garis geodetik atau rhumbline"
 msgid "Grid options: "
 msgstr "Opsi grid:"
 
-#: ../gui/tcltk/gis.m/gridline.tcl:158
-#: ../gui/tcltk/d.m/gridline.tcl:77
+#: ../gui/tcltk/gis.m/gridline.tcl:158 ../gui/tcltk/d.m/gridline.tcl:77
 msgid "draw grid"
 msgstr "gambarkan grid"
 
@@ -3687,8 +3434,7 @@ msgstr "grid geodetik"
 msgid "grid color "
 msgstr "warna grid"
 
-#: ../gui/tcltk/gis.m/gridline.tcl:166
-#: ../gui/tcltk/d.m/gridline.tcl:85
+#: ../gui/tcltk/gis.m/gridline.tcl:166 ../gui/tcltk/d.m/gridline.tcl:85
 msgid "Help for grids"
 msgstr "Bantuan untuk grid"
 
@@ -3732,18 +3478,15 @@ msgstr "warna garis batas"
 msgid "Geodesic and rhumblines for latlong locations only"
 msgstr "Geodesik dan rhumbline untuk lokasi lintang-bujur saja"
 
-#: ../gui/tcltk/gis.m/gridline.tcl:213
-#: ../gui/tcltk/d.m/gridline.tcl:119
+#: ../gui/tcltk/gis.m/gridline.tcl:213 ../gui/tcltk/d.m/gridline.tcl:119
 msgid "draw geodesic line"
 msgstr "gambarkan garis geodesik"
 
-#: ../gui/tcltk/gis.m/gridline.tcl:218
-#: ../gui/tcltk/d.m/gridline.tcl:124
+#: ../gui/tcltk/gis.m/gridline.tcl:218 ../gui/tcltk/d.m/gridline.tcl:124
 msgid "Help for geodesic lines"
 msgstr "Bantuan untuk garis geodesik"
 
-#: ../gui/tcltk/gis.m/gridline.tcl:219
-#: ../gui/tcltk/gis.m/gridline.tcl:246
+#: ../gui/tcltk/gis.m/gridline.tcl:219 ../gui/tcltk/gis.m/gridline.tcl:246
 msgid " line color"
 msgstr " warna garis"
 
@@ -3751,18 +3494,15 @@ msgstr " warna garis"
 msgid " text color"
 msgstr " warna teks"
 
-#: ../gui/tcltk/gis.m/gridline.tcl:232
-#: ../gui/tcltk/gis.m/gridline.tcl:255
+#: ../gui/tcltk/gis.m/gridline.tcl:232 ../gui/tcltk/gis.m/gridline.tcl:255
 msgid "     line endpoints (x1,y1,x2,y2)"
 msgstr "     titik akhir garis (x1,y1,x2,y2)"
 
-#: ../gui/tcltk/gis.m/gridline.tcl:240
-#: ../gui/tcltk/d.m/gridline.tcl:149
+#: ../gui/tcltk/gis.m/gridline.tcl:240 ../gui/tcltk/d.m/gridline.tcl:149
 msgid "draw rhumbline"
 msgstr "gambarkan rhumbline"
 
-#: ../gui/tcltk/gis.m/gridline.tcl:245
-#: ../gui/tcltk/d.m/gridline.tcl:154
+#: ../gui/tcltk/gis.m/gridline.tcl:245 ../gui/tcltk/d.m/gridline.tcl:154
 msgid "Help for rhumblines"
 msgstr "Bantuan untuk rhumbline"
 
@@ -3775,118 +3515,117 @@ msgstr "Peta raster untuk legenda"
 msgid "legend for %s"
 msgstr "legenda untuk %s"
 
-#: ../gui/tcltk/gis.m/legend.tcl:165
+#: ../gui/tcltk/gis.m/legend.tcl:193
 msgid "Display legend for raster map using cat values and labels"
 msgstr "Tampilkan legenda untuk peta raster dengan nilai cat dan label"
 
-#: ../gui/tcltk/gis.m/legend.tcl:182
+#: ../gui/tcltk/gis.m/legend.tcl:210
 msgid "Raster map: "
 msgstr "Peta raster: "
 
-#: ../gui/tcltk/gis.m/legend.tcl:199
+#: ../gui/tcltk/gis.m/legend.tcl:229
+#, fuzzy, tcl-format
 msgid "Legend placement and size as 0-100% of display"
 msgstr "Peletakkan legenda dan ukuran berdasarkan 0-100% tampilan"
 
-#: ../gui/tcltk/gis.m/legend.tcl:205
+#: ../gui/tcltk/gis.m/legend.tcl:235
+#, fuzzy, tcl-format
 msgid "    x,y of lower left corner (in % from display top left)"
 msgstr "   x,y dari ujung kiri bawah (dalam % dari ujung kiri atas tampilan)"
 
-#: ../gui/tcltk/gis.m/legend.tcl:208
-#: ../gui/tcltk/gis.m/barscale.tcl:191
-#: ../gui/tcltk/gis.m/maptext.tcl:150
-#: ../gui/tcltk/gis.m/dtext.tcl:197
+#: ../gui/tcltk/gis.m/legend.tcl:238 ../gui/tcltk/gis.m/barscale.tcl:191
+#: ../gui/tcltk/gis.m/maptext.tcl:150 ../gui/tcltk/gis.m/dtext.tcl:197
 msgid "place with mouse"
 msgstr "letakkan dengan tetikus"
 
-#: ../gui/tcltk/gis.m/legend.tcl:216
+#: ../gui/tcltk/gis.m/legend.tcl:246
 msgid "    legend height "
 msgstr "   tinggi legenda"
 
-#: ../gui/tcltk/gis.m/legend.tcl:218
+#: ../gui/tcltk/gis.m/legend.tcl:248
+#, fuzzy, tcl-format
 msgid "Legend height (% of display)"
 msgstr "Tinggi legenda (% dari tampilan)"
 
-#: ../gui/tcltk/gis.m/legend.tcl:219
+#: ../gui/tcltk/gis.m/legend.tcl:249
 msgid "%  width"
 msgstr "% lebar"
 
-#: ../gui/tcltk/gis.m/legend.tcl:221
+#: ../gui/tcltk/gis.m/legend.tcl:251
+#, fuzzy, tcl-format
 msgid "Legend width (% of display)"
 msgstr "Lebar legenda (% dari tampilan)"
 
-#: ../gui/tcltk/gis.m/legend.tcl:228
+#: ../gui/tcltk/gis.m/legend.tcl:258
 msgid "Legend appearance: text color"
 msgstr "Penampilan legenda: warna teks"
 
-#: ../gui/tcltk/gis.m/legend.tcl:232
+#: ../gui/tcltk/gis.m/legend.tcl:262
 msgid "  legend text font "
 msgstr "  jenis huruf teks dari legenda"
 
-#: ../gui/tcltk/gis.m/legend.tcl:243
+#: ../gui/tcltk/gis.m/legend.tcl:273
 msgid "do not display labels"
 msgstr "jangan tampilkan label"
 
-#: ../gui/tcltk/gis.m/legend.tcl:245
+#: ../gui/tcltk/gis.m/legend.tcl:275
 msgid "do not display values"
 msgstr "jangan tampilkan nilai"
 
-#: ../gui/tcltk/gis.m/legend.tcl:252
+#: ../gui/tcltk/gis.m/legend.tcl:282
 msgid "    number of lines (0=display all):"
 msgstr "    jumlah baris (0=tampilkan semua)"
 
-#: ../gui/tcltk/gis.m/legend.tcl:254
+#: ../gui/tcltk/gis.m/legend.tcl:284
 msgid "Lines to display"
 msgstr "Garis yang akan ditampilkan"
 
-#: ../gui/tcltk/gis.m/legend.tcl:256
+#: ../gui/tcltk/gis.m/legend.tcl:286
 msgid "invert legend"
 msgstr "balikkan legenda"
 
-#: ../gui/tcltk/gis.m/legend.tcl:263
+#: ../gui/tcltk/gis.m/legend.tcl:293
 msgid "    interval between categories (integer maps)"
 msgstr "   interval antara kategori (peta integer)"
 
-#: ../gui/tcltk/gis.m/legend.tcl:265
+#: ../gui/tcltk/gis.m/legend.tcl:295
 msgid "Thinning interval"
 msgstr "Interval penipisan"
 
-#: ../gui/tcltk/gis.m/legend.tcl:272
+#: ../gui/tcltk/gis.m/legend.tcl:302
 msgid "draw smooth gradient (fp maps)"
 msgstr "gambarkan gradasi yang halus (peta floating point)"
 
-#: ../gui/tcltk/gis.m/legend.tcl:274
+#: ../gui/tcltk/gis.m/legend.tcl:304
 msgid "with maximum of"
 msgstr "dengan nilai maksimum dari"
 
-#: ../gui/tcltk/gis.m/legend.tcl:276
+#: ../gui/tcltk/gis.m/legend.tcl:306
 msgid "Maximum lines to display for gradient"
 msgstr "Garis maksimum yang ditampilkan untuk gradien"
 
-#: ../gui/tcltk/gis.m/legend.tcl:277
-#: ../gui/tcltk/gis.m/chart.tcl:196
-#: ../gui/tcltk/d.m/chart.tcl:108
-#: ../gui/tcltk/d.m/vector.tcl:229
+#: ../gui/tcltk/gis.m/legend.tcl:307 ../gui/tcltk/gis.m/chart.tcl:196
+#: ../gui/tcltk/d.m/chart.tcl:108 ../gui/tcltk/d.m/vector.tcl:229
 msgid "lines"
 msgstr "garis"
 
-#: ../gui/tcltk/gis.m/legend.tcl:283
+#: ../gui/tcltk/gis.m/legend.tcl:313
 msgid "Display legend for subset of raster values"
 msgstr "Tampilkan legenda untuk sebagian nilai raster"
 
-#: ../gui/tcltk/gis.m/legend.tcl:290
+#: ../gui/tcltk/gis.m/legend.tcl:320
 msgid "skip categories with no labels"
 msgstr "lewati kategori tanpa label"
 
-#: ../gui/tcltk/gis.m/legend.tcl:297
+#: ../gui/tcltk/gis.m/legend.tcl:327
 msgid "    legend for only these categories     "
 msgstr "   legenda hanya untuk kategori ini saja"
 
-#: ../gui/tcltk/gis.m/legend.tcl:304
+#: ../gui/tcltk/gis.m/legend.tcl:334
 msgid "    legend for only this range of values"
 msgstr "   legenda hanya untuk nilai dalam rentang ini saja"
 
-#: ../gui/tcltk/gis.m/maplabels.tcl:135
-#: ../gui/tcltk/gis.m/maptext.tcl:80
+#: ../gui/tcltk/gis.m/maplabels.tcl:135 ../gui/tcltk/gis.m/maptext.tcl:80
 msgid "Select label font"
 msgstr "Pilih label jenis huruf"
 
@@ -3974,12 +3713,14 @@ msgstr "famil:"
 msgid "size:"
 msgstr "ukuran:"
 
-#: ../gui/tcltk/gis.m/maplabels.tcl:272
-#: ../gui/tcltk/gis.m/maptext.tcl:184
-#: ../gui/tcltk/gis.m/dtext.tcl:228
-#: ../gui/tcltk/d.m/fttext.tcl:149
+#: ../gui/tcltk/gis.m/maplabels.tcl:272 ../gui/tcltk/gis.m/maptext.tcl:184
+#: ../gui/tcltk/gis.m/dtext.tcl:228 ../gui/tcltk/d.m/fttext.tcl:149
 msgid "  color"
 msgstr "  warna"
+
+#: ../gui/tcltk/gis.m/maplabels.tcl:326
+msgid "Could not open labels file "
+msgstr ""
 
 #: ../gui/tcltk/gis.m/raster.tcl:127
 msgid "Raster drape map"
@@ -3997,8 +3738,7 @@ msgstr "Peta dasar:\t"
 msgid "base raster map to display"
 msgstr "peta dasar yang hendak ditampilkan"
 
-#: ../gui/tcltk/gis.m/raster.tcl:186
-#: ../gui/tcltk/gis.m/raster.tcl:190
+#: ../gui/tcltk/gis.m/raster.tcl:186 ../gui/tcltk/gis.m/raster.tcl:190
 msgid "base map info"
 msgstr "info peta dasar"
 
@@ -4022,8 +3762,7 @@ msgstr "\tpeta baur:"
 msgid "raster map to drape over base map"
 msgstr "peta raster untuk dibaurkan dengan peta dasar"
 
-#: ../gui/tcltk/gis.m/raster.tcl:227
-#: ../gui/tcltk/gis.m/raster.tcl:231
+#: ../gui/tcltk/gis.m/raster.tcl:227 ../gui/tcltk/gis.m/raster.tcl:231
 msgid "drape map info"
 msgstr "info peta baur"
 
@@ -4035,12 +3774,11 @@ msgstr "\tpenyesuaian kecerahan peta baur"
 msgid "Adjust brightness of drape map"
 msgstr "Sesuaikan kecerahan dari peta baur"
 
-#: ../gui/tcltk/gis.m/raster.tcl:246
-#: ../gui/tcltk/gis.m/rgbhis.tcl:220
-#: ../gui/tcltk/d.m/raster.tcl:143
-#: ../gui/tcltk/d.m/rgbhis.tcl:147
+#: ../gui/tcltk/gis.m/raster.tcl:246 ../gui/tcltk/gis.m/rgbhis.tcl:220
+#: ../gui/tcltk/d.m/raster.tcl:143 ../gui/tcltk/d.m/rgbhis.tcl:147
 msgid "overlay maps from other layers (transparent null value cells)"
-msgstr "tumpangsusun peta dari layer lain (sel dengan nilai null akan transparan)"
+msgstr ""
+"tumpangsusun peta dari layer lain (sel dengan nilai null akan transparan)"
 
 #: ../gui/tcltk/gis.m/raster.tcl:253
 msgid " Set background color (colored null value cells)"
@@ -4056,11 +3794,11 @@ msgid "chart for %s"
 msgstr "grafik untuk %s"
 
 #: ../gui/tcltk/gis.m/chart.tcl:159
-msgid "Display pie and bar charts of attribute values at vector object locations"
+msgid ""
+"Display pie and bar charts of attribute values at vector object locations"
 msgstr "Tampilan grafik kue dan batang dari nilai atribut lokasi obyek vektor"
 
-#: ../gui/tcltk/gis.m/chart.tcl:176
-#: ../gui/tcltk/d.m/chart.tcl:91
+#: ../gui/tcltk/gis.m/chart.tcl:176 ../gui/tcltk/d.m/chart.tcl:91
 msgid "Vector map to chart:"
 msgstr "Peta vektor yang akan dibuat grafiknya:"
 
@@ -4068,31 +3806,26 @@ msgstr "Peta vektor yang akan dibuat grafiknya:"
 msgid "vector map to chart"
 msgstr "peta vektor yang akan dibuat diagram"
 
-#: ../gui/tcltk/gis.m/chart.tcl:194
-#: ../gui/tcltk/d.m/chart.tcl:106
+#: ../gui/tcltk/gis.m/chart.tcl:194 ../gui/tcltk/d.m/chart.tcl:106
 msgid "Vector type:"
 msgstr "Tipe vektor:"
 
-#: ../gui/tcltk/gis.m/chart.tcl:195
-#: ../gui/tcltk/d.m/chart.tcl:107
+#: ../gui/tcltk/gis.m/chart.tcl:195 ../gui/tcltk/d.m/chart.tcl:107
 #: ../gui/tcltk/d.m/vector.tcl:227
 msgid "points"
 msgstr "titik"
 
-#: ../gui/tcltk/gis.m/chart.tcl:197
-#: ../gui/tcltk/d.m/chart.tcl:109
+#: ../gui/tcltk/gis.m/chart.tcl:197 ../gui/tcltk/d.m/chart.tcl:109
 #: ../gui/tcltk/d.m/vector.tcl:231
 msgid "boundaries"
 msgstr "batas"
 
-#: ../gui/tcltk/gis.m/chart.tcl:198
-#: ../gui/tcltk/d.m/chart.tcl:110
+#: ../gui/tcltk/gis.m/chart.tcl:198 ../gui/tcltk/d.m/chart.tcl:110
 #: ../gui/tcltk/d.m/vector.tcl:233
 msgid "centroids"
 msgstr "Centroid"
 
-#: ../gui/tcltk/gis.m/chart.tcl:199
-#: ../gui/tcltk/d.m/chart.tcl:111
+#: ../gui/tcltk/gis.m/chart.tcl:199 ../gui/tcltk/d.m/chart.tcl:111
 #: ../gui/tcltk/d.m/vector.tcl:235
 msgid "areas"
 msgstr "area"
@@ -4125,8 +3858,7 @@ msgstr "\tkolom untuk variabel ukuran diagram"
 msgid "  scale factor"
 msgstr "  faktor skala"
 
-#: ../gui/tcltk/gis.m/chart.tcl:252
-#: ../gui/tcltk/d.m/chart.tcl:158
+#: ../gui/tcltk/gis.m/chart.tcl:252 ../gui/tcltk/d.m/chart.tcl:158
 msgid "Chart type:"
 msgstr "Tipe diagram:"
 
@@ -4154,8 +3886,7 @@ msgstr "Transparansi"
 msgid "vector map to display"
 msgstr "Peta vektor untuk ditampilkan"
 
-#: ../gui/tcltk/gis.m/vector.tcl:324
-#: ../gui/tcltk/gis.m/vector.tcl:328
+#: ../gui/tcltk/gis.m/vector.tcl:324 ../gui/tcltk/gis.m/vector.tcl:328
 msgid "Vector Info"
 msgstr "Info vektor"
 
@@ -4219,13 +3950,11 @@ msgstr "  Ukuran"
 msgid "Icon size"
 msgstr "Ukuran ikon"
 
-#: ../gui/tcltk/gis.m/vector.tcl:385
-#: ../gui/tcltk/d.m/vector.tcl:259
+#: ../gui/tcltk/gis.m/vector.tcl:385 ../gui/tcltk/d.m/vector.tcl:259
 msgid "Draw lines:"
 msgstr "Gambar garis:"
 
-#: ../gui/tcltk/gis.m/vector.tcl:388
-#: ../gui/tcltk/gis.m/vector.tcl:404
+#: ../gui/tcltk/gis.m/vector.tcl:388 ../gui/tcltk/gis.m/vector.tcl:404
 msgid "Color"
 msgstr "Warna"
 
@@ -4241,8 +3970,7 @@ msgstr "Lebar garis"
 msgid "(pixels) "
 msgstr "(piksel)"
 
-#: ../gui/tcltk/gis.m/vector.tcl:401
-#: ../gui/tcltk/d.m/vector.tcl:275
+#: ../gui/tcltk/gis.m/vector.tcl:401 ../gui/tcltk/d.m/vector.tcl:275
 msgid "Fill areas:"
 msgstr "Isi area dengan warna:"
 
@@ -4250,18 +3978,15 @@ msgstr "Isi area dengan warna:"
 msgid "Random colors "
 msgstr "Warna acak"
 
-#: ../gui/tcltk/gis.m/vector.tcl:410
-#: ../gui/tcltk/d.m/vector.tcl:284
+#: ../gui/tcltk/gis.m/vector.tcl:410 ../gui/tcltk/d.m/vector.tcl:284
 msgid "GRASSRGB column colors"
 msgstr "Kolom warna GRASSRGB"
 
-#: ../gui/tcltk/gis.m/vector.tcl:417
-#: ../gui/tcltk/d.m/vector.tcl:291
+#: ../gui/tcltk/gis.m/vector.tcl:417 ../gui/tcltk/d.m/vector.tcl:291
 msgid "Label vectors:"
 msgstr "Vektor label:"
 
-#: ../gui/tcltk/gis.m/vector.tcl:418
-#: ../gui/tcltk/d.m/vector.tcl:292
+#: ../gui/tcltk/gis.m/vector.tcl:418 ../gui/tcltk/d.m/vector.tcl:292
 msgid "label"
 msgstr "label"
 
@@ -4273,8 +3998,7 @@ msgstr " Warna teks"
 msgid "   Text size"
 msgstr "   Ukuran teks"
 
-#: ../gui/tcltk/gis.m/vector.tcl:425
-#: ../gui/tcltk/d.m/vector.tcl:299
+#: ../gui/tcltk/gis.m/vector.tcl:425 ../gui/tcltk/d.m/vector.tcl:299
 msgid "text size"
 msgstr "ukuran teks"
 
@@ -4298,8 +4022,7 @@ msgstr "   Kolom atribut untuk label"
 msgid "Query vectors for display: "
 msgstr "Kueri vektor untuk tampilan:"
 
-#: ../gui/tcltk/gis.m/vector.tcl:456
-#: ../gui/tcltk/d.m/vector.tcl:327
+#: ../gui/tcltk/gis.m/vector.tcl:456 ../gui/tcltk/d.m/vector.tcl:327
 msgid "layer for query"
 msgstr "layer untuk kueri"
 
@@ -4335,8 +4058,7 @@ msgstr "Vektor baru"
 msgid "Select existing vector for saving queried objects"
 msgstr "Pilih vektor yang ada untuk penyimpanan obyek hasil kueri"
 
-#: ../gui/tcltk/gis.m/vector.tcl:522
-#: ../gui/tcltk/d.m/vector.tcl:376
+#: ../gui/tcltk/gis.m/vector.tcl:522 ../gui/tcltk/d.m/vector.tcl:376
 msgid "Display when avg. region dimension is"
 msgstr "Tampilan dengan rerata dimensi region sebesar"
 
@@ -4344,8 +4066,7 @@ msgstr "Tampilan dengan rerata dimensi region sebesar"
 msgid " or <"
 msgstr " atau <"
 
-#: ../gui/tcltk/gis.m/cmd.tcl:115
-#: ../gui/tcltk/d.m/cmd.tcl:52
+#: ../gui/tcltk/gis.m/cmd.tcl:115 ../gui/tcltk/d.m/cmd.tcl:52
 msgid "Command:"
 msgstr "Perintah:"
 
@@ -4353,10 +4074,8 @@ msgstr "Perintah:"
 msgid "Maximum zoom-in reached"
 msgstr "Perbesaran sudah paling maksimum"
 
-#: ../gui/tcltk/gis.m/mapcanvas.tcl:593
-#: ../gui/tcltk/gis.m/mapcanvas.tcl:1136
-#: ../gui/tcltk/gis.m/mapcanvas.tcl:1189
-#: ../gui/tcltk/gis.m/georect.tcl:1576
+#: ../gui/tcltk/gis.m/mapcanvas.tcl:593 ../gui/tcltk/gis.m/mapcanvas.tcl:1220
+#: ../gui/tcltk/gis.m/georect.tcl:1587
 msgid "Error setting region"
 msgstr "Kesalahan saat pengesetan region"
 
@@ -4364,13 +4083,11 @@ msgstr "Kesalahan saat pengesetan region"
 msgid "please wait..."
 msgstr "silakang tunggu..."
 
-#: ../gui/tcltk/gis.m/mapcanvas.tcl:760
-#: ../gui/tcltk/gis.m/mapcanvas.tcl:1783
+#: ../gui/tcltk/gis.m/mapcanvas.tcl:760 ../gui/tcltk/gis.m/mapcanvas.tcl:1814
 msgid "You have to select map layer first"
 msgstr "Anda harus memilih peta terlebih dahulu"
 
-#: ../gui/tcltk/gis.m/mapcanvas.tcl:761
-#: ../gui/tcltk/gis.m/mapcanvas.tcl:1784
+#: ../gui/tcltk/gis.m/mapcanvas.tcl:761 ../gui/tcltk/gis.m/mapcanvas.tcl:1815
 msgid "No map layer selected"
 msgstr "Tidak ada layer peta yang dipilih"
 
@@ -4395,62 +4112,54 @@ msgstr ""
 "Berkas region %s sudah ada. \n"
 "Apakah Anda ingin menimpanya?"
 
-#: ../gui/tcltk/gis.m/mapcanvas.tcl:1061
-#, tcl-format
-msgid "Display: rows=%d columns=%d  resolution=%g %s"
-msgstr "Tampilan: baris=%d kolom=%d resolusi=%g %s"
-
 #: ../gui/tcltk/gis.m/mapcanvas.tcl:1064
 #, tcl-format
 msgid "Display: rows=%d cols=%d  N-S res=%g  E-W res=%g"
 msgstr "Tampilan: baris=%d kolom=%d resolusi N-S=%g resolusi E-W=%g"
 
-#: ../gui/tcltk/gis.m/mapcanvas.tcl:1214
-#: ../gui/tcltk/gis.m/georect.tcl:2018
+#: ../gui/tcltk/gis.m/mapcanvas.tcl:1136
+#, fuzzy
+msgid "Error setting region (Problem with g.region?)"
+msgstr "Perbesaran sesuai region saat ini (tentukan dengan g.region)"
+
+#: ../gui/tcltk/gis.m/mapcanvas.tcl:1183 ../gui/tcltk/gis.m/mapcanvas.tcl:1188
+#, fuzzy
+msgid "Error reading current resolution with g.region"
+msgstr "Perbesaran sesuai region saat ini (tentukan dengan g.region)"
+
+#: ../gui/tcltk/gis.m/mapcanvas.tcl:1245 ../gui/tcltk/gis.m/georect.tcl:2029
 msgid "Drag or click mouse to zoom"
 msgstr "Tarik atau klik tetikus untuk memperbesar"
 
-#: ../gui/tcltk/gis.m/mapcanvas.tcl:1216
-#: ../gui/tcltk/gis.m/georect.tcl:2020
+#: ../gui/tcltk/gis.m/mapcanvas.tcl:1247 ../gui/tcltk/gis.m/georect.tcl:2031
 msgid "Drag or click mouse to unzoom"
 msgstr "Tarik atau klik tetikus untuk memperkecil"
 
-#: ../gui/tcltk/gis.m/mapcanvas.tcl:1451
-#: ../gui/tcltk/gis.m/georect.tcl:2218
+#: ../gui/tcltk/gis.m/mapcanvas.tcl:1482 ../gui/tcltk/gis.m/georect.tcl:2229
 msgid "Drag with mouse to pan"
 msgstr "Tarik dengan tetikus untuk menggeser"
 
-#: ../gui/tcltk/gis.m/mapcanvas.tcl:1578
+#: ../gui/tcltk/gis.m/mapcanvas.tcl:1609
 msgid "Measurement"
 msgstr "Pengukuran"
 
-#: ../gui/tcltk/gis.m/mapcanvas.tcl:1597
+#: ../gui/tcltk/gis.m/mapcanvas.tcl:1628
 msgid "Draw measure line with mouse"
 msgstr "Tarik garis ukur dengan tetikus"
 
-#: ../gui/tcltk/gis.m/mapcanvas.tcl:1687
-#, tcl-format
-msgid " --segment length = %s\n"
-msgstr " --panjang segmen = %s\n"
-
-#: ../gui/tcltk/gis.m/mapcanvas.tcl:1689
-#, tcl-format
-msgid "cumulative length = %s\n"
-msgstr "panjang total = %s\n"
-
-#: ../gui/tcltk/gis.m/mapcanvas.tcl:1754
+#: ../gui/tcltk/gis.m/mapcanvas.tcl:1785
 msgid "Click to query feature"
 msgstr "Klik untuk kueri fitur"
 
-#: ../gui/tcltk/gis.m/mapcanvas.tcl:1822
+#: ../gui/tcltk/gis.m/mapcanvas.tcl:1853
 msgid "This layer type does not support queries"
 msgstr "Tipe layer ini tidak mendukung kueri "
 
-#: ../gui/tcltk/gis.m/mapcanvas.tcl:1823
+#: ../gui/tcltk/gis.m/mapcanvas.tcl:1854
 msgid "Query not supported"
 msgstr "Kueri tidak didukung"
 
-#: ../gui/tcltk/gis.m/mapcanvas.tcl:1830
+#: ../gui/tcltk/gis.m/mapcanvas.tcl:1861
 msgid "You must select a map to query\n"
 msgstr "Anda harus memilih peta untuk melakukan kueri\n"
 
@@ -4459,6 +4168,7 @@ msgid "Display scale and north arrow"
 msgstr "Tampilan skala dan arah utara"
 
 #: ../gui/tcltk/gis.m/barscale.tcl:170
+#, fuzzy, tcl-format
 msgid "Scale placement: 0-100% from top left of display"
 msgstr "Peletakan skala: 0-100% dari kiri atas tampilan"
 
@@ -4486,8 +4196,7 @@ msgstr "  jenis huruf"
 msgid "\tbackground color "
 msgstr "\twarna latar belakang"
 
-#: ../gui/tcltk/gis.m/barscale.tcl:214
-#: ../gui/tcltk/gis.m/histogram.tcl:189
+#: ../gui/tcltk/gis.m/barscale.tcl:214 ../gui/tcltk/gis.m/histogram.tcl:189
 msgid "transparent background"
 msgstr "latar belakang transparan"
 
@@ -4495,13 +4204,11 @@ msgstr "latar belakang transparan"
 msgid "display N. arrow only"
 msgstr "tampilkan arah utara saja"
 
-#: ../gui/tcltk/gis.m/barscale.tcl:224
-#: ../gui/tcltk/d.m/barscale.tcl:94
+#: ../gui/tcltk/gis.m/barscale.tcl:224 ../gui/tcltk/d.m/barscale.tcl:94
 msgid "display scale only"
 msgstr "tampilkan skala saja"
 
-#: ../gui/tcltk/gis.m/barscale.tcl:232
-#: ../gui/tcltk/d.m/barscale.tcl:103
+#: ../gui/tcltk/gis.m/barscale.tcl:232 ../gui/tcltk/d.m/barscale.tcl:103
 msgid "text on top of scale, instead of to right"
 msgstr "teks di atas skala, bukan di sebelah kanan"
 
@@ -4509,8 +4216,7 @@ msgstr "teks di atas skala, bukan di sebelah kanan"
 msgid "line scale instead of bar"
 msgstr "skala garis, bukan skala batang"
 
-#: ../gui/tcltk/gis.m/barscale.tcl:242
-#: ../gui/tcltk/d.m/barscale.tcl:110
+#: ../gui/tcltk/gis.m/barscale.tcl:242 ../gui/tcltk/d.m/barscale.tcl:110
 msgid "use feet/miles instead of meters"
 msgstr "gunakan feet/mil, bukan meter"
 
@@ -4532,26 +4238,25 @@ msgid "Raster map for blue or saturation channel"
 msgstr "Peta raster untuk kanal biru atau saturasi"
 
 #: ../gui/tcltk/gis.m/rgbhis.tcl:136
-msgid "Display 3 raster maps as Red/Green/Blue or Hue/Intensity/Saturation channels"
-msgstr "Tampilan 3 peta raster sebagai kanal Red/Green/Blue or Hue/Intensity/Saturation"
+msgid ""
+"Display 3 raster maps as Red/Green/Blue or Hue/Intensity/Saturation channels"
+msgstr ""
+"Tampilan 3 peta raster sebagai kanal Red/Green/Blue or Hue/Intensity/"
+"Saturation"
 
-#: ../gui/tcltk/gis.m/rgbhis.tcl:155
-#: ../gui/tcltk/d.m/rgbhis.tcl:128
+#: ../gui/tcltk/gis.m/rgbhis.tcl:155 ../gui/tcltk/d.m/rgbhis.tcl:128
 msgid "display maps as RGB"
 msgstr "tampilkan peta sebagai RGB"
 
-#: ../gui/tcltk/gis.m/rgbhis.tcl:160
-#: ../gui/tcltk/d.m/rgbhis.tcl:134
+#: ../gui/tcltk/gis.m/rgbhis.tcl:160 ../gui/tcltk/d.m/rgbhis.tcl:134
 msgid "Help for RGB"
 msgstr "Bantuan untuk RGB"
 
-#: ../gui/tcltk/gis.m/rgbhis.tcl:164
-#: ../gui/tcltk/d.m/rgbhis.tcl:135
+#: ../gui/tcltk/gis.m/rgbhis.tcl:164 ../gui/tcltk/d.m/rgbhis.tcl:135
 msgid "display maps as HIS"
 msgstr "tampilan peta sebagai HIS"
 
-#: ../gui/tcltk/gis.m/rgbhis.tcl:169
-#: ../gui/tcltk/d.m/rgbhis.tcl:141
+#: ../gui/tcltk/gis.m/rgbhis.tcl:169 ../gui/tcltk/d.m/rgbhis.tcl:141
 msgid "Help for HIS"
 msgstr "Bantuan untuk HIS"
 
@@ -4588,25 +4293,26 @@ msgid "Adjusts the HIS intensity channel brightness"
 msgstr "Sesuaikan kecerahan kanal intensitas HIS"
 
 #: ../gui/tcltk/gis.m/maptext.tcl:126
-msgid "Create postscript text object (for postscript eps, pdf, and print output only)"
-msgstr "Membuat obyek teks postscript (untuk eps, pdf dan output cetakan postscript saja)"
+msgid ""
+"Create postscript text object (for postscript eps, pdf, and print output "
+"only)"
+msgstr ""
+"Membuat obyek teks postscript (untuk eps, pdf dan output cetakan postscript "
+"saja)"
 
 #: ../gui/tcltk/gis.m/maptext.tcl:133
 msgid "Text to display:"
 msgstr "Teks untuk ditampilkan"
 
-#: ../gui/tcltk/gis.m/maptext.tcl:140
-#: ../gui/tcltk/gis.m/dtext.tcl:188
+#: ../gui/tcltk/gis.m/maptext.tcl:140 ../gui/tcltk/gis.m/dtext.tcl:188
 msgid "Text placement: x,y coordinates (from upper left) "
 msgstr "Peletakan teks: koordinat x,y (dari kiri atas)"
 
-#: ../gui/tcltk/gis.m/maptext.tcl:147
-#: ../gui/tcltk/gis.m/dtext.tcl:194
+#: ../gui/tcltk/gis.m/maptext.tcl:147 ../gui/tcltk/gis.m/dtext.tcl:194
 msgid "     coordinate type for text placement "
 msgstr "     tipe koordinat untuk peletakan teks"
 
-#: ../gui/tcltk/gis.m/maptext.tcl:158
-#: ../gui/tcltk/gis.m/dtext.tcl:205
+#: ../gui/tcltk/gis.m/maptext.tcl:158 ../gui/tcltk/gis.m/dtext.tcl:205
 msgid "     align text with coordinate point  "
 msgstr "     sejajarkan teks dengan titik koordinat"
 
@@ -4618,8 +4324,7 @@ msgstr "     justifikasi"
 msgid "  line width"
 msgstr "  lebar garis"
 
-#: ../gui/tcltk/gis.m/maptext.tcl:177
-#: ../gui/tcltk/d.m/fttext.tcl:144
+#: ../gui/tcltk/gis.m/maptext.tcl:177 ../gui/tcltk/d.m/fttext.tcl:144
 msgid "Font:"
 msgstr "Jenis huruf:"
 
@@ -4639,8 +4344,7 @@ msgstr "     rotasi teks (derajat)"
 msgid "Text options: font "
 msgstr "Pilihan teks: jenis huruf"
 
-#: ../gui/tcltk/gis.m/dtext.tcl:230
-#: ../gui/tcltk/d.m/fttext.tcl:151
+#: ../gui/tcltk/gis.m/dtext.tcl:230 ../gui/tcltk/d.m/fttext.tcl:151
 #: ../gui/tcltk/d.m/dtext.tcl:106
 msgid "bold text"
 msgstr "teks tebal"
@@ -4653,199 +4357,230 @@ msgstr "     tinggi teks dalam piksel"
 msgid "  line spacing"
 msgstr "  spasi "
 
-#: ../gui/tcltk/gis.m/georect.tcl:282
-msgid "There is no raster group file (REF). You must select the 'create/edit group' option to create a group file."
-msgstr "Tidak ada berkas grup raster (REF). Anda harus memilih 'create/edit group' untuk membuat sebuah berkas grup"
+#: ../gui/tcltk/gis.m/georect.tcl:285
+msgid ""
+"There is no raster group file (REF). You must select the 'create/edit group' "
+"option to create a group file."
+msgstr ""
+"Tidak ada berkas grup raster (REF). Anda harus memilih 'create/edit group' "
+"untuk membuat sebuah berkas grup"
 
-#: ../gui/tcltk/gis.m/georect.tcl:304
-msgid "There is no vector group file (VREF). You must select the 'create/edit group' option to create a group file."
-msgstr "Tidak ada berkas grup vektor (VREF). Anda harus memilih 'create/edit group' untuk membaut sebuah berkas grup."
+#: ../gui/tcltk/gis.m/georect.tcl:307
+msgid ""
+"There is no vector group file (VREF). You must select the 'create/edit "
+"group' option to create a group file."
+msgstr ""
+"Tidak ada berkas grup vektor (VREF). Anda harus memilih 'create/edit group' "
+"untuk membaut sebuah berkas grup."
 
-#: ../gui/tcltk/gis.m/georect.tcl:385
+#: ../gui/tcltk/gis.m/georect.tcl:388
 msgid "Select mapset of raster to georectify"
 msgstr "Pilih mapset raster untuk dilakukan georektifikasi"
 
-#: ../gui/tcltk/gis.m/georect.tcl:433
+#: ../gui/tcltk/gis.m/georect.tcl:436
 msgid "Create a group REF file and directory for vectors"
 msgstr "Buat sebuah berkas REF dan direktori untuk vektor"
 
-#: ../gui/tcltk/gis.m/georect.tcl:446
+#: ../gui/tcltk/gis.m/georect.tcl:449
 msgid "Create/replace vector group"
 msgstr "Buat/ganti grup vektor"
 
-#: ../gui/tcltk/gis.m/georect.tcl:472
+#: ../gui/tcltk/gis.m/georect.tcl:475
 msgid "group name"
 msgstr "nama grup"
 
-#: ../gui/tcltk/gis.m/georect.tcl:474
+#: ../gui/tcltk/gis.m/georect.tcl:477
 msgid "Select existing vector group or name new group"
 msgstr "Pilih grup vektor yang ada atau beri nama dengan grup baru"
 
-#: ../gui/tcltk/gis.m/georect.tcl:484
+#: ../gui/tcltk/gis.m/georect.tcl:487
 msgid "vector"
 msgstr "vektor"
 
-#: ../gui/tcltk/gis.m/georect.tcl:486
+#: ../gui/tcltk/gis.m/georect.tcl:489
 msgid "Select xy vector(s) for group"
 msgstr "Pilih vektor xy untuk grup"
 
-#: ../gui/tcltk/gis.m/georect.tcl:496
+#: ../gui/tcltk/gis.m/georect.tcl:499
 msgid "Vector group"
 msgstr "Grup vektor"
 
-#: ../gui/tcltk/gis.m/georect.tcl:613
+#: ../gui/tcltk/gis.m/georect.tcl:616
 msgid "GRASS Georectifier"
 msgstr "GRASS Georectifier"
 
-#: ../gui/tcltk/gis.m/georect.tcl:624
+#: ../gui/tcltk/gis.m/georect.tcl:627
 msgid "Set up environment for georectifying rasters or vectors"
 msgstr "Pengesetan lingkungan untuk georektifikasi raster atau vektor"
 
-#: ../gui/tcltk/gis.m/georect.tcl:633
+#: ../gui/tcltk/gis.m/georect.tcl:636
 msgid "Georeference raster"
 msgstr "Georeferensi raster"
 
-#: ../gui/tcltk/gis.m/georect.tcl:637
+#: ../gui/tcltk/gis.m/georect.tcl:640
 msgid "Georeference vector"
 msgstr "Georeferensi vektor"
 
-#: ../gui/tcltk/gis.m/georect.tcl:644
+#: ../gui/tcltk/gis.m/georect.tcl:647
 msgid "1. Select mapset"
 msgstr "1. Pilih mapset"
 
-#: ../gui/tcltk/gis.m/georect.tcl:646
+#: ../gui/tcltk/gis.m/georect.tcl:649
 msgid "Mapset of xy raster group"
 msgstr "Mapset dari grup raster xy"
 
-#: ../gui/tcltk/gis.m/georect.tcl:656
+#: ../gui/tcltk/gis.m/georect.tcl:659
 msgid "2. Create/edit group"
 msgstr "2. Create/edit group"
 
-#: ../gui/tcltk/gis.m/georect.tcl:658
+#: ../gui/tcltk/gis.m/georect.tcl:661
 msgid "Create/edit group (rasters or vectors to georectify)"
 msgstr "Create/edit group (raster atau vektor yang akan dikoreksi geometrik)"
 
-#: ../gui/tcltk/gis.m/georect.tcl:666
+#: ../gui/tcltk/gis.m/georect.tcl:669
 msgid "3. Select group"
 msgstr "3. Pilih grup"
 
-#: ../gui/tcltk/gis.m/georect.tcl:668
+#: ../gui/tcltk/gis.m/georect.tcl:671
 msgid "Select existing group to georectify"
 msgstr "Pilih grup yang ada untuk dikoreksi geometrik"
 
-#: ../gui/tcltk/gis.m/georect.tcl:678
+#: ../gui/tcltk/gis.m/georect.tcl:681
 msgid "4. Select map"
 msgstr "4. Pilih peta"
 
-#: ../gui/tcltk/gis.m/georect.tcl:680
-msgid "Select non-georectified raster or vector to display for marking ground control points"
+#: ../gui/tcltk/gis.m/georect.tcl:683
+msgid ""
+"Select non-georectified raster or vector to display for marking ground "
+"control points"
 msgstr "Pilih raster non-georektifikasi yang ditampilkan untuk penandaan GCP "
 
-#: ../gui/tcltk/gis.m/georect.tcl:690
+#: ../gui/tcltk/gis.m/georect.tcl:693
 msgid "5. Start georectifying"
 msgstr "5. Mulai georektifikasi"
 
-#: ../gui/tcltk/gis.m/georect.tcl:692
+#: ../gui/tcltk/gis.m/georect.tcl:695
 msgid "Start georectifying"
 msgstr "Mulai georektifikasi"
 
-#: ../gui/tcltk/gis.m/georect.tcl:702
+#: ../gui/tcltk/gis.m/georect.tcl:705
 msgid "Cancel georectification"
 msgstr "Batalkan georektifikasi"
 
-#: ../gui/tcltk/gis.m/georect.tcl:799
+#: ../gui/tcltk/gis.m/georect.tcl:802
 msgid "Displaying xy map to be georectified"
 msgstr "Tampilkan peta xy untuk dikoreksi geometrik"
 
-#: ../gui/tcltk/gis.m/georect.tcl:1006
+#: ../gui/tcltk/gis.m/georect.tcl:1010
 msgid "Select rectification method for rasters"
 msgstr "Pilih metoda rektifikasi untuk raster"
 
-#: ../gui/tcltk/gis.m/georect.tcl:1009
+#: ../gui/tcltk/gis.m/georect.tcl:1013
 msgid "1st order"
 msgstr "Orde 1"
 
-#: ../gui/tcltk/gis.m/georect.tcl:1010
+#: ../gui/tcltk/gis.m/georect.tcl:1014
 msgid "affine transformation  (rasters & vectors). Requires 3+ GCPs."
 msgstr "transformasi affine (raster & vektor). Membutuhkan lebih dari 3 GCP"
 
-#: ../gui/tcltk/gis.m/georect.tcl:1015
+#: ../gui/tcltk/gis.m/georect.tcl:1019
 msgid "2nd order"
 msgstr "Orde 2"
 
-#: ../gui/tcltk/gis.m/georect.tcl:1016
-msgid "polynomial transformation  (rasters only). Requires 6+ GCPs."
-msgstr "transformasi polinomial (hanya untuk raster). Membutuhkan lebih dari 6 GCP"
-
 #: ../gui/tcltk/gis.m/georect.tcl:1020
+#, fuzzy
+msgid "polynomial transformation  (rasters only). Requires 7+ GCPs."
+msgstr ""
+"transformasi polinomial (hanya untuk raster). Membutuhkan lebih dari 6 GCP"
+
+#: ../gui/tcltk/gis.m/georect.tcl:1024
 msgid "3rd order"
 msgstr "Orde 3"
 
-#: ../gui/tcltk/gis.m/georect.tcl:1021
+#: ../gui/tcltk/gis.m/georect.tcl:1025
 msgid "polynomial transformation  (rasters only). Requires 10+ GCPs."
-msgstr "transformasi polinomial (hanya untuk raster). Membutuhkan lebih dari 10 GCP"
+msgstr ""
+"transformasi polinomial (hanya untuk raster). Membutuhkan lebih dari 10 GCP"
 
 #: ../gui/tcltk/gis.m/georect.tcl:1028
+msgid "Clip map/image to target region"
+msgstr ""
+
+#: ../gui/tcltk/gis.m/georect.tcl:1038
 msgid "Use"
 msgstr "Gunakan"
 
-#: ../gui/tcltk/gis.m/georect.tcl:1030
+#: ../gui/tcltk/gis.m/georect.tcl:1040
 msgid "xy coordinates"
 msgstr "koordinat xy"
 
-#: ../gui/tcltk/gis.m/georect.tcl:1032
+#: ../gui/tcltk/gis.m/georect.tcl:1042
 msgid "geographic coordinates"
 msgstr "koordinat geografis"
 
-#: ../gui/tcltk/gis.m/georect.tcl:1034
+#: ../gui/tcltk/gis.m/georect.tcl:1044
 msgid "forward error"
 msgstr "kesalahan forward"
 
-#: ../gui/tcltk/gis.m/georect.tcl:1036
+#: ../gui/tcltk/gis.m/georect.tcl:1046
 msgid "backward error"
 msgstr "kesalahan backward"
 
-#: ../gui/tcltk/gis.m/georect.tcl:1077
+#: ../gui/tcltk/gis.m/georect.tcl:1087
 msgid "Manage ground control points (GCPs)"
 msgstr "Kelola GCP"
 
-#: ../gui/tcltk/gis.m/georect.tcl:1102
+#: ../gui/tcltk/gis.m/georect.tcl:1112
 msgid "Save GCPs to POINTS file"
 msgstr "Simpan GCP ke dalam berkas POINTS"
 
-#: ../gui/tcltk/gis.m/georect.tcl:1109
+#: ../gui/tcltk/gis.m/georect.tcl:1119
 msgid "Clear all unchecked GCP entries"
 msgstr "Hapus semua masukan GCP yang tidak dipilih"
 
-#: ../gui/tcltk/gis.m/georect.tcl:1116
+#: ../gui/tcltk/gis.m/georect.tcl:1126
 msgid "Calculate RMS error"
 msgstr "Hitung kesalahan RMS"
 
-#: ../gui/tcltk/gis.m/georect.tcl:1123
+#: ../gui/tcltk/gis.m/georect.tcl:1133
 msgid "Rectify maps in group"
 msgstr "Rektifikasi peta dalam grup"
 
-#: ../gui/tcltk/gis.m/georect.tcl:1126
+#: ../gui/tcltk/gis.m/georect.tcl:1136
 msgid "Quit"
 msgstr "Keluar"
 
-#: ../gui/tcltk/gis.m/georect.tcl:1130
+#: ../gui/tcltk/gis.m/georect.tcl:1140
 msgid "Exit georectifier"
 msgstr "Keluar georectifier"
 
-#: ../gui/tcltk/gis.m/georect.tcl:1313
-msgid "There is no POINTS file of ground control points for group. You must create ground control points before georectifying map."
-msgstr "Tidak ada berkas POINT GCP untuk grup. Anda harus membuat GCP sebelum melakukan georektifikasi peta."
+#: ../gui/tcltk/gis.m/georect.tcl:1323
+msgid ""
+"There is no POINTS file of ground control points for group. You must create "
+"ground control points before georectifying map."
+msgstr ""
+"Tidak ada berkas POINT GCP untuk grup. Anda harus membuat GCP sebelum "
+"melakukan georektifikasi peta."
 
-#: ../gui/tcltk/gis.m/georect.tcl:1343
-msgid "Insufficient ground control points for georectification method. You need at least 3 points for 1st order, 6 points for 2nd order and 10 points for 3rd order."
-msgstr "GCP tidak cukup untuk metoda georektifikasi yang dipilih. Anda membutuhkan paling tidak 3 titik untuk Orde 1, 6 titik untuk Orde 2 dan 10 titik untuk Orde 3."
+#: ../gui/tcltk/gis.m/georect.tcl:1353
+msgid ""
+"Insufficient ground control points for georectification method. You need at "
+"least 3 points for 1st order, 6 points for 2nd order and 10 points for 3rd "
+"order."
+msgstr ""
+"GCP tidak cukup untuk metoda georektifikasi yang dipilih. Anda membutuhkan "
+"paling tidak 3 titik untuk Orde 1, 6 titik untuk Orde 2 dan 10 titik untuk "
+"Orde 3."
 
-#: ../gui/tcltk/gis.m/georect.tcl:1373
-msgid "No valid ground control points in GCP file. You must create valid ground control points before georectifying map."
-msgstr "Tidak ada berkas GCP yang valid. Anda harus membuat titik GCP yang valid sebelum melakukan koreksi georektifikasi peta."
+#: ../gui/tcltk/gis.m/georect.tcl:1384
+msgid ""
+"No valid ground control points in GCP file. You must create valid ground "
+"control points before georectifying map."
+msgstr ""
+"Tidak ada berkas GCP yang valid. Anda harus membuat titik GCP yang valid "
+"sebelum melakukan koreksi georektifikasi peta."
 
-#: ../gui/tcltk/gis.m/georect.tcl:1585
+#: ../gui/tcltk/gis.m/georect.tcl:1596
 msgid "Please wait..."
 msgstr "Silakan tunggu..."
 
@@ -4910,49 +4645,6 @@ msgstr "termasuk nilai null"
 msgid "r.info error"
 msgstr "kesalahan r.info"
 
-#: ../gui/tcltk/gis.m/gmlib.tcl:79
-#: ../gui/tcltk/gis.m/gmlib.tcl:108
-msgid "Map Resource File"
-msgstr "Berkas resource peta"
-
-#: ../gui/tcltk/gis.m/gmlib.tcl:80
-#: ../gui/tcltk/gis.m/gmlib.tcl:110
-msgid "All Files"
-msgstr "Semua berkas"
-
-#: ../gui/tcltk/gis.m/gmlib.tcl:84
-msgid "Open File"
-msgstr "Buka berkas"
-
-#: ../gui/tcltk/gis.m/gmlib.tcl:109
-msgid "DM Resource File"
-msgstr "Berkas resource DM"
-
-#: ../gui/tcltk/d.m/thematic.tcl:156
-#: ../gui/tcltk/d.m/vector.tcl:354
-msgid "     show data"
-msgstr "    tampilkan data"
-
-#: ../gui/tcltk/d.m/thematic.tcl:230
-msgid "Graduate colors: preset color schemes"
-msgstr "Warna gradasi: set-ulang skema warna"
-
-#: ../gui/tcltk/d.m/thematic.tcl:258
-msgid "create graphic legend"
-msgstr "buat legenda grafis"
-
-#: ../gui/tcltk/d.m/thematic.tcl:267
-msgid "    select monitor for legend"
-msgstr "   pilih monitor untuk legenda"
-
-#: ../gui/tcltk/d.m/labels.tcl:65
-msgid "Labels name:"
-msgstr "Nama label:"
-
-#: ../gui/tcltk/d.m/frames.tcl:64
-msgid "remove all frames"
-msgstr "hapus semua frame"
-
 #: ../gui/tcltk/d.m/monitorsel.tcl:33
 msgid "x0"
 msgstr "x0"
@@ -5009,6 +4701,30 @@ msgstr "x6"
 msgid "Start/select display monitor x6"
 msgstr "Mulai/pilih monitor display x6"
 
+#: ../gui/tcltk/d.m/thematic.tcl:156 ../gui/tcltk/d.m/vector.tcl:354
+msgid "     show data"
+msgstr "    tampilkan data"
+
+#: ../gui/tcltk/d.m/thematic.tcl:230
+msgid "Graduate colors: preset color schemes"
+msgstr "Warna gradasi: set-ulang skema warna"
+
+#: ../gui/tcltk/d.m/thematic.tcl:258
+msgid "create graphic legend"
+msgstr "buat legenda grafis"
+
+#: ../gui/tcltk/d.m/thematic.tcl:267
+msgid "    select monitor for legend"
+msgstr "   pilih monitor untuk legenda"
+
+#: ../gui/tcltk/d.m/labels.tcl:65
+msgid "Labels name:"
+msgstr "Nama label:"
+
+#: ../gui/tcltk/d.m/frames.tcl:64
+msgid "remove all frames"
+msgstr "hapus semua frame"
+
 #: ../gui/tcltk/d.m/gridline.tcl:78
 msgid "geodetic grid"
 msgstr "grid geodetik"
@@ -5049,8 +4765,7 @@ msgstr "Tampilan legenda dalam monitor:"
 msgid " erase monitor before drawing legend"
 msgstr " bersihkan monitor sebelum menggambar legenda"
 
-#: ../gui/tcltk/d.m/legend.tcl:106
-#: ../gui/tcltk/d.m/barscale.tcl:67
+#: ../gui/tcltk/d.m/legend.tcl:106 ../gui/tcltk/d.m/barscale.tcl:67
 msgid "Text color: "
 msgstr "Warna teks:"
 
@@ -5074,8 +4789,7 @@ msgstr "gambar gradasi yang halus"
 msgid "flip legend"
 msgstr "balikkan legenda"
 
-#: ../gui/tcltk/d.m/legend.tcl:185
-#: ../gui/tcltk/d.m/barscale.tcl:118
+#: ../gui/tcltk/d.m/legend.tcl:185 ../gui/tcltk/d.m/barscale.tcl:118
 msgid "place with mouse (cannot save placement with group)"
 msgstr "letakkan dengan tetikus (tidak dapat menyimpan penempatan dalam grup)"
 
@@ -5087,8 +4801,7 @@ msgstr "Nama raster:"
 msgid "show legend in selected display monitor"
 msgstr "tampilkan legenda dalam monitor display yang dipilih"
 
-#: ../gui/tcltk/d.m/raster.tcl:111
-#: ../gui/tcltk/d.m/raster.tcl:136
+#: ../gui/tcltk/d.m/raster.tcl:111 ../gui/tcltk/d.m/raster.tcl:136
 msgid " thin legend by "
 msgstr " legenda tipis oleh"
 
@@ -5132,13 +4845,11 @@ msgstr "Berkas biner (termasuk format GTOPO30)"
 msgid "ESRI Arc/Info ASCII grid"
 msgstr "ESRI Arc/Info ASCII grid"
 
-#: ../gui/tcltk/d.m/menu.tcl:86
-#: ../gui/tcltk/d.m/menu.tcl:120
+#: ../gui/tcltk/d.m/menu.tcl:86 ../gui/tcltk/d.m/menu.tcl:120
 msgid "GRIDATB.FOR map file (TOPMODEL)"
 msgstr "Berkas peta GRIDATB.FOR (TOPMODEL)"
 
-#: ../gui/tcltk/d.m/menu.tcl:87
-#: ../gui/tcltk/d.m/menu.tcl:121
+#: ../gui/tcltk/d.m/menu.tcl:87 ../gui/tcltk/d.m/menu.tcl:121
 msgid "MAT-File (v.4) array (Matlab or Octave)"
 msgstr "MAT-File (v.4) array (Matlab atau Octave)"
 
@@ -5190,18 +4901,15 @@ msgstr "Berkas GEOnet Name server country  (US-NGA GNS)"
 msgid "Matlab and MapGen files"
 msgstr "Berkas Matlab dan MapGen"
 
-#: ../gui/tcltk/d.m/menu.tcl:107
-#: ../gui/tcltk/d.m/menu.tcl:142
+#: ../gui/tcltk/d.m/menu.tcl:107 ../gui/tcltk/d.m/menu.tcl:142
 msgid "Grid 3D"
 msgstr "Grid 3D"
 
-#: ../gui/tcltk/d.m/menu.tcl:108
-#: ../gui/tcltk/d.m/menu.tcl:143
+#: ../gui/tcltk/d.m/menu.tcl:108 ../gui/tcltk/d.m/menu.tcl:143
 msgid "ASCII 3D file"
 msgstr "Berkas 3D ASCII"
 
-#: ../gui/tcltk/d.m/menu.tcl:109
-#: ../gui/tcltk/d.m/menu.tcl:144
+#: ../gui/tcltk/d.m/menu.tcl:109 ../gui/tcltk/d.m/menu.tcl:144
 msgid "Vis5D file"
 msgstr "Berkas Vis5D"
 
@@ -5253,8 +4961,7 @@ msgstr "Citra TIFF (8/24bit)"
 msgid "VRML file"
 msgstr "Berkas VRML"
 
-#: ../gui/tcltk/d.m/menu.tcl:132
-#: ../gui/tcltk/d.m/menu.tcl:140
+#: ../gui/tcltk/d.m/menu.tcl:132 ../gui/tcltk/d.m/menu.tcl:140
 #: ../gui/tcltk/d.m/menu.tcl:145
 msgid "VTK ASCII file"
 msgstr "Berkas VTK ASCII"
@@ -5365,7 +5072,9 @@ msgstr "Simpan display ke dalam berkas citra"
 
 #: ../gui/tcltk/d.m/menu.tcl:178
 msgid "XWD (Save display, selected with mouse, to map.xwd in home directory )"
-msgstr "XWD (Simpan tampilan, dipilih dengan tetikus, ke map.xwd dalam direktori home)"
+msgstr ""
+"XWD (Simpan tampilan, dipilih dengan tetikus, ke map.xwd dalam direktori "
+"home)"
 
 #: ../gui/tcltk/d.m/menu.tcl:179
 msgid "Save displays to multiple graphic file formats"
@@ -5397,7 +5106,8 @@ msgstr "Akses mapset yang lain dalam location saat ini"
 
 #: ../gui/tcltk/d.m/menu.tcl:194
 msgid "Change current working session to new mapset, location, or GISDBASE"
-msgstr "Ubah sesi kerja saat ini ke dalam mapset, location atau GISDBASE yang baru"
+msgstr ""
+"Ubah sesi kerja saat ini ke dalam mapset, location atau GISDBASE yang baru"
 
 #: ../gui/tcltk/d.m/menu.tcl:195
 msgid "Modify access by other users to current mapset"
@@ -5524,8 +5234,12 @@ msgid "Create color image from RGB files"
 msgstr "Hasilkan citra warna dari berkas RGB"
 
 #: ../gui/tcltk/d.m/menu.tcl:246
-msgid "Create 3 RGB (red, green, blue) maps from 3 HIS (hue, intensity, saturation) maps"
-msgstr "Hasilkan 3 peta RGB (merah, hijau, biru) dari 3 peta HIS (hue, intensitas, saturasi)"
+msgid ""
+"Create 3 RGB (red, green, blue) maps from 3 HIS (hue, intensity, saturation) "
+"maps"
+msgstr ""
+"Hasilkan 3 peta RGB (merah, hijau, biru) dari 3 peta HIS (hue, intensitas, "
+"saturasi)"
 
 #: ../gui/tcltk/d.m/menu.tcl:251
 msgid "Create raster buffers"
@@ -5593,7 +5307,8 @@ msgstr "Fitur linear thin"
 
 #: ../gui/tcltk/d.m/menu.tcl:288
 msgid "Carve stream channels into elevation map using vector streams map"
-msgstr "'Carve' kanal sungai ke dalam peta elevasi menggunakan peta sungai vektor"
+msgstr ""
+"'Carve' kanal sungai ke dalam peta elevasi menggunakan peta sungai vektor"
 
 #: ../gui/tcltk/d.m/menu.tcl:289
 msgid "Depressionless elevation map and flowline map"
@@ -5641,7 +5356,8 @@ msgstr "Simulasikan fenoma penyebaran anisotropik"
 
 #: ../gui/tcltk/d.m/menu.tcl:315
 msgid "Edit category values of individual cells for displayed raster map"
-msgstr "Edit nilai kategori dari sel individu untuk peta raster yang ditampilkan"
+msgstr ""
+"Edit nilai kategori dari sel individu untuk peta raster yang ditampilkan"
 
 #: ../gui/tcltk/d.m/menu.tcl:318
 msgid "Reclassify categories for areas of specified sizes"
@@ -5736,7 +5452,8 @@ msgid "Fill NULL cells by interpolation using regularized spline tension"
 msgstr "Isi sel NULL dengan interpolasi menggunakan RST"
 
 #: ../gui/tcltk/d.m/menu.tcl:356
-msgid "Report category labels and values"
+#, fuzzy
+msgid "Manage category labels and values"
 msgstr "Laporan kategori label dan nilai"
 
 #: ../gui/tcltk/d.m/menu.tcl:359
@@ -5856,12 +5573,20 @@ msgid "Create stationing from imput lines, and linear reference system"
 msgstr "Buat stationing dari garis input dan sistem referensi linear"
 
 #: ../gui/tcltk/d.m/menu.tcl:410
-msgid "Create points/segments from input lines, linear reference system and positions read from stdin"
-msgstr "Buat titik/segmen dari garis input, sistem referensi linear dan posisi yang dibaca dari stdin"
+msgid ""
+"Create points/segments from input lines, linear reference system and "
+"positions read from stdin"
+msgstr ""
+"Buat titik/segmen dari garis input, sistem referensi linear dan posisi yang "
+"dibaca dari stdin"
 
 #: ../gui/tcltk/d.m/menu.tcl:411
-msgid "Find line id and real km+offset for given points in vector map using linear reference system"
-msgstr "Cari identitas garis dan km+offset sebenarnya untuk titik tertentu dalam peta vektor dengan menggunakan sistem referensi linear"
+msgid ""
+"Find line id and real km+offset for given points in vector map using linear "
+"reference system"
+msgstr ""
+"Cari identitas garis dan km+offset sebenarnya untuk titik tertentu dalam "
+"peta vektor dengan menggunakan sistem referensi linear"
 
 #: ../gui/tcltk/d.m/menu.tcl:414
 msgid "Locate nearest features to points or centroids"
@@ -5937,7 +5662,9 @@ msgstr "Sampel peta raster"
 
 #: ../gui/tcltk/d.m/menu.tcl:451
 msgid "Calculate statistics for raster map overlain by vector map"
-msgstr "Menghitung statistik untuk peta raster yang ditumpangsusunkan oleh peta vektor"
+msgstr ""
+"Menghitung statistik untuk peta raster yang ditumpangsusunkan oleh peta "
+"vektor"
 
 #: ../gui/tcltk/d.m/menu.tcl:455
 msgid "Partition points into test/training sets for k-fold cross validatation"
@@ -5953,7 +5680,8 @@ msgstr "Membuka atribut vektor ke dalam basis data atau membuat laporan"
 
 #: ../gui/tcltk/d.m/menu.tcl:462
 msgid "Report areas for vector attribute categories"
-msgstr "Laporan untuk area yang didefinisikan oleh kategori atribut dari vektor"
+msgstr ""
+"Laporan untuk area yang didefinisikan oleh kategori atribut dari vektor"
 
 #: ../gui/tcltk/d.m/menu.tcl:465
 msgid "Test normality of point distribution"
@@ -5980,16 +5708,24 @@ msgid "Mosaic up to 4 adjacent images"
 msgstr "Mosaik hingga 4 citra yang berdekatan"
 
 #: ../gui/tcltk/d.m/menu.tcl:478
-msgid "Color balance and enhance color tables of multiband imagery for rgb display"
-msgstr "Atur warna dan perbaiki tabel warna dari citra multiband untuk tampilan RGB"
+msgid ""
+"Color balance and enhance color tables of multiband imagery for rgb display"
+msgstr ""
+"Atur warna dan perbaiki tabel warna dari citra multiband untuk tampilan RGB"
 
 #: ../gui/tcltk/d.m/menu.tcl:479
-msgid "Transform HIS (Hue/Intensity/Saturation) color image to RGB (Red/Green/Blue)"
-msgstr "Transformasi warna citra HIS (Hue/Intensitas/Saturasi) ke RGB (Red/Green/Blue)"
+msgid ""
+"Transform HIS (Hue/Intensity/Saturation) color image to RGB (Red/Green/Blue)"
+msgstr ""
+"Transformasi warna citra HIS (Hue/Intensitas/Saturasi) ke RGB (Red/Green/"
+"Blue)"
 
 #: ../gui/tcltk/d.m/menu.tcl:480
-msgid "Transform RGB (Red/Green/Blue) color image to HIS (Hue/Intensity/Saturation)"
-msgstr "Transformasi warna citra RGB (Red/Green/Blue) ke HIS (Hue/Intensitas/Saturasi)"
+msgid ""
+"Transform RGB (Red/Green/Blue) color image to HIS (Hue/Intensity/Saturation)"
+msgstr ""
+"Transformasi warna citra RGB (Red/Green/Blue) ke HIS (Hue/Intensitas/"
+"Saturasi)"
 
 #: ../gui/tcltk/d.m/menu.tcl:482
 msgid "Rectify and georeference image group"
@@ -6001,7 +5737,9 @@ msgstr "Set GCP dari peta raster atau input kibor"
 
 #: ../gui/tcltk/d.m/menu.tcl:485
 msgid "Set ground control points (GCP's) from vector map or keyboard entry"
-msgstr "Tentukan Titik Kontrol Tanah (GCP) dari peta vektor atau memasukkannya secara manual lewat kibor"
+msgstr ""
+"Tentukan Titik Kontrol Tanah (GCP) dari peta vektor atau memasukkannya "
+"secara manual lewat kibor"
 
 #: ../gui/tcltk/d.m/menu.tcl:487
 msgid "Affine and Polynomial rectification (rubber sheet)"
@@ -6113,7 +5851,8 @@ msgstr "blue (RGB) atau saturasi (HIS)"
 
 #: ../gui/tcltk/d.m/fttext.tcl:102
 msgid "     (leave blank to place with mouse; position will not save)"
-msgstr "   (gunakan tetikus untuk membiarkannya kosong; posisi tidak akan disimpan"
+msgstr ""
+"   (gunakan tetikus untuk membiarkannya kosong; posisi tidak akan disimpan"
 
 #: ../gui/tcltk/d.m/fttext.tcl:108
 msgid "     coordinate type"
@@ -6125,8 +5864,12 @@ msgstr "  sejajarkan teks dengan titik koordinat"
 
 #: ../gui/tcltk/d.m/fttext.tcl:120
 #, tcl-format
-msgid "     (for coordinates, % is from bottom left of display, pixels from top left)"
-msgstr "    (untuk koordinat, % dimulai dari kiri bawah display, piksel dari kiri atas)"
+msgid ""
+"     (for coordinates, % is from bottom left of display, pixels from top "
+"left)"
+msgstr ""
+"    (untuk koordinat, % dimulai dari kiri bawah display, piksel dari kiri "
+"atas)"
 
 #: ../gui/tcltk/d.m/fttext.tcl:126
 msgid "     text rotation (degrees counterclockwise)"
@@ -6236,8 +5979,7 @@ msgstr "            "
 msgid "faces"
 msgstr "permukaan"
 
-#: ../gui/tcltk/d.m/vector.tcl:262
-#: ../gui/tcltk/d.m/vector.tcl:278
+#: ../gui/tcltk/d.m/vector.tcl:262 ../gui/tcltk/d.m/vector.tcl:278
 #: ../gui/tcltk/d.m/vector.tcl:294
 msgid "color"
 msgstr "warna"
@@ -6386,6 +6128,29 @@ msgstr "Pratayang"
 msgid "Test"
 msgstr "Tes"
 
+#~ msgid "WARNING: Error creating new location"
+#~ msgstr "PERINGATAN: Ada kesalahan saat membuat location baru"
+
+#~ msgid ""
+#~ "Error creating new location from georeferenced file.  g.proj returned "
+#~ "following message:\n"
+#~ "\n"
+#~ "%s"
+#~ msgstr ""
+#~ "Ada kesalahan saat membuka location baru dari berkas bergeoreferensi. g."
+#~ "proj memberikan pesan kesalahan berikut: \n"
+#~ "\n"
+#~ "%s"
+
+#~ msgid "Display: rows=%d columns=%d  resolution=%g %s"
+#~ msgstr "Tampilan: baris=%d kolom=%d resolusi=%g %s"
+
+#~ msgid " --segment length = %s\n"
+#~ msgstr " --panjang segmen = %s\n"
+
+#~ msgid "cumulative length = %s\n"
+#~ msgstr "panjang total = %s\n"
+
 #, fuzzy
 #~ msgid "Convert vector lines to points"
 #~ msgstr "vektors"
@@ -6406,4 +6171,3 @@ msgstr "Tes"
 #~ "by GDAL (raster) or OGR (vector)\n"
 #~ "\n"
 #~ msgstr "vektors"
-
