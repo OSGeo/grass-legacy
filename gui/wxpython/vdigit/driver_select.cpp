@@ -1,5 +1,5 @@
 /**
-   \file driver_selected.cpp
+   \file driver_select.cpp
    
    \brief Experimental C++ wxWidgets display driver
 
