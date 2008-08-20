@@ -30,7 +30,7 @@ if ! grep -i '<html>' ${PGM}.tmp.html > /dev/null ; then
 	<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 	<html>
 	<head>
-	<title>GRASS GIS: ${PGM}</title>
+	<title>GRASS GIS Manual: ${PGM}</title>
 	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 	<link rel="stylesheet" href="grassdocs.css" type="text/css">
 	</head>
