@@ -1223,7 +1223,7 @@ class Data:
                                 (_("Convert object types"),
                                  _("Change the type of geometry elements."),
                                  "self.OnMenuCmd",
-                                 "v.type.py"),
+                                 "v.type.sh"),
                                 ("","","", ""),
 
                                 (_("Add centroids"),
