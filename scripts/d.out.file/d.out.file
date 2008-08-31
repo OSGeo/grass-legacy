@@ -315,7 +315,13 @@ fi
 
 ################################
 #export display to PNG/PS driver
-dsave=`d.save -a`
+
+if [ "$GIS_FLAG_T" -eq 1 ] ; then
+   # skip flood filling of background
+   dsave=`d.save -a | grep -v '^d.erase'`
+else
+   dsave=`d.save -a`
+fi
 
 d.mon start=$GRAPHICS_DRIVER --quiet
 eval "$dsave"
