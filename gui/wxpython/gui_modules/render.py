@@ -205,7 +205,7 @@ class Layer(object):
                 cmdStr = ''
                 for cmd in self.cmdlist:
                     cmdStr += ' '.join(cmd) + ';'
-                return cmdStr
+                return cmdStr.rstrip(';')
             else:
                 return ' '.join(self.cmdlist)
         else:
@@ -1030,7 +1030,7 @@ class Map(object):
         """
 
         Debug.msg (3, "Map.ChangeLayer(): layer=%s" % layer.name)
-
+        
         if kargs.has_key('type'):
             layer.SetType(kargs['type']) # check type
         
