@@ -72,6 +72,8 @@ for i in "$@" ; do
     
     	# Check if the user asked for the version
 	-v|--version)
+	    echo "$GRASS_VERSION"
+	    echo
 	    cat "$GISBASE/etc/license"
 	    exit
 	    ;;
@@ -597,28 +599,28 @@ if [ ! "$LOCATION" ] ; then
 		    ;;
     	    esac
 	    ;;
-	
-	# Check for tcltk interface
+
+	# Check that GUI support software is functional
 	tcltk | gis.m | oldtcltk | d.m | wxpython)
 
-        if [ "$GRASS_GUI" = "tcltk" ] || \
-			[ "$GRASS_GUI" = "gis.m" ] || \
-			[ "$GRASS_GUI" = "oldtcltk" ] || \
-			[ "$GRASS_GUI" = "d.m" ] ; then
+	    if [ "$GRASS_GUI" = "tcltk" ] || \
+		[ "$GRASS_GUI" = "gis.m" ] || \
+		[ "$GRASS_GUI" = "oldtcltk" ] || \
+		[ "$GRASS_GUI" = "d.m" ] ; then
 
-			# eval `foo` will return subshell return code and not app foo return code!!!
-			eval '"$GRASS_WISH" -file "$TCLTKGRASSBASE/gis_set.tcl"'
-			thetest=$?
-		else
-			eval '"$GRASS_PYTHON" "$WXPYTHONGRASSBASE/gis_set.py"'
-			thetest=$?
-		fi
+		    # eval `foo` will return subshell return code and not app foo return code!!!
+		    eval '"$GRASS_WISH" -file "$TCLTKGRASSBASE/gis_set.tcl"'
+		    thetest=$?
+	    else
+		    eval '"$GRASS_PYTHON" "$WXPYTHONGRASSBASE/gis_set.py"'
+		    thetest=$?
+	    fi
 
 
 	    case $thetest in
      	    	1)
 
-         	    # The gis_set.tcl script printed an error message so wait
+         	    # The gis_set script printed an error message so wait
 		    # for user to read it
 		    echo "Error in GUI startup. If necessary, please"
 		    echo "report this error to the GRASS developers."
