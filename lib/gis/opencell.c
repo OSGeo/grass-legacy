@@ -159,6 +159,7 @@ int G__open_cell_old(const char *name, const char *mapset)
     RASTER_MAP_TYPE MAP_TYPE;
     struct Reclass reclass;
     const char *xmapset;
+    struct GDAL_link *gdal;
 
     /* make sure window is set    */
     G__init_window();
@@ -250,8 +251,21 @@ int G__open_cell_old(const char *name, const char *mapset)
 	MAP_NBYTES = CELL_nbytes;
     }
 
-    /* now actually open file for reading */
-    fd = G_open_old(cell_dir, r_name, r_mapset);
+    gdal = G_get_gdal_link(r_name, r_mapset);
+    if (gdal) {
+#ifdef HAVE_GDAL
+	/* dummy descriptor to reserve the fileinfo slot */
+	fd = open("/dev/null", O_RDONLY);
+#else
+	G_warning(_("map <%s@%s> is a GDAL link but GRASS is compiled without GDAL support"),
+		  r_name, r_mapset);
+	return -1;
+#endif
+    }
+    else
+	/* now actually open file for reading */
+	fd = G_open_old(cell_dir, r_name, r_mapset);
+
     if (fd < 0)
 	return -1;
 
@@ -292,11 +306,14 @@ int G__open_cell_old(const char *name, const char *mapset)
     if ((fcb->reclass_flag = reclass_flag))
 	G_copy(&fcb->reclass, &reclass, sizeof(reclass));
 
-    /* check for compressed data format, making initial reads if necessary */
-    if (G__check_format(fd) < 0) {
-	close(fd);		/* warning issued by check_format() */
-	return -1;
-    }
+    if (gdal)
+	fcb->gdal = gdal;
+    else
+	/* check for compressed data format, making initial reads if necessary */
+	if (G__check_format(fd) < 0) {
+	    close(fd);		/* warning issued by check_format() */
+	    return -1;
+	}
 
     /* create the mapping from cell file to window */
     G__create_window_mapping(fd);

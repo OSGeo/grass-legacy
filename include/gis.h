@@ -623,6 +623,8 @@ struct TimeStamp
     int count;
 };
 
+struct GDAL_link;
+
 /*============================== Prototypes ================================*/
 
 /* Since there are so many prototypes for the gis library they are stored */
