@@ -72,7 +72,7 @@ for i in "$@" ; do
     
     	# Check if the user asked for the version
 	-v|--version)
-	    echo "$GRASS_VERSION"
+	    echo "GRASS GIS $GRASS_VERSION"
 	    echo
 	    cat "$GISBASE/etc/license"
 	    exit
