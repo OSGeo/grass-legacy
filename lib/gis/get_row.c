@@ -198,11 +198,34 @@ static int read_data_uncompressed(int fd, int row, unsigned char *data_buf,
 
 /*--------------------------------------------------------------------------*/
 
+#ifdef HAVE_GDAL
+static int read_data_gdal(int fd, int row, unsigned char *data_buf, int *nbytes)
+{
+    struct fileinfo *fcb = &G__.fileinfo[fd];
+    CPLErr err;
+
+    *nbytes = fcb->nbytes;
+
+    err = GDALRasterIO(
+	fcb->gdal->band, GF_Read, 0, row, fcb->cellhd.cols, 1, data_buf,
+	fcb->cellhd.cols, 1, fcb->gdal->type, 0, 0);
+
+    return err == CE_None ? 0 : -1;
+}
+#endif
+
+/*--------------------------------------------------------------------------*/
+
 /* Actually read a row of data in */
 
 static int read_data(int fd, int row, unsigned char *data_buf, int *nbytes)
 {
     struct fileinfo *fcb = &G__.fileinfo[fd];
+
+#ifdef HAVE_GDAL
+    if (fcb->gdal)
+	return read_data_gdal(fd, row, data_buf, nbytes);
+#endif
 
     if (!fcb->cellhd.compressed)
 	return read_data_uncompressed(fd, row, data_buf, nbytes);
@@ -350,6 +373,104 @@ static void cell_values_double(int fd, const unsigned char *data,
 
 /*--------------------------------------------------------------------------*/
 
+#ifdef HAVE_GDAL
+
+/*--------------------------------------------------------------------------*/
+
+static void gdal_values_int(int fd, const unsigned char *data,
+			    const COLUMN_MAPPING *cmap, int nbytes,
+			    CELL *cell, int n)
+{
+    struct fileinfo *fcb = &G__.fileinfo[fd];
+    const unsigned char *d;
+    COLUMN_MAPPING cmapold = 0;
+    int i;
+
+    for (i = 0; i < n; i++) {
+	if (!cmap[i]) {
+	    cell[i] = 0;
+	    continue;
+	}
+
+	if (cmap[i] == cmapold) {
+	    cell[i] = cell[i-1];
+	    continue;
+	}
+
+	d = data + (cmap[i] - 1) * nbytes;
+
+	switch (fcb->gdal->type) {
+	case GDT_Byte:	    cell[i] = *(GByte   *)d;	break;
+	case GDT_Int16:	    cell[i] = *(GInt16  *)d;	break;
+	case GDT_UInt16:    cell[i] = *(GUInt16 *)d;	break;
+	case GDT_Int32:	    cell[i] = *(GInt32  *)d;	break;
+	case GDT_UInt32:    cell[i] = *(GUInt32 *)d;	break;
+	default:
+	    /* shouldn't happen */
+	    G_set_c_null_value(&cell[i], 1);
+	    break;
+	}
+
+	cmapold = cmap[i];
+    }
+}
+
+/*--------------------------------------------------------------------------*/
+
+static void gdal_values_float(int fd, const float *data,
+			      const COLUMN_MAPPING *cmap, int nbytes,
+			      FCELL *cell, int n)
+{
+    COLUMN_MAPPING cmapold = 0;
+    int i;
+
+    for (i = 0; i < n; i++) {
+	if (!cmap[i]) {
+	    cell[i] = 0;
+	    continue;
+	}
+
+	if (cmap[i] == cmapold) {
+	    cell[i] = cell[i-1];
+	    continue;
+	}
+
+	cell[i] = data[cmap[i] - 1];
+
+	cmapold = cmap[i];
+    }
+}
+
+/*--------------------------------------------------------------------------*/
+
+static void gdal_values_double(int fd, const double *data,
+			       const COLUMN_MAPPING *cmap, int nbytes,
+			       DCELL *cell, int n)
+{
+    COLUMN_MAPPING cmapold = 0;
+    int i;
+
+    for (i = 0; i < n; i++) {
+	if (!cmap[i]) {
+	    cell[i] = 0;
+	    continue;
+	}
+
+	if (cmap[i] == cmapold) {
+	    cell[i] = cell[i-1];
+	    continue;
+	}
+
+	cell[i] = data[cmap[i] - 1];
+
+	cmapold = cmap[i];
+    }
+}
+
+/*--------------------------------------------------------------------------*/
+
+#endif
+
 /*--------------------------------------------------------------------------*/
 
 /* transfer_to_cell_XY takes bytes from fcb->data, converts these bytes with
@@ -368,8 +489,19 @@ static void transfer_to_cell_XX(int fd, void *cell)
 {
     static void (*cell_values_type[3]) () = {
     cell_values_int, cell_values_float, cell_values_double};
+#ifdef HAVE_GDAL
+    static void (*gdal_values_type[3]) () = {
+    gdal_values_int, gdal_values_float, gdal_values_double};
+#endif
     struct fileinfo *fcb = &G__.fileinfo[fd];
 
+#ifdef HAVE_GDAL
+    if (fcb->gdal)
+    (gdal_values_type[fcb->map_type]) (fd, fcb->data, fcb->col_map,
+				       fcb->cur_nbytes, cell,
+				       G__.window.cols);
+    else
+#endif
     (cell_values_type[fcb->map_type]) (fd, fcb->data, fcb->col_map,
 				       fcb->cur_nbytes, cell,
 				       G__.window.cols);
@@ -998,6 +1130,29 @@ static void get_null_value_row_nomask(int fd, char *flags, int row)
 
 /*--------------------------------------------------------------------------*/
 
+#ifdef HAVE_GDAL
+
+static void get_null_value_row_gdal(int fd, char *flags, int row)
+{
+    struct fileinfo *fcb = &G__.fileinfo[fd];
+    DCELL *tmp_buf = G_allocate_d_raster_buf();
+    int i;
+
+    if (get_map_row_nomask(fd, tmp_buf, row, DCELL_TYPE) <= 0) {
+	memset(flags, 1, G__.window.cols);
+	G_free(tmp_buf);
+	return;
+    }
+
+    for (i = 0; i < G__.window.cols; i++)
+	/* note: using == won't work if the null value is NaN */
+	flags[i] = memcmp(&tmp_buf[i], &fcb->gdal->null_val, sizeof(DCELL)) == 0;
+
+    G_free(tmp_buf);
+}
+
+#endif
+
 /*--------------------------------------------------------------------------*/
 
 /*--------------------------------------------------------------------------*/
@@ -1022,6 +1177,12 @@ static void embed_mask(char *flags, int row)
 
 static void get_null_value_row(int fd, char *flags, int row, int with_mask)
 {
+#ifdef HAVE_GDAL
+    struct fileinfo *fcb = &G__.fileinfo[fd];
+    if (fcb->gdal)
+	get_null_value_row_gdal(fd, flags, row);
+    else
+#endif
     get_null_value_row_nomask(fd, flags, row);
 
     if (with_mask)
