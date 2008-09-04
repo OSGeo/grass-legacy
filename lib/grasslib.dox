@@ -91,7 +91,7 @@ from GRASS 5 Programmer's manual) or are simply undocumented.</I>
 <li>stats:      Raster stats library - \ref stats
 <li>symbol:	Drawing symbols for %point %vector data library - \ref symbol
 <li>vask:	Cursor management library - \ref vask
-<li>vector:	\ref Vector_Library (GRASS Vector and Direct Graph Library)
+<li>%vector:	\ref vectorlib (GRASS Vector and Direct Graph Library)
 <ul>
 <li>vedit: \ref Vedit_Library - %vector editing
 </ul>
