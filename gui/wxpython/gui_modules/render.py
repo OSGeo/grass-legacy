@@ -184,9 +184,9 @@ class Layer(object):
         if UserSettings.Get(group='display', key='driver', subkey='type') == 'cairo':
             gcmd.Command(['d.mon',
                           'stop=cairo'], stderr=None)
-            os.unsetenv("GRASS_CAIROFILE")
+            del os.environ["GRASS_CAIROFILE"]
         else:
-            os.unsetenv("GRASS_PNGFILE")
+            del os.environ["GRASS_PNGFILE"]
         
         self.force_render = False
         
@@ -580,7 +580,8 @@ class Map(object):
         region = {}
 
         tmpreg = os.getenv("GRASS_REGION")
-        os.unsetenv("GRASS_REGION")
+        if tmpreg:
+            del os.environ["GRASS_REGION"]
 
         # use external gisrc if defined
         gisrc_orig = os.getenv("GISRC")
@@ -665,13 +666,7 @@ class Map(object):
         # adjust region settings to match monitor
         if not windres:
             self.region = self.AdjustRegion()
-
-        #        newextents = self.AlignResolution()
-        #        self.region['n'] = newextents['n']
-        #        self.region['s'] = newextents['s']
-        #        self.region['e'] = newextents['e']
-        #        self.region['w'] = newextents['w']
-
+        
         # read values from wind file
         try:
             for key in self.wind.keys():
@@ -869,7 +864,7 @@ class Map(object):
         os.environ["GRASS_HEIGHT"] = str(self.height)
         if UserSettings.Get(group='display', key='driver', subkey='type') == 'cairo':
             os.environ["GRASS_AUTO_WRITE"] = "TRUE"
-            os.unsetenv("GRASS_RENDER_IMMEDIATE")
+            del os.environ["GRASS_RENDER_IMMEDIATE"]
         else:
             os.environ["GRASS_PNG_AUTO_WRITE"] = "TRUE"
             os.environ["GRASS_PNG_READ"] = "FALSE"
@@ -907,12 +902,11 @@ class Map(object):
 
 
         # render overlays
-
-        os.unsetenv("GRASS_REGION")
-
         if tmp_region:
             os.environ["GRASS_REGION"] = tmp_region
-
+        else:
+            del os.environ["GRASS_REGION"]
+        
         # run g.pngcomp to get composite image
         try:
             gcmd.Command(complist)
