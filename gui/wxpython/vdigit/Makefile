@@ -11,7 +11,7 @@ EXTRA_LIBS = $(VECTLIB) $(GISLIB) $(GDALLIBS) $(VEDITLIB) $(WXWIDGETSLIB) $(PYTH
 ifeq ($(findstring darwin,$(ARCH)),darwin)
 EXTRA_LIBS := -bundle -undefined dynamic_lookup $(EXTRA_LIBS)
 else
-EXTRA_LIBS := $(EXTRA_LIBS)
+EXTRA_LIBS := $(EXTRA_LIBS) -lgdi
 endif
 
 LOCAL_HEADERS = digit.h driver.h
