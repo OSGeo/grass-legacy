@@ -185,7 +185,7 @@ class Layer(object):
             gcmd.Command(['d.mon',
                           'stop=cairo'], stderr=None)
             del os.environ["GRASS_CAIROFILE"]
-        else:
+        elif os.environ.has_key("GRASS_PNGFILE")
             del os.environ["GRASS_PNGFILE"]
         
         self.force_render = False
