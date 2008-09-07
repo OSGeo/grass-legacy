@@ -2,9 +2,9 @@
 
 %module grass6_wxnviz
 %{
+#include "nviz.h"
 #include <grass/gsurf.h>
 #include <grass/gstypes.h>
-#include "nviz.h"
 %}
 
 %include "std_vector.i"
