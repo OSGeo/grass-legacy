@@ -872,7 +872,8 @@ class Map(object):
         os.environ["GRASS_HEIGHT"] = str(self.height)
         if UserSettings.Get(group='display', key='driver', subkey='type') == 'cairo':
             os.environ["GRASS_AUTO_WRITE"] = "TRUE"
-            del os.environ["GRASS_RENDER_IMMEDIATE"]
+            if os.environ.has_key("GRASS_RENDER_IMMEDIATE"):
+                del os.environ["GRASS_RENDER_IMMEDIATE"]
         else:
             os.environ["GRASS_PNG_AUTO_WRITE"] = "TRUE"
             os.environ["GRASS_PNG_READ"] = "FALSE"
