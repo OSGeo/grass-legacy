@@ -36,6 +36,7 @@ SUBDIRS = \
 	d.rhumbline \
 	d.save \
 	d.text.new \
+	d.thematic.area \
 	d.title \
 	d.vect \
 	d.vect.chart \
