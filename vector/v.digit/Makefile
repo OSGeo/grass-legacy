@@ -13,10 +13,8 @@ include $(MODULE_TOPDIR)/include/Make/Module.make
 
 AUXDIR := $(GISBASE)/etc/v.digit
 TCLFILES := $(patsubst %,$(AUXDIR)/%,$(wildcard *.tcl))
-GIFFILES := $(patsubst icons/%,$(AUXDIR)/%,$(wildcard icons/*.gif))
-XBMFILES := $(patsubst icons/%,$(AUXDIR)/%,$(wildcard icons/*.xbm))
 
-default: cmd $(TCLFILES) $(GIFFILES) $(XBMFILES)
+default: cmd $(TCLFILES)
 
 $(AUXDIR):
 	if [ ! -d $(ETC) ]; then $(MKDIR) $(ETC); fi
@@ -25,9 +23,4 @@ $(AUXDIR):
 $(AUXDIR)/%.tcl: %.tcl $(AUXDIR)
 	$(INSTALL_DATA) $< $@
 
-$(AUXDIR)/%.gif: icons/%.gif $(AUXDIR)
-	$(INSTALL_DATA) $< $@
-
-$(AUXDIR)/%.xbm: icons/%.xbm $(AUXDIR)
-	$(INSTALL_DATA) $< $@
 
