@@ -125,7 +125,7 @@ int main(int argc, char **argv)
 
     quietly = G_define_flag();
     quietly->key = 'q';
-    quietly->description = _("Do not print polyline info");
+    quietly->description = _("Unused");
 
     if (G_parser(argc, argv))
 	exit(EXIT_FAILURE);
@@ -188,11 +188,8 @@ int main(int argc, char **argv)
 	/* Find start of this polyline */
 	start_line = walk_back(&map, line);
 	start_type = Vect_read_line(&map, NULL, NULL, start_line);
-	if (!quietly->answer) {
-	    fprintf(stdout, "Polyline %d: start line = %d \n", polyline,
-		    start_line);
-	    fflush(stdout);
-	}
+
+	G_debug(1, "Polyline %d: start line = %d \n", polyline, start_line);
 
 	/* Walk forward and pick up coordinates */
 	points_in_polyline =
@@ -208,7 +205,7 @@ int main(int argc, char **argv)
 
     G_message(_("%d lines or boundaries found in vector map <%s@%s>"),
 	      nlines, Vect_get_name(&map), Vect_get_mapset(&map));
-    G_message(_("%d polylines stored to vector map <%s%s>"),
+    G_message(_("%d polylines stored in vector map <%s@%s>"),
 	      polyline, Vect_get_name(&Out), Vect_get_mapset(&Out));
 
     /* Copy (all linked) tables if needed */
