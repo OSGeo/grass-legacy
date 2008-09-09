@@ -2412,7 +2412,7 @@ class VDigitCategoryDialog(wx.Dialog, listmix.ColumnSorterMixin):
                       wx.LEFT | wx.RIGHT | wx.BOTTOM, border=5)
         fidSizer = wx.BoxSizer(wx.HORIZONTAL)
         fidSizer.Add(item=wx.StaticText(parent=self, id=wx.ID_ANY,
-                                        label=_("Feature id")),
+                                        label=_("Feature id:")),
                      proportion=0, border=5,
                      flag=wx.ALIGN_CENTER_VERTICAL)
         fidSizer.Add(item=self.fidMulti, proportion=0,
