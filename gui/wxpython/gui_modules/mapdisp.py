@@ -1264,7 +1264,7 @@ class BufferedWindow(MapWindow, wx.Window):
                                                     subkey='enabled'):
                                     lines = digitClass.driver.GetSelected()
                                 else:
-                                    lines = digitClass.driver.GetSelected()[0] # only first found
+                                    lines = (digitClass.driver.GetSelected()[0],) # only first found
                                 
                                 cats = {}
                                 for line in lines:
@@ -1290,7 +1290,7 @@ class BufferedWindow(MapWindow, wx.Window):
                                                     subkey='enabled'):
                                     lines = digitClass.driver.GetSelected()
                                 else:
-                                    lines = digitClass.driver.GetSelected()[0] # only first found
+                                    lines = (digitClass.driver.GetSelected()[0],) # only first found
                                 
                                 cats = {}
                                 for line in lines:
