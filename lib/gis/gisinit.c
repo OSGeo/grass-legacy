@@ -86,7 +86,7 @@ int G__no_gisinit(const char *version)
 	return 0;
 
     if (strcmp(version, GIS_H_VERSION) != 0)
-        G_fatal_error(_("Incompatible library version for module: recompilation needed."));
+        G_fatal_error(_("Incompatible library version for module"));
 
     gisinit();
 
