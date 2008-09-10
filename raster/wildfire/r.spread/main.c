@@ -334,11 +334,8 @@ int main(int argc, char *argv[])
 
     /*  Get database window parameters  */
 
-    if (G_get_window(&window) < 0) {
-	sprintf(buf, "can't read current window parameters");
-	G_fatal_error(buf);
-	exit(EXIT_FAILURE);
-    }
+    if (G_get_window(&window) < 0)
+	G_fatal_error(_("Unable to read current window parameters"));
 
     /*  find number of rows and columns in window    */
 
@@ -355,139 +352,86 @@ int main(int argc, char *argv[])
 	display_init();
 
     /*  Check if input layers exists in data base  */
+    if (G_find_cell2(max_layer, "") == NULL)
+	G_fatal_error(_("Raster map <%s> not found"), max_layer);
 
-    if (G_find_cell2(max_layer, "") == NULL) {
-	sprintf(buf, "Raster map <%s> not found", max_layer);
-	G_fatal_error(buf);
-	exit(EXIT_FAILURE);
-    }
+    if (G_find_cell2(dir_layer, "") == NULL)
+	G_fatal_error(_("Raster map <%s> not found"), dir_layer);
 
-    if (G_find_cell2(dir_layer, "") == NULL) {
-	sprintf(buf, _("Raster map <%s> not found"), dir_layer);
-	G_fatal_error(buf);
-	exit(EXIT_FAILURE);
-    }
+    if (G_find_cell2(base_layer, "") == NULL)
+	G_fatal_error(_("Raster map <%s> not found"), base_layer);
 
-    if (G_find_cell2(base_layer, "") == NULL) {
-	sprintf(buf, _("Raster map <%s> not found"), base_layer);
-	G_fatal_error(buf);
-	exit(EXIT_FAILURE);
-    }
-
-    if (G_find_cell2(start_layer, "") == NULL) {
-	sprintf(buf, _("Raster map <%s> not found"), start_layer);
-	G_fatal_error(buf);
-	exit(EXIT_FAILURE);
-    }
+    if (G_find_cell2(start_layer, "") == NULL)
+	G_fatal_error(_("Raster map <%s> not found"), start_layer);
 
     if (spotting) {
-	if (G_find_cell2(spotdist_layer, "") == NULL) {
-	    sprintf(buf, _("Raster map <%s> not found"), spotdist_layer);
-	    G_fatal_error(buf);
-	    exit(EXIT_FAILURE);
-	}
-	if (G_find_cell2(velocity_layer, "") == NULL) {
-	    sprintf(buf, _("Raster map <%s> not found"), velocity_layer);
-	    G_fatal_error(buf);
-	    exit(EXIT_FAILURE);
-	}
-	if (G_find_cell2(mois_layer, "") == NULL) {
-	    sprintf(buf, _("Raster map <%s> not found"), mois_layer);
-	    G_fatal_error(buf);
-	    exit(EXIT_FAILURE);
-	}
-    }
+	if (G_find_cell2(spotdist_layer, "") == NULL)
+	    G_fatal_error(_("Raster map <%s> not found"), spotdist_layer);
 
+	if (G_find_cell2(velocity_layer, "") == NULL)
+	    G_fatal_error(_("Raster map <%s> not found"), velocity_layer);
+
+	if (G_find_cell2(mois_layer, "") == NULL)
+	    G_fatal_error(_("Raster map <%s> not found"), mois_layer);
+    }
 
     /*  Check if specified output layer names ARE LEGAL or EXISTS   */
+    if (G_legal_filename(out_layer) < 0)
+	G_fatal_error(_("<%s> is an illegal file name"), out_layer);
 
-    if (G_legal_filename(out_layer) < 0) {
-	sprintf(buf, _("<%s> is an illegal file name"), out_layer);
-	G_fatal_error(buf);
-	exit(EXIT_FAILURE);
-    }
-    if (G_find_cell2(out_layer, G_mapset())) {
-	sprintf(buf,
-		_("Raster map <%s> already exists in mapset <%s>, select another name"),
+    if (G_find_cell2(out_layer, G_mapset()))
+	G_fatal_error(
+	  _("Raster map <%s> already exists in mapset <%s>, select another name"),
 		out_layer, G_mapset());
-	G_fatal_error(buf);
-	exit(EXIT_FAILURE);
-    }
 
     if (x_out) {
-	if (G_legal_filename(x_out_layer) < 0) {
-	    sprintf(buf, _("<%s> is an illegal file name"), x_out_layer);
-	    G_fatal_error(buf);
-	    exit(EXIT_FAILURE);
-	}
-	if (G_find_cell2(x_out_layer, G_mapset())) {
-	    sprintf(buf,
-		    _("Raster map <%s> already exists in mapset <%s>, select another name"),
+	if (G_legal_filename(x_out_layer) < 0)
+	    G_fatal_error(_("<%s> is an illegal file name"), x_out_layer);
+
+	if (G_find_cell2(x_out_layer, G_mapset()))
+	    G_fatal_error(
+	      _("Raster map <%s> already exists in mapset <%s>, select another name"),
 		    x_out_layer, G_mapset());
-	    G_fatal_error(buf);
-	    exit(EXIT_FAILURE);
-	}
     }
 
     if (y_out) {
-	if (G_legal_filename(y_out_layer) < 0) {
-	    sprintf(buf, _("<%s> is an illegal file name"), y_out_layer);
-	    G_fatal_error(buf);
-	    exit(EXIT_FAILURE);
-	}
-	if (G_find_cell2(y_out_layer, G_mapset())) {
-	    sprintf(buf,
-		    _("Raster map <%s> already exists in mapset <%s>, select another name"),
+	if (G_legal_filename(y_out_layer) < 0)
+	    G_fatal_error(_("<%s> is an illegal file name"), y_out_layer);
+
+	if (G_find_cell2(y_out_layer, G_mapset()))
+	    G_fatal_error(
+	      _("Raster map <%s> already exists in mapset <%s>, select another name"),
 		    y_out_layer, G_mapset());
-	    G_fatal_error(buf);
-	    exit(EXIT_FAILURE);
-	}
     }
 
     /*  Open input cell layers for reading  */
 
     max_fd = G_open_cell_old(max_layer, G_find_cell2(max_layer, ""));
-    if (max_fd < 0) {
-	sprintf(buf, _("Unable to open raster map <%s>"), max_layer);
-	G_fatal_error(buf);
-	exit(EXIT_FAILURE);
-    }
+    if (max_fd < 0)
+	G_fatal_error(_("Unable to open raster map <%s>"), max_layer);
 
     dir_fd = G_open_cell_old(dir_layer, G_find_cell2(dir_layer, ""));
-    if (dir_fd < 0) {
-	sprintf(buf, _("Unable to open raster map <%s>"), dir_layer);
-	G_fatal_error(buf);
-	exit(EXIT_FAILURE);
-    }
+    if (dir_fd < 0)
+	G_fatal_error(_("Unable to open raster map <%s>"), dir_layer);
 
     base_fd = G_open_cell_old(base_layer, G_find_cell2(base_layer, ""));
-    if (base_fd < 0) {
-	sprintf(buf, _("Unable to open raster map <%s>"), base_layer);
-	G_fatal_error(buf);
-	exit(EXIT_FAILURE);
-    }
+    if (base_fd < 0)
+	G_fatal_error(_("Unable to open raster map <%s>"), base_layer);
 
     if (spotting) {
 	spotdist_fd =
 	    G_open_cell_old(spotdist_layer, G_find_cell2(spotdist_layer, ""));
-	if (spotdist_fd < 0) {
-	    sprintf(buf, _("Unable to open raster map <%s>"), spotdist_layer);
-	    G_fatal_error(buf);
-	    exit(EXIT_FAILURE);
-	}
+	if (spotdist_fd < 0)
+	    G_fatal_error(_("Unable to open raster map <%s>"), spotdist_layer);
+
 	velocity_fd =
 	    G_open_cell_old(velocity_layer, G_find_cell2(velocity_layer, ""));
-	if (velocity_fd < 0) {
-	    sprintf(buf, _("Unable to open raster map <%s>"), velocity_layer);
-	    G_fatal_error(buf);
-	    exit(EXIT_FAILURE);
-	}
+	if (velocity_fd < 0)
+	    G_fatal_error(_("Unable to open raster map <%s>"), velocity_layer);
+
 	mois_fd = G_open_cell_old(mois_layer, G_find_cell2(mois_layer, ""));
-	if (mois_fd < 0) {
-	    sprintf(buf, _("Unable to open raster map <%s>"), mois_layer);
-	    G_fatal_error(buf);
-	    exit(EXIT_FAILURE);
-	}
+	if (mois_fd < 0)
+	    G_fatal_error(_("Unable to open raster map <%s>"), mois_layer);
     }
 
     /*  Allocate memories for a row  */
@@ -555,11 +499,9 @@ int main(int argc, char *argv[])
      */
 
     start_fd = G_open_cell_old(start_layer, G_find_cell2(start_layer, ""));
-    if (start_fd < 0) {
-	sprintf(buf, _("Unable to open raster map <%s>"), start_layer);
-	G_fatal_error(buf);
-	exit(EXIT_FAILURE);
-    }
+    if (start_fd < 0)
+	G_fatal_error(_("Unable to open raster map <%s>"), start_layer);
+
 
     G_read_range(start_layer, G_find_file("cell", start_layer, ""), &range);
     G_get_range_min_max(&range, &range_min, &range_max);
