@@ -15,7 +15,7 @@ gis:
 	cat ../../../include/gisdefs.h | \
 		sed -e '/\.\.\..*;/d' -e '/\.\.\./,/;/d' \
 		-e '/^#/d' >> gisdefs.i
-#	gis.h  (gis.i checked into CVS 05/26/06; diff vs. that to see what was removed)
+#	gis.h  (gis.i based on gis.h c.12/17/04 (r16393)
 
 vector:
 	echo $(HEADER_LINE1) >  dig_structs.i
@@ -38,3 +38,4 @@ vector:
 
 distclean:
 	-rm -f gisdefs.i dig_structs.i vect.i
+	# gis.i dig_types.i imagedefs.h imagery.h
