@@ -28,8 +28,8 @@
 #define G_VAR_GISRC    0
 #define G_VAR_MAPSET   1
 
-#define G_GISRC_MODE_FILE     0   
-#define G_GISRC_MODE_MEMORY   1   
+#define G_GISRC_MODE_FILE     0
+#define G_GISRC_MODE_MEMORY   1
 
 #define TYPE_INTEGER  1
 #define TYPE_DOUBLE   2
@@ -37,22 +37,23 @@
 #define YES           1
 #define NO            0
 
-typedef enum {
-    G_OPT_WHERE,   
-    G_OPT_R_INPUT, 
+typedef enum
+{
+    G_OPT_WHERE,
+    G_OPT_R_INPUT,
     G_OPT_R_OUTPUT,
-    G_OPT_R_MAP,   
-    G_OPT_V_INPUT, 
+    G_OPT_R_MAP,
+    G_OPT_V_INPUT,
     G_OPT_V_OUTPUT,
-    G_OPT_V_MAP,   
-    G_OPT_V_TYPE,  
-    G_OPT_V_FIELD, 
-    G_OPT_V_CAT,   
-    G_OPT_V_CATS   
+    G_OPT_V_MAP,
+    G_OPT_V_TYPE,
+    G_OPT_V_FIELD,
+    G_OPT_V_CAT,
+    G_OPT_V_CATS
 } STD_OPT;
 
-#define G_INFO_FORMAT_STANDARD 0  
-#define G_INFO_FORMAT_GUI      1  
+#define G_INFO_FORMAT_STANDARD 0
+#define G_INFO_FORMAT_GUI      1
 
 #define G_ICON_CROSS  0
 #define G_ICON_BOX    1
@@ -65,27 +66,28 @@ typedef enum {
 typedef int CELL;
 typedef double DCELL;
 typedef float FCELL;
+
 /*extern CELL CELL_NODATA; Sajith */
 
 typedef int RASTER_MAP_TYPE;
 
 struct Cell_head
 {
-    int format;     
-    int compressed; 
-    int rows;	    
-    int rows3;	    
-    int cols;	    
-    int cols3;	    
-    int depths;     
-    int proj;	    
-    int zone;	    
-    double ew_res;  
-    double ew_res3; 
-    double ns_res;  
-    double ns_res3; 
-    double tb_res;  
-    double north;   
+    int format;
+    int compressed;
+    int rows;
+    int rows3;
+    int cols;
+    int cols3;
+    int depths;
+    int proj;
+    int zone;
+    double ew_res;
+    double ew_res3;
+    double ns_res;
+    double ns_res3;
+    double tb_res;
+    double north;
     double south;
     double east;
     double west;
@@ -97,21 +99,21 @@ struct _Color_Rule_
 {
     struct
     {
-    	DCELL value;
+	DCELL value;
 	unsigned char red;
 	unsigned char grn;
 	unsigned char blu;
-    }  high;
+    } high;
     struct
     {
-    	DCELL value;
+	DCELL value;
 	unsigned char red;
 	unsigned char grn;
 	unsigned char blu;
-    }  low;
+    } low;
 
-/*    struct _Color_Rule_ *next;
-    struct _Color_Rule_ *prev;  Commented By sajith I am confued here....*/
+    /*    struct _Color_Rule_ *next;
+       struct _Color_Rule_ *prev;  Commented By sajith I am confued here.... */
 };
 
 struct _Color_Info_
@@ -121,7 +123,7 @@ struct _Color_Info_
 
     struct
     {
-    	unsigned char *red;
+	unsigned char *red;
 	unsigned char *grn;
 	unsigned char *blu;
 	unsigned char *set;
@@ -131,7 +133,7 @@ struct _Color_Info_
 
     struct
     {
-        DCELL *vals;
+	DCELL *vals;
 	struct _Color_Rule_ **rules;
 	int nalloc;
 	int active;
@@ -142,15 +144,15 @@ struct _Color_Info_
 
 struct Colors
 {
-    int version;	
+    int version;
     DCELL shift;
     int invert;
-    int is_float;   	    
-    int null_set;   	    
+    int is_float;
+    int null_set;
     unsigned char null_red;
     unsigned char null_grn;
     unsigned char null_blu;
-    int undef_set;  	   
+    int undef_set;
     unsigned char undef_red;
     unsigned char undef_grn;
     unsigned char undef_blu;
@@ -162,44 +164,44 @@ struct Colors
 
 struct Reclass
 {
-    char name[50];  	   
-    char mapset[50]; 	   
-    int type;	    	   
-    int num;	    	   
-    CELL min;	    	   
-    CELL max;	    	   
-    CELL *table;    	   
-} ;
+    char name[50];
+    char mapset[50];
+    int type;
+    int num;
+    CELL min;
+    CELL max;
+    CELL *table;
+};
 
 struct FPReclass_table
 {
-    DCELL dLow;     
-    DCELL dHigh;    
-    DCELL rLow;     
-    DCELL rHigh;    
+    DCELL dLow;
+    DCELL dHigh;
+    DCELL rLow;
+    DCELL rHigh;
 };
 
 struct FPReclass
 {
-    int defaultDRuleSet;   
-    int defaultRRuleSet;   
-    int infiniteLeftSet;   
-    int infiniteRightSet;  
-    int rRangeSet;  	   
-    int maxNofRules; 
+    int defaultDRuleSet;
+    int defaultRRuleSet;
+    int infiniteLeftSet;
+    int infiniteRightSet;
+    int rRangeSet;
+    int maxNofRules;
     int nofRules;
-    DCELL defaultDMin;     
-    DCELL defaultDMax;     
-    DCELL defaultRMin;     
-    DCELL defaultRMax;     
-    DCELL infiniteDLeft;   
-    DCELL infiniteDRight;  
-    DCELL infiniteRLeft;   
-    DCELL infiniteRRight;  
-    DCELL dMin;     	   
-    DCELL dMax;     	   
-    DCELL rMin;     	   
-    DCELL rMax;     	   
+    DCELL defaultDMin;
+    DCELL defaultDMax;
+    DCELL defaultRMin;
+    DCELL defaultRMax;
+    DCELL infiniteDLeft;
+    DCELL infiniteDRight;
+    DCELL infiniteRLeft;
+    DCELL infiniteRRight;
+    DCELL dMin;
+    DCELL dMax;
+    DCELL rMin;
+    DCELL rMax;
     struct FPReclass_table *table;
 };
 
@@ -243,43 +245,43 @@ struct Quant
 	struct Quant_table **rules;
 	int nalloc;
 	int active;
-	DCELL inf_dmin; 
-	DCELL inf_dmax; 
-	CELL inf_min; 
-	CELL inf_max; 
+	DCELL inf_dmin;
+	DCELL inf_dmax;
+	CELL inf_min;
+	CELL inf_max;
     } fp_lookup;
 };
 
 struct Categories
 {
-    CELL ncats;     	    
-    CELL num;	    	    
-    char *title;    	    
-    char *fmt;	    	    
-    float m1;	    	    
-    float a1;	    	    
-    float m2;	    	    
-    float a2;	    	    
-    struct Quant q; 	    
-    char **labels;  	    
-    int *marks;    	    
+    CELL ncats;
+    CELL num;
+    char *title;
+    char *fmt;
+    float m1;
+    float a1;
+    float m2;
+    float a2;
+    struct Quant q;
+    char **labels;
+    int *marks;
     int nalloc;
     int last_marked_rule;
-   
+
 };
 
 struct History
 {
-    char    mapid[RECORD_LEN];
-    char    title[RECORD_LEN];
-    char    mapset[RECORD_LEN];
-    char    creator[RECORD_LEN];
-    char    maptype[RECORD_LEN];
-    char    datsrc_1[RECORD_LEN];
-    char    datsrc_2[RECORD_LEN];
-    char    keywrd[RECORD_LEN];
-    int     edlinecnt;
-    char    edhist[MAXEDLINES][RECORD_LEN];
+    char mapid[RECORD_LEN];
+    char title[RECORD_LEN];
+    char mapset[RECORD_LEN];
+    char creator[RECORD_LEN];
+    char maptype[RECORD_LEN];
+    char datsrc_1[RECORD_LEN];
+    char datsrc_2[RECORD_LEN];
+    char keywrd[RECORD_LEN];
+    int edlinecnt;
+    char edhist[MAXEDLINES][RECORD_LEN];
 };
 
 struct Cell_stats
@@ -290,19 +292,19 @@ struct Cell_stats
 	long *count;
 	int left;
 	int right;
-    } *node ;    
- 
-    int tlen ;   
-    int N;       
+    } *node;
+
+    int tlen;
+    int N;
     int curp;
-    long null_data_count;   
+    long null_data_count;
     int curoffset;
 };
 
 struct Histogram
 {
     int num;
-    
+
     struct Histogram_list
     {
 	CELL cat;
@@ -312,40 +314,40 @@ struct Histogram
 
 struct Range
 {
-    CELL min;		
-    CELL max;	
-    int first_time;   
+    CELL min;
+    CELL max;
+    int first_time;
 };
 
 struct FPRange
 {
-    DCELL min;		
-    DCELL max;	
-    int first_time;  
+    DCELL min;
+    DCELL max;
+    int first_time;
 };
 
 struct G_3dview
 {
-    char pgm_id[40];        
-    float from_to[2][3];    
-    float fov;              
-    float twist;            
-    float exag;             
-    int mesh_freq;  	    
-    int poly_freq;   	    
-    int display_type;       
-    int lightson;   	    
-    int dozero;   	    
-    int colorgrid;   	    
-    int shading;   	    
-    int fringe;   	    
-    int surfonly;   	    
-    int doavg;   	    
-    char grid_col[40];	    
-    char bg_col[40];	    
-    char other_col[40];     
-    float lightpos[4];	    
-    float lightcol[3];      
+    char pgm_id[40];
+    float from_to[2][3];
+    float fov;
+    float twist;
+    float exag;
+    int mesh_freq;
+    int poly_freq;
+    int display_type;
+    int lightson;
+    int dozero;
+    int colorgrid;
+    int shading;
+    int fringe;
+    int surfonly;
+    int doavg;
+    char grid_col[40];
+    char bg_col[40];
+    char other_col[40];
+    float lightpos[4];
+    float lightcol[3];
     float ambient;
     float shine;
     struct Cell_head vwin;
@@ -359,47 +361,46 @@ struct Key_Value
     char **value;
 };
 
-struct Option                	   
+struct Option
 {
-    char *key;                    
-    int type;                     
-    int required;                 
-    int multiple;                 
-    char *options;                
-    char **opts;                  
-    char *key_desc;               
-    char *label;                  
-    char *description;            
-    char *descriptions;           
-    char **descs;                 
-    char *answer;                 
-    char *def;                    
-    char **answers;               
-    struct Option *next_opt;      
-    char *gisprompt;              
-    int (*checker)();             
+    char *key;
+    int type;
+    int required;
+    int multiple;
+    char *options;
+    char **opts;
+    char *key_desc;
+    char *label;
+    char *description;
+    char *descriptions;
+    char **descs;
+    char *answer;
+    char *def;
+    char **answers;
+    struct Option *next_opt;
+    char *gisprompt;
+    int (*checker) ();
     int count;
 };
 
-struct Flag                 	   
+struct Flag
 {
-    char key;                      
-    char answer;                   
-    char *label;                   
-    char *description;             
-    struct Flag *next_flag;        
+    char key;
+    char answer;
+    char *label;
+    char *description;
+    struct Flag *next_flag;
 };
 
-struct GModule                     
+struct GModule
 {
-    char *label;                   
-    char *description;             
+    char *label;
+    char *description;
     int overwrite;
 };
 
 struct TimeStamp
 {
-    DateTime dt[2];   
+    DateTime dt[2];
     int count;
 };
-
