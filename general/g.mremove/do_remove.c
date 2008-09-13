@@ -1,4 +1,5 @@
 #include <string.h>
+#include <grass/gis.h>
 #include <grass/Vect.h>
 #include <grass/G3d.h>
 #include "global.h"
