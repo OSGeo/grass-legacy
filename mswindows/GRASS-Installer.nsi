@@ -2,7 +2,7 @@
 
 ;GRASS Installer for Windows
 ;Written by Marco Pasetti
-;Last Update: 16 July 2008
+;Last Update: 13 September 2008
 ;Mail to: marco.pasetti@alice.it 
 
 ;----------------------------------------------------------------------------------------------------------------------------
@@ -572,11 +572,25 @@ Section "GRASS" SecGRASS
 
 	;Set the USERNAME variable
 	Var /GLOBAL USERNAME
+	Var /GLOBAL PROFILE_DRIVE
+	Var /GLOBAL PROFILE_ROOT
 
+	;It first searches for the Key Regestry value "Logon User Name" in HKCU "Software\Microsoft\Windows\CurrentVersion\Explorer"
 	ReadRegStr $USERNAME HKCU "Software\Microsoft\Windows\CurrentVersion\Explorer" "Logon User Name"
 
+	;If the Key Registry value is empty, it uses a work around, retrieving the Username string from the System User Profile variable ($PROFILE)
+	;It first read the $PROFILE variable, to scan the OS version:
+	;If equal to "drive:\Users\UserName", the OS is Vista, and the $USERNAME variable set to $PROFILE -  "drive:\Users\"
+	;If not, the OS is XP or previous, and the $USERNAME variable set to $PROFILE -  "drive:\Documents and Settings\"
+	
 	${If} $USERNAME = ""
-		${StrReplace} "$USERNAME" "C:\Users\" "" "$PROFILE"		
+		StrCpy $PROFILE_DRIVE "$PROFILE" 2
+		StrCpy $PROFILE_ROOT "$PROFILE" 5 -3
+		${If} $USERNAME = "Users"		
+			${StrReplace} "$USERNAME" "$PROFILE_DRIVE\Users\" "" "$PROFILE"
+		${Else}
+			${StrReplace} "$USERNAME" "$PROFILE_DRIVE\Documents and Settings\" "" "$PROFILE"
+		${EndIf}
 	${EndIf}
 	
 	;Create the $INSTALL_DIR\msys\home and the $INSTALL_DIR\msys\home\$USERNAME directories
