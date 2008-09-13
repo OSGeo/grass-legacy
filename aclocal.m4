@@ -50,6 +50,24 @@ if test -n "$with_$1_libs"; then
 fi
 ])
 
+AC_DEFUN([LOC_CHECK_FRAMEWORK_PATH],[
+AC_MSG_CHECKING(for location of $2 framework)
+case "$with_$1_framework" in
+y | ye | yes | n | no)
+	AC_MSG_ERROR([*** You must supply a directory to --with-$1-framework.])
+	;;
+esac
+AC_MSG_RESULT($with_$1_framework)
+
+if test -n "$with_$1_framework"; then
+    if test -d $with_$1_framework; then
+        $3="$$3 -F$with_$1_framework"
+    else
+        AC_MSG_ERROR([*** $2 framework directory $dir does not exist.])
+    fi
+fi
+])
+
 AC_DEFUN([LOC_CHECK_SHARE_PATH],[
 AC_MSG_CHECKING(for location of $2 data files)
 case "$with_$1_share" in
@@ -66,6 +84,17 @@ if test -n "$with_$1_share" ; then
         AC_MSG_ERROR([*** $2 data directory $dir does not exist.])
     fi
 fi
+])
+
+AC_DEFUN([LOC_CHECK_LDFLAGS],[
+AC_MSG_CHECKING(for $2 linking flags)
+case "$with_$1_ldflags" in
+y | ye | yes | n | no)
+	AC_MSG_ERROR([*** You must supply a directory to --with-$1-ldflags.])
+	;;
+esac
+AC_MSG_RESULT($with_$1_ldflags)
+$3="$$3 $with_$1_ldflags"
 ])
 
 AC_DEFUN([LOC_CHECK_INCLUDES],[
@@ -151,6 +180,36 @@ ifelse($8,[],[
 LDFLAGS=${ac_save_ldflags}
 ])
 
+dnl $1  = function
+dnl $2  = descriptive name
+dnl $3  = result variable
+dnl $4  = LIBS initialiser (added to $3)
+dnl $5  = LDFLAGS initialiser (not added to $3)
+dnl $6  = LIBS initialiser (not added to $3)
+dnl $7  = ACTION-IF-FOUND
+dnl $8  = ACTION-IF-NOT-FOUND
+
+define(LOC_CHECK_FUNC,[
+ac_save_libs="$LIBS"
+ac_save_ldflags="$LDFLAGS"
+LIBS="$4 $6 $LIBS"
+LDFLAGS="$5 $LDFLAGS"
+AC_CHECK_FUNC($1,[
+ifelse($7,[],[
+    $3="$$3 $4"
+],$7)
+],[
+ifelse($8,[],[
+ifelse($2,[],
+    [AC_MSG_ERROR([*** Unable to locate $2.])],
+    [AC_MSG_ERROR([*** Unable to locate $1.])]
+)
+],$8)
+])
+LIBS=${ac_save_libs}
+LDFLAGS=${ac_save_ldflags}
+])
+
 AC_DEFUN([LOC_CHECK_VERSION_STRING],[
 AC_MSG_CHECKING($3 version)
 ac_save_cppflags="$CPPFLAGS"
@@ -220,9 +279,19 @@ AC_ARG_WITH($1-libs,
 LOC_PAD([  --with-$1-libs=DIRS])[$2 library files are in DIRS])
 ])
 
+AC_DEFUN([LOC_ARG_WITH_LDFLAGS],[
+AC_ARG_WITH($1-ldflags,
+LOC_PAD([  --with-$1-ldflags=FLAGS])[$2 needs FLAGS when linking])
+])
+
 AC_DEFUN([LOC_ARG_WITH_SHARE],[
 AC_ARG_WITH($1-share,
 LOC_PAD([  --with-$1-share=DIR])[$2 data files are in DIR])
+])
+
+AC_DEFUN([LOC_ARG_WITH_FRAMEWORK],[
+AC_ARG_WITH($1-framework,
+LOC_PAD([  --with-$1-framework=DIR])[$2 framework is in DIR])
 ])
 
 AC_DEFUN([LOC_OPTIONAL],[
