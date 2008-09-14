@@ -1,3 +1,5 @@
+#include <grass/cluster.h>
+
 #define INAME_LEN 30
 struct Ref_Files
 {
@@ -56,31 +58,6 @@ struct Signature
 
 };
 
-struct Cluster
-{
-    int nbands;
-    int npoints;
-    CELL **points;
-    int np;
-
-    double *band_sum;
-    double *band_sum2;
-
-    int *class;
-    int *reclass;
-    int *count;
-    int *countdiff;
-    double **sum;
-    double **sumdiff;
-    double **sum2;
-    double **mean;
-    struct Signature S;
-
-    int nclasses;
-    int merge1, merge2;
-    int iteration;
-    double percent_stable;
-};
 struct SubSig
 {
     double N;
