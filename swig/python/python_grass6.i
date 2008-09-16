@@ -32,3 +32,8 @@
 %include "interfaces/dig_structs.i"
 %include "interfaces/dig_types.i"
 
+%pythoncode %{
+def G_gisinit(pgm):
+    G__gisinit(GIS_H_VERSION, pgm)
+
+%}
