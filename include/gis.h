@@ -149,10 +149,10 @@ static const char *GRASS_copyright __attribute__ ((unused))
 #define GRASS_DIRSEP '/'
 #ifdef __MINGW32__
 #  define HOST_DIRSEP '\\'
-#  define G_DEV_NULL 'NUL:'
+#  define G_DEV_NULL "NUL:"
 #else
 #  define HOST_DIRSEP '/'
-#  define G_DEV_NULL '/dev/null'
+#  define G_DEV_NULL "/dev/null"
 #endif
 
  /**/ typedef enum
