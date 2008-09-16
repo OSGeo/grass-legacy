@@ -277,16 +277,17 @@ struct Cell_head
     double bottom;
 };
 
+struct _Color_Value_
+{
+    DCELL value;
+    unsigned char red;
+    unsigned char grn;
+    unsigned char blu;
+};
+
 struct _Color_Rule_
 {
-    struct
-    {
-	DCELL value;
-	unsigned char red;
-	unsigned char grn;
-	unsigned char blu;
-    } low, high;
-
+    struct _Color_Value_ low, high;
     struct _Color_Rule_ *next;
     struct _Color_Rule_ *prev;
 };
