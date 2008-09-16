@@ -11,7 +11,7 @@ LDFLAGS=-shared -L$(ARCH_LIBDIR) $(GDALLIBS) $(PYTHONLDFLAGS) -lgrass_I -lgrass_
 #SUBDIRS = NumPtr
 #include $(MODULE_TOPDIR)/include/Make/Dir.make
 
-default: python_grass6.so
+default: python_grass6.so numptr
 
 clean:
 	-rm -f *.o *.so python_grass6_wrap.c python_grass6.pyc python_grass6.py
@@ -29,6 +29,9 @@ python_grass6_wrap.o: python_grass6_wrap.c
 
 python_grass6.so: python_grass6_wrap.o
 	$(LD) $(LDFLAGS) $< -o _python_grass6.so
+
+numptr:
+	$(MAKE) -C NumPtr
 
 # doxygen:
 DOXNAME=
