@@ -1,3 +1,4 @@
+# Cloned automatically from Makefile.in by configure.
 MODULE_TOPDIR = ../..
 
 include $(MODULE_TOPDIR)/include/Make/Lib.make
@@ -6,15 +7,14 @@ include $(MODULE_TOPDIR)/include/Make/Doxygen.make
 LIB_NAME = python_grass6
 
 CFLAGS=-c -fpic -I. $(ARCH_INC) $(GDALCFLAGS) $(PYTHONCFLAGS)
-
 LDFLAGS=-shared -L$(ARCH_LIBDIR) $(GDALLIBS) $(PYTHONLDFLAGS) $(VECTLIB) $(IMAGERYLIB) $(GMATHLIB) $(GISLIB)
 
-#include $(MODULE_TOPDIR)/include/Make/Dir.make
 
 default: _$(LIB_NAME).so numptr
 
 clean:
 	-rm -f *.o *.so $(LIB_NAME)_wrap.c $(LIB_NAME).pyc $(LIB_NAME).py
+	$(MAKE) -C NumPtr clean
 
 distclean: clean
 	-rm -f Makefile
@@ -22,12 +22,13 @@ distclean: clean
 $(LIB_NAME)_wrap.c: $(LIB_NAME).i
 	$(SWIG) $(ARCH_INC) -python -shadow $<
 
-
 $(LIB_NAME)_wrap.o: $(LIB_NAME)_wrap.c
 	$(CC) $(CFLAGS) $(INCLUDE_DIRS) $<
 
 _$(LIB_NAME).so: $(LIB_NAME)_wrap.o
 	$(LD) $(LDFLAGS) $< -o _$(LIB_NAME).so
+	# build bytecode .pyc file; ignore undefined symbol error
+	echo "import $(LIB_NAME)" | python; true
 
 numptr:
 	$(MAKE) -C NumPtr
