@@ -9,3 +9,5 @@ numptr:
 
 clean:
 	-rm -rf build/
+	-rm -f setup.pyc
+	$(MAKE) -C src clean
