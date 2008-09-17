@@ -3,32 +3,31 @@ MODULE_TOPDIR = ../..
 include $(MODULE_TOPDIR)/include/Make/Lib.make
 include $(MODULE_TOPDIR)/include/Make/Doxygen.make
 
-CFLAGS=-c -fpic -I./ -I$(ARCH_DISTDIR)/include $(GDALCFLAGS) $(PYTHONCFLAGS)
+LIB_NAME = python_grass6
 
-LDFLAGS=-shared -L$(ARCH_LIBDIR) $(GDALLIBS) $(PYTHONLDFLAGS) -lgrass_I -lgrass_Iortho -lgrass_bitmap -lgrass_btree -lgrass_cdhc -lgrass_datetime -lgrass_dbmibase -lgrass_dbmiclient -lgrass_dbmidriver -lgrass_dbstubs -lgrass_dgl -lgrass_display -lgrass_dspf -lgrass_edit -lgrass_form -lgrass_g3d -lgrass_gis -lgrass_gmath -lgrass_gproj -lgrass_interpdata -lgrass_interpfl -lgrass_linkm -lgrass_qtree -lgrass_raster -lgrass_rowio -lgrass_rtree -lgrass_segment -lgrass_shape -lgrass_sites -lgrass_symb -lgrass_trans -lgrass_vask -lgrass_vect -lgrass_psdriver
+CFLAGS=-c -fpic -I. $(ARCH_INC) $(GDALCFLAGS) $(PYTHONCFLAGS)
 
-# TODO: build the NumPtr module. See NumPtr/README.GRASS
-#SUBDIRS = NumPtr
+LDFLAGS=-shared -L$(ARCH_LIBDIR) $(GDALLIBS) $(PYTHONLDFLAGS) $(VECTLIB) $(IMAGERYLIB) $(GMATHLIB) $(GISLIB)
+
 #include $(MODULE_TOPDIR)/include/Make/Dir.make
 
-default: python_grass6.so numptr
+default: _$(LIB_NAME).so numptr
 
 clean:
-	-rm -f *.o *.so python_grass6_wrap.c python_grass6.pyc python_grass6.py
+	-rm -f *.o *.so $(LIB_NAME)_wrap.c $(LIB_NAME).pyc $(LIB_NAME).py
 
 distclean: clean
 	-rm -f Makefile
 
-python_grass6_wrap.c: python_grass6.i
-	$(MAKE) -C interfaces
-	$(SWIG) -python -shadow $<
+$(LIB_NAME)_wrap.c: $(LIB_NAME).i
+	$(SWIG) $(ARCH_INC) -python -shadow $<
 
 
-python_grass6_wrap.o: python_grass6_wrap.c
+$(LIB_NAME)_wrap.o: $(LIB_NAME)_wrap.c
 	$(CC) $(CFLAGS) $(INCLUDE_DIRS) $<
 
-python_grass6.so: python_grass6_wrap.o
-	$(LD) $(LDFLAGS) $< -o _python_grass6.so
+_$(LIB_NAME).so: $(LIB_NAME)_wrap.o
+	$(LD) $(LDFLAGS) $< -o _$(LIB_NAME).so
 
 numptr:
 	$(MAKE) -C NumPtr
@@ -36,3 +35,11 @@ numptr:
 # doxygen:
 DOXNAME=
 DOXINPUT=grasspython.dox
+
+$(LIB_NAME)_wrap.c: $(ARCH_INCDIR)/gis.h
+$(LIB_NAME)_wrap.c: $(ARCH_INCDIR)/gisdefs.h
+$(LIB_NAME)_wrap.c: $(ARCH_INCDIR)/imagery.h
+$(LIB_NAME)_wrap.c: $(ARCH_INCDIR)/imagedefs.h
+$(LIB_NAME)_wrap.c: $(ARCH_INCDIR)/Vect.h
+$(LIB_NAME)_wrap.c: $(ARCH_INCDIR)/vect/dig_structs.h
+$(LIB_NAME)_wrap.c: $(ARCH_INCDIR)/vect/dig_defines.h
