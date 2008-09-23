@@ -51,7 +51,7 @@ replaceHa(float new_min_cost, float angle, int row, int col,
     if ((2 * i < *heap_len) &&
 	(heap[2 * i].min_cost > heap[2 * i + 1].min_cost))
 	smaller_child++;
-    while ((smaller_child <= *heap_len) &&
+    while ( (smaller_child <= *heap_len) && (smaller_child > 0) &&
 	   (new_min_cost > heap[smaller_child].min_cost)) {
 	heap[i].min_cost = heap[smaller_child].min_cost;
 	heap[i].angle = heap[smaller_child].angle;
