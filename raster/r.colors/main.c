@@ -193,7 +193,7 @@ int main(int argc, char **argv)
     opt.rules = G_define_standard_option(G_OPT_F_INPUT);
     opt.rules->key = "rules";
     opt.rules->required = NO;
-    opt.rules->description = _("Path to rules file");
+    opt.rules->description = _("Path to rules file (\"-\" to read rules from stdin)");
     opt.rules->guisection = _("Colors");
 
     flag.r = G_define_flag();
@@ -258,6 +258,24 @@ int main(int argc, char **argv)
     style = opt.colr->answer;
     cmap = opt.rast->answer;
     rules = opt.rules->answer;
+
+    /* handle 'color=rules rules=file' */
+    if(style && rules) {
+	if(strcmp(style, "rules") == 0)
+	    style = NULL;
+    }
+
+    /* handle rules="-" (from stdin) by translating that to colors=rules */
+    /* this method should not be ported to GRASS 7 where color=rules DNE */
+    if(rules && strcmp(rules, "-") == 0) {
+	if(style && (strcmp(style, "rules") != 0))
+	    G_fatal_error(
+	      _("\"color\", \"rules\", and \"raster\" options are mutually exclusive"));
+	else {
+	    style = G_store("rules");
+	    rules = NULL;
+	}
+    }
 
     if (!name)
 	G_fatal_error(_("No map specified"));
