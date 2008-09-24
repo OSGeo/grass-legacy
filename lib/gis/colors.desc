@@ -21,7 +21,7 @@ population: color table covering human population classification breaks
 rainbow: rainbow color table
 ramp: color ramp
 random: random color table
-rules: create new color table based on user-specified rules
+rules: create new color table based on user-specified rules read from stdin
 ryb: red through yellow to blue
 ryg: red through yellow to green
 sepia: yellowish-brown through to white
