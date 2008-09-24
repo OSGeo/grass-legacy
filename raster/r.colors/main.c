@@ -259,24 +259,6 @@ int main(int argc, char **argv)
     cmap = opt.rast->answer;
     rules = opt.rules->answer;
 
-    /* handle 'color=rules rules=file' */
-    if(style && rules) {
-	if(strcmp(style, "rules") == 0)
-	    style = NULL;
-    }
-
-    /* handle rules="-" (from stdin) by translating that to colors=rules */
-    /* this method should not be ported to GRASS 7 where color=rules DNE */
-    if(rules && strcmp(rules, "-") == 0) {
-	if(style && (strcmp(style, "rules") != 0))
-	    G_fatal_error(
-	      _("\"color\", \"rules\", and \"raster\" options are mutually exclusive"));
-	else {
-	    style = G_store("rules");
-	    rules = NULL;
-	}
-    }
-
     if (!name)
 	G_fatal_error(_("No map specified"));
 
@@ -289,6 +271,12 @@ int main(int argc, char **argv)
     if ((style && (cmap || rules)) || (cmap && rules))
 	G_fatal_error(_("\"color\", \"rules\", and \"raster\" options are mutually exclusive"));
 
+    /* handle rules="-" (from stdin) by translating that to colors=rules */
+    /* this method should not be ported to GRASS 7 where color=rules DNE */
+    if (rules && strcmp(rules, "-") == 0) {
+	style = G_store("rules");
+	rules = NULL;
+    }
 
     mapset = G_find_cell2(name, "");
     if (mapset == NULL)
