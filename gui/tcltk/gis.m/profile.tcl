@@ -51,7 +51,7 @@ proc GmProfile::select_rast { } {
     variable pmap
     variable status
     
-    set m [GSelect cell title "Raster map for profile" parent [winfo containing [winfo pointerx .] [winfo pointery .]]]
+    set m [GSelect cell title [G_msg "Raster map for profile"] parent [winfo containing [winfo pointerx .] [winfo pointery .]]]
     if { $m != "" } { 
         set pmap $m
     }
@@ -74,7 +74,7 @@ proc GmProfile::create { mapcan } {
 	
 	if { [winfo exists .profile] } {return}
 
-	set ptitle "Profile Window"
+	set ptitle [G_msg "Profile Window"]
 	toplevel .profile
     wm title .profile [G_msg $ptitle]
 
