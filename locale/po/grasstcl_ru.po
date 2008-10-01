@@ -1057,7 +1057,7 @@ msgstr "столбцы"
 #: ../gui/tcltk/d.m/chart.tcl:125
 #: ../gui/tcltk/d.m/vector.tcl:353
 msgid "Show columns"
-msgstr "Показать столбцы
+msgstr "Показать столбцы"
 
 #: ../gui/tcltk/gis.m/thematic.tcl:274
 msgid "   show data"
