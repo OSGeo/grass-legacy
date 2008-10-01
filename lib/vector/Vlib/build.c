@@ -50,6 +50,9 @@ int prnmsg(char *msg, ...)
     char buffer[1000];
     va_list ap;
 
+    if (G_verbose() == G_verbose_min())
+        return 1;
+    
     if (Msgout != NULL) {
 	va_start(ap, msg);
 	vsprintf(buffer, msg, ap);
