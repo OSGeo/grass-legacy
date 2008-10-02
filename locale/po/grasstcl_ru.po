@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: grasstcl_ru\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2008-08-19 23:37+0200\n"
-"PO-Revision-Date: 2008-08-19 23:32-0600\n"
+"PO-Revision-Date: 2008-09-29 20:16-0600\n"
 "Last-Translator: Maxim Dubinin <sim@gis-lab.info>\n"
 "Language-Team: Russian <grass-translations@lists.osgeo.org>\n"
 "MIME-Version: 1.0\n"
@@ -591,7 +591,6 @@ msgid "Search"
 msgstr "Поиск"
 
 #: ../lib/init/epsg_option.tcl:389
-#, fuzzy
 msgid "Grab code"
 msgstr "Захватить код"
 
@@ -1057,7 +1056,7 @@ msgstr "столбцы"
 #: ../gui/tcltk/d.m/chart.tcl:125
 #: ../gui/tcltk/d.m/vector.tcl:353
 msgid "Show columns"
-msgstr "Показать столбцы"
+msgstr "Показать столбц"
 
 #: ../gui/tcltk/gis.m/thematic.tcl:274
 msgid "   show data"
@@ -1309,7 +1308,6 @@ msgstr "показываемый файл подписей"
 
 #: ../gui/tcltk/gis.m/labels.tcl:146
 #: ../gui/tcltk/d.m/labels.tcl:80
-#, fuzzy
 msgid "Display constraints:"
 msgstr "Ограничения дисплея:"
 
@@ -1347,7 +1345,6 @@ msgid "Loading GIS Manager"
 msgstr "Загрузка GIS менеджера"
 
 #: ../gui/tcltk/gis.m/gm.tcl:220
-#, fuzzy
 msgid "Creating MainFrame..."
 msgstr "Создание MainFrame..."
 
@@ -2977,7 +2974,6 @@ msgid "Create LRS"
 msgstr "Создать LRS"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:463
-#, fuzzy
 msgid "Create stationing"
 msgstr "Создать станции"
 
@@ -3100,7 +3096,6 @@ msgid "Generate random points"
 msgstr "Создать случайные точки"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:504
-#, fuzzy
 msgid "Perturb points"
 msgstr "Сместить точки"
 
@@ -4214,7 +4209,6 @@ msgid "Display: "
 msgstr "Показать:"
 
 #: ../gui/tcltk/gis.m/vector.tcl:341
-#, fuzzy
 msgid "Shapes "
 msgstr "Объекты"
 
@@ -6361,9 +6355,8 @@ msgid "Paper format"
 msgstr "Формат бумаги"
 
 #: ../gui/tcltk/d.m/print.tcl:180
-#, fuzzy
 msgid "Custom"
-msgstr "Выбор"
+msgstr "По выбору"
 
 #: ../gui/tcltk/d.m/print.tcl:184
 msgid "height:"
