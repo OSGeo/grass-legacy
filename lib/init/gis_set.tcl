@@ -573,10 +573,9 @@ proc gisSetWindow {} {
     if { [CheckLocation] } {
         # setting list of mapsets
 	refresh_ms
-        selFromList .frame0.frameMS.listbox $mapset
-	if { [.frame0.frameMS.listbox get [.frame0.frameMS.listbox curselection]] == $mapset } {
-	        .frame0.frameBUTTONS.ok configure -state normal
-		}
+	if { [selFromList .frame0.frameMS.listbox $mapset] } {
+		.frame0.frameBUTTONS.ok configure -state normal
+	}
     }
 
 	bind .frame0.frameDB.mid.entry <Return> {
@@ -756,16 +755,21 @@ proc cdir { dir } {
 proc selFromList { lis str } {
 # Selects list entry, if there is match
   set siz [$lis size]
-  set curSelected 0
+  set curSelected ""
   for { set x 0 } { $x < $siz } { incr x } {
         if { $str == [$lis get $x] } {
 	        set curSelected $x
 		break
 	}
   }
-  $lis yview $curSelected
-  $lis selection clear 0 end
-  $lis select set $curSelected
+  if { $curSelected != "" } {
+  	$lis yview $curSelected
+  	$lis selection clear 0 end
+  	$lis select set $curSelected
+	return 1
+  } else {
+  	return 0
+  }
 }
 
 #############################################################################
