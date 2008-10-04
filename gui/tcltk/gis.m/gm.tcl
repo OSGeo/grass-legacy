@@ -383,6 +383,7 @@ proc Gm::help { } {
 # sets default display font
 proc Gm::defaultfont { source } {
 	global env iconpath
+	global fontlist
 	variable dfont
 	variable selectedfont
 	variable encoding
@@ -393,12 +394,16 @@ proc Gm::defaultfont { source } {
     toplevel .dispfont
     wm title .dispfont [G_msg "Select GRASS display font"]
     
-    if {[catch {set fontlist [exec d.font --q -l]} error]} {
+    if {[catch {set rawlist [exec d.font --q -L]} error]} {
 	    GmLib::errmsg $error "d.font error"
     }
-    set fontlist [string trim $fontlist]
-    set fontlist [split $fontlist "\n"]
-    set fontlist [lsort -unique $fontlist]
+    set rawlist [split $rawlist "\n"]
+    foreach item $rawlist {
+	set fontinfo [split $item "|"]
+	lappend fontlist $fontinfo
+    }
+    # Case-insensitive search on font long name, removing duplicates
+    set fontlist [lsort -dictionary -unique -index 1 $fontlist]
    
     set row [ frame .dispfont.fontlb ]
     Label $row.a -text [G_msg "Font: "] 
@@ -410,7 +415,7 @@ proc Gm::defaultfont { source } {
     	-relief {sunken}
 
     foreach item $fontlist {
-    	$fontlb insert end $item
+    	$fontlb insert end [lindex $item 1]
     }
     # If $Gm::dfont is empty then it hasn't been set by a layer module
     # before calling this procedure, so we should read the current
@@ -423,10 +428,14 @@ proc Gm::defaultfont { source } {
     set selectedfont $Gm::dfont
      
     if {$Gm::dfont != ""} {
-    	set fontindex [lsearch $fontlist $Gm::dfont]
-    	if {$fontindex > -1} {
+	set fontindex 0
+	foreach item $fontlist {
+	    if { $Gm::dfont eq [lindex $item 0] } {
     		$fontlb selection set $fontindex
     		$fontlb see $fontindex
+		break
+	    }
+	    incr fontindex
     	}
     }
 
@@ -452,7 +461,7 @@ proc Gm::defaultfont { source } {
     pack $row -side bottom -pady 3  -padx 5 -expand 0 -fill x 
     
     bind $fontlb <<ListboxSelect>> {
-    	set Gm::selectedfont [%W get [%W curselection]]
+    	set Gm::selectedfont [lindex [lindex $fontlist [%W curselection]] 0]
     }   
     
 };
