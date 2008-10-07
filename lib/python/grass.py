@@ -1,10 +1,33 @@
 import os
-import os.path
 import sys
 import types
 import subprocess
 import re
 import atexit
+
+# subprocess wrapper that uses shell on Windows
+
+class Popen(subprocess.Popen):
+    def __init__(self, args, bufsize=0, executable=None,
+                 stdin=None, stdout=None, stderr=None,
+                 preexec_fn=None, close_fds=False, shell=None,
+                 cwd=None, env=None, universal_newlines=False,
+                 startupinfo=None, creationflags=0):
+
+	if shell == None:
+	    shell = (sys.platform == "win32")
+
+	subprocess.Popen.__init__(self, args, bufsize, executable,
+                 stdin, stdout, stderr,
+                 preexec_fn, close_fds, shell,
+                 cwd, env, universal_newlines,
+                 startupinfo, creationflags)
+
+PIPE = subprocess.PIPE
+STDOUT = subprocess.STDOUT
+
+def call(*args, **kwargs):
+    return Popen(*args, **kwargs).wait()
 
 # GRASS-oriented interface to subprocess module
 
@@ -32,7 +55,10 @@ def make_command(prog, flags = "", overwrite = False, quiet = False, verbose = F
     if flags:
 	args.append("-%s" % flags)
     for opt, val in options.iteritems():
-	args.append("%s=%s" % (opt, _make_val(val)))
+	if val != None:
+	    if opt[0] == '_':
+		opt = opt[1:]
+	    args.append("%s=%s" % (opt, _make_val(val)))
     return args
 
 def start_command(prog, flags = "", overwrite = False, quiet = False, verbose = False, **kwargs):
@@ -44,19 +70,31 @@ def start_command(prog, flags = "", overwrite = False, quiet = False, verbose = 
 	else:
 	    options[opt] = val
     args = make_command(prog, flags, overwrite, quiet, verbose, **options)
-    return subprocess.Popen(args, **popts)
+    return Popen(args, **popts)
 
 def run_command(*args, **kwargs):
     ps = start_command(*args, **kwargs)
     return ps.wait()
 
 def pipe_command(*args, **kwargs):
-    kwargs['stdout'] = subprocess.PIPE
+    kwargs['stdout'] = PIPE
+    return start_command(*args, **kwargs)
+
+def feed_command(*args, **kwargs):
+    kwargs['stdin'] = PIPE
     return start_command(*args, **kwargs)
 
 def read_command(*args, **kwargs):
     ps = pipe_command(*args, **kwargs)
     return ps.communicate()[0]
+
+def write_command(*args, **kwargs):
+    stdin = kwargs['stdin']
+    kwargs['stdin'] = PIPE
+    p = start_command(*args, **kwargs)
+    p.stdin.write(stdin)
+    p.stdin.close()
+    return p.wait()
 
 def exec_command(prog, flags = "", overwrite = False, quiet = False, verbose = False, env = None, **kwargs):
     args = make_command(prog, flags, overwrite, quiet, verbose, **kwargs)
@@ -110,6 +148,10 @@ def parser():
     if len(sys.argv) > 1 and sys.argv[1] == "@ARGS_PARSED@":
 	return _parse_env()
 
+    cmdline = [basename(sys.argv[0])]
+    cmdline += ['"' + arg + '"' for arg in sys.argv[1:]]
+    os.environ['CMDLINE'] = ' '.join(cmdline)
+
     argv = sys.argv[:]
     name = argv[0]
     if not os.path.isabs(name):
@@ -126,19 +168,45 @@ def parser():
 def tempfile():
     return read_command("g.tempfile", pid = os.getpid()).strip()
 
+# key-value parsers
+
+def parse_key_val(s, sep = '=', dflt = None):
+    result = {}
+    for line in s.splitlines():
+	kv = line.split(sep, 1)
+	k = kv[0].strip()
+	if len(kv) > 1:
+	    v = kv[1]
+	else:
+	    v = dflt
+	result[k] = v
+    return result
+
+_kv_regex = None
+
+def parse_key_val2(s):
+    global _kv_regex
+    if _kv_regex == None:
+	_kv_regex = re.compile("([^=]+)='(.*)';?")
+    result = []
+    for line in s.splitlines():
+	m = _kv_regex.match(line)
+	if m != None:
+	    result.append(m.groups())
+	else:
+	    result.append(line.split('=', 1))
+    return dict(result)
+
 # interface to g.gisenv
 
-_kv_regex = re.compile("([^=]+)='(.*)';?")
-
 def gisenv():
-    lines = read_command("g.gisenv").splitlines()
-    return dict([_kv_regex.match(line).groups() for line in lines])
+    return parse_key_val2(read_command("g.gisenv"))
 
 # interface to g.region
 
 def region():
-    lines = read_command("g.region", flags='g').splitlines()
-    return dict([line.split('=',1) for line in lines])
+    s = read_command("g.region", flags='g')
+    return parse_key_val(s)
 
 def use_temp_region():
     name = "tmp.%s.%d" % (os.path.basename(sys.argv[0]), os.getpid())
@@ -155,12 +223,9 @@ def del_temp_region():
 
 # interface to g.findfile
 
-def find_file(name, element = 'cell'):
-    lines = read_command("g.findfile", element = element, file = name).splitlines()
-    try:
-        return dict([_kv_regex.match(line).groups() for line in lines])
-    except AttributeError:
-        return None
+def find_file(name, element = 'cell', mapset = None):
+    s = read_command("g.findfile", element = element, file = name, mapset = mapset)
+    return parse_key_val2(s)
 
 # interface to g.list
 
@@ -225,3 +290,124 @@ def parse_color(val, dflt = None):
         return tuple(float(v) / 255 for v in vals)
 
     return dflt
+
+# check GRASS_OVERWRITE
+
+def overwrite():
+    owstr = 'GRASS_OVERWRITE'
+    return owstr in os.environ and os.environ[owstr] != '0'
+
+# check GRASS_VERBOSE
+
+def verbosity():
+    vbstr = 'GRASS_VERBOSE'
+    if vbstr:
+	return int(vbstr)
+    else:
+	return 0
+
+## various utilities, not specific to GRASS
+
+# basename inc. extension stripping
+
+def basename(path, ext = None):
+    name = os.path.basename(path)
+    if not ext:
+	return name
+    fs = name.rsplit('.', 1)
+    if len(fs) > 1 and fs[1].lower() == ext:
+	name = fs[0]
+    return name
+
+# find a program (replacement for "which")
+
+def find_program(pgm, args = []):
+    nuldev = file(os.devnull, 'w+')
+    try:
+	call([pgm] + args, stdin = nuldev, stdout = nuldev, stderr = nuldev)
+	found = True
+    except:
+	found = False
+    nuldev.close()
+    return found
+
+# try to remove a file, without complaints
+
+def try_remove(path):
+    try:
+	os.remove(path)
+    except:
+	pass
+
+# try to remove a directory, without complaints
+
+def try_rmdir(path):
+    try:
+	os.rmdir(path)
+    except:
+	pass
+
+# run "v.db.connect -g ..." and parse output
+
+def vector_db(map, layer = None, **args):
+    s = read_command('v.db.connect', flags = 'g', map = map, layer = layer, **args)
+    result = []
+    for l in s.splitlines():
+	f = l.split(' ')
+	if len(f) != 5:
+	    continue
+	if layer and int(layer) == int(f[0]):
+	    return f
+	result.append(f)
+    if not layer:
+	return result
+
+# run "db.describe -c ..." and parse output
+
+def db_describe(table, **args):
+    s = read_command('db.describe', flags = 'c', table = table, **args)
+    if not s:
+	return None
+    cols = []
+    result = {}
+    for l in s.splitlines():
+	f = l.split(':')
+	key = f[0]
+	f[1] = f[1].lstrip(' ')
+	if key.startswith('Column '):
+	    n = int(key.split(' ')[1])
+	    cols.insert(n, f[1:])
+	elif key in ['ncols', 'nrows']:
+	    result[key] = int(f[1])
+	else:
+	    result[key] = f[1:]
+    result['cols'] = cols
+    return result
+
+# run "db.connect -p" and parse output
+
+def db_connection():
+    s = read_command('db.connect', flags = 'p')
+    return parse_key_val(s, sep = ':')
+
+# run "v.info -c ..." and parse output
+
+def vector_columns(map, layer = None, **args):
+    s = read_command('v.info', flags = 'c', map = map, layer = layer, quiet = True, **args)
+    result = []
+    for line in s.splitlines():
+	f = line.split('|')
+	if len(f) == 2:
+	    result.append(f)
+    return result
+
+# add vector history
+
+def vector_history(map):
+    run_command('v.support', map = map, cmdhist = os.environ['CMDLINE'])
+
+# add raster history
+
+def raster_history(map):
+    run_command('r.support', map = map, history = os.environ['CMDLINE'])
+
