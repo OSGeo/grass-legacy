@@ -157,7 +157,10 @@ def del_temp_region():
 
 def find_file(name, element = 'cell'):
     lines = read_command("g.findfile", element = element, file = name).splitlines()
-    return dict([_kv_regex.match(line).groups() for line in lines])
+    try:
+        return dict([_kv_regex.match(line).groups() for line in lines])
+    except AttributeError:
+        return None
 
 # interface to g.list
 
