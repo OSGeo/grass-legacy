@@ -127,7 +127,7 @@ text
   <dd>defines the name (path) of a shell script to be processed as batch job.</dd>
 
   <br>
-  <dt>GRASS_ERROR_LOG</dt>
+  <dt>GIS_ERROR_LOG</dt>
   <dd>If set, $GIS_ERROR_LOG should be the absolute path to the log file (a
    relative path will be interpreted relative to the process' cwd, not
    the cwd at the point the user set the variable). If not set,
@@ -582,14 +582,6 @@ detailed list of the variables.
     <tt>touch $HOME/GIS_ERROR_LOG</tt><br>
    See also GIS_ERROR_LOG variable.</dd>
   
-  <br>
-  <dt>$GISBASE/GIS_ERROR_LOG</dt>
-  <dd>if this file exists then all GRASS error and warning messages are 
-    logged here. Applies to all users. (proper write permissions must be in place)
-    <br><br>
-    <i>Note:</i>
-    Error and warning messages encountered while using the GUI menus are not logged.
-  </dd>
 </dl>
 
 <h3>SEE ALSO</h3>
