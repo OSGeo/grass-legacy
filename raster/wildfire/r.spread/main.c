@@ -219,7 +219,7 @@ int main(int argc, char *argv[])
     parm.x_out->gisprompt = "new,cell,raster";
     parm.x_out->guisection = _("Output_maps");
     parm.x_out->description =
-	_("Name of raster map to contain X_BACK coordiates");
+	_("Name of raster map to contain X_BACK coordinates");
 
     parm.y_out = G_define_option();
     parm.y_out->key = "y_output";
@@ -227,7 +227,7 @@ int main(int argc, char *argv[])
     parm.y_out->gisprompt = "new,cell,raster";
     parm.y_out->guisection = _("Output_maps");
     parm.y_out->description =
-	_("Name of raster map to contain Y_BACK coordiates");
+	_("Name of raster map to contain Y_BACK coordinates");
 
     /* please, remove before GRASS 7 released */
     flag.verbose = G_define_flag();
