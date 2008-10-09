@@ -48,17 +48,13 @@ int main(int argc, char **argv)
     G_gisinit(argv[0]);
 
     module = G_define_module();
-    module->keywords = _("display");
+    module->keywords = _("display, raster");
     module->description =
 	_("Displays and overlays raster map layers "
 	  "in the active display frame on the graphics monitor.");
 
     /* set up command line */
-    map = G_define_option();
-    map->key = "map";
-    map->type = TYPE_STRING;
-    map->required = YES;
-    map->gisprompt = "old,cell,raster";
+    map = G_define_standard_option(G_OPT_R_MAP);
     map->description = _("Raster map to be displayed");
 
     catlist = G_define_option();
@@ -80,9 +76,8 @@ int main(int argc, char **argv)
     bg = G_define_option();
     bg->key = "bg";
     bg->key_desc = "color";
-    bg->type = TYPE_STRING;
+    bg->gisprompt = GISPROMPT_COLOR;
     bg->required = NO;
-    bg->options = color_list();
     bg->description = _("Background color (for null)");
 
     flag_o = G_define_flag();
