@@ -28,7 +28,10 @@ int display(char *name,
     *********/
 
     if (bg) {
-	get_rgb(bg, &r, &g, &b);
+	if (G_str_to_color(bg, &r, &g, &b) != 1) {
+	    G_warning(_("[%s]: No such color"), bg);
+	    r = g = b = 255;
+	}
 	G_set_null_value_color(r, g, b, &colors);
     }
 
