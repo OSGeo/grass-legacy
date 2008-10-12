@@ -41,7 +41,11 @@ class Select(wx.combo.ComboCtrl):
         """
         wx.combo.ComboCtrl.__init__(self, parent=parent, id=id, size=size)
 
+        self.GetChildren()[0].SetName("Select")
+        self.GetChildren()[0].type = type
+        
         self.tcp = TreeCtrlComboPopup()
+
         self.SetPopupControl(self.tcp)
         self.SetPopupExtents(0,100)
         self.tcp.GetElementList(type, mapsets, exceptOf)
@@ -104,6 +108,7 @@ class TreeCtrlComboPopup(wx.combo.ComboPopup):
         for value in self.value:
             str += value + ","
         str = str.rstrip(',')
+        
         return str
 
     def OnPopup(self):
@@ -417,18 +422,27 @@ class LayerSelect(wx.Choice):
 
         super(LayerSelect, self).__init__(parent, id, pos=pos, size=size,
                                           choices=choices)
+        self.SetName("LayerSelect")
 
-        if not vector:
+        if len(choices) > 1:
             return
 
-        self.InsertLayers(vector)
+        if vector:
+            self.InsertLayers(vector)
+        else:
+            self.SetItems(['1'])
+            self.SetSelection(0)
         
     def InsertLayers(self, vector):
         """Insert layers for a vector into the layer combobox"""
         layerchoices = VectorDBInfo(vector).layers.keys()
 
-        self.SetItems(map(str, layerchoices))
-        self.SetStringSelection('1')
+        if len(layerchoices) > 1:
+            self.SetItems(map(str, layerchoices))
+            self.SetStringSelection('1')
+        else:
+            self.SetItems(['1'])
+            self.SetSelection(0)
         
 class ColumnSelect(wx.ComboBox):
     """
@@ -437,24 +451,30 @@ class ColumnSelect(wx.ComboBox):
     """
     def __init__(self, parent,
                  id=wx.ID_ANY, value='', pos=wx.DefaultPosition,
-                 size=wx.DefaultSize, vector=None, layer=1, choices=[]):
+                 size=globalvar.DIALOG_COMBOBOX_SIZE, vector=None,
+                 layer=1, choices=[]):
 
         super(ColumnSelect, self).__init__(parent, id, value, pos, size, choices,
                                            style=wx.CB_READONLY)
 
-        if not vector:
-            return
+        self.SetName("ColumnSelect")
 
-        self.InsertColumns(vector, layer)
+        if vector:
+            self.InsertColumns(vector, layer)
                 
     def InsertColumns(self, vector, layer):
         """Insert columns for a vector attribute table into the columns combobox"""
         dbInfo = VectorDBInfo(vector)
-        table = dbInfo.layers[int(layer)]['table']
-        columnchoices = dbInfo.tables[table]
-        #columnchoices.sort()
+        
+        try:
+            table = dbInfo.layers[int(layer)]['table']
+            columnchoices = dbInfo.tables[table]
+        except (KeyError, ValueError):
+            columnchoices = {}
+        
         self.SetItems(columnchoices.keys())
-
+        self.SetValue('')
+        
 class DbColumnSelect(wx.ComboBox):
     """
     Creates combo box for selecting columns from any table.
