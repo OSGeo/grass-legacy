@@ -1132,6 +1132,7 @@ class cmdPanel(wx.Panel):
                                 flag=wx.ADJUST_MINSIZE | wx.RIGHT | wx.LEFT | wx.TOP, border=5)
                 # GIS element entry
                 if p.get('prompt','') not in ('color',
+                                              'color_none',
                                               'dbcolumn',
                                               'dbtable',
                                               'layer') and \
@@ -1180,16 +1181,15 @@ class cmdPanel(wx.Panel):
                     which_sizer.Add(item=win, proportion=0,
                                     flag=wx.ADJUST_MINSIZE | wx.BOTTOM | wx.LEFT, border=5)
                 # color entry
-                elif p.get('prompt', '') == 'color':
-                    # Heuristic way of finding whether transparent is allowed
-                    handle_transparency =  'none' in p.get('description', '')
+                elif p.get('prompt', '') in ('color',
+                                             'color_none'):
                     default_color = (200,200,200)
                     label_color = _("Select Color")
                     if p.get('default','') != '':
                         default_color, label_color = color_resolve( p['default'] )
                     if p.get('value','') != '': # parameter previously set
                         default_color, label_color = color_resolve( p['value'] )
-                    if handle_transparency:
+                    if p.get('prompt', '') == 'color_none':
                         this_sizer = wx.BoxSizer(orient=wx.HORIZONTAL )
                     else:
                         this_sizer = which_sizer
@@ -1202,7 +1202,7 @@ class cmdPanel(wx.Panel):
                     # the selector proper and either a "transparent" button or None
                     p['wxId'] = [btn_colour.GetId(),]
                     btn_colour.Bind(csel.EVT_COLOURSELECT,  self.OnColorChange )
-                    if handle_transparency:
+                    if p.get('prompt', '') == 'color_none':
                         none_check = wx.CheckBox(which_panel, wx.ID_ANY, _("Transparent") )
                         if p.get('value','') != '' and p.get('value',[''])[0] == "none":
                             none_check.SetValue(True)

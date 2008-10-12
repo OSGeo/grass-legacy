@@ -624,7 +624,7 @@ struct Option *G_define_standard_option(int opt)
 	Opt->key_desc = "name";
 	Opt->required = NO;
 	Opt->answer = DEFAULT_FG_COLOR;
-	Opt->gisprompt = GISPROMPT_COLOR;
+	Opt->gisprompt = "old_color,color,color";
 	Opt->label = _("Color");
 	Opt->description = _("Either a standard color name or R:G:B triplet");
 	break;
@@ -634,7 +634,7 @@ struct Option *G_define_standard_option(int opt)
 	Opt->key_desc = "name";
 	Opt->required = NO;
 	Opt->answer = DEFAULT_BG_COLOR;
-	Opt->gisprompt = GISPROMPT_COLOR;
+	Opt->gisprompt = "old_color,color,color_none";
 	Opt->label = _("Background color");
 	Opt->description =
 	    _("Either a standard GRASS color, R:G:B triplet, or \"none\"");
