@@ -335,7 +335,7 @@ struct Option *G_define_standard_option(int opt)
 	Opt->required = NO;
 	Opt->multiple = NO;
 	Opt->description = _("Table name");
-	Opt->gisprompt = GISPROMPT_DBTABLE;
+	Opt->gisprompt = "old_dbtable,dbtable,dbtable";
 	break;
     case G_OPT_DRIVER:
 	Opt->key = "driver";
@@ -360,7 +360,7 @@ struct Option *G_define_standard_option(int opt)
 	Opt->required = NO;
 	Opt->multiple = NO;
 	Opt->description = _("Name of attribute column");
-	Opt->gisprompt = GISPROMPT_DBCOLUMN;
+	Opt->gisprompt = "old_dbcolumn,dbcolumn,dbcolumn";
 	break;
     case G_OPT_COLUMNS:
 	Opt->key = "columns";
@@ -369,7 +369,7 @@ struct Option *G_define_standard_option(int opt)
 	Opt->required = NO;
 	Opt->multiple = YES;
 	Opt->description = _("Name of attribute column(s)");
-	Opt->gisprompt = GISPROMPT_DBCOLUMN;
+	Opt->gisprompt = "old_dbcolumn,dbcolumn,dbcolumn";
 	break;
 
 	/* imagery group */
@@ -573,6 +573,8 @@ struct Option *G_define_standard_option(int opt)
 	Opt->description =
 	    _("A single vector map can be connected to multiple database "
 	      "tables. This number determines which table to use.");
+	Opt->gisprompt = "old_layer,layer,layer";
+	
 	break;
     case G_OPT_V_CAT:
 	Opt->key = "cat";
@@ -2751,17 +2753,10 @@ static int gis_prompt(struct Option *opt, char *buff)
 	ptr1 = G_ask_old_file("", buff, element, desc);
     else if (!strcmp("new_file", age))	/* file shouldn't exist unless overwrite is enabled */
 	ptr1 = G_ask_new_file("", buff, element, desc);
-    else if (!strcmp("color", age))
-	/* These prompts are only implemented in the gui */
-	/* The data can still be entered in the console */
-	return -1;
     else {
-	fprintf(stderr,
-		"\nPROGRAMMER ERROR: first item in gisprompt is <%s>\n", age);
-	fprintf(stderr,
-		"        Must be either new, old, mapset, any, old_file, new_file, or color\n");
 	return -1;
     }
+    
     if (ptr1 == '\0')
 	*buff = '\0';
 
