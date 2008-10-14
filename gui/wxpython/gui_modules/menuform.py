@@ -1171,6 +1171,10 @@ class cmdPanel(wx.Panel):
                         p['wxGetValue'] = win.GetStringSelection
                         win.Bind(wx.EVT_CHOICE, self.OnUpdateSelection)
                         win.Bind(wx.EVT_CHOICE, self.OnSetValue)
+                    elif p.get('prompt', '') == 'dbtable':
+                        win = gselect.TableSelect(parent=which_panel)
+                        p['wxGetValue'] = win.GetStringSelection
+                        win.Bind(wx.EVT_COMBOBOX, self.OnSetValue)
                     else:
                         win = gselect.ColumnSelect(parent=which_panel)
                         p['wxGetValue'] = win.GetStringSelection

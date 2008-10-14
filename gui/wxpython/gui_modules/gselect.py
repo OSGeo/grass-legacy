@@ -443,6 +443,33 @@ class LayerSelect(wx.Choice):
         else:
             self.SetItems(['1'])
             self.SetSelection(0)
+
+class TableSelect(wx.ComboBox):
+    """
+    Creates combo box for selecting attribute tables from the database
+    """
+    def __init__(self, parent,
+                 id=wx.ID_ANY, value='', pos=wx.DefaultPosition,
+                 size=globalvar.DIALOG_COMBOBOX_SIZE,
+                 choices=[]):
+
+        super(TableSelect, self).__init__(parent, id, value, pos, size, choices,
+                                          style=wx.CB_READONLY)
+
+        self.SetName("TableSelect")
+
+        if not choices:
+            self.InsertTables()
+                
+    def InsertTables(self):
+        """Insert attribute tables into combobox"""
+        items = []
+        for table in gcmd.Command(['db.tables',
+                                   '-p']).ReadStdOutput():
+            items.append(table)
+            
+        self.SetItems(items)
+        self.SetValue('')
         
 class ColumnSelect(wx.ComboBox):
     """
