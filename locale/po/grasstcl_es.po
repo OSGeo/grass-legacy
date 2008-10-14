@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: grasstcl_es\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-09-29 17:24+0200\n"
+"POT-Creation-Date: 2008-10-14 16:16+0200\n"
 "PO-Revision-Date: 2008-08-04 11:00+0200\n"
 "Last-Translator: Carlos Davila <carluti@users.sourceforge.net>\n"
 "Language-Team: Español <grass-translations@lists.osgeo.org>\n"
@@ -21,106 +21,106 @@ msgstr ""
 "X-Generator: KBabel 1.11.4\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: ../vector/v.digit/settings.tcl:63
+#: ../vector/v.digit/settings.tcl:75
 msgid "Add new column"
 msgstr "Añadir nueva columna"
 
-#: ../vector/v.digit/settings.tcl:66
+#: ../vector/v.digit/settings.tcl:78
 msgid "Create table"
 msgstr "Crear tabla"
 
-#: ../vector/v.digit/settings.tcl:99
+#: ../vector/v.digit/settings.tcl:111
 msgid "Add command"
 msgstr "Añadir comando"
 
-#: ../vector/v.digit/settings.tcl:135
+#: ../vector/v.digit/settings.tcl:149
 msgid "Table successfully created"
 msgstr "Tabla creada con éxito"
 
-#: ../vector/v.digit/settings.tcl:151
+#: ../vector/v.digit/settings.tcl:165
 msgid "Settings already opened"
 msgstr "Configuración ya abierta"
 
-#: ../vector/v.digit/settings.tcl:160 ../lib/init/epsg_option.tcl:311
-#: ../lib/init/file_option.tcl:263 ../gui/tcltk/gis.m/gm.tcl:446
+#: ../vector/v.digit/settings.tcl:174 ../lib/init/epsg_option.tcl:311
+#: ../lib/init/file_option.tcl:263 ../gui/tcltk/gis.m/gm.tcl:455
 #: ../gui/tcltk/gis.m/animate.tcl:536 ../gui/tcltk/gis.m/dnviz.tcl:228
 #: ../gui/tcltk/gis.m/rules.tcl:170
 msgid "OK"
 msgstr "OK"
 
-#: ../vector/v.digit/settings.tcl:169
+#: ../vector/v.digit/settings.tcl:183
 msgid "Symbology"
 msgstr "Simbología"
 
-#: ../vector/v.digit/settings.tcl:173 ../vector/v.digit/settings.tcl:326
+#: ../vector/v.digit/settings.tcl:187 ../vector/v.digit/settings.tcl:340
 msgid "Background"
 msgstr "Fondo"
 
-#: ../vector/v.digit/settings.tcl:180
+#: ../vector/v.digit/settings.tcl:194
 msgid "Highlight"
 msgstr "Destacar"
 
-#: ../vector/v.digit/settings.tcl:187
+#: ../vector/v.digit/settings.tcl:201
 msgid "Point"
 msgstr "Punto"
 
-#: ../vector/v.digit/settings.tcl:196
+#: ../vector/v.digit/settings.tcl:210
 msgid "Line"
 msgstr "Línea"
 
-#: ../vector/v.digit/settings.tcl:205
+#: ../vector/v.digit/settings.tcl:219
 msgid "Boundary (no area)"
 msgstr "Borde (ningún área)"
 
-#: ../vector/v.digit/settings.tcl:213
+#: ../vector/v.digit/settings.tcl:227
 msgid "Boundary (1 area)"
 msgstr "Borde (1 área)"
 
-#: ../vector/v.digit/settings.tcl:221
+#: ../vector/v.digit/settings.tcl:235
 msgid "Boundary (2 areas)"
 msgstr "Borde (2 áreas)"
 
-#: ../vector/v.digit/settings.tcl:230
+#: ../vector/v.digit/settings.tcl:244
 msgid "Centroid (in area)"
 msgstr "Centroide (dentro del área)"
 
-#: ../vector/v.digit/settings.tcl:238
+#: ../vector/v.digit/settings.tcl:252
 msgid "Centroid (outside area)"
 msgstr "Centroide (fuera del área)"
 
-#: ../vector/v.digit/settings.tcl:246
+#: ../vector/v.digit/settings.tcl:260
 msgid "Centroid (duplicate in area)"
 msgstr "Centroide (duplicado en el área)"
 
-#: ../vector/v.digit/settings.tcl:255
+#: ../vector/v.digit/settings.tcl:269
 msgid "Node (1 line)"
 msgstr "Nodo (1 línea)"
 
-#: ../vector/v.digit/settings.tcl:263
+#: ../vector/v.digit/settings.tcl:277
 msgid "Node (2 lines)"
 msgstr "Nodo (2 líneas)"
 
-#: ../vector/v.digit/settings.tcl:273
+#: ../vector/v.digit/settings.tcl:287
 msgid "Settings"
 msgstr "Preferencias"
 
-#: ../vector/v.digit/settings.tcl:278
+#: ../vector/v.digit/settings.tcl:292
 msgid "Snapping threshold in screen pixels"
 msgstr "Umbral de dibujo en píxeles de pantalla"
 
-#: ../vector/v.digit/settings.tcl:288
+#: ../vector/v.digit/settings.tcl:302
 msgid "Snapping threshold in map units"
 msgstr "Umbral de dibujo en unidades del mapa"
 
-#: ../vector/v.digit/settings.tcl:305
+#: ../vector/v.digit/settings.tcl:319
 msgid "Line width in screen pixels"
 msgstr "Anchura de línea en píxeles de pantalla"
 
-#: ../vector/v.digit/settings.tcl:307
+#: ../vector/v.digit/settings.tcl:321
 msgid "Set line width in pixels"
 msgstr "Establecer la anchura de línea en píxeles"
 
-#: ../vector/v.digit/settings.tcl:315
+#: ../vector/v.digit/settings.tcl:329
 msgid "Table"
 msgstr "Tabla"
 
@@ -287,16 +287,16 @@ msgstr "Ok"
 
 #: ../lib/gtcltk/select.tcl:209 ../lib/init/epsg_option.tcl:167
 #: ../lib/init/epsg_option.tcl:314 ../lib/init/file_option.tcl:114
-#: ../lib/init/file_option.tcl:266 ../gui/tcltk/gis.m/gm.tcl:449
+#: ../lib/init/file_option.tcl:266 ../gui/tcltk/gis.m/gm.tcl:458
 #: ../gui/tcltk/gis.m/animate.tcl:538 ../gui/tcltk/gis.m/dnviz.tcl:230
-#: ../gui/tcltk/gis.m/mapcanvas.tcl:855 ../gui/tcltk/gis.m/georect.tcl:703
+#: ../gui/tcltk/gis.m/mapcanvas.tcl:859 ../gui/tcltk/gis.m/georect.tcl:703
 #: ../gui/tcltk/gis.m/rules.tcl:172
 msgid "Cancel"
 msgstr "Cancelar"
 
 #: ../lib/gis/gui.tcl:11 ../lib/gis/gui.tcl:15 ../lib/gis/gui.tcl:19
-#: ../lib/gis/gui.tcl:310 ../gui/tcltk/gis.m/runandoutput.tcl:266
-#: ../gui/tcltk/gis.m/runandoutput.tcl:272
+#: ../lib/gis/gui.tcl:310 ../gui/tcltk/gis.m/runandoutput.tcl:270
+#: ../gui/tcltk/gis.m/runandoutput.tcl:276
 #: ../gui/tcltk/gis.m/grassabout.tcl:94 ../gui/tcltk/gis.m/gmlib.tcl:141
 msgid "Error"
 msgstr "Error"
@@ -366,7 +366,7 @@ msgstr "Ejecutar"
 msgid "Help"
 msgstr "Ayuda"
 
-#: ../lib/gis/gui.tcl:514 ../gui/tcltk/gis.m/runandoutput.tcl:127
+#: ../lib/gis/gui.tcl:514 ../gui/tcltk/gis.m/runandoutput.tcl:131
 msgid "Clear"
 msgstr "Limpiar"
 
@@ -565,9 +565,9 @@ msgstr ""
 "Mensaje de error: %s"
 
 #: ../lib/init/gis_set.tcl:128 ../lib/init/gis_set.tcl:379
-#: ../lib/init/gis_set.tcl:485 ../lib/init/gis_set.tcl:609
-#: ../lib/init/gis_set.tcl:630 ../lib/init/gis_set.tcl:648
-#: ../lib/init/gis_set.tcl:676
+#: ../lib/init/gis_set.tcl:485 ../lib/init/gis_set.tcl:608
+#: ../lib/init/gis_set.tcl:629 ../lib/init/gis_set.tcl:647
+#: ../lib/init/gis_set.tcl:675
 msgid "WARNING: invalid location"
 msgstr "AVISO: localización no válida"
 
@@ -695,7 +695,7 @@ msgstr ""
 "AVISO: la localización seleccionada <%s> no es válida. \n"
 "Intentar de nuevo con una localización válida."
 
-#: ../lib/init/gis_set.tcl:491 ../lib/init/gis_set.tcl:654
+#: ../lib/init/gis_set.tcl:491 ../lib/init/gis_set.tcl:653
 msgid "WARNING: invalid mapset"
 msgstr "AVISO: directorio de mapas no válido"
 
@@ -722,8 +722,8 @@ msgstr ""
 "AVISO: La base de datos no es válida. Buscando el primer directorio válido "
 "en directorios superiores"
 
-#: ../lib/init/gis_set.tcl:610 ../lib/init/gis_set.tcl:631
-#: ../lib/init/gis_set.tcl:649 ../lib/init/gis_set.tcl:677
+#: ../lib/init/gis_set.tcl:609 ../lib/init/gis_set.tcl:630
+#: ../lib/init/gis_set.tcl:648 ../lib/init/gis_set.tcl:676
 #, tcl-format
 msgid ""
 "Warning: selected location <%%s> is not valid. \n"
@@ -732,16 +732,16 @@ msgstr ""
 "AVISO: la localización seleccionada <%%s> no es válida. \n"
 "Intentar de nuevo con una localización válida."
 
-#: ../lib/init/gis_set.tcl:655
+#: ../lib/init/gis_set.tcl:654
 #, tcl-format
 msgid "Warning: <%%s> is not a valid mapset"
 msgstr "AVISO: <%%s> no es un directorio de mapas válido"
 
-#: ../lib/init/gis_set.tcl:747
+#: ../lib/init/gis_set.tcl:746
 msgid "WARNING: change directory failed"
 msgstr "AVISO: falló el cambio de directorio"
 
-#: ../lib/init/gis_set.tcl:748
+#: ../lib/init/gis_set.tcl:747
 #, tcl-format
 msgid ""
 "Warning: could not change directory to <%s>.\n"
@@ -796,7 +796,7 @@ msgstr "AVISO: Por favor, especificar un archivo georreferenciado válido"
 #: ../gui/tcltk/gis.m/chart.tcl:89 ../gui/tcltk/gis.m/chart.tcl:441
 #: ../gui/tcltk/gis.m/vector.tcl:194 ../gui/tcltk/gis.m/vector.tcl:819
 #: ../gui/tcltk/gis.m/cmd.tcl:75 ../gui/tcltk/gis.m/cmd.tcl:206
-#: ../gui/tcltk/gis.m/mapcanvas.tcl:212 ../gui/tcltk/gis.m/mapcanvas.tcl:221
+#: ../gui/tcltk/gis.m/mapcanvas.tcl:212 ../gui/tcltk/gis.m/mapcanvas.tcl:222
 #: ../gui/tcltk/gis.m/barscale.tcl:91 ../gui/tcltk/gis.m/barscale.tcl:401
 #: ../gui/tcltk/gis.m/rgbhis.tcl:83 ../gui/tcltk/gis.m/rgbhis.tcl:362
 #: ../gui/tcltk/gis.m/dtext.tcl:92 ../gui/tcltk/gis.m/dtext.tcl:401
@@ -1100,6 +1100,16 @@ msgstr "guardar"
 msgid "Save legend to EPS file"
 msgstr "Guardar leyenda en archivo EPS"
 
+#: ../gui/tcltk/gis.m/profile.tcl:54
+#, fuzzy
+msgid "Raster map for profile"
+msgstr "Mapa ráster para la leyenda"
+
+#: ../gui/tcltk/gis.m/profile.tcl:77
+#, fuzzy
+msgid "Profile Window"
+msgstr "Análisis del terreno"
+
 #: ../gui/tcltk/gis.m/profile.tcl:110
 msgid ""
 "Select raster map to profile.\n"
@@ -1128,7 +1138,7 @@ msgstr "Guardar perfil en archivo EPS"
 msgid "r.univar error"
 msgstr "error de r.univar"
 
-#: ../gui/tcltk/gis.m/profile.tcl:415 ../gui/tcltk/gis.m/mapcanvas.tcl:433
+#: ../gui/tcltk/gis.m/profile.tcl:415 ../gui/tcltk/gis.m/mapcanvas.tcl:435
 msgid "g.proj or projection error"
 msgstr "error de g.prog o de proyección"
 
@@ -1238,54 +1248,54 @@ msgstr "Visualización de mapa %d"
 msgid "GRASS%s GIS Manager - %s"
 msgstr "Administrador GIS - %s de GRASS%s"
 
-#: ../gui/tcltk/gis.m/gm.tcl:394
+#: ../gui/tcltk/gis.m/gm.tcl:395
 msgid "Select GRASS display font"
 msgstr "Seleccionar fuente de visualización de GRASS"
 
-#: ../gui/tcltk/gis.m/gm.tcl:404
+#: ../gui/tcltk/gis.m/gm.tcl:409
 msgid "Font: "
 msgstr "Fuente: "
 
-#: ../gui/tcltk/gis.m/gm.tcl:439
+#: ../gui/tcltk/gis.m/gm.tcl:448
 msgid "Character encoding: "
 msgstr "Codificación de caracteres: "
 
-#: ../gui/tcltk/gis.m/gm.tcl:520
+#: ../gui/tcltk/gis.m/gm.tcl:529
 #, tcl-format
 msgid "GRASS%s GIS Manager - %s %s"
 msgstr "Administrador GIS - %s %s de GRASS%s"
 
-#: ../gui/tcltk/gis.m/runandoutput.tcl:118
+#: ../gui/tcltk/gis.m/runandoutput.tcl:119
 msgid "Run (background)"
 msgstr "Ejecutar (segundo plano)"
 
-#: ../gui/tcltk/gis.m/runandoutput.tcl:120
+#: ../gui/tcltk/gis.m/runandoutput.tcl:122
 msgid "Run (GUI)"
 msgstr "Ejecutar (GUI)"
 
-#: ../gui/tcltk/gis.m/runandoutput.tcl:122
+#: ../gui/tcltk/gis.m/runandoutput.tcl:125
 msgid "Run (in Xterm)"
 msgstr "Ejecutar (en Xterm)"
 
-#: ../gui/tcltk/gis.m/runandoutput.tcl:125 ../gui/tcltk/gis.m/gmmenu.tcl:88
-#: ../gui/tcltk/gis.m/mapcanvas.tcl:859 ../gui/tcltk/d.m/menu.tcl:172
+#: ../gui/tcltk/gis.m/runandoutput.tcl:129 ../gui/tcltk/gis.m/gmmenu.tcl:88
+#: ../gui/tcltk/gis.m/mapcanvas.tcl:863 ../gui/tcltk/d.m/menu.tcl:172
 msgid "Save"
 msgstr "Guardar"
 
-#: ../gui/tcltk/gis.m/runandoutput.tcl:148
+#: ../gui/tcltk/gis.m/runandoutput.tcl:152
 msgid "Output - GIS.m"
 msgstr "Salida - GIS.m"
 
-#: ../gui/tcltk/gis.m/runandoutput.tcl:250
+#: ../gui/tcltk/gis.m/runandoutput.tcl:254
 #, fuzzy
 msgid "X Windows not available"
 msgstr "GhostScript no disponible"
 
-#: ../gui/tcltk/gis.m/runandoutput.tcl:251
+#: ../gui/tcltk/gis.m/runandoutput.tcl:255
 msgid "Functions that require X Windows are not available in Windows"
 msgstr ""
 
-#: ../gui/tcltk/gis.m/runandoutput.tcl:273
+#: ../gui/tcltk/gis.m/runandoutput.tcl:277
 msgid "This module requires X11 support, but no xmons were found"
 msgstr ""
 "Este módulo requiere soporte para X11, pero no se encontró ningún monitor X "
@@ -1361,7 +1371,7 @@ msgstr ""
 "visualización"
 
 #: ../gui/tcltk/gis.m/maptool.tcl:228 ../gui/tcltk/gis.m/gmmenu.tcl:615
-#: ../gui/tcltk/gis.m/mapcanvas.tcl:1860 ../gui/tcltk/d.m/menu.tcl:554
+#: ../gui/tcltk/gis.m/mapcanvas.tcl:1865 ../gui/tcltk/d.m/menu.tcl:554
 msgid "Query"
 msgstr "Consultas"
 
@@ -4079,40 +4089,40 @@ msgstr " o <"
 msgid "Command:"
 msgstr "Comando:"
 
-#: ../gui/tcltk/gis.m/mapcanvas.tcl:523
+#: ../gui/tcltk/gis.m/mapcanvas.tcl:526
 msgid "Maximum zoom-in reached"
 msgstr "Máximo aumento de zum alcanzado"
 
-#: ../gui/tcltk/gis.m/mapcanvas.tcl:593 ../gui/tcltk/gis.m/mapcanvas.tcl:1220
+#: ../gui/tcltk/gis.m/mapcanvas.tcl:596 ../gui/tcltk/gis.m/mapcanvas.tcl:1225
 #: ../gui/tcltk/gis.m/georect.tcl:1587
 msgid "Error setting region"
 msgstr "Error al establecer la región"
 
-#: ../gui/tcltk/gis.m/mapcanvas.tcl:601
+#: ../gui/tcltk/gis.m/mapcanvas.tcl:605
 msgid "please wait..."
 msgstr "por favor espere..."
 
-#: ../gui/tcltk/gis.m/mapcanvas.tcl:760 ../gui/tcltk/gis.m/mapcanvas.tcl:1814
+#: ../gui/tcltk/gis.m/mapcanvas.tcl:764 ../gui/tcltk/gis.m/mapcanvas.tcl:1819
 msgid "You have to select map layer first"
 msgstr "Tiene que seleccionar la capa del mapa primero"
 
-#: ../gui/tcltk/gis.m/mapcanvas.tcl:761 ../gui/tcltk/gis.m/mapcanvas.tcl:1815
+#: ../gui/tcltk/gis.m/mapcanvas.tcl:765 ../gui/tcltk/gis.m/mapcanvas.tcl:1820
 msgid "No map layer selected"
 msgstr "Ninguna capa de mapa seleccionada"
 
-#: ../gui/tcltk/gis.m/mapcanvas.tcl:833
+#: ../gui/tcltk/gis.m/mapcanvas.tcl:837
 msgid "Save Region"
 msgstr "Guardar región"
 
-#: ../gui/tcltk/gis.m/mapcanvas.tcl:836
+#: ../gui/tcltk/gis.m/mapcanvas.tcl:840
 msgid "Save current display geometry to named region"
 msgstr "Guardar las límites de la visualización actual para la región indicada"
 
-#: ../gui/tcltk/gis.m/mapcanvas.tcl:842
+#: ../gui/tcltk/gis.m/mapcanvas.tcl:846
 msgid "Enter region name"
 msgstr "Introducir nombre de región"
 
-#: ../gui/tcltk/gis.m/mapcanvas.tcl:877
+#: ../gui/tcltk/gis.m/mapcanvas.tcl:881
 #, tcl-format
 msgid ""
 "Region file %s already exists. \n"
@@ -4121,52 +4131,52 @@ msgstr ""
 "El archivo de región %s ya existe. \n"
 "¿Quiere sobrescribirlo?"
 
-#: ../gui/tcltk/gis.m/mapcanvas.tcl:1064
+#: ../gui/tcltk/gis.m/mapcanvas.tcl:1068
 #, tcl-format
 msgid "Display: rows=%d cols=%d  N-S res=%g  E-W res=%g"
 msgstr "Mostrar: filas=%d columnas=%d resolución N-S=%g resolución E-W=%g"
 
-#: ../gui/tcltk/gis.m/mapcanvas.tcl:1136
+#: ../gui/tcltk/gis.m/mapcanvas.tcl:1140
 msgid "Error setting region (Problem with g.region?)"
 msgstr "Error al establecer la región (¿Problema con g.region?)"
 
-#: ../gui/tcltk/gis.m/mapcanvas.tcl:1183 ../gui/tcltk/gis.m/mapcanvas.tcl:1188
+#: ../gui/tcltk/gis.m/mapcanvas.tcl:1188 ../gui/tcltk/gis.m/mapcanvas.tcl:1193
 msgid "Error reading current resolution with g.region"
 msgstr "Error al leer la resolución actual con g.region"
 
-#: ../gui/tcltk/gis.m/mapcanvas.tcl:1245 ../gui/tcltk/gis.m/georect.tcl:2029
+#: ../gui/tcltk/gis.m/mapcanvas.tcl:1250 ../gui/tcltk/gis.m/georect.tcl:2029
 msgid "Drag or click mouse to zoom"
 msgstr "Arrastrar o clic de ratón para hacer zum"
 
-#: ../gui/tcltk/gis.m/mapcanvas.tcl:1247 ../gui/tcltk/gis.m/georect.tcl:2031
+#: ../gui/tcltk/gis.m/mapcanvas.tcl:1252 ../gui/tcltk/gis.m/georect.tcl:2031
 msgid "Drag or click mouse to unzoom"
 msgstr "Arrastrar o clic de ratón para deshacer zum"
 
-#: ../gui/tcltk/gis.m/mapcanvas.tcl:1482 ../gui/tcltk/gis.m/georect.tcl:2229
+#: ../gui/tcltk/gis.m/mapcanvas.tcl:1487 ../gui/tcltk/gis.m/georect.tcl:2229
 msgid "Drag with mouse to pan"
 msgstr "Arrastrar con el ratón para panorámica"
 
-#: ../gui/tcltk/gis.m/mapcanvas.tcl:1609
+#: ../gui/tcltk/gis.m/mapcanvas.tcl:1614
 msgid "Measurement"
 msgstr "Medida"
 
-#: ../gui/tcltk/gis.m/mapcanvas.tcl:1628
+#: ../gui/tcltk/gis.m/mapcanvas.tcl:1633
 msgid "Draw measure line with mouse"
 msgstr "Dibujar línea de medida con el ratón"
 
-#: ../gui/tcltk/gis.m/mapcanvas.tcl:1785
+#: ../gui/tcltk/gis.m/mapcanvas.tcl:1790
 msgid "Click to query feature"
 msgstr "Hacer clic para consultar elemento"
 
-#: ../gui/tcltk/gis.m/mapcanvas.tcl:1853
+#: ../gui/tcltk/gis.m/mapcanvas.tcl:1858
 msgid "This layer type does not support queries"
 msgstr "Este tipo de capa no soporta consultas"
 
-#: ../gui/tcltk/gis.m/mapcanvas.tcl:1854
+#: ../gui/tcltk/gis.m/mapcanvas.tcl:1859
 msgid "Query not supported"
 msgstr "Consulta no soportada"
 
-#: ../gui/tcltk/gis.m/mapcanvas.tcl:1861
+#: ../gui/tcltk/gis.m/mapcanvas.tcl:1866
 msgid "You must select a map to query\n"
 msgstr "Se debe seleccionar un mapa a consultar\n"
 
