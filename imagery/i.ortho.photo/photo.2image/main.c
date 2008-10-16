@@ -8,8 +8,10 @@
  *               Bernhard Reiter <bernhard intevation.de>, 
  *               Brad Douglas <rez touchofmadness.com>, 
  *               Glynn Clements <glynn gclements.plus.com>
- * PURPOSE:      mark fiducial or reseau points on an image
- * COPYRIGHT:    (C) 1999-2007 by the GRASS Development Team
+ *               Hamish Bowman
+ *
+ * PURPOSE:      Mark fiducial or reseau points on an image
+ * COPYRIGHT:    (C) 1999-2008 by the GRASS Development Team
  *
  *               This program is free software under the GNU General Public
  *               License (>=v2). Read the file COPYING that comes with GRASS
@@ -25,26 +27,46 @@
 #include <grass/gis.h>
 #include <grass/raster.h>
 #include <grass/imagery.h>
+#include <grass/glocale.h>
 #include "globals.h"
 
 
 int main(int argc, char *argv[])
 {
-    char *name, *location, *mapset, *camera;
+    struct GModule *module;
+    struct Option *group_opt;
+
+    char mapset[GMAPSET_MAX];
+    char name[GNAME_MAX];
+
+    char *camera;
     int nfiles;
     struct Cell_head cellhd;
-
     /* struct Ortho_Image_Group    group;   -- in globals.h */
 
-    if (argc != 2)
-	G_fatal_error("usage: %s group.", argv[0]);
+
+    /* must run in a term window */
+    G_putenv("GRASS_UI_TERM", "1");
 
     G_gisinit(argv[0]);
+
+    module = G_define_module();
+    module->keywords = _("imagery, orthorectify");
+    module->description =
+	_("Interactively mark fiducial or reseau points on an image.");
+
+    group_opt = G_define_standard_option(G_OPT_I_GROUP);
+    group_opt->description =
+	_("Name of imagery group for ortho-rectification");
+
+    if (G_parser(argc, argv))
+	exit(EXIT_FAILURE);
+
     G_suppress_masking();	/* need to do this for target location */
-    name = (char *)G_malloc(40 * sizeof(char));
-    location = (char *)G_malloc(80 * sizeof(char));
-    mapset = (char *)G_malloc(80 * sizeof(char));
+
+    strcpy(name, group_opt->answer);
     camera = (char *)G_malloc(40 * sizeof(char));
+
 
     interrupt_char = G_intr_char();
     tempfile1 = G_tempfile();
@@ -56,13 +78,12 @@ int main(int argc, char *argv[])
     digit_points = G_tempfile();
 
     if (R_open_driver() != 0)
-	G_fatal_error("No graphics device selected");
+	G_fatal_error(_("No graphics device selected"));
 
     /* get image group and image group referenc file */
-    name = argv[1];
     strcpy(group.name, name);
     if (!I_find_group(group.name))
-	G_fatal_error("Image Group [%s] not found.", group.name);
+	G_fatal_error(_("Image Group [%s] not found"), group.name);
 
     /* get the group ref */
     I_get_group_ref(group.name, &group.group_ref);
@@ -74,11 +95,11 @@ int main(int argc, char *argv[])
     /** look for camera info  for this block **/
     G_suppress_warnings(1);
     if (!I_get_group_camera(group.name, camera))
-	G_fatal_error("No camera reference file selected for group [%s].",
+	G_fatal_error(_("No camera reference file selected for group [%s]"),
 		      group.name);
 
     if (!I_get_cam_info(camera, &group.camera_ref))
-	G_fatal_error("Bad format in camera file for group [%s].",
+	G_fatal_error(_("Bad format in camera file for group [%s]"),
 		      group.name);
     G_suppress_warnings(0);
 
@@ -112,7 +133,7 @@ int main(int argc, char *argv[])
     /* ask user for raster map to be displayed */
     do {
 	if (!choose_groupfile(name, mapset))
-	    quit(0);
+	    quit(EXIT_SUCCESS);
     } while (G_get_cellhd(name, mapset, &cellhd) < 0);
 
     /* display this file in "map1" */
@@ -126,7 +147,7 @@ int main(int argc, char *argv[])
 
     /* determine initial input method. */
     if (setup_camera_file() < 0)
-	quit(0);
+	quit(EXIT_SUCCESS);
     if (use_camera_file) {
 	from_keyboard = 0;
 	from_screen = 1;
@@ -142,7 +163,7 @@ int main(int argc, char *argv[])
     /* go do the work */
     driver();
     /* leave */
-    quit(0);
+    quit(EXIT_SUCCESS);
 }
 
 int quit(int n)
@@ -171,13 +192,13 @@ int error(const char *msg, int fatal)
     Curses_write_window(PROMPT_WINDOW, 2, 12, G_location());
     Beep();
     if (fatal)
-	sprintf(buf, "ERROR: %s", msg);
+	sprintf(buf, _("ERROR: %s"), msg);
     else
-	sprintf(buf, "WARNING: %s (click mouse to continue)", msg);
+	sprintf(buf, _("WARNING: %s (click mouse to continue)"), msg);
     Menu_msg(buf);
 
     if (fatal)
-	quit(1);
+	quit(EXIT_FAILURE);
     Mouse_pointer(&x, &y, &button);
     Curses_clear_window(PROMPT_WINDOW);
 
