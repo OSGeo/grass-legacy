@@ -1072,7 +1072,6 @@ class cmdPanel(wx.Panel):
                     else:
                         # list of values (combo)
                         txt = wx.StaticText(parent=which_panel, label = title + ':' )
-                        print p
                         self.label_id.append(txt.GetId())
                         which_sizer.Add(item=txt, proportion=0,
                                         flag=wx.ADJUST_MINSIZE | wx.TOP | wx.RIGHT | wx.LEFT, border=5)
