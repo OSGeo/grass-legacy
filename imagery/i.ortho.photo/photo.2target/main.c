@@ -7,17 +7,18 @@
  *               Bernhard Reiter <bernhard intevation.de>, 
  *               Glynn Clements <glynn gclements.plus.com>, 
  *               Radim Blazek <radim.blazek gmail.com>
- * PURPOSE:      allow user to mark control points on an image to be 
- *               ortho-rectified and then input the coordinates of each point 
- *               for calculation of rectification parameters
- * COPYRIGHT:    (C) 1999-2007 by the GRASS Development Team
+ *               Hamish Bowman
+ *
+ * PURPOSE:      Allow user to mark control points on an image to be 
+ *                 ortho-rectified and then input the coordinates of each point 
+ *                 for calculation of rectification parameters
+ * COPYRIGHT:    (C) 1999-2008 by the GRASS Development Team
  *
  *               This program is free software under the GNU General Public
  *               License (>=v2). Read the file COPYING that comes with GRASS
  *               for details.
  *
  *****************************************************************************/
-/* main.c */
 
 #define GLOBAL
 #include <unistd.h>
@@ -33,7 +34,10 @@
 
 int main(int argc, char *argv[])
 {
-    char *name, *location, *mapset, *camera, msg[100];
+    char mapset[GMAPSET_MAX];
+    char name[GNAME_MAX];
+    char *camera;
+
     struct GModule *module;
     struct Option *group_opt, *map_opt, *target_map_opt;
     struct Cell_head cellhd;
@@ -43,7 +47,7 @@ int main(int argc, char *argv[])
     G_gisinit(argv[0]);
 
     module = G_define_module();
-    module->keywords = _("imagery");
+    module->keywords = _("imagery, orthorectify");
     module->description = _("Creates control points on an image "
 			    "to be ortho-rectified.");
 
@@ -66,13 +70,13 @@ int main(int argc, char *argv[])
 				    " will be initially drawn on screen.");
 
     if (G_parser(argc, argv))
-	exit(1);
+	exit(EXIT_FAILURE);
+
 
     G_suppress_masking();	/* need to do this for target location */
-    name = (char *)G_malloc(40 * sizeof(char));
-    location = (char *)G_malloc(80 * sizeof(char));
-    mapset = (char *)G_malloc(80 * sizeof(char));
+
     camera = (char *)G_malloc(40 * sizeof(char));
+    strcpy(name, group_opt->answer);
 
     interrupt_char = G_intr_char();
     tempfile1 = G_tempfile();
@@ -90,12 +94,9 @@ int main(int argc, char *argv[])
 	G_fatal_error(_("No graphics device selected"));
 
     /* get group ref */
-    strcpy(group.name, group_opt->answer);
-    if (!I_find_group(group.name)) {
-	fprintf(stderr, "Group [%s] not found\n", group.name);
-	exit(1);
-    }
-
+    strcpy(group.name, name);
+    if (!I_find_group(group.name))
+	G_fatal_error(_("Group [%s] not found"), group.name);
 
     /* get the group ref */
     I_get_group_ref(group.name, &group.group_ref);
@@ -106,33 +107,24 @@ int main(int argc, char *argv[])
 
     /** look for camera info  for this group**/
     G_suppress_warnings(1);
-    if (!I_get_group_camera(group.name, camera)) {
-	sprintf(msg, "No camera reference file selected for group [%s]\n",
+    if (!I_get_group_camera(group.name, camera))
+	G_fatal_error(_("No camera reference file selected for group [%s]"),
 		group.name);
-	G_fatal_error(msg);
-    }
 
-    if (!I_get_cam_info(camera, &group.camera_ref)) {
-	sprintf(msg, "Bad format in camera file for group [%s]\n",
-		group.name);
-	G_fatal_error(msg);
-    }
+    if (!I_get_cam_info(camera, &group.camera_ref))
+	G_fatal_error(_("Bad format in camera file for group [%s]"),
+			group.name);
+
     G_suppress_warnings(0);
 
     /* get initial camera exposure station, if any */
-    if (!(ok = I_find_initial(group.name))) {
-	sprintf(msg, "No initial camera exposure station for group[%s]\n",
+    if (!(ok = I_find_initial(group.name)))
+	G_warning(_("No initial camera exposure station for group [%s]"),
 		group.name);
-	G_warning(msg);
-    }
 
-    if (ok)
-	if (!I_get_init_info(group.name, &group.camera_exp)) {
-	    sprintf(msg,
-		    "Bad format in initial camera exposure station for group [%s]\n",
-		    group.name);
-	    G_warning(msg);
-	}
+    if (ok && (!I_get_init_info(group.name, &group.camera_exp)) )
+	G_warning(_("Bad format in initial camera exposure station for group [%s]"),
+		  group.name);
 
     /* get target info and environment */
     G_suppress_warnings(1);
@@ -145,11 +137,10 @@ int main(int argc, char *argv[])
     if (!I_get_ref_points(group.name, &group.photo_points)) {
 	G_suppress_warnings(0);
 	if (group.photo_points.count == 0)
-	    sprintf(msg, "No photo points for group [%s].\n", group.name);
+	    G_fatal_error(_("No photo points for group [%s]"), group.name);
 	else if (group.ref_equation_stat == 0)
-	    sprintf(msg, "Poorly placed photo points for group [%s].\n",
-		    group.name);
-	G_fatal_error(msg);
+	    G_fatal_error(_("Poorly placed photo points for group [%s]"),
+			  group.name);
     }
     G_suppress_warnings(0);
 
@@ -170,7 +161,7 @@ int main(int argc, char *argv[])
     ********/
 
     /* determine transformation equation */
-    fprintf(stderr, "Computing equations ...\n");
+    G_message(_("Computing equations ..."));
     if (group.control_points.count > 0)
 	Compute_ortho_equation();
 
@@ -205,14 +196,14 @@ int main(int argc, char *argv[])
 	strcpy(name, map_opt->answer);
 	strcpy(mapset, ms);
 	if (G_get_cellhd(name, mapset, &cellhd) < 0) {
-	    G_fatal_error(_("Unable to read head of %s"), map_opt->answer);
+	    G_fatal_error(_("Unable to read raster header of <%s>"), map_opt->answer);
 	}
     }
     else {
 	/* ask user for group file to be displayed */
 	do {
 	    if (!choose_groupfile(name, mapset))
-		quit(0);
+		quit(EXIT_SUCCESS);
 	    /* display this file in "map1" */
 	} while (G_get_cellhd(name, mapset, &cellhd) < 0);
     }
@@ -236,7 +227,7 @@ int main(int argc, char *argv[])
 	strcpy(name, target_map_opt->answer);
 	strcpy(mapset, ms);
 	if (G_get_cellhd(name, mapset, &cellhd) < 0) {
-	    G_fatal_error(_("Unable to read head of %s"),
+	    G_fatal_error(_("Unable to read raster header of <%s>"),
 			  target_map_opt->answer);
 	}
 
@@ -266,7 +257,7 @@ int main(int argc, char *argv[])
     /* go do the work */
     driver();
 
-    quit(0);
+    quit(EXIT_SUCCESS);
 }
 
 int quit(int n)
@@ -305,13 +296,13 @@ int error(const char *msg, int fatal)
     Curses_write_window(PROMPT_WINDOW, 2, 12, G_mapset());
     Beep();
     if (fatal)
-	sprintf(buf, "ERROR: %s", msg);
+	sprintf(buf, _("ERROR: %s"), msg);
     else
-	sprintf(buf, "WARNING: %s (click mouse to continue)", msg);
+	sprintf(buf, _("WARNING: %s (click mouse to continue)"), msg);
     Menu_msg(buf);
 
     if (fatal)
-	quit(1);
+	quit(EXIT_FAILURE);
     Mouse_pointer(&x, &y, &button);
     Curses_clear_window(PROMPT_WINDOW);
 
