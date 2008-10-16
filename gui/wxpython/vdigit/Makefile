@@ -9,9 +9,9 @@ SHLIB_OBJS := $(patsubst %.cpp, $(OBJDIR)/%.o, $(SOURCES))
 EXTRA_CFLAGS = $(SHLIB_CFLAGS) $(GDALCFLAGS) $(PYTHONCFLAGS) $(WXWIDGETSCXXFLAGS)
 EXTRA_LIBS = $(VECTLIB) $(GISLIB) $(GDALLIBS) $(VEDITLIB) $(WXWIDGETSLIB)
 ifeq ($(findstring darwin,$(ARCH)),darwin)
-EXTRA_LIBS := -bundle -undefined dynamic_lookup $(EXTRA_LIBS)
+EXTRA_LIBS += -bundle -undefined dynamic_lookup
 else
-EXTRA_LIBS := $(PYTHONLDFLAGS) $(EXTRA_LIBS) -lgdi
+EXTRA_LIBS += $(PYTHONLDFLAGS) -lgdi
 endif
 
 LOCAL_HEADERS = digit.h driver.h
