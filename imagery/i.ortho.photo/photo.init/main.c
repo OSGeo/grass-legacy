@@ -7,9 +7,11 @@
  *               Roberto Flor <flor itc.it>, 
  *               Bernhard Reiter <bernhard intevation.de>, 
  *               Glynn Clements <glynn gclements.plus.com>
- * PURPOSE:      creates or modifies entries in a camera initial exposure
+ *               Hamish Bowman
+ *
+ * PURPOSE:      Creates or modifies entries in a camera initial exposure
  *               station file for imagery group referenced by a sub-block
- * COPYRIGHT:    (C) 1999-2007 by the GRASS Development Team
+ * COPYRIGHT:    (C) 1999-2008 by the GRASS Development Team
  *
  *               This program is free software under the GNU General Public
  *               License (>=v2). Read the file COPYING that comes with GRASS
@@ -20,47 +22,54 @@
 #define  MAIN  1
 #include <stdlib.h>
 #include <string.h>
+#include <grass/gis.h>
+#include <grass/glocale.h>
 #include "globals.h"
 
 
 int main(int argc, char *argv[])
 {
+    struct GModule *module;
+    struct Option *group_opt;
+
+    char name[GNAME_MAX];
     int have_old;
-    char *location, *mapset, *initial;
-    char *name;
 
-    if (argc != 2) {
-	fprintf(stderr, "usage: %s group\n", argv[0]);
-	exit(1);
-    }
-
-    initial = (char *)G_malloc(40 * sizeof(char));
-    mapset = (char *)G_malloc(40 * sizeof(char));
-    location = (char *)G_malloc(40 * sizeof(char));
-    name = (char *)G_malloc(40 * sizeof(char));
+    /* must run in a term window */
+    G_putenv("GRASS_UI_TERM", "1");
 
     G_gisinit(argv[0]);
-    location = G_location();
-    mapset = G_mapset();
 
+    module = G_define_module();
+    module->keywords = _("imagery, orthorectify");
+    module->description =
+	_("Interactively creates or modifies entries in a camera "
+	  "initial exposure station file for imagery group referenced "
+	  "by a sub-block.");
+
+    group_opt = G_define_standard_option(G_OPT_I_GROUP);
+    group_opt->description =
+	_("Name of imagery group for ortho-rectification");
+
+    if (G_parser(argc, argv))
+	exit(EXIT_FAILURE);
+
+
+    strcpy(name, group_opt->answer);
 
     /* get group ref */
-    name = argv[1];
     strcpy(group.name, name);
+
     if (!I_find_group(group.name)) {
-	fprintf(stderr, "Group  [%s] not found\n", name);
-	exit(1);
+	G_fatal_error(_("Group [%s] not found"), name);
     }
-#   ifdef DEBUG
-    fprintf(stderr, "Found group %s\n", group.name);
-#   endif
+    G_debug(1, "Found group %s", group.name);
+
 
 /*******************
     I_get_Ortho_Image_Group_Ref(group.name, &group.group_ref);
     nfiles = block.block_ref.nfiles;
-#   ifdef DEBUG
-    fprintf(stderr, "Got group ref \n");
-#   endif
+    G_debug(1, "Got group ref");
 *******************/
 
 
@@ -76,5 +85,5 @@ int main(int argc, char *argv[])
     /* save info */
     I_put_init_info(group.name, &group.camera_exp);
 
-    exit(0);
+    exit(EXIT_SUCCESS);
 }
