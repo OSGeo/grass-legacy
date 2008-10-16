@@ -8,7 +8,8 @@
  *               Bernhard Reiter <bernhard intevation.de>, 
  *               Glynn Clements <glynn gclements.plus.com>
  *               Hamish Bowman
- * PURPOSE:      select target location and mapset
+ *
+ * PURPOSE:      Select target location and mapset
  * COPYRIGHT:    (C) 1999-2008 by the GRASS Development Team
  *
  *               This program is free software under the GNU General Public
