@@ -20,48 +20,89 @@
 
 #define  MAIN   1
 #include <stdlib.h>
+#include <string.h>
+
+#ifdef DEBUG
+#include <unistd.h> /* for sleep() */
+#endif
+
+#include <grass/gis.h>
+#include <grass/glocale.h>
 #include "orthophoto.h"
 #include "globals.h"
-
 int main(int argc, char *argv[])
 {
+    struct GModule *module;
+    struct Option *group_opt, *camera_opt;
+
+    char *location;
+    char *mapset;
+    char group[GNAME_MAX];
+
     static int have_old;
-    char *group, *location, *mapset, *camera;
+    char *camera;
 
-    location = (char *)G_malloc(80 * sizeof(char));
-    mapset = (char *)G_malloc(80 * sizeof(char));
-    group = (char *)G_malloc(80 * sizeof(char));
-    camera = (char *)G_malloc(80 * sizeof(char));
 
-    /* initialize */
+    /* must run in a term window */
+    G_putenv("GRASS_UI_TERM", "1");
+
     G_gisinit(argv[0]);
+
+    module = G_define_module();
+    module->keywords = _("imagery, orthorectify");
+    module->description =
+	_("Interactively select and modify the imagery group camera reference file.");
+
+    group_opt = G_define_standard_option(G_OPT_I_GROUP);
+    group_opt->description =
+	_("Name of imagery group for ortho-rectification");
+
+    camera_opt = G_define_standard_option(G_OPT_F_INPUT);
+    camera_opt->key = "camera";
+    camera_opt->required = NO;
+    camera_opt->gisprompt = "old_file,camera,camera";
+    camera_opt->description =
+	_("Name of camera reference file to use");
+
+    if (G_parser(argc, argv))
+	exit(EXIT_FAILURE);
+
+
+    camera = (char *)G_malloc(GNAME_MAX * sizeof(char));
+
     location = G_location();
     mapset = G_mapset();
 
-    /* check args */
-    if (argc != 2) {
-	fprintf(stderr, "Usage: %s group\n", argv[0]);
-	exit(1);
+    strcpy(group, group_opt->answer);
+
+    if( !camera_opt->answer ) {
+	/* select the camera to use */
+	if (!I_ask_camera_any(
+	    _("Enter a camera reference file to be used with this imagery group"),
+	      camera)) {
+	    exit(EXIT_SUCCESS);
+	}
     }
-
-    /* get group for argv */
-    group = argv[1];
-
-    /* select the camera to use */
-    if (!I_ask_camera_any
-	("Enter a camera reference file to be used with this imagery group",
-	 camera))
-	exit(0);
+    else {
+	if (G_legal_filename (camera_opt->answer) < 0)
+	    G_fatal_error(_("<%s> is an illegal file name"),
+			  camera_opt->answer);
+	else
+	    strcpy(camera, camera_opt->answer);
+    }
 
     /* I_put_camera (camera); */
     I_put_group_camera(group, camera);
 
-    fprintf(stderr,
-	    "group [%s] in location [%s] mapset [%s] now has camera file [%s]\n",
-	    group, location, mapset, camera);
+    G_message(
+	_("Group [%s] in location [%s] mapset [%s] now has camera file [%s]"),
+	  group, location, mapset, camera);
+#ifdef DEBUG
+    /* slight pause before the screen is cleared */
+    sleep(3);
+#endif
 
-
-    /* show the camera infor for modification */
+    /* show the camera info for modification */
     if (I_find_camera(camera)) {
 	have_old = 1;
 	I_get_cam_info(camera, &cam_info);
@@ -69,7 +110,5 @@ int main(int argc, char *argv[])
     mod_cam_info(have_old, &cam_info);
     I_put_cam_info(camera, &cam_info);
 
-
-
-    exit(0);
+    exit(EXIT_SUCCESS);
 }
