@@ -15,7 +15,6 @@
  *               for details.
  *
  *****************************************************************************/
-/* main.c */
 
 /* read the target for the block and cast it into the alternate GRASS env */
 #define MAIN
@@ -23,7 +22,9 @@
 #include <stdio.h>
 #include <unistd.h>
 #include <string.h>
+#include <grass/gis.h>
 #include <grass/imagery.h>
+#include <grass/glocale.h>
 #include "orthophoto.h"
 #include "elev.h"
 
@@ -38,55 +39,68 @@ char *nd;
 
 int main(int argc, char *argv[])
 {
-    char *group, *location, *mapset, buf[100];
+
+    struct GModule *module;
+    struct Option *group_opt;
+
+    char location[GMAPSET_MAX];
+    char mapset[GMAPSET_MAX];
+    char group[GNAME_MAX];
+
+    char buf[100];
     int stat;
 
 
-    location = (char *)G_malloc(80 * sizeof(char));
-    mapset = (char *)G_malloc(80 * sizeof(char));
-    elev_layer = (char *)G_malloc(80 * sizeof(char));
-    mapset_elev = (char *)G_malloc(80 * sizeof(char));
+    /* must run in a term window */
+    G_putenv("GRASS_UI_TERM", "1");
+
+    G_gisinit(argv[0]);
+
+    module = G_define_module();
+    module->keywords = _("imagery, orthorectify");
+    module->description =
+	_("Interactively select or modify the target elevation model.");
+
+    group_opt = G_define_standard_option(G_OPT_I_GROUP);
+    group_opt->description =
+	_("Name of imagery group for ortho-rectification");
+
+    if (G_parser(argc, argv))
+	exit(EXIT_FAILURE);
+
+    elev_layer = (char *)G_malloc(GNAME_MAX * sizeof(char));
+    mapset_elev = (char *)G_malloc(GMAPSET_MAX * sizeof(char));
     tl = (char *)G_malloc(80 * sizeof(char));
     math_exp = (char *)G_malloc(80 * sizeof(char));
     units = (char *)G_malloc(80 * sizeof(char));
     nd = (char *)G_malloc(80 * sizeof(char));
-    group = (char *)G_malloc(80 * sizeof(char));
 
-    *location = 0;
-    *mapset = 0;
     *elev_layer = 0;
     *mapset_elev = 0;
     *tl = 0;
     *math_exp = 0;
     *units = 0;
     *nd = 0;
-    *group = 0;
 
-    if (argc != 2) {
-	fprintf(stderr, "Usage: %s group\n", argv[0]);
-	exit(1);
-    }
-
-    G_gisinit(argv[0]);
-
-    strcpy(group, argv[1]);
+    strcpy(group, group_opt->answer);
 
     G_suppress_warnings(1);
     if (!I_get_target(group, location, mapset)) {
-	sprintf(buf, "Target information for group [%s] missing\n", group);
+	sprintf(buf, _("Target information for group [%s] missing\n"), group);
 	goto error;
     }
 
     G_suppress_warnings(0);
     sprintf(buf, "%s/%s", G_gisdbase(), location);
     if (access(buf, 0) != 0) {
-	sprintf(buf, "Target location [%s] not found\n", location);
+	sprintf(buf, _("Target location [%s] not found\n"), location);
 	goto error;
     }
 
     I_get_group_elev(group, elev_layer, mapset_elev, tl, math_exp, units, nd);
     G__create_alt_env();
     G__setenv("LOCATION_NAME", location);
+
     stat = G__mapset_permissions(mapset);
     if (stat > 0) {
 	G__setenv("MAPSET", mapset);
@@ -101,19 +115,23 @@ int main(int argc, char *argv[])
 
 	/* select current location */
 	select_current_env();
-	I_put_group_elev(group, elev_layer, mapset_elev, tl, math_exp, units,
-			 nd);
-	return 0;
+
+	I_put_group_elev(group, elev_layer, mapset_elev, tl,
+			 math_exp, units, nd);
+
+	exit(EXIT_SUCCESS);
     }
-    sprintf(buf, "Mapset [%s] in target location [%s] - ", mapset, location);
-    strcat(buf, stat == 0 ? "permission denied\n" : "not found\n");
+
+    sprintf(buf, _("Mapset [%s] in target location [%s] - "), mapset, location);
+    strcat(buf, stat == 0 ? _("permission denied\n") : _("not found\n"));
 
   error:
-    strcat(buf, "Please select a target for group");
+    strcat(buf, _("Please select a target for group"));
     strcat(buf, group);
     G_suppress_warnings(0);
     G_fatal_error(buf);
 }
+
 
 int select_current_env(void)
 {
