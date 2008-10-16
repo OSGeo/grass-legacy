@@ -1,7 +1,6 @@
 #include <stdlib.h>
 #include <string.h>
 #include "global.h"
-/* FILE *Bugsr; */
 
 int get_target_window(void)
 {
@@ -32,20 +31,16 @@ int get_target_window(void)
     }
     ask_file_from_list(name, mapset);
 
-#ifdef DEBUG3
-    fprintf(Bugsr, "ask_file: %s in %s \n", name, mapset);
-#endif
+    G_debug(1, "ask_file: %s in %s", name, mapset);
 
     if (G_get_cellhd(name, mapset, &cellhd) < 0)
 	exit(EXIT_FAILURE);
 
-#ifdef DEBUG3
-    fprintf(Bugsr, "current window: n s = %f %f, \n", cellhd.north,
+
+    G_debug(1, "current window: n s = %f %f,", cellhd.north,
 	    cellhd.south);
-    fprintf(Bugsr, "current window: w e = %f %f, \n", cellhd.west,
+    G_debug(1, "current window: w e = %f %f,", cellhd.west,
 	    cellhd.east);
-    fflush(Bugsr);
-#endif
 
     georef_window(&cellhd, &target_window);
     ask_window(&target_window);
@@ -70,9 +65,7 @@ int georef_window(struct Cell_head *w1, struct Cell_head *w2)
 
     /* get an average elevation from the active control points */
     get_aver_elev(&group.control_points, &aver_z);
-#ifdef DEBUG3
-    fprintf(Bugsr, "Aver elev = %f \n", aver_z);
-#endif
+    G_debug(1, "Aver elev = %f", aver_z);
 
     /* compute ortho ref of all corners */
 
@@ -81,17 +74,14 @@ int georef_window(struct Cell_head *w1, struct Cell_head *w2)
 			group.XC, group.YC, group.ZC, group.omega, group.phi,
 			group.kappa);
 
-#ifdef DEBUG3
-    fprintf(Bugsr, "NORTH WEST CORNER\n");
-    fprintf(Bugsr, "group.E12 = %f %f %f, \n", group.E12[0], group.E12[1],
+    G_debug(1, "NORTH WEST CORNER");
+    G_debug(1, "group.E12 = %f %f %f,", group.E12[0], group.E12[1],
 	    group.E12[2]);
-    fprintf(Bugsr, "group.N12 = %f %f %f, \n", group.N12[0], group.N12[1],
+    G_debug(1, "group.N12 = %f %f %f,", group.N12[0], group.N12[1],
 	    group.N12[2]);
-    fprintf(Bugsr, "image  x = %f y = %f, photo x = %f y = %f \n", w1->west,
+    G_debug(1, "image  x = %f y = %f, photo x = %f y = %f", w1->west,
 	    w1->north, e0, n0);
-    fprintf(Bugsr, "target x = %f y = %f \n", e, n);
-    fflush(Bugsr);
-#endif
+    G_debug(1, "target x = %f y = %f", e, n);
 
     w2->north = w2->south = n;
     w2->west = w2->east = e;
@@ -101,13 +91,11 @@ int georef_window(struct Cell_head *w1, struct Cell_head *w2)
 			group.XC, group.YC, group.ZC, group.omega, group.phi,
 			group.kappa);
 
-#ifdef DEBUG3
-    fprintf(Bugsr, "NORTH EAST CORNER\n");
-    fprintf(Bugsr, "image  x = %f y = %f, photo x = %f y = %f \n", w1->east,
+    G_debug(1, "NORTH EAST CORNER");
+    G_debug(1, "image  x = %f y = %f, photo x = %f y = %f", w1->east,
 	    w1->north, e0, n0);
-    fprintf(Bugsr, "target x = %f y = %f \n", e, n);
-    fflush(Bugsr);
-#endif
+    G_debug(1, "target x = %f y = %f", e, n);
+
 
     if (n > w2->north)
 	w2->north = n;
@@ -123,13 +111,10 @@ int georef_window(struct Cell_head *w1, struct Cell_head *w2)
 			group.XC, group.YC, group.ZC, group.omega, group.phi,
 			group.kappa);
 
-#ifdef DEBUG3
-    fprintf(Bugsr, "SOUTH WEST CORNER\n");
-    fprintf(Bugsr, "image  x = %f y = %f, photo x = %f y = %f \n", w1->west,
+    G_debug(1, "SOUTH WEST CORNER");
+    G_debug(1, "image  x = %f y = %f, photo x = %f y = %f", w1->west,
 	    w1->south, e0, n0);
-    fprintf(Bugsr, "target x = %f y = %f \n", e, n);
-    fflush(Bugsr);
-#endif
+    G_debug(1, "target x = %f y = %f", e, n);
 
     if (n > w2->north)
 	w2->north = n;
@@ -145,13 +130,10 @@ int georef_window(struct Cell_head *w1, struct Cell_head *w2)
 			group.XC, group.YC, group.ZC, group.omega, group.phi,
 			group.kappa);
 
-#ifdef DEBUG3
-    fprintf(Bugsr, "SOUTH EAST CORNER\n");
-    fprintf(Bugsr, "image  x = %f y = %f, photo x = %f y = %f \n", w1->east,
+    G_debug(1, "SOUTH EAST CORNER");
+    G_debug(1, "image  x = %f y = %f, photo x = %f y = %f", w1->east,
 	    w1->south, e0, n0);
-    fprintf(Bugsr, "target x = %f y = %f \n", e, n);
-    fflush(Bugsr);
-#endif
+    G_debug(1, "target x = %f y = %f", e, n);
 
     if (n > w2->north)
 	w2->north = n;
@@ -176,16 +158,12 @@ int georef_window(struct Cell_head *w1, struct Cell_head *w2)
     w2->south = w2->south - 0.15 * diffns;
     w2->north = w2->north + 0.15 * diffns;
 
-#ifdef DEBUG3
-    fprintf(Bugsr, "FINAL\n");
-    fprintf(Bugsr, "east = %f \n west = %f \n north = %f \n south = %f \n",
+    G_debug(1, "FINAL");
+    G_debug(1, "east = %f \n west = %f \n north = %f \n south = %f",
 	    w2->east, w2->west, w2->north, w2->south);
-
-    fprintf(Bugsr, "RESOLUTION\n");
-    fprintf(Bugsr, "EW = %f\n", w2->ew_res);
-    fprintf(Bugsr, "NS = %f\n", w2->ns_res);
-    fflush(Bugsr);
-#endif
+    G_debug(1, "RESOLUTION");
+    G_debug(1, "EW = %f", w2->ew_res);
+    G_debug(1, "NS = %f", w2->ns_res);
 
     return 0;
 }

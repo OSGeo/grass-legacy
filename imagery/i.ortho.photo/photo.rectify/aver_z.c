@@ -19,17 +19,12 @@ int get_aver_elev(struct Ortho_Control_Points *cpz, double *aver_z)
 
 	n++;
 	meanz += *((cpz->z2)++);
-#ifdef DEBUG3
-	fprintf(Bugsr, "In ortho meanz = %f \n", meanz);
-#endif
-
+	G_debug(3, "In ortho meanz = %f", meanz);
     }
 
     *aver_z = meanz / n;
 
-#ifdef DEBUG3
-    fprintf(Bugsr, "In ortho aver_z = %f \n", *aver_z);
-#endif
+    G_debug(1, "In ortho aver_z = %f", *aver_z);
 
     /* reset pointers */
     for (i = 0; i < cpz->count; i++) {

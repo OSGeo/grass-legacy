@@ -35,41 +35,33 @@ int exec_rectify(void)
 
     /* rectify each file */
     for (n = 0; n < group.group_ref.nfiles; n++) {
-#ifdef DEBUG3
-	fprintf(Bugsr, "I look for files to ortho rectify \n");
-#endif
+	G_debug(2, "I look for files to ortho rectify");
+
 	if ((i = ref_list[n]) < 0)
 	    continue;
 	name = group.group_ref.file[i].name;
 	mapset = group.group_ref.file[i].mapset;
 	result = new_name[n];
 
-#ifdef DEBUG3
-	fprintf(Bugsr, "ORTHO RECTIFYING: \n");
-	fprintf(Bugsr, "NAME %s \n", name);
-	fprintf(Bugsr, "MAPSET %s \n", mapset);
-	fprintf(Bugsr, "RESULT %s \n", result);
-#endif
+	G_debug(2, "ORTHO RECTIFYING:");
+	G_debug(2, "NAME %s", name);
+	G_debug(2, "MAPSET %s", mapset);
+	G_debug(2, "RESULT %s", result);
+	G_debug(2, "select_current_env...");
 
-#ifdef DEBUG3
-	fprintf(Bugsr, "select_current_env...\n");
-#endif
 	select_current_env();
 
 	cats_ok = G_read_cats(name, mapset, &cats) >= 0;
 	colr_ok = G_read_colors(name, mapset, &colr) > 0;
 	hist_ok = G_read_history(name, mapset, &hist) >= 0;
-#ifdef DEBUG3
-	fprintf(Bugsr, "reading was fine...\n");
-#endif
+	G_debug(2, "reading was fine...");
+
 	time(&start_time);
-#ifdef DEBUG3
-	fprintf(Bugsr, "Starting the rectification...\n");
-#endif
+
+	G_debug(2, "Starting the rectification...");
+
 	if (rectify(name, mapset, result)) {
-#ifdef DEBUG3
-	    fprintf(Bugsr, "Done. Writing results...\n");
-#endif
+	    G_debug(2, "Done. Writing results...");
 	    select_target_env();
 	    if (cats_ok) {
 		G_write_cats(result, &cats);
@@ -91,13 +83,11 @@ int exec_rectify(void)
 		   compress_time - rectify_time, 1);
 	}
 	else {
-#ifdef DEBUG3
-	    fprintf(Bugsr, "Could not rectify. Mhhh.\n");
-#endif
+	    G_debug(2, "Could not rectify. Mhhh.");
 	    report(name, mapset, result, (long)0, (long)0, 0);
 	}
     }
 
-    G_done_msg("");
+    G_done_msg(" ");
     return 0;
 }

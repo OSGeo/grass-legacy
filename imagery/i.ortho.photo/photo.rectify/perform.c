@@ -35,14 +35,13 @@ int perform_georef(int infd, void *rast)
 		break;
 	    curidx++;
 	}
-	/*
-	   fprintf (Bugsr, " curidx %d\n", curidx);
-	 */
+
+	/* G_debug(3, " curidx %d", curidx); */
+
 	if (curidx >= matrix_rows)
 	    break;
-	/*
-	   fprintf (Bugsr, "read row %d\n", row);
-	 */
+
+	/* G_debug(3, "read row %d", row); */
 
 	if (G_get_raster_row_nomask
 	    (infd, G_incr_void_ptr(rast, rast_size), row, map_type) < 0)
@@ -52,9 +51,9 @@ int perform_georef(int infd, void *rast)
 	    idx = row_idx[i];
 	    if (row != row_min[idx])
 		break;
-	    /*
-	       fprintf (Bugsr, "  process matrix row %d\n", idx);
-	     */
+
+	    /* G_debug(4, "  process matrix row %d", idx); */
+
 	    rmap = row_map[idx];
 	    cmap = col_map[idx];
 	    left = row_left[idx];

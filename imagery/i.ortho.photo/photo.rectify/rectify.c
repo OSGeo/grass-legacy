@@ -7,6 +7,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
+#include <grass/glocale.h>
 #include "global.h"
 #include "local_proto.h"
 
@@ -25,22 +26,17 @@ int rectify(char *name, char *mapset, char *result)
     int r2, c2;
     double row2, col2;
     double aver_z;
-    char buf[64] = "";
 
-
-#ifdef DEBUG3
-    fprintf(Bugsr, "Open temp elevation file: \n");
-#endif
+    G_debug(1, "Open temp elevation file: ");
 
     /*  open temporary elevation cell layer */
     select_target_env();
 
     /**G_set_window (&elevhd);**/
-#ifdef DEBUG3
-    fprintf(Bugsr, "target window: rs=%d cs=%d n=%f s=%f w=%f e=%f\n",
+    G_debug(1, "target window: rs=%d cs=%d n=%f s=%f w=%f e=%f\n",
 	    target_window.rows, target_window.cols, target_window.north,
 	    target_window.south, target_window.west, target_window.east);
-#endif
+
     G_set_window(&target_window);
     elevfd = G_open_cell_old(elev_layer, mapset_elev);
 
@@ -53,29 +49,21 @@ int rectify(char *name, char *mapset, char *result)
 
 
     if (elevfd < 0) {
-#ifdef DEBUG3
-	fprintf(Bugsr, "CANT OPEN ELEV\n");
-	fprintf(Bugsr, "elev layer = %s  mapset elev = %s elevfd = %d \n",
+	G_debug(1, "CANT OPEN ELEV");
+	G_debug(1, "elev layer = %s  mapset elev = %s elevfd = %d",
 		elev_layer, mapset_elev, elevfd);
-	fflush(Bugsr);
-#endif
 	return 0;
     }
 
-#ifdef DEBUG3
-    fprintf(Bugsr, "elev layer = %s  mapset elev = %s elevfd = %d \n",
+    G_debug(1, "elev layer = %s  mapset elev = %s elevfd = %d",
 	    elev_layer, mapset_elev, elevfd);
-    fflush(Bugsr);
-#endif
 
     /* alloc Tie_Points  */
     y_ties = (int)(target_window.rows / TIE_ROW_DIST) + 2;
     x_ties = (int)(target_window.cols / TIE_COL_DIST) + 2;
 
-#ifdef DEBUG3
-    fprintf(Bugsr, "Number Tie_Points: y_ties %d \tx_ties %d \n", y_ties,
+    G_debug(1, "Number Tie_Points: y_ties %d \tx_ties %d", y_ties,
 	    x_ties);
-#endif
 
     T_Point = (Tie_Point **) G_malloc(y_ties * sizeof(Tie_Point *));
     for (i = 0; i < y_ties; i++)
@@ -92,11 +80,8 @@ int rectify(char *name, char *mapset, char *result)
 	r2 = (int)row2;
 
 	if ((G_get_d_raster_row(elevfd, elevbuf, r2)) < 0) {
-#ifdef DEBUG3
-	    fprintf(Bugsr,
-		    "ERROR reading elevation layer %s fd = %d : row %d \n",
+	    G_debug(1, "ERROR reading elevation layer %s fd = %d : row %d",
 		    elev_layer, elevfd, r2);
-#endif
 	    exit(0);
 	}
 	ncols = 0;
@@ -105,56 +90,42 @@ int rectify(char *name, char *mapset, char *result)
 		(tie_col * TIE_COL_DIST * target_window.ew_res) + 1;
 	    if (e2 >= target_window.east)
 		e2 = target_window.east - 1;
-#ifdef DEBUG3
-	    fprintf(Bugsr, "Tie_Point \t row %d \tcol %d \n", tie_row,
-		    tie_col);
-	    fprintf(Bugsr, "\t east %f\t north %f \n", e2, n2);
-#endif
+
+	    G_debug(5, "Tie_Point \t row %d \tcol %d", tie_row, tie_col);
+	    G_debug(5, "\t east %f\t north %f", e2, n2);
 
 	    col2 = easting_to_col(&target_window, e2);
 	    c2 = (int)col2;
 
-#ifdef DEBUG3
-	    fprintf(Bugsr, "\t\t row2 = %f \t col2 =  %f \n", row2, col2);
-	    fprintf(Bugsr, "\t\t   r2 = %d \t   c2 =  %d \n", r2, c2);
-	    fprintf(Bugsr, "\t\t elevbuf[c2] = %f        \n",
-		    (DCELL) elevbuf[c2]);
-#endif
+	    G_debug(5, "\t\t row2 = %f \t col2 =  %f", row2, col2);
+	    G_debug(5, "\t\t   r2 = %d \t   c2 =  %d", r2, c2);
+	    G_debug(5, "\t\t elevbuf[c2] = %f", (DCELL) elevbuf[c2]);
+
 	    /* if target TIE point has no elevation, set to aver_z */
 	    if (G_is_d_null_value(&elevbuf[c2]))
 		z2 = aver_z;
 	    else
 		z2 = (double)elevbuf[c2];
 
-#ifdef DEBUG3
-	    fprintf(Bugsr, "\t\t e2 = %f \t n2 =  %f \t z2 = %f \n", e2, n2,
-		    z2);
-	    fprintf(Bugsr, "\t\t XC = %f \t YC =  %f \t ZC = %f \n", group.XC,
+	    G_debug(5, "\t\t e2 = %f \t n2 =  %f \t z2 = %f", e2, n2, z2);
+	    G_debug(5, "\t\t XC = %f \t YC =  %f \t ZC = %f", group.XC,
 		    group.YC, group.ZC);
-	    fprintf(Bugsr, "\t\t omega = %f \t phi =  %f \t kappa = %f \n",
+	    G_debug(5, "\t\t omega = %f \t phi =  %f \t kappa = %f",
 		    group.omega, group.phi, group.kappa);
-#endif
 
 	    /* ex, nx: photo coordinates */
 	    I_ortho_ref(e2, n2, z2, &ex, &nx, &zx, &group.camera_ref,
 			group.XC, group.YC, group.ZC, group.omega, group.phi,
 			group.kappa);
 
-#ifdef DEBUG3
-	    fprintf(Bugsr,
-		    "\t\tAfter ortho ref (photo cords): ex = %f \t nx =  %f \n",
+	    G_debug(5, "\t\tAfter ortho ref (photo cords): ex = %f \t nx =  %f",
 		    ex, nx);
-	    fflush(Bugsr);
-#endif
 
 	    /* ex, nx: relative to (row,col) = 0 */
 	    I_georef(ex, nx, &ex, &nx, group.E21, group.N21);
 
-#ifdef DEBUG3
-	    fprintf(Bugsr, "\t\tAfter geo ref: ex = %f \t nx =  %f \n", ex,
-		    nx);
-	    fflush(Bugsr);
-#endif
+	    G_debug(5, "\t\tAfter geo ref: ex = %f \t nx =  %f", ex, nx);
+
 	    T_Point[tie_row][tie_col].XT = e2;
 	    T_Point[tie_row][tie_col].YT = n2;
 	    T_Point[tie_row][tie_col].ZT = z2;
@@ -167,10 +138,8 @@ int rectify(char *name, char *mapset, char *result)
     /* close elev layer so we can open the file to be rectified */
     select_target_env();
     if (!G_close_cell(elevfd)) {
-#ifdef DEBUG3
-	fprintf(Bugsr, "Can't close the elev file %s [%s in%s]",
+	G_debug(1, "Can't close the elev file %s [%s in %s]",
 		elev_layer, mapset_elev, G_location());
-#endif
     }
 
     /* open the result file into target window
@@ -199,10 +168,7 @@ int rectify(char *name, char *mapset, char *result)
     col = 0;
 
     for (tie_col = 0; tie_col < (x_ties - 1); tie_col++) {
-#ifdef DEBUG3
-	fprintf(Bugsr, "Patching column %d: \n", ncols);
-	fflush(Bugsr);
-#endif
+	G_debug(3, "Patching column %d:", ncols);
 
 	if ((win.cols = ncols) > TIE_COL_DIST)
 	    win.cols = TIE_COL_DIST;
@@ -211,26 +177,18 @@ int rectify(char *name, char *mapset, char *result)
 	row = 0;
 
 	for (tie_row = 0; tie_row < (y_ties - 1); tie_row++) {
-#ifdef DEBUG3
+	    G_debug(5, "Patching %d row:", nrows);
 
-	    fprintf(Bugsr, "Patching %d row: \n", nrows);
-	    fflush(Bugsr);
-#endif
 	    if ((win.rows = nrows) > TIE_ROW_DIST)
 		win.rows = TIE_ROW_DIST;
 
 	    get_psuedo_control_pt(tie_row, tie_col);
-#ifdef DEBUG3
-	    fprintf(Bugsr, "\t got psuedo pts: row %d \t col %d \n", tie_row,
-		    tie_col);
-	    fflush(Bugsr);
-#endif
+
+	    G_debug(5, "\t got psuedo pts: row %d \t col %d", tie_row, tie_col);
 
 	    compute_georef_matrix(&cellhd, &win);
-#ifdef DEBUG3
-	    fprintf(Bugsr, "\t\tcompute geo matrix\n");
-	    fflush(Bugsr);
-#endif
+
+	    G_debug(5, "\t\tcompute geo matrix");
 
 	    /* open the source imagery file to be rectified */
 	    /* set window to cellhd first to be able to read file exactly */
@@ -249,13 +207,9 @@ int rectify(char *name, char *mapset, char *result)
 
 	    /* perform the actual data rectification */
 	    perform_georef(infd, rast);
-#ifdef DEBUG3
-	    fprintf(Bugsr, "\t\tperform georef \n");
-	    fflush(Bugsr);
 
-	    fprintf(Bugsr, "\t\twrite matrix \n");
-	    fflush(Bugsr);
-#endif
+	    G_debug(5, "\t\tperform georef");
+	    G_debug(5, "\t\twrite matrix");
 
 	    /* close the source imagery file and free the buffer */
 	    select_current_env();
@@ -288,17 +242,14 @@ int rectify(char *name, char *mapset, char *result)
 
     if (target_window.proj != cellhd.proj) {
 	cellhd.proj = target_window.proj;
-	sprintf(buf,
-		"WARNING %s@%s: projection don't match current settings.\n",
+	G_warning(_("%s@%s: projection doesn't match current settings"),
 		name, mapset);
-	G_warning(buf);
     }
 
     if (target_window.zone != cellhd.zone) {
 	cellhd.zone = target_window.zone;
-	sprintf(buf, "WARNING %s@%s: zone don't match current settings .\n",
+	 G_warning(_("%s@%s: zone doesn't match current settings"),
 		name, mapset);
-	G_warning(buf);
     }
 
     target_window.compressed = cellhd.compressed;

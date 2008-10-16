@@ -58,14 +58,6 @@ int main(int argc, char *argv[])
 	exit(EXIT_FAILURE);
 
 
-#ifdef DEBUG3
-/* slowly convert these to G_debug() */
-    Bugsr = fopen("ortho_rectify.rst", "w");
-    if (Bugsr == NULL)
-	G_fatal_error("Can't open debug file \"ortho_rectify.rst\"");
-#endif
-
-
     G_suppress_masking();	/* need to do this for target location */
 
     strcpy(name, group_opt->answer);
