@@ -40,7 +40,7 @@ int main(int argc, char **argv)
     G_gisinit(argv[0]);
 
     module = G_define_module();
-    module->keywords = _("imagery");
+    module->keywords = _("imagery, orthorectify");
     module->description = _("Menu driver for the photo imagery programs.");
 
     group_opt = G_define_standard_option(G_OPT_I_GROUP);
