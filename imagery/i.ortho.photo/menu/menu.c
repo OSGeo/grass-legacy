@@ -59,25 +59,25 @@ int main(int argc, char **argv)
 
     /* get and check the group reference files */
     if (!I_get_group_ref(group.name, &group.group_ref)) {
-	G_warning("Pre-selected group <%s> not found.", group.name);
+	G_warning(_("Pre-selected group <%s> not found"), group.name);
 	/* clean the wrong name in GROUPFILE */
 	I_put_group("");
 
 	/* ask for new group name */
-	if (!I_ask_group_old
-	    ("Enter imagery group for ortho-rectification", group.name))
-	    exit(0);
+	if (!I_ask_group_old(
+	    _("Enter imagery group for ortho-rectification"), group.name))
+	    exit(EXIT_SUCCESS);
 	I_get_group_ref(group.name, &group.group_ref);
     }
 
     if (group.group_ref.nfiles <= 0)
-	G_fatal_error("Group [%s] contains no files\n", group.name);
+	G_fatal_error(_("Group [%s] contains no files"), group.name);
 
     I_put_group(group.name);
 
     while (1) {
 	if (!I_get_group(group.name)) {
-	    exit(0);
+	    exit(EXIT_SUCCESS);
 	}
 
 	/* print the screen full of options */
@@ -109,7 +109,7 @@ int main(int argc, char **argv)
 	if (!G_gets(buf))
 	    continue;
 	if (*buf == 0)		/* exit */
-	    exit(0);
+	    exit(EXIT_SUCCESS);
 
 	/* run the program choosen */
 	G_strip(buf);

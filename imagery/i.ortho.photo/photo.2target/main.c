@@ -44,6 +44,9 @@ int main(int argc, char *argv[])
     int ok;
     int nfiles;
 
+    /* must run in a term window */
+    G_putenv("GRASS_UI_TERM", "1");
+
     G_gisinit(argv[0]);
 
     module = G_define_module();
@@ -61,13 +64,13 @@ int main(int argc, char *argv[])
     map_opt = G_define_standard_option(G_OPT_R_MAP);
     map_opt->required = NO;
     map_opt->description = _("Name of image to be rectified which will "
-			     " be initially drawn on screen.");
+			     "be initially drawn on screen");
 
     target_map_opt = G_define_standard_option(G_OPT_R_MAP);
     target_map_opt->key = "target";
     target_map_opt->required = NO;
     target_map_opt->description = _("Name of a map from target mapset which "
-				    " will be initially drawn on screen.");
+				    "will be initially drawn on screen");
 
     if (G_parser(argc, argv))
 	exit(EXIT_FAILURE);
