@@ -48,11 +48,7 @@ int compute_georef_matrix(struct Cell_head *win1, struct Cell_head *win2)
 	cmap = col_map[row];
 	min = max = -1;
 
-/**** 
-#ifdef DEBUG3
-fprintf (Bugsr,"\n\t got row = \t%d\n",row);
-#endif
-****/
+/*	G_debug(3, "\n\t got row = \t%d", row); */
 
 	/* compute common code */
 	EX = E21a + E21c * row;
@@ -79,12 +75,9 @@ fprintf (Bugsr,"\n\t got row = \t%d\n",row);
 		cc = -1;
 	    *cmap++ = cc;
 
-/*****
-#ifdef DEBUG3
-fprintf (Bugsr,"\n\tnx = \t%f \tex = \t%f \n\trr = \t%d \tcc = \t%d\n", nx, ex,rr, cc);
-#endif
-*****/
+/*	    G_debug(4, "\n\tnx = \t%f \tex = \t%f \n\trr = \t%d \tcc = \t%d", nx, ex,rr, cc); */
 	}
+
 	row_min[row] = min;
 	row_max[row] = max;
 	row_left[row] = 0;

@@ -1,5 +1,6 @@
 #include <stdlib.h>
 #include <string.h>
+#include <grass/glocale.h>
 #include "global.h"
 
 int get_psuedo_control_pt(int tie_row, int tie_col)
@@ -8,10 +9,7 @@ int get_psuedo_control_pt(int tie_row, int tie_col)
     struct Ortho_Photo_Points ps_cp;
     int i, j, k;
 
-#ifdef DEBUG3
-    fprintf(Bugsr, "In ps_cp \n");
-    fflush(Bugsr);
-#endif
+    G_debug(1, "In ps_cp");
 
     /*  allocate psuedo struct, max points are four */
     ps_cp.count = 4;
@@ -20,12 +18,7 @@ int get_psuedo_control_pt(int tie_row, int tie_col)
     ps_cp.e2 = (double *)G_malloc(4 * sizeof(double));
     ps_cp.n2 = (double *)G_malloc(4 * sizeof(double));
     ps_cp.status = (int *)G_malloc(4 * sizeof(int));
-
-#ifdef DEBUG3
-    fprintf(Bugsr, "ps_cp allocated \n");
-    fflush(Bugsr);
-#endif
-
+    G_debug(1, "ps_cp allocated");
 
     /*  pseudo points are four corners taken from T_Points */
     k = 0;
@@ -42,46 +35,31 @@ int get_psuedo_control_pt(int tie_row, int tie_col)
 		   T_Point[tie_row + 1][tie_col].YT) / target_window.ns_res));
 	    ps_cp.status[k] = 1;
 
-#ifdef DEBUG3
-	    fprintf(Bugsr, "\t k = %d\t i = %d\t j = %d \n", k, i, j);
-	    fprintf(Bugsr, "\t\t e1[k] = %f \n", ps_cp.e1[k]);
-	    fprintf(Bugsr, "\t\t n1[k] = %f \n", ps_cp.n1[k]);
-	    fprintf(Bugsr, "\t\t e2[k] = %f \n", ps_cp.e2[k]);
-	    fprintf(Bugsr, "\t\t n2[k] = %f \n", ps_cp.n2[k]);
-	    fflush(Bugsr);
-#endif
+	    G_debug(2, "\t k = %d\t i = %d\t j = %d", k, i, j);
+	    G_debug(2, "\t\t e1[k] = %f", ps_cp.e1[k]);
+	    G_debug(2, "\t\t n1[k] = %f", ps_cp.n1[k]);
+	    G_debug(2, "\t\t e2[k] = %f", ps_cp.e2[k]);
+	    G_debug(2, "\t\t n2[k] = %f", ps_cp.n2[k]);
 
 	    k++;
 	}
     }
 
-#ifdef DEBUG3
-    fprintf(Bugsr, "ps_cp initialized \n");
-    fflush(Bugsr);
-#endif
-
+    G_debug(1, "ps_cp initialized");
 
     switch (I_compute_ref_equations(&ps_cp, E12, N12, E21, N21)) {
     case -1:
-#ifdef DEBUG3
-	fprintf(Bugsr, "\tref_equ: case -1\n");
-	fflush(Bugsr);
-#endif
-	strcat(msg, "Poorly placed psuedo control points.\n");
-	strcat(msg, "Can not generate the transformation equation.\n");
+	G_debug(1, "\tref_equ: case -1");
+	strcat(msg, _("Poorly placed psuedo control points. "));
+	strcat(msg, _("Cannot generate the transformation equation."));
 	break;
     case 0:
-#ifdef DEBUG3
-	fprintf(Bugsr, "\tref_equ: case 0 \n");
-	fflush(Bugsr);
-#endif
-	strcat(msg, "No active psuedo control points\n");
+	G_debug(1, "\tref_equ: case 0");
+	strcat(msg, _("No active psuedo control points"));
 	break;
     default:
-#ifdef DEBUG3
-	fprintf(Bugsr, "\tref equ: case good\n");
-	fflush(Bugsr);
-#endif
+	G_debug(1, "\tref equ: case good");
+
 	E12a = E12[0];
 	E12b = E12[1];
 	E12c = E12[2];
@@ -94,13 +72,11 @@ int get_psuedo_control_pt(int tie_row, int tie_col)
 	N21a = N21[0];
 	N21b = N21[1];
 	N21c = N21[2];
-#ifdef DEBUG3
-	fprintf(Bugsr, "\t\tE21 = %f\t %f\t %f \n", E21a, E21b, E21c);
-	fprintf(Bugsr, "\t\tN21 = %f\t %f\t %f \n", N21a, N21b, N21c);
-	fflush(Bugsr);
-#endif
+
+	G_debug(1, "\t\tE21 = %f\t %f\t %f", E21a, E21b, E21c);
+	G_debug(1, "\t\tN21 = %f\t %f\t %f", N21a, N21b, N21c);
+
 	return 1;
     }
     G_fatal_error(msg);
-    exit(1);
 }
