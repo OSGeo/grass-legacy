@@ -1,6 +1,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
+#include <grass/glocale.h>
 #include "global.h"
 #include <grass/vask.h>
 
@@ -32,7 +33,7 @@ int ask_files(char *groupname)
 	ln = 2;
 	V_clear();
 	V_line(0,
-	       "Please select the file(s) you wish to rectify by naming an output file");
+	       _("Please select the file(s) you wish to rectify by naming an output file"));
 	if (!repeat)
 	    for (i = 0; i < NFILES; i++)
 		result[i][0] = 0;
