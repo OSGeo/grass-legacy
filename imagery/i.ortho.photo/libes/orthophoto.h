@@ -15,8 +15,8 @@ struct Ortho_Image_Group_Ref
     int nfiles;
     struct Ortho_Image_Group_Ref_Files
     {
-	char name[30];
-	char mapset[30];
+	char name[GNAME_MAX];
+	char mapset[GMAPSET_MAX];
     } *file;
     struct Ortho_Ref_Color
     {
