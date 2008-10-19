@@ -83,8 +83,9 @@ label_t *labels_init(struct params *p, int *n_labels)
 	G_fatal_error(_("Unable to open database <%s> by driver <%s>"),
 		      fi->database, fi->driver);
 
-    sql_len = strlen(p->column->answer) + strlen(fi->table) +
-	strlen(fi->key) + 30;
+    sql_len =
+	strlen(p->column->answer) + strlen(p->overlap->answer) +
+	strlen(fi->table) + strlen(fi->key) + 31;
 
     /* initialize FT 2 library */
     if (FT_Init_FreeType(&library))
@@ -107,7 +108,7 @@ label_t *labels_init(struct params *p, int *n_labels)
     buffer = atof(p->isize->answer);
 
     /* use 1 point = 1 map unit */
-    if (FT_Set_Char_Size(face, (int)((font_size * 0.95) * 64.0), 0, 100, 100))
+    if (FT_Set_Char_Size(face, (int)((font_size) * 64.0), 0, 100, 100))
 	G_fatal_error(_("Unable to set font size"));
 
     /* start reading the map */
@@ -154,8 +155,15 @@ label_t *labels_init(struct params *p, int *n_labels)
 
 	sql = G_malloc(sql_len);
 	/* Read label from database */
-	sprintf(sql, "select %s from %s where %s = %d", p->column->answer,
-		fi->table, fi->key, cat);
+	if (p->overlap->answer[0] != '\0') {
+	    sprintf(sql, "select %s,%s from %s where %s = %d",
+		    p->column->answer, p->overlap->answer,
+		    fi->table, fi->key, cat);
+	}
+	else {
+	    sprintf(sql, "select %s from %s where %s = %d", p->column->answer,
+		    fi->table, fi->key, cat);
+	}
 	G_debug(3, "SQL: %s", sql);
 	db_init_string(&query);
 	db_set_string(&query, sql);
@@ -177,11 +185,8 @@ label_t *labels_init(struct params *p, int *n_labels)
 
 	table = db_get_cursor_table(&cursor);
 	column = db_get_table_column(table, 0);	/* first column */
-
 	db_init_string(&value);
 	db_convert_column_value_to_string(column, &value);
-	db_close_cursor(&cursor);
-
 	G_debug(3, "Label: %s", db_get_string(&value));
 
 	/* ignore empty strings */
@@ -194,6 +199,34 @@ label_t *labels_init(struct params *p, int *n_labels)
 	labels[i].shape = Points;
 	G_debug(3, "Label [%d]: %s, cat=%d, type=0x%02x", i, labels[i].text,
 		labels[i].cat, labels[i].type);
+
+	if (p->overlap->answer[0] != '\0') {
+	    int ctype;
+	    double dbl;
+
+	    column = db_get_table_column(table, 1);
+	    ctype = db_sqltype_to_Ctype(db_get_column_sqltype(column));
+	    if (ctype == DB_C_TYPE_INT) {
+		dbValue *val;
+
+		val = db_get_column_value(column);
+		dbl = (double)db_get_value_int(val);
+	    }
+	    else if (ctype == DB_C_TYPE_DOUBLE) {
+		dbValue *val;
+
+		val = db_get_column_value(column);
+		dbl = db_get_value_double(val);
+	    }
+	    else {
+		db_close_cursor(&cursor);
+		G_fatal_error(_("Cannot load overlap weights. "
+				"Column %s is not of numeric type in "
+				"table <%s>"), p->overlap->answer, fi->table);
+	    }
+	    labels[i].weight = dbl;
+	}
+	db_close_cursor(&cursor);
 
 	/* make a skyline for the text */
 	label_skyline(face, p->charset->answer, &labels[i]);
@@ -344,16 +377,17 @@ void label_candidates(label_t * labels, int n_labels)
 	G_percent(i, n_labels - 1, 1);
 	switch (labels[i].type) {
 	case GV_POINT:
-	    G_debug(3, "Line (%d): %s", i, labels[i].text);
+	    G_debug(3, "Point (%d): %s", i, labels[i].text);
 	    label_point_candidates(&labels[i]);
 	    break;
 	case GV_LINE:
 	    G_debug(3, "Line (%d): %s", i, labels[i].text);
 	    label_line_candidates(&labels[i]);
 	    break;
-	    /*                case GV_AREA:
-	     * label_area_candidates(labels[i]);
-	     * break; */
+	case GV_CENTROID:
+	    G_debug(3, "Area (%d): %s", i, labels[i].text);
+	    label_point_candidates(&labels[i]);
+	    break;
 	default:
 	    /* this should never be reached */
 	    break;
