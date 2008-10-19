@@ -24,8 +24,17 @@
  * @param argc Count of command line arguments
  * @param argv The command line arguments.
  * @param p The parameters structure.
+ * @return On error this function will exit.
  */
 static void parse_args(int argc, char *argv[], struct params *p);
+
+/**
+ * This function hides overlapping labels so that only the label with the
+ * largest weight will be shown.
+ * @param labels The labels array
+ * @param n_labels The size of the labels array
+ */
+static void hide_overlapping_lables(label_t * labels, int n_labels);
 
 /**
  * The main function controls the program flow.
@@ -58,56 +67,21 @@ int main(int argc, char *argv[])
     label_candidate_overlap(labels, n_labels);
     /*   3. position selection */
     simulate_annealing(labels, n_labels, &p);
+    /*   4. If overlap= option is given then go through final positioning
+     *   and remove remove overlaping labels */
+    if (p.overlap->answer[0] != '\0') {
+	hide_overlapping_lables(labels, n_labels);
+    }
     /* write lables to file */
     fprintf(stderr, "Writing labels to file: ...");
     labelf = G_fopen_new("paint/labels", p.labels->answer);
     for (i = 0; i < n_labels; i++) {
-	if (labels[i].n_candidates > 0) {
+	if ((labels[i].n_candidates > 0) && (!labels[i].hide)) {
 	    print_label(labelf, &labels[i], &p);
 	}
 	G_percent(i, (n_labels - 1), 1);
     }
     fclose(labelf);
-
-    /* dumping the skyline of the labels */
-    /*    {
-       int n=1;
-       char *f;
-       FILE *skyf;
-       f = G_tempfile();
-       skyf = fopen(f, "w");
-       printf("Writing label skylines & label points to file %s", f);
-       fprintf(skyf, "VERTI:\n");
-       printf("\n%d labels:\n", n_labels);
-       for (i = 0; i < n_labels; i++) {
-       printf("%s has %d candidates\n", labels[i].text, labels[i].n_candidates);
-       if (labels[i].n_candidates > 0) {
-       int j;
-       label_t *l = &labels[i];
-       j = l->current_candidate;
-       //           for(j=0; j < l->n_candidates; j++) {
-       {
-       int k;
-       label_candidate_t *cc = &l->candidates[j];
-       struct line_pnts *sky = skyline_trans_rot(l->skyline,
-       &cc->point,
-       cc->rotation);
-       fprintf(skyf, "L %d 1\n", sky->n_points);
-       for(k=0;k < sky->n_points; k++) {
-       fprintf(skyf, " %.12f %.12f\n", sky->x[k], sky->y[k]);
-       }
-       fprintf(skyf, " %-5d %-10d\n", 1, 1000+n);
-       // The label point
-       fprintf(skyf, "P 1 1\n");
-       fprintf(skyf, " %.12f %.12f\n", cc->point.x, cc->point.y);
-       fprintf(skyf, " %-5d %-10d\n", 1, 2000+n);
-       n++;
-       }
-       }
-       }
-       free(f);
-       fclose(skyf);
-       } */
 
     return EXIT_SUCCESS;
 }
@@ -122,8 +96,7 @@ static void parse_args(int argc, char *argv[], struct params *p)
 
     p->layer = G_define_standard_option(G_OPT_V_FIELD);
 
-    p->column = G_define_option();
-    p->column->key = "column";
+    p->column = G_define_standard_option(G_OPT_COLUMN);
     p->column->type = TYPE_STRING;
     p->column->required = YES;
     p->column->description =
@@ -143,7 +116,7 @@ static void parse_args(int argc, char *argv[], struct params *p)
     p->font->description =
 	_("Name of TrueType font (as listed in the fontcap)");
     p->font->guisection = _("Font");
-    p->font->gisprompt = "font";
+    p->font->gisprompt = _("Font");
 
     p->size = G_define_option();
     p->size->key = "size";
@@ -229,6 +202,13 @@ static void parse_args(int argc, char *argv[], struct params *p)
     p->bowidth->answer = "0";
     p->bowidth->guisection = _("Colors");
 
+    p->overlap = G_define_standard_option(G_OPT_COLUMN);
+    p->overlap->key = "overlap";
+    p->overlap->description = _("Numeric column to give precedence in case of"
+				" overlapping labels. The label with a smaller"
+				" weight is hidden.");
+    p->overlap->answer = "";
+
     if (G_parser(argc, argv))
 	exit(EXIT_FAILURE);
 }
@@ -246,7 +226,7 @@ void print_label(FILE * labelf, label_t * label, struct params *p)
     fprintf(labelf, "north: %lf\n", label->candidates[cc].point.y);
     fprintf(labelf, "xoffset: %lf\n", 0.0);	/*  * (size)); */
     fprintf(labelf, "yoffset: %lf\n", 0.0);	/*  * (size)); */
-    fprintf(labelf, "ref: %s\n", "bottom left");
+    fprintf(labelf, "ref: %s\n", "none none");
 
     fprintf(labelf, "font: %s\n", p->font->answer);
     fprintf(labelf, "color: %s\n", p->color->answer);
@@ -264,4 +244,35 @@ void print_label(FILE * labelf, label_t * label, struct params *p)
     fprintf(labelf, "text:%s\n\n", label->text);
 
     return;
+}
+
+void hide_overlapping_lables(label_t * labels, int n_labels)
+{
+    int i;
+
+    fprintf(stderr, "Culling overlapping labels: ...");
+    for (i = 0; i < n_labels; i++) {
+	int j;
+	int cc = labels[i].current_candidate;
+
+	/* do not bother with already hidden labels */
+	if (labels[i].hide) {
+	    G_percent(i, (n_labels - 1), 1);
+	    continue;
+	}
+	for (j = 0; j < labels[i].candidates[cc].n_intersections; j++) {
+	    label_intersection_t *isect =
+		&labels[i].candidates[cc].intersections[j];
+	    if (isect->candidate == isect->label->current_candidate) {
+		/* hide the one with a lower weight */
+		if (labels[i].weight >= isect->label->weight) {
+		    isect->label->hide = 1;
+		}
+		else {
+		    labels[i].hide = 1;
+		}
+	    }
+	}
+	G_percent(i, (n_labels - 1), 1);
+    }
 }
