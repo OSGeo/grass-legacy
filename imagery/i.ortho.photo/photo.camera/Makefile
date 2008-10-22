@@ -11,7 +11,6 @@ include $(MODULE_TOPDIR)/include/Make/Module.make
 
 default: etc
 
-htmletc:
-	$(MKDIR) $(GISBASE)/docs/html
-	$(INSTALL_DATA) description.html $(GISBASE)/docs/html/$(PGM).html
+$(PGM).tmp.html: description.html
+	$(INSTALL_DATA) $< $@
 	$(INSTALL_DATA) *.png $(GISBASE)/docs/html/
