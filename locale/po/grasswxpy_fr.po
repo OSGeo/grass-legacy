@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: grasswxpy_fr\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2008-10-11 14:54+0200\n"
-"PO-Revision-Date: 2008-10-17 17:11+0200\n"
+"PO-Revision-Date: 2008-10-22 17:36+0200\n"
 "Last-Translator: ANDRE Benoit <benoit.andre@bcgeol.be>\n"
 "Language-Team: Français <fr@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -82,7 +82,7 @@ msgstr "Options de zoom"
 
 #: ../gui/wxpython/icons/icon.py:252
 msgid "Display zoom management"
-msgstr ""
+msgstr "Gestion des zooms"
 
 #: ../gui/wxpython/icons/icon.py:254
 msgid "Add overlay"
@@ -926,81 +926,81 @@ msgstr "Extension pour les cartes en sortie :"
 
 #: ../gui/wxpython/gui_modules/georect.py:491
 msgid "You must select a valid image/map group in order to continue"
-msgstr ""
+msgstr "Vous devez sélectionner un ensemble d'images ou de cartes valides pour pouvoir continuer"
 
 #: ../gui/wxpython/gui_modules/georect.py:496
 msgid "You must enter an map name extension in order to continue"
-msgstr ""
+msgstr "Vous devez spécifier une extension au nom de la carte pour pouvoir continuer"
 
 #: ../gui/wxpython/gui_modules/georect.py:541
 msgid "Select image/map to display for ground control point (GCP) creation"
-msgstr ""
+msgstr "Sélectionner une image ou une carte à afficher pour la création des points de contrôle au sol (PCS)"
 
 #: ../gui/wxpython/gui_modules/georect.py:549
 msgid "Select display image/map:"
-msgstr ""
+msgstr "Sélectionner l'image ou la carte à afficher :"
 
 #: ../gui/wxpython/gui_modules/georect.py:581
 msgid "You must select a valid image/map in order to continue"
-msgstr ""
+msgstr "Vous devez choisir une image ou une carte valide pour pouvoir continuer"
 
 #: ../gui/wxpython/gui_modules/georect.py:605
 msgid "Create & manage ground control points"
-msgstr ""
+msgstr "Créer et gérer les points de contrôle au sol"
 
 #: ../gui/wxpython/gui_modules/georect.py:699
 msgid "Select rectification method for rasters"
-msgstr ""
+msgstr "Choissir la méthode de correction pour les 'rasters'"
 
 #: ../gui/wxpython/gui_modules/georect.py:700
 msgid "1st order"
-msgstr ""
+msgstr "1er ordre"
 
 #: ../gui/wxpython/gui_modules/georect.py:700
 msgid "2nd order"
-msgstr ""
+msgstr "2nd ordre"
 
 #: ../gui/wxpython/gui_modules/georect.py:700
 msgid "3rd order"
-msgstr ""
+msgstr "3ème ordre"
 
 #: ../gui/wxpython/gui_modules/georect.py:706
 msgid "clip to computational region in target location"
-msgstr ""
+msgstr "Circoncire à la région calculée dans la localisation cible"
 
 #: ../gui/wxpython/gui_modules/georect.py:711
 msgid "Ground Control Points"
-msgstr ""
+msgstr "Points de Contrôle au Sol"
 
 #: ../gui/wxpython/gui_modules/georect.py:777
 #, python-format
 msgid "At least %d GCPs required. Operation cancelled."
-msgstr ""
+msgstr "Un minimum de %d PCS est requis.  Opération annulée."
 
 #: ../gui/wxpython/gui_modules/georect.py:778
 msgid "Delete GCP"
-msgstr ""
+msgstr "Effacer des PCS"
 
 #: ../gui/wxpython/gui_modules/georect.py:879
 #, python-format
 msgid "POINTS file <%s> saved"
-msgstr ""
+msgstr "Fichier POINTS <%s> sauvé"
 
 #: ../gui/wxpython/gui_modules/georect.py:880
 msgid "POINTS file saved"
-msgstr ""
+msgstr "Fichier POINTS sauvé"
 
 #: ../gui/wxpython/gui_modules/georect.py:883
 msgid "Writing POINTS file failed"
-msgstr ""
+msgstr "Ecriture du fichier POINTS impossible"
 
 #: ../gui/wxpython/gui_modules/georect.py:920
 msgid "Reading POINTS file failed"
-msgstr ""
+msgstr "Lecture du fichier POINTS impossible"
 
 #: ../gui/wxpython/gui_modules/georect.py:965
 msgid "RMS Error"
-msgstr ""
+msgstr "Erreur RMS"
 
 #: ../gui/wxpython/gui_modules/georect.py:966
 msgid ""
@@ -1010,31 +1010,35 @@ msgid ""
 "7+ points for 2nd order, and\n"
 "10+ points for 3rd order."
 msgstr ""
+"Pas assez de points définis et activés pour la méthode de rectification choisie.\n"
+"3 points ou + nécessaires pour le 1er ordre,\n"
+"7 points ou + nécessaires pour le 2nd ordre, et\n"
+"10 points ou + nécessaires pour le 3ème ordre."
 
 #: ../gui/wxpython/gui_modules/georect.py:1037
 msgid "Georectifier settings"
-msgstr ""
+msgstr "Paramètres de géo-rectification"
 
 #: ../gui/wxpython/gui_modules/georect.py:1127
 #, python-format
 msgid "RMS error for selected points forward: %(fwd)s backward: %(bkw)s"
-msgstr ""
+msgstr "Erreur RMS pour les points sélectionnés avant : %(fwd)s arrière : %(bkw)s"
 
 #: ../gui/wxpython/gui_modules/georect.py:1160
 msgid "use| X coord"
-msgstr ""
+msgstr "Utiliser| coord X"
 
 #: ../gui/wxpython/gui_modules/georect.py:1161
 msgid "Y coord"
-msgstr ""
+msgstr "Coord Y"
 
 #: ../gui/wxpython/gui_modules/georect.py:1162
 msgid "E coord"
-msgstr ""
+msgstr "Coord E"
 
 #: ../gui/wxpython/gui_modules/georect.py:1163
 msgid "N coord"
-msgstr ""
+msgstr "Coord N"
 
 #: ../gui/wxpython/gui_modules/georect.py:1164
 msgid "Forward error"
@@ -1047,35 +1051,35 @@ msgstr ""
 #: ../gui/wxpython/gui_modules/georect.py:1265
 #: ../gui/wxpython/gui_modules/georect.py:1373
 msgid "Edit GCP"
-msgstr ""
+msgstr "Editer les PCS"
 
 #: ../gui/wxpython/gui_modules/georect.py:1266
 msgid "Invalid coordinate value. Operation cancelled."
-msgstr ""
+msgstr "Valeur de coordonnées invalide. Opération annulée."
 
 #: ../gui/wxpython/gui_modules/georect.py:1384
 msgid "Ground Control Point"
-msgstr ""
+msgstr "Point de contrôle au sol"
 
 #: ../gui/wxpython/gui_modules/georect.py:1398
 msgid "X:"
-msgstr ""
+msgstr "X :"
 
 #: ../gui/wxpython/gui_modules/georect.py:1399
 msgid "Y:"
-msgstr ""
+msgstr "Y :"
 
 #: ../gui/wxpython/gui_modules/georect.py:1400
 msgid "E:"
-msgstr ""
+msgstr "E :"
 
 #: ../gui/wxpython/gui_modules/georect.py:1401
 msgid "N:"
-msgstr ""
+msgstr "N :"
 
 #: ../gui/wxpython/gui_modules/georect.py:1487
 msgid "Symbol settings"
-msgstr ""
+msgstr "Paramètres des symbôles"
 
 #: ../gui/wxpython/gui_modules/georect.py:1496
 #: ../gui/wxpython/gui_modules/nviz_tools.py:554
@@ -1113,193 +1117,193 @@ msgstr ""
 #: ../gui/wxpython/gui_modules/preferences.py:830
 #: ../gui/wxpython/gui_modules/vdigit.py:1075
 msgid "Close dialog and ignore changes"
-msgstr ""
+msgstr "Femer la boîte de dialogue et ignorer les changements"
 
 #: ../gui/wxpython/gui_modules/georect.py:1573
 #, python-format
 msgid "Georectifier settings saved to file '%s'."
-msgstr ""
+msgstr "Paramètres de géo-rectification sauvés dans le fichier '%s'."
 
 #: ../gui/wxpython/gui_modules/menuform.py:138
 #: ../gui/wxpython/gui_modules/menuform.py:1179
 msgid "Select Color"
-msgstr ""
+msgstr "Choisir la couleur"
 
 #: ../gui/wxpython/gui_modules/menuform.py:186
 msgid "unknown"
-msgstr ""
+msgstr "Inconnu"
 
 #: ../gui/wxpython/gui_modules/menuform.py:203
 #, python-format
 msgid "Parameter not found: %s"
-msgstr ""
+msgstr "Paramètre non trouvé : %s"
 
 #: ../gui/wxpython/gui_modules/menuform.py:221
 #, python-format
 msgid "Flag not found: %s"
-msgstr ""
+msgstr "FLag non trouvé : %s"
 
 #: ../gui/wxpython/gui_modules/menuform.py:255
 #: ../gui/wxpython/gui_modules/menuform.py:1408
 msgid "<required>"
-msgstr ""
+msgstr "<obligatoire>"
 
 #: ../gui/wxpython/gui_modules/menuform.py:256
 #, python-format
 msgid "Parameter %(name)s (%(desc)s) is missing.\n"
-msgstr ""
+msgstr "Le paramètre %(name)s (%(desc)s) est manquant.\n"
 
 #: ../gui/wxpython/gui_modules/menuform.py:627
 msgid "Enter parameters for "
-msgstr ""
+msgstr "Entrez les paramètres pour"
 
 #: ../gui/wxpython/gui_modules/menuform.py:631
 msgid " (those in bold typeface are required)"
-msgstr ""
+msgstr "(ceux qui sont en caractères gras sont obligatoires)"
 
 #: ../gui/wxpython/gui_modules/menuform.py:642
 msgid "Close this window without executing the command"
-msgstr ""
+msgstr "Fermer cette fenêtre sans exécuter la commande"
 
 #: ../gui/wxpython/gui_modules/menuform.py:647
 msgid "Show manual page of the command"
-msgstr ""
+msgstr "Afficher la page de manuel pour la commande"
 
 #: ../gui/wxpython/gui_modules/menuform.py:665
 msgid "&Run"
-msgstr ""
+msgstr "&Exécuter"
 
 #: ../gui/wxpython/gui_modules/menuform.py:666
 msgid "Run the command"
-msgstr ""
+msgstr "Exécuter la commande"
 
 #: ../gui/wxpython/gui_modules/menuform.py:670
 msgid "Abort the running command"
-msgstr ""
+msgstr "Abandonner la commande en cours"
 
 #: ../gui/wxpython/gui_modules/menuform.py:674
 msgid "Copy the current command string to the clipboard"
-msgstr ""
+msgstr "Copier la chaîne de commande dans le presse-papier"
 
 #: ../gui/wxpython/gui_modules/menuform.py:706
 #: ../gui/wxpython/gui_modules/gdialogs.py:68
 #: ../gui/wxpython/gui_modules/preferences.py:1096
 msgid "Add created map into layer tree"
-msgstr ""
+msgstr "Ajouter la carte créée dans l'arborescence des couches"
 
 #: ../gui/wxpython/gui_modules/menuform.py:715
 #: ../gui/wxpython/gui_modules/preferences.py:1086
 msgid "Close dialog on finish"
-msgstr ""
+msgstr "Fermer la boîte de dialogue après exécution"
 
 #: ../gui/wxpython/gui_modules/menuform.py:827
 #, python-format
 msgid "'%s' copied to clipboard"
-msgstr ""
+msgstr "'%s' copié dans le presse-papier"
 
 #: ../gui/wxpython/gui_modules/menuform.py:882
 #: ../gui/wxpython/gui_modules/menuform.py:895
 #: ../gui/wxpython/gui_modules/menuform.py:1275
 msgid "Required"
-msgstr ""
+msgstr "Obligatoire"
 
 #: ../gui/wxpython/gui_modules/menuform.py:885
 #: ../gui/wxpython/gui_modules/menuform.py:895
 msgid "Optional"
-msgstr ""
+msgstr "Optionnel"
 
 #: ../gui/wxpython/gui_modules/menuform.py:923 ../gui/wxpython/wxgui.py:310
 #: ../gui/wxpython/wxgui.py:400
 msgid "Command output"
-msgstr ""
+msgstr "Messages de la commande"
 
 #: ../gui/wxpython/gui_modules/menuform.py:930
 msgid "Manual"
-msgstr ""
+msgstr "Manuel"
 
 #: ../gui/wxpython/gui_modules/menuform.py:1005
 msgid "[multiple]"
-msgstr ""
+msgstr "[multiple]"
 
 #: ../gui/wxpython/gui_modules/menuform.py:1043
 msgid "Valid range"
-msgstr ""
+msgstr "Plage de validité"
 
 #: ../gui/wxpython/gui_modules/menuform.py:1198
 msgid "Transparent"
-msgstr ""
+msgstr "Transparent"
 
 #: ../gui/wxpython/gui_modules/menuform.py:1215
 #, python-format
 msgid "Choose %s"
-msgstr ""
+msgstr "Choisir %s"
 
 #: ../gui/wxpython/gui_modules/menuform.py:1216
 #: ../gui/wxpython/gui_modules/menudata.py:26
 msgid "File"
-msgstr ""
+msgstr "Fichier"
 
 #: ../gui/wxpython/gui_modules/menuform.py:1477
 #, python-format
 msgid "Error in %s"
-msgstr ""
+msgstr "Erreur dans %s"
 
 #: ../gui/wxpython/gui_modules/menuform.py:1511
 #, python-format
 msgid "Unable to fetch interface description for command '%s'."
-msgstr ""
+msgstr "Impossible de trouver la description de l'interface pour la commande '%s'."
 
 #: ../gui/wxpython/gui_modules/menuform.py:1595
 #, python-format
 msgid "Unable to parse command %s"
-msgstr ""
+msgstr "Impossible d'interpréter la commande %s"
 
 #: ../gui/wxpython/gui_modules/menuform.py:1683
 #, python-format
 msgid "usage: %s <grass command>"
-msgstr ""
+msgstr "Utilisation : %s <grass command>"
 
 #: ../gui/wxpython/gui_modules/gdialogs.py:58
 msgid "Name for new vector map:"
-msgstr ""
+msgstr "Nom pour la nouvelle carte vectorielle :"
 
 #: ../gui/wxpython/gui_modules/gdialogs.py:64
 msgid "Create attribute table"
-msgstr ""
+msgstr "Créer la table d'attributs"
 
 #: ../gui/wxpython/gui_modules/gdialogs.py:127
 #: ../gui/wxpython/gui_modules/menudata.py:1201
 msgid "Create new vector map"
-msgstr ""
+msgstr "Créer un nouvelle carte vectorielle"
 
 #: ../gui/wxpython/gui_modules/gdialogs.py:143
 #, python-format
 msgid "Unable to create vector map <%s>."
-msgstr ""
+msgstr "Impossible de créer la carte vectorielle <%s>."
 
 #: ../gui/wxpython/gui_modules/gdialogs.py:160
 #, python-format
 msgid ""
 "Vector map <%s> already exists in the current mapset. Do you want to "
 "overwrite it?"
-msgstr ""
+msgstr "La carte vectorielle <%s> existe déjà dans le jeu de cartes courant.  Voulez-vous l'écraser ?"
 
 #: ../gui/wxpython/gui_modules/gdialogs.py:163
 msgid "Overwrite?"
-msgstr ""
+msgstr "Ecraser ?"
 
 #: ../gui/wxpython/gui_modules/gdialogs.py:203
 #, python-format
 msgid "New vector map <%s> created"
-msgstr ""
+msgstr "Nouvelle carte vectorielle <%s> créée"
 
 #: ../gui/wxpython/gui_modules/gdialogs.py:225
 msgid "Load region:"
-msgstr ""
+msgstr "Charger une région :"
 
 #: ../gui/wxpython/gui_modules/gdialogs.py:233
 msgid "Save region:"
-msgstr ""
+msgstr "Sauver une région :"
 
 #: ../gui/wxpython/gui_modules/gdialogs.py:304
 #, python-format
@@ -1404,7 +1408,7 @@ msgstr ""
 
 #: ../gui/wxpython/gui_modules/gdialogs.py:831
 msgid "Add imported layers into layer tree"
-msgstr ""
+msgstr "Ajouter les couches importées dans l'arborescence"
 
 #: ../gui/wxpython/gui_modules/gdialogs.py:839
 msgid "Close dialog"
@@ -1731,80 +1735,80 @@ msgstr ""
 #: ../gui/wxpython/gui_modules/menudata.py:27
 #: ../gui/wxpython/gui_modules/preferences.py:1306
 msgid "Workspace"
-msgstr ""
+msgstr "Espace de travail"
 
 #: ../gui/wxpython/gui_modules/menudata.py:29
 msgid "New workspace"
-msgstr ""
+msgstr "Nouvel espace de travail"
 
 #: ../gui/wxpython/gui_modules/menudata.py:30
 msgid "Create new workspace file (erase current workspace settings first)"
-msgstr ""
+msgstr "Créer un nouvel espace de travail (efface d'abord les paramètres de l'espace en cours)"
 
 #: ../gui/wxpython/gui_modules/menudata.py:34
 msgid "Open existing workspace"
-msgstr ""
+msgstr "Ouvrir un espace de travail existant"
 
 #: ../gui/wxpython/gui_modules/menudata.py:39
 msgid "Load map layers"
-msgstr ""
+msgstr "Charger des cartes"
 
 #: ../gui/wxpython/gui_modules/menudata.py:40 ../gui/wxpython/wxgui.py:741
 msgid "Load map layers into layer tree"
-msgstr ""
+msgstr "Charger des cartes dans l'arborescence des couches"
 
 #: ../gui/wxpython/gui_modules/menudata.py:44
 msgid "Load GRC file (Tcl/Tk GUI)"
-msgstr ""
+msgstr "Charger un fichier GRC (interface Tcl/Tk)"
 
 #: ../gui/wxpython/gui_modules/menudata.py:45
 msgid "Load map layers from GRC file to layer tree (not fully implemented)"
-msgstr ""
+msgstr "Charger des cartes depuis un fichier GRC dans l'arborescence des couches (pas totalement implémenté)"
 
 #: ../gui/wxpython/gui_modules/menudata.py:49 ../gui/wxpython/wxgui.py:825
 #: ../gui/wxpython/wxgui.py:843
 msgid "Save workspace"
-msgstr ""
+msgstr "Sauver l'espace de travail"
 
 #: ../gui/wxpython/gui_modules/menudata.py:54
 msgid "Save workspace as"
-msgstr ""
+msgstr "Sauver l'espace de travail sous"
 
 #: ../gui/wxpython/gui_modules/menudata.py:55
 msgid "Save current workspace as file"
-msgstr ""
+msgstr "Sauver l'espace de travail courant dans un fichier"
 
 #: ../gui/wxpython/gui_modules/menudata.py:59
 msgid "Close current workspace"
-msgstr ""
+msgstr "Fermer l'espace de travail courant"
 
 #: ../gui/wxpython/gui_modules/menudata.py:60
 msgid "Close current workspace file"
-msgstr ""
+msgstr "Fermer le fichier d'espace de travail courant"
 
 #: ../gui/wxpython/gui_modules/menudata.py:66
 msgid "Import raster map"
-msgstr ""
+msgstr "Importer une carte 'raster'"
 
 #: ../gui/wxpython/gui_modules/menudata.py:68
 msgid "Import raster data using GDAL"
-msgstr ""
+msgstr "Importer des données 'raster' en utilisant GDAL"
 
 #: ../gui/wxpython/gui_modules/menudata.py:69
 msgid "Import GDAL supported raster file into a binary raster map layer."
-msgstr ""
+msgstr "Importer un fichier 'raster' supporté par GDAL dans une carte 'raster' binaire"
 
 #: ../gui/wxpython/gui_modules/menudata.py:72
 msgid "Multiple raster data import using GDAL"
-msgstr ""
+msgstr "Importer de multiples données 'raster' en utilisant GDAL"
 
 #: ../gui/wxpython/gui_modules/menudata.py:73
 msgid "Converts selected GDAL layers to GRASS raster maps using r.in.gdal."
-msgstr ""
+msgstr "Convertir des couches GDAL sélectionnées en 'raster' GRASS au moyen de r.in.gdal"
 
 #: ../gui/wxpython/gui_modules/menudata.py:79
 msgid "Aggregate ASCII xyz import"
-msgstr ""
+msgstr "Importer des données ASCII xyz"
 
 #: ../gui/wxpython/gui_modules/menudata.py:80
 msgid ""
@@ -5013,7 +5017,7 @@ msgstr "Général"
 
 #: ../gui/wxpython/gui_modules/preferences.py:861
 msgid "General settings"
-msgstr ""
+msgstr "Paramètres généraux"
 
 #: ../gui/wxpython/gui_modules/preferences.py:872
 msgid "Element list:"
@@ -5035,7 +5039,7 @@ msgstr ""
 
 #: ../gui/wxpython/gui_modules/preferences.py:922
 msgid "Ask when removing map layer from layer tree"
-msgstr ""
+msgstr "Demander lors de l'enlèvement d'une couche de l'arborescence"
 
 #: ../gui/wxpython/gui_modules/preferences.py:940
 #: ../gui/wxpython/gui_modules/vdigit.py:1143
@@ -6907,7 +6911,7 @@ msgstr ""
 
 #: ../gui/wxpython/gis_set.py:173
 msgid "Welcome to GRASS GIS"
-msgstr ""
+msgstr "Bienvenue dans le SIG GRASS"
 
 #: ../gui/wxpython/gis_set.py:181
 msgid "Enter GRASS session"
@@ -6998,101 +7002,101 @@ msgstr ""
 
 #: ../gui/wxpython/gis_set.py:702
 msgid "GRASS Quickstart"
-msgstr ""
+msgstr "Démarrage rapide de GRASS"
 
 #: ../gui/wxpython/wxgui.py:100
 msgid "GRASS GIS Layer Manager (Experimental Prototype)"
-msgstr ""
+msgstr "Gestionnaire de couches d'information GRASS GIS (prototype expérimental)"
 
 #: ../gui/wxpython/wxgui.py:306
 msgid "Map layers for each display"
-msgstr ""
+msgstr "Couches pour chaque écran"
 
 #: ../gui/wxpython/wxgui.py:431
 msgid "Type GRASS command and run by pressing ENTER"
-msgstr ""
+msgstr "Entrez une commande GRASS et exécuter-la en appuyant sur ENTER"
 
 #: ../gui/wxpython/wxgui.py:552
 msgid ""
 "Workspace is not empty. Do you want to store current settings to workspace "
 "file?"
-msgstr ""
+msgstr "L'espace de travail n'est pas vide.  Voulez-vous sauver les paramètres courants dans un fichier ?"
 
 #: ../gui/wxpython/wxgui.py:555
 msgid "Save current settings?"
-msgstr ""
+msgstr "Sauver les paramètres courants ?"
 
 #: ../gui/wxpython/wxgui.py:570
 msgid "Choose workspace file"
-msgstr ""
+msgstr "Choisir un fichier d'environnement"
 
 #: ../gui/wxpython/wxgui.py:634 ../gui/wxpython/wxgui.py:639
 #, python-format
 msgid ""
 "Reading workspace file <%s> failed. Invalid file, unable to parse XML "
 "document."
-msgstr ""
+msgstr "Lecture du fichier d'environnement <%s> impossible.  Fichier invalide, incapable de déchiffrer le document XML"
 
 #: ../gui/wxpython/wxgui.py:644 ../gui/wxpython/wxgui.py:749
 #: ../gui/wxpython/wxgui.py:785
 msgid "Please wait, loading workspace..."
-msgstr ""
+msgstr "Patience, l'environnement est en cours de chargement..."
 
 #: ../gui/wxpython/wxgui.py:729
 msgid "Unable to read workspace file"
-msgstr ""
+msgstr "Incapable de lire le fichier d'environnement"
 
 #: ../gui/wxpython/wxgui.py:769
 msgid "Choose GRC file to load"
-msgstr ""
+msgstr "Choisir un fichier GRC à charger"
 
 #: ../gui/wxpython/wxgui.py:808
 msgid "Choose file to save current workspace"
-msgstr ""
+msgstr "Choisir le fichier où sauver l'environnement courant"
 
 #: ../gui/wxpython/wxgui.py:823 ../gui/wxpython/wxgui.py:840
 #, python-format
 msgid "Workspace file <%s> already exists. Do you want to overwrite this file?"
-msgstr ""
+msgstr "Le fichier denvironnement <%s> existe déjà.  Voulez-vous écraser ce fichier ?"
 
 #: ../gui/wxpython/wxgui.py:862
 #, python-format
 msgid "Unable to open workspace file <%s> for writing."
-msgstr ""
+msgstr "Impossible d'ouvrir le fichier d'environnement <%s> en écriture."
 
 #: ../gui/wxpython/wxgui.py:871
 #, python-format
 msgid "Writing current settings to workspace file failed (%s)."
-msgstr ""
+msgstr "Ecriture des paramètres courant dans le fichier d'environnement (%s) non réussie."
 
 #: ../gui/wxpython/wxgui.py:1063
 msgid "Import DXF layers"
-msgstr ""
+msgstr "Importer des couches DXF"
 
 #: ../gui/wxpython/wxgui.py:1069
 msgid "Import GDAL layers"
-msgstr ""
+msgstr "Importer des couches GDAL"
 
 #: ../gui/wxpython/wxgui.py:1075
 msgid "Import OGR layers"
-msgstr ""
+msgstr "Importer des couches OGR"
 
 #: ../gui/wxpython/wxgui.py:1100
 msgid "Attribute management is available only for vector maps."
-msgstr ""
+msgstr "La gestion des attributs est seulement disponible pour les cartes vectorielles"
 
 #: ../gui/wxpython/wxgui.py:1123
 msgid "Please wait, loading attribute data..."
-msgstr ""
+msgstr "Patientez, chargement des données d'attributs"
 
 #: ../gui/wxpython/wxgui.py:1436
 #, python-format
 msgid "Do you want to remove map layer %s from layer tree?"
-msgstr ""
+msgstr "Voulez-vous enlever la couche %s de l'arborescence"
 
 #: ../gui/wxpython/wxgui.py:1439
 msgid "Do you want to remove selected map layer from layer tree?"
-msgstr ""
+msgstr "Voulez-vous enlever la couche sélectionnée de l'arborescence"
 
 #: ../gui/wxpython/wxgui.py:1443
 msgid "Remove map layer"
