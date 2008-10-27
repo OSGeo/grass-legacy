@@ -346,7 +346,7 @@ proc layout_make_frame {dlg guisection optn glabel} {
 	global bgcolor
 
 	if {$guisection == {}} {set guisection {{}}}
-		
+
 	if {[llength $guisection] == 1} {
 		# A frame for a toplevel section
 		# This uses a scrolled frame in a notebook tab
@@ -356,10 +356,10 @@ proc layout_make_frame {dlg guisection optn glabel} {
 			set guisection {Options}
 		}
 		set path $opt($dlg,path)
-		if {$glabel == "Required"} {
-			set optpane [$path.nb insert 0 $guisection -text $glabel]
-		} else {
-			set optpane [$path.nb insert end $guisection -text $glabel]			
+		set optpane [$path.nb insert end $guisection -text $glabel]
+		# Word "required" in $glabel may be translated
+		if {$glabel == [G_msg "Required"]} {
+			$path.nb move $guisection 0
 		}
 		# Specials don't get scrolling frames:
 		if {$optn == -1} {
@@ -418,11 +418,7 @@ proc layout_raise_frame {dlg guisection optn} {
 		set guisection {Options}
 	}
 	
-	set firstpg [$path.nb pages 0]
 	$path.nb raise $guisection
-	
-	#Make the first tab the active one instead of the "options" tab
-	$path.nb raise $firstpg
 }
 
 proc layout_raise_special_frame {dlg guisection key} {
@@ -747,12 +743,18 @@ proc end_dialog {n} {
 	make_dialog_end $dlg $path $root
 	
 	if {$n > 0} {
-		layout_raise_frame $dlg $opt($dlg,1,guisection) 1
+		# Rise first page
+		$path.nb raise [$path.nb pages 0] 
 	}
 
 	update
 
 	show_cmd $dlg
+	
+	# Following commands will force redrawing of notebook
+	# It is required in case if pages where rearranged
+	$path.nb _realize
+	$path.nb _redraw
 }
 
 proc add_option {optn optlist} {
