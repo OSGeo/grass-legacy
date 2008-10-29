@@ -345,6 +345,7 @@ else
 fi
 
 d.mon start=$GRAPHICS_DRIVER --quiet
+BOX=`d.info -b | cut -f2 -d':'`
 eval "$dsave"
 d.mon stop=$GRAPHICS_DRIVER --quiet
 ################################
@@ -395,7 +396,17 @@ case "$GIS_OPT_FORMAT" in
      ;;
    geotiff)
      g.message "Translating to GeoTIFF format" 
-     eval `d.info -g`
+     eval `g.region -g`
+
+     # chop off out of region borders 
+     BOX_L=`echo $BOX | cut -f1 -d' '`
+     BOX_R=`echo $BOX | cut -f2 -d' '`
+     BOX_T=`echo $BOX | cut -f3 -d' '`
+     BOX_B=`echo $BOX | cut -f4 -d' '`
+     BOX_WIDTH=`echo $BOX_R $BOX_L | awk '{print $1 - $2}'`
+     BOX_HEIGHT=`echo $BOX_B $BOX_T | awk '{print $1 - $2}'`
+     g.message "Image crop [$BOX_WIDTH x $BOX_HEIGHT]"
+
      PROJ_WKT="`g.proj -wf`"
      CO=""
      if [ -n "$GIS_OPT_CREATEOPT" ] ; then
@@ -414,6 +425,7 @@ case "$GIS_OPT_FORMAT" in
      unset IFS
 
      gdal_translate -of GTIFF -a_ullr $w $n $e $s -quiet \
+	-srcwin $BOX_L $BOX_T $BOX_WIDTH $BOX_HEIGHT \
 	-a_srs "$PROJ_WKT" $CO $MO "$output" "$outname"
      EXITCODE=$?
      ;;
