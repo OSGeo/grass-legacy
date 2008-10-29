@@ -2,19 +2,22 @@
 # Greek translation of grassmods.pot
 # This file is distributed under the same license as the GRASS package.
 # Copyright (C) 2007 GRASS Development Team
-# Carlos Davila <carluti@users.sourceforge.net>, 2007.
 #
+# Carlos Davila <carluti@users.sourceforge.net>, 2007.
+# Vasilios Antoniou <antoniou_v@yahoo.gr>, 2008.
+# Vasilios Antoniou <vantoniou@gmail.com>, 2008.
 msgid ""
 msgstr ""
 "Project-Id-Version: grassmods_el\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2008-10-11 14:54+0200\n"
-"PO-Revision-Date: 2007-03-23 16:35+0100\n"
-"Last-Translator: Carlos Davila <carluti@users.sourceforge.net>\n"
+"PO-Revision-Date: 2008-10-29 10:26+0200\n"
+"Last-Translator: Vasilios Antoniou <vantoniou@gmail.com>\n"
 "Language-Team: Greek <grass-translations@lists.osgeo.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=ISO-8859-7\n"
 "Content-Transfer-Encoding: 8bit\n"
+"X-Generator: KBabel 1.11.4\n"
 
 #: ../db/base/execute.c:60 ../db/base/createdb.c:43 ../db/base/dropdb.c:43
 #: ../db/base/tables.c:46 ../db/base/droptable.c:44 ../db/base/select.c:62
@@ -27,197 +30,199 @@ msgstr ""
 #: ../display/d.thematic.area/main.c:230
 #, c-format
 msgid "Unable to start driver <%s>"
-msgstr ""
+msgstr "Αδυναμία εκκίνησης του οδηγού <%s>"
 
 #: ../db/base/execute.c:66 ../db/base/tables.c:51 ../db/base/select.c:68
 #: ../db/base/describe.c:57 ../display/d.vect/main.c:504
 #: ../display/d.thematic.area/main.c:235
 #, c-format
 msgid "Unable to open database <%s>"
-msgstr ""
+msgstr "Αδυναμία ανοίγματος βάσης δεδομενων <%s>"
 
 #: ../db/base/execute.c:76 ../db/base/execute.c:81
 #, c-format
 msgid "Error while executing: '%s'"
-msgstr ""
+msgstr "Σφάλμα κατά την εκτέλεση: '%s'"
 
 #: ../db/base/execute.c:106 ../db/base/copy.c:34 ../db/base/select.c:230
 msgid "database, attribute table, SQL"
-msgstr ""
+msgstr "Βάση δεδομένων, πίνακας ιδιοτήτων, SQL"
 
 #: ../db/base/execute.c:107
 msgid "Executes any SQL statement."
-msgstr ""
+msgstr "Εκτελεί οποιαδήποτε SQL εντολή"
 
 #: ../db/base/execute.c:111
 msgid "Name of file containing SQL statements"
-msgstr ""
+msgstr "Όνομα του αρχείου που περιέχει SQL εντολές"
 
 #: ../db/base/execute.c:124
 msgid "Ignore SQL errors and continue"
-msgstr ""
+msgstr "Αγνοεί τα SQL λάθη και συνεχίζει"
 
 #: ../db/base/execute.c:150
 msgid "Use db.select for SELECT SQL statements"
-msgstr ""
+msgstr "Χρησιμοποιήστε sb.select για SELECT SQL εντολές"
 
 #: ../db/base/createdb.c:71 ../db/base/dropdb.c:71 ../db/base/droptable.c:78
 #: ../db/base/databases.c:90 ../db/db.login/main.c:43
 msgid "database, SQL"
-msgstr ""
+msgstr "Βάση δεδομένων, SQL"
 
 #: ../db/base/createdb.c:72
 msgid "Creates an empty database."
-msgstr ""
+msgstr "Δημιουργεί μία κενή βάση δεδομένων"
 
 #: ../db/base/copy.c:35
 msgid "Copy a table."
-msgstr ""
+msgstr "Αντιγράφει ένα πίνακα"
 
 #: ../db/base/copy.c:37
 msgid ""
 "Either 'from_table' (optionally with 'where') can be used or 'select' "
 "option, but not 'from_table' and 'select' at the same time."
 msgstr ""
+"Είτε 'from_table' (κατ' επιλογή με 'where') μπορεί να χρησιμοποιηθεί ή 'select' "
+"επιλογή, αλλά όχι 'from_table' και 'select' την ίδια στιγμή."
 
 #: ../db/base/copy.c:43
 msgid "Input driver name"
-msgstr ""
+msgstr "Εισαγωγή όνομα οδηγού"
 
 #: ../db/base/copy.c:49
 msgid "Input database name"
-msgstr ""
+msgstr "Εισαγωγή όνομα βάσης δεδομένων"
 
 #: ../db/base/copy.c:56
 msgid "Input table name (only, if 'select' is not used)"
-msgstr ""
+msgstr "Εισαγωγής βάσης δεδομένων (μόνο εάν 'select' δεν χρησιμοποιείται)"
 
 #: ../db/base/copy.c:62
 msgid "Output driver name"
-msgstr ""
+msgstr "Εξαγωγή όνομα οδηγού"
 
 #: ../db/base/copy.c:68
 msgid "Output database name"
-msgstr ""
+msgstr "Εξαγωγή όνομα βάσης δεδομένων"
 
 #: ../db/base/copy.c:75
 msgid "Output table name"
-msgstr ""
+msgstr "Εξαγωγή ονόματος πίνακα"
 
 #: ../db/base/copy.c:84
 msgid "Full select statement (only, if 'from_table' and 'where' is not used)"
-msgstr ""
+msgstr "Πλήρης select δήλωση (μόνο, εάν 'from_table' και 'where' is δεν χρησιμοποιούνται)"
 
 #: ../db/base/copy.c:85
 msgid "E.g.: SELECT dedek FROM starobince WHERE obec = 'Frimburg'"
-msgstr ""
+msgstr "Παράδειγμα.: SELECT dedek FROM starobince WHERE obec = 'Frimburg'"
 
 #: ../db/base/copy.c:93
 msgid "Cannot combine 'from_table' and 'select' options"
-msgstr ""
+msgstr "Δεν μπορεί να συνδυαστεί 'from_table' και 'select' επιλογές"
 
 #: ../db/base/copy.c:111
 msgid "Either 'from_table' or 'select' option must be given."
-msgstr ""
+msgstr "Είτε 'from_table' ή 'select' επιλογή πρέπει να δωθεί."
 
 #: ../db/base/copy.c:114
 msgid "Cannot combine 'select' and 'where' options"
-msgstr ""
+msgstr "Δεν συνδυάζονται 'select' και 'where' επιλογές"
 
 #: ../db/base/copy.c:124
 msgid "Copy table failed"
-msgstr ""
+msgstr "Αντιγραφή πίνακα απέτυχε"
 
 #: ../db/base/dropdb.c:72
 msgid "Removes a database."
-msgstr ""
+msgstr "Αφαιρεί μία βάση δεδομένων"
 
 #: ../db/base/tables.c:87
 msgid "Print tables and exit"
-msgstr ""
+msgstr "Τυπώνει τον πίνακα και κλεινει (έξοδος)"
 
 #: ../db/base/tables.c:91
 msgid "System tables instead of user tables"
-msgstr ""
+msgstr "Πίνακες συστήματος αντί πίνακες χρηστών"
 
 #: ../db/base/tables.c:95 ../db/base/drivers.c:74 ../db/base/columns.c:92
 #: ../db/base/describe.c:125 ../db/base/connect.c:45
 msgid "database, attribute table"
-msgstr ""
+msgstr "βάση δεδομένων, πίνακας ιδιοτήτων"
 
 #: ../db/base/tables.c:96
 msgid "Lists all tables for a given database."
-msgstr ""
+msgstr "Δίνει τη λίστα όλων των πινάκων για μία δεδομένη βάση δεδομένων."
 
 #: ../db/base/droptable.c:79
 msgid "Removes a table from database."
-msgstr ""
+msgstr "Αφαιρεί ένα πίνακα από την βάση δεδομένων"
 
 #: ../db/base/drivers.c:41
 msgid "Error trying to read dbmscap file\n"
-msgstr ""
+msgstr "Σφάλμα κατά την προσπάθεια ανάγνωσης του αρχείου dbmscap\n"
 
 #: ../db/base/drivers.c:66
 msgid "Full output"
-msgstr ""
+msgstr "Πλήρες output"
 
 #: ../db/base/drivers.c:70
 msgid "print drivers and exit"
-msgstr ""
+msgstr "τυπώνει τους οδηγούς και έξοδος"
 
 #: ../db/base/drivers.c:75
 msgid "List all database drivers."
-msgstr ""
+msgstr "Δίνει τη λίστα για όλους τους οδηγούς βάσεων δεδομένων"
 
 #: ../db/base/select.c:190
 msgid "SQL select statement"
-msgstr ""
+msgstr "SQL select εντολή"
 
 #: ../db/base/select.c:192
 msgid "For example: 'select * from rybniky where kapri = 'hodne'"
-msgstr ""
+msgstr "Για παράδειγμα: 'select * from rybniky where kapri = 'hodne'"
 
 #: ../db/base/select.c:195 ../raster/r.distance/parse.c:50
 #: ../raster/r.stats/main.c:108 ../raster/r.cats/main.c:72
 #: ../vector/v.db.select/main.c:63
 msgid "Output field separator"
-msgstr ""
+msgstr "Διαχωριστής πεδίων εξόδου"
 
 #: ../db/base/select.c:199 ../vector/v.db.select/main.c:68
 msgid "Output vertical record separator"
-msgstr ""
+msgstr "Κάθετος διαχωριστής εγγραφών εξόδου"
 
 #: ../db/base/select.c:206 ../vector/v.db.select/main.c:76
 msgid "Null value indicator"
-msgstr ""
+msgstr "Δείκτης κενής τιμής"
 
 #: ../db/base/select.c:210
 msgid "Name of file with sql statement"
-msgstr ""
+msgstr "Όνομα αρχείου με sql εντολή"
 
 #: ../db/base/select.c:214 ../vector/v.db.select/main.c:86
 msgid "Do not include column names in output"
-msgstr ""
+msgstr "Μην συμπεριλάβεται τα ονόματα των στηλών στην έξοδο"
 
 #: ../db/base/select.c:218
 msgid "Describe query only (don't run it)"
-msgstr ""
+msgstr "Περιγράφη μόνο το ερώτημα (δεν το τρέχει)"
 
 #: ../db/base/select.c:222 ../vector/v.db.select/main.c:91
 msgid "Vertical output (instead of horizontal)"
-msgstr ""
+msgstr "Οριζόντια έξοδος (αντί για κατακόρυφη)"
 
 #: ../db/base/select.c:226
 msgid "Only test query, do not execute"
-msgstr ""
+msgstr "Ερώτημα μόνο για τεστ, μην το εκτελέσετε"
 
 #: ../db/base/select.c:231
 msgid "Selects data from table."
-msgstr ""
+msgstr "Επιλέγει δεδομένα από τον πίνακα/"
 
 #: ../db/base/columns.c:93
 msgid "List all columns for a given table."
-msgstr ""
+msgstr "Δίνει λίστα όλων των στηλών για ένα δεδομένο πίνακα."
 
 #: ../db/base/describe.c:63 ../vector/v.db.connect/main.c:199
 #: ../vector/v.in.ascii/in.c:402 ../vector/v.patch/main.c:139
@@ -226,60 +231,59 @@ msgstr ""
 #: ../vector/v.out.ogr/main.c:332 ../doc/vector/v.example/main.c:134
 #, c-format
 msgid "Unable to describe table <%s>"
-msgstr ""
+msgstr "Αδυναμία περιγραφής πίνακα <%s>"
 
 #: ../db/base/describe.c:104
 msgid "Print column names only instead of full column descriptions"
-msgstr ""
+msgstr "Εκτύπωση μόνο των ονομάτων στηλών αντί των αναλυτικών περιγραφών"
 
 #: ../db/base/describe.c:109
 msgid "Print table structure"
-msgstr ""
+msgstr "Τύπωμα της δομή του πίνακα"
 
 #: ../db/base/describe.c:126
 msgid "Describes a table in detail."
-msgstr ""
+msgstr "Λεπτομερής περιγραφή πίνακα"
 
 #: ../db/base/databases.c:56
 msgid "Unable to list databases"
-msgstr ""
+msgstr "Αδυναμία λίστας βάσεων δεδομένων"
 
 #: ../db/base/databases.c:85
 msgid "Location name"
-msgstr ""
+msgstr "Όνομα τοποθεσία"
 
 #: ../db/base/databases.c:92
 msgid "List all databases for a given driver and location."
-msgstr ""
+msgstr "Δίνει τη λίστα όλων των βάσεων δεδομένων για ένα δωσμένο οδηγό και τοποθεσία"
 
 #: ../db/base/connect.c:47
 msgid "Prints/sets general DB connection for current mapset and exits."
-msgstr ""
+msgstr "Εκτυπώνει/σετάρει γενική DB σύνδεση για το τρέχων maps και κλείνει"
 
 #: ../db/base/connect.c:52
 msgid "Print current connection parameters and exit"
-msgstr ""
+msgstr "Εκτυπώνει τις τρέχουσες παραμέτρους σύνδεσης και κλείνει"
 
 #: ../db/base/connect.c:57
 msgid "Check connection parameters, set if uninitialized, and exit"
-msgstr ""
+msgstr "Ελέγχεις τις τρέχουσες παραμέτρους σύνδεσης, σετάρεις άν δεν έχουν ξεκινήσεις και κλείνει"
 
 #: ../db/base/connect.c:72
 msgid "Database schema"
-msgstr ""
+msgstr "Η διάταξη της βάσης δεδομένων"
 
 #: ../db/base/connect.c:73
-msgid ""
-"Do not use this option if schemas are not supported by driver/database server"
-msgstr ""
+msgid "Do not use this option if schemas are not supported by driver/database server"
+msgstr "Μην χρησιμοποιήσετε αυτή την επιλογή άν η διάταξη δεν υποστηρίζεται από τον εξυπηρετητή οδηγό/βάση δεδομένων"
 
 #: ../db/base/connect.c:82
 msgid "Default group of database users to which select privilege is granted"
-msgstr ""
+msgstr "Προεπιλεγμένο γκρουπ χρηστών βάσης δεδομένων στο οποίο έχουν τα δικαιώματα"
 
 #: ../db/base/connect.c:117
 msgid "Database connection not defined. Run db.connect."
-msgstr ""
+msgstr "Δεν έχει καθορισθεί η σύνδεση με τη βάση δεδομένων. Τρέξτε το db.connect."
 
 #: ../db/base/connect.c:137
 #, c-format
@@ -288,26 +292,29 @@ msgid ""
 "driver: %s\n"
 "database: %s"
 msgstr ""
+"Προεπιλεγμένος οδηγός / η βάση δεδομένων έχει:\n"
+"driver: %s\n"
+"database: %s"
 
 #: ../db/base/connect.c:144
 msgid "Default driver is not set"
-msgstr ""
+msgstr "Ο προεπιλεγμένος οδηγός δεν έχει καθοριστεί"
 
 #: ../db/base/connect.c:147
 msgid "Default database is not set"
-msgstr ""
+msgstr "Η προεπιλεγμένη βάση δεδομένων δεν έχει καθοριστεί"
 
 #: ../db/db.login/main.c:44
 msgid "Sets user/password for driver/database."
-msgstr ""
+msgstr "Καθορίζει το όνομα χρήστη/κωδικό για τον οδηγό/ βάση δεδομένων"
 
 #: ../db/db.login/main.c:60
 msgid "Username"
-msgstr ""
+msgstr "Όνομα χρήστη"
 
 #: ../db/db.login/main.c:67
 msgid "Password"
-msgstr ""
+msgstr "Κωδικός"
 
 #: ../db/db.login/main.c:83
 #, c-format
@@ -316,152 +323,156 @@ msgid ""
 "Enter database password for connection\n"
 "<%s:%s:user=%s>\n"
 msgstr ""
+"\n"
+"Δώστε τον κωδικό της βάσης δεδομένων για τη σύνδεση\n"
+"<%s:%s:user=%s>\n"
 
 #: ../db/db.login/main.c:85
 #, c-format
+#, fuzzy
 msgid "Hit RETURN to cancel request\n"
-msgstr ""
+msgstr "Πατήστε το πλήκτρο RETURN για να ακυρώσετε την εντολή\n"
 
 #: ../db/db.login/main.c:93
 msgid "Exiting. Not changing current settings"
-msgstr ""
+msgstr "Κλείσιμο εφαρμογής, χωρίς να αλλάξουν οι τρέχουσες επιλογές"
 
 #: ../db/db.login/main.c:97
 msgid "New password set"
-msgstr ""
+msgstr "Ο νέος κωδικός δημιουργήθηκε"
 
 #: ../db/db.login/main.c:106
 msgid "Unable to set user/password"
-msgstr ""
+msgstr "Δεν είναι δυνατή η αλλαγή χρήστη/κωδικού"
 
 #: ../db/db.login/main.c:110
 msgid "The password was stored in file"
-msgstr ""
+msgstr "Ο κωδικός αποθηκεύτηκε στο αρχείο"
 
 #: ../db/drivers/sqlite/describe.c:159
 #, c-format
 msgid "SQLite driver: column '%s', SQLite type %d  is not supported"
-msgstr ""
+msgstr "SQLite driver: στήλη '%s', SQLite τύπος %d δεν υποστηρίζεται"
 
 #: ../db/drivers/mysql/listtab.c:36
 msgid "Cannot get list of tables:\n"
-msgstr ""
+msgstr "Δεν μπορώ να δω λίστα των πινάκων:\n"
 
 #: ../db/drivers/mysql/parse.c:60
 msgid "Wrong port number in MySQL database definition: "
-msgstr ""
+msgstr "Λάθος νούμερο πόρτας στην MySQL περιγραφή της βάσης: "
 
 #: ../db/drivers/mysql/parse.c:71 ../db/drivers/postgres/parse.c:55
 msgid "'user' in database definition is not supported, use db.login"
-msgstr ""
+msgstr "'user' στη βάση δεδομένων δεν υποστηρίζεται, χρησιμοποιήστε db."
 
 #: ../db/drivers/mysql/parse.c:75 ../db/drivers/postgres/parse.c:59
 msgid "'password' in database definition is not supported, use db.login"
-msgstr ""
+msgstr "'password' στη βάση δεδομένων δεν υποστηρίζεται, χρησιμοποιήστε db.login"
 
 #: ../db/drivers/mysql/parse.c:79
 msgid "Unknown option in database definition for "
-msgstr ""
+msgstr "Άγνωστη επιλογή στον ορισμός της βάσης δεδομένων για "
 
 #: ../db/drivers/mysql/cursor.c:46
 msgid "Cannot allocate cursor."
-msgstr ""
+msgstr "Δεν γίνεται η μετακίνηση του κέρσορα."
 
 #: ../db/drivers/mysql/cursor.c:55
 msgid "Cannot ad new token."
-msgstr ""
+msgstr "Αδύνατη η προσθήκη new token"
 
 #: ../db/drivers/mysql/select.c:43
 msgid "Cannot select data: \n"
-msgstr ""
+msgstr "Αδύνατη η επιλογή δεδομένων: \n"
 
 #: ../db/drivers/mysql/describe.c:120
 #, c-format
 msgid "MySQL driver: column '%s', type %d is not supported"
-msgstr ""
+msgstr "MySQL οδηγός: στήλη '%s', τύπος %d δεν υποστηρίζεται"
 
 #: ../db/drivers/mysql/describe.c:126
 #, c-format
 msgid ""
 "column '%s' : type BIGINT is stored as integer (4 bytes) some data may be "
 "damaged"
-msgstr ""
+msgstr "στήλη '%s' : τύπος BIGINT έχει αποθηκευτεί ως ακέραιος (4 bytes) ορισμένα δεδομένα μπορεί να έχουν καταστραφεί"
 
 #: ../db/drivers/mysql/db.c:67
 msgid "Cannot connect to MySQL: "
-msgstr ""
+msgstr "Αδυναμία σύνδεσης στην MySQL: "
 
 #: ../db/drivers/mysql/db.c:83
 msgid "Cannot parse MySQL embedded database name"
-msgstr ""
+msgstr "Αδυναμία περάσματος' MySQL ονόματος βάσης"
 
 #: ../db/drivers/mysql/db.c:99
 msgid "Cannot initialize MySQL embedded server"
-msgstr ""
+msgstr "Δεν ειναι δυνατή η αρχικοποίηση με τον ενσωματωμένο MySQL εξυπηρετητή"
 
 #: ../db/drivers/mysql/db.c:118
 msgid "Cannot connect to MySQL embedded server: "
-msgstr ""
+msgstr "Δεν ειναι δυνατή η σύνδεση με τον ενσωματωμένο MySQL εξυπηρετητή"
 
 #: ../db/drivers/mysql/fetch.c:34
 msgid "Cursor not found"
-msgstr ""
+msgstr "Ο κέρσορας δεν βρέθηκε"
 
 #: ../db/drivers/mysql/fetch.c:52
 msgid "Cursor position is not supported by MySQL driver"
-msgstr ""
+msgstr "Η θέση του κέρσοεα δεν υποστηρίζεται από τον οδηγό MySQL"
 
 #: ../db/drivers/mysql/fetch.c:190
 msgid "Cannot scan timestamp: "
-msgstr ""
+msgstr "Αδυναμία σκαναρίσματος timestamp: "
 
 #: ../db/drivers/mysql/fetch.c:198
 msgid "Unknown timestamp format: "
-msgstr ""
+msgstr "Άγνωστη μορφή timestamp: "
 
 #: ../db/drivers/mysql/fetch.c:212
 msgid "Cannot scan date: "
-msgstr ""
+msgstr "Αδυναμία σκαναρίσματος ημερομηνίας:"
 
 #: ../db/drivers/mysql/fetch.c:225
 msgid "Cannot scan time: "
-msgstr ""
+msgstr "Αδυναμία σκαναρίσματος χρόνου: "
 
 #: ../db/drivers/mysql/fetch.c:240
 msgid "Cannot scan datetime: "
-msgstr ""
+msgstr "Αδυναμία σκαναρίσματος ημερομηνίας-χρόνου: "
 
 #: ../db/drivers/mysql/error.c:29
 msgid "DBMI-MySQL driver error:\n"
-msgstr ""
+msgstr "DBMI-MySQL σφάλμα οδηγού:\n"
 
 #: ../db/drivers/postgres/parse.c:63
 msgid "Unknown option in database definition for PostgreSQL: "
-msgstr ""
+msgstr "Άγνωστη επιλογή στην περιγραφή βάσης δεδομένων για PostgreSQL: "
 
 #: ../db/drivers/postgres/describe.c:103
 #, c-format
 msgid "pg driver: PostGIS column '%s', type 'geometry'  will not be converted"
-msgstr ""
+msgstr "pg driver: PostGIS στήλη '%s', τύπος 'geometry' δεν θα μετατραπεί"
 
 #: ../db/drivers/postgres/describe.c:109
 #, c-format
 msgid "pg driver: column '%s', type %d  is not supported"
-msgstr ""
+msgstr "pg driver: στήλη '%s', τύπος %d δεν υποστηρίζεται"
 
 #: ../db/drivers/postgres/describe.c:116
 #, c-format
 msgid ""
 "column '%s' : type int8 (bigint) is stored as integer (4 bytes) some data "
 "may be damaged"
-msgstr ""
+msgstr "στήλη '%s' : τύπος int8 (bigint) έχει αποθηκευτεί ως ακέραιος (4 bytes) ορισμένα δεδομένα μπορεί να έχουν καταστραφεί"
 
 #: ../db/drivers/postgres/describe.c:120
 #, c-format
 msgid ""
 "column '%s' : type character varying is stored as varchar(250) some data may "
 "be lost"
-msgstr ""
+msgstr "στήλη '%s' : ο τύπος χαρακτήρα μεταβάλλεται έχει αποθηκευτεί ως varchar(250) ορισμένα δεδομένα θα χαθούν"
 
 #: ../db/drivers/postgres/describe.c:126
 #, c-format
@@ -469,15 +480,17 @@ msgid ""
 "column '%s' : type bool (boolean) is stored as char(1), values: 0 (false), 1 "
 "(true)"
 msgstr ""
+"στήλη '%s' : τύπος bool (boolean) έχει αποθηκευτέι ως char(1), τιμές: 0 (false), 1 "
+"(true)"
 
 #: ../db/drivers/postgres/fetch.c:172
 msgid "Cannot recognize boolean value"
-msgstr ""
+msgstr "Δεν μπορεί να αναγνωριστή η τιμή boolean"
 
 #: ../db/drivers/ogr/describe.c:93
 #, c-format
 msgid "OGR driver: column '%s', OGR type %d  is not supported"
-msgstr ""
+msgstr "OGR driver: στήλη '%s', OGR τύπος %d δεν υποστηρίζεται"
 
 #: ../db/drivers/ogr/describe.c:153
 #, c-format
@@ -485,174 +498,177 @@ msgid ""
 "column '%s', type 'string': unknown width -> stored as varchar(250) some "
 "data may be lost"
 msgstr ""
+"στήλη '%s', τύπος 'string': άγνωστο εύρος -> σωσμένο ως varchar(250) ορισμένα  "
+"δεδομένα μπορεί να χαθούν"
 
 #: ../db/drivers/ogr/describe.c:161 ../db/drivers/ogr/fetch.c:129
 msgid "Unknown type"
-msgstr ""
+msgstr "Άγνωστος τύπος"
 
 #: ../raster3d/r3.in.ascii/main.c:79
 msgid "Ascii raster map to be imported"
-msgstr ""
+msgstr "Ascii ράστερ χάρτης που θα εισαχθεί"
 
 #: ../raster3d/r3.in.ascii/main.c:90
 msgid "String representing NULL value data cell (use 'none' if no such value)"
-msgstr ""
+msgstr "Ο χαρακτήρας αντιπροσωπεύει NULL τιμή δεδομένων κελιού (χρησιμοποιήστε 'none' αν δεν υπάρχει τέτοια τιμή)"
 
 #: ../raster3d/r3.in.ascii/main.c:174
 #, c-format
 msgid "Loading data ...  (%dx%dx%d)"
-msgstr ""
+msgstr "Φόρτωση δεδομένων... (%dx%dx%d)"
 
 #: ../raster3d/r3.in.ascii/main.c:190
 msgid "End of file reached while still loading data."
-msgstr ""
+msgstr "Έφτασε το τέλος αρχείου ενώ ακόμα φορτώνονται δεδομένα"
 
 #: ../raster3d/r3.in.ascii/main.c:209
 #, c-format
-msgid ""
-"Data exists in input file after fully importing expected data.  [%.4f ...]"
-msgstr ""
+msgid "Data exists in input file after fully importing expected data.  [%.4f ...]"
+msgstr "Τα δεδομένα υπάρχουν στο αρχείο εισαγωγής μετά την πλήρη εισαγωγή των αναμενώμενων αρχείων [%.4f ...]"
 
 #: ../raster3d/r3.in.ascii/main.c:240
 msgid "raster3d, voxel, import"
-msgstr ""
+msgstr "raster3d, voxel, εισάγεται"
 
 #: ../raster3d/r3.in.ascii/main.c:242
 msgid "Convert a 3D ASCII raster text file into a (binary) 3D raster map layer"
-msgstr ""
+msgstr "Μετατροπή ενός 3Δ ASCII ράστερ αρχείου σε (binary) 3Δ ράστερ επίπεδο"
 
 #: ../raster3d/r3.in.ascii/main.c:268 ../raster3d/r3.out.ascii/main.c:268
 #: ../raster3d/r3.in.v5d/main.c:215 ../raster3d/r3.out.v5d/main.c:315
 #: ../raster/r.to.rast3elev/main.c:483 ../raster/r.to.rast3/main.c:309
 msgid "Error opening 3d raster map"
-msgstr ""
+msgstr "Σφάλμα κατά το άνοιμα 3Δ ράστερ χάρτη"
 
 #: ../raster3d/r3.in.ascii/main.c:274
 msgid "Error closing new 3d raster map"
-msgstr ""
+msgstr "Σφάλμα κατά το κλείσειμο 3Δ ράστερ χάρτη"
 
 #: ../raster3d/r3.in.ascii/main.c:284
 msgid "Error closing ascii file"
-msgstr ""
+msgstr "Σφάλμα κατά το κλείσομο ascii αρχείου"
 
 #: ../raster3d/r3.out.ascii/main.c:58 ../raster3d/r3.out.ascii/main.c:300
 #: ../raster3d/r3.in.v5d/main.c:220 ../raster3d/r3.out.v5d/main.c:329
 #: ../raster3d/base/r3.info.main.c:421 ../raster3d/r3.to.rast/main.c:390
 #: ../raster/r.to.rast3elev/main.c:546 ../raster/r.to.rast3/main.c:341
 msgid "Error closing 3d raster map"
-msgstr ""
+msgstr "Σφάλμα κατά το κλείσιμο 3Δ ράστερ αρχείου"
 
 #: ../raster3d/r3.out.ascii/main.c:76
 msgid "3d raster map to be converted to ASCII"
-msgstr ""
+msgstr "Το 3Δ ράστερ αρχείο θα μετατραπεί σε ASCII"
 
 #: ../raster3d/r3.out.ascii/main.c:83
 msgid "Name for ASCII output file"
-msgstr ""
+msgstr "Όνομα του ASCII εξαγώμενου αρχείου"
 
 #: ../raster3d/r3.out.ascii/main.c:92
 msgid "Number of decimal places for floats"
-msgstr ""
+msgstr "Αριθμός των δεδαδικών ψηφίων για τους αριθμούς υποδιαστολής"
 
 #: ../raster3d/r3.out.ascii/main.c:98 ../raster/r.transect/main.c:85
 #: ../raster/r.what/main.c:117
 msgid "Char string to represent no data cell"
-msgstr ""
+msgstr "Το στοιχείο char αντιπροσωπεύει κελό χωρίς δεδομένα"
 
 #: ../raster3d/r3.out.ascii/main.c:103 ../raster/r.out.ascii/main.c:104
 #: ../raster/r.out.arc/main.c:88
 msgid "Suppress printing of header information"
-msgstr ""
+msgstr "Αποσιώπηση εκτύπωσης πληροφοριών header"
 
 #: ../raster3d/r3.out.ascii/main.c:107 ../raster3d/r3.to.rast/main.c:90
 #: ../raster/r.to.rast3elev/main.c:232
 msgid "Use G3D mask (if exists) with input map"
-msgstr ""
+msgstr "Χρησιμοποιήστε G3D mask (αν υπάρχει) με εισαγώμενο χάρτη"
 
 #: ../raster3d/r3.out.ascii/main.c:244
 msgid "raster3d, voxel, export"
-msgstr ""
+msgstr "ράστερ 3D, voxel, εξαγωγή"
 
 #: ../raster3d/r3.out.ascii/main.c:246
 msgid "Converts a 3D raster map layer into an ASCII text file"
-msgstr ""
+msgstr "Μετατρέπει ένα 3Δ επίπεδο ράστερ χάρτη σε ένα ASCII αρχείο κειμένου"
 
 #: ../raster3d/r3.out.ascii/main.c:259 ../raster3d/r3.out.v5d/main.c:310
 #: ../raster3d/base/r3.null.main.c:106 ../raster3d/base/r3.mask.main.c:78
 msgid "Requested 3d raster map not found"
-msgstr ""
+msgstr "Ο ζητούμενος 3Δ ράστερ χάρτης δεν βρέθηκε"
 
 #: ../raster3d/r3.out.ascii/main.c:305
 msgid "Error closing new ASCII file"
-msgstr ""
+msgstr "Σφάλμα κατά το κλείσιμου νέου ASCII αρχείου"
 
 #: ../raster3d/r3.stats/main.c:568 ../raster/r.univar2/r3.univar_main.c:79
 msgid "raster3d, statistics"
-msgstr ""
+msgstr "ράστερ 3Δ, στατιστικά"
 
 #: ../raster3d/r3.stats/main.c:569
 msgid "Generates volume statistics for raster3d maps."
-msgstr ""
+msgstr "Παράγει στατιστικά όγκου για 3Δ ράστερ χάρτες."
 
 #: ../raster3d/r3.stats/main.c:580
 msgid "Number of sub-ranges to collect stats from"
-msgstr ""
+msgstr "Νούμερο των υποπεριοχών για συλλογή στατιστικών από αυτά"
 
 #: ../raster3d/r3.stats/main.c:586
 msgid "Calculate statistics based on equal value groups"
-msgstr ""
+msgstr "Υπολογίζει στατιστικά βασισμένα σε ίσης τιμής γκρουπ"
 
 #: ../raster3d/r3.stats/main.c:606
 msgid "The number of subranges has to be equal or greater than 1"
-msgstr ""
+msgstr "Ο αριθμός των υποπεριοχών πρέπει να είναι μεγαλύτερος ή ίσος του 1"
 
 #: ../raster3d/r3.stats/main.c:611 ../raster/r.univar2/r3.univar_main.c:104
 #, c-format
+#, fuzzy
 msgid "Requested g3d map <%s> not found"
-msgstr ""
+msgstr "Ο χάρτης g3d <%s> δεν βρήθηκε"
 
 #: ../raster3d/r3.stats/main.c:618 ../raster3d/r3.gwflow/main.c:371
 #: ../raster/r.univar2/r3.univar_main.c:112
 #, c-format
+#, fuzzy
 msgid "Error opening g3d map <%s>"
-msgstr ""
+msgstr "Σφάλμα κατά το άνοιγμα του g3d χάρτη <%s>"
 
 #: ../raster3d/r3.stats/main.c:664
 msgid "Sort non-null values"
-msgstr ""
+msgstr "Σορτάρισμα μη κενών τιμών"
 
 #: ../raster3d/r3.cross.rast/main.c:55
 msgid "Could not close G3D map"
-msgstr ""
+msgstr "Δεν γίνεται να κλείσει ο G3Δ χάρτης"
 
 #: ../raster3d/r3.cross.rast/main.c:77 ../raster3d/r3.cross.rast/main.c:392
 #: ../raster3d/r3.to.rast/main.c:194
 msgid "Unable to close output map"
-msgstr ""
+msgstr "Αδυναμία κλεισίματος του εξαγόμενου χάρτη"
 
 #: ../raster3d/r3.cross.rast/main.c:91
 msgid "Input 3D raster map for cross section."
-msgstr ""
+msgstr "Ο 3Δ εισαγώμενος χάρτης για τομή"
 
 #: ../raster3d/r3.cross.rast/main.c:98
 msgid "2D elevation map used to create the cross section map"
-msgstr ""
+msgstr "2Δ υψομετρικός χάρτης που χρησιμοποιήθηκε για την τομή"
 
 #: ../raster3d/r3.cross.rast/main.c:105
 msgid "Resulting cross section 2D raster map"
-msgstr ""
+msgstr "Το αποτέλεσμα τομής 2Δ ράστερ χάρτη"
 
 #: ../raster3d/r3.cross.rast/main.c:110
 msgid "Use g3d mask (if exists) with input map"
-msgstr ""
+msgstr "Χρησιμοποιήστε g3d μάσκα (αν υπάρχει) με τον χάρτη"
 
 #: ../raster3d/r3.cross.rast/main.c:162
 msgid "Unable to get elevation raster row"
-msgstr ""
+msgstr "Αδυναμία λήψης γραμμής υψομέτρων από ράστερ"
 
 #: ../raster3d/r3.cross.rast/main.c:230 ../raster3d/r3.cross.rast/main.c:237
 msgid "Could not write raster row"
-msgstr ""
+msgstr "Δεν ήταν δυνατή η εγγραφή γραμμής ράστερ"
 
 #: ../raster3d/r3.cross.rast/main.c:270 ../raster3d/r3.in.v5d/main.c:193
 #: ../raster3d/r3.mkdspf/main.c:75 ../raster3d/r3.out.v5d/main.c:289
@@ -661,105 +677,105 @@ msgstr ""
 #: ../raster3d/base/r3.timestamp.main.c:43 ../raster3d/r3.out.vtk/main.c:376
 #: ../raster3d/r3.to.rast/main.c:215
 msgid "raster3d, voxel"
-msgstr ""
+msgstr "ράστερ 3Δ, voxel"
 
 #: ../raster3d/r3.cross.rast/main.c:272
 msgid ""
 "Creates cross section 2D raster map from 3d raster map based on 2D elevation "
 "map"
-msgstr ""
+msgstr "Δημιουργεί τομή 2Δ ράστερ χάρτη από 3Δ ράστερ χάρτη βασισμένο στον 2Δ χάρτη υψομέτρων"
 
 #: ../raster3d/r3.cross.rast/main.c:284 ../raster3d/r3.to.rast/main.c:228
 #: ../visualization/nviz2/cmd/volume.c:42
 #, c-format
 msgid "3d raster map <%s> not found"
-msgstr ""
+msgstr "Ο 3Δ ράστερ χάρτης <%s> δεν βρέθηκε"
 
 #: ../raster3d/r3.cross.rast/main.c:298 ../raster/r.to.rast3elev/main.c:462
 #: ../raster/r.to.rast3/main.c:222
 msgid ""
 "The 2d and 3d region settings are different. I will use the g3d settings to "
 "adjust the 2d region."
-msgstr ""
+msgstr "Η 2Δ και 3Δ ρυθμίσεις περιοχης είναι διαφορετική, θα χρησιμοποιήσω την 3Δ για να ρυθμίσω την 2Δ"
 
 #: ../raster3d/r3.cross.rast/main.c:318 ../raster3d/r3.out.vtk/main.c:209
 #: ../raster3d/r3.out.vtk/main.c:293 ../raster3d/r3.out.vtk/main.c:516
 #: ../raster3d/r3.to.rast/main.c:243 ../raster3d/r3.to.rast/main.c:284
 #, c-format
 msgid "Error opening 3d raster map <%s>"
-msgstr ""
+msgstr "Σφάλμα ανοίγματος 3Δ ράστερ χάρτη <%s>"
 
 #: ../raster3d/r3.cross.rast/main.c:333
 msgid "Elevation map not found"
-msgstr ""
+msgstr "Ο χάρτης υψομέτρων δεν βρέθηκε"
 
 #: ../raster3d/r3.cross.rast/main.c:338
 msgid "Unable to open elevation map"
-msgstr ""
+msgstr "Αδυναμία ανοίγματος χάρτη υψομέτρων"
 
 #: ../raster3d/r3.cross.rast/main.c:349 ../raster3d/r3.to.rast/main.c:302
 #: ../raster/r.to.rast3/main.c:239
 msgid "Illegal output file name"
-msgstr ""
+msgstr "Μη επιτρεπτό όνομα εξαγώμενου χάρτη"
 
 #: ../raster3d/r3.cross.rast/main.c:352
 msgid "Output map already exists. Will be overwritten!"
-msgstr ""
+msgstr "Ο εξαγώμενος χάρτης ήδη υπάρχει. Θα αντικατασταθεί!"
 
 #: ../raster3d/r3.cross.rast/main.c:358 ../raster3d/r3.cross.rast/main.c:364
 msgid "Unable to create raster map"
-msgstr ""
+msgstr "Αδυναμία δημιουργίας ράστερ χάρτη"
 
 #: ../raster3d/r3.cross.rast/main.c:394
 msgid "Unable to close elevation map"
-msgstr ""
+msgstr "Αδυναμία κλεισίματος χάρτη υψομέτρων"
 
 #: ../raster3d/r3.cross.rast/main.c:399
 msgid "Wrong G3D Datatype! Cannot create raster map."
-msgstr ""
+msgstr "Λάθος G3D τύπος! Δεν μπορεί να δημιουργηθεί ράστερ χάρτης."
 
 #: ../raster3d/r3.cross.rast/main.c:404
 #, c-format
 msgid "Could not close G3D map <%s>"
-msgstr ""
+msgstr "Δεν μπορεί να κλείσει ο G3D χάρτης <%s>"
 
 #: ../raster3d/r3.mkdspf/main.c:77
 msgid ""
 "Creates a display file from an existing grid3 file according to specified "
 "threshold levels."
-msgstr ""
+msgstr "Δημιουργεί ένα αρχείο παρουσίασης από ένα υφιστάμενο grid3 αρχείο σύμφωνα με τα δεδομένα threshold levels."
 
 #: ../raster3d/r3.mkdspf/main.c:85
 msgid "Name of an existing 3d raster map"
-msgstr ""
+msgstr "Όνομα υπάρχοντως 3Δ ράστερ χάρτη"
 
 #: ../raster3d/r3.mkdspf/main.c:91
 msgid "Name of output display file"
-msgstr ""
+msgstr "Όνομα εξαγώμενου αρχείου παρουσίασης"
 
 #: ../raster3d/r3.mkdspf/main.c:98
 msgid "List of thresholds for isosurfaces"
-msgstr ""
+msgstr "Λίστα των thresholds για ισοεπιφάνειες"
 
 #: ../raster3d/r3.mkdspf/main.c:104
 msgid "Minimum isosurface level"
-msgstr ""
+msgstr "Ελάχιστο επίπεδο ισοεπιφανειών"
 
 #: ../raster3d/r3.mkdspf/main.c:110
 msgid "Maximum isosurface level"
-msgstr ""
+msgstr "Μέγιστο επίπεδο ισοεπιφανειών"
 
 #: ../raster3d/r3.mkdspf/main.c:116
 msgid "Positive increment between isosurface levels"
-msgstr ""
+msgstr "Θετικό βήμα μεταξύ ισοεπιφανειών"
 
 #: ../raster3d/r3.mkdspf/main.c:123
 msgid "Number of isosurface threshold levels"
-msgstr ""
+msgstr "Αριθμός επιπέδων threshold ισοεπιφανειών"
 
 #: ../raster3d/r3.mkdspf/main.c:127
 msgid "Suppress progress report & min/max information"
-msgstr ""
+msgstr "Ελαχιστοποίηση της προόδου αποτελεσμάτων & μέγιστο/ελάχιστο πληροφοριών"
 
 #: ../raster3d/r3.mkdspf/main.c:131
 msgid "Use flat shading rather than gradient"
@@ -768,51 +784,51 @@ msgstr ""
 #: ../raster3d/r3.mkdspf/main.c:139
 #, c-format
 msgid "Region from getWindow: %d %d %d"
-msgstr ""
+msgstr "Περιοχή από getWindow: %d %d %d"
 
 #: ../raster3d/r3.mkdspf/main.c:151
 #, c-format
 msgid "Not able to find grid3 file for [%s]"
-msgstr ""
+msgstr "Δεν ήταν δυνατή η εύρεση grid3 αρχείου για [%s]"
 
 #: ../raster3d/r3.mkdspf/main.c:163 ../raster3d/base/r3.info.main.c:128
 #, c-format
 msgid "Error opening grid3 file [%s]"
-msgstr ""
+msgstr "Σφάλμα κατά το άνοιγμα του αρχείου grid3 [%s]"
 
 #: ../raster3d/r3.mkdspf/main.c:166 ../raster3d/base/r3.info.main.c:287
 #: ../raster3d/base/r3.info.main.c:349
 #, c-format
 msgid "Error reading range for [%s]"
-msgstr ""
+msgstr "Σφάλμα κατά την ανάγνωση του εύρους για [%s]"
 
 #: ../raster3d/r3.mkdspf/main.c:195
 #, c-format
 msgid "Error opening display file [%s]"
-msgstr ""
+msgstr "Σφάλμα κατά το άνοιγμα του αρχείου παρουσίασης [%s]"
 
 #: ../raster3d/r3.mkdspf/main.c:216
 #, c-format
 msgid "Writing %s from %s..."
-msgstr ""
+msgstr "Εγγραφή %s από %s..."
 
 #: ../raster3d/r3.out.v5d/main.c:72
 msgid "3d raster map to be converted to Vis5d (v5d) file"
-msgstr ""
+msgstr "3Δ ράστερ χάρτης θα μετατραπεί σε αρχείο Vis5d (v5d)"
 
 #: ../raster3d/r3.out.v5d/main.c:79
 msgid "Name for v5d output file"
-msgstr ""
+msgstr "Όνομα για το εξαγώμενο v5d αρχείο"
 
 #: ../raster3d/r3.out.v5d/main.c:149
 #, c-format
 msgid "Viz5D allows %d cols, you have %d cols"
-msgstr ""
+msgstr "Viz5D επιτρέπει %d cols, έχετε %d cols"
 
 #: ../raster3d/r3.out.v5d/main.c:152
 #, c-format
 msgid "Viz5D allows %d rows, you have %d rows"
-msgstr ""
+msgstr "Viz5D allows %d γραμμές, έχετε %d γραμμές"
 
 #: ../raster3d/r3.out.v5d/main.c:202 ../raster3d/r3.to.rast/main.c:299
 #: ../raster/r.li/r.li.daemon/list.c:47 ../raster/r.gwflow/main.c:380
@@ -832,77 +848,76 @@ msgstr ""
 #: ../vector/v.surf.rst/main.c:838 ../vector/v.mapcalc/list.c:54
 #: ../vector/v.mapcalc/list.c:501 ../imagery/i.ask/popup.c:174
 msgid "Out of memory"
-msgstr ""
+msgstr "Εκτός μνήμης"
 
 #: ../raster3d/r3.out.v5d/main.c:262
 #, c-format
 msgid "Error: couldn't create %s"
-msgstr ""
+msgstr "Σφάλμα: δεν ήταν δυνατή η δημιουργία %s"
 
 #: ../raster3d/r3.out.v5d/main.c:267
 msgid "Error while writing grid. Disk full?"
-msgstr ""
+msgstr "Σφάλμα κατά την εγγραφή του grid. Δίσκος γεμάτος;"
 
 #: ../raster3d/r3.out.v5d/main.c:291
 msgid "Export of GRASS 3D raster map to 3-dimensional Vis5D file."
-msgstr ""
+msgstr "Εξαγωγή του GRASS 3Δ ράστερ χάρτη σε 3 διάστατο Vis5D αρχείο"
 
 #: ../raster3d/r3.out.v5d/main.c:298
 msgid "Use map coordinates instead of xyz coordinates"
-msgstr ""
+msgstr "Χρησιμοποιήστε συντεταγμένες χάρτη αντί χψζ συντεταγμένες"
 
 #: ../raster3d/r3.gwflow/main.c:55 ../raster/r.gwflow/main.c:58
 msgid "The initial piezometric head in [m]"
-msgstr ""
+msgstr "Η αρχική πιεζομετρική στήλη σε [m]"
 
 #: ../raster3d/r3.gwflow/main.c:63
 msgid "The status for each cell, = 0 - inactive, 1 - active, 2 - dirichlet"
-msgstr ""
+msgstr "Η κατάσταση κάθε κελιού, = 0 - inactive, 1 - active, 2 - dirichlet"
 
 #: ../raster3d/r3.gwflow/main.c:71
 msgid "The x-part of the hydraulic conductivity tensor in [m/s]"
-msgstr ""
+msgstr "Το x-μέρος της υδραυλικής αγωγιμότητας σε [m/s]"
 
 #: ../raster3d/r3.gwflow/main.c:79
 msgid "The y-part of the hydraulic conductivity tensor in [m/s]"
-msgstr ""
+msgstr "Το y-μέρος της υδραυλικής αγωγιμότητας σε [m/s]"
 
 #: ../raster3d/r3.gwflow/main.c:87
 msgid "The z-part of the hydraulic conductivity tensor in [m/s]"
-msgstr ""
+msgstr "Το z-μέρος της υδραυλικής αγωγιμότητας σε [m/s]"
 
 #: ../raster3d/r3.gwflow/main.c:94
 msgid "Sources and sinks in [m^3/s]"
-msgstr ""
+msgstr "Sources and sinks in [m^3/s]"
 
 #: ../raster3d/r3.gwflow/main.c:101
 msgid "Specific yield in 1/m"
-msgstr ""
+msgstr "Specific yield in 1/m"
 
 #: ../raster3d/r3.gwflow/main.c:108
 msgid "Recharge raster map in m^3/s"
-msgstr ""
+msgstr "Χάρτης επαναφόρτισης σε  m^3/s"
 
 #: ../raster3d/r3.gwflow/main.c:116
 msgid ""
 "The piezometric head result of the numerical calculation will be written to "
 "this map"
-msgstr ""
+msgstr "Η πιεζομετρική στήλη, αποτέλεσμα των αριθμητικών υπολογισμών θα γραφτεί σε αυτό το χάρτη"
 
 #: ../raster3d/r3.gwflow/main.c:124
 msgid ""
 "Calculate the groundwater distance velocity vector field and write the x, y, "
 "and z components to maps named name_[xyz]. Name is basename for the new "
 "raster3d maps"
-msgstr ""
+msgstr "Υπολογίστε την ταχύτητα του υπογειου νερού (διανυσματικό μερος) και γράψτε τα χ , ψ και ζ στοιχεία στο χάρτη με όνομα name_[xyz]. Το όνομα είναι το βασικό όνομα για τους νέους ράστερ 3Δ χάρτες"
 
 #: ../raster3d/r3.gwflow/main.c:135
 msgid "Use G3D mask (if exists)"
-msgstr ""
+msgstr "Χρησιμοποιήστε G3D μάσκα (εάν υπάρχει)"
 
 #: ../raster3d/r3.gwflow/main.c:140
-msgid ""
-"Use a sparse linear equation system, only available with iterative solvers"
+msgid "Use a sparse linear equation system, only available with iterative solvers"
 msgstr ""
 
 #: ../raster3d/r3.gwflow/main.c:170
@@ -933,8 +948,9 @@ msgid "Write the result to g3d map <%s>"
 msgstr ""
 
 #: ../raster3d/r3.gwflow/main.c:417
+#, fuzzy
 msgid "Error closing g3d file"
-msgstr ""
+msgstr "Σφάλμα κατά το κλείσιμο του g3d αρχείου"
 
 #: ../raster3d/base/r3.null.main.c:58
 msgid "3d raster map for which to modify null values"
@@ -1106,8 +1122,9 @@ msgstr ""
 #: ../general/g.region/main.c:450 ../general/g.region/main.c:793
 #: ../general/g.region/main.c:801 ../general/g.mremove/do_remove.c:50
 #, c-format
+#, fuzzy
 msgid "Raster map <%s> not found"
-msgstr ""
+msgstr "Ο χάρτης raster  <%s> δεν βρέθηκε"
 
 #: ../raster3d/base/r3.info.main.c:158 ../raster3d/base/r3.info.main.c:166
 #: ../raster3d/base/r3.info.main.c:172 ../raster3d/base/r3.info.main.c:177
@@ -1189,8 +1206,9 @@ msgid "Input grid3 filename"
 msgstr ""
 
 #: ../raster3d/base/r3.timestamp.main.c:59 ../raster/r.timestamp/main.c:45
+#, fuzzy
 msgid "Datetime, datetime1/datetime2, or none"
-msgstr ""
+msgstr "κανένα"
 
 #: ../raster3d/base/r3.timestamp.main.c:74
 #, c-format
@@ -1248,8 +1266,7 @@ msgid ""
 msgstr ""
 
 #: ../raster3d/r3.out.vtk/parameters.c:82
-msgid ""
-"Three (r,g,b) 3d raster maps to create rgb values [redmap,greenmap,bluemap]"
+msgid "Three (r,g,b) 3d raster maps to create rgb values [redmap,greenmap,bluemap]"
 msgstr ""
 
 #: ../raster3d/r3.out.vtk/parameters.c:92
@@ -1468,8 +1485,9 @@ msgstr ""
 #: ../imagery/i.his.rgb/openfiles.c:17 ../imagery/i.his.rgb/openfiles.c:19
 #: ../imagery/i.smap/shapiro/opencell.c:30 ../imagery/i.pca/main.c:392
 #, c-format
+#, fuzzy
 msgid "Unable to create raster map <%s>"
-msgstr ""
+msgstr "Αδυναμία δημιουργίας raster χάρτη <%s>"
 
 #: ../raster3d/r3.to.rast/main.c:216
 msgid "Converts 3D raster maps to 2D raster maps"
@@ -1588,8 +1606,9 @@ msgstr ""
 #: ../raster/r.cross/main.c:89 ../raster/r.series/main.c:150
 #: ../raster/r.buffer/main.c:91 ../imagery/i.smap/shapiro/parse.c:42
 #: ../imagery/i.maxlik/main.c:89
+#, fuzzy
 msgid "Run quietly"
-msgstr ""
+msgstr "Τρέχει χωρίς μηνύματα"
 
 #: ../raster/r.describe/main.c:115 ../raster/r.rescale.eq/main.c:107
 #: ../raster/r.coin/cmd_parms.c:88 ../raster/r.out.png/r.out.png.c:146
@@ -1748,8 +1767,9 @@ msgstr ""
 #: ../display/d.his/main.c:141 ../display/d.his/main.c:164
 #: ../display/d.nviz/main.c:186
 #, c-format
+#, fuzzy
 msgid "Unable to open raster map <%s>"
-msgstr ""
+msgstr "Αδυναμία ανοίγματος του χάρτη raster <%s>"
 
 #: ../raster/r.resamp.stats/main.c:374 ../raster/r.resamp.interp/main.c:320
 #: ../raster/r.colors/main.c:365
@@ -2060,8 +2080,9 @@ msgid "Input raster map is outside current region"
 msgstr ""
 
 #: ../raster/r.proj.seg/readcell.c:56
+#, fuzzy
 msgid "Unable to open temporary file"
-msgstr ""
+msgstr "Αδυναμία ανοίγματος προσωρινού αρχείου"
 
 #: ../raster/r.proj.seg/readcell.c:62 ../raster/r.proj/readcell.c:22
 msgid "Allocating memory and reading input map..."
@@ -2101,8 +2122,7 @@ msgid "GIS Coincidence Tabulation Facility\n"
 msgstr ""
 
 #: ../raster/r.coin/inter.c:36
-msgid ""
-"This utility will allow you to compare the coincidence of two map layers\n"
+msgid "This utility will allow you to compare the coincidence of two map layers\n"
 msgstr ""
 
 #: ../raster/r.coin/inter.c:53
@@ -2170,8 +2190,7 @@ msgstr ""
 
 #: ../raster/r.coin/inter.c:118
 #, c-format
-msgid ""
-"Do you wish to print this report (requires Unix lpr command)? (y/n) [n] "
+msgid "Do you wish to print this report (requires Unix lpr command)? (y/n) [n] "
 msgstr ""
 
 #: ../raster/r.coin/inter.c:127
@@ -2183,8 +2202,7 @@ msgstr ""
 
 #: ../raster/r.coin/inter.c:143
 #, c-format
-msgid ""
-"Do you wish to run this report with a different unit of measure? (y/n) [y] "
+msgid "Do you wish to run this report with a different unit of measure? (y/n) [y] "
 msgstr ""
 
 #: ../raster/r.coin/print_coin.c:44
@@ -2329,8 +2347,9 @@ msgstr ""
 #: ../swig/perl/R_slope_aspect/r_slope_aspect/opennew.c:11
 #: ../general/manage/cmd/rename.c:84 ../general/manage/cmd/copy.c:88
 #, c-format
+#, fuzzy
 msgid "<%s> is an illegal file name"
-msgstr ""
+msgstr "<%s> είναι μη επιτρεπτό όνομα αρχείου"
 
 #: ../raster/r.surf.fractal/interface.c:98
 #, c-format
@@ -2504,8 +2523,7 @@ msgid "Pattern map should be a binary 0/1 CELL map"
 msgstr ""
 
 #: ../raster/r.los/main.c:243
-msgid ""
-"Problem to obtain current ellipsoid parameters, using sphere (6370997.0)"
+msgid "Problem to obtain current ellipsoid parameters, using sphere (6370997.0)"
 msgstr ""
 
 #: ../raster/r.los/main.c:248
@@ -2627,8 +2645,9 @@ msgstr ""
 #: ../display/d.path/main.c:193 ../general/g.region/main.c:518
 #: ../general/g.mremove/do_remove.c:34
 #, c-format
+#, fuzzy
 msgid "Vector map <%s> not found"
-msgstr ""
+msgstr "Ο διανυσματικός χάρτης <%s> δεν βρέθηκε"
 
 #: ../raster/r.drain/main.c:221
 msgid "Failed to guess site file format"
@@ -2715,8 +2734,7 @@ msgid "Converts ASCII raster file to binary raster map layer."
 msgstr ""
 
 #: ../raster/r.in.ascii/main.c:74
-msgid ""
-"ASCII raster file to be imported. If not given reads from standard input"
+msgid "ASCII raster file to be imported. If not given reads from standard input"
 msgstr ""
 
 #: ../raster/r.in.ascii/main.c:85 ../raster/r.in.bin/main.c:166
@@ -2914,8 +2932,9 @@ msgid "Name for output vector map for adjusted stream points"
 msgstr ""
 
 #: ../raster/r.carve/main.c:101
+#, fuzzy
 msgid "Stream width (in meters). Default is raster cell width"
-msgstr ""
+msgstr "Προεπιλογή"
 
 #: ../raster/r.carve/main.c:107
 msgid "Additional stream depth (in meters)"
@@ -2944,8 +2963,7 @@ msgid "Processing lines... "
 msgstr ""
 
 #: ../raster/r.carve/enforce_ds.c:173
-msgid ""
-"Vect runs out of region and re-enters - this case is not yet implemented."
+msgid "Vect runs out of region and re-enters - this case is not yet implemented."
 msgstr ""
 
 #: ../raster/r.profile/input.c:29 ../raster/r.profile/input.c:46
@@ -3010,8 +3028,9 @@ msgid "[Along Track Dist.(m)] [Elevation]"
 msgstr ""
 
 #: ../raster/r.profile/main.c:183
+#, fuzzy
 msgid " [RGB Color]"
-msgstr ""
+msgstr "Χρώμα"
 
 #: ../raster/r.profile/main.c:193
 #, c-format
@@ -3300,8 +3319,7 @@ msgid ""
 msgstr ""
 
 #: ../raster/r.sun/main.c:236
-msgid ""
-"Name of the Linke atmospheric turbidity coefficient input raster map [-]"
+msgid "Name of the Linke atmospheric turbidity coefficient input raster map [-]"
 msgstr ""
 
 #: ../raster/r.sun/main.c:247
@@ -3687,8 +3705,9 @@ msgid "Seed point outside the current region"
 msgstr ""
 
 #: ../raster/r.lake/main.c:277
+#, fuzzy
 msgid "G_malloc: out of memory"
-msgstr ""
+msgstr "G_malloc: εκτός μνήμης"
 
 #: ../raster/r.lake/main.c:303
 msgid ""
@@ -3717,8 +3736,9 @@ msgstr ""
 
 #: ../raster/r.lake/main.c:407
 #, c-format
+#, fuzzy
 msgid "Unable to read color file of raster map <%s>"
-msgstr ""
+msgstr "Αδυναμία ανάγνωσης αρχείου χρώματος για τον ράστερ χάρτη <%s>"
 
 #: ../raster/r.out.gdal/main.c:48
 #, c-format
@@ -3802,8 +3822,7 @@ msgid "Name for output raster file"
 msgstr ""
 
 #: ../raster/r.out.gdal/main.c:445
-msgid ""
-"Creation option to the output format driver. Multiple options may be listed."
+msgid "Creation option to the output format driver. Multiple options may be listed."
 msgstr ""
 
 #: ../raster/r.out.gdal/main.c:453
@@ -4129,8 +4148,7 @@ msgid "Number of interpolation points"
 msgstr ""
 
 #: ../raster/r.surf.idw2/main.c:80
-msgid ""
-"Lat/long databases not supported by r.surf.idw2. Use r.surf.idw instead!"
+msgid "Lat/long databases not supported by r.surf.idw2. Use r.surf.idw instead!"
 msgstr ""
 
 #: ../raster/r.surf.idw2/main.c:87 ../vector/v.surf.idw/main.c:135
@@ -4158,8 +4176,7 @@ msgid "Reading raster map <%s>..."
 msgstr ""
 
 #: ../raster/r.transect/main.c:56
-msgid ""
-"Outputs raster map layer values lying along user defined transect line(s)."
+msgid "Outputs raster map layer values lying along user defined transect line(s)."
 msgstr ""
 
 #: ../raster/r.transect/main.c:60
@@ -4304,8 +4321,9 @@ msgstr ""
 #: ../raster/simwe/r.sim.water/main.c:270
 #: ../raster/simwe/r.sim.water/main.c:278
 #: ../raster/simwe/r.sim.water/main.c:287
+#, fuzzy
 msgid "Parameters"
-msgstr ""
+msgstr "Παράμετροι"
 
 #: ../raster/simwe/r.sim.sediment/main.c:221
 #: ../raster/simwe/r.sim.water/main.c:235
@@ -4630,8 +4648,9 @@ msgid "The number of input and elevation maps is not equal"
 msgstr ""
 
 #: ../raster/r.to.rast3elev/main.c:171 ../raster/r.to.rast3/main.c:378
+#, fuzzy
 msgid "Unable to close input map"
-msgstr ""
+msgstr "Αδυναμία κλεισίματος του χάρτη input"
 
 #: ../raster/r.to.rast3elev/main.c:183 ../raster/r.to.rast3/main.c:58
 msgid "Could not close the map"
@@ -5195,8 +5214,7 @@ msgid "raster, landscape structure analysis, dominance index"
 msgstr ""
 
 #: ../raster/r.li/r.li.patchnum/main.c:33
-msgid ""
-"Calculates patch number index on a raster map, using a 4 neighbour algorithm."
+msgid "Calculates patch number index on a raster map, using a 4 neighbour algorithm."
 msgstr ""
 
 #: ../raster/r.li/r.li.padrange/padrange.c:39
@@ -5226,8 +5244,7 @@ msgid "Calculates coefficient of variation of patch area on a raster map"
 msgstr ""
 
 #: ../raster/r.li/r.li.patchdensity/main.c:32
-msgid ""
-"Calculates patch density index on a raster map, using a 4 neighbour algorithm"
+msgid "Calculates patch density index on a raster map, using a 4 neighbour algorithm"
 msgstr ""
 
 #: ../raster/r.li/r.li.mps/mps.c:40
@@ -5421,8 +5438,7 @@ msgid ""
 msgstr ""
 
 #: ../raster/r.li/r.li.edgedensity/edgedensity.c:38
-msgid ""
-"Calculates edge density index on a raster map, using a 4 neighbour algorithm"
+msgid "Calculates edge density index on a raster map, using a 4 neighbour algorithm"
 msgstr ""
 
 #: ../raster/r.li/r.li.shannon/shannon.c:38
@@ -5591,8 +5607,9 @@ msgstr ""
 #: ../vector/v.voronoi/dt_main.c:92 ../vector/v.voronoi/dt_main.c:98
 #: ../vector/v.voronoi/vo_main.c:164 ../doc/vector/v.example/main.c:96
 #, c-format
+#, fuzzy
 msgid "Unable to create vector map <%s>"
-msgstr ""
+msgstr "Αδυναμία δημιουργίας διανυσματικού χάρτη <%s>"
 
 #: ../raster/r.flow/io.c:197
 msgid "Cannot reset current region"
@@ -6107,12 +6124,14 @@ msgstr ""
 #: ../raster/r.random/main.c:57 ../raster/r.resamp.rst/main.c:167
 #: ../raster/r.out.bin/main.c:73 ../raster/r.water.outlet/main.c:54
 #: ../imagery/i.zc/main.c:69
+#, fuzzy
 msgid "Name of input raster map"
-msgstr ""
+msgstr "Όνομα εισαγώμενου ράστερ χάρτη "
 
 #: ../raster/r.random/main.c:62 ../raster/r.median/main.c:58
+#, fuzzy
 msgid "Name of cover raster map"
-msgstr ""
+msgstr "Όνομα εισαγώμενων ράστερ χαρτών"
 
 #: ../raster/r.random/main.c:69
 msgid "The number of points to allocate"
@@ -6277,8 +6296,9 @@ msgid ""
 msgstr ""
 
 #: ../raster/r.sunmask/main.c:137
+#, fuzzy
 msgid "Name of elevation raster map"
-msgstr ""
+msgstr "Όνομα ράστερ χάρτη υψομέτρου"
 
 #: ../raster/r.sunmask/main.c:145
 msgid "Output raster map having shadows"
@@ -6544,8 +6564,9 @@ msgstr ""
 #: ../display/d.rgb/main.c:111 ../display/d.his/main.c:152
 #: ../display/d.his/main.c:171 ../display/d.his/main.c:196
 #, c-format
+#, fuzzy
 msgid "Color file for <%s> not available"
-msgstr ""
+msgstr "Χρώμα"
 
 #: ../raster/r.his/main.c:243
 msgid "Error reading 'hue' map"
@@ -6596,8 +6617,9 @@ msgid "(o/i) Topographic index statistics file"
 msgstr ""
 
 #: ../raster/r.topmodel/main.c:122
+#, fuzzy
 msgid "(i)   TOPMODEL Parameters file"
-msgstr ""
+msgstr "Παράμετροι"
 
 #: ../raster/r.topmodel/main.c:129
 msgid "(i)   Rainfall and potential evapotranspiration data file"
@@ -6710,8 +6732,9 @@ msgid ""
 msgstr ""
 
 #: ../raster/r.median/main.c:54
+#, fuzzy
 msgid "Name of base raster map"
-msgstr ""
+msgstr "Όνομα χάρτη υποβάθρου ράστερ"
 
 #: ../raster/r.median/main.c:71
 #, c-format
@@ -6990,8 +7013,9 @@ msgstr ""
 
 #: ../raster/r.stats/main.c:197
 #, c-format
+#, fuzzy
 msgid "Unable to open file <%s> for writing"
-msgstr ""
+msgstr "Αδυναμία ανοίγματος αρχείου <%s> για εγγραφή"
 
 #: ../raster/r.stats/main.c:203
 #, c-format
@@ -7025,8 +7049,9 @@ msgstr ""
 
 #: ../raster/r.stats/main.c:304
 #, c-format
+#, fuzzy
 msgid "Unable to read fp range of raster map <%s>"
-msgstr ""
+msgstr "Αδυναμία διαβάσματος εύρους fp για τον ραστερ χάρτη <%s>"
 
 #: ../raster/r.stats/main.c:324 ../raster/r.recode/read_rules.c:34
 #, c-format
@@ -7154,8 +7179,7 @@ msgid "Unable to open input file <%s>"
 msgstr ""
 
 #: ../raster/r.in.xyz/main.c:474
-msgid ""
-"If input is not from a file it is only possible to perform a single pass."
+msgid "If input is not from a file it is only possible to perform a single pass."
 msgstr ""
 
 #: ../raster/r.in.xyz/main.c:480
@@ -7245,8 +7269,9 @@ msgstr ""
 
 #: ../raster/r.slope.aspect/main.c:193
 #: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:198
+#, fuzzy
 msgid "Type of output aspect and slope maps"
-msgstr ""
+msgstr "Τύπος"
 
 #: ../raster/r.slope.aspect/main.c:203
 msgid "Name for output profile curvature raster map"
@@ -7278,13 +7303,11 @@ msgid "Name for output tangential curvature raster map"
 msgstr ""
 
 #: ../raster/r.slope.aspect/main.c:223
-msgid ""
-"Name for output first order partial derivative dx (E-W slope) raster map"
+msgid "Name for output first order partial derivative dx (E-W slope) raster map"
 msgstr ""
 
 #: ../raster/r.slope.aspect/main.c:233
-msgid ""
-"Name for output first order partial derivative dy (N-S slope) raster map"
+msgid "Name for output first order partial derivative dy (N-S slope) raster map"
 msgstr ""
 
 #: ../raster/r.slope.aspect/main.c:243
@@ -7431,8 +7454,9 @@ msgid "Creates/modifies the color table associated with a raster map layer."
 msgstr ""
 
 #: ../raster/r.colors/main.c:181
+#, fuzzy
 msgid "Type of color table"
-msgstr ""
+msgstr "Τύπος"
 
 #: ../raster/r.colors/main.c:183 ../raster/r.colors/main.c:197
 #: ../raster/r.colors/main.c:215 ../raster/r.colors/main.c:220
@@ -7539,8 +7563,9 @@ msgstr ""
 
 #: ../raster/r.colors/main.c:390
 #, c-format
+#, fuzzy
 msgid "Color table for <%s> set to %s"
-msgstr ""
+msgstr "Χρώμα"
 
 #: ../raster/r.colors/rules.c:42
 #, c-format
@@ -7596,8 +7621,9 @@ msgstr ""
 
 #: ../raster/r.colors/rules.c:136
 #, c-format
+#, fuzzy
 msgid "bad rule (%s): [%s]"
-msgstr ""
+msgstr "Εσφαλμένος κανόνας (%s): [%s]"
 
 #: ../raster/r.out.ppm/main.c:56
 msgid ""
@@ -8132,13 +8158,11 @@ msgid "Elevation (if no elevation map is specified)"
 msgstr ""
 
 #: ../raster/r.out.vtk/parameters.c:66
-msgid ""
-"Create VTK point data instead of VTK cell data (if no elevation map is given)"
+msgid "Create VTK point data instead of VTK cell data (if no elevation map is given)"
 msgstr ""
 
 #: ../raster/r.out.vtk/parameters.c:76
-msgid ""
-"Three (r,g,b) raster maps to create rgb values [redmap,greenmap,bluemap]"
+msgid "Three (r,g,b) raster maps to create rgb values [redmap,greenmap,bluemap]"
 msgstr ""
 
 #: ../raster/r.out.vtk/parameters.c:86
@@ -8154,8 +8178,7 @@ msgid "Use polydata-trianglestrips for elevation grid creation"
 msgstr ""
 
 #: ../raster/r.out.vtk/parameters.c:123
-msgid ""
-"Use polydata-vertices for elevation grid creation (to use with vtkDelauny2D)"
+msgid "Use polydata-vertices for elevation grid creation (to use with vtkDelauny2D)"
 msgstr ""
 
 #: ../raster/r.out.vtk/parameters.c:129
@@ -8256,8 +8279,7 @@ msgid "Writing VTK Vector Data\n"
 msgstr ""
 
 #: ../raster/r.out.vtk/main.c:381
-msgid ""
-"Wrong vector maps. Maps should have the same type! Vector output not added!"
+msgid "Wrong vector maps. Maps should have the same type! Vector output not added!"
 msgstr ""
 
 #: ../raster/r.support/modcolr/modcolr.c:38
@@ -8266,8 +8288,9 @@ msgstr ""
 
 #: ../raster/r.support/modcolr/modcolr.c:53
 #, c-format
+#, fuzzy
 msgid "Color table for <%s> updated"
-msgstr ""
+msgstr "Χρώμα"
 
 #: ../raster/r.support/modhead/modhead.c:70
 #, c-format
@@ -8862,8 +8885,9 @@ msgid "Imports GRIDATB.FOR map file (TOPMODEL) into GRASS raster map"
 msgstr ""
 
 #: ../raster/r.in.gridatb/main.c:53
+#, fuzzy
 msgid "Name for output raster map"
-msgstr ""
+msgstr "Όνομα εξαγόμενου ράστερ χάρτη"
 
 #: ../raster/r.in.gridatb/main.c:67
 #, c-format
@@ -8970,8 +8994,9 @@ msgstr ""
 #: ../ps/ps.map/catval.c:54 ../ps/ps.map/catval.c:116
 #: ../ps/ps.map/catval.c:182
 #, c-format
+#, fuzzy
 msgid "Unable to open database <%s> by driver <%s>"
-msgstr ""
+msgstr "Αδυναμία ανοίγματος της βάσης δεδομένων <%s> με τον οδηγό <%s>"
 
 #: ../raster/r.to.vect/main.c:192 ../raster/r.contour/main.c:195
 #: ../vector/v.in.dxf/write_vect.c:207 ../vector/lidar/lidarlib/raster.c:84
@@ -9336,8 +9361,7 @@ msgid "Calculate extended statistics"
 msgstr ""
 
 #: ../raster/r.univar2/r.univar_main.c:77
-msgid ""
-"Calculates univariate statistics from the non-null cells of a raster map."
+msgid "Calculates univariate statistics from the non-null cells of a raster map."
 msgstr ""
 
 #: ../raster/r.univar2/r.univar_main.c:121
@@ -9561,18 +9585,15 @@ msgid ""
 msgstr ""
 
 #: ../raster/r.watershed/shed/com_line.c:81
-msgid ""
-"depression map indicates all the locations in the current map window where"
+msgid "depression map indicates all the locations in the current map window where"
 msgstr ""
 
 #: ../raster/r.watershed/shed/com_line.c:82
-msgid ""
-"water accumulates and does not leave by the edge of the map. Lakes without"
+msgid "water accumulates and does not leave by the edge of the map. Lakes without"
 msgstr ""
 
 #: ../raster/r.watershed/shed/com_line.c:83
-msgid ""
-"outlet streams and sinkholes are examples of `depressions'.  If you wish to"
+msgid "outlet streams and sinkholes are examples of `depressions'.  If you wish to"
 msgstr ""
 
 #: ../raster/r.watershed/shed/com_line.c:84
@@ -9584,8 +9605,7 @@ msgid "locations where depressions occur.\n"
 msgstr ""
 
 #: ../raster/r.watershed/shed/com_line.c:86
-msgid ""
-"Hit <return> by itself for the next question if there is no depression map."
+msgid "Hit <return> by itself for the next question if there is no depression map."
 msgstr ""
 
 #: ../raster/r.watershed/shed/com_line.c:97
@@ -9596,8 +9616,7 @@ msgid ""
 msgstr ""
 
 #: ../raster/r.watershed/shed/com_line.c:99
-msgid ""
-"watershed basins.  The number of watershed basins is indirectly determined"
+msgid "watershed basins.  The number of watershed basins is indirectly determined"
 msgstr ""
 
 #: ../raster/r.watershed/shed/com_line.c:100
@@ -9612,18 +9631,15 @@ msgid "%s to define a unique watershed basin.  This area only applies to"
 msgstr ""
 
 #: ../raster/r.watershed/shed/com_line.c:103
-msgid ""
-"`exterior drainage basins'.  An exterior drainage basin does not have any"
+msgid "`exterior drainage basins'.  An exterior drainage basin does not have any"
 msgstr ""
 
 #: ../raster/r.watershed/shed/com_line.c:104
-msgid ""
-"drainage basins flowing into it.  Interior drainage basin size is determined"
+msgid "drainage basins flowing into it.  Interior drainage basin size is determined"
 msgstr ""
 
 #: ../raster/r.watershed/shed/com_line.c:105
-msgid ""
-"by the surface flow going into stream segments between stream interceptions."
+msgid "by the surface flow going into stream segments between stream interceptions."
 msgstr ""
 
 #: ../raster/r.watershed/shed/com_line.c:106
@@ -9636,18 +9652,15 @@ msgid "also allows the user to relate basin size to potential overland flow"
 msgstr ""
 
 #: ../raster/r.watershed/shed/com_line.c:109
-msgid ""
-"(i.e., areas with low infiltration capacities will need smaller areas to"
+msgid "(i.e., areas with low infiltration capacities will need smaller areas to"
 msgstr ""
 
 #: ../raster/r.watershed/shed/com_line.c:110
-msgid ""
-"develop stream channels than neighboring areas with high infiltration rates)."
+msgid "develop stream channels than neighboring areas with high infiltration rates)."
 msgstr ""
 
 #: ../raster/r.watershed/shed/com_line.c:111
-msgid ""
-"The user can create a map layer with potential overland flow values, and"
+msgid "The user can create a map layer with potential overland flow values, and"
 msgstr ""
 
 #: ../raster/r.watershed/shed/com_line.c:112
@@ -9753,8 +9766,7 @@ msgid "a display version of the accumulation map).  %s also has the"
 msgstr ""
 
 #: ../raster/r.watershed/shed/com_line.c:293
-msgid ""
-"ability to generate several variables in the Revised Universal Soil Loss"
+msgid "ability to generate several variables in the Revised Universal Soil Loss"
 msgstr ""
 
 #: ../raster/r.watershed/shed/com_line.c:294
@@ -9779,8 +9791,9 @@ msgid ""
 msgstr ""
 
 #: ../raster/r.watershed/shed/com_line.c:349
+#, fuzzy
 msgid "Type <return> if you do not have a disturbed land map layer."
-msgstr ""
+msgstr "Τύπος<return>."
 
 #: ../raster/r.watershed/shed/com_line.c:361
 msgid ""
@@ -9816,8 +9829,7 @@ msgid "these swales.  %s allows for an input (warning: kludge factor)"
 msgstr ""
 
 #: ../raster/r.watershed/shed/com_line.c:381
-msgid ""
-"that prevents the surface flow distance from getting too long.  Normally,"
+msgid "that prevents the surface flow distance from getting too long.  Normally,"
 msgstr ""
 
 #: ../raster/r.watershed/shed/com_line.c:382
@@ -9831,8 +9843,7 @@ msgid ""
 msgstr ""
 
 #: ../raster/r.watershed/shed/com_line.c:398
-msgid ""
-"slope length.  You may input a raster map indicating the locations of these"
+msgid "slope length.  You may input a raster map indicating the locations of these"
 msgstr ""
 
 #: ../raster/r.watershed/shed/com_line.c:399
@@ -9840,8 +9851,7 @@ msgid "blocking factors.\n"
 msgstr ""
 
 #: ../raster/r.watershed/shed/com_line.c:400
-msgid ""
-"Hit <return> by itself for the next question if there is no blocking map."
+msgid "Hit <return> by itself for the next question if there is no blocking map."
 msgstr ""
 
 #: ../raster/r.watershed/shed/file_in.c:15
@@ -10173,8 +10183,7 @@ msgid "Edge number out of range"
 msgstr ""
 
 #: ../raster/r.contour/main.c:92
-msgid ""
-"Produces a vector map layer of specified contours from a raster map layer."
+msgid "Produces a vector map layer of specified contours from a raster map layer."
 msgstr ""
 
 #: ../raster/r.contour/main.c:104
@@ -10317,8 +10326,9 @@ msgid "File containing category label rules (or \"-\" to read from stdin)"
 msgstr ""
 
 #: ../raster/r.cats/main.c:91
+#, fuzzy
 msgid "Default label or format string for dynamic labeling"
-msgstr ""
+msgstr "Προεπιλογή"
 
 #: ../raster/r.cats/main.c:93
 msgid "Used when no explicit label exists for the category"
@@ -10468,10 +10478,11 @@ msgid ""
 msgstr ""
 
 #: ../raster/r.out.tiff/r.out.tiff.c:183
+#, fuzzy
 msgid ""
 "Color map for palette must have less than 256 colors for the available range "
 "of data"
-msgstr ""
+msgstr "Χρώμα"
 
 #: ../raster/r.out.tiff/r.out.tiff.c:198
 #, c-format
@@ -10520,8 +10531,9 @@ msgid "Raster file(s) for View%d"
 msgstr ""
 
 #: ../raster/r.out.mpeg/main.c:406
+#, fuzzy
 msgid "Name for output file"
-msgstr ""
+msgstr "Όνομα αρχείου εξαγωγής"
 
 #: ../raster/r.out.mpeg/main.c:416
 msgid "Quality factor (1 = highest quality, lowest compression)"
@@ -10841,8 +10853,9 @@ msgstr ""
 
 #: ../raster/r.mapcalc/map.c:442
 #, c-format
+#, fuzzy
 msgid "Unable to open raster map <%s@%s>"
-msgstr ""
+msgstr "Αδυναμία ανοίγματος του χάρτη raster <%s@%s>"
 
 #: ../raster/r.mapcalc/map.c:515
 msgid "Failed writing raster map row"
@@ -10947,8 +10960,7 @@ msgid "raster, composite"
 msgstr ""
 
 #: ../raster/r.composite/main.c:74
-msgid ""
-"Combines red, green and blue map layers into a single composite raster map."
+msgid "Combines red, green and blue map layers into a single composite raster map."
 msgstr ""
 
 #: ../raster/r.composite/main.c:91
@@ -11217,13 +11229,11 @@ msgid "Name of raster map containing STARTing sources"
 msgstr ""
 
 #: ../raster/wildfire/r.spread/main.c:153
-msgid ""
-"Name of raster map containing max SPOTting DISTance (m) (required w/ -s)"
+msgid "Name of raster map containing max SPOTting DISTance (m) (required w/ -s)"
 msgstr ""
 
 #: ../raster/wildfire/r.spread/main.c:161
-msgid ""
-"Name of raster map containing midflame Wind SPEED (ft/min) (required w/ -s)"
+msgid "Name of raster map containing midflame Wind SPEED (ft/min) (required w/ -s)"
 msgstr ""
 
 #: ../raster/wildfire/r.spread/main.c:169
@@ -11428,8 +11438,9 @@ msgid "Use G3D mask (if exists) with output map"
 msgstr ""
 
 #: ../raster/r.to.rast3/main.c:117
+#, fuzzy
 msgid "Could not get raster row"
-msgstr ""
+msgstr "Αδυναμία ανάγνωσης της γραμμής (row) του χάρτη"
 
 #: ../raster/r.to.rast3/main.c:194
 msgid "raster, volume, conversion"
@@ -11580,8 +11591,9 @@ msgstr ""
 #: ../vector/v.surf.rst/main.c:675 ../vector/v.surf.rst/main.c:764
 #: ../doc/vector/v.example/main.c:85 ../display/d.what.vect/main.c:126
 #, c-format
+#, fuzzy
 msgid "Unable to open vector map <%s>"
-msgstr ""
+msgstr "Αδυναμία ανοίγματος διανυσματικού χάρτη <%s>"
 
 #: ../vector/v.net.visibility/main.c:98
 #, c-format
@@ -11659,8 +11671,7 @@ msgstr ""
 
 #: ../vector/v.db.connect/main.c:175
 #, c-format
-msgid ""
-"layer <%d> table <%s> in database <%s> through driver <%s> with key <%s>\n"
+msgid "layer <%d> table <%s> in database <%s> through driver <%s> with key <%s>\n"
 msgstr ""
 
 #: ../vector/v.db.connect/main.c:184 ../vector/v.edit/select.c:506
@@ -11672,8 +11683,9 @@ msgstr ""
 #: ../vector/v.to.rast/support.c:277 ../vector/v.to.rast/vect2rast.c:51
 #: ../vector/v.extract/main.c:270 ../doc/vector/v.example/main.c:103
 #, c-format
+#, fuzzy
 msgid "Database connection not defined for layer %d"
-msgstr ""
+msgstr "Δεν έχει καθοριστεί η σύνδεση με τη βάση δεδομένων για το επίπεδο (layer) %d"
 
 #: ../vector/v.db.connect/main.c:237
 #, c-format
@@ -12279,13 +12291,15 @@ msgstr ""
 #: ../vector/v.in.dxf/write_vect.c:214 ../vector/v.in.ascii/in.c:499
 #: ../vector/v.in.sites/main.c:174
 #, c-format
+#, fuzzy
 msgid "Unable to create index for table <%s>, key <%s>"
-msgstr ""
+msgstr "Αδυναμία δημιουργίας καταλόγου για τον πίνακα <%s>, κλειδί <%s>"
 
 #: ../vector/v.in.dxf/write_vect.c:219
 #, c-format
+#, fuzzy
 msgid "Unable to add database link for vector map <%s>"
-msgstr ""
+msgstr "Αδυναμία προσθήκης σύνδεσης με βάση δεδομένων για τον διανυσματικό χάρτη <%s>"
 
 #: ../vector/v.in.dxf/read_dxf.c:57
 msgid "end of file while looking for HEADER"
@@ -12844,8 +12858,7 @@ msgstr ""
 
 #: ../vector/lidar/v.surf.bspline/main.c:234
 #, c-format
-msgid ""
-"No vector map to interpolate. Interpolation will be done with <%s> vector map"
+msgid "No vector map to interpolate. Interpolation will be done with <%s> vector map"
 msgstr ""
 
 #: ../vector/lidar/v.surf.bspline/main.c:240
@@ -13021,8 +13034,7 @@ msgid ""
 msgstr ""
 
 #: ../vector/v.distance/main.c:200
-msgid ""
-"Column name(s) where values specified by 'upload' option will be uploaded"
+msgid "Column name(s) where values specified by 'upload' option will be uploaded"
 msgstr ""
 
 #: ../vector/v.distance/main.c:206
@@ -13191,8 +13203,9 @@ msgstr ""
 #: ../vector/v.reclass/main.c:135 ../vector/v.what.rast/main.c:155
 #: ../vector/v.to.rast/support.c:311 ../vector/v.to.rast/vect2rast.c:64
 #, c-format
+#, fuzzy
 msgid "Column <%s> not found"
-msgstr ""
+msgstr "Η στήλη <%s> δεν βρέθηκε"
 
 #: ../vector/v.reclass/main.c:182
 msgid "Cannot select records from database"
@@ -13342,18 +13355,15 @@ msgid ""
 msgstr ""
 
 #: ../vector/v.in.ascii/in.c:102
-msgid ""
-"Number of column used as x coordinate (first column is 1) for points mode"
+msgid "Number of column used as x coordinate (first column is 1) for points mode"
 msgstr ""
 
 #: ../vector/v.in.ascii/in.c:112
-msgid ""
-"Number of column used as y coordinate (first column is 1) for points mode"
+msgid "Number of column used as y coordinate (first column is 1) for points mode"
 msgstr ""
 
 #: ../vector/v.in.ascii/in.c:122
-msgid ""
-"Number of column used as z coordinate (first column is 1) for points mode"
+msgid "Number of column used as z coordinate (first column is 1) for points mode"
 msgstr ""
 
 #: ../vector/v.in.ascii/in.c:124
@@ -13365,8 +13375,7 @@ msgid "Number of column used as category (first column is 1) for points mode"
 msgstr ""
 
 #: ../vector/v.in.ascii/in.c:136
-msgid ""
-"If 0, unique category is assigned to each row and written to new column 'cat'"
+msgid "If 0, unique category is assigned to each row and written to new column 'cat'"
 msgstr ""
 
 #: ../vector/v.in.ascii/in.c:140
@@ -13433,13 +13442,11 @@ msgid ""
 msgstr ""
 
 #: ../vector/v.in.ascii/in.c:265
-msgid ""
-"z column number > minimum last column number (incorrect field separator?)"
+msgid "z column number > minimum last column number (incorrect field separator?)"
 msgstr ""
 
 #: ../vector/v.in.ascii/in.c:270
-msgid ""
-"cat column number > minimum last column number (incorrect field separator?)"
+msgid "cat column number > minimum last column number (incorrect field separator?)"
 msgstr ""
 
 #: ../vector/v.in.ascii/in.c:276
@@ -13464,8 +13471,7 @@ msgstr ""
 
 #: ../vector/v.in.ascii/in.c:411
 #, c-format
-msgid ""
-"Number of columns defined (%d) does not match number of columns (%d) in input"
+msgid "Number of columns defined (%d) does not match number of columns (%d) in input"
 msgstr ""
 
 #: ../vector/v.in.ascii/in.c:439
@@ -13754,8 +13760,7 @@ msgid "Format"
 msgstr ""
 
 #: ../vector/v.db.select/main.c:82
-msgid ""
-"Print minimal region extent of selected vector features instead of attributes"
+msgid "Print minimal region extent of selected vector features instead of attributes"
 msgstr ""
 
 #: ../vector/v.db.select/main.c:128
@@ -13771,8 +13776,9 @@ msgstr ""
 
 #: ../vector/v.db.select/main.c:184
 #, c-format
+#, fuzzy
 msgid "Unable to fetch data from table <%s>"
-msgstr ""
+msgstr "Αδυναμία φόρτωσης δεδομένων πίνακα <%s>"
 
 #: ../vector/v.db.select/main.c:230
 #, c-format
@@ -14319,8 +14325,9 @@ msgstr ""
 
 #: ../vector/v.sample/main.c:216 ../vector/v.patch/main.c:285
 #, c-format
+#, fuzzy
 msgid "Unable to create table <%s>"
-msgstr ""
+msgstr "Αδυναμία δημιουργίας πίνακα <%s>"
 
 #: ../vector/v.sample/main.c:227
 msgid "Checking vector points..."
@@ -14463,8 +14470,9 @@ msgstr ""
 
 #: ../vector/v.generalize/main.c:468
 #, c-format
+#, fuzzy
 msgid "Unable to calculate centroid for area %d"
-msgstr ""
+msgstr "Αδυναμία υπολογισμού κέντρων πολυγώνου για την επιφάνεια %d"
 
 #: ../vector/v.generalize/main.c:493
 #, c-format
@@ -14487,8 +14495,9 @@ msgstr ""
 
 #: ../vector/v.generalize/misc.c:174
 #, c-format
+#, fuzzy
 msgid "Unable to copy table <%s>"
-msgstr ""
+msgstr "Αδυναμία αντιγραφής πίνακα <%s>"
 
 #: ../vector/v.in.region/main.c:39
 msgid "Create a new vector from the current region."
@@ -14571,8 +14580,9 @@ msgstr ""
 
 #: ../vector/v.info/main.c:247
 #, c-format
+#, fuzzy
 msgid "  Type of Map:  %s (level: %i)        "
-msgstr ""
+msgstr "Τύπος "
 
 #: ../vector/v.info/main.c:255
 #, c-format
@@ -14749,8 +14759,9 @@ msgstr ""
 
 #: ../vector/v.in.ogr/main.c:335
 #, c-format
+#, fuzzy
 msgid "Vector map <%s> already exists and will be overwritten"
-msgstr ""
+msgstr "Ο διανυσματικός χάρτης <%s> υπάρχει ήδη και θα αντικατασταθεί (overwritten)"
 
 #: ../vector/v.in.ogr/main.c:379
 msgid "Select either the current region flag or the spatial option, not both"
@@ -15014,8 +15025,7 @@ msgid ""
 msgstr ""
 
 #: ../vector/v.patch/main.c:84
-msgid ""
-"Append files to existing file (overwriting existing files must be activated)"
+msgid "Append files to existing file (overwriting existing files must be activated)"
 msgstr ""
 
 #: ../vector/v.patch/main.c:89
@@ -15130,8 +15140,7 @@ msgstr ""
 
 #: ../vector/v.digit/main.c:157
 #, c-format
-msgid ""
-"Map <%s> does not exist in current mapset. Add flag -n to create a new map."
+msgid "Map <%s> does not exist in current mapset. Add flag -n to create a new map."
 msgstr ""
 
 #: ../vector/v.surf.idw/read_sites.c:86
@@ -15151,8 +15160,7 @@ msgid ""
 msgstr ""
 
 #: ../vector/v.surf.idw/main.c:106
-msgid ""
-"Power parameter; greater values assign greater influence to closer points"
+msgid "Power parameter; greater values assign greater influence to closer points"
 msgstr ""
 
 #: ../vector/v.surf.idw/main.c:110
@@ -15195,8 +15203,7 @@ msgid "Column type of wcolumn is not supported (must be integer or double)"
 msgstr ""
 
 #: ../vector/v.vol.rst/user1.c:126
-msgid ""
-"Column type of smooth column is not supported (must be integer or double)"
+msgid "Column type of smooth column is not supported (must be integer or double)"
 msgstr ""
 
 #: ../vector/v.vol.rst/main.c:204
@@ -15316,8 +15323,9 @@ msgid "Both crossvalidation and deviations file specified"
 msgstr ""
 
 #: ../vector/v.vol.rst/main.c:548
+#, fuzzy
 msgid "Vector is not 3D"
-msgstr ""
+msgstr "Το διάνυσμα δεν είναι 3Δ"
 
 #: ../vector/v.vol.rst/main.c:600
 #, c-format
@@ -15667,8 +15675,7 @@ msgid "Format: layer type count min max"
 msgstr ""
 
 #: ../vector/v.category/main.c:133
-msgid ""
-"Database connection and attribute tables for concerned layers are not changed"
+msgid "Database connection and attribute tables for concerned layers are not changed"
 msgstr ""
 
 #: ../vector/v.category/main.c:156
@@ -15792,8 +15799,9 @@ msgstr ""
 
 #: ../vector/v.convert/att.c:72
 #, c-format
+#, fuzzy
 msgid "Cannot open database %s"
-msgstr ""
+msgstr "Δεν μπορώ να ανοίξω την βάση δεδομένων %s"
 
 #: ../vector/v.convert/att.c:105
 #, c-format
@@ -16085,8 +16093,7 @@ msgid "Finds shortest path on vector network."
 msgstr ""
 
 #: ../vector/v.net.path/main.c:65
-msgid ""
-"Name of file containing start and end points. If not given, read from stdin"
+msgid "Name of file containing start and end points. If not given, read from stdin"
 msgstr ""
 
 #: ../vector/v.net.path/main.c:73 ../display/d.path/main.c:82
@@ -16197,8 +16204,9 @@ msgstr ""
 
 #: ../vector/v.label.sa/labels.c:145 ../vector/v.label/main.c:297
 #: ../display/d.vect/plot1.c:294
+#, fuzzy
 msgid "Unable to read vector map"
-msgstr ""
+msgstr "Αδυναμία ανάγνωσης διανυσματικού χάρτη"
 
 #: ../vector/v.label.sa/labels.c:248
 #, c-format
@@ -16259,8 +16267,9 @@ msgstr ""
 #: ../vector/v.label.sa/main.c:197 ../vector/v.label/main.c:188
 #: ../vector/v.lrs/v.lrs.label/main.c:228 ../display/d.path/main.c:116
 #: ../general/g.pnmcomp/main.c:334
+#, fuzzy
 msgid "Background color"
-msgstr ""
+msgstr "Χρώμα φόντου"
 
 #: ../vector/v.label.sa/main.c:208 ../vector/v.label/main.c:201
 msgid "Opaque to vector (only relevant if background color is selected)"
@@ -16277,13 +16286,17 @@ msgstr ""
 
 #: ../vector/v.label.sa/font.c:54
 #, c-format
+#, fuzzy
 msgid "%s: Unable to read font definition file; use the default"
 msgstr ""
+"%s: Αδυναμία ανάγνωσης του αρχείου γραμματοσειράς, χρησιμοποιήστε το "
+"προεπιλεγμένο"
 
 #: ../vector/v.label.sa/font.c:60
 #, c-format
+#, fuzzy
 msgid "%s: No font definition file"
-msgstr ""
+msgstr "%s: Δεν υπαρχειο αρχείο γραμματοσειράς"
 
 #: ../vector/v.clean/main.c:45
 msgid "Toolset for cleaning topology of vector map."
@@ -16318,8 +16331,7 @@ msgid ""
 msgstr ""
 
 #: ../vector/v.clean/main.c:95
-msgid ""
-"Threshold in map units, one value for each tool (default: 0.0[,0.0,...])"
+msgid "Threshold in map units, one value for each tool (default: 0.0[,0.0,...])"
 msgstr ""
 
 #: ../vector/v.clean/main.c:101
@@ -16743,8 +16755,9 @@ msgstr ""
 
 #: ../vector/v.what/what.c:170
 #, c-format
+#, fuzzy
 msgid "Type: %s"
-msgstr ""
+msgstr "Τύπος"
 
 #: ../vector/v.what/what.c:171
 #, c-format
@@ -16770,15 +16783,17 @@ msgstr ""
 
 #: ../vector/v.what/what.c:206
 #, c-format
+#, fuzzy
 msgid ""
 "Type: Area\n"
 "Area height: %f\n"
-msgstr ""
+msgstr "Τύπος"
 
 #: ../vector/v.what/what.c:210
 #, c-format
+#, fuzzy
 msgid "Type: Area\n"
-msgstr ""
+msgstr "Τύπος"
 
 #: ../vector/v.what/what.c:217
 #, c-format
@@ -17024,14 +17039,16 @@ msgid "Unable to fetch record"
 msgstr ""
 
 #: ../vector/v.to.db/parse.c:37
+#, fuzzy
 msgid ""
 "Type of elements (for coor valid point/centroid, for length valid line/"
 "boundary)"
-msgstr ""
+msgstr "Τύπος"
 
 #: ../vector/v.to.db/parse.c:39
+#, fuzzy
 msgid "Type of elements"
-msgstr ""
+msgstr "Τύπος"
 
 #: ../vector/v.to.db/parse.c:45
 msgid "Query layer (used by 'query' option)"
@@ -17120,8 +17137,7 @@ msgid "%d categories with more points (coordinates not loaded)"
 msgstr ""
 
 #: ../vector/v.out.vtk/writeVTK.c:187
-msgid ""
-"No coordinates to generate the output! Maybe an empty vector type chosen?"
+msgid "No coordinates to generate the output! Maybe an empty vector type chosen?"
 msgstr ""
 
 #: ../vector/v.out.vtk/writeVTK.c:575 ../vector/v.out.ogr/main.c:696
@@ -17160,8 +17176,9 @@ msgid "Path to resulting VTK file"
 msgstr ""
 
 #: ../vector/v.out.vtk/main.c:83
+#, fuzzy
 msgid "Layer number"
-msgstr ""
+msgstr "Νούμερο επιπέδου"
 
 #: ../vector/v.out.vtk/main.c:93
 msgid "Export numeric attribute table fields as VTK scalar variables"
@@ -17220,8 +17237,7 @@ msgid "Text to append to the comment line of the map's metadata file"
 msgstr ""
 
 #: ../vector/v.support/main.c:118
-msgid ""
-"Command line to store into vector map history file (used for vector scripts)"
+msgid "Command line to store into vector map history file (used for vector scripts)"
 msgstr ""
 
 #: ../vector/v.support/main.c:122
@@ -17230,8 +17246,9 @@ msgstr ""
 
 #: ../vector/v.support/main.c:188
 #, c-format
+#, fuzzy
 msgid "Unable to open history file for vector map <%s>"
-msgstr ""
+msgstr "Αδυναμία ανοίγματος του ιστορικού του διανυσματικού χάρτη <%s>"
 
 #: ../vector/v.select/main.c:134
 msgid "Select features from ainput by features from binput"
@@ -17365,8 +17382,7 @@ msgid "No graphics device selected"
 msgstr ""
 
 #: ../vector/v.label/main.c:252
-msgid ""
-"size and space options vary significantly which may lead to crummy output"
+msgid "size and space options vary significantly which may lead to crummy output"
 msgstr ""
 
 #: ../vector/v.label/main.c:260
@@ -17481,8 +17497,7 @@ msgid "Name of the attribute column with smoothing parameters"
 msgstr ""
 
 #: ../vector/v.surf.rst/main.c:313
-msgid ""
-"Maximum distance between points on isoline (to insert additional points)"
+msgid "Maximum distance between points on isoline (to insert additional points)"
 msgstr ""
 
 #: ../vector/v.surf.rst/main.c:322
@@ -17570,8 +17585,7 @@ msgid "Cannot write raster maps -- try to increase resolution"
 msgstr ""
 
 #: ../vector/v.in.db/main.c:54
-msgid ""
-"Creates new vector (points) map from database table containing coordinates."
+msgid "Creates new vector (points) map from database table containing coordinates."
 msgstr ""
 
 #: ../vector/v.in.db/main.c:58
@@ -17596,14 +17610,14 @@ msgstr ""
 
 #: ../vector/v.in.db/main.c:129
 #, c-format
-msgid ""
-"Output vector map, table <%s> (driver: <%s>, database: <%s>) already exists"
+msgid "Output vector map, table <%s> (driver: <%s>, database: <%s>) already exists"
 msgstr ""
 
 #: ../vector/v.in.db/main.c:162
 #, c-format
+#, fuzzy
 msgid "Unable to open select cursor: '%s'"
-msgstr ""
+msgstr "Αδυναμία ανοίγματος κέρσορα '%s'"
 
 #: ../vector/v.in.db/main.c:174
 msgid "Key column must be integer"
@@ -17708,8 +17722,9 @@ msgid "Error in color definition column (%s) with cat %d: colorstring [%s]"
 msgstr ""
 
 #: ../vector/v.to.rast/support.c:175
+#, fuzzy
 msgid "Color set to [200:200:200]"
-msgstr ""
+msgstr "Χρώμα"
 
 #: ../vector/v.to.rast/support.c:180
 #, c-format
@@ -17809,8 +17824,9 @@ msgid "Converted points/lines: %d of %d"
 msgstr ""
 
 #: ../vector/v.to.rast/vect2rast.c:209
+#, fuzzy
 msgid "Color can be updated from database only if use=attr"
-msgstr ""
+msgstr "Χρώμα"
 
 #: ../vector/v.drape/main.c:61
 msgid "vector, geometry, sampling"
@@ -17878,12 +17894,14 @@ msgid "OGR format"
 msgstr ""
 
 #: ../vector/v.out.ogr/main.c:137
+#, fuzzy
 msgid "OGR dataset creation option (format specific, NAME=VALUE)"
-msgstr ""
+msgstr "ΟΝΟΜΑ"
 
 #: ../vector/v.out.ogr/main.c:147
+#, fuzzy
 msgid "OGR layer creation option (format specific, NAME=VALUE)"
-msgstr ""
+msgstr "ΟΝΟΜΑ"
 
 #: ../vector/v.out.ogr/main.c:152
 msgid ""
@@ -17910,8 +17928,9 @@ msgstr ""
 
 #: ../vector/v.out.ogr/main.c:263
 #, c-format
+#, fuzzy
 msgid "Unable to open OGR data source '%s'"
-msgstr ""
+msgstr "Αδυναμία ανοίγματος OGR πηγή δεδομένων '%s'"
 
 #: ../vector/v.out.ogr/main.c:284 ../vector/v.out.ogr/main.c:291
 #, c-format
@@ -17935,14 +17954,12 @@ msgstr ""
 
 #: ../vector/v.out.ogr/main.c:386
 #, c-format
-msgid ""
-"%d point(s) found, but not requested to be exported. Verify 'type' parameter."
+msgid "%d point(s) found, but not requested to be exported. Verify 'type' parameter."
 msgstr ""
 
 #: ../vector/v.out.ogr/main.c:391
 #, c-format
-msgid ""
-"%d line(s) found, but not requested to be exported. Verify 'type' parameter."
+msgid "%d line(s) found, but not requested to be exported. Verify 'type' parameter."
 msgstr ""
 
 #: ../vector/v.out.ogr/main.c:397
@@ -17961,14 +17978,12 @@ msgstr ""
 
 #: ../vector/v.out.ogr/main.c:408
 #, c-format
-msgid ""
-"%d areas found, but not requested to be exported. Verify 'type' parameter."
+msgid "%d areas found, but not requested to be exported. Verify 'type' parameter."
 msgstr ""
 
 #: ../vector/v.out.ogr/main.c:413
 #, c-format
-msgid ""
-"%d faces found, but not requested to be exported. Verify 'type' parameter."
+msgid "%d faces found, but not requested to be exported. Verify 'type' parameter."
 msgstr ""
 
 #: ../vector/v.out.ogr/main.c:421
@@ -18043,8 +18058,7 @@ msgstr ""
 
 #: ../vector/v.net.steiner/main.c:527
 #, c-format
-msgid ""
-"[%d] (not reachable) nodes removed from list of Steiner point candidates"
+msgid "[%d] (not reachable) nodes removed from list of Steiner point candidates"
 msgstr ""
 
 #: ../vector/v.net.steiner/main.c:532
@@ -18382,8 +18396,7 @@ msgid "Column containing milepost position for the beginning of next segment"
 msgstr ""
 
 #: ../vector/v.lrs/v.lrs.create/main.c:179
-msgid ""
-"Column containing offset from milepost for the beginning of next segment"
+msgid "Column containing offset from milepost for the beginning of next segment"
 msgstr ""
 
 #: ../vector/v.lrs/v.lrs.create/main.c:188
@@ -18550,8 +18563,7 @@ msgid "[%d] points - too many records found"
 msgstr ""
 
 #: ../vector/v.buffer/main.c:256
-msgid ""
-"Creates a buffer around features of given type (areas must contain centroid)."
+msgid "Creates a buffer around features of given type (areas must contain centroid)."
 msgstr ""
 
 #: ../vector/v.buffer/main.c:271
@@ -19025,8 +19037,7 @@ msgid "Create EPS (Encapsulated PostScript) instead of PostScript file"
 msgstr ""
 
 #: ../ps/ps.map/main.c:121
-msgid ""
-"File containing mapping instructions (or use input=- to enter from keyboard)"
+msgid "File containing mapping instructions (or use input=- to enter from keyboard)"
 msgstr ""
 
 #: ../ps/ps.map/main.c:129
@@ -19051,11 +19062,15 @@ msgstr ""
 
 #: ../ps/ps.map/main.c:263
 #, c-format
+#, fuzzy
 msgid ""
 "\n"
 "ERROR: Required parameter <%s> not set:\n"
 "    (%s).\n"
 msgstr ""
+"\n"
+"ΣΦΑΛΜΑ: Η απαιτούμενη παράμετρος <%s> δεν έχει καθοριστεί:\n"
+"    (%s).\n"
 
 #: ../ps/ps.map/main.c:274
 msgid "Current region cannot be set."
@@ -19830,8 +19845,7 @@ msgid "Rectification polynom order (1-3)"
 msgstr ""
 
 #: ../imagery/i.rectify/main.c:83
-msgid ""
-"Use curr. region settings in target location (def.=calculate smallest area)"
+msgid "Use curr. region settings in target location (def.=calculate smallest area)"
 msgstr ""
 
 #: ../imagery/i.rectify/main.c:87
@@ -20471,13 +20485,11 @@ msgid "Sample size: %d points\n"
 msgstr ""
 
 #: ../imagery/i.cluster/main.c:315
-msgid ""
-"Not enough sample points. Please run again and choose a larger sample size"
+msgid "Not enough sample points. Please run again and choose a larger sample size"
 msgstr ""
 
 #: ../imagery/i.cluster/main.c:319
-msgid ""
-"Not enough non-zero sample data points. Check your current region (and mask)"
+msgid "Not enough non-zero sample data points. Check your current region (and mask)"
 msgstr ""
 
 #: ../imagery/i.cluster/main.c:332
@@ -20528,8 +20540,7 @@ msgid "Name of image to be rectified which will  be initially drawn on screen."
 msgstr ""
 
 #: ../imagery/i.ortho.photo/photo.2target/main.c:65
-msgid ""
-"Name of a map from target mapset which  will be initially drawn on screen."
+msgid "Name of a map from target mapset which  will be initially drawn on screen."
 msgstr ""
 
 #: ../imagery/i.ortho.photo/photo.2target/main.c:208
@@ -20871,8 +20882,9 @@ msgid "Raster"
 msgstr ""
 
 #: ../visualization/nviz/src/nviz_init.c:68
+#, fuzzy
 msgid "Name of raster map(s) for Color"
-msgstr ""
+msgstr "Χρώμα"
 
 #: ../visualization/nviz/src/nviz_init.c:77
 msgid "Name of vector lines/areas overlay map(s)"
@@ -20986,8 +20998,9 @@ msgstr ""
 
 #: ../visualization/nviz2/cmd/surface.c:126
 #, c-format
+#, fuzzy
 msgid "Color attribute not defined, using default <%s>"
-msgstr ""
+msgstr "Χρώμα"
 
 #: ../visualization/nviz2/cmd/surface.c:203
 #, c-format
@@ -21043,8 +21056,9 @@ msgid "Name of raster map(s) for color"
 msgstr ""
 
 #: ../visualization/nviz2/cmd/args.c:132
+#, fuzzy
 msgid "Color value(s)"
-msgstr ""
+msgstr "Χρώμα"
 
 #: ../visualization/nviz2/cmd/args.c:141
 msgid "Name of raster map(s) for mask"
@@ -21285,8 +21299,9 @@ msgid "Indicate if a pie or bar chart is desired"
 msgstr ""
 
 #: ../display/d.histogram/main.c:90
+#, fuzzy
 msgid "Color for text and axes"
-msgstr ""
+msgstr "Χρώμα"
 
 #: ../display/d.histogram/main.c:98
 msgid "Indicate if cell counts or map areas should be displayed"
@@ -21335,20 +21350,22 @@ msgid ""
 msgstr ""
 
 #: ../display/d.mapgraph/main.c:67
+#, fuzzy
 msgid ""
 "Color to draw with, either a standard GRASS color or R:G:B triplet "
 "(separated by colons)"
-msgstr ""
+msgstr "Χρώμα"
 
 #: ../display/d.erase/main.c:34
 msgid "Erase the contents of the active display frame with user defined color"
 msgstr ""
 
 #: ../display/d.erase/main.c:42
+#, fuzzy
 msgid ""
 "Color to erase with, either a standard GRASS color or R:G:B triplet "
 "(separated by colons)"
-msgstr ""
+msgstr "Χρώμα"
 
 #: ../display/d.erase/main.c:47 ../display/d.frame/frame.c:74
 msgid "Remove all frames and erase the screen"
@@ -21476,8 +21493,9 @@ msgstr ""
 
 #: ../display/d.what.vect/what.c:231
 #, c-format
+#, fuzzy
 msgid "Line: %d  Type: %s  Left: %d  Right: %d  "
-msgstr ""
+msgstr "Τύπος "
 
 #: ../display/d.what.vect/what.c:251
 #, c-format
@@ -21647,8 +21665,7 @@ msgstr ""
 
 #: ../display/d.font/main.c:126
 #, c-format
-msgid ""
-"Font name <%s> is invalid. Check font name or consider running 'g.mkfontcap'"
+msgid "Font name <%s> is invalid. Check font name or consider running 'g.mkfontcap'"
 msgstr ""
 
 #: ../display/d.rast.num/number.c:86
@@ -21658,12 +21675,14 @@ msgid ""
 msgstr ""
 
 #: ../display/d.rast.num/number.c:99
+#, fuzzy
 msgid "Color for drawing grid, or \"none\""
-msgstr ""
+msgstr "Χρώμα κανένα"
 
 #: ../display/d.rast.num/number.c:108
+#, fuzzy
 msgid "Color for drawing text"
-msgstr ""
+msgstr "Χρώμα"
 
 #: ../display/d.rast.num/number.c:121
 msgid "Get text color from cell color value"
@@ -21747,12 +21766,14 @@ msgid "Path to file location"
 msgstr ""
 
 #: ../display/d.linegraph/linegraph.c:139
+#, fuzzy
 msgid "Color for Y data"
-msgstr ""
+msgstr "Χρώμα"
 
 #: ../display/d.linegraph/linegraph.c:148
+#, fuzzy
 msgid "Color for axis, tics, numbers, and title"
-msgstr ""
+msgstr "Χρώμα"
 
 #: ../display/d.linegraph/linegraph.c:156
 msgid "Title for X data"
@@ -21835,8 +21856,7 @@ msgid "Getting graphics window coordinates"
 msgstr ""
 
 #: ../display/d.title/main.c:47
-msgid ""
-"Create a TITLE for a raster map in a form suitable for display with d.text."
+msgid "Create a TITLE for a raster map in a form suitable for display with d.text."
 msgstr ""
 
 #: ../display/d.title/main.c:58
@@ -21884,8 +21904,9 @@ msgid "Line color"
 msgstr ""
 
 #: ../display/d.geodesic/main.c:70
+#, fuzzy
 msgid "Text color or \"none\""
-msgstr ""
+msgstr "κανένα"
 
 #: ../display/d.geodesic/main.c:78 ../display/d.rhumbline/main.c:79
 #, c-format
@@ -21949,8 +21970,9 @@ msgstr ""
 #: ../display/d.graph/main.c:103 ../display/d.text.freetype/main.c:842
 #: ../display/d.rast/display.c:32 ../display/d.paint.labels/color.c:66
 #, c-format
+#, fuzzy
 msgid "[%s]: No such color"
-msgstr ""
+msgstr "[%s]: Δεν υπάρχει τέτοιο χρώμα"
 
 #: ../display/d.text/main.c:177
 #, c-format
@@ -22087,12 +22109,14 @@ msgid "Input map contains no data"
 msgstr ""
 
 #: ../display/d.legend/main.c:373 ../display/d.legend/main.c:531
+#, fuzzy
 msgid "Color range exceeds lower limit of actual data"
-msgstr ""
+msgstr "Χρώμα"
 
 #: ../display/d.legend/main.c:379 ../display/d.legend/main.c:535
+#, fuzzy
 msgid "Color range exceeds upper limit of actual data"
-msgstr ""
+msgstr "Χρώμα"
 
 #: ../display/d.legend/main.c:436
 #, c-format
@@ -22174,8 +22198,7 @@ msgid "Unable to read color"
 msgstr ""
 
 #: ../display/d.graph/main.c:56
-msgid ""
-"Program for generating and displaying simple graphics on the display monitor."
+msgid "Program for generating and displaying simple graphics on the display monitor."
 msgstr ""
 
 #: ../display/d.graph/main.c:63
@@ -22185,8 +22208,9 @@ msgid ""
 msgstr ""
 
 #: ../display/d.graph/main.c:71
+#, fuzzy
 msgid "Color to draw with, either a standard GRASS color or R:G:B triplet"
-msgstr ""
+msgstr "Χρώμα"
 
 #: ../display/d.graph/main.c:78
 msgid "Coordinates are given in map units"
@@ -22203,16 +22227,18 @@ msgid "Can't read vector map"
 msgstr ""
 
 #: ../display/d.vect/plot1.c:210
+#, fuzzy
 msgid "Color definition column not specified"
-msgstr ""
+msgstr "Χρώμα"
 
 #: ../display/d.vect/plot1.c:220 ../display/d.vect/area.c:78
 #: ../display/d.thematic.area/plot1.c:216
 #, c-format
+#, fuzzy
 msgid ""
 "Color definition column (%s) not a string. Column must be of form RRR:GGG:"
 "BBB where RGB values range 0-255."
-msgstr ""
+msgstr "Χρώμα."
 
 #: ../display/d.vect/plot1.c:225 ../display/d.vect/plot1.c:253
 #: ../display/d.vect/area.c:84 ../display/d.vect/area.c:112
@@ -22249,8 +22275,7 @@ msgstr ""
 #: ../display/d.vect/plot1.c:465 ../display/d.vect/area.c:344
 #: ../display/d.thematic.area/plot1.c:440
 #, c-format
-msgid ""
-"Error in line width column (%s), element %d with cat %d: line width [%d]"
+msgid "Error in line width column (%s), element %d with cat %d: line width [%d]"
 msgstr ""
 
 #: ../display/d.vect/plot1.c:530
@@ -22283,8 +22308,9 @@ msgstr ""
 
 #: ../display/d.vect/main.c:166 ../display/d.vect/main.c:176
 #: ../display/d.vect/main.c:264 ../display/d.vect/main.c:274
+#, fuzzy
 msgid "Either a standard GRASS color, R:G:B triplet, or \"none\""
-msgstr ""
+msgstr "Δώστε ένα στανταρ χρώμα GRASS, συνδυασμό R:G:B ή \"none\""
 
 #: ../display/d.vect/main.c:172
 msgid "Area fill color"
@@ -22295,8 +22321,9 @@ msgid "Name of color definition column (for use with -a flag)"
 msgstr ""
 
 #: ../display/d.vect/main.c:189
+#, fuzzy
 msgid "Type of color table (for use with -z flag)"
-msgstr ""
+msgstr "Τύπος"
 
 #: ../display/d.vect/main.c:198 ../display/d.vect/main.c:203
 #: ../display/d.vect/main.c:211
@@ -22348,8 +22375,9 @@ msgid "Label color"
 msgstr ""
 
 #: ../display/d.vect/main.c:254
+#, fuzzy
 msgid "Either a standard color name or R:G:B triplet"
-msgstr ""
+msgstr "Είτε ένα στανταρ όνομα χρώματος ή συνδυασμός R:G:B"
 
 #: ../display/d.vect/main.c:261
 msgid "Label background color"
@@ -22372,13 +22400,11 @@ msgid "Label vertical justification"
 msgstr ""
 
 #: ../display/d.vect/main.c:310
-msgid ""
-"Minimum region size (average from height and width) when map is displayed"
+msgid "Minimum region size (average from height and width) when map is displayed"
 msgstr ""
 
 #: ../display/d.vect/main.c:318
-msgid ""
-"Maximum region size (average from height and width) when map is displayed"
+msgid "Maximum region size (average from height and width) when map is displayed"
 msgstr ""
 
 #: ../display/d.vect/main.c:328 ../display/d.thematic.area/main.c:157
@@ -22452,8 +22478,7 @@ msgid "Plotting ..."
 msgstr ""
 
 #: ../display/d.vect/main.c:645 ../display/d.thematic.area/main.c:408
-msgid ""
-"The bounding box of the map is outside the current region, nothing drawn."
+msgid "The bounding box of the map is outside the current region, nothing drawn."
 msgstr ""
 
 #: ../display/d.vect/main.c:679
@@ -22469,13 +22494,13 @@ msgid "Cannot display topology, not available"
 msgstr ""
 
 #: ../display/d.vect/area.c:68 ../display/d.thematic.area/plot1.c:206
+#, fuzzy
 msgid "Color definition column not specified."
-msgstr ""
+msgstr "Χρώμα."
 
 #: ../display/d.vect/area.c:277
 #, c-format
-msgid ""
-"Error in color definition column (%s), area %d with cat %d: colorstring [%s]"
+msgid "Error in color definition column (%s), area %d with cat %d: colorstring [%s]"
 msgstr ""
 
 #: ../display/d.vect/area.c:283
@@ -22498,8 +22523,7 @@ msgid "No attribute found for cat %d: %s"
 msgstr ""
 
 #: ../display/d.vect.chart/main.c:65
-msgid ""
-"Displays charts of vector data in the active frame on the graphics monitor."
+msgid "Displays charts of vector data in the active frame on the graphics monitor."
 msgstr ""
 
 #: ../display/d.vect.chart/main.c:82
@@ -22560,24 +22584,29 @@ msgid "Name of raster aspect map to be displayed"
 msgstr ""
 
 #: ../display/d.rast.arrow/arrow.c:129
+#, fuzzy
 msgid "Type of existing raster aspect map"
-msgstr ""
+msgstr "Τύπος"
 
 #: ../display/d.rast.arrow/arrow.c:137
+#, fuzzy
 msgid "Color for drawing arrows"
-msgstr ""
+msgstr "Χρώμα"
 
 #: ../display/d.rast.arrow/arrow.c:145
+#, fuzzy
 msgid "Color for drawing grid or \"none\""
-msgstr ""
+msgstr "Χρώμα κανένα"
 
 #: ../display/d.rast.arrow/arrow.c:153
+#, fuzzy
 msgid "Color for drawing X's (Null values)"
-msgstr ""
+msgstr "Χρώμα"
 
 #: ../display/d.rast.arrow/arrow.c:161
+#, fuzzy
 msgid "Color for showing unknown information"
-msgstr ""
+msgstr "Χρώμα"
 
 #: ../display/d.rast.arrow/arrow.c:168
 msgid "Draw arrow every Nth grid cell"
@@ -22616,8 +22645,7 @@ msgid "No raster map exists in the current window"
 msgstr ""
 
 #: ../display/d.menu/main.c:68
-msgid ""
-"Creates and displays a menu within the active frame on the graphics monitor."
+msgid "Creates and displays a menu within the active frame on the graphics monitor."
 msgstr ""
 
 #: ../display/d.menu/main.c:77
@@ -23074,9 +23102,9 @@ msgid "Draw a scale bar only"
 msgstr ""
 
 #: ../display/d.barscale/main.c:89
-msgid ""
-"Background color, either a standard GRASS color, R:G:B triplet, or \"none\""
-msgstr ""
+#, fuzzy
+msgid "Background color, either a standard GRASS color, R:G:B triplet, or \"none\""
+msgstr "κανένα"
 
 #: ../display/d.barscale/main.c:109
 msgid ""
@@ -23110,8 +23138,9 @@ msgid "Ignored (compatibility with d.text.freetype)"
 msgstr ""
 
 #: ../display/d.text.new/main.c:326
+#, fuzzy
 msgid "Invalid coordinates"
-msgstr ""
+msgstr "Λάθος συντεταγμένες"
 
 #: ../display/d.text.new/main.c:393
 #, c-format
@@ -23328,8 +23357,9 @@ msgstr ""
 
 #: ../display/d.grid/main.c:76 ../display/d.grid/main.c:81
 #: ../display/d.grid/main.c:87
+#, fuzzy
 msgid "Color"
-msgstr ""
+msgstr "Χρώμα"
 
 #: ../display/d.grid/main.c:95
 msgid "Font size for gridline coordinate labels"
@@ -24248,8 +24278,7 @@ msgid "Use ESRI-style format (applies to WKT output only)"
 msgstr ""
 
 #: ../general/g.proj/main.c:93
-msgid ""
-"Print 'flat' output with no linebreaks (applies to WKT and PROJ.4 output)"
+msgid "Print 'flat' output with no linebreaks (applies to WKT and PROJ.4 output)"
 msgstr ""
 
 #: ../general/g.proj/main.c:102
@@ -24558,8 +24587,9 @@ msgstr ""
 
 #: ../general/g.region/main.c:478 ../general/g.mremove/do_remove.c:55
 #, c-format
+#, fuzzy
 msgid "3D raster map <%s> not found"
-msgstr ""
+msgstr "Ο 3Δ χάρτης raster  <%s> δεν βρέθηκε"
 
 #: ../general/g.region/main.c:481
 #, c-format
@@ -24697,8 +24727,9 @@ msgid "GUI type"
 msgstr ""
 
 #: ../general/g.gui/main.c:44
+#, fuzzy
 msgid "Default value: GRASS_GUI if defined otherwise tcltk"
-msgstr ""
+msgstr "Προεπιλογή"
 
 #: ../general/g.gui/main.c:45
 msgid ""
@@ -25101,3 +25132,4 @@ msgstr ""
 #: ../general/g.mremove/main.c:158
 msgid "You must use the force flag to actually remove them. Exiting."
 msgstr ""
+
