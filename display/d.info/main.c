@@ -24,6 +24,7 @@ int main(int argc, char *argv[])
     struct GModule *module;
     struct Flag *rflag, *dflag, *cflag, *fflag, *bflag, *gflag;
     int l, r, t, b;
+    double n, s, e, w;
     char window_name[128];
     struct Cell_head window;
 
@@ -54,7 +55,7 @@ int main(int argc, char *argv[])
     gflag = G_define_flag();
     gflag->key = 'g';
     gflag->description =
-	_("Display screen rectangle coordinates and resolution (west, east, north, south, ewres, nsres)");
+	_("Display screen rectangle coordinates and resolution of entire window");
 
     cflag = G_define_flag();
     cflag->key = 'c';
@@ -122,20 +123,33 @@ int main(int argc, char *argv[])
     }
 
     if (gflag->answer) {
+	/* outer bounds of the screen (including white bands) */
+
 	if (D_get_cur_wind(window_name))
 	    G_fatal_error(_("No current window"));
 	if (D_set_cur_wind(window_name))
 	    G_fatal_error(_("Current window not available"));
 
-	/* Read in the map window associated with window */
 	G_get_window(&window);
-	fprintf(stdout, "w=%f\n", window.west);
-	fprintf(stdout, "e=%f\n", window.east);
-	fprintf(stdout, "n=%f\n", window.north);
-	fprintf(stdout, "s=%f\n", window.south);
-	fprintf(stdout, "ewres=%f\n", window.ew_res);
-	fprintf(stdout, "nsres=%f\n", window.ns_res);
 
+	if (D_check_map_window(&window))
+	    G_fatal_error(_("Setting map window"));
+	if (D_get_screen_window(&t, &b, &l, &r))
+	    G_fatal_error(_("Getting screen window"));
+	if (D_do_conversions(&window, t, b, l, r))
+	    G_fatal_error(_("Error in calculating conversions"));
+
+	w = D_d_to_u_col((double)l);
+	e = D_d_to_u_col((double)r);
+	n = D_d_to_u_row((double)t);
+	s = D_d_to_u_row((double)b);
+
+	fprintf(stdout, "w=%f\n", w );
+	fprintf(stdout, "e=%f\n", e );
+	fprintf(stdout, "n=%f\n", n );
+	fprintf(stdout, "s=%f\n", s );
+	fprintf(stdout, "ewres=%.15g\n", (e-w)/(r-l) );
+	fprintf(stdout, "nsres=%.15g\n", (n-s)/(b-t) );
     }
 
     R_close_driver();
