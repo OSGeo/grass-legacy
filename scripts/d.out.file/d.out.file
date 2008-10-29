@@ -395,7 +395,7 @@ case "$GIS_OPT_FORMAT" in
      ;;
    geotiff)
      g.message "Translating to GeoTIFF format" 
-     eval `g.region -g`
+     eval `d.info -g`
      PROJ_WKT="`g.proj -wf`"
      CO=""
      if [ -n "$GIS_OPT_CREATEOPT" ] ; then
