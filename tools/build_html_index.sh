@@ -11,8 +11,6 @@ EXCLUDEMODS="\
 v.topo.check \
 i.ask \
 i.find \
-photo.elev \
-photo.target \
 helptext.html \
 r.watershed.ram \
 r.watershed.seg \
@@ -21,6 +19,22 @@ wxGUI.* \
 d.paint.labels \
 p.out.vrml \
 r.cats"
+
+# these modules don't use G_parser()
+check_for_desc_override()
+{
+    case "$BASENAME" in
+	g.parser)
+	    SHORTDESC="Provides automated parser, GUI, and help support for GRASS scipts."
+	    ;;
+	r.mapcalc)
+	    SHORTDESC="Raster map calculator."
+	    ;;
+	r.li.daemon)
+	    SHORTDESC="Support module for r.li landscape index calculations."
+	    ;;
+    esac
+}
 
 
 ############# nothing to configure below ############
@@ -102,6 +116,7 @@ GPL'ed), image processing and geographic information system (GIS).</p>
  <li><a href=\"gem/index.html\">The GRASS Extensions Manager (GEM)</a></li>
 </ul>
 <P>
+</td>
 
 " >> "$1"
 }
@@ -183,64 +198,68 @@ cd $HTMLDIR
 
 #get list of available GRASS modules:
 CMDLIST=`ls -1 *.*.html | grep -v "$FULLINDEX" | grep -v index.html | \
-  grep -v gis.m.html | grep -v "\($EXCLUDEHTML\)" | cut -d'.' -f1 | sort -u`
+  grep -v gis.m.html | grep -v "\($EXCLUDEHTML\)" | cut -d'.' -f1 | sort -u | \
+  grep -v photo`
 CMDLISTNO=`echo $CMDLIST | wc -w | awk '{print $1}'`
 
 #write main index:
 echo "Generating HTML manual pages index (help system)..."
-write_html_header $FULLINDEX "GRASS GIS $GRASSVERSION Reference Manual: Full index"
-echo "<BR><h3>Full command index:</h3>" >> $FULLINDEX
-echo "<table border=0>" >> $FULLINDEX
-echo "<tr><td>&nbsp;&nbsp;d.*  </td><td>display commands</td></tr>" >> $FULLINDEX
-echo "<tr><td>&nbsp;&nbsp;db.* </td><td>database commands</td></tr>" >> $FULLINDEX
-echo "<tr><td>&nbsp;&nbsp;g.*  </td><td>general commands</td></tr>" >> $FULLINDEX
-#echo "<tr><td>&nbsp;&nbsp;g3.* </td><td>general3D commands</td></tr>" >> $FULLINDEX
-echo "<tr><td>&nbsp;&nbsp;i.*  </td><td>imagery commands</td></tr>" >> $FULLINDEX
-echo "<tr><td>&nbsp;&nbsp;m.*  </td><td>miscellaneous commands</td></tr>" >> $FULLINDEX
-echo "<tr><td>&nbsp;&nbsp;ps.* </td><td>postscript commands</td></tr>" >> $FULLINDEX
-echo "<tr><td>&nbsp;&nbsp;r.*  </td><td>raster commands</td></tr>" >> $FULLINDEX
-echo "<tr><td>&nbsp;&nbsp;r3.* </td><td>raster3D commands</td></tr>" >> $FULLINDEX
-echo "<tr><td>&nbsp;&nbsp;v.*  </td><td>vector commands</td></tr>" >> $FULLINDEX
-echo "<tr><td>&nbsp;&nbsp;<a href=\"gis.m.html\">gis.m</a> </td><td>GUI frontend to GIS menus and display</td></tr>" >> $FULLINDEX
-echo "<tr><td>&nbsp;&nbsp;<a href=\"nviz.html\">nviz</a> </td><td>visualization suite</td></tr>" >> $FULLINDEX
-echo "<tr><td>&nbsp;&nbsp;<a href=\"wxGUI.html\">wxGUI</a> </td><td>wxPython-based GUI frontend</td></tr>" >> $FULLINDEX
-echo "<tr><td>&nbsp;&nbsp;<a href=\"xganim.html\">xganim</a> </td><td>raster map slideshow</td></tr>" >> $FULLINDEX
-echo "</table>" >> $FULLINDEX
+write_html_header "$FULLINDEX" "GRASS GIS $GRASSVERSION Reference Manual: Full index"
+echo "</tr></table>" >> "$FULLINDEX"
+echo "<BR><h3>Full command index:</h3>" >> "$FULLINDEX"
+echo "<table border=0>" >> "$FULLINDEX"
+echo "<tr><td>&nbsp;&nbsp;d.*  </td><td>display commands</td></tr>" >> "$FULLINDEX"
+echo "<tr><td>&nbsp;&nbsp;db.* </td><td>database commands</td></tr>" >> "$FULLINDEX"
+echo "<tr><td>&nbsp;&nbsp;g.*  </td><td>general commands</td></tr>" >> "$FULLINDEX"
+#echo "<tr><td>&nbsp;&nbsp;g3.* </td><td>general3D commands</td></tr>" >> "$FULLINDEX"
+echo "<tr><td>&nbsp;&nbsp;i.*  </td><td>imagery commands</td></tr>" >> "$FULLINDEX"
+echo "<tr><td>&nbsp;&nbsp;m.*  </td><td>miscellaneous commands</td></tr>" >> "$FULLINDEX"
+echo "<tr><td>&nbsp;&nbsp;ps.* </td><td>postscript commands</td></tr>" >> "$FULLINDEX"
+echo "<tr><td>&nbsp;&nbsp;r.*  </td><td>raster commands</td></tr>" >> "$FULLINDEX"
+echo "<tr><td>&nbsp;&nbsp;r3.* </td><td>raster3D commands</td></tr>" >> "$FULLINDEX"
+echo "<tr><td>&nbsp;&nbsp;v.*  </td><td>vector commands</td></tr>" >> "$FULLINDEX"
+echo "<tr><td>&nbsp;&nbsp;<a href=\"gis.m.html\">gis.m</a> </td><td>GUI frontend to GIS menus and display</td></tr>" >> "$FULLINDEX"
+echo "<tr><td>&nbsp;&nbsp;<a href=\"nviz.html\">nviz</a> </td><td>visualization suite</td></tr>" >> "$FULLINDEX"
+echo "<tr><td>&nbsp;&nbsp;<a href=\"wxGUI.html\">wxGUI</a> </td><td>wxPython-based GUI frontend</td></tr>" >> "$FULLINDEX"
+echo "<tr><td>&nbsp;&nbsp;<a href=\"xganim.html\">xganim</a> </td><td>raster map slideshow</td></tr>" >> "$FULLINDEX"
+echo "</table>" >> "$FULLINDEX"
 
 #generate main index of all modules:
-echo "<BR><BR>[ " >> $FULLINDEX
+echo "<BR><BR>[ " >> "$FULLINDEX"
 k=0
 for i in $CMDLIST
 do
   k=`expr $k + 1`
-  echo -n "<b><a href=\"#$i\">$i.*</a></b>" >> $FULLINDEX
+  echo -n "<b><a href=\"#$i\">$i.*</a></b>" >> "$FULLINDEX"
   if [ $k -lt $CMDLISTNO ] ; then
-     echo -n " | " >> $FULLINDEX
+     echo -n " | " >> "$FULLINDEX"
   fi
 done
 
 echo " ]
 <BR>
-" >> $FULLINDEX
+" >> "$FULLINDEX"
+
 
 #for all module groups:
 for i in $CMDLIST
 do 
-  echo "<a name=\"$i\"></a>" >> $FULLINDEX
-  echo "<BR><BR><h3>$i.* commands:</h3>" >> $FULLINDEX
-  echo "<table>" >> $FULLINDEX
+  echo "<a name=\"$i\"></a>" >> "$FULLINDEX"
+  echo "<BR><BR><h3>$i.* commands:</h3>" >> "$FULLINDEX"
+  echo "<table>" >> "$FULLINDEX"
 
   #for all modules:  
   for i in `ls -1 $i.*.html | grep -v "\($EXCLUDEHTML\)"`
   do
     BASENAME=`basename $i .html`
     SHORTDESC="`cat $i | awk '/NAME/,/SYNOPSIS/' | grep '<em>' | cut -d'-' -f2- | sed 's+^ ++g' | grep -vi 'SYNOPSIS' | head -n 1`"
-    echo "<tr><td valign="top"><a href=\"$i\">$BASENAME</a></td> <td>$SHORTDESC</td></tr>" >> $FULLINDEX
+    check_for_desc_override
+    echo "<tr><td valign="top"><a href=\"$i\">$BASENAME</a></td> <td>$SHORTDESC</td></tr>" >> "$FULLINDEX"
   done
-  echo "</table>" >> $FULLINDEX
+  echo "</table>" >> "$FULLINDEX"
 done
 
-write_html_footer $FULLINDEX index.html
+write_html_footer "$FULLINDEX" index.html
 # done full index
 
 #next write separate module pages:
@@ -250,47 +269,49 @@ do
   MODCLASS=`expand_module_class_name $k`
   FILENAME=$MODCLASS.html
 
-  write_html_header $FILENAME "GRASS GIS $GRASSVERSION Reference Manual: $MODCLASS"
-  echo "<b>$MODCLASS commands:</b>" >> $FILENAME
-  echo "<table>" >> $FILENAME
+  write_html_header "$FILENAME" "GRASS GIS $GRASSVERSION Reference Manual: $MODCLASS"
+  echo "</tr></table>"  >> "$FILENAME"
+
+  echo "<b>$MODCLASS commands:</b>" >> "$FILENAME"
+  echo "<table>" >> "$FILENAME"
   #for all modules:
   for k in `ls -1 $k.*.html | grep -v "\($EXCLUDEHTML\)"`
   do
     BASENAME=`basename $k .html`
     SHORTDESC="`cat $k | awk '/NAME/,/SYNOPSIS/' | grep '<em>' | cut -d'-' -f2- | sed 's+^ ++g' | grep -vi 'SYNOPSIS' | head -n 1`"
-    echo "<tr><td valign="top"><a href=\"$k\">$BASENAME</a></td> <td>$SHORTDESC</td></tr>" >> $FILENAME
+    check_for_desc_override
+    echo "<tr><td valign="top"><a href=\"$k\">$BASENAME</a></td> <td>$SHORTDESC</td></tr>" >> "$FILENAME"
   done
   
-  echo "</table>" >> $FILENAME
+  echo "</table>" >> "$FILENAME"
 
-  write_html_footer $FILENAME index.html
+  write_html_footer "$FILENAME" index.html
 done
 
 #next write main page:
 FILENAME=index.html
-write_html_header $FILENAME "GRASS GIS $GRASSVERSION Reference Manual" 1
+write_html_header "$FILENAME" "GRASS GIS $GRASSVERSION Reference Manual" 1
 
 #modules:
-echo "</td>" >> $FILENAME
-echo "<td valign=\"top\">" >> $FILENAME
-echo "<h3>Manual sections:</h3>" >> $FILENAME
-echo "<ul>" >> $FILENAME
+echo "<td valign=\"top\">" >> "$FILENAME"
+echo "<h3>Manual sections:</h3>" >> "$FILENAME"
+echo "<ul>" >> "$FILENAME"
 #for all module groups:
 for k in $CMDLIST
 do 
   MODCLASS=`expand_module_class_name $k`
-  echo "<li><a href=\"$MODCLASS.html\">$MODCLASS commands</a></li>" >> $FILENAME
+  echo "<li><a href=\"$MODCLASS.html\">$MODCLASS commands</a></li>" >> "$FILENAME"
 done
 
 #extra stuff for 'nviz' and 'xganim' and GUIs:
-echo "<li><a href=\"gis.m.html\">gis.m</a> and <a href=\"d.m.html\">d.m</a> GIS managers</li>" >> $FILENAME
-echo "<li><a href=\"nviz.html\">nviz</a> visualization and animation tool</li>" >> $FILENAME
-echo "<li><a href=\"wxGUI.html\">wxGUI</a> wxPython-based GUI frontend</li>" >> $FILENAME
-echo "<li><a href=\"xganim.html\">xganim</a> tool  for animating a raster map series</li>" >> $FILENAME
+echo "<li><a href=\"gis.m.html\">gis.m</a> and <a href=\"d.m.html\">d.m</a> GIS managers</li>" >> "$FILENAME"
+echo "<li><a href=\"nviz.html\">nviz</a> visualization and animation tool</li>" >> "$FILENAME"
+echo "<li><a href=\"wxGUI.html\">wxGUI</a> wxPython-based GUI frontend</li>" >> "$FILENAME"
+echo "<li><a href=\"xganim.html\">xganim</a> tool  for animating a raster map series</li>" >> "$FILENAME"
 	      
-echo "</ul>" >> $FILENAME
-echo "</td></tr>" >> $FILENAME
-echo "</table>" >> $FILENAME
+echo "</ul>" >> "$FILENAME"
+echo "</td></tr>" >> "$FILENAME"
+echo "</table>" >> "$FILENAME"
 
 #insert a special comment so that GEM will know where to merge docs of extensions
 echo >> "$FILENAME"
@@ -299,7 +320,7 @@ echo >> "$FILENAME"
 
 
 #############
-write_html_footer $FILENAME index.html
+write_html_footer "$FILENAME" index.html
 
 #############
 echo "Generated HTML docs in $HTMLDIR/index.html"
