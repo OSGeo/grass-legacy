@@ -345,8 +345,10 @@ else
 fi
 
 d.mon start=$GRAPHICS_DRIVER --quiet
-BOX=`d.info -b | cut -f2 -d':'`
-eval "$dsave"
+  # 'd.info -b' for white band removal
+  BOX=`d.info -b | cut -f2 -d':'`
+  # use 'd.info -g' here for GeoTIFF bbox with no white band removal
+  eval "$dsave"
 d.mon stop=$GRAPHICS_DRIVER --quiet
 ################################
 
