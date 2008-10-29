@@ -9,7 +9,7 @@ prior to export.
 PNG and PPM formats are supported directly by the GRASS PNG driver and
 PostScript output is supported directly by the GRASS PS driver.
 <P>
-TIFF, JPEG, and BMP formats are supported by using <tt>gdal_translate</tt>
+TIFF, GeoTIFF, JPEG, and BMP formats are supported by using <tt>gdal_translate</tt>
 on PPM format files produced by the GRASS PNG driver. Different levels of
 compression/quality are supported for JPEG files.
 <P>
@@ -22,6 +22,18 @@ recommended to output to regular PostScript format and then use a utility
 like <tt>ps2epsi</tt> to convert to an EPS file.
 Output from this module using the regular PostScript format may contain
 subframes.
+
+<P>
+GeoTIFF export is provided as a convenience. For raster export
+it is generally preferable to use the <em>r.out.gdal</em> or
+<em>r.out.tiff</em> modules. The advantage of using <em>d.out.file</em>
+is that you can easily overlay multiple raster maps, vector maps,
+and decorations into the GeoTIFF at the expense of resolution and
+quality. If you wish to minimize the negative effects, use
+"<tt>g.region&nbsp;align=</tt>" or "<tt>g.region&nbsp;rast=</tt>", then
+"<tt>g.region&nbsp;-g</tt>" or "<tt>r.info&nbsp;-g</tt>" to discover the
+raster rows and columns of the map, and feed these numbers into
+<em>d.out.file</em>'s <b>size</b> parameter as columns,rows.
 
 
 <H2>EXAMPLES</H2>
@@ -72,7 +84,11 @@ from the Wiki-Addons site</h4>
 <A HREF="d.mon.html">d.mon</A>,
 <A HREF="d.out.png.html">d.out.png</A>,
 <A HREF="d.save.html">d.save</A>,
-<A HREF="ps.map.html">ps.map</A></EM><BR>
+<A HREF="g.region.html">g.region</A>,
+<A HREF="ps.map.html">ps.map</A>,
+<A HREF="r.out.gdal.html">r.out.gdal</A>,
+<A HREF="r.out.tiff.html">r.out.tiff</A>
+</EM><BR>
 <A HREF="cairodriver.html">Cairo driver</A>,
 <A HREF="pngdriver.html">PNG driver</A>,
 <A HREF="psdriver.html">PostScript driver</A>,
