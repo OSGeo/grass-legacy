@@ -139,15 +139,15 @@ int main(int argc, char *argv[])
 	if (D_do_conversions(&window, t, b, l, r))
 	    G_fatal_error(_("Error in calculating conversions"));
 
-	w = D_d_to_u_col((double)l);
-	e = D_d_to_u_col((double)r);
 	n = D_d_to_u_row((double)t);
 	s = D_d_to_u_row((double)b);
+	w = D_d_to_u_col((double)l);
+	e = D_d_to_u_col((double)r);
 
-	fprintf(stdout, "w=%f\n", w );
-	fprintf(stdout, "e=%f\n", e );
 	fprintf(stdout, "n=%f\n", n );
 	fprintf(stdout, "s=%f\n", s );
+	fprintf(stdout, "w=%f\n", w );
+	fprintf(stdout, "e=%f\n", e );
 	fprintf(stdout, "ewres=%.15g\n", (e-w)/(r-l) );
 	fprintf(stdout, "nsres=%.15g\n", (n-s)/(b-t) );
     }
