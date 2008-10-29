@@ -29,7 +29,7 @@
 #%option
 #% key: format
 #% type: string
-#% options: png,ppm,tif,jpg,bmp,ps,eps,svg,pdf
+#% options: png,ppm,tif,geotiff,jpg,bmp,ps,eps,svg,pdf
 #% answer: png
 #% description: Graphics file format
 #% required : yes
@@ -100,6 +100,22 @@
 #% guisection: PostScript
 #% required : no
 #% end
+#%option
+#% key: createopt
+#% type: string
+#% label: GeoTIFF creation option(s)
+#% description: In the form of "NAME=VALUE", separate multiple entries with a comma.
+#% guisection: GeoTIFF
+#% required : no
+#%end
+#%option
+#% key: metaopt
+#% type: string
+#% label: GeoTIFF metadata key(s) and value(s) to add
+#% description: In the form of "META-TAG=VALUE", separate multiple entries with a comma.
+#% guisection: GeoTIFF
+#% required : no
+#%end
 #%flag
 #% key: b
 #% description: Set background color to black (white default)
@@ -217,7 +233,7 @@ case "$GIS_OPT_FORMAT" in
    png | ppm | ps | eps | svg | pdf)
      output="${GIS_OPT_OUTPUT}.${GIS_OPT_FORMAT}"
      ;;
-   tif | jpg)
+   tif | geotiff | jpg)
      output="`g.tempfile pid=$$`.ppm"
      ;;
    bmp)
@@ -229,7 +245,12 @@ case "$GIS_OPT_FORMAT" in
      ;;
 esac
 
-outname="${GIS_OPT_OUTPUT}.${GIS_OPT_FORMAT}"
+if [ "$GIS_OPT_FORMAT" = "geotiff" ] ; then
+    outname="${GIS_OPT_OUTPUT}.tif"
+else
+    outname="${GIS_OPT_OUTPUT}.${GIS_OPT_FORMAT}"
+fi
+
 
 #is there a simpler way of testing for --overwrite?
 if [ -e "$outname" ] ; then
@@ -337,10 +358,10 @@ case "$GIS_OPT_FORMAT" in
      g.message "Done."
      exit
      ;;
-   tif | jpg)
+   tif | geotiff | jpg)
      # delay not needed if using GRASS_PNG_AUTO_WRITE ?
      g.message "Waiting for file to write ..."
-     sleep 5
+     sleep 2
      ;;
    bmp)
      if [ $GIS_FLAG_C -eq 1 ] ; then
@@ -349,7 +370,7 @@ case "$GIS_OPT_FORMAT" in
      else
 	# delay not needed if using GRASS_PNG_AUTO_WRITE ?
 	g.message "Waiting for file to write ..."
-	sleep 5
+	sleep 2
      fi
      ;;
 esac
@@ -358,20 +379,46 @@ esac
 case "$GIS_OPT_FORMAT" in
    tif)
      g.message "Translating to TIFF format" 
-     gdal_translate "$output" "$outname" -of GTIFF
+     gdal_translate -of GTIFF -quiet "$output" "$outname"
      EXITCODE=$?
      ;;
    jpg)
      g.message "Translating to JPEG format" 
-     gdal_translate "$output" "$outname" -of JPEG -co QUALITY="$GIS_OPT_QUALITY"
+     gdal_translate -of JPEG -co QUALITY="$GIS_OPT_QUALITY" \
+	 -quiet "$output" "$outname"
      EXITCODE=$?
      ;;
    bmp)
      g.message "Translating to BMP format" 
-     gdal_translate "$output" "$outname" -of BMP
+     gdal_translate -of BMP -quiet "$output" "$outname"
+     EXITCODE=$?
+     ;;
+   geotiff)
+     g.message "Translating to GeoTIFF format" 
+     eval `g.region -g`
+     PROJ_WKT="`g.proj -wf`"
+     CO=""
+     if [ -n "$GIS_OPT_CREATEOPT" ] ; then
+	IFS=,
+	for KEYVALUE in $GIS_OPT_CREATEOPT ; do
+	   CO="$CO -co $KEYVALUE"
+	done
+     fi
+     MO=""
+     if [ -n "$GIS_OPT_METAOPT" ] ; then
+	IFS=,
+	for KEYVALUE in $GIS_OPT_METAOPT ; do
+	   MO="$MO -mo $KEYVALUE"
+	done
+     fi
+     unset IFS
+
+     gdal_translate -of GTIFF -a_ullr $w $n $e $s -quiet \
+	-a_srs "$PROJ_WKT" $CO $MO "$output" "$outname"
      EXITCODE=$?
      ;;
 esac
+
 
 \rm "$output"
 
