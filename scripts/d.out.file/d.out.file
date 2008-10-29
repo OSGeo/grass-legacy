@@ -135,6 +135,11 @@
 #% description: Set paper orientation to landscape (for PostScript output)
 #% guisection: PostScript
 #%end
+#%flag
+#% key: m
+#% description: Do not crop away margins
+#% guisection: GeoTIFF
+#%end
 
 
 if  [ -z "$GISBASE" ] ; then
@@ -347,7 +352,8 @@ fi
 d.mon start=$GRAPHICS_DRIVER --quiet
   # 'd.info -b' for white band removal
   BOX=`d.info -b | cut -f2 -d':'`
-  # use 'd.info -g' here for GeoTIFF bbox with no white band removal
+  # 'd.info -g' to get GeoTIFF bounds when keeping white margin bands
+  eval `d.info -g`
   eval "$dsave"
 d.mon stop=$GRAPHICS_DRIVER --quiet
 ################################
@@ -398,16 +404,23 @@ case "$GIS_OPT_FORMAT" in
      ;;
    geotiff)
      g.message "Translating to GeoTIFF format" 
-     eval `g.region -g`
+     
+     if [ $GIS_FLAG_M -eq 0 ] ; then
+	# chop off out of region borders 
+	eval `g.region -g`
 
-     # chop off out of region borders 
-     BOX_L=`echo $BOX | cut -f1 -d' '`
-     BOX_R=`echo $BOX | cut -f2 -d' '`
-     BOX_T=`echo $BOX | cut -f3 -d' '`
-     BOX_B=`echo $BOX | cut -f4 -d' '`
-     BOX_WIDTH=`echo $BOX_R $BOX_L | awk '{print $1 - $2}'`
-     BOX_HEIGHT=`echo $BOX_B $BOX_T | awk '{print $1 - $2}'`
-     g.message "Image crop [$BOX_WIDTH x $BOX_HEIGHT]"
+	BOX_L=`echo $BOX | cut -f1 -d' '`
+	BOX_R=`echo $BOX | cut -f2 -d' '`
+	BOX_T=`echo $BOX | cut -f3 -d' '`
+	BOX_B=`echo $BOX | cut -f4 -d' '`
+	BOX_WIDTH=`echo $BOX_R $BOX_L | awk '{print $1 - $2}'`
+	BOX_HEIGHT=`echo $BOX_B $BOX_T | awk '{print $1 - $2}'`
+
+	CROP_PARAM="-srcwin $BOX_L $BOX_T $BOX_WIDTH $BOX_HEIGHT"
+	g.message "Image crop [$BOX_WIDTH x $BOX_HEIGHT]"
+     else
+	CROP_PARAM=""
+     fi
 
      PROJ_WKT="`g.proj -wf`"
      CO=""
@@ -426,8 +439,7 @@ case "$GIS_OPT_FORMAT" in
      fi
      unset IFS
 
-     gdal_translate -of GTIFF -a_ullr $w $n $e $s -quiet \
-	-srcwin $BOX_L $BOX_T $BOX_WIDTH $BOX_HEIGHT \
+     gdal_translate -of GTIFF -a_ullr $w $n $e $s -quiet $CROP_PARAM \
 	-a_srs "$PROJ_WKT" $CO $MO "$output" "$outname"
      EXITCODE=$?
      ;;
