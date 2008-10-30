@@ -345,6 +345,10 @@ int main(int argc, char **argv)
 	    G_format_easting(cellhd.west, tmp2, cellhd.proj);
 	    fprintf(out, "east=%s\n", tmp1);
 	    fprintf(out, "west=%s\n", tmp2);
+	    G_format_easting(cellhd.top, tmp1, cellhd.proj);
+	    G_format_easting(cellhd.bottom, tmp2, cellhd.proj);
+	    fprintf(out, "top=%s\n", tmp1);
+	    fprintf(out, "bottom=%s\n", tmp2);
 	}
 
 	if (sflag->answer) {
