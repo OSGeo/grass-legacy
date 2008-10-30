@@ -360,6 +360,25 @@ d.mon stop=$GRAPHICS_DRIVER --quiet
 
 g.message "Screen export complete. (writing the file may take a small amount of time)"
 
+
+if [ $GIS_FLAG_M -eq 0 ] ; then
+   # chop off out of region borders 
+   eval `g.region -g`
+
+   BOX_L=`echo $BOX | cut -f1 -d' '`
+   BOX_R=`echo $BOX | cut -f2 -d' '`
+   BOX_T=`echo $BOX | cut -f3 -d' '`
+   BOX_B=`echo $BOX | cut -f4 -d' '`
+   BOX_WIDTH=`echo $BOX_R $BOX_L | awk '{print $1 - $2}'`
+   BOX_HEIGHT=`echo $BOX_B $BOX_T | awk '{print $1 - $2}'`
+
+   CROP_PARAM="-srcwin $BOX_L $BOX_T $BOX_WIDTH $BOX_HEIGHT"
+   g.message "Image crop [$BOX_WIDTH x $BOX_HEIGHT]"
+else
+   CROP_PARAM=""
+fi
+
+
 d.mon select="$curr_mon"
 
 case "$GIS_OPT_FORMAT" in
@@ -388,39 +407,23 @@ esac
 case "$GIS_OPT_FORMAT" in
    tif)
      g.message "Translating to TIFF format" 
-     gdal_translate -of GTIFF -quiet "$output" "$outname"
+     gdal_translate -of GTIFF $CROP_PARAM -quiet "$output" "$outname"
      EXITCODE=$?
      ;;
    jpg)
      g.message "Translating to JPEG format" 
      gdal_translate -of JPEG -co QUALITY="$GIS_OPT_QUALITY" \
-	 -quiet "$output" "$outname"
+	 $CROP_PARAM -quiet "$output" "$outname"
      EXITCODE=$?
      ;;
    bmp)
      g.message "Translating to BMP format" 
-     gdal_translate -of BMP -quiet "$output" "$outname"
+     gdal_translate -of BMP $CROP_PARAM -quiet "$output" "$outname"
      EXITCODE=$?
      ;;
    geotiff)
      g.message "Translating to GeoTIFF format" 
      
-     if [ $GIS_FLAG_M -eq 0 ] ; then
-	# chop off out of region borders 
-	eval `g.region -g`
-
-	BOX_L=`echo $BOX | cut -f1 -d' '`
-	BOX_R=`echo $BOX | cut -f2 -d' '`
-	BOX_T=`echo $BOX | cut -f3 -d' '`
-	BOX_B=`echo $BOX | cut -f4 -d' '`
-	BOX_WIDTH=`echo $BOX_R $BOX_L | awk '{print $1 - $2}'`
-	BOX_HEIGHT=`echo $BOX_B $BOX_T | awk '{print $1 - $2}'`
-
-	CROP_PARAM="-srcwin $BOX_L $BOX_T $BOX_WIDTH $BOX_HEIGHT"
-	g.message "Image crop [$BOX_WIDTH x $BOX_HEIGHT]"
-     else
-	CROP_PARAM=""
-     fi
 
      PROJ_WKT="`g.proj -wf`"
      CO=""
