@@ -2773,7 +2773,7 @@ msgstr ""
 #: ../gui/wxpython/gui_modules/preferences.py:530
 #, fuzzy
 msgid "aster"
-msgstr "Rastr"
+msgstr "astr"
 
 #: ../gui/wxpython/gui_modules/preferences.py:531
 msgid "gyro"
