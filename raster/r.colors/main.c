@@ -8,7 +8,7 @@
  * PURPOSE:      Allows creation and/or modification of the color table
  *               for a raster map layer.
  *
- * COPYRIGHT:    (C) 2006 by the GRASS Development Team
+ * COPYRIGHT:    (C) 2006-2008 by the GRASS Development Team
  *
  *               This program is free software under the GNU General Public
  *               License (>=v2). Read the file COPYING that comes with GRASS
@@ -260,7 +260,7 @@ int main(int argc, char **argv)
     rules = opt.rules->answer;
 
     if (!name)
-	G_fatal_error(_("No map specified"));
+	G_fatal_error(_("No raster map specified"));
 
     if (!cmap && !style && !rules && !interactive && !remove)
 	G_fatal_error(_("One of \"-i\" or \"-r\" or options \"color\", \"rast\" or \"rules\" must be specified!"));
@@ -286,9 +286,9 @@ int main(int argc, char **argv)
 	int stat = G_remove_colors(name, mapset);
 
 	if (stat < 0)
-	    G_fatal_error(_("%s - unable to remove color table"), name);
+	    G_fatal_error(_("Unable to remove color table of raster map <%s>"), name);
 	if (stat == 0)
-	    G_warning(_("%s - color table not found"), name);
+	    G_warning(_("Color table of raster map <%s> not found"), name);
 	return EXIT_SUCCESS;
     }
 
@@ -316,19 +316,19 @@ int main(int argc, char **argv)
 	 */
 	if (strcmp(style, "random") == 0) {
 	    if (fp)
-		G_fatal_error(_("Can't make random color table for floating point map"));
+		G_fatal_error(_("Color table 'random' is not supported for floating point raster map"));
 	    G_make_random_colors(&colors, (CELL) min, (CELL) max);
 	}
 	else if (strcmp(style, "grey.eq") == 0) {
 	    if (fp)
-		G_fatal_error(_("Can't make grey.eq color table for floating point map"));
+		G_fatal_error(_("Color table 'grey.eq' is not supported for floating point raster map"));
 	    if (!have_stats)
 		have_stats = get_stats(name, mapset, &statf);
 	    G_make_histogram_eq_colors(&colors, &statf);
 	}
 	else if (strcmp(style, "grey.log") == 0) {
 	    if (fp)
-		G_fatal_error(_("Can't make logarithmic color table for floating point map"));
+		G_fatal_error(_("Color table 'grey.log' is not supported for floating point raster map"));
 	    if (!have_stats)
 		have_stats = get_stats(name, mapset, &statf);
 	    G_make_histogram_log_colors(&colors, &statf, (CELL) min,
@@ -341,7 +341,7 @@ int main(int argc, char **argv)
 	else if (find_rule(style))
 	    G_make_fp_colors(&colors, style, min, max);
 	else
-	    G_fatal_error(_("%s - unknown color request"), style);
+	    G_fatal_error(_("Unknown color request '%s'"), style);
     }
     else if (rules) {
 	if (!G_load_fp_colors(&colors, rules, min, max)) {
@@ -352,7 +352,7 @@ int main(int argc, char **argv)
 	    sprintf(path, "%s/etc/colors/%s", G_gisbase(), rules);
 
 	    if (!G_load_fp_colors(&colors, path, min, max))
-		G_fatal_error(_("Unable to load rules file %s"), rules);
+		G_fatal_error(_("Unable to load rules file <%s>"), rules);
 	}
     }
     else {
@@ -362,7 +362,7 @@ int main(int argc, char **argv)
 	    G_fatal_error(_("Raster map <%s> not found"), cmap);
 
 	if (G_read_colors(cmap, cmapset, &colors) < 0)
-	    G_fatal_error(_("Unable to read color table for %s"), cmap);
+	    G_fatal_error(_("Unable to read color table for raster map <%s>"), cmap);
     }
 
     if (fp)
@@ -394,7 +394,7 @@ int main(int argc, char **argv)
 	G_mark_colors_as_fp(&colors);
 
     if (G_write_colors(name, mapset, &colors) >= 0)
-	G_message(_("Color table for <%s> set to %s"), name,
+	G_message(_("Color table for raster map <%s> set to '%s'"), name,
 		  interactive ? "rules" : style ? style : rules ? rules :
 		  cmap);
 
