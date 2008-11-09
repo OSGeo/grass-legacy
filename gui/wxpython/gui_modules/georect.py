@@ -817,7 +817,13 @@ class GCP(wx.Frame):
             mapWin.polypen = wx.Pen(colour=wxCol, width=wpx, style=wx.SOLID) # ?
             coord = mapWin.Cell2Pixel((gcp[coordtype][0], gcp[coordtype][1]))
             mapWin.DrawCross(pdc=mapWin.pdcTmp, coords=coord,
-                             size=5, text=('%s' % str(idx + 1), font, wxCol, 0.0))
+                             size=5, text={ 'text' : '%s' % str(idx + 1),
+                                            'font' : font,
+                                            'color': wxCol,
+                                            'coords': [coord[0] + 5,
+                                                       coord[1] + 5,
+                                                       5,
+                                                       5]})
             
             idx += 1
             
