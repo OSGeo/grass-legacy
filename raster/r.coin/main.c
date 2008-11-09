@@ -37,6 +37,7 @@ const char *dumpname;
 const char *statname;
 FILE *dumpfile;
 
+const char *mapset1, *mapset2;
 const char *map1name, *map2name;
 int ncat1, ncat2;
 
@@ -121,9 +122,10 @@ int main(int argc, char *argv[])
     map1name = parm.map1->answer;
     map2name = parm.map2->answer;
 
-    if (!G_find_cell2(map1name, ""))
+    mapset1 = G_find_cell2(map1name, "");
+    if (!mapset1)
 	G_fatal_error(_("Raster map <%s> not found"), map1name);
-    if (!G_find_cell2(map2name, ""))
+    mapset2 = G_find_cell2(map2name, "");
 	G_fatal_error(_("Raster map <%s> not found"), map2name);
 
     make_coin();

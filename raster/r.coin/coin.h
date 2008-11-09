@@ -42,6 +42,7 @@ extern const char *dumpname;
 extern const char *statname;
 extern FILE *dumpfile;
 
+extern const char *mapset1, *mapset2;
 extern const char *map1name, *map2name;
 extern int ncat1, ncat2;
 

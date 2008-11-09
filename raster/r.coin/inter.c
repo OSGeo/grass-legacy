@@ -21,7 +21,6 @@
 #include <grass/spawn.h>
 #include <grass/glocale.h>
 
-
 int interactive_version(void)
 {
     int cols;
