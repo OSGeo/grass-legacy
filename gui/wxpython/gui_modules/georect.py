@@ -24,12 +24,14 @@ import os
 import sys
 import tempfile
 import shutil
+import time
 
 import wx
 from wx.lib.mixins.listctrl import CheckListCtrlMixin, ListCtrlAutoWidthMixin, TextEditMixin
 import wx.lib.colourselect as  csel
 import wx.wizard as wiz
 
+import grass
 import globalvar
 import mapdisp
 import render
@@ -996,8 +998,10 @@ class GCP(wx.Frame):
             if self.clip_to_region:
                 cmdlist.append('-c')
             
-            self.parent.goutput.RunCmd(cmdlist)
+            self.parent.goutput.RunCmd(cmdlist, compReg=False,
+                                       switchPage=True)
 
+            time.sleep(.1)
             self.grwiz.SwitchEnv('original')
 
         elif maptype == 'vector':
