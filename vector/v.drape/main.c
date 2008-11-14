@@ -398,12 +398,7 @@ int main(int argc, char *argv[])
     
     /* build topology for output vector */
     if (out_num > 0) {
-	if (G_verbose() > G_verbose_min()) {
-	    Vect_build(&Out, stderr);
-	}
-	else {
-	    Vect_build(&Out, NULL);
-	}
+	Vect_build(&Out);
         
         /* Now let's move attribute data from all old map layers to new map */
         for (i = 0; i < Out.plus.n_cidx; i++) {

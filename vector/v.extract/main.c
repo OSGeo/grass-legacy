@@ -374,11 +374,7 @@ int main(int argc, char **argv)
     xtract_line(cat_count, cat_array, &In, &Out, new_cat, type, dissolve,
 		field, type_only, r_flag->answer ? 1 : 0);
 
-    if (G_verbose() > G_verbose_min())
-	Vect_build(&Out, stderr);
-    else
-	Vect_build(&Out, NULL);
-
+    Vect_build(&Out);
 
     /* Copy tables */
     if (!t_flag->answer) {
@@ -505,11 +501,8 @@ int main(int argc, char **argv)
 		Vect_delete_line(&Out, line);
 	    }
 	}
-	Vect_build_partial(&Out, GV_BUILD_NONE, NULL);
-	if (G_verbose() > G_verbose_min())
-	    Vect_build(&Out, stderr);
-	else
-	    Vect_build(&Out, NULL);
+	Vect_build_partial(&Out, GV_BUILD_NONE);
+	Vect_build(&Out);
     }
 
     Vect_close(&Out);
