@@ -141,7 +141,7 @@ int main(int argc, char **argv)
 	}
     }				/* for of copy table */
 
-    Vect_build(&Out, stdout);
+    Vect_build(&Out);
     Vect_close(&In);
     Vect_close(&Out);
 
