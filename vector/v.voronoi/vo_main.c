@@ -184,7 +184,7 @@ int main(int argc, char **argv)
     voronoi(triangulate, nextone);
 
     /* Close free ends by cyrrent region */
-    Vect_build_partial(&Out, GV_BUILD_BASE, NULL);
+    Vect_build_partial(&Out, GV_BUILD_BASE);
 
     ncoor = 0;
     acoor = 100;
@@ -353,8 +353,8 @@ int main(int argc, char **argv)
 
     Vect_close(&In);
 
-    Vect_build_partial(&Out, GV_BUILD_NONE, NULL);
-    Vect_build(&Out, stderr);
+    Vect_build_partial(&Out, GV_BUILD_NONE);
+    Vect_build(&Out);
     Vect_close(&Out);
 
     exit(EXIT_SUCCESS);

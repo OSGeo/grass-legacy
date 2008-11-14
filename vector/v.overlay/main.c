@@ -467,7 +467,7 @@ int main(int argc, char *argv[])
 
     G_message(_("Building partial topology..."));
     /* do not print output, because befor cleaning it is nonsense */
-    Vect_build_partial(&Out, GV_BUILD_BASE, NULL);
+    Vect_build_partial(&Out, GV_BUILD_BASE);
 
     /* AREA x AREA */
     if (type[0] == GV_AREA) {
@@ -478,11 +478,8 @@ int main(int argc, char *argv[])
     }
 
     G_message(_("Rebuilding topology..."));
-    Vect_build_partial(&Out, GV_BUILD_NONE, NULL);
-    if (G_verbose() > G_verbose_min())
-	Vect_build(&Out, stderr);
-    else
-	Vect_build(&Out, NULL);
+    Vect_build_partial(&Out, GV_BUILD_NONE);
+    Vect_build(&Out);
     /* Build topology to show the final result and prepare for Vect_close() */
 
     if (driver) {
