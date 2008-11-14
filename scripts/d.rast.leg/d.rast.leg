@@ -98,7 +98,7 @@ if [ $GIS_FLAG_F -eq 1 ] ; then
   FLIP="-f"
 fi
 
-if [ ! -z $GIS_OPT_TITLE ] ; then
+if [ ! -z "$GIS_OPT_TITLE" ] ; then
    MAPNAME="$GIS_OPT_TITLE"
 else
    MAPNAME="$GIS_OPT_MAP"
