@@ -4913,7 +4913,7 @@ msgstr "Nie można utworzyć mapy rastrowej %s"
 
 #: ../imagery/i.cca/main.c:201
 #, c-format
-msgid "The output cell map <%s.%d> has values outside the 0-255 range."
+msgid "The output cell map <%s.%d> has values outside the 0-255 range.\n"
 msgstr ""
 "Wyjściowa mapa rastrowa <%s.%d> posiada wartości spoza przedziału 0-255.\n"
 
@@ -10268,7 +10268,7 @@ msgid "Illegal delete request"
 msgstr ""
 
 #: ../raster/r.cost/btree.c:406
-msgid "Nothing to show"
+msgid "Nothing to show\n"
 msgstr "Nic nie znaleziono.\n"
 
 #: ../raster/r.cost/btree.c:439
@@ -26592,6 +26592,7 @@ msgid ""
 "Table: %s\n"
 "Key column: %s\n"
 msgstr ""
+"\n"
 "Sterownik: %s\n"
 "Baza danych: %s\n"
 "Tabela: %s\n"
