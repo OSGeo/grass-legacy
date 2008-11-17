@@ -45,10 +45,9 @@ modules which use this prefix.
 Before any other graphics calls can be made, a successful connection to a 
 running and selected graphics driver must be made.
 
-\verbatim
-R_open_driver()
-R_close_driver()
-\endverbatim
+- R_open_driver()
+
+- R_close_driver()
 
 \section col Colors
 
@@ -66,10 +65,9 @@ interactively manipulate the hardware color tables (using modules such as
 may be used than color registers available on the user's chosen driver, 
 there are no other programming repercussions.
 
-\verbatim
-R_color_table_fixed()
-R_color_table_float()
-\endverbatim
+- R_color_table_fixed()
+
+- R_color_table_float()
 
 Colors are set using integer values in the range of 0-255 to set the
 <b>red, green</b>, and <b>blue</b> intensities. In float mode, these values
@@ -78,31 +76,43 @@ instantaneously modify the appearance of colors on the monitor. In fixed mode,
 these values modify secondary look-up tables in the devices driver module so
 that the colors involved point to the closest available color on the device.
 
-\verbatim
-R_reset_color()
-R_reset_colors()
-R_color()
-R_standard_color()
-R_RGB_color()
-\endverbatim
+- R_reset_color()
+
+- R_reset_colors()
+
+- R_color()
+
+- R_standard_color()
+
+- R_RGB_color()
 
 \section basic Basic Graphics
 
-\verbatim
-R_screen_bot()
-R_screen_top()
-R_screen_left()
-R_screen_rite()
-R_move_abs()
-R_move_rel()
-R_cont_abs()
-R_cont_rel()
-R_box_abs()
-R_box_rel()
-R_erase()
-R_flush()
-R_stabilize()
-\endverbatim
+- R_screen_bot()
+
+- R_screen_top()
+
+- R_screen_left()
+
+- R_screen_rite()
+
+- R_move_abs()
+
+- R_move_rel()
+
+- R_cont_abs()
+
+- R_cont_rel()
+
+- R_box_abs()
+
+- R_box_rel()
+
+- R_erase()
+
+- R_flush()
+
+- R_stabilize()
 
 \section poly Poly Calls
 
@@ -110,39 +120,45 @@ In many cases strings of points are used to describe a complex line, a series of
 dots, or a solid polygon. Absolute and relative calls are provided for each of
 these operations.
 
-\verbatim
-R_polydots_abs()
-R_polydots_rel()
-R_polygon_abs()
-R_polygon_rel()
-R_polyline_abs()
-R_polyline_rel()
-\endverbatim
+- R_polydots_abs()
+
+- R_polydots_rel()
+
+- R_polygon_abs()
+
+- R_polygon_rel()
+
+- R_polyline_abs()
+
+- R_polyline_rel()
 
 \section raster Raster Calls
 
 GRASS requires efficient drawing of raster information to the display device.
 These calls provide that capability.
 
-\verbatim
-R_raster()
-R_raster_char()
-R_set_RGB_color()
-R_RGB_raster()
-\endverbatim
+- R_raster()
+
+- R_raster_char()
+
+- R_set_RGB_color()
+
+- R_RGB_raster()
 
 \section text Text
 
 These calls provide access to built-in vector fonts which may be sized and
 clipped to the programmer's specifications.
 
-\verbatim
-R_set_window()
-R_font()
-R_text_size()
-R_text()
-R_get_text_box()
-\endverbatim
+- R_set_window()
+
+- R_font()
+
+- R_text_size()
+
+- R_text()
+
+- R_get_text_box()
 
 \section font GRASS font support
 
@@ -185,11 +201,11 @@ user. This can be accomplished with a pointer, a rubber-band line or a
 rubber-band box. Upon pressing one of three mouse buttons, the current mouse
 location and the button pressed are returned.
 
-\verbatim
-R_get_location_with_pointer()
-R_get_location_with_line()
-R_get_location_with_box()
-\endverbatim
+- R_get_location_with_pointer()
+
+- R_get_location_with_line()
+
+- R_get_location_with_box()
 
 \section load Loading the Raster Graphics Library
 
