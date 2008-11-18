@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: grasstcl_de\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-10-11 14:54+0200\n"
+"POT-Creation-Date: 2008-11-18 11:29+0100\n"
 "PO-Revision-Date: 2008-04-03 10:13+0200\n"
 "Last-Translator: Markus Neteler <neteler osgeo.org>\n"
 "Language-Team: deutsch <grass-translations@lists.osgeo.org>\n"
@@ -313,7 +313,7 @@ msgstr "Speichere Gruppe"
 msgid "Load File"
 msgstr ""
 
-#: ../lib/gis/gui.tcl:295 ../lib/gis/gui.tcl:489
+#: ../lib/gis/gui.tcl:295 ../lib/gis/gui.tcl:485
 #: ../gui/tcltk/gis.m/gmmenu.tcl:326
 msgid "Output"
 msgstr "Ergebnis"
@@ -322,17 +322,22 @@ msgstr "Ergebnis"
 msgid "Options"
 msgstr "Optionen"
 
-#: ../lib/gis/gui.tcl:473 ../gui/tcltk/gis.m/gmmenu.tcl:165
+#: ../lib/gis/gui.tcl:361
+#, fuzzy
+msgid "Required"
+msgstr "benötigt"
+
+#: ../lib/gis/gui.tcl:469 ../gui/tcltk/gis.m/gmmenu.tcl:165
 #, fuzzy
 msgid "Copy"
 msgstr "Kopiere Karten"
 
-#: ../lib/gis/gui.tcl:512 ../gui/tcltk/gis.m/runandoutput.tcl:44
+#: ../lib/gis/gui.tcl:508 ../gui/tcltk/gis.m/runandoutput.tcl:44
 #: ../gui/tcltk/gis.m/runandoutput.tcl:116
 msgid "Run"
 msgstr "Los"
 
-#: ../lib/gis/gui.tcl:513 ../lib/init/gis_set.tcl:507
+#: ../lib/gis/gui.tcl:509 ../lib/init/gis_set.tcl:507
 #: ../gui/tcltk/gis.m/thematic.tcl:241 ../gui/tcltk/gis.m/thematic.tcl:245
 #: ../gui/tcltk/gis.m/profile.tcl:131 ../gui/tcltk/gis.m/profile.tcl:135
 #: ../gui/tcltk/gis.m/labels.tcl:136 ../gui/tcltk/gis.m/labels.tcl:140
@@ -371,26 +376,26 @@ msgstr "Los"
 msgid "Help"
 msgstr "Hilfe"
 
-#: ../lib/gis/gui.tcl:514 ../gui/tcltk/gis.m/runandoutput.tcl:131
+#: ../lib/gis/gui.tcl:510 ../gui/tcltk/gis.m/runandoutput.tcl:131
 msgid "Clear"
 msgstr "Löschen"
 
-#: ../lib/gis/gui.tcl:515 ../lib/init/epsg_option.tcl:394
+#: ../lib/gis/gui.tcl:511 ../lib/init/epsg_option.tcl:394
 #: ../lib/init/epsg_option.tcl:438 ../gui/tcltk/gis.m/runandoutput.tcl:48
 #: ../gui/tcltk/gis.m/gmmenu.tcl:90 ../gui/tcltk/gis.m/mapprint.tcl:366
 #: ../gui/tcltk/d.m/menu.tcl:174 ../gui/tcltk/d.m/print.tcl:281
 msgid "Close"
 msgstr "Schließen"
 
-#: ../lib/gis/gui.tcl:586
+#: ../lib/gis/gui.tcl:582
 msgid "required"
 msgstr "benötigt"
 
-#: ../lib/gis/gui.tcl:586
+#: ../lib/gis/gui.tcl:582
 msgid "optional"
 msgstr "optional"
 
-#: ../lib/gis/gui.tcl:587
+#: ../lib/gis/gui.tcl:583
 msgid "multiple"
 msgstr "viele "
 
