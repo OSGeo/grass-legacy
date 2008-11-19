@@ -102,7 +102,7 @@ if [ ! "$file" ] ; then
    exit 1
 fi
 
-table=`v.db.connect -g map="$GIS_OPT_MAP" fs=";" | grep -w "$GIS_OPT_LAYER" | cut -f2 -d';'`
+table="`v.db.connect -g map="$GIS_OPT_MAP" fs=";" | grep -w "$GIS_OPT_LAYER" | cut -f2 -d';'`"
 if [ -z "$table" ] ; then
    g.message -e 'There is no table connected to the input vector map! Cannot rename any column'
    cleanup
@@ -110,7 +110,7 @@ if [ -z "$table" ] ; then
 fi
 
 keycol=`v.db.connect -g map="$GIS_OPT_MAP" fs=";" | grep -w $GIS_OPT_LAYER | cut -f3 -d';'`
-database=`v.db.connect -g map="$GIS_OPT_MAP" fs=";" | grep -w $GIS_OPT_LAYER | cut -f4 -d';'`
+database="`v.db.connect -g map="$GIS_OPT_MAP" fs=";" | grep -w $GIS_OPT_LAYER | cut -f4 -d';'`"
 driver=`v.db.connect -g map="$GIS_OPT_MAP" fs=";" | grep -w $GIS_OPT_LAYER | cut -f5 -d';'`
 oldcol="`echo $GIS_OPT_COLUMN | cut -d',' -f1`"
 newcol="`echo $GIS_OPT_COLUMN | cut -d',' -f2`"
@@ -143,8 +143,8 @@ if [ $? -ne 0 ] ; then
 fi
 
 # describe old col
-oldcoltype="`db.describe -c table=$table database=$database driver=$driver | grep -w "$oldcol" | cut -d':' -f3`"
-oldcollength=`db.describe -c table=$table database=$database driver=$driver | grep -w "$oldcol" | cut -d':' -f4`
+oldcoltype="`db.describe -c table="${table}" database="${database}" driver=$driver | grep -w "$oldcol" | cut -d':' -f3`"
+oldcollength=`db.describe -c table="${table}" database="${database}" driver=$driver | grep -w "$oldcol" | cut -d':' -f4`
 
 # some tricks
 if [ "$driver" = "sqlite" -o "$driver" = "dbf" ] ; then
