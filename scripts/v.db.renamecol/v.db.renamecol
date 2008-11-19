@@ -143,8 +143,8 @@ if [ $? -ne 0 ] ; then
 fi
 
 # describe old col
-oldcoltype="`db.describe -c table=$table database=$database driver=$driver | grep $oldcol | cut -d':' -f3`"
-oldcollength=`db.describe -c table=$table database=$database driver=$driver | grep $oldcol | cut -d':' -f4`
+oldcoltype="`db.describe -c table=$table database=$database driver=$driver | grep -w "$oldcol" | cut -d':' -f3`"
+oldcollength=`db.describe -c table=$table database=$database driver=$driver | grep -w "$oldcol" | cut -d':' -f4`
 
 # some tricks
 if [ "$driver" = "sqlite" -o "$driver" = "dbf" ] ; then
