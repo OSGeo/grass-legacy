@@ -116,7 +116,7 @@ set descmenu [subst  {
 		{command {[G_msg "DXF"]} {} "v.in.dxf: Import DXF file" {} -command { execute v.in.dxf }}
 		{command {[G_msg "ESRI e00"]} {} "v.in.e00: Import ESRI e00 format" {} -command { execute v.in.e00 }}
 		{command {[G_msg "Garmin GPS"]} {} "v.in.garmin: Import Garmin GPS waypoints/routes/tracks" {} -command { execute v.in.garmin }}
-		{command {[G_msg "GPSBabel GPS"]} {} "v.in.gpsbabel: Import GPS waypoints/routes/tracks using GPSBabel" {} -command { execute v.in.gpsbabel }}
+		{command {[G_msg "GPSBabel GPS"]} {} "v.in.gpsbabel: Import GPS waypoints/routes/tracks from many formats using GPSBabel" {} -command { execute v.in.gpsbabel }}
 		{command {[G_msg "GEOnet"]} {} "v.in.gns: Import GEOnet Name server country files (US-NGA GNS)" {} -command { execute v.in.gns }}
 		{command {[G_msg "Matlab and MapGen"]} {} "v.in.mapgen: Import Matlab and MapGen files" {} -command { execute v.in.mapgen }}
 	}}
@@ -151,6 +151,7 @@ set descmenu [subst  {
 		{separator}
 		{command {[G_msg "ASCII points or GRASS ASCII vector"]} {} "v.out.ascii: Export ASCII vector or point file/old GRASS ASCII vector file" {} -command { execute v.out.ascii }}
 		{command {[G_msg "DXF"]} {} "v.out.dxf: Export DXF file (ASCII)" {} -command { execute v.out.dxf }}
+		{command {[G_msg "Multiple GPS formats using GPSBabel"]} {} "v.out.gpsbabel: Export GPS waypoints/routes/tracks using GPSBabel" {} -command { execute v.out.gpsbabel }}
 		{command {[G_msg "POV-Ray"]} {} "v.out.pov: Export POV-Ray format" {} -command { execute v.out.pov }}
 		{command {[G_msg "SVG"]} {} "v.out.svg: Export SVG file" {} -command { execute v.out.svg }}
 		{command {[G_msg "VTK"]} {} "v.out.vtk: Export VTK ASCII file" {} -command { execute v.out.vtk }}
@@ -287,6 +288,8 @@ set descmenu [subst  {
 		{command {[G_msg "Textural features"]} {} "r.texture: Textural features" {} -command {execute r.texture }}
 		{separator}
 		{command {[G_msg "Visibility"]} {} "r.los: Visibility/line of sight" {} -command {execute r.los }}
+		{command {[G_msg "Distance to features"]} {} "r.grow.distance: Distance to features" {} -command {execute r.grow.distance }}
+
 	}}
 	{cascad {[G_msg "Transform features"]} {} "" $tmenu {			
 		{command {[G_msg "Clump"]} {} "r.clump: Clump small areas (statistics calculated by r.volume)" {} -command {execute r.clump }}

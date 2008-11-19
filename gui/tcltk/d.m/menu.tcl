@@ -100,7 +100,7 @@ set descmenu [subst {
 			{command {[G_msg "DXF file"]} {} "v.in.dxf" {} -command { execute v.in.dxf }}
 			{command {[G_msg "ESRI e00 format"]} {} "v.in.e00" {} -command { execute v.in.e00 }}
 			{command {[G_msg "Garmin GPS Waypoints/Routes/Tracks"]} {} "v.in.garmin" {} -command { execute v.in.garmin }}
-			{command {[G_msg "GPS Waypoints/Routes/Tracks using GPSBabel"]} {} "v.in.gpsbabel" {} -command { execute v.in.gpsbabel }}
+			{command {[G_msg "GPS Waypoints/Routes/Tracks  from many formats using GPSBabel"]} {} "v.in.gpsbabel" {} -command { execute v.in.gpsbabel }}
 			{command {[G_msg "GEOnet Name server country files (US-NGA GNS)"]} {} "v.in.gns" {} -command { execute v.in.gns }}
 			{command {[G_msg "Matlab and MapGen files"]} {} "v.in.mapgen" {} -command { execute v.in.mapgen }}
 		}}
@@ -136,7 +136,9 @@ set descmenu [subst {
 			{separator}
 			{command {[G_msg "DXF file (ASCII)"]} {} "v.out.dxf" {} -command { execute v.out.dxf }}
 			{command {[G_msg "ASCII vector or point file/old GRASS ASCII vector file"]} {} "v.out.ascii" {} -command { execute v.out.ascii }}
+			{command {[G_msg "Multiple GPS formats using GPSBabel"]} {} "v.out.gpsbabel" {} -command { execute v.out.gpsbabel }}
 			{command {[G_msg "POV-Ray format"]} {} "v.out.pov" {} -command { execute v.out.pov }}
+			{command {[G_msg "SVG"]} {} "v.out.svg" {} -command { execute v.out.svg }}
 			{command {[G_msg "VTK ASCII file"]} {} "v.out.vtk" {} -command { execute v.out.vtk }}
 		}}
 		{cascad {[G_msg "Grid 3D"]} {} "" $tmenu {
@@ -277,6 +279,7 @@ set descmenu [subst {
 		{command {[G_msg "Terrain parameters"]} {} "r.param.scale" {} -command {execute r.param.scale }}
 		{command {[G_msg "Textural features"]} {} "r.texture" {} -command {execute r.texture }}
 		{command {[G_msg "Visibility/line of sight"]} {} "r.los" {} -command {execute r.los }}
+		{command {[G_msg "Distance to features"]} {} "r.grow.distance" {} -command {execute r.grow.distance }}
 	}}
 	{cascad {[G_msg "Transform features"]} {} "" $tmenu {			
 		{command {[G_msg "Clump small areas (statistics calculated by r.volume)"]} {} "r.clump" {} -command {execute r.clump }}
