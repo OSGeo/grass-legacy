@@ -34,7 +34,7 @@ int main(int argc, char *argv[])
     } parm;
 
     /* any interaction must run in a term window */
-    /* G_putenv("GRASS_UI_TERM", "1"); */
+    G_putenv("GRASS_UI_TERM", "1");
 
     G_gisinit(argv[0]);
 
