@@ -772,12 +772,12 @@ class Data:
                                  _("Line-of-sight raster analysis program."),
                                  "self.OnMenuCmd",
                                  "r.los"),
-                                )
 
                                 (_("Distance to features"),
                                  _("Generates a raster map layer of distance to features in input layer."),
                                  "self.OnMenuCmd",
                                  "r.grow.distance"),
+                                )
                          ),
                         (_("Transform features"), (
 
