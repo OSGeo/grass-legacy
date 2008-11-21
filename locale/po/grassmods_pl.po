@@ -8420,7 +8420,7 @@ msgid "Illegal delete request"
 msgstr ""
 
 #: ../raster/r.cost/btree.c:370
-msgid "Nothing to show"
+msgid "Nothing to show\n"
 msgstr "Nic nie znaleziono.\n"
 
 #: ../raster/r.cost/btree.c:401
@@ -17881,7 +17881,10 @@ msgid ""
 "Type: %s\n"
 "Left: %d\n"
 "Right: %d\n"
-msgstr "Id: %d Typ: %s Lewa: %d Prawa: %d  "
+msgstr "Id: %d\n"
+"Typ: %s\n"
+"Lewa: %d\n"
+"Prawa: %d\n"
 
 #: ../vector/v.what/what.c:139 ../vector/v.what/what.c:173
 #: ../display/d.what.vect/what.c:235
@@ -18003,6 +18006,7 @@ msgid ""
 "Table: %s\n"
 "Key column: %s\n"
 msgstr ""
+"\n"
 "Sterownik: %s\n"
 "Baza danych: %s\n"
 "Tabela: %s\n"
@@ -22554,7 +22558,7 @@ msgstr ""
 #, c-format
 msgid "The output cell map <%s.%d> has values outside the 0-255 range."
 msgstr ""
-"Wyjściowa mapa rastrowa <%s.%d> posiada wartości spoza przedziału 0-255.\n"
+"Wyjściowa mapa rastrowa <%s.%d> posiada wartości spoza przedziału 0-255."
 
 #: ../imagery/i.cca/transform.c:18
 msgid "Unable to allocate cell buffers."
