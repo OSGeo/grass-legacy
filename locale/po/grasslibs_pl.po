@@ -9,11 +9,11 @@ msgstr ""
 "Project-Id-Version: grasslibs_pl\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2008-11-18 16:47+0100\n"
-"PO-Revision-Date: 2008-03-06 00:17+0100\n"
-"Last-Translator: Robert Szczepanek <grass@szczepanek.pl>\n"
+"PO-Revision-Date: 2008-11-20 14:32+0100\n"
+"Last-Translator: Milena Nowotarska <do.milenki gmail.com>\n"
 "Language-Team: Polska <grass-translations@lists.osgeo.org>\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=utf-8\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: KBabel 1.11.4\n"
 
@@ -127,7 +127,7 @@ msgstr "Przeprowadź wszystkie testy "
 
 #: ../lib/gpde/test/test_main.c:65
 msgid "Run all integration tests"
-msgstr ""
+msgstr "Przeprowadź wszystkie testy integracji"
 
 #: ../lib/gpde/test/test_main.c:69
 msgid "Run all unit and integration tests"
@@ -334,8 +334,9 @@ msgid ""
 msgstr ""
 
 #: ../lib/gpde/N_parse_options.c:100
+#, fuzzy
 msgid "The calculation time in seconds"
-msgstr ""
+msgstr "Czas obliczeń w sekundach"
 
 #: ../lib/gpde/N_arrays_io.c:55 ../lib/gis/legal_name.c:94
 #: ../lib/gis/legal_name.c:97 ../lib/gis/opencell.c:1011
@@ -343,39 +344,37 @@ msgstr ""
 #: ../lib/ogsf/Gs3.c:284 ../lib/ogsf/Gs3.c:357 ../lib/ogsf/Gs3.c:472
 #: ../lib/ogsf/Gs3.c:568 ../lib/ogsf/Gs3.c:635 ../lib/ogsf/Gs3.c:692
 #: ../lib/ogsf/Gs3.c:761 ../lib/ogsf/Gs3.c:829 ../lib/ogsf/Gp3.c:54
-#, fuzzy, c-format
+#, c-format
 msgid "Raster map <%s> not found"
-msgstr "Nie można znaleźć wektora źródłowego '%s'"
+msgstr "Mapa rastrowa <%s> nie została znaleziona"
 
 #: ../lib/gpde/N_arrays_io.c:67 ../lib/ogsf/Gs3.c:137 ../lib/ogsf/Gs3.c:211
 #: ../lib/ogsf/Gs3.c:368 ../lib/ogsf/Gs3.c:483 ../lib/ogsf/Gs3.c:573
-#, fuzzy, c-format
+#, c-format
 msgid "Unable to open raster map <%s>"
-msgstr "Nie można otworzyć %s"
+msgstr "Nie można otworzyć mapy rastrowej <%s>"
 
 #: ../lib/gpde/N_arrays_io.c:96
-#, fuzzy, c-format
+#, c-format
 msgid "Reading raster map <%s> into memory"
-msgstr "Mapa rastrowa %s@%s jest pusta"
+msgstr ""
 
 #: ../lib/gpde/N_arrays_io.c:103
-#, fuzzy
 msgid "Could not get raster row"
-msgstr "Informacji o warstwie jest niedostępna"
+msgstr ""
 
 #: ../lib/gpde/N_arrays_io.c:161 ../lib/gpde/N_arrays_io.c:243
-#, fuzzy
 msgid "Unable to close input map"
-msgstr "Nie można otworzyć %s"
+msgstr "Nie można zamknąć mapy wejściowej "
 
 #: ../lib/gpde/N_arrays_io.c:190
 msgid "N_array_2d * array is empty"
 msgstr ""
 
 #: ../lib/gpde/N_arrays_io.c:202
-#, fuzzy, c-format
+#, c-format
 msgid "Unable to create raster map <%s>"
-msgstr "Nie można utworzyć nagłówka pliku dla [%s]"
+msgstr "Nie można utworzyć mapy rastrowej <%s>"
 
 #: ../lib/gpde/N_arrays_io.c:211
 #, c-format
@@ -384,19 +383,19 @@ msgstr ""
 
 #: ../lib/gpde/N_arrays_io.c:227 ../lib/gpde/N_arrays_io.c:232
 #: ../lib/gpde/N_arrays_io.c:237
-#, fuzzy, c-format
+#, c-format
 msgid "Unable to write raster row %i"
-msgstr "Nie można otworzyć automatycznego pliku maski"
+msgstr "Nie można odczytać rzędu rastra %i"
 
 #: ../lib/gpde/N_arrays_io.c:295
 #, c-format
 msgid "Requested g3d map <%s> not found"
-msgstr ""
+msgstr "Żądana mapa g3d <%s> nie została znaleziona"
 
 #: ../lib/gpde/N_arrays_io.c:303 ../lib/gpde/N_arrays_io.c:445
 #, c-format
 msgid "Error opening g3d map <%s>"
-msgstr ""
+msgstr "Błąd podczas otwierania mapy g3d <%s>"
 
 #: ../lib/gpde/N_arrays_io.c:331
 #, c-format
@@ -405,7 +404,7 @@ msgstr ""
 
 #: ../lib/gpde/N_arrays_io.c:386 ../lib/gpde/N_arrays_io.c:486
 msgid "Error closing g3d file"
-msgstr ""
+msgstr "Błąd podczas zamykania pliku g3d"
 
 #: ../lib/gpde/N_arrays_io.c:447
 #, c-format
@@ -447,9 +446,8 @@ msgid "Matrix is not symmetric!"
 msgstr "Macierz nie jest symetryczna!"
 
 #: ../lib/gpde/N_solvers.c:170
-#, fuzzy
 msgid "Starting cholesky decomposition solver"
-msgstr "Rozpoczęto rozwiązywanie metodą eliminacji Gaussa"
+msgstr ""
 
 #: ../lib/gpde/N_solvers.c:173 ../lib/gpde/N_solvers_krylov.c:190
 #: ../lib/gpde/N_solvers_krylov.c:357 ../lib/gpde/N_solvers_krylov.c:481
@@ -504,84 +502,84 @@ msgstr "Niedozwolona nazwa tabeli mapy <%s>. Znak <%c> jest niedozwolony.\n"
 
 #: ../lib/db/dbmi_client/copy_tab.c:100 ../lib/db/dbmi_client/copy_tab.c:120
 #: ../lib/db/dbmi_client/db.c:41
-#, fuzzy, c-format
+#, c-format
 msgid "Unable to start driver <%s>"
-msgstr "W %s nie można otworzyć pliku %s"
+msgstr "Nie można uruchomić sterownika <%s>"
 
 #: ../lib/db/dbmi_client/copy_tab.c:105 ../lib/db/dbmi_client/copy_tab.c:126
 #: ../lib/db/dbmi_client/db.c:46 ../lib/db/dbmi_client/delete_tab.c:49
 #: ../lib/vector/Vlib/array.c:284 ../lib/vector/Vlib/map.c:268
 #: ../lib/vector/Vlib/map.c:402 ../lib/vector/Vlib/map.c:614
 #: ../lib/vector/Vlib/net.c:185 ../lib/vector/Vlib/net.c:355
-#, fuzzy, c-format
+#, c-format
 msgid "Unable to open database <%s> by driver <%s>"
-msgstr "Nie można otworzyć pliku śledzenia błędu '%s'"
+msgstr ""
 
 #: ../lib/db/dbmi_client/copy_tab.c:144
-#, fuzzy, c-format
+#, c-format
 msgid "Unable to get list tables in database <%s>"
-msgstr "nie można otworzyć pliku elipsoidy: %s"
+msgstr ""
 
 #: ../lib/db/dbmi_client/copy_tab.c:157
-#, fuzzy, c-format
+#, c-format
 msgid "Table <%s> already exists in database <%s>"
-msgstr "nie można otworzyć pliku elipsoidy: %s"
+msgstr "Tabela <%s> już istnieje w bazie danych <%s>."
 
 #: ../lib/db/dbmi_client/copy_tab.c:199 ../lib/db/dbmi_client/copy_tab.c:276
 #: ../lib/db/dbmi_client/table.c:110
-#, fuzzy, c-format
+#, c-format
 msgid "Unable to open select cursor: '%s'"
-msgstr "Nie można otworzyć %s"
+msgstr ""
 
 #: ../lib/db/dbmi_client/copy_tab.c:231
 #, fuzzy, c-format
 msgid "Column <%s> is not integer"
-msgstr "Nie można otworzyć pliku śledzenia błędu '%s'"
+msgstr "Kolumna <%s> nie jest integer"
 
 #: ../lib/db/dbmi_client/copy_tab.c:248
-#, fuzzy, c-format
+#, c-format
 msgid "Column <%s> not found"
-msgstr "Nie można otworzyć pliku śledzenia błędu '%s'"
+msgstr "Kolumna <%s> nie została znaleziona"
 
 #: ../lib/db/dbmi_client/copy_tab.c:251
-#, fuzzy, c-format
+#, c-format
 msgid "Unable to create table <%s>"
-msgstr "W %s nie można otworzyć pliku %s"
+msgstr "Nie można utworzyć tabeli: [%s]"
 
 #: ../lib/db/dbmi_client/copy_tab.c:295
-#, fuzzy, c-format
+#, c-format
 msgid "Unable to fetch data from table <%s>"
-msgstr "W %s nie można otworzyć pliku %s"
+msgstr "Nie można odczytać danych z tabeli <%s>"
 
 #: ../lib/db/dbmi_client/copy_tab.c:351
-#, fuzzy, c-format
+#, c-format
 msgid "Unknown column type (column <%s>)"
-msgstr "Nie można odczytać typu kolumny...."
+msgstr "Nieznany typ kolumny  (kolumna <%s>)"
 
 #: ../lib/db/dbmi_client/select.c:279
-#, fuzzy, c-format
+#, c-format
 msgid "Unable select records from table <%s>"
-msgstr "Nie można utworzyć nagłówka pliku dla [%s]"
+msgstr "Nie można wybrać rekordów z tabeli <%s>"
 
 #: ../lib/db/dbmi_client/delete_tab.c:44
-#, fuzzy, c-format
+#, c-format
 msgid "Unable to open driver <%s>"
-msgstr "W %s nie można otworzyć pliku %s"
+msgstr "Nie można uruchomić sterownika <%s>"
 
 #: ../lib/db/dbmi_client/delete_tab.c:62
 #, fuzzy, c-format
 msgid "Unable to drop table: '%s'"
-msgstr "W %s nie można otworzyć pliku %s"
+msgstr "Nie można odłączyć tabeli: '%s'"
 
 #: ../lib/db/dbmi_client/column.c:110
-#, fuzzy, c-format
+#, c-format
 msgid "Unable to describe table <%s>"
-msgstr "W %s nie można otworzyć pliku %s"
+msgstr "Nie można opisać tabeli <%s>"
 
 #: ../lib/db/dbmi_client/table.c:46
-#, fuzzy, c-format
+#, c-format
 msgid "Unable open database <%s> by driver <%s>"
-msgstr "Nie można otworzyć pliku śledzenia błędu '%s'"
+msgstr "Nie można otworzyć bazy danych <%s> przez sterownik <%s>"
 
 #: ../lib/driver/parse_ftcap.c:32
 #, fuzzy, c-format
@@ -591,7 +589,7 @@ msgstr "%s: Nie można odczytać pliku FreeType; użyj ustawień domyślnych"
 #: ../lib/driver/parse_ftcap.c:38
 #, c-format
 msgid "%s: No font definition file"
-msgstr ""
+msgstr "%s: Brak pliku definicji czcionki"
 
 #: ../lib/driver/command.c:508
 #, fuzzy, c-format
@@ -616,7 +614,7 @@ msgstr ""
 #: ../lib/arraystats/class.c:23
 #, c-format
 msgid "%s: Unknown algorithm"
-msgstr ""
+msgstr "%s: Nieznany algorytm"
 
 #: ../lib/arraystats/class.c:26
 #, c-format
@@ -636,19 +634,19 @@ msgid "ERROR %s from graphics driver.\n"
 msgstr ""
 
 #: ../lib/raster/rem_io.c:169
-#, c-format
+#, fuzzy, c-format
 msgid "Unable to allocate memory\n"
-msgstr ""
+msgstr "Nie można zaalokować miejsca na null buffer"
 
 #: ../lib/raster/rem_io.c:219
-#, c-format
+#, fuzzy, c-format
 msgid "ERROR - eof from graphics monitor.\n"
-msgstr ""
+msgstr "Aby wybrać monitor uruchom \"d.mon\""
 
 #: ../lib/raster/rem_io.c:239
-#, c-format
+#, fuzzy, c-format
 msgid "Warning - no response from graphics monitor <%s>.\n"
-msgstr ""
+msgstr "Aby wybrać monitor uruchom \"d.mon\""
 
 #: ../lib/raster/rem_io.c:241
 #, c-format
@@ -656,9 +654,9 @@ msgid "Check to see if the mouse is still active.\n"
 msgstr ""
 
 #: ../lib/raster/rem_io.c:246
-#, c-format
+#, fuzzy, c-format
 msgid "ERROR - no response from graphics monitor <%s>.\n"
-msgstr ""
+msgstr "Aby wybrać monitor uruchom \"d.mon\""
 
 #: ../lib/raster/io_sock.c:63
 #, fuzzy
@@ -710,29 +708,28 @@ msgid "Connection failed."
 msgstr "Połączenie nie powiodło się."
 
 #: ../lib/vector/diglib/spindex.c:248
-#, fuzzy, c-format
+#, c-format
 msgid "Unable to delete node %d from spatial index"
-msgstr "W %s nie można otworzyć pliku %s"
+msgstr ""
 
 #: ../lib/vector/diglib/spindex.c:288
-#, fuzzy, c-format
+#, c-format
 msgid "Unable to delete line %d from spatial index"
-msgstr "W %s nie można otworzyć pliku %s"
+msgstr ""
 
 #: ../lib/vector/diglib/spindex.c:314
-#, fuzzy
 msgid "Attempt to delete sidx for dead area"
-msgstr "Nie można obliczyć centroid dla powierzchni %d"
+msgstr ""
 
 #: ../lib/vector/diglib/spindex.c:327
-#, fuzzy, c-format
+#, c-format
 msgid "Unable to delete area %d from spatial index"
-msgstr "W %s nie można otworzyć pliku %s"
+msgstr ""
 
 #: ../lib/vector/diglib/spindex.c:362
-#, fuzzy, c-format
+#, c-format
 msgid "Unable to delete isle %d from spatial index"
-msgstr "W %s nie można otworzyć pliku %s"
+msgstr ""
 
 #: ../lib/vector/diglib/plus_area.c:195 ../lib/vector/diglib/plus_area.c:651
 #: ../lib/vector/diglib/plus_area.c:659
@@ -764,79 +761,70 @@ msgid "Dead centroid %d registered for area (bug in the vector library)"
 msgstr ""
 
 #: ../lib/vector/diglib/plus_area.c:406
-#, fuzzy, c-format
+#, c-format
 msgid "Attempt to delete area %d info from dead isle %d"
-msgstr "Nie można odczytać nagłówka pliku"
+msgstr ""
 
 #: ../lib/vector/diglib/plus_area.c:749
-#, fuzzy, c-format
+#, c-format
 msgid "Attempt to delete isle %d info from dead area %d"
-msgstr "Nie można obliczyć centroid dla powierzchni %d"
+msgstr ""
 
 #: ../lib/vector/diglib/plus.c:288
-#, fuzzy
 msgid "Unable read topology for nodes"
-msgstr "Nie można odczytać nagłówka pliku"
+msgstr "Nie można odczytać topologii dla punktów"
 
 #: ../lib/vector/diglib/plus.c:293
-#, fuzzy, c-format
+#, c-format
 msgid "Unable to read topology for node %d"
-msgstr "Nie można odczytać histogramu dla [%s w %s]"
+msgstr "Nie można odczytać topologii dla punktów %d"
 
 #: ../lib/vector/diglib/plus.c:298
-#, fuzzy
 msgid "Unable read topology for lines"
-msgstr "Nie można odczytać nagłówka pliku"
+msgstr "Nie można odczytać topologii dla linii"
 
 #: ../lib/vector/diglib/plus.c:303
-#, fuzzy, c-format
+#, c-format
 msgid "Unable to read topology for line %d"
-msgstr "Nie można odczytać nagłówka pliku"
+msgstr "Nie można odczytać topologii dla linii %d"
 
 #: ../lib/vector/diglib/plus.c:308
-#, fuzzy
 msgid "Unable to read topo for areas"
-msgstr "Nie można odczytać nagłówka pliku"
+msgstr "Nie można odczytać topologii dla obszarów"
 
 #: ../lib/vector/diglib/plus.c:313
-#, fuzzy, c-format
+#, c-format
 msgid "Unable read topology for area %d"
-msgstr "Nie można obliczyć centroid dla powierzchni %d"
+msgstr "Nie można odczytać topologii dla obszaru %d"
 
 #: ../lib/vector/diglib/plus.c:318
-#, fuzzy
 msgid "Unable to read topology for isles"
-msgstr "Nie można odczytać nagłówka pliku"
+msgstr "Nie można odczytać topologii dla wysp"
 
 #: ../lib/vector/diglib/plus.c:323
-#, fuzzy, c-format
+#, c-format
 msgid "Unable to read topology for isle %d"
-msgstr "Nie można odczytać nagłówka pliku"
+msgstr "Nie można odczytać topologii dla wyspy %d"
 
 #: ../lib/vector/diglib/plus.c:345 ../lib/vector/diglib/plus.c:371
-#, fuzzy
 msgid "Unable to write head to plus file"
-msgstr "Nie można odczytać nagłówka pliku"
+msgstr ""
 
 #: ../lib/vector/diglib/plus.c:350
-#, fuzzy
 msgid "Unable to write nodes to plus file"
-msgstr "Nie można otworzyć automatycznego pliku maski"
+msgstr ""
 
 #: ../lib/vector/diglib/plus.c:355
-#, fuzzy
 msgid "Unable to write lines to plus file"
-msgstr "Nie można otworzyć automatycznego pliku maski"
+msgstr ""
 
 #: ../lib/vector/diglib/plus.c:360
-#, fuzzy
 msgid "Unable to write areas to plus file"
-msgstr "Nie można otworzyć automatycznego pliku maski"
+msgstr ""
 
 #: ../lib/vector/diglib/plus.c:365
-#, fuzzy
 msgid "Unable to write isles to plus file"
-msgstr "Nie można otworzyć automatycznego pliku maski"
+msgstr ""
 
 #: ../lib/vector/diglib/plus_node.c:217
 #, c-format
@@ -846,19 +834,18 @@ msgid ""
 msgstr ""
 
 #: ../lib/vector/vedit/select.c:234
-#, fuzzy
 msgid "Unknown query tool"
-msgstr "nieznany typ interpolacji"
+msgstr ""
 
 #: ../lib/vector/vedit/cats.c:66
-#, fuzzy, c-format
+#, c-format
 msgid "Unable to set category %d for line %d"
-msgstr "Nie można otworzyć pliku śledzenia błędu '%s'"
+msgstr "Nie można ustawić kategorii %d dla linii %d"
 
 #: ../lib/vector/vedit/cats.c:75
 #, fuzzy, c-format
 msgid "Unable to delete layer/category %d/%d line %d"
-msgstr "Nie można otworzyć %s"
+msgstr "Nie można usunąć warstwy/kategorii %d/%d linia %d"
 
 #: ../lib/vector/Vlib/build.c:31 ../lib/vector/Vlib/open.c:40
 #: ../lib/vector/Vlib/close.c:38 ../lib/vector/Vlib/read.c:30
@@ -873,8 +860,9 @@ msgid "Building topology for vector map <%s>..."
 msgstr "Przebuduj topologię dla wektora '%s@%s'"
 
 #: ../lib/vector/Vlib/build.c:138
+#, fuzzy
 msgid "Topology was built"
-msgstr ""
+msgstr "Topologia została zbudowana\n"
 
 #: ../lib/vector/Vlib/build.c:148
 #, fuzzy, c-format
@@ -899,7 +887,7 @@ msgstr "Liczba linii    :   %d\n"
 #: ../lib/vector/Vlib/build.c:152
 #, fuzzy, c-format
 msgid "Number of boundaries: %d"
-msgstr "Liczba węzłów     :    %d\n"
+msgstr "Liczba granic:   %d\n"
 
 #: ../lib/vector/Vlib/build.c:153
 #, fuzzy, c-format
@@ -909,7 +897,7 @@ msgstr "Liczba centroid :   %d\n"
 #: ../lib/vector/Vlib/build.c:156
 #, fuzzy, c-format
 msgid "Number of faces: %d"
-msgstr "Liczba centroid :   %d\n"
+msgstr "Liczba granic:   %d\n"
 
 #: ../lib/vector/Vlib/build.c:159
 #, fuzzy, c-format
@@ -929,7 +917,7 @@ msgstr "Liczba wysp     :   %d\n"
 #: ../lib/vector/Vlib/build.c:203
 #, fuzzy, c-format
 msgid "Number of incorrect boundaries: %d"
-msgstr "Liczba centroid :   %d\n"
+msgstr "Liczba nieprawidłowych granic   :   %d\n"
 
 #: ../lib/vector/Vlib/build.c:207
 #, fuzzy, c-format
@@ -954,27 +942,26 @@ msgstr "Liczba obszarów     :   -\n"
 #: ../lib/vector/Vlib/build.c:221
 #, fuzzy
 msgid "Number of isles: -"
-msgstr "Liczba wysp     :   %d\n"
+msgstr "Liczba wysp     :   -\n"
 
 #: ../lib/vector/Vlib/build.c:250
-#, fuzzy, c-format
+#, c-format
 msgid "Unable to open topo file for write <%s>"
-msgstr "Nie można otworzyć pliku śledzenia błędu '%s'"
+msgstr ""
 
 #: ../lib/vector/Vlib/build.c:258
 #, fuzzy
 msgid "Error writing out topo file"
-msgstr "błąd podczas zapisu zerowego wiersza %d"
+msgstr "Błąd podczas zapisu pliku topo"
 
 #: ../lib/vector/Vlib/build.c:401
-#, fuzzy, c-format
+#, c-format
 msgid "Unable open spatial index file for write <%s>"
-msgstr "Nie można otworzyć pliku śledzenia błędu '%s'"
+msgstr ""
 
 #: ../lib/vector/Vlib/build.c:409
-#, fuzzy
 msgid "Error writing out spatial index file"
-msgstr "błąd podczas zapisu zerowego wiersza %d"
+msgstr ""
 
 #: ../lib/vector/Vlib/intersect.c:127
 msgid "3D not supported by Vect_segment_intersection()"
@@ -1003,30 +990,31 @@ msgstr ""
 #: ../lib/vector/Vlib/open.c:168 ../lib/vector/Vlib/legal_vname.c:118
 #: ../lib/vector/Vlib/legal_vname.c:121 ../lib/vector/Vlib/map.c:324
 #: ../lib/ogsf/Gv3.c:57 ../lib/ogsf/Gp3.c:109
-#, fuzzy, c-format
+#, c-format
 msgid "Vector map <%s> not found"
-msgstr "Nie można znaleźć wektora źródłowego '%s'"
+msgstr "Nie znaleziono mapy wektorowej <%s>"
 
 #: ../lib/vector/Vlib/open.c:179
-#, fuzzy
 msgid ""
 "Vector map which is not in the current mapset cannot be opened for update"
 msgstr ""
-"Mapa, które nie jest w bieżącym mapsecie nie może być otwarta do "
-"uaktualniania."
+"Mapa, która nie jest w bieżącym mapsecie, nie może być otwarta do "
+"aktualizacji."
 
 #: ../lib/vector/Vlib/open.c:199 ../lib/ogsf/Gv3.c:63 ../lib/ogsf/Gp3.c:115
-#, fuzzy, c-format
+#, c-format
 msgid "Unable to open vector map <%s>"
-msgstr "Nie można otworzyć %s"
+msgstr "Nie można otworzyć mapy wektorowej <%s>"
 
 #: ../lib/vector/Vlib/open.c:211 ../lib/vector/Vlib/open.c:279
 #: ../lib/vector/Vlib/open.c:299
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Unable to open vector map <%s> on level %d. Try to rebuild vector topology "
 "by v.build."
-msgstr "Nie można otworzyć istniejącego wektora <%s> na poziomie [%d]"
+msgstr ""
+"Nie znaleziono mapy wektorowej <%s> na poziomie [%d]. Spróbuj przebudować "
+"topologię przez v.build."
 
 #: ../lib/vector/Vlib/open.c:214
 #, fuzzy
@@ -1034,94 +1022,96 @@ msgid "Unable to read head file"
 msgstr "Nie można odczytać nagłówka pliku"
 
 #: ../lib/vector/Vlib/open.c:236
-#, fuzzy, c-format
+#, c-format
 msgid "Unable to open topology file for vector map <%s>"
-msgstr "Nie można otworzyć pliku śledzenia błędu '%s'"
+msgstr ""
 
 #: ../lib/vector/Vlib/open.c:262
-#, fuzzy, c-format
+#, c-format
 msgid "Unable to open category index file for vector map <%s>"
-msgstr "Nie można otworzyć pliku śledzenia błędu '%s'"
+msgstr ""
 
 #: ../lib/vector/Vlib/open.c:353 ../lib/vector/Vlib/open.c:576
-#, fuzzy, c-format
+#, c-format
 msgid "Unable to open history file for vector map <%s>"
-msgstr "Nie można otworzyć pliku śledzenia błędu '%s'"
+msgstr ""
 
 #: ../lib/vector/Vlib/open.c:531
-#, fuzzy, c-format
+#, c-format
 msgid "%s is not in the current mapset (%s)"
-msgstr "brak dostępnych plików %s w bieżącym mapsecie\n"
+msgstr "%s nie jest bieżącym mapsetem (%s)"
 
 #: ../lib/vector/Vlib/open.c:540 ../lib/vector/Vlib/map.c:175
 #: ../lib/vector/Vlib/map.c:311
-#, fuzzy, c-format
+#, c-format
 msgid "Vector map name is not SQL compliant"
-msgstr "Nazwa mapy nie jest zgodna z SQL."
+msgstr "Nazwa mapy wektorowej nie jest zgodna z SQL."
 
 #: ../lib/vector/Vlib/open.c:547 ../lib/vector/Vlib/map.c:186
 #: ../lib/vector/Vlib/map.c:315
-#, fuzzy, c-format
+#, c-format
 msgid "Vector map <%s> already exists and will be overwritten"
-msgstr "Wektor '%s' już istnieje i zostanie nadpisany."
+msgstr "Mapa wektorowa <%s> już istnieje i zostanie nadpisana"
 
 #: ../lib/vector/Vlib/open.c:552 ../lib/vector/Vlib/map.c:190
-#, fuzzy, c-format
+#, c-format
 msgid "Unable to delete vector map <%s>"
-msgstr "Nie można otworzyć %s"
+msgstr "Nie można usunąć mapy wektorowej <%s>"
 
 #: ../lib/vector/Vlib/open.c:566
-#, fuzzy, c-format
+#, c-format
 msgid "Unable to create vector map <%s>"
-msgstr "Nie można utworzyć nagłówka pliku dla [%s]"
+msgstr "Nie można utworzyć mapy wektorowej <%s>"
 
 #: ../lib/vector/Vlib/open.c:622
 #, fuzzy, c-format
 msgid "Unable to stat file <%s>"
-msgstr "W %s nie można otworzyć pliku %s"
+msgstr "Nie można otworzyć pliku %s"
 
 #: ../lib/vector/Vlib/open.c:731
 msgid "Size of 'coor' file differs from value saved in topology file"
 msgstr ""
 
 #: ../lib/vector/Vlib/open.c:742
-#, fuzzy, c-format
+#, c-format
 msgid "Please rebuild topology for vector map <%s@%s>"
-msgstr "Przebuduj topologię dla wektora '%s@%s'"
+msgstr "Przebuduj topologię dla mapy wektorowej <%s@%s>"
 
 #: ../lib/vector/Vlib/close.c:134
-#, fuzzy, c-format
+#, c-format
 msgid "Unable to close vector <%s>"
-msgstr "Nie można otworzyć %s"
+msgstr "Nie można zamknąć wektora <%s>"
 
 #: ../lib/vector/Vlib/legal_vname.c:48
-#, fuzzy, c-format
+#, c-format
 msgid "Illegal vector map name <%s>. May not contain '.' or 'NULL'."
 msgstr ""
-"Nazwa mapy wektorowej <%s> jest niedozwolona. Może zawierać '.' lub 'NULL'.\n"
+"Nazwa mapy wektorowej <%s> jest niedozwolona. Może zawierać '.' lub 'NULL'."
 
 #: ../lib/vector/Vlib/legal_vname.c:55
-#, fuzzy, c-format
+#, c-format
 msgid "Illegal vector map name <%s>. Must start with a letter."
 msgstr ""
 "Nazwa mapy wektorowej <%s> jest niedozwolona. Nazwa musi zaczynać się od "
-"litery.\n"
+"litery."
 
 #: ../lib/vector/Vlib/legal_vname.c:63
-#, fuzzy, c-format
+#, c-format
 msgid "Illegal vector map name <%s>. Character '%c' not allowed."
-msgstr "Nazwa mapy wektorowej <%s> jest niedozwolona. Znak <%c> "
+msgstr "Nazwa mapy wektorowej <%s> jest niedozwolona. Znak '%c'"
 
 #: ../lib/vector/Vlib/legal_vname.c:70
 #, fuzzy, c-format
 msgid ""
 "Illegal vector map name <%s>. SQL keyword cannot be used as vector map name."
-msgstr "Nazwa mapy wektorowej <%s> jest niedozwolona. Znak <%c> "
+msgstr ""
+"Nazwa mapy wektorowej <%s> jest niedozwolona. SQL keyword cannot be used as "
+"vector map name."
 
 #: ../lib/vector/Vlib/legal_vname.c:101 ../lib/vector/Vlib/legal_vname.c:105
-#, fuzzy, c-format
+#, c-format
 msgid "Output vector map name <%s> is not valid map name"
-msgstr "Nazwa pliku wyjściowego '%s' nie jest poprawną nazwą rastra."
+msgstr "Nazwa pliku wyjściowego <%s> nie jest poprawną nazwą mapy wektorowej."
 
 #: ../lib/vector/Vlib/legal_vname.c:142 ../lib/vector/Vlib/legal_vname.c:146
 #, fuzzy, c-format
@@ -1142,34 +1132,31 @@ msgid "Invalid layer index (index < 0 or index >= number of layers)"
 msgstr ""
 
 #: ../lib/vector/Vlib/cindex.c:232
-#, fuzzy
 msgid "Layer or category index out of range"
-msgstr "Rozmiar wektore poza zakresem"
+msgstr "Warstwa lub indeks kategorii jest poza zakresem"
 
 #: ../lib/vector/Vlib/cindex.c:283
-#, fuzzy
 msgid "Layer index out of range"
-msgstr "Nieprawidłowy rozmiar macierzy"
+msgstr "Indeks warstwy jest poza zakresem"
 
 #: ../lib/vector/Vlib/cindex.c:460
-#, fuzzy, c-format
+#, c-format
 msgid "Unable to open cidx file <%s> for write"
-msgstr "Nie można otworzyć %s do zapisu"
+msgstr "Nie można otworzyć pliku cidx <%s> do zapisu"
 
 #: ../lib/vector/Vlib/cindex.c:468
-#, fuzzy, c-format
+#, c-format
 msgid "Error writing out category index file <%s>"
-msgstr "błąd podczas zapisu zerowego wiersza %d"
+msgstr "Błąd podczas zapisu pliku indeksu kategorii <%s>"
 
 #: ../lib/vector/Vlib/cindex.c:511
-#, fuzzy, c-format
+#, c-format
 msgid "Unable to open category index file for vector map <%s@%s>"
-msgstr "Nie można otworzyć pliku śledzenia błędu '%s'"
+msgstr "Nie można otworzyć pliku indeksu kategorii dla mapy wektorowej <%s@%s>"
 
 #: ../lib/vector/Vlib/read.c:99
-#, fuzzy
 msgid "vector map is not opened"
-msgstr "Nie można znaleźć wektora źródłowego '%s'"
+msgstr "mapa wektorowa nie została otwarta"
 
 #: ../lib/vector/Vlib/read.c:102
 #, c-format
@@ -1198,12 +1185,12 @@ msgstr ""
 #: ../lib/vector/Vlib/net.c:179 ../lib/vector/Vlib/net.c:350
 #, c-format
 msgid "Database connection not defined for layer %d"
-msgstr ""
+msgstr "Połączenie z bazą danych nie zostało zdefiniowane dla warstwy %d"
 
 #: ../lib/vector/Vlib/array.c:294
-#, fuzzy, c-format
+#, c-format
 msgid "Unable to select record from table <%s> (key %s, where %s)"
-msgstr "Nie można utworzyć nagłówka pliku dla [%s]"
+msgstr "Nie można wybrać rekordu z tabeli <%s> (klucz %s, gdzie %s)"
 
 #: ../lib/vector/Vlib/break_lines.c:115 ../lib/vector/Vlib/break_lines.c:370
 #, fuzzy, c-format
@@ -1211,14 +1198,12 @@ msgid "Intersections: %5d"
 msgstr "Inne rzutowanie"
 
 #: ../lib/vector/Vlib/poly.c:235
-#, fuzzy
 msgid "Unable to find point in polygon"
-msgstr "nie można znaleźć [%s] in [%s]"
+msgstr "Nie można znaleźć punktu w poligonie"
 
 #: ../lib/vector/Vlib/poly.c:649
-#, fuzzy
 msgid "conditions failed"
-msgstr "Połączenie nie powiodło się."
+msgstr ""
 
 #: ../lib/vector/Vlib/cats.c:45
 msgid "Vect_new_cats_struct(): Out of memory"
@@ -1227,7 +1212,7 @@ msgstr ""
 #: ../lib/vector/Vlib/cats.c:129
 #, c-format
 msgid "Too many categories (%d), unable to set cat %d (layer %d)"
-msgstr ""
+msgstr "byt dużo kategorii (%d), nie można ustawić cat %d (warstwa %d)"
 
 #: ../lib/vector/Vlib/cats.c:376
 #, c-format
@@ -1236,12 +1221,12 @@ msgstr ""
 
 #: ../lib/vector/Vlib/sindex.c:97
 msgid "not implemented"
-msgstr ""
+msgstr "Jeszcze nie zaimplementowano"
 
 #: ../lib/vector/Vlib/sindex.c:109
-#, fuzzy, c-format
+#, c-format
 msgid "Unable to delete item %d from spatial index"
-msgstr "W %s nie można otworzyć pliku %s"
+msgstr ""
 
 #: ../lib/vector/Vlib/sindex.c:127
 msgid ""
@@ -1268,33 +1253,30 @@ msgstr ""
 #: ../lib/vector/Vlib/write_nat.c:50 ../lib/vector/Vlib/write_nat.c:83
 #, c-format
 msgid "%s: Area %d does not exist"
-msgstr ""
+msgstr "%s: Obszar %d nie istnieje"
 
 #: ../lib/vector/Vlib/write_nat.c:640
-#, fuzzy
 msgid "Attempt to delete dead feature"
-msgstr "Nie można obliczyć centroid dla powierzchni %d"
+msgstr ""
 
 #: ../lib/vector/Vlib/write_nat.c:885
-#, fuzzy
 msgid "Attempt to restore alive feature"
-msgstr "Nie można obliczyć centroid dla powierzchni %d"
+msgstr ""
 
 #: ../lib/vector/Vlib/level_two.c:210 ../lib/vector/Vlib/level_two.c:235
 #: ../lib/vector/Vlib/level_two.c:259 ../lib/vector/Vlib/level_two.c:278
 #: ../lib/vector/Vlib/level_two.c:296 ../lib/vector/Vlib/level_two.c:315
-#, fuzzy, c-format
+#, c-format
 msgid "Vector map <%s> is not open on level >= 2"
-msgstr "Nie można znaleźć wektora źródłowego '%s'"
+msgstr ""
 
 #: ../lib/vector/Vlib/graph.c:110 ../lib/vector/Vlib/net.c:432
 msgid "GngFlatten error"
 msgstr ""
 
 #: ../lib/vector/Vlib/graph.c:143
-#, fuzzy
 msgid "Unable to add network arc"
-msgstr "Nie można otworzyć nowego wektora %s"
+msgstr ""
 
 #: ../lib/vector/Vlib/graph.c:231 ../lib/vector/Vlib/net.c:509
 #, c-format
@@ -1322,9 +1304,8 @@ msgid "Registering primitives:"
 msgstr ""
 
 #: ../lib/vector/Vlib/build_nat.c:515
-#, fuzzy
 msgid "Unable to read vector map"
-msgstr "Nie można otworzyć %s"
+msgstr "Nie można odczytać mapy wektorowej "
 
 #: ../lib/vector/Vlib/build_nat.c:548
 #, c-format
@@ -1339,7 +1320,7 @@ msgstr ""
 #: ../lib/vector/Vlib/build_nat.c:560
 #, fuzzy
 msgid "Building areas:"
-msgstr "Tworzenie topologii ...\n"
+msgstr "Tworzenie obszarów:"
 
 #: ../lib/vector/Vlib/build_nat.c:583
 #, c-format
@@ -1374,13 +1355,13 @@ msgid ""
 msgstr ""
 
 #: ../lib/vector/Vlib/build_ogr.c:272
-#, fuzzy, c-format
+#, c-format
 msgid "Unable to calculate centroid for area %d"
-msgstr "Nie można obliczyć centroid dla powierzchni %d"
+msgstr "Nie można obliczyć centroidu dla obszaru %d"
 
 #: ../lib/vector/Vlib/build_ogr.c:309 ../lib/vector/Vlib/read_ogr.c:120
 #: ../lib/vector/Vlib/read_ogr.c:306
-#, fuzzy, c-format
+#, c-format
 msgid "OGR feature type %d not supported"
 msgstr "Obiekty OGR typu %d nie są obsługiwane"
 
@@ -1403,7 +1384,6 @@ msgid "Feature %d without geometry ignored"
 msgstr "Obekt %d wez geometrii został zignorowany"
 
 #: ../lib/vector/Vlib/build_ogr.c:368
-#, fuzzy
 msgid "OGR feature without ID ignored"
 msgstr "Obiekt OGR bez ID został zignorowany."
 
@@ -1417,44 +1397,43 @@ msgid "Map structure has been closed"
 msgstr ""
 
 #: ../lib/vector/Vlib/area.c:53
-#, fuzzy
 msgid "Attempt to read points of nonexistent area"
-msgstr "Nie można obliczyć centroid dla powierzchni %d"
+msgstr ""
 
 #: ../lib/vector/Vlib/area.c:125
-#, fuzzy, c-format
+#, c-format
 msgid "Unable to read line %d"
-msgstr "Nie można odczytać nagłówka pliku"
+msgstr "Nie mozna odczytać linii %d"
 
 #: ../lib/vector/Vlib/area.c:164 ../lib/vector/Vlib/area.c:193
 #: ../lib/vector/Vlib/area.c:257 ../lib/vector/Vlib/area.c:286
-#, fuzzy, c-format
+#, c-format
 msgid "Attempt to read topo for dead area (%d)"
-msgstr "Nie można obliczyć centroid dla powierzchni %d"
+msgstr ""
 
 #: ../lib/vector/Vlib/area.c:313
-#, fuzzy, c-format
+#, c-format
 msgid "Attempt to read topo for dead isle (%d)"
-msgstr "Nie można odczytać nagłówka pliku"
+msgstr ""
 
 #: ../lib/vector/Vlib/open_ogr.c:53
 msgid "OGR format cannot be updated"
 msgstr ""
 
 #: ../lib/vector/Vlib/open_ogr.c:65
-#, fuzzy, c-format
+#, c-format
 msgid "Unable to open OGR data source '%s'"
-msgstr "Nie można otworzyć %s"
+msgstr "Nie można otworzyć źródła danych OGR '%s'"
 
 #: ../lib/vector/Vlib/open_ogr.c:85
-#, fuzzy, c-format
+#, c-format
 msgid "Unable to open layer <%s>"
-msgstr "W %s nie można otworzyć pliku %s"
+msgstr "Nie można otworzyć warstwy <%s>"
 
 #: ../lib/vector/Vlib/open_ogr.c:129
-#, fuzzy, c-format
+#, c-format
 msgid "Unable to open fidx file for vector map <%s@%s>"
-msgstr "Nie można otworzyć pliku śledzenia błędu '%s'"
+msgstr "Nie można otworzyć pliku fidx dla mapy wektorowej <%s@%s>"
 
 #: ../lib/vector/Vlib/open_ogr.c:147
 #, c-format
@@ -1475,97 +1454,94 @@ msgid "Area is composed of dead boundary"
 msgstr ""
 
 #: ../lib/vector/Vlib/map.c:55
-#, fuzzy
 msgid "input vector map is not open"
-msgstr "Nie można znaleźć wektora źródłowego '%s'"
+msgstr "wejściowa mapa wektorowa nie jest otwarta"
 
 #: ../lib/vector/Vlib/map.c:65 ../lib/vector/Vlib/map.c:81
 #: ../lib/ogsf/Gp3.c:143
-#, fuzzy, c-format
+#, c-format
 msgid "Unable to read vector map <%s>"
-msgstr "Nie można otworzyć %s"
+msgstr "Nie można odczytać mapy wektorowej <%s>"
 
 #: ../lib/vector/Vlib/map.c:179
-#, fuzzy, c-format
+#, c-format
 msgid "Unable to find vector map <%s> in <%s>"
-msgstr "nie można otworzyć rastrowej mapy [%s w %s]"
+msgstr "Nie można odnaleźć mapy wektorowej <%s> w <%s>"
 
 #: ../lib/vector/Vlib/map.c:210 ../lib/vector/Vlib/map.c:328
-#, fuzzy, c-format
+#, c-format
 msgid "Unable to copy vector map <%s> to <%s>"
-msgstr "nie można otworzyć rastrowej mapy [%s w %s]"
+msgstr "Nie można skopiować mapy wektorowej <%s> do <%s>"
 
 #: ../lib/vector/Vlib/map.c:257 ../lib/vector/Vlib/map.c:378
 #: ../lib/vector/Vlib/map.c:606 ../lib/vector/Vlib/map.c:713
-#, fuzzy, c-format
+#, c-format
 msgid "Unable to copy table <%s>"
-msgstr "W %s nie można otworzyć pliku %s"
+msgstr "Nie można skopiować tabeli <%s>"
 
 #: ../lib/vector/Vlib/map.c:273 ../lib/vector/Vlib/map.c:407
 #: ../lib/vector/Vlib/map.c:619
-#, fuzzy, c-format
+#, c-format
 msgid "Unable to create index for table <%s>, key <%s>"
-msgstr "Nie można utworzyć nagłówka pliku dla [%s]"
+msgstr "Nie można utworzyć indeksu dla tabeli <%s>, klucz <%s>"
 
 #: ../lib/vector/Vlib/map.c:392 ../lib/vector/Vlib/map.c:487
-#, fuzzy, c-format
+#, c-format
 msgid "Unable to delete table <%s>"
-msgstr "W %s nie można otworzyć pliku %s"
+msgstr "Nie można usunąć tabeli <%s>"
 
 #: ../lib/vector/Vlib/map.c:441
-#, fuzzy, c-format
+#, c-format
 msgid "Invalid vector map name <%s>"
-msgstr "Nie można otworzyć %s"
+msgstr "Niedozwolona nazwa mapy wektorowej  <%s>"
 
 #: ../lib/vector/Vlib/map.c:455
-#, fuzzy, c-format
+#, c-format
 msgid "Unable to open header file for vector map <%s>"
-msgstr "Nie można otworzyć pliku śledzenia błędu '%s'"
+msgstr "Nie można otworzyć pliku nagłówka dla mapy wektorowej <%s>"
 
 #: ../lib/vector/Vlib/map.c:477
-#, fuzzy, c-format
+#, c-format
 msgid "Unable to find table <%s> linked to vector map <%s>"
-msgstr "Nie można otworzyć pliku śledzenia błędu '%s'"
+msgstr "Nie można odnaleźć tabeli <%s> podłączonej do mapy wektorowej <%s>"
 
 #: ../lib/vector/Vlib/map.c:493
-#, fuzzy, c-format
+#, c-format
 msgid "Table <%s> linked to vector map <%s> does not exist"
-msgstr "Nie można otworzyć pliku śledzenia błędu '%s'"
+msgstr "Tabela <%s>podłączona do mapy wektorowej <%s> nie istnieje"
 
 #: ../lib/vector/Vlib/map.c:507
-#, fuzzy, c-format
+#, c-format
 msgid "Unable to open directory '%s'"
-msgstr "Nie można otworzyć %s"
+msgstr "Nie można otworzyć katalogu '%s'"
 
 #: ../lib/vector/Vlib/map.c:521
-#, fuzzy, c-format
+#, c-format
 msgid "Unable to delete file '%s'"
-msgstr "W %s nie można otworzyć pliku %s"
+msgstr "Nie można usunąć pliku '%s'"
 
 #: ../lib/vector/Vlib/map.c:538
-#, fuzzy, c-format
+#, c-format
 msgid "Unable to rename directory '%s' to '%s'"
-msgstr "Nie można utworzyć nagłówka pliku dla [%s]"
+msgstr "Nie można zmienić nazwy katalogu z '%s' na '%s'"
 
 #: ../lib/vector/Vlib/map.c:546
-#, fuzzy, c-format
+#, c-format
 msgid "Unable to remove directory '%s'"
-msgstr "Nie można otworzyć %s"
+msgstr "Nie można usunąć katalogu '%s'"
 
 #: ../lib/vector/Vlib/map.c:597 ../lib/vector/Vlib/map.c:698
-#, fuzzy, c-format
+#, c-format
 msgid "Unable to add database link for vector map <%s>"
-msgstr "Nie można otworzyć pliku śledzenia błędu '%s'"
+msgstr ""
 
 #: ../lib/vector/Vlib/read_nat.c:136
-#, fuzzy
 msgid "Attempt to read dead line"
-msgstr "Nie można odczytać nagłówka pliku"
+msgstr ""
 
 #: ../lib/vector/Vlib/overlay.c:74
-#, fuzzy
 msgid "unknown operator"
-msgstr "nieznany typ interpolacji"
+msgstr "nieznany operator"
 
 #: ../lib/vector/Vlib/overlay.c:123
 msgid "Overlay: line/boundary types not supported by AND operator"
@@ -1576,9 +1552,8 @@ msgid "Overlay: area x area types not supported by AND operator"
 msgstr ""
 
 #: ../lib/vector/Vlib/read_ogr.c:178
-#, fuzzy
 msgid "OGR feature without ID"
-msgstr "Obiekt OGR bez ID został zignorowany."
+msgstr "Obiekt OGR bez ID "
 
 #: ../lib/vector/Vlib/read_ogr.c:378 ../lib/vector/Vlib/read_ogr.c:386
 #, c-format
@@ -1586,30 +1561,27 @@ msgid "Unable to get feature geometry, FID %ld"
 msgstr ""
 
 #: ../lib/vector/Vlib/field.c:89
-#, fuzzy
 msgid "Layer number must be 1 or greater"
-msgstr "Numer pola musi mieć wartość 1 lub większą. "
+msgstr "Numer warstwy musi mieć wartość 1 lub większą. "
 
 #: ../lib/vector/Vlib/field.c:94
-#, fuzzy
 msgid "Unable to add database link, map is not opened in WRITE mode"
 msgstr ""
-"Nie można dodać połączenia do bazy danych, mapa jest otwarta w trybie ZAPIS."
+"Nie można dodać połączenia do bazy danych, mapa nie jest otwarta w trybie "
+"ZAPIS."
 
 #: ../lib/vector/Vlib/field.c:100
-#, fuzzy
 msgid "Unable to add database link"
-msgstr "Nie można dodać odnośnika do bazy danych."
+msgstr "Nie można dodać połączenia do bazy danych."
 
 #: ../lib/vector/Vlib/field.c:106 ../lib/vector/Vlib/field.c:151
-#, fuzzy
 msgid "Unable to write database links"
-msgstr "Nie można zapisać odnośnika do bazy danych."
+msgstr "Nie można zapisać połączeń do bazy danych."
 
 #: ../lib/vector/Vlib/field.c:219
-#, fuzzy, c-format
+#, c-format
 msgid "Layer number %d or name <%s> already exists"
-msgstr "Numer pola <%d> lub nazwa <%s> już istnieje"
+msgstr "Numer warstwy %d lub nazwa <%s> już istnieje"
 
 #: ../lib/vector/Vlib/field.c:298
 #, c-format
@@ -1624,7 +1596,6 @@ msgid "Default driver is not set"
 msgstr "Domyślny sterownik nie jest ustawiony"
 
 #: ../lib/vector/Vlib/field.c:308
-#, fuzzy
 msgid "Default database is not set"
 msgstr "Nie ma ustawionej domyślnej bazy danych"
 
@@ -1634,7 +1605,6 @@ msgid "Requested dblink %d, maximum link number %d"
 msgstr ""
 
 #: ../lib/vector/Vlib/field.c:507
-#, fuzzy
 msgid "Unable to open OGR DBMI driver"
 msgstr "Nie można otworzyć sterownika OGR DBMI."
 
@@ -1664,14 +1634,12 @@ msgid "Bug: attempt to update map which is not in current mapset"
 msgstr ""
 
 #: ../lib/vector/Vlib/net.c:121
-#, fuzzy
 msgid "Building graph..."
-msgstr "Tworzenie topologii ...\n"
+msgstr ""
 
 #: ../lib/vector/Vlib/net.c:163
-#, fuzzy
 msgid "Unable to build network graph"
-msgstr "Nie można otworzyć nowego wektora %s"
+msgstr ""
 
 #: ../lib/vector/Vlib/net.c:169
 msgid "Forward costs column not specified"
@@ -1683,15 +1651,15 @@ msgstr ""
 
 #: ../lib/vector/Vlib/net.c:190 ../lib/vector/Vlib/net.c:207
 #: ../lib/vector/Vlib/net.c:360
-#, fuzzy, c-format
+#, c-format
 msgid "Column <%s> not found in table <%s>"
-msgstr "Nie można otworzyć pliku śledzenia błędu '%s'"
+msgstr "Kolumna <%s> nie została znaleziona w tabeli <%s>"
 
 #: ../lib/vector/Vlib/net.c:196 ../lib/vector/Vlib/net.c:213
 #: ../lib/vector/Vlib/net.c:366
-#, fuzzy, c-format
+#, c-format
 msgid "Data type of column <%s> not supported (must be numeric)"
-msgstr "Nieznany typ kolumny z (musi być liczba całkowita lub rzeczywista)"
+msgstr "Nieznany typ kolumny <%s> (musi być liczba całkowita lub rzeczywista)"
 
 #: ../lib/vector/Vlib/net.c:226
 msgid "Registering arcs..."
@@ -1712,9 +1680,8 @@ msgid ""
 msgstr ""
 
 #: ../lib/vector/Vlib/net.c:322
-#, fuzzy
 msgid "Cannot add network arc"
-msgstr "Nie można otworzyć nowego wektora %s"
+msgstr ""
 
 #: ../lib/vector/Vlib/net.c:346
 msgid "Setting node costs..."
@@ -1726,9 +1693,8 @@ msgid "Database record for node %d (cat = %d) not found (cost set to 0)"
 msgstr ""
 
 #: ../lib/vector/Vlib/net.c:429
-#, fuzzy
 msgid "Flattening the graph..."
-msgstr "Tworzenie topologii ...\n"
+msgstr ""
 
 #: ../lib/vector/Vlib/net.c:439
 msgid "Graph was built"
@@ -1739,23 +1705,21 @@ msgid "Wrong line direction in Vect_net_get_line_cost()"
 msgstr ""
 
 #: ../lib/vector/Vlib/line.c:60 ../lib/ogsf/gsd_img_mpeg.c:317
-#, fuzzy
 msgid "Out of memory"
-msgstr "G_malloc: brak pamięci"
+msgstr "Brak wolnej pamięci"
 
 #: ../lib/vector/Vlib/line.c:199 ../lib/vector/Vlib/line.c:231
-#, fuzzy
 msgid "Index out of range in"
-msgstr "Nieprawidłowy rozmiar macierzy"
+msgstr "Indeks poza zakresem w "
 
 #: ../lib/vector/Vlib/line.c:527
 msgid "Segment outside line, no segment created"
 msgstr ""
 
 #: ../lib/vector/Vlib/header.c:95 ../lib/vector/Vlib/header.c:143
-#, fuzzy, c-format
+#, c-format
 msgid "Unable to open header file of vector <%s>"
-msgstr "Nie można otworzyć pliku śledzenia błędu '%s'"
+msgstr "Nie można otworzyć pliku nagłówka dla wektora <%s>"
 
 #: ../lib/vector/Vlib/header.c:151
 #, c-format
@@ -1763,9 +1727,9 @@ msgid "Corrupted row in head: %s"
 msgstr ""
 
 #: ../lib/vector/Vlib/header.c:187
-#, fuzzy, c-format
+#, c-format
 msgid "Unknown keyword %s in vector head"
-msgstr "nieznany typ interpolacjinieznany typ interpolacji"
+msgstr "Nieznane słowo kluczowe %s w nagłówku wektora"
 
 #: ../lib/vector/Vlib/header.c:510 ../lib/gis/proj3.c:64
 msgid "Unknown projection"
@@ -1773,68 +1737,73 @@ msgstr "Nieznane odwzorowanie"
 
 #: ../lib/vector/Vlib/write.c:27 ../lib/vector/Vlib/write.c:33
 #: ../lib/vector/Vlib/write.c:39 ../lib/vector/Vlib/write.c:46
-#, fuzzy
 msgid "for this format/level not supported"
-msgstr "Typ kolumny nie jest obsługiwany"
+msgstr ""
 
 #: ../lib/vector/Vlib/write.c:135
-#, fuzzy
 msgid "Unable to write feature, vector map is not opened"
-msgstr "Nie można zapisać linii, nie jest otwarta mapa"
+msgstr "Nie można zapisać obiektu, mapa wektorowa nie jest otwarta "
 
 #: ../lib/vector/Vlib/write.c:148
 #, fuzzy
 msgid "Unable to write feature (negative offset)"
-msgstr "Nie można zapisać linii (ujemny "
+msgstr "Nie można zapisać obiektu  (negative offset)"
 
 #: ../lib/vector/Vlib/write.c:181
-#, fuzzy
 msgid "Unable to rewrite feature, vector map is not opened"
-msgstr "Nie można nadpisać linii, mapa nie jest otwarta"
+msgstr "Nie można nadpisać obiektu, mapa wektorowa nie jest otwarta"
 
 #: ../lib/vector/Vlib/write.c:194
-#, fuzzy, c-format
+#, c-format
 msgid "Unable to rewrite feature %d"
-msgstr "W %s nie można otworzyć pliku %s"
+msgstr "Nie można nadpisać obiektu %s"
 
 #: ../lib/vector/Vlib/write.c:219
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Unable to delete feature %d, vector map <%s> is not opened on topology level"
-msgstr "Nie można usunąć linii, mapa '%s' nie jest otwarta na poziomie 2"
+msgstr ""
+"Nie można usunąć obiektu %d, mapa wektorowa <%s> nie jest otwarta na "
+"poziomie 2 (topologicznym)"
 
 #: ../lib/vector/Vlib/write.c:225
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Unable to delete feature %d, vector map <%s> is not opened in 'write' mode"
-msgstr "Nie można usunąć linii, mapa '%s' nie jest otwarta w trybie 'zapisu'"
+msgstr ""
+"Nie można usunąć obiektu %d, mapa wektorowa <%s> nie jest otwarta w trybie "
+"'zapisu'"
 
 #: ../lib/vector/Vlib/write.c:239
-#, fuzzy, c-format
+#, c-format
 msgid "Unable to feature %d from vector map <%s>"
-msgstr "Nie można otworzyć %s"
+msgstr "Nie można zaprezentować %d z mapy wektorowej <%s>"
 
 #: ../lib/vector/Vlib/write.c:265
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Unable to restore feature %d, vector map <%s> is not opened on topology level"
-msgstr "Nie można usunąć linii, mapa '%s' nie jest otwarta na poziomie 2"
+msgstr ""
+"Nie można przywrócić obiektu %d, mapa wektorowa <%s> nie jest otwarta na "
+"poziomie 2 (topologicznym)"
 
 #: ../lib/vector/Vlib/write.c:271
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Unable to restore feature %d, vector map <%s> is not opened in 'write' mode"
-msgstr "Nie można usunąć linii, mapa '%s' nie jest otwarta w trybie 'zapisu'"
+msgstr ""
+"Nie można przywrócić obiektu %d, mapa wektorowa <%s> nie jest otwarta w "
+"trybie 'zapisu'"
 
 #: ../lib/vector/Vlib/write.c:285
-#, fuzzy, c-format
+#, c-format
 msgid "Unable to restore feature %d from vector map <%s>"
-msgstr "Nie można otworzyć %s"
+msgstr ""
 
 #: ../lib/vask/V_support.c:58
-#, fuzzy, c-format
+#, c-format
 msgid "Unable to open file %s"
-msgstr "W %s nie można otworzyć pliku %s"
+msgstr "Nie można otworzyć pliku %s"
 
 #: ../lib/proj/get_proj.c:150
 #, c-format
@@ -1855,9 +1824,9 @@ msgid "Option input overflowed option table"
 msgstr ""
 
 #: ../lib/proj/get_proj.c:327
-#, fuzzy, c-format
+#, c-format
 msgid "Unable to initialize pj cause: %s"
-msgstr "W %s nie można otworzyć pliku %s"
+msgstr ""
 
 #: ../lib/proj/get_proj.c:403
 msgid "Input Projection Parameters"
@@ -1887,14 +1856,14 @@ msgid "Hit RETURN to cancel request\n"
 msgstr "Wciśnij ENTER aby anulować\n"
 
 #: ../lib/proj/datum.c:419 ../lib/proj/datum.c:484
-#, fuzzy, c-format
+#, c-format
 msgid "Unable to open datum table file <%s>"
-msgstr "nie można otworzyć pliku tabeli danych: %s"
+msgstr ""
 
 #: ../lib/proj/datum.c:432 ../lib/proj/datum.c:498
-#, fuzzy, c-format
+#, c-format
 msgid "Error in datum table file <%s>, line %d"
-msgstr "błąd w pliku tabeli danych, linia %d"
+msgstr ""
 
 #: ../lib/proj/convert.c:108
 msgid "Unable parse GRASS PROJ_INFO file"
@@ -1944,9 +1913,9 @@ msgid "pj_transform() failed: %s"
 msgstr ""
 
 #: ../lib/proj/ellipse.c:75
-#, fuzzy, c-format
+#, c-format
 msgid "Invalid ellipsoid <%s> in file"
-msgstr "niepoprawna elipsoida %s w pliku %s w %s"
+msgstr "Niewłaściwa elipsoida <%s> w pliku "
 
 #: ../lib/proj/ellipse.c:98
 msgid "No secondary ellipsoid descriptor (rf, es or b) in file"
@@ -1961,9 +1930,9 @@ msgid "No ellipsoid info given in file"
 msgstr "Plik nie zawiera informacji o elipsoidzie "
 
 #: ../lib/proj/ellipse.c:216 ../lib/gis/get_ellipse.c:283
-#, fuzzy, c-format
+#, c-format
 msgid "Unable to open ellipsoid table file <%s>"
-msgstr "nie można otworzyć pliku elipsoidy: %s"
+msgstr "Nie można otworzyć pliku elipsoidy <%s>"
 
 #: ../lib/g3d/g3dparam.c:52
 msgid "Data type used in the output file"
@@ -2027,7 +1996,6 @@ msgid "G3d_openCellOld: zone does not match window zone"
 msgstr "G3d_openCellOld: strefa nie pasuje do strefy okna"
 
 #: ../lib/g3d/g3dopen.c:140 ../lib/g3d/g3dopen.c:157
-#, fuzzy
 msgid "G3d_openCellOld: can't read header"
 msgstr "G3d_openCellOld: nie można odczytać nagłówka"
 
@@ -2097,18 +2065,16 @@ msgstr ""
 "niepoprawna elipsoida\n"
 
 #: ../lib/gis/sample.c:71
-#, fuzzy
 msgid "Unknown interpolation type"
-msgstr "nieznany typ interpolacji"
+msgstr "Nieznany typ interpolacji"
 
 #: ../lib/gis/sample.c:284
 msgid "\"no data\" label found; setting to zero"
 msgstr "znaleziono etykietę \"no data\"; ustawianie jako zero"
 
 #: ../lib/gis/sample.c:299
-#, fuzzy
 msgid "Problem reading raster map"
-msgstr "problem w czasie czytania pliku rastrowego"
+msgstr "Problem podczas czytania mapy rastrowej"
 
 #: ../lib/gis/put_cellhd.c:26
 #, c-format
@@ -2126,14 +2092,14 @@ msgid "Illegal filename. Character <%c> not allowed.\n"
 msgstr "Niedozwolona nazwa pliku. Znak <%c> jest niedopuszczalny.\n"
 
 #: ../lib/gis/legal_name.c:77 ../lib/gis/legal_name.c:81
-#, fuzzy, c-format
+#, c-format
 msgid "Output raster map name <%s> is not valid map name"
-msgstr "Nazwa pliku wyjściowego '%s' nie jest poprawną nazwą rastra."
+msgstr "Nazwa pliku wyjściowego <%s> nie jest poprawną nazwą mapy rastrowej."
 
 #: ../lib/gis/legal_name.c:118 ../lib/gis/legal_name.c:122
-#, fuzzy, c-format
+#, c-format
 msgid "Output raster map <%s> is used as input"
-msgstr "Mapa wyjściowa '%s' jest używana jako plik wejścowy"
+msgstr "Wyjściowa mapa rastrowa <%s> jest używana jako plik wejścowy"
 
 #: ../lib/gis/debug.c:69
 #, c-format
@@ -2199,9 +2165,8 @@ msgid "%s files available in mapset <%s>:\n"
 msgstr "%s plików dostępnych w mapsecie <%s>:\n"
 
 #: ../lib/gis/list.c:256
-#, fuzzy
 msgid "G_list: Unknown element type"
-msgstr "nieznany typ interpolacjinieznany typ interpolacji"
+msgstr ""
 
 #: ../lib/gis/unix_socks.c:102
 msgid "Unable to get GIS_LOCK enviroment variable value"
@@ -2216,14 +2181,14 @@ msgid "Other Projection"
 msgstr "Inne rzutowanie"
 
 #: ../lib/gis/opencell.c:105
-#, fuzzy, c-format
+#, c-format
 msgid "Unable to open raster map <%s@%s>"
-msgstr "Nie można otworzyć %s"
+msgstr "Nie można otworzyć mapy rastrowej <%s@%s>"
 
 #: ../lib/gis/opencell.c:171
-#, fuzzy, c-format
+#, c-format
 msgid "Unable to find <%s@%s>"
-msgstr "nie można znaleźć [%s]"
+msgstr "Nie można odnaleźć <%s@%s>"
 
 #: ../lib/gis/opencell.c:188
 #, c-format
@@ -2271,9 +2236,9 @@ msgstr ""
 "uaktualniania."
 
 #: ../lib/gis/opencell.c:649
-#, fuzzy, c-format
+#, c-format
 msgid "<%s> is an illegal file name"
-msgstr "opencell: %s - niedopuszczalna nazwa pliku"
+msgstr "<%s> jest niedozwoloną nazwą pliku"
 
 #: ../lib/gis/opencell.c:655
 #, fuzzy, c-format
@@ -2294,34 +2259,34 @@ msgid "G_set_fp_type(): can only be called with FCELL_TYPE or DCELL_TYPE"
 msgstr ""
 
 #: ../lib/gis/opencell.c:976 ../lib/gis/opencell.c:1064
-#, fuzzy, c-format
+#, c-format
 msgid "Unable to find '%s' in '%s'"
-msgstr "nie można znaleźć [%s]"
+msgstr "Nie można odnaleźć '%s' w '%s'"
 
 #: ../lib/gis/opencell.c:1009
-#, fuzzy, c-format
+#, c-format
 msgid "Raster map <%s> not found in mapset <%s>"
-msgstr "Nie można znaleźć wektora źródłowego '%s'"
+msgstr "Mapa rastrowa <%s> nie została znaleziona w  mapsecie <%s>"
 
 #: ../lib/gis/opencell.c:1070
-#, fuzzy, c-format
+#, c-format
 msgid "Unable to find '%s'"
-msgstr "nie można znaleźć [%s]"
+msgstr "Nie można odnaleźć '%s'"
 
 #: ../lib/gis/opencell.c:1075
-#, fuzzy, c-format
+#, c-format
 msgid "Unable to open '%s'"
-msgstr "Nie można otworzyć %s"
+msgstr "Nie można otworzyć '%s'"
 
 #: ../lib/gis/opencell.c:1085
-#, fuzzy, c-format
+#, c-format
 msgid "Invalid type: field '%s' in file '%s'"
-msgstr "niepoprawny typ: pole %s w pliku %s "
+msgstr "nieprawidłowy typ: pole '%s' w pliku '%s'"
 
 #: ../lib/gis/opencell.c:1099
 #, fuzzy, c-format
 msgid "Raster map <%s> is not xdr: byte_order: %s"
-msgstr "Nie można znaleźć wektora źródłowego '%s'"
+msgstr "Mapa rastrowa <%s> nie jest xdr: byte_order: %s"
 
 #: ../lib/gis/opencell.c:1179
 msgid ""
@@ -2361,7 +2326,7 @@ msgstr ""
 #: ../lib/gis/find_file.c:82
 #, fuzzy, c-format
 msgid "Using <%s@%s>"
-msgstr "nie można znaleźć [%s]"
+msgstr "Używa <%s@%s>"
 
 #: ../lib/gis/quant_io.c:89
 #, c-format
@@ -2387,54 +2352,45 @@ msgid "Unknown Location"
 msgstr "Nieznane położenie"
 
 #: ../lib/gis/color_rules.c:110
-#, fuzzy
 msgid "syntax error"
-msgstr "Błędny format wejściowy"
+msgstr "błąd składni "
 
 #: ../lib/gis/color_rules.c:112
 msgid "R/G/B not in range 0-255"
 msgstr "R/G/B poza zakresem 0-255"
 
 #: ../lib/gis/color_rules.c:114
-#, fuzzy
 msgid "invalid color name"
-msgstr "Nieodpowiednie współrzędne"
+msgstr "nieprawidłowa nazwa koloru"
 
 #: ../lib/gis/color_rules.c:116
 msgid "percentage not in range 0-100"
 msgstr "procenty poza zakresem 0-100"
 
 #: ../lib/gis/color_rules.c:118
-#, fuzzy
 msgid "invalid value"
-msgstr ""
-"\n"
-"niepoprawny układ odniesienia\n"
+msgstr "nieprawidłowa wartość"
 
 #: ../lib/gis/color_rules.c:120
-#, fuzzy
 msgid "unknown error"
-msgstr "nieznany typ interpolacji"
+msgstr "nieznany błąd"
 
 #: ../lib/gis/color_rules.c:151
-#, fuzzy, c-format
+#, c-format
 msgid "bad rule (%s): [%s]"
 msgstr "błędna reguła (%s): %s"
 
 #: ../lib/gis/spawn.c:80 ../lib/gis/spawn.c:112
-#, fuzzy
 msgid "Too many arguments"
-msgstr "zbyt dużo argumentów"
+msgstr "Zbyt dużo argumentów"
 
 #: ../lib/gis/spawn.c:133 ../lib/gis/spawn.c:401
-#, fuzzy
 msgid "Unable to create a new process"
-msgstr "nie można utworzyć nowego procesu"
+msgstr "Nie można utworzyć nowego procesu"
 
 #: ../lib/gis/spawn.c:142 ../lib/gis/spawn.c:237 ../lib/gis/spawn.c:424
-#, fuzzy
 msgid "Unable to execute command"
-msgstr "nie można wykonać polecenia"
+msgstr "Nie można wykonać polecenia"
 
 #: ../lib/gis/spawn.c:262 ../lib/gis/spawn.c:270
 #, c-format
@@ -2472,9 +2428,9 @@ msgid "G_spawn: unable to duplicate descriptor %d to %d"
 msgstr ""
 
 #: ../lib/gis/spawn.c:416
-#, fuzzy, c-format
+#, c-format
 msgid "Unable to change directory to %s"
-msgstr "Nie można utworzyć nagłówka pliku dla [%s]"
+msgstr "Nie można zmieńić katalogu %s"
 
 #: ../lib/gis/mapset.c:39
 msgid "MAPSET is not set"
@@ -2531,9 +2487,9 @@ msgid "    2:  Red, green, and blue color ramps\n"
 msgstr ""
 
 #: ../lib/gis/make_colr.c:55
-#, c-format
+#, fuzzy, c-format
 msgid "    3:  Color wave\n"
-msgstr ""
+msgstr "    4:  Skala szarości\n"
 
 #: ../lib/gis/make_colr.c:56
 #, c-format
@@ -2609,29 +2565,29 @@ msgid "Reading raster map <%s@%s> request for row %d is outside region"
 msgstr ""
 
 #: ../lib/gis/get_row.c:324
-#, fuzzy, c-format
+#, c-format
 msgid "cell_values_float: xdr_float failed for index %d"
 msgstr "cell_values_float: proces xdr_float nie powiódł się dla indeksu %d"
 
 #: ../lib/gis/get_row.c:365
-#, fuzzy, c-format
+#, c-format
 msgid "cell_values_double: xdr_double failed for index %d"
-msgstr "cell_values_float: proces xdr_float nie powiódł się dla indeksu %d"
+msgstr "cell_values_double: proces xdr_double nie powiódł się dla indeksu %d"
 
 #: ../lib/gis/get_row.c:621
-#, fuzzy, c-format
+#, c-format
 msgid "Error reading compressed map <%s@%s>, row %d"
-msgstr "wsparcie kategorii dla [%s] w mapsecie [%s] %s"
+msgstr "Błąd podczas czytania skompresowanej mapy <%s@%s>, rząd %d"
 
 #: ../lib/gis/get_row.c:624
-#, fuzzy, c-format
+#, c-format
 msgid "Error reading map <%s@%s>, row %d"
-msgstr "wsparcie kategorii dla [%s] w mapsecie [%s] %s"
+msgstr "Błąd podczas czytania mapy <%s@%s>, rząd %d"
 
 #: ../lib/gis/get_row.c:1031 ../lib/gis/get_row.c:1036
-#, fuzzy, c-format
+#, c-format
 msgid "Error reading null row %d"
-msgstr "błąd podczas wczytywania wiersza NULL %d"
+msgstr "Błąd podczas wczytywania wiersza NULL %d"
 
 #: ../lib/gis/get_row.c:1115
 #, fuzzy
@@ -2809,19 +2765,19 @@ msgid "Unable to read header file for raster map <%s@%s>."
 msgstr "Nie można utworzyć nagłówka pliku dla [%s w %s]"
 
 #: ../lib/gis/get_cellhd.c:74
-#, fuzzy, c-format
+#, c-format
 msgid " It is a reclass of raster map <%s@%s> "
-msgstr "To jest reklasyfikacja [%s w %s] "
+msgstr "To jest reklasyfikacja mapy rastrowej <%s@%s> "
 
 #: ../lib/gis/get_cellhd.c:78
 #, fuzzy, c-format
 msgid "which is missing."
-msgstr "brakujący"
+msgstr "brakujący."
 
 #: ../lib/gis/get_cellhd.c:80
 #, fuzzy, c-format
 msgid "whose header file can't be opened."
-msgstr "którego nagłówek nie może być otwarty"
+msgstr "którego nagłówek nie może być otwarty."
 
 #: ../lib/gis/get_cellhd.c:88
 #, fuzzy, c-format
@@ -2835,9 +2791,9 @@ msgstr ""
 "To ejst reklasyfikacja [%s w %s], gdzie nagłówek pliku jest niepoprawny\n"
 
 #: ../lib/gis/get_cellhd.c:109
-#, fuzzy, c-format
+#, c-format
 msgid " Invalid format."
-msgstr "Format niepoprawny\n"
+msgstr "Format niepoprawny."
 
 #: ../lib/gis/cats.c:381
 #, c-format
@@ -2941,15 +2897,15 @@ msgstr ""
 
 #: ../lib/gis/parser.c:337
 msgid "Table name"
-msgstr ""
+msgstr "Nazwa tabeli"
 
 #: ../lib/gis/parser.c:346
 msgid "Driver name"
-msgstr ""
+msgstr "Nazwa sterownika"
 
 #: ../lib/gis/parser.c:355
 msgid "Database name"
-msgstr ""
+msgstr "Nazwa bazy danych"
 
 #: ../lib/gis/parser.c:364
 msgid "Name of attribute column"
@@ -3027,7 +2983,7 @@ msgstr "Typ"
 
 #: ../lib/gis/parser.c:567
 msgid "Feature type(s)"
-msgstr ""
+msgstr "Typ obiektu"
 
 #: ../lib/gis/parser.c:574
 msgid "Layer number"
@@ -3061,11 +3017,11 @@ msgstr "Nazwa pliku wyjściowego"
 
 #: ../lib/gis/parser.c:619
 msgid "Field separator"
-msgstr ""
+msgstr "Separator pól"
 
 #: ../lib/gis/parser.c:630
 msgid "Color"
-msgstr ""
+msgstr "Kolor"
 
 #: ../lib/gis/parser.c:631
 msgid "Either a standard color name or R:G:B triplet"
@@ -3073,7 +3029,7 @@ msgstr ""
 
 #: ../lib/gis/parser.c:640
 msgid "Background color"
-msgstr ""
+msgstr "Kolor tła"
 
 #: ../lib/gis/parser.c:642
 msgid "Either a standard GRASS color, R:G:B triplet, or \"none\""
@@ -3158,11 +3114,11 @@ msgstr "  %*s   domyślnie: %s\n"
 
 #: ../lib/gis/parser.c:1506
 msgid "NAME"
-msgstr ""
+msgstr "NAZWA"
 
 #: ../lib/gis/parser.c:1519
 msgid "KEYWORDS"
-msgstr ""
+msgstr "Słowa kluczowe"
 
 #: ../lib/gis/parser.c:1524
 msgid "SYNOPSIS"
@@ -3186,7 +3142,7 @@ msgstr "Domyślne"
 
 #: ../lib/gis/parser.c:1905
 msgid "Allow overwrite"
-msgstr ""
+msgstr "Nadpisz istniejący"
 
 #: ../lib/gis/parser.c:1913
 msgid "Run with minimal output messages"
@@ -3194,7 +3150,7 @@ msgstr ""
 
 #: ../lib/gis/parser.c:1915
 msgid "Run quietly"
-msgstr ""
+msgstr "Uruchom bez komunikatów"
 
 #: ../lib/gis/parser.c:1948
 msgid "Unable to spawn the 'wish' program"
@@ -3263,7 +3219,7 @@ msgstr ""
 "Błąd: Brakująca wartość dla parametru <%s>\n"
 
 #: ../lib/gis/parser.c:2395
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "\n"
 "ERROR: Required parameter <%s> not set:\n"
@@ -3286,7 +3242,7 @@ msgid "       You provided %d items:\n"
 msgstr ""
 
 #: ../lib/gis/parser.c:2548
-#, fuzzy, c-format
+#, c-format
 msgid "ERROR: option <%s>: <%s> exists.\n"
 msgstr "Błąd: opcja <%s>: <%s> już istnieje.\n"
 
@@ -3307,9 +3263,9 @@ msgstr ""
 "OPCJA:   %s\n"
 
 #: ../lib/gis/parser.c:2618
-#, c-format
+#, fuzzy, c-format
 msgid "     key: %s\n"
-msgstr ""
+msgstr "  %*s   domyślnie: %s\n"
 
 #: ../lib/gis/parser.c:2620
 #, c-format
@@ -3327,14 +3283,14 @@ msgid "required: %s\n"
 msgstr "wymagany: %s\n"
 
 #: ../lib/gis/parser.c:2625
-#, c-format
+#, fuzzy, c-format
 msgid "multiple: %s\n"
-msgstr ""
+msgstr " domyślnie: %s\n"
 
 #: ../lib/gis/parser.c:2627
-#, c-format
+#, fuzzy, c-format
 msgid " options: %s\n"
-msgstr " opcjes: %s\n"
+msgstr "     poprawne opcje: %s\n"
 
 #: ../lib/gis/parser.c:2640
 #, c-format
@@ -3408,14 +3364,14 @@ msgid "Cannot write quant rules for map %s"
 msgstr ""
 
 #: ../lib/gis/raster_metadata.c:111
-#, fuzzy, c-format
+#, c-format
 msgid "Can't read %s for [%s in %s]"
-msgstr "Nie można odczytać histogramu dla [%s w %s]"
+msgstr "Nie można odczytać %s dla [%s w %s]"
 
 #: ../lib/gis/raster_metadata.c:144
-#, fuzzy, c-format
+#, c-format
 msgid "Can't create %s metadata file for [%s in %s]"
-msgstr "Nie można odczytać pliku nagłówka dla [%s w %s]\n"
+msgstr "Nie można utworzyć pliku metadanych %s dla [%s w %s]"
 
 #: ../lib/gis/open.c:62
 #, c-format
@@ -3920,14 +3876,13 @@ msgid "can't create histogram for [%s in %s]"
 msgstr "nie można utworzyć histogramu dla  [%s w %s]"
 
 #: ../lib/gis/gdal.c:54
-#, fuzzy, c-format
+#, c-format
 msgid "Unable to locate symbol <%s>"
-msgstr "W %s nie można otworzyć pliku %s"
+msgstr ""
 
 #: ../lib/gis/gdal.c:94
-#, fuzzy
 msgid "Unable to load GDAL library"
-msgstr "Nie można otworzyć nowego wektora %s"
+msgstr "Nie można załadować biblioteki GDAL"
 
 #: ../lib/nviz/change_view.c:108
 #, c-format
@@ -3936,7 +3891,7 @@ msgstr ""
 
 #: ../lib/nviz/render.c:108
 msgid "Bad server connection"
-msgstr ""
+msgstr "Wadliwe połączenie z serwerem"
 
 #: ../lib/nviz/render.c:117
 #, fuzzy
@@ -3944,9 +3899,8 @@ msgid "Unable to create rendering context"
 msgstr "nie można utworzyć nowego procesu"
 
 #: ../lib/nviz/position.c:50
-#, fuzzy
 msgid "Unable to set focus"
-msgstr "Nie można otworzyć %s"
+msgstr ""
 
 #: ../lib/nviz/nviz.c:76
 #, c-format
@@ -3962,9 +3916,9 @@ msgid "Maximum vector line maps loaded!"
 msgstr ""
 
 #: ../lib/nviz/map_obj.c:103 ../lib/nviz/map_obj.c:134
-#, fuzzy, c-format
+#, c-format
 msgid "Error loading vector map <%s>"
-msgstr "dla istniejących map rastrowych %d"
+msgstr ""
 
 #: ../lib/nviz/map_obj.c:122
 msgid "Maximum vector point maps loaded!"
@@ -3975,9 +3929,9 @@ msgid "Maximum volumes loaded!"
 msgstr ""
 
 #: ../lib/nviz/map_obj.c:158
-#, fuzzy, c-format
+#, c-format
 msgid "Error loading 3d raster map <%s>"
-msgstr "dla istniejących map rastrowych %d"
+msgstr ""
 
 #: ../lib/nviz/map_obj.c:166
 msgid "Nviz_new_map_obj(): unsupported data type"
@@ -4018,7 +3972,7 @@ msgstr ""
 #: ../lib/sites/sites.c:372 ../lib/sites/sites.c:1247
 #, fuzzy, c-format
 msgid "Cannot open database %s by driver %s"
-msgstr "Nie można otworzyć pliku śledzenia błędu '%s'"
+msgstr "Nie można otworzyć bazy danych <%s> sterownikiem <%s>"
 
 #: ../lib/sites/sites.c:380 ../lib/sites/sites.c:1255
 #, fuzzy
@@ -4037,37 +3991,37 @@ msgstr ""
 #: ../lib/imagery/fopen.c:23
 #, c-format
 msgid "Unable to create file [%s] of group [%s in %s]"
-msgstr ""
+msgstr "Nie można utworzyć pliku [%s] z grupy [%s w %s]"
 
 #: ../lib/imagery/fopen.c:36 ../lib/imagery/fopen.c:57
 #, c-format
 msgid "Unable to open file [%s] of group [%s in %s]"
-msgstr ""
+msgstr "Nie można otworzyć pliku [%s] z grupy [%s w %s]"
 
 #: ../lib/imagery/fopen.c:49
 #, c-format
 msgid "Unable to find file [%s] of group [%s in %s]"
-msgstr ""
+msgstr "Nie można odnaleźć pliku [%s] z grupy [%s w %s]"
 
 #: ../lib/imagery/fopen.c:79
 #, c-format
 msgid "Unable to create file [%s] for subgroup [%s] of group [%s in %s]"
-msgstr ""
+msgstr "Nie można utworzyć pliku [%s] dla podgrupy [%s] z grupy [%s w %s]"
 
 #: ../lib/imagery/fopen.c:101 ../lib/imagery/fopen.c:127
 #, c-format
 msgid "Unable to open file [%s] for subgroup [%s] of group [%s in %s]"
-msgstr ""
+msgstr "Nie można otworzyć pliku [%s] dla podgrupy [%s] z grupy [%s w %s]"
 
 #: ../lib/imagery/fopen.c:116
 #, c-format
 msgid "Unable to find file [%s] for subgroup [%s] of group [%s in %s]"
-msgstr ""
+msgstr "Nie można odnaleźć pliku [%s] dla podgrupy [%s] z grupy [%s w %s]"
 
 #: ../lib/imagery/target.c:38
-#, fuzzy, c-format
+#, c-format
 msgid "Unable to read target file for group [%s]"
-msgstr "Nie można utworzyć nagłówka pliku dla [%s]"
+msgstr ""
 
 #: ../lib/ogsf/Gv3.c:249
 #, c-format
@@ -4075,9 +4029,9 @@ msgid "No features from vector map <%s> fall within current region"
 msgstr ""
 
 #: ../lib/ogsf/Gv3.c:254
-#, fuzzy, c-format
+#, c-format
 msgid "Vector map <%s> loaded (%d features)"
-msgstr "Nie można znaleźć wektora źródłowego '%s'"
+msgstr "Mapa wektorowa <%s> została załadowana (%d obiektów)"
 
 #: ../lib/ogsf/gk.c:322
 msgid "Need at least 3 keyframes for spline"
@@ -4088,44 +4042,39 @@ msgid "Need at least 2 keyframes for interpolation"
 msgstr ""
 
 #: ../lib/ogsf/GVL2.c:248
-#, fuzzy, c-format
+#, c-format
 msgid "Loading 3d raster map <%s>..."
-msgstr "Mapa rastrowa %s@%s jest pusta"
+msgstr "Ładuję mapę rastrową 3D <%s>..."
 
 #: ../lib/ogsf/Gvl3.c:39 ../lib/ogsf/gvl_file.c:428
-#, fuzzy, c-format
+#, c-format
 msgid "3D raster map <%s> not found"
-msgstr "Nie można znaleźć wektora źródłowego '%s'"
+msgstr "Nie znaleziono mapy rastrowej 3D <%s>"
 
 #: ../lib/ogsf/gsd_img_mpeg.c:63
-#, fuzzy
 msgid "Unable to allocate stream"
-msgstr "Nie można zaalokować miejsca na macierz."
+msgstr ""
 
 #: ../lib/ogsf/gsd_img_mpeg.c:156
-#, fuzzy
 msgid "Video codec not found"
-msgstr "Nie można znaleźć wektora źródłowego '%s'"
+msgstr ""
 
 #: ../lib/ogsf/gsd_img_mpeg.c:162
 #, fuzzy
 msgid "Unable to open codec"
-msgstr "Nie można otworzyć %s"
+msgstr "Nie można otworzyć codec %s"
 
 #: ../lib/ogsf/gsd_img_mpeg.c:181
-#, fuzzy
 msgid "Unable to allocate picture"
-msgstr "Nie można zaalokować miejsca na macierz."
+msgstr ""
 
 #: ../lib/ogsf/gsd_img_mpeg.c:192
-#, fuzzy
 msgid "Unable to allocate temporary picture"
-msgstr "W %s nie można otworzyć pliku %s"
+msgstr ""
 
 #: ../lib/ogsf/gsd_img_mpeg.c:252
-#, fuzzy
 msgid "Error while writing video frame"
-msgstr "błąd podczas zapisu zerowego wiersza %d"
+msgstr ""
 
 #: ../lib/ogsf/gsd_img_mpeg.c:298
 #, c-format
@@ -4137,19 +4086,17 @@ msgid "Unable to deduce output format from file extension: using MPEG"
 msgstr ""
 
 #: ../lib/ogsf/gsd_img_mpeg.c:310
-#, fuzzy
 msgid "Unable to find suitable output format"
-msgstr "Nie można otworzyć pliku śledzenia błędu '%s'"
+msgstr "Nie można odnaleźć odpowiedniego formatu wyjściwego"
 
 #: ../lib/ogsf/gsd_img_mpeg.c:337
-#, fuzzy
 msgid "Invalid output format parameters"
-msgstr "Nie można otworzyć %s"
+msgstr ""
 
 #: ../lib/ogsf/gsd_img_mpeg.c:351
-#, fuzzy, c-format
+#, c-format
 msgid "Unable to open <%s>"
-msgstr "Nie można otworzyć %s"
+msgstr "Nie można otworzyć <%s>"
 
 #: ../lib/ogsf/gsd_img_mpeg.c:361
 msgid "NVIZ has not been built with MPEG output support"
@@ -4157,48 +4104,45 @@ msgstr ""
 
 #: ../lib/ogsf/gsd_img_ppm.c:53 ../lib/ogsf/gsd_img_ppm.c:96
 #: ../lib/ogsf/gsd_img_tif.c:64 ../lib/ogsf/GK2.c:219
-#, fuzzy, c-format
+#, c-format
 msgid "Unable to open file <%s> for writing"
-msgstr "Nie można otworzyć %s do zapisu"
+msgstr "Nie można otworzyć pliku <%s> do zapisu"
 
 #: ../lib/ogsf/gsdrape.c:207
-#, fuzzy
 msgid "Unable to process vector map - out of memory"
-msgstr "Nie można otworzyć %s"
+msgstr ""
 
 #: ../lib/ogsf/gsd_legend.c:245
-#, fuzzy, c-format
+#, c-format
 msgid "Unable to read color file of raster map <%s>"
-msgstr "Nie można utworzyć nagłówka pliku dla [%s w %s]"
+msgstr ""
 
 #: ../lib/ogsf/gsd_legend.c:251
-#, fuzzy, c-format
+#, c-format
 msgid "Unable to read category file of raster map <%s>"
-msgstr "Nie można utworzyć nagłówka pliku dla [%s w %s]"
+msgstr ""
 
 #: ../lib/ogsf/gsd_legend.c:268
-#, fuzzy, c-format
+#, c-format
 msgid "Unable to read fp range of raster map <%s>"
-msgstr "Nie można utworzyć nagłówka pliku dla [%s]"
+msgstr ""
 
 #: ../lib/ogsf/gsd_legend.c:280
-#, fuzzy, c-format
+#, c-format
 msgid "Unable to read range of raster map <%s>"
-msgstr "Nie można utworzyć nagłówka pliku dla [%s]"
+msgstr ""
 
 #: ../lib/ogsf/gsd_legend.c:294
 msgid "Range request error for legend"
 msgstr ""
 
 #: ../lib/ogsf/gsd_legend.c:384
-#, fuzzy
 msgid "Unable to show discrete FP range (use list"
-msgstr "Nie można zapisać odnośnika do bazy danych."
+msgstr ""
 
 #: ../lib/ogsf/gsd_legend.c:500
-#, fuzzy
 msgid "Too many categories to show as discrete!"
-msgstr "Zbyt wiele kategorii reklasyfikacji dla [%s w %s]"
+msgstr ""
 
 #: ../lib/ogsf/gsd_legend.c:502
 msgid "Try using smaller font!"
@@ -4208,13 +4152,13 @@ msgstr ""
 #: ../lib/ogsf/Gs3.c:479 ../lib/ogsf/Gs3.c:583
 #, fuzzy
 msgid "Unable to allocate memory for a null buffer"
-msgstr "Nie można zaalokować miejsca na macierz."
+msgstr "Nie można zaalokować miejsca na null buffer"
 
 #: ../lib/ogsf/Gs3.c:140 ../lib/ogsf/Gs3.c:214 ../lib/ogsf/Gs3.c:376
 #: ../lib/ogsf/Gs3.c:491 ../lib/ogsf/Gs3.c:586
-#, fuzzy, c-format
+#, c-format
 msgid "Loading raster map <%s>..."
-msgstr "Mapa rastrowa %s@%s jest pusta"
+msgstr "Ładuję mapę rastrową <%s>..."
 
 #: ../lib/ogsf/Gs3.c:643
 #, c-format
@@ -4222,9 +4166,9 @@ msgid "Color table range doesn't match data (mincol=%d, maxcol=%d"
 msgstr ""
 
 #: ../lib/ogsf/Gs3.c:705 ../lib/ogsf/Gs3.c:775
-#, fuzzy, c-format
+#, c-format
 msgid "Translating colors from raster map <%s>..."
-msgstr "Przebuduj topologię dla wektora '%s@%s'"
+msgstr ""
 
 #: ../lib/ogsf/Gs3.c:1012
 msgid "View not saved by this program,there may be some inconsistancies"
@@ -4267,19 +4211,19 @@ msgid "Maximum number of datafiles exceeded"
 msgstr ""
 
 #: ../lib/ogsf/gvl_file.c:437
-#, fuzzy, c-format
+#, c-format
 msgid "Unable to open 3D raster map <%s>"
-msgstr "Nie można otworzyć %s"
+msgstr "Nie można otworzyć mapy rastrowej 3D <%s>"
 
 #: ../lib/ogsf/gvl_file.c:443
-#, fuzzy, c-format
+#, c-format
 msgid "Unable to read range of 3D raster map <%s>"
-msgstr "Nie można utworzyć nagłówka pliku dla [%s]"
+msgstr ""
 
 #: ../lib/ogsf/gvl_file.c:471
-#, fuzzy, c-format
+#, c-format
 msgid "Unable to close 3D raster map <%s>"
-msgstr "Nie można otworzyć %s"
+msgstr ""
 
 #: ../lib/ogsf/trans.c:180
 msgid "Out of matrix stack space"
@@ -4295,16 +4239,15 @@ msgid "No points from vector map <%s> fall within current region"
 msgstr ""
 
 #: ../lib/ogsf/Gp3.c:209
-#, fuzzy, c-format
+#, c-format
 msgid "Vector map <%s> loaded (%d points)"
-msgstr "Nie można znaleźć wektora źródłowego '%s'"
+msgstr ""
 
 #: ../lib/ogsf/GS2.c:1638
-#, fuzzy, c-format
+#, c-format
 msgid "Raster map <%s> is outside of current region. Load failed."
 msgstr ""
-"[%s] w mapsecie [%s] - znajduje się w innej strefie [%d] niż bieżący region "
-"[%d]"
+"Mapa rastrowa <%s> jest poza bieżącym regionem. Załadowanie nie powiodło się."
 
 #: ../lib/ogsf/GS2.c:1716 ../lib/ogsf/GS2.c:1722 ../lib/ogsf/GS2.c:1730
 #: ../lib/ogsf/GS2.c:1739 ../lib/ogsf/GS2.c:1747 ../lib/ogsf/GS2.c:1757
@@ -4313,14 +4256,12 @@ msgid "GS_load_att_map(): Out of memory. Unable to load map"
 msgstr ""
 
 #: ../lib/ogsf/GS2.c:1833
-#, fuzzy
 msgid "Loading failed"
-msgstr "Połączenie nie powiodło się."
+msgstr "Ładowanie nie powiodło się."
 
 #: ../lib/ogsf/GS2.c:1837
-#, fuzzy
 msgid "Error finding range"
-msgstr "dla istniejących map rastrowych %d"
+msgstr ""
 
 #: ../lib/gmath/la.c:64 ../lib/gmath/la.c:120
 msgid "Matrix dimensions out of range"
@@ -4333,7 +4274,7 @@ msgstr "Macierz nie jest w pełni zainicjowana"
 #: ../lib/gmath/la.c:158
 #, fuzzy
 msgid "Unable to allocate space for matrix copy"
-msgstr "Nie można zaalokować miejsca na macierz."
+msgstr "Nie można zaalokować miejsca na kopię macierzy"
 
 #: ../lib/gmath/la.c:247
 msgid "First scalar multiplier must be non-zero"
@@ -4370,12 +4311,12 @@ msgstr ""
 #: ../lib/gmath/la.c:464
 #, fuzzy
 msgid "Could not allocate space for solution matrix"
-msgstr "Nie można zaalokować miejsca na wektor"
+msgstr "Nie można zaalokować miejsca na solution matrix"
 
 #: ../lib/gmath/la.c:470 ../lib/gmath/la.c:478
 #, fuzzy
 msgid "Could not allocate space for working matrix"
-msgstr "Nie można zaalokować miejsca na wektor"
+msgstr "Nie można zaalokować miejsca na working matrix"
 
 #: ../lib/gmath/la.c:531
 msgid "Matrix (or submatrix is singular). Solution undetermined"
@@ -4411,9 +4352,8 @@ msgid "Element array has not been allocated"
 msgstr ""
 
 #: ../lib/gmath/la.c:696
-#, fuzzy
 msgid "Specified element is outside array bounds"
-msgstr "Określony indeks kolumnyjest nieprawidłowy"
+msgstr ""
 
 #: ../lib/gmath/la.c:750
 msgid "Specified matrix column index is outside range"
@@ -4445,9 +4385,8 @@ msgid "Unknown vector type."
 msgstr "nieznany typ interpolacjinieznany typ interpolacji"
 
 #: ../lib/gmath/la.c:981
-#, fuzzy
 msgid "Output vector is uninitialized"
-msgstr "Jedna lub obie macierze wejściowe nie są zainicjowane"
+msgstr ""
 
 #: ../lib/gmath/la.c:986
 msgid "Vectors are not of the same type"
@@ -4524,13 +4463,13 @@ msgstr ""
 #: ../lib/symbol/read.c:278
 #, c-format
 msgid "Cannot find/open symbol: '%s'"
-msgstr ""
+msgstr "Nie można odnaleźć/otworzyć symbolu: '%s'"
 
 #: ../lib/symbol/read.c:378 ../lib/symbol/read.c:396 ../lib/symbol/read.c:406
 #: ../lib/symbol/read.c:424
 #, c-format
 msgid "Incorrect symbol color: '%s', using default."
-msgstr ""
+msgstr "Niedozwolony kolor symbolu: '%s', zostanie użyty domyślny."
 
 #: ../lib/rst/interp_float/segmen2d.c:113
 msgid ""
@@ -4545,7 +4484,7 @@ msgstr "Wektor nie jest trójwymiarowy"
 
 #: ../lib/rst/interp_float/vinput2d.c:76
 msgid "Loading data from attribute table ..."
-msgstr ""
+msgstr "Ładuje dane z tabeli atrybutów ..."
 
 #: ../lib/rst/interp_float/vinput2d.c:79
 msgid "Cannot get layer info"
@@ -4579,7 +4518,7 @@ msgstr "Nieznany typ kolumny s (musi być liczba całkowita lub rzeczywista)"
 
 #: ../lib/rst/interp_float/vinput2d.c:121
 msgid "Reading lines from vector map ... "
-msgstr ""
+msgstr "Czyta linie z mapy wektorowej ..."
 
 #: ../lib/rst/interp_float/vinput2d.c:153
 #: ../lib/rst/interp_float/vinput2d.c:271
@@ -4628,205 +4567,270 @@ msgid "some points outside of region -- will ignore..."
 msgstr "pewne punkty poza regionem -- będą ignorowane"
 
 #: ../lib/rst/interp_float/input2d.c:47
-#, fuzzy, c-format
+#, c-format
 msgid "Mask raster map <%s> not found"
-msgstr "Nie można znaleźć wektora źródłowego '%s'"
+msgstr "Nie znaleziono MASKi mapy rastrowej <%s>"
 
 #: ../lib/rst/interp_float/input2d.c:69
 msgid "Bitmap mask created"
 msgstr ""
 
-#, fuzzy
-#~ msgid "Removed bridges"
-#~ msgstr "Usuń okno"
+msgid "Removed bridges"
+msgstr ""
+
+msgid "Duplicates"
+msgstr "Duplikaty"
+
+msgid "G_malloc: out of memory"
+msgstr "G_malloc: brak pamięci"
+
+msgid "G_calloc: out of memory"
+msgstr "G_calloc: brak pamięci"
+
+msgid "G_realloc: out of memory"
+msgstr "G_realloc: brak pamięci"
+
+msgid "Insufficent memory for allocation of gaussian"
+msgstr "zbyt mała ilość pamięci do alokacji "
+
+msgid "Cannot describe table <%s>"
+msgstr "Nie można opisać tabeli <%s>"
 
 #, fuzzy
-#~ msgid "Duplicates"
-#~ msgstr "powtórz pole Wschodu"
+msgid "Cannot read topo for line [%d]"
+msgstr "Nie można odczytać histogramu dla [%s w %s]"
 
-#~ msgid "G_malloc: out of memory"
-#~ msgstr "G_malloc: brak pamięci"
+msgid "Unable to connect lines %d,%d"
+msgstr "Nie można połączyć linii %d,%d"
 
-#~ msgid "G_calloc: out of memory"
-#~ msgstr "G_calloc: brak pamięci"
-
-#~ msgid "G_realloc: out of memory"
-#~ msgstr "G_realloc: brak pamięci"
-
-#~ msgid "Insufficent memory for allocation of gaussian"
-#~ msgstr "zbyt mała ilość pamięci do alokacji "
+msgid "Output name '%s' is not valid rast name."
+msgstr "Nazwa pliku wyjściowego '%s' nie jest poprawną nazwą rastra."
 
 #, fuzzy
-#~ msgid "Cannot describe table <%s>"
-#~ msgstr "Nie można otworzyć pliku śledzenia błędu '%s'"
+msgid "Cannot find input map '%s'"
+msgstr "Nie można odnaleźć/otworzyć symbolu: '%s'"
+
+msgid "Output map '%s' is used as input"
+msgstr "Mapa wyjściowa '%s' jest używana jako plik wejścowy"
+
+msgid "unable to open raster map [%s in %s]"
+msgstr "nie można otworzyć rastrowej mapy [%s w %s]"
+
+msgid "unable to find [%s] in [%s]"
+msgstr "nie można znaleźć [%s] in [%s]"
 
 #, fuzzy
-#~ msgid "Cannot read topo for line [%d]"
-#~ msgstr "Nie można odczytać histogramu dla [%s w %s]"
+msgid "Can't read header file for [%s in %s]\n"
+msgstr "Nie można otworzyć nagłówka pliku dla [%s w %s]"
+
+msgid "Can't open header file for [%s in %s]"
+msgstr "Nie można otworzyć nagłówka pliku dla [%s w %s]"
+
+msgid "Cannot get field info"
+msgstr "Brak informacji o polu"
+
+msgid "Cannot open database"
+msgstr "Nie można otworzyć bazy danych"
+
+msgid "Building topology ...\n"
+msgstr "Tworzenie topologii ...\n"
+
+msgid "Cannot get column info"
+msgstr "Nie można pobrać informacji o kolumnie"
 
 #, fuzzy
-#~ msgid "Unable to connect lines %d,%d"
+msgid "OGR feature type [%d] not supported"
+msgstr "Obiekty OGR typu %d nie są obsługiwane"
+
+msgid "Cannot rewrite line"
+msgstr "Nie można nadpisać linii"
+
+msgid "Output name '%s' is not valid vector name."
+msgstr "Nazwa wyniku '%s' nie jest poprawną nazwą wektora."
+
+msgid "Cannot copy vector '%s' to '%s'"
+msgstr "Nie można skopiować wektora '%s' do '%s'"
+
+#, fuzzy
+msgid "Cannot open existing vector map <%s>"
+msgstr "Nie można otworzyć pliku śledzenia błędu '%s'"
+
+#, fuzzy
+msgid "Cannot delete existing vector <%s>"
+msgstr "Nie można usunąć istniejącego wektora <%s>"
+
+msgid "Cannot open new vector %s"
+msgstr "Nie można otworzyć nowego wektora %s"
+
+msgid "Cannot open history file for vector '%s'"
+msgstr "Nie można otworzyć pliku historii dla wektora '%s'"
+
+msgid "Setting map window"
+msgstr "Ustawienia okna mapy"
+
+msgid "Current window not settable"
+msgstr "Nie można ustawić bieżącego okna "
+
+msgid "Can't clear current graphics window"
+msgstr "Nie można wyczyścić bieżącej grafiki"
+
+msgid "Color file for [%s] not available"
+msgstr "Plik koloru dla [%s] nie jest dostępny"
+
+msgid "Cannot use current window"
+msgstr "Nie można użyć bieżącego okna"
+
+msgid "Not able to open cellfile for [%s]"
+msgstr "Nie można otworzyć cellfile dla [%s]"
+
+msgid "clearing current graphics window"
+msgstr "czyszczenie bieżącej grafiki"
+
+msgid "%s - ** illegal name **"
+msgstr "%s - ** nazwa niedopuszczalna **"
+
+msgid "G_dump: memory allocated to G__"
+msgstr "zrzut _G: pamięć ulokowana w G__"
+
+msgid "Size of cell in fp maps = %d"
+msgstr "Rozmiar komórki w mapach fp = %d"
+
+msgid "type for writing floating maps = %d"
+msgstr "typ zapisu map o wartościach danych zmiennoprzecinkowych = %d"
+
+msgid "current window = %p"
+msgstr "bieżące okno = %p"
+
+msgid "Flag: window set? %d"
+msgstr "Flaga: ustawienie okna? %d"
+
+#, fuzzy
+msgid "buffer for reading null rows %p"
+msgstr "zabezpieczenie przed wczytaniem zerowych wierszy %p"
+
+#, fuzzy
+msgid "Histogram request %d"
+msgstr "Histogram wymaga %d"
+
+msgid "G_dump: file #%d"
+msgstr "G_dump: plik #%d"
+
+msgid "Range structure %p"
+msgstr "Struktura zasięgu %p"
+
+msgid "Current data row in memory %d"
+msgstr "Bieżący wiersz danych w pamięci %d"
+
+msgid "Current null row in memory %d"
+msgstr "Bieżący zerowy wiersz w pamięci %d"
+
+msgid "bytes per cell %d"
+msgstr "bajtów na komórkę %d"
+
+msgid "Temporary name for NEW files %s"
+msgstr "Tymczasowa nazwa dla nowych plików %s"
+
+msgid "Temporary name for NEW NULL files %s"
+msgstr "Tymczasowa nazwa dla nowych, pustych plików %s"
+
+msgid "Mapset of open file %s"
+msgstr "Mapset otwartego pliku: %s"
+
+msgid "NULL_ROWS array[%d] = %p"
+msgstr "tablica NULL_ROWS [%d] = %p"
+
+#, fuzzy
+msgid "No such graphics monitor as <%s>.\n"
+msgstr "Monitor nie został wybrany"
+
+#, fuzzy
+msgid "Please run \"d.mon\" to select a valid graphics monitor.\n"
+msgstr "Aby wybrać monitor uruchom \"d.mon\""
+
+msgid "Can't stat %s\n"
+msgstr ""
+
+#, fuzzy
+msgid "Please start graphics monitor <%s>.\n"
+msgstr "Aby wybrać monitor uruchom \"d.mon\""
+
+msgid "Not connected...\n"
+msgstr "Brak połączenia...\n"
+
+msgid "Cannot open old vector %s"
+msgstr "Nie można otworzyć starego wektora %s"
+
+msgid "Starting lu solver method"
+msgstr "Rozpoczęto rozwiązywanie metodą LU"
+
+#~ msgid "mapset <%s> is not the current mapset"
+#~ msgstr "mapset <%s> nie jest bieżącym mapsetem"
+
+#~ msgid "map <%s> is not in the current mapset"
+#~ msgstr "mapa <%s> nie znajduje się w bieżącym mapsecie"
+
+#, fuzzy
+#~ msgid ""
+#~ "\n"
+#~ "ERROR: value <%s> ambiguous for parameter <%s>\n"
+#~ msgstr ""
+#~ "\n"
+#~ "Błąd: wartość <%s> zajduje się poza zakresem dla parametru <%s>\n"
+
+#, fuzzy
+#~ msgid "Unable to open display"
+#~ msgstr "Nie można otworzyć %s"
+
+#, fuzzy
+#~ msgid "Unable to obtain visual"
 #~ msgstr "W %s nie można otworzyć pliku %s"
 
-#~ msgid "Output name '%s' is not valid rast name."
-#~ msgstr "Nazwa pliku wyjściowego '%s' nie jest poprawną nazwą rastra."
+#, fuzzy
+#~ msgid "Unable to query drawable"
+#~ msgstr "W %s nie można otworzyć pliku %s"
 
-#~ msgid "Cannot find input map '%s'"
+#, fuzzy
+#~ msgid "Failed to initialize Xlib surface"
+#~ msgstr "W %s nie można otworzyć pliku %s"
+
+#~ msgid "Unknown file extension: %s"
+#~ msgstr "Nieznane rozszerzenie pliku: %s"
+
+#, fuzzy
+#~ msgid "Unknown Cairo surface type"
+#~ msgstr "nieznany typ interpolacji"
+
+#, fuzzy
+#~ msgid "Failed to initialize Cairo surface"
+#~ msgstr "W %s nie można otworzyć pliku %s"
+
+#, fuzzy
+#~ msgid "Cairo: unable to open output file <%s>"
+#~ msgstr "nie można otworzyć pliku tabeli danych: %s"
+
+#, fuzzy
+#~ msgid "Cairo: unable to open mask file <%s>"
+#~ msgstr "G_spawn: nie można otworzyć pliku %s"
+
+#, fuzzy
+#~ msgid "Cairo: unable to open input file <%s>"
+#~ msgstr "G_spawn: nie można otworzyć pliku %s"
+
+#, fuzzy
+#~ msgid "Cairo: invalid input file <%s>"
 #~ msgstr "Nie można znaleźć wejściowej mapy '%s'"
 
-#~ msgid "Output map '%s' is used as input"
-#~ msgstr "Mapa wyjściowa '%s' jest używana jako plik wejścowy"
-
-#~ msgid "unable to open raster map [%s in %s]"
+#, fuzzy
+#~ msgid "Unable to convert from <%s> to UTF-8"
 #~ msgstr "nie można otworzyć rastrowej mapy [%s w %s]"
 
-#~ msgid "unable to find [%s] in [%s]"
-#~ msgstr "nie można znaleźć [%s] in [%s]"
-
-#~ msgid "Can't read header file for [%s in %s]\n"
-#~ msgstr "Nie można odczytać pliku nagłówka dla [%s w %s]\n"
-
-#~ msgid "Can't open header file for [%s in %s]"
-#~ msgstr "Nie można otworzyć nagłówka pliku dla [%s w %s]"
-
-#~ msgid "Cannot get field info"
-#~ msgstr "Brak informacji o polu"
+#~ msgid "Some characters could not be converted to UTF-8"
+#~ msgstr "Nie udało się przekonwertować niektórych znaków do UTF-8"
 
 #, fuzzy
-#~ msgid "Cannot open database"
-#~ msgstr "Nie można otworzyć bazy danych %s"
-
-#~ msgid "Building topology ...\n"
-#~ msgstr "Tworzenie topologii ...\n"
+#~ msgid "Cairo: unable to open input mask file <%s>"
+#~ msgstr "nie można otworzyć pliku tabeli danych: %s"
 
 #, fuzzy
-#~ msgid "Cannot get column info"
-#~ msgstr "Informacji o warstwie jest niedostępna"
-
-#, fuzzy
-#~ msgid "OGR feature type [%d] not supported"
-#~ msgstr "Obiekty OGR typu %d nie są obsługiwane"
-
-#~ msgid "Cannot rewrite line"
-#~ msgstr "Nie można nadpisać linii"
-
-#~ msgid "Output name '%s' is not valid vector name."
-#~ msgstr "Nazwa wyniku '%s' nie jest poprawną nazwą wektora."
-
-#~ msgid "Cannot copy vector '%s' to '%s'"
-#~ msgstr "Nie można skopiować wektora '%s' do '%s'"
-
-#, fuzzy
-#~ msgid "Cannot open existing vector map <%s>"
-#~ msgstr "Nie można otworzyć pliku śledzenia błędu '%s'"
-
-#, fuzzy
-#~ msgid "Cannot delete existing vector <%s>"
-#~ msgstr "Nie można usunąć istniejącego wektora <%s>"
-
-#~ msgid "Cannot open new vector %s"
-#~ msgstr "Nie można otworzyć nowego wektora %s"
-
-#~ msgid "Cannot open history file for vector '%s'"
-#~ msgstr "Nie można otworzyć pliku historii dla wektora '%s'"
-
-#~ msgid "Setting map window"
-#~ msgstr "Ustawienia okna mapy"
-
-#, fuzzy
-#~ msgid "Current window not settable"
-#~ msgstr "bieżące okno = %p"
-
-#~ msgid "Can't clear current graphics window"
-#~ msgstr "Nie można wyczyścić bieżącej grafiki"
-
-#~ msgid "Color file for [%s] not available"
-#~ msgstr "Plik koloru dla [%s] nie jest dostępny"
-
-#~ msgid "Cannot use current window"
-#~ msgstr "Nie można użyć bieżącego okna"
-
-#~ msgid "Not able to open cellfile for [%s]"
-#~ msgstr "Nie można otworzyć cellfile dla [%s]"
-
-#~ msgid "clearing current graphics window"
-#~ msgstr "czyszczenie bieżącej grafiki"
-
-#~ msgid "%s - ** illegal name **"
-#~ msgstr "%s - ** nazwa niedopuszczalna **"
-
-#~ msgid "G_dump: memory allocated to G__"
-#~ msgstr "zrzut _G: pamięć ulokowana w G__"
-
-#~ msgid "Size of cell in fp maps = %d"
-#~ msgstr "Rozmiar komórki w mapach fp = %d"
-
-#~ msgid "type for writing floating maps = %d"
-#~ msgstr "typ zapisu map o wartościach danych zmiennoprzecinkowych = %d"
-
-#~ msgid "current window = %p"
-#~ msgstr "bieżące okno = %p"
-
-#~ msgid "Flag: window set? %d"
-#~ msgstr "Flaga: ustawienie okna? %d"
-
-#, fuzzy
-#~ msgid "buffer for reading null rows %p"
-#~ msgstr "zabezpieczenie przed wczytaniem zerowych wierszy %p"
-
-#, fuzzy
-#~ msgid "Histogram request %d"
-#~ msgstr "Histogram wymaga %d"
-
-#~ msgid "G_dump: file #%d"
-#~ msgstr "G_dump: plik #%d"
-
-#~ msgid "Range structure %p"
-#~ msgstr "Struktura zasięgu %p"
-
-#~ msgid "Current data row in memory %d"
-#~ msgstr "Bieżący wiersz danych w pamięci %d"
-
-#~ msgid "Current null row in memory %d"
-#~ msgstr "Bieżący zerowy wiersz w pamięci %d"
-
-#~ msgid "bytes per cell %d"
-#~ msgstr "bajtów na komórkę %d"
-
-#~ msgid "Temporary name for NEW files %s"
-#~ msgstr "Tymczasowa nazwa dla nowych plików %s"
-
-#~ msgid "Temporary name for NEW NULL files %s"
-#~ msgstr "Tymczasowa nazwa dla nowych, pustych plików %s"
-
-#~ msgid "Mapset of open file %s"
-#~ msgstr "Mapset otwartego pliku: %s"
-
-#~ msgid "NULL_ROWS array[%d] = %p"
-#~ msgstr "tablica NULL_ROWS [%d] = %p"
-
-#, fuzzy
-#~ msgid "No such graphics monitor as <%s>.\n"
-#~ msgstr "Monitor nie został wybrany"
-
-#, fuzzy
-#~ msgid "Please run \"d.mon\" to select a valid graphics monitor.\n"
-#~ msgstr "Aby wybrać monitor uruchom \"d.mon\""
-
-#, fuzzy
-#~ msgid "Can't stat %s\n"
-#~ msgstr "lista %s"
-
-#, fuzzy
-#~ msgid "Please start graphics monitor <%s>.\n"
-#~ msgstr "Aby wybrać monitor uruchom \"d.mon\""
-
-#~ msgid "Not connected...\n"
-#~ msgstr "Brak połączenia...\n"
-
-#, fuzzy
-#~ msgid "Cannot open old vector %s"
-#~ msgstr "Nie można otworzyć nowego wektora %s"
-
-#~ msgid "Starting lu solver method"
-#~ msgstr "Rozpoczęto rozwiązywanie metodą LU"
+#~ msgid "Cairo: invalid input mask file <%s>"
+#~ msgstr "Nie można znaleźć wejściowej mapy '%s'"
