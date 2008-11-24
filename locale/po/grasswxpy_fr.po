@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: grasswxpy_fr\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-10-11 14:54+0200\n"
-"PO-Revision-Date: 2008-10-22 17:36+0200\n"
+"POT-Creation-Date: 2008-11-24 16:19+0100\n"
+"PO-Revision-Date: 2008-11-06 23:26+0100\n"
 "Last-Translator: ANDRE Benoit <benoit.andre@bcgeol.be>\n"
 "Language-Team: Français <fr@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -105,7 +105,7 @@ msgid "Save display to PNG file"
 msgstr "Sauver l'image écran dans un ficher PNG"
 
 #: ../gui/wxpython/icons/icon.py:263
-#: ../gui/wxpython/gui_modules/mapdisp.py:3273
+#: ../gui/wxpython/gui_modules/mapdisp.py:3303
 msgid "Print display"
 msgstr "Imprimer l'image écran"
 
@@ -208,7 +208,7 @@ msgid "Add labels"
 msgstr "Ajouter des étiquettes"
 
 #: ../gui/wxpython/icons/icon.py:315
-#: ../gui/wxpython/gui_modules/mapdisp.py:3851
+#: ../gui/wxpython/gui_modules/mapdisp.py:3882
 msgid "Add text layer"
 msgstr "Ajouter une couche de texte"
 
@@ -255,7 +255,7 @@ msgid "Left: Select; Middle: Unselect; Right: Confirm"
 msgstr "Gauche : Sélectionner ; Milieu : Désélectionner : Droite : Confirmer"
 
 #: ../gui/wxpython/icons/icon.py:335
-#: ../gui/wxpython/gui_modules/toolbars.py:689
+#: ../gui/wxpython/gui_modules/toolbars.py:703
 msgid "Copy categories"
 msgstr "Copier les catégories"
 
@@ -331,7 +331,7 @@ msgstr "Mesurer une distance"
 
 #: ../gui/wxpython/icons/icon.py:379
 msgid "Draw transect in map display window to profile"
-msgstr ""
+msgstr "Tracer la ligne de coupe sur la carte affichée"
 
 #: ../gui/wxpython/icons/icon.py:381
 msgid "Profile surface map"
@@ -339,15 +339,15 @@ msgstr ""
 
 #: ../gui/wxpython/icons/icon.py:383
 msgid "Draw/re-draw profile"
-msgstr ""
+msgstr "Trace/retrace le profil"
 
 #: ../gui/wxpython/icons/icon.py:385
 msgid "Profile options"
-msgstr ""
+msgstr "Options pour les profils"
 
 #: ../gui/wxpython/icons/icon.py:387
 msgid "Create histogram of image or raster file"
-msgstr ""
+msgstr "Créer l'histogramme de l'image ou du fichier 'raster'"
 
 #: ../gui/wxpython/icons/icon.py:389
 msgid "Select font"
@@ -375,7 +375,7 @@ msgid "Define GCP (Ground Control Points)"
 msgstr "Définir les points de contrôle au sol (PCS)"
 
 #: ../gui/wxpython/icons/icon.py:401
-#: ../gui/wxpython/gui_modules/menudata.py:433
+#: ../gui/wxpython/gui_modules/menudata.py:438
 msgid "Georectify"
 msgstr "Géo-rectifier"
 
@@ -427,9 +427,9 @@ msgstr "Définir la base de données de GRASS et la localisation"
 #: ../gui/wxpython/gui_modules/location_wizard.py:1076
 #: ../gui/wxpython/gui_modules/location_wizard.py:1154
 #: ../gui/wxpython/gui_modules/location_wizard.py:1246
-#: ../gui/wxpython/gui_modules/menuform.py:1217
-#: ../gui/wxpython/gui_modules/gdialogs.py:801
-#: ../gui/wxpython/gui_modules/gdialogs.py:811 ../gui/wxpython/gis_set.py:123
+#: ../gui/wxpython/gui_modules/menuform.py:1276
+#: ../gui/wxpython/gui_modules/gdialogs.py:805
+#: ../gui/wxpython/gui_modules/gdialogs.py:815 ../gui/wxpython/gis_set.py:123
 msgid "Browse"
 msgstr "Parcourir"
 
@@ -465,15 +465,15 @@ msgstr "Impossible de créer la localisation"
 #: ../gui/wxpython/gui_modules/location_wizard.py:2230
 #: ../gui/wxpython/gui_modules/location_wizard.py:2249
 #: ../gui/wxpython/gui_modules/location_wizard.py:2556
-#: ../gui/wxpython/gui_modules/georect.py:885
-#: ../gui/wxpython/gui_modules/georect.py:922
+#: ../gui/wxpython/gui_modules/georect.py:894
+#: ../gui/wxpython/gui_modules/georect.py:931
 #: ../gui/wxpython/gui_modules/gdialogs.py:144
-#: ../gui/wxpython/gui_modules/gdialogs.py:1000
-#: ../gui/wxpython/gui_modules/mapdisp.py:1138
-#: ../gui/wxpython/gui_modules/mapdisp.py:1769
-#: ../gui/wxpython/gui_modules/mapdisp.py:2723
+#: ../gui/wxpython/gui_modules/gdialogs.py:1004
+#: ../gui/wxpython/gui_modules/mapdisp.py:1160
+#: ../gui/wxpython/gui_modules/mapdisp.py:1791
+#: ../gui/wxpython/gui_modules/mapdisp.py:2749
 #: ../gui/wxpython/gui_modules/workspace.py:617
-#: ../gui/wxpython/gui_modules/preferences.py:1508
+#: ../gui/wxpython/gui_modules/preferences.py:1530
 #: ../gui/wxpython/gui_modules/dbm.py:188
 #: ../gui/wxpython/gui_modules/dbm.py:272
 #: ../gui/wxpython/gui_modules/dbm.py:1217
@@ -491,14 +491,15 @@ msgstr "Impossible de créer la localisation"
 #: ../gui/wxpython/gui_modules/dbm.py:2599
 #: ../gui/wxpython/gui_modules/gcmd.py:59
 #: ../gui/wxpython/gui_modules/gcmd.py:82
-#: ../gui/wxpython/gui_modules/wxgui_utils.py:406
-#: ../gui/wxpython/gui_modules/wxgui_utils.py:431
-#: ../gui/wxpython/gui_modules/wxgui_utils.py:1224
+#: ../gui/wxpython/gui_modules/render.py:458
+#: ../gui/wxpython/gui_modules/wxgui_utils.py:410
+#: ../gui/wxpython/gui_modules/wxgui_utils.py:442
+#: ../gui/wxpython/gui_modules/wxgui_utils.py:1235
 #: ../gui/wxpython/gui_modules/vdigit.py:1895
 #: ../gui/wxpython/gui_modules/vdigit.py:2073
 #: ../gui/wxpython/gui_modules/vdigit.py:2097 ../gui/wxpython/gis_set.py:672
-#: ../gui/wxpython/wxgui.py:731 ../gui/wxpython/wxgui.py:863
-#: ../gui/wxpython/wxgui.py:872
+#: ../gui/wxpython/wxgui.py:734 ../gui/wxpython/wxgui.py:866
+#: ../gui/wxpython/wxgui.py:875
 msgid "Error"
 msgstr "Erreur"
 
@@ -516,7 +517,8 @@ msgstr "Choisir le code EPSG du système de coordonnées"
 
 #: ../gui/wxpython/gui_modules/location_wizard.py:251
 msgid "Use coordinate system of selected georeferenced file"
-msgstr "Utiliser le système de coordonnées du fichier géo-référencé sélectionné"
+msgstr ""
+"Utiliser le système de coordonnées du fichier géo-référencé sélectionné"
 
 #: ../gui/wxpython/gui_modules/location_wizard.py:254
 msgid "Use coordinate system of selected WKT or PRJ file"
@@ -524,7 +526,9 @@ msgstr "Utiliser le système de coordonnées du fichier WKT ou PRJ sélectionné
 
 #: ../gui/wxpython/gui_modules/location_wizard.py:257
 msgid "Create custom PROJ.4 parameters string for coordinate system"
-msgstr "Créer une chaîne de paramètres PROJ.4 particuliers pour le système de coordonnées"
+msgstr ""
+"Créer une chaîne de paramètres PROJ.4 particuliers pour le système de "
+"coordonnées"
 
 #: ../gui/wxpython/gui_modules/location_wizard.py:260
 #, fuzzy
@@ -716,7 +720,8 @@ msgstr "Localisation <%s> créée"
 #: ../gui/wxpython/gui_modules/location_wizard.py:1739
 #, python-format
 msgid "Unable to create new location. Location <%s> not created."
-msgstr "Impossible de créer la nouvelle localisation.  Localisation <%s> non créée."
+msgstr ""
+"Impossible de créer la nouvelle localisation.  Localisation <%s> non créée."
 
 #: ../gui/wxpython/gui_modules/location_wizard.py:1741
 #: ../gui/wxpython/gui_modules/location_wizard.py:1749
@@ -857,152 +862,162 @@ msgstr "Liste des transformations de données"
 msgid "Datums:"
 msgstr "Données : "
 
-#: ../gui/wxpython/gui_modules/georect.py:107
+#: ../gui/wxpython/gui_modules/georect.py:109
 msgid "Setup for georectification"
 msgstr "Setup pour la géo-rectification"
 
-#: ../gui/wxpython/gui_modules/georect.py:137
-#: ../gui/wxpython/gui_modules/georect.py:140
+#: ../gui/wxpython/gui_modules/georect.py:139
+#: ../gui/wxpython/gui_modules/georect.py:142
 msgid "Georectifying setup canceled."
 msgstr "Setup de la géo-rectification annulée"
 
-#: ../gui/wxpython/gui_modules/georect.py:175
+#: ../gui/wxpython/gui_modules/georect.py:178
 msgid "Set ground control points (GCPs)"
 msgstr "Définir les points de contrôle au sol (PCS)"
 
-#: ../gui/wxpython/gui_modules/georect.py:274
+#: ../gui/wxpython/gui_modules/georect.py:277
 msgid "Select map type and location/mapset"
 msgstr "Choisir le type de carte, la localisation et le jeu de cartes"
 
-#: ../gui/wxpython/gui_modules/georect.py:301
+#: ../gui/wxpython/gui_modules/georect.py:304
 msgid "Map type to georectify"
 msgstr "Type de carte à géo-rectifier"
 
-#: ../gui/wxpython/gui_modules/georect.py:302
-#: ../gui/wxpython/gui_modules/wxgui_utils.py:640
+#: ../gui/wxpython/gui_modules/georect.py:305
+#: ../gui/wxpython/gui_modules/wxgui_utils.py:651
 msgid "raster"
 msgstr "raster"
 
-#: ../gui/wxpython/gui_modules/georect.py:302
-#: ../gui/wxpython/gui_modules/wxgui_utils.py:661
+#: ../gui/wxpython/gui_modules/georect.py:305
+#: ../gui/wxpython/gui_modules/wxgui_utils.py:672
 msgid "vector"
 msgstr "vecteur"
 
-#: ../gui/wxpython/gui_modules/georect.py:308
+#: ../gui/wxpython/gui_modules/georect.py:311
 msgid "Select source location:"
 msgstr "Choisir la localisation initiale : "
 
-#: ../gui/wxpython/gui_modules/georect.py:319
+#: ../gui/wxpython/gui_modules/georect.py:322
 msgid "Select source mapset:"
 msgstr "Choisir le jeu de cartes initial :"
 
-#: ../gui/wxpython/gui_modules/georect.py:373
+#: ../gui/wxpython/gui_modules/georect.py:376
 msgid "You must select a valid location before selecting a mapset"
-msgstr "Vous devez sélectionner une localisation valide avant de sélectionner un jeu de cartes"
+msgstr ""
+"Vous devez sélectionner une localisation valide avant de sélectionner un jeu "
+"de cartes"
 
-#: ../gui/wxpython/gui_modules/georect.py:384
+#: ../gui/wxpython/gui_modules/georect.py:387
 msgid "You must select a valid location and mapset in order to continue"
-msgstr "Vous devez sélectionner une localisation et un jeu de cartes valides avant de pouvoir continuer"
+msgstr ""
+"Vous devez sélectionner une localisation et un jeu de cartes valides avant "
+"de pouvoir continuer"
 
-#: ../gui/wxpython/gui_modules/georect.py:401
+#: ../gui/wxpython/gui_modules/georect.py:404
 msgid "Select image/map group to georectify"
 msgstr "Choisir un groupe d'images/cartes à géo-rectifier"
 
-#: ../gui/wxpython/gui_modules/georect.py:420
+#: ../gui/wxpython/gui_modules/georect.py:423
 msgid "Select group:"
 msgstr "Choisir un groupe :"
 
-#: ../gui/wxpython/gui_modules/georect.py:431
+#: ../gui/wxpython/gui_modules/georect.py:434
 msgid "Create group if none exists"
 msgstr "Créer un groupe si aucun n''existe"
 
-#: ../gui/wxpython/gui_modules/georect.py:434
+#: ../gui/wxpython/gui_modules/georect.py:437
 msgid "Create/edit group..."
 msgstr "Créer/éditer un groupe ..."
 
-#: ../gui/wxpython/gui_modules/georect.py:440
+#: ../gui/wxpython/gui_modules/georect.py:443
 msgid "Extension for output maps:"
 msgstr "Extension pour les cartes en sortie :"
 
-#: ../gui/wxpython/gui_modules/georect.py:491
+#: ../gui/wxpython/gui_modules/georect.py:494
 msgid "You must select a valid image/map group in order to continue"
-msgstr "Vous devez sélectionner un ensemble d'images ou de cartes valides pour pouvoir continuer"
+msgstr ""
+"Vous devez sélectionner un ensemble d'images ou de cartes valides pour "
+"pouvoir continuer"
 
-#: ../gui/wxpython/gui_modules/georect.py:496
+#: ../gui/wxpython/gui_modules/georect.py:499
 msgid "You must enter an map name extension in order to continue"
-msgstr "Vous devez spécifier une extension au nom de la carte pour pouvoir continuer"
+msgstr ""
+"Vous devez spécifier une extension au nom de la carte pour pouvoir continuer"
 
-#: ../gui/wxpython/gui_modules/georect.py:541
+#: ../gui/wxpython/gui_modules/georect.py:544
 msgid "Select image/map to display for ground control point (GCP) creation"
-msgstr "Sélectionner une image ou une carte à afficher pour la création des points de contrôle au sol (PCS)"
+msgstr ""
+"Sélectionner une image ou une carte à afficher pour la création des points "
+"de contrôle au sol (PCS)"
 
-#: ../gui/wxpython/gui_modules/georect.py:549
+#: ../gui/wxpython/gui_modules/georect.py:552
 msgid "Select display image/map:"
 msgstr "Sélectionner l'image ou la carte à afficher :"
 
-#: ../gui/wxpython/gui_modules/georect.py:581
+#: ../gui/wxpython/gui_modules/georect.py:584
 msgid "You must select a valid image/map in order to continue"
-msgstr "Vous devez choisir une image ou une carte valide pour pouvoir continuer"
+msgstr ""
+"Vous devez choisir une image ou une carte valide pour pouvoir continuer"
 
-#: ../gui/wxpython/gui_modules/georect.py:605
+#: ../gui/wxpython/gui_modules/georect.py:608
 msgid "Create & manage ground control points"
 msgstr "Créer et gérer les points de contrôle au sol"
 
-#: ../gui/wxpython/gui_modules/georect.py:699
+#: ../gui/wxpython/gui_modules/georect.py:702
 msgid "Select rectification method for rasters"
 msgstr "Choissir la méthode de correction pour les 'rasters'"
 
-#: ../gui/wxpython/gui_modules/georect.py:700
+#: ../gui/wxpython/gui_modules/georect.py:703
 msgid "1st order"
 msgstr "1er ordre"
 
-#: ../gui/wxpython/gui_modules/georect.py:700
+#: ../gui/wxpython/gui_modules/georect.py:703
 msgid "2nd order"
 msgstr "2nd ordre"
 
-#: ../gui/wxpython/gui_modules/georect.py:700
+#: ../gui/wxpython/gui_modules/georect.py:703
 msgid "3rd order"
 msgstr "3ème ordre"
 
-#: ../gui/wxpython/gui_modules/georect.py:706
+#: ../gui/wxpython/gui_modules/georect.py:709
 msgid "clip to computational region in target location"
 msgstr "Circoncire à la région calculée dans la localisation cible"
 
-#: ../gui/wxpython/gui_modules/georect.py:711
+#: ../gui/wxpython/gui_modules/georect.py:714
 msgid "Ground Control Points"
 msgstr "Points de Contrôle au Sol"
 
-#: ../gui/wxpython/gui_modules/georect.py:777
+#: ../gui/wxpython/gui_modules/georect.py:780
 #, python-format
 msgid "At least %d GCPs required. Operation cancelled."
 msgstr "Un minimum de %d PCS est requis.  Opération annulée."
 
-#: ../gui/wxpython/gui_modules/georect.py:778
+#: ../gui/wxpython/gui_modules/georect.py:781
 msgid "Delete GCP"
 msgstr "Effacer des PCS"
 
-#: ../gui/wxpython/gui_modules/georect.py:879
+#: ../gui/wxpython/gui_modules/georect.py:888
 #, python-format
 msgid "POINTS file <%s> saved"
 msgstr "Fichier POINTS <%s> sauvé"
 
-#: ../gui/wxpython/gui_modules/georect.py:880
+#: ../gui/wxpython/gui_modules/georect.py:889
 msgid "POINTS file saved"
 msgstr "Fichier POINTS sauvé"
 
-#: ../gui/wxpython/gui_modules/georect.py:883
+#: ../gui/wxpython/gui_modules/georect.py:892
 msgid "Writing POINTS file failed"
 msgstr "Ecriture du fichier POINTS impossible"
 
-#: ../gui/wxpython/gui_modules/georect.py:920
+#: ../gui/wxpython/gui_modules/georect.py:929
 msgid "Reading POINTS file failed"
 msgstr "Lecture du fichier POINTS impossible"
 
-#: ../gui/wxpython/gui_modules/georect.py:965
+#: ../gui/wxpython/gui_modules/georect.py:974
 msgid "RMS Error"
 msgstr "Erreur RMS"
 
-#: ../gui/wxpython/gui_modules/georect.py:966
+#: ../gui/wxpython/gui_modules/georect.py:975
 msgid ""
 "Insufficient points defined and active (checked) for selected rectification "
 "method.\n"
@@ -1010,122 +1025,125 @@ msgid ""
 "7+ points for 2nd order, and\n"
 "10+ points for 3rd order."
 msgstr ""
-"Pas assez de points définis et activés pour la méthode de rectification choisie.\n"
+"Pas assez de points définis et activés pour la méthode de rectification "
+"choisie.\n"
 "3 points ou + nécessaires pour le 1er ordre,\n"
 "7 points ou + nécessaires pour le 2nd ordre, et\n"
 "10 points ou + nécessaires pour le 3ème ordre."
 
-#: ../gui/wxpython/gui_modules/georect.py:1037
+#: ../gui/wxpython/gui_modules/georect.py:1048
 msgid "Georectifier settings"
 msgstr "Paramètres de géo-rectification"
 
-#: ../gui/wxpython/gui_modules/georect.py:1127
+#: ../gui/wxpython/gui_modules/georect.py:1138
 #, python-format
 msgid "RMS error for selected points forward: %(fwd)s backward: %(bkw)s"
-msgstr "Erreur RMS pour les points sélectionnés avant : %(fwd)s arrière : %(bkw)s"
+msgstr ""
+"Erreur RMS pour les points sélectionnés avant : %(fwd)s arrière : %(bkw)s"
 
-#: ../gui/wxpython/gui_modules/georect.py:1160
+#: ../gui/wxpython/gui_modules/georect.py:1171
 msgid "use| X coord"
 msgstr "Utiliser| coord X"
 
-#: ../gui/wxpython/gui_modules/georect.py:1161
+#: ../gui/wxpython/gui_modules/georect.py:1172
 msgid "Y coord"
 msgstr "Coord Y"
 
-#: ../gui/wxpython/gui_modules/georect.py:1162
+#: ../gui/wxpython/gui_modules/georect.py:1173
 msgid "E coord"
 msgstr "Coord E"
 
-#: ../gui/wxpython/gui_modules/georect.py:1163
+#: ../gui/wxpython/gui_modules/georect.py:1174
 msgid "N coord"
 msgstr "Coord N"
 
-#: ../gui/wxpython/gui_modules/georect.py:1164
+#: ../gui/wxpython/gui_modules/georect.py:1175
 msgid "Forward error"
-msgstr ""
+msgstr "Erreur suivante"
 
-#: ../gui/wxpython/gui_modules/georect.py:1165
+#: ../gui/wxpython/gui_modules/georect.py:1176
 msgid "Backward error"
-msgstr ""
+msgstr "Erreur précédente"
 
-#: ../gui/wxpython/gui_modules/georect.py:1265
-#: ../gui/wxpython/gui_modules/georect.py:1373
+#: ../gui/wxpython/gui_modules/georect.py:1276
+#: ../gui/wxpython/gui_modules/georect.py:1384
 msgid "Edit GCP"
 msgstr "Editer les PCS"
 
-#: ../gui/wxpython/gui_modules/georect.py:1266
+#: ../gui/wxpython/gui_modules/georect.py:1277
 msgid "Invalid coordinate value. Operation cancelled."
 msgstr "Valeur de coordonnées invalide. Opération annulée."
 
-#: ../gui/wxpython/gui_modules/georect.py:1384
+#: ../gui/wxpython/gui_modules/georect.py:1395
 msgid "Ground Control Point"
 msgstr "Point de contrôle au sol"
 
-#: ../gui/wxpython/gui_modules/georect.py:1398
+#: ../gui/wxpython/gui_modules/georect.py:1409
 msgid "X:"
 msgstr "X :"
 
-#: ../gui/wxpython/gui_modules/georect.py:1399
+#: ../gui/wxpython/gui_modules/georect.py:1410
 msgid "Y:"
 msgstr "Y :"
 
-#: ../gui/wxpython/gui_modules/georect.py:1400
+#: ../gui/wxpython/gui_modules/georect.py:1411
 msgid "E:"
 msgstr "E :"
 
-#: ../gui/wxpython/gui_modules/georect.py:1401
+#: ../gui/wxpython/gui_modules/georect.py:1412
 msgid "N:"
 msgstr "N :"
 
-#: ../gui/wxpython/gui_modules/georect.py:1487
+#: ../gui/wxpython/gui_modules/georect.py:1498
 msgid "Symbol settings"
 msgstr "Paramètres des symbôles"
 
-#: ../gui/wxpython/gui_modules/georect.py:1496
+#: ../gui/wxpython/gui_modules/georect.py:1507
 #: ../gui/wxpython/gui_modules/nviz_tools.py:554
 #: ../gui/wxpython/gui_modules/nviz_tools.py:1243
 msgid "Color:"
 msgstr "Couleur :"
 
-#: ../gui/wxpython/gui_modules/georect.py:1513
+#: ../gui/wxpython/gui_modules/georect.py:1524
 #: ../gui/wxpython/gui_modules/nviz_tools.py:538
 #: ../gui/wxpython/gui_modules/nviz_tools.py:1214
 msgid "Width:"
 msgstr "Largeur :"
 
-#: ../gui/wxpython/gui_modules/georect.py:1541
+#: ../gui/wxpython/gui_modules/georect.py:1552
 #: ../gui/wxpython/gui_modules/profile.py:990
 #: ../gui/wxpython/gui_modules/profile.py:1335
-#: ../gui/wxpython/gui_modules/preferences.py:825
+#: ../gui/wxpython/gui_modules/preferences.py:828
 #: ../gui/wxpython/gui_modules/nviz_tools.py:1269
 msgid "Apply changes for the current session"
 msgstr "Appliquer les changements pour la session courante"
 
-#: ../gui/wxpython/gui_modules/georect.py:1543
+#: ../gui/wxpython/gui_modules/georect.py:1554
 #: ../gui/wxpython/gui_modules/profile.py:992
 #: ../gui/wxpython/gui_modules/profile.py:1337
-#: ../gui/wxpython/gui_modules/preferences.py:827
+#: ../gui/wxpython/gui_modules/preferences.py:830
 #: ../gui/wxpython/gui_modules/nviz_tools.py:1271
-msgid "Apply and save changes to user settings file (default for next sessions)"
+msgid ""
+"Apply and save changes to user settings file (default for next sessions)"
 msgstr ""
 "Appliquer et sauver les changements dans le fichier de configuration "
 "personnel (valeurs par défaut pour la prochaine session)"
 
-#: ../gui/wxpython/gui_modules/georect.py:1546
+#: ../gui/wxpython/gui_modules/georect.py:1557
 #: ../gui/wxpython/gui_modules/profile.py:995
 #: ../gui/wxpython/gui_modules/profile.py:1340
-#: ../gui/wxpython/gui_modules/preferences.py:830
+#: ../gui/wxpython/gui_modules/preferences.py:833
 #: ../gui/wxpython/gui_modules/vdigit.py:1075
 msgid "Close dialog and ignore changes"
 msgstr "Femer la boîte de dialogue et ignorer les changements"
 
-#: ../gui/wxpython/gui_modules/georect.py:1573
+#: ../gui/wxpython/gui_modules/georect.py:1584
 #, python-format
 msgid "Georectifier settings saved to file '%s'."
 msgstr "Paramètres de géo-rectification sauvés dans le fichier '%s'."
 
 #: ../gui/wxpython/gui_modules/menuform.py:138
-#: ../gui/wxpython/gui_modules/menuform.py:1179
+#: ../gui/wxpython/gui_modules/menuform.py:1238
 msgid "Select Color"
 msgstr "Choisir la couleur"
 
@@ -1133,77 +1151,76 @@ msgstr "Choisir la couleur"
 msgid "unknown"
 msgstr "Inconnu"
 
-#: ../gui/wxpython/gui_modules/menuform.py:203
+#: ../gui/wxpython/gui_modules/menuform.py:201
 #, python-format
 msgid "Parameter not found: %s"
 msgstr "Paramètre non trouvé : %s"
 
-#: ../gui/wxpython/gui_modules/menuform.py:221
+#: ../gui/wxpython/gui_modules/menuform.py:220
 #, python-format
 msgid "Flag not found: %s"
 msgstr "FLag non trouvé : %s"
 
-#: ../gui/wxpython/gui_modules/menuform.py:255
-#: ../gui/wxpython/gui_modules/menuform.py:1408
+#: ../gui/wxpython/gui_modules/menuform.py:254
 msgid "<required>"
 msgstr "<obligatoire>"
 
-#: ../gui/wxpython/gui_modules/menuform.py:256
+#: ../gui/wxpython/gui_modules/menuform.py:255
 #, python-format
 msgid "Parameter %(name)s (%(desc)s) is missing.\n"
 msgstr "Le paramètre %(name)s (%(desc)s) est manquant.\n"
 
-#: ../gui/wxpython/gui_modules/menuform.py:627
+#: ../gui/wxpython/gui_modules/menuform.py:626
 msgid "Enter parameters for "
 msgstr "Entrez les paramètres pour"
 
-#: ../gui/wxpython/gui_modules/menuform.py:631
+#: ../gui/wxpython/gui_modules/menuform.py:630
 msgid " (those in bold typeface are required)"
 msgstr "(ceux qui sont en caractères gras sont obligatoires)"
 
-#: ../gui/wxpython/gui_modules/menuform.py:642
+#: ../gui/wxpython/gui_modules/menuform.py:641
 msgid "Close this window without executing the command"
 msgstr "Fermer cette fenêtre sans exécuter la commande"
 
-#: ../gui/wxpython/gui_modules/menuform.py:647
+#: ../gui/wxpython/gui_modules/menuform.py:646
 msgid "Show manual page of the command"
 msgstr "Afficher la page de manuel pour la commande"
 
-#: ../gui/wxpython/gui_modules/menuform.py:665
+#: ../gui/wxpython/gui_modules/menuform.py:664
 msgid "&Run"
 msgstr "&Exécuter"
 
-#: ../gui/wxpython/gui_modules/menuform.py:666
+#: ../gui/wxpython/gui_modules/menuform.py:665
 msgid "Run the command"
 msgstr "Exécuter la commande"
 
-#: ../gui/wxpython/gui_modules/menuform.py:670
+#: ../gui/wxpython/gui_modules/menuform.py:669
 msgid "Abort the running command"
 msgstr "Abandonner la commande en cours"
 
-#: ../gui/wxpython/gui_modules/menuform.py:674
+#: ../gui/wxpython/gui_modules/menuform.py:673
 msgid "Copy the current command string to the clipboard"
 msgstr "Copier la chaîne de commande dans le presse-papier"
 
-#: ../gui/wxpython/gui_modules/menuform.py:706
+#: ../gui/wxpython/gui_modules/menuform.py:705
 #: ../gui/wxpython/gui_modules/gdialogs.py:68
-#: ../gui/wxpython/gui_modules/preferences.py:1096
+#: ../gui/wxpython/gui_modules/preferences.py:1118
 msgid "Add created map into layer tree"
 msgstr "Ajouter la carte créée dans l'arborescence des couches"
 
-#: ../gui/wxpython/gui_modules/menuform.py:715
-#: ../gui/wxpython/gui_modules/preferences.py:1086
+#: ../gui/wxpython/gui_modules/menuform.py:714
+#: ../gui/wxpython/gui_modules/preferences.py:1108
 msgid "Close dialog on finish"
 msgstr "Fermer la boîte de dialogue après exécution"
 
-#: ../gui/wxpython/gui_modules/menuform.py:827
+#: ../gui/wxpython/gui_modules/menuform.py:826
 #, python-format
 msgid "'%s' copied to clipboard"
 msgstr "'%s' copié dans le presse-papier"
 
 #: ../gui/wxpython/gui_modules/menuform.py:882
 #: ../gui/wxpython/gui_modules/menuform.py:895
-#: ../gui/wxpython/gui_modules/menuform.py:1275
+#: ../gui/wxpython/gui_modules/menuform.py:1381
 msgid "Required"
 msgstr "Obligatoire"
 
@@ -1212,8 +1229,8 @@ msgstr "Obligatoire"
 msgid "Optional"
 msgstr "Optionnel"
 
-#: ../gui/wxpython/gui_modules/menuform.py:923 ../gui/wxpython/wxgui.py:310
-#: ../gui/wxpython/wxgui.py:400
+#: ../gui/wxpython/gui_modules/menuform.py:923 ../gui/wxpython/wxgui.py:308
+#: ../gui/wxpython/wxgui.py:398
 msgid "Command output"
 msgstr "Messages de la commande"
 
@@ -1225,40 +1242,41 @@ msgstr "Manuel"
 msgid "[multiple]"
 msgstr "[multiple]"
 
-#: ../gui/wxpython/gui_modules/menuform.py:1043
+#: ../gui/wxpython/gui_modules/menuform.py:1054
 msgid "Valid range"
 msgstr "Plage de validité"
 
-#: ../gui/wxpython/gui_modules/menuform.py:1198
+#: ../gui/wxpython/gui_modules/menuform.py:1257
 msgid "Transparent"
 msgstr "Transparent"
 
-#: ../gui/wxpython/gui_modules/menuform.py:1215
+#: ../gui/wxpython/gui_modules/menuform.py:1274
 #, python-format
 msgid "Choose %s"
 msgstr "Choisir %s"
 
-#: ../gui/wxpython/gui_modules/menuform.py:1216
+#: ../gui/wxpython/gui_modules/menuform.py:1275
 #: ../gui/wxpython/gui_modules/menudata.py:26
 msgid "File"
 msgstr "Fichier"
 
-#: ../gui/wxpython/gui_modules/menuform.py:1477
+#: ../gui/wxpython/gui_modules/menuform.py:1564
 #, python-format
 msgid "Error in %s"
 msgstr "Erreur dans %s"
 
-#: ../gui/wxpython/gui_modules/menuform.py:1511
+#: ../gui/wxpython/gui_modules/menuform.py:1598
 #, python-format
 msgid "Unable to fetch interface description for command '%s'."
-msgstr "Impossible de trouver la description de l'interface pour la commande '%s'."
+msgstr ""
+"Impossible de trouver la description de l'interface pour la commande '%s'."
 
-#: ../gui/wxpython/gui_modules/menuform.py:1595
+#: ../gui/wxpython/gui_modules/menuform.py:1682
 #, python-format
 msgid "Unable to parse command %s"
 msgstr "Impossible d'interpréter la commande %s"
 
-#: ../gui/wxpython/gui_modules/menuform.py:1683
+#: ../gui/wxpython/gui_modules/menuform.py:1770
 #, python-format
 msgid "usage: %s <grass command>"
 msgstr "Utilisation : %s <grass command>"
@@ -1272,7 +1290,7 @@ msgid "Create attribute table"
 msgstr "Créer la table d'attributs"
 
 #: ../gui/wxpython/gui_modules/gdialogs.py:127
-#: ../gui/wxpython/gui_modules/menudata.py:1201
+#: ../gui/wxpython/gui_modules/menudata.py:1217
 msgid "Create new vector map"
 msgstr "Créer un nouvelle carte vectorielle"
 
@@ -1286,7 +1304,9 @@ msgstr "Impossible de créer la carte vectorielle <%s>."
 msgid ""
 "Vector map <%s> already exists in the current mapset. Do you want to "
 "overwrite it?"
-msgstr "La carte vectorielle <%s> existe déjà dans le jeu de cartes courant.  Voulez-vous l'écraser ?"
+msgstr ""
+"La carte vectorielle <%s> existe déjà dans le jeu de cartes courant.  Voulez-"
+"vous l'écraser ?"
 
 #: ../gui/wxpython/gui_modules/gdialogs.py:163
 msgid "Overwrite?"
@@ -1311,131 +1331,141 @@ msgid ""
 "Drag %s with mouse in pointer mode to position.\n"
 "Double-click to change options."
 msgstr ""
+"Glisser %s avec la souris en mode pointeur.\n"
+"Double click pour modifier les options."
 
 #: ../gui/wxpython/gui_modules/gdialogs.py:307
 msgid ""
 "\n"
 "Define raster map name for legend in properties dialog."
 msgstr ""
+"\n"
+"Définir le nom de la carte 'raster' pour laquelle dresser la légende dans la "
+"boîte de dialogue des propriétés."
 
 #: ../gui/wxpython/gui_modules/gdialogs.py:358
 #, python-format
 msgid "Legend of raster map <%s>"
-msgstr ""
+msgstr "Légende pour la carte 'raster' <%s>"
 
 #: ../gui/wxpython/gui_modules/gdialogs.py:473
 msgid "Enter text:"
-msgstr ""
+msgstr "Entrez le texte :"
 
 #: ../gui/wxpython/gui_modules/gdialogs.py:486
 msgid "Rotation:"
-msgstr ""
+msgstr "Rotation :"
 
 #: ../gui/wxpython/gui_modules/gdialogs.py:499
-#: ../gui/wxpython/gui_modules/preferences.py:960
+#: ../gui/wxpython/gui_modules/preferences.py:963
 msgid "Set font"
-msgstr ""
+msgstr "Définir la police"
 
 #: ../gui/wxpython/gui_modules/gdialogs.py:510
 msgid ""
 "Drag text with mouse in pointer mode to position.\n"
 "Double-click to change options"
 msgstr ""
+"Glisser le texte avec la souris en mode pointeur.\n"
+"Double click pour modifier les options."
 
 #: ../gui/wxpython/gui_modules/gdialogs.py:601
 msgid "Load"
-msgstr ""
+msgstr "Charger"
 
 #: ../gui/wxpython/gui_modules/gdialogs.py:636
 msgid "Map layer type:"
-msgstr ""
+msgstr "Type de carte :"
 
 #: ../gui/wxpython/gui_modules/gdialogs.py:647
 msgid "Mapset:"
-msgstr ""
+msgstr "Jeu de cartes :"
 
 #: ../gui/wxpython/gui_modules/gdialogs.py:660
 msgid "Filter:"
-msgstr ""
+msgstr "Filtre :"
 
 #: ../gui/wxpython/gui_modules/gdialogs.py:672
 msgid "List of maps:"
-msgstr ""
+msgstr "Liste des cartes :"
 
 #: ../gui/wxpython/gui_modules/gdialogs.py:728
-#: ../gui/wxpython/gui_modules/gdialogs.py:1081
+#: ../gui/wxpython/gui_modules/gdialogs.py:1085
 #: ../gui/wxpython/gui_modules/dbm.py:959
 msgid "Select all"
-msgstr ""
+msgstr "Tout sélectionner"
 
 #: ../gui/wxpython/gui_modules/gdialogs.py:729
-#: ../gui/wxpython/gui_modules/gdialogs.py:1082
+#: ../gui/wxpython/gui_modules/gdialogs.py:1086
 #: ../gui/wxpython/gui_modules/dbm.py:960
 msgid "Deselect all"
-msgstr ""
+msgstr "Tout désélectionner"
 
-#: ../gui/wxpython/gui_modules/gdialogs.py:782
+#: ../gui/wxpython/gui_modules/gdialogs.py:786
 msgid "Multiple import"
-msgstr ""
-
-#: ../gui/wxpython/gui_modules/gdialogs.py:796
-msgid "Input DXF file"
-msgstr ""
-
-#: ../gui/wxpython/gui_modules/gdialogs.py:797
-msgid "Choose DXF file:"
-msgstr ""
+msgstr "Importation multiple"
 
 #: ../gui/wxpython/gui_modules/gdialogs.py:800
+msgid "Input DXF file"
+msgstr "Fichier DXF en entrée"
+
+#: ../gui/wxpython/gui_modules/gdialogs.py:801
+msgid "Choose DXF file:"
+msgstr "Choisir le fichier DXF :"
+
+#: ../gui/wxpython/gui_modules/gdialogs.py:804
 msgid "Choose DXF file to import"
-msgstr ""
-
-#: ../gui/wxpython/gui_modules/gdialogs.py:806
-msgid "Input directory"
-msgstr ""
-
-#: ../gui/wxpython/gui_modules/gdialogs.py:807
-msgid "Choose directory:"
-msgstr ""
+msgstr "Choisir le fichier DXF à importer"
 
 #: ../gui/wxpython/gui_modules/gdialogs.py:810
-msgid "Choose input directory"
-msgstr ""
+msgid "Input directory"
+msgstr "Répertoire d'entrée"
+
+#: ../gui/wxpython/gui_modules/gdialogs.py:811
+msgid "Choose directory:"
+msgstr "Choisir le répertoire : "
 
 #: ../gui/wxpython/gui_modules/gdialogs.py:814
-msgid "Select file extension:"
-msgstr ""
+msgid "Choose input directory"
+msgstr "Choisir le répertoire d'entrée"
 
-#: ../gui/wxpython/gui_modules/gdialogs.py:831
+#: ../gui/wxpython/gui_modules/gdialogs.py:818
+msgid "Select file extension:"
+msgstr "Choisir l'extension du fichier :"
+
+#: ../gui/wxpython/gui_modules/gdialogs.py:835
 msgid "Add imported layers into layer tree"
 msgstr "Ajouter les couches importées dans l'arborescence"
 
-#: ../gui/wxpython/gui_modules/gdialogs.py:839
-msgid "Close dialog"
-msgstr ""
-
-#: ../gui/wxpython/gui_modules/gdialogs.py:842
-msgid "&Import"
-msgstr ""
-
 #: ../gui/wxpython/gui_modules/gdialogs.py:843
-msgid "Import selected layers"
-msgstr ""
+msgid "Close dialog"
+msgstr "Fermer la boîte de dialogue"
 
-#: ../gui/wxpython/gui_modules/gdialogs.py:883
+#: ../gui/wxpython/gui_modules/gdialogs.py:846
+msgid "&Import"
+msgstr "&Importer"
+
+#: ../gui/wxpython/gui_modules/gdialogs.py:847
+msgid "Import selected layers"
+msgstr "Importer les couches sélectionnées"
+
+#: ../gui/wxpython/gui_modules/gdialogs.py:887
 #, python-format
 msgid " List of %s layers "
-msgstr ""
+msgstr "Liste des couches %s"
 
-#: ../gui/wxpython/gui_modules/gdialogs.py:998
+#: ../gui/wxpython/gui_modules/gdialogs.py:1002
 #, python-format
 msgid ""
 "File <%(file)s>: Unable to get list of DXF layers.\n"
 "\n"
 "%(details)s"
 msgstr ""
+"Fichier <%(file)s> : Impossible de charger la liste des couches DXF.\n"
+"\n"
+"%(details)s"
 
-#: ../gui/wxpython/gui_modules/gdialogs.py:1044
+#: ../gui/wxpython/gui_modules/gdialogs.py:1048
 #: ../gui/wxpython/gui_modules/dbm.py:2019
 #: ../gui/wxpython/gui_modules/dbm.py:2120
 #: ../gui/wxpython/gui_modules/dbm.py:2356
@@ -1445,168 +1475,174 @@ msgstr ""
 #: ../gui/wxpython/gui_modules/vdigit.py:1765
 #: ../gui/wxpython/gui_modules/vdigit.py:2196
 msgid "Layer"
-msgstr ""
+msgstr "Couche"
 
-#: ../gui/wxpython/gui_modules/gdialogs.py:1045
+#: ../gui/wxpython/gui_modules/gdialogs.py:1049
 msgid "Layer name"
-msgstr ""
+msgstr "Nom de la couche"
 
-#: ../gui/wxpython/gui_modules/gdialogs.py:1046
+#: ../gui/wxpython/gui_modules/gdialogs.py:1050
 msgid "Output vector map name"
-msgstr ""
+msgstr "Nom de la carte à créer"
 
-#: ../gui/wxpython/gui_modules/gdialogs.py:1128
+#: ../gui/wxpython/gui_modules/gdialogs.py:1132
 msgid "Set Map Layer Opacity"
-msgstr ""
+msgstr "Ajuster l'opacité de la carte"
 
-#: ../gui/wxpython/gui_modules/gdialogs.py:1152
+#: ../gui/wxpython/gui_modules/gdialogs.py:1156
 msgid "transparent"
-msgstr ""
+msgstr "transparent"
 
-#: ../gui/wxpython/gui_modules/gdialogs.py:1155
+#: ../gui/wxpython/gui_modules/gdialogs.py:1159
 msgid "opaque"
-msgstr ""
+msgstr "opaque"
 
 #: ../gui/wxpython/gui_modules/rules.py:30
 msgid "Enter rules"
-msgstr ""
+msgstr "Entrer les règles"
 
 #: ../gui/wxpython/gui_modules/rules.py:50
 msgid "Create new color table using color rules"
 msgstr ""
+"Créer une nouvelle table de couleur en utilisant des règles de coloriage"
 
 #: ../gui/wxpython/gui_modules/rules.py:51
 msgid "Raster map:"
-msgstr ""
+msgstr "Carte 'raster' :"
 
 #: ../gui/wxpython/gui_modules/rules.py:53
 msgid "Enter color rules"
-msgstr ""
+msgstr "Entrer les règles de coloriage"
 
 #: ../gui/wxpython/gui_modules/rules.py:56
 msgid "Reclassify raster map using rules"
-msgstr ""
+msgstr "Reclassifier une carte 'raster' selon des règles"
 
 #: ../gui/wxpython/gui_modules/rules.py:57
 msgid "Raster map to reclassify:"
-msgstr ""
+msgstr "Carte 'raster' à reclassifier"
 
 #: ../gui/wxpython/gui_modules/rules.py:58
 msgid "Reclassified raster map:"
-msgstr ""
+msgstr "Carte 'raster' reclassifiée :"
 
 #: ../gui/wxpython/gui_modules/rules.py:59
 #: ../gui/wxpython/gui_modules/rules.py:71
 msgid "Enter reclassification rules"
-msgstr ""
+msgstr "Entrer les règles de reclassification"
 
 #: ../gui/wxpython/gui_modules/rules.py:62
 msgid "Recode raster map using rules"
-msgstr ""
+msgstr "Recoder une carte 'raster' en utilisant des règles"
 
 #: ../gui/wxpython/gui_modules/rules.py:63
 msgid "Raster map to recode:"
-msgstr ""
+msgstr "Carte 'raster' à recoder :"
 
 #: ../gui/wxpython/gui_modules/rules.py:64
 msgid "Recoded raster map:"
-msgstr ""
+msgstr "Carte 'raster' recodée :"
 
 #: ../gui/wxpython/gui_modules/rules.py:65
 msgid "Enter recoding rules"
-msgstr ""
+msgstr "Entrer les règles de recodification"
 
 #: ../gui/wxpython/gui_modules/rules.py:68
 msgid "Reclassify vector map using SQL rules"
-msgstr ""
+msgstr "Reclassifier une carte vectorielle en utilisant des requêts SQL"
 
 #: ../gui/wxpython/gui_modules/rules.py:69
 msgid "Vector map to reclassify:"
-msgstr ""
+msgstr "Carte vectorielle à reclassifier :"
 
 #: ../gui/wxpython/gui_modules/rules.py:70
 msgid "Reclassified vector map:"
-msgstr ""
+msgstr "Carte vectorielle reclassifiée :"
 
 #: ../gui/wxpython/gui_modules/rules.py:103
 msgid "overwrite existing file"
-msgstr ""
+msgstr "écraser le fichier existant"
 
-#: ../gui/wxpython/gui_modules/mapdisp.py:1137
-#: ../gui/wxpython/gui_modules/mapdisp.py:1768
+#: ../gui/wxpython/gui_modules/mapdisp.py:1159
+#: ../gui/wxpython/gui_modules/mapdisp.py:1790
 msgid "No vector map selected for editing."
-msgstr ""
+msgstr "Aucune carte vectorielle sélectionnée pour son édition"
 
-#: ../gui/wxpython/gui_modules/mapdisp.py:1285
-#: ../gui/wxpython/gui_modules/mapdisp.py:1292
+#: ../gui/wxpython/gui_modules/mapdisp.py:1307
+#: ../gui/wxpython/gui_modules/mapdisp.py:1314
 msgid "Update categories"
-msgstr ""
+msgstr "Mettre à jour les catégories"
 
-#: ../gui/wxpython/gui_modules/mapdisp.py:1886
+#: ../gui/wxpython/gui_modules/mapdisp.py:1908
 msgid "Z bulk-labeling dialog"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/mapdisp.py:2353
+#: ../gui/wxpython/gui_modules/mapdisp.py:2379
 msgid "Zoom to saved region extents"
-msgstr ""
+msgstr "Zoomer sur les limites de la région sauvée"
 
-#: ../gui/wxpython/gui_modules/mapdisp.py:2404
+#: ../gui/wxpython/gui_modules/mapdisp.py:2430
 #, python-format
 msgid "Region file <%s> already exists. Do you want to overwrite it?"
-msgstr ""
+msgstr "Le fichier région <%s> existe déjà.  Voulez-vous l'écraser ?"
 
-#: ../gui/wxpython/gui_modules/mapdisp.py:2406
+#: ../gui/wxpython/gui_modules/mapdisp.py:2432
 #: ../gui/wxpython/gui_modules/workspace.py:633
 msgid "Warning"
-msgstr ""
+msgstr "Attention"
 
-#: ../gui/wxpython/gui_modules/mapdisp.py:2467
+#: ../gui/wxpython/gui_modules/mapdisp.py:2493
 msgid "GRASS GIS - Map display"
-msgstr ""
+msgstr "SIG GRASS - Moniteur d'affichage des cartes"
 
-#: ../gui/wxpython/gui_modules/mapdisp.py:2541
+#: ../gui/wxpython/gui_modules/mapdisp.py:2567
 msgid "Render"
-msgstr ""
+msgstr "Générer (l'affichage)"
 
-#: ../gui/wxpython/gui_modules/mapdisp.py:2544
+#: ../gui/wxpython/gui_modules/mapdisp.py:2570
 msgid "Enable/disable auto-rendering"
-msgstr ""
+msgstr "Activer/désactiver l'auto-régénération"
 
-#: ../gui/wxpython/gui_modules/mapdisp.py:2547
+#: ../gui/wxpython/gui_modules/mapdisp.py:2573
 msgid "Show computational extent"
-msgstr ""
+msgstr "Afficher les limites calculées"
 
-#: ../gui/wxpython/gui_modules/mapdisp.py:2552
+#: ../gui/wxpython/gui_modules/mapdisp.py:2578
+#, fuzzy
 msgid ""
 "Show/hide computational region extent (set with g.region). Display region "
 "drawn as a blue box inside the computational region, computational region "
 "inside a display region as a red box)."
 msgstr ""
+"Afficher/cacher les limites calculées de la région (définie avec g.region).  "
+"La région d'affichage est dessinée sous la forme d'un rectangle bleu à "
+"l'intérieur de la région caclulée, la région calculée est affichée sous la "
+"forme d'un rectangle rouge à l'intérieur de la région d'affichage"
 
-#: ../gui/wxpython/gui_modules/mapdisp.py:2560
-#: ../gui/wxpython/gui_modules/preferences.py:1027
+#: ../gui/wxpython/gui_modules/mapdisp.py:2586
+#: ../gui/wxpython/gui_modules/preferences.py:1049
 msgid "Constrain display resolution to computational settings"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/mapdisp.py:2564
+#: ../gui/wxpython/gui_modules/mapdisp.py:2590
 msgid ""
 "Constrain display resolution to computational region settings. Default value "
 "for new map displays can be set up in 'User GUI settings' dialog."
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/mapdisp.py:2663
+#: ../gui/wxpython/gui_modules/mapdisp.py:2689
 msgid "Map Toolbar"
-msgstr ""
+msgstr "Barre d'outils pour les cartes"
 
-#: ../gui/wxpython/gui_modules/mapdisp.py:2677
+#: ../gui/wxpython/gui_modules/mapdisp.py:2703
 msgid "Vector digitizer toolbar"
-msgstr ""
+msgstr "Barre d'outils pour le digitaliseur vectoriel"
 
-#: ../gui/wxpython/gui_modules/mapdisp.py:2694
+#: ../gui/wxpython/gui_modules/mapdisp.py:2720
 msgid "Georectification toolbar"
-msgstr ""
+msgstr "Barre d'outils pour la géo-rectification"
 
-#: ../gui/wxpython/gui_modules/mapdisp.py:2706
+#: ../gui/wxpython/gui_modules/mapdisp.py:2732
 #, python-format
 msgid ""
 "Unable to start Nviz. The GLCanvas class has not been included with this "
@@ -1614,8 +1650,12 @@ msgid ""
 "\n"
 "Details: %s"
 msgstr ""
+"Impossible de démarrer Nviz.  La classe GLCanvas n'a pas été incluse dans "
+"cette compilation de wxPython! Retour au mode d'affichage 2D.\n"
+"\n"
+"Détails : %s"
 
-#: ../gui/wxpython/gui_modules/mapdisp.py:2711
+#: ../gui/wxpython/gui_modules/mapdisp.py:2737
 #, python-format
 msgid ""
 "Unable to start Nviz. The OpenGL package was not found. You can get it at "
@@ -1623,8 +1663,13 @@ msgid ""
 "\n"
 "Details: %s"
 msgstr ""
+"Impossible de démarrer Nviz.  Le package OpenGL n'a pas été trouvé.  Vous "
+"pouvez le trouver sur http://PyOpenGL.sourceforge.net. Retour au mode "
+"d'affichage 2D.\n"
+"\n"
+"Détails : %s"
 
-#: ../gui/wxpython/gui_modules/mapdisp.py:2716
+#: ../gui/wxpython/gui_modules/mapdisp.py:2742
 #, python-format
 msgid ""
 "Unable to start Nviz. Python extension for Nviz was not found or loaded "
@@ -1632,108 +1677,114 @@ msgid ""
 "\n"
 "Details: %s"
 msgstr ""
+"Impossible de démarrer Nviz.   L'extension Python pour Nviz n'a pas été "
+"trouvée ou chargée correctement.  Retour au mode d'affichage 2D.\n"
+"\n"
+"Détails : %s"
 
-#: ../gui/wxpython/gui_modules/mapdisp.py:2747
+#: ../gui/wxpython/gui_modules/mapdisp.py:2773
 msgid "Please wait, loading data..."
-msgstr ""
+msgstr "Un peu de patience, chargement des données"
 
-#: ../gui/wxpython/gui_modules/mapdisp.py:2777
+#: ../gui/wxpython/gui_modules/mapdisp.py:2803
 msgid "Nviz toolbar"
-msgstr ""
+msgstr "Barre d'outils NVIZ"
 
-#: ../gui/wxpython/gui_modules/mapdisp.py:3265
+#: ../gui/wxpython/gui_modules/mapdisp.py:3295
 msgid "Page setup"
-msgstr ""
+msgstr "Mise en page"
 
-#: ../gui/wxpython/gui_modules/mapdisp.py:3269
+#: ../gui/wxpython/gui_modules/mapdisp.py:3299
 msgid "Print preview"
-msgstr ""
+msgstr "Aperçu avant impression"
 
-#: ../gui/wxpython/gui_modules/mapdisp.py:3363
+#: ../gui/wxpython/gui_modules/mapdisp.py:3393
 msgid "No map layer selected for querying."
-msgstr ""
+msgstr "Aucune carte sélectionnée pour une interrogation"
 
-#: ../gui/wxpython/gui_modules/mapdisp.py:3364
-#: ../gui/wxpython/gui_modules/mapdisp.py:3448
-#: ../gui/wxpython/gui_modules/dbm.py:2784 ../gui/wxpython/wxgui.py:1102
-#: ../gui/wxpython/wxgui.py:1470
+#: ../gui/wxpython/gui_modules/mapdisp.py:3394
+#: ../gui/wxpython/gui_modules/mapdisp.py:3478
+#: ../gui/wxpython/gui_modules/dbm.py:2784 ../gui/wxpython/wxgui.py:1106
+#: ../gui/wxpython/wxgui.py:1474
 msgid "Message"
-msgstr ""
+msgstr "Message"
 
-#: ../gui/wxpython/gui_modules/mapdisp.py:3447
+#: ../gui/wxpython/gui_modules/mapdisp.py:3477
 msgid "No vector map selected for querying."
-msgstr ""
+msgstr "Aucune carte vectorielle sélectionnée pour une interrogation"
 
-#: ../gui/wxpython/gui_modules/mapdisp.py:3509
+#: ../gui/wxpython/gui_modules/mapdisp.py:3540
 msgid "Query raster/vector map(s) (display mode)"
-msgstr ""
+msgstr "Interroger une (des) carte(s) 'raster'/vectorielle(s) (mode écran)"
 
-#: ../gui/wxpython/gui_modules/mapdisp.py:3517
+#: ../gui/wxpython/gui_modules/mapdisp.py:3548
 msgid "Query vector map (edit mode)"
-msgstr ""
+msgstr "Interroger carte vectorielle (mode édition)"
 
-#: ../gui/wxpython/gui_modules/mapdisp.py:3631
+#: ../gui/wxpython/gui_modules/mapdisp.py:3662
 #, python-format
 msgid ""
 "Click and drag with left mouse button to measure.%sDouble click with left "
 "button to clear."
 msgstr ""
+"Clicker et glisser avec le bouton gauche de la souris pour mesurer %s Double "
+"clicker avec le bouton gauche pour annuler"
 
-#: ../gui/wxpython/gui_modules/mapdisp.py:3638
+#: ../gui/wxpython/gui_modules/mapdisp.py:3669
 msgid "Measuring distance"
-msgstr ""
+msgstr "Mesurage de la distance"
 
-#: ../gui/wxpython/gui_modules/mapdisp.py:3642
+#: ../gui/wxpython/gui_modules/mapdisp.py:3673
 msgid "Measuring distance:"
-msgstr ""
+msgstr "Mesurage de la distance :"
 
-#: ../gui/wxpython/gui_modules/mapdisp.py:3800
+#: ../gui/wxpython/gui_modules/mapdisp.py:3831
 msgid "Scale and North arrow"
-msgstr ""
+msgstr "Echelle et rose des vents"
 
-#: ../gui/wxpython/gui_modules/mapdisp.py:3806
+#: ../gui/wxpython/gui_modules/mapdisp.py:3837
 msgid "Show/hide scale and North arrow"
-msgstr ""
+msgstr "Afficher/cacher l'échelle et la rose des vents"
 
-#: ../gui/wxpython/gui_modules/mapdisp.py:3807
+#: ../gui/wxpython/gui_modules/mapdisp.py:3838
 msgid "scale object"
-msgstr ""
+msgstr "Mettre l'objet à l'échelle"
 
-#: ../gui/wxpython/gui_modules/mapdisp.py:3833
+#: ../gui/wxpython/gui_modules/mapdisp.py:3864
 msgid "Show/hide legend"
-msgstr ""
+msgstr "Afficher/cacher la légende"
 
-#: ../gui/wxpython/gui_modules/mapdisp.py:3834
+#: ../gui/wxpython/gui_modules/mapdisp.py:3865
 msgid "legend object"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/mapdisp.py:3899
-#: ../gui/wxpython/gui_modules/wxgui_utils.py:266
+#: ../gui/wxpython/gui_modules/mapdisp.py:3930
+#: ../gui/wxpython/gui_modules/wxgui_utils.py:267
 msgid "Zoom to selected map"
-msgstr ""
+msgstr "Zoomer sur la carte sélectionnée"
 
-#: ../gui/wxpython/gui_modules/mapdisp.py:3903
+#: ../gui/wxpython/gui_modules/mapdisp.py:3934
 msgid "Zoom to computational region (set with g.region)"
-msgstr ""
+msgstr "Zoomer sur la région calculée (définie avec g.region)"
 
-#: ../gui/wxpython/gui_modules/mapdisp.py:3907
+#: ../gui/wxpython/gui_modules/mapdisp.py:3938
 msgid "Zoom to default region"
-msgstr ""
+msgstr "Zoomer sur la région par défaut"
 
-#: ../gui/wxpython/gui_modules/mapdisp.py:3911
+#: ../gui/wxpython/gui_modules/mapdisp.py:3942
 msgid "Zoom to saved region"
-msgstr ""
+msgstr "Zoomer sur la région sauvegardée"
 
-#: ../gui/wxpython/gui_modules/mapdisp.py:3915
+#: ../gui/wxpython/gui_modules/mapdisp.py:3946
 msgid "Set computational region from display"
-msgstr ""
+msgstr "Définir la région calculée à partir de celle de l'écran"
 
-#: ../gui/wxpython/gui_modules/mapdisp.py:3919
+#: ../gui/wxpython/gui_modules/mapdisp.py:3950
 msgid "Save display geometry to named region"
-msgstr ""
+msgstr "Sauvegarder la géométrie de l'écran dans un nom de région"
 
 #: ../gui/wxpython/gui_modules/menudata.py:27
-#: ../gui/wxpython/gui_modules/preferences.py:1306
+#: ../gui/wxpython/gui_modules/preferences.py:1328
 msgid "Workspace"
 msgstr "Espace de travail"
 
@@ -1743,7 +1794,9 @@ msgstr "Nouvel espace de travail"
 
 #: ../gui/wxpython/gui_modules/menudata.py:30
 msgid "Create new workspace file (erase current workspace settings first)"
-msgstr "Créer un nouvel espace de travail (efface d'abord les paramètres de l'espace en cours)"
+msgstr ""
+"Créer un nouvel espace de travail (efface d'abord les paramètres de l'espace "
+"en cours)"
 
 #: ../gui/wxpython/gui_modules/menudata.py:34
 msgid "Open existing workspace"
@@ -1753,7 +1806,7 @@ msgstr "Ouvrir un espace de travail existant"
 msgid "Load map layers"
 msgstr "Charger des cartes"
 
-#: ../gui/wxpython/gui_modules/menudata.py:40 ../gui/wxpython/wxgui.py:741
+#: ../gui/wxpython/gui_modules/menudata.py:40 ../gui/wxpython/wxgui.py:744
 msgid "Load map layers into layer tree"
 msgstr "Charger des cartes dans l'arborescence des couches"
 
@@ -1763,10 +1816,12 @@ msgstr "Charger un fichier GRC (interface Tcl/Tk)"
 
 #: ../gui/wxpython/gui_modules/menudata.py:45
 msgid "Load map layers from GRC file to layer tree (not fully implemented)"
-msgstr "Charger des cartes depuis un fichier GRC dans l'arborescence des couches (pas totalement implémenté)"
+msgstr ""
+"Charger des cartes depuis un fichier GRC dans l'arborescence des couches "
+"(pas totalement implémenté)"
 
-#: ../gui/wxpython/gui_modules/menudata.py:49 ../gui/wxpython/wxgui.py:825
-#: ../gui/wxpython/wxgui.py:843
+#: ../gui/wxpython/gui_modules/menudata.py:49 ../gui/wxpython/wxgui.py:828
+#: ../gui/wxpython/wxgui.py:846
 msgid "Save workspace"
 msgstr "Sauver l'espace de travail"
 
@@ -1796,7 +1851,9 @@ msgstr "Importer des données 'raster' en utilisant GDAL"
 
 #: ../gui/wxpython/gui_modules/menudata.py:69
 msgid "Import GDAL supported raster file into a binary raster map layer."
-msgstr "Importer un fichier 'raster' supporté par GDAL dans une carte 'raster' binaire"
+msgstr ""
+"Importer un fichier 'raster' supporté par GDAL dans une carte 'raster' "
+"binaire"
 
 #: ../gui/wxpython/gui_modules/menudata.py:72
 msgid "Multiple raster data import using GDAL"
@@ -1804,7 +1861,9 @@ msgstr "Importer de multiples données 'raster' en utilisant GDAL"
 
 #: ../gui/wxpython/gui_modules/menudata.py:73
 msgid "Converts selected GDAL layers to GRASS raster maps using r.in.gdal."
-msgstr "Convertir des couches GDAL sélectionnées en 'raster' GRASS au moyen de r.in.gdal"
+msgstr ""
+"Convertir des couches GDAL sélectionnées en 'raster' GRASS au moyen de r.in."
+"gdal"
 
 #: ../gui/wxpython/gui_modules/menudata.py:79
 msgid "Aggregate ASCII xyz import"
@@ -1818,135 +1877,148 @@ msgstr ""
 
 #: ../gui/wxpython/gui_modules/menudata.py:84
 msgid "ASCII grid import"
-msgstr ""
+msgstr "Importer un grid ASCII"
 
 #: ../gui/wxpython/gui_modules/menudata.py:85
 msgid "Converts ASCII raster file to binary raster map layer."
-msgstr ""
+msgstr "Convertit un fichier 'raster' ASCII en une carte 'raster' binaire"
 
 #: ../gui/wxpython/gui_modules/menudata.py:89
 msgid "ASCII polygons and lines import"
-msgstr ""
+msgstr "Importation de lignes et de polygones ASCII"
 
 #: ../gui/wxpython/gui_modules/menudata.py:90
 msgid "Creates raster maps from ASCII polygon/line/point data files."
 msgstr ""
+"Créer des cartes 'raster' à partir de fichiers contenant des données ASCII "
+"de point/ligne/polygone"
 
 #: ../gui/wxpython/gui_modules/menudata.py:95
 msgid "Binary file import"
-msgstr ""
+msgstr "Importer des fichiers binaires"
 
 #: ../gui/wxpython/gui_modules/menudata.py:96
 msgid "Import a binary raster file into a GRASS raster map layer."
-msgstr ""
+msgstr "Importer un fichier 'raster' binaire dans une couche 'raster' GRASS."
 
 #: ../gui/wxpython/gui_modules/menudata.py:100
 msgid "ESRI ASCII grid import"
-msgstr ""
+msgstr "Importation d'un grid ESRI ASCII"
 
 #: ../gui/wxpython/gui_modules/menudata.py:101
 msgid ""
 "Converts an ESRI ARC/INFO ascii raster file (GRID) into a (binary) raster "
 "map layer."
 msgstr ""
+"Convertit un fichier 'raster' ESRI ARC/INFO ASCII (GRID) dans une couche "
+"'raster' (binaire)."
 
 #: ../gui/wxpython/gui_modules/menudata.py:105
 msgid "GRIDATB.FOR import"
-msgstr ""
+msgstr "Importer un GRIDATB.FOR"
 
 #: ../gui/wxpython/gui_modules/menudata.py:106
 msgid "Imports GRIDATB.FOR map file (TOPMODEL) into GRASS raster map"
 msgstr ""
+"Importer un fichier carte GRIDATB.FOR (TOPMODEL) dans un carte 'rater' GRASS"
 
 #: ../gui/wxpython/gui_modules/menudata.py:110
 msgid "MAT-File (v.4) import"
-msgstr ""
+msgstr "Imoorter un MAT-File (v.4)"
 
 #: ../gui/wxpython/gui_modules/menudata.py:111
 msgid "Imports a binary MAT-File(v4) to a GRASS raster."
 msgstr ""
+"Importe un fichier binaire MAT-File (V.4) dans une couche 'raster' GRASS."
 
 #: ../gui/wxpython/gui_modules/menudata.py:115
 msgid "SPOT NDVI import"
-msgstr ""
+msgstr "Importer un SPOT NDVI"
 
 #: ../gui/wxpython/gui_modules/menudata.py:116
 msgid "Import of SPOT VGT NDVI file into a raster map"
-msgstr ""
+msgstr "Importation d'un fichier SPOT VGT NDVI dans une carte 'raster'"
 
 #: ../gui/wxpython/gui_modules/menudata.py:120
 msgid "SRTM HGT import"
-msgstr ""
+msgstr "Importer un SRTM HGT"
 
 #: ../gui/wxpython/gui_modules/menudata.py:121
 msgid "Import SRTM HGT files into GRASS"
-msgstr ""
+msgstr "Importer des fichiers SRTM HGT dans GRASS"
 
 #: ../gui/wxpython/gui_modules/menudata.py:125
 msgid "Terra ASTER HDF import"
-msgstr ""
+msgstr "Importer un Terra ASTER HDF"
 
 #: ../gui/wxpython/gui_modules/menudata.py:126
 msgid ""
 "Georeference, rectify and import Terra-ASTER imagery and relative DEM's "
 "using gdalwarp."
 msgstr ""
+"Géoréférencer, rectifier et importer une image Terra-ASTER et ses DEM's "
+"associés au moyen de gdalwarp."
 
 #: ../gui/wxpython/gui_modules/menudata.py:131
 msgid "WMS import"
-msgstr ""
+msgstr "Importer un WMS"
 
 #: ../gui/wxpython/gui_modules/menudata.py:132
 msgid "Downloads and imports data from WMS servers."
-msgstr ""
+msgstr "Téklécharge et importe des données depuis un serveur WMS."
 
 #: ../gui/wxpython/gui_modules/menudata.py:137
 msgid "Import vector map"
-msgstr ""
+msgstr "Importer des cartes vectorielles"
 
 #: ../gui/wxpython/gui_modules/menudata.py:139
 msgid "Import vector data using OGR"
-msgstr ""
+msgstr "Importer des données vectorielles en utilisant OGR"
 
 #: ../gui/wxpython/gui_modules/menudata.py:140
 msgid "Convert OGR vector layers to GRASS vector map."
-msgstr ""
+msgstr "Convertir des couches vectorielles OGR en carte vectorielle GRASS."
 
 #: ../gui/wxpython/gui_modules/menudata.py:144
 msgid "Multiple vector data import using OGR"
-msgstr ""
+msgstr "Importer de multiples donénes vectorielles en utilisant OGR"
 
 #: ../gui/wxpython/gui_modules/menudata.py:145
 msgid "Converts selected OGR layers to GRASS vector maps using v.in.ogr."
 msgstr ""
+"Convertit les couches OGR sélectionées en cartes vectorielles GRASS en "
+"utilisant v.in.ogr."
 
 #: ../gui/wxpython/gui_modules/menudata.py:150
 msgid "ASCII points/GRASS ASCII vector import"
-msgstr ""
+msgstr "Importer des points ASCII/vecteurs GRASS ASCII"
 
 #: ../gui/wxpython/gui_modules/menudata.py:151
 msgid "Creates a vector map from ASCII points file or ASCII vector file."
 msgstr ""
+"Crée un carte vectorielle depuis un fichier de points ASCII ou un fichier "
+"vecteur ASCII."
 
 #: ../gui/wxpython/gui_modules/menudata.py:155
 msgid "Old GRASS vector import"
-msgstr ""
+msgstr "Importer une carte vectorielle ancienne version de GRASS"
 
 #: ../gui/wxpython/gui_modules/menudata.py:156
 msgid "Imports older versions of GRASS vector maps."
 msgstr ""
+"Importe des cartes vectorielles au format d'anciennes versions de GRASS."
 
 #: ../gui/wxpython/gui_modules/menudata.py:161
 msgid "DXF import"
-msgstr ""
+msgstr "Importer un DXF"
 
 #: ../gui/wxpython/gui_modules/menudata.py:162
 msgid "Converts files in DXF format to GRASS vector map format."
-msgstr ""
+msgstr "Convertit des fichiers DXF en carte vectorielle GRASS."
 
 #: ../gui/wxpython/gui_modules/menudata.py:166
 msgid "Multiple DXF layers import"
-msgstr ""
+msgstr "Importer de multiples couches DXF"
 
 #: ../gui/wxpython/gui_modules/menudata.py:167
 msgid "Converts selected DXF layers to GRASS vector maps (using v.in.dxf)."
@@ -2057,7 +2129,8 @@ msgid "ASCII x,y,z export"
 msgstr ""
 
 #: ../gui/wxpython/gui_modules/menudata.py:234
-msgid "Export a raster map to a text file as x,y,z values based on cell centers."
+msgid ""
+"Export a raster map to a text file as x,y,z values based on cell centers."
 msgstr ""
 
 #: ../gui/wxpython/gui_modules/menudata.py:239
@@ -2129,7 +2202,7 @@ msgid ""
 msgstr ""
 
 #: ../gui/wxpython/gui_modules/menudata.py:281
-#: ../gui/wxpython/gui_modules/menudata.py:320
+#: ../gui/wxpython/gui_modules/menudata.py:325
 msgid "POV-Ray export"
 msgstr ""
 
@@ -2156,8 +2229,8 @@ msgid "Export a raster map to the Virtual Reality Modeling Language (VRML)"
 msgstr ""
 
 #: ../gui/wxpython/gui_modules/menudata.py:296
-#: ../gui/wxpython/gui_modules/menudata.py:330
-#: ../gui/wxpython/gui_modules/menudata.py:348
+#: ../gui/wxpython/gui_modules/menudata.py:335
+#: ../gui/wxpython/gui_modules/menudata.py:353
 msgid "VTK export"
 msgstr ""
 
@@ -2193,604 +2266,626 @@ msgstr ""
 msgid "Exports GRASS vector map layers to DXF file format."
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:321
-msgid "Converts to POV-Ray format, GRASS x,y,z -> POV-Ray x,z,y"
-msgstr ""
+#: ../gui/wxpython/gui_modules/menudata.py:320
+#, fuzzy
+msgid "Multiple GPS export formats using GPSBabel"
+msgstr "Importer de multiples donénes vectorielles en utilisant OGR"
 
-#: ../gui/wxpython/gui_modules/menudata.py:325
-msgid "SVG export"
+#: ../gui/wxpython/gui_modules/menudata.py:321
+msgid ""
+"Exports a vector map to a GPS receiver or file format supported by GPSBabel."
 msgstr ""
 
 #: ../gui/wxpython/gui_modules/menudata.py:326
-msgid "Exports a GRASS vector map to SVG."
+msgid "Converts to POV-Ray format, GRASS x,y,z -> POV-Ray x,z,y"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/menudata.py:330
+msgid "SVG export"
 msgstr ""
 
 #: ../gui/wxpython/gui_modules/menudata.py:331
-msgid "Converts a GRASS binary vector map to VTK ASCII output."
+msgid "Exports a GRASS vector map to SVG."
 msgstr ""
 
 #: ../gui/wxpython/gui_modules/menudata.py:336
+msgid "Converts a GRASS binary vector map to VTK ASCII output."
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/menudata.py:341
 msgid "Export grid 3D volume"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:338
+#: ../gui/wxpython/gui_modules/menudata.py:343
 msgid "ASCII 3D export"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:339
+#: ../gui/wxpython/gui_modules/menudata.py:344
 msgid "Converts a 3D raster map layer into an ASCII text file"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:343
+#: ../gui/wxpython/gui_modules/menudata.py:348
 msgid "Vis5D export"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:344
+#: ../gui/wxpython/gui_modules/menudata.py:349
 msgid "Export of GRASS 3D raster map to 3-dimensional Vis5D file."
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:349
+#: ../gui/wxpython/gui_modules/menudata.py:354
 msgid "Converts 3D raster maps (G3D) into the VTK-Ascii format"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:355
+#: ../gui/wxpython/gui_modules/menudata.py:360
 msgid "Manage maps and volumes"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:357
+#: ../gui/wxpython/gui_modules/menudata.py:362
 msgid "Copy"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:358
+#: ../gui/wxpython/gui_modules/menudata.py:363
 msgid ""
 "Copies available data files in the user's current mapset search path and "
 "location to the appropriate element directories under the user's current "
 "mapset."
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:363
+#: ../gui/wxpython/gui_modules/menudata.py:368
 msgid "List"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:364
+#: ../gui/wxpython/gui_modules/menudata.py:369
 msgid ""
 "Lists available GRASS data base files of the user-specified data type to "
 "standard output."
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:368
+#: ../gui/wxpython/gui_modules/menudata.py:373
 msgid "List filtered"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:369
+#: ../gui/wxpython/gui_modules/menudata.py:374
 msgid "Apply regular expressions and wildcards to g.list"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:374
-#: ../gui/wxpython/gui_modules/wxgui_utils.py:255
+#: ../gui/wxpython/gui_modules/menudata.py:379
+#: ../gui/wxpython/gui_modules/wxgui_utils.py:256
 msgid "Rename"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:375
+#: ../gui/wxpython/gui_modules/menudata.py:380
 msgid "Renames data base element files in the user's current mapset."
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:380
+#: ../gui/wxpython/gui_modules/menudata.py:385
 msgid "Delete"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:381
+#: ../gui/wxpython/gui_modules/menudata.py:386
 msgid "Removes data base element files from the user's current mapset."
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:385
+#: ../gui/wxpython/gui_modules/menudata.py:390
 msgid "Delete filtered"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:386
+#: ../gui/wxpython/gui_modules/menudata.py:391
 msgid "Apply regular expressions and wildcards to g.remove"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:391
+#: ../gui/wxpython/gui_modules/menudata.py:396
 msgid "Map type conversions"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:393
+#: ../gui/wxpython/gui_modules/menudata.py:398
 msgid "Raster to vector"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:394
+#: ../gui/wxpython/gui_modules/menudata.py:399
 msgid "Converts a raster map into a vector map layer."
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:398
+#: ../gui/wxpython/gui_modules/menudata.py:403
 msgid "Raster series to volume"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:399
+#: ../gui/wxpython/gui_modules/menudata.py:404
 msgid "Converts 2D raster map slices to one 3D raster volume map."
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:403
+#: ../gui/wxpython/gui_modules/menudata.py:408
 msgid "Raster 2.5D to volume"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:404
+#: ../gui/wxpython/gui_modules/menudata.py:409
 msgid "Creates a 3D volume map based on 2D elevation and value raster maps."
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:409
+#: ../gui/wxpython/gui_modules/menudata.py:414
 msgid "Vector to raster"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:410
+#: ../gui/wxpython/gui_modules/menudata.py:415
 msgid "Converts a binary GRASS vector map layer into a GRASS raster map layer."
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:414
+#: ../gui/wxpython/gui_modules/menudata.py:419
 msgid "Vector to volume"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:415
+#: ../gui/wxpython/gui_modules/menudata.py:420
 msgid ""
 "Converts a binary GRASS vector map (only points) layer into a 3D GRASS "
 "raster map layer."
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:419
+#: ../gui/wxpython/gui_modules/menudata.py:424
 msgid "Sites to vector"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:420
+#: ../gui/wxpython/gui_modules/menudata.py:425
 msgid "Converts a GRASS site_lists file into a vector map."
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:425
+#: ../gui/wxpython/gui_modules/menudata.py:430
 msgid "Volume to raster series"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:426
+#: ../gui/wxpython/gui_modules/menudata.py:431
 msgid "Converts 3D raster maps to 2D raster maps"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:434
+#: ../gui/wxpython/gui_modules/menudata.py:439
 msgid "Georectify raster and vector maps"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:439
+#: ../gui/wxpython/gui_modules/menudata.py:444
 msgid "NVIZ (requires Tcl/Tk)"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:440
+#: ../gui/wxpython/gui_modules/menudata.py:445
 msgid "nviz - Visualization and animation tool for GRASS data"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:445
+#: ../gui/wxpython/gui_modules/menudata.py:450
 msgid "Bearing/distance to coordinates"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:446
+#: ../gui/wxpython/gui_modules/menudata.py:451
 msgid "It assumes a cartesian coordinate system"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:451
+#: ../gui/wxpython/gui_modules/menudata.py:456
 msgid "Postscript plot"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:452
+#: ../gui/wxpython/gui_modules/menudata.py:457
 msgid "Hardcopy PostScript map output utility."
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:457
+#: ../gui/wxpython/gui_modules/menudata.py:462
 msgid "E&xit"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:458
+#: ../gui/wxpython/gui_modules/menudata.py:463
 msgid "Exit GUI"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:463
+#: ../gui/wxpython/gui_modules/menudata.py:468
 msgid "Config"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:464
+#: ../gui/wxpython/gui_modules/menudata.py:469
 msgid "Region"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:466
+#: ../gui/wxpython/gui_modules/menudata.py:471
 msgid "Display region"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:467
 #: ../gui/wxpython/gui_modules/menudata.py:472
+#: ../gui/wxpython/gui_modules/menudata.py:477
 msgid "Manages the boundary definitions for the geographic region."
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:471
+#: ../gui/wxpython/gui_modules/menudata.py:476
 msgid "Set region"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:477
+#: ../gui/wxpython/gui_modules/menudata.py:482
 msgid "GRASS working environment"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:479
+#: ../gui/wxpython/gui_modules/menudata.py:484
 msgid "Mapset access"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:480
+#: ../gui/wxpython/gui_modules/menudata.py:485
 msgid "Set/unset access to other mapsets in current location"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:484
+#: ../gui/wxpython/gui_modules/menudata.py:489
 msgid "Change working environment"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:485
+#: ../gui/wxpython/gui_modules/menudata.py:490
 msgid "Change current mapset."
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:489
+#: ../gui/wxpython/gui_modules/menudata.py:494
 msgid "User access"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:490
+#: ../gui/wxpython/gui_modules/menudata.py:495
 msgid "Controls access to the current mapset for other users on the system."
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:494
+#: ../gui/wxpython/gui_modules/menudata.py:499
 msgid "Show settings"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:495
 #: ../gui/wxpython/gui_modules/menudata.py:500
+#: ../gui/wxpython/gui_modules/menudata.py:505
 msgid "Outputs and modifies the user's current GRASS variable settings."
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:499
+#: ../gui/wxpython/gui_modules/menudata.py:504
 msgid "Change settings"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:504
+#: ../gui/wxpython/gui_modules/menudata.py:509
 msgid "Version"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:505
+#: ../gui/wxpython/gui_modules/menudata.py:510
 msgid "Displays version and copyright information."
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:510
-#: ../gui/wxpython/gui_modules/menudata.py:512
+#: ../gui/wxpython/gui_modules/menudata.py:515
+#: ../gui/wxpython/gui_modules/menudata.py:517
 msgid "Manage projections"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:513
+#: ../gui/wxpython/gui_modules/menudata.py:518
 msgid ""
 "Converts co-ordinate system descriptions (i.e. projection information) "
 "between various formats (including GRASS format). Can also be used to create "
 "GRASS locations."
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:517
+#: ../gui/wxpython/gui_modules/menudata.py:522
 msgid "Projection for current location"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:518
+#: ../gui/wxpython/gui_modules/menudata.py:523
 msgid "Create/edit projection information for current location"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:523
+#: ../gui/wxpython/gui_modules/menudata.py:528
 msgid "Convert coordinates"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:524
+#: ../gui/wxpython/gui_modules/menudata.py:529
 msgid "Convert coordinates from one projection to another (cs2cs frontend)."
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:530
+#: ../gui/wxpython/gui_modules/menudata.py:535
 msgid "Preferences"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:531
+#: ../gui/wxpython/gui_modules/menudata.py:536
 msgid "User GUI preferences (display font, commands, digitizer, etc.)"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:536
+#: ../gui/wxpython/gui_modules/menudata.py:541
 msgid "Raster"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:537
+#: ../gui/wxpython/gui_modules/menudata.py:542
 msgid "Develop raster map"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:539
+#: ../gui/wxpython/gui_modules/menudata.py:544
 msgid "Digitize raster (requires XTerm)"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:540
+#: ../gui/wxpython/gui_modules/menudata.py:545
 msgid "Digitize raster map"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:545
+#: ../gui/wxpython/gui_modules/menudata.py:550
 msgid "Compress/decompress"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:546
+#: ../gui/wxpython/gui_modules/menudata.py:551
 msgid "Compresses and decompresses raster maps."
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:551
+#: ../gui/wxpython/gui_modules/menudata.py:556
 msgid "Region boundaries"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:552
+#: ../gui/wxpython/gui_modules/menudata.py:557
 msgid "Sets the boundary definitions for a raster map."
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:556
+#: ../gui/wxpython/gui_modules/menudata.py:561
 msgid "Manage NULL values"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:557
+#: ../gui/wxpython/gui_modules/menudata.py:562
 msgid "Creates explicitly the NULL-value bitmap file."
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:561
+#: ../gui/wxpython/gui_modules/menudata.py:566
 msgid "Quantization"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:562
+#: ../gui/wxpython/gui_modules/menudata.py:567
 msgid "Produces the quantization file for a floating-point map."
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:566
+#: ../gui/wxpython/gui_modules/menudata.py:571
 msgid "Timestamp"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:567
+#: ../gui/wxpython/gui_modules/menudata.py:572
 msgid "Print/add/remove a timestamp for a raster map."
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:572
+#: ../gui/wxpython/gui_modules/menudata.py:577
 msgid "Resample using aggregate statistics"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:573
+#: ../gui/wxpython/gui_modules/menudata.py:578
 msgid "Resamples raster map layers using aggregation."
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:577
+#: ../gui/wxpython/gui_modules/menudata.py:582
 msgid "Resample using multiple methods"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:578
+#: ../gui/wxpython/gui_modules/menudata.py:583
 msgid "Resamples raster map layers using interpolation."
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:582
+#: ../gui/wxpython/gui_modules/menudata.py:587
 msgid "Resample using nearest neighbor"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:583
+#: ../gui/wxpython/gui_modules/menudata.py:588
 msgid "GRASS raster map layer data resampling capability."
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:587
+#: ../gui/wxpython/gui_modules/menudata.py:592
 msgid "Resample using spline tension"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:588
+#: ../gui/wxpython/gui_modules/menudata.py:593
 msgid ""
 "Reinterpolates and optionally computes topographic analysis from input "
 "raster map to a new raster map (possibly with different resolution) using "
 "regularized spline with tension and smoothing."
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:593
+#: ../gui/wxpython/gui_modules/menudata.py:598
 msgid "Support file maintenance"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:594
+#: ../gui/wxpython/gui_modules/menudata.py:599
 msgid "Allows creation and/or modification of raster map layer support files."
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:598
+#: ../gui/wxpython/gui_modules/menudata.py:603
 msgid "Update map statistics"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:599
+#: ../gui/wxpython/gui_modules/menudata.py:604
 msgid "Update raster map statistics"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:604
-msgid "Reproject raster"
-msgstr ""
-
-#: ../gui/wxpython/gui_modules/menudata.py:605
-msgid "Re-projects a raster map from one location to the current location."
-msgstr ""
-
 #: ../gui/wxpython/gui_modules/menudata.py:609
-msgid "Tiling"
+msgid "Link to GDAL"
 msgstr ""
 
 #: ../gui/wxpython/gui_modules/menudata.py:610
+#, fuzzy
+msgid "Link GDAL supported raster file to a binary raster map layer."
+msgstr ""
+"Importer un fichier 'raster' supporté par GDAL dans une carte 'raster' "
+"binaire"
+
+#: ../gui/wxpython/gui_modules/menudata.py:615
+msgid "Reproject raster"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/menudata.py:616
+msgid "Re-projects a raster map from one location to the current location."
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/menudata.py:620
+msgid "Tiling"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/menudata.py:621
 msgid ""
 "Produces tilings of the source projection for use in the destination region "
 "and projection."
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:615
-#: ../gui/wxpython/gui_modules/menudata.py:1293
+#: ../gui/wxpython/gui_modules/menudata.py:626
+#: ../gui/wxpython/gui_modules/menudata.py:1309
 msgid "Manage colors"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:617
+#: ../gui/wxpython/gui_modules/menudata.py:628
 msgid "Color tables"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:618
+#: ../gui/wxpython/gui_modules/menudata.py:629
 msgid "Creates/modifies the color table associated with a raster map layer."
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:622
+#: ../gui/wxpython/gui_modules/menudata.py:633
 msgid "Color rules"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:623
-#: ../gui/wxpython/gui_modules/menudata.py:1294
+#: ../gui/wxpython/gui_modules/menudata.py:634
+#: ../gui/wxpython/gui_modules/menudata.py:1310
 msgid "Set colors interactively by entering color rules"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:628
+#: ../gui/wxpython/gui_modules/menudata.py:639
 msgid "Blend 2 color rasters"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:629
+#: ../gui/wxpython/gui_modules/menudata.py:640
 msgid "Blends color components of two raster maps by a given ratio."
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:633
+#: ../gui/wxpython/gui_modules/menudata.py:644
 msgid "Create RGB"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:634
-msgid "Combines red, green and blue map layers into a single composite map layer."
+#: ../gui/wxpython/gui_modules/menudata.py:645
+msgid ""
+"Combines red, green and blue map layers into a single composite map layer."
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:638
-#: ../gui/wxpython/gui_modules/menudata.py:1598
+#: ../gui/wxpython/gui_modules/menudata.py:649
+#: ../gui/wxpython/gui_modules/menudata.py:1614
 msgid "RGB to HIS"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:639
+#: ../gui/wxpython/gui_modules/menudata.py:650
 msgid ""
 "Generates red, green and blue raster map layers combining hue, intensity and "
 "saturation (HIS) values from user-specified input raster map layers."
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:645
+#: ../gui/wxpython/gui_modules/menudata.py:656
 msgid "Query by coordinates"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:646
+#: ../gui/wxpython/gui_modules/menudata.py:657
 msgid "Queries raster map layers on their category values and category labels."
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:651
+#: ../gui/wxpython/gui_modules/menudata.py:662
 msgid "Buffer rasters"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:652
+#: ../gui/wxpython/gui_modules/menudata.py:663
 msgid ""
 "Creates a raster map layer showing buffer zones surrounding cells that "
 "contain non-NULL category values."
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:656
+#: ../gui/wxpython/gui_modules/menudata.py:667
 msgid "Closest points"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:657
+#: ../gui/wxpython/gui_modules/menudata.py:668
 msgid "Locates the closest points between objects in two raster maps."
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:661
+#: ../gui/wxpython/gui_modules/menudata.py:672
 #: ../gui/wxpython/gui_modules/nviz_tools.py:251
 #: ../gui/wxpython/gui_modules/nviz_tools.py:432
 #: ../gui/wxpython/gui_modules/nviz_tools.py:850
 msgid "Mask"
 msgstr "Masque"
 
-#: ../gui/wxpython/gui_modules/menudata.py:662
+#: ../gui/wxpython/gui_modules/menudata.py:673
 msgid "Create a MASK for limiting raster operation"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:666
+#: ../gui/wxpython/gui_modules/menudata.py:677
 msgid "Map calculator"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:667
+#: ../gui/wxpython/gui_modules/menudata.py:678
 msgid "Map calculator for raster map algebra"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:670
+#: ../gui/wxpython/gui_modules/menudata.py:681
 msgid "Neighborhood analysis"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:672
+#: ../gui/wxpython/gui_modules/menudata.py:683
 msgid "Moving window"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:673
+#: ../gui/wxpython/gui_modules/menudata.py:684
 msgid ""
 "Makes each cell category value a function of the category values assigned to "
 "the cells around it, and stores new cell values in an output raster map "
 "layer."
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:677
+#: ../gui/wxpython/gui_modules/menudata.py:688
 msgid "Neighborhood points"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:678
+#: ../gui/wxpython/gui_modules/menudata.py:689
 msgid ""
 "Makes each cell value a function of the attribute values assigned to the "
 "vector points or centroids around it, and stores new cell values in an "
 "output raster map layer."
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:683
+#: ../gui/wxpython/gui_modules/menudata.py:694
 msgid "Overlay rasters"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:685
+#: ../gui/wxpython/gui_modules/menudata.py:696
 msgid "Cross product"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:686
+#: ../gui/wxpython/gui_modules/menudata.py:697
 msgid ""
 "Creates a cross product of the category values from multiple raster map "
 "layers."
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:690
+#: ../gui/wxpython/gui_modules/menudata.py:701
 msgid "Raster series"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:691
+#: ../gui/wxpython/gui_modules/menudata.py:702
 msgid ""
 "Makes each output cell value a function of the values assigned to the "
 "corresponding cells in the input raster map layers."
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:695
+#: ../gui/wxpython/gui_modules/menudata.py:706
 msgid "Patch raster maps"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:696
+#: ../gui/wxpython/gui_modules/menudata.py:707
 msgid ""
 "Creates a composite raster map layer by using known category values from one "
 "(or more) map layer(s) to fill in areas of \"no data\" in another map layer."
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:701
+#: ../gui/wxpython/gui_modules/menudata.py:712
 msgid "Statistical overlay"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:702
+#: ../gui/wxpython/gui_modules/menudata.py:713
 msgid "Calculates category or object oriented statistics."
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:707
+#: ../gui/wxpython/gui_modules/menudata.py:718
 msgid "Solar radiance and shadows"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:709
+#: ../gui/wxpython/gui_modules/menudata.py:720
 msgid "Solar irradiance and irradiation"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:710
+#: ../gui/wxpython/gui_modules/menudata.py:721
 msgid ""
 "Computes direct (beam), diffuse and reflected solar irradiation raster maps "
 "for given day, latitude, surface and atmospheric conditions. Solar "
@@ -2801,26 +2896,26 @@ msgid ""
 "is optionally incorporated."
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:714
+#: ../gui/wxpython/gui_modules/menudata.py:725
 msgid "Shadows map"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:715
+#: ../gui/wxpython/gui_modules/menudata.py:726
 msgid ""
 "Calculates cast shadow areas from sun position and DEM. Either A: exact sun "
 "position is specified, or B: date/time to calculate the sun position by r."
 "sunmask itself."
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:720
+#: ../gui/wxpython/gui_modules/menudata.py:731
 msgid "Terrain analysis"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:722
+#: ../gui/wxpython/gui_modules/menudata.py:733
 msgid "Cumulative movement costs"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:723
+#: ../gui/wxpython/gui_modules/menudata.py:734
 msgid ""
 "Outputs a raster map layer showing the anisotropic cumulative cost of moving "
 "between different geographic locations on an input elevation raster map "
@@ -2828,373 +2923,385 @@ msgid ""
 "raster map layer whose cell values represent friction cost."
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:727
+#: ../gui/wxpython/gui_modules/menudata.py:738
 msgid "Cost surface"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:728
+#: ../gui/wxpython/gui_modules/menudata.py:739
 msgid ""
 "Outputs a raster map layer showing the cumulative cost of moving between "
 "different geographic locations on an input raster map layer whose cell "
 "category values represent cost."
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:732
+#: ../gui/wxpython/gui_modules/menudata.py:743
 msgid "Least cost route or flow"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:733
+#: ../gui/wxpython/gui_modules/menudata.py:744
 msgid "Traces a flow through an elevation model on a raster map layer."
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:738
-#: ../gui/wxpython/gui_modules/wxgui_utils.py:652
+#: ../gui/wxpython/gui_modules/menudata.py:749
+#: ../gui/wxpython/gui_modules/wxgui_utils.py:663
 msgid "Shaded relief"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:739
+#: ../gui/wxpython/gui_modules/menudata.py:750
 msgid "Creates shaded relief map from an elevation map (DEM)."
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:744
+#: ../gui/wxpython/gui_modules/menudata.py:755
 msgid "Slope and aspect"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:745
+#: ../gui/wxpython/gui_modules/menudata.py:756
 msgid ""
 "Generates raster map layers of slope, aspect, curvatures and partial "
 "derivatives from a raster map layer of true elevation values. Aspect is "
 "calculated counterclockwise from east."
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:749
+#: ../gui/wxpython/gui_modules/menudata.py:760
 msgid "Terrain parameters"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:750
+#: ../gui/wxpython/gui_modules/menudata.py:761
 msgid ""
 "Uses a multi-scale approach by taking fitting quadratic parameters to any "
 "size window (via least squares)."
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:754
+#: ../gui/wxpython/gui_modules/menudata.py:765
 msgid "Textural features"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:755
+#: ../gui/wxpython/gui_modules/menudata.py:766
 msgid "Generate images with textural features from a raster map."
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:760
+#: ../gui/wxpython/gui_modules/menudata.py:771
 msgid "Visibility"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:761
+#: ../gui/wxpython/gui_modules/menudata.py:772
 msgid "Line-of-sight raster analysis program."
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:766
+#: ../gui/wxpython/gui_modules/menudata.py:776
+#, fuzzy
+msgid "Distance to features"
+msgstr "Effacer un (des) objet(s)"
+
+#: ../gui/wxpython/gui_modules/menudata.py:777
+msgid "Generates a raster map layer of distance to features in input layer."
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/menudata.py:782
 msgid "Transform features"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:768
+#: ../gui/wxpython/gui_modules/menudata.py:784
 msgid "Clump"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:769
+#: ../gui/wxpython/gui_modules/menudata.py:785
 msgid ""
 "Recategorizes data in a raster map layer by grouping cells that form "
 "physically discrete areas into unique categories."
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:773
+#: ../gui/wxpython/gui_modules/menudata.py:789
 msgid "Grow"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:774
+#: ../gui/wxpython/gui_modules/menudata.py:790
 msgid "Generates a raster map layer with contiguous areas grown by one cell."
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:778
+#: ../gui/wxpython/gui_modules/menudata.py:794
 msgid "Thin"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:779
+#: ../gui/wxpython/gui_modules/menudata.py:795
 msgid "Thins non-zero cells that denote linear features in a raster map layer."
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:785
+#: ../gui/wxpython/gui_modules/menudata.py:801
 msgid "Hydrologic modeling"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:787
+#: ../gui/wxpython/gui_modules/menudata.py:803
 msgid "Carve stream channels"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:788
+#: ../gui/wxpython/gui_modules/menudata.py:804
 msgid ""
 "Takes vector stream data, transforms it to raster and subtracts depth from "
 "the output DEM."
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:792
+#: ../gui/wxpython/gui_modules/menudata.py:808
 msgid "Fill lake"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:793
+#: ../gui/wxpython/gui_modules/menudata.py:809
 msgid "Fills lake from seed at given level"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:798
+#: ../gui/wxpython/gui_modules/menudata.py:814
 msgid "Depressionless map and flowlines"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:799
+#: ../gui/wxpython/gui_modules/menudata.py:815
 msgid ""
 "Filters and generates a depressionless elevation map and a flow direction "
 "map from a given elevation layer."
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:803
+#: ../gui/wxpython/gui_modules/menudata.py:819
 msgid "Flow accumulation"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:804
+#: ../gui/wxpython/gui_modules/menudata.py:820
 msgid "Flow computation for massive grids (Float version)."
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:808
+#: ../gui/wxpython/gui_modules/menudata.py:824
 msgid "Flow lines"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:809
+#: ../gui/wxpython/gui_modules/menudata.py:825
 msgid ""
 "Construction of slope curves (flowlines), flowpath lengths, and flowline "
 "densities (upslope areas) from a raster digital elevation model (DEM)"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:814
+#: ../gui/wxpython/gui_modules/menudata.py:830
 msgid "SIMWE Overland flow modeling"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:815
+#: ../gui/wxpython/gui_modules/menudata.py:831
 msgid "Overland flow hydrologic simulation using path sampling method (SIMWE)"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:819
+#: ../gui/wxpython/gui_modules/menudata.py:835
 msgid "SIMWE Sediment flux modeling"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:820
+#: ../gui/wxpython/gui_modules/menudata.py:836
 msgid ""
 "Sediment transport and erosion/deposition simulation using path sampling "
 "method (SIMWE)"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:825
+#: ../gui/wxpython/gui_modules/menudata.py:841
 msgid "Topographic index map"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:826
+#: ../gui/wxpython/gui_modules/menudata.py:842
 msgid "Creates topographic index [ln(a/tan(beta))] map from elevation map."
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:830
+#: ../gui/wxpython/gui_modules/menudata.py:846
 msgid "TOPMODEL simulation"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:831
+#: ../gui/wxpython/gui_modules/menudata.py:847
 msgid "Simulates TOPMODEL which is a physically based hydrologic model."
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:836
+#: ../gui/wxpython/gui_modules/menudata.py:852
 msgid "Watershed subbasins"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:837
+#: ../gui/wxpython/gui_modules/menudata.py:853
 msgid "Generates a raster map layer showing watershed subbasins."
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:841
+#: ../gui/wxpython/gui_modules/menudata.py:857
 msgid "Watershed analysis"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:842
+#: ../gui/wxpython/gui_modules/menudata.py:858
 msgid "Watershed basin analysis program."
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:846
+#: ../gui/wxpython/gui_modules/menudata.py:862
 msgid "Watershed basin creation"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:847
+#: ../gui/wxpython/gui_modules/menudata.py:863
 msgid "Watershed basin creation program."
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:852
+#: ../gui/wxpython/gui_modules/menudata.py:868
 msgid "Landscape structure modeling"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:854
+#: ../gui/wxpython/gui_modules/menudata.py:870
 msgid "Set up (requires XTerm)"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:855
-#: ../gui/wxpython/gui_modules/menudata.py:878
+#: ../gui/wxpython/gui_modules/menudata.py:871
+#: ../gui/wxpython/gui_modules/menudata.py:894
 msgid "Set up sampling and analysis framework"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:860
+#: ../gui/wxpython/gui_modules/menudata.py:876
 msgid "Analyze landscape"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:861
+#: ../gui/wxpython/gui_modules/menudata.py:877
 msgid ""
 "Contains a set of measures for attributes, diversity, texture, "
 "juxtaposition, and edge."
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:865
+#: ../gui/wxpython/gui_modules/menudata.py:881
 msgid "Analyze patches"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:866
+#: ../gui/wxpython/gui_modules/menudata.py:882
 msgid ""
 "Calculates attribute, patch size, core (interior) size, shape, fractal "
 "dimension, and perimeter measures for sets of patches in a landscape."
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:870
+#: ../gui/wxpython/gui_modules/menudata.py:886
 msgid "Output"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:871
+#: ../gui/wxpython/gui_modules/menudata.py:887
 msgid ""
 "Displays the boundary of each r.le patch and shows how the boundary is "
 "traced, displays the attribute, size, perimeter and shape indices for each "
 "patch and saves the data in an output file."
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:876
+#: ../gui/wxpython/gui_modules/menudata.py:892
 msgid "Landscape patch analysis"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:879
+#: ../gui/wxpython/gui_modules/menudata.py:895
 msgid "Configuration editor for r.li.'index'"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:884
+#: ../gui/wxpython/gui_modules/menudata.py:900
 msgid "Edge density"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:885
-msgid "Calculates edge density index on a raster map, using a 4 neighbour algorithm"
+#: ../gui/wxpython/gui_modules/menudata.py:901
+msgid ""
+"Calculates edge density index on a raster map, using a 4 neighbour algorithm"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:889
+#: ../gui/wxpython/gui_modules/menudata.py:905
 msgid "Contrast weighted edge density"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:890
+#: ../gui/wxpython/gui_modules/menudata.py:906
 msgid "Calculates contrast weighted edge density index on a raster map"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:895
+#: ../gui/wxpython/gui_modules/menudata.py:911
 msgid "Patch area mean"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:896
+#: ../gui/wxpython/gui_modules/menudata.py:912
 msgid ""
 "Calculates mean patch size index on a raster map, using a 4 neighbour "
 "algorithm"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:900
+#: ../gui/wxpython/gui_modules/menudata.py:916
 msgid "Patch area range"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:901
+#: ../gui/wxpython/gui_modules/menudata.py:917
 msgid "Calculates range of patch area size on a raster map"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:905
+#: ../gui/wxpython/gui_modules/menudata.py:921
 msgid "Patch area Std Dev"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:906
+#: ../gui/wxpython/gui_modules/menudata.py:922
 msgid "Calculates standard deviation of patch area a raster map"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:910
+#: ../gui/wxpython/gui_modules/menudata.py:926
 msgid "Patch area Coeff Var"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:911
+#: ../gui/wxpython/gui_modules/menudata.py:927
 msgid "Calculates coefficient of variation of patch area on a raster map"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:915
+#: ../gui/wxpython/gui_modules/menudata.py:931
 msgid "Patch density"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:916
-msgid "Calculates patch density index on a raster map, using a 4 neighbour algorithm"
-msgstr ""
-
-#: ../gui/wxpython/gui_modules/menudata.py:920
-msgid "Patch number"
-msgstr ""
-
-#: ../gui/wxpython/gui_modules/menudata.py:921
-msgid "Calculates patch number index on a raster map, using a 4 neighbour algorithm."
-msgstr ""
-
-#: ../gui/wxpython/gui_modules/menudata.py:926
-msgid "Dominance's diversity"
-msgstr ""
-
-#: ../gui/wxpython/gui_modules/menudata.py:927
-#: ../gui/wxpython/gui_modules/menudata.py:943
-msgid "Calculates dominance's diversity index on a raster map"
-msgstr ""
-
-#: ../gui/wxpython/gui_modules/menudata.py:931
-msgid "Shannon's diversity"
-msgstr ""
-
 #: ../gui/wxpython/gui_modules/menudata.py:932
-msgid "Calculates Shannon's diversity index on a raster map"
+msgid ""
+"Calculates patch density index on a raster map, using a 4 neighbour algorithm"
 msgstr ""
 
 #: ../gui/wxpython/gui_modules/menudata.py:936
-msgid "Simpson's diversity"
+msgid "Patch number"
 msgstr ""
 
 #: ../gui/wxpython/gui_modules/menudata.py:937
-msgid "Calculates Simpson's diversity index on a raster map"
+msgid ""
+"Calculates patch number index on a raster map, using a 4 neighbour algorithm."
 msgstr ""
 
 #: ../gui/wxpython/gui_modules/menudata.py:942
-msgid "Richness"
+msgid "Dominance's diversity"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/menudata.py:943
+#: ../gui/wxpython/gui_modules/menudata.py:959
+msgid "Calculates dominance's diversity index on a raster map"
 msgstr ""
 
 #: ../gui/wxpython/gui_modules/menudata.py:947
-msgid "Shape index"
+msgid "Shannon's diversity"
 msgstr ""
 
 #: ../gui/wxpython/gui_modules/menudata.py:948
-msgid "Calculates shape index on a raster map"
+msgid "Calculates Shannon's diversity index on a raster map"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/menudata.py:952
+msgid "Simpson's diversity"
 msgstr ""
 
 #: ../gui/wxpython/gui_modules/menudata.py:953
+msgid "Calculates Simpson's diversity index on a raster map"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/menudata.py:958
+msgid "Richness"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/menudata.py:963
+msgid "Shape index"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/menudata.py:964
+msgid "Calculates shape index on a raster map"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/menudata.py:969
 msgid "Wildfire modeling"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:955
+#: ../gui/wxpython/gui_modules/menudata.py:971
 msgid "Rate of spread"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:956
+#: ../gui/wxpython/gui_modules/menudata.py:972
 msgid ""
 "Generates three, or four raster map layers showing 1) the base "
 "(perpendicular) rate of spread (ROS), 2) the maximum (forward) ROS, 3) the "
@@ -3202,1489 +3309,1497 @@ msgid ""
 "spotting distance."
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:960
+#: ../gui/wxpython/gui_modules/menudata.py:976
 msgid "Least-cost spread paths"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:961
+#: ../gui/wxpython/gui_modules/menudata.py:977
 msgid ""
 "Recursively traces the least cost path backwards to cells from which the "
 "cumulative cost was determined."
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:965
+#: ../gui/wxpython/gui_modules/menudata.py:981
 msgid "Anisotropic spread simulation"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:966
+#: ../gui/wxpython/gui_modules/menudata.py:982
 msgid ""
 "It optionally produces raster maps to contain backlink UTM coordinates for "
 "tracing spread paths."
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:972
+#: ../gui/wxpython/gui_modules/menudata.py:988
 msgid "Change category values and labels"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:974
+#: ../gui/wxpython/gui_modules/menudata.py:990
 msgid "Interactively edit category values"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:975
+#: ../gui/wxpython/gui_modules/menudata.py:991
 msgid "Interactively edit cell values in a raster map."
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:980
+#: ../gui/wxpython/gui_modules/menudata.py:996
 msgid "Reclassify by size"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:981
+#: ../gui/wxpython/gui_modules/menudata.py:997
 msgid ""
 "Reclasses a raster map greater or less than user specified area size (in "
 "hectares)"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:985
+#: ../gui/wxpython/gui_modules/menudata.py:1001
 msgid "Reclassify interactively"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:986
+#: ../gui/wxpython/gui_modules/menudata.py:1002
 msgid "Reclassify raster categories interactively by entering reclass rules"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:990
+#: ../gui/wxpython/gui_modules/menudata.py:1006
 msgid "Reclassify using rules file"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:991
+#: ../gui/wxpython/gui_modules/menudata.py:1007
 msgid ""
 "Creates a new map layer whose category values are based upon a "
 "reclassification of the categories in an existing raster map layer."
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:996
+#: ../gui/wxpython/gui_modules/menudata.py:1012
 msgid "Recode interactively"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:997
+#: ../gui/wxpython/gui_modules/menudata.py:1013
 msgid ""
 "Recode raster categories interactively by entering recode rules (create new "
 "raster map)"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1001
+#: ../gui/wxpython/gui_modules/menudata.py:1017
 msgid "Recode using rules file"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1002
-msgid "r.recode.rules - Use ascii rules file to recode categories in raster map"
+#: ../gui/wxpython/gui_modules/menudata.py:1018
+msgid ""
+"r.recode.rules - Use ascii rules file to recode categories in raster map"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1007
+#: ../gui/wxpython/gui_modules/menudata.py:1023
 msgid "Rescale"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1008
+#: ../gui/wxpython/gui_modules/menudata.py:1024
 msgid "Rescales the range of category values in a raster map layer."
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1012
+#: ../gui/wxpython/gui_modules/menudata.py:1028
 msgid "Rescale with histogram"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1013
+#: ../gui/wxpython/gui_modules/menudata.py:1029
 msgid ""
 "Rescales histogram equalized the range of category values in a raster map "
 "layer."
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1020
+#: ../gui/wxpython/gui_modules/menudata.py:1036
 msgid "Concentric circles"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1021
+#: ../gui/wxpython/gui_modules/menudata.py:1037
 msgid "Creates a raster map containing concentric rings around a given point."
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1024
+#: ../gui/wxpython/gui_modules/menudata.py:1040
 msgid "Generate random cells"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1026
+#: ../gui/wxpython/gui_modules/menudata.py:1042
 msgid "Random cells"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1027
+#: ../gui/wxpython/gui_modules/menudata.py:1043
 msgid "Generates random cell values with spatial dependence."
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1031
+#: ../gui/wxpython/gui_modules/menudata.py:1047
 msgid "Random cells and vector points"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1032
+#: ../gui/wxpython/gui_modules/menudata.py:1048
 msgid ""
 "Creates a raster map layer and vector point map containing randomly located "
 "sites."
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1037
+#: ../gui/wxpython/gui_modules/menudata.py:1053
 msgid "Generate surfaces"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1039
+#: ../gui/wxpython/gui_modules/menudata.py:1055
 msgid "Fractal surface"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1040
+#: ../gui/wxpython/gui_modules/menudata.py:1056
 msgid "Creates a fractal surface of a given fractal dimension."
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1045
+#: ../gui/wxpython/gui_modules/menudata.py:1061
 msgid "Gaussian kernel density surface"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1046
+#: ../gui/wxpython/gui_modules/menudata.py:1062
 msgid ""
 "Generates a raster density map from vector points data using a moving 2D "
 "isotropic Gaussian kernel or optionally generates a vector density map on "
 "vector network with a 1D kernel."
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1050
+#: ../gui/wxpython/gui_modules/menudata.py:1066
 msgid "Gaussian deviates surface"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1051
+#: ../gui/wxpython/gui_modules/menudata.py:1067
 msgid ""
 "GRASS module to produce a raster map layer of gaussian deviates whose mean "
 "and standard deviation can be expressed by the user. It uses a gaussian "
 "random number generator."
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1056
+#: ../gui/wxpython/gui_modules/menudata.py:1072
 msgid "Plane"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1057
+#: ../gui/wxpython/gui_modules/menudata.py:1073
 msgid ""
 "Creates raster plane map given dip (inclination), aspect (azimuth) and one "
 "point."
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1062
+#: ../gui/wxpython/gui_modules/menudata.py:1078
 msgid "Random deviates surface"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1063
+#: ../gui/wxpython/gui_modules/menudata.py:1079
 msgid ""
 "Produces a raster map layer of uniform random deviates whose range can be "
 "expressed by the user."
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1067
+#: ../gui/wxpython/gui_modules/menudata.py:1083
 msgid "Random surface with spatial dependence"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1068
+#: ../gui/wxpython/gui_modules/menudata.py:1084
 msgid "Generates random surface(s) with spatial dependence."
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1074
+#: ../gui/wxpython/gui_modules/menudata.py:1090
 msgid "Generate contour lines"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1075
-msgid "Produces a vector map layer of specified contours from a raster map layer."
+#: ../gui/wxpython/gui_modules/menudata.py:1091
+msgid ""
+"Produces a vector map layer of specified contours from a raster map layer."
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1078
+#: ../gui/wxpython/gui_modules/menudata.py:1094
 msgid "Interpolate surfaces"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1080
+#: ../gui/wxpython/gui_modules/menudata.py:1096
 msgid "Bilinear from raster points"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1081
+#: ../gui/wxpython/gui_modules/menudata.py:1097
 msgid "Bilinear interpolation utility for raster map layers."
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1085
+#: ../gui/wxpython/gui_modules/menudata.py:1101
 msgid "Bilinear and bicubic from vector points"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1086
+#: ../gui/wxpython/gui_modules/menudata.py:1102
 msgid "Bicubic or bilinear spline interpolation with Tykhonov regularization."
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1091
+#: ../gui/wxpython/gui_modules/menudata.py:1107
 msgid "IDW from raster points"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1092
+#: ../gui/wxpython/gui_modules/menudata.py:1108
 msgid "Surface interpolation utility for raster map layers."
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1096
+#: ../gui/wxpython/gui_modules/menudata.py:1112
 msgid "IDW from vector points"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1097
+#: ../gui/wxpython/gui_modules/menudata.py:1113
 msgid ""
 "Surface interpolation from vector point data by Inverse Distance Squared "
 "Weighting."
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1102
+#: ../gui/wxpython/gui_modules/menudata.py:1118
 msgid "Raster contours"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1103
+#: ../gui/wxpython/gui_modules/menudata.py:1119
 msgid "Surface generation program from rasterized contours."
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1107
+#: ../gui/wxpython/gui_modules/menudata.py:1123
 msgid "Regularized spline tension"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1108
+#: ../gui/wxpython/gui_modules/menudata.py:1124
 msgid ""
 "Spatial approximation and topographic analysis from given point or isoline "
 "data in vector format to floating point raster format using regularized "
 "spline with tension."
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1113
+#: ../gui/wxpython/gui_modules/menudata.py:1129
 msgid "Fill NULL cells"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1114
-msgid "Fills no-data areas in raster maps using v.surf.rst splines interpolation"
+#: ../gui/wxpython/gui_modules/menudata.py:1130
+msgid ""
+"Fills no-data areas in raster maps using v.surf.rst splines interpolation"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1120
-#: ../gui/wxpython/gui_modules/menudata.py:1711
+#: ../gui/wxpython/gui_modules/menudata.py:1136
+#: ../gui/wxpython/gui_modules/menudata.py:1727
 msgid "Report and statistics"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1122
+#: ../gui/wxpython/gui_modules/menudata.py:1138
 msgid "Basic raster metadata"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1123
+#: ../gui/wxpython/gui_modules/menudata.py:1139
 msgid "Output basic information about a raster map layer."
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1127
+#: ../gui/wxpython/gui_modules/menudata.py:1143
 msgid "Manage category information"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1128
+#: ../gui/wxpython/gui_modules/menudata.py:1144
 msgid ""
 "Manages category values and labels associated with user-specified raster map "
 "layers."
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1133
+#: ../gui/wxpython/gui_modules/menudata.py:1149
 msgid "General statistics"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1134
+#: ../gui/wxpython/gui_modules/menudata.py:1150
 msgid "Generates area statistics for raster map layers."
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1138
+#: ../gui/wxpython/gui_modules/menudata.py:1154
 msgid "Range of category values"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1139
+#: ../gui/wxpython/gui_modules/menudata.py:1155
 msgid "Prints terse list of category values found in a raster map layer."
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1143
+#: ../gui/wxpython/gui_modules/menudata.py:1159
 msgid "Sum category values"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1144
+#: ../gui/wxpython/gui_modules/menudata.py:1160
 msgid "Sums up the raster cell values."
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1148
+#: ../gui/wxpython/gui_modules/menudata.py:1164
 msgid "Sum area by raster map and category"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1149
+#: ../gui/wxpython/gui_modules/menudata.py:1165
 msgid "Reports statistics for raster map layers."
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1153
+#: ../gui/wxpython/gui_modules/menudata.py:1169
 msgid "Statistics for clumped cells"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1154
+#: ../gui/wxpython/gui_modules/menudata.py:1170
 msgid ""
 "Calculates the volume of data \"clumps\", and (optionally) produces a GRASS "
 "vector points map containing the calculated centroids of these clumps."
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1158
+#: ../gui/wxpython/gui_modules/menudata.py:1174
 msgid "Total corrected area"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1159
+#: ../gui/wxpython/gui_modules/menudata.py:1175
 msgid "Surface area estimation for rasters."
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1163
+#: ../gui/wxpython/gui_modules/menudata.py:1179
 msgid "Univariate raster statistics"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1164
-msgid "Calculates univariate statistics from the non-null cells of a raster map."
+#: ../gui/wxpython/gui_modules/menudata.py:1180
+msgid ""
+"Calculates univariate statistics from the non-null cells of a raster map."
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1169
+#: ../gui/wxpython/gui_modules/menudata.py:1185
 msgid "Sample transects"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1170
+#: ../gui/wxpython/gui_modules/menudata.py:1186
 msgid "Outputs the raster map layer values lying on user-defined line(s)."
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1174
+#: ../gui/wxpython/gui_modules/menudata.py:1190
 msgid "Sample transects (bearing/distance)"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1175
-msgid "Outputs raster map layer values lying along user defined transect line(s)."
+#: ../gui/wxpython/gui_modules/menudata.py:1191
+msgid ""
+"Outputs raster map layer values lying along user defined transect line(s)."
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1180
+#: ../gui/wxpython/gui_modules/menudata.py:1196
 msgid "Covariance/correlation"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1181
+#: ../gui/wxpython/gui_modules/menudata.py:1197
 msgid ""
 "Outputs a covariance/correlation matrix for user-specified raster map layer"
 "(s)."
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1185
+#: ../gui/wxpython/gui_modules/menudata.py:1201
 msgid "Linear regression"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1186
+#: ../gui/wxpython/gui_modules/menudata.py:1202
 msgid "Calculates linear regression from two raster maps: y = a + b*x"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1190
+#: ../gui/wxpython/gui_modules/menudata.py:1206
 msgid "Mutual category occurrences"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1191
+#: ../gui/wxpython/gui_modules/menudata.py:1207
 msgid ""
 "Tabulates the mutual occurrence (coincidence) of categories for two raster "
 "map layers."
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1198
+#: ../gui/wxpython/gui_modules/menudata.py:1214
 msgid "Vector"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1199
+#: ../gui/wxpython/gui_modules/menudata.py:1215
 msgid "Develop vector map"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1202
+#: ../gui/wxpython/gui_modules/menudata.py:1218
 msgid "Create new empty vector map"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1207
+#: ../gui/wxpython/gui_modules/menudata.py:1223
 msgid "Create/rebuild topology"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1208
+#: ../gui/wxpython/gui_modules/menudata.py:1224
 msgid "Creates topology for GRASS vector map."
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1212
+#: ../gui/wxpython/gui_modules/menudata.py:1228
 msgid "Clean vector map"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1213
+#: ../gui/wxpython/gui_modules/menudata.py:1229
 msgid "Toolset for cleaning topology of vector map."
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1217
+#: ../gui/wxpython/gui_modules/menudata.py:1233
 msgid "Generalization"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1218
+#: ../gui/wxpython/gui_modules/menudata.py:1234
 msgid "Vector based generalization."
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1223
+#: ../gui/wxpython/gui_modules/menudata.py:1239
 msgid "Convert object types"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1224
+#: ../gui/wxpython/gui_modules/menudata.py:1240
 msgid "Change the type of geometry elements."
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1229
+#: ../gui/wxpython/gui_modules/menudata.py:1245
 msgid "Add centroids"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1230
+#: ../gui/wxpython/gui_modules/menudata.py:1246
 msgid "Adds missing centroids to closed boundaries."
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1235
+#: ../gui/wxpython/gui_modules/menudata.py:1251
 msgid "Build polylines"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1236
+#: ../gui/wxpython/gui_modules/menudata.py:1252
 msgid "Builds polylines from lines or boundaries."
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1240
+#: ../gui/wxpython/gui_modules/menudata.py:1256
 msgid "Split polylines"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1241
+#: ../gui/wxpython/gui_modules/menudata.py:1257
 msgid "Creates points/segments from input vector lines and positions."
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1245
+#: ../gui/wxpython/gui_modules/menudata.py:1261
 msgid "Parallel lines"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1246
+#: ../gui/wxpython/gui_modules/menudata.py:1262
 msgid "Create parallel line to input lines"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1251
+#: ../gui/wxpython/gui_modules/menudata.py:1267
 msgid "Dissolve boundaries"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1252
+#: ../gui/wxpython/gui_modules/menudata.py:1268
 msgid ""
 "Dissolves boundaries between adjacent areas sharing a common category number "
 "or attribute."
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1257
+#: ../gui/wxpython/gui_modules/menudata.py:1273
 msgid "Create 3D vector over raster"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1258
+#: ../gui/wxpython/gui_modules/menudata.py:1274
 msgid "Converts vector map to 3D by sampling of elevation raster map."
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1262
+#: ../gui/wxpython/gui_modules/menudata.py:1278
 msgid "Extrude 3D vector map"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1263
+#: ../gui/wxpython/gui_modules/menudata.py:1279
 msgid "Extrudes flat vector object to 3D with defined height."
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1268
+#: ../gui/wxpython/gui_modules/menudata.py:1284
 msgid "Link to OGR"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1269
-msgid ""
-"Available drivers: ESRI Shapefile,MapInfo File,UK .NTF,SDTS,TIGER,S57,DGN,"
-"VRT,REC,Memory,BNA,CSV,GML,GPX,KML,GeoJSON,GMT,SQLite,ODBC,PGeo,PostgreSQL,"
-"AVCBin"
+#: ../gui/wxpython/gui_modules/menudata.py:1285
+msgid "Creates a new vector as a read-only link to OGR layer."
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1274
+#: ../gui/wxpython/gui_modules/menudata.py:1290
 msgid "Create labels"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1275
+#: ../gui/wxpython/gui_modules/menudata.py:1291
 msgid "Creates paint labels for a vector map from attached attributes."
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1280
+#: ../gui/wxpython/gui_modules/menudata.py:1296
 msgid "Reposition vector map"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1281
+#: ../gui/wxpython/gui_modules/menudata.py:1297
 msgid ""
 "Performs an affine transformation (shift, scale and rotate, or GPCs) on "
 "vector map."
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1285
+#: ../gui/wxpython/gui_modules/menudata.py:1301
 msgid "Reproject vector map"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1286
+#: ../gui/wxpython/gui_modules/menudata.py:1302
 msgid "Allows projection conversion of vector maps."
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1299
+#: ../gui/wxpython/gui_modules/menudata.py:1315
 msgid "Query with attributes"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1300
+#: ../gui/wxpython/gui_modules/menudata.py:1316
 msgid ""
 "Selects vector objects from an existing vector map and creates a new map "
 "containing only the selected objects."
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1304
+#: ../gui/wxpython/gui_modules/menudata.py:1320
 msgid "Query with coordinate(s)"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1305
+#: ../gui/wxpython/gui_modules/menudata.py:1321
 msgid "Queries a vector map layer at given locations."
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1309
+#: ../gui/wxpython/gui_modules/menudata.py:1325
 msgid "Query with another vector map"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1310
+#: ../gui/wxpython/gui_modules/menudata.py:1326
 msgid "Select features from ainput by features from binput"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1315
+#: ../gui/wxpython/gui_modules/menudata.py:1331
 msgid "Buffer vectors"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1316
-msgid "Creates a buffer around features of given type (areas must contain centroid)."
+#: ../gui/wxpython/gui_modules/menudata.py:1332
+msgid ""
+"Creates a buffer around features of given type (areas must contain centroid)."
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1319
+#: ../gui/wxpython/gui_modules/menudata.py:1335
 msgid "Lidar analysis"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1321
+#: ../gui/wxpython/gui_modules/menudata.py:1337
 msgid "Detect edges"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1322
+#: ../gui/wxpython/gui_modules/menudata.py:1338
 msgid "Detects the object's edges from a LIDAR data set."
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1326
+#: ../gui/wxpython/gui_modules/menudata.py:1342
 msgid "Detect interiors"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1327
+#: ../gui/wxpython/gui_modules/menudata.py:1343
 msgid ""
 "Building contour determination and Region Growing algorithm for determining "
 "the building inside"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1331
+#: ../gui/wxpython/gui_modules/menudata.py:1347
 msgid "Correct and reclassify objects"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1332
+#: ../gui/wxpython/gui_modules/menudata.py:1348
 msgid ""
 "Correction of the v.lidar.growing output. It is the last of the three "
 "algorithms for LIDAR filtering."
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1337
+#: ../gui/wxpython/gui_modules/menudata.py:1353
 msgid "Linear referencing"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1339
+#: ../gui/wxpython/gui_modules/menudata.py:1355
 msgid "Create LRS"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1340
+#: ../gui/wxpython/gui_modules/menudata.py:1356
 msgid "Create Linear Reference System"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1344
+#: ../gui/wxpython/gui_modules/menudata.py:1360
 msgid "Create stationing"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1345
+#: ../gui/wxpython/gui_modules/menudata.py:1361
 msgid "Create stationing from input lines, and linear reference system"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1349
+#: ../gui/wxpython/gui_modules/menudata.py:1365
 msgid "Create points/segments"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1350
+#: ../gui/wxpython/gui_modules/menudata.py:1366
 msgid ""
 "Creates points/segments from input lines, linear reference system and "
 "positions read from stdin or a file."
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1354
+#: ../gui/wxpython/gui_modules/menudata.py:1370
 msgid "Find line id and offset"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1355
+#: ../gui/wxpython/gui_modules/menudata.py:1371
 msgid ""
 "Finds line id and real km+offset for given points in vector map using linear "
 "reference system."
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1361
+#: ../gui/wxpython/gui_modules/menudata.py:1377
 msgid "Nearest features"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1362
+#: ../gui/wxpython/gui_modules/menudata.py:1378
 msgid ""
 "Finds the nearest element in vector map 'to' for elements in vector map "
 "'from'."
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1365
+#: ../gui/wxpython/gui_modules/menudata.py:1381
 msgid "Network analysis"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1367
+#: ../gui/wxpython/gui_modules/menudata.py:1383
 msgid "Allocate subnets"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1368
+#: ../gui/wxpython/gui_modules/menudata.py:1384
 msgid ""
 "Centre node must be opened (costs >= 0). Costs of centre node are used in "
 "calculation"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1372
+#: ../gui/wxpython/gui_modules/menudata.py:1388
 msgid "Network maintenance"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1373
+#: ../gui/wxpython/gui_modules/menudata.py:1389
 msgid "Network maintenance."
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1377
+#: ../gui/wxpython/gui_modules/menudata.py:1393
 msgid "Visibility network"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1378
+#: ../gui/wxpython/gui_modules/menudata.py:1394
 msgid "Visibility graph construction."
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1382
+#: ../gui/wxpython/gui_modules/menudata.py:1398
 msgid "Shortest path"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1383
+#: ../gui/wxpython/gui_modules/menudata.py:1399
 msgid "Finds shortest path on vector network."
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1387
+#: ../gui/wxpython/gui_modules/menudata.py:1403
 msgid "Display shortest route (requires XTerm)"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1388
+#: ../gui/wxpython/gui_modules/menudata.py:1404
 msgid ""
 "Display shortest route along network between 2 nodes (visualization only, "
 "requires XTerm))"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1392
+#: ../gui/wxpython/gui_modules/menudata.py:1408
 msgid "Split net"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1393
+#: ../gui/wxpython/gui_modules/menudata.py:1409
 msgid ""
 "Splits net to bands between cost isolines (direction from centre). Centre "
 "node must be opened (costs >= 0). Costs of centre node are used in "
 "calculation."
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1397
+#: ../gui/wxpython/gui_modules/menudata.py:1413
 msgid "Steiner tree"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1398
+#: ../gui/wxpython/gui_modules/menudata.py:1414
 msgid ""
 "Note that 'Minimum Steiner Tree' problem is NP-hard and heuristic algorithm "
 "is used in this module so the result may be sub optimal"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1402
+#: ../gui/wxpython/gui_modules/menudata.py:1418
 msgid "Traveling salesman analysis"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1403
+#: ../gui/wxpython/gui_modules/menudata.py:1419
 msgid ""
 "Note that TSP is NP-hard, heuristic algorithm is used by this module and "
 "created cycle may be sub optimal"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1408
-#: ../gui/wxpython/gui_modules/menudata.py:1410
+#: ../gui/wxpython/gui_modules/menudata.py:1424
+#: ../gui/wxpython/gui_modules/menudata.py:1426
 msgid "Overlay vector maps"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1411
+#: ../gui/wxpython/gui_modules/menudata.py:1427
 msgid "Overlays two vector maps."
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1415
+#: ../gui/wxpython/gui_modules/menudata.py:1431
 msgid "Patch vector maps"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1416
+#: ../gui/wxpython/gui_modules/menudata.py:1432
 msgid "Create a new vector map layer by combining other vector map layers."
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1422
+#: ../gui/wxpython/gui_modules/menudata.py:1438
 msgid "Change attributes"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1424
+#: ../gui/wxpython/gui_modules/menudata.py:1440
 msgid "Manage or report categories"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1425
+#: ../gui/wxpython/gui_modules/menudata.py:1441
 msgid "Attach, delete or report vector categories to map geometry."
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1429
+#: ../gui/wxpython/gui_modules/menudata.py:1445
 msgid "Reclassify objects interactively"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1430
+#: ../gui/wxpython/gui_modules/menudata.py:1446
 msgid "Reclassify vector objects interactively by entering SQL rules"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1434
+#: ../gui/wxpython/gui_modules/menudata.py:1450
 msgid "Reclassify objects using rules file"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1435
+#: ../gui/wxpython/gui_modules/menudata.py:1451
 msgid ""
 "Changes vector category values for an existing vector map according to "
 "results of SQL queries or a value in attribute table column."
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1442
+#: ../gui/wxpython/gui_modules/menudata.py:1458
 msgid "Generate area for current region"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1443
+#: ../gui/wxpython/gui_modules/menudata.py:1459
 msgid "Create a new vector from the current region."
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1446
+#: ../gui/wxpython/gui_modules/menudata.py:1462
 msgid "Generate areas from points"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1448
+#: ../gui/wxpython/gui_modules/menudata.py:1464
 msgid "Convex hull"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1449
+#: ../gui/wxpython/gui_modules/menudata.py:1465
 msgid "Uses a GRASS vector points map to produce a convex hull vector map."
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1453
+#: ../gui/wxpython/gui_modules/menudata.py:1469
 msgid "Delaunay triangles"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1454
+#: ../gui/wxpython/gui_modules/menudata.py:1470
 msgid ""
 "Creates a Delaunay triangulation from an input vector map containing points "
 "or centroids."
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1458
+#: ../gui/wxpython/gui_modules/menudata.py:1474
 msgid "Voronoi diagram/Thiessen polygons"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1459
+#: ../gui/wxpython/gui_modules/menudata.py:1475
 msgid ""
 "Creates a Voronoi diagram from an input vector map containing points or "
 "centroids."
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1465
+#: ../gui/wxpython/gui_modules/menudata.py:1481
 msgid "Generate grid"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1466
+#: ../gui/wxpython/gui_modules/menudata.py:1482
 msgid "Creates a GRASS vector map of a user-defined grid."
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1469
+#: ../gui/wxpython/gui_modules/menudata.py:1485
 msgid "Generate points"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1471
+#: ../gui/wxpython/gui_modules/menudata.py:1487
 msgid "Generate from database"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1472
-msgid "Creates new vector (points) map from database table containing coordinates."
+#: ../gui/wxpython/gui_modules/menudata.py:1488
+msgid ""
+"Creates new vector (points) map from database table containing coordinates."
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1476
+#: ../gui/wxpython/gui_modules/menudata.py:1492
 msgid "Generate points along lines"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1477
+#: ../gui/wxpython/gui_modules/menudata.py:1493
 msgid "Create points along input lines in new vector with 2 layers."
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1481
+#: ../gui/wxpython/gui_modules/menudata.py:1497
 msgid "Generate random points"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1482
+#: ../gui/wxpython/gui_modules/menudata.py:1498
 msgid "Randomly generate a 2D/3D vector points map."
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1486
+#: ../gui/wxpython/gui_modules/menudata.py:1502
 msgid "Perturb points"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1487
+#: ../gui/wxpython/gui_modules/menudata.py:1503
 msgid "Random location perturbations of GRASS vector points"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1494
+#: ../gui/wxpython/gui_modules/menudata.py:1510
 msgid "Remove outliers in point sets"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1495
+#: ../gui/wxpython/gui_modules/menudata.py:1511
 msgid "Removes outliers from vector point data."
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1499
+#: ../gui/wxpython/gui_modules/menudata.py:1515
 msgid "Test/training point sets"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1500
+#: ../gui/wxpython/gui_modules/menudata.py:1516
 msgid "Randomly partition points into test/train sets."
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1505
+#: ../gui/wxpython/gui_modules/menudata.py:1521
 msgid "Update area attributes from raster"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1506
+#: ../gui/wxpython/gui_modules/menudata.py:1522
 msgid ""
 "Calculates univariate statistics from a GRASS raster map based on vector "
 "polygons and uploads statistics to new attribute columns."
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1510
+#: ../gui/wxpython/gui_modules/menudata.py:1526
 msgid "Update point attributes from areas"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1511
+#: ../gui/wxpython/gui_modules/menudata.py:1527
 msgid "Uploads vector values at positions of vector points to the table."
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1514
+#: ../gui/wxpython/gui_modules/menudata.py:1530
 msgid "Update point attributes from raster"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1516
+#: ../gui/wxpython/gui_modules/menudata.py:1532
 msgid "Sample raster maps at point locations"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1517
+#: ../gui/wxpython/gui_modules/menudata.py:1533
 msgid "Uploads raster values at positions of vector points to the table."
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1521
+#: ../gui/wxpython/gui_modules/menudata.py:1537
 msgid "Sample raster neighborhood around points"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1522
+#: ../gui/wxpython/gui_modules/menudata.py:1538
 msgid "Samples a raster map at vector point locations."
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1528
+#: ../gui/wxpython/gui_modules/menudata.py:1544
 msgid "Reports and statistics"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1530
+#: ../gui/wxpython/gui_modules/menudata.py:1546
 msgid "Basic vector metadata"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1531
+#: ../gui/wxpython/gui_modules/menudata.py:1547
 msgid "Outputs basic information about a user-specified vector map layer."
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1536
+#: ../gui/wxpython/gui_modules/menudata.py:1552
 msgid "Report topology by category"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1537
+#: ../gui/wxpython/gui_modules/menudata.py:1553
 msgid "Reports geometry statistics for vectors."
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1541
+#: ../gui/wxpython/gui_modules/menudata.py:1557
 msgid "Upload or report topology"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1542
+#: ../gui/wxpython/gui_modules/menudata.py:1558
 msgid "Populate database values from vector features."
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1547
+#: ../gui/wxpython/gui_modules/menudata.py:1563
 msgid "Univariate attribute statistics"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1548
+#: ../gui/wxpython/gui_modules/menudata.py:1564
 msgid ""
 "Calculates univariate statistics for attribute. Variance and standard "
 "deviation is calculated only for points if specified."
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1553
+#: ../gui/wxpython/gui_modules/menudata.py:1569
 msgid "Quadrat indices"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1554
+#: ../gui/wxpython/gui_modules/menudata.py:1570
 msgid "Indices for quadrat counts of sites lists."
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1558
+#: ../gui/wxpython/gui_modules/menudata.py:1574
 msgid "Test normality"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1559
+#: ../gui/wxpython/gui_modules/menudata.py:1575
 msgid "Tests for normality for points."
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1566
+#: ../gui/wxpython/gui_modules/menudata.py:1582
 msgid "Imagery"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1567
+#: ../gui/wxpython/gui_modules/menudata.py:1583
 msgid "Develop images and groups"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1569
+#: ../gui/wxpython/gui_modules/menudata.py:1585
 msgid "Create/edit group"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1570
+#: ../gui/wxpython/gui_modules/menudata.py:1586
 msgid "Creates, edits, and lists groups and subgroups of imagery files."
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1574
+#: ../gui/wxpython/gui_modules/menudata.py:1590
 msgid "Target group"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1575
+#: ../gui/wxpython/gui_modules/menudata.py:1591
 msgid "Targets an imagery group to a GRASS location and mapset."
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1580
+#: ../gui/wxpython/gui_modules/menudata.py:1596
 msgid "Mosaic images"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1581
+#: ../gui/wxpython/gui_modules/menudata.py:1597
 msgid "Mosaics up to 4 images and extends colormap; creates map *.mosaic"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1586
+#: ../gui/wxpython/gui_modules/menudata.py:1602
 msgid "Manage image colors"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1588
+#: ../gui/wxpython/gui_modules/menudata.py:1604
 msgid "Color balance for RGB"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1589
+#: ../gui/wxpython/gui_modules/menudata.py:1605
 msgid "Auto-balancing of colors for LANDSAT images"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1593
+#: ../gui/wxpython/gui_modules/menudata.py:1609
 msgid "HIS to RGB"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1594
+#: ../gui/wxpython/gui_modules/menudata.py:1610
 msgid ""
 "Hue-intensity-saturation (his) to red-green-blue (rgb) raster map color "
 "transformation function."
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1599
+#: ../gui/wxpython/gui_modules/menudata.py:1615
 msgid ""
 "Red-green-blue (rgb) to hue-intensity-saturation (his) raster map color "
 "transformation function"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1605
+#: ../gui/wxpython/gui_modules/menudata.py:1621
 msgid "Rectify image or raster"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1606
+#: ../gui/wxpython/gui_modules/menudata.py:1622
 msgid ""
 "Rectifies an image by computing a coordinate transformation for each pixel "
 "in the image based on the control points"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1610
+#: ../gui/wxpython/gui_modules/menudata.py:1626
 msgid "Ortho photo rectification (requires Xterm)"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1611
+#: ../gui/wxpython/gui_modules/menudata.py:1627
 msgid "Ortho Photo rectification"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1616
+#: ../gui/wxpython/gui_modules/menudata.py:1632
 msgid "Brovey sharpening"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1617
-msgid "Brovey transform to merge multispectral and high-res panchromatic channels"
+#: ../gui/wxpython/gui_modules/menudata.py:1633
+msgid ""
+"Brovey transform to merge multispectral and high-res panchromatic channels"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1620
+#: ../gui/wxpython/gui_modules/menudata.py:1636
 msgid "Classify image"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1622
+#: ../gui/wxpython/gui_modules/menudata.py:1638
 msgid "Clustering input for unsupervised classification"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1623
+#: ../gui/wxpython/gui_modules/menudata.py:1639
 msgid ""
 "The resulting signature file is used as input for i.maxlik, to generate an "
 "unsupervised image classification."
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1628
+#: ../gui/wxpython/gui_modules/menudata.py:1644
 msgid "Maximum likelihood classification (MLC)"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1629
+#: ../gui/wxpython/gui_modules/menudata.py:1645
 msgid ""
 "Classification is based on the spectral signature information generated by "
 "either i.cluster, i.class, or i.gensig."
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1633
+#: ../gui/wxpython/gui_modules/menudata.py:1649
 msgid "Sequential maximum a posteriori classification (SMAP)"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1634
+#: ../gui/wxpython/gui_modules/menudata.py:1650
 msgid ""
 "Performs contextual image classification using sequential maximum a "
 "posteriori (SMAP) estimation."
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1639
+#: ../gui/wxpython/gui_modules/menudata.py:1655
 msgid "Interactive input for supervised classification (requires Xterm)"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1640
+#: ../gui/wxpython/gui_modules/menudata.py:1656
 msgid "Interactive input for supervised classification"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1644
+#: ../gui/wxpython/gui_modules/menudata.py:1660
 msgid "Input for supervised MLC"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1645
+#: ../gui/wxpython/gui_modules/menudata.py:1661
 msgid "Generates statistics for i.maxlik from raster map layer."
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1649
+#: ../gui/wxpython/gui_modules/menudata.py:1665
 msgid "Input for supervised SMAP"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1650
+#: ../gui/wxpython/gui_modules/menudata.py:1666
 msgid "Generate statistics for i.smap from raster map layer."
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1655
+#: ../gui/wxpython/gui_modules/menudata.py:1671
 msgid "Filter image"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1657
+#: ../gui/wxpython/gui_modules/menudata.py:1673
 msgid "Edge detection"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1658
+#: ../gui/wxpython/gui_modules/menudata.py:1674
 msgid "Zero-crossing \"edge detection\" raster function for image processing."
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1662
+#: ../gui/wxpython/gui_modules/menudata.py:1678
 msgid "Matrix/convolving filter"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1663
+#: ../gui/wxpython/gui_modules/menudata.py:1679
 msgid "Raster map matrix filter."
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1669
-#: ../gui/wxpython/gui_modules/wxgui_utils.py:338
+#: ../gui/wxpython/gui_modules/menudata.py:1685
+#: ../gui/wxpython/gui_modules/wxgui_utils.py:342
 msgid "Histogram"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1670
+#: ../gui/wxpython/gui_modules/menudata.py:1686
 msgid "Generate histogram of image"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1674
+#: ../gui/wxpython/gui_modules/menudata.py:1690
 msgid "Spectral response"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1675
-msgid "displays spectral response at user specified locations in group or images"
-msgstr ""
-
-#: ../gui/wxpython/gui_modules/menudata.py:1679
-msgid "Tasseled cap vegetation index"
-msgstr ""
-
-#: ../gui/wxpython/gui_modules/menudata.py:1680
-msgid "Tasseled Cap (Kauth Thomas) transformation for LANDSAT-TM data"
-msgstr ""
-
-#: ../gui/wxpython/gui_modules/menudata.py:1683
-msgid "Transform image"
-msgstr ""
-
-#: ../gui/wxpython/gui_modules/menudata.py:1685
-msgid "Canonical correlation"
-msgstr ""
-
-#: ../gui/wxpython/gui_modules/menudata.py:1686
-msgid "Canonical components analysis (cca) program for image processing."
-msgstr ""
-
-#: ../gui/wxpython/gui_modules/menudata.py:1690
-msgid "Principal components"
-msgstr ""
-
 #: ../gui/wxpython/gui_modules/menudata.py:1691
-msgid "Principal components analysis (pca) program for image processing."
+msgid ""
+"displays spectral response at user specified locations in group or images"
 msgstr ""
 
 #: ../gui/wxpython/gui_modules/menudata.py:1695
-msgid "Fast Fourier"
+msgid "Tasseled cap vegetation index"
 msgstr ""
 
 #: ../gui/wxpython/gui_modules/menudata.py:1696
-msgid "Fast Fourier Transform (FFT) for image processing."
+msgid "Tasseled Cap (Kauth Thomas) transformation for LANDSAT-TM data"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1700
-msgid "Inverse Fast Fourier"
+#: ../gui/wxpython/gui_modules/menudata.py:1699
+msgid "Transform image"
 msgstr ""
 
 #: ../gui/wxpython/gui_modules/menudata.py:1701
-msgid "Inverse Fast Fourier Transform (IFFT) for image processing."
+msgid "Canonical correlation"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/menudata.py:1702
+msgid "Canonical components analysis (cca) program for image processing."
 msgstr ""
 
 #: ../gui/wxpython/gui_modules/menudata.py:1706
-msgid "Atmospheric correction"
+msgid "Principal components"
 msgstr ""
 
 #: ../gui/wxpython/gui_modules/menudata.py:1707
+msgid "Principal components analysis (pca) program for image processing."
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/menudata.py:1711
+msgid "Fast Fourier"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/menudata.py:1712
+msgid "Fast Fourier Transform (FFT) for image processing."
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/menudata.py:1716
+msgid "Inverse Fast Fourier"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/menudata.py:1717
+msgid "Inverse Fast Fourier Transform (IFFT) for image processing."
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/menudata.py:1722
+msgid "Atmospheric correction"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/menudata.py:1723
 msgid "Performs atmospheric correction using the 6S algorithm."
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1713
+#: ../gui/wxpython/gui_modules/menudata.py:1729
 msgid "Bit pattern comparison "
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1714
+#: ../gui/wxpython/gui_modules/menudata.py:1730
 msgid "Compares bit patterns with a raster map."
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1718
+#: ../gui/wxpython/gui_modules/menudata.py:1734
 msgid "Kappa analysis"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1719
+#: ../gui/wxpython/gui_modules/menudata.py:1735
 msgid ""
 "Calculate error matrix and kappa parameter for accuracy assessment of "
 "classification result."
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1723
+#: ../gui/wxpython/gui_modules/menudata.py:1739
 msgid "OIF for LandSat TM"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1724
+#: ../gui/wxpython/gui_modules/menudata.py:1740
 msgid "Calculates Optimum-Index-Factor table for LANDSAT TM bands 1-5, & 7"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1731
+#: ../gui/wxpython/gui_modules/menudata.py:1747
 msgid "Volumes"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1732
+#: ../gui/wxpython/gui_modules/menudata.py:1748
 msgid "Develop volumes"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1734
+#: ../gui/wxpython/gui_modules/menudata.py:1750
 msgid "Manage 3D NULL values"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1735
+#: ../gui/wxpython/gui_modules/menudata.py:1751
 msgid "Explicitly create the 3D NULL-value bitmap file."
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1739
+#: ../gui/wxpython/gui_modules/menudata.py:1755
 msgid "Manage timestamp"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1740
+#: ../gui/wxpython/gui_modules/menudata.py:1756
 msgid "Print/add/remove a timestamp for a 3D raster map"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1747
+#: ../gui/wxpython/gui_modules/menudata.py:1763
 msgid "3D Mask"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1748
+#: ../gui/wxpython/gui_modules/menudata.py:1764
 msgid "Establishes the current working 3D raster mask."
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1752
+#: ../gui/wxpython/gui_modules/menudata.py:1768
 msgid "3D raster map calculator"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1753
+#: ../gui/wxpython/gui_modules/menudata.py:1769
 msgid "Map calculator for volumetric map algebra"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1757
+#: ../gui/wxpython/gui_modules/menudata.py:1773
 msgid "Cross section"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1758
+#: ../gui/wxpython/gui_modules/menudata.py:1774
 msgid ""
 "Creates cross section 2D raster map from 3d raster map based on 2D elevation "
 "map"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1762
+#: ../gui/wxpython/gui_modules/menudata.py:1778
 msgid "Interpolate volume from points"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1763
+#: ../gui/wxpython/gui_modules/menudata.py:1779
 msgid ""
 "Interpolates point data to a G3D grid volume using regularized spline with "
 "tension (RST) algorithm."
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1767
+#: ../gui/wxpython/gui_modules/menudata.py:1783
 msgid "Report and Statistics"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1769
+#: ../gui/wxpython/gui_modules/menudata.py:1785
 msgid "Basic volume metadata"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1770
+#: ../gui/wxpython/gui_modules/menudata.py:1786
 msgid "Outputs basic information about a user-specified 3D raster map layer."
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1777
+#: ../gui/wxpython/gui_modules/menudata.py:1793
 #: ../gui/wxpython/gui_modules/dbm.py:2019
 #: ../gui/wxpython/gui_modules/dbm.py:2131
 #: ../gui/wxpython/gui_modules/dbm.py:2370
 msgid "Database"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1778
+#: ../gui/wxpython/gui_modules/menudata.py:1794
 msgid "Database information"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1780
+#: ../gui/wxpython/gui_modules/menudata.py:1796
 msgid "Describe table"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1781
+#: ../gui/wxpython/gui_modules/menudata.py:1797
 msgid "Describes a table in detail."
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1785
+#: ../gui/wxpython/gui_modules/menudata.py:1801
 msgid "List columns"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1786
+#: ../gui/wxpython/gui_modules/menudata.py:1802
 msgid "List all columns for a given table."
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1790
+#: ../gui/wxpython/gui_modules/menudata.py:1806
 msgid "List drivers"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1791
+#: ../gui/wxpython/gui_modules/menudata.py:1807
 msgid "List all database drivers."
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1795
+#: ../gui/wxpython/gui_modules/menudata.py:1811
 msgid "List tables"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1796
+#: ../gui/wxpython/gui_modules/menudata.py:1812
 msgid "Lists all tables for a given database."
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1802
+#: ../gui/wxpython/gui_modules/menudata.py:1818
 msgid "Manage databases"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1804
+#: ../gui/wxpython/gui_modules/menudata.py:1820
 msgid "Connect"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1805
+#: ../gui/wxpython/gui_modules/menudata.py:1821
 msgid "Prints/sets general DB connection for current mapset and exits."
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1809
+#: ../gui/wxpython/gui_modules/menudata.py:1825
 msgid "Login"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1810
+#: ../gui/wxpython/gui_modules/menudata.py:1826
 msgid "Sets user/password for driver/database."
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1815
+#: ../gui/wxpython/gui_modules/menudata.py:1831
 msgid "Copy table"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1816
+#: ../gui/wxpython/gui_modules/menudata.py:1832
 msgid ""
 "Copy a table. Either 'from_table' (optionally with 'where') can be used or "
 "'select' option, but not 'from_table' and 'select' at the same time."
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1820
+#: ../gui/wxpython/gui_modules/menudata.py:1836
 msgid "New table"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1821
+#: ../gui/wxpython/gui_modules/menudata.py:1837
 msgid ""
 "Creates and adds a new attribute table to a given layer of an existing "
 "vector map."
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1825
+#: ../gui/wxpython/gui_modules/menudata.py:1841
 msgid "Remove table"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1826
+#: ../gui/wxpython/gui_modules/menudata.py:1842
 msgid "Drops an attribute table."
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1831
+#: ../gui/wxpython/gui_modules/menudata.py:1847
 msgid "Add columns"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1832
+#: ../gui/wxpython/gui_modules/menudata.py:1848
 msgid ""
 "Adds one or more columns to the attribute table connected to a given vector "
 "map."
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1836
+#: ../gui/wxpython/gui_modules/menudata.py:1852
 msgid "Change values"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1837
-msgid "Allows to update a column in the attribute table connected to a vector map."
+#: ../gui/wxpython/gui_modules/menudata.py:1853
+msgid ""
+"Allows to update a column in the attribute table connected to a vector map."
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1841
+#: ../gui/wxpython/gui_modules/menudata.py:1857
 #: ../gui/wxpython/gui_modules/dbm.py:765
 msgid "Rename column"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1842
-msgid "Renames a column in the attribute table connected to a given vector map."
+#: ../gui/wxpython/gui_modules/menudata.py:1858
+msgid ""
+"Renames a column in the attribute table connected to a given vector map."
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1847
+#: ../gui/wxpython/gui_modules/menudata.py:1863
 msgid "Test"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1848
+#: ../gui/wxpython/gui_modules/menudata.py:1864
 msgid "Test database driver, database must exist and set by db.connect."
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1853
+#: ../gui/wxpython/gui_modules/menudata.py:1869
 msgid "Query"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1855
+#: ../gui/wxpython/gui_modules/menudata.py:1871
 msgid "Query any table"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1856
+#: ../gui/wxpython/gui_modules/menudata.py:1872
 msgid "Selects data from table."
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1860
+#: ../gui/wxpython/gui_modules/menudata.py:1876
 msgid "Query vector attribute data"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1861
+#: ../gui/wxpython/gui_modules/menudata.py:1877
 msgid "Prints vector map attributes."
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1865
+#: ../gui/wxpython/gui_modules/menudata.py:1881
 msgid "SQL statement"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1866
+#: ../gui/wxpython/gui_modules/menudata.py:1882
 msgid "Executes any SQL statement."
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1872
+#: ../gui/wxpython/gui_modules/menudata.py:1888
 msgid "Vector database connections"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1874
+#: ../gui/wxpython/gui_modules/menudata.py:1890
 msgid "Reconnect vector to database"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1875
+#: ../gui/wxpython/gui_modules/menudata.py:1891
 msgid "Reconnects vectors to a new database."
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1879
+#: ../gui/wxpython/gui_modules/menudata.py:1895
 msgid "Set vector map - database connection"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1880
+#: ../gui/wxpython/gui_modules/menudata.py:1896
 msgid "Prints/sets DB connection for a vector map to attribute table."
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1887
+#: ../gui/wxpython/gui_modules/menudata.py:1903
 msgid "Help"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1889
+#: ../gui/wxpython/gui_modules/menudata.py:1905
 msgid "GRASS GIS help"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1890
-#: ../gui/wxpython/gui_modules/menudata.py:1895
+#: ../gui/wxpython/gui_modules/menudata.py:1906
+#: ../gui/wxpython/gui_modules/menudata.py:1911
 msgid "Display the HTML man pages of GRASS"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1894
+#: ../gui/wxpython/gui_modules/menudata.py:1910
 msgid "GRASS GIS GUI help"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menudata.py:1899
-#: ../gui/wxpython/gui_modules/menudata.py:1900
+#: ../gui/wxpython/gui_modules/menudata.py:1915
+#: ../gui/wxpython/gui_modules/menudata.py:1916
 msgid "About GRASS GIS"
 msgstr ""
 
@@ -4791,8 +4906,8 @@ msgid "Label font size (pts):"
 msgstr ""
 
 #: ../gui/wxpython/gui_modules/profile.py:925
-#: ../gui/wxpython/gui_modules/preferences.py:944
-#: ../gui/wxpython/gui_modules/preferences.py:1567
+#: ../gui/wxpython/gui_modules/preferences.py:947
+#: ../gui/wxpython/gui_modules/preferences.py:1589
 msgid "Font settings"
 msgstr ""
 
@@ -4819,7 +4934,7 @@ msgid "Profile line settings"
 msgstr ""
 
 #: ../gui/wxpython/gui_modules/profile.py:1109
-#: ../gui/wxpython/gui_modules/wxgui_utils.py:340
+#: ../gui/wxpython/gui_modules/wxgui_utils.py:344
 msgid "Profile"
 msgstr ""
 
@@ -4908,72 +5023,72 @@ msgstr ""
 msgid "Show legend"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/preferences.py:359
+#: ../gui/wxpython/gui_modules/preferences.py:362
 msgid "Segment break"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/preferences.py:491
+#: ../gui/wxpython/gui_modules/preferences.py:494
 msgid "Collapse all except PERMANENT and current"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/preferences.py:492
+#: ../gui/wxpython/gui_modules/preferences.py:495
 msgid "Collapse all except PERMANENT"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/preferences.py:493
+#: ../gui/wxpython/gui_modules/preferences.py:496
 msgid "Collapse all"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/preferences.py:494
+#: ../gui/wxpython/gui_modules/preferences.py:497
 msgid "Expand all"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/preferences.py:495
+#: ../gui/wxpython/gui_modules/preferences.py:498
 #: ../gui/wxpython/gui_modules/dbm.py:951
 msgid "Edit selected record"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/preferences.py:496
+#: ../gui/wxpython/gui_modules/preferences.py:499
 msgid "Display selected"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/preferences.py:521
+#: ../gui/wxpython/gui_modules/preferences.py:524
 msgid "box"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/preferences.py:522
+#: ../gui/wxpython/gui_modules/preferences.py:525
 msgid "sphere"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/preferences.py:523
+#: ../gui/wxpython/gui_modules/preferences.py:526
 msgid "cube"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/preferences.py:524
+#: ../gui/wxpython/gui_modules/preferences.py:527
 msgid "diamond"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/preferences.py:525
+#: ../gui/wxpython/gui_modules/preferences.py:528
 msgid "dtree"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/preferences.py:526
+#: ../gui/wxpython/gui_modules/preferences.py:529
 msgid "ctree"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/preferences.py:527
+#: ../gui/wxpython/gui_modules/preferences.py:530
 msgid "aster"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/preferences.py:528
+#: ../gui/wxpython/gui_modules/preferences.py:531
 msgid "gyro"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/preferences.py:529
+#: ../gui/wxpython/gui_modules/preferences.py:532
 msgid "histogram"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/preferences.py:596
+#: ../gui/wxpython/gui_modules/preferences.py:599
 #, python-format
 msgid ""
 "Error: Reading settings from file <%(file)s> failed.\n"
@@ -4981,11 +5096,11 @@ msgid ""
 "       Line: '%(line)s'"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/preferences.py:626
+#: ../gui/wxpython/gui_modules/preferences.py:629
 msgid "Uknown settings file location."
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/preferences.py:657
+#: ../gui/wxpython/gui_modules/preferences.py:660
 #, python-format
 msgid ""
 "Writing settings to file <%(file)s> failed.\n"
@@ -4993,222 +5108,227 @@ msgid ""
 "Details: %(detail)s"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/preferences.py:756
+#: ../gui/wxpython/gui_modules/preferences.py:759
 msgid "Unable to set "
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/preferences.py:791
+#: ../gui/wxpython/gui_modules/preferences.py:794
 msgid "User GUI settings"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/preferences.py:815
+#: ../gui/wxpython/gui_modules/preferences.py:818
 msgid "Set to default"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/preferences.py:823
+#: ../gui/wxpython/gui_modules/preferences.py:826
 msgid "Revert settings to default and apply changes"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/preferences.py:858
+#: ../gui/wxpython/gui_modules/preferences.py:861
 #: ../gui/wxpython/gui_modules/vdigit.py:1136
 #: ../gui/wxpython/gui_modules/nviz_tools.py:956
 msgid "General"
 msgstr "Général"
 
-#: ../gui/wxpython/gui_modules/preferences.py:861
+#: ../gui/wxpython/gui_modules/preferences.py:864
 msgid "General settings"
 msgstr "Paramètres généraux"
 
-#: ../gui/wxpython/gui_modules/preferences.py:872
+#: ../gui/wxpython/gui_modules/preferences.py:875
 msgid "Element list:"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/preferences.py:894
+#: ../gui/wxpython/gui_modules/preferences.py:897
 msgid "Save current window layout as default"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/preferences.py:897
+#: ../gui/wxpython/gui_modules/preferences.py:900
 msgid ""
 "Save current position and size of Layer Manager window and opened Map "
 "Display window(s) and use as default for next sessions."
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/preferences.py:910
+#: ../gui/wxpython/gui_modules/preferences.py:913
 msgid "Layer Manager settings"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/preferences.py:922
+#: ../gui/wxpython/gui_modules/preferences.py:925
 msgid "Ask when removing map layer from layer tree"
 msgstr "Demander lors de l'enlèvement d'une couche de l'arborescence"
 
-#: ../gui/wxpython/gui_modules/preferences.py:940
+#: ../gui/wxpython/gui_modules/preferences.py:943
 #: ../gui/wxpython/gui_modules/vdigit.py:1143
 msgid "Display"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/preferences.py:955
+#: ../gui/wxpython/gui_modules/preferences.py:958
 msgid "Default font for GRASS displays:"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/preferences.py:969
+#: ../gui/wxpython/gui_modules/preferences.py:972
 msgid "Default display settings"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/preferences.py:980
+#: ../gui/wxpython/gui_modules/preferences.py:983
 msgid "Display driver:"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/preferences.py:1007
+#: ../gui/wxpython/gui_modules/preferences.py:1010
 msgid "Statusbar mode:"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/preferences.py:1040
+#: ../gui/wxpython/gui_modules/preferences.py:1030
+#: ../gui/wxpython/gui_modules/nviz_tools.py:962
+msgid "Background color:"
+msgstr "Couleur d'arrière-plan"
+
+#: ../gui/wxpython/gui_modules/preferences.py:1062
 msgid "Enable auto-rendering"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/preferences.py:1061
+#: ../gui/wxpython/gui_modules/preferences.py:1083
 msgid "Command"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/preferences.py:1064
+#: ../gui/wxpython/gui_modules/preferences.py:1086
 msgid "Command dialog settings"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/preferences.py:1076
+#: ../gui/wxpython/gui_modules/preferences.py:1098
 msgid "Allow output files to overwrite existing files"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/preferences.py:1106
+#: ../gui/wxpython/gui_modules/preferences.py:1128
 msgid "Verbosity level:"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/preferences.py:1125
+#: ../gui/wxpython/gui_modules/preferences.py:1147
 msgid "Raster settings"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/preferences.py:1136
+#: ../gui/wxpython/gui_modules/preferences.py:1158
 msgid "Overlay raster maps"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/preferences.py:1150
+#: ../gui/wxpython/gui_modules/preferences.py:1172
 msgid "Vector settings"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/preferences.py:1156
+#: ../gui/wxpython/gui_modules/preferences.py:1178
 #: ../gui/wxpython/gui_modules/nviz_tools.py:569
 msgid "Display:"
 msgstr "Ecran : "
 
-#: ../gui/wxpython/gui_modules/preferences.py:1178
+#: ../gui/wxpython/gui_modules/preferences.py:1200
 #: ../gui/wxpython/gui_modules/vdigit.py:1364
 msgid "Attributes"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/preferences.py:1186
+#: ../gui/wxpython/gui_modules/preferences.py:1208
 msgid "Highlighting"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/preferences.py:1202
+#: ../gui/wxpython/gui_modules/preferences.py:1224
 msgid "Line width (in pixels)"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/preferences.py:1225
+#: ../gui/wxpython/gui_modules/preferences.py:1247
 msgid "Data browser"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/preferences.py:1230
+#: ../gui/wxpython/gui_modules/preferences.py:1252
 msgid "Left mouse double click"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/preferences.py:1241
+#: ../gui/wxpython/gui_modules/preferences.py:1263
 msgid "Encoding"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/preferences.py:1252
+#: ../gui/wxpython/gui_modules/preferences.py:1274
 msgid "Ask when deleting data record(s) from table"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/preferences.py:1273
+#: ../gui/wxpython/gui_modules/preferences.py:1295
 msgid "Create table"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/preferences.py:1280
+#: ../gui/wxpython/gui_modules/preferences.py:1302
 #: ../gui/wxpython/gui_modules/dbm.py:2142
 #: ../gui/wxpython/gui_modules/dbm.py:2166
 #: ../gui/wxpython/gui_modules/dbm.py:2382
 msgid "Key column"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/preferences.py:1309
+#: ../gui/wxpython/gui_modules/preferences.py:1331
 msgid "Loading workspace"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/preferences.py:1321
+#: ../gui/wxpython/gui_modules/preferences.py:1343
 msgid "Suppress positioning Map Display Window(s)"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/preferences.py:1332
+#: ../gui/wxpython/gui_modules/preferences.py:1354
 msgid "Suppress positioning Layer Manager window"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/preferences.py:1350
+#: ../gui/wxpython/gui_modules/preferences.py:1372
 #: ../gui/wxpython/gui_modules/dbm.py:589
 msgid "Advanced"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/preferences.py:1353
+#: ../gui/wxpython/gui_modules/preferences.py:1375
 msgid "Advanced settings"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/preferences.py:1365
+#: ../gui/wxpython/gui_modules/preferences.py:1387
 msgid "Place where to store settings:"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/preferences.py:1386
+#: ../gui/wxpython/gui_modules/preferences.py:1408
 msgid "Icon theme:"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/preferences.py:1403
+#: ../gui/wxpython/gui_modules/preferences.py:1425
 msgid "Note: Requires GUI restart."
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/preferences.py:1423
+#: ../gui/wxpython/gui_modules/preferences.py:1445
 msgid "Select default display font"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/preferences.py:1447
+#: ../gui/wxpython/gui_modules/preferences.py:1469
 #, python-format
 msgid "Settings saved to file '%s'."
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/preferences.py:1507
+#: ../gui/wxpython/gui_modules/preferences.py:1529
 msgid "Key column cannot be empty string."
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/preferences.py:1574
+#: ../gui/wxpython/gui_modules/preferences.py:1596
 msgid "Select font:"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/preferences.py:1673
+#: ../gui/wxpython/gui_modules/preferences.py:1695
 msgid "Set/unset access to mapsets in current location"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/preferences.py:1687
+#: ../gui/wxpython/gui_modules/preferences.py:1709
 #, python-format
 msgid ""
 "Check mapset to make it accessible, uncheck it to hide it.%sNote: PERMANENT "
 "and current mapset are always accessible."
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/preferences.py:1754
+#: ../gui/wxpython/gui_modules/preferences.py:1776
 msgid "Mapset"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/preferences.py:1755
+#: ../gui/wxpython/gui_modules/preferences.py:1777
 msgid "Owner"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/preferences.py:1756
+#: ../gui/wxpython/gui_modules/preferences.py:1778
 msgid "Group"
 msgstr ""
 
@@ -5594,31 +5714,31 @@ msgstr ""
 
 #: ../gui/wxpython/gui_modules/dbm.py:2797
 msgid "Close dialog on submit"
-msgstr ""
+msgstr "Fermer la boîte de dialogue après mise à jour"
 
 #: ../gui/wxpython/gui_modules/dbm.py:2807
 msgid "No attributes found"
-msgstr ""
+msgstr "Aucun attribut trouvé"
 
 #: ../gui/wxpython/gui_modules/dbm.py:2813
 msgid "Update attributes"
-msgstr ""
+msgstr "Mettre à jour les attributs"
 
 #: ../gui/wxpython/gui_modules/dbm.py:2815
 msgid "Add attributes"
-msgstr ""
+msgstr "Ajouter des attributs"
 
 #: ../gui/wxpython/gui_modules/dbm.py:2817
 msgid "Display attributes"
-msgstr ""
+msgstr "Afficher les attributs"
 
 #: ../gui/wxpython/gui_modules/dbm.py:2821
 msgid "&Reload"
-msgstr ""
+msgstr "&Recharger"
 
 #: ../gui/wxpython/gui_modules/dbm.py:2822
 msgid "&Submit"
-msgstr ""
+msgstr "&Mettre à jour"
 
 #: ../gui/wxpython/gui_modules/dbm.py:2838
 #: ../gui/wxpython/gui_modules/vdigit.py:1820
@@ -5627,7 +5747,7 @@ msgstr ""
 
 #: ../gui/wxpython/gui_modules/dbm.py:3076
 msgid "Unknown"
-msgstr ""
+msgstr "Inconnu"
 
 #: ../gui/wxpython/gui_modules/dbm.py:3134
 #: ../gui/wxpython/gui_modules/dbm.py:3370
@@ -5635,15 +5755,15 @@ msgstr ""
 #: ../gui/wxpython/gui_modules/vdigit.py:1772
 #: ../gui/wxpython/gui_modules/vdigit.py:2197
 msgid "Category"
-msgstr ""
+msgstr "Catégorie"
 
 #: ../gui/wxpython/gui_modules/dbm.py:3323
 msgid "Submit"
-msgstr ""
+msgstr "Mettre à jour"
 
-#: ../gui/wxpython/gui_modules/dbm.py:3467 ../gui/wxpython/wxgui.py:1128
+#: ../gui/wxpython/gui_modules/dbm.py:3467 ../gui/wxpython/wxgui.py:1132
 msgid "GRASS GIS Attribute Table Manager"
-msgstr ""
+msgstr "Gestionnaire des tables d'attributs GRASS"
 
 #: ../gui/wxpython/gui_modules/sqlbuilder.py:43
 #, python-format
@@ -5653,25 +5773,26 @@ msgstr ""
 #: ../gui/wxpython/gui_modules/goutput.py:303
 #, python-format
 msgid "Command '%s' not yet implemented."
-msgstr ""
+msgstr "Commande '%s' pas encore implémentée"
 
 #: ../gui/wxpython/gui_modules/goutput.py:375
 msgid "Save file as..."
-msgstr ""
+msgstr "Sauver le fichier sous ..."
 
 #: ../gui/wxpython/gui_modules/goutput.py:477
-msgid "Please note that the data are left in incosistent stage and can be corrupted"
+msgid ""
+"Please note that the data are left in incosistent stage and can be corrupted"
 msgstr ""
 
 #: ../gui/wxpython/gui_modules/goutput.py:480
 msgid "Command aborted"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/goutput.py:486
+#: ../gui/wxpython/gui_modules/goutput.py:487
 msgid "Command finished"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/goutput.py:754
+#: ../gui/wxpython/gui_modules/goutput.py:755
 msgid "Unable to encode text. Please set encoding in GUI preferences."
 msgstr ""
 
@@ -5760,28 +5881,32 @@ msgstr ""
 msgid "Unable to open file"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/render.py:625
+#: ../gui/wxpython/gui_modules/render.py:460
+msgid "wxGUI closed."
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/render.py:627
 #, python-format
 msgid "Unable to zoom to raster map <%s>."
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/render.py:628
+#: ../gui/wxpython/gui_modules/render.py:630
 #, python-format
 msgid "Unable to zoom to vector map <%s>."
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/render.py:972
-#: ../gui/wxpython/gui_modules/render.py:1059
+#: ../gui/wxpython/gui_modules/render.py:977
+#: ../gui/wxpython/gui_modules/render.py:1064
 #, python-format
 msgid "Unable to render map layer <%s>."
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/render.py:1175
+#: ../gui/wxpython/gui_modules/render.py:1180
 #, python-format
 msgid "Unable render overlay <%s>."
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/render.py:1209
+#: ../gui/wxpython/gui_modules/render.py:1214
 #, python-format
 msgid "Unable render overlay <%s>"
 msgstr ""
@@ -5794,143 +5919,148 @@ msgstr ""
 msgid "Map Layers"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/wxgui_utils.py:251
+#: ../gui/wxpython/gui_modules/wxgui_utils.py:252
 msgid "Remove"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/wxgui_utils.py:262
+#: ../gui/wxpython/gui_modules/wxgui_utils.py:263
 msgid "Change opacity level"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/wxgui_utils.py:264
+#: ../gui/wxpython/gui_modules/wxgui_utils.py:265
 msgid "Properties"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/wxgui_utils.py:268
+#: ../gui/wxpython/gui_modules/wxgui_utils.py:269
 msgid "Set computational region from selected map"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/wxgui_utils.py:281
+#: ../gui/wxpython/gui_modules/wxgui_utils.py:282
 msgid "Show attribute data"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/wxgui_utils.py:284
+#: ../gui/wxpython/gui_modules/wxgui_utils.py:285
 msgid "Start editing"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/wxgui_utils.py:285
+#: ../gui/wxpython/gui_modules/wxgui_utils.py:286
 msgid "Stop editing"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/wxgui_utils.py:300
+#: ../gui/wxpython/gui_modules/wxgui_utils.py:297
 msgid "Use as background vector map"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/wxgui_utils.py:326
-#: ../gui/wxpython/gui_modules/wxgui_utils.py:342
+#: ../gui/wxpython/gui_modules/wxgui_utils.py:328
+#: ../gui/wxpython/gui_modules/wxgui_utils.py:346
 msgid "Metadata"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/wxgui_utils.py:333
+#: ../gui/wxpython/gui_modules/wxgui_utils.py:335
 msgid "Zoom to selected map (ignore NULLs)"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/wxgui_utils.py:335
+#: ../gui/wxpython/gui_modules/wxgui_utils.py:337
 msgid "Set computational region from selected map (ignore NULLs)"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/wxgui_utils.py:345
+#: ../gui/wxpython/gui_modules/wxgui_utils.py:340
+#, fuzzy
+msgid "Set color table"
+msgstr "Choisir une couleur"
+
+#: ../gui/wxpython/gui_modules/wxgui_utils.py:349
 msgid "Nviz properties"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/wxgui_utils.py:404
+#: ../gui/wxpython/gui_modules/wxgui_utils.py:408
 msgid "Unable to create profile of raster map."
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/wxgui_utils.py:429
+#: ../gui/wxpython/gui_modules/wxgui_utils.py:440
 msgid "Unable to display histogram of raster map."
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/wxgui_utils.py:514
+#: ../gui/wxpython/gui_modules/wxgui_utils.py:525
 #, python-format
 msgid "Set opacity <%s>"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/wxgui_utils.py:588
+#: ../gui/wxpython/gui_modules/wxgui_utils.py:599
 msgid "Layer group:"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/wxgui_utils.py:593
-#: ../gui/wxpython/gui_modules/wxgui_utils.py:1144
+#: ../gui/wxpython/gui_modules/wxgui_utils.py:604
+#: ../gui/wxpython/gui_modules/wxgui_utils.py:1155
 msgid "Click to edit layer settings"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/wxgui_utils.py:640
-#: ../gui/wxpython/gui_modules/wxgui_utils.py:643
-#: ../gui/wxpython/gui_modules/wxgui_utils.py:646
-#: ../gui/wxpython/gui_modules/wxgui_utils.py:649
-#: ../gui/wxpython/gui_modules/wxgui_utils.py:652
-#: ../gui/wxpython/gui_modules/wxgui_utils.py:655
-#: ../gui/wxpython/gui_modules/wxgui_utils.py:658
-#: ../gui/wxpython/gui_modules/wxgui_utils.py:661
-#: ../gui/wxpython/gui_modules/wxgui_utils.py:664
-#: ../gui/wxpython/gui_modules/wxgui_utils.py:667
-#: ../gui/wxpython/gui_modules/wxgui_utils.py:670
-#: ../gui/wxpython/gui_modules/wxgui_utils.py:673
-#: ../gui/wxpython/gui_modules/wxgui_utils.py:676
-#: ../gui/wxpython/gui_modules/wxgui_utils.py:679
+#: ../gui/wxpython/gui_modules/wxgui_utils.py:651
+#: ../gui/wxpython/gui_modules/wxgui_utils.py:654
+#: ../gui/wxpython/gui_modules/wxgui_utils.py:657
+#: ../gui/wxpython/gui_modules/wxgui_utils.py:660
+#: ../gui/wxpython/gui_modules/wxgui_utils.py:663
+#: ../gui/wxpython/gui_modules/wxgui_utils.py:666
+#: ../gui/wxpython/gui_modules/wxgui_utils.py:669
+#: ../gui/wxpython/gui_modules/wxgui_utils.py:672
+#: ../gui/wxpython/gui_modules/wxgui_utils.py:675
+#: ../gui/wxpython/gui_modules/wxgui_utils.py:678
+#: ../gui/wxpython/gui_modules/wxgui_utils.py:681
+#: ../gui/wxpython/gui_modules/wxgui_utils.py:684
+#: ../gui/wxpython/gui_modules/wxgui_utils.py:687
+#: ../gui/wxpython/gui_modules/wxgui_utils.py:690
 msgid "(double click to set properties)"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/wxgui_utils.py:643
+#: ../gui/wxpython/gui_modules/wxgui_utils.py:654
 msgid "3d raster"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/wxgui_utils.py:646
+#: ../gui/wxpython/gui_modules/wxgui_utils.py:657
 msgid "RGB"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/wxgui_utils.py:649
+#: ../gui/wxpython/gui_modules/wxgui_utils.py:660
 msgid "HIS"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/wxgui_utils.py:655
+#: ../gui/wxpython/gui_modules/wxgui_utils.py:666
 msgid "raster cell numbers"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/wxgui_utils.py:658
+#: ../gui/wxpython/gui_modules/wxgui_utils.py:669
 msgid "raster flow arrows"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/wxgui_utils.py:664
+#: ../gui/wxpython/gui_modules/wxgui_utils.py:675
 msgid "thematic map"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/wxgui_utils.py:667
+#: ../gui/wxpython/gui_modules/wxgui_utils.py:678
 msgid "thematic charts"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/wxgui_utils.py:670
+#: ../gui/wxpython/gui_modules/wxgui_utils.py:681
 msgid "grid"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/wxgui_utils.py:673
+#: ../gui/wxpython/gui_modules/wxgui_utils.py:684
 msgid "geodesic line"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/wxgui_utils.py:676
+#: ../gui/wxpython/gui_modules/wxgui_utils.py:687
 msgid "rhumbline"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/wxgui_utils.py:679
+#: ../gui/wxpython/gui_modules/wxgui_utils.py:690
 msgid "vector labels"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/wxgui_utils.py:953
+#: ../gui/wxpython/gui_modules/wxgui_utils.py:964
 msgid "Please wait, updating data..."
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/wxgui_utils.py:1223
+#: ../gui/wxpython/gui_modules/wxgui_utils.py:1234
 #, python-format
 msgid "Map <%s> not found."
 msgstr ""
@@ -5941,81 +6071,91 @@ msgstr ""
 msgid "GRASS %s Map Calculator"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/toolbars.py:697
+#: ../gui/wxpython/gui_modules/toolbars.py:327
+#, fuzzy
+msgid "Zoom to map"
+msgstr "Zoomer sur la carte sélectionnée"
+
+#: ../gui/wxpython/gui_modules/toolbars.py:327
+#, fuzzy
+msgid "Zoom to displayed map"
+msgstr "Zoomer sur la carte sélectionnée"
+
+#: ../gui/wxpython/gui_modules/toolbars.py:711
 msgid "Duplicate attributes"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/toolbars.py:764
+#: ../gui/wxpython/gui_modules/toolbars.py:778
 msgid "Digitization settings"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/toolbars.py:774
+#: ../gui/wxpython/gui_modules/toolbars.py:788
 msgid "Copy features from (background) vector map"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/toolbars.py:782
+#: ../gui/wxpython/gui_modules/toolbars.py:796
 msgid "Flip selected lines/boundaries"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/toolbars.py:790
+#: ../gui/wxpython/gui_modules/toolbars.py:804
 msgid "Merge selected lines/boundaries"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/toolbars.py:798
+#: ../gui/wxpython/gui_modules/toolbars.py:812
 msgid "Break selected lines/boundaries at intersection"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/toolbars.py:806
+#: ../gui/wxpython/gui_modules/toolbars.py:820
 msgid "Snap selected lines/boundaries (only to nodes)"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/toolbars.py:814
+#: ../gui/wxpython/gui_modules/toolbars.py:828
 msgid "Connect selected lines/boundaries"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/toolbars.py:822
+#: ../gui/wxpython/gui_modules/toolbars.py:836
 msgid "Query features"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/toolbars.py:830
+#: ../gui/wxpython/gui_modules/toolbars.py:844
 msgid "Z bulk-labeling of 3D lines"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/toolbars.py:838
+#: ../gui/wxpython/gui_modules/toolbars.py:852
 msgid "Feature type conversion"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/toolbars.py:1007
-#: ../gui/wxpython/gui_modules/toolbars.py:1099
-#: ../gui/wxpython/gui_modules/toolbars.py:1172
+#: ../gui/wxpython/gui_modules/toolbars.py:1021
+#: ../gui/wxpython/gui_modules/toolbars.py:1113
+#: ../gui/wxpython/gui_modules/toolbars.py:1186
 msgid "Select vector map"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/toolbars.py:1045
+#: ../gui/wxpython/gui_modules/toolbars.py:1059
 #, python-format
 msgid "Please wait, opening vector map <%s> for editing..."
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/toolbars.py:1067
+#: ../gui/wxpython/gui_modules/toolbars.py:1081
 msgid "Digitize"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/toolbars.py:1105
+#: ../gui/wxpython/gui_modules/toolbars.py:1119
 #, python-format
 msgid "Do you want to save changes in vector map <%s>?"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/toolbars.py:1107
+#: ../gui/wxpython/gui_modules/toolbars.py:1121
 msgid "Save changes?"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/toolbars.py:1114
+#: ../gui/wxpython/gui_modules/toolbars.py:1128
 #, python-format
 msgid "Please wait, closing and rebuilding topology of vector map <%s>..."
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/toolbars.py:1178
-#: ../gui/wxpython/gui_modules/toolbars.py:1183
+#: ../gui/wxpython/gui_modules/toolbars.py:1192
+#: ../gui/wxpython/gui_modules/toolbars.py:1197
 msgid "New vector map"
 msgstr ""
 
@@ -6085,7 +6225,8 @@ msgid "Select only features inside of selection bounding box"
 msgstr ""
 
 #: ../gui/wxpython/gui_modules/vdigit.py:1238
-msgid "By default are selected all features overlapping selection bounding box "
+msgid ""
+"By default are selected all features overlapping selection bounding box "
 msgstr ""
 
 #: ../gui/wxpython/gui_modules/vdigit.py:1241
@@ -6331,57 +6472,57 @@ msgstr ""
 msgid "Layer (Categories)"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/colorrules.py:92
+#: ../gui/wxpython/gui_modules/colorrules.py:94
 msgid "Create new color table for raster map"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/colorrules.py:94
-#: ../gui/wxpython/gui_modules/colorrules.py:388
+#: ../gui/wxpython/gui_modules/colorrules.py:96
+#: ../gui/wxpython/gui_modules/colorrules.py:389
 msgid "Enter raster cat values or percents"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/colorrules.py:96
+#: ../gui/wxpython/gui_modules/colorrules.py:98
 msgid "Create new color table for vector map"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/colorrules.py:98
+#: ../gui/wxpython/gui_modules/colorrules.py:100
 msgid "Enter vector attribute values or ranges (n or n1 to n2)"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/colorrules.py:113
-msgid "replace existing color table"
-msgstr ""
-
-#: ../gui/wxpython/gui_modules/colorrules.py:119
-msgid "Layer:"
-msgstr ""
-
-#: ../gui/wxpython/gui_modules/colorrules.py:121
-msgid "Attribute column:"
-msgstr ""
-
-#: ../gui/wxpython/gui_modules/colorrules.py:123
-msgid "RGB color column:"
-msgstr ""
-
-#: ../gui/wxpython/gui_modules/colorrules.py:152
-msgid "Preview"
-msgstr ""
-
-#: ../gui/wxpython/gui_modules/colorrules.py:200
+#: ../gui/wxpython/gui_modules/colorrules.py:111
 msgid "Select raster map:"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/colorrules.py:202
+#: ../gui/wxpython/gui_modules/colorrules.py:113
 msgid "Select vector map:"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/colorrules.py:391
-#, python-format
-msgid "Enter raster cat values or percents (range = %d-%d)"
+#: ../gui/wxpython/gui_modules/colorrules.py:122
+msgid "replace existing color table"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/colorrules.py:463
+#: ../gui/wxpython/gui_modules/colorrules.py:128
+msgid "Layer:"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/colorrules.py:130
+msgid "Attribute column:"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/colorrules.py:132
+msgid "RGB color column:"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/colorrules.py:161
+msgid "Preview"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/colorrules.py:392
+#, python-format
+msgid "Enter raster cat values or percents (range = %(min)d-%(max)d)"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/colorrules.py:468
 msgid "Please select attribute column and RGB color column first"
 msgstr ""
 
@@ -6624,7 +6765,7 @@ msgstr "Style grossier : "
 
 #: ../gui/wxpython/gui_modules/nviz_tools.py:383
 msgid "wire"
-msgstr ""
+msgstr "treillis"
 
 #: ../gui/wxpython/gui_modules/nviz_tools.py:384
 msgid "surface"
@@ -6648,7 +6789,7 @@ msgstr "gouraud"
 
 #: ../gui/wxpython/gui_modules/nviz_tools.py:406
 msgid "Wire color:"
-msgstr ""
+msgstr "Couleur du treillis :"
 
 #: ../gui/wxpython/gui_modules/nviz_tools.py:421
 msgid "All"
@@ -6736,10 +6877,6 @@ msgstr "attributs des iso-surfaces"
 #: ../gui/wxpython/gui_modules/nviz_tools.py:848
 msgid "Topography level"
 msgstr "Niveau topographique"
-
-#: ../gui/wxpython/gui_modules/nviz_tools.py:962
-msgid "Background color:"
-msgstr "Couleur d'arrière-plan"
 
 #: ../gui/wxpython/gui_modules/nviz_tools.py:997
 #: ../gui/wxpython/gui_modules/nviz_tools.py:1076
@@ -6834,15 +6971,15 @@ msgstr "La carte vectorielle <%s> est en 2D"
 #: ../gui/wxpython/gui_modules/nviz_tools.py:2445
 #, python-format
 msgid "%(primitives)d primitives (%(points)d points)"
-msgstr ""
+msgstr "%(primitives)d primitives (%(points)d points)"
 
 #: ../gui/wxpython/gis_set.py:84
 msgid "Choose project location and mapset"
-msgstr ""
+msgstr "Choisir une localisation de projet et un jeu de cartes"
 
 #: ../gui/wxpython/gis_set.py:87
 msgid "Manage"
-msgstr ""
+msgstr "Gérer"
 
 #: ../gui/wxpython/gis_set.py:89
 #, python-format
@@ -6850,64 +6987,74 @@ msgid ""
 "Welcome to GRASS GIS %s\n"
 "The world's leading open source GIS"
 msgstr ""
+"Bienvenue dans le SIG GRASS %s\n"
+"Le SIG leader du monde open source"
 
 #: ../gui/wxpython/gis_set.py:95
 msgid ""
 "Select an existing project location and mapset\n"
 "or define a new location"
 msgstr ""
+"Sélectionner une localisation de projet et un jeu de cartes existants\n"
+"ou définir une nouvelle localisation"
 
 #: ../gui/wxpython/gis_set.py:101
 msgid ""
 "Project location\n"
 "(projection/coordinate system)"
 msgstr ""
+"Localisation du projet\n"
+"(projection/système de coordonnées)"
 
 #: ../gui/wxpython/gis_set.py:104
 msgid ""
 "Accessible mapsets\n"
 "(directories of GIS files)"
 msgstr ""
+"Jeu de cartes accessibles\n"
+"(répertoire des fichiers SIG)"
 
 #: ../gui/wxpython/gis_set.py:107
 msgid ""
 "Create new mapset\n"
 "in selected location"
 msgstr ""
+"Créer un nouveau jeu de cartes\n"
+"dans la localisation choisie"
 
 #: ../gui/wxpython/gis_set.py:110
 msgid "Define new location"
-msgstr ""
+msgstr "Définir une nouvelle localisation"
 
 #: ../gui/wxpython/gis_set.py:113
 msgid ""
 "Rename/delete selected\n"
 "mapset or location"
-msgstr ""
+msgstr "Renommer/effacer la localisation ou le jeu de cartes sélectionné"
 
 #: ../gui/wxpython/gis_set.py:118
 msgid "Start GRASS"
-msgstr ""
+msgstr "Démarrer GRASS"
 
 #: ../gui/wxpython/gis_set.py:125
 msgid "Create mapset"
-msgstr ""
+msgstr "Créer un jeu de cartes"
 
 #: ../gui/wxpython/gis_set.py:129
 msgid "Rename mapset"
-msgstr ""
+msgstr "Renommer le jeu de cartes"
 
 #: ../gui/wxpython/gis_set.py:129
 msgid "Rename location"
-msgstr ""
+msgstr "Renommer la localisation"
 
 #: ../gui/wxpython/gis_set.py:130
 msgid "Delete mapset"
-msgstr ""
+msgstr "Effacer le jeu de cartes"
 
 #: ../gui/wxpython/gis_set.py:130
 msgid "Delete location"
-msgstr ""
+msgstr "Effacer la localisation"
 
 #: ../gui/wxpython/gis_set.py:173
 msgid "Welcome to GRASS GIS"
@@ -6915,17 +7062,17 @@ msgstr "Bienvenue dans le SIG GRASS"
 
 #: ../gui/wxpython/gis_set.py:181
 msgid "Enter GRASS session"
-msgstr ""
+msgstr "Entrer la session GRASS"
 
 #: ../gui/wxpython/gis_set.py:206
 #, python-format
 msgid "ERROR: Location <%s> not found"
-msgstr ""
+msgstr "ERREUR : Localisation <%s> non trouvée"
 
 #: ../gui/wxpython/gis_set.py:218
 #, python-format
 msgid "ERROR: Mapset <%s> not found"
-msgstr ""
+msgstr "ERREUR : Jeu de cartes <%s> non trouvé"
 
 #: ../gui/wxpython/gis_set.py:426 ../gui/wxpython/gis_set.py:450
 #, python-format
@@ -6933,22 +7080,24 @@ msgid ""
 "Current name: %s\n"
 "Enter new name:"
 msgstr ""
+"Nom courant : %s\n"
+"Entrer le nouveau nom :"
 
 #: ../gui/wxpython/gis_set.py:427
 msgid "Rename selected mapset"
-msgstr ""
+msgstr "Renommer le jeu de cartes"
 
 #: ../gui/wxpython/gis_set.py:438
 msgid "Unable to rename mapset"
-msgstr ""
+msgstr "Impossible de renommer le jeu de cartes"
 
 #: ../gui/wxpython/gis_set.py:451
 msgid "Rename selected location"
-msgstr ""
+msgstr "Renommer la localisation sélectionnée"
 
 #: ../gui/wxpython/gis_set.py:464
 msgid "Unable to rename location"
-msgstr ""
+msgstr "Impossible de renommer la localisation"
 
 #: ../gui/wxpython/gis_set.py:476
 #, python-format
@@ -6958,14 +7107,19 @@ msgid ""
 "\n"
 "ALL MAPS included in this mapset will be PERMANENTLY DELETED!"
 msgstr ""
+"Voulez-vous continuer l'opération d'effacement du jeu de cartes <%(mapset)s> "
+"de la localisation <%(location)s>?\n"
+"\n"
+"TOUTES LES CARTES incluses dans ce jeu de cartes seront IRREMEDIABLEMENT "
+"EFFACEES !"
 
 #: ../gui/wxpython/gis_set.py:481
 msgid "Delete selected mapset"
-msgstr ""
+msgstr "Effacer le jeu de cartes sélectionné"
 
 #: ../gui/wxpython/gis_set.py:490
 msgid "Unable to delete mapset"
-msgstr ""
+msgstr "Impossible d'effacer le jeu de cartes"
 
 #: ../gui/wxpython/gis_set.py:501
 #, python-format
@@ -6974,135 +7128,148 @@ msgid ""
 "\n"
 "ALL MAPS included in this location will be PERMANENTLY DELETED!"
 msgstr ""
+"Voulez-vous continuer l'opération d'effacement de la localisation <%s>?\n"
+"\n"
+"TOUTES LES CARTES incluses dans cette localisation seront IRREMEDIABLEMENT "
+"EFFACEES !"
 
 #: ../gui/wxpython/gis_set.py:505
 msgid "Delete selected location"
-msgstr ""
+msgstr "Effacer la localisation sélectionnée"
 
 #: ../gui/wxpython/gis_set.py:516
 msgid "Unable to delete location"
-msgstr ""
+msgstr "Impossible d'effacer la localisation"
 
 #: ../gui/wxpython/gis_set.py:642
 msgid "Choose GIS Data Directory:"
-msgstr ""
+msgstr "Choisir le répertoire contenant les données SIG : "
 
 #: ../gui/wxpython/gis_set.py:657
 msgid "Enter name for new mapset:"
-msgstr ""
+msgstr "Entrer le nom du nouveau jeu de cartes :"
 
 #: ../gui/wxpython/gis_set.py:658
 msgid "Create new mapset"
-msgstr ""
+msgstr "Créer un nouveau jeu de cartes"
 
 #: ../gui/wxpython/gis_set.py:671
 #, python-format
 msgid "Unable to create new mapset: %s"
-msgstr ""
+msgstr "Impossible de créer le nouveau jeu de cartes : %s"
 
 #: ../gui/wxpython/gis_set.py:702
 msgid "GRASS Quickstart"
 msgstr "Démarrage rapide de GRASS"
 
-#: ../gui/wxpython/wxgui.py:100
+#: ../gui/wxpython/wxgui.py:98
 msgid "GRASS GIS Layer Manager (Experimental Prototype)"
-msgstr "Gestionnaire de couches d'information GRASS GIS (prototype expérimental)"
+msgstr ""
+"Gestionnaire de couches d'information GRASS GIS (prototype expérimental)"
 
-#: ../gui/wxpython/wxgui.py:306
+#: ../gui/wxpython/wxgui.py:304
 msgid "Map layers for each display"
 msgstr "Couches pour chaque écran"
 
-#: ../gui/wxpython/wxgui.py:431
+#: ../gui/wxpython/wxgui.py:434
 msgid "Type GRASS command and run by pressing ENTER"
 msgstr "Entrez une commande GRASS et exécuter-la en appuyant sur ENTER"
 
-#: ../gui/wxpython/wxgui.py:552
+#: ../gui/wxpython/wxgui.py:555
 msgid ""
 "Workspace is not empty. Do you want to store current settings to workspace "
 "file?"
-msgstr "L'espace de travail n'est pas vide.  Voulez-vous sauver les paramètres courants dans un fichier ?"
+msgstr ""
+"L'espace de travail n'est pas vide.  Voulez-vous sauver les paramètres "
+"courants dans un fichier ?"
 
-#: ../gui/wxpython/wxgui.py:555
+#: ../gui/wxpython/wxgui.py:558
 msgid "Save current settings?"
 msgstr "Sauver les paramètres courants ?"
 
-#: ../gui/wxpython/wxgui.py:570
+#: ../gui/wxpython/wxgui.py:573
 msgid "Choose workspace file"
 msgstr "Choisir un fichier d'environnement"
 
-#: ../gui/wxpython/wxgui.py:634 ../gui/wxpython/wxgui.py:639
+#: ../gui/wxpython/wxgui.py:637 ../gui/wxpython/wxgui.py:642
 #, python-format
 msgid ""
 "Reading workspace file <%s> failed. Invalid file, unable to parse XML "
 "document."
-msgstr "Lecture du fichier d'environnement <%s> impossible.  Fichier invalide, incapable de déchiffrer le document XML"
+msgstr ""
+"Lecture du fichier d'environnement <%s> impossible.  Fichier invalide, "
+"incapable de déchiffrer le document XML"
 
-#: ../gui/wxpython/wxgui.py:644 ../gui/wxpython/wxgui.py:749
-#: ../gui/wxpython/wxgui.py:785
+#: ../gui/wxpython/wxgui.py:647 ../gui/wxpython/wxgui.py:752
+#: ../gui/wxpython/wxgui.py:788
 msgid "Please wait, loading workspace..."
 msgstr "Patience, l'environnement est en cours de chargement..."
 
-#: ../gui/wxpython/wxgui.py:729
+#: ../gui/wxpython/wxgui.py:732
 msgid "Unable to read workspace file"
 msgstr "Incapable de lire le fichier d'environnement"
 
-#: ../gui/wxpython/wxgui.py:769
+#: ../gui/wxpython/wxgui.py:772
 msgid "Choose GRC file to load"
 msgstr "Choisir un fichier GRC à charger"
 
-#: ../gui/wxpython/wxgui.py:808
+#: ../gui/wxpython/wxgui.py:811
 msgid "Choose file to save current workspace"
 msgstr "Choisir le fichier où sauver l'environnement courant"
 
-#: ../gui/wxpython/wxgui.py:823 ../gui/wxpython/wxgui.py:840
+#: ../gui/wxpython/wxgui.py:826 ../gui/wxpython/wxgui.py:843
 #, python-format
 msgid "Workspace file <%s> already exists. Do you want to overwrite this file?"
-msgstr "Le fichier denvironnement <%s> existe déjà.  Voulez-vous écraser ce fichier ?"
+msgstr ""
+"Le fichier denvironnement <%s> existe déjà.  Voulez-vous écraser ce fichier ?"
 
-#: ../gui/wxpython/wxgui.py:862
+#: ../gui/wxpython/wxgui.py:865
 #, python-format
 msgid "Unable to open workspace file <%s> for writing."
 msgstr "Impossible d'ouvrir le fichier d'environnement <%s> en écriture."
 
-#: ../gui/wxpython/wxgui.py:871
+#: ../gui/wxpython/wxgui.py:874
 #, python-format
 msgid "Writing current settings to workspace file failed (%s)."
-msgstr "Ecriture des paramètres courant dans le fichier d'environnement (%s) non réussie."
+msgstr ""
+"Ecriture des paramètres courant dans le fichier d'environnement (%s) non "
+"réussie."
 
-#: ../gui/wxpython/wxgui.py:1063
+#: ../gui/wxpython/wxgui.py:1067
 msgid "Import DXF layers"
 msgstr "Importer des couches DXF"
 
-#: ../gui/wxpython/wxgui.py:1069
+#: ../gui/wxpython/wxgui.py:1073
 msgid "Import GDAL layers"
 msgstr "Importer des couches GDAL"
 
-#: ../gui/wxpython/wxgui.py:1075
+#: ../gui/wxpython/wxgui.py:1079
 msgid "Import OGR layers"
 msgstr "Importer des couches OGR"
 
-#: ../gui/wxpython/wxgui.py:1100
+#: ../gui/wxpython/wxgui.py:1104
 msgid "Attribute management is available only for vector maps."
-msgstr "La gestion des attributs est seulement disponible pour les cartes vectorielles"
+msgstr ""
+"La gestion des attributs est seulement disponible pour les cartes "
+"vectorielles"
 
-#: ../gui/wxpython/wxgui.py:1123
+#: ../gui/wxpython/wxgui.py:1127
 msgid "Please wait, loading attribute data..."
 msgstr "Patientez, chargement des données d'attributs"
 
-#: ../gui/wxpython/wxgui.py:1436
+#: ../gui/wxpython/wxgui.py:1440
 #, python-format
 msgid "Do you want to remove map layer %s from layer tree?"
 msgstr "Voulez-vous enlever la couche %s de l'arborescence"
 
-#: ../gui/wxpython/wxgui.py:1439
+#: ../gui/wxpython/wxgui.py:1443
 msgid "Do you want to remove selected map layer from layer tree?"
 msgstr "Voulez-vous enlever la couche sélectionnée de l'arborescence"
 
-#: ../gui/wxpython/wxgui.py:1443
+#: ../gui/wxpython/wxgui.py:1447
 msgid "Remove map layer"
-msgstr ""
+msgstr "Enlever la couche"
 
-#: ../gui/wxpython/wxgui.py:1469
+#: ../gui/wxpython/wxgui.py:1473
 msgid "No map layer selected. Operation cancelled."
-msgstr ""
-
+msgstr "Aucune couche sélectionnée.  Opération annulée."
