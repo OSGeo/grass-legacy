@@ -124,7 +124,7 @@ db__copy_table ( char *from_drvname, char *from_dbname, char *from_tblname,
         char *tblname = db_get_string(&tblnames[i]);
 
         if (strcmp(to_tblname, tblname) == 0) {
-	    G_warning("Table '%s' already exists", to_dbname);
+	    G_warning("Table '%s' already exists", to_tblname);
 	    db_close_database_shutdown_driver(to_driver);
             if (from_driver != to_driver)
 	        db_close_database_shutdown_driver(from_driver);
