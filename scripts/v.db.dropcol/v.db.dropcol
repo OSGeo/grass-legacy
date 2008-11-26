@@ -125,7 +125,7 @@ fi
 if [ "$driver" = "sqlite" ] ; then
 	#echo "Using special trick for SQLite"
 	# http://www.sqlite.org/faq.html#q13
-	v.info --q -c map=$table | cut -d'|' -f1,2 | grep -v "|${col}$" > "$TMP.coldesc"
+	v.info --q -c map=$GIS_OPT_MAP layer=$GIS_OPT_LAYER | cut -d'|' -f1,2 | grep -v "|${col}$" > "$TMP.coldesc"
 	# need to revert order:
 	cat "$TMP.coldesc" | cut -d'|' -f1 > "$TMP.coltypes"
 	cat "$TMP.coldesc" | cut -d'|' -f2 > "$TMP.colnames"
