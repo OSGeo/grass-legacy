@@ -1,6 +1,6 @@
 /***************************************************************
  *
- * MODULE:       v.delauney
+ * MODULE:       v.delaunay
  *
  * AUTHOR(S):    Martin Pavlovsky (Paul Kelly mentor)
  *
