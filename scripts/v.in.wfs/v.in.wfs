@@ -6,7 +6,7 @@
 # AUTHOR(S):	Markus Neteler. neteler itc it
 #               Hamish Bowman (fixes)
 # PURPOSE:	WFS support
-# COPYRIGHT:	(C) 2006, 2007 Markus Neteler and GRASS Development Team
+# COPYRIGHT:	(C) 2006-2008 Markus Neteler and GRASS Development Team
 #
 #		This program is free software under the GNU General Public
 #		License (>=v2). Read the file COPYING that comes with GRASS
@@ -37,20 +37,27 @@ if  [ -z "$GISBASE" ] ; then
     exit 1
 fi
 
+# save command line
 if [ "$1" != "@ARGS_PARSED@" ] ; then
+    CMDLINE="`basename $0`"
+    for arg in "$@" ; do
+        CMDLINE="$CMDLINE \"$arg\""
+    done
+    export CMDLINE
     exec g.parser "$0" "$@"
 fi
 
 # xerces support compiled in?
 OGRINFO=`which ogrinfo`
-if [ -z "`ldd $OGRINFO | grep xerces`" ] ; then
-  g.message -e "OGR needs to be compiled with xerces-c support"
-  exit 1
-fi
+#TODO: this is Linux only, needs a fix:
+#if [ -z "`ldd $OGRINFO | grep xerces`" ] ; then
+#  g.message -e "OGR needs to be compiled with xerces-c support"
+#  exit 1
+#fi
 
-#### check if we have lynx
-if [ ! -x "`which lynx`" ] ; then
-    g.message -e "'lynx' is required, please install first"
+#### check if we have curl
+if [ ! -x "`which curl`" ] ; then
+    g.message -e "'curl' is required, please install first"
     exit 1
 fi
 
@@ -64,10 +71,19 @@ OUT=$GIS_OPT_output
 WFS_URL="$GIS_OPT_WFS"
 
 g.message "Retrieving data ..."
-lynx -source "$WFS_URL" > "$TMP.xml"
+curl "$WFS_URL" > "$TMP.xml"
 
 v.in.ogr dsn="$TMP.xml" out=$OUT -o
-#rm -f "$TMP.xml"
+if [ $? -ne 0 ] ; then
+  g.message -e "WFS-XML file not readable. Check if xerces-c support is compiled into GDAL/OGR library."
+  rm -f "$TMP.xml" "$TMP" "$TMP.gfs"
+  exit 1
+fi
 
+rm -f "$TMP.xml" "$TMP" "$TMP.gfs"
+
+v.support $OUT cmdhist="${CMDLINE}"
 g.message "Vector points map <$OUT> imported from WFS."
+
 exit 0
+
