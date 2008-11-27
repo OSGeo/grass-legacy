@@ -107,7 +107,7 @@ SUBDIRS = \
 	r.volume \
 	r.walk \
 	r.water.outlet \
-	r.watershed \
+	r.watershed2 \
 	r.what \
 	r.what.color \
 	simwe \
