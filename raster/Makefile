@@ -27,7 +27,7 @@ SUBDIRS = \
 	r.grow2 \
 	r.grow.distance \
 	r.gwflow \
-	r.horion \
+	r.horizon \
 	r.his \
 	r.in.arc \
 	r.in.ascii \
