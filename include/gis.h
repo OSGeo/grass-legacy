@@ -532,6 +532,7 @@ struct FPRange
 
 struct FP_stats {
     int geometric;
+    int geom_abs;
     int flip;
     int count;
     DCELL min, max;
