@@ -21,9 +21,13 @@ void divide(struct vertex *sites_sorted[], unsigned int l, unsigned int r,
 {
 
     unsigned int n;
+
     unsigned int split;
+
     struct edge *l_ccw_l, *r_cw_l, *l_ccw_r, *r_cw_r, *l_tangent;
+
     struct edge *a, *b, *c;
+
     double c_p;
 
     n = r - l + 1;
@@ -98,7 +102,9 @@ static void find_lowest_cross_edge(struct edge *r_cw_l, struct vertex *s,
 				   struct vertex **org_r_lower)
 {
     struct edge *l, *r;
+
     struct vertex *o_l, *o_r, *d_l, *d_r;
+
     boolean ready;
 
     l = r_cw_l;
@@ -139,8 +145,11 @@ static void merge(struct edge *r_cw_l, struct vertex *s,
 		  struct edge **l_tangent)
 {
     struct edge *base, *l_cand, *r_cand;
+
     struct vertex *org_base, *dest_base;
+
     long double u_l_c_o_b, v_l_c_o_b, u_l_c_d_b, v_l_c_d_b;
+
     long double u_r_c_o_b, v_r_c_o_b, u_r_c_d_b, v_r_c_d_b;
 
     /* cross product */
@@ -148,10 +157,15 @@ static void merge(struct edge *r_cw_l, struct vertex *s,
 
     /* dot product */
     long double d_p_l_cand, d_p_r_cand;
+
     boolean above_l_cand, above_r_cand, above_next, above_prev;
+
     struct vertex *dest_l_cand, *dest_r_cand;
+
     long double cot_l_cand, cot_r_cand;
+
     struct edge *l_lower, *r_lower;
+
     struct vertex *org_r_lower, *org_l_lower;
 
     /* Create first cross edge by joining lower common tangent */
@@ -196,8 +210,11 @@ static void merge(struct edge *r_cw_l, struct vertex *s,
 	   in_circle test gets invalid. */
 	if (above_l_cand) {
 	    double u_n_o_b, v_n_o_b, u_n_d_b, v_n_d_b;
+
 	    double c_p_next, d_p_next, cot_next;
+
 	    struct edge *next;
+
 	    struct vertex *dest_next;
 
 	    d_p_l_cand =
@@ -233,8 +250,11 @@ static void merge(struct edge *r_cw_l, struct vertex *s,
 	   in_circle test gets invalid. */
 	if (above_r_cand) {
 	    double u_p_o_b, v_p_o_b, u_p_d_b, v_p_d_b;
+
 	    double c_p_prev, d_p_prev, cot_prev;
+
 	    struct edge *prev;
+
 	    struct vertex *dest_prev;
 
 	    d_p_r_cand =
