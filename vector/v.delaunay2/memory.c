@@ -5,7 +5,9 @@
 #include "data_types.h"
 
 struct vertex *sites;
+
 static struct edge *edges;
+
 static struct edge **free_list_e;
 
 static unsigned int n_free_e;
@@ -13,6 +15,7 @@ static unsigned int n_free_e;
 void alloc_memory(unsigned int n)
 {
     struct edge *e;
+
     int i;
 
     /* Sites storage. */
@@ -52,6 +55,7 @@ void realloc_sites(unsigned int n)
 void alloc_edges(unsigned int n)
 {
     struct edge *e;
+
     int i;
 
     /* Edges. Euler's formula - at most 3n edges on a set of n sites */

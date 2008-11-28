@@ -14,10 +14,13 @@ void output_edges(struct vertex *sites_sorted[], unsigned int n, int mode3d,
 		  int Type, struct Map_info map_out)
 {
     struct edge *e_start, *e;
+
     struct vertex *u, *v;
+
     unsigned int i;
 
     static struct line_pnts *Points = NULL;
+
     static struct line_cats *Cats = NULL;
 
     if (!Points) {
@@ -62,11 +65,15 @@ void output_triangles(struct vertex *sites_sorted[], unsigned int n,
 		      int mode3d, int Type, struct Map_info map_out)
 {
     struct edge *e_start, *e, *next;
+
     struct vertex *u, *v, *w;
+
     unsigned int i;
+
     struct vertex *temp;
 
     struct line_pnts *Points = Vect_new_line_struct();
+
     struct line_cats *Cats = Vect_new_cats_struct();
 
     double x1, y1, z1, x2, y2, z2, x3, y3, z3;
@@ -140,9 +147,13 @@ void output_triangles(struct vertex *sites_sorted[], unsigned int n,
 void remove_duplicates(struct vertex *list[], unsigned int *size)
 {
     int n = *size - 1;
+
     int left = 0;
+
     int right = 1;
+
     int shift = 0;
+
     int empty = 0;
 
     if (n > 0)
@@ -164,6 +175,7 @@ int read_sites(int mode3d, int complete_map, struct Map_info map_in,
 	       BOUND_BOX Box)
 {
     int nlines, line, allocated, nsites;
+
     struct line_pnts *Points;
 
     Points = Vect_new_line_struct();
