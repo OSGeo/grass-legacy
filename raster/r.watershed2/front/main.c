@@ -40,8 +40,8 @@ int main(int argc, char *argv[])
     struct Option *opt14;
     struct Option *opt15;
     struct Option *opt16;
-    struct Flag *flag1;
-    struct Flag *flag2;
+    struct Flag *flag_flow;
+    struct Flag *flag_seg;
     struct GModule *module;
 
     G_gisinit(argv[0]);
@@ -73,7 +73,7 @@ int main(int argc, char *argv[])
     opt3->guisection = _("Input_options");
 
     opt4 = G_define_option();
-    opt4->key = "disturbed_land";
+    opt4->key = "disturbed.land";
     opt4->description =
 	_("Input map or value: percent of disturbed land, for USLE");
     opt4->required = NO;
@@ -100,7 +100,7 @@ int main(int argc, char *argv[])
     opt6->guisection = _("Input_options");
 
     opt7 = G_define_option();
-    opt7->key = "max_slope_length";
+    opt7->key = "max.slope.length";
     opt7->description =
 	_("Input value: maximum length of surface flow, for USLE");
     opt7->required = NO;
@@ -143,7 +143,7 @@ int main(int argc, char *argv[])
     opt11->guisection = _("Output_options");
 
     opt12 = G_define_option();
-    opt12->key = "half_basin";
+    opt12->key = "half.basin";
     opt12->description =
 	_("Output map: each half-basin is given a unique value");
     opt12->required = NO;
@@ -161,7 +161,7 @@ int main(int argc, char *argv[])
     opt13->guisection = _("Output_options");
 
     opt14 = G_define_option();
-    opt14->key = "length_slope";
+    opt14->key = "length.slope";
     opt14->description =
 	_("Output map: slope length and steepness (LS) factor for USLE");
     opt14->required = NO;
@@ -170,33 +170,33 @@ int main(int argc, char *argv[])
     opt14->guisection = _("Output_options");
 
     opt15 = G_define_option();
-    opt15->key = "slope_steepness";
+    opt15->key = "slope.steepness";
     opt15->description = _("Output map: slope steepness (S) factor for USLE");
     opt15->required = NO;
     opt15->type = TYPE_STRING;
     opt15->gisprompt = "new,cell,raster";
     opt15->guisection = _("Output_options");
 
-	opt16 = G_define_option() ;
-	opt16->key         = "memory";
-	opt16->type        = TYPE_INTEGER;
-	opt16->required    = NO;
-	opt16->answer      = "300"; /* 300MB default value */
-	opt16->description = _("Maximum memory to be used with -m flag (in MB)");
+    opt16 = G_define_option() ;
+    opt16->key         = "memory";
+    opt16->type        = TYPE_INTEGER;
+    opt16->required    = NO;
+    opt16->answer      = "300"; /* 300MB default value, please keep in sync with r.terraflow */
+    opt16->description = _("Maximum memory to be used with -m flag (in MB)");
 
-
-    flag1 = G_define_flag();
-    flag1->key = '4';
-    flag1->description =
+    flag_flow = G_define_flag();
+    flag_flow->key = '4';
+    flag_flow->description =
 	_("Allow only horizontal and vertical flow of water");
 
-    flag2 = G_define_flag();
-    flag2->key = 'm';
-    flag2->description =
+    flag_seg = G_define_flag();
+    flag_seg->key = 'm';
+    flag_seg->description =
 	_("Enable disk swap memory option: Operation is slow");
 
     if (G_parser(argc, argv))
 	exit(EXIT_FAILURE);
+
 
     /* Check option combinations */
 
@@ -234,12 +234,12 @@ int main(int argc, char *argv[])
     /* Build command line */
     sprintf(command, "%s/etc/", G_gisbase());
 
-    if (flag2->answer)
+    if (flag_seg->answer)
 	strcat(command, "r.watershed2.seg");
     else
 	strcat(command, "r.watershed2.ram");
 
-    if (flag1->answer)
+    if (flag_flow->answer)
 	strcat(command, " -4");
 
     if (opt1->answer) {
@@ -343,14 +343,14 @@ int main(int argc, char *argv[])
 	strcat(command, "\"");
     }
 
-    if (flag2->answer && opt16->answer) {
+    if (flag_seg->answer && opt16->answer) {
 	strcat(command, " mb=");
 	strcat(command, "\"");
 	strcat(command, opt16->answer);
 	strcat(command, "\"");
     }
 
-    G_debug(1, "Mode: %s", flag1->answer ? "Segmented" : "All in RAM");
+    G_debug(1, "Mode: %s", flag_seg->answer ? "Segmented" : "All in RAM");
     G_debug(1, "Running: %s", command);
 
     ret = system(command);
@@ -360,32 +360,32 @@ int main(int argc, char *argv[])
     if (opt8->answer)
 	write_hist(opt8->answer,
 		   "Watershed accumulation: overland flow that traverses each cell",
-		   opt1->answer, flag1->answer);
+		   opt1->answer, flag_seg->answer);
     if (opt9->answer)
 	write_hist(opt9->answer,
 		   "Watershed drainage direction (divided by 45deg)",
-		   opt1->answer, flag1->answer);
+		   opt1->answer, flag_seg->answer);
     if (opt10->answer)
 	write_hist(opt10->answer,
-		   "Watershed basins", opt1->answer, flag1->answer);
+		   "Watershed basins", opt1->answer, flag_seg->answer);
     if (opt11->answer)
 	write_hist(opt11->answer,
-		   "Watershed stream segments", opt1->answer, flag1->answer);
+		   "Watershed stream segments", opt1->answer, flag_seg->answer);
     if (opt12->answer)
 	write_hist(opt12->answer,
-		   "Watershed half-basins", opt1->answer, flag1->answer);
+		   "Watershed half-basins", opt1->answer, flag_seg->answer);
     if (opt13->answer)
 	write_hist(opt13->answer,
 		   "Watershed visualization map (filtered accumulation map)",
-		   opt1->answer, flag1->answer);
+		   opt1->answer, flag_seg->answer);
     if (opt14->answer)
 	write_hist(opt14->answer,
 		   "Watershed slope length and steepness (LS) factor",
-		   opt1->answer, flag1->answer);
+		   opt1->answer, flag_seg->answer);
     if (opt15->answer)
 	write_hist(opt15->answer,
 		   "Watershed slope steepness (S) factor",
-		   opt1->answer, flag1->answer);
+		   opt1->answer, flag_seg->answer);
 
     exit(ret);
 }
