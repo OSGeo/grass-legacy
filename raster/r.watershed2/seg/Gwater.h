@@ -16,8 +16,8 @@
 #define NOMASK			1
 #define MIN_SLOPE		.00001
 #define MIN_GRADIENT_DEGREES	1
-#define DEG_TO_RAD		.017453293  /* pi / 180 */
-#define METER_TO_FOOT		3.281
+#define DEG_TO_RAD		((2 * M_PI) / 360.)
+#define METER_TO_FOOT		(1 / 0.3048)
 #define MAX_BYTES		10485760
 #define PAGE_BLOCK		1024
 #define SROW			200
