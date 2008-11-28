@@ -1,4 +1,3 @@
-
 /***************************************************************
  *
  * MODULE:       v.delaunay
@@ -35,39 +34,26 @@ int main(int argc, char *argv[])
 
     /* GRASS related variables */
     char *mapset;
-
     struct Map_info map_in, map_out;
-
     struct Cell_head Window;
-
     BOUND_BOX Box;
-
     struct GModule *module;
-
     struct Flag *reg_flag, *line_flag;
-
     struct Option *in_opt, *out_opt;
 
     struct line_pnts *Points;
-
     struct line_cats *Cats;
-
     int nareas, area;
 
     int Type;
-
     int complete_map;
-
     int mode3d;
 
     /* ---------------------- */
 
     unsigned int i;
-
     unsigned int n;
-
     struct edge *l_cw, *r_ccw;
-
     struct vertex **sites_sorted;
 
     /* GRASS related manipulations */
@@ -158,7 +144,6 @@ int main(int argc, char *argv[])
 	/*  Assign centroid to each area */
 	for (area = 1; area <= nareas; area++) {
 	    double x, y, z, angle, slope;
-
 	    int ret;
 
 	    G_percent(area, nareas, 2);
