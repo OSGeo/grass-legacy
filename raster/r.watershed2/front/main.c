@@ -236,9 +236,9 @@ int main(int argc, char *argv[])
     sprintf(command, "%s/etc/", G_gisbase());
 
     if (flag_seg->answer)
-	strcat(command, "r.watershed2.seg");
+	strcat(command, "r.watershed.seg");
     else
-	strcat(command, "r.watershed2.ram");
+	strcat(command, "r.watershed.ram");
 
     if (flag_flow->answer)
 	strcat(command, " -4");

@@ -95,7 +95,7 @@ int do_astar(void)
 	    }
 	}
     }
-    G_percent(count, do_points, 1);	/* finish it */
+    G_percent(count, do_points, 3);	/* finish it */
     flag_destroy(worked);
     flag_destroy(in_list);
     G_free(heap_index);
