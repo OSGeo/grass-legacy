@@ -2168,7 +2168,7 @@ msgstr "Devam etmek için ENTER'a basın -->"
 #: ../lib/gis/list.c:185
 #, c-format
 msgid "%s files available in mapset <%s>:\n"
-msgstr "<%s>  harita takımında kullanılabilir %s dosyalar :\n"
+msgstr "%s harita takımında kullanılabilir <%s> dosyalar:\n"
 
 #: ../lib/gis/list.c:256
 msgid "G_list: Unknown element type"
