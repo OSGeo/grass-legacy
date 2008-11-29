@@ -14,12 +14,12 @@ int save_fft(int total, double *data[2], double *maximum, double *minimum)
     min = *minimum;
 
     if ((fp = G_fopen_new_misc("cell_misc", "fftreal", Cellmap_real)) == NULL)
-	G_fatal_error(_("Unable to open file in the cell_misc directory."));
+	G_fatal_error(_("Unable to open file in the 'cell_misc' directory"));
     fwrite((char *)data[0], sizeof(double), (size_t) total, fp);
     fclose(fp);
 
     if ((fp = G_fopen_new_misc("cell_misc", "fftimag", Cellmap_imag)) == NULL)
-	G_fatal_error(_("Unable to open file in the cell_misc directory."));
+	G_fatal_error(_("Unable to open file in the 'cell_misc' directory"));
     fwrite((char *)data[1], sizeof(double), (size_t) total, fp);
     fclose(fp);
 
