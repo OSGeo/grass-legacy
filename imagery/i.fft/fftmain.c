@@ -10,7 +10,7 @@
  * PURPOSE:      processes a single input raster map layer
  *               and constructs the real and imaginary Fourier
  *               components in frequency space
- * COPYRIGHT:    (C) 1999-2007 by the GRASS Development Team
+ * COPYRIGHT:    (C) 1999-2008 by the GRASS Development Team
  *
  *               This program is free software under the GNU General Public
  *               License (>=v2). Read the file COPYING that comes with GRASS
@@ -71,34 +71,21 @@ int main(int argc, char *argv[])
     me = G_program_name();
 
     module = G_define_module();
-    module->keywords = _("imagery");
+    module->keywords = _("imagery, FFT");
     module->description =
 	_("Fast Fourier Transform (FFT) for image processing.");
 
     /* define options */
-    op1 = G_define_option();
+    op1 = G_define_standard_option(G_OPT_R_INPUT);
     op1->key = "input_image";
-    op1->type = TYPE_STRING;
-    op1->required = YES;
-    op1->multiple = NO;
-    op1->gisprompt = "old,cell,raster";
-    op1->description = _("Input raster map being fft");
 
-    op2 = G_define_option();
+    op2 = G_define_standard_option(G_OPT_R_OUTPUT);
     op2->key = "real_image";
-    op2->type = TYPE_STRING;
-    op2->required = YES;
-    op2->multiple = NO;
-    op2->gisprompt = "new,cell,raster";
-    op2->description = _("Output real part arrays stored as raster map");
+    op2->description = _("Name for output real part arrays stored as raster map");
 
-    op3 = G_define_option();
+    op3 = G_define_standard_option(G_OPT_R_OUTPUT);
     op3->key = "imaginary_image";
-    op3->type = TYPE_STRING;
-    op3->required = YES;
-    op3->multiple = NO;
-    op3->gisprompt = "new,cell,raster";
-    op3->description = _("Output imaginary part arrays stored as raster map");
+    op3->description = _("Name for output imaginary part arrays stored as raster map");
 
     op4 = G_define_option();
     op4->key = "range";
@@ -131,15 +118,15 @@ int main(int argc, char *argv[])
 
     /* check command line args for validity */
     if (G_legal_filename(Cellmap_real) < 0)
-	G_fatal_error(_("Illegal file name for real part: %s"), Cellmap_real);
+	G_fatal_error(_("<%s> is an illegal file name"), Cellmap_real);
 
     if (G_legal_filename(Cellmap_imag) < 0)
-	G_fatal_error(_("Illegal file name for imaginary part: %s"),
+	G_fatal_error(_("<%s> is an illegal file name"),
 		      Cellmap_imag);
 
     sscanf(op4->answer, "%d", &Range);
     if (Range <= 0)
-	G_fatal_error(_("Range less than or equal to zero not allowed."));
+	G_fatal_error(_("Range less than or equal to zero not allowed"));
 
     G_get_set_window(&window);	/* get the current window for later */
     put_orig_window(&window);
@@ -161,7 +148,7 @@ int main(int argc, char *argv[])
     data[1] = (double *)G_malloc((rows * cols) * sizeof(double));
 
     /* Initialize real & complex components to zero */
-    G_message(_("Initializing data...\n"));
+    G_debug(1, "Initializing data...");
     {
 	register double *dptr1, *dptr0;
 
@@ -176,13 +163,17 @@ int main(int argc, char *argv[])
     cell_row = G_allocate_cell_buf();
 
     /* Read in cell map values */
-    G_message(_("Reading the raster map..."));
+    G_message(_("Reading the raster map <%s>..."),
+	      Cellmap_orig);
     for (i = 0; i < or; i++) {
 	if (G_get_map_row(inputfd, cell_row, i) < 0)
 	    G_fatal_error(_("Error while reading input raster map."));
 	for (j = 0; j < oc; j++)
 	    *(data[0] + (i * cols) + j) = (double)cell_row[j];
+	
+	G_percent(i+1, or, 2);
     }
+    
     /* close input cell map and release the row buffer */
     G_close_cell(inputfd);
     G_free(cell_row);
@@ -190,8 +181,7 @@ int main(int argc, char *argv[])
     /* perform FFT */
     G_message(_("Starting FFT..."));
     fft(-1, data, totsize, cols, rows);
-    G_message(_("FFT completed..."));
-
+    
     /* set up a window for the transform cell map */
     window.rows = rows;
     window.cols = cols;
@@ -232,13 +222,13 @@ int main(int argc, char *argv[])
 	}
     }
 
-    G_message(_("Writing transformed data to file..."));
+    G_message(_("Writing transformed data..."));
     /* write out the double arrays to cell_misc/file/FFTREAL and FFTIMAG */
     max = 0.0;
     min = 0.0;
     save_fft(totsize, data, &max, &min);
 
-    G_message(_("Writing viewable versions of transformed data to files..."));
+    G_message(_("Writing viewable versions of transformed data..."));
     /* Write out result to a new cell map */
     /*
        for (i=0; i<rows; i++) {
@@ -265,6 +255,8 @@ int main(int argc, char *argv[])
 	    }
 	    G_put_raster_row(realfd, cell_row, CELL_TYPE);
 	    G_put_raster_row(imagfd, cell_row2, CELL_TYPE);
+
+	    G_percent(i+1, rows, 2);
 	}
     }
     G_close_cell(realfd);
@@ -279,7 +271,7 @@ int main(int argc, char *argv[])
     for (i = 0; i < 2; i++)
 	G_free(data[i]);
 
-    G_done_msg(_("Transform successful."));
+    G_done_msg(_(" "));
 
     exit(EXIT_SUCCESS);
 }
