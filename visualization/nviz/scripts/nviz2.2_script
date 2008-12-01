@@ -355,10 +355,10 @@ if {$DEBUG} {puts "panel area made"}
 	# DEBUG
 	if {$DEBUG} {puts "Help menu made"}
 	
-	set leftmenu [frame $Nv_(AREA).menu.left -relief flat -bd 0]
+	set Nv_(AREA).menu [frame $Nv_(AREA).menu.left -relief flat -bd 0]
 	
 	# file menu
-	set filemenu [Nv_mkMenu $leftmenu.file File \
+	set filemenu [Nv_mkMenu $Nv_(AREA).menu.file File \
 			  {"Load State ..." "Save State ..." \
 				"" \
 				"Set Canvas Size ..."
@@ -392,17 +392,17 @@ if {$DEBUG} {puts "file menu made"}
 # DEBUG
 if {$DEBUG} {puts "disabled made"}
 
-	pack [Nv_mkConfigMenu $leftmenu.config] -side left -fill x -expand no 
+	pack [Nv_mkConfigMenu $Nv_(AREA).menu.config] -side left -fill x -expand no 
 
-	pack [Nv_mkPanelMenu $leftmenu.panel] -side left -fill x -expand no 
+	pack [Nv_mkPanelMenu $Nv_(AREA).menu.panel] -side left -fill x -expand no 
 # DEBUG
 if {$DEBUG} {puts "scripting menu 0 made"}
 
 
 	# Make a menu entry for scripting
-	menubutton $leftmenu.scripting -text Scripting \
-		-menu $leftmenu.scripting.m -underline 0
-	set scriptingmenu [menu $leftmenu.scripting.m]
+	menubutton $Nv_(AREA).menu.scripting -text Scripting \
+		-menu $Nv_(AREA).menu.scripting.m -underline 0
+	set scriptingmenu [menu $Nv_(AREA).menu.scripting.m]
 
 	$scriptingmenu add checkbutton -label "On" \
 		-onvalue 1 -offvalue 0 -variable ScriptState \
@@ -432,13 +432,13 @@ if {$DEBUG} {puts "scripting menu 0 made"}
 	$scriptingmenu add command -label "Script Tools" \
 		-underline 1 -command {exec nviz -f $default_panel_path/script_tools -q &}
 
-	pack $leftmenu.scripting -side left -fill x -expand no
+	pack $Nv_(AREA).menu.scripting -side left -fill x -expand no
 
 
 # DEBUG
 if {$DEBUG} {puts "scripting menu made"}
 
-	pack $leftmenu -side left -fill x -expand no 
+	pack $Nv_(AREA).menu -side left -fill x -expand no 
 
 
 	tk_menuBar $Nv_(AREA).menu $Nv_(AREA).menu.file $Nv_(AREA).menu.panel \
