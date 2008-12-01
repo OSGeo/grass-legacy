@@ -54,6 +54,7 @@ POINT {
 
 GLOBAL struct Cell_head window;
 
+GLOBAL int *heap_index, heap_size;
 GLOBAL int first_astar, first_cum, nxt_avail_pt, total_cells, do_points;
 GLOBAL SHORT nrows, ncols;
 GLOBAL double half_res, diag, max_length, dep_slope;
@@ -104,6 +105,7 @@ CELL def_basin(int, int, CELL, double, CELL);
 /* do_astar.c */
 int do_astar(void);
 int add_pt(SHORT, SHORT, SHORT, SHORT, CELL, CELL);
+int drop_pt(void);
 double get_slope(SHORT, SHORT, SHORT, SHORT, CELL, CELL);
 int replace(SHORT, SHORT, SHORT, SHORT);
 
