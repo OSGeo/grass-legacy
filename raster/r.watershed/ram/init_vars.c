@@ -170,7 +170,7 @@ int init_vars(int argc, char *argv[])
 		wat[SEG_INDEX(wat_seg, r, c)] = 1;
 	}
     }
-    asp = (CELL *) G_calloc(size_array(&asp_seg, nrows, ncols), sizeof(CELL));
+    asp = (CELL *) G_malloc(size_array(&asp_seg, nrows, ncols) * sizeof(CELL));
 
     if (pit_flag) {
 	pit_mapset = do_exist(pit_name);
@@ -247,7 +247,14 @@ int init_vars(int argc, char *argv[])
 			       sizeof(double));
     }
 
+    /* heap_index will track astar_pts in the binary min-heap */
+    /* heap_index is one-based */
+    heap_index = (int *)G_malloc((do_points + 1) * sizeof(int));
+
     G_message(_("SECTION 1b (of %1d): Determining Offmap Flow."), tot_parts);
+
+    /* heap is empty */
+    heap_size = 0;
 
     first_astar = first_cum = -1;
     if (MASK_flag) {
