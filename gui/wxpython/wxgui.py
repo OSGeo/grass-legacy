@@ -492,6 +492,8 @@ class GMFrame(wx.Frame):
     def OnAboutGRASS(self, event):
         """Display 'About GRASS' dialog"""
         info = wx.AboutDialogInfo()
+
+        rev = "$Revision$"
         # name
         info.SetName("GRASS GIS")
         # version
