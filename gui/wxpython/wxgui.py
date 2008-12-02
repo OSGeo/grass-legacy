@@ -503,7 +503,7 @@ class GMFrame(wx.Frame):
         copyrightFile = open(os.path.join(os.getenv("GISBASE"), "COPYING"), 'r')
         copyrightOut = []
         copyright = copyrightFile.readlines()
-        info.SetCopyright(wordwrap(''.join(copyright[:11] + copyright[26:-3]),
+        info.SetCopyright(rev + '\n\n' + wordwrap(''.join(copyright[:11] + copyright[26:-3]),
                                    550, wx.ClientDC(self)))
         copyrightFile.close()
         # website
