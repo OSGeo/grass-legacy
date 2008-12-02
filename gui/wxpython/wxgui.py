@@ -504,7 +504,7 @@ class GMFrame(wx.Frame):
         copyrightOut = []
         copyright = copyrightFile.readlines()
         info.SetCopyright(rev + '\n\n' + wordwrap(''.join(copyright[:11] + copyright[26:-3]),
-                                   550, wx.ClientDC(self)))
+                                                  550, wx.ClientDC(self)))
         copyrightFile.close()
         # website
         info.SetWebSite(("http://grass.osgeo.org", "The official GRASS site"))
