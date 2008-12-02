@@ -13,6 +13,7 @@ symb:
 	if [ ! -d $(ETC)/symbol/demo ]; then $(MKDIR) $(ETC)/symbol/demo ; fi
 	if [ ! -d $(ETC)/symbol/basic ]; then $(MKDIR) $(ETC)/symbol/basic ; fi
 	if [ ! -d $(ETC)/symbol/extra ]; then $(MKDIR) $(ETC)/symbol/extra ; fi
+	if [ ! -d $(ETC)/symbol/geology ]; then $(MKDIR) $(ETC)/symbol/geology ; fi
 	@# check for file type to avoid problems with CVS/ directory:
 	for file in symbol/demo/* ; do \
 		[ -f "$$file" ] && $(INSTALL_DATA) $$file $(ETC)/symbol/demo ; \
@@ -22,4 +23,7 @@ symb:
 	done
 	for file in symbol/extra/* ; do \
 		[ -f "$$file" ] && $(INSTALL_DATA) $$file $(ETC)/symbol/extra ; \
+	done
+	for file in symbol/geology/* ; do \
+		[ -f "$$file" ] && $(INSTALL_DATA) $$file $(ETC)/symbol/geology ; \
 	done
