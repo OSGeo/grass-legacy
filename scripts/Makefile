@@ -17,6 +17,7 @@ SUBDIRS = \
 	d.shadedmap \
 	d.slide.show \
 	d.split \
+	d.split.frame \
 	d.text.freetype \
 	d.vect.thematic \
 	db.dropcol \
@@ -36,6 +37,7 @@ SUBDIRS = \
 	p.out.vrml \
 	r.blend \
 	r.cats \
+	r.colors.stddev \
 	r.fillnulls \
 	r.in.aster \
 	r.in.srtm \
@@ -64,6 +66,7 @@ SUBDIRS = \
 	v.db.univar \
 	v.db.update \
 	v.dissolve \
+	v.colors \
 	v.in.e00 \
 	v.in.garmin \
 	v.in.geonames \
