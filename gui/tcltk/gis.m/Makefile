@@ -9,7 +9,8 @@ default: script install_scripts myhtml
 install_scripts:
 	if [ ! -d $(GISBASE)/etc/gm ] ; then $(MKDIR) $(GISBASE)/etc/gm; fi
 	#$(INSTALL) description.html $(GISBASE)/docs/html/gis.m.html
-	for file in *.tcl ; do $(INSTALL) $$file $(GISBASE)/etc/gm/ ; done
+	for file in *.tcl ; do $(INSTALL_DATA) $$file $(GISBASE)/etc/gm/ ; done
+	$(CHMOD) a+X $(GISBASE)/etc/gm/tksys.tcl
 	for file in *.gif ; do $(INSTALL_DATA) $$file $(GISBASE)/etc/gm/ ; done
 	for file in docs/gm_*.html ; do $(INSTALL_DATA) $$file $(GISBASE)/docs/html/ ; done
 	for file in docs/gm_*.png ; do $(INSTALL_DATA) $$file $(GISBASE)/docs/html/ ; done
