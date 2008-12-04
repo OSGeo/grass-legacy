@@ -21,21 +21,21 @@
 # this script needs gnuplot
 
 #%Module
-#%  description: displays spectral response at user specified locations in group or images
+#%  description: Displays spectral response at user specified locations in group or images.
 #%  keywords: imagery, raster, multispectral
 #%End
 #%option
 #% key: group
 #% type: string
 #% gisprompt: old,group
-#% description: group input
+#% description: Group input
 #% required : no
 #%end
 #%option
 #% key: raster
 #% type: string
 #% gisprompt: old,cell,raster
-#% description: raster input maps
+#% description: Raster input maps
 #% multiple : yes
 #% required : no
 #%end
@@ -43,7 +43,7 @@
 #% key: output
 #% type: string
 #% gisprompt: output
-#% description: write output to PNG image
+#% description: Write output to PNG image
 #% multiple : no
 #% required : no
 #%end
@@ -57,7 +57,7 @@
 #%end
 #%flag 
 #%key: c
-#%description: label with coordinates instead of numbering
+#%description: Label with coordinates instead of numbering
 #%end
 
 if test "$GISBASE" = ""; then
