@@ -47,7 +47,7 @@ int main(int argc, char *argv[])
 
     prompt = G_define_option();
     prompt->key = "prompt";
-    prompt->key_desc = "\"message\"";
+    prompt->key_desc = "message";
     prompt->type = TYPE_STRING;
     prompt->description = "Short user prompt message";
 
