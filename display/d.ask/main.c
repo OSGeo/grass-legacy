@@ -35,29 +35,31 @@ int main(int argc, char *argv[])
     module = G_define_module();
     module->keywords = _("display");
     module->description =
-	"Prompts the user to select a GRASS data base file from among "
-	"files displayed in a menu on the graphics monitor.";
+	_("Prompts the user to select a GRASS data base file from among "
+	  "files displayed in a menu on the graphics monitor.");
 
     element = G_define_option();
     element->key = "element";
     element->key_desc = "name,description";
     element->type = TYPE_STRING;
     element->required = YES;
-    element->description = "Database element , one word description";
+    element->description = _("Database element, one word description");
 
     prompt = G_define_option();
     prompt->key = "prompt";
     prompt->key_desc = "message";
     prompt->type = TYPE_STRING;
-    prompt->description = "Short user prompt message";
+    prompt->description = _("Short user prompt message");
 
     G_disable_interactive();
     if (G_parser(argc, argv))
-	exit(1);
+	exit(EXIT_FAILURE);
+
 
     /* make sure we can do graphics */
     if (R_open_driver() != 0)
-	G_fatal_error("No graphics device selected");
+	G_fatal_error(_("No graphics device selected"));
+
     R_close_driver();
 
     tempfile = G_tempfile();
@@ -80,10 +82,10 @@ int main(int argc, char *argv[])
     else {
 	fd = popen("d.menu tcolor=red > /dev/null", "w");
 	if (fd) {
-	    fprintf(fd, "** no %s files found **\n", element->answers[1]);
-	    fprintf(fd, "Click here to CONTINUE\n");
+	    fprintf(fd, _("** no %s files found **\n"), element->answers[1]);
+	    fprintf(fd, _("Click here to CONTINUE\n"));
 	    pclose(fd);
 	}
-	exit(0);
+	exit(EXIT_SUCCESS);
     }
 }
