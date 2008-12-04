@@ -55,6 +55,7 @@ SUBDIRS = \
 	r3.mapcalculator \
 	v.build.all \
 	v.centroids \
+	v.colors \
 	v.convert.all \
 	v.db.addcol \
 	v.db.addtable \
@@ -66,7 +67,6 @@ SUBDIRS = \
 	v.db.univar \
 	v.db.update \
 	v.dissolve \
-	v.colors \
 	v.in.e00 \
 	v.in.garmin \
 	v.in.geonames \
