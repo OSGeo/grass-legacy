@@ -16,7 +16,7 @@ $(PROG2): *.gif *.tcl
 	if [ ! -d $(ETC)/dm ]; then $(MKDIR) $(ETC)/dm; fi
 	$(INSTALL_DATA) *.gif $(ETC)/dm/
 	for tcl in $(TCL); do \
-	    $(INSTALL) $$tcl $(ETC)/dm/ ; \
+	    $(INSTALL_DATA) $$tcl $(ETC)/dm/ ; \
 	done
 	$(INSTALL) $(PGM2) $(PROG2)
 	$(MKDIR) $(GISBASE)/etc/dm/script
