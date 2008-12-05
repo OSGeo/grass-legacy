@@ -1,4 +1,5 @@
 #include <stdlib.h>
+#include <math.h>
 #include <grass/gis.h>
 #include "driver.h"
 #include "driverlib.h"
@@ -32,7 +33,7 @@ static void line(const struct point *p, int n, int y)
 	const struct point *p0 = &p[i];
 	const struct point *p1 = &p[i + 1];
 	const struct point *tmp;
-	double fx;
+	double fx, fy;
 	long x;
 
 	if (p0->y == p1->y)
@@ -47,10 +48,11 @@ static void line(const struct point *p, int n, int y)
 	if (p1->y <= y)
 	    continue;
 
-	fx = (double)p1->x * (y - p0->y) + (double)p0->x * (p1->y - y);
+	fy = y + 0.5;
+	fx = (double)p1->x * (fy - p0->y) + (double)p0->x * (p1->y - fy);
 	fx /= p1->y - p0->y;
 	x = fx < -0x7fffffff ? -0x7fffffff :
-	    fx > 0x7fffffff ? 0x7fffffff : (long)fx;
+	    fx > 0x7fffffff ? 0x7fffffff : (long)floor(fx + 0.5);
 
 	if (num_x >= max_x) {
 	    max_x += 20;
