@@ -248,6 +248,7 @@ set descmenu [subst  {
 	}}
 	{cascad {[G_msg "Manage map colors"]} {} "" $tmenu {			
 		{command {[G_msg "Color tables"]} {} "r.colors: Set colors to predefined color tables or from another raster map" {} -command {execute r.colors }}
+		{command {[G_msg "Color tables (stddev)"]} {} "r.colors.stddev: Set color rules based on stddev from a map's mean value" {} -command {execute r.colors.stddev }}
 		{command {[G_msg "Color rules"]} {} "Set colors interactively by entering color rules" {} -command {GmRules::main "r.colors" }}
 		{separator}
 		{command {[G_msg "Blend"]} {} "r.blend: Blend 2 color maps to produce 3 RGB files" {} -command {execute r.blend }}
@@ -417,7 +418,7 @@ set descmenu [subst  {
 		{command {[G_msg "Linear regression"]} {} "r.regression.line: Linear regression between 2 maps" {} -command {execute r.regression.line }}
 		{command {[G_msg "Mutual category occurences"]} {} "r.coin: Mutual category occurences (coincidence)" {} -command {execute r.coin }}
 	}}
- } 
+ }
  {[G_msg "&Vector"]} all options $tmenu {
 	{cascad {[G_msg "Develop map"]} {} "" $tmenu {			
 		{command {[G_msg "Digitize"]} {} "v.digit: Digitize/edit vector map" {} -command {execute v.digit }}
@@ -443,6 +444,7 @@ set descmenu [subst  {
 		{command {[G_msg "Link to OGR"]} {} "v.external: Create new vector as link to external OGR layer" {} -command {execute v.external }}
 		{separator}
 		{command {[G_msg "Create labels"]} {} "v.label: Create text label file for vector objects" {} -command {execute v.label }}
+		{command {[G_msg "Assign colors"]} {} "v.colors: Set color rules using a numeric attribute column" {} -command {execute v.colors }}
 		{separator}
 		{command {[G_msg "Reposition vector"]} {} "v.transform: Reposition (shift, rotate, skew) vector file in coordinate space" {} -command {execute v.transform }}
 		{command {[G_msg "Reproject vector"]} {} "v.proj: Reproject vector from other location" {} -command {execute v.proj }}
