@@ -241,6 +241,7 @@ set descmenu [subst {
 	}}
 	{cascad {[G_msg "Manage map colors"]} {} "" $tmenu {			
 		{command {[G_msg "Set colors to predefined color tables"]} {} "r.colors" {} -command {execute r.colors }}
+		{command {[G_msg "Set colors based on standard deviations"]} {} "r.colors.stddev" {} -command {execute r.colors.stddev }}
 		{command {[G_msg "Set colors using color rules"]} {} "r.colors.rules" {} -command {execute $env(GISBASE)/etc/gm/script/r.colors.rules }}
 		{separator}
 		{command {[G_msg "Blend 2 color maps to produce 3 RGB files"]} {} "r.blend" {} -command {execute r.blend }}
@@ -393,6 +394,7 @@ set descmenu [subst {
 		{command {[G_msg "Extrude 2D vector into 3D vector"]} {} "v.extrude" {} -command {execute v.extrude }}
 		{separator}
 		{command {[G_msg "Create text label file for vector features"]} {} "v.label" {} -command {execute v.label }}
+		{command {[G_msg "Assign colors from a numeric attribute column"]} {} "v.colors" {} -command {execute v.colors }}
 		{separator}
 		{command {[G_msg "Reproject vector from other location"]} {} "v.proj" {} -command {execute v.proj }}
 	}}
