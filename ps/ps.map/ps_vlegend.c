@@ -192,6 +192,7 @@ int PS_vlegend(void)
 			    eps_bbox(vector.layer[i].pat, &llx, &lly, &urx,
 				     &ury);
 			    sprintf(pat, "APATTEPS%d", i);
+			    pat_save(PS.fp, vector.layer[i].pat, pat);
 
 			    fprintf(PS.fp,
 				    "<<  /PatternType 1\n    /PaintType 1\n    /TilingType 1\n");
