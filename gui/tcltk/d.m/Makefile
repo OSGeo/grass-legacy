@@ -18,6 +18,7 @@ $(PROG2): *.gif *.tcl
 	for tcl in $(TCL); do \
 	    $(INSTALL_DATA) $$tcl $(ETC)/dm/ ; \
 	done
+	$(CHMOD) a+X $(GISBASE)/etc/dm/tksys.tcl
 	$(INSTALL) $(PGM2) $(PROG2)
 	$(MKDIR) $(GISBASE)/etc/dm/script
 	$(INSTALL) script/*.* $(GISBASE)/etc/dm/script
