@@ -43,9 +43,6 @@ double H;			/* Hausdorff-Besickovitch dimension.    */
 /* interface.c */
 int interface(int, char *[]);
 
-/* open_files.c */
-int open_files(void);
-
 /* process.c */
 int process(void);
 int data_reset(double *[2], int);
