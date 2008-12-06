@@ -82,7 +82,7 @@ int main(int argc, char *argv[])
     option_opt->answer = "add";
     option_opt->description = _("Action to be done");
     option_opt->descriptions = _("add;add a new category;"
-				 "del;delete category (-1 to delete all categories of given layer);"
+				 "del;delete all categories of given layer;"
 				 "chlayer;change layer number (e.g. layer=3,1 changes layer 3 to layer 1);"
 				 "sum;add the value specified by cat option to the current category value;"
 				 "report;print report (statistics), in shell style: layer type count min max;"
@@ -281,7 +281,7 @@ int main(int argc, char *argv[])
 	    if (type & otype && (!Clist ||
 				 (Clist &&
 				  Vect_cat_in_cat_list(id, Clist) == TRUE))) {
-		ret = Vect_field_cat_del(Cats, fields[0], cat);
+		ret = Vect_field_cat_del(Cats, fields[0], -1);
 		if (ret == 1) {
 		    nmodified++;
 		}
@@ -528,7 +528,7 @@ int main(int argc, char *argv[])
 	Vect_build(&Out);
 	Vect_close(&Out);
 	
-	G_done_msg(_("%d features modified"), nmodified);
+	G_done_msg(_("%d features modified."), nmodified);
     }
     Vect_close(&In);
 
