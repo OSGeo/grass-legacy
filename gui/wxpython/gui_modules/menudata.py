@@ -12,7 +12,7 @@ License (>=v2). Read the file COPYING that comes with GRASS
 for details.
 
 @author Michael Barton (Arizona State University)
-@author Yann Chemin
+@author Yann Chemin <yann.chemin gmail.com>
 @author Martin Landa <landa.martin gmail.com>
 """
 
@@ -320,7 +320,7 @@ class Data:
                                 (_("Multiple GPS export formats using GPSBabel"),
                                  _("Exports a vector map to a GPS receiver or file format supported by GPSBabel."),
                                  "self.OnMenuCmd",
-                                 "v.out.gpsbabel"),
+                                 "v.out.gps"),
 
                                 (_("POV-Ray export"),
                                  _("Converts to POV-Ray format, GRASS x,y,z -> POV-Ray x,z,y"),
@@ -852,6 +852,17 @@ class Data:
                                  _("Simulates TOPMODEL which is a physically based hydrologic model."),
                                  "self.OnMenuCmd",
                                  "r.topmodel"),
+                                ("","","", ""),
+
+                                (_("USLE K Factor"),
+                                 _("USLE K Factor: Soil Erodibility."),
+                                 "self.OnMenuCmd",
+                                 "r.uslek"),
+
+                                (_("USLE R Factor"),
+                                 _("USLE R Factor: Rainfall Erosivity."),
+                                 "self.OnMenuCmd",
+                                 "r.usler"),
                                 ("","","", ""),
 
                                 (_("Watershed subbasins"),
@@ -1645,6 +1656,43 @@ class Data:
                          _("Ortho Photo rectification"),
                          "self.OnXTerm",
                          "i.ortho.photo"),
+                        ("","","", ""),
+
+                        (_("Basic RS processing"), (
+
+                                (_("MODIS Quality Flags"),
+                                 _("Extract Modis Quality flags as raster values."),
+                                 "self.OnMenuCmd",
+                                 "i.modis.qc"),
+
+                                (_("Latitude/longitude maps"),
+                                 _("Creates Latitude or Longitude map."),
+                                 "self.OnMenuCmd",
+                                 "i.latlong"),
+
+                                (_("Potential Sunshine Hours"),
+                                 _("Creates Potential Sunshine Hours map."),
+                                 "self.OnMenuCmd",
+                                 "i.sunhours"),
+                                ("","","", ""),
+
+                                (_("Albedo"),
+                                 _("Albedo from Modis, Aster, Landsat, AVHRR."),
+                                 "self.OnMenuCmd",
+                                 "i.albedo"),
+
+                                (_("Vegetation Indices"),
+                                 _("14 types of vegetation Indices."),
+                                 "self.OnMenuCmd",
+                                 "i.vi"),
+                                ("","","", ""),
+
+                                (_("Emissivity"),
+                                 _("Emissivity from NDVI."),
+                                 "self.OnMenuCmd",
+                                 "i.emissivity"),
+                                )
+                         ),
                         ("","","", ""),
 
                         (_("Brovey sharpening"),
