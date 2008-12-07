@@ -182,7 +182,7 @@ v.db.connect map="$GIS_OPT_MAP" database="${database}" driver="$driver" \
 
 # finally we have to add cats into the attribute DB to make modules such as v.what.rast happy:
 # (creates new row for each vector line):
-v.to.db "$GIS_OPT_MAP" layer="$GIS_OPT_LAYER" option=cat col=cat
+v.to.db "$GIS_OPT_MAP" layer="$GIS_OPT_LAYER" option=cat col=cat qlayer="$GIS_OPT_LAYER"
 
 if [ -z "$GRASS_VERBOSE" ] || [ "$GRASS_VERBOSE" -gt 0 ] ; then
    g.message "Current attribute table links:"
