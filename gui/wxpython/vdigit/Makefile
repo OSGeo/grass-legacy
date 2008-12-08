@@ -9,9 +9,9 @@ SHLIB_OBJS := $(patsubst %.cpp, $(OBJDIR)/%.o, $(SOURCES))
 EXTRA_CFLAGS = $(SHLIB_CFLAGS) $(GDALCFLAGS) $(PYTHONCFLAGS) $(WXWIDGETSCXXFLAGS)
 EXTRA_LIBS = $(VECTLIB) $(GISLIB) $(GDALLIBS) $(VEDITLIB) $(WXWIDGETSLIB)
 ifeq ($(findstring darwin,$(ARCH)),darwin)
-EXTRA_LIBS += -bundle -undefined dynamic_lookup
+EXTRA_LIBS := -bundle -undefined dynamic_lookup $(EXTRA_LIBS)
 else
-EXTRA_LIBS += $(PYTHONLDFLAGS) -lgdi
+EXTRA_LIBS := $(PYTHONLDFLAGS) $(EXTRA_LIBS) -lgdi
 endif
 
 LOCAL_HEADERS = digit.h driver.h
@@ -22,7 +22,13 @@ SHLIB = $(OBJDIR)/_$(LIB_NAME).so
 
 EXTRA_CLEAN_FILES = $(SHLIB) $(LIB_NAME).i $(LIB_NAME).py $(LIB_NAME)_wrap.cpp
 
+ifneq ($(USE_WXWIDGETS),)
+ifneq ($(USE_PYTHON),)
+ifneq ($(strip $(CXX)),)
 default: install_vdigit
+endif
+endif
+endif
 
 $(LIB_NAME).i: digit.i dig_types.i driver.h digit.h
 	cat digit.i dig_types.i > $(LIB_NAME).i
