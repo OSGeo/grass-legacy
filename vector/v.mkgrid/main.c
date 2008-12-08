@@ -1,4 +1,3 @@
-
 /****************************************************************************
  *
  * MODULE:       v.mkgrid
@@ -45,6 +44,8 @@ int main(int argc, char *argv[])
     struct Map_info Map;
     struct Option *vectname, *grid, *coord, *box, *angle, *position_opt;
     struct Flag *q;
+    struct Flag *points_fl;
+    int points_p;
     struct GModule *module;
 
     struct line_pnts *Points;
@@ -110,6 +111,12 @@ int main(int argc, char *argv[])
 	_("Angle of rotation (in degrees counter-clockwise)");
     angle->answer = "0";
 
+    points_fl = G_define_flag ();
+    points_fl->key = 'p';
+    points_fl->description = _("Create grid of points"
+                            " instead of areas and centroids");
+    points_fl->answer = 0;
+
     /* please, remove before GRASS 7 released */
     q = G_define_flag();
     q->key = 'q';
@@ -126,6 +133,8 @@ int main(int argc, char *argv[])
 		    "in future. Please use '--quiet' instead."));
     }
 
+
+    points_p = points_fl->answer;
 
     /* get the current window  */
     G_get_window(&window);
@@ -243,7 +252,10 @@ int main(int argc, char *argv[])
 	G_fatal_error(_("Unable to grant privileges on table <%s>"),
 		      Fi->table);
 
-    write_grid(&grid_info, &Map);
+    if (! points_p) {
+	/* create areas */
+	write_grid(&grid_info, &Map);
+    }
 
     /* Create a grid of label points at the centres of the grid cells */
     G_verbose_message(_("Creating centroids..."));
@@ -253,6 +265,7 @@ int main(int argc, char *argv[])
     for (i = 0; i < grid_info.num_rows; ++i) {
 	for (j = 0; j < grid_info.num_cols; ++j) {
 	    double x, y;
+	    const int point_type = points_p ? GV_POINT : GV_CENTROID;
 
 	    x = grid_info.origin_x + (0.5 + j) * grid_info.length;
 	    y = grid_info.origin_y + (0.5 + i) * grid_info.width;
@@ -265,7 +278,7 @@ int main(int argc, char *argv[])
 
 	    Vect_append_point(Points, x, y, 0.0);
 	    Vect_cat_set(Cats, 1, attCount + 1);
-	    Vect_write_line(&Map, GV_CENTROID, Points, Cats);
+	    Vect_write_line(&Map, point_type, Points, Cats);
 
 	    if (grid_info.num_rows < 27 && grid_info.num_cols < 27) {
 		sprintf(buf,
