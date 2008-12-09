@@ -99,15 +99,7 @@ n=1
 while [ "$n" -le "$colnum" ]
   do
     col=`echo $GIS_OPT_COLUMNS | cut -d',' -f$n`
-
-    # trap odd column definitions
-    COLPAIRS=`echo $col | tr ',' '\n' | wc -l | awk '{print $1 * 2}'`
-    TOKENS=`echo $col | tr ' ' '\n' | wc -l | awk '{print $1}'`
-    if [ $COLPAIRS -ne $TOKENS ] ; then
-      g.message -e 'Column definitions are not comma separated or incorrect'
-      exit 1
-    fi
-
+    
     if [ -z "$col" ] ; then
       g.message -e 'There is an empty column! Did you leave a trailing comma?'
       exit 1
