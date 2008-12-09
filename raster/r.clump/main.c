@@ -8,7 +8,7 @@
  * PURPOSE:      Recategorizes data in a raster map layer by grouping cells
  *		 that form physically discrete areas into unique categories.
  *
- * COPYRIGHT:    (C) 2006 by the GRASS Development Team
+ * COPYRIGHT:    (C) 2006-2008 by the GRASS Development Team
  *
  *               This program is free software under the GNU General Public
  *               License (>=v2). Read the file COPYING that comes with GRASS
@@ -19,9 +19,8 @@
 #include <stdlib.h>
 #include <string.h>
 #include <grass/gis.h>
-#include "local_proto.h"
 #include <grass/glocale.h>
-
+#include "local_proto.h"
 
 int main(int argc, char *argv[])
 {
@@ -47,9 +46,9 @@ int main(int argc, char *argv[])
     /* Define the different options */
 
     module = G_define_module();
-    module->keywords = _("raster");
+    module->keywords = _("raster, statistics, reclass");
     module->description =
-	_("Recategorizes data in a raster map layer by grouping cells "
+	_("Recategorizes data in a raster map by grouping cells "
 	  "that form physically discrete areas into unique categories.");
 
     opt1 = G_define_standard_option(G_OPT_R_INPUT);
@@ -100,7 +99,7 @@ int main(int argc, char *argv[])
 
     clump(in_fd, out_fd);
 
-    G_message(_("Creating support files..."));
+    G_debug(1, "Creating support files...");
 
     G_close_cell(in_fd);
     G_close_cell(out_fd);
@@ -110,7 +109,7 @@ int main(int argc, char *argv[])
     if (opt3->answer != NULL)
 	strcpy(title, opt3->answer);
     else
-	sprintf(title, "clump of %s in %s", name, mapset);
+	sprintf(title, "clump of <%s@%s>", name, mapset);
 
     G_put_cell_title(OUTPUT, title);
     G_read_range(OUTPUT, G_mapset(), &range);
@@ -118,6 +117,7 @@ int main(int argc, char *argv[])
     G_make_random_colors(&colr, min, max);
     G_write_colors(OUTPUT, G_mapset(), &colr);
 
-    G_message(_("%d clumps"), range.max);
+    G_done_msg(_("%d clumps."), range.max);
+
     exit(EXIT_SUCCESS);
 }
