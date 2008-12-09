@@ -13,7 +13,7 @@
  *               Radim Blazek <radim.blazek gmail.com>
  * PURPOSE:      spatial interpolation based on distance squared weighting of 
  *               the values of nearest irregularly spaced data points
- * COPYRIGHT:    (C) 1999-2007 by the GRASS Development Team
+ * COPYRIGHT:    (C) 1999-2008 by the GRASS Development Team
  *
  *               This program is free software under the GNU General Public
  *               License (>=v2). Read the file COPYING that comes with GRASS
@@ -35,9 +35,9 @@ Further modifications tracked by CVS
 #include <stdlib.h>
 #include <math.h>
 #include <grass/gis.h>
+#include <grass/glocale.h>
 #define MAIN
 #include "main.h"
-#include <grass/glocale.h>
 
 static int error_flag = 0;
 static char *input;
@@ -66,9 +66,9 @@ int main(int argc, char **argv)
     G_gisinit(argv[0]);
 
     module = G_define_module();
-    module->keywords = _("raster");
+    module->keywords = _("raster, interpolation");
     module->description =
-	_("Surface interpolation utility for raster map layers.");
+	_("Surface interpolation utility for raster map.");
 
     parm.input = G_define_standard_option(G_OPT_R_INPUT);
 
@@ -89,7 +89,7 @@ int main(int argc, char **argv)
 	exit(EXIT_FAILURE);
 
     if (sscanf(parm.npoints->answer, "%d", &n) != 1 || n <= 0)
-	G_fatal_error(_("%s=%s - illegal value"), parm.npoints->key,
+	G_fatal_error(_("Illegal value for '%s' (%s)"), parm.npoints->key,
 		      parm.npoints->answer);
 
     npoints = n;
@@ -100,8 +100,7 @@ int main(int argc, char **argv)
     current_mapset = G_mapset();
 
     /*  Get database window parameters                              */
-    if (G_get_window(&window) < 0)
-	G_fatal_error(_("Unable to read current region parameters"));
+    G_get_window(&window);
 
     /* Make sure layer_map is available                                     */
     layer_mapset = G_find_cell(input, "");
@@ -162,7 +161,8 @@ int main(int argc, char **argv)
     G_command_history(&history);
     G_write_history(output, &history);
 
-    G_done_msg("");
+    G_done_msg(" ");
+    
     exit(EXIT_SUCCESS);
 }
 
@@ -230,11 +230,11 @@ interpolate(MELEMENT rowlist[], SHORT nrows, SHORT ncols, SHORT datarows,
     nbr_head->searchptr = &(nbr_head->Mptr);	/* see replace_neighbor */
 #endif
 
-    G_message(_("Interpolating raster map <%s>... %d rows... "), output,
+    G_message(_("Interpolating raster map <%s> (%d rows)... "), output,
 	      nrows);
 
     for (row = 0; row < nrows; row++) {	/*  loop over rows      */
-	G_percent(row, nrows, 2);
+	G_percent(row+1, nrows, 2);
 
 	/* if mask occurs, read current row of the mask */
 	if (mask && G_get_map_row(maskfd, mask, row) < 0)
@@ -682,12 +682,13 @@ MELEMENT *row_lists(
 
     /* enter data by allocation of individual matrix elements */
     *npts = 0;
-    fprintf(stderr, "Reading %s...", input);
+    G_message(_("Reading raster map <%s>..."), input);
 
     for (row = 0, Rptr = rowlist; row < rows; row++) {
-	G_percent(row, rows, 1);
+	G_percent(row+1, rows, 2);
 	if (G_get_map_row_nomask(fd, cell, row) < 0)
-	    G_fatal_error(_("Cannot read row"));
+	    G_fatal_error(_("Unable to read raster map row %d"),
+			  row);
 
 	for (col = 0; col < cols; col++) {
 	    if (cell[col] != 0) {
@@ -706,7 +707,7 @@ MELEMENT *row_lists(
 	if (Rptr->prior != Rptr)	/* non-zero input data in this row */
 	    Rptr++->y = row;
     }				/* loop over rows */
-    G_percent(row, rows, 1);
+    
     endlist = Rptr;		/* point to element after last valid row list dummy */
 
     /* add final link to complete doubly-linked lists */
