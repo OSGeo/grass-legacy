@@ -22,6 +22,8 @@ SHLIB = $(OBJDIR)/_$(LIB_NAME).so
 
 EXTRA_CLEAN_FILES = $(SHLIB) $(LIB_NAME).i $(LIB_NAME).py $(LIB_NAME)_wrap.cpp
 
+default:
+
 ifneq ($(USE_WXWIDGETS),)
 ifneq ($(USE_PYTHON),)
 ifneq ($(strip $(CXX)),)
