@@ -76,7 +76,12 @@ fi
 
 # save command line
 if [ "$1" != "@ARGS_PARSED@" ] ; then
-  exec g.parser "$0" "$@"
+    CMDLINE="`basename $0`"
+    for arg in "$@" ; do
+        CMDLINE="$CMDLINE \"$arg\""
+    done
+    export CMDLINE
+    exec g.parser "$0" "$@"
 fi
 
 map3d=` v.info map="$GIS_OPT_INPUT" -t | grep map3d | cut -d'=' -f2`
@@ -113,5 +118,8 @@ else
        exit 1
    fi
 fi
+
+# write cmd history:
+v.support ${GIS_OPT_OUTPUT} cmdhist="${CMDLINE}"
 
 exit 0
