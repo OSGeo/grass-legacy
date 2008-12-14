@@ -42,4 +42,4 @@ int parse(int argc, char *argv[], struct parms *parms)
 	G_fatal_error(_("Subgroup <%s> not found"), parms->subgroup);
 
     return 0;
-}i
+}
