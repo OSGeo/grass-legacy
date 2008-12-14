@@ -1,0 +1,110 @@
+#!/bin/sh
+############################################################################
+#
+# MODULE:       v.to.3d
+#
+# AUTHOR:       Martin Landa, CTU in Prague, Czech Republic
+#
+# PURPOSE:      Transform 2D vectors to 3D vectors
+#                 (frontend to v.transform)
+#
+# COPYRIGHT:    (c) 2008 Martin Landa, and the GRASS Development Team
+#               This program is free software under the GNU General Public
+#               License (>=v2). Read the file COPYING that comes with GRASS
+#               for details.
+#
+#############################################################################
+
+#%Module
+#% description: Performs transformation of 2D vector features to 3D.
+#% keywords: vector, transformation, 3D
+#%End
+
+#%Option
+#% key: input
+#% type: string
+#% required: yes
+#% multiple: no
+#% key_desc: name
+#% description: Name of input vector map
+#% gisprompt: old,vector,vector
+#%End
+
+#%Option
+#% key: output
+#% type: string
+#% required: yes
+#% multiple: no
+#% key_desc: name
+#% description: Name for output vector map
+#% gisprompt: new,vector,vector
+#%End
+
+#%Option
+#% key: height
+#% type: double
+#% required: no
+#% multiple: no
+#% description: Fixed height for 3D vector features
+#%End
+
+#%Option
+#% key: layer
+#% type: integer
+#% required: no
+#% multiple: no
+#% label: Layer number
+#% description: A single vector map can be connected to multiple database tables. This number determines which table to use.
+#% answer: 1
+#% gisprompt: old_layer,layer,layer
+#%End
+
+#%Option
+#% key: column
+#% type: string
+#% required: no
+#% multiple: no
+#% key_desc: name
+#% description: Name of attribute column used for height
+#% gisprompt: old_dbcolumn,dbcolumn,dbcolumn
+#%End
+
+if  [ -z "$GISBASE" ] ; then
+    echo "You must be in GRASS GIS to run this program." 1>&2
+    exit 1
+fi
+
+# save command line
+if [ "$1" != "@ARGS_PARSED@" ] ; then
+  exec g.parser "$0" "$@"
+fi
+
+if [ -n "$GIS_OPT_HEIGHT" ] ; then
+   if [ -n "$GIS_OPT_COLUMN" ] ; then
+      g.message -e "Either 'height' or 'column' parameter have to be used"
+      exit 1
+   fi
+   # fixed height
+   v.transform input="$GIS_OPT_INPUT" output="$GIS_OPT_OUTPUT" zshift="$GIS_OPT_HEIGHT"
+else
+   if [ -z "$GIS_OPT_COLUMN" ] ; then
+      g.message -e "Either 'height' or 'column' parameter have to be used"
+      exit 1
+   fi
+
+   # attribute height, check column type
+   coltype=`v.info -c map="$GIS_OPT_INPUT" layer="$GIS_OPT_LAYER" --quiet | grep -w "$GIS_OPT_COLUMN" | cut -d'|' -f1`
+   if [ "$coltype" = "INTEGER" -o "$coltype" = "DOUBLE PRECISION" ] ; then
+       table=`v.db.connect map="$GIS_OPT_INPUT" -g fs=',' | grep ^"$GIS_OPT_LAYER" | cut -d',' -f2`
+       v.transform input="$GIS_OPT_INPUT" output="$GIS_OPT_OUTPUT" layer="$GIS_OPT_LAYER" columns="zshift:${GIS_OPT_COLUMN}" table="$table"
+   else
+       if [ -z "$coltype" ] ; then
+	   g.message -e "Column <$GIS_OPT_COLUMN> not found"
+       else
+	   g.message -e "Column type must be numeric"
+       fi
+       exit 1
+   fi
+fi
+
+exit 0
