@@ -78,8 +78,9 @@ SUBDIRS = \
 	v.out.gpsbabel \
 	v.rast.stats \
 	v.report \
+	v.to.3d \
 	v.univar.sh \
-	v.what.vect
+	v.what.vect \
 
 include $(MODULE_TOPDIR)/include/Make/Dir.make
 
