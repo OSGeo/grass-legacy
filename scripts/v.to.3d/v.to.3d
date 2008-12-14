@@ -79,6 +79,13 @@ if [ "$1" != "@ARGS_PARSED@" ] ; then
   exec g.parser "$0" "$@"
 fi
 
+map3d=` v.info "$GIS_OPT_INPUT" -t | grep map3d | cut -d'=' -f2`
+
+if [ "$map3d" -eq "1" ] ; then
+    g.message -e "Vector map <$GIS_OPT_INPUT> is 3D"
+    exit 1
+fi
+
 if [ -n "$GIS_OPT_HEIGHT" ] ; then
    if [ -n "$GIS_OPT_COLUMN" ] ; then
       g.message -e "Either 'height' or 'column' parameter have to be used"
