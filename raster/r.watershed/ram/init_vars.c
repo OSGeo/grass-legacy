@@ -139,11 +139,19 @@ int init_vars(int argc, char *argv[])
 	G_fatal_error(_("unable to open elevation map layer"));
     }
 
+    swale = flag_create(nrows, ncols);
+    in_list = flag_create(nrows, ncols);
+    worked = flag_create(nrows, ncols);
+
     for (r = 0; r < nrows; r++) {
 	G_get_c_raster_row(fd, buf, r);
 	for (c = 0; c < ncols; c++) {
 	    index = SEG_INDEX(alt_seg, r, c);
 	    alt[index] = r_h[index] = buf[c];
+	    /* all flags need to be manually set to zero */
+	    flag_unset(swale, r, c);	
+	    flag_unset(in_list, r, c);	
+	    flag_unset(worked, r, c);	
 	}
     }
     G_close_cell(fd);
@@ -186,7 +194,7 @@ int init_vars(int argc, char *argv[])
 	}
 	G_close_cell(fd);
     }
-    swale = flag_create(nrows, ncols);
+
     if (ob_flag) {
 	fd = G_open_cell_old(ob_name, ob_mapset);
 	if (fd < 0) {
@@ -207,8 +215,7 @@ int init_vars(int argc, char *argv[])
 	    G_fatal_error(_("unable to open rill map layer"));
 	}
     }
-    in_list = flag_create(nrows, ncols);
-    worked = flag_create(nrows, ncols);
+
     MASK_flag = 0;
     do_points = nrows * ncols;
     if (NULL != G_find_file("cell", "MASK", G_mapset())) {
