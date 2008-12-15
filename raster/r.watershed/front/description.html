@@ -7,9 +7,7 @@
 <p>
 <!-- Interactive mode not activated in GRASS 6.
 <em>r.watershed</em> can be run either interactively or non-interactively.
-If the user types <tt>r.watershed</tt>
-on the command line without program arguments, the program will prompt the user
-with a verbose description of the input maps.  The interactive version of
+The interactive version of
 <em>r.watershed</em> can prepare inputs to lumped-parameter hydrologic models.
 After a verbose interactive session, <em>r.watershed</em> will query the user
 for a number of
@@ -17,21 +15,8 @@ map layers.  Each map layer's values will be tabulated by watershed basin and se
 to an output file.  This output file is organized to ease data entry into a
 lumped-parameter hydrologic model program.  The non-interactive version of
 <em>r.watershed</em> cannot create this file.
-
-<p>
-The user can run the program non-interactively, by specifying input map names
-on the command line. Parameter names may be specified by their
-full names, or by any initial string that distinguish them from other parameter names.
-In <em>r.watershed</em>'s case, the first two letters of each name sufficiently
-distinguishes parameter names.
-For example, the two expressions below are equivalent inputs to <em>r.watershed</em>:
-<p>
-<pre>
- el=elev.map th=100 st=stream.map ba=basin.map
-
- elevation=elev.map threshold=100 stream=stream.map basin=basin.map
-</pre>
 -->
+
 <h2>OPTIONS</h2>
 
 <dl>
@@ -46,8 +31,8 @@ slower.
 <dt><em>-4</em> 
 
 <dd>Allow only horizontal and vertical flow of water.
-Stream and slope lengths are approximately the same as outputs from default surface
-flow (allows horizontal, vertical, and diagonal flow of water).
+Stream and slope lengths are approximately the same as outputs from default
+surface flow (allows horizontal, vertical, and diagonal flow of water).
 This flag will also make the drainage basins look more homogeneous.
 
 <dt><em>elevation</em> 
@@ -175,18 +160,20 @@ by 100 for the GRASS output map layer.
 
 <h2>NOTES</h2>
 
-<em>r.watershed</em> uses an algorithm designed to minimize the impact of
-DEM data errors. This algorithm works slower than <em>r.terraflow</em> but
-provides more accurate results in areas of low slope as well as DEMs
-constructed with techniques that mistake canopy tops as the ground elevation.
-Kinner et al. (2005), for example, used SRTM and IFSAR DEMs to compare
-<em>r.watershed</em> against <em>r.terraflow</em> results in Panama.
-<em>r.terraflow</em> was unable to replicate stream locations in the larger
-valleys while  <em>r.watershed</em> performed much better. Thus, if forest
-canopy exists in valleys, SRTM, IFSAR, and similar data products will cause
-major errors in <em>r.terraflow</em> stream output. Under similar conditions,
-<em>r.watershed</em> will generate better <b>stream</b> and <b>half.basin</b>
-results. If watershed divides contain flat to low slope, <em>r.watershed</em>
+<em>r.watershed</em> uses an A<sup>T</sup> least-cost search algorithm
+(see <a href="#references">REFERENCES</a> section) designed to minimize
+the impact of DEM data errors. Compared to <em>r.terraflow</em>, this 
+algorithm provides more accurate results in areas of low slope as well 
+as DEMs constructed with techniques that mistake canopy tops as the 
+ground elevation. Kinner et al. (2005), for example, used SRTM and IFSAR 
+DEMs to compare <em>r.watershed</em> against <em>r.terraflow</em> 
+results in Panama. <em>r.terraflow</em> was unable to replicate stream 
+locations in the larger valleys while <em>r.watershed</em> performed 
+much better. Thus, if forest canopy exists in valleys, SRTM, IFSAR, and 
+similar data products will cause major errors in <em>r.terraflow</em> 
+stream output. Under similar conditions, <em>r.watershed</em> will 
+generate better <b>stream</b> and <b>half_basin</b> results. If 
+watershed divides contain flat to low slope, <em>r.watershed</em>
 will generate better basin results than <em>r.terraflow</em>.
 (<em>r.terraflow</em> uses the same type of algorithm as ESRI's ArcGIS
 watershed software which fails under these conditions.) Also, if watershed
