@@ -1855,7 +1855,7 @@ proc MapCanvas::query { mon x y } {
 		default {
 			set mapname ""
 			tk_messageBox -type ok -icon warning -parent .mapcan($mon) \
-				-message [G_msg "This layer type does not support queries"] 
+				-message [G_msg "This layer type does not support queries"] \
 					-title [G_msg "Query not supported"]
 			return
 		}

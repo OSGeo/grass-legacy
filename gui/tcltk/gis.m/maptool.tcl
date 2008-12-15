@@ -375,10 +375,10 @@ proc MapToolBar::savefile { type quality } {
 	if { [info exists env(HOME)] } {
 		set dir $env(HOME)
 		set path [tk_getSaveFile -initialdir $dir \
-			-title "Save file: do not add extension to file name"]
+			-title "Save Mapcanvas contents to file"]
 	} else {
-		set path [tk_getSaveFile  \
-			 -title "Save file: do not add extension to file name"]
+		set path [tk_getSaveFile \
+			-title "Save Mapcanvas contents to file"]
 	}
 	set currdir [pwd]
 	cd $tmpdir
@@ -386,23 +386,35 @@ proc MapToolBar::savefile { type quality } {
 	catch {file copy -force $outfile($mon) $path.ppm}
 
 	cd $currdir
+	
+	set ext [file extension $path]
 
 	if { $path != "" } {
 		switch $type {
 			"bmp" {
-				if { [catch {exec gdal_translate $path.ppm $path.bmp -of BMP} error ]} {
+				if { [string equal -nocase {.bmp} $ext] } {
+					set saveto $path
+				} else {
+					set saveto $path.bmp
+				}
+				if { [catch {exec gdal_translate $path.ppm $saveto -of BMP} error ]} {
 					GmLib::errmsg $error [G_msg "Could not create BMP"]
 				}
 				catch {file delete $path.ppm}
 			}
 			"jpg" {
+				if { [string equal -nocase {.jpg} $ext] || [string equal -nocase {.jpeg} $ext]} {
+					set saveto $path
+				} else {
+					set saveto $path.jpg
+				}
 			    if { $quality == 300 } {
-					if { [catch {exec gdal_translate $path.ppm $path.jpg -of JPEG -co QUALITY=95 -outsize 300% 300% } error ]} {
+					if { [catch {exec gdal_translate $path.ppm $saveto -of JPEG -co QUALITY=95 -outsize 300% 300% } error ]} {
 						GmLib::errmsg $error [G_msg "Could not create JPG"]
 					}					
 					catch {file delete $path.ppm}
 				} else {
-					if { [catch {exec gdal_translate $path.ppm $path.jpg -of JPEG -co QUALITY=$quality  } error ]} {
+					if { [catch {exec gdal_translate $path.ppm $saveto -of JPEG -co QUALITY=$quality  } error ]} {
 						GmLib::errmsg $error [G_msg "Could not create JPG"]
 					}					
 
@@ -410,7 +422,12 @@ proc MapToolBar::savefile { type quality } {
 				}
 			}
 			"png" {
-				if { [catch {exec gdal_translate $path.ppm $path.png -of PNG} error ]} {
+				if { [string equal -nocase {.png} $ext] } {
+					set saveto $path
+				} else {
+					set saveto $path.png
+				}
+				if { [catch {exec gdal_translate $path.ppm $saveto -of PNG} error ]} {
 					GmLib::errmsg $error [G_msg "Could not create PNG"]
 				}
 				
@@ -420,7 +437,12 @@ proc MapToolBar::savefile { type quality } {
 				return
 			}
 			"tif" {
-				if { [catch {exec gdal_translate $path.ppm $path.tif -of GTIFF} error ]} {
+				if { [string equal -nocase {.tif} $ext] || [string equal -nocase {.tiff} $ext] } {
+					set saveto $path
+				} else {
+					set saveto $path.tif
+				}
+				if { [catch {exec gdal_translate $path.ppm $saveto -of GTIFF} error ]} {
 					GmLib::errmsg $error [G_msg "Could not create TIF"]
 				}
 				
