@@ -28,6 +28,7 @@
 #%option
 #% key: layer
 #% type: integer
+#% gisprompt: old_layer,layer,layer
 #% description: Layer to which the table to be changed is connected
 #% answer: 1
 #% required : no
@@ -35,6 +36,7 @@
 #%option
 #% key: column
 #% type: string
+#% gisprompt: old_dbcolumn,dbcolumn,dbcolumn
 #% description: Column to update
 #% required : yes
 #%end
@@ -46,6 +48,7 @@
 #%end
 #%option
 #% key: qcolumn
+#% gisprompt: old_dbcolumn,dbcolumn,dbcolumn
 #% type: string
 #% description: Column to query
 #% required : no
