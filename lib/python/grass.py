@@ -4,6 +4,7 @@ import types
 import subprocess
 import re
 import atexit
+import string
 
 # subprocess wrapper that uses shell on Windows
 
@@ -230,33 +231,14 @@ def parse_key_val(s, sep = '=', dflt = None):
 	result[k] = v
     return result
 
-_kv_regex = None
-
-def parse_key_val2(s):
-    """Parse a string into a dictionary, where entries are separated
-    by newlines and the key and value are separated by `=', and the
-    value is enclosed in single quotes.
-    Suitable for parsing the output from g.findfile and g.gisenv.
-    """
-    global _kv_regex
-    if _kv_regex == None:
-	_kv_regex = re.compile("([^=]+)='(.*)';?")
-    result = []
-    for line in s.splitlines():
-	m = _kv_regex.match(line)
-	if m != None:
-	    result.append(m.groups())
-	else:
-	    result.append(line.split('=', 1))
-    return dict(result)
-
 # interface to g.gisenv
 
 def gisenv():
     """Returns the output from running g.gisenv (with no arguments), as a
     dictionary.
     """
-    return parse_key_val2(read_command("g.gisenv"))
+    s = read_command("g.gisenv", flags='n')
+    return parse_key_val(s)
 
 # interface to g.region
 
@@ -287,8 +269,8 @@ def del_temp_region():
 
 def find_file(name, element = 'cell', mapset = None):
     """Returns the output from running g.findfile as a dictionary."""
-    s = read_command("g.findfile", element = element, file = name, mapset = mapset)
-    return parse_key_val2(s)
+    s = read_command("g.findfile", flags='n', element = element, file = name, mapset = mapset)
+    return parse_key_val(s)
 
 # interface to g.list
 
@@ -398,7 +380,7 @@ def overwrite():
 
 def verbosity():
     """Return the verbosity level selected by GRASS_VERBOSE"""
-    vbstr = 'GRASS_VERBOSE'
+    vbstr = os.getenv('GRASS_VERBOSE')
     if vbstr:
 	return int(vbstr)
     else:
@@ -512,15 +494,16 @@ def db_connection():
 # run "v.info -c ..." and parse output
 
 def vector_columns(map, layer = None, **args):
-    """Return the list of columns for the database table connected to
+    """Return the directory of columns for the database table connected to
     a vector map (interface to `v.info -c').
     """
     s = read_command('v.info', flags = 'c', map = map, layer = layer, quiet = True, **args)
-    result = []
+    result = {}
     for line in s.splitlines():
 	f = line.split('|')
 	if len(f) == 2:
-	    result.append(f)
+            result[f[1]] = f[0]
+    
     return result
 
 # add vector history
@@ -539,3 +522,20 @@ def raster_history(map):
     """
     run_command('r.support', map = map, history = os.environ['CMDLINE'])
 
+# run "r.info -rgstmpud ..." and parse output
+
+def raster_info(map):
+    """Return information about a raster map (interface to `r.info')."""
+    s = read_command('r.info', flags = 'rgstmpud', map = map)
+    kv = parse_key_val(s)
+    for k in ['min', 'max', 'north', 'south', 'east', 'west', 'nsres', 'ewres']:
+	kv[k] = float(kv[k])
+    return kv
+
+# interface to r.mapcalc
+
+def mapcalc(exp, **kwargs):
+    t = string.Template(exp)
+    e = t.substitute(**kwargs)
+    if run_command('r.mapcalc', expression = e) != 0:
+	grass.fatal("An error occurred while running r.mapcalc")
