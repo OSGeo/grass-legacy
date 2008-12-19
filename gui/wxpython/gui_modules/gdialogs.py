@@ -689,14 +689,11 @@ class LoadMapLayersDialog(wx.Dialog):
         @param type layer type ('raster' or 'vector')
         @param mapset mapset name
         """
-        list = gcmd.Command(['g.mlist',
-                             'type=%s' % type,
-                             'mapset=%s' % mapset])
-
-        self.map_layers = []
-        for map in list.ReadStdOutput():
-            self.map_layers.append(map)
-            
+        try:
+            self.map_layers = grass.list_grouped2(type=type, mapset=mapset)[mapset]
+        except KeyError:
+            self.map_layers = []
+        
         self.layers.Set(self.map_layers)
         
         # check all items by default
