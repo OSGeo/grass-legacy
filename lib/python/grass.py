@@ -494,7 +494,7 @@ def db_connection():
 # run "v.info -c ..." and parse output
 
 def vector_columns(map, layer = None, **args):
-    """Return the directory of columns for the database table connected to
+    """Return a dictionary of the columns for the database table connected to
     a vector map (interface to `v.info -c').
     """
     s = read_command('v.info', flags = 'c', map = map, layer = layer, quiet = True, **args)
@@ -519,9 +519,18 @@ def vector_history(map):
 def raster_history(map):
     """Set the command history for a raster map to the command used to
     invoke the script (interface to `r.support').
-    """
-    run_command('r.support', map = map, history = os.environ['CMDLINE'])
 
+    @return True on success
+    @return False on failure
+    """
+    current_mapset = gisenv()['MAPSET']
+    if find_file(name = map)['mapset'] == current_mapset:
+        run_command('r.support', map = map, history = os.environ['CMDLINE'])
+        return True
+    
+    warning("Unable to write history for <%s>. Raster map <%s> not found in current mapset." % (map, map))
+    return False
+    
 # run "r.info -rgstmpud ..." and parse output
 
 def raster_info(map):
