@@ -87,6 +87,54 @@ if [ ! "$USERTERM" ] ; then
 	USERTERM="Terminal"
 fi
 
+# Some reasonable Wish defaults, to avoid accidental use of the
+# system TclTk.  Avoid non-working combination Aqua 8.4.
+# System tcltk has "wish" & "tclsh" symlinks, Aqua and user builds do not.
+# assume user TclTk progs in default build location /usr/local/bin.
+# check even if /usr/local/bin not in PATH, this is where Aqua will be
+# also assume matching tclsh alongside wish
+if [ ! "$GRASS_WISH" ] ; then
+	gwish=""
+	gtclsh=""
+	if [ -e "/usr/local/bin/wish8.5" ] ; then
+		gwish="/usr/local/bin/wish8.5"
+		gtclsh="/usr/local/bin/tclsh8.5"
+	else
+		# check for any other wish8.5
+		wish85=`type -p wish8.5`
+		tclsh85=`type -p tclsh8.5`
+		if [ "$wish85" ] ; then
+			gwish="$wish85"
+			gtclsh="$tclsh85"
+		else
+			# check for any wish8.4
+			wish84=`type -p wish8.4`
+			tclsh84=`type -p tclsh8.4`
+			if [ ! "$wish84" ] ; then
+				# or maybe /usr/local/bin not in PATH
+				wish84="/usr/local/bin/wish8.4"
+				tclsh84="/usr/local/bin/tclsh8.4"
+			fi
+			if [ -e "$wish84" ] ; then
+				# make sure it's not aqua
+				# aqua wish is a shell script that starts framework wish
+				if [ "`file $wish84 | grep 'shell script'`" ] ; then
+					echo "Warning: TclTk Aqua 8.4 unsupported"
+				else
+					gwish="$wish84"
+					gtclsh="$tclsh84"
+				fi
+			fi
+		fi
+	fi
+	if [ "$gwish" ] ; then
+		GRASS_WISH="$gwish"
+		export GRASS_WISH
+		GRASS_TCLSH="$gtclsh"
+		export GRASS_TCLSH
+	fi
+fi
+
 ### X11 stuff
 
 if [ "@X11@" ] ; then
