@@ -104,7 +104,7 @@ else
 
    table=`v.db.connect $GIS_OPT_INPUT -g fs=";" | grep -w $GIS_OPT_LAYER | awk -F ";" '{print $2}'`
    if [ -z "$table" ] ; then
-      g.message -e 'Database connection not defined for layer $GIS_OPT_LAYER'
+      g.message -e "Database connection not defined for layer $GIS_OPT_LAYER"
       exit 1
    fi
    v.reclass input="$GIS_OPT_INPUT" output="$GIS_OPT_OUTPUT"_${TMP} layer="$GIS_OPT_LAYER" \
