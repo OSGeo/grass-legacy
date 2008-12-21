@@ -126,7 +126,7 @@ read_input_files (void)
 	    for (col = 0; col < region.cols; col++)
 	    {
 		BM_set(bitbar, col, row, (barc[col] != 0));
-		if (barc[col] != 0)
+		if (parm.dsout && barc[col] != 0)
 		    put(ds, row, col, -1);
 	    }
 	}
