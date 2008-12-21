@@ -422,15 +422,15 @@ class AttributeManager(wx.Frame):
     """
     def __init__(self, parent, id, title, vectmap,
                  size = wx.DefaultSize, style = wx.DEFAULT_FRAME_STYLE,
-                 pointdata=None, log=None):
+                 item=None, log=None):
 
         self.vectmap   = vectmap
-        self.pointdata = pointdata
         self.parent    = parent # GMFrame
+        self.treeItem  = item   # item in layer tree
         self.cmdLog    = log    # self.parent.goutput
         
         wx.Frame.__init__(self, parent, id, title, style=style)
-
+        
         # icon
         self.SetIcon(wx.Icon(os.path.join(globalvar.ETCICONDIR, 'grass_sql.ico'), wx.BITMAP_TYPE_ICO))
 
@@ -441,15 +441,7 @@ class AttributeManager(wx.Frame):
             self.mapdisplay = self.parent.curr_page.maptree.mapdisplay
         except:
             self.map = self.mapdisplay = None
-
-        if pointdata:
-            self.icon      = pointdata[0]
-            self.pointsize = pointdata[1]
-        else:
-            self.icon      = None
-            self.pointsize = None
-
-
+        
         # status bar log class
         self.log = Log(self) # -> statusbar
 
@@ -1101,7 +1093,14 @@ class AttributeManager(wx.Frame):
                                               update=True)
         else:
             # add map layer with higlighted vector features
-            self.AddQueryMapLayer()
+            self.AddQueryMapLayer() # -> self.qlayer
+
+            # set opacity based on queried layer
+            if self.parent and self.parent.GetName() == "LayerManager" and \
+                    self.treeItem:
+                maptree = self.parent.curr_page.maptree
+                opacity = maptree.GetPyData(self.treeItem)[0]['maplayer'].GetOpacity(float=True)
+                self.qlayer.SetOpacity(opacity)
             if zoom:
                 keyColumn = self.mapDBInfo.layers[self.layer]['key']
                 where = ''
@@ -1932,7 +1931,9 @@ class AttributeManager(wx.Frame):
             self.qlayer.SetCmd(self.mapdisplay.AddTmpVectorMapLayer(self.vectmap, cats, addLayer=False))
         else:
             self.qlayer = self.mapdisplay.AddTmpVectorMapLayer(self.vectmap, cats)
-                
+
+        return self.qlayer
+    
     def UpdateDialog(self, layer):
         """Updates dialog layout for given layer"""
         #
