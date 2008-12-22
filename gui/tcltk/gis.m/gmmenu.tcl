@@ -92,6 +92,7 @@ set descmenu [subst  {
 	{separator}
 	{cascad {[G_msg "Import raster map"]} {} "" $tmenu {
 		{command {[G_msg "Multiple formats using GDAL"]} {} "r.in.gdal: Import multiple formats using GDAL" {} -command { execute r.in.gdal }}
+		{command {[G_msg "Multiple formats using GDAL (link into instead of import)"]} {} "r.external: Link multiple formats using GDAL" {} -command { execute r.external }}
 		{separator}
 		{command {[G_msg "Aggregate ASCII xyz"]} {} "r.in.xyz: Import aggregate ASCII xyz data into raster grid" {} -command { execute r.in.xyz }}
 		{command {[G_msg "ASCII grid"]} {} "r.in.ascii: Import ASCII grid (includes GRASS ASCII)" {} -command { execute r.in.ascii }}
