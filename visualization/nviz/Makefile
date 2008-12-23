@@ -9,6 +9,12 @@ NV_VER=nviz$(VER)
 PROG=nviz
 INSTALL_DIR=$(GISBASE)/etc/$(NV_VER)
 
+ifneq ($(strip $(MINGW)),)
+	FIND = find
+else
+	FIND = find -L
+endif
+
 SCRIPTS := \
 	scripts/script_get_line \
 	scripts/script_play \
@@ -37,7 +43,7 @@ endif
 	for file in $(SCRIPTS) ; do $(INSTALL) $$file $(INSTALL_DIR)/scripts ; done
 	-$(MKDIR) $(INSTALL_DIR)/bitmaps
 	-$(MKDIR) $(INSTALL_DIR)/bitmaps/flythrough
-	find -L bitmaps -path '*/.svn' -prune -o -type f -print | \
+	$(FIND) bitmaps -path '*/.svn' -prune -o -type f -print | \
 		while read file ; do $(INSTALL_DATA) $$file $(INSTALL_DIR)/$$file ; done
 
 docs:
