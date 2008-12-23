@@ -5,6 +5,12 @@ include $(MODULE_TOPDIR)/include/Make/Grass.make
 
 GRASS_NVIZ_DOCS=$(GISBASE)/docs/html/nviz
 
+ifneq ($(strip $(MINGW)),)
+	FIND = find
+else
+	FIND = find -L
+endif
+
 default:
 	-$(MKDIR) $(GISBASE)/docs
 	-$(MKDIR) $(GISBASE)/docs/html
@@ -14,5 +20,5 @@ default:
 	-$(MKDIR) $(GRASS_NVIZ_DOCS)/nvimg
 	-$(MKDIR) $(GRASS_NVIZ_DOCS)/nvimg/panel
 	-$(MKDIR) $(GRASS_NVIZ_DOCS)/nvimg/work
-	find -L . -type f \( -name '*.html' -o -name '*.png' -o -name '*.gif' \) -print | \
+	$(FIND) . -type f \( -name '*.html' -o -name '*.png' -o -name '*.gif' \) -print | \
 		while read file ; do $(INSTALL_DATA) $$file $(GRASS_NVIZ_DOCS)/$$file ; done
