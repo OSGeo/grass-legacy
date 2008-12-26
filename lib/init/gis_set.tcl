@@ -240,7 +240,7 @@ proc gisSetWindow {} {
     	-orient {horizontal}
  
 	button .frame0.frameDB.right.button \
-		-text [G_msg "Browse..."] -padx 10 -bd 1 \
+		-text [G_msg "Browse..."] -padx 15 -bd 1 \
 		-command { set tmp [tk_chooseDirectory -initialdir $database \
 			-parent .frame0 -title [G_msg "New GIS data directory"] -mustexist true]
 			if {$tmp != ""} {
@@ -364,7 +364,7 @@ proc gisSetWindow {} {
 	
     button .frame0.frameNMS.third.button \
     	-text [G_msg "Create new mapset"] \
-    	-padx 10 -bd 1 -wraplength 150 \
+    	-padx 15 -bd 1 -wraplength 150 \
      	-command { 
      	    set mymapset [ string trim $mymapset ]
      	    if { [file exists $mymapset] } {
@@ -416,7 +416,7 @@ proc gisSetWindow {} {
     button .frame0.frameNMS.fifth.button \
     	-text [G_msg "Georeferenced file"] \
     	-width 22 -bd 1 -wraplength 150\
-    	-relief raised \
+    	-relief raised -padx 15 \
     	-command {putGRASSRC $gisrc_name
 		fileOpt::fileLocCom
     		tkwait window .fileloc
@@ -429,7 +429,7 @@ proc gisSetWindow {} {
     button .frame0.frameNMS.sixth.button \
     	-text [G_msg "EPSG codes"] \
     	-width 22 -bd 1 -wraplength 150\
-    	-relief raised \
+    	-relief raised -padx 15 \
     	-command { putGRASSRC $gisrc_name
 		if { [epsgOpt::epsgLocCom] } {
     		tkwait window .optPopup
@@ -442,7 +442,7 @@ proc gisSetWindow {} {
     button .frame0.frameNMS.seventh.button \
     	-text [G_msg "Projection values"] \
     	-width 22 -bd 1 -wraplength 150\
-    	-relief raised \
+    	-relief raised -padx 15 \
     	-command {
 			if { $mingw == "1" } {
 				exec -- cmd.exe /c start $env(GISBASE)/etc/set_data
@@ -479,7 +479,7 @@ proc gisSetWindow {} {
     
     button .frame0.frameBUTTONS.ok \
      	-text [G_msg "Enter GRASS"] \
-    	-padx 10 -bd 1 -fg green4 -default active -wraplength 100 \
+    	-padx 15 -bd 1 -fg green4 -default active -wraplength 100 \
      	-command {
             if {[CheckLocation] == 0} {
 				DialogGen .wrnDlg [G_msg "WARNING: invalid location"] warning \
@@ -505,7 +505,7 @@ proc gisSetWindow {} {
 
     button .frame0.frameBUTTONS.help \
     	-text [G_msg "Help"] \
-    	-padx 10 -bd 1 -wraplength 100 \
+    	-padx 15 -bd 1 -wraplength 100 \
     	-bg honeydew2 \
 		-command {
 			if { [winfo exists .help] } {
@@ -523,14 +523,12 @@ proc gisSetWindow {} {
 
     button .frame0.frameBUTTONS.cancel \
     	-text [G_msg "Exit"] \
-    	-padx 10 -bd 1 -wraplength 100 \
+    	-padx 15 -bd 1 -wraplength 100 \
     	-command { exit 2 }
 
 
-    pack append .frame0.frameBUTTONS \
-    	.frame0.frameBUTTONS.ok { left  } \
-    	.frame0.frameBUTTONS.cancel { left  } \
-    	.frame0.frameBUTTONS.help { right  } 
+    pack .frame0.frameBUTTONS.ok .frame0.frameBUTTONS.cancel -side left -padx 5 -pady 5
+    pack .frame0.frameBUTTONS.help -side right -padx 5 -pady 5
 
 
 
@@ -708,7 +706,7 @@ proc refresh_loc {} {
 		 && [file exists $database] && [file isdirectory $database] } {
 	   cdir $database
 	   $locList delete 0 end
-	   foreach i [lsort [glob -nocomplain -directory [pwd] *]] {
+	   foreach i [lsort -dictionary [glob -nocomplain -directory [pwd] *]] {
 		   if { [file isdirectory $i] } {
 			   $locList insert end [file tail $i]
 		   }
@@ -720,7 +718,7 @@ proc refresh_loc {} {
 }
 
 proc refresh_ms {} {
-# refresh location listbox entries
+# refresh mapset listbox entries
         global database
 	global location
 
@@ -729,12 +727,14 @@ proc refresh_ms {} {
 	if { [CheckLocation] } {
 	        cdir $database
 		cdir $location
-		foreach i [lsort [glob -directory [pwd] *]] {
-			if {[file isdirectory $i] && [file owned $i] } {
+                $mapList insert 0 {PERMANENT}
+		foreach i [lsort -dictionary [glob -directory [pwd] *]] {
+			if {[file isdirectory $i] && [file owned $i] && ([file tail $i] != {PERMANENT}) } {
 				$mapList insert end [file tail $i]
 			}
 		}
 	}
+
 	.frame0.frameBUTTONS.ok configure -state disabled
 }
 
