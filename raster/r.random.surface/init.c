@@ -1,8 +1,4 @@
 /* init.c                                                               */
-
-#undef TRACE
-#undef DEBUG
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -14,7 +10,6 @@
 #undef MAIN
 #include "ransurf.h"
 #include "local_proto.h"
-
 
 /* function prototypes */
 static void IsLegal(char *Name);
@@ -33,15 +28,16 @@ void Init(int argc, char **argv)
     char msg[128], msg2[64];
     double MinRes;
 
-    FUNCTION(Init);
+    G_debug(2, "Init");
 
     Output = G_define_option();
     Output->key = "output";
     Output->type = TYPE_STRING;
+    Output->key_desc = "name";
     Output->required = YES;
     Output->multiple = YES;
-    Output->description = "Names of the resulting maps";
     Output->gisprompt = "new,cell,raster";
+    Output->description = _("Name for output raster map(s)");
 
     /*
        TheoryS              = G_define_option() ;
@@ -59,7 +55,8 @@ void Init(int argc, char **argv)
     Distance->required = NO;
     Distance->multiple = NO;
     Distance->description =
-	"Input value: max. distance of spatial correlation (value >= 0.0, default [0.0])";
+      _("Maximum distance of spatial correlation (value >= 0.0)");
+    Distance->answer = "0.0";
 
     Exponent = G_define_option();
     Exponent->key = "exponent";
@@ -67,7 +64,8 @@ void Init(int argc, char **argv)
     Exponent->multiple = NO;
     Exponent->required = NO;
     Exponent->description =
-	"Input value: distance decay exponent (value > 0.0), default [1.0])";
+	_("Distance decay exponent (value > 0.0)");
+    Exponent->answer = "1.0";
 
     Weight = G_define_option();
     Weight->key = "flat";
@@ -75,30 +73,32 @@ void Init(int argc, char **argv)
     Weight->multiple = NO;
     Weight->required = NO;
     Weight->description =
-	"Input value: distance filter remains flat before beginning exponent, default [0.0]";
+	_("Distance filter remains flat before beginning exponent");
+    Weight->answer = "0.0";
 
     SeedStuff = G_define_option();
     SeedStuff->key = "seed";
     SeedStuff->type = TYPE_INTEGER;
     SeedStuff->required = NO;
     SeedStuff->description =
-	"Input value: random seed (SEED_MIN >= value >= SEED_MAX), default [random]";
+	_("Random seed (SEED_MIN >= value >= SEED_MAX) (default: random)");
 
     range_high_stuff = G_define_option();
     range_high_stuff->key = "high";
     range_high_stuff->type = TYPE_INTEGER;
     range_high_stuff->required = NO;
     range_high_stuff->description =
-	"Input value: maximum cell value of distribution, default [255]";
+	_("Maximum cell value of distribution");
+    range_high_stuff->answer = "255";
 
     Uniform = G_define_flag();
     Uniform->key = 'u';
-    Uniform->description = "Uniformly distributed cell values";
+    Uniform->description = _("Uniformly distributed cell values");
 
     /* please, remove before GRASS 7 released */
     Verbose = G_define_flag();
     Verbose->key = 'q';
-    Verbose->description = "No (quiet) description during run";
+    Verbose->description = _("No (quiet) description during run");
 
     if (G_parser(argc, argv))
 	exit(EXIT_FAILURE);
@@ -109,8 +109,7 @@ void Init(int argc, char **argv)
 	G_warning(_("The '-q' flag is superseded and will be removed "
 		    "in future. Please use '--quiet' instead."));
     }
-
-
+    
     Rs = G_window_rows();
     Cs = G_window_cols();
     Surface = (double **)G_malloc(Rs * sizeof(double *));
@@ -132,7 +131,7 @@ void Init(int argc, char **argv)
     }
     else {
 	if ((FDM = G_open_cell_old("MASK", G_mapset())) < 0) {
-	    G_fatal_error(" unable to open MASK");
+	    G_fatal_error(_("Unable to open raster map <%s>"), "MASK");
 	}
 	else {
 	    MapCount = 0;
@@ -161,7 +160,7 @@ void Init(int argc, char **argv)
     }
 
     if (1 >= High)
-	G_fatal_error("high [%d] must be greater than 1", High);
+	G_fatal_error(_("High (%d) must be greater than 1"), High);
 
     CatInfo.NumCat = High;
     NumMaps = 0;
@@ -171,8 +170,8 @@ void Init(int argc, char **argv)
 	for (j = i - 1; j >= 0; j--) {
 	    if (strcmp(OutNames[j], Name) == 0)
 		G_fatal_error
-		    ("%s: Random map [%s] repeated, maps must be unique",
-		     G_program_name(), Name);
+		    (_("Rastar map <%s> repeated, maps must be unique"),
+		     Name);
 	}
 
 	OutNames = (char **)G_realloc(OutNames, (i + 1) * sizeof(char *));
@@ -181,7 +180,7 @@ void Init(int argc, char **argv)
 	NumMaps++;
     }
     if (NumMaps == 0)
-	G_fatal_error("%s: requires an output map", G_program_name());
+	G_fatal_error(_("Output raster map required"));
 
     Theory = 0;
     /*
@@ -203,7 +202,7 @@ void Init(int argc, char **argv)
 	    sscanf(Number, "%d", &(Seeds[i]));
 	    if (Seeds[i] > SEED_MAX) {
 
-		sprintf(msg, _("Seed [%d] larger than maximum [%d]"),
+		sprintf(msg, _("Seed (%d) larger than maximum (%d)"),
 			Seeds[i], SEED_MAX);
 		Seeds[i] = Seeds[i] % SEED_MAX;
 		sprintf(msg2, _(" seed is set to %d"), Seeds[i]);
@@ -211,7 +210,7 @@ void Init(int argc, char **argv)
 		G_warning(msg);
 	    }
 	    else if (Seeds[i] < SEED_MIN) {
-		sprintf(msg, _("Seed [%d] smaller than minimum [%d]"),
+		sprintf(msg, _("Seed (%d) smaller than minimum (%d)"),
 			Seeds[i], SEED_MIN);
 		while (Seeds[i] < SEED_MIN)
 		    Seeds[i] += SEED_MAX - SEED_MIN;
@@ -254,8 +253,8 @@ void Init(int argc, char **argv)
     if (Distance->answer) {
 	sscanf(Distance->answer, "%lf", &(AllFilters[NumDist].MaxDist));
 	if (AllFilters[NumDist].MaxDist < 0.0)
-	    G_fatal_error("%s: distance value[%d]: [%lf] must be >= 0.0",
-			  G_program_name(), NumDist,
+	    G_fatal_error(_("Distance value (%d): %lf must be >= 0.0"),
+			  NumDist,
 			  AllFilters[NumDist].MaxDist);
 
 	NumDist++;
@@ -283,8 +282,8 @@ void Init(int argc, char **argv)
     if (Exponent->answer) {
 	sscanf(Exponent->answer, "%lf", &(AllFilters[NumExp].Exp));
 	if (AllFilters[NumExp].Exp <= 0.0)
-	    G_fatal_error("%s: exponent value [%lf] must be > 0.0",
-			  G_program_name(), AllFilters[NumExp].Exp);
+	    G_fatal_error(_("Exponent value (%lf) must be > 0.0"),
+			  AllFilters[NumExp].Exp);
 
 	NumExp++;
     }
@@ -307,10 +306,9 @@ void Init(int argc, char **argv)
     if (Weight->answer) {
 	sscanf(Weight->answer, "%lf", &(AllFilters[NumWeight].Mult));
 	if (AllFilters[NumWeight].Mult > AllFilters[NumWeight].MaxDist)
-	    G_fatal_error
-		("%s: flat value [%lf] must be less than distance value [%lf]",
-		 G_program_name(), AllFilters[NumWeight].Mult,
-		 AllFilters[NumWeight].MaxDist);
+	    G_fatal_error(_("Flat value (%lf) must be less than distance value (%lf)"),
+			  AllFilters[NumWeight].Mult,
+			  AllFilters[NumWeight].MaxDist);
 
 	NumWeight++;
     }
@@ -329,9 +327,8 @@ void Init(int argc, char **argv)
     }
 
     if (NumDist > 1 && NumDist < NumFilters)
-	G_fatal_error("%s: must have a distance value for each filter",
-		      G_program_name());
-
+	G_fatal_error(_("Must have a distance value for each filter"));
+    
     if (NumDist == 0) {
 	AllFilters[0].MaxDist = MinRes / 4.0;
     }
@@ -362,8 +359,7 @@ void Init(int argc, char **argv)
     }
 
     if (NumExp > 1 && NumExp < NumFilters)
-	G_fatal_error("%s: must have a exponent value for each filter",
-		      G_program_name());
+	G_fatal_error(_("Must have a exponent value for each filter"));
 
     if (NumWeight > 0) {
 	sprintf(String, " flat=");
@@ -372,7 +368,7 @@ void Init(int argc, char **argv)
 	    sprintf(String, "%.*lf,",
 		    Digits(AllFilters[i].Mult, 6), AllFilters[i].Mult);
 	    strcat(Buf, String);
-	    DOUBLE(AllFilters[i].Mult);
+	    G_debug(3, "(AllFilters[i].Mult):%.12lf", AllFilters[i].Mult);
 	}
 	sprintf(String, "%.*lf",
 		Digits(AllFilters[i].Mult, 6), AllFilters[i].Mult);
@@ -380,9 +376,8 @@ void Init(int argc, char **argv)
     }
 
     if (NumWeight > 1 && NumWeight < NumFilters)
-	G_fatal_error("%s: must have a weight value for each filter",
-		      G_program_name());
-
+	G_fatal_error(_("Must have a weight value for each filter"));
+    
     if (NumExp == 1) {
 	for (NumExp = 1; NumExp < NumFilters; NumExp++)
 	    AllFilters[NumExp].Exp = AllFilters[0].Exp;
@@ -397,20 +392,17 @@ void Init(int argc, char **argv)
 	for (NumWeight = 0; NumWeight < NumFilters; NumWeight++)
 	    AllFilters[NumWeight].Mult = 0.0;
     }
-    RETURN;
-
+    
     AllMaxDist = 0.0;
     for (i = 0; i < NumFilters; i++) {
 	if (AllMaxDist < AllFilters[i].MaxDist)
 	    AllMaxDist = AllFilters[i].MaxDist;
-	AllFilters[i].MaxSq = AllFilters[i].MaxDist * AllFilters[i].MaxDist;
-	INT(i);
-	DOUBLE(AllFilters[i].Mult);
-	DOUBLE(AllFilters[i].MaxDist);
-	RETURN;
-	DOUBLE(AllFilters[i].MaxSq);
-	DOUBLE(AllFilters[i].Exp);
-	RETURN;
+	AllFilters[i].MaxSq = AllFilters[i].MaxDist * AllFilters[i].MaxDist;	
+	G_debug(3, "(i):%d", i);
+	G_debug(3, "(AllFilters[i].Mult):%.12lf", AllFilters[i].Mult);
+	G_debug(3, "(AllFilters[i].MaxDist):%.12lf", AllFilters[i].MaxDist);
+	G_debug(3, "(AllFilters[i].MaxSq):%.12lf", AllFilters[i].MaxSq);
+	G_debug(3, "(AllFilters[i].Exp):%.12lf", AllFilters[i].Exp);
     }
 
     BigF.RowPlus = AllMaxDist / NS;
@@ -430,6 +422,6 @@ void Init(int argc, char **argv)
 static void IsLegal(char *Name)
 {
     if (G_legal_filename(Name) == -1)
-	G_fatal_error("%s: map name [%s] not legal for GRASS",
-		      G_program_name(), Name);
+	G_fatal_error(_("<%s> is an ilegal name"),
+		      Name);
 }
