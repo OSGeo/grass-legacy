@@ -553,10 +553,13 @@ class ColumnSelect(wx.ComboBox):
         try:
             table = dbInfo.layers[int(layer)]['table']
             columnchoices = dbInfo.tables[table]
+            columns = len(columnchoices.keys()) * ['']
+            for key, val in columnchoices.iteritems():
+                columns[val['index']] = key
         except (KeyError, ValueError):
-            columnchoices = {}
-        
-        self.SetItems(columnchoices.keys())
+            columns = []
+
+        self.SetItems(columns)
         self.SetValue('')
         
 class DbColumnSelect(wx.ComboBox):
