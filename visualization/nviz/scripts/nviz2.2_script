@@ -8,7 +8,7 @@
 # Major update of GUI Nov 2006, Michael Barton, Arizona State University
 #
 ##########################################################################
-# COPYRIGHT:	(C) 1999 - 2006 by Michael Barton and the GRASS Development Team
+# COPYRIGHT:	(C) 1999 - 2008 by Michael Barton and the GRASS Development Team
 #
 #		This program is free software under the GNU General Public
 #		License (>=v2). Read the file COPYING that comes with GRASS
@@ -313,15 +313,15 @@ if {$DEBUG} {puts "info widget made"}
 	# make	panel area
 	###########################################################################
 	canvas $Nv_(PAREA).canvas -yscrollcommand "$Nv_(PAREA).f1.scrolly set" \
-	-borderwidth 2 -relief sunken
+            -borderwidth 2 -relief sunken
 	frame $Nv_(PAREA).f1 -borderwidth 0 -relief flat
-	scrollbar $Nv_(PAREA).f1.scrolly -command "$Nv_(PAREA).canvas yview"
+	scrollbar $Nv_(PAREA).f1.scrolly -command "$Nv_(PAREA).canvas yview"        
+        bind all <MouseWheel> {$Nv_(PAREA).canvas yview scroll [expr -1 * %D] units}
 	button $Nv_(PAREA).f1.b1 -bitmap @$bit_map_path/left \
 		-width 8 -height 12 -command "hide_menus"
 	help $Nv_(PAREA).f1.b1 balloon "Hide Panels"
 
 	frame $Nv_(P_AREA) -relief flat
-
 
 # DEBUG
 if {$DEBUG} {puts "panel area made"}
@@ -329,8 +329,8 @@ if {$DEBUG} {puts "panel area made"}
 	###########################################################################
 	# make	menubar
 	###########################################################################
-	frame $Nv_(AREA).menu  -relief flat -borderwidth 1
-	pack $Nv_(AREA).menu -side top -fill x -expand no
+	frame $Nv_(AREA).menu  -relief flat -borderwidth 0
+	#pack $Nv_(AREA).menu -side top -fill x -expand no
 
 	pack $Nv_(PAREA).canvas -side top -fill both -expand yes
 	pack $Nv_(PAREA).f1 -side left -before $Nv_(PAREA).canvas -fill y
@@ -346,19 +346,20 @@ if {$DEBUG} {puts "panel area made"}
 	$Nv_(PAREA).canvas create window 0 0 -window $Nv_(P_AREA) -anchor nw
 	bind $Nv_(P_AREA) <Configure> "set_scrollsize"
 
-	pack [Nv_mkMenu $Nv_(AREA).menu.help Help \
+        set helpmenu [Nv_mkMenu $Nv_(AREA).menu.help "Help   " \
 		{"NVIZ Help" "About NVIZ" "NVIZ - Bugs / ToDo"} \
 		{0 0 0} \
-		{"nviz_browse nviz_toc.html" "nviz_browse nviz_desc.html" "nviz_browse bugs_todo.html"} ] \
-		-side right -fill none -expand no -anchor e
+		{"nviz_browse nviz_toc.html" "nviz_browse nviz_desc.html" "nviz_browse bugs_todo.html"} ]
+
+#	#pack  $helpmenu -side right -fill none -expand yes -anchor e
 
 	# DEBUG
 	if {$DEBUG} {puts "Help menu made"}
 	
-	set Nv_(AREA).menu [frame $Nv_(AREA).menu.left -relief flat -bd 0]
+	#set Nv_(AREA).menu [frame $Nv_(AREA).menu.left -relief flat -bd 0]
 	
 	# file menu
-	set filemenu [Nv_mkMenu $Nv_(AREA).menu.file File \
+	set filemenu [Nv_mkMenu $Nv_(AREA).menu.file "File   " \
 			  {"Load State ..." "Save State ..." \
 				"" \
 				"Set Canvas Size ..."
@@ -379,7 +380,7 @@ if {$DEBUG} {puts "panel area made"}
 				"Separator" \
 				"reset_Nviz" "Nv_close_scripting ; exit ; puts"}]
 
-	pack $filemenu -side left -fill x -expand no 
+#	pack $filemenu -side left -fill x -expand no 
 
 
 # DEBUG
@@ -392,16 +393,16 @@ if {$DEBUG} {puts "file menu made"}
 # DEBUG
 if {$DEBUG} {puts "disabled made"}
 
-	pack [Nv_mkConfigMenu $Nv_(AREA).menu.config] -side left -fill x -expand no 
+#	pack [Nv_mkConfigMenu $Nv_(AREA).menu.config] -side left -fill x -expand no 
 
-	pack [Nv_mkPanelMenu $Nv_(AREA).menu.panel] -side left -fill x -expand no 
+#	pack [Nv_mkPanelMenu $Nv_(AREA).menu.panel] -side left -fill x -expand no 
 # DEBUG
 if {$DEBUG} {puts "scripting menu 0 made"}
 
 
 	# Make a menu entry for scripting
-	menubutton $Nv_(AREA).menu.scripting -text Scripting \
-		-menu $Nv_(AREA).menu.scripting.m -underline 0
+	set scriptingbtn [menubutton $Nv_(AREA).menu.scripting -text "Scripting   " \
+		-menu $Nv_(AREA).menu.scripting.m -underline 0 ]
 	set scriptingmenu [menu $Nv_(AREA).menu.scripting.m]
 
 	$scriptingmenu add checkbutton -label "On" \
@@ -432,17 +433,20 @@ if {$DEBUG} {puts "scripting menu 0 made"}
 	$scriptingmenu add command -label "Script Tools" \
 		-underline 1 -command {exec nviz -f $default_panel_path/script_tools -q &}
 
-	pack $Nv_(AREA).menu.scripting -side left -fill x -expand no
+        set configmenu [Nv_mkConfigMenu $Nv_(AREA).menu.config]
+        set panelmenu [Nv_mkPanelMenu $Nv_(AREA).menu.panel]
 
+	pack $helpmenu -side right -fill none -expand no -anchor e
+	pack $filemenu $configmenu $panelmenu $scriptingbtn -side left -fill none -expand no -anchor w
 
 # DEBUG
 if {$DEBUG} {puts "scripting menu made"}
 
-	pack $Nv_(AREA).menu -side left -fill x -expand no 
+	pack $Nv_(AREA).menu -side left -fill x -expand yes
 
-
-	tk_menuBar $Nv_(AREA).menu $Nv_(AREA).menu.file $Nv_(AREA).menu.panel \
-	$Nv_(AREA).menu.scripting
+	tk_menuBar $Nv_(AREA).menu
+	#tk_menuBar $Nv_(AREA).menu $filemenu $Nv_(AREA).menu.panel \
+	#$scriptingbtn
 
 	set Nv_(Q) [Q_init 2]
 
@@ -627,7 +631,7 @@ proc Nv_closeAllPanels { } {
 ############################################################################
 # procedure to make	 PANEL pulldown menu
 ###########################################################################
-proc Nv_mkPanelMenu { P { name Visualize } } {
+proc Nv_mkPanelMenu { P { name "Visualize   " } } {
 	global Nv_ DEBUG
 
 	menubutton $P -text $name -menu $P.m -underline 0
@@ -660,7 +664,7 @@ proc Nv_mkPanelMenu { P { name Visualize } } {
 ############################################################################
 # procedure to make	 CONFIG pulldown menu
 ###########################################################################
-proc Nv_mkConfigMenu { P { name Appearance } } {
+proc Nv_mkConfigMenu { P { name "Appearance   " } } {
 	global Nv_ DEBUG
 
 	menubutton $P -text $name -menu $P.m -underline 0
