@@ -573,4 +573,4 @@ def mapcalc(exp, **kwargs):
     t = string.Template(exp)
     e = t.substitute(**kwargs)
     if run_command('r.mapcalc', expression = e) != 0:
-	grass.fatal("An error occurred while running r.mapcalc")
+	fatal("An error occurred while running r.mapcalc")
