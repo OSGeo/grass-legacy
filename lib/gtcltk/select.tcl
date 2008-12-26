@@ -26,7 +26,7 @@
 
 set bind_scroll_list {}
 
-proc handle_scroll {ammount} {
+proc handle_scroll {amount} {
     global bind_scroll_list
 
     foreach {x y} {-1 -1} {}
@@ -46,7 +46,7 @@ proc handle_scroll {ammount} {
 		set l [string length $parent]
         if {[string equal -length $l $parent $keyboard_focus] || \
             [string equal -length $l $parent $mouse_focus]} {
-            $window yview scroll [expr {-$ammount/120}] units
+            $window yview scroll [expr -1 * $amount] units
         }
     }
 
@@ -176,7 +176,7 @@ proc GSelect_::create { element args } {
                 -image [Bitmap::get folder] -drawcross auto
             }
             set path "$location_path/$dir/$element/"
-            foreach fp [ lsort [glob -nocomplain $path/*] ]  {
+            foreach fp [ lsort -dictionary [glob -nocomplain $path/*] ]  {
             set file [file tail $fp]
             $tree insert end ms_$dir $file@$dir -text $file -data $file \
                 -image [Bitmap::get file] -drawcross never
@@ -189,12 +189,12 @@ proc GSelect_::create { element args } {
         $tree insert end root ms_$sympath -text SYMBOLS -data $sympath -open 1 \
             -image [Bitmap::get openfold] -drawcross auto
         
-        foreach ic_dir [ lsort [glob -nocomplain $sympath/*] ]  {
+        foreach ic_dir [ lsort -dictionary [glob -nocomplain $sympath/*] ]  {
             set dir_tail [file tail $ic_dir]
             $tree insert end ms_$sympath ms_$dir_tail  -text $dir_tail -data $dir_tail \
                 -image [Bitmap::get folder] -drawcross auto
     
-            foreach ic_file [ lsort [glob -nocomplain $sympath/$dir_tail/*] ]  {
+            foreach ic_file [ lsort -dictionary [glob -nocomplain $sympath/$dir_tail/*] ]  {
                 set file [file tail $ic_file]
                 $tree insert end ms_$dir_tail $dir_tail/$file -text $file -data $file \
                     -image [Bitmap::get file] -drawcross never

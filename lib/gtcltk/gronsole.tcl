@@ -187,7 +187,9 @@ proc Gronsole::do_click {path ci} {
 }
 
 proc Gronsole::create_command {path cmd} {
+	global iconpath
 	variable _data
+	
 	set textarea $path.text
 
 	incr _data($path,count)
@@ -208,7 +210,7 @@ proc Gronsole::create_command {path cmd} {
 	bind $cmdlabel <Button-1> "Gronsole::do_click $path $ci"
 	# set cmdlabel [text $frame.cmdline.cmd -height 1 -width 10]
 	# $cmdlabel insert end $cmd
-	set ex [button $frame.cmdline.eX -text "X" -command "Gronsole::destroy_command $path $ci"]
+	set ex [button $frame.cmdline.eX -image [image create photo -file "$iconpath/edit-cut.gif"] -command "Gronsole::destroy_command $path $ci"]
 	pack $ex -side right
 	pack $frame.cmdline.tags -side right
 	set iconwidth ""
