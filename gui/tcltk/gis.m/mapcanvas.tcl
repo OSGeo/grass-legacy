@@ -165,7 +165,7 @@ proc MapCanvas::create { } {
 	set env(GRASS_HEIGHT) 480.0
 	set drawprog 0
 	# Explore mode is off by default
-	set exploremode($mon) 0
+	set exploremode($mon) 1
 
 	# Make sure that we are using the WIND file for everything except displays
 	if {[info exists env(WIND_OVERRIDE)]} {unset env(WIND_OVERRIDE)}
@@ -677,7 +677,7 @@ proc MapCanvas::display_server {} {
 
 	# Do me again in a short period of time.
 	# vwait might be appropriate here
-	after 100 MapCanvas::display_server
+	after 300 MapCanvas::display_server
 }
 
 # Request a redraw on a monitor
@@ -1061,7 +1061,7 @@ proc MapCanvas::currentzoom { mon } {
 	set nsres [lindex $region 4]
 	set ewres [lindex $region 5]
 
-	if { $nsres == $ewres } {
+	if { $nsres == $ewres || $exploremode($mon) } {
 	    set MapCanvas::regionstr [format [G_msg "Display: rows=%d columns=%d  resolution=%g $mapunits"] \
 		$rows $cols $nsres]
 	} else {

@@ -166,10 +166,11 @@ proc MapToolBar::create { tb } {
 
 	set mapzoom [menubutton $tb.mapzoom	 \
 		-image [image create photo -file "$iconpath/gui-mapzoom.gif"] \
-		-highlightthickness 0 -takefocus 0 -relief flat -borderwidth 1 \
+		-highlightthickness 0 -takefocus 0 -relief flat -borderwidth 0 \
 		-highlightbackground $bgcolor -activebackground honeydew \
 		-bg $bgcolor -width 32 -indicatoron 0 -direction below]
-	DynamicHelp::register $mapzoom balloon [G_msg "Zoom to..."]
+	# DynamicHelp from Bwidgets 1.2.1 is buggy with menubuttons, at least on Mac
+	#DynamicHelp::register $mapzoom balloon [G_msg "Zoom to..."]
 
 	# menu zooming display
 	set zoommenu [menu $mapzoom.zm -type normal]
@@ -275,7 +276,8 @@ proc MapToolBar::create { tb } {
 		-highlightthickness 0 -takefocus 0 -relief flat -borderwidth 1 \
 		-highlightbackground $bgcolor -activebackground honeydew \
 		-bg $bgcolor -width 32 -indicatoron 0 -direction below]
-	DynamicHelp::register $mapsave balloon [G_msg "Export display to graphics file"]
+	# DynamicHelp from Bwidgets 1.2.1 is buggy with menubuttons, at least on Mac
+	#DynamicHelp::register $mapsave balloon [G_msg "Export display to graphics file"]
 
 	pack $mapsave -side left -anchor w -expand no -fill y
 	pack $bbox4 -side left -anchor w

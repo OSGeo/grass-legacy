@@ -126,9 +126,9 @@ proc command_window {where} {
 		-highlightbackground $bgcolor \
 		-command "$gronsole run_xterm \[string trim \[$cmdtext get 1.0 end\]\] {}"]
 	set outpane [frame $where.output -bg $bgcolor]
-	set savebutton [button $outpane.save -text [G_msg "Save"] -command "$gronsole save" \
+	set savebutton [button $outpane.save -text [G_msg " Save "] -command "$gronsole save" \
 		-bd 1 -padx 10 -highlightbackground $bgcolor]
-	set clearbutton [button $outpane.clear -text [G_msg "Clear"] -command "$gronsole clear" \
+	set clearbutton [button $outpane.clear -text [G_msg " Clear "] -command "$gronsole clear" \
 		-bd 1 -padx 10 -highlightbackground $bgcolor]
 
 	pack $runbutton $run2button $runuibutton $runxterm \
