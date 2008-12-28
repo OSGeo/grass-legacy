@@ -118,6 +118,7 @@ set descmenu [subst  {
 		{command {[G_msg "ESRI e00"]} {} "v.in.e00: Import ESRI e00 format" {} -command { execute v.in.e00 }}
 		{command {[G_msg "Garmin GPS"]} {} "v.in.garmin: Import Garmin GPS waypoints/routes/tracks" {} -command { execute v.in.garmin }}
 		{command {[G_msg "GPSBabel GPS"]} {} "v.in.gpsbabel: Import GPS waypoints/routes/tracks from many formats using GPSBabel" {} -command { execute v.in.gpsbabel }}
+                {command {[G_msg "Geonames"]} {} "v.in.geonames: Import geonames country files" {} -command { execute v.in.geonames }}
 		{command {[G_msg "GEOnet"]} {} "v.in.gns: Import GEOnet Name server country files (US-NGA GNS)" {} -command { execute v.in.gns }}
 		{command {[G_msg "Matlab and MapGen"]} {} "v.in.mapgen: Import Matlab and MapGen files" {} -command { execute v.in.mapgen }}
 	}}
@@ -125,6 +126,7 @@ set descmenu [subst  {
 		{command {[G_msg "ASCII 3D"]} {} "r3.in.ascii: Import ASCII 3D file" {} -command { execute r3.in.ascii }}
 		{command {[G_msg "Vis5D"]} {} "r3.in.v5d: Import Vis5D file" {} -command { execute r3.in.v5d }}
 	}}
+        {command {[G_msg "Import data table"]} {} "db.in.ogr: Import attribute data tables using OGR" {} -command { execute db.in.ogr }}
 	{separator}
 	{cascad {[G_msg "Export raster map"]} {} "" $tmenu {
 		{command {[G_msg "Multiple formats using GDAL"]} {} "r.out.gdal: Export multiple formats using GDAL" {} -command { execute r.out.gdal }}
@@ -162,6 +164,7 @@ set descmenu [subst  {
 		{command {[G_msg "Vis5D"]} {} "r3.out.v5d: Export Vis5D file" {} -command { execute r3.out.v5d }}
 		{command {[G_msg "VTK"]} {} "r3.out.vtk: Export VTK ASCII file" {} -command { execute r3.out.vtk }}
 		}}
+	{command {[G_msg "Export data table"]} {} "db.out.ogr: Export attribute data tables using OGR" {} -command { execute db.out.ogr }}
 	{separator}
 	{cascad {[G_msg "Manage maps and volumes"]} {} "" $tmenu {
 		{command {[G_msg "Copy"]} {} "g.copy: Copy maps" {} -command {execute g.copy }}
@@ -291,7 +294,8 @@ set descmenu [subst  {
 		{separator}
 		{command {[G_msg "Visibility"]} {} "r.los: Visibility/line of sight" {} -command {execute r.los }}
 		{command {[G_msg "Distance to features"]} {} "r.grow.distance: Distance to features" {} -command {execute r.grow.distance }}
-
+		{separator}
+		{command {[G_msg "Horizon"]} {} "r.horizon: Calculate horizon angle" {} -command {execute r.horizon }}
 	}}
 	{cascad {[G_msg "Transform features"]} {} "" $tmenu {			
 		{command {[G_msg "Clump"]} {} "r.clump: Clump small areas (statistics calculated by r.volume)" {} -command {execute r.clump }}
@@ -405,6 +409,7 @@ set descmenu [subst  {
 		{command {[G_msg "Manage category information"]} {} "r.category: Manage category labels and values" {} -command {execute r.category }}
 		{separator}
 		{command {[G_msg "General statistics"]} {} "r.stats: General statistics" {} -command {execute r.stats }}
+		{command {[G_msg "Quantiles for large data sets"]} {} "r.quantile: Calculate quantiles from large data sets" {} -command {execute r.quantile}}
 		{command {[G_msg "Range of category values"]} {} "r.describe: Range of all category values" {} -command {execute r.describe }}
 		{command {[G_msg "Sum cell category values"]} {} "r.sum: Sum all cell category values" {} -command {execute r.sum }}
 		{command {[G_msg "Sum area by map and category"]} {} "r.report:Sum area by map and category" {} -command {execute r.report }}
