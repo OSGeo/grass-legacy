@@ -430,9 +430,9 @@ set descmenu [subst  {
 		{command {[G_msg "Digitize"]} {} "v.digit: Digitize/edit vector map" {} -command {execute v.digit }}
 		{command {[G_msg "Edit features"]} {} "v.edit: Edit vector features" {} -command {execute v.edit }}
 		{separator}
-		{command {[G_msg "Create/rebuild topology: "]} {} "v.build: Create or rebuild topology of vector objects" {} -command {execute v.build }}
+		{command {[G_msg "Create/rebuild topology"]} {} "v.build: Create or rebuild topology of vector objects" {} -command {execute v.build }}
 		{command {[G_msg "Clean vector"]} {} "v.clean: Clean vector objects" {} -command {execute v.clean }}
-		{command {[G_msg "Generalization"]} {} "v.generalize: Smooth, simplify, displace, or generalize a vector map" {} -command {execute v.generalize }}
+		{command {[G_msg "Smooth or simplify"]} {} "v.generalize: Smooth or simplify lines and boundaries (reduce vertices)" {} -command {execute v.generalize }}
 		{separator}
 		{command {[G_msg "Convert object types"]} {} "v.type: Convert vector objects from one feature type to another" {} -command {execute $env(GISBASE)/etc/gui/scripts/v.type.sh }}
 		{separator}
