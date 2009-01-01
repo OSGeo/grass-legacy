@@ -792,6 +792,18 @@ class BufferedWindow(MapWindow, wx.Window):
                 coordtype = 'mapcoord'
             self.parent.gismanager.georectifying.DrawGCP(coordtype)
             
+        # 
+        # clear measurement
+        #
+        
+        if self.mouse["use"] == "measure":
+            self.ClearLines(pdc=self.pdcTmp)
+            self.polycoords = []
+            self.mouse['use'] = 'pointer'
+            self.mouse['box'] = 'point'
+            self.mouse['end'] = [0, 0]
+            self.SetCursor(self.parent.cursors["default"])
+            
         stop = time.clock()
 
         #
@@ -1079,7 +1091,7 @@ class BufferedWindow(MapWindow, wx.Window):
         elif event.Moving():
             self.OnMouseMoving(event)
 
-        event.Skip()
+#        event.Skip()
         
     def OnMouseWheel(self, event):
         """
@@ -1113,7 +1125,7 @@ class BufferedWindow(MapWindow, wx.Window):
 
         self.Refresh()
         self.processMouse = True
-        event.Skip()
+#        event.Skip()
 
     def OnDragging(self, event):
         """
@@ -1150,7 +1162,7 @@ class BufferedWindow(MapWindow, wx.Window):
                 # draw box only when left mouse button is pressed
                 self.MouseDraw(pdc=self.pdcTmp)
       
-        event.Skip()
+#        event.Skip()
 
     def OnLeftDown(self, event):
         """
@@ -1704,15 +1716,14 @@ class BufferedWindow(MapWindow, wx.Window):
                 self.textdict[self.dragid]['coords'] = self.pdc.GetIdBounds(self.dragid)
             else:
                 pass
+            self.dragid = None
+            self.currtxtid = None
+#            self.UpdateMap(render=True)
             
         else:
             pass
-
-        self.dragid = None
-        self.currtxtid = None
-        self.UpdateMap(render=True)
-                                                               
-        event.Skip()
+                                              
+#        event.Skip()
 
     def OnButtonDClick(self, event):
         """
@@ -1728,7 +1739,7 @@ class BufferedWindow(MapWindow, wx.Window):
             self.mouse['use'] = 'pointer'
             self.mouse['box'] = 'point'
             self.mouse['end'] = [0, 0]
-            ### self.Refresh()
+            self.Refresh()
             self.SetCursor(self.parent.cursors["default"])
         elif self.mouse["use"] == "profile":
             # profile
@@ -1759,7 +1770,7 @@ class BufferedWindow(MapWindow, wx.Window):
             elif self.dragid == 1:
                 self.parent.OnAddLegend(None)
                 
-        event.Skip()
+#        event.Skip()
 
     def OnRightDown(self, event):
         """
