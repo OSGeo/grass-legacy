@@ -27,6 +27,7 @@ import types
 import re
 import string
 import getopt
+import platform
 
 ### XML 
 import xml.sax
@@ -61,10 +62,8 @@ import wx.stc
 import wx.lib.customtreectrl as CT
 import wx.lib.flatnotebook as FN
 from wx.lib.wordwrap import wordwrap
-try:
-    import subprocess
-except:
-    import compat.subprocess as subprocess
+
+import grass
 
 import gui_modules.utils as utils
 import gui_modules.preferences as preferences
@@ -368,8 +367,9 @@ class GMFrame(wx.Frame):
         if dlg.ShowModal() == wx.ID_OK:
             ms = dlg.GetMapsets()
             # run g.mapsets with string of accessible mapsets
-            cmdlist = ['g.mapsets', 'mapset=%s' % ','.join(ms)]
-            gcmd.Command(cmdlist)
+            gcmd.RunCommand('g.mapsets',
+                            parent = self,
+                            mapset = '%s' % ','.join(ms))
             
     def OnRDigit(self, event):
         """
@@ -500,8 +500,8 @@ class GMFrame(wx.Frame):
         # name
         info.SetName("GRASS GIS")
         # version
-        versionCmd = gcmd.Command(['g.version'])
-        info.SetVersion(versionCmd.ReadStdOutput()[0].replace('GRASS', '').strip())
+        version = grass.read_command('g.version').replace('GRASS', '').strip()
+        info.SetVersion(version)
         # description
         copyrightFile = open(os.path.join(os.getenv("GISBASE"), "COPYING"), 'r')
         copyrightOut = []
@@ -628,7 +628,7 @@ class GMFrame(wx.Frame):
             fileStream = ''.join(file.readlines())
             p = re.compile('(grass-gxw.dtd)')
             p.search(fileStream)
-            if subprocess.mswindows:
+            if platform.system() == 'Windows':
                 # FIXME mixing '\' and '/' causes error in p.sub
                 dtdFilename = dtdFilename.replace("\\", "/") 
             fileStream = p.sub(dtdFilename, fileStream)
@@ -980,7 +980,7 @@ class GMFrame(wx.Frame):
 
         # reset display mode
         os.environ['GRASS_RENDER_IMMEDIATE'] = 'TRUE'
-
+        
     def OnPreferences(self, event):
         """General GUI preferences/settings"""
         preferences.PreferencesDialog(parent=self).ShowModal()
