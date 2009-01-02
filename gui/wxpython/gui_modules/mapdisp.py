@@ -2892,7 +2892,7 @@ class MapFrame(wx.Frame):
             #
             self.tree.EnableItemType(type='3d-raster', enable=False)
             
-        self.toolbars['map'].combo.SetValue ("Tools")
+        self.toolbars['map'].combo.SetValue (_("2D view"))
         self.toolbars['map'].Enable2D(True)
         self.toggleStatus.Enable(True)
 
