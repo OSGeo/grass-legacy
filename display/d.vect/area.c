@@ -380,14 +380,9 @@ int darea(struct Map_info *Map, struct cat_list *Clist,
 	    int i;
 
 	    Vect_get_area_points(Map, area, Points);
-	    if (rgb) {
-		R_RGB_color((unsigned char)red, (unsigned char)grn,
-			    (unsigned char)blu);
-	    }
-	    else {
-		R_RGB_color(bcolor->r, bcolor->g, bcolor->b);
-	    }
-	    /*use different user defined render methods */
+	    R_RGB_color(bcolor->r, bcolor->g, bcolor->b);
+
+    	    /*use different user defined render methods */
 	    plot_polyline(Points->x, Points->y, Points->n_points);
 	    for (i = 0; i < n_isles; i++) {
 		isle = Vect_get_area_isle(Map, area, i);
