@@ -125,11 +125,8 @@ class TreeCtrlComboPopup(wx.combo.ComboPopup):
             if not root:
                 return
             item = self.FindItem(root, self.value[0])
-            try:
-                self.seltree.SelectItem(item)
-                self.seltree.EnsureVisible(item)
-            except:
-                pass
+            self.seltree.EnsureVisible(item)
+            self.seltree.SelectItem(item)
             
     def SetStringValue(self, value):
         # this assumes that item strings are unique...
@@ -328,6 +325,7 @@ class VectorDBInfo:
         nuldev = file(os.devnull, 'w+')
         self.layers = grass.vector_db(map=self.map, stderr=nuldev)
         nuldev.close()
+        
         if (len(self.layers.keys()) == 0):
             return False
 
@@ -338,38 +336,28 @@ class VectorDBInfo:
         for layer in self.layers.keys():
             # determine column names and types
             table = self.layers[layer]["table"]
-            columnsCommand = gcmd.Command (cmd=["db.describe",
-                                                "-c", "--q",
-                                                "table=%s" % self.layers[layer]["table"],
-                                                "driver=%s" % self.layers[layer]["driver"],
-                                                "database=%s" % self.layers[layer]["database"]])
-
-
             columns = {} # {name: {type, length, [values], [ids]}}
+            i = 0
+            for item in grass.db_describe(table = self.layers[layer]["table"],
+                                          driver = self.layers[layer]["driver"],
+                                          database = self.layers[layer]["database"])['cols']:
+                name, type, length = item
+                # FIXME: support more datatypes
+                if type.lower() == "integer":
+                    ctype = int
+                elif type.lower() == "double precision":
+                    ctype = float
+                else:
+                    ctype = str
 
-            if columnsCommand.returncode == 0:
-                # skip nrows and ncols
-                i = 0
-                for line in columnsCommand.ReadStdOutput()[2:]:
-                    num, name, type, length = line.strip().split(':')
-                    # FIXME: support more datatypes
-                    if type.lower() == "integer":
-                        ctype = int
-                    elif type.lower() == "double precision":
-                        ctype = float
-                    else:
-                        ctype = str
-
-                    columns[name.strip()] = { 'index'  : i,
-                                              'type'   : type.lower(),
-                                              'ctype'  : ctype,
-                                              'length' : int(length),
-                                              'values' : [],
-                                              'ids'    : []}
-                    i += 1
-            else:
-                return False
-
+                columns[name.strip()] = { 'index'  : i,
+                                          'type'   : type.lower(),
+                                          'ctype'  : ctype,
+                                          'length' : int(length),
+                                          'values' : [],
+                                          'ids'    : []}
+                i += 1
+            
             # check for key column
             # v.db.connect -g/p returns always key column name lowercase
             if self.layers[layer]["key"] not in columns.keys():
@@ -426,7 +414,7 @@ class LayerSelect(wx.Choice):
     def InsertLayers(self, vector):
         """Insert layers for a vector into the layer combobox"""
         layerchoices = utils.GetVectorNumberOfLayers(vector)
-
+        
         if self.all:
             layerchoices.insert(0, '-1')
         if len(layerchoices) > 1:
@@ -486,17 +474,20 @@ class TableSelect(wx.ComboBox):
     def InsertTables(self, driver=None, database=None):
         """Insert attribute tables into combobox"""
         items = []
-        tableCmd = None
+
+        if not driver or not database:
+            connect = grass.db_connection()
+            
+            driver = connect['driver']
+            database = connect['database']
+        
         ret = gcmd.RunCommand('db.tables',
-                              parent = self,
-                              read = True,
                               flags = 'p',
+                              read = True,
                               driver = driver,
                               database = database)
         
-        if ret == None:
-            tableCmd = None
-        else:
+        if ret:
             for table in ret.split('\n'):
                 if len(table) > 0:
                     items.append(table)
