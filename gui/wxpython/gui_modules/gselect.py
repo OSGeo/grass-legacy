@@ -487,10 +487,12 @@ class TableSelect(wx.ComboBox):
         """Insert attribute tables into combobox"""
         items = []
         tableCmd = None
-        ret = grass.read_command('db.tables',
-                                  flags = 'p',
-                                  driver = driver,
-                                  database = database)
+        ret = gcmd.RunCommand('db.tables',
+                              parent = self,
+                              read = True,
+                              flags = 'p',
+                              driver = driver,
+                              database = database)
         
         if ret == None:
             tableCmd = None
