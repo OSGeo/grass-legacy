@@ -486,21 +486,18 @@ class TableSelect(wx.ComboBox):
     def InsertTables(self, driver=None, database=None):
         """Insert attribute tables into combobox"""
         items = []
-        cmd = ['db.tables',
-               '-p']
-        if driver:
-            cmd.append('driver=%s' % driver)
-        if database:
-            cmd.append('database=%s' % database)
+        tableCmd = None
+        ret = gcmd.RunCommand('db.tables',
+                              parent = self,
+                              read = True,
+                              flags = 'p',
+                              driver = driver,
+                              database = database)
         
-        try:
-            tableCmd = gcmd.Command(cmd)
-        except gcmd.CmdError:
+        if ret == None:
             tableCmd = None
-        
-        if tableCmd and \
-                tableCmd.returncode == 0:
-            for table in tableCmd.ReadStdOutput():
+        else:
+            for table in ret.split('\n'):
                 items.append(table)
             
         self.SetItems(items)
