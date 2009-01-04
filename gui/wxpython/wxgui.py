@@ -953,19 +953,20 @@ class GMFrame(wx.Frame):
         gisbase = os.environ['GISBASE']
 
         # make list of xmons that are not running
-        cmdlist = ["d.mon", "-L"]
-        p = gcmd.Command(cmdlist)
+        ret = gcmd.RunCommand('d.mon',
+                              flags = 'L',
+                              read = True)
 
-        for line in p.ReadStdOutput():                
+        for line in ret.split('\n'):               
             line = line.strip()
             if line.startswith('x') and 'not running' in line:
                 xmonlist.append(line[0:2])
 
         # open available xmon
         xmon = xmonlist[0]
-        cmdlist = ["d.mon","start=%s" % xmon]
-        p = gcmd.Command(cmdlist)
-
+        gcmd.RunCommand('d.mon',
+                        start = xmon)
+        
         # run the command        
         runbat = os.path.join(gisbase,'etc','grass-run.bat')
         xtermwrapper = os.path.join(gisbase,'etc','grass-xterm-wrapper')
@@ -976,6 +977,7 @@ class GMFrame(wx.Frame):
             cmdlist = ["cmd.exe", "/c", 'start "%s"' % runbat, command]
         else:
             cmdlist = [xtermwrapper, '-e "%s"' % grassrun, command]
+
         p = gcmd.Command(cmdlist)
 
         # reset display mode

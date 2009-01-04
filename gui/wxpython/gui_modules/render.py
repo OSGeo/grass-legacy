@@ -133,9 +133,11 @@ class Layer(object):
         #
         if UserSettings.Get(group='display', key='driver', subkey='type') == 'cairo':
             os.environ["GRASS_CAIROFILE"] = self.mapfile
-            if 'cairo' not in gcmd.Command(['d.mon', '-p']).ReadStdOutput()[0]:
-                gcmd.Command(['d.mon',
-                              'start=cairo'], stderr=None)
+            if 'cairo' not in gcmd.RunCommand('d.mon',
+                                              flags='p',
+                                              read = True):
+                gcmd.RunCommand('d.mon',
+                                start = 'cairo')
         else:
             if self.mapfile:
                 os.environ["GRASS_PNGFILE"] = self.mapfile
@@ -186,8 +188,8 @@ class Layer(object):
         # stop monitor
         #
         if UserSettings.Get(group='display', key='driver', subkey='type') == 'cairo':
-            gcmd.Command(['d.mon',
-                          'stop=cairo'], stderr=None)
+            gcmd.RunCommand('d.mon',
+                            stop = 'cairo')
             del os.environ["GRASS_CAIROFILE"]
         elif os.environ.has_key("GRASS_PNGFILE"):
             del os.environ["GRASS_PNGFILE"]

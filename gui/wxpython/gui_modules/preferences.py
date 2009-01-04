@@ -991,7 +991,9 @@ class PreferencesDialog(wx.Dialog):
         listOfDrivers = self.settings.Get(group='display', key='driver', subkey='choices', internal=True)
         # check if cairo is available
         if 'cairo' not in listOfDrivers:
-            for line in gcmd.Command(['d.mon', '-l']).ReadStdOutput():
+            for line in gcmd.RunCommand('d.mon',
+                                        flags = 'l',
+                                        read = True):
                 if 'cairo' in line:
                     listOfDrivers.append('cairo')
                     break
