@@ -125,8 +125,11 @@ class TreeCtrlComboPopup(wx.combo.ComboPopup):
             if not root:
                 return
             item = self.FindItem(root, self.value[0])
-            self.seltree.EnsureVisible(item)
-            self.seltree.SelectItem(item)
+            try:
+                self.seltree.SelectItem(item)
+                self.seltree.EnsureVisible(item)
+            except:
+                pass
             
     def SetStringValue(self, value):
         # this assumes that item strings are unique...
@@ -483,18 +486,16 @@ class TableSelect(wx.ComboBox):
     def InsertTables(self, driver=None, database=None):
         """Insert attribute tables into combobox"""
         items = []
-        ret = gcmd.RunCommand('db.tables',
-                              flag = 'p',
-                              parent = self,
-                              driver = driver,
-                              database = database)
+        tableCmd = None
+        ret = grass.read_command('db.tables',
+                                  flags = 'p',
+                                  driver = driver,
+                                  database = database)
         
-        if ret != 0:
+        if ret == None:
             tableCmd = None
-        
-        if tableCmd and \
-                tableCmd.returncode == 0:
-            for table in tableCmd.ReadStdOutput():
+        else:
+            for table in ret.split('\n'):
                 items.append(table)
             
         self.SetItems(items)
