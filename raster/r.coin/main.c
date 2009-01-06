@@ -126,6 +126,7 @@ int main(int argc, char *argv[])
     if (!mapset1)
 	G_fatal_error(_("Raster map <%s> not found"), map1name);
     mapset2 = G_find_cell2(map2name, "");
+    if (!mapset2)
 	G_fatal_error(_("Raster map <%s> not found"), map2name);
 
     make_coin();
