@@ -420,7 +420,8 @@ class BufferedWindow(MapWindow, wx.Window):
                 # self.ovlcoords[drawid] = coords
 
         elif pdctype == 'text': # draw text on top of map
-            if not img['active']: return #only draw active text
+            if not img['active']:
+                return #only draw active text
             if img.has_key('rotation'):
                 rotation = float(img['rotation'])
             else:
