@@ -511,9 +511,9 @@ msgid "Unable to get list tables in database <%s>"
 msgstr "���"
 
 #: ../lib/db/dbmi_client/copy_tab.c:157
-#, c-format
+#, fuzzy, c-format
 msgid "Table <%s> already existsin database <%s>"
-msgstr ""
+msgstr "���"
 
 #: ../lib/db/dbmi_client/copy_tab.c:199 ../lib/db/dbmi_client/copy_tab.c:276
 #: ../lib/db/dbmi_client/table.c:110
@@ -881,44 +881,44 @@ msgid "Topology was built\n"
 msgstr ""
 
 #: ../lib/vector/Vlib/build.c:172
-#, c-format
+#, fuzzy, c-format
 msgid "Number of nodes     :   %d\n"
-msgstr ""
+msgstr "����� ���� ���\n"
 
 #: ../lib/vector/Vlib/build.c:173
-#, c-format
+#, fuzzy, c-format
 msgid "Number of primitives:   %d\n"
-msgstr ""
+msgstr "����� ���� ���\n"
 
 #: ../lib/vector/Vlib/build.c:174
-#, c-format
+#, fuzzy, c-format
 msgid "Number of points    :   %d\n"
-msgstr ""
+msgstr "����� ���� ���\n"
 
 #: ../lib/vector/Vlib/build.c:175
-#, c-format
+#, fuzzy, c-format
 msgid "Number of lines     :   %d\n"
-msgstr ""
+msgstr "����� ���� ���\n"
 
 #: ../lib/vector/Vlib/build.c:176
-#, c-format
+#, fuzzy, c-format
 msgid "Number of boundaries:   %d\n"
-msgstr ""
+msgstr "����� ���� ���\n"
 
 #: ../lib/vector/Vlib/build.c:177
-#, c-format
+#, fuzzy, c-format
 msgid "Number of centroids :   %d\n"
-msgstr ""
+msgstr "����� ���� ���\n"
 
 #: ../lib/vector/Vlib/build.c:180
-#, c-format
+#, fuzzy, c-format
 msgid "Number of faces     :   %d\n"
-msgstr ""
+msgstr "����� ���� ���\n"
 
 #: ../lib/vector/Vlib/build.c:183
-#, c-format
+#, fuzzy, c-format
 msgid "Number of kernels   :   %d\n"
-msgstr ""
+msgstr "����� ���� ���\n"
 
 #: ../lib/vector/Vlib/build.c:223
 #, c-format
@@ -931,24 +931,24 @@ msgid "Number of isles     :   %d\n"
 msgstr ""
 
 #: ../lib/vector/Vlib/build.c:227
-#, c-format
+#, fuzzy, c-format
 msgid "Number of incorrect boundaries   :   %d\n"
-msgstr ""
+msgstr "����� ���� ���\n"
 
 #: ../lib/vector/Vlib/build.c:231
-#, c-format
+#, fuzzy, c-format
 msgid "Number of centroids outside area :   %d\n"
-msgstr ""
+msgstr "����� ���� ���\n"
 
 #: ../lib/vector/Vlib/build.c:235
-#, c-format
+#, fuzzy, c-format
 msgid "Number of duplicate centroids    :   %d\n"
-msgstr ""
+msgstr "����� ���� ���\n"
 
 #: ../lib/vector/Vlib/build.c:239
-#, c-format
+#, fuzzy, c-format
 msgid "Number of areas without centroid :   %d\n"
-msgstr ""
+msgstr "����� ���� ���\n"
 
 #: ../lib/vector/Vlib/build.c:244
 msgid "Number of areas     :   -\n"
@@ -1323,8 +1323,9 @@ msgid "BUG (add_area_cats_to_cidx): Area %d does not exist"
 msgstr ""
 
 #: ../lib/vector/Vlib/write_nat.c:600
+#, fuzzy
 msgid "Attempt to delete dead line"
-msgstr ""
+msgstr "���"
 
 #: ../lib/vector/Vlib/level_two.c:210 ../lib/vector/Vlib/level_two.c:235
 #: ../lib/vector/Vlib/level_two.c:259 ../lib/vector/Vlib/level_two.c:278
@@ -1456,8 +1457,9 @@ msgid "Map structure has been closed"
 msgstr ""
 
 #: ../lib/vector/Vlib/area.c:53
+#, fuzzy
 msgid "Attempt to read points of nonexisting area"
-msgstr ""
+msgstr "���"
 
 #: ../lib/vector/Vlib/area.c:125
 #, fuzzy, c-format
@@ -4416,8 +4418,9 @@ msgid "Loading data from attribute table ..."
 msgstr ""
 
 #: ../lib/rst/interp_float/vinput2d.c:79
+#, fuzzy
 msgid "Cannot get layer info"
-msgstr ""
+msgstr "���"
 
 #: ../lib/rst/interp_float/vinput2d.c:87
 #, fuzzy, c-format
@@ -4587,3 +4590,65 @@ msgstr ""
 #, fuzzy
 #~ msgid "ERROR: GISBASE not set\n"
 #~ msgstr "���: GISBASE � �����\n"
+
+#, fuzzy
+#~ msgid ""
+#~ "Unable to open vector map <%s> on level %d. Try to rebuild vector "
+#~ "topology by v.build."
+#~ msgstr "���"
+
+#, fuzzy
+#~ msgid "Attempt to delete dead feature"
+#~ msgstr "���"
+
+#, fuzzy
+#~ msgid "Attempt to restore alive feature"
+#~ msgstr "���"
+
+#, fuzzy
+#~ msgid "Unable to find vector map <%s> in <%s>"
+#~ msgstr "���"
+
+#, fuzzy
+#~ msgid "Unable to rewrite feature %d"
+#~ msgstr "���"
+
+#, fuzzy
+#~ msgid ""
+#~ "Unable to restore feature %d, vector map <%s> is not opened on topology "
+#~ "level"
+#~ msgstr "���"
+
+#, fuzzy
+#~ msgid ""
+#~ "Unable to restore feature %d, vector map <%s> is not opened in 'write' "
+#~ "mode"
+#~ msgstr "����� ���� ���\n"
+
+#, fuzzy
+#~ msgid "Unable to restore feature %d from vector map <%s>"
+#~ msgstr "����� ���� ���\n"
+
+#, fuzzy
+#~ msgid "Line is not looped"
+#~ msgstr "���"
+
+#, fuzzy
+#~ msgid "Unable to find '%s' in '%s'"
+#~ msgstr "���"
+
+#, fuzzy
+#~ msgid "Using <%s@%s>"
+#~ msgstr "���"
+
+#, fuzzy
+#~ msgid "Unable to locate symbol <%s>"
+#~ msgstr "���"
+
+#, fuzzy
+#~ msgid "Unable to load GDAL library"
+#~ msgstr "���"
+
+#, fuzzy
+#~ msgid "Cannot select attributes"
+#~ msgstr "���"

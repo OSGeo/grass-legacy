@@ -381,9 +381,9 @@ msgstr ""
 
 #: ../lib/gpde/N_arrays_io.c:227 ../lib/gpde/N_arrays_io.c:232
 #: ../lib/gpde/N_arrays_io.c:237
-#, c-format
+#, fuzzy, c-format
 msgid "Unable to write rast row %i"
-msgstr ""
+msgstr "%s उघडता आले नाही"
 
 #: ../lib/gpde/N_arrays_io.c:295
 #, c-format
@@ -509,9 +509,9 @@ msgid "Unable to get list tables in database <%s>"
 msgstr "%s उघडता आले नाही"
 
 #: ../lib/db/dbmi_client/copy_tab.c:157
-#, c-format
+#, fuzzy, c-format
 msgid "Table <%s> already existsin database <%s>"
-msgstr ""
+msgstr "%s उघडता आले नाही"
 
 #: ../lib/db/dbmi_client/copy_tab.c:199 ../lib/db/dbmi_client/copy_tab.c:276
 #: ../lib/db/dbmi_client/table.c:110
@@ -868,44 +868,44 @@ msgid "Topology was built\n"
 msgstr ""
 
 #: ../lib/vector/Vlib/build.c:172
-#, c-format
+#, fuzzy, c-format
 msgid "Number of nodes     :   %d\n"
-msgstr ""
+msgstr "%s उघडता आले नाही"
 
 #: ../lib/vector/Vlib/build.c:173
-#, c-format
+#, fuzzy, c-format
 msgid "Number of primitives:   %d\n"
-msgstr ""
+msgstr "%s उघडता आले नाही"
 
 #: ../lib/vector/Vlib/build.c:174
-#, c-format
+#, fuzzy, c-format
 msgid "Number of points    :   %d\n"
-msgstr ""
+msgstr "%s उघडता आले नाही"
 
 #: ../lib/vector/Vlib/build.c:175
-#, c-format
+#, fuzzy, c-format
 msgid "Number of lines     :   %d\n"
-msgstr ""
+msgstr "%s उघडता आले नाही"
 
 #: ../lib/vector/Vlib/build.c:176
-#, c-format
+#, fuzzy, c-format
 msgid "Number of boundaries:   %d\n"
-msgstr ""
+msgstr "%s उघडता आले नाही"
 
 #: ../lib/vector/Vlib/build.c:177
-#, c-format
+#, fuzzy, c-format
 msgid "Number of centroids :   %d\n"
-msgstr ""
+msgstr "%s उघडता आले नाही"
 
 #: ../lib/vector/Vlib/build.c:180
-#, c-format
+#, fuzzy, c-format
 msgid "Number of faces     :   %d\n"
-msgstr ""
+msgstr "%s उघडता आले नाही"
 
 #: ../lib/vector/Vlib/build.c:183
-#, c-format
+#, fuzzy, c-format
 msgid "Number of kernels   :   %d\n"
-msgstr ""
+msgstr "%s उघडता आले नाही"
 
 #: ../lib/vector/Vlib/build.c:223
 #, c-format
@@ -918,24 +918,24 @@ msgid "Number of isles     :   %d\n"
 msgstr ""
 
 #: ../lib/vector/Vlib/build.c:227
-#, c-format
+#, fuzzy, c-format
 msgid "Number of incorrect boundaries   :   %d\n"
-msgstr ""
+msgstr "%s उघडता आले नाही"
 
 #: ../lib/vector/Vlib/build.c:231
-#, c-format
+#, fuzzy, c-format
 msgid "Number of centroids outside area :   %d\n"
-msgstr ""
+msgstr "%s उघडता आले नाही"
 
 #: ../lib/vector/Vlib/build.c:235
-#, c-format
+#, fuzzy, c-format
 msgid "Number of duplicate centroids    :   %d\n"
-msgstr ""
+msgstr "%s उघडता आले नाही"
 
 #: ../lib/vector/Vlib/build.c:239
-#, c-format
+#, fuzzy, c-format
 msgid "Number of areas without centroid :   %d\n"
-msgstr ""
+msgstr "%s उघडता आले नाही"
 
 #: ../lib/vector/Vlib/build.c:244
 msgid "Number of areas     :   -\n"
@@ -994,9 +994,9 @@ msgstr "%s उघडता आले नाही"
 
 #: ../lib/vector/Vlib/open.c:211 ../lib/vector/Vlib/open.c:278
 #: ../lib/vector/Vlib/open.c:297
-#, c-format
+#, fuzzy, c-format
 msgid "Unable to open vector map <%s> on topology level %d"
-msgstr ""
+msgstr "%s उघडता आले नाही"
 
 #: ../lib/vector/Vlib/open.c:213
 #, fuzzy
@@ -1309,8 +1309,9 @@ msgid "BUG (add_area_cats_to_cidx): Area %d does not exist"
 msgstr ""
 
 #: ../lib/vector/Vlib/write_nat.c:600
+#, fuzzy
 msgid "Attempt to delete dead line"
-msgstr ""
+msgstr "temp फाइल उघडता आली नाही"
 
 #: ../lib/vector/Vlib/level_two.c:210 ../lib/vector/Vlib/level_two.c:235
 #: ../lib/vector/Vlib/level_two.c:259 ../lib/vector/Vlib/level_two.c:278
@@ -1442,8 +1443,9 @@ msgid "Map structure has been closed"
 msgstr ""
 
 #: ../lib/vector/Vlib/area.c:53
+#, fuzzy
 msgid "Attempt to read points of nonexisting area"
-msgstr ""
+msgstr "temp फाइल उघडता आली नाही"
 
 #: ../lib/vector/Vlib/area.c:125
 #, fuzzy, c-format
@@ -1796,8 +1798,9 @@ msgid "Unable to write line, vector map is not opened"
 msgstr "%s उघडता आले नाही"
 
 #: ../lib/vector/Vlib/write.c:122
+#, fuzzy
 msgid "Unable to write line (negative offset)"
-msgstr ""
+msgstr "temp फाइल उघडता आली नाही"
 
 #: ../lib/vector/Vlib/write.c:155
 #, fuzzy
@@ -1807,7 +1810,7 @@ msgstr "%s उघडता आले नाही"
 #: ../lib/vector/Vlib/write.c:168
 #, fuzzy, c-format
 msgid "Unable to rewrite line %d"
-msgstr "%s उघडता आले नाही"
+msgstr "temp फाइल उघडता आली नाही"
 
 #: ../lib/vector/Vlib/write.c:212
 #, fuzzy, c-format
@@ -4354,8 +4357,9 @@ msgid "Loading data from attribute table ..."
 msgstr ""
 
 #: ../lib/rst/interp_float/vinput2d.c:79
+#, fuzzy
 msgid "Cannot get layer info"
-msgstr ""
+msgstr "temp फाइल उघडता आली नाही"
 
 #: ../lib/rst/interp_float/vinput2d.c:87
 #, fuzzy, c-format
@@ -4440,7 +4444,7 @@ msgstr ""
 
 #, fuzzy
 #~ msgid "Cannot describe table <%s>"
-#~ msgstr "temp फाइल उघडता आली नाही"
+#~ msgstr "%s उघडता आले नाही"
 
 #, fuzzy
 #~ msgid "Cannot read topo for line [%d]"
@@ -4460,7 +4464,7 @@ msgstr ""
 
 #, fuzzy
 #~ msgid "Cannot get column info"
-#~ msgstr "सध्याची विंडो = %p\n"
+#~ msgstr "temp फाइल उघडता आली नाही"
 
 #, fuzzy
 #~ msgid "Cannot open existing vector map <%s>"
@@ -4561,3 +4565,63 @@ msgstr ""
 #, fuzzy
 #~ msgid "Not able to open cellfile for [%s]"
 #~ msgstr "उघडलेल्या फाइलचे नाव %s\n"
+
+#, fuzzy
+#~ msgid "Attempt to delete dead feature"
+#~ msgstr "temp फाइल उघडता आली नाही"
+
+#, fuzzy
+#~ msgid "Attempt to restore alive feature"
+#~ msgstr "temp फाइल उघडता आली नाही"
+
+#, fuzzy
+#~ msgid "Unable to find vector map <%s> in <%s>"
+#~ msgstr "%s उघडता आले नाही"
+
+#, fuzzy
+#~ msgid "Unable to rewrite feature %d"
+#~ msgstr "%s उघडता आले नाही"
+
+#, fuzzy
+#~ msgid ""
+#~ "Unable to restore feature %d, vector map <%s> is not opened on topology "
+#~ "level"
+#~ msgstr "%s उघडता आले नाही"
+
+#, fuzzy
+#~ msgid ""
+#~ "Unable to restore feature %d, vector map <%s> is not opened in 'write' "
+#~ "mode"
+#~ msgstr "%s उघडता आले नाही"
+
+#, fuzzy
+#~ msgid "Unable to restore feature %d from vector map <%s>"
+#~ msgstr "%s उघडता आले नाही"
+
+#, fuzzy
+#~ msgid "Line is not looped"
+#~ msgstr "%s मिळाले नाही"
+
+#, fuzzy
+#~ msgid "Unable to find '%s' in '%s'"
+#~ msgstr "%s उघडता आले नाही"
+
+#, fuzzy
+#~ msgid "Using <%s@%s>"
+#~ msgstr "%s उघडता आले नाही"
+
+#, fuzzy
+#~ msgid "Unable to locate symbol <%s>"
+#~ msgstr "%s उघडता आले नाही"
+
+#, fuzzy
+#~ msgid "Unable to load GDAL library"
+#~ msgstr "temp फाइल उघडता आली नाही"
+
+#, fuzzy
+#~ msgid "Cannot fetch row"
+#~ msgstr "सध्याची विंडो = %p\n"
+
+#, fuzzy
+#~ msgid "Cannot select attributes"
+#~ msgstr "temp फाइल उघडता आली नाही"

@@ -934,7 +934,7 @@ msgstr "Herramienta de consulta desconocida"
 
 #
 #: ../lib/vector/vedit/cats.c:66
-#, c-format
+#, fuzzy, c-format
 msgid "Unable to set category %d for line %d"
 msgstr "No se puede establecer la categoría %d para la línea %d"
 
@@ -3192,6 +3192,7 @@ msgid "Type"
 msgstr "Tipo"
 
 #: ../lib/gis/parser.c:567
+#, fuzzy
 msgid "Feature type(s)"
 msgstr "Tipo(s) de objeto espacial"
 
@@ -4915,3 +4916,19 @@ msgstr "Creada máscara de mapa de bits"
 #, fuzzy
 #~ msgid "Translating colors from fp raster map <%s>"
 #~ msgstr "No se puede abrir el mapa ráster <%s>"
+
+#, fuzzy
+#~ msgid "Line is not looped"
+#~ msgstr "No se permiten matrices"
+
+#, fuzzy
+#~ msgid "side != 0 feature not implemented"
+#~ msgstr "sin implementar"
+
+#, fuzzy
+#~ msgid "Feature id"
+#~ msgstr "Objeto espacial: "
+
+#, fuzzy
+#~ msgid "Feature ids"
+#~ msgstr "Objeto espacial: "

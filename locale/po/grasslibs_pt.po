@@ -400,9 +400,9 @@ msgstr ""
 
 #: ../lib/gpde/N_arrays_io.c:227 ../lib/gpde/N_arrays_io.c:232
 #: ../lib/gpde/N_arrays_io.c:237
-#, c-format
+#, fuzzy, c-format
 msgid "Unable to write rast row %i"
-msgstr ""
+msgstr "Impossível mudar de diretório para %s"
 
 #: ../lib/gpde/N_arrays_io.c:295
 #, c-format
@@ -534,9 +534,9 @@ msgid "Unable to get list tables in database <%s>"
 msgstr "não foi possível abrir o arquivo com a tabela de datum: %s"
 
 #: ../lib/db/dbmi_client/copy_tab.c:157
-#, c-format
+#, fuzzy, c-format
 msgid "Table <%s> already existsin database <%s>"
-msgstr ""
+msgstr "não foi possível abrir o arquivo com a tabela de datum: %s"
 
 #: ../lib/db/dbmi_client/copy_tab.c:199 ../lib/db/dbmi_client/copy_tab.c:276
 #: ../lib/db/dbmi_client/table.c:110
@@ -895,80 +895,82 @@ msgid "Topology was built\n"
 msgstr "A topologia foi criada.\n"
 
 #: ../lib/vector/Vlib/build.c:172
-#, c-format
+#, fuzzy, c-format
 msgid "Number of nodes     :   %d\n"
 msgstr "Número de nós     :   %d\n"
 
 #: ../lib/vector/Vlib/build.c:173
-#, c-format
+#, fuzzy, c-format
 msgid "Number of primitives:   %d\n"
 msgstr "Número de primitivas:   %d\n"
 
 #: ../lib/vector/Vlib/build.c:174
-#, c-format
+#, fuzzy, c-format
 msgid "Number of points    :   %d\n"
 msgstr "Número de pontos    :   %d\n"
 
 #: ../lib/vector/Vlib/build.c:175
-#, c-format
+#, fuzzy, c-format
 msgid "Number of lines     :   %d\n"
 msgstr "Número de linhas     :   %d\n"
 
 #: ../lib/vector/Vlib/build.c:176
-#, c-format
+#, fuzzy, c-format
 msgid "Number of boundaries:   %d\n"
 msgstr "Número de fronteiras:   %d\n"
 
 #: ../lib/vector/Vlib/build.c:177
-#, c-format
+#, fuzzy, c-format
 msgid "Number of centroids :   %d\n"
 msgstr "Número de centróides :   %d\n"
 
 #: ../lib/vector/Vlib/build.c:180
-#, c-format
+#, fuzzy, c-format
 msgid "Number of faces     :   %d\n"
 msgstr "Número de faces     :   %d\n"
 
 #: ../lib/vector/Vlib/build.c:183
-#, c-format
+#, fuzzy, c-format
 msgid "Number of kernels   :   %d\n"
 msgstr "Número de núcleos   :   %d\n"
 
 #: ../lib/vector/Vlib/build.c:223
-#, c-format
+#, fuzzy, c-format
 msgid "Number of areas     :   %d\n"
 msgstr "Número de áreas     :   %d\n"
 
 #: ../lib/vector/Vlib/build.c:224
-#, c-format
+#, fuzzy, c-format
 msgid "Number of isles     :   %d\n"
 msgstr "Número de ilhas     :   %d\n"
 
 #: ../lib/vector/Vlib/build.c:227
-#, c-format
+#, fuzzy, c-format
 msgid "Number of incorrect boundaries   :   %d\n"
 msgstr "Número de fronteiras incorretas   :   %d\n"
 
 #: ../lib/vector/Vlib/build.c:231
-#, c-format
+#, fuzzy, c-format
 msgid "Number of centroids outside area :   %d\n"
 msgstr "Número de centróides fora da área :   %d\n"
 
 #: ../lib/vector/Vlib/build.c:235
-#, c-format
+#, fuzzy, c-format
 msgid "Number of duplicate centroids    :   %d\n"
 msgstr "Número de centróides duplicados    :   %d\n"
 
 #: ../lib/vector/Vlib/build.c:239
-#, c-format
+#, fuzzy, c-format
 msgid "Number of areas without centroid :   %d\n"
 msgstr "Número de áreas sem centróide :   %d\n"
 
 #: ../lib/vector/Vlib/build.c:244
+#, fuzzy
 msgid "Number of areas     :   -\n"
 msgstr "Número de áreas     :   -\n"
 
 #: ../lib/vector/Vlib/build.c:245
+#, fuzzy
 msgid "Number of isles     :   -\n"
 msgstr "Número de ilhas     :   -\n"
 
@@ -1025,7 +1027,7 @@ msgstr "Impossível mudar de diretório para %s"
 #: ../lib/vector/Vlib/open.c:297
 #, fuzzy, c-format
 msgid "Unable to open vector map <%s> on topology level %d"
-msgstr "Impossível abrir vetor existente <%s> no nível [%d]"
+msgstr "não foi possível abrir o mapa raster [%s em %s]"
 
 #: ../lib/vector/Vlib/open.c:213
 #, fuzzy
@@ -1104,8 +1106,9 @@ msgid "Registered points"
 msgstr "Pontos registrados"
 
 #: ../lib/vector/Vlib/snap.c:229
+#, fuzzy
 msgid "Nodes marked as anchor"
-msgstr ""
+msgstr "Nós marcados para encaixar"
 
 #: ../lib/vector/Vlib/snap.c:231
 msgid "Nodes marked to be snapped"
@@ -1428,10 +1431,12 @@ msgid "isles built"
 msgstr "Grafo construído"
 
 #: ../lib/vector/Vlib/build_nat.c:605
+#, fuzzy
 msgid "Attaching islands: "
 msgstr "Anexando ilhas:"
 
 #: ../lib/vector/Vlib/build_nat.c:622
+#, fuzzy
 msgid "Attaching centroids: "
 msgstr "Anexando centróides:"
 
@@ -1877,7 +1882,7 @@ msgstr "não consegui reescrever a linha, o mapa não está aberto"
 #: ../lib/vector/Vlib/write.c:168
 #, fuzzy, c-format
 msgid "Unable to rewrite line %d"
-msgstr "Impossível abrir arquivo %s"
+msgstr "Impossível ler arquivo de cabeçalho"
 
 #: ../lib/vector/Vlib/write.c:212
 #, fuzzy, c-format
@@ -3078,6 +3083,7 @@ msgid "Type"
 msgstr "Tipo"
 
 #: ../lib/gis/parser.c:565
+#, fuzzy
 msgid "Feature type(s)"
 msgstr "Tipo(s) de feição"
 
@@ -4270,9 +4276,10 @@ msgid "Vector map <%s> loaded (%d points)"
 msgstr "Vetor de entrada '%s' não encontrado"
 
 #: ../lib/ogsf/GS2.c:1638
-#, c-format
+#, fuzzy, c-format
 msgid "Raster map <%s@%s> is outside of current region. Load failed."
 msgstr ""
+"[%s] no mapset [%s] - está em uma zona diferente [%d] da região atual [%d]"
 
 #: ../lib/ogsf/GS2.c:1716 ../lib/ogsf/GS2.c:1722 ../lib/ogsf/GS2.c:1730
 #: ../lib/ogsf/GS2.c:1739 ../lib/ogsf/GS2.c:1747 ../lib/ogsf/GS2.c:1757
@@ -4517,8 +4524,9 @@ msgid "Loading data from attribute table ..."
 msgstr "Carregando dados da tabela de atributos ... "
 
 #: ../lib/rst/interp_float/vinput2d.c:79
+#, fuzzy
 msgid "Cannot get layer info"
-msgstr "não consegui obter informações da camada"
+msgstr "Impossível obter informação do campo"
 
 #: ../lib/rst/interp_float/vinput2d.c:87
 #, c-format
@@ -4650,6 +4658,7 @@ msgstr ""
 #~ "\r%d áreas construídas      \n"
 #~ "%d ilhas construídas\n"
 
+#, fuzzy
 #~ msgid "Cannot open database <%s> by driver <%s>"
 #~ msgstr "Impossível abrir base de dados <%s> com driver <%s>"
 
@@ -4671,8 +4680,9 @@ msgstr ""
 #~ msgid "Cannot rewrite line"
 #~ msgstr "não consegui reescrever a linha"
 
+#, fuzzy
 #~ msgid "Cannot delete line"
-#~ msgstr "não consegui apagar a linha"
+#~ msgstr "não consegui reescrever a linha"
 
 #~ msgid "Output name '%s' is not valid vector name."
 #~ msgstr "Nome de arquivo de saída %s não é um nome de vetor válido."
@@ -4697,3 +4707,84 @@ msgstr ""
 
 #~ msgid "Can't open directory %s"
 #~ msgstr "Impossível abrir diretório %s"
+
+#, fuzzy
+#~ msgid ""
+#~ "Unable to open vector map <%s> on level %d. Try to rebuild vector "
+#~ "topology by v.build."
+#~ msgstr "Impossível abrir vetor existente <%s> no nível [%d]"
+
+#, fuzzy
+#~ msgid "Attempt to delete dead feature"
+#~ msgstr "Tentativa de remover área morta"
+
+#, fuzzy
+#~ msgid "Attempt to restore alive feature"
+#~ msgstr "Tentativa de remover área morta"
+
+#, fuzzy
+#~ msgid "Unable to find vector map <%s> in <%s>"
+#~ msgstr "não foi possível abrir o mapa raster [%s em %s]"
+
+#, fuzzy
+#~ msgid "Unable to rewrite feature %d"
+#~ msgstr "Impossível abrir arquivo %s"
+
+#, fuzzy
+#~ msgid ""
+#~ "Unable to restore feature %d, vector map <%s> is not opened on topology "
+#~ "level"
+#~ msgstr ""
+#~ "não é possível apagar a linha, o mapa '%s' não está aberto no nível 2"
+
+#, fuzzy
+#~ msgid ""
+#~ "Unable to restore feature %d, vector map <%s> is not opened in 'write' "
+#~ "mode"
+#~ msgstr ""
+#~ "não consegui apagar a linha, o mapa '%s' não está aberto em modo de "
+#~ "escrita"
+
+#, fuzzy
+#~ msgid "Unable to restore feature %d from vector map <%s>"
+#~ msgstr "Impossível mudar de diretório para %s"
+
+#, fuzzy
+#~ msgid "Line is not looped"
+#~ msgstr "Matrizes não são permitidas"
+
+#, fuzzy
+#~ msgid "Unable to find '%s' in '%s'"
+#~ msgstr "não consegui encontrar [%s]"
+
+#, fuzzy
+#~ msgid "Using <%s@%s>"
+#~ msgstr "não consegui encontrar [%s]"
+
+#, fuzzy
+#~ msgid "Feature id"
+#~ msgstr "Tipo(s) de feição"
+
+#, fuzzy
+#~ msgid "Feature ids"
+#~ msgstr "Tipo(s) de feição"
+
+#, fuzzy
+#~ msgid "Unable to locate symbol <%s>"
+#~ msgstr "Impossível abrir arquivo %s"
+
+#, fuzzy
+#~ msgid "Unable to load GDAL library"
+#~ msgstr "Impossível adicionar arco"
+
+#, fuzzy
+#~ msgid "Attributes for category %d not found"
+#~ msgstr "Registro no banco de dados para categoria %d não encontrado"
+
+#, fuzzy
+#~ msgid "Cannot fetch row"
+#~ msgstr "não consegui obter informações da camada"
+
+#, fuzzy
+#~ msgid "Cannot select attributes"
+#~ msgstr "não consegui apagar a linha"

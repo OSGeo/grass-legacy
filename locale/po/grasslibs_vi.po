@@ -522,9 +522,9 @@ msgid "Unable to get list tables in database <%s>"
 msgstr "không thể mở tập tin bảng ellipsoid : %s"
 
 #: ../lib/db/dbmi_client/copy_tab.c:157
-#, c-format
+#, fuzzy, c-format
 msgid "Table <%s> already existsin database <%s>"
-msgstr ""
+msgstr "không thể mở tập tin bảng ellipsoid : %s"
 
 #: ../lib/db/dbmi_client/copy_tab.c:199 ../lib/db/dbmi_client/copy_tab.c:276
 #: ../lib/db/dbmi_client/table.c:110
@@ -897,80 +897,82 @@ msgid "Topology was built\n"
 msgstr "Tôpô đã xây dựng xong.\n"
 
 #: ../lib/vector/Vlib/build.c:172
-#, c-format
+#, fuzzy, c-format
 msgid "Number of nodes     :   %d\n"
 msgstr "Số nốt      :   %d\n"
 
 #: ../lib/vector/Vlib/build.c:173
-#, c-format
+#, fuzzy, c-format
 msgid "Number of primitives:   %d\n"
 msgstr "Số đối tượng nguyên thủy:   %d\n"
 
 #: ../lib/vector/Vlib/build.c:174
-#, c-format
+#, fuzzy, c-format
 msgid "Number of points    :   %d\n"
 msgstr "Số điểm     :   %d\n"
 
 #: ../lib/vector/Vlib/build.c:175
-#, c-format
+#, fuzzy, c-format
 msgid "Number of lines     :   %d\n"
 msgstr "Số đường     :   %d\n"
 
 #: ../lib/vector/Vlib/build.c:176
-#, c-format
+#, fuzzy, c-format
 msgid "Number of boundaries:   %d\n"
 msgstr "Số ranh giới:   %d\n"
 
 #: ../lib/vector/Vlib/build.c:177
-#, c-format
+#, fuzzy, c-format
 msgid "Number of centroids :   %d\n"
 msgstr "Số trọng tâm:   %d\n"
 
 #: ../lib/vector/Vlib/build.c:180
-#, c-format
+#, fuzzy, c-format
 msgid "Number of faces     :   %d\n"
 msgstr "Số mặt     :   %d\n"
 
 #: ../lib/vector/Vlib/build.c:183
-#, c-format
+#, fuzzy, c-format
 msgid "Number of kernels   :   %d\n"
 msgstr "Số nhân    :   %d\n"
 
 #: ../lib/vector/Vlib/build.c:223
-#, c-format
+#, fuzzy, c-format
 msgid "Number of areas     :   %d\n"
 msgstr "Số vùng     :   %d\n"
 
 #: ../lib/vector/Vlib/build.c:224
-#, c-format
+#, fuzzy, c-format
 msgid "Number of isles     :   %d\n"
 msgstr "Số đảo     :   %d\n"
 
 #: ../lib/vector/Vlib/build.c:227
-#, c-format
+#, fuzzy, c-format
 msgid "Number of incorrect boundaries   :   %d\n"
 msgstr "Số ranh giới không đúng   :   %d\n"
 
 #: ../lib/vector/Vlib/build.c:231
-#, c-format
+#, fuzzy, c-format
 msgid "Number of centroids outside area :   %d\n"
 msgstr "Số trọng tâm nằm ngoài vùng :   %d\n"
 
 #: ../lib/vector/Vlib/build.c:235
-#, c-format
+#, fuzzy, c-format
 msgid "Number of duplicate centroids    :   %d\n"
 msgstr "Số trọng tâm bị đúp    :   %d\n"
 
 #: ../lib/vector/Vlib/build.c:239
-#, c-format
+#, fuzzy, c-format
 msgid "Number of areas without centroid :   %d\n"
 msgstr "Số vùng không có trọng tâm :   %d\n"
 
 #: ../lib/vector/Vlib/build.c:244
+#, fuzzy
 msgid "Number of areas     :   -\n"
 msgstr "Số vùng     :   -\n"
 
 #: ../lib/vector/Vlib/build.c:245
+#, fuzzy
 msgid "Number of isles     :   -\n"
 msgstr "Số đảo     :   -\n"
 
@@ -1028,7 +1030,7 @@ msgstr "không thể đổi thư mục đến %s"
 #: ../lib/vector/Vlib/open.c:297
 #, fuzzy, c-format
 msgid "Unable to open vector map <%s> on topology level %d"
-msgstr "Không thể mở vector cũ %s ở cấp %d"
+msgstr "không thể mở bản đồ raster [%s in %s]"
 
 #: ../lib/vector/Vlib/open.c:213
 #, fuzzy
@@ -1351,8 +1353,9 @@ msgid "BUG (add_area_cats_to_cidx): Area %d does not exist"
 msgstr ""
 
 #: ../lib/vector/Vlib/write_nat.c:600
+#, fuzzy
 msgid "Attempt to delete dead line"
-msgstr ""
+msgstr "Không thể mở tập tin tạm"
 
 #: ../lib/vector/Vlib/level_two.c:210 ../lib/vector/Vlib/level_two.c:235
 #: ../lib/vector/Vlib/level_two.c:259 ../lib/vector/Vlib/level_two.c:278
@@ -1429,10 +1432,12 @@ msgid "isles built"
 msgstr "Tôpô đã xây dựng xong.\n"
 
 #: ../lib/vector/Vlib/build_nat.c:605
+#, fuzzy
 msgid "Attaching islands: "
 msgstr "Đang gắn các đảo: "
 
 #: ../lib/vector/Vlib/build_nat.c:622
+#, fuzzy
 msgid "Attaching centroids: "
 msgstr "Đang gắn các trọng tâm:"
 
@@ -1493,8 +1498,9 @@ msgid "Map structure has been closed"
 msgstr ""
 
 #: ../lib/vector/Vlib/area.c:53
+#, fuzzy
 msgid "Attempt to read points of nonexisting area"
-msgstr ""
+msgstr "Không thể tính toán trọng tâm cho vùng %d"
 
 #: ../lib/vector/Vlib/area.c:125
 #, fuzzy, c-format
@@ -1546,8 +1552,9 @@ msgid ""
 msgstr ""
 
 #: ../lib/vector/Vlib/remove_areas.c:58 ../lib/vector/Vlib/remove_areas.c:179
+#, fuzzy
 msgid "Removed areas"
-msgstr ""
+msgstr "Loại bỏ cửa sổ"
 
 #: ../lib/vector/Vlib/remove_areas.c:97
 msgid "Area is composed of dead boundary"
@@ -1871,7 +1878,7 @@ msgstr "Không thể ghi lại đường, bản đồ chưa được mở"
 #: ../lib/vector/Vlib/write.c:168
 #, fuzzy, c-format
 msgid "Unable to rewrite line %d"
-msgstr "Không thể mở tập tin %s trong %s"
+msgstr "Không thể mở tập tin tạm"
 
 #: ../lib/vector/Vlib/write.c:212
 #, fuzzy, c-format
@@ -4286,9 +4293,10 @@ msgid "Vector map <%s> loaded (%d points)"
 msgstr "Không tìm thấy vector đầu vào '%s'"
 
 #: ../lib/ogsf/GS2.c:1638
-#, c-format
+#, fuzzy, c-format
 msgid "Raster map <%s@%s> is outside of current region. Load failed."
 msgstr ""
+"[%s] trong bộ bản đồ [%s] - ở một múi [%d] khác với vùng hiện hành [%d]"
 
 #: ../lib/ogsf/GS2.c:1716 ../lib/ogsf/GS2.c:1722 ../lib/ogsf/GS2.c:1730
 #: ../lib/ogsf/GS2.c:1739 ../lib/ogsf/GS2.c:1747 ../lib/ogsf/GS2.c:1757
@@ -4537,11 +4545,12 @@ msgid "Loading data from attribute table ..."
 msgstr ""
 
 #: ../lib/rst/interp_float/vinput2d.c:79
+#, fuzzy
 msgid "Cannot get layer info"
 msgstr "Không thể lấy thông tin lớp"
 
 #: ../lib/rst/interp_float/vinput2d.c:87
-#, c-format
+#, fuzzy, c-format
 msgid "Cannot open database %s"
 msgstr "Không thể mở CSDL"
 
@@ -4698,8 +4707,9 @@ msgstr ""
 #~ msgid "Cannot rewrite line"
 #~ msgstr "Không thể ghi lại đường"
 
+#, fuzzy
 #~ msgid "Cannot delete line"
-#~ msgstr "Không thể xóa đường"
+#~ msgstr "Không thể ghi lại đường"
 
 #~ msgid "Output name '%s' is not valid vector name."
 #~ msgstr "Tên bản đồ đầu ra '%s' không phải là tên vector hợp lệ"
@@ -4925,3 +4935,73 @@ msgstr ""
 
 #~ msgid "Force overwrite of output files"
 #~ msgstr "Buộc ghi đè các tập tin đầu ra"
+
+#, fuzzy
+#~ msgid ""
+#~ "Unable to open vector map <%s> on level %d. Try to rebuild vector "
+#~ "topology by v.build."
+#~ msgstr "Không thể mở vector cũ %s ở cấp %d"
+
+#, fuzzy
+#~ msgid "Attempt to delete dead feature"
+#~ msgstr "Không thể tính toán trọng tâm cho vùng %d"
+
+#, fuzzy
+#~ msgid "Attempt to restore alive feature"
+#~ msgstr "Không thể tính toán trọng tâm cho vùng %d"
+
+#, fuzzy
+#~ msgid "Unable to find vector map <%s> in <%s>"
+#~ msgstr "không thể mở bản đồ raster [%s in %s]"
+
+#, fuzzy
+#~ msgid "Unable to rewrite feature %d"
+#~ msgstr "Không thể mở tập tin %s trong %s"
+
+#, fuzzy
+#~ msgid ""
+#~ "Unable to restore feature %d, vector map <%s> is not opened on topology "
+#~ "level"
+#~ msgstr "Không thể xóa đường, bản đồ '%s' chưa được mở ở cấp 2"
+
+#, fuzzy
+#~ msgid ""
+#~ "Unable to restore feature %d, vector map <%s> is not opened in 'write' "
+#~ "mode"
+#~ msgstr "Không thể xóa đường, bản đồ '%s' không được mở ở chế độ ghi"
+
+#, fuzzy
+#~ msgid "Unable to restore feature %d from vector map <%s>"
+#~ msgstr "không thể đổi thư mục đến %s"
+
+#, fuzzy
+#~ msgid "Line is not looped"
+#~ msgstr "Không tìm thấy vector đầu vào '%s'"
+
+#, fuzzy
+#~ msgid "Unable to find '%s' in '%s'"
+#~ msgstr "không thể tìm thấy [%s]"
+
+#, fuzzy
+#~ msgid "Using <%s@%s>"
+#~ msgstr "không thể tìm thấy [%s]"
+
+#, fuzzy
+#~ msgid "Unable to locate symbol <%s>"
+#~ msgstr "Không thể mở tập tin %s trong %s"
+
+#, fuzzy
+#~ msgid "Unable to load GDAL library"
+#~ msgstr "Không thể tính toán trọng tâm cho vùng %d"
+
+#, fuzzy
+#~ msgid "Attributes for category %d not found"
+#~ msgstr "Bản ghi CSDL cho phạm trù %d không được tìm thấy"
+
+#, fuzzy
+#~ msgid "Cannot fetch row"
+#~ msgstr "Không thể lấy thông tin lớp"
+
+#, fuzzy
+#~ msgid "Cannot select attributes"
+#~ msgstr "Không thể xóa đường"

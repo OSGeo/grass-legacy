@@ -166,7 +166,7 @@ msgid "Unable to get list tables in database <%s>"
 msgstr "Nelze získat seznam tabulek v databázi <%s>"
 
 #: ../lib/db/dbmi_client/copy_tab.c:157
-#, c-format
+#, fuzzy, c-format
 msgid "Table <%s> already existsin database <%s>"
 msgstr "Tabulka <%s> ji¾ existuje v databázi <%s>"
 
@@ -717,7 +717,7 @@ msgstr "Zapsat 2d pole do rastrové mapy <%s>"
 
 #: ../lib/gpde/N_arrays_io.c:227 ../lib/gpde/N_arrays_io.c:232
 #: ../lib/gpde/N_arrays_io.c:237
-#, c-format
+#, fuzzy, c-format
 msgid "Unable to write rast row %i"
 msgstr "Nelze zapsat øádku rastru %i"
 
@@ -1039,7 +1039,7 @@ msgid "Unable to close 3D raster map <%s>"
 msgstr "Nelze zavøít rastrovou mapu <%s>"
 
 #: ../lib/ogsf/GS2.c:1638
-#, c-format
+#, fuzzy, c-format
 msgid "Raster map <%s@%s> is outside of current region. Load failed."
 msgstr "Rastrová mapa <%s@%s> je mimo souèasný region. Naèítání selhalo."
 
@@ -2424,6 +2424,7 @@ msgid "Type"
 msgstr "Typ"
 
 #: ../lib/gis/parser.c:565
+#, fuzzy
 msgid "Feature type(s)"
 msgstr "Typ(y) vektorových objektù"
 
@@ -2480,7 +2481,7 @@ msgid "Either a standard GRASS color, R:G:B triplet, or \"none\""
 msgstr "Buï standardní GRASS barva, R:G:B triplet nebo \"none\""
 
 #: ../lib/gis/parser.c:779
-#, c-format
+#, fuzzy, c-format
 msgid "BUG in descriptions, option %s in %s does not exist"
 msgstr "BUG v popisu, volba %s v %s neexistuje"
 
@@ -2959,7 +2960,7 @@ msgid "Unknown query tool"
 msgstr "Neznámý dotazovací nástroj"
 
 #: ../lib/vector/vedit/cats.c:65
-#, c-format
+#, fuzzy, c-format
 msgid "Unable to set category %d for line %d"
 msgstr "Nelze nastavit kategorii %d pro linii %d"
 
@@ -3255,6 +3256,7 @@ msgstr "%s %5d"
 
 #: ../lib/vector/Vlib/break_lines.c:122 ../lib/vector/Vlib/break_lines.c:366
 #: ../lib/vector/Vlib/break_lines.c:387
+#, fuzzy
 msgid "Intersections:"
 msgstr "Prùseèíky:"
 
@@ -3264,9 +3266,9 @@ msgid "BUG (delete_area_cats_from_cidx): Area %d does not exist"
 msgstr "BUG (delete_area_cats_from_cidx): Plocha %d neexistuje"
 
 #: ../lib/vector/Vlib/write_nat.c:66
-#, c-format
+#, fuzzy, c-format
 msgid "BUG (add_area_cats_to_cidx): Area %d does not exist"
-msgstr "BUG (add_area_cats_to_cidx):Plocha %d neexistuje"
+msgstr "BUG (delete_area_cats_from_cidx): Plocha %d neexistuje"
 
 #: ../lib/vector/Vlib/write_nat.c:600
 msgid "Attempt to delete dead line"
@@ -3428,38 +3430,41 @@ msgid "Requested format is not compiled in this version"
 msgstr "Po¾adovaný formát není zkompilován v této verzi"
 
 #: ../lib/vector/Vlib/write.c:109
+#, fuzzy
 msgid "Unable to write line, vector map is not opened"
 msgstr "Nelze zapsat linii, vektorová mapa není otevøena"
 
 #: ../lib/vector/Vlib/write.c:122
+#, fuzzy
 msgid "Unable to write line (negative offset)"
 msgstr "Nelze zapsat linii (záporný offset)"
 
 #: ../lib/vector/Vlib/write.c:155
+#, fuzzy
 msgid "Unable to rewrite line, vector map is not opened"
 msgstr "Nelze pøepsat linii, vektorová mapa není otevøena"
 
 #: ../lib/vector/Vlib/write.c:168
-#, c-format
+#, fuzzy, c-format
 msgid "Unable to rewrite line %d"
-msgstr "Nelze pøepsat linii  %d"
+msgstr "Nelze èíst linii %d"
 
 #: ../lib/vector/Vlib/write.c:212
-#, c-format
+#, fuzzy, c-format
 msgid "Unable to delete line %d, vector map <%s> is not opened on topo level 2"
 msgstr ""
 "Nelze odstranit linii %d, vektorová mapa <%s> není otevøena na úrovni "
 "topologie 2"
 
 #: ../lib/vector/Vlib/write.c:218
-#, c-format
+#, fuzzy, c-format
 msgid "Unable to delete line %d, vector map <%s> is not opened in 'write' mode"
 msgstr ""
 "Nelze odstranit linii %d, vektorová mapa <%s> není otevøena v módu pro "
 "'zápis'"
 
 #: ../lib/vector/Vlib/write.c:232
-#, c-format
+#, fuzzy, c-format
 msgid "Unable to delete line %d from vector map <%s>"
 msgstr "Nelze smazat linii %d z vektorové vrstvy <%s>"
 
@@ -3516,9 +3521,9 @@ msgstr ""
 
 #: ../lib/vector/Vlib/open.c:211 ../lib/vector/Vlib/open.c:278
 #: ../lib/vector/Vlib/open.c:297
-#, c-format
+#, fuzzy, c-format
 msgid "Unable to open vector map <%s> on topology level %d"
-msgstr "Nelze otevøít existující vektorovou mapu <%s> na úrovni %d"
+msgstr "Nelze kopírovat vektorovou mapu <%s> do <%s>"
 
 #: ../lib/vector/Vlib/open.c:213
 msgid "Unable to read head file"
@@ -3641,6 +3646,7 @@ msgid "Wrong line direction in Vect_net_get_line_cost()"
 msgstr "Chybný smìr linie ve Vect_net_get_line_cost()"
 
 #: ../lib/vector/Vlib/area.c:53
+#, fuzzy
 msgid "Attempt to read points of nonexisting area"
 msgstr "Pokus o ètení bodù z neexistující plochy"
 
@@ -3681,10 +3687,12 @@ msgid "Area of size = 0.0 ignored"
 msgstr "Plocha o velikosti = 0.0 ignorována"
 
 #: ../lib/vector/Vlib/build_nat.c:151
+#, fuzzy
 msgid "Request to find area outside nonexisting isle"
 msgstr "Po¾adavek najít plochy mimo neexistující ostrov"
 
 #: ../lib/vector/Vlib/build_nat.c:510
+#, fuzzy
 msgid "Registering primitives: "
 msgstr "Registrace prvkù: "
 
@@ -3693,30 +3701,37 @@ msgid "Unable to read vector map"
 msgstr "Nelze èíst vektorovou vrstvu"
 
 #: ../lib/vector/Vlib/build_nat.c:560
+#, fuzzy
 msgid "primitives registered"
 msgstr "prvky zaregistrovány"
 
 #: ../lib/vector/Vlib/build_nat.c:561
+#, fuzzy
 msgid "vertices registered"
 msgstr "opìrných bodù zaregistrováno"
 
 #: ../lib/vector/Vlib/build_nat.c:572
+#, fuzzy
 msgid "Building areas: "
 msgstr "Vytváøení ploch:"
 
 #: ../lib/vector/Vlib/build_nat.c:595
+#, fuzzy
 msgid "areas built"
 msgstr "ploch vytvoøeno"
 
 #: ../lib/vector/Vlib/build_nat.c:596
+#, fuzzy
 msgid "isles built"
 msgstr "Ostrovù vytvoøeno"
 
 #: ../lib/vector/Vlib/build_nat.c:605
+#, fuzzy
 msgid "Attaching islands: "
 msgstr "Pøidávání ostrovù: "
 
 #: ../lib/vector/Vlib/build_nat.c:622
+#, fuzzy
 msgid "Attaching centroids: "
 msgstr "Pøipojování centroidù: "
 
@@ -3852,89 +3867,92 @@ msgid "Breaks"
 msgstr "Zlomy"
 
 #: ../lib/vector/Vlib/build.c:144
-#, c-format
+#, fuzzy, c-format
 msgid "Building topology for vector map <%s>...\n"
 msgstr "Vytváøím topologii pro vektorovou vrstvu <%s>...\n"
 
 #: ../lib/vector/Vlib/build.c:160
+#, fuzzy
 msgid "Topology was built\n"
 msgstr "Topologie byla vytvoøena\n"
 
 #: ../lib/vector/Vlib/build.c:172
-#, c-format
+#, fuzzy, c-format
 msgid "Number of nodes     :   %d\n"
 msgstr "Poèet uzlù          :   %d\n"
 
 #: ../lib/vector/Vlib/build.c:173
-#, c-format
+#, fuzzy, c-format
 msgid "Number of primitives:   %d\n"
 msgstr "Poèet primitiv      :   %d\n"
 
 #: ../lib/vector/Vlib/build.c:174
-#, c-format
+#, fuzzy, c-format
 msgid "Number of points    :   %d\n"
 msgstr "Poèet bodù          :   %d\n"
 
 #: ../lib/vector/Vlib/build.c:175
-#, c-format
+#, fuzzy, c-format
 msgid "Number of lines     :   %d\n"
 msgstr "Poèet linií         :   %d\n"
 
 #: ../lib/vector/Vlib/build.c:176
-#, c-format
+#, fuzzy, c-format
 msgid "Number of boundaries:   %d\n"
 msgstr "Poèet hranic        :   %d\n"
 
 #: ../lib/vector/Vlib/build.c:177
-#, c-format
+#, fuzzy, c-format
 msgid "Number of centroids :   %d\n"
 msgstr "Poèet centroidù     :   %d\n"
 
 #: ../lib/vector/Vlib/build.c:180
-#, c-format
+#, fuzzy, c-format
 msgid "Number of faces     :   %d\n"
 msgstr "Poèet stìn          :   %d\n"
 
 #: ../lib/vector/Vlib/build.c:183
-#, c-format
+#, fuzzy, c-format
 msgid "Number of kernels   :   %d\n"
 msgstr "Poèet jader:        :   %d\n"
 
 #: ../lib/vector/Vlib/build.c:223
-#, c-format
+#, fuzzy, c-format
 msgid "Number of areas     :   %d\n"
 msgstr "Poèet ploch         :   %d\n"
 
 #: ../lib/vector/Vlib/build.c:224
-#, c-format
+#, fuzzy, c-format
 msgid "Number of isles     :   %d\n"
 msgstr "Poèet ostrovù       :   %d\n"
 
 #: ../lib/vector/Vlib/build.c:227
-#, c-format
+#, fuzzy, c-format
 msgid "Number of incorrect boundaries   :   %d\n"
 msgstr "Poèet chybných hranic            :   %d\n"
 
 #: ../lib/vector/Vlib/build.c:231
-#, c-format
+#, fuzzy, c-format
 msgid "Number of centroids outside area :   %d\n"
 msgstr "Poèet centroidù mimo plochu      :   %d\n"
 
 #: ../lib/vector/Vlib/build.c:235
-#, c-format
+#, fuzzy, c-format
 msgid "Number of duplicate centroids    :   %d\n"
 msgstr "Poèet duplikátních centroidù     :   %d\n"
 
 #: ../lib/vector/Vlib/build.c:239
-#, c-format
+#, fuzzy, c-format
 msgid "Number of areas without centroid :   %d\n"
 msgstr "Poèet ploch bez centroidu        :   %d\n"
 
 #: ../lib/vector/Vlib/build.c:244
+#, fuzzy
 msgid "Number of areas     :   -\n"
 msgstr "Poèet ploch         :   -\n"
 
 #: ../lib/vector/Vlib/build.c:245
+#, fuzzy
 msgid "Number of isles     :   -\n"
 msgstr "Poèet ostrovù       :   -\n"
 
@@ -4054,7 +4072,7 @@ msgid "vector map is not opened"
 msgstr "Vektorová mapa není otevøena"
 
 #: ../lib/vector/Vlib/read.c:106
-#, c-format
+#, fuzzy, c-format
 msgid ""
 "Vect_read_line(): line %d is not reasonable (max line in vector map: %d)"
 msgstr ""
@@ -4385,6 +4403,7 @@ msgid "Loading data from attribute table ..."
 msgstr "Naèítání dat z atributové tabulky ..."
 
 #: ../lib/rst/interp_float/vinput2d.c:79
+#, fuzzy
 msgid "Cannot get layer info"
 msgstr "Nelze získat informace o vrstvì"
 
@@ -4592,7 +4611,7 @@ msgstr ""
 "nalezeny parametry. Zkontrolujte nastavení."
 
 #: ../lib/proj/convert.c:440
-#, c-format
+#, fuzzy, c-format
 msgid ""
 "Invalid tranformation number %d; valid range is 1 to %d. Leaving datum "
 "transform parameters unspecified."
@@ -4630,3 +4649,81 @@ msgstr "Nesprávná barva pro symbol: '%s', pou¾ívám výchozí"
 #~ msgstr ""
 #~ "Ukonèení algoritmu: %i hranic intervalù nebo více nejsou statisticky "
 #~ "významné pro alfa=0,05"
+
+#, fuzzy
+#~ msgid ""
+#~ "Unable to open vector map <%s> on level %d. Try to rebuild vector "
+#~ "topology by v.build."
+#~ msgstr "Nelze otevøít existující vektorovou mapu <%s> na úrovni %d"
+
+#, fuzzy
+#~ msgid "%s: Area %d does not exist"
+#~ msgstr "BUG (add_area_cats_to_cidx):Plocha %d neexistuje"
+
+#, fuzzy
+#~ msgid "Attempt to delete dead feature"
+#~ msgstr "Pokus o odstranìní mrtvé plochy"
+
+#, fuzzy
+#~ msgid "Attempt to restore alive feature"
+#~ msgstr "Pokus o odstranìní mrtvé plochy"
+
+#, fuzzy
+#~ msgid "Unable to rewrite feature %d"
+#~ msgstr "Nelze pøepsat linii  %d"
+
+#, fuzzy
+#~ msgid ""
+#~ "Unable to restore feature %d, vector map <%s> is not opened on topology "
+#~ "level"
+#~ msgstr ""
+#~ "Nelze odstranit linii %d, vektorová mapa <%s> není otevøena na úrovni "
+#~ "topologie 2"
+
+#, fuzzy
+#~ msgid ""
+#~ "Unable to restore feature %d, vector map <%s> is not opened in 'write' "
+#~ "mode"
+#~ msgstr ""
+#~ "Nelze odstranit linii %d, vektorová mapa <%s> není otevøena v módu pro "
+#~ "'zápis'"
+
+#, fuzzy
+#~ msgid "Unable to restore feature %d from vector map <%s>"
+#~ msgstr "Nelze smazat linii %d z vektorové vrstvy <%s>"
+
+#, fuzzy
+#~ msgid "Line is not looped"
+#~ msgstr "Matice nejsou povoleny"
+
+#, fuzzy
+#~ msgid "side != 0 feature not implemented"
+#~ msgstr "není implementováno"
+
+#, fuzzy
+#~ msgid "Using <%s@%s>"
+#~ msgstr "Nelze nalézt <%s@%s>"
+
+#, fuzzy
+#~ msgid "Feature id"
+#~ msgstr "Prvek:"
+
+#, fuzzy
+#~ msgid "Feature ids"
+#~ msgstr "Prvek:"
+
+#, fuzzy
+#~ msgid "Unable to locate symbol <%s>"
+#~ msgstr "Nelze vytvoøit tabulku <%s>"
+
+#, fuzzy
+#~ msgid "Unable to load GDAL library"
+#~ msgstr "Nelze alokovat pamì»"
+
+#, fuzzy
+#~ msgid "Attributes for category %d not found"
+#~ msgstr "Datový záznam pro cat %d nebyla nalezena"
+
+#, fuzzy
+#~ msgid "Cannot open database %s by driver %s"
+#~ msgstr "Nelze otevøít databázi <%s> pomocí ovladaèe <%s>"

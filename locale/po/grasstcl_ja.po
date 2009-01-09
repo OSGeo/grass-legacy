@@ -7164,3 +7164,39 @@ msgstr "テキスト"
 #, fuzzy
 #~ msgid "Modify mapset search path"
 #~ msgstr "マップセット"
+
+#, fuzzy
+#~ msgid "Raster map for profile"
+#~ msgstr "ラスター の:"
+
+#, fuzzy
+#~ msgid " Save "
+#~ msgstr "保存"
+
+#, fuzzy
+#~ msgid " Clear "
+#~ msgstr "クリア"
+
+#, fuzzy
+#~ msgid "Geonames"
+#~ msgstr "名前の変更"
+
+#, fuzzy
+#~ msgid "Import data table"
+#~ msgstr "ファイル"
+
+#, fuzzy
+#~ msgid "Export data table"
+#~ msgstr "ファイル"
+
+#, fuzzy
+#~ msgid "Color tables (stddev)"
+#~ msgstr "コピー"
+
+#, fuzzy
+#~ msgid "Distance to features"
+#~ msgstr "単位 "
+
+#, fuzzy
+#~ msgid "Assign colors"
+#~ msgstr "色"

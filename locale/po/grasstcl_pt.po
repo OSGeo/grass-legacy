@@ -5045,6 +5045,7 @@ msgid "Garmin GPS Waypoints/Routes/Tracks"
 msgstr "Pontos/Rotas/Trilhas do GPS Garmin"
 
 #: ../gui/tcltk/d.m/menu.tcl:103
+#, fuzzy
 msgid "GPS Waypoints/Routes/Tracks using GPSBabel"
 msgstr "Pontos/Rotas/Trilhas do GPS, usando GPSBabel"
 
@@ -6392,3 +6393,55 @@ msgstr "Teste"
 #~ msgstr ""
 #~ "Encontra ID da linha e km+afastamento reais para pontos dados em mapa "
 #~ "vetorial usando sistema de referência linear"
+
+#, fuzzy
+#~ msgid "Required"
+#~ msgstr "obrigatório"
+
+#, fuzzy
+#~ msgid "Raster map for profile"
+#~ msgstr "Mapa raster para legendar"
+
+#, fuzzy
+#~ msgid "Profile Window"
+#~ msgstr "Análise de perfil"
+
+#, fuzzy
+#~ msgid " Save "
+#~ msgstr "Salvar"
+
+#, fuzzy
+#~ msgid " Clear "
+#~ msgstr "Limpar"
+
+#, fuzzy
+#~ msgid "Multiple formats using GDAL (link into instead of import)"
+#~ msgstr "Múltiplos formatos usando GDAL"
+
+#, fuzzy
+#~ msgid "Geonames"
+#~ msgstr "Renomear"
+
+#, fuzzy
+#~ msgid "Import data table"
+#~ msgstr "Importar mapa raster"
+
+#, fuzzy
+#~ msgid "Multiple GPS formats using GPSBabel"
+#~ msgstr "Múltiplos formatos usando OGR"
+
+#, fuzzy
+#~ msgid "Export data table"
+#~ msgstr "Exportar mapa raster"
+
+#, fuzzy
+#~ msgid "Color tables (stddev)"
+#~ msgstr "Tabela de cores"
+
+#, fuzzy
+#~ msgid "Distance to features"
+#~ msgstr "Feições texturais"
+
+#, fuzzy
+#~ msgid "Assign colors"
+#~ msgstr "Cor da Linha"

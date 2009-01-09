@@ -512,9 +512,9 @@ msgid "Unable to get list tables in database <%s>"
 msgstr "का"
 
 #: ../lib/db/dbmi_client/copy_tab.c:157
-#, c-format
+#, fuzzy, c-format
 msgid "Table <%s> already existsin database <%s>"
-msgstr ""
+msgstr "का"
 
 #: ../lib/db/dbmi_client/copy_tab.c:199 ../lib/db/dbmi_client/copy_tab.c:276
 #: ../lib/db/dbmi_client/table.c:110
@@ -890,12 +890,12 @@ msgid "Number of primitives:   %d\n"
 msgstr "का n"
 
 #: ../lib/vector/Vlib/build.c:174
-#, c-format
+#, fuzzy, c-format
 msgid "Number of points    :   %d\n"
 msgstr "िबनदूओाओ की िगनती    :   %d\n"
 
 #: ../lib/vector/Vlib/build.c:175
-#, c-format
+#, fuzzy, c-format
 msgid "Number of lines     :   %d\n"
 msgstr "रेखाओ की िगनती  े  :   %d\n"
 
@@ -1011,7 +1011,7 @@ msgstr "के लिए"
 #: ../lib/vector/Vlib/open.c:297
 #, fuzzy, c-format
 msgid "Unable to open vector map <%s> on topology level %d"
-msgstr "चालू"
+msgstr "नक़ल"
 
 #: ../lib/vector/Vlib/open.c:213
 #, fuzzy
@@ -1330,8 +1330,9 @@ msgid "BUG (add_area_cats_to_cidx): Area %d does not exist"
 msgstr ""
 
 #: ../lib/vector/Vlib/write_nat.c:600
+#, fuzzy
 msgid "Attempt to delete dead line"
-msgstr ""
+msgstr "के लिए n"
 
 #: ../lib/vector/Vlib/level_two.c:210 ../lib/vector/Vlib/level_two.c:235
 #: ../lib/vector/Vlib/level_two.c:259 ../lib/vector/Vlib/level_two.c:278
@@ -1372,8 +1373,9 @@ msgid "Request to find area outside nonexisting isle"
 msgstr ""
 
 #: ../lib/vector/Vlib/build_nat.c:510
+#, fuzzy
 msgid "Registering primitives: "
-msgstr ""
+msgstr "का n"
 
 #: ../lib/vector/Vlib/build_nat.c:520
 #, fuzzy
@@ -1470,8 +1472,9 @@ msgid "Map structure has been closed"
 msgstr ""
 
 #: ../lib/vector/Vlib/area.c:53
+#, fuzzy
 msgid "Attempt to read points of nonexisting area"
-msgstr ""
+msgstr "के लिए"
 
 #: ../lib/vector/Vlib/area.c:125
 #, fuzzy, c-format
@@ -1846,7 +1849,7 @@ msgstr "है नहीं"
 #: ../lib/vector/Vlib/write.c:168
 #, fuzzy, c-format
 msgid "Unable to rewrite line %d"
-msgstr "का"
+msgstr "के लिए n"
 
 #: ../lib/vector/Vlib/write.c:212
 #, fuzzy, c-format
@@ -4240,9 +4243,9 @@ msgid "Vector map <%s> loaded (%d points)"
 msgstr "नहीं"
 
 #: ../lib/ogsf/GS2.c:1638
-#, c-format
+#, fuzzy, c-format
 msgid "Raster map <%s@%s> is outside of current region. Load failed."
-msgstr ""
+msgstr "है नहीं."
 
 #: ../lib/ogsf/GS2.c:1716 ../lib/ogsf/GS2.c:1722 ../lib/ogsf/GS2.c:1730
 #: ../lib/ogsf/GS2.c:1739 ../lib/ogsf/GS2.c:1747 ../lib/ogsf/GS2.c:1757
@@ -4490,13 +4493,14 @@ msgid "Loading data from attribute table ..."
 msgstr ""
 
 #: ../lib/rst/interp_float/vinput2d.c:79
+#, fuzzy
 msgid "Cannot get layer info"
-msgstr ""
+msgstr "के लिए n"
 
 #: ../lib/rst/interp_float/vinput2d.c:87
-#, c-format
+#, fuzzy, c-format
 msgid "Cannot open database %s"
-msgstr ""
+msgstr "लिंक ."
 
 #: ../lib/rst/interp_float/vinput2d.c:92
 #, fuzzy, c-format
@@ -4850,3 +4854,65 @@ msgstr ""
 #, fuzzy
 #~ msgid "Unknown attribute type in call to G_readsites_xyz()!\n"
 #~ msgstr "जी n"
+
+#, fuzzy
+#~ msgid ""
+#~ "Unable to open vector map <%s> on level %d. Try to rebuild vector "
+#~ "topology by v.build."
+#~ msgstr "चालू"
+
+#, fuzzy
+#~ msgid "Attempt to delete dead feature"
+#~ msgstr "के लिए"
+
+#, fuzzy
+#~ msgid "Attempt to restore alive feature"
+#~ msgstr "के लिए"
+
+#, fuzzy
+#~ msgid "Unable to find vector map <%s> in <%s>"
+#~ msgstr "नक़ल"
+
+#, fuzzy
+#~ msgid "Unable to rewrite feature %d"
+#~ msgstr "का"
+
+#, fuzzy
+#~ msgid ""
+#~ "Unable to restore feature %d, vector map <%s> is not opened on topology "
+#~ "level"
+#~ msgstr "है नहीं चालू"
+
+#, fuzzy
+#~ msgid ""
+#~ "Unable to restore feature %d, vector map <%s> is not opened in 'write' "
+#~ "mode"
+#~ msgstr "है नहीं"
+
+#, fuzzy
+#~ msgid "Unable to restore feature %d from vector map <%s>"
+#~ msgstr "के लिए"
+
+#, fuzzy
+#~ msgid "Line is not looped"
+#~ msgstr "नहीं"
+
+#, fuzzy
+#~ msgid "Unable to find '%s' in '%s'"
+#~ msgstr "का"
+
+#, fuzzy
+#~ msgid "Using <%s@%s>"
+#~ msgstr "का"
+
+#, fuzzy
+#~ msgid "Unable to locate symbol <%s>"
+#~ msgstr "का"
+
+#, fuzzy
+#~ msgid "Unable to load GDAL library"
+#~ msgstr "के लिए"
+
+#, fuzzy
+#~ msgid "Attributes for category %d not found"
+#~ msgstr "के लिए नहीं"

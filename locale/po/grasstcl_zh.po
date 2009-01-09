@@ -1281,8 +1281,9 @@ msgid "Return to previous zoom"
 msgstr ""
 
 #: ../gui/tcltk/gis.m/maptool.tcl:172
+#, fuzzy
 msgid "Zoom to..."
-msgstr ""
+msgstr "放大"
 
 #: ../gui/tcltk/gis.m/maptool.tcl:184
 #, fuzzy
@@ -1328,8 +1329,9 @@ msgid "Print raster & vector maps to eps file"
 msgstr ""
 
 #: ../gui/tcltk/gis.m/maptool.tcl:278
+#, fuzzy
 msgid "Export display to graphics file"
-msgstr ""
+msgstr "保存当前显示为图片文件"
 
 #: ../gui/tcltk/gis.m/maptool.tcl:289
 msgid "low quality (50)"
@@ -6038,3 +6040,39 @@ msgstr "测试"
 
 #~ msgid "WARNING: Error creating new location"
 #~ msgstr "警告："
+
+#, fuzzy
+#~ msgid "Raster map for profile"
+#~ msgstr "栅格地图： "
+
+#, fuzzy
+#~ msgid " Save "
+#~ msgstr "保存"
+
+#, fuzzy
+#~ msgid " Clear "
+#~ msgstr "清除"
+
+#, fuzzy
+#~ msgid "Multiple formats using GDAL (link into instead of import)"
+#~ msgstr "使用GDAL的多种格式"
+
+#, fuzzy
+#~ msgid "Geonames"
+#~ msgstr "重命名地图"
+
+#, fuzzy
+#~ msgid "Import data table"
+#~ msgstr "创建表"
+
+#, fuzzy
+#~ msgid "Multiple GPS formats using GPSBabel"
+#~ msgstr "使用GDAL的多种格式"
+
+#, fuzzy
+#~ msgid "Export data table"
+#~ msgstr "创建表"
+
+#, fuzzy
+#~ msgid "Distance to features"
+#~ msgstr "纹理特征"

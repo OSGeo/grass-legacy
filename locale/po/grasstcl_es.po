@@ -6393,3 +6393,35 @@ msgstr ""
 #: ../visualization/nviz/scripts/panel_animation.tcl:275
 msgid "Test"
 msgstr "Test"
+
+#, fuzzy
+#~ msgid " Save "
+#~ msgstr "Guardar"
+
+#, fuzzy
+#~ msgid " Clear "
+#~ msgstr "Limpiar"
+
+#, fuzzy
+#~ msgid "Multiple formats using GDAL (link into instead of import)"
+#~ msgstr "Varios formatos que usan GDAL"
+
+#, fuzzy
+#~ msgid "Geonames"
+#~ msgstr "Cambiar nombre"
+
+#, fuzzy
+#~ msgid "Import data table"
+#~ msgstr "Importar mapa ráster"
+
+#, fuzzy
+#~ msgid "Export data table"
+#~ msgstr "Exportar mapa ráster"
+
+#, fuzzy
+#~ msgid "Color tables (stddev)"
+#~ msgstr "Tablas de color"
+
+#, fuzzy
+#~ msgid "Assign colors"
+#~ msgstr "color de línea"

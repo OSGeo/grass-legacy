@@ -6161,3 +6161,15 @@ msgstr ""
 #~ "by GDAL (raster) or OGR (vector)\n"
 #~ "\n"
 #~ msgstr "vektors"
+
+#, fuzzy
+#~ msgid "Raster map for profile"
+#~ msgstr "vektors"
+
+#, fuzzy
+#~ msgid "Import data table"
+#~ msgstr "vektors"
+
+#, fuzzy
+#~ msgid "Export data table"
+#~ msgstr "vektors"

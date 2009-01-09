@@ -900,7 +900,7 @@ msgid "Unknown query tool"
 msgstr "Неизвестный инструмент запроса"
 
 #: ../lib/vector/vedit/cats.c:66
-#, c-format
+#, fuzzy, c-format
 msgid "Unable to set category %d for line %d"
 msgstr "Невозможно установить категорию %d для линии %d"
 
@@ -931,89 +931,92 @@ msgid "Requested format is not compiled in this version"
 msgstr "Запрашиваемый формат для этой версии не скомпилирован."
 
 #: ../lib/vector/Vlib/build.c:147
-#, c-format
+#, fuzzy, c-format
 msgid "Building topology for vector map <%s>...\n"
 msgstr "Построение топологии для векторного слоя  <%s>...\n"
 
 #: ../lib/vector/Vlib/build.c:163
+#, fuzzy
 msgid "Topology was built\n"
 msgstr "Топология построена\n"
 
 #: ../lib/vector/Vlib/build.c:175
-#, c-format
+#, fuzzy, c-format
 msgid "Number of nodes     :   %d\n"
 msgstr "Количество узлов     :   %d\n"
 
 #: ../lib/vector/Vlib/build.c:176
-#, c-format
+#, fuzzy, c-format
 msgid "Number of primitives:   %d\n"
 msgstr "Количество примитивов:   %d\n"
 
 #: ../lib/vector/Vlib/build.c:177
-#, c-format
+#, fuzzy, c-format
 msgid "Number of points    :   %d\n"
 msgstr "Количество точек    :   %d\n"
 
 #: ../lib/vector/Vlib/build.c:178
-#, c-format
+#, fuzzy, c-format
 msgid "Number of lines     :   %d\n"
 msgstr "Количество линий     :   %d\n"
 
 #: ../lib/vector/Vlib/build.c:179
-#, c-format
+#, fuzzy, c-format
 msgid "Number of boundaries:   %d\n"
 msgstr "Количество границ:   %d\n"
 
 #: ../lib/vector/Vlib/build.c:180
-#, c-format
+#, fuzzy, c-format
 msgid "Number of centroids :   %d\n"
 msgstr "Количество центроидов :   %d\n"
 
 #: ../lib/vector/Vlib/build.c:183
-#, c-format
+#, fuzzy, c-format
 msgid "Number of faces     :   %d\n"
 msgstr "Количество граней     :   %d\n"
 
 #: ../lib/vector/Vlib/build.c:186
-#, c-format
+#, fuzzy, c-format
 msgid "Number of kernels   :   %d\n"
 msgstr "Количество ядер   :   %d\n"
 
 #: ../lib/vector/Vlib/build.c:226
-#, c-format
+#, fuzzy, c-format
 msgid "Number of areas     :   %d\n"
 msgstr "Количество полигонов     :   %d\n"
 
 #: ../lib/vector/Vlib/build.c:227
-#, c-format
+#, fuzzy, c-format
 msgid "Number of isles     :   %d\n"
 msgstr "Количество островов     :   %d\n"
 
 #: ../lib/vector/Vlib/build.c:230
-#, c-format
+#, fuzzy, c-format
 msgid "Number of incorrect boundaries   :   %d\n"
 msgstr "Количество неправильных границ   :   %d\n"
 
 #: ../lib/vector/Vlib/build.c:234
-#, c-format
+#, fuzzy, c-format
 msgid "Number of centroids outside area :   %d\n"
 msgstr "Количество центроидов вне полигонов :   %d\n"
 
 #: ../lib/vector/Vlib/build.c:238
-#, c-format
+#, fuzzy, c-format
 msgid "Number of duplicate centroids    :   %d\n"
 msgstr "Количество центроидов-дупликатов    :   %d\n"
 
 #: ../lib/vector/Vlib/build.c:242
-#, c-format
+#, fuzzy, c-format
 msgid "Number of areas without centroid :   %d\n"
 msgstr "Количество полигонов без центроидов :   %d\n"
 
 #: ../lib/vector/Vlib/build.c:247
+#, fuzzy
 msgid "Number of areas     :   -\n"
 msgstr "Количество полигонов     :   -\n"
 
 #: ../lib/vector/Vlib/build.c:248
+#, fuzzy
 msgid "Number of isles     :   -\n"
 msgstr "Количество островов     :   -\n"
 
@@ -1305,6 +1308,7 @@ msgstr "%s %5d"
 
 #: ../lib/vector/Vlib/break_lines.c:122 ../lib/vector/Vlib/break_lines.c:366
 #: ../lib/vector/Vlib/break_lines.c:387
+#, fuzzy
 msgid "Intersections:"
 msgstr "Пересечения: "
 
@@ -1435,6 +1439,7 @@ msgid "Request to find area outside nonexistent isle"
 msgstr "Попытка найти полигон вокруг несуществующего острова"
 
 #: ../lib/vector/Vlib/build_nat.c:510
+#, fuzzy
 msgid "Registering primitives: "
 msgstr "Регистрируются примитивы:"
 
@@ -1443,30 +1448,37 @@ msgid "Unable to read vector map"
 msgstr "Невозможно прочитать векторный слой"
 
 #: ../lib/vector/Vlib/build_nat.c:560
+#, fuzzy
 msgid "primitives registered"
 msgstr "примитивов зарегистрировано"
 
 #: ../lib/vector/Vlib/build_nat.c:561
+#, fuzzy
 msgid "vertices registered"
 msgstr "узлов зарегистрировано"
 
 #: ../lib/vector/Vlib/build_nat.c:572
+#, fuzzy
 msgid "Building areas: "
 msgstr "Построение полигонов:"
 
 #: ../lib/vector/Vlib/build_nat.c:595
+#, fuzzy
 msgid "areas built"
 msgstr "полигонов построено"
 
 #: ../lib/vector/Vlib/build_nat.c:596
+#, fuzzy
 msgid "isles built"
 msgstr "островов создано"
 
 #: ../lib/vector/Vlib/build_nat.c:605
+#, fuzzy
 msgid "Attaching islands: "
 msgstr "Назначаются острова:"
 
 #: ../lib/vector/Vlib/build_nat.c:622
+#, fuzzy
 msgid "Attaching centroids: "
 msgstr "Назначаются центроиды:"
 
@@ -3151,6 +3163,7 @@ msgid "Type"
 msgstr "Тип"
 
 #: ../lib/gis/parser.c:565
+#, fuzzy
 msgid "Feature type(s)"
 msgstr "Тип(ы) объекта(ов)"
 
@@ -4594,8 +4607,9 @@ msgid "Loading data from attribute table ..."
 msgstr "Загружаются данные из таблицы аттрибутов"
 
 #: ../lib/rst/interp_float/vinput2d.c:79
+#, fuzzy
 msgid "Cannot get layer info"
-msgstr "Невозможно получить информацию о слое"
+msgstr "Не могу открыть врем. файл"
 
 #: ../lib/rst/interp_float/vinput2d.c:87
 #, c-format
@@ -4695,6 +4709,7 @@ msgstr "создана битмэп маска "
 #~ msgid "field missing east"
 #~ msgstr "отсутствует поле east"
 
+#, fuzzy
 #~ msgid "Cannot describe table <%s>"
 #~ msgstr "Невозможно описать таблицу <%s>"
 
@@ -4843,3 +4858,31 @@ msgstr "создана битмэп маска "
 #, fuzzy
 #~ msgid "ERROR: GISBASE not set\n"
 #~ msgstr "ОШИБКА: GISBASE не установлен\n"
+
+#, fuzzy
+#~ msgid "Line is not looped"
+#~ msgstr "Матрицы не разрешены"
+
+#, fuzzy
+#~ msgid "side != 0 feature not implemented"
+#~ msgstr "не предусмотрено"
+
+#, fuzzy
+#~ msgid "Feature id"
+#~ msgstr "Объект: "
+
+#, fuzzy
+#~ msgid "Feature ids"
+#~ msgstr "Объект: "
+
+#, fuzzy
+#~ msgid "Attributes for category %d not found"
+#~ msgstr "Для категории %d не найдена запись в БД"
+
+#, fuzzy
+#~ msgid "Cannot fetch row"
+#~ msgstr "Невозможно получить информацию о слое"
+
+#, fuzzy
+#~ msgid "Cannot select attributes"
+#~ msgstr "Невозможно описать таблицу <%s>"

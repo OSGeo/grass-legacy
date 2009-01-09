@@ -6680,3 +6680,43 @@ msgstr ""
 
 msgid "Albedo"
 msgstr "Albedo"
+
+#, fuzzy
+#~ msgid " Save "
+#~ msgstr "Zapisz"
+
+#, fuzzy
+#~ msgid " Clear "
+#~ msgstr "Wyczy¶æ"
+
+#, fuzzy
+#~ msgid "Multiple formats using GDAL (link into instead of import)"
+#~ msgstr "Ró¿norodne formaty poprzez sterownik GDAL"
+
+#, fuzzy
+#~ msgid "Geonames"
+#~ msgstr "Zmieñ nazwê"
+
+#, fuzzy
+#~ msgid "Import data table"
+#~ msgstr "Import map rastrowych"
+
+#, fuzzy
+#~ msgid "Multiple GPS formats using GPSBabel"
+#~ msgstr "Ró¿ne formaty przy pomocy OGR"
+
+#, fuzzy
+#~ msgid "Export data table"
+#~ msgstr "Eksportuj mapê rastrow±"
+
+#, fuzzy
+#~ msgid "Color tables (stddev)"
+#~ msgstr "Tabele kolorów"
+
+#, fuzzy
+#~ msgid "Distance to features"
+#~ msgstr "Edytuj obiekty"
+
+#, fuzzy
+#~ msgid "Assign colors"
+#~ msgstr "kolor linii"

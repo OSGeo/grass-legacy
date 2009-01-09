@@ -4861,6 +4861,7 @@ msgid "Garmin GPS Waypoints/Routes/Tracks"
 msgstr "Garmin KKS Noktaları/Rotaları/İzleri"
 
 #: ../gui/tcltk/d.m/menu.tcl:103
+#, fuzzy
 msgid "GPS Waypoints/Routes/Tracks using GPSBabel"
 msgstr "GPSBabel'in kullandığı KKS Noktaları/Rotaları/İzleri"
 
@@ -6097,3 +6098,55 @@ msgstr "Sınama"
 #~ "takip eden mesajı verdi:\n"
 #~ "\n"
 #~ "%s"
+
+#, fuzzy
+#~ msgid "Required"
+#~ msgstr "gereken"
+
+#, fuzzy
+#~ msgid "Raster map for profile"
+#~ msgstr "Lejand için raster harita"
+
+#, fuzzy
+#~ msgid "Profile Window"
+#~ msgstr "Kesit analizi"
+
+#, fuzzy
+#~ msgid " Save "
+#~ msgstr "Kaydet"
+
+#, fuzzy
+#~ msgid " Clear "
+#~ msgstr "Temizle"
+
+#, fuzzy
+#~ msgid "Multiple formats using GDAL (link into instead of import)"
+#~ msgstr "GDAL desteği olan birçok biçim"
+
+#, fuzzy
+#~ msgid "Geonames"
+#~ msgstr "Yeniden adlandır"
+
+#, fuzzy
+#~ msgid "Import data table"
+#~ msgstr "Raster haritaları içe aktar"
+
+#, fuzzy
+#~ msgid "Multiple GPS formats using GPSBabel"
+#~ msgstr "OGR kullanan birçok biçim"
+
+#, fuzzy
+#~ msgid "Export data table"
+#~ msgstr "Raster haritayı dışa aktar"
+
+#, fuzzy
+#~ msgid "Color tables (stddev)"
+#~ msgstr "Renk tabloları"
+
+#, fuzzy
+#~ msgid "Distance to features"
+#~ msgstr "Objeleri düzenle"
+
+#, fuzzy
+#~ msgid "Assign colors"
+#~ msgstr "çizgi rengi"

@@ -838,7 +838,7 @@ msgid "Unknown query tool"
 msgstr ""
 
 #: ../lib/vector/vedit/cats.c:66
-#, c-format
+#, fuzzy, c-format
 msgid "Unable to set category %d for line %d"
 msgstr "Nie można ustawić kategorii %d dla linii %d"
 
@@ -2982,6 +2982,7 @@ msgid "Type"
 msgstr "Typ"
 
 #: ../lib/gis/parser.c:567
+#, fuzzy
 msgid "Feature type(s)"
 msgstr "Typ obiektu"
 
@@ -4747,8 +4748,9 @@ msgstr "Monitor nie został wybrany"
 msgid "Please run \"d.mon\" to select a valid graphics monitor.\n"
 msgstr "Aby wybrać monitor uruchom \"d.mon\""
 
+#, fuzzy
 msgid "Can't stat %s\n"
-msgstr ""
+msgstr "lista %s"
 
 #, fuzzy
 msgid "Please start graphics monitor <%s>.\n"
@@ -4834,3 +4836,19 @@ msgstr "Rozpoczęto rozwiązywanie metodą LU"
 #, fuzzy
 #~ msgid "Cairo: invalid input mask file <%s>"
 #~ msgstr "Nie można znaleźć wejściowej mapy '%s'"
+
+#, fuzzy
+#~ msgid "Line is not looped"
+#~ msgstr "Niepoprawna macierz"
+
+#, fuzzy
+#~ msgid "side != 0 feature not implemented"
+#~ msgstr "Jeszcze nie zaimplementowano"
+
+#, fuzzy
+#~ msgid "Feature id"
+#~ msgstr "Typ obiektu"
+
+#, fuzzy
+#~ msgid "Feature ids"
+#~ msgstr "Typ obiektu"

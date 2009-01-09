@@ -3138,6 +3138,7 @@ msgid "Type"
 msgstr "Typ"
 
 #: ../lib/gis/parser.c:567
+#, fuzzy
 msgid "Feature type(s)"
 msgstr "Eigenschaften"
 
@@ -4796,3 +4797,15 @@ msgstr ""
 
 #~ msgid "G_realloc: out of memory"
 #~ msgstr "G_realloc: Kein Speicher mehr da."
+
+#, fuzzy
+#~ msgid "Line is not looped"
+#~ msgstr "Matrizen sind nicht erlaubt."
+
+#, fuzzy
+#~ msgid "Feature id"
+#~ msgstr "Eigenschaften"
+
+#, fuzzy
+#~ msgid "Feature ids"
+#~ msgstr "Eigenschaften"

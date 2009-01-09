@@ -523,9 +523,9 @@ msgid "Unable to get list tables in database <%s>"
 msgstr "Nezmo¾en odpreti datoteko s tabelo elipsoida: %s"
 
 #: ../lib/db/dbmi_client/copy_tab.c:157
-#, c-format
+#, fuzzy, c-format
 msgid "Table <%s> already existsin database <%s>"
-msgstr ""
+msgstr "Nezmo¾en odpreti datoteko s tabelo elipsoida: %s"
 
 #: ../lib/db/dbmi_client/copy_tab.c:199 ../lib/db/dbmi_client/copy_tab.c:276
 #: ../lib/db/dbmi_client/table.c:110
@@ -896,52 +896,52 @@ msgid "Topology was built\n"
 msgstr "Topologija je zgrajena. \n"
 
 #: ../lib/vector/Vlib/build.c:172
-#, c-format
+#, fuzzy, c-format
 msgid "Number of nodes     :   %d\n"
 msgstr "©tevilo vozlov           :  %d\n"
 
 #: ../lib/vector/Vlib/build.c:173
-#, c-format
+#, fuzzy, c-format
 msgid "Number of primitives:   %d\n"
 msgstr "©tevilo primitivnih enot :  %d\n"
 
 #: ../lib/vector/Vlib/build.c:174
-#, c-format
+#, fuzzy, c-format
 msgid "Number of points    :   %d\n"
 msgstr "©tevilo toèk             :  %d\n"
 
 #: ../lib/vector/Vlib/build.c:175
-#, c-format
+#, fuzzy, c-format
 msgid "Number of lines     :   %d\n"
 msgstr "©tevilo linij            :  %d\n"
 
 #: ../lib/vector/Vlib/build.c:176
-#, c-format
+#, fuzzy, c-format
 msgid "Number of boundaries:   %d\n"
 msgstr "©tevilo meja             :  %d\n"
 
 #: ../lib/vector/Vlib/build.c:177
-#, c-format
+#, fuzzy, c-format
 msgid "Number of centroids :   %d\n"
 msgstr "©tevilo centroidov       :  %d\n"
 
 #: ../lib/vector/Vlib/build.c:180
-#, c-format
+#, fuzzy, c-format
 msgid "Number of faces     :   %d\n"
 msgstr "©tevilo povr¹in          :  %d\n"
 
 #: ../lib/vector/Vlib/build.c:183
-#, c-format
+#, fuzzy, c-format
 msgid "Number of kernels   :   %d\n"
 msgstr "©tevilo jeder            :  %d\n"
 
 #: ../lib/vector/Vlib/build.c:223
-#, c-format
+#, fuzzy, c-format
 msgid "Number of areas     :   %d\n"
 msgstr "©tevilo obmoèij          :  %d\n"
 
 #: ../lib/vector/Vlib/build.c:224
-#, c-format
+#, fuzzy, c-format
 msgid "Number of isles     :   %d\n"
 msgstr "©tevilo otokov           :  %d\n"
 
@@ -956,20 +956,22 @@ msgid "Number of centroids outside area :   %d\n"
 msgstr "©tevilo centroidov izven obmoèja:   %d\n"
 
 #: ../lib/vector/Vlib/build.c:235
-#, c-format
+#, fuzzy, c-format
 msgid "Number of duplicate centroids    :   %d\n"
 msgstr "©tevilo dvojnih centroidov      :   %d\n"
 
 #: ../lib/vector/Vlib/build.c:239
-#, c-format
+#, fuzzy, c-format
 msgid "Number of areas without centroid :   %d\n"
 msgstr "©tevilo obmoèij brez centroida  :    %d\n"
 
 #: ../lib/vector/Vlib/build.c:244
+#, fuzzy
 msgid "Number of areas     :   -\n"
 msgstr "©tevilo obmoèij    :   -\n"
 
 #: ../lib/vector/Vlib/build.c:245
+#, fuzzy
 msgid "Number of isles     :   -\n"
 msgstr "©tevilo otokov     :   -\n"
 
@@ -1025,7 +1027,7 @@ msgstr "ne morem spremeniti direktorija v %s"
 #: ../lib/vector/Vlib/open.c:297
 #, fuzzy, c-format
 msgid "Unable to open vector map <%s> on topology level %d"
-msgstr "Ne morem odpreti starega vektorja %s na nivoju %d"
+msgstr "ne morem odpreti rastrskega sloja [%s v %s]"
 
 #: ../lib/vector/Vlib/open.c:213
 #, fuzzy
@@ -1351,8 +1353,9 @@ msgid "BUG (add_area_cats_to_cidx): Area %d does not exist"
 msgstr ""
 
 #: ../lib/vector/Vlib/write_nat.c:600
+#, fuzzy
 msgid "Attempt to delete dead line"
-msgstr ""
+msgstr "Ne morem odpreti temp datoteke"
 
 #: ../lib/vector/Vlib/level_two.c:210 ../lib/vector/Vlib/level_two.c:235
 #: ../lib/vector/Vlib/level_two.c:259 ../lib/vector/Vlib/level_two.c:278
@@ -1429,10 +1432,12 @@ msgid "isles built"
 msgstr "Topologija je zgrajena. \n"
 
 #: ../lib/vector/Vlib/build_nat.c:605
+#, fuzzy
 msgid "Attaching islands: "
 msgstr "Pripajanje otokov: "
 
 #: ../lib/vector/Vlib/build_nat.c:622
+#, fuzzy
 msgid "Attaching centroids: "
 msgstr "Pripajanje centroidov: "
 
@@ -1492,8 +1497,9 @@ msgid "Map structure has been closed"
 msgstr ""
 
 #: ../lib/vector/Vlib/area.c:53
+#, fuzzy
 msgid "Attempt to read points of nonexisting area"
-msgstr ""
+msgstr "Ne morem prebrati histograma za [%s v %s]"
 
 #: ../lib/vector/Vlib/area.c:125
 #, fuzzy, c-format
@@ -1873,7 +1879,7 @@ msgstr "Ne morem ponovno zapisati linije, sloj ¾e obstaja"
 #: ../lib/vector/Vlib/write.c:168
 #, fuzzy, c-format
 msgid "Unable to rewrite line %d"
-msgstr "Nezmo¾en odpreti datoteko %s v %s"
+msgstr "Ne morem odpreti temp datoteke"
 
 #: ../lib/vector/Vlib/write.c:212
 #, fuzzy, c-format
@@ -3963,8 +3969,9 @@ msgid "can't create histogram for [%s in %s]"
 msgstr "ne morem ustvariti histograma za [%s v %s]"
 
 #: ../lib/gis/alloc.c:45
+#, fuzzy
 msgid "G_malloc: out of memory"
-msgstr ""
+msgstr "ne morem dodeliti spomina"
 
 #: ../lib/gis/alloc.c:79
 #, fuzzy
@@ -3972,8 +3979,9 @@ msgid "G_calloc: out of memory"
 msgstr "ne morem dodeliti spomina"
 
 #: ../lib/gis/alloc.c:117
+#, fuzzy
 msgid "G_realloc: out of memory"
-msgstr ""
+msgstr "ne morem dodeliti spomina"
 
 #: ../lib/nviz/change_view.c:108
 #, c-format
@@ -4300,9 +4308,9 @@ msgid "Vector map <%s> loaded (%d points)"
 msgstr "Vneseni vektor '%s' ni bil najden"
 
 #: ../lib/ogsf/GS2.c:1638
-#, c-format
+#, fuzzy, c-format
 msgid "Raster map <%s@%s> is outside of current region. Load failed."
-msgstr ""
+msgstr "[%s] v \"mapset\" [%s] - v drugi coni [%d] kot trenutna regija [%d]"
 
 #: ../lib/ogsf/GS2.c:1716 ../lib/ogsf/GS2.c:1722 ../lib/ogsf/GS2.c:1730
 #: ../lib/ogsf/GS2.c:1739 ../lib/ogsf/GS2.c:1747 ../lib/ogsf/GS2.c:1757
@@ -4699,8 +4707,9 @@ msgstr ""
 #~ msgid "Cannot rewrite line"
 #~ msgstr "Ne morem prepisati linije"
 
+#, fuzzy
 #~ msgid "Cannot delete line"
-#~ msgstr "Ne morem zbrisati linije"
+#~ msgstr "Ne morem prepisati linije"
 
 #~ msgid "Output name '%s' is not valid vector name."
 #~ msgstr "Izhodno ime '%s' ni veljavno ime za vektor."
@@ -4989,3 +4998,69 @@ msgstr ""
 
 #~ msgid "Select type: point, line, boundary, centroid or area"
 #~ msgstr "Izberi tip: toèka, linija, meja, centroid ali obmoèje"
+
+#, fuzzy
+#~ msgid ""
+#~ "Unable to open vector map <%s> on level %d. Try to rebuild vector "
+#~ "topology by v.build."
+#~ msgstr "Ne morem odpreti starega vektorja %s na nivoju %d"
+
+#, fuzzy
+#~ msgid "Attempt to delete dead feature"
+#~ msgstr "Ne morem prebrati histograma za [%s v %s]"
+
+#, fuzzy
+#~ msgid "Attempt to restore alive feature"
+#~ msgstr "Ne morem prebrati histograma za [%s v %s]"
+
+#, fuzzy
+#~ msgid "Unable to find vector map <%s> in <%s>"
+#~ msgstr "ne morem odpreti rastrskega sloja [%s v %s]"
+
+#, fuzzy
+#~ msgid "Unable to rewrite feature %d"
+#~ msgstr "Nezmo¾en odpreti datoteko %s v %s"
+
+#, fuzzy
+#~ msgid ""
+#~ "Unable to restore feature %d, vector map <%s> is not opened on topology "
+#~ "level"
+#~ msgstr "Ne morem izbrisati linije, sloj '%s' ni odprt na nivoju 2"
+
+#, fuzzy
+#~ msgid ""
+#~ "Unable to restore feature %d, vector map <%s> is not opened in 'write' "
+#~ "mode"
+#~ msgstr "Ne morem izbrisati linije, sloj '%s' ni odprt v zapisovalnem naèinu"
+
+#, fuzzy
+#~ msgid "Unable to restore feature %d from vector map <%s>"
+#~ msgstr "ne morem spremeniti direktorija v %s"
+
+#, fuzzy
+#~ msgid "Line is not looped"
+#~ msgstr "Vneseni vektor '%s' ni bil najden"
+
+#, fuzzy
+#~ msgid "Unable to find '%s' in '%s'"
+#~ msgstr "ne najdem [%s]"
+
+#, fuzzy
+#~ msgid "Using <%s@%s>"
+#~ msgstr "ne najdem [%s]"
+
+#, fuzzy
+#~ msgid "Unable to locate symbol <%s>"
+#~ msgstr "Nezmo¾en odpreti datoteko %s v %s"
+
+#, fuzzy
+#~ msgid "Unable to load GDAL library"
+#~ msgstr "Ne morem odpreti datoteke topo za pisanje: %s\n"
+
+#, fuzzy
+#~ msgid "Cannot fetch row"
+#~ msgstr "Ne morem zbrisati linije"
+
+#, fuzzy
+#~ msgid "Cannot select attributes"
+#~ msgstr "Ne morem zbrisati linije"

@@ -823,14 +823,14 @@ msgid "Unknown query tool"
 msgstr "bilinmeyen sorgu aracı"
 
 #: ../lib/vector/vedit/cats.c:65
-#, c-format
+#, fuzzy, c-format
 msgid "Unable to set category %d for line %d"
-msgstr ""
+msgstr "<%s> raster haritasının kategori dosyası okunamıyor"
 
 #: ../lib/vector/vedit/cats.c:74
-#, c-format
+#, fuzzy, c-format
 msgid "Unable to delete layer/category %d/%d line %d"
-msgstr ""
+msgstr "<%s> vektör haritası silinemiyor"
 
 #: ../lib/vector/Vlib/intersect.c:127
 msgid "3D not supported by Vect_segment_intersection()"
@@ -851,89 +851,92 @@ msgid "Requested format is not compiled in this version"
 msgstr "İstenen format bu sürümde derlenmedi."
 
 #: ../lib/vector/Vlib/build.c:144
-#, c-format
+#, fuzzy, c-format
 msgid "Building topology for vector map <%s>...\n"
 msgstr "<%s> vektör haritası için topoloji kuruluyor   \n"
 
 #: ../lib/vector/Vlib/build.c:160
+#, fuzzy
 msgid "Topology was built\n"
 msgstr "Topoloji oluşturuldu\n"
 
 #: ../lib/vector/Vlib/build.c:172
-#, c-format
+#, fuzzy, c-format
 msgid "Number of nodes     :   %d\n"
 msgstr "Düğüm noktası sayısı     :   %d\n"
 
 #: ../lib/vector/Vlib/build.c:173
-#, c-format
+#, fuzzy, c-format
 msgid "Number of primitives:   %d\n"
-msgstr ""
+msgstr "Nokta sayısı    :   %d\n"
 
 #: ../lib/vector/Vlib/build.c:174
-#, c-format
+#, fuzzy, c-format
 msgid "Number of points    :   %d\n"
 msgstr "Nokta sayısı    :   %d\n"
 
 #: ../lib/vector/Vlib/build.c:175
-#, c-format
+#, fuzzy, c-format
 msgid "Number of lines     :   %d\n"
 msgstr "Çizgi sayısı     :   %d\n"
 
 #: ../lib/vector/Vlib/build.c:176
-#, c-format
+#, fuzzy, c-format
 msgid "Number of boundaries:   %d\n"
 msgstr "Sınır sayısı:   %d\n"
 
 #: ../lib/vector/Vlib/build.c:177
-#, c-format
+#, fuzzy, c-format
 msgid "Number of centroids :   %d\n"
 msgstr "Alan merkezi sayısı :   %d\n"
 
 #: ../lib/vector/Vlib/build.c:180
-#, c-format
+#, fuzzy, c-format
 msgid "Number of faces     :   %d\n"
 msgstr "Yüzey sayısı     :   %d\n"
 
 #: ../lib/vector/Vlib/build.c:183
-#, c-format
+#, fuzzy, c-format
 msgid "Number of kernels   :   %d\n"
-msgstr ""
+msgstr "Düğüm noktası sayısı     :   %d\n"
 
 #: ../lib/vector/Vlib/build.c:223
-#, c-format
+#, fuzzy, c-format
 msgid "Number of areas     :   %d\n"
 msgstr "Alan sayısı     :   %d\n"
 
 #: ../lib/vector/Vlib/build.c:224
-#, c-format
+#, fuzzy, c-format
 msgid "Number of isles     :   %d\n"
 msgstr "Ada sayısı     :   %d\n"
 
 #: ../lib/vector/Vlib/build.c:227
-#, c-format
+#, fuzzy, c-format
 msgid "Number of incorrect boundaries   :   %d\n"
 msgstr "Hatalı sınır sayısı   :   %d\n"
 
 #: ../lib/vector/Vlib/build.c:231
-#, c-format
+#, fuzzy, c-format
 msgid "Number of centroids outside area :   %d\n"
 msgstr "Alan dışındaki alan merkezi sayısı :   %d\n"
 
 #: ../lib/vector/Vlib/build.c:235
-#, c-format
+#, fuzzy, c-format
 msgid "Number of duplicate centroids    :   %d\n"
 msgstr "Tekrarlanan alan merkezi sayısı    :   %d\n"
 
 #: ../lib/vector/Vlib/build.c:239
-#, c-format
+#, fuzzy, c-format
 msgid "Number of areas without centroid :   %d\n"
 msgstr "Alan merkezi olmayan alan sayısı :   %d\n"
 
 #: ../lib/vector/Vlib/build.c:244
+#, fuzzy
 msgid "Number of areas     :   -\n"
 msgstr "Alan sayısı     :    -\n"
 
 #: ../lib/vector/Vlib/build.c:245
+#, fuzzy
 msgid "Number of isles     :   -\n"
 msgstr "Ada sayısı     :   -\n"
 
@@ -957,8 +960,9 @@ msgstr "Konumsal indek dosyasını yazmada hata"
 
 #: ../lib/vector/Vlib/dangles.c:173 ../lib/vector/Vlib/dangles.c:272
 #: ../lib/vector/Vlib/dangles.c:284
+#, fuzzy
 msgid "Removed dangles:"
-msgstr ""
+msgstr "Kaldırılan köprüler"
 
 #: ../lib/vector/Vlib/open.c:100
 #, c-format
@@ -1075,12 +1079,14 @@ msgid "Snaps"
 msgstr "Yapışma"
 
 #: ../lib/vector/Vlib/snap.c:420
+#, fuzzy
 msgid "Snapped vertices"
-msgstr ""
+msgstr "Tüm kırıklık noktaları"
 
 #: ../lib/vector/Vlib/snap.c:422
+#, fuzzy
 msgid "New vertices"
-msgstr ""
+msgstr "Tüm kırıklık noktaları"
 
 #: ../lib/vector/Vlib/close.c:134
 #, c-format
@@ -1212,6 +1218,7 @@ msgstr "%s %5d"
 
 #: ../lib/vector/Vlib/break_lines.c:122 ../lib/vector/Vlib/break_lines.c:366
 #: ../lib/vector/Vlib/break_lines.c:387
+#, fuzzy
 msgid "Intersections:"
 msgstr "Kesişimler:"
 
@@ -1337,8 +1344,9 @@ msgid "Request to find area outside nonexisting isle"
 msgstr ""
 
 #: ../lib/vector/Vlib/build_nat.c:510
+#, fuzzy
 msgid "Registering primitives: "
-msgstr ""
+msgstr "çizgiler kaydediliyor ..."
 
 #: ../lib/vector/Vlib/build_nat.c:520
 msgid "Unable to read vector map"
@@ -1353,22 +1361,27 @@ msgid "vertices registered"
 msgstr ""
 
 #: ../lib/vector/Vlib/build_nat.c:572
+#, fuzzy
 msgid "Building areas: "
 msgstr "Alanlar oluşturuluyor: "
 
 #: ../lib/vector/Vlib/build_nat.c:595
+#, fuzzy
 msgid "areas built"
 msgstr "alanlar oluşturuldu"
 
 #: ../lib/vector/Vlib/build_nat.c:596
+#, fuzzy
 msgid "isles built"
 msgstr "adalar oluşturuldu"
 
 #: ../lib/vector/Vlib/build_nat.c:605
+#, fuzzy
 msgid "Attaching islands: "
 msgstr "Adalar ekleniyor:"
 
 #: ../lib/vector/Vlib/build_nat.c:622
+#, fuzzy
 msgid "Attaching centroids: "
 msgstr "Alan merkezleri ekleniyor: "
 
@@ -2965,6 +2978,7 @@ msgid "Type"
 msgstr "Tip"
 
 #: ../lib/gis/parser.c:565
+#, fuzzy
 msgid "Feature type(s)"
 msgstr "Obje tip(ler)i"
 
@@ -4383,8 +4397,9 @@ msgid "Loading data from attribute table ..."
 msgstr "Öznitelik tablosundan veri yükleniyor ..."
 
 #: ../lib/rst/interp_float/vinput2d.c:79
+#, fuzzy
 msgid "Cannot get layer info"
-msgstr "Katman bilgisi alınamıyor"
+msgstr "Alan bilgisi alınamıyor"
 
 #: ../lib/rst/interp_float/vinput2d.c:87
 #, c-format
@@ -4484,8 +4499,9 @@ msgstr "Sembol bulunamıyor/açılamıyor: '%s'"
 msgid "Output map '%s' is used as input"
 msgstr "'%s' çıktı haritası girdi olarak kullanılıyor"
 
+#, fuzzy
 msgid "unable to open raster map [%s in %s]"
-msgstr ""
+msgstr "<%s@%s> raster haritası açılamıyor"
 
 #, fuzzy
 msgid "unable to find [%s] in [%s]"
@@ -4500,8 +4516,9 @@ msgstr "[%s deki %s] için üstbilgi dosyası açılamıyo"
 msgid "Cannot rewrite line"
 msgstr "Çizgi yeniden yazılamıyor"
 
+#, fuzzy
 msgid "Cannot delete line"
-msgstr "Çizgi silinemedi"
+msgstr "Çizgi yeniden yazılamıyor"
 
 msgid "Building topology ...\n"
 msgstr "Topoloji oluşturuluyor...\n"
@@ -4515,6 +4532,7 @@ msgstr "Veritabanı açılamıyor"
 msgid "Could not select from table/column"
 msgstr "Tablo veya sütundan seçilemiyor"
 
+#, fuzzy
 msgid "Cannot open database <%s> by driver <%s>"
 msgstr "<%s> veritabanı <%s>  sürücüsüyle açılamıyor"
 
@@ -4547,3 +4565,61 @@ msgstr "[%d] OGR obje tipi desteklenmiyor"
 
 #~ msgid "Unknown file extension: %s"
 #~ msgstr "Bilinmeyen dosya uzantısı: %s"
+
+#, fuzzy
+#~ msgid ""
+#~ "Unable to open vector map <%s> on level %d. Try to rebuild vector "
+#~ "topology by v.build."
+#~ msgstr "Vektör harita <%s> ten <%s> e kopyalanamıyor"
+
+#, fuzzy
+#~ msgid "%s: Area %d does not exist"
+#~ msgstr "%s: Alan %d mevcut değil"
+
+#, fuzzy
+#~ msgid "Unable to rewrite feature %d"
+#~ msgstr "%d çizgisi okunamıyor"
+
+#, fuzzy
+#~ msgid ""
+#~ "Unable to restore feature %d, vector map <%s> is not opened on topology "
+#~ "level"
+#~ msgstr "Veritabanı bağlantısı eklenemiyor, harita WRITE modunda açılmadı"
+
+#, fuzzy
+#~ msgid ""
+#~ "Unable to restore feature %d, vector map <%s> is not opened in 'write' "
+#~ "mode"
+#~ msgstr "Veritabanı bağlantısı eklenemiyor, harita WRITE modunda açılmadı"
+
+#, fuzzy
+#~ msgid "Unable to restore feature %d from vector map <%s>"
+#~ msgstr "<%s> vektör haritası silinemiyor"
+
+#, fuzzy
+#~ msgid "Line is not looped"
+#~ msgstr "Matris olanağı yok"
+
+#, fuzzy
+#~ msgid "Unable to find '%s' in '%s'"
+#~ msgstr "'%s' bulunamadı"
+
+#, fuzzy
+#~ msgid "Feature id"
+#~ msgstr "Obje: "
+
+#, fuzzy
+#~ msgid "Feature ids"
+#~ msgstr "Obje: "
+
+#, fuzzy
+#~ msgid "Attributes for category %d not found"
+#~ msgstr "%d kategorisinin veritabanı kaydı bulunamıyor"
+
+#, fuzzy
+#~ msgid "Cannot fetch row"
+#~ msgstr "Katman bilgisi alınamıyor"
+
+#, fuzzy
+#~ msgid "Cannot select attributes"
+#~ msgstr "Çizgi silinemedi"

@@ -531,9 +531,9 @@ msgid "Unable to get list tables in database <%s>"
 msgstr "impossibile aprire il file con la tabella dell'ellissoide: %s"
 
 #: ../lib/db/dbmi_client/copy_tab.c:157
-#, c-format
+#, fuzzy, c-format
 msgid "Table <%s> already existsin database <%s>"
-msgstr ""
+msgstr "impossibile aprire il file con la tabella dell'ellissoide: %s"
 
 #: ../lib/db/dbmi_client/copy_tab.c:199 ../lib/db/dbmi_client/copy_tab.c:276
 #: ../lib/db/dbmi_client/table.c:110
@@ -907,80 +907,82 @@ msgid "Topology was built\n"
 msgstr "La topologia è stata creata.\n"
 
 #: ../lib/vector/Vlib/build.c:172
-#, c-format
+#, fuzzy, c-format
 msgid "Number of nodes     :   %d\n"
 msgstr "Numero di nodi     :   %d\n"
 
 #: ../lib/vector/Vlib/build.c:173
-#, c-format
+#, fuzzy, c-format
 msgid "Number of primitives:   %d\n"
 msgstr "Numero di primitive:   %d\n"
 
 #: ../lib/vector/Vlib/build.c:174
-#, c-format
+#, fuzzy, c-format
 msgid "Number of points    :   %d\n"
 msgstr "Numero di punti    :   %d\n"
 
 #: ../lib/vector/Vlib/build.c:175
-#, c-format
+#, fuzzy, c-format
 msgid "Number of lines     :   %d\n"
 msgstr "Numero di linee    :   %d\n"
 
 #: ../lib/vector/Vlib/build.c:176
-#, c-format
+#, fuzzy, c-format
 msgid "Number of boundaries:   %d\n"
 msgstr "Numero di confini  :   %d\n"
 
 #: ../lib/vector/Vlib/build.c:177
-#, c-format
+#, fuzzy, c-format
 msgid "Number of centroids :   %d\n"
 msgstr "Numero di centroidi:   %d\n"
 
 #: ../lib/vector/Vlib/build.c:180
-#, c-format
+#, fuzzy, c-format
 msgid "Number of faces     :   %d\n"
 msgstr "Numero di facce    :   %d\n"
 
 #: ../lib/vector/Vlib/build.c:183
-#, c-format
+#, fuzzy, c-format
 msgid "Number of kernels   :   %d\n"
 msgstr "Numero di kernel   :   %d\n"
 
 #: ../lib/vector/Vlib/build.c:223
-#, c-format
+#, fuzzy, c-format
 msgid "Number of areas     :   %d\n"
 msgstr "Numero di aree     :   %d\n"
 
 #: ../lib/vector/Vlib/build.c:224
-#, c-format
+#, fuzzy, c-format
 msgid "Number of isles     :   %d\n"
 msgstr "Numero di isole    :   %d\n"
 
 #: ../lib/vector/Vlib/build.c:227
-#, c-format
+#, fuzzy, c-format
 msgid "Number of incorrect boundaries   :   %d\n"
 msgstr "Numero di confini non corretti   :   %d\n"
 
 #: ../lib/vector/Vlib/build.c:231
-#, c-format
+#, fuzzy, c-format
 msgid "Number of centroids outside area :   %d\n"
 msgstr "Numero di centroidi al di fuori dell'area :   %d\n"
 
 #: ../lib/vector/Vlib/build.c:235
-#, c-format
+#, fuzzy, c-format
 msgid "Number of duplicate centroids    :   %d\n"
 msgstr "Numero di centroidi duplicati    :   %d\n"
 
 #: ../lib/vector/Vlib/build.c:239
-#, c-format
+#, fuzzy, c-format
 msgid "Number of areas without centroid :   %d\n"
 msgstr "Numero di aree senza centroide :   %d\n"
 
 #: ../lib/vector/Vlib/build.c:244
+#, fuzzy
 msgid "Number of areas     :   -\n"
 msgstr "Numero di aree     :   -\n"
 
 #: ../lib/vector/Vlib/build.c:245
+#, fuzzy
 msgid "Number of isles     :   -\n"
 msgstr "Numero di isole     :   -\n"
 
@@ -1038,7 +1040,7 @@ msgstr "impossibile cambiare la directory %s"
 #: ../lib/vector/Vlib/open.c:297
 #, fuzzy, c-format
 msgid "Unable to open vector map <%s> on topology level %d"
-msgstr "Non riesco ad aprire il vettoriale %s al livello %d"
+msgstr "impossibile aprire un raster [%s in %s]"
 
 #: ../lib/vector/Vlib/open.c:213
 #, fuzzy
@@ -1112,8 +1114,9 @@ msgid "Registering points"
 msgstr "Linee registrate: "
 
 #: ../lib/vector/Vlib/snap.c:179
+#, fuzzy
 msgid "All vertices"
-msgstr ""
+msgstr "Permettere sovrascrivere"
 
 #: ../lib/vector/Vlib/snap.c:180
 #, fuzzy
@@ -1369,8 +1372,9 @@ msgid "BUG (add_area_cats_to_cidx): Area %d does not exist"
 msgstr ""
 
 #: ../lib/vector/Vlib/write_nat.c:600
+#, fuzzy
 msgid "Attempt to delete dead line"
-msgstr ""
+msgstr "Non riesco ad aprire il file temp"
 
 #: ../lib/vector/Vlib/level_two.c:210 ../lib/vector/Vlib/level_two.c:235
 #: ../lib/vector/Vlib/level_two.c:259 ../lib/vector/Vlib/level_two.c:278
@@ -1447,10 +1451,12 @@ msgid "isles built"
 msgstr "La topologia è stata creata.\n"
 
 #: ../lib/vector/Vlib/build_nat.c:605
+#, fuzzy
 msgid "Attaching islands: "
 msgstr "Isole allegate: "
 
 #: ../lib/vector/Vlib/build_nat.c:622
+#, fuzzy
 msgid "Attaching centroids: "
 msgstr "Centroidi allegati:  "
 
@@ -1511,8 +1517,9 @@ msgid "Map structure has been closed"
 msgstr ""
 
 #: ../lib/vector/Vlib/area.c:53
+#, fuzzy
 msgid "Attempt to read points of nonexisting area"
-msgstr ""
+msgstr "Impossibile calcolare il centroide dell'area %d"
 
 #: ../lib/vector/Vlib/area.c:125
 #, fuzzy, c-format
@@ -1892,7 +1899,7 @@ msgstr "Non riesco a riscrivere la linea, la mappa non è aperta"
 #: ../lib/vector/Vlib/write.c:168
 #, fuzzy, c-format
 msgid "Unable to rewrite line %d"
-msgstr "Impossibile aprire il file %s in %s"
+msgstr "Non riesco ad aprire il file temp"
 
 #: ../lib/vector/Vlib/write.c:212
 #, fuzzy, c-format
@@ -3117,6 +3124,7 @@ msgid "Type"
 msgstr "Tipo"
 
 #: ../lib/gis/parser.c:565
+#, fuzzy
 msgid "Feature type(s)"
 msgstr "Tipo di "
 
@@ -4324,9 +4332,9 @@ msgid "Vector map <%s> loaded (%d points)"
 msgstr "Non riesco a trovare il vettore '%s' di input"
 
 #: ../lib/ogsf/GS2.c:1638
-#, c-format
+#, fuzzy, c-format
 msgid "Raster map <%s@%s> is outside of current region. Load failed."
-msgstr ""
+msgstr "[%s] nel mapset [%s] - zona [%d] diversa dalla regione in uso [%d]"
 
 #: ../lib/ogsf/GS2.c:1716 ../lib/ogsf/GS2.c:1722 ../lib/ogsf/GS2.c:1730
 #: ../lib/ogsf/GS2.c:1739 ../lib/ogsf/GS2.c:1747 ../lib/ogsf/GS2.c:1757
@@ -4721,8 +4729,9 @@ msgstr ""
 #~ msgid "Cannot rewrite line"
 #~ msgstr "Non riesco a riscrivere la linea"
 
+#, fuzzy
 #~ msgid "Cannot delete line"
-#~ msgstr "Non posso cancellare la linea"
+#~ msgstr "Non riesco a riscrivere la linea"
 
 #~ msgid "Output name '%s' is not valid vector name."
 #~ msgstr "Il nome '%s' in output non è valido per un vettore."
@@ -4940,3 +4949,80 @@ msgstr ""
 
 #~ msgid "ERROR: GISBASE not set\n"
 #~ msgstr "ERRORE: GISBASE non definito\n"
+
+#, fuzzy
+#~ msgid ""
+#~ "Unable to open vector map <%s> on level %d. Try to rebuild vector "
+#~ "topology by v.build."
+#~ msgstr "Non riesco ad aprire il vettoriale %s al livello %d"
+
+#, fuzzy
+#~ msgid "Attempt to delete dead feature"
+#~ msgstr "Impossibile calcolare il centroide dell'area %d"
+
+#, fuzzy
+#~ msgid "Attempt to restore alive feature"
+#~ msgstr "Impossibile calcolare il centroide dell'area %d"
+
+#, fuzzy
+#~ msgid "Unable to find vector map <%s> in <%s>"
+#~ msgstr "impossibile aprire un raster [%s in %s]"
+
+#, fuzzy
+#~ msgid "Unable to rewrite feature %d"
+#~ msgstr "Impossibile aprire il file %s in %s"
+
+#, fuzzy
+#~ msgid ""
+#~ "Unable to restore feature %d, vector map <%s> is not opened on topology "
+#~ "level"
+#~ msgstr ""
+#~ "Non riesco a cancellare la linea, la mappa '%s' non è aperta a livello 2"
+
+#, fuzzy
+#~ msgid ""
+#~ "Unable to restore feature %d, vector map <%s> is not opened in 'write' "
+#~ "mode"
+#~ msgstr ""
+#~ "Non posso cancellare la linea, la mappa '%s' non è aperta in modalità di "
+#~ "scrittura ('write')"
+
+#, fuzzy
+#~ msgid "Unable to restore feature %d from vector map <%s>"
+#~ msgstr "impossibile cambiare la directory %s"
+
+#, fuzzy
+#~ msgid "Line is not looped"
+#~ msgstr "Non riesco a trovare il vettore '%s' di input"
+
+#, fuzzy
+#~ msgid "Unable to find '%s' in '%s'"
+#~ msgstr "impossibile trovare [%s]"
+
+#, fuzzy
+#~ msgid "Using <%s@%s>"
+#~ msgstr "impossibile trovare [%s]"
+
+#, fuzzy
+#~ msgid "Feature id"
+#~ msgstr "Tipo di "
+
+#, fuzzy
+#~ msgid "Feature ids"
+#~ msgstr "Tipo di "
+
+#, fuzzy
+#~ msgid "Unable to locate symbol <%s>"
+#~ msgstr "Impossibile aprire il file %s in %s"
+
+#, fuzzy
+#~ msgid "Unable to load GDAL library"
+#~ msgstr "Impossibile calcolare il centroide dell'area %d"
+
+#, fuzzy
+#~ msgid "Cannot fetch row"
+#~ msgstr "Non posso cancellare la linea"
+
+#, fuzzy
+#~ msgid "Cannot select attributes"
+#~ msgstr "Non posso cancellare la linea"

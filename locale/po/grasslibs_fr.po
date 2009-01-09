@@ -885,80 +885,82 @@ msgid "Topology was built\n"
 msgstr "La topologie a bien été construite.\n"
 
 #: ../lib/vector/Vlib/build.c:175
-#, c-format
+#, fuzzy, c-format
 msgid "Number of nodes     :   %d\n"
 msgstr "Nombre de noeuds     :   %d\n"
 
 #: ../lib/vector/Vlib/build.c:176
-#, c-format
+#, fuzzy, c-format
 msgid "Number of primitives:   %d\n"
 msgstr "Nombre de primitives:   %d\n"
 
 #: ../lib/vector/Vlib/build.c:177
-#, c-format
+#, fuzzy, c-format
 msgid "Number of points    :   %d\n"
 msgstr "Nombre de points    :   %d\n"
 
 #: ../lib/vector/Vlib/build.c:178
-#, c-format
+#, fuzzy, c-format
 msgid "Number of lines     :   %d\n"
 msgstr "Nombre de lignes     :   %d\n"
 
 #: ../lib/vector/Vlib/build.c:179
-#, c-format
+#, fuzzy, c-format
 msgid "Number of boundaries:   %d\n"
 msgstr "Nombre de contours:   %d\n"
 
 #: ../lib/vector/Vlib/build.c:180
-#, c-format
+#, fuzzy, c-format
 msgid "Number of centroids :   %d\n"
 msgstr "Nombre de centroïdes :   %d\n"
 
 #: ../lib/vector/Vlib/build.c:183
-#, c-format
+#, fuzzy, c-format
 msgid "Number of faces     :   %d\n"
 msgstr "Nombre de faces     :   %d\n"
 
 #: ../lib/vector/Vlib/build.c:186
-#, c-format
+#, fuzzy, c-format
 msgid "Number of kernels   :   %d\n"
 msgstr "Nombre de noyaux   :   %d\n"
 
 #: ../lib/vector/Vlib/build.c:226
-#, c-format
+#, fuzzy, c-format
 msgid "Number of areas     :   %d\n"
 msgstr "Nombre de surfaces     :   %d\n"
 
 #: ../lib/vector/Vlib/build.c:227
-#, c-format
+#, fuzzy, c-format
 msgid "Number of isles     :   %d\n"
 msgstr "Nombre d'îles     :   %d\n"
 
 #: ../lib/vector/Vlib/build.c:230
-#, c-format
+#, fuzzy, c-format
 msgid "Number of incorrect boundaries   :   %d\n"
 msgstr "Nombre de contours incorrects   :   %d\n"
 
 #: ../lib/vector/Vlib/build.c:234
-#, c-format
+#, fuzzy, c-format
 msgid "Number of centroids outside area :   %d\n"
 msgstr "Nombre de contours en dehors de la surface :   %d\n"
 
 #: ../lib/vector/Vlib/build.c:238
-#, c-format
+#, fuzzy, c-format
 msgid "Number of duplicate centroids    :   %d\n"
 msgstr "Nombre de centroïdes en double    :   %d\n"
 
 #: ../lib/vector/Vlib/build.c:242
-#, c-format
+#, fuzzy, c-format
 msgid "Number of areas without centroid :   %d\n"
 msgstr "Nombre de surfaces sans centroïde:   %d\n"
 
 #: ../lib/vector/Vlib/build.c:247
+#, fuzzy
 msgid "Number of areas     :   -\n"
 msgstr "Nombre de surfaces     :   -\n"
 
 #: ../lib/vector/Vlib/build.c:248
+#, fuzzy
 msgid "Number of isles     :   -\n"
 msgstr "Nombre d'îles     :   -\n"
 
@@ -1433,10 +1435,12 @@ msgid "isles built"
 msgstr "La topologie a bien été construite.\n"
 
 #: ../lib/vector/Vlib/build_nat.c:605
+#, fuzzy
 msgid "Attaching islands: "
 msgstr "Rattachement des îles: "
 
 #: ../lib/vector/Vlib/build_nat.c:622
+#, fuzzy
 msgid "Attaching centroids: "
 msgstr "Rattachement des centroïdes: "
 
@@ -4060,8 +4064,9 @@ msgid "ask: can't happen"
 msgstr "demande: ne peut pas survenir"
 
 #: ../lib/gis/alloc.c:45
+#, fuzzy
 msgid "G_malloc: out of memory"
-msgstr ""
+msgstr "Allocation mémoire impossible"
 
 #: ../lib/gis/alloc.c:79
 #, fuzzy
@@ -4069,8 +4074,9 @@ msgid "G_calloc: out of memory"
 msgstr "Allocation mémoire impossible"
 
 #: ../lib/gis/alloc.c:117
+#, fuzzy
 msgid "G_realloc: out of memory"
-msgstr ""
+msgstr "Allocation mémoire impossible"
 
 #: ../lib/gis/histogram.c:57
 #, c-format
@@ -4680,6 +4686,7 @@ msgid "Loading data from attribute table ..."
 msgstr ""
 
 #: ../lib/rst/interp_float/vinput2d.c:79
+#, fuzzy
 msgid "Cannot get layer info"
 msgstr "Impossible de récupérer les infos de la couche"
 
@@ -4849,8 +4856,9 @@ msgstr ""
 #~ msgid "Cannot rewrite line"
 #~ msgstr "Impossible de réécrire la ligne"
 
+#, fuzzy
 #~ msgid "Cannot delete line"
-#~ msgstr "Impossible de supprimer la ligne"
+#~ msgstr "Impossible de réécrire la ligne"
 
 #~ msgid "Output name '%s' is not valid vector name."
 #~ msgstr "Le nom de sortie '%s' n'est pas un nom de vecteur valide."
@@ -5136,3 +5144,20 @@ msgstr ""
 
 #~ msgid "The vector '%s' already exists."
 #~ msgstr "Le vecteur '%s' existe déjà."
+
+#, fuzzy
+#~ msgid "Line is not looped"
+#~ msgstr "Le vecteur d'entrée '%s' n'a pas été trouvé"
+
+#, fuzzy
+#~ msgid "Attributes for category %d not found"
+#~ msgstr ""
+#~ "L'enregistrement de la base de données pour cat %d n'a pas été trouvé"
+
+#, fuzzy
+#~ msgid "Cannot fetch row"
+#~ msgstr "Impossible de récupérer les infos de la couche"
+
+#, fuzzy
+#~ msgid "Cannot select attributes"
+#~ msgstr "Impossible de supprimer la ligne"
