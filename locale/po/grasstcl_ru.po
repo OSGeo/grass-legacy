@@ -11,7 +11,7 @@ msgstr ""
 "Last-Translator: Maxim Dubinin <sim@gis-lab.info>\n"
 "Language-Team: Russian <grass-translations@lists.osgeo.org>\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=utf-8\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: KBabel 1.9.1\n"
 
@@ -4884,6 +4884,7 @@ msgid "Garmin GPS Waypoints/Routes/Tracks"
 msgstr "Garmin GPS Точки/Маршруты/Трэки"
 
 #: ../gui/tcltk/d.m/menu.tcl:103
+#, fuzzy
 msgid "GPS Waypoints/Routes/Tracks using GPSBabel"
 msgstr "GPS Точки/Маршруты/Трэки используя GPSBabel"
 
@@ -6177,3 +6178,47 @@ msgstr "Тест"
 #, fuzzy
 #~ msgid "Create Location From EPSG"
 #~ msgstr "Район"
+
+#, fuzzy
+#~ msgid "Required"
+#~ msgstr "необходимо"
+
+#, fuzzy
+#~ msgid " Save "
+#~ msgstr "Сохранить"
+
+#, fuzzy
+#~ msgid " Clear "
+#~ msgstr "Очистить"
+
+#, fuzzy
+#~ msgid "Multiple formats using GDAL (link into instead of import)"
+#~ msgstr "Форматы импорта использующие GDAL"
+
+#, fuzzy
+#~ msgid "Geonames"
+#~ msgstr "Переименовать"
+
+#, fuzzy
+#~ msgid "Import data table"
+#~ msgstr "Импортировать растровый слой"
+
+#, fuzzy
+#~ msgid "Multiple GPS formats using GPSBabel"
+#~ msgstr "Форматы импорта использующие OGR"
+
+#, fuzzy
+#~ msgid "Export data table"
+#~ msgstr "Экспортировать растровый слой"
+
+#, fuzzy
+#~ msgid "Color tables (stddev)"
+#~ msgstr "Цветовые таблицы"
+
+#, fuzzy
+#~ msgid "Distance to features"
+#~ msgstr "Редактировать объекты"
+
+#, fuzzy
+#~ msgid "Assign colors"
+#~ msgstr "цвет линии"

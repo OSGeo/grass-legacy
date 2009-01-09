@@ -527,9 +527,9 @@ msgid "Unable to get list tables in database <%s>"
 msgstr "neiespējami atvērt elipsoīda tabulas failu: %s"
 
 #: ../lib/db/dbmi_client/copy_tab.c:157
-#, c-format
+#, fuzzy, c-format
 msgid "Table <%s> already existsin database <%s>"
-msgstr ""
+msgstr "neiespējami atvērt elipsoīda tabulas failu: %s"
 
 #: ../lib/db/dbmi_client/copy_tab.c:199 ../lib/db/dbmi_client/copy_tab.c:276
 #: ../lib/db/dbmi_client/table.c:110
@@ -899,80 +899,82 @@ msgid "Topology was built\n"
 msgstr "Topoloģija tika izveidota.\n"
 
 #: ../lib/vector/Vlib/build.c:172
-#, c-format
+#, fuzzy, c-format
 msgid "Number of nodes     :   %d\n"
 msgstr "Posmu skaits     :   %d\n"
 
 #: ../lib/vector/Vlib/build.c:173
-#, c-format
+#, fuzzy, c-format
 msgid "Number of primitives:   %d\n"
 msgstr "Pirmatnējo/vienkāršo datu skaits:   %d\n"
 
 #: ../lib/vector/Vlib/build.c:174
-#, c-format
+#, fuzzy, c-format
 msgid "Number of points    :   %d\n"
 msgstr "Punktu skaits    :   %d\n"
 
 #: ../lib/vector/Vlib/build.c:175
-#, c-format
+#, fuzzy, c-format
 msgid "Number of lines     :   %d\n"
 msgstr "Līniju skaits     :   %d\n"
 
 #: ../lib/vector/Vlib/build.c:176
-#, c-format
+#, fuzzy, c-format
 msgid "Number of boundaries:   %d\n"
 msgstr "Robežu skaits:   %d\n"
 
 #: ../lib/vector/Vlib/build.c:177
-#, c-format
+#, fuzzy, c-format
 msgid "Number of centroids :   %d\n"
 msgstr "Centroīdu skaits :   %d\n"
 
 #: ../lib/vector/Vlib/build.c:180
-#, c-format
+#, fuzzy, c-format
 msgid "Number of faces     :   %d\n"
 msgstr "Plakņu skaits     :   %d\n"
 
 #: ../lib/vector/Vlib/build.c:183
-#, c-format
+#, fuzzy, c-format
 msgid "Number of kernels   :   %d\n"
 msgstr "Kodolu skaits   :   %d\n"
 
 #: ../lib/vector/Vlib/build.c:223
-#, c-format
+#, fuzzy, c-format
 msgid "Number of areas     :   %d\n"
 msgstr "Laukumu skaits     :   %d\n"
 
 #: ../lib/vector/Vlib/build.c:224
-#, c-format
+#, fuzzy, c-format
 msgid "Number of isles     :   %d\n"
 msgstr "'Salu' skaits     :   %d\n"
 
 #: ../lib/vector/Vlib/build.c:227
-#, c-format
+#, fuzzy, c-format
 msgid "Number of incorrect boundaries   :   %d\n"
 msgstr "Nepareizu robežu skaits   :   %d\n"
 
 #: ../lib/vector/Vlib/build.c:231
-#, c-format
+#, fuzzy, c-format
 msgid "Number of centroids outside area :   %d\n"
 msgstr "Ārpus laukuma esošu centroīdu skaits :   %d\n"
 
 #: ../lib/vector/Vlib/build.c:235
-#, c-format
+#, fuzzy, c-format
 msgid "Number of duplicate centroids    :   %d\n"
 msgstr "Dubultu centroīdu skaits    :   %d\n"
 
 #: ../lib/vector/Vlib/build.c:239
-#, c-format
+#, fuzzy, c-format
 msgid "Number of areas without centroid :   %d\n"
 msgstr "Bez centroīdiem esošu laukumu skaits :   %d\n"
 
 #: ../lib/vector/Vlib/build.c:244
+#, fuzzy
 msgid "Number of areas     :   -\n"
 msgstr "Laukumu skaits     :   -\n"
 
 #: ../lib/vector/Vlib/build.c:245
+#, fuzzy
 msgid "Number of isles     :   -\n"
 msgstr "'Salu' skaits     :   -\n"
 
@@ -1031,7 +1033,7 @@ msgstr "neispējami mainīt direktoriju uz %s"
 #: ../lib/vector/Vlib/open.c:297
 #, fuzzy, c-format
 msgid "Unable to open vector map <%s> on topology level %d"
-msgstr "Nevar atvērt veco vektoru %s līmenī %d"
+msgstr "neiespējami atvērt rastra karti [%s iekš %s]"
 
 #: ../lib/vector/Vlib/open.c:213
 #, fuzzy
@@ -1357,8 +1359,9 @@ msgid "BUG (add_area_cats_to_cidx): Area %d does not exist"
 msgstr ""
 
 #: ../lib/vector/Vlib/write_nat.c:600
+#, fuzzy
 msgid "Attempt to delete dead line"
-msgstr ""
+msgstr "Nevar atvērt 'temp'/pagaidu failu"
 
 #: ../lib/vector/Vlib/level_two.c:210 ../lib/vector/Vlib/level_two.c:235
 #: ../lib/vector/Vlib/level_two.c:259 ../lib/vector/Vlib/level_two.c:278
@@ -1435,10 +1438,12 @@ msgid "isles built"
 msgstr "Topoloģija tika izveidota.\n"
 
 #: ../lib/vector/Vlib/build_nat.c:605
+#, fuzzy
 msgid "Attaching islands: "
 msgstr "Pievienot salas"
 
 #: ../lib/vector/Vlib/build_nat.c:622
+#, fuzzy
 msgid "Attaching centroids: "
 msgstr "Pievienot centroīdus"
 
@@ -1498,8 +1503,9 @@ msgid "Map structure has been closed"
 msgstr ""
 
 #: ../lib/vector/Vlib/area.c:53
+#, fuzzy
 msgid "Attempt to read points of nonexisting area"
-msgstr ""
+msgstr "Nevar nolasīt histogrammu priekš [%s no %s]"
 
 #: ../lib/vector/Vlib/area.c:125
 #, fuzzy, c-format
@@ -1879,7 +1885,7 @@ msgstr "Nevar pārrakstīt līniju,karte nav atvērta"
 #: ../lib/vector/Vlib/write.c:168
 #, fuzzy, c-format
 msgid "Unable to rewrite line %d"
-msgstr "Neiespējami atvērt failu %s iekš %s"
+msgstr "Nevar atvērt 'temp'/pagaidu failu"
 
 #: ../lib/vector/Vlib/write.c:212
 #, fuzzy, c-format
@@ -3955,8 +3961,9 @@ msgid "can't create histogram for [%s in %s]"
 msgstr "nevar izveidot histogrammu priekš [%s iekš %s]"
 
 #: ../lib/gis/alloc.c:45
+#, fuzzy
 msgid "G_malloc: out of memory"
-msgstr ""
+msgstr "Neiespējami piešķirt atmiņu\n"
 
 #: ../lib/gis/alloc.c:79
 #, fuzzy
@@ -3964,8 +3971,9 @@ msgid "G_calloc: out of memory"
 msgstr "Neiespējami piešķirt atmiņu\n"
 
 #: ../lib/gis/alloc.c:117
+#, fuzzy
 msgid "G_realloc: out of memory"
-msgstr ""
+msgstr "Neiespējami piešķirt atmiņu\n"
 
 #: ../lib/nviz/change_view.c:108
 #, c-format
@@ -4292,9 +4300,9 @@ msgid "Vector map <%s> loaded (%d points)"
 msgstr "Ieejas vektors '%s' nav atrasts"
 
 #: ../lib/ogsf/GS2.c:1638
-#, c-format
+#, fuzzy, c-format
 msgid "Raster map <%s@%s> is outside of current region. Load failed."
-msgstr ""
+msgstr "Defekts: atteikts papildināt karti,kura nav tekošajā karšu komplektā."
 
 #: ../lib/ogsf/GS2.c:1716 ../lib/ogsf/GS2.c:1722 ../lib/ogsf/GS2.c:1730
 #: ../lib/ogsf/GS2.c:1739 ../lib/ogsf/GS2.c:1747 ../lib/ogsf/GS2.c:1757
@@ -4541,6 +4549,7 @@ msgid "Loading data from attribute table ..."
 msgstr ""
 
 #: ../lib/rst/interp_float/vinput2d.c:79
+#, fuzzy
 msgid "Cannot get layer info"
 msgstr "Nevar iegūt slāņa informāciju"
 
@@ -4683,8 +4692,9 @@ msgstr ""
 #~ msgid "Cannot rewrite line"
 #~ msgstr "Nevar pārrakstīt līniju"
 
+#, fuzzy
 #~ msgid "Cannot delete line"
-#~ msgstr "Nevar dzēst līniju"
+#~ msgstr "Nevar pārrakstīt līniju"
 
 #~ msgid "Output name '%s' is not valid vector name."
 #~ msgstr "Izejas vārds '%s' nav derīgs vektora nosaukums."
@@ -4952,3 +4962,71 @@ msgstr ""
 #, fuzzy
 #~ msgid "WARNING: can not create a new process\n"
 #~ msgstr "Nevar izveidot jaunu procesu!"
+
+#, fuzzy
+#~ msgid ""
+#~ "Unable to open vector map <%s> on level %d. Try to rebuild vector "
+#~ "topology by v.build."
+#~ msgstr "Nevar atvērt veco vektoru %s līmenī %d"
+
+#, fuzzy
+#~ msgid "Attempt to delete dead feature"
+#~ msgstr "Nevar nolasīt histogrammu priekš [%s no %s]"
+
+#, fuzzy
+#~ msgid "Attempt to restore alive feature"
+#~ msgstr "Nevar nolasīt histogrammu priekš [%s no %s]"
+
+#, fuzzy
+#~ msgid "Unable to find vector map <%s> in <%s>"
+#~ msgstr "neiespējami atvērt rastra karti [%s iekš %s]"
+
+#, fuzzy
+#~ msgid "Unable to rewrite feature %d"
+#~ msgstr "Neiespējami atvērt failu %s iekš %s"
+
+#, fuzzy
+#~ msgid ""
+#~ "Unable to restore feature %d, vector map <%s> is not opened on topology "
+#~ "level"
+#~ msgstr "Nevar izdzēst līniju, karte '%s' karte nav atvērta līmenī 2"
+
+#, fuzzy
+#~ msgid ""
+#~ "Unable to restore feature %d, vector map <%s> is not opened in 'write' "
+#~ "mode"
+#~ msgstr ""
+#~ "Nevar izdzēst līniju, karte '%s' karte nav atvērta rakstīšanas 'write' "
+#~ "režijmā"
+
+#, fuzzy
+#~ msgid "Unable to restore feature %d from vector map <%s>"
+#~ msgstr "neispējami mainīt direktoriju uz %s"
+
+#, fuzzy
+#~ msgid "Line is not looped"
+#~ msgstr "Ieejas vektors '%s' nav atrasts"
+
+#, fuzzy
+#~ msgid "Unable to find '%s' in '%s'"
+#~ msgstr "neiespējami atrast [%s]"
+
+#, fuzzy
+#~ msgid "Using <%s@%s>"
+#~ msgstr "neiespējami atrast [%s]"
+
+#, fuzzy
+#~ msgid "Unable to locate symbol <%s>"
+#~ msgstr "Neiespējami atvērt failu %s iekš %s"
+
+#, fuzzy
+#~ msgid "Unable to load GDAL library"
+#~ msgstr "Nevar atvērt topo failu rakstīšanai: %s\n"
+
+#, fuzzy
+#~ msgid "Cannot fetch row"
+#~ msgstr "Nevar iegūt slāņa informāciju"
+
+#, fuzzy
+#~ msgid "Cannot select attributes"
+#~ msgstr "Nevar dzēst līniju"

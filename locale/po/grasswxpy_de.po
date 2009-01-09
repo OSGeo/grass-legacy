@@ -22,6 +22,7 @@ msgstr ""
 "2);\n"
 
 #: ../gui/wxpython/icons/icon.py:162
+#, fuzzy
 msgid "Unable to load icon theme, using default icon theme..."
 msgstr "Kann Icon-Thema nicht laden, benutze originales Icon-Thema..."
 
@@ -1916,8 +1917,9 @@ msgid "Save current workspace as file"
 msgstr "Speichere aktuelles Projekt in eine Datei "
 
 #: ../gui/wxpython/gui_modules/menudata.py:59
+#, fuzzy
 msgid "Close current workspace"
-msgstr "Schließe das aktuelle Projekt"
+msgstr "Schließe aktuelle Projektdatei"
 
 #: ../gui/wxpython/gui_modules/menudata.py:60
 msgid "Close current workspace file"
@@ -6146,8 +6148,9 @@ msgstr "Hervorheben"
 #: ../gui/wxpython/gui_modules/dbm.py:967
 #: ../gui/wxpython/gui_modules/dbm.py:1852
 #: ../gui/wxpython/gui_modules/dbm.py:1856
+#, fuzzy
 msgid "Extract selected"
-msgstr ""
+msgstr "Löschen"
 
 #: ../gui/wxpython/gui_modules/dbm.py:972
 #: ../gui/wxpython/gui_modules/dbm.py:1461
@@ -6332,8 +6335,9 @@ msgid "&Delete layer"
 msgstr "Löschen"
 
 #: ../gui/wxpython/gui_modules/dbm.py:2349
+#, fuzzy
 msgid "Modify selected layer"
-msgstr ""
+msgstr "Importieren"
 
 #: ../gui/wxpython/gui_modules/dbm.py:2421
 msgid "&Modify layer"
@@ -8042,8 +8046,9 @@ msgid "Do you want to remove map layer %s from layer tree?"
 msgstr "Kartenebenen in eine Baumstruktur laden"
 
 #: ../gui/wxpython/wxgui.py:1443
+#, fuzzy
 msgid "Do you want to remove selected map layer from layer tree?"
-msgstr ""
+msgstr "Kartenebenen in eine Baumstruktur laden"
 
 #: ../gui/wxpython/wxgui.py:1447
 msgid "Remove map layer"
@@ -8052,3 +8057,99 @@ msgstr ""
 #: ../gui/wxpython/wxgui.py:1473
 msgid "No map layer selected. Operation cancelled."
 msgstr ""
+
+#, fuzzy
+#~ msgid "Delete selected features"
+#~ msgstr "Löschen"
+
+#, fuzzy
+#~ msgid "Delete layer"
+#~ msgstr "Löschen"
+
+#, fuzzy
+#~ msgid "Modify layer"
+#~ msgstr "Karten auflisten"
+
+#, fuzzy
+#~ msgid "Zoom to map"
+#~ msgstr "Auf die gewählte Karte zoomen"
+
+#, fuzzy
+#~ msgid "Zoom to displayed map"
+#~ msgstr "Auf die gewählte Karte zoomen"
+
+#, fuzzy
+#~ msgid "Create new workspace"
+#~ msgstr "Erzeuge neue Projektdatei"
+
+#, fuzzy
+#~ msgid "Load workspace from file"
+#~ msgstr "Speichere Projekt"
+
+#, fuzzy
+#~ msgid "Save workspace to open file"
+#~ msgstr "Speichere aktuelles Projekt in eine Datei"
+
+#, fuzzy
+#~ msgid "Save as"
+#~ msgstr "Speichern"
+
+#, fuzzy
+#~ msgid "Save workspace to file"
+#~ msgstr "Speichere aktuelles Projekt in eine Datei"
+
+#, fuzzy
+#~ msgid "Close"
+#~ msgstr "Code"
+
+#, fuzzy
+#~ msgid "Close loaded workspace"
+#~ msgstr "Schließe das aktuelle Projekt"
+
+#, fuzzy
+#~ msgid "Load map layers from GRC file to layer tree"
+#~ msgstr "Kartenebenen in eine Baumstruktur laden"
+
+#, fuzzy
+#~ msgid "Geonames import"
+#~ msgstr "GEOnet Import"
+
+#, fuzzy
+#~ msgid "Imports geonames.org country files into a GRASS vector points map."
+#~ msgstr ""
+#~ "Importiere US-NGA GEOnet Names Server (GNS) Länderdaten in eine GRASS "
+#~ "Vektorpunkte Karte."
+
+#, fuzzy
+#~ msgid "Multiple GPS export formats using GPSBabel"
+#~ msgstr "Vektorexport über OGR"
+
+#, fuzzy
+#~ msgid "Export database table"
+#~ msgstr "Importiere Datenbanktabelle"
+
+#, fuzzy
+#~ msgid "Exports attribute tables in various formats."
+#~ msgstr "Importiere Attributtabellen in versch. Formaten."
+
+#, fuzzy
+#~ msgid "2D vector to 3D vector"
+#~ msgstr "Raster Vektor"
+
+#, fuzzy
+#~ msgid "Color tables (stddev)"
+#~ msgstr "Farbtabellen"
+
+#, fuzzy
+#~ msgid "Distance to features"
+#~ msgstr "Texturelle Objekte"
+
+#, fuzzy
+#~ msgid "Generates a raster map layer of distance to features in input layer."
+#~ msgstr ""
+#~ "Erstellt eine Rasterkarte mit Flächen, die um jeweils eine Zelle "
+#~ "erweitert wurde"
+
+#, fuzzy
+#~ msgid "Edit vector map (non-interactively)"
+#~ msgstr "Interaktive Bearbeitung von Rasterwerte (Recode)"

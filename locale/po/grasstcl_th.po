@@ -4876,6 +4876,7 @@ msgid "Garmin GPS Waypoints/Routes/Tracks"
 msgstr "Garmin GPS Waypoints/Routes/Tracks"
 
 #: ../gui/tcltk/d.m/menu.tcl:103
+#, fuzzy
 msgid "GPS Waypoints/Routes/Tracks using GPSBabel"
 msgstr "GPS Waypoints/Routes/Tracks ใช้ GPSBabel"
 
@@ -6129,3 +6130,55 @@ msgstr "ทดสอบ"
 
 #~ msgid " text size"
 #~ msgstr "ขนาดข้อความ"
+
+#, fuzzy
+#~ msgid "Required"
+#~ msgstr "ต้องการ"
+
+#, fuzzy
+#~ msgid "Raster map for profile"
+#~ msgstr "แผนที่เชิงภาพ สำหรับป้าย"
+
+#, fuzzy
+#~ msgid "Profile Window"
+#~ msgstr "Profile analysis"
+
+#, fuzzy
+#~ msgid " Save "
+#~ msgstr "บันทึก"
+
+#, fuzzy
+#~ msgid " Clear "
+#~ msgstr "ล้าง"
+
+#, fuzzy
+#~ msgid "Multiple formats using GDAL (link into instead of import)"
+#~ msgstr "ชนิดอื่นด้วย GDAL"
+
+#, fuzzy
+#~ msgid "Geonames"
+#~ msgstr "เปลี่ยนชื่อ"
+
+#, fuzzy
+#~ msgid "Import data table"
+#~ msgstr "นำเข้าแผนที่แรสเตอร์"
+
+#, fuzzy
+#~ msgid "Multiple GPS formats using GPSBabel"
+#~ msgstr "หลายรูปแบบด้วย OGR"
+
+#, fuzzy
+#~ msgid "Export data table"
+#~ msgstr "ส่งออกแผนที่แรสเตอร์"
+
+#, fuzzy
+#~ msgid "Color tables (stddev)"
+#~ msgstr "ตารางสี"
+
+#, fuzzy
+#~ msgid "Distance to features"
+#~ msgstr "แก้ไขข้อมูล"
+
+#, fuzzy
+#~ msgid "Assign colors"
+#~ msgstr "สีเส้น"

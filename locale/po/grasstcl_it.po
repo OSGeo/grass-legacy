@@ -5117,6 +5117,7 @@ msgid "Garmin GPS Waypoints/Routes/Tracks"
 msgstr "Punti di rilevamento/Rotte/Tracce GPS Garmin"
 
 #: ../gui/tcltk/d.m/menu.tcl:103
+#, fuzzy
 msgid "GPS Waypoints/Routes/Tracks using GPSBabel"
 msgstr "Punti di rilevamento/Rotte/Tracce GPS usando GPSBabel"
 
@@ -6791,8 +6792,9 @@ msgstr "Testo"
 #~ msgid "new window  "
 #~ msgstr "nuova finestra"
 
+#, fuzzy
 #~ msgid "reuse window"
-#~ msgstr "riusa finestra"
+#~ msgstr "nuova finestra"
 
 #~ msgid "About"
 #~ msgstr "Info"
@@ -7647,3 +7649,55 @@ msgstr "Testo"
 #, fuzzy
 #~ msgid "Break lines at intersections"
 #~ msgstr "direzioni linea"
+
+#, fuzzy
+#~ msgid "Required"
+#~ msgstr "richiesto"
+
+#, fuzzy
+#~ msgid "Raster map for profile"
+#~ msgstr "Mappa Raster per la legenda:"
+
+#, fuzzy
+#~ msgid "Profile Window"
+#~ msgstr "riusa finestra"
+
+#, fuzzy
+#~ msgid " Save "
+#~ msgstr "Salva"
+
+#, fuzzy
+#~ msgid " Clear "
+#~ msgstr "Annulla"
+
+#, fuzzy
+#~ msgid "Multiple formats using GDAL (link into instead of import)"
+#~ msgstr "Vari formati usando GDAL"
+
+#, fuzzy
+#~ msgid "Geonames"
+#~ msgstr "Rinomina"
+
+#, fuzzy
+#~ msgid "Import data table"
+#~ msgstr "Importa mappe raster"
+
+#, fuzzy
+#~ msgid "Multiple GPS formats using GPSBabel"
+#~ msgstr "Vari formati usando GDAL"
+
+#, fuzzy
+#~ msgid "Export data table"
+#~ msgstr "Esporta mappa raster"
+
+#, fuzzy
+#~ msgid "Color tables (stddev)"
+#~ msgstr "Copia tabella"
+
+#, fuzzy
+#~ msgid "Distance to features"
+#~ msgstr "Caratteristiche lineare sottili"
+
+#, fuzzy
+#~ msgid "Assign colors"
+#~ msgstr "linea colore"

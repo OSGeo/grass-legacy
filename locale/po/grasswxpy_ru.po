@@ -16,6 +16,7 @@ msgstr ""
 "X-Generator: KBabel 1.9.1\n"
 
 #: ../gui/wxpython/icons/icon.py:162
+#, fuzzy
 msgid "Unable to load icon theme, using default icon theme..."
 msgstr "Невозможно загрузить набор иконок, используются стандартный..."
 
@@ -1818,8 +1819,9 @@ msgid "Save current workspace as file"
 msgstr "Сохранить текущий проект как файл"
 
 #: ../gui/wxpython/gui_modules/menudata.py:59
+#, fuzzy
 msgid "Close current workspace"
-msgstr "Закрыть текущий проект"
+msgstr "Закрыть текущий файл проекта"
 
 #: ../gui/wxpython/gui_modules/menudata.py:60
 msgid "Close current workspace file"
@@ -3812,6 +3814,7 @@ msgid "Create new empty vector map"
 msgstr "Создать новый пустой векторный слой"
 
 #: ../gui/wxpython/gui_modules/menudata.py:1207
+#, fuzzy
 msgid "Create/rebuild topology"
 msgstr "Создать/построить топологию"
 
@@ -5711,12 +5714,14 @@ msgid "Highlight selected"
 msgstr "Подсветить (дубликаты)"
 
 #: ../gui/wxpython/gui_modules/dbm.py:963
+#, fuzzy
 msgid "Highlight selected and zoom"
 msgstr "Выделить выбранное и масштабировать"
 
 #: ../gui/wxpython/gui_modules/dbm.py:967
 #: ../gui/wxpython/gui_modules/dbm.py:1852
 #: ../gui/wxpython/gui_modules/dbm.py:1856
+#, fuzzy
 msgid "Extract selected"
 msgstr "Выбранный фрагмент"
 
@@ -6069,7 +6074,7 @@ msgid "Map scale"
 msgstr "Масштаб карты"
 
 #: ../gui/wxpython/gui_modules/gcmd.py:93
-#, python-format
+#, fuzzy, python-format
 msgid "Error in command execution %s"
 msgstr "Ошибка при выполнении команды %s"
 
@@ -7506,11 +7511,12 @@ msgid "Please wait, loading attribute data..."
 msgstr "Загрузка атрибутивных данных, пожалуйста подождите..."
 
 #: ../gui/wxpython/wxgui.py:1436
-#, python-format
+#, fuzzy, python-format
 msgid "Do you want to remove map layer %s from layer tree?"
 msgstr "Удалить слой %s из дерева слоев?"
 
 #: ../gui/wxpython/wxgui.py:1439
+#, fuzzy
 msgid "Do you want to remove selected map layer from layer tree?"
 msgstr "Удалить выбранный слой из содержания?"
 
@@ -7614,3 +7620,120 @@ msgstr "Не выбран слой. Операция прервана."
 
 #~ msgid "Unable to run the command, another command is running..."
 #~ msgstr "Невозможно запустить команду, выполняется другая команда..."
+
+#, fuzzy
+#~ msgid "Delete selected features"
+#~ msgstr "Удалить выбранный слой"
+
+#, fuzzy
+#~ msgid "Nothing to delete."
+#~ msgstr "Нечего не выбрано."
+
+#, fuzzy
+#~ msgid "Delete layer"
+#~ msgstr "&Удалить слой"
+
+#, fuzzy
+#~ msgid "Modify layer"
+#~ msgstr "&Изменить слой"
+
+#, fuzzy
+#~ msgid "Set color table"
+#~ msgstr "Цветовые таблицы"
+
+#, fuzzy
+#~ msgid "Zoom to map"
+#~ msgstr "Масштабировать до выбранного слоя"
+
+#, fuzzy
+#~ msgid "Zoom to displayed map"
+#~ msgstr "Масштабировать до выбранного слоя"
+
+#, fuzzy
+#~ msgid "Create new workspace"
+#~ msgstr "Создать файл рабочей области"
+
+#, fuzzy
+#~ msgid "Load workspace from file"
+#~ msgstr "Выберите файл проекта"
+
+#, fuzzy
+#~ msgid "Save workspace to open file"
+#~ msgstr "Сохранить текущую рабочую область в файл"
+
+#, fuzzy
+#~ msgid "Save as"
+#~ msgstr "Сохранить изменения"
+
+#, fuzzy
+#~ msgid "Save workspace to file"
+#~ msgstr "Сохранить текущую рабочую область в файл"
+
+#, fuzzy
+#~ msgid "Close"
+#~ msgstr "Код"
+
+#, fuzzy
+#~ msgid "Close loaded workspace"
+#~ msgstr "Закрыть текущий проект"
+
+#, fuzzy
+#~ msgid "Load map layers from GRC file to layer tree"
+#~ msgstr "Загрузить слои в содержание"
+
+#, fuzzy
+#~ msgid "Geonames import"
+#~ msgstr "Импорт GEOnet"
+
+#, fuzzy
+#~ msgid "Imports geonames.org country files into a GRASS vector points map."
+#~ msgstr ""
+#~ "Импорт файлов стран US-NGA GEOnet Names Server (GNS) в векторный слой "
+#~ "GRASS."
+
+#, fuzzy
+#~ msgid "Multiple GPS export formats using GPSBabel"
+#~ msgstr "Форматы экспорта использующие OGR"
+
+#, fuzzy
+#~ msgid "Export database table"
+#~ msgstr "Импорт таблицы базы данных"
+
+#, fuzzy
+#~ msgid "Exports attribute tables in various formats."
+#~ msgstr "Импорт атрибутивных таблиц в различных форматах."
+
+#, fuzzy
+#~ msgid "2D vector to 3D vector"
+#~ msgstr "Растр в вектор"
+
+#, fuzzy
+#~ msgid "Link to GDAL"
+#~ msgstr "Связать с OGR"
+
+#, fuzzy
+#~ msgid "Link GDAL supported raster file to a binary raster map layer."
+#~ msgstr "Импорт растра поддерживаемый GDAL в бинарный растровый слой."
+
+#, fuzzy
+#~ msgid "Color tables (stddev)"
+#~ msgstr "Цветовые таблицы"
+
+#, fuzzy
+#~ msgid "Distance to features"
+#~ msgstr "Ближайшие объекты"
+
+#, fuzzy
+#~ msgid "Generates a raster map layer of distance to features in input layer."
+#~ msgstr ""
+#~ "Создать растровый слой с протяженными зонами выращенными вокруг единичных "
+#~ "ячеек."
+
+#, fuzzy
+#~ msgid "Edit vector map (non-interactively)"
+#~ msgstr "Интерактивная перекодировка"
+
+#, fuzzy
+#~ msgid "Creates a new vector as a read-only link to OGR layer."
+#~ msgstr ""
+#~ "Создать новый векторный слой путем комбинирования других векторных слоев."

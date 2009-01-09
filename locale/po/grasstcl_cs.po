@@ -4121,6 +4121,7 @@ msgid "Garmin GPS Waypoints/Routes/Tracks"
 msgstr "Garmin GPS trasové body/cesty/stopy"
 
 #: ../gui/tcltk/d.m/menu.tcl:103
+#, fuzzy
 msgid "GPS Waypoints/Routes/Tracks using GPSBabel"
 msgstr "GPS Waypoints/Routes/Tracks pomocí GPSBabel"
 
@@ -6131,3 +6132,55 @@ msgstr "volitelné"
 #: ../lib/gis/gui.tcl:587
 msgid "multiple"
 msgstr "mnohonásobné"
+
+#, fuzzy
+#~ msgid "Required"
+#~ msgstr "vy¾adováno"
+
+#, fuzzy
+#~ msgid "Raster map for profile"
+#~ msgstr "Rastrová mapová vrstva pro legendu"
+
+#, fuzzy
+#~ msgid "Profile Window"
+#~ msgstr "Analýza profilu"
+
+#, fuzzy
+#~ msgid " Save "
+#~ msgstr "Ulo¾it"
+
+#, fuzzy
+#~ msgid " Clear "
+#~ msgstr "Vyèistit"
+
+#, fuzzy
+#~ msgid "Multiple formats using GDAL (link into instead of import)"
+#~ msgstr "Rùznorodé formáty pomocí GDAL"
+
+#, fuzzy
+#~ msgid "Geonames"
+#~ msgstr "Pøejmenovat mapové vrstvy"
+
+#, fuzzy
+#~ msgid "Import data table"
+#~ msgstr "import rastrové mapy"
+
+#, fuzzy
+#~ msgid "Multiple GPS formats using GPSBabel"
+#~ msgstr "Rùznorodé formáty pomocí GDAL"
+
+#, fuzzy
+#~ msgid "Export data table"
+#~ msgstr "Export rastrové mapy"
+
+#, fuzzy
+#~ msgid "Color tables (stddev)"
+#~ msgstr "Tabulka barev"
+
+#, fuzzy
+#~ msgid "Distance to features"
+#~ msgstr "Editovat prvky"
+
+#, fuzzy
+#~ msgid "Assign colors"
+#~ msgstr "barva linie"

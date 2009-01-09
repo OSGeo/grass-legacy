@@ -513,9 +513,9 @@ msgid "Unable to get list tables in database <%s>"
 msgstr "datum لم يمكن فتح ملف جدول : %s"
 
 #: ../lib/db/dbmi_client/copy_tab.c:157
-#, c-format
+#, fuzzy, c-format
 msgid "Table <%s> already existsin database <%s>"
-msgstr ""
+msgstr "datum لم يمكن فتح ملف جدول : %s"
 
 #: ../lib/db/dbmi_client/copy_tab.c:199 ../lib/db/dbmi_client/copy_tab.c:276
 #: ../lib/db/dbmi_client/table.c:110
@@ -881,80 +881,82 @@ msgid "Topology was built\n"
 msgstr "تم بناء الطبولوجى\n"
 
 #: ../lib/vector/Vlib/build.c:172
-#, c-format
+#, fuzzy, c-format
 msgid "Number of nodes     :   %d\n"
 msgstr "عدد العقد     :   %d\n"
 
 #: ../lib/vector/Vlib/build.c:173
-#, c-format
+#, fuzzy, c-format
 msgid "Number of primitives:   %d\n"
-msgstr ""
+msgstr "عدد النقاط    :   %d\n"
 
 #: ../lib/vector/Vlib/build.c:174
-#, c-format
+#, fuzzy, c-format
 msgid "Number of points    :   %d\n"
 msgstr "عدد النقاط    :   %d\n"
 
 #: ../lib/vector/Vlib/build.c:175
-#, c-format
+#, fuzzy, c-format
 msgid "Number of lines     :   %d\n"
 msgstr "عدد الخطوط     :   %d\n"
 
 #: ../lib/vector/Vlib/build.c:176
-#, c-format
+#, fuzzy, c-format
 msgid "Number of boundaries:   %d\n"
-msgstr ""
+msgstr "%d : عدد الحدود غير الصحيحة\n"
 
 #: ../lib/vector/Vlib/build.c:177
-#, c-format
+#, fuzzy, c-format
 msgid "Number of centroids :   %d\n"
 msgstr "عدد  اشباه المراكز :   %d\n"
 
 #: ../lib/vector/Vlib/build.c:180
-#, c-format
+#, fuzzy, c-format
 msgid "Number of faces     :   %d\n"
 msgstr "عدد  الأوجه    :   %d\n"
 
 #: ../lib/vector/Vlib/build.c:183
-#, c-format
+#, fuzzy, c-format
 msgid "Number of kernels   :   %d\n"
-msgstr ""
+msgstr "عدد العقد     :   %d\n"
 
 #: ../lib/vector/Vlib/build.c:223
-#, c-format
+#, fuzzy, c-format
 msgid "Number of areas     :   %d\n"
 msgstr "عدد المساحات     :   %d\n"
 
 #: ../lib/vector/Vlib/build.c:224
-#, c-format
+#, fuzzy, c-format
 msgid "Number of isles     :   %d\n"
 msgstr "عدد الجزر:    %d\n"
 
 #: ../lib/vector/Vlib/build.c:227
-#, c-format
+#, fuzzy, c-format
 msgid "Number of incorrect boundaries   :   %d\n"
 msgstr "%d : عدد الحدود غير الصحيحة\n"
 
 #: ../lib/vector/Vlib/build.c:231
-#, c-format
+#, fuzzy, c-format
 msgid "Number of centroids outside area :   %d\n"
 msgstr "%d : عدد  اشباه المراكز خارج المساحة\n"
 
 #: ../lib/vector/Vlib/build.c:235
-#, c-format
+#, fuzzy, c-format
 msgid "Number of duplicate centroids    :   %d\n"
 msgstr "%d : عدد اشباه المراكز المضاعفة\n"
 
 #: ../lib/vector/Vlib/build.c:239
-#, c-format
+#, fuzzy, c-format
 msgid "Number of areas without centroid :   %d\n"
 msgstr "%d : عدد المساحات بدون اشباه مراكز\n"
 
 #: ../lib/vector/Vlib/build.c:244
+#, fuzzy
 msgid "Number of areas     :   -\n"
 msgstr "عدد المساحات     :   -\n"
 
 #: ../lib/vector/Vlib/build.c:245
+#, fuzzy
 msgid "Number of isles     :   -\n"
 msgstr "عدد الجزر     :   -\n"
 
@@ -1010,7 +1012,7 @@ msgstr " [%s] غير قادر على أنشاء ملف عنوان رئيسى ل"
 #: ../lib/vector/Vlib/open.c:297
 #, fuzzy, c-format
 msgid "Unable to open vector map <%s> on topology level %d"
-msgstr "%d على مستوى %s لم يمكن فتح فيكتور قديم "
+msgstr "'%s'الى '%s'لم يمكن نسخ فيكتور"
 
 #: ../lib/vector/Vlib/open.c:213
 #, fuzzy
@@ -1336,8 +1338,9 @@ msgid "BUG (add_area_cats_to_cidx): Area %d does not exist"
 msgstr ""
 
 #: ../lib/vector/Vlib/write_nat.c:600
+#, fuzzy
 msgid "Attempt to delete dead line"
-msgstr ""
+msgstr "لم يمكن فتح ملف مؤقت"
 
 #: ../lib/vector/Vlib/level_two.c:210 ../lib/vector/Vlib/level_two.c:235
 #: ../lib/vector/Vlib/level_two.c:259 ../lib/vector/Vlib/level_two.c:278
@@ -1412,10 +1415,12 @@ msgid "isles built"
 msgstr "تم بناء الطبولوجى\n"
 
 #: ../lib/vector/Vlib/build_nat.c:605
+#, fuzzy
 msgid "Attaching islands: "
 msgstr ": توصيل الجزر"
 
 #: ../lib/vector/Vlib/build_nat.c:622
+#, fuzzy
 msgid "Attaching centroids: "
 msgstr " : توصيل اشباه المراكز"
 
@@ -1475,8 +1480,9 @@ msgid "Map structure has been closed"
 msgstr ""
 
 #: ../lib/vector/Vlib/area.c:53
+#, fuzzy
 msgid "Attempt to read points of nonexisting area"
-msgstr ""
+msgstr "%s: لم يمكن فتح ملف  الطبوغرافية للكتابة\n"
 
 #: ../lib/vector/Vlib/area.c:125
 #, fuzzy, c-format
@@ -1851,7 +1857,7 @@ msgstr "لم يمكن إعادة كتابة الخط حيث ان الخريطة 
 #: ../lib/vector/Vlib/write.c:168
 #, fuzzy, c-format
 msgid "Unable to rewrite line %d"
-msgstr "لم يمكن فتحه %s فى %s"
+msgstr "لم يمكن فتح ملف مؤقت"
 
 #: ../lib/vector/Vlib/write.c:212
 #, fuzzy, c-format
@@ -3875,8 +3881,9 @@ msgid "can't create histogram for [%s in %s]"
 msgstr ""
 
 #: ../lib/gis/alloc.c:45
+#, fuzzy
 msgid "G_malloc: out of memory"
-msgstr ""
+msgstr "لم يمكن توفير ذاكرة"
 
 #: ../lib/gis/alloc.c:79
 #, fuzzy
@@ -3884,8 +3891,9 @@ msgid "G_calloc: out of memory"
 msgstr "لم يمكن توفير ذاكرة"
 
 #: ../lib/gis/alloc.c:117
+#, fuzzy
 msgid "G_realloc: out of memory"
-msgstr ""
+msgstr "لم يمكن توفير ذاكرة"
 
 #: ../lib/nviz/change_view.c:108
 #, c-format
@@ -4212,9 +4220,9 @@ msgid "Vector map <%s> loaded (%d points)"
 msgstr "غير موجود'%s' الفيكتور"
 
 #: ../lib/ogsf/GS2.c:1638
-#, c-format
+#, fuzzy, c-format
 msgid "Raster map <%s@%s> is outside of current region. Load failed."
-msgstr ""
+msgstr "خطأ: محاولة لتحديث خريطة ليست ضمن مجموعة الخرائط الحالية"
 
 #: ../lib/ogsf/GS2.c:1716 ../lib/ogsf/GS2.c:1722 ../lib/ogsf/GS2.c:1730
 #: ../lib/ogsf/GS2.c:1739 ../lib/ogsf/GS2.c:1747 ../lib/ogsf/GS2.c:1757
@@ -4602,8 +4610,9 @@ msgstr ""
 #~ msgid "Cannot rewrite line"
 #~ msgstr "لم يمكن إعادة كتابة الخط"
 
+#, fuzzy
 #~ msgid "Cannot delete line"
-#~ msgstr "لم يمكن محو الخط"
+#~ msgstr "لم يمكن إعادة كتابة الخط"
 
 #~ msgid "Output name '%s' is not valid vector name."
 #~ msgstr "غير صالح '%s' اسم الملف الفيكتورى المخرج"
@@ -4873,3 +4882,69 @@ msgstr ""
 
 #~ msgid "ERROR: GISBASE not set\n"
 #~ msgstr "خطا: GISBASE لم يتم تعريف\n"
+
+#, fuzzy
+#~ msgid ""
+#~ "Unable to open vector map <%s> on level %d. Try to rebuild vector "
+#~ "topology by v.build."
+#~ msgstr "%d على مستوى %s لم يمكن فتح فيكتور قديم "
+
+#, fuzzy
+#~ msgid "Attempt to delete dead feature"
+#~ msgstr "%s: لم يمكن فتح ملف  الطبوغرافية للكتابة\n"
+
+#, fuzzy
+#~ msgid "Attempt to restore alive feature"
+#~ msgstr "%s: لم يمكن فتح ملف  الطبوغرافية للكتابة\n"
+
+#, fuzzy
+#~ msgid "Unable to find vector map <%s> in <%s>"
+#~ msgstr "'%s'الى '%s'لم يمكن نسخ فيكتور"
+
+#, fuzzy
+#~ msgid "Unable to rewrite feature %d"
+#~ msgstr "لم يمكن فتحه %s فى %s"
+
+#, fuzzy
+#~ msgid ""
+#~ "Unable to restore feature %d, vector map <%s> is not opened on topology "
+#~ "level"
+#~ msgstr "لم يمكن محو الخط,الخريطة  غير مفتوحة على المستوى الثانى"
+
+#, fuzzy
+#~ msgid ""
+#~ "Unable to restore feature %d, vector map <%s> is not opened in 'write' "
+#~ "mode"
+#~ msgstr " لم يمكن محو الخط,الخريطة  غير مفتوحة بوضع مهيأ للكتابة"
+
+#, fuzzy
+#~ msgid "Unable to restore feature %d from vector map <%s>"
+#~ msgstr " [%s] غير قادر على أنشاء ملف عنوان رئيسى ل"
+
+#, fuzzy
+#~ msgid "Line is not looped"
+#~ msgstr "غير موجود'%s' الفيكتور"
+
+#, fuzzy
+#~ msgid "Unable to find '%s' in '%s'"
+#~ msgstr "[%s] لم يتم ايجاد"
+
+#, fuzzy
+#~ msgid "Using <%s@%s>"
+#~ msgstr "[%s] لم يتم ايجاد"
+
+#, fuzzy
+#~ msgid "Unable to locate symbol <%s>"
+#~ msgstr "لم يمكن فتحه %s فى %s"
+
+#, fuzzy
+#~ msgid "Unable to load GDAL library"
+#~ msgstr "%s: لم يمكن فتح ملف  الطبوغرافية للكتابة\n"
+
+#, fuzzy
+#~ msgid "Cannot fetch row"
+#~ msgstr "لم يمكن محو الخط"
+
+#, fuzzy
+#~ msgid "Cannot select attributes"
+#~ msgstr "لم يمكن محو الخط"

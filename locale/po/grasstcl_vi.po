@@ -6816,3 +6816,55 @@ msgstr "Chữ"
 
 #~ msgid "Break lines at intersections"
 #~ msgstr "Ngắt đường tại các giao điểm"
+
+#, fuzzy
+#~ msgid "Required"
+#~ msgstr "cần có"
+
+#, fuzzy
+#~ msgid "Raster map for profile"
+#~ msgstr "Bản đồ raster làm chú giải:"
+
+#, fuzzy
+#~ msgid "Profile Window"
+#~ msgstr "Phân tích mặt cắt"
+
+#, fuzzy
+#~ msgid " Save "
+#~ msgstr "Lưu"
+
+#, fuzzy
+#~ msgid " Clear "
+#~ msgstr "Xóa"
+
+#, fuzzy
+#~ msgid "Multiple formats using GDAL (link into instead of import)"
+#~ msgstr "Nhiều loại định dạng bằng cách dùng GDAL"
+
+#, fuzzy
+#~ msgid "Geonames"
+#~ msgstr "Đặt lại tên các bản đồ"
+
+#, fuzzy
+#~ msgid "Import data table"
+#~ msgstr "Lấy mẫu các bản đồ raster"
+
+#, fuzzy
+#~ msgid "Multiple GPS formats using GPSBabel"
+#~ msgstr "Nhiều loại định dạng bằng cách dùng GDAL"
+
+#, fuzzy
+#~ msgid "Export data table"
+#~ msgstr "Lấy mẫu các bản đồ raster"
+
+#, fuzzy
+#~ msgid "Color tables (stddev)"
+#~ msgstr "Sao chép bảng"
+
+#, fuzzy
+#~ msgid "Distance to features"
+#~ msgstr "Các đối tượng cấu trúc"
+
+#, fuzzy
+#~ msgid "Assign colors"
+#~ msgstr "màu đường"

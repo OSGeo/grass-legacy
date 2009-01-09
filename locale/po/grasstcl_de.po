@@ -5230,6 +5230,7 @@ msgid "Garmin GPS Waypoints/Routes/Tracks"
 msgstr "Garmin GPS Wegpunkte/Routen/Spuren"
 
 #: ../gui/tcltk/d.m/menu.tcl:103
+#, fuzzy
 msgid "GPS Waypoints/Routes/Tracks using GPSBabel"
 msgstr "GPS Wegpunkte/Routen/Spuren mit GPSBabel importieren"
 
@@ -6488,3 +6489,43 @@ msgstr "Vorschau"
 #: ../visualization/nviz/scripts/panel_animation.tcl:275
 msgid "Test"
 msgstr "Testen"
+
+#, fuzzy
+#~ msgid " Save "
+#~ msgstr "Speichern"
+
+#, fuzzy
+#~ msgid " Clear "
+#~ msgstr "Löschen"
+
+#, fuzzy
+#~ msgid "Multiple formats using GDAL (link into instead of import)"
+#~ msgstr "Viele Formate mit GDAL importieren"
+
+#, fuzzy
+#~ msgid "Geonames"
+#~ msgstr "Nenne Karten um"
+
+#, fuzzy
+#~ msgid "Import data table"
+#~ msgstr "Stichprobe"
+
+#, fuzzy
+#~ msgid "Multiple GPS formats using GPSBabel"
+#~ msgstr "Viele Formate mit GDAL importieren"
+
+#, fuzzy
+#~ msgid "Export data table"
+#~ msgstr "Stichprobe"
+
+#, fuzzy
+#~ msgid "Color tables (stddev)"
+#~ msgstr "Tabelle kopieren"
+
+#, fuzzy
+#~ msgid "Distance to features"
+#~ msgstr "Texturelle Objekte"
+
+#, fuzzy
+#~ msgid "Assign colors"
+#~ msgstr "Linienfarbe"

@@ -574,9 +574,9 @@ msgid "Unable to get list tables in database <%s>"
 msgstr "无法打开椭球表文件：%s"
 
 #: ../lib/db/dbmi_client/copy_tab.c:157
-#, c-format
+#, fuzzy, c-format
 msgid "Table <%s> already existsin database <%s>"
-msgstr ""
+msgstr "无法打开椭球表文件：%s"
 
 #: ../lib/db/dbmi_client/copy_tab.c:199 ../lib/db/dbmi_client/copy_tab.c:276
 #: ../lib/db/dbmi_client/table.c:110
@@ -946,80 +946,82 @@ msgid "Topology was built\n"
 msgstr "拓扑建立完成。\n"
 
 #: ../lib/vector/Vlib/build.c:172
-#, c-format
+#, fuzzy, c-format
 msgid "Number of nodes     :   %d\n"
 msgstr "节点数              ：   %d\n"
 
 #: ../lib/vector/Vlib/build.c:173
-#, c-format
+#, fuzzy, c-format
 msgid "Number of primitives:   %d\n"
 msgstr "原始线的数量        ：   %d\n"
 
 #: ../lib/vector/Vlib/build.c:174
-#, c-format
+#, fuzzy, c-format
 msgid "Number of points    :   %d\n"
 msgstr "点的数量            ：   %d\n"
 
 #: ../lib/vector/Vlib/build.c:175
-#, c-format
+#, fuzzy, c-format
 msgid "Number of lines     :   %d\n"
 msgstr "线的数量            ：   %d\n"
 
 #: ../lib/vector/Vlib/build.c:176
-#, c-format
+#, fuzzy, c-format
 msgid "Number of boundaries:   %d\n"
 msgstr "边界的数量          ：   %d\n"
 
 #: ../lib/vector/Vlib/build.c:177
-#, c-format
+#, fuzzy, c-format
 msgid "Number of centroids :   %d\n"
 msgstr "质心的数量          ：   %d\n"
 
 #: ../lib/vector/Vlib/build.c:180
-#, c-format
+#, fuzzy, c-format
 msgid "Number of faces     :   %d\n"
 msgstr "face的数量          ：   %d\n"
 
 #: ../lib/vector/Vlib/build.c:183
-#, c-format
+#, fuzzy, c-format
 msgid "Number of kernels   :   %d\n"
 msgstr "核(kernels)的数量   ：   %d\n"
 
 #: ../lib/vector/Vlib/build.c:223
-#, c-format
+#, fuzzy, c-format
 msgid "Number of areas     :   %d\n"
 msgstr "区域的数量          ：   %d\n"
 
 #: ../lib/vector/Vlib/build.c:224
-#, c-format
+#, fuzzy, c-format
 msgid "Number of isles     :   %d\n"
 msgstr "岛的数量            ：  %d\n"
 
 #: ../lib/vector/Vlib/build.c:227
-#, c-format
+#, fuzzy, c-format
 msgid "Number of incorrect boundaries   :   %d\n"
 msgstr "错误边界的数量      ：   %d\n"
 
 #: ../lib/vector/Vlib/build.c:231
-#, c-format
+#, fuzzy, c-format
 msgid "Number of centroids outside area :   %d\n"
 msgstr "在区域外的质心的数量：   %d\n"
 
 #: ../lib/vector/Vlib/build.c:235
-#, c-format
+#, fuzzy, c-format
 msgid "Number of duplicate centroids    :   %d\n"
 msgstr "重复质心的数量      ：   %d\n"
 
 #: ../lib/vector/Vlib/build.c:239
-#, c-format
+#, fuzzy, c-format
 msgid "Number of areas without centroid :   %d\n"
 msgstr "没有质心的区域数量  ：   %d\n"
 
 #: ../lib/vector/Vlib/build.c:244
+#, fuzzy
 msgid "Number of areas     :   -\n"
 msgstr "区域的数量          ：   -\n"
 
 #: ../lib/vector/Vlib/build.c:245
+#, fuzzy
 msgid "Number of isles     :   -\n"
 msgstr "岛的数量            ：   -\n"
 
@@ -1075,7 +1077,7 @@ msgstr "无法将目录改变到%s"
 #: ../lib/vector/Vlib/open.c:297
 #, fuzzy, c-format
 msgid "Unable to open vector map <%s> on topology level %d"
-msgstr "无法打开旧的矢量%s在级别%d上"
+msgstr "无法打开栅格图[%s在%s中]"
 
 #: ../lib/vector/Vlib/open.c:213
 #, fuzzy
@@ -1147,8 +1149,9 @@ msgid "Registering points"
 msgstr "注册线： "
 
 #: ../lib/vector/Vlib/snap.c:179
+#, fuzzy
 msgid "All vertices"
-msgstr ""
+msgstr "允许覆盖"
 
 #: ../lib/vector/Vlib/snap.c:180
 #, fuzzy
@@ -1399,8 +1402,9 @@ msgid "BUG (add_area_cats_to_cidx): Area %d does not exist"
 msgstr ""
 
 #: ../lib/vector/Vlib/write_nat.c:600
+#, fuzzy
 msgid "Attempt to delete dead line"
-msgstr ""
+msgstr "无法打开临时文件"
 
 #: ../lib/vector/Vlib/level_two.c:210 ../lib/vector/Vlib/level_two.c:235
 #: ../lib/vector/Vlib/level_two.c:259 ../lib/vector/Vlib/level_two.c:278
@@ -1477,10 +1481,12 @@ msgid "isles built"
 msgstr "拓扑建立完成。\n"
 
 #: ../lib/vector/Vlib/build_nat.c:605
+#, fuzzy
 msgid "Attaching islands: "
 msgstr "附加岛："
 
 #: ../lib/vector/Vlib/build_nat.c:622
+#, fuzzy
 msgid "Attaching centroids: "
 msgstr "附加质心："
 
@@ -1543,8 +1549,9 @@ msgid "Map structure has been closed"
 msgstr ""
 
 #: ../lib/vector/Vlib/area.c:53
+#, fuzzy
 msgid "Attempt to read points of nonexisting area"
-msgstr ""
+msgstr "无法为区域 %d 计算质心"
 
 #: ../lib/vector/Vlib/area.c:125
 #, fuzzy, c-format
@@ -1923,7 +1930,7 @@ msgstr "无法重写线，地图尚未打开"
 #: ../lib/vector/Vlib/write.c:168
 #, fuzzy, c-format
 msgid "Unable to rewrite line %d"
-msgstr "无法打开文件 %s 在 %s 中"
+msgstr "无法打开临时文件"
 
 #: ../lib/vector/Vlib/write.c:212
 #, fuzzy, c-format
@@ -3142,6 +3149,7 @@ msgid "Type"
 msgstr "类型"
 
 #: ../lib/gis/parser.c:565
+#, fuzzy
 msgid "Feature type(s)"
 msgstr "要素类型"
 
@@ -4331,9 +4339,9 @@ msgid "Vector map <%s> loaded (%d points)"
 msgstr "输入矢量'%s'未找到"
 
 #: ../lib/ogsf/GS2.c:1638
-#, c-format
+#, fuzzy, c-format
 msgid "Raster map <%s@%s> is outside of current region. Load failed."
-msgstr ""
+msgstr "[%s]在地图集[%s]中 - 区域[%d]与当前的范围[%d]不同"
 
 #: ../lib/ogsf/GS2.c:1716 ../lib/ogsf/GS2.c:1722 ../lib/ogsf/GS2.c:1730
 #: ../lib/ogsf/GS2.c:1739 ../lib/ogsf/GS2.c:1747 ../lib/ogsf/GS2.c:1757
@@ -4580,6 +4588,7 @@ msgid "Loading data from attribute table ..."
 msgstr "从属性表中载入数据..."
 
 #: ../lib/rst/interp_float/vinput2d.c:79
+#, fuzzy
 msgid "Cannot get layer info"
 msgstr "无法获取图层信息"
 
@@ -4737,8 +4746,9 @@ msgstr ""
 #~ msgid "Cannot rewrite line"
 #~ msgstr "无法重写线"
 
+#, fuzzy
 #~ msgid "Cannot delete line"
-#~ msgstr "无法删除想线"
+#~ msgstr "无法重写线"
 
 #~ msgid "Output name '%s' is not valid vector name."
 #~ msgstr "输出的名称'%s'不是有效的矢量名称。"
@@ -4988,3 +4998,81 @@ msgstr ""
 #~ "I'm finding records that do not have a floating point attributes (fields "
 #~ "prefixed with '%')."
 #~ msgstr "这些记录没有浮点属性(字段以'%'为前缀)."
+
+#, fuzzy
+#~ msgid ""
+#~ "Unable to open vector map <%s> on level %d. Try to rebuild vector "
+#~ "topology by v.build."
+#~ msgstr "无法打开旧的矢量%s在级别%d上"
+
+#, fuzzy
+#~ msgid "Attempt to delete dead feature"
+#~ msgstr "无法为区域 %d 计算质心"
+
+#, fuzzy
+#~ msgid "Attempt to restore alive feature"
+#~ msgstr "无法为区域 %d 计算质心"
+
+#, fuzzy
+#~ msgid "Unable to find vector map <%s> in <%s>"
+#~ msgstr "无法打开栅格图[%s在%s中]"
+
+#, fuzzy
+#~ msgid "Unable to rewrite feature %d"
+#~ msgstr "无法打开文件 %s 在 %s 中"
+
+#, fuzzy
+#~ msgid ""
+#~ "Unable to restore feature %d, vector map <%s> is not opened on topology "
+#~ "level"
+#~ msgstr "无法删除线，地图'%s'没有在级别2上打开"
+
+#, fuzzy
+#~ msgid ""
+#~ "Unable to restore feature %d, vector map <%s> is not opened in 'write' "
+#~ "mode"
+#~ msgstr "无法删除线，地图'%s'没有以写模式打开"
+
+#, fuzzy
+#~ msgid "Unable to restore feature %d from vector map <%s>"
+#~ msgstr "无法将目录改变到%s"
+
+#, fuzzy
+#~ msgid "Line is not looped"
+#~ msgstr "输入矢量'%s'未找到"
+
+#, fuzzy
+#~ msgid "Unable to find '%s' in '%s'"
+#~ msgstr "无法找到[%s]"
+
+#, fuzzy
+#~ msgid "Using <%s@%s>"
+#~ msgstr "无法找到[%s]"
+
+#, fuzzy
+#~ msgid "Feature id"
+#~ msgstr "要素类型"
+
+#, fuzzy
+#~ msgid "Feature ids"
+#~ msgstr "要素类型"
+
+#, fuzzy
+#~ msgid "Unable to locate symbol <%s>"
+#~ msgstr "无法打开文件 %s 在 %s 中"
+
+#, fuzzy
+#~ msgid "Unable to load GDAL library"
+#~ msgstr "无法为区域 %d 计算质心"
+
+#, fuzzy
+#~ msgid "Attributes for category %d not found"
+#~ msgstr "类型为 %d 的记录未找到"
+
+#, fuzzy
+#~ msgid "Cannot fetch row"
+#~ msgstr "无法获取图层信息"
+
+#, fuzzy
+#~ msgid "Cannot select attributes"
+#~ msgstr "无法删除想线"

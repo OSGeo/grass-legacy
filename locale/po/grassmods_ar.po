@@ -2076,12 +2076,14 @@ msgid "How to split display"
 msgstr ""
 
 #: ../locale/scriptstrings/d.vect.thematic_to_translate.c:1
+#, fuzzy
 msgid "Displays thematic vectormap"
-msgstr ""
+msgstr "اسم الخريطة الراسترية"
 
 #: ../locale/scriptstrings/d.vect.thematic_to_translate.c:2
+#, fuzzy
 msgid "display, legend"
-msgstr ""
+msgstr "الملف الراسترى المدخل"
 
 #: ../locale/scriptstrings/d.vect.thematic_to_translate.c:3
 #: ../locale/scriptstrings/d.vect.thematic_to_translate.c:37
@@ -2113,8 +2115,9 @@ msgid "Vector map type"
 msgstr "<%s>لم يتم العثور على الخريطة المدخلة\n"
 
 #: ../locale/scriptstrings/d.vect.thematic_to_translate.c:8
+#, fuzzy
 msgid "Attribute column to use for thematic display (must be numeric)"
-msgstr ""
+msgstr "<%s> اسم الملف المستخدم لل"
 
 #: ../locale/scriptstrings/d.vect.thematic_to_translate.c:10
 #, fuzzy
@@ -2132,8 +2135,9 @@ msgid ""
 msgstr ""
 
 #: ../locale/scriptstrings/d.vect.thematic_to_translate.c:16
+#, fuzzy
 msgid "Layer to use for thematic display"
-msgstr ""
+msgstr "اسم الخريطة الراسترية  للعرض كخلفية"
 
 #: ../locale/scriptstrings/d.vect.thematic_to_translate.c:17
 #: ../locale/scriptstrings/d.vect.thematic_to_translate.c:19
@@ -2191,15 +2195,17 @@ msgid ""
 msgstr ""
 
 #: ../locale/scriptstrings/d.vect.thematic_to_translate.c:32
+#, fuzzy
 msgid ""
 "Beginning color for custom color gradient. Must be expressed as R:G:B "
 "triplet."
-msgstr ""
+msgstr "استخدام احداثيات مركز الخريطة\n"
 
 #: ../locale/scriptstrings/d.vect.thematic_to_translate.c:34
+#, fuzzy
 msgid ""
 "Ending color for custom color gradient. Must be expressed as R:G:B triplet"
-msgstr ""
+msgstr "استخدام احداثيات مركز الخريطة\n"
 
 #: ../locale/scriptstrings/d.vect.thematic_to_translate.c:35
 #: ../locale/scriptstrings/d.vect.thematic_to_translate.c:51
@@ -2465,20 +2471,24 @@ msgid "sensor: SPOT"
 msgstr ""
 
 #: ../locale/scriptstrings/i.fusion.brovey_to_translate.c:6
+#, fuzzy
 msgid "raster input map (green: tm2 | qbird_green | spot1)"
-msgstr ""
+msgstr "اسم الخريطة الراسترية المدخلة"
 
 #: ../locale/scriptstrings/i.fusion.brovey_to_translate.c:7
+#, fuzzy
 msgid "raster input map (NIR: tm4 | qbird_nir | spot2)"
-msgstr ""
+msgstr "اسم الخريطة الراسترية المدخلة"
 
 #: ../locale/scriptstrings/i.fusion.brovey_to_translate.c:8
+#, fuzzy
 msgid "raster input map (MIR; tm5 | qbird_red | spot3)"
-msgstr ""
+msgstr "اسم الخريطة الراسترية المدخلة"
 
 #: ../locale/scriptstrings/i.fusion.brovey_to_translate.c:9
+#, fuzzy
 msgid "raster input map (etmpan | qbird_pan | spotpan)"
-msgstr ""
+msgstr "اسم الخريطة الراسترية المدخلة"
 
 #: ../locale/scriptstrings/i.fusion.brovey_to_translate.c:10
 #, fuzzy
@@ -4944,9 +4954,9 @@ msgid "Preliminary surface calculations."
 msgstr ""
 
 #: ../raster/r.surf.fractal/spec_syn.c:120
-#, c-format
+#, fuzzy, c-format
 msgid "Calculating surface %d (of %d)"
-msgstr ""
+msgstr "حساب الظلال من نموذج الإرتفاعت الرقمى"
 
 #: ../raster/r.reclass/reclass.c:49 ../raster/r.reclass/reclass.c:109
 #, fuzzy
@@ -6334,8 +6344,9 @@ msgid "Overwrite seed map with result (lake) map"
 msgstr ""
 
 #: ../raster/r.lake/main.c:206
+#, fuzzy
 msgid "Both seed map and coordinates cannot be specifed"
-msgstr ""
+msgstr "!تم تحديد إحداثى شرق فارغ"
 
 #: ../raster/r.lake/main.c:209
 msgid "Seed map or seed coordinates must be set!"
@@ -6346,8 +6357,9 @@ msgid "Seed coordinates and output map lake= must be set!"
 msgstr ""
 
 #: ../raster/r.lake/main.c:215
+#, fuzzy
 msgid "Both lake and overwrite cannot be specifed"
-msgstr ""
+msgstr "!تم تحديد إحداثى شرق فارغ"
 
 #: ../raster/r.lake/main.c:218
 msgid "Output lake map or overwrite flag must be set!"
@@ -7763,6 +7775,7 @@ msgid "Please specify min and/or max radius when using the binary flag"
 msgstr ""
 
 #: ../raster/r.surf.idw/main.c:71
+#, fuzzy
 msgid "Surface interpolation utility for raster map layers."
 msgstr "وسيلة إستيفاء السطح لخريطة راسترية"
 
@@ -7771,9 +7784,9 @@ msgid "Output is the interpolation error"
 msgstr "المخرج هو خطأ الإستيفاء"
 
 #: ../raster/r.surf.idw/main.c:92
-#, c-format
+#, fuzzy, c-format
 msgid "%s=%s - illegal value"
-msgstr ""
+msgstr "اسم ااملف المخرج"
 
 #: ../raster/r.surf.idw/main.c:104
 #, fuzzy
@@ -8474,6 +8487,7 @@ msgid "Raster map(s) to report on"
 msgstr "الخريطة الراسترية المطلوب التقرير معتمدا عليها"
 
 #: ../raster/r.report/parse.c:45
+#, fuzzy
 msgid ""
 "mi(les),me(ters),k(ilometers),a(cres),h(ectares),c(ell_counts),p"
 "(ercent_cover)"
@@ -9105,6 +9119,7 @@ msgid "Print the sun position output in shell script style"
 msgstr "طباعة مكان الشمس فى صورة شل سكربت"
 
 #: ../raster/r.sunmask/main.c:258
+#, fuzzy
 msgid "Using map center coordinates\n"
 msgstr "استخدام احداثيات مركز الخريطة\n"
 
@@ -10365,8 +10380,9 @@ msgid "%s - color table not found"
 msgstr "غير موجودة <%s> الخريطة الراسترية "
 
 #: ../raster/r.colors/main.c:303
+#, fuzzy
 msgid "Can't make random color table for floating point map"
-msgstr ""
+msgstr "اسم الخريطة الراسترية الناتجة"
 
 #: ../raster/r.colors/main.c:308
 msgid "Can't make grey.eq color table for floating point map"
@@ -10740,8 +10756,9 @@ msgid "Starting filter #%d, distance: %.*lf, exponent: %.*lf, flat: %.*lf"
 msgstr ""
 
 #: ../raster/r.random.surface/main.c:78
+#, fuzzy
 msgid "Percent done:"
-msgstr ""
+msgstr "مقلوب فرق العزم"
 
 #: ../raster/r.cost/btree.c:58
 msgid "new_cell is NULL"
@@ -11715,6 +11732,7 @@ msgid "Unable to properly write output raster map"
 msgstr "اسم الخريطة المخرجة"
 
 #: ../raster/r.clump/main.c:52
+#, fuzzy
 msgid ""
 "Recategorizes data in a raster map layer by grouping cells that form "
 "physically discrete areas into unique categories."
@@ -13169,22 +13187,24 @@ msgid "Reading data: "
 msgstr "التوقيع ..."
 
 #: ../raster/r.contour/main.c:270
-#, c-format
+#, fuzzy, c-format
 msgid "Range of data:    min =  %f max = %f"
-msgstr ""
+msgstr "min,max :المدى الصحيح"
 
 #: ../raster/r.contour/main.c:272
+#, fuzzy
 msgid "Range of data:    empty"
-msgstr ""
+msgstr "التوقيع ..."
 
 #: ../raster/r.contour/main.c:299 ../raster/r.contour/main.c:303
+#, fuzzy
 msgid "This step value is not allowed."
-msgstr ""
+msgstr "الملفات الراسترية المطلوب رؤيتها%d"
 
 #: ../raster/r.contour/main.c:327
-#, c-format
+#, fuzzy, c-format
 msgid "Range of levels: min = %f max = %f"
-msgstr ""
+msgstr "min,max :المدى الصحيح"
 
 #: ../raster/r.contour/main.c:356
 #, fuzzy
@@ -14142,6 +14162,7 @@ msgid "Name of raster map containing back-path easting information"
 msgstr "اسم الخريطة الراسترية الحاوية على معلومات الشرق للطريق الخلفى"
 
 #: ../raster/wildfire/r.spreadpath/main.c:91
+#, fuzzy
 msgid "Name of raster map containing back-path norhting information"
 msgstr "اسم الخريطة الراسترية الحاوية على معلومات الشمال للطريق الخلفى"
 
@@ -14247,10 +14268,12 @@ msgid "Name of raster map to contain OUTPUT spread time (min)"
 msgstr "اسم الخريطة الراسترية لتحوى زمن الإنتشار المخرج, دقيقة"
 
 #: ../raster/wildfire/r.spread/main.c:224
+#, fuzzy
 msgid "Name of raster map to contain X_BACK coordiates"
 msgstr "اسم الخريطة الراسترية لتحوى الإحداثيات السينية"
 
 #: ../raster/wildfire/r.spread/main.c:232
+#, fuzzy
 msgid "Name of raster map to contain Y_BACK coordiates"
 msgstr "اسم الخريطة الراسترية لتحوى الإحداثيات الصادية"
 
@@ -14982,9 +15005,9 @@ msgid "%d lines converted to boundaries"
 msgstr "الملف الراسترى الطلوب إدخالة"
 
 #: ../vector/v.edit/main.c:402
-#, c-format
+#, fuzzy, c-format
 msgid "%d boundaries converted to lines"
-msgstr ""
+msgstr "%-5d أشباه المراكز كتبت فى ملف المخرج\n"
 
 #: ../vector/v.edit/main.c:407
 #, fuzzy
@@ -15663,14 +15686,14 @@ msgid "CrossCorrelation: No record for point (cat = %d)"
 msgstr "cat = %d لا يوجد تسجيل للخط"
 
 #: ../vector/lidar/v.surf.bspline/crosscorr.c:286
-#, c-format
+#, fuzzy, c-format
 msgid "CrossCorrelation: Mean = %.5lf\n"
-msgstr ""
+msgstr "لم بمكن قراءة معلومات الحقل"
 
 #: ../vector/lidar/v.surf.bspline/crosscorr.c:288
-#, c-format
+#, fuzzy, c-format
 msgid "CrossCorrelation: Root Means Square (RMS) = %.5lf\n"
-msgstr ""
+msgstr "%d نقاط تم تحميلها\n"
 
 #: ../vector/lidar/v.surf.bspline/crosscorr.c:307
 #, c-format
@@ -15687,9 +15710,9 @@ msgid ""
 msgstr ""
 
 #: ../vector/lidar/v.surf.bspline/crosscorr.c:312
-#, c-format
+#, fuzzy, c-format
 msgid "CrossCorrelation: lambda_i = %.3f\n"
-msgstr ""
+msgstr "لم بمكن قراءة معلومات الحقل"
 
 #: ../vector/lidar/v.surf.bspline/crosscorr.c:318
 #, fuzzy, c-format
@@ -15911,7 +15934,7 @@ msgstr ""
 #: ../vector/v.distance/main.c:133
 #, fuzzy
 msgid "From type"
-msgstr "نوع المظهر"
+msgstr "نوع غير معروف"
 
 #: ../vector/v.distance/main.c:140
 #, fuzzy
@@ -15919,12 +15942,14 @@ msgid "To type"
 msgstr "نوع غير معروف"
 
 #: ../vector/v.distance/main.c:145
+#, fuzzy
 msgid "From layer"
-msgstr ""
+msgstr " nv لون\n"
 
 #: ../vector/v.distance/main.c:150
+#, fuzzy
 msgid "To layer"
-msgstr ""
+msgstr "اسم الطبقة المدخلة"
 
 #: ../vector/v.distance/main.c:156
 #, fuzzy
@@ -16017,8 +16042,9 @@ msgid "Unable to open default database"
 msgstr "%s لم يتم فتح قاعدة البيانات"
 
 #: ../vector/v.distance/main.c:438
+#, fuzzy
 msgid "Incomatible column types"
-msgstr ""
+msgstr "نوع غير معروف"
 
 #: ../vector/v.distance/main.c:511
 #, fuzzy
@@ -16217,9 +16243,9 @@ msgid "Incomplete rule"
 msgstr ""
 
 #: ../vector/v.reclass/main.c:422
-#, c-format
+#, fuzzy, c-format
 msgid "%d features reclassed"
-msgstr ""
+msgstr "%d نقطة كتبت للمخرج\n"
 
 #: ../vector/v.in.ascii/head.c:22
 #, fuzzy, c-format
@@ -18926,6 +18952,7 @@ msgid "Input vector was not found."
 msgstr "الفيكتور المخرج  غير موجود"
 
 #: ../vector/v.convert/att.c:36
+#, fuzzy
 msgid "No category labels (dig_cats) found, no table created.\n"
 msgstr "لم توجد عناوين فئات, لم يتم إنشاء الجدول\n"
 
@@ -19634,9 +19661,9 @@ msgid "Duplicate area centroids"
 msgstr "لم يتم حساب شبه مركز المساحة"
 
 #: ../vector/v.clean/prune.c:62
-#, c-format
+#, fuzzy, c-format
 msgid "Removed vertices: %5d"
-msgstr ""
+msgstr "لم يتم حساب شبه مركز المساحة"
 
 #: ../vector/v.clean/prune.c:215
 #, fuzzy
@@ -19761,9 +19788,9 @@ msgid "Unable to open vector map <%s> at topology level %d"
 msgstr "<%s>فى<%s>لم يمكن فتح الملف الفيكتورى"
 
 #: ../vector/v.net/main.c:188
-#, c-format
+#, fuzzy, c-format
 msgid "%d arcs added to network (nlayer: [%d])"
-msgstr ""
+msgstr "%d فئات محملة من الجدول\n"
 
 #: ../vector/v.net/nodes.c:85
 #, fuzzy, c-format
@@ -20171,14 +20198,14 @@ msgid "More elements of category [%d], nothing loaded to DB"
 msgstr "غير موجود <%s> الراستر"
 
 #: ../vector/v.to.db/update.c:196
-#, c-format
+#, fuzzy, c-format
 msgid "Cat [%d]: row already exists (not inserted)"
-msgstr ""
+msgstr "خريطة مخرجة حيث ستكتب النقاط"
 
 #: ../vector/v.to.db/update.c:204
-#, c-format
+#, fuzzy, c-format
 msgid "Cat [%d]: row does not exist (not updated)"
-msgstr ""
+msgstr "غير موجودة <%s> الخريطة الراسترية "
 
 #: ../vector/v.to.db/main.c:33
 msgid "Populate database values from vector features."
@@ -20426,8 +20453,9 @@ msgid "Processing ainput lines ..."
 msgstr "إنشاء نقاط على الخط المدخل"
 
 #: ../vector/v.select/main.c:302
+#, fuzzy
 msgid "Processing ainput areas ..."
-msgstr ""
+msgstr "إنشاء نقاط على الخط المدخل"
 
 #: ../vector/v.select/main.c:453
 #, fuzzy
@@ -21070,11 +21098,11 @@ msgid "Current region does not include the entire input vector map <%s>"
 msgstr "<%s>لم يتم العثور على الخريطة المدخلة\n"
 
 #: ../vector/v.drape/main.c:162
-#, c-format
+#, fuzzy, c-format
 msgid ""
 "Elevation raster map <%s> does not cover the entire area of the input vector "
 "map <%s>. "
-msgstr ""
+msgstr "<%s>لم يتم العثور على الخريطة المدخلة\n"
 
 #: ../vector/v.out.ogr/main.c:88
 msgid "Converts to one of the supported OGR vector formats."
@@ -21266,8 +21294,9 @@ msgid "Categories of points on terminals (layer is specified by nlayer)"
 msgstr ""
 
 #: ../vector/v.net.steiner/main.c:389
+#, fuzzy
 msgid "Number of steiner poins (-1 for all possible)"
-msgstr ""
+msgstr "الخريطة الراسترية لنقاط البدء"
 
 #: ../vector/v.net.steiner/main.c:453
 #, fuzzy
@@ -21983,8 +22012,9 @@ msgid "Do not copy table (see also 'new' parameter)"
 msgstr ""
 
 #: ../vector/v.extract/main.c:99
+#, fuzzy
 msgid "Types to be extracted "
-msgstr ""
+msgstr "الملف الراسترى الطلوب إدخالة"
 
 #: ../vector/v.extract/main.c:103
 msgid "If -1, all features in all layers of given type are extracted"
@@ -22450,20 +22480,21 @@ msgid "Output inverse raster map after IFFT"
 msgstr "وصف مبسط للملف الراسترى المخرج"
 
 #: ../imagery/i.ifft/ifftmain.c:91
-#, c-format
+#, fuzzy, c-format
 msgid "%s: %s - Unable to find the real-image map."
-msgstr ""
+msgstr "اسم الخريطة الراسترية المدخلة"
 
 #: ../imagery/i.ifft/ifftmain.c:97
+#, fuzzy
 msgid ""
 "Unable to open real-image in the cell_misc directory.\n"
 "Input map probably wasn't created by i.fft"
-msgstr ""
+msgstr "%s:لم يتم فتح ملف بإحداثيات\n"
 
 #: ../imagery/i.ifft/ifftmain.c:100
-#, c-format
+#, fuzzy, c-format
 msgid "%s: %s - Unable to find the imaginary-image."
-msgstr ""
+msgstr "اسم الخريطة الراسترية المدخلة"
 
 #: ../imagery/i.ifft/ifftmain.c:106
 msgid ""
@@ -22472,14 +22503,15 @@ msgid ""
 msgstr ""
 
 #: ../imagery/i.ifft/ifftmain.c:127
-#, c-format
+#, fuzzy, c-format
 msgid "Power 2 values : [%d] rows [%d] columns."
-msgstr ""
+msgstr "%d راستر%s, %d فيكتور%s\n"
 
 #: ../imagery/i.ifft/ifftmain.c:136 ../imagery/i.zc/main.c:156
 #: ../imagery/i.fft/fftmain.c:163
+#, fuzzy
 msgid "Insufficent memory for allocation of data structure"
-msgstr ""
+msgstr "موقع قاعدة البيانات"
 
 #: ../imagery/i.ifft/ifftmain.c:139
 #, fuzzy
@@ -22492,8 +22524,9 @@ msgid "Masking the raster maps..."
 msgstr "خريطة الراستر الاساس"
 
 #: ../imagery/i.ifft/ifftmain.c:167
+#, fuzzy
 msgid "Rotating data arrays..."
-msgstr ""
+msgstr "التوقيع ..."
 
 #: ../imagery/i.ifft/ifftmain.c:206
 msgid "Starting Inverse FFT..."
@@ -22515,8 +22548,9 @@ msgid "Writing data to file..."
 msgstr "كتابة ملف جديد...\n"
 
 #: ../imagery/i.ifft/ifftmain.c:246 ../imagery/i.fft/fftmain.c:284
+#, fuzzy
 msgid "Transform successful."
-msgstr ""
+msgstr "التوقيع ..."
 
 #: ../imagery/i.his.rgb/h2rmain.c:47
 msgid ""
@@ -22717,8 +22751,9 @@ msgid "Output saturation raster map"
 msgstr "خريطة الصرف المخرجة"
 
 #: ../imagery/i.smap/bouman/segment.c:69
+#, fuzzy
 msgid "Number of classes must be < 256!"
-msgstr ""
+msgstr "عدد نقاط الإستيفاء"
 
 #: ../imagery/i.smap/bouman/segment.c:93
 #, c-format
@@ -22749,8 +22784,9 @@ msgid ""
 msgstr ""
 
 #: ../imagery/i.smap/bouman/interp.c:177
+#, fuzzy
 msgid "Class transition statistics."
-msgstr ""
+msgstr "عدم انشاء جدول الخواص"
 
 #: ../imagery/i.smap/bouman/interp.c:193
 #, c-format
@@ -22758,24 +22794,26 @@ msgid "Transition probabilities: %f %f %f; %f"
 msgstr ""
 
 #: ../imagery/i.smap/bouman/interp.c:239
+#, fuzzy
 msgid "interp: invalid parameter values."
-msgstr ""
+msgstr "تقرير الإحصائيات للخرائط الراسترية"
 
 #: ../imagery/i.smap/bouman/multialloc.c:115
+#, fuzzy
 msgid "get_img: out of memory."
-msgstr ""
+msgstr "لم يتم فتح إختيار المؤشر"
 
 #: ../imagery/i.smap/shapiro/openfiles.c:15
 #: ../imagery/i.smap/shapiro/read_sig.c:13 ../imagery/i.gensig/openfiles.c:16
-#, c-format
+#, fuzzy, c-format
 msgid "Unable to read REF file for subgroup [%s] in group [%s]."
-msgstr ""
+msgstr "%s لم يمكن فتح ملف المدى ل"
 
 #: ../imagery/i.smap/shapiro/openfiles.c:19
 #: ../imagery/i.smap/shapiro/read_sig.c:17 ../imagery/i.gensig/openfiles.c:20
-#, c-format
+#, fuzzy, c-format
 msgid "Subgroup [%s] in group [%s] contains no files."
-msgstr ""
+msgstr "%s لم يمكن فتح ملف المدى ل"
 
 #: ../imagery/i.smap/shapiro/main.c:40
 msgid ""
@@ -22812,14 +22850,14 @@ msgid "Subgroup [%s] not found."
 msgstr "غير موجودة <%s> المنطقة"
 
 #: ../imagery/i.smap/shapiro/read_sig.c:23
-#, c-format
+#, fuzzy, c-format
 msgid "Signature file [%s] is missing or not readable."
-msgstr ""
+msgstr "غير موجود <%s>الملف للمنظر ثلاثى الأبعاد "
 
 #: ../imagery/i.smap/shapiro/read_sig.c:27
-#, c-format
+#, fuzzy, c-format
 msgid "Signature file [%s] is invalid."
-msgstr ""
+msgstr "غير موجود <%s>الملف للمنظر ثلاثى الأبعاد "
 
 #: ../imagery/i.vpoints/plot.c:61 ../imagery/i.vpoints/plot.c:143
 #: ../display/d.graph/do_graph.c:415 ../display/d.vect/main.c:472
@@ -22882,12 +22920,14 @@ msgid "Calculating eigenvalues and eigenvectors..."
 msgstr "حساب الظلال من نموذج الإرتفاعت الرقمى"
 
 #: ../imagery/i.pca/main.c:152
+#, fuzzy
 msgid "Ordering eigenvalues in descending order..."
-msgstr ""
+msgstr "حساب الظلال من نموذج الإرتفاعت الرقمى"
 
 #: ../imagery/i.pca/main.c:155
+#, fuzzy
 msgid "Transposing eigen matrix..."
-msgstr ""
+msgstr "التوقيع ..."
 
 #: ../imagery/i.pca/main.c:206
 msgid "Scale range length should be > 0. Using default values: 0,255"
@@ -23154,9 +23194,10 @@ msgid "Rectification polynom order (1-3)"
 msgstr ""
 
 #: ../imagery/i.rectify/main.c:83
+#, fuzzy
 msgid ""
 "Use curr. region settings in target location (def.=calculate smallest area)"
-msgstr ""
+msgstr "ضبط المنطقة الحالية من ابعاد الخريطة المسماه"
 
 #: ../imagery/i.rectify/main.c:87
 #, fuzzy
@@ -23194,8 +23235,9 @@ msgid "Calculating class means ..."
 msgstr "حساب الظلال من نموذج الإرتفاعت الرقمى"
 
 #: ../imagery/i.gensig/covariance.c:27
+#, fuzzy
 msgid "Calculating class covariance matrix..."
-msgstr ""
+msgstr "حساب الظلال من نموذج الإرتفاعت الرقمى"
 
 #: ../imagery/i.gensig/covariance.c:29
 msgid "Calculating class covariance matrices..."
@@ -23231,8 +23273,9 @@ msgid "Subgroup <%s> not found"
 msgstr "غير موجود <%s> الراستر"
 
 #: ../imagery/i.gensig/get_train.c:28
+#, fuzzy
 msgid "Finding training classes ..."
-msgstr ""
+msgstr "dig_att عطل فى فتح ملف المدخل"
 
 #: ../imagery/i.gensig/get_train.c:53
 #, c-format
@@ -23240,17 +23283,19 @@ msgid "Training class [%d] only has one cell - this class will be ignored."
 msgstr ""
 
 #: ../imagery/i.gensig/get_train.c:58
+#, fuzzy
 msgid "Training map has no classes."
-msgstr ""
+msgstr "غير موجودة <%s> الخريطة الراسترية "
 
 #: ../imagery/i.gensig/get_train.c:73
+#, fuzzy
 msgid "1 class."
-msgstr ""
+msgstr "غير موجود <%s> الراستر"
 
 #: ../imagery/i.gensig/get_train.c:75
-#, c-format
+#, fuzzy, c-format
 msgid "%d classes."
-msgstr ""
+msgstr "غير موجود <%s> الراستر"
 
 #: ../imagery/i.gensig/check.c:21
 #, c-format
@@ -23273,9 +23318,9 @@ msgid "Generates statistics for i.maxlik from raster map layer."
 msgstr "انشاء احصائيات المساحة لطبقات الخرائط الراسترية"
 
 #: ../imagery/i.gensig/write_sig.c:15
-#, c-format
+#, fuzzy, c-format
 msgid "Unable to create signature file [%s] for subgroup [%s] in group [%s]."
-msgstr ""
+msgstr "<%s>فى<%s>لم يمكن فتح الملف الفيكتورى"
 
 #: ../imagery/i.gensig/write_sig.c:19
 #, fuzzy, c-format
@@ -23407,8 +23452,9 @@ msgid "Range less than or equal to zero not allowed."
 msgstr ""
 
 #: ../imagery/i.fft/fftmain.c:166
+#, fuzzy
 msgid "Initializing data...\n"
-msgstr ""
+msgstr "التوقيع ..."
 
 #: ../imagery/i.fft/fftmain.c:181
 #, fuzzy
@@ -23421,8 +23467,9 @@ msgid "Starting FFT..."
 msgstr "التوقيع ..."
 
 #: ../imagery/i.fft/fftmain.c:195
+#, fuzzy
 msgid "FFT completed..."
-msgstr ""
+msgstr "مقلوب فرق العزم"
 
 #: ../imagery/i.fft/fftmain.c:213
 #, fuzzy
@@ -23430,12 +23477,14 @@ msgid "Rotating data..."
 msgstr "التوقيع ..."
 
 #: ../imagery/i.fft/fftmain.c:243
+#, fuzzy
 msgid "Writing viewable versions of transformed data to files..."
-msgstr ""
+msgstr "كتابة ملف جديد...\n"
 
 #: ../imagery/i.fft/save_fft.c:17 ../imagery/i.fft/save_fft.c:22
+#, fuzzy
 msgid "Unable to open file in the cell_misc directory."
-msgstr ""
+msgstr "%s:لم يتم فتح ملف بإحداثيات\n"
 
 #: ../imagery/i.find/main.c:63
 #, c-format
@@ -23558,14 +23607,14 @@ msgid "Raster map <%s> do not exists in subgroup <%s>"
 msgstr "الخريطة الراسترية المطلوب الضبط عليها"
 
 #: ../imagery/i.cluster/open_files.c:40
-#, c-format
+#, fuzzy, c-format
 msgid "Subgroup [%s] doesn't have any files"
-msgstr ""
+msgstr "غير موجودة <%s> المنطقة"
 
 #: ../imagery/i.cluster/open_files.c:43
-#, c-format
+#, fuzzy, c-format
 msgid "The subgroup must have at least 2 files to run %s"
-msgstr ""
+msgstr "نقطة %d فى حاجة لإدخال على الأقل"
 
 #: ../imagery/i.cluster/open_files.c:54
 #, fuzzy
@@ -23605,8 +23654,9 @@ msgid ""
 msgstr ""
 
 #: ../imagery/i.cluster/main.c:90
+#, fuzzy
 msgid "Group of imagery files to be clustered"
-msgstr ""
+msgstr "اسم الخرائط الراسترية المطلوب ترقيعها ببعضها "
 
 #: ../imagery/i.cluster/main.c:96
 msgid "Subgroup name in the above group"
@@ -23649,46 +23699,49 @@ msgid "Output file to contain final report"
 msgstr "اسم ملف التقرير"
 
 #: ../imagery/i.cluster/main.c:178
-#, c-format
+#, fuzzy, c-format
 msgid ""
 "\n"
 "<%s> -- illegal number of initial classes"
 msgstr ""
+"\n"
+"\n"
+"%d :عدد النقاط\n"
 
 #: ../imagery/i.cluster/main.c:191
-#, c-format
+#, fuzzy, c-format
 msgid ""
 "\n"
 "<%s> -- illegal value(s) of sample intervals"
-msgstr ""
+msgstr "ملف المدخل"
 
 #: ../imagery/i.cluster/main.c:207
-#, c-format
+#, fuzzy, c-format
 msgid ""
 "\n"
 "<%s> -- illegal value of iterations"
-msgstr ""
+msgstr "ملف المدخل"
 
 #: ../imagery/i.cluster/main.c:215
-#, c-format
+#, fuzzy, c-format
 msgid ""
 "\n"
 "<%s> -- illegal value of convergence"
-msgstr ""
+msgstr "ملف المدخل"
 
 #: ../imagery/i.cluster/main.c:222
-#, c-format
+#, fuzzy, c-format
 msgid ""
 "\n"
 "<%s> -- illegal value of separation"
-msgstr ""
+msgstr "ملف المدخل"
 
 #: ../imagery/i.cluster/main.c:229
-#, c-format
+#, fuzzy, c-format
 msgid ""
 "\n"
 "<%s> -- illegal value of min_size"
-msgstr ""
+msgstr "ملف المدخل"
 
 #: ../imagery/i.cluster/main.c:242
 #, fuzzy
@@ -23850,9 +23903,9 @@ msgid "%d classes (convergence=%.1f%%)\n"
 msgstr ""
 
 #: ../imagery/i.cluster/main.c:344
-#, c-format
+#, fuzzy, c-format
 msgid "Could not write signature file <%s> for group <%s>, subsgroup <%s>"
-msgstr ""
+msgstr "<%s>فى<%s>لم يمكن فتح الملف الفيكتورى"
 
 #: ../imagery/i.cluster/main.c:349
 #, c-format
@@ -23931,9 +23984,9 @@ msgid "group=[%s] - not found."
 msgstr "غير موجودة <%s> المنطقة"
 
 #: ../imagery/i.maxlik/open.c:19
-#, c-format
+#, fuzzy, c-format
 msgid "subgroup=[%s] (of group [%s]) - not found."
-msgstr ""
+msgstr "غير موجود <%s> الراستر"
 
 #: ../imagery/i.maxlik/open.c:26
 #, c-format
@@ -23960,9 +24013,9 @@ msgid "[%s] has more than 255 signatures."
 msgstr ""
 
 #: ../imagery/i.maxlik/open.c:70
-#, c-format
+#, fuzzy, c-format
 msgid "Unable to create reject layer [%s]."
-msgstr ""
+msgstr "اسم الخريطة الراسترية الناتجة"
 
 #: ../imagery/i.maxlik/main.c:53
 msgid "Classifies the cell spectral reflectances in imagery data."
@@ -23980,8 +24033,9 @@ msgid "Imagery group to be classified"
 msgstr "الخريطة الراسترية المطلوب إعادة تصنيفها"
 
 #: ../imagery/i.maxlik/main.c:66
+#, fuzzy
 msgid "Subgroup containing image files to be classified"
-msgstr ""
+msgstr "غير موجودة <%s> المنطقة"
 
 #: ../imagery/i.maxlik/main.c:72
 #, fuzzy
@@ -25842,16 +25896,19 @@ msgid ""
 msgstr " الصندوق المحيط للخريطة خارج المنطقة الحالية لن يتم عرض شيئ\n"
 
 #: ../display/d.vect/main.c:679
+#, fuzzy
 msgid "Cannot display areas, topology not available"
-msgstr ""
+msgstr "لم توجد<%s>الخريطة الفيكتورية"
 
 #: ../display/d.vect/main.c:684
+#, fuzzy
 msgid "Cannot display lines by id, topology not available"
-msgstr ""
+msgstr "لم توجد<%s>الخريطة الفيكتورية"
 
 #: ../display/d.vect/main.c:726
+#, fuzzy
 msgid "Cannot display topology, not available"
-msgstr ""
+msgstr "لم توجد<%s>الخريطة الفيكتورية"
 
 #: ../display/d.vect/area.c:277
 #, c-format
@@ -28677,7 +28734,7 @@ msgstr ""
 
 #, fuzzy
 #~ msgid "Unable to connect line id %d to line %d"
-#~ msgstr "طباعة عناوين الفئة"
+#~ msgstr "لم يمكن اختيار البيانات من الجدول"
 
 #, fuzzy
 #~ msgid "Unable to get category list <%s>, editing terminated"
@@ -28809,6 +28866,7 @@ msgstr ""
 #~ msgid "can't read header for <%s> in <%s>"
 #~ msgstr " <%s> فى <%s>لم يمكن قراءة العنوان الرئيسى ل"
 
+#, fuzzy
 #~ msgid "region <%s> not found"
 #~ msgstr "غير موجودة <%s> المنطقة"
 
@@ -28821,8 +28879,9 @@ msgstr ""
 #~ msgid "can't read 3dview file <%s> in <%s>"
 #~ msgstr "<%s> فى <%s>لم يمكن قراءة الملف للمنظر ثلاثى الأبعاد"
 
+#, fuzzy
 #~ msgid "can't open vector map <%s> in <%s>"
-#~ msgstr "<%s>فى<%s>لم يمكن فتح الملف الفيكتورى"
+#~ msgstr "[%s]لم يتم فتح ملف الخلية ل "
 
 #~ msgid "invalid region: %s"
 #~ msgstr "%s:منطقة غير صالحة"
@@ -29597,6 +29656,7 @@ msgstr ""
 #~ "of the CURRENTLY DEFINED REGION."
 #~ msgstr "PPM تحويل راستر جراسى الى صورة "
 
+#, fuzzy
 #~ msgid "Raster input map"
 #~ msgstr "اسم الراستر المدخل"
 
@@ -29640,7 +29700,11 @@ msgstr ""
 
 #, fuzzy
 #~ msgid "%s in %s -can't open raster map"
-#~ msgstr "%s لم يمكن فتح ملف المدى ل"
+#~ msgstr ""
+#~ "#-#-#-#-#  grassmods_ar.po (grassmods_ar)  #-#-#-#-#\n"
+#~ "خريطة الراستر الغطاء\n"
+#~ "#-#-#-#-#  grassmods_ar.po (grassmods_ar)  #-#-#-#-#\n"
+#~ "%s لم يمكن فتح ملف المدى ل"
 
 #, fuzzy
 #~ msgid "%s: can't create %s"
@@ -29719,7 +29783,7 @@ msgstr ""
 
 #, fuzzy
 #~ msgid "Topology is not available"
-#~ msgstr "لم توجد<%s>الخريطة الفيكتورية"
+#~ msgstr "اسم الخريطة الراسترية"
 
 #, fuzzy
 #~ msgid "Cannot describe table %s"
@@ -29783,7 +29847,7 @@ msgstr ""
 
 #, fuzzy
 #~ msgid "name for new vector map"
-#~ msgstr "اسم الملف الراسترى الموجود"
+#~ msgstr "اسم الملف الراسترى الجديد"
 
 #, fuzzy
 #~ msgid "name for new vector map (omit for display to stdout)"
@@ -29806,7 +29870,7 @@ msgstr ""
 
 #, fuzzy
 #~ msgid "<%s> unable to open raster map"
-#~ msgstr "اسم الخريطة الراسترية المخرجة"
+#~ msgstr "[%s]لم يتم فتح ملف الخلية ل "
 
 #, fuzzy
 #~ msgid "Cannot find vector map [%s]"
@@ -29831,6 +29895,7 @@ msgstr ""
 #~ msgid "string representing no data cell value"
 #~ msgstr "الرمز الممثل لقيم خلية بدون بيانات"
 
+#, fuzzy
 #~ msgid "File name of classification result"
 #~ msgstr "اسم ملف ناتج التصنيف"
 
@@ -29854,8 +29919,9 @@ msgstr ""
 #~ msgid "Base raster map"
 #~ msgstr "الخريطة الراسترية الأساس"
 
+#, fuzzy
 #~ msgid "Cover raster map"
-#~ msgstr "الخريطة الراسترية الغطاء"
+#~ msgstr "الخريطة الغطاء"
 
 #~ msgid "Resultant raster map"
 #~ msgstr "الخريطة الراسترية الناتجة"
@@ -30164,7 +30230,7 @@ msgstr ""
 
 #, fuzzy
 #~ msgid "%s: reading category file for %s"
-#~ msgstr "%s لم يمكن فتح ملف المدى ل"
+#~ msgstr "%s لم يتم العثور على الخريطة الراسترية"
 
 #, fuzzy
 #~ msgid "%s: unable to open raster map [%s]"
@@ -30597,8 +30663,9 @@ msgstr ""
 #~ msgid "%s Quit menu\n"
 #~ msgstr "%s الخروج من القائمة\n"
 
+#, fuzzy
 #~ msgid "Name of input map"
-#~ msgstr "اسم الخريطة المدخلة"
+#~ msgstr "اسم مجموعة الخرائط للخريطة المدخلة"
 
 #~ msgid "The map E and N grid coordinates of a starting point"
 #~ msgstr "احداثيات الشرق و الشمال لنقطة البدء"
@@ -30629,6 +30696,7 @@ msgstr ""
 #~ msgid "Mean curvature"
 #~ msgstr "الإنحناء المتوسط"
 
+#, fuzzy
 #~ msgid "Tension"
 #~ msgstr "الشد"
 
@@ -30651,3 +30719,1254 @@ msgstr ""
 #~ "for an example of this). Use this module to generate naturally looking "
 #~ "synthetical elevation models (DEM)."
 #~ msgstr "برنامج أنشاء سطح فراكتالى مستخدما بعد فراكتالى معطى"
+
+#, fuzzy
+#~ msgid "Format"
+#~ msgstr "الخريطة المخرجة"
+
+#, fuzzy
+#~ msgid "Unable to open database: "
+#~ msgstr "<%s> لم يمكن فتح"
+
+#, fuzzy
+#~ msgid "Name of raster map to generate legend from"
+#~ msgstr "<%s> اسم الملف المستخدم لل"
+
+#, fuzzy
+#~ msgid "Name of raster map to print in legend"
+#~ msgstr "اسم الخريطة الراسترية  للعرض كخلفية"
+
+#, fuzzy
+#~ msgid "Split the display into subframes."
+#~ msgstr "الخريطة الراسترية المطلوب تسجيلها"
+
+#, fuzzy
+#~ msgid "Number of subframes"
+#~ msgstr "عدد الصفوف"
+
+#, fuzzy
+#~ msgid "display, vector, thematic, legend"
+#~ msgstr "الملف الراسترى المدخل"
+
+#, fuzzy
+#~ msgid "Icon size for point data"
+#~ msgstr "قطع بيانات النقط العشرية"
+
+#, fuzzy
+#~ msgid "imagery, fusion, Brovey"
+#~ msgstr "الملف الراسترى الطلوب إدخالة"
+
+#, fuzzy
+#~ msgid "Color using standard deviation bands"
+#~ msgstr "الإنحراف المعيارى"
+
+#, fuzzy
+#~ msgid "vector, color table"
+#~ msgstr "الخريطة الراسترية المطلوب تسجيلها"
+
+#, fuzzy
+#~ msgid "Name of column containg numeric data"
+#~ msgstr "اسم الخريطة الراسترية المحتوية على معلومات التكلفة لخلية الشبكة"
+
+#, fuzzy
+#~ msgid "Layer number of data column"
+#~ msgstr "عدم انشاء جدول الخواص"
+
+#, fuzzy
+#~ msgid "Name of color column to populate"
+#~ msgstr "اسم الخريطة المدخلة"
+
+#, fuzzy
+#~ msgid "Manually set range (min,max)"
+#~ msgstr "min,max :المدى الصحيح"
+
+#, fuzzy
+#~ msgid "Name of old database"
+#~ msgstr "اسم الخريطة الراسترية الجديدة"
+
+#, fuzzy
+#~ msgid "vector, export, GPS"
+#~ msgstr "عدم انشاء جدول الخواص"
+
+#, fuzzy
+#~ msgid "Export as waypoints"
+#~ msgstr "الخريطة الفيكتورية لنقاط البدء"
+
+#, fuzzy
+#~ msgid "Export as routes"
+#~ msgstr "الخريطة الفيكتورية لنقاط البدء"
+
+#, fuzzy
+#~ msgid "Feature type(s)"
+#~ msgstr "نوع المظهر"
+
+#, fuzzy
+#~ msgid "Name for output file or GPS device"
+#~ msgstr "اسم الملف المخرج"
+
+#, fuzzy
+#~ msgid "GpsBabel supported output format"
+#~ msgstr "عرض الهيئات المدعمة والخروج"
+
+#, fuzzy
+#~ msgid "Unable to allocate data buffer. Check current region with g.region."
+#~ msgstr "لم يتم حساب شبه مركز المساحة"
+
+#, fuzzy
+#~ msgid "raster, DEM, fractal"
+#~ msgstr "الخريطة الراسترية المطلوب تسجيلها"
+
+#, fuzzy
+#~ msgid "Raster map <%s> created."
+#~ msgstr "dig_att لم يمكن العثور على ملف"
+
+#, fuzzy
+#~ msgid "raster, null data"
+#~ msgstr "عدم انشاء جدول الخواص"
+
+#, fuzzy
+#~ msgid "Manages NULL-values of given raster map."
+#~ msgstr "اسم الخريطة الراسترية المدخلة"
+
+#, fuzzy
+#~ msgid "Raster map <%s> is not in your mapset <%s>"
+#~ msgstr "لم توجد<%s>الخريطة الفيكتورية"
+
+#, fuzzy
+#~ msgid "%s is illegal entry for null"
+#~ msgstr "اسم ااملف المخرج"
+
+#, fuzzy
+#~ msgid "Raster map <%s> already has a null bitmap file"
+#~ msgstr "خريطة مخرجة حيث ستكتب النقاط"
+
+#, fuzzy
+#~ msgid "<%s> is integer raster map (CELL)"
+#~ msgstr "%s لم يمكن فتح ملف المدى ل"
+
+#, fuzzy
+#~ msgid "<%s> is floating pointing raster map"
+#~ msgstr "الخريطة الراسترية لنقاط البدء"
+
+#, fuzzy
+#~ msgid "Writing new null file for raster map <%s>..."
+#~ msgstr "كتابة ملف جديد...\n"
+
+#, fuzzy
+#~ msgid "Error writing null row %d"
+#~ msgstr "تغلب على الخريطة المخرجة"
+
+#, fuzzy
+#~ msgid "Raster map <%s> modified."
+#~ msgstr "غير موجودة <%s> الخريطة الراسترية "
+
+#, fuzzy
+#~ msgid "Removing null file for raster map <%s>..."
+#~ msgstr "%s لم يمكن فتح ملف المدى ل"
+
+#, fuzzy
+#~ msgid "%s: %s: illegal value spec"
+#~ msgstr "اسم ااملف المخرج"
+
+#, fuzzy
+#~ msgid "Writing new data for raster map <%s>..."
+#~ msgstr "خريطة الراستر االناتجة"
+
+#, fuzzy
+#~ msgid "Do not export long colortable"
+#~ msgstr "بقاء جدول الألوان الحالى "
+
+#, fuzzy
+#~ msgid "Bad number of bytes per cell"
+#~ msgstr "عدد البيتات فى الخلية , واحدة, اثنتين, أم أربعة"
+
+#, fuzzy
+#~ msgid "Illegal south coordinate <%s>"
+#~ msgstr "!تم تحديد إحداثى شمال فارغ"
+
+#, fuzzy
+#~ msgid "Illegal west coordinate <%s>"
+#~ msgstr "!تم تحديد إحداثى شمال فارغ"
+
+#, fuzzy
+#~ msgid "Illegal number of rows <%s>"
+#~ msgstr "!تم تحديد إحداثى شمال فارغ"
+
+#, fuzzy
+#~ msgid "Illegal number of columns <%s>"
+#~ msgstr ""
+#~ "\n"
+#~ "\n"
+#~ "%d :عدد النقاط\n"
+
+#, fuzzy
+#~ msgid "End coordinate: %.15g, %.15g"
+#~ msgstr "%s:منطقة غير صالحة"
+
+#, fuzzy
+#~ msgid "You are not outputting any raster maps"
+#~ msgstr "اسم الملف الفيكتورى المخرج"
+
+#, fuzzy
+#~ msgid "raster, interpolation"
+#~ msgstr "عدد نقاط الإستيفاء"
+
+#, fuzzy
+#~ msgid "Illegal value for '%s' (%s)"
+#~ msgstr "ملف المدخل"
+
+#, fuzzy
+#~ msgid "Interpolating raster map <%s> (%d rows)... "
+#~ msgstr "خريطة الراستر االناتجة"
+
+#, fuzzy
+#~ msgid ""
+#~ "mi;miles;me;meters;k;kilometers;a;acres;h;hectares;c;cell counts;p;"
+#~ "percent cover"
+#~ msgstr ""
+#~ "أميال mi, أمتار me, كيلومترات k, افدنة a, هيكتارات h, عدات الخلية c,  p "
+#~ "نسبة التغطية"
+
+#, fuzzy
+#~ msgid "Path to rules file (\"-\" to read rules from stdin)"
+#~ msgstr "إدخال خريطة راسترية بينرية "
+
+#, fuzzy
+#~ msgid "No raster map specified"
+#~ msgstr "لم تحدد خرائط مدخلة"
+
+#, fuzzy
+#~ msgid "Unable to remove color table of raster map <%s>"
+#~ msgstr "اسم الخريطة الراسترية الناتجة"
+
+#, fuzzy
+#~ msgid "Color table of raster map <%s> not found"
+#~ msgstr "غير موجود <%s>الملف للمنظر ثلاثى الأبعاد "
+
+#, fuzzy
+#~ msgid "Unknown color request '%s'"
+#~ msgstr "%s - لون غير معروف\n"
+
+#, fuzzy
+#~ msgid "Name for output raster map(s)"
+#~ msgstr "اسم الخريطة الراسترية المخرجة"
+
+#, fuzzy
+#~ msgid "Maximum distance of spatial correlation (value >= 0.0)"
+#~ msgstr "أقصى مسافة من نقطة اارؤية بالأمتار"
+
+#, fuzzy
+#~ msgid "Maximum cell value of distribution"
+#~ msgstr "عدد نقاط الإستيفاء"
+
+#, fuzzy
+#~ msgid "Output raster map required"
+#~ msgstr "وصف مبسط للملف الراسترى المخرج"
+
+#, fuzzy
+#~ msgid "<%s> is an ilegal name"
+#~ msgstr "اسم ااملف المخرج"
+
+#, fuzzy
+#~ msgid "raster, random, surface"
+#~ msgstr "الملف الراستري للسطح"
+
+#, fuzzy
+#~ msgid "Generating raster map <%s>..."
+#~ msgstr "%-5d dig_att قراءة ملف...\n"
+
+#, fuzzy
+#~ msgid "Neighborhood"
+#~ msgstr "حجم التجاور"
+
+#, fuzzy
+#~ msgid "Unable to read raster map row %d "
+#~ msgstr "اسم الخريطة الراسترية الناتجة"
+
+#, fuzzy
+#~ msgid "Failed writing raster map row %d"
+#~ msgstr "%-5d dig_att قراءة ملف...\n"
+
+#, fuzzy
+#~ msgid "raster, statistics, reclass"
+#~ msgstr "عدم انشاء جدول الخواص"
+
+#, fuzzy
+#~ msgid "Maximum distance of spatial correlation (value(s) >= 0.0)"
+#~ msgstr "أقصى مسافة من نقطة اارؤية بالأمتار"
+
+#, fuzzy
+#~ msgid "Distance must be >= 0.0"
+#~ msgstr "طبقتين يجب تحديدهم"
+
+#, fuzzy
+#~ msgid "raster, random, cell"
+#~ msgstr "الخريطة الراسترية المطلوب تسجيلها"
+
+#, fuzzy
+#~ msgid "Name of input file; or \"-\" to read from stdin"
+#~ msgstr "الملف  الأسكى الراسترى المطلوب ادخاله"
+
+#, fuzzy
+#~ msgid "Writing vector contours (total levels %d)..."
+#~ msgstr "كتابة ملف جديد...\n"
+
+#, fuzzy
+#~ msgid "Data range of raster map <%s> is empty"
+#~ msgstr "بدء بالقيم فى الخريطة الراسترية"
+
+#, fuzzy
+#~ msgid "Unable to read range of raster map <%s>"
+#~ msgstr "بدء بالقيم فى الخريطة الراسترية"
+
+#, fuzzy
+#~ msgid "raster, recode category"
+#~ msgstr "طباعة نوع الملف الراسترى فقط"
+
+#, fuzzy
+#~ msgid "Unable to open rules file <%s>"
+#~ msgstr "[%s]لم يتم فتح ملف الخلية ل "
+
+#, fuzzy
+#~ msgid "Generates a raster map layer of distance to features in input layer."
+#~ msgstr "انشاء خريطة راسترية بها مساحات متجاورة نمت بخلية واحدة"
+
+#, fuzzy
+#~ msgid "Name for distance output map"
+#~ msgstr "اسم الخريطة المدخلة"
+
+#, fuzzy
+#~ msgid "Name for value output map"
+#~ msgstr "اسم الخريطة الراسترية المخرجة"
+
+#, fuzzy
+#~ msgid "At least one of distance= and value= must be given"
+#~ msgstr "طبقتين يجب تحديدهم"
+
+#, fuzzy
+#~ msgid "Unable to create distance map <%s>"
+#~ msgstr "اسم الخريطة الراسترية الناتجة"
+
+#, fuzzy
+#~ msgid "Unable to create value map <%s>"
+#~ msgstr "اسم الخريطة الراسترية الناتجة"
+
+#, fuzzy
+#~ msgid "Unable to create temporary file <%s>"
+#~ msgstr "لم يتم تحديث الحدود"
+
+#, fuzzy
+#~ msgid "Complex types not supported"
+#~ msgstr "نوع العمود غير مدعم"
+
+#, fuzzy
+#~ msgid "Copying color table for %s"
+#~ msgstr " <%s> فى <%s>لم يمكن قراءة العنوان الرئيسى ل"
+
+#, fuzzy
+#~ msgid "Setting grey color table for <%s> (full 8bit range)"
+#~ msgstr " <%s> فى <%s>لم يمكن قراءة العنوان الرئيسى ل"
+
+#, fuzzy
+#~ msgid "Setting grey color table for <%s> (data range)"
+#~ msgstr " <%s> فى <%s>لم يمكن قراءة العنوان الرئيسى ل"
+
+#, fuzzy
+#~ msgid "Unable to create cell/%s file"
+#~ msgstr "[%s]لم يتم فتح ملف الخلية ل "
+
+#, fuzzy
+#~ msgid "Unable to create fcell/%s file"
+#~ msgstr "لم يتم تحديث الحدود"
+
+#, fuzzy
+#~ msgid "Unable to create cell_misc/%s/gdal file"
+#~ msgstr "لم يتم تحديث الحدود"
+
+#, fuzzy
+#~ msgid "Error writing cell_misc/%s/gdal file"
+#~ msgstr "خطا فى محاولة قراءة ملف قاعدة البيانات dbmscap\n"
+
+#, fuzzy
+#~ msgid "Unable to create cell_misc/%s/f_format file"
+#~ msgstr "لم يتم تحديث الحدود"
+
+#, fuzzy
+#~ msgid "Error writing cell_misc/%s/f_format file"
+#~ msgstr "خطا فى محاولة قراءة ملف قاعدة البيانات dbmscap\n"
+
+#, fuzzy
+#~ msgid "Unable to write quant file"
+#~ msgstr "القيمة التى تعنى قيمة منعدمة"
+
+#, fuzzy
+#~ msgid "Link GDAL supported raster file to a binary raster map layer."
+#~ msgstr "ادخال ملف راسترى ذو دعم  جيدال الى خريطة راسترية بينرية"
+
+#, fuzzy
+#~ msgid "Raster file to be linked"
+#~ msgstr "الملف الراسترى الطلوب إدخالة"
+
+#, fuzzy
+#~ msgid "Name of non-file GDAL data source"
+#~ msgstr "اسم الخريطة الراسترية الجديدة"
+
+#, fuzzy
+#~ msgid "Name for input source not specified"
+#~ msgstr "اسم الخريطة الراسترية المخرجة"
+
+#, fuzzy
+#~ msgid "Unable to set window"
+#~ msgstr "<%s> لم يمكن فتح"
+
+#, fuzzy
+#~ msgid ""
+#~ "Computes direct (beam), diffuse and reflected solar irradiation raster "
+#~ "maps for given day, latitude, surface and atmospheric conditions. Solar "
+#~ "parameters (e.g. sunrise, sunset times, declination, extraterrestrial "
+#~ "irradiance, daylight length) are saved in a local text file. "
+#~ "Alternatively, a local time can be specified to compute solar incidence "
+#~ "angle and/or irradiance raster maps. The shadowing effect of the "
+#~ "topography is optionally incorporated."
+#~ msgstr ""
+#~ "برنامج حساب الإشعاع  الشمسى الساقط والمنعكس للتضاريس فى مكان ووقت معين من "
+#~ "السنة"
+
+#, fuzzy
+#~ msgid "A single value of inclination (slope)"
+#~ msgstr "قيمة مفردة  لخط العرض"
+
+#, fuzzy
+#~ msgid "Name of the longitude input raster map [decimal degrees]"
+#~ msgstr "اسم ملف خط العرض الراسترى"
+
+#, fuzzy
+#~ msgid "Name of real-sky beam radiation coefficient input raster map [-]"
+#~ msgstr "ملف عامل اشعاع الأشعة المرسلة للسماء الحقيقية"
+
+#, fuzzy
+#~ msgid "Name of real-sky diffuse radiation coefficient input raster map [-]"
+#~ msgstr "ملف عامل اشعاع الضوءالمنتشر للسماء الحقيقية"
+
+#, fuzzy
+#~ msgid "The horizon information input map prefix"
+#~ msgstr "تقرير عن الراستر المدخلة والخروج"
+
+#, fuzzy
+#~ msgid ""
+#~ "Output global (total) irradiance/irradiation [W.m-2] (mode 1) or "
+#~ "irradiance/irradiation raster map [Wh.m-2.day-1] (mode 2)"
+#~ msgstr "إخراج ملف الإشعاع المنتشرالراسترى"
+
+#, fuzzy
+#~ msgid "Error reading time step size"
+#~ msgstr "خطا فى محاولة قراءة ملف قاعدة البيانات dbmscap\n"
+
+#, fuzzy
+#~ msgid "Error reading horizon step size"
+#~ msgstr "%s لم يتم العثور على الخريطة الراسترية"
+
+#, fuzzy
+#~ msgid "Horizon file no. %d <%s> not found"
+#~ msgstr "غير موجود <%s>الملف للمنظر ثلاثى الأبعاد "
+
+#, fuzzy
+#~ msgid "Prefix of the horizon raster output maps"
+#~ msgstr "اسم الخريطة الراسترية المخرجة"
+
+#, fuzzy
+#~ msgid "Could not read bufferzone size. Aborting."
+#~ msgstr "%s لم يتم العثور على الخريطة الراسترية"
+
+#, fuzzy
+#~ msgid "Calculating map %01d of %01d (angle %lf, raster map <%s>)"
+#~ msgstr "بدء بالقيم فى الخريطة الراسترية"
+
+#, fuzzy
+#~ msgid "Selecting features..."
+#~ msgstr "حساب الظلال من نموذج الإرتفاعت الرقمى"
+
+#, fuzzy
+#~ msgid "%d features converted"
+#~ msgstr "%d نقطة كتبت للمخرج\n"
+
+#, fuzzy
+#~ msgid "Selection"
+#~ msgstr "الصفر قيمة حقيقية"
+
+#, fuzzy
+#~ msgid "%d points read in region"
+#~ msgstr "%d نقاط تم تحميلها\n"
+
+#, fuzzy
+#~ msgid "No records selected from table <%s> "
+#~ msgstr "%d التسجيلات اختيرت من الجدول"
+
+#, fuzzy
+#~ msgid "Name of existing vector map (from)"
+#~ msgstr ""
+#~ "#-#-#-#-#  grassmods_ar.po (grassmods_ar)  #-#-#-#-#\n"
+#~ "اسم الخريطة الراسترية الموجودة\n"
+#~ "#-#-#-#-#  grassmods_ar.po (grassmods_ar)  #-#-#-#-#\n"
+#~ "اسم الملف الراسترى الموجود"
+
+#, fuzzy
+#~ msgid "From"
+#~ msgstr "نوع المظهر"
+
+#, fuzzy
+#~ msgid "Name of existing vector map (to)"
+#~ msgstr ""
+#~ "#-#-#-#-#  grassmods_ar.po (grassmods_ar)  #-#-#-#-#\n"
+#~ "اسم الخريطة الراسترية الموجودة\n"
+#~ "#-#-#-#-#  grassmods_ar.po (grassmods_ar)  #-#-#-#-#\n"
+#~ "اسم الملف الراسترى الموجود"
+
+#, fuzzy
+#~ msgid "Feature type (from)"
+#~ msgstr "نوع المظهر"
+
+#, fuzzy
+#~ msgid "Feature type (to)"
+#~ msgstr "نوع المظهر"
+
+#, fuzzy
+#~ msgid "Layer number (from)"
+#~ msgstr "اسم الخريطة الراسترية"
+
+#, fuzzy
+#~ msgid "Layer number (to)"
+#~ msgstr "اسم الخريطة الراسترية"
+
+#, fuzzy
+#~ msgid "vector, reclass, attributes"
+#~ msgstr "عدم انشاء جدول الخواص"
+
+#, fuzzy
+#~ msgid "The source for the new key column must be type integer or string"
+#~ msgstr "لم توجد<%s>الخريطة الفيكتورية"
+
+#, fuzzy
+#~ msgid "Column numbers must not be negative"
+#~ msgstr "لم توجد<%s>الخريطة الفيكتورية"
+
+#, fuzzy
+#~ msgid "Unable to select record from table <%s> (key %s, column %s)"
+#~ msgstr "لم يمكن اختيار البيانات من الجدول"
+
+#, fuzzy
+#~ msgid "Column <%s>: unsupported data type"
+#~ msgstr "نوع العمود غير مدعم"
+
+#, fuzzy
+#~ msgid "Name of attribute column(s) to be exported (point mode)"
+#~ msgstr "<%s> اسم الملف المستخدم لل"
+
+#, fuzzy
+#~ msgid ""
+#~ "Unable to open vector map <%s> at topology level. Flag '%c' requires "
+#~ "topology level."
+#~ msgstr "<%s>فى<%s>لم يمكن فتح الملف الفيكتورى"
+
+#, fuzzy
+#~ msgid "Unable to get bounding box of area %d"
+#~ msgstr "<%s>لم يتم العثور على الخريطة المدخلة\n"
+
+#, fuzzy
+#~ msgid "Unable to get bounding box of line %d"
+#~ msgstr "طباعة عناوين الفئة"
+
+#, fuzzy
+#~ msgid "Failed to copy attribute table to output map"
+#~ msgstr "[%s]لم يتم فتح ملف الخلية ل "
+
+#, fuzzy
+#~ msgid "Number of centres: %d (nlayer %d)"
+#~ msgstr ""
+#~ "\n"
+#~ "\n"
+#~ "%d :عدد النقاط\n"
+
+#, fuzzy
+#~ msgid "Calculating costs from centre %d..."
+#~ msgstr "حساب الظلال من نموذج الإرتفاعت الرقمى"
+
+#, fuzzy
+#~ msgid "vector, metadata, history"
+#~ msgstr "عدم انشاء جدول الخواص"
+
+#, fuzzy
+#~ msgid "Unable open database <%s> by driver <%s>"
+#~ msgstr "%s بالمشغل %s لم يمكن فتح قاعدة البيانات"
+
+#, fuzzy
+#~ msgid "Error reading coordinates file"
+#~ msgstr "إحداثيات الشرق والشمال لنقطة البدء"
+
+#, fuzzy
+#~ msgid "Error creating transformation"
+#~ msgstr "طباعة نوع الملف الراسترى فقط"
+
+#, fuzzy
+#~ msgid "Processing features..."
+#~ msgstr "التوقيع ..."
+
+#, fuzzy
+#~ msgid "type       count        min        max\n"
+#~ msgstr ""
+#~ "                       إختبر متبقيـــــــــــــــات الخـــــــــريطة\n"
+
+#, fuzzy
+#~ msgid "point"
+#~ msgstr "اسم الجدول"
+
+#, fuzzy
+#~ msgid "boundary"
+#~ msgstr "لم يتم تحديث الحدود"
+
+#, fuzzy
+#~ msgid "area"
+#~ msgstr "المساحة\n"
+
+#, fuzzy
+#~ msgid "Copying attribute table(s)..."
+#~ msgstr "عدم انشاء جدول الخواص"
+
+#, fuzzy
+#~ msgid "%d features modified."
+#~ msgstr "%d نقطة كتبت للمخرج\n"
+
+#, fuzzy
+#~ msgid "Unable to open dig_cats file"
+#~ msgstr "[%s]لم يتم فتح ملف الخلية ل "
+
+#, fuzzy
+#~ msgid "Name of input vector map (A)"
+#~ msgstr "اسم الخريطة الراسترية المدخلة"
+
+#, fuzzy
+#~ msgid "Feature type (vector map A)"
+#~ msgstr "اسم الخريطة الراسترية"
+
+#, fuzzy
+#~ msgid "Layer number (vector map A)"
+#~ msgstr "اسم الملف الراسترى الموجود"
+
+#, fuzzy
+#~ msgid "Name of input vector map (B)"
+#~ msgstr "اسم الخريطة الراسترية المدخلة"
+
+#, fuzzy
+#~ msgid "Feature type (vector map B)"
+#~ msgstr "اسم الخريطة الراسترية"
+
+#, fuzzy
+#~ msgid "Layer number (vector map B)"
+#~ msgstr "اسم الملف الراسترى الموجود"
+
+#, fuzzy
+#~ msgid ""
+#~ "Id: %d\n"
+#~ "Type: %s\n"
+#~ "Left: %d\n"
+#~ "Right: %d\n"
+#~ msgstr " %d:يمين %d:يسار %s:نوع %d: خط "
+
+#, fuzzy
+#~ msgid ""
+#~ "Node[%d]: %d\n"
+#~ "Number of lines: %d\n"
+#~ "Coordinates: %.6f, %.6f, %.6f\n"
+#~ msgstr "%d : عدد الخطوط %d: [%d] العقدة\n"
+
+#, fuzzy
+#~ msgid ""
+#~ "Id: %5d\n"
+#~ "Angle: %.8f\n"
+#~ msgstr " Line: %5d  Angle: %.8f\n"
+
+#, fuzzy
+#~ msgid "Id: %d\n"
+#~ msgstr "  جزيرة[%d]: %d\n"
+
+#, fuzzy
+#~ msgid ""
+#~ "Area: %d\n"
+#~ "Number of isles: %d\n"
+#~ msgstr "مساحة: %d  عدد الجزر: %d\n"
+
+#, fuzzy
+#~ msgid "Reading features..."
+#~ msgstr "التوقيع ..."
+
+#, fuzzy
+#~ msgid "Reading areas..."
+#~ msgstr "التوقيع ..."
+
+#, fuzzy
+#~ msgid "%d records selected from table (layer %d)"
+#~ msgstr "%d التسجيلات اختيرت من الجدول"
+
+#, fuzzy
+#~ msgid "%d update/insert errors (layer %d)"
+#~ msgstr "%d تحديث الخطا\n"
+
+#, fuzzy
+#~ msgid "No attribute table found"
+#~ msgstr "غير موجود <%s> الراستر"
+
+#, fuzzy
+#~ msgid "No numerical attributes found. Skipping export"
+#~ msgstr "%d نقاط تم تحميلها\n"
+
+#, fuzzy
+#~ msgid "Error reading value of attribute '%s'"
+#~ msgstr "%s لم يتم العثور على الخريطة الراسترية"
+
+#, fuzzy
+#~ msgid "vector, query"
+#~ msgstr "عدد نقاط الإستيفاء"
+
+#, fuzzy
+#~ msgid "Operator defines required relation between features"
+#~ msgstr "%d نقطة كتبت للمخرج\n"
+
+#, fuzzy
+#~ msgid "Processing areas..."
+#~ msgstr "التوقيع ..."
+
+#, fuzzy
+#~ msgid "Writing selected features..."
+#~ msgstr "كتابة رؤوس قمم الخطوط"
+
+#, fuzzy
+#~ msgid "Layer %d - no table"
+#~ msgstr "اسم الخريطة الراسترية"
+
+#, fuzzy
+#~ msgid "Layer %d - unable to copy table"
+#~ msgstr "<%s> لم يمكن فتح"
+
+#, fuzzy
+#~ msgid "Converts DWG/DXF to GRASS vector map"
+#~ msgstr "ادخال ملف راسترى ثنائى كطبقة خريطة راسترية جراسية"
+
+#, fuzzy
+#~ msgid "Name of DWG or DXF file"
+#~ msgstr "اسم الملف المخرج"
+
+#, fuzzy
+#~ msgid "Unable to open input file <%s>. Error %d: %s"
+#~ msgstr "<%s> لم يمكن فتح"
+
+#, fuzzy
+#~ msgid "Output vector map name <%s> is not valid map name"
+#~ msgstr "طبقتين يجب تحديدهم"
+
+#, fuzzy
+#~ msgid "vector, extract"
+#~ msgstr "عدم انشاء جدول الخواص"
+
+#, fuzzy
+#~ msgid "Extracting features..."
+#~ msgstr "وصل الفئات...\n"
+
+#, fuzzy
+#~ msgid "Not enough memory."
+#~ msgstr "%c :نوع غير معروف"
+
+#, fuzzy
+#~ msgid "Unable to calculate area centroid z coordinate"
+#~ msgstr "لم يتم حساب شبه مركز المساحة"
+
+#, fuzzy
+#~ msgid "vector, transformation, 3D"
+#~ msgstr "عدد نقاط الإستيفاء"
+
+#, fuzzy
+#~ msgid "Either '%s' or '%s' parameter have to be used"
+#~ msgstr "طبقتين يجب تحديدهم"
+
+#, fuzzy
+#~ msgid "Parameters '%s' ignored"
+#~ msgstr "غير موجودة <%s> الخريطة الراسترية "
+
+#, fuzzy
+#~ msgid "Attribute table required"
+#~ msgstr "غير موجود <%s> الراستر"
+
+#, fuzzy
+#~ msgid "Vector map <%s> is 2D"
+#~ msgstr "لم توجد<%s>الخريطة الفيكتورية"
+
+#, fuzzy
+#~ msgid "Vector map <%s> is 3D"
+#~ msgstr "لم توجد<%s>الخريطة الفيكتورية"
+
+#, fuzzy
+#~ msgid "Copying attributes..."
+#~ msgstr "عدم انشاء جدول الخواص"
+
+#, fuzzy
+#~ msgid "Unable to copy attributes"
+#~ msgstr "لم يمكن اختيار البيانات من الجدول"
+
+#, fuzzy
+#~ msgid "Vertical extent of vector map <%s>: B: %f T: %f"
+#~ msgstr "<%s>فى<%s>لم يمكن فتح الملف الفيكتورى"
+
+#, fuzzy
+#~ msgid "Column must be numeric"
+#~ msgstr "لم توجد<%s>الخريطة الفيكتورية"
+
+#, fuzzy
+#~ msgid "Skipping feature without category"
+#~ msgstr "%-5d تم تخطى فئات النقط الميت\n"
+
+#, fuzzy
+#~ msgid "Unable to get height for feature category %d"
+#~ msgstr " 2-%d اسماء الخرائط المدخلة"
+
+#, fuzzy
+#~ msgid "Feature id %d has no category - skipping"
+#~ msgstr "%-5d تم تخطى فئات النقط الميت\n"
+
+#, fuzzy
+#~ msgid "Do not copy table"
+#~ msgstr "لم يتم نسخ الجدول"
+
+#, fuzzy
+#~ msgid "Name of attribute column used for height"
+#~ msgstr "<%s> اسم الملف المستخدم لل"
+
+#, fuzzy
+#~ msgid "Creates parallel line to input vector lines."
+#~ msgstr "إنشاء نقاط على الخط المدخل"
+
+#, fuzzy
+#~ msgid "Offset along major axis in map units"
+#~ msgstr "المسافة العظمى بين النقاط بوحدات الخريطة"
+
+#, fuzzy
+#~ msgid "Offset along minor axis in map units"
+#~ msgstr "المسافة العظمى بين النقاط بوحدات الخريطة"
+
+#, fuzzy
+#~ msgid "vector, buffer"
+#~ msgstr "عدد نقاط الإستيفاء"
+
+#, fuzzy
+#~ msgid "Buffer distance along major axis in map units"
+#~ msgstr "المسافة العظمى بين النقاط بوحدات الخريطة"
+
+#, fuzzy
+#~ msgid "Buffer distance along minor axis in map units"
+#~ msgstr "المسافة العظمى بين النقاط بوحدات الخريطة"
+
+#, fuzzy
+#~ msgid "The tolerance in map units = %g"
+#~ msgstr "المسافة العظمى بين النقاط بوحدات الخريطة"
+
+#, fuzzy
+#~ msgid "Unable to select data from table <%s>"
+#~ msgstr "لم يمكن اختيار البيانات من الجدول"
+
+#, fuzzy
+#~ msgid "Buffering lines..."
+#~ msgstr "التوقيع ..."
+
+#, fuzzy
+#~ msgid "Buffering areas..."
+#~ msgstr "وصل الفئات...\n"
+
+#, fuzzy
+#~ msgid "Power 2 values: %d rows %d columns"
+#~ msgstr "%d راستر%s, %d فيكتور%s\n"
+
+#, fuzzy
+#~ msgid "Reading raster maps..."
+#~ msgstr "%-5d dig_att قراءة ملف...\n"
+
+#, fuzzy
+#~ msgid "Writing data..."
+#~ msgstr "كتابة ملف جديد...\n"
+
+#, fuzzy
+#~ msgid "Name for output file containing result signatures"
+#~ msgstr "اسم الملف الخرج المحتوى على مصفوفة الخطا وعامل كبا"
+
+#, fuzzy
+#~ msgid "Maximum number of sub-signatures in any class"
+#~ msgstr "المسافة العظمى بين النقاط بوحدات الخريطة"
+
+#, fuzzy
+#~ msgid "Illegal number of sub-signatures (%s)"
+#~ msgstr "مساحة: %d  عدد الجزر: %d\n"
+
+#, fuzzy
+#~ msgid "Generates statistics for i.smap from raster map."
+#~ msgstr "انشاء احصائيات المساحة لطبقات الخرائط الراسترية"
+
+#, fuzzy
+#~ msgid "Clustering class %d (%d pixels)..."
+#~ msgstr "حساب الظلال من نموذج الإرتفاعت الرقمى"
+
+#, fuzzy
+#~ msgid "Number of subclasses is %d"
+#~ msgstr "عدد نقاط الإستيفاء"
+
+#, fuzzy
+#~ msgid "Not enough pixels in class %d"
+#~ msgstr "%c :نوع غير معروف"
+
+#, fuzzy
+#~ msgid "Too many subclasses for class index %d"
+#~ msgstr "خريطة الراستر الاساس"
+
+#, fuzzy
+#~ msgid "Number of subclasses set to %d"
+#~ msgstr "عدد نقاط الإستيفاء"
+
+#, fuzzy
+#~ msgid "Unable to create signature file <%s>"
+#~ msgstr "[%s]لم يتم فتح ملف الخلية ل "
+
+#, fuzzy
+#~ msgid "imagery, color transformation, RGB, HIS"
+#~ msgstr "عدد نقاط الإستيفاء"
+
+#, fuzzy
+#~ msgid "Name of input raster map (hue)"
+#~ msgstr "اسم الخريطة الراسترية المدخلة"
+
+#, fuzzy
+#~ msgid "Name of input raster map (intensity)"
+#~ msgstr "اسم الخريطة الراسترية المدخلة"
+
+#, fuzzy
+#~ msgid "Name of input raster map (saturation)"
+#~ msgstr "اسم الخريطة الراسترية المدخلة"
+
+#, fuzzy
+#~ msgid "Name for output raster map (red)"
+#~ msgstr "اسم الخريطة الراسترية المخرجة"
+
+#, fuzzy
+#~ msgid "Name for output raster map (green)"
+#~ msgstr "اسم الخريطة الراسترية المخرجة"
+
+#, fuzzy
+#~ msgid "Name for output raster map (blue)"
+#~ msgstr "اسم الخريطة الراسترية المخرجة"
+
+#, fuzzy
+#~ msgid "Name of input raster map (red)"
+#~ msgstr "اسم الخريطة الراسترية المدخلة"
+
+#, fuzzy
+#~ msgid "Name of input raster map (green)"
+#~ msgstr "اسم الخريطة الراسترية المدخلة"
+
+#, fuzzy
+#~ msgid "Name of input raster map (blue)"
+#~ msgstr "اسم الخريطة الراسترية المدخلة"
+
+#, fuzzy
+#~ msgid "Name for output raster map (hue)"
+#~ msgstr "اسم الخريطة الراسترية المخرجة"
+
+#, fuzzy
+#~ msgid "Name for output raster map (intensity)"
+#~ msgstr "اسم الخريطة الراسترية المخرجة"
+
+#, fuzzy
+#~ msgid "Name for output raster map (saturation)"
+#~ msgstr "اسم خريطة الراستر المخرجة"
+
+#, fuzzy
+#~ msgid "Subgroup <%s> in group <%s> contains no raster maps"
+#~ msgstr "%s لم يمكن فتح ملف المدى ل"
+
+#, fuzzy
+#~ msgid "Name of file containing signatures"
+#~ msgstr "اسم الخريطة الراسترية الحاوية على درجات الإنحدار"
+
+#, fuzzy
+#~ msgid "Unable to read signature file <%s>"
+#~ msgstr "[%s]لم يتم فتح ملف الخلية ل "
+
+#, fuzzy
+#~ msgid "imagery, image transformation, PCA"
+#~ msgstr "عدد نقاط الإستيفاء"
+
+#, fuzzy
+#~ msgid "Unable allocate memory for row buffer"
+#~ msgstr "لم يتم حساب شبه مركز المساحة"
+
+#, fuzzy
+#~ msgid "Unable to allocate memory for row buffer"
+#~ msgstr "لم يتم حساب شبه مركز المساحة"
+
+#, fuzzy
+#~ msgid "Unable to allocate memory for raster row"
+#~ msgstr "لم يتم حساب شبه مركز المساحة"
+
+#, fuzzy
+#~ msgid "Not enough active control points for current order, %d are required."
+#~ msgstr "الإحداثيات للإستفهام"
+
+#, fuzzy
+#~ msgid "Poorly placed control points."
+#~ msgstr "اسم الطبقة المستخدمة كدرجة لون"
+
+#, fuzzy
+#~ msgid " Can not generate the transformation equation."
+#~ msgstr "لم بمكن قراءة معلومات الحقل"
+
+#, fuzzy
+#~ msgid "Invalid order"
+#~ msgstr "%s:منطقة غير صالحة"
+
+#, fuzzy
+#~ msgid "Raster map <%s@%s>: projection don't match current settings"
+#~ msgstr "لم توجد<%s>الخريطة الفيكتورية"
+
+#, fuzzy
+#~ msgid "Raster map <%s@%s>: zone don't match current settings"
+#~ msgstr "لم توجد<%s>الخريطة الفيكتورية"
+
+#, fuzzy
+#~ msgid "Rectify <%s@%s> (location <%s>)"
+#~ msgstr "dig قراءة ملف...\n"
+
+#, fuzzy
+#~ msgid "into  <%s@%s> (location <%s>) ... %s"
+#~ msgstr "غير موجود <%s>الملف للمنظر ثلاثى الأبعاد "
+
+#, fuzzy
+#~ msgid "complete"
+#~ msgstr "مقلوب فرق العزم"
+
+#, fuzzy
+#~ msgid "failed"
+#~ msgstr "ملف المدخل"
+
+#, fuzzy
+#~ msgid ""
+#~ "Input raster map <%s> does not exist in group <%s>.\n"
+#~ " Try:\n"
+#~ msgstr "الخريطة الراسترية المطلوب الضبط عليها"
+
+#, fuzzy
+#~ msgid "Rectified input raster map <%s> will be saved as <%s>"
+#~ msgstr "<%s>فى<%s>لم يمكن فتح الملف الفيكتورى"
+
+#, fuzzy
+#~ msgid "Target information for group <%s> missing"
+#~ msgstr "اسم الخريطة الراسترية"
+
+#, fuzzy
+#~ msgid "Target location <%s> not found"
+#~ msgstr "غير موجودة <%s> المنطقة"
+
+#, fuzzy
+#~ msgid "Error while writing to temp file"
+#~ msgstr "خطا فى محاولة قراءة ملف قاعدة البيانات dbmscap\n"
+
+#, fuzzy
+#~ msgid "Error writing row %d"
+#~ msgstr "تغلب على الخريطة المخرجة"
+
+#, fuzzy
+#~ msgid "Reading the raster map <%s>..."
+#~ msgstr "%-5d dig_att قراءة ملف...\n"
+
+#, fuzzy
+#~ msgid "Writing transformed data..."
+#~ msgstr "كتابة ملف جديد...\n"
+
+#, fuzzy
+#~ msgid "No raster maps found"
+#~ msgstr "إدخال خريطة راسترية بينرية "
+
+#, fuzzy
+#~ msgid "Subgroup <%s> doesn't have any raster maps"
+#~ msgstr "غير موجودة <%s> المنطقة"
+
+#, fuzzy
+#~ msgid "Subgroup <%s> only has 1 raster map"
+#~ msgstr "اسم الخريطة الراسترية المخرجة"
+
+#, fuzzy
+#~ msgid "Unable to open seed signature file <%s>"
+#~ msgstr "dig_att عطل فى فتح ملف المدخل"
+
+#, fuzzy
+#~ msgid "imagery, classification, signatures"
+#~ msgstr "اسم ملف ناتج التصنيف"
+
+#, fuzzy
+#~ msgid "Unable to create report file <%s>"
+#~ msgstr "[%s]لم يتم فتح ملف الخلية ل "
+
+#, fuzzy
+#~ msgid "Bad format in camera file for group [%s]"
+#~ msgstr "%s لم يمكن فتح ملف المدى ل"
+
+#, fuzzy
+#~ msgid "No photo points for group [%s]"
+#~ msgstr "لم يتم الثور على شيئ\n"
+
+#, fuzzy
+#~ msgid "Computing equations ..."
+#~ msgstr "لم يتم نسخ الجدول"
+
+#, fuzzy
+#~ msgid "Unable to read raster header of <%s>"
+#~ msgstr "لم بمكن قراءة معلومات الحقل"
+
+#, fuzzy
+#~ msgid "Name of camera reference file to use"
+#~ msgstr "اسم الملف الراسترى الجديد"
+
+#, fuzzy
+#~ msgid "Group [%s] in location [%s] mapset [%s] now has camera file [%s]"
+#~ msgstr "لم توجد<%s>الخريطة الفيكتورية"
+
+#, fuzzy
+#~ msgid "Target location [%s] not found\n"
+#~ msgstr "غير موجود <%s>الملف للمنظر ثلاثى الأبعاد "
+
+#, fuzzy
+#~ msgid "Mapset [%s] in target location [%s] - "
+#~ msgstr "غير موجود <%s>الملف للمنظر ثلاثى الأبعاد "
+
+#, fuzzy
+#~ msgid "Pre-selected group <%s> not found"
+#~ msgstr "غير موجودة <%s> المنطقة"
+
+#, fuzzy
+#~ msgid "Enter imagery group for ortho-rectification"
+#~ msgstr "اسم الخرائط الراسترية المطلوب ترقيعها ببعضها "
+
+#, fuzzy
+#~ msgid "Group [%s] contains no files"
+#~ msgstr "غير موجودة <%s> المنطقة"
+
+#, fuzzy
+#~ msgid "Image Group [%s] not found"
+#~ msgstr "غير موجودة <%s> المنطقة"
+
+#, fuzzy
+#~ msgid "Poorly placed psuedo control points. "
+#~ msgstr "اسم الطبقة المستخدمة كدرجة لون"
+
+#, fuzzy
+#~ msgid "Cannot generate the transformation equation."
+#~ msgstr "طباعة مصفوفة المضاهاه"
+
+#, fuzzy
+#~ msgid "No active psuedo control points"
+#~ msgstr "اسم الطبقة المستخدمة كدرجة لون"
+
+#, fuzzy
+#~ msgid "Interactively select or modify the imagery group target."
+#~ msgstr "إختيار النقاط الطرفية تفاغليا"
+
+#, fuzzy
+#~ msgid "Unable to open signature file <%s>"
+#~ msgstr "<%s> لم يمكن فتح"
+
+#, fuzzy
+#~ msgid "imagery, classification, MLC"
+#~ msgstr "اسم ملف ناتج التصنيف"
+
+#, fuzzy
+#~ msgid "Name for raster map holding classification results"
+#~ msgstr "اسم الخريطة ااراسترية الكنتورية"
+
+#, fuzzy
+#~ msgid "Text color or \"none\""
+#~ msgstr " اللون الأساس\n"
+
+#, fuzzy
+#~ msgid "Location is not %s"
+#~ msgstr "%s لم يمكن فتح "
+
+#, fuzzy
+#~ msgid "%s - illegal longitude"
+#~ msgstr "اسم ااملف المخرج"
+
+#, fuzzy
+#~ msgid "Input map contains no data"
+#~ msgstr "الخريطة المدخلة حاوية الخطوط"
+
+#, fuzzy
+#~ msgid "Color definition column not specified"
+#~ msgstr "لم تحدد خرائط مدخلة"
+
+#, fuzzy
+#~ msgid "Unknown color: '%s'"
+#~ msgstr "%s - لون غير معروف\n"
+
+#, fuzzy
+#~ msgid "Unable to read symbol, unable todisplay points"
+#~ msgstr "[%s]لم يتم فتح ملف الخلية ل "
+
+#, fuzzy
+#~ msgid "Short user prompt message"
+#~ msgstr "استخدام المنطقة الحالية"
+
+#, fuzzy
+#~ msgid ""
+#~ "Displays the rhumbline joining two user-specified points, in the active "
+#~ "frame on the user's graphics monitor."
+#~ msgstr "اختيار الخط الذى سيعرض به النص على الشاشة"
+
+#, fuzzy
+#~ msgid "Name of an existing map"
+#~ msgstr "اسم الخريطة الراسترية الموجودة"
+
+#, fuzzy
+#~ msgid "Name of a mapset"
+#~ msgstr "اسم الخريطة الناتجة"
+
+#, fuzzy
+#~ msgid "Removing %s <%s>"
+#~ msgstr "dig قراءة ملف...\n"
+
+#, fuzzy
+#~ msgid "couldn't be removed"
+#~ msgstr "الملف الراسترى الطلوب إدخالة"
+
+#, fuzzy
+#~ msgid "%s: couldn't be removed"
+#~ msgstr "الملف الراسترى الطلوب إدخالة"
+
+#, fuzzy
+#~ msgid "%s: removed"
+#~ msgstr "%-5d أشباه المراكز قرات\n"
+
+#, fuzzy
+#~ msgid "<%s> nothing removed"
+#~ msgstr "غير موجود <%s> الراستر"
+
+#, fuzzy
+#~ msgid "Remove base maps"
+#~ msgstr "الخريطة الراسترية الغطاء"
+
+#, fuzzy
+#~ msgid "Unable to compile regular expression %s"
+#~ msgstr "[%s]لم يتم فتح ملف الخلية ل "
+
+#, fuzzy
+#~ msgid "Map name exclusion pattern (default: none)"
+#~ msgstr "شكل فاصل المخرج"
+
+#, fuzzy
+#~ msgid "Print data types"
+#~ msgstr "طباعة نوع الملف الراسترى فقط"
+
+#, fuzzy
+#~ msgid "Pretty printing in human readable format"
+#~ msgstr "header تخطى طباعة معلومات عن العنوان الرئيسى بأول الملف"

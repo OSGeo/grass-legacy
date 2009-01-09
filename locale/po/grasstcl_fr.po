@@ -1380,8 +1380,9 @@ msgid "Return to previous zoom"
 msgstr "Revenir au zoom précédent"
 
 #: ../gui/tcltk/gis.m/maptool.tcl:172
+#, fuzzy
 msgid "Zoom to..."
-msgstr ""
+msgstr "Zoom arrière"
 
 #: ../gui/tcltk/gis.m/maptool.tcl:184
 #, fuzzy
@@ -6440,3 +6441,47 @@ msgstr "Texte"
 #, fuzzy
 #~ msgid "Enter number of datum transform selected"
 #~ msgstr "Entrer le numéro du datum sélectionné"
+
+#, fuzzy
+#~ msgid "Required"
+#~ msgstr "requis"
+
+#, fuzzy
+#~ msgid " Save "
+#~ msgstr "Sauvegarder"
+
+#, fuzzy
+#~ msgid " Clear "
+#~ msgstr "Nettoyer"
+
+#, fuzzy
+#~ msgid "Multiple formats using GDAL (link into instead of import)"
+#~ msgstr "Formats multiples avec GDAL"
+
+#, fuzzy
+#~ msgid "Geonames"
+#~ msgstr "Renommer"
+
+#, fuzzy
+#~ msgid "Import data table"
+#~ msgstr "Importer une carte raster"
+
+#, fuzzy
+#~ msgid "Multiple GPS formats using GPSBabel"
+#~ msgstr "Formats multiples avec GDAL"
+
+#, fuzzy
+#~ msgid "Export data table"
+#~ msgstr "Exporter une carte raster"
+
+#, fuzzy
+#~ msgid "Color tables (stddev)"
+#~ msgstr "Tables de couleurs"
+
+#, fuzzy
+#~ msgid "Distance to features"
+#~ msgstr "Objets de texture"
+
+#, fuzzy
+#~ msgid "Assign colors"
+#~ msgstr "couleur de ligne"

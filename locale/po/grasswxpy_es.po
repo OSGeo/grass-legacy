@@ -18,6 +18,7 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: ../gui/wxpython/icons/icon.py:162
+#, fuzzy
 msgid "Unable to load icon theme, using default icon theme..."
 msgstr "No se puede cargar el tema de iconos, se usa el predeterminado..."
 
@@ -1845,8 +1846,9 @@ msgid "Save current workspace as file"
 msgstr "Guardar entorno de trabajo actual como archivo"
 
 #: ../gui/wxpython/gui_modules/menudata.py:59
+#, fuzzy
 msgid "Close current workspace"
-msgstr "Cerrar entorno de trabajo actual"
+msgstr "Cerrar archivo de entorno de trabajo actual"
 
 #: ../gui/wxpython/gui_modules/menudata.py:60
 msgid "Close current workspace file"
@@ -3932,6 +3934,7 @@ msgid "Create new empty vector map"
 msgstr "vectorial"
 
 #: ../gui/wxpython/gui_modules/menudata.py:1223
+#, fuzzy
 msgid "Create/rebuild topology"
 msgstr "Crear/reconstruir topología"
 
@@ -5877,14 +5880,16 @@ msgid "Highlight selected"
 msgstr "Borrar lo seleccionado"
 
 #: ../gui/wxpython/gui_modules/dbm.py:963
+#, fuzzy
 msgid "Highlight selected and zoom"
-msgstr ""
+msgstr "Borrar lo seleccionado"
 
 #: ../gui/wxpython/gui_modules/dbm.py:967
 #: ../gui/wxpython/gui_modules/dbm.py:1852
 #: ../gui/wxpython/gui_modules/dbm.py:1856
+#, fuzzy
 msgid "Extract selected"
-msgstr ""
+msgstr "Borrar objeto(s) espacial(es)"
 
 #: ../gui/wxpython/gui_modules/dbm.py:972
 #: ../gui/wxpython/gui_modules/dbm.py:1461
@@ -6065,8 +6070,9 @@ msgid "&Delete layer"
 msgstr "&Borrar capa"
 
 #: ../gui/wxpython/gui_modules/dbm.py:2349
+#, fuzzy
 msgid "Modify selected layer"
-msgstr ""
+msgstr "Importar las capas seleccionadas"
 
 #: ../gui/wxpython/gui_modules/dbm.py:2421
 msgid "&Modify layer"
@@ -7746,8 +7752,9 @@ msgid "Do you want to remove map layer %s from layer tree?"
 msgstr "Cargar capas de mapa en el árbol de capas"
 
 #: ../gui/wxpython/wxgui.py:1443
+#, fuzzy
 msgid "Do you want to remove selected map layer from layer tree?"
-msgstr ""
+msgstr "Cargar capas de mapa en el árbol de capas"
 
 #: ../gui/wxpython/wxgui.py:1447
 msgid "Remove map layer"
@@ -7814,3 +7821,77 @@ msgstr ""
 #, fuzzy
 #~ msgid "Error in Attribute Table Manager"
 #~ msgstr "Error Tabla"
+
+#, fuzzy
+#~ msgid "Delete selected features"
+#~ msgstr "Borrar la capa seleccionada"
+
+#, fuzzy
+#~ msgid "Delete layer"
+#~ msgstr "&Borrar capa"
+
+#, fuzzy
+#~ msgid "Modify layer"
+#~ msgstr "Añadir capa de cuadrícula"
+
+#, fuzzy
+#~ msgid "Create new workspace"
+#~ msgstr "Crear nuevo archivo de entorno de trabajo"
+
+#, fuzzy
+#~ msgid "Load workspace from file"
+#~ msgstr "Guardar entorno de trabajo"
+
+#, fuzzy
+#~ msgid "Save workspace to open file"
+#~ msgstr "Guardar entorno de trabajo actual a archivo"
+
+#, fuzzy
+#~ msgid "Save as"
+#~ msgstr "Guardar cambios"
+
+#, fuzzy
+#~ msgid "Save workspace to file"
+#~ msgstr "Guardar entorno de trabajo actual a archivo"
+
+#, fuzzy
+#~ msgid "Close"
+#~ msgstr "Código"
+
+#, fuzzy
+#~ msgid "Close loaded workspace"
+#~ msgstr "Cerrar entorno de trabajo actual"
+
+#, fuzzy
+#~ msgid "Load map layers from GRC file to layer tree"
+#~ msgstr "Cargar capas de mapa en el árbol de capas"
+
+#, fuzzy
+#~ msgid "Geonames import"
+#~ msgstr "Importación de GEOnet"
+
+#, fuzzy
+#~ msgid "Imports geonames.org country files into a GRASS vector points map."
+#~ msgstr ""
+#~ "Importa archivos de país del Servidor de Nombres Geonet (GNS) US-NGA a un "
+#~ "mapa vectorial de puntos de GRASS."
+
+#, fuzzy
+#~ msgid "Export database table"
+#~ msgstr "Importar tabla de base de datos"
+
+#, fuzzy
+#~ msgid "Exports attribute tables in various formats."
+#~ msgstr "Importa tablas de atributos en varios formatos."
+
+#, fuzzy
+#~ msgid "2D vector to 3D vector"
+#~ msgstr "Ráster a vectorial"
+
+#, fuzzy
+#~ msgid "Color tables (stddev)"
+#~ msgstr "Tablas de color"
+
+#, fuzzy
+#~ msgid "Edit vector map (non-interactively)"
+#~ msgstr "Recodificar de forma interactiva"

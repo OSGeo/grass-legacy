@@ -18,6 +18,7 @@ msgstr ""
 "Plural-Forms:  nplurals=2; plural=(n != 1);\n"
 
 #: ../gui/wxpython/icons/icon.py:162
+#, fuzzy
 msgid "Unable to load icon theme, using default icon theme..."
 msgstr "Simge teması yüklenemiyor, varsayılan simge teması kullanılıyor..."
 
@@ -1759,8 +1760,9 @@ msgid "Load GRC file (Tcl/Tk GUI)"
 msgstr ""
 
 #: ../gui/wxpython/gui_modules/menudata.py:45
+#, fuzzy
 msgid "Load map layers from GRC file to layer tree (not fully implemented)"
-msgstr ""
+msgstr "Harita katmanlarını katman ağacına yükle"
 
 #: ../gui/wxpython/gui_modules/menudata.py:49 ../gui/wxpython/wxgui.py:798
 #: ../gui/wxpython/wxgui.py:816
@@ -1776,8 +1778,9 @@ msgid "Save current workspace as file"
 msgstr "Çalışma alanını dosyaya kaydet"
 
 #: ../gui/wxpython/gui_modules/menudata.py:59
+#, fuzzy
 msgid "Close current workspace"
-msgstr "Geçerli çalışma alanını kapat"
+msgstr "Geçerli çalışma alanı dosyasını kapat"
 
 #: ../gui/wxpython/gui_modules/menudata.py:60
 msgid "Close current workspace file"
@@ -3656,6 +3659,7 @@ msgid "Create new empty vector map"
 msgstr "Yeni boş vektör harita oluştur"
 
 #: ../gui/wxpython/gui_modules/menudata.py:1207
+#, fuzzy
 msgid "Create/rebuild topology"
 msgstr "Topoloji oluştur/yeniden kur"
 
@@ -5442,6 +5446,7 @@ msgstr "Tüm kayıtları sil"
 #: ../gui/wxpython/gui_modules/dbm.py:925
 #: ../gui/wxpython/gui_modules/dbm.py:1729
 #: ../gui/wxpython/gui_modules/dbm.py:1733
+#, fuzzy
 msgid "Extract selected"
 msgstr "Seçileni çıkart"
 
@@ -5751,7 +5756,7 @@ msgid "Map scale"
 msgstr "Harita ölçeği"
 
 #: ../gui/wxpython/gui_modules/gcmd.py:93
-#, python-format
+#, fuzzy, python-format
 msgid "Error in command execution %s"
 msgstr "%s komutu çalıştırılmasında hata"
 
@@ -7108,6 +7113,7 @@ msgid "Do you want to remove map layer <%s> from layer tree?"
 msgstr "%s harita katmanını katman ağacından kaldırmak istiyormusun?"
 
 #: ../gui/wxpython/wxgui.py:1403
+#, fuzzy
 msgid "Do you want to remove selected map layer from layer tree?"
 msgstr "Seçilen harita katmanını katman ağacından kaldırmak istiyormusun?"
 
@@ -7197,6 +7203,7 @@ msgstr "Raster haritayı seç:"
 msgid "Select vector map:"
 msgstr "Vektör haritayı seç:"
 
+#, fuzzy
 msgid "Enter raster cat values or percents (range = %d-%d)"
 msgstr "Raster categori değerleri veya yüzdeleri gir (aralık = %d-%d)"
 
@@ -7235,9 +7242,11 @@ msgstr "<%(column)s> sütunu<%(table)s> tablosunda bulunamadı."
 msgid "Add"
 msgstr "Ekle"
 
+#, fuzzy
 msgid "Highlight selected"
 msgstr "Seçileni vurgula"
 
+#, fuzzy
 msgid "Highlight selected and zoom"
 msgstr "Seçileni vurgula ve büyült"
 
@@ -7267,3 +7276,125 @@ msgstr "Değişiklikleri uygula ve diyaloğu kapat"
 
 msgid "Digitization interface:"
 msgstr "Sayısallaştırma arayüzü:"
+
+#, fuzzy
+#~ msgid "Delete selected features"
+#~ msgstr "Seçileni katmanı sil"
+
+#, fuzzy
+#~ msgid ""
+#~ "Loading attribute data failed.\n"
+#~ "\n"
+#~ "%s"
+#~ msgstr ""
+#~ "Öznitelik verisini yüklemede hata.\n"
+#~ "\n"
+#~ "%s"
+
+#, fuzzy
+#~ msgid "Nothing to delete."
+#~ msgstr "Hiçbirşey çıkarılmadı."
+
+#, fuzzy
+#~ msgid "Delete layer"
+#~ msgstr "&Katman sil"
+
+#, fuzzy
+#~ msgid "Modify layer"
+#~ msgstr "&Katmanı değiştir"
+
+#, fuzzy
+#~ msgid "Set color table"
+#~ msgstr "Renk tabloları"
+
+#, fuzzy
+#~ msgid "Zoom to map"
+#~ msgstr "Seçilen haritaya göre göster"
+
+#, fuzzy
+#~ msgid "Zoom to displayed map"
+#~ msgstr "Seçilen haritaya göre göster"
+
+#, fuzzy
+#~ msgid "Create new workspace"
+#~ msgstr "Yeni çalışma alanı dosyası oluştur"
+
+#, fuzzy
+#~ msgid "Load workspace from file"
+#~ msgstr "çalışma alanı dosyasını seç"
+
+#, fuzzy
+#~ msgid "Save workspace to open file"
+#~ msgstr "Geçerli çalışma alanını dosyaya kaydet"
+
+#, fuzzy
+#~ msgid "Save as"
+#~ msgstr "Değişiklikleri kaydet"
+
+#, fuzzy
+#~ msgid "Save workspace to file"
+#~ msgstr "Geçerli çalışma alanını dosyaya kaydet"
+
+#, fuzzy
+#~ msgid "Close"
+#~ msgstr "Kod"
+
+#, fuzzy
+#~ msgid "Close loaded workspace"
+#~ msgstr "Geçerli çalışma alanını kapat"
+
+#, fuzzy
+#~ msgid "Geonames import"
+#~ msgstr "GEOnet içe aktar"
+
+#, fuzzy
+#~ msgid "Imports geonames.org country files into a GRASS vector points map."
+#~ msgstr "Eski GRASS vektör haritasını içe aktarır."
+
+#, fuzzy
+#~ msgid "Multiple GPS export formats using GPSBabel"
+#~ msgstr "OGR kullanan çeşitli dışa aktarma biçimleri"
+
+#, fuzzy
+#~ msgid "Export database table"
+#~ msgstr "Veritabanı tablosunu içe aktar"
+
+#, fuzzy
+#~ msgid "Exports attribute tables in various formats."
+#~ msgstr "Değişik biçimlerdeki öznitelik tablolarını içe aktar."
+
+#, fuzzy
+#~ msgid "2D vector to 3D vector"
+#~ msgstr "Rasterdan vektöre"
+
+#, fuzzy
+#~ msgid "Link to GDAL"
+#~ msgstr "OGR'ye bağlantı"
+
+#, fuzzy
+#~ msgid "Link GDAL supported raster file to a binary raster map layer."
+#~ msgstr ""
+#~ "GDAL desteğindeki raster dosyayı ikili raster harita katmanı olarak içe "
+#~ "aktar"
+
+#, fuzzy
+#~ msgid "Color tables (stddev)"
+#~ msgstr "Renk tabloları"
+
+#, fuzzy
+#~ msgid "Distance to features"
+#~ msgstr "En yakın objeler"
+
+#, fuzzy
+#~ msgid "Generates a raster map layer of distance to features in input layer."
+#~ msgstr "Raster harita katmanını ASCII metin dosyasına dönüştür"
+
+#, fuzzy
+#~ msgid "Edit vector map (non-interactively)"
+#~ msgstr "Etkileşimli olarak yeniden kodla"
+
+#, fuzzy
+#~ msgid "Creates a new vector as a read-only link to OGR layer."
+#~ msgstr ""
+#~ "Diğer vektör harita katmanlarını birleştirirek yeni vektör harita katmanı "
+#~ "oluştur"

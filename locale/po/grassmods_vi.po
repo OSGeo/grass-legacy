@@ -1760,6 +1760,7 @@ msgid "display, export, GPS"
 msgstr "trình bày, xuất, GPS"
 
 #: ../locale/scriptstrings/d.out.gpsdrive_to_translate.c:3
+#, fuzzy
 msgid "name for new map image (lives in ~/.gpsdrive)"
 msgstr "tên của ảnh bản đồ mới (ở trong ~/.gpsdrive)"
 
@@ -1983,6 +1984,7 @@ msgid "display"
 msgstr "trình bày"
 
 #: ../locale/scriptstrings/d.rast.leg_to_translate.c:3
+#, fuzzy
 msgid "omit entries with missing label"
 msgstr "Bỏ các mục bị thiếu nhãn"
 
@@ -2104,12 +2106,14 @@ msgid "How to split display"
 msgstr "Chia phần trình bày như thế nào"
 
 #: ../locale/scriptstrings/d.vect.thematic_to_translate.c:1
+#, fuzzy
 msgid "Displays thematic vectormap"
 msgstr "Trình bày bản đồ vector kiểu chủ đề"
 
 #: ../locale/scriptstrings/d.vect.thematic_to_translate.c:2
+#, fuzzy
 msgid "display, legend"
-msgstr "trình bày, chú giải"
+msgstr "Lật chú giải"
 
 #: ../locale/scriptstrings/d.vect.thematic_to_translate.c:3
 #: ../locale/scriptstrings/d.vect.thematic_to_translate.c:37
@@ -2141,6 +2145,7 @@ msgid "Vector map type"
 msgstr "Kiểu bản đồ vector"
 
 #: ../locale/scriptstrings/d.vect.thematic_to_translate.c:8
+#, fuzzy
 msgid "Attribute column to use for thematic display (must be numeric)"
 msgstr "Cột thuộc tính dùng để trình bày chủ đề (phải là dạng số)"
 
@@ -2153,6 +2158,7 @@ msgid "Thematic divisions of data for display"
 msgstr "Các phép phân chia dữ liệu theo chủ đề để trình bày"
 
 #: ../locale/scriptstrings/d.vect.thematic_to_translate.c:14
+#, fuzzy
 msgid ""
 "Break points for custom breaks option. Separate values by spaces. (0 10 20 "
 "30 ...)"
@@ -2204,6 +2210,7 @@ msgid "Color"
 msgstr ""
 
 #: ../locale/scriptstrings/d.vect.thematic_to_translate.c:26
+#, fuzzy
 msgid ""
 "Color scheme for graduated color mapping (select 'single_color' for "
 "graduated point/line display)"
@@ -2212,12 +2219,14 @@ msgstr ""
 "cho việc trình bày điểm/đường phân cấp)"
 
 #: ../locale/scriptstrings/d.vect.thematic_to_translate.c:28
+#, fuzzy
 msgid ""
 "Color for graduated points map (grass named color or R:G:B triplet). Set "
 "color scheme to single color."
 msgstr ""
-"Màu dùng cho bản đồ điểm được phân cấp (màu gọi tên theo chuẩn của GRASS "
-"hoặc kiểu bộ ba R:G:B). Thiết lập chế độ màu thành một màu duy nhất"
+"Màu dùng cho các đường hoặc các đường viền của điểm/vùng được phân cấp. (màu "
+"gọi tên theo chuẩn của GRASS hoặc kiểu bộ ba R:G:B). Thiết lập chế độ màu "
+"thành một màu duy nhất"
 
 #: ../locale/scriptstrings/d.vect.thematic_to_translate.c:30
 msgid ""
@@ -2229,6 +2238,7 @@ msgstr ""
 "thành một màu duy nhất"
 
 #: ../locale/scriptstrings/d.vect.thematic_to_translate.c:32
+#, fuzzy
 msgid ""
 "Beginning color for custom color gradient. Must be expressed as R:G:B "
 "triplet."
@@ -2237,6 +2247,7 @@ msgstr ""
 "R:G:B)"
 
 #: ../locale/scriptstrings/d.vect.thematic_to_translate.c:34
+#, fuzzy
 msgid ""
 "Ending color for custom color gradient. Must be expressed as R:G:B triplet"
 msgstr ""
@@ -2266,6 +2277,7 @@ msgid "WHERE conditions of SQL statement without 'where' keyword"
 msgstr "Các điều kiện WHERE của câu lệnh SQL không có từ khóa 'where'"
 
 #: ../locale/scriptstrings/d.vect.thematic_to_translate.c:42
+#, fuzzy
 msgid ""
 "Root for the name of psmap instruction files to be in current directory (if "
 "not set, no psmap instruction files will be created)"
@@ -2478,7 +2490,7 @@ msgstr "vùng cần loại bỏ"
 #: ../locale/scriptstrings/g.mremove_to_translate.c:9
 #, fuzzy
 msgid "Icon to remove"
-msgstr "biểu tượng cần loại bỏ"
+msgstr "Bản đồ vector cần loại bỏ"
 
 #: ../locale/scriptstrings/g.mremove_to_translate.c:10
 #, fuzzy
@@ -2519,22 +2531,27 @@ msgid "sensor: SPOT"
 msgstr "bộ cảm biến: SPOT"
 
 #: ../locale/scriptstrings/i.fusion.brovey_to_translate.c:6
+#, fuzzy
 msgid "raster input map (green: tm2 | qbird_green | spot1)"
 msgstr "bản đồ raster đầu vào (green: tm2 | qbird_green | spot1)"
 
 #: ../locale/scriptstrings/i.fusion.brovey_to_translate.c:7
+#, fuzzy
 msgid "raster input map (NIR: tm4 | qbird_nir | spot2)"
 msgstr "bản đồ raster đầu vào (NIR: tm4 | qbird_nir | spot2)"
 
 #: ../locale/scriptstrings/i.fusion.brovey_to_translate.c:8
+#, fuzzy
 msgid "raster input map (MIR; tm5 | qbird_red | spot3)"
 msgstr "bản đồ raster đầu vào (MIR; tm5 | qbird_red | spot3)"
 
 #: ../locale/scriptstrings/i.fusion.brovey_to_translate.c:9
+#, fuzzy
 msgid "raster input map (etmpan | qbird_pan | spotpan)"
 msgstr "bản đồ raster đầu vào (etmpan | qbird_pan | spotpan)"
 
 #: ../locale/scriptstrings/i.fusion.brovey_to_translate.c:10
+#, fuzzy
 msgid "raster output map prefix (e.g. 'brov')"
 msgstr "tiền tố cho bản đồ raster đầu ra (ví dụ 'brov')"
 
@@ -2581,6 +2598,7 @@ msgid "existing SPOT VGT NDVI HDF file (0001_NDV.HDF)"
 msgstr "tập tin SPOT VGT NDVI hiện có (0001_NDV.HDF)"
 
 #: ../locale/scriptstrings/i.landsat.rgb_to_translate.c:1
+#, fuzzy
 msgid "Auto-balancing of colors for LANDSAT images"
 msgstr "Cân bằng màu tự động cho các ảnh LANDSAT"
 
@@ -2657,6 +2675,7 @@ msgid "Print in shell script style"
 msgstr "In ra các thống kê ở dạng tập lệnh shell"
 
 #: ../locale/scriptstrings/i.spectral_to_translate.c:1
+#, fuzzy
 msgid ""
 "displays spectral response at user specified locations in group or images"
 msgstr ""
@@ -2668,6 +2687,7 @@ msgid "imagery, raster, multispectral"
 msgstr "ảnh, raster, đa phổ"
 
 #: ../locale/scriptstrings/i.spectral_to_translate.c:3
+#, fuzzy
 msgid "group input"
 msgstr "nhóm đầu vào"
 
@@ -3292,6 +3312,7 @@ msgid "Type of the raster map to be created"
 msgstr "Kiểu bản đồ raster cần tạo."
 
 #: ../locale/scriptstrings/r.reclass.area_to_translate.c:1
+#, fuzzy
 msgid ""
 "Reclasses a raster map greater or less than user specified area size (in "
 "hectares)"
@@ -3304,12 +3325,14 @@ msgid "raster, statistics, aggregation"
 msgstr "raster, thống kê, tổng hợp"
 
 #: ../locale/scriptstrings/r.reclass.area_to_translate.c:4
+#, fuzzy
 msgid "lesser val option that sets the <= area size limit [hectares]"
 msgstr ""
 "tùy chọn lesser val (giá trị nhỏ hơn) thiết lập giới hạn kích thước vùng lớn "
 "hơn lesser val [hecta]"
 
 #: ../locale/scriptstrings/r.reclass.area_to_translate.c:5
+#, fuzzy
 msgid "greater val option that sets the >= area size limit [hectares]"
 msgstr ""
 "tùy chọn greater val thiết lập giới hạn kích thước vùng nhỏ hơn greater val "
@@ -5068,9 +5091,9 @@ msgid "Preliminary surface calculations."
 msgstr ""
 
 #: ../raster/r.surf.fractal/spec_syn.c:120
-#, c-format
+#, fuzzy, c-format
 msgid "Calculating surface %d (of %d)"
-msgstr ""
+msgstr "Đang tính bóng đổ từ DEM..."
 
 #: ../raster/r.reclass/reclass.c:49 ../raster/r.reclass/reclass.c:109
 #, fuzzy
@@ -6500,6 +6523,7 @@ msgid "Overwrite seed map with result (lake) map"
 msgstr "Ghi đè bản đồ 'hạt gieo' với kết quả bản đồ (hồ)"
 
 #: ../raster/r.lake/main.c:206
+#, fuzzy
 msgid "Both seed map and coordinates cannot be specifed"
 msgstr "Cả bản đồ 'hạt gieo' lẫn các tọa độ không thể được chỉ định"
 
@@ -6512,6 +6536,7 @@ msgid "Seed coordinates and output map lake= must be set!"
 msgstr "Các tọa độ 'hạt gieo' và bản đồ đầu ra lake= phải được thiết lập!"
 
 #: ../raster/r.lake/main.c:215
+#, fuzzy
 msgid "Both lake and overwrite cannot be specifed"
 msgstr "Cả hồ lẫn việc ghi đè không thể được chỉ định"
 
@@ -7947,6 +7972,7 @@ msgid "Please specify min and/or max radius when using the binary flag"
 msgstr ""
 
 #: ../raster/r.surf.idw/main.c:71
+#, fuzzy
 msgid "Surface interpolation utility for raster map layers."
 msgstr "Tiện ích nội suy bề mặt cho các lớp bản đồ raster"
 
@@ -8669,12 +8695,11 @@ msgid "Raster map(s) to report on"
 msgstr "(Các) bản đồ raster cần báo cáo"
 
 #: ../raster/r.report/parse.c:45
+#, fuzzy
 msgid ""
 "mi(les),me(ters),k(ilometers),a(cres),h(ectares),c(ell_counts),p"
 "(ercent_cover)"
-msgstr ""
-"mi(les),me(ters),k(ilometers),a(cres),h(ectares),c(ell_counts),p"
-"(ercent_cover)"
+msgstr "mi(les)_dặm,f(eet)_bộ_Anh,me(t),k(ilomet),a(cres)_mẫu_Anh,h(ecta)"
 
 #: ../raster/r.report/parse.c:54
 msgid "Character representing no data cell value"
@@ -9332,6 +9357,7 @@ msgid "Print the sun position output in shell script style"
 msgstr "In đầu ra vị trí mặt trời ở dạng tập lệnh shell"
 
 #: ../raster/r.sunmask/main.c:258
+#, fuzzy
 msgid "Using map center coordinates\n"
 msgstr "Sử dụng tọa độ tâm bản đồ\n"
 
@@ -10205,7 +10231,7 @@ msgstr "Số lần chạy qua #%d ( của %d)..."
 
 #: ../raster/r.in.xyz/main.c:593 ../raster/r.in.xyz/main.c:601
 #: ../raster/r.in.xyz/main.c:1096 ../raster/r.in.xyz/main.c:1104
-#, c-format
+#, fuzzy, c-format
 msgid ""
 "Not enough data columns. Incorrect delimiter or column number? Found the "
 "following character(s) in row %d:\n"
@@ -10220,17 +10246,17 @@ msgid "Line ignored as requested"
 msgstr ""
 
 #: ../raster/r.in.xyz/main.c:616 ../raster/r.in.xyz/main.c:1134
-#, c-format
+#, fuzzy, c-format
 msgid "Bad y-coordinate line %d column %d. <%s>"
 msgstr "Dòng tọa độ y tồi %d cột %d. <%s>"
 
 #: ../raster/r.in.xyz/main.c:623 ../raster/r.in.xyz/main.c:1119
-#, c-format
+#, fuzzy, c-format
 msgid "Bad x-coordinate line %d column %d. <%s>"
 msgstr "Dòng tọa độ x tồi %d cột %d. <%s>"
 
 #: ../raster/r.in.xyz/main.c:630 ../raster/r.in.xyz/main.c:1149
-#, c-format
+#, fuzzy, c-format
 msgid "Bad z-coordinate line %d column %d. <%s>"
 msgstr "Dòng tọa độ y tồi %d cột %d. <%s>"
 
@@ -10244,7 +10270,7 @@ msgid "Writing map, row %d"
 msgstr "Đang ghi bản đồ, hàng %d"
 
 #: ../raster/r.in.xyz/main.c:1055
-#, c-format
+#, fuzzy, c-format
 msgid "%d points found in region."
 msgstr "%d điểm tìm thấy trong vùng."
 
@@ -10601,22 +10627,23 @@ msgid "%s - color table not found"
 msgstr "%s - không tìm thấy bản đồ"
 
 #: ../raster/r.colors/main.c:303
+#, fuzzy
 msgid "Can't make random color table for floating point map"
-msgstr "Không thể tạo bảng màu ngẫu nhiên cho bản đồ kiểu dấu chấm động"
+msgstr "Không thể tạo bảng màu logarit cho bản đồ kiểu dấu chấm động"
 
 #: ../raster/r.colors/main.c:308
+#, fuzzy
 msgid "Can't make grey.eq color table for floating point map"
-msgstr ""
-"Không thể làm bảng màu grey.eq (thang màu xám) cho bản đồ kiểu dấu chấm động."
+msgstr "Không thể tạo bảng màu logarit cho bản đồ kiểu dấu chấm động"
 
 #: ../raster/r.colors/main.c:315
 msgid "Can't make logarithmic color table for floating point map"
 msgstr "Không thể tạo bảng màu logarit cho bản đồ kiểu dấu chấm động"
 
 #: ../raster/r.colors/main.c:328
-#, c-format
+#, fuzzy, c-format
 msgid "%s - unknown color request"
-msgstr "%s - yêu cầu màu không biết"
+msgstr "%s - màu không hiểu\n"
 
 #: ../raster/r.colors/main.c:339
 #, fuzzy, c-format
@@ -12006,6 +12033,7 @@ msgid "Unable to properly write output raster map"
 msgstr "Không thể mở tập tin chữ ký đầu ra."
 
 #: ../raster/r.clump/main.c:52
+#, fuzzy
 msgid ""
 "Recategorizes data in a raster map layer by grouping cells that form "
 "physically discrete areas into unique categories."
@@ -12024,7 +12052,7 @@ msgid "Creating support files..."
 msgstr "đang tạo các tập tin hỗ trợ cho %s"
 
 #: ../raster/r.clump/main.c:121
-#, c-format
+#, fuzzy, c-format
 msgid "%d clumps"
 msgstr "%d khối gộp"
 
@@ -13581,6 +13609,7 @@ msgid "Neither \"levels\" nor \"step\" parameter specified."
 msgstr ""
 
 #: ../raster/r.contour/main.c:165
+#, fuzzy
 msgid "Could not read range file"
 msgstr "Không thể đọc tập tin miền giá trị"
 
@@ -14589,6 +14618,7 @@ msgid "Name of raster map containing back-path easting information"
 msgstr "Tên bản đồ raster chứa easting của đường dẫn ngược"
 
 #: ../raster/wildfire/r.spreadpath/main.c:91
+#, fuzzy
 msgid "Name of raster map containing back-path norhting information"
 msgstr "Tên bản đồ raster chứa northing của đường dẫn ngược"
 
@@ -14702,10 +14732,12 @@ msgid "Name of raster map to contain OUTPUT spread time (min)"
 msgstr "Tên của bản đồ raster có chứa thời gian phát tán ĐẦU RA (phút) "
 
 #: ../raster/wildfire/r.spread/main.c:224
+#, fuzzy
 msgid "Name of raster map to contain X_BACK coordiates"
 msgstr "Tên của bản đồ raster chứa tọa độ X_BACK"
 
 #: ../raster/wildfire/r.spread/main.c:232
+#, fuzzy
 msgid "Name of raster map to contain Y_BACK coordiates"
 msgstr "Tên của bản đồ raster chứa tọa độ Y_BACK"
 
@@ -15921,6 +15953,7 @@ msgid "Bicubic interpolation"
 msgstr "Phép nội suy bậc ba kép (bicubic)"
 
 #: ../vector/lidar/v.lidar.edgedetection/main.c:342
+#, fuzzy
 msgid "Creating auxiliar table for archiving overlaping zones"
 msgstr "Đang tạo bảng phụ để lưu trữ các vùng chồng nhau"
 
@@ -16159,14 +16192,14 @@ msgid "CrossCorrelation: No record for point (cat = %d)"
 msgstr "Không có bản ghi cho đường (cat = %d)"
 
 #: ../vector/lidar/v.surf.bspline/crosscorr.c:286
-#, c-format
+#, fuzzy, c-format
 msgid "CrossCorrelation: Mean = %.5lf\n"
-msgstr ""
+msgstr "Không thể đọc thông tin trường"
 
 #: ../vector/lidar/v.surf.bspline/crosscorr.c:288
-#, c-format
+#, fuzzy, c-format
 msgid "CrossCorrelation: Root Means Square (RMS) = %.5lf\n"
-msgstr ""
+msgstr "%d điểm tìm thấy trong vùng."
 
 #: ../vector/lidar/v.surf.bspline/crosscorr.c:307
 #, c-format
@@ -16183,9 +16216,9 @@ msgid ""
 msgstr ""
 
 #: ../vector/lidar/v.surf.bspline/crosscorr.c:312
-#, c-format
+#, fuzzy, c-format
 msgid "CrossCorrelation: lambda_i = %.3f\n"
-msgstr ""
+msgstr "Không thể đọc thông tin trường"
 
 #: ../vector/lidar/v.surf.bspline/crosscorr.c:318
 #, fuzzy, c-format
@@ -16405,16 +16438,18 @@ msgid "To_map"
 msgstr ""
 
 #: ../vector/v.distance/main.c:133
+#, fuzzy
 msgid "From type"
-msgstr "Từ kiểu"
+msgstr "Đến kiểu"
 
 #: ../vector/v.distance/main.c:140
 msgid "To type"
 msgstr "Đến kiểu"
 
 #: ../vector/v.distance/main.c:145
+#, fuzzy
 msgid "From layer"
-msgstr "Từ lớp"
+msgstr "Đến lớp"
 
 #: ../vector/v.distance/main.c:150
 msgid "To layer"
@@ -16536,6 +16571,7 @@ msgid "Unable to open default database"
 msgstr "Không thể mở CSDL mặc định"
 
 #: ../vector/v.distance/main.c:438
+#, fuzzy
 msgid "Incomatible column types"
 msgstr "Các kiểu cột không tương thích"
 
@@ -16641,7 +16677,7 @@ msgstr "Tên của cột thuộc tính dùng làm nhãn"
 #: ../vector/v.reclass/main.c:80
 #, fuzzy
 msgid "The column must be type integer or string"
-msgstr "Cột key phải là số nguyên"
+msgstr "Tên cột (phải là kiểu số)"
 
 #: ../vector/v.reclass/main.c:83
 #, fuzzy
@@ -16735,9 +16771,9 @@ msgid "Incomplete rule"
 msgstr "Phần trăm hoàn tất..."
 
 #: ../vector/v.reclass/main.c:422
-#, c-format
+#, fuzzy, c-format
 msgid "%d features reclassed"
-msgstr ""
+msgstr "%d điểm được ghi vào dữ liệu vector"
 
 #: ../vector/v.in.ascii/head.c:22
 #, fuzzy, c-format
@@ -18089,6 +18125,7 @@ msgid "Select type: line or area"
 msgstr "Chọn kiểu: đường hoặc vùng"
 
 #: ../vector/v.info/main.c:66
+#, fuzzy
 msgid "Outputs basic information about a user-specified vector map layer."
 msgstr ""
 "Xuất ra thông tin cơ bản về một lớp bản đồ raster do người dùng chỉ định."
@@ -19554,6 +19591,7 @@ msgid "Input vector was not found."
 msgstr "Không tìm thấy vector đầu vào"
 
 #: ../vector/v.convert/att.c:36
+#, fuzzy
 msgid "No category labels (dig_cats) found, no table created.\n"
 msgstr "Không tìm thấy các nhãn phạm trù (dig_cats), bảng không được tạo ra.\n"
 
@@ -20434,9 +20472,9 @@ msgid "Unable to open vector map <%s> at topology level %d"
 msgstr "Không thể mở tập tin vector <%s> trong <%s>"
 
 #: ../vector/v.net/main.c:188
-#, c-format
+#, fuzzy, c-format
 msgid "%d arcs added to network (nlayer: [%d])"
-msgstr ""
+msgstr "%d phạm được đọc từ bản đồ"
 
 #: ../vector/v.net/nodes.c:85
 #, fuzzy, c-format
@@ -20552,17 +20590,13 @@ msgid "Nothing Found.\n"
 msgstr "Không tìm thấy gì cả.\n"
 
 #: ../vector/v.what/what.c:136
-#, c-format
+#, fuzzy, c-format
 msgid ""
 "Line: %d  \n"
 "Type: %s  \n"
 "Left: %d  \n"
 "Right: %d  \n"
-msgstr ""
-"Đường: %d \n"
-"Kiểu: %s  \n"
-"Trái: %d  \n"
-"Phải: %d  \n"
+msgstr "Đường: %d  Kiểu: %s  Trái: %d  Phải: %d  "
 
 #: ../vector/v.what/what.c:140 ../vector/v.what/what.c:174
 #: ../display/d.what.vect/what.c:235
@@ -20571,24 +20605,19 @@ msgid "Length: %f\n"
 msgstr "Chiều dài: %f\n"
 
 #: ../vector/v.what/what.c:156
-#, c-format
+#, fuzzy, c-format
 msgid ""
 "Node[%d]: %d  \n"
 "Number of lines: %d  \n"
 "Coordinates: %.6f, %.6f, %.6f\n"
-msgstr ""
-"Nốt[%d]: %d  \n"
-"Số_đường: %d  \n"
-"Tọa_độ: %.6f, %.6f, %.6f\n"
+msgstr "  Nốt[%d]: %d  Số đường: %d  Tọa_độ: %.6f, %.6f, %.6f\n"
 
 #: ../vector/v.what/what.c:164
-#, c-format
+#, fuzzy, c-format
 msgid ""
 "Line: %5d  \n"
 "Angle: %.8f\n"
-msgstr ""
-"Đường: %5d  \n"
-"Góc: %.8f \n"
+msgstr "    Đường: %5d  Góc: %.8f\n"
 
 #: ../vector/v.what/what.c:171
 #, fuzzy, c-format
@@ -20611,7 +20640,7 @@ msgid "Line height: %f\n"
 msgstr "Độ cao đường: %f\n"
 
 #: ../vector/v.what/what.c:198
-#, c-format
+#, fuzzy, c-format
 msgid ""
 "Line height min: %f \n"
 "Line height max: %f\n"
@@ -20620,7 +20649,7 @@ msgstr ""
 "Độ cao đường tối đa: %f \n"
 
 #: ../vector/v.what/what.c:207
-#, c-format
+#, fuzzy, c-format
 msgid ""
 "Object type: Area \n"
 "Area height: %f\n"
@@ -20629,18 +20658,16 @@ msgstr ""
 "Độ cao vùng: %f\n"
 
 #: ../vector/v.what/what.c:211
-#, c-format
+#, fuzzy, c-format
 msgid "Object type: Area\n"
 msgstr "Kiểu đối tượng: Vùng\n"
 
 #: ../vector/v.what/what.c:218
-#, c-format
+#, fuzzy, c-format
 msgid ""
 "Area: %d  \n"
 "Number of isles: %d\n"
-msgstr ""
-"Vùng: %d \n"
-"Số đảo: %d \n"
+msgstr "Vùng: %d  Số đảo: %d\n"
 
 #: ../vector/v.what/what.c:223
 #, c-format
@@ -20653,7 +20680,7 @@ msgid "Island: %d In area: %d\n"
 msgstr "Đảo: %d  Trong vùng: %d\n"
 
 #: ../vector/v.what/what.c:235 ../vector/v.what/what.c:242
-#, c-format
+#, fuzzy, c-format
 msgid ""
 "Sq Meters: %.3f \n"
 "Hectares: %.3f\n"
@@ -20662,7 +20689,7 @@ msgstr ""
 "Hecta: %.3f\n"
 
 #: ../vector/v.what/what.c:237 ../vector/v.what/what.c:245
-#, c-format
+#, fuzzy, c-format
 msgid ""
 "Acres: %.3f \n"
 "Sq Miles: %.4f\n"
@@ -20671,7 +20698,7 @@ msgstr ""
 "Dặmg vuông: %.4f\n"
 
 #: ../vector/v.what/what.c:263
-#, c-format
+#, fuzzy, c-format
 msgid ""
 "Layer: %d\n"
 "Category: %d \n"
@@ -20873,14 +20900,14 @@ msgid "More elements of category [%d], nothing loaded to DB"
 msgstr "Không tìm thấy tập tin raster <%s>"
 
 #: ../vector/v.to.db/update.c:196
-#, c-format
+#, fuzzy, c-format
 msgid "Cat [%d]: row already exists (not inserted)"
-msgstr ""
+msgstr "Vector '%s' đã có và sẽ bị ghi đè."
 
 #: ../vector/v.to.db/update.c:204
-#, c-format
+#, fuzzy, c-format
 msgid "Cat [%d]: row does not exist (not updated)"
-msgstr ""
+msgstr "Bản đồ raster [%s] không tồn tại"
 
 #: ../vector/v.to.db/main.c:33
 msgid "Populate database values from vector features."
@@ -20914,6 +20941,7 @@ msgid "Unable to fetch record"
 msgstr "Không thể gọi hàng"
 
 #: ../vector/v.to.db/parse.c:37
+#, fuzzy
 msgid ""
 "Type of elements (for coor valid point/centroid, for length valid line/"
 "boundary)"
@@ -21022,7 +21050,7 @@ msgstr "%d bản ghi được chèn"
 #: ../vector/v.to.db/report.c:186
 #, fuzzy, c-format
 msgid "%d update/insert errors"
-msgstr "%d lỗi cập nhật"
+msgstr "%d lỗi chèn"
 
 #: ../vector/v.to.db/report.c:188
 #, fuzzy, c-format
@@ -21123,6 +21151,7 @@ msgid "Unable to open history file for vector map <%s>"
 msgstr "Không thể mở con trỏ chọn: '%s'"
 
 #: ../vector/v.select/main.c:134
+#, fuzzy
 msgid "Select features from ainput by features from binput"
 msgstr "Chọn các đối tượng từ ainput theo các đối tượng từ binput"
 
@@ -21144,8 +21173,9 @@ msgid "Processing ainput lines ..."
 msgstr "Đang xử lý các đường ainput (đầu vào a)..."
 
 #: ../vector/v.select/main.c:302
+#, fuzzy
 msgid "Processing ainput areas ..."
-msgstr "Đang xử lý các vùng ainput (đầu vào a)..."
+msgstr "Đang xử lý các đường ainput (đầu vào a)..."
 
 #: ../vector/v.select/main.c:453
 msgid "Writing attributes ..."
@@ -21423,6 +21453,7 @@ msgid "Anisotropy angle (in degrees counterclockwise from East)"
 msgstr "Góc không đẳng hướng (độ, ngược chiều kim đồng hồ từ hướng Đông)"
 
 #: ../vector/v.surf.rst/main.c:402
+#, fuzzy
 msgid "You are not outputing any raster or vector maps"
 msgstr "Bạn không xuất ra bất kỳ tập tin raster hay vector nào"
 
@@ -21790,11 +21821,11 @@ msgid "Current region does not include the entire input vector map <%s>"
 msgstr "Không thể tìm thấy bản đồ vector đầu vào <%s>"
 
 #: ../vector/v.drape/main.c:162
-#, c-format
+#, fuzzy, c-format
 msgid ""
 "Elevation raster map <%s> does not cover the entire area of the input vector "
 "map <%s>. "
-msgstr ""
+msgstr "Không thể tìm thấy bản đồ vector đầu vào <%s>"
 
 #: ../vector/v.out.ogr/main.c:88
 #, fuzzy
@@ -22014,8 +22045,9 @@ msgid "Categories of points on terminals (layer is specified by nlayer)"
 msgstr ""
 
 #: ../vector/v.net.steiner/main.c:389
+#, fuzzy
 msgid "Number of steiner poins (-1 for all possible)"
-msgstr ""
+msgstr "(Các) tập tin vector chồng điểm"
 
 #: ../vector/v.net.steiner/main.c:453
 #, fuzzy
@@ -22744,8 +22776,9 @@ msgid "Do not copy table (see also 'new' parameter)"
 msgstr "Đừng sao chép bảng (xem thêm tham số 'new')"
 
 #: ../vector/v.extract/main.c:99
+#, fuzzy
 msgid "Types to be extracted "
-msgstr ""
+msgstr "Tập tin raster cần nhập"
 
 #: ../vector/v.extract/main.c:103
 #, fuzzy
@@ -23196,6 +23229,7 @@ msgid "Input parse error on line %d"
 msgstr ""
 
 #: ../imagery/i.ifft/orig_wind.c:27
+#, fuzzy
 msgid "The real and imaginary original windows did not match."
 msgstr "Các cửa sổ nguyên thủy của phần-thực và phần-ảo không khớp nhau."
 
@@ -23239,6 +23273,7 @@ msgid "%s: %s - Unable to find the real-image map."
 msgstr "%s: %s - Không thể tìm thấy bản đồ ảnh-thực."
 
 #: ../imagery/i.ifft/ifftmain.c:97
+#, fuzzy
 msgid ""
 "Unable to open real-image in the cell_misc directory.\n"
 "Input map probably wasn't created by i.fft"
@@ -23252,6 +23287,7 @@ msgid "%s: %s - Unable to find the imaginary-image."
 msgstr "%s: %s - Không thể tìm thấy ảnh-ảo."
 
 #: ../imagery/i.ifft/ifftmain.c:106
+#, fuzzy
 msgid ""
 "Unable to open imaginary-image in the cell_misc directory.\n"
 "Input map probably wasn't created by i.fft"
@@ -23275,6 +23311,7 @@ msgid "Reading the raster maps..."
 msgstr "Đang đọc các bản đồ raster..."
 
 #: ../imagery/i.ifft/ifftmain.c:146
+#, fuzzy
 msgid "Masking the raster maps..."
 msgstr "Đang tạo mặt nạ các bản đồ raster..."
 
@@ -23295,8 +23332,9 @@ msgid "Unable to open output file."
 msgstr "Không thể mở tập tin đầu ra."
 
 #: ../imagery/i.ifft/ifftmain.c:220
+#, fuzzy
 msgid "Writing data to file..."
-msgstr "Đang ghi dữ liệu vào tập tin..."
+msgstr "Đang ghi dữ liệu được chuyển đổi vào tập tin..."
 
 #: ../imagery/i.ifft/ifftmain.c:246 ../imagery/i.fft/fftmain.c:284
 msgid "Transform successful."
@@ -23509,16 +23547,17 @@ msgid "Output saturation raster map"
 msgstr "Bản đồ hệ thống thoát nước raster đầu ra"
 
 #: ../imagery/i.smap/bouman/segment.c:69
+#, fuzzy
 msgid "Number of classes must be < 256!"
 msgstr "Số nhóm phải < 256!"
 
 #: ../imagery/i.smap/bouman/segment.c:93
-#, c-format
+#, fuzzy, c-format
 msgid "Processing rows %d-%d (of %d), cols=%d-%d (of %d)"
 msgstr "Đang xử lý các hàng %d-%d (của %d), cột=%d-%d (của %d)"
 
 #: ../imagery/i.smap/bouman/model.c:38
-#, c-format
+#, fuzzy, c-format
 msgid ""
 "\n"
 "Nonsymetric covariance for class [%d] subclass [%d]."
@@ -23527,7 +23566,7 @@ msgstr ""
 "Hiệp phương sai bất đối xứng cho nhóm [%d] nhóm phụ [%d]."
 
 #: ../imagery/i.smap/bouman/model.c:48
-#, c-format
+#, fuzzy, c-format
 msgid "Nonpositive eigenvalues for class [%d] subclass [%d]."
 msgstr "Các giá trị eigen không dương cho nhóm [%d] nhóm phục [%d]."
 
@@ -23536,7 +23575,7 @@ msgid "pyramid constructed."
 msgstr "tháp được kiến trúc xong"
 
 #: ../imagery/i.smap/bouman/interp.c:103
-#, c-format
+#, fuzzy, c-format
 msgid ""
 "\n"
 "Resolution = %d; period = %d"
@@ -23554,6 +23593,7 @@ msgid "Transition probabilities: %f %f %f; %f"
 msgstr "Các khả năng chuyển dịch: %f %f %f; %f"
 
 #: ../imagery/i.smap/bouman/interp.c:239
+#, fuzzy
 msgid "interp: invalid parameter values."
 msgstr "interp (diễn giải): các giá trị tham số không hợp lệ."
 
@@ -23563,13 +23603,13 @@ msgstr "get_img: hết bộ nhớ."
 
 #: ../imagery/i.smap/shapiro/openfiles.c:15
 #: ../imagery/i.smap/shapiro/read_sig.c:13 ../imagery/i.gensig/openfiles.c:16
-#, c-format
+#, fuzzy, c-format
 msgid "Unable to read REF file for subgroup [%s] in group [%s]."
 msgstr "Không thể đọc tập tin REF của nhóm phụ [%s] trong nhóm [%s]."
 
 #: ../imagery/i.smap/shapiro/openfiles.c:19
 #: ../imagery/i.smap/shapiro/read_sig.c:17 ../imagery/i.gensig/openfiles.c:20
-#, c-format
+#, fuzzy, c-format
 msgid "Subgroup [%s] in group [%s] contains no files."
 msgstr "Nhóm phụ [%s] trong nhóm [%s] không có tập tin nào."
 
@@ -23601,7 +23641,7 @@ msgid "Use maximum likelihood estimation (instead of smap)"
 msgstr "Sử dụng phép ước lượng giống nhau tối đa (thay vì dùng SMAP)"
 
 #: ../imagery/i.smap/shapiro/parse.c:57
-#, c-format
+#, fuzzy, c-format
 msgid "Group [%s] not found."
 msgstr "Không tìm thấy nhóm [%s]"
 
@@ -23616,7 +23656,7 @@ msgid "Signature file [%s] is missing or not readable."
 msgstr "Tập tin chữ ký [%s] bị thiếu hoặc không đọc được"
 
 #: ../imagery/i.smap/shapiro/read_sig.c:27
-#, c-format
+#, fuzzy, c-format
 msgid "Signature file [%s] is invalid."
 msgstr "Tập tin chữ ký [%s] không hợp lệ."
 
@@ -23683,12 +23723,14 @@ msgid "Calculating eigenvalues and eigenvectors..."
 msgstr "Đang tính giá trị trung bình nhóm ..."
 
 #: ../imagery/i.pca/main.c:152
+#, fuzzy
 msgid "Ordering eigenvalues in descending order..."
-msgstr ""
+msgstr "Đang tính giá trị trung bình nhóm ..."
 
 #: ../imagery/i.pca/main.c:155
+#, fuzzy
 msgid "Transposing eigen matrix..."
-msgstr ""
+msgstr "Đang quét dữ liệu..."
 
 #: ../imagery/i.pca/main.c:206
 msgid "Scale range length should be > 0. Using default values: 0,255"
@@ -23707,7 +23749,7 @@ msgstr "Đang tính ma trận hiệp phương sai nhóm..."
 #: ../imagery/i.pca/main.c:372
 #, fuzzy
 msgid "Cannot allocate memory for raster row"
-msgstr "Không thể cấp phát bộ nhớ"
+msgstr "Không thể cấp phát bộ nhớ cho chuỗi "
 
 #: ../imagery/i.pca/main.c:400
 #, c-format
@@ -23953,6 +23995,7 @@ msgid "No zoom window is defined."
 msgstr "Không có cửa sổ phóng được định nghĩa"
 
 #: ../imagery/i.rectify/main.c:58
+#, fuzzy
 msgid ""
 "Rectifies an image by computing a coordinate transformation for each pixel "
 "in the image based on the control points"
@@ -23970,6 +24013,7 @@ msgid "Rectification polynom order (1-3)"
 msgstr "Bậc đa thức nắn chỉnh (1-3)"
 
 #: ../imagery/i.rectify/main.c:83
+#, fuzzy
 msgid ""
 "Use curr. region settings in target location (def.=calculate smallest area)"
 msgstr ""
@@ -24006,6 +24050,7 @@ msgid "Calculating class mean ..."
 msgstr "Đang tính giá trị trung bình nhóm ..."
 
 #: ../imagery/i.gensig/means.c:27
+#, fuzzy
 msgid "Calculating class means ..."
 msgstr "Đang tính các giá trị trung bình nhóm ..."
 
@@ -24050,21 +24095,24 @@ msgid "Subgroup <%s> not found"
 msgstr "không tìm thấy nhóm phụ <%s>"
 
 #: ../imagery/i.gensig/get_train.c:28
+#, fuzzy
 msgid "Finding training classes ..."
 msgstr "Đang tìm các nhóm hướng dẫn..."
 
 #: ../imagery/i.gensig/get_train.c:53
-#, c-format
+#, fuzzy, c-format
 msgid "Training class [%d] only has one cell - this class will be ignored."
 msgstr "Nhóm hướng dẫn [%d] chỉ có một ô - nhóm này sẽ bị bỏ qua."
 
 #: ../imagery/i.gensig/get_train.c:58
+#, fuzzy
 msgid "Training map has no classes."
 msgstr "Bản đồ hướng dẫn không có nhóm nào."
 
 #: ../imagery/i.gensig/get_train.c:73
+#, fuzzy
 msgid "1 class."
-msgstr "1 nhóm"
+msgstr "%d nhóm."
 
 #: ../imagery/i.gensig/get_train.c:75
 #, c-format
@@ -24072,21 +24120,22 @@ msgid "%d classes."
 msgstr "%d nhóm."
 
 #: ../imagery/i.gensig/check.c:21
-#, c-format
+#, fuzzy, c-format
 msgid "Signature [%d] not invertible."
 msgstr "Chữ ký [%d] không thể đảo ngược"
 
 #: ../imagery/i.gensig/check.c:27
-#, c-format
+#, fuzzy, c-format
 msgid "Signature [%d] can't get eigen values."
 msgstr "Chữ ký [%d] không thể lấy các giá trị eigen."
 
 #: ../imagery/i.gensig/check.c:33
-#, c-format
+#, fuzzy, c-format
 msgid "Signature [%d] not positive definite."
 msgstr "Chữ ký [%d] không được xác định dương."
 
 #: ../imagery/i.gensig/main.c:41
+#, fuzzy
 msgid "Generates statistics for i.maxlik from raster map layer."
 msgstr "Tạo thống kê cho i.maxlik  từ lớp bản đồ raster"
 
@@ -24096,7 +24145,7 @@ msgid "Unable to create signature file [%s] for subgroup [%s] in group [%s]."
 msgstr "Không thể tạo tập tin chữ ký [%s] cho nhóm phụ [%s] trong nhóm [%s]."
 
 #: ../imagery/i.gensig/write_sig.c:19
-#, c-format
+#, fuzzy, c-format
 msgid "Writing signature file [%s] ..."
 msgstr "Đang ghi tập tin chữ ký [%s]..."
 
@@ -24222,6 +24271,7 @@ msgid "Illegal file name for imaginary part: %s"
 msgstr "%s: %s - tên tập tin cho phần-ảo không hợp lệ\n"
 
 #: ../imagery/i.fft/fftmain.c:142
+#, fuzzy
 msgid "Range less than or equal to zero not allowed."
 msgstr "Khoảng giá trị =<0 không được chấp nhận."
 
@@ -24246,12 +24296,14 @@ msgid "Rotating data..."
 msgstr "Đang xoay dữ liệu..."
 
 #: ../imagery/i.fft/fftmain.c:243
+#, fuzzy
 msgid "Writing viewable versions of transformed data to files..."
 msgstr ""
 "Đang ghi các phiên bản có thể xem được của dữ liệu được chuyển đổi vào các "
 "tập tin..."
 
 #: ../imagery/i.fft/save_fft.c:17 ../imagery/i.fft/save_fft.c:22
+#, fuzzy
 msgid "Unable to open file in the cell_misc directory."
 msgstr "Không thể mở tập tin trong thư mục cell_misc."
 
@@ -24284,7 +24336,7 @@ msgid "%d classes, %.2f%% points stable\n"
 msgstr "%d nhóm, %.2f%% điểm ổn định\n"
 
 #: ../imagery/i.cluster/checkpt.c:40
-#, c-format
+#, fuzzy, c-format
 msgid "Iteration %d: %% Convergence: %.2f (%s elapsed, %s left)"
 msgstr "Lần lặp %d: %% Hội tụ: %.2f (%s đã chạy, %s còn lại)"
 
@@ -24371,7 +24423,7 @@ msgstr ""
 "\n"
 
 #: ../imagery/i.cluster/open_files.c:17
-#, c-format
+#, fuzzy, c-format
 msgid ""
 "\n"
 " group <%s> not found"
@@ -24390,12 +24442,12 @@ msgid "Raster map <%s> do not exists in subgroup <%s>"
 msgstr "Bản đồ raster [%s] đã có trong nhóm"
 
 #: ../imagery/i.cluster/open_files.c:40
-#, c-format
+#, fuzzy, c-format
 msgid "Subgroup [%s] doesn't have any files"
-msgstr "Nhóm phụ [%s] không có tập tin nào"
+msgstr "Nhóm phụ [%s] không có tập tin nào."
 
 #: ../imagery/i.cluster/open_files.c:43
-#, c-format
+#, fuzzy, c-format
 msgid "The subgroup must have at least 2 files to run %s"
 msgstr "Nhóm phụ phải có tối thiểu 2 tập tin để chạy %s"
 
@@ -24414,7 +24466,7 @@ msgid "** Can't read signature file <%s> **"
 msgstr "** Không thể đọc tập tin chữ ký <%s> **"
 
 #: ../imagery/i.cluster/open_files.c:71
-#, c-format
+#, fuzzy, c-format
 msgid "** <%s> has too many signatures (limit is 255)"
 msgstr "** <%s> có quá nhiều chữ ký (giới hạn là 255)"
 
@@ -24483,7 +24535,7 @@ msgid "Output file to contain final report"
 msgstr "Tên của tập tin đầu ra chứa báo cáo sau cùng"
 
 #: ../imagery/i.cluster/main.c:178
-#, c-format
+#, fuzzy, c-format
 msgid ""
 "\n"
 "<%s> -- illegal number of initial classes"
@@ -24492,7 +24544,7 @@ msgstr ""
 "<%s> -- số nhóm khởi tạo không hợp lệ"
 
 #: ../imagery/i.cluster/main.c:191
-#, c-format
+#, fuzzy, c-format
 msgid ""
 "\n"
 "<%s> -- illegal value(s) of sample intervals"
@@ -24501,7 +24553,7 @@ msgstr ""
 "<%s> -- (các) giá trị của các khoảng thu mẫu không hợp lệ"
 
 #: ../imagery/i.cluster/main.c:207
-#, c-format
+#, fuzzy, c-format
 msgid ""
 "\n"
 "<%s> -- illegal value of iterations"
@@ -24510,7 +24562,7 @@ msgstr ""
 "<%s> -- giá trị lần lặp không hợp lệ"
 
 #: ../imagery/i.cluster/main.c:215
-#, c-format
+#, fuzzy, c-format
 msgid ""
 "\n"
 "<%s> -- illegal value of convergence"
@@ -24519,7 +24571,7 @@ msgstr ""
 "<%s> -- giá trị hội tụ không hợp lệ"
 
 #: ../imagery/i.cluster/main.c:222
-#, c-format
+#, fuzzy, c-format
 msgid ""
 "\n"
 "<%s> -- illegal value of separation"
@@ -24528,7 +24580,7 @@ msgstr ""
 "<%s> -- giá trị tách không hợp lệ"
 
 #: ../imagery/i.cluster/main.c:229
-#, c-format
+#, fuzzy, c-format
 msgid ""
 "\n"
 "<%s> -- illegal value of min_size"
@@ -24659,6 +24711,7 @@ msgid "Reading image ... "
 msgstr "Đang đọc ảnh..."
 
 #: ../imagery/i.cluster/main.c:307
+#, fuzzy
 msgid "Out of Memory. Please run again and choose a smaller sample size"
 msgstr "Hết bộ nhớ. Vui lòng chạy lại và chọn kích thước mẫu nhỏ hơn"
 
@@ -24668,11 +24721,13 @@ msgid "Sample size: %d points\n"
 msgstr "K.thước mẫu: %d điểm\n"
 
 #: ../imagery/i.cluster/main.c:315
+#, fuzzy
 msgid ""
 "Not enough sample points. Please run again and choose a larger sample size"
 msgstr "Không đủ điểm mẫu. Vui lòng chạy lại và chọn k.thước mẫu lớn hơn"
 
 #: ../imagery/i.cluster/main.c:319
+#, fuzzy
 msgid ""
 "Not enough non-zero sample data points. Check your current region (and mask)"
 msgstr ""
@@ -24694,7 +24749,7 @@ msgid "%d classes (convergence=%.1f%%)\n"
 msgstr "%d nhóm (hội tụ=%.1f%%)\n"
 
 #: ../imagery/i.cluster/main.c:344
-#, c-format
+#, fuzzy, c-format
 msgid "Could not write signature file <%s> for group <%s>, subsgroup <%s>"
 msgstr "Không thể ghi tập tin chữ ký <%s> cho nhóm <%s>, nhóm phụ <%s>"
 
@@ -24733,10 +24788,12 @@ msgid "Creates control points on an image to be ortho-rectified."
 msgstr "Tạo các điểm khống chế trên một ảnh cần nắn chỉnh thẳng."
 
 #: ../imagery/i.ortho.photo/photo.2target/main.c:59
+#, fuzzy
 msgid "Name of image to be rectified which will  be initialy drawn on screen."
 msgstr "Tên của ảnh cần nắn chỉnh sẽ được khởi tạo vẽ trên màn hình."
 
 #: ../imagery/i.ortho.photo/photo.2target/main.c:65
+#, fuzzy
 msgid ""
 "Name of a map from target mapset which  will be initialy drawn on screen."
 msgstr ""
@@ -24789,7 +24846,7 @@ msgid "subgroup=[%s] (of group [%s]) - not found."
 msgstr "nhóm phụ=[%s] (của nhóm [%s]) - không tìm thấy"
 
 #: ../imagery/i.maxlik/open.c:26
-#, c-format
+#, fuzzy, c-format
 msgid ""
 "Subgroup [%s] of group [%s] doesn't have any files.\n"
 "The subgroup must have at least 2 files."
@@ -24798,7 +24855,7 @@ msgstr ""
 "Nhóm phụ phải có ít nhất 2 tập tin."
 
 #: ../imagery/i.maxlik/open.c:29
-#, c-format
+#, fuzzy, c-format
 msgid ""
 "Subgroup [%s] of group [%s] only has 1 file.\n"
 "The subgroup must have at least 2 files."
@@ -24851,16 +24908,17 @@ msgid "Raster map to hold classification results"
 msgstr "Bản đồ raster để lưu các kết quả phân loại"
 
 #: ../imagery/i.maxlik/main.c:85
+#, fuzzy
 msgid "Raster map to hold reject threshold results"
 msgstr "Bản đồ raster để lưu các kết quả ngưỡng bị loại"
 
 #: ../imagery/i.maxlik/invert.c:28
-#, c-format
+#, fuzzy, c-format
 msgid "signature %d is not valid (ill-conditioned) - ignored."
 msgstr "chữ ký %d không hợp lệ (đặt đ.kiện kém) - bỏ qua."
 
 #: ../imagery/i.maxlik/invert.c:31
-#, c-format
+#, fuzzy, c-format
 msgid "signature %d is not valid (singular) - ignored."
 msgstr "chữ ký %d không hợp lệ (số ít) - bỏ qua."
 
@@ -25138,6 +25196,7 @@ msgid "Execute script file at startup"
 msgstr "Thực thi tập tin tập lệnh lúc khởi động"
 
 #: ../visualization/nviz/src/nviz_init.c:130
+#, fuzzy
 msgid "Load previosly saved state file"
 msgstr "Nạp tập tin trạng thái đã lưu trước đó"
 
@@ -26768,14 +26827,17 @@ msgstr ""
 "Khung bao của bản đồ nằm ngoài vùng hiện tại, không có gì được trình bày.\n"
 
 #: ../display/d.vect/main.c:679
+#, fuzzy
 msgid "Cannot display areas, topology not available"
 msgstr "Không thể trình bày các vùng, tôpô không dùng được"
 
 #: ../display/d.vect/main.c:684
+#, fuzzy
 msgid "Cannot display lines by id, topology not available"
 msgstr "Không thể trình bày các đường theo id, tôpô không dùng được"
 
 #: ../display/d.vect/main.c:726
+#, fuzzy
 msgid "Cannot display topology, not available"
 msgstr "Không thể trình bày tôpô, không khả dụng"
 
@@ -27591,6 +27653,7 @@ msgid "%d raster%s, %d vector%s\n"
 msgstr "%d raster%s, %d vector%s\n"
 
 #: ../display/d.zoom/main.c:307
+#, fuzzy
 msgid "No previous zoom availible"
 msgstr "Vùng phóng trước đó không có"
 
@@ -29526,6 +29589,7 @@ msgstr ""
 #~ msgid "Cell area: %f"
 #~ msgstr "diện tích ô: %f"
 
+#, fuzzy
 #~ msgid "Error writing result map file!"
 #~ msgstr "Lỗi khi đang ghi tập tin bản đồ kết quả!"
 
@@ -29570,6 +29634,7 @@ msgstr ""
 #~ "Bắt đầu làm đầy hồ ở mức %8.4f theo %d bước. \n"
 #~ "Phần trăm hoàn tất:"
 
+#, fuzzy
 #~ msgid "Pass: %d\n"
 #~ msgstr "Số lần chạy qua: %d\n"
 
@@ -29664,6 +29729,7 @@ msgstr ""
 #~ msgid "Create 3D file"
 #~ msgstr "Tạo tập tin 3D"
 
+#, fuzzy
 #~ msgid "imagery group"
 #~ msgstr "nhóm ảnh"
 
@@ -29673,8 +29739,9 @@ msgstr ""
 #~ msgid "output raster map"
 #~ msgstr "Bản đồ raster đầu ra"
 
+#, fuzzy
 #~ msgid "Name of input raster map(s)"
-#~ msgstr "Tên của (các) bản đồ raster đầu vào"
+#~ msgstr "Tên bản đồ raster đầu vào"
 
 #~ msgid "Output file extension (inputfile(s) + extension)"
 #~ msgstr "Đuôi mở rộng của tập tin đầu ra (tập_tin_đầu_vào + đuôi_mở_rộng)"
@@ -29729,8 +29796,9 @@ msgstr ""
 #~ msgid "Removing files from group"
 #~ msgstr "Loại bỏ các tập tin ra khỏi nhóm ảnh"
 
+#, fuzzy
 #~ msgid "Adding files to group [%s]"
-#~ msgstr "Thêm các tập tin vào nhóm [%s]"
+#~ msgstr "Thêm các tập tin vào nhóm ]phụ [%s]"
 
 #~ msgid "Adding files to subgroup [%s]"
 #~ msgstr "Thêm các tập tin vào nhóm ]phụ [%s]"
@@ -29747,8 +29815,9 @@ msgstr ""
 #~ msgid "Found file <%s@%s> in group."
 #~ msgstr "Tìm thấy tập tin <%s@%s> trong nhóm."
 
+#, fuzzy
 #~ msgid "Found file <%s@%s> in subgroup."
-#~ msgstr "Tìm thấy tập tin <%s@%s> trong nhóm phụ."
+#~ msgstr "Tìm thấy tập tin <%s@%s> trong nhóm."
 
 #, fuzzy
 #~ msgid "Unable to open file: <%s>"
@@ -29803,7 +29872,7 @@ msgstr ""
 
 #, fuzzy
 #~ msgid "Unable to connect line id %d to line %d"
-#~ msgstr "Không hiển thị số lượng phạm trù"
+#~ msgstr "Không thể chọn dữ liệu từ bảng"
 
 #, fuzzy
 #~ msgid "Unable to get category list <%s>, editing terminated"
@@ -29905,6 +29974,7 @@ msgstr ""
 #~ msgid "%s: <%s> raster map exists already"
 #~ msgstr "%s: tập tin raster <%s> đã tồn tại"
 
+#, fuzzy
 #~ msgid "creating support files for %s"
 #~ msgstr "đang tạo các tập tin hỗ trợ cho %s"
 
@@ -29915,6 +29985,7 @@ msgstr ""
 #~ msgid "%s - map not found"
 #~ msgstr "%s - không tìm thấy bản đồ"
 
+#, fuzzy
 #~ msgid "%s: Cannot open [%s]"
 #~ msgstr "%s: Không thể mở [%s]"
 
@@ -29958,6 +30029,7 @@ msgstr ""
 #~ msgid "can't read header for <%s> in <%s>"
 #~ msgstr "Không thể đọc header cho <%s> trong <%s>"
 
+#, fuzzy
 #~ msgid "region <%s> not found"
 #~ msgstr "Không tìm thấy vùng <%s>"
 
@@ -29970,8 +30042,9 @@ msgstr ""
 #~ msgid "can't read 3dview file <%s> in <%s>"
 #~ msgstr "không thể đọc tập tin 3dview <%s> trong <%s>"
 
+#, fuzzy
 #~ msgid "can't open vector map <%s> in <%s>"
-#~ msgstr "Không thể mở tập tin vector <%s> trong <%s>"
+#~ msgstr "Không thể mở bản đồ vector [%s]"
 
 #~ msgid "invalid region: %s"
 #~ msgstr "vùng không hợp lệ: %s"
@@ -30016,8 +30089,9 @@ msgstr ""
 #~ msgid "[%s] map not found"
 #~ msgstr "không tìm thấy bản đồ [%s]"
 
+#, fuzzy
 #~ msgid "elevation file [%s] not found"
-#~ msgstr "Không tìm thấy tập tin độ cao [%s]"
+#~ msgstr "không tìm thấy tập tin cell [%s]"
 
 #~ msgid "min computed aspect %.4f  max computed aspect %.4f"
 #~ msgstr "hướng tối thiểu tính được %.4f   hướng tối đa tính được %.4f"
@@ -30462,8 +30536,9 @@ msgstr ""
 #~ msgid "Output map where segments will be written"
 #~ msgstr "Bản đồ đầu ra chứa các điểm sẽ được ghi"
 
+#, fuzzy
 #~ msgid "Cannot get layer information for vector map"
-#~ msgstr "Không thể lấy thông tin lớp từ bản đồ vector"
+#~ msgstr "Không thể lấy thông tin lớp của bản đồ vector"
 
 #~ msgid "<%s> cellfile not found"
 #~ msgstr "không tìm thấy tập tin cell <%s>"
@@ -30727,6 +30802,7 @@ msgstr ""
 #~ msgid "Cannot start driver <%s>."
 #~ msgstr "Không thể khởi động trình đ.khiển '%s'."
 
+#, fuzzy
 #~ msgid "[%s] is an illegal name"
 #~ msgstr "[%s] là tên không hợp lệ"
 
@@ -30801,11 +30877,13 @@ msgstr ""
 #~ msgid "CREATING SUPPORT FILES ..."
 #~ msgstr "ĐANG TẠO CÁC TẬP TIN HỖ TRỢ ..."
 
+#, fuzzy
 #~ msgid "%s - illegal name"
 #~ msgstr "%s - tên không hợp lệ"
 
+#, fuzzy
 #~ msgid "Error reading map %s"
-#~ msgstr "Lỗi khi đang đọc bản đồ %s"
+#~ msgstr "Lỗi khi đang đọc tập tin raster [%s]"
 
 #~ msgid "<%s> is not a valid GRASS map name"
 #~ msgstr "<%s> không phải là một tên bản đồ GRASS hợp lệ"
@@ -30869,6 +30947,7 @@ msgstr ""
 #~ "Đổi một tập tin raster GRASS thành một tập tin ảnh PPM với độ phân giải "
 #~ "điểm ảnh của VÙNG ĐƯỢC ĐỊNH NGHĨA HIỆN TẠI."
 
+#, fuzzy
 #~ msgid "Raster input map"
 #~ msgstr "Bản đồ raster đầu vào"
 
@@ -30879,10 +30958,11 @@ msgstr ""
 #~ msgid "Checking location %s, mapset %s:"
 #~ msgstr "Đang kiểm tra location %s, bộ bản đồ %s\n"
 
+#, fuzzy
 #~ msgid "Input map [%s] in location [%s] in mapset [%s] not found."
 #~ msgstr ""
-#~ "Không tìm thấy bản đồ đầu vào [%s] trong location [%s] trong bộ bản đồ [%"
-#~ "s]."
+#~ "Tập tin vector [%s] trong location [%s] trong bộ bản đồ [%s] không khả "
+#~ "dụng"
 
 #~ msgid "Can't work with xy data"
 #~ msgstr "Không thể làm việc với dữ liệu xy"
@@ -30919,8 +30999,13 @@ msgstr ""
 #~ msgid "Couldn't find raster map [%s]"
 #~ msgstr "Không thể tìm thấy tập tin raster %s"
 
+#, fuzzy
 #~ msgid "%s in %s -can't open raster map"
-#~ msgstr "%s trong %s - không thể mở tập tin raster."
+#~ msgstr ""
+#~ "#-#-#-#-#  grassmods_vi.po (grassmods_vi)  #-#-#-#-#\n"
+#~ "%s - không thể mở bản đồ raster\n"
+#~ "#-#-#-#-#  grassmods_vi.po (grassmods_vi)  #-#-#-#-#\n"
+#~ "%s - không thể mở tập tin raster"
 
 #~ msgid "%s - can't create raster map"
 #~ msgstr "%s  - Không thể tạo tập tin cell."
@@ -31140,7 +31225,7 @@ msgstr ""
 
 #, fuzzy
 #~ msgid "name for new vector map"
-#~ msgstr "tên của tập tin vector nhị phân mới"
+#~ msgstr "Tên của tập tin raster mới"
 
 #~ msgid "name for new vector map (omit for display to stdout)"
 #~ msgstr "Tên của tập tin vector mới (bỏ qua để trình bày tại stdout)"
@@ -31212,8 +31297,9 @@ msgstr ""
 #~ msgid "string representing no data cell value"
 #~ msgstr "Chuỗi biểu thị cho những ô không có giá trị"
 
+#, fuzzy
 #~ msgid "File name of classification result"
-#~ msgstr "Tên tập tin kết quả phân loại"
+#~ msgstr "Bản đồ raster để lưu các kết quả phân loại"
 
 #~ msgid "File name of reference classes"
 #~ msgstr "Tên tập tin của các nhóm tham chiếu"
@@ -31234,8 +31320,9 @@ msgstr ""
 #~ msgid "Base raster map"
 #~ msgstr "Bản đồ raster nền"
 
+#, fuzzy
 #~ msgid "Cover raster map"
-#~ msgstr "Bản đồ raster lớp phủ"
+#~ msgstr "Bản đồ lớp phủ"
 
 #~ msgid "Resultant raster map"
 #~ msgstr "Bản đồ raster tạo thành"
@@ -31883,9 +31970,7 @@ msgstr ""
 
 #, fuzzy
 #~ msgid "No features found"
-#~ msgstr ""
-#~ "\n"
-#~ "Không tìm thấy các lớp DXF!\n"
+#~ msgstr "%d điểm được ghi vào dữ liệu vector"
 
 #~ msgid "Could not open ascii file [%s]"
 #~ msgstr "Không thể mở tập tin ascii [%s]"
@@ -32394,3 +32479,1556 @@ msgstr ""
 
 #~ msgid "Maximum distance"
 #~ msgstr "Khoảng cách tối đa"
+
+#, fuzzy
+#~ msgid "Format"
+#~ msgstr "Định dạng OGR."
+
+#, fuzzy
+#~ msgid "Unable to open database: "
+#~ msgstr "Không thể mở bản đồ raster <%s>"
+
+#, fuzzy
+#~ msgid "Name of raster map to generate legend from"
+#~ msgstr "Tên của bản đồ raster cần dùng cho <%s>"
+
+#, fuzzy
+#~ msgid "Name of raster map to print in legend"
+#~ msgstr "Tên của bản đồ hướng raster cần trình bày"
+
+#, fuzzy
+#~ msgid "Split the display into subframes."
+#~ msgstr "Nhập bản đồ cần trình bày ở khung thứ nhất"
+
+#, fuzzy
+#~ msgid "Number of subframes"
+#~ msgstr "Số khung ảnh"
+
+#, fuzzy
+#~ msgid "display, vector, thematic, legend"
+#~ msgstr "trình bày, chú giải"
+
+#, fuzzy
+#~ msgid "Break points for custom breaks option"
+#~ msgstr ""
+#~ "Các điểm ngắt dùng cho tùy chọn ngắt tùy ý. Tách các giá trị ra bằng "
+#~ "khoảng trắng (0 10 20 30 ...)"
+
+#, fuzzy
+#~ msgid "Icon size for point data"
+#~ msgstr "Biểu tượng điểm vector dùng cho dữ liệu điểm"
+
+#, fuzzy
+#~ msgid "Minimum icon size/line width for graduated points/lines)"
+#~ msgstr ""
+#~ "Kích thước biểu tượng/chiều dày đường tối đa đối với các điểm/đường được "
+#~ "phân cấp)"
+
+#, fuzzy
+#~ msgid "Color for graduated points map"
+#~ msgstr "Màu cho chữ"
+
+#, fuzzy
+#~ msgid "GRASS named color or R:G:B triplet. Set color scheme to single color"
+#~ msgstr ""
+#~ "Màu dùng cho bản đồ điểm được phân cấp (màu gọi tên theo chuẩn của GRASS "
+#~ "hoặc kiểu bộ ba R:G:B). Thiết lập chế độ màu thành một màu duy nhất"
+
+#, fuzzy
+#~ msgid ""
+#~ "GRASS named color or R:G:B triplet. Set color scheme to single color."
+#~ msgstr ""
+#~ "Màu dùng cho bản đồ điểm được phân cấp (màu gọi tên theo chuẩn của GRASS "
+#~ "hoặc kiểu bộ ba R:G:B). Thiết lập chế độ màu thành một màu duy nhất"
+
+#, fuzzy
+#~ msgid "Must be expressed as R:G:B triplet"
+#~ msgstr ""
+#~ "Màu kết thúc dùng cho gradient màu tùy chọn. Phải được biểu diễn ở dạng "
+#~ "Bộ ba R:G:B)"
+
+#, fuzzy
+#~ msgid "imagery, fusion, Brovey"
+#~ msgstr "raster, ảnh, nhập dữ liệu"
+
+#, fuzzy
+#~ msgid "LANDSAT sensor"
+#~ msgstr "Kênh đỏ LANDSAT"
+
+#, fuzzy
+#~ msgid "Color using standard deviation bands"
+#~ msgstr ""
+#~ "các trị tr.bình và độ lệch chuẩn cho %d băng%s\n"
+#~ "\n"
+
+#, fuzzy
+#~ msgid "vector, color table"
+#~ msgstr "raster, xuất dữ liệu."
+
+#, fuzzy
+#~ msgid "Name of column containg numeric data"
+#~ msgstr "Tên của cột chứa thuộc tính w để nội suy"
+
+#, fuzzy
+#~ msgid "Layer number of data column"
+#~ msgstr "Lớp cần thêm cột vào"
+
+#, fuzzy
+#~ msgid "Name of color column to populate"
+#~ msgstr "Tên của cột cần trình bày"
+
+#, fuzzy
+#~ msgid "Manually set range (min,max)"
+#~ msgstr "Miền số nguyên: min,max"
+
+#, fuzzy
+#~ msgid "Name of old database"
+#~ msgstr "Tên của CSDL mới"
+
+#, fuzzy
+#~ msgid "vector, export, GPS"
+#~ msgstr "vector, nhập dữ liệu, GPS"
+
+#, fuzzy
+#~ msgid "Export as waypoints"
+#~ msgstr "Đang trích các điểm..."
+
+#, fuzzy
+#~ msgid "Export as routes"
+#~ msgstr "Nhập"
+
+#, fuzzy
+#~ msgid "Export as tracks"
+#~ msgstr "Nhập"
+
+#, fuzzy
+#~ msgid "Feature type(s)"
+#~ msgstr "Kiểu đối tượng"
+
+#, fuzzy
+#~ msgid "Name for output file or GPS device"
+#~ msgstr "Tên cho tập tin đầu ra"
+
+#, fuzzy
+#~ msgid "GpsBabel supported output format"
+#~ msgstr "Liệt kê các định dạng đầu ra được hỗ trợ"
+
+#, fuzzy
+#~ msgid "Unable to allocate data buffer. Check current region with g.region."
+#~ msgstr "Không thể cấp phát bộ nhớ cho chuỗi "
+
+#, fuzzy
+#~ msgid "raster, DEM, fractal"
+#~ msgstr "raster, xuất dữ liệu."
+
+#, fuzzy
+#~ msgid "Raster map <%s> created."
+#~ msgstr "Raster <%s> đã có."
+
+#, fuzzy
+#~ msgid "raster, null data"
+#~ msgstr "vector, nhập"
+
+#, fuzzy
+#~ msgid "Manages NULL-values of given raster map."
+#~ msgstr "Tên bản đồ raster đầu vào"
+
+#, fuzzy
+#~ msgid "Raster map <%s> is not in your mapset <%s>"
+#~ msgstr "Không tìm thấy bản đồ vector <%s>"
+
+#, fuzzy
+#~ msgid "%s is illegal entry for null"
+#~ msgstr "giá trị cho null không hợp lệ"
+
+#, fuzzy
+#~ msgid "Raster map <%s> already has a null bitmap file"
+#~ msgstr "Vector '%s' đã có và sẽ bị ghi đè."
+
+#, fuzzy
+#~ msgid "<%s> is integer raster map (CELL)"
+#~ msgstr "%s trong %s - không thể mở tập tin raster."
+
+#, fuzzy
+#~ msgid "<%s> is floating pointing raster map"
+#~ msgstr "Tập tin raster chứa các điểm bắt đầu"
+
+#, fuzzy
+#~ msgid "Writing new null file for raster map <%s>..."
+#~ msgstr "Ghi đang ghi tập tin null cho [%s]... "
+
+#, fuzzy
+#~ msgid "Error writing null row %d"
+#~ msgstr "Lỗi khi đang ghi null hàng thứ [%d]."
+
+#, fuzzy
+#~ msgid "Raster map <%s> modified."
+#~ msgstr "Không tìm thấy bản đồ raster <%s>"
+
+#, fuzzy
+#~ msgid "Removing null file for raster map <%s>..."
+#~ msgstr "Đang loại bỏ tập tin null cho [%s]...\n"
+
+#, fuzzy
+#~ msgid "%s: %s: illegal value spec"
+#~ msgstr "%s=%s - giá trị không hợp lệ"
+
+#, fuzzy
+#~ msgid "Writing new data for raster map <%s>..."
+#~ msgstr "Đang ghi bản đồ raster %i\n"
+
+#, fuzzy
+#~ msgid "Do not export long colortable"
+#~ msgstr "Giữ bảng màu hiện có"
+
+#, fuzzy
+#~ msgid "Creation option(s) to pass to the output format driver"
+#~ msgstr ""
+#~ "tùy chọn tạo đối với trình điều khiển định dạng đầu ra. Nhiều tùy chọn có "
+#~ "thể được liệt kê cùng lúc"
+
+#, fuzzy
+#~ msgid "Bad number of bytes per cell"
+#~ msgstr "        Số byte/ô"
+
+#, fuzzy
+#~ msgid "Illegal south coordinate <%s>"
+#~ msgstr "Tọa độ bắc không hợp lệ <%s>"
+
+#, fuzzy
+#~ msgid "Illegal west coordinate <%s>"
+#~ msgstr "Tọa độ đông không hợp lệ <%s>"
+
+#, fuzzy
+#~ msgid "Illegal number of rows <%s>"
+#~ msgstr "Cảnh báo: tên nhóm phụ không hợp lệ <%s>."
+
+#, fuzzy
+#~ msgid "Illegal number of columns <%s>"
+#~ msgstr "Số lần lặp lớn nhất: %d\n"
+
+#, fuzzy
+#~ msgid "End coordinate: %.15g, %.15g"
+#~ msgstr "Các tọa độ không hợp lệ %s %s"
+
+#, fuzzy
+#~ msgid "You are not outputting any raster maps"
+#~ msgstr "Bạn không xuất ra bất kỳ tập tin raster hay vector nào"
+
+#, fuzzy
+#~ msgid "raster, interpolation"
+#~ msgstr "vector, nội suy"
+
+#, fuzzy
+#~ msgid "Illegal value for '%s' (%s)"
+#~ msgstr "giá trị cho null không hợp lệ"
+
+#, fuzzy
+#~ msgid "Interpolating raster map <%s> (%d rows)... "
+#~ msgstr "Đang nội suy bản đồ raster <%s> ... %d hàng ... "
+
+#, fuzzy
+#~ msgid ""
+#~ "mi;miles;me;meters;k;kilometers;a;acres;h;hectares;c;cell counts;p;"
+#~ "percent cover"
+#~ msgstr ""
+#~ "mi(les),me(ters),k(ilometers),a(cres),h(ectares),c(ell_counts),p"
+#~ "(ercent_cover)"
+
+#, fuzzy
+#~ msgid "Path to rules file (\"-\" to read rules from stdin)"
+#~ msgstr "Tập tin tọa độ đầu vào (bỏ qua để đọc từ stdin)"
+
+#, fuzzy
+#~ msgid "No raster map specified"
+#~ msgstr "Bản đồ dữ liệu không được chỉ định"
+
+#, fuzzy
+#~ msgid "-g and -a flags are mutually exclusive"
+#~ msgstr "Các cờ -B và -C loại bỏ nhau. Chỉ chọn một mà thôi."
+
+#, fuzzy
+#~ msgid "Unable to remove color table of raster map <%s>"
+#~ msgstr "Không thể tạo bản đồ raster <%s>"
+
+#, fuzzy
+#~ msgid "Color table of raster map <%s> not found"
+#~ msgstr "Không tìm thấy tập tin cell albedo <%s> (hệ số albedo đầu vào)"
+
+#, fuzzy
+#~ msgid "Color table 'random' is not supported for floating point raster map"
+#~ msgstr "Không thể tạo bảng màu ngẫu nhiên cho bản đồ kiểu dấu chấm động"
+
+#, fuzzy
+#~ msgid "Color table 'grey.eq' is not supported for floating point raster map"
+#~ msgstr ""
+#~ "Không thể làm bảng màu grey.eq (thang màu xám) cho bản đồ kiểu dấu chấm "
+#~ "động."
+
+#, fuzzy
+#~ msgid ""
+#~ "Color table 'grey.log' is not supported for floating point raster map"
+#~ msgstr ""
+#~ "Không thể làm bảng màu grey.eq (thang màu xám) cho bản đồ kiểu dấu chấm "
+#~ "động."
+
+#, fuzzy
+#~ msgid "Unknown color request '%s'"
+#~ msgstr "%s - yêu cầu màu không biết"
+
+#, fuzzy
+#~ msgid "Unable to read color table for raster map <%s>"
+#~ msgstr "Không thể tạo bản đồ raster <%s>"
+
+#, fuzzy
+#~ msgid "Name for output raster map(s)"
+#~ msgstr "Tên của bản đồ raster đầu ra"
+
+#, fuzzy
+#~ msgid "Maximum distance of spatial correlation (value >= 0.0)"
+#~ msgstr "khoảng cách lớn nhất từ điểm đến mạng lưới"
+
+#, fuzzy
+#~ msgid "Maximum cell value of distribution"
+#~ msgstr "Số lần chạy lặp tối đa"
+
+#, fuzzy
+#~ msgid "High (%d) must be greater than 1"
+#~ msgstr "%s = %s -- phải lớn hơn 0"
+
+#, fuzzy
+#~ msgid "Output raster map required"
+#~ msgstr "Tiêu đề của tập tin raster đầu ra"
+
+#, fuzzy
+#~ msgid "<%s> is an ilegal name"
+#~ msgstr "[%s] là tên không hợp lệ"
+
+#, fuzzy
+#~ msgid "raster, random, surface"
+#~ msgstr "Tập tin raster dùng cho bề mặt"
+
+#, fuzzy
+#~ msgid "Generating raster map <%s>..."
+#~ msgstr ""
+#~ "\n"
+#~ "Đang ghi tập tin raster... "
+
+#, fuzzy
+#~ msgid "Neighborhood"
+#~ msgstr "Kích thước vùng lân cận"
+
+#, fuzzy
+#~ msgid "Unable to read raster map row %d "
+#~ msgstr "Không thể tạo bản đồ raster <%s>"
+
+#, fuzzy
+#~ msgid "Failed writing raster map row %d"
+#~ msgstr ""
+#~ "\n"
+#~ "Đang ghi tập tin raster... "
+
+#, fuzzy
+#~ msgid "raster, statistics, reclass"
+#~ msgstr "raster, thống kê"
+
+#, fuzzy
+#~ msgid "Maximum distance of spatial correlation (value(s) >= 0.0)"
+#~ msgstr "khoảng cách lớn nhất từ điểm đến mạng lưới"
+
+#, fuzzy
+#~ msgid "Distance must be >= 0.0"
+#~ msgstr "'layer' phải > 0 đối với 'cats'."
+
+#, fuzzy
+#~ msgid "raster, random, cell"
+#~ msgstr "raster, xuất dữ liệu."
+
+#, fuzzy
+#~ msgid "Name of input file; or \"-\" to read from stdin"
+#~ msgstr "Tập tin ASCII chứa dữ liệu đầu vào"
+
+#, fuzzy
+#~ msgid "Writing vector contours (total levels %d)..."
+#~ msgstr "Đang ghi bản đồ..."
+
+#, fuzzy
+#~ msgid "raster, DEM, contours, vector"
+#~ msgstr "Không có đầu ra raster lẫn vector"
+
+#, fuzzy
+#~ msgid "Data range of raster map <%s> is empty"
+#~ msgstr "Không thể ghi bản đồ hồ raster <%s>!"
+
+#, fuzzy
+#~ msgid "Unable to read range of raster map <%s>"
+#~ msgstr "Không thể ghi bản đồ hồ raster <%s>!"
+
+#, fuzzy
+#~ msgid "raster, recode category"
+#~ msgstr "Phép chiếu nguồn"
+
+#, fuzzy
+#~ msgid "Unable to open rules file <%s>"
+#~ msgstr "Không thể mở tập tin cell [%s]."
+
+#, fuzzy
+#~ msgid "Generates a raster map layer of distance to features in input layer."
+#~ msgstr ""
+#~ "Tạo một lớp bản đồ raster với các vùng liền nhau được làm lớn lên từ một ô"
+
+#, fuzzy
+#~ msgid "Name for distance output map"
+#~ msgstr "Tên của lớp đầu ra"
+
+#, fuzzy
+#~ msgid "Name for value output map"
+#~ msgstr "Tên của bản đồ raster đầu ra"
+
+#, fuzzy
+#~ msgid "At least one of distance= and value= must be given"
+#~ msgstr "2 lớp phải được chỉ định"
+
+#, fuzzy
+#~ msgid "Unable to create distance map <%s>"
+#~ msgstr "Không thể tạo bản đồ raster <%s>"
+
+#, fuzzy
+#~ msgid "Unable to create value map <%s>"
+#~ msgstr "Không thể tạo bản đồ raster <%s>"
+
+#, fuzzy
+#~ msgid "Unable to create temporary file <%s>"
+#~ msgstr "Không thể tạo các tập tin tạm"
+
+#, fuzzy
+#~ msgid ""
+#~ "\n"
+#~ "You can use the -o flag to r.external to override this check and use the "
+#~ "location definition for the dataset.\n"
+#~ msgstr ""
+#~ "\n"
+#~ "Bạn có thể dùng cờ -o cho %s để ghi đè kiểm tra này.\n"
+
+#, fuzzy
+#~ msgid "Complex types not supported"
+#~ msgstr "Kiểu cột không được hỗ trợ"
+
+#, fuzzy
+#~ msgid "Copying color table for %s"
+#~ msgstr "Đang tạo các tập tin hỗ trợ cho %s..."
+
+#, fuzzy
+#~ msgid "Setting grey color table for <%s> (full 8bit range)"
+#~ msgstr "Đang tạo các tập tin hỗ trợ cho %s..."
+
+#, fuzzy
+#~ msgid "Setting grey color table for <%s> (data range)"
+#~ msgstr "Đang tạo các tập tin hỗ trợ cho %s..."
+
+#, fuzzy
+#~ msgid "Unable to create cell/%s file"
+#~ msgstr "Không thể đọc tập tin màu."
+
+#, fuzzy
+#~ msgid "Unable to create fcell/%s file"
+#~ msgstr "không thể tạo mặt"
+
+#, fuzzy
+#~ msgid "Unable to create cell_misc/%s/gdal file"
+#~ msgstr "Không thể tạo các tập tin tạm"
+
+#, fuzzy
+#~ msgid "Error writing cell_misc/%s/gdal file"
+#~ msgstr "Lỗi khi đang ghi tập tin bản đồ kết quả!"
+
+#, fuzzy
+#~ msgid "Unable to create cell_misc/%s/f_format file"
+#~ msgstr "Không thể tạo các tập tin tạm"
+
+#, fuzzy
+#~ msgid "Error writing cell_misc/%s/f_format file"
+#~ msgstr "Lỗi khi đang ghi tập tin bản đồ kết quả!"
+
+#, fuzzy
+#~ msgid "Unable to write quant file"
+#~ msgstr "Không thể ghi vào tập tin"
+
+#, fuzzy
+#~ msgid "Link GDAL supported raster file to a binary raster map layer."
+#~ msgstr ""
+#~ "Nhập tập tin raster được GDAL hỗ trợ vào thành một lớp bản đồ raster nhị "
+#~ "phân."
+
+#, fuzzy
+#~ msgid "Raster file to be linked"
+#~ msgstr "Tập tin raster cần nhập"
+
+#, fuzzy
+#~ msgid "Name of non-file GDAL data source"
+#~ msgstr "Tên của CSDL mới"
+
+#, fuzzy
+#~ msgid "Band to select"
+#~ msgstr "Không có màn hình nào được chọn"
+
+#, fuzzy
+#~ msgid "Name for input source not specified"
+#~ msgstr "Tên của bản đồ raster đầu ra"
+
+#, fuzzy
+#~ msgid "input= and source= are mutually exclusive"
+#~ msgstr "Các cờ -B và -C loại bỏ nhau. Chỉ chọn một mà thôi."
+
+#, fuzzy
+#~ msgid "Unable to set window"
+#~ msgstr "không thể thiết lập kích thước"
+
+#, fuzzy
+#~ msgid ""
+#~ "Computes direct (beam), diffuse and reflected solar irradiation raster "
+#~ "maps for given day, latitude, surface and atmospheric conditions. Solar "
+#~ "parameters (e.g. sunrise, sunset times, declination, extraterrestrial "
+#~ "irradiance, daylight length) are saved in a local text file. "
+#~ "Alternatively, a local time can be specified to compute solar incidence "
+#~ "angle and/or irradiance raster maps. The shadowing effect of the "
+#~ "topography is optionally incorporated."
+#~ msgstr ""
+#~ "Tính toán các bản đồ raster về hướng (chiếu), khuếch tán, và bức xạ mặt "
+#~ "trời với các điều kiện cho trước về ngày, vĩ độ, bề mặt và khí quyển. Các "
+#~ "tham số về mặt trời (ví dụ thời gian mặt trời mọc, lặn, độ xiên, bức xạ "
+#~ "ngoài không, gian độ dài ngày) được lưu trong tập tin history của bản đồ. "
+#~ "Một cách chạy lệnh khác là có thể chỉ định giờ địa phương để tính toán "
+#~ "góc tác động của mặt trời và/hoặc các bản đồ bức xạ kiểu raster. Tác động "
+#~ "đổ bóng của địa hình cũng có thể được đưa vào theo tùy chọn"
+
+#, fuzzy
+#~ msgid "A single value of inclination (slope)"
+#~ msgstr "Một giá trị vĩ độ duy nhất [độ thập phân]"
+
+#, fuzzy
+#~ msgid "Name of the longitude input raster map [decimal degrees]"
+#~ msgstr "Tên của bản đồ raster đầu vào chứa vĩ độ [độ thập phân]"
+
+#, fuzzy
+#~ msgid "Name of real-sky beam radiation coefficient input raster map [-]"
+#~ msgstr ""
+#~ "Tên của bản đồ raster chứa hệ số bức xạ ánh sáng của bầu trời thực [-]"
+
+#, fuzzy
+#~ msgid "Name of real-sky diffuse radiation coefficient input raster map [-]"
+#~ msgstr "Tên của bản đồ raster chứa hệ số khuếch tán của bầu trời thực [-]"
+
+#, fuzzy
+#~ msgid "The horizon information input map prefix"
+#~ msgstr "Thông tin phép chiếu sẽ không được cập nhật."
+
+#, fuzzy
+#~ msgid ""
+#~ "Output global (total) irradiance/irradiation [W.m-2] (mode 1) or "
+#~ "irradiance/irradiation raster map [Wh.m-2.day-1] (mode 2)"
+#~ msgstr ""
+#~ "Bức xạ chiếu sáng đầu ra [W.m-2] (chế độ 1) hoặc tập tin raster bức xạ "
+#~ "[Wh.m-2.ngày-1] (chế độ 2)."
+
+#, fuzzy
+#~ msgid "Error reading time step size"
+#~ msgstr "Lỗi khi đang đọc bản đồ %s"
+
+#, fuzzy
+#~ msgid "Error reading horizon step size"
+#~ msgstr "Lỗi khi đang đọc tập tin raster [%s]"
+
+#, fuzzy
+#~ msgid "The horizon step size must be greater than 0."
+#~ msgstr "%s = %s -- phải lớn hơn 0"
+
+#, fuzzy
+#~ msgid "Time and insol_time are incompatible options"
+#~ msgstr ""
+#~ "time (th.gian) và insol_time (th.gian ch.sáng là các tùy chọn không tương "
+#~ "thích"
+
+#, fuzzy
+#~ msgid ""
+#~ "Mode 1: instantaneous solar incidence angle & irradiance using a set "
+#~ "local time"
+#~ msgstr ""
+#~ "Chế độ 1: góc tác động tức thời của mặt trời và bức xạ tạo ravào một giờ "
+#~ "địa phương đã chọn"
+
+#, fuzzy
+#~ msgid "incidout requres time parameter to be set"
+#~ msgstr ""
+#~ "incidount (tác động đầu ra) đòi hỏi phải thiết lập tham số time (th.gian)"
+
+#, fuzzy
+#~ msgid "Mode 2: integrated daily irradiation"
+#~ msgstr ""
+#~ "Chế độ 2: bức xạ tích hợp hàng ngày đối với một ngày chọn trước trong năm"
+
+#, fuzzy
+#~ msgid "Horizon file no. %d <%s> not found"
+#~ msgstr "Không tìm thấy tập tin 3dview <%s>"
+
+#, fuzzy
+#~ msgid "Prefix of the horizon raster output maps"
+#~ msgstr "Tên bản đồ raster đầu ra"
+
+#, fuzzy
+#~ msgid "Write output in degrees (default is radians)"
+#~ msgstr "Tiền tố của các ảnh đầu ra (mặc định = NVIZ)"
+
+#, fuzzy
+#~ msgid "Could not read bufferzone size. Aborting."
+#~ msgstr "Không thể đọc tập tin miền giá trị"
+
+#, fuzzy
+#~ msgid "Calculating map %01d of %01d (angle %lf, raster map <%s>)"
+#~ msgstr "Không thể ghi bản đồ hồ raster <%s>!"
+
+#, fuzzy
+#~ msgid "Selecting features..."
+#~ msgstr "Đang tính các giá trị trung bình nhóm ..."
+
+#, fuzzy
+#~ msgid "%d features converted"
+#~ msgstr "%d điểm được ghi vào dữ liệu vector"
+
+#, fuzzy
+#~ msgid "Selection"
+#~ msgstr "Độ_phân_giải"
+
+#, fuzzy
+#~ msgid "DXF layers"
+#~ msgstr "Từ lớp"
+
+#, fuzzy
+#~ msgid "%d points read in region"
+#~ msgstr "%d điểm tìm thấy trong vùng."
+
+#, fuzzy
+#~ msgid "No records selected from table <%s> "
+#~ msgstr "%d bản ghi được chọn từ bảng"
+
+#, fuzzy
+#~ msgid "Name of existing vector map (from)"
+#~ msgstr ""
+#~ "#-#-#-#-#  grassmods_vi.po (grassmods_vi)  #-#-#-#-#\n"
+#~ "Tên của bản đồ vector hiện có\n"
+#~ "#-#-#-#-#  grassmods_vi.po (grassmods_vi)  #-#-#-#-#\n"
+#~ "Tên của tập tin vector hiện có"
+
+#, fuzzy
+#~ msgid "From"
+#~ msgstr "Từ kiểu"
+
+#, fuzzy
+#~ msgid "Name of existing vector map (to)"
+#~ msgstr ""
+#~ "#-#-#-#-#  grassmods_vi.po (grassmods_vi)  #-#-#-#-#\n"
+#~ "Tên của bản đồ vector hiện có\n"
+#~ "#-#-#-#-#  grassmods_vi.po (grassmods_vi)  #-#-#-#-#\n"
+#~ "Tên của tập tin vector hiện có"
+
+#, fuzzy
+#~ msgid "Feature type (from)"
+#~ msgstr "Kiểu đối tượng"
+
+#, fuzzy
+#~ msgid "Feature type (to)"
+#~ msgstr "Kiểu đối tượng"
+
+#, fuzzy
+#~ msgid "Layer number (from)"
+#~ msgstr "Lớp số"
+
+#, fuzzy
+#~ msgid "Layer number (to)"
+#~ msgstr "Lớp số"
+
+#, fuzzy
+#~ msgid "vector, reclass, attributes"
+#~ msgstr "vector, raster, bảng thuộc tính"
+
+#, fuzzy
+#~ msgid "The source for the new key column must be type integer or string"
+#~ msgstr "Cột key phải là số nguyên"
+
+#, fuzzy
+#~ msgid "Column numbers must not be negative"
+#~ msgstr "Độ chính xác không được là số âm"
+
+#, fuzzy
+#~ msgid "Unable to select record from table <%s> (key %s, column %s)"
+#~ msgstr "Không thể chọn dữ liệu từ bảng"
+
+#, fuzzy
+#~ msgid "Column <%s>: unsupported data type"
+#~ msgstr "Cột <%s>: kiểu dữ liệu không hợp lệ."
+
+#, fuzzy
+#~ msgid "Name of attribute column(s) to be exported (point mode)"
+#~ msgstr "Tên của cột thuộc tính dùng làm nhãn"
+
+#, fuzzy
+#~ msgid ""
+#~ "Unable to open vector map <%s> at topology level. Flag '%c' requires "
+#~ "topology level."
+#~ msgstr "Không thể mở tập tin vector <%s> trong <%s>"
+
+#, fuzzy
+#~ msgid "Unable to get bounding box of area %d"
+#~ msgstr "Không tìm thấy bản đồ vector [%s]"
+
+#, fuzzy
+#~ msgid "Unable to get bounding box of line %d"
+#~ msgstr "Không hiển thị số lượng phạm trù"
+
+#, fuzzy
+#~ msgid "Failed to copy attribute table to output map"
+#~ msgstr "Không thể mở bản đồ vector [%s]"
+
+#, fuzzy
+#~ msgid "Number of centres: %d (nlayer %d)"
+#~ msgstr "Số lượng điểm đầu vào: %d."
+
+#, fuzzy
+#~ msgid "Calculating costs from centre %d..."
+#~ msgstr "Đang tính các giá trị trung bình nhóm ..."
+
+#, fuzzy
+#~ msgid "vector, metadata, history"
+#~ msgstr "vector, nhập"
+
+#, fuzzy
+#~ msgid "Unable open database <%s> by driver <%s>"
+#~ msgstr "Không thể mở CSDL %s bằng trình điều khiển %s"
+
+#, fuzzy
+#~ msgid "Error reading coordinates file"
+#~ msgstr "Tọa độ Đ và B của (các) điểm bắt đầu"
+
+#, fuzzy
+#~ msgid "Error creating transformation"
+#~ msgstr "In ra thông tin tôpô (chế độ gỡ lỗi)"
+
+#, fuzzy
+#~ msgid "Processing features..."
+#~ msgstr "Đang xử lý các vùng ainput (đầu vào a)..."
+
+#, fuzzy
+#~ msgid "type       count        min        max\n"
+#~ msgstr "Miền:     tối thiểu       tối đa\n"
+
+#, fuzzy
+#~ msgid "point"
+#~ msgstr "các điểm"
+
+#, fuzzy
+#~ msgid "boundary"
+#~ msgstr "Các_ranh_giới"
+
+#, fuzzy
+#~ msgid "area"
+#~ msgstr "Vùng\n"
+
+#, fuzzy
+#~ msgid "Copying attribute table(s)..."
+#~ msgstr "CSDL, bảng thuộc tính"
+
+#, fuzzy
+#~ msgid "%d features modified."
+#~ msgstr "%d điểm được ghi vào dữ liệu vector"
+
+#, fuzzy
+#~ msgid "Unable to open dig_cats file"
+#~ msgstr "Không thể mở tập tin dig_att <%s>\n"
+
+#, fuzzy
+#~ msgid "Name of input vector map (A)"
+#~ msgstr "Tên của bản đồ vector đầu vào"
+
+#, fuzzy
+#~ msgid "Feature type (vector map A)"
+#~ msgstr "Tên của bản đồ vector"
+
+#, fuzzy
+#~ msgid "Layer number (vector map A)"
+#~ msgstr "tên của tập tin vector nhị phân mới"
+
+#, fuzzy
+#~ msgid "Name of input vector map (B)"
+#~ msgstr "Tên của bản đồ vector đầu vào"
+
+#, fuzzy
+#~ msgid "Feature type (vector map B)"
+#~ msgstr "Tên của bản đồ vector"
+
+#, fuzzy
+#~ msgid "Layer number (vector map B)"
+#~ msgstr "tên của tập tin vector nhị phân mới"
+
+#, fuzzy
+#~ msgid ""
+#~ "Id: %d\n"
+#~ "Type: %s\n"
+#~ "Left: %d\n"
+#~ "Right: %d\n"
+#~ msgstr ""
+#~ "Đường: %d \n"
+#~ "Kiểu: %s  \n"
+#~ "Trái: %d  \n"
+#~ "Phải: %d  \n"
+
+#, fuzzy
+#~ msgid ""
+#~ "Node[%d]: %d\n"
+#~ "Number of lines: %d\n"
+#~ "Coordinates: %.6f, %.6f, %.6f\n"
+#~ msgstr ""
+#~ "Nốt[%d]: %d  \n"
+#~ "Số_đường: %d  \n"
+#~ "Tọa_độ: %.6f, %.6f, %.6f\n"
+
+#, fuzzy
+#~ msgid ""
+#~ "Id: %5d\n"
+#~ "Angle: %.8f\n"
+#~ msgstr ""
+#~ "Đường: %5d  \n"
+#~ "Góc: %.8f \n"
+
+#, fuzzy
+#~ msgid "Id: %d\n"
+#~ msgstr "Đảo[%d]: %d\n"
+
+#, fuzzy
+#~ msgid ""
+#~ "Area: %d\n"
+#~ "Number of isles: %d\n"
+#~ msgstr ""
+#~ "Vùng: %d \n"
+#~ "Số đảo: %d \n"
+
+#, fuzzy
+#~ msgid "Reading features..."
+#~ msgstr "Đang xoay dữ liệu..."
+
+#, fuzzy
+#~ msgid "Layer number (write to)"
+#~ msgstr "Lớp số"
+
+#, fuzzy
+#~ msgid "Reading areas..."
+#~ msgstr "Đang xoay dữ liệu..."
+
+#, fuzzy
+#~ msgid "%d records selected from table (layer %d)"
+#~ msgstr "%d bản ghi được chọn từ bảng"
+
+#, fuzzy
+#~ msgid "%d update/insert errors (layer %d)"
+#~ msgstr "%d lỗi cập nhật"
+
+#, fuzzy
+#~ msgid "No attribute table found"
+#~ msgstr "(các) cột thuộc tính"
+
+#, fuzzy
+#~ msgid "No numerical attributes found. Skipping export"
+#~ msgstr "Không tìm thấy đường, bỏ qua type=line"
+
+#, fuzzy
+#~ msgid "Error reading value of attribute '%s'"
+#~ msgstr "Lỗi khi đang đọc tập tin cats cho <%s>."
+
+#, fuzzy
+#~ msgid "vector, query"
+#~ msgstr "vector, mạng lưới"
+
+#, fuzzy
+#~ msgid "Operator defines required relation between features"
+#~ msgstr "%d điểm được ghi vào dữ liệu vector"
+
+#, fuzzy
+#~ msgid ""
+#~ "A feature is written to output if the result of operation 'ainput "
+#~ "operator binput' is true. An input feature is considered to be true, if "
+#~ "category of given layer is defined."
+#~ msgstr ""
+#~ "Toán tử định nghĩa mối liên hệ cần có giữa các đối tượng.  Một đối tượng "
+#~ "được ghi vào đầu ra nếu kết quả của phép tính 'ainput toán tử binput' là "
+#~ "đúng. Một đối tượng đầu vào được coi là đúng nếu phạm trù của lớp được "
+#~ "cho được xác định.\n"
+#~ "\t overlap: các đối tượng chồng một phần hoặc chồng hoàn toàn"
+
+#, fuzzy
+#~ msgid "Processing areas..."
+#~ msgstr "Đang xử lý các vùng ainput (đầu vào a)..."
+
+#, fuzzy
+#~ msgid "Writing selected features..."
+#~ msgstr "Đang nhập bản đồ, %d đối tượng..."
+
+#, fuzzy
+#~ msgid "Layer %d - no table"
+#~ msgstr "Lớp '%s' không khả dụng"
+
+#, fuzzy
+#~ msgid "Layer %d - unable to copy table"
+#~ msgstr "Không thể mở tập tin tạm"
+
+#, fuzzy
+#~ msgid "Converts DWG/DXF to GRASS vector map"
+#~ msgstr "Đổi các vector OGR thành GRASS. Các trình điều khiển hiện có:\n"
+
+#, fuzzy
+#~ msgid "Name of DWG or DXF file"
+#~ msgstr "Tên tập tin đầu ra"
+
+#, fuzzy
+#~ msgid "Unable to open input file <%s>. Error %d: %s"
+#~ msgstr "Không thể mở tập tin đầu vào <%s>."
+
+#, fuzzy
+#~ msgid "Output vector map name <%s> is not valid map name"
+#~ msgstr "2 lớp phải được chỉ định"
+
+#, fuzzy
+#~ msgid "Vector Z value for unknown height"
+#~ msgstr "vector, mật độ nhân"
+
+#, fuzzy
+#~ msgid "No features match Your query"
+#~ msgstr ""
+#~ "\n"
+#~ "Không tìm thấy các lớp DXF!\n"
+
+#, fuzzy
+#~ msgid "vector, extract"
+#~ msgstr "vector, xuất dữ liệu"
+
+#, fuzzy
+#~ msgid "Please specify random number larger than 0"
+#~ msgstr "Vui lòng chỉ định số dòng bỏ qua hợp lý"
+
+#, fuzzy
+#~ msgid "Extracting features..."
+#~ msgstr "Đang trích ra các vùng..."
+
+#, fuzzy
+#~ msgid "Not enough memory."
+#~ msgstr "Không đủ bộ nhớ cho az"
+
+#, fuzzy
+#~ msgid "Unable to calculate area centroid z coordinate"
+#~ msgstr "Không thể tính toán trọng tâm vùng"
+
+#, fuzzy
+#~ msgid "vector, transformation, 3D"
+#~ msgstr "vector, nội suy"
+
+#, fuzzy
+#~ msgid "Either '%s' or '%s' parameter have to be used"
+#~ msgstr "Một trong các tham số [%s] hoặc [%s] phải được thiết lập"
+
+#, fuzzy
+#~ msgid "Parameters '%s' ignored"
+#~ msgstr "Tham số cần thiết <cats> không được thiết lập"
+
+#, fuzzy
+#~ msgid "Attribute table required"
+#~ msgstr "(các) cột thuộc tính"
+
+#, fuzzy
+#~ msgid "Vector map <%s> is 2D"
+#~ msgstr "Không tìm thấy bản đồ vector %s"
+
+#, fuzzy
+#~ msgid "Vector map <%s> is 3D"
+#~ msgstr "Không tìm thấy bản đồ vector %s"
+
+#, fuzzy
+#~ msgid "Copying attributes..."
+#~ msgstr "CSDL, bảng thuộc tính"
+
+#, fuzzy
+#~ msgid "Unable to copy attributes"
+#~ msgstr "Không thể chọn dữ liệu từ bảng"
+
+#, fuzzy
+#~ msgid "Vertical extent of vector map <%s>: B: %f T: %f"
+#~ msgstr "Không thể mở tập tin vector <%s> trong <%s>"
+
+#, fuzzy
+#~ msgid "Column must be numeric"
+#~ msgstr "Tên cột (phải là kiểu số)"
+
+#, fuzzy
+#~ msgid "Skipping feature without category"
+#~ msgstr "%d điểm không có phạm trù, bỏ qua"
+
+#, fuzzy
+#~ msgid "Unable to get height for feature category %d"
+#~ msgstr "Không thể lấy thông tin lớp của bản đồ vector"
+
+#, fuzzy
+#~ msgid "Feature id %d has no category - skipping"
+#~ msgstr "%d điểm không có phạm trù, bỏ qua"
+
+#, fuzzy
+#~ msgid "Reverse transformation; 3D vector features to 2D"
+#~ msgstr "dùng các quy tắc chuyển đổi cho LANDSAT-4"
+
+#, fuzzy
+#~ msgid "Do not copy table"
+#~ msgstr "Không thể sao chép bảng"
+
+#, fuzzy
+#~ msgid "Fixed height for 3D vector features"
+#~ msgstr "Chiều cao cố định đối với các đối tượng vector 3D"
+
+#, fuzzy
+#~ msgid "Name of attribute column used for height"
+#~ msgstr "Truy vấn lớp. Được dùng bởi tùy chọn 'query'."
+
+#, fuzzy
+#~ msgid "Creates parallel line to input vector lines."
+#~ msgstr "Tạo ra các điểm dọc theo các đường đầu vào."
+
+#, fuzzy
+#~ msgid "Offset along major axis in map units"
+#~ msgstr "Độ dịch nhãn theo hướng x"
+
+#, fuzzy
+#~ msgid "Offset along minor axis in map units"
+#~ msgstr "Độ dịch nhãn theo hướng x"
+
+#, fuzzy
+#~ msgid "Tolerance of arc polylines in map units"
+#~ msgstr "Dung sai tính theo đơn vị bản đồ: %g"
+
+#, fuzzy
+#~ msgid "vector, buffer"
+#~ msgstr "vector, mạng lưới"
+
+#, fuzzy
+#~ msgid "Buffer distance along major axis in map units"
+#~ msgstr "Khoảng cách đệm tính theo đơn vị bản đồ"
+
+#, fuzzy
+#~ msgid "Buffer distance along minor axis in map units"
+#~ msgstr "Khoảng cách đệm tính theo đơn vị bản đồ"
+
+#, fuzzy
+#~ msgid "The tolerance was reset to %g"
+#~ msgstr "Dung sai được thiết lập lại thành %g (đơn vị bản đồ)"
+
+#, fuzzy
+#~ msgid "The tolerance in map units = %g"
+#~ msgstr "Dung sai tính theo đơn vị bản đồ: %g"
+
+#, fuzzy
+#~ msgid "Unable to select data from table <%s>"
+#~ msgstr "Không thể chọn dữ liệu từ bảng"
+
+#, fuzzy
+#~ msgid "Buffering lines..."
+#~ msgstr "Đang trích ra các đường..."
+
+#, fuzzy
+#~ msgid "Buffering areas..."
+#~ msgstr "Đang trích ra các vùng..."
+
+#, fuzzy
+#~ msgid "imagery, FFT"
+#~ msgstr "ảnh"
+
+#, fuzzy
+#~ msgid "Power 2 values: %d rows %d columns"
+#~ msgstr "Bậc 2 giá trị:  [%d] hàng [%d] cột."
+
+#, fuzzy
+#~ msgid "Reading raster maps..."
+#~ msgstr ""
+#~ "\n"
+#~ "Đang ghi tập tin raster... "
+
+#, fuzzy
+#~ msgid "Writing data..."
+#~ msgstr "Đang ghi dữ liệu vào tập tin..."
+
+#, fuzzy
+#~ msgid "Name for output file containing result signatures"
+#~ msgstr "Tên tập tin đầu ra chứa ma trận lỗi và kappa"
+
+#, fuzzy
+#~ msgid "Maximum number of sub-signatures in any class"
+#~ msgstr "Số điểm ảnh tối thiểu trong một nhóm"
+
+#, fuzzy
+#~ msgid "Illegal number of sub-signatures (%s)"
+#~ msgstr "Số bước không hợp lệ: %s"
+
+#, fuzzy
+#~ msgid "1 class found"
+#~ msgstr "1 nhóm"
+
+#, fuzzy
+#~ msgid "%d classes found"
+#~ msgstr "%d thay đổi đã xong"
+
+#, fuzzy
+#~ msgid "Generates statistics for i.smap from raster map."
+#~ msgstr "Tạo thống kê cho i.maxlik  từ lớp bản đồ raster"
+
+#, fuzzy
+#~ msgid "Clustering class %d (%d pixels)..."
+#~ msgstr "Đang tính các giá trị trung bình nhóm ..."
+
+#, fuzzy
+#~ msgid "Number of subclasses is %d"
+#~ msgstr "Số lượng bản in"
+
+#, fuzzy
+#~ msgid "Not enough pixels in class %d"
+#~ msgstr "Không đủ tên cột"
+
+#, fuzzy
+#~ msgid "Too many subclasses for class index %d"
+#~ msgstr "Bản đồ raster 2D mặt đáy"
+
+#, fuzzy
+#~ msgid "Number of subclasses set to %d"
+#~ msgstr "Số lượng bản in"
+
+#, fuzzy
+#~ msgid "Unable to create signature file <%s>"
+#~ msgstr "Không thể tạo tập tin [%s]"
+
+#, fuzzy
+#~ msgid "imagery, color transformation, RGB, HIS"
+#~ msgstr "vector, nội suy"
+
+#, fuzzy
+#~ msgid "Name of input raster map (hue)"
+#~ msgstr "Tên của (các) bản đồ raster đầu vào"
+
+#, fuzzy
+#~ msgid "Name of input raster map (intensity)"
+#~ msgstr "Tên của (các) bản đồ raster đầu vào"
+
+#, fuzzy
+#~ msgid "Name of input raster map (saturation)"
+#~ msgstr "Tên của (các) bản đồ raster đầu vào"
+
+#, fuzzy
+#~ msgid "Name for output raster map (red)"
+#~ msgstr "Tên của bản đồ raster đầu ra"
+
+#, fuzzy
+#~ msgid "Name for output raster map (green)"
+#~ msgstr "Tên của bản đồ raster đầu ra"
+
+#, fuzzy
+#~ msgid "Name for output raster map (blue)"
+#~ msgstr "Tên của bản đồ raster đầu ra"
+
+#, fuzzy
+#~ msgid "Name of input raster map (red)"
+#~ msgstr "Tên của (các) bản đồ raster đầu vào"
+
+#, fuzzy
+#~ msgid "Name of input raster map (green)"
+#~ msgstr "Tên của (các) bản đồ raster đầu vào"
+
+#, fuzzy
+#~ msgid "Name of input raster map (blue)"
+#~ msgstr "Tên của (các) bản đồ raster đầu vào"
+
+#, fuzzy
+#~ msgid "Name for output raster map (hue)"
+#~ msgstr "Tên của bản đồ raster đầu ra"
+
+#, fuzzy
+#~ msgid "Name for output raster map (intensity)"
+#~ msgstr "Tên của bản đồ raster đầu ra"
+
+#, fuzzy
+#~ msgid "Name for output raster map (saturation)"
+#~ msgstr "Bản đồ raster đầu ra (mặc định: tiêu đề đầu vào)"
+
+#, fuzzy
+#~ msgid "Subgroup <%s> in group <%s> contains no raster maps"
+#~ msgstr "Nhóm phụ [%s] trong nhóm [%s] không có tập tin nào."
+
+#, fuzzy
+#~ msgid "Name of file containing signatures"
+#~ msgstr "Tập tin chứa các câu lệnh SQL"
+
+#, fuzzy
+#~ msgid "Unable to read signature file <%s>"
+#~ msgstr "Không thể tạo tập tin [%s]"
+
+#, fuzzy
+#~ msgid "imagery, image transformation, PCA"
+#~ msgstr "vector, nội suy"
+
+#, fuzzy
+#~ msgid "Unable allocate memory for row buffer"
+#~ msgstr "Thất bại trong việc cấp phát bộ nhớ cho các con trỏ hàng"
+
+#, fuzzy
+#~ msgid "Unable to allocate memory for row buffer"
+#~ msgstr "Thất bại trong việc cấp phát bộ nhớ cho các con trỏ hàng"
+
+#, fuzzy
+#~ msgid "Unable to allocate memory for raster row"
+#~ msgstr "Không thể cấp phát bộ nhớ"
+
+#, fuzzy
+#~ msgid "Control Point file for group <%s@%s> - "
+#~ msgstr "Không thể mở tập tin [%s]"
+
+#, fuzzy
+#~ msgid "Not enough active control points for current order, %d are required."
+#~ msgstr "Tọa độ để truy vấn"
+
+#, fuzzy
+#~ msgid "Poorly placed control points."
+#~ msgstr "Không có điểm bắt đầu"
+
+#, fuzzy
+#~ msgid " Can not generate the transformation equation."
+#~ msgstr "Không thể lấy thông tin lớp từ bản đồ vector"
+
+#, fuzzy
+#~ msgid "Invalid order"
+#~ msgstr "Các tọa độ không hợp lệ %s %s"
+
+#, fuzzy
+#~ msgid "Raster map <%s@%s>: projection don't match current settings"
+#~ msgstr "Không tìm thấy bản đồ vector <%s>"
+
+#, fuzzy
+#~ msgid "Raster map <%s@%s>: zone don't match current settings"
+#~ msgstr "Không tìm thấy bản đồ vector <%s>"
+
+#, fuzzy
+#~ msgid "Rectify <%s@%s> (location <%s>)"
+#~ msgstr "Đang đọc %s..."
+
+#, fuzzy
+#~ msgid "into  <%s@%s> (location <%s>) ... %s"
+#~ msgstr "Bộ bản đồ [%s] trong location đầu vào [%s] - không tìm thấy"
+
+#, fuzzy
+#~ msgid "complete"
+#~ msgstr "Phần trăm hoàn tất..."
+
+#, fuzzy
+#~ msgid "failed"
+#~ msgstr "Đầu vào thất bại"
+
+#, fuzzy
+#~ msgid "imagery, rectify"
+#~ msgstr "nhóm ảnh"
+
+#, fuzzy
+#~ msgid ""
+#~ "Input raster map <%s> does not exist in group <%s>.\n"
+#~ " Try:\n"
+#~ msgstr "Bản đồ raster [%s] đã có trong nhóm"
+
+#, fuzzy
+#~ msgid "Exit!"
+#~ msgstr "Hiện_có"
+
+#, fuzzy
+#~ msgid "Rectified input raster map <%s> will be saved as <%s>"
+#~ msgstr "không thể mở bản đồ raster [%s] trong [%s]"
+
+#, fuzzy
+#~ msgid "Target information for group <%s> missing"
+#~ msgstr "Thông tin miền [%s] không khả dụng"
+
+#, fuzzy
+#~ msgid "Target location <%s> not found"
+#~ msgstr "Không tìm thấy vùng <%s>"
+
+#, fuzzy
+#~ msgid "Error while writing to temp file"
+#~ msgstr "Lỗi khi đang đọc tập tin lịch sử"
+
+#, fuzzy
+#~ msgid "Error writing row %d"
+#~ msgstr "Lỗi khi đang ghi null hàng thứ [%d]."
+
+#, fuzzy
+#~ msgid "Reading the raster map <%s>..."
+#~ msgstr ""
+#~ "\n"
+#~ "Đang ghi tập tin raster... "
+
+#, fuzzy
+#~ msgid "Writing transformed data..."
+#~ msgstr "Đang ghi dữ liệu được chuyển đổi vào tập tin..."
+
+#, fuzzy
+#~ msgid "Subgroup <%s> in group <%s> not found"
+#~ msgstr "không tìm thấy nhóm phụ <%s>"
+
+#, fuzzy
+#~ msgid "No raster maps found"
+#~ msgstr "Bản đồ raster 3d cần loại bỏ"
+
+#, fuzzy
+#~ msgid "Subgroup <%s> doesn't have any raster maps"
+#~ msgstr "Nhóm phụ [%s] không có tập tin nào"
+
+#, fuzzy
+#~ msgid "Subgroup <%s> only has 1 raster map"
+#~ msgstr "Nhóm phụ [%s] chỉ có 1 tập tin"
+
+#, fuzzy
+#~ msgid "Subgroup must have at least 2 raster maps"
+#~ msgstr "Nhóm phụ phải có tối thiểu 2 tập tin để chạy %s"
+
+#, fuzzy
+#~ msgid "Unable to open seed signature file <%s>"
+#~ msgstr "Không thể mở tập tin chữ ký."
+
+#, fuzzy
+#~ msgid "imagery, classification, signatures"
+#~ msgstr "Tên tập tin kết quả phân loại"
+
+#, fuzzy
+#~ msgid "Unable to create report file <%s>"
+#~ msgstr "Không thể tạo tập tin [%s]"
+
+#, fuzzy
+#~ msgid "Bad format in camera file for group [%s]"
+#~ msgstr "Thêm các tập tin vào nhóm [%s]"
+
+#, fuzzy
+#~ msgid "No photo points for group [%s]"
+#~ msgstr "%s: không tìm thấy các điểm dữ liệu"
+
+#, fuzzy
+#~ msgid "Computing equations ..."
+#~ msgstr "Đang sao chép bảng..."
+
+#, fuzzy
+#~ msgid "Unable to read raster header of <%s>"
+#~ msgstr "Không thể đọc tập tin header của [%s]"
+
+#, fuzzy
+#~ msgid "Name of camera reference file to use"
+#~ msgstr "Tên tập tin raster mới"
+
+#, fuzzy
+#~ msgid "Group [%s] in location [%s] mapset [%s] now has camera file [%s]"
+#~ msgstr ""
+#~ "Không tìm thấy bản đồ đầu vào [%s] trong location [%s] trong bộ bản đồ [%"
+#~ "s]."
+
+#, fuzzy
+#~ msgid "Target location [%s] not found\n"
+#~ msgstr "Không tìm thấy tập tin độ cao [%s]"
+
+#, fuzzy
+#~ msgid "Mapset [%s] in target location [%s] - "
+#~ msgstr "Bộ bản đồ [%s] trong location đầu vào [%s] - không tìm thấy"
+
+#, fuzzy
+#~ msgid "Pre-selected group <%s> not found"
+#~ msgstr ""
+#~ "\n"
+#~ " không tìm thấy nhóm <%s>"
+
+#, fuzzy
+#~ msgid "Enter imagery group for ortho-rectification"
+#~ msgstr "Tên của location đích cho ảnh"
+
+#, fuzzy
+#~ msgid "Group [%s] contains no files"
+#~ msgstr "Nhóm phụ [%s] trong nhóm [%s] không có tập tin nào."
+
+#, fuzzy
+#~ msgid "Image Group [%s] not found"
+#~ msgstr "Không tìm thấy nhóm [%s]"
+
+#, fuzzy
+#~ msgid "Poorly placed psuedo control points. "
+#~ msgstr "Không có điểm bắt đầu"
+
+#, fuzzy
+#~ msgid "Cannot generate the transformation equation."
+#~ msgstr "Không thể lấy thông tin lớp từ bản đồ vector"
+
+#, fuzzy
+#~ msgid "No active psuedo control points"
+#~ msgstr "Không có điểm bắt đầu"
+
+#, fuzzy
+#~ msgid "Interactively select or modify the imagery group target."
+#~ msgstr "Chọn lộ trình ở chế độ tương tác"
+
+#, fuzzy
+#~ msgid "No files in this group!"
+#~ msgstr "Tìm thấy tập tin <%s@%s> trong nhóm phụ."
+
+#, fuzzy
+#~ msgid "Group [%s] targeted for location [%s], mapset [%s]"
+#~ msgstr "nhóm [%s] được xác định đích vào location [%s], bộ bản đồ [%s]\n"
+
+#, fuzzy
+#~ msgid "Unable to open signature file <%s>"
+#~ msgstr "Không thể mở tập tin đầu vào <%s@%s>."
+
+#, fuzzy
+#~ msgid "imagery, classification, MLC"
+#~ msgstr "Phép phân loại điểm"
+
+#, fuzzy
+#~ msgid "Generated by either i.cluster, i.class, or i.gensig"
+#~ msgstr ""
+#~ "Một chức năng về ảnh dùng để phân loại sự phản xạ phổ trong dữ liệu ảnh "
+#~ "dựa trên thông tin chữ ký phổ được tạo ra bởi i.cluster, i.class, hoặc i."
+#~ "gensig."
+
+#, fuzzy
+#~ msgid "Name for raster map holding classification results"
+#~ msgstr "Tên bản đồ raster đầu vào chứa các chi phí va chạm"
+
+#, fuzzy
+#~ msgid "Position"
+#~ msgstr "Phép chiếu nguồn"
+
+#, fuzzy
+#~ msgid "Text color or \"none\""
+#~ msgstr "Màu chữ"
+
+#, fuzzy
+#~ msgid "Location is not %s"
+#~ msgstr "Location: %s\n"
+
+#, fuzzy
+#~ msgid "%s - illegal longitude"
+#~ msgstr "%s - tên không hợp lệ"
+
+#, fuzzy
+#~ msgid "Input map contains no data"
+#~ msgstr "Mảng không có dữ liệu"
+
+#, fuzzy
+#~ msgid "Color definition column not specified"
+#~ msgstr "Cột định nghĩa màu không được chỉ định"
+
+#, fuzzy
+#~ msgid ""
+#~ "Error in color definition column '%s', feature id %d with cat %d: "
+#~ "colorstring '%s'"
+#~ msgstr ""
+#~ "Lỗi trong cột định nghĩa màu (%s), vùng %d với cat %d: chuỗi màu [%s]"
+
+#, fuzzy
+#~ msgid "Error in color definition column '%s', feature id %d with cat %d"
+#~ msgstr "Lỗi trong cột định nghĩa màu (%s), vùng %d với cat %d"
+
+#, fuzzy
+#~ msgid "Error in color definition column '%s': %d features affected"
+#~ msgstr "Lỗi trong cột định nghĩa màu (%s), vùng %d với cat %d"
+
+#, fuzzy
+#~ msgid "Layer number (if -1, all layers are displayed)"
+#~ msgstr "Lớp số. Nếu là -1, tất cả các lớp được trình bày."
+
+#, fuzzy
+#~ msgid "Unknown color: '%s'"
+#~ msgstr "Màu không biết: [%s]"
+
+#, fuzzy
+#~ msgid "Unable to read symbol, unable todisplay points"
+#~ msgstr "Không thể đọc biểu tượng, không thể trình bày các điểm"
+
+#, fuzzy
+#~ msgid "Short user prompt message"
+#~ msgstr "In ra cả thông báo bản quyền"
+
+#, fuzzy
+#~ msgid "Disable"
+#~ msgstr "Bảng bị thiếu"
+
+#, fuzzy
+#~ msgid ""
+#~ "Displays the rhumbline joining two user-specified points, in the active "
+#~ "frame on the user's graphics monitor."
+#~ msgstr ""
+#~ "Trình bày dữ liệu vector của GRASS trong khung kích hoạt trên màn hình đồ "
+#~ "họa."
+
+#, fuzzy
+#~ msgid "-s and -n are mutually exclusive"
+#~ msgstr "Các cờ -B và -C loại bỏ nhau. Chỉ chọn một mà thôi."
+
+#, fuzzy
+#~ msgid "Name of an existing map"
+#~ msgstr "Tên bản đồ raster hiện có"
+
+#, fuzzy
+#~ msgid "Name of a mapset"
+#~ msgstr "Tên của bộ bản đồ đích"
+
+#, fuzzy
+#~ msgid "Removing %s <%s>"
+#~ msgstr "Đang đọc %s..."
+
+#, fuzzy
+#~ msgid "couldn't be removed"
+#~ msgstr "biểu tượng cần loại bỏ"
+
+#, fuzzy
+#~ msgid "%s: couldn't be removed"
+#~ msgstr "(các) tập tin %s cần loại bỏ"
+
+#, fuzzy
+#~ msgid "%s: removed"
+#~ msgstr "%-5d trọng tâm được đọc\n"
+
+#, fuzzy
+#~ msgid "<%s> nothing removed"
+#~ msgstr "Không tìm thấy <%s>\n"
+
+#, fuzzy
+#~ msgid "Use basic regular expressions instead of wildcards"
+#~ msgstr "dùng biểu thức quy tắc thay vì ký tự bất kỳ"
+
+#, fuzzy
+#~ msgid "Use extended regular expressions instead of wildcards"
+#~ msgstr "dùng biểu thức quy tắc thay vì ký tự bất kỳ"
+
+#, fuzzy
+#~ msgid "Remove base maps"
+#~ msgstr "Bản đồ raster lớp phủ"
+
+#, fuzzy
+#~ msgid "-r and -e are mutually exclusive"
+#~ msgstr "Các cờ -B và -C loại bỏ nhau. Chỉ chọn một mà thôi."
+
+#, fuzzy
+#~ msgid "Unable to compile regular expression %s"
+#~ msgstr "Không thể mở tập tin cell [%s]."
+
+#, fuzzy
+#~ msgid "Map name exclusion pattern (default: none)"
+#~ msgstr "kiểu tìm kiếm tên bản đồ, phải 'trích dẫn'. (mặc định: tất cả)"
+
+#, fuzzy
+#~ msgid "Print data types"
+#~ msgstr "Chỉ in ra kiểu bản đồ raster"
+
+#, fuzzy
+#~ msgid "Pretty printing in human readable format"
+#~ msgstr "Chặn việc in ra thông tin header"

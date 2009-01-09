@@ -443,7 +443,7 @@ msgstr "เขียนข้อมูล 2d ไปที่ แผนที่�
 
 #: ../lib/gpde/N_arrays_io.c:227 ../lib/gpde/N_arrays_io.c:232
 #: ../lib/gpde/N_arrays_io.c:237
-#, c-format
+#, fuzzy, c-format
 msgid "Unable to write rast row %i"
 msgstr "ไม่สามารถแถวของแผนที่เชิงภาพ %i"
 
@@ -571,9 +571,9 @@ msgid "Unable to get list tables in database <%s>"
 msgstr "ไม่สามารถเปิดไฟล์ตารางรูปทรงรี: %s"
 
 #: ../lib/db/dbmi_client/copy_tab.c:157
-#, c-format
+#, fuzzy, c-format
 msgid "Table <%s> already existsin database <%s>"
-msgstr ""
+msgstr "ไม่สามารถเปิดไฟล์ตารางรูปทรงรี: %s"
 
 #: ../lib/db/dbmi_client/copy_tab.c:199 ../lib/db/dbmi_client/copy_tab.c:276
 #: ../lib/db/dbmi_client/table.c:110
@@ -932,80 +932,82 @@ msgid "Topology was built\n"
 msgstr "Topology ถูกสร้างแล้ว.\n"
 
 #: ../lib/vector/Vlib/build.c:172
-#, c-format
+#, fuzzy, c-format
 msgid "Number of nodes     :   %d\n"
 msgstr "จำนวน nodes     :   %d\n"
 
 #: ../lib/vector/Vlib/build.c:173
-#, c-format
+#, fuzzy, c-format
 msgid "Number of primitives:   %d\n"
 msgstr "จำนวน primitives:   %d\n"
 
 #: ../lib/vector/Vlib/build.c:174
-#, c-format
+#, fuzzy, c-format
 msgid "Number of points    :   %d\n"
 msgstr "จำนวนจุด    :   %d\n"
 
 #: ../lib/vector/Vlib/build.c:175
-#, c-format
+#, fuzzy, c-format
 msgid "Number of lines     :   %d\n"
 msgstr "จำนวนเส้น     :   %d\n"
 
 #: ../lib/vector/Vlib/build.c:176
-#, c-format
+#, fuzzy, c-format
 msgid "Number of boundaries:   %d\n"
 msgstr "จำนวนขอบเขต:   %d\n"
 
 #: ../lib/vector/Vlib/build.c:177
-#, c-format
+#, fuzzy, c-format
 msgid "Number of centroids :   %d\n"
 msgstr "จำนวนจุดศูนย์ถ่วง :   %d\n"
 
 #: ../lib/vector/Vlib/build.c:180
-#, c-format
+#, fuzzy, c-format
 msgid "Number of faces     :   %d\n"
 msgstr "จำนวน faces           :   %d\n"
 
 #: ../lib/vector/Vlib/build.c:183
-#, c-format
+#, fuzzy, c-format
 msgid "Number of kernels   :   %d\n"
 msgstr "จำนวน  kernels   :   %d\n"
 
 #: ../lib/vector/Vlib/build.c:223
-#, c-format
+#, fuzzy, c-format
 msgid "Number of areas     :   %d\n"
 msgstr "จำนวน รูปปิด     :   %d\n"
 
 #: ../lib/vector/Vlib/build.c:224
-#, c-format
+#, fuzzy, c-format
 msgid "Number of isles     :   %d\n"
 msgstr "จำนวน  isles     :   %d\n"
 
 #: ../lib/vector/Vlib/build.c:227
-#, c-format
+#, fuzzy, c-format
 msgid "Number of incorrect boundaries   :   %d\n"
 msgstr "จำนวนขอบเขตที่ไม่ถูกต้อง   :   %d\n"
 
 #: ../lib/vector/Vlib/build.c:231
-#, c-format
+#, fuzzy, c-format
 msgid "Number of centroids outside area :   %d\n"
 msgstr "จำนวนจุดศูนย์ถ่วงที่อยู่นอกพื้นที่ :   %d\n"
 
 #: ../lib/vector/Vlib/build.c:235
-#, c-format
+#, fuzzy, c-format
 msgid "Number of duplicate centroids    :   %d\n"
 msgstr "จำนวนจุดศูนย์ถ่วงที่ซ้ำ    :   %d\n"
 
 #: ../lib/vector/Vlib/build.c:239
-#, c-format
+#, fuzzy, c-format
 msgid "Number of areas without centroid :   %d\n"
 msgstr "จำนวน  รูปปิด ที่ไม่มี จุดศูนย์ถ่วง  :   %d\n"
 
 #: ../lib/vector/Vlib/build.c:244
+#, fuzzy
 msgid "Number of areas     :   -\n"
 msgstr "จำนวน  รูปปิด     :   -\n"
 
 #: ../lib/vector/Vlib/build.c:245
+#, fuzzy
 msgid "Number of isles     :   -\n"
 msgstr "จำนวน  isles     :   -\n"
 
@@ -1058,9 +1060,9 @@ msgstr "ไม่สามารถเปิดแผนที่เชิงเ
 
 #: ../lib/vector/Vlib/open.c:211 ../lib/vector/Vlib/open.c:278
 #: ../lib/vector/Vlib/open.c:297
-#, c-format
+#, fuzzy, c-format
 msgid "Unable to open vector map <%s> on topology level %d"
-msgstr "ไม่สามารถเปิดแผนที่เชิงเส้นได้ <%s> บน topology ระดับ %d"
+msgstr "ไม่สามารถคัดลอกแผนที่เชิงเส้น  <%s> ไปเป็น <%s>"
 
 #: ../lib/vector/Vlib/open.c:213
 msgid "Unable to read head file"
@@ -1460,10 +1462,12 @@ msgid "isles built"
 msgstr "Graph ถูกสร้าง"
 
 #: ../lib/vector/Vlib/build_nat.c:605
+#, fuzzy
 msgid "Attaching islands: "
 msgstr "การแนบรูปเกาะ : "
 
 #: ../lib/vector/Vlib/build_nat.c:622
+#, fuzzy
 msgid "Attaching centroids: "
 msgstr "การแนบ จุดศูนย์ถ่วง: "
 
@@ -1908,7 +1912,7 @@ msgstr "ไม่สามารถเขียนใหม่,แผนที�
 #: ../lib/vector/Vlib/write.c:168
 #, fuzzy, c-format
 msgid "Unable to rewrite line %d"
-msgstr "ไม่สามารถลบไฟล์  '%s'"
+msgstr "ไม่สามารถอ่าน ส่วนหัวของไฟล์ได้"
 
 #: ../lib/vector/Vlib/write.c:212
 #, fuzzy, c-format
@@ -2033,7 +2037,7 @@ msgid ""
 msgstr "Datum <%s> ยอมรับโดย GRASS แต่ไม่พบค่าตัวแปร.คุณต้องตรวจสอบข้อมูลนี้"
 
 #: ../lib/proj/convert.c:440
-#, c-format
+#, fuzzy, c-format
 msgid ""
 "Invalid tranformation number %d; valid range is 1 to %d. Leaving datum "
 "transform parameters unspecified."
@@ -3102,6 +3106,7 @@ msgid "Type"
 msgstr "ชนิด"
 
 #: ../lib/gis/parser.c:565
+#, fuzzy
 msgid "Feature type(s)"
 msgstr "ลักษณะข้อมูล"
 
@@ -4290,9 +4295,9 @@ msgid "Vector map <%s> loaded (%d points)"
 msgstr "ไม่พบ ชื่อแผนที่เชิงเส้น <%s>"
 
 #: ../lib/ogsf/GS2.c:1638
-#, c-format
+#, fuzzy, c-format
 msgid "Raster map <%s@%s> is outside of current region. Load failed."
-msgstr ""
+msgstr "[%s] ชุดแผนที่ [%s] - ในโซนที่แตกต่าง [%d] จากขอบเขตปัจจุบัน [%d]"
 
 #: ../lib/ogsf/GS2.c:1716 ../lib/ogsf/GS2.c:1722 ../lib/ogsf/GS2.c:1730
 #: ../lib/ogsf/GS2.c:1739 ../lib/ogsf/GS2.c:1747 ../lib/ogsf/GS2.c:1757
@@ -4534,8 +4539,9 @@ msgid "Loading data from attribute table ..."
 msgstr "กำลังอ่านข้อมูลจากตารางข้อมูล"
 
 #: ../lib/rst/interp_float/vinput2d.c:79
+#, fuzzy
 msgid "Cannot get layer info"
-msgstr "ไม่สามารถอ่านรายละเอียดของชั้นข้อมูลได้"
+msgstr "ไม่สามารถอ่านรายละเอียด field ได้"
 
 #: ../lib/rst/interp_float/vinput2d.c:87
 #, c-format
@@ -4666,6 +4672,7 @@ msgstr "ภาพการบัง ถูกสร้าง"
 #~ "\r%d สร้างรูปปิด      \n"
 #~ "%d สร้าง isles \n"
 
+#, fuzzy
 #~ msgid "Cannot open database <%s> by driver <%s>"
 #~ msgstr "ไม่สามารถเปิดฐานข้อมูล <%s> ด้วยตัวขับ <%s>"
 
@@ -4687,5 +4694,84 @@ msgstr "ภาพการบัง ถูกสร้าง"
 #~ msgid "Cannot rewrite line"
 #~ msgstr "ไม่สามารถเขียนใหม่"
 
+#, fuzzy
 #~ msgid "Cannot delete line"
+#~ msgstr "ไม่สามารถเขียนใหม่"
+
+#, fuzzy
+#~ msgid ""
+#~ "Unable to open vector map <%s> on level %d. Try to rebuild vector "
+#~ "topology by v.build."
+#~ msgstr "ไม่สามารถเปิดแผนที่เชิงเส้นได้ <%s> บน topology ระดับ %d"
+
+#, fuzzy
+#~ msgid "Attempt to delete dead feature"
+#~ msgstr "ตั้งใจที่จะลบพื้นที่"
+
+#, fuzzy
+#~ msgid "Attempt to restore alive feature"
+#~ msgstr "ตั้งใจที่จะลบพื้นที่"
+
+#, fuzzy
+#~ msgid "Unable to find vector map <%s> in <%s>"
+#~ msgstr "ไม่สามารถคัดลอกแผนที่เชิงเส้น  <%s> ไปเป็น <%s>"
+
+#, fuzzy
+#~ msgid "Unable to rewrite feature %d"
+#~ msgstr "ไม่สามารถลบไฟล์  '%s'"
+
+#, fuzzy
+#~ msgid ""
+#~ "Unable to restore feature %d, vector map <%s> is not opened on topology "
+#~ "level"
+#~ msgstr "ไม่สามารถลบ,แผนที่ '%s ไม่ไดถูกเปิด ในระดับ 2"
+
+#, fuzzy
+#~ msgid ""
+#~ "Unable to restore feature %d, vector map <%s> is not opened in 'write' "
+#~ "mode"
+#~ msgstr "ไม่สามารถลบ,แผนที่ '%s ไม่ไดถูกเปิด เพื่อเขียน"
+
+#, fuzzy
+#~ msgid "Unable to restore feature %d from vector map <%s>"
+#~ msgstr "ไม่สามารถลบแผนที่เชิงเส้น  <%s> ได้"
+
+#, fuzzy
+#~ msgid "Line is not looped"
+#~ msgstr "เมตริกซ์ ไม่ยอมรับ"
+
+#, fuzzy
+#~ msgid "Unable to find '%s' in '%s'"
+#~ msgstr "ไม่สามารถค้นหา  [%s]"
+
+#, fuzzy
+#~ msgid "Using <%s@%s>"
+#~ msgstr "ไม่สามารถค้นหา  [%s]"
+
+#, fuzzy
+#~ msgid "Feature id"
+#~ msgstr "ลักษณะข้อมูล"
+
+#, fuzzy
+#~ msgid "Feature ids"
+#~ msgstr "ลักษณะข้อมูล"
+
+#, fuzzy
+#~ msgid "Unable to locate symbol <%s>"
+#~ msgstr "ไม่สามารถลบตารางได้ <%s>"
+
+#, fuzzy
+#~ msgid "Unable to load GDAL library"
+#~ msgstr "ไม่สามารถเพิ่ม network arc"
+
+#, fuzzy
+#~ msgid "Attributes for category %d not found"
+#~ msgstr "ไม่พบ ข้อมูลสำหรับแสดง %d  จากฐานข้อมูล"
+
+#, fuzzy
+#~ msgid "Cannot fetch row"
+#~ msgstr "ไม่สามารถอ่านรายละเอียดของชั้นข้อมูลได้"
+
+#, fuzzy
+#~ msgid "Cannot select attributes"
 #~ msgstr "ไม่สามารถลบ"
