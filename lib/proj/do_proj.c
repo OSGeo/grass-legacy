@@ -144,6 +144,7 @@ int pj_do_transform(int count, double *x, double *y, double *h,
 
     if (h == NULL) {
 	int i;
+
 	h = G_malloc(sizeof *h * count);
 	/* they say memset is only guaranteed for chars ;-( */
 	for (i = 0; i < count; ++i)

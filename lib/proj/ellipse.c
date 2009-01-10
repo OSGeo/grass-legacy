@@ -26,7 +26,8 @@
 #include <grass/gprojects.h>
 #include "local_proto.h"
 
-static int get_a_e2_f(const char *, const char *, double *, double *, double *);
+static int get_a_e2_f(const char *, const char *, double *, double *,
+		      double *);
 
 /**
  * This routine returns the ellipsoid parameters from the database.
@@ -217,7 +218,8 @@ struct ellps_list *read_ellipsoid_table(int fatal)
 
     if (fd == NULL) {
 	perror(file);
-	G_asprintf(&errbuf, _("unable to open ellipsoid table file: %s"), file);
+	G_asprintf(&errbuf, _("unable to open ellipsoid table file: %s"),
+		   file);
 	fatal ? G_fatal_error(errbuf) : G_warning(errbuf);
 	G_free(errbuf);
 	return 0;
@@ -230,8 +232,8 @@ struct ellps_list *read_ellipsoid_table(int fatal)
 	if (*buf == 0 || *buf == '#')
 	    continue;
 
-	if (sscanf(buf, "%s  \"%1023[^\"]\" %s %s", name, descr, buf1, buf2) !=
-	    4) {
+	if (sscanf(buf, "%s  \"%1023[^\"]\" %s %s", name, descr, buf1, buf2)
+	    != 4) {
 	    err++;
 	    sprintf(buf, " %d", line);
 	    if (*badlines)
