@@ -5,13 +5,13 @@
 # Markus Neteler <neteler itc.it>, 2004.
 # Stephan Holl <holl gdf-hannover.de>, 2004, 2005, 2006.
 # Robert Nuske <rnuske gwdg.de>, 2006, 2007.
-# Robert Nuske <rnuske@gwdg.de>, 2008.
+# Robert Nuske <rnuske@gwdg.de>, 2008, 2009.
 msgid ""
 msgstr ""
 "Project-Id-Version: grassmods_de\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2008-11-18 11:29+0100\n"
-"PO-Revision-Date: 2008-11-18 19:39+0100\n"
+"PO-Revision-Date: 2009-01-02 22:29+0100\n"
 "Last-Translator: Robert Nuske <rnuske@gwdg.de>\n"
 "Language-Team: Deutsch <grass-translations@lists.osgeo.org>\n"
 "MIME-Version: 1.0\n"
@@ -305,6 +305,9 @@ msgid ""
 "driver: %s\n"
 "database: %s"
 msgstr ""
+"Standard Treiber / Datenbank ist:\n"
+"Treiber: %s\n"
+"Datenbank: %s"
 
 #: ../db/base/connect.c:144
 msgid "Default driver is not set"
@@ -316,7 +319,7 @@ msgstr "Standard-Datenbank ist nicht angegeben."
 
 #: ../db/db.login/main.c:44
 msgid "Sets user/password for driver/database."
-msgstr ""
+msgstr "Setzt Benutzername/Passwort für Treiber/Datenbank."
 
 #: ../db/db.login/main.c:60
 msgid "Username"
@@ -344,11 +347,11 @@ msgstr "Drücke RETURN um Anfrage abzubrechen\n"
 
 #: ../db/db.login/main.c:93
 msgid "Exiting. Not changing current settings"
-msgstr ""
+msgstr "Ende, ohne aktuelle Einstellungen zu verändern."
 
 #: ../db/db.login/main.c:97
 msgid "New password set"
-msgstr ""
+msgstr "Neues Passwort gesetzt."
 
 #: ../db/db.login/main.c:106
 msgid "Unable to set user/password"
@@ -532,8 +535,8 @@ msgstr "ZU importierende ASCII Raster-Datei."
 #: ../raster3d/r3.in.ascii/main.c:90
 msgid "String representing NULL value data cell (use 'none' if no such value)"
 msgstr ""
-"Zeichenkette, die NULL-Werte repräsentiert (verwenden Sie 'none' wenn Sie "
-"keinen sezen wollen)."
+"Zeichenkette, die NULL-Werte repräsentiert (verwenden Sie 'none' wenn keiner "
+"existiert)."
 
 #: ../raster3d/r3.in.ascii/main.c:174
 #, c-format
@@ -549,6 +552,8 @@ msgstr "Ende der Datei erreicht während des Ladens der Daten."
 msgid ""
 "Data exists in input file after fully importing expected data.  [%.4f ...]"
 msgstr ""
+"Nach vollständigem Import der erwarteten Daten befinden sie sich in der "
+"Input-Datei.  [%.4f ...]"
 
 #: ../raster3d/r3.in.ascii/main.c:240
 msgid "raster3d, voxel, import"
@@ -634,15 +639,15 @@ msgstr "Erzeugt Volumenstatistiken für 3D-Rasterkarten."
 
 #: ../raster3d/r3.stats/main.c:580
 msgid "Number of sub-ranges to collect stats from"
-msgstr "Anzahl der Unterbereiche für die Statistiken berechnet werden sollen"
+msgstr "Anzahl der Bereiche, für die Statistiken berechnet werden sollen"
 
 #: ../raster3d/r3.stats/main.c:586
 msgid "Calculate statistics based on equal value groups"
-msgstr ""
+msgstr "Berechne Statistiken für Gruppen gleicher Werte."
 
 #: ../raster3d/r3.stats/main.c:606
 msgid "The number of subranges has to be equal or greater than 1"
-msgstr ""
+msgstr "Die Anzahl der Bereiche muß gleich oder größer 1 sein."
 
 #: ../raster3d/r3.stats/main.c:611 ../raster/r.univar2/r3.univar_main.c:104
 #, c-format
@@ -925,9 +930,8 @@ msgid "Specific yield in 1/m"
 msgstr ""
 
 #: ../raster3d/r3.gwflow/main.c:108
-#, fuzzy
 msgid "Recharge raster map in m^3/s"
-msgstr "Lese Rasterkarte..."
+msgstr "Grundwasserneubildungskarte in m^3/s"
 
 #: ../raster3d/r3.gwflow/main.c:116
 msgid ""
@@ -1696,13 +1700,11 @@ msgid "%s: [%s] not found"
 msgstr "%s: [%s] nicht gefunden."
 
 #: ../raster/r.rescale.eq/main.c:54
-#, fuzzy
 msgid ""
 "Rescales histogram equalized the range of category values in a raster map "
 "layer."
 msgstr ""
-"Reskaliert ein normalisiertes Histogram basierend auf der Spanne der "
-"Kategoriewerte einer Rasterkarte."
+"Reskaliert mit Histogrammnormalisierung die Kategoriewerte einer Rasterkarte."
 
 #: ../raster/r.rescale.eq/main.c:64 ../raster/r.rescale/main.c:61
 msgid "The name of the raster map to be rescaled"
@@ -1850,14 +1852,12 @@ msgid "Extracts terrain parameters from a DEM."
 msgstr "Extrahiert Terrainparameter aus einem DGM."
 
 #: ../raster/r.param.scale/interface.c:56
-#, fuzzy
 msgid ""
 "Uses a multi-scale approach by taking fitting quadratic parameters to any "
 "size window (via least squares)."
 msgstr ""
-"Extrahiert Reliefinformationen aus einem DEM. Dazu benutzt das Modul einen "
-"multi-skalaren Ansatz, in dem quadratische Parameter auf jede Fenstergröße "
-"angepasst werden (über kleinste Quadrate)."
+"Verwendet einen multi-skalaren Ansatz, in dem quadratische Parameter auf "
+"jede Fenstergröße angepasst werden (über die Methode der kleinsten Quadrate)."
 
 #: ../raster/r.param.scale/interface.c:74
 msgid "Output raster layer containing morphometric parameter"
@@ -4512,85 +4512,80 @@ msgstr "Lese 'r.stats'-Ausgabe."
 
 #: ../raster/simwe/r.sim.sediment/main.c:111
 msgid "raster, sediment flow, erosion, deposition"
-msgstr "Raster, Sedimente, Erosion, Deposition"
+msgstr "Raster, Sedimenttransport, Erosion, Deposition"
 
 #: ../raster/simwe/r.sim.sediment/main.c:113
 msgid ""
 "Sediment transport and erosion/deposition simulation using path sampling "
 "method (SIMWE)"
 msgstr ""
+"Sedimenttransport und Erosions/Depositions Simulation unter Verwendung der "
+"\"path sampling method\" (SIMWE)."
 
 #: ../raster/simwe/r.sim.sediment/main.c:118
 #: ../raster/simwe/r.sim.water/main.c:125
 msgid "Name of the elevation raster map [m]"
-msgstr "Name der Rasterkarte, die Höheninformation enthält [m]."
+msgstr "Name der Rasterkartem mit Höheninformation [m]."
 
 #: ../raster/simwe/r.sim.sediment/main.c:123
 msgid "Name of the water depth raster map [m]"
-msgstr "Name der Rasterkarte, die die Wasserhöhe angibt [m]."
+msgstr "Name der Rasterkarte mit Wassertiefe [m]."
 
 #: ../raster/simwe/r.sim.sediment/main.c:128
 #: ../raster/simwe/r.sim.water/main.c:130
 msgid "Name of the x-derivatives raster map [m/m]"
-msgstr "Name der Rasterkarte, die die Ableitung nach X enthält [m/m]."
+msgstr "Name der Rasterkarte mit Ableitung nach X [m/m]."
 
 #: ../raster/simwe/r.sim.sediment/main.c:133
 #: ../raster/simwe/r.sim.water/main.c:135
 msgid "Name of the y-derivatives raster map [m/m]"
-msgstr "Name der Rasterkarte, die die Ableitung nach Y enthält [m/m]."
+msgstr "Name der Rasterkarte mit Ableitung nach Y [m/m]."
 
 #: ../raster/simwe/r.sim.sediment/main.c:139
-#, fuzzy
 msgid "Name of the detachment capacity coefficient raster map [s/m]"
-msgstr "Die Karte mit dem Koeffizient der direkten Sonneneinstrahlung [-]."
+msgstr "Name der Rasterkarte mit Trennungs-Kapazitätskoeffizienten [s/m]."
 
 #: ../raster/simwe/r.sim.sediment/main.c:145
-#, fuzzy
 msgid "Name of the transport capacity coefficient raster map [s]"
-msgstr "Einabekarte des Grund-Albedokoeffizients [-]."
+msgstr "Name der Rasterkarte mit Transport-Kapazitätskoeffizienten [s/m]."
 
 #: ../raster/simwe/r.sim.sediment/main.c:151
-#, fuzzy
 msgid "Name of the critical shear stress raster map [Pa]"
-msgstr "Name einer neuen Rasterkarte"
+msgstr "Name der Rasterkarte mit kritische Scherrspannung [Pa]."
 
 #: ../raster/simwe/r.sim.sediment/main.c:157
 #: ../raster/simwe/r.sim.water/main.c:173
 msgid "Name of the Mannings n raster map"
-msgstr "Name der Mannings n Rasterkarte"
+msgstr "Name der Rasterkarte mit Mannings n."
 
 #: ../raster/simwe/r.sim.sediment/main.c:165
 msgid "Name of the Mannings n value"
-msgstr "Name des Mannings n Wertes"
+msgstr "Name des Mannings n Parameters."
 
 #: ../raster/simwe/r.sim.sediment/main.c:180
-#, fuzzy
 msgid "Output transport capacity raster map [kg/ms]"
-msgstr "Ausgabekarte mit Hangexposition."
+msgstr "Ausgabe-Rasterkarte der Transportkapazität [kg/ms]."
 
 #: ../raster/simwe/r.sim.sediment/main.c:187
-#, fuzzy
 msgid "Output transp.limited erosion-deposition raster map [kg/m2s]"
-msgstr "section"
+msgstr ""
+"Ausgabe der \"transp.limited\" Erosions-Depositions Rasterkarte [kg/m2s]."
 
 #: ../raster/simwe/r.sim.sediment/main.c:194
-#, fuzzy
 msgid "Output sediment concentration raster map [particle/m3]"
-msgstr "Name der Fließrichtungskarte (Ausgabe)"
+msgstr "Ausgabe-Rasterkarte der Sedimentkonzentration [Partikel/m3]"
 
 #: ../raster/simwe/r.sim.sediment/main.c:200
-#, fuzzy
 msgid "Output sediment flux raster map [kg/ms]"
-msgstr "Name der Rasterkarte mit Abflussinformationen "
+msgstr "Ausgabe-Rasterkarte des Sedimentfluß [kg/ms]."
 
 #: ../raster/simwe/r.sim.sediment/main.c:207
-#, fuzzy
 msgid "Output erosion-deposition raster map [kg/m2s]"
-msgstr "section"
+msgstr "Ausgabe der Erosions-Depositions-Rasterkarte [kg/m2s]."
 
 #: ../raster/simwe/r.sim.sediment/main.c:214
 msgid "Number of walkers"
-msgstr "Anzahl der Geher"
+msgstr "Anzahl der Agenten."
 
 #: ../raster/simwe/r.sim.sediment/main.c:215
 #: ../raster/simwe/r.sim.sediment/main.c:223
@@ -4614,17 +4609,17 @@ msgstr "Zeit verwendet für die Iterationen [Minuten]"
 #: ../raster/simwe/r.sim.sediment/main.c:231
 #: ../raster/simwe/r.sim.water/main.c:249
 msgid "Time interval for creating output maps [minutes]"
-msgstr "Zeit-Intervall für die Erstellung von Ausgabe-Karten [Minuten]"
+msgstr "Zeit-Intervall für die Erstellung von Ausgabekarten [Minuten]"
 
 #: ../raster/simwe/r.sim.sediment/main.c:249
 #: ../raster/simwe/r.sim.water/main.c:267
 msgid "Water diffusion constant"
-msgstr "Wasserdiffusionskonstante"
+msgstr "Wasserdiffusionskoeffizienten"
 
 #: ../raster/simwe/r.sim.sediment/main.c:331
 #: ../raster/simwe/r.sim.water/main.c:444
 msgid "More than 100 files are going to be created !!!!!"
-msgstr "Mehr als 100 Dateien sollen werden erstellt !!!!!"
+msgstr "Es sollen mehr als 100 Dateien erstellt werden !!!!!"
 
 #: ../raster/simwe/r.sim.sediment/main.c:337
 #: ../raster/simwe/r.sim.water/main.c:450
@@ -4738,75 +4733,69 @@ msgid "Overland flow hydrologic simulation using path sampling method (SIMWE)"
 msgstr ""
 
 #: ../raster/simwe/r.sim.water/main.c:142
-#, fuzzy
 msgid "Name of the rainfall excess rate (rain-infilt) raster map [mm/hr]"
-msgstr "Name einer neuen Rasterkarte"
+msgstr ""
+"Name der Rasterkarte der Niederschlagsüberschussrate (rain-infilt) [mm/hr]."
 
 #: ../raster/simwe/r.sim.water/main.c:151
-#, fuzzy
 msgid "Rainfall excess rate unique value [mm/hr]"
-msgstr "Name einer neuen Rasterkarte"
+msgstr "Niederschlagsüberschussrate, einzelner Wert [mm/hr]."
 
 #: ../raster/simwe/r.sim.water/main.c:158
-#, fuzzy
 msgid "Name of the runoff infiltration rate raster map [mm/hr]"
-msgstr "Name der Eingabe-Rasterkarte"
+msgstr "Name der Rasterkarte der Abflußinfiltrationsrate [mm/hr]."
 
 #: ../raster/simwe/r.sim.water/main.c:167
-#, fuzzy
 msgid "Runoff infiltration rate unique value [mm/hr]"
-msgstr "Name der Eingabe-Rasterkarte"
+msgstr "Abflußinfiltrationsrate, einzelner Wert [mm/hr]."
 
 #: ../raster/simwe/r.sim.water/main.c:181
 msgid "Mannings n unique value"
-msgstr "Mannings n eindeutiger Wert"
+msgstr "Mannings n, einzelner Wert."
 
 #: ../raster/simwe/r.sim.water/main.c:188
-#, fuzzy
 msgid "Name of the flow controls raster map (permeability ratio 0-1)"
-msgstr "Name der Eingabe-Rasterkarte"
+msgstr "Name Rasterkarte, die den Fluß kontrolliert (Permeabilität: 0-1)."
 
 #: ../raster/simwe/r.sim.water/main.c:203
-#, fuzzy
 msgid "Output water depth raster map [m]"
-msgstr "Ausgabekarte mit der Hangläne (Raster)."
+msgstr "Ausgabe-Rasterkarte der Wassertiefe [m]"
 
 #: ../raster/simwe/r.sim.water/main.c:209
-#, fuzzy
 msgid "Output water discharge raster map [m3/s]"
-msgstr "Ausgabekarte mit der mittleren Wölbung."
+msgstr "Ausgabe-Rasterkarte des Wasserabfluß [m3/s]."
 
 #: ../raster/simwe/r.sim.water/main.c:215
-#, fuzzy
 msgid "Output simulation error raster map [m]"
-msgstr "Ausgabekarte mit der Hangneigung."
+msgstr "Ausgabe-Rasterkarte des Simulationsfehlers [m]."
 
 #: ../raster/simwe/r.sim.water/main.c:232
 msgid "Number of walkers, default is twice the no. of cells"
-msgstr ""
+msgstr "Anzahl der Agenten, Standard ist das Doppelte der Anzahl der Zellen."
 
 #: ../raster/simwe/r.sim.water/main.c:276
 msgid ""
 "Threshold water depth [m] (diffusion increases after this water depth is "
 "reached)"
 msgstr ""
+"Schwellwert der Wassertiefe [m] (Diffusion steigt, nachdem diese Wassertiefe "
+"erreicht wurde)."
 
 #: ../raster/simwe/r.sim.water/main.c:284
 msgid "Diffusion increase constant"
-msgstr ""
+msgstr "Diffusions Steigerungsrate"
 
 #: ../raster/simwe/r.sim.water/main.c:293
 msgid "Weighting factor for water flow velocity vector"
-msgstr ""
+msgstr "Gewichtungsfaktor für den Geschwindigkeitsvektor des Wasserflusses."
 
 #: ../raster/simwe/r.sim.water/main.c:298
 msgid "Time-series output"
-msgstr ""
+msgstr "Ausgabe der Zeitreihe"
 
 #: ../raster/simwe/r.sim.water/main.c:477
-#, fuzzy
 msgid "You are not outputting any raster maps"
-msgstr "Es werden weder Vektor- noch Rasterdaten ausgegeben."
+msgstr "Sie produzieren keine Rasterkarten."
 
 #: ../raster/r.out.mat/main.c:65
 msgid "Exports a GRASS raster to a binary MAT-File."
@@ -5206,16 +5195,16 @@ msgid ""
 "Interactive tool used to setup the sampling and analysis framework that will "
 "be used by the other r.le programs."
 msgstr ""
+"Interaktives Werkzeug zur Erzeugung eine Stichproben- und Analyse-Rahmens, "
+"der von den anderen r.le-Progammen verwendet wird. "
 
 #: ../raster/r.le/r.le.setup/main.c:67
-#, fuzzy
 msgid "Raster map to use to setup sampling"
-msgstr "Rasterkarte, die umgeschlüsselt werden soll."
+msgstr "Rasterkarte, zur Erzeugung des Stichprobenrahmens."
 
 #: ../raster/r.le/r.le.setup/main.c:71
-#, fuzzy
 msgid "Vector map to overlay"
-msgstr "Vektorkartentyp."
+msgstr "Einzublendende Vektorkarte."
 
 #: ../raster/r.le/r.le.pixel/main.c:47
 msgid ""
@@ -5226,15 +5215,14 @@ msgstr ""
 "Nebeneinanderstellung und Kanten"
 
 #: ../raster/r.le/r.le.trace/main.c:59
-#, fuzzy
 msgid ""
 "Displays the boundary of each r.le patch and shows how the boundary is "
 "traced, displays the attribute, size, perimeter and shape indices for each "
 "patch and saves the data in an output file."
 msgstr ""
-"Zeige die Grenzen aller r.le-Patches und zeige wie die Grenzen nachverfolgt "
-"werden. Zeige Attribut, Größe, Umfang und Form jedes Patches und speichere "
-"die Daten in einer Ausgabedatei."
+"Zeigt die Grenzen aller r.le-Patches und wie die Grenze verfolgt wird. Zeigt "
+"außerdem die Attribute, Größe, Umfang und Form Indices jedes Patches und "
+"speichert die Daten in eine Ausgabedatei."
 
 #: ../raster/r.le/r.le.patch/main.c:49
 msgid ""
@@ -6009,11 +5997,12 @@ msgstr ""
 "in der Zukunft entfernt."
 
 #: ../raster/r.surf.contour/main.c:75
-#, fuzzy
 msgid ""
 "Invoke slow, but memory frugal operation (generally not needed, will be "
 "removed in future)"
-msgstr "in"
+msgstr ""
+"Rufe langsame aber speicherschonende Operation auf (im Allgemeinen nicht "
+"benötigt, wird in Zukunft entfernt)."
 
 #: ../raster/r.topidx/main.c:39
 msgid "Creates topographic index [ln(a/tan(beta))] map from elevation map."
@@ -8083,9 +8072,9 @@ msgid ""
 "Your color rules do not cover the whole range of data!\n"
 " (rules %f to %f but data %f to %f)"
 msgstr ""
-"Die ausgewählten Farbregeln erstrecken sich nicht über die gesamte "
-"Datenspanne!\n"
-"(Regelsatz: %f - %f aber Datenspanne: %f - %f)"
+"Die ausgewählten Farbregeln erstrecken sich nicht über den gesamten "
+"Wertebereich!\n"
+"(Regelsatz: %f - %f aber Daten: %f - %f)"
 
 #: ../raster/r.colors/rules.c:107
 #, c-format
@@ -8128,13 +8117,12 @@ msgid "bad rule (%s): [%s]"
 msgstr "Schlechte Regel (%s): '%s'."
 
 #: ../raster/r.out.ppm/main.c:56
-#, fuzzy
 msgid ""
 "Converts a GRASS raster map to a PPM image file at the pixel resolution of "
 "the currently defined region."
 msgstr ""
-"Exportiere GRASS Rasterkarte in ein 8/24 bit TIFF-Bild. Die Pixelauflösung "
-"wird aus der aktuellen Region-Einstellung übernommen."
+"Konvertiert eine GRASS-Rasterkarte in eine PPM Bilddatei mit der Auflösung "
+"der aktuellen Region."
 
 #: ../raster/r.out.ppm/main.c:64
 msgid "Name for new PPM file (use '-' for stdout)"
@@ -9989,27 +9977,23 @@ msgstr ""
 
 #: ../raster/r.watershed/ram/init_vars.c:139
 msgid "unable to open elevation map layer"
-msgstr "Kann die Rasterkarte mit Höhenwerten nicht öffnen."
+msgstr "Kann die elevation-Karte nicht öffnen."
 
 #: ../raster/r.watershed/ram/init_vars.c:157
-#, fuzzy
 msgid "unable to open runoff map layer"
-msgstr "Kann die Ausgabedatei nicht öffnen."
+msgstr "Kann die runoff-Karte nicht öffnen."
 
 #: ../raster/r.watershed/ram/init_vars.c:179
-#, fuzzy
 msgid "unable to open depression map layer"
-msgstr "Kann die Höhenkarte nicht schließen."
+msgstr "Kann die depression-Karte nicht öffnen."
 
 #: ../raster/r.watershed/ram/init_vars.c:193
-#, fuzzy
 msgid "unable to open blocking map layer"
-msgstr "Kann die Eingabekarte nicht schließen."
+msgstr "Kann die blocking-Karte nicht öffnen."
 
 #: ../raster/r.watershed/ram/init_vars.c:207
-#, fuzzy
 msgid "unable to open rill map layer"
-msgstr "Kann die Cell-Datei <%s> nicht öffnen."
+msgstr "Kann die rill-Karte nicht öffnen."
 
 #: ../raster/r.watershed/ram/init_vars.c:217
 msgid "unable to open MASK"
@@ -10022,7 +10006,7 @@ msgid "SECTION 1b (of %1d): Determining Offmap Flow."
 msgstr ""
 
 #: ../raster/r.watershed/ram/usage.c:9 ../raster/r.watershed/seg/usage.c:9
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "USAGE for basin delineation:\n"
 "%s -4 el=elevation_map t=swale_threshold [ov=overland_flow_map] "
@@ -10040,7 +10024,23 @@ msgid ""
 "[de=depression_map] [ac=accumulation_map] [di=display_map] "
 "[ms=max_slope_length] [ob=overland_blocking_map] [S=slope_steepness_map] "
 "LS=length_slope_map [r=rill_erosion_map] [sd=slope_deposition value or map]"
-msgstr "S"
+msgstr ""
+"VERWENDUNG für Einzugsgebietskartierung:\n"
+"%s -4 el=elevation_map t=swale_threshold [ov=overland_flow_map] "
+"[dr=drain_direction_map] [de=depression_map] [ac=accumulation_map] "
+"[di=display_map] ba=watershed_basin_map [se=stream_segment_map]\n"
+"\n"
+"VERWENDUNG für ARMSED-Datei Erzeugung:\n"
+"%s [-4] el=elevation_map t=swale_threshold [ov=overland_flow_map] "
+"[dr=drain_direction_map] [de=depression_map] [ac=accumulation_map] "
+"[di=display_map] [ba=watershed_basin_map] [se=stream_segment_map] "
+"ha=half_basin_map ar=ARMSED_file_name\n"
+"\n"
+"VERWENDUNG für Hanglängenberechnung:\n"
+"%s [-4] el=elevation_map t=swale_threshold [dr=drain_direction_map] "
+"[de=depression_map] [ac=accumulation_map] [di=display_map] "
+"[ms=max_slope_length] [ob=overland_blocking_map] [S=slope_steepness_map] "
+"LS=length_slope_map [r=rill_erosion_map] [sd=slope_deposition value or map]"
 
 #: ../raster/r.watershed/ram/do_cum.c:12 ../raster/r.watershed/seg/do_cum.c:14
 msgid "SECTION 3: Accumulating Surface Flow."
@@ -10063,9 +10063,8 @@ msgstr "Abschnitt %d: Bestimme Wassereinzugsgebiet."
 
 #: ../raster/r.watershed/ram/close_maps.c:22
 #: ../raster/r.watershed/ram/close_maps.c:60
-#, fuzzy
 msgid "unable to open new accum map layer."
-msgstr "Kann die Karte MASK nicht öffnen."
+msgstr "Kann neue accum-Karte nicht öffnen."
 
 #: ../raster/r.watershed/ram/close_maps.c:32
 #: ../raster/r.watershed/ram/close_maps.c:49
@@ -10085,9 +10084,8 @@ msgid "unable to open new L map layer."
 msgstr "Kann neue L-Karte nicht öffnen."
 
 #: ../raster/r.watershed/ram/close_maps.c:114
-#, fuzzy
 msgid "unable to open new slope length map layer."
-msgstr "Kann die Karte MASK nicht öffnen."
+msgstr "Kann neue slope-length-Karte nicht öffnen."
 
 #: ../raster/r.watershed/ram/close_maps.c:136
 msgid "unable to open new S map layer."
@@ -10096,21 +10094,19 @@ msgstr "Kann neue S-Karte nicht öffnen."
 #: ../raster/r.watershed/ram/do_astar.c:14
 #: ../raster/r.watershed/seg/do_astar.c:18
 msgid "SECTION 2: A * Search."
-msgstr ""
+msgstr "Abschnitt 2: A * Suche."
 
 #: ../raster/r.watershed/shed/valid.c:24
-#, fuzzy
 msgid "accum file missing in valid_basins()"
-msgstr "in"
+msgstr "accum-Datei fehlt in valid_basins()"
 
 #: ../raster/r.watershed/shed/valid.c:28
-#, fuzzy
 msgid "unable to open accum file in valid_basins()"
-msgstr "Kann die Rules-Datei %s in %s nicht öffnen."
+msgstr "Kann die accum-Datei in valid_basins() nicht öffnen."
 
 #: ../raster/r.watershed/shed/main.c:40
 msgid "Slow version of water analysis program starting now"
-msgstr ""
+msgstr "Langsame Version des Wasseranalyseprogramms startet jetzt. "
 
 #: ../raster/r.watershed/shed/main.c:45 ../raster/r.watershed/shed/main.c:54
 #, c-format
@@ -10200,7 +10196,7 @@ msgstr ""
 #: ../raster/r.watershed/shed/com_line.c:68
 #: ../raster/r.watershed/shed/com_line.c:180
 msgid "program will terminate."
-msgstr "Programm beendet."
+msgstr "Programm wird beendet."
 
 #: ../raster/r.watershed/shed/com_line.c:79
 #, c-format
@@ -10230,9 +10226,8 @@ msgid "have a depression map, prepare a map where non-zero values indicate the"
 msgstr ""
 
 #: ../raster/r.watershed/shed/com_line.c:85
-#, fuzzy
 msgid "locations where depressions occur.\n"
-msgstr "Eingabekarte: Orte realer Senken im Gebiet."
+msgstr "Orte an denen Senken vorkommen.\n"
 
 #: ../raster/r.watershed/shed/com_line.c:86
 msgid ""
@@ -10316,7 +10311,7 @@ msgstr " 1) Acres, 2) Quadratmeter, 3) Quadratmeilen, 4) Hektar,"
 
 #: ../raster/r.watershed/shed/com_line.c:118
 msgid " 5) kilometers sq., 6) map cells,  7) overland flow units"
-msgstr " 5) Quadratkilometer, 6) Zellen,  7) overland flow units"
+msgstr " 5) Quadratkilometer, 6) Zellen, 7) Oberflächenabflußeinheiten"
 
 #: ../raster/r.watershed/shed/com_line.c:119
 #, c-format
@@ -10542,9 +10537,8 @@ msgid "divided by basin. %s will then run %s and create the report."
 msgstr ""
 
 #: ../raster/r.watershed/shed/read.c:23
-#, fuzzy
 msgid "unable to open basin/half basin map"
-msgstr "Kann die Höhenkarte nicht schließen."
+msgstr "Kann die basin/half basin-Karte nicht öffnen."
 
 #: ../raster/r.watershed/shed/basin_maps.c:12
 #, fuzzy
@@ -10633,16 +10627,16 @@ msgstr "Modul zur Analyse von Wassereinzugsgebieten."
 #: ../raster/r.watershed/front/main.c:55
 msgid "Input map: elevation on which entire analysis is based"
 msgstr ""
-"Eingabekarte: Höhenmodell, welches Grundlage dieser gesamten Analyse sein "
-"wird."
+"Eingabekarte mit Höheninformationen, welche die Grundlage der gesamten "
+"Analyse ist."
 
 #: ../raster/r.watershed/front/main.c:60
 msgid "Input map: locations of real depressions"
-msgstr "Eingabekarte: Orte realer Senken im Gebiet."
+msgstr "Eingabekarte mit Orten realer Senken im Gebiet."
 
 #: ../raster/r.watershed/front/main.c:68
 msgid "Input map: amount of overland flow per cell"
-msgstr "Eingabekarte: Anzahl von Oerflächenabfluss pro Zelle."
+msgstr "Eingabekarte mit der Größe des Oberflächenabfluss pro Zelle."
 
 #: ../raster/r.watershed/front/main.c:77
 msgid "Input map or value: percent of disturbed land, for USLE"
@@ -10651,8 +10645,7 @@ msgstr "Eingabekarte oder Wert: Prozent von gestörtem Land, (für ABAG/USLE)."
 #: ../raster/r.watershed/front/main.c:86
 msgid "Input map: terrain blocking overland surface flow, for USLE"
 msgstr ""
-"Eingabekarte: Linienhafte Strukturen, die Oberflächenabfluss blockieren (für "
-"ABAG/USLE)."
+"Eingabekarte mit Gelände, dass den Oberflächenabfluss blockiert, für USLE."
 
 #: ../raster/r.watershed/front/main.c:95
 msgid "Input value: minimum size of exterior watershed basin"
@@ -10664,35 +10657,36 @@ msgstr "Eingabewert: Maximale Länge des Oberflächenabflusses (für ABAG/USLE)."
 
 #: ../raster/r.watershed/front/main.c:113
 msgid "Output map: number of cells that drain through each cell"
-msgstr "Ausgabekarte: Anzahl der Zellen, die durch jede Zelle abfließt."
+msgstr "Ausgabekarte mit Anzahl der Zellen, die durch jede Zelle abfließt."
 
 #: ../raster/r.watershed/front/main.c:121
 msgid "Output map: drainage direction"
-msgstr "Ausgabekarte: Abflussrichtung"
+msgstr "Ausgabekarte mit Abflussrichtung."
 
 #: ../raster/r.watershed/front/main.c:130
 msgid "Output map: unique label for each watershed basin"
-msgstr "Ausgabekarte: Eindeutige Label für jedes Einzugsgebiet."
+msgstr "Ausgabekarte mit eindeutiger Kennzeichnung jedes Einzugsgebietes."
 
 #: ../raster/r.watershed/front/main.c:138
 msgid "Output map: stream segments"
-msgstr "Ausgabekarte: Flussnetzwerk"
+msgstr "Ausgabekarte der Flußsegmente. "
 
 #: ../raster/r.watershed/front/main.c:147
 msgid "Output map: each half-basin is given a unique value"
-msgstr "Ausgabekarte: Einzugegebietshälften mit einem eindeutigen Wert."
+msgstr "Ausgabekarte mit Einzugsgebietshälften mit eindeutigen Wert."
 
 #: ../raster/r.watershed/front/main.c:156
 msgid "Output map: useful for visual display of results"
-msgstr "Ausgabekarte: hilfreich für die visuelle Darstellung der Ergebnisse."
+msgstr ""
+"Ausgabekarte die hilfreich für die visuelle Darstellung der Ergebnisse ist."
 
 #: ../raster/r.watershed/front/main.c:165
 msgid "Output map: slope length and steepness (LS) factor for USLE"
-msgstr "Ausgabekarte: Hanglänge und -Neigungsfaktor (LS) für ABAG/USLE."
+msgstr "Ausgabekarte der Hanglängen und -Neigungsfaktoren (LS) für USLE."
 
 #: ../raster/r.watershed/front/main.c:173
 msgid "Output map: slope steepness (S) factor for USLE"
-msgstr "Ausgabekarte: Hangneigungsfaktor (S) für ABAG/USLE."
+msgstr "Ausgabekarte der Hangneigungsfaktoren (S) für USLE."
 
 #: ../raster/r.watershed/front/main.c:182
 msgid "Enable disk swap memory option: Operation is slow"
@@ -10931,7 +10925,7 @@ msgstr "Bereich der Stufen: min = %f max = %f"
 #: ../raster/r.contour/main.c:356
 #, fuzzy
 msgid "Displacing data: "
-msgstr "Drehe Daten..."
+msgstr "Verschiebe Daten:"
 
 #: ../raster/r.cross/renumber.c:32
 #, c-format
@@ -11071,11 +11065,11 @@ msgstr "Aggregationsverfahren"
 
 #: ../raster/r.series/main.c:157
 msgid "Ignore values outside this range"
-msgstr ""
+msgstr "Ignoriere Werte außerhalb dieses Bereichs."
 
 #: ../raster/r.series/main.c:209
 msgid "output= and method= must have the same number of values"
-msgstr ""
+msgstr "output= und method= müssen die selbe Anzahl von Werten haben."
 
 #: ../raster/r.water.outlet/main.c:47
 msgid "Watershed basin creation program."
@@ -11618,29 +11612,28 @@ msgid "Integer data range of %s is %d to %d"
 msgstr "Integer Wertebereich von %s ist %d bis %d."
 
 #: ../raster/r.recode/read_rules.c:59
-#, fuzzy
 msgid "Enter the rule or 'help' for the format description"
-msgstr "Bitte geben Sie eine Regel in einem der folgende Formate ein:\n"
+msgstr "Geben Sie die Regel oder 'help' für die Formatbeschreibung ein."
 
 #: ../raster/r.recode/read_rules.c:80
 msgid "Enter a rule in one of these formats:"
-msgstr "Bitte geben Sie eine Regel in einem dieser Formate ein:"
+msgstr "Geben Sie eine Regel in einem dieser Formate ein:"
 
 #: ../raster/r.recode/read_rules.c:81
 msgid "old_low:old_high:new_low:new_high"
-msgstr ""
+msgstr "alt_neidrig:alt_hoch:neu_niedrig:neu_hoch"
 
 #: ../raster/r.recode/read_rules.c:82
 msgid "old_low:old_high:new_val      (i.e. new_high == new_low)"
-msgstr ""
+msgstr "alt_niedrig:alt_hoch:neuer_wert      (z.B. neu_hoch == neu_niedrig)"
 
 #: ../raster/r.recode/read_rules.c:83
 msgid "*:old_val:new_val             (interval [inf, old_val])"
-msgstr ""
+msgstr "*:alt_wert:neu_wert             (Intervall [unendlich, alt_wert])"
 
 #: ../raster/r.recode/read_rules.c:84
 msgid "old_val:*:new_val             (interval [old_val, inf])"
-msgstr ""
+msgstr "alt_wertl:*:neu_wert             (Intervall [alt_wert, unendlich])"
 
 #: ../raster/r.recode/read_rules.c:123
 #, fuzzy, c-format
@@ -15237,7 +15230,7 @@ msgstr "Kann die MASKE nicht lesen."
 #: ../vector/v.kernel/main.c:450
 #, c-format
 msgid "Maximum value in output: %e."
-msgstr "Maximaler Wert der Ausgabekarte: %e."
+msgstr "Maximaler Wert der Ausgabe: %e."
 
 #: ../vector/v.sample/main.c:88
 #, fuzzy
