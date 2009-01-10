@@ -139,6 +139,20 @@ class MapWindow(object):
                  style=wx.NO_FULL_REPAINT_ON_RESIZE,
                  Map=None, tree=None, gismgr=None):
         self.parent = parent # MapFrame
+
+        #
+        # mouse attributes like currently pressed buttons, position on
+        # the screen, begin and end of dragging, and type of drawing
+        #
+        self.mouse = {
+            'l'    : False,
+            'r'    : False,
+            'm'    : False,
+            'begin': [0, 0], # screen coordinates
+            'end'  : [0, 0],
+            'use'  : "pointer",
+            'box'  : "point"
+            }
         
     def EraseMap(self):
         """
@@ -270,21 +284,7 @@ class BufferedWindow(MapWindow, wx.Window):
         #
         self.zoomhistory = [] # list of past zoom extents
         self.currzoom = 0 # current set of extents in zoom history being used
-
-        #
-        # mouse attributes like currently pressed buttons, position on
-        # the screen, begin and end of dragging, and type of drawing
-        #
-        self.mouse = {
-            'l'    : False,
-            'r'    : False,
-            'm'    : False,
-            'begin': [0, 0], # screen coordinates
-            'end'  : [0, 0],
-            'use'  : "pointer",
-            'box'  : "point"
-            }
-
+        
         self.zoomtype = 1   # 1 zoom in, 0 no zoom, -1 zoom out
         self.hitradius = 10 # distance for selecting map decorations
         self.dialogOffset = 5 # offset for dialog (e.g. DisplayAttributesDialog)
