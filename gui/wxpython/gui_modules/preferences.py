@@ -502,6 +502,7 @@ class Settings:
                                                                         'location',
                                                                         'mapset')
         self.internalSettings['advanced']['iconTheme']['choices'] = ('grass',
+                                                                     'grass2',
                                                                      'silk')
         self.internalSettings['cmd']['verbosity']['choices'] = ('grassenv',
                                                                 'verbose',
@@ -1778,6 +1779,7 @@ class CheckListMapset(wx.ListCtrl, listmix.ListCtrlAutoWidthMixin, listmix.Check
         self.InsertColumn(2, _('Group'))
         locationPath = os.path.join(grassenv.GetGRASSVariable('GISDBASE'),
                                     grassenv.GetGRASSVariable('LOCATION_NAME'))
+        
         for mapset in mapsets:
             index = self.InsertStringItem(sys.maxint, mapset)
             mapsetPath = os.path.join(locationPath,
