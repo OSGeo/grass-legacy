@@ -581,3 +581,35 @@ class CommandThread(Thread):
         """Abort running process, used by main thread to signal an abort"""
         self._want_abort = True
     
+def RunCommand(prog, flags = "", overwrite = False, quiet = False, verbose = False,
+               parent = None, read = False, stdin = None, **kwargs):
+    """Run GRASS command"""
+    kwargs['stderr'] = subprocess.PIPE
+    
+    if read:
+        kwargs['stdout'] = subprocess.PIPE
+    
+    if stdin:
+        kwargs['stdin'] = subprocess.PIPE
+    
+    ps = grass.start_command(prog, flags, overwrite, quiet, verbose, **kwargs)
+    
+    if stdin:
+        ps.stdin.write(stdin)
+        ps.stdin.close()
+        ps.stdin = None
+
+    ret = ps.wait()
+    
+    stdout, stderr = ps.communicate()
+        
+    if ret != 0 and parent:
+        e = CmdError(cmd = prog,
+                     message = stderr,
+                     parent = parent)
+        e.Show()
+
+    if not read:
+        return ret
+
+    return stdout
