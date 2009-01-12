@@ -36,7 +36,7 @@ int vect_to_rast(char *vector_map, char *raster_map, int field, char *column,
     if ((vector_mapset = G_find_vector2(vector_map, "")) == NULL)
 	G_fatal_error(_("Vector map <%s> not found"), vector_map);
 
-    G_debug(1, "Loading vector information...");
+    G_message(_("Loading data..."));
     Vect_set_open_level(2);
     Vect_open_old(&Map, vector_map, vector_mapset);
 
@@ -179,10 +179,7 @@ int vect_to_rast(char *vector_map, char *raster_map, int field, char *column,
 	    }
 	}
 
-	G_message(_("Converted areas: %d of %d"), nareas, nareas_all);
-	G_message(_("Converted points/lines: %d of %d"), nlines, nplines_all);
-
-	G_debug(1, "Writing raster map ...");
+	G_message(_("Writing raster map..."));
 
 	stat = output_raster(fd);
     } while (stat == 0);
@@ -199,7 +196,7 @@ int vect_to_rast(char *vector_map, char *raster_map, int field, char *column,
 
     Vect_close(&Map);
 
-    G_debug(1, "Creating support files for raster map...");
+    G_verbose_message(_("Creating support files for raster map..."));
     G_close_cell(fd);
     update_hist(raster_map, vector_map, vector_mapset, Map.head.orig_scale);
 
@@ -224,5 +221,10 @@ int vect_to_rast(char *vector_map, char *raster_map, int field, char *column,
     update_labels(raster_map, vector_map, field, labelcolumn, use, value,
 		  column);
 
+    G_message(_("Converted areas: %d of %d"), nareas, nareas_all);
+    G_message(_("Converted points/lines: %d of %d"), nlines, nplines_all);
+    
+    G_done_msg(" ");
+    
     return 0;
 }
