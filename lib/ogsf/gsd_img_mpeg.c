@@ -436,7 +436,7 @@ int gsd_close_mpeg(void)
 
     if (!(fmt->flags & AVFMT_NOFILE)) {
 	/* close the output file */
-#ifdef (LIBAVFORMAT_VERSION_INT>>16) < 52
+#if (LIBAVFORMAT_VERSION_INT>>16) < 52
 	url_fclose(&oc->pb);
 #else
 	url_fclose(oc->pb);
