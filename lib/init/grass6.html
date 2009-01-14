@@ -12,11 +12,11 @@
 
 <H2>NAME</H2>
 
-<EM><B>grass64</B></EM>  - The GRASS startup program<BR>
+<EM><B>grass65</B></EM>  - The GRASS startup program<BR>
 
 <H2>SYNOPSIS</H2>
 
-<B>grass64</B> [<B>-</B>] [<B>-v</B>] [<B>-h | -help | --help</B>]
+<B>grass65</B> [<B>-</B>] [<B>-v</B>] [<B>-h | -help | --help</B>]
     [<B>-text | -gui | -tcltk | -wxpython]</B>]
     [[[<B>&lt;GISDBASE&gt;/</B>]<B>&lt;LOCATION_NAME&gt;/</B>]
     	<B>&lt;MAPSET&gt;</B>]
@@ -37,15 +37,15 @@ desired mapset to work on.
 <H2>FEATURES</H2>
 
 <P>
-The <em>grass64</em> startup program will remember both the desired user
+The <em>grass65</em> startup program will remember both the desired user
 interface and mapset. Thus, the next time the user runs GRASS, typing
-<EM>grass64</EM> (without any options) will start GRASS with the previous
+<EM>grass65</EM> (without any options) will start GRASS with the previous
 settings for the user interface and mapset selected.
 
 <P>
-If you specify a graphical user interface (Tcl/Tk or wxPython) the <EM>grass64</EM>
+If you specify a graphical user interface (Tcl/Tk or wxPython) the <EM>grass65</EM>
 program will try to verify that the system you specified exists and that you
-can access it successfully. If any of these checks fail then <EM>grass64</EM>
+can access it successfully. If any of these checks fail then <EM>grass65</EM>
 will automatically switch back to the text user interface mode.
 
 
@@ -122,16 +122,16 @@ The rest of this help page will only consider shell environment variables.
 <H3>User Interface Environment Variable</H3>
 
 <P>
-The <EM>grass64</EM> program will check for the existence of an environment
+The <EM>grass65</EM> program will check for the existence of an environment
 variable called GRASS_GUI which indicates the type of user interface for
-GRASS to use. If this variable is not set when <EM>grass64</EM> is run, then
+GRASS to use. If this variable is not set when <EM>grass65</EM> is run, then
 it will be created and then saved in the <tt>$HOME/.grassrc6</tt> file for
 the next time GRASS is run. In addition to "text", "tcltk" or "wxpython",
 the GRASS_GUI variable can be set to the name of the Tcl/Tk GUI to use, for
 example "gis.m" or "d.m".
 
 <P>
-There is an order of precedence in the way <EM>grass64</EM> determines the user
+There is an order of precedence in the way <EM>grass65</EM> determines the user
 interface to use. The following is the hierarchy from highest precedence to
 lowest.
 
@@ -260,23 +260,23 @@ The following are some examples of how you could start GRASS
 
 <DL>
 
-<DT><B>grass64</B>
+<DT><B>grass65</B>
 <DD> Start GRASS using the default user interface. The user will be prompted
     to choose the appropriate location and mapset.
 
-<DT><B>grass64 -gui</B>
+<DT><B>grass65 -gui</B>
 <DD> Start GRASS using the Tcl/Tk based user interface. The user will be
     prompted to choose the appropriate location and mapset.
 
-<DT><B>grass64 -text</B>
+<DT><B>grass65 -text</B>
 <DD> Start GRASS using the text based user interface. The user will be
     prompted to choose the appropriate location and mapset.
 
-<DT><B>grass64 ~/grassdata/spearfish60/user1</B>
+<DT><B>grass65 ~/grassdata/spearfish60/user1</B>
 <DD> Start GRASS using the default user interface and automatically launch
    into the given mapset, bypassing the mapset selection menu.
 
-<DT><B>grass64 -gui -</B>
+<DT><B>grass65 -gui -</B>
 <DD> Start GRASS using the Tcl/Tk based user interface and try to obtain
     the location and mapset from environment variables.
 
@@ -301,7 +301,7 @@ The following are some possible examples.
     
     Start GRASS with the following command:<BR><BR>
     
-    grass64 -<BR><BR>
+    grass65 -<BR><BR>
     
     GRASS will start with the mapset defined by LOCATION since the LOCATION
     variable overrides the other variables.<BR><BR>
@@ -315,7 +315,7 @@ The following are some possible examples.
     
     Start GRASS with the following command:<BR><BR>
     
-    grass64 -<BR><BR>
+    grass65 -<BR><BR>
     
     GRASS will start with the mapset defined by
     GISDBASE/LOCATION_NAME/MAPSET.<BR><BR>
@@ -330,7 +330,7 @@ The following are some possible examples.
     
     Start GRASS with the following command:<BR><BR>
     
-    grass64 /usr/home/grass/data/thailand/forests<BR><BR>
+    grass65 /usr/home/grass/data/thailand/forests<BR><BR>
     
     GRASS will start with the mapset /home/grass/data/thailand/forests which
     overrides the environment variables.<BR><BR>
@@ -345,7 +345,7 @@ The following are some possible examples.
     
     Start GRASS with the following command:<BR><BR>
     
-    grass64 swamps<BR><BR>
+    grass65 swamps<BR><BR>
     
     GRASS will start with the mapset defined by GISDBASE/LOCATION_NAME/swamps
     since the command line argument for the mapset overrides the environment
@@ -361,7 +361,7 @@ The following are some possible examples.
     
     Start GRASS with the following command:<BR><BR>
     
-    grass64 thailand/forests<BR><BR>
+    grass65 thailand/forests<BR><BR>
     
     GRASS will start with the mapset defined by GISDBASE/thailand/forests
     since the command line arguments for the location and mapset overrides
@@ -394,10 +394,10 @@ until it finds the first version of <tt>wish</tt>.
 
 <H2>FILES</H2>
 
-<EM>$UNIX_BIN/grass64</EM> - GRASS startup program (Linux, MacOSX etc.)<BR>
-<EM>$WINDOWS_BIN/grass64.bat</EM> - GRASS startup program (MS-Windows)<BR>
+<EM>$UNIX_BIN/grass65</EM> - GRASS startup program (Linux, MacOSX etc.)<BR>
+<EM>$WINDOWS_BIN/grass65.bat</EM> - GRASS startup program (MS-Windows)<BR>
 <EM>$GISBASE/etc/Init.sh</EM> - GRASS initialization script called by
-    <EM>grass64</EM><BR>
+    <EM>grass65</EM><BR>
 <EM>$GISBASE/etc/gis_set.tcl</EM> - Tcl/Tk script to set the
     location and mapset to use. Called by <EM>Init.sh</EM><BR><BR>
 
