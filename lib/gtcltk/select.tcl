@@ -46,7 +46,7 @@ proc handle_scroll {amount} {
 		set l [string length $parent]
         if {[string equal -length $l $parent $keyboard_focus] || \
             [string equal -length $l $parent $mouse_focus]} {
-            $window yview scroll [expr -1 * $amount] units
+            $window yview scroll [expr  {-$amount/120}] units
         }
     }
 
