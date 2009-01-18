@@ -135,9 +135,17 @@ class Layer(object):
                 gcmd.Command(['d.mon',
                               'start=cairo'], stderr=None)
         else:
+            if not self.mapfile:
+                self.gtemp = tempfile.mkstemp()[1]
+                self.maskfile = self.gtemp + ".pgm"
+                if self.type == 'overlay':
+                    self.mapfile  = self.gtemp + ".png"
+                else:
+                    self.mapfile  = self.gtemp + ".ppm"
+
             if self.mapfile:
                 os.environ["GRASS_PNGFILE"] = self.mapfile
-                
+        
         #
         # execute command
         #
