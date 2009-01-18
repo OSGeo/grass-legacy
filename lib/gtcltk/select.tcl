@@ -8,9 +8,9 @@
 #   GRASS 5. Subsequent modifications by members of the GRASS Development
 #   team.
 #
-# Last update: September 2007
+# Last update: January 2009
 #
-# COPYRIGHT:	(C) 1999 - 2007 by the GRASS Development Team
+# COPYRIGHT:	(C) 1999 - 2009 by the GRASS Development Team
 #
 #		This program is free software under the GNU General Public
 #		License (>=v2). Read the file COPYING that comes with GRASS
@@ -24,53 +24,61 @@
 # We use the parent because the scrollbars are in the parent, and two scrollable
 # Things shouldn't have the same parent.
 
-set bind_scroll_list {}
+namespace eval GSelect_ {
+    variable count 1
+    variable dblclick
+    variable array selwin
+    variable tree
+    variable bind_scroll_list
+    set bind_scroll_list {}
+}
 
-proc handle_scroll {amount} {
-    global bind_scroll_list
+proc handle_scroll {amount window} {
+    variable bind_scroll_list
+    set scrlwin ""
 
-    foreach {x y} {-1 -1} {}
-
-    set window_gone 0
-
-    foreach window $bind_scroll_list {
-        if {![winfo exists $window]} {
-            set window_gone 1
-            continue
-        } 
-        if {![winfo ismapped $window]} continue
-        set parent [winfo parent $window]
-        set keyboard_focus [focus -displayof $window]
-        foreach {x y} [winfo pointerxy $window] {break}
-        set mouse_focus [winfo containing -displayof $window $x $y]
-		set l [string length $parent]
-        if {[string equal -length $l $parent $keyboard_focus] || \
-            [string equal -length $l $parent $mouse_focus]} {
-            $window yview scroll [expr  {-$amount/120}] units
-        }
+    if {[lsearch -exact $bind_scroll_list $window] != -1} {
+        #window is a scrollable window
+        set scrlwin $window
+    } else {
+        # if window is not scrollable, find the parent that is scrollable
+        foreach item $bind_scroll_list {
+            if {[string first $item $window 0] != -1} {
+                set scrlwin $item
+                break
+            }
+        }    
     }
 
-    # We should thin out windows that don't exist anymore if we find them
-    if {$window_gone} {
-        set new_bind_scroll_list {}
-        foreach window $bind_scroll_list {
-            if {[winfo exists $window]} {
-                lappend new_bind_scroll_list $window
-            }
-        }
-        set bind_scroll_list $new_bind_scroll_list
+    if {$scrlwin == "" } {return}
+    if {[tk windowingsystem] eq "win32"} {
+        $scrlwin yview scroll [expr {-$amount/120}] units
+    } else { 
+        $scrlwin yview scroll [expr -1*$amount] units
     }
 }
 
 proc bind_scroll {frame} {
-    global bind_scroll_list
+    variable bind_scroll_list
 
-    lappend bind_scroll_list $frame
+    lappend bind_scroll_list $frame    
+    
+    # We should thin out windows that don't exist anymore if we find them
+    set new_bind_scroll_list {}
+    foreach window $bind_scroll_list {
+        if {[winfo exists $window]} {
+            lappend new_bind_scroll_list $window
+        }
+    }
+    set bind_scroll_list $new_bind_scroll_list
+
 }
 
-bind all <MouseWheel> "handle_scroll %D"
-bind all <Button-4> "handle_scroll 120"
-bind all <Button-5> "handle_scroll -120"
+bind all <MouseWheel> "handle_scroll %D %W"
+if {[tk windowingsystem] eq "x11"} {
+    bind all <Button-4> "handle_scroll 1 %W"
+    bind all <Button-5> "handle_scroll -1 %W"
+}
 
 ##############################################################
 
@@ -82,11 +90,6 @@ proc GSelect { element args } {
 
 }
 
-namespace eval GSelect_ {
-    variable count 1
-    variable dblclick
-    variable array selwin
-}
 
 proc GSelect_::create { element args } {
     # main procedure for creating and managing selection window, which a tree
@@ -95,6 +98,7 @@ proc GSelect_::create { element args } {
     global env id
     variable selwin
     variable count
+    variable tree
     
     incr count
     set id $count
@@ -104,7 +108,7 @@ proc GSelect_::create { element args } {
     set selwin($id,selected) {}
     
     if {[lsearch -exact $args "title"] > -1} {
-	append title " - [lindex $args [expr [lsearch -exact $args title]+1]]"
+        append title " - [lindex $args [expr [lsearch -exact $args title]+1]]"
     }
     
     # Leave selection on top of caller window till it's closed
@@ -133,7 +137,7 @@ proc GSelect_::create { element args } {
 
     set tree  [Tree $sw.tree \
                    -relief flat -borderwidth 0 -width 15 -highlightthickness 0\
-		   -redraw 1 -dropenabled 1 -dragenabled 1 \
+                   -redraw 1 -dropenabled 1 -dragenabled 1 \
                    -opencmd   "GSelect_::moddir 1 $sw.tree" \
                    -closecmd  "GSelect_::moddir 0 $sw.tree"] 
 
@@ -145,9 +149,6 @@ proc GSelect_::create { element args } {
     set w 300
     set h 400
     wm geometry $selwin($id,self) ${w}x$h$x$y
-
-    pack $sw    -side top  -expand yes -fill both
-    pack $tree  -side top -expand yes -fill both 
 
     $tree bindText  <ButtonPress-1>        "GSelect_::select $id $tree"
     $tree bindImage <ButtonPress-1>        "GSelect_::select $id $tree"
@@ -170,16 +171,16 @@ proc GSelect_::create { element args } {
             if { ! [ file exists $windfile ] } { continue }
             if { $dir == $current_mapset } {
                 $tree insert end root ms_$dir -text $dir -data $dir -open 1 \
-                -image [Bitmap::get openfold] -drawcross auto
+                    -image [Bitmap::get openfold] -drawcross auto
             } else {
                 $tree insert end root ms_$dir -text $dir -data $dir -open 0 \
-                -image [Bitmap::get folder] -drawcross auto
+                    -image [Bitmap::get folder] -drawcross auto
             }
             set path "$location_path/$dir/$element/"
             foreach fp [ lsort -dictionary [glob -nocomplain $path/*] ]  {
-            set file [file tail $fp]
-            $tree insert end ms_$dir $file@$dir -text $file -data $file \
-                -image [Bitmap::get file] -drawcross never
+                set file [file tail $fp]
+                $tree insert end ms_$dir $file@$dir -text $file -data $file \
+                    -image [Bitmap::get file] -drawcross never
             }
         }
     }
@@ -208,9 +209,6 @@ proc GSelect_::create { element args } {
     button $selwin($id,self).ok -text [G_msg "Ok"] -command "destroy $selwin($id,self)"
     button $selwin($id,self).cancel -text [G_msg "Cancel"] -command "GSelect_::terminate $id"
 
-    pack $selwin($id,self).ok $selwin($id,self).cancel -side left -expand yes
-
-
     # ScrollView
     toplevel $selftop -relief raised -borderwidth 2
     wm protocol $selftop WM_DELETE_WINDOW {
@@ -220,6 +218,10 @@ proc GSelect_::create { element args } {
     wm withdraw $selftop
     wm transient $selftop $selwin($id,self)
     ScrollView $selftop.sv -window $tree -fill black
+
+    pack $sw   -side top  -expand yes -fill both
+    pack $tree  -side top -expand yes -fill both 
+    pack $selwin($id,self).ok $selwin($id,self).cancel -side left -expand yes
     pack $selftop.sv -fill both -expand yes
 
     wm protocol $selwin($id,self) WM_DELETE_WINDOW "GSelect_::terminate $id"
