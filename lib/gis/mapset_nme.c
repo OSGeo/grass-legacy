@@ -218,11 +218,25 @@ char **G_available_mapsets(void)
  */
 void G_add_mapset_to_search_path(const char *mapset)
 {
+    if (!G_is_mapset_in_search_path(mapset))
+	new_mapset(mapset);
+}
+
+/*!
+  \brief Check if given mapset is in search path
+
+  \param mapset mapset name
+
+  \return 1 mapset found in search path
+  \return 0 mapset not found
+*/
+int G_is_mapset_in_search_path(const char *mapset)
+{
     int i;
 
     for (i = 0; i < nmapset; i++) {
 	if (strcmp(mapset_name[i], mapset) == 0)
-	    return;
+	    return 1;
     }
-    new_mapset(mapset);
+    return 0;
 }
