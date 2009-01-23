@@ -53,9 +53,10 @@ if "%1" == "-text" goto settextmode
 :aftertextcheck
 
 if "%1" == "-tcltk" goto setguimode
+if "%1" == "-wxpython" goto setwxmode
 if "%1" == "-gui" goto setguimode
-:afterguicheck
 
+:afterguicheck
 
 if exist "%WINGISRC%" goto aftercreategisrc
 
@@ -80,16 +81,16 @@ if "%GRASS_GUI%" == "" (
 rem Set tcltk as default if not specified elsewhere
 if "%GRASS_GUI%"=="" set GRASS_GUI=tcltk
 
-
 "%WINGISBASE%\etc\clean_temp" > NUL:
 
 
 if "%GRASS_GUI%"=="text" goto text
+if "%GRASS_GUI%"=="wxpython" goto wxpython
 
 if not "%GRASS_WISH%"=="" (
-  "%GRASS_WISH%" "%WINGISBASE%\etc\gis_set.tcl"
+	"%GRASS_WISH%" "%WINGISBASE%\etc\gis_set.tcl"
 ) else (
-  "%WINGISBASE%\etc\gis_set.tcl"
+	"%WINGISBASE%\etc\gis_set.tcl"
 )
 
 rem This doesn't seem to work; don't understand return codes from gis_set.tcl PK
@@ -97,12 +98,22 @@ rem if return ok, gis.m start:
 if %errorlevel% == 2 goto exitinit
 
 if not "%GRASS_WISH%"=="" (
-  "%GRASS_WISH%" "%WINGISBASE%\etc\gm\gm.tcl"
+	"%GRASS_WISH%" "%WINGISBASE%\etc\gm\gm.tcl"
 ) else (
-  "%WINGISBASE%\etc\gm\gm.tcl"
+	"%WINGISBASE%\etc\gm\gm.tcl"
 )
 
 "%WINGISBASE%\etc\clean_temp" > NUL:
+
+goto exitinit
+
+:wxpython
+
+set PYTHONPATH=%PYTHONPATH%;%WINGISBASE%\etc\python;%WINGISBASE%\etc\wxpython
+
+python "%GISBASE%/etc/wxpython/gis_set.py"
+if %errorlevel% == 2 goto exitinit
+python "%GISBASE%/etc/wxpython/wxgui.py"
 
 goto exitinit
 
@@ -145,8 +156,13 @@ shift
 goto aftertextcheck
 
 :setguimode
-
 set GRASS_GUI=tcltk
+shift
+
+goto afterguicheck
+
+:setwxmode
+set GRASS_GUI=wxpython
 shift
 
 goto afterguicheck
