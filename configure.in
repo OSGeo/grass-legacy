@@ -846,7 +846,6 @@ LOC_CHECK_INCLUDES(tcl.h,Tcl,$TCLINCDIR)
 LOC_CHECK_INCLUDES(tk.h,Tk,$TCLINCDIR $X_CFLAGS)
 
 # Tcl/Tk version checks
-
 LOC_CHECK_VERSION_STRING(tcl.h,TCL_VERSION,Tcl,tcl_ver,$TCLINCDIR,UNKNOWN)
 
 LOC_CHECK_VERSION_STRING(tk.h,TK_VERSION,Tk,tk_ver,$TCLINCDIR $X_CFLAGS,UNKNOWN)
@@ -856,6 +855,8 @@ if test "$tcl_ver" = "$tk_ver" ; then
 else
     AC_MSG_ERROR([*** Tcl/Tk version mismatch.])
 fi
+
+TCL_VERSION="$tcl_ver"
 
 # FreeBSD and CygWin don't have a "dot" between major/minor version number
 tcltk_ver2=`echo $tcltk_ver | sed 's/\.//g'`
@@ -893,7 +894,7 @@ AC_SUBST(TCLINCDIR)
 AC_SUBST(TKINCDIR)
 AC_SUBST(TCLTKLIBPATH)
 AC_SUBST(TCLTKLIBS)
-
+AC_SUBST(TCL_VERSION)
 # Done checking Tcl/Tk
 
 # Enable PostgreSQL option
