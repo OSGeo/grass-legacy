@@ -440,6 +440,8 @@ class GMFrame(wx.Frame):
         self.gm_cb.GetPage(event.GetSelection()).maptree.Map.Clean()
         self.gm_cb.GetPage(event.GetSelection()).maptree.Close(True)
         
+        self.curr_page = None
+        
         event.Skip()
 
     def OnRunCmd(self, event):
@@ -1502,10 +1504,14 @@ class GMFrame(wx.Frame):
             self.curr_page.maptree.Delete(layer)
         
     def OnCloseWindow(self, event):
-        """Cleanup when wxgui.py is quit"""
+        """Cleanup when wxGUI is quit"""
+        if not self.curr_page:
+            self._auimgr.UnInit()
+            self.Destroy()
+            return
+        
+        maptree = self.curr_page.maptree
         if UserSettings.Get(group='manager', key='askOnQuit', subkey='enabled'):
-            maptree = self.curr_page.maptree
-            
             if self.workspaceFile:
                 message = _("Do you want to save changes in the workspace?")
             else:
@@ -1534,10 +1540,12 @@ class GMFrame(wx.Frame):
         # don't ask any more...
         UserSettings.Set(group = 'manager', key = 'askOnQuit', subkey = 'enabled',
                          value = False)
+
         for page in range(self.gm_cb.GetPageCount()):
             self.gm_cb.GetPage(0).maptree.mapdisplay.OnCloseWindow(event)
+
         self.gm_cb.DeleteAllPages()
-        # self.DestroyChildren()
+        
         self._auimgr.UnInit()
         self.Destroy()
         
