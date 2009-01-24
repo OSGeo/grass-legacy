@@ -30,7 +30,10 @@ from nviz_mapdisp import wxUpdateView as wxUpdateView
 from nviz_mapdisp import wxUpdateProperties as wxUpdateProperties
 
 sys.path.append(os.path.join(globalvar.ETCWXDIR, "nviz"))
-import grass6_wxnviz as wxnviz
+try:
+   import grass6_wxnviz as wxnviz
+except ImportError:
+   pass
 
 class NvizToolWindow(wx.Frame):
     """Experimental window for Nviz tools
