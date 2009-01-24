@@ -23,6 +23,7 @@ COPYING that comes with GRASS for details.
 
 import wx
 import os, sys
+import platform
 
 import globalvar
 import gcmd
@@ -132,6 +133,15 @@ class AbstractToolbar(object):
         self.action = { 'id' : self.defaultAction['id'],
                         'desc' : self.defaultAction.get('desc', '') }
         
+    def FixSize(self, width):
+	"""Fix toolbar width on Windows
+        
+	@todo Determine why combobox causes problems here
+	"""
+        if platform.system() == 'Windows':
+            size = self._toolbar.GetBestSize()
+            self._toolbar.SetSize((size[0] + width, size[1]))
+        
 class MapToolbar(AbstractToolbar):
     """
     Main Map Display toolbar
@@ -152,7 +162,7 @@ class MapToolbar(AbstractToolbar):
         self.combo = wx.ComboBox(parent=self.toolbar, id=wx.ID_ANY, value=_('2D view'),
                                  choices=[_('2D view'), _('3D view'), _('Digitize')], 
                                  style=wx.CB_READONLY, size=(90, -1))
-
+        
         self.comboid = self.toolbar.AddControl(self.combo)
         self.mapdisplay.Bind(wx.EVT_COMBOBOX, self.OnSelectTool, self.comboid)
 
@@ -162,12 +172,14 @@ class MapToolbar(AbstractToolbar):
         # workaround for Mac bug. May be fixed by 2.8.8, but not before then.
         self.combo.Hide()
         self.combo.Show()
-
+        
         # default action
         self.action = { 'id' : self.pointer }
         self.defaultAction = { 'id' : self.pointer,
                                'bind' : self.mapdisplay.OnPointer }
         self.OnTool(None)
+        
+        self.FixSize(width = 90)
         
     def ToolbarData(self):
         """Toolbar data"""
@@ -470,6 +482,8 @@ class VDigitToolbar(AbstractToolbar):
         
         # toogle to pointer by default
         self.OnTool(None)
+        
+        self.FixSize(width = 105)
         
     def ToolbarData(self, row=None):
         """
