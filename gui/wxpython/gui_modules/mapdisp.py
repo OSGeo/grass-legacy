@@ -2732,7 +2732,8 @@ class MapFrame(wx.Frame):
                               ToolbarPane().Top().
                               LeftDockable(False).RightDockable(False).
                               BottomDockable(False).TopDockable(True).
-                              CloseButton(False).Layer(2))
+                              CloseButton(False).Layer(2).
+                              BestSize((globalvar.MAP_WINDOW_SIZE[0]-15, -1)))
         # vector digitizer
         elif name == "vdigit":
             self.toolbars['vdigit'] = toolbars.VDigitToolbar(parent=self, map=self.Map,
@@ -2746,7 +2747,8 @@ class MapFrame(wx.Frame):
                                   ToolbarPane().Top().Row(toolRow + 1).
                                   LeftDockable(False).RightDockable(False).
                                   BottomDockable(False).TopDockable(True).
-                                  CloseButton(False).Layer(2))
+                                  CloseButton(False).Layer(2).
+                                  BestSize((globalvar.MAP_WINDOW_SIZE[0]-15, -1)))
 
             # change mouse to draw digitized line
             self.MapWindow.mouse['box'] = "point"
@@ -2763,7 +2765,8 @@ class MapFrame(wx.Frame):
                               ToolbarPane().Top().
                               LeftDockable(False).RightDockable(False).
                               BottomDockable(False).TopDockable(True).
-                              CloseButton(False).Layer(2))
+                              CloseButton(False).Layer(2).
+                              BestSize((globalvar.MAP_WINDOW_SIZE[0]-15, -1)))
         # nviz
         elif name == "nviz":
             import nviz
@@ -2846,7 +2849,9 @@ class MapFrame(wx.Frame):
                               ToolbarPane().Top().Row(1).
                               LeftDockable(False).RightDockable(False).
                               BottomDockable(False).TopDockable(True).
-                              CloseButton(False).Layer(2))
+                              CloseButton(False).Layer(2).
+                              BestSize((globalvar.MAP_WINDOW_SIZE[0]-15, -1)))
+            
             self.MapWindow = self.MapWindow3D
             self.SetStatusText("", 0)
             
