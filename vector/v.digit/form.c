@@ -5,8 +5,12 @@
 #include <fcntl.h>
 #include <sys/time.h>
 #include <sys/types.h>
+
+/* hack for tcl 8.6 */
+#define USE_INTERP_RESULT
 #include <tcl.h>
 #include <tk.h>
+
 #include <locale.h>
 #include <grass/gis.h>
 #include <grass/dbmi.h>
