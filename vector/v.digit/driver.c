@@ -1,3 +1,6 @@
+/* hack for tcl 8.6 */
+#define USE_INTERP_RESULT
+
 #include <grass/gis.h>
 #include <grass/raster.h>
 #include <grass/display.h>
