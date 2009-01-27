@@ -789,7 +789,7 @@ if [ -n "$GRASS_BATCH_JOB" ] ; then
    else
       # right file, but ...
       if [ ! -x "$GRASS_BATCH_JOB" ] ; then
-	 echo "Please change file permission to 'executable' for '$GRASS_BATCH_JOB'"
+	 echo "ERROR: change file permission to 'executable' for '$GRASS_BATCH_JOB'"
 	 cleanup_tmp
 	 exit 1
       else
