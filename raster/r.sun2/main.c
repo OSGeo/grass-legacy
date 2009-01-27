@@ -191,8 +191,6 @@ double distance(double x1, double x2, double y1, double y2)
 
 
 
-
-
 int main(int argc, char *argv[])
 {
     double singleSlope;
@@ -742,8 +740,9 @@ int main(int argc, char *argv[])
 	ll_correction = 1;
     }
 
-
+    G_debug(3, "calculate starts...");
     calculate(singleSlope, singleAspect, singleAlbedo, singleLinke, gridGeom);
+    G_debug(3, "OUTGR starts...");
     OUTGR();
 
     return 1;
@@ -789,10 +788,7 @@ int INPUT_part(int offset, double *zmax)
 
 
     if ((mapset = G_find_cell(elevin, "")) == NULL)
-	G_fatal_error("Elevation raster file not found");
-
-
-
+	G_fatal_error(_("Raster map <%s> not found"),elevin);
     fd1 = G_open_cell_old(elevin, mapset);
 
     if (slopein != NULL) {
@@ -803,7 +799,6 @@ int INPUT_part(int offset, double *zmax)
 	    for (l = 0; l < numRows; l++) {
 		s[l] = (float *)G_malloc(sizeof(float) * (n));
 	    }
-
 	}
 	if ((mapset = G_find_cell(slopein, "")) == NULL)
 	       G_fatal_error(_("Raster map <%s> not found"),slopein);
@@ -828,7 +823,6 @@ int INPUT_part(int offset, double *zmax)
 
     }
 
-
     if (linkein != NULL) {
 	cell4 = G_allocate_f_raster_buf();
 	if (li == NULL) {
@@ -839,7 +833,6 @@ int INPUT_part(int offset, double *zmax)
 	}
 	if ((mapset = G_find_cell(linkein, "")) == NULL)
 	    G_fatal_error(_("Raster map <%s> not found"),linkein);
-
 	fd4 = G_open_cell_old(linkein, mapset);
     }
 
@@ -852,7 +845,6 @@ int INPUT_part(int offset, double *zmax)
 	}
 	if ((mapset = G_find_cell(albedo, "")) == NULL)
 	    G_fatal_error(_("Raster map <%s> not found"),albedo);
-
 	fd5 = G_open_cell_old(albedo, mapset);
     }
 
@@ -865,7 +857,6 @@ int INPUT_part(int offset, double *zmax)
 	}
 	if ((mapset = G_find_cell(latin, "")) == NULL)
 	    G_fatal_error(_("Raster map <%s> not found"),latin);
-
 	fd6 = G_open_cell_old(latin, mapset);
     }
 
@@ -877,15 +868,11 @@ int INPUT_part(int offset, double *zmax)
 
 	if ((mapset = G_find_cell(longin, "")) == NULL)
 	    G_fatal_error(_("Raster map <%s> not found"),longin);
-
 	fd7 = G_open_cell_old(longin, mapset);
     }
 
-
-
     if (coefbh != NULL) {
 	rast1 = G_allocate_f_raster_buf();
-
 	if (cbhr == NULL) {
 	    cbhr = (float **)G_malloc(sizeof(float *) * (numRows));
 	    for (l = 0; l < numRows; l++)
@@ -893,7 +880,6 @@ int INPUT_part(int offset, double *zmax)
 	}
 	if ((mapset = G_find_cell(coefbh, "")) == NULL)
 	    G_fatal_error(_("Raster map <%s> not found"),coefbh);
-
 	fr1 = G_open_cell_old(coefbh, mapset);
     }
 
@@ -906,12 +892,8 @@ int INPUT_part(int offset, double *zmax)
 	}
 	if ((mapset = G_find_cell(coefdh, "")) == NULL)
 	    G_fatal_error(_("Raster map <%s> not found"),coefdh);
-
 	fr2 = G_open_cell_old(coefdh, mapset);
     }
-
-
-
 
     if (useHorizonData()) {
 	if (horizonarray == NULL) {
@@ -943,7 +925,6 @@ int INPUT_part(int offset, double *zmax)
 	    sprintf(shad_filename, formatString, horizon, i);
 	    if ((mapset = G_find_cell(shad_filename, "")) == NULL)
 		G_fatal_error(_("Horizon file no. %d <%s> not found"), i, shad_filename);
-
 	    fd_shad[i] = G_open_cell_old(shad_filename, mapset);
 	}
     }
@@ -952,7 +933,6 @@ int INPUT_part(int offset, double *zmax)
      */
 
     if (useHorizonData()) {
-
 
 	for (i = 0; i < arrayNumInt; i++) {
 	    for (row = m - offset - 1; row >= finalRow; row--) {
@@ -967,14 +947,12 @@ int INPUT_part(int offset, double *zmax)
 						    AMIN1(horizonbuf[i][j],
 							  256 * invScale)));
 		    horizonpointer += arrayNumInt;
-
 		}
 	    }
 	}
 
 
     }
-
 
 
     for (row = m - offset - 1; row >= finalRow; row--) {
@@ -995,8 +973,6 @@ int INPUT_part(int offset, double *zmax)
 	    G_get_f_raster_row(fr1, rast1, row);
 	if (coefdh != NULL)
 	    G_get_f_raster_row(fr2, rast2, row);
-
-
 
 	row_rev = m - row - 1;
 	rowrevoffset = row_rev - offset;
@@ -1061,11 +1037,6 @@ int INPUT_part(int offset, double *zmax)
 		else
 		    cdhr[rowrevoffset][j] = UNDEFZ;
 	    }
-
-
-
-
-
 	}
     }
 
@@ -1231,7 +1202,6 @@ int OUTGR(void)
 		    G_set_f_null_value(cell8 + j, 1);
 		else
 		    cell8[j] = (FCELL) beam[i][j];
-
 	    }
 	    G_put_f_raster_row(fd8, cell8);
 	}
@@ -1242,7 +1212,6 @@ int OUTGR(void)
 		    G_set_f_null_value(cell12 + j, 1);
 		else
 		    cell12[j] = (FCELL) globrad[i][j];
-
 	    }
 	    G_put_f_raster_row(fd12, cell12);
 	}
@@ -1309,40 +1278,8 @@ int OUTGR(void)
     return 1;
 }
 
-/*  min(), max() are unused
- * int min(arg1, arg2)
- * int arg1;
- * int arg2;
- * {
- * int res;
- * if (arg1 <= arg2) {
- * res = arg1;
- * }
- * else {
- * res = arg2;
- * }
- * return res;
- * }
- * 
- * int max(arg1, arg2)
- * int arg1;
- * int arg2;
- * {
- * int res;
- * if (arg1 >= arg2) {
- * res = arg1;
- * }
- * else {
- * res = arg2;
- * }
- * return res;
- * }
- */
-
-
 
 /**********************************************************/
-
 
 void joules2(struct SunGeometryConstDay *sunGeom,
 	     struct SunGeometryVarDay *sunVarGeom,
@@ -1411,15 +1348,11 @@ void joules2(struct SunGeometryConstDay *sunGeom,
 	firstAngle = (firstTime - 12) * HOURANGLE;
 	lastAngle = (sunGeom->sunset_time - 12) * HOURANGLE;
 
-
-
-
 	dfr_rad = step * HOURANGLE;
 
 	sunGeom->timeAngle = firstAngle;
 
 	varCount_global = 0;
-
 
 	dfr = step;
 
@@ -1467,8 +1400,6 @@ void joules2(struct SunGeometryConstDay *sunGeom,
 }
 
 /*////////////////////////////////////////////////////////////////////// */
-
-
 
 
 /*
@@ -1814,7 +1745,6 @@ void calculate(double singleSlope, double singleAspect, double singleAlbedo,
 
     numRows = m / numPartitions;
 
-
     if (useCivilTime()) {
 	/* We need to calculate the deviation of the local solar time from the 
 	 * "local clock time". */
@@ -1829,10 +1759,7 @@ void calculate(double singleSlope, double singleAspect, double singleAlbedo,
     }
     else {
 	setTimeOffset(0.);
-
     }
-
-
 
     for (j = 0; j < m; j++) {
 	G_percent(j, m - 1, 2);
@@ -1852,10 +1779,8 @@ void calculate(double singleSlope, double singleAspect, double singleAlbedo,
 		longitTime = -longitArray[arrayOffset][i] / 15.;
 	    }
 
-
 	    gridGeom.xg0 = gridGeom.xx0 = (double)i *gridGeom.stepx;
 	    gridGeom.yg0 = gridGeom.yy0 = (double)j *gridGeom.stepy;
-
 
 	    gridGeom.xp = xmin + gridGeom.xx0;
 	    gridGeom.yp = ymin + gridGeom.yy0;
