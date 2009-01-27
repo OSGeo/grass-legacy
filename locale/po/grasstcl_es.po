@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: grasstcl_es\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-01-09 17:00+0100\n"
+"POT-Creation-Date: 2009-01-27 16:21+0100\n"
 "PO-Revision-Date: 2008-08-04 11:00+0200\n"
 "Last-Translator: Carlos Davila <carluti@users.sourceforge.net>\n"
 "Language-Team: Español <grass-translations@lists.osgeo.org>\n"
@@ -277,15 +277,15 @@ msgstr "Introducir nuevo registro en tabla"
 msgid "Add new"
 msgstr "Añadir nuevo"
 
-#: ../lib/gtcltk/select.tcl:103
+#: ../lib/gtcltk/select.tcl:107
 msgid "Select item"
 msgstr "Seleccionar item"
 
-#: ../lib/gtcltk/select.tcl:208
+#: ../lib/gtcltk/select.tcl:209
 msgid "Ok"
 msgstr "Ok"
 
-#: ../lib/gtcltk/select.tcl:209 ../lib/init/epsg_option.tcl:167
+#: ../lib/gtcltk/select.tcl:210 ../lib/init/epsg_option.tcl:167
 #: ../lib/init/epsg_option.tcl:314 ../lib/init/file_option.tcl:114
 #: ../lib/init/file_option.tcl:266 ../gui/tcltk/gis.m/gm.tcl:458
 #: ../gui/tcltk/gis.m/animate.tcl:538 ../gui/tcltk/gis.m/dnviz.tcl:230
@@ -4567,7 +4567,7 @@ msgstr "Segundo orden"
 
 #: ../gui/tcltk/gis.m/georect.tcl:1020
 #, fuzzy
-msgid "polynomial transformation  (rasters only). Requires 7+ GCPs."
+msgid "polynomial transformation  (rasters only). Requires 6+ GCPs."
 msgstr ""
 "transformación polinomial  (sólo rásters). Requiere 6 o más puntos de "
 "control."
