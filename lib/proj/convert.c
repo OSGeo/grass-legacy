@@ -221,7 +221,7 @@ OGRSpatialReferenceH GPJ_grass_to_osr(struct Key_Value * proj_info,
     G_free(modwkt);
     CPLFree(wkt);
     if (proj4 != proj4mod)
-	G_free(proj4);
+	pj_dalloc(proj4);
     G_free(proj4mod);
     G_free(datum);
     G_free(params);
