@@ -14,7 +14,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: grassmods_es\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-01-27 16:21+0100\n"
+"POT-Creation-Date: 2009-01-29 21:41+0100\n"
 "PO-Revision-Date: 2008-01-11 19:44+0100\n"
 "Last-Translator: Carlos Davila <carluti@users.sourceforge.net>\n"
 "Language-Team: Español <grass-translations@lists.osgeo.org>\n"
@@ -1163,23 +1163,23 @@ msgstr ""
 #: ../raster/wildfire/r.spread/main.c:372
 #: ../raster/wildfire/r.spread/main.c:375 ../raster/r.resample/main.c:97
 #: ../raster/r.buffer/main.c:127 ../raster/r.support.stats/main.c:48
-#: ../raster/r.bitpattern/main.c:101 ../raster/r.sun2/main.c:809
-#: ../raster/r.sun2/main.c:826 ../raster/r.sun2/main.c:841
-#: ../raster/r.sun2/main.c:854 ../raster/r.sun2/main.c:867
-#: ../raster/r.sun2/main.c:879 ../raster/r.sun2/main.c:895
-#: ../raster/r.sun2/main.c:908 ../raster/r.horizon/main.c:553
-#: ../vector/v.what.rast/main.c:138 ../vector/v.extrude/main.c:179
-#: ../vector/v.sample/main.c:158 ../vector/v.vol.rst/main.c:594
-#: ../vector/v.drape/main.c:245 ../doc/raster/r.example/main.c:111
-#: ../ps/ps.map/outl_io.c:68 ../imagery/i.ifft/ifftmain.c:95
-#: ../imagery/i.ifft/ifftmain.c:105 ../imagery/i.gensigset/parse.c:42
-#: ../imagery/i.his.rgb/openfiles.c:31 ../imagery/i.his.rgb/openfiles.c:36
-#: ../imagery/i.his.rgb/openfiles.c:41 ../imagery/i.group/main.c:205
-#: ../imagery/i.group/main.c:244 ../imagery/i.rgb.his/openfiles.c:14
-#: ../imagery/i.rgb.his/openfiles.c:16 ../imagery/i.rgb.his/openfiles.c:18
-#: ../imagery/i.pca/main.c:123 ../imagery/i.class/main.c:127
-#: ../imagery/i.gensig/parse.c:36 ../imagery/i.zc/main.c:111
-#: ../imagery/i.fft/fftmain.c:108
+#: ../raster/r.bitpattern/main.c:101 ../raster/r.sun2/main.c:791
+#: ../raster/r.sun2/main.c:804 ../raster/r.sun2/main.c:821
+#: ../raster/r.sun2/main.c:835 ../raster/r.sun2/main.c:847
+#: ../raster/r.sun2/main.c:859 ../raster/r.sun2/main.c:870
+#: ../raster/r.sun2/main.c:882 ../raster/r.sun2/main.c:894
+#: ../raster/r.horizon/main.c:553 ../vector/v.what.rast/main.c:138
+#: ../vector/v.extrude/main.c:179 ../vector/v.sample/main.c:158
+#: ../vector/v.vol.rst/main.c:594 ../vector/v.drape/main.c:245
+#: ../doc/raster/r.example/main.c:111 ../ps/ps.map/outl_io.c:68
+#: ../imagery/i.ifft/ifftmain.c:95 ../imagery/i.ifft/ifftmain.c:105
+#: ../imagery/i.gensigset/parse.c:42 ../imagery/i.his.rgb/openfiles.c:31
+#: ../imagery/i.his.rgb/openfiles.c:36 ../imagery/i.his.rgb/openfiles.c:41
+#: ../imagery/i.group/main.c:205 ../imagery/i.group/main.c:244
+#: ../imagery/i.rgb.his/openfiles.c:14 ../imagery/i.rgb.his/openfiles.c:16
+#: ../imagery/i.rgb.his/openfiles.c:18 ../imagery/i.pca/main.c:123
+#: ../imagery/i.class/main.c:127 ../imagery/i.gensig/parse.c:36
+#: ../imagery/i.zc/main.c:111 ../imagery/i.fft/fftmain.c:108
 #: ../imagery/i.ortho.photo/photo.2target/main.c:197
 #: ../imagery/i.ortho.photo/photo.2target/main.c:227
 #: ../visualization/xganim/main.c:366 ../visualization/nviz2/cmd/surface.c:56
@@ -1578,9 +1578,9 @@ msgstr "No se puede escribir la fila ráster"
 #: ../raster/r.mapcalc/map3.c:580 ../raster/r.mapcalc/map.c:507
 #: ../raster/r.composite/main.c:192 ../raster/r.buffer/write_map.c:40
 #: ../raster/r.in.arc/main.c:154 ../raster/r.bitpattern/main.c:125
-#: ../raster/r.sun2/main.c:1169 ../raster/r.sun2/main.c:1176
-#: ../raster/r.sun2/main.c:1183 ../raster/r.sun2/main.c:1190
-#: ../raster/r.sun2/main.c:1197 ../raster/r.sun2/main.c:1204
+#: ../raster/r.sun2/main.c:1140 ../raster/r.sun2/main.c:1147
+#: ../raster/r.sun2/main.c:1154 ../raster/r.sun2/main.c:1161
+#: ../raster/r.sun2/main.c:1168 ../raster/r.sun2/main.c:1175
 #: ../vector/lidar/v.surf.bspline/main.c:292 ../vector/v.kernel/main.c:268
 #: ../vector/v.surf.idw/main.c:258 ../vector/v.neighbors/main.c:96
 #: ../vector/v.to.rast/vect2rast.c:125 ../vector/v.to.rast/vect2rast.c:129
@@ -6056,7 +6056,7 @@ msgstr ""
 "irradiancia. El efecto de sombreo de la topografía se puede incorporar "
 "opcionalmente."
 
-#: ../raster/r.sun/main.c:208 ../raster/r.sun2/main.c:255
+#: ../raster/r.sun/main.c:208 ../raster/r.sun2/main.c:253
 #: ../raster/r.horizon/main.c:226
 msgid "Name of the input elevation raster map [meters]"
 msgstr "Nombre del mapa ráster de elevación de entrada [metros]"
@@ -6089,15 +6089,15 @@ msgstr "Nombre del mapa ráster de elevación de entrada [metros]"
 #: ../raster/r.watershed/front/main.c:74 ../raster/r.watershed/front/main.c:83
 #: ../raster/r.watershed/front/main.c:92
 #: ../raster/r.watershed/front/main.c:101
-#: ../raster/r.watershed/front/main.c:110 ../raster/r.sun2/main.c:256
-#: ../raster/r.sun2/main.c:264 ../raster/r.sun2/main.c:273
-#: ../raster/r.sun2/main.c:281 ../raster/r.sun2/main.c:289
-#: ../raster/r.sun2/main.c:298 ../raster/r.sun2/main.c:308
-#: ../raster/r.sun2/main.c:317 ../raster/r.sun2/main.c:326
-#: ../raster/r.sun2/main.c:335 ../raster/r.sun2/main.c:343
-#: ../raster/r.sun2/main.c:352 ../raster/r.sun2/main.c:361
-#: ../raster/r.sun2/main.c:370 ../raster/r.sun2/main.c:378
-#: ../raster/r.sun2/main.c:386 ../raster/r.horizon/main.c:227
+#: ../raster/r.watershed/front/main.c:110 ../raster/r.sun2/main.c:254
+#: ../raster/r.sun2/main.c:262 ../raster/r.sun2/main.c:271
+#: ../raster/r.sun2/main.c:279 ../raster/r.sun2/main.c:287
+#: ../raster/r.sun2/main.c:296 ../raster/r.sun2/main.c:306
+#: ../raster/r.sun2/main.c:315 ../raster/r.sun2/main.c:324
+#: ../raster/r.sun2/main.c:333 ../raster/r.sun2/main.c:341
+#: ../raster/r.sun2/main.c:350 ../raster/r.sun2/main.c:359
+#: ../raster/r.sun2/main.c:368 ../raster/r.sun2/main.c:376
+#: ../raster/r.sun2/main.c:384 ../raster/r.horizon/main.c:227
 #: ../raster/r.horizon/main.c:236 ../raster/r.horizon/main.c:244
 #: ../raster/r.horizon/main.c:252 ../raster/r.horizon/main.c:260
 #: ../raster/r.horizon/main.c:268 ../raster/r.horizon/main.c:276
@@ -6105,7 +6105,7 @@ msgstr "Nombre del mapa ráster de elevación de entrada [metros]"
 msgid "Input_options"
 msgstr "Opciones de entrada"
 
-#: ../raster/r.sun/main.c:217 ../raster/r.sun2/main.c:263
+#: ../raster/r.sun/main.c:217 ../raster/r.sun2/main.c:261
 msgid ""
 "Name of the input aspect map (terrain aspect or azimuth of the solar panel) "
 "[decimal degrees]"
@@ -6113,7 +6113,7 @@ msgstr ""
 "Nombre del mapa ráster de orientación (orientación del terreno o azimut del "
 "panel solar) [grados decimales]"
 
-#: ../raster/r.sun/main.c:227 ../raster/r.sun2/main.c:280
+#: ../raster/r.sun/main.c:227 ../raster/r.sun2/main.c:278
 msgid ""
 "Name of the input slope raster map (terrain slope or solar panel "
 "inclination) [decimal degrees]"
@@ -6121,31 +6121,31 @@ msgstr ""
 "Nombre del mapa ráster de pendiente de entrada (pendiente del terreno o "
 "inclinación del panel solar) [grados decimales]"
 
-#: ../raster/r.sun/main.c:236 ../raster/r.sun2/main.c:297
+#: ../raster/r.sun/main.c:236 ../raster/r.sun2/main.c:295
 msgid ""
 "Name of the Linke atmospheric turbidity coefficient input raster map [-]"
 msgstr ""
 "Nombre del mapa ráster de coeficiente de turbidez atmosférica Linke de "
 "entrada [-]"
 
-#: ../raster/r.sun/main.c:247 ../raster/r.sun2/main.c:307
+#: ../raster/r.sun/main.c:247 ../raster/r.sun2/main.c:305
 msgid "A single value of the Linke atmospheric turbidity coefficient [-]"
 msgstr "Un valor único del coeficiente de turbidez atmosférica Linke [-]"
 
-#: ../raster/r.sun/main.c:256 ../raster/r.sun2/main.c:316
+#: ../raster/r.sun/main.c:256 ../raster/r.sun2/main.c:314
 msgid "Name of the ground albedo coefficient input raster map [-]"
 msgstr ""
 "Nombre del mapa ráster de entrada de coeficiente albedo del terreno [-]"
 
-#: ../raster/r.sun/main.c:267 ../raster/r.sun2/main.c:325
+#: ../raster/r.sun/main.c:267 ../raster/r.sun2/main.c:323
 msgid "A single value of the ground albedo coefficient [-]"
 msgstr "Un solo valor del coeficiente albedo del terreno [-]"
 
-#: ../raster/r.sun/main.c:276 ../raster/r.sun2/main.c:334
+#: ../raster/r.sun/main.c:276 ../raster/r.sun2/main.c:332
 msgid "Name of the latitudes input raster map [decimal degrees]"
 msgstr "Nombre del mapa ráster de latitudes de entrada [grados decimales]"
 
-#: ../raster/r.sun/main.c:286 ../raster/r.sun2/main.c:342
+#: ../raster/r.sun/main.c:286 ../raster/r.sun2/main.c:340
 msgid "A single value of latitude [decimal degrees]"
 msgstr "Un valor único de latitud [grados decimales]"
 
@@ -6159,7 +6159,7 @@ msgstr "Nombre ráster"
 msgid "Name of real-sky diffuse radiation coefficient raster map [-]"
 msgstr "Nombre ráster"
 
-#: ../raster/r.sun/main.c:313 ../raster/r.sun2/main.c:392
+#: ../raster/r.sun/main.c:313 ../raster/r.sun2/main.c:390
 msgid "Output incidence angle raster map (mode 1 only)"
 msgstr "Mapa ráster de ángulo de incidencia de salida (modo 1 solamente)"
 
@@ -6182,10 +6182,10 @@ msgstr "Mapa ráster de ángulo de incidencia de salida (modo 1 solamente)"
 #: ../raster/r.watershed/front/main.c:153
 #: ../raster/r.watershed/front/main.c:162
 #: ../raster/r.watershed/front/main.c:171
-#: ../raster/r.watershed/front/main.c:179 ../raster/r.sun2/main.c:393
-#: ../raster/r.sun2/main.c:401 ../raster/r.sun2/main.c:408
-#: ../raster/r.sun2/main.c:416 ../raster/r.sun2/main.c:424
-#: ../raster/r.sun2/main.c:432 ../raster/r.horizon/main.c:301
+#: ../raster/r.watershed/front/main.c:179 ../raster/r.sun2/main.c:391
+#: ../raster/r.sun2/main.c:399 ../raster/r.sun2/main.c:406
+#: ../raster/r.sun2/main.c:414 ../raster/r.sun2/main.c:422
+#: ../raster/r.sun2/main.c:430 ../raster/r.horizon/main.c:301
 #: ../raster/r.horizon/main.c:311 ../raster/r.horizon/main.c:319
 #: ../vector/v.vol.rst/main.c:353 ../vector/v.vol.rst/main.c:370
 #: ../vector/v.vol.rst/main.c:380 ../vector/v.vol.rst/main.c:389
@@ -6197,7 +6197,7 @@ msgstr "Mapa ráster de ángulo de incidencia de salida (modo 1 solamente)"
 msgid "Output_options"
 msgstr "Opciones de salida"
 
-#: ../raster/r.sun/main.c:322 ../raster/r.sun2/main.c:400
+#: ../raster/r.sun/main.c:322 ../raster/r.sun2/main.c:398
 msgid ""
 "Output beam irradiance [W.m-2] (mode 1) or irradiation raster map [Wh.m-2."
 "day-1] (mode 2)"
@@ -6205,11 +6205,11 @@ msgstr ""
 "Producir mapa ráster de irradiancia [W.m-2] (modo 1) o irradiación [Wh.m-2."
 "día-1] (modo 2) de los rayos"
 
-#: ../raster/r.sun/main.c:331 ../raster/r.sun2/main.c:407
+#: ../raster/r.sun/main.c:331 ../raster/r.sun2/main.c:405
 msgid "Output insolation time raster map [h] (mode 2 only)"
 msgstr "Producir mapa ráster de tiempo de insolación [h] (modo 2 solamente)"
 
-#: ../raster/r.sun/main.c:340 ../raster/r.sun2/main.c:415
+#: ../raster/r.sun/main.c:340 ../raster/r.sun2/main.c:413
 msgid ""
 "Output diffuse irradiance [W.m-2] (mode 1) or irradiation raster map [Wh.m-2."
 "day-1] (mode 2)"
@@ -6217,7 +6217,7 @@ msgstr ""
 "Producir mapa ráster de irradiancia [W.m-2] (modo 1) o irradiación [Wh.m-2."
 "día-1] (modo 2) difusas"
 
-#: ../raster/r.sun/main.c:349 ../raster/r.sun2/main.c:423
+#: ../raster/r.sun/main.c:349 ../raster/r.sun2/main.c:421
 msgid ""
 "Output ground reflected irradiance [W.m-2] (mode 1) or irradiation raster "
 "map [Wh.m-2.day-1] (mode 2)"
@@ -6225,30 +6225,30 @@ msgstr ""
 "Producir mapa ráster de irradiancia [W.m-2] (modo 1) o irradiación [Wh.m-2."
 "día-1] (modo 2) reflejadas del terreno"
 
-#: ../raster/r.sun/main.c:356 ../raster/r.sun2/main.c:439
+#: ../raster/r.sun/main.c:356 ../raster/r.sun2/main.c:437
 msgid "No. of day of the year (1-365)"
 msgstr "Número de día del año (1-365)"
 
-#: ../raster/r.sun/main.c:364 ../raster/r.sun2/main.c:446
+#: ../raster/r.sun/main.c:364 ../raster/r.sun2/main.c:444
 msgid "Time step when computing all-day radiation sums [decimal hours]"
 msgstr ""
 "Intervalo de tiempo cuando se procesan sumas de radiación de todo el día "
 "[horas decimales]"
 
-#: ../raster/r.sun/main.c:371 ../raster/r.sun2/main.c:453
+#: ../raster/r.sun/main.c:371 ../raster/r.sun2/main.c:451
 msgid "Declination value (overriding the internally computed value) [radians]"
 msgstr ""
 "Valor de declinación (ignorando el valor procesado internamente) [radianes]"
 
-#: ../raster/r.sun/main.c:379 ../raster/r.sun2/main.c:460
+#: ../raster/r.sun/main.c:379 ../raster/r.sun2/main.c:458
 msgid "Local (solar) time (to be set for mode 1 only) [decimal hours]"
 msgstr "Hora local (solar) (a establecer sólo para modo 1) [horas decimales]"
 
-#: ../raster/r.sun/main.c:384 ../raster/r.sun2/main.c:502
+#: ../raster/r.sun/main.c:384 ../raster/r.sun2/main.c:500
 msgid "Incorporate the shadowing effect of terrain"
 msgstr "Incorporar el efecto de sombreo del terreno"
 
-#: ../raster/r.sun/main.c:410 ../raster/r.sun2/main.c:571
+#: ../raster/r.sun/main.c:410 ../raster/r.sun2/main.c:569
 msgid "insol_time and incidout are incompatible options"
 msgstr "insol_time e incidout son opciones incompatibles"
 
@@ -6272,7 +6272,7 @@ msgstr "incidout requiere que se establezca el parámetro hora local (time)"
 msgid "Mode 2: integrated daily irradiation for a given day of the year"
 msgstr "Modo 2: irradiación diaria integrada para un día determinado del año"
 
-#: ../raster/r.sun/main.c:474 ../raster/r.sun2/main.c:720
+#: ../raster/r.sun/main.c:474 ../raster/r.sun2/main.c:718
 #: ../raster/r.horizon/main.c:481
 msgid ""
 "Can't get projection info of current location: please set latitude via 'lat' "
@@ -6281,7 +6281,7 @@ msgstr ""
 "No se puede obtener información de proyección de la localización actual: "
 "¡por favor establezca la latitud via opción 'lat' o 'latin'!"
 
-#: ../raster/r.sun/main.c:477 ../raster/r.sun2/main.c:723
+#: ../raster/r.sun/main.c:477 ../raster/r.sun2/main.c:721
 #: ../raster/r.horizon/main.c:484 ../display/d.where/main.c:96
 #: ../general/g.region/printwindow.c:251 ../general/g.region/printwindow.c:492
 #: ../general/g.region/printwindow.c:611
@@ -6289,7 +6289,7 @@ msgid "Can't get projection units of current location"
 msgstr ""
 "No se pueden obtener unidades de la proyección de la localización actual"
 
-#: ../raster/r.sun/main.c:481 ../raster/r.sun2/main.c:726
+#: ../raster/r.sun/main.c:481 ../raster/r.sun2/main.c:724
 #: ../raster/r.horizon/main.c:488 ../ps/ps.map/do_geogrid.c:272
 #: ../display/d.where/main.c:99 ../display/d.grid/plot.c:294
 #: ../general/g.region/printwindow.c:254 ../general/g.region/printwindow.c:495
@@ -6299,7 +6299,7 @@ msgstr ""
 "No se pueden obtener los valores clave de la proyección de la localización "
 "actual"
 
-#: ../raster/r.sun/main.c:491 ../raster/r.sun2/main.c:736
+#: ../raster/r.sun/main.c:491 ../raster/r.sun2/main.c:734
 #: ../raster/r.horizon/main.c:498 ../ps/ps.map/do_geogrid.c:278
 #: ../display/d.where/main.c:106 ../display/d.where/main.c:132
 #: ../display/d.grid/plot.c:301 ../display/d.grid/plot.c:328
@@ -15318,7 +15318,7 @@ msgstr "weight= y -c son excluyentes mutuamente"
 msgid "Unable to set window"
 msgstr "No se puede establecer el tamaño"
 
-#: ../raster/r.sun2/main.c:227
+#: ../raster/r.sun2/main.c:225
 #, fuzzy
 msgid ""
 "Computes direct (beam), diffuse and reflected solar irradiation raster maps "
@@ -15338,40 +15338,40 @@ msgstr ""
 "irradiancia. El efecto de sombreo de la topografía se puede incorporar "
 "opcionalmente."
 
-#: ../raster/r.sun2/main.c:272
+#: ../raster/r.sun2/main.c:270
 msgid "A single value of the orientation (aspect), 270 is south"
 msgstr ""
 
-#: ../raster/r.sun2/main.c:288
+#: ../raster/r.sun2/main.c:286
 #, fuzzy
 msgid "A single value of inclination (slope)"
 msgstr "Un valor único de latitud [grados decimales]"
 
-#: ../raster/r.sun2/main.c:351
+#: ../raster/r.sun2/main.c:349
 #, fuzzy
 msgid "Name of the longitude input raster map [decimal degrees]"
 msgstr "Nombre del mapa ráster de latitudes de entrada [grados decimales]"
 
-#: ../raster/r.sun2/main.c:360
+#: ../raster/r.sun2/main.c:358
 #, fuzzy
 msgid "Name of real-sky beam radiation coefficient input raster map [-]"
 msgstr "Nombre ráster"
 
-#: ../raster/r.sun2/main.c:369
+#: ../raster/r.sun2/main.c:367
 #, fuzzy
 msgid "Name of real-sky diffuse radiation coefficient input raster map [-]"
 msgstr "Nombre ráster"
 
-#: ../raster/r.sun2/main.c:377
+#: ../raster/r.sun2/main.c:375
 #, fuzzy
 msgid "The horizon information input map prefix"
 msgstr "La información de la proyección no se actualizará."
 
-#: ../raster/r.sun2/main.c:385 ../raster/r.horizon/main.c:243
+#: ../raster/r.sun2/main.c:383 ../raster/r.horizon/main.c:243
 msgid "Angle step size for multidirectional horizon [degrees]"
 msgstr ""
 
-#: ../raster/r.sun2/main.c:431
+#: ../raster/r.sun2/main.c:429
 #, fuzzy
 msgid ""
 "Output global (total) irradiance/irradiation [W.m-2] (mode 1) or irradiance/"
@@ -15380,52 +15380,52 @@ msgstr ""
 "Producir mapa ráster de irradiancia [W.m-2] (modo 1) o irradiación [Wh.m-2."
 "día-1] (modo 2) de los rayos"
 
-#: ../raster/r.sun2/main.c:481 ../raster/r.horizon/main.c:318
+#: ../raster/r.sun2/main.c:479 ../raster/r.horizon/main.c:318
 msgid "Sampling distance step coefficient (0.5-1.5)"
 msgstr ""
 
-#: ../raster/r.sun2/main.c:489
+#: ../raster/r.sun2/main.c:487
 msgid "Read the input files in this number of chunks"
 msgstr ""
 
-#: ../raster/r.sun2/main.c:496
+#: ../raster/r.sun2/main.c:494
 msgid "Civil time zone value, if none, the time will be local solar time"
 msgstr ""
 
-#: ../raster/r.sun2/main.c:507
+#: ../raster/r.sun2/main.c:505
 msgid "Use the low-memory version of the program"
 msgstr ""
 
-#: ../raster/r.sun2/main.c:539
+#: ../raster/r.sun2/main.c:537
 msgid "You must give the longitude raster if you use civil time"
 msgstr ""
 
-#: ../raster/r.sun2/main.c:578
+#: ../raster/r.sun2/main.c:576
 #, fuzzy
 msgid "Error reading time step size"
 msgstr "Error al leer el archivo temporal"
 
-#: ../raster/r.sun2/main.c:582
+#: ../raster/r.sun2/main.c:580
 #, fuzzy
 msgid "Error reading horizon step size"
 msgstr "Leyendo coordenadas del archivo."
 
-#: ../raster/r.sun2/main.c:586
+#: ../raster/r.sun2/main.c:584
 #, fuzzy
 msgid "The horizon step size must be greater than 0."
 msgstr "%s = %s -- debe ser mayor que cero"
 
-#: ../raster/r.sun2/main.c:590
+#: ../raster/r.sun2/main.c:588
 msgid ""
 "If you use the horizon option you must also set the 'horizonstep' parameter."
 msgstr ""
 
-#: ../raster/r.sun2/main.c:597
+#: ../raster/r.sun2/main.c:595
 #, fuzzy
 msgid "Time and insol_time are incompatible options"
 msgstr "Hora local (time) e insol_time son opciones incompatibles"
 
-#: ../raster/r.sun2/main.c:598
+#: ../raster/r.sun2/main.c:596
 #, fuzzy
 msgid ""
 "Mode 1: instantaneous solar incidence angle & irradiance using a set local "
@@ -15434,27 +15434,27 @@ msgstr ""
 "Modo 1: ángulo de incidencia solar instantáneo e irradiancia dada una hora "
 "local establecida"
 
-#: ../raster/r.sun2/main.c:603
+#: ../raster/r.sun2/main.c:601
 #, fuzzy
 msgid "incidout requres time parameter to be set"
 msgstr "incidout requiere que se establezca el parámetro hora local (time)"
 
-#: ../raster/r.sun2/main.c:604
+#: ../raster/r.sun2/main.c:602
 #, fuzzy
 msgid "Mode 2: integrated daily irradiation"
 msgstr "Modo 2: irradiación diaria integrada para un día determinado del año"
 
-#: ../raster/r.sun2/main.c:657
+#: ../raster/r.sun2/main.c:655
 msgid "If you use -s and no horizon rasters, numpartitions must be =1"
 msgstr ""
 
-#: ../raster/r.sun2/main.c:671
+#: ../raster/r.sun2/main.c:669
 msgid ""
 "If you want to save memory and to use shadows, you must use pre-calculated "
 "horizons."
 msgstr ""
 
-#: ../raster/r.sun2/main.c:945
+#: ../raster/r.sun2/main.c:927
 #, fuzzy, c-format
 msgid "Horizon file no. %d <%s> not found"
 msgstr "Archivo 3Dview <%s> no encontrado"
