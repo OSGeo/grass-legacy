@@ -745,7 +745,7 @@ int main(int argc, char *argv[])
     G_debug(3, "OUTGR starts...");
     OUTGR();
 
-    return 1;
+    exit(EXIT_SUCCESS);
 }
 
 
