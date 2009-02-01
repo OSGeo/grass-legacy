@@ -64,7 +64,7 @@ class GException(Exception):
         self.parent = parent
         self.title = title
         
-    def __str__(self):
+    def Show(self):
         dlg = wx.MessageDialog(parent=self.parent,
                                caption=self.title,
                                message=self.message,
@@ -77,8 +77,11 @@ class GException(Exception):
 
         dlg.ShowModal()
         
+    def __str__(self):
+        self.Show()
+        
         return ''
-
+    
 class GStdError(GException):
     """Generic exception"""
 
