@@ -7049,6 +7049,7 @@ msgstr ""
 #~ "y la construcción automática de la GUI.\n"
 #~ "%s"
 
+#, fuzzy
 #~ msgid "About wxPython GRASS GUI"
 #~ msgstr "Acerca de la GUI wxPython de GRASS"
 
@@ -7124,3 +7125,23 @@ msgstr ""
 #, fuzzy
 #~ msgid "Edit vector map (non-interactively)"
 #~ msgstr "Recodificar de forma interactiva"
+
+#, fuzzy
+#~ msgid "Vector digitizer"
+#~ msgstr "Barra de herramientas del digitalizador vectorial"
+
+#, fuzzy
+#~ msgid "Do you want to save changes in the workspace?"
+#~ msgstr "vectorial?"
+
+#, fuzzy
+#~ msgid "Do you want to store current settings to workspace file?"
+#~ msgstr "Entorno de trabajo?"
+
+#, fuzzy
+#~ msgid "Close display"
+#~ msgstr "Borrar visualización"
+
+#, fuzzy
+#~ msgid "Create new workspace?"
+#~ msgstr "Crear nuevo archivo de entorno de trabajo"
