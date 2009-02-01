@@ -2,7 +2,6 @@ MODULE_TOPDIR = ..
 
 SUBDIRS = \
 	i.ask \
-	i.atcorr \
 	i.cluster \
 	i.find \
 	i.gensig \
@@ -19,9 +18,16 @@ SUBDIRS = \
 
 include $(MODULE_TOPDIR)/include/Make/Platform.make
 
+CXXBASED = i.atcorr
+
 FFTWBASED = i.fft i.ifft i.zc
 
 XMONBASED = i.class i.ortho.photo i.points i.vpoints
+
+#compile if C++ compiler present:
+ifneq ($(strip $(CXX)),)
+    SUBDIRS += $(CXXBASED)
+endif
 
 #compile if FFTW present:
 ifneq ($(strip $(FFTWLIB)),)
