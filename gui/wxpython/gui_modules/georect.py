@@ -1133,7 +1133,7 @@ class GCP(wx.Frame):
                                           'vector'))
                 shutil.move(xyvpath, vpath)        
                 
-                self.parent.goutput.WriteCmd(_('Vector map <%s> georectified '
+                self.parent.goutput.WriteCmdLog(_('Vector map <%s> georectified '
                                                'successfully') % self.outname)
                 # copy attributes
                 self.parent.goutput.WriteLog(_('Copying attributes...'))
