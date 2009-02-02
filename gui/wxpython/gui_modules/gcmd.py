@@ -620,4 +620,3 @@ def RunCommand(prog, flags = "", overwrite = False, quiet = False, verbose = Fal
         return ret
 
     return stdout
-
