@@ -121,7 +121,7 @@ class LayerTree(treemixin.DragAndDrop, CT.CustomTreeCtrl):
         self.items = []
 
         #create image list to use with layer tree
-        il = wx.ImageList(16, 16, mask=False)
+        il = wx.ImageList(16, 16, mask = True)
 
         trart = wx.ArtProvider.GetBitmap(wx.ART_FOLDER_OPEN, wx.ART_OTHER, (16, 16))
         self.folder_open = il.Add(trart)
