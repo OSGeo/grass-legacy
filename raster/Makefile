@@ -128,6 +128,10 @@ XMONBASED = r.digit
 
 include $(MODULE_TOPDIR)/include/Make/Platform.make
 
+ifneq ($(MINGW),)
+    SUBDIRS += r.li
+endif
+
 #compile if GDAL present:
 ifneq ($(USE_GDAL),)
     SUBDIRS += $(GDALBASED)
