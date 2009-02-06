@@ -16701,8 +16701,8 @@ msgstr "Nombre del mapa vectorial para visualización en QGIS"
 
 #: ../vector/lidar/v.outlier/main.c:109
 #: ../vector/lidar/v.surf.bspline/main.c:140
-msgid "Thychonov regularization weigth"
-msgstr "Peso de regularización Thychonov "
+msgid "Tychonov regularization weight"
+msgstr "Peso de regularización Tychonov"
 
 #: ../vector/lidar/v.outlier/main.c:116
 msgid "Threshold for the outliers"

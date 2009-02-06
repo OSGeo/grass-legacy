@@ -16002,8 +16002,8 @@ msgstr "ชื่อของ แผนที่เชิงเส้น สำ�
 
 #: ../vector/lidar/v.outlier/main.c:109
 #: ../vector/lidar/v.surf.bspline/main.c:138
-msgid "Thychonov regularization weigth"
-msgstr "Thychonov regularization weigth"
+msgid "Tychonov regularization weigth"
+msgstr "Tychonov regularization weight"
 
 #: ../vector/lidar/v.outlier/main.c:116
 msgid "Threshold for the outliers"

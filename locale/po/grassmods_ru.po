@@ -16366,7 +16366,7 @@ msgstr "Имя векторного слоя для визуализации в 
 
 #: ../vector/lidar/v.outlier/main.c:109
 #: ../vector/lidar/v.surf.bspline/main.c:138
-msgid "Thychonov regularization weigth"
+msgid "Tychonov regularization weight"
 msgstr "Вес регуляризации Тихонова"
 
 #: ../vector/lidar/v.outlier/main.c:116
