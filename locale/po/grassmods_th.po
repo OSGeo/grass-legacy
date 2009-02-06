@@ -9633,8 +9633,8 @@ msgstr "ค่าขั้น ของ Interpolation spline ใน north direct
 
 #: ../vector/lidar/v.outlier/main.c:109
 #: ../vector/lidar/v.surf.bspline/main.c:138
-msgid "Thychonov regularization weigth"
-msgstr "Thychonov regularization weigth"
+msgid "Tychonov regularization weigth"
+msgstr "Tychonov regularization weight"
 
 #: ../vector/lidar/v.outlier/main.c:116
 msgid "Threshold for the outliers"
