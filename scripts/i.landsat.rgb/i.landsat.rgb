@@ -161,22 +161,16 @@ RED_MAPSET=`g.findfile -n elem=cell file=$RED | grep mapset | cut -d'=' -f2`
 BLUE_MAPSET=`g.findfile -n elem=cell file=$BLUE | grep mapset | cut -d'=' -f2`
 GREEN_MAPSET=`g.findfile -n elem=cell file=$GREEN | grep mapset | cut -d'=' -f2`
 
-if [ "$BLUE_MAPSET" == "$MAPSET" ] ; then
+if [ "$BLUE_MAPSET" = "$CURRENT_MAPSET" ] ; then
     r.support ${BLUE} history="${CMDLINE}"
-else
-    g.message -w message="Unable to write history for <$BLUE>. Raster map <$BLUE> not found in current mapset."
 fi
 
-if [ "$GREEN_MAPSET" == "$MAPSET" ] ; then
+if [ "$GREEN_MAPSET" = "$CURRENT_MAPSET" ] ; then
     r.support ${GREEN} history="${CMDLINE}"
-else
-    g.message -w message="Unable to write history for <$GREEN>. Raster map <$GREEN> not found in current mapset."
 fi
 
-if [ "$RED_MAPSET" == "$MAPSET" ] ; then
+if [ "$RED_MAPSET" = "$CURRENT_MAPSET" ] ; then
     r.support ${RED} history="${CMDLINE}"
-else
-    g.message -w message="Unable to write history for <$RED>. Raster map <$RED> not found in current mapset."
 fi
 
 exit 0
