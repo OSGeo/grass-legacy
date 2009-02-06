@@ -9937,8 +9937,8 @@ msgstr "Valor de paso spline de interpolación en dirección Norte"
 
 #: ../vector/lidar/v.outlier/main.c:109
 #: ../vector/lidar/v.surf.bspline/main.c:138
-msgid "Thychonov regularization weigth"
-msgstr "Peso de regularización Thychonov "
+msgid "Tychonov regularization weight"
+msgstr "Peso de regularización Tychonov "
 
 #: ../vector/lidar/v.outlier/main.c:116
 msgid "Threshold for the outliers"

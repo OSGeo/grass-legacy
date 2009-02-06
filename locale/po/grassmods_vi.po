@@ -10116,8 +10116,8 @@ msgstr "Giá trị bước spline nội suy theo hướng bắc"
 
 #: ../vector/lidar/v.outlier/main.c:109
 #: ../vector/lidar/v.surf.bspline/main.c:138
-msgid "Thychonov regularization weigth"
-msgstr "Trọng số phép chính quy hóa Tykhonov"
+msgid "Tychonov regularization weight"
+msgstr "Trọng số phép chính quy hóa Tychonov"
 
 #: ../vector/lidar/v.outlier/main.c:116
 msgid "Threshold for the outliers"
