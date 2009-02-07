@@ -1787,12 +1787,9 @@ class CheckListMapset(wx.ListCtrl, listmix.ListCtrlAutoWidthMixin, listmix.Check
         self.InsertColumn(0, _('Mapset'))
         self.InsertColumn(1, _('Owner'))
         self.InsertColumn(2, _('Group'))
-<<<<<<< .working
+
         locationPath = os.path.join(grassenv.GetGRASSVariable('GISDBASE'),
                                     grassenv.GetGRASSVariable('LOCATION_NAME'))
-=======
-        gisenv = grass.gisenv()
-        locationPath = os.path.join(gisenv['GISDBASE'], gisenv['LOCATION_NAME'])
 
         ret = grass.read_command('g.mapsets',
                                  flags = 'l')
@@ -1801,7 +1798,6 @@ class CheckListMapset(wx.ListCtrl, listmix.ListCtrlAutoWidthMixin, listmix.Check
         mapsets = []
         if ret:
             mapsets = ret.split()
->>>>>>> .merge-right.r35797
         
         for mapset in mapsets:
             index = self.InsertStringItem(sys.maxint, mapset)
