@@ -1787,22 +1787,35 @@ class CheckListMapset(wx.ListCtrl, listmix.ListCtrlAutoWidthMixin, listmix.Check
         self.InsertColumn(0, _('Mapset'))
         self.InsertColumn(1, _('Owner'))
         self.InsertColumn(2, _('Group'))
+<<<<<<< .working
         locationPath = os.path.join(grassenv.GetGRASSVariable('GISDBASE'),
                                     grassenv.GetGRASSVariable('LOCATION_NAME'))
+=======
+        gisenv = grass.gisenv()
+        locationPath = os.path.join(gisenv['GISDBASE'], gisenv['LOCATION_NAME'])
+
+        ret = grass.read_command('g.mapsets',
+                                 flags = 'l')
+        ret = ret.strip(' \n')
+
+        mapsets = []
+        if ret:
+            mapsets = ret.split()
+>>>>>>> .merge-right.r35797
         
         for mapset in mapsets:
             index = self.InsertStringItem(sys.maxint, mapset)
             mapsetPath = os.path.join(locationPath,
                                       mapset)
             stat_info = os.stat(mapsetPath)
-	    if os.name in ('posix', 'mac'):
-                self.SetStringItem(index, 1, "%s" % pwd.getpwuid(stat_info.st_uid)[0])
-                # FIXME: get group name
-                self.SetStringItem(index, 2, "%-8s" % stat_info.st_gid) 
-	    else:
-                # FIXME: no pwd under MS Windows (owner: 0, group: 0)
-                self.SetStringItem(index, 1, "%-8s" % stat_info.st_uid)
-                self.SetStringItem(index, 2, "%-8s" % stat_info.st_gid)
+        if os.name in ('posix', 'mac'):
+            self.SetStringItem(index, 1, "%s" % pwd.getpwuid(stat_info.st_uid)[0])
+            # FIXME: get group name
+            self.SetStringItem(index, 2, "%-8s" % stat_info.st_gid) 
+        else:
+            # FIXME: no pwd under MS Windows (owner: 0, group: 0)
+            self.SetStringItem(index, 1, "%-8s" % stat_info.st_uid)
+            self.SetStringItem(index, 2, "%-8s" % stat_info.st_gid)
                 
         self.SetColumnWidth(col=0, width=wx.LIST_AUTOSIZE)
         self.SetColumnWidth(col=1, width=wx.LIST_AUTOSIZE)
