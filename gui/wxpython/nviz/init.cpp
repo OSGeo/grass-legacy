@@ -53,6 +53,9 @@ Nviz::Nviz(PyObject *log)
     glCanvas = NULL;
 
     G_debug(1, "Nviz::Nviz()");
+
+    // TODO: redirect messages to the GUI window
+    G_set_verbose(0);
 }
 
 /*!
