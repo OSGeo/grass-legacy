@@ -1806,11 +1806,9 @@ class CheckListMapset(wx.ListCtrl, listmix.ListCtrlAutoWidthMixin, listmix.Check
         ret = gcmd.RunCommand('g.mapsets',
                               flags = 'l',
                               read = True)
-        ret = ret.rstrip('\n')
-        
         mapsets = []
         if ret:
-            mapsets = ret.split()
+            mapsets = ret.rstrip(' \n').split(' ')
         
         for mapset in mapsets:
             index = self.InsertStringItem(sys.maxint, mapset)
