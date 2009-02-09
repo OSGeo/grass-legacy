@@ -23,8 +23,11 @@ import os
 import sys
 import copy
 import stat
-if os.name in ('posix', 'mac'):
+try:
     import pwd
+    havePwd = True
+except ImportError:
+    havePwd = False
 
 import wx
 import wx.lib.filebrowsebutton as filebrowse
@@ -1796,14 +1799,15 @@ class CheckListMapset(wx.ListCtrl, listmix.ListCtrlAutoWidthMixin, listmix.Check
         """Load data into list"""
         self.InsertColumn(0, _('Mapset'))
         self.InsertColumn(1, _('Owner'))
-        self.InsertColumn(2, _('Group'))
+        ### self.InsertColumn(2, _('Group'))
         gisenv = grass.gisenv()
         locationPath = os.path.join(gisenv['GISDBASE'], gisenv['LOCATION_NAME'])
 
-        ret = grass.read_command('g.mapsets',
-                                 flags = 'l')
-        ret = ret.strip(' \n')
-
+        ret = gcmd.RunCommand('g.mapsets',
+                              flags = 'l',
+                              read = True)
+        ret = ret.rstrip('\n')
+        
         mapsets = []
         if ret:
             mapsets = ret.split()
@@ -1813,17 +1817,17 @@ class CheckListMapset(wx.ListCtrl, listmix.ListCtrlAutoWidthMixin, listmix.Check
             mapsetPath = os.path.join(locationPath,
                                       mapset)
             stat_info = os.stat(mapsetPath)
-        if os.name in ('posix', 'mac'):
-            self.SetStringItem(index, 1, "%s" % pwd.getpwuid(stat_info.st_uid)[0])
-            # FIXME: get group name
-            self.SetStringItem(index, 2, "%-8s" % stat_info.st_gid) 
-        else:
-            # FIXME: no pwd under MS Windows (owner: 0, group: 0)
-            self.SetStringItem(index, 1, "%-8s" % stat_info.st_uid)
-            self.SetStringItem(index, 2, "%-8s" % stat_info.st_gid)
+            if havePwd:
+                self.SetStringItem(index, 1, "%s" % pwd.getpwuid(stat_info.st_uid)[0])
+                # FIXME: get group name
+                ### self.SetStringItem(index, 2, "%-8s" % stat_info.st_gid) 
+            else:
+                # FIXME: no pwd under MS Windows (owner: 0, group: 0)
+                self.SetStringItem(index, 1, "%-8s" % stat_info.st_uid)
+                ### self.SetStringItem(index, 2, "%-8s" % stat_info.st_gid)
                 
         self.SetColumnWidth(col=0, width=wx.LIST_AUTOSIZE)
-        self.SetColumnWidth(col=1, width=wx.LIST_AUTOSIZE)
+        ### self.SetColumnWidth(col=1, width=wx.LIST_AUTOSIZE)
         
     def OnCheckItem(self, index, flag):
         """Mapset checked/unchecked"""
