@@ -12,7 +12,7 @@ msgstr ""
 "Project-Id-Version: grasswxpy_de\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2009-01-12 22:59+0100\n"
-"PO-Revision-Date: 2009-01-30 20:49+0100\n"
+"PO-Revision-Date: 2009-02-12 20:32+0100\n"
 "Last-Translator: Markus Neteler <neteler osgeo.org>\n"
 "Language-Team: deutsch <Deutsch <grass-translations@lists.osgeo.org>>\n"
 "MIME-Version: 1.0\n"
@@ -24,7 +24,7 @@ msgstr ""
 #: ../gui/wxpython/gui_modules/profile.py:65
 #, fuzzy
 msgid "Profile Analysis"
-msgstr "Oberflächenanalysen"
+msgstr "Analyse"
 
 #: ../gui/wxpython/gui_modules/profile.py:153
 #: ../gui/wxpython/gui_modules/profile.py:272
@@ -54,8 +54,9 @@ msgid "Raster values"
 msgstr "Raster Werte"
 
 #: ../gui/wxpython/gui_modules/profile.py:436
+#, fuzzy
 msgid "You must draw a transect to profile in the map display window."
-msgstr ""
+msgstr "Darstellung."
 
 #: ../gui/wxpython/gui_modules/profile.py:437
 msgid "Nothing to profile"
@@ -159,7 +160,7 @@ msgstr "Einstellungen."
 #: ../gui/wxpython/gui_modules/profile.py:1105
 #, fuzzy
 msgid "Profile line settings"
-msgstr "Linien"
+msgstr "Linie"
 
 #: ../gui/wxpython/gui_modules/profile.py:1115
 #: ../gui/wxpython/gui_modules/wxgui_utils.py:345
@@ -169,13 +170,13 @@ msgstr ""
 #: ../gui/wxpython/gui_modules/profile.py:1120
 #, fuzzy
 msgid "Line color"
-msgstr "Linie Farbe"
+msgstr "Linien-Farbe"
 
 #: ../gui/wxpython/gui_modules/profile.py:1127
 #: ../gui/wxpython/gui_modules/vdigit.py:1148
 #, fuzzy
 msgid "Line width"
-msgstr "Breite:"
+msgstr "Linienbreite"
 
 #: ../gui/wxpython/gui_modules/profile.py:1137
 #, fuzzy
@@ -196,7 +197,7 @@ msgstr ""
 #: ../gui/wxpython/gui_modules/nviz_tools.py:848
 #, fuzzy
 msgid "Color"
-msgstr "Farbe"
+msgstr "Farben"
 
 #: ../gui/wxpython/gui_modules/profile.py:1181
 msgid "Size"
@@ -227,12 +228,12 @@ msgstr ""
 #: ../gui/wxpython/gui_modules/profile.py:1245
 #, fuzzy
 msgid "Custom min"
-msgstr "Benutzerdefiniert"
+msgstr "kundenspezifisch"
 
 #: ../gui/wxpython/gui_modules/profile.py:1253
 #, fuzzy
 msgid "Custom max"
-msgstr "Benutzerdefiniert"
+msgstr "kundenspezifisch"
 
 #: ../gui/wxpython/gui_modules/profile.py:1261
 #, fuzzy
@@ -247,7 +248,7 @@ msgstr "Fortgeschritten"
 #: ../gui/wxpython/gui_modules/profile.py:1290
 #, fuzzy
 msgid "Grid color"
-msgstr "Farbe"
+msgstr "Gitternetz Farbe"
 
 #: ../gui/wxpython/gui_modules/profile.py:1297
 msgid "Show grid"
@@ -323,7 +324,7 @@ msgid ""
 "See 'Command output' window for details.\n"
 "\n"
 "Number of skipped lines: %(line)d"
-msgstr "Zeilen Zeilen"
+msgstr "Linie"
 
 #: ../gui/wxpython/gui_modules/workspace.py:633
 #: ../gui/wxpython/gui_modules/mapdisp.py:2477
@@ -387,7 +388,7 @@ msgstr ""
 #: ../gui/wxpython/gui_modules/wxgui_utils.py:298
 #, fuzzy
 msgid "Use as background vector map"
-msgstr "Benutze Vektor"
+msgstr "Vektor"
 
 #: ../gui/wxpython/gui_modules/wxgui_utils.py:329
 #: ../gui/wxpython/gui_modules/wxgui_utils.py:347
@@ -436,7 +437,7 @@ msgstr ""
 #: ../gui/wxpython/gui_modules/wxgui_utils.py:596
 #, fuzzy
 msgid "Layer group:"
-msgstr "Layer %d:"
+msgstr "Layer:"
 
 #: ../gui/wxpython/gui_modules/wxgui_utils.py:601
 #: ../gui/wxpython/gui_modules/wxgui_utils.py:1152
@@ -516,7 +517,7 @@ msgstr ""
 #: ../gui/wxpython/gui_modules/wxgui_utils.py:681
 #, fuzzy
 msgid "geodesic line"
-msgstr "Linien"
+msgstr "Linie"
 
 #: ../gui/wxpython/gui_modules/wxgui_utils.py:684
 msgid "rhumbline"
@@ -627,7 +628,7 @@ msgid ""
 "http://PyOpenGL.sourceforge.net. Switching back to 2D display mode.\n"
 "\n"
 "Details: %s"
-msgstr "Darstellung"
+msgstr "http://PyOpenGL.sourceforge.net. Darstellung"
 
 #: ../gui/wxpython/gui_modules/mapdisp.py:2784
 #, fuzzy, python-format
@@ -666,7 +667,7 @@ msgstr "Drucke"
 #: ../gui/wxpython/icons/icon.py:177
 #, fuzzy
 msgid "Print display"
-msgstr "Drucke"
+msgstr "Drucke Darstellung"
 
 #: ../gui/wxpython/gui_modules/mapdisp.py:3455
 msgid "No map layer selected for querying."
@@ -688,12 +689,12 @@ msgstr "Es wurde keine Vektorkarte für die Abfrage ausgewählt."
 #: ../gui/wxpython/gui_modules/mapdisp.py:3606
 #, fuzzy
 msgid "Query raster/vector map(s) (display mode)"
-msgstr "Abfragen Vektor"
+msgstr "Abfrage Raster Vektor Darstellung"
 
 #: ../gui/wxpython/gui_modules/mapdisp.py:3614
 #, fuzzy
 msgid "Query vector map (edit mode)"
-msgstr "Abfragen Vektor"
+msgstr "Abfrage Vektor"
 
 #: ../gui/wxpython/gui_modules/mapdisp.py:3728
 #, python-format
@@ -760,7 +761,7 @@ msgstr "Zu berechnende Region aus der aktuellen Darstellung übernehmen"
 #: ../gui/wxpython/gui_modules/mapdisp.py:4030
 #, fuzzy
 msgid "Save display geometry to named region"
-msgstr "Speichern"
+msgstr "Darstellung"
 
 #: ../gui/wxpython/gui_modules/dbm.py:72
 #: ../gui/wxpython/gui_modules/dbm.py:261
@@ -781,7 +782,7 @@ msgstr ""
 #: ../gui/wxpython/gui_modules/dbm.py:236
 #, fuzzy
 msgid "Can display only 256 columns."
-msgstr "Spalten."
+msgstr "Darstellung."
 
 #: ../gui/wxpython/gui_modules/dbm.py:270
 #, fuzzy, python-format
@@ -856,7 +857,7 @@ msgstr "Daten"
 #: ../gui/wxpython/gui_modules/dbm.py:553
 #, fuzzy
 msgid "SQL Query"
-msgstr "Abfragen"
+msgstr "Abfrage"
 
 #: ../gui/wxpython/gui_modules/dbm.py:576
 #, fuzzy
@@ -952,19 +953,21 @@ msgstr "Löschen"
 #: ../gui/wxpython/gui_modules/dbm.py:962
 #, fuzzy
 msgid "Delete all records"
-msgstr "Löschen"
+msgstr "Alle"
 
 #: ../gui/wxpython/gui_modules/dbm.py:964
 #: ../gui/wxpython/gui_modules/gdialogs.py:738
 #: ../gui/wxpython/gui_modules/gdialogs.py:1095
+#, fuzzy
 msgid "Select all"
-msgstr ""
+msgstr "Alle"
 
 #: ../gui/wxpython/gui_modules/dbm.py:965
 #: ../gui/wxpython/gui_modules/gdialogs.py:739
 #: ../gui/wxpython/gui_modules/gdialogs.py:1096
+#, fuzzy
 msgid "Deselect all"
-msgstr ""
+msgstr "Alle"
 
 #: ../gui/wxpython/gui_modules/dbm.py:967
 #, fuzzy
@@ -1027,7 +1030,7 @@ msgstr ""
 #: ../gui/wxpython/gui_modules/dbm.py:1321
 #, fuzzy, python-format
 msgid "Casting value '%(value)s' to %(type)s failed."
-msgstr "Eingabe fehlgeschlagen.."
+msgstr "fehlgeschlagen."
 
 #: ../gui/wxpython/gui_modules/dbm.py:1229
 msgid "Unable to insert new record."
@@ -1067,7 +1070,7 @@ msgstr ""
 #: ../gui/wxpython/gui_modules/dbm.py:1473
 #, fuzzy
 msgid "Drop all columns"
-msgstr "Spalten"
+msgstr "Alle"
 
 #: ../gui/wxpython/gui_modules/dbm.py:1536
 #, fuzzy
@@ -1086,7 +1089,7 @@ msgid ""
 "Loading attribute data failed.\n"
 "\n"
 "%s"
-msgstr "Daten"
+msgstr "fehlgeschlagen"
 
 #: ../gui/wxpython/gui_modules/dbm.py:1724
 #, fuzzy, python-format
@@ -1095,7 +1098,7 @@ msgid ""
 "Invalid SQL select statement.\n"
 "\n"
 "%s"
-msgstr "Daten"
+msgstr "fehlgeschlagen"
 
 #: ../gui/wxpython/gui_modules/dbm.py:1809
 msgid "Database connection"
@@ -1127,7 +1130,7 @@ msgstr ""
 #: ../gui/wxpython/gui_modules/gdialogs.py:1058
 #, fuzzy
 msgid "Layer"
-msgstr "Layer %d"
+msgstr "Layer"
 
 #: ../gui/wxpython/gui_modules/dbm.py:2075
 #: ../gui/wxpython/gui_modules/dbm.py:2182
@@ -1174,7 +1177,7 @@ msgstr "Kategorien."
 #: ../gui/wxpython/gui_modules/dbm.py:2225
 #, fuzzy
 msgid "Table name"
-msgstr "Tabelle"
+msgstr "Name"
 
 #: ../gui/wxpython/gui_modules/dbm.py:2238
 msgid "&Create table"
@@ -1191,7 +1194,7 @@ msgstr ""
 #: ../gui/wxpython/gui_modules/dbm.py:2259
 #, fuzzy
 msgid "Layer description"
-msgstr "Layer %d"
+msgstr "Layer"
 
 #: ../gui/wxpython/gui_modules/dbm.py:2320
 #, fuzzy
@@ -1206,7 +1209,7 @@ msgstr "Lösche Ebene"
 #: ../gui/wxpython/gui_modules/dbm.py:2362
 #, fuzzy
 msgid "Layer to detele"
-msgstr "Layer %d"
+msgstr "Layer"
 
 #: ../gui/wxpython/gui_modules/dbm.py:2383
 #, fuzzy
@@ -1231,7 +1234,7 @@ msgstr ""
 #: ../gui/wxpython/gui_modules/dbm.py:2638
 #, fuzzy
 msgid "Unable to create new table. Table name or key column name is missing."
-msgstr "Tabelle."
+msgstr "Name Name."
 
 #: ../gui/wxpython/gui_modules/dbm.py:2645
 #, fuzzy, python-format
@@ -1243,7 +1246,7 @@ msgstr "Tabelle."
 msgid ""
 "Unable to add new layer to vector map <%(vector)s>. Layer %(layer)d already "
 "exists."
-msgstr "Vektor Vektor."
+msgstr "Vektor Vektor Layer."
 
 #: ../gui/wxpython/gui_modules/dbm.py:2875
 msgid "Database connection is not defined in DB file."
@@ -1255,7 +1258,7 @@ msgid ""
 "No attribute table linked to vector map <%(vector)s> found. %(msg)s\n"
 "You can disable this message from digitization settings. Or you can create "
 "and link attribute table to the vector map using Attribute Table Manager."
-msgstr "Vektor Vektor Vektor Tabelle."
+msgstr "Vektor Vektor Vektor."
 
 #: ../gui/wxpython/gui_modules/dbm.py:2898
 #, fuzzy
@@ -1278,7 +1281,7 @@ msgstr ""
 #: ../gui/wxpython/gui_modules/dbm.py:2918
 #, fuzzy
 msgid "Display attributes"
-msgstr "Zeige Attribute"
+msgstr "Darstellung"
 
 #: ../gui/wxpython/gui_modules/dbm.py:2922
 msgid "&Reload"
@@ -1420,8 +1423,9 @@ msgid "Twist:"
 msgstr "Verfügbare Karten auflisten"
 
 #: ../gui/wxpython/gui_modules/nviz_tools.py:163
+#, fuzzy
 msgid "Height:"
-msgstr ""
+msgstr "Höhe:"
 
 #: ../gui/wxpython/gui_modules/nviz_tools.py:170
 msgid "Z-exag:"
@@ -1606,12 +1610,12 @@ msgstr "Farbe:"
 #: ../gui/wxpython/gui_modules/nviz_tools.py:421
 #, fuzzy
 msgid "Set to all"
-msgstr "Farbe"
+msgstr "Alle"
 
 #: ../gui/wxpython/gui_modules/nviz_tools.py:422
 #, fuzzy
 msgid "Use draw settings for all loaded surfaces"
-msgstr "Benutze"
+msgstr "Alle"
 
 #: ../gui/wxpython/gui_modules/nviz_tools.py:436
 msgid "Mask zeros:"
@@ -1634,13 +1638,13 @@ msgstr "Position"
 #: ../gui/wxpython/gui_modules/nviz_tools.py:523
 #, fuzzy
 msgid "Show vector lines"
-msgstr "Vektor Zeilen"
+msgstr "Vektor"
 
 #: ../gui/wxpython/gui_modules/nviz_tools.py:531
 #: ../gui/wxpython/gui_modules/nviz_tools.py:1156
 #, fuzzy
 msgid "Vector lines"
-msgstr "Zeilen"
+msgstr "Vektorlinien"
 
 #: ../gui/wxpython/gui_modules/nviz_tools.py:537
 #: ../gui/wxpython/gui_modules/nviz_tools.py:1213
@@ -1653,7 +1657,7 @@ msgstr ""
 #: ../gui/wxpython/gui_modules/georect.py:1514
 #, fuzzy
 msgid "Color:"
-msgstr "Farbe:"
+msgstr "Farben:"
 
 #: ../gui/wxpython/gui_modules/nviz_tools.py:568
 #: ../gui/wxpython/gui_modules/preferences.py:1179
@@ -1670,18 +1674,18 @@ msgstr "Kostenoberfläche"
 #: ../gui/wxpython/gui_modules/nviz_tools.py:687
 #, fuzzy
 msgid "Height above surface:"
-msgstr "Karten auflisten"
+msgstr "Höhe:"
 
 #: ../gui/wxpython/gui_modules/nviz_tools.py:617
 #, fuzzy
 msgid "Show vector points"
-msgstr "Vektor Punkte"
+msgstr "Vektor"
 
 #: ../gui/wxpython/gui_modules/nviz_tools.py:625
 #: ../gui/wxpython/gui_modules/nviz_tools.py:1181
 #, fuzzy
 msgid "Vector points"
-msgstr "Punkte"
+msgstr "Vektorpunkte"
 
 #: ../gui/wxpython/gui_modules/nviz_tools.py:631
 #, fuzzy
@@ -1767,8 +1771,9 @@ msgid "(x)"
 msgstr ""
 
 #: ../gui/wxpython/gui_modules/nviz_tools.py:1053
+#, fuzzy
 msgid "Height"
-msgstr ""
+msgstr "Höhe"
 
 #: ../gui/wxpython/gui_modules/nviz_tools.py:1072
 #, fuzzy
@@ -1831,17 +1836,17 @@ msgstr ""
 #: ../gui/wxpython/gui_modules/nviz_tools.py:2351
 #, fuzzy
 msgid "Layer properties"
-msgstr "Layer %d"
+msgstr "Layer"
 
 #: ../gui/wxpython/gui_modules/nviz_tools.py:2456
 #, fuzzy, python-format
 msgid "Vector map <%s> is 3D"
-msgstr "Vektorkarte %s nicht gefunden."
+msgstr "Vektorkarte <%s> ist 3D."
 
 #: ../gui/wxpython/gui_modules/nviz_tools.py:2459
 #, fuzzy, python-format
 msgid "Vector map <%s> is 2D"
-msgstr "Vektorkarte %s nicht gefunden."
+msgstr "Vektorkarte <%s> ist 2D."
 
 #: ../gui/wxpython/gui_modules/nviz_tools.py:2461
 #, fuzzy, python-format
@@ -1853,20 +1858,24 @@ msgid "Segment break"
 msgstr ""
 
 #: ../gui/wxpython/gui_modules/preferences.py:494
+#, fuzzy
 msgid "Collapse all except PERMANENT and current"
-msgstr ""
+msgstr "Alle"
 
 #: ../gui/wxpython/gui_modules/preferences.py:495
+#, fuzzy
 msgid "Collapse all except PERMANENT"
-msgstr ""
+msgstr "Alle"
 
 #: ../gui/wxpython/gui_modules/preferences.py:496
+#, fuzzy
 msgid "Collapse all"
-msgstr ""
+msgstr "Alle"
 
 #: ../gui/wxpython/gui_modules/preferences.py:497
+#, fuzzy
 msgid "Expand all"
-msgstr ""
+msgstr "Alle"
 
 #: ../gui/wxpython/gui_modules/preferences.py:499
 #, fuzzy
@@ -1917,7 +1926,7 @@ msgid ""
 "       Details: %(detail)s\n"
 "       Line: '%(line)s'"
 msgstr ""
-"\n"
+"fehlgeschlagen\n"
 "\n"
 " Linie"
 
@@ -1931,7 +1940,7 @@ msgid ""
 "Writing settings to file <%(file)s> failed.\n"
 "\n"
 "Details: %(detail)s"
-msgstr "Eingabe fehlgeschlagen."
+msgstr "fehlgeschlagen"
 
 #: ../gui/wxpython/gui_modules/preferences.py:760
 msgid "Unable to set "
@@ -1967,12 +1976,12 @@ msgstr "Speichern"
 msgid ""
 "Save current position and size of Layer Manager window and opened Map "
 "Display window(s) and use as default for next sessions."
-msgstr "Speichern."
+msgstr "Layer Darstellung."
 
 #: ../gui/wxpython/gui_modules/preferences.py:914
 #, fuzzy
 msgid "Layer Manager settings"
-msgstr "Layer %d"
+msgstr "Layer"
 
 #: ../gui/wxpython/gui_modules/preferences.py:926
 #, fuzzy
@@ -2050,7 +2059,7 @@ msgstr "Raster"
 #: ../gui/wxpython/gui_modules/preferences.py:1159
 #, fuzzy
 msgid "Overlay raster maps"
-msgstr "Karten überlagern"
+msgstr "Raster"
 
 #: ../gui/wxpython/gui_modules/preferences.py:1173
 #, fuzzy
@@ -2112,7 +2121,7 @@ msgstr "Darstellung"
 #: ../gui/wxpython/gui_modules/preferences.py:1355
 #, fuzzy
 msgid "Suppress positioning Layer Manager window"
-msgstr "Layer %d"
+msgstr "Layer"
 
 #: ../gui/wxpython/gui_modules/preferences.py:1376
 #, fuzzy
@@ -2212,7 +2221,7 @@ msgstr ""
 #: ../gui/wxpython/gui_modules/toolbars.py:806
 #, fuzzy
 msgid "Copy features from (background) vector map"
-msgstr "Kopiere Karten Vektor"
+msgstr "Vektor"
 
 #: ../gui/wxpython/gui_modules/toolbars.py:814
 #, fuzzy
@@ -2227,7 +2236,7 @@ msgstr "Zeilen Umrandung"
 #: ../gui/wxpython/gui_modules/toolbars.py:830
 #, fuzzy
 msgid "Break selected lines/boundaries at intersection"
-msgstr "Zeilen Umrandung"
+msgstr "Teile"
 
 #: ../gui/wxpython/gui_modules/toolbars.py:838
 #, fuzzy
@@ -2242,7 +2251,7 @@ msgstr "Zeilen Umrandung"
 #: ../gui/wxpython/gui_modules/toolbars.py:854
 #, fuzzy
 msgid "Query features"
-msgstr "Abfragen"
+msgstr "Abfrage"
 
 #: ../gui/wxpython/gui_modules/toolbars.py:862
 #, fuzzy
@@ -2269,7 +2278,7 @@ msgstr "Vektor."
 #: ../gui/wxpython/gui_modules/toolbars.py:1137
 #, fuzzy, python-format
 msgid "Do you want to save changes in vector map <%s>?"
-msgstr "Speichern Vektor?"
+msgstr "Vektor?"
 
 #: ../gui/wxpython/gui_modules/toolbars.py:1139
 #, fuzzy
@@ -2279,13 +2288,13 @@ msgstr "Speichern?"
 #: ../gui/wxpython/gui_modules/toolbars.py:1146
 #, fuzzy, python-format
 msgid "Please wait, closing and rebuilding topology of vector map <%s>..."
-msgstr "Topologie Vektor."
+msgstr "Vektor."
 
 #: ../gui/wxpython/gui_modules/toolbars.py:1210
 #: ../gui/wxpython/gui_modules/toolbars.py:1215
 #, fuzzy
 msgid "New vector map"
-msgstr "Neu Vektor"
+msgstr "Vektor"
 
 #: ../gui/wxpython/gui_modules/menuform.py:138
 #: ../gui/wxpython/gui_modules/menuform.py:1249
@@ -2873,7 +2882,7 @@ msgstr ""
 #: ../gui/wxpython/gui_modules/gcmd.py:356
 #, fuzzy
 msgid "Execution failed:"
-msgstr "Eingabe fehlgeschlagen.:"
+msgstr "fehlgeschlagen:"
 
 #: ../gui/wxpython/gui_modules/gcmd.py:359
 msgid "Details:"
@@ -2973,7 +2982,7 @@ msgstr "Name"
 #: ../gui/wxpython/gui_modules/georect.py:550
 #, fuzzy
 msgid "Select image/map to display for ground control point (GCP) creation"
-msgstr "Darstellung Punkte"
+msgstr "Darstellung Punkt"
 
 #: ../gui/wxpython/gui_modules/georect.py:558
 #, fuzzy
@@ -3043,12 +3052,12 @@ msgstr ""
 #: ../gui/wxpython/gui_modules/georect.py:899
 #, fuzzy
 msgid "Writing POINTS file failed"
-msgstr "Eingabe fehlgeschlagen."
+msgstr "fehlgeschlagen"
 
 #: ../gui/wxpython/gui_modules/georect.py:936
 #, fuzzy
 msgid "Reading POINTS file failed"
-msgstr "Eingabe fehlgeschlagen."
+msgstr "fehlgeschlagen"
 
 #: ../gui/wxpython/gui_modules/georect.py:981
 #, fuzzy
@@ -3155,7 +3164,7 @@ msgstr "Raster"
 #: ../gui/wxpython/gui_modules/nviz_mapdisp.py:489
 #, fuzzy
 msgid "failed"
-msgstr "Eingabe fehlgeschlagen."
+msgstr "fehlgeschlagen"
 
 #: ../gui/wxpython/gui_modules/nviz_mapdisp.py:491
 #, python-format
@@ -3170,7 +3179,7 @@ msgstr "Raster"
 #: ../gui/wxpython/gui_modules/nviz_mapdisp.py:546
 #, fuzzy
 msgid "Raster map"
-msgstr "Rasterkarte"
+msgstr "Raster"
 
 #: ../gui/wxpython/gui_modules/nviz_mapdisp.py:550
 #, fuzzy
@@ -3189,12 +3198,12 @@ msgstr ""
 #: ../gui/wxpython/gui_modules/nviz_mapdisp.py:609
 #, fuzzy, python-format
 msgid "Loading vector map <%(name)s> (%(type)s) failed"
-msgstr "Vektor"
+msgstr "Vektor Name fehlgeschlagen"
 
 #: ../gui/wxpython/gui_modules/nviz_mapdisp.py:660
 #, fuzzy, python-format
 msgid "Unable to unload vector map <%(name)s> (%(type)s)"
-msgstr "Vektor"
+msgstr "Vektor Name"
 
 #: ../gui/wxpython/gui_modules/nviz_mapdisp.py:663
 #, fuzzy, python-format
@@ -3204,7 +3213,7 @@ msgstr "Vektor Name"
 #: ../gui/wxpython/gui_modules/nviz_mapdisp.py:1185
 #, fuzzy, python-format
 msgid "Vector point layer not found (id=%d)"
-msgstr "Vektor Punkte"
+msgstr "Vektor Punkt"
 
 #: ../gui/wxpython/gui_modules/nviz_mapdisp.py:1187
 #, fuzzy, python-format
@@ -3217,12 +3226,12 @@ msgid ""
 "Setting data layer properties failed.\n"
 "\n"
 "%s"
-msgstr "Daten"
+msgstr "fehlgeschlagen"
 
 #: ../gui/wxpython/gui_modules/colorrules.py:94
 #, fuzzy
 msgid "Create new color table for raster map"
-msgstr "Farbe"
+msgstr "Raster"
 
 #: ../gui/wxpython/gui_modules/colorrules.py:96
 #: ../gui/wxpython/gui_modules/colorrules.py:389
@@ -3233,7 +3242,7 @@ msgstr "Raster"
 #: ../gui/wxpython/gui_modules/colorrules.py:98
 #, fuzzy
 msgid "Create new color table for vector map"
-msgstr "Farbe Vektor"
+msgstr "Vektor"
 
 #: ../gui/wxpython/gui_modules/colorrules.py:100
 #, fuzzy
@@ -3258,7 +3267,7 @@ msgstr "Farbe"
 #: ../gui/wxpython/gui_modules/colorrules.py:128
 #, fuzzy
 msgid "Layer:"
-msgstr "Ebene:"
+msgstr "Layer:"
 
 #: ../gui/wxpython/gui_modules/colorrules.py:130
 #, fuzzy
@@ -3383,12 +3392,12 @@ msgid ""
 "\n"
 "Data are probably corrupted, try to run v.build to rebuild the topology "
 "(Vector->Develop vector map->Create/rebuild topology)."
-msgstr "Vektor Topologie Vektor Topologie."
+msgstr "Vektor Vektor Vektor."
 
 #: ../gui/wxpython/gui_modules/vdigit.py:646
 #, fuzzy
 msgid "Undo failed, data corrupted."
-msgstr "Daten."
+msgstr "fehlgeschlagen."
 
 #: ../gui/wxpython/gui_modules/vdigit.py:1070
 msgid "Apply changes for this session"
@@ -3438,9 +3447,10 @@ msgid "Select only features inside of selection bounding box"
 msgstr ""
 
 #: ../gui/wxpython/gui_modules/vdigit.py:1238
+#, fuzzy
 msgid ""
 "By default are selected all features overlapping selection bounding box "
-msgstr ""
+msgstr "Alle "
 
 #: ../gui/wxpython/gui_modules/vdigit.py:1241
 msgid "Check for duplicates"
@@ -3449,12 +3459,12 @@ msgstr ""
 #: ../gui/wxpython/gui_modules/vdigit.py:1253
 #, fuzzy
 msgid "Digitize line features"
-msgstr "Digitalisieren"
+msgstr "Linie"
 
 #: ../gui/wxpython/gui_modules/vdigit.py:1256
 #, fuzzy
 msgid "Break lines at intersection"
-msgstr "Zeilen"
+msgstr "Teile"
 
 #: ../gui/wxpython/gui_modules/vdigit.py:1266
 #, fuzzy
@@ -3469,7 +3479,7 @@ msgstr "Speichern"
 #: ../gui/wxpython/gui_modules/vdigit.py:1282
 #, fuzzy
 msgid "Query tool"
-msgstr "Abfragen"
+msgstr "Abfrage-Werkzeug"
 
 #: ../gui/wxpython/gui_modules/vdigit.py:1289
 msgid "Choose query tool"
@@ -3573,12 +3583,12 @@ msgstr "Linie"
 #: ../gui/wxpython/gui_modules/vdigit.py:1457
 #, fuzzy
 msgid "Boundary (no area)"
-msgstr "Boundary (keine Fläche)"
+msgstr "Fläche"
 
 #: ../gui/wxpython/gui_modules/vdigit.py:1458
 #, fuzzy
 msgid "Boundary (one area)"
-msgstr "Fläche:\n"
+msgstr "Fläche"
 
 #: ../gui/wxpython/gui_modules/vdigit.py:1459
 #, fuzzy
@@ -3588,22 +3598,22 @@ msgstr "Flächen"
 #: ../gui/wxpython/gui_modules/vdigit.py:1460
 #, fuzzy
 msgid "Centroid (in area)"
-msgstr "Zentroid (in Fläche)"
+msgstr "Fläche"
 
 #: ../gui/wxpython/gui_modules/vdigit.py:1461
 #, fuzzy
 msgid "Centroid (outside area)"
-msgstr "Zentroid (außerhalb einer Fläche)"
+msgstr "Fläche"
 
 #: ../gui/wxpython/gui_modules/vdigit.py:1462
 #, fuzzy
 msgid "Centroid (duplicate in area)"
-msgstr "Zentroid (Duplikat in einer Fläche)"
+msgstr "Fläche"
 
 #: ../gui/wxpython/gui_modules/vdigit.py:1463
 #, fuzzy
 msgid "Node (one line)"
-msgstr "Linien"
+msgstr "Linie"
 
 #: ../gui/wxpython/gui_modules/vdigit.py:1464
 #, fuzzy
@@ -3617,7 +3627,7 @@ msgstr ""
 #: ../gui/wxpython/gui_modules/vdigit.py:1466
 #, fuzzy
 msgid "Area (closed boundary + centroid)"
-msgstr "Grenzen"
+msgstr "Grenze Zentroid"
 
 #: ../gui/wxpython/gui_modules/vdigit.py:1467
 #, fuzzy
@@ -3677,7 +3687,7 @@ msgstr "Löschen"
 #: ../gui/wxpython/gui_modules/vdigit.py:1928
 #, fuzzy
 msgid "Delete all"
-msgstr "Löschen"
+msgstr "Alle"
 
 #: ../gui/wxpython/gui_modules/vdigit.py:2072
 #, fuzzy
@@ -3714,7 +3724,7 @@ msgstr "Erzeuge Punkte"
 #: ../gui/wxpython/gui_modules/vdigit.py:2380
 #, fuzzy
 msgid "Layer (Categories)"
-msgstr "Kategorien"
+msgstr "Layer"
 
 #: ../gui/wxpython/gui_modules/gdialogs.py:58
 #, fuzzy
@@ -3750,7 +3760,7 @@ msgstr ""
 #: ../gui/wxpython/gui_modules/gdialogs.py:203
 #, fuzzy, python-format
 msgid "New vector map <%s> created"
-msgstr "Neu Vektor"
+msgstr "Vektor"
 
 #: ../gui/wxpython/gui_modules/gdialogs.py:225
 msgid "Load region:"
@@ -3874,12 +3884,12 @@ msgstr "Schließen"
 #: ../gui/wxpython/gui_modules/gdialogs.py:856
 #, fuzzy
 msgid "&Import"
-msgstr "&Importieren"
+msgstr "&Import"
 
 #: ../gui/wxpython/gui_modules/gdialogs.py:857
 #, fuzzy
 msgid "Import selected layers"
-msgstr "Importieren"
+msgstr "Import"
 
 #: ../gui/wxpython/gui_modules/gdialogs.py:897
 #, fuzzy, python-format
@@ -3897,17 +3907,17 @@ msgstr ""
 #: ../gui/wxpython/gui_modules/gdialogs.py:1059
 #, fuzzy
 msgid "Layer name"
-msgstr "Layer %d Name"
+msgstr "Layer Name"
 
 #: ../gui/wxpython/gui_modules/gdialogs.py:1060
 #, fuzzy
 msgid "Output vector map name"
-msgstr "Ergebnis Vektor"
+msgstr "Vektor Name"
 
 #: ../gui/wxpython/gui_modules/gdialogs.py:1142
 #, fuzzy
 msgid "Set Map Layer Opacity"
-msgstr "Layer %d"
+msgstr "Layer"
 
 #: ../gui/wxpython/gui_modules/gdialogs.py:1166
 #, fuzzy
@@ -4014,7 +4024,7 @@ msgstr "Legende hinzufügen"
 #: ../gui/wxpython/icons/icon.py:175
 #, fuzzy
 msgid "Save display to PNG file"
-msgstr "Speichern"
+msgstr "Darstellung"
 
 #: ../gui/wxpython/icons/icon.py:180
 msgid "Start new display"
@@ -4116,7 +4126,7 @@ msgstr ""
 #: ../gui/wxpython/icons/icon.py:223
 #, fuzzy
 msgid "Add geodesic line layer"
-msgstr "Linien"
+msgstr "Linie"
 
 #: ../gui/wxpython/icons/icon.py:225
 msgid "Add rhumbline layer"
@@ -4135,33 +4145,33 @@ msgstr "Raster"
 #: ../gui/wxpython/icons/icon.py:234
 #, fuzzy
 msgid "Digitize new point"
-msgstr "Neuen Punkt digitalisieren"
+msgstr "Punkt"
 
 #: ../gui/wxpython/icons/icon.py:235 ../gui/wxpython/icons/icon.py:244
 #, fuzzy
 msgid "Left: new point"
-msgstr "Punkte"
+msgstr "Punkt"
 
 #: ../gui/wxpython/icons/icon.py:237
 #, fuzzy
 msgid "Digitize new line"
-msgstr "Neue Linie digitalisieren"
+msgstr "Linie"
 
 #: ../gui/wxpython/icons/icon.py:238 ../gui/wxpython/icons/icon.py:241
 #: ../gui/wxpython/icons/icon.py:262
 #, fuzzy
 msgid "Left: new point; Middle: undo last point; Right: close line"
-msgstr "Punkte Punkte Linien"
+msgstr "Punkt Punkt Linie"
 
 #: ../gui/wxpython/icons/icon.py:240
 #, fuzzy
 msgid "Digitize new boundary"
-msgstr "Digitalisiere neue Umrandung (Boundary)"
+msgstr "Grenze"
 
 #: ../gui/wxpython/icons/icon.py:243
 #, fuzzy
 msgid "Digitize new centroid"
-msgstr "Digitalisiere neuen Zentroid"
+msgstr "Zentroid"
 
 #: ../gui/wxpython/icons/icon.py:246
 msgid "Add new vertex"
@@ -4191,12 +4201,12 @@ msgstr ""
 #: ../gui/wxpython/icons/icon.py:258
 #, fuzzy
 msgid "Display/update categories"
-msgstr "Kategorien"
+msgstr "Darstellung"
 
 #: ../gui/wxpython/icons/icon.py:261
 #, fuzzy
 msgid "Edit line/boundary"
-msgstr "Editiere Linie/Boundary"
+msgstr "Linie Grenze"
 
 #: ../gui/wxpython/icons/icon.py:264
 #, fuzzy
@@ -4221,7 +4231,7 @@ msgstr "Einstellungen"
 #: ../gui/wxpython/icons/icon.py:276
 #, fuzzy
 msgid "Split line/boundary"
-msgstr "Linien Grenzen"
+msgstr "Linie Grenze"
 
 #: ../gui/wxpython/icons/icon.py:279
 #, fuzzy
@@ -4530,7 +4540,7 @@ msgstr ""
 #: ../gui/wxpython/wxgui.py:98
 #, fuzzy
 msgid "GRASS GIS Layer Manager (Experimental Prototype)"
-msgstr "Layer %d"
+msgstr "Layer"
 
 #: ../gui/wxpython/wxgui.py:308
 #, fuzzy
@@ -4562,7 +4572,7 @@ msgstr ""
 msgid ""
 "Reading workspace file <%s> failed. Invalid file, unable to parse XML "
 "document."
-msgstr "Eingabe fehlgeschlagen.."
+msgstr "fehlgeschlagen."
 
 #: ../gui/wxpython/wxgui.py:653 ../gui/wxpython/wxgui.py:758
 #: ../gui/wxpython/wxgui.py:794
@@ -4604,22 +4614,22 @@ msgstr ""
 #: ../gui/wxpython/wxgui.py:880
 #, fuzzy, python-format
 msgid "Writing current settings to workspace file failed (%s)."
-msgstr "Eingabe fehlgeschlagen.."
+msgstr "fehlgeschlagen."
 
 #: ../gui/wxpython/wxgui.py:1073
 #, fuzzy
 msgid "Import DXF layers"
-msgstr "Importieren"
+msgstr "Import"
 
 #: ../gui/wxpython/wxgui.py:1079
 #, fuzzy
 msgid "Import GDAL layers"
-msgstr "Importieren"
+msgstr "Import"
 
 #: ../gui/wxpython/wxgui.py:1085
 #, fuzzy
 msgid "Import OGR layers"
-msgstr "Importieren"
+msgstr "Import"
 
 #: ../gui/wxpython/wxgui.py:1110
 #, fuzzy
@@ -4673,6 +4683,10 @@ msgid ""
 msgstr "Darstellung"
 
 #, fuzzy
+msgid "Extract Modis Quality flags as raster values."
+msgstr "Raster."
+
+#, fuzzy
 #~ msgid "New workspace"
 #~ msgstr "Speichere Projekt"
 
@@ -4708,14 +4722,14 @@ msgstr "Darstellung"
 
 #, fuzzy
 #~ msgid "Import raster data using GDAL"
-#~ msgstr "Importieren Daten"
+#~ msgstr "Import Raster"
 
 #~ msgid "Import GDAL supported raster file into a binary raster map layer."
 #~ msgstr "Importiere Rasterdatei über GDAL in binäre Rasterkarte."
 
 #, fuzzy
 #~ msgid "Multiple raster data import using GDAL"
-#~ msgstr "Daten"
+#~ msgstr "Raster"
 
 #, fuzzy
 #~ msgid "Converts selected GDAL layers to GRASS raster maps using r.in.gdal."
@@ -4807,14 +4821,14 @@ msgstr "Darstellung"
 
 #, fuzzy
 #~ msgid "Import vector data using OGR"
-#~ msgstr "Importieren Vektor Daten"
+#~ msgstr "Import Vektor"
 
 #~ msgid "Convert OGR vector layers to GRASS vector map."
 #~ msgstr "Konvertiere OGR-Vektor Daten in eine GRASS Vektorkarte"
 
 #, fuzzy
 #~ msgid "Multiple vector data import using OGR"
-#~ msgstr "Vektor Daten"
+#~ msgstr "Vektor"
 
 #, fuzzy
 #~ msgid "Converts selected OGR layers to GRASS vector maps using v.in.ogr."
@@ -5137,14 +5151,14 @@ msgstr "Darstellung"
 
 #, fuzzy
 #~ msgid "Raster to vector"
-#~ msgstr "Raster zu Vektorkonvertierung"
+#~ msgstr "Raster Vektor"
 
 #~ msgid "Converts a raster map into a vector map layer."
 #~ msgstr "Konvertiert eine Rasterkarte in eine Vektorkarte"
 
 #, fuzzy
 #~ msgid "Raster series to volume"
-#~ msgstr "Rasterkartenserie zu Volumina"
+#~ msgstr "Raster"
 
 #, fuzzy
 #~ msgid "Converts 2D raster map slices to one 3D raster volume map."
@@ -5153,7 +5167,7 @@ msgstr "Darstellung"
 
 #, fuzzy
 #~ msgid "Raster 2.5D to volume"
-#~ msgstr "2.5D Rasterkarte zu Volumina"
+#~ msgstr "Raster"
 
 #~ msgid "Creates a 3D volume map based on 2D elevation and value raster maps."
 #~ msgstr ""
@@ -5162,7 +5176,7 @@ msgstr "Darstellung"
 
 #, fuzzy
 #~ msgid "Vector to raster"
-#~ msgstr "Vektor -> Raster"
+#~ msgstr "Vektor Raster"
 
 #~ msgid ""
 #~ "Converts a binary GRASS vector map layer into a GRASS raster map layer."
@@ -5180,14 +5194,14 @@ msgstr "Darstellung"
 
 #, fuzzy
 #~ msgid "Sites to vector"
-#~ msgstr "Sites (GRASS 5.0) -> Vektor"
+#~ msgstr "Vektor"
 
 #~ msgid "Converts a GRASS site_lists file into a vector map."
 #~ msgstr "Konvertiert eine GRASS site_lists Datei in eine Vektorkarte"
 
 #, fuzzy
 #~ msgid "Volume to raster series"
-#~ msgstr "Volumen zu Rasterkartenserien"
+#~ msgstr "Volumen Raster"
 
 #, fuzzy
 #~ msgid "Converts 3D raster maps to 2D raster maps"
@@ -5504,7 +5518,7 @@ msgstr "Darstellung"
 
 #, fuzzy
 #~ msgid "Neighborhood analysis"
-#~ msgstr "Nachbarschaftsanalysen"
+#~ msgstr "Nachbarschaft"
 
 #~ msgid "Moving window"
 #~ msgstr "Fenster bewegen"
@@ -6005,7 +6019,9 @@ msgstr "Darstellung"
 #~ msgid ""
 #~ "It optionally produces raster maps to contain backlink UTM coordinates "
 #~ "for tracing spread paths."
-#~ msgstr "Raster."
+#~ msgstr ""
+#~ "Dies erzeugt optional Rasterkarten mit 'backlink'-UTM-Koordinaten, um "
+#~ "Ausbreitungspfade nachzuzeichnen."
 
 #, fuzzy
 #~ msgid "Change category values and labels"
@@ -6041,7 +6057,9 @@ msgstr "Darstellung"
 #~ msgid ""
 #~ "Creates a new map layer whose category values are based upon a "
 #~ "reclassification of the categories in an existing raster map layer."
-#~ msgstr "Kategorien."
+#~ msgstr ""
+#~ "Erzeugt eine neue Karte, deren Kategoriewerte auf einer Reklassifikation "
+#~ "der Kategorien einer existierenden Rasterkarte basieren."
 
 #~ msgid "Recode interactively"
 #~ msgstr "Interaktive Bearbeitung von Rasterwerte (Recode)"
@@ -6059,7 +6077,7 @@ msgstr "Darstellung"
 #, fuzzy
 #~ msgid ""
 #~ "r.recode.rules - Use ascii rules file to recode categories in raster map"
-#~ msgstr "Benutze Kategorien"
+#~ msgstr "Raster"
 
 #~ msgid "Rescale"
 #~ msgstr "Neu skalieren"
@@ -6099,7 +6117,7 @@ msgstr "Darstellung"
 
 #, fuzzy
 #~ msgid "Random cells and vector points"
-#~ msgstr "Zufällige Zellen und Vektorpunkte aus einer Rasterkarte erzeugen"
+#~ msgstr "Vektor"
 
 #~ msgid ""
 #~ "Creates a raster map layer and vector point map containing randomly "
@@ -6183,7 +6201,7 @@ msgstr "Darstellung"
 #, fuzzy
 #~ msgid ""
 #~ "Produces a vector map layer of specified contours from a raster map layer."
-#~ msgstr "Vektor."
+#~ msgstr "Vektor Raster."
 
 #, fuzzy
 #~ msgid "Interpolate surfaces"
@@ -6191,7 +6209,7 @@ msgstr "Darstellung"
 
 #, fuzzy
 #~ msgid "Bilinear from raster points"
-#~ msgstr "Rasterpunkte mit der bilinearen Interpolation errechnen"
+#~ msgstr "Raster"
 
 #, fuzzy
 #~ msgid "Bilinear interpolation utility for raster map layers."
@@ -6199,11 +6217,11 @@ msgstr "Darstellung"
 
 #, fuzzy
 #~ msgid "Bilinear and bicubic from vector points"
-#~ msgstr "Rasterpunkte mit der bilinearen Interpolation errechnen"
+#~ msgstr "Vektor"
 
 #, fuzzy
 #~ msgid "IDW from raster points"
-#~ msgstr "Interpolation von Rasterkonturen"
+#~ msgstr "Raster"
 
 #, fuzzy
 #~ msgid "Surface interpolation utility for raster map layers."
@@ -6211,17 +6229,19 @@ msgstr "Darstellung"
 
 #, fuzzy
 #~ msgid "IDW from vector points"
-#~ msgstr "Mit Vektorpunkten arbeiten"
+#~ msgstr "Vektor"
 
 #, fuzzy
 #~ msgid ""
 #~ "Surface interpolation from vector point data by Inverse Distance Squared "
 #~ "Weighting."
-#~ msgstr "Vektor Daten."
+#~ msgstr ""
+#~ "Oberflächeninterpolation aus Vektor-Punktdaten durch Inverse Distance "
+#~ "Squared Weighting."
 
 #, fuzzy
 #~ msgid "Raster contours"
-#~ msgstr "Raster zu Vektorkonvertierung"
+#~ msgstr "Raster"
 
 #, fuzzy
 #~ msgid "Surface generation program from rasterized contours."
@@ -6238,12 +6258,18 @@ msgstr "Darstellung"
 #~ "Spatial approximation and topographic analysis from given point or "
 #~ "isoline data in vector format to floating point raster format using "
 #~ "regularized spline with tension."
-#~ msgstr "Daten Vektor."
+#~ msgstr ""
+#~ "Räumliche Approximation und topographische Analyse auf Basis gegebener "
+#~ "Punkte oder Isolinien im Vektorformat unter Verwendung regularisierten "
+#~ "Splinefunktion mit Spannung. Das Ergebnis wird in eine Fließkomma-"
+#~ "Rasterkarte geschrieben."
 
 #, fuzzy
 #~ msgid ""
 #~ "Fills no-data areas in raster maps using v.surf.rst splines interpolation"
-#~ msgstr "Daten Flächen"
+#~ msgstr ""
+#~ "Fülle Flächen ohne Daten in Rasterkarten mit Hilfe der v.surf.rst Spline-"
+#~ "Interpolation."
 
 #, fuzzy
 #~ msgid "Basic raster metadata"
@@ -6251,7 +6277,7 @@ msgstr "Darstellung"
 
 #, fuzzy
 #~ msgid "Output basic information about a raster map layer."
-#~ msgstr "Ergebnis."
+#~ msgstr "Gibt grundlegende Informationen über eine Rasterkarte aus."
 
 #, fuzzy
 #~ msgid "Manage category information"
@@ -6285,9 +6311,7 @@ msgstr "Darstellung"
 
 #, fuzzy
 #~ msgid "Sum area by raster map and category"
-#~ msgstr ""
-#~ "Fläche:\n"
-#~ " Raster"
+#~ msgstr "Fläche Raster"
 
 #, fuzzy
 #~ msgid "Reports statistics for raster map layers."
@@ -6298,7 +6322,9 @@ msgstr "Darstellung"
 #~ "Calculates the volume of data \"clumps\", and (optionally) produces a "
 #~ "GRASS vector points map containing the calculated centroids of these "
 #~ "clumps."
-#~ msgstr "Daten Vektor Punkte Zentroide."
+#~ msgstr ""
+#~ "Berechnet das Volumen Daten-\"Klumpen\". Optional kann eine GRASS-"
+#~ "Vektorkarte (Punkte) mit den Zentroiden der Datenklumpen erzeugt werden."
 
 #, fuzzy
 #~ msgid "Surface area estimation for rasters."
@@ -6360,7 +6386,9 @@ msgstr "Darstellung"
 #~ msgid ""
 #~ "Tabulates the mutual occurrence (coincidence) of categories for two "
 #~ "raster map layers."
-#~ msgstr "Kategorien."
+#~ msgstr ""
+#~ "Tabelliert das gemeinsame Auftreten von Kategorien (Koinzidenz) von zwei "
+#~ "Rasterkarten."
 
 #, fuzzy
 #~ msgid "Vector"
@@ -6380,7 +6408,7 @@ msgstr "Darstellung"
 
 #, fuzzy
 #~ msgid "Creates topology for GRASS vector map."
-#~ msgstr "Topologie Vektor."
+#~ msgstr "Erzeugt Topologie für GRASS Vektorkarten."
 
 #, fuzzy
 #~ msgid "Clean vector map"
@@ -6388,15 +6416,15 @@ msgstr "Darstellung"
 
 #, fuzzy
 #~ msgid "Toolset for cleaning topology of vector map."
-#~ msgstr "Topologie Vektor."
+#~ msgstr "Werkzeugkasten zum Säubern Topologie von Vektorkarten."
 
 #, fuzzy
 #~ msgid "Generalization"
-#~ msgstr "Ebene erzeugen"
+#~ msgstr "Allgemeine Statistiken"
 
 #, fuzzy
 #~ msgid "Vector based generalization."
-#~ msgstr "Vektorbasierte Generalisierung."
+#~ msgstr "Vektor"
 
 #, fuzzy
 #~ msgid "Convert object types"
@@ -6408,11 +6436,11 @@ msgstr "Darstellung"
 
 #, fuzzy
 #~ msgid "Adds missing centroids to closed boundaries."
-#~ msgstr "Zentroide Umrandung."
+#~ msgstr "Fügt fehlende Zentroide zu geschlossenen Grenzen hinzu."
 
 #, fuzzy
 #~ msgid "Builds polylines from lines or boundaries."
-#~ msgstr "Zeilen Umrandung."
+#~ msgstr "Erstellt Poly-Linien aus Linien und Grenzen."
 
 #, fuzzy
 #~ msgid "Split polylines"
@@ -6420,7 +6448,7 @@ msgstr "Darstellung"
 
 #, fuzzy
 #~ msgid "Creates points/segments from input vector lines and positions."
-#~ msgstr "Punkte Vektor Zeilen."
+#~ msgstr "Erzeuge Punkte/Segmente aus den Input Vektorlinien und Positionen."
 
 #, fuzzy
 #~ msgid "Parallel lines"
@@ -6428,7 +6456,7 @@ msgstr "Darstellung"
 
 #, fuzzy
 #~ msgid "Create parallel line to input lines"
-#~ msgstr "Zeilen"
+#~ msgstr "Erzeuge eine parallele Linie zu der eingegebenen Linie."
 
 #, fuzzy
 #~ msgid "Dissolve boundaries"
@@ -6438,15 +6466,19 @@ msgstr "Darstellung"
 #~ msgid ""
 #~ "Dissolves boundaries between adjacent areas sharing a common category "
 #~ "number or attribute."
-#~ msgstr "Umrandung Flächen."
+#~ msgstr ""
+#~ "Löst Grenzen zwischen benachbarten Flächen mit gleicher Kategorienummer "
+#~ "oder gleichem Attributwert auf."
 
 #, fuzzy
 #~ msgid "Create 3D vector over raster"
-#~ msgstr "Vektorpuffer erstellen"
+#~ msgstr "Vektor Raster"
 
 #, fuzzy
 #~ msgid "Converts vector map to 3D by sampling of elevation raster map."
-#~ msgstr "Vektor."
+#~ msgstr ""
+#~ "Konvertiert eine Vektorkarte nach 3D durch Abtasten einer Karte mit "
+#~ "Höheninformationen."
 
 #, fuzzy
 #~ msgid "Extrude 3D vector map"
@@ -6454,11 +6486,13 @@ msgstr "Darstellung"
 
 #, fuzzy
 #~ msgid "Extrudes flat vector object to 3D with defined height."
-#~ msgstr "Vektor."
+#~ msgstr "Presst flache Vektorobjekte in eine 3D-Form mit definierter Höhe."
 
 #, fuzzy
 #~ msgid "Creates a new vector as a read-only link to OGR layer."
-#~ msgstr "Vektor."
+#~ msgstr ""
+#~ "Erzeugt eine neue Vektorkarte als einen ausschließlich lesbaren Link zu "
+#~ "einem OGR-Layer."
 
 #, fuzzy
 #~ msgid "Create labels"
@@ -6466,7 +6500,7 @@ msgstr "Darstellung"
 
 #, fuzzy
 #~ msgid "Creates paint labels for a vector map from attached attributes."
-#~ msgstr "Vektor."
+#~ msgstr "Erzeugt Paint-Label für Vektorkarten von zugehörigen Attributen."
 
 #, fuzzy
 #~ msgid "Reposition vector map"
@@ -6476,7 +6510,9 @@ msgstr "Darstellung"
 #~ msgid ""
 #~ "Performs an affine transformation (shift, scale and rotate, or GPCs) on "
 #~ "vector map."
-#~ msgstr "Vektor."
+#~ msgstr ""
+#~ "Führt eine affine Transformation (schieben, skalieren und rotieren oder "
+#~ "GPCs) von Vektorkarten durch."
 
 #, fuzzy
 #~ msgid "Reproject vector map"
@@ -6484,29 +6520,31 @@ msgstr "Darstellung"
 
 #, fuzzy
 #~ msgid "Allows projection conversion of vector maps."
-#~ msgstr "Vektor."
+#~ msgstr "Ermöglicht die Umwandlung der Projektion von Vektorkarten."
 
 #, fuzzy
 #~ msgid "Query with attributes"
-#~ msgstr "Nach Attributen abfragen"
+#~ msgstr "Abfrage"
 
 #, fuzzy
 #~ msgid ""
 #~ "Selects vector objects from an existing vector map and creates a new map "
 #~ "containing only the selected objects."
-#~ msgstr "Vektor Vektor."
+#~ msgstr ""
+#~ "Selektiert Vektorobjekte einer existierenden Vektorkarte und erzeugt eine "
+#~ "neue Karte nur mit den selektierten Objekten."
 
 #, fuzzy
 #~ msgid "Query with coordinate(s)"
-#~ msgstr "Abfragen unter Koordinaten"
+#~ msgstr "Abfrage"
 
 #, fuzzy
 #~ msgid "Queries a vector map layer at given locations."
-#~ msgstr "Vektor."
+#~ msgstr "Fraget Vektorkarten an gegebenen Positionen ab."
 
 #, fuzzy
 #~ msgid "Query with another vector map"
-#~ msgstr "Abfragen Vektor"
+#~ msgstr "Abfrage Vektor"
 
 #, fuzzy
 #~ msgid "Select features from ainput by features from binput"
@@ -6520,7 +6558,9 @@ msgstr "Darstellung"
 #~ msgid ""
 #~ "Creates a buffer around features of given type (areas must contain "
 #~ "centroid)."
-#~ msgstr "Flächen."
+#~ msgstr ""
+#~ "Erzeugt einen Buffer um die Feature mit gegebenen Typ (Flächen müssen "
+#~ "Zentroide enthalten)."
 
 #, fuzzy
 #~ msgid "Lidar analysis"
@@ -6528,7 +6568,7 @@ msgstr "Darstellung"
 
 #, fuzzy
 #~ msgid "Detects the object's edges from a LIDAR data set."
-#~ msgstr "Daten."
+#~ msgstr "Erkennt Kanten von Objekten aus einem LIDAR-Datensatz."
 
 #, fuzzy
 #~ msgid ""
@@ -6550,7 +6590,9 @@ msgstr "Darstellung"
 
 #, fuzzy
 #~ msgid "Create stationing from input lines, and linear reference system"
-#~ msgstr "Zeilen"
+#~ msgstr ""
+#~ "Erzeuge Stationen auf Basis der Eingabelinien und dem "
+#~ "Linearenreferenzsystem."
 
 #, fuzzy
 #~ msgid "Create points/segments"
@@ -6560,13 +6602,17 @@ msgstr "Darstellung"
 #~ msgid ""
 #~ "Creates points/segments from input lines, linear reference system and "
 #~ "positions read from stdin or a file."
-#~ msgstr "Punkte Zeilen."
+#~ msgstr ""
+#~ "Erzeuge Punkte/Segmente auf Basis der Eingabelinien, des "
+#~ "Linearenreferenzsystems und Positionen von stdin oder einer Datei."
 
 #, fuzzy
 #~ msgid ""
 #~ "Finds line id and real km+offset for given points in vector map using "
 #~ "linear reference system."
-#~ msgstr "Punkte Vektor."
+#~ msgstr ""
+#~ "Findet die ID der Linie und tatsächliche km+Versatz für gegebene Punkte "
+#~ "einer Vektorkarte mit Hilfe eines Linearenreferenzsystems."
 
 #, fuzzy
 #~ msgid "Nearest features"
@@ -6576,7 +6622,9 @@ msgstr "Darstellung"
 #~ msgid ""
 #~ "Finds the nearest element in vector map 'to' for elements in vector map "
 #~ "'from'."
-#~ msgstr "Vektor Vektor."
+#~ msgstr ""
+#~ "Findet das nächstgelegene Element der Vektorkarte 'to' für Elemente in "
+#~ "der Vektorkarte 'from'. "
 
 #, fuzzy
 #~ msgid "Network analysis"
@@ -6596,7 +6644,7 @@ msgstr "Darstellung"
 
 #, fuzzy
 #~ msgid "Finds shortest path on vector network."
-#~ msgstr "Vektor."
+#~ msgstr "Findet den kürzesten Weg in einem Vektor-Netzwerk."
 
 #, fuzzy
 #~ msgid "Split net"
@@ -6612,11 +6660,11 @@ msgstr "Darstellung"
 
 #, fuzzy
 #~ msgid "Overlay vector maps"
-#~ msgstr "Karten überlagern Vektor"
+#~ msgstr "Vektor"
 
 #, fuzzy
 #~ msgid "Overlays two vector maps."
-#~ msgstr "Vektor."
+#~ msgstr "Überlagert zwei Vektorkarten."
 
 #, fuzzy
 #~ msgid "Patch vector maps"
@@ -6624,7 +6672,8 @@ msgstr "Darstellung"
 
 #, fuzzy
 #~ msgid "Create a new vector map layer by combining other vector map layers."
-#~ msgstr "Vektor Vektor."
+#~ msgstr ""
+#~ "Erzeugt eine neue Vektorkarte durch Kombination anderer Vektorkarten."
 
 #, fuzzy
 #~ msgid "Change attributes"
@@ -6636,7 +6685,8 @@ msgstr "Darstellung"
 
 #, fuzzy
 #~ msgid "Attach, delete or report vector categories to map geometry."
-#~ msgstr "Vektor Kategorien."
+#~ msgstr ""
+#~ "Füge hinzu, Lösche oder Berichte Vektorkategorien einer Kartengeometrie."
 
 #, fuzzy
 #~ msgid "Reclassify objects interactively"
@@ -6650,15 +6700,18 @@ msgstr "Darstellung"
 #~ msgid ""
 #~ "Changes vector category values for an existing vector map according to "
 #~ "results of SQL queries or a value in attribute table column."
-#~ msgstr "Vektor Vektor."
+#~ msgstr ""
+#~ "Ändert die Kategorien einer existierenden Vektorkarte entsprechend den "
+#~ "Ergebnissen der SQL-Abfragen oder der Werte einer Spalte der "
+#~ "Attributtabelle."
 
 #, fuzzy
 #~ msgid "Generate area for current region"
-#~ msgstr "Bereich feature für von"
+#~ msgstr "Fläche"
 
 #, fuzzy
 #~ msgid "Create a new vector from the current region."
-#~ msgstr "Vektor."
+#~ msgstr "Erzeuge einen neuen Vektor aus der aktuellen Region."
 
 #, fuzzy
 #~ msgid "Generate areas from points"
@@ -6666,7 +6719,9 @@ msgstr "Darstellung"
 
 #, fuzzy
 #~ msgid "Uses a GRASS vector points map to produce a convex hull vector map."
-#~ msgstr "Vektor Punkte Vektor."
+#~ msgstr ""
+#~ "Verwendet eine GRASS Vektor-Punktkarte, um eine Vektorkarte mit konvexer "
+#~ "Hülle zu erzeugen."
 
 #, fuzzy
 #~ msgid "Delaunay triangles"
@@ -6676,7 +6731,9 @@ msgstr "Darstellung"
 #~ msgid ""
 #~ "Creates a Delaunay triangulation from an input vector map containing "
 #~ "points or centroids."
-#~ msgstr "Vektor Punkte Zentroide."
+#~ msgstr ""
+#~ "Erzeugt eine Delaunay-Triangulation auf Basis einer Eingabe-Vektorkarte "
+#~ "mit Punkten oder Zentroiden."
 
 #, fuzzy
 #~ msgid "Voronoi diagram/Thiessen polygons"
@@ -6686,7 +6743,9 @@ msgstr "Darstellung"
 #~ msgid ""
 #~ "Creates a Voronoi diagram from an input vector map containing points or "
 #~ "centroids."
-#~ msgstr "Vektor Punkte Zentroide."
+#~ msgstr ""
+#~ "Erstellt ein Voronoi Diagramm auf Basis einer Vektorkarte mit Punkten "
+#~ "oder Zentroiden."
 
 #, fuzzy
 #~ msgid "Generate grid"
@@ -6694,7 +6753,8 @@ msgstr "Darstellung"
 
 #, fuzzy
 #~ msgid "Creates a GRASS vector map of a user-defined grid."
-#~ msgstr "Vektor."
+#~ msgstr ""
+#~ "Erzeugt eine GRASS Vektorkarte mit einem benutzerdefinierten Gitternetz."
 
 #, fuzzy
 #~ msgid "Generate points"
@@ -6704,7 +6764,9 @@ msgstr "Darstellung"
 #~ msgid ""
 #~ "Creates new vector (points) map from database table containing "
 #~ "coordinates."
-#~ msgstr "Vektor Punkte."
+#~ msgstr ""
+#~ "Erzeugt neue Vektorkarte (Punkte) aus einer Datenbanktabelle, die "
+#~ "Koordinaten beinhaltet."
 
 #, fuzzy
 #~ msgid "Generate points along lines"
@@ -6712,7 +6774,9 @@ msgstr "Darstellung"
 
 #, fuzzy
 #~ msgid "Create points along input lines in new vector with 2 layers."
-#~ msgstr "Punkte Zeilen Vektor."
+#~ msgstr ""
+#~ "Erzeuge Punkte entlang der Eingabelinie in eine neue Vektorkarte mit zwei "
+#~ "Layern."
 
 #, fuzzy
 #~ msgid "Generate random points"
@@ -6720,7 +6784,7 @@ msgstr "Darstellung"
 
 #, fuzzy
 #~ msgid "Randomly generate a 2D/3D vector points map."
-#~ msgstr "Vektor Punkte."
+#~ msgstr "Erzeugt zufällige 2D/3D GRASS Vektor-Punktkarten."
 
 #, fuzzy
 #~ msgid "Perturb points"
@@ -6728,61 +6792,66 @@ msgstr "Darstellung"
 
 #, fuzzy
 #~ msgid "Random location perturbations of GRASS vector points"
-#~ msgstr "Vektor Punkte"
+#~ msgstr "Zufällige Störung der Position von GRASS Vektorpunkten."
 
 #, fuzzy
 #~ msgid "Remove outliers in point sets"
-#~ msgstr "Interpoliere Volumen aus Punkten mit Hilfe von Splines"
+#~ msgstr "Punkt"
 
 #, fuzzy
 #~ msgid "Removes outliers from vector point data."
-#~ msgstr "Vektor Daten."
+#~ msgstr "Entfernt Ausreißer aus einem Punkt-Vektordatensatz."
 
 #, fuzzy
 #~ msgid "Test/training point sets"
-#~ msgstr "Testen"
+#~ msgstr "Punkt"
 
 #, fuzzy
 #~ msgid "Randomly partition points into test/train sets."
-#~ msgstr "Punkte."
+#~ msgstr "Teile die Punkte zufällig in ein Test- und ein Training-Datensatz."
 
 #, fuzzy
 #~ msgid "Update area attributes from raster"
-#~ msgstr "Editiere Attribute (im Formmodus)"
+#~ msgstr "Fläche Raster"
 
 #, fuzzy
 #~ msgid ""
 #~ "Calculates univariate statistics from a GRASS raster map based on vector "
 #~ "polygons and uploads statistics to new attribute columns."
-#~ msgstr "Vektor Spalten."
+#~ msgstr ""
+#~ "Berechnet Kennzahlen univariater Statistik einer Rasterkarte für Polygone "
+#~ "und fügt die Ergebnisse als neue Spalte der Attributtabelle an."
 
 #, fuzzy
 #~ msgid "Update point attributes from areas"
-#~ msgstr "Editiere Attribute (im Formmodus)"
+#~ msgstr "Punkt"
 
 #, fuzzy
 #~ msgid "Uploads vector values at positions of vector points to the table."
-#~ msgstr "Vektor Vektor Punkte."
+#~ msgstr ""
+#~ "Schreibt den Vektorwert an der Stelle der Vektorpunkte in die Tabelle."
 
 #, fuzzy
 #~ msgid "Update point attributes from raster"
-#~ msgstr "Editiere Attribute (im Formmodus)"
+#~ msgstr "Punkt Raster"
 
 #, fuzzy
 #~ msgid "Sample raster maps at point locations"
-#~ msgstr "Raster Punkte"
+#~ msgstr "Raster Punkt"
 
 #, fuzzy
 #~ msgid "Uploads raster values at positions of vector points to the table."
-#~ msgstr "Vektor Punkte."
+#~ msgstr ""
+#~ "Übernimmt die Rasterwerte an den Positinen der Vektor-Punkte in die "
+#~ "Attributtabelle."
 
 #, fuzzy
 #~ msgid "Sample raster neighborhood around points"
-#~ msgstr "Stichprobe"
+#~ msgstr "Raster"
 
 #, fuzzy
 #~ msgid "Samples a raster map at vector point locations."
-#~ msgstr "Vektor."
+#~ msgstr "Fragt eine Rasterkarte an den Positionen von Vektorpunkten ab."
 
 #, fuzzy
 #~ msgid "Reports and statistics"
@@ -6820,11 +6889,13 @@ msgstr "Darstellung"
 #~ msgid ""
 #~ "Calculates univariate statistics for attribute. Variance and standard "
 #~ "deviation is calculated only for points if specified."
-#~ msgstr "Punkte."
+#~ msgstr ""
+#~ "Berechnet univariate Statistiken für die Attribute. Die Varianz und "
+#~ "Standardabweichung wird nur für Punkte berechnet wenn explizit angefragt."
 
 #, fuzzy
 #~ msgid "Indices for quadrat counts of sites lists."
-#~ msgstr "Sites."
+#~ msgstr "Indices der Quadrat-Count-Methode von site_lists."
 
 #, fuzzy
 #~ msgid "Test normality"
@@ -6832,7 +6903,7 @@ msgstr "Darstellung"
 
 #, fuzzy
 #~ msgid "Tests for normality for points."
-#~ msgstr "Punkte."
+#~ msgstr "Test auf Normalverteilung für Punkte."
 
 #, fuzzy
 #~ msgid "Develop images and groups"
@@ -6866,7 +6937,7 @@ msgstr "Darstellung"
 
 #, fuzzy
 #~ msgid "Color balance for RGB"
-#~ msgstr "Farbe"
+#~ msgstr "Farben"
 
 #, fuzzy
 #~ msgid "HIS to RGB"
@@ -6876,13 +6947,13 @@ msgstr "Darstellung"
 #~ msgid ""
 #~ "Hue-intensity-saturation (his) to red-green-blue (rgb) raster map color "
 #~ "transformation function."
-#~ msgstr "Farbe."
+#~ msgstr "Raster."
 
 #, fuzzy
 #~ msgid ""
 #~ "Red-green-blue (rgb) to hue-intensity-saturation (his) raster map color "
 #~ "transformation function"
-#~ msgstr "Farbe"
+#~ msgstr "Raster"
 
 #, fuzzy
 #~ msgid "Rectify image or raster"
@@ -6907,19 +6978,16 @@ msgstr "Darstellung"
 #~ "The resulting signature file is used as input for i.maxlik, to generate "
 #~ "an unsupervised image classification."
 #~ msgstr ""
-#~ "Ein Clusteralgorithmus, der spektrale Signaturen für "
-#~ "Landbedeckungsklassen aus einem Bild ermittelt. Die resultierende "
-#~ "Signaturdatei kann als Eingabe für i.maxlik für eine unüberwachte "
-#~ "Klassifikation verwendet werden."
+#~ "Die resultierende Signaturdatei wird als Eingabe für i.maxlik verwendet, "
+#~ "um eine unüberwachte Bildklassifikation zu erzeugen."
 
 #, fuzzy
 #~ msgid ""
 #~ "Classification is based on the spectral signature information generated "
 #~ "by either i.cluster, i.class, or i.gensig."
 #~ msgstr ""
-#~ "Eine Bildbearbeitungsfunktion, die die spektrale Reflektion einer Zelle "
-#~ "basierend auf der spektralen Signaturinformation (generiert durch i."
-#~ "cluster, i.class oder i.gensig) klassifiziert."
+#~ "Die Klassifikation basiert auf der Information der spektralen Signatur "
+#~ "erzeugt von .cluster, i.class, oder i.gensig."
 
 #, fuzzy
 #~ msgid ""
@@ -6960,7 +7028,7 @@ msgstr "Darstellung"
 #, fuzzy
 #~ msgid ""
 #~ "Zero-crossing \"edge detection\" raster function for image processing."
-#~ msgstr "Raster."
+#~ msgstr "Zero-crossing: Funktion der Bildverarbeitung zur Kantenerkennung."
 
 #, fuzzy
 #~ msgid "Matrix/convolving filter"
@@ -6976,7 +7044,7 @@ msgstr "Darstellung"
 
 #, fuzzy
 #~ msgid "Tasseled Cap (Kauth Thomas) transformation for LANDSAT-TM data"
-#~ msgstr "Daten"
+#~ msgstr "Tasseled Cap (Kauth Thomas) Transformation für LANDSAT-TM Daten."
 
 #, fuzzy
 #~ msgid "Transform image"
@@ -7073,7 +7141,9 @@ msgstr "Darstellung"
 #~ msgid ""
 #~ "Interpolates point data to a G3D grid volume using regularized spline "
 #~ "with tension (RST) algorithm."
-#~ msgstr "Daten."
+#~ msgstr ""
+#~ "Interpoliert Punkte zu einem G3D Grid Volumen unter Verwendung des "
+#~ "regularized spline with tension (RST) Algorithmus."
 
 #, fuzzy
 #~ msgid "Report and Statistics"
@@ -7104,7 +7174,7 @@ msgstr "Darstellung"
 
 #, fuzzy
 #~ msgid "List all columns for a given table."
-#~ msgstr "Karten auflisten Spalten."
+#~ msgstr "Listet alle Spalten einer Tabelle."
 
 #, fuzzy
 #~ msgid "List drivers"
@@ -7112,7 +7182,7 @@ msgstr "Darstellung"
 
 #, fuzzy
 #~ msgid "List all database drivers."
-#~ msgstr "Karten auflisten."
+#~ msgstr "Listet alle verfügbaren Datenbanktreiber auf."
 
 #, fuzzy
 #~ msgid "List tables"
@@ -7150,7 +7220,9 @@ msgstr "Darstellung"
 #~ msgid ""
 #~ "Creates and adds a new attribute table to a given layer of an existing "
 #~ "vector map."
-#~ msgstr "Vektor."
+#~ msgstr ""
+#~ "Erzeugt eine neue Attributtabelle für einen Layer einer existierenden "
+#~ "Vektorkarte."
 
 #, fuzzy
 #~ msgid "Remove table"
@@ -7168,7 +7240,8 @@ msgstr "Darstellung"
 #~ msgid ""
 #~ "Adds one or more columns to the attribute table connected to a given "
 #~ "vector map."
-#~ msgstr "Spalten Vektor."
+#~ msgstr ""
+#~ "Fügt eine oder mehrere Spalten zu der Attributtabelle einer Vektorkarte."
 
 #, fuzzy
 #~ msgid "Change values"
@@ -7178,12 +7251,14 @@ msgstr "Darstellung"
 #~ msgid ""
 #~ "Allows to update a column in the attribute table connected to a vector "
 #~ "map."
-#~ msgstr "Vektor."
+#~ msgstr "Aktualisiert eine Spalte einer Attributtabelle einer Vektorkarte."
 
 #, fuzzy
 #~ msgid ""
 #~ "Renames a column in the attribute table connected to a given vector map."
-#~ msgstr "Vektor."
+#~ msgstr ""
+#~ "Benennt eine Spalte einer Attributtabelle verbunden mit einer bestimmten "
+#~ "Vektorkarte um."
 
 #, fuzzy
 #~ msgid "Test"
@@ -7191,27 +7266,29 @@ msgstr "Darstellung"
 
 #, fuzzy
 #~ msgid "Test database driver, database must exist and set by db.connect."
-#~ msgstr "Testen."
+#~ msgstr ""
+#~ "Teste den Datenbank-Treiber. Die Datenbank muß existieren und mittels db."
+#~ "connect verbunden sein."
 
 #, fuzzy
 #~ msgid "Query"
-#~ msgstr "Abfragen"
+#~ msgstr "Abfrage"
 
 #, fuzzy
 #~ msgid "Query any table"
-#~ msgstr "Daten abfragen (SQL Select)"
+#~ msgstr "Abfrage"
 
 #, fuzzy
 #~ msgid "Selects data from table."
-#~ msgstr "Daten."
+#~ msgstr "Selektiert Daten einer Tabelle."
 
 #, fuzzy
 #~ msgid "Query vector attribute data"
-#~ msgstr "Abfragen Vektor Daten"
+#~ msgstr "Abfrage Vektor"
 
 #, fuzzy
 #~ msgid "Prints vector map attributes."
-#~ msgstr "Vektor."
+#~ msgstr "Gebe Vektorattribute aus."
 
 #, fuzzy
 #~ msgid "SQL statement"
@@ -7227,7 +7304,7 @@ msgstr "Darstellung"
 
 #, fuzzy
 #~ msgid "Reconnect vector to database"
-#~ msgstr "Zu Datenbank verbinden"
+#~ msgstr "Vektor"
 
 #, fuzzy
 #~ msgid "Set vector map - database connection"
@@ -7235,7 +7312,9 @@ msgstr "Darstellung"
 
 #, fuzzy
 #~ msgid "Prints/sets DB connection for a vector map to attribute table."
-#~ msgstr "Vektor."
+#~ msgstr ""
+#~ "Gibt oder setzt Datenbankverbindung für eine Vektorkarte zu einer "
+#~ "Attributtabelle."
 
 #, fuzzy
 #~ msgid "Help"
@@ -7247,7 +7326,7 @@ msgstr "Darstellung"
 
 #, fuzzy
 #~ msgid "Modify selected layer"
-#~ msgstr "Importieren"
+#~ msgstr "Import"
 
 #, fuzzy
 #~ msgid "Create new workspace"
@@ -7287,9 +7366,7 @@ msgstr "Darstellung"
 
 #, fuzzy
 #~ msgid "Imports geonames.org country files into a GRASS vector points map."
-#~ msgstr ""
-#~ "Importiere US-NGA GEOnet Names Server (GNS) Länderdaten in eine GRASS "
-#~ "Vektorpunkte Karte."
+#~ msgstr "Importiert Länderdateien von geonames.org in eine Vektorpunktkarte."
 
 #, fuzzy
 #~ msgid "Multiple GPS export formats using GPSBabel"
@@ -7309,7 +7386,7 @@ msgstr "Darstellung"
 
 #, fuzzy
 #~ msgid "Color tables (stddev)"
-#~ msgstr "Tabelle kopieren"
+#~ msgstr "Farben"
 
 #, fuzzy
 #~ msgid "Distance to features"
@@ -7326,7 +7403,7 @@ msgstr "Darstellung"
 
 #, fuzzy
 #~ msgid "ERROR: Rendering failed"
-#~ msgstr "Rendering Eingabe fehlgeschlagen."
+#~ msgstr "Rendering fehlgeschlagen"
 
 #, fuzzy
 #~ msgid "New"
@@ -7340,44 +7417,44 @@ msgstr "Darstellung"
 #~ msgid ""
 #~ "Exports a vector map to a GPS receiver or file format supported by "
 #~ "GPSBabel."
-#~ msgstr "Vektor."
+#~ msgstr "Vektor Format."
 
 #, fuzzy
 #~ msgid "Performs transformation of 2D vector features to 3D."
-#~ msgstr "Vektor."
+#~ msgstr "Führt die Transformation von 2D Vektorfeature nach 3D durch."
 
 #, fuzzy
 #~ msgid "Set color rules based on stddev from a map's mean value."
-#~ msgstr "Farbe."
+#~ msgstr "Bestimme Farbregeln basierend auf den Standardabweichungen."
 
 #, fuzzy
 #~ msgid "Total corrected area"
-#~ msgstr "Fläche:\n"
+#~ msgstr "Fläche"
 
 #, fuzzy
 #~ msgid ""
 #~ "Edits a vector map, allows adding, deleting and modifying selected vector "
 #~ "features."
-#~ msgstr "Vektor Vektor."
+#~ msgstr ""
+#~ "Editiert eine Vektorkarte, ermöglicht das Hinzufügen, Löschen und Ändern "
+#~ "ausgewählter Vektor Feature."
 
 #, fuzzy
 #~ msgid ""
 #~ "Set color rules for features in a vector using a numeric attribute column."
-#~ msgstr "Farbe Vektor."
+#~ msgstr ""
+#~ "Bestimme Farbregeln für Feature einer Vektorkarte unter Verwendung einer "
+#~ "numerischen Spalte der Attributtabelle."
 
 #, fuzzy
 #~ msgid "Find line id and offset"
-#~ msgstr "Linien"
+#~ msgstr "Linie"
 
 #, fuzzy
 #~ msgid "Mosaics up to 4 images and extends colormap; creates map *.mosaic"
 #~ msgstr ""
 #~ "Mosaikiert bis zu 4 Bilder und erweitert die Farbtabelle. Erzeugt *."
 #~ "mosaic-Karten."
-
-#, fuzzy
-#~ msgid "Extract Modis Quality flags as raster values."
-#~ msgstr "Raster."
 
 #, fuzzy
 #~ msgid "Vegetation Indices"
@@ -7403,3 +7480,68 @@ msgstr "Darstellung"
 #, fuzzy
 #~ msgid "Reconnects vectors to a new database."
 #~ msgstr "Verbindet Vektor mit einer neuen Datenbank."
+
+#, fuzzy
+#~ msgid "Horizon angle computation from a digital elevation model."
+#~ msgstr ""
+#~ "Berechnung des Horizontwinkel auf Grundlage eines digitalen Höhenmodells."
+
+#, fuzzy
+#~ msgid "Compute quantiles using two passes."
+#~ msgstr "Berechne Quantile in zwei Durchgängen"
+
+#, fuzzy
+#~ msgid "Change the type of geometry elements."
+#~ msgstr "Ändere die Art der geometrischen Elemente."
+
+#, fuzzy
+#~ msgid "Create Linear Reference System"
+#~ msgstr "Erzeuge Linearesreferenzsystem"
+
+#, fuzzy
+#~ msgid ""
+#~ "Centre node must be opened (costs >= 0). Costs of centre node are used in "
+#~ "calculation"
+#~ msgstr ""
+#~ "Zentraler Knoten muss geöffnet sein (Kosten >= 0). Kosten des zentralen "
+#~ "Knoten gehen im die Berechnung mit ein."
+
+#, fuzzy
+#~ msgid "Visibility graph construction."
+#~ msgstr "Konstruktion des Sichtbarkeits-Graphen."
+
+#, fuzzy
+#~ msgid ""
+#~ "Splits net to bands between cost isolines (direction from centre). Centre "
+#~ "node must be opened (costs >= 0). Costs of centre node are used in "
+#~ "calculation."
+#~ msgstr ""
+#~ "Teilt das Netz in Bänder zwischen Isokostenlinien (Richtung vom Zentrum). "
+#~ "Zentraler Knoten muss geöffnet sein (Kosten >= 0). Kosten des zentralen "
+#~ "Knotens gehen in die Berechnung ein."
+
+#, fuzzy
+#~ msgid ""
+#~ "Note that 'Minimum Steiner Tree' problem is NP-hard and heuristic "
+#~ "algorithm is used in this module so the result may be sub optimal"
+#~ msgstr ""
+#~ "Bedenken Sie das 'Minimum Steiner Tree'-Problem ist NP-hart und in diesem "
+#~ "Modul wird ein heuristischer Algorithmus verwenden, so kann das Ergebnis "
+#~ "suboptimal sein."
+
+#, fuzzy
+#~ msgid ""
+#~ "Note that TSP is NP-hard, heuristic algorithm is used by this module and "
+#~ "created cycle may be sub optimal"
+#~ msgstr ""
+#~ "Bedenken Sie das: Das Handelsreisenden-Problem ist NP-hart. Dies Modul "
+#~ "setzt ein heuristischen Algorithmus ein und erzeugte Ringen können "
+#~ "suboptimal sein."
+
+#, fuzzy
+#~ msgid "Ortho Photo rectification"
+#~ msgstr "Beenden"
+
+#, fuzzy
+#~ msgid "Interactive input for supervised classification (requires Xterm)"
+#~ msgstr "für"
