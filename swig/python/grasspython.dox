@@ -1,15 +1,22 @@
-/*! \page GRASS_SWIG_PYTHON GRASS SWIG/PYTHON interface
+/*! \page GRASS_SWIG_PYTHON GRASS 6 SWIG/PYTHON interface
 
-<h2>GRASS SWIG/PYTHON interface</h2>
+<h2>GRASS 6 SWIG/PYTHON interface</h2>
 
-At the moment a prototype is implemented. It permits to use
-some GRASS library functions directly from the PYTHON programming language.
+At the moment a prototype is implemented (a more advanced interface
+is included in GRASS 7). It permits to use some GRASS 6 library
+functions directly from the PYTHON programming language.
 
-<h3>Status of GRASS SWIG/PYTHON implementation</h3>
-
-At the moment a prototype is implemented.
 <P>
-See: gisdefs.i
+See: python_grass6.i
+
+<p>
+Examples:
+<ul>
+<li> examples/rasteraccess.py
+<li> examples/vectoraccess.py
+<li> examples/m.distance
+<li> test.py
+</ul>
 
 */
 
