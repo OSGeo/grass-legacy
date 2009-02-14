@@ -76,7 +76,7 @@ from GRASS 5 Programmer's manual) or are simply undocumented.</I>
 <li>gmath: 	\ref gmathlib (generic mathematical functions and BLAS/LAPACK library wrapper)
 <li>gpde:       \ref gpdelib (partial differential equations library)
 <li>gtcltk:	Tcl/Tk stuff - \ref gtcltk
-<li>gui/wxpython: <a href="../../gui/wxpython/index.html">wxpython based graphical user interface</a> (GUI)
+<li>gui/wxpython: <a href="/grass/grass6_progman/gui/wxpython/index.html">wxpython based graphical user interface</a> (GUI)
 <li>imagery:	\ref imagerylib 
 <li>init:	\ref init (GRASS initialization code + scripts)
 <li>linkm:	Linked list memory manager - \ref linkm (obsolete?)
