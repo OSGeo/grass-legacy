@@ -9,7 +9,7 @@ int sg_factor(void)
     CELL low_elev, hih_elev;
     double height, length, S, sin_theta;
 
-    G_message(_("SECTION 4: Length Slope determination."));
+    G_message(_("SECTION 4: RUSLE LS and/or S factor determination."));
 
     for (r = 0; r < nrows; r++) {
 	G_percent(r, nrows, 3);
@@ -31,14 +31,14 @@ int sg_factor(void)
 	    else
 		S = 16.8 * sin_theta - .50;
 	    if (sg_flag)
-		s_g[SEG_INDEX(s_g_seg, r, c)] = S;
+		s_g[SEG_INDEX(s_g_seg, r, c)] = S * 100; /* factor 100 for backwards compatibility */
 	    if (ls_flag) {
 		length *= METER_TO_FOOT;
 		len_slp_equ(length, sin_theta, S, r, c);
 	    }
 	}
     }
-    G_percent(r, nrows, 3);	/* finish it */
+    G_percent(nrows, nrows, 1);	/* finish it */
 
     if (ril_flag) {
 	G_free(ril_buf);
@@ -66,7 +66,7 @@ int len_slp_equ(double slope_length, double sin_theta, double S, int r, int c)
     /* rill_ratio equation from Steve Warren */
     rill_ratio *= .5 + .005 * ril + .0001 * ril * ril;
     s_l_exp = rill_ratio / (1 + rill_ratio);
-    L = 100 * pow((slope_length / 72.6), s_l_exp);
+    L = 100 * pow((slope_length / 72.6), s_l_exp);  /* factor 100 for backwards compatibility */
     l_s[SEG_INDEX(l_s_seg, r, c)] = L * S;
 
     return 0;

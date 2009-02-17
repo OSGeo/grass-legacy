@@ -40,7 +40,7 @@ int close_array_seg(void)
 	    r = 1;
 	    incr = 0;
 	    while (incr >= 0) {
-		G_percent(r, max, 3);
+		G_percent(r, max, 2);
 		for (gr = 130 + incr; gr <= 255; gr += 20) {
 		    for (rd = 90 + incr; rd <= 255; rd += 30) {
 			for (bl = 90 + incr; bl <= 255; bl += 40) {
@@ -78,7 +78,7 @@ int close_array_seg(void)
 	else
 	    G_debug(1,
 		    "Too many subbasins to reasonably check for color brightness");
-	/* using the existing method ... */
+	/* using the existing stack of while/for/for/for/while loops ... */
     }
 
     /* stream segments map */
@@ -112,7 +112,7 @@ int close_array_seg(void)
 	G_write_colors(bas_name, this_mapset, &colors);
     }
 
-    /* half.basins map */
+    /* half_basins map */
     if (haf_flag) {
 	map_fd = G_open_cell_new(haf_name);
 	for (r = 0; r < nrows; r++) {
