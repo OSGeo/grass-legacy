@@ -35,7 +35,7 @@ Nviz::Nviz(PyObject *log)
     logStream = log;
 
     G_set_error_routine(&print_error);
-    G_set_percent_routine(&print_percent);
+    // G_set_percent_routine(&print_percent);
 
     GS_libinit();
     GVL_libinit();
@@ -53,7 +53,7 @@ Nviz::Nviz(PyObject *log)
 Nviz::~Nviz()
 {
     G_unset_error_routine();
-    G_unset_percent_routine();
+    // G_unset_percent_routine();
 
     G_free((void *) data);
 
