@@ -497,7 +497,7 @@ set descmenu [subst {
 	{cascad {[G_msg "Classify image"]} {} "" $tmenu {			
 		{command {[G_msg "Clustering input for unsupervised classification"]} {} "i.cluster" {} -command {execute i.cluster }}
 		{separator}
-		{command {[G_msg "Maximum likelyhood classification (MLC)"]} {} "i.maxlik" {} -command {execute i.maxlik }}
+		{command {[G_msg "Maximum likelihood classification (MLC)"]} {} "i.maxlik" {} -command {execute i.maxlik }}
 		{command {[G_msg "Sequential maximum a posteriory classification (SMAP)"]} {} "i.smap" {} -command {execute i.smap }}
 		{separator}
 		{command {[G_msg "Interactive input for supervised classification"]} {} "i.class" {} -command {term i.class }}
