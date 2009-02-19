@@ -65,7 +65,7 @@ for DIR in bin scripts ; do
 #    echo "[$MODULE]"
 
     case "$MODULE" in
-      g.parser | r.mapcalc | r3.mapcalc | mkftcap | p.out.vrml| d.paint.labels)
+      g.parser | r.mapcalc | r3.mapcalc | mkftcap | p.out.vrml| d.paint.labels | r.cats)
 	continue
 	;;
     esac
@@ -253,7 +253,7 @@ g.message "Generating LaTeX source (writing to \$GISBASE/etc/) ..."
 
 #### write header
 cat << EOF > "${TMP}.tex"
-%% Adapted from LyX 1.3 LaTeX export. (c) 2007 The GRASS Development Team
+%% Adapted from LyX 1.3 LaTeX export. (c) 2009 The GRASS Development Team
 \documentclass[a4paper]{article}
 \usepackage{palatino}
 \usepackage[T1]{fontenc}
@@ -276,7 +276,7 @@ cat << EOF > "${TMP}.tex"
 \makeatother
 \begin{document}
 \begin{center}\includegraphics[%
-  width=0.5\textwidth]{grasslogo_vector.pdf}\end{center}
+  width=0.3\textwidth]{grasslogo_vector.pdf}\end{center}
 
 \begin{center}{\huge `g.version | cut -f1 -d'('` Command list}\end{center}{\huge \par}
 
@@ -399,6 +399,9 @@ if [ ! -d "$GISBASE/docs/pdf" ] ; then
 fi
 \mv module_synopsis.pdf "$GISBASE/docs/pdf/"
 
+# Convert to pretty two-up version:
+# Open PDF in Acrobat, print-to-file as postscript, then run:
+# a2ps module_list.ps -o module_list_2up.ps
+# ps2pdf13 module_list_2up.ps
 
 g.message "Done."
-
