@@ -84,8 +84,9 @@ int main(int argc, char *argv[])
 		G_warning(_("<%s> is an illegal file name"), new);
 		continue;
 	    }
-	    if (strcmp(old, new) == 0) {
-		G_warning(_("%s=%s,%s: files are the same, no rename required"),
+	    if (G_strcasecmp(old, new) == 0) {
+		/* avoid problems on case-insensitive file systems (FAT, NTFS, ...) */
+		G_warning(_("%s=%s,%s: files could be the same, no rename possible"),
 			  parm[n]->key, old, new);
 		continue;
 	    }
