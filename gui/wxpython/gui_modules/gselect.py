@@ -335,39 +335,15 @@ class VectorDBInfo:
 
     def __CheckDBConnection(self):
         """Check DB connection"""
-        layerCommand = gcmd.Command(cmd=["v.db.connect",
-                                         "-g", "--q",
-                                         "map=%s" % self.map],
-                                    rerr=None, stderr=None)
-        if layerCommand.returncode != 0:
-            return False
-
-        # list of available layers & (table, database, driver)
-        for line in layerCommand.ReadStdOutput():
-            lineList = line.split(' ')
-            layer = lineList[0]
-            if '/' in layer:
-                layer, layer_name = lineList[0].split('/')
-            else:
-                layer_name = None
-            # database can contain ' ' in it's path
-            if len(lineList) > 5:
-                database = ''.join(lineList[3:-1])
-            else:
-                database = lineList[3]
-            self.layers[int(layer)] = {
-                "name"     : layer_name,
-                "table"    : lineList[1],
-                "key"      : lineList[2],
-                "database" : database,
-                "driver"   : lineList[-1]
-                }
-            
+        nuldev = file(os.devnull, 'w+')
+        self.layers = grass.vector_db(map=self.map, stderr=nuldev)
+        nuldev.close()
+        
         if (len(self.layers.keys()) == 0):
             return False
 
         return True
-
+    
     def __DescribeTables(self):
         """Describe linked tables"""
         for layer in self.layers.keys():
