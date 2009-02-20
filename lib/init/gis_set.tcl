@@ -557,7 +557,7 @@ proc gisSetWindow {} {
     
     if { [string equal $location "<UNKNOWN>"] } {
 	DialogGen .wrnDlg "Starting GRASS for first time" warning \
-	"GRASS needs a direcotry where to store data. Create one in any file manager if You have not done it yet." 0 OK
+	"GRASS needs a directory where to store data. Create one in any file manager if you have not done it yet." 0 OK
 	set tmp [tk_chooseDirectory -initialdir $database \
 		-parent .frame0 -title [G_msg "Select GIS data directory"] -mustexist true]
 	if {$tmp != ""} { set database $tmp }
