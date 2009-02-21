@@ -24,11 +24,20 @@ r.cats"
 check_for_desc_override()
 {
     case "$BASENAME" in
+	d.font.freetype)
+	    SHORTDESC="Selects the font in which text will be displayed on the user's graphics monitor (compatibility alias module for d.font)."
+	    ;;
+	d.text.freetype)
+	    SHORTDESC="Draws text in the active display frame on the graphics monitor using the current font (compatibility alias module for d.text)."
+	    ;;
 	g.parser)
 	    SHORTDESC="Provides automated parser, GUI, and help support for GRASS scipts."
 	    ;;
 	r.mapcalc)
 	    SHORTDESC="Raster map calculator."
+	    ;;
+	r3.mapcalc)
+	    SHORTDESC="3D raster map calculator."
 	    ;;
 	r.li.daemon)
 	    SHORTDESC="Support module for r.li landscape index calculations."
