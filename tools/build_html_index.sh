@@ -280,7 +280,6 @@ echo "<tr><td>&nbsp;&nbsp;<a href=\"full_index.html#db\">db.*</a> </td><td>datab
 echo "<tr><td>&nbsp;&nbsp;<a href=\"full_index.html#g\">g.*</a> </td><td>general commands</td></tr>" >> "$FULLINDEX"
 echo "<tr><td>&nbsp;&nbsp;<a href=\"full_index.html#i\">i.*</a> </td><td>imagery commands</td></tr>" >> "$FULLINDEX"
 echo "<tr><td>&nbsp;&nbsp;<a href=\"full_index.html#m\">m.*</a> </td><td>miscellaneous commands</td></tr>" >> "$FULLINDEX"
-echo "<tr><td>&nbsp;&nbsp;<a href=\"full_index.html#r\">r.*</a> </td><td>raster commands</td></tr>" >> "$FULLINDEX"
 echo "<tr><td>&nbsp;&nbsp;<a href=\"full_index.html#ps\">ps.*</a> </td><td>postscript commands</td></tr>" >> "$FULLINDEX"
 echo "<tr><td>&nbsp;&nbsp;<a href=\"full_index.html#r\">r.*</a> </td><td>raster commands</td></tr>" >> "$FULLINDEX"
 echo "<tr><td>&nbsp;&nbsp;<a href=\"full_index.html#r3\">r3.*</a> </td><td>raster3D commands</td></tr>" >> "$FULLINDEX"
