@@ -82,7 +82,7 @@ for i in "$@" ; do
 	help|-h|-help|--help)
 	    echo "Usage:"
 	    echo "  $CMD_NAME [-h | -help | --help] [-v | --version] [-c]"
-	    echo "          [-text | -gui | -tcltk | -oldtcltk | -wxpython]"
+	    echo "          [-text | -gui | -tcltk | -oldtcltk | -wxpython | -wx]"
 	    echo "          [[[<GISDBASE>/]<LOCATION_NAME>/]<MAPSET>]"
 	    echo
             echo "Flags:"
@@ -97,7 +97,7 @@ for i in "$@" ; do
             echo "                                   and set as default"
 	    echo "  -oldtcltk                      use old Tcl/Tk based graphical user interface"
             echo "                                   and set as default"
-            echo "  -wxpython                      use wxPython based graphical user interface"
+            echo "  -wxpython or -wx               use wxPython based graphical user interface"
             echo "                                   and set as default"
             echo
             echo "Parameters:"
@@ -143,7 +143,7 @@ for i in "$@" ; do
 	    ;;
 
 	# Check if the -wxpython flag was given
-	-wxpython)
+	-wxpython | -wx)
 	    GRASS_GUI="wxpython"
 	    shift
 	    ;;

@@ -54,6 +54,7 @@ if "%1" == "-text" goto settextmode
 
 if "%1" == "-tcltk" goto setguimode
 if "%1" == "-wxpython" goto setwxmode
+if "%1" == "-wx" goto setwxmode
 if "%1" == "-gui" goto setguimode
 
 :afterguicheck
