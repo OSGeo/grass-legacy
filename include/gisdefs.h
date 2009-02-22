@@ -837,7 +837,6 @@ int G__name_is_fully_qualified(const char *, char *, char *);
 char *G_fully_qualified_name(const char *, const char *);
 
 /* null_val.c */
-void G__init_null_patterns(void);
 void G__set_null_value(void *, int, int, RASTER_MAP_TYPE);
 void G_set_null_value(void *, int, RASTER_MAP_TYPE);
 void G_set_c_null_value(CELL *, int);
