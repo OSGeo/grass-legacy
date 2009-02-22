@@ -424,7 +424,7 @@ proc gisSetWindow {} {
     		refresh_ms
     		selFromList .frame0.frameLOC.listbox $location
     		selFromList .frame0.frameMS.listbox $mapset
-    		.frame0.frameBUTTONS.ok configure -state normal}
+    		if { [CheckLocation] } { .frame0.frameBUTTONS.ok configure -state normal }}
 
     button .frame0.frameNMS.sixth.button \
     	-text [G_msg "EPSG codes"] \
@@ -437,7 +437,7 @@ proc gisSetWindow {} {
     		refresh_ms
     		selFromList .frame0.frameLOC.listbox $location
     		selFromList .frame0.frameMS.listbox $mapset
-    		.frame0.frameBUTTONS.ok configure -state normal} }
+    		if { [CheckLocation] } { .frame0.frameBUTTONS.ok configure -state normal } } }
     	    			
     button .frame0.frameNMS.seventh.button \
     	-text [G_msg "Projection values"] \
@@ -555,8 +555,19 @@ proc gisSetWindow {} {
 
     .frame0.frameDB.mid.entry xview moveto 1
     
-    if { ! [file exists $database] } {
-      	DialogGen .wrnDlg [G_msg "WARNING: Invalid Database"] warning \
+    if { [string equal $location "<UNKNOWN>"] } {
+	DialogGen .wrnDlg [G_msg "Starting GRASS for the first time"] warning \
+	[G_msg "GRASS needs a directory in which to store its data. \
+Create one now if you have not already done so. \
+A popular choice is \"grassdata\", located in your home directory."] 0 OK
+
+	set tmp [tk_chooseDirectory -initialdir $database \
+		-parent .frame0 -title [G_msg "Select GIS data directory"] -mustexist true]
+	if {$tmp != ""} { set database $tmp }
+	set location ""
+	.frame0.frameBUTTONS.ok configure -state disabled
+    } elseif { ! [file exists $database] } {
+	DialogGen .wrnDlg [G_msg "WARNING: Invalid Database"] warning \
 	    [G_msg "WARNING: Invalid database. Finding first valid directory in parent tree"] \
 	    0 OK
       

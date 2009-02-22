@@ -61,7 +61,7 @@ if "%1" == "-gui" goto setguimode
 if exist "%WINGISRC%" goto aftercreategisrc
 
 rem Create an initial GISRC file based on current directory
-"%WINGISBASE%\etc\echo" "GISDBASE: %CD%" | g.dirseps -g > "%WINGISRC%"
+"%WINGISBASE%\etc\echo" "GISDBASE: %USERPROFILE%" | g.dirseps -g > "%WINGISRC%"
 "%WINGISBASE%\etc\echo" "LOCATION_NAME: <UNKNOWN>" >> "%WINGISRC%"
 "%WINGISBASE%\etc\echo" "MAPSET: <UNKNOWN>" >> "%WINGISRC%"
 	    
