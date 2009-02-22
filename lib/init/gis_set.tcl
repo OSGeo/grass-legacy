@@ -556,8 +556,12 @@ proc gisSetWindow {} {
     .frame0.frameDB.mid.entry xview moveto 1
     
     if { [string equal $location "<UNKNOWN>"] } {
-	DialogGen .wrnDlg "Starting GRASS for first time" warning \
-	"GRASS needs a directory where to store data. Create one in any file manager if you have not done it yet." 0 OK
+	DialogGen .wrnDlg "Starting GRASS for the first time" warning \
+	[concat "GRASS needs a directory in which to store its data. " \
+	"Create one now if you have not already done so. " \
+	"A popular choice is \"grassdata\", located " \
+	"in your home directory."] 0 OK
+
 	set tmp [tk_chooseDirectory -initialdir $database \
 		-parent .frame0 -title [G_msg "Select GIS data directory"] -mustexist true]
 	if {$tmp != ""} { set database $tmp }
