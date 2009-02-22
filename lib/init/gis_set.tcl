@@ -424,7 +424,7 @@ proc gisSetWindow {} {
     		refresh_ms
     		selFromList .frame0.frameLOC.listbox $location
     		selFromList .frame0.frameMS.listbox $mapset
-    		.frame0.frameBUTTONS.ok configure -state normal}
+    		if { [CheckLocation] } { .frame0.frameBUTTONS.ok configure -state normal }}
 
     button .frame0.frameNMS.sixth.button \
     	-text [G_msg "EPSG codes"] \
@@ -437,7 +437,7 @@ proc gisSetWindow {} {
     		refresh_ms
     		selFromList .frame0.frameLOC.listbox $location
     		selFromList .frame0.frameMS.listbox $mapset
-    		.frame0.frameBUTTONS.ok configure -state normal} }
+    		if { [CheckLocation] } { .frame0.frameBUTTONS.ok configure -state normal } } }
     	    			
     button .frame0.frameNMS.seventh.button \
     	-text [G_msg "Projection values"] \
@@ -556,11 +556,10 @@ proc gisSetWindow {} {
     .frame0.frameDB.mid.entry xview moveto 1
     
     if { [string equal $location "<UNKNOWN>"] } {
-	DialogGen .wrnDlg "Starting GRASS for the first time" warning \
-	[concat "GRASS needs a directory in which to store its data. " \
-	"Create one now if you have not already done so. " \
-	"A popular choice is \"grassdata\", located " \
-	"in your home directory."] 0 OK
+	DialogGen .wrnDlg [G_msg "Starting GRASS for the first time"] warning \
+	[G_msg "GRASS needs a directory in which to store its data. \
+Create one now if you have not already done so. \
+A popular choice is \"grassdata\", located in your home directory."] 0 OK
 
 	set tmp [tk_chooseDirectory -initialdir $database \
 		-parent .frame0 -title [G_msg "Select GIS data directory"] -mustexist true]
