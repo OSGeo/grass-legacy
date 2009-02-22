@@ -2753,7 +2753,7 @@ msgid ""
 "No attribute table linked to vector map <%(vector)s> found. %(msg)s\n"
 "You can disable this message from digitization settings. Or you can create "
 "and link attribute table to the vector map using Attribute Table Manager."
-msgstr "Vektor Vektor Vektor."
+msgstr ""
 
 #: ../gui/wxpython/gui_modules/dbm.py:2927
 msgid "Close dialog on submit"
@@ -3213,7 +3213,7 @@ msgstr "Vektor"
 #: ../gui/wxpython/gui_modules/toolbars.py:1078
 #, fuzzy, python-format
 msgid "Please wait, opening vector map <%s> for editing..."
-msgstr "Vektor."
+msgstr ""
 
 #: ../gui/wxpython/gui_modules/toolbars.py:1138
 #, fuzzy, python-format
@@ -3228,7 +3228,7 @@ msgstr "Speichern?"
 #: ../gui/wxpython/gui_modules/toolbars.py:1147
 #, fuzzy, python-format
 msgid "Please wait, closing and rebuilding topology of vector map <%s>..."
-msgstr "Vektor."
+msgstr ""
 
 #: ../gui/wxpython/gui_modules/toolbars.py:1211
 #: ../gui/wxpython/gui_modules/toolbars.py:1216
@@ -3497,7 +3497,7 @@ msgstr ""
 #: ../gui/wxpython/gui_modules/vdigit.py:1571
 #, fuzzy, python-format
 msgid "Vector digitizer settings saved to file <%s>."
-msgstr "Vektor."
+msgstr ""
 
 #: ../gui/wxpython/gui_modules/vdigit.py:1730
 #, fuzzy
@@ -3540,7 +3540,7 @@ msgstr "Alle löschen"
 #: ../gui/wxpython/gui_modules/vdigit.py:2075
 #, fuzzy
 msgid "Unable to update vector map."
-msgstr "Vektor."
+msgstr ""
 
 #: ../gui/wxpython/gui_modules/vdigit.py:2237
 #, fuzzy, python-format
@@ -4637,7 +4637,7 @@ msgstr "Vektor"
 #: ../gui/wxpython/menustrings.py:49
 #, fuzzy
 msgid "Converts selected OGR layers to GRASS vector maps using v.in.ogr."
-msgstr "Vektor."
+msgstr ""
 
 #: ../gui/wxpython/menustrings.py:50
 msgid "ASCII points/GRASS ASCII vector import"
@@ -4670,7 +4670,7 @@ msgstr ""
 #: ../gui/wxpython/menustrings.py:57
 #, fuzzy
 msgid "Converts selected DXF layers to GRASS vector maps (using v.in.dxf)."
-msgstr "Vektor."
+msgstr ""
 
 #: ../gui/wxpython/menustrings.py:58
 msgid "ESRI e00 import"
@@ -7284,7 +7284,7 @@ msgstr "Grundlegende Vektor-Metadaten"
 #: ../gui/wxpython/menustrings.py:590
 #, fuzzy
 msgid "Outputs basic information about a user-specified vector map layer."
-msgstr "Vektor."
+msgstr ""
 
 #: ../gui/wxpython/menustrings.py:591
 #, fuzzy
@@ -7304,7 +7304,7 @@ msgstr "Topologie"
 #: ../gui/wxpython/menustrings.py:594
 #, fuzzy
 msgid "Populate database values from vector features."
-msgstr "Vektor."
+msgstr ""
 
 #: ../gui/wxpython/menustrings.py:595
 #, fuzzy
