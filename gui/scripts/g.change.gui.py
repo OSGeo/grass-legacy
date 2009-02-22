@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/env python
 
 ############################################################################
 #
@@ -17,7 +17,7 @@
 #  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 #  GNU General Public License for more details.
 #
-#############################################################################/
+############################################################################
 #%Module
 #% description: Changes the default GRASS graphical user interface (GUI) setting.
 #% keywords: general, gui
@@ -35,15 +35,13 @@
 
 # simple front end to g.gui to be used from within the GUI.
 
+import grass
+import sys
 
-if [ -z "$GISBASE" ] ; then
-    echo "You must be in GRASS GIS to run this program." 1>&2
-    exit 1
-fi
+def main():
+    grass.exec_command("g.gui", flags = 'nu', gui = options['gui'])
+    sys.exit(ret)
 
-if [ "$1" != "@ARGS_PARSED@" ] ; then
-    exec g.parser "$0" "$@"
-fi
-
-g.gui -nu gui="$GIS_OPT_GUI"
-
+if __name__ == "__main__":
+    options, flags = grass.parser()
+    sys.exit(main())
