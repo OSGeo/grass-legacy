@@ -399,7 +399,7 @@ if [ ! -f "$GISRC" ] ; then
     read ans
 
     #for convenience, define pwd as GISDBASE:
-    echo "GISDBASE: $PWD" > "$GISRC"
+    echo "GISDBASE: $HOME" > "$GISRC"
     echo 'LOCATION_NAME: <UNKNOWN>' >> "$GISRC"
     echo 'MAPSET: <UNKNOWN>' >> "$GISRC"
 
