@@ -4137,7 +4137,7 @@ msgstr "Die Regions-Datei <%s> existiert? Soll sie überschrieben werden?"
 
 #: ../gui/wxpython/gis_set.py:84
 msgid "Choose project location and mapset"
-msgstr ""
+msgstr "Wählen Sie eine existierende Location mit Mapset"
 
 #: ../gui/wxpython/gis_set.py:87
 msgid "Manage"
@@ -4148,42 +4148,51 @@ msgstr "Verwalte"
 msgid ""
 "Welcome to GRASS GIS %s\n"
 "The world's leading open source GIS"
-msgstr ""
+msgstr "Willkommen in GRASS GIS %s\n"
+"Das weltweit führende quelloffene GIS"
 
 #: ../gui/wxpython/gis_set.py:95
 msgid ""
 "Select an existing project location and mapset\n"
 "or define a new location"
 msgstr ""
+"Wählen Sie eine existierende Location mit Mapset\n"
+"oder definieren Sie eine neue Location"
 
 #: ../gui/wxpython/gis_set.py:101
 msgid ""
 "Project location\n"
 "(projection/coordinate system)"
 msgstr ""
+"Projekt Location\n"
+"(Projektion/Koordinatensystem)"
 
 #: ../gui/wxpython/gis_set.py:104
 msgid ""
 "Accessible mapsets\n"
 "(directories of GIS files)"
 msgstr ""
+"Verfügbare Mapsets\n"
+"(Ordner mit GIS-Daten)"
 
 #: ../gui/wxpython/gis_set.py:107
 msgid ""
 "Create new mapset\n"
 "in selected location"
 msgstr ""
+"Neues Mapset in der ausge-\n"
+"wählten Location erstellen"
 
 #: ../gui/wxpython/gis_set.py:110
 msgid "Define new location"
-msgstr ""
+msgstr "Neue Location definieren"
 
 #: ../gui/wxpython/gis_set.py:113
-#, fuzzy
 msgid ""
 "Rename/delete selected\n"
 "mapset or location"
-msgstr "Nenne Karten um"
+msgstr "Benenne um/Lösche selektierte\n"
+"Mapset oder Location"
 
 #: ../gui/wxpython/gis_set.py:118
 msgid "Start GRASS"
