@@ -1746,7 +1746,7 @@ static void G_script(void)
     fprintf(fp, "#  GNU General Public License for more details.\n");
     fprintf(fp, "#\n");
     fprintf(fp,
-	    "#############################################################################/\n");
+	    "############################################################################\n");
 
     fprintf(fp, "#%%Module\n");
     if (module_info.label)
