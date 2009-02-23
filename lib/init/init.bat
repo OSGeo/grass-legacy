@@ -177,6 +177,9 @@ goto afterguicheck
 
 :exitinit
 
+rem Clean out old .tmp files from the mapset
+"%WINGISBASE%\etc\clean_temp" > NUL:
+
 set PATH=%SAVEPATH%
 set SAVEPATH=
 exit /b
