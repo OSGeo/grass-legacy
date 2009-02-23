@@ -90,6 +90,7 @@ rem Clean out old .tmp files from the mapset
 if "%HAVE_GISRC%"=="true" (
   "%WINGISBASE%\etc\clean_temp" > NUL:
 )
+set HAVE_GISRC=
 
 if "%GRASS_GUI%"=="text" goto text
 if "%GRASS_GUI%"=="wxpython" goto wxpython
@@ -143,7 +144,7 @@ type "%WINGISBASE%\etc\welcome"
 "%WINGISBASE%\etc\echo" "See the licence terms with:              g.version -c"
 "%WINGISBASE%\etc\echo" ""
 
-prompt GRASS %GRASS_VERSION% $C%LOCATION_NAME%$F:$P $G
+prompt GRASS %GRASS_VERSION% $C%LOCATION_NAME%$F$G 
 
 cmd.exe
 
