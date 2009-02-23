@@ -59,13 +59,17 @@ if "%1" == "-gui" goto setguimode
 
 :afterguicheck
 
-if exist "%WINGISRC%" goto aftercreategisrc
+if exist "%WINGISRC%" (
+   set HAVE_GISRC=true
+   goto aftercreategisrc
+)
 
+set HAVE_GISRC=false
 rem Create an initial GISRC file based on current directory
 "%WINGISBASE%\etc\echo" "GISDBASE: %USERPROFILE%" | g.dirseps -g > "%WINGISRC%"
 "%WINGISBASE%\etc\echo" "LOCATION_NAME: <UNKNOWN>" >> "%WINGISRC%"
 "%WINGISBASE%\etc\echo" "MAPSET: <UNKNOWN>" >> "%WINGISRC%"
-	    
+
 :aftercreategisrc
 
 rem Now set the real GISRC
@@ -82,8 +86,10 @@ if "%GRASS_GUI%" == "" (
 rem Set tcltk as default if not specified elsewhere
 if "%GRASS_GUI%"=="" set GRASS_GUI=tcltk
 
-"%WINGISBASE%\etc\clean_temp" > NUL:
-
+rem Clean out old .tmp files from the mapset
+if "%HAVE_GISRC%"=="true" (
+  "%WINGISBASE%\etc\clean_temp" > NUL:
+)
 
 if "%GRASS_GUI%"=="text" goto text
 if "%GRASS_GUI%"=="wxpython" goto wxpython
