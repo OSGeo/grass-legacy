@@ -8,24 +8,24 @@ msgid ""
 msgstr ""
 "Project-Id-Version: grasstcl_cs\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-01-15 17:52+0100\n"
-"PO-Revision-Date: 2008-08-22 17:12+0200\n"
-"Last-Translator: Jan Trochta\n"
-"Language-Team: Czech <grass-translations@lists.osgeo.org>\n"
+"POT-Creation-Date: 2009-02-24 17:46+0100\n"
+"PO-Revision-Date: 2009-02-24 10:18+0100\n"
+"Last-Translator: \n"
+"Language-Team:  <cs@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=ISO-8859-2\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: KBabel 1.11.4\n"
 
-#: ../lib/gtcltk/select.tcl:103
+#: ../lib/gtcltk/select.tcl:107
 msgid "Select item"
 msgstr "Vybrat"
 
-#: ../lib/gtcltk/select.tcl:208
+#: ../lib/gtcltk/select.tcl:209
 msgid "Ok"
 msgstr "Ok"
 
-#: ../lib/gtcltk/select.tcl:209 ../lib/init/epsg_option.tcl:167
+#: ../lib/gtcltk/select.tcl:210 ../lib/init/epsg_option.tcl:167
 #: ../lib/init/epsg_option.tcl:314 ../lib/init/file_option.tcl:114
 #: ../lib/init/file_option.tcl:266 ../gui/tcltk/gis.m/animate.tcl:538
 #: ../gui/tcltk/gis.m/rules.tcl:172 ../gui/tcltk/gis.m/georect.tcl:703
@@ -59,9 +59,8 @@ msgid "Options"
 msgstr "Volby"
 
 #: ../lib/gis/gui.tcl:361
-#, fuzzy
 msgid "Required"
-msgstr "vy¾adováno"
+msgstr "Vy¾adováno"
 
 #: ../lib/gis/gui.tcl:469 ../gui/tcltk/gis.m/gmmenu.tcl:170
 msgid "Copy"
@@ -1092,9 +1091,8 @@ msgid "Garmin GPS Waypoints/Routes/Tracks"
 msgstr "Garmin GPS trasové body/cesty/stopy"
 
 #: ../gui/tcltk/d.m/menu.tcl:103
-#, fuzzy
 msgid "GPS Waypoints/Routes/Tracks  from many formats using GPSBabel"
-msgstr "GPS Waypoints/Routes/Tracks pomocí GPSBabel"
+msgstr "GPS Waypoints/Routes/Tracks z rùznáých formátù pomocí GPSBabel"
 
 #: ../gui/tcltk/d.m/menu.tcl:104
 msgid "GEOnet Name server country files (US-NGA GNS)"
@@ -1182,9 +1180,8 @@ msgid "ASCII vector or point file/old GRASS ASCII vector file"
 msgstr "ASCII vektorový nebo bodový soubor/starý vektorový GRASS ASCII soubor"
 
 #: ../gui/tcltk/d.m/menu.tcl:139 ../gui/tcltk/gis.m/gmmenu.tcl:157
-#, fuzzy
 msgid "Multiple GPS formats using GPSBabel"
-msgstr "Rùznorodé formáty pomocí GDAL"
+msgstr "Rùzndé formáty GPS pomocí GPSBAbel"
 
 #: ../gui/tcltk/d.m/menu.tcl:140
 msgid "POV-Ray format"
@@ -1516,7 +1513,7 @@ msgstr "Nastavit barevnou ¹kálu podle pøedefinované tabulky barev"
 
 #: ../gui/tcltk/d.m/menu.tcl:244
 msgid "Set colors based on standard deviations"
-msgstr ""
+msgstr "Nastavit barvy pomocí smìrodatné odchylky"
 
 #: ../gui/tcltk/d.m/menu.tcl:245
 msgid "Set colors using color rules"
@@ -1646,9 +1643,8 @@ msgid "Visibility/line of sight"
 msgstr "Viditelnost/linie viditelnosti"
 
 #: ../gui/tcltk/d.m/menu.tcl:283 ../gui/tcltk/gis.m/gmmenu.tcl:296
-#, fuzzy
 msgid "Distance to features"
-msgstr "Editovat prvky"
+msgstr "Vzdálenost k prvkùm"
 
 #: ../gui/tcltk/d.m/menu.tcl:285 ../gui/tcltk/gis.m/gmmenu.tcl:300
 msgid "Transform features"
@@ -1995,7 +1991,7 @@ msgstr "Vytvoøit textový popisek pro vektorové prvky"
 
 #: ../gui/tcltk/d.m/menu.tcl:397
 msgid "Assign colors from a numeric attribute column"
-msgstr ""
+msgstr "Pøiøadit barvy z numerického atributového sloupce"
 
 #: ../gui/tcltk/d.m/menu.tcl:399
 msgid "Reproject vector from other location"
@@ -2296,8 +2292,8 @@ msgid "Clustering input for unsupervised classification"
 msgstr "Metoda shlukování pro neøízenou klasifikaci"
 
 #: ../gui/tcltk/d.m/menu.tcl:500 ../gui/tcltk/gis.m/gmmenu.tcl:562
-msgid "Maximum likelyhood classification (MLC)"
-msgstr "Gaussùv klasifikátor MLC (Maximum likelihood classification)"
+msgid "Maximum likelihood classification (MLC)"
+msgstr "Klasifikace Maximum likelihood classification (MLC)"
 
 #: ../gui/tcltk/d.m/menu.tcl:501 ../gui/tcltk/gis.m/gmmenu.tcl:563
 msgid "Sequential maximum a posteriory classification (SMAP)"
@@ -3048,14 +3044,12 @@ msgid "*requires ghostscript to be installed and in path"
 msgstr "*vy¾aduje instalovaný ghostscript a cestu k nìmu"
 
 #: ../gui/tcltk/gis.m/profile.tcl:54
-#, fuzzy
 msgid "Raster map for profile"
-msgstr "Rastrová mapová vrstva pro legendu"
+msgstr "Rastrová mapová vrstva pro profil"
 
 #: ../gui/tcltk/gis.m/profile.tcl:77
-#, fuzzy
 msgid "Profile Window"
-msgstr "Analýza profilu"
+msgstr "Okno profilu"
 
 #: ../gui/tcltk/gis.m/profile.tcl:110
 msgid ""
@@ -3962,8 +3956,7 @@ msgid "2nd order"
 msgstr "druhý stupeò"
 
 #: ../gui/tcltk/gis.m/georect.tcl:1020
-#, fuzzy
-msgid "polynomial transformation  (rasters only). Requires 7+ GCPs."
+msgid "polynomial transformation  (rasters only). Requires 6+ GCPs."
 msgstr ""
 "polynomní transformace (pouze rastrové vrstvy). Vy¾aduje minimálnì 6 "
 "vlícovacích bodù."
@@ -4086,9 +4079,8 @@ msgid "Import raster map"
 msgstr "import rastrové mapy"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:95
-#, fuzzy
 msgid "Multiple formats using GDAL (link into instead of import)"
-msgstr "Rùznorodé formáty pomocí GDAL"
+msgstr "Rùzné formáty pomocí GDAL (pøipojit místo importu)"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:97
 msgid "Aggregate ASCII xyz"
@@ -4163,9 +4155,8 @@ msgid "GPSBabel GPS"
 msgstr "GPSBabel GPS"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:121
-#, fuzzy
 msgid "Geonames"
-msgstr "Pøejmenovat mapové vrstvy"
+msgstr "Geonames"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:122
 msgid "GEOnet"
@@ -4188,9 +4179,8 @@ msgid "Vis5D"
 msgstr "Soubor Vis5D"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:129
-#, fuzzy
 msgid "Import data table"
-msgstr "import rastrové mapy"
+msgstr "Import tabulky dat"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:131
 msgid "Export raster map"
@@ -4246,9 +4236,8 @@ msgid "Export grid 3D volume"
 msgstr "Export grid3D volume"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:167
-#, fuzzy
 msgid "Export data table"
-msgstr "Export rastrové mapy"
+msgstr "Export tabulky dat"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:172
 msgid "List"
@@ -4408,9 +4397,8 @@ msgid "Color tables"
 msgstr "Tabulka barev"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:255
-#, fuzzy
 msgid "Color tables (stddev)"
-msgstr "Tabulka barev"
+msgstr "Tabulka barev (smìrodatná odchylka)"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:256
 msgid "Color rules"
@@ -4478,7 +4466,7 @@ msgstr "Viditelnost"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:298
 msgid "Horizon"
-msgstr ""
+msgstr "Horizont"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:301
 msgid "Clump"
@@ -4707,7 +4695,7 @@ msgstr "Upravit informace o kategoriích"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:412
 msgid "Quantiles for large data sets"
-msgstr ""
+msgstr "Quantily pro velké sady dat"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:413
 msgid "Range of category values"
@@ -4747,7 +4735,7 @@ msgstr "Vyèistit vektorové soubory"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:435
 msgid "Smooth or simplify"
-msgstr ""
+msgstr "Vyhlazení nebo zjednodu¹ení"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:437
 msgid "Convert object types"
@@ -4790,9 +4778,8 @@ msgid "Create labels"
 msgstr "Vytvoøit popisky"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:453
-#, fuzzy
 msgid "Assign colors"
-msgstr "barva linie"
+msgstr "Pøiøadit barvy"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:455
 msgid "Reposition vector"
@@ -5637,14 +5624,12 @@ msgid "Run (in Xterm)"
 msgstr "Spustit v pøíkazové konzoli (Xterm)"
 
 #: ../gui/tcltk/gis.m/runandoutput.tcl:129
-#, fuzzy
 msgid " Save "
-msgstr "Ulo¾it"
+msgstr " Ulo¾it"
 
 #: ../gui/tcltk/gis.m/runandoutput.tcl:131
-#, fuzzy
 msgid " Clear "
-msgstr "Vyèistit"
+msgstr " Vyèistit"
 
 #: ../gui/tcltk/gis.m/runandoutput.tcl:152
 msgid "Output - GIS.m"
@@ -6201,15 +6186,3 @@ msgstr "Nastavit ¹íøku textu v pixelech"
 #: ../vector/v.digit/settings.tcl:329
 msgid "Table"
 msgstr "Tabulka"
-
-#~ msgid "Zoom to..."
-#~ msgstr "Zvìt¹it na..."
-
-#~ msgid "Export display to graphics file"
-#~ msgstr "Exportovat obsah do grafického souboru"
-
-#~ msgid "Create/rebuild topology: "
-#~ msgstr "Vytvoøit/znovu sestavit topologii"
-
-#~ msgid "Generalization"
-#~ msgstr "Zobecnìní"
