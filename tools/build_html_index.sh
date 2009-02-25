@@ -4,32 +4,28 @@
 # Markus Neteler, 2003, 2004, 2005, 2006
 
 
-## TODO: better fix this in include/Make/Html.make, see bug #5361
+## TODO: better fix this in include/Make/Html.make, see RT bug #5361
 
 #exclude following list of modules from help index:
 EXCLUDEMODS="\
-v.topo.check \
+d.font.freetype \
+d.paint.labels \
+d.text.freetype \
 i.ask \
 i.find \
-helptext.html \
+p.out.vrml \
+r.cats \
 r.watershed.ram \
 r.watershed.seg \
+v.topo.check \
+helptext.html \
 gis.m \
-wxGUI.* \
-d.paint.labels \
-p.out.vrml \
-r.cats"
+wxGUI.*"
 
 # these modules don't use G_parser()
 check_for_desc_override()
 {
     case "$BASENAME" in
-	d.font.freetype)
-	    SHORTDESC="Selects the font in which text will be displayed on the user's graphics monitor (compatibility alias module for d.font)."
-	    ;;
-	d.text.freetype)
-	    SHORTDESC="Draws text in the active display frame on the graphics monitor using the current font (compatibility alias module for d.text)."
-	    ;;
 	g.parser)
 	    SHORTDESC="Provides automated parser, GUI, and help support for GRASS scipts."
 	    ;;
