@@ -197,7 +197,7 @@ set descmenu [subst {
 		{command {[G_msg "Modify access by other users to current mapset"]} {} "g.access" {} -command {execute g.access }}
 		{command {[G_msg "Show current GRASS environment settings"]} {} "g.gisenv" {} -command {run_panel g.gisenv }}
 		{command {[G_msg "Set GRASS environment settings"]} {} "g.gisenv" {} -command {execute g.gisenv }}
-		{command {[G_msg "Change default GUI"]} {} "g.change.gui" {} -command {execute "$env(GISBASE)/etc/gui/scripts/g.change.gui.sh" }}
+		{command {[G_msg "Change default GUI"]} {} "g.gui" {} -command {spawn [list "g.gui" "-nu" "--ui"] }}
 		{command {[G_msg "Show current GRASS version"]} {} "g.version -c" {} -command {run_panel "g.version -c" }}
 	}}
 	{cascad {[G_msg "Manage projections"]} {} "" $tmenu {			
