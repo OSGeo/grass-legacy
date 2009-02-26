@@ -563,7 +563,11 @@ set descmenu [subst  {
 		{command {[G_msg "Maximum likelihood classification (MLC)"]} {} "i.maxlik: Maximum likelihood classification" {} -command {execute i.maxlik }}
 		{command {[G_msg "Sequential maximum a posteriory classification (SMAP)"]} {} "i.smap: Sequential maximum a posteriory classification" {} -command {execute i.smap }}
 		{separator}
-		{command {[G_msg "Interactive input for supervised classification"]} {} "i.class: Interactive input for supervised classification" {} -command {term i.class }}
+		{command {[G_msg "Interactive input for supervised classification"]} {} "i.class: Interactive input for supervised classification" {} -command {
+		    unset env(GRASS_RENDER_IMMEDIATE)
+		    guarantee_xmon
+		    term i.class
+		    set env(GRASS_RENDER_IMMEDIATE) "TRUE" }}
 		{command {[G_msg "Input for supervised MLC"]} {} "i.gensig: Non-interactive input for supervised classification (MLC)" {} -command {execute i.gensig }}
 		{command {[G_msg "Input for supervised SMAP"]} {} "i.gensigset: Non-interactive input for supervised classification (SMAP)" {} -command {execute i.gensigset }}
 	}}
