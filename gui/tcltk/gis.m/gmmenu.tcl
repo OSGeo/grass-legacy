@@ -224,6 +224,7 @@ set descmenu [subst  {
 		{command {[G_msg "Convert coordinates"]} {} "m.proj: Convert coordinates from one projection to another" {} -command {execute m.proj }}
 	}}
 	{command {[G_msg "Display font"]} {} "Set default display font" {} -command {Gm::defaultfont "menu" }}
+	{command {[G_msg "Change default GUI to wxPython"]} {} "Changing GUI will take effect next time you start GRASS" {} -command {run_panel "g.gui -un wxpython" }}
  } 
  {[G_msg "&Raster"]} all options $tmenu {
 	{cascad {[G_msg "Develop map"]} {} "" $tmenu {			
