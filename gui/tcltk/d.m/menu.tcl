@@ -491,7 +491,7 @@ set descmenu [subst {
 		{command {[G_msg "Set ground control points (GCP's) from vector map or keyboard entry"]} {} "i.vpoints" {} \
 		-command {guarantee_xmon; term i.vpoints }}
 		{command {[G_msg "Affine and Polynomial rectification (rubber sheet)"]} {} "i.rectify" {} -command {execute i.rectify }}
-		{command {[G_msg "Ortho photo rectification"]} {} "i.ortho.photo" {} -command {term i.ortho.photo }}
+		{command {[G_msg "Ortho photo rectification"]} {} "i.ortho.photo" {} -command {guarantee_xmon; term i.ortho.photo }}
 	}}
 	{separator}
 	{command {[G_msg "Brovey transformation and pan sharpening"]} {} "i.fusion.brovey" {} -command {execute i.fusion.brovey }}
@@ -501,7 +501,7 @@ set descmenu [subst {
 		{command {[G_msg "Maximum likelihood classification (MLC)"]} {} "i.maxlik" {} -command {execute i.maxlik }}
 		{command {[G_msg "Sequential maximum a posteriory classification (SMAP)"]} {} "i.smap" {} -command {execute i.smap }}
 		{separator}
-		{command {[G_msg "Interactive input for supervised classification"]} {} "i.class" {} -command {term i.class }}
+		{command {[G_msg "Interactive input for supervised classification"]} {} "i.class" {} -command {guarantee_xmon; term i.class }}
 		{command {[G_msg "Non-interactive input for supervised classification (MLC)"]} {} "i.gensig" {} -command {execute i.gensig }}
 		{command {[G_msg "Non-interactive input for supervised classification (SMAP)"]} {} "i.gensigset" {} -command {execute i.gensigset }}
 	}}
