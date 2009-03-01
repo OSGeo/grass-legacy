@@ -66,7 +66,12 @@ int main(int argc, char *argv[])
 
     /* Define options */
     opt_in = G_define_standard_option(G_OPT_R_INPUTS);
+    opt_in->description = _("Name of two or more input raster maps");
+
     opt_out = G_define_standard_option(G_OPT_R_OUTPUT);
+    opt_out->label = _("Base name for output raster maps");
+    opt_out->description =
+	_("A numerical suffix will be added for each component map");
 
     opt_scale = G_define_option();
     opt_scale->key = "rescale";
@@ -75,7 +80,7 @@ int main(int argc, char *argv[])
     opt_scale->required = NO;
     opt_scale->answer = "0,255";
     opt_scale->description =
-	_("Rescaling range output (For no rescaling use 0,0)");
+	_("Rescaling range for output maps (for no rescaling use 0,0)");
 
     if (G_parser(argc, argv))
 	exit(EXIT_FAILURE);
