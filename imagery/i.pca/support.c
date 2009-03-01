@@ -38,10 +38,10 @@ static int write_history(int bands, char *outname, double **eigmat, double *eigv
     double eigval_total = 0.0;
 
     G_short_history(outname, "raster", &hist);
-    sprintf(hist.edhist[0], "Eigen (vectors) and values:");
+    sprintf(hist.edhist[0], "Eigen values, (vectors), and [percent importance]:");
 
     if(first_map)
-	G_message(_("Eigen (vectors) and values:"));
+	G_message(_("Eigen values, (vectors), and [percent importance]:"));
 
     for (i = 0; i < bands; i++)
 	eigval_total += eigval[i];
@@ -49,14 +49,14 @@ static int write_history(int bands, char *outname, double **eigmat, double *eigv
     for (i = 0; i < bands; i++) {
 	char tmpeigen[256], tmpa[80];
 
-	sprintf(tmpeigen, "PC%d ( ", i+1);
+	sprintf(tmpeigen, "Eigenvalue %d: %.2f ( ", i+1, eigval[i]);
 	for (j = 0; j < bands; j++) {
 	    sprintf(tmpa, "%.2f ", eigmat[i][j]);
 	    G_strcat(tmpeigen, tmpa);
 	}
 	G_strcat(tmpeigen, ") ");
 	
-	sprintf(tmpa, "%.2f", eigval[i] * 100/eigval_total);
+	sprintf(tmpa, "[%.2f%%]", eigval[i] * 100/eigval_total);
 	G_strcat(tmpeigen, tmpa);
 
 	sprintf(hist.edhist[i + 1], tmpeigen);
