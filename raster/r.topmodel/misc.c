@@ -66,9 +66,12 @@ void depressionless(void)
 
 void basin_elevation(void)
 {
+    /* be quiet */
+/*    G_putenv("GRASS_VERBOSE", "0");   how to unset in a cross-platform way afterwards? */
     sprintf(buf, "%s/bin/r.mapcalc "
-	    "'%s = if(%s == 0 || isnull(%s), null(), %s)' --quiet",
+	    "'%s = if(%s == 0 || isnull(%s), null(), %s)'",
 	    gisbase, map.belev, map.basin, map.basin, map.elev);
+
     G_message("r.mapcalc '%s = if(%s == 0 || isnull(%s), null(), %s)'"
 	      " ... ", map.belev, map.basin, map.basin, map.elev);
 
