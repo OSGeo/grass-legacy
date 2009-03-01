@@ -227,7 +227,7 @@ int main(int argc, char *argv[])
     verbose = !flag.q->answer;
 
     if ((reportfile = parm.report_file->answer) == NULL)
-	report = fopen("/dev/null", "w");
+	report = fopen(G_DEV_NULL, "w");
     else
 	report = fopen(reportfile, "w");
     if (report == NULL) {

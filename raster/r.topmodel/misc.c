@@ -37,7 +37,7 @@ void gregion(void)
     }
 
     if (hdmap) {
-	sprintf(buf, "%s/bin/g.region rast=%s > /dev/null", gisbase, hdmap);
+	sprintf(buf, "%s/bin/g.region rast=%s --quiet", gisbase, hdmap);
 	G_message("g.region rast=%s ... ", hdmap);
 
 	if (run(buf))
@@ -49,7 +49,7 @@ void gregion(void)
 void depressionless(void)
 {
     sprintf(buf, "%s/bin/r.fill.dir "
-	    "input=%s elev=%s dir=%s type=grass > /dev/null",
+	    "input=%s elev=%s dir=%s type=grass --quiet",
 	    gisbase, map.elev, map.fill, map.dir);
     G_message("r.fill.dir input=%s elev=%s dir=%s type=grass ... ",
 	      map.elev, map.fill, map.dir);
@@ -66,9 +66,12 @@ void depressionless(void)
 
 void basin_elevation(void)
 {
+    /* be quiet */
+/*    G_putenv("GRASS_VERBOSE", "0");   how to unset in a cross-platform way afterwards? */
     sprintf(buf, "%s/bin/r.mapcalc "
-	    "'%s = if(%s == 0 || isnull(%s), null(), %s)' > /dev/null",
+	    "'%s = if(%s == 0 || isnull(%s), null(), %s)'",
 	    gisbase, map.belev, map.basin, map.basin, map.elev);
+
     G_message("r.mapcalc '%s = if(%s == 0 || isnull(%s), null(), %s)'"
 	      " ... ", map.belev, map.basin, map.basin, map.elev);
 
@@ -84,7 +87,7 @@ void top_index(void)
 {
     if (map.belev) {
 	sprintf(buf, "%s/bin/r.topidx "
-		"input=%s output=%s > /dev/null",
+		"input=%s output=%s --quiet",
 		gisbase, map.belev, map.topidx);
 	G_message("r.topidx input=%s output=%s ... ", map.belev, map.topidx);
 
