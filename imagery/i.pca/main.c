@@ -80,6 +80,7 @@ int main(int argc, char *argv[])
     if (G_parser(argc, argv))
 	exit(EXIT_FAILURE);
 
+
     /* determine number of bands passed in */
     for (bands = 0; opt_in->answers[bands] != NULL; bands++) ;
 
@@ -166,7 +167,7 @@ int main(int argc, char *argv[])
 	sprintf(outname, "%s.%d", opt_out->answer, i + 1);
 
 	/* write colors and history to file */
-	write_support(bands, outname, eigmat);
+	write_support(bands, outname, eigmat, eigval);
 
 	/* close output file */
 	G_unopen_cell(inp_fd[i]);
