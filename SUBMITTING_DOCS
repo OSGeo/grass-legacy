@@ -20,10 +20,7 @@ care of following rules:
 
 
 2. Module manual page:
-   Place the documentation in HTML format into '<module>.html', where
-   <module> is the name of the module. E.g. if the module is named
-   r.example, the documentation file should be named r.example.html.
-
+   Place the documentation in HTML format into 'description.html'.
    The easiest way to do this is to study an existing HTML page
    (to get the page style, e.g. vector/v.to.db/v.to.db.html).
    With a few exceptions, header and footer are NOT allowed.
@@ -81,7 +78,7 @@ care of following rules:
 
 
 5. When submitting new files to the repository set SVN properties,
-   e.g. for HTML file
+   e.g. for HTML file:
     
        svn:mime-type : text/html
        svn:keywords : Author Date Id
