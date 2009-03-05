@@ -49,12 +49,13 @@ proc fly_set_icons {_dir} {
 fly_set_icons $bit_map_path/flythrough
 ################################################################################
 
-proc mkFlyButtons {BASE frame draw_lab draw_var1 draw_var2} {
+proc mkFlyButtons {BASE frame draw_lab draw_var1 draw_var2 draw_var4} {
 	global Nv_ fly draw_option
 
 	# Flythrough menus
 	set fly(EYE_RADIOBUTTON) $draw_var1
 	set fly(CENTER_RADIOBUTTON) $draw_var2
+	set fly(C2C_RADIOBUTTON) $draw_var4
 
 	set fly(FLY_RADIOBUTTON) [radiobutton $BASE.$frame.b3 \
                  -variable draw_option -value 3 -text "fly"\
@@ -73,7 +74,7 @@ proc mkFlyButtons {BASE frame draw_lab draw_var1 draw_var2} {
 
 	fly_deselect
 
-    pack $draw_lab $draw_var1 $draw_var2 $fly(FLY_RADIOBUTTON) $fly(FLY_MENUBUTTON) -side left -expand 0
+    pack $draw_lab $draw_var1 $draw_var2 $draw_var4 $fly(FLY_RADIOBUTTON) $fly(FLY_MENUBUTTON) -side left -expand 0
 
 
 	# Flythrough panel
@@ -274,6 +275,7 @@ proc fly_select {} {
 	global fly;
 	$fly(EYE_RADIOBUTTON) deselect
 	$fly(CENTER_RADIOBUTTON) deselect
+	$fly(C2C_RADIOBUTTON) deselect
 	$fly(FLY_RADIOBUTTON) select
 
 	$fly(FLY_MENUBUTTON) configure -text $fly(FLY_MODE)

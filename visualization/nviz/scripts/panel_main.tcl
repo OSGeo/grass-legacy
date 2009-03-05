@@ -175,23 +175,27 @@ proc mkmainPanel { BASE } {
 	set draw_lab [label $BASE.midt.lablev1 -text "View method:" -anchor w]
 
 	set draw_var1 [radiobutton $BASE.midt.b1 -text "eye" \
-		-variable draw_option -value 0 -width 8 \
+		-variable draw_option -value 0 -width 4 \
 		-command "change_display 1" ]
 
 	set draw_var2 [radiobutton $BASE.midt.b2 -text "center" \
-		-variable draw_option -value 1 -width 8 \
+		-variable draw_option -value 1 -width 6 \
 		-command "change_display 0" ]
+
+	set draw_var4 [radiobutton $BASE.midt.b4 -text "C2C" \
+		-variable draw_option -value 4 -width 3 \
+		-command "C2C 1" ]
 	$draw_var1 select
 
 	help $BASE.midt.b1 balloon "Change view by moving eye position"
 	help $BASE.midt.b2 balloon "Change view by moving scene center position"
-
+	help $BASE.midt.b4 balloon "Click to change scene center position, scroll to zoom in and out"
 
 	if {$Nv_(FlyThrough)} {
-		mkFlyButtons $BASE "midt" $draw_lab $draw_var1 $draw_var2
+		mkFlyButtons $BASE "midt" $draw_lab $draw_var1 $draw_var2 $draw_var4
 	} else {
 		# original code
-		pack $draw_lab $draw_var1 $draw_var2 -side left -expand 0
+		pack $draw_lab $draw_var1 $draw_var2 $draw_var4 -side left -expand 0
 	}
 	help $BASE.midt.b3 balloon "Change view using mouse to control fly-through"
 
@@ -501,7 +505,8 @@ proc update_center_position {x y} {
 proc change_display {flag} {
 	global XY Nv_
 	global Nauto_draw
-
+	
+	C2C 0
 	set NAME $XY
 	set NAME2 [winfo parent $NAME]
 	catch "destroy $XY"
@@ -588,7 +593,7 @@ proc move_position {} {
 		update
 	}
 
-	if {$draw_option == 1} {
+	if {$draw_option == 1 || $draw_option == 4} {
 		#Move center of view cross hair
 
 		set E [lindex [Nget_focus_gui] 0]
@@ -625,4 +630,3 @@ proc restorecursor {} {
 	$can($mon) configure -cursor $Nv_(cursor)
 	return
 }
-
