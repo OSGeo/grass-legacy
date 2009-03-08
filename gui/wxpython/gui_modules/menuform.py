@@ -915,7 +915,7 @@ class cmdPanel(wx.Panel):
             tab[section] = wx.ScrolledWindow( parent=self.notebook )
             tab[section].SetScrollRate(10,10)
             tabsizer[section] = wx.BoxSizer(orient=wx.VERTICAL)
-            self.notebook.AddPage( tab[section], text=section )
+            self.notebook.AddPage( tab[section], text=section.replace('_', ' '))
 
         # are we running from command line?
         ### add 'command output' tab regardless standalone dialog
@@ -1160,7 +1160,8 @@ class cmdPanel(wx.Panel):
                                               'dbtable',
                                               'dbcolumn',
                                               'layer',
-                                              'layer_all') and \
+                                              'layer_all',
+                                              'layer_zero') and \
                        p.get('element', '') != 'file':
                     if p.get('multiple', 'no') == 'yes':
                         multiple = True
@@ -1194,21 +1195,25 @@ class cmdPanel(wx.Panel):
                                              'dbtable',
                                              'dbcolumn',
                                              'layer',
-                                             'layer_all'):
+                                             'layer_all',
+                                             'layer_zero'):
                     if p.get('multiple', 'no') == 'yes':
                         win = wx.TextCtrl(parent=which_panel, value = p.get('default',''),
                                           size=globalvar.DIALOG_TEXTCTRL_SIZE)
                         win.Bind(wx.EVT_TEXT, self.OnSetValue)
                     else:
                         if p.get('prompt', '') in ('layer',
-                                                   'layer_all'):
+                                                   'layer_all',
+                                                   'layer_zero'):
+                            initial = ['1']
                             if p.get('prompt', '') == 'layer_all':
-                                all = True
-                            else:
-                                all = False
+                                initial.insert(0, '-1')
+                            if p.get('prompt', '') == 'layer_zero':
+                                initial.insert(0, '0')
+                            
                             if p.get('age', 'old_layer') == 'old_layer':
                                 win = gselect.LayerSelect(parent=which_panel,
-                                                          all=all,
+                                                          initial=initial,
                                                           default=p['default'])
                                 p['wxGetValue'] = win.GetStringSelection
                                 win.Bind(wx.EVT_CHOICE, self.OnUpdateSelection)
