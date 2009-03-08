@@ -366,7 +366,7 @@ proc GmProfile::getcoords { mapcan } {
 	set tottlength [expr {$tottlength + $tlength}]
 	
 	lappend pcoordslist $tottlength
-	
+    	
 	monitor_annotate $measurement_annotation_handle " --segment length\t= $tlength\n"
 	monitor_annotate $measurement_annotation_handle "cumulative length\t= $tottlength\n"
 	
@@ -523,8 +523,40 @@ proc GmProfile::pdraw { } {
 	$pcan create line $right $bottom $right [expr $bottom + 5]
 	$pcan create line [expr $left - 5] $top $left $top
 
+    
+    # Keep total points in profile graph to under 500 to prevent freezing in
+    # large, high resolution maps
+    
+    set ns 0.0
+    set ew 0.0
+    set max_res 0.0
+    set max_dim 0.0
+    set transect_res 0
+    
+	if {![catch {open [concat "|g.region" "-gp" "2> $devnull"] r} input]} {
+		while {[gets $input line] >= 0} {
+            set reglst [split $line "="]
+            set parts([lindex $reglst 0]) [lindex $reglst 1]
+		}
+		if {[catch {close $input} error]} {
+			GmLib::errmsg $error [G_msg "Error reading region values"]
+		}
+
+        set ns [expr abs($parts(n) - $parts(s))]
+        set ew [expr abs($parts(e) - $parts(w))]
+        set max_res [expr {$parts(nsres) > $parts(ewres) ? $parts(nsres):$parts(ewres)}]
+        set max_dim [expr {$ns > $ew ? $ns:$ew}]
+                
+        if { [expr (2 * $max_dim) / $max_res] > 500} {
+            set transect_res [expr (2  * $max_dim / 500)]
+        } else {
+            set transect_res $max_res
+        }
+                        
+	}
+    
 	# run r.profile first time to calculate total transect distance (needed for lat lon regions)
-   	if {![catch {open "|r.profile input=$pmap profile=$pcoords null=nan 2> $devnull" r} input]} {
+   	if {![catch {open "|r.profile input=$pmap profile=$pcoords res=$transect_res null=nan 2> $devnull" r} input]} {
 		while {[gets $input line] >= 0} {
 			if { [regexp -nocase {^([0-9].*) ([[.-.]0-9na].*)$} $line trash dist elev] } {
 				set cumdist $dist
@@ -593,7 +625,7 @@ proc GmProfile::pdraw { } {
 
 	# run r.profile again to
 	# convert dist elev (stdout) to xy coordinates of profile line
-   	if {![catch {open "|r.profile input=$pmap profile=$pcoords null=nan 2> $devnull" r} input]} {
+   	if {![catch {open "|r.profile input=$pmap profile=$pcoords res=$transect_res null=nan 2> $devnull" r} input]} {
 		while {[gets $input line] >= 0} {
 			if { [regexp -nocase {^([0-9].*) ([[.-.]0-9na].*)$} $line trash dist elev] } {
 			    if { [string equal "$elev" "nan" ]  } {
