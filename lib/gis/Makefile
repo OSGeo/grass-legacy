@@ -8,8 +8,13 @@ EXTRA_LIBS = $(XDRLIB) $(SOCKLIB) $(DATETIMELIB) $(INTLLIB) $(MATHLIB)
 DATASRC = ellipse.table datum.table datumtransform.table FIPS.code state27 state83 projections gui.tcl
 EXTRA_INC = $(ZLIBINCPATH)
 
+include $(MODULE_TOPDIR)/include/Make/Platform.make
+
 LIB_OBJS := $(subst .c,.o,$(wildcard *.c))
 LIB_OBJS := $(filter-out fmode.o dllmain.o,$(LIB_OBJS))
+ifneq ($(MINGW),)
+LIB_OBJS := $(LIB_OBJS) dllmain.o fmode.o
+endif
 
 include $(MODULE_TOPDIR)/include/Make/Lib.make
 include $(MODULE_TOPDIR)/include/Make/Doxygen.make
@@ -40,7 +45,7 @@ endif
 
 endif
 
-default: $(DLLMAIN_OBJ) lib $(FMODE_OBJ) $(DATAFILES) $(COLORFILES) $(ETC)/colors.desc $(ETC)/element_list
+default: lib $(FMODE_OBJ) $(DATAFILES) $(COLORFILES) $(ETC)/colors.desc $(ETC)/element_list
 
 $(ETC)/colors:
 	$(MKDIR) $@
