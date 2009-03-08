@@ -22,6 +22,7 @@ COPYING that comes with GRASS for details.
 
 import os
 import sys
+import copy
 
 import wx
 import wx.combo
