@@ -329,7 +329,6 @@ class GRASSStartup(wx.Frame):
                   flag= wx.ADJUST_MINSIZE |
                   wx.ALIGN_CENTER_VERTICAL |
                   wx.ALIGN_CENTER_HORIZONTAL |
-                  wx.EXPAND |
                   wx.BOTTOM,
                   border=10)
         sizer.Add(item=self.ltitle, # title
@@ -337,7 +336,6 @@ class GRASSStartup(wx.Frame):
                   flag=wx.ADJUST_MINSIZE |
                   wx.ALIGN_CENTER_VERTICAL |
                   wx.ALIGN_CENTER_HORIZONTAL |
-                  wx.EXPAND |
                   wx.BOTTOM,
                   border=5)
         sizer.Add(item=dbase_sizer, proportion=0,
