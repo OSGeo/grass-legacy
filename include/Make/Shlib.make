@@ -4,7 +4,11 @@ SHLIB = $(ARCH_LIBDIR)/$(SHLIB_PREFIX)$(SHLIB_NAME).$(GRASS_VERSION_NUMBER)$(SHL
 
 # Object that calls _setfmode(_O_BINARY) which must be linked to each DLL on Windows
 ifdef MINGW
+ifneq ($(SHLIB_NAME),$(DATETIME_LIBNAME))
+ifneq ($(SHLIB_NAME),$(GIS_LIBNAME))
   DLLMAIN_OBJ = $(MODULE_TOPDIR)/lib/gis/$(OBJDIR)/dllmain.o
+endif
+endif
 endif
 
 CFLAGS += $(SHLIB_CFLAGS) $(NLS_CFLAGS)
