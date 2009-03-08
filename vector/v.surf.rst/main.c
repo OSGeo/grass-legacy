@@ -205,6 +205,7 @@ int main(int argc, char *argv[])
     parm.field->description =
 	_("If set to 0, z coordinates are used. (3D vector only)");
     parm.field->answer = "1";
+    parm.field->gisprompt = "old_layer,layer,layer_zero";
 
     parm.zcol = G_define_option();
     parm.zcol->key = "zcolumn";

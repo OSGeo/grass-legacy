@@ -414,36 +414,37 @@ class LayerSelect(wx.Choice):
     def __init__(self, parent,
                  id=wx.ID_ANY, pos=wx.DefaultPosition,
                  size=globalvar.DIALOG_LAYER_SIZE,
-                 vector=None, choices=[], all=False, default=None):
+                 vector=None, choices=[], initial=['1'], default=None):
 
         super(LayerSelect, self).__init__(parent, id, pos=pos, size=size,
                                           choices=choices)
 
-        self.all = all
+        # initial choices (force '1' to be included)
+        self.initial = initial
+        if '1' not in self.initial:
+            self.initial.append('1')
         
-        self.SetName("LayerSelect")
-
         # default value
         self.default = default
-            
+        
+        self.SetName("LayerSelect")
+        
         if len(choices) > 1:
             return
-
+        
         if vector:
             self.InsertLayers(vector)
         else:
-            if all:
-                self.SetItems(['-1', '1'])
-            else:
-                self.SetItems(['1'])
+            self.SetItems(self.initial)
             self.SetStringSelection('1')
         
     def InsertLayers(self, vector):
         """Insert layers for a vector into the layer combobox"""
-        layerchoices = utils.GetVectorNumberOfLayers(vector)
+        layerchoices = []
+        if self.initial:
+            layerchoices = copy.copy(self.initial)
+        layerchoices += utils.GetVectorNumberOfLayers(vector)
 
-        if self.all:
-            layerchoices.insert(0, '-1')
         if len(layerchoices) > 1:
             self.SetItems(layerchoices)
             self.SetStringSelection('1')
