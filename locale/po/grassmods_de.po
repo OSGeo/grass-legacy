@@ -16242,8 +16242,8 @@ msgid "Spline type of interpolation"
 msgstr "Name der Karte, die Interpolationsfehler enthält."
 
 #: ../vector/lidar/v.surf.bspline/main.c:145 ../vector/v.surf.rst/main.c:206
-msgid "Field value. If set to 0, z coordinates are used. (3D vector only)"
-msgstr "Feldwert. Wenn 0, dann wird die Z-Koordinate genutzt (nur bei 3D-Vektoren)."
+msgid "If set to 0, z coordinates are used. (3D vector only)"
+msgstr "Wenn 0, dann wird die Z-Koordinate genutzt (nur bei 3D-Vektoren)."
 
 #: ../vector/lidar/v.surf.bspline/main.c:155
 msgid "Attribute table column with values to interpolate (if layer>0)"
