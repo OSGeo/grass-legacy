@@ -6,8 +6,8 @@
  *               Brad Douglas <rez touchofmadness.com>,
  *               Hamish Bowman <hamish_b yahoo.com>
  *               Markus Metz <markus.metz.giswork gmail.com>
- * PURPOSE:      Watershed determination
- * COPYRIGHT:    (C) 1999-2008 by the GRASS Development Team
+ * PURPOSE:      Hydrological analysis
+ * COPYRIGHT:    (C) 1999-2009 by the GRASS Development Team
  *
  *               This program is free software under the GNU General Public
  *               License (>=v2). Read the file COPYING that comes with GRASS
@@ -46,6 +46,7 @@ int main(int argc, char *argv[])
     struct Flag *flag_mfd;
     struct Flag *flag_flow;
     struct Flag *flag_seg;
+    struct Flag *flag_abs;
     struct GModule *module;
 
     G_gisinit(argv[0]);
@@ -103,16 +104,14 @@ int main(int argc, char *argv[])
 	_("Input value: minimum size of exterior watershed basin");
     opt6->required = NO;
     opt6->type = TYPE_INTEGER;
-    opt6->gisprompt = "new,cell,raster";
     opt6->guisection = _("Input_options");
 
     opt7 = G_define_option();
     opt7->key = "max.slope.length";
     opt7->description =
-	_("Input value: maximum length of surface flow, for USLE");
+	_("Input value: maximum length of surface flow in map units, for USLE");
     opt7->required = NO;
     opt7->type = TYPE_DOUBLE;
-    opt7->gisprompt = "new,cell,raster";
     opt7->guisection = _("Input_options");
 
     opt8 = G_define_option();
@@ -161,7 +160,7 @@ int main(int argc, char *argv[])
     opt13 = G_define_option();
     opt13->key = "visual";
     opt13->description =
-	_("Output map: useful for visual display of results");
+	_("Output map: useful for visual display of results. DEPRECATED.");
     opt13->required = NO;
     opt13->type = TYPE_STRING;
     opt13->gisprompt = "new,cell,raster";
@@ -213,8 +212,17 @@ int main(int argc, char *argv[])
 
     flag_seg = G_define_flag();
     flag_seg->key = 'm';
-    flag_seg->description =
+    flag_seg->label =
 	_("Enable disk swap memory option: Operation is slow");
+    flag_seg->description =
+	_("Only needed if memory requirements exceed available RAM; see manual on how to calculate memory requirements");
+
+    flag_abs = G_define_flag();
+    flag_abs->key = 'a';
+    flag_abs->label =
+	_("Use positive flow accumulation even for likely underestimates");
+    flag_abs->description =
+	_("See manual for a detailed description of flow accumulation output");
 
     if (G_parser(argc, argv))
 	exit(EXIT_FAILURE);
@@ -269,6 +277,9 @@ int main(int argc, char *argv[])
 
     if (flag_flow->answer)
 	strcat(command, " -4");
+
+    if (flag_abs->answer)
+	strcat(command, " -a");
 
     if (opt1->answer) {
 	strcat(command, " el=");

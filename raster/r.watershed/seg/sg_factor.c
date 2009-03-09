@@ -17,7 +17,7 @@ int sg_factor(void)
 	    cseg_get(&r_h, &hih_elev, r, c);
 	    dseg_get(&s_l, &length, r, c);
 	    cseg_get(&asp, &downer, r, c);
-	    height = hih_elev - low_elev;
+	    height = 1.0 * (hih_elev - low_elev) / ele_scale;
 	    if (length > max_length) {
 		height *= max_length / length;
 		length = max_length;
