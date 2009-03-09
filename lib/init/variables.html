@@ -260,14 +260,21 @@ text
     set to override Python executable.</dd>
   
   <br>
+  <dt>GRASS_WXBUNDLED</dt>
+  <dd>[wxGUI]<br>
+    set to tell wxGUI that a bundled wxPython will be used.<br>
+    When set, the wxGUI will not check the wxPython version, as this
+    function is incompatible with a bundled wxPython.  It is up to the
+    packager to make sure that a compatible wxPython version is bundled.</dd>
+  
+  <br>
   <dt>GRASS_TCLSH</dt>
   <dd>[nviz]<br>
     set tclsh shell name to override 'tclsh'.</dd>
   
   <br>
   <dt>GRASS_XTERM</dt>
-  <dd>lib/init/grass-xterm-wrapper<br>
-    lib/init/grass-xterm-mac<br>
+  <dd>[lib/init/grass-xterm-wrapper, lib/init/grass-xterm-mac]<br>
     set to any value (e.g. rxvt, aterm, gnome-terminal, konsole) to
     substitute 'x-terminal-emulator' or 'xterm'. The Mac OS X app
     startup defaults to an internal '$GISBASE/etc/grass-xterm-mac',
