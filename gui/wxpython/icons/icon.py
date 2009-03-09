@@ -21,15 +21,15 @@ for details.
 import os
 import sys
 
-import wxversion
-wxversion.select('2.8')
-import wx
-
 gmPath = os.path.join(os.getenv("GISBASE"), "etc", "wxpython", "gui_modules")
 sys.path.append(gmPath)
 
 import grassenv
 import globalvar
+if not os.getenv("GRASS_WXBUNDLED"):
+    globalvar.CheckForWx()
+import wx
+
 from preferences import globalSettings as UserSettings
 
 import grass_icons # default icon set

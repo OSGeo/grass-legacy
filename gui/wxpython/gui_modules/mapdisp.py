@@ -35,12 +35,13 @@ import math
 import tempfile
 import copy
 
+import globalvar
+if not os.getenv("GRASS_WXBUNDLED"):
+    globalvar.CheckForWx()
 import wx
 import wx.aui
 
 from threading import Thread
-
-import globalvar
 try:
     import subprocess
 except:
