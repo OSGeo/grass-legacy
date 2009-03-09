@@ -348,7 +348,7 @@ proc MapToolBar::create { tb } {
 
 	# This does not actually set the mode
 	# it just starts visually in sync with the default
-	set MapToolBar::explore($mon) strict
+	set MapToolBar::explore($mon) explore
 
 	pack $strictdraw $exploredraw -side left -anchor w
 }
