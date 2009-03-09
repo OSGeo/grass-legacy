@@ -803,11 +803,20 @@ class MultiImportDialog(wx.Dialog):
 
         self.panel = wx.Panel(parent=self, id=wx.ID_ANY)
 
+        if self.inputType == 'dxf':
+            self.inputTitle = _("Input DXF file")
+        else:
+            self.inputTitle = _("Input directory")
+
+        self.inputBox = wx.StaticBox(parent=self.panel, id=wx.ID_ANY,
+                                label=" %s " % self.inputTitle)
+        self.layerBox = wx.StaticBox(parent=self.panel, id=wx.ID_ANY,
+                                label=_(" List of %s layers ") % self.inputType.upper())
+
         #
         # input
         #
         if self.inputType == 'dxf':
-            self.inputTitle = _("Input DXF file")
             self.inputText = wx.StaticText(self.panel, id=wx.ID_ANY, label=_("Choose DXF file:"))
             self.input = filebrowse.FileBrowseButton(parent=self.panel, id=wx.ID_ANY, 
                                                      size=globalvar.DIALOG_GSELECT_SIZE, labelText='',
@@ -817,7 +826,6 @@ class MultiImportDialog(wx.Dialog):
                                                      changeCallback=self.OnSetInput,
                                                      fileMask="*.dxf")
         else:
-            self.inputTitle = _("Input directory")
             self.inputText = wx.StaticText(self.panel, id=wx.ID_ANY, label=_("Choose directory:"))
             self.input = filebrowse.DirBrowseButton(parent=self.panel, id=wx.ID_ANY, 
                                                      size=globalvar.DIALOG_GSELECT_SIZE, labelText='',
@@ -867,9 +875,7 @@ class MultiImportDialog(wx.Dialog):
         #
         # input
         #
-        inputBox = wx.StaticBox(parent=self.panel, id=wx.ID_ANY,
-                                label=" %s " % self.inputTitle)
-        inputSizer = wx.StaticBoxSizer(inputBox, wx.HORIZONTAL)
+        inputSizer = wx.StaticBoxSizer(self.inputBox, wx.HORIZONTAL)
         
         gridSizer = wx.FlexGridSizer(cols=2, vgap=5, hgap=5)
        
@@ -893,9 +899,7 @@ class MultiImportDialog(wx.Dialog):
         #
         # list of DXF layers
         #
-        layerBox = wx.StaticBox(parent=self.panel, id=wx.ID_ANY,
-                                label=_(" List of %s layers ") % self.inputType.upper())
-        layerSizer = wx.StaticBoxSizer(layerBox, wx.HORIZONTAL)
+        layerSizer = wx.StaticBoxSizer(self.layerBox, wx.HORIZONTAL)
 
         layerSizer.Add(item=self.list, proportion=1,
                       flag=wx.ALL | wx.EXPAND, border=5)
