@@ -151,19 +151,18 @@ information about categories not present in the vector geometry file.
 This means that e.g. an attribute table can be populated first and then
 vector objects can be added to the geometry file with category numbers.
 Using <a href="v.category.html">v.category</a>, category numbers can be
-printed or maintained. In order to link one vector object to several
-attribute tables, several category numbers per vector object are needed.
+printed or maintained.
 <br><br></li>
 
 <li><b>Layers</b><br>
 It is possible to link the geographic objects in
 a vector map to one or more tables. Each link to a distinct
 attribute table is called a layer. A link defines which database
-driver, database and table is to be used. Each category number
-in a geometry file corresponds to a row in the attribute table
-(the linking column is usually the "cat" key column). Using
-<a href="v.db.connect.html">v.db.connect</a> layers can be listed
-or maintained.<br>
+driver, database and table is to be used. Each category number in a
+geometry file is associated with a layer and corresponds to a row in the
+attribute table for this layer (the linking column is usually the "cat"
+key column). Using <a href="v.db.connect.html">v.db.connect</a> layers
+can be listed or maintained.<br>
 Vector objects are not organized in layers. All vector
 objects are kept in one geometry file, and topology is maintained for
 all vector objects together. GRASS layers only consist of links to
