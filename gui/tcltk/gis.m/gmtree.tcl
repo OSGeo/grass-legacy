@@ -15,7 +15,7 @@ namespace eval GmTree {
     variable node
     variable selected ""
     variable dblclick
-    variable legend_height 20
+    variable legend_height 25
     variable legend_width 30
     variable treeht 6
 	global array tree ;# mon
@@ -75,8 +75,8 @@ proc GmTree::create { mon } {
 
 	set sw    [ScrolledWindow $pg($mon).sw \
 		-relief flat -borderwidth 0 ]
-    set lw [expr {$legend_width + 27}]
-    set lh [expr {$legend_height + 6}]
+    set lw [expr {$legend_width + 30}]
+    set lh [expr {$legend_height + 2}]
 	
     set tree($mon)  [Tree $sw.tree_$mon \
             -relief flat -borderwidth 0 -highlightthickness 0 \

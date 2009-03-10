@@ -25,18 +25,18 @@ proc GmVector::legend { id } {
    
     set lh $GmTree::legend_height
     set lw $GmTree::legend_width
-    set mar 2
+    set mar 0
     set leg $opt($id,1,_legend)
 
     $leg delete all
+    set x1 0
+    set x2 [expr $lw - 6]
+    set y1 1
+    set y2 [expr $lh + 1]
+    set lwidth  $opt($id,1,lwidth)
 
     # area    
     if { $opt($id,1,type_area) || $opt($id,1,type_face)} {
-		set x1 [expr $mar ]
-		set x2 [expr {$lw - $mar} ]
-		set y1 [expr $mar ]
-		set y2 [expr {$lh - $mar} ]
-		set lwidth  $opt($id,1,lwidth)
 		if { $lwidth == 0 } { set lwidth 1 }
 		if {$opt($id,1,_use_color) == 1} {
 			if {$opt($id,1,_use_fcolor) == 1} {		
@@ -56,11 +56,6 @@ proc GmVector::legend { id } {
     
     #line
     if { $opt($id,1,type_line) || $opt($id,1,type_boundary) } {
-		set x1 [expr $mar ]
-		set x2 [expr {$lw - $mar} ]
-		set y1 [expr $mar ]
-		set y2 [expr {$lh - $mar} ]
-		set lwidth  $opt($id,1,lwidth)
 		if { $lwidth == 0 } { set lwidth 1 }
 		if {$opt($id,1,_use_color) == 1} {
 			$leg create rectangle $x1 $y1 $x2 $y2 -outline $opt($id,1,color) \
@@ -69,22 +64,22 @@ proc GmVector::legend { id } {
     }
 
     # point 
-    set xc [expr {$lw / 2 + $mar - 1} ]
-    set yc [expr {$lh / 2} ]
-    set size $opt($id,1,size)
-   
     set maxpsize  [expr {$lw / 3 - 2} ]
+    set size $opt($id,1,size)
     if { $size > $maxpsize } { set size $maxpsize }
-	set x1 [expr {$xc - $size / 2} ]
-	set x2 [expr {$xc + $size / 2 + 1} ]
-	set y1 [expr {$yc - $size / 2 }]
-	set y2 [expr {$yc + $size / 2 + 1} ]
 
+    set xc [expr {$lw / 2 - 2} ]
+    set yc [expr {$lh / 2 + 2} ]
+    set px1 [expr {$xc - $size / 2} ]
+    set px2 [expr {$xc + $size / 2 } ]
+    set py1 [expr {$yc - $size / 2 }]
+    set py2 [expr {$yc + $size / 2 } ]
+   
     if { $opt($id,1,type_point) || $opt($id,1,type_centroid) } {
-	set lwidth  $opt($id,1,lwidth)
-	if { $lwidth == 0 } { set lwidth 1 }
-        $leg create line $x1 $yc $x2 $yc -fill $opt($id,1,color) -width $lwidth
-	$leg create line $xc $y1 $xc $y2 -fill $opt($id,1,color) -width $lwidth
+        set lwidth  $opt($id,1,lwidth)
+        if { $lwidth == 0 } { set lwidth 1 }
+        $leg create line $px1 $yc $px2 $yc -fill $opt($id,1,color) -width $lwidth
+        $leg create line $xc $py1 $xc $py2 -fill $opt($id,1,color) -width $lwidth
     }
 
 
