@@ -22,7 +22,6 @@ COPYING that comes with GRASS for details.
 
 import os
 import sys
-import copy
 
 import wx
 import wx.combo
@@ -441,11 +440,15 @@ class LayerSelect(wx.Choice):
         
     def InsertLayers(self, vector):
         """Insert layers for a vector into the layer combobox"""
-        layerchoices = []
-        if self.initial:
-            layerchoices = copy.copy(self.initial)
-        layerchoices += utils.GetVectorNumberOfLayers(vector)
+        layerchoices = utils.GetVectorNumberOfLayers(vector)
+        for layer in self.initial:
+            if layer in layerchoices:
+                continue
+            layerchoices.append(layer)
 
+        # sort list of available layers
+        utils.ListSortLower(layerchoices)
+        
         if len(layerchoices) > 1:
             self.SetItems(layerchoices)
             self.SetStringSelection('1')
