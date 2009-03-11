@@ -10,13 +10,13 @@
 ##########################################################################
 
 namespace eval GmRnums {
-    variable array opt # rnums current options
+    variable array opt ;# rnums current options
     variable count 1
-    variable array tree # mon
-    variable array lfile # raster
-    variable array lfilemask # raster
+    variable array tree ;# mon
+    variable array lfile ;# raster
+    variable array lfilemask ;# raster
     variable optlist
-    variable array dup # vector
+    variable array dup ;# vector
 }
 
 ###############################################################################
@@ -270,9 +270,18 @@ proc GmRnums::display { node mod } {
 		set mapdispht $env(GRASS_HEIGHT)
 		set mapdispwd $env(GRASS_WIDTH)
 	} elseif {$opt($id,1,_check)} {
-		set msgtxt [G_msg "Cell values can only be displayed\nfor regions of < 10,000 cells"]
-		set answer [tk_messageBox -message $msgtxt -type ok -parent .mapcan($mon)]
-		if { $answer == "ok" } {return}
+		if { $MapCanvas::exploremode($mon) == 0 } {
+			set msgtxt [G_msg "Cell values can only be displayed\nfor regions of < 10,000 cells"]
+			set answer [tk_messageBox -message $msgtxt -type ok -parent .mapcan($mon)]
+			if { $answer == "ok" } {return}
+		} else {
+			set answer [tk_dialog .mapcan($mon).constrain \
+			[G_msg "Constrain map to region geometry?"] \
+			[G_msg "Cell values can only be displayed for \nregions of < 10,000 cells. Map in explore mode may contain more than 10,000 cells.\n\n\
+It's suggested to constrain map to region geometry to display cell values."] questhead 0 \
+			[G_msg "Constrain map to region geometry"] [G_msg "Leave in explore mode"]]
+			if { $answer == 0 } { MapCanvas::exploremode $mon 0 }
+		}
     }
 	
 	# set grass font environmental variable to whatever it was when we started
