@@ -147,6 +147,7 @@ int main(int argc, char *argv[])
 	    _("Field value. If set to 0, z coordinates are used. (3D vector only)");
 	dfield_opt->answer = "0";
 	dfield_opt->guisection = _("Settings");
+	dfield_opt->gisprompt = "old_layer,layer,layer_zero";
     }
 
     col_opt = G_define_option(); {
