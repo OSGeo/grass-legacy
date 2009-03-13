@@ -1187,6 +1187,8 @@ class VDigitToolbar(AbstractToolbar):
         
         self.mapLayer = None
         
+        self.parent.MapWindow.redrawAll = True
+        
         return True
     
     def UpdateListOfLayers (self, updateTool=False):
