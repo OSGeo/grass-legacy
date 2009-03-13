@@ -573,7 +573,7 @@ set descmenu [subst  {
 	}}
 	{cascad {[G_msg "Filter image"]} {} "" $tmenu {			
 		{command {[G_msg "Edge detection"]} {} "i.zc: Zero edge crossing detection" {} -command {execute i.zc }}
-		{command {[G_msg "Matrix/convolving filter"]} {} "r.mfilter: User defined matrix/convolving filter" {} -command {execute r.mfilter }}
+		{command {[G_msg "Matrix/convolving filter"]} {} "r.mfilter: User defined matrix/convolving filter" {} -command {execute r.mfilter.fp }}
 	}}
 	{command {[G_msg "Spectral response"]} {} "i.spectral: Spectral response" {} -command {execute i.spectral }}
 	{command {[G_msg "Tassled cap vegetation index"]} {} "i.tasscap: Tassled cap vegetation index" {} -command {execute i.tasscap }}
