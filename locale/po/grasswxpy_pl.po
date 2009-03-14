@@ -530,11 +530,11 @@ msgstr "Plik regionu <%s> już istnieje.Chcesz go nadpisać?"
 
 #: ../gui/wxpython/gui_modules/mapdisp.py:2540
 msgid "GRASS GIS - Map display"
-msgstr "GRASS GIS Okno mapy: "
+msgstr "GRASS GIS - Okno mapy"
 
 #: ../gui/wxpython/gui_modules/mapdisp.py:2614
 msgid "Render"
-msgstr "_Renderuj"
+msgstr "Renderuj"
 
 #: ../gui/wxpython/gui_modules/mapdisp.py:2617
 msgid "Enable/disable auto-rendering"
