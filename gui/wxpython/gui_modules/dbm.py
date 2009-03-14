@@ -3105,24 +3105,18 @@ class DisplayAttributesDialog(wx.Dialog):
 
     def OnSubmit(self, event):
         """Submit records"""
-        sqlCommands = self.GetSQLString(updateValues=True)
-        if len(sqlCommands) > 0:
-            sqlFile = tempfile.NamedTemporaryFile(mode="w")
-            for sql in sqlCommands:
-                enc = UserSettings.Get(group='atm', key='encoding', subkey='value')
-                if not enc and \
-                        os.environ.has_key('GRASS_DB_ENCODING'):
-                    enc = os.environ['GRASS_DB_ENCODING']
-                if enc:
-                    sqlFile.file.write(sql.encode(enc))
-                else:
-                    sqlFile.file.write(sql)
-                sqlFile.file.write(os.linesep)
-                sqlFile.file.flush()
-                gcmd.Command(cmd=["db.execute",
-                                  "--q",
-                                  "input=%s" % sqlFile.name])
-
+        for sql in self.GetSQLString(updateValues=True):
+            enc = UserSettings.Get(group='atm', key='encoding', subkey='value')
+            if not enc and \
+                    os.environ.has_key('GRASS_DB_ENCODING'):
+                enc = os.environ['GRASS_DB_ENCODING']
+            if enc:
+                sql = sql.encode(enc)
+            
+            gcmd.Command(cmd=["db.execute",
+                              "--q"],
+                         stdin=sql)
+            
         if self.closeDialog.IsChecked():
             self.OnCancel(event)
 
