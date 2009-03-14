@@ -3335,13 +3335,20 @@ class VectorDBInfo(gselect.VectorDBInfo):
         Return line id or None if no line is found"""
         line = None
         nselected = 0
+        if os.environ.has_key("LC_ALL"):
+            locale = os.environ["LC_ALL"]
+            os.environ["LC_ALL"] = "C"
         
+        ### FIXME (implement script-style output)
         cmdWhat = gcmd.Command(cmd=['v.what',
                                    '-a', '--q',
                                     'map=%s' % self.map,
                                     'east_north=%f,%f' % \
                                         (float(queryCoords[0]), float(queryCoords[1])),
                                     'distance=%f' % qdist], stderr=None)
+        
+        if os.environ.has_key("LC_ALL"):
+            os.environ["LC_ALL"] = locale
         
         data = {}
         if cmdWhat.returncode == 0:
