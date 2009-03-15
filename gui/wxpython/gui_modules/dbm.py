@@ -31,6 +31,7 @@ for details.
 
 import sys
 import os
+import platform
 import locale
 import tempfile
 import copy
@@ -253,7 +254,10 @@ class VirtualAttributeList(wx.ListCtrl,
                 # casting ...
                 if self.columns[columns[j]]['ctype'] != type(''):
                     try:
-                        self.itemDataMap[i].append(self.columns[columns[j]]['ctype'] (value))
+                        if platform.system() == "Darwin":
+                            self.itemDataMap[i].append(value)
+                        else:
+                            self.itemDataMap[i].append(self.columns[columns[j]]['ctype'](value))
                     except ValueError:
                         self.itemDataMap[i].append('')
                 else:
@@ -270,7 +274,7 @@ class VirtualAttributeList(wx.ListCtrl,
                         cat = -1
                         wx.MessageBox(parent=self,
                                       message=_("Error loading attribute data. "
-                                                "Record number: %(rec)d. Unable to cast value '%(val)s' in "
+                                                "Record number: %(rec)d. Unable to convert value '%(val)s' in "
                                                 "key column (%(key)s) to integer.\n\n"
                                                 "Details: %(detail)s") % \
                                           { 'rec' : i + 1, 'val' : value,
@@ -1256,9 +1260,15 @@ class AttributeManager(wx.Frame):
                             continue
 
                     try:
-                        values[i] = list.columns[columnName[i]]['ctype'] (values[i])
+                        if list.columns[columnName[i]]['ctype'] == int:
+                            # values[i] is stored as text. 
+                            value = float(values[i])
+                        else:
+                            value = values[i]
+                        values[i] = list.columns[columnName[i]]['ctype'] (value)
+
                     except:
-                        raise ValueError(_("Casting value '%(value)s' to %(type)s failed.") % 
+                        raise ValueError(_("Value '%(value)s' needs to be entered as %(type)s.") % 
                                          {'value' : str(values[i]),
                                           'type' : list.columns[columnName[i]]['type']})
                     columnsString += '%s,' % columnName[i]
@@ -1356,12 +1366,16 @@ class AttributeManager(wx.Frame):
                                 else:
                                     idx = i
                                 if list.columns[columnName[i]]['ctype'] != type(''):
+                                    if list.columns[columnName[i]]['ctype'] == int:
+                                        value = float(values[i])
+                                    else:
+                                        value = values[i]
                                     list.itemDataMap[item][idx] = \
-                                        list.columns[columnName[i]]['ctype'] (values[i])
+                                        list.columns[columnName[i]]['ctype'] (value)
                                 else:
                                     list.itemDataMap[item][idx] = values[i]
                             except:
-                                raise ValueError(_("Casting value '%(value)s' to %(type)s failed.") % \
+                                raise ValueError(_("Value '%(value)s' needs to be entered as %(type)s.") % \
                                                      {'value' : str(values[i]),
                                                       'type' : list.columns[columnName[i]]['type']})
 
@@ -1371,6 +1385,7 @@ class AttributeManager(wx.Frame):
                                 updateString += "%s=%s," % (columnName[i], values[i])
                         else: # NULL
                             updateString += "%s=NULL," % (columnName[i])
+                            
             except ValueError, err:
                 wx.MessageBox(parent=self,
                               message="%s%s%s" % (_("Unable to update existing record."),
@@ -1383,7 +1398,9 @@ class AttributeManager(wx.Frame):
                                                     (table, updateString.strip(','),
                                                      keyColumn, cat))
                 self.ApplyCommands()
-                
+
+            list.Update(self.mapDBInfo)
+                        
     def OnDataReload(self, event):
         """Reload list of records"""
         self.OnApplySqlStatement(None)
