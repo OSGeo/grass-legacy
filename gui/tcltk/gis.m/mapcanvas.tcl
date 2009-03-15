@@ -112,6 +112,7 @@ namespace eval MapCanvas {
 	# zoom_attrs used in g.region command to set WIND file
 	variable zoom_attrs
 	set zoom_attrs {n s e w nsres ewres rows cols}
+	variable ll_proj ;# 1 if it's Lat/Lon projection, 0 othervise
 
 	# string with region information to show in status bar
 	variable regionstr
@@ -417,6 +418,7 @@ proc MapCanvas::shrinkwrap {sense nsew1 ar2 } {
 
 
 proc MapCanvas::get_mapunits {} {
+	variable ll_proj
 	# get map units from PROJ_UNITS
 	if {![catch {open "|g.proj -p" r} input]} {
 	    set key ""
@@ -441,6 +443,11 @@ proc MapCanvas::get_mapunits {} {
 	# May already be set above if locn was XY.
 	if { ! [ info exist mapunits ] } {
 	    set mapunits $prj(units)
+	}
+	
+	set ll_proj 0
+	if { [string eq "Lat/Lon" "$prj(name)"] } {
+		set ll_proj 1
 	}
 	
 	return $mapunits
@@ -1029,6 +1036,7 @@ proc MapCanvas::currentzoom { mon } {
 	variable msg
 	variable canvas_w
 	variable canvas_h
+	variable ll_proj
 
 	set mapunits [MapCanvas::get_mapunits]
 
@@ -1044,8 +1052,13 @@ proc MapCanvas::currentzoom { mon } {
 	if {$exploremode($mon)} {
 		# Set the region extents to the smallest region no smaller than the canvas
 		set canvas_ar [expr {1.0 * $canvas_w($mon) / $canvas_h($mon)}]
-		set expanded_region [MapCanvas::shrinkwrap 1 [lrange $region 0 3] $canvas_ar]
-		foreach {n s e w} $expanded_region {break}
+		foreach {n s e w} [MapCanvas::shrinkwrap 1 [lrange $region 0 3] $canvas_ar] {break}
+		# In Lat/Lon N and S can not be larger than 90!
+		if { $ll_proj } {
+			if { $n >  90 } { set n  90 }
+			if { $s < -90 } { set s -90 }
+		}
+		set expanded_region "$n $s $e $w"
 		# Calculate the resolutions proportional to the map size
 		set explore_nsres [expr {1.0 * ($n - $s) / $canvas_h($mon)}]
 		set explore_ewres [expr {1.0 * ($e - $w) / $canvas_w($mon)}]
