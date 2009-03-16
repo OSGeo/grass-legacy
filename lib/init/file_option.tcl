@@ -45,6 +45,7 @@
 namespace eval fileOpt {
 	variable fileLocation ;#name of new location to be created
 	variable filepath  ;#path to georeferenced file
+	variable dtnum ;#datum transformation number
 	global env
 	global database 
 	global mingw ;#test to see if we are running a windows version in mingw
