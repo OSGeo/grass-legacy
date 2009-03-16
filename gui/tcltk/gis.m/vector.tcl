@@ -29,10 +29,10 @@ proc GmVector::legend { id } {
     set leg $opt($id,1,_legend)
 
     $leg delete all
-    set x1 0
-    set x2 [expr $lw - 6]
-    set y1 1
-    set y2 [expr $lh + 1]
+    set x1 4
+    set x2 [expr $lw - 7]
+    set y1 4
+    set y2 [expr $lh - 2]
     set lwidth  $opt($id,1,lwidth)
 
     # area    
@@ -68,13 +68,13 @@ proc GmVector::legend { id } {
     set size $opt($id,1,size)
     if { $size > $maxpsize } { set size $maxpsize }
 
-    set xc [expr {$lw / 2 - 2} ]
+    set xc [expr {$lw / 2 - 1} ]
     set yc [expr {$lh / 2 + 2} ]
     set px1 [expr {$xc - $size / 2} ]
     set px2 [expr {$xc + $size / 2 } ]
     set py1 [expr {$yc - $size / 2 }]
     set py2 [expr {$yc + $size / 2 } ]
-   
+
     if { $opt($id,1,type_point) || $opt($id,1,type_centroid) } {
         set lwidth  $opt($id,1,lwidth)
         if { $lwidth == 0 } { set lwidth 1 }
@@ -254,7 +254,7 @@ proc GmVector::show_data { id } {
 		set tbl [lindex $vdblist 1]
 		set db [lindex $vdblist 3]
 		set drv [lindex $vdblist 4]
-		set cmd "db.select table=$tbl database=$db driver=$drv"
+		set cmd "db.select table=$tbl database=$db driver=dbf"
 		run_panel $cmd
 	}
 }
