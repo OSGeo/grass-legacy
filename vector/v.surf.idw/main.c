@@ -109,6 +109,7 @@ int main(int argc, char *argv[])
     parm.dfield->description =
 	_("If set to 0, z coordinates are used (3D vector only)");
     parm.dfield->answer = "1";
+    parm.dfield->gisprompt = "old_layer,layer,layer_zero"; 
 
     parm.col = G_define_option();
     parm.col->key = "column";
