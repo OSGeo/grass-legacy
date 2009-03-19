@@ -31,7 +31,6 @@ for details.
 
 import sys
 import os
-import platform
 import locale
 import tempfile
 import copy
@@ -251,16 +250,15 @@ class VirtualAttributeList(wx.ListCtrl,
             j = 0
             
             for value in record.split('|'):
-                # casting ...
                 if self.columns[columns[j]]['ctype'] != type(''):
                     try:
-                        if platform.system() == "Darwin":
-                            self.itemDataMap[i].append(value)
-                        else:
-                            self.itemDataMap[i].append(self.columns[columns[j]]['ctype'](value))
+                        ### casting disabled (2009/03)
+                        ### self.itemDataMap[i].append(self.columns[columns[j]]['ctype'](value))
+                        self.itemDataMap[i].append(value)
                     except ValueError:
-                        self.itemDataMap[i].append('')
+                        self.itemDataMap[i].append(_('Unknown value'))
                 else:
+                    # encode string values
                     try:
                         self.itemDataMap[i].append(unicodeValue(value))
                     except UnicodeDecodeError:
