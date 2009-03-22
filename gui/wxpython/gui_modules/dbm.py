@@ -21,7 +21,7 @@ List of classes:
  - VectorDBInfo
  - ModifyTableRecord
 
-(C) 2007-2008 by the GRASS Development Team
+(C) 2007-2009 by the GRASS Development Team
 
 This program is free software under the GNU General Public
 License (>=v2). Read the file COPYING that comes with GRASS
@@ -512,10 +512,7 @@ class AttributeManager(wx.Frame):
         #self.notebook.AddPage(self.manageLayerPage, caption=_("Manage layers"))
         self.notebook.AddPage(self.manageLayerPage, text=_("Manage layers")) # FN
         self.manageLayerPage.SetTabAreaColour(globalvar.FNPageColor)
-
-        self.infoCollapseLabelExp = _("Click here to show database connection information")
-        self.infoCollapseLabelCol = _("Click here to hide database connection information")
-
+        
         self.__createBrowsePage()
         self.__createManageTablePage()
         self.__createManageLayerPage()
@@ -703,13 +700,13 @@ class AttributeManager(wx.Frame):
             #
             # dbInfo
             #
-            infoCollapse = wx.CollapsiblePane(parent=panel,
-                                              label=self.infoCollapseLabelExp,
-                                              style=wx.CP_DEFAULT_STYLE |
-                                              wx.CP_NO_TLW_RESIZE | wx.EXPAND)
-            self.MakeInfoPaneContent(layer, infoCollapse.GetPane())
-            infoCollapse.Collapse(False)
-            self.Bind(wx.EVT_COLLAPSIBLEPANE_CHANGED, self.OnInfoPaneChanged, infoCollapse)
+            dbBox = wx.StaticBox(parent=panel, id=wx.ID_ANY,
+                                          label=" %s " % _("Database connection"))
+            dbSizer = wx.StaticBoxSizer(dbBox, wx.VERTICAL)
+            dbSizer.Add(item=self.__createDbInfoDesc(panel, layer),
+                        proportion=1,
+                        flag=wx.EXPAND | wx.ALL,
+                        border=3)
             
             #
             # table description
@@ -829,7 +826,7 @@ class AttributeManager(wx.Frame):
                            proportion=1,
                            border=3)
             
-            pageSizer.Add(item=infoCollapse,
+            pageSizer.Add(item=dbSizer,
                           flag=wx.ALL | wx.EXPAND,
                           proportion=0,
                           border=3)
@@ -837,16 +834,14 @@ class AttributeManager(wx.Frame):
             pageSizer.Add(item=tableSizer,
                           flag=wx.LEFT | wx.RIGHT | wx.BOTTOM | wx.EXPAND,
                           proportion=1,
-                          border=5)
+                          border=3)
  
             pageSizer.Add(item=columnSizer,
                           flag=wx.LEFT | wx.RIGHT | wx.BOTTOM | wx.EXPAND,
                           proportion=0,
-                          border=5)
+                          border=3)
             
             panel.SetSizer(pageSizer)
-            
-            self.layerPage[layer]['dbinfo'] = infoCollapse.GetId()
         
         self.manageTablePage.SetSelection(0) # select first layer
         try:
@@ -1829,63 +1824,30 @@ class AttributeManager(wx.Frame):
         
         return (cols, where)
     
-    def OnInfoPaneChanged(self, event):
-        """Collapse database connection info box"""
-
-        if self.FindWindowById(self.layerPage[self.layer]['dbinfo']).IsExpanded():
-            self.FindWindowById(self.layerPage[self.layer]['dbinfo']).SetLabel( \
-                self.infoCollapseLabelCol)
-        else:
-             self.FindWindowById(self.layerPage[self.layer]['dbinfo']).SetLabel( \
-                 self.infoCollapseLabelExp)
-
-        # redo layout
-        self.Layout()
-
-    def MakeInfoPaneContent(self, layer, pane):
+    def __createDbInfoDesc(self, panel, layer):
         """Create database connection information content"""
-            # connection info
-        border = wx.BoxSizer(wx.VERTICAL)
-
-        connectionInfoBox = wx.StaticBox(parent=pane, id=wx.ID_ANY,
-                                         label=" %s " % _("Database connection"))
-        infoSizer = wx.StaticBoxSizer(connectionInfoBox, wx.VERTICAL)
         infoFlexSizer = wx.FlexGridSizer (cols=2, hgap=1, vgap=1)
         infoFlexSizer.AddGrowableCol(1)
-
-        infoFlexSizer.Add(item=wx.StaticText(parent=pane, id=wx.ID_ANY,
+        
+        infoFlexSizer.Add(item=wx.StaticText(parent=panel, id=wx.ID_ANY,
                                              label="Driver:"))
-        infoFlexSizer.Add(item=wx.StaticText(parent=pane, id=wx.ID_ANY,
-                                             label="%s" % \
-                                                 self.mapDBInfo.layers[layer]['driver']))
-        infoFlexSizer.Add(item=wx.StaticText(parent=pane, id=wx.ID_ANY,
+        infoFlexSizer.Add(item=wx.StaticText(parent=panel, id=wx.ID_ANY,
+                                             label=self.mapDBInfo.layers[layer]['driver']))
+        infoFlexSizer.Add(item=wx.StaticText(parent=panel, id=wx.ID_ANY,
                                              label="Database:"))
-        infoFlexSizer.Add(item=wx.StaticText(parent=pane, id=wx.ID_ANY,
-                                             label="%s" % \
-                                                 self.mapDBInfo.layers[layer]['database']))
-        infoFlexSizer.Add(item=wx.StaticText(parent=pane, id=wx.ID_ANY,
+        infoFlexSizer.Add(item=wx.StaticText(parent=panel, id=wx.ID_ANY,
+                                             label=self.mapDBInfo.layers[layer]['database']))
+        infoFlexSizer.Add(item=wx.StaticText(parent=panel, id=wx.ID_ANY,
                                              label="Table:"))
-        infoFlexSizer.Add(item=wx.StaticText(parent=pane, id=wx.ID_ANY,
-                                             label="%s" % \
-                                                 self.mapDBInfo.layers[layer]['table']))
-        infoFlexSizer.Add(item=wx.StaticText(parent=pane, id=wx.ID_ANY,
+        infoFlexSizer.Add(item=wx.StaticText(parent=panel, id=wx.ID_ANY,
+                                             label=self.mapDBInfo.layers[layer]['table']))
+        infoFlexSizer.Add(item=wx.StaticText(parent=panel, id=wx.ID_ANY,
                                              label="Key:"))
-        infoFlexSizer.Add(item=wx.StaticText(parent=pane, id=wx.ID_ANY,
-                                             label="%s" % \
-                                                 self.mapDBInfo.layers[layer]['key']))
+        infoFlexSizer.Add(item=wx.StaticText(parent=panel, id=wx.ID_ANY,
+                                             label=self.mapDBInfo.layers[layer]['key']))
 
-        infoSizer.Add(item=infoFlexSizer,
-                      proportion=1,
-                      flag=wx.EXPAND | wx.ALL,
-                      border=3)
-
-        border.Add(item=infoSizer,
-                   proportion=1,
-                   flag=wx.EXPAND | wx.ALL,
-                   border=3)
-
-        pane.SetSizer(border)
-
+        return infoFlexSizer
+        
     def OnCloseWindow(self, event):
         """Cancel button pressed"""
         self.Close()
