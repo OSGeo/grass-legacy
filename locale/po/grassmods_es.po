@@ -16910,7 +16910,7 @@ msgstr "Ninguna salida ráster ni vectorial"
 #: ../vector/lidar/v.surf.bspline/main.c:236
 #, fuzzy, c-format
 msgid ""
-"No vector map of sparse points to interpolate. Interpolation will be done "
+"No vector map of sparse points to interpolate was specified. Interpolation will be done "
 "with <%s> vector map"
 msgstr ""
 "Ningún mapa vectorial a interpolar. La interpolación se hará con el mapa "
