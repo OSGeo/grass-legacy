@@ -1,76 +1,10 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
-<html><head><title>GRASS GIS: v.surf.bspline</title>
-
-
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-<link rel="stylesheet" href="v.surf.bspline_new_files/grassdocs.css" type="text/css"><script charset="utf-8" id="injection_graph_func" src="v.surf.bspline_new_files/injection_graph_func.js"></script></head><body bgcolor="white">
-
-<img src="v.surf.bspline_new_files/grass_logo.png" alt="GRASS logo"><hr align="center" noshade="noshade" size="6">
-
-<h2>NAME</h2>
-<em><b>v.surf.bspline</b></em>  - Bicubic or bilinear spline interpolation with Tykhonov regularization.
-<h2>KEYWORDS</h2>
-vector, interpolation
-<h2>SYNOPSIS</h2>
-<b>v.surf.bspline</b><br>
-<b>v.surf.bspline help</b><br>
-<b>v.surf.bspline</b> [-<b>c</b>] <b>input</b>=<em>name</em>  [<b>sparse</b>=<em>name</em>]   [<b>output</b>=<em>name</em>]   [<b>raster</b>=<em>name</em>]   [<b>sie</b>=<em>float</em>]   [<b>sin</b>=<em>float</em>]   [<b>type</b>=<em>string</em>]   [<b>lambda_i</b>=<em>float</em>]   [<b>layer</b>=<em>integer</em>]   [<b>column</b>=<em>string</em>]   [--<b>overwrite</b>]  [--<b>verbose</b>]  [--<b>quiet</b>] 
-
-<h3>Flags:</h3>
-<dl>
-<dt><b>-c</b></dt>
-<dd>Find the best Tykhonov regularizing parameter using a "leave-one-out" cross validation method. Note that cross validation can run very slowly if more than 100 observations are used (for more information see "description")</dd>
-
-<dt><b>--overwrite</b></dt>
-<dd>Allow output files to overwrite existing files</dd>
-<dt><b>--verbose</b></dt>
-<dd>Verbose module output</dd>
-<dt><b>--quiet</b></dt>
-<dd>Quiet module output</dd>
-</dl>
-
-<h3>Parameters:</h3>
-<dl>
-<dt><b>input</b>=<em>name</em></dt>
-<dd>Name of input vector map containing point observations to be interpolated</dd>
-
-<dt><b>sparse</b>=<em>name</em></dt>
-<dd>Name of an input vector map of "sparse points". The "sparse points" vector map indicates the location of <b><i>output</i></b> vector points (see below). </dd>
-
-<dt><b>output</b>=<em>name</em></dt>
-<dd>Not available for vectors using the dbf database driver. Name of an output map of interpolated vector points. If a <b><i>sparse</i></b> points map is <b>not</b> specified (see above), the points in the output vector are in the same locations as the points in the input map, but have interpolated values rather than observed values. If a <b><i>sparse</i></b> points map <b>is</b> specified, the output vector points will have the same locations as the <b><i>sparse</i></b> points, and their values will be that of the inerpolated raster surface at those locations (see below)</dd>
-
-<dt><b>raster</b>=<em>name</em></dt>
-<dd>Name of the interpolated output raster surface map</dd>
-
-<dt><b>sie</b>=<em>float</em></dt>
-<dd>Length of each spline step in the east-west direction (see below)</dd>
-<dd>Default: <em>4</em></dd>
-
-<dt><b>sin</b>=<em>float</em></dt>
-<dd>Length of each spline step in the north-south direction (see below)</dd>
-<dd>Default: <em>4</em></dd>
-
-<dt><b>type</b>=<em>string</em></dt>
-<dd>Spline interpolation algorithm</dd>
-<dd>Options: <em>bilinear, bicubic</em></dd>
-<dd>Default: <em>bilinear</em></dd>
-
-<dt><b>lambda_i</b>=<em>float</em></dt>
-<dd>Tykhonov regularization parameter (affects smoothing)</dd>
-<dd>Default: <em>1</em></dd>
-
-<dt><b>layer</b>=<em>integer</em></dt>
-<dd>Vector layer used for input observations</dd>
-<dd>If layer = 0 and the map is a 3D vector, the z coordinates are used.</dd>
-<dd>Default: <em>0</em></dd>
-
-<dt><b>column</b>=<em>string</em></dt>
-<dd>If layer > 0, specify the attribute table column with values to interpolate (2D or 3D map)</dd>
-
-</dl>
 <h2>DESCRIPTION</h2>
-<em>v.surf.bspline</em> performs a bilinear/bicubic spline interpolation with Tykhonov regularization. The input is a 2D or 3D vector points map. Values to interpolate can be the z values of 3D points or the values in a user-specified attribue column in a 2D or 3D map. Output can be a raster or vector map. Optionally, a "sparse point" vector map can be input specify vector points output.
+<em>v.surf.bspline</em> performs a bilinear/bicubic spline interpolation with
+Tykhonov regularization. The input is a 2D or 3D vector points map. Values to
+interpolate can be the z values of 3D points or the values in a user-specified
+attribue column in a 2D or 3D map. Output can be a raster or vector map.
+Optionally, a "sparse point" vector map can be input specify vector points
+output.
 <br> <br>
 From a theoretical perspective, the interpolating procedure takes place in two parts: the first is an estimate of the linear coefficients of a spline function is derived from the observation points using a least squares regression; the second is the computation of the interpolated surface (or interpolated vector points). As used here, the splines are 2D piece-wise non-zero polynomial functions calculated within a limited, 2D area. The length of each spline step is defined by <b><i>sie</i></b> for the east-west direction and <b><i>sin</i></b> for the north-south direction. For optimum performance, the length of spline step should be no less than the distance between observation points. Each vector point observation is modeled as a linear function of the non-zero splines in the area around the observation. The least squares regression predicts the the coefficients of these linear functions. Regularization, avoids the need to have one one observation and one coefficient for each spline (in order to avoid instability). 
 <br><br>
@@ -161,10 +95,7 @@ dati LIDAR, Rivista dell'Agenzia del Territorio, n. 3-2003, pp. 11-22
 <br>
 <br>
 Antolin R. and Brovelli M.A., 2007, LiDAR data Filtering with GRASS GIS for the Determination of Digital Terrain Models. 
-Proceedings of Jornadas de SIG Libre, Girona, España. CD ISBN: 978-84-690-3886-9 <br>
+Proceedings of Jornadas de SIG Libre, Girona, Espa&ntilde;a. CD ISBN:
+978-84-690-3886-9 <br>
 
 <p><i>Last changed: $Date$</i>
-</p><hr>
-<p><a href="http://grass.osgeo.org/grass64/manuals/html64_user/index.html">Main index</a> - <a href="http://grass.osgeo.org/grass64/manuals/html64_user/vector.html">vector index</a> - <a href="http://grass.osgeo.org/grass64/manuals/html64_user/full_index.html">Full index</a></p>
-<p>Â© 2003-2008 <a href="http://grass.osgeo.org/">GRASS Development Team</a></p>
-</body></html>
