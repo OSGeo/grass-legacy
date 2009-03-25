@@ -54,7 +54,7 @@ char *GPJ_grass_to_wkt(struct Key_Value *proj_info,
 		       int esri_style, int prettify)
 {
     OGRSpatialReferenceH hSRS;
-    char *wkt;
+    char *wkt, *local_wkt;
 
     hSRS = GPJ_grass_to_osr(proj_info, proj_units);
 
@@ -69,8 +69,10 @@ char *GPJ_grass_to_wkt(struct Key_Value *proj_info,
     else
 	OSRExportToWkt(hSRS, &wkt);
 
+    local_wkt = G_store(wkt);
+    CPLFree(wkt);
     OSRDestroySpatialReference(hSRS);
-    return wkt;
+    return local_wkt;
 }
 
 /**
@@ -220,9 +222,9 @@ OGRSpatialReferenceH GPJ_grass_to_osr(struct Key_Value * proj_info,
     OSRDestroySpatialReference(hSRS);
     G_free(modwkt);
     CPLFree(wkt);
+    pj_dalloc(proj4);
     if (proj4 != proj4mod)
-	pj_dalloc(proj4);
-    G_free(proj4mod);
+        G_free(proj4mod);
     G_free(datum);
     G_free(params);
     G_free(datumlongname);
@@ -310,7 +312,11 @@ int GPJ_osr_to_grass(struct Cell_head *cellhd, struct Key_Value **projinfo,
     /* -------------------------------------------------------------------- */
     temp_projinfo = G_create_key_value();
 
-    pszRemaining = pszProj4;
+    /* Create "local" copy of proj4 string so we can modify and free it
+     * using GRASS functions */
+    pszRemaining = G_store(pszProj4);
+    CPLFree(pszProj4);
+    pszProj4 = pszRemaining;
     while ((pszRemaining = strstr(pszRemaining, "+")) != NULL) {
 	char *pszToken, *pszValue;
 
@@ -561,7 +567,7 @@ int GPJ_osr_to_grass(struct Cell_head *cellhd, struct Key_Value **projinfo,
 	G_free_key_value(temp_projinfo);
     }
 
-    free(pszProj4);		/* hopefully the same as CPLFree()! */
+    G_free(pszProj4);
 
     /* -------------------------------------------------------------------- */
     /*      Set the linear units.                                           */
@@ -783,8 +789,8 @@ static void DatumNameMassage(char **ppszDatum)
     /* -------------------------------------------------------------------- */
     for (i = 0; papszDatumEquiv[i] != NULL; i += 2) {
 	if (EQUAL(*ppszDatum, papszDatumEquiv[i])) {
-	    CPLFree(*ppszDatum);
-	    *ppszDatum = CPLStrdup(papszDatumEquiv[i + 1]);
+	    G_free(*ppszDatum);
+	    *ppszDatum = G_store(papszDatumEquiv[i + 1]);
 	    break;
 	}
     }
