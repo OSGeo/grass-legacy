@@ -10,12 +10,12 @@
 ##########################################################################
 
 namespace eval GmVector {
-    variable array opt # vector current options
+    variable array opt ;# vector current options
     variable count 1
-    variable array lfile # vector
-    variable array lfilemask # vector
+    variable array lfile ;# vector
+    variable array lfilemask ;# vector
     variable optlist
-    variable array dup # vector
+    variable array dup ;# vector
 }
 
 ###############################################################################
@@ -25,7 +25,7 @@ proc GmVector::legend { id } {
    
     set lh $GmTree::legend_height
     set lw $GmTree::legend_width
-    set mar 0
+    set mar 2
     set leg $opt($id,1,_legend)
 
     $leg delete all
@@ -74,7 +74,7 @@ proc GmVector::legend { id } {
     }
 
     # point 
-    set maxpsize  [expr {$lw / 3 - 2} ]
+    set maxpsize  [expr {$lw / 2} ]
     set size $opt($id,1,size)
     if { $size > $maxpsize } { set size $maxpsize }
 
@@ -88,8 +88,8 @@ proc GmVector::legend { id } {
     if { $opt($id,1,type_point) || $opt($id,1,type_centroid) } {
 	set lwidth  $opt($id,1,lwidth)
 	if { $lwidth == 0 } { set lwidth 1 }
-        $leg create line $x1 $yc $x2 $yc -fill $opt($id,1,color) -width $lwidth
-	$leg create line $xc $y1 $xc $y2 -fill $opt($id,1,color) -width $lwidth
+        $leg create line $px1 $yc $px2 $yc -fill $opt($id,1,color) -width $lwidth
+	$leg create line $xc $py1 $xc $py2 -fill $opt($id,1,color) -width $lwidth
     }
 
 
