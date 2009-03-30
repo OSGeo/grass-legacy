@@ -49,14 +49,18 @@ static int write_history(int bands, char *outname, double **eigmat, double *eigv
     for (i = 0; i < bands; i++) {
 	char tmpeigen[256], tmpa[80];
 
-	sprintf(tmpeigen, "PC%d %9.2f ( ", i+1, eigval[i]);
+	sprintf(tmpeigen, "PC%d %9.2f (", i+1, eigval[i]);
 	for (j = 0; j < bands; j++) {
-	    sprintf(tmpa, "%5.2f ", eigmat[i][j]);
+	    sprintf(tmpa, "%7.4f", eigmat[i][j]);
 	    G_strcat(tmpeigen, tmpa);
+	    if (j < (bands - 1) ){
+		sprintf(tmpa, ",");
+		G_strcat(tmpeigen, tmpa);
+	    }
 	}
-	G_strcat(tmpeigen, ") ");
+	G_strcat(tmpeigen, ")");
 	
-	sprintf(tmpa, "[ %5.2f%% ]", eigval[i] * 100/eigval_total);
+	sprintf(tmpa, "[%.2f%%]", eigval[i] * 100/eigval_total);
 	G_strcat(tmpeigen, tmpa);
 
 	sprintf(hist.edhist[i + 1], tmpeigen);
