@@ -37,10 +37,6 @@ proc GmVector::legend { id } {
 
     # area    
     if { $opt($id,1,type_area) || $opt($id,1,type_face)} {
-		set x1 [expr $mar ]
-		set x2 [expr {$lw - $mar} ]
-		set y1 [expr $mar ]
-		set y2 [expr {$lh - $mar} ]
 		set lwidth  $opt($id,1,lwidth)
 		if { $lwidth == 0 } { set lwidth 1 }
 		if {$opt($id,1,_use_color) == 1} {
@@ -61,10 +57,6 @@ proc GmVector::legend { id } {
     
     #line
     if { $opt($id,1,type_line) || $opt($id,1,type_boundary) } {
-		set x1 [expr $mar ]
-		set x2 [expr {$lw - $mar} ]
-		set y1 [expr $mar ]
-		set y2 [expr {$lh - $mar} ]
 		set lwidth  $opt($id,1,lwidth)
 		if { $lwidth == 0 } { set lwidth 1 }
 		if {$opt($id,1,_use_color) == 1} {
