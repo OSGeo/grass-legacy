@@ -37,6 +37,7 @@ proc GmVector::legend { id } {
 
     # area    
     if { $opt($id,1,type_area) || $opt($id,1,type_face)} {
+		set lwidth  $opt($id,1,lwidth)
 		if { $lwidth == 0 } { set lwidth 1 }
 		if {$opt($id,1,_use_color) == 1} {
 			if {$opt($id,1,_use_fcolor) == 1} {		
@@ -56,6 +57,7 @@ proc GmVector::legend { id } {
     
     #line
     if { $opt($id,1,type_line) || $opt($id,1,type_boundary) } {
+		set lwidth  $opt($id,1,lwidth)
 		if { $lwidth == 0 } { set lwidth 1 }
 		if {$opt($id,1,_use_color) == 1} {
 			$leg create rectangle $x1 $y1 $x2 $y2 -outline $opt($id,1,color) \
