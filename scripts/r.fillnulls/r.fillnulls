@@ -177,7 +177,7 @@ if [ $? -ne 0 ] ; then
 fi
 
 #count number of points to control segmax parameter for interpolation:
-POINTSNUMBER="`v.info map=${VECTTMP} | grep 'Number of points' | awk '{print $5}'`"
+POINTSNUMBER="`v.info -t map=${VECTTMP} | grep points | cut -d'=' -f2`"
 
 g.message "Interpolating $POINTSNUMBER points"
 
