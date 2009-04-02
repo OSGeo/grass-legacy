@@ -75,7 +75,7 @@
    NEED HELP
    - GRASS' make install installs all files BENEATH top level dir with UID
    set to benni !!! Is this intentional?
-   - provide gem61 as link in /usr/local/bin as part of grass 6.1 base install
+   - provide gem6x as link in /usr/local/bin as part of grass 6.x base install
    - description.html should not contain </body> or </html> as Rules.Make seems
    to append those ?
    - source install copies files COPYING README REQUIREMENTS.html to somewhere (but where?)
@@ -131,9 +131,9 @@
    - remove cva, install again: WARNING: list item 'cva' exists in index.html (?)
    - superfluous warning upon uninstall of extension w/o "entries-gisman"
    - due to bad command line parsing, listing installed extensions only works like this:
-   ./gem --grass=/usr/local/grass-6.1.cvs -q
+   ./gem6 --grass=/usr/local/grass-6.4.svn -q
    NOT like this:
-   ./gem -q --grass=/usr/local/grass-6.1.cvs
+   ./gem6 -q --grass=/usr/local/grass-6.4.svn
 
 
  */
@@ -147,7 +147,7 @@
 
 void show_help(void)
 {
-    fprintf(stdout, "Usage: gem [OPTION] [ACTION] [FILE|DIR]\n");
+    fprintf(stdout, "Usage: gem6 [OPTION] [ACTION] [FILE|DIR]\n");
     fprintf(stdout, "Install a GRASS extension from FILE or DIR.\n");
     fprintf(stdout, "Manage (installed) GRASS extension(s).\n");
     fprintf(stdout, "\nPossible ACTIONs are:\n");
@@ -203,9 +203,9 @@ void show_help(void)
 	    "For installation from source code, a C compiler and make tools are needed.\n");
     fprintf(stdout, "\nExample:\n");
     fprintf(stdout,
-	    "\tgem -b macosx --grass=/usr/local/grass-6.0.0 -i myExtension\n");
+	    "\tgem6 -b macosx --grass=/usr/local/grass-6.4.0 -i myExtension\n");
     fprintf(stdout,
-	    "Installs the MacOS X binaries for 'myExtension' in /usr/local/grass-6.0.0.\n");
+	    "Installs the MacOS X binaries for 'myExtension' in /usr/local/grass-6.4.0.\n");
     exit(0);
 }
 
@@ -257,7 +257,7 @@ void show_license(char *package)
 
 void show_version(void)
 {
-    fprintf(stdout, "gem (GRASS extensions manager) %.2f\n", PROGVERSION);
+    fprintf(stdout, "gem6 (GRASS extensions manager) %.2f\n", PROGVERSION);
     fprintf(stdout, "Written by Benjamin Ducke\n");
     fprintf(stdout, "\nCopyright (C) 2005 Benjamin Ducke\n");
     fprintf(stdout,
