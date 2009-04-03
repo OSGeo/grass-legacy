@@ -33,27 +33,41 @@
 #define NODE_ERROR  4
 
 int yyparse(void);
+
 void get_col_def(SQLPSTMT * st, int col, int *type, int *width,
 		 int *decimals);
 int sel(SQLPSTMT * st, int tab, int **set);
+
 void eval_val(int tab, int row, int col, SQLPVALUE * inval,
 	      SQLPVALUE * result);
 int set_val(int tab, int row, int col, SQLPVALUE * val);
+
 double eval_node(SQLPNODE *, int, int, SQLPVALUE *);
+
 int eval_node_type(SQLPNODE *, int);
 
 int execute(char *sql, cursor * c)
 {
     int i, j, tab, ret;
+
     SQLPSTMT *st;
+
     ROW *dbrows;
+
     VALUE *dbval;
+
     int row, nrows;
+
     int *cols, ncols, col;
+
     int *selset;
+
     int dtype, stype;
+
     int width, decimals;
+
     char *tmpsql, name[500];
+
     SQLPVALUE *calctmp;		/* store for calculated values in UPDATE, if any */
 
     /* parse sql statement */
@@ -451,6 +465,7 @@ int set_val(int tab, int row, int col, SQLPVALUE * val)
 		dbval->d = val->d;
 	    else if (val->type == SQLP_S) {
 		char *tailptr;
+
 		double dval = strtod(val->s, &tailptr);
 
 		if (!(*tailptr)) {
@@ -465,14 +480,21 @@ int set_val(int tab, int row, int col, SQLPVALUE * val)
 
 /* Comparison of 2 rows */
 static int cur_cmp_table;
+
 static int cur_cmp_ocol;
+
 static int cmp_row_asc(const void *pa, const void *pb)
 {
     int *row1 = (int *)pa;
+
     int *row2 = (int *)pb;
+
     char *c1, *c2;
+
     int i1, i2;
+
     double d1, d2;
+
     TABLE *tbl;
 
     tbl = &(db.tables[cur_cmp_table]);
@@ -517,7 +539,9 @@ static int cmp_row_desc(const void *pa, const void *pb)
 int sel(SQLPSTMT * st, int tab, int **selset)
 {
     int i, ret, condition;
+
     int *set;			/* pointer to array of indexes to rows */
+
     int aset, nset;
 
     G_debug(2, "sel(): tab = %d", tab);
@@ -644,11 +668,17 @@ int sel(SQLPSTMT * st, int tab, int **selset)
 double eval_node(SQLPNODE * nptr, int tab, int row, SQLPVALUE * value)
 {
     int left, right;
+
     SQLPVALUE left_value, right_value;
+
     int ccol;
+
     COLUMN *col;
+
     VALUE *val;
+
     double left_dval, right_dval, dval;
+
     char *rightbuf;
 
     /* Note: node types were previously checked by eval_node_type */
@@ -988,7 +1018,9 @@ double eval_node(SQLPNODE * nptr, int tab, int row, SQLPVALUE * value)
 int eval_node_type(SQLPNODE * nptr, int tab)
 {
     int left, right;
+
     int ccol;
+
     COLUMN *col = NULL;
 
     switch (nptr->node_type) {
