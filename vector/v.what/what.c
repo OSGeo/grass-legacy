@@ -265,8 +265,8 @@ int what(double east, double north, double maxdist, int width,
 		    fprintf(stdout, "Type=Area\nArea_height=%f\n", z);
 		}
 		else {
-		}
 		fprintf(stdout, _("Type: Area\nArea height: %f\n"), z);
+		}
 	    }
 	    else {
 		if (script) {
