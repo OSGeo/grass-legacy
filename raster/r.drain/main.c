@@ -202,7 +202,6 @@ int main(int argc, char **argv)
 
     if (opt4->answer) {
 	G_message(_("Outputting a vector path"));
-	/*vect = opt4->answer; */
 	if (G_legal_filename(opt4->answer) < 0)
 	    G_fatal_error(_("<%s> is an illegal file name"), opt4->answer);
 	/*G_ask_vector_new("",vect); */
@@ -239,7 +238,7 @@ int main(int argc, char **argv)
     G_get_window(&window);
     nrows = G_window_rows();
     ncols = G_window_cols();
-    if (vect) {
+    if (opt4->answer) {
 	Points = Vect_new_line_struct();
 	Cats = Vect_new_cats_struct();
     }
