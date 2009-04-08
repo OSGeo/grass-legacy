@@ -122,7 +122,7 @@ static int get_field_cat(struct Map_info *Map, char *layer, int *field,
 			 int *cat)
 {
     int i, type;
-    char field_name[DXf_BUF_SIZE];
+    char field_name[DXF_BUF_SIZE];
     char x = 0;
 
     /* make table name SQL compliant: Vect_default_field_info returns
