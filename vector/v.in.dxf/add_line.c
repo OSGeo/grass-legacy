@@ -14,6 +14,7 @@ int add_line(struct dxf_file *dxf, struct Map_info *Map)
 
     strcpy(layer, UNIDENTIFIED_LAYER);
 
+    zpnts[0] = zpnts[1] = 0.0;
     /* read in lines and process information until a 0 is read in */
     while ((code = dxf_get_code(dxf)) != 0) {
 	if (code == -2)
@@ -76,11 +77,8 @@ int add_line(struct dxf_file *dxf, struct Map_info *Map)
 	}
     }
 
-    if (arr_size == 2) {	/* have both start and stop */
-	if (!zflag)
-	    zpnts[0] = zpnts[1] = 0.0;
+    if (arr_size == 2)	/* have both start and stop */
 	write_line(Map, layer, arr_size);
-    }
 
     return 0;
 }
