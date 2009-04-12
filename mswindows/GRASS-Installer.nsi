@@ -2,14 +2,15 @@
 
 ;GRASS Installer for Windows
 ;Written by Marco Pasetti
-;Last Update: 13 September 2008
-;Mail to: marco.pasetti@alice.it 
+;Updated for OSGeo4W by Colin Nielsen
+;Last Update: 30 March 2009
+;Mail to: grass-dev@lists.osgeo.org 
 
 ;----------------------------------------------------------------------------------------------------------------------------
 
 ;Define the source path of the demolocation files
 
-!define DEMOLOCATION_PATH "c:\msys\local\src\grass-6.3.0\demolocation"
+!define DEMOLOCATION_PATH "c:\osgeo4w\usr\src\grass-6.4.0RC3\demolocation"
 
 ;Select if you are building a "Development Version" or a "Release Version" of the GRASS Installer
 ;Change the INSTALLER_TYPE variable to Release, Dev6 or Dev7
@@ -20,14 +21,14 @@
 
 ;Version variables
 
-!define RELEASE_VERSION_NUMBER "6.3.0"
-!define RELEASE_SVN_REVISION "31095"
-!define RELEASE_BINARY_REVISION "4"
-!define RELEASE_GRASS_COMMAND "grass63"
+!define RELEASE_VERSION_NUMBER "6.4.0RC3"
+!define RELEASE_SVN_REVISION "36599"
+!define RELEASE_BINARY_REVISION "1"
+!define RELEASE_GRASS_COMMAND "grass64"
 !define RELEASE_GRASS_BASE "GRASS"
 
 !define DEV6_VERSION_NUMBER "6-SVN"
-!define DEV6_SVN_REVISION ""
+!define DEV6_SVN_REVISION "36599"
 !define DEV6_BINARY_REVISION "1"
 !define DEV6_GRASS_COMMAND "grass64"
 !define DEV6_GRASS_BASE "GRASS-6-SVN"
@@ -480,15 +481,21 @@ Section "GRASS" SecGRASS
 	;Create the Desktop Shortcut
 	SetShellVarContext current
 	
-	CreateShortCut "$DESKTOP\GRASS ${VERSION_NUMBER}.lnk" "$INSTALL_DIR\${GRASS_COMMAND}.bat" "-tcltk"\
+	CreateShortCut "$DESKTOP\GRASS ${VERSION_NUMBER}.lnk" "$INSTALL_DIR\${GRASS_COMMAND}.bat" "-wxpython"\
 	"$INSTALL_DIR\icons\GRASS.ico" "" SW_SHOWNORMAL "" "Launch GRASS ${VERSION_NUMBER}"
+
+	CreateShortCut "$DESKTOP\GRASS ${VERSION_NUMBER} msys.lnk" "$INSTALL_DIR\msys\msys.bat" "/grass/bin/${GRASS_COMMAND} -wxpython"\
+	"$INSTALL_DIR\icons\GRASS.ico" "" SW_SHOWNORMAL "" "Launch GRASS ${VERSION_NUMBER} with msys Terminal"
  
 	;Create the Windows Start Menu Shortcuts
 	SetShellVarContext all
 	
 	CreateDirectory "$SMPROGRAMS\${GRASS_BASE}"
 	
-	CreateShortCut "$SMPROGRAMS\${GRASS_BASE}\GRASS ${VERSION_NUMBER}.lnk" "$INSTALL_DIR\${GRASS_COMMAND}.bat" "-tcltk"\
+	CreateShortCut "$SMPROGRAMS\${GRASS_BASE}\GRASS Old GUI.lnk" "$INSTALL_DIR\${GRASS_COMMAND}.bat" "-tcltk"\
+	"$INSTALL_DIR\icons\GRASS.ico" "" SW_SHOWNORMAL "" "Launch GRASS ${VERSION_NUMBER}"
+
+	CreateShortCut "$SMPROGRAMS\${GRASS_BASE}\GRASS ${VERSION_NUMBER}.lnk" "$INSTALL_DIR\${GRASS_COMMAND}.bat" "-wxpython"\
 	"$INSTALL_DIR\icons\GRASS.ico" "" SW_SHOWNORMAL "" "Launch GRASS ${VERSION_NUMBER}"
 
 	CreateShortCut "$SMPROGRAMS\${GRASS_BASE}\GRASS Command Line.lnk" "$INSTALL_DIR\${GRASS_COMMAND}.bat" "-text"\
@@ -500,6 +507,9 @@ Section "GRASS" SecGRASS
 	CreateShortCut "$SMPROGRAMS\${GRASS_BASE}\GRASS Web Site.lnk" "$INSTALL_DIR\GRASS-WebSite.url" ""\
 	"$INSTALL_DIR\icons\GRASS_Web.ico" "" SW_SHOWNORMAL "" "Visit the GRASS Web Site"
 	
+	CreateShortCut "$SMPROGRAMS\${GRASS_BASE}\GRASS ${VERSION_NUMBER} msys.lnk" "$INSTALL_DIR\msys\msys.bat" "/grass/bin/${GRASS_COMMAND} -wxpython"\
+	"$INSTALL_DIR\icons\GRASS.ico" "" SW_SHOWNORMAL "" "Launch GRASS ${VERSION_NUMBER} with msys Terminal"
+ 
 	!if ${INSTALLER_TYPE} == "Release"
 		CreateShortCut "$SMPROGRAMS\${GRASS_BASE}\Release Notes.lnk" "$INSTALL_DIR\WinGRASS-README.url" ""\
 		"$INSTALL_DIR\icons\WinGRASS.ico" "" SW_SHOWNORMAL "" "Visit the WinGRASS Project Web Page"
@@ -549,6 +559,9 @@ Section "GRASS" SecGRASS
 	FileWrite $0 'rem Path to the proj files (notably the epsg projection list)$\r$\n'	
 	FileWrite $0 'set GRASS_PROJSHARE=%GRASSDIR%\proj$\r$\n'
 	FileWrite $0 '$\r$\n'
+	FileWrite $0 'rem Path to the python directory$\r$\n'	
+	FileWrite $0 'set PYTHONHOME=%GRASSDIR%\Python25$\r$\n'
+	FileWrite $0 '$\r$\n'
 	FileWrite $0 'set WINGISBASE=%GRASSDIR%$\r$\n'
 	FileWrite $0 '"%WINGISBASE%\etc\init.bat" %*'
 	FileClose $0
@@ -597,9 +610,9 @@ Section "GRASS" SecGRASS
 	CreateDirectory $INSTALL_DIR\msys\home
 	CreateDirectory $INSTALL_DIR\msys\home\$USERNAME
   
-	;create the $INSTALL_DIR\msys\home\$USERNAME\grass_command
+	;create the $INSTALL_DIR\bin grass_command
 	ClearErrors
-	FileOpen $0 $INSTALL_DIR\msys\home\$USERNAME\${GRASS_COMMAND} w
+	FileOpen $0 $INSTALL_DIR\bin\${GRASS_COMMAND} w
 	IfErrors done_create_grass_command
 	FileWrite $0 '#! /bin/sh$\r$\n'
 	FileWrite $0 '#########################################################################$\r$\n'
@@ -643,9 +656,26 @@ Section "GRASS" SecGRASS
 	FileWrite $0 'PATH="$$GISBASE/tcl-tk/bin:$$GISBASE/sqlite/bin:$$GISBASE/gpsbabel:$$PATH"$\r$\n'
 	FileWrite $0 'export PATH$\r$\n'
 	FileWrite $0 '$\r$\n'
+	FileWrite $0 '# Set the PYTHONPATH variable$\r$\n'
+	FileWrite $0 'PYTHONPATH="$$GISBASE/etc/python:$$GISBASE/Python25:$$PYTHONPATH"$\r$\n'
+	FileWrite $0 'export PYTHONPATH$\r$\n'
+	FileWrite $0 'PYTHONHOME="$INSTALL_DIR\Python25"$\r$\n'
+	FileWrite $0 'export PYTHONHOME$\r$\n'
+	FileWrite $0 '$\r$\n'
 	FileWrite $0 'exec "$$GISBASE/etc/Init.sh" "$$@"'
 	FileClose $0
 	done_create_grass_command:
+
+	;Create the $INSTALL_DIR\msys\grass link directory
+	CreateDirectory $INSTALL_DIR\msys\grass
+
+	;create the $INSTALL_DIR\msys\etc\fstab with the main grass dir mount info
+	ClearErrors
+	FileOpen $0 $INSTALL_DIR\msys\etc\fstab w
+	IfErrors done_create_fstab
+	FileWrite $0 '$INSTALL_DIR   /grass$\r$\n'
+	FileClose $0
+	done_create_fstab:
 	
 	;Set the Unix-Like GIS_DATABASE Path
 	Var /GLOBAL UNIX_LIKE_GIS_DATABASE_PATH
@@ -785,8 +815,10 @@ Section "Uninstall"
 	RMDir /r "$INSTDIR\icons"
 	RMDir /r "$INSTDIR\include"
 	RMDir /r "$INSTDIR\lib"
+	RMDir /r "$INSTDIR\locale"
 	RMDir /r "$INSTDIR\msys"
 	RMDir /r "$INSTDIR\proj"
+	RMDir /r "$INSTDIR\Python25"
 	RMDir /r "$INSTDIR\scripts"
 	RMDir /r "$INSTDIR\sqlite"
 	RMDir /r "$INSTDIR\tcl-tk"
@@ -797,6 +829,7 @@ Section "Uninstall"
 	;remove the Desktop ShortCut
 	SetShellVarContext current
 	Delete "$DESKTOP\GRASS ${VERSION_NUMBER}.lnk"
+	Delete "$DESKTOP\GRASS ${VERSION_NUMBER} msys.lnk"
 	
 	;remove the Programs Start ShortCuts
 	SetShellVarContext all
