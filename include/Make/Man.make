@@ -35,6 +35,7 @@ manmulti:
 else
 
 $(MANDIR)/$(PGM).${SECT}: $(MANSRC)
+	$(MKDIR) $(MANDIR)
 	$(HTML2MAN) $< $@ $(SECT)
 
 # man rules for cmd commands
