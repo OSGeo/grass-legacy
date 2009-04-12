@@ -10,7 +10,7 @@
 
 ;Define the source path of the demolocation files
 
-!define DEMOLOCATION_PATH "c:\osgeo4w\usr\src\grass-6.4.0RC3\demolocation"
+!define DEMOLOCATION_PATH "c:\osgeo4w\usr\src\grass-6.4.0RC4\demolocation"
 
 ;Select if you are building a "Development Version" or a "Release Version" of the GRASS Installer
 ;Change the INSTALLER_TYPE variable to Release, Dev6 or Dev7
@@ -21,7 +21,7 @@
 
 ;Version variables
 
-!define RELEASE_VERSION_NUMBER "6.4.0RC3"
+!define RELEASE_VERSION_NUMBER "6.4.0RC4"
 !define RELEASE_SVN_REVISION "36599"
 !define RELEASE_BINARY_REVISION "1"
 !define RELEASE_GRASS_COMMAND "grass64"
@@ -30,7 +30,7 @@
 !define DEV6_VERSION_NUMBER "6-SVN"
 !define DEV6_SVN_REVISION "36599"
 !define DEV6_BINARY_REVISION "1"
-!define DEV6_GRASS_COMMAND "grass64"
+!define DEV6_GRASS_COMMAND "grass65"
 !define DEV6_GRASS_BASE "GRASS-6-SVN"
 
 !define DEV7_VERSION_NUMBER "7-SVN"
