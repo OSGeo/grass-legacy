@@ -10,8 +10,8 @@ set GRASS_7_DEV_PACKAGE_DIR=.\GRASS-7-Dev-Package
 
 set OSGEO4W_DIR=c:\osgeo4w
 
-set GRASS_RELEASE_INSTALL_FOLDER=%OSGEO4W_DIR%\apps\grass\grass-6.4.0RC3
-set GRASS_6_DEV_INSTALL_FOLDER=%OSGEO4W_DIR%\apps\grass\grass-6.4.0svn
+set GRASS_RELEASE_INSTALL_FOLDER=%OSGEO4W_DIR%\apps\grass\grass-6.4.0RC4
+set GRASS_6_DEV_INSTALL_FOLDER=%OSGEO4W_DIR%\apps\grass\grass-6.5.svn
 set GRASS_7_DEV_INSTALL_FOLDER=%OSGEO4W_DIR%\apps\grass\grass-7.0.svn
 
 @echo -----------------------------------------------------------------------------------------------------------------------
