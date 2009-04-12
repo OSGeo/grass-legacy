@@ -42,3 +42,7 @@ $(STRINGDIR)/$(PGM)_to_translate.c: $(PGM)
 
 scriptstrings: $(STRINGDIR)/$(PGM)_to_translate.c
 
+install:
+	$(INSTALL) $(ARCH_DISTDIR)/scripts/$(PGM)$(EXE) $(INST_DIR)/scripts/
+	$(INSTALL_DATA) $(HTMLDIR)/$(PGM).html $(INST_DIR)/docs/html/
+	$(INSTALL_DATA) $(ARCH_DISTDIR)/man/man1/$(PGM).1 $(INST_DIR)/man/man1/
