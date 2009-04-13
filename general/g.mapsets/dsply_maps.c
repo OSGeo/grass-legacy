@@ -1,16 +1,17 @@
 #include <string.h>
 #include <stdio.h>
-#include "externs.h"
+#include <grass/glocale.h>
+#include "local_proto.h"
 
 static int display1(void);
-static int display2(void);
+static int display2(const char *fs);
 
-int display_available_mapsets(int verbose)
+int display_available_mapsets(const char* fs)
 {
-    if (verbose)
+    if (!fs)
 	display1();
     else
-	display2();
+	display2(fs);
 
     return 0;
 }
@@ -19,7 +20,7 @@ static int display1(void)
 {
     int n;
 
-    fprintf(stdout, "Available mapsets:");
+    fprintf(stdout, _("Available mapsets:"));
     for (n = 0; n < nmapsets; n++) {
 	if (n % 4)
 	    fprintf(stdout, " ");
@@ -29,13 +30,13 @@ static int display1(void)
     }
     fprintf(stdout, "\n");
     if (nmapsets == 0)
-	fprintf(stdout, "** no mapsets **\n");
+	fprintf(stdout, _("** no mapsets **\n"));
     fprintf(stdout, "\n");
 
     return 0;
 }
 
-static int display2(void)
+static int display2(const char *fs)
 {
     int nleft, len, n;
     char *name;
@@ -47,7 +48,9 @@ static int display2(void)
 	    fprintf(stdout, "\n");
 	    nleft = 78;
 	}
-	fprintf(stdout, "%s ", name);
+	fprintf(stdout, "%s", name);
+	if (n < nmapsets-1)
+	    fprintf(stdout, "%s", fs);
 	nleft -= (len + 1);
     }
     fprintf(stdout, "\n");
