@@ -332,7 +332,6 @@ int Vect_attach_centroids(struct Map_info *Map, BOUND_BOX * box)
     static int first = 1;
     static struct ilist *List;
     P_AREA *Area;
-    P_NODE *Node;
     P_LINE *Line;
     struct Plus_head *plus;
 
@@ -378,7 +377,6 @@ int Vect_attach_centroids(struct Map_info *Map, BOUND_BOX * box)
 
 	centr = List->value[i];
 	Line = plus->Line[centr];
-	Node = plus->Node[Line->N1];
 
 	/* only attach unregistered and duplicate centroids because 
 	 * 1) all properly attached centroids are properly attached, really! Don't touch.
@@ -390,7 +388,7 @@ int Vect_attach_centroids(struct Map_info *Map, BOUND_BOX * box)
 
 	orig_area = Line->left;
 
-	sel_area = Vect_find_area(Map, Node->x, Node->y);
+	sel_area = Vect_find_area(Map, Line->E, Line->N);
 	G_debug(3, "  centroid %d is in area %d", centr, sel_area);
 	if (sel_area > 0) {
 	    Area = plus->Area[sel_area];
@@ -398,17 +396,20 @@ int Vect_attach_centroids(struct Map_info *Map, BOUND_BOX * box)
 		G_debug(3, "  first centroid -> attach to area");
 		Area->centroid = centr;
 		Line->left = sel_area;
+		
+		if (sel_area != orig_area && plus->do_uplist)
+		    dig_line_add_updated(plus, centr);
 	    }
 	    else if (Area->centroid != centr) {	/* duplicate centroid */
 		/* Note: it cannot happen that Area->centroid == centr, because the centroid
 		 * was not registered or a duplicate */
 		G_debug(3, "  duplicate centroid -> do not attach to area");
 		Line->left = -sel_area;
+
+		if (-sel_area != orig_area && plus->do_uplist)
+		    dig_line_add_updated(plus, centr);
 	    }
 	}
-
-	if (sel_area != orig_area && plus->do_uplist)
-	    dig_line_add_updated(plus, centr);
     }
 
     return 0;
@@ -436,6 +437,7 @@ int Vect_build_nat(struct Map_info *Map, int build)
     P_AREA *Area;
     BOUND_BOX box;
     struct ilist *List;
+    time_t start, end;
 
     G_debug(3, "Vect_build_nat() build = %d", build);
 
@@ -509,6 +511,9 @@ int Vect_build_nat(struct Map_info *Map, int build)
 
 	/* register lines, create nodes */
 	Vect_rewind(Map);
+
+	time(&start);
+    
 	G_message(_("Registering primitives..."));
 	i = 1;
 	npoints = 0;
@@ -566,6 +571,9 @@ int Vect_build_nat(struct Map_info *Map, int build)
 	G_message(_("%d vertices registered"), npoints);
 
 	plus->built = GV_BUILD_BASE;
+
+	time(&end);
+	G_message("primitives: %f", difftime(end, start));
     }
 
     if (build < GV_BUILD_AREAS)
@@ -575,6 +583,7 @@ int Vect_build_nat(struct Map_info *Map, int build)
 	/* Build areas */
 	/* Go through all bundaries and try to build area for both sides */
 	G_message(_("Building areas..."));
+	time(&start);
 	for (i = 1; i <= plus->n_lines; i++) {
 	    G_percent(i, plus->n_lines, 1);
 
@@ -600,6 +609,9 @@ int Vect_build_nat(struct Map_info *Map, int build)
 	G_message(_("%d areas built"), plus->n_areas);
 	G_message(_("%d isles built"), plus->n_isles);
 	plus->built = GV_BUILD_AREAS;
+
+	time(&end);
+	G_message("areas: %f", difftime(end, start));
     }
 
     if (build < GV_BUILD_ATTACH_ISLES)
@@ -608,11 +620,14 @@ int Vect_build_nat(struct Map_info *Map, int build)
     /* Attach isles to areas */
     if (plus->built < GV_BUILD_ATTACH_ISLES) {
 	G_message(_("Attaching islands..."));
+	time(&start);
 	for (i = 1; i <= plus->n_isles; i++) {
 	    G_percent(i, plus->n_isles, 1);
 	    Vect_attach_isle(Map, i);
 	}
 	plus->built = GV_BUILD_ATTACH_ISLES;
+	time(&end);
+	G_message("isles: %f", difftime(end, start));
     }
 
     if (build < GV_BUILD_CENTROIDS)
@@ -623,6 +638,7 @@ int Vect_build_nat(struct Map_info *Map, int build)
 	int nlines;
 
 	G_message(_("Attaching centroids..."));
+	time(&start);
 
 	nlines = Vect_get_num_lines(Map);
 	for (line = 1; line <= nlines; line++) {
@@ -654,9 +670,12 @@ int Vect_build_nat(struct Map_info *Map, int build)
 	    }
 	}
 	plus->built = GV_BUILD_CENTROIDS;
+	time(&end);
+	G_message("centroids: %f", difftime(end, start));
     }
 
     /* Add areas to category index */
+    time(&start);
     for (area = 1; area <= plus->n_areas; area++) {
 	int c;
 
@@ -675,6 +694,8 @@ int Vect_build_nat(struct Map_info *Map, int build)
 	if (plus->Area[area]->centroid == 0 || Cats->n_cats == 0)	/* no centroid or no cats */
 	    dig_cidx_add_cat(plus, 0, 0, area, GV_AREA);
     }
+    time(&end);
+    G_message("areas to cidx: %f", difftime(end, start));
 
     return 1;
 }
