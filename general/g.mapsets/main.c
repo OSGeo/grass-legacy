@@ -7,9 +7,11 @@
  *               Glynn Clements <glynn gclements.plus.com>
  *               Hamish Bowman <hamish_nospam yahoo.com>, 
  *               Markus Neteler <neteler itc.it>, 
- *               Moritz Lennert <mlennert club.worldonline.be>
+ *               Moritz Lennert <mlennert club.worldonline.be>,
+ *               Martin Landa <landa.martin gmail.com>,
+ *               Huidae Cho <grass4u gmail.com>
  * PURPOSE:      set current mapset path
- * COPYRIGHT:    (C) 1994-2008 by the GRASS Development Team
+ * COPYRIGHT:    (C) 1994-2009 by the GRASS Development Team
  *
  *               This program is free software under the GNU General Public
  *               License (>=v2). Read the file COPYING that comes with GRASS
@@ -17,7 +19,7 @@
  *
  *****************************************************************************/
 
-#define MAIN
+#define _MAIN_C_
 #include <string.h>
 #include <stdlib.h>
 #include <unistd.h>
@@ -25,26 +27,31 @@
 #include <grass/spawn.h>
 #include <grass/glocale.h>
 #include "local_proto.h"
-#include "externs.h"
 
-static char Path[GPATH_MAX];
+static void append_mapset(char **, const char *);
 
 int main(int argc, char *argv[])
 {
     int n;
     int i;
     int skip;
-    char *cur_mapset;
+    const char *cur_mapset;
     char **ptr;
     char **tokens;
     int no_tokens;
     FILE *fp;
     char path[GPATH_MAX];
-    struct GModule *module;
-    struct Option *opt1, *opt2, *opt3;
-    struct Flag *print;
-    struct Flag *list;
-    struct Flag *tcl;
+    char *Path;
+    int nchoices;
+
+    struct GModule *module;    
+    struct _opt {
+	struct Option *mapset, *add, *remove;
+	struct Option *fs;
+	struct Flag *print;
+	struct Flag *list;
+	struct Flag *dialog;
+    } opt;
 
     G_gisinit(argv[0]);
 
@@ -55,84 +62,88 @@ int main(int argc, char *argv[])
 	  "search path, affecting the user's access to data existing "
 	  "under the other GRASS mapsets in the current location.");
 
-    opt1 = G_define_option();
-    opt1->key = "mapset";
-    opt1->type = TYPE_STRING;
-    opt1->required = NO;
-    opt1->multiple = YES;
-    opt1->description = _("Name(s) of existing mapset(s)");
+    opt.mapset = G_define_option();
+    opt.mapset->key = "mapset";
+    opt.mapset->type = TYPE_STRING;
+    opt.mapset->required = NO;
+    opt.mapset->multiple = YES;
+    opt.mapset->description = _("Name(s) of existing mapset(s)");
 
-    opt2 = G_define_option();
-    opt2->key = "addmapset";
-    opt2->type = TYPE_STRING;
-    opt2->required = NO;
-    opt2->multiple = YES;
-    opt2->description =
+    opt.add = G_define_option();
+    opt.add->key = "addmapset";
+    opt.add->type = TYPE_STRING;
+    opt.add->required = NO;
+    opt.add->multiple = YES;
+    opt.add->description =
 	_("Name(s) of existing mapset(s) to add to search list");
 
-    opt3 = G_define_option();
-    opt3->key = "removemapset";
-    opt3->type = TYPE_STRING;
-    opt3->required = NO;
-    opt3->multiple = YES;
-    opt3->description =
+    opt.remove = G_define_option();
+    opt.remove->key = "removemapset";
+    opt.remove->type = TYPE_STRING;
+    opt.remove->required = NO;
+    opt.remove->multiple = YES;
+    opt.remove->description =
 	_("Name(s) of existing mapset(s) to remove from search list");
+    
+    opt.fs = G_define_standard_option(G_OPT_F_SEP);
+    opt.fs->answer = " ";
+    
+    opt.list = G_define_flag();
+    opt.list->key = 'l';
+    opt.list->description = _("List all available mapsets");
 
-    list = G_define_flag();
-    list->key = 'l';
-    list->description = _("List all available mapsets");
+    opt.print = G_define_flag();
+    opt.print->key = 'p';
+    opt.print->description = _("Print current mapset search path");
 
-    print = G_define_flag();
-    print->key = 'p';
-    print->description = _("Print current mapset search path");
+    opt.dialog = G_define_flag();
+    opt.dialog->key = 's';
+    opt.dialog->description = _("Show mapset selection dialog");
 
-    tcl = G_define_flag();
-    tcl->key = 's';
-    tcl->description = _("Show mapset selection dialog");
-
-    Path[0] = '\0';
+    Path = NULL;
+    nmapsets = 0;
     nchoices = 0;
 
     if (G_parser(argc, argv))
 	exit(EXIT_FAILURE);
 
-    if (list->answer) {
+    if (opt.list->answer) {
 	get_available_mapsets();
-	display_available_mapsets(0);
+	display_available_mapsets(opt.fs->answer);
     }
 
-    if (tcl->answer) {
+    if (opt.dialog->answer) {
 	sprintf(path, "%s/etc/g.mapsets.tcl", G_gisbase());
 	G_spawn(path, "g.mapsets.tcl", NULL);
     }
 
-    if (opt1->answer) {
-	for (ptr = opt1->answers; *ptr != NULL; ptr++) {
-	    char *mapset;
+    if (opt.mapset->answer) {
+	for (ptr = opt.mapset->answers; *ptr != NULL; ptr++) {
+	    const char *mapset;
 
 	    mapset = *ptr;
 	    if (G__mapset_permissions(mapset) < 0)
 		G_fatal_error(_("Mapset <%s> not found"), mapset);
 	    nchoices++;
-	    strcat(Path, mapset);
-	    strcat(Path, " ");
+	    append_mapset(&Path, mapset);
 	}
     }
 
     /* add to existing search path */
-    if (opt2->answer) {
-	char *oldname;
+    if (opt.add->answer) {
+	const char *oldname;
 
-	Path[0] = '\0';
-
-	/* read existing mapsets from SEARCH_PATH */
-	for (n = 0; (oldname = G__mapset_name(n)); n++) {
-	    strcat(Path, oldname);
-	    strcat(Path, " ");
+	if (Path) {
+	    G_free(Path);
+	    Path = NULL;
 	}
 
+	/* read existing mapsets from SEARCH_PATH */
+	for (n = 0; (oldname = G__mapset_name(n)); n++)
+	    append_mapset(&Path, oldname);
+
 	/* fetch and add new mapsets from param list */
-	for (ptr = opt2->answers; *ptr != NULL; ptr++) {
+	for (ptr = opt.add->answers; *ptr != NULL; ptr++) {
 	    char *mapset;
 
 	    mapset = *ptr;
@@ -147,22 +158,24 @@ int main(int argc, char *argv[])
 				  mapset);
 
 	    nchoices++;
-	    strcat(Path, mapset);
-	    strcat(Path, " ");
+	    append_mapset(&Path, mapset);
 	}
     }
 
     /* remove from existing search path */
-    if (opt3->answer) {
-	char *oldname;
+    if (opt.remove->answer) {
+	const char *oldname;
 
-	Path[0] = '\0';
+	if (Path) {
+	    G_free(Path);
+	    Path = NULL;
+	}
 
 	/* read existing mapsets from SEARCH_PATH */
 	for (n = 0; (oldname = G__mapset_name(n)); n++) {
 	    int found = 0;
 
-	    for (ptr = opt3->answers; *ptr; ptr++)
+	    for (ptr = opt.remove->answers; *ptr; ptr++)
 		if (strcmp(oldname, *ptr) == 0)
 		    found = 1;
 
@@ -173,15 +186,26 @@ int main(int argc, char *argv[])
 	    }
 
 	    nchoices++;
-	    strcat(Path, oldname);
-	    strcat(Path, " ");
+	    append_mapset(&Path, oldname);
 	}
     }
 
     /* stuffem sets nchoices */
 
     if (nchoices == 0) {
-	goto DISPLAY;
+	if (opt.print->answer)
+	    display_mapset_path(opt.fs->answer);
+
+	if (Path)
+	    G_free(Path);
+
+	if (nmapsets) {
+	    for(nmapsets--; nmapsets >= 0; nmapsets--)
+		G_free(mapset_name[nmapsets]);
+	    G_free(mapset_name);
+	}
+
+	exit(EXIT_SUCCESS);
     }
 
     /* note I'm assuming that mapsets cannot have ' 's in them */
@@ -230,9 +254,26 @@ int main(int argc, char *argv[])
     fclose(fp);
     G_free_tokens(tokens);
 
-  DISPLAY:
-    if (print->answer)
-	display_mapset_path(0);
+    if (Path)
+	G_free(Path);
+
+    if (nmapsets) {
+	for(nmapsets--; nmapsets >= 0; nmapsets--)
+	    G_free(mapset_name[nmapsets]);
+	G_free(mapset_name);
+    }
 
     exit(EXIT_SUCCESS);
+}
+
+static void append_mapset(char **path, const char *mapset)
+{
+    int len = (*path == NULL ? 0 : strlen(*path));
+
+    *path = (char *)G_realloc(*path, len + strlen(mapset) + 2);
+    if (!len)
+        *path[0] = '\0';
+    strcat(*path, mapset);
+    strcat(*path, " ");
+    return;
 }
