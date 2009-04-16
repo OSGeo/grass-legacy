@@ -19,7 +19,7 @@ int what(double east, double north, double maxdist, int width,
 {
     int type;
     char east_buf[40], north_buf[40];
-    double sq_meters;
+    double sq_meters, sqm_to_sqft, acres, hectares, sq_miles;
     double z = 0, l = 0;
     int notty = 0;
     int getz = 0;
@@ -35,6 +35,12 @@ int what(double east, double north, double maxdist, int width,
     Points = Vect_new_line_struct();
     Cats = Vect_new_cats_struct();
     db_init_string(&html);
+
+    /* always use plain feet not US survey ft */
+    /*  if you really want USfeet, try G_database_units_to_meters_factor()
+	here, but then watch that sq_miles is not affected too */
+    sqm_to_sqft = 1 / ( 0.0254 * 0.0254 * 12 * 12 );
+
 
     for (i = 0; i < nvects; i++) {
 
@@ -209,7 +215,16 @@ int what(double east, double north, double maxdist, int width,
 	    else {
 		fprintf(stdout, _("Type: Area\n"));
 	    }
+
+
 	    sq_meters = Vect_get_area_area(&Map[i], area);
+	    hectares  = sq_meters / 10000.;
+	    /* 1 acre = 1 chain(66') * 1 furlong(10 chains),
+		or if you prefer ( 5280 ft/mi ^2 / 640 acre/sq mi ) */
+	    acres = (sq_meters * sqm_to_sqft) / (66 * 660);
+	    sq_miles = acres / 640.;
+
+
 	    if (topo) {
 		int nisles, isleidx, isle, isle_area;
 
@@ -232,18 +247,16 @@ int what(double east, double north, double maxdist, int width,
 	    }
 	    else {
 		fprintf(stdout, _("Sq Meters: %.3f\nHectares: %.3f\n"),
-			sq_meters, (sq_meters / 10000.));
+			sq_meters, hectares);
 		fprintf(stdout, _("Acres: %.3f\nSq Miles: %.4f\n"),
-			((sq_meters * 10.763649) / 43560.),
-			((sq_meters * 10.763649) / 43560.) / 640.);
+			acres, sq_miles);
 		if (notty) {
 		    fprintf(stderr,
 			    _("Sq Meters: %.3f\nHectares: %.3f\n"),
-			    sq_meters, (sq_meters / 10000.));
+			    sq_meters, hectares);
 		    fprintf(stderr,
 			    _("Acres: %.3f\nSq Miles: %.4f\n"),
-			    ((sq_meters * 10.763649) / 43560.),
-			    ((sq_meters * 10.763649) / 43560.) / 640.);
+			    acres, sq_miles);
 		}
 		nlines += 3;
 	    }
