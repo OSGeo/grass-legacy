@@ -1,4 +1,3 @@
-
 MODULE_TOPDIR = ../..
 
 PGM = g.mapsets
