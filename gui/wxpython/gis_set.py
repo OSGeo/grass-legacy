@@ -608,6 +608,10 @@ class GRASSStartup(wx.Frame):
 
         disabled = []
         idx = 0
+        try:
+            locationName = self.listOfLocations[self.lblocations.GetSelection()]
+        except IndexError:
+            locationName = ''
         
         for mapset in self.listOfMapsets:
             if mapset not in self.listOfMapsetsSelectable:
