@@ -686,7 +686,10 @@ class Settings:
             elif value == 'None':
                 value = None
             elif ':' in value: # -> color
-                value = tuple(map(int, value.split(':')))
+                try:
+                    value = tuple(map(int, value.split(':')))
+                except ValueError: # -> string
+                    pass
             else:
                 try:
                     value = int(value)
