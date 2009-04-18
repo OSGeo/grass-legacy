@@ -621,7 +621,7 @@ class ItemList(wx.ListCtrl,
         """
         if str == '':
             self.Populate(self.sourceData)
-            return None
+            return []
 
         data = []
         str = str.lower()
@@ -638,7 +638,7 @@ class ItemList(wx.ListCtrl,
         if len(data) > 0:
             return data[0]
         else:
-            return None
+            return []
 
 class ProjTypePage(TitledPage):
     """
