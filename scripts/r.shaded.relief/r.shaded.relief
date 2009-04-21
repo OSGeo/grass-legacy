@@ -129,11 +129,11 @@ unset LC_ALL
 LC_NUMERIC=C
 export LC_NUMERIC
 
-alt=$GIS_OPT_ALTITUDE
-az=$GIS_OPT_AZIMUTH
-elev=$GIS_OPT_MAP
-zmult=$GIS_OPT_ZMULT
-scale=$GIS_OPT_SCALE
+alt="$GIS_OPT_ALTITUDE"
+az="$GIS_OPT_AZIMUTH"
+elev="$GIS_OPT_MAP"
+zmult="$GIS_OPT_ZMULT"
+scale="$GIS_OPT_SCALE"
 
 eval `g.findfile element=cell file=$elev`
 if [ -z "$name" ] ; then
@@ -150,6 +150,16 @@ if [ -z "$GIS_OPT_SHADEDMAP" ]; then
     ELEVSHADE="${elev%%@*}.shade"
 else
     ELEVSHADE="$GIS_OPT_SHADEDMAP"
+fi
+
+# test for overwrite as r.mapcalc doesn't
+eval `g.findfile element=cell file="$ELEVSHADE" mapset=.`
+if [ -n "$name" ] ; then
+   # map already exists
+   if [ -z "$GRASS_OVERWRITE" ] || [ "$GRASS_OVERWRITE" -ne 1 ] ; then
+      g.message -e "option <shadedmap>: <$ELEVSHADE> exists."
+      exit 1
+   fi
 fi
 
 # allow - and . chars in the map name
