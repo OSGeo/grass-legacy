@@ -41,7 +41,7 @@ P_NODE *dig_alloc_node()
 {
     P_NODE *Node;
 
-    Node = (P_NODE *) malloc(sizeof(P_NODE));
+    Node = (P_NODE *) G_malloc(sizeof(P_NODE));
     if (Node == NULL)
 	return NULL;
 
@@ -69,12 +69,12 @@ int dig_node_alloc_line(P_NODE * node, int add)
 
     num = node->n_lines + add;
 
-    p = realloc(node->lines, num * sizeof(plus_t));
+    p = G_realloc(node->lines, num * sizeof(plus_t));
     if (p == NULL)
 	return -1;
     node->lines = (plus_t *) p;
 
-    p = realloc(node->angles, num * sizeof(float));
+    p = G_realloc(node->angles, num * sizeof(float));
     if (p == NULL)
 	return -1;
     node->angles = (float *)p;
@@ -96,7 +96,7 @@ int dig_alloc_nodes(struct Plus_head *Plus, int add)
     char *p;
 
     size = Plus->alloc_nodes + 1 + add;
-    p = realloc(Plus->Node, size * sizeof(P_NODE *));
+    p = G_realloc(Plus->Node, size * sizeof(P_NODE *));
     if (p == NULL)
 	return -1;
 
@@ -111,7 +111,7 @@ P_LINE *dig_alloc_line()
 {
     P_LINE *Line;
 
-    Line = (P_LINE *) malloc(sizeof(P_LINE));
+    Line = (P_LINE *) G_malloc(sizeof(P_LINE));
     if (Line == NULL)
 	return NULL;
 
@@ -130,7 +130,7 @@ int dig_alloc_lines(struct Plus_head *Plus, int add)
     char *p;
 
     size = Plus->alloc_lines + 1 + add;
-    p = realloc(Plus->Line, size * sizeof(P_LINE *));
+    p = G_realloc(Plus->Line, size * sizeof(P_LINE *));
     if (p == NULL)
 	return -1;
 
@@ -152,7 +152,7 @@ int dig_alloc_areas(struct Plus_head *Plus, int add)
     char *p;
 
     size = Plus->alloc_areas + 1 + add;
-    p = realloc(Plus->Area, size * sizeof(P_AREA *));
+    p = G_realloc(Plus->Area, size * sizeof(P_AREA *));
     if (p == NULL)
 	return -1;
 
@@ -175,7 +175,7 @@ int dig_alloc_isles(struct Plus_head *Plus, int add)
 
     G_debug(3, "dig_alloc_isle():");
     size = Plus->alloc_isles + 1 + add;
-    p = realloc(Plus->Isle, size * sizeof(P_ISLE *));
+    p = G_realloc(Plus->Isle, size * sizeof(P_ISLE *));
     if (p == NULL)
 	return -1;
 
@@ -190,7 +190,7 @@ P_AREA *dig_alloc_area()
 {
     P_AREA *Area;
 
-    Area = (P_AREA *) malloc(sizeof(P_AREA));
+    Area = (P_AREA *) G_malloc(sizeof(P_AREA));
     if (Area == NULL)
 	return NULL;
 
@@ -212,7 +212,7 @@ P_ISLE *dig_alloc_isle()
 {
     P_ISLE *Isle;
 
-    Isle = (P_ISLE *) malloc(sizeof(P_ISLE));
+    Isle = (P_ISLE *) G_malloc(sizeof(P_ISLE));
     if (Isle == NULL)
 	return NULL;
 
@@ -307,7 +307,7 @@ int dig_area_alloc_line(P_AREA * area, int add)
 
     num = area->alloc_lines + add;
 
-    p = realloc(area->lines, num * sizeof(plus_t));
+    p = G_realloc(area->lines, num * sizeof(plus_t));
     if (p == NULL)
 	return -1;
     area->lines = (plus_t *) p;
@@ -330,7 +330,7 @@ int dig_area_alloc_isle(P_AREA * area, int add)
     G_debug(5, "dig_area_alloc_isle(): add = %d", add);
     num = area->alloc_isles + add;
 
-    p = realloc(area->isles, num * sizeof(plus_t));
+    p = G_realloc(area->isles, num * sizeof(plus_t));
     if (p == NULL)
 	return -1;
     area->isles = (plus_t *) p;
@@ -353,7 +353,7 @@ int dig_isle_alloc_line(P_ISLE * isle, int add)
     G_debug(3, "dig_isle_alloc_line():");
     num = isle->alloc_lines + add;
 
-    p = realloc(isle->lines, num * sizeof(plus_t));
+    p = G_realloc(isle->lines, num * sizeof(plus_t));
     if (p == NULL)
 	return -1;
     isle->lines = (plus_t *) p;
