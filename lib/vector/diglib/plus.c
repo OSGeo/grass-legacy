@@ -117,12 +117,12 @@ void dig_free_plus_nodes(struct Plus_head *Plus)
 		continue;
 
 	    if (Node->alloc_lines > 0) {
-		free(Node->lines);
-		free(Node->angles);
+		G_free(Node->lines);
+		G_free(Node->angles);
 	    }
-	    free(Node);
+	    G_free(Node);
 	}
-	free(Plus->Node);
+	G_free(Plus->Node);
     }
     Plus->Node = NULL;
     Plus->n_nodes = 0;
@@ -148,9 +148,9 @@ void dig_free_plus_lines(struct Plus_head *Plus)
 	    if (Line == NULL)
 		continue;
 
-	    free(Line);
+	    G_free(Line);
 	}
-	free(Plus->Line);
+	G_free(Plus->Line);
     }
 
     Plus->Line = NULL;
@@ -185,14 +185,14 @@ void dig_free_plus_areas(struct Plus_head *Plus)
 		continue;
 
 	    if (Area->alloc_lines > 0)
-		free(Area->lines);
+		G_free(Area->lines);
 
 	    if (Area->alloc_isles > 0)
-		free(Area->isles);
+		G_free(Area->isles);
 
-	    free(Area);
+	    G_free(Area);
 	}
-	free(Plus->Area);
+	G_free(Plus->Area);
     }
     Plus->Area = NULL;
     Plus->n_areas = 0;
@@ -219,11 +219,11 @@ void dig_free_plus_isles(struct Plus_head *Plus)
 		continue;
 
 	    if (Isle->alloc_lines > 0)
-		free(Isle->lines);
+		G_free(Isle->lines);
 
-	    free(Isle);
+	    G_free(Isle);
 	}
-	free(Plus->Isle);
+	G_free(Plus->Isle);
     }
 
     Plus->Isle = NULL;
