@@ -46,6 +46,7 @@ modbuild: ReadMe.rtf
 	@# html.make needs a little change
 	sed -e 's,GISRC=$$(RUN_GISBASE),GISRC=/Library/GRASS/$(GRASS_VERSION_MAJOR).$(GRASS_VERSION_MINOR)/modbuild/dist.$$(ARCH),g' $(MODULE_TOPDIR)/include/Make/Html.make > $(ARCH_DISTDIR)/modbuild/include/Make/Html.make
 	-cp $(MODULE_TOPDIR)/include/Make/Lib.make $(ARCH_DISTDIR)/modbuild/include/Make/
+	-cp $(MODULE_TOPDIR)/include/Make/Man.make $(ARCH_DISTDIR)/modbuild/include/Make/
 	sed -e 's,$$(DEPENDENCIES),,g' $(MODULE_TOPDIR)/include/Make/Module.make > $(ARCH_DISTDIR)/modbuild/include/Make/Module.make
 	@# platform.make changes
 	sed -e 's,^GRASS_HOME.*,GRASS_HOME = $$(GRASS_HOME),g' \
