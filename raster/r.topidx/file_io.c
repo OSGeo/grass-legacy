@@ -16,7 +16,7 @@ void getcells(void)
 	G_fatal_error(_("Cannot open raster map <%s>"), iname);
 
     data_type = G_get_raster_map_type(fd);
-    if (G_get_cellhd(iname, mapset, &inhead) < 0 )
+    if (G_get_cellhd(iname, mapset, &inhead) < 0)
 	G_fatal_error(_("Unable to read header of raster map <%s>"), iname);
 
     if (data_type == CELL_TYPE)
@@ -28,8 +28,10 @@ void getcells(void)
     atb = (DCELL **) G_malloc(sizeof(DCELL *) * window.rows);
     a = (DCELL **) G_malloc(sizeof(DCELL *) * window.rows);
 
-    if ((window.ew_res < inhead.ew_res) || (window.ns_res < inhead.ns_res))
-        G_fatal_error(_("Current region resolution [%.2fx%.2f] lower than input map resolution [%.2fx%.2f]! Needs to be at least identical or the current region resolution lower than the input map resolution"),window.ew_res, window.ns_res, inhead.ew_res, inhead.ns_res);
+    if (window.ew_res < inhead.ew_res || window.ns_res < inhead.ns_res)
+	G_fatal_error(_("Current region resolution [%.2fx%.2f] lower than input map resolution [%.2fx%.2f]! Needs to be at least identical or the current region resolution lower than the input map resolution"),
+		      window.ew_res, window.ns_res, inhead.ew_res,
+		      inhead.ns_res);
 
     G_important_message(_("Reading elevation map..."));
 
