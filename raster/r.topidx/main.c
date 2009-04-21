@@ -19,7 +19,6 @@
  *****************************************************************************/
 
 #define	MAIN
-#include <grass/gis.h>
 #include <grass/glocale.h>
 #include "global.h"
 
