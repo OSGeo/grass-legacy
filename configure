@@ -13940,8 +13940,8 @@ CPPFLAGS=$ac_save_cppflags
 
 CAIROLIB=`pkg-config --libs cairo`
 
-ac_save_ldflags="$LDFLAGS"
-LDFLAGS="$LDFLAGS $CAIROLIB"
+ac_save_libs="$LIBS"
+LIBS="$LIBS $CAIROLIB"
 echo $ac_n "checking for cairo_create""... $ac_c" 1>&6
 echo "configure:13947: checking for cairo_create" >&5
 
@@ -13990,7 +13990,7 @@ else
 
 fi
 
-LDFLAGS=${ac_save_ldflags}
+LIBS=${ac_save_libs}
 
 fi # $USE_CAIRO
 
