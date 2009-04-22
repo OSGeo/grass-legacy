@@ -1485,12 +1485,12 @@ LOC_CHECK_INCLUDES(cairo.h,Cairo,$CAIROINC)
 
 CAIROLIB=`pkg-config --libs cairo`
 
-ac_save_ldflags="$LDFLAGS"
-LDFLAGS="$LDFLAGS $CAIROLIB"
+ac_save_libs="$LIBS"
+LIBS="$LIBS $CAIROLIB"
 AC_CHECK_FUNC(cairo_create,,[
 AC_MSG_ERROR([*** Unable to locate cairo_create() function.])
 ])
-LDFLAGS=${ac_save_ldflags}
+LIBS=${ac_save_libs}
 
 fi # $USE_CAIRO
 
