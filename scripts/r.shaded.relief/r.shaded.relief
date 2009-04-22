@@ -66,7 +66,7 @@
 #% end
 #% option
 #%  key: altitude
-#%  type: integer
+#%  type: double
 #%  description: Altitude of the sun in degrees above the horizon
 #%  required : no
 #%  options : 0-90
@@ -74,7 +74,7 @@
 #% end
 #% option
 #%  key: azimuth
-#%  type: integer
+#%  type: double
 #%  description: Azimuth of the sun in degrees to the east of north
 #%  required : no
 #%  options : 0-360
@@ -179,7 +179,8 @@ if [ "$GIS_OPT_UNITS" = "feet" ] ; then
 fi		
 
 #correct azimuth to East (GRASS convention):
-az=`expr $az - 90`
+#  this seems to be backwards, but in fact it works so leave it.
+az=`echo "$az" | awk '{print $1 - 90.0}'`
 
 g.message "Calculating shading, please stand by."
 
