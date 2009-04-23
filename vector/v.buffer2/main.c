@@ -122,7 +122,7 @@ int main(int argc, char *argv[])
     char *mapset;
     struct GModule *module;
     struct Option *in_opt, *out_opt, *type_opt, *dista_opt, *distb_opt,
-	*angle_opt;
+	*angle_opt, *buffer_opt, *debug_opt;
     struct Flag *straight_flag, *nocaps_flag;
     struct Option *tol_opt, *bufcol_opt, *scale_opt, *field_opt;
 
@@ -203,6 +203,24 @@ int main(int argc, char *argv[])
 	_("Maximum distance between theoretical arc and polygon segments as multiple of buffer");
     tol_opt->guisection = _("Distance");
 
+    debug_opt = G_define_option();
+    debug_opt->key = "debug";
+    debug_opt->type = TYPE_STRING;
+    debug_opt->required = NO;
+    debug_opt->guisection = _("Unused");
+    debug_opt->description =
+	_("This does nothing. It is retained for backwards compatibility");
+
+    buffer_opt = G_define_option();
+    buffer_opt->key = "buffer";
+    buffer_opt->type = TYPE_DOUBLE;
+    buffer_opt->required = NO;
+    buffer_opt->label =
+	_("This is an alias to the distance option. "
+	  "It is retained for backwards compatibility");
+    buffer_opt->description = _("Buffer distance in map units");
+    buffer_opt->guisection = _("Unused");
+
     straight_flag = G_define_flag();
     straight_flag->key = 's';
     straight_flag->description = _("Make outside corners straight");
@@ -216,11 +234,12 @@ int main(int argc, char *argv[])
     if (G_parser(argc, argv))
 	exit(EXIT_FAILURE);
 
+
     type = Vect_option_to_types(type_opt);
     field = atoi(field_opt->answer);
 
-    if ((dista_opt->answer && bufcol_opt->answer) ||
-	(!(dista_opt->answer || bufcol_opt->answer)))
+    if (((dista_opt->answer || buffer_opt->answer) && bufcol_opt->answer) ||
+	(!(dista_opt->answer || buffer_opt->answer || bufcol_opt->answer)))
 	G_fatal_error(_("Select a buffer distance/minordistance/angle "
 			"or column, but not both."));
 
@@ -229,6 +248,12 @@ int main(int argc, char *argv[])
 		    "step. If you encounter problems, use the debug "
 		    "option or clean manually with v.clean tool=break; "
 		    "v.category step=0; v.extract -d type=area"));
+
+    if (buffer_opt->answer)
+	G_warning(_("The buffer option has been replaced by the distance "
+		    "option and will be removed in future."));
+    if (buffer_opt->answer && dista_opt->answer)
+	G_fatal_error(_("Use the distance option instead of the buffer option."));
 
     tolerance = atof(tol_opt->answer);
     if (adjust_tolerance(&tolerance))
@@ -239,8 +264,11 @@ int main(int argc, char *argv[])
 	G_fatal_error("Illegal scale value");
 
 
-    if (dista_opt->answer) {
-	da = atof(dista_opt->answer);
+    if (dista_opt->answer || buffer_opt->answer) {
+	if(buffer_opt->answer)
+	    da = atof(buffer_opt->answer);
+	if(dista_opt->answer)
+	    da = atof(dista_opt->answer);
 
 	if (distb_opt->answer)
 	    db = atof(distb_opt->answer);
