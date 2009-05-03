@@ -29,13 +29,6 @@ try:
 except ImportError, e:
     haveGLCanvas = False
     errorMsg = e
-try:
-    from OpenGL.GL import *
-    from OpenGL.GLUT import *
-    haveOpenGL = True
-except ImportError, e:
-    haveOpenGL = False
-    errorMsg = e
 
 import globalvar
 try:
