@@ -265,6 +265,10 @@ LOC_ARG_WITH_LIB(blas, BLAS)
 LOC_ARG_WITH_INC(lapack, LAPACK)
 LOC_ARG_WITH_LIB(lapack, LAPACK)
 
+LOC_ARG_WITH_INC(cairo, cairo)
+LOC_ARG_WITH_LIB(cairo, cairo)
+LOC_ARG_WITH_LDFLAGS(cairo, cairo)
+
 LOC_ARG_WITH_INC(motif, Motif)
 LOC_ARG_WITH_LIB(motif, Motif)
 
@@ -1478,22 +1482,32 @@ CAIROLIB=
 
 if test -n "$USE_CAIRO"; then
 
+cairo="cairo cairo-ft"
+if test -n "$USE_X11"; then
+	cairo="$cairo cairo-xlib-xrender"
+fi
+
 # With Cairo includes directory
 
-CAIROINC=`pkg-config --cflags cairo`
+CAIROINC=`pkg-config --cflags $cairo`
+
+LOC_CHECK_INC_PATH(cairo,cairo,CAIROINC)
 
 LOC_CHECK_INCLUDES(cairo.h,Cairo,$CAIROINC)
 
 # With Cairo library directory
 
-CAIROLIB=`pkg-config --libs cairo`
+CAIROLIB=`pkg-config --libs $cairo`
 
-ac_save_libs="$LIBS"
-LIBS="$LIBS $CAIROLIB"
-AC_CHECK_FUNC(cairo_create,,[
-AC_MSG_ERROR([*** Unable to locate cairo_create() function.])
-])
-LIBS=${ac_save_libs}
+LOC_CHECK_LIB_PATH(cairo,cairo,CAIROLIB)
+LOC_CHECK_LDFLAGS(cairo,cairo,CAIROLIB)
+
+LOC_CHECK_FUNC(cairo_create,,,,,$CAIROLIB,[:])
+LOC_CHECK_FUNC(cairo_xlib_surface_create_with_xrender_format,,,,,$CAIROLIB,
+[CAIRO_HAS_XRENDER=1],[CAIRO_HAS_XRENDER=0])
+AC_SUBST(CAIRO_HAS_XRENDER)
+
+CAIROLIB="$CAIROLIB $CAIROLDFLAGS"
 
 fi # $USE_CAIRO
 
