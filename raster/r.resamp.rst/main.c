@@ -159,12 +159,7 @@ int main(int argc, char *argv[])
 	  "different resolution) using regularized spline with "
 	  "tension and smoothing.");
 
-    parm.input = G_define_option();
-    parm.input->key = "input";
-    parm.input->type = TYPE_STRING;
-    parm.input->required = YES;
-    parm.input->gisprompt = "old,cell,raster";
-    parm.input->description = _("Name of input raster map");
+    parm.input = G_define_standard_option(G_OPT_R_INPUT);
 
     parm.res_ew = G_define_option();
     parm.res_ew->key = "ew_res";
@@ -184,6 +179,7 @@ int main(int argc, char *argv[])
     parm.elev->required = NO;
     parm.elev->gisprompt = "new,cell,raster";
     parm.elev->description = _("Output z-file (elevation) map");
+    parm.elev->guisection = _("Output_options");
 
     parm.slope = G_define_option();
     parm.slope->key = "slope";
