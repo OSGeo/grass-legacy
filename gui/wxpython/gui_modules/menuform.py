@@ -1529,8 +1529,10 @@ class cmdPanel(wx.Panel):
         event.Skip()
         
     def OnUpdateSelection(self, event):
-        """Update list of available layers, tables, columns for
-        vector map layer"""
+        """
+        Update dialog (layers, tables, columns, etc.)
+        """
+        # get widget id
         if not event:
             id = None
             for p in self.task.params:
@@ -1551,11 +1553,13 @@ class cmdPanel(wx.Panel):
         if not p or \
                 not p.has_key('wxId-bind'):
             return
-        
+
+        # get widget prompt
         pType = p.get('prompt', '')
         if not pType:
             return
 
+        # check for map/input parameter
         pMap = self.task.get_param('map', raiseError=False)
         if not pMap:
             pMap = self.task.get_param('input', raiseError=False)
@@ -1565,6 +1569,10 @@ class cmdPanel(wx.Panel):
         else:
             map = None
         
+        # avoid multiple updating
+        columns = []
+        
+        # update reference widgets
         for uid in p['wxId-bind']:
             win = self.FindWindowById(uid)
             name = win.GetName()
@@ -1584,33 +1592,37 @@ class cmdPanel(wx.Panel):
                 win.InsertTables(driver, db)
             
             elif name == 'ColumnSelect':
-                pLayer = self.task.get_param('layer', element='element', raiseError=False)
-                if pLayer:
-                    if pLayer.get('value', '') != '':
-                        layer = int(pLayer.get('value', 1))
-                    else:
-                        layer = int(pLayer.get('default', 1))
-                else:
-                    layer = 1
-                if map:
-                    win.InsertColumns(map, layer)
-                else: # table
-                    pDriver = self.task.get_param('dbdriver', element='prompt', raiseError=False)
-                    if pDriver:
-                        driver = pDriver.get('value', None)
-                    pDb = self.task.get_param('dbname', element='prompt', raiseError=False)
-                    if pDb:
-                        db = pDb.get('value', None)
-                    pTable = self.task.get_param('dbtable', element='element', raiseError=False)
-                    if pTable and \
-                            pTable.get('value', '') != '':
-                        if driver and db:
-                            win.InsertTableColumns(pTable.get('value'), driver, db)
+                if not columns:
+                    pLayer = self.task.get_param('layer', element='element', raiseError=False)
+                    if pLayer:
+                        if pLayer.get('value', '') != '':
+                            layer = int(pLayer.get('value', 1))
                         else:
-                            win.InsertTableColumns(pTable.get('value'))
-        if event:
-            event.Skip()
-        
+                            layer = int(pLayer.get('default', 1))
+                    else:
+                        layer = 1
+                        
+                    if map:
+                        win.InsertColumns(map, layer)
+                        columns = win.GetItems()
+                    else: # table
+                        pDriver = self.task.get_param('dbdriver', element='prompt', raiseError=False)
+                        if pDriver:
+                            driver = pDriver.get('value', None)
+                        pDb = self.task.get_param('dbname', element='prompt', raiseError=False)
+                        if pDb:
+                            db = pDb.get('value', None)
+                        pTable = self.task.get_param('dbtable', element='element', raiseError=False)
+                        if pTable and \
+                                pTable.get('value', '') != '':
+                            if driver and db:
+                                win.InsertTableColumns(pTable.get('value'), driver, db)
+                            else:
+                                win.InsertTableColumns(pTable.get('value'))
+                            columns = win.GetItems()
+                else:
+                   win.SetItems(columns) 
+                
     def createCmd( self, ignoreErrors = False ):
         """
         Produce a command line string (list) or feeding into GRASS.
