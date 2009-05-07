@@ -43,7 +43,7 @@ Classes:
 
 @todo
  - verify option value types
- - use DOM instead of SAX
+ - use DOM instead of SAX (is it really necessary? ML)
 """
 
 import sys
@@ -54,6 +54,8 @@ import os
 import time
 import copy
 import locale
+from threading import Thread
+import Queue
 
 ### i18N
 import gettext
@@ -64,11 +66,12 @@ if not os.getenv("GRASS_WXBUNDLED"):
     globalvar.CheckForWx()
 
 import wx
+import wx.html
 import wx.lib.flatnotebook as FN
 import wx.lib.colourselect as csel
 import wx.lib.filebrowsebutton as filebrowse
 from wx.lib.expando import ExpandoTextCtrl, EVT_ETC_LAYOUT_NEEDED
-import wx.html
+from wx.lib.newevent import NewEvent
 
 # Do the python 2.0 standard xml thing and map it on the old names
 import xml.sax
@@ -102,6 +105,8 @@ except:
     from compat import subprocess
 
 utils.reexec_with_pythonw()
+
+wxUpdateDialog, EVT_DIALOG_UPDATE = NewEvent()
 
 # From lib/gis/col_str.c, except purple which is mentioned
 # there but not given RGB values
@@ -159,6 +164,142 @@ def text_beautify( someString , width=70):
 def escape_ampersand(text):
     """Escapes ampersands with additional ampersand for GUI"""
     return string.replace(text, "&", "&&")
+
+class UpdateThread(Thread):
+    """Update dialog widgets in the thread"""
+    def __init__(self, parent, event, eventId, task):
+        Thread.__init__(self)
+        
+        self.parent = parent
+        self.event = event
+        self.eventId = eventId
+        self.task = task
+        self.setDaemon(True)
+        
+        # list of functions which updates the dialog
+        self.data = {}
+        
+    def run(self):
+        # get widget id
+        if not self.eventId:
+            for p in self.task.params:
+                if p.get('gisprompt', False) == False:
+                    continue
+                prompt = p.get('element', '')
+                if prompt == 'vector':
+                    name = p.get('name', '')
+                    if name in ('map', 'input'):
+                        self.eventId = p['wxId']
+            if self.eventId is None:
+                return
+        
+        p = self.task.get_param(self.eventId, element='wxId', raiseError=False)
+        
+        if not p or \
+                not p.has_key('wxId-bind'):
+            return
+
+        # get widget prompt
+        pType = p.get('prompt', '')
+        if not pType:
+            return
+
+        # check for map/input parameter
+        pMap = self.task.get_param('map', raiseError=False)
+        if not pMap:
+            pMap = self.task.get_param('input', raiseError=False)
+
+        if pMap:
+            map = pMap.get('value', '')
+        else:
+            map = None
+        
+        # update reference widgets
+        for uid in p['wxId-bind']:
+            win = self.parent.FindWindowById(uid)
+            name = win.GetName()
+            
+            if name == 'LayerSelect':
+                self.data[win.InsertLayers] = { 'vector' : map }
+                
+            elif name == 'TableSelect':
+                pDriver = self.task.get_param('dbdriver', element='prompt', raiseError=False)
+                driver = db = None
+                if pDriver:
+                    driver = pDriver['value']
+                pDb = self.task.get_param('dbname', element='prompt', raiseError=False)
+                if pDb:
+                    db = pDb['value']
+                
+                self.data[win.InsertTables] = { 'driver' : driver,
+                                                'database' : db }
+                
+            elif name == 'ColumnSelect':
+                pLayer = self.task.get_param('layer', element='element', raiseError=False)
+                if pLayer:
+                    if pLayer.get('value', '') != '':
+                        layer = int(pLayer.get('value', 1))
+                    else:
+                        layer = int(pLayer.get('default', 1))
+                else:
+                    layer = 1
+                
+                if map:
+                    self.data[win.InsertColumns] = { 'vector' : map, 'layer' : layer }
+                else: # table
+                    pDriver = self.task.get_param('dbdriver', element='prompt', raiseError=False)
+                    if pDriver:
+                        driver = pDriver.get('value', None)
+                    pDb = self.task.get_param('dbname', element='prompt', raiseError=False)
+                    if pDb:
+                        db = pDb.get('value', None)
+                    pTable = self.task.get_param('dbtable', element='element', raiseError=False)
+                    if pTable and \
+                            pTable.get('value', '') != '':
+                        if driver and db:
+                            self.data[win.InsertTableColumns] = { 'table' : pTable.get('value'),
+                                                                  'driver' : driver,
+                                                                  'database' : db }
+                        else:
+                            self.data[win.InsertTableColumns] = { 'table'  : pTable.get('value') }
+        
+def UpdateDialog(parent, event, eventId, task):
+    return UpdateThread(parent, event, eventId, task)
+
+class UpdateQThread(Thread):
+    """Update dialog widgets in the thread"""
+    requestId = 0
+    def __init__(self, parent, requestQ, resultQ, **kwds):
+        Thread.__init__(self, **kwds)
+        
+        self.parent = parent # cmdPanel
+        self.setDaemon(True)
+        
+        self.requestQ = requestQ
+        self.resultQ = resultQ
+        
+        self.start()
+        
+    def Update(self, callable, *args, **kwds):
+        UpdateQThread.requestId += 1
+        
+        self.request = None
+        self.requestQ.put((UpdateQThread.requestId, callable, args, kwds))
+        
+        return UpdateQThread.requestId
+    
+    def run(self):
+        while True:
+            requestId, callable, args, kwds = self.requestQ.get()
+            
+            requestTime = time.time()
+            
+            self.request = callable(*args, **kwds)
+
+            self.resultQ.put((requestId, self.request.run()))
+                        
+            event = wxUpdateDialog(data = self.request.data)
+            wx.PostEvent(self.parent, event)
 
 class testSAXContentHandler(HandlerBase):
 # SAX compliant
@@ -751,6 +892,12 @@ class mainFrame(wx.Frame):
         self.SetSize((sizeFrame[0], sizeFrame[1] +
                       self.notebookpanel.constrained_size[1] -
                       self.notebookpanel.panelMinHeight))
+
+        # thread to update dialog
+        # create queues
+        self.requestQ = Queue.Queue()
+        self.resultQ = Queue.Queue()
+        self.updateThread = UpdateQThread(self.notebookpanel, self.requestQ, self.resultQ)
 
         self.Layout()
 
@@ -1414,6 +1561,12 @@ class cmdPanel(wx.Panel):
 
         self.hasMain = tab.has_key( _('Required') ) # publish, to enclosing Frame for instance
 
+        self.Bind(EVT_DIALOG_UPDATE, self.OnUpdateDialog)
+
+    def OnUpdateDialog(self, event):
+        for fn, kwargs in event.data.iteritems():
+            fn(**kwargs)
+        
     def OnVerbosity(self, event):
         """Verbosity level changed"""
         verbose = self.FindWindowById(self.task.get_flag('verbose')['wxId'])
@@ -1532,97 +1685,19 @@ class cmdPanel(wx.Panel):
         """
         Update dialog (layers, tables, columns, etc.)
         """
-        # get widget id
-        if not event:
-            id = None
-            for p in self.task.params:
-                if p.get('gisprompt', False) == False:
-                    continue
-                prompt = p.get('element', '')
-                if prompt == 'vector':
-                    name = p.get('name', '')
-                    if name in ('map', 'input'):
-                        id = p['wxId']
-            if id is None:
-                return
+        if event:
+            self.parent.updateThread.Update(UpdateDialog,
+                                            self,
+                                            event,
+                                            event.GetId(),
+                                            self.task)
         else:
-            id = event.GetId()
+            self.parent.updateThread.Update(UpdateDialog,
+                                            self,
+                                            None,
+                                            None,
+                                            self.task)
         
-        p = self.task.get_param(id, element='wxId', raiseError=False)
-        
-        if not p or \
-                not p.has_key('wxId-bind'):
-            return
-
-        # get widget prompt
-        pType = p.get('prompt', '')
-        if not pType:
-            return
-
-        # check for map/input parameter
-        pMap = self.task.get_param('map', raiseError=False)
-        if not pMap:
-            pMap = self.task.get_param('input', raiseError=False)
-
-        if pMap:
-            map = pMap.get('value', '')
-        else:
-            map = None
-        
-        # avoid multiple updating
-        columns = []
-        
-        # update reference widgets
-        for uid in p['wxId-bind']:
-            win = self.FindWindowById(uid)
-            name = win.GetName()
-            
-            if name == 'LayerSelect':
-                win.InsertLayers(map)
-            
-            elif name == 'TableSelect':
-                pDriver = self.task.get_param('dbdriver', element='prompt', raiseError=False)
-                driver = db = None
-                if pDriver:
-                    driver = pDriver['value']
-                pDb = self.task.get_param('dbname', element='prompt', raiseError=False)
-                if pDb:
-                    db = pDb['value']
-                
-                win.InsertTables(driver, db)
-            
-            elif name == 'ColumnSelect':
-                if not columns:
-                    pLayer = self.task.get_param('layer', element='element', raiseError=False)
-                    if pLayer:
-                        if pLayer.get('value', '') != '':
-                            layer = int(pLayer.get('value', 1))
-                        else:
-                            layer = int(pLayer.get('default', 1))
-                    else:
-                        layer = 1
-                        
-                    if map:
-                        win.InsertColumns(map, layer)
-                        columns = win.GetItems()
-                    else: # table
-                        pDriver = self.task.get_param('dbdriver', element='prompt', raiseError=False)
-                        if pDriver:
-                            driver = pDriver.get('value', None)
-                        pDb = self.task.get_param('dbname', element='prompt', raiseError=False)
-                        if pDb:
-                            db = pDb.get('value', None)
-                        pTable = self.task.get_param('dbtable', element='element', raiseError=False)
-                        if pTable and \
-                                pTable.get('value', '') != '':
-                            if driver and db:
-                                win.InsertTableColumns(pTable.get('value'), driver, db)
-                            else:
-                                win.InsertTableColumns(pTable.get('value'))
-                            columns = win.GetItems()
-                else:
-                   win.SetItems(columns) 
-                
     def createCmd( self, ignoreErrors = False ):
         """
         Produce a command line string (list) or feeding into GRASS.
