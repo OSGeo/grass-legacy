@@ -18,7 +18,7 @@ struct colortable
     int cols;
     int nodata;
     int tickbar;
-    int discrete;	/* for FP maps use discrete bands not continuous gradient */
+    int discrete;	/* force discrete bands or continuous gradient */
     int range_override;
 };
 

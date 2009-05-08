@@ -23,7 +23,7 @@ static char *help[] = {
     "color      color",
     "nodata     Y|n",
     "tickbar    y|N"
-    "discrete   y|N"
+    "discrete   y|n"
     ""
 };
 
@@ -44,7 +44,7 @@ int read_colortable(void)
     h = w = x = y = 0.0;
     ct.nodata = TRUE;
     ct.tickbar = FALSE;
-    ct.discrete = FALSE;
+    ct.discrete = -1;	    /* default: TRUE for CELL map, FALSE for FP maps */
     range_override = FALSE;
 
     while (input(2, buf, help)) {
@@ -149,6 +149,7 @@ int read_colortable(void)
 
 	error(key, data, "illegal colortabe sub-request");
     }
+
     ct.x = x;
     ct.y = y;
     if (fontsize)
@@ -163,6 +164,14 @@ int read_colortable(void)
 	    ct.name = PS.cell_name;
 	    ct.mapset = PS.cell_mapset;
 	}
+    }
+
+    /* set default if legend type was not specified */
+    if (ct.discrete == -1) {
+	if (G_raster_map_is_fp(ct.name, ct.mapset))
+	    ct.discrete = FALSE;
+	else
+	    ct.discrete = TRUE;
     }
 
     ct.min = min;
