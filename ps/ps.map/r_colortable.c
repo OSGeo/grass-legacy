@@ -22,7 +22,9 @@ static char *help[] = {
     "fontsize   fontsize",
     "color      color",
     "nodata     Y|n",
-    "tickbar    y|N" ""
+    "tickbar    y|N"
+    "discrete   y|N"
+    ""
 };
 
 int read_colortable(void)
@@ -30,7 +32,7 @@ int read_colortable(void)
     char buf[1024];
     char *key, *data;
     char name[GNAME_MAX], mapset[GMAPSET_MAX];
-    int color, fontsize, cols, nodata, tickbar;
+    int color, fontsize, cols, nodata, tickbar, discrete;
     double w, h, x, y;
     int range_override;
     double min, max, tmpD;
@@ -40,8 +42,9 @@ int read_colortable(void)
     color = BLACK;
     cols = 1;
     h = w = x = y = 0.0;
-    ct.nodata = 1;
-    ct.tickbar = 0;
+    ct.nodata = TRUE;
+    ct.tickbar = FALSE;
+    ct.discrete = FALSE;
     range_override = FALSE;
 
     while (input(2, buf, help)) {
@@ -135,6 +138,12 @@ int read_colortable(void)
 	if (KEY("tickbar")) {
 	    tickbar = yesno(key, data);
 	    ct.tickbar = tickbar;
+	    continue;
+	}
+
+	if (KEY("discrete")) {
+	    discrete = yesno(key, data);
+	    ct.discrete = discrete;
 	    continue;
 	}
 

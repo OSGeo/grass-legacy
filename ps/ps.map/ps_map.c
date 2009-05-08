@@ -145,7 +145,7 @@ int ps_map(void)
 
     /* do the colortable, if requested */
     if (PS.do_colortable) {
-	if (G_raster_map_is_fp(ct.name, ct.mapset))
+	if (G_raster_map_is_fp(ct.name, ct.mapset) && ct.discrete == FALSE)
 	    PS_fcolortable();
 	else
 	    PS_colortable();
