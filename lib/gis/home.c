@@ -67,6 +67,5 @@ char *G__home(void)
 #else
     home = getenv("HOME");
 #endif
-    G_debug(2, "G__home home = %s", home);
     return home;
 }
