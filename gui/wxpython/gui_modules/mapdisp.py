@@ -2755,6 +2755,19 @@ class MapFrame(wx.Frame):
 	
         # vector digitizer
         elif name == "vdigit":
+            from vdigit import haveVDigit
+            if not haveVDigit:
+                from vdigit import errorMsg
+                msg = _("Unable to start vector digitizer.\nThe VDigit python extension "
+                        "was not found or loaded properly.\n"
+                        "Switching back to 2D display mode.\n\nDetails: %s" % errorMsg)
+                
+                self.toolbars['map'].combo.SetValue (_("2D view"))
+                wx.MessageBox(parent=self,
+                              message=msg,
+                              caption=_("Error"))
+                return
+            
             self.toolbars['vdigit'] = toolbars.VDigitToolbar(parent=self, map=self.Map,
                                                              layerTree=self.tree,
                                                              log=self.gismanager.goutput)
@@ -2792,16 +2805,17 @@ class MapFrame(wx.Frame):
             # check for GLCanvas and OpenGL
             msg = None
             if not nviz.haveGLCanvas:
-                msg = _("Unable to start Nviz. The GLCanvas class has not been "
+                msg = _("Unable to switch to 3D display mode.\nThe GLCanvas class has not been "
                         "included with this build "
-                        "of wxPython! Switching back to "
+                        "of wxPython!\nSwitching back to "
                         "2D display mode.\n\nDetails: %s" % nviz.errorMsg)
             if not nviz.haveNviz:
-                msg = _("Unable to start Nviz. Python extension "
-                        "for Nviz was not found or loaded properly. "
+                msg = _("Unable to switch to 3D display mode.\nThe Nviz python extension "
+                        "was not found or loaded properly.\n"
                         "Switching back to 2D display mode.\n\nDetails: %s" % nviz.errorMsg)
 
             if msg:
+                self.toolbars['map'].combo.SetValue (_("2D view"))
                 wx.MessageBox(parent=self,
                               message=msg,
                               caption=_("Error"))
