@@ -102,6 +102,9 @@ int main(int argc, char *argv[])
 
 
     if (strcmp(type->answer, "oldtcltk") == 0) {
+#ifdef __MINGW32__
+	G_fatal_error(_("The old d.m GUI is not available for WinGRASS"));
+#endif
 	sprintf(progname, "%s/etc/dm/d.m.tcl", G_gisbase());
 	if (rc_file->answer) {
 	    G_spawn(getenv("GRASS_WISH"), "d.m", progname, "-name", "d_m_tcl",

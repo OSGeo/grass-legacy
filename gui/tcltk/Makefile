@@ -1,6 +1,10 @@
 MODULE_TOPDIR = ../..
 
-SUBDIRS = d.m gis.m
+SUBDIRS = gis.m
+
+ifndef MINGW
+SUBDIRS += d.m
+endif
 
 include $(MODULE_TOPDIR)/include/Make/Dir.make
 
