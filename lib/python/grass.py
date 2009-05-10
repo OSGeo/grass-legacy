@@ -219,7 +219,7 @@ def tempfile():
 
 # key-value parsers
 
-def parse_key_val(s, sep = '=', dflt = None):
+def parse_key_val(s, sep = '=', dflt = None, val_type = None):
     """Parse a string into a dictionary, where entries are separated
     by newlines and the key and value are separated by `sep' (default: `=')
     """
@@ -231,7 +231,10 @@ def parse_key_val(s, sep = '=', dflt = None):
 	    v = kv[1]
 	else:
 	    v = dflt
-	result[k] = v
+        if val_type:
+            result[k] = val_type(v)
+        else:
+            result[k] = v
     return result
 
 # interface to g.gisenv
@@ -248,7 +251,7 @@ def gisenv():
 def region():
     """Returns the output from running "g.region -g", as a dictionary."""
     s = read_command("g.region", flags='g')
-    return parse_key_val(s)
+    return parse_key_val(s, val_type = float)
 
 def use_temp_region():
     """Copies the current region to a temporary region with "g.region save=",
