@@ -2765,7 +2765,8 @@ class MapFrame(wx.Frame):
                 self.toolbars['map'].combo.SetValue (_("2D view"))
                 wx.MessageBox(parent=self,
                               message=msg,
-                              caption=_("Error"))
+                              caption=_("Error"),
+                              style=wx.OK | wx.ICON_ERROR | wx.CENTRE)
                 return
             
             self.toolbars['vdigit'] = toolbars.VDigitToolbar(parent=self, map=self.Map,
@@ -2818,7 +2819,8 @@ class MapFrame(wx.Frame):
                 self.toolbars['map'].combo.SetValue (_("2D view"))
                 wx.MessageBox(parent=self,
                               message=msg,
-                              caption=_("Error"))
+                              caption=_("Error"),
+                              style=wx.OK | wx.ICON_ERROR | wx.CENTRE)
                 return
 
             #
