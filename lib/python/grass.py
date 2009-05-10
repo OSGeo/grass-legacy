@@ -112,6 +112,30 @@ def read_command(*args, **kwargs):
     ps = pipe_command(*args, **kwargs)
     return ps.communicate()[0]
 
+def parse_command(*args, **kwargs):
+    """Passes all arguments to read_command, then optionally parses
+    the output.
+
+    Output can be automatically parsed if <b>parse</b> parameter is
+    given. Use True for default parse function -- parse_key_val().
+    """
+    parse = None # do not parse output
+    if kwargs.has_key('parse'):
+        if type(kwargs['parse']) is types.TupleType:
+            parse = kwargs['parse'][0]
+            parse_args = kwargs['parse'][1]
+        else:
+            parse = parse_key_val # use default fn
+            parse_args = {}
+        del kwargs['parse']
+
+    res = read_command(*args, **kwargs)
+
+    if parse:
+        return parse(res, **parse_args)
+
+    return res
+
 def write_command(*args, **kwargs):
     """Passes all arguments to feed_command, with the string specified
     by the 'stdin' argument fed to the process' stdin.
