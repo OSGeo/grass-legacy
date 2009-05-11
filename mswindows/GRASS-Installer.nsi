@@ -566,7 +566,7 @@ Section "GRASS" SecGRASS
 	FileWrite $0 'set PATHEXT=%PATHEXT%;.PY$\r$\n'
 	FileWrite $0 '$\r$\n'
 	FileWrite $0 'set WINGISBASE=%GRASSDIR%$\r$\n'
-	FileWrite $0 '"%WINGISBASE%\etc\init.bat" %*'
+	FileWrite $0 '"%WINGISBASE%\etc\Init.bat" %*'
 	FileClose $0
 	done_create_grass_command.bat:
 	
