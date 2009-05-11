@@ -100,15 +100,15 @@ fi
 
 #### check for overenthusiasm
 if [ -n "$GIS_OPT_PROJ_IN" ] && [ $GIS_FLAG_I -eq 1 ] ; then
-   g.message -e "Chose only one input parameter method"
+   g.message -e "Choose only one input parameter method"
    exit 1
 fi
 if [ -n "$GIS_OPT_PROJ_OUT" ] && [ $GIS_FLAG_O -eq 1 ] ; then
-   g.message -e "Chose only one output parameter method" 
+   g.message -e "Choose only one output parameter method" 
    exit 1
 fi
 if [ $GIS_FLAG_I -eq 1 ] && [ $GIS_FLAG_O -eq 1 ] ; then
-   g.message -e "Chose only one auto-projection parameter method"
+   g.message -e "Choose only one auto-projection parameter method"
    exit 1
 fi
 if [ -n "$GIS_OPT_OUTPUT" ] && [ -e "$GIS_OPT_OUTPUT" ] ; then
