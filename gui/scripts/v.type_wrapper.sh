@@ -1,7 +1,7 @@
 #!/bin/sh
 ############################################################################
 #
-# MODULE:       v.type.sh (v.type wrapper script)
+# MODULE:       v.type_wrapper.sh (v.type wrapper script)
 # AUTHOR(S):    Hamish Bowman  (Otago University, New Zealand)
 # PURPOSE:      Supply v.type options in a GUI compatible way
 # COPYRIGHT:    (c) 2007 by Hamish Bowman, and the GRASS Development Team
