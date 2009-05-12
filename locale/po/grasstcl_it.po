@@ -3517,11 +3517,11 @@ msgstr "Icona"
 
 #: ../gui/tcltk/gis.m/vector.tcl:377
 msgid "   Size"
-msgstr " Grandezza"
+msgstr "   Grandezza"
 
 #: ../gui/tcltk/gis.m/vector.tcl:379
 msgid "Icon size"
-msgstr " Grandezza icona"
+msgstr "Grandezza icona"
 
 #: ../gui/tcltk/gis.m/vector.tcl:385 ../gui/tcltk/d.m/vector.tcl:259
 msgid "Draw lines:"
@@ -3533,12 +3533,12 @@ msgstr "Colore"
 
 #: ../gui/tcltk/gis.m/vector.tcl:391
 msgid "   Width"
-msgstr "Larghezza"
+msgstr "   Larghezza"
 
 #: ../gui/tcltk/gis.m/vector.tcl:393
 #, fuzzy
 msgid "Line width"
-msgstr "Grandezza Linea"
+msgstr "Grandezza linea"
 
 #: ../gui/tcltk/gis.m/vector.tcl:395
 msgid "(pixels) "
@@ -3550,7 +3550,7 @@ msgstr "Riempi aree:"
 
 #: ../gui/tcltk/gis.m/vector.tcl:408
 msgid "Random colors "
-msgstr "Colori casuali"
+msgstr "Colori casuali "
 
 #: ../gui/tcltk/gis.m/vector.tcl:410 ../gui/tcltk/d.m/vector.tcl:284
 msgid "GRASSRGB column colors"
@@ -3582,7 +3582,7 @@ msgstr "Parte del label da allineare con punto vettoriale"
 
 #: ../gui/tcltk/gis.m/vector.tcl:437
 msgid "   Justification"
-msgstr "Giustificazione"
+msgstr "   Giustificazione"
 
 #: ../gui/tcltk/gis.m/vector.tcl:446
 msgid "     Layer for labels"
@@ -3594,7 +3594,7 @@ msgstr " Colonna di attributo per le etichette"
 
 #: ../gui/tcltk/gis.m/vector.tcl:455
 msgid "Query vectors for display: "
-msgstr "Interroga vettori per visualizzare:"
+msgstr "Interroga vettori per visualizzare: "
 
 #: ../gui/tcltk/gis.m/vector.tcl:456 ../gui/tcltk/d.m/vector.tcl:327
 msgid "layer for query"
@@ -3610,15 +3610,15 @@ msgstr "Usa query SQL"
 
 #: ../gui/tcltk/gis.m/vector.tcl:483
 msgid "    Show attribute columns"
-msgstr "   Mostra i campi delle colonne"
+msgstr "    Mostra i campi delle colonne"
 
 #: ../gui/tcltk/gis.m/vector.tcl:489
 msgid "      Show attribute data"
-msgstr "   Mostra dati dei campi"
+msgstr "      Mostra dati dei campi"
 
 #: ../gui/tcltk/gis.m/vector.tcl:501
 msgid "Save displayed objects to new vector file "
-msgstr "Salva oggetti visualizzati in un nuovo file vettoriale"
+msgstr "Salva oggetti visualizzati in un nuovo file vettoriale "
 
 #: ../gui/tcltk/gis.m/vector.tcl:503
 msgid "Overwrite existing"
