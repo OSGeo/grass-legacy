@@ -3550,7 +3550,7 @@ msgstr "Riempi aree:"
 
 #: ../gui/tcltk/gis.m/vector.tcl:408
 msgid "Random colors "
-msgstr "Colori casuali"
+msgstr "Colori casuali "
 
 #: ../gui/tcltk/gis.m/vector.tcl:410 ../gui/tcltk/d.m/vector.tcl:284
 msgid "GRASSRGB column colors"
@@ -3566,11 +3566,11 @@ msgstr "label"
 
 #: ../gui/tcltk/gis.m/vector.tcl:420
 msgid " Text color"
-msgstr "Colore testo"
+msgstr " Colore testo"
 
 #: ../gui/tcltk/gis.m/vector.tcl:423
 msgid "   Text size"
-msgstr " Grandezza testo"
+msgstr "   Grandezza testo"
 
 #: ../gui/tcltk/gis.m/vector.tcl:425 ../gui/tcltk/d.m/vector.tcl:299
 msgid "text size"
@@ -3582,19 +3582,19 @@ msgstr "Parte del label da allineare con punto vettoriale"
 
 #: ../gui/tcltk/gis.m/vector.tcl:437
 msgid "   Justification"
-msgstr "Giustificazione"
+msgstr "   Giustificazione"
 
 #: ../gui/tcltk/gis.m/vector.tcl:446
 msgid "     Layer for labels"
 msgstr "     Layer per labels"
 
 #: ../gui/tcltk/gis.m/vector.tcl:448
-msgid "   Attribute col for labels"
-msgstr " Colori campi per labels"
+msgid "   Attribute column for labels"
+msgstr "   Colonna di attributo per le etichette"
 
 #: ../gui/tcltk/gis.m/vector.tcl:455
 msgid "Query vectors for display: "
-msgstr "Interroga vettori per visualizzare:"
+msgstr "Interroga vettori per visualizzare: "
 
 #: ../gui/tcltk/gis.m/vector.tcl:456 ../gui/tcltk/d.m/vector.tcl:327
 msgid "layer for query"
