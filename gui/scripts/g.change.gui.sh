@@ -41,11 +41,6 @@ if [ -z "$GISBASE" ] ; then
     exit 1
 fi
 
-if [ ! -x "`which $(basename "$0")`" ] ; then
-    PATH="$PATH:$GISBASE/etc/gui/scripts"
-    export PATH
-fi
-
 if [ "$1" != "@ARGS_PARSED@" ] ; then
     exec g.parser "$0" "$@"
 fi
