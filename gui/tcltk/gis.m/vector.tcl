@@ -442,7 +442,7 @@ proc GmVector::options { id frm } {
     set row [ frame $frm.label3 ]
     LabelEntry $row.a -label [G_msg "     Layer for labels"] \
                 -textvariable GmVector::opt($id,1,lfield) -width 3 
-    LabelEntry $row.b -label [G_msg "   Attribute col for labels"] \
+    LabelEntry $row.b -label [G_msg "   Attribute column for labels"] \
                 -textvariable GmVector::opt($id,1,attribute) -width 23
     pack $row.a $row.b -side left
     pack $row -side top -fill both -expand yes
