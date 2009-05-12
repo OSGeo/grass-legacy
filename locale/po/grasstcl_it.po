@@ -3589,8 +3589,8 @@ msgid "     Layer for labels"
 msgstr "     Layer per labels"
 
 #: ../gui/tcltk/gis.m/vector.tcl:448
-msgid "   Attribute col for labels"
-msgstr " Colori campi per labels"
+msgid "   Attribute column for labels"
+msgstr " Colonna di attributo per le etichette"
 
 #: ../gui/tcltk/gis.m/vector.tcl:455
 msgid "Query vectors for display: "
