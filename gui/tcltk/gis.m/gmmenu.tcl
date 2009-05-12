@@ -435,7 +435,7 @@ set descmenu [subst  {
 		{command {[G_msg "Clean vector"]} {} "v.clean: Clean vector objects" {} -command {execute v.clean }}
 		{command {[G_msg "Smooth or simplify"]} {} "v.generalize: Smooth or simplify lines and boundaries (reduce vertices)" {} -command {execute v.generalize }}
 		{separator}
-		{command {[G_msg "Convert object types"]} {} "v.type: Convert vector objects from one feature type to another" {} -command {execute $env(GISBASE)/etc/gui/scripts/v.type.sh }}
+		{command {[G_msg "Convert object types"]} {} "v.type: Convert vector objects from one feature type to another" {} -command {execute $env(GISBASE)/etc/gui/scripts/v.type_wrapper.sh }}
 		{separator}
 		{command {[G_msg "Add centroids"]} {} "v.centroids: Add centroids to closed boundaries to create areas" {} -command {execute v.centroids }}
 		{separator}
