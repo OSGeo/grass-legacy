@@ -247,7 +247,8 @@ if [ "$GIS_OPT_V" -lt 2 ] ; then
 else
    g.message -w "The verbosity option is superseded. Use --verbose instead"
    if [ -n "$GRASS_VERBOSE" ] && [ "$GRASS_VERBOSE" -lt 2 ] ; then
-      GRASS_VERBOSE=2
+      GRASS_VERBOSE=3
+      export GRASS_VERBOSE
    fi
 fi
 
