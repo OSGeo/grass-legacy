@@ -33,6 +33,10 @@ if [ $EXIT_VAL -ne 0 ] ; then
    echo
    echo "ERROR: $1 exited abnormally. Press <enter> to continue."
    read
+elif [ `g.gisenv get=DEBUG` -gt 0 ] ; then
+   echo
+   echo "\"$1\" exited normally. Press <enter> to continue."
+   read
 fi
 
 exit $EXIT_VAL
