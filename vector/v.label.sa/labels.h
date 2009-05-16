@@ -10,6 +10,7 @@
 #include <string.h>
 #include <math.h>
 #include <grass/gis.h>
+#include <grass/gisdefs.h>
 #include <grass/display.h>
 #include <grass/raster.h>
 #include <grass/Vect.h>

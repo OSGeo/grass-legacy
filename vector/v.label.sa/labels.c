@@ -66,7 +66,7 @@ label_t *labels_init(struct params *p, int *n_labels)
 
     G_debug(1, "Need to allocate %d bytes of memory",
 	    sizeof(label_t) * label_sz);
-    labels = malloc(sizeof(label_t) * label_sz);
+    labels = (label_t *) G_malloc(sizeof(label_t) * label_sz);
     G_debug(1, "labels=%p", labels);
 
     if (labels == NULL)
@@ -128,7 +128,7 @@ label_t *labels_init(struct params *p, int *n_labels)
 	    label_sz += 100;
 	    G_debug(1, "Need to resize %p to %d bytes of memory",
 		    (void *)labels, sizeof(label_t) * label_sz);
-	    labels = realloc(labels, sizeof(label_t) * label_sz);
+	    labels = G_realloc(labels, sizeof(label_t) * label_sz);
 	    if (labels == NULL) {
 		G_fatal_error(_("Cannot allocate more memory"));
 	    }
@@ -153,7 +153,7 @@ label_t *labels_init(struct params *p, int *n_labels)
 	if (cat < 0)
 	    continue;		/* no cat for this field */
 
-	sql = G_malloc(sql_len);
+	sql = (char *) G_malloc(sql_len);
 	/* Read label from database */
 	if (p->overlap->answer[0] != '\0') {
 	    sprintf(sql, "select %s,%s from %s where %s = %d",
@@ -167,7 +167,7 @@ label_t *labels_init(struct params *p, int *n_labels)
 	G_debug(3, "SQL: %s", sql);
 	db_init_string(&query);
 	db_set_string(&query, sql);
-	free(sql);
+	G_free(sql);
 
 	if (db_open_select_cursor(driver, &query, &cursor, DB_SEQUENTIAL) !=
 	    DB_OK)
@@ -407,7 +407,7 @@ static void label_point_candidates(label_t * label)
     int i;
     label_candidate_t *candidates;
 
-    candidates = calloc(19, sizeof(label_candidate_t));
+    candidates = G_calloc(19, sizeof(label_candidate_t));
     if (candidates == NULL) {
 	G_fatal_error("Cannot allocate memory.");
     }
@@ -550,8 +550,8 @@ static void label_line_candidates(label_t * label)
 
 	return;
     }
-    above_candidates = calloc(n, sizeof(label_candidate_t));
-    below_candidates = calloc(n, sizeof(label_candidate_t));
+    above_candidates = G_calloc(n, sizeof(label_candidate_t));
+    below_candidates = G_calloc(n, sizeof(label_candidate_t));
     if ((above_candidates == NULL) || (below_candidates == NULL)) {
 	G_fatal_error("Cannot allocate memory.");
     }
@@ -761,15 +761,15 @@ static void label_line_candidates(label_t * label)
 	return;
     }
 
-    candidates = calloc(n * 2, sizeof(label_candidate_t));
+    candidates = G_calloc(n * 2, sizeof(label_candidate_t));
     for (i = 0; i < n; i++) {
 	memcpy(&candidates[i * 2], &above_candidates[i],
 	       sizeof(label_candidate_t));
 	memcpy(&candidates[i * 2 + 1], &below_candidates[i],
 	       sizeof(label_candidate_t));
     }
-    free(above_candidates);
-    free(below_candidates);
+    G_free(above_candidates);
+    G_free(below_candidates);
 
     n_c = n * 2;
     /* pick the 32 best candidates */
@@ -783,7 +783,7 @@ static void label_line_candidates(label_t * label)
 	    Vect_destroy_line_struct(candidates[i].swathline);
 	}
 
-	tmp = realloc(candidates, sizeof(label_candidate_t) * 32);
+	tmp = G_realloc(candidates, sizeof(label_candidate_t) * 32);
 	if (tmp != NULL) {
 	    candidates = tmp;
 	}
@@ -1234,7 +1234,7 @@ void label_candidate_overlap(label_t * labels, int n_labels)
 			label_intersection_t *li;
 
 			n = ++(labels[i].candidates[j].n_intersections);
-			li = realloc(labels[i].candidates[j].intersections,
+			li = G_realloc(labels[i].candidates[j].intersections,
 				     n * sizeof(label_intersection_t));
 			if (li == NULL)
 			    G_fatal_error("\nUnable to allocate memory\n");
@@ -1247,7 +1247,7 @@ void label_candidate_overlap(label_t * labels, int n_labels)
 			}
 			labels[i].candidates[j].intersections = li;
 			n = ++(labels[k].candidates[l].n_intersections);
-			li = realloc(labels[k].candidates[l].intersections,
+			li = G_realloc(labels[k].candidates[l].intersections,
 				     n * sizeof(label_intersection_t));
 			if (li == NULL)
 			    G_fatal_error("\nUnable to allocate memory\n");

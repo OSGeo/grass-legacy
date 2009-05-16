@@ -9,6 +9,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <grass/gis.h>
+#include <grass/gisdefs.h>
 #include <grass/glocale.h>
 #include <grass/freetypecap.h>
 #include "labels.h"
