@@ -426,6 +426,7 @@ proc MapCanvas::get_mapunits {} {
 	    while {[gets $input line] >= 0} {
 	    	if { [string equal "XY location (unprojected)" "$line"] } {
 	    	    set mapunits "map units"
+		    set ll_proj 0
 	    	    break
 	    	}
 	    	regexp -nocase {^(.*):(.*)$} $line trash key value
@@ -443,13 +444,14 @@ proc MapCanvas::get_mapunits {} {
 	# May already be set above if locn was XY.
 	if { ! [ info exist mapunits ] } {
 	    set mapunits $prj(units)
-	}
-	
-	set ll_proj 0
-	if { [string eq "Lat/Lon" "$prj(name)"] } {
+
+	    if { [string eq "Lat/Lon" "$prj(name)"] } {
 		set ll_proj 1
+	    } else {
+		set ll_proj 0
+	    }
 	}
-	
+
 	return $mapunits
 }
 
