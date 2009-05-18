@@ -197,6 +197,7 @@ char **G_available_mapsets(void)
 	    /* Add to list */
 	    mapsets[n] = G_store(ent->d_name);
 	    n++;
+	    mapsets[n] = NULL;
 	}
 	else {
 	    G_debug(4, "%s is not mapset", ent->d_name);
