@@ -112,7 +112,9 @@ namespace eval MapCanvas {
 	# zoom_attrs used in g.region command to set WIND file
 	variable zoom_attrs
 	set zoom_attrs {n s e w nsres ewres rows cols}
-	variable ll_proj ;# 1 if it's Lat/Lon projection, 0 othervise
+
+	# ll_proj is 1 for a Lat/Lon projection, 0 othervise
+	variable ll_proj
 
 	# string with region information to show in status bar
 	variable regionstr
