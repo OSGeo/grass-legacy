@@ -541,18 +541,12 @@ proc Gronsole::run_xterm {path cmd tags} {
 	if { $mingw == "1" } {
 	    exec -- cmd.exe /c start $env(GISBASE)/etc/grass-run.bat $cmd &
 	} else {
-# NG:
+	    set cmd_exe [lindex $cmd 0]
+	    set args [lrange $cmd 1 end]
+	    
 	    eval [list exec -- $env(GISBASE)/etc/grass-xterm-wrapper \
 		-name xterm-grass -e $env(GISBASE)/etc/grass-run.sh \
-		[lindex $cmd 0] [split [lrange $cmd 1 end]] ] &
-# NG:
-#	    eval [linsert [linsert $cmd 0 exec -- $env(GISBASE)/etc/grass-xterm-wrapper \
-#		-name xterm-grass -e $env(GISBASE)/etc/grass-run.sh] end &]
-
-# NG:
-#	    eval exec -- $env(GISBASE)/etc/grass-xterm-wrapper \
-#		-name xterm-grass -e $env(GISBASE)/etc/grass-run.sh \
-#		$cmd &
+		$cmd_exe ] $args &
 	}
 
 	update idletasks
