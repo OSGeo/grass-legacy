@@ -1095,14 +1095,14 @@ proc MapCanvas::currentzoom { mon } {
 		    if { $n >  90 } {
 			set n  90
 			tk_messageBox -type ok -icon warning -parent .mapcan($mon) \
-			    -message [G_msg "Can not explore beyond the poles: switching into constrained mode"] \
+			    -message [G_msg "Cannot explore beyond the poles: switching into constrained mode"] \
 			    -title [G_msg "Switching to constrained mode"]
 			MapCanvas::exploremode $mon 0
 		    }
 		    if { $s < -90 } {
 			set s -90
 			tk_messageBox -type ok -icon warning -parent .mapcan($mon) \
-			    -message [G_msg "Can not explore beyond the poles: switching into constrained mode"] \
+			    -message [G_msg "Cannot explore beyond the poles: switching into constrained mode"] \
 			    -title [G_msg "Switching to constrained mode"]
 			MapCanvas::exploremode $mon 0
 		    }
