@@ -155,6 +155,7 @@ proc MapCanvas::create { } {
 	variable b1east 
 	variable b1north 
 	variable mappid
+	variable ll_proj
 	global drawprog
 	global tmpdir
 	global env
@@ -167,8 +168,16 @@ proc MapCanvas::create { } {
 	set env(GRASS_WIDTH) 640.0
 	set env(GRASS_HEIGHT) 480.0
 	set drawprog 0
-	# Explore mode is off by default
-	set exploremode($mon) 1
+
+	# run get_mapunits to check projection
+	MapCanvas::get_mapunits
+	if { $ll_proj } {
+	    # Explore mode is off by default (can't peer past 90deg)
+	    set exploremode($mon) 0
+	} else {
+	    # Explore mode is on by default
+	    set exploremode($mon) 1
+	}
 
 	# Make sure that we are using the WIND file for everything except displays
 	if {[info exists env(WIND_OVERRIDE)]} {unset env(WIND_OVERRIDE)}
@@ -571,6 +580,8 @@ proc MapCanvas::runprograms { mon mod } {
 	variable opclist
 	variable mapframe
 	variable zoom_attrs
+	variable ll_proj
+	variable exploremode
 	global env
 	global drawprog
 	global devnull
@@ -590,7 +601,27 @@ proc MapCanvas::runprograms { mon mod } {
 	set options {}
 	foreach attr $zoom_attrs value $values {
 		if {$attr != "rows" && $attr != "cols"} {
-			lappend options "$attr=$value"
+		    if { $ll_proj } {
+			if {$attr == "n" && $value > 90} {
+			    set value 90
+			    if {$exploremode($mon)} {
+			        tk_messageBox -type ok -icon warning -parent .mapcan($mon) \
+				    -message [G_msg "Cannot explore beyond the poles: switching into constrained mode"] \
+				    -title [G_msg "Switching to constrained mode"]
+			        MapCanvas::exploremode $mon 0
+			    }
+			}
+			if {$attr == "s" && $value < -90} {
+			    set value -90
+			    if {$exploremode($mon)} {
+				tk_messageBox -type ok -icon warning -parent .mapcan($mon) \
+				    -message [G_msg "Cannot explore beyond the poles: switching into constrained mode"] \
+				    -title [G_msg "Switching to constrained mode"]
+				MapCanvas::exploremode $mon 0
+			    }
+			}
+		    }
+		    lappend options "$attr=$value"
 		}
 	}
 
@@ -1058,10 +1089,25 @@ proc MapCanvas::currentzoom { mon } {
 		set canvas_ar [expr {1.0 * $canvas_w($mon) / $canvas_h($mon)}]
 		foreach {n s e w} [MapCanvas::shrinkwrap 1 [lrange $region 0 3] $canvas_ar] {break}
 		# In Lat/Lon N and S can not be larger than 90!
+# FIXME:
+#puts "-> n=$n  s=$s  e=$e  w=$w"
 		if { $ll_proj } {
-			if { $n >  90 } { set n  90 }
-			if { $s < -90 } { set s -90 }
+		    if { $n >  90 } {
+			set n  90
+			tk_messageBox -type ok -icon warning -parent .mapcan($mon) \
+			    -message [G_msg "Can not explore beyond the poles: switching into constrained mode"] \
+			    -title [G_msg "Switching to constrained mode"]
+			MapCanvas::exploremode $mon 0
+		    }
+		    if { $s < -90 } {
+			set s -90
+			tk_messageBox -type ok -icon warning -parent .mapcan($mon) \
+			    -message [G_msg "Can not explore beyond the poles: switching into constrained mode"] \
+			    -title [G_msg "Switching to constrained mode"]
+			MapCanvas::exploremode $mon 0
+		    }
 		}
+#puts "=> n=$n  s=$s  e=$e  w=$w"
 		set expanded_region "$n $s $e $w"
 		# Calculate the resolutions proportional to the map size
 		set explore_nsres [expr {1.0 * ($n - $s) / $canvas_h($mon)}]
