@@ -8,7 +8,7 @@ rem Force command line startup mode
 set GRASS_UI_TERM=1
 
 rem Run command
-"%*"
+%*
 
 if not %errorlevel% == 0 goto error
 
