@@ -13,8 +13,9 @@ rem Run command
 title GRASS: %1 Done.
 if %errorlevel% == 1 goto error
 
-rem Pause for 2 seconds to allow user to read any output
-ping 127.0.0.1 -n 3 -w 1000 >NUL:
+echo.
+echo %1 complete.
+pause
 :end
 exit %errorlevel%
 
