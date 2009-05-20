@@ -10,16 +10,19 @@ set GRASS_UI_TERM=1
 rem Run command
 "%*"
 
-title GRASS: %1 Done.
-if %errorlevel% == 1 goto error
+if not %errorlevel% == 0 goto error
 
+title GRASS: %1 Done.
 echo.
 echo %1 complete.
 pause
+
 :end
 exit %errorlevel%
 
 :error
+title GRASS: %1 Done. (error %errorlevel%)
+echo.
 echo -----
 echo ERROR: %1 exited abnormally.
 echo -----
