@@ -71,9 +71,19 @@ the computational region extents.
 <br><br>
 
 A separate console window shows all commands issued and all command
-output (upper window). GRASS commands (and any other unix/linux
-commands) can be run from the console (lower window).<br>
+output (upper window). GRASS commands (and any other UNIX/Linux/DOS
+commands) can be entered into and run from the console (lower window).
+If any of the arguments contain a space then the entire option must
+be quoted in Tcl/Tk style, e.g.:
+<div class="code"><pre>
+ v.db.select roads "where=label ~ 'highway'"
+  or
+ v.db.select roads {where=label ~ 'highway'}
+  or
+ v.db.select roads where=label\ ~\ 'highway'
+</pre></div>
 
+<br>
 <br>
 <center>
 <img src="gm_gronsole.png" alt="Output and command console window" height="231" width="480">

@@ -1,6 +1,9 @@
 #!/bin/sh
 # script to launch GRASS commands
 
+#DEBUG:
+#print_args "$@"
+
 # change console title to name of module
 if [ "$TERM" = "xterm" ] && [ -n "$BASH" ] ; then
    TITLE="GRASS: $1"
@@ -31,7 +34,11 @@ echo
 EXIT_VAL=$?
 if [ $EXIT_VAL -ne 0 ] ; then
    echo
-   echo "ERROR: $1 exited abnormally. Press <enter> to continue."
+   echo "ERROR: \"$1\" exited abnormally. Press <enter> to continue."
+   read
+else
+   echo
+   echo "\"$1\" complete. Press <enter> to continue."
    read
 fi
 
