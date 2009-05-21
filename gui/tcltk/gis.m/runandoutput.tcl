@@ -108,22 +108,29 @@ proc gronsole_history {cmdtext ci cmd} {
 proc command_window {where} {
 	global keycontrol
 	global bgcolor
+	global mingw
+
 	set cmdpane [frame $where.command -bg $bgcolor]
 	set cmdwin [ScrolledWindow $where.win -relief flat -borderwidth 1]
 	set gronsole [Gronsole $where.gronsole -clickcmd "gronsole_history $cmdwin.text"]
 	set cmdtext [text $cmdwin.text -height 2 -width 80] 
 	$cmdwin setwidget $cmdtext
-	set runbutton [button $cmdpane.run -text [G_msg "Run"] -width 17 -wraplength 100 -default active -bd 1 \
-		-highlightbackground $bgcolor \
+	set runbutton [button $cmdpane.run -text [G_msg "Run"] -width 17 -wraplength 100 \
+		-default active -bd 1 -highlightbackground $bgcolor \
 		-command "run_disabled $gronsole $cmdpane.run \[string trim \[$cmdtext get 1.0 end\]\]"]
-	set run2button [button $cmdpane.run2 -text [G_msg "Run (background)"] -width 17 -wraplength 100 -bd 1 \
-		-highlightbackground $bgcolor \
+	set run2button [button $cmdpane.run2 -text [G_msg "Run (background)"] -width 17 \
+		-wraplength 100 -bd 1 -highlightbackground $bgcolor \
 		-command "$gronsole run \[string trim \[$cmdtext get 1.0 end\]\] {} {}"]
-	set runuibutton [button $cmdpane.runui -text [G_msg "Run (GUI)"] -width 17 -wraplength 100 -bd 1 \
-		-highlightbackground $bgcolor \
+	set runuibutton [button $cmdpane.runui -text [G_msg "Run (GUI)"] -width 17 \
+		-wraplength 100 -bd 1 -highlightbackground $bgcolor \
 		-command "run_ui \[string trim \[$cmdtext get 1.0 end\]\]"]
-	set runxterm [button $cmdpane.xterm -text [G_msg "Run (in Xterm)"] -width 17 -wraplength 100 -bd 1 \
-		-highlightbackground $bgcolor \
+	if { $mingw } {
+		set termbox "DOS box"
+	} else {
+		set termbox "Xterm"
+	}
+	set runxterm [button $cmdpane.xterm -text [G_msg "Run (in $termbox)"] -width 17 \
+		-wraplength 100 -bd 1 -highlightbackground $bgcolor \
 		-command "$gronsole run_xterm \[string trim \[$cmdtext get 1.0 end\]\] {}"]
 	set outpane [frame $where.output -bg $bgcolor]
 	set savebutton [button $outpane.save -text [G_msg " Save "] -command "$gronsole save" \
