@@ -10,12 +10,12 @@
 ##########################################################################
 
 namespace eval GmVector {
-    variable array opt # vector current options
+    variable array opt ;# vector current options
     variable count 1
-    variable array lfile # vector
-    variable array lfilemask # vector
+    variable array lfile ;# vector
+    variable array lfilemask ;# vector
     variable optlist
-    variable array dup # vector
+    variable array dup ;# vector
 }
 
 ###############################################################################
