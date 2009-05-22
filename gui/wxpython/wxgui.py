@@ -536,13 +536,17 @@ class GMFrame(wx.Frame):
         # name
         info.SetName("GRASS GIS")
         # version
-        versionCmd = gcmd.Command(['g.version'])
-        info.SetVersion(versionCmd.ReadStdOutput()[0].replace('GRASS', '').strip())
+        version, svn_gis_h_rev, svn_gis_h_date = gcmd.RunCommand('g.version',
+                                                                 flags = 'r',
+                                                                 read = True).splitlines()
+        version = version.replace('GRASS', '').strip()
+        info.SetVersion(version)
         # description
         copyrightFile = open(os.path.join(os.getenv("GISBASE"), "COPYING"), 'r')
         copyrightOut = []
         copyright = copyrightFile.readlines()
-        info.SetCopyright(rev + '\n\n' + wordwrap(''.join(copyright[:11] + copyright[26:-3]),
+        info.SetCopyright('GIS Library: '+ svn_gis_h_rev + '(' + svn_gis_h_date.split(' ')[1] + ')' + 
+                          '\n\n' + wordwrap(''.join(copyright[:11] + copyright[26:-3]),
                                                   550, wx.ClientDC(self)))
         copyrightFile.close()
         # website
