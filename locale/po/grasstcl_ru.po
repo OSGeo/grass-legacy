@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: grasstcl_ru\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2009-01-12 22:59+0100\n"
-"PO-Revision-Date: 2008-10-09 22:55-0600\n"
+"PO-Revision-Date: 2009-01-28 23:05-0600\n"
 "Last-Translator: Maxim Dubinin <sim@gis-lab.info>\n"
 "Language-Team: Russian <grass-translations@lists.osgeo.org>\n"
 "MIME-Version: 1.0\n"
@@ -97,11 +97,11 @@ msgid "Frame name (optional): "
 msgstr "Имя фрейма (опция):"
 
 #: ../gui/tcltk/gis.m/frames.tcl:135
-#, fuzzy, tcl-format
+#, tcl-format
 msgid "Set frame borders at 0-100% from lower left corner of display "
 msgstr ""
-"Установить границы фреймов равными 0-100% начиная с нижнего левого угла "
-"дисплея "
+"Установить границы фреймов равными 0-100 процентов начиная с нижнего левого "
+"угла дисплея"
 
 #: ../gui/tcltk/gis.m/frames.tcl:141
 msgid "     set borders (bottom,top,left,right): "
@@ -145,9 +145,8 @@ msgid "Multiple formats using GDAL"
 msgstr "Форматы импорта использующие GDAL"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:95
-#, fuzzy
 msgid "Multiple formats using GDAL (link into instead of import)"
-msgstr "Форматы импорта использующие GDAL"
+msgstr "Форматы импорта использующие GDAL (связывание вместо импорта)"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:97
 msgid "Aggregate ASCII xyz"
@@ -226,9 +225,8 @@ msgid "GPSBabel GPS"
 msgstr "GPSBabel GPS"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:121
-#, fuzzy
 msgid "Geonames"
-msgstr "Переименовать"
+msgstr "Geonames"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:122
 msgid "GEOnet"
@@ -251,9 +249,8 @@ msgid "Vis5D"
 msgstr "Vis5D"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:129
-#, fuzzy
 msgid "Import data table"
-msgstr "Импортировать растровый слой"
+msgstr "Импортировать таблицу данных"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:131
 msgid "Export raster map"
@@ -305,9 +302,8 @@ msgid "Export vector map"
 msgstr "Экспортировать векторный слой"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:157 ../gui/tcltk/d.m/menu.tcl:139
-#, fuzzy
 msgid "Multiple GPS formats using GPSBabel"
-msgstr "Форматы импорта использующие OGR"
+msgstr "Форматы импорта GPS использующие GPSBabel"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:159 ../gui/tcltk/d.m/menu.tcl:141
 msgid "SVG"
@@ -318,9 +314,8 @@ msgid "Export grid 3D volume"
 msgstr "Экспорт объемный 3D грид"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:167
-#, fuzzy
 msgid "Export data table"
-msgstr "Экспортировать растровый слой"
+msgstr "Экспортировать таблицу данных"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:169 ../gui/tcltk/d.m/menu.tcl:151
 msgid "Manage maps and volumes"
@@ -549,9 +544,8 @@ msgid "Color tables"
 msgstr "Цветовые таблицы"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:255
-#, fuzzy
 msgid "Color tables (stddev)"
-msgstr "Цветовые таблицы"
+msgstr "Цветовые таблицы (стд.откл)"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:256
 msgid "Color rules"
@@ -673,13 +667,12 @@ msgid "Visibility"
 msgstr "Видимость"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:296 ../gui/tcltk/d.m/menu.tcl:283
-#, fuzzy
 msgid "Distance to features"
-msgstr "Редактировать объекты"
+msgstr "Расстояние до объектов"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:298
 msgid "Horizon"
-msgstr ""
+msgstr "Горизонт"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:300 ../gui/tcltk/d.m/menu.tcl:285
 msgid "Transform features"
@@ -987,7 +980,7 @@ msgstr "Общая статистика"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:412
 msgid "Quantiles for large data sets"
-msgstr ""
+msgstr "Квантили для больших наборов данных"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:413
 msgid "Range of category values"
@@ -1056,7 +1049,7 @@ msgstr "Очистить вектор"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:435
 msgid "Smooth or simplify"
-msgstr ""
+msgstr "Сгладить или упростить"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:437
 msgid "Convert object types"
@@ -1099,9 +1092,8 @@ msgid "Create labels"
 msgstr "Создать подписи"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:453
-#, fuzzy
 msgid "Assign colors"
-msgstr "цвет линии"
+msgstr "Назначить цвета"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:455
 msgid "Reposition vector"
@@ -1943,14 +1935,12 @@ msgid "Print"
 msgstr "Печать"
 
 #: ../gui/tcltk/gis.m/profile.tcl:54
-#, fuzzy
 msgid "Raster map for profile"
-msgstr "Растровый слой для легенды"
+msgstr "Растровый слой для профиля"
 
 #: ../gui/tcltk/gis.m/profile.tcl:77
-#, fuzzy
 msgid "Profile Window"
-msgstr "Профильный анализ"
+msgstr "Окно профиля"
 
 #: ../gui/tcltk/gis.m/profile.tcl:110
 msgid ""
@@ -2212,7 +2202,7 @@ msgstr "Тематическая карта: тип"
 #: ../gui/tcltk/gis.m/thematic.tcl:288 ../gui/tcltk/d.m/thematic.tcl:171
 #, fuzzy
 msgid " map by"
-msgstr " слой "
+msgstr "слой "
 
 #: ../gui/tcltk/gis.m/thematic.tcl:297
 msgid "    number of intervals to map (interval themes):"
@@ -2780,14 +2770,15 @@ msgid "Raster map: "
 msgstr "Растровый слой:"
 
 #: ../gui/tcltk/gis.m/legend.tcl:229
-#, fuzzy, tcl-format
+#, tcl-format
 msgid "Legend placement and size as 0-100% of display"
-msgstr "Расположение легенды и размер как 0-100% дисплея"
+msgstr "Расположение легенды и размер как 0-100 процентов дисплея"
 
 #: ../gui/tcltk/gis.m/legend.tcl:235
-#, fuzzy, tcl-format
+#, tcl-format
 msgid "    x,y of lower left corner (in % from display top left)"
-msgstr "    x,y нижнего левого угла (в % от верхнего левого угла дисплея)"
+msgstr ""
+"    x,y нижнего левого угла (в процентах от верхнего левого угла дисплея)"
 
 #: ../gui/tcltk/gis.m/legend.tcl:238 ../gui/tcltk/gis.m/dtext.tcl:197
 #: ../gui/tcltk/gis.m/barscale.tcl:191 ../gui/tcltk/gis.m/maptext.tcl:150
@@ -2799,18 +2790,18 @@ msgid "    legend height "
 msgstr "    высота легенды"
 
 #: ../gui/tcltk/gis.m/legend.tcl:248
-#, fuzzy, tcl-format
+#, tcl-format
 msgid "Legend height (% of display)"
-msgstr "Высота легенды (% дисплея)"
+msgstr "Высота легенды (в процентах дисплея)"
 
 #: ../gui/tcltk/gis.m/legend.tcl:249
 msgid "%  width"
 msgstr "%  ширина"
 
 #: ../gui/tcltk/gis.m/legend.tcl:251
-#, fuzzy, tcl-format
+#, tcl-format
 msgid "Legend width (% of display)"
-msgstr "Ширина легенды (% дисплея)"
+msgstr "Ширина легенды (в процентах дисплея)"
 
 #: ../gui/tcltk/gis.m/legend.tcl:258
 msgid "Legend appearance: text color"
@@ -2937,14 +2928,12 @@ msgid "Run (in Xterm)"
 msgstr "Запустить (в Xterm)"
 
 #: ../gui/tcltk/gis.m/runandoutput.tcl:129
-#, fuzzy
 msgid " Save "
-msgstr "Сохранить"
+msgstr " Сохранить"
 
 #: ../gui/tcltk/gis.m/runandoutput.tcl:131
-#, fuzzy
 msgid " Clear "
-msgstr "Очистить"
+msgstr " Очистить"
 
 #: ../gui/tcltk/gis.m/runandoutput.tcl:152
 msgid "Output - GIS.m"
@@ -3013,9 +3002,10 @@ msgid "Display scale and north arrow"
 msgstr "Показать масштаб и стрелку на север"
 
 #: ../gui/tcltk/gis.m/barscale.tcl:170
-#, fuzzy, tcl-format
+#, tcl-format
 msgid "Scale placement: 0-100% from top left of display"
-msgstr "Расположение масштаба: 0-100% от левого верхнего угла дисплея"
+msgstr ""
+"Расположение масштаба: 0-100 процентов от левого верхнего угла дисплея "
 
 #: ../gui/tcltk/gis.m/barscale.tcl:176
 msgid "\t enter x,y of scale/arrow upper left corner"
@@ -4124,9 +4114,8 @@ msgid "Garmin GPS Waypoints/Routes/Tracks"
 msgstr "Garmin GPS Точки/Маршруты/Трэки"
 
 #: ../gui/tcltk/d.m/menu.tcl:103
-#, fuzzy
 msgid "GPS Waypoints/Routes/Tracks  from many formats using GPSBabel"
-msgstr "GPS Точки/Маршруты/Трэки используя GPSBabel"
+msgstr "GPS Точки/Маршруты/Трэки из разных форматов используя GPSBabel"
 
 #: ../gui/tcltk/d.m/menu.tcl:104
 msgid "GEOnet Name server country files (US-NGA GNS)"
@@ -4455,7 +4444,7 @@ msgstr "Установить цвета в заданные цветовые т�
 
 #: ../gui/tcltk/d.m/menu.tcl:244
 msgid "Set colors based on standard deviations"
-msgstr ""
+msgstr "Установить цвета по стандартным отклонениям"
 
 #: ../gui/tcltk/d.m/menu.tcl:245
 msgid "Set colors using color rules"
@@ -4767,7 +4756,7 @@ msgstr "Создать текстовые подписи для векторны
 
 #: ../gui/tcltk/d.m/menu.tcl:397
 msgid "Assign colors from a numeric attribute column"
-msgstr ""
+msgstr "Установить цвета по числовому полю"
 
 #: ../gui/tcltk/d.m/menu.tcl:399
 msgid "Reproject vector from other location"
@@ -5086,13 +5075,13 @@ msgid "  align text with coordinate point"
 msgstr "  выровнять текст с точкой"
 
 #: ../gui/tcltk/d.m/fttext.tcl:120
-#, fuzzy, tcl-format
+#, tcl-format
 msgid ""
 "     (for coordinates, % is from bottom left of display, pixels from top "
 "left)"
 msgstr ""
-"     (для координат, % начиная с нижнего левого угла, пиксели с верхнего "
-"левого)"
+"     (для координат, процентов начиная с нижнего левого угла, пиксели с "
+"верхнего левого)"
 
 #: ../gui/tcltk/d.m/fttext.tcl:126
 msgid "     text rotation (degrees counterclockwise)"
@@ -6250,3 +6239,27 @@ msgstr "Тест"
 #, fuzzy
 #~ msgid "Create Location From EPSG"
 #~ msgstr "Район"
+
+#, fuzzy
+#~ msgid "Select GIS data directory"
+#~ msgstr "Новый каталог ГИС данных:"
+
+#, fuzzy
+#~ msgid "Error reading region values"
+#~ msgstr "Ошибка установки региона"
+
+#, fuzzy
+#~ msgid "Constrain map to region geometry?"
+#~ msgstr "Ограничить слой геометрией региона"
+
+#, fuzzy
+#~ msgid "Maximum likelihood classification (MLC)"
+#~ msgstr "Классификация максимального подобия (MLC)"
+
+#, fuzzy
+#~ msgid "   Attribute column for labels"
+#~ msgstr "   Поле атрибутов для подписей"
+
+#, fuzzy
+#~ msgid "polynomial transformation  (rasters only). Requires 6+ GCPs."
+#~ msgstr "полиномиальная трансформация (только растры). Требует 7+ GCP."

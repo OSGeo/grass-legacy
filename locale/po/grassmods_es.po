@@ -7344,7 +7344,8 @@ msgstr "Producir derivadas parciales en vez de parámetros topográficos"
 #: ../vector/v.surf.rst/main.c:206 ../vector/lidar/v.surf.bspline/main.c:145
 msgid "If set to 0, z coordinates are used. (3D vector only)"
 msgstr ""
-"Si se establece a 0, se usarán las coordenadas Z (sólo vectoriales 3D)"
+"Valor de campo. Si se establece a 0, se usarán las coordenadas Z (sólo "
+"vectoriales 3D)"
 
 #: ../vector/v.surf.rst/main.c:214
 msgid ""
@@ -28616,6 +28617,182 @@ msgstr "Archivo de imagen"
 msgid "Percentage of CPU time to use"
 msgstr "Porcentaje de tiempo de CPU a usar"
 
+#, fuzzy
+msgid "display, legend"
+msgstr "Dar la vuelta a la leyenda"
+
+#, fuzzy
+msgid "Theme_prefs"
+msgstr "Preferencias de tema"
+
+#, fuzzy
+msgid "Attribute column to use for thematic display (must be numeric)"
+msgstr ""
+"Columna de atributos a usar para presentación temática (debe ser numérico)"
+
+#, fuzzy
+msgid ""
+"Break points for custom breaks option. Separate values by spaces. (0 10 20 "
+"30 ...)"
+msgstr ""
+"Puntos de ruptura para la opción de ruptura personalizada. Separar valores "
+"por espacios (0 10 20 30...)"
+
+#, fuzzy
+msgid ""
+"Color scheme for graduated color mapping (select 'single_color' for "
+"graduated point/line display)"
+msgstr ""
+"Esquema de colores para mapas en gradiente de color (seleccionar "
+"'single_color' para mostrar gradiente de puntos/líneas)"
+
+#, fuzzy
+msgid ""
+"Color for graduated points map (grass named color or R:G:B triplet). Set "
+"color scheme to single color."
+msgstr ""
+"Color para mapa de gradiente de líneas o puntos/bordes de área (nombre de "
+"color de grass o triplete R:G:B). Establecer esquema de color a un color."
+
+#, fuzzy
+msgid ""
+"Beginning color for custom color gradient. Must be expressed as R:G:B "
+"triplet."
+msgstr ""
+"Color inicial para gradiente de color personalizado. Se debe expresar como "
+"triplete R:G:B."
+
+#, fuzzy
+msgid ""
+"Ending color for custom color gradient. Must be expressed as R:G:B triplet"
+msgstr ""
+"Color final para gradiente de color personalizado. Se debe expresar como "
+"triplete R:G:B."
+
+#, fuzzy
+msgid ""
+"Root for the name of psmap instruction files to be in current directory (if "
+"not set, no psmap instruction files will be created)"
+msgstr ""
+"Raíz para el nombre de los archivos de instrucciones psmap para estar en el "
+"directorio actual ((si no se indica, no se creará ningún archivo de "
+"instrucciones psmap)"
+
+#, fuzzy
+msgid "Auto-balancing of colors for LANDSAT images"
+msgstr "Balance automático de colores para imágenes LANDSAT"
+
+#, fuzzy
+msgid ""
+"displays spectral response at user specified locations in group or images"
+msgstr ""
+"muestra la respuesta espectral en localizaciones especificadas por el "
+"usuario en grupo o imágenes"
+
+#, fuzzy
+msgid "group input"
+msgstr "entrada de grupo"
+
+#, fuzzy
+msgid "raster input maps"
+msgstr "Mapa ráster de entrada"
+
+#, fuzzy
+msgid "write output to PNG image"
+msgstr "escribir la salida a imagen PNG"
+
+#, fuzzy
+msgid "label with coordinates instead of numbering"
+msgstr "Etiquetar con coordenadas en vez de numeración"
+
+#, fuzzy
+msgid ""
+"Reclasses a raster map greater or less than user specified area size (in "
+"hectares)"
+msgstr ""
+"Reclasifica un mapa ráster mayor o menor que la superficie indicada por el "
+"usuario (en hectáreas)"
+
+#, fuzzy
+msgid "lesser val option that sets the <= area size limit [hectares]"
+msgstr ""
+"Opción de valor menor que establece el <= límite de tamaño de área "
+"(hectáreas)"
+
+#, fuzzy
+msgid "greater val option that sets the >= area size limit [hectares]"
+msgstr ""
+"Opción de valor mayor que establece el >= límite de tamaño de área "
+"(hectáreas)"
+
+#, fuzzy
+msgid ""
+"Name of old database. The database must be in form printed by v.db.connect -"
+"g, i.e. with substituted variables"
+msgstr ""
+"Nombre de la antigua base de datos. La base de datos debe estar en la forma "
+"impresa por v.db.connect -g, esto es, con variables sustituidas"
+
+msgid "mi(les),f(eet),me(ters),k(ilometers),a(cres),h(ectares),p(ercent)"
+msgstr ""
+"mi(llas),f(pies),me(tros),k(ilómetros),a(cres),h(ectáreas),p(orcentaje)"
+
+#, fuzzy
+msgid "Could not read range file"
+msgstr "No se puede leer el archivo de intervalo"
+
+#, fuzzy
+msgid "%d update/insert errors"
+msgstr "%d errores al insertar"
+
+#, fuzzy
+msgid "Writing data to file..."
+msgstr "Escribiendo los datos transformados a archivo..."
+
+#, fuzzy
+msgid "Subgroup [%s] in group [%s] contains no files."
+msgstr "El subgrupo [%s] en el grupo [%s] no contiene archivos."
+
+#, fuzzy
+msgid "1 class."
+msgstr "%d clases."
+
+#, fuzzy
+msgid "Subgroup [%s] doesn't have any files"
+msgstr "El subgrupo [%s] no tiene ningún archivo"
+
+#, fuzzy
+msgid "The subgroup must have at least 2 files to run %s"
+msgstr "El subgrupo debe tener al menos dos archivos para ejecutarse"
+
+#, fuzzy
+msgid "Can't open seed signature file <%s>"
+msgstr "** No se puede abrir el archivo de firmas semilla <%s> **"
+
+#, fuzzy
+msgid "File containing initial signatures"
+msgstr "Archivo que contiene las firmas iniciales"
+
+#, fuzzy
+msgid "Output file to contain final report"
+msgstr "Archivo de salida para contener el informe final"
+
+#, fuzzy
+msgid ""
+"\n"
+"<%s> -- illegal value of min_size"
+msgstr ""
+"\n"
+"<%s> -- valor no admitido de tamaño mínimo"
+
+#, fuzzy
+msgid "Transposing eigen matrix..."
+msgstr "Trasponiendo la matriz de valores propios..."
+
+#, fuzzy
+msgid "Output"
+msgstr "Salida:"
+
 #~ msgid "Display manager for GRASS"
 #~ msgstr "Administrador de visualización para GRASS"
 
@@ -28887,41 +29064,20 @@ msgstr "Porcentaje de tiempo de CPU a usar"
 #~ msgid "Displays thematic vector map"
 #~ msgstr "Visualizar mapa vectorial temático"
 
-#, fuzzy
-#~ msgid "display, legend"
-#~ msgstr "Dar la vuelta a la leyenda"
-
 #~ msgid "Files"
 #~ msgstr "Archivos"
 
 #~ msgid "Vector map to display thematically"
 #~ msgstr "Mapa vectorial a mostrar temáticamente"
 
-#, fuzzy
-#~ msgid "Theme_prefs"
-#~ msgstr "Preferencias de tema"
-
 #~ msgid "Vector map type"
 #~ msgstr "Tipo de mapa vectorial"
-
-#, fuzzy
-#~ msgid "Attribute column to use for thematic display (must be numeric)"
-#~ msgstr ""
-#~ "Columna de atributos a usar para presentación temática (debe ser numérico)"
 
 #~ msgid "Type of thematic display"
 #~ msgstr "Tipo de visualización temática"
 
 #~ msgid "Thematic divisions of data for display"
 #~ msgstr "Divisiones temáticas de los datos a mostrar"
-
-#, fuzzy
-#~ msgid ""
-#~ "Break points for custom breaks option. Separate values by spaces. (0 10 "
-#~ "20 30 ...)"
-#~ msgstr ""
-#~ "Puntos de ruptura para la opción de ruptura personalizada. Separar "
-#~ "valores por espacios (0 10 20 30...)"
 
 #~ msgid "Layer to use for thematic display"
 #~ msgstr "Capa a usar para visualización temática"
@@ -28943,43 +29099,12 @@ msgstr "Porcentaje de tiempo de CPU a usar"
 #~ msgid "Number of classes for interval theme (integer)"
 #~ msgstr "Número de clases para tema de intervalo (entero)"
 
-#, fuzzy
-#~ msgid ""
-#~ "Color scheme for graduated color mapping (select 'single_color' for "
-#~ "graduated point/line display)"
-#~ msgstr ""
-#~ "Esquema de colores para mapas en gradiente de color (seleccionar "
-#~ "'single_color' para mostrar gradiente de puntos/líneas)"
-
-#, fuzzy
-#~ msgid ""
-#~ "Color for graduated points map (grass named color or R:G:B triplet). Set "
-#~ "color scheme to single color."
-#~ msgstr ""
-#~ "Color para mapa de gradiente de líneas o puntos/bordes de área (nombre de "
-#~ "color de grass o triplete R:G:B). Establecer esquema de color a un color."
-
 #~ msgid ""
 #~ "Color for graduated lines or point/area outlines (grass named color or R:"
 #~ "G:B triplet). Set color scheme to single color."
 #~ msgstr ""
 #~ "Color para mapa de gradiente de líneas o puntos/bordes de área (nombre de "
 #~ "color de grass o triplete R:G:B). Establecer esquema de color a un color."
-
-#, fuzzy
-#~ msgid ""
-#~ "Beginning color for custom color gradient. Must be expressed as R:G:B "
-#~ "triplet."
-#~ msgstr ""
-#~ "Color inicial para gradiente de color personalizado. Se debe expresar "
-#~ "como triplete R:G:B."
-
-#, fuzzy
-#~ msgid ""
-#~ "Ending color for custom color gradient. Must be expressed as R:G:B triplet"
-#~ msgstr ""
-#~ "Color final para gradiente de color personalizado. Se debe expresar como "
-#~ "triplete R:G:B."
 
 #~ msgid "Misc"
 #~ msgstr "Miscelánea"
@@ -28994,15 +29119,6 @@ msgstr "Porcentaje de tiempo de CPU a usar"
 
 #~ msgid "WHERE conditions of SQL statement without 'where' keyword"
 #~ msgstr "Condiciones WHERE de sentencia SQL sin palabra clave 'where'"
-
-#, fuzzy
-#~ msgid ""
-#~ "Root for the name of psmap instruction files to be in current directory "
-#~ "(if not set, no psmap instruction files will be created)"
-#~ msgstr ""
-#~ "Raíz para el nombre de los archivos de instrucciones psmap para estar en "
-#~ "el directorio actual ((si no se indica, no se creará ningún archivo de "
-#~ "instrucciones psmap)"
 
 #~ msgid "Name of group file where thematic map commands will be saved"
 #~ msgstr ""
@@ -29161,10 +29277,6 @@ msgstr "Porcentaje de tiempo de CPU a usar"
 #~ msgid "existing SPOT VGT NDVI HDF file (0001_NDV.HDF)"
 #~ msgstr "archivo SPOT VGT NDVI HDF existente (0001_NDV.HDF)"
 
-#, fuzzy
-#~ msgid "Auto-balancing of colors for LANDSAT images"
-#~ msgstr "Balance automático de colores para imágenes LANDSAT"
-
 #~ msgid "raster, imagery, colors"
 #~ msgstr "ráster, imaginería, colores"
 
@@ -29211,37 +29323,14 @@ msgstr "Porcentaje de tiempo de CPU a usar"
 #~ msgid "LANDSAT TM band 7."
 #~ msgstr "LANDSAT TM banda 7."
 
-#, fuzzy
-#~ msgid ""
-#~ "displays spectral response at user specified locations in group or images"
-#~ msgstr ""
-#~ "muestra la respuesta espectral en localizaciones especificadas por el "
-#~ "usuario en grupo o imágenes"
-
 #~ msgid "imagery, raster, multispectral"
 #~ msgstr "imaginería, ráster, multiespectral"
-
-#, fuzzy
-#~ msgid "group input"
-#~ msgstr "entrada de grupo"
-
-#, fuzzy
-#~ msgid "raster input maps"
-#~ msgstr "Mapa ráster de entrada"
-
-#, fuzzy
-#~ msgid "write output to PNG image"
-#~ msgstr "escribir la salida a imagen PNG"
 
 #~ msgid "Use image list and not group"
 #~ msgstr "Usar lista de imágenes y no grupo"
 
 #~ msgid "Select multiple points"
 #~ msgstr "Seleccionar múltiples puntos"
-
-#, fuzzy
-#~ msgid "label with coordinates instead of numbering"
-#~ msgstr "Etiquetar con coordenadas en vez de numeración"
 
 #~ msgid "Tasseled Cap (Kauth Thomas) transformation for LANDSAT-TM data"
 #~ msgstr "Transformación Tasseled Cap (Kauth Thomas) para datos LANDSAT-TM"
@@ -29587,28 +29676,8 @@ msgstr "Porcentaje de tiempo de CPU a usar"
 #~ msgid "Type of the raster map to be created"
 #~ msgstr "Tipo de mapa ráster a crear"
 
-#, fuzzy
-#~ msgid ""
-#~ "Reclasses a raster map greater or less than user specified area size (in "
-#~ "hectares)"
-#~ msgstr ""
-#~ "Reclasifica un mapa ráster mayor o menor que la superficie indicada por "
-#~ "el usuario (en hectáreas)"
-
 #~ msgid "raster, statistics, aggregation"
 #~ msgstr "ráster, estadísticas, agregación"
-
-#, fuzzy
-#~ msgid "lesser val option that sets the <= area size limit [hectares]"
-#~ msgstr ""
-#~ "Opción de valor menor que establece el <= límite de tamaño de área "
-#~ "(hectáreas)"
-
-#, fuzzy
-#~ msgid "greater val option that sets the >= area size limit [hectares]"
-#~ msgstr ""
-#~ "Opción de valor mayor que establece el >= límite de tamaño de área "
-#~ "(hectáreas)"
 
 #~ msgid "reclass raster output map"
 #~ msgstr "reclasificar mapa ráster de salida"
@@ -29876,14 +29945,6 @@ msgstr "Porcentaje de tiempo de CPU a usar"
 
 #~ msgid "Reconnects vectors to a new database."
 #~ msgstr "Conecta vectoriales a una nueva base de datos."
-
-#, fuzzy
-#~ msgid ""
-#~ "Name of old database. The database must be in form printed by v.db."
-#~ "connect -g, i.e. with substituted variables"
-#~ msgstr ""
-#~ "Nombre de la antigua base de datos. La base de datos debe estar en la "
-#~ "forma impresa por v.db.connect -g, esto es, con variables sustituidas"
 
 #~ msgid "Name of new database"
 #~ msgstr "Nombre de la nueva base de datos"
@@ -30175,10 +30236,6 @@ msgstr "Porcentaje de tiempo de CPU a usar"
 #~ msgid "Value to calculate"
 #~ msgstr "Valor a calcular"
 
-#~ msgid "mi(les),f(eet),me(ters),k(ilometers),a(cres),h(ectares),p(ercent)"
-#~ msgstr ""
-#~ "mi(llas),f(pies),me(tros),k(ilómetros),a(cres),h(ectáreas),p(orcentaje)"
-
 #~ msgid "Uploads vector values at positions of vector points to the table."
 #~ msgstr ""
 #~ "Carga valores vectoriales en las posiciones de puntos vectoriales a la "
@@ -30283,10 +30340,6 @@ msgstr "Porcentaje de tiempo de CPU a usar"
 
 #~ msgid "Total levels: %4d"
 #~ msgstr "Niveles totales: %4d"
-
-#, fuzzy
-#~ msgid "Could not read range file"
-#~ msgstr "No se puede leer el archivo de intervalo"
 
 #~ msgid "Reading data: "
 #~ msgstr "Leyendo datos: "
@@ -30405,10 +30458,6 @@ msgstr "Porcentaje de tiempo de CPU a usar"
 #~ msgid "%d categories read from map"
 #~ msgstr "%d categorías leídas del mapa"
 
-#, fuzzy
-#~ msgid "%d update/insert errors"
-#~ msgstr "%d errores al insertar"
-
 #~ msgid "Output inverse raster map after IFFT"
 #~ msgstr "Producir mapa ráster inverso después de IFFT"
 
@@ -30433,10 +30482,6 @@ msgstr "Porcentaje de tiempo de CPU a usar"
 #~ msgid "Unable to open output file."
 #~ msgstr "No fue posible abrir el archivo de salida"
 
-#, fuzzy
-#~ msgid "Writing data to file..."
-#~ msgstr "Escribiendo los datos transformados a archivo..."
-
 #~ msgid "Transform successful."
 #~ msgstr "Transformación exitosa."
 
@@ -30455,10 +30500,6 @@ msgstr "Porcentaje de tiempo de CPU a usar"
 
 #~ msgid "get_img: out of memory."
 #~ msgstr "get_img: sin memoria"
-
-#, fuzzy
-#~ msgid "Subgroup [%s] in group [%s] contains no files."
-#~ msgstr "El subgrupo [%s] en el grupo [%s] no contiene archivos."
 
 #~ msgid "Writing [%s] ..."
 #~ msgstr "Escribiendo [%s] ..."
@@ -30490,10 +30531,6 @@ msgstr "Porcentaje de tiempo de CPU a usar"
 
 #~ msgid "Resultant signature file"
 #~ msgstr "Archivo de firma resultante"
-
-#, fuzzy
-#~ msgid "1 class."
-#~ msgstr "%d clases."
 
 #~ msgid "%d classes."
 #~ msgstr "%d clases."
@@ -30532,20 +30569,8 @@ msgstr "Porcentaje de tiempo de CPU a usar"
 #~ msgid "subgroup <%s> not found"
 #~ msgstr "subgrupo <%s> no encontrado"
 
-#, fuzzy
-#~ msgid "Subgroup [%s] doesn't have any files"
-#~ msgstr "El subgrupo [%s] no tiene ningún archivo"
-
-#, fuzzy
-#~ msgid "The subgroup must have at least 2 files to run %s"
-#~ msgstr "El subgrupo debe tener al menos dos archivos para ejecutarse"
-
 #~ msgid "Unable to proceed"
 #~ msgstr "No se puede proceder"
-
-#, fuzzy
-#~ msgid "Can't open seed signature file <%s>"
-#~ msgstr "** No se puede abrir el archivo de firmas semilla <%s> **"
 
 #, fuzzy
 #~ msgid "Can't read signature file <%s>"
@@ -30556,22 +30581,6 @@ msgstr "Porcentaje de tiempo de CPU a usar"
 
 #~ msgid "Subgroup name in the above group"
 #~ msgstr "Nombre de subgrupo en el grupo de arriba"
-
-#, fuzzy
-#~ msgid "File containing initial signatures"
-#~ msgstr "Archivo que contiene las firmas iniciales"
-
-#, fuzzy
-#~ msgid "Output file to contain final report"
-#~ msgstr "Archivo de salida para contener el informe final"
-
-#, fuzzy
-#~ msgid ""
-#~ "\n"
-#~ "<%s> -- illegal value of min_size"
-#~ msgstr ""
-#~ "\n"
-#~ "<%s> -- valor no admitido de tamaño mínimo"
 
 #~ msgid "Can't creat reportfile: "
 #~ msgstr "No se puede crear el informe: "
@@ -30787,10 +30796,6 @@ msgstr "Porcentaje de tiempo de CPU a usar"
 
 #~ msgid "Ordering eigenvalues in descending order..."
 #~ msgstr "Organizando los valores propios en orden descendente..."
-
-#, fuzzy
-#~ msgid "Transposing eigen matrix..."
-#~ msgstr "Trasponiendo la matriz de valores propios..."
 
 #~ msgid "Cannot write color table of raster map <%s>"
 #~ msgstr "No se puede escribir la tabla de colores de mapa ráster <%s>"
@@ -31094,10 +31099,6 @@ msgstr "Porcentaje de tiempo de CPU a usar"
 #~ msgid "Name of the y-derivatives raster map [m/m] or [ft/ft]"
 #~ msgstr "Nombre del mapa ráster de derivadas de Y [m/m] o [pies/pies]"
 
-#, fuzzy
-#~ msgid "Output"
-#~ msgstr "Salida:"
-
 #~ msgid "Threshold distance set to %g map units (based on 2D resolution)"
 #~ msgstr ""
 #~ "Distancia umbral establecida a %g unidades de mapa (basado en resolución "
@@ -31349,3 +31350,395 @@ msgstr "Porcentaje de tiempo de CPU a usar"
 #, fuzzy
 #~ msgid "Name of column to use for buffer distances"
 #~ msgstr "Columna de atributos a usar para distancias de buffer"
+
+#, fuzzy
+#~ msgid "Lat/Long locations are not supported by this module"
+#~ msgstr "Localización latitud/longitud no soportada"
+
+#, fuzzy
+#~ msgid "Direction raster found <%s>"
+#~ msgstr "Escribiendo mapa ráster <%s>"
+
+#, fuzzy
+#~ msgid "Outputting a vector path"
+#~ msgstr "Producir mapa vectorial de líneas de flujo"
+
+#, fuzzy
+#~ msgid "Do not write GDAL standard colortable"
+#~ msgstr "Eliminar la tabla de colores existente"
+
+#, fuzzy
+#~ msgid "Forcing raster export."
+#~ msgstr "ráster, exportar"
+
+#, fuzzy
+#~ msgid "Raster export aborted."
+#~ msgstr "ráster, exportar"
+
+#, fuzzy
+#~ msgid "Raster map <%s> range: %g - %g"
+#~ msgstr "El mapa ráster <%s> ya existe"
+
+#, fuzzy
+#~ msgid ""
+#~ "Input raster map contains cells with NULL-value (no-data). The value %d "
+#~ "was used to represent no-data values in the input map. You can specify a "
+#~ "nodata value with the %s option."
+#~ msgstr ""
+#~ "El mapa ráster de entrada contiene celdas con valor NULO (sin datos). "
+#~ "Para los valores sin datos se usó el valor %d. Puede especificar el valor "
+#~ "para para las celdas sin datos con el parámetro %s."
+
+#, fuzzy
+#~ msgid ""
+#~ "Input raster map contains cells with NULL-value (no-data). The value %g "
+#~ "was used to represent no-data values in the input map. You can specify a "
+#~ "nodata value with the %s option."
+#~ msgstr ""
+#~ "El mapa ráster de entrada contiene celdas con valor NULO (sin datos). "
+#~ "Para los valores sin datos se usó el valor %d. Puede especificar el valor "
+#~ "para para las celdas sin datos con el parámetro %s."
+
+#, fuzzy
+#~ msgid "Use cell center reference in header instead of cell corner"
+#~ msgstr "Listar un vacío por línea en vez de fila completa"
+
+#, fuzzy
+#~ msgid "Name of output raster map to contain movement directions"
+#~ msgstr "Nombre del mapa ráster de entrada que contiene costes de fricción"
+
+#, fuzzy
+#~ msgid "Initializing directional output "
+#~ msgstr "Inicializando la salida "
+
+#, fuzzy
+#~ msgid "Writing movement direction file %s..."
+#~ msgstr "Escribiendo vértices..."
+
+#, fuzzy
+#~ msgid "Sigma (in cells) for Gaussian filter"
+#~ msgstr "Sensibilidad del filtro de Gauss"
+
+#, fuzzy
+#~ msgid "weight= and gauss= are mutually exclusive"
+#~ msgstr "weight= y -c son excluyentes mutuamente"
+
+#, fuzzy
+#~ msgid "Method %s not compatible with Gaussian filter"
+#~ msgstr "Extensión X-Y del filtro de Gauss"
+
+#, fuzzy
+#~ msgid "SECTION 3: Accumulating Surface Flow with SFD."
+#~ msgstr "SECCIÓN 3: acumulando flujo de superficie."
+
+#, fuzzy
+#~ msgid "SECTION 3: Accumulating Surface Flow with MFD."
+#~ msgstr "SECCIÓN 3: acumulando flujo de superficie."
+
+#, fuzzy
+#~ msgid "SECTION 4: RUSLE LS and/or S factor determination."
+#~ msgstr "SECCIÓN 4: determinación de la pendiente de la longitud."
+
+#, fuzzy
+#~ msgid "unable to open new LS factor map layer."
+#~ msgstr "no se puede abrir nueva capa de mapa L."
+
+#, fuzzy
+#~ msgid "unable to open new S factor map layer."
+#~ msgstr "no se puede abrir nueva capa de mapa S."
+
+#, fuzzy
+#~ msgid "Input value: maximum length of surface flow in map units, for USLE"
+#~ msgstr "Valor de entrada: longitud máxima de flujo de superficie, para USLE"
+
+#, fuzzy
+#~ msgid "Output map: useful for visual display of results. DEPRECATED."
+#~ msgstr "Mapa de salida: útil para  visualizar los resultados"
+
+#, fuzzy
+#~ msgid "Convergence factor for MFD (1-10)"
+#~ msgstr "Factor de conversión para valores Z"
+
+#, fuzzy
+#~ msgid ""
+#~ "Sorry, if any of the following options are set:\n"
+#~ "    basin, stream, half.basin, length.slope, or slope.steepness\n"
+#~ "    you MUST provide a value for the basin threshold parameter."
+#~ msgstr ""
+#~ "Lo siento, si alguna de las siguientes opciones es establecida:\n"
+#~ "    cuenca, corriente, semicuenca, pendiente o IS\n"
+#~ "    DEBE proporcionar un valor para el parámetro de umbral de cuenca."
+
+#, fuzzy
+#~ msgid "unable to open flow accumulation map layer"
+#~ msgstr "no se puede abrir nueva capa de mapa de acumulación."
+
+#, fuzzy
+#~ msgid "Tykhonov regularization weight"
+#~ msgstr "Peso de regularización Tychonov"
+
+#, fuzzy
+#~ msgid "Unable to create table <%s_edge_Interpolation>"
+#~ msgstr "No se puede crear la tabla <%s>"
+
+#, fuzzy
+#~ msgid ""
+#~ "Find the best Tykhonov regularizing parameter using a \"leave-one-out\" "
+#~ "cross validation method"
+#~ msgstr ""
+#~ "Encontrar los mejores parámetros usando un método de validación cruzada"
+
+#, fuzzy
+#~ msgid "Length of each spline step in the east-west direction"
+#~ msgstr "Valor de paso spline de interpolación en dirección Este"
+
+#, fuzzy
+#~ msgid "Length of each spline step in the north-south direction"
+#~ msgstr "Valor de paso spline de interpolación en dirección Norte"
+
+#, fuzzy
+#~ msgid "Spline interpolation algorithm"
+#~ msgstr "Algoritmo de generalización"
+
+#, fuzzy
+#~ msgid "Tykhonov regularization parameter (affects smoothing)"
+#~ msgstr "Peso de regularización Tychonov"
+
+#, fuzzy
+#~ msgid ""
+#~ "No vector map of sparse points to interpolate was specified. "
+#~ "Interpolation will be done with <%s> vector map"
+#~ msgstr ""
+#~ "Ningún mapa vectorial a interpolar. La interpolación se hará con el mapa "
+#~ "vectorial <%s>"
+
+#, fuzzy
+#~ msgid "First column is 1. If 0, z coordinate is not used"
+#~ msgstr "Si es 0, no se usará la coordenada Z"
+
+#, fuzzy
+#~ msgid ""
+#~ "First column is 1. If 0, unique category is assigned to each row and "
+#~ "written to new column 'cat'"
+#~ msgstr ""
+#~ "Si es 0, se asignará una categoría única a cada fila y se escribirá en "
+#~ "una nueva columna 'cat'."
+
+#, fuzzy
+#~ msgid "Create a new empty vector map and exit. Nothing is read from input."
+#~ msgstr "Crear un mapa nuevo vacío y salir. No se lee nada de la entrada"
+
+#, fuzzy
+#~ msgid "Maximum number of points for approximation in a segment (>npmin)"
+#~ msgstr "Número mínimo de puntos para aproximación en un segmento (>segmax)"
+
+#, fuzzy
+#~ msgid ""
+#~ "Node[%d]=%d\n"
+#~ "Number_lines=%d\n"
+#~ "Coordinates=%.6f,%.6f,%.6f\n"
+#~ msgstr ""
+#~ "  Nodo[%d]: %d  \n"
+#~ "Número de líneas: %d\n"
+#~ "Coordenadas: %.6f, %.6f, %.6f\n"
+
+#, fuzzy
+#~ msgid ""
+#~ "mi(les),f(eet),me(ters),k(ilometers),a(cres),h(ectares),r(adians),d"
+#~ "(egrees)"
+#~ msgstr ""
+#~ "mi(llas),f(pies),me(tros),k(ilómetros),a(cres),h(ectáreas),p(orcentaje)"
+
+#, fuzzy
+#~ msgid "The 'azimuth' option makes sense only for lines"
+#~ msgstr "La opción 'lados' sólo tiene sentido para perímetros"
+
+#, fuzzy
+#~ msgid "vector, spatial query"
+#~ msgstr "vectorial, consultar"
+
+#, fuzzy
+#~ msgid "Unknown operator"
+#~ msgstr "Operación desconocida"
+
+#, fuzzy
+#~ msgid "Output from v.select"
+#~ msgstr "Formato de salida"
+
+#, fuzzy
+#~ msgid "Unable to read line id %d from vector map <%s>"
+#~ msgstr ""
+#~ "No se puede obtener información de la capa para el mapa vectorial <%s>"
+
+#, fuzzy
+#~ msgid "Unable to read area id %d from vector map <%s>"
+#~ msgstr "No se pueden procesar las áreas del mapa vectorial<%s>"
+
+#, fuzzy
+#~ msgid "%d features without category skipped"
+#~ msgstr "%d puntos sin categoría saltados"
+
+#, fuzzy
+#~ msgid "%d features written to output."
+#~ msgstr "%ld bytes escritos a '%s'"
+
+#, fuzzy
+#~ msgid "Outputs"
+#~ msgstr "Salida:"
+
+#, fuzzy
+#~ msgid "Use the distance option instead of the buffer option."
+#~ msgstr "Usar radianes en vez de grados para la rotación"
+
+#, fuzzy
+#~ msgid ""
+#~ "Your cats/ file is invalid. A cats/ file with categories and labels is "
+#~ "required for 'colortable' when using categorical legends; see the r."
+#~ "category help page. Colortable creation has been skipped."
+#~ msgstr ""
+#~ "Su archivo de categorías no es válido. Se requiere un archivo de "
+#~ "categorías y etiquetas para la 'tabla de color' cuando se usan rásters "
+#~ "CELL. No se asignará ninguna tabla de colores a este archivo PostScript "
+#~ "de salida."
+
+#, fuzzy
+#~ msgid "Name of two or more input raster maps"
+#~ msgstr "Nombre del mapa ráster de entrada"
+
+#, fuzzy
+#~ msgid "Base name for output raster maps"
+#~ msgstr "Nombre para el mapa ráster de salida"
+
+#, fuzzy
+#~ msgid "A numerical suffix will be added for each component map"
+#~ msgstr "Número de niveles a usar para cada componente"
+
+#, fuzzy
+#~ msgid "Rescaling range for output maps (for no rescaling use 0,0)"
+#~ msgstr "Re-escalar rango de salida (para no re-escalar use 0,0)"
+
+#, fuzzy
+#~ msgid "Computing means for band %d..."
+#~ msgstr "Calculando medias para la banda %d:"
+
+#, fuzzy
+#~ msgid "Transforming <%s>..."
+#~ msgstr "Trasponiendo la matriz de valores propios..."
+
+#, fuzzy
+#~ msgid "Rescaling <%s> to range %d,%d..."
+#~ msgstr "%s: reescalando los datos al rango [%d, %d]:"
+
+#, fuzzy
+#~ msgid "Verbose module output"
+#~ msgstr "Modo verboso"
+
+#, fuzzy
+#~ msgid "%s=%s,%s: files could be the same, no rename possible"
+#~ msgstr ""
+#~ "%s=%s,%s: los archivos son iguales, no se necesita cambiar el nombre"
+
+#, fuzzy
+#~ msgid "Your mapset search list:\n"
+#~ msgstr "Imprimir la ruta de búsqueda del directorio de mapas actual"
+
+#, fuzzy
+#~ msgid "<%s> not found in mapset list"
+#~ msgstr "Columna <%s> no encontrada en la tabla <%s>"
+
+#, fuzzy
+#~ msgid "Available mapsets:"
+#~ msgstr "Listar todos los directorios de mapas disponibles"
+
+#, fuzzy
+#~ msgid "Theme"
+#~ msgstr "Preferencias de tema"
+
+#, fuzzy
+#~ msgid ""
+#~ "Name of attribute column to use for thematic display (must be numeric)"
+#~ msgstr ""
+#~ "Columna de atributos a usar para presentación temática (debe ser numérico)"
+
+#, fuzzy
+#~ msgid "Separate values by spaces (0 10 20 30 ...)"
+#~ msgstr ""
+#~ "Puntos de ruptura para la opción de ruptura personalizada. Separar "
+#~ "valores por espacios (0 10 20 30...)"
+
+#, fuzzy
+#~ msgid "Select 'single_color' for graduated point/line display"
+#~ msgstr ""
+#~ "Esquema de colores para mapas en gradiente de color (seleccionar "
+#~ "'single_color' para mostrar gradiente de puntos/líneas)"
+
+#, fuzzy
+#~ msgid "Beginning color for custom color gradient"
+#~ msgstr ""
+#~ "Color inicial para gradiente de color personalizado. Se debe expresar "
+#~ "como triplete R:G:B."
+
+#, fuzzy
+#~ msgid "Ending color for custom color gradient"
+#~ msgstr ""
+#~ "Color final para gradiente de color personalizado. Se debe expresar como "
+#~ "triplete R:G:B."
+
+#, fuzzy
+#~ msgid ""
+#~ "Root for the name of psmap instruction files to be in current directory"
+#~ msgstr ""
+#~ "Raíz para el nombre de los archivos de instrucciones psmap para estar en "
+#~ "el directorio actual ((si no se indica, no se creará ningún archivo de "
+#~ "instrucciones psmap)"
+
+#, fuzzy
+#~ msgid "Performs auto-balancing of colors for LANDSAT images."
+#~ msgstr "Balance automático de colores para imágenes LANDSAT"
+
+#, fuzzy
+#~ msgid ""
+#~ "Displays spectral response at user specified locations in group or images."
+#~ msgstr ""
+#~ "muestra la respuesta espectral en localizaciones especificadas por el "
+#~ "usuario en grupo o imágenes"
+
+#, fuzzy
+#~ msgid "Group input"
+#~ msgstr "entrada de grupo"
+
+#, fuzzy
+#~ msgid "Write output to PNG image"
+#~ msgstr "escribir la salida a imagen PNG"
+
+#, fuzzy
+#~ msgid "Label with coordinates instead of numbering"
+#~ msgstr "Etiquetar con coordenadas en vez de numeración"
+
+#, fuzzy
+#~ msgid ""
+#~ "Reclasses a raster map greater or less than user specified area size (in "
+#~ "hectares)."
+#~ msgstr ""
+#~ "Reclasifica un mapa ráster mayor o menor que la superficie indicada por "
+#~ "el usuario (en hectáreas)"
+
+#, fuzzy
+#~ msgid "Lesser value option that sets the <= area size limit [hectares]"
+#~ msgstr ""
+#~ "Opción de valor menor que establece el <= límite de tamaño de área "
+#~ "(hectáreas)"
+
+#, fuzzy
+#~ msgid "Greater value option that sets the >= area size limit [hectares]"
+#~ msgstr ""
+#~ "Opción de valor mayor que establece el >= límite de tamaño de área "
+#~ "(hectáreas)"
+
+#, fuzzy
+#~ msgid ""
+#~ "The database must be in form printed by v.db.connect -g, i.e. with "
+#~ "substituted variables"
+#~ msgstr ""
+#~ "Nombre de la antigua base de datos. La base de datos debe estar en la "
+#~ "forma impresa por v.db.connect -g, esto es, con variables sustituidas"

@@ -6450,3 +6450,29 @@ msgstr "Test"
 
 #~ msgid "Generalization"
 #~ msgstr "Generalización"
+
+#, fuzzy
+#~ msgid "Select GIS data directory"
+#~ msgstr "Nuevo directorio de datos GIS"
+
+#, fuzzy
+#~ msgid "Error reading region values"
+#~ msgstr "Error al establecer la región"
+
+#, fuzzy
+#~ msgid "Constrain map to region geometry?"
+#~ msgstr "Restringir mapa a la geometría de la región"
+
+#, fuzzy
+#~ msgid "Maximum likelihood classification (MLC)"
+#~ msgstr "Clasificación por probabilidad máxima (MLC)"
+
+#, fuzzy
+#~ msgid "   Attribute column for labels"
+#~ msgstr "   Columna de atributos para las etiquetas"
+
+#, fuzzy
+#~ msgid "polynomial transformation  (rasters only). Requires 6+ GCPs."
+#~ msgstr ""
+#~ "transformación polinomial  (sólo rásters). Requiere 6 o más puntos de "
+#~ "control."
