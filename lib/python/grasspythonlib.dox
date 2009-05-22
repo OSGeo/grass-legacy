@@ -1,17 +1,28 @@
-/*! \page pythonlib GRASS 6 Python library
+/*! \page pythonlib GRASS 6 Python scripting library
 
-by GRASS Development Team
+by GRASS Development Team (http://grass.osgeo.org)
 
-http://grass.osgeo.org
+\section intro Introduction
 
-See code in: grass.py
+The code in lib/python/ provides "grass.script" in order to support GRASS 
+scripts written in Python. The scripts/ directory of GRASS contains a
+series of examples actually provided to the end users.
 
+See code in:
+<ul>
+<li>grass.py</li>
+</ul>
 
-\section scripting GRASS scripting tasks for Python provided by "grass.py".
+\section scripting GRASS scripting tasks for Python provided by "grass".
 
-Usage: "import grass"
+Usage:
+
+\code
+import grass
+\endcode
 
 \section make_command
+
 \code
 def make_command(prog, flags = "", overwrite = False, quiet = False, verbose = False, **options):
 \endcode
@@ -40,7 +51,7 @@ and "shell". Example:
 <subprocess.Popen object at 0xb7c12f6c>
 >>> print p.communicate()[0]
 GISDBASE='/opt/grass-data';
-LOCATION_NAME='spearfish57';
+LOCATION_NAME='spearfish60';
 MAPSET='glynn';
 GRASS_DB_ENCODING='ascii';
 GRASS_GUI='text';
@@ -62,7 +73,7 @@ Passes all arguments to start_command, but also adds
 <subprocess.Popen object at 0xb7c12f6c>
 >>> print p.communicate()[0]
 GISDBASE='/opt/grass-data';
-LOCATION_NAME='spearfish57';
+LOCATION_NAME='spearfish60';
 MAPSET='glynn';
 GRASS_DB_ENCODING='ascii';
 GRASS_GUI='text';
