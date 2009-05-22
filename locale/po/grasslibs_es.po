@@ -4900,79 +4900,112 @@ msgid "Insufficent memory for allocation of gaussian"
 msgstr "Memoria insuficiente para emplazar gaussian"
 
 #, fuzzy
-#~ msgid "Unable to delete layer/category %d/%d line %d"
-#~ msgstr "No se puede borrar el mapa vectorial <%s>"
+msgid "Unable to delete layer/category %d/%d line %d"
+msgstr "No se puede borrar el mapa vectorial <%s>"
 
 #, fuzzy
-#~ msgid "Cannot get layer info"
-#~ msgstr "No se puede obtener información de la fila."
+msgid "Cannot get layer info"
+msgstr "No se puede obtener información de la fila."
 
 #, fuzzy
-#~ msgid "Cannot open database %s"
-#~ msgstr "No se puede abrir la base de datos %s con el controlador %s"
+msgid "Cannot open database %s"
+msgstr "No se puede abrir la base de datos %s con el controlador %s"
 
 #, fuzzy
-#~ msgid "Registering points"
-#~ msgstr "Registrando elementos..."
+msgid "Registering points"
+msgstr "Registrando elementos..."
 
 #, fuzzy
-#~ msgid "All vertices"
-#~ msgstr "Permitir sobrescribir"
+msgid "All vertices"
+msgstr "Permitir sobrescribir"
 
 #, fuzzy
-#~ msgid "Registered points"
-#~ msgstr "Registrando elementos..."
+msgid "Registered points"
+msgstr "Registrando elementos..."
 
 #, fuzzy
-#~ msgid "Duplicates"
-#~ msgstr "campo Este duplicado"
+msgid "Duplicates"
+msgstr "campo Este duplicado"
 
 #, fuzzy
-#~ msgid "G_malloc: out of memory"
-#~ msgstr "Sin memoria"
+msgid "G_malloc: out of memory"
+msgstr "Sin memoria"
 
 #, fuzzy
-#~ msgid "G_calloc: out of memory"
-#~ msgstr "Sin memoria"
+msgid "G_calloc: out of memory"
+msgstr "Sin memoria"
 
 #, fuzzy
-#~ msgid "G_realloc: out of memory"
-#~ msgstr "Sin memoria"
+msgid "G_realloc: out of memory"
+msgstr "Sin memoria"
 
 #, fuzzy
-#~ msgid "BUG (delete_area_cats_from_cidx): Area %d does not exist"
-#~ msgstr "BUG (Vect_build_sidx_from_topo): el área no existe."
+msgid "BUG (delete_area_cats_from_cidx): Area %d does not exist"
+msgstr "BUG (Vect_build_sidx_from_topo): el área no existe."
 
 #, fuzzy
-#~ msgid "Attempt to delete dead line"
-#~ msgstr "Intento de borrar un área inexistente"
+msgid "Attempt to delete dead line"
+msgstr "Intento de borrar un área inexistente"
 
 #, fuzzy
-#~ msgid "unable to open raster map [%s in %s]"
-#~ msgstr "No se puede abrir el mapa raster <%s@%s>"
+msgid "unable to open raster map [%s in %s]"
+msgstr "No se puede abrir el mapa raster <%s@%s>"
 
 #, fuzzy
-#~ msgid "unable to find [%s] in [%s]"
-#~ msgstr "No se puede encontrar '%s' en '%s'"
+msgid "unable to find [%s] in [%s]"
+msgstr "No se puede encontrar '%s' en '%s'"
 
 #
 #, fuzzy
-#~ msgid "Unable to connect lines %d,%d"
+msgid "Unable to connect lines %d,%d"
+msgstr "No se puede leer la línea %d"
+
+#, fuzzy
+msgid "Output name '%s' is not valid rast name."
+msgstr ""
+"El nombre del mapa vectorial de salida <%s> no es un nombre de mapa válido"
+
+#, fuzzy
+msgid "Cannot find input map '%s'"
+msgstr "No se puede encontrar  o abrir el símbolo '%s'"
+
+#, fuzzy
+msgid "Output map '%s' is used as input"
+msgstr "El mapa vectorial de salida <%s> se está usando como entrada"
+
+#, fuzzy
+msgid "Translating colors from fp raster map <%s>"
+msgstr "Traduciendo colores del mapa raster <%s>..."
+
+#, fuzzy
+#~ msgid "Unable to load file to memory, file not open"
+#~ msgstr "No se puede abrir el archivo temporal"
+
+#, fuzzy
+#~ msgid ""
+#~ "Vect_read_line_geos(): feature id %d is not reasonable (max features in "
+#~ "vector map <%s>: %d)"
+#~ msgstr ""
+#~ "Vect_read_line(): el identificador del razgo id %d no es razonable (El "
+#~ "número máximo de rasgos en el mapa vector es <%s>: %d)"
+
+#, fuzzy
+#~ msgid "only native format supported"
+#~ msgstr "no soportado para este formato/nivel"
+
+#
+#, fuzzy
+#~ msgid "Unable to read line offset %ld"
 #~ msgstr "No se puede leer la línea %d"
 
 #, fuzzy
-#~ msgid "Output name '%s' is not valid rast name."
-#~ msgstr ""
-#~ "El nombre del mapa vectorial de salida <%s> no es un nombre de mapa válido"
+#~ msgid "Attempt to read points of nonexistent area id %d"
+#~ msgstr "Intento de leer puntos de un área inexistente."
 
 #, fuzzy
-#~ msgid "Cannot find input map '%s'"
-#~ msgstr "No se puede encontrar  o abrir el símbolo '%s'"
+#~ msgid "Unable to read feature id %d"
+#~ msgstr "No se puede reescribir el razgo. %d"
 
 #, fuzzy
-#~ msgid "Output map '%s' is used as input"
-#~ msgstr "El mapa vectorial de salida <%s> se está usando como entrada"
-
-#, fuzzy
-#~ msgid "Translating colors from fp raster map <%s>"
-#~ msgstr "Traduciendo colores del mapa raster <%s>..."
+#~ msgid "Unable to make mapset element %s (%s): %s"
+#~ msgstr "No se puede generar el elemento %s (%s) del directorio de mapas"
