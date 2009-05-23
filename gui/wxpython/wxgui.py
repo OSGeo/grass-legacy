@@ -27,6 +27,8 @@ import types
 import re
 import string
 import getopt
+import platform
+import shlex
 
 ### XML 
 import xml.sax
@@ -450,12 +452,13 @@ class GMFrame(wx.Frame):
 
     def OnRunCmd(self, event):
         """Run command"""
-        cmd = event.GetString()
+        cmdString = event.GetString()
 
-        if cmd[:2] == 'd.' and not self.curr_page:
+        if cmdString[:2] == 'd.' and not self.curr_page:
             self.NewDisplay(show=True)
         
-        if len(cmd.split(' ')) > 1:
+        cmd = shlex.split(str(cmdString))
+        if len(cmd) > 1:
             self.goutput.RunCmd(cmd, switchPage=True)
         else:
             self.goutput.RunCmd(cmd, switchPage=False)
@@ -1019,9 +1022,9 @@ class GMFrame(wx.Frame):
         runbat = os.path.join(gisbase,'etc','grass-run.bat')
         xtermwrapper = os.path.join(gisbase,'etc','grass-xterm-wrapper')
         grassrun = os.path.join(gisbase,'etc','grass-run.sh')
-        command = ' '.join(command)
+        command = shlex.split(str(command))
         
-        if 'OS' in os.environ and os.environ['OS'] == "Windows_NT":
+        if platform.system() == 'Windows':
             cmdlist = ["cmd.exe", "/c", 'start "%s"' % runbat, command]
         else:
             cmdlist = [xtermwrapper, '-e "%s"' % grassrun, command]
