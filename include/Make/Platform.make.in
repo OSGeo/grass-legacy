@@ -171,6 +171,8 @@ TKINCDIR            = @TKINCDIR@
 TCLTKLIBPATH        = @TCLTKLIBPATH@
 TCLTKLIBS           = @TCLTKLIBS@
 TCLVERSION          = @TCL_VERSION@
+# set from configure when 64bit TclTk Aqua becomes possible on OSX
+TCLTKAQUA_IS64BIT    = @TCLTKAQUA_IS64BIT@
 
 #FFTW:
 FFTWINC             = @FFTWINC@
@@ -187,11 +189,6 @@ GDALLIBS            = @GDAL_LIBS@
 GDALCFLAGS          = @GDAL_CFLAGS@
 USE_GDAL            = @USE_GDAL@
 USE_OGR             = @USE_OGR@
-
-#GEOS
-GEOSLIBS            = @GEOS_LIBS@
-GEOSCFLAGS          = @GEOS_CFLAGS@
-USE_GEOS            = @USE_GEOS@
 
 #FreeType:
 FTINC               = @FTINC@
@@ -227,6 +224,8 @@ WXWIDGETSCXXFLAGS   = @WXWIDGETSCXXFLAGS@
 WXWIDGETSCPPFLAGS   = @WXWIDGETSCPPFLAGS@
 WXWIDGETSLIB        = @WXWIDGETSLIB@
 USE_WXWIDGETS       = @USE_WXWIDGETS@
+# set from configure when 64bit wxWidgets becomes possible on OSX
+WX_ISOSX64BIT       = 
 
 #regex
 REGEXINCPATH        = @REGEXINCPATH@
