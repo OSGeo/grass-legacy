@@ -52,9 +52,6 @@ from GRASS 5 Programmer's manual) or are simply undocumented.</i>
 -->
 \image html "grass6_arch.png" "GRASS 6 Architecture"
 
-<p>
-<b>PLEASE UPDATE FOR GRASS 7</b>
-
 \section corelibs Principal library
 
 (the name refers to the directory name in lib/ in the source code)
