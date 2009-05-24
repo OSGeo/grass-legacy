@@ -18,12 +18,11 @@ inc_dirs = [os.path.join(variables['GRASS_HOME'],
 lib_dirs = [os.path.join(variables['GRASS_HOME'],
                          'dist.' + variables['ARCH'],
                          'lib')]
-
-
 libs = ['grass_gis',
         'grass_nviz',
         'grass_ogsf',
         'grass_g3d']
+extras = []
 
 for flag in ('GDALCFLAGS',
              'GDALLIBS',
@@ -33,7 +32,7 @@ for flag in ('GDALCFLAGS',
              'XMINC',
              'OPENGLLIB',
              'OPENGLULIB'):
-    update_opts(flag, macros, inc_dirs, lib_dirs, libs)
+    update_opts(flag, macros, inc_dirs, lib_dirs, libs, extras)
 
 setup(
     ext_modules= [
@@ -54,6 +53,7 @@ setup(
             include_dirs = inc_dirs,
             library_dirs = lib_dirs,
             libraries = libs,
+            extra_link_args = extras,
             )
 	]
     )
