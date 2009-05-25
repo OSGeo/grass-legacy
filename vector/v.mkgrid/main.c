@@ -4,7 +4,7 @@
  * AUTHOR(S):    Written by GRASS, Fall of 88, Michael Higgins CERL (original contributor)
  *               Updated <02 Jun 1992> by Darrell McCauley <mccauley@ecn.purdue.edu> angle option added.
  *               Upgrade to 5.7 Radim Blazek 10/2004
- *               Hamish Bowman <hamish_nospam yahoo.com>,
+ *               Hamish Bowman <hamish_b yahoo.com>,
  *               Jachym Cepicky <jachym les-ejk.cz>, Markus Neteler <neteler itc.it>
  * PURPOSE:      
  * COPYRIGHT:    (C) 1999-2007 by the GRASS Development Team
@@ -37,12 +37,12 @@ int main(int argc, char *argv[])
     char buf[2000];
 
     /* Other local variables */
-    int attCount;
+    int attCount, nbreaks;
 
     struct grid_description grid_info;
     struct Cell_head window;
     struct Map_info Map;
-    struct Option *vectname, *grid, *coord, *box, *angle, *position_opt;
+    struct Option *vectname, *grid, *coord, *box, *angle, *position_opt, *breaks;
     struct Flag *q;
     struct Flag *points_fl;
     int points_p;
@@ -111,11 +111,19 @@ int main(int argc, char *argv[])
 	_("Angle of rotation (in degrees counter-clockwise)");
     angle->answer = "0";
 
+    breaks = G_define_option();
+    breaks->key = "breaks";
+    breaks->type = TYPE_INTEGER;
+    breaks->required = NO;
+    breaks->description =
+	_("Number of horizontal vertex points per grid cell");
+    breaks->options = "3-30";
+    breaks->answer = "3";
+
     points_fl = G_define_flag ();
     points_fl->key = 'p';
-    points_fl->description = _("Create grid of points"
-                            " instead of areas and centroids");
-    points_fl->answer = 0;
+    points_fl->description =
+	_("Create grid of points instead of areas and centroids");
 
     /* please, remove before GRASS 7 released */
     q = G_define_flag();
@@ -125,6 +133,7 @@ int main(int argc, char *argv[])
 
     if (G_parser(argc, argv))
 	exit(EXIT_FAILURE);
+
 
     /* please, remove before GRASS 7 released */
     if (q->answer) {
@@ -150,6 +159,8 @@ int main(int argc, char *argv[])
     grid_info.num_cols = atoi(grid->answers[1]);
 
     grid_info.angle = M_PI / 180 * atof(angle->answer);
+
+    nbreaks = atoi(breaks->answer);
 
     /* Position */
     if (position_opt->answer[0] == 'r') {	/* region */
@@ -254,7 +265,7 @@ int main(int argc, char *argv[])
 
     if (! points_p) {
 	/* create areas */
-	write_grid(&grid_info, &Map);
+	write_grid(&grid_info, &Map, nbreaks);
     }
 
     /* Create a grid of label points at the centres of the grid cells */
