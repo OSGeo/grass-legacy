@@ -77,7 +77,7 @@
 #% key: position
 #% type: double
 #% description: Position of vertical map-legend separator (in percent)
-#% answer: 65
+#% answer: 80
 #% required : no
 #%end
 
