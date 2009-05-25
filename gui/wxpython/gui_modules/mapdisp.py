@@ -65,7 +65,7 @@ import profile
 import globalvar
 import utils
 import gdialogs
-import grass
+from grass.script import core as grass
 from vdigit import VDigitCategoryDialog as VDigitCategoryDialog
 from vdigit import VDigitZBulkDialog    as VDigitZBulkDialog
 from vdigit import VDigitDuplicatesDialog as VDigitDuplicatesDialog

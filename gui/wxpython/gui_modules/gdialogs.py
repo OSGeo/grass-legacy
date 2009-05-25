@@ -31,13 +31,14 @@ import wx
 import wx.lib.filebrowsebutton as filebrowse
 import wx.lib.mixins.listctrl as listmix
 
+from grass.script import core as grass
+
 import gcmd
 import grassenv
 import globalvar
 import gselect
 import menuform
 import utils
-import grass
 from preferences import globalSettings as UserSettings
 
 class NewVectorDialog(wx.Dialog):
