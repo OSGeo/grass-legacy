@@ -28,8 +28,7 @@ import wx.lib.mixins.listctrl as listmix
 import globalvar
 import utils
 import menuform
-### from grass.script import core as grass
-import grass
+from grass.script import core as grass
 
 class GPrompt:
     """Interactive GRASS prompt"""
