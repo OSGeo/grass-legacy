@@ -82,12 +82,12 @@
 #%end
 
 if test "$GISBASE" = ""; then
- echo "You must be in GRASS GIS to run this program." >&2
- exit 1
+    echo "You must be in GRASS GIS to run this program." >&2
+    exit 1
 fi
 
 if [ "$1" != "@ARGS_PARSED@" ] ; then
-  exec g.parser "$0" "$@"
+    exec g.parser "$0" "$@"
 fi
 
 if [ $GIS_FLAG_N -eq 1 ] ; then
@@ -114,6 +114,7 @@ if [ ! "$file" ] ; then
 fi
 filemapset="${mapset}"
 # would it be better to search for cats/ file ??
+eval `g.gisenv`
 HISTFILEDIR=$GISDBASE/$LOCATION_NAME/$filemapset/cell_misc/
 eval `r.info -t "$GIS_OPT_MAP"`
 
