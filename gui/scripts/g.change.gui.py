@@ -35,12 +35,13 @@
 
 # simple front end to g.gui to be used from within the GUI.
 
-import grass
 import sys
+from grass.script import core as grass
 
 def main():
     grass.exec_command("g.gui", flags = 'nu', gui = options['gui'])
-    sys.exit(ret)
+    
+    return 0
 
 if __name__ == "__main__":
     options, flags = grass.parser()
