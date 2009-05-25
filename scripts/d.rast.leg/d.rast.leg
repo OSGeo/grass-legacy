@@ -111,6 +111,7 @@ if [ ! "$file" ] ; then
    exit 1
 fi
 filemapset="${mapset}"
+eval `g.gisenv`
 HISTFILEDIR=$GISDBASE/$LOCATION_NAME/$filemapset/cell_misc/
 
 # for rast=
