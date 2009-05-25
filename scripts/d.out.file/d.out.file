@@ -195,6 +195,12 @@ fi
 #### set variables
 res="$GIS_OPT_RESOLUTION"
 
+if [ -z "$GRASS_VERBOSE" ] || [ "$GRASS_VERBOSE" -le 2 ] ; then
+  BEQUIET="--quiet"
+else
+  BEQUIET=""
+fi
+
 #capture current display monitor and geometry
 # identify current monitor
 currmon="`d.mon -L | grep "(selected)" | awk '{print $1}'`"
@@ -349,13 +355,13 @@ else
    dsave=`d.save -a`
 fi
 
-d.mon start=$GRAPHICS_DRIVER --quiet
+d.mon start=$GRAPHICS_DRIVER $BEQUIET
   # 'd.info -b' for white band removal
   BOX=`d.info -b | cut -f2 -d':'`
   # 'd.info -g' to get GeoTIFF bounds when keeping white margin bands
   eval `d.info -g`
   eval "$dsave"
-d.mon stop=$GRAPHICS_DRIVER --quiet
+d.mon stop=$GRAPHICS_DRIVER $BEQUIET
 ################################
 
 g.message "Screen export complete. (writing the file may take a small amount of time)"
