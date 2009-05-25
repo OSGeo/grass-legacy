@@ -36,7 +36,6 @@ import wx.lib.mixins.listctrl as listmix
 from wx.lib.wordwrap import wordwrap
 
 import gcmd
-import grass
 import grassenv
 import utils
 import globalvar

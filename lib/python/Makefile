@@ -5,15 +5,30 @@ include $(MODULE_TOPDIR)/include/Make/Grass.make
 include $(MODULE_TOPDIR)/include/Make/Rules.make
 include $(MODULE_TOPDIR)/include/Make/Doxygen.make
 
-default: $(ETC)/python
+PYDIR = $(ETC)/python
+GDIR = $(PYDIR)/grass
+DSTDIR = $(GDIR)/script
 
-$(ETC)/python: grass.py README.txt
-	if [ ! -d $@ ]; then $(MKDIR) $@; fi
-	for file in $^ ; do $(INSTALL_DATA) $$file $@ ; done
+MODULES = core db raster vector
 
-.PHONY: $(ETC)/python
+PYFILES := $(patsubst %,$(DSTDIR)/%.py,$(MODULES) __init__)
 
-clean:
+default: $(DSTDIR)
+	$(MAKE) $(PYFILES) $(DSTDIR)/README.txt
+
+$(PYDIR):
+	test -d $@ || $(MKDIR) -p $@
+
+$(GDIR): $(PYDIR)
+	test -d $@ || $(MKDIR) -p $@
+
+$(DSTDIR): $(GDIR)
+	test -d $@ || $(MKDIR) -p $@
+	test -f __init__.py || touch $(GDIR)/__init__.py
+	@echo "import script" >> $(GDIR)/__init__.py
+
+$(DSTDIR)/%: %
+	$(INSTALL_DATA) $< $@
 
 #doxygen:
 DOXNAME=grasspython

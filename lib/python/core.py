@@ -1,10 +1,34 @@
+"""
+@package grass.script.core
+
+@brief GRASS Python scripting module
+
+Core functions to be used in Python scripts.
+
+Usage:
+
+@code
+from grass.script import core as grass
+
+grass.parser()
+...
+@endcode
+
+(C) 2008-2009 by the GRASS Development Team
+This program is free software under the GNU General Public
+License (>=v2). Read the file COPYING that comes with GRASS
+for details.
+
+@author Glynn Clements
+@author Martin Landa <landa.martin gmail.com>
+"""
+
 import os
 import sys
 import types
-import subprocess
 import re
 import atexit
-import string
+import subprocess
 
 # subprocess wrapper that uses shell on Windows
 
@@ -19,11 +43,11 @@ class Popen(subprocess.Popen):
 	    shell = (sys.platform == "win32")
 
 	subprocess.Popen.__init__(self, args, bufsize, executable,
-                 stdin, stdout, stderr,
-                 preexec_fn, close_fds, shell,
-                 cwd, env, universal_newlines,
-                 startupinfo, creationflags)
-
+                                  stdin, stdout, stderr,
+                                  preexec_fn, close_fds, shell,
+                                  cwd, env, universal_newlines,
+                                  startupinfo, creationflags)
+        
 PIPE = subprocess.PIPE
 STDOUT = subprocess.STDOUT
 
@@ -161,10 +185,10 @@ def message(msg, flag = None):
     """Display a message using g.message"""
     run_command("g.message", flags = flag, message = msg)
 
-def debug(msg):
+def debug(msg, debug = 1):
     """Display a debugging message using g.message -d"""
-    message(msg, flag = 'd')
-
+    run_command("g.message", flags = 'd', message = msg, debug = debug)
+    
 def verbose(msg):
     """Display a verbose message using g.message -v"""
     message(msg, flag = 'v')
@@ -245,12 +269,25 @@ def tempfile():
 
 # key-value parsers
 
-def parse_key_val(s, sep = '=', dflt = None, val_type = None):
+def parse_key_val(s, sep = '=', dflt = None, val_type = None, vsep = None):
     """Parse a string into a dictionary, where entries are separated
     by newlines and the key and value are separated by `sep' (default: `=')
     """
     result = {}
-    for line in s.splitlines():
+
+    if not s:
+        return result
+    
+    if vsep:
+        lines = s.split(vsep)
+        try:
+            lines.remove('\n')
+        except ValueError:
+            pass
+    else:
+        lines = s.splitlines()
+    
+    for line in lines:
 	kv = line.split(sep, 1)
 	k = kv[0].strip()
 	if len(kv) > 1:
@@ -328,24 +365,24 @@ def list_grouped(type):
             result[mapset].extend(line.split())
     return result
 
-def mlist_grouped(type, pattern=None):
+def mlist_grouped(type, mapset = None, pattern = None):
     """Returns the output from running g.mlist, as a dictionary where the keys
     are mapset names and the values are lists of maps in that mapset. 
     """
     result = {}
-    mapset = None
+    mapset_element = None
     for line in read_command("g.mlist", flags="m",
-                             type = type, pattern = pattern).splitlines():
+                             type = type, mapset = mapset, pattern = pattern).splitlines():
         try:
-            map, mapset = line.split('@')
+            map, mapset_element = line.split('@')
         except ValueError:
             print >> sys.stderr, "Invalid element '%s'" % line
             continue
         
-        if result.has_key(mapset):
-            result[mapset].append(map)
+        if result.has_key(mapset_element):
+            result[mapset_element].append(map)
         else:
-	    result[mapset] = [map, ]
+	    result[mapset_element] = [map, ]
     
     return result
 
@@ -471,145 +508,5 @@ def try_rmdir(path):
     except:
 	pass
 
-# run "v.db.connect -g ..." and parse output
-
-def vector_db(map, **args):
-    """Return the database connection details for a vector map
-    (interface to `v.db.connect -g').
-
-    @param map vector map
-
-    @return dictionary { layer : { 'layer', 'table, 'database', 'driver', 'key' }
-    """
-    s = read_command('v.db.connect', flags = 'g', map = map, fs = ';', **args)
-    result = {}
-    
-    for l in s.splitlines():
-	f = l.split(';')
-	if len(f) != 5:
-	    continue
-        
-        if '/' in f[0]:
-            f1 = f[0].split('/')
-            layer = f1[0]
-            name = f1[1]
-        else:
-            layer = f[0]
-            name = ''
-            
-	result[int(layer)] = {
-            'layer'    : layer,
-            'name'     : name,
-            'table'    : f[1],
-            'key'      : f[2],
-            'database' : f[3],
-            'driver'   : f[4] }
-    
-    return result
-
-def vector_layer_db(map, layer):
-    """Return the database connection details for a vector map layer.
-    If db connection for given layer is not defined, fatal() is called."""
-    try:
-        f = vector_db(map)[int(layer)]
-    except KeyError:
-	grass.fatal("Database connection not defined for layer %s" % layer)
-
-    return f
-
-# run "db.describe -c ..." and parse output
-
-def db_describe(table, **args):
-    """Return the list of columns for a database table
-    (interface to `db.describe -c').
-    """
-    s = read_command('db.describe', flags = 'c', table = table, **args)
-    if not s:
-	return None
-    cols = []
-    result = {}
-    for l in s.splitlines():
-	f = l.split(':')
-	key = f[0]
-	f[1] = f[1].lstrip(' ')
-	if key.startswith('Column '):
-	    n = int(key.split(' ')[1])
-	    cols.insert(n, f[1:])
-	elif key in ['ncols', 'nrows']:
-	    result[key] = int(f[1])
-	else:
-	    result[key] = f[1:]
-    result['cols'] = cols
-    return result
-
-# run "db.connect -p" and parse output
-
-def db_connection():
-    """Return the current database connection parameters
-    (interface to `db.connect -p').
-    """
-    s = read_command('db.connect', flags = 'p')
-    return parse_key_val(s, sep = ':')
-
-# run "v.info -c ..." and parse output
-
-def vector_columns(map, layer = None, **args):
-    """Return a dictionary of the columns for the database table connected to
-    a vector map (interface to `v.info -c').
-    """
-    s = read_command('v.info', flags = 'c', map = map, layer = layer, quiet = True, **args)
-    result = {}
-    for line in s.splitlines():
-	f = line.split('|')
-	if len(f) == 2:
-            result[f[1]] = f[0]
-    
-    return result
-
-# add vector history
-
-def vector_history(map):
-    """Set the command history for a vector map to the command used to
-    invoke the script (interface to `v.support').
-    """
-    run_command('v.support', map = map, cmdhist = os.environ['CMDLINE'])
-
-# add raster history
-
-def raster_history(map):
-    """Set the command history for a raster map to the command used to
-    invoke the script (interface to `r.support').
-
-    @return True on success
-    @return False on failure
-    """
-    current_mapset = gisenv()['MAPSET']
-    if find_file(name = map)['mapset'] == current_mapset:
-        run_command('r.support', map = map, history = os.environ['CMDLINE'])
-        return True
-    
-    warning("Unable to write history for <%s>. Raster map <%s> not found in current mapset." % (map, map))
-    return False
-
 def float_or_dms(s):
     return sum(float(x) / 60 ** n for (n, x) in enumerate(s.split(':')))
-
-# run "r.info -rgstmpud ..." and parse output
-
-def raster_info(map):
-    """Return information about a raster map (interface to `r.info')."""
-    s = read_command('r.info', flags = 'rgstmpud', map = map)
-    kv = parse_key_val(s)
-    for k in ['min', 'max', 'north', 'south', 'east', 'west']:
-	kv[k] = float(kv[k])
-    for k in ['nsres', 'ewres']:
-	kv[k] = float_or_dms(kv[k])
-    return kv
-
-# interface to r.mapcalc
-
-def mapcalc(exp, **kwargs):
-    t = string.Template(exp)
-    e = t.substitute(**kwargs)
-    if run_command('r.mapcalc', expression = e) != 0:
-	fatal("An error occurred while running r.mapcalc")

@@ -69,6 +69,10 @@ try:
 except:
     import compat.subprocess as subprocess
 
+grassPath = os.path.join(globalvar.ETCDIR, "python")
+sys.path.append(grassPath)
+from grass.script import core as grass
+
 import gui_modules.utils as utils
 import gui_modules.preferences as preferences
 import gui_modules.wxgui_utils as wxgui_utils

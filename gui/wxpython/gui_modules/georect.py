@@ -35,7 +35,7 @@ from wx.lib.mixins.listctrl import CheckListCtrlMixin, ListCtrlAutoWidthMixin, T
 import wx.lib.colourselect as  csel
 import wx.wizard as wiz
 
-import grass
+from grass.script import core as grass, vector, db
 import globalvar
 import mapdisp
 import render
@@ -1076,7 +1076,7 @@ class GCP(wx.Frame):
                                              switchPage = True)
                 
                 xyLayer = []
-                for layer in grass.vector_db(map = vect).itervalues():
+                for layer in vector.vector_db(map = vect).itervalues():
                     xyLayer.append((layer['driver'],
                                     layer['database'],
                                     layer['table']))
@@ -1088,7 +1088,7 @@ class GCP(wx.Frame):
                                            switchPage = True,
                                            onDone = self.OnGeorectDone)
 
-                dbConnect = grass.db_connection()
+                dbConnect = db.db_connection()
                 for layer in xyLayer:                
                     self.parent.goutput.RunCmd(['db.copy',
                                                 '--q',
