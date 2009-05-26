@@ -35,11 +35,11 @@ EXIT_VAL=$?
 if [ $EXIT_VAL -ne 0 ] ; then
    echo
    echo "ERROR: \"$1\" exited abnormally. Press <enter> to continue."
-   read
+   read dummy_var
 else
    echo
    echo "\"$1\" complete. Press <enter> to continue."
-   read
+   read dummy_var
 fi
 
 exit $EXIT_VAL
