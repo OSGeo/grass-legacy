@@ -306,7 +306,7 @@ proc help_cmd {dlg} {
 	global opt env
 	set pgm_name $opt($dlg,pgm_name)
 
-	if {[catch {exec $env(GRASS_HTML_BROWSER) $env(GISBASE)/docs/html/$pgm_name.html &} error]} {
+	if {[catch {exec $env(GRASS_HTML_BROWSER) file://$env(GISBASE)/docs/html/$pgm_name.html &} error]} {
 		tk_messageBox -type ok -icon error -title [G_msg "Error"] -message [G_msg $error]
 		return
 	}
