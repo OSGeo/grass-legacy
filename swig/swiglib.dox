@@ -45,7 +45,7 @@ The source code is available here:
 
  - in <a href="http://grass.osgeo.org/devel/index.php#software">GRASS SVN</a>
  - in the <a href="http://grass.osgeo.org/grass64/source/snapshot/">weekly SVN snapshot</a> (swig/ subdirectory)
- - via <a href="http://trac.osgeo.org/grass/browser/grass/branches/releasebranch_64/swig">SVN Trac interface</a>
+ - via <a href="http://trac.osgeo.org/grass/browser/grass/branches/releasebranch_6_4/swig">SVN Trac interface</a>
 
 \section see_also See also
 
