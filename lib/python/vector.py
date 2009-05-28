@@ -1,5 +1,4 @@
-"""
-@package grass.script.vector
+"""!@package grass.script.vector
 
 @brief GRASS Python scripting module
 
@@ -31,7 +30,7 @@ from core import *
 # run "v.db.connect -g ..." and parse output
 
 def vector_db(map, **args):
-    """Return the database connection details for a vector map
+    """!Return the database connection details for a vector map
     (interface to `v.db.connect -g'). Example:
     
     \code
@@ -72,7 +71,7 @@ def vector_db(map, **args):
     return result
 
 def vector_layer_db(map, layer):
-    """Return the database connection details for a vector map layer.
+    """!Return the database connection details for a vector map layer.
     If db connection for given layer is not defined, fatal() is called."""
     try:
         f = vector_db(map)[int(layer)]
@@ -84,7 +83,7 @@ def vector_layer_db(map, layer):
 # run "v.info -c ..." and parse output
 
 def vector_columns(map, layer = None, **args):
-    """Return a dictionary of the columns for the database table connected to
+    """!Return a dictionary of the columns for the database table connected to
     a vector map (interface to `v.info -c').
     """
     s = read_command('v.info', flags = 'c', map = map, layer = layer, quiet = True, **args)
@@ -99,7 +98,7 @@ def vector_columns(map, layer = None, **args):
 # add vector history
 
 def vector_history(map):
-    """Set the command history for a vector map to the command used to
+    """!Set the command history for a vector map to the command used to
     invoke the script (interface to `v.support').
     """
     run_command('v.support', map = map, cmdhist = os.environ['CMDLINE'])
@@ -107,7 +106,7 @@ def vector_history(map):
 # run "v.info -t" and parse output
 
 def vector_info_topo(map):
-    """Return information about a vector map (interface to `v.info
+    """!Return information about a vector map (interface to `v.info
     -t'). Example:
 
     \code
@@ -127,7 +126,7 @@ def vector_info_topo(map):
 # interface for v.db.select
 
 def vector_db_select(map, layer = 1, **kwargs):
-    """Get attribute data of selected vector map layer.
+    """!Get attribute data of selected vector map layer.
 
     Function returns list of columns and dictionary of values ordered by
     key column value. Example:
