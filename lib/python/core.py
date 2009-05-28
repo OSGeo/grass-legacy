@@ -233,7 +233,6 @@ def exec_command(prog, flags = "", overwrite = False, quiet = False, verbose = F
     @param env environment variable (default os.environ)
     @param kwargs
     """
->>>>>>> .merge-right.r37559
     args = make_command(prog, flags, overwrite, quiet, verbose, **kwargs)
     if env == None:
 	env = os.environ
