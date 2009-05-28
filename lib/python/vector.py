@@ -8,7 +8,7 @@ Vector related functions to be used in Python scripts.
 Usage:
 
 @code
-from grass.script import core, vector as grass
+from grass.script import vector as grass
 
 grass.parser()
 grass.vector_db(map)
