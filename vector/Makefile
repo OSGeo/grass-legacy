@@ -28,7 +28,6 @@ SUBDIRS = \
 	v.kcv \
 	v.kernel \
 	v.label \
-	v.label.sa \
 	v.lrs \
 	v.proj \
 	v.mkgrid \
@@ -90,6 +89,11 @@ ifneq ($(strip $(TCLTKLIBS)),)
     SUBDIRS += $(TCLTKBASED)
 endif
 
+REQUIRESFT = v.label.sa
+
+ifneq ($(strip $(FTLIB)),)
+    SUBDIRS += $(REQUIRESFT)
+endif
 
 OPENDWGBASED = v.in.dwg
 
