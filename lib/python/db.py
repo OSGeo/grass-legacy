@@ -1,5 +1,4 @@
-"""
-@package grass.script.db
+"""!@package grass.script.db
 
 @brief GRASS Python scripting module
 
@@ -29,7 +28,7 @@ from core import *
 # run "db.describe -c ..." and parse output
 
 def db_describe(table, **args):
-    """Return the list of columns for a database table
+    """!Return the list of columns for a database table
     (interface to `db.describe -c'). Example:
     
     \code
@@ -67,7 +66,7 @@ def db_describe(table, **args):
 # run "db.connect -p" and parse output
 
 def db_connection():
-    """Return the current database connection parameters
+    """!Return the current database connection parameters
     (interface to `db.connect -p'). Example:
 
     \code
