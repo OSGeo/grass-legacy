@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
 <head>
-<title>r.mapcalc</title>
+<title>GRASS GIS manual: r.mapcalc</title>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 <link rel="stylesheet" href="grassdocs.css" type="text/css">
 </head>
@@ -385,7 +385,7 @@ produce a floating-point result, as will using float():
 
 
 <h3>NULL support</h3>
-<menu>
+<ul>
 <li>Division by zero should result in NULL. 
 <li>Modulus by zero should result in NULL. 
 <li>     NULL-values in any arithmetic or logical operation should result
@@ -422,7 +422,7 @@ log(-2)
 sqrt(-2) 
 pow(a,b) where a is negative and b is not an integer 
 </pre></div>
-</menu>
+</ul>
 <p>
 NULL support: Please note that any math performed with NULL cells always
 results in a NULL value for these cells. If you want to replace a NULL cell
@@ -519,7 +519,7 @@ r.mapcalc command. E.g. rather than:
 </pre></div>
 use:
 <div class="code"><pre>
-		r.mapcalc &#60&#60EOF
+		r.mapcalc &lt;&lt;EOF
         $GIS_OPT_OUTPUT.r = r#$GIS_OPT_FIRST * .$GIS_OPT_PERCENT + (1.0 - .$GIS_OPT_PERCENT) * r#$GIS_OPT_SECOND
         $GIS_OPT_OUTPUT.g = g#$GIS_OPT_FIRST * .$GIS_OPT_PERCENT + (1.0 - .$GIS_OPT_PERCENT) * g#$GIS_OPT_SECOND
         $GIS_OPT_OUTPUT.b = b#$GIS_OPT_FIRST * .$GIS_OPT_PERCENT + (1.0 - .$GIS_OPT_PERCENT) * b#$GIS_OPT_SECOND
