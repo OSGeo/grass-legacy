@@ -8,7 +8,7 @@ Database related functions to be used in Python scripts.
 Usage:
 
 @code
-from grass.script import core, db as grass
+from grass.script import db as grass
 
 grass.parser()
 grass.db_describe(table)

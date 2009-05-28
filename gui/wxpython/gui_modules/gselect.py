@@ -26,7 +26,8 @@ import sys
 import wx
 import wx.combo
 
-from grass.script import core, vector as grass
+import grass.script as grass
+
 import globalvar
 import gcmd
 import utils
