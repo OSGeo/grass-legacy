@@ -205,7 +205,14 @@ GetTiles() {
   done
 
   g.message "Requesting ${NUMBER_OF_TILES} tiles."
-  
+  if [ "$NUMBER_OF_TILES" -gt 200 ] ; then
+     g.message -w "Proceed with care. This number of tiles may exceed \
+       the maximum command line argument length available from your \
+       operating system and cause an error later on in the r.in.gdalwarp \
+       step. In addition it may be considered abusive behavior by the \
+       server provider - check their terms of use."
+  fi
+
   NUMBER_OF_TILES=0 #The number of the tiles 
 
   mkdir -p "${GIS_OPT_FOLDER}"
