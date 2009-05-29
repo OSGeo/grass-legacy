@@ -122,7 +122,9 @@ char *G_ask_vector_in_mapset(const char *, char *);
  *  the G_asprintf macro is disabled until a stable version of GDAL
  *  with a different function becomes widely used 
  */
+#ifndef SWIG
 int G_vasprintf(char **, const char *, va_list);
+#endif
 int G_asprintf(char **, const char *, ...)
     __attribute__ ((format(printf, 2, 3)));
 
