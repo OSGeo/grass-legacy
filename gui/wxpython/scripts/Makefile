@@ -9,11 +9,15 @@ default: install_scripts
 
 ifdef MINGW
 SCRIPT_ACTIONS += create.bat
+PYEXT = .py
+else
+PYEXT = 
 endif
 
 install_scripts: $(SCRIPT_ACTIONS)
-	$(MKDIR) $(ETCDIR)
-	$(INSTALL) d.rast3d $(ETCDIR)/
+	if [ ! -d $(ETC)/gui ] ; then $(MKDIR) $(ETC)/gui ; fi
+	if [ ! -d $(ETCDIR) ] ; then $(MKDIR) $(ETCDIR) ; fi
+	$(INSTALL) d.rast3d $(ETCDIR)/d.rast3d$(PYEXT)
 
 create.bat:
 	if [ ! -d $(ETC)/wxpython ] ; then $(MKDIR) $(ETC)/wxpython ; fi
