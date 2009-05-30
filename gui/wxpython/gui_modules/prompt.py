@@ -123,6 +123,33 @@ class GPrompt:
         
         return cmdprompt, cmdinput
 
+    def __checkKey(self, text, keywords):
+        """!Check if text is in keywords"""
+        found = 0
+        keys = text.split(',')
+        if len(keys) > 1: # -> multiple keys
+            for k in keys[:-1]:
+                k = k.strip()
+                for key in keywords: 
+                    if k == key: # full match
+                        found += 1
+                        break
+            k = keys[-1].strip()
+            for key in keywords:
+                if k in key: # partial match
+                    found +=1
+                    break
+        else:
+            for key in keywords:
+                if text in key: # partial match
+                    found +=1
+                    break
+        
+        if found == len(keys):
+            return True
+        
+        return False
+    
     def GetPanel(self):
         """!Get main widget panel"""
         return self.panel
@@ -174,13 +201,12 @@ class GPrompt:
         modules = []
         for module, data in self.modules.iteritems():
             if self.searchBy.GetSelection() == 0: # -> description
-                ref = data['desc']
+                if text in data['desc']:
+                    modules.append(module)
             else: # -> keywords
-                ref = ','.join(data['keywords'])
-            
-            if text in ref:
-                modules.append(module)
-            
+                if self.__checkKey(text, data['keywords']):
+                    modules.append(module)
+        
         self.parent.statusbar.SetStatusText(_("%d modules found") % len(modules))
         self.input.SetChoices(modules)
                     
