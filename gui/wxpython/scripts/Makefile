@@ -16,9 +16,11 @@ install_scripts: $(SCRIPT_ACTIONS)
 	$(INSTALL) d.rast3d $(ETCDIR)/
 
 create.bat:
-	if [ ! -d $(ETC)/gui ] ; then $(MKDIR) $(ETC)/gui ; fi
-	if [ ! -d $(ETCDIR) ] ; then $(MKDIR) $(ETCDIR) ; fi
-	sed -e "s#SCRIPT_NAME#d.rast3d#" $(MODULE_TOPDIR)/gui/scripts/windows_launch.bat \
-		> $(ETCDIR)/d.rast3d.bat
+	if [ ! -d $(ETC)/wxpython ] ; then $(MKDIR) $(ETC)/wxpython ; fi
+	if [ ! -d $(ETC)/wxpython/scripts ] ; then $(MKDIR) $(ETC)/wxpython/scripts ; fi
+	for file in p.* ; do \
+	sed -e "s#SCRIPT_NAME#$$file#" $(MODULE_TOPDIR)/gui/scripts/windows_launch.bat \
+		| sed -e "s#etc/gui/#etc/wxpython/#" \
+		> $(ETC)/wxpython/scripts/$$file.bat ; done
 
 clean: cleansubdirs
