@@ -44,6 +44,7 @@
 #include "surf.h"
 #include <grass/interpf.h>
 #include <grass/glocale.h>
+#include <grass/gmath.h>
 
 #include "local_proto.h"
 
