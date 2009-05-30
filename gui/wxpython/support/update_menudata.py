@@ -19,10 +19,34 @@ Usage: python update_menudata.py
 
 import os
 import sys
+import locale
 try:
     import xml.etree.ElementTree as etree
 except ImportError:
     import elementtree.ElementTree as etree # Python <= 2.4
+
+import xml.sax
+import xml.sax.handler
+HandlerBase=xml.sax.handler.ContentHandler
+from xml.sax import make_parser
+
+def ParseInterface(cmd):
+    """!Parse interface
+    
+    @param cmd command to be parsed (given as list)
+    """
+    grass_task = menuform.grassTask()
+    handler = menuform.processTask(grass_task)
+    enc = locale.getdefaultlocale()[1]
+    if enc and enc.lower() not in ("utf8", "utf-8"):
+        xml.sax.parseString(menuform.getInterfaceDescription(cmd[0]).decode(enc).encode("utf-8"),
+                            handler)
+    else:
+        xml.sax.parseString(menuform.getInterfaceDescription(cmd[0]),
+                            handler)
+        
+    return grass_task
+    
 
 def parseModules():
     """!Parse modules' interface"""
@@ -40,7 +64,7 @@ def parseModules():
         if module in ignore:
             continue
         try:
-            interface = menuform.GUI().ParseInterface(cmd = [module])
+            interface = ParseInterface(cmd = [module])
         except IOError, e:
             print >> sys.stderr, e
             continue
