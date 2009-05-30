@@ -37,8 +37,6 @@ void R_kill_driver(void);
 void R_close_driver(void);
 void R_release_driver(void);
 
-/* io_fifo.c / io_sock.c */
-int unlock_driver(int);
 int R_open_driver(void);
 
 /* pad.c */
