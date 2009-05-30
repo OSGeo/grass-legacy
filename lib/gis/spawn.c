@@ -221,18 +221,18 @@ static char **do_bindings(char **env, struct binding *bindings,
     return env;
 }
 
-static int do_spawn(struct spawn *sp, const char *command)
+static int do_spawn(const char *command)
 {
     char **env;
     int status;
 
-    do_redirects(sp->redirects, sp->num_redirects);
-    env = do_bindings(_environ, sp->bindings, sp->num_bindings);
+    do_redirects(redirects, num_redirects);
+    env = do_bindings(_environ, bindings, num_bindings);
 
     status =
-	spawnvpe(sp->background ? _P_NOWAIT : _P_WAIT, command, sp->args, env);
+	spawnvpe(background ? _P_NOWAIT : _P_WAIT, command, args, env);
 
-    if (!sp->background && status < 0)
+    if (!background && status < 0)
 	G_warning(_("Unable to execute command"));
 
     return status;
