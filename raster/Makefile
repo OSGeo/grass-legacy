@@ -40,7 +40,6 @@ SUBDIRS = \
 	r.kappa \
 	r.lake \
 	r.le \
-	r.li \
 	r.los \
 	r.mapcalc \
 	r.median \
@@ -128,7 +127,7 @@ XMONBASED = r.digit
 
 include $(MODULE_TOPDIR)/include/Make/Platform.make
 
-ifneq ($(MINGW),)
+ifndef MINGW
     SUBDIRS += r.li
 endif
 
