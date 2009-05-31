@@ -58,8 +58,7 @@ void RunScripts(ClientData clientData)
  *----------------------------------------------------------------------
  */
 
-int NVIZ_AppInit(Tcl_Interp * interp	/* Interpreter for application. */
-    )
+int NVIZ_AppInit(Tcl_Interp *interp)	/* Interpreter for application. */
 {
 
     mainWindow = Tk_MainWindow(interp);
