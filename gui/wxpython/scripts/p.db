@@ -23,10 +23,13 @@ fi
 
 # CODE GOES HERE
 
-PYTHONPATH="$GISBASE/etc/wx"
-
+if [ -z "$PYTHONPATH" ] ; then
+   PYTHONPATH="$GISBASE/etc/wx"
+else
+   PYTHONPATH="$GISBASE/etc/wx:$PYTHONPATH"
+fi
 export PYTHONPATH
 
-python $PYTHONPATH/gui_modules/dbm.py $GIS_OPT_TABLE
+"$GRASS_PYTHON" "$PYTHONPATH/gui_modules/dbm.py" "$GIS_OPT_TABLE"
 
 exit 0
