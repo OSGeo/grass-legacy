@@ -306,7 +306,7 @@ fi
 export GRASS_PYTHON
 
 # Set PYTHONPATH to find GRASS Python modules
-if [ ! "PYTHONPATH" ] ; then
+if [ ! "$PYTHONPATH" ] ; then
     PYTHONPATH="$GISBASE/etc/python"
 else
     PYTHONPATH="$GISBASE/etc/python:$PYTHONPATH"
