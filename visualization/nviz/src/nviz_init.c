@@ -150,6 +150,8 @@ static int parse_command(Nv_data * data, Tcl_Interp * interp,	/* Current interpr
 	exit(EXIT_FAILURE);
     /* [?!]: Exit status is zero to avoid TCL complaints */
 
+    G_debug(1, "nviz_init:parse_command()");
+
     /* please remove before GRASS 7 released */
     if (verbose->answer) {
         putenv("GRASS_VERBOSE=3");
@@ -384,6 +386,8 @@ int Ngetargs(Tcl_Interp * interp,	/* Current interpreter. */
     const char *cmd;
     int argc;
 
+    G_debug(2, "nviz_init:Ngetargs()");
+
     argv0 = Tcl_GetVar(interp, "argv0", TCL_LEAVE_ERR_MSG);
     tmp = Tcl_GetVar(interp, "argv", TCL_LEAVE_ERR_MSG);
     cmd = Tcl_GetNameOfExecutable();
@@ -509,7 +513,7 @@ int set_default_wirecolors(Nv_data * dc, int surfs)
     return 0;
 }
 
-int Ninit(Tcl_Interp * interp, Tk_Window w)
+int Ninit(Tcl_Interp *interp, Tk_Window w)
 {
     static Nv_data data;
 
@@ -545,8 +549,8 @@ int Ninit(Tcl_Interp * interp, Tk_Window w)
 
 void swap_togl();
 
-int Ninitdata(Tcl_Interp * interp,	/* Current interpreter. */
-	      Nv_data * data)
+int Ninitdata(Tcl_Interp *interp,	/* Current interpreter. */
+	      Nv_data *data)
 {
     const char **argv;
     int argc;
