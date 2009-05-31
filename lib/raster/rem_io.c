@@ -22,8 +22,6 @@
 int _rfd, _wfd;
 int _quiet;
 
-extern int unlock_driver(int);
-
 int sync_driver(char *);
 
 static unsigned char outbuf[BUFFERSIZ];
