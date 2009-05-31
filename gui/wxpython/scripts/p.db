@@ -24,9 +24,9 @@ fi
 # CODE GOES HERE
 
 if [ -z "$PYTHONPATH" ] ; then
-   PYTHONPATH="$GISBASE/etc/wx"
+   PYTHONPATH="$GISBASE/etc/wxpython"
 else
-   PYTHONPATH="$GISBASE/etc/wx:$PYTHONPATH"
+   PYTHONPATH="$GISBASE/etc/wxpython:$PYTHONPATH"
 fi
 export PYTHONPATH
 
