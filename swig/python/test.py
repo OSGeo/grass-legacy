@@ -5,7 +5,7 @@
 
 
 import os, sys
-import python_grass6 as g6lib
+from grass.lib import grass
 
 if not os.environ.has_key("GISBASE"):
     print "You must be in GRASS GIS to run this program."
@@ -14,16 +14,16 @@ if not os.environ.has_key("GISBASE"):
 rname = 'elevation.dem'
 mapset = 'PERMANENT'
 
-g6lib.G_gisinit('')
-g6lib.G_find_cell2(rname,'')
+grass.G_gisinit('')
+grass.G_find_cell2(rname,'')
 
 print mapset
 
 print 'prints 0 if map was found'
 
-print 'roads:'
-print g6lib.G_raster_map_type('roads',mapset)
+print 'roads raster map:'
+print grass.G_raster_map_type('roads',mapset)
 
-print 'elevation.dem:'
-print g6lib.G_raster_map_type(rname,mapset)
+print 'elevation.dem raster map:'
+print grass.G_raster_map_type(rname,mapset)
 
