@@ -242,7 +242,7 @@ int dig_fseek(struct gvfile * file, long offset, int whence);
 void dig_rewind(struct gvfile * file);
 int dig_fflush(struct gvfile * file);
 size_t dig_fread(void *ptr, size_t size, size_t nmemb, struct gvfile * file);
-size_t dig_fwrite(void *ptr, ssize_t size, size_t nmemb, struct gvfile * file);
+size_t dig_fwrite(void *ptr, size_t size, size_t nmemb, struct gvfile * file);
 void dig_file_init(struct gvfile * file);
 int dig_file_load(struct gvfile * file);
 void dig_file_free(struct gvfile * file);
