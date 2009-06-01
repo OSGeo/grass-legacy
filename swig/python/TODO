@@ -1,9 +1,6 @@
 TODO
 -----
 
-urgent:
-- get rid of local copies in include files
-
 important:
 - enable calls from outside GRASS
 - Synchronize with GRASS-Perl group
