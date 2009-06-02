@@ -108,12 +108,14 @@ rem This doesn't seem to work; don't understand return codes from gis_set.tcl PK
 rem if return ok, gis.m start:
 if %errorlevel% == 2 goto exitinit
 
+rem Does line 42 above mean that GRASS_WISH will always be set?
 if not "%GRASS_WISH%"=="" (
-	"%GRASS_WISH%" "%WINGISBASE%\etc\gm\gm.tcl"
+	start /b "GRASS Tcl/Tk" "%GRASS_WISH%" "%WINGISBASE%\etc\gm\gm.tcl"
 ) else (
-	"%WINGISBASE%\etc\gm\gm.tcl"
+	start /b "GRASS Tcl/Tk" "%WINGISBASE%\etc\gm\gm.tcl"
 )
 
+rem Will redirecting output to NUL hide legitamite error messages, harming debugging?
 "%WINGISBASE%\etc\clean_temp" > NUL:
 
 goto exitinit
