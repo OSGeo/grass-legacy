@@ -113,8 +113,10 @@ namespace eval MapCanvas {
 	variable zoom_attrs
 	set zoom_attrs {n s e w nsres ewres rows cols}
 
-	# ll_proj is 1 for a Lat/Lon projection, 0 othervise
-	variable ll_proj
+	# proj_is_ll is 1 for a Lat/Lon projection, 0 otherwise
+	global proj_is_ll
+	# DMS format: 0 is ddd.ddddd,  1 is ddd:mm.mmmmm', 2 is ddd:mm'ss.sss"
+	global dms_format
 
 	# string with region information to show in status bar
 	variable regionstr
@@ -155,7 +157,8 @@ proc MapCanvas::create { } {
 	variable b1east 
 	variable b1north 
 	variable mappid
-	variable ll_proj
+	global proj_is_ll
+	global dms_format
 	global drawprog
 	global tmpdir
 	global env
@@ -171,13 +174,16 @@ proc MapCanvas::create { } {
 
 	# run get_mapunits to check projection
 	MapCanvas::get_mapunits
-	if { $ll_proj } {
+	if { $proj_is_ll } {
 	    # Explore mode is off by default (can't peer past 90deg)
 	    set exploremode($mon) 0
 	} else {
 	    # Explore mode is on by default
 	    set exploremode($mon) 1
 	}
+
+# FIXME:  make this settable from the UI or use GRASS_DMS_FORMAT enviro var
+	set dms_format 2
 
 	# Make sure that we are using the WIND file for everything except displays
 	if {[info exists env(WIND_OVERRIDE)]} {unset env(WIND_OVERRIDE)}
@@ -429,7 +435,7 @@ proc MapCanvas::shrinkwrap {sense nsew1 ar2 } {
 
 
 proc MapCanvas::get_mapunits {} {
-	variable ll_proj
+	global proj_is_ll
 	# get map units from PROJ_UNITS
 	if {![catch {open "|g.proj -p" r} input]} {
 	    set key ""
@@ -437,7 +443,7 @@ proc MapCanvas::get_mapunits {} {
 	    while {[gets $input line] >= 0} {
 	    	if { [string equal "XY location (unprojected)" "$line"] } {
 	    	    set mapunits "map units"
-		    set ll_proj 0
+		    set proj_is_ll 0
 	    	    break
 	    	}
 	    	regexp -nocase {^(.*):(.*)$} $line trash key value
@@ -457,9 +463,9 @@ proc MapCanvas::get_mapunits {} {
 	    set mapunits $prj(units)
 
 	    if { [string eq "Lat/Lon" "$prj(name)"] } {
-		set ll_proj 1
+		set proj_is_ll 1
 	    } else {
-		set ll_proj 0
+		set proj_is_ll 0
 	    }
 	}
 
@@ -580,7 +586,7 @@ proc MapCanvas::runprograms { mon mod } {
 	variable opclist
 	variable mapframe
 	variable zoom_attrs
-	variable ll_proj
+	global proj_is_ll
 	variable exploremode
 	global env
 	global drawprog
@@ -601,7 +607,7 @@ proc MapCanvas::runprograms { mon mod } {
 	set options {}
 	foreach attr $zoom_attrs value $values {
 		if {$attr != "rows" && $attr != "cols"} {
-		    if { $ll_proj } {
+		    if { $proj_is_ll } {
 			if {$attr == "n" && $value > 90} {
 			    set value 90
 			    if {$exploremode($mon)} {
@@ -983,6 +989,7 @@ proc MapCanvas::pointer { mon } {
 	variable can
 	variable b1east
 	variable b1north 
+	global proj_is_ll
 	global coords
 	global pctentry
 	global pixelentry
@@ -1009,7 +1016,18 @@ proc MapCanvas::pointer { mon } {
 		global screenpct pctentry pixelentry geoentry geogentry llvert llhoriz
 		set b1east [MapCanvas::scrx2mape $mon %x]
 		set b1north [MapCanvas::scry2mapn $mon %y]
-		set b1coords "$b1east $b1north"
+		if { $proj_is_ll } {
+		    if { $b1north < -90 } {
+			set coords($mon) "$b1east -90"
+		    } elseif { $b1north > 90 } {
+			set coords($mon) "$b1east 90"
+		    } else {
+			set coords($mon) "$b1east $b1north"
+		    }
+		} else {
+		    set coords($mon) "$b1east $b1north"
+		}
+
 		# grab coordinates at mouse click for georectification
 		if { [info exists geoentry] } {
 			$geoentry insert 0 $b1coords
@@ -1051,9 +1069,145 @@ proc MapCanvas::pointer { mon } {
 		set scrxmov %x
 		set scrymov %y
 		set eastcoord  [format $outfmt_coords [eval MapCanvas::scrx2mape $mon %x] ]
-		set northcoord [format $outfmt_coords [eval MapCanvas::scry2mapn $mon %y] ]
-		set coords($mon) "$eastcoord $northcoord"
+		if { $proj_is_ll } {
+		    set northcoord [eval MapCanvas::scry2mapn $mon %y]
+		    set coords($mon) [eval MapCanvas::fancy_ll $eastcoord $northcoord]
+		} else {
+		    set northcoord [format $outfmt_coords [eval MapCanvas::scry2mapn $mon %y] ]
+		    set coords($mon) "$eastcoord   $northcoord"
+		}
 	}
+}
+
+
+###############################################################################
+# procedures to make lat/lon resolution fancy
+proc MapCanvas::fancy_ll_res { res } {
+	variable res_str
+	# units are degrees
+	# _d means integer, _f means float
+	variable deg_d
+	variable min_f
+	variable min_d
+	variable sec_f
+	global proj_is_ll
+	global dms_format
+
+	if { !$proj_is_ll } {
+		return "$res"
+	}
+
+	# format easting
+	set deg_d [expr $res - fmod($res,1) ]
+	set min_f [expr fmod($res,1)*60 ]
+	set min_d [expr $min_f - fmod($min_f,1) ]
+	set sec_f [expr fmod($min_f,1)*60 ]
+
+	switch $dms_format {
+	    0 {
+		set res_str [format "%.6g" $res]
+	    }
+	    1 {
+		set res_str [format "%.0f\xB0%02.4g'" $deg_d $min_f ]
+	    }
+	    2 {
+		# 'g.region -g' doesn't report enough sig digs for LL so we get rounding errors!
+		if { [expr abs($sec_f - 60)] < 0.0001 } { 
+		    set min_d [expr $min_d + 1]
+		    set sec_f "0"
+		}
+
+		set res_str [format "%.0f\xB0%02.0f'%02.3g\"" \
+			$deg_d $min_d $sec_f ]
+	    }
+	}
+
+	return "$res_str"
+}
+
+
+###############################################################################
+# procedures to make lat/lon coords fancy
+proc MapCanvas::fancy_ll { eastcoord northcoord } {
+	variable ncoord
+	variable ecoord
+	variable hem_str
+	# units are degrees
+	# _d means integer, _f means float
+	variable deg_d
+	variable min_f
+	variable min_d
+	variable sec_f
+	global proj_is_ll
+	global dms_format
+
+	if { !$proj_is_ll } {
+		return "$eastcoord   $northcoord"
+	}
+
+	# format easting
+	set deg_d [expr abs($eastcoord - fmod($eastcoord,1)) ]
+	set min_f [expr abs(fmod($eastcoord,1)*60) ]
+	set min_d [expr $min_f - fmod($min_f,1) ]
+	set sec_f [expr fmod($min_f,1)*60 ]
+
+	if { fmod($eastcoord,180) == 0 } {
+		set hem_str ""
+	} elseif { $eastcoord > 0 } {
+	    set hem_str "E"
+	} else {
+	    set hem_str "W"
+	}
+
+	switch $dms_format {
+	    0 {
+		set ecoord [format "%.6f\xB0 %s" [expr abs($eastcoord)] $hem_str ]
+	    }
+	    1 {
+		set ecoord [format "%3.0f\xB0 %02.4f' %s" \
+			$deg_d $min_f $hem_str ]
+	    }
+	    2 {
+		set ecoord [format "%3.0f\xB0%02.0f'%06.3f\"%s" \
+			$deg_d $min_d $sec_f $hem_str ]
+	    }
+	}
+
+	# now northing
+	set deg_d [expr abs($northcoord - fmod($northcoord,1)) ]
+	set min_f [expr abs(fmod($northcoord,1)*60) ]
+	set min_d [expr $min_f - fmod($min_f,1) ]
+	set sec_f [expr fmod($min_f,1)*60 ]
+
+	if { $northcoord > 0 } {
+		set hem_str "N"
+	} elseif { $northcoord == 0 } {
+		set hem_str ""
+	} else {
+		set hem_str "S"
+	}
+
+	if { $northcoord > 90 || $northcoord < -90} {
+	    set ncoord [concat "90\xB0" $hem_str ]
+	} else {
+	    switch $dms_format {
+		0 {
+		    set ncoord [format "%.6f\xB0 %s" [expr abs($northcoord)] $hem_str ]
+		}
+		1 {
+
+		    set ncoord [format "%2.0f\xB0 %02.4f' %s" \
+			  $deg_d $min_f $hem_str ]
+
+		}
+		2 {
+		    set ncoord [format "%2.0f\xB0%02.0f'%06.3f\"%s" \
+			$deg_d $min_d $sec_f $hem_str ]
+		}
+	    }
+	}
+
+	return "$ecoord   $ncoord"
 }
 
 
@@ -1071,7 +1225,7 @@ proc MapCanvas::currentzoom { mon } {
 	variable msg
 	variable canvas_w
 	variable canvas_h
-	variable ll_proj
+	global proj_is_ll
 
 	set mapunits [MapCanvas::get_mapunits]
 
@@ -1091,7 +1245,7 @@ proc MapCanvas::currentzoom { mon } {
 		# In Lat/Lon N and S can not be larger than 90!
 # FIXME:
 #puts "-> n=$n  s=$s  e=$e  w=$w"
-		if { $ll_proj } {
+		if { $proj_is_ll } {
 		    if { $n >  90 } {
 			set n  90
 			tk_messageBox -type ok -icon warning -parent .mapcan($mon) \
@@ -1125,11 +1279,21 @@ proc MapCanvas::currentzoom { mon } {
 	set ewres [lindex $region 5]
 
 	if { $nsres == $ewres || $exploremode($mon) } {
-	    set MapCanvas::regionstr [format [G_msg "Display: rows=%d columns=%d  resolution=%g $mapunits"] \
-		$rows $cols $nsres]
+	    if { $proj_is_ll } {
+		set res_str [MapCanvas::fancy_ll_res $nsres]
+	    } else {
+		set res_str [format "%g" $nsres]
+	    }
+	    set MapCanvas::regionstr [format [G_msg "Display: rows=%d  columns=%d  resolution=%s\
+		    $mapunits"] $rows $cols $res_str]
 	} else {
-	    set MapCanvas::regionstr [format [G_msg "Display: rows=%d cols=%d  N-S res=%g  E-W res=%g"] \
-		$rows $cols $nsres $ewres]
+	    if { $proj_is_ll } {
+		set MapCanvas::regionstr [format [G_msg "Display: rows=%d  cols=%d  N-S res=%s  E-W res=%s"] \
+		    $rows $cols [MapCanvas::fancy_ll_res $nsres] [MapCanvas::fancy_ll_res $ewres]]
+	    } else {
+		set MapCanvas::regionstr [format [G_msg "Display: rows=%d  cols=%d  N-S res=%g  E-W res=%g"] \
+		    $rows $cols $nsres $ewres]
+	    }
 	}
 
 	set MapCanvas::msg($mon) $regionstr
@@ -1299,6 +1463,7 @@ proc MapCanvas::zoombind { mon zoom } {
 	variable areaY2
 	variable msg
 	global outfmt_coords
+	global proj_is_ll
 
 	# initialize zoom rectangle corners
 
@@ -1324,8 +1489,14 @@ proc MapCanvas::zoombind { mon zoom } {
 		set scrxmov %x
 		set scrymov %y
 		set eastcoord  [format $outfmt_coords [eval MapCanvas::scrx2mape $mon %x] ]
-		set northcoord [format $outfmt_coords [eval MapCanvas::scry2mapn $mon %y] ]
-		set coords($mon) "$eastcoord $northcoord"
+		if { $proj_is_ll } {
+		    set northcoord [eval MapCanvas::scry2mapn $mon %y]
+		    set coords($mon) [eval MapCanvas::fancy_ll $eastcoord $northcoord]
+		} else {
+		    set northcoord [format $outfmt_coords [eval MapCanvas::scry2mapn $mon %y] ]
+		    set coords($mon) "$eastcoord   $northcoord"
+		}
+
 		MapCanvas::drawzoom $mon %x %y
 	}
 
@@ -1546,6 +1717,7 @@ proc MapCanvas::panbind { mon } {
 	variable can
 	variable msg
 	global outfmt_coords
+	global proj_is_ll
 
 	set MapCanvas::msg($mon) [G_msg "Drag with mouse to pan"]
 
@@ -1558,8 +1730,15 @@ proc MapCanvas::panbind { mon } {
 		set scrxmov %x
 		set scrymov %y
 		set eastcoord  [format $outfmt_coords [eval MapCanvas::scrx2mape $mon %x] ]
-		set northcoord [format $outfmt_coords [eval MapCanvas::scry2mapn $mon %y] ]
-		set coords($mon) "$eastcoord $northcoord"
+		set eastcoord  [format $outfmt_coords [eval MapCanvas::scrx2mape $mon %x] ]
+		if { $proj_is_ll } {
+		    set northcoord [eval MapCanvas::scry2mapn $mon %y]
+		    set coords($mon) [eval MapCanvas::fancy_ll $eastcoord $northcoord]
+		} else {
+		    set northcoord [format $outfmt_coords [eval MapCanvas::scry2mapn $mon %y] ]
+		    set coords($mon) "$eastcoord   $northcoord"
+		}
+
 		MapCanvas::dragpan $mon %x %y
 	}
 
@@ -1687,10 +1866,16 @@ proc MapCanvas::measurebind { mon } {
 		set scrxmov %x
 		set scrymov %y
 		set eastcoord  [format $outfmt_coords [eval MapCanvas::scrx2mape $mon %x] ]
-		set northcoord [format $outfmt_coords [eval MapCanvas::scry2mapn $mon %y] ]
-		set coords($mon) "$eastcoord $northcoord"
-		MapCanvas::drawmline $mon %x %y
+		if { $proj_is_ll } {
+		    set northcoord [eval MapCanvas::scry2mapn $mon %y]
+		    set coords($mon) [eval MapCanvas::fancy_ll $eastcoord $northcoord]
+		} else {
+		    set northcoord [format $outfmt_coords [eval MapCanvas::scry2mapn $mon %y] ]
+		    set coords($mon) "$eastcoord   $northcoord"
 		}
+
+		MapCanvas::drawmline $mon %x %y
+	}
 	bind $can($mon) <ButtonRelease-1> "MapCanvas::measure $mon %x %y"
 
 	set MapCanvas::msg($mon) [G_msg "Draw measure line with mouse"]
