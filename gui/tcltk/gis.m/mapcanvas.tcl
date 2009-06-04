@@ -115,7 +115,7 @@ namespace eval MapCanvas {
 
 	# proj_is_ll is 1 for a Lat/Lon projection, 0 otherwise
 	global proj_is_ll
-	# DMS format: 0 is ddd.ddddd,  1 is ddd:mm.mmmmm', 2 is ddd:mm'ss.sss"
+	# DMS format: 0 is ddd.dddddd,  1 is ddd:mm.mmmm', 2 is ddd:mm'ss.sss"
 	global dms_format
 
 	# string with region information to show in status bar
@@ -183,6 +183,7 @@ proc MapCanvas::create { } {
 	}
 
 # FIXME:  make this settable from the UI or use GRASS_DMS_FORMAT enviro var
+	# DMS format: 0 is ddd.dddddd,  1 is ddd:mm.mmmm', 2 is ddd:mm'ss.sss"
 	set dms_format 2
 
 	# Make sure that we are using the WIND file for everything except displays
@@ -1108,7 +1109,11 @@ proc MapCanvas::fancy_ll_res { res } {
 		set res_str [format "%.6g" $res]
 	    }
 	    1 {
-		set res_str [format "%.0f\xB0%02.4g'" $deg_d $min_f ]
+		if { $min_f == 0 } {
+			set res_str [format "%.0f\xB0" $deg_d ]
+		} else {
+			set res_str [format "%.0f\xB0%02.4g'" $deg_d $min_f ]
+		}
 	    }
 	    2 {
 		# 'g.region -g' doesn't report enough sig digs for LL so we get rounding errors!
@@ -1117,8 +1122,13 @@ proc MapCanvas::fancy_ll_res { res } {
 		    set sec_f "0"
 		}
 
-		set res_str [format "%.0f\xB0%02.0f'%02.3g\"" \
-			$deg_d $min_d $sec_f ]
+		if { $sec_f != 0 } {
+			set res_str [format "%.0f\xB0%02.0f'%02.3g\"" $deg_d $min_d $sec_f ]
+		} elseif { $min_d != 0 } {
+			set res_str [format "%.0f\xB0%02.0f'" $deg_d $min_d ]
+		} else {
+			set res_str [format "%.0f\xB0" $deg_d ]
+		}
 	    }
 	}
 
