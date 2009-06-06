@@ -131,9 +131,9 @@
    - remove cva, install again: WARNING: list item 'cva' exists in index.html (?)
    - superfluous warning upon uninstall of extension w/o "entries-gisman"
    - due to bad command line parsing, listing installed extensions only works like this:
-   ./gem6 --grass=/usr/local/grass-6.4.svn -q
+   ./gem64 --grass=/usr/local/grass-6.4.svn -q
    NOT like this:
-   ./gem6 -q --grass=/usr/local/grass-6.4.svn
+   ./gem64 -q --grass=/usr/local/grass-6.4.svn
 
 
  */
@@ -147,7 +147,7 @@
 
 void show_help(void)
 {
-    fprintf(stdout, "Usage: gem6 [OPTION] [ACTION] [FILE|DIR]\n");
+    fprintf(stdout, "Usage: gem64 [OPTION] [ACTION] [FILE|DIR]\n");
     fprintf(stdout, "Install a GRASS extension from FILE or DIR.\n");
     fprintf(stdout, "Manage (installed) GRASS extension(s).\n");
     fprintf(stdout, "\nPossible ACTIONs are:\n");
@@ -203,7 +203,7 @@ void show_help(void)
 	    "For installation from source code, a C compiler and make tools are needed.\n");
     fprintf(stdout, "\nExample:\n");
     fprintf(stdout,
-	    "\tgem6 -b macosx --grass=/usr/local/grass-6.4.0 -i myExtension\n");
+	    "\tgem64 -b macosx --grass=/usr/local/grass-6.4.0 -i myExtension\n");
     fprintf(stdout,
 	    "Installs the MacOS X binaries for 'myExtension' in /usr/local/grass-6.4.0.\n");
     exit(0);
@@ -257,7 +257,7 @@ void show_license(char *package)
 
 void show_version(void)
 {
-    fprintf(stdout, "gem6 (GRASS extensions manager) %.2f\n", PROGVERSION);
+    fprintf(stdout, "gem64 (GRASS extensions manager) %.2f\n", PROGVERSION);
     fprintf(stdout, "Written by Benjamin Ducke\n");
     fprintf(stdout, "\nCopyright (C) 2005 Benjamin Ducke\n");
     fprintf(stdout,
