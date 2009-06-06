@@ -51,10 +51,10 @@ actions.o: actions.h globals.h
 
 main.o:	globals.h
 
-install: gem6
-	strip gem6;
-	cp gem6 /usr/local/bin
+install: gem$(GRASS_VERSION_MAJOR)$(GRASS_VERSION_MINOR)
+	strip gem$(GRASS_VERSION_MAJOR)$(GRASS_VERSION_MINOR);
+	cp gem$(GRASS_VERSION_MAJOR)$(GRASS_VERSION_MINOR) /usr/local/bin
 
 clean:
-	-rm -f *.o *.bak core *~ gem6
+	-rm -f *.o *.bak core *~ gem$(GRASS_VERSION_MAJOR)$(GRASS_VERSION_MINOR)
 
