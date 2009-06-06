@@ -31,7 +31,9 @@ OBJS =	at_exit_funcs.o \
 	actions.o \
 	main.o
 
-default: $(SRCS) $(HDRS) $(OBJS)
+default: gem
+
+gem: $(SRCS) $(HDRS) $(OBJS)
 	$(CC) $(OBJS) -o gem$(GRASS_VERSION_MAJOR)$(GRASS_VERSION_MINOR) $(CFLAGS) $(CLIBS) $(LDFLAGS)
 
 %.o: %.c
@@ -53,7 +55,7 @@ actions.o: actions.h globals.h
 
 main.o:	globals.h
 
-install: gem$(GRASS_VERSION_MAJOR)$(GRASS_VERSION_MINOR)
+install: gem
 	strip gem$(GRASS_VERSION_MAJOR)$(GRASS_VERSION_MINOR);
 	cp gem$(GRASS_VERSION_MAJOR)$(GRASS_VERSION_MINOR) /usr/local/bin
 
