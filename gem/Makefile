@@ -1,3 +1,5 @@
+GRASS_VERSION_MAJOR=6
+GRASS_VERSION_MINOR=4
 CC=gcc
 CFLAGS=-g -Wall -pedantic -Werror-implicit-function-declaration -fno-common
 CLIBS=
@@ -32,7 +34,7 @@ OBJS =	at_exit_funcs.o \
 default: gem
 
 gem: $(SRCS) $(HDRS) $(OBJS)
-	$(CC) $(OBJS) -o gem6 $(CFLAGS) $(CLIBS) $(LDFLAGS)
+	$(CC) $(OBJS) -o gem$(GRASS_VERSION_MAJOR)$(GRASS_VERSION_MINOR) $(CFLAGS) $(CLIBS) $(LDFLAGS)
 
 %.o: %.c
 	$(CC) $(CFLAGS) $(CPPFLAGS) -o $@ -c $<
