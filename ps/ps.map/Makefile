@@ -22,4 +22,5 @@ $(PROLOG): prolog.ps
 patt:
 	$(MKDIR) $(ETC)/paint/patterns/
 	$(INSTALL_DATA) patterns/*.eps $(ETC)/paint/patterns/
-
+	$(MKDIR) $(ETC)/paint/decorations/
+	$(INSTALL_DATA) decorations/*.eps $(ETC)/paint/decorations/
