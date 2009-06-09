@@ -37,7 +37,7 @@ eval `g.gisenv`
 LOCATION=$GISDBASE/$LOCATION_NAME/$MAPSET
 
 CONVERTEDMAPS=0
-for i in `g.mlist type=sites`
+for i in `g.mlist type=sites mapset=.`
 do
 
   # polish map names to be SQL compliant
