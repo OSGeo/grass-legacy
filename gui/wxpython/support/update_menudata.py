@@ -80,15 +80,23 @@ def parseModules():
 
 def updateData(data, modules):
     """!Update menu data tree"""
+    # list of modules to be ignored
+    ignore =  [ 'v.type_wrapper.py',
+                'vcolors' ]
+    
+
     for node in data.tree.getiterator():
         if node.tag != 'menuitem':
             continue
-        
+
         item = dict()
         for child in node.getchildren():
             item[child.tag] = child.text
         
         if not item.has_key('command'):
+            continue
+
+        if item['command'] in ignore:
             continue
         
         module = item['command'].split(' ')[0]
@@ -101,11 +109,15 @@ def updateData(data, modules):
         else:
             desc = modules[module]['desc']
         node.find('help').text = desc
-        
+    
 def writeData(data):
     """!Write updated menudata.xml"""
     file = os.path.join('..', 'xml', 'menudata.xml')
-    data.tree.write(file)
+    try:
+        data.tree.write(file)
+    except IOError:
+        print >> sys.stderr, "'menudata.xml' not found. Please run the script from 'gui/wxpython/support'."
+        
 
 def main(argv = None):
     if argv is None:
@@ -132,7 +144,7 @@ if __name__ == '__main__':
         print >> sys.stderr, "You must be in GRASS GIS to run this program."
         sys.exit(1)
     
-    sys.path.append('../gui_modules')
+    sys.path.append(os.path.join(os.getenv("GISBASE"), 'etc', 'wxpython', 'gui_modules'))
     import menudata
     import menuform
     import globalvar
