@@ -591,7 +591,8 @@
 	<separator />
 	<menuitem>
 	  <label>NVIZ (requires Tcl/Tk)</label>
-	  <help>nviz - Visualization and animation tool for GRASS data</help>
+	  <help>nviz - Visualization and animation tool for GRASS data.</help>
+	  <keywords>raster,vector,visualization</keywords>
 	  <handler>self.OnMenuCmd</handler>
 	  <command>nviz</command>
 	</menuitem>
@@ -817,6 +818,7 @@
 	    <menuitem>
 	      <label>Update map statistics</label>
 	      <help>Update raster map statistics</help>
+	      <keywords>raster,statistics</keywords>
 	      <handler>self.OnMenuCmd</handler>
 	      <command>r.support.stats</command>
 	    </menuitem>
@@ -1133,6 +1135,7 @@
 	    <menuitem>
 	      <label>Flow accumulation</label>
 	      <help>Flow computation for massive grids (Float version).</help>
+	      <keywords>raster</keywords>
 	      <handler>self.OnMenuCmd</handler>
 	      <command>r.terraflow</command>
 	    </menuitem>
@@ -1191,6 +1194,7 @@
 	    <menuitem>
 	      <label>Watershed basin creation</label>
 	      <help>Watershed basin creation program.</help>
+	      <keywords>raster</keywords>
 	      <handler>self.OnMenuCmd</handler>
 	      <command>r.water.outlet</command>
 	    </menuitem>
