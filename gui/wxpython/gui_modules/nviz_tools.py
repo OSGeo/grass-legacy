@@ -1704,7 +1704,7 @@ class NvizToolWindow(wx.Frame):
 
         shade = self.FindWindowById(self.win['surface']['draw']['shading']).GetSelection()
 
-        value, desc = self.mapWindow.GetDrawMode(mode, style, shade)
+        value, desc = self.mapWindow.nvizDefault.GetDrawMode(mode, style, shade)
 
         return value, desc
 
