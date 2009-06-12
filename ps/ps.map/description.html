@@ -1577,11 +1577,33 @@ USAGE:	<B>end</B>
 <P>
 
 
+<H2>EXAMPLES</H2>
 
-<H2>EXAMPLE ps.map INPUT FILE</H2>
 
-The following is an example of a <EM>ps.map</EM> script file. The file has been
-named <EM>spear.soils</EM>:
+The following are examples of <EM>ps.map</EM> script files.
+<P>
+<h4>Simple example</h4>
+The file has been named <EM>spear.basic</EM>:
+
+<PRE>
+# this ps.map example draws a map of Spearfish, SD
+<B>raster</B> elevation.dem
+<B>header</B>
+  <B>end</B>
+<B>vlines</B> roads
+  <B>color</B> brown
+  <B>end</B>
+<B>end</B>
+</PRE>
+
+Generate map as Postsript file:
+<PRE>
+ ps.map input=spear.basic output=spear_basic.ps
+</PRE>
+
+
+<h4>More complicated example</h4>
+The file has been named <EM>spear.soils</EM>:
 
 <PRE>
 # this ps.map example draws a map of Spearfish, SD
