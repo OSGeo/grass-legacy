@@ -72,7 +72,7 @@ proc run_ui {cmd} {
     set program [lindex $cmd 0]
     set code ""
 
-	if {[catch {set code [exec -- $program --tcltk 2> $devnull]} error]} {
+	if {[catch {set code [exec -- "$program" --tcltk 2> $devnull]} error]} {
 		GmLib::errmsg $error
 	}
 
@@ -170,7 +170,7 @@ set gronsole [command_window {.gronsole}]
 
 proc execute {cmd} {
     # Use run and output
-    run_ui $cmd
+    run_ui [list $cmd]
 }
 
 ###############################################################################
