@@ -803,11 +803,13 @@ class LoadMapLayersDialog(wx.Dialog):
 class MultiImportDialog(wx.Dialog):
     """Import dxf layers"""
     def __init__(self, parent, type,
-                 id=wx.ID_ANY, title=_("Multiple import"), 
+                 id=wx.ID_ANY, title=_("Multiple import"),
+                 link = False,
                  style=wx.DEFAULT_DIALOG_STYLE | wx.RESIZE_BORDER):
 
         self.parent = parent # GMFrame 
         self.inputType = type
+        self.link = link     # Link or import data (only for GDAL/OGR)
         
         wx.Dialog.__init__(self, parent, id, title, style=style)
 
@@ -817,7 +819,7 @@ class MultiImportDialog(wx.Dialog):
             self.inputTitle = _("Input DXF file")
         else:
             self.inputTitle = _("Input directory")
-
+        
         self.inputBox = wx.StaticBox(parent=self.panel, id=wx.ID_ANY,
                                 label=" %s " % self.inputTitle)
         self.layerBox = wx.StaticBox(parent=self.panel, id=wx.ID_ANY,
@@ -859,8 +861,11 @@ class MultiImportDialog(wx.Dialog):
         self.list = LayersList(self.panel)
         self.list.LoadData()
 
-        self.add = wx.CheckBox(parent=self.panel, id=wx.ID_ANY,
-                               label=_("Add imported layers into layer tree"))
+        self.add = wx.CheckBox(parent=self.panel, id=wx.ID_ANY)
+        if link:
+            self.add.SetLabel(_("Add linked layers into layer tree"))
+        else:
+            self.add.SetLabel(_("Add imported layers into layer tree"))
         self.add.SetValue(UserSettings.Get(group='cmd', key='addNewLayer', subkey='enabled'))
 
         #
@@ -871,8 +876,12 @@ class MultiImportDialog(wx.Dialog):
         self.btn_cancel.SetToolTipString(_("Close dialog"))
         self.btn_cancel.Bind(wx.EVT_BUTTON, self.OnCancel)
         # run
-        self.btn_run = wx.Button(parent=self.panel, id=wx.ID_OK, label= _("&Import"))
-        self.btn_run.SetToolTipString(_("Import selected layers"))
+        if link:
+            self.btn_run = wx.Button(parent=self.panel, id=wx.ID_OK, label= _("&Link"))
+            self.btn_run.SetToolTipString(_("Link selected layers"))
+        else:
+            self.btn_run = wx.Button(parent=self.panel, id=wx.ID_OK, label= _("&Import"))
+            self.btn_run.SetToolTipString(_("Import selected layers"))
         self.btn_run.SetDefault()
         self.btn_run.Enable(False)
         self.btn_run.Bind(wx.EVT_BUTTON, self.OnRun)
@@ -952,7 +961,7 @@ class MultiImportDialog(wx.Dialog):
         self.Close()
 
     def OnRun(self, event):
-        """Import data (each layes as separate vector map)"""
+        """!Import/Link data (each layes as separate vector map)"""
         data = self.list.GetLayers()
         
         # hide dialog
@@ -965,13 +974,25 @@ class MultiImportDialog(wx.Dialog):
                        'layers=%s' % layer,
                        'output=%s' % output]
             elif self.inputType == 'ogr':
-                cmd = ['v.in.ogr',
-                       'dsn=%s' % (os.path.join(self.input.GetValue(), layer)),
-                       'output=%s' % output]
-            else:
-                cmd = ['r.in.gdal', '-o', # override projection by default
-                       'input=%s' % (os.path.join(self.input.GetValue(), layer)),
-                       'output=%s' % output]
+                if self.link:
+                    cmd = ['v.external',
+                           'dsn=%s' % os.path.join(self.input.GetValue()),
+                           'output=%s' % output,
+                           'layer=%s' % layer.rstrip('.' + self.format.GetValue())
+                           ]
+                else:
+                    cmd = ['v.in.ogr',
+                           'dsn=%s' % (os.path.join(self.input.GetValue(), layer)),
+                           'output=%s' % output]
+            else: # gdal
+                if self.link:
+                    cmd = ['r.external', '-o', # override projection by default
+                           'input=%s' % (os.path.join(self.input.GetValue(), layer)),
+                           'output=%s' % output]
+                else:
+                    cmd = ['r.in.gdal', '-o', # override projection by default
+                           'input=%s' % (os.path.join(self.input.GetValue(), layer)),
+                           'output=%s' % output]
             
             if UserSettings.Get(group='cmd', key='overwrite', subkey='enabled'):
                 cmd.append('--overwrite')
