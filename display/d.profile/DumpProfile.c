@@ -17,7 +17,7 @@ int WriteProfile(char *raster, char *mapset,
     char *buf2 = G_calloc(UCAT_STR_SIZE, sizeof(char));
     char *outfile = G_calloc(strlen(fname) + 3, sizeof(char));
     char coords[4][80];
-    char outfmt[64];
+    char outfmt[24];
     FILE *outFile;
     struct ProfileNode *ptr;
 
