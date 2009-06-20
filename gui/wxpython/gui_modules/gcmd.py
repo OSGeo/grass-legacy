@@ -15,15 +15,13 @@ Classes:
  - Command
  - CommandThread
 
-(C) 2007-2008 by the GRASS Development Team
+(C) 2007-2009 by the GRASS Development Team
 This program is free software under the GNU General Public
 License (>=v2). Read the file COPYING that comes with GRASS
 for details.
 
 @author Jachym Cepicky
-Martin Landa <landa.martin gmail.com>
-
-@date 2007-2008
+@author Martin Landa <landa.martin gmail.com>
 """
 
 import os
@@ -60,14 +58,14 @@ from debug import Debug as Debug
 class GException(Exception):
     """Generic exception"""
     def __init__(self, message, title=_("Error"), parent=None):
-        self.message = message
+        self.msg = message
         self.parent = parent
         self.title = title
         
     def Show(self):
         dlg = wx.MessageDialog(parent=self.parent,
                                caption=self.title,
-                               message=self.message,
+                               message=self.msg,
                                style=wx.ICON_ERROR | wx.CENTRE)
         dlg.SetIcon(wx.Icon(os.path.join(globalvar.ETCICONDIR, 'grass_error.ico'), wx.BITMAP_TYPE_ICO))
         if self.parent:
