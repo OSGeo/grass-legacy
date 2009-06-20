@@ -27,6 +27,8 @@ endif
 ifndef PROJ_BIN
 PROJ_BIN = `echo "${NAD2BIN}" | sed -e "s,.=,," -e "s,/nad2bin,,"`
 endif
+# get python version - use python in path, should be config'd python
+PYVER = `python -V 2>&1 | cut -d \  -f 2 | cut -d . -f 1,2`
 
 default: macosxapp
 
@@ -68,6 +70,7 @@ $(OBJDIR)/grass.sh: grass.sh.in
 	sed -e "s,@GDAL_BIN_PATH@,$(GDAL_BIN):," \
 	-e "s,@PROJ_BIN_PATH@,$(PROJ_BIN):," \
 	-e "s,@X11@,$(USE_X11),g" \
+	-e "s,@PYVER@,$(PYVER),g" \
 	grass.sh.in > $(OBJDIR)/grass.sh
 
 clean:
