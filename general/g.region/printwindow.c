@@ -23,7 +23,7 @@ int print_window(struct Cell_head *window, int print_flag)
     double longitude, latitude;
 
     if (print_flag & PRINT_SH)
-	x = -1;
+	x = G_projection() == PROJECTION_LL ? -1 : 0;
     else
 	x = window->proj;
 
