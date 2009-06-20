@@ -35,10 +35,19 @@ int What(char *name,
 	sprintf(txt_buf, "%s in mapset %s", name, mapset);
 	DrawText(22, 1, 1, txt_buf);
 	R_standard_color(D_translate_color(DEFAULT_FG_COLOR));
-	sprintf(txt_buf, "EAST: %10.2f", east);
+
+	if (G_projection() == PROJECTION_LL)
+	    sprintf(txt_buf, "EAST: %10.6f", east);
+	else
+	    sprintf(txt_buf, "EAST: %10.2f", east);
 	DrawText(22, 2, 1, txt_buf);
-	sprintf(txt_buf, "NORTH: %10.2f", north);
+
+	if (G_projection() == PROJECTION_LL)
+	    sprintf(txt_buf, "NORTH: %10.6f", north);
+	else
+	    sprintf(txt_buf, "NORTH: %10.2f", north);
 	DrawText(22, 3, 1, txt_buf);
+
 	if (NoCatStrings)
 	    sprintf(txt_buf, "(%d)", buf[col]);
 	else

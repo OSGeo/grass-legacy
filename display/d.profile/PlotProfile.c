@@ -98,8 +98,14 @@ int PlotProfile(struct Profile profile, char *letter, int min, int max)
     text_height = TEXT_HEIGHT * (b - t);
     text_width = text_height * 0.8;
     R_standard_color(D_translate_color(DEFAULT_FG_COLOR));
-    sprintf(txt_buf, "%s: From (%10.2f,%10.2f) to (%10.2f,%10.2f)",
+
+    if (G_projection() == PROJECTION_LL)
+	sprintf(txt_buf, "%s: From (%10.6f,%10.6f) to (%10.6f,%10.6f)",
 	    letter, profile.e1, profile.n1, profile.e2, profile.n2);
+    else
+	sprintf(txt_buf, "%s: From (%10.2f,%10.2f) to (%10.2f,%10.2f)",
+	    letter, profile.e1, profile.n1, profile.e2, profile.n2);
+
     done = 0;
     do {
 	R_get_text_box(txt_buf, &tt, &tb, &tl, &tr);
