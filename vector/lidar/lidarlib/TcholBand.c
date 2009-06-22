@@ -129,8 +129,8 @@ void tcholInv(double **N, double *invNdiag, int n, int BW)
     double somma;
 
 	/*--------------------------------------*/
-    G_alloc_matrix(n, BW);
-    G_alloc_vector(n);
+    T = G_alloc_matrix(n, BW);
+    vect = G_alloc_vector(n);
 
     /* T computation                */
     tcholDec(N, T, n, BW);
@@ -177,8 +177,8 @@ void tcholSolveInv(double **N, double *TN, double *invNdiag, double *parVect,
     double somma;
 
 	/*--------------------------------------*/
-    G_alloc_matrix(n, BW);
-    G_alloc_vector(n);
+    T = G_alloc_matrix(n, BW);
+    vect = G_alloc_vector(n);
 
     /* T computation                */
     tcholDec(N, T, n, BW);
