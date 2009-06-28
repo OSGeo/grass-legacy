@@ -834,7 +834,12 @@ class BufferedWindow(MapWindow, wx.Window):
         #
         ### self.Map.SetRegion()
         self.parent.StatusbarUpdate()
-
+        if grass.find_file(name = 'MASK', element = 'cell')['name']:
+            # mask found
+            self.parent.maskInfo.SetLabel(_('MASK'))
+        else:
+            self.parent.maskInfo.SetLabel('')
+        
         Debug.msg (2, "BufferedWindow.UpdateMap(): render=%s, renderVector=%s -> time=%g" % \
                    (render, renderVector, (stop-start)))
         
@@ -2621,8 +2626,8 @@ class MapFrame(wx.Frame):
         #
         # Add statusbar
         #
-        self.statusbar = self.CreateStatusBar(number=3, style=0)
-        self.statusbar.SetStatusWidths([-5, -2, -1])
+        self.statusbar = self.CreateStatusBar(number=4, style=0)
+        self.statusbar.SetStatusWidths([-5, -2, -1, -1])
         self.toggleStatus = wx.Choice(self.statusbar, wx.ID_ANY,
                                       choices = globalvar.MAP_DISPLAY_STATUSBAR_MODE)
         self.toggleStatus.SetSelection(UserSettings.Get(group='display', key='statusbarMode', subkey='selection'))
@@ -2662,6 +2667,13 @@ class MapFrame(wx.Frame):
                                     size=(150, -1))
         self.mapScale.Hide()
         self.statusbar.Bind(wx.EVT_TEXT_ENTER, self.OnChangeMapScale, self.mapScale)
+
+        # mask
+        self.maskInfo = wx.StaticText(parent = self.statusbar, id = wx.ID_ANY,
+                                                  label = '')
+        self.maskInfo.SetForegroundColour(wx.Colour(255, 0, 0))
+        
+
         # on-render gauge
         self.onRenderGauge = wx.Gauge(parent=self.statusbar, id=wx.ID_ANY,
                                       range=0, style=wx.GA_HORIZONTAL)
@@ -3327,7 +3339,8 @@ class MapFrame(wx.Frame):
                    (0, self.mapScale),
                    (0, self.onRenderGauge),
                    (1, self.toggleStatus),
-                   (2, self.autoRender)]
+                   (2, self.maskInfo),
+                   (3, self.autoRender)]
         for idx, win in widgets:
             rect = self.statusbar.GetFieldRect(idx)
             if idx == 0: # show region / mapscale / process bar
@@ -3345,9 +3358,12 @@ class MapFrame(wx.Frame):
             else: # choice || auto-rendering
                 x, y = rect.x, rect.y - 1
                 w, h = rect.width, rect.height + 2
-                if idx == 2:
+                if idx == 2: # mask
                     x += 5
-
+                    y += 4
+                elif idx == 3: # render
+                    x += 5
+            
             win.SetPosition((x, y))
             win.SetSize((w, h))
 
