@@ -375,3 +375,37 @@ def reexec_with_pythonw():
             not sys.executable.endswith('MacOS/Python'):
         print >> sys.stderr, 're-executing using pythonw'
         os.execvp('pythonw', ['pythonw', __file__] + sys.argv[1:])
+
+def ReadEpsgCodes(path):
+    """!Read EPSG code from the file
+
+    @param path full path to the file with EPSG codes
+
+    @return dictionary of EPSG code
+    @return string on error
+    """
+    epsgCodeDict = dict()
+    try:
+        f = open(path, "r")
+        i = 0
+        code = None
+        for line in f.readlines():
+            line = line.strip()
+            if len(line) < 1:
+                continue
+                
+            if line[0] == '#':
+                descr = line[1:].strip()
+            elif line[0] == '<':
+                code, params = line.split(" ", 1)
+                code = int(code.replace('<', '').replace('>', ''))
+
+            if code is not None:
+                epsgCodeDict[code] = (descr, params)
+                code = None
+            i += 1
+        f.close()
+    except StandardError, e:
+        return str(e)
+    
+    return epsgCodeDict

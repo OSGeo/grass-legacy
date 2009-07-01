@@ -549,11 +549,39 @@ class MapFrame(wx.Frame):
                 self.statusbar.SetStatusText("%.2f, %.2f (seg: %.2f; tot: %.2f)" % \
                                                  (e, n, distance_seg, distance_tot), 0)
             else:
-                if self.Map.projinfo['proj'] == 'll':
-                    self.statusbar.SetStatusText("%s" % utils.Deg2DMS(e, n), 0)
+                if UserSettings.Get(group='display', key='projection', subkey='enabled') and \
+                        UserSettings.Get(group='display', key='projection', subkey='proj4'):
+                    projIn = gcmd.RunCommand('g.proj',
+                                             flags = 'jf',
+                                             read = True)
+                    projOut = UserSettings.Get(group='display',
+                                               key='projection',
+                                               subkey='proj4').replace('<>', '').strip()
+                    coors = gcmd.RunCommand('m.proj',
+                                            proj_in = projIn,
+                                            proj_out = projOut,
+                                            stdin = '%f|%f' % (e, n),
+                                            read = True)
+                    if coors:
+                        coors = coors.split('\t')
+                        e = coors[0]
+                        n = coors[1].split(' ')[0].strip()
+                        try:
+                            proj = projOut.split(' ')[0].split('=')[1]
+                        except IndexError:
+                            proj = ''
+                        if proj in ('ll', 'latlong', 'longlat'):
+                            self.statusbar.SetStatusText("%s %s" % (e, n), 0)
+                        else:
+                            self.statusbar.SetStatusText("%.2f, %.2f" % (float(e), float(n)), 0)
+                    else:
+                        self.statusbar.SetStatusText(_("Error in projection"), 0)
                 else:
-                    self.statusbar.SetStatusText("%.2f, %.2f" % (e, n), 0)
-        
+                    if self.Map.projinfo['proj'] == 'll':
+                        self.statusbar.SetStatusText("%s" % utils.Deg2DMS(e, n), 0)
+                    else:
+                        self.statusbar.SetStatusText("%.2f, %.2f" % (e, n), 0)
+                
         event.Skip()
 
     def OnDraw(self, event):
