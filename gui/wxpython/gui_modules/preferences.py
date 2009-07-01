@@ -1155,11 +1155,11 @@ class PreferencesDialog(wx.Dialog):
         label = wx.StaticText(parent=panel, id=wx.ID_ANY,
                               label=_("EPSG code:"))
         epsgCode = wx.ComboBox(parent=panel, id=wx.ID_ANY,
-                               name="GetStringSelection",
+                               name="GetValue",
                                size = (150, -1))
         self.epsgCodeDict = dict()
-        epsgCode.SetStringSelection(self.settings.Get(group='display', key='projection', subkey='epsg'))
-        self.winId['display:projection:epgs'] = epsgCode.GetId()
+        epsgCode.SetValue(str(self.settings.Get(group='display', key='projection', subkey='epsg')))
+        self.winId['display:projection:epsg'] = epsgCode.GetId()
         
         gridSizer.Add(item=label,
                       pos=(row, 0),
@@ -1586,10 +1586,10 @@ class PreferencesDialog(wx.Dialog):
         path = win.GetValue()
 
         self.epsgCodeDict = utils.ReadEpsgCodes(path)
-        list = self.FindWindowById(self.winId['display:projection:epgs'])
+        list = self.FindWindowById(self.winId['display:projection:epsg'])
         if type(self.epsgCodeDict) == type(''):
             wx.MessageBox(parent=self,
-                          message=_("Unable to read EPGS codes: %s") % self.epsgCodeDict,
+                          message=_("Unable to read EPSG codes: %s") % self.epsgCodeDict,
                           caption=_("Error"),  style=wx.OK | wx.ICON_ERROR | wx.CENTRE)
             self.epsgCodeDict = dict()
             list.SetItems([])
@@ -1609,7 +1609,7 @@ class PreferencesDialog(wx.Dialog):
         """!Enable mapdisplay window statusbar projection"""
         checked = event.IsChecked()
 
-        winCode = self.FindWindowById(self.winId['display:projection:epgs'])
+        winCode = self.FindWindowById(self.winId['display:projection:epsg'])
         winString = self.FindWindowById(self.winId['display:projection:proj4'])
         
         winCode.Enable(checked)
@@ -1621,7 +1621,7 @@ class PreferencesDialog(wx.Dialog):
         win = self.FindWindowById(self.winId['display:projection:proj4'])
         if not self.epsgCodeDict:
             wx.MessageBox(parent=self,
-                          message=_("EPSG code %s not found") % str(code),
+                          message=_("EPSG code %s not found") % event.GetString(),
                           caption=_("Error"),  style=wx.OK | wx.ICON_ERROR | wx.CENTRE)
             winCode.SetValue('')
             win.SetValue('')
@@ -1637,7 +1637,7 @@ class PreferencesDialog(wx.Dialog):
         
         
         try:
-            win.SetValue(self.epsgCodeDict[code][1])
+            win.SetValue(self.epsgCodeDict[code][1].replace('<>', '').strip())
         except KeyError:
             wx.MessageBox(parent=self,
                           message=_("EPSG code %s not found") % str(code),

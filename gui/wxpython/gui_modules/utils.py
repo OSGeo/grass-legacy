@@ -409,3 +409,37 @@ def ReadEpsgCodes(path):
         return str(e)
     
     return epsgCodeDict
+
+def ReprojectCoordinates(coord, projOut, projIn = None, flags = ''):
+    """!Reproject coordinates
+
+    @param coord coordinates given as tuple
+    @param projOut output projection
+    @param projIn input projection (use location projection settings)
+
+    @return reprojected coordinates (returned as tuple)
+    """
+    if not projIn:
+        projIn = gcmd.RunCommand('g.proj',
+                                 flags = 'jf',
+                                 read = True)
+    coors = gcmd.RunCommand('m.proj',
+                            flags = flags,
+                            proj_in = projIn,
+                            proj_out = projOut,
+                            stdin = '%f|%f' % (coord[0], coord[1]),
+                            read = True)
+    if coors:
+        coors = coors.split('\t')
+        e = coors[0]
+        n = coors[1].split(' ')[0].strip()
+        try:
+            proj = projOut.split(' ')[0].split('=')[1]
+        except IndexError:
+            proj = ''
+        if proj in ('ll', 'latlong', 'longlat'):
+            return (proj, (e, n))
+        else:
+            return (proj, (float(e), float(n)))
+    
+    return (None, None)
