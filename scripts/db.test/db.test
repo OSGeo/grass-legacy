@@ -48,7 +48,7 @@ do
 
     cat /dev/null > "$expected"
 
-    if [ $TYPE = "X" ]
+    if [ "$TYPE" = "X" ]
     then
         echo "$SQL" | db.execute
     else
@@ -71,7 +71,7 @@ do
 	echo $RES >> "$expected"
     done
 
-    if [ $TYPE = "S" ]
+    if [ "$TYPE" = "S" ]
     then
 	diff "$result" "$expected"
 
