@@ -264,12 +264,13 @@ def GetVectorNumberOfLayers(vector):
     
     return layers
 
-def Deg2DMS(lon, lat, string = True):
+def Deg2DMS(lon, lat, string = True, hemisphere = True):
     """!Convert deg value to dms string
 
     @param lon longitude (x)
     @param lat latitude (y)
     @param string True to return string otherwise tuple
+    @param hemisphere print hemisphere
     
     @return DMS string or tuple of values
     @return empty string on error
@@ -290,18 +291,24 @@ def Deg2DMS(lon, lat, string = True):
         flon += 360.0
 
     # hemisphere
-    if flat < 0.0:
+    if hemisphere:
+        if flat < 0.0:
+            flat = abs(flat)
+            hlat = 'S'
+        else:
+            hlat = 'N'
+
+        if flon < 0.0:
+            hlon = 'W'
+            flon = abs(flon)
+        else:
+            hlon = 'E'
+    else:
         flat = abs(flat)
-        hlat = 'S'
-    else:
-        hlat = 'N'
-
-    if flon < 0.0:
-        hlon = 'W'
         flon = abs(flon)
-    else:
-        hlon = 'E'
-
+        hlon = ''
+        hlat = ''
+    
     slat = __ll_parts(flat)
     slon = __ll_parts(flon)
 
