@@ -2,7 +2,9 @@ MODULE_TOPDIR = ..
 
 #compile if PYTHON present:
 ifneq ($(USE_PYTHON),)
+ifneq ($(strip $(CXX)),)
     SUBDIRS += python
+endif
 endif
 
 # doxygen:
