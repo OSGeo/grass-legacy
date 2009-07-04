@@ -41,6 +41,7 @@ int main(int argc, char **argv)
     dbHandle handle;
     int ret;
     FILE *fd;
+    const char *schema;
     int error = 0;
 
     parse_command_line(argc, argv);
@@ -61,7 +62,8 @@ int main(int argc, char **argv)
     }
 
     db_init_handle(&handle);
-    db_set_handle(&handle, parms.database, NULL);
+    schema = db_get_default_schema_name();
+    db_set_handle(&handle, parms.database, schema);
     if (db_open_database(driver, &handle) != DB_OK)
 	G_fatal_error(_("Unable to open database <%s>"), parms.database);
 
