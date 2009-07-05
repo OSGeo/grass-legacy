@@ -21,6 +21,7 @@ $(SCRIPT): $(PGM)
 	if [ ! -d $(SCRIPTDIR) ]; then $(MKDIR) $(SCRIPTDIR); fi
 	$(INSTALL) $(PGM) $(SCRIPT)
 	$(MAKE) htmlscript scriptstrings
+	$(MAKE) mancmd
 
 $(BIN)/$(PGM).bat: $(MODULE_TOPDIR)/scripts/windows_launch.bat
 	sed -e "s#SCRIPT_NAME#$(PGM)#" $(MODULE_TOPDIR)/scripts/windows_launch.bat > $@
