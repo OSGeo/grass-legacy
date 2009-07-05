@@ -55,7 +55,7 @@ extern struct Cell_head region;
 /* #define JUMP2FLOW */
 /* define it only if you want to skip the flow direction computation
    and jump directly to computing flow accumulation; the flowstream
-   must exist in /var/tmp/flowStream */
+   must exist in /STREAM_DIR/flowStream */
 
 
 /* ---------------------------------------------------------------------- */
@@ -131,7 +131,11 @@ parse_args(int argc, char *argv[]) {
   streamdir->key        = "STREAM_DIR";
   streamdir->type       = TYPE_STRING;
   streamdir->required   = NO;
-  streamdir->answer     = G_store("/var/tmp"); 
+#ifdef __MINGW32__
+  streamdir->answer     = G_convert_dirseps_from_host(G_store(getenv("TEMP")));
+#else
+  streamdir->answer     = G_store("/var/tmp/");
+#endif
   streamdir->description=
      _("Directory to hold temporary files (they can be large)");
 
@@ -141,7 +145,6 @@ parse_args(int argc, char *argv[]) {
   quiet = G_define_flag() ;
   quiet->key         = 'q' ;
   quiet->description = _("Quiet");
-  /* quiet->answer = 'n'; */
 
  /* stats file */
   struct Option *stats_opt;
@@ -177,8 +180,8 @@ parse_args(int argc, char *argv[]) {
 
   opt->mem = atoi(mem->answer);
   opt->streamdir = streamdir->answer;
-
   opt->verbose = FALSE;
+
 /* please, remove before GRASS 7 released */
   if(quiet->answer) {
     G_warning(_("The '-q' flag is superseded and will be removed "
@@ -581,7 +584,10 @@ main(int argc, char *argv[]) {
   
 #else 
   AMI_STREAM<waterWindowBaseType> *flowStream;
-  flowStream = new AMI_STREAM<waterWindowBaseType>("/var/tmp/flowStream");
+  char path[GPATH_MAX];
+
+  sprintf(path, "%s/flowStream", streamdir->answer);
+  flowStream = new AMI_STREAM<waterWindowBaseType>(path);
   fprintf(stderr, "flowStream opened: len=%d\n", flowStream->stream_len());
   fprintf(stderr, "jumping to flow accumulation computation\n");
 #endif
