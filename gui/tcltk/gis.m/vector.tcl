@@ -235,7 +235,19 @@ proc GmVector::select_qmap { id } {
 proc GmVector::show_columns { id } {
 	variable opt
 	set mapname $opt($id,1,vect)
+	if {[string length $mapname] == 0} {
+		GmVector::select_map $id
+		set mapname $opt($id,1,vect)
+		if {[string length $mapname] == 0} {
+			GmLib::errmsg [G_msg "This action requires map name to be set"]
+			return
+		}
+	}
 	set layernum $opt($id,1,layer)
+	if {[string is integer -strict $layernum] == 0 } {
+		GmLib::errmsg [G_msg "You must provide valid vector layer number"]
+		return
+	}
 	set cmd "v.info -c map=$mapname layer=$layernum"		
 	run_panel $cmd
 }
@@ -245,7 +257,19 @@ proc GmVector::show_columns { id } {
 proc GmVector::show_data { id } { 
 	variable opt
 	set mapname $opt($id,1,vect)
+	if {[string length $mapname] == 0} {
+		GmVector::select_map $id
+		set mapname $opt($id,1,vect)
+		if {[string length $mapname] == 0} {
+			GmLib::errmsg [G_msg "This action requires map name to be set"]
+			return
+		}
+	}
 	set layernum $opt($id,1,layer)
+	if {[string is integer -strict $layernum] == 0 } {
+		GmLib::errmsg [G_msg "You must provide valid vector layer number"]
+		return
+	}
 	if {![catch {open "|v.db.connect map=$mapname layer=$layernum -g" r} vdb]} {
 		set vectdb [read $vdb]
 		if {[catch {close $vdb} error]} {
@@ -253,10 +277,10 @@ proc GmVector::show_data { id } {
 		}
 
 		set vdblist [split $vectdb " "]
-		set tbl [lindex $vdblist 1]
-		set db [lindex $vdblist 3]
-		set drv [lindex $vdblist 4]
-		set cmd "db.select table=$tbl database=$db driver=dbf"
+		set tbl [string trim [lindex $vdblist 1]]
+		set db [file normalize [join [lrange $vdblist 3 end-1]]]
+		set drv [string trim [lindex $vdblist end]]
+		set cmd [list db.select "table=$tbl" "database=$db" "driver=$drv"]
 		run_panel $cmd
 	}
 }
@@ -266,7 +290,19 @@ proc GmVector::show_data { id } {
 proc GmVector::show_info { id } {
 	variable opt
 	set mapname $opt($id,1,vect)
+	if {[string length $mapname] == 0} {
+		GmVector::select_map $id
+		set mapname $opt($id,1,vect)
+		if {[string length $mapname] == 0} {
+			GmLib::errmsg [G_msg "This action requires map name to be set"]
+			return
+		}
+	}
 	set layernum $opt($id,1,layer)
+	if {[string is integer -strict $layernum] == 0 } {
+		GmLib::errmsg [G_msg "You must provide valid vector layer number"]
+		return
+	}
 	set cmd "v.info map=$mapname layer=$layernum"		
 	run_panel $cmd
 }
