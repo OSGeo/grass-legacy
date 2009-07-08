@@ -2438,66 +2438,59 @@ class BufferedWindow(MapWindow, wx.Window):
             os.environ["GRASS_REGION"] = tmpreg
 
     def ZoomToSaved(self, event):
-        """
-        Set display geometry to match extents in
+        """!Set display geometry to match extents in
         saved region file
         """
-
-        zoomreg = {}
-
-        dlg = gdialogs.SavedRegion(self, wx.ID_ANY, _("Zoom to saved region extents"),
+        dlg = gdialogs.SavedRegion(parent = self, id = wx.ID_ANY,
+                                   title = _("Zoom to saved region extents"),
                                    pos=wx.DefaultPosition, size=wx.DefaultSize,
                                    style=wx.DEFAULT_DIALOG_STYLE,
                                    loadsave='load')
-
+        
         if dlg.ShowModal() == wx.ID_CANCEL:
             dlg.Destroy()
             return
-
+        
         wind = dlg.wind
-
-        p = gcmd.Command (["g.region", "-ugp", "region=%s" % wind])
-
-        if p.returncode == 0:
-            output = p.ReadStdOutput()
-            for line in output:
-                line = line.strip()
-                if '=' in line: key,val = line.split('=')
-                zoomreg[key] = float(val)
-            self.Map.region['n'] = zoomreg['n']
-            self.Map.region['s'] = zoomreg['s']
-            self.Map.region['e'] = zoomreg['e']
-            self.Map.region['w'] = zoomreg['w']
-            self.ZoomHistory(self.Map.region['n'],self.Map.region['s'],self.Map.region['e'],self.Map.region['w'])
-            self.UpdateMap()
-
+        
+        self.Map.GetRegion(regionName = wind,
+                           update = True)
+        
         dlg.Destroy()
-
+        
+        self.ZoomHistory(self.Map.region['n'],
+                         self.Map.region['s'],
+                         self.Map.region['e'],
+                         self.Map.region['w'])
+        
+        self.UpdateMap()
+    
     def SaveDisplayRegion(self, event):
         """
         Save display extents to named region file.
         """
 
-        dlg = gdialogs.SavedRegion(self, wx.ID_ANY, "Save display extents to region file",
+        dlg = gdialogs.SavedRegion(parent = self, id = wx.ID_ANY,
+                                   title = _("Save display extents to region file"),
                                    pos=wx.DefaultPosition, size=wx.DefaultSize,
                                    style=wx.DEFAULT_DIALOG_STYLE,
                                    loadsave='save')
         if dlg.ShowModal() == wx.ID_CANCEL:
             dlg.Destroy()
             return
-
+        
         wind = dlg.wind
-
+        
         # test to see if it already exists and ask permission to overwrite
         windpath = os.path.join(self.Map.env["GISDBASE"], self.Map.env["LOCATION_NAME"],
-                                self.Map.env["MAPSET"],"windows",wind)
-
+                                self.Map.env["MAPSET"], "windows", wind)
+        
         if windpath and not os.path.exists(windpath):
             self.SaveRegion(wind)
         elif windpath and os.path.exists(windpath):
             overwrite = wx.MessageBox(_("Region file <%s> already exists. "
                                         "Do you want to overwrite it?") % (wind),
-                                      _("Warning"), wx.YES_NO)
+                                      _("Warning"), wx.YES_NO | wx.CENTRE)
             if (overwrite == wx.YES):
                 self.SaveRegion(wind)
         else:
@@ -2509,8 +2502,9 @@ class BufferedWindow(MapWindow, wx.Window):
         """
         Save region settings
         """
-        new = self.Map.AlignResolution()
-
+        ### new = self.Map.AlignResolution()
+        new = self.Map.GetCurrentRegion()
+        
         cmdRegion = ["g.region",
                      "-u",
                      "n=%f" % new['n'],
