@@ -161,15 +161,15 @@ proc GSelect_::create { element args } {
     }
     
     set location_path [file normalize [file join "$env(GISDBASE)" "$env(LOCATION_NAME)"]]
-    set current_mapset [file normalize "$env(MAPSET)"]
+    set current_mapset "$env(MAPSET)"
     set sympath [file normalize [file join "$env(GISBASE)" "etc" "symbol"]]
-    
+
     # main selection subroutine
     if {$element != "symbol"} {
         foreach dir [exec g.mapsets -p] {
             set windfile [file normalize [file join "$location_path" "$dir" "WIND"]]
             if { ! [ file exists $windfile ] } { continue }
-            if { $dir == [file tail "$current_mapset"] } {
+            if { $dir == "$current_mapset" } {
                 $tree insert end root ms_$dir -text $dir -data $dir -open 1 \
                     -image [Bitmap::get openfold] -drawcross auto
             } else {
