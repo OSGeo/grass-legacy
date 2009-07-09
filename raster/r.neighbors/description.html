@@ -237,8 +237,12 @@ of the raster map layer.  By default, <em><b>r.neighbors</b></em> will align
 these geographic region settings.  However, the user can elect to keep
 original input and output resolutions which are not aligned by specifying
 this (e.g., using the <b>-a</b> option).
-
 <p>
+
+<em><b>r.neighbors</b></em> doesn't propagate NULLs, but computes the
+aggregate over the non-NULL cells in the neighborhood.
+<p>
+
 The <b>-c</b> flag and the <b>weights</b> parameter are mutually exclusive. 
 Any use of the two together will produce an error. Differently-shaped neighborhood 
 analysis windows may be achieved by using the <b>weight=</b> parameter to specify 
@@ -265,6 +269,7 @@ for <em>average</em> neighborhood function output,
 whether or not the color file makes sense for the output
 will be dependent on the input data values.)
 
+
 <h2>SEE ALSO</h2>
 
 <em><a href="g.region.html">g.region</a></em><br>
@@ -274,18 +279,11 @@ will be dependent on the input data values.)
 <em><a href="r.statistics.html">r.statistics</a></em><br>
 <em><a href="r.support.html">r.support</a></em>
 
+
 <h2>AUTHOR</h2>
 
 Michael Shapiro,
 U.S.Army Construction Engineering Research Laboratory 
 
-<p><i>Last changed: $Date$</i>  
-				        
-				        
-				        
-				        
-
-
-
-
-
+<p>
+<i>Last changed: $Date$</i>  
