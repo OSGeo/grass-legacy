@@ -111,11 +111,11 @@ if [ "$GIS_OPT_TYPE" != "point" ] && \
 fi
 
 if [ -n "$GIS_OPT_FILE" ] ; then
-    E00NAME=`basename $GIS_OPT_FILE .e00`
+    E00NAME=`basename "$GIS_OPT_FILE" .e00`
     # to avoid CAPs problem:
-    E00NAME=`basename $E00NAME .E00`
+    E00NAME=`basename "$E00NAME" .E00`
     # avcimport only accepts 13 chars:
-    E00SHORTNAME="`echo $E00NAME | cut -b1-13`"
+    E00SHORTNAME="`echo "$E00NAME" | cut -b1-13`"
 fi
 
 #check if this is a split E00 file (.e01, .e02 ...):
@@ -155,7 +155,7 @@ fi
 rm -f "$TMPDIR"
 mkdir "$TMPDIR"
 
-install -m 644 $E00NAME.e* $E00NAME.E* "$TMPDIR" 2>/dev/null
+install -m 644 "$E00NAME.e"* "$E00NAME.E"* "$TMPDIR" 2> /dev/null
 
 #change to temporary directory to later avoid removal problems (rm -r ...)
 cd "$TMPDIR"
@@ -218,13 +218,16 @@ fi
 
 
 if [ "$GIS_OPT_TYPE" = "area" ] ; then
-        g.message "Importing areas..."
-        # we must reconstruct topology and cleanup polygons:
-        v.in.ogr -o dsn="$E00SHORTNAME" layer=LAB,ARC type=centroid,boundary output="$NAME"
-	if [ $? -eq 1 ] ; then
-   	g.message -e "An error occurred. Stop."
-   	rm -rf "$E00TMP.e00" "$E00SHORTNAME" info 2>&1 > /dev/null
-   	exit 1
+	g.message "Importing areas..."
+
+	# we must reconstruct topology and cleanup polygons:
+	v.in.ogr -o dsn="$E00SHORTNAME" layer=LAB,ARC \
+		type=centroid,boundary output="$NAME"
+
+	if [ $? -ne 0 ] ; then
+	   g.message -e "An error occurred. Halting."
+	   rm -rf "$E00TMP.e00" "$E00SHORTNAME" info 2>&1 > /dev/null
+	   exit 1
 	fi
 fi
 
