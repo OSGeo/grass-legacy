@@ -1400,8 +1400,9 @@ class cmdPanel(wx.Panel):
                                 win.Bind(wx.EVT_TEXT, self.OnSetValue)
                         elif p.get('prompt', '') == 'dbcolumn':
                             win = gselect.ColumnSelect(parent=which_panel)
-                            p['wxGetValue'] = win.GetStringSelection
-                            win.Bind(wx.EVT_COMBOBOX, self.OnSetValue)
+                            ### p['wxGetValue'] = win.GetStringSelection
+                            ### win.Bind(wx.EVT_COMBOBOX, self.OnSetValue)
+                            win.Bind(wx.EVT_TEXT, self.OnSetValue)
                             
                     p['wxId'] = win.GetId()
                     
