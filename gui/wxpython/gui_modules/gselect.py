@@ -541,18 +541,24 @@ class ColumnSelect(wx.ComboBox):
     The 'layer' terminology is likely to change for GRASS 7
     """
     def __init__(self, parent,
-                 id=wx.ID_ANY, value='', pos=wx.DefaultPosition,
-                 size=globalvar.DIALOG_COMBOBOX_SIZE, vector=None,
-                 layer=1, choices=[]):
+                 id = wx.ID_ANY, value = '',
+                 size = globalvar.DIALOG_COMBOBOX_SIZE,
+                 vector = None, layer = 1, choices = [], readonly = False,
+                 **kwargs):
+        if readonly:
+            if kwargs.has_key('style'):
+                style |= wx.CB_READONLY
+            else:
+                style = wx.CB_READONLY
         
-        super(ColumnSelect, self).__init__(parent, id, value, pos, size, choices,
-                                           style=wx.CB_READONLY)
-
+        super(ColumnSelect, self).__init__(parent, id, value = value, choices = choices, size = size,
+                                           **kwargs)
+        
         self.SetName("ColumnSelect")
 
         if vector:
             self.InsertColumns(vector, layer)
-                
+    
     def InsertColumns(self, vector, layer):
         """Insert columns for a vector attribute table into the columns combobox"""
         dbInfo = VectorDBInfo(vector)
