@@ -324,7 +324,7 @@ This installer currently does NOT do any verification of installed dependencies 
 \cf0 \ul Bundling Libraries and Programs\
 \pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
 \cf0 \ulnone \
-With the installer package build, additional dependent libraries and programs can be bundled with the application package to make a more portable and easily installed GRASS application.  See 
+Additional dependent libraries and programs can be bundled with the application package to make a more portable and easily installed GRASS application.  See 
 \f1\fs20 macosx/pkg/bundle.make
 \f0\fs24  for details.\
 \
@@ -578,8 +578,7 @@ For Tiger:\
 \f1\fs20 \cf0 echo "CC = /usr/bin/gcc -arch ppc -arch i386 -arch ppc64 -arch x86_64" >> Makefile.config\
 \pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
 \cf0 \
-\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
-\cf0 make\
+make\
 make package pkgdir=/path/to/some/temp/dir\
 \
 \pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\li360\ql\qnatural\pardirnatural
@@ -657,15 +656,18 @@ It's a multi-step build, 1 for each architecture.  Create a folder inside the so
 
 \f1\fs20 \cf0 mkdir build-i386\
 mkdir build-ppc\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
 
-\f0\fs24 \
+\f0\fs24 \cf0 \
 and also for Leopard:\
 \
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
 
-\f1\fs20 mkdir build-x86_64\
-mkdir build-ppc64\
+\f1\fs20 \cf0 mkdir build-x86_64\
+mkdir build-ppc64\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
 
-\f0\fs24 \
+\f0\fs24 \cf0 \
 For i386 and ppc arches, if building on Tiger, you must add the following to extra-cflags and extra-ldflags in the configure command:\
 \
 \pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\li180\fi-180\ql\qnatural\pardirnatural
@@ -714,8 +716,7 @@ Don't install this one, there is no need.\
 \
 If you are building for Leopard, also do the 64bit varieties, otherwise skip to the lipo step below.\
 \
-\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
-\cf0 For x86_64:\
+For x86_64:\
 \
 \pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\li180\fi-180\ql\qnatural\pardirnatural
 
@@ -736,8 +737,7 @@ Again, if you are building
 \pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
 
 \f0\fs24 \cf0 \
-\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
-\cf0 And ppc64:\
+And ppc64:\
 \
 \pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\li180\fi-180\ql\qnatural\pardirnatural
 
@@ -768,20 +768,19 @@ In
 \
 \pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
 
-\f1\fs20 \cf0 HAVE_PPC64=yes\
+\f1\fs20 \cf0 HAVE_PPC64=yes\
 \pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
 
 \f0\fs24 \cf0 \
 Then finish:\
-\
+\
 \pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\li180\fi-180\ql\qnatural\pardirnatural
 
 \f1\fs20 \cf0 make\
 \pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
 
 \f0\fs24 \cf0 \
-\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
-\cf0 \
+\
 Now use lipo to merge them together, first drop down to the ffmpeg source folder:\
 \
 \pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\li180\fi-180\ql\qnatural\pardirnatural
@@ -802,7 +801,7 @@ run the following lipo command (fill in the \ul libname\ulnone  in all places). 
 \
 \pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\li180\fi-180\ql\qnatural\pardirnatural
 
-\f1\fs20 \cf0 sudo lipo -create build-ppc/\ul libname\ulnone /\ul libname\ulnone .dylib build-i386/\ul libname\ulnone /\ul libname\ulnone .dylib build-ppc64/\ul libname\ulnone /\ul libname\ulnone .dylib build-x86_64/\ul libname\ulnone /\ul libname\ulnone .dylib -output /usr/local/lib/\ul libname\ulnone .dylib\
+\f1\fs20 \cf0 sudo lipo -create build-ppc/\ul libname\ulnone /\ul libname\ulnone .dylib build-i386/\ul libname\ulnone /\ul libname\ulnone .dylib build-ppc64/\ul libname\ulnone /\ul libname\ulnone .dylib build-x86_64/\ul libname\ulnone /\ul libname\ulnone .dylib -output /usr/local/lib/\ul libname\ulnone .dylib\
 \pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
 
 \f0\fs24 \cf0 \
