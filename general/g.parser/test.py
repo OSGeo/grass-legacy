@@ -1,74 +1,59 @@
-#!/usr/bin/python
+#!/usr/bin/env python
 
 # g.parser demo script for python programing
 
-import os
-import sys
-
-#%Module
+#%module
 #%  description: g.parser test script (python)
-#%End
+#%end
 #%flag
 #%  key: f
 #%  description: A flag
 #%end
 #%option
-#% key: raster
-#% type: string
-#% gisprompt: old,cell,raster
-#% description: Raster input map
-#% required : yes
+#%  key: raster
+#%  type: string
+#%  gisprompt: old,cell,raster
+#%  description: Raster input map
+#%  required : yes
 #%end
 #%option
-#% key: vector
-#% type: string
-#% gisprompt: old,vector,vector
-#% description: Vector input map
-#% required : yes
+#%  key: vector
+#%  type: string
+#%  gisprompt: old,vector,vector
+#%  description: Vector input map
+#%  required : yes
 #%end
 #%option
-#% key: option1
-#% type: string
-#% description: An option
-#% required : yes
+#%  key: option1
+#%  type: string
+#%  description: An option
+#%  required : no
 #%end
+
+import os
+import sys
+
+import grass.script as grass
 
 def main():
+    #### add your code here ####
 
-    #add your code here
-
-    print ""
-    if ( os.getenv('GIS_FLAG_F') == "1" ):
+    if flags['f']:
         print "Flag -f set"
     else:
         print "Flag -f not set"
 
-    #test if parameter present:
-    if ( os.getenv("GIS_OPT_OPTION1") != "" ):
-        print "Value of GIS_OPT_OPTION1: '%s'" % os.getenv('GIS_OPT_OPTION1')
+    # test if parameter present:
+    if options['option1']:
+        print "Value of GIS_OPT_OPTION1: '%s'" % options['option1']
 
-    print "Value of GIS_OPT_RASTER: '%s'" % os.getenv('GIS_OPT_RASTER')
-    print "Value of GIS_OPT_VECTOR: '%s'" % os.getenv('GIS_OPT_VECTOR')
+    print "Value of GIS_OPT_RASTER: '%s'" % options['raster']
+    print "Value of GIS_OPT_VECTOR: '%s'" % options['vector']
 
-    #end of your code 
-    
+    #### end of your code ####
+
+    return 0
+
 if __name__ == "__main__":
-    args = ""
-    for arg in sys.argv:
-        args += arg+" "
-
-    if !os.getenv("GISBASE"):
-        print >> sys.stderr, "You must be in GRASS GIS to run this program."
-        sys.exit(0)
-
-    try:
-        if ( sys.argv[1] != "@ARGS_PARSED@" ):
-            os.system("g.parser %s " % (args))
-    except IndexError:
-        os.system("g.parser %s" % (args))
-
-    if sys.argv[1] == "@ARGS_PARSED@":
-        main();
-
-
-
+    options, flags = grass.parser()
+    sys.exit(main())
