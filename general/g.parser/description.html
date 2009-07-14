@@ -52,6 +52,7 @@ Typical header definitions are as follows:
 #%end
 </pre></div>
 
+
 <h2>NOTES</h2>
 
 An option can be instructed to allow multiple inputs by adding the
@@ -106,28 +107,35 @@ to any GRASS command. Example:
 v.in.db --script
 </pre></div>
 
+
 <h2>Help page template (HTML)</h2>
 
-The flag <b>--html-description</b> added to a GRASS command,
+The flag <b>--html-description</b> added to a GRASS command
 generates a related help page template in HTML. Example:
 
 <div class="code"><pre>
 v.in.db --html-description
 </pre></div>
 
+
 <h2>GUI window parser (XML)</h2>
 
-The flag <b>--interface-description</b> added to a GRASS command,
+The flag <b>--interface-description</b> added to a GRASS command
 generates a related help page template in XML. Example:
 
 <div class="code"><pre>
 v.in.db --interface-description
 </pre></div>
 
--<h2>GUI window parser (TclTk)</h2>
+<h2>GUI window parser (Tcl/Tk)</h2>
 
-The flag <b>--tcltk</b> added to a GRASS command, generates a a XML
-description of the GUI interface. Example
+The flag <b>--tcltk</b> added to a GRASS command generates Tcl/Tk
+code suitable for building the GUI interface. Example:
+
+<div class="code"><pre>
+v.in.db --tcltk
+</pre></div>
+
 
 <h2>TRANSLATION</h2>
 
@@ -142,6 +150,7 @@ g.parser -t somescriptfile
 <em>g.parser</em> will print the text of the translatable options to
 <tt>stdout</tt>, one per line, and exit. This is for internal use within
 the build system to prepare GRASS scripts for translation.
+
 
 <h2>EXAMPLES</h2>
 
@@ -296,6 +305,7 @@ Parameters:
   option1   An option
 </pre></div>
 
+
 <h3>Example code for Perl</h3>
 
 <div class="code"><pre>
@@ -365,6 +375,10 @@ printf ("Value of GIS_OPT_vect: '%s'\n", $ENV{'GIS_OPT_VECTOR'});
 
 </pre></div>
 
+The <tt>test.pl</tt> script will provide a GUI and usage help text similar
+to the other examples above.
+
+
 <h2>SEE ALSO</h2>
 
 <em>
@@ -377,6 +391,7 @@ printf ("Value of GIS_OPT_vect: '%s'\n", $ENV{'GIS_OPT_VECTOR'});
 </em>
 
 and the <tt>SUBMITTING_SCRIPTS</tt> file in the GRASS source code.
+
 
 <h2>AUTHOR</h2>
 
