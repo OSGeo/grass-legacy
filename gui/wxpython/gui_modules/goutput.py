@@ -111,19 +111,22 @@ class CmdThread(threading.Thread):
         self.requestCmd.abort()
     
 class GMConsole(wx.Panel):
-    """
-    Create and manage output console for commands entered on the
-    GIS Manager command line.
+    """!Create and manage output console for commands run by GUI.
     """
     def __init__(self, parent, id=wx.ID_ANY, margin=False, pageid=0,
-                 pos=wx.DefaultPosition, size=wx.DefaultSize,
-                 style=wx.TAB_TRAVERSAL | wx.FULL_REPAINT_ON_RESIZE):
-        wx.Panel.__init__(self, parent, id, pos, size, style)
+                 notebook = None,
+                 style=wx.TAB_TRAVERSAL | wx.FULL_REPAINT_ON_RESIZE,
+                 **kwargs):
+        wx.Panel.__init__(self, parent, id, style = style, *kwargs)
         self.SetName("GMConsole")
         
         # initialize variables
         self.Map             = None
-        self.parent          = parent # GMFrame | CmdPanel
+        self.parent          = parent # GMFrame | CmdPanel | ?
+        if notebook:
+            self._notebook = notebook
+        else:
+            self._notebook = self.parent.notebook
         self.lineWidth       = 80
         self.pageid          = pageid
         # remember position of line begining (used for '\r')
@@ -239,8 +242,8 @@ class GMConsole(wx.Panel):
         @param stdout write to stdout or stderr
         """
         if switchPage and \
-                self.parent.notebook.GetSelection() != self.parent.goutput.pageid:
-            self.parent.notebook.SetSelection(self.parent.goutput.pageid)
+                self._notebook.GetSelection() != self.parent.goutput.pageid:
+            self._notebook.SetSelection(self.parent.goutput.pageid)
         
         if not style:
             style = self.cmd_output.StyleDefault
@@ -375,8 +378,8 @@ class GMConsole(wx.Panel):
                 
                 # switch to 'Command output'
                 if switchPage:
-                    if self.parent.notebook.GetSelection() != self.parent.goutput.pageid:
-                        self.parent.notebook.SetSelection(self.parent.goutput.pageid)
+                    if self._notebook.GetSelection() != self.parent.goutput.pageid:
+                        self._notebook.SetSelection(self.parent.goutput.pageid)
                     
                     self.parent.SetFocus() # -> set focus
                     self.parent.Raise()
@@ -460,12 +463,12 @@ class GMConsole(wx.Panel):
         """!Print command output"""
         message = event.text
         type  = event.type
-        if self.parent.notebook.GetSelection() != self.parent.goutput.pageid:
-            textP = self.parent.notebook.GetPageText(self.parent.goutput.pageid)
+        if self._notebook.GetSelection() != self.parent.goutput.pageid:
+            textP = self._notebook.GetPageText(self.parent.goutput.pageid)
             if textP[-1] != ')':
                 textP += ' (...)'
-            self.parent.notebook.SetPageText(self.parent.goutput.pageid,
-                                             textP)
+            self._notebook.SetPageText(self.parent.goutput.pageid,
+                                       textP)
         
         # message prefix
         if type == 'warning':
@@ -579,8 +582,9 @@ class GMConsole(wx.Panel):
             if hasattr(self.parent.parent, "btn_help"):
                 dialog.btn_help.Enable(True)
 
-            dialog.btn_run.Enable(True)
-
+            if hasattr(self.parent.parent, "btn_run"):
+                dialog.btn_run.Enable(True)
+            
             if event.returncode == 0 and \
                     not event.aborted and hasattr(dialog, "addbox") and \
                     dialog.addbox.IsChecked():
@@ -605,8 +609,9 @@ class GMConsole(wx.Panel):
                                      lcmd=lcmd,
                                      lname=name)
             
-            if dialog.get_dcmd is None and \
-                   dialog.closebox.IsChecked():
+            if hasattr(dialog, "get_dcmd") and \
+                    dialog.get_dcmd is None and \
+                    dialog.closebox.IsChecked():
                 time.sleep(1)
                 dialog.Close()
 
