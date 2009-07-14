@@ -10,26 +10,26 @@ import sys
 #%End
 #%flag
 #%  key: f
-#%  description: a flag
-#%END
+#%  description: A flag
+#%end
 #%option
 #% key: raster
 #% type: string
 #% gisprompt: old,cell,raster
-#% description: raster input map
+#% description: Raster input map
 #% required : yes
 #%end
 #%option
 #% key: vector
 #% type: string
 #% gisprompt: old,vector,vector
-#% description: vector input map
+#% description: Vector input map
 #% required : yes
 #%end
 #%option
 #% key: option1
 #% type: string
-#% description: an option
+#% description: An option
 #% required : yes
 #%end
 
