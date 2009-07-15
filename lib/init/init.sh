@@ -952,7 +952,8 @@ bash|msh|cygwin)
     rm -f "$bashrc"
     echo "test -r ~/.alias && . ~/.alias" >> "$bashrc"
     echo "PS1='GRASS GRASS_VERSION_NUMBER ($LOCATION_NAME):\w > '" >> "$bashrc"
-    echo "PROMPT_COMMAND=$GISBASE/etc/prompt.sh" >> "$bashrc"
+    # Use \"' to allow spaces in $GISBASE
+    echo "PROMPT_COMMAND=\"'$GISBASE/etc/prompt.sh'\"" >> "$bashrc"
 
     if [ -r "$USERHOME/.grass.bashrc" ]
     then
