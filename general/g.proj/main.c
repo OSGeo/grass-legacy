@@ -51,44 +51,45 @@ int main(int argc, char *argv[])
 				 * (to create a new location) when none exists */
 
     module = G_define_module();
-    module->keywords = _("general");
-    module->description =
+    module->keywords = _("general, projection");
+    module->label =
 	_("Converts co-ordinate system descriptions (i.e. projection "
-	  "information) between various formats (including GRASS format). "
-	  "Can also be used to create GRASS locations.");
+	  "information) between various formats (including GRASS format).");
+    module->description =
+	_("Can also be used to create GRASS locations.");
 
     printinfo = G_define_flag();
     printinfo->key = 'p';
-    printinfo->guisection = "Printed_Output";
+    printinfo->guisection = _("Print");
     printinfo->description =
 	_("Print projection information (in conventional GRASS format)");
 
     datuminfo = G_define_flag();
     datuminfo->key = 'd';
-    datuminfo->guisection = "Printed_Output";
+    datuminfo->guisection = _("Print");
     datuminfo->description =
 	_("Verify datum information and print transformation parameters");
 
     printproj4 = G_define_flag();
     printproj4->key = 'j';
-    printproj4->guisection = "Printed_Output";
+    printproj4->guisection = _("Print");
     printproj4->description =
 	_("Print projection information in PROJ.4 format");
 
     printwkt = G_define_flag();
     printwkt->key = 'w';
-    printwkt->guisection = "Printed_Output";
+    printwkt->guisection = _("Print");
     printwkt->description = _("Print projection information in WKT format");
 
     esristyle = G_define_flag();
     esristyle->key = 'e';
-    esristyle->guisection = "Printed_Output";
+    esristyle->guisection = _("Print");
     esristyle->description =
 	_("Use ESRI-style format (applies to WKT output only)");
 
     dontprettify = G_define_flag();
     dontprettify->key = 'f';
-    dontprettify->guisection = "Printed_Output";
+    dontprettify->guisection = _("Print");
     dontprettify->description =
 	_("Print 'flat' output with no linebreaks (applies to WKT and "
 	  "PROJ.4 output)");
@@ -98,7 +99,7 @@ int main(int argc, char *argv[])
     ingeo->type = TYPE_STRING;
     ingeo->key_desc = "file";
     ingeo->required = NO;
-    ingeo->guisection = "Input";
+    ingeo->guisection = _("Input");
     ingeo->description = _("Georeferenced data file to read projection "
 			   "information from");
 
@@ -107,7 +108,7 @@ int main(int argc, char *argv[])
     inwkt->type = TYPE_STRING;
     inwkt->key_desc = "file";
     inwkt->required = NO;
-    inwkt->guisection = "Input";
+    inwkt->guisection = _("Input");
     inwkt->description = _("ASCII file containing a WKT projection "
 			   "description (- for stdin)");
 
@@ -116,7 +117,7 @@ int main(int argc, char *argv[])
     inproj4->type = TYPE_STRING;
     inproj4->key_desc = "params";
     inproj4->required = NO;
-    inproj4->guisection = "Input";
+    inproj4->guisection = _("Input");
     inproj4->description = _("PROJ.4 projection description (- for stdin)");
 
     inepsg = G_define_option();
@@ -124,7 +125,7 @@ int main(int argc, char *argv[])
     inepsg->type = TYPE_INTEGER;
     inepsg->required = NO;
     inepsg->options = "1-1000000";
-    inepsg->guisection = "Input";
+    inepsg->guisection = _("Input");
     inepsg->description = _("EPSG projection code");
 
     dtrans = G_define_option();
@@ -133,21 +134,21 @@ int main(int argc, char *argv[])
     dtrans->required = NO;
     dtrans->options = "-1-100";
     dtrans->answer = "0";
-    dtrans->guisection = "Datum_Trans";
-    dtrans->description =
-	_("Index number of datum transform parameters, \"0\" "
-	  "for unspecified or \"-1\" to list and exit");
+    dtrans->guisection = _("Datum");
+    dtrans->label =
+	_("Index number of datum transform parameters");
+    dtrans->description = ("\"0\" for unspecified or \"-1\" to list and exit");
 
     forcedatumtrans = G_define_flag();
     forcedatumtrans->key = 't';
-    forcedatumtrans->guisection = "Datum_Trans";
+    forcedatumtrans->guisection = _("Datum");
     forcedatumtrans->description =
 	_("Force override of datum transformation information in input "
 	  "co-ordinate system");
 
     create = G_define_flag();
     create->key = 'c';
-    create->guisection = "Create/Edit_Locations";
+    create->guisection = _("Create/Edit");
     create->description = _("Create new projection files (modifies current "
 			    "location unless 'location' option specified)");
 
@@ -156,14 +157,14 @@ int main(int argc, char *argv[])
     location->type = TYPE_STRING;
     location->key_desc = "name";
     location->required = NO;
-    location->guisection = "Create/Edit_Locations";
+    location->guisection = _("Create/Edit");
     location->description = _("Name of new location to create");
 
     interprompt = G_define_flag();
     interprompt->key = 'i';
     interprompt->description =
 	_("Enable interactive prompting (for command-line use only)");
-
+    
     if (G_parser(argc, argv))
 	exit(EXIT_FAILURE);
 
