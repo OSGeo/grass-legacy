@@ -2,10 +2,10 @@
 
 # run within GRASS Spearfish session
 # run this before starting python to append module search path:
-#   export PYTHONPATH=/usr/src/grass70/swig/python
+#   export PYTHONPATH=/usr/src/grass64/swig/python
 #   check with "import sys; sys.path"
 # or:
-#   sys.path.append("/usr/src/grass70/swig/python")
+#   sys.path.append("/usr/src/grass64/swig/python")
 # FIXME: install the grass bindings in $GISBASE/lib/ ?
 
 import os, sys

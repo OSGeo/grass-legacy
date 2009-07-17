@@ -5,14 +5,14 @@ Run within GRASS session
 Run this before starting python to append module search path:
 
 @code
-export PYTHONPATH=/usr/src/grass70/swig/python
+export PYTHONPATH=/usr/src/grass64/swig/python
 @endcode
 
 Check with "import sys; sys.path"
 or:
 
 @code
-sys.path.append("/usr/src/grass70/swig/python")
+sys.path.append("/usr/src/grass64/swig/python")
 @endcode
 
 \todo install the grass bindings in $GISBASE/lib/ ?
