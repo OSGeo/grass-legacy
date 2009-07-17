@@ -135,9 +135,8 @@ int main(int argc, char *argv[])
     dtrans->options = "-1-100";
     dtrans->answer = "0";
     dtrans->guisection = _("Datum");
-    dtrans->label =
-	_("Index number of datum transform parameters");
-    dtrans->description = ("\"0\" for unspecified or \"-1\" to list and exit");
+    dtrans->label = _("Index number of datum transform parameters");
+    dtrans->description = _("\"0\" for unspecified or \"-1\" to list and exit");
 
     forcedatumtrans = G_define_flag();
     forcedatumtrans->key = 't';
@@ -164,7 +163,7 @@ int main(int argc, char *argv[])
     interprompt->key = 'i';
     interprompt->description =
 	_("Enable interactive prompting (for command-line use only)");
-    
+
     if (G_parser(argc, argv))
 	exit(EXIT_FAILURE);
 
