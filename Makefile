@@ -53,6 +53,7 @@ DIRS = \
 	vector \
 	visualization \
 	man \
+	swig \
 	macosx
 
 SUBDIRS = $(DIRS)
