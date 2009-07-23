@@ -18,7 +18,6 @@
 #include <unistd.h>
 #include <grass/gis.h>
 #include <grass/glocale.h>
-#include "nfiles.h"
 #include "local_proto.h"
 
 int main(int argc, char *argv[])
