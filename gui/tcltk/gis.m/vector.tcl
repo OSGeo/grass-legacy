@@ -153,6 +153,8 @@ proc GmVector::create { tree parent } {
     set opt($count,1,symdir) "basic"
     set opt($count,1,icon) "basic/circle"
     set opt($count,1,size) 5 
+    set opt($count,1,sizecol) "" 
+    set opt($count,1,rotcol) "" 
 
     set opt($count,1,layer) 1 
     set opt($count,1,lfield) 1 
@@ -160,8 +162,8 @@ proc GmVector::create { tree parent } {
     set opt($count,1,where) "" 
     set opt($count,1,_use_where) 1
     set opt($count,1,qmap) "" 
-	set opt($count,1,qsave) 0
-	set opt($count,1,qoverwrite) 0
+    set opt($count,1,qsave) 0
+    set opt($count,1,qoverwrite) 0
 
     set opt($count,1,attribute) "" 
     set opt($count,1,xref) "left"
@@ -172,16 +174,17 @@ proc GmVector::create { tree parent } {
     set opt($count,1,maxreg) "" 
     set opt($count,1,mod) 1
 
-	set optlist { _check vect opacity display_shape display_cat display_topo display_dir \
-				display_attr type_point type_line type_boundary type_centroid \
-				type_area type_face color _use_color fcolor _use_fcolor lcolor \
-				rdmcolor sqlcolor icon size lwidth layer lfield attribute \
-				xref yref lsize cat where _use_where qmap qsave qoverwrite \
-				minreg maxreg}
+    set optlist { _check vect opacity display_shape display_cat \
+    			display_topo display_dir display_attr type_point \
+			type_line type_boundary type_centroid type_area \
+			type_face color _use_color fcolor _use_fcolor lcolor \
+			rdmcolor sqlcolor icon size sizecol rotcol lwidth \
+			layer lfield attribute xref yref lsize cat where \
+			_use_where qmap qsave qoverwrite minreg maxreg }
                   
     foreach key $optlist {
 		set opt($count,0,$key) $opt($count,1,$key)
-    } 
+    }
 
     GmVector::legend $count
 
@@ -400,6 +403,7 @@ proc GmVector::options { id frm } {
     pack $row.a $row.b $row.c $row.d $row.e $row.f $row.g -side left
     pack $row -side top -fill both -expand yes
 
+
     # points
     set row [ frame $frm.icon ]  
     Label $row.a -text [G_msg "Point symbols:"]
@@ -412,6 +416,15 @@ proc GmVector::options { id frm } {
                    -width 2 -helptext [G_msg "Icon size"] -modifycmd "GmVector::legend $id" 
     pack $row.a $row.b $row.c $row.d $row.e -side left
     pack $row -side top -fill both -expand yes
+
+    set row [ frame $frm.icon_extra ]
+    LabelEntry $row.a -label [G_msg "Attribute column for size"] \
+		-textvariable GmVector::opt($id,1,sizecol) -width 25
+    LabelEntry $row.b -label [G_msg "Attribute column for rotation"] \
+		-textvariable GmVector::opt($id,1,rotcol) -width 23
+    pack $row.a $row.b -side top
+    pack $row -side top -fill both -expand yes
+
 
     # lines
     set row [ frame $frm.color ]
@@ -460,7 +473,7 @@ proc GmVector::options { id frm } {
     pack $row.a $row.b $row.c $row.d $row.e $row.f -side left
     pack $row -side top -fill both -expand yes
 
-	# label alighment
+    # label alignment
     set row [ frame $frm.label2 ]
     Label $row.a -text "     " 
     ComboBox $row.b -label [G_msg "Label part to align with vector point"] \
@@ -689,6 +702,12 @@ proc GmVector::display { node mod } {
     append cmd2 " type=$type"
 
     append cmd " icon=$opt($id,1,icon) size=$opt($id,1,size)" 
+    if { $opt($id,1,sizecol) != "" } {
+        append cmd " {size_column=$opt($id,1,sizecol)}"
+    }
+    if { $opt($id,1,rotcol) != "" } {
+        append cmd " {rot_column=$opt($id,1,rotcol)}"
+    }
 
     if { $opt($id,1,lwidth) != 1 } { 
         append cmd " width=$opt($id,1,lwidth)" 
@@ -831,12 +850,14 @@ proc GmVector::duplicate { tree parent node id } {
 	
 	set opt($count,1,opacity) $opt($id,1,opacity)
 
-	set optlist { _check vect display_shape display_cat display_topo display_dir \
-				display_attr type_point type_line type_boundary type_centroid \
-				type_area type_face color _use_color fcolor _use_fcolor lcolor \
-				rdmcolor sqlcolor icon size lwidth layer lfield attribute \
-				xref yref lsize cat where _use_where qmap qsave qoverwrite \
-				minreg maxreg minreg maxreg}
+	set optlist { _check vect display_shape display_cat display_topo \
+			display_dir display_attr type_point type_line \
+			type_boundary type_centroid type_area type_face \
+			color _use_color fcolor _use_fcolor lcolor rdmcolor \
+			sqlcolor icon size sizecol rotcol lwidth layer \
+			lfield attribute xref yref lsize cat where \
+			_use_where qmap qsave qoverwrite minreg maxreg \
+			minreg maxreg }
                   
     foreach key $optlist {
     	set opt($count,1,$key) $opt($id,1,$key)
