@@ -1091,7 +1091,7 @@ void Vect_area_buffer2(struct Map_info *Map, int area, double da, double db,
     Vect_append_point(outer, outer->x[0], outer->y[0], outer->z[0]);
 
     /* inner contours */
-    for (i = 1; i <= isles_count; i++) {
+    for (i = 0; i < isles_count; i++) {
 	isle = Vect_get_area_isle(Map, area, i);
 	Vect_get_isle_points(Map, isle, tPoints);
 
