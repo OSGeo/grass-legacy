@@ -28,10 +28,9 @@ cluster_LIBS    = $(CLUSTERLIB)
 trans_LIBS      = $(TRANSLIB)
 vedit_LIBS      = $(VEDITLIB)
 
-vector_wrap_c_FLAGS = $(VECT_INC)
-proj_wrap_c_FLAGS = $(PROJINC) $(GDALCFLAGS)
+EXTRA_INC = $(VECT_INC) $(PROJINC) $(GDALCFLAGS)
 
-EXTRA_SWIG = ../include/python/my_typemaps.i ../include/python/common.i
+EXTRA_SWG = ../include/python/my_typemaps.i ../include/python/common.i
 SWIGFLAGS = $(ARCH_INC) -I../include/python -outdir .
 EXTRA_CFLAGS = $(PYMOD_CFLAGS)
 EXTRA_CLEAN_FILES := $(foreach M,$(MODULES),$(M)_wrap.o $(M)_wrap.c $(M).pyc $(M).py _$(M).so)
