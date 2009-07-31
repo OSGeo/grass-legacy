@@ -231,8 +231,8 @@ int main(int argc, char *argv[])
     }
 
     /* Open OGR DSN */
-    OGRRegisterAll();
-    G_debug(2, "driver count = %d", OGRGetDriverCount());
+    /* OGRRegisterAll(); */  /* drivers are already registered */
+    G_debug(0, "driver count = %d", OGRGetDriverCount());
     drn = -1;
     for (i = 0; i < OGRGetDriverCount(); i++) {
 	Ogr_driver = OGRGetDriver(i);
