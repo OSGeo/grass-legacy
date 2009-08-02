@@ -19,6 +19,8 @@
 # ifdef _WIN32
 #  include <windows.h>
 # endif
+# undef CPL_STDCALL
+# define CPL_STDCALL
 #endif
 
 static void CPL_STDCALL (*pGDALAllRegister)(void);
@@ -77,6 +79,8 @@ static void load_library(void)
 	"libgdal.so",
 # endif
 # ifdef _WIN32
+	"gdal16.dll",
+	"gdal15.dll",
 	"gdal11.dll",
 	"gdal.1.0.dll",
 	"gdal.dll",
