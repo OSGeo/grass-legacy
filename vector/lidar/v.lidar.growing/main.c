@@ -173,7 +173,7 @@ int main(int argc, char *argv[])
 
     sprintf(buf, "SELECT Interp,ID FROM %s_edge_Interpolation",
 	    xname);
-    G_debug(0,"buf: %s", buf);
+    G_debug(1,"buf: %s", buf);
     db_append_string(&sql, buf);
 
     if (db_open_select_cursor(driver, &sql, &cursor, DB_SEQUENTIAL) != DB_OK)
