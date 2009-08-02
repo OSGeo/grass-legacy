@@ -254,11 +254,17 @@ int G_load_fp_colors(struct Colors *colors, const char *path, DCELL min,
 static int load_rules_name(struct Colors *colors, const char *name, DCELL min,
 			   DCELL max)
 {
+    int ret;
     char path[GPATH_MAX];
 
     sprintf(path, "%s/etc/colors/%s", G_gisbase(), name);
 
-    return load_rules_file(colors, path, min, max);
+    ret = load_rules_file(colors, path, min, max);
+
+    if (!ret)
+	G_fatal_error(_("Unable to load color rules <%s>"), name);
+
+    return ret;
 }
 
 int G_make_colors(struct Colors *colors, const char *name, CELL min, CELL max)
