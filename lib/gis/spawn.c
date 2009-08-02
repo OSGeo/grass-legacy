@@ -208,7 +208,7 @@ static const char *directory;
 
 #ifdef __MINGW32__
 
-static int do_redirects(struct redirect *redirects, int num_redirects)
+static void do_redirects(struct redirect *redirects, int num_redirects)
 {
     if (num_redirects > 0)
 	G_fatal_error
