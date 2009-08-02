@@ -19,7 +19,14 @@ cleansubdirs:
 	    $(MAKE) -C $$subdir clean; \
 	done
 
-.PHONY: subdirs cleansubdirs parsubdirs $(SUBDIRS)
+installsubdirs:
+	@list='$(SUBDIRS)'; \
+	for subdir in $$list; do \
+	    echo $$subdir ; \
+	    $(MAKE) -C $$subdir install; \
+	done
+
+.PHONY: subdirs cleansubdirs installsubdirs parsubdirs $(SUBDIRS)
 
 parsubdirs: $(SUBDIRS)
 
