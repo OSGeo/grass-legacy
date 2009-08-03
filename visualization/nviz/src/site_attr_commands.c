@@ -152,6 +152,7 @@ in order to get the link at the site cat
 #include <stdlib.h>
 #include <grass/Vect.h>
 #include <grass/site.h>
+#include <grass/dbmi.h>
 #include "interface.h"
 #define	R_G_B_2_RGB(r,g,b) ((b) & 0xff) | (((g) & 0xff) << 8) | (((r) & 0xff) << 16)
 
@@ -275,29 +276,77 @@ int Nsite_attr_get_fields_name_cmd(data, interp, argc, argv)
      int argc;			/* Number of arguments. */
      char **argv;		/* Argument strings. */
 {
-    struct Map_info *Map;
-    int *ctypes;
-    char **cnames;
-    int *ndx;
-    int ncols, i;
-    char buf[1024];
+    struct Map_info Map;
+    int ncols, col;
+    char buf[9182];
+    struct field_info *Fi;
+    dbDriver *driver;
+    dbHandle handle;
+    dbTable *table;
+    dbColumn *column;
+    dbString table_name, dbsql, valstr;
+    char *mapset;
 
-    if (argc != 2)
+    if (argc != 2) {
+	G_warning("Wrong argument count for Nsite_attr_get_fields_name");
 	return (TCL_ERROR);
-
-    Map =
-	(struct Map_info *)G_sites_open_old(argv[1],
-					    G_find_vector2(argv[1], ""));
-    ncols = G_sites_get_fields(Map, &cnames, &ctypes, &ndx);
-
-    for (i = 0; i < ncols; i++) {
-	sprintf(buf, "%s", cnames[i]);
-	Tcl_AppendElement(interp, buf);
     }
 
-    if (ncols > 0)
-	G_sites_free_fields(ncols, cnames, ctypes, ndx);
-    G_sites_close(Map);
+    if ((mapset = G_find_vector2(argv[1], "")) == NULL) {
+	G_warning("Vector map <%s> not found", argv[1]);
+	return TCL_ERROR;
+    }
+
+    if (Vect_open_old_head(&Map, argv[1], mapset) < 0) {
+	G_warning("Failed to open vector map <%s>", argv[1]);
+	return TCL_ERROR;
+    }
+
+    Fi = Vect_get_field(&Map, 1);	/* FIXME: only layer 1 is supported. Requires GUI changes. */
+    if (!Fi) {
+	Vect_close(&Map);
+	G_warning("Failed to get database information for vector map <%s>",
+		  argv[1]);
+	return TCL_ERROR;
+    }
+
+    /* Prepeare strings for use in db_* calls */
+    db_init_string(&dbsql);
+    db_init_string(&valstr);
+    db_init_string(&table_name);
+    db_init_handle(&handle);
+
+    /* Prepearing database for use */
+    driver = db_start_driver(Fi->driver);
+    if (driver == NULL) {
+	Vect_close(&Map);
+	G_warning("Unable to start driver <%s>", Fi->driver);
+	return TCL_ERROR;
+    }
+
+    db_set_handle(&handle, Fi->database, NULL);
+    if (db_open_database(driver, &handle) != DB_OK) {
+	Vect_close(&Map);
+	G_warning("Unable to open database <%s> by driver <%s>",
+		  Fi->database, Fi->driver);
+	return TCL_ERROR;
+    }
+
+    db_set_string(&table_name, Fi->table);
+    if (db_describe_table(driver, &table_name, &table) != DB_OK) {
+	Vect_close(&Map);
+	G_warning("Unable to describe table <%s>", Fi->table);
+	return TCL_ERROR;
+    }
+
+    ncols = db_get_table_number_of_columns(table);
+    for (col = 0; col < ncols; col++) {
+	column = db_get_table_column(table, col);
+	sprintf(buf, "%s", db_get_column_name(column));
+	Tcl_AppendElement(interp, buf);
+    }
+    db_close_database_shutdown_driver(driver);
+    Vect_close(&Map);
     return (TCL_OK);
 }
 
@@ -347,29 +396,81 @@ int Nsite_attr_get_fields_name_and_type_cmd(data, interp, argc, argv)
      int argc;			/* Number of arguments. */
      char **argv;		/* Argument strings. */
 {
-    struct Map_info *Map;
-    int *ctypes;
-    char **cnames;
-    int *ndx;
-    int ncols, i;
-    char buf[2048];
+    struct Map_info Map;
+    int ncols, col, type;
+    char buf[9182];
+    struct field_info *Fi;
+    dbDriver *driver;
+    dbHandle handle;
+    dbTable *table;
+    dbColumn *column;
+    dbString table_name, dbsql, valstr;
+    char *mapset;
 
-    if (argc != 2)
+    if (argc != 2) {
+	G_warning
+	    ("Wrong argument count for Nsite_attr_get_fields_name_and_type");
 	return (TCL_ERROR);
-
-    Map = G_sites_open_old(argv[1], G_find_vector2(argv[1], ""));
-    ncols = G_sites_get_fields(Map, &cnames, &ctypes, &ndx);
-
-    for (i = 0; i < ncols; i++) {
-	sprintf(buf, "%s", cnames[i]);
-	Tcl_AppendElement(interp, buf);
-	sprintf(buf, "%c", ctypes[i]);
-	Tcl_AppendElement(interp, buf);
     }
 
-    if (ncols > 0)
-	G_sites_free_fields(ncols, cnames, ctypes, ndx);
-    G_sites_close(Map);
+    if ((mapset = G_find_vector2(argv[1], "")) == NULL) {
+	G_warning("Vector map <%s> not found", argv[1]);
+	return TCL_ERROR;
+    }
+
+    if (Vect_open_old_head(&Map, argv[1], mapset) < 0) {
+	G_warning("Failed to open vector map <%s>", argv[1]);
+	return TCL_ERROR;
+    }
+
+    Fi = Vect_get_field(&Map, 1);	/* FIXME: only layer 1 is supported. Requires GUI changes. */
+    if (!Fi) {
+	Vect_close(&Map);
+	G_warning("Failed to get database information for vector map <%s>",
+		  argv[1]);
+	return TCL_ERROR;
+    }
+
+    /* Prepeare strings for use in db_* calls */
+    db_init_string(&dbsql);
+    db_init_string(&valstr);
+    db_init_string(&table_name);
+    db_init_handle(&handle);
+
+    /* Prepearing database for use */
+    driver = db_start_driver(Fi->driver);
+    if (driver == NULL) {
+	Vect_close(&Map);
+	G_warning("Unable to start driver <%s>", Fi->driver);
+	return TCL_ERROR;
+    }
+
+    db_set_handle(&handle, Fi->database, NULL);
+    if (db_open_database(driver, &handle) != DB_OK) {
+	Vect_close(&Map);
+	G_warning("Unable to open database <%s> by driver <%s>",
+		  Fi->database, Fi->driver);
+	return TCL_ERROR;
+    }
+
+    db_set_string(&table_name, Fi->table);
+    if (db_describe_table(driver, &table_name, &table) != DB_OK) {
+	Vect_close(&Map);
+	G_warning("Unable to describe table <%s>", Fi->table);
+	return TCL_ERROR;
+    }
+
+    ncols = db_get_table_number_of_columns(table);
+    for (col = 0; col < ncols; col++) {
+	column = db_get_table_column(table, col);
+	sprintf(buf, "%s", db_get_column_name(column));
+	Tcl_AppendElement(interp, buf);
+	type = db_sqltype_to_Ctype(db_get_column_sqltype(column));
+	sprintf(buf, "%c", type);
+	Tcl_AppendElement(interp, buf);
+    }
+    db_close_database_shutdown_driver(driver);
+    Vect_close(&Map);
     return (TCL_OK);
 }
 
@@ -444,39 +545,111 @@ int Nsite_attr_get_field_not_emtpy_cats_cmd(data, interp, argc, argv)
      int argc;			/* Number of arguments. */
      char **argv;		/* Argument strings. */
 {
-    struct Map_info *Map;
-    int *ctypes;
-    char **cnames;
-    int *ndx;
-    int ncols, i, index;
+    struct Map_info Map;
+    int ncols, nrows, type, index, col, more;
     char buf[9182];
-    SITE_ATT *sa;
+    struct field_info *Fi;
+    dbDriver *driver;
+    dbHandle handle;
+    dbCursor cursor;
+    dbTable *table;
+    dbColumn *column;
+    dbString table_name, dbsql, valstr;
+    char *mapset;
 
-    if (argc != 3)
+    if (argc != 3) {
+	G_message
+	    ("Wrong argument count for Nsite_attr_get_field_not_emtpy_cats");
 	return (TCL_ERROR);
+    }
 
     index = atoi(argv[2]);
 
-    Map = G_sites_open_old(argv[1], G_find_vector2(argv[1], ""));
-    ncols = G_sites_get_fields(Map, &cnames, &ctypes, &ndx);
-
-    for (i = 0; i < Map->n_site_att; i++) {
-	sa = &(Map->site_att[i]);
-	/*              printf("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ i=%d cat=%d field=%s\n", i, sa->cat, sa->str[ndx[index]]); */
-	switch (ctypes[index]) {
-	case 's':		/* string */
-	    if (strlen(sa->str[ndx[index]]) > 0) {
-		sprintf(buf, "%d", sa->cat);
-		Tcl_AppendElement(interp, buf);
-	    }
-	    break;
-	}
+    if ((mapset = G_find_vector2(argv[1], "")) == NULL) {
+	G_warning("Vector map <%s> not found", argv[1]);
+	return TCL_ERROR;
     }
 
-    if (ncols > 0)
-	G_sites_free_fields(ncols, cnames, ctypes, ndx);
-    G_sites_close(Map);
+    if (Vect_open_old_head(&Map, argv[1], mapset) < 0) {
+	G_warning("Failed to open vector map <%s>", argv[1]);
+	return TCL_ERROR;
+    }
 
+    Fi = Vect_get_field(&Map, index);
+    if (!Fi) {
+	Vect_close(&Map);
+	G_warning("Failed to get database information for vector map <%s>",
+		  argv[1]);
+	return TCL_ERROR;
+    }
+
+    /* Prepeare strings for use in db_* calls */
+    db_init_string(&dbsql);
+    db_init_string(&valstr);
+    db_init_string(&table_name);
+    db_init_handle(&handle);
+
+    /* Prepearing database for use */
+    driver = db_start_driver(Fi->driver);
+    if (driver == NULL) {
+	Vect_close(&Map);
+	G_warning("Unable to start driver <%s>", Fi->driver);
+	return TCL_ERROR;
+    }
+
+    db_set_handle(&handle, Fi->database, NULL);
+    if (db_open_database(driver, &handle) != DB_OK) {
+	Vect_close(&Map);
+	G_warning("Unable to open database <%s> by driver <%s>",
+		  Fi->database, Fi->driver);
+	return TCL_ERROR;
+    }
+
+    db_set_string(&table_name, Fi->table);
+    if (db_describe_table(driver, &table_name, &table) != DB_OK) {
+	Vect_close(&Map);
+	G_warning("Unable to describe table <%s>", Fi->table);
+	return TCL_ERROR;
+    }
+
+    ncols = db_get_table_number_of_columns(table);
+    db_set_string(&dbsql, "select * from ");
+    db_append_string(&dbsql, Fi->table);
+
+    if (db_open_select_cursor(driver, &dbsql, &cursor, DB_SEQUENTIAL)
+	!= DB_OK) {
+	G_warning("Unabale to get attribute data");
+	return TCL_ERROR;
+    }
+    else {
+	nrows = db_get_num_rows(&cursor);
+	table = db_get_cursor_table(&cursor);
+
+	if (nrows > 0) {
+	    if (db_fetch(&cursor, DB_NEXT, &more) != DB_OK) {
+		G_warning("Error while retreiving database record");
+	    }
+	    else {
+		for (col = 0; col < ncols; col++) {
+		    column = db_get_table_column(table, col);
+		    type = db_sqltype_to_Ctype(db_get_column_sqltype(column));
+		    /* Same as str type in sites_att. No idea why only str are used here */
+		    if (type == DB_C_TYPE_STRING ||
+			type == DB_C_TYPE_DATETIME) {
+			db_convert_column_value_to_string(column, &valstr);
+			if (strlen(db_get_string(&valstr)) > 0) {
+			    sprintf(buf, "%s", db_get_string(&valstr));
+			    Tcl_AppendElement(interp, buf);
+			}
+		    }
+		}
+	    }
+	}
+	db_close_cursor(&cursor);
+    }
+
+    db_close_database_shutdown_driver(driver);
+    Vect_close(&Map);
     return (TCL_OK);
 }
 
@@ -497,45 +670,105 @@ int Nsite_attr_get_record_values_cmd(data, interp, argc, argv)
      int argc;			/* Number of arguments. */
      char **argv;		/* Argument strings. */
 {
-    struct Map_info *Map;
-    int *ctypes;
-    char **cnames;
-    int *ndx;
-    int ncols, i, cat;
+    struct Map_info Map;
+    int ncols, nrows, cat, col, more;
     char buf[9182];
-    SITE_ATT *sa;
+    struct field_info *Fi;
+    dbDriver *driver;
+    dbHandle handle;
+    dbCursor cursor;
+    dbTable *table;
+    dbColumn *column;
+    dbString table_name, dbsql, valstr;
+    char *mapset;
 
-    if (argc != 3)
+    if (argc != 3) {
+	G_message("Wrong argument count for Nsite_attr_get_record_values");
 	return (TCL_ERROR);
+    }
 
     cat = atoi(argv[2]);
 
-    Map = G_sites_open_old(argv[1], G_find_vector2(argv[1], ""));
-    ncols = G_sites_get_fields(Map, &cnames, &ctypes, &ndx);
-
-
-    if ((sa = (SITE_ATT *) G_sites_get_atts(Map, &cat)) == NULL)
-	return (TCL_ERROR);
-
-    for (i = 0; i < ncols; i++) {
-	switch (ctypes[i]) {
-	case 'c':		/* category */
-	    sprintf(buf, "%d", sa->cat);
-	    break;
-	case 'd':		/* double */
-	    sprintf(buf, "%f", sa->dbl[ndx[i]]);
-	    break;
-	case 's':		/* string */
-	    sprintf(buf, "%s", sa->str[ndx[i]]);
-	    break;
-	}
-	Tcl_AppendElement(interp, buf);
+    if ((mapset = G_find_vector2(argv[1], "")) == NULL) {
+	G_warning("Vector map <%s> not found", argv[1]);
+	return TCL_ERROR;
     }
 
-    if (ncols > 0)
-	G_sites_free_fields(ncols, cnames, ctypes, ndx);
-    G_sites_close(Map);
+    if (Vect_open_old_head(&Map, argv[1], mapset) < 0) {
+	G_warning("Failed to open vector map <%s>", argv[1]);
+	return TCL_ERROR;
+    }
 
+    Fi = Vect_get_field(&Map, 1);	/* FIXME: only layer 1 is supported. Requires GUI changes. */
+    if (!Fi) {
+	Vect_close(&Map);
+	G_warning("Failed to get database information for vector map <%s>",
+		  argv[1]);
+	return TCL_ERROR;
+    }
+
+    /* Prepeare strings for use in db_* calls */
+    db_init_string(&dbsql);
+    db_init_string(&valstr);
+    db_init_string(&table_name);
+    db_init_handle(&handle);
+
+    /* Prepearing database for use */
+    driver = db_start_driver(Fi->driver);
+    if (driver == NULL) {
+	Vect_close(&Map);
+	G_warning("Unable to start driver <%s>", Fi->driver);
+	return TCL_ERROR;
+    }
+
+    db_set_handle(&handle, Fi->database, NULL);
+    if (db_open_database(driver, &handle) != DB_OK) {
+	Vect_close(&Map);
+	G_warning("Unable to open database <%s> by driver <%s>",
+		  Fi->database, Fi->driver);
+	return TCL_ERROR;
+    }
+
+    db_set_string(&table_name, Fi->table);
+    if (db_describe_table(driver, &table_name, &table) != DB_OK) {
+	Vect_close(&Map);
+	G_warning("Unable to describe table <%s>", Fi->table);
+	return TCL_ERROR;
+    }
+
+    ncols = db_get_table_number_of_columns(table);
+
+    sprintf(buf, "select * from %s where %s=%d", Fi->table, Fi->key, cat);
+    db_set_string(&dbsql, buf);
+
+    if (db_open_select_cursor(driver, &dbsql, &cursor, DB_SEQUENTIAL)
+	!= DB_OK) {
+	G_warning("Unabale to get attribute data for cat %d", cat);
+	return TCL_ERROR;
+    }
+    else {
+	nrows = db_get_num_rows(&cursor);
+	table = db_get_cursor_table(&cursor);
+
+	if (nrows > 0) {
+	    if (db_fetch(&cursor, DB_NEXT, &more) != DB_OK) {
+		G_warning("Error while retreiving database record for cat %d",
+			  cat);
+	    }
+	    else {
+		for (col = 0; col < ncols; col++) {
+		    column = db_get_table_column(table, col);
+		    db_convert_column_value_to_string(column, &valstr);
+		    sprintf(buf, "%s", db_get_string(&valstr));
+		    Tcl_AppendElement(interp, buf);
+		}
+	    }
+	}
+	db_close_cursor(&cursor);
+    }
+
+    db_close_database_shutdown_driver(driver);
+    Vect_close(&Map);
     return (TCL_OK);
 }
 

@@ -62,7 +62,7 @@ proc appBusy {} {
     }
 #$Nv_(AREA).menu.wait_pls configure -fg red -bg black
     pack $Nv_(AREA).menu.wait_pls
-    grab $Nv_(AREA).menu.wait_pls
+#grab $Nv_(AREA).menu.wait_pls
     update
 }
 

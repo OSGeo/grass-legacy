@@ -25,7 +25,7 @@
 #*
 #**************************************************************
 namespace eval NV_panel_vquery {
-    variable maxdist # snapping distance for selecting objects to query
+    variable maxdist ;# snapping distance for selecting objects to query
     variable array highlight
 }
 
