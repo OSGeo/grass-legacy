@@ -31,7 +31,7 @@ exts='ttf TTF pfa PFA pfb PFB dfont DFONT oft OFT'
         fi
     done
     
-    if which fc-list >&/dev/null ; then
+    if which fc-list >/dev/null 2>&1 ; then
         fc-list :outline file index \
             | sed -n \
                   -e 's!^\(.*\)/\(.*\)\.\([^.]*\): :index=0$!\2:\1/\2.\3:utf-8:!p' \
