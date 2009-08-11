@@ -462,11 +462,6 @@ int main(int argc, char *argv[])
 	n100 = ceil(n / 100.);
 	m100 = ceil(m / 100.);
 
-/*
-  printf(". n=%f  s=%f\n",new_cellhd.north, new_cellhd.south);
-  printf(". e=%f  w=%f\n",new_cellhd.east, new_cellhd.west);
-  printf(". r=%d  c=%d\n",new_cellhd.rows, new_cellhd.cols);
-*/
 	if (G_set_window(&new_cellhd) == -1)
 	    exit(EXIT_FAILURE);
     }
