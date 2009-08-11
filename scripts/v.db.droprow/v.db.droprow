@@ -1,0 +1,118 @@
+#!/bin/sh
+
+############################################################################
+#
+# MODULE:       v.db.droprow
+# AUTHOR(S):    Markus Neteler
+# PURPOSE:      interface to v.extract -r to drop ...
+# COPYRIGHT:    (C) 2009 by the GRASS Development Team
+#
+#               This program is free software under the GNU General Public
+#               License (>=v2). Read the file COPYING that comes with GRASS
+#               for details.
+#
+#############################################################################
+
+
+#%Module
+#%  description: Removes a vector object (point, line, area, face etc.) from a vector map through attribute selection
+#%  keywords: vector, database, attribute table
+#%End
+
+#%option
+#% key: input
+#% type: string
+#% gisprompt: old,vector,vector
+#% key_desc : name
+#% description: Vector map for which to drop vector objects
+#% required : yes
+#%end
+
+#%option
+#% key: output
+#% type: string
+#% gisprompt: new,vector,vector
+#% key_desc : name
+#% description: Name for output vector map
+#% required : yes
+#%end
+
+#%option
+#% key: layer
+#% type: integer
+#% description: Layer of attribute table to use for selection
+#% answer: 1
+#% required : no
+#%end
+
+#%option
+#% key: where
+#% type: string
+#% description: WHERE conditions for vector delete, without 'where' keyword (e.g. elevation IS NULL)
+#% required : yes
+#%end
+
+if  [ -z "$GISBASE" ] ; then
+    echo 'You must be in GRASS GIS to run this program' >&2
+ exit 1
+fi
+
+# save command line
+if [ "$1" != "@ARGS_PARSED@" ] ; then
+    CMDLINE="`basename $0`"
+    for arg in "$@" ; do
+        CMDLINE="$CMDLINE \"$arg\""
+    done
+    export CMDLINE
+    exec g.parser "$0" "$@"
+fi
+
+PROG=`basename $0`
+
+# what to do in case of user break:
+exitprocedure()
+{
+ g.message -e 'User break!'
+ exit 1
+}
+# shell check for user break (signal list: trap -l)
+trap "exitprocedure" 2 3 15
+
+### setup enviro vars ###
+eval `g.gisenv`
+: ${GISBASE?} ${GISDBASE?} ${LOCATION_NAME?} ${MAPSET?}
+
+# does map exist in CURRENT mapset?
+eval `g.findfile element=vector file=$GIS_OPT_INPUT mapset=$MAPSET`
+if [ ! "$file" ] ; then
+   g.message -e "Vector map <$GIS_OPT_INPUT> not found in current mapset"
+   exit 1
+fi
+
+table=`v.db.connect map=$GIS_OPT_INPUT -g fs=";" | grep -w $GIS_OPT_LAYER | cut -f2 -d";"`
+if [ -z "$table" ] ; then
+   g.message -e 'There is no table connected to the input vector map! Cannot delete any column'
+   exit 1
+fi
+keycol=`v.db.connect -g fs=";" map=$GIS_OPT_INPUT | grep -w $GIS_OPT_LAYER | cut -f3 -d';'`
+database=`v.db.connect -g fs=";" map=$GIS_OPT_INPUT | grep -w $GIS_OPT_LAYER | cut -f4 -d';'`
+driver=`v.db.connect -g fs=";" map=$GIS_OPT_INPUT | grep -w $GIS_OPT_LAYER | cut -f5 -d';'`
+col="$GIS_OPT_COLUMN"
+
+if [ -z "$GRASS_OVERWRITE" ] ; then
+   OVERFLAG="--o"
+fi
+
+# delete vectors via reverse selection
+v.extract -r input=${GIS_OPT_INPUT} layer=$GIS_OPT_LAYER output=${GIS_OPT_OUTPUT} \
+          where="${GIS_OPT_WHERE}" $OVERFLAG 2>&1 | grep -v 'v.extract complete'
+if [ $? -ne 0 ] ; then
+   g.message -e message="Error in 'where' statement"
+   g.region --q vect=${GIS_OPT_OUTPUT}
+   exit 1
+fi
+
+# write cmd history:
+v.support map=${GIS_OPT_INPUT} cmdhist="${CMDLINE}"
+
+exit 0
