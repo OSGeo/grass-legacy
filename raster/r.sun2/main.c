@@ -440,6 +440,7 @@ int main(int argc, char *argv[])
     parm.day->type = TYPE_INTEGER;
     parm.day->required = YES;
     parm.day->description = _("No. of day of the year (1-365)");
+    parm.day->options = "1-365";
 
     parm.step = G_define_option();
     parm.step->key = "step";
@@ -463,6 +464,7 @@ int main(int argc, char *argv[])
     parm.ltime->required = NO;
     parm.ltime->description =
 	_("Local (solar) time (to be set for mode 1 only) [decimal hours]");
+    parm.ltime->options = "0-24";
 
     /*
      * parm.startTime = G_define_option();
