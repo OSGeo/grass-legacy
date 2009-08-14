@@ -94,10 +94,6 @@ if [ -z "$table" ] ; then
    g.message -e 'There is no table connected to the input vector map! Cannot delete any column'
    exit 1
 fi
-keycol=`v.db.connect -g fs=";" map=$GIS_OPT_INPUT | grep -w $GIS_OPT_LAYER | cut -f3 -d';'`
-database=`v.db.connect -g fs=";" map=$GIS_OPT_INPUT | grep -w $GIS_OPT_LAYER | cut -f4 -d';'`
-driver=`v.db.connect -g fs=";" map=$GIS_OPT_INPUT | grep -w $GIS_OPT_LAYER | cut -f5 -d';'`
-col="$GIS_OPT_COLUMN"
 
 if [ -z "$GRASS_OVERWRITE" ] ; then
    OVERFLAG="--o"
@@ -113,6 +109,6 @@ if [ $? -ne 0 ] ; then
 fi
 
 # write cmd history:
-v.support map=${GIS_OPT_INPUT} cmdhist="${CMDLINE}"
+v.support map=${GIS_OPT_OUTPUT} cmdhist="${CMDLINE}"
 
 exit 0
