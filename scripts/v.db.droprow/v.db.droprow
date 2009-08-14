@@ -83,9 +83,9 @@ eval `g.gisenv`
 : ${GISBASE?} ${GISDBASE?} ${LOCATION_NAME?} ${MAPSET?}
 
 # does map exist in CURRENT mapset?
-eval `g.findfile element=vector file=$GIS_OPT_INPUT mapset=$MAPSET`
+eval `g.findfile element=vector file=$GIS_OPT_INPUT`
 if [ ! "$file" ] ; then
-   g.message -e "Vector map <$GIS_OPT_INPUT> not found in current mapset"
+   g.message -e "Vector map <$GIS_OPT_INPUT> not found"
    exit 1
 fi
 
