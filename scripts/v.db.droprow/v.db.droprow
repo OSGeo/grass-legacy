@@ -82,19 +82,6 @@ trap "exitprocedure" 2 3 15
 eval `g.gisenv`
 : ${GISBASE?} ${GISDBASE?} ${LOCATION_NAME?} ${MAPSET?}
 
-# does map exist in CURRENT mapset?
-eval `g.findfile element=vector file=$GIS_OPT_INPUT`
-if [ ! "$file" ] ; then
-   g.message -e "Vector map <$GIS_OPT_INPUT> not found"
-   exit 1
-fi
-
-table=`v.db.connect map=$GIS_OPT_INPUT -g fs=";" | grep -w $GIS_OPT_LAYER | cut -f2 -d";"`
-if [ -z "$table" ] ; then
-   g.message -e 'There is no table connected to the input vector map! Cannot delete any column'
-   exit 1
-fi
-
 if [ -z "$GRASS_OVERWRITE" ] ; then
    OVERFLAG="--o"
 fi
