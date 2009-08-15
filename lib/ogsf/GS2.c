@@ -1009,7 +1009,7 @@ int GS_is_masked(int id, float *pt)
 }
 
 /*!
-   \brief Unset ?
+   \brief Unset Scaled Difference surface
  */
 void GS_unset_SDsurf(void)
 {
@@ -1020,7 +1020,7 @@ void GS_unset_SDsurf(void)
 }
 
 /*!
-   \brief Set ?
+   \brief Set surface as Scaled Difference surface
 
    \param id surface id
 
