@@ -77,7 +77,8 @@ BIN_DIST_FILES = $(FILES) \
 	include \
 	lib \
 	man \
-	scripts
+	scripts \
+	tools
 
 default: builddemolocation
 	@echo "GRASS GIS compilation log"     > $(ERRORLOG)
@@ -93,6 +94,8 @@ default: builddemolocation
 	if [ ${LOCALE} -eq 1 ] ; then $(MAKE) -C locale; fi
 	-cp -f $(FILES) ${ARCH_DISTDIR}/
 	-cp -f ${ARCH_BINDIR}/grass${GRASS_VERSION_MAJOR}${GRASS_VERSION_MINOR} ${ARCH_DISTDIR}/grass${GRASS_VERSION_MAJOR}${GRASS_VERSION_MINOR}.tmp
+	@test -d ${ARCH_DISTDIR}/tools/ || mkdir -p ${ARCH_DISTDIR}/tools/
+	-${INSTALL} tools/mkhtml.sh ${ARCH_DISTDIR}/tools/ 2>/dev/null
 	@(cd tools ; sh -c "./build_html_index.sh")
 	@if [ `cat "$(ERRORLOG)" | wc -l` -gt 5 ] ; then \
 		echo "--"     >> $(ERRORLOG) ; \
@@ -157,7 +160,8 @@ cleandistdirs:
 	-rm -rf ${ARCH_DISTDIR}/man/         2>/dev/null
 	-rm -rf ${ARCH_DISTDIR}/scripts/     2>/dev/null
 	-rm -rf ${ARCH_DISTDIR}/demolocation/ 2>/dev/null
-	-rm -rf ${ARCH_DISTDIR}/tcltkgrass/ 2>/dev/null
+	-rm -rf ${ARCH_DISTDIR}/tcltkgrass/  2>/dev/null
+	-rm -rf ${ARCH_DISTDIR}/tools/       2>/dev/null
 	-rm -f ${ARCH_DISTDIR}/AUTHORS ${ARCH_DISTDIR}/CHANGES ${ARCH_DISTDIR}/REQUIREMENTS.html ${ARCH_DISTDIR}/COPYING ${ARCH_DISTDIR}/GPL.TXT ${ARCH_DISTDIR}/grass${GRASS_VERSION_MAJOR}${GRASS_VERSION_MINOR}.tmp 2>/dev/null
 	-rmdir ${ARCH_DISTDIR}
 	-rm -f ${ARCH_BINDIR}/grass${GRASS_VERSION_MAJOR}${GRASS_VERSION_MINOR} 2>/dev/null
@@ -266,6 +270,7 @@ endif
 	-cd ${GISBASE} ; tar cBf - fonts | (cd ${INST_DIR} ; tar xBf - ) 2>/dev/null
 	-cd ${GISBASE} ; tar cBf - man | (cd ${INST_DIR} ; tar xBf - ) 2>/dev/null
 	-cd ${GISBASE} ; tar cBf - scripts | (cd ${INST_DIR} ; tar xBf - ) 2>/dev/null
+	-cd ${GISBASE} ; tar cBf - tools | (cd ${INST_DIR} ; tar xBf - ) 2>/dev/null
 	if [ ${LOCALE} -eq 1 ] ; then cd ${GISBASE} ; tar cBf - locale | (cd ${INST_DIR} ; tar xBf - ) 2>/dev/null ; fi
 	@ # The man, include, and lib could go to ${PREFIX}/ BUT if this is
 	@ # done, then the corresponding uninstall instructions must delete
