@@ -88,7 +88,7 @@ void top_index(void)
     }
 
     if (map.topidx) {
-	sprintf(buf, "r.stats -Anc input=%s nsteps=%d > %s",
+	sprintf(buf, "r.stats -Anc input=%s nsteps=%d output=\"%s\"",
 		map.topidx, misc.nidxclass, file.idxstats);
 	G_message("%s ...", buf);
 
