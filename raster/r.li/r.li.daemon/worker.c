@@ -57,7 +57,8 @@ void worker(char *raster, int f(int, char **, area_des, double *),
     fm = G_malloc(sizeof(struct fcell_memory_entry));
     dm = G_malloc(sizeof(struct dcell_memory_entry));
     pid = getpid();
-    ad = malloc(sizeof(struct area_entry));
+    ad = G_malloc(sizeof(struct area_entry));
+
     /* open raster map */
     mapset = G_find_cell(raster, "");
     fd = G_open_cell_old(raster, mapset);
@@ -65,6 +66,7 @@ void worker(char *raster, int f(int, char **, area_des, double *),
 	G_message(_("CHILD[pid = %i] cannot open raster map"), pid);
 	exit(EXIT_FAILURE);
     }
+
     /* read data type to allocate cache */
     data_type = G_raster_map_type(raster, mapset);
     /* calculate rows in cache */
@@ -112,6 +114,7 @@ void worker(char *raster, int f(int, char **, area_des, double *),
 
     /* receive loop */
     receive(rec_ch, &toReceive);
+
     while (toReceive.type != TERM) {
 	if (toReceive.type == AREA) {
 	    aid = toReceive.f.f_ma.aid;
@@ -122,9 +125,7 @@ void worker(char *raster, int f(int, char **, area_des, double *),
 	    ad->raster = raster;
 	    ad->mask = -1;
 	}
-	else {
-	    /* toReceive.type == MASKEDAREA */
-
+	else if (toReceive.type == MASKEDAREA) {
 	    aid = toReceive.f.f_ma.aid;
 	    ad->x = toReceive.f.f_ma.x;
 	    ad->y = toReceive.f.f_ma.y;
@@ -149,9 +150,11 @@ void worker(char *raster, int f(int, char **, area_des, double *),
 		    G_message(_("CHILD[pid = %i]: unable to open <%s> mask ... continuing without!"),
 			      pid, toReceive.f.f_ma.mask);
 		}
-
 	    }
 	}
+	else
+	    G_fatal_error("Program error, worker() toReceive.type=%d",
+			  toReceive.type);
 
 	/* memory menagement */
 	if (ad->rl > used) {
@@ -227,7 +230,10 @@ char *mask_preprocessing(char *mask, char *raster, int rl, int cl)
     CELL *old;
     double add_row, add_col;
 
-    buf = malloc(cl * sizeof(int));
+    buf = G_malloc(cl * sizeof(int));
+
+    G_debug(3, "daemon mask preproc: raster=[%s] mask=[%s]  rl=%d cl=%d",
+	    raster, mask, rl, cl);
 
     mapset = G_find_cell(raster, "");
     /* open raster */
