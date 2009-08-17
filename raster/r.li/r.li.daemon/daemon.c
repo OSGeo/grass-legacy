@@ -101,7 +101,7 @@ int calculateIndex(char *file, int f(int, char **, area_des, double *),
        ######################################################### */
 
     /* TODO: check if this path is portable */
-    sprintf(pathSetup, "%s/.r.li/history/%s", getenv("HOME"), file);
+    sprintf(pathSetup, "%s/.r.li/history/%s", G_home(), file);
     G_debug(1, "r.li.daemon pathSetup: %s", pathSetup);
     parsed = parseSetup(pathSetup, l, g, raster);
 
@@ -123,20 +123,20 @@ int calculateIndex(char *file, int f(int, char **, area_des, double *),
 	    G_fatal_error(_("Cannot create random access file"));
     }
     else {
-	/*check if ~/.r.li/output exist */
-	sprintf(out, "%s/.r.li/", getenv("HOME"));
+	/* check if ~/.r.li/output exists */
+	sprintf(out, "%s/.r.li/", G_home());
 
 	doneDir = G_mkdir(out);
 	if (doneDir == -1 && errno != EEXIST)
 	    G_fatal_error(_("Cannot create %s/.r.li/ directory"),
-			  getenv("HOME"));
-	sprintf(out, "%s/.r.li/output", getenv("HOME"));
+			  G_home());
+	sprintf(out, "%s/.r.li/output", G_home());
 	doneDir = G_mkdir(out);
 	if (doneDir == -1 && errno != EEXIST)
 	    G_fatal_error(_("Cannot create %s/.r.li/output/ directory"),
-			  getenv("HOME"));
-	sprintf(out, "%s/.r.li/output/%s", getenv("HOME"), output);
-	res = open(out, O_WRONLY | O_CREAT | O_TRUNC, 0755);
+			  G_home());
+	sprintf(out, "%s/.r.li/output/%s", G_home(), output);
+	res = open(out, O_WRONLY | O_CREAT | O_TRUNC, 0644);
     }
     i = 0;
 
