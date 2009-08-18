@@ -633,6 +633,7 @@ int disposeAreas(list l, g_areas g, char *def)
     return ERROR;
 }
 
+
 int next_Area(int parsed, list l, g_areas g, msg * m)
 {
     if (parsed == NORMAL) {
@@ -652,6 +653,7 @@ int next_Area(int parsed, list l, g_areas g, msg * m)
     }
 }
 
+
 int print_Output(int out, msg m)
 {
     if (m.type != DONE)
@@ -662,12 +664,14 @@ int print_Output(int out, msg m)
 
 	sprintf(s, "RESULT %i|%f\n", m.f.f_d.aid, m.f.f_d.res);
 	len = strlen(s);
+
 	if (write(out, s, len) == len)
 	    return 1;
 	else
 	    return 0;
     }
 }
+
 
 int error_Output(int out, msg m)
 {
@@ -677,12 +681,14 @@ int error_Output(int out, msg m)
 	char s[100];
 
 	sprintf(s, "ERROR %i", m.f.f_d.aid);
+
 	if (write(out, s, strlen(s)) == strlen(s))
 	    return 1;
 	else
 	    return 0;
     }
 }
+
 
 int raster_Output(int fd, int aid, g_areas g, double res)
 {
@@ -693,11 +699,14 @@ int raster_Output(int fd, int aid, g_areas g, double res)
 	G_message(_("Cannot make lseek"));
 	return -1;
     }
+
     if (write(fd, &toPut, sizeof(double)) == 0)
 	return 1;
     else
 	return 0;
 }
+
+
 int write_raster(int mv_fd, int random_access, g_areas g)
 {
     int i = 0, j = 0, letti = 0;
@@ -709,24 +718,33 @@ int write_raster(int mv_fd, int random_access, g_areas g)
     rows = g->rows;
     center = g->sf_x + ((int)g->cl / 2);
 
-    file_buf = malloc(cols * sizeof(double));
+    file_buf = G_malloc(cols * sizeof(double));
     lseek(random_access, 0, SEEK_SET);
+
     cell_buf = G_allocate_d_raster_buf();
     G_set_d_null_value(cell_buf, G_window_cols() + 1);
+
     for (i = 0; i < g->sf_y + ((int)g->rl / 2); i++) {
 	G_put_raster_row(mv_fd, cell_buf, DCELL_TYPE);
     }
+
     for (i = 0; i < rows; i++) {
 	letti = read(random_access, file_buf, (cols * sizeof(double)));
+
 	if (letti == -1)
 	    G_message("%s", strerror(errno));
+
 	for (j = 0; j < cols; j++) {
 	    cell_buf[j + center] = file_buf[j];
 	}
+
 	G_put_raster_row(mv_fd, cell_buf, DCELL_TYPE);
     }
+
     G_set_d_null_value(cell_buf, G_window_cols() + 1);
+
     for (i = 0; i < G_window_rows() - g->sf_y - g->rows; i++)
 	G_put_raster_row(mv_fd, cell_buf, DCELL_TYPE);
+
     return 1;
 }
