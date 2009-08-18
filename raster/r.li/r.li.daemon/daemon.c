@@ -57,6 +57,7 @@ int calculateIndex(char *file, int f(int, char **, area_des, double *),
     g = (g_areas) G_malloc(sizeof(struct generatore));
     l = (list) G_malloc(sizeof(struct lista));
     mypid = getpid();
+
     /* create report pipe */
     reportChannelName = G_tempfile();
     if (mkfifo(reportChannelName, 0644) == -1)
@@ -96,14 +97,22 @@ int calculateIndex(char *file, int f(int, char **, area_des, double *),
     /*open reportChannel */
     receiveChannel = open(reportChannelName, O_RDONLY, 0755);
 
+
     /*########################################################      
        -----------------create area queue----------------------
        ######################################################### */
+
+    /* strip off leading path if present */
+    char testpath[GPATH_MAX];
+    sprintf(testpath, "%s%s", G_home(), "/.r.li/history/");
+    if(strncmp(file, testpath, strlen(testpath)) == 0)
+	file += strlen(testpath);
 
     /* TODO: check if this path is portable */
     sprintf(pathSetup, "%s/.r.li/history/%s", G_home(), file);
     G_debug(1, "r.li.daemon pathSetup: [%s]", pathSetup);
     parsed = parseSetup(pathSetup, l, g, raster);
+
 
     /*########################################################
        -----------------open output file ---------------------
@@ -366,7 +375,6 @@ int parseSetup(char *path, list l, g_areas g, char *raster)
 	    rel_sa_cl = atof(strtok(NULL, "\n"));
 
 	    if (rel_sa_x == -1.0 && rel_sa_y == -1.0) {
-
 		/* runtime disposition */
 
 		int sa_rl, sa_cl;
@@ -382,6 +390,7 @@ int parseSetup(char *path, list l, g_areas g, char *raster)
 		g->sf_y = sf_y;
 		g->x = sf_x;
 		g->y = sf_y;
+
 		return disposeAreas(l, g, strtok(NULL, "\n"));
 	    }
 	    else {
