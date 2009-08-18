@@ -317,10 +317,6 @@ int parseSetup(char *path, list l, g_areas g, char *raster)
     int sf_x, sf_y, sf_rl, sf_cl;
     int size;
 
-    /* TODO: if present, strip away G_home()/.r.li/history/ path from string */
-    /*  ? if(strncmp(G_rc_path(), path, strlen(G_rc_path()) ) == 0)
-	?     path += strlen(G_rc_path());
-	? */
     if (stat(path, &s) != 0)
 	G_fatal_error(_("Cannot find configuration file <%s>"), path);
 
