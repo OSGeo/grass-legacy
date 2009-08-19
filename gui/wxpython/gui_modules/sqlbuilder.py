@@ -11,9 +11,10 @@ PURPOSE:   GRASS SQL Builder
 
 AUTHOR(S): GRASS Development Team
            Original author: Jachym Cepicky <jachym.cepicky gmail.com>
-           Various updates: Martin Landa <landa.martin gmail.com>
+           Various updates: Martin Landa <landa.martin gmail.com>,
+                            Hamish Bowman <hamish_b yahoo com>
 
-COPYRIGHT: (C) 2007 by the GRASS Development Team
+COPYRIGHT: (C) 2007-2009 by the GRASS Development Team
 
            This program is free software under the GNU General Public
            License (>=v2). Read the file COPYING that comes with GRASS
@@ -24,7 +25,8 @@ import wx
 import os,sys
 import time
 
-import grassenv
+from grass.script import core as grass
+
 import gcmd
 import globalvar
 
@@ -35,7 +37,7 @@ imagepath = images.__path__[0]
 sys.path.append(imagepath)
 
 class SQLFrame(wx.Frame):
-    """SQL Frame class"""
+    """!SQL Frame class"""
     def __init__(self, parent, id, title, vectmap, qtype="select"):
 
         wx.Frame.__init__(self, parent, id, title)
@@ -48,16 +50,25 @@ class SQLFrame(wx.Frame):
         #
         self.vectmap = vectmap
         if not "@" in self.vectmap:
-            self.vectmap = self.vectmap + "@" + grassenv.GetGRASSVariable ("MAPSET")
-        self.mapname, self.mapset = self.vectmap.split("@")
-        self.layer,self.tablename, self.column, self.database, self.driver =\
-                 os.popen("v.db.connect -g fs=\"|\" map=%s" %\
-                (self.vectmap)).readlines()[0].strip().split("|")
+            self.vectmap = self.vectmap + "@" + grass.gisenv()['MAPSET']
 
-        self.qtype = qtype        # type of the uqery: SELECT, UPDATE, DELETE, ...
-        self.column_names = []       # array with column names
+        self.mapname, self.mapset = self.vectmap.split("@")
+
+        #FIXME: pass layer number to v.db.connect ???
+        ret = gcmd.RunCommand('v.db.connect',
+                      quiet = True,
+                      read = True,
+                      flags = 'g',
+                      fs = '|',
+                      map = self.vectmap)
+        for line in ret.splitlines():
+            self.layer,self.tablename, self.column, self.database, self.driver =\
+                line.strip().split("|")
+
+        self.qtype = qtype      # type of the uqery: SELECT, UPDATE, DELETE, ...
+        self.column_names = []  # array with column names
         self.columns = {}       # array with colum properties
-        self.colvalues = []     # arrya with uniqe values in selected column
+        self.colvalues = []     # array with uniqe values in selected column
         self.heading = ""
         self.parent = parent
 
@@ -85,10 +96,10 @@ class SQLFrame(wx.Frame):
         self.btn_is = wx.Button(self, -1, "=")
         self.btn_isnot = wx.Button(self, -1, "!=")
         self.btn_like = wx.Button(self, -1, "LIKE")
-        self.btn_gt = wx.Button(self, -1, ">=")
-        self.btn_gtis = wx.Button(self, -1, ">")
-        self.btn_lt = wx.Button(self, -1, "<=")
-        self.btn_ltis = wx.Button(self, -1, "<")
+        self.btn_gt = wx.Button(self, -1, ">")
+        self.btn_gtis = wx.Button(self, -1, ">=")
+        self.btn_lt = wx.Button(self, -1, "<")
+        self.btn_ltis = wx.Button(self, -1, "<=")
         self.btn_or = wx.Button(self, -1, "OR")
         self.btn_not = wx.Button(self, -1, "NOT")
         self.btn_and = wx.Button(self, -1, "AND")
@@ -218,14 +229,16 @@ class SQLFrame(wx.Frame):
         self.Show(True)
 
     def GetColumns(self):
-        """Get columns"""
-        dbDescribe = gcmd.Command(['db.describe',
-                                   '-c', '--q',
-                                   'table=%s',
-                                   'database=%s',
-                                   'driver=%s' % self.tablename, self.database, self.driver])
-
-        for line in dbDescribe.ReadStdOutput()[2:]:
+        """!Get columns"""
+        ret = gcmd.RunCommand('db.describe',
+                              quiet = True,
+                              read = True,
+                              flags = 'c',
+                              table = self.tablename,
+                              database = self.database,
+                              driver = self.driver)
+        
+        for line in ret.splitlines():
             # skip ncols and nrows lines
             linetype = line.strip().split(":")[0]
             if linetype == "ncols" or linetype == "nrows":
@@ -246,14 +259,23 @@ class SQLFrame(wx.Frame):
         self.list_values.Clear()
         column = self.list_columns.GetString(idx)
         i = 0
-        for line in os.popen("""db.select -c database="%s" driver=%s sql="SELECT %s FROM %s" """ %\
-                (self.database,self.driver,column,self.tablename)):
-                if justsample and i < 256 or \
-                   not justsample:
-                    self.list_values.Insert(line.strip(),0)
-                else:
-                    break
-                i += 1
+        querystring = "SELECT %s FROM %s" % (column, self.tablename)
+
+        ret = gcmd.RunCommand('db.select',
+                              read = True,
+                              quiet = True,
+                              flags = 'c',
+                              database = self.database,
+                              driver = self.driver,
+                              sql = querystring)
+
+        for line in ret.splitlines():
+            if justsample and i < 256 or \
+               not justsample:
+                self.list_values.Insert(line.strip(),0)
+            else:
+                break
+            i += 1
 
     def GetSampleValues(self,event):
         self.GetUniqueValues(None,True)
@@ -274,8 +296,6 @@ class SQLFrame(wx.Frame):
         self.__addSomething(value)
 
     def AddMark(self,event):
-
-
         if event.GetId() == self.btn_is.GetId(): mark = "="
         elif event.GetId() == self.btn_isnot.GetId(): mark = "!="
         elif event.GetId() == self.btn_like.GetId(): mark = "LIKE"
@@ -303,11 +323,20 @@ class SQLFrame(wx.Frame):
                 newsqlstr += " "
         except:
             pass
+
         newsqlstr += what
         newsqlstr += " "+sqlstr[position:]
 
         self.text_sql.SetValue(newsqlstr)
+        # FIXME: cursor position is messed up
+        #   see also   http://trac.wxwidgets.org/ticket/10051
+        #DEBUG: print "before: %d" % (position)
         self.text_sql.SetInsertionPoint(position)
+        #? self.text_sql.SetInsertionPoint(position+len(what))
+        #? self.text_sql.SetInsertionPointEnd()
+        #DEBUG: print "len(what)=%d" % (len(what))
+        #DEBUG: print "after: %d" % (self.text_sql.GetPosition()[0])
+        #DEBUG: print " "
 
     def OnApply(self,event):
         if self.parent:
@@ -315,13 +344,25 @@ class SQLFrame(wx.Frame):
                 self.parent.text_query.SetValue= self.text_sql.GetValue().strip().replace("\n"," ")
             except:
                 pass
+
     def OnVerify(self,event):
         if self.text_sql.GetValue():
-            if os.system("""db.select -t driver=%s database="%s" sql="SELECT * FROM %s WHERE %s" """ % \
-                    (self.driver, self.database,self.tablename,
-                        self.text_sql.GetValue().strip().replace("\n"," "))):
-                # FIXME: LOG
-                # print self.text_sql.GetValue().strip().replace("\n"," "), "not correct!"
+            querystring = "SELECT * FROM %s WHERE %s" % \
+                          (self.tablename,
+                           self.text_sql.GetValue().strip().replace("\n"," "))
+            # FIXME: LOG
+            # print self.text_sql.GetValue().strip().replace("\n"," "), "not correct!"
+
+            print "Testing [%s] ..." % (querystring)
+            ret, msg = gcmd.RunCommand('db.select',
+                                  getErrorMsg = True,
+                                  verbose = True,
+                                  flags = 't',
+                                  driver = self.driver,
+                                  database = self.database,
+                                  sql = querystring)
+            print msg, " "
+            if ret == 0:
                 pass
 
     def OnClear(self, event):
