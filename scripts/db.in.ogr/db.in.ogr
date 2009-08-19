@@ -111,10 +111,9 @@ fi
 # check ERRORs and cat and cat_ issues (maybe problem with translated messages)
 # we import faking a map which generates only the attribute table:
 WARNING="`v.in.ogr --q dsn=\"$GIS_OPT_DSN\" $LAYER out=$GIS_OPT_OUTPUT -o --o 2>&1 | grep -i 'ERROR\|cat' | grep -v 'truncated'`"
-STATUSOGR=$?
 if [ ! -z "$WARNING" ] ; then
    echo "$WARNING"
-   if [ ! -z "$GIS_OPT_DB_TABLE" -a $STATUSOGR -ne 0 ] ; then
+   if [ ! -z "$GIS_OPT_DB_TABLE" ] ; then
       g.message -e "Input DSN <$INPUT> not found or not readable"
    else
       g.message -e "Input table <$INPUT> not found or not readable"
