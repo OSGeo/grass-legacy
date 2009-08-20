@@ -392,6 +392,10 @@ int main(int argc, char *argv[])
 		if (out_type[i] == CELL_TYPE) {
 		    if (G_is_c_null_value(&cache[point].value[i])) {
 			fprintf(stdout, "%c%s", fs, null_str);
+			if (withcats)
+			    fprintf(stdout, "%c", fs);
+			if (flag4->answer)
+			    fprintf(stdout, "%c", fs);
 			continue;
 		    }
 		    fprintf(stdout, "%c%ld", fs, (long)cache[point].value[i]);
@@ -400,6 +404,10 @@ int main(int argc, char *argv[])
 
 		    if (G_is_d_null_value(&cache[point].dvalue[i])) {
 			fprintf(stdout, "%c%s", fs, null_str);
+			if (withcats)
+			    fprintf(stdout, "%c", fs);
+			if (flag4->answer)
+			    fprintf(stdout, "%c", fs);
 			continue;
 		    }
 		    sprintf(tmp_buf, "%.10f", cache[point].dvalue[i]);
