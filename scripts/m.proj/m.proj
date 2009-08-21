@@ -230,7 +230,7 @@ fi
 
 #### setup output style
 if [ $GIS_FLAG_D -eq 0 ] ; then
-   OUTFMT=""
+   OUTFMT="-w5"
 else
    OUTFMT="-f %.8f"
 fi
