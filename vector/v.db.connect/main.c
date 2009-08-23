@@ -33,7 +33,7 @@ int main(int argc, char **argv)
     char *input, *mapset;
     struct GModule *module;
     struct Option *inopt, *dbdriver, *dbdatabase, *dbtable, *field_opt,
-	*dbkey, *sep_opt;
+	*dbkey, *sep_opt, *layer_opt;
     struct Flag *overwrite, *print, *columns, *delete, *shell_print;
     dbDriver *driver;
     dbString table_name;
@@ -86,6 +86,11 @@ int main(int argc, char **argv)
 			   "in shell script style");
     shell_print->description =
 	_("Format: layer[/layer name] table key database driver");
+
+    /* This should be changed in GRASS 7. Printing options shouldn't ignore layer=%d option. */
+    layer_opt = G_define_flag();
+    layer_opt->key = 'l';
+    layer_opt->description = _("Use layer option for connection printing");
 
     columns = G_define_flag();
     columns->key = 'c';
@@ -156,26 +161,30 @@ int main(int argc, char **argv)
 		    if ((fi = Vect_get_dblink(&Map, i)) == NULL)
 			G_fatal_error(_("Database connection not defined"));
 
-		    if (shell_print->answer) {
-			const char *sep = sep_opt->answer;
-			if (fi->name) {
-			    fprintf(stdout, "%d/%s%s%s%s%s%s%s%s%s\n",
-				    fi->number, fi->name, sep,
-				    fi->table, sep, fi->key, sep,
-				    fi->database, sep, fi->driver);
+		    if (layer_opt->answer && fi->number == field) {
+			if (shell_print->answer) {
+			    const char *sep = sep_opt->answer;
+
+			    if (fi->name) {
+				fprintf(stdout, "%d/%s%s%s%s%s%s%s%s%s\n",
+					fi->number, fi->name, sep,
+					fi->table, sep, fi->key, sep,
+					fi->database, sep, fi->driver);
+			    }
+			    else {
+				fprintf(stdout, "%d%s%s%s%s%s%s%s%s\n",
+					fi->number, sep,
+					fi->table, sep, fi->key, sep,
+					fi->database, sep, fi->driver);
+			    }
 			}
 			else {
-			    fprintf(stdout, "%d%s%s%s%s%s%s%s%s\n",
-				    fi->number, sep,
-				    fi->table, sep, fi->key, sep,
-				    fi->database, sep, fi->driver);
+			    fprintf(stdout,
+				    _("layer <%d> table <%s> in database <%s> through driver "
+				     "<%s> with key <%s>\n"), fi->number,
+				    fi->table, fi->database, fi->driver,
+				    fi->key);
 			}
-		    }
-		    else {
-			fprintf(stdout,
-				_("layer <%d> table <%s> in database <%s> through driver "
-				 "<%s> with key <%s>\n"), fi->number,
-				fi->table, fi->database, fi->driver, fi->key);
 		    }
 		}
 	    }			/* end print */

@@ -196,7 +196,7 @@ proc GmThematic::show_data { id } {
 		GmLib::errmsg [G_msg "You must provide valid vector layer number"]
 		return
 	}
-	if {![catch {open "|v.db.connect map=$mapname layer=$layernum -g" r} vdb]} {
+	if {![catch {open "|v.db.connect map=$mapname layer=$layernum -g -l" r} vdb]} {
 		set vectdb [read $vdb]
 		if {[catch {close $vdb} error]} {
 			GmLib::errmsg $error
