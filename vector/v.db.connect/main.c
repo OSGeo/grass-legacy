@@ -33,8 +33,9 @@ int main(int argc, char **argv)
     char *input, *mapset;
     struct GModule *module;
     struct Option *inopt, *dbdriver, *dbdatabase, *dbtable, *field_opt,
-	*dbkey, *sep_opt, *layer_opt;
-    struct Flag *overwrite, *print, *columns, *delete, *shell_print;
+	*dbkey, *sep_opt;
+    struct Flag *overwrite, *print, *columns, *delete, *shell_print,
+	*limit_layer;
     dbDriver *driver;
     dbString table_name;
     dbTable *table;
@@ -87,10 +88,14 @@ int main(int argc, char **argv)
     shell_print->description =
 	_("Format: layer[/layer name] table key database driver");
 
-    /* This should be changed in GRASS 7. Printing options shouldn't ignore layer=%d option. */
-    layer_opt = G_define_flag();
-    layer_opt->key = 'l';
-    layer_opt->description = _("Use layer option for connection printing");
+    /* This should be changed in GRASS 7.
+       Printing options shouldn't ignore layer=%d option.
+       That would require us to override/unset the default layer=1 there :-/
+        or add a new -a flag for print all layers ?? */
+    limit_layer = G_define_flag();
+    limit_layer->key = 'l';
+    limit_layer->description =
+	_("When printing, limit to layer specified by the layer option");
 
     columns = G_define_flag();
     columns->key = 'c';
@@ -113,6 +118,7 @@ int main(int argc, char **argv)
     if (G_parser(argc, argv))
 	exit(EXIT_FAILURE);
 
+
     /* The check must allow '.' in the name (schema.table) */
     /*
        if (dbtable->answer) {
@@ -133,9 +139,6 @@ int main(int argc, char **argv)
 	field = 1;
 
     G_debug(3, "Mapset = %s", mapset);
-
-    if (print->answer && shell_print->answer)
-	G_fatal_error(_("Please choose only one print style"));
 
     if (print->answer || shell_print->answer || columns->answer)
 	Vect_open_old(&Map, inopt->answer, mapset);
@@ -161,30 +164,31 @@ int main(int argc, char **argv)
 		    if ((fi = Vect_get_dblink(&Map, i)) == NULL)
 			G_fatal_error(_("Database connection not defined"));
 
-		    if (layer_opt->answer && fi->number == field) {
-			if (shell_print->answer) {
-			    const char *sep = sep_opt->answer;
+		    if (limit_layer->answer && fi->number != field)
+			continue;
 
-			    if (fi->name) {
-				fprintf(stdout, "%d/%s%s%s%s%s%s%s%s%s\n",
-					fi->number, fi->name, sep,
-					fi->table, sep, fi->key, sep,
-					fi->database, sep, fi->driver);
-			    }
-			    else {
-				fprintf(stdout, "%d%s%s%s%s%s%s%s%s\n",
-					fi->number, sep,
-					fi->table, sep, fi->key, sep,
-					fi->database, sep, fi->driver);
-			    }
+		    if (shell_print->answer) {
+			const char *sep = sep_opt->answer;
+
+			if (fi->name) {
+			    fprintf(stdout, "%d/%s%s%s%s%s%s%s%s%s\n",
+				    fi->number, fi->name, sep,
+				    fi->table, sep, fi->key, sep,
+				    fi->database, sep, fi->driver);
 			}
 			else {
-			    fprintf(stdout,
-				    _("layer <%d> table <%s> in database <%s> through driver "
-				     "<%s> with key <%s>\n"), fi->number,
-				    fi->table, fi->database, fi->driver,
-				    fi->key);
+			    fprintf(stdout, "%d%s%s%s%s%s%s%s%s\n",
+				    fi->number, sep,
+				    fi->table, sep, fi->key, sep,
+				    fi->database, sep, fi->driver);
 			}
+		    }
+		    else {
+			fprintf(stdout,
+				_("layer <%d> table <%s> in database <%s> through driver "
+				  "<%s> with key <%s>\n"), fi->number,
+				fi->table, fi->database, fi->driver,
+				fi->key);
 		    }
 		}
 	    }			/* end print */
