@@ -14,6 +14,7 @@
  * \date 1999-2008
  */
 
+#include <string.h>
 #include <grass/gis.h>
 
 
@@ -29,6 +30,10 @@
 int G_trim_decimal(char *buf)
 {
     char *mark;
+
+    /* don't trim e+20 into e+2 */
+    if( strchr(buf, 'e') || strchr(buf, 'E') )
+	return 0;
 
     /* find the . */
     while (*buf != '.')
