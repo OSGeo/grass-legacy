@@ -208,7 +208,7 @@ fi
 
 if [ $DBFDRIVER -eq 1 ] ; then
    # `wc -c` reports number of chars + 1 for the newline
-   if [ `echo "$COLPREFIX" | wc -c` -gt 8 ] ; then
+   if [ `echo "$COLPREFIX" | wc -c` -gt 7 ] ; then
        g.message -e "Cannot create unique names for columns. \
          Either use a shorter column prefix or switch to another DB \
 	 backend such as SQLite. DBF limits the length to 10 characters"
