@@ -43,7 +43,7 @@ void extract_init(struct SigSet *S)
 		}
 
 	    /* Test for positive definite matrix */
-	    eigen(SubS->Rinv, NULL, lambda, nbands);
+	    G_math_eigval(SubS->Rinv, lambda, nbands);
 	    for (b1 = 0; b1 < nbands; b1++) {
 		if (lambda[b1] <= 0.0)
 		    G_warning(_("Nonpositive eigenvalues for class %d subclass %d"),
