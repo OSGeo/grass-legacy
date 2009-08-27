@@ -4,6 +4,7 @@ MODULE_TOPDIR = ..
 SUBDIRS = \
 	datetime \
 	gis \
+	external \
 	gmath \
 	linkm \
 	driver \
@@ -16,7 +17,6 @@ SUBDIRS = \
 	db \
 	vask \
 	edit \
-	external \
 	fonts \
 	gtcltk \
 	form \

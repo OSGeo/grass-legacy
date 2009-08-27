@@ -39,4 +39,20 @@ eigen.c/jacobi.c:
   transpose(), transpose2()
  both used in i.pca and i.cca. Header different, functionality identical.
  To be merged.
+ -> Merged and partly replaced by ccmath eigenvector functions
  -> some cleanup done by Glynn
+Aug 2009 Soeren:
+Replaced the eigenvalue and singular value decomposition code with ccmath implementations
+
+The lu.c need to be replaced by ccmath lu solver. The following modules must be edited:
+./imagery/i.smap/bouman/invert.c
+./imagery/i.gensigset/invert.c 
+./raster/r.param.scale/process.c
+./raster/r.param.scale/process.c
+./lib/rst/interp_float/ressegm2d.c
+./lib/rst/interp_float/ressegm2d.c
+./lib/rst/interp_float/ressegm2d.c
+./lib/rst/interp_float/segmen2d.c
+./lib/rst/interp_float/segmen2d.c
+
+
