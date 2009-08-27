@@ -73,6 +73,7 @@ void N_free_geom_data(N_geom_data * geom)
 N_geom_data *N_init_geom_data_3d(G3D_Region * region3d, N_geom_data * geodata)
 {
     N_geom_data *geom = geodata;
+
     struct Cell_head region2d;
 
 #pragma omp critical
@@ -115,9 +116,13 @@ N_geom_data *N_init_geom_data_2d(struct Cell_head * region,
 				 N_geom_data * geodata)
 {
     N_geom_data *geom = geodata;
+
     struct Cell_head backup;
+
     double meters;
+
     short ll = 0;
+
     int i;
 
 
@@ -158,10 +163,12 @@ N_geom_data *N_init_geom_data_2d(struct Cell_head * region,
 		    "N_init_geom_data_2d: calculating the areas for non parametric projection");
 	    geom->planimetric = 0;
 
-	    if (geom->area != NULL)
+	    if (geom->area != NULL) {
 		G_free(geom->area);
-	    else
 		geom->area = G_calloc(geom->rows, sizeof(double));
+	    } else {
+		geom->area = G_calloc(geom->rows, sizeof(double));
+            }
 
 	    /*fill the area vector */
 	    for (i = 0; i < geom->rows; i++) {

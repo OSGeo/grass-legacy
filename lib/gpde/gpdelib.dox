@@ -11,10 +11,9 @@ The GRASS partial differential equation library is designed to support the
 solution of PDE's within GRASS.
 Therefore it provides functions to create and solve linear equation systems.
 The library design is thread safe and supports threaded parallelism with OpenMP. 
-Most of the available solvers (expect the gauss seidel and jacobi solver)
-and the assembling of the linear equation systems are parallelized with OpenMP. 
+The assembling of the linear equation systems is parallelized with OpenMP. 
 The creation of a linear equation system can be done by using quadratic or sparse matrices.
-Sparse and quadratic matrices are supported by the iterative equation solvers, 
+Sparse and quadratic matrices are supported by the iterative equation solvers of the gmath library, 
 the direct equation solvers only support regular quadratic matrices.
 <p>
 To enable parallel computing, you will need a compiler with OpenMP capabilities
@@ -29,9 +28,6 @@ groundwater flow and solute transport in 2d and 3d are implemented.
 It is IMHO easy to add any partial differential equation which can be 
 solved with the finite volume or the finite differences method based on structured grids.
 The basis for the discretisation is the geometrical structure of raster and volume maps.
-<br>
-<br>
-There are plans to implement heat flow in two and three dimensions.
 <br>
 <br>
 Currently only planimetric projections are supported for numerical calculations.
@@ -52,98 +48,13 @@ The principle to create and solve a linear equation systems with this library:
       to manage the data
 2.) Assemble the linear equation system
     - use the sparse matrix structure to save lots of memory and cpu time
-3.) Solve the linear equation system with the gauss, lu, jacobi, sor, cg or bicgstab method
-    - always prefer the iterative krylov-space methods for solving
-    - if the linear equation systems are in a bad condition try the jacobian solver
+3.) Solve the linear equation system with the gauss, lu, cg, pcg or bicgstab method
+    - always prefer the iterative krylov-space (cg, pcg and bicgstab) methods for solving
     - the available direct solvers don't support sparse matrices
 4.) Write the result back as raster/volume map
 \endverbatim
 
-The following code shows how to implement this principle with the GRASS PDE lib:
-
-\verbatim
-/* *************************************************************** */
-/* ****** calculate 2d dimensional groundwater flow ************** */
-/* *************************************************************** */
-int main()
-{
-    int i, j;
-    N_gwflow_data2d *data = NULL; 	/* data structure with the groundwater data		*/
-    N_geom_data *geom = NULL; 		/* geometry of the calculation area (region)		*/
-    N_les *les = NULL; 		/* the linear equation system structure			*/
-    N_les_callback_2d *call = NULL;	/* the callback for the groundwater flow calulation	*/
-
-    /* allocate the callback structure */
-    call = N_alloc_les_callback_2d();
-
-    /* set the callback to groundwater flow calculation */
-    N_set_les_callback_2d_func(call, (*N_callback_gwflow_2d));
-
-   /* allocate the groundwater data structure with one million cells */
-    data = N_alloc_gwflow_data2d(1000, 1000);
-
-    /* get the current region */
-    G_get_set_window(&region);
-
-    /* allocate and initiate the geometry structure  for geometry and area calculation
-       needed by the groundwater calculation callback */
-    geom = N_init_geom_data_2d(&region, geom);
-
- 
-    /*fill the data arrays with raster maps*/
-    N_read_rast_to_array_2d("phead_map_name", data->phead);      
-    N_read_rast_to_array_2d("phead_map_name", data->phead_start);
-    N_read_rast_to_array_2d("status_map_name", data->status);
-    N_read_rast_to_array_2d("hc_x_map_name", data->hc_x);
-    N_read_rast_to_array_2d("hc_y_map_name", data->hc_y);
-    N_read_rast_to_array_2d("q_map_name", data->q);
-    N_read_rast_to_array_2d("s_map_name", data->s);
-    N_read_rast_to_array_2d("top_map_name", data->top);
-    N_read_rast_to_array_2d("bottom_map_name", data->bottom);
-    N_read_rast_to_array_2d("r_map_name", data->r);
-
-    /* Set the inactive cells to zero, to assure a no flow boundary */
-    /* notice: the data arrays are of type DCELL, so the put_*_d_value functions are used */
-    for (y = 0; y < geom->rows; y++) {
-	for (x = 0; x < geom->cols; x++) {
-	    stat = (int)N_get_array_2d_d_value(data->status, x, y);
-	    if (stat == N_CELL_INACTIVE) {	/*only inactive cells */
-		N_put_array_2d_d_value(data->hc_x, x, y, 0);
-		N_put_array_2d_d_value(data->hc_y, x, y, 0);
-		N_put_array_2d_d_value(data->s, x, y, 0);
-		N_put_array_2d_d_value(data->q, x, y, 0);
-	    }
-	}
-    }
- 
-    /*Assemble the sparse matrix */
-    les = N_assemble_les_2d(N_SPARSE_LES, geom, data->status, data->phead_start, (void *)data, call);
-
-    /*Solve the linear equation system with the cg method*/
-    N_solver_cg(les, 100000, 0.1e-8);
-
-    /* now copy the result from the x vector of the linear equation system
-       into a data array, this function is not provided by the gpde lib, 
-       you have to write your own: take a look at r.gwflow 
-    */
-    copy_x_vect_to_data_array(les->x, data->phead, geom);
-
-    /*write the x vector of the les back into a raster map*/
-    N_write_array_2d_to_rast(data->phead, "output_map_name");
-
-    /*free the memory*/
-    N_free_les(les);
-    N_free_gwflow_data2d(data);
-    N_free_geom_data(geom);
-    G_free(call);
-
-    return 0;
-}
-
-\endverbatim
-
-The assembling of lineare equation systems is based on a 5 point star for raster maps and a
-7 point star for volume maps, implemented as finite volume/differences discretization. 
+The modules r.gwflow and r3.gwflow are examples how to use the gpde library.
 
 <p>
 All raster and volume maps which are used to create a linear equation system
@@ -396,45 +307,6 @@ templates for callback functions
 N_data_star *#N_callback_template_3d(void *data, N_geom_data * geom, int depth, int row, int col);
 <p>
 N_data_star *#N_callback_template_2d(void *data, N_geom_data * geom, int row, int col);
-
-
-\section solvers Available solvers
-
-\subsection direct_solvers Direct solvers
-
-Two direct solvers are implemented, the gauss elimination solver and the lu decomposition solver.
-The direct solvers only work with regular quadratic matrices, not with sparse matrices.
-
-<p>
-int #N_solver_gauss (N_les * les);
-
-<p>
-int #N_solver_lu (N_les * les);
-
-
-\subsection iterative_solvers Iterative solvers 
-
-The iterative solvers work with regular quadartic and sparse matrices.
-<p>
-To solve symmetric and positive definite linear equation systems the iterative 
-conjugated gradient method with additional diagonal preconditioning are implemented.
-
-int #N_solver_cg(N_les * les, int maxit, double error);
-<p>
-int #N_solver_pcg(N_les * les, int maxit, double error);
-
-<p>
-To solve unsymmetric non definite linear equation system the iterative BiCGSatb method is implemented
-
-<p>
-int #N_solver_bicgstab(N_les * les, int maxit, double error);
-
-<p>
-Additionally jacobi and Gauss-Seidel iterative solvers with relaxation are implemented
-<p>
-int #N_solver_jacobi (N_les * L, int maxit, double sor, double error);
-<p>
-int #N_solver_SOR (N_les * L, int maxit, double sor, double error);
 
 \section available_pdes Implemented PDE's
 

@@ -53,6 +53,7 @@ double N_calc_arith_mean(double a, double b)
 double N_calc_arith_mean_n(double *a, int size)
 {
     double val = 0.0;
+
     int i;
 
     for (i = 0; i < size; i++)
@@ -96,6 +97,7 @@ double N_calc_geom_mean(double a, double b)
 double N_calc_geom_mean_n(double *a, int size)
 {
     double val = 1;
+
     int i;
 
     for (i = 0; i < size; i++)
@@ -140,6 +142,7 @@ double N_calc_harmonic_mean(double a, double b)
 double N_calc_harmonic_mean_n(double *a, int size)
 {
     double val = 0;
+
     int i;
 
     for (i = 0; i < size; i++)
@@ -189,6 +192,7 @@ double N_calc_quad_mean(double a, double b)
 double N_calc_quad_mean_n(double *a, int size)
 {
     double val = 0;
+
     int i;
 
     for (i = 0; i < size; i++)

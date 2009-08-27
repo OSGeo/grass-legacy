@@ -18,6 +18,7 @@
 #include <grass/gis.h>
 #include <grass/G3d.h>
 #include <grass/glocale.h>
+#include <grass/gmath.h>
 
 #ifndef _N_PDE_H_
 #define _N_PDE_H_
@@ -74,17 +75,6 @@
 /* *************************************************************** */
 
 /*!
- * \brief The row vector of the sparse matrix
- * */
-typedef struct
-{
-    int cols;			/*Number of entries */
-    double *values;		/*The non null values of the row */
-    int *index;			/*the index number */
-} N_spvector;
-
-
-/*!
  * \brief The linear equation system (les) structure 
  *
  * This structure manages the Ax = b system.
@@ -98,26 +88,33 @@ typedef struct
     double *x;			/*the value vector */
     double *b;			/*the right side of Ax = b */
     double **A;			/*the normal quadratic matrix */
-    N_spvector **Asp;		/*the sparse matrix */
+    G_math_spvector **Asp;	/*the sparse matrix */
     int rows;			/*number of rows */
     int cols;			/*number of cols */
     int quad;			/*is the matrix quadratic (1-quadratic, 0 not) */
     int type;			/*the type of the les, normal == 0, sparse == 1 */
 } N_les;
 
-extern N_spvector *N_alloc_spvector(int cols);
 extern N_les *N_alloc_les_param(int cols, int rows, int type, int param);
+
 extern N_les *N_alloc_les(int rows, int type);
+
 extern N_les *N_alloc_les_A(int rows, int type);
+
 extern N_les *N_alloc_les_Ax(int rows, int type);
+
 extern N_les *N_alloc_les_Ax_b(int rows, int type);
+
 extern N_les *N_alloc_nquad_les(int cols, int rows, int type);
+
 extern N_les *N_alloc_nquad_les_A(int cols, int rows, int type);
+
 extern N_les *N_alloc_nquad_les_Ax(int cols, int rows, int type);
+
 extern N_les *N_alloc_nquad_les_Ax_b(int cols, int rows, int type);
+
 extern void N_print_les(N_les * les);
-extern int N_add_spvector_to_les(N_les * les, N_spvector * vector, int row);
-extern void N_free_spvector(N_spvector * vector);
+
 extern void N_free_les(N_les * les);
 
 /* *************************************************************** */
@@ -146,30 +143,14 @@ typedef struct
 } N_geom_data;
 
 extern N_geom_data *N_alloc_geom_data(void);
+
 extern void N_free_geom_data(N_geom_data * geodata);
+
 extern N_geom_data *N_init_geom_data_3d(G3D_Region * region3d,
 					N_geom_data * geodata);
 extern N_geom_data *N_init_geom_data_2d(struct Cell_head *region,
 					N_geom_data * geodata);
 extern double N_get_geom_data_area_of_cell(N_geom_data * geom, int row);
-
-
-/* *************************************************************** */
-/* *************** LINEARE EQUATION SOLVER PART ****************** */
-/* *************************************************************** */
-extern int N_solver_gauss(N_les * les);
-extern int N_solver_lu(N_les * les);
-extern int N_solver_cholesky(N_les * les);
-extern int N_solver_jacobi(N_les * L, int maxit, double sor, double error);
-extern int N_solver_SOR(N_les * L, int maxit, double sor, double error);
-extern int N_solver_cg(N_les * les, int maxit, double error);
-extern int N_solver_pcg(N_les * les, int maxit, double error, int prec);
-extern int N_solver_bicgstab(N_les * les, int maxit, double error);
-extern void N_matrix_vector_product(N_les * les, double *source,
-				    double *result);
-extern void N_sparse_matrix_vector_product(N_les * les, double *source,
-					   double *result);
-extern N_les *N_create_diag_precond_matrix(N_les * les, int prec);
 
 /* *************************************************************** */
 /* *************** READING RASTER AND VOLUME DATA **************** */
@@ -187,13 +168,19 @@ typedef struct
 } N_array_2d;
 
 extern N_array_2d *N_alloc_array_2d(int cols, int rows, int offset, int type);
+
 extern void N_free_array_2d(N_array_2d * data_array);
+
 extern int N_get_array_2d_type(N_array_2d * array2d);
+
 extern void N_get_array_2d_value(N_array_2d * array2d, int col, int row,
 				 void *value);
 extern CELL N_get_array_2d_c_value(N_array_2d * array2d, int col, int row);
+
 extern FCELL N_get_array_2d_f_value(N_array_2d * array2d, int col, int row);
+
 extern DCELL N_get_array_2d_d_value(N_array_2d * array2d, int col, int row);
+
 extern void N_put_array_2d_value(N_array_2d * array2d, int col, int row,
 				 char *value);
 extern void N_put_array_2d_c_value(N_array_2d * array2d, int col, int row,
@@ -203,17 +190,25 @@ extern void N_put_array_2d_f_value(N_array_2d * array2d, int col, int row,
 extern void N_put_array_2d_d_value(N_array_2d * array2d, int col, int row,
 				   DCELL value);
 extern int N_is_array_2d_value_null(N_array_2d * array2d, int col, int row);
+
 extern void N_put_array_2d_value_null(N_array_2d * array2d, int col, int row);
+
 extern void N_print_array_2d(N_array_2d * data);
+
 extern void N_print_array_2d_info(N_array_2d * data);
+
 extern void N_copy_array_2d(N_array_2d * source, N_array_2d * target);
+
 extern double N_norm_array_2d(N_array_2d * array1, N_array_2d * array2,
 			      int type);
 extern N_array_2d *N_math_array_2d(N_array_2d * array1, N_array_2d * array2,
 				   N_array_2d * result, int type);
 extern int N_convert_array_2d_null_to_zero(N_array_2d * a);
+
 extern N_array_2d *N_read_rast_to_array_2d(char *name, N_array_2d * array);
+
 extern void N_write_array_2d_to_rast(N_array_2d * array, char *name);
+
 extern void N_calc_array_2d_stats(N_array_2d * a, double *min, double *max,
 				  double *sum, int *nonzero, int withoffset);
 
@@ -230,7 +225,9 @@ typedef struct
 extern N_array_3d *N_alloc_array_3d(int cols, int rows, int depths,
 				    int offset, int type);
 extern void N_free_array_3d(N_array_3d * data_array);
+
 extern int N_get_array_3d_type(N_array_3d * array3d);
+
 extern void N_get_array_3d_value(N_array_3d * array3d, int col, int row,
 				 int depth, void *value);
 extern float N_get_array_3d_f_value(N_array_3d * array3d, int col, int row,
@@ -248,13 +245,17 @@ extern int N_is_array_3d_value_null(N_array_3d * array3d, int col, int row,
 extern void N_put_array_3d_value_null(N_array_3d * array3d, int col, int row,
 				      int depth);
 extern void N_print_array_3d(N_array_3d * data);
+
 extern void N_print_array_3d_info(N_array_3d * data);
+
 extern void N_copy_array_3d(N_array_3d * source, N_array_3d * target);
+
 extern double N_norm_array_3d(N_array_3d * array1, N_array_3d * array2,
 			      int type);
 extern N_array_3d *N_math_array_3d(N_array_3d * array1, N_array_3d * array2,
 				   N_array_3d * result, int type);
 extern int N_convert_array_3d_null_to_zero(N_array_3d * a);
+
 extern N_array_3d *N_read_rast3d_to_array_3d(char *name, N_array_3d * array,
 					     int mask);
 extern void N_write_array_3d_to_rast3d(N_array_3d * array, char *name,
@@ -371,11 +372,17 @@ extern void N_set_les_callback_3d_func(N_les_callback_3d * data,
 extern void N_set_les_callback_2d_func(N_les_callback_2d * data,
 				       N_data_star * (*callback_func_2d) ());
 extern N_les_callback_3d *N_alloc_les_callback_3d(void);
+
 extern N_les_callback_2d *N_alloc_les_callback_2d(void);
+
 extern N_data_star *N_alloc_5star(void);
+
 extern N_data_star *N_alloc_7star(void);
+
 extern N_data_star *N_alloc_9star(void);
+
 extern N_data_star *N_alloc_27star(void);
+
 extern N_data_star *N_create_5star(double C, double W, double E, double N,
 				   double S, double V);
 extern N_data_star *N_create_7star(double C, double W, double E, double N,
@@ -431,6 +438,7 @@ extern N_les *N_assemble_les_2d_param(int les_type, N_geom_data * geom,
 				      int cell_Type);
 
 extern int N_les_pivot_create(N_les * les);
+
 int N_les_integrate_dirichlet_2d(N_les * les, N_geom_data * geom,
 				 N_array_2d * status, N_array_2d * start_val);
 int N_les_integrate_dirichlet_3d(N_les * les, N_geom_data * geom,
@@ -459,12 +467,19 @@ extern struct Option *N_define_standard_option(int opt);
 /* *************************************************************** */
 
 extern double N_calc_arith_mean(double a, double b);
+
 extern double N_calc_arith_mean_n(double *a, int size);
+
 extern double N_calc_geom_mean(double a, double b);
+
 extern double N_calc_geom_mean_n(double *a, int size);
+
 extern double N_calc_harmonic_mean(double a, double b);
+
 extern double N_calc_harmonic_mean_n(double *a, int size);
+
 extern double N_calc_quad_mean(double a, double b);
+
 extern double N_calc_quad_mean_n(double *a, int size);
 
 /* *************************************************************** */
@@ -472,6 +487,7 @@ extern double N_calc_quad_mean_n(double *a, int size);
 /* *************************************************************** */
 
 extern double N_full_upwinding(double sprod, double distance, double D);
+
 extern double N_exp_upwinding(double sprod, double distance, double D);
 
 
@@ -644,25 +660,33 @@ typedef struct
 
 
 extern N_gradient_2d *N_alloc_gradient_2d(void);
+
 extern void N_free_gradient_2d(N_gradient_2d * grad);
+
 extern N_gradient_2d *N_create_gradient_2d(double NC, double SC, double WC,
 					   double EC);
 extern int N_copy_gradient_2d(N_gradient_2d * source, N_gradient_2d * target);
+
 extern N_gradient_2d *N_get_gradient_2d(N_gradient_field_2d * field,
 					N_gradient_2d * gradient, int col,
 					int row);
 
 extern N_gradient_3d *N_alloc_gradient_3d(void);
+
 extern void N_free_gradient_3d(N_gradient_3d * grad);
+
 extern N_gradient_3d *N_create_gradient_3d(double NC, double SC, double WC,
 					   double EC, double TC, double BC);
 extern int N_copy_gradient_3d(N_gradient_3d * source, N_gradient_3d * target);
+
 extern N_gradient_3d *N_get_gradient_3d(N_gradient_field_3d * field,
 					N_gradient_3d * gradient, int col,
 					int row, int depth);
 
 extern N_gradient_neighbours_x *N_alloc_gradient_neighbours_x(void);
+
 extern void N_free_gradient_neighbours_x(N_gradient_neighbours_x * grad);
+
 extern N_gradient_neighbours_x *N_create_gradient_neighbours_x(double NWN,
 							       double NEN,
 							       double WC,
@@ -673,7 +697,9 @@ extern int N_copy_gradient_neighbours_x(N_gradient_neighbours_x * source,
 					N_gradient_neighbours_x * target);
 
 extern N_gradient_neighbours_y *N_alloc_gradient_neighbours_y(void);
+
 extern void N_free_gradient_neighbours_y(N_gradient_neighbours_y * grad);
+
 extern N_gradient_neighbours_y *N_create_gradient_neighbours_y(double NWW,
 							       double NEE,
 							       double NC,
@@ -684,7 +710,9 @@ extern int N_copy_gradient_neighbours_y(N_gradient_neighbours_y * source,
 					N_gradient_neighbours_y * target);
 
 extern N_gradient_neighbours_z *N_alloc_gradient_neighbours_z(void);
+
 extern void N_free_gradient_neighbours_z(N_gradient_neighbours_z * grad);
+
 extern N_gradient_neighbours_z *N_create_gradient_neighbours_z(double NWZ,
 							       double NZ,
 							       double NEZ,
@@ -698,7 +726,9 @@ extern int N_copy_gradient_neighbours_z(N_gradient_neighbours_z * source,
 					N_gradient_neighbours_z * target);
 
 extern N_gradient_neighbours_2d *N_alloc_gradient_neighbours_2d(void);
+
 extern void N_free_gradient_neighbours_2d(N_gradient_neighbours_2d * grad);
+
 extern N_gradient_neighbours_2d
     * N_create_gradient_neighbours_2d(N_gradient_neighbours_x * x,
 				      N_gradient_neighbours_y * y);
@@ -711,7 +741,9 @@ extern N_gradient_neighbours_2d
 
 
 extern N_gradient_neighbours_3d *N_alloc_gradient_neighbours_3d(void);
+
 extern void N_free_gradient_neighbours_3d(N_gradient_neighbours_3d * grad);
+
 extern N_gradient_neighbours_3d
     * N_create_gradient_neighbours_3d(N_gradient_neighbours_x * xt,
 				      N_gradient_neighbours_x * xc,
@@ -725,11 +757,14 @@ extern int N_copy_gradient_neighbours_3d(N_gradient_neighbours_3d * source,
 					 N_gradient_neighbours_3d * target);
 
 extern void N_print_gradient_field_2d_info(N_gradient_field_2d * field);
+
 extern void N_calc_gradient_field_2d_stats(N_gradient_field_2d * field);
 
 
 extern N_gradient_field_2d *N_alloc_gradient_field_2d(int cols, int rows);
+
 extern void N_free_gradient_field_2d(N_gradient_field_2d * field);
+
 extern int N_copy_gradient_field_2d(N_gradient_field_2d * source,
 				    N_gradient_field_2d * target);
 extern N_gradient_field_2d *N_compute_gradient_field_2d(N_array_2d * pot,
@@ -743,11 +778,13 @@ extern void N_compute_gradient_field_components_2d(N_gradient_field_2d *
 						   N_array_2d * y_comp);
 
 extern void N_print_gradient_field_3d_info(N_gradient_field_3d * field);
+
 extern void N_calc_gradient_field_3d_stats(N_gradient_field_3d * field);
 
 extern N_gradient_field_3d *N_alloc_gradient_field_3d(int cols, int rows,
 						      int depths);
 extern void N_free_gradient_field_3d(N_gradient_field_3d * field);
+
 extern int N_copy_gradient_field_3d(N_gradient_field_3d * source,
 				    N_gradient_field_3d * target);
 extern N_gradient_field_3d *N_compute_gradient_field_3d(N_array_3d * pot,

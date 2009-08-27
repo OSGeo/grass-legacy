@@ -34,7 +34,7 @@ typedef struct
 paramType param;		/*Parameters */
 
 /*- prototypes --------------------------------------------------------------*/
-static void set_params(void);	/*Fill the paramType structure */
+static void set_params(void);		/*Fill the paramType structure */
 
 /* ************************************************************************* */
 /* Set up the arguments we are expecting ********************************** */
@@ -45,7 +45,7 @@ void set_params(void)
     param.unit->key = "unit";
     param.unit->type = TYPE_STRING;
     param.unit->required = NO;
-    param.unit->options = "array,assemble,geom,gradient,les,solver,tools";
+    param.unit->options = "array,assemble,geom,gradient,les,tools";
     param.unit->description = _("Choose the unit tests to run");
 
     param.integration = G_define_option();
@@ -100,7 +100,6 @@ int main(int argc, char *argv[])
 	returnstat += unit_test_gradient();
 	returnstat += unit_test_geom_data();
 	returnstat += unit_test_les_creation();
-	returnstat += unit_test_solvers();
 	returnstat += unit_test_tools();
 
     }
@@ -133,9 +132,6 @@ int main(int argc, char *argv[])
 		    if (strcmp(param.unit->answers[i], "les") == 0)
 			returnstat += unit_test_les_creation();
 
-		    if (strcmp(param.unit->answers[i], "solver") == 0)
-			returnstat += unit_test_solvers();
-
 		    if (strcmp(param.unit->answers[i], "tools") == 0)
 			returnstat += unit_test_tools();
 
@@ -150,11 +146,10 @@ int main(int argc, char *argv[])
 		    if (strcmp(param.integration->answers[i], "gwflow") == 0)
 			returnstat += integration_test_gwflow();
 
-		    if (strcmp(param.integration->answers[i], "heatflow") == 0) ;	/*nothing to do for now */
+		    if (strcmp(param.integration->answers[i], "heatflow") == 0);	/*nothing to do for now */
 
-		    if (strcmp(param.integration->answers[i], "transport") ==
-			0)
-			returnstat += integration_test_solute_transport();
+		    if (strcmp(param.integration->answers[i], "transport") == 0)
+		        returnstat += integration_test_solute_transport();
 
 		    i++;
 		}
@@ -162,10 +157,10 @@ int main(int argc, char *argv[])
 	}
     }
 
-    if (returnstat != 0)
-	G_warning("Errors detected while testing the gpde lib");
+    if(returnstat != 0)
+    	G_warning("Errors detected while testing the gpde lib");
     else
-	G_message("\n-- gpde lib tests finished successfully --");
+    	G_message("\n-- gpde lib tests finished successfully --");
 
     return (returnstat);
 }

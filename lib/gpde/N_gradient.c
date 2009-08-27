@@ -116,6 +116,7 @@ N_gradient_2d *N_get_gradient_2d(N_gradient_field_2d * field,
 				 N_gradient_2d * gradient, int col, int row)
 {
     double NC = 0, SC = 0, WC = 0, EC = 0;
+
     N_gradient_2d *grad = gradient;
 
 
@@ -250,6 +251,7 @@ N_gradient_3d *N_get_gradient_3d(N_gradient_field_3d * field,
 				 int depth)
 {
     double NC, SC, WC, EC, TC, BC;
+
     N_gradient_3d *grad = gradient;
 
     NC = N_get_array_3d_d_value(field->y_array, col, row, depth);
@@ -631,6 +633,7 @@ N_gradient_neighbours_2d
 				      N_gradient_neighbours_y * y)
 {
     N_gradient_neighbours_2d *grad;
+
     int fail = 0;
 
     G_debug(5,
@@ -706,9 +709,13 @@ N_gradient_neighbours_2d *N_get_gradient_neighbours_2d(N_gradient_field_2d *
 						       int row)
 {
     double NWN, NEN, WC, EC, SWS, SES;
+
     double NWW, NEE, NC, SC, SWW, SEE;
+
     N_gradient_neighbours_2d *grad = NULL;
+
     N_gradient_neighbours_x *grad_x = NULL;
+
     N_gradient_neighbours_y *grad_y = NULL;
 
 
@@ -832,6 +839,7 @@ N_gradient_neighbours_3d
 				      N_gradient_neighbours_z * zb)
 {
     N_gradient_neighbours_3d *grad;
+
     int fail = 0;
 
     G_debug(5,

@@ -2,8 +2,8 @@ MODULE_TOPDIR = ../../..
 
 PGM=test.gpde.lib
 
-LIBES = $(GISLIB) $(G3DLIB) $(GPDELIB)
-DEPENDENCIES = $(GISDEP) $(G3DDEP) $(GPDEDEP)
+LIBES = $(GISLIB) $(G3DLIB) $(GPDELIB) $(GMATHLIB)
+DEPENDENCIES = $(GISDEP) $(G3DDEP) $(GPDEDEP) $(GMATDEP)
 
 include $(MODULE_TOPDIR)/include/Make/Module.make
 

@@ -22,7 +22,7 @@
 /* ***************** N_gwflow_data3d ***************************** */
 /* *************************************************************** */
 /*!
- * \brief Alllocate memory for the groundwater calculation data structure in 3 dimensions
+ * \brief Allocate memory for the groundwater calculation data structure in 3 dimensions
  *
  * The groundwater calculation data structure will be allocated including
  * all appendant 3d and 2d arrays. The offset for the 3d arrays is one
@@ -264,14 +264,23 @@ N_data_star *N_callback_gwflow_3d(void *gwdata, N_geom_data * geom, int col,
 				  int row, int depth)
 {
     double hc_e = 0, hc_w = 0, hc_n = 0, hc_s = 0, hc_t = 0, hc_b = 0;
+
     double dx, dy, dz, Ax, Ay, Az;
+
     double hc_x, hc_y, hc_z;
+
     double hc_xw, hc_yn, hc_zt;
+
     double hc_xe, hc_ys, hc_zb;
+
     double hc_start;
+
     double Ss, r, nf, q;
+
     double C, W, E, N, S, T, B, V;
+
     N_data_star *mat_pos;
+
     N_gwflow_data3d *data;
 
     /*cast the void pointer to the right data structure */
@@ -371,22 +380,39 @@ N_data_star *N_callback_gwflow_2d(void *gwdata, N_geom_data * geom, int col,
 				  int row)
 {
     double T_e = 0, T_w = 0, T_n = 0, T_s = 0;
+
     double z_e = 0, z_w = 0, z_n = 0, z_s = 0;
+
     double dx, dy, Az;
+
     double hc_x, hc_y;
+
     double z, top;
+
     double hc_xw, hc_yn;
+
     double z_xw, z_yn;
+
     double hc_xe, hc_ys;
+
     double z_xe, z_ys;
+
     double hc, hc_start;
+
     double Ss, r, nf, q;
+
     double C, W, E, N, S, V;
+
     N_gwflow_data2d *data;
+
     N_data_star *mat_pos;
+
     double river_vect = 0;	/*entry in vector */
+
     double river_mat = 0;	/*entry in matrix */
+
     double drain_vect = 0;	/*entry in vector */
+
     double drain_mat = 0;	/*entry in matrix */
 
     /*cast the void pointer to the right data structure */

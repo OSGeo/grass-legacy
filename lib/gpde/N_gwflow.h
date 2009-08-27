@@ -104,5 +104,6 @@ extern N_gwflow_data3d *N_alloc_gwflow_data3d(int cols, int rows, int depths,
 extern N_gwflow_data2d *N_alloc_gwflow_data2d(int cols, int rows, int river,
 					      int drain);
 extern void N_free_gwflow_data3d(N_gwflow_data3d * data);
+
 extern void N_free_gwflow_data2d(N_gwflow_data2d * data);
 #endif

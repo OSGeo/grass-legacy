@@ -29,8 +29,11 @@
 void N_calc_gradient_field_2d_stats(N_gradient_field_2d * field)
 {
     double minx, miny;
+
     double maxx, maxy;
+
     double sumx, sumy;
+
     int nonullx, nonully;
 
     G_debug(3,
@@ -110,8 +113,11 @@ N_gradient_field_2d *N_compute_gradient_field_2d(N_array_2d * pot,
 						 gradfield)
 {
     int i, j;
+
     int rows, cols;
+
     double dx, dy, p1, p2, r1, r2, mean, grad, res;
+
     N_gradient_field_2d *field = gradfield;
 
 
@@ -245,10 +251,15 @@ N_compute_gradient_field_components_2d(N_gradient_field_2d * field,
 				       N_array_2d * y_comp)
 {
     int i, j;
+
     int rows, cols;
+
     double vx, vy;
+
     N_array_2d *x = x_comp;
+
     N_array_2d *y = y_comp;
+
     N_gradient_2d grad;
 
 
@@ -300,8 +311,11 @@ N_compute_gradient_field_components_2d(N_gradient_field_2d * field,
 void N_calc_gradient_field_3d_stats(N_gradient_field_3d * field)
 {
     double minx, miny, minz;
+
     double maxx, maxy, maxz;
+
     double sumx, sumy, sumz;
+
     int nonullx, nonully, nonullz;
 
     G_debug(3,
@@ -392,8 +406,11 @@ N_gradient_field_3d *N_compute_gradient_field_3d(N_array_3d * pot,
 						 gradfield)
 {
     int i, j, k;
+
     int cols, rows, depths;
+
     double dx, dy, dz, p1, p2, r1, r2, mean, grad, res;
+
     N_gradient_field_3d *field = gradfield;
 
 
@@ -582,11 +599,17 @@ N_compute_gradient_field_components_3d(N_gradient_field_3d * field,
 				       N_array_3d * z_comp)
 {
     int i, j, k;
+
     int rows, cols, depths;
+
     double vx, vy, vz;
+
     N_array_3d *x = x_comp;
+
     N_array_3d *y = y_comp;
+
     N_array_3d *z = z_comp;
+
     N_gradient_3d grad;
 
 

@@ -95,6 +95,7 @@ extern N_solute_transport_data3d *N_alloc_solute_transport_data3d(int cols,
 extern N_solute_transport_data2d *N_alloc_solute_transport_data2d(int cols,
 								  int rows);
 extern void N_free_solute_transport_data3d(N_solute_transport_data3d * data);
+
 extern void N_free_solute_transport_data2d(N_solute_transport_data2d * data);
 
 /*compute the dispersivity tensor */

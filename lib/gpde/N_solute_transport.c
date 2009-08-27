@@ -30,21 +30,35 @@ N_data_star *N_callback_solute_transport_3d(void *solutedata,
 					    int row, int depth)
 {
     double Df_e = 0, Df_w = 0, Df_n = 0, Df_s = 0, Df_t = 0, Df_b = 0;
+
     double dx, dy, dz, Az;
+
     double diff_x, diff_y, diff_z;
+
     double diff_xw, diff_yn;
+
     double diff_xe, diff_ys;
+
     double diff_zt, diff_zb;
+
     double cin = 0, cg, cg_start;
+
     double R, nf, cs, q;
+
     double C, W, E, N, S, T, B, V;
+
     double vw = 0, ve = 0, vn = 0, vs = 0, vt = 0, vb = 0;
+
     double Ds_w = 0, Ds_e = 0, Ds_n = 0, Ds_s = 0, Ds_t = 0, Ds_b = 0;
+
     double Dw = 0, De = 0, Dn = 0, Ds = 0, Dt = 0, Db = 0;
+
     double rw = 0.5, re = 0.5, rn = 0.5, rs = 0.5, rt = 0.5, rb = 0.5;
 
     N_solute_transport_data3d *data = NULL;
+
     N_data_star *mat_pos;
+
     N_gradient_3d grad;
 
     /*cast the void pointer to the right data structure */
@@ -186,27 +200,47 @@ N_data_star *N_callback_solute_transport_2d(void *solutedata,
 					    int row)
 {
     double Df_e = 0, Df_w = 0, Df_n = 0, Df_s = 0;
+
     double z_e = 0, z_w = 0, z_n = 0, z_s = 0;
+
     double dx, dy, Az;
+
     double diff_x, diff_y;
+
     double disp_x, disp_y;
+
     double z;
+
     double diff_xw, diff_yn;
+
     double disp_xw, disp_yn;
+
     double z_xw, z_yn;
+
     double diff_xe, diff_ys;
+
     double disp_xe, disp_ys;
+
     double z_xe, z_ys;
+
     double cin = 0, cg, cg_start;
+
     double R, nf, cs, q;
+
     double C, W, E, N, S, V, NE, NW, SW, SE;
+
     double vw = 0, ve = 0, vn = 0, vs = 0;
+
     double Ds_w = 0, Ds_e = 0, Ds_n = 0, Ds_s = 0;
+
     double Dw = 0, De = 0, Dn = 0, Ds = 0;
+
     double rw = 0.5, re = 0.5, rn = 0.5, rs = 0.5;
 
     N_solute_transport_data2d *data = NULL;
+
     N_data_star *mat_pos;
+
     N_gradient_2d grad;
 
     /*cast the void pointer to the right data structure */
@@ -578,8 +612,11 @@ void N_free_solute_transport_data2d(N_solute_transport_data2d * data)
 void N_calc_solute_transport_transmission_2d(N_solute_transport_data2d * data)
 {
     int i, j, count = 1;
+
     int cols, rows;
+
     double c;
+
     N_gradient_2d grad;
 
     cols = data->grad->cols;
@@ -651,9 +688,13 @@ void N_calc_solute_transport_transmission_2d(N_solute_transport_data2d * data)
 void N_calc_solute_transport_disptensor_2d(N_solute_transport_data2d * data)
 {
     int i, j;
+
     int cols, rows;
+
     double vx, vy, vv;
+
     double disp_xx, disp_yy, disp_xy;
+
     N_gradient_2d grad;
 
     cols = data->grad->cols;
@@ -710,9 +751,13 @@ void N_calc_solute_transport_disptensor_2d(N_solute_transport_data2d * data)
 void N_calc_solute_transport_disptensor_3d(N_solute_transport_data3d * data)
 {
     int i, j, k;
+
     int cols, rows, depths;
+
     double vx, vy, vz, vv;
+
     double disp_xx, disp_yy, disp_zz, disp_xy, disp_xz, disp_yz;
+
     N_gradient_3d grad;
 
     cols = data->grad->cols;
