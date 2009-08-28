@@ -107,9 +107,9 @@ int F_open(char *title, char *html)
 
 
 
-	sprintf(command, "%s/etc/form/form", G_gisbase());
-	sprintf(script, "%s/etc/form/form.tcl", G_gisbase());
-
+	sprintf(command, "\"%s/etc/form/form\"", G_gisbase());
+	sprintf(script, "\"%s/etc/form/form.tcl\"", G_gisbase());
+G_message("FC: %s form -f %s", command, script);
 	execl(command, "form", "-f", script, NULL);
 
 	G_debug(2, "CHILD END\n");

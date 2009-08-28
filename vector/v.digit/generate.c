@@ -4,6 +4,34 @@
 #include <grass/dbmi.h>
 #include <grass/form.h>
 
+/* I was unable to find standard strrep function. */
+char *strrep(char *from, char *to, char symbol) {
+	int i = 0, j = 0, size;
+
+	size = sizeof(from)*strlen(from)+1;
+	to = (char *)malloc(size);
+	if (!to) {
+		return NULL;
+	}
+	while (from[i]) {
+		if (from[i]==symbol) {
+			size++;
+			to = realloc(to, size);
+			if (!to)
+				return NULL;
+			to[j] = '\\';
+			j++;
+		}
+		to[j] = from[i];
+		i++;
+		j++;
+	}
+	to[j]='\0';
+	
+	return to;
+}
+
+
 /* Generate form in HTML/TXT format.
  *  Pointer to resulting string is stored to 'form'. This string must be freed by application.
  *
@@ -17,6 +45,7 @@ F_generate(char *drvname, char *dbname, char *tblname, char *key, int keyval,
 {
     int col, ncols, ctype, sqltype, more;
     char buf[5000], buf1[100];
+    char *escstr;
     const char *colname;
     dbString sql, html, str;
     dbDriver *driver;
@@ -133,8 +162,14 @@ F_generate(char *drvname, char *dbname, char *tblname, char *key, int keyval,
 		/* Note: because html_library.tcl failes to parse
 		 *  <INPUT name=abc value='dbname=xxx'> and returnes
 		 *  name="xxx" value="dbname=xxx" order of value and name parameters is changed */
+		/* Note: TCL will process \$[] chars in dbname (path) and thus we need to escape them. 
+		 *  As {} chars are converted by html_library.tcl to HTML entities, it's no use to escape them.*/
+		escstr = strrep(dbname,escstr,'\\');
+		escstr = strrep(escstr,escstr,'$');
+		escstr = strrep(escstr,escstr,'[');
+		escstr = strrep(escstr,escstr,']');
 		sprintf(buf, "<INPUT type=hidden value=\"%s\" name=%s>",
-			dbname, F_DATABASE_FNAME);
+			escstr, F_DATABASE_FNAME);
 		db_append_string(&html, buf);
 		sprintf(buf, "<INPUT type=hidden name=%s value=\"%s\">",
 			F_TABLE_FNAME, tblname);
@@ -238,7 +273,6 @@ F_generate(char *drvname, char *dbname, char *tblname, char *key, int keyval,
 	}
     }
     G_debug(2, "FORM STRING:\n%s\n", db_get_string(&html));
-
     db_close_cursor(&cursor);
     db_close_database(driver);
     db_shutdown_driver(driver);
