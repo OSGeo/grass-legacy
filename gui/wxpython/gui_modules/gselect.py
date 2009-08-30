@@ -414,6 +414,40 @@ class VectorDBInfo:
                 self.tables[table][name]['values'] = []
                 self.tables[table][name]['ids']    = []
         
+    def GetName(self):
+        """!Get vector name"""
+        return self.map
+    
+    def GetKeyColumn(self, layer):
+        """!Get key column of given layer
+        
+        @param layer vector layer number
+        """
+        return self.layers[layer]['key']
+    
+    def GetTable(self, layer):
+        """!Get table name of given layer
+        
+        @param layer vector layer number
+        """
+        return self.layers[layer]['table']
+    
+    def GetDbSettings(self, layer):
+        """!Get database settins
+
+        @param layer layer number
+        
+        @return (driver, database)
+        """
+        return self.layers[layer]['driver'], self.layers[layer]['database']
+    
+    def GetTableDesc(self, table):
+        """!Get table columns
+
+        @param table table name
+        """
+        return self.tables[table]
+
 class LayerSelect(wx.Choice):
     """
     Creates combo box for selecting data layers defined for vector.

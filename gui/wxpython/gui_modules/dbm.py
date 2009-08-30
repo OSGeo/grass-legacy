@@ -74,6 +74,30 @@ def unicodeValue(value):
     
     return value
 
+def createDbInfoDesc(panel, mapDBInfo, layer):
+    """!Create database connection information content"""
+    infoFlexSizer = wx.FlexGridSizer (cols=2, hgap=1, vgap=1)
+    infoFlexSizer.AddGrowableCol(1)
+    
+    infoFlexSizer.Add(item=wx.StaticText(parent=panel, id=wx.ID_ANY,
+                                         label="Driver:"))
+    infoFlexSizer.Add(item=wx.StaticText(parent=panel, id=wx.ID_ANY,
+                                         label=mapDBInfo.layers[layer]['driver']))
+    infoFlexSizer.Add(item=wx.StaticText(parent=panel, id=wx.ID_ANY,
+                                         label="Database:"))
+    infoFlexSizer.Add(item=wx.StaticText(parent=panel, id=wx.ID_ANY,
+                                         label=mapDBInfo.layers[layer]['database']))
+    infoFlexSizer.Add(item=wx.StaticText(parent=panel, id=wx.ID_ANY,
+                                         label="Table:"))
+    infoFlexSizer.Add(item=wx.StaticText(parent=panel, id=wx.ID_ANY,
+                                         label=mapDBInfo.layers[layer]['table']))
+    infoFlexSizer.Add(item=wx.StaticText(parent=panel, id=wx.ID_ANY,
+                                         label="Key:"))
+    infoFlexSizer.Add(item=wx.StaticText(parent=panel, id=wx.ID_ANY,
+                                         label=mapDBInfo.layers[layer]['key']))
+    
+    return infoFlexSizer
+
 class Log:
     """
     The log output is redirected to the status bar of the containing frame.
@@ -460,7 +484,10 @@ class AttributeManager(wx.Frame):
 
         # -> layers / tables description
         self.mapDBInfo = VectorDBInfo(self.vectmap)
-
+        
+        # sqlbuilder
+        self.builder = None
+        
         if len(self.mapDBInfo.layers.keys()) == 0:
             wx.MessageBox(parent=self.parent,
                           message=_("Database connection for vector map <%s> "
@@ -707,7 +734,7 @@ class AttributeManager(wx.Frame):
             dbBox = wx.StaticBox(parent=panel, id=wx.ID_ANY,
                                           label=" %s " % _("Database connection"))
             dbSizer = wx.StaticBoxSizer(dbBox, wx.VERTICAL)
-            dbSizer.Add(item=self.__createDbInfoDesc(panel, layer),
+            dbSizer.Add(item=createDbInfoDesc(panel, self.mapDBInfo, layer),
                         proportion=1,
                         flag=wx.EXPAND | wx.ALL,
                         border=3)
@@ -1830,40 +1857,31 @@ class AttributeManager(wx.Frame):
         
         return (cols, where)
     
-    def __createDbInfoDesc(self, panel, layer):
-        """Create database connection information content"""
-        infoFlexSizer = wx.FlexGridSizer (cols=2, hgap=1, vgap=1)
-        infoFlexSizer.AddGrowableCol(1)
-        
-        infoFlexSizer.Add(item=wx.StaticText(parent=panel, id=wx.ID_ANY,
-                                             label="Driver:"))
-        infoFlexSizer.Add(item=wx.StaticText(parent=panel, id=wx.ID_ANY,
-                                             label=self.mapDBInfo.layers[layer]['driver']))
-        infoFlexSizer.Add(item=wx.StaticText(parent=panel, id=wx.ID_ANY,
-                                             label="Database:"))
-        infoFlexSizer.Add(item=wx.StaticText(parent=panel, id=wx.ID_ANY,
-                                             label=self.mapDBInfo.layers[layer]['database']))
-        infoFlexSizer.Add(item=wx.StaticText(parent=panel, id=wx.ID_ANY,
-                                             label="Table:"))
-        infoFlexSizer.Add(item=wx.StaticText(parent=panel, id=wx.ID_ANY,
-                                             label=self.mapDBInfo.layers[layer]['table']))
-        infoFlexSizer.Add(item=wx.StaticText(parent=panel, id=wx.ID_ANY,
-                                             label="Key:"))
-        infoFlexSizer.Add(item=wx.StaticText(parent=panel, id=wx.ID_ANY,
-                                             label=self.mapDBInfo.layers[layer]['key']))
-
-        return infoFlexSizer
-        
     def OnCloseWindow(self, event):
         """Cancel button pressed"""
         self.Close()
         event.Skip()
-
+        
     def OnBuilder(self,event):
-        """SQL Builder button pressed"""
-        self.builder = sqlbuilder.SQLFrame(parent=self, id=wx.ID_ANY,
-                                           title=_("SQL Builder"),
-                                           vectmap=self.vectmap)
+        """!SQL Builder button pressed -> show the SQLBuilder dialog"""
+        if not self.builder:
+            self.builder = sqlbuilder.SQLFrame(parent = self, id = wx.ID_ANY,
+                                               title = _("SQL Builder"),
+                                               vectmap = self.vectmap,
+                                               evtheader = self.OnBuilderEvt)
+            self.builder.Show()
+        else:
+            self.builder.Raise()
+        
+    def OnBuilderEvt(self, event):
+        if event == 'apply':
+            sqlstr = self.builder.GetSQLStatement()
+            self.FindWindowById(self.layerPage[self.layer]['statement']).SetValue(sqlstr)
+            if self.builder.CloseOnApply():
+                self.builder = None
+        elif event == 'close':
+            self.builder = None
+        
     def OnTextEnter(self, event):
         pass
 
