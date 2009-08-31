@@ -1,4 +1,4 @@
-"""
+"""!
 @package dbm.py
 
 @brief GRASS Attribute Table Manager
@@ -49,6 +49,8 @@ import wx
 import wx.lib.mixins.listctrl as listmix
 import wx.lib.flatnotebook as FN
 import wx.lib.scrolledpanel as scrolled
+
+import grass.script as grass
 
 import sqlbuilder
 import grassenv
@@ -462,7 +464,14 @@ class AttributeManager(wx.Frame):
         self.parent    = parent # GMFrame
         self.treeItem  = item   # item in layer tree
         self.cmdLog    = log    # self.parent.goutput
-        
+                
+        # vector attributes can be changed only if vector map is in
+        # the current mapset
+        if grass.find_file(element = 'vector', name = vectmap)['mapset'] == grass.gisenv()['MAPSET']:
+            editable = True
+        else:
+            editable = False
+                
         wx.Frame.__init__(self, parent, id, title, style=style)
         
         # icon
@@ -529,9 +538,11 @@ class AttributeManager(wx.Frame):
         self.browsePage.SetTabAreaColour(globalvar.FNPageColor)
 
         self.manageTablePage = FN.FlatNotebook(self.panel, id=wx.ID_ANY,
-                                          style=dbmStyle)
+                                               style=dbmStyle)
         #self.notebook.AddPage(self.manageTablePage, caption=_("Manage tables"))
         self.notebook.AddPage(self.manageTablePage, text=_("Manage tables")) # FN
+        if not editable:
+            self.notebook.GetPage(self.notebook.GetPageCount()-1).Enable(False)
         self.manageTablePage.SetTabAreaColour(globalvar.FNPageColor)
 
         self.manageLayerPage = FN.FlatNotebook(self.panel, id=wx.ID_ANY,
@@ -539,6 +550,8 @@ class AttributeManager(wx.Frame):
         #self.notebook.AddPage(self.manageLayerPage, caption=_("Manage layers"))
         self.notebook.AddPage(self.manageLayerPage, text=_("Manage layers")) # FN
         self.manageLayerPage.SetTabAreaColour(globalvar.FNPageColor)
+        if not editable:
+            self.notebook.GetPage(self.notebook.GetPageCount()-1).Enable(False)
         
         self.__createBrowsePage()
         self.__createManageTablePage()
