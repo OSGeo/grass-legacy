@@ -164,18 +164,22 @@ int G_math_solv(double **a,double *b,int n)
 {
     return solv(a[0],b, n);
 }
+
+
 /**
      \brief Solve a symmetric positive definite linear system S*x = b.
 
      \param  a = array containing system matrix S (altered to Cholesky upper right factor by computation)
      \param  b = array containing system vector b as input and solution vector x as output
      \param  n = dimension of system
-     \return: 0 -> normal exit 1 -> input matrix not positive definite
+     \return: 0 -> normal exit; -1 -> input matrix not positive definite
  */
  int G_math_solvps(double **a,double *b,int n)
 {
-    solvps(a[0], b,n);
+    return solvps(a[0], b,n);
 }
+
+
 /**
      \brief Solve a tridiagonal linear system M*x = y.
 
@@ -191,6 +195,8 @@ void G_math_solvtd(double *a,double *b,double *c,double *x,int m)
     solvtd(a, b, c, x, m);
     return;
 }
+
+
 /*
      \brief Solve an upper right triangular linear system T*x = b.
 
@@ -199,14 +205,14 @@ void G_math_solvtd(double *a,double *b,double *c,double *x,int m)
      \param  n = dimension (dim(a)=n*n,dim(b)=n)
      \return value: f = status flag, with 0 -> normal exit, -1 -> system singular
 */
-
 int G_math_solvru(double **a,double *b,int n)
 {
     return solvru(a[0], b, n);
 }
+
+
 /**
      \brief Invert (in place) a general real matrix A -> Inv(A).
-
 
      \param  a = array containing the input matrix A. This is converted to the inverse matrix.
      \param  n = dimension of the system (i.e. A is n x n )
@@ -216,6 +222,8 @@ int G_math_minv(double **a,int n)
 {
     return minv(a[0], n);
 }
+
+
 /**
      \brief Invert (in place) a symmetric real matrix, V -> Inv(V).
 
@@ -229,10 +237,9 @@ int G_math_psinv(double **a,int n)
     return psinv( a[0], n);
 }
 
+
 /**
-
      \brief Invert an upper right triangular matrix T -> Inv(T).
-
 
      \param  a = pointer to array of upper right triangular matrix, This is replaced by the inverse matrix.
      \param  n = dimension (dim(a)=n*n)
@@ -242,6 +249,8 @@ int G_math_ruinv(double **a,int n)
 {
     return ruinv(a[0], n);
 }
+
+
 /*
 -----------------------------------------------------------------------------
 
@@ -252,7 +261,6 @@ int G_math_ruinv(double **a,int n)
 
      \brief Compute the eigenvalues of a real symmetric matrix A.
 
-
      \param  a = pointer to array of symmetric n by n input matrix A. The computation alters these values.
      \param  ev = pointer to array of the output eigenvalues
      \param  n = dimension parameter (dim(a)= n*n, dim(ev)= n)
@@ -262,6 +270,8 @@ void G_math_eigval(double **a,double *ev,int n)
     eigval(a[0], ev, n);
     return;
 }
+
+
 /**
      \brief Compute the eigenvalues and eigenvectors of a real symmetric matrix A.
 
@@ -281,6 +291,8 @@ void G_math_eigen(double **a,double *ev,int n)
     eigen(a[0], ev, n);
     return;
 }
+
+
 /*
      \brief Compute the maximum (absolute) eigenvalue and corresponding eigenvector of a real symmetric matrix A.
 
@@ -358,6 +370,8 @@ double G_math_evmax(double **a,double *u,int n)
           d[i] >= 0 for i = 0 to n-1.
 -------------------------------------------------------------------------------
 */
+
+
 /**
      \brief Compute the singular values of a real m by n matrix A.
 
@@ -373,11 +387,12 @@ int G_math_svdval(double *d,double **a,int m,int n)
 {
     return svdval(d, a[0], m, n);
 }
+
+
 /**
 
      \brief Compute singular values when m >> n.
 
-     
      \param  d = pointer to double array of dimension n (output = singular values of A)
      \param  a = pointer to store of the m by n input matrix A (A is altered by the computation)
      \param  m = number of rows in A
@@ -388,9 +403,10 @@ int G_math_sv2val(double *d,double **a,int m,int n)
 {
     return sv2val(d, a[0], m, n);
 }
+
+
 /*
      \brief Compute the singular value transformation S = U~*A*V.
-
      
      \param  d = pointer to double array of dimension n (output = singular values of A)
      \param  a = pointer to store of the m by n input matrix A (A is altered by the computation)
@@ -405,9 +421,9 @@ int G_math_svduv(double *d,double **a,double **u,int m,double **v,int n)
     return svduv(d, a[0], u[0], m, v[0], n);
 }
 
+
 /**
      \brief Compute the singular value transformation when m >> n.
-
      
      \param  d = pointer to double array of dimension n (output = singular values of A)
      \param  a = pointer to store of the m by n input matrix A (A is altered by the computation)
@@ -421,10 +437,11 @@ int G_math_sv2uv(double *d,double **a,double **u,int m,double **v,int n)
 {
     return sv2uv(d, a[0], u[0], m, v[0], n);
 }
+
+
 /**
 
      \brief Compute the singular value transformation with A overloaded by the partial U-matrix.
-
      
      \param  d = pointer to double array of dimension n
            (output = singular values of A)
