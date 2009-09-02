@@ -259,6 +259,8 @@ else
       fi
       if [ ! -x "${MYINST_DIR}/bin/${MODULE}" ] ; then
 	g.message -e "Module did not install properly"
+	cleanup
+	exit 1
       fi
       if [ $GIS_FLAG_A -eq 1 ] ; then
          \mv ${MYINST_DIR}/bin/${MODULE} ${MYINST_DIR}/
