@@ -38,12 +38,12 @@
 int fft(int, double *[2], int, int, int);
 int fft2(int, double (*)[2], int, int, int);
 /* gauss.c */
-float gauss(int);
+double G_math_rand_gauss(int, double);
 /* max_pow2.c */
 long max_pow2 (long n);
 long min_pow2 (long n);
 /* rand1.c */
-float rand1(int);
+float G_math_rand(int);
 /* del2g.c */
 int del2g(double *[2], int, double);
 /* getg.c */
@@ -52,6 +52,10 @@ int getg(double, double *[2], int);
 int G_math_egvorder(double *, double **, long);
 /* mult.c */
 int G_math_complex_mult (double *v1[2], int size1, double *v2[2], int size2, double *v3[2], int size3);
+/* lu.c*/
+int G_ludcmp(double **, int, int *, double *);
+void G_lubksb(double **a, int n, int *indx, double b[]);
+
 
 
 /* *************************************************************** */
