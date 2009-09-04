@@ -174,7 +174,7 @@ extern void G_math_f_x_dyad_y(float *, float *, float **, int, int );
 extern void G_math_d_aAx_by(double **, double *, double *, double , double , double *, int , int );
 extern void G_math_f_aAx_by(float **, float *, float *, float , float , float *, int , int );
 extern int G_math_d_A_T(double **A, int rows);
-extern int G_math_f_A_T(double **A, int rows);
+extern int G_math_f_A_T(float **A, int rows);
 
 /*level 3 matrix - matrix grass implementation with OpenMP thread support*/
 extern void G_math_d_aA_B(double **, double **, double , double **, int , int );
