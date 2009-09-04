@@ -35,27 +35,28 @@
 
 
 /* fft.c */
-int fft(int, double *[2], int, int, int);
-int fft2(int, double (*)[2], int, int, int);
+extern int fft(int, double *[2], int, int, int);
+extern int fft2(int, double (*)[2], int, int, int);
 /* gauss.c */
-double G_math_rand_gauss(int, double);
+extern double G_math_rand_gauss(int, double);
 /* max_pow2.c */
-long max_pow2 (long n);
-long min_pow2 (long n);
+extern long G_math_max_pow2 (long n);
+extern long G_math_min_pow2 (long n);
 /* rand1.c */
-float G_math_rand(int);
+extern float G_math_rand(int);
 /* del2g.c */
-int del2g(double *[2], int, double);
+extern int del2g(double *[2], int, double);
 /* getg.c */
-int getg(double, double *[2], int);
+extern int getg(double, double *[2], int);
 /* eigen_tools.c */
-int G_math_egvorder(double *, double **, long);
+extern int G_math_egvorder(double *, double **, long);
 /* mult.c */
-int G_math_complex_mult (double *v1[2], int size1, double *v2[2], int size2, double *v3[2], int size3);
+extern int G_math_complex_mult (double *v1[2], int size1, double *v2[2], int size2, double *v3[2], int size3);
 /* lu.c*/
-int G_ludcmp(double **, int, int *, double *);
-void G_lubksb(double **a, int n, int *indx, double b[]);
-
+extern int G_ludcmp(double **, int, int *, double *);
+extern void G_lubksb(double **a, int n, int *indx, double b[]);
+/* findzc.c */
+extern int G_math_findzc(double conv[], int size, double zc[], double thresh, int num_orients);
 
 
 /* *************************************************************** */
@@ -172,6 +173,8 @@ extern void G_math_d_x_dyad_y(double *, double *, double **, int, int );
 extern void G_math_f_x_dyad_y(float *, float *, float **, int, int );
 extern void G_math_d_aAx_by(double **, double *, double *, double , double , double *, int , int );
 extern void G_math_f_aAx_by(float **, float *, float *, float , float , float *, int , int );
+extern int G_math_d_A_T(double **A, int rows);
+extern int G_math_f_A_T(double **A, int rows);
 
 /*level 3 matrix - matrix grass implementation with OpenMP thread support*/
 extern void G_math_d_aA_B(double **, double **, double , double **, int , int );
