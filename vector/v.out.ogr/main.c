@@ -39,6 +39,7 @@ char OGRdrivers[2000];
 int main(int argc, char *argv[])
 {
     int i, j, k, centroid, otype, donocat;
+    int num_to_export;
     char *mapset;
     int field;
     struct GModule *module;
@@ -94,7 +95,7 @@ int main(int argc, char *argv[])
     type_opt->answer = "line,boundary";
     type_opt->description =
 	_("Feature type. Combination of types is not supported "
-	  "by all formats.");
+	  "by all output formats.");
     type_opt->guisection = _("Input");
 
     dsn_opt = G_define_option();
@@ -195,6 +196,8 @@ int main(int argc, char *argv[])
     else if (otype & GV_AREA)
 	wkbtype = wkbPolygon;
     else if (otype & GV_FACE)
+	wkbtype = wkbPolygon25D;
+    else if (otype & GV_VOLUME)
 	wkbtype = wkbPolygon25D;
 
     if (poly_flag->answer)
@@ -444,21 +447,100 @@ int main(int argc, char *argv[])
 		   "Verify 'type' parameter."), Vect_get_num_primitives(&In,
 									GV_CENTROID));
 
-    if (Vect_get_num_primitives(&In, GV_AREA) > 0 && !(otype & GV_AREA))
+    if (Vect_get_num_areas(&In) > 0 && !(otype & GV_AREA))
 	G_warning(_("%d areas found, but not requested to be exported. "
-		    "Verify 'type' parameter."), Vect_get_num_primitives(&In,
-									 GV_AREA));
+		    "Verify 'type' parameter."), Vect_get_num_areas(&In));
 
     if (Vect_get_num_primitives(&In, GV_FACE) > 0 && !(otype & GV_FACE))
-	G_warning(_("%d faces found, but not requested to be exported. "
+	G_warning(_("%d face(s) found, but not requested to be exported. "
 		    "Verify 'type' parameter."), Vect_get_num_primitives(&In,
 									 GV_FACE));
 
-    /* add? GV_KERNEL */
+    if (Vect_get_num_primitives(&In, GV_KERNEL) > 0 &&
+	!(otype & GV_KERNEL) && !(otype & GV_VOLUME))
+	G_warning(_("%d kernel(s) found, but not requested to be exported. "
+		   "Verify 'type' parameter."), Vect_get_num_primitives(&In,
+									GV_KERNEL));
+
+    if (Vect_get_num_volumes(&In) > 0 && !(otype & GV_VOLUME))
+	G_warning(_("%d volume(s) found, but not requested to be exported. "
+		    "Verify 'type' parameter."), Vect_get_num_volumes(&In));
+
+    /* warn and eventually abort if there is nothing to be exported */
+    num_to_export = 0;
+    if (Vect_get_num_primitives(&In, GV_POINT) < 1 && (otype & GV_POINTS)) {
+        G_warning(_("No points found, but requested to be exported. "
+		    "Will skip this geometry type."));
+    } else {
+        if ( otype & GV_POINT )
+            num_to_export = num_to_export + Vect_get_num_primitives(&In, GV_POINT);
+    }
+
+    if (Vect_get_num_primitives(&In, GV_LINE) < 1 && (otype & GV_LINE)) {
+        G_warning(_("No lines found, but requested to be exported. "
+		    "Will skip this geometry type."));
+    } else {
+        if ( otype & GV_LINE )
+            num_to_export = num_to_export + Vect_get_num_primitives(&In, GV_LINE);
+    }
+
+    if (Vect_get_num_primitives(&In, GV_BOUNDARY) < 1 && (otype & GV_BOUNDARY)) {
+        G_warning(_("No boundaries found, but requested to be exported. "
+		    "Will skip this geometry type."));
+    } else {
+        if ( otype & GV_BOUNDARY )
+            num_to_export = num_to_export + Vect_get_num_primitives(&In, GV_BOUNDARY);
+    }
+
+    if (Vect_get_num_areas(&In) < 1 && (otype & GV_AREA)) {
+        G_warning(_("No areas found, but requested to be exported. "
+		    "Will skip this geometry type."));
+    } else {
+        if ( otype & GV_AREA )
+            num_to_export = num_to_export + Vect_get_num_areas(&In);
+    }
+
+    if (Vect_get_num_primitives(&In, GV_CENTROID) < 1 && (otype & GV_CENTROID)) {
+        G_warning(_("No centroids found, but requested to be exported. "
+		    "Will skip this geometry type."));
+    } else {
+        if ( otype & GV_CENTROID )
+            num_to_export = num_to_export + Vect_get_num_primitives(&In, GV_CENTROID);
+    }
+
+    if (Vect_get_num_primitives(&In, GV_FACE) < 1 && (otype & GV_FACE)) {
+        G_warning(_("No faces found, but requested to be exported. "
+		    "Will skip this geometry type."));
+    } else {
+        if ( otype & GV_FACE )
+            num_to_export = num_to_export + Vect_get_num_primitives(&In, GV_FACE);
+    }
+
+    if (Vect_get_num_primitives(&In, GV_KERNEL) < 1 && (otype & GV_KERNEL)) {
+        G_warning(_("No kernels found, but requested to be exported. "
+		    "Will skip this geometry type."));
+    } else {
+        if ( otype & GV_KERNEL )
+            num_to_export = num_to_export + Vect_get_num_primitives(&In, GV_KERNEL);
+    }
+
+    if (Vect_get_num_volumes(&In) < 1 && (otype & GV_VOLUME)) {
+        G_warning(_("No volumes found, but requested to be exported. "
+		    "Will skip this geometry type."));
+    } else {
+        if ( otype & GV_VOLUME )
+            num_to_export = num_to_export + Vect_get_num_volumes(&In);
+    }
+
+    G_debug(1, "Requested to export %d geometries", num_to_export);
+
+    if ( num_to_export < 1 ) {
+        G_fatal_error(_("Nothing to export. Aborting."));
+    }
 
     /* Lines (run always to count features of different type) */
     if ((otype & GV_POINTS) || (otype & GV_LINES)) {
-	G_message(_("Exporting %i points/lines..."), Vect_get_num_lines(&In));
+	G_message(_("Exporting %i geometries..."), Vect_get_num_lines(&In));
 	for (i = 1; i <= Vect_get_num_lines(&In); i++) {
 
 	    G_percent(i, Vect_get_num_lines(&In), 1);
@@ -499,7 +581,7 @@ int main(int argc, char *argv[])
 
 		OGR_G_AddGeometryDirectly(Ogr_geometry, ring);
 	    }
-	    else if (type == GV_POINT) {
+	    else if ((type == GV_POINT) || ((type == GV_CENTROID) && (otype & GV_CENTROID))) {
 		Ogr_geometry = OGR_G_CreateGeometry(wkbPoint);
 		OGR_G_AddPoint(Ogr_geometry, Points->x[0], Points->y[0],
 			       Points->z[0]);
@@ -674,6 +756,70 @@ int main(int argc, char *argv[])
 	}			/* for */
     }
 
+    /* Kernels */
+    if (otype & GV_KERNEL) {
+	G_message(_("Exporting %i kernels..."), Vect_get_num_kernels(&In));
+	for (i = 1; i <= Vect_get_num_lines(&In); i++) {
+
+	    G_percent(i, Vect_get_num_lines(&In), 1);
+
+	    type = Vect_read_line(&In, Points, Cats, i);
+	    G_debug(2, "line = %d type = %d", i, type);
+	    if (!(otype & type)) {
+		G_debug(2, "type %d not specified -> skipping", type);
+		fskip++;
+		continue;
+	    }
+
+	    Vect_cat_get(Cats, field, &cat);
+	    if (cat < 0 && !donocat) {	/* Do not export not labeled */
+		nocatskip++;
+		continue;
+	    }
+
+
+	    /* Geometry */
+	    if (type == GV_KERNEL) {
+            Ogr_geometry = OGR_G_CreateGeometry(wkbPoint);
+            OGR_G_AddPoint(Ogr_geometry, Points->x[0], Points->y[0],
+                    Points->z[0]);
+
+            Ogr_feature = OGR_F_Create(Ogr_featuredefn);
+
+            OGR_F_SetGeometry(Ogr_feature, Ogr_geometry);
+
+            /* Output one feature for each category */
+            for (j = -1; j < Cats->n_cats; j++) {
+            if (j == -1) {
+                if (cat >= 0)
+                continue;	/* cat(s) exists */
+            }
+            else {
+                if (Cats->field[j] == field)
+                cat = Cats->cat[j];
+                else
+                continue;
+            }
+
+                mk_att(cat, Fi, Driver, ncol, doatt, nocat_flag->answer, Ogr_feature);
+                OGR_L_CreateFeature(Ogr_layer, Ogr_feature);
+            }
+            OGR_G_DestroyGeometry(Ogr_geometry);
+            OGR_F_Destroy(Ogr_feature);
+	    }
+	}
+    }
+
+    /*
+        TODO:   Volumes. Do not export kernels here, that's already done.
+                We do need to worry about holes, though.
+        NOTE: We can probably just merge this with faces export function.
+              Except for GRASS, which output format would know the difference?
+    */
+    if ((otype & GV_VOLUME)) {
+        G_message(_("Exporting %i volumes..."), Vect_get_num_volumes(&In));
+        G_warning(_("Export of volumes not implemented yet. Skipping."));
+    }
 
     OGR_DS_Destroy(Ogr_ds);
 
