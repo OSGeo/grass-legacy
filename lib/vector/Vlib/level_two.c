@@ -84,6 +84,19 @@ int Vect_get_num_areas(struct Map_info *map)
 }
 
 /*!
+   \brief Fetch number of kernels in vector map
+
+   \param map vector map
+
+   \return number of kernels
+ */
+int Vect_get_num_kernels(struct Map_info *map)
+{
+    return (map->plus.n_klines);
+}
+
+
+/*!
    \brief Get number of faces in vector map
 
    \param map vector map
@@ -94,6 +107,20 @@ int Vect_get_num_faces(struct Map_info *map)
 {
     return (map->plus.n_flines);
 }
+
+
+/*!
+   \brief Fetch number of volumes in vector map
+
+   \param map vector map
+
+   \return number of volumes
+ */
+int Vect_get_num_volumes(struct Map_info *map)
+{
+    return (map->plus.n_volumes);
+}
+
 
 /*!
    \brief Get number of islands in vector map
@@ -106,6 +133,20 @@ int Vect_get_num_islands(struct Map_info *map)
 {
     return (map->plus.n_isles);
 }
+
+
+/*!
+   \brief Fetch number of holes in vector map
+
+   \param map vector map
+
+   \return number of holes
+ */
+int Vect_get_num_holes(struct Map_info *map)
+{
+    return (map->plus.n_holes);
+}
+
 
 /*!
    \brief Get number of defined dblinks
