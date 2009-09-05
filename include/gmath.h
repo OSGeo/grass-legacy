@@ -28,6 +28,7 @@
  /* only include if available */
 #include <grass/la.h>
 #endif
+#include <stddef.h>
 
 
 #define G_MATH_NORMAL_LES 0
