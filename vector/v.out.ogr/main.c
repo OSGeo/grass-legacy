@@ -90,8 +90,7 @@ int main(int argc, char *argv[])
 
     in_opt = G_define_standard_option(G_OPT_V_INPUT);
 
-    type_opt = G_define_standard_option(G_OPT_V_TYPE);
-    type_opt->options = "point,kernel,centroid,line,boundary,area,face";
+    type_opt = G_define_standard_option(G_OPT_V3_TYPE);
     type_opt->answer = "line,boundary";
     type_opt->description =
 	_("Feature type. Combination of types is not supported "
