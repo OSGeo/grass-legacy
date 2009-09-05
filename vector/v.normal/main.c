@@ -121,7 +121,7 @@ int main(int argc, char **argv)
     }
 
     all = flag.region->answer ? 0 : 1;
-    verbose = (flag.q->answer == (char)NULL) ? 1 : 0;
+    verbose = flag.q->answer ? 0 : 1;
 
     /* Open input */
     if ((mapset = G_find_vector2(parm.input->answer, "")) == NULL) {
