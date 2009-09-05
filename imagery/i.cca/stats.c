@@ -1,6 +1,7 @@
 #include <grass/gis.h>
-#include "local_proto.h"
+#include <grass/gmath.h>
 
+#include "local_proto.h"
 
 int
 within(int samptot, int nclass, double *nsamp, double ***cov,

@@ -1,8 +1,10 @@
 #include <stdlib.h>
-#include <grass/gis.h>
-#include <grass/glocale.h>
-#include "local_proto.h"
 
+#include <grass/gis.h>
+#include <grass/gmath.h>
+#include <grass/glocale.h>
+
+#include "local_proto.h"
 
 int
 transform(int *datafds, int *outfds, int rows, int cols,
