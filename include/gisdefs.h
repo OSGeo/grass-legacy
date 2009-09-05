@@ -406,17 +406,6 @@ int G_recursive_copy(const char *, const char *);
 /* date.c */
 char *G_date(void);
 
-/* dalloc.c */
-double *G_alloc_vector(size_t);
-double **G_alloc_matrix(int, int);
-float  *G_alloc_fvector(size_t);
-float  **G_alloc_fmatrix(int, int);
-void G_free_vector(double *);
-void G_free_matrix(double **);
-void G_free_fvector(float *);
-void G_free_fmatrix(float **);
-
-
 /* datum.c */
 int G_get_datum_by_name(const char *);
 char *G_datum_name(int);
@@ -668,12 +657,6 @@ int G_command_history(struct History *);
 /* home.c */
 char *G_home(void);
 char *G__home(void);
-
-/* ialloc.c */
-int *G_alloc_ivector(size_t);
-int **G_alloc_imatrix(int, int);
-void G_free_ivector(int *);
-void G_free_imatrix(int **);
 
 /* index.c */
 char *G_index(const char *, int);

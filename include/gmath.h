@@ -33,28 +33,52 @@
 #define G_MATH_NORMAL_LES 0
 #define G_MATH_SPARSE_LES 1
 
+/* dalloc.c */
+double *G_alloc_vector(size_t);
+double **G_alloc_matrix(int, int);
+float  *G_alloc_fvector(size_t);
+float  **G_alloc_fmatrix(int, int);
+void G_free_vector(double *);
+void G_free_matrix(double **);
+void G_free_fvector(float *);
+void G_free_fmatrix(float **);
+
+/* ialloc.c */
+int *G_alloc_ivector(size_t);
+int **G_alloc_imatrix(int, int);
+void G_free_ivector(int *);
+void G_free_imatrix(int **);
 
 /* fft.c */
 extern int fft(int, double *[2], int, int, int);
 extern int fft2(int, double (*)[2], int, int, int);
+
 /* gauss.c */
 extern double G_math_rand_gauss(int, double);
+
 /* max_pow2.c */
 extern long G_math_max_pow2 (long n);
 extern long G_math_min_pow2 (long n);
+
 /* rand1.c */
 extern float G_math_rand(int);
+
 /* del2g.c */
 extern int del2g(double *[2], int, double);
+
 /* getg.c */
 extern int getg(double, double *[2], int);
+
 /* eigen_tools.c */
 extern int G_math_egvorder(double *, double **, long);
+
 /* mult.c */
 extern int G_math_complex_mult (double *v1[2], int size1, double *v2[2], int size2, double *v3[2], int size3);
+
 /* lu.c*/
 extern int G_ludcmp(double **, int, int *, double *);
 extern void G_lubksb(double **a, int n, int *indx, double b[]);
+
 /* findzc.c */
 extern int G_math_findzc(double conv[], int size, double zc[], double thresh, int num_orients);
 
