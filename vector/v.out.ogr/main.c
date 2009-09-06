@@ -274,7 +274,7 @@ int main(int argc, char *argv[])
 	i++;
     }
 
-    if ( update_flag->answer )  {
+    if (update_flag->answer)  {
     	G_debug(1, "Update OGR data source");
 	Ogr_ds = OGR_Dr_Open(Ogr_driver, dsn_opt->answer, TRUE);
     } else {
@@ -405,7 +405,7 @@ int main(int argc, char *argv[])
 		    OGR_Fld_Destroy(Ogr_field);
 		} else {
 		    /* skip export of 'cat' field */
-		    if ( strcmp (Fi->key,db_get_column_name(Column)) != 0 ) {
+		    if (strcmp (Fi->key,db_get_column_name(Column)) != 0) {
 			Ogr_field =
 			    OGR_Fld_Create(db_get_column_name(Column), ogr_ftype);
 			OGR_L_CreateField(Ogr_layer, Ogr_field, 0);
@@ -471,7 +471,7 @@ int main(int argc, char *argv[])
         G_warning(_("No points found, but requested to be exported. "
 		    "Will skip this geometry type."));
     } else {
-        if ( otype & GV_POINT )
+        if (otype & GV_POINT)
             num_to_export = num_to_export + Vect_get_num_primitives(&In, GV_POINT);
     }
 
@@ -479,7 +479,7 @@ int main(int argc, char *argv[])
         G_warning(_("No lines found, but requested to be exported. "
 		    "Will skip this geometry type."));
     } else {
-        if ( otype & GV_LINE )
+        if (otype & GV_LINE)
             num_to_export = num_to_export + Vect_get_num_primitives(&In, GV_LINE);
     }
 
@@ -487,7 +487,7 @@ int main(int argc, char *argv[])
         G_warning(_("No boundaries found, but requested to be exported. "
 		    "Will skip this geometry type."));
     } else {
-        if ( otype & GV_BOUNDARY )
+        if (otype & GV_BOUNDARY)
             num_to_export = num_to_export + Vect_get_num_primitives(&In, GV_BOUNDARY);
     }
 
@@ -495,7 +495,7 @@ int main(int argc, char *argv[])
         G_warning(_("No areas found, but requested to be exported. "
 		    "Will skip this geometry type."));
     } else {
-        if ( otype & GV_AREA )
+        if (otype & GV_AREA)
             num_to_export = num_to_export + Vect_get_num_areas(&In);
     }
 
@@ -503,7 +503,7 @@ int main(int argc, char *argv[])
         G_warning(_("No centroids found, but requested to be exported. "
 		    "Will skip this geometry type."));
     } else {
-        if ( otype & GV_CENTROID )
+        if (otype & GV_CENTROID)
             num_to_export = num_to_export + Vect_get_num_primitives(&In, GV_CENTROID);
     }
 
@@ -511,7 +511,7 @@ int main(int argc, char *argv[])
         G_warning(_("No faces found, but requested to be exported. "
 		    "Will skip this geometry type."));
     } else {
-        if ( otype & GV_FACE )
+        if (otype & GV_FACE)
             num_to_export = num_to_export + Vect_get_num_primitives(&In, GV_FACE);
     }
 
@@ -519,7 +519,7 @@ int main(int argc, char *argv[])
         G_warning(_("No kernels found, but requested to be exported. "
 		    "Will skip this geometry type."));
     } else {
-        if ( otype & GV_KERNEL )
+        if (otype & GV_KERNEL)
             num_to_export = num_to_export + Vect_get_num_primitives(&In, GV_KERNEL);
     }
 
@@ -527,14 +527,15 @@ int main(int argc, char *argv[])
         G_warning(_("No volumes found, but requested to be exported. "
 		    "Will skip this geometry type."));
     } else {
-        if ( otype & GV_VOLUME )
+        if (otype & GV_VOLUME)
             num_to_export = num_to_export + Vect_get_num_volumes(&In);
     }
 
     G_debug(1, "Requested to export %d geometries", num_to_export);
 
-    if ( num_to_export < 1 ) {
-        G_fatal_error(_("Nothing to export. Aborting."));
+    if (num_to_export < 1) {
+        G_warning(_("Nothing to export"));
+	exit(EXIT_SUCCESS);
     }
 
     /* Lines (run always to count features of different type) */
@@ -843,8 +844,8 @@ int main(int argc, char *argv[])
      *    all boundaries/centroids.
      *  OTOH why should be reported? */
     /*
-       if ( ((otype & GV_POINTS) || (otype & GV_LINES)) && fskip > 0 )
-       G_warning ( "%d features of different type skip", fskip);
+       if (((otype & GV_POINTS) || (otype & GV_LINES)) && fskip > 0)
+       G_warning ("%d features of different type skip", fskip);
      */
 
     exit(EXIT_SUCCESS);
@@ -946,7 +947,7 @@ int mk_att(int cat, struct field_info *Fi, dbDriver *Driver, int ncol,
 			}
 		    }
 		}
-		db_close_cursor ( &cursor );
+		db_close_cursor (&cursor);
 	    }
 
 	}
@@ -956,7 +957,7 @@ int mk_att(int cat, struct field_info *Fi, dbDriver *Driver, int ncol,
 	}
     }
     else {
-	/* G_warning ( "Line without cat of layer %d", field); */
+	/* G_warning ("Line without cat of layer %d", field); */
 	nocat++;
     }
     fout++;
