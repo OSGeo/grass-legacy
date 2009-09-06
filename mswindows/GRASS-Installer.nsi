@@ -21,7 +21,7 @@
 
 ;Version variables
 
-!define RELEASE_VERSION_NUMBER "6.4.0RC4"
+!define RELEASE_VERSION_NUMBER "6.4.0RC5"
 !define RELEASE_SVN_REVISION "36599"
 !define RELEASE_BINARY_REVISION "1"
 !define RELEASE_GRASS_COMMAND "grass64"
@@ -513,7 +513,7 @@ Section "GRASS" SecGRASS
 	"$INSTALL_DIR\icons\GRASS_MSys.ico" "" SW_SHOWNORMAL "" "Launch GRASS ${VERSION_NUMBER} with the new wxPython GUI and a MSYS UNIX terminal"
 	
 ; FIXME: ship the WinGrass release notes .html file instead of URL
-; http://trac.osgeo.org/grass/browser/grass-web/trunk/grass64/binary/mswindows/native/README.html?format=raw
+; http://trac.osgeo.org/grass/browser/grass-web/trunk/grass65/binary/mswindows/native/README.html?format=raw
 ; probably ship with devel versions too? ie Release Notes, not the Release Announcement press release.
 	!if ${INSTALLER_TYPE} == "Release"
 		CreateShortCut "$SMPROGRAMS\${GRASS_BASE}\Release Notes.lnk" "$INSTALL_DIR\WinGRASS-README.url" ""\

@@ -1,9 +1,9 @@
-set ICON=%OSGEO4W_ROOT%\apps\grass\grass-6.4.0svn\etc\gui\icons\grass.ico
-set BATCH=%OSGEO4W_ROOT%\bin\grass64.bat
+set ICON=%OSGEO4W_ROOT%\apps\grass\grass-6.5.svn\etc\gui\icons\grass.ico
+set BATCH=%OSGEO4W_ROOT%\bin\grass65.bat
 
-textreplace -std -t "%OSGEO4W_ROOT%"\bin\grass64.bat
-textreplace -std -t "%OSGEO4W_ROOT%"\apps\grass\grass-6.4.0svn\etc\fontcap
-textreplace -std -t "%OSGEO4W_ROOT%"\apps\grass\bin\grass64
+textreplace -std -t "%OSGEO4W_ROOT%"\bin\grass65.bat
+textreplace -std -t "%OSGEO4W_ROOT%"\apps\grass\grass-6.5.svn\etc\fontcap
+textreplace -std -t "%OSGEO4W_ROOT%"\apps\grass\bin\grass65
 
 mkdir "%OSGEO4W_STARTMENU%\GRASS GIS"
 xxmklink "%OSGEO4W_STARTMENU%\GRASS GIS\wxPython.lnk"   "%BATCH%" "-wxpython" \ "wxPython interface" 1 "%ICON%"

@@ -76,7 +76,7 @@ rm $OSGEO4W_ROOT_MSYS/apps/grass/grass-$VERSION/lib/*.dll
 mv $OSGEO4W_ROOT_MSYS/apps/grass/grass-$VERSION/include/grass/config.h $OSGEO4W_ROOT_MSYS/apps/grass/grass-$VERSION/include/grass/config.h.mingw
 cp mswindows/osgeo4w/config.h.switch $OSGEO4W_ROOT_MSYS/apps/grass/grass-$VERSION/include/grass/config.h
 cp mswindows/osgeo4w/config.h.vc $OSGEO4W_ROOT_MSYS/apps/grass/grass-$VERSION/include/grass
-cp mswindows/osgeo4w/grass64.bat.tmpl $OSGEO4W_ROOT_MSYS/bin/grass64.bat.tmpl
+cp mswindows/osgeo4w/grass65.bat.tmpl $OSGEO4W_ROOT_MSYS/bin/grass65.bat.tmpl
 cp mswindows/osgeo4w/ini.bat.tmpl $OSGEO4W_ROOT_MSYS/etc/ini/grass.bat.tmpl
 cp mswindows/osgeo4w/postinstall.bat $OSGEO4W_ROOT_MSYS/etc/postinstall/grass.bat
 cp mswindows/osgeo4w/preremove.bat $OSGEO4W_ROOT_MSYS/etc/preremove/grass.bat
@@ -88,7 +88,7 @@ P=$(pwd -W)
 P=${P//\//\\\\}\\\\dist.i686-pc-mingw32
 
 sed -e "s#$P#@osgeo4w@#" $OSGEO4W_ROOT_MSYS/apps/grass/grass-$VERSION/etc/fontcap >$OSGEO4W_ROOT_MSYS/apps/grass/grass-$VERSION/etc/fontcap.tmpl
-sed -e "s#$P#@osgeo4w_msys@#" $OSGEO4W_ROOT_MSYS/apps/grass/bin/grass64 >$OSGEO4W_ROOT_MSYS/apps/grass/bin/grass64.tmpl
+sed -e "s#$P#@osgeo4w_msys@#" $OSGEO4W_ROOT_MSYS/apps/grass/bin/grass65 >$OSGEO4W_ROOT_MSYS/apps/grass/bin/grass65.tmpl
 rm $OSGEO4W_ROOT_MSYS/apps/grass/grass-$VERSION/etc/fontcap 
 
 echo $(date): STARTING building vc libraries
@@ -114,7 +114,7 @@ tar -cjf $PDIR/grass-devel-vc/grass-devel-vc-$VERSION-$PACKAGE.tar.bz2 \
 	apps/grass/grass-$VERSION/lib/*.lib
 
 tar -cjf $PDIR/grass/grass-$VERSION-$PACKAGE.tar.bz2 \
-	apps/grass/bin/grass64.tmpl \
+	apps/grass/bin/grass65.tmpl \
 	apps/grass/grass-$VERSION/authors \
 	apps/grass/grass-$VERSION/bin/ \
 	apps/grass/grass-$VERSION/bwidget/ \
@@ -129,7 +129,7 @@ tar -cjf $PDIR/grass/grass-$VERSION-$PACKAGE.tar.bz2 \
 	bin/libgnurx-0.dll \
 	bin/libiconv-2.dll \
 	bin/libintl-8.dll \
-	bin/grass64.bat.tmpl \
+	bin/grass65.bat.tmpl \
 	bin/libgrass_*.$VERSION.dll \
 	etc/ini/grass.bat \
 	etc/postinstall/grass.bat \
