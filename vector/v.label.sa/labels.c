@@ -5,8 +5,6 @@
 */
 #include "labels.h"
 static int label_skyline(FT_Face face, const char *charset, label_t * label);
-static struct line_pnts *box_trans_rot(BOUND_BOX * bb, label_point_t * p,
-				       double angle);
 static void label_point_candidates(label_t * label);
 static void label_line_candidates(label_t * label);
 static int candidate_compare(const void *a, const void *b);
@@ -64,13 +62,13 @@ label_t *labels_init(struct params *p, int *n_labels)
 
     label_sz = Vect_get_num_primitives(&Map, legal_types);
 
-    G_debug(1, "Need to allocate %d bytes of memory",
+    G_debug(1, "Need to allocate %ld bytes of memory",
 	    sizeof(label_t) * label_sz);
     labels = (label_t *) G_malloc(sizeof(label_t) * label_sz);
     G_debug(1, "labels=%p", labels);
 
     if (labels == NULL)
-	G_fatal_error(_("Cannot allocate %d bytes of memory"),
+	G_fatal_error(_("Cannot allocate %ld bytes of memory"),
 		      sizeof(label_t) * label_sz);
 
     /* open database */
@@ -126,7 +124,7 @@ label_t *labels_init(struct params *p, int *n_labels)
 
 	if (i == label_sz) {	/* we need more memory */
 	    label_sz += 100;
-	    G_debug(1, "Need to resize %p to %d bytes of memory",
+	    G_debug(1, "Need to resize %p to %ld bytes of memory",
 		    (void *)labels, sizeof(label_t) * label_sz);
 	    labels = G_realloc(labels, sizeof(label_t) * label_sz);
 	    if (labels == NULL) {
@@ -185,13 +183,18 @@ label_t *labels_init(struct params *p, int *n_labels)
 
 	table = db_get_cursor_table(&cursor);
 	column = db_get_table_column(table, 0);	/* first column */
+
 	db_init_string(&value);
 	db_convert_column_value_to_string(column, &value);
+
 	G_debug(3, "Label: %s", db_get_string(&value));
 
 	/* ignore empty strings */
-	if (strlen(db_get_string(&value)) == 0)
+	if (strlen(db_get_string(&value)) == 0) {
+	    Vect_destroy_cats_struct(Cats);
+	    Vect_destroy_line_struct(Points);
 	    continue;
+	}
 
 	labels[i].text = G_strdup(db_get_string(&value));
 	labels[i].cat = cat;
@@ -372,6 +375,7 @@ void label_candidates(label_t * labels, int n_labels)
 
     /* generate candidate location for each label based on feture type
      * see chapter 5 of MERL-TR-96-04 */
+	G_debug(3, "n_lables=%d", n_labels);
     fprintf(stderr, "Generating label candidates: ...");
     for (i = 0; i < n_labels; i++) {
 	G_percent(i, n_labels - 1, 1);
@@ -836,17 +840,8 @@ struct line_pnts *skyline_trans_rot(struct line_pnts *skyline,
     return Points;
 }
 
-/**
- * This function rotates and translates the label bounding box to the
- * given point, and returns it as a polygon.
- * @param bb The bounding box to translate and rotate.
- * @param p The point to translate the bounding box to
- * @param angle The angle (in radians) to rotate the label counter-clockwise
- * @return A lint_pnts structure containing the rotated and translated
- * bounding box as a polygon.
- */
-static struct line_pnts *box_trans_rot(BOUND_BOX * bb, label_point_t * p,
-				       double angle)
+struct line_pnts *box_trans_rot(BOUND_BOX * bb, label_point_t * p,
+				double angle)
 {
     struct line_pnts *Points;
     double x0, y0, x1, y1, x2, y2;
@@ -1040,7 +1035,7 @@ static double label_pointover(label_t * label, label_candidate_t * candidate)
      */
     trbb = box_trans_rot(&label->bb, &candidate->point, candidate->rotation);
     n = Vect_select_lines_by_polygon(&Map, trbb, 0, NULL, GV_POINT, il);
-
+    Vect_destroy_line_struct(trbb);
     pointover = (double)il->n_values;
     Vect_destroy_list(il);
 
@@ -1074,13 +1069,15 @@ static double label_lineover(label_t * label, label_candidate_t * candidate,
     n = Vect_select_lines_by_polygon(&Map, trbb, 0, NULL, linetype, il);
 
     if (n == 0) {
+	Vect_destroy_line_struct(trbb);
+	Vect_destroy_list(il);
 	return 0.0;
     }
 
     for (i = 0; i < il->n_values; i++) {
 	int j, found = 0;
 	struct line_pnts *line;
-	label_point_t v, v1, v2;
+	label_point_t v = {0, 0}, v1 = {0, 0} , v2 = {0 ,0};
 
 	line = Vect_new_line_struct();
 	Vect_read_line(&Map, line, NULL, il->value[i]);
@@ -1131,6 +1128,7 @@ static double label_lineover(label_t * label, label_candidate_t * candidate,
 	Vect_destroy_line_struct(line);
     }
 
+    Vect_destroy_line_struct(trbb);
     Vect_destroy_list(il);
     return lineover;
 }
@@ -1262,6 +1260,7 @@ void label_candidate_overlap(label_t * labels, int n_labels)
 		}
 	    }
 	}
+	G_debug(3, "i=%d n_lables=%d", i, n_labels);
 	G_percent(i, n_labels, 1);
     }
     G_percent(n_labels, n_labels, 1);
