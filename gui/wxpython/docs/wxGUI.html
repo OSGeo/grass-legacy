@@ -122,7 +122,7 @@ layers and their option settings.</dd>
 
 <dt><img src="icons/grass2/save.png">&nbsp;
   <img src="icons/grass/file-save.gif">&nbsp;
-Save workspace file</em></dt>
+<em>Save workspace file</em></dt>
 <dd>Saves current set of layers and their options to a workspace
   file.</dd>
 
@@ -134,37 +134,39 @@ Save workspace file</em></dt>
 
 <dt><img src="icons/grass2/layer-shaded-relief-add.png">&nbsp;
   <img src="icons/grass/module-d.shadedmap.gif">&nbsp;
-<em>Add miscelaneous raster-based map layers</em></dt>
-<dd>opens a dropdown menu that allows user to select to add:<br> 
+<em>Add various raster-based map layers</em></dt>
+<dd>opens a dropdown menu that allows user to select to:<br> 
 
-    <dt><img src="icons/grass2/layer-shaded-relief-add.png">&nbsp;
+    <UL>
+    <LI><dt><img src="icons/grass2/layer-shaded-relief-add.png">&nbsp;
         <img src="icons/grass/module-d.shadedmap.gif">&nbsp;
-        <em>shaded relief raster map layer </em></dt>
-        see <em><a href="d.shadedmap.html">d.shadedmap</a></em>, or <br>
-    <dt><img src="icons/grass2/layer-rgb-add.png">&nbsp;
+        <em>Add shaded relief raster map layer </em></dt>
+        <dd>Adds shaded relief raster map layer,
+        see <em><a href="d.shadedmap.html">d.shadedmap</a></em>
+ <LI><dt><img src="icons/grass2/layer-rgb-add.png">&nbsp;
         <img src="icons/grass/channel-rgb.gif">&nbsp;
-        <em>RGB raster layer</em></dt>
+        <em>Add RGB raster layer</em></dt>
         <dd>Combines and displays three raster maps defined as red, green, and blue
         channels, see <em><a href="d.rgb.html">d.rgb</a></em>.</dd>
-    <dt><img src="icons/grass2/layer-his-add.png">&nbsp;
+ <LI><dt><img src="icons/grass2/layer-his-add.png">&nbsp;
         <img src="icons/grass/channel-his.gif">&nbsp;
-        <em>HIS raster layer</em></dt>
+        <em>Add HIS raster layer</em></dt>
         <dd>Combines and displays two or three raster maps defined as hue,
         intensity, and (optionally) saturation channels,
         see <em><a href="d.his.html">d.his</a></em>.</dd>
-    <dt><img src="icons/grass2/layer-cell-cats-add.png">&nbsp;
+ <LI><dt><img src="icons/grass2/layer-cell-cats-add.png">&nbsp;
         <img src="icons/grass/module-d.rast.arrow.gif">&nbsp;
-        <em>raster arrows layer</em></dt>
+        <em>Add raster arrows layer</em></dt>
         <dd>Adds map of raster cells with directional arrows drawn.  Arrow
         direction and length are determined by separate aspect/directional map
         and (optional) slope/intensity map,
         see <em><a href="d.rast.arrow.html">d.rast.arrow</a></em>.</dd>
-    <dt><img src="icons/grass2/layer-cell-cats-add.png">&nbsp;
+ <LI><dt><img src="icons/grass2/layer-cell-cats-add.png">&nbsp;
         <img src="icons/grass/module-d.rast.num.gif">&nbsp;
-        <em>raster numbers layer</em></dt>
+        <em>Add raster numbers layer</em></dt>
         <dd>Adds map of raster cells with numbers representing the cell values, 
         see <em><a href="d.rast.num.html">d.rast.num</a></em>.</dd>
-</dd>
+ </UL>
 
 <dt><img src="icons/grass2/layer-vector-add.png">&nbsp;
   <img src="icons/grass/element-vector.gif">&nbsp;
@@ -173,6 +175,12 @@ Save workspace file</em></dt>
 </dd>
 
 <dt><img src="icons/grass2/layer-vector-thematic-add.png">&nbsp;
+  <img src="icons/grass/module-d.vect.thematic.gif">&nbsp;
+<em>Add various vector-based map layers </em></dt>
+<dd>opens a dropdown menu that allows user to select to:<br>
+
+<UL>
+<LI><dt><img src="icons/grass2/layer-vector-thematic-add.png">&nbsp;
   <img src="icons/grass/module-d.vect.thematic.gif">&nbsp;
 <em>Add thematic map layer
   (for all vector types)</em></dt>
@@ -186,7 +194,7 @@ results of thematic mapping to a ps.map instructions file for later
 printing,
 see <em><a href="d.vect.thematic.html">d.vect.thematic</a></em>.</dd>
 
-<dt><img src="icons/grass2/layer-vector-chart-add.png">&nbsp;
+<LI><dt><img src="icons/grass2/layer-vector-chart-add.png">&nbsp;
   <img src="icons/grass/module-d.vect.chart.gif">&nbsp;
 <em>Add thematic charts layer (for vector points)</em></dt>
 <dd>Adds layer in which pie or bar charts can be automatically created
@@ -195,6 +203,7 @@ in the associated attribute table. Options include: chart type, layer
 and attributes to chart, chart colors, and chart size (fixed or based
 on attribute column),
 see <em><a href="d.vect.chart.html">d.vect.chart</a></em>.</dd>
+</UL>
 
 <dt><img src="icons/grass2/layer-command-add.png">&nbsp;
   <img src="icons/grass/gui-cmd.gif">&nbsp;
@@ -221,28 +230,45 @@ d.text text=Population\ density
 
 <dt><img src="icons/grass2/layer-grid-add.png">&nbsp;
   <img src="icons/grass/module-d.grid.gif">&nbsp;
-   <em>Add overlay grids and lines</em></dt>
-<dd>Adds layer to display regular grid (for all locations), or geodesic and
-rhumblines (for latitude/longitude locations only), see <em><a href="d.grid.html">d.grid</a>, <a href="d.geodesic.html">d.geodesic</a>, <a href="d.rhumbline.html">d.rhumbline</a></em>.</dd>
+   <em>Add grid or vector labels overlay</em></dt>
+<dd>opens a dropdown menu that allows user to select to:<br>
 
-<dt><img src="icons/grass2/layer-label-add.png">&nbsp;
-  <img src="icons/grass/module-d.labels.gif">&nbsp;
-   <em>Add labels layer for vector
-objects (from existing labels file)</em></dt>
-<dd>Add raster text layer from a labels file for vector objects
-created with the <em><a href="v.label.html">v.label</a></em> module
-(accessed from button in options panel). A labels file can also be
-created with a text editor,
-see <em><a href="d.labels.html">d.labels</a></em>.</dd>
+<UL>
+<LI><dt><img src="icons/grass2/layer-grid-add.png">&nbsp;
+        <img src="icons/grass/module-d.grid.gif">&nbsp;
+        <em>Add overlay grids and lines</em></dt>
+        <dd>Adds layer to display regular grid (for all locations)
+           see <em><a href="d.grid.html">d.grid</a></em></dd>
+
+<LI><dt><img src="icons/grass2/layer-label-add.png">&nbsp;
+        <img src="icons/grass/module-d.labels.gif">&nbsp;
+        <em>Add labels layer for vector objects (from existing labels file)</em></dt>
+        <dd>Add raster text layer from a labels file for vector objects
+        created with the <em><a href="v.label.html">v.label</a></em> module
+        (accessed from button in options panel). A labels file can also be
+        created with a text editor, see <em><a href="d.labels.html">d.labels</a></em>.</dd>
+
+<LI><dt><img src="icons/grass2/layer-grid-add.png">&nbsp;
+        <img src="icons/grass/module-d.grid.gif">&nbsp;
+        <em>Add geodesic line layer</em></dt>
+        <dd>Add layer to display geodesic line for latitude/longitude locations only,
+        see <em><a href="d.geodesic.html">d.geodesic</a></em></dd> 
+
+<LI><dt><img src="icons/grass2/layer-grid-add.png">&nbsp;
+        <img src="icons/grass/module-d.grid.gif">&nbsp;
+        <em>Add rhumbline layer</em>
+         <dd>Add layer to display rhumblines (for latitude/longitude locations only),
+          see <em><a href="d.rhumbline.html">d.rhumbline</a></em>.</dd>
+</UL>
 
 <dt><img src="icons/grass2/layer-remove.png">&nbsp;
   <img src="icons/grass/edit-cut.gif">&nbsp;
-   <em>Remove map layer from layer tree</em></dt>
+   <em>Delete selected layer</em></dt>
 <dd>Removes selected map layer or map layer group from layer tree.</dd>
 
 <dt><img src="icons/grass2/table.png">&nbsp;
   <img src="icons/grass/db-values.gif">&nbsp;
-  <em>Open <a href="wxGUI.Attribute_Table_Manager.html">Attribute Table Manager</a> for selected vector map</em></dt>
+  <em>Show <a href="wxGUI.Attribute_Table_Manager.html">Attribute Table Manager</a> for selected vector map</em></dt>
 <dd>Displays attribute data of selected vector map.</dd>
 
 </dl>
