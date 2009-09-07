@@ -5,6 +5,12 @@ PACKAGE = "grasslibs"
 include $(MODULE_TOPDIR)/include/Make/Lib.make
 include $(MODULE_TOPDIR)/include/Make/Doxygen.make
 
+# substitute OSX arch flags for python
+ifneq ($(MACOSX_ARCHS),)
+CFLAGS := $(subst $(MACOSX_ARCHS),,$(CFLAGS)) $(MACOSX_ARCHS_PYTHON)
+LDFLAGS := $(subst $(MACOSX_ARCHS),,$(LDFLAGS)) $(MACOSX_ARCHS_PYTHON)
+endif
+
 # doxygen:
 DOXNAME=
 DOXINPUT=grasspython.dox
