@@ -5,6 +5,12 @@ PACKAGE = "grasslibs"
 include $(MODULE_TOPDIR)/include/Make/Lib.make
 include $(MODULE_TOPDIR)/include/Make/Doxygen.make
 
+# substitute OSX arch flags for python
+ifneq ($(MACOSX_ARCHS),)
+CFLAGS := $(subst $(MACOSX_ARCHS),,$(CFLAGS)) $(MACOSX_ARCHS_PYTHON)
+LDFLAGS := $(subst $(MACOSX_ARCHS),,$(LDFLAGS)) $(MACOSX_ARCHS_PYTHON)
+endif
+
 # doxygen:
 DOXNAME=
 DOXINPUT=grasspython.dox
@@ -28,7 +34,7 @@ cluster_LIBS    = $(CLUSTERLIB)
 trans_LIBS      = $(TRANSLIB)
 vedit_LIBS      = $(VEDITLIB)
 
-EXTRA_INC = $(VECT_INC) $(PROJINC) $(GDALCFLAGS)
+EXTRA_INC = $(VECT_INC) $(PROJINC) $(GDALCFLAGS) $(GEOSCFLAGS)
 
 EXTRA_SWG = ../include/python/my_typemaps.i ../include/python/common.i
 SWIGFLAGS = $(ARCH_INC) -I../include/python -outdir .
