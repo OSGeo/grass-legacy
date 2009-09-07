@@ -1,10 +1,12 @@
 <h2>DESCRIPTION</h2>
 
 <b>wxGUI</b> is a new generation of the GUI for GRASS GIS. It's a successor
-of the <em><a href="gis.m.html">Tcl/Tk GUI</a></em>.
+of the <em><a href="gis.m.html">Tcl/Tk GUI</a></em> from GRASS 6.
 
+<p>
 If wxGUI is not your default GUI, you can define it as default by
- typing at GRASS command line prompt
+typing at GRASS command line prompt
+
 <div class="code"><pre>
    g.gui -u wxpython 
 </pre></div>
@@ -33,7 +35,7 @@ You can also start GRASS from the shell command line with wxGUI
 defined by the <tt>-wxpython</tt> switch:
 
 <div class="code"><pre>
-    grass64 -wxpython
+    grass65 -wxpython
 </pre></div>
 
 <p>
@@ -85,12 +87,12 @@ groups can be activated or deactivated for display. Layer tree
 composition can be saved to a workspace file and opened in subsequent
 sessions, restoring all layers and their display options.
 
-<P>
+<p>
 Right mouse click on a layer opens a dropdown menu with options to 
 remove or rename the layer (g.remove, g.rename), 
 change its display properties (d.rast and d.vect options such as color, symbol, etc.),
 show its metadata (r.info, v.info) or attributes, if applicable.
-<P>
+<p>
 Left mouse double click on a layer opens GUI for its display options (d.rast, d.vect).
 
 <h4>Layer Manager Toolbar</h4>
@@ -137,36 +139,36 @@ layers and their option settings.</dd>
 <em>Add various raster-based map layers</em></dt>
 <dd>opens a dropdown menu that allows user to select to:<br> 
 
-    <UL>
-    <LI><dt><img src="icons/grass2/layer-shaded-relief-add.png">&nbsp;
-        <img src="icons/grass/module-d.shadedmap.gif">&nbsp;
-        <em>Add shaded relief raster map layer </em></dt>
-        <dd>Adds shaded relief raster map layer,
-        see <em><a href="d.shadedmap.html">d.shadedmap</a></em>
- <LI><dt><img src="icons/grass2/layer-rgb-add.png">&nbsp;
-        <img src="icons/grass/channel-rgb.gif">&nbsp;
-        <em>Add RGB raster layer</em></dt>
-        <dd>Combines and displays three raster maps defined as red, green, and blue
-        channels, see <em><a href="d.rgb.html">d.rgb</a></em>.</dd>
- <LI><dt><img src="icons/grass2/layer-his-add.png">&nbsp;
-        <img src="icons/grass/channel-his.gif">&nbsp;
-        <em>Add HIS raster layer</em></dt>
-        <dd>Combines and displays two or three raster maps defined as hue,
-        intensity, and (optionally) saturation channels,
-        see <em><a href="d.his.html">d.his</a></em>.</dd>
- <LI><dt><img src="icons/grass2/layer-cell-cats-add.png">&nbsp;
-        <img src="icons/grass/module-d.rast.arrow.gif">&nbsp;
-        <em>Add raster arrows layer</em></dt>
-        <dd>Adds map of raster cells with directional arrows drawn.  Arrow
-        direction and length are determined by separate aspect/directional map
-        and (optional) slope/intensity map,
-        see <em><a href="d.rast.arrow.html">d.rast.arrow</a></em>.</dd>
- <LI><dt><img src="icons/grass2/layer-cell-cats-add.png">&nbsp;
-        <img src="icons/grass/module-d.rast.num.gif">&nbsp;
-        <em>Add raster numbers layer</em></dt>
-        <dd>Adds map of raster cells with numbers representing the cell values, 
-        see <em><a href="d.rast.num.html">d.rast.num</a></em>.</dd>
- </UL>
+  <ul>
+    <li><dt><img src="icons/grass2/layer-shaded-relief-add.png">&nbsp;
+	<img src="icons/grass/module-d.shadedmap.gif">&nbsp;
+	<em>Add shaded relief raster map layer </em></dt>
+      <dd>Adds shaded relief raster map layer,
+	see <em><a href="d.shadedmap.html">d.shadedmap</a></em></li>
+    <li><dt><img src="icons/grass2/layer-rgb-add.png">&nbsp;
+	<img src="icons/grass/channel-rgb.gif">&nbsp;
+	<em>Add RGB raster layer</em></dt>
+      <dd>Combines and displays three raster maps defined as red, green, and blue
+	channels, see <em><a href="d.rgb.html">d.rgb</a></em>.</dd></li>
+    <li><dt><img src="icons/grass2/layer-his-add.png">&nbsp;
+	<img src="icons/grass/channel-his.gif">&nbsp;
+	<em>Add HIS raster layer</em></dt>
+      <dd>Combines and displays two or three raster maps defined as hue,
+	intensity, and (optionally) saturation channels,
+	see <em><a href="d.his.html">d.his</a></em>.</dd></li>
+    <li><dt><img src="icons/grass2/layer-cell-cats-add.png">&nbsp;
+	<img src="icons/grass/module-d.rast.arrow.gif">&nbsp;
+	<em>Add raster arrows layer</em></dt>
+      <dd>Adds map of raster cells with directional arrows drawn.  Arrow
+	direction and length are determined by separate aspect/directional map
+	and (optional) slope/intensity map,
+	see <em><a href="d.rast.arrow.html">d.rast.arrow</a></em>.</dd></li>
+    <li><dt><img src="icons/grass2/layer-cell-cats-add.png">&nbsp;
+	<img src="icons/grass/module-d.rast.num.gif">&nbsp;
+	<em>Add raster numbers layer</em></dt>
+      <dd>Adds map of raster cells with numbers representing the cell values, 
+	see <em><a href="d.rast.num.html">d.rast.num</a></em>.</dd></li>
+  </ul>
 
 <dt><img src="icons/grass2/layer-vector-add.png">&nbsp;
   <img src="icons/grass/element-vector.gif">&nbsp;
@@ -179,31 +181,31 @@ layers and their option settings.</dd>
 <em>Add various vector-based map layers </em></dt>
 <dd>opens a dropdown menu that allows user to select to:<br>
 
-<UL>
-<LI><dt><img src="icons/grass2/layer-vector-thematic-add.png">&nbsp;
-  <img src="icons/grass/module-d.vect.thematic.gif">&nbsp;
-<em>Add thematic map layer
-  (for all vector types)</em></dt>
-<dd>Adds layer for thematic display values from a numeric attribute
-column associated with a vector map. Options include: thematic display
-type (graduated colors or point sizes), methods for creating display
-intervals, SQL query of attribute column to limit vector objects to
-display, control of point icon types and sizes, control of thematic
-color schemes, creation of legend for thematic map, and saving the
-results of thematic mapping to a ps.map instructions file for later
-printing,
-see <em><a href="d.vect.thematic.html">d.vect.thematic</a></em>.</dd>
-
-<LI><dt><img src="icons/grass2/layer-vector-chart-add.png">&nbsp;
-  <img src="icons/grass/module-d.vect.chart.gif">&nbsp;
-<em>Add thematic charts layer (for vector points)</em></dt>
-<dd>Adds layer in which pie or bar charts can be automatically created
-at vector point locations. Charts display values from selected columns
-in the associated attribute table. Options include: chart type, layer
-and attributes to chart, chart colors, and chart size (fixed or based
-on attribute column),
-see <em><a href="d.vect.chart.html">d.vect.chart</a></em>.</dd>
-</UL>
+  <ul>
+    <li><dt><img src="icons/grass2/layer-vector-thematic-add.png">&nbsp;
+	<img src="icons/grass/module-d.vect.thematic.gif">&nbsp;
+	<em>Add thematic map layer
+	  (for all vector types)</em></dt>
+      <dd>Adds layer for thematic display values from a numeric attribute
+	column associated with a vector map. Options include: thematic display
+	type (graduated colors or point sizes), methods for creating display
+	intervals, SQL query of attribute column to limit vector objects to
+	display, control of point icon types and sizes, control of thematic
+	color schemes, creation of legend for thematic map, and saving the
+	results of thematic mapping to a ps.map instructions file for later
+	printing,
+	see <em><a href="d.vect.thematic.html">d.vect.thematic</a></em>.</dd></li>
+      
+    <li><dt><img src="icons/grass2/layer-vector-chart-add.png">&nbsp;
+	<img src="icons/grass/module-d.vect.chart.gif">&nbsp;
+	<em>Add thematic charts layer (for vector points)</em></dt>
+      <dd>Adds layer in which pie or bar charts can be automatically created
+	at vector point locations. Charts display values from selected columns
+	in the associated attribute table. Options include: chart type, layer
+	and attributes to chart, chart colors, and chart size (fixed or based
+	on attribute column),
+	see <em><a href="d.vect.chart.html">d.vect.chart</a></em>.</dd></li>
+  </ul>
 
 <dt><img src="icons/grass2/layer-command-add.png">&nbsp;
   <img src="icons/grass/gui-cmd.gif">&nbsp;
@@ -303,7 +305,7 @@ This component includes toolbar area (set of toolbars), map canvas
 where a map composition is displayed, and the statusbar.
 
 <center>
-  <br><img src="wxGUI_map_display.jpg" alt="Map Display Window"/><br><br>
+  <br><img src="wxGUI_map_display.jpg" alt="Map Display Window"><br><br>
 </center>
 
 Each Map Display Window has a unique layer tree and region
