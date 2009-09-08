@@ -1299,13 +1299,12 @@ static int box_overlap(BOUND_BOX * a, BOUND_BOX * b)
  */
 static int box_overlap2(struct line_pnts *a, struct line_pnts *b)
 {
-    int i, r = 0;
-
+    int i;
     for (i = 0; i < (a->n_points - 1); i++) {
 	int j;
-
 	for (j = 0; j < (b->n_points - 1); j++) {
-	    r += segments_intersect(a->x[i], a->y[i],
+	    int r;
+	    r = segments_intersect(a->x[i], a->y[i],
 				   a->x[i + 1], a->y[i + 1],
 				   b->x[j], b->y[j],
 				   b->x[j + 1], a->y[j + 1],
