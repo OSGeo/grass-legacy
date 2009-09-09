@@ -14,6 +14,8 @@
 #############################################################################
 #
 # PDF output requires the Palatino font.
+# Run this script from the tools/ directory in the souce code.
+#   (TeX needs to be able to find grasslogo_vector.pdf)
 #
 
 if  [ -z "$GISBASE" ] ; then
@@ -58,36 +60,23 @@ cd "$GISBASE"
 XML_MENU="$GISBASE/etc/wxpython/xml/menudata.xml"
 
 
+# generate menu hierarchy
+MDPY="$GISBASE/etc/wxpython/gui_modules/menudata.py"
+# python menudata.py commands
+# python menudata.py tree
+# python menudata.py strings
+python "$MDPY" commands | sed -e 's/ | /|/' -e 's/[ -].*|/|/' \
+  | sort -u > "$TMP.menu_hierarchy"
+
+
+
 # work in progress -- still rather buggy.
 find_menu_hierarchy()
 {
-unset MODULE_COUNT MODULE_LABEL MODULE_MENU1 MODULE_MENU2
+  MODL=$1
+  PLACEMENT=`grep "^$MODL|" "$TMP.menu_hierarchy" | cut -f2 -d'|'`
 
-MODULE_COUNT=`grep -c -w "$MODULE" "$XML_MENU"`
-
-if [ "$MODULE_COUNT" -ge 1 ] ; then
-    MODULE_LABEL=`xml2 < "$XML_MENU" | grep -w -B5 "$MODULE" | \
-       grep 'label=' | cut -f2 -d= | tr '\n' '>' | \
-       sed -e 's/>$//' -e 's/[^ ]>/ > /'`
-
-    MODULE_MENU1=`xml2 < "$XML_MENU" | grep -w -B5000 "$MODULE" | \
-       sed -e 's+^/menudata/menubar/menu/++' | tac | \
-       grep '/label=\|^label=' | grep -B1000 '^label=' -m 1 | \
-       grep -v menuitem | tail -n 1 | cut -f2 -d=`
-
-    MODULE_MENU2=`xml2 < "$XML_MENU" | grep -w -B5000 "$MODULE" | \
-       sed -e 's+^/menudata/menubar/menu/++' | tac | \
-       grep '/label=\|^label=' | grep -B1000 '^label=' -m 1 | \
-       grep -v menuitem | head -n 1 | cut -f2 -d= | tr '\n' ' ' | \
-       sed -e 's/ $//'`
-
-    if [ "$MODULE_COUNT" -eq 1 ] ; then
-        echo "$MODULE|$MODULE_MENU1 > $MODULE_MENU2 > $MODULE_LABEL"
-    else
-	# "*" indicates module appears more than once
-        echo "$MODULE*|$MODULE_MENU1 > $MODULE_MENU2 > $MODULE_LABEL"
-    fi
-fi
+  echo "$PLACEMENT"
 }
 
 for DIR in bin scripts ; do
@@ -104,18 +93,29 @@ for DIR in bin scripts ; do
 	;;
     esac
 
-#    find_menu_hierarchy
-
     eval `$MODULE --tcltk | head -n 3 | tail -n 2 |  tr '"' "'" | \
-        sed -e 's/^ //' -e 's/ {/="/' -e 's/}$/"/'`
+        sed -e 's/^ //' -e 's/ {/="/' -e 's/}$/"/' -e 's/[^\."]"$/&./'`
+
     if [ -z "$label" ] && [ -z "$desc" ] ; then
 	continue
     fi
+
+    MODULE_MENU_LOC=`find_menu_hierarchy "$MODULE"`
+
+    BUFF=""
     if [ -z "$label" ] ; then
-	echo "$MODULE: $desc" >> "$TMP"
+	BUFF="$MODULE: $desc"
     else
-	echo "$MODULE: $label" >> "$TMP"
+	BUFF="$MODULE: $label"
     fi
+    if [ -n "$MODULE_MENU_LOC" ] ; then
+        BUFF="$BUFF {$MODULE_MENU_LOC}"
+    fi
+    if [ -n "$BUFF" ] ; then
+       #echo "$BUFF"
+       echo "$BUFF" >> "$TMP"
+    fi
+
   done
 
   cd ..
@@ -127,14 +127,26 @@ for MODULE in ps.map ; do
     unset desc
 
     eval `$MODULE --tcltk | head -n 3 | tail -n 2 |  tr '"' "'" | \
-	sed -e 's/^ //' -e 's/ {/="/' -e 's/}$/"/'`
+	sed -e 's/^ //' -e 's/ {/="/' -e 's/}$/"/' -e 's/[^\."]"$/&./'`
+
     if [ -z "$label" ] && [ -z "$desc" ] ; then
 	continue
     fi
+
+    MODULE_MENU_LOC=`find_menu_hierarchy "$MODULE"`
+
+    BUFF=""
     if [ -z "$label" ] ; then
-	echo "$MODULE: $desc" >> "$TMP"
+	BUFF="$MODULE: $desc"
     else
-	echo "$MODULE: $label" >> "$TMP"
+	BUFF="$MODULE: $label"
+    fi
+    if [ -n "$MODULE_MENU_LOC" ] ; then
+        BUFF="$BUFF {$MODULE_MENU_LOC}"
+    fi
+    if [ -n "$BUFF" ] ; then
+       #echo "$BUFF"
+       echo "$BUFF" >> "$TMP"
     fi
 done
 
@@ -158,11 +170,7 @@ EOF
 sort "$TMP" > "$SYNOP"
 \rm -f "$TMP"
 
-
-
-# add missing periods at end of descriptions
-sed -e 's/[^\.]$/&./' "$SYNOP" > "${TMP}.txt"
-
+cp "$SYNOP" "${TMP}.txt"
 
 ####### create HTML source #######
 # poor cousin to full_index.html from tools/build_html_index.sh
@@ -187,6 +195,11 @@ cat << EOF > "${TMP}.html"
 <h3>`date "+%e %B %Y"`</h3>
 </center>
 <BR><BR><BR>
+
+<i><font size="-1" color="#778877">
+   Menu position follows if available.</font></i>
+
+<BR><BR>
 
 <h4>Command types:</h4>
 <ul>
@@ -245,7 +258,10 @@ EOF
     grep "^${SECTION}\." "${TMP}.txt" | \
       sed -e 's/: /| /' -e 's/^.*|/<li> <a href="&.html">&<\/a>:/' \
 	  -e 's/|.html">/.html">/' -e 's+|</a>:+</a>:+' \
-	  -e 's/&/\&amp;/g' >> "${TMP}.html"
+	  -e 's/&/\&amp;/g' \
+	  -e 's+ {+\n     <BR><font size="-2" color="#778877"><i>+' \
+	  -e 's+}+</i></font>+' \
+	  -e 's+ > + \&rarr; +g'  >> "${TMP}.html"
 
     if [ "$SECTION" = "i" ] ; then
 	# include imagery photo subsection
@@ -260,7 +276,10 @@ EOF
 	grep "^photo\." "${TMP}.txt" | \
 	  sed -e 's/: /| /' -e 's/^.*|/<li> <a href="&.html">&<\/a>:/' \
 	      -e 's/|.html">/.html">/' -e 's+|</a>:+</a>:+' \
-	      -e 's/&/\&amp;/g' >> "${TMP}.html"
+	      -e 's/&/\&amp;/g' \
+	      -e 's+ {+\n     <BR><font size="-2" color="#778877"><i>+' \
+	      -e 's+}+</i></font>+' \
+	      -e 's+ > + \&rarr; +g'  >> "${TMP}.html"
     fi
 
 done
@@ -296,6 +315,8 @@ cat << EOF > "${TMP}.tex"
 \usepackage[latin1]{inputenc}
 \usepackage{a4wide}
 \usepackage{graphicx}
+\usepackage{color}
+\definecolor{DarkSeaGreen3}{rgb}{0.412,0.545,0.412}
 
 \makeatletter
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Textclass specific LaTeX commands.
@@ -376,8 +397,17 @@ EOF
 
     grep "^${SECTION}\." "${TMP}.txt" | \
       sed -e 's/^/\\item [/' -e 's/: /]/' \
+          -e 's+ {+ \\\\\n$+' -e 's/}$/$/' \
+	  -e 's+ > +\\,\\triangleright\\,|+' \
           -e 's/\*/{*}/g' -e 's/_/\\_/g' -e 's/&/\\\&/g' \
-	  >> "${TMP}.tex"
+	| awk '/^\$/ { STR=$0; \
+		       gsub(" ", "\\, ", STR); \
+		       sub(/\|/," ",STR); \
+		       sub(/^/,"\\textcolor{DarkSeaGreen3}{\\footnotesize ",STR); \
+		       sub(/$/,"}",STR); \
+		       print STR \
+		     } ;
+	       /^\\/ {print}' >> "${TMP}.tex"
 
     if [ "$SECTION" = "i" ] ; then
 	# include imagery photo subsection
