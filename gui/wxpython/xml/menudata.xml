@@ -743,8 +743,8 @@
 	  <items>
 	    <menuitem>
 	      <label>Manage projections</label>
-	      <help>Converts co-ordinate system descriptions (i.e. projection information) between various formats (including GRASS format). Can also be used to create GRASS locations.</help>
-	      <keywords>general</keywords>
+	      <help>Converts co-ordinate system descriptions (i.e. projection information) between various formats (including GRASS format).</help>
+	      <keywords>general,projection</keywords>
 	      <handler>self.OnMenuCmd</handler>
 	      <command>g.proj</command>
 	    </menuitem>
@@ -956,7 +956,7 @@
 	</menuitem>
 	<menuitem>
 	  <label>Mask</label>
-	  <help>Create a MASK for limiting raster operation</help>
+	  <help>Creates a mask for limiting raster operation.</help>
 	  <keywords>raster,mask</keywords>
 	  <handler>self.OnMenuCmd</handler>
 	  <command>r.mask</command>
@@ -1448,7 +1448,7 @@
 	    <menuitem>
 	      <label>Recode using rules file</label>
 	      <help>r.recode.rules - Use ascii rules file to recode categories in raster map</help>
-	      <handler>self.OnMenuCmd</handler>
+	      <keywords /><handler>self.OnMenuCmd</handler>
 	      <command>r.recode.file</command>
 	    </menuitem>
 	    <separator />
@@ -2659,7 +2659,7 @@
 	  <items>
 	    <menuitem>
 	      <label>Query any table</label>
-	      <help>Selects data from table.</help>
+	      <help>Selects data from attribute table (performs SQL query statement(s)).</help>
 	      <keywords>database,attribute table,SQL</keywords>
 	      <handler>self.OnMenuCmd</handler>
 	      <command>db.select</command>
@@ -2707,14 +2707,14 @@
       <items>
 	<menuitem>
 	  <label>GRASS help</label>
-	  <help>Display the manual pages of GRASS</help>
+	  <help>Display the HTML man pages of GRASS</help>
 	  <keywords>general,manual,help</keywords>
 	  <handler>self.RunMenuCmd</handler>
 	  <command>g.manual -i</command>
 	</menuitem>
 	<menuitem>
 	  <label>GUI help</label>
-	  <help>Display the manual pages of wxGUI</help>
+	  <help>Display the HTML man pages of GRASS</help>
 	  <keywords>general,manual,help</keywords>
 	  <handler>self.RunMenuCmd</handler>
 	  <command>g.manual wxGUI</command>
