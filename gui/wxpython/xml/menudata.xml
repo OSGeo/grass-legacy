@@ -682,45 +682,58 @@
 	      <handler>self.OnMapsets</handler>
 	    </menuitem>
 	    <menuitem>
-	      <label>Change working environment</label>
-	      <help>Change current mapset.</help>
-	      <keywords>general,settings</keywords>
-	      <handler>self.OnMenuCmd</handler>
-	      <command>g.mapset</command>
-	    </menuitem>
-	    <menuitem>
 	      <label>User access</label>
 	      <help>Controls access to the current mapset for other users on the system.</help>
 	      <keywords>general</keywords>
-	      <handler>self.OnMenuCmd</handler>
+              <handler>self.OnMenuCmd</handler>
 	      <command>g.access</command>
 	    </menuitem>
+	    <separator />
+	    <menuitem>
+	      <label>Change working environment</label>
+	      <help>Change current mapset.</help>
+	      <keywords>general,settings</keywords>
+              <handler>self.OnMenuCmd</handler>
+	      <command>g.mapset</command>
+	    </menuitem>
+	    <menuitem>
+	      <label>Change location and mapset</label>
+	      <help>Change current location and mapset (note that current workspace will be closed).</help>
+              <handler>self.OnChangeLocation</handler>
+	    </menuitem>
+	    <menuitem>
+	      <label>Change mapset</label>
+	      <help>Change current mapset.</help>
+              <handler>self.OnChangeMapset</handler>
+	    </menuitem>
+	    <separator />
 	    <menuitem>
 	      <label>Show settings</label>
 	      <help>Outputs and modifies the user's current GRASS variable settings.</help>
 	      <keywords>general</keywords>
-	      <handler>self.RunMenuCmd</handler>
+              <handler>self.RunMenuCmd</handler>
 	      <command>g.gisenv --v</command>
 	    </menuitem>
 	    <menuitem>
 	      <label>Change settings</label>
 	      <help>Outputs and modifies the user's current GRASS variable settings.</help>
 	      <keywords>general</keywords>
-	      <handler>self.OnMenuCmd</handler>
+              <handler>self.OnMenuCmd</handler>
 	      <command>g.gisenv</command>
 	    </menuitem>
 	    <menuitem>
 	      <label>Change default GUI</label>
 	      <help>Changes the default GRASS graphical user interface (GUI) setting.</help>
 	      <keywords>general,gui</keywords>
-	      <handler>self.OnMenuCmd</handler>
+              <handler>self.OnMenuCmd</handler>
 	      <command>g.change.gui.py</command>
 	    </menuitem>
+	    <separator />
 	    <menuitem>
 	      <label>Version</label>
 	      <help>Displays version and copyright information.</help>
 	      <keywords>general</keywords>
-	      <handler>self.RunMenuCmd</handler>
+              <handler>self.RunMenuCmd</handler>
 	      <command>g.version -c</command>
 	    </menuitem>
 	  </items>
@@ -752,6 +765,7 @@
 	    </menuitem>
 	  </items>
 	</menu>
+	<separator />
 	<menuitem>
 	  <label>Preferences</label>
 	  <help>User GUI preferences (display font, commands, digitizer, etc.)</help>
