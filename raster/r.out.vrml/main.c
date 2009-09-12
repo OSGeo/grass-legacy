@@ -31,7 +31,7 @@ int main(int argc, char *argv[])
     struct Option *rast_el, *rast_co, *out;
     struct Option *exag_opt;
     char *t_mapset;
-    FILEDESC elevfd = 0, colorfd = 0;
+    int elevfd = 0, colorfd = 0;
     FILE *vout = NULL;
     struct Colors colr;
     char errbuf[100], outfile[256];
