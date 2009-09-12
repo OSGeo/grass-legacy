@@ -1,3 +1,4 @@
+#include <stdio.h>
 #include <grass/gis.h>
 
 /*  VRML VERSION - only 1.0 currently supported
@@ -10,12 +11,10 @@
 /* closed square bracket */
 #define CSB "]"
 
-/* open curley bracket */
+/* open curly bracket */
 #define OCB "{"
-/* closed curley bracket */
+/* closed curly bracket */
 #define CCB "}"
-
-typedef int FILEDESC;
 
 /* main.c */
 extern int init_coordcnv(double, struct Cell_head *, double, double);
@@ -29,7 +28,7 @@ extern void vrml_end(FILE *);
 /* put_grid.c */
 extern void vrml_put_grid(FILE *,
 			  struct Cell_head *,
-			  FILEDESC, FILEDESC,
+			  int, int,
 			  struct Colors *, int, int, int, int);
 
 /* put_view.c */
