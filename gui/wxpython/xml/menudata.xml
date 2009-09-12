@@ -1447,8 +1447,9 @@
 	    </menuitem>
 	    <menuitem>
 	      <label>Recode using rules file</label>
-	      <help>r.recode.rules - Use ascii rules file to recode categories in raster map</help>
-	      <keywords /><handler>self.OnMenuCmd</handler>
+	      <help>r.recode.file - Use ascii rules file to recode categories in raster map</help>
+	      <keywords>raster, recode</keywords>
+	      <handler>self.OnMenuCmd</handler>
 	      <command>r.recode.file</command>
 	    </menuitem>
 	    <separator />
@@ -1865,6 +1866,7 @@
 	      <label>Color rules</label>
 	      <help>Set colors interactively by entering color rules</help>
 	      <handler>self.RulesCmd</handler>
+	      <keywords>vector, colors</keywords>
 	      <command>vcolors</command>
 	    </menuitem>
 	  </items>
