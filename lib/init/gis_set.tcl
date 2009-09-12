@@ -59,10 +59,10 @@ proc searchGISRC { filename } {
 	    if { [regexp -- {^GISDBASE: *(.*)$} $thisline dummy env_database] } {
                 set database $env_database
             }
-            if { [scan $thisline "LOCATION_NAME: %s" env_location] } {
+            if { [regexp -- {^LOCATION_NAME: *(.*)$} $thisline dummy env_location] } {
                 set location $env_location
             }
-            if { [scan $thisline "MAPSET: %s" env_mapset] } {
+            if { [regexp -- {^MAPSET: *(.*)$} $thisline dummy env_mapset] } {
                 set mapset $env_mapset
             }
             set thisline [gets $ifp]
@@ -119,8 +119,7 @@ proc CheckLocation {} {
     global database location
     
     set found 0
-    set dir $database
-    append dir "/$location"
+    set dir [file join "$database" "$location"]
     set currDir [pwd]
 
     # Special case - wrong GISDBASE
@@ -135,7 +134,7 @@ proc CheckLocation {} {
     } else {
         cdir $dir
         .frame0.frameNMS.second.entry configure -state disabled
-        if {[file isdirectory "PERMANENT"] && [file exists "$dir/PERMANENT/DEFAULT_WIND"]} {
+        if {[file isdirectory "PERMANENT"] && [file exists [file join "$dir" "PERMANENT" "DEFAULT_WIND"]]} {
             set found 1
             .frame0.frameNMS.second.entry configure -state normal
         }
@@ -150,7 +149,7 @@ proc CheckMapset {} {
 	
 	if { $mapset == "" } { return 0; }
 	
-	if { [file exists "$database/$location/$mapset/WIND"] } {
+	if { [file exists [file join "$database" "$location" "$mapset" "WIND"]] } {
 		return 1
 	}
 	return 0
@@ -393,11 +392,11 @@ proc gisSetWindow {} {
                     puts $varfp "DB_DRIVER: dbf"
                     puts $varfp "DB_DATABASE: \$GISDBASE/\$LOCATION_NAME/\$MAPSET/dbf/"
                     close $varfp
-                    catch {file attributes $mymapset/VAR -permissions u+rw,go+r}
-                    file mkdir $mymapset/dbf
+                    catch {file attributes [file join "$mymapset" "VAR"] -permissions u+rw,go+r}
+                    file mkdir [file join "$mymapset" "dbf"]
                     #copy over the WIND definition:
-                    catch {file copy $mymapset/../PERMANENT/DEFAULT_WIND $mymapset/WIND}
-                    catch {file attributes $mymapset/WIND -permissions u+rw,go+r}
+                    catch {file copy [file join "$mymapset" ".." "PERMANENT" "DEFAULT_WIND"] [file join "$mymapset" "WIND"]}
+                    catch {file attributes [file join "$mymapset" "WIND"] -permissions u+rw,go+r}
                     .frame0.frameMS.listbox insert end $mymapset
                     selFromList .frame0.frameMS.listbox $mymapset
                     set mapset $mymapset
@@ -445,7 +444,7 @@ proc gisSetWindow {} {
     	-relief raised -padx 15 \
     	-command {
 			if { $mingw == "1" } {
-				exec -- cmd.exe /c start $env(GISBASE)/etc/set_data
+				exec -- cmd.exe /c start [file join "$env(GISBASE)" "etc" "set_data"]
 			} else {
 				exec -- $env(GISBASE)/etc/grass-xterm-wrapper -name xterm-grass -e $env(GISBASE)/etc/grass-run.sh $env(GISBASE)/etc/set_data
 			}
@@ -515,9 +514,9 @@ proc gisSetWindow {} {
 				 return
 			}
 			if { $mingw == "1" } {
-				exec -- $env(GRASS_HTML_BROWSER) file://$env(GISBASE)/docs/html/helptext.html &;
+				exec -- "$env(GRASS_HTML_BROWSER)" "file://$env(GISBASE)/docs/html/helptext.html" &;
 			} else {
-				exec -- $env(GRASS_HTML_BROWSER) file://$env(GISBASE)/docs/html/helptext.html >@stdout 2>@stderr &;
+				exec -- "$env(GRASS_HTML_BROWSER)" "file://$env(GISBASE)/docs/html/helptext.html" >@stdout 2>@stderr &;
 			}
         }
 

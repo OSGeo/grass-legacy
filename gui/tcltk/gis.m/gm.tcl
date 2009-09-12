@@ -19,23 +19,23 @@
 #
 ##########################################################################
 
-lappend auto_path $env(GISBASE)/bwidget
+lappend auto_path [file join "$env(GISBASE)" "bwidget"]
 
 package require -exact BWidget 1.2.1
 
 # Load up all the gis.m layers and things.
 # pkgIndex.tcl only loads the files when they are first called.
-lappend auto_path $env(GISBASE)/etc/gm
+lappend auto_path [file join "$env(GISBASE)" "etc" "gm"]
 package require -exact GisM 1.0
 
 # path to GIS Manager files
-set gmpath $env(GISBASE)/etc/gm
+set gmpath [file join "$env(GISBASE)" "etc" "gm"]
 
 # Load GUI stuff required for error reporting etc.
-source $env(GISBASE)/etc/gui.tcl
+source [file join "$env(GISBASE)" "etc" "gui.tcl"]
 
 # Load common procedure library
-source $gmpath/gmlib.tcl
+source [file join "$gmpath" "gmlib.tcl"]
 
 # gisenv errors are fatal. 
 if {[catch {set env(GISDBASE) [exec g.gisenv get=GISDBASE]} error]} {
@@ -72,7 +72,7 @@ if {[catch {set mapset [exec g.gisenv get=MAPSET]} error]} {
 
 
 # path to icons for GIS Manager
-set iconpath $env(GISBASE)/etc/gui/icons/grass
+set iconpath [file join "$env(GISBASE)" "etc" "gui" "icons" "grass"]
 
 global iconpath
 global gmpath
@@ -116,7 +116,7 @@ if {![catch {set env(OS)}] && $env(OS) == "Windows_NT"} {
 
 
 #fetch GRASS Version number:
-catch {set fp [open $env(GISBASE)/etc/VERSIONNUMBER r]}
+catch {set fp [open [file join "$env(GISBASE)" "etc" "VERSIONNUMBER"] r]}
 set GRASSVERSION [read -nonewline $fp]
 
 if {[catch {close $fp} error]} {
@@ -132,7 +132,7 @@ if {[catch {close $fp} error]} {
 # $env(GISBASE)/etc/gtcltk/gronsole.tcl
 
 # Load a console user interface
-source $gmpath/runandoutput.tcl
+source [file join "$gmpath" "runandoutput.tcl"]
 
 namespace eval Gm {
 	variable gm_mainframe

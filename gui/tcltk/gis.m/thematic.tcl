@@ -10,14 +10,14 @@
 ##########################################################################
 
 namespace eval GmThematic {
-    variable array opt # thematic current options
-	variable array tlegend # mon id
-	variable array tlegcan # mon id
+    variable array opt ;# thematic current options
+	variable array tlegend ;# mon id
+	variable array tlegcan ;# mon id
     variable count 1
-    variable array lfile # raster
-    variable array lfilemask # raster
+    variable array lfile ;# raster
+    variable array lfilemask ;# raster
     variable optlist
-    variable array dup # vector
+    variable array dup ;# vector
 }
 
 
@@ -162,7 +162,19 @@ proc GmThematic::show_columns { id } {
 	variable opt
 	global bgcolor
 	set mapname $opt($id,1,map)
+	if {[string length $mapname] == 0} {
+		GmThematic::select_map $id
+		set mapname $opt($id,1,map)
+		if {[string length $mapname] == 0} {
+			GmLib::errmsg [G_msg "This action requires map name to be set"]
+			return
+		}
+	}
 	set layernum $opt($id,1,layer)
+	if {[string is integer -strict $layernum] == 0 } {
+		GmLib::errmsg [G_msg "You must provide valid vector layer number"]
+		return
+	}
 	set cmd "v.info -c map=$mapname layer=$layernum"
 	run_panel $cmd
 }
@@ -171,17 +183,29 @@ proc GmThematic::show_data { id } {
 	variable opt
 	global bgcolor
 	set mapname $opt($id,1,map)
-	set layer $opt($id,1,layer)
-	if {![catch {open "|v.db.connect map=$mapname layer=$layer -g" r} vdb]} {
+	if {[string length $mapname] == 0} {
+		GmVector::select_map $id
+		set mapname $opt($id,1,map)
+		if {[string length $mapname] == 0} {
+			GmLib::errmsg [G_msg "This action requires map name to be set"]
+			return
+		}
+	}
+	set layernum $opt($id,1,layer)
+	if {[string is integer -strict $layernum] == 0 } {
+		GmLib::errmsg [G_msg "You must provide valid vector layer number"]
+		return
+	}
+	if {![catch {open "|v.db.connect map=$mapname layer=$layernum -g -l" r} vdb]} {
 		set vectdb [read $vdb]
 		if {[catch {close $vdb} error]} {
 			GmLib::errmsg $error
 		}
 		set vdblist [split $vectdb " "]
-		set tbl [lindex $vdblist 1]
-		set db [lindex $vdblist 3]
-		set drv [lindex $vdblist 4]
-		set cmd "db.select table=$tbl database=$db driver=$drv"
+		set tbl [string trim [lindex $vdblist 1]]
+		set db [file normalize [join [lrange $vdblist 3 end-1]]]
+		set drv [string trim [lindex $vdblist end]]
+		set cmd [list db.select "table=$tbl" "database=$db" "driver=$drv"]
 		run_panel $cmd
 	}
 }
@@ -680,7 +704,7 @@ proc GmThematic::tleg_item { mon id } {
 		GmLib::errmsg $error [G_msg "Error creating tempfile"]
 	}
 
-	set legfile "$tmpdir/gismlegend.txt"
+	set legfile [file join "$tmpdir" "gismlegend.txt"]
 	if {![file exists $legfile]} {return}
 	catch {set ltxt [open $legfile r]}
 	set x1 30

@@ -10,12 +10,12 @@
 ##########################################################################
 
 namespace eval GmChart {
-    variable array opt # chart options
+    variable array opt ;# chart options
     variable count 1
-    variable array lfile # vector
-    variable array lfilemask # vector
+    variable array lfile ;# vector
+    variable array lfilemask ;# vector
     variable optlist
-    variable array dup # vector
+    variable array dup ;# vector
 }
 
 
@@ -121,7 +121,19 @@ proc GmChart::show_columns { id } {
 	variable opt
 	global bgcolor
 	set mapname $opt($id,1,map)
+	if {[string length $mapname] == 0} {
+		GmChart::select_map $id
+		set mapname $opt($id,1,map)
+		if {[string length $mapname] == 0} {
+			GmLib::errmsg [G_msg "This action requires map name to be set"]
+			return
+		}
+	}
 	set layernum $opt($id,1,layer)
+	if {[string is integer -strict $layernum] == 0 } {
+		GmLib::errmsg [G_msg "You must provide valid vector layer number"]
+		return
+	}
 	set cmd "v.info -c map=$mapname layer=$layernum"
 	run_panel $cmd
 }
@@ -130,17 +142,29 @@ proc GmChart::show_data { id } {
 	variable opt
 	global bgcolor
 	set mapname $opt($id,1,map)
-	set layer $opt($id,1,layer)
-	if ![catch {open "|v.db.connect map=$mapname layer=$layer -g" r} vdb] {
+	if {[string length $mapname] == 0} {
+		GmChart::select_map $id
+		set mapname $opt($id,1,map)
+		if {[string length $mapname] == 0} {
+			GmLib::errmsg [G_msg "This action requires map name to be set"]
+			return
+		}
+	}
+	set layernum $opt($id,1,layer)
+	if {[string is integer -strict $layernum] == 0 } {
+		GmLib::errmsg [G_msg "You must provide valid vector layer number"]
+		return
+	}
+	if ![catch {open "|v.db.connect map=$mapname layer=$layernum -g -l" r} vdb] {
 		set vectdb [read $vdb]
 		if {[catch {close $vdb} error]} {
             GmLib::errmsg $error
 		}
 		set vdblist [split $vectdb " "]
-		set tbl [lindex $vdblist 1]
-		set db [lindex $vdblist 3]
-		set drv [lindex $vdblist 4]
-		set cmd "db.select table=$tbl database=$db driver=$drv"
+		set tbl [string trim [lindex $vdblist 1]]
+		set db [file normalize [join [lrange $vdblist 3 end-1]]]
+		set drv [string trim [lindex $vdblist end]]
+		set cmd [list db.select "table=$tbl" "database=$db" "driver=$drv"]
 		run_panel $cmd
 	}
 }

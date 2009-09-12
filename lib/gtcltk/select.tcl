@@ -160,24 +160,24 @@ proc GSelect_::create { element args } {
     	$tree bindText  <Control-ButtonPress-1> "GSelect_::select $id $tree"
     }
     
-    set location_path "$env(GISDBASE)/$env(LOCATION_NAME)/"
-    set current_mapset "$env(MAPSET)"
-    set sympath "$env(GISBASE)/etc/symbol/"
+    set location_path [file normalize [file join "$env(GISDBASE)" "$env(LOCATION_NAME)"]]
+    set current_mapset [file normalize "$env(MAPSET)"]
+    set sympath [file normalize [file join "$env(GISBASE)" "etc" "symbol"]]
     
     # main selection subroutine
     if {$element != "symbol"} {
         foreach dir [exec g.mapsets -p] {
-            set windfile "$location_path/$dir/WIND"
+            set windfile [file normalize [file join "$location_path" "$dir" "WIND"]]
             if { ! [ file exists $windfile ] } { continue }
-            if { $dir == $current_mapset } {
+            if { $dir == [file tail "$current_mapset"] } {
                 $tree insert end root ms_$dir -text $dir -data $dir -open 1 \
                     -image [Bitmap::get openfold] -drawcross auto
             } else {
                 $tree insert end root ms_$dir -text $dir -data $dir -open 0 \
                     -image [Bitmap::get folder] -drawcross auto
             }
-            set path "$location_path/$dir/$element/"
-            foreach fp [ lsort -dictionary [glob -nocomplain $path/*] ]  {
+            set path [file normalize [file join "$location_path" "$dir" "$element"]]
+            foreach fp [ lsort -dictionary [glob -nocomplain -directory $path *] ]  {
                 set file [file tail $fp]
                 $tree insert end ms_$dir $file@$dir -text $file -data $file \
                     -image [Bitmap::get file] -drawcross never
@@ -190,14 +190,14 @@ proc GSelect_::create { element args } {
         $tree insert end root ms_$sympath -text SYMBOLS -data $sympath -open 1 \
             -image [Bitmap::get openfold] -drawcross auto
         
-        foreach ic_dir [ lsort -dictionary [glob -nocomplain $sympath/*] ]  {
+        foreach ic_dir [ lsort -dictionary [glob -nocomplain -directory $sympath *] ]  {
             set dir_tail [file tail $ic_dir]
             $tree insert end ms_$sympath ms_$dir_tail  -text $dir_tail -data $dir_tail \
                 -image [Bitmap::get folder] -drawcross auto
     
-            foreach ic_file [ lsort -dictionary [glob -nocomplain $sympath/$dir_tail/*] ]  {
+            foreach ic_file [ lsort -dictionary [glob -nocomplain -directory [file join "$sympath" "$dir_tail"] *] ]  {
                 set file [file tail $ic_file]
-                $tree insert end ms_$dir_tail $dir_tail/$file -text $file -data $file \
+                $tree insert end ms_$dir_tail [file join "$dir_tail" "$file"] -text $file -data $file \
                     -image [Bitmap::get file] -drawcross never
             }
         }

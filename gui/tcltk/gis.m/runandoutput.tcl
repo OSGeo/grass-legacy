@@ -50,7 +50,7 @@ proc make_fun_buttons {dlg path} {
 	set opt($dlg,run_button) $buttonframe.run 
 
 	# Turn off help button if the help file doesn't exist
-	if {! [file exists $env(GISBASE)/docs/html/$pgm_name.html]} {
+	if {! [file exists [file join "$env(GISBASE)" "docs" "html" "$pgm_name.html"]]} {
 		$buttonframe.help configure -state disabled
 	}
 
