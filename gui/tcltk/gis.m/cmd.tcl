@@ -10,13 +10,13 @@
 ##########################################################################
 
 namespace eval GmCmd {
-    variable array opt # cmd current options
+    variable array opt ;# cmd current options
     variable count 1
-    variable array tree # mon
-    variable array lfile # command
-    variable array lfilemask # command
+    variable array tree ;# mon
+    variable array lfile ;# command
+    variable array lfilemask ;# command
     variable optlist
-    variable array dup # layer
+    variable array dup ;# layer
 }
 
 

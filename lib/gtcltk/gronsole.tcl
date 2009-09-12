@@ -468,7 +468,8 @@ proc Gronsole::execout {path cmd ci execcmd} {
 	# Actually run the program
 	# |& grocat merges stdout and stderr because Tcl treats
 	# anything written to stderr as an error condition
-	set cmd [concat | $cmd |& $env(GISBASE)/etc/grocat]
+	set grocat [file join "$env(GISBASE)" "etc" "grocat"]
+	set cmd [concat | $cmd |& "\"$grocat\"" ]
 
 	set message_env [exec g.gisenv get=GRASS_MESSAGE_FORMAT]
         set env(GRASS_MESSAGE_FORMAT) gui

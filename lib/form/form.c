@@ -93,7 +93,7 @@ int submit(ClientData cdata, Tcl_Interp * interp, int argc, char *argv[])
 
     /* Check if all internal values are set */
     if (Drvname == NULL || Dbname == NULL || Tblname == NULL || Key == NULL) {
-	G_warning("db connection was not set by form\n");
+	G_warning("db connection was not set by form");
 	sprintf(buf, "set submit_msg \"db connection was not set by form.\"");
 	Tcl_Eval(interp, buf);
 	Tcl_Eval(interp, "set submit_result 0");
@@ -104,7 +104,7 @@ int submit(ClientData cdata, Tcl_Interp * interp, int argc, char *argv[])
     G_debug(2, "Open driver");
     driver = db_start_driver(Drvname);
     if (driver == NULL) {
-	G_warning("Cannot open driver\n");
+	G_warning("Cannot open driver");
 	sprintf(buf, "set submit_msg \"Cannot open driver '%s'\"", Drvname);
 	Tcl_Eval(interp, buf);
 	Tcl_Eval(interp, "set submit_result 0");
@@ -116,11 +116,12 @@ int submit(ClientData cdata, Tcl_Interp * interp, int argc, char *argv[])
     db_set_handle(&handle, Dbname, NULL);
     G_debug(2, "Open database");
     if (db_open_database(driver, &handle) != DB_OK) {
-	G_warning("Cannot open database\n");
+	G_warning("Cannot open database");
 	db_shutdown_driver(driver);
 	sprintf(buf,
 		"set submit_msg \"Cannot open database '%s' by driver '%s'\"",
 		Dbname, Drvname);
+
 	Tcl_Eval(interp, buf);
 	Tcl_Eval(interp, "set submit_result 0");
 	return TCL_OK;
@@ -129,7 +130,7 @@ int submit(ClientData cdata, Tcl_Interp * interp, int argc, char *argv[])
 
     db_set_string(&table_name, Tblname);
     if (db_describe_table(driver, &table_name, &table) != DB_OK) {
-	G_warning("Cannot describe table\n");
+	G_warning("Cannot describe table");
 	db_shutdown_driver(driver);
 	db_close_database(driver);
 	sprintf(buf, "set submit_msg \"Cannot describe table '%s'\"",

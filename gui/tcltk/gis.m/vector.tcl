@@ -160,8 +160,8 @@ proc GmVector::create { tree parent } {
     set opt($count,1,where) "" 
     set opt($count,1,_use_where) 1
     set opt($count,1,qmap) "" 
-	set opt($count,1,qsave) 0
-	set opt($count,1,qoverwrite) 0
+    set opt($count,1,qsave) 0
+    set opt($count,1,qoverwrite) 0
 
     set opt($count,1,attribute) "" 
     set opt($count,1,xref) "left"
@@ -172,16 +172,17 @@ proc GmVector::create { tree parent } {
     set opt($count,1,maxreg) "" 
     set opt($count,1,mod) 1
 
-	set optlist { _check vect opacity display_shape display_cat display_topo display_dir \
-				display_attr type_point type_line type_boundary type_centroid \
-				type_area type_face color _use_color fcolor _use_fcolor lcolor \
-				rdmcolor sqlcolor icon size lwidth layer lfield attribute \
-				xref yref lsize cat where _use_where qmap qsave qoverwrite \
-				minreg maxreg}
+    set optlist { _check vect opacity display_shape display_cat \
+    			display_topo display_dir display_attr type_point \
+			type_line type_boundary type_centroid type_area \
+			type_face color _use_color fcolor _use_fcolor lcolor \
+			rdmcolor sqlcolor icon size lwidth \
+			layer lfield attribute xref yref lsize cat where \
+			_use_where qmap qsave qoverwrite minreg maxreg }
                   
     foreach key $optlist {
 		set opt($count,0,$key) $opt($count,1,$key)
-    } 
+    }
 
     GmVector::legend $count
 
@@ -235,7 +236,19 @@ proc GmVector::select_qmap { id } {
 proc GmVector::show_columns { id } {
 	variable opt
 	set mapname $opt($id,1,vect)
+	if {[string length $mapname] == 0} {
+		GmVector::select_map $id
+		set mapname $opt($id,1,vect)
+		if {[string length $mapname] == 0} {
+			GmLib::errmsg [G_msg "This action requires map name to be set"]
+			return
+		}
+	}
 	set layernum $opt($id,1,layer)
+	if {[string is integer -strict $layernum] == 0 } {
+		GmLib::errmsg [G_msg "You must provide valid vector layer number"]
+		return
+	}
 	set cmd "v.info -c map=$mapname layer=$layernum"		
 	run_panel $cmd
 }
@@ -245,18 +258,30 @@ proc GmVector::show_columns { id } {
 proc GmVector::show_data { id } { 
 	variable opt
 	set mapname $opt($id,1,vect)
+	if {[string length $mapname] == 0} {
+		GmVector::select_map $id
+		set mapname $opt($id,1,vect)
+		if {[string length $mapname] == 0} {
+			GmLib::errmsg [G_msg "This action requires map name to be set"]
+			return
+		}
+	}
 	set layernum $opt($id,1,layer)
-	if {![catch {open "|v.db.connect map=$mapname layer=$layernum -g" r} vdb]} {
+	if {[string is integer -strict $layernum] == 0 } {
+		GmLib::errmsg [G_msg "You must provide valid vector layer number"]
+		return
+	}
+	if {![catch {open "|v.db.connect map=$mapname layer=$layernum -g -l" r} vdb]} {
 		set vectdb [read $vdb]
 		if {[catch {close $vdb} error]} {
 			GmLib::errmsg $error
 		}
 
 		set vdblist [split $vectdb " "]
-		set tbl [lindex $vdblist 1]
-		set db [lindex $vdblist 3]
-		set drv [lindex $vdblist 4]
-		set cmd "db.select table=$tbl database=$db driver=dbf"
+		set tbl [string trim [lindex $vdblist 1]]
+		set db [file normalize [join [lrange $vdblist 3 end-1]]]
+		set drv [string trim [lindex $vdblist end]]
+		set cmd [list db.select "table=$tbl" "database=$db" "driver=$drv"]
 		run_panel $cmd
 	}
 }
@@ -266,7 +291,19 @@ proc GmVector::show_data { id } {
 proc GmVector::show_info { id } {
 	variable opt
 	set mapname $opt($id,1,vect)
+	if {[string length $mapname] == 0} {
+		GmVector::select_map $id
+		set mapname $opt($id,1,vect)
+		if {[string length $mapname] == 0} {
+			GmLib::errmsg [G_msg "This action requires map name to be set"]
+			return
+		}
+	}
 	set layernum $opt($id,1,layer)
+	if {[string is integer -strict $layernum] == 0 } {
+		GmLib::errmsg [G_msg "You must provide valid vector layer number"]
+		return
+	}
 	set cmd "v.info map=$mapname layer=$layernum"		
 	run_panel $cmd
 }
@@ -364,6 +401,7 @@ proc GmVector::options { id frm } {
     pack $row.a $row.b $row.c $row.d $row.e $row.f $row.g -side left
     pack $row -side top -fill both -expand yes
 
+
     # points
     set row [ frame $frm.icon ]  
     Label $row.a -text [G_msg "Point symbols:"]
@@ -424,7 +462,7 @@ proc GmVector::options { id frm } {
     pack $row.a $row.b $row.c $row.d $row.e $row.f -side left
     pack $row -side top -fill both -expand yes
 
-	# label alighment
+    # label alignment
     set row [ frame $frm.label2 ]
     Label $row.a -text "     " 
     ComboBox $row.b -label [G_msg "Label part to align with vector point"] \
@@ -795,12 +833,14 @@ proc GmVector::duplicate { tree parent node id } {
 	
 	set opt($count,1,opacity) $opt($id,1,opacity)
 
-	set optlist { _check vect display_shape display_cat display_topo display_dir \
-				display_attr type_point type_line type_boundary type_centroid \
-				type_area type_face color _use_color fcolor _use_fcolor lcolor \
-				rdmcolor sqlcolor icon size lwidth layer lfield attribute \
-				xref yref lsize cat where _use_where qmap qsave qoverwrite \
-				minreg maxreg minreg maxreg}
+	set optlist { _check vect display_shape display_cat display_topo \
+			display_dir display_attr type_point type_line \
+			type_boundary type_centroid type_area type_face \
+			color _use_color fcolor _use_fcolor lcolor rdmcolor \
+			sqlcolor icon size lwidth layer \
+			lfield attribute xref yref lsize cat where \
+			_use_where qmap qsave qoverwrite minreg maxreg \
+			minreg maxreg }
                   
     foreach key $optlist {
     	set opt($count,1,$key) $opt($id,1,$key)

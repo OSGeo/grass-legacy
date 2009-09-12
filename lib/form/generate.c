@@ -4,6 +4,19 @@
 #include <grass/dbmi.h>
 #include <grass/form.h>
 
+/* Escape string for use in TCL */
+char *escape_tcl_string(char *input)
+{
+    char *escaped;
+
+    escaped = G_str_replace(input, "\\", "\\\\");
+    escaped = G_str_replace(escaped, "[", "\\[");
+    escaped = G_str_replace(escaped, "]", "\\]");
+    escaped = G_str_replace(escaped, "$", "\\$");
+
+    return escaped;
+}
+
 /* Generate form in HTML/TXT format.
  *  Pointer to resulting string is stored to 'form'. This string must be freed by application.
  *
@@ -60,8 +73,9 @@ F_generate(char *drvname, char *dbname, char *tblname, char *key, int keyval,
     G_debug(2, "Open driver");
     driver = db_start_driver(drvname);
     if (driver == NULL) {
-	G_warning("Cannot open driver\n");
-	sprintf(buf, "Cannot open driver '%s'<BR>", drvname);
+	G_warning("Cannot open driver");
+	sprintf(buf, "Cannot open driver '%s'<BR>",
+		escape_tcl_string(drvname));
 	*form = G_store(buf);
 	return -1;
     }
@@ -71,10 +85,10 @@ F_generate(char *drvname, char *dbname, char *tblname, char *key, int keyval,
     db_set_handle(&handle, dbname, NULL);
     G_debug(2, "Open database");
     if (db_open_database(driver, &handle) != DB_OK) {
-	G_warning("Cannot open database\n");
+	G_warning("Cannot open database");
 	db_shutdown_driver(driver);
-	sprintf(buf, "Cannot open database '%s' by driver '%s'<BR>", dbname,
-		drvname);
+	sprintf(buf, "Cannot open database '%s' by driver '%s'<BR>",
+		escape_tcl_string(dbname), escape_tcl_string(drvname));
 	*form = G_store(buf);
 	return -1;
     }
@@ -88,12 +102,13 @@ F_generate(char *drvname, char *dbname, char *tblname, char *key, int keyval,
     G_debug(2, "%s", buf);
     db_set_string(&sql, buf);
     if (db_open_select_cursor(driver, &sql, &cursor, DB_SEQUENTIAL) != DB_OK) {
-	G_warning("Cannot open select cursor\n");
+	G_warning("Cannot open select cursor");
 	db_close_database(driver);
 	db_shutdown_driver(driver);
 	sprintf(buf,
 		"Cannot open select cursor:<BR>'%s'<BR>on database '%s' by driver '%s'<BR>",
-		db_get_string(&sql), dbname, drvname);
+		escape_tcl_string(db_get_string(&sql)),
+		escape_tcl_string(dbname), escape_tcl_string(drvname));
 	*form = G_store(buf);
 	return -1;
     }
@@ -102,7 +117,7 @@ F_generate(char *drvname, char *dbname, char *tblname, char *key, int keyval,
     table = db_get_cursor_table(&cursor);
 
     if (db_fetch(&cursor, DB_NEXT, &more) != DB_OK) {
-	G_warning("Cannot fetch next record\n");
+	G_warning("Cannot fetch next record");
 	db_close_cursor(&cursor);
 	db_close_database(driver);
 	db_shutdown_driver(driver);
@@ -128,19 +143,23 @@ F_generate(char *drvname, char *dbname, char *tblname, char *key, int keyval,
 		db_append_string(&html, "<FORM>");
 
 		sprintf(buf, "<INPUT type=hidden name=%s value=\"%s\">",
-			F_DRIVER_FNAME, drvname);
+			escape_tcl_string(F_DRIVER_FNAME),
+			escape_tcl_string(drvname));
 		db_append_string(&html, buf);
 		/* Note: because html_library.tcl failes to parse
 		 *  <INPUT name=abc value='dbname=xxx'> and returnes
 		 *  name="xxx" value="dbname=xxx" order of value and name parameters is changed */
 		sprintf(buf, "<INPUT type=hidden value=\"%s\" name=%s>",
-			dbname, F_DATABASE_FNAME);
+			escape_tcl_string(dbname),
+			escape_tcl_string(F_DATABASE_FNAME));
 		db_append_string(&html, buf);
 		sprintf(buf, "<INPUT type=hidden name=%s value=\"%s\">",
-			F_TABLE_FNAME, tblname);
+			escape_tcl_string(F_TABLE_FNAME),
+			escape_tcl_string(tblname));
 		db_append_string(&html, buf);
 		sprintf(buf, "<INPUT type=hidden name=%s value=\"%s\">",
-			F_KEY_FNAME, key);
+			escape_tcl_string(F_KEY_FNAME),
+			escape_tcl_string(key));
 		db_append_string(&html, buf);
 
 	    }
@@ -156,19 +175,22 @@ F_generate(char *drvname, char *dbname, char *tblname, char *key, int keyval,
 		G_debug(2, "%s: %s", colname, db_get_string(&str));
 
 		if (edit_mode == F_VIEW) {
-		    sprintf(buf, "<B>%s : </B> %s <BR>", colname,
-			    db_get_string(&str));
+		    sprintf(buf, "<B>%s : </B> %s <BR>",
+			    escape_tcl_string(G_strdup(colname)),
+			    escape_tcl_string(db_get_string(&str)));
 		    db_append_string(&html, buf);
 		}
 		else {
-		    sprintf(buf, "<B>%s : </B>", colname);
+		    sprintf(buf, "<B>%s : </B>",
+			    escape_tcl_string(G_strdup(colname)));
 		    db_append_string(&html, buf);
 
 		    if (G_strcasecmp(colname, key) == 0) {
 			sprintf(buf,
 				"%s<BR> <INPUT type=hidden name=%s value=\"%s\">",
-				db_get_string(&str), colname,
-				db_get_string(&str));
+				escape_tcl_string(db_get_string(&str)),
+				escape_tcl_string(G_strdup(colname)),
+				escape_tcl_string(db_get_string(&str)));
 		    }
 		    else {
 			switch (ctype) {
@@ -187,7 +209,9 @@ F_generate(char *drvname, char *dbname, char *tblname, char *key, int keyval,
 			}
 			sprintf(buf,
 				"<INPUT type=text size=%s name=%s value=\"%s\"><BR>",
-				buf1, colname, db_get_string(&str));
+				escape_tcl_string(buf1),
+				escape_tcl_string(G_strdup(colname)),
+				escape_tcl_string(db_get_string(&str)));
 		    }
 		    db_append_string(&html, buf);
 		}

@@ -10,13 +10,13 @@
 ##########################################################################
 
 namespace eval GmRaster {
-    variable array opt # raster current options
+    variable array opt ;# raster current options
     variable count 1
-    variable array tree # mon
-    variable array lfile # raster
-    variable array lfilemask # raster
+    variable array tree ;# mon
+    variable array lfile ;# raster
+    variable array lfilemask ;# raster
     variable optlist
-    variable array dup # vector
+    variable array dup ;# vector
 }
 
 ###############################################################################
@@ -137,6 +137,14 @@ proc GmRaster::select_drapemap { id } {
 proc GmRaster::show_info { id } {
 	variable opt
 	set mapname $opt($id,1,map)
+	if {[string length $mapname] == 0} {
+		GmRaster::select_map $id
+		set mapname $opt($id,1,map)
+		if {[string length $mapname] == 0} {
+			GmLib::errmsg [G_msg "This action requires map name to be set"]
+			return
+		}
+	}
 	set cmd "r.info map=$mapname"		
 	run_panel $cmd
 }
@@ -145,6 +153,14 @@ proc GmRaster::show_info { id } {
 proc GmRaster::show_info_drape { id } {
 	variable opt
 	set mapname $opt($id,1,drapemap)
+	if {[string length $mapname] == 0} {
+		GmRaster::select_drapemap $id
+		set mapname $opt($id,1,drapemap)
+		if {[string length $mapname] == 0} {
+			GmLib::errmsg [G_msg "This action requires map name to be set"]
+			return
+		}
+	}
 	set cmd "r.info map=$mapname"		
 	run_panel $cmd
 }
