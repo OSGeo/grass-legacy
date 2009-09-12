@@ -5,7 +5,7 @@ exec $GRASS_WISH "$0" "$@"
 # Put current mapset and PERMANENT at the top of the list, mapsets are later written to SEARCH_PATH
 # and searched in this order
 
-lappend auto_path $env(GISBASE)/bwidget
+lappend auto_path "$env(GISBASE)/bwidget"
 package require -exact BWidget 1.2.1
 
 set env(GISDBASE) [exec g.gisenv get=GISDBASE]
@@ -13,7 +13,7 @@ set env(LOCATION_NAME) [exec g.gisenv get=LOCATION_NAME]
 set env(MAPSET) [exec g.gisenv get=MAPSET]
 
 # Include the select dialog code because it defines scroll bindings
-source $env(GISBASE)/etc/gtcltk/select.tcl
+source "$env(GISBASE)/etc/gtcltk/select.tcl"
 
 proc set_mapsets { } {
     global ms_ch ms_name nms

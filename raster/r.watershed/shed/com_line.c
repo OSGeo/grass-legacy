@@ -44,7 +44,7 @@ int com_line_Gwater(INPUT * input, OUTPUT * output)
 	input->com_line_ram = (char *)G_calloc(400, sizeof(char));
 	prog_name = G_store(RAM_NAME);
 	sprintf(input->com_line_ram,
-		"%s/etc/water/%s", G_getenv("GISBASE"), RAM_NAME);
+		"\"%s/etc/water/%s\"", G_getenv("GISBASE"), RAM_NAME);
 	fprintf(stderr,
 		"\nIf there is not enough ram for the fast mode (%s) to run,\n",
 		RAM_NAME);
@@ -53,7 +53,7 @@ int com_line_Gwater(INPUT * input, OUTPUT * output)
 	    input->slow = 1;
 	    input->com_line_seg = (char *)G_calloc(400, sizeof(char));
 	    sprintf(input->com_line_seg,
-		    "%s/etc/water/%s", G_getenv("GISBASE"), SEG_NAME);
+		    "\"%s/etc/water/%s\"", G_getenv("GISBASE"), SEG_NAME);
 	}
     }
     else {
@@ -61,7 +61,7 @@ int com_line_Gwater(INPUT * input, OUTPUT * output)
 	prog_name = G_store(SEG_NAME);
 	input->com_line_seg = (char *)G_calloc(400, sizeof(char));
 	sprintf(input->com_line_seg,
-		"%s/etc/water/%s", G_getenv("GISBASE"), SEG_NAME);
+		"\"%s/etc/water/%s\"", G_getenv("GISBASE"), SEG_NAME);
     }
 
     G_message(_("\nIf you hit <return> by itself for the next question, this"));
