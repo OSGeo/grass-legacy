@@ -233,12 +233,12 @@ int main(int argc, char *argv[])
     }
 
     /* Build command line */
-    sprintf(command, "%s/etc/", G_gisbase());
+    sprintf(command, "\"%s/etc/", G_gisbase());
 
     if (flag_seg->answer)
-	strcat(command, "r.watershed.seg");
+	strcat(command, "r.watershed.seg\"");
     else
-	strcat(command, "r.watershed.ram");
+	strcat(command, "r.watershed.ram\"");
 
     if (flag_flow->answer)
 	strcat(command, " -4");
