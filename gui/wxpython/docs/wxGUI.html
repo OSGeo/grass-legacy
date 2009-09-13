@@ -378,66 +378,71 @@ maintained, see <em><a href="g.region.html">g.region</a></em>.</dd>
 
 <dt><img src="icons/grass2/zoom-more.png">&nbsp;
   <em>Zoom menu</em></dt>
-<dd>Automatic zoom settings menu. Zoom to match the extents of a selected
-map, zoom to match the computational region (set with
-<em>g.region</em>), zoom to match the extents of a saved region or
-save the current extents to a named region file, or to set
-computational region (the mapset's <tt>WIND</tt> file) to match the
-current display extents (does not change the resolution).
-See <em><a href="g.region.html">g.region</a></em>.</dd>
+<dd>opens a dropdown menu that allows user to:<br>
+  <ul>
+    <li>Zoom to match the extents of a selected map</li>
+    <li>Zoom to match the computational region (set with <em>g.region</em>)</li>
+    <li>Zoom to match the extents of a saved region or
+        save the current extents to a named region file</li>
+    <li>Set computational region (the mapset's <tt>WIND</tt> file) to match the
+        current display extents (does not change the resolution).
+        See <em><a href="g.region.html">g.region</a></em>.</dd>
+  </ul>
 
 <dt><img src="icons/grass2/layer-raster-analyze.png">&nbsp;
   <em>Analyze menu</em></dt>
-<dd>Contains functions for distance measurement, creating histogram or
-profile tool.</dd>
+<dd>opens a dropdown menu with:<br>
 
-<dt><img src="icons/grass2/measure-length.png">&nbsp;
-  <em>Distance measurement tool</em></dt>
-<dd>Interactive measurement of lengths defined with the mouse. The
-length of each segment and the cumulative length of all segments
-measuered is displayed in the command output window frame. Lengths are
-measured in the current measurement unit,
-see <em><a href="d.measure.html">d.measure</a></em>.</dd>
+  <ul>
+    <li> <dt><img src="icons/grass2/measure-length.png">&nbsp;
+         <em>Distance measurement tool</em></dt>
+        <dd>Interactive measurement of lengths defined with the mouse. The
+        length of each segment and the cumulative length of all segments
+        measuered is displayed in the command output window frame. Lengths are
+        measured in the current measurement unit,
+        see <em><a href="d.measure.html">d.measure</a></em>.</dd></li>
 
-<dt><img src="icons/grass2/layer-raster-profile.png">&nbsp;
-  <em>Profile tool</em></dt>
-<dd>Interactively create profile of a raster map. Profile transect is
-drawn with the mouse in map display. The profile may be of the
-displayed map or a different map,
-see <em><a href="gm_profile.html">Profile Tool help
-page</a></em>.</dd>
+    <li><dt><img src="icons/grass2/layer-raster-profile.png">&nbsp;
+        <em>Profile tool</em></dt>
+      <dd>Interactively create profile of a raster map. Profile transect is
+      drawn with the mouse in map display. The profile may be of the
+      displayed map or a different map,
+      see <em><a href="gm_profile.html">Profile Tool help page</a></em>.</dd></li>
 
-<dt><img src="icons/grass2/layer-raster-histogram.png">&nbsp;
-  Display histogram of selected raster map</dt>
-<dd>Displays histogram of selected raster map or image in new window,
-see <em><a href="d.histogram.html">d.histogram</a></em>.</dd>
+    <li><dt><img src="icons/grass2/layer-raster-histogram.png">&nbsp;
+        <em>Histogram tool</em></dt>
+        <dd>Displays histogram of selected raster map or image in new window,
+        see <em><a href="d.histogram.html">d.histogram</a></em>.</dd></li>
+   </ul>
 
 <dt><img src="icons/grass2/element-add.png">&nbsp;
-  Add overlay</dt>
-<dd>Adds overlay to map display like barscale, north arrow, text.</dd>
+    <em>Add overlay</em></dt>
+    <dd>opens a dropdown menu that allows user to:<br>
 
-<dt><img src="icons/grass2/scalebar-add.png">&nbsp;
-  <em>Add scalebar and north arrow</em></dt>
-<dd>Adds layer to display a combined scalebar and north arrow. Options
-include scalebar placement (using screen coordinates or a mouse),
-scalebar format, and scalebar colors,
-see <em><a href="d.barscale.html">d.barscale</a></em>.</dd>
+  <ul>
+    <li> <dt><img src="icons/grass2/scalebar-add.png">&nbsp;
+         <em>Add scalebar and north arrow</em></dt>
+         <dd>Adds layer to display a combined scalebar and north arrow. Options
+         include scalebar placement (using screen coordinates or a mouse),
+         scalebar format, and scalebar colors,
+         see <em><a href="d.barscale.html">d.barscale</a></em>.</dd></li>
 
-<dt><img src="icons/grass2/legend-add.png">&nbsp;
-  <em>Add raster map legend</em></dt>
-<dd>Adds layer to display with legend of selected raster map,
-see <em><a href="d.legend.html">d.legend</a></em>.</dd>
+    <li><dt><img src="icons/grass2/legend-add.png">&nbsp;
+        <em>Add raster map legend</em></dt>
+        <dd>Adds layer to display with legend of selected raster map,
+        see <em><a href="d.legend.html">d.legend</a></em>.</dd></li>
 
-<dt><img src="icons/grass2/text-add.png">&nbsp;
-  <em>Add text layer</em></dt>
-<dd>Adds layer to display a line of text using default GRASS font
-(selected with <em><a href="d.font.html">d.font</a></em>).  Options
-include: text placement (screen coordinates); and text size, bolding,
-and color, see <em><a href="d.text.html">d.text</a></em>.</dd>
+    <li><dt><img src="icons/grass2/text-add.png">&nbsp;
+        <em>Add text layer</em></dt>
+        <dd>Adds layer to display a line of text using default GRASS font
+        (selected with <em><a href="d.font.html">d.font</a></em>).  Options
+        include: text placement (screen coordinates); and text size, bolding,
+        and color, see <em><a href="d.text.html">d.text</a></em>.</dd></li>
+  </ul>
 
 <dt><img src="icons/grass2/map-export.png">&nbsp;
-  <em>Export map display</em></dt>
-<dd>Exports visible map display to different raster graphic formats.</dd>
+  <em>Save display to PNG file</em></dt>
+<dd>Save the visible image in map display to different raster graphic formats.</dd>
 
 <dt><img src="icons/grass2/print.png">&nbsp;
   <em>Print map</em></dt>
