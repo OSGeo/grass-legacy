@@ -307,35 +307,37 @@ the computational region extents.
 <dl>
 
 <dt><img src="icons/grass2/show.png">&nbsp;
-  <em>Display active layers (current region)</em></dt>
+  <em>Display map</em></dt>
 <dd>Displays all active layers from layer tree at current resolution
 and region extents for that map display window.</dd>
 
 <dt><img src="icons/grass2/layer-redraw.png">&nbsp;
-  <em>Re-render and display all active
-layers and zoom to current region</em></dt>
-<dd>Resets the region to the display resolution and extents and forces
+  <em>Re-render map</em></dt>
+<dd>Resets the region to the display resolution and extent and forces
 re-display and re-rendering all active layers.</dd>
 
 <dt><img src="icons/grass2/erase.png">&nbsp;
-  <em>Erase display content</em></dt>
+  <em>Erase display</em></dt>
 <dd>Erases the currently selected map display to a white background;
 also removes all frames,
 see <em><a href="d.erase.html">d.erase</a>, <a href="d.frame.html">d.frame
 -e</a></em>.</dd>
 
 <dt><img src="icons/grass2/pointer.png">&nbsp;
-  <em>Arrow cursor</em></dt>
+  <em>Pointer</em></dt>
 <dd>Select arrow cursor for map display.</dd>
 
 <dt><img src="icons/grass2/info.png">&nbsp;
-  <em>Query tool (select a map first)</em></dt>
-<dd>Query selected raster, RGB raster (all three map channels will be
+  <em>Query raster/vector maps</em></dt>
+<dd>opens a dropdown menu that allows user to select to:<br>
+  <ul>
+    <li><dd>Query selected raster, RGB raster (all three map channels will be
 queried), or vector map(s) using the mouse. Map(s) must be selected
 before query.  Vector charts and thematic vector maps cannot be
-queried. The results of the query will be displayed in the console
-window,
-see <em><a href="r.what.html">r.what</a>, <a href="v.what.html">v.what</a></em>.</dd>
+queried. The results of the query will be displayed in the console window,
+see <em><a href="r.what.html">r.what</a>, <a href="v.what.html">v.what</a></em>.</dd></li>
+    <li><dd>Query vector map in edit mode</dd></li>
+  </ul>
 
 <dt><img src="icons/grass2/pan.png">&nbsp;
   <em>Pan</em></dt>
@@ -372,21 +374,22 @@ other GIS processes,
 see <em><a href="g.region.html">g.region</a></em>.</dd>
 
 <dt><img src="icons/grass2/zoom-last.png">&nbsp;
-  <em>Revert zoom</em></dt>
-<dd>Returns to the previous zoom. Up to 10 levels of zoom back are
+  <em>Return to pervious zoom</em></dt>
+<dd>Returns to the previous zoom extent. Up to 10 levels of zoom back are
 maintained, see <em><a href="g.region.html">g.region</a></em>.</dd>
 
 <dt><img src="icons/grass2/zoom-more.png">&nbsp;
-  <em>Zoom menu</em></dt>
+  <em>Zoom options</em></dt>
 <dd>opens a dropdown menu that allows user to:<br>
   <ul>
     <li>Zoom to match the extents of a selected map</li>
     <li>Zoom to match the computational region (set with <em>g.region</em>)</li>
-    <li>Zoom to match the extents of a saved region or
-        save the current extents to a named region file</li>
+    <li>Zoom to match the extents of the default region</li> 
+    <li>Zoom to match the extents of a saved region</li> 
     <li>Set computational region (the mapset's <tt>WIND</tt> file) to match the
-        current display extents (does not change the resolution).
-        See <em><a href="g.region.html">g.region</a></em>.</dd>
+        current display extents (does not change the resolution),
+        see <em><a href="g.region.html">g.region</a></em>.</dd>
+    <li>Save display geometry (current extents) to a named region file</li>
   </ul>
 
 <dt><img src="icons/grass2/layer-raster-analyze.png">&nbsp;
