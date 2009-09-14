@@ -306,8 +306,8 @@ if [ ! "$GRASS_PYTHON" ] ; then
     else
         GRASS_PYTHON=python
     fi
+    export GRASS_PYTHON
 fi
-export GRASS_PYTHON
 
 # Set PYTHONPATH to find GRASS Python modules
 if [ ! "$PYTHONPATH" ] ; then
