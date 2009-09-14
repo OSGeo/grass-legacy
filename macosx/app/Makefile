@@ -29,6 +29,11 @@ PROJ_BIN = `echo "${NAD2BIN}" | sed -e "s,.=,," -e "s,/nad2bin,,"`
 endif
 # get python version - use python in path, should be config'd python
 PYVER = `python -V 2>&1 | cut -d \  -f 2 | cut -d . -f 1,2`
+ifneq ($(filter ppc64 x86_64,$(MACOSX_ARCHS_WXPYTHON)),)
+WX64BIT = 1
+else
+WX64BIT = 0
+endif
 
 default: macosxapp
 
@@ -71,6 +76,7 @@ $(OBJDIR)/grass.sh: grass.sh.in
 	-e "s,@PROJ_BIN_PATH@,$(PROJ_BIN):," \
 	-e "s,@X11@,$(USE_X11),g" \
 	-e "s,@PYVER@,$(PYVER),g" \
+	-e "s,@WX64BIT@,$(WX64BIT),g" \
 	grass.sh.in > $(OBJDIR)/grass.sh
 
 clean:

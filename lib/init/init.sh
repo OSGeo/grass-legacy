@@ -301,7 +301,11 @@ if [ ! "$GRASS_WISH" ] ; then
 fi
 
 if [ ! "$GRASS_PYTHON" ] ; then
-      GRASS_PYTHON=python
+    if [ "$MACOSX" ] ; then
+        GRASS_PYTHON=pythonw
+    else
+        GRASS_PYTHON=python
+    fi
 fi
 export GRASS_PYTHON
 
