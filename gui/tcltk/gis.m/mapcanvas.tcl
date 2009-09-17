@@ -115,6 +115,7 @@ namespace eval MapCanvas {
 
 	# proj_is_ll is 1 for a Lat/Lon projection, 0 otherwise
 	global proj_is_ll
+    
 	# DMS format: 0 is ddd.dddddd,  1 is ddd:mm.mmmm', 2 is ddd:mm'ss.sss"
 	global dms_format
 
@@ -174,13 +175,9 @@ proc MapCanvas::create { } {
 
 	# run get_mapunits to check projection
 	MapCanvas::get_mapunits
-	if { $proj_is_ll } {
-	    # Explore mode is off by default (can't peer past 90deg)
-	    set exploremode($mon) 0
-	} else {
-	    # Explore mode is on by default
-	    set exploremode($mon) 1
-	}
+    
+    # exploremode set initially (map fills display canvas)
+	set exploremode($mon) 1
 
 # FIXME:  make this settable from the UI or use GRASS_DMS_FORMAT enviro var
 	# DMS format: 0 is ddd.dddddd,  1 is ddd:mm.mmmm', 2 is ddd:mm'ss.sss"
@@ -398,14 +395,46 @@ proc MapCanvas::create { } {
 # Sense - 0 means largest no larger, 1 means smallest no smaller
 # We will change rectangle 1
 proc MapCanvas::shrinkwrap {sense nsew1 ar2 } {
+    global proj_is_ll
+        
 	foreach {n1 s1 e1 w1} $nsew1 {break}
 
+    # Limit extents for latlon regions
+    if {$proj_is_ll && $sense} {
+        if {$n1 >  90} {set n1  90}
+        if {$s1 >  90} {set s1  90}
+        if {$n1 < -90} {set n1 -90}
+        if {$s1 < -90} {set s1 -90}
+    
+        while {$e1 >  360} {set e1 [expr $e1 - 360]}
+        while {$e1 < -360} {set e1 [expr $e1 + 360]}
+        while {$w1 >  360} {set w1 [expr $w1 - 360]}
+        while {$w1 < -360} {set w1 [expr $w1 + 360]}
+    
+        if {$w1 >  180 && $w1 <=  360} {set w1 [expr {$w1 - 360}]}
+        if {$w1 < -180 && $w1 >= -360} {set w1 [expr {$w1 + 360}]}
+        if {$e1 >  180 && $e1 <=  360} {set e1 [expr {$e1 - 360}]}
+        if {$e1 < -180 && $e1 >= -360} {set e1 [expr {$e1 + 360}]}
+    }
+        
 	set ns1 [expr {$n1 - $s1}]
 	set ew1 [expr {$e1 - $w1}]
 
+    # reset for latlon location
+    if {$proj_is_ll && $sense} {
+        if {$ns1 <   0} {set ns1 [expr abs($ns1)]}
+        if {$ns1 > 180} {set ns1 180}
+        if {$ew1 <   0} {set ew1 [expr 360 - abs($ew1)]}
+        if {$ew1 > 360} {set ew1 360}
+    }
+
 	# Width / height
 	# Big aspect ratio is wide, small aspect ratio is tall
-	set ar1 [expr { 1.0 * $ew1 / $ns1 }]
+	if {$ns1 != 0} {
+        set ar1 [expr { 1.0 * $ew1 / $ns1 }]
+    } else {
+        return
+    }
 
 	# If rectangle one is wider than rectangle 2.
 	# (or rectangle one isn't wider rectangle box 2 and the sense is inverted)
@@ -424,12 +453,14 @@ proc MapCanvas::shrinkwrap {sense nsew1 ar2 } {
 		set re1 $e1
 		set rw1 $w1
 		set goal [expr {$ew1 / $ar2}]
+        
+        # set limit for latlon location        
 		set midpoint [expr {$s1 + $ns1 / 2}]
 		set rn1 [expr {$midpoint + $goal / 2}]
 		set rs1 [expr {$midpoint - $goal / 2}]
 	}
 
-	set result [list $rn1 $rs1 $re1 $rw1]
+    set result [list $rn1 $rs1 $re1 $rw1]
 
 	return $result
 }
@@ -437,6 +468,9 @@ proc MapCanvas::shrinkwrap {sense nsew1 ar2 } {
 
 proc MapCanvas::get_mapunits {} {
 	global proj_is_ll
+    
+    set proj_is_ll 0
+    
 	# get map units from PROJ_UNITS
 	if {![catch {open "|g.proj -p" r} input]} {
 	    set key ""
@@ -444,7 +478,7 @@ proc MapCanvas::get_mapunits {} {
 	    while {[gets $input line] >= 0} {
 	    	if { [string equal "XY location (unprojected)" "$line"] } {
 	    	    set mapunits "map units"
-		    set proj_is_ll 0
+                set prj(proj) "xy"
 	    	    break
 	    	}
 	    	regexp -nocase {^(.*):(.*)$} $line trash key value
@@ -452,7 +486,11 @@ proc MapCanvas::get_mapunits {} {
 	    	set value [string trim $value]
 	    	set prj($key) $value	
 	    }
-	    if {[catch {close $input} error]} {
+
+        # Set for latlon locations
+        if { $prj(proj) == "ll"} {set proj_is_ll 1}
+        
+        if {[catch {close $input} error]} {
 			GmLib::errmsg $error [G_msg "g.proj or projection error"]
 			return
 	    } 
@@ -462,12 +500,6 @@ proc MapCanvas::get_mapunits {} {
 	# May already be set above if locn was XY.
 	if { ! [ info exist mapunits ] } {
 	    set mapunits $prj(units)
-
-	    if { [string eq "Lat/Lon" "$prj(name)"] } {
-		set proj_is_ll 1
-	    } else {
-		set proj_is_ll 0
-	    }
 	}
 
 	return $mapunits
@@ -565,7 +597,7 @@ proc MapCanvas::driversettings { mon } {
 		set driver_h($mon) [expr {round ($y2 - $y1)}]
 		set driver_w($mon) [expr {round ($x2 - $x1)}]
 	}
-
+    
 	#set display environment
 	set env(GRASS_WIDTH) "$driver_w($mon)"
 	set env(GRASS_HEIGHT) "$driver_h($mon)"
@@ -587,8 +619,8 @@ proc MapCanvas::runprograms { mon mod } {
 	variable opclist
 	variable mapframe
 	variable zoom_attrs
-	global proj_is_ll
 	variable exploremode
+	global proj_is_ll
 	global env
 	global drawprog
 	global devnull
@@ -607,30 +639,14 @@ proc MapCanvas::runprograms { mon mod } {
 	set values [MapCanvas::currentzoom $mon]
 	set options {}
 	foreach attr $zoom_attrs value $values {
-		if {$attr != "rows" && $attr != "cols"} {
-		    if { $proj_is_ll } {
-			if {$attr == "n" && $value > 90} {
-			    set value 90
-			    if {$exploremode($mon)} {
-			        tk_messageBox -type ok -icon warning -parent .mapcan($mon) \
-				    -message [G_msg "Cannot explore beyond the poles: switching into constrained mode"] \
-				    -title [G_msg "Switching to constrained mode"]
-			        MapCanvas::exploremode $mon 0
-			    }
-			}
-			if {$attr == "s" && $value < -90} {
-			    set value -90
-			    if {$exploremode($mon)} {
-				tk_messageBox -type ok -icon warning -parent .mapcan($mon) \
-				    -message [G_msg "Cannot explore beyond the poles: switching into constrained mode"] \
-				    -title [G_msg "Switching to constrained mode"]
-				MapCanvas::exploremode $mon 0
-			    }
-			}
-		    }
-		    lappend options "$attr=$value"
-		}
-	}
+        if { $proj_is_ll} {
+            if {$attr == "n" && $value >  90} {set value  90}
+            if {$attr == "n" && $value < -90} {set value -90}
+            if {$attr == "s" && $value >  90} {set value  90}
+            if {$attr == "s" && $value < -90} {set value -90}
+        }
+        if {$attr != "rows" && $attr != "cols"} {lappend options "$attr=$value"}
+    }
 
 	# Now use the region values to get the region printed back out in -p format
 	# including lat long now as dd:mm:ss
@@ -642,7 +658,7 @@ proc MapCanvas::runprograms { mon mod } {
 			}
 		}
 		if {[catch {close $input} error]} {
-			GmLib::errmsg $error [G_msg "Error setting region"]
+			GmLib::errmsg $error [G_msg "Error setting region 1"]
 			return
 		}
 		# Finally put this into wind file format to use with GRASS_REGION
@@ -652,13 +668,11 @@ proc MapCanvas::runprograms { mon mod } {
 	} 
 
 	set MapCanvas::msg($mon) [G_msg "please wait..."]
-	$mapframe($mon) showstatusbar progression
+	$mapframe($mon) showstatusbar progression   
 
 	incr drawprog
 	# only use dynamic region for display geometry; use WIND for computational geometry
 	set env(GRASS_REGION) $gregion
-
-	
 
 	# Setting the font really only needs to be done once per display start
 	incr drawprog
@@ -945,10 +959,12 @@ proc MapCanvas::check_saveregion {mon saveregion} {
 # Pass second argument true to switch in, false to switch out
 proc MapCanvas::exploremode { mon boolean } {
 	variable exploremode
+    variable can
 
 	# Set the explore mode to yes or no (the input)
 	set exploremode($mon) $boolean
 
+    $can($mon) delete map$mon
 	# Request a redraw with a geometry change (not just a zoom change).
 	# Flag it at as such (2)
 	MapCanvas::request_redraw $mon 2
@@ -1017,18 +1033,8 @@ proc MapCanvas::pointer { mon } {
 		global screenpct pctentry pixelentry geoentry geogentry llvert llhoriz
 		set b1east [MapCanvas::scrx2mape $mon %x]
 		set b1north [MapCanvas::scry2mapn $mon %y]
-		if { $proj_is_ll } {
-		    if { $b1north < -90 } {
-			set coords($mon) "$b1east -90"
-		    } elseif { $b1north > 90 } {
-			set coords($mon) "$b1east 90"
-		    } else {
-			set coords($mon) "$b1east $b1north"
-		    }
-		} else {
-		    set coords($mon) "$b1east $b1north"
-		}
-
+        set coords($mon) "$b1east $b1north"
+        
 		# grab coordinates at mouse click for georectification
 		if { [info exists geoentry] } {
 			$geoentry insert 0 $b1coords
@@ -1106,29 +1112,29 @@ proc MapCanvas::fancy_ll_res { res } {
 
 	switch $dms_format {
 	    0 {
-		set res_str [format "%.6g" $res]
+            set res_str [format "%.6g" $res]
 	    }
 	    1 {
-		if { $min_f == 0 } {
-			set res_str [format "%.0f\xB0" $deg_d ]
-		} else {
-			set res_str [format "%.0f\xB0%02.4g'" $deg_d $min_f ]
-		}
+            if { $min_f == 0 } {
+                set res_str [format "%.0f\xB0" $deg_d ]
+            } else {
+                set res_str [format "%.0f\xB0%02.4g'" $deg_d $min_f ]
+            }
 	    }
 	    2 {
 		# 'g.region -g' doesn't report enough sig digs for LL so we get rounding errors!
-		if { [expr abs($sec_f - 60)] < 0.0001 } { 
-		    set min_d [expr $min_d + 1]
-		    set sec_f "0"
-		}
+            if { [expr abs($sec_f - 60)] < 0.0001 } { 
+                set min_d [expr $min_d + 1]
+                set sec_f "0"
+            }
 
-		if { $sec_f != 0 } {
-			set res_str [format "%.0f\xB0%02.0f'%02.3g\"" $deg_d $min_d $sec_f ]
-		} elseif { $min_d != 0 } {
-			set res_str [format "%.0f\xB0%02.0f'" $deg_d $min_d ]
-		} else {
-			set res_str [format "%.0f\xB0" $deg_d ]
-		}
+            if { $sec_f != 0 } {
+                set res_str [format "%.0f\xB0%02.0f'%02.3g\"" $deg_d $min_d $sec_f ]
+            } elseif { $min_d != 0 } {
+                set res_str [format "%.0f\xB0%02.0f'" $deg_d $min_d ]
+            } else {
+                set res_str [format "%.0f\xB0" $deg_d ]
+            }
 	    }
 	}
 
@@ -1171,15 +1177,15 @@ proc MapCanvas::fancy_ll { eastcoord northcoord } {
 
 	switch $dms_format {
 	    0 {
-		set ecoord [format "%.6f\xB0 %s" [expr abs($eastcoord)] $hem_str ]
+            set ecoord [format "%.6f\xB0 %s" [expr abs($eastcoord)] $hem_str ]
 	    }
 	    1 {
-		set ecoord [format "%3.0f\xB0 %02.4f' %s" \
-			$deg_d $min_f $hem_str ]
+            set ecoord [format "%3.0f\xB0 %02.4f' %s" \
+                $deg_d $min_f $hem_str ]
 	    }
 	    2 {
-		set ecoord [format "%3.0f\xB0%02.0f'%06.3f\"%s" \
-			$deg_d $min_d $sec_f $hem_str ]
+            set ecoord [format "%3.0f\xB0%02.0f'%06.3f\"%s" \
+                $deg_d $min_d $sec_f $hem_str ]
 	    }
 	}
 
@@ -1205,10 +1211,8 @@ proc MapCanvas::fancy_ll { eastcoord northcoord } {
 		    set ncoord [format "%.6f\xB0 %s" [expr abs($northcoord)] $hem_str ]
 		}
 		1 {
-
 		    set ncoord [format "%2.0f\xB0 %02.4f' %s" \
 			  $deg_d $min_f $hem_str ]
-
 		}
 		2 {
 		    set ncoord [format "%2.0f\xB0%02.0f'%06.3f\"%s" \
@@ -1244,7 +1248,7 @@ proc MapCanvas::currentzoom { mon } {
 	foreach attr $zoom_attrs {
 		lappend region $monitor_zooms($mon,1,$attr)
 	}
-
+    
 	# If explore mode is enabled, set region geometry to match the canvas
 	# and set map resolution proportional to map size to maintain constant
 	# numbers of pixels in display.
@@ -1252,35 +1256,27 @@ proc MapCanvas::currentzoom { mon } {
 		# Set the region extents to the smallest region no smaller than the canvas
 		set canvas_ar [expr {1.0 * $canvas_w($mon) / $canvas_h($mon)}]
 		foreach {n s e w} [MapCanvas::shrinkwrap 1 [lrange $region 0 3] $canvas_ar] {break}
-		# In Lat/Lon N and S can not be larger than 90!
-# FIXME:
-#puts "-> n=$n  s=$s  e=$e  w=$w"
-		if { $proj_is_ll } {
-		    if { $n >  90 } {
-			set n  90
-			tk_messageBox -type ok -icon warning -parent .mapcan($mon) \
-			    -message [G_msg "Cannot explore beyond the poles: switching into constrained mode"] \
-			    -title [G_msg "Switching to constrained mode"]
-			MapCanvas::exploremode $mon 0
-		    }
-		    if { $s < -90 } {
-			set s -90
-			tk_messageBox -type ok -icon warning -parent .mapcan($mon) \
-			    -message [G_msg "Cannot explore beyond the poles: switching into constrained mode"] \
-			    -title [G_msg "Switching to constrained mode"]
-			MapCanvas::exploremode $mon 0
-		    }
-		}
-#puts "=> n=$n  s=$s  e=$e  w=$w"
-		set expanded_region "$n $s $e $w"
+
+        set expanded_region "$n $s $e $w"
+        set ns [expr $n - $s]
+        set ew [expr $e - $w]
+
+        # adjust for latlon locations
+        if {$proj_is_ll} {
+            if {$ns > 180} {set ns 180}
+            if {$ew > 360} {set ew 360}
+            if {$ew <   0} {set ew [expr $ew + 360]}
+        }
+        
 		# Calculate the resolutions proportional to the map size
-		set explore_nsres [expr {1.0 * ($n - $s) / $canvas_h($mon)}]
-		set explore_ewres [expr {1.0 * ($e - $w) / $canvas_w($mon)}]
-		set explore_rows [expr round(abs($n-$s)/$explore_nsres)]
-		set explore_cols [expr round(abs($e-$w)/$explore_ewres)]
+		set explore_nsres [expr {1.0 * ($ns) / $canvas_h($mon)}]
+		set explore_ewres [expr {1.0 * ($ew) / $canvas_w($mon)}]
+		set explore_rows [expr round(abs($ns)/$explore_nsres)]
+		set explore_cols [expr round(abs($ew)/$explore_ewres)]
 		lappend expanded_region $explore_nsres $explore_ewres $explore_rows $explore_cols
 		set region $expanded_region
-	}
+
+    }
 
 	# create region information string for status bar message
 	set rows [lindex $region 6]
@@ -1290,19 +1286,19 @@ proc MapCanvas::currentzoom { mon } {
 
 	if { $nsres == $ewres || $exploremode($mon) } {
 	    if { $proj_is_ll } {
-		set res_str [MapCanvas::fancy_ll_res $nsres]
+            set res_str [MapCanvas::fancy_ll_res $nsres]
 	    } else {
-		set res_str [format "%g" $nsres]
+            set res_str [format "%g" $nsres]
 	    }
 	    set MapCanvas::regionstr [format [G_msg "Display: rows=%d  columns=%d  resolution=%s\
 		    $mapunits"] $rows $cols $res_str]
 	} else {
 	    if { $proj_is_ll } {
-		set MapCanvas::regionstr [format [G_msg "Display: rows=%d  cols=%d  N-S res=%s  E-W res=%s"] \
-		    $rows $cols [MapCanvas::fancy_ll_res $nsres] [MapCanvas::fancy_ll_res $ewres]]
+            set MapCanvas::regionstr [format [G_msg "Display: rows=%d  cols=%d  N-S res=%s  E-W res=%s"] \
+                $rows $cols [MapCanvas::fancy_ll_res $nsres] [MapCanvas::fancy_ll_res $ewres]]
 	    } else {
-		set MapCanvas::regionstr [format [G_msg "Display: rows=%d  cols=%d  N-S res=%g  E-W res=%g"] \
-		    $rows $cols $nsres $ewres]
+            set MapCanvas::regionstr [format [G_msg "Display: rows=%d  cols=%d  N-S res=%g  E-W res=%g"] \
+                $rows $cols $nsres $ewres]
 	    }
 	}
 
@@ -1319,6 +1315,7 @@ proc MapCanvas::zoom_new {mon args} {
 	variable monitor_zooms
 	variable zoomhistories
 	variable zoom_attrs
+    global proj_is_ll
 
 	# Demote all of the zoom history
 	for {set i $zoomhistories} {$i > 1} {incr i -1} {
@@ -1330,9 +1327,9 @@ proc MapCanvas::zoom_new {mon args} {
 
 	# If resolution values aren't present we just use existing values.
 	set present_attrs [lrange $zoom_attrs 0 [expr {[llength $args] - 1}]]
-
+    
 	foreach value $args attr $present_attrs {
-		set monitor_zooms($mon,1,$attr) $value
+        set monitor_zooms($mon,1,$attr) $value        
 	}
 }
 
@@ -1365,7 +1362,8 @@ proc MapCanvas::zoom_previous {mon} {
 # Zoom to something loaded from a g.region command
 proc MapCanvas::zoom_gregion {mon args} {
 	global devnull
-
+    global proj_is_ll
+    
 	if {![catch {open [concat "|g.region" "-ugp" $args "2> $devnull"] r} input]} {
 		while {[gets $input line] >= 0} {
 			if { [regexp -nocase {^([a-z]+)=(.*)$} $line trash key value] } {
@@ -1397,6 +1395,24 @@ proc MapCanvas::zoom_gregion {mon args} {
 		# recalculate region north and east in even multiple of resolution
 		set parts(e) [expr $parts(w) + $width]
 		set parts(n) [expr $parts(s) + $height]
+        
+        # Limit extents for latlon regions
+        if {$proj_is_ll} {
+            if {$parts(n) >  90} {set parts(n)  90}
+            if {$parts(s) >  90} {set parts(s)  90}
+            if {$parts(n) < -90} {set parts(n) -90}
+            if {$parts(s) < -90} {set parts(s) -90}
+        
+            while {$parts(e) >  360} {set parts(e) [expr $parts(e) - 360]}
+            while {$parts(e) < -360} {set parts(e) [expr $parts(e) + 360]}
+            while {$parts(w) >  360} {set parts(w) [expr $parts(w) - 360]}
+            while {$parts(w) < -360} {set parts(w) [expr $parts(w) + 360]}
+        
+            if {$parts(w) >  180 && $parts(w) <=  360} {set parts(w) [expr {$parts(w) - 360}]}
+            if {$parts(w) < -180 && $parts(w) >= -360} {set parts(w) [expr {$parts(w) + 360}]}
+            if {$parts(e) >  180 && $parts(e) <=  360} {set parts(e) [expr {$parts(e) - 360}]}
+            if {$parts(e) < -180 && $parts(e) >= -360} {set parts(e) [expr {$parts(e) + 360}]}
+        }
 		
 		MapCanvas::zoom_new $mon $parts(n) $parts(s) $parts(e) \
 			$parts(w) $parts(nsres) $parts(ewres) $parts(rows) $parts(cols)
@@ -1459,7 +1475,7 @@ proc MapCanvas::set_wind {mon args overwrite} {
 	}
 	
 	if {[catch {eval [list exec -- $cmd] $args $options >& $devnull} error]} {
-		GmLib::errmsg $error [G_msg "Error setting region"]
+		GmLib::errmsg $error [G_msg "Error setting region 2"]
 	}
 	
 }
@@ -1568,14 +1584,19 @@ proc MapCanvas::zoomregion { mon zoom } {
 	variable areaY1 
 	variable areaX2 
 	variable areaY2
+    global proj_is_ll
 
 	set clickzoom 0
-	
+    	
 	# get display extents in geographic coordinates
 	set dispnorth [scry2mapn $mon 0]
 	set dispsouth [scry2mapn $mon $canvas_h($mon)]
 	set dispeast  [scrx2mape $mon $canvas_w($mon)]
 	set dispwest  [scrx2mape $mon 0]
+    set disp_ns [expr $dispnorth - $dispsouth]
+    set disp_ew [expr $dispeast - $dispwest]
+    
+    if {$proj_is_ll && $disp_ew < 0} {set disp_ew [expr $disp_ew + 360]}
 
 	# minimum zoom by rectangle size = 15pix. For users with shaky hends or jerky mouses
 	if {abs($areaX2($mon)-$areaX1($mon)) < 15 && abs($areaY2($mon)-$areaY1($mon)) < 15 } {
@@ -1604,10 +1625,11 @@ proc MapCanvas::zoomregion { mon zoom } {
 	set east  [scrx2mape $mon $cright]
 	set west  [scrx2mape $mon $cleft]
 	# (this is all you need to zoom in with box)
-
+        
 	# if click and no drag, zoom in or out by fraction of original area and center on the click spot
 	if {($areaX2($mon) == 0) && ($areaY2($mon) == 0)} {set clickzoom 1}
-	# get first click location in map coordinates for recentering with 1-click zooming
+
+    # get first click location in map coordinates for recentering with 1-click zooming
 	set newcenter_n [scry2mapn $mon $areaY1($mon)]
 	set newcenter_e [scrx2mape $mon $areaX1($mon)]	
 
@@ -1626,23 +1648,38 @@ proc MapCanvas::zoomregion { mon zoom } {
 	# recenters region in display window at spot clicked
 	if {$clickzoom == 1} {
 		# calculate amount to zoom in or out in geographic distance
-		set nsscale [expr (($dispnorth - $dispsouth) - ($dispnorth - $dispsouth)/sqrt(2))/2]
-		set ewscale [expr (($dispeast - $dispwest) - ($dispeast - $dispwest)/sqrt(2))/2]
+		set nsscale [expr ($disp_ns - $disp_ns/sqrt(2))/2]
+		set ewscale [expr ($disp_ew - $disp_ew/sqrt(2))/2]
 		if {$zoom == 1} {
 			# zoom in
 			set north [expr {$dispnorth - $nsscale + $shift_n}]
 			set south [expr {$dispsouth + $nsscale + $shift_n}]
-			set east [expr {$dispeast - $ewscale + $shift_e}]
-			set west [expr {$dispwest + $ewscale + $shift_e}]
+			set east  [expr {$dispeast  - $ewscale + $shift_e}]
+			set west  [expr {$dispwest  + $ewscale + $shift_e}]
 		} elseif {$zoom == -1} {
 			# zoom out
-			set north [expr {$dispnorth + $nsscale + $shift_n}]
-			set south [expr {$dispsouth - $nsscale + $shift_n}]
-			set east [expr {$dispeast + $ewscale + $shift_e}]
-			set west [expr {$dispwest - $ewscale + $shift_e}]
-		}
-	}
-
+            if {$proj_is_ll && $disp_ns >= 178} {
+                # Limit extents for latlon regions
+                set north $dispnorth
+                set south $dispsouth
+            } else {
+                # shift and scale
+                set north [expr {$dispnorth + $nsscale + $shift_n}]
+                set south [expr {$dispsouth - $nsscale + $shift_n}]
+            }
+            
+            if {$proj_is_ll && $disp_ew >= 358} {
+                # if the disp_ew is 360 or more, just shift the center don't rescale
+                set east [expr {$dispeast + $shift_e}]
+                set west [expr {$dispwest + $shift_e}]
+                set east [expr {$dispeast + $shift_e}]
+                set west [expr {$dispwest + $shift_e}]
+            } else {
+                set east [expr {$dispeast + $ewscale + $shift_e}]
+                set west [expr {$dispwest - $ewscale + $shift_e}]
+            }
+        }
+    }
 
 	# zoom out with box
 	# box determines zoom out proportion, longest box dimension determines zoom,
@@ -1653,53 +1690,93 @@ proc MapCanvas::zoomregion { mon zoom } {
 		# Calculate the box geometry--to be used for new region geometry
 		set box_ns [expr $north-$south]
 		set box_ew [expr $east-$west]
+        
+        # reset for latlon location
+        if {$proj_is_ll && $box_ew < 0} {set box_ew [expr 360 - abs($box_ew)]}
+        
 		# calcuate aspect ratio for zoom box
 		set box_aspect [expr $box_ns/$box_ew]
+        
 		# calculate zoomout ratio for longest box dimension
 		if { $box_ns > $box_ew } {
-			set zoomratio [expr ($dispnorth - $dispsouth)/$box_ns]
-			set new_ns [expr ($dispnorth - $dispsouth) * $zoomratio]
+			set zoomratio [expr ($disp_ns)/$box_ns]
+			set new_ns [expr $disp_ns * $zoomratio]
 			set new_ew [expr $new_ns / $box_aspect]
 		} else {
-			set zoomratio [expr ($dispeast - $dispwest)/$box_ew]
-			set new_ew [expr ($dispeast - $dispwest) * $zoomratio]
+			set zoomratio [expr ($disp_ew)/$box_ew]
+			set new_ew [expr ($disp_ew) * $zoomratio]
 			set new_ns [expr $new_ew * $box_aspect]
 		}
 
 		# get zoom-out box center
-		set boxcenter_n [expr $south + (($north - $south)/2)]
-		set boxcenter_e [expr $west + (($east - $west)/2)]
+		set boxcenter_n [expr $south + ($box_ns/2)]
+                
+        # reset for latlon location
+        if {$proj_is_ll && $box_ew < 0} {set box_ew [expr 360 - abs($box_ew)]}
+
+		set boxcenter_e [expr $west + ($box_ew/2)]
 		
 		# zoom out to new extents
-		set north [expr $boxcenter_n + ($new_ns/2)]
-		set south [expr $boxcenter_n - ($new_ns/2)]
-		set east [expr $boxcenter_e + ($new_ew/2)]
-		set west [expr $boxcenter_e - ($new_ew/2)]
-	}
+        if {$proj_is_ll && $disp_ns >= 178} {
+            # limits for latlon locations
+            set north $dispnorth
+            set south $dispsouth
+        } else {
+            set north [expr $boxcenter_n + ($new_ns/2)]
+            set south [expr $boxcenter_n - ($new_ns/2)]
+        }
+
+        if {$proj_is_ll && $disp_ew >= 358} {
+            # if the disp_ew is 360 or more, just shift the center don't rescale
+            set east [expr $dispeast + ($oldcenter_e - $boxcenter_e)]
+            set west [expr $dispwest + ($oldcenter_e - $boxcenter_e)]
+        } else {
+            set east [expr $boxcenter_e + ($new_ew/2)]
+            set west [expr $boxcenter_e - ($new_ew/2)]
+        }
+    }
+
 
 	#set starting point (sw corner)
-	set west [expr $ewres*round($west/$ewres)]
+	set west  [expr $ewres*round($west/$ewres)]
 	set south [expr round($south/$nsres)*$nsres]
 
 	# get original width and height
-	set width [expr abs($east - $west)]
+	set width  [expr abs($east - $west)]
 	set height [expr abs($north - $south)]
-	
+
 	# get columns and rows rounded to nearest multiple of resolution
 	set cols [expr round($width/$ewres)]
 	set rows [expr round($height/$nsres)]
 	
 	# reset width and height in even multiples of resolution
-	set width [expr $cols * $ewres]
+	set width  [expr $cols * $ewres]
 	set height [expr $rows * $nsres]
 
 	# recalculate region north and east in even multiple of resolution
-	set east [expr $west + $width]
+	set east  [expr $west + $width]
 	set north [expr $south + $height]
 
+    # Limit extents for latlon regions
+    if {$proj_is_ll} {
+        if {$north >  90} {set north  90}
+        if {$south >  90} {set south  90}
+        if {$north < -90} {set north -90}
+        if {$south < -90} {set south -90}
+    
+        while {$east >  360} {set east [expr $east - 360]}
+        while {$east < -360} {set east [expr $east + 360]}
+        while {$west >  360} {set west [expr $west - 360]}
+        while {$west < -360} {set west [expr $west + 360]}
+    
+        if {$west >  180 && $west <=  360} {set west [expr {$west - 360}]}
+        if {$west < -180 && $west >= -360} {set west [expr {$west + 360}]}
+        if {$east >  180 && $east <=  360} {set east [expr {$east - 360}]}
+        if {$east < -180 && $east >= -360} {set east [expr {$east + 360}]}
+    }
 
-	MapCanvas::zoom_new $mon $north $south $east $west $nsres $ewres $rows $cols
-
+    MapCanvas::zoom_new $mon $north $south $east $west $nsres $ewres $rows $cols
+    
 	# redraw map
 	$can($mon) delete map$mon
 	$can($mon) delete area area2
@@ -1737,10 +1814,11 @@ proc MapCanvas::panbind { mon } {
 
 	bind $can($mon) <B1-Motion> {
 		global mon
+        
 		set scrxmov %x
 		set scrymov %y
 		set eastcoord  [format $outfmt_coords [eval MapCanvas::scrx2mape $mon %x] ]
-		set eastcoord  [format $outfmt_coords [eval MapCanvas::scrx2mape $mon %x] ]
+#		set eastcoord  [format $outfmt_coords [eval MapCanvas::scrx2mape $mon %x] ]
 		if { $proj_is_ll } {
 		    set northcoord [eval MapCanvas::scry2mapn $mon %y]
 		    set coords($mon) [eval MapCanvas::fancy_ll $eastcoord $northcoord]
@@ -1795,15 +1873,12 @@ proc MapCanvas::dragpan {mon x y} {
 }
 
 proc MapCanvas::pan { mon } {
-	variable start_x 
-	variable start_y
 	variable from_x 
 	variable from_y
 	variable to_x 
 	variable to_y
 	variable can
-	variable can
-	variable monitor_zooms
+    global proj_is_ll
 
 	# get map coordinate shift
 	set from_e [scrx2mape $mon $from_x]
@@ -1813,13 +1888,13 @@ proc MapCanvas::pan { mon } {
 
 	# get region extents
 	foreach {map_n map_s map_e map_w} [MapCanvas::currentzoom $mon] {break}
-
+    
 	# set new region extents
 	set north [expr {$map_n - ($to_n - $from_n)}]
 	set south [expr {$map_s - ($to_n - $from_n)}]
 	set east  [expr {$map_e - ($to_e - $from_e)}]
 	set west  [expr {$map_w - ($to_e - $from_e)}]
-
+    
 	# reset region and redraw map
 	MapCanvas::zoom_new $mon $north $south $east $west
 
@@ -1985,8 +2060,6 @@ proc MapCanvas::measure { mon x y } {
 	set linex1 $linex2
 	set liney1 $liney2
 }
-
-
 
 # format length numbers and units in a nice way, as a function of length
 proc MapCanvas::fmt_length { dist } {
@@ -2176,21 +2249,24 @@ proc MapCanvas::coordconv { mon } {
 	variable canvas_w
 	variable canvas_h
 	variable monitor_zooms
-
+    global proj_is_ll
 
 	# get region extents
 	foreach {n s e w} [MapCanvas::currentzoom $mon] {break}
 
 	# calculate dimensions
-
 	set north_extent($mon) [expr {1.0*$n}]
 	set south_extent($mon) [expr {1.0*$s}]
 	set east_extent($mon) [expr {1.0*$e}]
 	set west_extent($mon) [expr {1.0*$w}]
-
+    
 	set map_ew($mon) [expr {$east_extent($mon) - $west_extent($mon)}]
 	set map_ns($mon) [expr {$north_extent($mon) - $south_extent($mon)}]
-
+    
+    if {$proj_is_ll} {
+        if {$map_ew($mon) < 0} {set map_ew($mon) [expr $map_ew($mon) + 360]}
+    }
+    
 	# get current screen geometry
 	if { [info exists "mapimg.$mon"] } {
 		set scr_lr($mon) [image width "mapimg.$mon"]
@@ -2216,9 +2292,9 @@ proc MapCanvas::coordconv { mon } {
 	# calculate screen dimensions and offsets
 
 	if { $map2scrx_conv($mon) > $map2scry_conv($mon) } {
-			set map2scrx_conv($mon) $map2scry_conv($mon)
+        set map2scrx_conv($mon) $map2scry_conv($mon)
 	} else {
-			set map2scry_conv($mon) $map2scrx_conv($mon)
+        set map2scry_conv($mon) $map2scrx_conv($mon)
 	}
 
 }
@@ -2251,8 +2327,15 @@ proc MapCanvas::scry2mapn { mon y } {
 	variable north_extent
 	variable scr_top
 	variable map2scry_conv
+    global proj_is_ll
 
-	return [expr {$north_extent($mon) - (($y - $scr_top($mon)) / $map2scry_conv($mon))}]
+	set coord [expr {$north_extent($mon) - (($y - $scr_top($mon)) / $map2scry_conv($mon))}]
+    
+    # set for latlon location
+    if {$proj_is_ll && $coord >  90} {set coord  90}
+    if {$proj_is_ll && $coord < -90} {set coord -90}
+
+    return $coord
 }
 
 # screen x to map east
@@ -2260,8 +2343,19 @@ proc MapCanvas::scrx2mape { mon x } {
 	variable west_extent
 	variable scr_left
 	variable map2scrx_conv
+    global proj_is_ll
 	
-	return [expr {$west_extent($mon) + (($x - $scr_left($mon)) / $map2scrx_conv($mon))}]
+	set coord [expr {$west_extent($mon) + (($x - $scr_left($mon)) / $map2scrx_conv($mon))}]
+    
+    # calculate for latlon location
+    if {$proj_is_ll } {
+        while {$coord >  360} {set coord [expr $coord - 360]}
+        while {$coord < -360} {set coord [expr $coord + 360]}
+        if {$coord >  180 && $coord <= 360 } {set coord [expr {$coord - 360}]}
+        if {$coord < -180 && $coord >= -360} {set coord [expr {$coord + 360}]}
+    }
+    
+    return $coord
 }
 
 ###############################################################################
