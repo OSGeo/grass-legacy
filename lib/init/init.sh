@@ -731,7 +731,7 @@ lockfile="$LOCATION/.gislock"
 "$ETC/lock" "$lockfile" $$
 case $? in
     0) ;;
-    1)
+    2)
     	echo "$USER is currently running GRASS in selected mapset (file $lockfile found). Concurrent use not allowed."
     	cleanup_tmp
     	exit 1 ;;
