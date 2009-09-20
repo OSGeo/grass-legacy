@@ -1,14 +1,14 @@
 <h2>DESCRIPTION</h2>
 
 <b>wxGUI</b> is a new generation of the GUI for GRASS GIS. It's a successor
-of the <em><a href="gis.m.html">Tcl/Tk GUI</a></em>.
+of the <em><a href="gis.m.html">Tcl/Tk GUI</a></em> from GRASS 6.
 
 <p>
-To start the wxGUI automatically for each session run GRASS with
-<tt>wxpython</tt> switch
+If wxGUI is not your default GUI, you can define it as default by
+typing at GRASS command line prompt
 
 <div class="code"><pre>
-    g.gui -u wxpython& 
+   g.gui -u wxpython& 
 </pre></div>
 
 or define in your <tt>.grassrc6</tt> file 'GRASS_GUI' variable
@@ -18,20 +18,25 @@ or define in your <tt>.grassrc6</tt> file 'GRASS_GUI' variable
 </pre></div>
 
 The GUI can be quit by selecting the 'File->Exit' menu item. The GUI
-can be restarted from the GRASS command line prompt by
-typing
+can be restarted from the GRASS command line prompt by typing
 
 <div class="code"><pre>
-    g.gui wxpython&
+    g.gui wxpython
 </pre></div>
 
-or 
+or  to restart with previously saved workspace type:
 
 <div class="code"><pre>
     g.gui wxpython workspace=file.gxw
 </pre></div>
 
-to launch wxGUI and load workspace file on start-up.
+<p>
+You can also start GRASS from the shell command line with wxGUI
+defined by the <tt>-wxpython</tt> switch:
+
+<div class="code"><pre>
+    grass64 -wxpython
+</pre></div>
 
 <p>
 The GUI is composed by <em>two</em> main components:
@@ -89,7 +94,6 @@ the layer opens a dropdown menu with options to remove or rename the layer
 (g.remove, g.rename), change its display properties (d.rast and d.vect 
 options such as color, symbol, etc.), show its metadata (r.info, v.info) or 
 attributes, if applicable.
-
 <p>
 A left mouse double click on a layer opens GUI for its display options 
 These options are those for the d.* command for each layer type (d.rast, 
@@ -100,8 +104,7 @@ d.vect, or d.grid, for example).
 <dl>
 
 <dt><img src="icons/grass2/monitor-create.png">&nbsp;
-  <img src="icons/grass/gui-startmon.gif">&nbsp;
-  <img src="icons/silk/application_add.png"> <em>Open new Map Display Window</em></dt>
+<em>Open new Map Display Window</em></dt>
 <dd>Opens a new map display and creates empty layer tree tab in Layer Manager.</dd>
 
 <dt><img src="icons/grass2/create.png">&nbsp;
@@ -110,31 +113,28 @@ d.vect, or d.grid, for example).
 where new layers can be added.</dd>
 
 <dt><img src="icons/grass2/layer-open.png">&nbsp;
-  <img src="icons/grass/file-new.gif">&nbsp;
-  <img src="icons/silk/page_white_get.png"> <em>Load map layers (raster, vector) into workspace</em></dt>
+<em>Load map layers (raster, vector) into workspace</em></dt>
 <dd>Loads selected raster or vector maps into current layer tree.</dd>
 
 <dt><img src="icons/grass2/open.png">&nbsp;
-  <img src="icons/grass/file-open.gif">&nbsp;
-  <img src="icons/silk/folder.png"> <em>Open an existing workspace file</em></dt>
+<em>Open an existing workspace file</em></dt>
 <dd>Opens an previously saved workspace file, containing a set of display
 layers and their option settings.</dd>
 
 <dt><img src="icons/grass2/save.png">&nbsp;
-  <img src="icons/grass/file-save.gif">&nbsp;
-  <img src="icons/silk/page_save.png"> <em>Save layers composition to workspace
-    file</em></dt>
+<em>Save workspace file</em></dt>
 <dd>Saves current set of layers and their options to a workspace
   file.</dd>
 
 <dt><img src="icons/grass2/layer-raster-add.png">&nbsp;
-  <img src="icons/grass/element-cell.gif">&nbsp;
-  <img src="icons/silk/image_add.png"> <em>Add raster-based map layer</em></dt>
-<dd>Adds raster map to layer tree, see <em><a href="d.rast.html">d.rast</a></em>. Includes also shaded relief map, RGB or HIS map or raster flow arrows map.</dd>
+<em>Add raster map layer</em></dt>
+<dd>Adds raster map to layer tree, see <em><a href="d.rast.html">d.rast</a></em>. 
+</dd>
 
 <dt><img src="icons/grass2/layer-shaded-relief-add.png">&nbsp;
 <em>Add various raster-based map layers</em></dt>
 <dd>Opens a dropdown menu that allows user to select to:<br> 
+
   <ul>
     <li><dt><img src="icons/grass2/layer-shaded-relief-add.png">&nbsp;
 	<em>Add shaded relief raster map layer </em></dt>
@@ -162,44 +162,41 @@ layers and their option settings.</dd>
 	see <em><a href="d.rast.num.html">d.rast.num</a></em>.</dd></li>
   </ul>
 
-<dt><img src="icons/grass2/layer-his-add.png">&nbsp;
-  <img src="icons/grass/channel-his.gif">&nbsp;
-  <img src="icons/silk/his.png"> <em>Add HIS raster layer</em></dt>
-<dd>Combines and displays two or three raster maps defined as hue,
-intensity, and (optionally) saturation channels,
-see <em><a href="d.his.html">d.his</a></em>.</dd>
-
-<dt><img src="icons/grass2/layer-cell-cats-add.png">&nbsp;
-  <img src="icons/grass/module-d.rast.arrow.gif">&nbsp;
-  <img src="icons/silk/arrow_out.png"> <em>Add raster arrows layer</em></dt>
-<dd>Adds map of raster cells with directional arrows drawn.  Arrow
-direction and length are determined by separate aspect/directional map
-and (optional) slope/intensity map,
-see <em><a href="d.rast.arrow.html">d.rast.arrow</a></em>.</dd>
-
 <dt><img src="icons/grass2/layer-vector-add.png">&nbsp;
-  <img src="icons/grass/element-vector.gif">&nbsp;
-  <img src="icons/silk/map_add.png"> <em>Add vector-based map layer</em></dt>
-<dd>Adds a vector map layer, see <em><a href="d.vect.html">d.vect</a></em>. Includes also thematic vector map or thematic charts layer.</dd>
+<em>Add vector map layer</em></dt>
+<dd>Adds a vector map layer, see <em><a href="d.vect.html">d.vect</a></em>. 
+</dd>
 
 <dt><img src="icons/grass2/layer-vector-thematic-add.png">&nbsp;
 <em>Add various vector-based map layers </em></dt>
 <dd>Opens a dropdown menu that allows user to select to:<br>
 
-<dt><img src="icons/grass2/layer-vector-chart-add.png">&nbsp;
-  <img src="icons/grass/module-d.vect.chart.gif">&nbsp;
-  <img src="icons/silk/chart_bar.png"> <em>Add thematic charts layer
-(for vector points)</em></dt>
-<dd>Adds layer in which pie or bar charts can be automatically created
-at vector point locations. Charts display values from selected columns
-in the associated attribute table. Options include: chart type, layer
-and attributes to chart, chart colors, and chart size (fixed or based
-on attribute column),
-see <em><a href="d.vect.chart.html">d.vect.chart</a></em>.</dd>
+  <ul>
+    <li><dt><img src="icons/grass2/layer-vector-thematic-add.png">&nbsp;
+	<em>Add thematic map layer
+	  (for all vector types)</em></dt>
+      <dd>Adds layer for thematic display values from a numeric attribute
+	column associated with a vector map. Options include: thematic display
+	type (graduated colors or point sizes), methods for creating display
+	intervals, SQL query of attribute column to limit vector objects to
+	display, control of point icon types and sizes, control of thematic
+	color schemes, creation of legend for thematic map, and saving the
+	results of thematic mapping to a ps.map instructions file for later
+	printing,
+	see <em><a href="d.vect.thematic.html">d.vect.thematic</a></em>.</dd></li>
+      
+    <li><dt><img src="icons/grass2/layer-vector-chart-add.png">&nbsp;
+	<em>Add thematic charts layer (for vector points)</em></dt>
+      <dd>Adds layer in which pie or bar charts can be automatically created
+	at vector point locations. Charts display values from selected columns
+	in the associated attribute table. Options include: chart type, layer
+	and attributes to chart, chart colors, and chart size (fixed or based
+	on attribute column),
+	see <em><a href="d.vect.chart.html">d.vect.chart</a></em>.</dd></li>
+  </ul>
 
 <dt><img src="icons/grass2/layer-command-add.png">&nbsp;
-  <img src="icons/grass/gui-cmd.gif">&nbsp;
-  <img src="icons/silk/cog_add.png"> <em>Add command layer</em></dt>
+<em>Add command layer</em></dt>
 <dd>Adds a layer in which a GRASS GIS command or command list can be entered.
 For a command list use the semi-colon (";") symbol as a separator.
 For example:
@@ -216,23 +213,18 @@ d.text text=Population\ density
 </dd>
 
 <dt><img src="icons/grass2/layer-group-add.png">&nbsp;
-  <img src="icons/grass/gui-group.gif">&nbsp;
-  <img src="icons/silk/folder_add.png"> <em>Add layer group</em></dt>
+<em>Add layer group</em></dt>
 <dd>Adds an empty layer group. Layers can then be added to the group.</dd>
 
 <dt><img src="icons/grass2/layer-grid-add.png">&nbsp;
    <em>Add grid or vector labels overlay</em></dt>
 <dd>Opens a dropdown menu that allows user to select to:<br>
 
-<dt><img src="icons/grass2/layer-label-add.png">&nbsp;
-  <img src="icons/grass/module-d.labels.gif">&nbsp;
-  <img src="icons/silk/tag_blue_add.png"> <em>Add labels layer for vector
-objects (from existing labels file)</em></dt>
-<dd>Add raster text layer from a labels file for vector objects
-created with the <em><a href="v.label.html">v.label</a></em> module
-(accessed from button in options panel). A labels file can also be
-created with a text editor,
-see <em><a href="d.labels.html">d.labels</a></em>.</dd>
+  <ul>
+  <li><dt><img src="icons/grass2/layer-grid-add.png">&nbsp;
+      <em>Add overlay grids and lines</em></dt>
+    <dd>Adds layer to display regular grid (for all locations)
+      see <em><a href="d.grid.html">d.grid</a></em></dd></li>
 
   <li><dt><img src="icons/grass2/layer-label-add.png">&nbsp;
       <em>Add labels layer for vector objects (from existing labels file)</em></dt>
@@ -253,13 +245,11 @@ see <em><a href="d.labels.html">d.labels</a></em>.</dd>
   </ul>
 
 <dt><img src="icons/grass2/layer-remove.png">&nbsp;
-  <img src="icons/grass/edit-cut.gif">&nbsp;
-  <img src="icons/silk/bin_closed.png"> <em>Remove map layer from layer tree</em></dt>
+   <em>Delete selected layer</em></dt>
 <dd>Removes selected map layer or map layer group from layer tree.</dd>
 
 <dt><img src="icons/grass2/table.png">&nbsp;
-  <img src="icons/grass/db-values.gif">&nbsp;
-  <img src="icons/silk/application_view_columns.png"> <em>Open <a href="wxGUI.Attribute_Table_Manager.html">Attribute Table Manager</a> for selected vector map</em></dt>
+  <em>Show <a href="wxGUI.Attribute_Table_Manager.html">Attribute Table Manager</a> for selected vector map</em></dt>
 <dd>Displays attribute data of selected vector map.</dd>
 
 </dl>
@@ -272,7 +262,7 @@ displayed, and a statusbar with information about the geographic region of
 the maps displayed.
 
 <center>
-  <br><img src="wxGUI_map_display.jpg" alt="Map Display Window"/><br><br>
+  <br><img src="wxGUI_map_display.jpg" alt="Map Display Window"><br><br>
 </center>
 
 Each Map Display Window has a unique layer tree (in the layer manager) 
@@ -304,8 +294,7 @@ the computational region extents.
 <dl>
 
 <dt><img src="icons/grass2/show.png">&nbsp;
-  <img src="icons/grass/gui-display.gif">&nbsp;
-  <img src="icons/silk/map_go.png"> <em>Display active layers (current region)</em></dt>
+  <em>Display map</em></dt>
 <dd>Displays all active layers from layer tree and re-renders for display
 any layers that have changed since the last time the display was updated, 
 including layers added or removed.</dd>
@@ -316,19 +305,16 @@ including layers added or removed.</dd>
 or not.</dd>
 
 <dt><img src="icons/grass2/erase.png">&nbsp;
-  <img src="icons/grass/gui-erase.gif">&nbsp;
-  <img src="icons/silk/cross.png"> <em>Erase display content</em></dt>
+  <em>Erase display</em></dt>
 <dd>Erases the currently selected map display to a white background.
 see <em><a href="d.erase.html">d.erase</a>, <a href="d.frame.html">d.frame
 -e</a></em>.</dd>
 
 <dt><img src="icons/grass2/pointer.png">&nbsp;
-  <img src="icons/grass/gui-pointer.gif">&nbsp;
-  <img src="icons/silk/cursor.png"> <em>Arrow cursor</em></dt>
+  <em>Pointer</em></dt>
 <dd>Select arrow cursor for map display.</dd>
 
 <dt><img src="icons/grass2/info.png">&nbsp;
-
   <em>Query raster/vector maps</em></dt>
 <dd>Opens a dropdown menu that allows user to select to:<br>
   <ul>
@@ -343,8 +329,7 @@ see <em><a href="r.what.html">r.what</a>, <a href="v.what.html">v.what</a></em>.
   </ul>
 
 <dt><img src="icons/grass2/pan.png">&nbsp;
-  <img src="icons/grass/gui-pan.gif">&nbsp;
-  <img src="icons/silk/arrow_out.png"> <em>Pan</em></dt>
+  <em>Pan</em></dt>
 <dd>Interactive selection of a new center of view in the active
 display monitor. Drag the pan cursor while pressing the left mouse
 button to pan.  Panning changes the location of the region displayed
@@ -353,8 +338,7 @@ does <em>not</em> affect the computational region for other GIS
 processes, see <em><a href="g.region.html">g.region</a></em>.</dd>
 
 <dt><img src="icons/grass2/zoom-in.png">&nbsp;
-  <img src="icons/grass/gui-zoom_in.gif">&nbsp;
-  <img src="icons/silk/zoom_in.png"> <em>Zoom in</em></dt>
+  <em>Zoom in</em></dt>
 <dd>Interactive zooming with the mouse in the active display monitor.
 Drawing a box or just click with the mouse (left button) and zoom-in
 cursor causes the display to zoom in so that the area defined by the
@@ -366,8 +350,7 @@ does <em>not</em> affect the computational region for other GIS
 processes, see <em><a href="g.region.html">g.region</a></em>.</dd>
 
 <dt><img src="icons/grass2/zoom-out.png">&nbsp;
-  <img src="icons/grass/gui-zoom_out.gif">&nbsp;
-  <img src="icons/silk/zoom_out.png"> <em>Zoom out</em></dt>
+  <em>Zoom out</em></dt>
 <dd>Interactive zooming with the mouse in the active display monitor.
 Drawing a box or just click with the mouse (left button) and zoom-out
 cursor causes the display to zoom in so that the area displayed
@@ -380,9 +363,8 @@ other GIS processes,
 see <em><a href="g.region.html">g.region</a></em>.</dd>
 
 <dt><img src="icons/grass2/zoom-last.png">&nbsp;
-  <img src="icons/grass/gui-zoom_back.gif">&nbsp;
-  <img src="icons/silk/zoom_back.png"> <em>Revert zoom</em></dt>
-<dd>Returns to the previous zoom. Up to 10 levels of zoom back are
+  <em>Return to pervious zoom</em></dt>
+<dd>Returns to the previous zoom extent. Up to 10 levels of zoom back are
 maintained, see <em><a href="g.region.html">g.region</a></em>.</dd>
 
 <dt><img src="icons/grass2/zoom-more.png">&nbsp;
@@ -403,14 +385,15 @@ maintained, see <em><a href="g.region.html">g.region</a></em>.</dd>
   <em>Analyze menu</em></dt>
 <dd>Opens a dropdown menu with:<br>
 
-<dt><img src="icons/grass2/measure-length.png">&nbsp;
-  <img src="icons/grass/gui-measure.gif">&nbsp;
-  <img src="icons/silk/sum.png"> <em>Distance measurement tool</em></dt>
-<dd>Interactive measurement of lengths defined with the mouse. The
-length of each segment and the cumulative length of all segments
-measuered is displayed in the command output window frame. Lengths are
-measured in the current measurement unit,
-see <em><a href="d.measure.html">d.measure</a></em>.</dd>
+  <ul>
+    <li> <dt><img src="icons/grass2/measure-length.png">&nbsp;
+         <em>Distance measurement tool</em></dt>
+        <dd>Interactive measurement of lengths defined with the mouse. The
+        length of each segment and the cumulative length of all segments
+        measuered is displayed in the command output window frame. Lengths are
+        measured in the current measurement unit,
+        see <em><a href="d.measure.html">d.measure</a></em>.</dd></li>
+
     <li><dt><img src="icons/grass2/layer-raster-profile.png">&nbsp;
         <em>Profile tool</em></dt>
       <dd>Interactively create profile of a raster map. Profile transect is
@@ -419,46 +402,43 @@ see <em><a href="d.measure.html">d.measure</a></em>.</dd>
       simultaneously, 
       see <em><a href="gm_profile.html">Profile Tool help page</a></em>.</dd></li>
 
-<dt><img src="icons/grass2/layer-raster-histogram.png">&nbsp;
-  <img src="icons/silk/chart_bar.png">&nbsp;
-  <img src="icons/grass/module-d.histogram.gif"> Display histogram of selected raster map</dt>
-<dd>Displays histogram of selected raster map or image in new window,
-see <em><a href="d.histogram.html">d.histogram</a></em>.</dd>
+    <li><dt><img src="icons/grass2/layer-raster-histogram.png">&nbsp;
+        <em>Histogram tool</em></dt>
+        <dd>Displays histogram of selected raster map or image in new window,
+        see <em><a href="d.histogram.html">d.histogram</a></em>.</dd></li>
+   </ul>
 
 <dt><img src="icons/grass2/overlay-add.png">&nbsp;
-  <img src="icons/silk/overlays.png">&nbsp;
-  <img src="icons/grass/gui-rastanalyze.gif"> Add overlay</dt>
-<dd>Adds overlay to map display like barscale, north arrow, text.</dd>
+    <em>Add overlay</em></dt>
+    <dd>opens a dropdown menu that allows user to:<br>
 
-<dt><img src="icons/grass2/scalebar-add.png">&nbsp;
-  <img src="icons/grass/module-d.barscale.gif">&nbsp;
-  <img src="icons/silk/page_white_picture.png"> <em>Add scalebar and north arrow</em></dt>
-<dd>Adds layer to display a combined scalebar and north arrow. Options
-include scalebar placement (using screen coordinates or a mouse),
-scalebar format, and scalebar colors,
-see <em><a href="d.barscale.html">d.barscale</a></em>.</dd>
+  <ul>
+    <li> <dt><img src="icons/grass2/scalebar-add.png">&nbsp;
+         <em>Add scalebar and north arrow</em></dt>
+         <dd>Adds layer to display a combined scalebar and north arrow. Options
+         include scalebar placement (using screen coordinates or a mouse),
+         scalebar format, and scalebar colors,
+         see <em><a href="d.barscale.html">d.barscale</a></em>.</dd></li>
 
-<dt><img src="icons/grass2/legend-add.png">&nbsp;
-  <img src="icons/grass/module-d.legend.gif">&nbsp;
-  <img src="icons/silk/page_green.png"> <em>Add raster map legend</em></dt>
-<dd>Adds layer to display with legend of selected raster map,
-see <em><a href="d.legend.html">d.legend</a></em>.</dd>
+    <li><dt><img src="icons/grass2/legend-add.png">&nbsp;
+        <em>Add raster map legend</em></dt>
+        <dd>Adds layer to display with legend of selected raster map,
+        see <em><a href="d.legend.html">d.legend</a></em>.</dd></li>
 
-<dt><img src="icons/grass2/text-add.png">&nbsp;
-  <img src="icons/grass/module-d.text.gif">&nbsp;
-  <img src="icons/silk/textfield_add.png"> <em>Add text layer</em></dt>
-<dd>Adds layer to display a line of text using default GRASS font
-(selected with <em><a href="d.font.html">d.font</a></em>).  Options
-include: text placement (screen coordinates); and text size, bolding,
-and color, see <em><a href="d.text.html">d.text</a></em>.</dd>
+    <li><dt><img src="icons/grass2/text-add.png">&nbsp;
+        <em>Add text layer</em></dt>
+        <dd>Adds layer to display a line of text using default GRASS font
+        (selected with <em><a href="d.font.html">d.font</a></em>).  Options
+        include: text placement (screen coordinates); and text size, bolding,
+        and color, see <em><a href="d.text.html">d.text</a></em>.</dd></li>
+  </ul>
 
 <dt><img src="icons/grass2/map-export.png">&nbsp;
   <em>Save display to graphic file</em></dt>
 <dd>Save the visible image in map display to different raster graphic formats.</dd>
 
 <dt><img src="icons/grass2/print.png">&nbsp;
-  <img src="icons/grass/file-print.gif">&nbsp;
-  <img src="icons/silk/printer.png"> <em>Print map</em></dt>
+  <em>Print map</em></dt>
 <dd>Prints map on system native printer or PostScript device;
 saves visible map display (including PostScript text and labels) to PDF
 or EPS file.</dd>
@@ -488,31 +468,24 @@ or EPS file.</dd>
 
 <h2>CONFIGURATION</h2>
 
-User preferences dialog ('Config->Preferences') enables configuration
-of various options.
+<em>User GIS settings</em> dialog ('Config->Preferences') enables
+configuration of various options.
 
-<h3>Icon Theme</h3>
-
-Currently are supported three icon theme sets:
-
-<ul>
-  <li><em>new</em> <a href="http://www.szczepanek.pl/icons.grass/v.0.1/">GRASS theme</a> v0.1 (<tt>grass2</tt>)</li>
-  <li><em>original TCL/TK-based</em> GRASS theme (<tt>grass</tt>)</li>
-  <li><em>Silk theme</em>-based
-  on <a href="http://www.famfamfam.com/lab/icons/silk/">Silk icon
-  set</a>, v1.3 (<tt>silk</tt>)</li>
-</ul>
+<p>
+For information about available <em>icon themes</em> see
+this <a href="wxGUI.Icons.html">page</a>.
 
 <h2>SEE ALSO</h2>
 
 <em>
-<a href="wxGUI.Vector_Digitizing_Tool.html">Vector digitizing tool</a>,
-<a href="wxGUI.Attribute_Table_Manager.html">Attribute Table Manager</a>,
-<a href="wxGUI.Nviz.html">Nviz extension</a>
+  <a href="wxGUI.Vector_Digitizing_Tool.html">Vector digitizing tool</a>,
+  <a href="wxGUI.Attribute_Table_Manager.html">Attribute Table Manager</a>,
+  <a href="wxGUI.Nviz.html">Nviz extension</a>,
+  <a href="wxGUI.Icons.html">Icon themes</a>
 </em>
 
 <p>
-See also <a href="http://grass.osgeo.org/wiki/WxPython-based_GUI_for_GRASS">Wiki</a> page.
+See also <a href="http://grass.osgeo.org/wiki/WxGUI">Wiki</a> page.
 
 <p>
 <em>
