@@ -93,7 +93,7 @@ int main(int argc, char *argv[])
 
     type_opt = G_define_standard_option(G_OPT_V3_TYPE);
     type_opt->options = "point,line,boundary,centroid,area,face,kernel,auto";
-    type_opt->answer = "auto";
+    type_opt->answer = "line,boundary";
     type_opt->description =
 	_("Feature type(s). Combinations not supported "
 	  "by all output formats. Default: first type found in input.");
