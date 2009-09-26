@@ -979,7 +979,7 @@ class BufferedWindow(MapWindow, wx.Window):
             self.RefreshRect(r, False)
             pdc.SetId(boxid)
             self.Draw(pdc, drawid=boxid, pdctype='box', coords=mousecoords)
-        elif self.mouse['box'] == "line":
+        elif self.mouse['box'] == "line" or self.mouse['box'] == 'point':
             self.lineid = wx.ID_NEW
             mousecoords = [begin[0], begin[1], \
                            end[0], end[1]]
