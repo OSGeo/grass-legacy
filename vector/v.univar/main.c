@@ -45,6 +45,8 @@ int first = 1;
 
 /* Statistics */
 int count = 0;		/* number of features with non-null attribute */
+int nprim;		/* number of primitives */
+
 double sum = 0.0;
 double sumsq = 0.0;
 double sumcb = 0.0;
@@ -144,7 +146,7 @@ int main(int argc, char *argv[])
 		   "can be calculated"));
     }
 
-    if ((extended->answer && !(otype & GV_POINTS)) || geometry->answer) {
+    if (extended->answer && (!(otype & GV_POINTS) || geometry->answer)) {
 	G_warning(_("Extended statistics is currently supported only for points/centroids"));
     }
 
@@ -160,21 +162,53 @@ int main(int argc, char *argv[])
 
 static void select_from_geometry(void)
 {
-    int nprim;
-    int i;
+    int i, ncats, *cats;
     struct line_pnts *iPoints, *jPoints;
     iPoints = Vect_new_line_struct();
     jPoints = Vect_new_line_struct();
 
-    nprim = Vect_get_num_primitives(&Map, otype);
+    if (where_opt->answer != NULL) {
+	if (ofield < 1) {
+	    G_fatal_error(_("'layer' must be > 0 for 'where'."));
+	}
+	Fi = Vect_get_field(&Map, ofield);
+	if (!Fi) {
+	    G_fatal_error(_("Database connection not defined for layer %d"),
+			  ofield);
+	}
+
+	Driver = db_start_driver_open_database(Fi->driver, Fi->database);
+	if (Driver == NULL)
+	    G_fatal_error("Unable to open database <%s> by driver <%s>",
+			  Fi->database, Fi->driver);
+	ncats = db_select_int(Driver, Fi->table, Fi->key, where_opt->answer,
+			      &cats);
+	if (ncats == -1)
+		G_fatal_error(_("Unable select categories from table <%s>"), Fi->table);
+
+	db_close_database_shutdown_driver(Driver);
+
+    }
     count = 0;
 
+    nprim = Vect_get_num_primitives(&Map, otype);
     /* Start calculating the statistics based on distance to all other primitives.
        Use the centroid of areas and the first point of lines */
     for(i=1;i <= nprim; i++) {
 	int j;
 	int ri;
 	ri = Vect_read_line(&Map, iPoints, Cats, i);
+	if(where_opt->answer) {
+	    int ok=FALSE;
+	    for(j=0; j < Cats->n_cats; j++) {
+		if(Vect_cat_in_array(Cats->cat[j], cats, ncats)) {
+		    ok = TRUE;
+		    break;
+		}
+	    }
+	    if(!ok)
+	        continue;
+	}
 	for(j=i+1; j < nprim; j++) {
 	    /* get distance to this object */
 	    int rj;
@@ -186,7 +220,9 @@ static void select_from_geometry(void)
 		double dmin = 0.0;
 		Vect_line_distance(jPoints, iPoints->x[k], iPoints->y[k], iPoints->z[k], 1,
 				       NULL, NULL, NULL, &dmin, NULL, NULL);
-		if((k == 0) || (dmin < val)) val = dmin;
+		if((k == 0) || (dmin < val)) {
+		    val = dmin;
+		}
 	    }
 	    if(val == 0) {
 		nzero++;
@@ -410,15 +446,15 @@ static void summary(void)
 	else {
 	    double n = count;
 
-	    mean = sum / count;
-	    mean_abs = sum_abs / count;
-	    pop_variance = (sumsq - sum * sum / count) / count;
+	    mean = sum / n;
+	    mean_abs = sum_abs / n;
+	    pop_variance = (sumsq - sum * sum / n) / n;
 	    pop_stdev = sqrt(pop_variance);
-	    pop_coeff_variation = pop_stdev / (sqrt(sum * sum) / count);
-	    sample_variance = (sumsq - sum * sum / count) / (count - 1);
+	    pop_coeff_variation = pop_stdev / (sqrt(sum * sum) / n);
+	    sample_variance = (sumsq - sum * sum / n) / (count - 1);
 	    sample_stdev = sqrt(sample_variance);
 	    kurtosis =
-		(sumqt / count - 4 * sum * sumcb / (n * n) +
+		(sumqt / n - 4 * sum * sumcb / (n * n) +
 		 6 * sum * sum * sumsq / (n * n * n) -
 		 3 * sum * sum * sum * sum / (n * n * n * n))
 		/ (sample_stdev * sample_stdev * sample_stdev *
@@ -463,6 +499,7 @@ static void summary(void)
     }
     else {
 	if(geometry->answer) {
+	    fprintf(stdout, "number of primitives: %d\n", nprim);
 	    fprintf(stdout, "number of non zero distances: %d\n", count);
 	    fprintf(stdout, "number of zero distances: %d\n", nzero);
 	}
