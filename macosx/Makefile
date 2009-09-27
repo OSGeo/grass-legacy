@@ -31,6 +31,8 @@ ifeq ($(MACOSX_APP),1)
 SUBDIRS = app modbuild
 endif
 
+FILES = AUTHORS COPYING CHANGES REQUIREMENTS.html GPL.TXT
+
 include $(MODULE_TOPDIR)/include/Make/Dir.make
 
 default: subdirs
@@ -51,6 +53,7 @@ real-install-macosx:
 	${MAKE_DIR_CMD} ${INST_DIR}
 	${MAKE} macosx-support-dir
 	-cd ${GISBASE} ; tar cBf - ${MACOSX_APP_NAME} | (cd ${prefix} ; tar xBf - ) 2>/dev/null
+	-cd ${GISBASE} ; tar cBf - $(FILES) | (cd ${INST_DIR} ; tar xBf - ) 2>/dev/null
 	-cd ${GISBASE} ; tar cBf - bin | (cd ${INST_DIR} ; tar xBf - ) 2>/dev/null
 	-cd ${GISBASE} ; tar cBf - bwidget | (cd ${INST_DIR} ; tar xBf - ) 2>/dev/null
 	-cd ${GISBASE} ; tar cBf - docs | (cd ${INST_DIR} ; tar xBf - ) 2>/dev/null
