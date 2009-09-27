@@ -24,42 +24,47 @@
 #include <grass/dbmi.h>
 #include <grass/glocale.h>
 
+struct GModule *module;
+struct Option *map_opt, *type_opt, *field_opt, *col_opt, *where_opt,
+    *percentile;
+struct Flag *shell_flag, *extended, *geometry;
+char *mapset;
+struct Map_info Map;
+struct field_info *Fi;
+dbDriver *Driver;
+dbCatValArray Cvarr;
+struct line_pnts *Points;
+struct line_cats *Cats;
+int otype, ofield;
+int compatible = 1;		/* types are compatible: point+centroid or line+boundary or area */
+int nrec, ctype, nlines, line, nareas, area;
+int nmissing = 0;		/* number of missing atttributes */
+int nnull = 0;		/* number of null values */
+int nzero = 0;		/* number of zero distances */
+int first = 1;
+
+/* Statistics */
+int count = 0;		/* number of features with non-null attribute */
+double sum = 0.0;
+double sumsq = 0.0;
+double sumcb = 0.0;
+double sumqt = 0.0;
+double sum_abs = 0.0;
+double min = 0.0 / 0.0;	/* init as nan */
+double max = 0.0 / 0.0;
+double mean, mean_abs, pop_variance, sample_variance, pop_stdev, sample_stdev,
+    pop_coeff_variation, kurtosis, skewness;
+double total_size = 0.0;	/* total size: length/area */
+
+/* Extended statistics */
+int perc;
+
+static void select_from_geometry(void);
+static void select_from_database(void);
+static void summary(void);
+
 int main(int argc, char *argv[])
 {
-    struct GModule *module;
-    struct Option *map_opt, *type_opt, *field_opt, *col_opt, *where_opt,
-	*percentile;
-    struct Flag *shell_flag, *extended;
-    char *mapset;
-    struct Map_info Map;
-    struct field_info *Fi;
-    dbDriver *Driver;
-    dbCatValArray Cvarr;
-    struct line_pnts *Points;
-    struct line_cats *Cats;
-    int otype, ofield;
-    int compatible = 1;		/* types are compatible: point+centroid or line+boundary or area */
-    int nrec, ctype, nlines, line, nareas, area;
-    int nmissing = 0;		/* number of missing atttributes */
-    int nnull = 0;		/* number of null values */
-    int first = 1;
-
-    /* Statistics */
-    int count = 0;		/* number of features with non-null attribute */
-    double sum = 0.0;
-    double sumsq = 0.0;
-    double sumcb = 0.0;
-    double sumqt = 0.0;
-    double sum_abs = 0.0;
-    double min = 0.0 / 0.0;	/* init as nan */
-    double max = 0.0 / 0.0;
-    double mean, mean_abs, pop_variance, sample_variance, pop_stdev,
-	sample_stdev, pop_coeff_variation, kurtosis, skewness;
-    double total_size = 0.0;	/* total size: length/area */
-
-    /* Extended statistics */
-    int perc;
-
     module = G_define_module();
     module->keywords = _("vector, statistics");
     module->description =
@@ -74,7 +79,7 @@ int main(int argc, char *argv[])
     col_opt = G_define_option();
     col_opt->key = "column";
     col_opt->type = TYPE_STRING;
-    col_opt->required = YES;
+    col_opt->required = NO;
     col_opt->multiple = NO;
     col_opt->description = _("Column name");
 
@@ -99,9 +104,18 @@ int main(int argc, char *argv[])
     extended->key = 'e';
     extended->description = _("Calculate extended statistics");
 
+    geometry = G_define_flag();
+    geometry->key = 'd';
+    geometry->description = _("Calculate geometry distances instead of table data.");
+
     G_gisinit(argv[0]);
     if (G_parser(argc, argv))
 	exit(EXIT_FAILURE);
+
+    /* Only require col_opt answer if -g flag is not set */
+    if (!col_opt->answer && !geometry->answer) {
+	G_fatal_error(_("Required parameter <%s> not set:\n\t(%s)"), col_opt->key, col_opt->description);
+    }
 
     otype = Vect_option_to_types(type_opt);
     ofield = atoi(field_opt->answer);
@@ -122,18 +136,86 @@ int main(int argc, char *argv[])
 	compatible = 0;
     if ((otype & GV_LINES) && (otype & GV_AREA))
 	compatible = 0;
+    if (!compatible && geometry->answer)
+	compatible = 1; /* distances is copatible with all kinds of geometries */
 
     if (!compatible) {
 	G_warning(_("Incompatible vector type(s) specified, only number of features, minimum, maximum and range "
 		   "can be calculated"));
     }
 
-    if (extended->answer && !(otype & GV_POINTS)) {
+    if ((extended->answer && !(otype & GV_POINTS)) || geometry->answer) {
 	G_warning(_("Extended statistics is currently supported only for points/centroids"));
     }
 
-    /* Read attributes */
-    db_CatValArray_init(&Cvarr);
+    if(geometry->answer)
+	select_from_geometry();
+    else
+	select_from_database();
+    summary();
+
+    Vect_close(&Map);
+    exit(EXIT_SUCCESS);
+}
+
+static void select_from_geometry(void)
+{
+    int nprim;
+    int i;
+    struct line_pnts *iPoints, *jPoints;
+    iPoints = Vect_new_line_struct();
+    jPoints = Vect_new_line_struct();
+
+    nprim = Vect_get_num_primitives(&Map, otype);
+    count = 0;
+
+    /* Start calculating the statistics based on distance to all other primitives.
+       Use the centroid of areas and the first point of lines */
+    for(i=1;i <= nprim; i++) {
+	int j;
+	int ri;
+	ri = Vect_read_line(&Map, iPoints, Cats, i);
+	for(j=i+1; j < nprim; j++) {
+	    /* get distance to this object */
+	    int rj;
+	    int k;
+	    rj = Vect_read_line(&Map, jPoints, Cats, j);
+	    double val = 0.0;
+	    /* now calculate the min distance between each point in line i with line j */
+	    for(k=0; k < iPoints->n_points; k++) {
+		double dmin = 0.0;
+		Vect_line_distance(jPoints, iPoints->x[k], iPoints->y[k], iPoints->z[k], 1,
+				       NULL, NULL, NULL, &dmin, NULL, NULL);
+		if((k == 0) || (dmin < val)) val = dmin;
+	    }
+	    if(val == 0) {
+		nzero++;
+		continue;
+	    }
+	    if (first) {
+		max = val;
+		min = val;
+		first = 0;
+	    }
+	    else {
+		if (val > max)
+		    max = val;
+		if (val < min)
+		    min = val;
+	    }
+	    sum += val;
+	    sumsq += val * val;
+	    sumcb += val * val * val;
+	    sumqt += val * val * val * val;
+	    sum_abs += fabs(val);
+	    count++;
+	    G_debug(3, "i=%d j=%d sum = %f val=%f", i, j, sum, val);
+	}
+    }
+}
+
+static void select_from_database(void)
+{
     Fi = Vect_get_field(&Map, ofield);
     if (Fi == NULL) {
 	G_fatal_error(_("Unable to get layer info for vector map"));
@@ -143,9 +225,8 @@ int main(int argc, char *argv[])
     if (Driver == NULL)
 	G_fatal_error("Unable to open database <%s> by driver <%s>",
 		      Fi->database, Fi->driver);
-
     /* Note do not check if the column exists in the table because it may be an expression */
-
+    db_CatValArray_init(&Cvarr);
     nrec =
 	db_select_CatValArray(Driver, Fi->table, Fi->key, col_opt->answer,
 			      where_opt->answer, &Cvarr);
@@ -159,6 +240,7 @@ int main(int argc, char *argv[])
 	G_fatal_error(_("Unable to select data from table"));
 
     db_close_database_shutdown_driver(Driver);
+
 
     /* Lines */
     nlines = Vect_get_num_lines(&Map);
@@ -311,9 +393,12 @@ int main(int argc, char *argv[])
     }
 
     G_debug(2, "sum = %f total_size = %f", sum, total_size);
+}
 
+static void summary(void)
+{
     if (compatible) {
-	if ((otype & GV_LINES) || (otype & GV_AREA)) {
+	if (((otype & GV_LINES) || (otype & GV_AREA)) && !geometry->answer) {
 	    mean = sum / total_size;
 	    mean_abs = sum_abs / total_size;
 	    /* Roger Bivand says it is wrong see GRASS devel list 7/2004 */
@@ -349,8 +434,13 @@ int main(int argc, char *argv[])
 
     if (shell_flag->answer) {
 	fprintf(stdout, "n=%d\n", count);
-	fprintf(stdout, "nmissing=%d\n", nmissing);
-	fprintf(stdout, "nnull=%d\n", nnull);
+	if(geometry->answer) {
+	    fprintf(stdout, "nzero=%d\n", nzero);
+	}
+	else {
+	    fprintf(stdout, "nmissing=%d\n", nmissing);
+	    fprintf(stdout, "nnull=%d\n", nnull);
+	}
 	if (count > 0) {
 	    fprintf(stdout, "min=%g\n", min);
 	    fprintf(stdout, "max=%g\n", max);
@@ -372,10 +462,16 @@ int main(int argc, char *argv[])
 	}
     }
     else {
-	fprintf(stdout, "number of features with non NULL attribute: %d\n",
-		count);
-	fprintf(stdout, "number of missing attributes: %d\n", nmissing);
-	fprintf(stdout, "number of NULL attributes: %d\n", nnull);
+	if(geometry->answer) {
+	    fprintf(stdout, "number of non zero distances: %d\n", count);
+	    fprintf(stdout, "number of zero distances: %d\n", nzero);
+	}
+	else {
+	    fprintf(stdout, "number of features with non NULL attribute: %d\n",
+		    count);
+	    fprintf(stdout, "number of missing attributes: %d\n", nmissing);
+	    fprintf(stdout, "number of NULL attributes: %d\n", nnull);
+	}
 	if (count > 0) {
 	    fprintf(stdout, "minimum: %g\n", min);
 	    fprintf(stdout, "maximum: %g\n", max);
@@ -400,7 +496,8 @@ int main(int argc, char *argv[])
     }
 
     /* TODO: mode, skewness, kurtosis */
-    if (extended->answer && compatible && (otype & GV_POINTS) && count > 0) {
+    /* Not possible to calculate for point distance, since we don't collect the population */
+    if (extended->answer && compatible && (otype & GV_POINTS) && !geometry->answer && count > 0) {
 	double quartile_25 = 0.0, quartile_75 = 0.0, quartile_perc = 0.0;
 	double median = 0.0;
 	int qpos_25, qpos_75, qpos_perc;
@@ -460,8 +557,5 @@ int main(int argc, char *argv[])
 		fprintf(stdout, "%dth percentile: %g\n", perc, quartile_perc);
 	}
     }
-
-    Vect_close(&Map);
-
-    exit(EXIT_SUCCESS);
 }
+
