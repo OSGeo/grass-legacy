@@ -25,6 +25,8 @@ import time
 
 import gcmd
 import gselect
+from grass.script import core as grass
+
 import subprocess
 
 imagePath = os.path.join( os.getenv("GISBASE"), "etc", "wxpython")
@@ -120,6 +122,7 @@ class MapCalcFrame(wx.Frame):
         self.btn_run = wx.Button(self, -1, "Run")
         self.btn_run.SetDefault()
         self.btn_close = wx.Button(self, -1, "Close")
+        self.btn_mapinsert = wx.Button(self, -1, "Insert")
 
         self.btn_pow = wx.Button(self, -1, "^")
         self.btn_pow.SetToolTipString('exponent')
@@ -134,7 +137,8 @@ class MapCalcFrame(wx.Frame):
         self.btn_mult = wx.Button(self, -1, "*")
         self.btn_mult.SetToolTipString('multiply')
 
-        self.btn_paren = wx.Button(self, -1, "( )") 
+        self.btn_lparen = wx.Button(self, -1, "(") 
+        self.btn_rparen = wx.Button(self, -1, ")") 
 
         self.btn_lshift = wx.Button(self, -1, "<<")
         self.btn_lshift.SetToolTipString('left shift')
@@ -220,7 +224,8 @@ class MapCalcFrame(wx.Frame):
         self.btn_or.Bind(wx.EVT_BUTTON, self.AddMark)
         self.btn_ornull.Bind(wx.EVT_BUTTON, self.AddMark)        
         self.btn_cond.Bind(wx.EVT_BUTTON, self.AddMark)
-        self.btn_paren.Bind(wx.EVT_BUTTON, self.AddMark)
+        self.btn_lparen.Bind(wx.EVT_BUTTON, self.AddMark)
+        self.btn_rparen.Bind(wx.EVT_BUTTON, self.AddMark)
         
         self.btn_close.Bind(wx.EVT_BUTTON, self.OnClose)
         self.btn_clear.Bind(wx.EVT_BUTTON, self.OnClear)
@@ -229,12 +234,11 @@ class MapCalcFrame(wx.Frame):
         
         self.newmaptxt.Bind(wx.EVT_TEXT, self.OnNewmap)
         
-        #self.mapselect.Bind(wx.EVT_COMBOBOX, self.OnSelect)
-        self.mapselect.Bind(wx.EVT_TEXT, self.OnSelect)
-        #self.mapselect.Bind(wx.EVT_TEXT_ENTER, self.OnSelect)
+        self.btn_mapinsert.Bind(wx.EVT_BUTTON, self.OnMapInsert)
         self.function.Bind(wx.EVT_COMBOBOX, self.OnSelect)
-        #self.function.Bind(wx.EVT_TEXT, self.OnSelect)
         self.function.Bind(wx.EVT_TEXT_ENTER, self.OnSelect)
+                
+        self.text_mcalc.Bind(wx.EVT_TEXT, self.OnExprEdit)
 
         self.__doLayout()
 
@@ -272,15 +276,17 @@ class MapCalcFrame(wx.Frame):
         buttonsizer2.Add(self.btn_compl, (5,1))
         buttonsizer2.Add(self.btn_not, (4,1))
 
-        buttonsizer3 = wx.GridBagSizer(7, 1)
-        buttonsizer3.Add(self.newmaplabel, (0,0), (1,2), wx.ALIGN_CENTER)
-        buttonsizer3.Add(self.newmaptxt, (1,0), (1,2), wx.TOP, 4)
-        buttonsizer3.Add(self.mapsellabel, (2,0), (1,2), wx.ALIGN_CENTER)
-        buttonsizer3.Add(self.mapselect, (3,0), (1,2))
-        buttonsizer3.Add(self.functlabel, (4,0), (1,2), wx.ALIGN_CENTER)
-        buttonsizer3.Add(self.function, (5,0), (1,2))
-        buttonsizer3.Add(self.btn_paren, (6,0), (1,1), wx.ALIGN_CENTER)
-        buttonsizer3.Add(self.btn_clear, (6,1), (1,1), wx.ALIGN_CENTER)
+        buttonsizer3 = wx.GridBagSizer(8, 1)
+        buttonsizer3.Add(self.newmaplabel, (0,0), (1,3), wx.ALIGN_CENTER)
+        buttonsizer3.Add(self.newmaptxt, (1,0), (1,3), wx.RIGHT, 15)
+        buttonsizer3.Add(self.mapsellabel, (2,0), (1,3), wx.ALIGN_CENTER)
+        buttonsizer3.Add(self.mapselect, (3,0), (1,3))
+        buttonsizer3.Add(self.btn_mapinsert, (4,2), (1,1), wx.ALIGN_TOP)
+        buttonsizer3.Add(self.functlabel, (5,0), (1,3), wx.ALIGN_CENTER)
+        buttonsizer3.Add(self.function, (6,0), (1,3))
+        buttonsizer3.Add(self.btn_lparen, (7,0), (1,1), wx.ALIGN_LEFT)
+        buttonsizer3.Add(self.btn_rparen, (7,1), (1,1), wx.ALIGN_RIGHT)
+        buttonsizer3.Add(self.btn_clear, (7,2), (1,1), wx.ALIGN_CENTER)
         
         buttonsizer4 = wx.GridSizer(4, 3, 3, 3)
         buttonsizer4.Add(self.btn_run,0,wx.RIGHT,5)
@@ -335,11 +341,17 @@ class MapCalcFrame(wx.Frame):
         elif event.GetId() == self.btn_and.GetId(): mark = "&&"
         elif event.GetId() == self.btn_andnull.GetId(): mark = "&&&"
         elif event.GetId() == self.btn_cond.GetId(): mark = "?:"
-        elif event.GetId() == self.btn_paren.GetId(): mark = "()"        
+        elif event.GetId() == self.btn_lparen.GetId(): mark = "("        
+        elif event.GetId() == self.btn_rparen.GetId(): mark = ")"        
         self.__addSomething(mark)
         
     def OnNewmap(self, event):
         self.newmap = event.GetString()
+        
+    def OnMapInsert(self, event):
+        map = self.mapselect.GetValue()
+        self.__addSomething(map)
+        self.text_mcalc.SetFocus()
 
     def OnSelect(self, event):
         """
@@ -348,27 +360,30 @@ class MapCalcFrame(wx.Frame):
         item = event.GetString()
         self.__addSomething(item)
         self.text_mcalc.SetFocus()
+        
+    def OnExprEdit(self,event):
+        self.text_mcalc.Update()
+        self.text_mcalc.SetFocus()
 
     def __addSomething(self,what):
         """
         Inserts operators, map names, and functions into text area
         """
         self.text_mcalc.SetFocus()
+        
         mcalcstr = self.text_mcalc.GetValue()
         newmcalcstr = ''
-        position = self.text_mcalc.GetInsertionPoint()
-        
+        position = self.text_mcalc.GetInsertionPoint()        
         selection = self.text_mcalc.GetSelection()
-
         newmcalcstr = mcalcstr[:position]
-        
+                
         try:
             if newmcalcstr[-1] != " ":
                 newmcalcstr += " "
         except:
             pass
         newmcalcstr += what
-        position_offset = len(what)
+        position_offset = len(what) + 2
         newmcalcstr += " "+mcalcstr[position:]
 
         self.text_mcalc.SetValue(newmcalcstr)
@@ -389,12 +404,19 @@ class MapCalcFrame(wx.Frame):
 
         mctxt = self.text_mcalc.GetValue().strip().replace("\n"," ")
         mctxt = mctxt.replace(" ","")
+        
         if self.dimension == 3:
-            gcmd.RunCommand('r3.mapcalc',
-                            expression = "%s=%s" % (self.newmap,mctxt))
+            cmdlist = ['r3.mapcalc', "%s=%s" % (self.newmap,mctxt)]
         else:
-            gcmd.RunCommand('r.mapcalc',
-                            expression = "%s=%s" % (self.newmap,mctxt))
+            cmdlist = ['r.mapcalc', "%s=%s" % (self.newmap,mctxt)]
+            
+        p = subprocess.Popen(cmdlist, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        mcerr = p.stderr.read()
+                                                    
+        if mcerr == '':
+            wx.MessageBox('Map %s created successfully' % self.newmap)
+        else:
+            wx.MessageBox(mcerr)
         
     def OnClear(self, event):
         """
