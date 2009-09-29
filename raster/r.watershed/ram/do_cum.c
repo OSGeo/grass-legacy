@@ -10,6 +10,7 @@ int do_cum(void)
     int killer, threshold, count;
     SHORT asp_r[9] = { 0, -1, -1, -1, 0, 1, 1, 1, 0 };
     SHORT asp_c[9] = { 0, 1, 0, -1, -1, -1, 0, 1, 1 };
+    int this_index, down_index;
 
     G_message(_("SECTION 3: Accumulating Surface Flow with SFD."));
 
@@ -18,13 +19,11 @@ int do_cum(void)
 	threshold = 60;
     else
 	threshold = bas_thres;
-    while (first_cum != -1) {
-	G_percent(count++, do_points, 2);
-	killer = first_cum;
-	first_cum = astar_pts[killer].nxt;
-	r = astar_pts[killer].r;
-	c = astar_pts[killer].c;
-	aspect = asp[SEG_INDEX(asp_seg, r, c)];
+    for (killer = 1; killer <= do_points; killer++) {
+	G_percent(killer, do_points, 1);
+	this_index = astar_pts[killer];
+	aspect = asp[this_index];
+	seg_index_rc(alt_seg, this_index, &r, &c);
 	if (aspect) {
 	    dr = r + asp_r[ABS(aspect)];
 	    dc = c + asp_c[ABS(aspect)];
@@ -32,10 +31,11 @@ int do_cum(void)
 	else
 	    dr = dc = -1;
 	if (dr >= 0 && dr < nrows && dc >= 0 && dc < ncols) { /* if ((dr = astar_pts[killer].downr) > -1) { */
-	    value = wat[SEG_INDEX(wat_seg, r, c)];
+	    down_index = SEG_INDEX(wat_seg, dr, dc);
+	    value = wat[this_index];
 	    if ((int)(ABS(value) + 0.5) >= threshold)
 		FLAG_SET(swale, r, c);
-	    valued = wat[SEG_INDEX(wat_seg, dr, dc)];
+	    valued = wat[down_index];
 	    if (value > 0) {
 		if (valued > 0)
 		    valued += value;
@@ -48,14 +48,14 @@ int do_cum(void)
 		else
 		    valued = value - valued;
 	    }
-	    wat[SEG_INDEX(wat_seg, dr, dc)] = valued;
+	    wat[down_index] = valued;
 	    valued = ABS(valued) + 0.5;
 	    is_swale = FLAG_GET(swale, r, c);
 	    /* update asp for depression */
 	    if (is_swale && pit_flag) {
-		if (aspect > 0 && asp[SEG_INDEX(asp_seg, dr, dc)] == 0) {
+		if (aspect > 0 && asp[down_index] == 0) {
 		    aspect = -aspect;
-		    asp[SEG_INDEX(asp_seg, r, c)] = aspect;
+		    asp[this_index] = aspect;
 		}
 	    }
 	    if (is_swale || ((int)valued) >= threshold) {
@@ -67,7 +67,6 @@ int do_cum(void)
 	    }
 	}
     }
-    G_percent(count, do_points, 1);	/* finish it */
     G_free(astar_pts);
 
     return 0;
@@ -112,6 +111,7 @@ int do_cum_mfd(void)
     int workedon, edge;
     SHORT asp_r[9] = { 0, -1, -1, -1, 0, 1, 1, 1, 0 };
     SHORT asp_c[9] = { 0, 1, 0, -1, -1, -1, 0, 1, 1 };
+    int this_index, down_index, nbr_index;
 
     G_message(_("SECTION 3: Accumulating Surface Flow with MFD."));
     G_debug(1, "MFD convergence factor set to %d.", c_fac);
@@ -142,13 +142,11 @@ int do_cum_mfd(void)
     else
 	threshold = bas_thres;
 
-    while (first_cum != -1) {
-	G_percent(count++, do_points, 2);
-	killer = first_cum;
-	first_cum = astar_pts[killer].nxt;
-	r = astar_pts[killer].r;
-	c = astar_pts[killer].c;
-	aspect = asp[SEG_INDEX(asp_seg, r, c)];
+    for (killer = 1; killer <= do_points; killer++) {
+	G_percent(killer, do_points, 1);
+	this_index = astar_pts[killer];
+	seg_index_rc(alt_seg, this_index, &r, &c);
+	aspect = asp[this_index];
 	if (aspect) {
 	    dr = r + asp_r[ABS(aspect)];
 	    dc = c + asp_c[ABS(aspect)];
@@ -156,8 +154,9 @@ int do_cum_mfd(void)
 	else
 	    dr = dc = -1;
 	if (dr >= 0 && dr < nrows && dc >= 0 && dc < ncols) { /* if ((dr = astar_pts[killer].downr) > -1) { */
-	    value = wat[SEG_INDEX(wat_seg, r, c)];
-	    valued = wat[SEG_INDEX(wat_seg, dr, dc)];
+	    value = wat[this_index];
+	    down_index = SEG_INDEX(wat_seg, dr, dc);
+	    valued = wat[down_index];
 
 	    r_max = dr;
 	    c_max = dc;
@@ -170,7 +169,7 @@ int do_cum_mfd(void)
 	    stream_cells = 0;
 	    swale_cells = 0;
 	    astar_not_set = 1;
-	    ele = alt[SEG_INDEX(alt_seg, r, c)];
+	    ele = alt[this_index];
 	    is_null = 0;
 	    edge = 0;
 	    /* this loop is needed to get the sum of weights */
@@ -183,17 +182,19 @@ int do_cum_mfd(void)
 		if (r_nbr >= 0 && r_nbr < nrows && c_nbr >= 0 &&
 		    c_nbr < ncols) {
 
+		    nbr_index = SEG_INDEX(wat_seg, r_nbr, c_nbr);
+
 		    /* check for swale or stream cells */
 		    is_swale = FLAG_GET(swale, r_nbr, c_nbr);
 		    if (is_swale)
 			swale_cells++;
-		    valued = wat[SEG_INDEX(wat_seg, r_nbr, c_nbr)];
+		    valued = wat[nbr_index];
 		    if ((ABS(valued) + 0.5) >= threshold)
 			stream_cells++;
 
 		    is_worked = FLAG_GET(worked, r_nbr, c_nbr);
 		    if (is_worked == 0) {
-			ele_nbr = alt[SEG_INDEX(alt_seg, r_nbr, c_nbr)];
+			ele_nbr = alt[nbr_index];
 			is_null = G_is_c_null_value(&ele_nbr);
 			edge = is_null;
 			if (!is_null && ele_nbr <= ele) {
@@ -233,7 +234,7 @@ int do_cum_mfd(void)
 		is_swale = FLAG_GET(swale, r, c);
 		if (is_swale && aspect > 0) {
 		    aspect = -1 * drain[r - r_nbr + 1][c - c_nbr + 1];
-		    asp[SEG_INDEX(asp_seg, r, c)] = aspect;
+		    asp[this_index] = aspect;
 		}
 		continue;
 	    }
@@ -267,11 +268,13 @@ int do_cum_mfd(void)
 			is_worked = FLAG_GET(worked, r_nbr, c_nbr);
 			if (is_worked == 0) {
 
+			    nbr_index = SEG_INDEX(wat_seg, r_nbr, c_nbr);
+
 			    weight[ct_dir] = weight[ct_dir] / sum_weight;
 			    /* check everything sums up to 1.0 */
 			    prop += weight[ct_dir];
 
-			    valued = wat[SEG_INDEX(wat_seg, r_nbr, c_nbr)];
+			    valued = wat[nbr_index];
 			    if (value > 0) {
 				if (valued > 0)
 				    valued += value * weight[ct_dir];
@@ -284,7 +287,7 @@ int do_cum_mfd(void)
 				else
 				    valued = value * weight[ct_dir] - valued;
 			    }
-			    wat[SEG_INDEX(wat_seg, r_nbr, c_nbr)] = valued;
+			    wat[nbr_index] = valued;
 
 			    /* get main drainage direction */
 			    if (ABS(valued) >= max_acc) {
@@ -306,7 +309,7 @@ int do_cum_mfd(void)
 	    }
 
 	    if (mfd_cells < 2) {
-		valued = wat[SEG_INDEX(wat_seg, dr, dc)];
+		valued = wat[down_index];
 		if (value > 0) {
 		    if (valued > 0)
 			valued += value;
@@ -319,22 +322,22 @@ int do_cum_mfd(void)
 		    else
 			valued = value - valued;
 		}
-		wat[SEG_INDEX(wat_seg, dr, dc)] = valued;
+		wat[down_index] = valued;
 	    }
 
 	    /* update asp */
 	    if (dr != r_max || dc != c_max) {
 		aspect = drain[r - r_max + 1][c - c_max + 1];
-		if (asp[SEG_INDEX(asp_seg, r, c)] < 0)
+		if (asp[this_index] < 0)
 		    aspect = -aspect;
-		asp[SEG_INDEX(asp_seg, r, c)] = aspect;
+		asp[this_index] = aspect;
 	    }
 	    is_swale = FLAG_GET(swale, r, c);
 	    /* update asp for depression */
 	    if (is_swale && pit_flag) {
 		if (aspect > 0 && asp[SEG_INDEX(asp_seg, r_max, c_max)] == 0) {
 		    aspect = -aspect;
-		    asp[SEG_INDEX(asp_seg, r, c)] = aspect;
+		    asp[this_index] = aspect;
 		}
 	    }
 	    /* start new stream */
@@ -355,7 +358,6 @@ int do_cum_mfd(void)
 	    FLAG_SET(worked, r, c);
 	}
     }
-    G_percent(count, do_points, 1);	/* finish it */
     if (workedon)
 	G_warning(_("MFD: A * path already processed when distributing flow: %d of %d cells"),
 		  workedon, do_points);

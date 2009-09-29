@@ -304,7 +304,7 @@ int init_vars(int argc, char *argv[])
 			       sizeof(double));
     }
 
-    astar_pts = (POINT *) G_malloc(do_points * sizeof(POINT));
+    astar_pts = (int *) G_malloc((do_points + 1) * sizeof(int));
 
     /* heap_index will track astar_pts in ternary min-heap */
     /* heap_index is one-based */
