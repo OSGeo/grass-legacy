@@ -970,7 +970,7 @@ bash|msh|cygwin)
     echo "export PATH=\"$PATH\"" >> "$bashrc"
     echo "export HOME=\"$USERHOME\"" >> "$bashrc" # restore user home path
     echo 'export GRASS_SHELL_PID=$$' >> "$bashrc" # can be used to terminate GRASS session from GUI
-    if [ "$GRASS_GUI" == tcltk ] || [ "$GRASS_GUI" == gis.m ]; then
+    if [ "$GRASS_GUI" = tcltk ] || [ "$GRASS_GUI" = gis.m ]; then
     	echo '$GISBASE/scripts/gis.m' >> "$bashrc" # Start gis.m
     fi;
     echo 'trap "echo \"GUI issued an exit\"; exit" SIGINT' >> "$bashrc"
