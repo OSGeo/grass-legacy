@@ -2,4 +2,4 @@
   section="Applications/Science/Geoscience"\
   title="GRASS GIS"\
   command="/usr/bin/grass65"\
-  icon="grass-48x48.png"
+  icon="grass.xpm"
