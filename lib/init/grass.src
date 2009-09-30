@@ -22,38 +22,4 @@ trap "echo 'User break!' ; exit" 2 3 9 15
 GISBASE="GISBASE_VALUE"
 export GISBASE
 
-GISRCRC="$HOME/.grassrc6"
-
-if [ -n "$GRASS_BATCH_JOB" ] ; then
-	exec "$GISBASE/etc/Init.sh" "$@"
-fi
-
-if test -t 0; then
-	# We are running from some terminal (i.e. xterm).
-	exec "$GISBASE/etc/Init.sh" "$@"
-else
-	# We are running headless...
-	if [ ! -f "$GISRCRC" ] ; then
-		# First time user...
-		( exec xdg-terminal -e $0 "$@" ) &>/dev/null
-		# If there is no xdg-terminal, then fall back to xterm
-		( exec xterm -e $0 "$@" ) &>/dev/null
-	else
-		# Returning user may have preffered GRASS terminal application
-		if [ -z "$GRASS_XTERM" ]; then
-			GRASS_XTERM=`awk '/GRASS_XTERM/ {print $2}' "$GISRCRC"  2>/dev/null`
-		fi;
-		if [ -n "$GRASS_XTERM" ]; then
-			# User has preffered GRASS terminal app
-			( exec $GRASS_XTERM -e $0 "$@" ) &>/dev/null
-		else
-			# Starting user's preffered terminal app
-			( exec xdg-terminal -e $0 "$@" ) &>/dev/null
-			# If there is no xdg-terminal, then fall back to xterm
-			( exec xterm -e $0 "$@" ) &>/dev/null
-		fi;
-	fi;
-fi;
-
-exit 1; # If we got so far, it's an error.
-
+exec "$GISBASE/etc/Init.sh" "$@"
