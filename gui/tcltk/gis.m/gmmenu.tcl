@@ -201,7 +201,8 @@ set descmenu [subst  {
 	}}
 	{command {[G_msg "PostScript plot"]} {} "ps.map: Create cartographic PostScript plot" {} -command { execute ps.map }}
 	{separator}
-	{command {[G_msg "E&xit"]} {} "Exit GIS Manager" {} -accelerator $keyctrl-Q -command { exit } }
+	{command {[G_msg "Exit &GRASS"]} {} "End current GRASS session" {} -command { Gm::quit true } }
+	{command {[G_msg "&Quit GIS Manager"]} {} "Exit GIS Manager" {} -accelerator $keyctrl-Q -command { Gm::quit } }
  }
  {[G_msg "&Config"]} all options $tmenu {
 	{cascad {[G_msg "Region"]} {} "" $tmenu {

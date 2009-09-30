@@ -513,6 +513,39 @@ proc Gm::cleanup { } {
 
 };
 
+# Provides remote exit call. Used by GRASS exit to close all session's gis.m instances.
+# Argument session_id is exit caller's GIS_LOCK variable.
+proc Gm::remoteExit { session_id } {
+	global env
+	if {$env(GIS_LOCK) == $session_id} Gm::quit
+}
+
+# Provides exit from gis.m. May also do some clean-up, save-settings et.al.
+proc Gm::quit { {full_exit false} } {
+	global env
+	
+	if { $full_exit } {
+		if { [catch {set spid $env(GRASS_SHELL_PID)}] == 0 } {
+			set leave [tk_dialog .leave [G_msg "End current GRASS session"] \
+			[G_msg "Do You really want to terminate current\
+GRASS session?\n\nThis action will colse all sessions gis.m instances.\n\nIf You have running some \
+GRASS module from comandline, GRASS will terminate after it\
+finishes to run."] warning 1 [G_msg "Terminate current GRASS sesion"] [G_msg "Cancel"]]
+			if { $leave == 0 } { 
+				exec kill -SIGINT $env(GRASS_SHELL_PID)
+			} else { 
+				return
+			}
+		} else {
+			tk_messageBox -type ok -title [G_msg "Not supported"] -message \
+			[G_msg "We sorry. Your shell does not support this feature. \n\
+You have to type 'exit' in terminal manualy."]
+		}
+	}
+
+	exit
+}
+
 ###############################################################################
 
 proc main {argc argv} {
@@ -538,7 +571,7 @@ proc main {argc argv} {
 		Gm::SaveFileBox
     }
     bind . <$keycontrol-Key-q> {
-		exit
+		Gm::quit
 	}
     bind . <$keycontrol-Key-w> {
 		GmTree::FileClose {}
@@ -562,6 +595,9 @@ proc main {argc argv} {
     }
 }
 
+wm protocol . WM_DELETE_WINDOW {
+	Gm::quit
+}
 
 main $argc $argv
 wm geom . [wm geom .]

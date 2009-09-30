@@ -40,7 +40,9 @@ else
 		( exec xterm -e $0 "$@" ) &>/dev/null
 	else
 		# Returning user may have preffered GRASS terminal application
-		GRASS_XTERM=`awk '/GRASS_XTERM/ {print $2}' "$GISRCRC"  2>/dev/null`
+		if [ -z "$GRASS_XTERM" ]; then
+			GRASS_XTERM=`awk '/GRASS_XTERM/ {print $2}' "$GISRCRC"  2>/dev/null`
+		fi;
 		if [ -n "$GRASS_XTERM" ]; then
 			# User has preffered GRASS terminal app
 			( exec $GRASS_XTERM -e $0 "$@" ) &>/dev/null
