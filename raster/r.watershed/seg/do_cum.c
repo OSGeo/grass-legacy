@@ -194,6 +194,7 @@ int do_cum_mfd(void)
 		r_nbr = r + nextdr[ct_dir];
 		c_nbr = c + nextdc[ct_dir];
 		weight[ct_dir] = -1;
+		worked_nbr[ct_dir] = 1;
 		/* check that neighbour is within region */
 		if (r_nbr >= 0 && r_nbr < nrows && c_nbr >= 0 &&
 		    c_nbr < ncols) {
