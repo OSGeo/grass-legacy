@@ -209,7 +209,10 @@ class GeorectWizard(object):
             #
             # show new display & draw map
             #
+            self.xy_mapdisp.CenterOnScreen()
             self.xy_mapdisp.Show()
+            self.gcpmgr.Centre()
+            self.gcpmgr.Raise()
         else:
             self.Cleanup()
                             
@@ -275,6 +278,7 @@ class GeorectWizard(object):
     def Cleanup(self):
         """Return to current location and mapset"""
         self.SwitchEnv('original')
+                
         self.parent.georectifying = None
 
         if hasattr(self, "xy_mapdisp"):
@@ -282,6 +286,11 @@ class GeorectWizard(object):
             self.xy_mapdisp = None
 
         self.wizard.Destroy()
+        
+        # clear GCPs from target display
+        self.gcpmgr.ClearGCP(event=None)
+        self.parent.curr_page.maptree.mapdisplay.MapWindow.UpdateMap(render=False)
+
 
 class LocationPage(TitledPage):
     """
@@ -489,9 +498,11 @@ class GroupPage(TitledPage):
         
     def OnMkGroup(self, event):
         """Create new group in source location/mapset"""
+        self.parent.SwitchEnv('new')
         menuform.GUI().ParseCommand(['i.group'],
                                     completed=(self.GetOptData, None, ''),
                                     parentframe=self.parent.parent, modal=True)
+        self.parent.SwitchEnv('original')
 
     def OnVGroup(self, event):
         """Add vector maps to group"""
@@ -1040,6 +1051,8 @@ class GCP(wx.Frame):
         """
         global maptype
         self.SaveGCPs(None)
+        cmd_stdout = ''
+        cmd_stderr = ''
         
         if self.CheckGCPcount(msg=True) == False:
             return
@@ -1051,9 +1064,31 @@ class GCP(wx.Frame):
             if self.clip_to_region:
                 cmdlist.append('-c')
             
-            self.parent.goutput.RunCmd(cmdlist, compReg=False,
-                                       switchPage=True)
+            p = gcmd.Command(cmdlist, stdout=cmd_stdout, stderr=cmd_stderr)
+            output = p.ReadStdOutput()
+            error = p.ReadErrOutput()
             
+            # printing to console
+            for i in error: 
+                i = i.split(':')
+                if len(i) >1: 
+                    if i[0] == 'GRASS_INFO_PERCENT':
+                        print i[1]+'% completed'
+                    else:
+                        print i[1]
+            for i in output: 
+                i = i.split(':')
+                if len(i) >1: 
+                    if i[0] == 'GRASS_INFO_PERCENT':
+                        print i[1]+'% completed'
+                    else:
+                        print i[1]
+            
+            if p.returncode == 0:
+                wx.MessageBox('Maps in group %s georectified successfully' % self.xygroup)
+            else:
+                wx.MessageBox('ERROR...',error)
+
             time.sleep(.1)
             self.grwiz.SwitchEnv('original')
 
@@ -1373,6 +1408,7 @@ class GCPList(wx.ListCtrl,
             coords.append(self.GetItem(index, i).GetText())
         
         dlg = EditGPC(parent=self, id=wx.ID_ANY, data=coords)
+
         if dlg.ShowModal() == wx.ID_OK:
             values = dlg.GetValues() # string
             
