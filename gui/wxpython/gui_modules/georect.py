@@ -288,9 +288,7 @@ class GeorectWizard(object):
         self.wizard.Destroy()
         
         # clear GCPs from target display
-        self.gcpmgr.ClearGCP(event=None)
         self.parent.curr_page.maptree.mapdisplay.MapWindow.UpdateMap(render=False)
-
 
 class LocationPage(TitledPage):
     """
@@ -498,12 +496,10 @@ class GroupPage(TitledPage):
         
     def OnMkGroup(self, event):
         """Create new group in source location/mapset"""
-        self.parent.SwitchEnv('new')
         menuform.GUI().ParseCommand(['i.group'],
                                     completed=(self.GetOptData, None, ''),
                                     parentframe=self.parent.parent, modal=True)
-        self.parent.SwitchEnv('original')
-
+                                    
     def OnVGroup(self, event):
         """Add vector maps to group"""
         dlg = VectGroup(parent = self,
@@ -645,7 +641,6 @@ class DispMapPage(TitledPage):
             wx.MessageBox(_('You must select a valid image/map in order to continue'))
             event.Veto()
             return
-
         self.parent.SwitchEnv('original')
         
     def OnEnterPage(self, event=None):
