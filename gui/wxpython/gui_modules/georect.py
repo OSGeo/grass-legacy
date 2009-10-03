@@ -728,6 +728,8 @@ class GCP(wx.Frame):
         self.bkw_rmserror = 0.0
         # list map coords and ID of map display they came from
         self.mapcoordlist = [] 
+        # region clipping for georectified map
+        self.clip_to_region = False
 
         self.SetTarget(self.xygroup, self.currentlocation, self.currentmapset)
 
@@ -762,9 +764,9 @@ class GCP(wx.Frame):
         sizer.Add(item=self.rb_grmethod, proportion=0,
                        flag=wx.EXPAND | wx.ALL, border=5)
         
-        self.clip_to_region = wx.CheckBox(parent=panel, id=wx.ID_ANY,
+        self.check = wx.CheckBox(parent=panel, id=wx.ID_ANY,
                                 label=_("clip to computational region in target location"))
-        sizer.Add(item=self.clip_to_region, proportion=0,
+        sizer.Add(item=self.check, proportion=0,
                        flag=wx.EXPAND | wx.ALL, border=5)
 
         box = wx.StaticBox (parent=panel, id=wx.ID_ANY,
@@ -786,6 +788,7 @@ class GCP(wx.Frame):
         self.Bind(wx.EVT_RADIOBOX, self.OnGRMethod, self.rb_grmethod)
         self.Bind(wx.EVT_ACTIVATE, self.OnFocus)
         self.Bind(wx.EVT_CLOSE, self.OnQuit)
+        self.Bind(wx.EVT_CHECKBOX, self.ClipRegion, self.check)
 
         panel.SetSizer(sizer)
         # sizer.Fit(self)
@@ -793,6 +796,9 @@ class GCP(wx.Frame):
     def __del__(self):
         """Disable georectification mode"""
         self.parent.georectifying = None
+        
+    def ClipRegion(self, event):
+        self.clip_to_region = event.IsChecked()
         
     def SetMapDisplay(self, win):
         self.mapdisp = win
@@ -1058,7 +1064,7 @@ class GCP(wx.Frame):
                        'extension=%s' % self.extension,'order=%s' % self.gr_order]
             if self.clip_to_region:
                 cmdlist.append('-c')
-            
+            print 'the command run = ',str(cmdlist)
             p = gcmd.Command(cmdlist, stdout=cmd_stdout, stderr=cmd_stderr)
             output = p.ReadStdOutput()
             error = p.ReadErrOutput()
