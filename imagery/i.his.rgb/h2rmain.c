@@ -75,6 +75,7 @@ int main(int argc, char **argv)
     if (G_parser(argc, argv))
 	exit(EXIT_FAILURE);
 
+
     /* get dimension of the image */
     rows = G_window_rows();
     cols = G_window_cols();
@@ -91,7 +92,7 @@ int main(int argc, char **argv)
 	/* read in a row from each cell map */
 	for (band = 0; band < 3; band++)
 	    if (G_get_map_row(fd_input[band], rowbuffer[band], i) < 0)
-		G_fatal_error(_("Unable to read raster map row %d"), i);
+		G_fatal_error(_("Unable to read raster map row %ld"), i);
 
 	/* process this row of the map */
 	his2rgb(rowbuffer, cols);
@@ -100,8 +101,10 @@ int main(int argc, char **argv)
 	for (band = 0; band < 3; band++)
 	    if (G_put_raster_row(fd_output[band], rowbuffer[band], CELL_TYPE)
 		< 0)
-		G_fatal_error(_("Failed writing raster map row %d"), i);
+		G_fatal_error(_("Failed writing raster map row %ld"), i);
     }
+    G_percent(i, rows, 2);
+
 
     closefiles(opt_red->answer, opt_green->answer, opt_blue->answer,
 	       fd_output, rowbuffer);
