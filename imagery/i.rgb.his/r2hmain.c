@@ -107,5 +107,5 @@ int main(int argc, char **argv)
 	       fd_output, rowbuffer);
 
 
-exit(EXIT_SUCCESS);
+    exit(EXIT_SUCCESS);
 }
