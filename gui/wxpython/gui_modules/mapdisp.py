@@ -4134,6 +4134,21 @@ class MapFrame(wx.Frame):
         if showCompExtent:
             self.MapWindow.regionCoords = []
         
+    def IsStandalone(self):
+        """!Check if Map display is standalone"""
+        if self.gismanager:
+            return False
+        
+        return True
+    
+    def GetLayerManager(self):
+        """!Get reference to Layer Manager
+
+        @return window reference
+        @return None (if standalone)
+        """
+        return self.gismanager
+
 # end of class MapFrame
 
 class MapApp(wx.App):
