@@ -135,7 +135,7 @@ EOF
       done
 else
    ALL_MAX=0
-   ALL_MIN=255
+   ALL_MIN=999999
    for i in $RED $GREEN $BLUE ; do
       g.message "Processing <$i>..."
       MIN=`r.univar -ge $i perc=2  | grep "^percentile_" | cut -d'=' -f2`
