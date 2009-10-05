@@ -30,7 +30,6 @@
 #include <grass/Vect.h>
 
 #include <gdal_version.h>	/* needed for FID detection */
-#include <ogr_api.h>
 
 #ifdef HAVE_OGR
 #include <ogr_api.h>
