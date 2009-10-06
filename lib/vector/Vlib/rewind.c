@@ -19,7 +19,7 @@
  */
 
 #include <grass/Vect.h>
-
+#include <grass/glocale.h>
 
 /*  Rewind vector data file to cause reads to start at beginning */
 /* returns 0 on success, -1 on error */
