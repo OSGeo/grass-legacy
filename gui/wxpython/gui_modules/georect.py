@@ -94,7 +94,6 @@ class GeorectWizard(object):
                 line = line.replace('\n', '').strip()
                 if len(line) < 1:
                     continue
-                print line
                 key, value = line.split(':', 1)
                 self.gisrc_dict[key.strip()] = value.strip()
         finally:
@@ -519,7 +518,7 @@ class GroupPage(TitledPage):
         """Process i.group"""
         # update the page
         if dcmd:
-            gcmd.Command(dcmd, stderr=None)
+            gcmd.Command(dcmd)
 
         self.OnEnterPage()
         self.Update()
@@ -626,6 +625,7 @@ class DispMapPage(TitledPage):
     def OnSelection(self,event):
         """Map to display selected"""
         global xy_map
+        global maptype
 
         xy_map = event.GetString()
 
@@ -633,6 +633,18 @@ class DispMapPage(TitledPage):
             wx.FindWindowById(wx.ID_FORWARD).Enable(False)
         else:
             wx.FindWindowById(wx.ID_FORWARD).Enable(True)
+
+        try:
+        # set computational region to match selected map and zoom display to region
+            if maptype == 'cell':
+                p = gcmd.Command(['g.region', 'rast=xy_map'])
+            elif maptype == 'vector':
+                p = gcmd.Command(['g.region', 'vect=xy_map'])
+            
+            if p.returncode == 0:
+                self.parent.Map.region = self.parent.Map.GetRegion()
+        except:
+            pass
 
     def OnPageChanging(self, event=None):
         global xy_map
@@ -690,6 +702,7 @@ class GCP(wx.Frame):
         self.xymapset = self.grwiz.gisrc_dict['MAPSET']
         self.xygroup = self.grwiz.grouppage.xygroup
         self.extension = self.grwiz.grouppage.extension
+        self.VectGRList = []
 
         self.file = {
             'points' : os.path.join(self.grassdatabase,
@@ -1052,8 +1065,6 @@ class GCP(wx.Frame):
         """
         global maptype
         self.SaveGCPs(None)
-        cmd_stdout = ''
-        cmd_stderr = ''
         
         if self.CheckGCPcount(msg=True) == False:
             return
@@ -1064,26 +1075,22 @@ class GCP(wx.Frame):
                        'extension=%s' % self.extension,'order=%s' % self.gr_order]
             if self.clip_to_region:
                 cmdlist.append('-c')
-            print 'the command run = ',str(cmdlist)
-            p = gcmd.Command(cmdlist, stdout=cmd_stdout, stderr=cmd_stderr)
+                
+            p = gcmd.Command(cmdlist)
+            
             output = p.ReadStdOutput()
             error = p.ReadErrOutput()
             
             # printing to console
             for i in error: 
-                i = i.split(':')
-                if len(i) >1: 
-                    if i[0] == 'GRASS_INFO_PERCENT':
-                        print i[1]+'% completed'
-                    else:
-                        print i[1]
+                try:
+                    msgtype, msg = i.split(':')
+                    if msgtype != 'GRASS_INFO_PERCENT':
+                        self.parent.goutput.WriteLog(text = _(msg), switchPage = True)
+                except:
+                    continue
             for i in output: 
-                i = i.split(':')
-                if len(i) >1: 
-                    if i[0] == 'GRASS_INFO_PERCENT':
-                        print i[1]+'% completed'
-                    else:
-                        print i[1]
+                self.parent.goutput.WriteLog(text = _(msg), switchPage = True)
             
             if p.returncode == 0:
                 wx.MessageBox('Maps in group %s georectified successfully' % self.xygroup)
@@ -1094,8 +1101,23 @@ class GCP(wx.Frame):
             self.grwiz.SwitchEnv('original')
 
         elif maptype == 'vector':
+            outmsg = ''
             # loop through all vectors in VREF
             # and move resulting vector to target location
+            
+            # make sure current mapset has a vector folder
+            if not os.path.isdir(os.path.join(self.grassdatabase,
+                                              self.currentlocation,
+                                              self.currentmapset,
+                                              'vector')):
+                os.mkdir(os.path.join(self.grassdatabase,
+                                      self.currentlocation,
+                                      self.currentmapset,
+                                      'vector'))
+
+            self.grwiz.SwitchEnv('new')
+            
+            # make list of vectors to georectify from VREF
             f = open(self.file['vgrp'])
             vectlist = []
             try:
@@ -1106,82 +1128,87 @@ class GCP(wx.Frame):
                     vectlist.append(vect)
             finally:
                 f.close()
+                               
+            # georectify each vector in VREF using v.transform
             for vect in vectlist:
-                self.grwiz.SwitchEnv('new')
                 self.outname = vect + '_' + self.extension
                 self.parent.goutput.WriteLog(text = _('Transforming <%s>...') % vect,
                                              switchPage = True)
-                
-                xyLayer = []
-                for layer in vector.vector_db(map = vect).itervalues():
-                    xyLayer.append((layer['driver'],
-                                    layer['database'],
-                                    layer['table']))
-                self.parent.goutput.RunCmd(['v.transform',
-                                            '--o',
-                                            'input=%s' % vect,
-                                            'output=%s' % self.outname,
-                                            'pointsfile=%s' % self.file['points']],
-                                           switchPage = True,
-                                           onDone = self.OnGeorectDone)
+                                             
+                p = gcmd.Command(['v.transform', 
+                                 '--o', 
+                                 'input=%s' % vect, 
+                                 'output=%s' % self.outname,
+                                 'points=%s' % self.file['points']])
 
-                dbConnect = db.db_connection()
-                for layer in xyLayer:                
-                    self.parent.goutput.RunCmd(['db.copy',
-                                                '--q',
-                                                '--o',
-                                                'from_driver=%s' % layer[0],
-                                                'from_database=%s' % layer[1],
-                                                'from_table=%s' % layer[2],
-                                                'to_driver=%s' % dbConnect['driver'],
-                                                'to_database=%s' % dbConnect['database'],
-                                                'to_table=%s' % layer[2] + '_' + self.extension])
+                output = p.ReadStdOutput()
+                error = p.ReadErrOutput()
+                                
+                # printing to console
+                for i in error: 
+                    try:
+                        msgtype, msg = i.split(':')
+                        if msgtype != 'GRASS_INFO_PERCENT':
+                            self.parent.goutput.WriteLog(text = _(msg), switchPage = True)
+                    except:
+                        continue
+                for i in output: 
+                    self.parent.goutput.WriteLog(text = _(i), switchPage = True)
+                        
+                if p.returncode == 0:
+                    self.VectGRList.append(self.outname)
+                else:
+                    self.parent.goutput.WriteError(_('Georectification of vector map <%s> failed') %
+                                                           self.outname)
+
+                # FIXME
+                # Copying database information not working. 
+                # Does not copy from xy location to current location
+#                xyLayer = []
+#                for layer in grass.vector_db(map = vect).itervalues():
+#                    xyLayer.append((layer['driver'],
+#                                    layer['database'],
+#                                    layer['table']))
+
+                        
+#                dbConnect = grass.db_connection()
+#                print 'db connection =', dbConnect
+#                for layer in xyLayer:     
+#                    self.parent.goutput.RunCmd(['db.copy',
+#                                                '--q',
+#                                                '--o',
+#                                                'from_driver=%s' % layer[0],
+#                                                'from_database=%s' % layer[1],
+#                                                'from_table=%s' % layer[2],
+#                                                'to_driver=%s' % dbConnect['driver'],
+#                                                'to_database=%s' % dbConnect['database'],
+#                                                'to_table=%s' % layer[2] + '_' + self.extension])
+
+            # copy all georectified vectors from source location to current location
+            for name in self.VectGRList:
+                xyvpath = os.path.join(self.grassdatabase,
+                                       self.xylocation,
+                                       self.xymapset,
+                                       'vector',
+                                       name)
+                vpath = os.path.join(self.grassdatabase,
+                                     self.currentlocation,
+                                     self.currentmapset,
+                                     'vector',
+                                     name)
+                                    
+                if os.path.isdir(vpath):
+                    self.parent.goutput.WriteWarning(_('Vector map <%s> already exists. '
+                                                       'Change extension name and '
+                                                       'georectify again.') % self.outname)
+                    break
+                else:
+                    shutil.move(xyvpath, vpath)
+                                                   
+        wx.MessageBox('For all vector maps georectified successfully, ' + '\n' +
+                      'you will need to copy any associated attribute tables' + '\n' +
+                      'and reconnect them to the georectified vectors')
             
-    def OnGeorectDone(self, **kargs):
-        """Print final message"""
-        global maptype
-        if maptype == 'cell':
-            return
-
-        returncode = kargs['returncode']
-        
-        xyvpath = os.path.join(self.grassdatabase,
-                               self.xylocation,
-                               self.xymapset,
-                               'vector',
-                               self.outname)
-        vpath = os.path.join(self.grassdatabase,
-                             self.currentlocation,
-                             self.currentmapset,
-                             'vector',
-                             self.outname)
-        
-        if os.path.isdir(vpath):
-            self.parent.goutput.WriteWarning(_('Vector map <%s> already exists. '
-                                               'Change extension name and '
-                                               'georectify again.') % self.outname)
-        else:
-            if returncode == 0:
-                if not os.path.isdir(os.path.join(self.grassdatabase,
-                                                  self.currentlocation,
-                                                  self.currentmapset,
-                                                  'vector')):
-                    os.mkdir(os.path.join(self.grassdatabase,
-                                          self.currentlocation,
-                                          self.currentmapset,
-                                          'vector'))
-                shutil.move(xyvpath, vpath)        
-                
-                self.parent.goutput.WriteCmdLog(_('Vector map <%s> georectified '
-                                               'successfully') % self.outname)
-                # copy attributes
-                self.parent.goutput.WriteLog(_('Copying attributes...'))
-                
-            else:
-                self.parent.goutput.WriteError(_('Georectification of vector map <%s> failed') %
-                                               self.outname)
-                
-        del self.outname
         self.grwiz.SwitchEnv('original')
         
     def OnSettings(self, event):
