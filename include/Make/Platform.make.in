@@ -216,6 +216,7 @@ CAIROLIB            = @CAIROLIB@
 USE_CAIRO           = @USE_CAIRO@
 
 #Python
+PYTHON              = python
 PYTHONINC           = @PYTHONINC@
 PYTHONCFLAGS        = @PYTHONCFLAGS@
 PYTHONLDFLAGS       = @PYTHONLDFLAGS@

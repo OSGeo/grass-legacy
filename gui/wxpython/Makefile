@@ -34,7 +34,7 @@ $(ETCDIR)/%: %
 
 menustrings.py: gui_modules/menudata.py xml/menudata.xml
 	GISBASE="$(GISBASE)" \
-	python $< > $@
+	$(PYTHON) $< > $@
 
 #doxygen:
 DOXNAME=wxpython
