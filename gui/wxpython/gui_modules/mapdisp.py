@@ -1871,6 +1871,7 @@ class BufferedWindow(MapWindow, wx.Window):
                     self.polycoords = []
                     self.UpdateMap(render=False)
                     self.redrawAll = True
+                    self.Refresh()
                     
                     # add new record into atribute table
                     if UserSettings.Get(group='vdigit', key="addRecord", subkey='enabled') is True:
