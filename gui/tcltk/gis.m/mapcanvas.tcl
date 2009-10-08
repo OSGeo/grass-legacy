@@ -483,16 +483,16 @@ proc MapCanvas::get_mapunits {} {
 	    	regexp -nocase {^(.*):(.*)$} $line trash key value
 	    	set key [string trim $key]
 	    	set value [string trim $value]
-	    	set prj($key) $value	
+	    	set prj($key) $value
 	    }
 
         # Set for latlon locations
         if { $prj(proj) == "ll"} {set proj_is_ll 1}
         
         if {[catch {close $input} error]} {
-			GmLib::errmsg $error [G_msg "g.proj or projection error"]
-			return
-	    } 
+		GmLib::errmsg $error [G_msg "g.proj or projection error"]
+		return
+	    }
 	}
 	# Length is calculated from the map canvas arrows
 	#  and so is measured & plotted in map units.
