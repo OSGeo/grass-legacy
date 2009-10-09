@@ -14,7 +14,7 @@ msgstr ""
 "Project-Id-Version: grassmods_cs\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2009-02-24 17:46+0100\n"
-"PO-Revision-Date: 2009-02-24 10:45+0100\n"
+"PO-Revision-Date: 2009-10-09 12:58+0200\n"
 "Last-Translator: \n"
 "Language-Team:  <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -26351,7 +26351,7 @@ msgstr "Soubor ASCII pro import, pokud není zadán, ète se standardní vstup"
 
 #: ../vector/v.in.ascii/in.c:67
 msgid "point;simple x,y[,z] list;standard;GRASS's vector ASCII format"
-msgstr "bod;jednodu¹e x,y[,z] seznam;standard; GRASS vektorový ASCII formát"
+msgstr "point;bodový formát (x,y[,z]);standard;GRASS vektorový ASCII formát"
 
 #: ../vector/v.in.ascii/in.c:70
 msgid "Input file format"
