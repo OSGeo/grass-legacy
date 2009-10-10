@@ -6,7 +6,7 @@
  *               Bernhard Reiter <bernhard intevation.de>, 
  *               Markus Neteler <neteler itc.it>, 
  *               Glynn Clements <glynn gclements.plus.com>, 
- *               Hamish Bowman <hamish_nospam yahoo.com>
+ *               Hamish Bowman <hamish_b yahoo.com>
  * PURPOSE:      
  * COPYRIGHT:    (C) 1999-2007 by the GRASS Development Team
  *

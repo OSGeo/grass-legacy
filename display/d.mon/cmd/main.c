@@ -7,7 +7,7 @@
  *               Roberto Flor <flor itc.it>, 
  *               Bernhard Reiter <bernhard intevation.de>, 
  *               Glynn Clements <glynn gclements.plus.com>, 
- *               Hamish Bowman <hamish_nospam yahoo.com>, 
+ *               Hamish Bowman <hamish_b yahoo.com>, 
  *               Jan-Oliver Wagner <jan intevation.de>
  * PURPOSE:      control graphic monitors
  * COPYRIGHT:    (C) 1999-2006 by the GRASS Development Team

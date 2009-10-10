@@ -6,7 +6,7 @@
  *               Michael Shapiro, U.S. Army CERL (original contributor)
  *               Markus Neteler <neteler itc.it>
  *               Bernhard Reiter <bernhard intevation.de>, Eric G. Miller <egm2 jps.net>, 
- *               Glynn Clements <glynn gclements.plus.com>, Hamish Bowman <hamish_nospam yahoo.com>, 
+ *               Glynn Clements <glynn gclements.plus.com>, Hamish Bowman <hamish_b yahoo.com>, 
  *               Jan-Oliver Wagner <jan intevation.de>
  * PURPOSE:      
  * COPYRIGHT:    (C) 1999-2007 by the GRASS Development Team
