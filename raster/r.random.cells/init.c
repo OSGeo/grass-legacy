@@ -32,7 +32,7 @@ void Init(int argc, char **argv)
     Output->type = TYPE_STRING;
     Output->required = YES;
     Output->multiple = NO;
-    Output->description = "Name of indepent cells map";
+    Output->description = "Name of independent cells map";
     Output->gisprompt = "new,cell,raster";
 
     Distance = G_define_option();
