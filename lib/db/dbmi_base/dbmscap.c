@@ -173,12 +173,12 @@ dbDbmscap *db_read_dbmscap(void)
 	name = G_str_replace(ent->d_name, ".exe", "");
 
 #ifdef __MINGW32__
-	dirpath = G_malloc(strlen("\"\\driver\\db\\\"")
+	dirpath = G_malloc(strlen("\\driver\\db\\")
 			   + strlen(G_gisbase()) + strlen(ent->d_name) + 1);
-	sprintf(dirpath, "\"%s\\driver\\db\\%s\"", G_gisbase(), ent->d_name);
+	sprintf(dirpath, "%s\\driver\\db\\%s", G_gisbase(), ent->d_name);
 	G_convert_dirseps_to_host(dirpath);
 #else
-	G_asprintf(&dirpath, "\"%s/driver/db/%s\"", G_gisbase(), ent->d_name);
+	G_asprintf(&dirpath, "%s/driver/db/%s", G_gisbase(), ent->d_name);
 #endif
 	add_entry(&list, name, dirpath, "");
 	G_free(name);
