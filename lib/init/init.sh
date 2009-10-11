@@ -1022,12 +1022,13 @@ done
 
 # Attempt to close any open gis.m instances. 
 # Will work only on some systems, still has no harm to others
-if [ $TCLTKGRASSBASE ] ; then
+# do Mac and MSys have pgrep? if [ -x `which pgrep` ] && [ `pgrep -c  ... ] ; then
+if [ -n "$TCLTKGRASSBASE" ] && [ `pgrep -c $GRASS_WISH` -ge 1 ] ; then
 	echo "Closing open gis.m sessions....."
 	echo 'foreach gwin [lsearch -all -inline [winfo interps] gm_tcl*] {
 		catch {send -async $gwin Gm::remoteExit $env(GIS_LOCK)}
 	}
-	exit' | $GRASS_WISH >/dev/null 2>&1
+	exit' | "$GRASS_WISH" #>/dev/null 2>&1
 fi
 
 echo "Cleaning up temporary files ..."
