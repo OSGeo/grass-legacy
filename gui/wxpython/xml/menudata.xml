@@ -2392,7 +2392,7 @@
 	      <help>Raster map matrix filter.</help>
 	      <keywords>raster,map algebra</keywords>
 	      <handler>self.OnMenuCmd</handler>
-	      <command>r.mfilter.fp</command>
+	      <command>r.mfilter</command>
 	    </menuitem>
 	  </items>
 	</menu>
