@@ -1046,10 +1046,11 @@ class PreferencesDialog(wx.Dialog):
         if 'cairo' not in listOfDrivers:
             for line in gcmd.RunCommand('d.mon',
                                         flags = 'l',
-                                        read = True):
+                                        read = True).splitlines():
                 if 'cairo' in line:
                     listOfDrivers.append('cairo')
                     break
+        
         driver = wx.Choice(parent=panel, id=wx.ID_ANY, size=(150, -1),
                            choices=listOfDrivers,
                            name="GetStringSelection")
