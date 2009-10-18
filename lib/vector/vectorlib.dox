@@ -142,14 +142,13 @@ The following vector objects are defined:
 <li> line: a directed sequence of connected vertices with two endpoints called nodes;
 <li> boundary: the border line to describe an area;
 <li> centroid: a point within a closed boundary;
-<li> area: the topological composition of centroid and boundary;
+<li> area: the topological composition of a closed ring of boundaries and optionally a centroid;
 <li> face: a 3D area;
 <li> kernel: a 3D centroid in a volume;
 <li> volume: a 3D corpus, the topological composition of faces and kernel.
 </ul>
 
-Note that all lines and boundaries can be polylines (with nodes in
-between). 
+Note that all lines and boundaries can have multiple vertices and segments. 
 
 \section libraries Vector libraries
 
@@ -164,7 +163,7 @@ For historical reasons, there are two internal libraries for vector:
 
 <ul>
 <li> diglib (with dig_*() functions), GRASS 3.x/4.x
-<li> Vlib (with V1_*(), V2_*() and Vect_*() functions), GRASS 4.x/5.x (except for the 5.7 interim version)
+<li> Vlib (with V1_*(), V2_*() and Vect_*() functions), GRASS 6.x (except for the 5.7 interim version)
 </ul>
 
 The vector library was introduced in GRASS 4.0 to hide internal vector
@@ -494,10 +493,11 @@ This is handled correctly in GRASS: A can be filled, B filled differently.
 +---------+
 \endverbatim
 
-In GRASS, whenever an 'inner' ring touches the boundary of an outside area, even in
-one point, it is no longer an 'inner' ring, it is simply another area.
-A, B above can never be exported from GRASS as polygon A with inner ring B
-because there are only 2 areas A and B and no island.
+In GRASS, whenever an 'inner' ring touches the boundary of an outside
+area, even in one point, it is no longer an 'inner' ring (Isle in
+GRASS topology), it is simply another area. A, B above can never be
+exported from GRASS as polygon A with inner ring B because there are
+only 2 areas A and B and one island formed by A and B together.
 
 
 \subsection Topology_Example_3 Topology Example 3:
