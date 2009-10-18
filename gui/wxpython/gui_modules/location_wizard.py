@@ -252,22 +252,21 @@ class CoordinateSystemPage(TitledPage):
 
         # toggles
         self.radio1 = wx.RadioButton(parent=self, id=wx.ID_ANY,
-                                     label=_("Select coordinate system"),
+                                     label=_("Select coordinate system parameters from a list"),
                                      style = wx.RB_GROUP)
         self.radio2 = wx.RadioButton(parent=self, id=wx.ID_ANY,
-                                     label=_("Select EPSG code of coordinate system"))
+                                     label=_("Select EPSG code of spatial reference system"))
         self.radio3 = wx.RadioButton(parent=self, id=wx.ID_ANY,
-                                     label=_("Use coordinate system of selected "
-                                             "georeferenced file"))
+                                     label=_("Read projection and datum terms from a "
+                                             "georeferenced data file"))
         self.radio4 = wx.RadioButton(parent=self, id=wx.ID_ANY,
-                                     label=_("Use coordinate system of selected "
+                                     label=_("Read projection and datum terms from a "
                                              "WKT or PRJ file"))
         self.radio5 = wx.RadioButton(parent=self, id=wx.ID_ANY,
-                                     label=_("Create custom PROJ.4 parameters "
-                                             "string for coordinate system"))
+                                     label=_("Specify projection and datum terms using custom "
+                                             "PROJ.4 parameters"))
         self.radio6 = wx.RadioButton(parent=self, id=wx.ID_ANY,
-                                     label=_("Use arbitrary non-earth "
-                                             "coordinate system (XY)"))
+                                     label=_("Create an arbitrary non-earth coordinate system (XY)"))
         # layout
         self.sizer.AddGrowableCol(1)
         self.sizer.SetVGap(10)
@@ -423,7 +422,9 @@ class ProjectionsPage(TitledPage):
         
         if self.proj in self.parent.projections.keys():
             if self.proj == 'stp':
-                wx.MessageBox('State Plan Projection must be entered as an EPSG code or a custom PROJ4 string', 
+                wx.MessageBox('Currently State Plane projections must be selected using the '
+                              'text-based setup (g.setproj), or entered by EPSG code or '
+                              'custom PROJ.4 terms.',
                               'Warning', wx.ICON_WARNING)
                 self.proj = ''
                 self.tproj.SetValue(self.proj)
