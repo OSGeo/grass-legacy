@@ -957,7 +957,7 @@ class DatumPage(TitledPage):
         event.Skip()
 
     def OnDText(self, event):
-        self.datum = event.GetString().lower()
+        self.datum = event.GetString()
 
         nextButton = wx.FindWindowById(wx.ID_FORWARD)
         if len(self.datum) == 0 or self.datum not in self.parent.datums:
@@ -2078,6 +2078,7 @@ class LocationWizard(wx.Object):
 
         proj4string = '%s +no_defs' % proj4string
         
+        wx.MessageBox(proj4string, 'final proj4 string')
         return proj4string
         
     def Proj4Create(self, proj4string):
@@ -2732,7 +2733,7 @@ class SelectTransformDialog(wx.Dialog):
         #
         self.translist = TransList(panel, id=-1, size=(width, height), style=wx.SUNKEN_BORDER)
         self.translist.SetItemCount(tlistlen)
-        self.translist.SetSelection(1)
+        self.translist.SetSelection(2)
         self.translist.SetFocus()
         
         self.Bind(wx.EVT_LISTBOX, self.ClickTrans, self.translist)
