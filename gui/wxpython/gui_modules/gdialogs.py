@@ -43,7 +43,7 @@ from preferences import globalSettings as UserSettings
 
 class NewVectorDialog(wx.Dialog):
     """Create new vector map layer"""
-    def __init__(self, parent, id, title, disableAdd=False, 
+    def __init__(self, parent, id, title, disableAdd=False, disableTable=False,
                 style=wx.DEFAULT_DIALOG_STYLE | wx.RESIZE_BORDER):
 
         wx.Dialog.__init__(self, parent, id, title, style=style)
@@ -64,7 +64,9 @@ class NewVectorDialog(wx.Dialog):
         self.table = wx.CheckBox(parent=self.panel, id=wx.ID_ANY,
                                  label=_("Create attribute table"))
         self.table.SetValue(True)
-
+        if disableTable:
+            self.table.Enable(False)
+        
         self.addbox = wx.CheckBox(parent=self.panel,
                                   label=_('Add created map into layer tree'), style = wx.NO_BORDER)
         if disableAdd:
@@ -126,7 +128,7 @@ class NewVectorDialog(wx.Dialog):
         return mapName
     
 def CreateNewVector(parent, cmdDef, title=_('Create new vector map'),
-                    exceptMap=None, log=None, disableAdd=False):
+                    exceptMap=None, log=None, disableAdd=False, disableTable=False):
     """Create new vector map layer
 
     @cmdList tuple/list (cmd list, output paramater)
@@ -136,7 +138,7 @@ def CreateNewVector(parent, cmdDef, title=_('Create new vector map'),
     """
     cmd = cmdDef[0]
     dlg = NewVectorDialog(parent, wx.ID_ANY, title,
-                          disableAdd)
+                          disableAdd, disableTable)
     if dlg.ShowModal() == wx.ID_OK:
         outmap = dlg.GetName()
         if outmap == exceptMap:
@@ -181,7 +183,7 @@ def CreateNewVector(parent, cmdDef, title=_('Create new vector map'),
         #
         # create attribute table
         #
-        if dlg.table.IsChecked():
+        if dlg.table.IsEnabled() and dlg.table.IsChecked():
             key = UserSettings.Get(group='atm', key='keycolumn', subkey='value')
             sql = 'CREATE TABLE %s (%s INTEGER)' % (outmap, key)
             
