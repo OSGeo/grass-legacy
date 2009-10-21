@@ -15,6 +15,7 @@
  *
  *****************************************************************************/
 
+#include <stdlib.h>
 #define MAIN
 #include <grass/glocale.h>
 #include "global.h"
