@@ -1,16 +1,16 @@
-# translation of grasswxpy_pl.po to Polish
+# translation of grasswxpy_pl.po to Polski
 # This file is distributed under the same license as the GRASS package.
-# Copyright (C) 2008, 2009 GRASS Development Team
-# Milena Nowotarska <do.milenki*gmail.com>, 2009.
+# Copyright (C) 2008, 2009, GRASS Development Team
+# Milena Nowotarska <do.milenki*gmail.com>, 2008, 2009.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: grasswxpy_pl\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2009-01-12 22:59+0100\n"
-"PO-Revision-Date: 2009-10-27 22:20+0200\n"
+"PO-Revision-Date: 2009-10-28 23:18+0100\n"
 "Last-Translator: Milena Nowotarska <do.milenki*gmail.com>\n"
-"Language-Team: Milena\n"
+"Language-Team: Polish <grass-translations@lists.osgeo.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -999,8 +999,8 @@ msgid ""
 "Unable to rename column <%(column)s> to <%(columnTo)s>. Column already "
 "exists in the table <%(table)s>."
 msgstr ""
-"Nie można zmienić nazwy kolumny <%(kolumna)s> na <%(kolumnaTo)s>. Kolumna "
-"już istnieje w tabeli <%(tabela)s>."
+"Nie można zmienić nazwy kolumny <%(column)s> na <%(columnTo)s>. Kolumna już "
+"istnieje w tabeli <%(table)s>."
 
 #: ../gui/wxpython/gui_modules/dbm.py:1442
 #, python-format
@@ -1008,8 +1008,8 @@ msgid ""
 "Unable to rename column. Column <%(column)s> doesn't exist in the table <%"
 "(table)s>."
 msgstr ""
-"Nie można zmienić nazwy kolumny. Kolumna <%(kolumna)s> nie istnieje w tabeli "
-"<%(tabela)s>."
+"Nie można zmienić nazwy kolumny. Kolumna <%(column)s> nie istnieje w tabeli <"
+"%(table)s>."
 
 #: ../gui/wxpython/gui_modules/dbm.py:1470
 msgid "Drop selected column"
@@ -1358,7 +1358,7 @@ msgstr "Perspektywa:"
 
 #: ../gui/wxpython/gui_modules/nviz_tools.py:149
 msgid "Twist:"
-msgstr "Otočení:"
+msgstr "Skręcenie:"
 
 #: ../gui/wxpython/gui_modules/nviz_tools.py:163
 msgid "Height:"
@@ -1771,35 +1771,35 @@ msgstr "Wyświetl wybrane"
 
 #: ../gui/wxpython/gui_modules/preferences.py:525
 msgid "box"
-msgstr "ramka"
+msgstr "box"
 
 #: ../gui/wxpython/gui_modules/preferences.py:526
 msgid "sphere"
-msgstr "sfera"
+msgstr "sphere"
 
 #: ../gui/wxpython/gui_modules/preferences.py:527
 msgid "cube"
-msgstr "sześcian"
+msgstr "cube"
 
 #: ../gui/wxpython/gui_modules/preferences.py:528
 msgid "diamond"
-msgstr ""
+msgstr "diamond"
 
 #: ../gui/wxpython/gui_modules/preferences.py:529
 msgid "dtree"
-msgstr ""
+msgstr "dtree"
 
 #: ../gui/wxpython/gui_modules/preferences.py:530
 msgid "ctree"
-msgstr ""
+msgstr "ctree"
 
 #: ../gui/wxpython/gui_modules/preferences.py:531
 msgid "aster"
-msgstr ""
+msgstr "aster"
 
 #: ../gui/wxpython/gui_modules/preferences.py:532
 msgid "gyro"
-msgstr ""
+msgstr "gyro"
 
 #: ../gui/wxpython/gui_modules/preferences.py:533
 msgid "histogram"
@@ -1865,7 +1865,7 @@ msgid ""
 "Display window(s) and use as default for next sessions."
 msgstr ""
 "Zapisz bieżącą pozycję i rozmiar Okna Menadżera warstw i Okna/Okien Map i "
-"użyj ich jako domyslnych w następnej sesji."
+"użyj ich jako domyślnych w następnej sesji."
 
 #: ../gui/wxpython/gui_modules/preferences.py:914
 msgid "Layer Manager settings"
@@ -1911,9 +1911,8 @@ msgid "Command"
 msgstr "Polecenie"
 
 #: ../gui/wxpython/gui_modules/preferences.py:1087
-#, fuzzy
 msgid "Command dialog settings"
-msgstr "Okno ustawień poleceń"
+msgstr "Ustawienia okna poleceń"
 
 #: ../gui/wxpython/gui_modules/preferences.py:1099
 msgid "Allow output files to overwrite existing files"
@@ -2030,7 +2029,7 @@ msgstr "Wybierz czcionkę:"
 
 #: ../gui/wxpython/gui_modules/preferences.py:1696
 msgid "Set/unset access to mapsets in current location"
-msgstr "Ustaw dostępy do mapsetów w bieżącej lokalizacji"
+msgstr "Ustaw dostępy do mapsetów w bieżącej lokacji"
 
 #: ../gui/wxpython/gui_modules/preferences.py:1710
 #, python-format
@@ -3255,7 +3254,7 @@ msgstr "Zapisz zmainy przy wyjściu"
 
 #: ../gui/wxpython/gui_modules/vdigit.py:1282
 msgid "Query tool"
-msgstr ""
+msgstr "Narzędzie zapytań"
 
 #: ../gui/wxpython/gui_modules/vdigit.py:1289
 msgid "Choose query tool"
@@ -3381,7 +3380,6 @@ msgid "Node (two lines)"
 msgstr "Węzeł (dwie linie)"
 
 #: ../gui/wxpython/gui_modules/vdigit.py:1465
-#, fuzzy
 msgid "Vertex"
 msgstr "Węzeł"
 
@@ -4327,12 +4325,15 @@ msgid "Please wait, loading attribute data..."
 msgstr "Proszę czekać, ładuję dane atrybutowe..."
 
 #: ../gui/wxpython/wxgui.py:1444
-#, fuzzy, python-format
+#, python-format
 msgid ""
 "Do you want to remove map layer(s)\n"
 "%s\n"
 "from layer tree?"
-msgstr "Czy chcesz usunąć warstwę mapy<%s> z listy warstw?"
+msgstr ""
+"Czy chcesz usunąć warstwę mapy (s)\n"
+"%s\n"
+" z listy warstw?"
 
 #: ../gui/wxpython/wxgui.py:1447
 msgid "Do you want to remove selected map layer(s) from layer tree?"
@@ -4873,7 +4874,6 @@ msgstr "Połączenie wektora z bazą danych"
 #~ msgid "Neighborhood points"
 #~ msgstr "Punkty sąsiedztwa"
 
-#, fuzzy
 #~ msgid "Cross product"
 #~ msgstr "Produkt poprzecznego łączenia rastrów"
 
@@ -6132,3 +6132,7 @@ msgstr "Połączenie wektora z bazą danych"
 #, fuzzy
 #~ msgid "Develop volumes"
 #~ msgstr "Praca z "
+
+#~ msgid "Prints/sets DB connection for a vector map to attribute table."
+#~ msgstr ""
+#~ "Wyświetla/ustawia połączenie DB dla mapy wektorowej z tabelą atrybutów."
