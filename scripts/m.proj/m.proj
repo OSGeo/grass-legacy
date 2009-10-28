@@ -230,10 +230,10 @@ fi
 #   cs2cs | sed -e 's/d/:/g' -e "s/'/:/g"  -e 's/"//g'
 
 if [ -z "$outfile" ] ; then
-   cat "$infile" | tr "$fs" ' ' | cs2cs $OUTFMT $IN_PROJ +to $OUT_PROJ
+   cat "$infile" | tr "$fs" ' ' | cs2cs $OUTFMT $IN_PROJ +to $OUT_PROJ | tr -s "\t" "$GIS_OPT_FS" | tr -s " " "$GIS_OPT_FS"
    EXITCODE=$?
 else
-   cat "$infile" | tr "$fs" ' ' | cs2cs $OUTFMT $IN_PROJ +to $OUT_PROJ > "$outfile"
+   cat "$infile" | tr "$fs" ' ' | cs2cs $OUTFMT $IN_PROJ +to $OUT_PROJ | tr -s "\t" "$GIS_OPT_FS" | tr -s " " "$GIS_OPT_FS" > "$outfile"
    EXITCODE=$?
 
    #### check if transform REALLY worked (e.g. bogus output if grid file not found)
