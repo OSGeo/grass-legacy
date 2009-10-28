@@ -3,34 +3,37 @@
 # This file is distributed under the same license as the GRASS package.
 # Copyright (C) 2005, GRASS Development Team
 # Artur Nieścior <nieart@interia.pl>, 2005, 2006.
-#
+# Milena Nowotarska <do.milenki*gmail.com>, 2009.
 msgid ""
 msgstr ""
 "Project-Id-Version: grasslibs_pl\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2009-01-12 22:58+0100\n"
-"PO-Revision-Date: 2008-11-20 14:32+0100\n"
-"Last-Translator: Milena Nowotarska <do.milenki gmail.com>\n"
-"Language-Team: Polska <grass-translations@lists.osgeo.org>\n"
+"PO-Revision-Date: 2009-10-27 18:48+0200\n"
+"Last-Translator: Milena Nowotarska <do.milenki*gmail.com>\n"
+"Language-Team: Milena\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: KBabel 1.11.4\n"
+"Language: pl\n"
+"Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
+"|| n%100>=20) ? 1 : 2);\n"
+"X-Generator: Virtaal 0.4.0\n"
 
 #: ../lib/imagery/list_gp.c:34
 #, c-format
 msgid "group <%s> is empty\n"
-msgstr ""
+msgstr "grupa <%s> jest pusta\n"
 
 #: ../lib/imagery/list_gp.c:44
 #, c-format
 msgid "group <%s> references the following raster maps\n"
-msgstr ""
+msgstr "grupa <%s> odnosi się do następujących map rastrowych\n"
 
 #: ../lib/imagery/target.c:38
 #, c-format
 msgid "Unable to read target file for group [%s]"
-msgstr ""
+msgstr "Nie można odczytać pliku docelowego dla grupy [%s]"
 
 #: ../lib/imagery/fopen.c:23
 #, c-format
@@ -65,12 +68,12 @@ msgstr "Nie można odnaleźć pliku [%s] dla podgrupy [%s] z grupy [%s w %s]"
 #: ../lib/imagery/list_subgp.c:36
 #, c-format
 msgid "subgroup <%s> of group <%s> is empty\n"
-msgstr ""
+msgstr "podgrupa <%s> grupy <%s> jest pusta\n"
 
 #: ../lib/imagery/list_subgp.c:48
 #, c-format
 msgid "subgroup <%s> of group <%s> references the following raster maps\n"
-msgstr ""
+msgstr "podgrupa <%s> grupy <%s> odnosi się do następujących map rastrowych\n"
 
 #: ../lib/rst/interp_float/vinput2d.c:73
 msgid "Vector is not 3D"
@@ -97,7 +100,7 @@ msgstr "Połączenie z bazą danych nie zostało zdefiniowane dla warstwy %d"
 #: ../lib/db/dbmi_client/db.c:46 ../lib/db/dbmi_client/delete_tab.c:49
 #, c-format
 msgid "Unable to open database <%s> by driver <%s>"
-msgstr ""
+msgstr "Nie można otworzyć bazy danych <%s> przez sterownik <%s>"
 
 #: ../lib/rst/interp_float/vinput2d.c:94
 #, c-format
@@ -128,11 +131,11 @@ msgstr "Czyta linie z mapy wektorowej ..."
 #: ../lib/rst/interp_float/vinput2d.c:273
 #, c-format
 msgid "Database record for cat %d not found"
-msgstr ""
+msgstr "Nie odnaleziono w bazie danych rekordu dla cat %d"
 
 #: ../lib/rst/interp_float/vinput2d.c:236
 msgid "Reading nodes from vector map ... "
-msgstr ""
+msgstr "Czyta punkty z mapy wektorowej ..."
 
 #: ../lib/rst/interp_float/vinput2d.c:318
 msgid "strip exists with insufficient data"
@@ -177,7 +180,7 @@ msgstr "Nie znaleziono MASKi mapy rastrowej <%s>"
 
 #: ../lib/rst/interp_float/input2d.c:69
 msgid "Bitmap mask created"
-msgstr ""
+msgstr "Utworzono maskę bitmapy"
 
 #: ../lib/rst/interp_float/segmen2d.c:113
 msgid ""
@@ -196,6 +199,8 @@ msgstr ""
 msgid ""
 "Incorrect symbol name: '%s' (should be: group/name or group/name@mapset)"
 msgstr ""
+"Nieprawidłowa nazwa symbolu: '%s' (powinno być: grupa/nazwa lub grupa/"
+"nazwa@mapset)"
 
 #: ../lib/symbol/read.c:278
 #, c-format
@@ -210,7 +215,7 @@ msgstr "Niedozwolony kolor symbolu: '%s', zostanie użyty domyślny."
 
 #: ../lib/vector/vedit/select.c:234
 msgid "Unknown query tool"
-msgstr ""
+msgstr "Nieznane narzędzie zapytań"
 
 #: ../lib/vector/vedit/cats.c:66
 #, fuzzy, c-format
@@ -224,29 +229,31 @@ msgstr "Jeszcze nie zaimplementowano"
 #: ../lib/vector/Vlib/sindex.c:109
 #, c-format
 msgid "Unable to delete item %d from spatial index"
-msgstr ""
+msgstr "Nie można usunąć obiektu %d z indeksu przestrzennego"
 
 #: ../lib/vector/Vlib/sindex.c:127
 msgid ""
 "Unable to build spatial index from topology, vector map is not opened at "
 "topo level 2"
 msgstr ""
+"Nie można utworzyć indeksu przestrzennego z topologii, mapa wektorowa nie "
+"jest otwarta na poziomie topo 2"
 
 #: ../lib/vector/Vlib/sindex.c:166
 msgid "BUG (Vect_build_sidx_from_topo): node does not exist"
-msgstr ""
+msgstr "BUG (Vect_build_sidx_from_topo): węzeł nie istnieje"
 
 #: ../lib/vector/Vlib/sindex.c:176
 msgid "BUG (Vect_build_sidx_from_topo): line does not exist"
-msgstr ""
+msgstr "BUG (Vect_build_sidx_from_topo): linia nie istnieje"
 
 #: ../lib/vector/Vlib/sindex.c:193
 msgid "BUG (Vect_build_sidx_from_topo): area does not exist"
-msgstr ""
+msgstr "BUG (Vect_build_sidx_from_topo): poligon nie istnieje"
 
 #: ../lib/vector/Vlib/sindex.c:210
 msgid "BUG (Vect_build_sidx_from_topo): isle does not exist"
-msgstr ""
+msgstr "BUG (Vect_build_sidx_from_topo): wyspa nie istnieje"
 
 #: ../lib/vector/Vlib/line.c:60 ../lib/ogsf/gsd_img_mpeg.c:317
 msgid "Out of memory"
@@ -791,8 +798,9 @@ msgid "Request to find area outside nonexistent isle"
 msgstr ""
 
 #: ../lib/vector/Vlib/build_nat.c:507
+#, fuzzy
 msgid "Registering primitives..."
-msgstr ""
+msgstr "Liczba prymitywów:   %d\n"
 
 #: ../lib/vector/Vlib/build_nat.c:516
 msgid "Unable to read vector map"
@@ -1218,33 +1226,33 @@ msgstr "Nie można odczytać topologii dla wyspy %d"
 
 #: ../lib/vector/diglib/plus.c:345 ../lib/vector/diglib/plus.c:371
 msgid "Unable to write head to plus file"
-msgstr ""
+msgstr "Nie można zapisać nagłówka do pliku dodatkowego"
 
 #: ../lib/vector/diglib/plus.c:350
 msgid "Unable to write nodes to plus file"
-msgstr ""
+msgstr "Nie można zapisać punktów do pliku dodatkowego"
 
 #: ../lib/vector/diglib/plus.c:355
 msgid "Unable to write lines to plus file"
-msgstr ""
+msgstr "Nie można zapisać linii do pliku dodatkowego"
 
 #: ../lib/vector/diglib/plus.c:360
 msgid "Unable to write areas to plus file"
-msgstr ""
+msgstr "Nie można zapisać obszarów do pliku dodatkowego"
 
 #: ../lib/vector/diglib/plus.c:365
 msgid "Unable to write isles to plus file"
-msgstr ""
+msgstr "Nie można zapisać wysp do pliku dodatkowego"
 
 #: ../lib/vector/diglib/spindex.c:248
 #, c-format
 msgid "Unable to delete node %d from spatial index"
-msgstr ""
+msgstr "Nie można usunąć punktu %d z indeksu przestrzennego"
 
 #: ../lib/vector/diglib/spindex.c:288
 #, c-format
 msgid "Unable to delete line %d from spatial index"
-msgstr ""
+msgstr "Nie można usunąć linii %d z indeksu przestrzennego"
 
 #: ../lib/vector/diglib/spindex.c:314
 msgid "Attempt to delete sidx for dead area"
@@ -1253,12 +1261,12 @@ msgstr ""
 #: ../lib/vector/diglib/spindex.c:327
 #, c-format
 msgid "Unable to delete area %d from spatial index"
-msgstr ""
+msgstr "Nie można usunąć obszaru %d z indeksu przestrzennego"
 
 #: ../lib/vector/diglib/spindex.c:362
 #, c-format
 msgid "Unable to delete isle %d from spatial index"
-msgstr ""
+msgstr "Nie można usunąć wyspy %d z indeksu przestrzennego"
 
 #: ../lib/vector/diglib/plus_node.c:217
 #, c-format
@@ -1313,7 +1321,7 @@ msgstr ""
 
 #: ../lib/sites/sites.c:136
 msgid "Category must be integer"
-msgstr ""
+msgstr "Kategoria musi być formatu integer"
 
 #: ../lib/sites/sites.c:210
 msgid "Memory error in writing timestamp"
@@ -1321,7 +1329,7 @@ msgstr ""
 
 #: ../lib/sites/sites.c:212
 msgid "Illegal TimeStamp string"
-msgstr ""
+msgstr "Niepoprawny ciąg znacznika czasu"
 
 #: ../lib/sites/sites.c:241
 msgid "Memory error in allocating timestamp"
@@ -1340,31 +1348,30 @@ msgid "Unable to open select cursor: '%s'"
 msgstr ""
 
 #: ../lib/sites/sites.c:397
-#, fuzzy
 msgid "Cannot fetch row"
-msgstr "Informacji o warstwie jest niedostępna"
+msgstr "Nie można odczytać wiersza"
 
 #: ../lib/sites/sites.c:579
 msgid "G_oldsite_new_struct: invalid # dims or fields"
 msgstr ""
 
 #: ../lib/sites/sites.c:1249
-#, fuzzy, c-format
+#, c-format
 msgid "Cannot open database %s by driver %s"
 msgstr "Nie można otworzyć bazy danych <%s> sterownikiem <%s>"
 
 #: ../lib/sites/sites.c:1257
-#, fuzzy
 msgid "Cannot select attributes"
-msgstr "Nie można usunąć linii"
+msgstr "Nie można wybrać atrybutów"
 
 #: ../lib/proj/convert.c:108
 msgid "Unable parse GRASS PROJ_INFO file"
 msgstr ""
 
 #: ../lib/proj/convert.c:113
+#, fuzzy
 msgid "Unable get PROJ.4-style parameter string"
-msgstr ""
+msgstr "Nie można dokonać interpretacji ciągu parametrów stylu-PROJ.4"
 
 #: ../lib/proj/convert.c:125
 #, c-format
@@ -1380,6 +1387,7 @@ msgstr ""
 #: ../lib/proj/convert.c:384
 msgid "No projection name! Projection parameters likely to be meaningless."
 msgstr ""
+"Brak nazwy projekcji! Parametry projekcji są prawdopodobnie niewystarczające."
 
 #: ../lib/proj/convert.c:420
 #, c-format
@@ -1470,7 +1478,7 @@ msgstr ""
 #: ../lib/proj/get_proj.c:238
 #, c-format
 msgid "The error message: %s"
-msgstr ""
+msgstr "Informacja o błędzie: %s"
 
 #: ../lib/proj/get_proj.c:296
 msgid "Option input overflowed option table"
@@ -1483,19 +1491,19 @@ msgstr ""
 
 #: ../lib/proj/get_proj.c:403
 msgid "Input Projection Parameters"
-msgstr ""
+msgstr "Wejściowe parametry projekcji"
 
 #: ../lib/proj/get_proj.c:406
 msgid "Input Unit Factor"
-msgstr ""
+msgstr "Wejściowy współczynnik jednostek"
 
 #: ../lib/proj/get_proj.c:416
 msgid "Output Projection Parameters"
-msgstr ""
+msgstr "Wyjściowe parametry projekcji"
 
 #: ../lib/proj/get_proj.c:419
 msgid "Output Unit Factor"
-msgstr ""
+msgstr "Wyjściowy współczynnik jednostek"
 
 #: ../lib/display/tran_colr.c:129 ../lib/display/tran_colr.c:131
 #, c-format
@@ -4609,6 +4617,10 @@ msgid "%s: No font definition file"
 msgstr "%s: Brak pliku definicji czcionki"
 
 #, fuzzy
+msgid "Can't read header file for [%s in %s]\n"
+msgstr "Nie można otworzyć nagłówka pliku dla [%s w %s]"
+
+#, fuzzy
 #~ msgid "Unable to delete layer/category %d/%d line %d"
 #~ msgstr "Nie można usunąć warstwy/kategorii %d/%d linia %d"
 
@@ -4661,10 +4673,6 @@ msgstr "%s: Brak pliku definicji czcionki"
 
 #~ msgid "unable to find [%s] in [%s]"
 #~ msgstr "nie można znaleźć [%s] in [%s]"
-
-#, fuzzy
-#~ msgid "Can't read header file for [%s in %s]\n"
-#~ msgstr "Nie można otworzyć nagłówka pliku dla [%s w %s]"
 
 #~ msgid "Can't open header file for [%s in %s]"
 #~ msgstr "Nie można otworzyć nagłówka pliku dla [%s w %s]"
@@ -4821,9 +4829,8 @@ msgstr "%s: Brak pliku definicji czcionki"
 #~ "\n"
 #~ "Błąd: wartość <%s> zajduje się poza zakresem dla parametru <%s>\n"
 
-#, fuzzy
 #~ msgid "Unable to open display"
-#~ msgstr "Nie można otworzyć %s"
+#~ msgstr "Nie można otworzyć okna mapy"
 
 #, fuzzy
 #~ msgid "Unable to obtain visual"
@@ -4840,13 +4847,11 @@ msgstr "%s: Brak pliku definicji czcionki"
 #~ msgid "Unknown file extension: %s"
 #~ msgstr "Nieznane rozszerzenie pliku: %s"
 
-#, fuzzy
 #~ msgid "Unknown Cairo surface type"
-#~ msgstr "nieznany typ interpolacji"
+#~ msgstr "Nieznany typ powierzchni Cario"
 
-#, fuzzy
 #~ msgid "Failed to initialize Cairo surface"
-#~ msgstr "W %s nie można otworzyć pliku %s"
+#~ msgstr "Tworzenie powierzchni Cario nie powiodło się"
 
 #, fuzzy
 #~ msgid "Cairo: unable to open output file <%s>"
@@ -4878,3 +4883,120 @@ msgstr "%s: Brak pliku definicji czcionki"
 #, fuzzy
 #~ msgid "Cairo: invalid input mask file <%s>"
 #~ msgstr "Nie można znaleźć wejściowej mapy '%s'"
+
+#~ msgid "PS: GRASS_TRUECOLOR status: %s"
+#~ msgstr "PS: status GRASS_TRUECOLOR: %s"
+
+#~ msgid "Unable to open output file <%s>"
+#~ msgstr "Nie można otworzyć pliku wyjściowego <%s>"
+
+#~ msgid "Unable to write output file <%s>"
+#~ msgstr "Nie można zapisać pliku wyjściowego <%s>"
+
+#, fuzzy
+#~ msgid "Cairo: Invalid BMP header for <%s>"
+#~ msgstr "Nie można znaleźć wejściowej mapy '%s'"
+
+#, fuzzy
+#~ msgid "Unable to open input file <%s>"
+#~ msgstr "G_spawn: nie można otworzyć pliku %s"
+
+#, fuzzy
+#~ msgid "Unable to read input file <%s>"
+#~ msgstr "Nie można otworzyć pliku %s"
+
+#, fuzzy
+#~ msgid "Unable to parse input file <%s>"
+#~ msgstr "Nie można otworzyć pliku %s"
+
+#, fuzzy
+#~ msgid "Invalid map type <%d>"
+#~ msgstr "Niedozwolona nazwa mapy wektorowej  <%s>"
+
+#, fuzzy
+#~ msgid "Unable to load color rules <%s>"
+#~ msgstr "Nie można zamknąć wektora <%s>"
+
+#, fuzzy
+#~ msgid "Unable to open GDAL file"
+#~ msgstr "Nie można otworzyć pliku %s"
+
+#, fuzzy
+#~ msgid "Unable to get <%s> driver"
+#~ msgstr "Nie można otworzyć <%s>"
+
+#, fuzzy
+#~ msgid "Unable to create <%s> dataset using <%s> driver"
+#~ msgstr "Nie można utworzyć tabeli: [%s]"
+
+#, fuzzy
+#~ msgid "Unable to get in-memory raster driver"
+#~ msgstr "Nie można odczytać rzędu rastra %i"
+
+#, fuzzy
+#~ msgid "Unable to create <%s> dataset using memory driver"
+#~ msgstr "Nie można utworzyć nowego procesu"
+
+#, fuzzy
+#~ msgid "Unable to set geo transform"
+#~ msgstr "Nie można odczytać mapy wektorowej "
+
+#, fuzzy
+#~ msgid "Unable to set projection"
+#~ msgstr "Nie można otworzyć codec %s"
+
+#, fuzzy
+#~ msgid "Unable to create cell_misc/%s/gdal file"
+#~ msgstr "Nie można odczytać nagłówka pliku"
+
+#, fuzzy
+#~ msgid "Error writing cell_misc/%s/gdal file"
+#~ msgstr "Błąd podczas zapisu pliku topo"
+
+#, fuzzy
+#~ msgid "Unable to create output file <%s> using driver <%s>"
+#~ msgstr "W %s nie można otworzyć pliku %s"
+
+#, fuzzy
+#~ msgid "       valid options: %s\n"
+#~ msgstr "     poprawne opcje: %s\n"
+
+#, fuzzy
+#~ msgid "Removing %s <%s>"
+#~ msgstr "Używa <%s@%s>"
+
+#, fuzzy
+#~ msgid "%s: missing"
+#~ msgstr "brakujący."
+
+#, fuzzy
+#~ msgid "Copy %s <%s> to current mapset as <%s>"
+#~ msgstr "%s nie jest bieżącym mapsetem (%s)"
+
+#, fuzzy
+#~ msgid "Cannot rename <%s> to <%s>"
+#~ msgstr "Nie można otworzyć bazy danych <%s> sterownikiem <%s>"
+
+#, fuzzy
+#~ msgid "Unable to open range file for [%s in %s]"
+#~ msgstr "Nie można utworzyć nagłówka pliku dla [%s w %s]"
+
+#, fuzzy
+#~ msgid "Error reading range file for [%s in %s]"
+#~ msgstr "Nie można otworzyć nagłówka pliku dla [%s w %s]"
+
+#, fuzzy
+#~ msgid "Unable to open range file for <%s>"
+#~ msgstr "Nie można otworzyć pliku nagłówka dla wektora <%s>"
+
+#, fuzzy
+#~ msgid "All vertices"
+#~ msgstr "Nadpisz istniejący"
+
+#, fuzzy
+#~ msgid "Removed bridges"
+#~ msgstr "Usuń okno"
+
+#, fuzzy
+#~ msgid "Cannot delete line"
+#~ msgstr "Nie można nadpisać linii"
