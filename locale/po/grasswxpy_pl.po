@@ -1,19 +1,23 @@
-# translation of grasswxpy_pl.po to
+# translation of grasswxpy_pl.po to Polish
 # This file is distributed under the same license as the GRASS package.
-# Copyright (C) 2008, GRASS Development Team
-# Milena Nowotarska <do.milenki*gmail.com>, 2008.
+# Copyright (C) 2008, 2009 GRASS Development Team
+# Milena Nowotarska <do.milenki*gmail.com>, 2009.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: grasswxpy_pl\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2009-01-12 22:59+0100\n"
-"PO-Revision-Date: 2009-06-03 00:41+0100\n"
+"PO-Revision-Date: 2009-10-27 22:20+0200\n"
 "Last-Translator: Milena Nowotarska <do.milenki*gmail.com>\n"
-"Language-Team: Polish <grass-translations@lists.osgeo.org>\n"
+"Language-Team: Milena\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Language: pl\n"
+"Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
+"|| n%100>=20) ? 1 : 2);\n"
+"X-Generator: Virtaal 0.4.0\n"
 "X-Poedit-Language: Polish\n"
 "X-Poedit-Country: POLAND\n"
 "X-Poedit-Bookmarks: 977,-1,-1,-1,-1,-1,-1,-1,-1,-1\n"
@@ -34,7 +38,7 @@ msgstr "Długość (%s)"
 
 #: ../gui/wxpython/gui_modules/profile.py:159
 msgid "Distance along transect"
-msgstr ""
+msgstr "Długość linii profilu"
 
 #: ../gui/wxpython/gui_modules/profile.py:160
 msgid "Cell values"
@@ -51,7 +55,7 @@ msgstr "Wartości mapy rastrowej"
 
 #: ../gui/wxpython/gui_modules/profile.py:436
 msgid "You must draw a transect to profile in the map display window."
-msgstr ""
+msgstr "Musisz narysować linię profilu w oknie mapy."
 
 #: ../gui/wxpython/gui_modules/profile.py:437
 msgid "Nothing to profile"
@@ -355,7 +359,7 @@ msgstr "Powiększ do mapy"
 
 #: ../gui/wxpython/gui_modules/wxgui_utils.py:270
 msgid "Set computational region from selected map"
-msgstr ""
+msgstr "Ustaw zasięg bieżącej mapy jako region obliczeniowy"
 
 #: ../gui/wxpython/gui_modules/wxgui_utils.py:283
 msgid "Show attribute data"
@@ -385,6 +389,7 @@ msgstr "Przybliż do wybranej mapy (ignoruj wartości NULL)"
 #: ../gui/wxpython/gui_modules/wxgui_utils.py:338
 msgid "Set computational region from selected map (ignore NULLs)"
 msgstr ""
+"Ustaw zasięg bieżącej mapy jako region obliczeniowy (ignoruj wartość NULL)"
 
 #: ../gui/wxpython/gui_modules/wxgui_utils.py:341
 msgid "Set color table"
@@ -485,7 +490,7 @@ msgstr "grid"
 
 #: ../gui/wxpython/gui_modules/wxgui_utils.py:681
 msgid "geodesic line"
-msgstr ""
+msgstr "linia geodezyjna"
 
 #: ../gui/wxpython/gui_modules/wxgui_utils.py:684
 msgid "rhumbline"
@@ -543,7 +548,7 @@ msgstr "Włącz/wyłącz automatczne odświeżanie"
 #: ../gui/wxpython/gui_modules/mapdisp.py:2620
 #, fuzzy
 msgid "Show computational extent"
-msgstr "Pokaż zakres przeliczonego regionu"
+msgstr "Pokaż zakres regionu obliczeniowego"
 
 #: ../gui/wxpython/gui_modules/mapdisp.py:2625
 msgid ""
@@ -569,7 +574,7 @@ msgstr "Lista narzędzi mapy"
 
 #: ../gui/wxpython/gui_modules/mapdisp.py:2745
 msgid "Vector digitizer toolbar"
-msgstr ""
+msgstr "Narzędzia wektoryzacji"
 
 #: ../gui/wxpython/gui_modules/mapdisp.py:2762
 msgid "Georectification toolbar"
@@ -704,7 +709,7 @@ msgstr "Dodaj warstwę tekstową"
 
 #: ../gui/wxpython/gui_modules/mapdisp.py:4014
 msgid "Zoom to computational region (set with g.region)"
-msgstr ""
+msgstr "Przybliż do regionu obliczeniowego (ustawionego przez g.region)"
 
 #: ../gui/wxpython/gui_modules/mapdisp.py:4018
 msgid "Zoom to default region"
@@ -716,7 +721,7 @@ msgstr "Powiększ do zapisanego regionu"
 
 #: ../gui/wxpython/gui_modules/mapdisp.py:4026
 msgid "Set computational region from display"
-msgstr ""
+msgstr "Ustaw zasięg wyświetlonej mapy jako region obliczeniowy"
 
 #: ../gui/wxpython/gui_modules/mapdisp.py:4030
 msgid "Save display geometry to named region"
@@ -1114,11 +1119,11 @@ msgstr "Kolumna z kluczem"
 
 #: ../gui/wxpython/gui_modules/dbm.py:2203
 msgid "Insert record for each category into table"
-msgstr ""
+msgstr "Wprowadź do tabeli wartości dla wszystkich kategorii"
 
 #: ../gui/wxpython/gui_modules/dbm.py:2218
 msgid "You need to add categories by v.category module."
-msgstr ""
+msgstr "Dodaj kategorie za pomocą modułu v.category."
 
 #: ../gui/wxpython/gui_modules/dbm.py:2225
 msgid "Table name"
@@ -1173,12 +1178,14 @@ msgstr ""
 #: ../gui/wxpython/gui_modules/dbm.py:2638
 msgid "Unable to create new table. Table name or key column name is missing."
 msgstr ""
+"Nie można utworzyć nowej tabeli. Brakuje nazwy tabeli lub nazwy kolumny "
+"przechowującej klucz."
 
 #: ../gui/wxpython/gui_modules/dbm.py:2645
 #, python-format
 msgid "Unable to create new table. Table <%s> already exists in the database."
 msgstr ""
-"Nie można stworzyć nowej tabeli. Tabela <%s> już istnieje w bazie danych."
+"Nie można utworzyć nowej tabeli. Tabela <%s> już istnieje w bazie danych."
 
 #: ../gui/wxpython/gui_modules/dbm.py:2682
 #, python-format
@@ -1186,6 +1193,8 @@ msgid ""
 "Unable to add new layer to vector map <%(vector)s>. Layer %(layer)d already "
 "exists."
 msgstr ""
+"Nie można dodać nowej warstwy do mapy wektorowej <%(vector)s>. Warstwa %"
+"(layer)d już istnieje."
 
 #: ../gui/wxpython/gui_modules/dbm.py:2875
 msgid "Database connection is not defined in DB file."
@@ -1287,19 +1296,19 @@ msgstr "Wprowadź reguły reklasyfikacji"
 
 #: ../gui/wxpython/gui_modules/rules.py:62
 msgid "Recode raster map using rules"
-msgstr ""
+msgstr "Przekoduj mapę rastrową używając regół kolorów"
 
 #: ../gui/wxpython/gui_modules/rules.py:63
 msgid "Raster map to recode:"
-msgstr ""
+msgstr "Mapa rastrowa do przekodowania:"
 
 #: ../gui/wxpython/gui_modules/rules.py:64
 msgid "Recoded raster map:"
-msgstr ""
+msgstr "Przekodowana mapa rastrowa:"
 
 #: ../gui/wxpython/gui_modules/rules.py:65
 msgid "Enter recoding rules"
-msgstr ""
+msgstr "Wprowadź reguły przekodowania"
 
 #: ../gui/wxpython/gui_modules/rules.py:68
 msgid "Reclassify vector map using SQL rules"
@@ -1444,7 +1453,7 @@ msgstr "mapa"
 #: ../gui/wxpython/gui_modules/nviz_tools.py:262
 #: ../gui/wxpython/gui_modules/nviz_tools.py:865
 msgid "unset"
-msgstr ""
+msgstr "Brak wartości"
 
 #: ../gui/wxpython/gui_modules/nviz_tools.py:267
 #: ../gui/wxpython/gui_modules/nviz_tools.py:870
@@ -1463,11 +1472,11 @@ msgstr "Tryb:"
 
 #: ../gui/wxpython/gui_modules/nviz_tools.py:337
 msgid "coarse"
-msgstr ""
+msgstr "niskiej jakości"
 
 #: ../gui/wxpython/gui_modules/nviz_tools.py:338
 msgid "fine"
-msgstr ""
+msgstr "wysokiej jakości"
 
 #: ../gui/wxpython/gui_modules/nviz_tools.py:339
 msgid "both"
@@ -1480,11 +1489,11 @@ msgstr "Rozdzielczość:"
 
 #: ../gui/wxpython/gui_modules/nviz_tools.py:353
 msgid "coarse:"
-msgstr ""
+msgstr "niskiej jakości"
 
 #: ../gui/wxpython/gui_modules/nviz_tools.py:365
 msgid "fine:"
-msgstr ""
+msgstr "wysokiej jakości"
 
 #: ../gui/wxpython/gui_modules/nviz_tools.py:380
 msgid "Coarse style:"
@@ -1614,11 +1623,11 @@ msgstr "slajdy"
 
 #: ../gui/wxpython/gui_modules/nviz_tools.py:793
 msgid "List of isosurfaces"
-msgstr "Lista Izopowierzchni"
+msgstr "Lista izopowierzchni"
 
 #: ../gui/wxpython/gui_modules/nviz_tools.py:841
 msgid "Isosurface attributes"
-msgstr "Atrybuty Izopowierzchni"
+msgstr "Atrybuty izopowierzchni"
 
 #: ../gui/wxpython/gui_modules/nviz_tools.py:847
 msgid "Topography level"
@@ -1667,7 +1676,7 @@ msgstr "Wysokość"
 
 #: ../gui/wxpython/gui_modules/nviz_tools.py:1072
 msgid "Twist"
-msgstr ""
+msgstr "Skręcenie"
 
 #: ../gui/wxpython/gui_modules/nviz_tools.py:1102
 msgid "Z-exag"
@@ -1766,11 +1775,11 @@ msgstr "ramka"
 
 #: ../gui/wxpython/gui_modules/preferences.py:526
 msgid "sphere"
-msgstr ""
+msgstr "sfera"
 
 #: ../gui/wxpython/gui_modules/preferences.py:527
 msgid "cube"
-msgstr ""
+msgstr "sześcian"
 
 #: ../gui/wxpython/gui_modules/preferences.py:528
 msgid "diamond"
@@ -1874,7 +1883,7 @@ msgstr "Ekran"
 #: ../gui/wxpython/gui_modules/preferences.py:959
 #, fuzzy
 msgid "Default font for GRASS displays:"
-msgstr "Domyślne opcje czcionki dla ekranu GRASS-a"
+msgstr "Domyślne opcje czcionki dla ekranu GRASS-a:"
 
 #: ../gui/wxpython/gui_modules/preferences.py:964
 #: ../gui/wxpython/gui_modules/gdialogs.py:508
@@ -1908,7 +1917,7 @@ msgstr "Okno ustawień poleceń"
 
 #: ../gui/wxpython/gui_modules/preferences.py:1099
 msgid "Allow output files to overwrite existing files"
-msgstr ""
+msgstr "Pozwól na nadpisanie istniejących plików przez pliki wyjściowe"
 
 #: ../gui/wxpython/gui_modules/preferences.py:1109
 #: ../gui/wxpython/gui_modules/menuform.py:714
@@ -1923,7 +1932,7 @@ msgstr "Dodaj utworzoną mapę do drzewa warstw"
 
 #: ../gui/wxpython/gui_modules/preferences.py:1129
 msgid "Verbosity level:"
-msgstr ""
+msgstr "Poziom szczegółowości:"
 
 #: ../gui/wxpython/gui_modules/preferences.py:1148
 msgid "Raster settings"
@@ -1996,7 +2005,7 @@ msgstr "Miejsce przechowywania ustawień:"
 
 #: ../gui/wxpython/gui_modules/preferences.py:1409
 msgid "Icon theme:"
-msgstr ""
+msgstr "Motyw ikon:"
 
 #: ../gui/wxpython/gui_modules/preferences.py:1426
 msgid "Note: Requires GUI restart."
@@ -2004,7 +2013,7 @@ msgstr "Uwaga: Wymagany restart GUI."
 
 #: ../gui/wxpython/gui_modules/preferences.py:1446
 msgid "Select default display font"
-msgstr ""
+msgstr "Wybierz domyślną czcionkę wyświetlania"
 
 #: ../gui/wxpython/gui_modules/preferences.py:1470
 #, python-format
@@ -2078,7 +2087,7 @@ msgstr "Kopiuj obiekty z (podkładowej) mapy wektorowej"
 
 #: ../gui/wxpython/gui_modules/toolbars.py:814
 msgid "Flip selected lines/boundaries"
-msgstr ""
+msgstr "Odbij wybrane linie/granice"
 
 #: ../gui/wxpython/gui_modules/toolbars.py:822
 msgid "Merge selected lines/boundaries"
@@ -2098,7 +2107,7 @@ msgstr "Dołącz wybrane linie/granice"
 
 #: ../gui/wxpython/gui_modules/toolbars.py:854
 msgid "Query features"
-msgstr ""
+msgstr "Odpytaj obiekty"
 
 #: ../gui/wxpython/gui_modules/toolbars.py:862
 msgid "Z bulk-labeling of 3D lines"
@@ -2106,7 +2115,7 @@ msgstr ""
 
 #: ../gui/wxpython/gui_modules/toolbars.py:870
 msgid "Feature type conversion"
-msgstr ""
+msgstr "Konwersja typów obiektów"
 
 #: ../gui/wxpython/gui_modules/toolbars.py:1039
 #: ../gui/wxpython/gui_modules/toolbars.py:1131
@@ -2117,7 +2126,7 @@ msgstr "Wybierz mapę wektorową"
 #: ../gui/wxpython/gui_modules/toolbars.py:1077
 #, python-format
 msgid "Please wait, opening vector map <%s> for editing..."
-msgstr ""
+msgstr "Proszę czekać, otwieram mapę wektorową <%s> do edycji..."
 
 #: ../gui/wxpython/gui_modules/toolbars.py:1137
 #, python-format
@@ -2155,7 +2164,7 @@ msgstr "Nie znaleziono paramentru: %s"
 #: ../gui/wxpython/gui_modules/menuform.py:220
 #, python-format
 msgid "Flag not found: %s"
-msgstr ""
+msgstr "Flaga nie została odnaleziona: %s"
 
 #: ../gui/wxpython/gui_modules/menuform.py:254
 msgid "<required>"
@@ -2262,23 +2271,23 @@ msgstr "Błąd w %s"
 #: ../gui/wxpython/gui_modules/menuform.py:1638
 #, python-format
 msgid "Unable to fetch interface description for command '%s'."
-msgstr ""
+msgstr "Nie można pobrać opisu interfejsu dla polecenia '%s\"."
 
 #: ../gui/wxpython/gui_modules/menuform.py:1722
 #, python-format
 msgid "Unable to parse command %s"
-msgstr ""
+msgstr "Nie można przetworzyć polecenia '%s'"
 
 #: ../gui/wxpython/gui_modules/menuform.py:1811
 #, python-format
 msgid "usage: %s <grass command>"
-msgstr ""
+msgstr "użycie: %s <grass command>"
 
 #: ../gui/wxpython/gui_modules/mcalc_builder.py:52
 #: ../gui/wxpython/gui_modules/mcalc_builder.py:54
 #, python-format
 msgid "GRASS %s Map Calculator"
-msgstr "GRASS %s mapový kalkulátor"
+msgstr "GRASS %s Kalkulator Map"
 
 #: ../gui/wxpython/gui_modules/goutput.py:310
 #, python-format
@@ -2293,6 +2302,7 @@ msgstr "Zapisz plik jako..."
 msgid ""
 "Please note that the data are left in incosistent stage and can be corrupted"
 msgstr ""
+"Zauważ, że dane są pozostawione w niespójnym stanie i  mogą zostać uszkodzone"
 
 #: ../gui/wxpython/gui_modules/goutput.py:487
 msgid "Command aborted"
@@ -2523,7 +2533,7 @@ msgstr "Definicja PROJ.4:"
 #: ../gui/wxpython/gui_modules/location_wizard.py:1608
 #, python-format
 msgid "Do you want to create GRASS location <%s>?"
-msgstr "Czy chcesz stworzyć lokację GRASS-a <%s>?"
+msgstr "Czy chcesz utworzyć lokację GRASS-a <%s>?"
 
 #: ../gui/wxpython/gui_modules/location_wizard.py:1609
 msgid "Create new location?"
@@ -2540,12 +2550,12 @@ msgstr "Czy chcesz teraz zdefiniować zakres i rozdzielczość regionu?"
 #: ../gui/wxpython/gui_modules/location_wizard.py:1725
 #, python-format
 msgid "Location <%s> created"
-msgstr "Lokacja <%s> została stworzona"
+msgstr "Lokacja <%s> została utworzona"
 
 #: ../gui/wxpython/gui_modules/location_wizard.py:1739
 #, python-format
 msgid "Unable to create new location. Location <%s> not created."
-msgstr "Nie można stworzyć nowej lokacji. Lokacja <%s> nie została utworzona."
+msgstr "Nie można utworzyć nowej lokacji. Lokacja <%s> nie została utworzona."
 
 #: ../gui/wxpython/gui_modules/location_wizard.py:1741
 #: ../gui/wxpython/gui_modules/location_wizard.py:1749
@@ -2563,7 +2573,7 @@ msgstr ""
 #: ../gui/wxpython/gui_modules/location_wizard.py:2094
 #: ../gui/wxpython/gui_modules/location_wizard.py:2125
 msgid "Unable to create new location"
-msgstr "Nie udało się stworzyć nowej lokacji"
+msgstr "Nie udało się utworzyć nowej lokacji"
 
 #: ../gui/wxpython/gui_modules/location_wizard.py:2020
 msgid "EPSG code missing."
@@ -3485,7 +3495,7 @@ msgstr "Stwórz nową mapę wektorową"
 #: ../gui/wxpython/gui_modules/gdialogs.py:143
 #, python-format
 msgid "Unable to create vector map <%s>."
-msgstr "Nie można stworzyć mapy wektorowej <%s>."
+msgstr "Nie można utworzyć mapy wektorowej <%s>."
 
 #: ../gui/wxpython/gui_modules/gdialogs.py:160
 #, python-format
@@ -3502,11 +3512,11 @@ msgstr "Nadpisać?"
 #: ../gui/wxpython/gui_modules/gdialogs.py:203
 #, python-format
 msgid "New vector map <%s> created"
-msgstr "Nowa mapa wektorowa <%s> została stworzona"
+msgstr "Nowa mapa wektorowa <%s> została utworzona"
 
 #: ../gui/wxpython/gui_modules/gdialogs.py:225
 msgid "Load region:"
-msgstr "Załaduj region:"
+msgstr "Wczytaj region:"
 
 #: ../gui/wxpython/gui_modules/gdialogs.py:233
 msgid "Save region:"
@@ -3557,7 +3567,7 @@ msgstr ""
 
 #: ../gui/wxpython/gui_modules/gdialogs.py:611
 msgid "Load"
-msgstr "Załaduj"
+msgstr "Wczytaj"
 
 #: ../gui/wxpython/gui_modules/gdialogs.py:646
 msgid "Map layer type:"
@@ -3581,7 +3591,7 @@ msgstr "Import wielu warstw"
 
 #: ../gui/wxpython/gui_modules/gdialogs.py:810
 msgid "Input DXF file"
-msgstr "Załaduj plik DXF"
+msgstr "Plik DXF do wczytania"
 
 #: ../gui/wxpython/gui_modules/gdialogs.py:811
 msgid "Choose DXF file:"
@@ -3761,7 +3771,7 @@ msgstr "Stwórz nowy plik projektu"
 
 #: ../gui/wxpython/icons/icon.py:184
 msgid "Load map layers into workspace"
-msgstr "Załaduj warstwy mapy do projektu"
+msgstr "Wczytaj warstwy mapy do projektu"
 
 #: ../gui/wxpython/icons/icon.py:186
 msgid "Open existing workspace file"
@@ -4021,7 +4031,7 @@ msgstr "Odwołaj wybór punktu GCP"
 
 #: ../gui/wxpython/icons/icon.py:329
 msgid "Reload GCPs from selected POINTS file"
-msgstr "Załaduj punkty GCP z wybranego pliku POINTS"
+msgstr "Wczytaj punkty GCP z wybranego pliku POINTS"
 
 #: ../gui/wxpython/icons/icon.py:331
 msgid "Quit georectification module"
@@ -4215,7 +4225,7 @@ msgstr "Utwórz nowy mapset"
 #: ../gui/wxpython/gis_set.py:671
 #, python-format
 msgid "Unable to create new mapset: %s"
-msgstr "Nie można stworzyć nowego mapsetu: %s"
+msgstr "Nie można utworzyć nowego mapsetu: %s"
 
 #: ../gui/wxpython/gis_set.py:702
 msgid "GRASS Quickstart"
@@ -4223,11 +4233,11 @@ msgstr ""
 
 #: ../gui/wxpython/wxgui.py:98
 msgid "GRASS GIS Layer Manager (Experimental Prototype)"
-msgstr ""
+msgstr "Menadżer warstw GRASS GIS (Prototyp)"
 
 #: ../gui/wxpython/wxgui.py:308
 msgid "Map layers for each display"
-msgstr ""
+msgstr "Warstwy mapy dla każdego okna mapy"
 
 #: ../gui/wxpython/wxgui.py:438
 msgid "Type GRASS command and run by pressing ENTER"
@@ -4351,10 +4361,10 @@ msgstr "Połączenie wektora z bazą danych"
 #~ msgstr "Otwórz pole pracy"
 
 #~ msgid "Load map layers"
-#~ msgstr "Załaduj warstwy mapy"
+#~ msgstr "Wczytaj warstwy mapy"
 
 #~ msgid "Load GRC file (Tcl/Tk GUI)"
-#~ msgstr "Załaduj plik GRC (Tcl/Tk GUI)"
+#~ msgstr "Wczytaj plik GRC (Tcl/Tk GUI)"
 
 #~ msgid "Load map layers from GRC file to layer tree (not fully implemented)"
 #~ msgstr ""
@@ -4378,15 +4388,15 @@ msgstr "Połączenie wektora z bazą danych"
 #~ msgstr "Import map rastrowych"
 
 #~ msgid "Import raster data using GDAL"
-#~ msgstr "Import danych rastrowych przy pomocy GDAL"
+#~ msgstr "Import danych rastrowych (GDAL)"
 
 #~ msgid "Import GDAL supported raster file into a binary raster map layer."
 #~ msgstr ""
-#~ "Import rastrowych plików wspieranych przez GDAL do binarnej mapy "
+#~ "Importuje pliki rastrowe obsługiwane przez GDAL do binarnej mapy "
 #~ "rastrowej."
 
 #~ msgid "Multiple raster data import using GDAL"
-#~ msgstr "Import wielu rastrów przy pomocy GDAL"
+#~ msgstr "Import wielu danych rastrowych (GDAL)"
 
 #~ msgid "Converts selected GDAL layers to GRASS raster maps using r.in.gdal."
 #~ msgstr ""
@@ -4394,7 +4404,7 @@ msgstr "Połączenie wektora z bazą danych"
 #~ "in.gdal."
 
 #~ msgid "Aggregate ASCII xyz import"
-#~ msgstr "Agreguje dane ASCII xyz do grida"
+#~ msgstr "Agregacja danych ASCII xyz do grida"
 
 #~ msgid "ASCII grid import"
 #~ msgstr "Import ASCII grid"
@@ -4469,13 +4479,13 @@ msgstr "Połączenie wektora z bazą danych"
 #~ msgstr "Import mapy wektorowej"
 
 #~ msgid "Import vector data using OGR"
-#~ msgstr "Import mapy wektorowej przy pomocy OGR"
+#~ msgstr "Import mapy wektorowej (OGR)"
 
 #~ msgid "Convert OGR vector layers to GRASS vector map."
 #~ msgstr "Konwertuje warstwy wektorowe OGR na wektorowe mapy GRASS."
 
 #~ msgid "Multiple vector data import using OGR"
-#~ msgstr "Import wielu warstw wektorowych przy użyciu OGR"
+#~ msgstr "Import wielu warstw wektorowych (OGR)"
 
 #~ msgid "Old GRASS vector import"
 #~ msgstr "Import starego wektorowego formatu GRASS"
@@ -4502,10 +4512,10 @@ msgstr "Połączenie wektora z bazą danych"
 #~ msgstr "Import GEOnet"
 
 #~ msgid "Matlab and MapGen import"
-#~ msgstr "Import Matlab and MapGen"
+#~ msgstr "Import Matlab i MapGen"
 
 #~ msgid "Import grid 3D volume"
-#~ msgstr "Import grid3D volume"
+#~ msgstr "Import grid 3D volume"
 
 #~ msgid "ASCII 3D import"
 #~ msgstr "Import ASCII 3D"
@@ -4517,61 +4527,62 @@ msgstr "Połączenie wektora z bazą danych"
 #~ msgstr "Import tabeli baz danych"
 
 #~ msgid "Export raster map"
-#~ msgstr "Eksportuj mapę rastrową"
+#~ msgstr "Eksport mapy rastrowej"
 
 #~ msgid "Multiple export formats using GDAL"
 #~ msgstr "Eksport do różnych formatów GDAL"
 
 #~ msgid "Exports GRASS raster map into GDAL supported formats."
-#~ msgstr "Exportuje mapy rastrowe GRASS-a do formatów wspieranych przez GDAL."
+#~ msgstr ""
+#~ "Eksportuje mapy rastrowe GRASS-a do formatów wspieranych przez GDAL."
 
 #~ msgid "ASCII grid export"
-#~ msgstr "ASCII grid export"
+#~ msgstr "Eksport do ASCII grid"
 
 #~ msgid "Converts a raster map layer into an ASCII text file."
 #~ msgstr "Konwertuje warstwę mapy rastrowej na plik tekstowy ASCII."
 
 #~ msgid "ASCII x,y,z export"
-#~ msgstr "ASCII x,y,z export"
+#~ msgstr "Eksport do ASCII x,y,z"
 
 #~ msgid "ESRI ASCII grid export"
-#~ msgstr "ESRI ASCII grid export"
+#~ msgstr "Eksport do ESRI ASCII grid"
 
 #~ msgid "Converts a raster map layer into an ESRI ARCGRID file."
 #~ msgstr "Konwertuje warstwę mapy rastrowej do pliku ESRI ARCGRID."
 
 #~ msgid "GRIDATB.FOR export"
-#~ msgstr "GRIDATB.FOR export"
+#~ msgstr "Eksport do GRIDATB.FOR"
 
 #~ msgid "Exports GRASS raster map to GRIDATB.FOR map file (TOPMODEL)"
 #~ msgstr "Eksportuje mapę rastrową GRASS do pliku mapy GRIDATB.FOR (TOPMODEL)"
 
 #~ msgid "MAT-File (v.4) export"
-#~ msgstr "MAT-File (v.4) export"
+#~ msgstr "Eksport do MAT-File (v.4)"
 
 #~ msgid "Exports a GRASS raster to a binary MAT-File."
 #~ msgstr "Eksportuje raster GRASS do binarnego Pliku-MAT"
 
 #~ msgid "Binary export"
-#~ msgstr "Export pliku binarnego"
+#~ msgstr "Eksport do pliku binarnego"
 
 #~ msgid "Exports a GRASS raster to a binary array."
 #~ msgstr "Eksportuje raster GRASS do szeregów binarnych."
 
 #~ msgid "MPEG-1 export"
-#~ msgstr "MPEG-1 export"
+#~ msgstr "Eksport do MPEG-1"
 
 #~ msgid "Raster File Series to MPEG Conversion Program."
 #~ msgstr "Program Konwersji Serii Plików Rastrowych do formatu MPG."
 
 #~ msgid "PNG export"
-#~ msgstr "PNG export"
+#~ msgstr "Eksport do PNG"
 
 #~ msgid "PPM export"
-#~ msgstr "PPM export"
+#~ msgstr "Eksport do PPM"
 
 #~ msgid "PPM from RGB export"
-#~ msgstr "Export PPM z RGB vrstev"
+#~ msgstr "Eksport do PPM z warstw RGB"
 
 #~ msgid ""
 #~ "Converts 3 GRASS raster layers (R,G,B) to a PPM image file at the pixel "
@@ -4581,7 +4592,7 @@ msgstr "Połączenie wektora z bazą danych"
 #~ "rozdzielczości piksela aktualnie zdefiniowanego regionu"
 
 #~ msgid "POV-Ray export"
-#~ msgstr "POV-Ray export"
+#~ msgstr "Eksport do POV-Ray"
 
 #~ msgid "Converts a raster map layer into a height-field file for POVRAY."
 #~ msgstr ""
@@ -4589,37 +4600,37 @@ msgstr "Połączenie wektora z bazą danych"
 #~ "POVRAY."
 
 #~ msgid "TIFF export"
-#~ msgstr "TIFF export"
+#~ msgstr "Eksport do TIFF"
 
 #~ msgid "VRML export"
-#~ msgstr "VRML export"
+#~ msgstr "Eksport do VRML"
 
 #~ msgid "VTK export"
-#~ msgstr "VTK export"
+#~ msgstr "Eksport do VTK"
 
 #~ msgid "Export vector map"
-#~ msgstr "Export mapy wektorowej"
+#~ msgstr "Eksport mapy wektorowej"
 
 #~ msgid "Multiple export formats using OGR"
-#~ msgstr "Export do różnych formatów OGR"
+#~ msgstr "Eksport do różnych formatów OGR"
 
 #~ msgid "DXF export"
-#~ msgstr "DXF export"
+#~ msgstr "Eksport do DXF"
 
 #~ msgid "Exports GRASS vector map layers to DXF file format."
 #~ msgstr "Eksportuje warstwy mapy wektorowej GRASS-a do formatu DXF."
 
 #~ msgid "SVG export"
-#~ msgstr "SVG export"
+#~ msgstr "Eksport do SVG"
 
 #~ msgid "Exports a GRASS vector map to SVG."
 #~ msgstr "Eksportuje mapę wektorową GRASS-a do SVG."
 
 #~ msgid "ASCII 3D export"
-#~ msgstr "ASCII 3D export"
+#~ msgstr "Eksport do ASCII 3D"
 
 #~ msgid "Vis5D export"
-#~ msgstr "Vis5D export"
+#~ msgstr "Eksport do Vis5D"
 
 #~ msgid "Manage maps and volumes"
 #~ msgstr "Zarządzanie mapami i danymi 2D i 3D"
@@ -4671,25 +4682,25 @@ msgstr "Połączenie wektora z bazą danych"
 #~ msgstr "Region"
 
 #~ msgid "Display region"
-#~ msgstr "Wyświetl cały region"
+#~ msgstr "Wyświetl region"
 
 #~ msgid "Set region"
 #~ msgstr "Ustaw region"
 
 #~ msgid "GRASS working environment"
-#~ msgstr "Środowisko pracy GRASS"
+#~ msgstr "Środowisko pracy GRASS-a"
 
 #~ msgid "Mapset access"
 #~ msgstr "Dostęp do mapsetu"
 
 #~ msgid "Change working environment"
-#~ msgstr "Zmień środowisko pracy GRASS-a"
+#~ msgstr "Zmień mapset"
 
 #~ msgid "Change current mapset."
-#~ msgstr "Zmień bieżący mapset"
+#~ msgstr "Zmienia bieżący mapset."
 
 #~ msgid "User access"
-#~ msgstr "Dostęp użytkownika"
+#~ msgstr "Dostęp innych użytkowników"
 
 #~ msgid "Controls access to the current mapset for other users on the system."
 #~ msgstr "Kontrola dostępu innych użytkowników do bieżącego mapsetu."
@@ -4698,7 +4709,9 @@ msgstr "Połączenie wektora z bazą danych"
 #~ msgstr "Pokaż ustawienia"
 
 #~ msgid "Outputs and modifies the user's current GRASS variable settings."
-#~ msgstr "Zapisuje i modyfikuje bieżące ustawienia zmiennych użytkownka GRASS"
+#~ msgstr ""
+#~ "Wypisuje i modyfikuje bieżące ustawienia użytkownka zmiennych środowiska "
+#~ "GRASS."
 
 #~ msgid "Change settings"
 #~ msgstr "Zmień ustawienia"
@@ -4707,7 +4720,7 @@ msgstr "Połączenie wektora z bazą danych"
 #~ msgstr "Wersja"
 
 #~ msgid "Manage projections"
-#~ msgstr "Zarządzaj projekcjami"
+#~ msgstr "Zarządzanie projekcjami"
 
 #~ msgid "Projection for current location"
 #~ msgstr "Projekcja bieżącej lokacji"
@@ -4779,7 +4792,7 @@ msgstr "Połączenie wektora z bazą danych"
 
 #~ msgid "Link GDAL supported raster file to a binary raster map layer."
 #~ msgstr ""
-#~ "Import rastrowych plików wspieranych przez GDAL do binarnej mapy "
+#~ "Tworzy link rastrowych plików wspieranych przez GDAL do binarnej mapy "
 #~ "rastrowej."
 
 #~ msgid "Reproject raster"
@@ -4791,7 +4804,7 @@ msgstr "Połączenie wektora z bazą danych"
 #~ "lokacji."
 
 #~ msgid "Tiling"
-#~ msgstr "Układanie kafelek"
+#~ msgstr "Kafelki"
 
 #~ msgid ""
 #~ "Produces tilings of the source projection for use in the destination "
@@ -4860,6 +4873,7 @@ msgstr "Połączenie wektora z bazą danych"
 #~ msgid "Neighborhood points"
 #~ msgstr "Punkty sąsiedztwa"
 
+#, fuzzy
 #~ msgid "Cross product"
 #~ msgstr "Produkt poprzecznego łączenia rastrów"
 
@@ -5440,7 +5454,7 @@ msgstr "Połączenie wektora z bazą danych"
 #~ msgstr "Obraz"
 
 #~ msgid "Develop images and groups"
-#~ msgstr "Rozwijaj obrazy i grupy"
+#~ msgstr "Praca ze zobrazowaniami i grupami obrazów"
 
 #~ msgid "Create/edit group"
 #~ msgstr "Utwórz/edytuj grupę"
@@ -5607,13 +5621,13 @@ msgstr "Połączenie wektora z bazą danych"
 #~ msgstr "Zarządzaj wartościami 3D NULL"
 
 #~ msgid "Manage timestamp"
-#~ msgstr "Zarządzaj datą w timestamp"
+#~ msgstr "Zarządzaj datą w znaczniku czasu"
 
 #~ msgid "Print/add/remove a timestamp for a 3D raster map"
-#~ msgstr "Odświerz/dodaj/usuń timestamp dla mapy rastrowej 3D"
+#~ msgstr "Odświerz/dodaj/usuń znacznik czasu dla mapy rastrowej 3D"
 
 #~ msgid "3D Mask"
-#~ msgstr "3D Maska"
+#~ msgstr "Maska 3D"
 
 #~ msgid "3D raster map calculator"
 #~ msgstr "Kalkulator mapy rastrowej 3D"
@@ -5764,7 +5778,7 @@ msgstr "Połączenie wektora z bazą danych"
 #~ msgstr "PomocGRASS GIS GUI"
 
 #~ msgid "About GRASS GIS"
-#~ msgstr "O GIS GRASS"
+#~ msgstr "O GRASS GIS"
 
 #~ msgid "Modify selected layer"
 #~ msgstr "Modyfikuj wybraną warstwę"
@@ -5823,7 +5837,7 @@ msgstr "Połączenie wektora z bazą danych"
 #~ msgstr "Importuje starsze wersje wektorowych map GRASS-a"
 
 #~ msgid "Multiple GPS export formats using GPSBabel"
-#~ msgstr "Export różnych formatów GPS przy pomocy GPSBabel"
+#~ msgstr "Eksport różnych formatów GPS (GPSBabel)"
 
 #, fuzzy
 #~ msgid "Export database table"
@@ -5872,7 +5886,7 @@ msgstr "Połączenie wektora z bazą danych"
 #~ msgstr "Konwertuje binarną mapę wektorową GRASS do mapy rastrowej GRASS."
 
 #~ msgid "Vector to volume"
-#~ msgstr "Wektor do 3D"
+#~ msgstr "Wektor do bryły rastrowej 3D"
 
 #~ msgid ""
 #~ "Converts a binary GRASS vector map (only points) layer into a 3D GRASS "
@@ -5901,7 +5915,7 @@ msgstr "Połączenie wektora z bazą danych"
 
 #, fuzzy
 #~ msgid "Develop raster map"
-#~ msgstr "Rozwijaj mapę rastrową"
+#~ msgstr "Praca z mapą rastrową"
 
 #~ msgid "Cumulative movement costs"
 #~ msgstr "Skumulowany koszt przemieszczenia pomiędzy dwiema lokalizacjami"
@@ -5959,3 +5973,162 @@ msgstr "Połączenie wektora z bazą danych"
 #, fuzzy
 #~ msgid "Query selected vector map in editable mode"
 #~ msgstr "Zapytania do map wektorowych (tryb edycji) "
+
+#~ msgid "Converts selected OGR layers to GRASS vector maps using v.in.ogr."
+#~ msgstr ""
+#~ "Konwertuje wybrane warstwy OGR do mapy rastrowej GRASS-a przy użyciu r.in."
+#~ "ogr."
+
+#~ msgid "Import Mapgen or Matlab vector maps into GRASS."
+#~ msgstr "Importuje mapy wektorowe Mapgen i Matlab do GRASS-a."
+
+#~ msgid ""
+#~ "Convert a 3D ASCII raster text file into a (binary) 3D raster map layer"
+#~ msgstr ""
+#~ "Konwertuje tekstowy plik rastrowy 3D ASCII na binarną mapę rastrową 3D."
+
+#~ msgid ""
+#~ "import of 3-dimensional Vis5D files (i.e. the v5d file with 1 variable "
+#~ "and 1 time step)"
+#~ msgstr ""
+#~ "Importuje trójwymiarowe pliki Vis5D (np. plik v5d z 1 zmienną i 1 "
+#~ "znacznikiem czasu)"
+
+#~ msgid "Imports attribute tables in various formats."
+#~ msgstr "Importuje tabele atrybutów w różnych formatach."
+
+#~ msgid "Export GRASS raster as non-georeferenced PNG image format."
+#~ msgstr "Eksportuje raster GRASS-a do formatu PNG bez georeferencji."
+
+#~ msgid "Converts raster maps into the VTK-Ascii format"
+#~ msgstr "Konwertuje mapę rastrową do formatu VTK-Ascii."
+
+#~ msgid "Converts to one of the supported OGR vector formats."
+#~ msgstr "Konwertuje do jednego z dostępnych formatów wektorowych OGR."
+
+#~ msgid "ASCII points/GRASS ASCII vector export"
+#~ msgstr "Eksport punktów ASCII do wektorów GRASS ASCII"
+
+#~ msgid "Converts a GRASS binary vector map to a GRASS ASCII vector map."
+#~ msgstr ""
+#~ "Konwertuje binarną mapę wektorową GRASS-a do wektorowej mapy GRASS-a typu "
+#~ "ASCII."
+
+#~ msgid ""
+#~ "Exports a vector map to a GPS receiver or file format supported by "
+#~ "GPSBabel."
+#~ msgstr ""
+#~ "Eksportuje mapę wektorową do odbiornika GPS lub pliku obsługiwanego przez "
+#~ "bibliotekę GPSBabel."
+
+#~ msgid "Converts to POV-Ray format, GRASS x,y,z -> POV-Ray x,z,y"
+#~ msgstr "Konwertuje do formatu POV-Ray, GRASS x,y,z -> POV-Ray x,y,z"
+
+#~ msgid "Converts a GRASS binary vector map to VTK ASCII output."
+#~ msgstr "Konwertuje binarną mapę wektorową GRASS-a do VTK ASCII."
+
+#~ msgid "Export grid 3D volume"
+#~ msgstr "Eksport do grid3D volume"
+
+#~ msgid "Converts a 3D raster map layer into an ASCII text file"
+#~ msgstr "Konwertuje warstwę mapy rastrowej 3D na plik tekstowy ASCII."
+
+#~ msgid "Export of GRASS 3D raster map to 3-dimensional Vis5D file."
+#~ msgstr "Eksportuje raster 3D GRASS-a do trójwymiarowego pliku Vis5D."
+
+#~ msgid "Converts 3D raster maps (G3D) into the VTK-Ascii format"
+#~ msgstr "Konwertuje mapę rastrową 3D GRASS-a do formatu VTK-Ascii."
+
+#~ msgid "Raster series to volume"
+#~ msgstr "Seria map rastrowych do bryły rastrowej 3D"
+
+#~ msgid "Converts 2D raster map slices to one 3D raster volume map."
+#~ msgstr "Konwertuje serie map rastrowych 2D do jednej bryły 3D (volume)."
+
+#~ msgid "Raster 2.5D to volume"
+#~ msgstr "Mapa rastrowa 2,5D do bryły rastrowej 3D"
+
+#~ msgid "Volume to raster series"
+#~ msgstr "Bryły 3D do serii map rastrowych"
+
+#~ msgid "Converts 3D raster maps to 2D raster maps"
+#~ msgstr "Konwertuje mapy rastrowe 3D do map rastrowych 2D"
+
+#~ msgid "Georectify raster and vector maps"
+#~ msgstr "Georektyfikacja map rastrowych i wektorowych"
+
+#~ msgid "nviz - Visualization and animation tool for GRASS data"
+#~ msgstr "NVIZ - narzędzie do wizualizacji i animacji danych GRASS-a"
+
+#~ msgid "Manages the boundary definitions for the geographic region."
+#~ msgstr "Definiowanie granic geograficznych obszaru roboczego."
+
+#~ msgid "Set/unset access to other mapsets in current location"
+#~ msgstr "Ustawianie dostępów do mapsetów w bieżącej lokacji."
+
+#~ msgid "Displays version and copyright information."
+#~ msgstr "Wyświetla numer wersji i informację o prawach autorskich."
+
+#~ msgid "Convert coordinates from one projection to another (cs2cs frontend)."
+#~ msgstr "Konwertuj współrzędne z danej projekcji do innej (cs2cs)"
+
+#~ msgid "User GUI preferences (display font, commands, digitizer, etc.)"
+#~ msgstr ""
+#~ "Preferencje użytkownika GUI (czcionka wyświetlania, komendy, digitajzer, "
+#~ "itp.)"
+
+#~ msgid "Quantization"
+#~ msgstr "Kwantyzacja"
+
+#~ msgid "Produces the quantization file for a floating-point map."
+#~ msgstr "Tworzy plik kwantyzacji dla mapy zmiennoprzecinkowej."
+
+#~ msgid "Timestamp"
+#~ msgstr "Znacznik czasu"
+
+#~ msgid "Creates/modifies the color table associated with a raster map layer."
+#~ msgstr "Tworzy/modyfikuje paletę kolorów związaną z warstwą mapy rastrowej."
+
+#~ msgid "Set colors interactively by entering color rules"
+#~ msgstr "Ustaw kolory interaktywnie wprowadzając reguły kolorów"
+
+#~ msgid "Query by coordinates"
+#~ msgstr "Zapytanie według współrzędnych"
+
+#, fuzzy
+#~ msgid "Overlay rasters"
+#~ msgstr "Przykryj mapy rastrowe"
+
+#~ msgid "Solar irradiance and irradiation"
+#~ msgstr "Promieniowanie słoneczne i napromienienie"
+
+#~ msgid "Creates shaded relief map from an elevation map (DEM)."
+#~ msgstr "Tworzy mapęcieniowanego reliefu z mapy wysokości (DEM)."
+
+#~ msgid "Fills lake from seed at given level"
+#~ msgstr "Wypełnia jeziora z wartości próbki na zadanym poziomie"
+
+#~ msgid "Develop vector map"
+#~ msgstr "Praca z mapą wektorową"
+
+#~ msgid "Creates a new vector as a read-only link to OGR layer."
+#~ msgstr ""
+#~ "Tworzy nową warstwę wektorową jako link do warstwy OGR tylko do odczytu."
+
+#~ msgid "Albedo from Modis, Aster, Landsat, AVHRR."
+#~ msgstr "Albedo z danych Modis, Aster, Landsat, AVHRR."
+
+#, fuzzy
+#~ msgid "Vegetation Indices"
+#~ msgstr "Indeksy wegetacji"
+
+#, fuzzy
+#~ msgid "14 types of vegetation Indices."
+#~ msgstr "14 typów indeksów wegetacji"
+
+#~ msgid "Emissivity from NDVI."
+#~ msgstr "Emisja z NDVI."
+
+#, fuzzy
+#~ msgid "Develop volumes"
+#~ msgstr "Praca z "
