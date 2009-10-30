@@ -71,6 +71,10 @@
 #% description: Output long/lat in decimal degrees or other projections with many decimal places
 #%end
 #%flag
+#% key: g
+#% description: Script style output in CSV format respecting the field separator settings
+#%end
+#%flag
 #% key: v
 #% description: Verbose mode (print projection parameters and filenames to stderr)
 #%end
@@ -229,16 +233,33 @@ fi
 # Convert cs2cs DMS format to GRASS DMS format:
 #   cs2cs | sed -e 's/d/:/g' -e "s/'/:/g"  -e 's/"//g'
 
-if [ -z "$outfile" ] ; then
-   cat "$infile" | tr "$fs" ' ' | cs2cs $OUTFMT $IN_PROJ +to $OUT_PROJ | tr -s "\t" "$GIS_OPT_FS" | tr -s " " "$GIS_OPT_FS"
-   EXITCODE=$?
-else
-   cat "$infile" | tr "$fs" ' ' | cs2cs $OUTFMT $IN_PROJ +to $OUT_PROJ | tr -s "\t" "$GIS_OPT_FS" | tr -s " " "$GIS_OPT_FS" > "$outfile"
-   EXITCODE=$?
+# reformat strange cs2cs output to pretty CSV format
+if [ "$GIS_FLAG_G" -eq 1 ] ; then
+   if [ -z "$outfile" ] ; then
+      cat "$infile" | tr "$fs" ' ' | cs2cs $OUTFMT $IN_PROJ +to $OUT_PROJ | tr -s "\t" "$GIS_OPT_FS" | tr -s " " "$GIS_OPT_FS"
+      EXITCODE=$?
+   else
+      cat "$infile" | tr "$fs" ' ' | cs2cs $OUTFMT $IN_PROJ +to $OUT_PROJ | tr -s "\t" "$GIS_OPT_FS" | tr -s " " "$GIS_OPT_FS" > "$outfile"
+      EXITCODE=$?
 
-   #### check if transform REALLY worked (e.g. bogus output if grid file not found)
-   if [ -n "`head -n 1 "$outfile" | grep '^\*'`" ] ; then
-      EXITCODE=1
+      #### check if transform REALLY worked (e.g. bogus output if grid file not found)
+      if [ -n "`head -n 1 "$outfile" | grep '^\*'`" ] ; then
+         EXITCODE=1
+      fi
+   fi
+else
+   # write cs2cs output as is
+   if [ -z "$outfile" ] ; then
+      cat "$infile" | tr "$fs" ' ' | cs2cs $OUTFMT $IN_PROJ +to $OUT_PROJ
+      EXITCODE=$?
+   else
+      cat "$infile" | tr "$fs" ' ' | cs2cs $OUTFMT $IN_PROJ +to $OUT_PROJ > "$outfile"
+      EXITCODE=$?
+
+      #### check if transform REALLY worked (e.g. bogus output if grid file not found)
+      if [ -n "`head -n 1 "$outfile" | grep '^\*'`" ] ; then
+         EXITCODE=1
+      fi
    fi
 fi
 
