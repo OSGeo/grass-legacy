@@ -28,9 +28,10 @@ gradient to two of eight neighboring points is greater than the high
 threshold. Other points are classified as TERRAIN.
 <br>
 <br>
-The output eill be a vector map in which points has been classified as 
+The output will be a vector map in which points has been classified as 
 TERRAIN, EDGE or UNKNOWN. This vector map should be the input of 
 <em>v.lidar.growing</em> module.
+
 
 <h2>NOTES</h2>
 
@@ -40,10 +41,11 @@ the interpolated height values of each point will be recorded. Also points
 in the output vector map will be classified as:
 <br>
 <br>
-EDGE (cat = 1, layer = 1)
+TERRAIN (cat = 1, layer = 1)
 <br>
-TERRAIN (cat = 2, layer = 1)
+EDGE (cat = 2, layer = 1)
 <br>
+UNKNOWN (cat = 3, layer = 1)
 <br>
 The final result of the whole procedure (v.lidar.edgedetection,
 v.lidar.growing, v.lidar.correction) will be a point classification in
