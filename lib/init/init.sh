@@ -973,7 +973,7 @@ bash|msh|cygwin)
     if [ "$GRASS_GUI" = tcltk ] || [ "$GRASS_GUI" = gis.m ]; then
     	echo '$GISBASE/scripts/gis.m' >> "$bashrc" # Start gis.m
     fi;
-    echo 'trap "echo \"GUI issued an exit\"; exit" SIGINT' >> "$bashrc"
+    echo 'trap "echo \"GUI issued an exit\"; exit" SIGQUIT' >> "$bashrc"
 
     "$ETC/run" "$SHELL"
     EXIT_VAL=$?

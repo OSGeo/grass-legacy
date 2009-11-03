@@ -532,7 +532,7 @@ GRASS session?\n\nThis action will colse all sessions gis.m instances.\n\nIf You
 GRASS module from comandline, GRASS will terminate after it\
 finishes to run."] warning 1 [G_msg "Terminate current GRASS sesion"] [G_msg "Cancel"]]
 			if { $leave == 0 } { 
-				exec kill -SIGINT $env(GRASS_SHELL_PID)
+				exec kill -SIGQUIT $env(GRASS_SHELL_PID)
 			} else { 
 				return
 			}
