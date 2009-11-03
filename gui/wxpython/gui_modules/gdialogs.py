@@ -985,7 +985,7 @@ class MultiImportDialog(wx.Dialog):
                            'layer=%s' % layer.rstrip('.' + self.format.GetValue())
                            ]
                 else:
-                    cmd = ['v.in.ogr',
+                    cmd = ['v.in.ogr', '-o', # override projection by default
                            'dsn=%s' % (os.path.join(self.input.GetValue(), layer)),
                            'output=%s' % output]
             else: # gdal
