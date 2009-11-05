@@ -472,7 +472,7 @@ int main(int argc, char *argv[])
 
 		OGR_G_AddGeometryDirectly(Ogr_geometry, ring);
 	    }
-	    else if (type == GV_POINT) {
+	    else if (type & GV_POINTS) {  /* GV_POINT or GV_CENTROID */
 		Ogr_geometry = OGR_G_CreateGeometry(wkbPoint);
 		OGR_G_AddPoint(Ogr_geometry, Points->x[0], Points->y[0],
 			       Points->z[0]);
