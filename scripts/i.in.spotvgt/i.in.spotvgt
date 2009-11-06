@@ -180,10 +180,15 @@ else
     NAME="$SPOTNAME"
 fi
 
-if [ -n `g.findfile elem=cell file="$NAME" | grep ^file | cut -f2 -d=` ] ; then
-	g.message -e message="<$NAME> already exists. Aborting."
-	exit 1
+
+eval `g.findfile element=cell file=$NAME`
+filename="${fullname}"
+BASE="${name}"
+if [ "$filename" != "" ] ; then
+  g.message -e message="<$NAME> already exists. Aborting."
+  exit 1
 fi
+
 
 # still a ZIP file?  (is this portable?? see the r.in.srtm script for ideas)
 if [ "`file -ib $GIS_OPT_FILE`" = "application/x-zip" ] ; then
