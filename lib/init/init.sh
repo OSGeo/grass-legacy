@@ -1020,10 +1020,8 @@ do
     d.mon stop="$MON"
 done
 
-# Attempt to close any open gis.m instances. 
-# Will work only on some systems, still has no harm to others
-# do Mac and MSys have pgrep? if [ -x `which pgrep` ] && [ `pgrep -c  ... ] ; then
-if [ -n "$TCLTKGRASSBASE" ] && [ `pgrep -c $GRASS_WISH` -ge 1 ] ; then
+# Attempt to close any open gis.m instances.
+if [ -n "$TCLTKGRASSBASE" ] && [ `ps -a | grep -c "$GRASS_WISH"` -ge 1 ] ; then
 	echo "Closing open gis.m sessions....."
 	echo 'foreach gwin [lsearch -all -inline [winfo interps] gm_tcl*] {
 		catch {send -async $gwin Gm::remoteExit $env(GIS_LOCK)}
