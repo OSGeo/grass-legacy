@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: grasslibs_el\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-01-09 16:59+0100\n"
+"POT-Creation-Date: 2009-11-12 16:58+0100\n"
 "PO-Revision-Date: 2008-10-16 11:25+0300\n"
 "Last-Translator: Vasilios Antoniou <antoniou_v@yahoo.gr>\n"
 "Language-Team: Bασίλειος Αντωνίου <grass-translations@lists.osgeo.org>\n"
@@ -73,7 +73,7 @@ msgstr ""
 "\n"
 "++ Επιτυχής εκτέλεση τεστ μαθηματικής μονάδας ++"
 
-#: ../lib/gpde/test/test_gwflow.c:43
+#: ../lib/gpde/test/test_gwflow.c:46
 msgid ""
 "\n"
 "++ Running gwflow integration tests ++"
@@ -81,15 +81,15 @@ msgstr ""
 "\n"
 "++ Εκτελούνται δοκιμές ενσωμάτωσης gwflow ++"
 
-#: ../lib/gpde/test/test_gwflow.c:45
+#: ../lib/gpde/test/test_gwflow.c:48
 msgid "\t 1. testing 2d gwflow"
 msgstr "\t 1. δοκιμή 2 διαστάσεων gwflow"
 
-#: ../lib/gpde/test/test_gwflow.c:48
+#: ../lib/gpde/test/test_gwflow.c:51
 msgid "\t 2. testing 3d gwflow"
 msgstr "\t 1. δοκιμή 3 διαστάσεων gwflow"
 
-#: ../lib/gpde/test/test_gwflow.c:52
+#: ../lib/gpde/test/test_gwflow.c:55
 msgid ""
 "\n"
 "-- gwflow integration tests failure --"
@@ -97,7 +97,7 @@ msgstr ""
 "\n"
 "-- αποτυχία δοκιμής ενσωμάτωσης gwflow --"
 
-#: ../lib/gpde/test/test_gwflow.c:54
+#: ../lib/gpde/test/test_gwflow.c:57
 msgid ""
 "\n"
 "-- gwflow integration tests finished successfully --"
@@ -137,7 +137,7 @@ msgstr ""
 "\n"
 "-- Επιτυχής εκτέλεσης δοκιμής θερμικής ροής --"
 
-#: ../lib/gpde/test/test_les.c:34
+#: ../lib/gpde/test/test_les.c:35
 msgid ""
 "\n"
 "++ Running les creation unit tests ++"
@@ -145,7 +145,7 @@ msgstr ""
 "\n"
 "++ Εκτέλεσης μονάδας δημιουργίας les ++"
 
-#: ../lib/gpde/test/test_les.c:39
+#: ../lib/gpde/test/test_les.c:40
 msgid ""
 "\n"
 "-- les creation unit tests failure --"
@@ -153,7 +153,7 @@ msgstr ""
 "\n"
 "++ Αποτυχία εκτέλεσης μονάδας δημιουργίας les ++"
 
-#: ../lib/gpde/test/test_les.c:41
+#: ../lib/gpde/test/test_les.c:42
 msgid ""
 "\n"
 "-- les creation unit tests finished successfully --"
@@ -161,31 +161,31 @@ msgstr ""
 "\n"
 "++ Επιτυχία εκτέλεσης μονάδας δημιουργίας les ++"
 
-#: ../lib/gpde/test/test_les.c:95
+#: ../lib/gpde/test/test_les.c:96
 msgid "\t * testing les creation in parallel\n"
 msgstr "\t * δοκιμή δημιουργίας les παράλληλα\n"
 
-#: ../lib/gpde/test/test_les.c:126
+#: ../lib/gpde/test/test_les.c:127
 msgid "\t * testing les creation in serial\n"
 msgstr "\t * δοκιμή δημιουργίας les σειριακά\n"
 
-#: ../lib/gpde/test/test_main.c:49
+#: ../lib/gpde/test/test_main.c:49 ../lib/gmath/test/test_main.c:47
 msgid "Choose the unit tests to run"
 msgstr "Επιλέξτε τις μονάδες που θέλετε να εκτελέσετε"
 
-#: ../lib/gpde/test/test_main.c:56
+#: ../lib/gpde/test/test_main.c:56 ../lib/gmath/test/test_main.c:54
 msgid "Choose the integration tests to run"
 msgstr "Επιλέξτε τις μονάδες ενσωμάτωσης που θέλετε να εκτελέσετε"
 
-#: ../lib/gpde/test/test_main.c:61
+#: ../lib/gpde/test/test_main.c:61 ../lib/gmath/test/test_main.c:79
 msgid "Run all unit tests"
 msgstr "Εκτέλεση όλων των δοκιμών μονάδας"
 
-#: ../lib/gpde/test/test_main.c:65
+#: ../lib/gpde/test/test_main.c:65 ../lib/gmath/test/test_main.c:83
 msgid "Run all integration tests"
 msgstr "Εκτέλεση όλων των δοκιμών ενσωμάτωσης"
 
-#: ../lib/gpde/test/test_main.c:69
+#: ../lib/gpde/test/test_main.c:69 ../lib/gmath/test/test_main.c:87
 msgid "Run all unit and integration tests"
 msgstr "Εκτέλεση όλων των δοκιμών ενσωμάτωσης και μονάδας"
 
@@ -196,30 +196,6 @@ msgstr "δοκιμή, gpde"
 #: ../lib/gpde/test/test_main.c:87
 msgid "Performs unit and integration tests for gpde library"
 msgstr "Εκτελεί δοκιμές μονάδας και ενσωμάτωσης για την βιβλιοθήκη gpde"
-
-#: ../lib/gpde/test/test_geom.c:36
-msgid ""
-"\n"
-"++ Running geom_data unit tests ++"
-msgstr ""
-"\n"
-"++ Εκτέλεση δοκιμής geom_data ++"
-
-#: ../lib/gpde/test/test_geom.c:41
-msgid ""
-"\n"
-"-- geom_data unit tests failure --"
-msgstr ""
-"\n"
-"++ Αποτυχία εκτέλεσης δοκιμής geom_data ++"
-
-#: ../lib/gpde/test/test_geom.c:43
-msgid ""
-"\n"
-"-- geom_data unit tests finished successfully --"
-msgstr ""
-"\n"
-"++ Επιτυχία εκτέλεσης δοκιμής geom_data ++"
 
 #: ../lib/gpde/test/test_solute_transport.c:43
 msgid ""
@@ -245,13 +221,37 @@ msgstr ""
 "\n"
 "++ Αποτυχία εκτέλεσης δοκιμής ενσωμάτωσης solute_transport ++"
 
-#: ../lib/gpde/test/test_solute_transport.c:54
+#: ../lib/gpde/test/test_solute_transport.c:55
 msgid ""
 "\n"
 "-- solute_transport integration tests finished successfully --"
 msgstr ""
 "\n"
 "++ Επιτυχία εκτέλεσης δοκιμής ενσωμάτωσης solute_transport ++"
+
+#: ../lib/gpde/test/test_geom.c:36
+msgid ""
+"\n"
+"++ Running geom_data unit tests ++"
+msgstr ""
+"\n"
+"++ Εκτέλεση δοκιμής geom_data ++"
+
+#: ../lib/gpde/test/test_geom.c:41
+msgid ""
+"\n"
+"-- geom_data unit tests failure --"
+msgstr ""
+"\n"
+"++ Αποτυχία εκτέλεσης δοκιμής geom_data ++"
+
+#: ../lib/gpde/test/test_geom.c:43
+msgid ""
+"\n"
+"-- geom_data unit tests finished successfully --"
+msgstr ""
+"\n"
+"++ Επιτυχία εκτέλεσης δοκιμής geom_data ++"
 
 #: ../lib/gpde/test/test_assemble.c:42
 msgid ""
@@ -317,58 +317,6 @@ msgstr ""
 "\n"
 "++ Επιτυχία εκτέλεσης δοκιμής μονάδος gradient ++"
 
-#: ../lib/gpde/test/test_solvers.c:37
-msgid ""
-"\n"
-"++ Running solver unit tests ++"
-msgstr ""
-"\n"
-"++ Εκτέλεση δοκιμής μονάδος επίλυσης (solver) ++"
-
-#: ../lib/gpde/test/test_solvers.c:42
-msgid ""
-"\n"
-"-- Solver unit tests failure --"
-msgstr ""
-"\n"
-"++ Αποτυχία εκτέλεσης δοκιμής μονάδος επίλυσης (solver) ++"
-
-#: ../lib/gpde/test/test_solvers.c:44
-msgid ""
-"\n"
-"-- Solver unit tests finished successfully --"
-msgstr ""
-"\n"
-"++ Επιτυχία εκτέλεσης δοκιμής μονάδος επίλυσης (solver) ++"
-
-#: ../lib/gpde/N_solvers_classic_iter.c:57
-#: ../lib/gpde/N_solvers_classic_iter.c:94 ../lib/gpde/N_solvers.c:55
-#: ../lib/gpde/N_solvers.c:93 ../lib/gpde/N_solvers.c:160
-#: ../lib/gpde/N_solvers_krylov.c:78 ../lib/gpde/N_solvers_krylov.c:255
-#: ../lib/gpde/N_solvers_krylov.c:423 ../lib/gpde/N_solvers_krylov.c:832
-msgid "The linear equation system is not quadratic"
-msgstr "Η γραμμική συνάρτηση δεν είναι 2ου βαθμού"
-
-#: ../lib/gpde/N_solvers_classic_iter.c:152
-#, c-format
-msgid "sparse Jacobi -- iteration %5i error %g\n"
-msgstr ""
-
-#: ../lib/gpde/N_solvers_classic_iter.c:154
-#, c-format
-msgid "sparse SOR -- iteration %5i error %g\n"
-msgstr ""
-
-#: ../lib/gpde/N_solvers_classic_iter.c:197
-#, c-format
-msgid "Jacobi -- iteration %5i error %g\n"
-msgstr ""
-
-#: ../lib/gpde/N_solvers_classic_iter.c:235
-#, c-format
-msgid "SOR -- iteration %5i error %g\n"
-msgstr ""
-
 #: ../lib/gpde/N_parse_options.c:58
 msgid ""
 "The type of solver which should solve the symmetric linear equation system"
@@ -401,16 +349,16 @@ msgstr "Ο χρόνος υπολογίζεται σε δευτερόλεπτα"
 
 #: ../lib/gpde/N_arrays_io.c:55 ../lib/gis/legal_name.c:94
 #: ../lib/gis/legal_name.c:97 ../lib/gis/opencell.c:1011
-#: ../lib/ogsf/gsd_legend.c:238 ../lib/ogsf/Gs3.c:126 ../lib/ogsf/Gs3.c:200
-#: ../lib/ogsf/Gs3.c:284 ../lib/ogsf/Gs3.c:357 ../lib/ogsf/Gs3.c:472
-#: ../lib/ogsf/Gs3.c:568 ../lib/ogsf/Gs3.c:635 ../lib/ogsf/Gs3.c:692
-#: ../lib/ogsf/Gs3.c:761 ../lib/ogsf/Gs3.c:829 ../lib/ogsf/Gp3.c:54
+#: ../lib/ogsf/gsd_legend.c:238 ../lib/ogsf/Gs3.c:126 ../lib/ogsf/Gs3.c:201
+#: ../lib/ogsf/Gs3.c:286 ../lib/ogsf/Gs3.c:359 ../lib/ogsf/Gs3.c:475
+#: ../lib/ogsf/Gs3.c:572 ../lib/ogsf/Gs3.c:639 ../lib/ogsf/Gs3.c:696
+#: ../lib/ogsf/Gs3.c:766 ../lib/ogsf/Gs3.c:835 ../lib/ogsf/Gp3.c:54
 #, c-format
 msgid "Raster map <%s> not found"
 msgstr "Ο χάρτης raster  <%s> δεν βρέθηκε"
 
-#: ../lib/gpde/N_arrays_io.c:67 ../lib/ogsf/Gs3.c:137 ../lib/ogsf/Gs3.c:211
-#: ../lib/ogsf/Gs3.c:368 ../lib/ogsf/Gs3.c:483 ../lib/ogsf/Gs3.c:573
+#: ../lib/gpde/N_arrays_io.c:67 ../lib/ogsf/Gs3.c:137 ../lib/ogsf/Gs3.c:212
+#: ../lib/ogsf/Gs3.c:370 ../lib/ogsf/Gs3.c:486 ../lib/ogsf/Gs3.c:577
 #, c-format
 msgid "Unable to open raster map <%s>"
 msgstr "Αδυναμία ανοίγματος του χάρτη raster <%s>"
@@ -472,70 +420,6 @@ msgstr "Σφάλμα κατά το κλείσιμο του g3d αρχείου"
 msgid "Write 3d array to g3d map <%s>"
 msgstr "Εγγραφή πίνακα 3 διαστάσεων στον g3d χάρτη <%s>"
 
-#: ../lib/gpde/N_solvers.c:50
-msgid "The gauss elimination solver does not work with sparse matrices"
-msgstr ""
-
-#: ../lib/gpde/N_solvers.c:60
-msgid "Starting direct gauss elimination solver"
-msgstr ""
-
-#: ../lib/gpde/N_solvers.c:88
-msgid "The lu solver does not work with sparse matrices"
-msgstr ""
-
-#: ../lib/gpde/N_solvers.c:98
-msgid "Starting direct lu decomposition solver"
-msgstr ""
-
-#: ../lib/gpde/N_solvers.c:155
-msgid "The cholesky solver does not work with sparse matrices"
-msgstr ""
-
-#: ../lib/gpde/N_solvers.c:166 ../lib/gpde/N_solvers_krylov.c:84
-#: ../lib/gpde/N_solvers_krylov.c:261
-msgid "Matrix is not symmetric!"
-msgstr "Ο πίνακας δεν είναι συμμετρικός!"
-
-#: ../lib/gpde/N_solvers.c:170
-msgid "Starting cholesky decomposition solver"
-msgstr ""
-
-#: ../lib/gpde/N_solvers.c:173 ../lib/gpde/N_solvers_krylov.c:190
-#: ../lib/gpde/N_solvers_krylov.c:357 ../lib/gpde/N_solvers_krylov.c:481
-msgid "Unable to solve the linear equation system"
-msgstr "Αδυναμία λύσης του γραμμικού συστήματος"
-
-#: ../lib/gpde/N_solvers_krylov.c:198
-#, c-format
-msgid "Sparse PCG -- iteration %i error  %g\n"
-msgstr ""
-
-#: ../lib/gpde/N_solvers_krylov.c:200
-#, c-format
-msgid "PCG -- iteration %i error  %g\n"
-msgstr ""
-
-#: ../lib/gpde/N_solvers_krylov.c:365
-#, c-format
-msgid "Sparse CG -- iteration %i error  %g\n"
-msgstr ""
-
-#: ../lib/gpde/N_solvers_krylov.c:367
-#, c-format
-msgid "CG -- iteration %i error  %g\n"
-msgstr ""
-
-#: ../lib/gpde/N_solvers_krylov.c:530
-#, c-format
-msgid "Sparse BiCGStab -- iteration %i error  %g\n"
-msgstr ""
-
-#: ../lib/gpde/N_solvers_krylov.c:533
-#, c-format
-msgid "BiCGStab -- iteration %i error  %g\n"
-msgstr ""
-
 #: ../lib/db/dbmi_base/legal_dbname.c:25
 #, c-format
 msgid "Illegal table map name <%s>. May not contain '.' or 'NULL'.\n"
@@ -563,8 +447,8 @@ msgstr "Αδυναμία εκκίνησης του οδηγού <%s>"
 
 #: ../lib/db/dbmi_client/copy_tab.c:105 ../lib/db/dbmi_client/copy_tab.c:126
 #: ../lib/db/dbmi_client/db.c:46 ../lib/db/dbmi_client/delete_tab.c:49
-#: ../lib/vector/Vlib/array.c:284 ../lib/vector/Vlib/map.c:268
-#: ../lib/vector/Vlib/map.c:402 ../lib/vector/Vlib/map.c:617
+#: ../lib/vector/Vlib/array.c:284 ../lib/vector/Vlib/map.c:271
+#: ../lib/vector/Vlib/map.c:405 ../lib/vector/Vlib/map.c:620
 #: ../lib/vector/Vlib/net.c:185 ../lib/vector/Vlib/net.c:355
 #: ../lib/sites/sites.c:372 ../lib/rst/interp_float/vinput2d.c:88
 #, c-format
@@ -612,7 +496,7 @@ msgstr "Αδυναμία φόρτωσης δεδομένων πίνακα <%s>"
 msgid "Unknown column type (column <%s>)"
 msgstr ""
 
-#: ../lib/db/dbmi_client/select.c:279
+#: ../lib/db/dbmi_client/select.c:280
 #, c-format
 msgid "Unable select records from table <%s>"
 msgstr "Αδυναμία επιλογής εγγραφών από πίνακα <%s>"
@@ -684,32 +568,32 @@ msgid ""
 "to %i, but using probabilities for %i classes."
 msgstr ""
 
-#: ../lib/raster/rem_io.c:42
+#: ../lib/raster/rem_io.c:40
 #, c-format
 msgid "ERROR %s from graphics driver.\n"
 msgstr "ΣΦΑΛΜΑ %s από τον οδηγός κάρτας γραφικών.\n"
 
-#: ../lib/raster/rem_io.c:169
+#: ../lib/raster/rem_io.c:167
 #, c-format
 msgid "Unable to allocate memory\n"
 msgstr "Αδυναμία κατανομής (allocate) μνήμης\n"
 
-#: ../lib/raster/rem_io.c:219
+#: ../lib/raster/rem_io.c:217
 #, c-format
 msgid "ERROR - eof from graphics monitor.\n"
 msgstr "ΣΦΑΛΜΑ - eof από την οθόνη γραφικών.\n"
 
-#: ../lib/raster/rem_io.c:239
+#: ../lib/raster/rem_io.c:237
 #, c-format
 msgid "Warning - no response from graphics monitor <%s>.\n"
 msgstr "Προσοχή - καμία απόκριση από την οθόνη γραφικών <%s>.\n"
 
-#: ../lib/raster/rem_io.c:241
+#: ../lib/raster/rem_io.c:239
 #, c-format
 msgid "Check to see if the mouse is still active.\n"
 msgstr "Δοκιμάστε αν τον ποντίκι (mouse) αποκρίνεται.\n"
 
-#: ../lib/raster/rem_io.c:246
+#: ../lib/raster/rem_io.c:244
 #, c-format
 msgid "ERROR - no response from graphics monitor <%s>.\n"
 msgstr "ΣΦΑΛΜΑ - καμία απόκριση απο την οθόνη γραφικών <%s>.\n"
@@ -785,44 +669,57 @@ msgstr "Δεν γίνεται η διαγραφή περιοχής %d από το χωρικό πίνακα"
 msgid "Unable to delete isle %d from spatial index"
 msgstr "Δεν γίνεται η διαγραφή της νησίδας %d από το χωρικό πίνακα"
 
-#: ../lib/vector/diglib/plus_area.c:195 ../lib/vector/diglib/plus_area.c:651
-#: ../lib/vector/diglib/plus_area.c:659
+#: ../lib/vector/diglib/plus_area.c:207 ../lib/vector/diglib/plus_area.c:675
+#: ../lib/vector/diglib/plus_area.c:683
 #, c-format
 msgid "Line %d already has area/isle %d to left"
 msgstr ""
 
-#: ../lib/vector/diglib/plus_area.c:205
+#: ../lib/vector/diglib/plus_area.c:217
 #, c-format
 msgid "Line %d already has area/isle %d to right"
 msgstr ""
 
-#: ../lib/vector/diglib/plus_area.c:287
+#: ../lib/vector/diglib/plus_area.c:299
 msgid "Attempt to delete isle from dead area"
 msgstr ""
 
-#: ../lib/vector/diglib/plus_area.c:304
+#: ../lib/vector/diglib/plus_area.c:316
 #, c-format
 msgid "Attempt to delete not registered isle %d from area %d"
 msgstr ""
 
-#: ../lib/vector/diglib/plus_area.c:342
+#: ../lib/vector/diglib/plus_area.c:354
 msgid "Attempt to delete dead area"
 msgstr ""
 
-#: ../lib/vector/diglib/plus_area.c:382
+#: ../lib/vector/diglib/plus_area.c:394
 #, c-format
 msgid "Dead centroid %d registered for area (bug in the vector library)"
 msgstr ""
 
-#: ../lib/vector/diglib/plus_area.c:406
+#: ../lib/vector/diglib/plus_area.c:418
 #, c-format
 msgid "Attempt to delete area %d info from dead isle %d"
 msgstr "Προσπάθεια διαγραφής επιφάνειας %d από κενή νησίδα (%d)"
 
-#: ../lib/vector/diglib/plus_area.c:749
+#: ../lib/vector/diglib/plus_area.c:773
 #, c-format
 msgid "Attempt to delete isle %d info from dead area %d"
 msgstr "Προσπάθεια διαγραφής νησίδας %d από κενή (dead) επιφάνεια %d"
+
+#: ../lib/vector/diglib/file.c:157
+msgid "Writing to file loaded to memory not supported"
+msgstr ""
+
+#: ../lib/vector/diglib/file.c:200
+#, fuzzy
+msgid "Unable to load file to memory, file not open"
+msgstr "Αδυναμία ανοίγματος προσωρινού αρχείου"
+
+#: ../lib/vector/diglib/file.c:215
+msgid "Vector memory mode not supported, using 'AUTO'"
+msgstr ""
 
 #: ../lib/vector/diglib/plus.c:288
 msgid "Unable read topology for nodes"
@@ -887,7 +784,7 @@ msgid ""
 "node %d, line %d"
 msgstr ""
 
-#: ../lib/vector/vedit/select.c:234
+#: ../lib/vector/vedit/select.c:233
 msgid "Unknown query tool"
 msgstr "Άγνωστος query εργαλείο"
 
@@ -916,10 +813,10 @@ msgstr ""
 msgid "Error while adding point to array. Out of memory"
 msgstr ""
 
-#: ../lib/vector/Vlib/build.c:31 ../lib/vector/Vlib/open.c:40
-#: ../lib/vector/Vlib/close.c:38 ../lib/vector/Vlib/read.c:30
-#: ../lib/vector/Vlib/rewind.c:35 ../lib/vector/Vlib/write.c:53
-#: ../lib/vector/Vlib/write.c:59
+#: ../lib/vector/Vlib/build.c:31 ../lib/vector/Vlib/close.c:38
+#: ../lib/vector/Vlib/read.c:30 ../lib/vector/Vlib/write.c:53
+#: ../lib/vector/Vlib/write.c:59 ../lib/vector/Vlib/open.c:40
+#: ../lib/vector/Vlib/rewind.c:35
 msgid "Requested format is not compiled in this version"
 msgstr "Το συγκεκριμένο format δεν γίνει compiled για την έκδοση αυτή"
 
@@ -1031,142 +928,23 @@ msgstr "Αδυναμία ανοίγματος πίνακα χωρικών δεδομένων για εγγραφή <%s>"
 msgid "Error writing out spatial index file"
 msgstr "Σφάλμα εγγραφής χωρικών δεδομένων στο αρχείο"
 
-#: ../lib/vector/Vlib/open.c:100
-#, c-format
-msgid "Programmer requested unknown open level %d"
-msgstr ""
-
-#: ../lib/vector/Vlib/open.c:168 ../lib/vector/Vlib/legal_vname.c:118
-#: ../lib/vector/Vlib/legal_vname.c:121 ../lib/vector/Vlib/map.c:324
-#: ../lib/ogsf/Gv3.c:57 ../lib/ogsf/Gp3.c:109
-#, c-format
-msgid "Vector map <%s> not found"
-msgstr "Ο διανυσματικός χάρτης <%s> δεν βρέθηκε"
-
-#: ../lib/vector/Vlib/open.c:179
-msgid ""
-"Vector map which is not in the current mapset cannot be opened for update"
-msgstr ""
-"Ο διανυσματικός χάρτης που δεν ανήκει στο τρέχον mapset δεν μπορεί να "
-"ανοίξει για ενημέρωση"
-
-#: ../lib/vector/Vlib/open.c:199 ../lib/ogsf/Gv3.c:63 ../lib/ogsf/Gp3.c:115
-#, c-format
-msgid "Unable to open vector map <%s>"
-msgstr "Αδυναμία ανοίγματος διανυσματικού χάρτη <%s>"
-
-#: ../lib/vector/Vlib/open.c:211 ../lib/vector/Vlib/open.c:279
-#: ../lib/vector/Vlib/open.c:299
-#, c-format
-msgid ""
-"Unable to open vector map <%s> on level %d. Try to rebuild vector topology "
-"by v.build."
-msgstr ""
-"Αδυναμία ανοίγματος διανυσματικού χάρτη <%s> στο τοπολογικό επίπεδο %d. "
-"Δοκιμάστε να ξαναφτιάξετε την τοπολογία με v.build."
-
-#: ../lib/vector/Vlib/open.c:214
-msgid "Unable to read head file"
-msgstr "Αδυναμία ανάγνωσης head αρχείου"
-
-#: ../lib/vector/Vlib/open.c:236
-#, c-format
-msgid "Unable to open topology file for vector map <%s>"
-msgstr ""
-"Αδυναμία ανοίγματος τοπολογικού αρχείου για τον διανυσματικό χάρτη <%s>"
-
-#: ../lib/vector/Vlib/open.c:262
-#, c-format
-msgid "Unable to open category index file for vector map <%s>"
-msgstr "Αδυναμία ανοίγματος του υπομνήματος για τον διανυσματικό χάρτη <%s>"
-
-#: ../lib/vector/Vlib/open.c:353 ../lib/vector/Vlib/open.c:576
-#, c-format
-msgid "Unable to open history file for vector map <%s>"
-msgstr "Αδυναμία ανοίγματος του ιστορικού του διανυσματικού χάρτη <%s>"
-
-#: ../lib/vector/Vlib/open.c:531
-#, c-format
-msgid "%s is not in the current mapset (%s)"
-msgstr ""
-
-#: ../lib/vector/Vlib/open.c:540 ../lib/vector/Vlib/map.c:175
-#: ../lib/vector/Vlib/map.c:311
-#, c-format
-msgid "Vector map name is not SQL compliant"
-msgstr "Ο διανυσματικός χάρτης δεν είναι συμβατός με SQL"
-
-#: ../lib/vector/Vlib/open.c:547 ../lib/vector/Vlib/map.c:186
-#: ../lib/vector/Vlib/map.c:315
-#, c-format
-msgid "Vector map <%s> already exists and will be overwritten"
-msgstr ""
-"Ο διανυσματικός χάρτης <%s> υπάρχει ήδη και θα αντικατασταθεί (overwritten)"
-
-#: ../lib/vector/Vlib/open.c:552 ../lib/vector/Vlib/map.c:190
-#, c-format
-msgid "Unable to delete vector map <%s>"
-msgstr "Αδυναμία διαγραφής διανυσματικού χάρτη <%s>"
-
-#: ../lib/vector/Vlib/open.c:566
-#, c-format
-msgid "Unable to create vector map <%s>"
-msgstr "Αδυναμία δημιουργίας διανυσματικού χάρτη <%s>"
-
-#: ../lib/vector/Vlib/open.c:622
-#, c-format
-msgid "Unable to stat file <%s>"
-msgstr ""
-
-#: ../lib/vector/Vlib/open.c:731
-msgid "Size of 'coor' file differs from value saved in topology file"
-msgstr ""
-
-#: ../lib/vector/Vlib/open.c:742
-#, c-format
-msgid "Please rebuild topology for vector map <%s@%s>"
-msgstr "Παρακαλώ ξαναφτιάξτε την τοπολογία για τον διανυσματικό χάρτη <%s@%s>"
-
 #: ../lib/vector/Vlib/close.c:134
 #, c-format
 msgid "Unable to close vector <%s>"
 msgstr "Αδυναμία κλεισίματος του διανύσματος <%s>"
 
-#: ../lib/vector/Vlib/cindex.c:31
-msgid "Category index is not up to date"
-msgstr "Ο κατάλογος των κατηγοριών δεν είναι ενημερωμένος"
+#: ../lib/vector/Vlib/read.c:99 ../lib/vector/Vlib/geos.c:53
+msgid "vector map is not opened"
+msgstr "Ο διανυσματικός χάρτης δεν είναι ανοικτός"
 
-#: ../lib/vector/Vlib/cindex.c:61 ../lib/vector/Vlib/cindex.c:125
-#: ../lib/vector/Vlib/cindex.c:143 ../lib/vector/Vlib/cindex.c:166
-msgid "Invalid layer index (index >= number of layers)"
-msgstr ""
-
-#: ../lib/vector/Vlib/cindex.c:107
-msgid "Invalid layer index (index < 0 or index >= number of layers)"
-msgstr ""
-
-#: ../lib/vector/Vlib/cindex.c:232
-msgid "Layer or category index out of range"
-msgstr ""
-
-#: ../lib/vector/Vlib/cindex.c:283
-msgid "Layer index out of range"
-msgstr ""
-
-#: ../lib/vector/Vlib/cindex.c:460
+#: ../lib/vector/Vlib/read.c:102
 #, c-format
-msgid "Unable to open cidx file <%s> for write"
+msgid ""
+"Vect_read_line(): feature id %d is not reasonable (max features in vector "
+"map <%s>: %d)"
 msgstr ""
-
-#: ../lib/vector/Vlib/cindex.c:468
-#, c-format
-msgid "Error writing out category index file <%s>"
-msgstr ""
-
-#: ../lib/vector/Vlib/cindex.c:511
-#, c-format
-msgid "Unable to open category index file for vector map <%s@%s>"
-msgstr ""
+"Vect_read_line():γραμμή %d δεν έχει λογική (max γραμμή στον διανυσματικό "
+"χάρτη: <%s>: %d)"
 
 #: ../lib/vector/Vlib/legal_vname.c:48
 #, c-format
@@ -1201,25 +979,19 @@ msgstr ""
 msgid "Output vector map name <%s> is not valid map name"
 msgstr "Το εξαγώμενο όνομα του διανυσματικού χάρτη <%s> δεν είναι επιτρεπτό"
 
+#: ../lib/vector/Vlib/legal_vname.c:118 ../lib/vector/Vlib/legal_vname.c:121
+#: ../lib/vector/Vlib/open.c:168 ../lib/vector/Vlib/map.c:327
+#: ../lib/ogsf/Gv3.c:57 ../lib/ogsf/Gp3.c:109
+#, c-format
+msgid "Vector map <%s> not found"
+msgstr "Ο διανυσματικός χάρτης <%s> δεν βρέθηκε"
+
 #: ../lib/vector/Vlib/legal_vname.c:142 ../lib/vector/Vlib/legal_vname.c:146
 #, c-format
 msgid "Output vector map <%s> is used as input"
 msgstr ""
 "Ο εξαγόμενος διανυσματικός χάρτης <%s> χρησιμοποιείται για εισαγωγή "
 "δεδομένων."
-
-#: ../lib/vector/Vlib/read.c:99
-msgid "vector map is not opened"
-msgstr "Ο διανυσματικός χάρτης δεν είναι ανοικτός"
-
-#: ../lib/vector/Vlib/read.c:102
-#, c-format
-msgid ""
-"Vect_read_line(): feature id %d is not reasonable (max features in vector "
-"map <%s>: %d)"
-msgstr ""
-"Vect_read_line():γραμμή %d δεν έχει λογική (max γραμμή στον διανυσματικό "
-"χάρτη: <%s>: %d)"
 
 #: ../lib/vector/Vlib/array.c:99
 #, c-format
@@ -1235,9 +1007,9 @@ msgstr ""
 msgid "Not enough space in vector array"
 msgstr ""
 
-#: ../lib/vector/Vlib/array.c:278 ../lib/vector/Vlib/map.c:240
-#: ../lib/vector/Vlib/map.c:361 ../lib/vector/Vlib/map.c:467
-#: ../lib/vector/Vlib/map.c:584 ../lib/vector/Vlib/map.c:682
+#: ../lib/vector/Vlib/array.c:278 ../lib/vector/Vlib/map.c:243
+#: ../lib/vector/Vlib/map.c:364 ../lib/vector/Vlib/map.c:470
+#: ../lib/vector/Vlib/map.c:587 ../lib/vector/Vlib/map.c:685
 #: ../lib/vector/Vlib/net.c:179 ../lib/vector/Vlib/net.c:350
 #: ../lib/rst/interp_float/vinput2d.c:79
 #, c-format
@@ -1250,19 +1022,6 @@ msgstr ""
 msgid "Unable to select record from table <%s> (key %s, where %s)"
 msgstr "Αδυναμία επιλογής της εγγραφής <%s> (κλειδί %s, όπου %s)"
 
-#: ../lib/vector/Vlib/break_lines.c:115 ../lib/vector/Vlib/break_lines.c:370
-#, c-format
-msgid "Intersections: %5d"
-msgstr ""
-
-#: ../lib/vector/Vlib/poly.c:235
-msgid "Unable to find point in polygon"
-msgstr "Αδυναμία εύρεσης σημείου στο πολύγωνο"
-
-#: ../lib/vector/Vlib/poly.c:649
-msgid "conditions failed"
-msgstr "Οι συνθήκες απέτυχαν"
-
 #: ../lib/vector/Vlib/cats.c:45
 msgid "Vect_new_cats_struct(): Out of memory"
 msgstr "Vect_new_cats_struct(): η μνήμη γέμισε"
@@ -1272,42 +1031,9 @@ msgstr "Vect_new_cats_struct(): η μνήμη γέμισε"
 msgid "Too many categories (%d), unable to set cat %d (layer %d)"
 msgstr "Πάρα πολλές κατηγορίες (%d), δεν μπορεί να cat %d (επίπεδο %d)"
 
-#: ../lib/vector/Vlib/cats.c:376
+#: ../lib/vector/Vlib/cats.c:407
 #, c-format
 msgid "Unable to convert category string '%s' (from '%s') to category range"
-msgstr ""
-
-#: ../lib/vector/Vlib/sindex.c:97
-msgid "not implemented"
-msgstr "Δεν έχει εφαρμοστεί"
-
-#: ../lib/vector/Vlib/sindex.c:109
-#, c-format
-msgid "Unable to delete item %d from spatial index"
-msgstr "Δεν γίνεται η διαγραφή του αντικειμένου %d από το χωρικό πίνακα"
-
-#: ../lib/vector/Vlib/sindex.c:127
-msgid ""
-"Unable to build spatial index from topology, vector map is not opened at "
-"topo level 2"
-msgstr ""
-"Αδυναμία δημιοργίας χωρικού πίνακα από την τοπολογία, ο διανυσματικός χάρτης "
-"δεν είναι ανοικτός στο topo level 2"
-
-#: ../lib/vector/Vlib/sindex.c:166
-msgid "BUG (Vect_build_sidx_from_topo): node does not exist"
-msgstr "BUG (Vect_build_sidx_from_topo): κόμβος δεν υπάρχει"
-
-#: ../lib/vector/Vlib/sindex.c:176
-msgid "BUG (Vect_build_sidx_from_topo): line does not exist"
-msgstr "BUG (Vect_build_sidx_from_topo): η γραμμή δεν υπάρχει"
-
-#: ../lib/vector/Vlib/sindex.c:193
-msgid "BUG (Vect_build_sidx_from_topo): area does not exist"
-msgstr "BUG (Vect_build_sidx_from_topo): η επιφάνεια δεν υπάρχει"
-
-#: ../lib/vector/Vlib/sindex.c:210
-msgid "BUG (Vect_build_sidx_from_topo): isle does not exist"
 msgstr ""
 
 #: ../lib/vector/Vlib/write_nat.c:50 ../lib/vector/Vlib/write_nat.c:83
@@ -1322,84 +1048,6 @@ msgstr "Προσπάθεια διαγραφής λάθος στοιχείων"
 #: ../lib/vector/Vlib/write_nat.c:885
 msgid "Attempt to restore alive feature"
 msgstr "Προσπάθεια αποκατάστασης σωστών στοιχείων"
-
-#: ../lib/vector/Vlib/level_two.c:210 ../lib/vector/Vlib/level_two.c:235
-#: ../lib/vector/Vlib/level_two.c:259 ../lib/vector/Vlib/level_two.c:278
-#: ../lib/vector/Vlib/level_two.c:296 ../lib/vector/Vlib/level_two.c:315
-#, c-format
-msgid "Vector map <%s> is not open on level >= 2"
-msgstr "Ο διανυσματικός χάρτης <%s> δεν είναι ανοικτός σε επίπεδο >= 2"
-
-#: ../lib/vector/Vlib/graph.c:110 ../lib/vector/Vlib/net.c:432
-msgid "GngFlatten error"
-msgstr "GngFlatten σφάλμα"
-
-#: ../lib/vector/Vlib/graph.c:143
-msgid "Unable to add network arc"
-msgstr ""
-
-#: ../lib/vector/Vlib/graph.c:231 ../lib/vector/Vlib/net.c:509
-#, c-format
-msgid "dglShortestPath error: %s"
-msgstr "dglShortestPath σφάλμα: %s"
-
-#: ../lib/vector/Vlib/build_nat.c:93
-msgid "Unable to add area (map closed, topo saved)"
-msgstr "Αδυναμία προσθήκης επιφάνειας (χάρτης κλειστός, τοπογραφία σωσμένη)"
-
-#: ../lib/vector/Vlib/build_nat.c:102
-msgid "Unable to add isle (map closed, topo saved)"
-msgstr "Unable to add isle (χάρτης κλειστός, τοπογραφία σωσμένη)"
-
-#: ../lib/vector/Vlib/build_nat.c:112
-msgid "Area of size = 0.0 ignored"
-msgstr "Επιφάνεια μεγέθους = 0.0 αγνοείται"
-
-#: ../lib/vector/Vlib/build_nat.c:148
-msgid "Request to find area outside nonexistent isle"
-msgstr ""
-
-#: ../lib/vector/Vlib/build_nat.c:507
-#, fuzzy
-msgid "Registering primitives..."
-msgstr "Εγγραφή αρχικά: "
-
-#: ../lib/vector/Vlib/build_nat.c:516
-msgid "Unable to read vector map"
-msgstr "Αδυναμία ανάγνωσης διανυσματικού χάρτη"
-
-#: ../lib/vector/Vlib/build_nat.c:560
-#, c-format
-msgid "%d primitives registered"
-msgstr ""
-
-#: ../lib/vector/Vlib/build_nat.c:561
-#, c-format
-msgid "%d vertices registered"
-msgstr ""
-
-#: ../lib/vector/Vlib/build_nat.c:572
-#, fuzzy
-msgid "Building areas..."
-msgstr "Δημιουργία επιφανειών"
-
-#: ../lib/vector/Vlib/build_nat.c:595
-#, fuzzy, c-format
-msgid "%d areas built"
-msgstr "Επιφάνειες δημιουργήθηκαν"
-
-#: ../lib/vector/Vlib/build_nat.c:596
-#, fuzzy, c-format
-msgid "%d isles built"
-msgstr "Νησίδες δημιουργήθηκαν"
-
-#: ../lib/vector/Vlib/build_nat.c:605
-msgid "Attaching islands..."
-msgstr ""
-
-#: ../lib/vector/Vlib/build_nat.c:620
-msgid "Attaching centroids..."
-msgstr ""
 
 #: ../lib/vector/Vlib/open_nat.c:145
 #, c-format
@@ -1452,13 +1100,9 @@ msgstr "Χαρακτηριστικό %d χωρίς γεωμετρία αγνοείται"
 msgid "OGR feature without ID ignored"
 msgstr "OGR χαρακτηριστικό χωρίς ID αγνοείται"
 
-#: ../lib/vector/Vlib/level.c:38
-msgid "Map structure was never initialized"
+#: ../lib/vector/Vlib/remove_areas.c:92
+msgid "Area is composed of dead boundary"
 msgstr ""
-
-#: ../lib/vector/Vlib/level.c:40
-msgid "Map structure has been closed"
-msgstr "Η δομή του χάρτη έχει κλείσει"
 
 #: ../lib/vector/Vlib/area.c:53
 msgid "Attempt to read points of nonexistent area"
@@ -1480,134 +1124,6 @@ msgstr "Προσπάθεια ανάγνωσης τοπογραφίας για κενή (dead) επιφάνεια (%d)"
 msgid "Attempt to read topo for dead isle (%d)"
 msgstr ""
 
-#: ../lib/vector/Vlib/open_ogr.c:53
-msgid "OGR format cannot be updated"
-msgstr "OGR format δεν μπορεί να ανανεωθεί"
-
-#: ../lib/vector/Vlib/open_ogr.c:65
-#, c-format
-msgid "Unable to open OGR data source '%s'"
-msgstr "Αδυναμία ανοίγματος OGR πηγή δεδομένων '%s'"
-
-#: ../lib/vector/Vlib/open_ogr.c:85
-#, c-format
-msgid "Unable to open layer <%s>"
-msgstr "Αδυναμία ανοίγματος επιπέδου <%s>"
-
-#: ../lib/vector/Vlib/open_ogr.c:129
-#, c-format
-msgid "Unable to open fidx file for vector map <%s@%s>"
-msgstr "Αδυναμία ανοίγματος αρχείου fidx για τον διανυσματικό χάρτη <%s@%s>"
-
-#: ../lib/vector/Vlib/open_ogr.c:147
-#, c-format
-msgid ""
-"Feature index format version %d.%d is not supported by this release. Try to "
-"rebuild topology or upgrade GRASS."
-msgstr ""
-
-#: ../lib/vector/Vlib/open_ogr.c:152
-#, c-format
-msgid ""
-"Your GRASS version does not fully support feature index format %d.%d of the "
-"vector. Consider to rebuild topology or upgrade GRASS."
-msgstr ""
-
-#: ../lib/vector/Vlib/remove_areas.c:92
-msgid "Area is composed of dead boundary"
-msgstr ""
-
-#: ../lib/vector/Vlib/read_nat.c:136
-msgid "Attempt to read dead line"
-msgstr ""
-
-#: ../lib/vector/Vlib/map.c:55
-msgid "input vector map is not open"
-msgstr "Ο διανυσματικός χάρτης εισαγωγής δεν είναι ανοικτός"
-
-#: ../lib/vector/Vlib/map.c:65 ../lib/vector/Vlib/map.c:81
-#: ../lib/ogsf/Gp3.c:143
-#, c-format
-msgid "Unable to read vector map <%s>"
-msgstr "Αδυναμία ανάγνωσης διανυσματικού χάρτη <%s>"
-
-#: ../lib/vector/Vlib/map.c:179
-#, c-format
-msgid "Unable to find vector map <%s> in <%s>"
-msgstr "Αδυναμία αντιγραφής διανυσματικού χάρτη <%s> σε <%s>"
-
-#: ../lib/vector/Vlib/map.c:210 ../lib/vector/Vlib/map.c:328
-#, c-format
-msgid "Unable to copy vector map <%s> to <%s>"
-msgstr "Αδυναμία αντιγραφής διανυσματικού χάρτη <%s> σε <%s>"
-
-#: ../lib/vector/Vlib/map.c:257 ../lib/vector/Vlib/map.c:378
-#: ../lib/vector/Vlib/map.c:609 ../lib/vector/Vlib/map.c:716
-#, c-format
-msgid "Unable to copy table <%s>"
-msgstr "Αδυναμία αντιγραφής πίνακα <%s>"
-
-#: ../lib/vector/Vlib/map.c:273 ../lib/vector/Vlib/map.c:407
-#: ../lib/vector/Vlib/map.c:622
-#, c-format
-msgid "Unable to create index for table <%s>, key <%s>"
-msgstr "Αδυναμία δημιουργίας καταλόγου για τον πίνακα <%s>, κλειδί <%s>"
-
-#: ../lib/vector/Vlib/map.c:392 ../lib/vector/Vlib/map.c:487
-#, c-format
-msgid "Unable to delete table <%s>"
-msgstr "Αδυναμία διαγραφής πίνακα <%s>"
-
-#: ../lib/vector/Vlib/map.c:441
-#, c-format
-msgid "Invalid vector map name <%s>"
-msgstr "Λάθος όνομα διανυσματικού χάρτη <%s>"
-
-#: ../lib/vector/Vlib/map.c:455
-#, c-format
-msgid "Unable to open header file for vector map <%s>"
-msgstr "Αδυναμία ανοίγματος header αρχείου διανυσματικού χάρτη <%s>"
-
-#: ../lib/vector/Vlib/map.c:477
-#, c-format
-msgid "Unable to find table <%s> linked to vector map <%s>"
-msgstr ""
-"Αδυναμία εύρεσης του πίνακα <%s> που είναι συνδεδεμένος με τον διανυσματικό "
-"χάρτη <%s>"
-
-#: ../lib/vector/Vlib/map.c:493
-#, c-format
-msgid "Table <%s> linked to vector map <%s> does not exist"
-msgstr ""
-"Ο πίνακας <%s> που είναι συνδεδεμένος με τον διανυσματικό χάρτη <%s> δεν "
-"υπάρχει"
-
-#: ../lib/vector/Vlib/map.c:507
-#, c-format
-msgid "Unable to open directory '%s'"
-msgstr "Αδυναμία ανοίγματος καταλόγου συστήματος '%s'"
-
-#: ../lib/vector/Vlib/map.c:521
-#, c-format
-msgid "Unable to delete file '%s'"
-msgstr "Αδυναμία διαγραφής αρχείου '%s'"
-
-#: ../lib/vector/Vlib/map.c:538
-#, c-format
-msgid "Unable to rename directory '%s' to '%s'"
-msgstr "Αδυναμία μετονομασίας καταλόγου συστήματος '%s' σε '%s'"
-
-#: ../lib/vector/Vlib/map.c:546
-#, c-format
-msgid "Unable to remove directory '%s'"
-msgstr "Αδυναμία μεταφοράς καταλόγου συστήματος '%s'"
-
-#: ../lib/vector/Vlib/map.c:600 ../lib/vector/Vlib/map.c:701
-#, c-format
-msgid "Unable to add database link for vector map <%s>"
-msgstr ""
-"Αδυναμία προσθήκης σύνδεσης με βάση δεδομένων για τον διανυσματικό χάρτη <%s>"
-
 #: ../lib/vector/Vlib/overlay.c:74
 msgid "unknown operator"
 msgstr "Άγνωστος τελεστής"
@@ -1628,184 +1144,6 @@ msgstr ""
 #: ../lib/vector/Vlib/read_ogr.c:378 ../lib/vector/Vlib/read_ogr.c:386
 #, c-format
 msgid "Unable to get feature geometry, FID %ld"
-msgstr ""
-
-#: ../lib/vector/Vlib/field.c:89
-msgid "Layer number must be 1 or greater"
-msgstr "Το νούμερο του επιπέδου πρέπει να είναι μεγαλύτερο ή ίσο με 1"
-
-#: ../lib/vector/Vlib/field.c:94
-msgid "Unable to add database link, map is not opened in WRITE mode"
-msgstr ""
-"Αδυναμία σύνδεσης βάσης δεδομένων, ο χάρτης δεν είναι ανοικτός σε κατάσταση "
-"εγγραφής (WRITE mode)"
-
-#: ../lib/vector/Vlib/field.c:100
-msgid "Unable to add database link"
-msgstr "Αδυναμία σύνδεσης βάσης δεδομένων"
-
-#: ../lib/vector/Vlib/field.c:106 ../lib/vector/Vlib/field.c:151
-msgid "Unable to write database links"
-msgstr "Αδυναμία σύνδεσης βάσης δεδομένων"
-
-#: ../lib/vector/Vlib/field.c:219
-#, c-format
-msgid "Layer number %d or name <%s> already exists"
-msgstr "Το επίπεδο με αριθμό %d ή όνομα <%s> υπάρχει ήδη"
-
-#: ../lib/vector/Vlib/field.c:298
-#, c-format
-msgid ""
-"Default driver / database set to:\n"
-"driver: %s\n"
-"database: %s"
-msgstr ""
-"Προεπιλεγμένος οδηγός / η βάση δεδομένων έχει:\n"
-"driver: %s\n"
-"database: %s"
-
-#: ../lib/vector/Vlib/field.c:305
-msgid "Default driver is not set"
-msgstr "Ο προεπιλεγμένος οδηγός δεν έχει καθοριστεί"
-
-#: ../lib/vector/Vlib/field.c:308
-msgid "Default database is not set"
-msgstr "Η προεπιλεγμένη βάση δεδομένων δεν έχει καθοριστεί"
-
-#: ../lib/vector/Vlib/field.c:367
-#, c-format
-msgid "Requested dblink %d, maximum link number %d"
-msgstr ""
-
-#: ../lib/vector/Vlib/field.c:507
-msgid "Unable to open OGR DBMI driver"
-msgstr ""
-
-#: ../lib/vector/Vlib/field.c:546
-msgid ""
-"All FID tests failed. Neither 'FID' nor 'ogc_fid' nor 'ogr_fid' nor 'gid' "
-"available in OGR DB table"
-msgstr ""
-
-#: ../lib/vector/Vlib/field.c:601
-#, c-format
-msgid "Don't know how to read links for format %d"
-msgstr ""
-
-#: ../lib/vector/Vlib/field.c:633
-#, c-format
-msgid "Error in rule on row %d in %s"
-msgstr ""
-
-#: ../lib/vector/Vlib/field.c:686
-#, c-format
-msgid "Unable to open vector database definition file '%s'"
-msgstr ""
-
-#: ../lib/vector/Vlib/field.c:774
-msgid "Bug: attempt to update map which is not in current mapset"
-msgstr ""
-
-#: ../lib/vector/Vlib/net.c:121
-msgid "Building graph..."
-msgstr ""
-
-#: ../lib/vector/Vlib/net.c:163
-msgid "Unable to build network graph"
-msgstr ""
-
-#: ../lib/vector/Vlib/net.c:169
-msgid "Forward costs column not specified"
-msgstr ""
-
-#: ../lib/vector/Vlib/net.c:176
-msgid "Arc field < 1"
-msgstr ""
-
-#: ../lib/vector/Vlib/net.c:190 ../lib/vector/Vlib/net.c:207
-#: ../lib/vector/Vlib/net.c:360
-#, c-format
-msgid "Column <%s> not found in table <%s>"
-msgstr ""
-
-#: ../lib/vector/Vlib/net.c:196 ../lib/vector/Vlib/net.c:213
-#: ../lib/vector/Vlib/net.c:366
-#, c-format
-msgid "Data type of column <%s> not supported (must be numeric)"
-msgstr ""
-
-#: ../lib/vector/Vlib/net.c:226
-msgid "Registering arcs..."
-msgstr ""
-
-#: ../lib/vector/Vlib/net.c:254
-#, c-format
-msgid ""
-"Database record for line %d (cat = %d, forward/both direction(s)) not found "
-"(forward/both direction(s) of line skipped)"
-msgstr ""
-
-#: ../lib/vector/Vlib/net.c:273
-#, c-format
-msgid ""
-"Database record for line %d (cat = %d, backword direction) not found"
-"(direction of line skipped)"
-msgstr ""
-
-#: ../lib/vector/Vlib/net.c:322
-msgid "Cannot add network arc"
-msgstr ""
-
-#: ../lib/vector/Vlib/net.c:346
-msgid "Setting node costs..."
-msgstr ""
-
-#: ../lib/vector/Vlib/net.c:402
-#, c-format
-msgid "Database record for node %d (cat = %d) not found (cost set to 0)"
-msgstr ""
-
-#: ../lib/vector/Vlib/net.c:429
-msgid "Flattening the graph..."
-msgstr ""
-
-#: ../lib/vector/Vlib/net.c:439
-msgid "Graph was built"
-msgstr ""
-
-#: ../lib/vector/Vlib/net.c:590
-msgid "Wrong line direction in Vect_net_get_line_cost()"
-msgstr ""
-
-#: ../lib/vector/Vlib/line.c:60 ../lib/ogsf/gsd_img_mpeg.c:317
-msgid "Out of memory"
-msgstr ""
-
-#: ../lib/vector/Vlib/line.c:199 ../lib/vector/Vlib/line.c:231
-msgid "Index out of range in"
-msgstr ""
-
-#: ../lib/vector/Vlib/line.c:527
-msgid "Segment outside line, no segment created"
-msgstr ""
-
-#: ../lib/vector/Vlib/header.c:95 ../lib/vector/Vlib/header.c:143
-#, c-format
-msgid "Unable to open header file of vector <%s>"
-msgstr ""
-
-#: ../lib/vector/Vlib/header.c:151
-#, c-format
-msgid "Corrupted row in head: %s"
-msgstr ""
-
-#: ../lib/vector/Vlib/header.c:187
-#, c-format
-msgid "Unknown keyword %s in vector head"
-msgstr ""
-
-#: ../lib/vector/Vlib/header.c:510 ../lib/gis/proj3.c:64
-msgid "Unknown projection"
 msgstr ""
 
 #: ../lib/vector/Vlib/write.c:27 ../lib/vector/Vlib/write.c:33
@@ -1874,22 +1212,620 @@ msgstr ""
 msgid "Unable to restore feature %d from vector map <%s>"
 msgstr "Unable to restore feature %d from vector map <%s>"
 
-#: ../lib/vector/Vlib/buffer2.c:375
+#: ../lib/vector/Vlib/geos.c:56
+#, fuzzy, c-format
+msgid ""
+"Vect_read_line_geos(): feature id %d is not reasonable (max features in "
+"vector map <%s>: %d)"
+msgstr ""
+"Vect_read_line():γραμμή %d δεν έχει λογική (max γραμμή στον διανυσματικό "
+"χάρτη: <%s>: %d)"
+
+#: ../lib/vector/Vlib/geos.c:61
+msgid "only native format supported"
+msgstr ""
+
+#: ../lib/vector/Vlib/geos.c:66 ../lib/vector/Vlib/geos.c:256
+#: ../lib/vector/Vlib/read_nat.c:136
+msgid "Attempt to read dead line"
+msgstr ""
+
+#: ../lib/vector/Vlib/geos.c:91
+#, c-format
+msgid "Vect_read_area_geos(): unable to read area id %d"
+msgstr ""
+
+#: ../lib/vector/Vlib/geos.c:105
+#, c-format
+msgid "Vect_read_area_geos(): unable to read isle id %d of area id %d"
+msgstr ""
+
+#: ../lib/vector/Vlib/geos.c:203
+#, fuzzy, c-format
+msgid "Unable to read line offset %ld"
+msgstr "Αδυναμία ανάγνωσης γραμμής %d"
+
+#: ../lib/vector/Vlib/geos.c:410
+#, fuzzy, c-format
+msgid "Attempt to read points of nonexistent area id %d"
+msgstr "Προσπάθεια προσπελασης σημείων σε επιφάνεια που δεν υπάρχει"
+
+#: ../lib/vector/Vlib/geos.c:470
+#, fuzzy, c-format
+msgid "Unable to read feature id %d"
+msgstr "Αδυναμία επανεγγραφής feature %d"
+
+#: ../lib/vector/Vlib/open.c:100
+#, c-format
+msgid "Programmer requested unknown open level %d"
+msgstr ""
+
+#: ../lib/vector/Vlib/open.c:179
+msgid ""
+"Vector map which is not in the current mapset cannot be opened for update"
+msgstr ""
+"Ο διανυσματικός χάρτης που δεν ανήκει στο τρέχον mapset δεν μπορεί να "
+"ανοίξει για ενημέρωση"
+
+#: ../lib/vector/Vlib/open.c:199 ../lib/ogsf/Gv3.c:63 ../lib/ogsf/Gp3.c:115
+#, c-format
+msgid "Unable to open vector map <%s>"
+msgstr "Αδυναμία ανοίγματος διανυσματικού χάρτη <%s>"
+
+#: ../lib/vector/Vlib/open.c:211 ../lib/vector/Vlib/open.c:279
+#: ../lib/vector/Vlib/open.c:299
+#, c-format
+msgid ""
+"Unable to open vector map <%s> on level %d. Try to rebuild vector topology "
+"by v.build."
+msgstr ""
+"Αδυναμία ανοίγματος διανυσματικού χάρτη <%s> στο τοπολογικό επίπεδο %d. "
+"Δοκιμάστε να ξαναφτιάξετε την τοπολογία με v.build."
+
+#: ../lib/vector/Vlib/open.c:214
+msgid "Unable to read head file"
+msgstr "Αδυναμία ανάγνωσης head αρχείου"
+
+#: ../lib/vector/Vlib/open.c:236
+#, c-format
+msgid "Unable to open topology file for vector map <%s>"
+msgstr ""
+"Αδυναμία ανοίγματος τοπολογικού αρχείου για τον διανυσματικό χάρτη <%s>"
+
+#: ../lib/vector/Vlib/open.c:262
+#, c-format
+msgid "Unable to open category index file for vector map <%s>"
+msgstr "Αδυναμία ανοίγματος του υπομνήματος για τον διανυσματικό χάρτη <%s>"
+
+#: ../lib/vector/Vlib/open.c:353 ../lib/vector/Vlib/open.c:576
+#, c-format
+msgid "Unable to open history file for vector map <%s>"
+msgstr "Αδυναμία ανοίγματος του ιστορικού του διανυσματικού χάρτη <%s>"
+
+#: ../lib/vector/Vlib/open.c:531
+#, c-format
+msgid "%s is not in the current mapset (%s)"
+msgstr ""
+
+#: ../lib/vector/Vlib/open.c:540 ../lib/vector/Vlib/map.c:178
+#: ../lib/vector/Vlib/map.c:314
+#, c-format
+msgid "Vector map name is not SQL compliant"
+msgstr "Ο διανυσματικός χάρτης δεν είναι συμβατός με SQL"
+
+#: ../lib/vector/Vlib/open.c:547 ../lib/vector/Vlib/map.c:189
+#: ../lib/vector/Vlib/map.c:318
+#, c-format
+msgid "Vector map <%s> already exists and will be overwritten"
+msgstr ""
+"Ο διανυσματικός χάρτης <%s> υπάρχει ήδη και θα αντικατασταθεί (overwritten)"
+
+#: ../lib/vector/Vlib/open.c:552 ../lib/vector/Vlib/map.c:193
+#, c-format
+msgid "Unable to delete vector map <%s>"
+msgstr "Αδυναμία διαγραφής διανυσματικού χάρτη <%s>"
+
+#: ../lib/vector/Vlib/open.c:566
+#, c-format
+msgid "Unable to create vector map <%s>"
+msgstr "Αδυναμία δημιουργίας διανυσματικού χάρτη <%s>"
+
+#: ../lib/vector/Vlib/open.c:622
+#, c-format
+msgid "Unable to stat file <%s>"
+msgstr ""
+
+#: ../lib/vector/Vlib/open.c:731
+msgid "Size of 'coor' file differs from value saved in topology file"
+msgstr ""
+
+#: ../lib/vector/Vlib/open.c:742
+#, c-format
+msgid "Please rebuild topology for vector map <%s@%s>"
+msgstr "Παρακαλώ ξαναφτιάξτε την τοπολογία για τον διανυσματικό χάρτη <%s@%s>"
+
+#: ../lib/vector/Vlib/cindex.c:31
+msgid "Category index is not up to date"
+msgstr "Ο κατάλογος των κατηγοριών δεν είναι ενημερωμένος"
+
+#: ../lib/vector/Vlib/cindex.c:61 ../lib/vector/Vlib/cindex.c:125
+#: ../lib/vector/Vlib/cindex.c:143 ../lib/vector/Vlib/cindex.c:166
+msgid "Invalid layer index (index >= number of layers)"
+msgstr ""
+
+#: ../lib/vector/Vlib/cindex.c:107
+msgid "Invalid layer index (index < 0 or index >= number of layers)"
+msgstr ""
+
+#: ../lib/vector/Vlib/cindex.c:232
+msgid "Layer or category index out of range"
+msgstr ""
+
+#: ../lib/vector/Vlib/cindex.c:283
+msgid "Layer index out of range"
+msgstr ""
+
+#: ../lib/vector/Vlib/cindex.c:460
+#, c-format
+msgid "Unable to open cidx file <%s> for write"
+msgstr ""
+
+#: ../lib/vector/Vlib/cindex.c:468
+#, c-format
+msgid "Error writing out category index file <%s>"
+msgstr ""
+
+#: ../lib/vector/Vlib/cindex.c:511
+#, c-format
+msgid "Unable to open category index file for vector map <%s@%s>"
+msgstr ""
+
+#: ../lib/vector/Vlib/break_lines.c:115 ../lib/vector/Vlib/break_lines.c:370
+#, c-format
+msgid "Intersections: %5d"
+msgstr ""
+
+#: ../lib/vector/Vlib/poly.c:235
+msgid "Unable to find point in polygon"
+msgstr "Αδυναμία εύρεσης σημείου στο πολύγωνο"
+
+#: ../lib/vector/Vlib/poly.c:649
+msgid "conditions failed"
+msgstr "Οι συνθήκες απέτυχαν"
+
+#: ../lib/vector/Vlib/sindex.c:97
+msgid "not implemented"
+msgstr "Δεν έχει εφαρμοστεί"
+
+#: ../lib/vector/Vlib/sindex.c:109
+#, c-format
+msgid "Unable to delete item %d from spatial index"
+msgstr "Δεν γίνεται η διαγραφή του αντικειμένου %d από το χωρικό πίνακα"
+
+#: ../lib/vector/Vlib/sindex.c:127
+msgid ""
+"Unable to build spatial index from topology, vector map is not opened at "
+"topo level 2"
+msgstr ""
+"Αδυναμία δημιοργίας χωρικού πίνακα από την τοπολογία, ο διανυσματικός χάρτης "
+"δεν είναι ανοικτός στο topo level 2"
+
+#: ../lib/vector/Vlib/sindex.c:168
+msgid "BUG (Vect_build_sidx_from_topo): node does not exist"
+msgstr "BUG (Vect_build_sidx_from_topo): κόμβος δεν υπάρχει"
+
+#: ../lib/vector/Vlib/sindex.c:180
+msgid "BUG (Vect_build_sidx_from_topo): line does not exist"
+msgstr "BUG (Vect_build_sidx_from_topo): η γραμμή δεν υπάρχει"
+
+#: ../lib/vector/Vlib/sindex.c:199
+msgid "BUG (Vect_build_sidx_from_topo): area does not exist"
+msgstr "BUG (Vect_build_sidx_from_topo): η επιφάνεια δεν υπάρχει"
+
+#: ../lib/vector/Vlib/sindex.c:218
+msgid "BUG (Vect_build_sidx_from_topo): isle does not exist"
+msgstr ""
+
+#: ../lib/vector/Vlib/buffer2.c:376
 #, fuzzy
 msgid "Line is not looped"
 msgstr "Οι πίνακες δεν επιτρέπονται"
 
-#: ../lib/vector/Vlib/buffer2.c:610 ../lib/vector/Vlib/buffer2.c:621
+#: ../lib/vector/Vlib/buffer2.c:611 ../lib/vector/Vlib/buffer2.c:622
 msgid "Next edge was visited but it is not the first one !!! breaking loop"
 msgstr ""
 
-#: ../lib/vector/Vlib/buffer2.c:673
+#: ../lib/vector/Vlib/buffer2.c:674
 #, fuzzy
 msgid "side != 0 feature not implemented"
 msgstr "Δεν έχει εφαρμοστεί"
 
-#: ../lib/vector/Vlib/buffer2.c:923 ../lib/vector/Vlib/buffer2.c:956
+#: ../lib/vector/Vlib/buffer2.c:924 ../lib/vector/Vlib/buffer2.c:957
 msgid "Vect_get_point_in_poly() failed"
+msgstr ""
+
+#: ../lib/vector/Vlib/level_two.c:251 ../lib/vector/Vlib/level_two.c:276
+#: ../lib/vector/Vlib/level_two.c:300 ../lib/vector/Vlib/level_two.c:319
+#: ../lib/vector/Vlib/level_two.c:337 ../lib/vector/Vlib/level_two.c:356
+#, c-format
+msgid "Vector map <%s> is not open on level >= 2"
+msgstr "Ο διανυσματικός χάρτης <%s> δεν είναι ανοικτός σε επίπεδο >= 2"
+
+#: ../lib/vector/Vlib/graph.c:110 ../lib/vector/Vlib/net.c:432
+msgid "GngFlatten error"
+msgstr "GngFlatten σφάλμα"
+
+#: ../lib/vector/Vlib/graph.c:143
+msgid "Unable to add network arc"
+msgstr ""
+
+#: ../lib/vector/Vlib/graph.c:231 ../lib/vector/Vlib/net.c:514
+#, c-format
+msgid "dglShortestPath error: %s"
+msgstr "dglShortestPath σφάλμα: %s"
+
+#: ../lib/vector/Vlib/build_nat.c:93
+msgid "Unable to add area (map closed, topo saved)"
+msgstr "Αδυναμία προσθήκης επιφάνειας (χάρτης κλειστός, τοπογραφία σωσμένη)"
+
+#: ../lib/vector/Vlib/build_nat.c:102
+msgid "Unable to add isle (map closed, topo saved)"
+msgstr "Unable to add isle (χάρτης κλειστός, τοπογραφία σωσμένη)"
+
+#: ../lib/vector/Vlib/build_nat.c:112
+msgid "Area of size = 0.0 ignored"
+msgstr "Επιφάνεια μεγέθους = 0.0 αγνοείται"
+
+#: ../lib/vector/Vlib/build_nat.c:148
+msgid "Request to find area outside nonexistent isle"
+msgstr ""
+
+#: ../lib/vector/Vlib/build_nat.c:514
+#, fuzzy
+msgid "Registering primitives..."
+msgstr "Εγγραφή αρχικά: "
+
+#: ../lib/vector/Vlib/build_nat.c:523
+msgid "Unable to read vector map"
+msgstr "Αδυναμία ανάγνωσης διανυσματικού χάρτη"
+
+#: ../lib/vector/Vlib/build_nat.c:567
+#, c-format
+msgid "%d primitives registered"
+msgstr ""
+
+#: ../lib/vector/Vlib/build_nat.c:568
+#, c-format
+msgid "%d vertices registered"
+msgstr ""
+
+#: ../lib/vector/Vlib/build_nat.c:579
+#, fuzzy
+msgid "Building areas..."
+msgstr "Δημιουργία επιφανειών"
+
+#: ../lib/vector/Vlib/build_nat.c:602
+#, fuzzy, c-format
+msgid "%d areas built"
+msgstr "Επιφάνειες δημιουργήθηκαν"
+
+#: ../lib/vector/Vlib/build_nat.c:603
+#, fuzzy, c-format
+msgid "%d isles built"
+msgstr "Νησίδες δημιουργήθηκαν"
+
+#: ../lib/vector/Vlib/build_nat.c:612
+msgid "Attaching islands..."
+msgstr ""
+
+#: ../lib/vector/Vlib/build_nat.c:627
+msgid "Attaching centroids..."
+msgstr ""
+
+#: ../lib/vector/Vlib/level.c:38
+msgid "Map structure was never initialized"
+msgstr ""
+
+#: ../lib/vector/Vlib/level.c:40
+msgid "Map structure has been closed"
+msgstr "Η δομή του χάρτη έχει κλείσει"
+
+#: ../lib/vector/Vlib/open_ogr.c:53
+msgid "OGR format cannot be updated"
+msgstr "OGR format δεν μπορεί να ανανεωθεί"
+
+#: ../lib/vector/Vlib/open_ogr.c:65
+#, c-format
+msgid "Unable to open OGR data source '%s'"
+msgstr "Αδυναμία ανοίγματος OGR πηγή δεδομένων '%s'"
+
+#: ../lib/vector/Vlib/open_ogr.c:85
+#, c-format
+msgid "Unable to open layer <%s>"
+msgstr "Αδυναμία ανοίγματος επιπέδου <%s>"
+
+#: ../lib/vector/Vlib/open_ogr.c:129
+#, c-format
+msgid "Unable to open fidx file for vector map <%s@%s>"
+msgstr "Αδυναμία ανοίγματος αρχείου fidx για τον διανυσματικό χάρτη <%s@%s>"
+
+#: ../lib/vector/Vlib/open_ogr.c:147
+#, c-format
+msgid ""
+"Feature index format version %d.%d is not supported by this release. Try to "
+"rebuild topology or upgrade GRASS."
+msgstr ""
+
+#: ../lib/vector/Vlib/open_ogr.c:152
+#, c-format
+msgid ""
+"Your GRASS version does not fully support feature index format %d.%d of the "
+"vector. Consider to rebuild topology or upgrade GRASS."
+msgstr ""
+
+#: ../lib/vector/Vlib/map.c:55
+msgid "input vector map is not open"
+msgstr "Ο διανυσματικός χάρτης εισαγωγής δεν είναι ανοικτός"
+
+#: ../lib/vector/Vlib/map.c:68 ../lib/vector/Vlib/map.c:84
+#: ../lib/ogsf/Gp3.c:143
+#, c-format
+msgid "Unable to read vector map <%s>"
+msgstr "Αδυναμία ανάγνωσης διανυσματικού χάρτη <%s>"
+
+#: ../lib/vector/Vlib/map.c:182
+#, c-format
+msgid "Unable to find vector map <%s> in <%s>"
+msgstr "Αδυναμία αντιγραφής διανυσματικού χάρτη <%s> σε <%s>"
+
+#: ../lib/vector/Vlib/map.c:213 ../lib/vector/Vlib/map.c:331
+#, c-format
+msgid "Unable to copy vector map <%s> to <%s>"
+msgstr "Αδυναμία αντιγραφής διανυσματικού χάρτη <%s> σε <%s>"
+
+#: ../lib/vector/Vlib/map.c:260 ../lib/vector/Vlib/map.c:381
+#: ../lib/vector/Vlib/map.c:612 ../lib/vector/Vlib/map.c:719
+#, c-format
+msgid "Unable to copy table <%s>"
+msgstr "Αδυναμία αντιγραφής πίνακα <%s>"
+
+#: ../lib/vector/Vlib/map.c:276 ../lib/vector/Vlib/map.c:410
+#: ../lib/vector/Vlib/map.c:625
+#, c-format
+msgid "Unable to create index for table <%s>, key <%s>"
+msgstr "Αδυναμία δημιουργίας καταλόγου για τον πίνακα <%s>, κλειδί <%s>"
+
+#: ../lib/vector/Vlib/map.c:395 ../lib/vector/Vlib/map.c:490
+#, c-format
+msgid "Unable to delete table <%s>"
+msgstr "Αδυναμία διαγραφής πίνακα <%s>"
+
+#: ../lib/vector/Vlib/map.c:444
+#, c-format
+msgid "Invalid vector map name <%s>"
+msgstr "Λάθος όνομα διανυσματικού χάρτη <%s>"
+
+#: ../lib/vector/Vlib/map.c:458
+#, c-format
+msgid "Unable to open header file for vector map <%s>"
+msgstr "Αδυναμία ανοίγματος header αρχείου διανυσματικού χάρτη <%s>"
+
+#: ../lib/vector/Vlib/map.c:480
+#, c-format
+msgid "Unable to find table <%s> linked to vector map <%s>"
+msgstr ""
+"Αδυναμία εύρεσης του πίνακα <%s> που είναι συνδεδεμένος με τον διανυσματικό "
+"χάρτη <%s>"
+
+#: ../lib/vector/Vlib/map.c:496
+#, c-format
+msgid "Table <%s> linked to vector map <%s> does not exist"
+msgstr ""
+"Ο πίνακας <%s> που είναι συνδεδεμένος με τον διανυσματικό χάρτη <%s> δεν "
+"υπάρχει"
+
+#: ../lib/vector/Vlib/map.c:510
+#, c-format
+msgid "Unable to open directory '%s'"
+msgstr "Αδυναμία ανοίγματος καταλόγου συστήματος '%s'"
+
+#: ../lib/vector/Vlib/map.c:524
+#, c-format
+msgid "Unable to delete file '%s'"
+msgstr "Αδυναμία διαγραφής αρχείου '%s'"
+
+#: ../lib/vector/Vlib/map.c:541
+#, c-format
+msgid "Unable to rename directory '%s' to '%s'"
+msgstr "Αδυναμία μετονομασίας καταλόγου συστήματος '%s' σε '%s'"
+
+#: ../lib/vector/Vlib/map.c:549
+#, c-format
+msgid "Unable to remove directory '%s'"
+msgstr "Αδυναμία μεταφοράς καταλόγου συστήματος '%s'"
+
+#: ../lib/vector/Vlib/map.c:603 ../lib/vector/Vlib/map.c:704
+#, c-format
+msgid "Unable to add database link for vector map <%s>"
+msgstr ""
+"Αδυναμία προσθήκης σύνδεσης με βάση δεδομένων για τον διανυσματικό χάρτη <%s>"
+
+#: ../lib/vector/Vlib/field.c:93
+msgid "Layer number must be 1 or greater"
+msgstr "Το νούμερο του επιπέδου πρέπει να είναι μεγαλύτερο ή ίσο με 1"
+
+#: ../lib/vector/Vlib/field.c:98
+msgid "Unable to add database link, map is not opened in WRITE mode"
+msgstr ""
+"Αδυναμία σύνδεσης βάσης δεδομένων, ο χάρτης δεν είναι ανοικτός σε κατάσταση "
+"εγγραφής (WRITE mode)"
+
+#: ../lib/vector/Vlib/field.c:104
+msgid "Unable to add database link"
+msgstr "Αδυναμία σύνδεσης βάσης δεδομένων"
+
+#: ../lib/vector/Vlib/field.c:110 ../lib/vector/Vlib/field.c:155
+msgid "Unable to write database links"
+msgstr "Αδυναμία σύνδεσης βάσης δεδομένων"
+
+#: ../lib/vector/Vlib/field.c:223
+#, c-format
+msgid "Layer number %d or name <%s> already exists"
+msgstr "Το επίπεδο με αριθμό %d ή όνομα <%s> υπάρχει ήδη"
+
+#: ../lib/vector/Vlib/field.c:302
+#, c-format
+msgid ""
+"Default driver / database set to:\n"
+"driver: %s\n"
+"database: %s"
+msgstr ""
+"Προεπιλεγμένος οδηγός / η βάση δεδομένων έχει:\n"
+"driver: %s\n"
+"database: %s"
+
+#: ../lib/vector/Vlib/field.c:309
+msgid "Default driver is not set"
+msgstr "Ο προεπιλεγμένος οδηγός δεν έχει καθοριστεί"
+
+#: ../lib/vector/Vlib/field.c:312
+msgid "Default database is not set"
+msgstr "Η προεπιλεγμένη βάση δεδομένων δεν έχει καθοριστεί"
+
+#: ../lib/vector/Vlib/field.c:371
+#, c-format
+msgid "Requested dblink %d, maximum link number %d"
+msgstr ""
+
+#: ../lib/vector/Vlib/field.c:511
+msgid "Unable to open OGR DBMI driver"
+msgstr ""
+
+#: ../lib/vector/Vlib/field.c:550
+msgid ""
+"All FID tests failed. Neither 'FID' nor 'ogc_fid' nor 'ogr_fid' nor 'gid' "
+"available in OGR DB table"
+msgstr ""
+
+#: ../lib/vector/Vlib/field.c:605
+#, c-format
+msgid "Don't know how to read links for format %d"
+msgstr ""
+
+#: ../lib/vector/Vlib/field.c:637
+#, c-format
+msgid "Error in rule on row %d in %s"
+msgstr ""
+
+#: ../lib/vector/Vlib/field.c:690
+#, c-format
+msgid "Unable to open vector database definition file '%s'"
+msgstr ""
+
+#: ../lib/vector/Vlib/field.c:778
+msgid "Bug: attempt to update map which is not in current mapset"
+msgstr ""
+
+#: ../lib/vector/Vlib/net.c:121
+msgid "Building graph..."
+msgstr ""
+
+#: ../lib/vector/Vlib/net.c:163
+msgid "Unable to build network graph"
+msgstr ""
+
+#: ../lib/vector/Vlib/net.c:169
+msgid "Forward costs column not specified"
+msgstr ""
+
+#: ../lib/vector/Vlib/net.c:176
+msgid "Arc field < 1"
+msgstr ""
+
+#: ../lib/vector/Vlib/net.c:190 ../lib/vector/Vlib/net.c:207
+#: ../lib/vector/Vlib/net.c:360
+#, c-format
+msgid "Column <%s> not found in table <%s>"
+msgstr ""
+
+#: ../lib/vector/Vlib/net.c:196 ../lib/vector/Vlib/net.c:213
+#: ../lib/vector/Vlib/net.c:366
+#, c-format
+msgid "Data type of column <%s> not supported (must be numeric)"
+msgstr ""
+
+#: ../lib/vector/Vlib/net.c:226
+msgid "Registering arcs..."
+msgstr ""
+
+#: ../lib/vector/Vlib/net.c:254
+#, c-format
+msgid ""
+"Database record for line %d (cat = %d, forward/both direction(s)) not found "
+"(forward/both direction(s) of line skipped)"
+msgstr ""
+
+#: ../lib/vector/Vlib/net.c:273
+#, c-format
+msgid ""
+"Database record for line %d (cat = %d, backword direction) not found"
+"(direction of line skipped)"
+msgstr ""
+
+#: ../lib/vector/Vlib/net.c:322
+msgid "Cannot add network arc"
+msgstr ""
+
+#: ../lib/vector/Vlib/net.c:346
+msgid "Setting node costs..."
+msgstr ""
+
+#: ../lib/vector/Vlib/net.c:402
+#, c-format
+msgid "Database record for node %d (cat = %d) not found (cost set to 0)"
+msgstr ""
+
+#: ../lib/vector/Vlib/net.c:429
+msgid "Flattening the graph..."
+msgstr ""
+
+#: ../lib/vector/Vlib/net.c:438
+msgid "Graph was built"
+msgstr ""
+
+#: ../lib/vector/Vlib/net.c:595
+msgid "Wrong line direction in Vect_net_get_line_cost()"
+msgstr ""
+
+#: ../lib/vector/Vlib/line.c:60 ../lib/ogsf/gsd_img_mpeg.c:317
+msgid "Out of memory"
+msgstr ""
+
+#: ../lib/vector/Vlib/line.c:199 ../lib/vector/Vlib/line.c:231
+msgid "Index out of range in"
+msgstr ""
+
+#: ../lib/vector/Vlib/line.c:527
+msgid "Segment outside line, no segment created"
+msgstr ""
+
+#: ../lib/vector/Vlib/header.c:95 ../lib/vector/Vlib/header.c:143
+#, c-format
+msgid "Unable to open header file of vector <%s>"
+msgstr ""
+
+#: ../lib/vector/Vlib/header.c:151
+#, c-format
+msgid "Corrupted row in head: %s"
+msgstr ""
+
+#: ../lib/vector/Vlib/header.c:187
+#, c-format
+msgid "Unknown keyword %s in vector head"
+msgstr ""
+
+#: ../lib/vector/Vlib/header.c:510 ../lib/gis/proj3.c:64
+msgid "Unknown projection"
 msgstr ""
 
 #: ../lib/vask/V_support.c:58
@@ -1956,15 +1892,15 @@ msgstr "Αδυναμία ανοίγματος του αρχείου που περιέχει τον πίνακα datum <%s>"
 msgid "Error in datum table file <%s>, line %d"
 msgstr "Σφάλμα στο αρχείο που περιέχει τον πίνακα datum <%s>, γραμμή %d"
 
-#: ../lib/proj/convert.c:108
+#: ../lib/proj/convert.c:110
 msgid "Unable parse GRASS PROJ_INFO file"
 msgstr "Αδυναμία ανάλυσης GRASS PROJ_INFO αρχείου"
 
-#: ../lib/proj/convert.c:113
+#: ../lib/proj/convert.c:115
 msgid "Unable get PROJ.4-style parameter string"
 msgstr "Αδυναμία λήψης PROJ.4-στυλ παραμέτρου"
 
-#: ../lib/proj/convert.c:125
+#: ../lib/proj/convert.c:127
 #, c-format
 msgid ""
 "OGR can't parse PROJ.4-style parameter string: %s (OGR Error code was %d)"
@@ -1972,27 +1908,27 @@ msgstr ""
 "OGR δεν μπορεί να αναλύσει PROJ.4-το στυλ παραμέτρου string: %s (OGR κώδικας "
 "σφάλματος ήταν %d)"
 
-#: ../lib/proj/convert.c:131
+#: ../lib/proj/convert.c:133
 #, c-format
 msgid "OGR can't get WKT-style parameter string (OGR Error code was %d)"
 msgstr ""
 "OGR δεν μπορεί να πάρεις WKT-το στυλ παραμέτρου string (OGR κωδικός "
 "σφάλματος ήταν %d)"
 
-#: ../lib/proj/convert.c:384
+#: ../lib/proj/convert.c:390
 msgid "No projection name! Projection parameters likely to be meaningless."
 msgstr ""
 "Δεν υπάρχει όνομα προβολής! Οι παράμετροι προβολής προφανώς είναι άνευ "
 "νοήματος."
 
-#: ../lib/proj/convert.c:420
+#: ../lib/proj/convert.c:426
 #, c-format
 msgid "Datum <%s> not recognised by GRASS and no parameters found"
 msgstr ""
 "Datum <%s> δεν αναγνωρίζεται από το GRASS και οι παράμετροι δεν μπορούν να "
 "βρεθούν."
 
-#: ../lib/proj/convert.c:436
+#: ../lib/proj/convert.c:442
 #, c-format
 msgid ""
 "Datum <%s> apparently recognised by GRASS but no parameters found. You may "
@@ -2001,7 +1937,7 @@ msgstr ""
 "Datum <%s> προφανώς αναγνωρίζεται από το GRASS αλλά δεν μπορούν να βρεθούν "
 "οι παράμετροι. Μάλλον θα πρέπει να το ξαναδείτε."
 
-#: ../lib/proj/convert.c:440
+#: ../lib/proj/convert.c:446
 #, c-format
 msgid ""
 "Invalid transformation number %d; valid range is 1 to %d. Leaving datum "
@@ -2077,6 +2013,13 @@ msgstr "G3d_getStandard3dParams: η τιμή tile είναι μη επιτρεπτή"
 msgid "Window replacing the default"
 msgstr "Το παράθυρο αντικαθιστά το προεπιλεγμένο"
 
+#: ../lib/g3d/g3dhistory.c:42 ../lib/gis/history.c:132
+#, c-format
+msgid "can't get history information for [%s] in mapset [%s]"
+msgstr ""
+"δεν μπορεί να πάρει πληροφορίες για το ιστορικό του [%s] στα χαρτογραφικά "
+"δεδομένα[%s]"
+
 #: ../lib/g3d/g3dopen.c:20
 msgid "G3d_openCellOldNoHeader: error in G3d_maskOpenOld"
 msgstr "G3d_openCellOldNoHeader: σφάλμα στο G3d_maskOpenOld"
@@ -2146,13 +2089,6 @@ msgstr "G3d_openCellNew: δεν μπορεί να γραφτεί η κεφαλίδα (header)"
 msgid "G3d_openCellNew: error in G3d_fillHeader"
 msgstr "G3d_openCellNew: σφάλμα στο G3d_fillHeader"
 
-#: ../lib/g3d/g3dhistory.c:42 ../lib/gis/history.c:132
-#, c-format
-msgid "can't get history information for [%s] in mapset [%s]"
-msgstr ""
-"δεν μπορεί να πάρει πληροφορίες για το ιστορικό του [%s] στα χαρτογραφικά "
-"δεδομένα[%s]"
-
 #: ../lib/gis/get_ell_name.c:31 ../lib/gis/get_datum_name.c:69
 #: ../lib/gis/get_projname.c:38
 msgid "Cannot open temp file"
@@ -2220,7 +2156,7 @@ msgstr ""
 "Ο εξαγόμενος διανυσματικός χάρτης <%s> χρησιμοποιείται για εισαγωγή "
 "δεδομένων."
 
-#: ../lib/gis/debug.c:69
+#: ../lib/gis/debug.c:74
 #, c-format
 msgid "Cannot open debug file '%s'"
 msgstr "Δεν ήταν δυνατό το άνοιγμα του αρχείου αποσφαλμάτωσης (debug) '%s'"
@@ -2478,54 +2414,54 @@ msgstr "Αδυναμία δημιουργίας νέας επεξεργασίας - διαδικασίας!"
 msgid "Unknown Location"
 msgstr "Άγνωστη περιοχή"
 
-#: ../lib/gis/spawn.c:80 ../lib/gis/spawn.c:112
+#: ../lib/gis/spawn.c:80 ../lib/gis/spawn.c:114
 msgid "Too many arguments"
 msgstr "Πάρα πολλές παράμετροι(;)"
 
-#: ../lib/gis/spawn.c:133 ../lib/gis/spawn.c:401
+#: ../lib/gis/spawn.c:137 ../lib/gis/spawn.c:404
 msgid "Unable to create a new process"
 msgstr "Αδυναμία δημιουργίας νέας επεξεργασίας"
 
-#: ../lib/gis/spawn.c:142 ../lib/gis/spawn.c:237 ../lib/gis/spawn.c:424
+#: ../lib/gis/spawn.c:146 ../lib/gis/spawn.c:240 ../lib/gis/spawn.c:427
 msgid "Unable to execute command"
 msgstr "Αδυναμία εκτέλεσης εντολής"
 
-#: ../lib/gis/spawn.c:262 ../lib/gis/spawn.c:270
+#: ../lib/gis/spawn.c:265 ../lib/gis/spawn.c:273
 #, c-format
 msgid "G_spawn: unable to restore signal %d"
 msgstr "G_spawn: αδυναμία αποκατάστασης σήματοςl %d"
 
-#: ../lib/gis/spawn.c:301
+#: ../lib/gis/spawn.c:304
 #, c-format
 msgid "G_spawn: unable to reset signal %d"
 msgstr "G_spawn: αδυναμία επαναφοράς %d"
 
-#: ../lib/gis/spawn.c:310
+#: ../lib/gis/spawn.c:313
 #, c-format
 msgid "G_spawn: unable to ignore signal %d"
 msgstr "G_spawn: αδυναμία αγνόησης σήματος %d"
 
-#: ../lib/gis/spawn.c:321
+#: ../lib/gis/spawn.c:324
 #, c-format
 msgid "G_spawn: unable to block signal %d"
 msgstr "G_spawn: αδυναμία μπλοκαρίσματος σήματος %d"
 
-#: ../lib/gis/spawn.c:329
+#: ../lib/gis/spawn.c:332
 #, c-format
 msgid "G_spawn: unable to unblock signal %d"
 msgstr "G_spawn: αδυναμία ξεμπλοκαρίσματος σήματος %d"
 
-#: ../lib/gis/spawn.c:353
+#: ../lib/gis/spawn.c:356
 #, c-format
 msgid "G_spawn: unable to open file %s"
 msgstr "G_spawn: αδυναμία ανοίγματος αρχείου %s"
 
-#: ../lib/gis/spawn.c:358 ../lib/gis/spawn.c:367
+#: ../lib/gis/spawn.c:361 ../lib/gis/spawn.c:370
 #, c-format
 msgid "G_spawn: unable to duplicate descriptor %d to %d"
 msgstr "G_spawn: αδυναμία αντιγραφής descriptor %d σε %d"
 
-#: ../lib/gis/spawn.c:416
+#: ../lib/gis/spawn.c:419
 #, c-format
 msgid "Unable to change directory to %s"
 msgstr "Αδυναμία αλλαγής φακέλου σε %s"
@@ -2559,11 +2495,16 @@ msgstr "Άγνωστο λάθος"
 msgid "bad rule (%s): [%s]"
 msgstr "Εσφαλμένος κανόνας (%s): [%s]"
 
+#: ../lib/gis/color_rules.c:265
+#, fuzzy, c-format
+msgid "Unable to load color rules <%s>"
+msgstr "Αδυναμία κλεισίματος του διανύσματος <%s>"
+
 #: ../lib/gis/mapset.c:39
 msgid "MAPSET is not set"
 msgstr "MAPSET δεν έχει οριστεί"
 
-#: ../lib/gis/mapset.c:57 ../lib/gis/gisinit.c:65
+#: ../lib/gis/mapset.c:57 ../lib/gis/gisinit.c:66
 #, c-format
 msgid "MAPSET %s not found"
 msgstr "MAPSET %s δεν βρέθηκε"
@@ -2577,6 +2518,21 @@ msgstr "ένα λεπτάκι...\n"
 #, c-format
 msgid "No help available for command [%s]\n"
 msgstr "Δεν υπάρχει κείμενο βοήθειας για την εντολή [%s]\n"
+
+#: ../lib/gis/range.c:192
+#, c-format
+msgid "can't read f_range file for [%s in %s]"
+msgstr "δεν μπορεί να γίνει ανάγνωση f_range αρχείου για [%s in %s]"
+
+#: ../lib/gis/range.c:308
+#, c-format
+msgid "can't read range file for [%s in %s]"
+msgstr "Δεν είναι δυνατή η ανάγνωση του εύρους του αρχείου για [%s σε %s]"
+
+#: ../lib/gis/range.c:359 ../lib/gis/range.c:412
+#, c-format
+msgid "can't write range file for [%s in %s]"
+msgstr "Δεν είναι δυνατή η εγγραφή του εύρους του αρχείου για [%s σε %s]"
 
 #: ../lib/gis/make_colr.c:40
 #, c-format
@@ -2657,35 +2613,10 @@ msgstr ""
 "\n"
 "%s εσφαλμένο; δοκιμάστε ξανά > "
 
-#: ../lib/gis/range.c:192
+#: ../lib/gis/ls.c:96
 #, c-format
-msgid "can't read f_range file for [%s in %s]"
-msgstr "δεν μπορεί να γίνει ανάγνωση f_range αρχείου για [%s in %s]"
-
-#: ../lib/gis/range.c:308
-#, c-format
-msgid "can't read range file for [%s in %s]"
-msgstr "Δεν είναι δυνατή η ανάγνωση του εύρους του αρχείου για [%s σε %s]"
-
-#: ../lib/gis/range.c:359 ../lib/gis/range.c:412
-#, c-format
-msgid "can't write range file for [%s in %s]"
-msgstr "Δεν είναι δυνατή η εγγραφή του εύρους του αρχείου για [%s σε %s]"
-
-#: ../lib/gis/gisinit.c:54 ../lib/gis/gisinit.c:89
-msgid "Incompatible library version for module"
-msgstr "Ασύμβατη έκδοση βιβλιοθήκης για το module"
-
-#: ../lib/gis/gisinit.c:62
-#, c-format
-msgid "MAPSET %s - permission denied"
-msgstr "MAPSET %s - δεν επιτρέπεται η πρόσβαση"
-
-#: ../lib/gis/gisinit.c:108
-msgid "System not initialized. Programmer forgot to call G_gisinit()."
-msgstr ""
-"Το σύστημα δεν έχει αρχικοποιηθεί. Ο προγραμματιστής ξέχασει να καλέσει "
-"G_gisinit()."
+msgid "Unable to open directory %s"
+msgstr "Αδυναμία ανοίγματος φακέλλου %s"
 
 #: ../lib/gis/get_row.c:46 ../lib/gis/get_row.c:1049
 #, c-format
@@ -2722,6 +2653,23 @@ msgstr "Σφάλμα ανάγνωσης κενής γραμμής %d"
 #: ../lib/gis/get_row.c:1115
 msgid "Unable to realloc buffer"
 msgstr "Αδυναμία to realloc buffer"
+
+#: ../lib/gis/gisinit.c:54 ../lib/gis/gisinit.c:90
+msgid ""
+"Incompatible library version for module. You need to rebuild GRASS or "
+"untangle multiple installations."
+msgstr ""
+
+#: ../lib/gis/gisinit.c:63
+#, c-format
+msgid "MAPSET %s - permission denied"
+msgstr "MAPSET %s - δεν επιτρέπεται η πρόσβαση"
+
+#: ../lib/gis/gisinit.c:110
+msgid "System not initialized. Programmer forgot to call G_gisinit()."
+msgstr ""
+"Το σύστημα δεν έχει αρχικοποιηθεί. Ο προγραμματιστής ξέχασει να καλέσει "
+"G_gisinit()."
 
 #: ../lib/gis/get_projname.c:31
 #, c-format
@@ -2767,11 +2715,6 @@ msgstr "με τίτλους"
 msgid "(no title)"
 msgstr "(χωρίς τίτλο)"
 
-#: ../lib/gis/ls.c:96
-#, c-format
-msgid "Unable to open directory %s"
-msgstr "Αδυναμία ανοίγματος φακέλλου %s"
-
 #: ../lib/gis/set_window.c:76
 msgid ""
 "G_set_window(): projection/zone differs from that of currently open raster "
@@ -2779,6 +2722,16 @@ msgid ""
 msgstr ""
 "G_set_window(): η προβολή/ζώνη διαφέρεις από τους υφιστάμενα ανοιχτου ραστερ "
 "χάρτες"
+
+#: ../lib/gis/raster_metadata.c:111
+#, c-format
+msgid "Can't read %s for [%s in %s]"
+msgstr "Αδυναμία ανάγνωσης %s για [%s στο %s]"
+
+#: ../lib/gis/raster_metadata.c:144
+#, c-format
+msgid "Can't create %s metadata file for [%s in %s]"
+msgstr "Αδυναμία ανάγνωσης %s του μεταρχείου για[%s στο %s]"
 
 #: ../lib/gis/format.c:157
 #, c-format
@@ -2886,6 +2839,28 @@ msgstr "αδυναμία εγγραφής αρχείου quant!"
 msgid "unable to write f_format file for CELL maps"
 msgstr "αδυναμία εγγραφής f_format αρχείου για CELL χάρτες"
 
+#: ../lib/gis/home.c:39
+msgid "unable to determine user's home directory"
+msgstr "Δεν είναι δυνατός ο καθορισμούς ο αρχικός φάκελλος του χρήστη"
+
+#: ../lib/gis/error.c:257
+msgid "WARNING: "
+msgstr "ΠΡΟΣΟΧΗ:"
+
+#: ../lib/gis/error.c:258
+msgid "ERROR: "
+msgstr "ΣΦΑΛΜΑ:"
+
+#: ../lib/gis/cats.c:381
+#, c-format
+msgid "category support for [%s] in mapset [%s] %s"
+msgstr "Υποστήριξη κατηγοριών για [%s] στο mapset [%s] %s"
+
+#: ../lib/gis/cats.c:417
+#, c-format
+msgid "category support for vector map [%s] in mapset [%s] %s"
+msgstr "Υποστήριξη κατηγοριών για διανυσματικό χάρτη[%s] στο mapset [%s] %s"
+
 #: ../lib/gis/get_cellhd.c:71 ../lib/gis/get_cellhd.c:100
 #, c-format
 msgid "Unable to read header file for raster map <%s@%s>."
@@ -2924,28 +2899,6 @@ msgstr ""
 msgid " Invalid format."
 msgstr "Λάθος διάταξη (φορματ)"
 
-#: ../lib/gis/home.c:39
-msgid "unable to determine user's home directory"
-msgstr "Δεν είναι δυνατός ο καθορισμούς ο αρχικός φάκελλος του χρήστη"
-
-#: ../lib/gis/error.c:257
-msgid "WARNING: "
-msgstr "ΠΡΟΣΟΧΗ:"
-
-#: ../lib/gis/error.c:258
-msgid "ERROR: "
-msgstr "ΣΦΑΛΜΑ:"
-
-#: ../lib/gis/cats.c:381
-#, c-format
-msgid "category support for [%s] in mapset [%s] %s"
-msgstr "Υποστήριξη κατηγοριών για [%s] στο mapset [%s] %s"
-
-#: ../lib/gis/cats.c:417
-#, c-format
-msgid "category support for vector map [%s] in mapset [%s] %s"
-msgstr "Υποστήριξη κατηγοριών για διανυσματικό χάρτη[%s] στο mapset [%s] %s"
-
 #: ../lib/gis/get_ellipse.c:85
 #, c-format
 msgid "Unable to open file %s in <%s>"
@@ -2971,40 +2924,25 @@ msgstr "Λάθος es: πεδίο '%s' στο αρχείο %s στο <%s>"
 msgid "No ellipsoid info given in file %s in <%s>"
 msgstr "Δεν έχουν δωθεί πληροφορίες για το ελλειψοειδές στο αρχείο %s στο <%s>"
 
-#: ../lib/gis/raster_metadata.c:111
+#: ../lib/gis/gdal.c:56
 #, c-format
-msgid "Can't read %s for [%s in %s]"
-msgstr "Αδυναμία ανάγνωσης %s για [%s στο %s]"
+msgid "Unable to locate symbol <%s>"
+msgstr "Αδυναμία εντοπισμού συμβόλου <%s>"
 
-#: ../lib/gis/raster_metadata.c:144
-#, c-format
-msgid "Can't create %s metadata file for [%s in %s]"
-msgstr "Αδυναμία ανάγνωσης %s του μεταρχείου για[%s στο %s]"
+#: ../lib/gis/gdal.c:98
+msgid "Unable to load GDAL library"
+msgstr "Αδυναμία φόρτωσης βιβλιοθήκης GDAL "
 
 #: ../lib/gis/location.c:44
 #, c-format
 msgid "LOCATION << %s >> not available"
 msgstr "LOCATION << %s >> δεν είναι διαθέσιμη"
 
-#: ../lib/gis/null_val.c:91
+#: ../lib/gis/null_val.c:68
 msgid "EmbedGivenNulls: wrong data type!"
 msgstr "EmbedGivenNulls: εσφαλμένος τύπος δεδομένων!"
 
-#: ../lib/gis/null_val.c:112
-msgid "Null values have not been initialized. "
-msgstr "Η κενή τιμή δεν έχει αρχικοποιηθεί."
-
-#: ../lib/gis/null_val.c:113
-msgid "G_gisinit() must be called first. "
-msgstr "G_gisinit() πρέπει να κληθεί πρώτη. "
-
-#: ../lib/gis/null_val.c:114
-msgid "Please advise GRASS developers of this error.\n"
-msgstr ""
-"Παρακαλώ ενημερώστε τους προγραμματιστές του GRASS για αυτό το μήνυμα "
-"λάθους.\n"
-
-#: ../lib/gis/null_val.c:223
+#: ../lib/gis/null_val.c:128
 msgid "G_set_null_value: wrong data type!"
 msgstr "G_set_null_value: εσφαλμένος τύπος δεδομένων!"
 
@@ -3028,108 +2966,113 @@ msgstr ""
 "S=(%f,%f)(%f,%f)"
 
 #: ../lib/gis/mapset_msc.c:60
-#, c-format
-msgid "Unable to make mapset element %s (%s)"
+#, fuzzy, c-format
+msgid "Unable to make mapset element %s (%s): %s"
 msgstr "Αδυναμία δημιουργίας mapset στοιχείου %s (%s)"
 
-#: ../lib/gis/parser.c:328
+#: ../lib/gis/mapset_msc.c:64
+#, fuzzy, c-format
+msgid "Unable to access mapset element %s (%s): %s"
+msgstr "Αδυναμία δημιουργίας mapset στοιχείου %s (%s)"
+
+#: ../lib/gis/parser.c:331
 msgid "WHERE conditions of SQL statement without 'where' keyword"
 msgstr "WHERE συνθήκες της SQL δήλωση χωρίς 'where' λέξη-κλειδί"
 
-#: ../lib/gis/parser.c:329
+#: ../lib/gis/parser.c:332
 msgid "Example: income < 1000 and inhab >= 10000"
 msgstr "Παράδειγμα: income < 1000 and inhab >= 10000"
 
-#: ../lib/gis/parser.c:337
+#: ../lib/gis/parser.c:340
 msgid "Table name"
 msgstr "Όνομα πίνακα"
 
-#: ../lib/gis/parser.c:346
+#: ../lib/gis/parser.c:349
 msgid "Driver name"
 msgstr "Όνομα οδηγού"
 
-#: ../lib/gis/parser.c:355
+#: ../lib/gis/parser.c:358
 msgid "Database name"
 msgstr "Όνομα βάσης δεδομένων"
 
-#: ../lib/gis/parser.c:364
+#: ../lib/gis/parser.c:367
 msgid "Name of attribute column"
 msgstr "Όνομα στήλης"
 
-#: ../lib/gis/parser.c:373
+#: ../lib/gis/parser.c:376
 msgid "Name of attribute column(s)"
 msgstr "Όνομα στηλών"
 
-#: ../lib/gis/parser.c:384
+#: ../lib/gis/parser.c:387
 msgid "Name of input imagery group"
 msgstr ""
 
-#: ../lib/gis/parser.c:392
+#: ../lib/gis/parser.c:395
 msgid "Name of input imagery subgroup"
 msgstr ""
 
-#: ../lib/gis/parser.c:402 ../lib/gis/parser.c:427
+#: ../lib/gis/parser.c:405 ../lib/gis/parser.c:430
 msgid "Name of input raster map"
 msgstr "Όνομα εισαγώμενου ράστερ χάρτη "
 
-#: ../lib/gis/parser.c:411 ../lib/gis/parser.c:436
+#: ../lib/gis/parser.c:414 ../lib/gis/parser.c:439
 msgid "Name of input raster map(s)"
 msgstr "Όνομα εισαγώμενων ράστερ χαρτών"
 
-#: ../lib/gis/parser.c:419
+#: ../lib/gis/parser.c:422
 msgid "Name for output raster map"
 msgstr "Όνομα εξαγόμενου ράστερ χάρτη"
 
-#: ../lib/gis/parser.c:444
+#: ../lib/gis/parser.c:447
 msgid "Name of base raster map"
 msgstr "Όνομα χάρτη υποβάθρου ράστερ"
 
-#: ../lib/gis/parser.c:452
+#: ../lib/gis/parser.c:455
 msgid "Name of cover raster map"
 msgstr "Όνομα εισαγώμενων ράστερ χαρτών"
 
-#: ../lib/gis/parser.c:460
+#: ../lib/gis/parser.c:463
 msgid "Name of elevation raster map"
 msgstr "Όνομα ράστερ χάρτη υψομέτρου"
 
-#: ../lib/gis/parser.c:469
+#: ../lib/gis/parser.c:472
 msgid "Name of elevation raster map(s)"
 msgstr "Όνομα ράστερ χαρτών υψομέτρου"
 
-#: ../lib/gis/parser.c:479 ../lib/gis/parser.c:504
+#: ../lib/gis/parser.c:482 ../lib/gis/parser.c:507
 msgid "Name of input raster3d map"
 msgstr "Όνομα εισαγώμενων 3Δ ράστερ χάρτη"
 
-#: ../lib/gis/parser.c:488 ../lib/gis/parser.c:513
+#: ../lib/gis/parser.c:491 ../lib/gis/parser.c:516
 msgid "Name of input raster3d map(s)"
 msgstr "Όνομα εισαγώμενων 3Δ ράστερ χαρτών"
 
-#: ../lib/gis/parser.c:496
+#: ../lib/gis/parser.c:499
 msgid "Name for output raster3d map"
 msgstr "Όνομα εξαγόμενου 3Δ ράστερ χάρτη"
 
-#: ../lib/gis/parser.c:523 ../lib/gis/parser.c:548
+#: ../lib/gis/parser.c:526 ../lib/gis/parser.c:551
 msgid "Name of input vector map"
 msgstr "Όνομα εισαγόμενου διανυσματικού χάρτη"
 
-#: ../lib/gis/parser.c:532 ../lib/gis/parser.c:557
+#: ../lib/gis/parser.c:535 ../lib/gis/parser.c:560
 msgid "Name of input vector map(s)"
 msgstr "Όνομα εισαγόμενων διανυσματικων χαρτών"
 
-#: ../lib/gis/parser.c:540
+#: ../lib/gis/parser.c:543
 msgid "Name for output vector map"
 msgstr "Όνομα εξαγόμενου διανυσματικού χάρτη"
 
-#: ../lib/gis/parser.c:566
+#: ../lib/gis/parser.c:569 ../lib/gis/parser.c:578
 #, fuzzy
 msgid "Feature type"
 msgstr "Τύποι δεδομένων"
 
-#: ../lib/gis/parser.c:573
+#: ../lib/gis/parser.c:585
 msgid "Layer number"
 msgstr "Νούμερο επιπέδου"
 
-#: ../lib/gis/parser.c:575
+#: ../lib/gis/parser.c:587
 msgid ""
 "A single vector map can be connected to multiple database tables. This "
 "number determines which table to use."
@@ -3137,77 +3080,77 @@ msgstr ""
 "Ένας διανυσματικός χάρτης είναι δυνατόν να συνδεθεί με πολλαπλούς πίνακες. "
 "Αυτός αριθμός καθορίζει ποιος πίνακας θα χρησιμοποιηθεί."
 
-#: ../lib/gis/parser.c:584
+#: ../lib/gis/parser.c:596
 msgid "Category value"
 msgstr "Τιμή κατηγορίας"
 
-#: ../lib/gis/parser.c:591
+#: ../lib/gis/parser.c:603
 msgid "Category values"
 msgstr "Τιμές κατηγοριών"
 
-#: ../lib/gis/parser.c:592 ../lib/gis/parser.c:606
+#: ../lib/gis/parser.c:604 ../lib/gis/parser.c:618
 msgid "Example: 1,3,7-9,13"
 msgstr "Παράδειγμα: 1,3,7-9,13"
 
-#: ../lib/gis/parser.c:598
+#: ../lib/gis/parser.c:610
 #, fuzzy
 msgid "Feature id"
 msgstr "Χαρακτηριστικό: "
 
-#: ../lib/gis/parser.c:605
+#: ../lib/gis/parser.c:617
 #, fuzzy
 msgid "Feature ids"
 msgstr "Χαρακτηριστικό: "
 
-#: ../lib/gis/parser.c:616
+#: ../lib/gis/parser.c:628
 msgid "Name of input file"
 msgstr "Όνομα αρχείου εισαγωγής"
 
-#: ../lib/gis/parser.c:624
+#: ../lib/gis/parser.c:636
 msgid "Name for output file"
 msgstr "Όνομα αρχείου εξαγωγής"
 
-#: ../lib/gis/parser.c:632
+#: ../lib/gis/parser.c:644
 msgid "Field separator"
 msgstr "Διαχωριστής πεδίων (π.χ. , .  tab)"
 
-#: ../lib/gis/parser.c:643
+#: ../lib/gis/parser.c:655
 msgid "Color"
 msgstr "Χρώμα"
 
-#: ../lib/gis/parser.c:644
+#: ../lib/gis/parser.c:656
 msgid "Either a standard color name or R:G:B triplet"
 msgstr "Είτε ένα στανταρ όνομα χρώματος ή συνδυασμός R:G:B"
 
-#: ../lib/gis/parser.c:653
+#: ../lib/gis/parser.c:665
 msgid "Background color"
 msgstr "Χρώμα φόντου"
 
-#: ../lib/gis/parser.c:655
+#: ../lib/gis/parser.c:667
 msgid "Either a standard GRASS color, R:G:B triplet, or \"none\""
 msgstr "Δώστε ένα στανταρ χρώμα GRASS, συνδυασμό R:G:B ή \"none\""
 
-#: ../lib/gis/parser.c:796
+#: ../lib/gis/parser.c:808
 #, c-format
 msgid "BUG in descriptions, option '%s' in <%s> does not exist"
 msgstr "BUG στις περιγραφές, επιλογή '%s' στο <%s> δεν υπάρχει"
 
-#: ../lib/gis/parser.c:898
+#: ../lib/gis/parser.c:910
 msgid "Use either --quiet or --verbose flag, not both. Assuming --verbose."
 msgstr ""
 "Χρησιμοποιήστε  --quiet ή --verbose flag, όχι και τα δύο. Υποθέτω --verbose."
 
-#: ../lib/gis/parser.c:912
+#: ../lib/gis/parser.c:924
 msgid "Use either --quiet or --verbose flag, not both. Assuming --quiet."
 msgstr ""
 "Χρησιμοποιήστε  --quiet ή --verbose flag, όχι και τα δύο. Υποθέτω --quiet."
 
-#: ../lib/gis/parser.c:942
+#: ../lib/gis/parser.c:954
 #, c-format
 msgid "Sorry <%s> is not a valid option\n"
 msgstr "Συγνώμη <%s> δεν είναι αποδεκτή επιλογή\n"
 
-#: ../lib/gis/parser.c:1047
+#: ../lib/gis/parser.c:1059
 #, c-format
 msgid ""
 "\n"
@@ -3216,7 +3159,7 @@ msgstr ""
 "\n"
 "Περιγραφή:\n"
 
-#: ../lib/gis/parser.c:1054
+#: ../lib/gis/parser.c:1066
 #, c-format
 msgid ""
 "\n"
@@ -3225,7 +3168,7 @@ msgstr ""
 "\n"
 "Λέξεις κλειδιά:\n"
 
-#: ../lib/gis/parser.c:1058
+#: ../lib/gis/parser.c:1070
 #, c-format
 msgid ""
 "\n"
@@ -3236,7 +3179,7 @@ msgstr ""
 "Χρήση:\n"
 " "
 
-#: ../lib/gis/parser.c:1126
+#: ../lib/gis/parser.c:1138
 #, c-format
 msgid ""
 "\n"
@@ -3245,19 +3188,19 @@ msgstr ""
 "\n"
 "Flags:\n"
 
-#: ../lib/gis/parser.c:1149 ../lib/gis/parser.c:1628 ../lib/gis/parser.c:1916
+#: ../lib/gis/parser.c:1161 ../lib/gis/parser.c:1645 ../lib/gis/parser.c:1933
 msgid "Allow output files to overwrite existing files"
 msgstr "Επιτρέπει τα εξαγόμενα αρχεία να επικαλύπτουν τα υπάρχοντα"
 
-#: ../lib/gis/parser.c:1151 ../lib/gis/parser.c:1632
+#: ../lib/gis/parser.c:1163 ../lib/gis/parser.c:1649
 msgid "Verbose module output"
 msgstr "Verbose module εξαγωγή"
 
-#: ../lib/gis/parser.c:1152 ../lib/gis/parser.c:1635
+#: ../lib/gis/parser.c:1164 ../lib/gis/parser.c:1652
 msgid "Quiet module output"
 msgstr "Quiet module εξαγωγή"
 
-#: ../lib/gis/parser.c:1157
+#: ../lib/gis/parser.c:1169
 #, c-format
 msgid ""
 "\n"
@@ -3266,80 +3209,80 @@ msgstr ""
 "\n"
 "Παράμετροι:\n"
 
-#: ../lib/gis/parser.c:1180
+#: ../lib/gis/parser.c:1192
 #, c-format
 msgid "  %*s   default: %s\n"
 msgstr "  %*s   προεπιλογή: %s\n"
 
-#: ../lib/gis/parser.c:1519
+#: ../lib/gis/parser.c:1536
 msgid "NAME"
 msgstr "ΟΝΟΜΑ"
 
-#: ../lib/gis/parser.c:1532
+#: ../lib/gis/parser.c:1549
 msgid "KEYWORDS"
 msgstr "ΛΕΞΕΙΣ ΚΛΕΙΔΙΑ"
 
-#: ../lib/gis/parser.c:1537
+#: ../lib/gis/parser.c:1554
 msgid "SYNOPSIS"
 msgstr "ΣΥΝΟΨΗ"
 
-#: ../lib/gis/parser.c:1605
+#: ../lib/gis/parser.c:1622
 msgid "Flags"
 msgstr ""
 
-#: ../lib/gis/parser.c:1643
+#: ../lib/gis/parser.c:1660
 msgid "Parameters"
 msgstr "Παράμετροι"
 
-#: ../lib/gis/parser.c:1683
+#: ../lib/gis/parser.c:1700
 msgid "Options"
 msgstr "Επιλογές"
 
-#: ../lib/gis/parser.c:1689
+#: ../lib/gis/parser.c:1706
 msgid "Default"
 msgstr "Προεπιλογή"
 
-#: ../lib/gis/parser.c:1918
+#: ../lib/gis/parser.c:1935
 msgid "Allow overwrite"
 msgstr "Επιτρέπει επικάλυψη"
 
-#: ../lib/gis/parser.c:1926
+#: ../lib/gis/parser.c:1943
 msgid "Run with minimal output messages"
 msgstr "Τρέχει με τα λιγότερα εξαγώμενα μηνύματα"
 
-#: ../lib/gis/parser.c:1928
+#: ../lib/gis/parser.c:1945
 msgid "Run quietly"
 msgstr "Τρέχει χωρίς μηνύματα"
 
-#: ../lib/gis/parser.c:1961
+#: ../lib/gis/parser.c:1978
 msgid "Unable to spawn the 'wish' program"
 msgstr ""
 
-#: ../lib/gis/parser.c:1980
+#: ../lib/gis/parser.c:1997
 msgid "Unable to determine program name"
 msgstr "Αδυναμία προσδιορισμού του ονόματος του προγράμματος"
 
-#: ../lib/gis/parser.c:2037
+#: ../lib/gis/parser.c:2054
 #, c-format
 msgid "  %*s   options: "
 msgstr "  %*s   επιλογές: "
 
-#: ../lib/gis/parser.c:2082 ../lib/gis/parser.c:2097
+#: ../lib/gis/parser.c:2099 ../lib/gis/parser.c:2114
 #, c-format
 msgid "Sorry, <%c> is not a valid flag\n"
 msgstr ""
 
-#: ../lib/gis/parser.c:2163
+#: ../lib/gis/parser.c:2180
 #, c-format
 msgid "Sorry, <%s=> is ambiguous\n"
 msgstr "Συγνώμη, <%s=> είναι αμφίσημο\n"
 
-#: ../lib/gis/parser.c:2169
+#: ../lib/gis/parser.c:2186
 #, c-format
 msgid "Sorry, <%s> is not a valid parameter\n"
 msgstr "Συγνώμη, <%s> δεν είναι επιτρεπτή παράμετρος\n"
 
-#: ../lib/gis/parser.c:2250
+#: ../lib/gis/parser.c:2267
 #, c-format
 msgid ""
 "\n"
@@ -3348,12 +3291,12 @@ msgstr ""
 "\n"
 "ΣΦΑΛΜΑ: μη επιτρεπτό σύνταξη εύρους για την παράμετρο <%s>\n"
 
-#: ../lib/gis/parser.c:2251
+#: ../lib/gis/parser.c:2268
 #, c-format
 msgid "       Presented as: %s\n"
 msgstr "       Παρουσιάζεται ως: %s\n"
 
-#: ../lib/gis/parser.c:2255
+#: ../lib/gis/parser.c:2272
 #, c-format
 msgid ""
 "\n"
@@ -3362,12 +3305,12 @@ msgstr ""
 "\n"
 "ΣΦΑΛΜΑ: η τιμή <%s> είναι εκτός ορίων <%s>\n"
 
-#: ../lib/gis/parser.c:2257
+#: ../lib/gis/parser.c:2274
 #, c-format
 msgid "       Legal range: %s\n"
 msgstr "       Αποδεκτό εύρος τιμών: %s\n"
 
-#: ../lib/gis/parser.c:2260
+#: ../lib/gis/parser.c:2277
 #, c-format
 msgid ""
 "\n"
@@ -3376,7 +3319,7 @@ msgstr ""
 "\n"
 "ΣΦΑΛΜΑ: Λείπει τιμή για την παράμετρο <%s>\n"
 
-#: ../lib/gis/parser.c:2408
+#: ../lib/gis/parser.c:2425
 #, c-format
 msgid ""
 "\n"
@@ -3387,7 +3330,7 @@ msgstr ""
 "ΣΦΑΛΜΑ: Η απαιτούμενη παράμετρος <%s> δεν έχει καθοριστεί:\n"
 "    (%s).\n"
 
-#: ../lib/gis/parser.c:2503
+#: ../lib/gis/parser.c:2520
 #, c-format
 msgid ""
 "\n"
@@ -3396,24 +3339,24 @@ msgstr ""
 "\n"
 "ΣΦΑΛΜΑ: η επιλογή <%s> πρέπει να δωθεί σε πολλαπλάσια του %d\n"
 
-#: ../lib/gis/parser.c:2505
+#: ../lib/gis/parser.c:2522
 #, c-format
 msgid "       You provided %d items:\n"
 msgstr "       Δώσατε %d αντικείμενα:\n"
 
-#: ../lib/gis/parser.c:2561
+#: ../lib/gis/parser.c:2578
 #, c-format
 msgid "ERROR: option <%s>: <%s> exists.\n"
 msgstr "ΣΦΑΛΜΑ: Η επιλογή <%s>: <%s> υπάρχει.\n"
 
-#: ../lib/gis/parser.c:2616
+#: ../lib/gis/parser.c:2633
 #, c-format
 msgid ""
 "\n"
 "FLAG: Set the following flag?\n"
 msgstr ""
 
-#: ../lib/gis/parser.c:2630
+#: ../lib/gis/parser.c:2647
 #, c-format
 msgid ""
 "\n"
@@ -3422,51 +3365,51 @@ msgstr ""
 "\n"
 "ΕΠΙΛΟΓΗ:   %s\n"
 
-#: ../lib/gis/parser.c:2631
+#: ../lib/gis/parser.c:2648
 #, c-format
 msgid "     key: %s\n"
 msgstr "     κλειδί: %s\n"
 
-#: ../lib/gis/parser.c:2633
+#: ../lib/gis/parser.c:2650
 #, c-format
 msgid "  format: %s\n"
 msgstr "  φορμάτ: %s\n"
 
-#: ../lib/gis/parser.c:2635
+#: ../lib/gis/parser.c:2652
 #, c-format
 msgid " default: %s\n"
 msgstr " προεπιλεγμένο: %s\n"
 
-#: ../lib/gis/parser.c:2636
+#: ../lib/gis/parser.c:2653
 #, c-format
 msgid "required: %s\n"
 msgstr "απαιτούμενο: %s\n"
 
-#: ../lib/gis/parser.c:2638
+#: ../lib/gis/parser.c:2655
 #, c-format
 msgid "multiple: %s\n"
 msgstr "πολλαπλάσιο: %s\n"
 
-#: ../lib/gis/parser.c:2640
+#: ../lib/gis/parser.c:2657
 #, c-format
 msgid " options: %s\n"
 msgstr " επιλογές: %s\n"
 
-#: ../lib/gis/parser.c:2653
+#: ../lib/gis/parser.c:2670
 #, c-format
 msgid "enter option > "
 msgstr "δώστε επιλογή > "
 
-#: ../lib/gis/parser.c:2670 ../lib/gis/parser.c:2680
+#: ../lib/gis/parser.c:2687 ../lib/gis/parser.c:2697
 msgid "   Try again? "
 msgstr "   Προσπαθήστε ξανά? "
 
-#: ../lib/gis/parser.c:2678
+#: ../lib/gis/parser.c:2695
 #, c-format
 msgid "Sorry, %s is not accepted.\n"
 msgstr "Συγνώμη, %s δεν είναι αποδεκτό.\n"
 
-#: ../lib/gis/parser.c:2688
+#: ../lib/gis/parser.c:2705
 #, c-format
 msgid ""
 "\n"
@@ -3477,11 +3420,11 @@ msgstr ""
 "Έχετε επιλέξει:\n"
 "  %s\n"
 
-#: ../lib/gis/parser.c:2689
+#: ../lib/gis/parser.c:2706
 msgid "Is this correct? "
 msgstr "Είναι σωστό;"
 
-#: ../lib/gis/parser.c:2754
+#: ../lib/gis/parser.c:2771
 msgid "to accept the default"
 msgstr "για να αποδεκτείτε το προκαθορισμένο"
 
@@ -3997,38 +3940,29 @@ msgstr "αδυναμία δημιουγίας ιστογράμματος για [%s in %s]"
 
 #: ../lib/gis/alloc.c:43
 #, c-format
-msgid "G_malloc: unable to allocate %lu bytes at %s:%d"
+msgid "G_malloc: unable to allocate %lu bytes of memory at %s:%d"
 msgstr ""
 
 #: ../lib/gis/alloc.c:76
 #, c-format
-msgid "G_calloc: unable to allocate %lu * %lu bytes at %s:%d"
+msgid "G_calloc: unable to allocate %lu * %lu bytes of memory at %s:%d"
 msgstr ""
 
 #: ../lib/gis/alloc.c:114
 #, c-format
-msgid "G_realloc: unable to allocate %lu bytes at %s:%d"
+msgid "G_realloc: unable to allocate %lu bytes of memory at %s:%d"
 msgstr ""
-
-#: ../lib/gis/gdal.c:54
-#, c-format
-msgid "Unable to locate symbol <%s>"
-msgstr "Αδυναμία εντοπισμού συμβόλου <%s>"
-
-#: ../lib/gis/gdal.c:94
-msgid "Unable to load GDAL library"
-msgstr "Αδυναμία φόρτωσης βιβλιοθήκης GDAL "
 
 #: ../lib/nviz/change_view.c:108
 #, c-format
 msgid "Invalid view position coordinates, using %f,%f"
 msgstr "Λάθος συντεταγμένες όψης, χρήση %f,%f"
 
-#: ../lib/nviz/render.c:109
+#: ../lib/nviz/render.c:108
 msgid "Bad server connection"
 msgstr "Κακή σύνδεση με τον εξυπηρετητή"
 
-#: ../lib/nviz/render.c:118
+#: ../lib/nviz/render.c:117
 msgid "Unable to create rendering context"
 msgstr "Αδυναμία δημιουργίας rendering"
 
@@ -4171,6 +4105,21 @@ msgstr ""
 msgid "subgroup <%s> of group <%s> references the following raster maps\n"
 msgstr ""
 
+#: ../lib/imagery/points.c:124
+#, fuzzy, c-format
+msgid "Unable to open control point file for group [%s in %s]"
+msgstr "Αδυναμία ανοίγματος αρχείου [%s] του γκρουπ [%s in %s]"
+
+#: ../lib/imagery/points.c:132
+#, fuzzy, c-format
+msgid "Bad format in control point file for group [%s in %s]"
+msgstr "Αδυναμία ανοίγματος αρχείου [%s] του γκρουπ [%s in %s]"
+
+#: ../lib/imagery/points.c:159
+#, fuzzy, c-format
+msgid "Unable to create control point file for group [%s in %s]"
+msgstr "Αδυναμία δημιουργίας αρχείου [%s] του γκρουπ [%s in %s]"
+
 #: ../lib/imagery/target.c:38
 #, c-format
 msgid "Unable to read target file for group [%s]"
@@ -4308,30 +4257,30 @@ msgstr "Πάρα πολλές κατηγορίες να δείξω ως μοναδικές!"
 msgid "Try using smaller font!"
 msgstr "Χρησιμοποιήστε μικρότερη γραμματοσειρά!"
 
-#: ../lib/ogsf/Gs3.c:133 ../lib/ogsf/Gs3.c:207 ../lib/ogsf/Gs3.c:364
-#: ../lib/ogsf/Gs3.c:479 ../lib/ogsf/Gs3.c:583
+#: ../lib/ogsf/Gs3.c:133 ../lib/ogsf/Gs3.c:208 ../lib/ogsf/Gs3.c:366
+#: ../lib/ogsf/Gs3.c:482 ../lib/ogsf/Gs3.c:587
 msgid "Unable to allocate memory for a null buffer"
 msgstr "Αδυναμία κατανομής (allocate) μνήμης για κενό buffer"
 
-#: ../lib/ogsf/Gs3.c:140 ../lib/ogsf/Gs3.c:214 ../lib/ogsf/Gs3.c:376
-#: ../lib/ogsf/Gs3.c:491 ../lib/ogsf/Gs3.c:586
+#: ../lib/ogsf/Gs3.c:140 ../lib/ogsf/Gs3.c:215 ../lib/ogsf/Gs3.c:378
+#: ../lib/ogsf/Gs3.c:494 ../lib/ogsf/Gs3.c:590
 #, c-format
 msgid "Loading raster map <%s>..."
 msgstr "Φόρτωση του raster χάρτη <%s>..."
 
-#: ../lib/ogsf/Gs3.c:643
+#: ../lib/ogsf/Gs3.c:647
 #, c-format
 msgid "Color table range doesn't match data (mincol=%d, maxcol=%d"
 msgstr ""
 "Το εύρος του χρωματικού πίνακα δεν ταιριάζει με τα δεδομένα (mincol=%d, "
 "maxcol=%d"
 
-#: ../lib/ogsf/Gs3.c:705 ../lib/ogsf/Gs3.c:775
+#: ../lib/ogsf/Gs3.c:709 ../lib/ogsf/Gs3.c:780
 #, c-format
 msgid "Translating colors from raster map <%s>..."
 msgstr "Μεταφράζονταις χρώματα για τον ράστερ χάρτη <%s>..."
 
-#: ../lib/ogsf/Gs3.c:1012
+#: ../lib/ogsf/Gs3.c:1018
 msgid "View not saved by this program,there may be some inconsistancies"
 msgstr ""
 "Η όψη δεν έχει σωθεί από το πρόγραμμα, μάλλον υπάρχουν κάποιες ασυνέχειες"
@@ -4423,6 +4372,251 @@ msgstr "Η φόρτωση απέτυχε"
 #: ../lib/ogsf/GS2.c:1837
 msgid "Error finding range"
 msgstr "Λάθος στην εύρεση εύρους"
+
+#: ../lib/gmath/test/test_ccmath_wrapper.c:37
+#, fuzzy
+msgid ""
+"\n"
+"++ Running ccmath wrapper unit tests ++"
+msgstr ""
+"\n"
+"++ Εκτέλεση τεστ μαθηματικής μονάδας ++"
+
+#: ../lib/gmath/test/test_ccmath_wrapper.c:42
+#, fuzzy
+msgid ""
+"\n"
+"-- ccmath wrapper unit tests failure --"
+msgstr ""
+"\n"
+"-- Αποτυχία εκτέλεσης τεστ μαθηματικής μονάδας --"
+
+#: ../lib/gmath/test/test_ccmath_wrapper.c:44
+#, fuzzy
+msgid ""
+"\n"
+"-- ccmath wrapper unit tests finished successfully --"
+msgstr ""
+"\n"
+"++ Επιτυχής εκτέλεση τεστ μαθηματικής μονάδας ++"
+
+#: ../lib/gmath/test/bench_solver_krylov.c:34
+#, fuzzy
+msgid ""
+"\n"
+"++ Running krylov solver benchmark ++"
+msgstr ""
+"\n"
+"++ Εκτέλεση δοκιμής μονάδος επίλυσης (solver) ++"
+
+#: ../lib/gmath/test/test_blas1.c:40
+#, fuzzy
+msgid ""
+"\n"
+"++ Running blas level 1 unit tests ++"
+msgstr ""
+"\n"
+"++ Εκτέλεση δοκιμής μονάδος επίλυσης (solver) ++"
+
+#: ../lib/gmath/test/test_blas1.c:47
+#, fuzzy
+msgid ""
+"\n"
+"-- blas level 1 unit tests failure --"
+msgstr ""
+"\n"
+"++ Αποτυχία εκτέλεσης δοκιμής μονάδος επίλυσης (solver) ++"
+
+#: ../lib/gmath/test/test_blas1.c:49
+#, fuzzy
+msgid ""
+"\n"
+"-- blas level 1 unit tests finished successfully --"
+msgstr ""
+"\n"
+"++ Επιτυχία εκτέλεσης δοκιμής μονάδος επίλυσης (solver) ++"
+
+#: ../lib/gmath/test/bench_blas2.c:35
+#, fuzzy
+msgid ""
+"\n"
+"++ Running blas level 2 benchmark ++"
+msgstr ""
+"\n"
+"++ Εκτέλεση δοκιμής μονάδος επίλυσης (solver) ++"
+
+#: ../lib/gmath/test/test_blas2.c:38
+#, fuzzy
+msgid ""
+"\n"
+"++ Running blas level 2 unit tests ++"
+msgstr ""
+"\n"
+"++ Εκτέλεση δοκιμής μονάδος επίλυσης (solver) ++"
+
+#: ../lib/gmath/test/test_blas2.c:44
+#, fuzzy
+msgid ""
+"\n"
+"-- blas level 2 unit tests failure --"
+msgstr ""
+"\n"
+"++ Αποτυχία εκτέλεσης δοκιμής μονάδος επίλυσης (solver) ++"
+
+#: ../lib/gmath/test/test_blas2.c:46
+#, fuzzy
+msgid ""
+"\n"
+"-- blas level 2 unit tests finished successfully --"
+msgstr ""
+"\n"
+"++ Επιτυχία εκτέλεσης δοκιμής μονάδος επίλυσης (solver) ++"
+
+#: ../lib/gmath/test/bench_blas3.c:34
+#, fuzzy
+msgid ""
+"\n"
+"++ Running blas level 3 benchmark ++"
+msgstr ""
+"\n"
+"++ Εκτέλεση δοκιμής μονάδος επίλυσης (solver) ++"
+
+#: ../lib/gmath/test/bench_solver_direct.c:34
+#, fuzzy
+msgid ""
+"\n"
+"++ Running direct solver benchmark ++"
+msgstr ""
+"\n"
+"++ Εκτέλεση δοκιμής μονάδος επίλυσης (solver) ++"
+
+#: ../lib/gmath/test/test_blas3.c:38
+#, fuzzy
+msgid ""
+"\n"
+"++ Running blas level 3 unit tests ++"
+msgstr ""
+"\n"
+"++ Εκτέλεση δοκιμής μονάδος επίλυσης (solver) ++"
+
+#: ../lib/gmath/test/test_blas3.c:44
+#, fuzzy
+msgid ""
+"\n"
+"-- blas level 3 unit tests failure --"
+msgstr ""
+"\n"
+"++ Αποτυχία εκτέλεσης δοκιμής μονάδος επίλυσης (solver) ++"
+
+#: ../lib/gmath/test/test_blas3.c:46
+#, fuzzy
+msgid ""
+"\n"
+"-- blas level 3 unit tests finished successfully --"
+msgstr ""
+"\n"
+"++ Επιτυχία εκτέλεσης δοκιμής μονάδος επίλυσης (solver) ++"
+
+#: ../lib/gmath/test/test_main.c:61
+msgid "The size of the matrices and vectors for benchmarking"
+msgstr ""
+
+#: ../lib/gmath/test/test_main.c:68
+msgid "Choose solver benchmark"
+msgstr ""
+
+#: ../lib/gmath/test/test_main.c:75
+msgid "Choose blas benchmark"
+msgstr ""
+
+#: ../lib/gmath/test/test_main.c:105
+#, fuzzy
+msgid "test, gmath"
+msgstr "δοκιμή, gpde"
+
+#: ../lib/gmath/test/test_main.c:107
+#, fuzzy
+msgid "Performs benchmarks, unit and integration tests for the gmath library"
+msgstr "Εκτελεί δοκιμές μονάδας και ενσωμάτωσης για την βιβλιοθήκη gpde"
+
+#: ../lib/gmath/test/test_solvers.c:37
+msgid ""
+"\n"
+"++ Running solver unit tests ++"
+msgstr ""
+"\n"
+"++ Εκτέλεση δοκιμής μονάδος επίλυσης (solver) ++"
+
+#: ../lib/gmath/test/test_solvers.c:42
+msgid ""
+"\n"
+"-- Solver unit tests failure --"
+msgstr ""
+"\n"
+"++ Αποτυχία εκτέλεσης δοκιμής μονάδος επίλυσης (solver) ++"
+
+#: ../lib/gmath/test/test_solvers.c:44
+msgid ""
+"\n"
+"-- Solver unit tests finished successfully --"
+msgstr ""
+"\n"
+"++ Επιτυχία εκτέλεσης δοκιμής μονάδος επίλυσης (solver) ++"
+
+#: ../lib/gmath/solvers_krylov.c:219 ../lib/gmath/solvers_krylov.c:413
+#: ../lib/gmath/solvers_krylov.c:577 ../lib/gmath/solvers_direct.c:133
+msgid "Unable to solve the linear equation system"
+msgstr "Αδυναμία λύσης του γραμμικού συστήματος"
+
+#: ../lib/gmath/solvers_krylov.c:227
+#, c-format
+msgid "Sparse PCG -- iteration %i error  %g\n"
+msgstr ""
+
+#: ../lib/gmath/solvers_krylov.c:229
+#, c-format
+msgid "PCG -- iteration %i error  %g\n"
+msgstr ""
+
+#: ../lib/gmath/solvers_krylov.c:421
+#, c-format
+msgid "Sparse CG -- iteration %i error  %g\n"
+msgstr ""
+
+#: ../lib/gmath/solvers_krylov.c:423
+#, c-format
+msgid "CG -- iteration %i error  %g\n"
+msgstr ""
+
+#: ../lib/gmath/solvers_krylov.c:626
+#, c-format
+msgid "Sparse BiCGStab -- iteration %i error  %g\n"
+msgstr ""
+
+#: ../lib/gmath/solvers_krylov.c:629
+#, c-format
+msgid "BiCGStab -- iteration %i error  %g\n"
+msgstr ""
+
+#: ../lib/gmath/solvers_classic_iter.c:84
+#, c-format
+msgid "sparse Jacobi -- iteration %5i error %g\n"
+msgstr ""
+
+#: ../lib/gmath/solvers_classic_iter.c:156
+#, c-format
+msgid "sparse SOR -- iteration %5i error %g\n"
+msgstr ""
+
+#: ../lib/gmath/solvers_classic_iter.c:218
+#, c-format
+msgid "Jacobi -- iteration %5i error %g\n"
+msgstr ""
+
+#: ../lib/gmath/solvers_classic_iter.c:275
+#, c-format
+msgid "SOR -- iteration %5i error %g\n"
+msgstr ""
 
 #: ../lib/gmath/la.c:64 ../lib/gmath/la.c:120
 msgid "Matrix dimensions out of range"
@@ -4583,6 +4777,18 @@ msgstr "Η δομή του διανύσματος δεν έχει ξεκινήσει"
 msgid "Input format error"
 msgstr "Σφάλμα κατά την εισαγωγή στοιχείων"
 
+#: ../lib/gmath/solvers_direct.c:45
+msgid "Starting direct gauss elimination solver"
+msgstr ""
+
+#: ../lib/gmath/solvers_direct.c:73
+msgid "Starting direct lu decomposition solver"
+msgstr ""
+
+#: ../lib/gmath/solvers_direct.c:130
+msgid "Starting cholesky decomposition solver"
+msgstr ""
+
 #: ../lib/gmath/del2g.c:50
 msgid "    taking FFT of image..."
 msgstr "    φτιάχνω FFT της εικόνας..."
@@ -4608,12 +4814,12 @@ msgstr "    υπολογίζω το αντίστροφο FFT..."
 msgid "[%s]: No such color"
 msgstr "[%s]: Δεν υπάρχει τέτοιο χρώμα"
 
-#: ../lib/symbol/read.c:206
+#: ../lib/symbol/read.c:211
 #, c-format
 msgid "Cannot read symbol line coordinates: %s"
 msgstr "Δεν είναι δυνατή η ανάγνωση των συντεταγμένων των συμβόλων γραμμής: %s"
 
-#: ../lib/symbol/read.c:254
+#: ../lib/symbol/read.c:259
 #, c-format
 msgid ""
 "Incorrect symbol name: '%s' (should be: group/name or group/name@mapset)"
@@ -4621,13 +4827,13 @@ msgstr ""
 "Εσφαλμένο όνομα συμβόλου: '%s' (θα έπρεπε να είναι: group/name or group/"
 "name@mapset)"
 
-#: ../lib/symbol/read.c:278
+#: ../lib/symbol/read.c:283
 #, c-format
 msgid "Cannot find/open symbol: '%s'"
 msgstr "Δεν μπορώ να βρω/ανόιξω το σύμβολο: '%s'"
 
-#: ../lib/symbol/read.c:378 ../lib/symbol/read.c:396 ../lib/symbol/read.c:406
-#: ../lib/symbol/read.c:424
+#: ../lib/symbol/read.c:388 ../lib/symbol/read.c:406 ../lib/symbol/read.c:416
+#: ../lib/symbol/read.c:434
 #, c-format
 msgid "Incorrect symbol color: '%s', using default."
 msgstr "Εσφαλμένο χρώμα συμβόλου: '%s', χρησιμοποιώ το προεπιλεγμένο."
@@ -4734,6 +4940,26 @@ msgstr ""
 #: ../lib/rst/interp_float/input2d.c:69
 msgid "Bitmap mask created"
 msgstr "Δημιουργήθηκε μάσκα bitmap"
+
+#~ msgid "The linear equation system is not quadratic"
+#~ msgstr "Η γραμμική συνάρτηση δεν είναι 2ου βαθμού"
+
+#~ msgid "Matrix is not symmetric!"
+#~ msgstr "Ο πίνακας δεν είναι συμμετρικός!"
+
+#~ msgid "Incompatible library version for module"
+#~ msgstr "Ασύμβατη έκδοση βιβλιοθήκης για το module"
+
+#~ msgid "Null values have not been initialized. "
+#~ msgstr "Η κενή τιμή δεν έχει αρχικοποιηθεί."
+
+#~ msgid "G_gisinit() must be called first. "
+#~ msgstr "G_gisinit() πρέπει να κληθεί πρώτη. "
+
+#~ msgid "Please advise GRASS developers of this error.\n"
+#~ msgstr ""
+#~ "Παρακαλώ ενημερώστε τους προγραμματιστές του GRASS για αυτό το μήνυμα "
+#~ "λάθους.\n"
 
 #~ msgid "Unable to delete layer/category %d/%d line %d"
 #~ msgstr "Αδυναμία διαγραφής στρώμα/κατηγορία %d/%d γραμμή %d"
