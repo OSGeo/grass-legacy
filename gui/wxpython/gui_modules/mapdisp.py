@@ -955,7 +955,7 @@ class BufferedWindow(MapWindow, wx.Window):
         If not given from self.mouse['begin'] to self.mouse['end'].
 
         """
-        self.redrawAll = False
+#        self.redrawAll = False
         
         if not pdc:
             return
