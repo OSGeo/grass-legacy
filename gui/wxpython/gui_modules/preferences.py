@@ -176,6 +176,9 @@ class Settings:
                 'rasterOverlay' : {
                     'enabled' : True
                     },
+                'rasterColorTable' : {
+                    'selection' : 'rainbow',
+                    },
                 # d.vect
                 'showType': {
                     'point' : {
@@ -1235,6 +1238,22 @@ class PreferencesDialog(wx.Dialog):
         
         gridSizer.Add(item=rasterOverlay,
                       pos=(row, 0), span=(1, 2))
+
+        # default color table
+        row += 1
+        gridSizer.Add(item=wx.StaticText(parent=panel, id=wx.ID_ANY,
+                                         label=_("Default color table:")),
+                      flag=wx.ALIGN_LEFT |
+                      wx.ALIGN_CENTER_VERTICAL,
+                      pos=(row, 0))
+        colorTable = wx.Choice(parent=panel, id=wx.ID_ANY, size=(200, -1),
+                               choices=utils.GetColorTables(),
+                               name="GetStringSelection")
+        colorTable.SetStringSelection(self.settings.Get(group='cmd', key='rasterColorTable', subkey='selection'))
+        self.winId['cmd:rasterColorTable:selection'] = colorTable.GetId()
+        
+        gridSizer.Add(item=colorTable,
+                      pos=(row, 1))
         
         sizer.Add(item=gridSizer, proportion=1, flag=wx.ALL | wx.EXPAND, border=5)
         border.Add(item=sizer, proportion=0, flag=wx.LEFT | wx.RIGHT | wx.BOTTOM | wx.EXPAND, border=3)
