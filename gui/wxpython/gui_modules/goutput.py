@@ -100,7 +100,8 @@ class CmdThread(threading.Thread):
             time.sleep(.1)
             
             # set default color table for raster data
-            if args[0][0][:2] == 'r.':
+            if UserSettings.Get(group='cmd', key='rasterColorTable', subkey='enabled') and \
+                    args[0][0][:2] == 'r.':
                 moduleInterface = menuform.GUI().ParseCommand(args[0], show = None)
                 outputParam = moduleInterface.get_param(value = 'output', raiseError = False)
                 colorTable = UserSettings.Get(group='cmd', key='rasterColorTable', subkey='selection')

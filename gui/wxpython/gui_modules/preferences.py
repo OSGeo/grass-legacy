@@ -177,6 +177,7 @@ class Settings:
                     'enabled' : True
                     },
                 'rasterColorTable' : {
+                    'enabled'   : False,
                     'selection' : 'rainbow',
                     },
                 # d.vect
@@ -1241,18 +1242,25 @@ class PreferencesDialog(wx.Dialog):
 
         # default color table
         row += 1
-        gridSizer.Add(item=wx.StaticText(parent=panel, id=wx.ID_ANY,
-                                         label=_("Default color table:")),
-                      flag=wx.ALIGN_LEFT |
-                      wx.ALIGN_CENTER_VERTICAL,
+        rasterCTCheck = wx.CheckBox(parent=panel, id=wx.ID_ANY,
+                                    label=_("Default color table"),
+                                    name='IsChecked')
+        rasterCTCheck.SetValue(self.settings.Get(group='cmd', key='rasterColorTable', subkey='enabled'))
+        self.winId['cmd:rasterColorTable:enabled'] = rasterCTCheck.GetId()
+        rasterCTCheck.Bind(wx.EVT_CHECKBOX, self.OnCheckColorTable)
+        
+        gridSizer.Add(item=rasterCTCheck,
                       pos=(row, 0))
-        colorTable = wx.Choice(parent=panel, id=wx.ID_ANY, size=(200, -1),
+        
+        rasterCTName = wx.Choice(parent=panel, id=wx.ID_ANY, size=(200, -1),
                                choices=utils.GetColorTables(),
                                name="GetStringSelection")
-        colorTable.SetStringSelection(self.settings.Get(group='cmd', key='rasterColorTable', subkey='selection'))
-        self.winId['cmd:rasterColorTable:selection'] = colorTable.GetId()
+        rasterCTName.SetStringSelection(self.settings.Get(group='cmd', key='rasterColorTable', subkey='selection'))
+        self.winId['cmd:rasterColorTable:selection'] = rasterCTName.GetId()
+        if not rasterCTCheck.IsChecked():
+            rasterCTName.Enable(False)
         
-        gridSizer.Add(item=colorTable,
+        gridSizer.Add(item=rasterCTName,
                       pos=(row, 1))
         
         sizer.Add(item=gridSizer, proportion=1, flag=wx.ALL | wx.EXPAND, border=5)
@@ -1663,6 +1671,14 @@ class PreferencesDialog(wx.Dialog):
         
         return panel
 
+    def OnCheckColorTable(self, event):
+        """!Set/unset default color table"""
+        win = self.FindWindowById(self.winId['cmd:rasterColorTable:selection'])
+        if event.IsChecked():
+            win.Enable()
+        else:
+            win.Enable(False)
+        
     def OnLoadEpsgCodes(self, event):
         """!Load EPSG codes from the file"""
         win = self.FindWindowById(self.winId['projection:statusbar:projFile'])
