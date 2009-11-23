@@ -52,6 +52,7 @@ import os
 import time
 import copy
 import locale
+import types
 from threading import Thread
 import Queue
 
@@ -331,8 +332,14 @@ class grassTask:
     def get_param(self, value, element='name', raiseError=True):
         """!Find and return a param by name."""
         for p in self.params:
-            if p[element][:len(value)] == value:
-                return p
+            if p[element] is None:
+                continue
+            if type(value) == types.StringType:
+                if p[element][:len(value)] == value:
+                    return p
+            else:
+                if p[element] == value:
+                    return p
         if raiseError:
             raise ValueError, _("Parameter not found: %s") % \
                 value
@@ -1698,7 +1705,12 @@ class GUI:
     def __init__(self, parent=-1):
         self.parent = parent
         self.grass_task = None
+        self.cmd = list()
 
+    def GetCmd(self):
+        """Get validated command"""
+        return self.cmd
+    
     def ParseInterface(self, cmd, parser = processTask):
         """!Parse interface
 
@@ -1800,6 +1812,8 @@ class GUI:
                 self.mf.MakeModal(modal)
             else:
                 self.mf.OnApply(None)
+        
+        self.cmd = cmd
         
         return self.grass_task
 
