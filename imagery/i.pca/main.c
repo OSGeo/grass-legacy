@@ -260,12 +260,12 @@ static int calc_mu(int *fds, double *mu, int bands)
 
 	    for (col = 0; col < cols; col++) {
 		/* skip null cells */
-		if (G_is_null_value(rowbuf, maptype)) {
+		if (G_is_null_value(ptr, maptype)) {
 		    ptr = G_incr_void_ptr(ptr, G_raster_size(maptype));
 		    continue;
 		}
 
-		sum += G_get_raster_value_d(rowbuf, maptype);
+		sum += G_get_raster_value_d(ptr, maptype);
 		ptr = G_incr_void_ptr(ptr, G_raster_size(maptype));
 	    }
 	}
