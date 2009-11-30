@@ -487,7 +487,7 @@ proc MapCanvas::get_mapunits {} {
 	    }
 
         # Set for latlon locations
-        if { $prj(proj) == "ll"} {set proj_is_ll 1}
+        if { [ info exist prj ] && $prj(proj) == "ll"} {set proj_is_ll 1}
         
         if {[catch {close $input} error]} {
 		GmLib::errmsg $error [G_msg "g.proj or projection error"]
