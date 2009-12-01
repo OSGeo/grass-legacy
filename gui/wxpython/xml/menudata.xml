@@ -1408,7 +1408,7 @@
 	      <label>IDW from raster points (alternate method for sparse points)</label>
 	      <help>Surface interpolation from raster points using inverse distance squared weighting algorithm (may be better for sparse points)</help>
 	      <handler>self.OnMenuCmd</handler>
-	      <command>r.surf.idw</command>
+	      <command>r.surf.idw2</command>
 	    </menuitem>
 	    <menuitem>
 	      <label>IDW from vector points</label>
@@ -2012,7 +2012,7 @@
 	      <label>Univariate statistics for attribute columns</label>
 	      <help>Calculates univariate statistics for any numeric attribute</help>
 	      <handler>self.OnMenuCmd</handler>
-	      <command>v.univar</command>
+	      <command>v.db.univar</command>
 	    </menuitem>
 	    <separator />
 	    <menuitem>
