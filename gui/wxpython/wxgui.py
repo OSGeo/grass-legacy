@@ -453,9 +453,10 @@ class GMFrame(wx.Frame):
 
         return cmdlist
 
-    def RunMenuCmd(self, event):
+    def RunMenuCmd(self, event, cmd = ''):
         """!Run command selected from menu"""
-        cmd = self.GetMenuCmd(event)
+        if event:
+            cmd = self.GetMenuCmd(event)
         self.goutput.RunCmd(cmd, switchPage=True)
 
     def OnMenuCmd(self, event, cmd = ''):
@@ -999,8 +1000,8 @@ class GMFrame(wx.Frame):
 
             p = gcmd.Command(cmdlist)
 
-            # reset display mode
-            os.environ['GRASS_RENDER_IMMEDIATE'] = 'TRUE'
+        # reset display mode
+        os.environ['GRASS_RENDER_IMMEDIATE'] = 'TRUE'
         
     def OnPreferences(self, event):
         """!General GUI preferences/settings"""
