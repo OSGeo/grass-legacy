@@ -597,7 +597,7 @@
 	      <label>Set region</label>
 	      <help>Manages the boundary definitions for the geographic region.</help>
 	      <handler>self.OnMenuCmd</handler>
-	      <command>g.region -p</command>
+	      <command>g.region</command>
 	    </menuitem>
 	  </items>
 	</menu>
