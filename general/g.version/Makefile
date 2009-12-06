@@ -7,16 +7,23 @@ PGM=g.version
 COPYING=`cat ./../../COPYING | sed -f sed.script | tr -d '\012'`
 GRASS_CONFIGURE_PARAMS=`head -n 7 ./../../config.status | tail -n 1 | tr -d '\012'`
 
-EXTRA_CFLAGS=-DGRASS_VERSION_NUMBER=\"'$(GRASS_VERSION_NUMBER)'\" -DGRASS_VERSION_DATE=\"'$(GRASS_VERSION_DATE)'\" -DGRASS_VERSION_UPDATE_PKG=\"'$(GRASS_VERSION_UPDATE_PKG)'\"  -DGRASS_CONFIGURE_PARAMS="\"$(GRASS_CONFIGURE_PARAMS)\"" -DCOPYING="\"$(COPYING)\""
+EXTRA_CFLAGS = \
+	-DGRASS_VERSION_NUMBER=\"'$(GRASS_VERSION_NUMBER)'\" \
+	-DGRASS_VERSION_DATE=\"'$(GRASS_VERSION_DATE)'\" \
+	-DGRASS_VERSION_UPDATE_PKG=\"'$(GRASS_VERSION_UPDATE_PKG)'\" \
+	-I$(OBJDIR)
 
-LIBES     = $(GISLIB)
-DEPENDENCIES= $(GISDEP)
+EXTRA_HEADERS = $(OBJDIR)/copying.h $(OBJDIR)/confparms.h
+
+LIBES = $(GISLIB)
+DEPENDENCIES = $(GISDEP)
 
 include $(MODULE_TOPDIR)/include/Make/Module.make
 
-default: cmd COPYING GRASS_CONFIGURE_PARAMS
+default: cmd
 
-COPYING:
-	cat ./../../COPYING | sed -f sed.script | tr -d '\012' > $(GRASS_VERSION_FILE)
-GRASS_CONFIGURE_PARAMS:
-	head -n 7 ./../../config.status | tail -n 1 | sed 's+#++1' | tr -d '\012' > $(GRASS_BUILD_FILE)
+$(OBJDIR)/copying.h: $(MODULE_TOPDIR)/COPYING | $(OBJDIR)
+	sed -e 's/^\(.*\)$$/"\1\\n"/' $< > $@
+
+$(OBJDIR)/confparms.h: $(MODULE_TOPDIR)/config.status | $(OBJDIR)
+	sed -n '7s/^#\(.*\)$$/"\1"/p' $< > $@
