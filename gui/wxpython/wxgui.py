@@ -990,20 +990,33 @@ class GMFrame(wx.Frame):
 
         # open available xmon
         xmon = xmonlist[0]
-        cmdlist = ["d.mon","start=%s" % xmon]
-        p = gcmd.Command(cmdlist)
-
-        # run the command        
-        runbat = os.path.join(gisbase,'etc','grass-run.bat')
-        xtermwrapper = os.path.join(gisbase,'etc','grass-xterm-wrapper')
-        grassrun = os.path.join(gisbase,'etc','grass-run.sh')
-        command = shlex.split(str(command))
         
-        if platform.system() == 'Windows':
-            cmdlist = ["cmd.exe", "/c", 'start "%s"' % runbat, command]
-        else:
-            cmdlist = [xtermwrapper, '-e "%s"' % grassrun, command]
-        p = gcmd.Command(cmdlist)
+        # run the command        
+        command = ' '.join(command)
+                
+        if sys.platform == "darwin":
+
+            cmdlist = ['xterm', '-e', 'd.mon', xmon]
+            p = gcmd.Command(cmdlist, wait=False)
+
+            cmdlist = ['xterm', '-e', command]
+            q = gcmd.Command(cmdlist, wait=False)
+
+        else:        
+            cmdlist = ["d.mon","start=%s" % xmon]
+            p = gcmd.Command(cmdlist)
+
+            # run the command        
+            runbat = os.path.join(gisbase,'etc','grass-run.bat')
+            xtermwrapper = os.path.join(gisbase,'etc','grass-xterm-wrapper')
+            grassrun = os.path.join(gisbase,'etc','grass-run.sh')
+            command = shlex.split(str(command))
+            
+            if platform.system() == 'Windows':
+                cmdlist = ["cmd.exe", "/c", 'start "%s"' % runbat, command]
+            else:
+                cmdlist = [xtermwrapper, '-e "%s"' % grassrun, command]
+            p = gcmd.Command(cmdlist)
 
         # reset display mode
         os.environ['GRASS_RENDER_IMMEDIATE'] = 'TRUE'
