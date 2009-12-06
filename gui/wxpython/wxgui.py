@@ -970,26 +970,37 @@ class GMFrame(wx.Frame):
             if line.startswith('x') and 'not running' in line:
                 xmonlist.append(line[0:2])
 
-        # open available xmon
+        # find available xmon
         xmon = xmonlist[0]
-        gcmd.RunCommand('d.mon',
-                        start = xmon)
         
         # run the command        
-        runbat = os.path.join(gisbase,'etc','grass-run.bat')
-        xtermwrapper = os.path.join(gisbase,'etc','grass-xterm-wrapper')
-        grassrun = os.path.join(gisbase,'etc','grass-run.sh')
         command = ' '.join(command)
-        
-        if 'OS' in os.environ and os.environ['OS'] == "Windows_NT":
-            cmdlist = ["cmd.exe", "/c", 'start "%s"' % runbat, command]
+                
+        if sys.platform == "darwin":
+
+            cmdlist = ['xterm', '-e', 'd.mon', xmon]
+            p = gcmd.Command(cmdlist, wait=False)
+
+            cmdlist = ['xterm', '-e', command]
+            q = gcmd.Command(cmdlist, wait=False)
+
         else:
-            cmdlist = [xtermwrapper, '-e "%s"' % grassrun, command]
+            gcmd.RunCommand('d.mon',
+                            start = xmon)
+            
+            runbat = os.path.join(gisbase,'etc','grass-run.bat')
+            xtermwrapper = os.path.join(gisbase,'etc','grass-xterm-wrapper')
+            grassrun = os.path.join(gisbase,'etc','grass-run.sh')
+            
+            if 'OS' in os.environ and os.environ['OS'] == "Windows_NT":
+                cmdlist = ["cmd.exe", "/c", 'start "%s"' % runbat, command]
+            else:
+                cmdlist = [xtermwrapper, '-e "%s"' % grassrun, command]
 
-        p = gcmd.Command(cmdlist)
+            p = gcmd.Command(cmdlist)
 
-        # reset display mode
-        os.environ['GRASS_RENDER_IMMEDIATE'] = 'TRUE'
+            # reset display mode
+            os.environ['GRASS_RENDER_IMMEDIATE'] = 'TRUE'
         
     def OnPreferences(self, event):
         """!General GUI preferences/settings"""
