@@ -146,7 +146,7 @@ namespace eval Gm {
 	variable selectedfont
 	variable encoding
 	global array filename ;# mon
-
+        variable last_directory ;# last save/load dir for reuse
 }
 
 
@@ -271,7 +271,11 @@ proc Gm::create { } {
 			Gm::cleanup}
 	}
 
-
+        if { [info exists env(HOME)] } {
+                set Gm::last_directory $env(HOME)
+        } else {
+                set Gm::last_directory [pwd]
+        }
 
 }
 

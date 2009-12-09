@@ -374,14 +374,8 @@ proc MapToolBar::savefile { type quality } {
 
 	set outfile($mon) $MapCanvas::outfile($mon)
 
-	if { [info exists env(HOME)] } {
-		set dir $env(HOME)
-		set path [tk_getSaveFile -initialdir $dir \
-			-title "Save Mapcanvas contents to file"]
-	} else {
-		set path [tk_getSaveFile \
-			-title "Save Mapcanvas contents to file"]
-	}
+	set path [tk_getSaveFile -initialdir $Gm::last_directory \
+		-title "Save Mapcanvas contents to file" ]
 	set currdir [pwd]
 	cd $tmpdir
 
@@ -451,6 +445,7 @@ proc MapToolBar::savefile { type quality } {
 				catch {file delete $path.ppm}
 			}
 		}
+                set Gm::last_directory [file dirname $path] ;# update last path only when user saves something
 	}
 	return
 }
