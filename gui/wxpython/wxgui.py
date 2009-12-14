@@ -996,11 +996,15 @@ class GMFrame(wx.Frame):
                 
         if sys.platform == "darwin":
 
-            cmdlist = ['xterm', '-e', 'd.mon', xmon]
-            p = gcmd.Command(cmdlist, wait=False)
+            try:
+                cmdlist = ['xterm', '-e', 'd.mon', xmon]
+                p = gcmd.Command(cmdlist, wait=False)
 
-            cmdlist = ['xterm', '-e', command]
-            q = gcmd.Command(cmdlist, wait=False)
+                cmdlist = ['xterm', '-e', command]
+                q = gcmd.Command(cmdlist, wait=False)
+            except:
+                wx.MessageBox(_('Requires an xterm and could not find an xterm to launch'),
+                              _('Command %s could not be run') % cmdlist[0])
 
         else:        
             cmdlist = ["d.mon","start=%s" % xmon]
