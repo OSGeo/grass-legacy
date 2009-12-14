@@ -40,8 +40,6 @@ int do_astar(void)
     ew_res = window.ew_res;
     ns_res = window.ns_res;
 
-    G_debug(0, "ew_res %e, ns_res %e", ew_res, ns_res);
-
     count = 0;
     first_astar = heap_index[1];
     first_cum = do_points;
