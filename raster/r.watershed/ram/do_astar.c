@@ -17,10 +17,11 @@ int do_astar(void)
      * |2| |3|
      * |5|0|6|
      */
-    int nbr_ew[8] = { 0, 1, 2, 3, 1, 0, 0, 1};
-    int nbr_ns[8] = { 0, 1, 2, 3, 3, 2, 3, 2};
+    int nbr_ew[8] = { 0, 1, 2, 3, 1, 0, 0, 1 };
+    int nbr_ns[8] = { 0, 1, 2, 3, 3, 2, 3, 2 };
     double dx, dy, dist_to_nbr[8], ew_res, ns_res;
     double slope[8];
+    int skip_diag;
 
     G_message(_("SECTION 2: A * Search."));
 
@@ -38,6 +39,8 @@ int do_astar(void)
     }
     ew_res = window.ew_res;
     ns_res = window.ns_res;
+
+    G_debug(0, "ew_res %e, ns_res %e", ew_res, ns_res);
 
     count = 0;
     first_astar = heap_index[1];
@@ -78,39 +81,46 @@ int do_astar(void)
 		/* if not, add as new point */
 		is_in_list = FLAG_GET(in_list, upr, upc);
 		is_worked = FLAG_GET(worked, upr, upc);
+		skip_diag = 0;
+		/* avoid diagonal flow direction bias */
 		if (!is_worked) {
 		    alt_nbr[ct_dir] = alt[index_up];
-		    slope[ct_dir] = get_slope2(alt_val, alt_nbr[ct_dir], dist_to_nbr[ct_dir]);
-		    /* avoid diagonal flow direction bias */
-		    if (ct_dir > 3) {
-			if (slope[nbr_ew[ct_dir]]) {
+		    slope[ct_dir] =
+			get_slope2(alt_val, alt_nbr[ct_dir],
+				   dist_to_nbr[ct_dir]);
+		}
+		if (!is_in_list) {
+		    if (ct_dir > 3 && slope[ct_dir] > 0) {
+			if (slope[nbr_ew[ct_dir]] > 0) {
 			    /* slope to ew nbr > slope to center */
-			    if (slope[ct_dir] < get_slope2(alt_nbr[nbr_ew[ct_dir]], alt_nbr[ct_dir], ew_res))
-				is_in_list = 1;
+			    if (slope[ct_dir] <
+				get_slope2(alt_nbr[nbr_ew[ct_dir]],
+					   alt_nbr[ct_dir], ew_res))
+				skip_diag = 1;
 			}
-			if (!is_in_list && slope[nbr_ns[ct_dir]]) {
+			if (!skip_diag && slope[nbr_ns[ct_dir]] > 0) {
 			    /* slope to ns nbr > slope to center */
-			    if (slope[ct_dir] < get_slope2(alt_nbr[nbr_ns[ct_dir]], alt_nbr[ct_dir], ns_res))
-				is_in_list = 1;
+			    if (slope[ct_dir] <
+				get_slope2(alt_nbr[nbr_ns[ct_dir]],
+					   alt_nbr[ct_dir], ns_res))
+				skip_diag = 1;
 			}
 		    }
 		}
-		
+
 		/* add neighbour as new point if not in the list */
-		if (is_in_list == 0) {
+		if (is_in_list == 0 && skip_diag == 0) {
 		    add_pt(upr, upc, alt_nbr[ct_dir], alt_val);
 		    /* set flow direction */
 		    asp[index_up] = drain[upr - r + 1][upc - c + 1];
 		}
-		else {
-		    if (is_worked == 0) {
-			/* neighbour is edge in list, not yet worked */
-			if (asp[index_up] < 0) {
-			    asp[index_up] = drain[upr - r + 1][upc - c + 1];
+		else if (is_in_list && is_worked == 0) {
+		    /* neighbour is edge in list, not yet worked */
+		    if (asp[index_up] < 0) {
+			asp[index_up] = drain[upr - r + 1][upc - c + 1];
 
-			    if (wat[index_doer] > 0)
-				wat[index_doer] = -wat[index_doer];
-			}
+			if (wat[index_doer] > 0)
+			    wat[index_doer] = -wat[index_doer];
 		    }
 		}
 	    }  /* end if in region */
@@ -142,7 +152,6 @@ int cmp_pnt(CELL elea, CELL eleb, int addeda, int addedb)
 /* new add point routine for min heap */
 int add_pt(SHORT r, SHORT c, CELL ele, CELL downe)
 {
-
     FLAG_SET(in_list, r, c);
 
     /* add point to next free position */
@@ -291,7 +300,7 @@ double get_slope2(CELL ele, CELL up_ele, double dist)
     if (ele == up_ele)
 	return 0.5 / dist;
     else
-	return (double) (up_ele - ele) / dist;
+	return (double)(up_ele - ele) / dist;
 }
 
 /* new replace */
@@ -312,8 +321,8 @@ int replace(			/* ele was in there */
 	/* if (astar_pts[now].r == upr && astar_pts[now].c == upc) { */
 	seg_index_rc(alt_seg, astar_pts[now], &r2, &c2);
 	if (r2 == upr && c2 == upc) {
-	    /*astar_pts[now].downr = r;
-	    astar_pts[now].downc = c; */
+	    /* astar_pts[now].downr = r;
+	       astar_pts[now].downc = c; */
 	    return 0;
 	}
 	heap_run++;
