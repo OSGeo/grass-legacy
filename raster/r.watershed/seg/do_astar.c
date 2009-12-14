@@ -24,8 +24,8 @@ int do_astar(void)
     int nbr_ew[8] = { 0, 1, 2, 3, 1, 0, 0, 1 };
     int nbr_ns[8] = { 0, 1, 2, 3, 3, 2, 3, 2 };
     double dx, dy, dist_to_nbr[8], ew_res, ns_res;
-
     double slope[8];
+    int skip_diag;
 
     G_message(_("SECTION 2: A * Search."));
 
@@ -82,54 +82,53 @@ int do_astar(void)
 	    slope[ct_dir] = alt_nbr[ct_dir] = 0;
 	    /* check that upr, upc are within region */
 	    if (upr >= 0 && upr < nrows && upc >= 0 && upc < ncols) {
-		/* slope */
+		/* avoid diagonal flow direction bias */
 		bseg_get(&in_list, &in_val, upr, upc);
 		bseg_get(&worked, &work_val, upr, upc);
+		skip_diag = 0;
 		if (!work_val) {
 		    cseg_get(&alt, &alt_up, upr, upc);
 		    alt_nbr[ct_dir] = alt_up;
 		    slope[ct_dir] =
 			get_slope2(alt_val, alt_nbr[ct_dir],
 				   dist_to_nbr[ct_dir]);
-		    /* avoid diagonal flow direction bias */
-		    if (ct_dir > 3) {
-			if (slope[nbr_ew[ct_dir]]) {
+		}
+		if (!in_val) {
+		    if (ct_dir > 3 && slope[ct_dir] > 0) {
+			if (slope[nbr_ew[ct_dir]] > 0) {
 			    /* slope to ew nbr > slope to center */
 			    if (slope[ct_dir] <=
 				get_slope2(alt_nbr[nbr_ew[ct_dir]],
 					   alt_nbr[ct_dir], ew_res))
-				in_val = 1;
+				skip_diag = 1;
 			}
-			if (!in_val && slope[nbr_ns[ct_dir]]) {
+			if (!skip_diag && slope[nbr_ns[ct_dir]] > 0) {
 			    /* slope to ns nbr > slope to center */
 			    if (slope[ct_dir] <=
 				get_slope2(alt_nbr[nbr_ns[ct_dir]],
 					   alt_nbr[ct_dir], ns_res))
-				in_val = 1;
+				skip_diag = 1;
 			}
 		    }
 		}
 		/* put neighbour in search list if not yet in */
-		if (in_val == 0) {
+		if (in_val == 0 && skip_diag == 0) {
 		    cseg_get(&alt, &alt_up, upr, upc);
 		    add_pt(upr, upc, alt_up, alt_val);
 		    /* flow direction is set here */
 		    drain_val = drain[upr - r + 1][upc - c + 1];
 		    cseg_put(&asp, &drain_val, upr, upc);
 		}
-		else {
-		    /* check if neighbour has not been worked on,
-		     * update values for asp and wat */
-		    if (!work_val) {
-			cseg_get(&asp, &asp_up, upr, upc);
-			if (asp_up < 0) {
-			    drain_val = drain[upr - r + 1][upc - c + 1];
-			    cseg_put(&asp, &drain_val, upr, upc);
-			    dseg_get(&wat, &wat_val, r, c);
-			    if (wat_val > 0) {
-				wat_val = -wat_val;
-				dseg_put(&wat, &wat_val, r, c);
-			    }
+		/* check if neighbour has not been worked on */
+		else if (in_val && !work_val) {
+		    cseg_get(&asp, &asp_up, upr, upc);
+		    if (asp_up < 0) {
+			drain_val = drain[upr - r + 1][upc - c + 1];
+			cseg_put(&asp, &drain_val, upr, upc);
+			dseg_get(&wat, &wat_val, r, c);
+			if (wat_val > 0) {
+			    wat_val = -wat_val;
+			    dseg_put(&wat, &wat_val, r, c);
 			}
 		    }
 		}
