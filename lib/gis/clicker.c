@@ -7,15 +7,17 @@
  * 
  */
 #include <stdio.h>
+#include <grass/gis.h>
 
 static int G_clicker_prev = 0;
 
 int G_clicker(void)
 {
-    int x;
+    int x, format;
     static char clicks[] = "|/-\\";
 
     /* be verbose only 1> */
+    format = G_info_format();
     if (format == G_INFO_FORMAT_SILENT || G_verbose() < 1)
         return 0;
 
