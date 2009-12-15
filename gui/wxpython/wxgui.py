@@ -247,7 +247,7 @@ class GMFrame(wx.Frame):
             label += '\t' + shortcut
         
         menuItem = menu.Append(wx.ID_ANY, label, helpString, kind)
-        
+
         self.menucmd[menuItem.GetId()] = gcmd
 
         if len(gcmd) > 0 and \
@@ -407,14 +407,14 @@ class GMFrame(wx.Frame):
                     dlg.Destroy()
                     return
                 dlg.Destroy()
-        
+
         self.gm_cb.GetPage(event.GetSelection()).maptree.Map.Clean()
         self.gm_cb.GetPage(event.GetSelection()).maptree.Close(True)
-        
+
         self.curr_page = None
-        
+
         event.Skip()
-        
+
     def GetLogWindow(self):
         """!Get widget for command output"""
         return self.goutput
@@ -976,13 +976,13 @@ class GMFrame(wx.Frame):
         
         # run the command        
         command = ' '.join(command)
-                
+
+        # bring up the xmon
+        cmdlist = ['d.mon', xmon]
+        p = gcmd.Command(cmdlist, wait=False)
+
         if sys.platform == "darwin":
-
             try:
-                cmdlist = ['xterm', '-e', 'd.mon', xmon]
-                p = gcmd.Command(cmdlist, wait=False)
-
                 cmdlist = ['xterm', '-e', command]
                 q = gcmd.Command(cmdlist, wait=False)
             except:
@@ -990,19 +990,15 @@ class GMFrame(wx.Frame):
                               _('Command %s could not be run') % cmdlist[0])
 
         else:
-            gcmd.RunCommand('d.mon',
-                            start = xmon)
-            
-            runbat = os.path.join(gisbase,'etc','grass-run.bat')
-            xtermwrapper = os.path.join(gisbase,'etc','grass-xterm-wrapper')
-            grassrun = os.path.join(gisbase,'etc','grass-run.sh')
-            
             if 'OS' in os.environ and os.environ['OS'] == "Windows_NT":
+                runbat = os.path.join(gisbase,'etc','grass-run.bat')
                 cmdlist = ["cmd.exe", "/c", 'start "%s"' % runbat, command]
             else:
-                cmdlist = [xtermwrapper, '-e "%s"' % grassrun, command]
+                xtermwrapper = os.path.join(gisbase,'etc','grass-xterm-wrapper')
+                grassrun = os.path.join(gisbase,'etc','grass-run.sh')
+                cmdlist = [xtermwrapper, '-e', grassrun, command]
 
-            p = gcmd.Command(cmdlist)
+            p = gcmd.Command(cmdlist, wait=False)
 
         # reset display mode
         os.environ['GRASS_RENDER_IMMEDIATE'] = 'TRUE'
@@ -1349,7 +1345,7 @@ class GMFrame(wx.Frame):
         self.curr_page.maptree.mapdisplay.Show()
 
     def OnAddOverlay(self, event):
-        """!Add overlay menu""" 
+        """!Add decoration overlay menu""" 
         # start new map display if no display is available
         if not self.curr_page:
             self.NewDisplay(show=False)
