@@ -948,57 +948,54 @@ class GMFrame(wx.Frame):
     
                 self.goutput.RunCmd(cmdlist)
 
-    def OnXTerm(self, event):
+    def OnXTerm(self, event, need_xmon = True):
         """
         Run commands that need interactive xmon
         """
-        command = self.GetMenuCmd(event)
-
         # unset display mode
         del os.environ['GRASS_RENDER_IMMEDIATE']
 
-        # open next available xmon
-        xmonlist = []
-        gisbase = os.environ['GISBASE']
+        if(need_xmon):
+            # open next available xmon
+            xmonlist = []
 
-        # make list of xmons that are not running
-        ret = gcmd.RunCommand('d.mon',
-                              flags = 'L',
-                              read = True)
+            # make list of xmons that are not running
+            ret = gcmd.RunCommand('d.mon',
+                                  flags = 'L',
+                                  read = True)
 
-        for line in ret.split('\n'):               
-            line = line.strip()
-            if line.startswith('x') and 'not running' in line:
-                xmonlist.append(line[0:2])
+            for line in ret.split('\n'):               
+                line = line.strip()
+                if line.startswith('x') and 'not running' in line:
+                    xmonlist.append(line[0:2])
 
-        # find available xmon
-        xmon = xmonlist[0]
-        
+            # find available xmon
+            xmon = xmonlist[0]
+
+            # bring up the xmon
+            cmdlist = ['d.mon', xmon]
+            p = gcmd.Command(cmdlist, wait=False)
+
+
         # run the command        
+        command = self.GetMenuCmd(event)
         command = ' '.join(command)
 
-        # bring up the xmon
-        cmdlist = ['d.mon', xmon]
-        p = gcmd.Command(cmdlist, wait=False)
+        gisbase = os.environ['GISBASE']
 
-        if sys.platform == "darwin":
-            try:
-                cmdlist = ['xterm', '-e', command]
-                q = gcmd.Command(cmdlist, wait=False)
-            except:
-                wx.MessageBox(_('Requires an xterm and could not find an xterm to launch'),
-                              _('Command %s could not be run') % cmdlist[0])
-
+        if 'OS' in os.environ and os.environ['OS'] == "Windows_NT":
+            runbat = os.path.join(gisbase,'etc','grass-run.bat')
+            cmdlist = ["cmd.exe", "/c", 'start "%s"' % runbat, command]
         else:
-            if 'OS' in os.environ and os.environ['OS'] == "Windows_NT":
-                runbat = os.path.join(gisbase,'etc','grass-run.bat')
-                cmdlist = ["cmd.exe", "/c", 'start "%s"' % runbat, command]
+            if sys.platform == "darwin":
+                xtermwrapper = os.path.join(gisbase,'etc','grass-xterm-mac')
             else:
                 xtermwrapper = os.path.join(gisbase,'etc','grass-xterm-wrapper')
-                grassrun = os.path.join(gisbase,'etc','grass-run.sh')
-                cmdlist = [xtermwrapper, '-e', grassrun, command]
 
-            p = gcmd.Command(cmdlist, wait=False)
+            grassrun = os.path.join(gisbase,'etc','grass-run.sh')
+            cmdlist = [xtermwrapper, '-e', grassrun, command]
+
+        p = gcmd.Command(cmdlist, wait=False)
 
         # reset display mode
         os.environ['GRASS_RENDER_IMMEDIATE'] = 'TRUE'
