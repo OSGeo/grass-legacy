@@ -1,4 +1,4 @@
-"""
+"""!
 @package wxgui.py
 
 @brief Main Python app for GRASS wxPython GUI. Main menu, layer management
@@ -9,7 +9,7 @@ Classes:
  - GMFrame
  - GMApp
 
-(C) 2006-2008 by the GRASS Development Team
+(C) 2006-2009 by the GRASS Development Team
 This program is free software under the GNU General Public
 License (>=v2). Read the file COPYING that comes with GRASS
 for details.
@@ -995,7 +995,6 @@ class GMFrame(wx.Frame):
         command = ' '.join(command)
                 
         if sys.platform == "darwin":
-
             try:
                 cmdlist = ['xterm', '-e', 'd.mon', xmon]
                 p = gcmd.Command(cmdlist, wait=False)
@@ -1007,14 +1006,13 @@ class GMFrame(wx.Frame):
                               _('Command %s could not be run') % cmdlist[0])
 
         else:        
-            cmdlist = ["d.mon","start=%s" % xmon]
+            cmdlist = ["d.mon", "start=%s" % xmon]
             p = gcmd.Command(cmdlist)
 
             # run the command        
             runbat = os.path.join(gisbase,'etc','grass-run.bat')
             xtermwrapper = os.path.join(gisbase,'etc','grass-xterm-wrapper')
             grassrun = os.path.join(gisbase,'etc','grass-run.sh')
-            command = shlex.split(str(command))
             
             if platform.system() == 'Windows':
                 cmdlist = ["cmd.exe", "/c", 'start "%s"' % runbat, command]
@@ -1584,12 +1582,14 @@ class AboutWindow(wx.Frame):
         wx.Frame.__init__(self, parent=parent, id=wx.ID_ANY, size=(550,400), 
                           title=_('About GRASS GIS'))
         
+        panel = wx.Panel(parent = self, id = wx.ID_ANY)
+        
         # version and web site
         version, svn_gis_h_rev, svn_gis_h_date = gcmd.RunCommand('g.version',
                                                                  flags = 'r',
                                                                  read = True).splitlines()
 
-        infoTxt = wx.Panel(parent = self, id = wx.ID_ANY)
+        infoTxt = wx.Panel(parent = panel, id = wx.ID_ANY)
         infoSizer = wx.BoxSizer(wx.VERTICAL)
         logo = os.path.join(globalvar.ETCDIR, "gui", "icons", "grass.ico")
         logoBitmap = wx.StaticBitmap(parent = infoTxt, id = wx.ID_ANY,
@@ -1618,12 +1618,12 @@ class AboutWindow(wx.Frame):
             copyrightOut = []
             copyright = copyrightFile.readlines()
             copytext = wordwrap(''.join(copyright[:11] + copyright[26:-3]),
-                                575, wx.ClientDC(self))
+                                575, wx.ClientDC(panel))
             copyrightFile.close()
         else:
             copytext = _('COPYING file missing')
         # put text into a scrolling panel
-        copyrightwin = scrolled.ScrolledPanel(self, id=wx.ID_ANY, 
+        copyrightwin = scrolled.ScrolledPanel(panel, id=wx.ID_ANY, 
                                               size=wx.DefaultSize,
                                               style = wx.TAB_TRAVERSAL|wx.SUNKEN_BORDER)
         copyrighttxt = wx.StaticText(copyrightwin, id=wx.ID_ANY, label=copytext)
@@ -1644,7 +1644,7 @@ class AboutWindow(wx.Frame):
         else:
             license = _('GPL.TXT file missing')
         # put text into a scrolling panel
-        licensewin = scrolled.ScrolledPanel(self, id=wx.ID_ANY, 
+        licensewin = scrolled.ScrolledPanel(panel, id=wx.ID_ANY, 
                                             size=wx.DefaultSize,
                                             style = wx.TAB_TRAVERSAL|wx.SUNKEN_BORDER)
         licensetxt = wx.StaticText(licensewin, id=wx.ID_ANY, label=license)
@@ -1664,7 +1664,7 @@ class AboutWindow(wx.Frame):
             authorsFile.close()
         else:
             authors = _('AUTHORS file missing')
-        authorwin = scrolled.ScrolledPanel(self, id=wx.ID_ANY, 
+        authorwin = scrolled.ScrolledPanel(panel, id=wx.ID_ANY, 
                                            size=wx.DefaultSize,
                                            style = wx.TAB_TRAVERSAL|wx.SUNKEN_BORDER)
         authortxt = wx.StaticText(authorwin, id=wx.ID_ANY, label=str(authors))
@@ -1683,7 +1683,7 @@ class AboutWindow(wx.Frame):
                 FN.FNB_NO_X_BUTTON | \
                 FN.FNB_NO_NAV_BUTTONS
                 
-        aboutNotebook = FN.FlatNotebook(self, id=wx.ID_ANY, style=nbstyle)
+        aboutNotebook = FN.FlatNotebook(panel, id=wx.ID_ANY, style=nbstyle)
         aboutNotebook.SetTabAreaColour(globalvar.FNPageColor)
         
         # make pages for About GRASS notebook
@@ -1693,7 +1693,7 @@ class AboutWindow(wx.Frame):
         pg4 = aboutNotebook.AddPage(authorwin,    text=_("Authors"))
 
         # buttons
-        btnClose = wx.Button(parent = self, id = wx.ID_CLOSE)
+        btnClose = wx.Button(parent = panel, id = wx.ID_CLOSE)
         btnSizer = wx.BoxSizer(wx.HORIZONTAL)
         btnSizer.Add(item = btnClose, proportion = 1,
                      flag = wx.ALL | wx.EXPAND | wx.ALIGN_RIGHT,
@@ -1710,7 +1710,7 @@ class AboutWindow(wx.Frame):
                   flag=wx.EXPAND | wx.ALL, border=1)
         sizer.Add(item=btnSizer, proportion=0,
                   flag=wx.EXPAND | wx.ALL | wx.ALIGN_RIGHT, border=1)
-        self.SetSizer(sizer)
+        panel.SetSizer(sizer)
         self.Layout()
     
     def OnCloseWindow(self, event):
