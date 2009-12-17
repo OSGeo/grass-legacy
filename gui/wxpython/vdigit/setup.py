@@ -11,7 +11,12 @@ from build_ext import update_opts
 
 from distutils.core import setup, Extension
 
-macros = [('PACKAGE', '"grasslibs"')]
+if sys.platform == "win32":
+    package = '\\"grasslibs\\"'
+else:
+    package = '"grasslibs"'
+macros = [('PACKAGE', package)]
+
 inc_dirs = [os.path.join(variables['GRASS_HOME'],
                          'dist.' + variables['ARCH'],
                          'include')]
