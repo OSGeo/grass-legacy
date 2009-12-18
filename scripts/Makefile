@@ -80,7 +80,8 @@ SUBDIRS = \
 	v.rast.stats \
 	v.report \
 	v.univar.sh \
-	v.what.vect
+	v.what.vect \
+	v.krige
 
 include $(MODULE_TOPDIR)/include/Make/Dir.make
 

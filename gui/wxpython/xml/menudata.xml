@@ -1641,6 +1641,14 @@
 	    </menuitem>
 	    <separator />
 	    <menuitem>
+	      <label>Ordinary or block kriging</label>
+	      <help>Performs ordinary or block kriging.</help>
+	      <keywords>vector,interpolation,kriging</keywords>
+              <handler>self.RunMenuCmd</handler>
+	      <command>v.krige</command>
+	    </menuitem>
+	    <separator />
+	    <menuitem>
 	      <label>Fill NULL cells</label>
 	      <help>Fills no-data areas in raster maps using v.surf.rst splines interpolation</help>
 	      <keywords>raster,elevation,interpolation</keywords>
@@ -1778,8 +1786,8 @@
 	    </menuitem>
 	    <menuitem>
 	      <label>Digitize vector map (requires TclTk)</label>
-	      <help>Interactive editing and digitization of vector maps</help>
-	      <keywords>vector, editing, digitization</keywords>
+	      <help>Interactive editing and digitization of vector maps.</help>
+	      <keywords>vector,editing,digitization</keywords>
 	      <handler>self.OnMenuCmd</handler>
 	      <command>v.digit</command>
 	    </menuitem>
