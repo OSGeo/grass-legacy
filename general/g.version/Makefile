@@ -20,10 +20,12 @@ DEPENDENCIES = $(GISDEP)
 
 include $(MODULE_TOPDIR)/include/Make/Module.make
 
-default: cmd
+default:
+	$(MAKE) $(OBJDIR)
+	$(MAKE) cmd
 
-$(OBJDIR)/copying.h: $(MODULE_TOPDIR)/COPYING | $(OBJDIR)
+$(OBJDIR)/copying.h: $(MODULE_TOPDIR)/COPYING
 	sed -e 's/^\(.*\)$$/"\1\\n"/' $< > $@
 
-$(OBJDIR)/confparms.h: $(MODULE_TOPDIR)/config.status | $(OBJDIR)
+$(OBJDIR)/confparms.h: $(MODULE_TOPDIR)/config.status
 	sed -n '7s/^#\(.*\)$$/"\1"/p' $< > $@
