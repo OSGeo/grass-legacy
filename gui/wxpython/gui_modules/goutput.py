@@ -36,6 +36,8 @@ import gcmd
 import utils
 import preferences
 import menuform
+import prompt
+
 from debug import Debug as Debug
 from preferences import globalSettings as UserSettings
 
@@ -145,6 +147,7 @@ class GMConsole(wx.Panel):
             self._notebook = self.parent.notebook
         self.lineWidth       = 80
         self.pageid          = pageid
+                        
         # remember position of line begining (used for '\r')
         self.linePos         = -1
         
@@ -162,7 +165,7 @@ class GMConsole(wx.Panel):
                                             style=wx.GA_HORIZONTAL)
         self.console_progressbar.Bind(EVT_CMD_PROGRESS, self.OnCmdProgress)
         # abort
-        self.btn_abort = wx.Button(parent=self, id=wx.ID_STOP)
+        self.btn_abort = wx.Button(self, -1, "Abort command", size=(125,-1))
         self.btn_abort.SetToolTipString(_("Abort the running command"))
         self.btn_abort.Bind(wx.EVT_BUTTON, self.OnCmdAbort)
         self.btn_abort.Enable(False)
@@ -179,6 +182,11 @@ class GMConsole(wx.Panel):
         self.Bind(EVT_CMD_DONE, self.OnCmdDone)
         
         #
+        # command prompt
+        #
+        self.cmd_prompt = prompt.GPrompt(self, id=wx.ID_ANY)
+
+        #
         # stream redirection
         #
         self.cmd_stdout = GMStdout(self)
@@ -192,8 +200,10 @@ class GMConsole(wx.Panel):
         #
         # buttons
         #
-        self.console_clear = wx.Button(parent=self, id=wx.ID_CLEAR)
-        self.console_save  = wx.Button(parent=self, id=wx.ID_SAVE)
+        self.console_clear = wx.Button(self, -1, "Clear output", size=(125,-1))
+        self.cmd_clear = wx.Button(self, -1, "Clear command", size=(125,-1))
+        self.console_save  = wx.Button(self, -1, "Save output", size=(125,-1))
+        self.Bind(wx.EVT_BUTTON, self.cmd_prompt.OnCmdErase, self.cmd_clear)
         self.Bind(wx.EVT_BUTTON, self.ClearHistory, self.console_clear)
         self.Bind(wx.EVT_BUTTON, self.SaveHistory,  self.console_save)
 
@@ -204,27 +214,31 @@ class GMConsole(wx.Panel):
     def __layout(self):
         """!Do layout"""
         boxsizer1 = wx.BoxSizer(wx.VERTICAL)
-        gridsizer1 = wx.GridSizer(rows=1, cols=2, vgap=0, hgap=0)
+        gridsizer1 = wx.GridSizer(rows=1, cols=4, vgap=0, hgap=0)
+        
         boxsizer1.Add(item=self.cmd_output, proportion=1,
-                      flag=wx.EXPAND | wx.ADJUST_MINSIZE, border=0)
+                      flag=wx.EXPAND | wx.ALIGN_BOTTOM, border=0)
+        boxsizer1.Add(item=self.cmd_prompt, proportion=0,
+                      flag=wx.EXPAND | wx.FIXED_MINSIZE | wx.ALIGN_BOTTOM, border=0)
+                                            
         gridsizer1.Add(item=self.console_clear, proportion=0,
-                       flag=wx.ALIGN_CENTER_HORIZONTAL | wx.ADJUST_MINSIZE, border=0)
+                       flag=wx.ALIGN_CENTER_HORIZONTAL | wx.FIXED_MINSIZE, border=0)
         gridsizer1.Add(item=self.console_save, proportion=0,
-                       flag=wx.ALIGN_CENTER_HORIZONTAL | wx.ADJUST_MINSIZE, border=0)
-
-
+                       flag=wx.ALIGN_CENTER_HORIZONTAL | wx.FIXED_MINSIZE, border=0)
+        gridsizer1.Add(item=self.cmd_clear, proportion=0,
+                       flag=wx.ALIGN_CENTER_HORIZONTAL | wx.FIXED_MINSIZE, border=0)
+        gridsizer1.Add(item=self.btn_abort, proportion=0,
+                       flag=wx.ALIGN_CENTER_HORIZONTAL | wx.FIXED_MINSIZE, border=0)
         boxsizer1.Add(item=gridsizer1, proportion=0,
                       flag=wx.EXPAND | wx.ALIGN_CENTRE_VERTICAL | wx.TOP | wx.BOTTOM,
                       border=5)
+                      
         boxsizer2 = wx.BoxSizer(wx.HORIZONTAL)
         boxsizer2.Add(item=self.console_progressbar, proportion=1,
                       flag=wx.EXPAND | wx.ALIGN_CENTRE_VERTICAL)
-        boxsizer2.Add(item=self.btn_abort, proportion=0,
-                      flag=wx.ALIGN_CENTRE_VERTICAL | wx.LEFT,
-                      border = 5)
         boxsizer1.Add(item=boxsizer2, proportion=0,
-                      flag=wx.EXPAND | wx.ALIGN_CENTRE_VERTICAL | wx.ALL,
-                      border=5)
+                      flag=wx.EXPAND | wx.ALIGN_CENTRE_VERTICAL | wx.LEFT | wx.RIGHT |
+                      wx.TOP, border=5)
         
         boxsizer1.Fit(self)
         boxsizer1.SetSizeHints(self)
@@ -232,6 +246,7 @@ class GMConsole(wx.Panel):
         # layout
         self.SetAutoLayout(True)
         self.SetSizer(boxsizer1)
+        self.Layout()
 
     def Redirect(self):
         """!Redirect stderr
@@ -269,7 +284,8 @@ class GMConsole(wx.Panel):
         
         # p1 = self.cmd_output.GetCurrentPos()
         p1 = self.cmd_output.GetEndStyled()
-        self.cmd_output.GotoPos(p1)
+#        self.cmd_output.GotoPos(p1)
+        self.cmd_output.DocumentEnd()
         
         for line in text.splitlines():
             # fill space
@@ -349,7 +365,10 @@ class GMConsole(wx.Panel):
                 self.parent.cmdinput.SetHistoryItems()
             except AttributeError:
                 pass
-        
+
+        # allow writing to output window
+        self.cmd_output.SetReadOnly(False)
+                
         if cmdlist[0] in globalvar.grassCmd['all']:
             # send GRASS command without arguments to GUI command interface
             # except display commands (they are handled differently)
@@ -410,7 +429,7 @@ class GMConsole(wx.Panel):
                     if os.environ.has_key("GRASS_REGION"):
                         del os.environ["GRASS_REGION"]
                     
-                if len(cmdlist) == 1 and cmdlist[0] not in ('v.krige'):
+                if len(cmdlist) == 1:
                     import menuform
                     # process GRASS command without argument
                     menuform.GUI().ParseCommand(cmdlist, parentframe=self)
@@ -434,9 +453,9 @@ class GMConsole(wx.Panel):
 
             # if command is not a GRASS command, treat it like a shell command
             try:
-                # gcmd.Command(cmdlist,
-                #             stdout=self.cmd_stdout,
-                #             stderr=self.cmd_stderr)
+#                gcmd.Command(cmdlist,
+#                         stdout=self.cmd_stdout,
+#                         stderr=self.cmd_stderr)
                 self.cmdThread.RunCmd(GrassCmd,
                                       onDone,
                                       cmdlist,
@@ -445,6 +464,9 @@ class GMConsole(wx.Panel):
                 self.cmd_output_timer.Start(50)
             except gcmd.CmdError, e:
                 print >> sys.stderr, e
+
+        # reset output window to read only
+        self.cmd_output.SetReadOnly(True)
         
         return None
 
@@ -530,7 +552,7 @@ class GMConsole(wx.Panel):
                 self.cmd_output.AddTextWrapped(message, wrap=60)
             else:
                 self.cmd_output.AddTextWrapped(message, wrap=None)
-	    
+
         p2 = self.cmd_output.GetCurrentPos()
         
         if p2 >= p1:
@@ -590,7 +612,7 @@ class GMConsole(wx.Panel):
 
         # set focus on prompt
         if self.parent.GetName() == "LayerManager":
-            self.parent.cmdinput.SetFocus()
+            self.cmd_prompt.SetFocus()
             self.btn_abort.Enable(False)
         else:
             # updated command dialog
@@ -640,7 +662,7 @@ class GMConsole(wx.Panel):
                     dialog.closebox.IsChecked():
                 time.sleep(1)
                 dialog.Close()
-        
+
         event.Skip()
         
     def OnProcessPendingOutputWindowEvents(self, event):
@@ -756,13 +778,14 @@ class GMStc(wx.stc.StyledTextCtrl):
     def __init__(self, parent, id, margin=False, wrap=None):
         wx.stc.StyledTextCtrl.__init__(self, parent, id)
         self.parent = parent
+        self.SetUndoCollection(True)
+        self.SetReadOnly(True)
 
         #
         # styles
         #                
         self.SetStyle()
         
-
         #
         # line margins
         #
@@ -786,7 +809,7 @@ class GMStc(wx.stc.StyledTextCtrl):
         self.SetUseHorizontalScrollBar(True)
 
         #
-        # bindins
+        # bindings
         #
         self.Bind(wx.EVT_WINDOW_DESTROY, self.OnDestroy)
         
@@ -873,4 +896,3 @@ class GMStc(wx.stc.StyledTextCtrl):
                     txt = _('Unable to encode text. Please set encoding in GUI preferences.') + '\n'
                     
                 self.AddText(txt) 
-    
