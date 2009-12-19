@@ -128,15 +128,17 @@ class CmdThread(threading.Thread):
     def abort(self):
         self.requestCmd.abort()
     
-class GMConsole(wx.Panel):
+class GMConsole(wx.SplitterWindow):
     """!Create and manage output console for commands run by GUI.
     """
     def __init__(self, parent, id=wx.ID_ANY, margin=False, pageid=0,
                  notebook = None,
                  style=wx.TAB_TRAVERSAL | wx.FULL_REPAINT_ON_RESIZE,
                  **kwargs):
-        wx.Panel.__init__(self, parent, id, style = style, *kwargs)
+        wx.SplitterWindow.__init__(self, parent, id, style = style, *kwargs)
         self.SetName("GMConsole")
+
+        self.panel = wx.Panel(parent = self, id = wx.ID_ANY)
         
         # initialize variables
         self.Map             = None
@@ -160,16 +162,10 @@ class GMConsole(wx.Panel):
         #
         # progress bar
         #
-        self.console_progressbar = wx.Gauge(parent=self, id=wx.ID_ANY,
+        self.console_progressbar = wx.Gauge(parent=self.panel, id=wx.ID_ANY,
                                             range=100, pos=(110, 50), size=(-1, 25),
                                             style=wx.GA_HORIZONTAL)
         self.console_progressbar.Bind(EVT_CMD_PROGRESS, self.OnCmdProgress)
-        # abort
-        self.btn_abort = wx.Button(parent = self, id = wx.ID_ANY, label = _("&Abort command"),
-                                   size=(125,-1))
-        self.btn_abort.SetToolTipString(_("Abort the running command"))
-        self.btn_abort.Bind(wx.EVT_BUTTON, self.OnCmdAbort)
-        self.btn_abort.Enable(False)
         
         #
         # text control for command output
@@ -181,12 +177,14 @@ class GMConsole(wx.Panel):
         self.cmd_output.Bind(wx.EVT_TIMER, self.OnProcessPendingOutputWindowEvents)
         self.Bind(EVT_CMD_RUN, self.OnCmdRun)
         self.Bind(EVT_CMD_DONE, self.OnCmdDone)
-        
-        if self.parent.GetName() == 'LayerManager':
-            #
-            # command prompt
-            #
-            self.cmd_prompt = prompt.GPromptSTC(self, id=wx.ID_ANY)
+
+        #
+        # command prompt
+        #
+        self.cmd_prompt = prompt.GPromptSTC(parent = self.panel, id=wx.ID_ANY,
+                                            onRun = self.RunCmd)
+        if self.parent.GetName() != 'LayerManager':
+            self.cmd_prompt.Hide()
         
         #
         # stream redirection
@@ -202,21 +200,25 @@ class GMConsole(wx.Panel):
         #
         # buttons
         #
-        self.console_clear = wx.Button(parent = self, id = wx.ID_ANY,
-                                       label = _("C&lear output"), size=(125,-1))
-        
-        if self.parent.GetName() == 'LayerManager':
-            self.cmd_clear = wx.Button(parent = self, id = wx.ID_ANY,
+        self.btn_console_clear = wx.Button(parent = self.panel, id = wx.ID_ANY,
+                                           label = _("C&lear output"), size=(125,-1))
+        self.btn_cmd_clear = wx.Button(parent = self.panel, id = wx.ID_ANY,
                                        label = _("Cl&ear command"), size=(125,-1))
-            self.Bind(wx.EVT_BUTTON, self.cmd_prompt.OnCmdErase, self.cmd_clear)
-            
-        self.console_save  = wx.Button(parent = self, id = wx.ID_ANY,
-                                       label = _("&Save output"), size=(125,-1))
-        
-        self.Bind(wx.EVT_BUTTON, self.ClearHistory, self.console_clear)
-        self.Bind(wx.EVT_BUTTON, self.SaveHistory,  self.console_save)
+        if self.parent.GetName() != 'LayerManager':
+            self.btn_cmd_clear.Hide()
+        self.btn_console_save  = wx.Button(parent = self.panel, id = wx.ID_ANY,
+                                           label = _("&Save output"), size=(125,-1))
+        # abort
+        self.btn_abort = wx.Button(parent = self.panel, id = wx.ID_ANY, label = _("&Abort command"),
+                                   size=(125,-1))
+        self.btn_abort.SetToolTipString(_("Abort the running command"))
+        self.btn_abort.Enable(False)
 
-        self.Bind(EVT_CMD_ABORT, self.OnCmdAbort)
+        self.btn_cmd_clear.Bind(wx.EVT_BUTTON,     self.cmd_prompt.OnCmdErase)
+        self.btn_console_clear.Bind(wx.EVT_BUTTON, self.ClearHistory)
+        self.btn_console_save.Bind(wx.EVT_BUTTON,  self.SaveHistory)
+        self.btn_abort.Bind(wx.EVT_BUTTON,         self.OnCmdAbort)
+        self.btn_abort.Bind(EVT_CMD_ABORT,         self.OnCmdAbort)
         
         self.__layout()
 
@@ -225,33 +227,39 @@ class GMConsole(wx.Panel):
         boxsizer = wx.BoxSizer(wx.VERTICAL)
         buttonsizer = wx.BoxSizer(wx.HORIZONTAL)
         
-        boxsizer.Add(item=self.cmd_output, proportion=1,
-                      flag=wx.EXPAND | wx.ALIGN_BOTTOM, border=0)
-        if self.parent.GetName() == 'LayerManager':
-            boxsizer.Add(item=self.cmd_prompt, proportion=0,
-                          flag=wx.EXPAND | wx.FIXED_MINSIZE | wx.ALIGN_BOTTOM, border=0)
-                                            
-        buttonsizer.Add(item=self.console_clear, proportion=0,
+        boxsizer.Add(item=self.cmd_prompt, proportion=1,
+                         flag=wx.EXPAND | wx.ALL, border=1)
+        
+        buttonsizer.Add(item=self.btn_console_clear, proportion=0,
                         flag=wx.ALIGN_CENTER | wx.FIXED_MINSIZE | wx.ALL, border=5)
-        buttonsizer.Add(item=self.console_save, proportion=0,
+        buttonsizer.Add(item=self.btn_console_save, proportion=0,
                         flag=wx.ALIGN_CENTER | wx.FIXED_MINSIZE | wx.ALL, border=5)
-        if self.parent.GetName() == 'LayerManager':
-            buttonsizer.Add(item=self.cmd_clear, proportion=0,
-                            flag=wx.ALIGN_CENTER | wx.FIXED_MINSIZE | wx.ALL, border=5)
+        buttonsizer.Add(item=self.btn_cmd_clear, proportion=0,
+                        flag=wx.ALIGN_CENTER | wx.FIXED_MINSIZE | wx.ALL, border=5)
         buttonsizer.Add(item=self.btn_abort, proportion=0,
                         flag=wx.ALIGN_CENTER | wx.FIXED_MINSIZE | wx.ALL, border=5)
         boxsizer.Add(item=buttonsizer, proportion=0,
                       flag=wx.ALIGN_CENTER)
         
-        boxsizer.Add(item=self.console_progressbar, proportion=0,
-                      flag=wx.EXPAND | wx.ALIGN_CENTRE_VERTICAL | wx.LEFT | wx.RIGHT, border=5)
+        boxsizer.Add(item=self.console_progressbar, proportion=1,
+                      flag=wx.EXPAND | wx.ALIGN_CENTRE_VERTICAL | wx.LEFT | wx.RIGHT | wx.BOTTOM, border=3)
         
         boxsizer.Fit(self)
         boxsizer.SetSizeHints(self)
 
+        self.panel.SetSizer(boxsizer)
+        
+        # split window
+        if self.parent.GetName() == 'LayerManager':
+            self.SplitHorizontally(self.cmd_output, self.panel, -75)
+            self.SetMinimumPaneSize(100)
+        else:
+            self.SplitHorizontally(self.cmd_output, self.panel, -10)
+            self.SetMinimumPaneSize(65)
+        self.Fit()
+        
         # layout
         self.SetAutoLayout(True)
-        self.SetSizer(boxsizer)
         self.Layout()
 
     def Redirect(self):

@@ -668,11 +668,12 @@ class TextCtrlAutoComplete(wx.ComboBox, listmix.ColumnSorterMixin):
 
 class GPromptSTC(wx.stc.StyledTextCtrl):
     """!Styled GRASS prompt with autocomplete and calltips"""    
-    def __init__(self, parent, id, size=wx.DefaultSize, margin=False, wrap=None):
+    def __init__(self, parent, id, onRun, margin=False, wrap=None):
         wx.stc.StyledTextCtrl.__init__(self, parent, id)
         self.parent = parent
         self.SetUndoCollection(True)        
-
+        self.RunCmd = onRun
+        
         #
         # styles
         #                
@@ -898,7 +899,7 @@ class GPromptSTC(wx.stc.StyledTextCtrl):
                 maplist = []
                 self.maptype = ''
 
-                #what kind of map/data type is desired?
+                # what kind of map/data type is desired?
                 if (((cmdtype in ['r', 'i'] or cmd in self.drastcmd) and arg in self.rastargs) or
                   ((cmd=='nviz' or cmdtype=='r3') and arg in ['elevation','color']) or
                   arg in ['rast', 'raster']):
@@ -920,9 +921,7 @@ class GPromptSTC(wx.stc.StyledTextCtrl):
                     self.maptype ='group'
                 elif arg=='3dview':
                     self.maptype ='3dview'
-                    
-                print 'maptype at end of = ' + str(self.maptype)
-
+                
             elif event.GetKeyCode() == 44:
                 # autocompletion after ','
                 # if comma is pressed, use the same maptype as previous for multiple map entries
@@ -996,7 +995,7 @@ class GPromptSTC(wx.stc.StyledTextCtrl):
             cmd = shlex.split(str(line))
             
             #send the command list to the processor 
-            self.parent.RunCmd(cmd)
+            self.RunCmd(cmd)
                             
             #add command to history    
             self.cmdbuffer.append(line)
