@@ -165,7 +165,8 @@ class GMConsole(wx.Panel):
                                             style=wx.GA_HORIZONTAL)
         self.console_progressbar.Bind(EVT_CMD_PROGRESS, self.OnCmdProgress)
         # abort
-        self.btn_abort = wx.Button(self, -1, "Abort command", size=(125,-1))
+        self.btn_abort = wx.Button(parent = self, id = wx.ID_ANY, label = _("Abort command"),
+                                   size=(125,-1))
         self.btn_abort.SetToolTipString(_("Abort the running command"))
         self.btn_abort.Bind(wx.EVT_BUTTON, self.OnCmdAbort)
         self.btn_abort.Enable(False)
@@ -200,9 +201,12 @@ class GMConsole(wx.Panel):
         #
         # buttons
         #
-        self.console_clear = wx.Button(self, -1, "Clear output", size=(125,-1))
-        self.cmd_clear = wx.Button(self, -1, "Clear command", size=(125,-1))
-        self.console_save  = wx.Button(self, -1, "Save output", size=(125,-1))
+        self.console_clear = wx.Button(parent = self, id = wx.ID_ANY,
+                                       label = _("Clear output"), size=(125,-1))
+        self.cmd_clear = wx.Button(parent = self, id = wx.ID_ANY,
+                                   label = _("Clear command"), size=(125,-1))
+        self.console_save  = wx.Button(parent = self, id = wx.ID_ANY,
+                                       label = _("Save output"), size=(125,-1))
         self.Bind(wx.EVT_BUTTON, self.cmd_prompt.OnCmdErase, self.cmd_clear)
         self.Bind(wx.EVT_BUTTON, self.ClearHistory, self.console_clear)
         self.Bind(wx.EVT_BUTTON, self.SaveHistory,  self.console_save)
