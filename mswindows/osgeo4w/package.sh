@@ -1,4 +1,4 @@
-#!/c/Programme/OSGeo4W/apps/msys/bin/sh
+#!/c/OSGeo4W/apps/msys/bin/sh
 
 set -e
 
@@ -7,7 +7,7 @@ if ! [ -d mswindows ]; then
 	exit 1
 fi
 
-export OSGEO4W_ROOT_MSYS=/c/Programme/OSGeo4W
+export OSGEO4W_ROOT_MSYS=/c/OSGeo4W
 export PATH=.:/c/mingw/bin:/usr/local/bin:/bin:$OSGEO4W_ROOT_MSYS/bin:/c/WINDOWS/system32:/c/WINDOWS:/c/WINDOWS/System32/Wbem
 
 version() {
@@ -64,7 +64,7 @@ if ! [ -f mswindows/osgeo4w/configure-stamp ]; then
 fi
 
 echo $(date): STARTING make
-make -j4 || make -j4
+make || make
 
 echo $(date): STARTING make install
 make install
@@ -80,9 +80,9 @@ cp mswindows/osgeo4w/grass64.bat.tmpl $OSGEO4W_ROOT_MSYS/bin/grass64.bat.tmpl
 cp mswindows/osgeo4w/ini.bat.tmpl $OSGEO4W_ROOT_MSYS/etc/ini/grass.bat.tmpl
 cp mswindows/osgeo4w/postinstall.bat $OSGEO4W_ROOT_MSYS/etc/postinstall/grass.bat
 cp mswindows/osgeo4w/preremove.bat $OSGEO4W_ROOT_MSYS/etc/preremove/grass.bat
-cp /c/mingw/bin/libgnurx-0.dll $OSGEO_ROOT_MSYS/bin
-cp /c/mingw/bin/libiconv-2.dll $OSGEO_ROOT_MSYS/bin
-cp /c/mingw/bin/libintl-8.dll $OSGEO_ROOT_MSYS/bin
+#cp /c/mingw/bin/libgnurx-0.dll $OSGEO_ROOT_MSYS/bin
+#cp /c/mingw/bin/libiconv-2.dll $OSGEO_ROOT_MSYS/bin
+#cp /c/mingw/bin/libintl-8.dll $OSGEO_ROOT_MSYS/bin
 
 P=$(pwd -W)
 P=${P//\//\\\\}\\\\dist.i686-pc-mingw32
