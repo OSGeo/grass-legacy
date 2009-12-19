@@ -536,7 +536,7 @@ class GMFrame(wx.Frame):
     def OnAboutGRASS(self, event):
         """Display 'About GRASS' dialog"""
         win = AboutWindow(self)
-        win.Centre()
+        win.CentreOnScreen()
         win.Show(True)  
         
     def OnWorkspace(self, event):
@@ -1581,6 +1581,8 @@ class AboutWindow(wx.Frame):
         """
         wx.Frame.__init__(self, parent=parent, id=wx.ID_ANY, size=(550,400), 
                           title=_('About GRASS GIS'))
+        
+        self.SetIcon(wx.Icon(os.path.join(globalvar.ETCICONDIR, 'grass.ico'), wx.BITMAP_TYPE_ICO))
         
         panel = wx.Panel(parent = self, id = wx.ID_ANY)
         
