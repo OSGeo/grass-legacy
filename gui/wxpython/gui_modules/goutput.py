@@ -1,4 +1,4 @@
-"""
+"""!
 @package goutput
 
 @brief Command output log widget
@@ -9,7 +9,7 @@ Classes:
  - GMStdout
  - GMStderr
 
-(C) 2007-2008 by the GRASS Development Team
+(C) 2007-2009 by the GRASS Development Team
 This program is free software under the GNU General Public
 License (>=v2). Read the file COPYING that comes with GRASS
 for details.
@@ -182,11 +182,12 @@ class GMConsole(wx.Panel):
         self.Bind(EVT_CMD_RUN, self.OnCmdRun)
         self.Bind(EVT_CMD_DONE, self.OnCmdDone)
         
-        #
-        # command prompt
-        #
-        self.cmd_prompt = prompt.GPromptSTC(self, id=wx.ID_ANY)
-
+        if self.parent.GetName() == 'LayerManager':
+            #
+            # command prompt
+            #
+            self.cmd_prompt = prompt.GPromptSTC(self, id=wx.ID_ANY)
+        
         #
         # stream redirection
         #
@@ -203,11 +204,15 @@ class GMConsole(wx.Panel):
         #
         self.console_clear = wx.Button(parent = self, id = wx.ID_ANY,
                                        label = _("Clear output"), size=(125,-1))
-        self.cmd_clear = wx.Button(parent = self, id = wx.ID_ANY,
-                                   label = _("Clear command"), size=(125,-1))
+        
+        if self.parent.GetName() == 'LayerManager':
+            self.cmd_clear = wx.Button(parent = self, id = wx.ID_ANY,
+                                       label = _("Clear command"), size=(125,-1))
+            self.Bind(wx.EVT_BUTTON, self.cmd_prompt.OnCmdErase, self.cmd_clear)
+            
         self.console_save  = wx.Button(parent = self, id = wx.ID_ANY,
                                        label = _("Save output"), size=(125,-1))
-        self.Bind(wx.EVT_BUTTON, self.cmd_prompt.OnCmdErase, self.cmd_clear)
+        
         self.Bind(wx.EVT_BUTTON, self.ClearHistory, self.console_clear)
         self.Bind(wx.EVT_BUTTON, self.SaveHistory,  self.console_save)
 
@@ -222,15 +227,17 @@ class GMConsole(wx.Panel):
         
         boxsizer1.Add(item=self.cmd_output, proportion=1,
                       flag=wx.EXPAND | wx.ALIGN_BOTTOM, border=0)
-        boxsizer1.Add(item=self.cmd_prompt, proportion=0,
-                      flag=wx.EXPAND | wx.FIXED_MINSIZE | wx.ALIGN_BOTTOM, border=0)
+        if self.parent.GetName() == 'LayerManager':
+            boxsizer1.Add(item=self.cmd_prompt, proportion=0,
+                          flag=wx.EXPAND | wx.FIXED_MINSIZE | wx.ALIGN_BOTTOM, border=0)
                                             
         gridsizer1.Add(item=self.console_clear, proportion=0,
                        flag=wx.ALIGN_CENTER_HORIZONTAL | wx.FIXED_MINSIZE, border=0)
         gridsizer1.Add(item=self.console_save, proportion=0,
                        flag=wx.ALIGN_CENTER_HORIZONTAL | wx.FIXED_MINSIZE, border=0)
-        gridsizer1.Add(item=self.cmd_clear, proportion=0,
-                       flag=wx.ALIGN_CENTER_HORIZONTAL | wx.FIXED_MINSIZE, border=0)
+        if self.parent.GetName() == 'LayerManager':
+            gridsizer1.Add(item=self.cmd_clear, proportion=0,
+                           flag=wx.ALIGN_CENTER_HORIZONTAL | wx.FIXED_MINSIZE, border=0)
         gridsizer1.Add(item=self.btn_abort, proportion=0,
                        flag=wx.ALIGN_CENTER_HORIZONTAL | wx.FIXED_MINSIZE, border=0)
         boxsizer1.Add(item=gridsizer1, proportion=0,
