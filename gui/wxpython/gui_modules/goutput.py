@@ -165,7 +165,7 @@ class GMConsole(wx.Panel):
                                             style=wx.GA_HORIZONTAL)
         self.console_progressbar.Bind(EVT_CMD_PROGRESS, self.OnCmdProgress)
         # abort
-        self.btn_abort = wx.Button(parent = self, id = wx.ID_ANY, label = _("Abort command"),
+        self.btn_abort = wx.Button(parent = self, id = wx.ID_ANY, label = _("&Abort command"),
                                    size=(125,-1))
         self.btn_abort.SetToolTipString(_("Abort the running command"))
         self.btn_abort.Bind(wx.EVT_BUTTON, self.OnCmdAbort)
@@ -203,15 +203,15 @@ class GMConsole(wx.Panel):
         # buttons
         #
         self.console_clear = wx.Button(parent = self, id = wx.ID_ANY,
-                                       label = _("Clear output"), size=(125,-1))
+                                       label = _("C&lear output"), size=(125,-1))
         
         if self.parent.GetName() == 'LayerManager':
             self.cmd_clear = wx.Button(parent = self, id = wx.ID_ANY,
-                                       label = _("Clear command"), size=(125,-1))
+                                       label = _("Cl&ear command"), size=(125,-1))
             self.Bind(wx.EVT_BUTTON, self.cmd_prompt.OnCmdErase, self.cmd_clear)
             
         self.console_save  = wx.Button(parent = self, id = wx.ID_ANY,
-                                       label = _("Save output"), size=(125,-1))
+                                       label = _("&Save output"), size=(125,-1))
         
         self.Bind(wx.EVT_BUTTON, self.ClearHistory, self.console_clear)
         self.Bind(wx.EVT_BUTTON, self.SaveHistory,  self.console_save)
@@ -222,41 +222,36 @@ class GMConsole(wx.Panel):
 
     def __layout(self):
         """!Do layout"""
-        boxsizer1 = wx.BoxSizer(wx.VERTICAL)
-        gridsizer1 = wx.GridSizer(rows=1, cols=4, vgap=0, hgap=0)
+        boxsizer = wx.BoxSizer(wx.VERTICAL)
+        buttonsizer = wx.BoxSizer(wx.HORIZONTAL)
         
-        boxsizer1.Add(item=self.cmd_output, proportion=1,
+        boxsizer.Add(item=self.cmd_output, proportion=1,
                       flag=wx.EXPAND | wx.ALIGN_BOTTOM, border=0)
         if self.parent.GetName() == 'LayerManager':
-            boxsizer1.Add(item=self.cmd_prompt, proportion=0,
+            boxsizer.Add(item=self.cmd_prompt, proportion=0,
                           flag=wx.EXPAND | wx.FIXED_MINSIZE | wx.ALIGN_BOTTOM, border=0)
                                             
-        gridsizer1.Add(item=self.console_clear, proportion=0,
-                       flag=wx.ALIGN_CENTER_HORIZONTAL | wx.FIXED_MINSIZE, border=0)
-        gridsizer1.Add(item=self.console_save, proportion=0,
-                       flag=wx.ALIGN_CENTER_HORIZONTAL | wx.FIXED_MINSIZE, border=0)
+        buttonsizer.Add(item=self.console_clear, proportion=0,
+                        flag=wx.ALIGN_CENTER | wx.FIXED_MINSIZE | wx.ALL, border=5)
+        buttonsizer.Add(item=self.console_save, proportion=0,
+                        flag=wx.ALIGN_CENTER | wx.FIXED_MINSIZE | wx.ALL, border=5)
         if self.parent.GetName() == 'LayerManager':
-            gridsizer1.Add(item=self.cmd_clear, proportion=0,
-                           flag=wx.ALIGN_CENTER_HORIZONTAL | wx.FIXED_MINSIZE, border=0)
-        gridsizer1.Add(item=self.btn_abort, proportion=0,
-                       flag=wx.ALIGN_CENTER_HORIZONTAL | wx.FIXED_MINSIZE, border=0)
-        boxsizer1.Add(item=gridsizer1, proportion=0,
-                      flag=wx.EXPAND | wx.ALIGN_CENTRE_VERTICAL | wx.TOP | wx.BOTTOM,
-                      border=5)
-                      
-        boxsizer2 = wx.BoxSizer(wx.HORIZONTAL)
-        boxsizer2.Add(item=self.console_progressbar, proportion=1,
-                      flag=wx.EXPAND | wx.ALIGN_CENTRE_VERTICAL)
-        boxsizer1.Add(item=boxsizer2, proportion=0,
-                      flag=wx.EXPAND | wx.ALIGN_CENTRE_VERTICAL | wx.LEFT | wx.RIGHT |
-                      wx.TOP, border=5)
+            buttonsizer.Add(item=self.cmd_clear, proportion=0,
+                            flag=wx.ALIGN_CENTER | wx.FIXED_MINSIZE | wx.ALL, border=5)
+        buttonsizer.Add(item=self.btn_abort, proportion=0,
+                        flag=wx.ALIGN_CENTER | wx.FIXED_MINSIZE | wx.ALL, border=5)
+        boxsizer.Add(item=buttonsizer, proportion=0,
+                      flag=wx.ALIGN_CENTER)
         
-        boxsizer1.Fit(self)
-        boxsizer1.SetSizeHints(self)
+        boxsizer.Add(item=self.console_progressbar, proportion=0,
+                      flag=wx.EXPAND | wx.ALIGN_CENTRE_VERTICAL | wx.LEFT | wx.RIGHT, border=5)
+        
+        boxsizer.Fit(self)
+        boxsizer.SetSizeHints(self)
 
         # layout
         self.SetAutoLayout(True)
-        self.SetSizer(boxsizer1)
+        self.SetSizer(boxsizer)
         self.Layout()
 
     def Redirect(self):
