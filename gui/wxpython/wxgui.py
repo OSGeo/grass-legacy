@@ -264,7 +264,7 @@ class GMFrame(wx.Frame):
 
         # create command output text area and add it to main notebook page
         self.goutput = goutput.GMConsole(self, pageid=1)
-        self.outpage = self.notebook.AddPage(self.goutput, text=_("Command output"))
+        self.outpage = self.notebook.AddPage(self.goutput, text=_("Command console"))
 
         # bindings
         self.gm_cb.Bind(FN.EVT_FLATNOTEBOOK_PAGE_CHANGED, self.OnCBPageChanged)

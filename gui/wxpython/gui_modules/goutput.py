@@ -184,7 +184,7 @@ class GMConsole(wx.Panel):
         #
         # command prompt
         #
-        self.cmd_prompt = prompt.GPrompt(self, id=wx.ID_ANY)
+        self.cmd_prompt = prompt.GPromptSTC(self, id=wx.ID_ANY)
 
         #
         # stream redirection
