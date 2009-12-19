@@ -24,400 +24,147 @@ import sys
 import shlex
 
 import wx
-import wx.stc
+import wx.lib.mixins.listctrl as listmix
 
 from grass.script import core as grass
 
 import globalvar
+import utils
+import menuform
 import menudata
-import gcmd
 
-class GPrompt(wx.stc.StyledTextCtrl):
-    """!Styled GRASS prompt"""    
-    def __init__(self, parent, id, size=wx.DefaultSize, margin=False, wrap=None):
-        wx.stc.StyledTextCtrl.__init__(self, parent, id)
-        self.parent = parent
-        self.SetUndoCollection(True)        
-
-        #
-        # styles
-        #                
-        self.SetWrapMode(True)
+class GPrompt:
+    """!Interactive GRASS prompt"""
+    def __init__(self, parent):
+        self.parent = parent # GMFrame
+        
+        # dictionary of modules (description, keywords, ...)
+        self.modules = self.parent.menudata.GetModules()
+        
+        self.panel, self.input = self.__create()
+        
+    def __create(self):
+        """!Create widget"""
+        cmdprompt = wx.Panel(self.parent)
         
         #
-        # create command and map lists for autocompletion
+        # search
         #
-        self.AutoCompSetIgnoreCase(False) 
+        searchTxt = wx.StaticText(parent = cmdprompt, id = wx.ID_ANY,
+                                  label = _("Find module:"))
         
-        self.rastlist = []
-        self.vectlist = []
-        self.imglist = []
-        self.r3list = []
-        self.dblist = []
-        self.genlist = []
-        self.displist = []
+        self.searchBy = wx.Choice(parent = cmdprompt, id = wx.ID_ANY,
+                             choices = [_("description"),
+                                        _("keywords")])
+        winHeight = self.searchBy.GetSize()[1]
+
+        self.search = wx.TextCtrl(parent = cmdprompt, id = wx.ID_ANY,
+                             value = "", size = (-1, 25))
         
-        for item in globalvar.grassCmd['all']:
-            if len(item.split('.')) > 1:
-                start,end = item.split('.',1)
-                if start == 'r': self.rastlist.append(end)
-                elif start == 'v': self.vectlist.append(end)
-                elif start == 'i': self.imglist.append(end)
-                elif start == 'r3': self.r3list.append(end)
-                elif start == 'db': self.dblist.append(end)
-                elif start == 'g': self.genlist.append(end)
-                elif start == 'd': self.displist.append(end)
+        label = wx.Button(parent = cmdprompt, id = wx.ID_ANY,
+                          label = _("&Cmd >"), size = (-1, winHeight))
+        label.SetToolTipString(_("Click for erasing command prompt"))
 
-        self.rastlist.sort()
-        self.vectlist.sort()
-        self.imglist.sort()
-        self.r3list.sort()
-        self.dblist.sort()
-        self.genlist.sort()
-        self.displist.sort()
-                        
-        self.datatypes = []
-        self.maplists = {}
-        self.maptype = ''
-        self.datatypes = ['rast',
-                        'rast3d',
-                        'vect',
-                        'oldvect',
-                        'asciivect',
-                        'labels',
-                        'region',
-                        'region3d',
-                        'group',
-                        '3dview']
-
-        self.drastcmd = ['d.rast',
-                        'd.rgb',
-                        'd.his',
-                        'd.rast.arrow',
-                        'd.rast.num']
-                    
-        self.dvectcmd = ['d.vect',
-                        'd.vect.chart'
-                        'd.thematic.area',
-                        'd.vect.thematic']
+        ### todo: fix TextCtrlAutoComplete to work also on Macs
+        ### reason: missing wx.PopupWindow()
+        try:
+            cmdinput = TextCtrlAutoComplete(parent = cmdprompt, id = wx.ID_ANY,
+                                            value = "",
+                                            style = wx.TE_LINEWRAP | wx.TE_PROCESS_ENTER,
+                                            size = (-1, winHeight),
+                                            statusbar = self.parent.statusbar)
+        except NotImplementedError:
+            # wx.PopupWindow may be not available in wxMac
+            # see http://trac.wxwidgets.org/ticket/9377
+            cmdinput = wx.TextCtrl(parent = cmdprompt, id = wx.ID_ANY,
+                                   value = "",
+                                   style=wx.TE_LINEWRAP | wx.TE_PROCESS_ENTER,
+                                   size = (-1, 25))
+            self.searchBy.Enable(False)
+            self.search.Enable(False)
         
-        self.rastargs = ['map',
-                        'input',
-                        'elevation',
-                        'color',
-                        'rast',
-                        'raster',
-                        'red',
-                        'green',
-                        'blue',
-                        'h_map',
-                        'i_map',
-                        's_map',
-                        'hue_input',
-                        'intensity_input',
-                        'saturation_input',
-                        'red_input',
-                        'green_input',
-                        'blue_input']
-                        
-        self.__getfiles()
-
-        #
-        # command history buffer
-        #
-        self.cmdbuffer = []
-        self.cmdindex = 0
-
-        #
-        # line margins
-        #
-        # TODO print number only from cmdlog
-        self.SetMarginWidth(1, 0)
-        self.SetMarginWidth(2, 0)
-        if margin:
-            self.SetMarginType(0, wx.stc.STC_MARGIN_NUMBER)
-            self.SetMarginWidth(0, 30)
-        else:
-            self.SetMarginWidth(0, 0)
-
-        #
-        # miscellaneous
-        #
-        self.SetViewWhiteSpace(False)
-#        self.SetTabWidth(4)
-        self.SetUseTabs(False)
-        self.UsePopUp(True)
-        self.SetSelBackground(True, "#FFFF00")
-        self.SetUseHorizontalScrollBar(True)
-
-        #
-        # bindings
-        #
-        self.Bind(wx.EVT_WINDOW_DESTROY, self.OnDestroy)
-        self.Bind(wx.EVT_KEY_DOWN, self.OnKeyPressed)
- 
-    def __getfiles(self):   
-        for item in self.datatypes:
-            mlist = grass.read_command("g.mlist", "m", type=item).splitlines()
-            mlist.sort()
-            self.maplists[item] = mlist
-            
-    def OnKeyPressed(self, event):
-        """!Key press capture for autocompletion, tooltips, and command history"""
-        #keycodes used: "." = 46, "=" = 61, "," = 44 
-        line = ''
-        entry = ''
-        usage = ''
-        cmdtype = ''
-        cmdname = ''
-        cmd = ''
-        if event.GetKeyCode() != 44:
-            self.maptype = ''
-                            
-        # CAN CHANGE: event.ControlDown() for manual autocomplete
+        cmdinput.SetFont(wx.Font(10, wx.FONTFAMILY_MODERN, wx.NORMAL, wx.NORMAL, 0, ''))
         
-        if event.GetKeyCode() == 46 and not event.ShiftDown():
-            #GRASS command autocomplete when "." is pressed after r,v,i,g,db, or d
-            listcmds = []
-            pos = self.GetCurrentPos()
-            self.InsertText(pos,'.')
-            self.CharRight()
-            
-            entry = self.GetTextLeft()
-            if entry not in ['r.','v.','i.','g.','db.','d.']:
-                return
-
-            if entry == 'r.': listcmds = self.rastlist
-            elif entry == 'v.': listcmds = self.vectlist
-            elif entry == 'i.': listcmds = self.imglist
-            elif entry == 'r3.': listcmds = self.r3list
-            elif entry == 'db.': listcmds = self.dblist
-            elif entry == 'g.': listcmds = self.genlist
-            elif entry == 'd.': listcmds = self.displist
-
-            if listcmds == []:
-                return
-            else:
-                self.AutoCompShow(0, " ".join(listcmds))                    
-            
-        elif event.GetKeyCode() == wx.WXK_TAB:
-            #GRASS command calltips
-                        
-            #Must be a command to the left somewhere
-            pos = self.GetCurrentPos()
-            entry = self.GetTextLeft()
-            cmd = entry.split()[0].strip()
-            if cmd not in globalvar.grassCmd['all']:
-                return
-            
-            usage, description = self.GetCommandUsage(cmd)
-                                        
-            self.CallTipSetBackground("PALE GREEN")
-            self.CallTipSetForeground("BLACK")
-            self.CallTipShow(pos, usage+'\n\n'+description)
-            
-        elif (event.GetKeyCode() == wx.WXK_SPACE and event.ControlDown()) or \
-            event.GetKeyCode() == 61 or event.GetKeyCode() == 44:
-            #Autocompletion for map/data file name entry
-            pos = self.GetCurrentPos()
-            entry = self.GetTextLeft()
-            arg = ''
-
-            if entry.strip()[0:2] in ['r.','v.','i.','g.','db.','d.']:
-                cmdtype =  entry.strip()[0]
-                cmd = entry.split()[0].strip()
-                if cmd in globalvar.grassCmd['all']:
-                    cmdname = cmd.split('.')[1]
-                else:
-                    #No complete GRASS command found
-                    cmd = ''
-                    cmdname = ''
-            elif entry.strip()[0:4] == 'nviz':
-                cmdtype = ''
-                cmdname = cmd = 'nviz'
-            else:
-                #No partial or complete GRASS command found
-                return
-
-            cmdargs = entry.strip('=')
-            try:
-                arg = cmdargs.rsplit(' ',1)[1]
-            except:
-                arg = ''
-                
-            if event.GetKeyCode() == 61:
-                #insert the '=' and move to the end of the line, ready for a map name
-                self.InsertText(pos,'=')
-                self.CharRight()
-
-                maplist = []
-                maptype = ''
-                
-                #what kind of map/data type is desired?
-                if (((cmdtype in ['r', 'i'] or cmd in self.drastcmd) and arg in self.rastargs) or
-                  ((cmd=='nviz' or cmdtype=='r3') and (arg=='elevation' or arg=='color')) or
-                  arg=='rast' or arg=='raster'):
-                    self.maptype = 'rast'
-                elif (((cmdtype=='v' or cmd in self.dvectcmd) and arg in ['map', 'input']) or
-                  (cmdtype=='r3' and arg=='input') or
-                  arg in ['vect', 'vector', 'points']):
-                    self.maptype = 'vect'
-                elif ((cmdtype=='r3' and (arg=='map' or arg=='input')) or
-                  (cmdtype=='nviz' and arg=='volume') or arg=='rast3d'):
-                    self.maptype = 'rast3d'
-                elif arg=='labels':
-                    self.maptype ='labels'
-                elif arg=='region':
-                    self.maptype ='region'
-                elif arg=='region3d':
-                    self.maptype ='region3d'
-                elif arg=='group':
-                    self.maptype ='group'
-                elif arg=='3dview':
-                    self.maptype ='3dview'
-
-            elif event.GetKeyCode() == 44:
-                #if ctrl-comma is pressed, use the same maptype as previous for multiple map entries
-                
-                # insert the comma and move to the end of the line ready for a map name
-                self.InsertText(pos,',')
-                self.CharRight()
-                
-                #must apply to an entry where '=[string]' has already been entered
-                if '=' not in arg:
-                    return
-
-            elif event.GetKeyCode() == wx.WXK_SPACE and event.ControlDown():
-                #map entries without arguments (as in r.info [mapname]) use ctrl-shift
-                maplist = []
-                if cmdtype=='r' or cmdtype=='i':
-                    self.maptype = 'rast'
-                elif cmdtype=='v':
-                    self.maptype = 'vect'
-                elif cmdtype=='r3':
-                    self.maptype = 'rast3d'
-                    
-            if self.maptype == '': 
-                return
-            else:
-                maplist = self.maplists[self.maptype]
-                self.AutoCompShow(0, " ".join(maplist))
-                        
-        elif event.GetKeyCode() in [wx.WXK_UP,wx.WXK_DOWN] and event.ControlDown():
-            #Command history    
-            
-            if self.cmdbuffer == []: return
-            txt = ''
-
-            self.DocumentEnd()
-            
-            if event.GetKeyCode() == wx.WXK_UP:
-                self.cmdindex = self.cmdindex - 1
-            if event.GetKeyCode() == wx.WXK_DOWN:
-                self.cmdindex = self.cmdindex + 1
-            if self.cmdindex < 0:
-                self.cmdindex = 0
-            if self.cmdindex > len(self.cmdbuffer) - 1:
-                self.cmdindex = len(self.cmdbuffer) - 1
-            
-            try:
-                txt = self.cmdbuffer[self.cmdindex]
-            except:
-                pass
-                
-            self.DelLineLeft()
-            self.DelLineRight()
-            pos = self.GetCurrentPos()            
-            self.InsertText(pos,txt)
-            self.LineEnd()
-            
-        elif event.GetKeyCode() == wx.WXK_RETURN and self.AutoCompActive() == False:
-            #Run command on line when <return> is pressed    
-            print 'in command'
-            #find the command to run
-            line = str(self.GetCurLine()[0]).strip()
-            if len(line) == 0:
-                return
-                        
-            cmd = shlex.split(str(line))
-            
-            #send the command to the processor 
-            self.parent.RunCmd(cmd)
-                            
-            #add command to buffer    
-            self.cmdbuffer.append(line)
-            
-            #keep buffer to a managable size
-            if len(self.cmdbuffer) > 200:
-                del self.cmdbuffer[0]
-            self.cmdindex = len(self.cmdbuffer)
-
-        else:
-            event.Skip()
-
-    def GetTextLeft(self):
-        """!Returns all text left of the caret"""
-        entry = ''
-        pos = self.GetCurrentPos()
-        self.HomeExtend()
-        entry = self.GetSelectedText().strip()
-        self.SetCurrentPos(pos)
+        wx.CallAfter(cmdinput.SetInsertionPoint, 0)
         
-        return entry
+        # bidnings
+        label.Bind(wx.EVT_BUTTON,        self.OnCmdErase)
+        cmdinput.Bind(wx.EVT_TEXT_ENTER, self.OnRunCmd)
+        cmdinput.Bind(wx.EVT_TEXT,       self.OnUpdateStatusBar)
+        self.search.Bind(wx.EVT_TEXT,    self.OnSearchModule)
+        
+        # layout
+        sizer = wx.GridBagSizer(hgap=5, vgap=5)
+        sizer.AddGrowableRow(1)
+        sizer.AddGrowableCol(2)
 
-    def GetCommandUsage(self, command):
-        """!Returns the usage information for a command"""
-        usage = ''
-        description = ''
+        sizer.Add(item = searchTxt,
+                  flag = wx.ALIGN_RIGHT | wx.ALIGN_CENTER_VERTICAL,
+                  pos = (0, 0))
 
-        ret, out  = gcmd.RunCommand(command, 'help', getErrorMsg = True)
-               
-        if ret == 0:
-            cmdhelp = out.splitlines()
-            addline = False
-            helplist = []
-            description = ''
-            for line in cmdhelp:
-                if "Usage:" in line:
-                    addline = True
-                    continue
-                elif "Flags:" in line:
-                    addline = False
+        sizer.Add(item = self.searchBy,
+                  flag = wx.ALIGN_CENTER_VERTICAL | wx.ALIGN_CENTER,
+                  pos = (0, 1))
+        
+        sizer.Add(item = self.search,
+                  flag = wx.EXPAND | wx.RIGHT | wx.ALIGN_CENTER_VERTICAL | wx.ALIGN_CENTER,
+                  border = 5,
+                  pos = (0, 2))
+        
+        sizer.Add(item = label, 
+                  flag = wx.LEFT | wx.EXPAND | wx.ALIGN_CENTER_VERTICAL | wx.ALIGN_CENTER,
+                  border = 5,
+                  pos = (1, 0))
+        
+        sizer.Add(item = cmdinput,
+                  flag = wx.EXPAND | wx.RIGHT,
+                  border = 5,
+                  pos = (1, 1), span = (1, 2))
+        
+        cmdprompt.SetSizer(sizer)
+        sizer.Fit(cmdprompt)
+        cmdprompt.Layout()
+        
+        return cmdprompt, cmdinput
+
+    def __checkKey(self, text, keywords):
+        """!Check if text is in keywords"""
+        found = 0
+        keys = text.split(',')
+        if len(keys) > 1: # -> multiple keys
+            for k in keys[:-1]:
+                k = k.strip()
+                for key in keywords: 
+                    if k == key: # full match
+                        found += 1
+                        break
+            k = keys[-1].strip()
+            for key in keywords:
+                if k in key: # partial match
+                    found +=1
                     break
-                elif addline == True:
-                    line = line.strip()
-                    helplist.append(line)
-
-            for line in cmdhelp:
-                if "Description:" in line:
-                    addline = True
-                    continue
-                elif "Keywords:" in line:
-                    addline = False
-                    break
-                elif addline == True:
-                    description += (line + ' ')
-                
-            description = description.strip()
-
-            for line in helplist:
-                usage += line + '\n'
-
-            return usage.strip(), description
         else:
-            return ''   
-
-    def OnDestroy(self, evt):
-        """!The clipboard contents can be preserved after
-        the app has exited"""
+            for key in keywords:
+                if text in key: # partial match
+                    found +=1
+                    break
         
-        wx.TheClipboard.Flush()
-        evt.Skip()
+        if found == len(keys):
+            return True
+        
+        return False
+    
+    def GetPanel(self):
+        """!Get main widget panel"""
+        return self.panel
+
+    def GetInput(self):
+        """!Get main prompt widget"""
+        return self.input
     
     def OnCmdErase(self, event):
         """!Erase command prompt"""
-        self.Home()
-        self.DelLineRight()
+        self.input.SetValue('')
         
     def OnRunCmd(self, event):
         """!Run command"""
@@ -917,4 +664,3 @@ class TextCtrlAutoComplete(wx.ComboBox, listmix.ColumnSorterMixin):
             self._showDropDown(False)
         
         event.Skip()
->>>>>>> .r40052
