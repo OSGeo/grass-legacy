@@ -1,4 +1,4 @@
-"""!
+"""
 @package wxgui.py
 
 @brief Main Python app for GRASS wxPython GUI. Main menu, layer management
@@ -119,20 +119,20 @@ class GMFrame(wx.Frame):
         self.disp_idx      = 0            # index value for map displays and layer trees
         self.curr_page     = ''           # currently selected page for layer tree notebook
         self.curr_pagenum  = ''           # currently selected page number for layer tree notebook
+        self.encoding      = 'ISO-8859-1' # default encoding for display fonts
         self.workspaceFile = workspace    # workspace file
         self.menucmd       = dict()       # menuId / cmd
         self.georectifying = None         # reference to GCP class or None
+        
         # list of open dialogs
         self.dialogs        = dict()
         self.dialogs['preferences'] = None
         self.dialogs['atm'] = list()
         
         # creating widgets
-        # -> self.notebook, self.goutput, self.outpage
         self.notebook  = self.__createNoteBook()
         self.menubar, self.menudata = self.__createMenuBar()
         self.statusbar = self.CreateStatusBar(number=1)
-        self.cmdprompt, self.cmdinput = self.__createCommandPrompt()
         self.toolbar   = self.__createToolBar()
         
         # bindings
@@ -146,16 +146,11 @@ class GMFrame(wx.Frame):
         self._auimgr.AddPane(self.notebook, wx.aui.AuiPaneInfo().
                              Left().CentrePane().BestSize((-1,-1)).Dockable(False).
                              CloseButton(False).DestroyOnClose(True).Row(1).Layer(0))
-        self._auimgr.AddPane(self.cmdprompt, wx.aui.AuiPaneInfo().
-                             Bottom().BestSize((-1, -1)).Dockable(False).
-                             CloseButton(False).DestroyOnClose(True).
-                             PaneBorder(False).Row(1).Layer(0).Position(0).
-                             CaptionVisible(False))
 
         self._auimgr.Update()
 
         wx.CallAfter(self.notebook.SetSelection, 0)
-        wx.CallAfter(self.cmdinput.SetFocus)
+        wx.CallAfter(self.goutput.cmd_prompt.SetFocus)
         
         # use default window layout ?
         if UserSettings.Get(group='general', key='defWindowPos', subkey='enabled') is True:
@@ -192,13 +187,7 @@ class GMFrame(wx.Frame):
         # start with layer manager on top
         self.curr_page.maptree.mapdisplay.Raise()
         self.Raise()
-        
-    def __createCommandPrompt(self):
-        """!Creates command-line input area"""
-        p = prompt.GPrompt(self)
-
-        return p.GetPanel(), p.GetInput()
-    
+            
     def __createMenuBar(self):
         """!Creates menubar"""
 
@@ -367,7 +356,7 @@ class GMFrame(wx.Frame):
         page = event.GetSelection()
         if page == self.goutput.pageid:
             # remove '(...)'
-            self.notebook.SetPageText(page, _("Command output"))
+            self.notebook.SetPageText(page, _("Command console"))
         
         event.Skip()
 
@@ -454,7 +443,7 @@ class GMFrame(wx.Frame):
         if event:
             cmd = self.GetMenuCmd(event)
         self.goutput.RunCmd(cmd, switchPage=True)
-        
+
     def OnMenuCmd(self, event, cmd = ''):
         """!Parse command selected from menu"""
         if event:
@@ -548,7 +537,7 @@ class GMFrame(wx.Frame):
     def OnAboutGRASS(self, event):
         """!Display 'About GRASS' dialog"""
         win = AboutWindow(self)
-        win.CentreOnScreen()
+        win.Centre()
         win.Show(True)  
         
     def OnWorkspace(self, event):
@@ -979,7 +968,7 @@ class GMFrame(wx.Frame):
 
         gisbase = os.environ['GISBASE']
 
-        if sys.platform == win32:
+        if 'OS' in os.environ and os.environ['OS'] == "Windows_NT":
             runbat = os.path.join(gisbase,'etc','grass-run.bat')
             cmdlist = ["cmd.exe", "/c", 'start "%s"' % runbat, command]
         else:
@@ -1541,19 +1530,17 @@ class GMFrame(wx.Frame):
         event.Skip()
 
     def OnQuit(self, event):
-        """!Quit GRASS session (wxGUI and shell)"""
+        """!Quit GRASS"""
         # quit wxGUI session
         self.OnCloseWindow(event)
-        
+
         # quit GRASS shell
         try:
-            pid = int(os.environ['GIS_LOCK'])
-        except (KeyError, ValueError):
-            sys.stderr.write('\n')
-            sys.stderr.write(_("WARNING: Unable to quit GRASS, uknown GIS_LOCK"))
+            pid = os.environ['GRASS_SHELL_PID']
+        except KeyError:
             return
-        
-        os.kill(pid, signal.SIGQUIT)
+
+        os.kill(int(pid), signal.SIGQUIT)
         
     def OnCloseWindow(self, event):
         """!Cleanup when wxGUI is quit"""
