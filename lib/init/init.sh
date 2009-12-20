@@ -817,7 +817,7 @@ case "$GRASS_GUI" in
     
     # Check for tcltk interface
     tcltk | gis.m)
-	if [ $sh -ne bash ] || [ $sh -ne msh ] || [ $sh -ne cygwin ]; then
+	if [ "$sh" != "bash" ] && [ "$sh" != "msh" ] && [ "$sh" != "cygwin" ]; then
 		# trap is not supported by csh/tcsh and rc
 		"$GISBASE/scripts/gis.m"
 	fi;
