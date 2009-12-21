@@ -241,7 +241,7 @@ class GMConsole(wx.SplitterWindow):
         boxsizer.Add(item=buttonsizer, proportion=0,
                       flag=wx.ALIGN_CENTER)
         
-        boxsizer.Add(item=self.console_progressbar, proportion=1,
+        boxsizer.Add(item=self.console_progressbar, proportion=0,
                       flag=wx.EXPAND | wx.ALIGN_CENTRE_VERTICAL | wx.LEFT | wx.RIGHT | wx.BOTTOM, border=3)
         
         boxsizer.Fit(self)
@@ -379,9 +379,6 @@ class GMConsole(wx.SplitterWindow):
                 self.parent.cmdinput.SetHistoryItems()
             except AttributeError:
                 pass
-
-        # allow writing to output window
-        self.cmd_output.SetReadOnly(False)
                 
         if cmdlist[0] in globalvar.grassCmd['all']:
             # send GRASS command without arguments to GUI command interface
@@ -471,9 +468,6 @@ class GMConsole(wx.SplitterWindow):
             self.btn_abort.Enable()
             self.cmd_output_timer.Start(50)
 
-        # reset output window to read only
-        self.cmd_output.SetReadOnly(True)
-        
         return None
 
     def ClearHistory(self, event):
@@ -785,7 +779,6 @@ class GMStc(wx.stc.StyledTextCtrl):
         wx.stc.StyledTextCtrl.__init__(self, parent, id)
         self.parent = parent
         self.SetUndoCollection(True)
-        self.SetReadOnly(True)
 
         #
         # styles
@@ -818,6 +811,18 @@ class GMStc(wx.stc.StyledTextCtrl):
         # bindings
         #
         self.Bind(wx.EVT_WINDOW_DESTROY, self.OnDestroy)
+        self.Bind(wx.EVT_KEY_DOWN, self.OnKeyPressed)
+
+    def OnKeyPressed(self, event):
+        """!Traps key presses so that the STC behaves like read only to
+        key presses, but not to logged output or errors. Exception for 
+        key press modified by ctrl or cmd (Mac) to allow cut, copy, paste
+        through key filter"""
+        
+        if event.ControlDown() or event.CmdDown():
+            event.Skip()
+        else:
+            return
         
     def SetStyle(self):
         """!Set styles for styled text output windows with type face 
