@@ -449,7 +449,7 @@ proc GmCLabels::display { node } {
 				set opt($id,1,ltxt) [subst -nocommands -novariables $val]
 				
 				# check to see if there are line breaks in the text
-				set newlines [expr [llength [split $opt($id,1,ltxt) "\n"]] - 1]
+				set newlines [llength [split $opt($id,1,ltxt) "\n"]]
 				
 				# create each label when loop gets to a text line in the labels file
 				# Here should be set all font related options, that come from labelfile
@@ -460,14 +460,14 @@ proc GmCLabels::display { node } {
 				# set the label width and height
 				set linelen [font measure $opt($id,1,lfont) $opt($id,1,ltxt)]
 				if {$linelen < $opt($id,1,lwidth)} {
-					set wid [expr $linelen + 8]
-					set lineh [expr $newlines * [font metrics $opt($id,1,lfont) -linespace] + 8]
+					set wid [expr $linelen + 2]
+					set lineh [expr $newlines * [font metrics $opt($id,1,lfont) -linespace]]
 				} else {
-					set wid $opt($id,1,lwidth)
-					set lineh [expr $newlines * (ceil($linelen/$opt($id,1,lwidth))+1)\
-					 * [font metrics $opt($id,1,lfont) -linespace] + 8]
+					set wid $opt($id,1,lwidth); # This is too wide as wrapped text lines might be shorter.
+					set lineh [expr $newlines * (ceil($linelen/($opt($id,1,lwidth)-15.0)))\
+					 * [font metrics $opt($id,1,lfont) -linespace]]; # Somtimes font measure gives wrong length. -15.0 is a hack.
 				}
-				if {$opt($id,1,lopaque) != "yes"} {
+				if {!$opt($id,1,lopaque)} {
 					set lbackground ""
 				} else { set lbackground $opt($id,1,lbackground) }
 				if {!$opt($id,1,lboxbenable)} {

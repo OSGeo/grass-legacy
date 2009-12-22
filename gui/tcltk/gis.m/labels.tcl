@@ -10,13 +10,13 @@
 ##########################################################################
 
 namespace eval GmLabels {
-    variable array opt # labels current options
+    variable array opt ;# labels current options
     variable count 1
-    variable array tree # mon    
-    variable array lfile # labels
-    variable array lfilemask # labels
+    variable array tree ;# mon    
+    variable array lfile ;# labels
+    variable array lfilemask ;# labels
     variable optlist
-    variable array dup # layer
+    variable array dup ;# layer
 }
 
 
