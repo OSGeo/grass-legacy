@@ -39,7 +39,7 @@ default: macosxapp
 
 macosxapp: PkgInfo app.icns English.lproj/MainMenu.nib build_html_user_index.sh build_gui_user_menu.sh python_wrapper $(ARCH_OBJS) $(APPDIR)/MacOS/GRASS
 	-${MAKE_DIR_CMD} ${APPDIR}/Resources/Scripts
-	-${MAKE_DIR_CMD} ${APPDIR}/MacOS/scripts
+	-${MAKE_DIR_CMD} ${APPDIR}/MacOS/bin
 	-${MAKE_DIR_CMD} ${APPDIR}/MacOS/etc
 	-${INSTALL_DATA} app.icns ${APPDIR}/Resources
 	-tar cBf - English.lproj --exclude CVS | (cd ${APPDIR}/Resources ; tar xBf - ) 2>/dev/null
