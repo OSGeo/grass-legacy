@@ -102,7 +102,7 @@ class Settings:
                     'enabled' : False
                     },
                 'autoRendering': {
-                    'enabled' : False
+                    'enabled' : True
                     },
                 'statusbarMode': {
                     'selection' : 0
