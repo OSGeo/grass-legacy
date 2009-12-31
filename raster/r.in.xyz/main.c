@@ -297,7 +297,10 @@ int main(int argc, char *argv[])
 
     /* parse zrange */
     do_zfilter = FALSE;
-    if (zrange_opt->answer != NULL) {	/* should this be answerS ? */
+    if (zrange_opt->answer != NULL) {
+	if (zrange_opt->answers[0] == NULL)
+	    G_fatal_error(_("Invalid zrange"));
+
 	sscanf(zrange_opt->answers[0], "%lf", &zrange_min);
 	sscanf(zrange_opt->answers[1], "%lf", &zrange_max);
 	do_zfilter = TRUE;
@@ -515,7 +518,7 @@ int main(int argc, char *argv[])
     /* allocate memory for a single row of output data */
     raster_row = G_allocate_raster_buf(rtype);
 
-    G_message(_("Scanning data ..."));
+    G_message(_("Reading data ..."));
 
     count_total = 0;
 
