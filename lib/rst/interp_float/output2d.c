@@ -19,6 +19,7 @@
 #include <grass/bitmap.h>
 #include <grass/linkm.h>
 
+#include <grass/glocale.h>
 #include <grass/interpf.h>
 
 
