@@ -199,7 +199,7 @@ int main(int argc, char *argv[])
     if (xcol+1 < 1 || ycol+1 < 1 || zcol+1 < 0 || catcol+1 < 0)
 	G_fatal_error(_("Column numbers must not be negative"));
 
-    if (old->answer != NULL) {
+    if ( (old->answer != NULL) && (strcmp(old->answer, "-") != 0) ) {
 	if ((ascii = fopen(old->answer, "r")) == NULL) {
 	    G_fatal_error(_("Unable to open ASCII file <%s>"), old->answer);
 	}
