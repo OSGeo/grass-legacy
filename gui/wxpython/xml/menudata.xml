@@ -1,7 +1,7 @@
 <menudata>
   <menubar>
     <menu>
-      <label>File</label>
+      <label>&amp;File</label>
       <items>
 	<menu>
 	  <label>Workspace</label>
@@ -665,7 +665,7 @@
       </items>
     </menu>
     <menu>
-      <label>Config</label>
+      <label>&amp;Config</label>
       <items>
 	<menu>
 	  <label>Region</label>
@@ -787,7 +787,7 @@
       </items>
     </menu>
     <menu>
-      <label>Raster</label>
+      <label>&amp;Raster</label>
       <items>
 	<menu>
 	  <label>Develop raster map</label>
@@ -1774,7 +1774,7 @@
       </items>
     </menu>
     <menu>
-      <label>Vector</label>
+      <label>&amp;Vector</label>
       <items>
 	<menu>
 	  <label>Develop vector map</label>
@@ -2341,7 +2341,7 @@
       </items>
     </menu>
     <menu>
-      <label>Imagery</label>
+      <label>&amp;Imagery</label>
       <items>
 	<menu>
 	  <label>Develop images and groups</label>
@@ -2575,7 +2575,7 @@
       </items>
     </menu>
     <menu>
-      <label>Volumes</label>
+      <label>V&amp;olumes</label>
       <items>
 	<menu>
 	  <label>Develop volumes</label>
@@ -2660,7 +2660,7 @@
       </items>
     </menu>
     <menu>
-      <label>Database</label>
+      <label>&amp;Database</label>
       <items>
 	<menu>
 	  <label>Database information</label>
@@ -2816,7 +2816,7 @@
       </items>
     </menu>
     <menu>
-      <label>Help</label>
+      <label>&amp;Help</label>
       <items>
 	<menuitem>
 	  <label>GRASS help</label>
