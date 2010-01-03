@@ -180,15 +180,17 @@ list_available_modules()
      cd "$TMPDIR"
      rm -f index.html
      if [ "$USE_WGET" ] ; then
-        wget --quiet -nv $SVNURL_ADDONS/$MODCLASS
+        wget --quiet -nv "$SVNURL_ADDONS/$MODCLASS"
      else
-        curl -silent --location $SVNURL_ADDONS/$MODCLASS -o index.html
+        curl -silent --location "$SVNURL_ADDONS/$MODCLASS" -o index.html
      fi
-     grep '<li>' index.html 2> /dev/null | grep -v '\.\.' | cut -d'"' -f2 | sed 's+/$++g' >> list.txt
+     grep '<li>' index.html 2> /dev/null | grep -v '\.\.' | \
+        cut -d'"' -f2 | sed 's+/$++g' >> list_$$.txt
      rm -f index.html
  done
- cat list.txt
- rm -f list.txt
+ cat list_$$.txt
+ rm -f list_$$.txt
+ # so why save to a file at all instead of cat'ing directly?
 }
 
 ##
@@ -211,7 +213,7 @@ fi
 
 g.message -d "svn co [$SVNURL_ADDONS]/[$MODULECLASS]/[$MODULE]"
 
-cd ${TMPDIR}
+cd "$TMPDIR"
 g.message message="Fetching <$MODULE> from GRASS-Addons SVN (be patient)..."
 svn co ${SVNURL_ADDONS}/${MODULECLASS}/${MODULE}
 
@@ -220,9 +222,9 @@ if [ $? -ne 0 ] ; then
    exit 1
 fi
 
-cd ${TMPDIR}/${MODULE}
+cd "$TMPDIR/$MODULE"
 g.message message="Compiling ${MODULE}..."
-make MODULE_TOPDIR=${GISBASE}
+make MODULE_TOPDIR="$GISBASE"
 if [ $? -ne 0 ] ; then
    g.message -e message="Compilation failed, sorry. Please check above error messages."
    cleanup
@@ -230,28 +232,28 @@ if [ $? -ne 0 ] ; then
 else
    g.message message="Installing ${MODULE}..."
    # can we write? Install dir present?
-   if test ! -d ${MYINST_DIR} ; then
-      mkdir -p ${MYINST_DIR}
+   if test ! -d "${MYINST_DIR}" ; then
+      mkdir -p "${MYINST_DIR}"
    fi
-   if test ! -d ${MYINST_DIR}/bin ; then
-      mkdir -p ${MYINST_DIR}/bin
+   if test ! -d "${MYINST_DIR}/bin" ; then
+      mkdir -p "${MYINST_DIR}/bin"
    fi
-   if test ! -d ${MYINST_DIR}/docs/html ; then
-      mkdir -p ${MYINST_DIR}/docs/html
+   if test ! -d "${MYINST_DIR}/docs/html" ; then
+      mkdir -p "${MYINST_DIR}/docs/html"
    fi
-   if test ! -d ${MYINST_DIR}/man/man1 ; then
-      mkdir -p ${MYINST_DIR}/man/man1
+   if test ! -d "${MYINST_DIR}/man/man1" ; then
+      mkdir -p "${MYINST_DIR}/man/man1"
    fi
    touch "${MYINST_DIR}/`basename $0`.$$"
    if [ $? -ne 0 ] ; then
       g.message -e message="Cannot write to <${MYINST_DIR}>, installation failed"
       exit 1
    else
-      rm -f ${MYINST_DIR}/`basename $0`.$$
-      if test -f ${MYINST_DIR}/bin/${MODULE} ; then
-         rm -f ${MYINST_DIR}/bin/${MODULE}
+      rm -f "${MYINST_DIR}/`basename $0`.$$"
+      if test -f "${MYINST_DIR}/bin/${MODULE}" ; then
+         rm -f "${MYINST_DIR}/bin/${MODULE}"
       fi
-      make MODULE_TOPDIR=${GISBASE} INST_DIR=${MYINST_DIR}
+      make MODULE_TOPDIR="$GISBASE" INST_DIR="$MYINST_DIR"
       if [ $? -ne 0 ] ; then
          g.message -e message="Installation failed, sorry. Please check above error messages."
          cleanup
@@ -263,8 +265,8 @@ else
 	exit 1
       fi
       if [ $GIS_FLAG_A -eq 1 ] ; then
-         \mv ${MYINST_DIR}/bin/${MODULE} ${MYINST_DIR}/
-	 rmdir ${MYINST_DIR}/bin
+         \mv "${MYINST_DIR}/bin/${MODULE}" "$MYINST_DIR"/
+	 rmdir "${MYINST_DIR}/bin"
       fi
    fi
 fi
@@ -272,5 +274,5 @@ fi
 cleanup
 
 g.message message=""
-g.message message="Installation of <${MODULE}> in <${MYINST_DIR}> successfully finished."
+g.message message="Installation of <$MODULE> in <$MYINST_DIR> successfully finished."
 exit 0
