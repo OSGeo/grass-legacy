@@ -16213,7 +16213,7 @@ CPPFLAGS=$ac_save_cppflags
   if test -n "$MACOSX_ARCHS" ; then
     wxver=`"$WX_CONFIG" --version`
     wxlib=`"$WX_CONFIG" --prefix`/lib/lib`"$WX_CONFIG" --basename`-`echo "$wxver" | cut -d . -f1,2`.dylib
-    wxlibinfo=`file "$wxlib"`
+    wxlibinfo=`file -L "$wxlib"`
     for a in i386 ppc x86_64 ppc64
     do
       # add only if in MACOSX_ARCHS
