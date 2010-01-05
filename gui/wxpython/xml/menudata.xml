@@ -739,7 +739,7 @@
 	      <help>Changes the default GRASS graphical user interface (GUI) setting.</help>
 	      <keywords>general,gui</keywords>
               <handler>self.OnMenuCmd</handler>
-	      <command>g.change.gui.py</command>
+	      <command>g.change.gui.sh</command>
 	    </menuitem>
 	    <separator />
 	    <menuitem>
@@ -1826,7 +1826,7 @@
 	      <help>Change the type of geometry elements</help>
 	      <keywords>vector,geometry</keywords>
 	      <handler>self.OnMenuCmd</handler>
-	      <command>v.type_wrapper.py</command>
+	      <command>v.type_wrapper.sh</command>
 	    </menuitem>
 	    <separator />
 	    <menuitem>
