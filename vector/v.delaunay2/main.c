@@ -117,11 +117,11 @@ int main(int argc, char *argv[])
 
     remove_duplicates(&n);
 
-    /* Triangulate. */
-    G_verbose_message("Delaunay triangulation...");
+    /* triangulate. */
+    G_verbose_message(_("Delaunay triangulation..."));
     divide(0, n - 1, &l_cw, &r_ccw);
 
-    G_verbose_message("writing edges...");
+    G_verbose_message(_("writing edges..."));
     output_edges(n, mode3d, Type, Out);
 
     free_memory();
@@ -130,8 +130,8 @@ int main(int argc, char *argv[])
 	Vect_build_partial(&Out, GV_BUILD_AREAS);
 	nareas = Vect_get_num_areas(&Out);
 	G_debug(3, "nareas = %d", nareas);
-	/*  Assign centroid to each area */
-	G_verbose_message("assign centroids...");
+	/*  assign centroid to each area */
+	G_verbose_message(_("Calculate area centroids..."));
 	for (area = 1; area <= nareas; area++) {
 	    double x, y, z, angle, slope;
 	    int ret;
