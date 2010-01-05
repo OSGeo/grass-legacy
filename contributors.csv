@@ -1,4 +1,5 @@
 cvs_id,name,email,country,osgeo_id,rfc2_agreed
+-,Anne Ghisla,<a.ghisla gmail.com>,Italy,aghisla,yes
 -,Ivan Shmakov,<ivan theory.asu.ru>,Russia,1gray,yes
 -,Eric Patton,<epatton nrcan.gc.ca>,Canada,epatton,yes
 -,Laura Toma,<ltoma bowdoin.edu>,USA,ltoma,yes
@@ -29,7 +30,7 @@ jan,Jan-Oliver Wagner,<jan intevation.de>,Germany,-,-
 john,John Huddleston,<jhudd.lamar colostate.edu>,USA,-,-
 justin,Justin Hickey,<jhickey hpcc.nectec.or.th>,Thailand,-,-
 markus,Markus Neteler,<neteler cealp.it>,Italy,neteler,yes
-martin,Martin Wegmann,<wegmann biozentrum.uni-wuerzburg.de>,Germany,wegmann,-
+martin,Martin Wegmann,<wegmann biozentrum.uni-wuerzburg.de>,Germany,wegmann,yes
 martinl,Martin Landa,<landa.martin gmail.com>,Czech Republic,martinl,yes
 massimo,Massimo Cuomo,<m.cuomo acsys.it>,Switzerland,-,-
 michael,Michael Barton,<michael.barton asu.edu>,USA,cmbarton,yes
