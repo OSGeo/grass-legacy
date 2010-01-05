@@ -14,32 +14,30 @@
  *               for details.
  *
  **************************************************************/
-
+#define MAIN
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
 #include <grass/gis.h>
 #include <grass/Vect.h>
 #include <grass/glocale.h>
+#include "defs.h"
 #include "data_types.h"
 #include "memory.h"
 #include "geometry.h"
 #include "edge.h"
 #include "in_out.h"
 
-int compare(const struct vertex **p1, const struct vertex **p2);
-
 int main(int argc, char *argv[])
 {
-
     /* GRASS related variables */
     char *mapset;
-    struct Map_info map_in, map_out;
-    struct Cell_head Window;
-    BOUND_BOX Box;
+    struct Map_info In, Out;
     struct GModule *module;
     struct Flag *reg_flag, *line_flag;
     struct Option *in_opt, *out_opt;
+    struct Cell_head Window;
+    BOUND_BOX Box;
 
     struct line_pnts *Points;
     struct line_cats *Cats;
@@ -51,10 +49,8 @@ int main(int argc, char *argv[])
 
     /* ---------------------- */
 
-    unsigned int i;
     unsigned int n;
-    struct edge *l_cw, *r_ccw;
-    struct vertex **sites_sorted;
+    struct edge *l_cw = NULL, *r_ccw = NULL;
 
     /* GRASS related manipulations */
     G_gisinit(argv[0]);
@@ -93,55 +89,49 @@ int main(int argc, char *argv[])
 	G_fatal_error(_("Vector map <%s> not found"), in_opt->answer);
 
     Vect_set_open_level(2);
-    Vect_open_old(&map_in, in_opt->answer, mapset);
+    Vect_open_old(&In, in_opt->answer, mapset);
 
     /* check if we have a 3D input points map */
-    mode3d = Vect_is_3d(&map_in);
+    mode3d = Vect_is_3d(&In);
 
-    if (mode3d) {
-	if (0 > Vect_open_new(&map_out, out_opt->answer, 1))
-	    G_fatal_error(_("Unable to create vector map <%s>"),
-			  out_opt->answer);
-    }
-    else if (0 > Vect_open_new(&map_out, out_opt->answer, 0))
+    if (0 > Vect_open_new(&Out, out_opt->answer, mode3d))
 	G_fatal_error(_("Unable to create vector map <%s>"), out_opt->answer);
 
-    Vect_hist_copy(&map_in, &map_out);
-    Vect_hist_command(&map_out);
+    Vect_hist_copy(&In, &Out);
+    Vect_hist_command(&Out);
 
     /* initialize working region */
     G_get_window(&Window);
-    G_percent(0, 100, 1);
     Vect_region_box(&Window, &Box);
 
-    n = read_sites(mode3d, complete_map, map_in, Box);
+    n = read_sites(mode3d, complete_map, In, Box);
 
-    /* Sort. */
-    sites_sorted =
-	(struct vertex **)G_malloc((unsigned)n * sizeof(struct vertex *));
-    if (sites_sorted == MY_NULL)
-	G_fatal_error(_("Not enough memory."));
-    for (i = 0; i < n; i++)
-	sites_sorted[i] = sites + i;
-    qsort(sites_sorted, n, sizeof(struct vertex *), (void *)compare);
+    Vect_set_release_support(&In);
+    Vect_close(&In);
 
-    remove_duplicates(sites_sorted, &n);
+    if (n < 3)
+	G_fatal_error(_("no points to triangulate"));
 
-    /* Triangulate. */
-    divide(sites_sorted, 0, n - 1, &l_cw, &r_ccw);
+    /* sort sites */
+    qsort(sites, n, sizeof(struct vertex), cmp);
 
-    output_edges(sites_sorted, n, mode3d, Type, map_out);
+    remove_duplicates(&n);
 
-    free((char *)sites_sorted);
+    /* triangulate */
+    G_verbose_message(_("Delaunay triangulation..."));
+    divide(0, n - 1, &l_cw, &r_ccw);
+
+    G_verbose_message(_("Writing edges..."));
+    output_edges(n, mode3d, Type, Out);
+
     free_memory();
 
-    Vect_close(&map_in);
-
     if (Type == GV_BOUNDARY) {
-	Vect_build_partial(&map_out, GV_BUILD_AREAS);
-	nareas = Vect_get_num_areas(&map_out);
-	G_debug(3, "nareas = %d", nareas);
-	/*  Assign centroid to each area */
+	Vect_build_partial(&Out, GV_BUILD_AREAS);
+	nareas = Vect_get_num_areas(&Out);
+	G_debug(1, "nareas = %d", nareas);
+	/*  assign centroid to each area */
+	G_verbose_message(_("Calculate area centroids..."));
 	for (area = 1; area <= nareas; area++) {
 	    double x, y, z, angle, slope;
 	    int ret;
@@ -149,12 +139,12 @@ int main(int argc, char *argv[])
 	    G_percent(area, nareas, 2);
 	    Vect_reset_line(Points);
 	    Vect_reset_cats(Cats);
-	    ret = Vect_get_point_in_area(&map_out, area, &x, &y);
+	    ret = Vect_get_point_in_area(&Out, area, &x, &y);
 	    if (ret < 0) {
 		G_warning(_("Unable to calculate area centroid"));
 		continue;
 	    }
-	    ret = Vect_tin_get_z(&map_out, x, y, &z, &angle, &slope);
+	    ret = Vect_tin_get_z(&Out, x, y, &z, &angle, &slope);
 	    G_debug(3, "area centroid z: %f", z);
 	    if (ret < 0) {
 		G_warning(_("Unable to calculate area centroid z coordinate"));
@@ -162,19 +152,11 @@ int main(int argc, char *argv[])
 	    }
 	    Vect_append_point(Points, x, y, z);
 	    Vect_cat_set(Cats, 1, area);
-	    Vect_write_line(&map_out, GV_CENTROID, Points, Cats);
+	    Vect_write_line(&Out, GV_CENTROID, Points, Cats);
 	}
     }
-    Vect_build(&map_out);
-    Vect_close(&map_out);
+    Vect_build(&Out);
+    Vect_close(&Out);
 
     exit(EXIT_SUCCESS);
-}
-
-/* compare first according to x-coordinate, if equal then y-coordinate */
-int compare(const struct vertex **p1, const struct vertex **p2)
-{
-    if ((*p1)->x == (*p2)->x)
-	return ((*p1)->y < (*p2)->y);
-    return ((*p1)->x < (*p2)->x);
 }

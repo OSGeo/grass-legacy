@@ -1,11 +1,6 @@
-#include <grass/gis.h>
-#include <grass/Vect.h>
-#include <grass/glocale.h>
 
 #ifdef MAIN
-struct Cell_head Window;
-BOUND_BOX Box;
+struct vertex *sites;
 #else
-extern struct Cell_head Window;
-extern BOUND_BOX Box;
+extern struct vertex *sites;
 #endif
