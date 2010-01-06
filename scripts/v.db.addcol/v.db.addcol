@@ -78,34 +78,34 @@ eval `g.gisenv`
 : ${GISBASE?} ${GISDBASE?} ${LOCATION_NAME?} ${MAPSET?}
 
 # does map exist in CURRENT mapset?
-eval `g.findfile element=vector file=$GIS_OPT_MAP mapset=$MAPSET`
+eval `g.findfile element=vector file="$GIS_OPT_MAP" mapset="$MAPSET"`
 if [ ! "$file" ] ; then
    g.message "Vector map '$GIS_OPT_MAP' not found in current mapset"
    exit 1
 fi
 
-table=`v.db.connect $GIS_OPT_MAP -g fs=";" | grep -w $GIS_OPT_LAYER | awk -F ";" '{print $2}'`
+table=`v.db.connect "$GIS_OPT_MAP" -g fs=";" | grep -w "$GIS_OPT_LAYER" | awk -F ";" '{print $2}'`
 if [ -z "$table" ] ; then
    g.message -e 'There is no table connected to this map! Run v.db.connect or v.db.addtable first.'
    exit 1
 fi
 
-database=`v.db.connect $GIS_OPT_MAP -g fs=";" | grep -w $GIS_OPT_LAYER | awk -F ";" '{print $4}'`
-driver=`v.db.connect $GIS_OPT_MAP -g fs=";" | grep -w $GIS_OPT_LAYER | awk -F ";" '{print $5}'`
+database=`v.db.connect "$GIS_OPT_MAP" -g fs=";" | grep -w "$GIS_OPT_LAYER" | awk -F ";" '{print $4}'`
+driver=`v.db.connect "$GIS_OPT_MAP" -g fs=";" | grep -w "$GIS_OPT_LAYER" | awk -F ";" '{print $5}'`
 
-colnum=`echo $GIS_OPT_COLUMNS | awk -F, '{print NF}'`
+colnum=`echo "$GIS_OPT_COLUMNS" | awk -F, '{print NF}'`
 
 n=1
 while [ "$n" -le "$colnum" ]
   do
-    col=`echo $GIS_OPT_COLUMNS | cut -d',' -f$n`
+    col=`echo "$GIS_OPT_COLUMNS" | cut -d',' -f$n`
     
     if [ -z "$col" ] ; then
       g.message -e 'There is an empty column! Did you leave a trailing comma?'
       exit 1
     fi
 
-    echo "ALTER TABLE $table ADD COLUMN $col" | db.execute database="${database}" driver=${driver}
+    echo "ALTER TABLE $table ADD COLUMN $col" | db.execute database="${database}" driver="${driver}"
     if [ $? -eq 1 ] ; then
       g.message -e "Cannot continue (problem adding column)."
       exit 1
@@ -115,7 +115,7 @@ while [ "$n" -le "$colnum" ]
 
 
 # write cmd history:
-v.support ${GIS_OPT_MAP} cmdhist="${CMDLINE}"
+v.support "${GIS_OPT_MAP}" cmdhist="${CMDLINE}"
 
 exit 0
 
