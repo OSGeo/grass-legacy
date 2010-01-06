@@ -200,13 +200,13 @@ cleanup(){
  fi
 }
 
-if [ $GIS_FLAG_l -eq 1 ] ; then
+if [ $GIS_FLAG_L -eq 1 ] ; then
    list_available_modules
    rmdir "$TMPDIR"
    exit 0
 fi
 
-if [ -z "$GIS_OPT_EXTENSION" -a $GIS_FLAG_l -eq 0 ] ; then
+if [ -z "$GIS_OPT_EXTENSION" -a $GIS_FLAG_L -eq 0 ] ; then
    g.message message="You need to define an extension name or use -l"
    exit 1
 fi
