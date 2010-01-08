@@ -125,13 +125,16 @@ if [ $? -ne 0 ] ; then
    driver=`db.connect -p | grep '^driver' | cut -d':' -f2`
 else
    # there is a definition for layer 1, so we check for the user defined layer
-   database=`v.db.connect map="$GIS_OPT_MAP" -g fs=";" | grep -w "$QUERYLAYER" | awk -F ";" '{print $4}'`
+   # v.db.connect expands $VARIABLES, we want to keep them relative so use the raw file
+   eval `g.findfile elem="vector/$GIS_OPT_MAP" file=dbln`
+   database=`grep -w "^$QUERYLAYER" "$file" | cut -f4- -d' ' | sed -e 's/ [^ ]*$//'`
+
    if [ -z "$database" ] ; then
       #nothing on user defined layer, so we use the default mapset settings in this case:
       database=`db.connect -p | grep '^database' | cut -d':' -f2-`
       driver=`db.connect -p | grep '^driver' | cut -d':' -f2`
    else
-      driver=`v.db.connect map="$GIS_OPT_MAP" -g fs=";" | grep -w "$QUERYLAYER" | awk -F ";" '{print $5}'`
+       driver=`grep -w "^$QUERYLAYER" "$file" | sed -e 's/^.* \(.*\)$/\1/'`
    fi
 fi
 
@@ -182,7 +185,8 @@ v.db.connect map="$GIS_OPT_MAP" database="${database}" driver="$driver" \
 
 # finally we have to add cats into the attribute DB to make modules such as v.what.rast happy:
 # (creates new row for each vector line):
-v.to.db "$GIS_OPT_MAP" layer="$GIS_OPT_LAYER" option=cat col=cat qlayer="$GIS_OPT_LAYER"
+v.to.db "$GIS_OPT_MAP" layer="$GIS_OPT_LAYER" option=cat \
+   col=cat qlayer="$GIS_OPT_LAYER"
 
 if [ -z "$GRASS_VERBOSE" ] || [ "$GRASS_VERBOSE" -gt 0 ] ; then
    g.message "Current attribute table links:"
