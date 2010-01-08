@@ -127,7 +127,11 @@ else
    # there is a definition for layer 1, so we check for the user defined layer
    # v.db.connect expands $VARIABLES, we want to keep them relative so use the raw file
    eval `g.findfile elem="vector/$GIS_OPT_MAP" file=dbln`
-   database=`grep -w "^$QUERYLAYER" "$file" | cut -f4- -d' ' | sed -e 's/ [^ ]*$//'`
+   if [ ! "$file" ] ; then
+      database=""
+   else
+      database=`grep -w "^$QUERYLAYER" "$file" | cut -f4- -d' ' | sed -e 's/ [^ ]*$//'`
+   fi
 
    if [ -z "$database" ] ; then
       #nothing on user defined layer, so we use the default mapset settings in this case:
