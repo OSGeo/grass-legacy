@@ -73,7 +73,7 @@ int read_file(LOGIN * login)
     login->n = 0;
     file = login_filename();
 
-    G_debug(3, "file = %s", file);
+    G_debug(3, "file = <%s>", file);
 
     if (stat(file, &info) != 0) {
 	G_debug(3, "login file does not exist");
@@ -84,13 +84,15 @@ int read_file(LOGIN * login)
     if (fd == NULL)
 	return -1;
 
-    while (fgets(buf, 2000, fd)) {
+    while (G_getl2(buf, 2000, fd)) {
 	G_chop(buf);
 
 	usr[0] = pwd[0] = '\0';
+	/* FIXME: not safe for spaces in DB path name */
 	ret = sscanf(buf, "%[^ ] %[^ ] %[^ ] %[^ ]", dr, db, usr, pwd);
 
-	G_debug(3, "ret = %d : %s %s %s %s", ret, dr, db, usr, pwd);
+	G_debug(3, "ret = %d : dr=[%s] db=[%s] us=[%s] pw=[%s]",
+		ret, dr, db, usr, pwd);
 
 	if (ret < 2) {
 	    G_warning("Login file corrupted");
