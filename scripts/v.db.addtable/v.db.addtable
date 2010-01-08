@@ -127,7 +127,11 @@ else
    # there is a definition for layer 1, so we check for the user defined layer
    # v.db.connect expands $VARIABLES, we want to keep them relative so use the raw file
    eval `g.findfile elem="vector/$GIS_OPT_MAP" file=dbln`
-   database=`grep -w "^$QUERYLAYER" "$file" | cut -f4- -d' ' | sed -e 's/ [^ ]*$//'`
+   if [ ! "$file" ] ; then
+      database=""
+   else
+      database=`grep -w "^$QUERYLAYER" "$file" | cut -f4- -d' ' | sed -e 's/ [^ ]*$//'`
+   fi
 
    if [ -z "$database" ] ; then
       #nothing on user defined layer, so we use the default mapset settings in this case:
@@ -140,7 +144,7 @@ fi
 
 #maybe there is already a table linked to the selected layer?
 if [ "$GIS_OPT_LAYER" -eq 1 ] ; then
-  v.db.connect "$GIS_OPT_MAP" -g 2> /dev/null | grep -w "$GIS_OPT_LAYER" > /dev/null
+  v.db.connect "$GIS_OPT_MAP" -g 2> /dev/null | grep -w "^$GIS_OPT_LAYER" > /dev/null
   if [ $? -eq 0 ] ; then
      g.message -e "There is already a table linked to layer <$GIS_OPT_LAYER>" 
      exit 1

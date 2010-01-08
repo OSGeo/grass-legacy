@@ -73,8 +73,7 @@ fi
 for VECT in `g.list type=vect mapset=${MAPSET} | sed 1,2d | grep -v '^-*$'`
 do
     g.message message="Reconnecting vector '${VECT}@${MAPSET}'"
-    for LINK in `v.db.connect -g fs=";" map=${VECT}@${MAPSET} | tr ';' '|'`
-    do
+    for LINK in `v.db.connect -g fs="|" map=${VECT}@${MAPSET}` ; do
         eval `echo $LINK | sed 's$\([^\|]*\)|\([^\|]*\)|\([^\|]*\)|\([^\|]*\)|\([^\|]*\)$LAYER=\1 SCHEMA_TABLE=\2 KEY=\3 DATABASE=\4 DRIVER=\5$'`
 
         SCHEMA=`echo $SCHEMA_TABLE | grep '\.' | sed 's/\([^.]*\)\..*/\1/'`
