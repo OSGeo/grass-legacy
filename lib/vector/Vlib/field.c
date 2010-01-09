@@ -632,7 +632,7 @@ int Vect_read_dblinks(struct Map_info *Map)
 	if (strlen(buf) == 0)
 	    continue;
  
-	tokens = G_tokenize(buf, " ");
+	tokens = G_tokenize(buf, " |");
 	ntok = G_number_of_tokens(tokens);
 
 	if (ntok < 2 || (ntok < 5 && rule < 1)) {
