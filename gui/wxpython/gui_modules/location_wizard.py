@@ -673,8 +673,7 @@ class ProjParamsPage(TitledPage):
         TitledPage.__init__(self, wizard, _("Choose projection parameters"))
         global coordsys
 
-        self.utmzone = ''
-        self.utmhemisphere = ''
+        self.utmzoneNum = 0
         self.hemischoices = ["north","south"]
         self.parent = parent
         self.panel = ''
@@ -688,6 +687,7 @@ class ProjParamsPage(TitledPage):
         self.paramlist = []
         self.p4projparams = ''
         self.projdesc = ''
+        self.paramSBox = ''
         
         radioSBox = wx.StaticBox(parent=self, id=wx.ID_ANY,
                                label=" %s " % _("Select datum or ellipsoid (next page)"))
@@ -720,18 +720,24 @@ class ProjParamsPage(TitledPage):
         
     def OnParamEntry(self, event):
         num = 0
-        # deal with weird spin control text event behavior, sending dup. event with negative number        
         if event.GetId() >= 2000:
             num = event.GetId() - 2000
         else:
             pass
+        
         val = event.GetString()
+        
         if self.ptype[num] == 'zone':
-            if val.isdigit():
-                if int(val) < 1: self.pentry[num].SetValue(1)
-                if int(val) > 60: self.pentry[num].SetValue(60)
-            else: 
-                self.pentry[num].SetValue(1)
+            try:
+                intval = int(val)
+                if intval < 1: 
+                    self.pentry[num].SetValue('1')
+                    val = 1
+                if intval > 60: 
+                    self.pentry[num].SetValue('60')
+                    val = 60
+            except:
+                pass
 
         self.pval[num] = val
         
@@ -752,6 +758,7 @@ class ProjParamsPage(TitledPage):
                                       'Something is missing!', wx.ICON_ERROR)
                         event.Veto()
                     else:
+                        self.pval[num] = str(self.pval[num])
                         self.p4projparams += (' +' + self.proj4param[num] + '=' + self.pval[num])
 
     def OnEnterPage(self,event):
@@ -759,12 +766,12 @@ class ProjParamsPage(TitledPage):
         try:
             # page already formatted
             if self.pagesizer.GetItem(self.panel) != '':
-                pass
+                self.paramSBox.SetLabel(_(" Enter parameters for %s projection ") % self.projdesc)
         except:
             # entering page for the first time
-            paramSBox = wx.StaticBox(parent=self, id=wx.ID_ANY,
+            self.paramSBox = wx.StaticBox(parent=self, id=wx.ID_ANY,
                                    label=_(" Enter parameters for %s projection ") % self.projdesc)
-            paramSBSizer = wx.StaticBoxSizer(paramSBox)
+            paramSBSizer = wx.StaticBoxSizer(self.paramSBox)
 
             self.panel = scrolled.ScrolledPanel(self, wx.ID_ANY)
             self.prjparamsizer = wx.GridBagSizer(vgap=0, hgap=0) 
@@ -799,8 +806,8 @@ class ProjParamsPage(TitledPage):
                 # default values
                 if self.ptype[num] == 'bool': self.pval[num] = 'No'
                 elif self.ptype[num] == 'zone': 
-                    self.pval[num] = '30' 
                     self.pdesc[num] += ' (1-60)'
+                    self.pval[num] = '' 
                 else: self.pval[num] = paramgrp[2]
 
                 label = wx.StaticText(self.panel, id=1000+num, label=self.pdesc[num], 
@@ -810,16 +817,9 @@ class ProjParamsPage(TitledPage):
                                                  choices = ['No','Yes'])  
                     self.pentry[num].SetStringSelection(self.pval[num])
                     self.Bind(wx.EVT_CHOICE, self.OnParamEntry)
-                elif self.ptype[num] == 'zone':
-                    self.pentry[num] = wx.SpinCtrl(self.panel, id=2000+num,
-                                                   value='30',
-                                                   size=(100,-1), 
-                                                   style=wx.SP_ARROW_KEYS | wx.SP_WRAP,
-                                                   min=1, max=60, initial=30)  
-                    self.pentry[num].SetValue(int(self.pval[num]))
-                    self.Bind(wx.EVT_TEXT, self.OnParamEntry)
                 else:
-                    self.pentry[num] = wx.TextCtrl(self.panel, id=2000+num, value=self.pval[num],
+                    self.pentry[num] = wx.TextCtrl(self.panel, id=2000+num, 
+                                                   value=self.pval[num],
                                                    size=(100,-1))
                     self.Bind(wx.EVT_TEXT, self.OnParamEntry)
                     if paramgrp[1] == 'noask':
@@ -854,13 +854,6 @@ class ProjParamsPage(TitledPage):
         elif event.GetId() == self.radio2.GetId():
             self.SetNext(self.parent.ellipsepage)
             self.parent.sumpage.SetPrev(self.parent.ellipsepage)
-
-    def GetUTM(self, event):
-        self.utmzone = event.GetString()
-
-    def OnHemisphere(self, event):
-        self.utmhemisphere = event.GetString()
-
 
 class DatumPage(TitledPage):
     """
@@ -2649,11 +2642,23 @@ class RegionDef(BaseClass, wx.Frame):
 
     def __UpdateInfo(self):
         """!Update number of rows/cols/cells"""
-        self.rows = int((self.north - self.south) / self.nsres)
-        self.cols = int((self.east - self.west) / self.ewres)
+        try:
+            self.rows = abs(int((self.north - self.south) / self.nsres))
+        except:
+            self.rows = 0
+            
+        try:
+            self.cols = abs(int((self.east - self.west) / self.ewres))
+        except:
+            self.rows = 0
+            
         self.cells = self.rows * self.cols
 
-        self.depth = int((self.top - self.bottom) / self.tbres)
+        try:
+            self.depth = abs(int((self.top - self.bottom) / self.tbres))
+        except:
+            self.depth = 0
+            
         self.cells3 = self.rows * self.cols * self.depth
 
         # 2D
@@ -2666,19 +2671,25 @@ class RegionDef(BaseClass, wx.Frame):
 
     def OnSetButton(self, event=None):
         """!Set default region"""
-        ret = gcmd.RunCommand('g.region',
-                              flags = 'sgpa',
-                              n = self.north,
-                              s = self.south,
-                              e = self.east,
-                              w = self.west,
-                              nsres = self.nsres,
-                              ewres = self.ewres,
-                              t = self.top,
-                              b = self.bottom,
-                              tbres = self.tbres)
-        if ret == 0:
-            self.Destroy()
+
+        if self.cells <= 0 or self.cells3 <= 0:
+            dlg = wx.MessageBox(message = _("Resolution cannot be 0"),
+                                caption = _("Extents set incorrectly"),
+                                style = wx.OK)
+        else:
+            ret = gcmd.RunCommand('g.region',
+                                  flags = 'sgpa',
+                                  n = self.north,
+                                  s = self.south,
+                                  e = self.east,
+                                  w = self.west,
+                                  nsres = self.nsres,
+                                  ewres = self.ewres,
+                                  t = self.top,
+                                  b = self.bottom,
+                                  tbres = self.tbres)
+            if ret == 0:
+                self.Destroy()
 
     def OnCancel(self, event):
         self.Destroy()
