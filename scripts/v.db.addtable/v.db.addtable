@@ -14,7 +14,7 @@
 #############################################################################
 
 #%Module
-#%  description: Creates and adds a new attribute table to a given layer of an existing vector map.
+#%  description: Creates and connects a new attribute table to a given layer of an existing vector map.
 #%  keywords: vector, database, attribute table
 #%End
 #%option
@@ -121,26 +121,10 @@ v.db.connect map="$GIS_OPT_MAP" -g  2> /dev/null | grep '^1 ' > /dev/null
 if [ $? -ne 0 ] ; then
    # nothing defined for layer 1
    g.message "Creating new DB connection based on default mapset settings..."
-   database=`db.connect -p | grep '^database' | cut -d':' -f2-`
-   driver=`db.connect -p | grep '^driver' | cut -d':' -f2`
-else
-   # there is a definition for layer 1, so we check for the user defined layer
-   # v.db.connect expands $VARIABLES, we want to keep them relative so use the raw file
-   eval `g.findfile elem="vector/$GIS_OPT_MAP" file=dbln`
-   if [ ! "$file" ] ; then
-      database=""
-   else
-      database=`grep -w "^$QUERYLAYER" "$file" | cut -f4- -d' ' | sed -e 's/ [^ ]*$//'`
-   fi
-
-   if [ -z "$database" ] ; then
-      #nothing on user defined layer, so we use the default mapset settings in this case:
-      database=`db.connect -p | grep '^database' | cut -d':' -f2-`
-      driver=`db.connect -p | grep '^driver' | cut -d':' -f2`
-   else
-       driver=`grep -w "^$QUERYLAYER" "$file" | sed -e 's/^.* \(.*\)$/\1/'`
-   fi
 fi
+database=`db.connect -p | grep '^database' | cut -d':' -f2-`
+driver=`db.connect -p | grep '^driver' | cut -d':' -f2`
+
 
 #maybe there is already a table linked to the selected layer?
 if [ "$GIS_OPT_LAYER" -eq 1 ] ; then
@@ -176,7 +160,8 @@ if [ $? -ne 0 ] ; then
        fi
    fi
 
-   echo "CREATE TABLE $table ($COLUMN_DEF)" | db.execute database="$database" driver="$driver"
+   echo "CREATE TABLE $table ($COLUMN_DEF)" | \
+      db.execute database="$database" driver="$driver"
    if [ $? -ne 0 ] ; then
      g.message -e "Cannot continue."
      exit 1
