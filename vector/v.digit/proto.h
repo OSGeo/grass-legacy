@@ -141,3 +141,6 @@ double get_thresh();
 int reset_values(ClientData, Tcl_Interp *, int, char **);
 int set_value(ClientData, Tcl_Interp *, int, char **);
 int submit(ClientData, Tcl_Interp *, int, char **);
+int F_open(char *, char *);
+void F_clear(void);
+void F_close(void);

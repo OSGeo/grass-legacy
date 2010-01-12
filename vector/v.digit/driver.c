@@ -1,6 +1,3 @@
-/* hack for tcl 8.6 */
-#define USE_INTERP_RESULT
-
 #include <grass/gis.h>
 #include <grass/raster.h>
 #include <grass/display.h>
@@ -54,21 +51,21 @@ void driver_plot_icon(double x, double y, const char *icon)
 	    ".screen.canvas create bitmap %d %d -bitmap @$iconpath/%s.xbm -foreground %s -anchor center",
 	    xi, yi, icon, color);
     if (Tcl_Eval(Toolbox, buf) != TCL_OK)
-	G_warning("driver_plot_icon: %s", Toolbox->result);
+	G_warning("driver_plot_icon: %s", Tcl_GetStringResult(Toolbox));
 }
 
 static void get_window(int *t, int *b, int *l, int *r)
 {
     Tcl_Eval(Toolbox,
 	     "list 0 [winfo height .screen.canvas] 0 [winfo width .screen.canvas]");
-    sscanf(Toolbox->result, "%d %d %d %d", t, b, l, r);
+    sscanf(Tcl_GetStringResult(Toolbox), "%d %d %d %d", t, b, l, r);
 
     if (*b > 1 || *r > 1)
 	return;
 
     Tcl_Eval(Toolbox,
 	     "list 0 [.screen.canvas cget -height] 0 [.screen.canvas cget -width]");
-    sscanf(Toolbox->result, "%d %d %d %d", t, b, l, r);
+    sscanf(Tcl_GetStringResult(Toolbox), "%d %d %d %d", t, b, l, r);
 }
 
 static void setup(void)
@@ -101,7 +98,7 @@ int driver_open(void)
     double n, s, e, w;
 
     if (Tcl_Eval(Toolbox, "create_screen") != TCL_OK)
-	G_warning("create_screen: %s", Toolbox->result);
+	G_warning("create_screen: %s", Tcl_GetStringResult(Toolbox));
 
 
     setup();
