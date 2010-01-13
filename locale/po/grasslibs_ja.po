@@ -788,59 +788,59 @@ msgid "Topology was built"
 msgstr ""
 
 #: ../lib/vector/Vlib/build.c:153
-#, c-format
+#, fuzzy, c-format
 msgid "Number of nodes: %d"
-msgstr ""
+msgstr "����� ���� ���\n"
 
 #: ../lib/vector/Vlib/build.c:154
-#, c-format
+#, fuzzy, c-format
 msgid "Number of primitives: %d"
-msgstr ""
+msgstr "����� ���� ���\n"
 
 #: ../lib/vector/Vlib/build.c:155
-#, c-format
+#, fuzzy, c-format
 msgid "Number of points: %d"
-msgstr ""
+msgstr "����� ���� ���\n"
 
 #: ../lib/vector/Vlib/build.c:156
-#, c-format
+#, fuzzy, c-format
 msgid "Number of lines: %d"
-msgstr ""
+msgstr "����� ���� ���\n"
 
 #: ../lib/vector/Vlib/build.c:157
-#, c-format
+#, fuzzy, c-format
 msgid "Number of boundaries: %d"
-msgstr ""
+msgstr "����� ���� ���\n"
 
 #: ../lib/vector/Vlib/build.c:158
-#, c-format
+#, fuzzy, c-format
 msgid "Number of centroids: %d"
-msgstr ""
+msgstr "����� ���� ���\n"
 
 #: ../lib/vector/Vlib/build.c:161
-#, c-format
+#, fuzzy, c-format
 msgid "Number of faces: %d"
-msgstr ""
+msgstr "����� ���� ���\n"
 
 #: ../lib/vector/Vlib/build.c:164
-#, c-format
+#, fuzzy, c-format
 msgid "Number of kernels: %d"
-msgstr ""
+msgstr "����� ���� ���\n"
 
 #: ../lib/vector/Vlib/build.c:205
-#, c-format
+#, fuzzy, c-format
 msgid "Number of areas: %d"
-msgstr ""
+msgstr "����� ���� ���\n"
 
 #: ../lib/vector/Vlib/build.c:206
-#, c-format
+#, fuzzy, c-format
 msgid "Number of isles: %d"
-msgstr ""
+msgstr "����� ���� ���\n"
 
 #: ../lib/vector/Vlib/build.c:209
-#, c-format
+#, fuzzy, c-format
 msgid "Number of incorrect boundaries: %d"
-msgstr ""
+msgstr "����� ���� ���\n"
 
 #: ../lib/vector/Vlib/build.c:213
 #, fuzzy, c-format
@@ -853,17 +853,19 @@ msgid "Number of duplicate centroids: %d"
 msgstr "����� ���� ���\n"
 
 #: ../lib/vector/Vlib/build.c:221
-#, c-format
+#, fuzzy, c-format
 msgid "Number of areas without centroid: %d"
-msgstr ""
+msgstr "����� ���� ���\n"
 
 #: ../lib/vector/Vlib/build.c:226
+#, fuzzy
 msgid "Number of areas: -"
-msgstr ""
+msgstr "����� ���� ���\n"
 
 #: ../lib/vector/Vlib/build.c:227
+#, fuzzy
 msgid "Number of isles: -"
-msgstr ""
+msgstr "����� ���� ���\n"
 
 #: ../lib/vector/Vlib/build.c:256
 #, fuzzy, c-format
@@ -1032,8 +1034,9 @@ msgid ""
 msgstr ""
 
 #: ../lib/vector/Vlib/build_ogr.c:349
+#, fuzzy
 msgid "Feature: "
-msgstr ""
+msgstr "種類"
 
 #: ../lib/vector/Vlib/build_ogr.c:361
 #, c-format
@@ -2843,16 +2846,19 @@ msgid "Example: income < 1000 and inhab >= 10000"
 msgstr ""
 
 #: ../lib/gis/parser.c:340
+#, fuzzy
 msgid "Table name"
-msgstr ""
+msgstr "テーブル"
 
 #: ../lib/gis/parser.c:349
+#, fuzzy
 msgid "Driver name"
-msgstr ""
+msgstr "ドライバ"
 
 #: ../lib/gis/parser.c:358
+#, fuzzy
 msgid "Database name"
-msgstr ""
+msgstr "データベース"
 
 #: ../lib/gis/parser.c:367
 #, fuzzy
@@ -2877,7 +2883,7 @@ msgstr "���"
 #: ../lib/gis/parser.c:405 ../lib/gis/parser.c:430
 #, fuzzy
 msgid "Name of input raster map"
-msgstr "���"
+msgstr "入力するファイル"
 
 #: ../lib/gis/parser.c:414 ../lib/gis/parser.c:439
 #, fuzzy
@@ -2938,8 +2944,9 @@ msgid "Name for output vector map"
 msgstr "���"
 
 #: ../lib/gis/parser.c:569 ../lib/gis/parser.c:578
+#, fuzzy
 msgid "Feature type"
-msgstr ""
+msgstr "地物型"
 
 #: ../lib/gis/parser.c:585
 msgid "Layer number"
@@ -2956,8 +2963,9 @@ msgid "Category value"
 msgstr ""
 
 #: ../lib/gis/parser.c:603
+#, fuzzy
 msgid "Category values"
-msgstr ""
+msgstr "属性値"
 
 #: ../lib/gis/parser.c:604 ../lib/gis/parser.c:618
 msgid "Example: 1,3,7-9,13"
@@ -2982,20 +2990,23 @@ msgid "Name for output file"
 msgstr "���"
 
 #: ../lib/gis/parser.c:644
+#, fuzzy
 msgid "Field separator"
-msgstr ""
+msgstr "区切り"
 
 #: ../lib/gis/parser.c:655
+#, fuzzy
 msgid "Color"
-msgstr ""
+msgstr "カラー"
 
 #: ../lib/gis/parser.c:656
 msgid "Either a standard color name or R:G:B triplet"
 msgstr ""
 
 #: ../lib/gis/parser.c:665
+#, fuzzy
 msgid "Background color"
-msgstr ""
+msgstr "背景の色"
 
 #: ../lib/gis/parser.c:667
 msgid "Either a standard GRASS color, R:G:B triplet, or \"none\""
@@ -3108,12 +3119,14 @@ msgstr ""
 "パラメータ:\n"
 
 #: ../lib/gis/parser.c:1700
+#, fuzzy
 msgid "Options"
-msgstr ""
+msgstr "オプション "
 
 #: ../lib/gis/parser.c:1706
+#, fuzzy
 msgid "Default"
-msgstr ""
+msgstr "既定値"
 
 #: ../lib/gis/parser.c:1935
 msgid "Allow overwrite"
@@ -3124,8 +3137,9 @@ msgid "Run with minimal output messages"
 msgstr ""
 
 #: ../lib/gis/parser.c:1945
+#, fuzzy
 msgid "Run quietly"
-msgstr ""
+msgstr "説明なし"
 
 #: ../lib/gis/parser.c:1978
 #, fuzzy
@@ -3895,8 +3909,9 @@ msgid ""
 msgstr ""
 
 #: ../lib/sites/sites.c:397
+#, fuzzy
 msgid "Cannot fetch row"
-msgstr ""
+msgstr "���"
 
 #: ../lib/sites/sites.c:579
 msgid "G_oldsite_new_struct: invalid # dims or fields"
@@ -4731,89 +4746,89 @@ msgid "Bitmap mask created"
 msgstr ""
 
 #, fuzzy
-#~ msgid "Unable to delete layer/category %d/%d line %d"
-#~ msgstr "����� ���� ���\n"
+msgid "Unable to delete layer/category %d/%d line %d"
+msgstr "����� ���� ���\n"
 
 #, fuzzy
-#~ msgid "Cannot open database %s"
-#~ msgstr "���"
+msgid "Cannot open database %s"
+msgstr "���"
 
 #, fuzzy
-#~ msgid "Cannot read topo for line [%d]"
-#~ msgstr "���"
+msgid "Cannot read topo for line [%d]"
+msgstr "���"
 
 #, fuzzy
-#~ msgid "Output name '%s' is not valid rast name."
-#~ msgstr "���."
+msgid "Output name '%s' is not valid rast name."
+msgstr "���."
 
 #, fuzzy
-#~ msgid "Cannot get field info"
-#~ msgstr "���"
+msgid "Cannot get field info"
+msgstr "���"
 
 #, fuzzy
-#~ msgid "Cannot open database"
-#~ msgstr "���"
+msgid "Cannot open database"
+msgstr "���"
 
 #, fuzzy
-#~ msgid "Output name '%s' is not valid vector name."
-#~ msgstr "���."
+msgid "Output name '%s' is not valid vector name."
+msgstr "���."
 
 #, fuzzy
-#~ msgid "Cannot open existing vector map <%s>"
-#~ msgstr "���"
+msgid "Cannot open existing vector map <%s>"
+msgstr "���"
 
 #, fuzzy
-#~ msgid "Cannot delete existing vector <%s>"
-#~ msgstr "���"
+msgid "Cannot delete existing vector <%s>"
+msgstr "���"
 
 #, fuzzy
-#~ msgid "Cannot open new vector %s"
-#~ msgstr "���"
+msgid "Cannot open new vector %s"
+msgstr "���"
 
 #, fuzzy
-#~ msgid "Cannot open history file for vector '%s'"
-#~ msgstr "���"
+msgid "Cannot open history file for vector '%s'"
+msgstr "���"
 
 #, fuzzy
-#~ msgid "Can't open directory %s"
-#~ msgstr "���"
+msgid "Can't open directory %s"
+msgstr "���"
 
 #, fuzzy
-#~ msgid "No such graphics monitor as <%s>.\n"
-#~ msgstr "����������<%s> � �����.\n"
+msgid "No such graphics monitor as <%s>.\n"
+msgstr "����������<%s> � �����.\n"
 
 #, fuzzy
-#~ msgid "Please run \"d.mon\" to select a valid graphics monitor.\n"
-#~ msgstr "�����\"d.mon\" ����� �����������\n"
+msgid "Please run \"d.mon\" to select a valid graphics monitor.\n"
+msgstr "�����\"d.mon\" ����� �����������\n"
 
 #, fuzzy
-#~ msgid "Error - Monitor <%s> is in use.\n"
-#~ msgstr "��� - ����<%s> ���\n"
+msgid "Error - Monitor <%s> is in use.\n"
+msgstr "��� - ����<%s> ���\n"
 
 #, fuzzy
-#~ msgid "Error - Could not complete locking process for monitor <%s>.\n"
-#~ msgstr "��� - � �� ����������(lock) ������<%s>.\n"
+msgid "Error - Could not complete locking process for monitor <%s>.\n"
+msgstr "��� - � �� ����������(lock) ������<%s>.\n"
 
 #, fuzzy
-#~ msgid "Error - Can't set up pipe to graphics device.\n"
-#~ msgstr "��� - ����� (pipe) ������� �����.\n"
+msgid "Error - Can't set up pipe to graphics device.\n"
+msgstr "��� - ����� (pipe) ������� �����.\n"
 
 #, fuzzy
-#~ msgid "Error - Graphics monitor <%s> not running!\n"
-#~ msgstr "��� - ����������<%s> � ����\n"
+msgid "Error - Graphics monitor <%s> not running!\n"
+msgstr "��� - ����������<%s> � ����\n"
 
 #, fuzzy
-#~ msgid "Please start graphics monitor <%s>.\n"
-#~ msgstr "���� ����������<%s>.\n"
+msgid "Please start graphics monitor <%s>.\n"
+msgstr "���� ����������<%s>.\n"
 
 #, fuzzy
-#~ msgid "Not connected...\n"
-#~ msgstr "�������...\n"
+msgid "Not connected...\n"
+msgstr "�������...\n"
 
 #, fuzzy
-#~ msgid "Couldn't connect to monitor. Will try once more.\n"
-#~ msgstr "����� ����� ���� ���� ����\n"
+msgid "Couldn't connect to monitor. Will try once more.\n"
+msgstr "����� ����� ���� ���� ����\n"
 
 #, fuzzy
-#~ msgid "ERROR: GISBASE not set\n"
-#~ msgstr "���: GISBASE � �����\n"
+msgid "ERROR: GISBASE not set\n"
+msgstr "���: GISBASE � �����\n"
