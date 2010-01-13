@@ -13,6 +13,7 @@
 #include <grass/gis.h>
 #include <grass/dbmi.h>
 #include <grass/form.h>
+#include <grass/Vect.h>
 #include "proto.h"
 
 /* Structure to store column names and values */
