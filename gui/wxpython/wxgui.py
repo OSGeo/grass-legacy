@@ -1666,7 +1666,7 @@ class AboutWindow(wx.Frame):
         authorwin = scrolled.ScrolledPanel(panel, id=wx.ID_ANY, 
                                            size=wx.DefaultSize,
                                            style = wx.TAB_TRAVERSAL|wx.SUNKEN_BORDER)
-        authortxt = wx.StaticText(authorwin, id=wx.ID_ANY, label=str(authors))
+        authortxt = wx.StaticText(authorwin, id=wx.ID_ANY, label=authors)
         authorwin.SetAutoLayout(1)
         authorwin.SetupScrolling()
         authorwin.sizer = wx.BoxSizer(wx.VERTICAL)
