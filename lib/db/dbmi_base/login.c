@@ -85,7 +85,7 @@ int read_file(LOGIN * login)
     if (fd == NULL)
 	return -1;
 
-    while (fgets(buf, 2000, fd)) {
+    while (G_getl2(buf, 2000, fd)) {
 	G_chop(buf);
 
 	usr[0] = pwd[0] = '\0';
