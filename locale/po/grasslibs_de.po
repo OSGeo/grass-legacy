@@ -1,6 +1,6 @@
 # translation of grasslibs_de.po to Deutsch
 # This file is distributed under the same license as the GRASS package.
-# Copyright (C) 2004, 2008, GRASS Development Team
+# Copyright (C) 2004, 2008, 2010, GRASS Development Team
 #
 # Stephan Holl <stephan.holl intevation.de>, 2007.
 # Stephan Holl <holl gdf-hannover.de>, 2004, 2005, 2006.
@@ -5086,3 +5086,33 @@ msgstr "Raster"
 #, fuzzy
 #~ msgid "The cholesky solver does not work with sparse matrices"
 #~ msgstr "Der lu-Solver arbeitet nur mit normalen quadratischen Matrizen"
+
+#~ msgid ""
+#~ "taking too long to find points for interpolation--please change the "
+#~ "region to area where your points are. Continuing calculations..."
+#~ msgstr ""
+#~ "Es dauert zu lange, um Punkte f√ºr die Interpolation zu finden -- bitte √"
+#~ "§ndern Sie die Region auf den Bereich, wo die Punkte sind. Fahre mit der "
+#~ "Berechnung fort..."
+
+#, fuzzy
+#~ msgid "Reading lines from vector map ... "
+#~ msgstr "Vektor Karte "
+
+#, fuzzy
+#~ msgid "Reading nodes from vector map ... "
+#~ msgstr "Vektor Karte "
+
+#~ msgid "strip exists with insufficient data"
+#~ msgstr "Strip existiert mit unzureichenden Daten."
+
+#~ msgid "there are points outside specified 2D/3D region--ignored %d points"
+#~ msgstr ""
+#~ "Es sind Punkte au√üerhalb der angegebenen 2d/3D-Region gefunden worden - "
+#~ "ignoriere %d Punkte."
+
+#~ msgid "ignoring %d points -- too dense"
+#~ msgstr "Ignoriere %d Punkte -- sie liegen zu dicht beieinander."
+
+#~ msgid "some points outside of region -- will ignore..."
+#~ msgstr "einige Punkte sind au√üerhalb der Region -- ignoriere dies..."

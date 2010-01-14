@@ -1,6 +1,6 @@
 # translation of grasstcl_de.po to deutsch
 # This file is distributed under the same license as the GRASS package.
-# Copyright (C) 2005, 2008, GRASS Development Team
+# Copyright (C) 2005, 2008, 2010, GRASS Development Team
 #
 # Markus Neteler <neteler itc.it>, 2006.
 # Stephan Holl <holl gdf-hannover.de>, 2006, 2007.

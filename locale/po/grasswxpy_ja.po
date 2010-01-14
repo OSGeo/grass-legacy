@@ -452,7 +452,6 @@ msgid "Delete selected layer"
 msgstr ""
 
 #: ../gui/wxpython/icons/icon.py:202 ../gui/wxpython/gis_set.py:125
-#, fuzzy
 msgid "Quit"
 msgstr "終了"
 
@@ -1549,9 +1548,8 @@ msgid "Launches script file."
 msgstr ""
 
 #: ../gui/wxpython/menustrings.py:184
-#, fuzzy
 msgid "Exit GUI"
-msgstr "終了"
+msgstr ""
 
 #: ../gui/wxpython/menustrings.py:185
 msgid "Quit wxGUI session"
@@ -5053,9 +5051,8 @@ msgstr "GRASSデータベースとロケーション名の設定"
 #: ../gui/wxpython/gui_modules/gdialogs.py:961
 #: ../gui/wxpython/gui_modules/gdialogs.py:970
 #: ../gui/wxpython/gui_modules/menuform.py:1392 ../gui/wxpython/gis_set.py:130
-#, fuzzy
 msgid "Browse"
-msgstr "ブラウズ"
+msgstr "参照"
 
 #: ../gui/wxpython/gui_modules/location_wizard.py:155
 #: ../gui/wxpython/gis_set.py:103
@@ -8854,42 +8851,42 @@ msgid ""
 msgstr ""
 
 #, fuzzy
-#~ msgid "Output vector map name"
-#~ msgstr "ベクトル"
+msgid "Output vector map name"
+msgstr "ベクトル"
 
 #, fuzzy
-#~ msgid "Create/edit projection information for current location"
-#~ msgstr "の"
+msgid "Create/edit projection information for current location"
+msgstr "の"
 
 #, fuzzy
-#~ msgid "Digitize raster map"
-#~ msgstr "デジタイズ"
+msgid "Digitize raster map"
+msgstr "デジタイズ"
 
 #, fuzzy
-#~ msgid "Reclassify vector objects interactively by entering SQL rules"
-#~ msgstr "ベクトル"
+msgid "Reclassify vector objects interactively by entering SQL rules"
+msgstr "ベクトル"
 
 #, fuzzy
-#~ msgid ""
-#~ "Hue-intensity-saturation (his) to red-green-blue (rgb) raster map color "
-#~ "transformation function."
-#~ msgstr "色."
+msgid ""
+"Hue-intensity-saturation (his) to red-green-blue (rgb) raster map color "
+"transformation function."
+msgstr "色."
 
 #, fuzzy
-#~ msgid ""
-#~ "Red-green-blue (rgb) to hue-intensity-saturation (his) raster map color "
-#~ "transformation function"
-#~ msgstr "色"
+msgid ""
+"Red-green-blue (rgb) to hue-intensity-saturation (his) raster map color "
+"transformation function"
+msgstr "色"
 
 #, fuzzy
-#~ msgid "Interactive input for supervised classification"
-#~ msgstr "入力 の"
+msgid "Interactive input for supervised classification"
+msgstr "入力 の"
 
 #, fuzzy
-#~ msgid ""
-#~ "Copy a table. Either 'from_table' (optionally with 'where') can be used "
-#~ "or 'select' option, but not 'from_table' and 'select' at the same time."
-#~ msgstr "コピー."
+msgid ""
+"Copy a table. Either 'from_table' (optionally with 'where') can be used or "
+"'select' option, but not 'from_table' and 'select' at the same time."
+msgstr "コピー."
 
 #, fuzzy
 #~ msgid "Save workspace to open file"
@@ -8914,3 +8911,31 @@ msgstr ""
 #, fuzzy
 #~ msgid "E&xit"
 #~ msgstr "終了(&x)"
+
+#, fuzzy
+#~ msgid "Open existing workspace file"
+#~ msgstr "ワークスペースを開く"
+
+#, fuzzy
+#~ msgid "Save current workspace to file"
+#~ msgstr "保存"
+
+#, fuzzy
+#~ msgid "Config"
+#~ msgstr "設定"
+
+#, fuzzy
+#~ msgid "Raster"
+#~ msgstr "ファイル"
+
+#, fuzzy
+#~ msgid "Vector"
+#~ msgstr "ファイル"
+
+#, fuzzy
+#~ msgid "Imagery"
+#~ msgstr "映像"
+
+#, fuzzy
+#~ msgid "Load"
+#~ msgstr "読み込み"

@@ -1,6 +1,6 @@
 # translation of grassmods_de.po to Deutsch
 # This file is distributed under the same license as the GRASS package.
-# Copyright (C) 2004, 2008, GRASS Development Team
+# Copyright (C) 2004, 2008, 2010 GRASS Development Team
 #
 # Markus Neteler <neteler itc.it>, 2004.
 # Stephan Holl <holl gdf-hannover.de>, 2004, 2005, 2006.
@@ -31933,14 +31933,14 @@ msgid "Output"
 msgstr "Ausgabe:"
 
 #, fuzzy
-#~ msgid ""
-#~ "Input raster map contains cells with NULL-value (no-data). The value %g "
-#~ "was used to represent no-data values in the input map. You can specify a "
-#~ "nodata value with the %s option."
-#~ msgstr ""
-#~ "Die Eingabe Rasterkarte enthält Zellen mit dem NULL-Wert (no-data). Der "
-#~ "Wert %g wurde verwendet um Nodata-Werte in der Eingabekarte zu "
-#~ "kennzeichnen. Sie können Nodata-Wert mit dem Parameter %s bestimmen."
+msgid ""
+"Input raster map contains cells with NULL-value (no-data). The value %g was "
+"used to represent no-data values in the input map. You can specify a nodata "
+"value with the %s option."
+msgstr ""
+"Die Eingabe Rasterkarte enthält Zellen mit dem NULL-Wert (no-data). Der "
+"Wert %g wurde verwendet um Nodata-Werte in der Eingabekarte zu kennzeichnen. "
+"Sie können Nodata-Wert mit dem Parameter %s bestimmen."
 
 #~ msgid "Script kill option"
 #~ msgstr "Skript Kill-Option."
@@ -31982,3 +31982,247 @@ msgstr "Ausgabe:"
 
 #~ msgid "Please choose only one print style"
 #~ msgstr "Bitte nur einen Druck-Stil auswählen."
+
+#~ msgid ""
+#~ "Calculate the groundwater distance velocity vector field and write the x, "
+#~ "y, and z components to maps named name_[xyz]. Name is basename for the "
+#~ "new raster3d maps"
+#~ msgstr ""
+#~ "Berechne das Vektorfeld der Grundwassergeschwindigkeit und schreibe die "
+#~ "X, Y und Z Komponenten in die Karten name_[xyz]. Name ist der gemeinsame "
+#~ "Bestandteil der neuen raster3d Karten."
+
+#~ msgid "The height of the river bed in [m]"
+#~ msgstr "Höhe des Flussbetts [m]."
+
+#~ msgid "The height of the drainage bed in [m]"
+#~ msgstr "Höhe der Drainage [m]."
+
+#~ msgid "Calculation of unconfined groundwater flow loop %i\n"
+#~ msgstr "Berechnung der unbeschränkten Grundwasserfluss Schleife %i\n"
+
+#, fuzzy
+#~ msgid "Input value: maximum length of surface flow, for USLE"
+#~ msgstr ""
+#~ "Eingabewert: Maximale Länge des Oberflächenabflusses in Karteneinheiten "
+#~ "für USLE."
+
+#, fuzzy
+#~ msgid "Output map: useful for visual display of results"
+#~ msgstr ""
+#~ "Ausgabekarte die hilfreich für die visuelle Darstellung der Ergebnisse "
+#~ "ist. VERALTET."
+
+#, fuzzy
+#~ msgid ""
+#~ "Sorry, if any of the following options are set:\n"
+#~ "    basin, stream, half.basin, slope, or lS\n"
+#~ "    you MUST provide a value for the basin threshold parameter."
+#~ msgstr ""
+#~ "Wenn eine der nachfolgenden Optionen gesetzt wurde\n"
+#~ "    basin, stream, half.basin, length.slope, or slope.steepness\n"
+#~ "    MÜSSEN Sie ein Wert für den Parameter 'basin threshold' angegeben."
+
+#, fuzzy
+#~ msgid "unable to open new L map layer."
+#~ msgstr "Kann neue accum-Karte nicht öffnen."
+
+#, fuzzy
+#~ msgid "unable to open new S map layer."
+#~ msgstr "Kann neue accum-Karte nicht öffnen."
+
+#, fuzzy
+#~ msgid "SECTION 4: Length Slope determination."
+#~ msgstr "ABSCHNITT %d: Bestimme Wassereinzugsgebiet."
+
+#, fuzzy
+#~ msgid "SECTION 3: Accumulating Surface Flow."
+#~ msgstr "ABSCHNITT 3: Akkumuliere Oberflächenabfluß mit SFD."
+
+#, fuzzy
+#~ msgid "unable to open MASK"
+#~ msgstr "Kann die Maske (MASK) nicht lesen."
+
+#, fuzzy
+#~ msgid "Unable to open MASK"
+#~ msgstr "Kann die Maske (MASK) nicht lesen."
+
+#~ msgid "CHILD[pid = %i]: unable to open %s mask ... continue without!!!"
+#~ msgstr ""
+#~ "CHILD[pid = %i]: kann %s Maske nicht öffnen ... mache ohne weiter !!!"
+
+#~ msgid "r.li.worker (pid %i) exited with abnormal status %i"
+#~ msgstr "r.li.worker (pid %i) abgebrochen mit unnormalen Status %i"
+
+#~ msgid "r.li.worker (pid %i) terminated"
+#~ msgstr "r.li.worker (pid %i) beendet."
+
+#~ msgid "Cannot make stat of %s configuration file"
+#~ msgstr "Kann stat von %s Konfigurationsdatei nicht erzeugen."
+
+#~ msgid "Illegal configuration file"
+#~ msgstr "Ungültige Konfigurationsdatei."
+
+#~ msgid "Do not export long colortable"
+#~ msgstr "Exportiere keine langen Farbtabellen."
+
+#~ msgid ""
+#~ "Input raster map contains cells with NULL-value (no-data). The value %d "
+#~ "was used to represent no-data values in the input map. You can specify "
+#~ "nodata value by %s parameter."
+#~ msgstr ""
+#~ "Die Eingabe Rasterkarte enthält Zellen mit dem NULL-Wert (no-data). Der "
+#~ "Wert %d wurde verwendet um Nodata-Werte in der Eingabekarte zu "
+#~ "kennzeichnen. Sie können Nodata-Wert mit dem Parameter %s bestimmen."
+
+#~ msgid ""
+#~ "Input raster map contains cells with NULL-value (no-data). The value %g "
+#~ "was used to represent no-data values in the input map. You can specify "
+#~ "nodata value by %s parameter."
+#~ msgstr ""
+#~ "Die Eingabe Rasterkarte enthält Zellen mit dem NULL-Wert (no-data). Der "
+#~ "Wert %g wurde verwendet um Nodata-Werte in der Eingabekarte zu "
+#~ "kennzeichnen. Sie können Nodata-Wert mit dem Parameter %s bestimmen."
+
+#, fuzzy
+#~ msgid "Starting map [%s]"
+#~ msgstr "Setze den Kartennamen auf <%s>."
+
+#, fuzzy
+#~ msgid "Percent done:"
+#~ msgstr "Prozent fertig: "
+
+#, fuzzy
+#~ msgid "Seed [%d] larger than maximum [%d]"
+#~ msgstr "Startwert (%d) größer als das Maximum (%d)."
+
+#, fuzzy
+#~ msgid "Seed [%d] smaller than minimum [%d]"
+#~ msgstr "Startwert (%d) kleiner als das Minimum (%d)."
+
+#~ msgid "Calculating map %01d of %01d (angle %lf, raster map <%s>)"
+#~ msgstr "Berechne Karte %01d von %01d (Winkel %lf, Rasterkarte <%s>)."
+
+#~ msgid "Show the category label in the grid cell(s)"
+#~ msgstr "Zeige die Kategorielabel der Rasterzelle(n)."
+
+#, fuzzy
+#~ msgid "Lat/Long location is not supported"
+#~ msgstr "Lat/Long Locations werden von diesem Modul nicht unterstützt"
+
+#~ msgid "Default value: GRASS_GUI if defined otherwise tcltk"
+#~ msgstr "Standardwert: GRASS_GUI wenn definiert, ansonsten tcltk"
+
+#~ msgid ""
+#~ "tcltk;Tcl/Tk based GUI - GIS Manager (gis.m);oldtcltk;Old Tcl/Tk based "
+#~ "GUI - Display Manager (d.m);wxpython;wxPython based next generation GUI;"
+#~ "text;command line interface only"
+#~ msgstr ""
+#~ "tcltk;Tcl/Tk basiertes GUI - GIS Manager (gis.m);oldtcltk;Altes Tcl/Tk "
+#~ "basiertes GUI - Display Manager (d.m);wxpython;wxPython basiertes GUI der "
+#~ "nächsten Generation;text;Nur Kommandozeile"
+
+#~ msgid "Unable to read symbol, unable todisplay points"
+#~ msgstr "Kann das Symbol nicht lesen; kann die Punkte nicht darstellen."
+
+#~ msgid "Allocation memory for bilinear interpolation"
+#~ msgstr "Allokiere Speicher für die bilineare Interpolation."
+
+#~ msgid "Allocation memory for bicubic interpolation"
+#~ msgstr "Allokiere Speicher für die bikubische Interpolation."
+
+#~ msgid "Cannot allocate %d bytes of memory"
+#~ msgstr "Kann nicht %d Byte Speicher belegen."
+
+#~ msgid "Feature type. Combination of types is not supported by all formats."
+#~ msgstr ""
+#~ "Feature-Typ: Kombinationen der Typen wird nicht von allen Formaten "
+#~ "unterstützt."
+
+#~ msgid ""
+#~ "%d faces found, but not requested to be exported. Verify 'type' parameter."
+#~ msgstr ""
+#~ "%d 3D-Fläche(n) gefunden, die allerdings nicht exportiert werden sollen. "
+#~ "Überprüfen Sie bitte den 'type'-Parameter."
+
+#~ msgid "Exporting %i points/lines..."
+#~ msgstr "Exportiere %i Punkte/Linien..."
+
+#~ msgid "vector, query"
+#~ msgstr "Vektor, Abfrage"
+
+#, fuzzy
+#~ msgid "Writing edges..."
+#~ msgstr "Schreibe Vertices..."
+
+#, fuzzy
+#~ msgid "point;simple x,y[,z] list;standard;GRASS's vector ASCII format"
+#~ msgstr "Punkt; einfache x,y[,z] Liste;Standard;GRASSs Vektor-ASCII-Format"
+
+#, fuzzy
+#~ msgid "Columns"
+#~ msgstr "Spalten = %d"
+
+#, fuzzy
+#~ msgid ""
+#~ "Number of column used as x coordinate (first column is 1) for points mode"
+#~ msgstr "Nummer der Spalte, die als Y-Koordinate genutzt wird (Punkt-Modus)."
+
+#, fuzzy
+#~ msgid ""
+#~ "Number of column used as y coordinate (first column is 1) for points mode"
+#~ msgstr "Nummer der Spalte, die als Y-Koordinate genutzt wird (Punkt-Modus)."
+
+#, fuzzy
+#~ msgid ""
+#~ "Number of column used as z coordinate (first column is 1) for points mode"
+#~ msgstr "Nummer der Spalte, die als Z-Koordinate genutzt wird (Punkt-Modus)."
+
+#, fuzzy
+#~ msgid "If 0, z coordinate is not used"
+#~ msgstr ""
+#~ "Die erste Spalte ist 1. Wenn 0, dann wird die Z-Koordinate nicht "
+#~ "verwendet."
+
+#, fuzzy
+#~ msgid ""
+#~ "Number of column used as category (first column is 1) for points mode"
+#~ msgstr "Nummer der Spalte, die als Kategorie genutzt wird (Punkt-Modus)."
+
+#, fuzzy
+#~ msgid ""
+#~ "If 0, unique category is assigned to each row and written to new column "
+#~ "'cat'"
+#~ msgstr ""
+#~ "Erste Spalte ist 1. Wenn 0, dann wird in die neue Spalte 'cat' in jede "
+#~ "Zeile eine eindeutige Kategorie geschrieben."
+
+#, fuzzy
+#~ msgid "Create a new empty vector map and exit. Nothing is read from input"
+#~ msgstr ""
+#~ "Erstellt eine neue, leere Vektorkarte und beendet sich. Nichts wird "
+#~ "eingelesen."
+
+#~ msgid "Create a MASK for limiting raster operation"
+#~ msgstr "Erzeuge eine Maske (MASK) um Rasteroperationen zu begrenzen."
+
+#~ msgid "Raster map to use as MASK"
+#~ msgstr "Rasterkarte, die als Maske (MASK) verwendet werden soll."
+
+#~ msgid "Category values to use for MASK (format: 1 2 3 thru 7 *)"
+#~ msgstr ""
+#~ "Kategoriewerte, die für die Maske verwendet werden (Format: 1 2 3 thru 7 "
+#~ "*)."
+
+#~ msgid "Create inverse MASK from specified 'maskcats' list"
+#~ msgstr "Erzeuge eine inverse Maske aus der angegebenen 'maskcats' Liste."
+
+#~ msgid "Remove existing MASK (overrides other options)"
+#~ msgstr "Entferne existierende Maske (MASK). Übersteuert andere Optionen."
+
+#~ msgid "Computing row %d of covariance matrix..."
+#~ msgstr "Berechne Zeile %d der Kovarianz-Matrix..."
+
+#~ msgid "The output cell map <%s.%d> has values outside the 0-255 range."
+#~ msgstr ""
+#~ "Die Ausgabe-Rasterkarte <%s.%d> hat Werte außerhalb der Spanne 0-255."
