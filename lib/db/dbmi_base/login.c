@@ -6,6 +6,7 @@
 #include <unistd.h>
 #include <grass/gis.h>
 #include <grass/dbmi.h>
+#include <grass/glocale.h>
 
 typedef struct
 {
@@ -27,7 +28,7 @@ static const char *login_filename(void)
 
     if (!file) {
 	file = (char *)malloc(1000);
-	sprintf(file, "%s/.grasslogin6", G_home());
+	sprintf(file, "%s/.grasslogin64", G_home());
     }
     return file;
 }
@@ -58,7 +59,7 @@ add_login(LOGIN * login, const char *dr, const char *db, const char *usr,
 }
 
 /*
-   Read file if exists
+   Read the DB login file if it exists
    return: -1 error (cannot read file)
    number of items (0 also if file does not exist)
  */
@@ -73,7 +74,7 @@ int read_file(LOGIN * login)
     login->n = 0;
     file = login_filename();
 
-    G_debug(3, "file = %s", file);
+    G_debug(3, "DB login file = <%s>", file);
 
     if (stat(file, &info) != 0) {
 	G_debug(3, "login file does not exist");
@@ -88,12 +89,13 @@ int read_file(LOGIN * login)
 	G_chop(buf);
 
 	usr[0] = pwd[0] = '\0';
-	ret = sscanf(buf, "%[^ ] %[^ ] %[^ ] %[^ ]", dr, db, usr, pwd);
+	ret = sscanf(buf, "%[^|]|%[^|]|%[^|]|%[^\n]", dr, db, usr, pwd);
 
-	G_debug(3, "ret = %d : %s %s %s %s", ret, dr, db, usr, pwd);
+	G_debug(3, "ret = %d : drv=[%s] db=[%s] usr=[%s] pwd=[%s]",
+		ret, dr, db, usr, pwd);
 
 	if (ret < 2) {
-	    G_warning("Login file corrupted");
+	    G_warning(_("Login file corrupted"));
 	    continue;
 	}
 
@@ -106,7 +108,7 @@ int read_file(LOGIN * login)
 }
 
 /*
-   Write file
+   Write the DB login file
    return: -1 error (cannot read file)
    0 OK
  */
@@ -118,7 +120,7 @@ int write_file(LOGIN * login)
 
     file = login_filename();
 
-    G_debug(3, "file = %s", file);
+    G_debug(3, "DB login file = <%s>", file);
 
     fd = fopen(file, "w");
     if (fd == NULL)
@@ -129,12 +131,12 @@ int write_file(LOGIN * login)
     chmod(file, S_IRUSR | S_IWUSR);
 
     for (i = 0; i < login->n; i++) {
-	fprintf(fd, "%s %s", login->data[i].driver, login->data[i].database);
+	fprintf(fd, "%s|%s", login->data[i].driver, login->data[i].database);
 	if (login->data[i].user) {
-	    fprintf(fd, " %s", login->data[i].user);
+	    fprintf(fd, "|%s", login->data[i].user);
 
 	    if (login->data[i].password)
-		fprintf(fd, " %s", login->data[i].password);
+		fprintf(fd, "|%s", login->data[i].password);
 	}
 	fprintf(fd, "\n");
     }
@@ -156,8 +158,8 @@ db_set_login(const char *driver, const char *database, const char *user,
     int i, found;
     LOGIN login;
 
-    G_debug(3, "db_set_login(): %s %s %s %s", driver, database, user,
-	    password);
+    G_debug(3, "db_set_login(): drv=[%s] db=[%s] usr=[%s] pwd=[%s]",
+	    driver, database, user, password);
 
     init_login(&login);
 
@@ -205,7 +207,7 @@ db_get_login(const char *driver, const char *database, const char **user,
     int i;
     LOGIN login;
 
-    G_debug(3, "db_get_login(): %s %s", driver, database);
+    G_debug(3, "db_get_login(): drv=[%s] db=[%s]", driver, database);
 
     user[0] = '\0';
     password[0] = '\0';
