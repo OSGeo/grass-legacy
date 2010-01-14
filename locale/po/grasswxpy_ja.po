@@ -445,7 +445,6 @@ msgid "Delete selected layer"
 msgstr ""
 
 #: ../gui/wxpython/icons/icon.py:203 ../gui/wxpython/gis_set.py:128
-#, fuzzy
 msgid "Quit"
 msgstr "終了"
 
@@ -4732,7 +4731,7 @@ msgstr "GRASSデータベースとロケーション名の設定"
 #: ../gui/wxpython/gui_modules/menuform.py:1460 ../gui/wxpython/gis_set.py:133
 #, fuzzy
 msgid "Browse"
-msgstr "ブラウズ"
+msgstr "参照"
 
 #: ../gui/wxpython/gui_modules/location_wizard.py:155
 #: ../gui/wxpython/gis_set.py:106
