@@ -571,7 +571,7 @@ proc GmCLabels::duplicate { tree parent node id } {
 	variable dup
 	global iconpath
 
-    set node "PS labels:$count"
+    set node "clabels:$count"
 	set dup($count) 1
 
     set frm [ frame .clabelsicon$count]
@@ -595,12 +595,12 @@ proc GmCLabels::duplicate { tree parent node id } {
 
 	if { $opt($id,1,labels) == ""} {
 	    $tree insert $sellayer $parent $node \
-		-text      "clabels $count" \
+		-text      "PS labels $count" \
 		-window    $frm \
 		-drawcross auto
 	} else {
 	    $tree insert $sellayer $parent $node \
-		-text      "$opt($id,1,clabels)" \
+		-text      "$opt($id,1,labels)" \
 		-window    $frm \
 		-drawcross auto
 	}
