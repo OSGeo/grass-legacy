@@ -54,21 +54,21 @@ msgstr "FEHLER - keine Antwort vom Grafikfenster <%s>.\n"
 
 #: ../lib/raster/io_sock.c:63
 msgid "No graphics monitor has been selected for output."
-msgstr "Kein Grafikfenster fÃ¼r die Ausgabe selektiert."
+msgstr "Kein Grafikfenster für die Ausgabe selektiert."
 
 #: ../lib/raster/io_sock.c:64
 msgid "Please run \"d.mon\" to select a graphics monitor."
-msgstr "Bitte verwenden Sie \"d.mon\", um ein Grafikfenster auszuwÃ¤hlen."
+msgstr "Bitte verwenden Sie \"d.mon\", um ein Grafikfenster auszuwählen."
 
 #: ../lib/raster/io_sock.c:72
 #, c-format
 msgid "Failed to get socket name for monitor <%s>."
-msgstr "Konnte fÃ¼r das Grafikfenster <%s> kein Socketnamen bekommen."
+msgstr "Konnte für das Grafikfenster <%s> kein Socketnamen bekommen."
 
 #: ../lib/raster/io_sock.c:81
 #, c-format
 msgid "No socket to connect to for monitor <%s>."
-msgstr "Keine Socket-Verbindung fÃ¼r Grafikfenster <%s> vorhanden."
+msgstr "Keine Socket-Verbindung für Grafikfenster <%s> vorhanden."
 
 #: ../lib/raster/io_sock.c:98
 msgid "Socket is already in use or not accepting connections."
@@ -76,7 +76,7 @@ msgstr "Socket wird bereits benutzt oder akzeptiert keine Verbindungen."
 
 #: ../lib/raster/io_sock.c:99
 msgid "Use d.mon to select a monitor"
-msgstr "Bitte verwenden Sie \"d.mon\", um ein Grafikfenster auszuwÃ¤hlen."
+msgstr "Bitte verwenden Sie \"d.mon\", um ein Grafikfenster auszuwählen."
 
 #: ../lib/raster/io_sock.c:105
 msgid "Trying to connect to something not a socket."
@@ -101,7 +101,7 @@ msgstr "Verbindung fehlgeschlagen."
 #: ../lib/vask/V_support.c:58
 #, c-format
 msgid "Unable to open file %s"
-msgstr "Kann Datei %s nicht Ã¶ffnen."
+msgstr "Kann Datei %s nicht öffnen."
 
 #: ../lib/symbol/read.c:206
 #, c-format
@@ -118,7 +118,7 @@ msgstr ""
 #: ../lib/symbol/read.c:278
 #, c-format
 msgid "Cannot find/open symbol: '%s'"
-msgstr "Kann Symbol '%s' nicht finden/Ã¶ffnen."
+msgstr "Kann Symbol '%s' nicht finden/öffnen."
 
 #: ../lib/symbol/read.c:378 ../lib/symbol/read.c:396 ../lib/symbol/read.c:406
 #: ../lib/symbol/read.c:424
@@ -129,7 +129,7 @@ msgstr "Falsche Symbolfarbe: '%s', benutze Standardfarbe."
 #: ../lib/proj/get_proj.c:150
 #, fuzzy, c-format
 msgid "Invalid zone %s specified"
-msgstr "ungÃ¼ltiger Ellipsoid %s in Datei."
+msgstr "ungültiger Ellipsoid %s in Datei."
 
 #: ../lib/proj/get_proj.c:230
 msgid "Unable to initialise PROJ.4 with the following parameter list:"
@@ -147,7 +147,7 @@ msgstr ""
 #: ../lib/proj/get_proj.c:327
 #, fuzzy, c-format
 msgid "Unable to initialize pj cause: %s"
-msgstr "Kann Datei %s in %s nicht Ã¶ffnen"
+msgstr "Kann Datei %s in %s nicht öffnen"
 
 #: ../lib/proj/get_proj.c:403
 #, fuzzy
@@ -171,18 +171,18 @@ msgstr "Ergebnis"
 #: ../lib/proj/datum.c:251
 #, fuzzy
 msgid "Unable to open temporary file"
-msgstr "Kann Datei %s nicht Ã¶ffnen."
+msgstr "Kann Datei %s nicht öffnen."
 
 #: ../lib/proj/datum.c:345 ../lib/gis/get_projname.c:52
 #: ../lib/gis/get_ell_name.c:45 ../lib/gis/get_datum_name.c:58
 #, c-format
 msgid "Hit RETURN to cancel request\n"
-msgstr "DrÃ¼cken Sie RETURN, um abzubrechen.\n"
+msgstr "Drücken Sie RETURN, um abzubrechen.\n"
 
 #: ../lib/proj/datum.c:419 ../lib/proj/datum.c:484
 #, fuzzy, c-format
 msgid "Unable to open datum table file <%s>"
-msgstr "Kann Datums-Tabelle %s nicht Ã¶ffnen."
+msgstr "Kann Datums-Tabelle %s nicht öffnen."
 
 #: ../lib/proj/datum.c:432 ../lib/proj/datum.c:498
 #, fuzzy, c-format
@@ -197,7 +197,7 @@ msgstr "fehlgeschlagen"
 #: ../lib/proj/ellipse.c:75
 #, fuzzy, c-format
 msgid "Invalid ellipsoid <%s> in file"
-msgstr "ungÃ¼ltiger Ellipsoid %s in Datei."
+msgstr "ungültiger Ellipsoid %s in Datei."
 
 #: ../lib/proj/ellipse.c:98
 msgid "No secondary ellipsoid descriptor (rf, es or b) in file"
@@ -206,7 +206,7 @@ msgstr ""
 #: ../lib/proj/ellipse.c:102
 #, fuzzy
 msgid "Invalid ellipsoid descriptors (a, rf, es or b) in file"
-msgstr "ungÃ¼ltiger Ellipsoid %s in Datei."
+msgstr "ungültiger Ellipsoid %s in Datei."
 
 #: ../lib/proj/ellipse.c:115
 msgid "No ellipsoid info given in file"
@@ -215,17 +215,17 @@ msgstr "Keine Ellipsoid-Informationen in Datei."
 #: ../lib/proj/ellipse.c:215 ../lib/gis/get_ellipse.c:283
 #, fuzzy, c-format
 msgid "Unable to open ellipsoid table file <%s>"
-msgstr "Kann die Ellipsoid-Tabelle %s nicht Ã¶ffnen."
+msgstr "Kann die Ellipsoid-Tabelle %s nicht öffnen."
 
 #: ../lib/proj/ellipse.c:268 ../lib/gis/get_ellipse.c:338
 #, c-format
 msgid "Line%s of ellipsoid table file <%s> is invalid"
-msgstr "Die Zeile %s der Ellipsoid-Tabelle <%s> ist ungÃ¼ltig."
+msgstr "Die Zeile %s der Ellipsoid-Tabelle <%s> ist ungültig."
 
 #: ../lib/proj/ellipse.c:269 ../lib/gis/get_ellipse.c:336
 #, c-format
 msgid "Lines%s of ellipsoid table file <%s> are invalid"
-msgstr "Zeilen%s der Ellipsoid-Tabelle <%s> sind ungÃ¼ltig."
+msgstr "Zeilen%s der Ellipsoid-Tabelle <%s> sind ungültig."
 
 #: ../lib/proj/convert.c:110
 msgid "Unable parse GRASS PROJ_INFO file"
@@ -297,7 +297,7 @@ msgid ""
 msgstr ""
 "\n"
 "\n"
-"Farbtabelle wird fÃ¼r die Datei [%s] in Mapset [%s] benÃ¶tigt.\n"
+"Farbtabelle wird für die Datei [%s] in Mapset [%s] benötigt.\n"
 
 #: ../lib/gis/make_colr.c:52
 #, c-format
@@ -311,12 +311,12 @@ msgstr ""
 #: ../lib/gis/make_colr.c:53
 #, c-format
 msgid "    1:  Random colors\n"
-msgstr "    1:  ZufÃ¤llige Farben\n"
+msgstr "    1:  Zufällige Farben\n"
 
 #: ../lib/gis/make_colr.c:54
 #, c-format
 msgid "    2:  Red, green, and blue color ramps\n"
-msgstr "    2:  Rote, grÃ¼ne und blaue Farbrampen\n"
+msgstr "    2:  Rote, grüne und blaue Farbrampen\n"
 
 #: ../lib/gis/make_colr.c:55
 #, c-format
@@ -331,7 +331,7 @@ msgstr "    4:  Graustufen\n"
 #: ../lib/gis/make_colr.c:57
 #, c-format
 msgid "    5:  Aspect\n"
-msgstr "    5:  Farbe speziell fÃ¼r Hangneigungskarten\n"
+msgstr "    5:  Farbe speziell für Hangneigungskarten\n"
 
 #: ../lib/gis/make_colr.c:58
 #, c-format
@@ -341,12 +341,12 @@ msgstr "    6:  Regenbogenfarben\n"
 #: ../lib/gis/make_colr.c:59
 #, c-format
 msgid "    7:  Red through yellow to green\n"
-msgstr "    7:  Von rot Ã¼ber gelb zu grÃ¼n\n"
+msgstr "    7:  Von rot über gelb zu grün\n"
 
 #: ../lib/gis/make_colr.c:60
 #, c-format
 msgid "    8:  Green through yellow to red\n"
-msgstr "    8:  Von grÃ¼n Ã¼ber gelb zu rot\n"
+msgstr "    8:  Von grün über gelb zu rot\n"
 
 #: ../lib/gis/make_colr.c:61
 #, c-format
@@ -360,7 +360,7 @@ msgid ""
 "%s invalid; Try again > "
 msgstr ""
 "\n"
-"%s ist ungÃ¼ltig; Bitte nocheinmal probieren > "
+"%s ist ungültig; Bitte nocheinmal probieren > "
 
 #: ../lib/gis/find_file.c:74
 #, c-format
@@ -380,20 +380,20 @@ msgstr "Kann keine quant-Regeln schreiben: Karte %s ist eine Integerkarte."
 #: ../lib/gis/quant_rw.c:215
 #, c-format
 msgid "Cannot write quant rules for map %s"
-msgstr "Kann keine quant-Regeln fÃ¼r Karte %s schreiben."
+msgstr "Kann keine quant-Regeln für Karte %s schreiben."
 
 #: ../lib/gis/set_window.c:76
 msgid ""
 "G_set_window(): projection/zone differs from that of currently open raster "
 "maps"
 msgstr ""
-"G_set_window(): Projektion/Zone unterscheidet sich von den gerade geÃ¶ffneten "
+"G_set_window(): Projektion/Zone unterscheidet sich von den gerade geöffneten "
 "Rasterdateien."
 
 #: ../lib/gis/quant_io.c:89
 #, c-format
 msgid "The floating data range for %s@%s is empty"
-msgstr "Die FlieÃŸkomma Spanne der Karte %s@%s ist leer."
+msgstr "Die Fließkomma Spanne der Karte %s@%s ist leer."
 
 #: ../lib/gis/quant_io.c:99
 #, c-format
@@ -416,26 +416,26 @@ msgstr ""
 #, c-format
 msgid "%s: map [%s] not open for write - request ignored"
 msgstr ""
-"%s: Karte [%s] ist nicht zum Schreiben geÃ¶ffnet - Anfrage wird ignoriert."
+"%s: Karte [%s] ist nicht zum Schreiben geöffnet - Anfrage wird ignoriert."
 
 #: ../lib/gis/put_row.c:259
 #, c-format
 msgid "%s: map [%s] not open for random write - request ignored"
 msgstr ""
-"%s Karte [%s] ist nicht zum zufÃ¤lligen Schreiben geÃ¶ffnet - Anfrage wird "
+"%s Karte [%s] ist nicht zum zufälligen Schreiben geöffnet - Anfrage wird "
 "ignoriert."
 
 #: ../lib/gis/put_row.c:266
 #, c-format
 msgid "%s: map [%s] not open for sequential write - request ignored"
 msgstr ""
-"%s: Karte [%s] ist nicht fÃ¼r sequentielles Schreiben geÃ¶ffnet - Anfrage wird "
+"%s: Karte [%s] ist nicht für sequentielles Schreiben geöffnet - Anfrage wird "
 "ignoriert."
 
 #: ../lib/gis/put_row.c:270
 #, c-format
 msgid "%s: unopened file descriptor - request ignored"
-msgstr "%s: UngeÃ¶ffneter Dateibeschreiber - Anfrage ignoriert."
+msgstr "%s: Ungeöffneter Dateibeschreiber - Anfrage ignoriert."
 
 #: ../lib/gis/put_row.c:310
 #, c-format
@@ -445,17 +445,17 @@ msgstr "Karte [%s] - Kann Zeile %d nicht schreiben. "
 #: ../lib/gis/put_row.c:393
 #, c-format
 msgid "xdr_float failed for index %d of row %d"
-msgstr "xdr_float fehlgeschlagen fÃ¼r den Index %d in Reihe %d"
+msgstr "xdr_float fehlgeschlagen für den Index %d in Reihe %d"
 
 #: ../lib/gis/put_row.c:419
 #, c-format
 msgid "xdr_double failed for index %d of row %d"
-msgstr "xdr_double fehlerhaft fÃ¼r Index %d der Reihe %d"
+msgstr "xdr_double fehlerhaft für Index %d der Reihe %d"
 
 #: ../lib/gis/put_row.c:754
 #, c-format
 msgid "unable to find a temporary null file %s"
-msgstr "Kann keine temporÃ¤re NULL-Datei %s finden."
+msgstr "Kann keine temporäre NULL-Datei %s finden."
 
 #: ../lib/gis/put_row.c:776 ../lib/gis/put_row.c:781
 #, c-format
@@ -465,22 +465,22 @@ msgstr "Fehler beim Schreiben der Null-Reihe %d."
 #: ../lib/gis/cats.c:381
 #, c-format
 msgid "category support for [%s] in mapset [%s] %s"
-msgstr "Kategorie UnterstÃ¼tzung fÃ¼r [%s] im Mapset [%s] %s"
+msgstr "Kategorie Unterstützung für [%s] im Mapset [%s] %s"
 
 #: ../lib/gis/cats.c:417
 #, c-format
 msgid "category support for vector map [%s] in mapset [%s] %s"
-msgstr "Kategorie UnterstÃ¼tzung fÃ¼r die Vektordatei [%s] in Mapset [%s] %s"
+msgstr "Kategorie Unterstützung für die Vektordatei [%s] in Mapset [%s] %s"
 
 #: ../lib/gis/view.c:177
 #, c-format
 msgid "Unable to open %s for writing"
-msgstr "Kann %s nicht zum Beschreiben Ã¶ffnen."
+msgstr "Kann %s nicht zum Beschreiben öffnen."
 
 #: ../lib/gis/view.c:263 ../lib/gis/view.c:480
 #, c-format
 msgid "Unable to open %s for reading"
-msgstr "Kann %s nicht zum Lesen Ã¶ffnen."
+msgstr "Kann %s nicht zum Lesen öffnen."
 
 #: ../lib/gis/view.c:466
 #, c-format
@@ -491,7 +491,7 @@ msgstr "GRASS Fenster-Ausschnitt wurde abgespeichert:\n"
 #, c-format
 msgid " Window saved in \"%s\" is completely outside of current GRASS window."
 msgstr ""
-" Das in \"%s\" abgespeicherte Fenster ist komplett auÃŸerhalb des derzeitigen "
+" Das in \"%s\" abgespeicherte Fenster ist komplett außerhalb des derzeitigen "
 "GRASS Fensters."
 
 #: ../lib/gis/view.c:550
@@ -499,7 +499,7 @@ msgstr ""
 msgid ""
 " Only %d%% of window saved in \"%s\" overlaps with current GRASS window."
 msgstr ""
-" Nur %d%% des in \"%s\" abgespeicherten Fensters Ã¼berlappt mit dem "
+" Nur %d%% des in \"%s\" abgespeicherten Fensters überlappt mit dem "
 "derzeitigen GRASS-Fenster."
 
 #: ../lib/gis/get_projname.c:31
@@ -515,7 +515,7 @@ msgstr "FEHLER beim Lesen von %s"
 #: ../lib/gis/get_projname.c:38 ../lib/gis/get_ell_name.c:31
 #: ../lib/gis/get_datum_name.c:69
 msgid "Cannot open temp file"
-msgstr "Kann temporÃ¤re Datei nicht Ã¶ffnen."
+msgstr "Kann temporäre Datei nicht öffnen."
 
 #: ../lib/gis/get_projname.c:49
 #, c-format
@@ -531,7 +531,7 @@ msgstr ""
 #: ../lib/gis/get_projname.c:51
 #, c-format
 msgid "Enter 'list' for the list of available projections\n"
-msgstr "Geben Sie 'list' fÃ¼r eine Liste der verfÃ¼gbaren Projektionen ein.\n"
+msgstr "Geben Sie 'list' für eine Liste der verfügbaren Projektionen ein.\n"
 
 #: ../lib/gis/get_projname.c:74
 #, c-format
@@ -540,7 +540,7 @@ msgid ""
 "invalid projection\n"
 msgstr ""
 "\n"
-"UngÃ¼ltige Projektion\n"
+"Ungültige Projektion\n"
 
 #: ../lib/gis/mapset_msc.c:60
 #, fuzzy, c-format
@@ -574,19 +574,19 @@ msgstr "G_set_null_value: falscher Datentyp!"
 
 #: ../lib/gis/adj_cellhd.c:47 ../lib/gis/adj_cellhd.c:199
 msgid "Illegal n-s resolution value"
-msgstr "UngÃ¼ltige N-S AuflÃ¶sung"
+msgstr "Ungültige N-S Auflösung"
 
 #: ../lib/gis/adj_cellhd.c:51 ../lib/gis/adj_cellhd.c:205
 msgid "Illegal row value"
-msgstr "UngÃ¼ltiger Zeilenwert"
+msgstr "Ungültiger Zeilenwert"
 
 #: ../lib/gis/adj_cellhd.c:55 ../lib/gis/adj_cellhd.c:211
 msgid "Illegal e-w resolution value"
-msgstr "UngÃ¼ltige E-W Ausdehnung"
+msgstr "Ungültige E-W Ausdehnung"
 
 #: ../lib/gis/adj_cellhd.c:59 ../lib/gis/adj_cellhd.c:217
 msgid "Illegal col value"
-msgstr "UngÃ¼ltiger Spaltenwert"
+msgstr "Ungültiger Spaltenwert"
 
 #: ../lib/gis/adj_cellhd.c:79 ../lib/gis/adj_cellhd.c:247
 #, c-format
@@ -596,17 +596,17 @@ msgstr ""
 
 #: ../lib/gis/adj_cellhd.c:84 ../lib/gis/adj_cellhd.c:252
 msgid "Illegal latitude for North"
-msgstr "UngÃ¼ltige geographische LÃ¤nge fÃ¼r Norden"
+msgstr "Ungültige geographische Länge für Norden"
 
 #: ../lib/gis/adj_cellhd.c:90 ../lib/gis/adj_cellhd.c:258
 #, c-format
 msgid "Fixing subtle input data rounding error of south boundary (%g>%g)"
 msgstr ""
-"Repariere ungenauen Rundungsfehler des SÃ¼drandes der Eingabe-Daten (%g>%g)."
+"Repariere ungenauen Rundungsfehler des Südrandes der Eingabe-Daten (%g>%g)."
 
 #: ../lib/gis/adj_cellhd.c:95 ../lib/gis/adj_cellhd.c:263
 msgid "Illegal latitude for South"
-msgstr "UngÃ¼ltige geographische LÃ¤nge fÃ¼r SÃ¼den"
+msgstr "Ungültige geographische Länge für Süden"
 
 #: ../lib/gis/adj_cellhd.c:107 ../lib/gis/adj_cellhd.c:275
 #, c-format
@@ -618,56 +618,56 @@ msgstr ""
 #, c-format
 msgid "Fixing subtle input data rounding error of east boundary (%g>%g)"
 msgstr ""
-"Repariere ungenauen Rundungsfehler des SÃ¼drandes der Eingabe-Daten (%g>%g)."
+"Repariere ungenauen Rundungsfehler des Südrandes der Eingabe-Daten (%g>%g)."
 
 #: ../lib/gis/adj_cellhd.c:131 ../lib/gis/adj_cellhd.c:299
 msgid "North must be north of South"
-msgstr "Nordwert muss nÃ¶rdlich des SÃ¼dwertes liegen"
+msgstr "Nordwert muss nördlich des Südwertes liegen"
 
 #: ../lib/gis/adj_cellhd.c:133 ../lib/gis/adj_cellhd.c:301
 msgid "North must be larger than South"
-msgstr "Nordwert muss grÃ¶ÃŸer als der SÃ¼dwert sein"
+msgstr "Nordwert muss größer als der Südwert sein"
 
 #: ../lib/gis/adj_cellhd.c:136 ../lib/gis/adj_cellhd.c:304
 msgid "East must be larger than West"
-msgstr "Ostwert muss grÃ¶ÃŸer als der Westwert sein"
+msgstr "Ostwert muss größer als der Westwert sein"
 
 #: ../lib/gis/adj_cellhd.c:155 ../lib/gis/adj_cellhd.c:348
 msgid "Invalid coordinates"
-msgstr "UngÃ¼ltige Koordinaten"
+msgstr "Ungültige Koordinaten"
 
 #: ../lib/gis/adj_cellhd.c:201
 msgid "Illegal n-s3 resolution value"
-msgstr "UngÃ¼ltige N-S3 AuflÃ¶sung"
+msgstr "Ungültige N-S3 Auflösung"
 
 #: ../lib/gis/adj_cellhd.c:207
 msgid "Illegal row3 value"
-msgstr "UngÃ¼ltiger Zeilenwert3"
+msgstr "Ungültiger Zeilenwert3"
 
 #: ../lib/gis/adj_cellhd.c:213
 msgid "Illegal e-w3 resolution value"
-msgstr "UngÃ¼ltige E-W3 Ausdehnung"
+msgstr "Ungültige E-W3 Ausdehnung"
 
 #: ../lib/gis/adj_cellhd.c:219
 msgid "Illegal col3 value"
-msgstr "UngÃ¼ltiger Spaltenwert3"
+msgstr "Ungültiger Spaltenwert3"
 
 #: ../lib/gis/adj_cellhd.c:223
 msgid "Illegal t-b3 resolution value"
-msgstr "UngÃ¼ltige t-b3 Ausdehnung"
+msgstr "Ungültige t-b3 Ausdehnung"
 
 #: ../lib/gis/adj_cellhd.c:227
 msgid "Illegal depths value"
-msgstr "UngÃ¼ltiger Tiefenwert"
+msgstr "Ungültiger Tiefenwert"
 
 #: ../lib/gis/adj_cellhd.c:306
 msgid "Top must be larger than Bottom"
-msgstr "Oben muss grÃ¶ÃŸer sein als Unten"
+msgstr "Oben muss größer sein als Unten"
 
 #: ../lib/gis/parser.c:331
 #, fuzzy
 msgid "WHERE conditions of SQL statement without 'where' keyword"
-msgstr "WHERE-Ausdruck der SQL-Abfrage ohne das 'WHERE' SchlÃ¼sselwort."
+msgstr "WHERE-Ausdruck der SQL-Abfrage ohne das 'WHERE' Schlüsselwort."
 
 #: ../lib/gis/parser.c:332
 msgid "Example: income < 1000 and inhab >= 10000"
@@ -723,15 +723,15 @@ msgstr "Name der Basisrasterkarte."
 
 #: ../lib/gis/parser.c:455
 msgid "Name of cover raster map"
-msgstr "Name der Ãœberlagerungskarte."
+msgstr "Name der Überlagerungskarte."
 
 #: ../lib/gis/parser.c:463
 msgid "Name of elevation raster map"
-msgstr "Name der HÃ¶henrasterkarte."
+msgstr "Name der Höhenrasterkarte."
 
 #: ../lib/gis/parser.c:472
 msgid "Name of elevation raster map(s)"
-msgstr "Name der HÃ¶henrasterkarte(n)."
+msgstr "Name der Höhenrasterkarte(n)."
 
 #: ../lib/gis/parser.c:482 ../lib/gis/parser.c:507
 msgid "Name of input raster3d map"
@@ -772,7 +772,7 @@ msgid ""
 "number determines which table to use."
 msgstr ""
 "Eine Vektorkarte kann mit mehreren Attributdatenquellen verbunden werden."
-"Diese Zahl gibt Auskunft Ã¼ber die zu benutzende Tabelle."
+"Diese Zahl gibt Auskunft über die zu benutzende Tabelle."
 
 #: ../lib/gis/parser.c:587
 msgid "Category value"
@@ -861,7 +861,7 @@ msgid ""
 "Keywords:\n"
 msgstr ""
 "\n"
-"SchlÃ¼sselwÃ¶rter:\n"
+"Schlüsselwörter:\n"
 
 #: ../lib/gis/parser.c:1061
 #, c-format
@@ -885,11 +885,11 @@ msgstr ""
 
 #: ../lib/gis/parser.c:1152 ../lib/gis/parser.c:1636 ../lib/gis/parser.c:1924
 msgid "Allow output files to overwrite existing files"
-msgstr "Ausgabedateien dÃ¼rfen bereits existierende Dateien Ã¼berschreiben."
+msgstr "Ausgabedateien dürfen bereits existierende Dateien überschreiben."
 
 #: ../lib/gis/parser.c:1154 ../lib/gis/parser.c:1640
 msgid "Verbose module output"
-msgstr "GesprÃ¤chige Modulausgabe (verbose)"
+msgstr "Gesprächige Modulausgabe (verbose)"
 
 #: ../lib/gis/parser.c:1155 ../lib/gis/parser.c:1643
 msgid "Quiet module output"
@@ -958,7 +958,7 @@ msgstr ""
 #: ../lib/gis/parser.c:1969
 #, fuzzy
 msgid "Unable to spawn the 'wish' program"
-msgstr "Kann %s nicht Ã¶ffnen."
+msgstr "Kann %s nicht öffnen."
 
 #: ../lib/gis/parser.c:1988
 #, fuzzy
@@ -973,7 +973,7 @@ msgstr "  %*s   Optionen: "
 #: ../lib/gis/parser.c:2090 ../lib/gis/parser.c:2105
 #, c-format
 msgid "Sorry, <%c> is not a valid flag\n"
-msgstr "Tut mir leid, <%c> ist keine gÃ¼ltiges Flag\n"
+msgstr "Tut mir leid, <%c> ist keine gültiges Flag\n"
 
 #: ../lib/gis/parser.c:2171
 #, c-format
@@ -983,7 +983,7 @@ msgstr "Tut mir leid, <%s=> ist nicht eindeutig\n"
 #: ../lib/gis/parser.c:2177
 #, c-format
 msgid "Sorry, <%s> is not a valid parameter\n"
-msgstr "Tut mir leid, <%s> ist kein gÃ¼ltiger Parameter\n"
+msgstr "Tut mir leid, <%s> ist kein gültiger Parameter\n"
 
 #: ../lib/gis/parser.c:2258
 #, c-format
@@ -992,12 +992,12 @@ msgid ""
 "ERROR: illegal range syntax for parameter <%s>\n"
 msgstr ""
 "\n"
-"Fehler: UngÃ¼ltige Spannensyntax fÃ¼r den Parameter <%s>\n"
+"Fehler: Ungültige Spannensyntax für den Parameter <%s>\n"
 
 #: ../lib/gis/parser.c:2259
 #, c-format
 msgid "       Presented as: %s\n"
-msgstr "       PrÃ¤sentiert als: %s\n"
+msgstr "       Präsentiert als: %s\n"
 
 #: ../lib/gis/parser.c:2263
 #, c-format
@@ -1006,7 +1006,7 @@ msgid ""
 "ERROR: value <%s> out of range for parameter <%s>\n"
 msgstr ""
 "\n"
-"FEHLER: Wert <%s> ist auÃŸerhalb der Spanne von Parameter <%s>\n"
+"FEHLER: Wert <%s> ist außerhalb der Spanne von Parameter <%s>\n"
 
 #: ../lib/gis/parser.c:2265
 #, c-format
@@ -1020,7 +1020,7 @@ msgid ""
 "ERROR: Missing value for parameter <%s>\n"
 msgstr ""
 "\n"
-"FEHLER: Fehlender Wert fÃ¼r Parameter <%s>\n"
+"FEHLER: Fehlender Wert für Parameter <%s>\n"
 
 #: ../lib/gis/parser.c:2416
 #, c-format
@@ -1030,7 +1030,7 @@ msgid ""
 "    (%s).\n"
 msgstr ""
 "\n"
-"Fehler: BenÃ¶tigter Parameter <%s> ist nicht gesetzt:\n"
+"Fehler: Benötigter Parameter <%s> ist nicht gesetzt:\n"
 "    (%s).\n"
 
 #: ../lib/gis/parser.c:2511
@@ -1088,7 +1088,7 @@ msgstr " Standard: %s\n"
 #: ../lib/gis/parser.c:2644
 #, c-format
 msgid "required: %s\n"
-msgstr "benÃ¶tigt werden: %s\n"
+msgstr "benötigt werden: %s\n"
 
 #: ../lib/gis/parser.c:2646
 #, c-format
@@ -1122,7 +1122,7 @@ msgid ""
 "  %s\n"
 msgstr ""
 "\n"
-"Sie haben ausgewÃ¤hlt:\n"
+"Sie haben ausgewählt:\n"
 "  %s\n"
 
 #: ../lib/gis/parser.c:2697
@@ -1136,27 +1136,27 @@ msgstr "Zum Akzeptieren der Standardeinstellung"
 #: ../lib/gis/color_read.c:116
 #, c-format
 msgid "color support for [%s] in mapset [%s] %s"
-msgstr "FarbunterstÃ¼tzung fÃ¼r die Datei [%s] im Mapset [%s] %s"
+msgstr "Farbunterstützung für die Datei [%s] im Mapset [%s] %s"
 
 #: ../lib/gis/timestamp.c:282
 #, c-format
 msgid "Can't create timestamp file for %s map %s in mapset %s"
-msgstr "Kann keine Zeitstempel-Datei fÃ¼r %s Karte %s in Mapset %s erzeugen."
+msgstr "Kann keine Zeitstempel-Datei für %s Karte %s in Mapset %s erzeugen."
 
 #: ../lib/gis/timestamp.c:291
 #, c-format
 msgid "Invalid timestamp specified for %s map %s in mapset %s"
-msgstr "UngÃ¼ltiger Zeitstempel fÃ¼r %s Karte %s in Mapset %s spezifiziert."
+msgstr "Ungültiger Zeitstempel für %s Karte %s in Mapset %s spezifiziert."
 
 #: ../lib/gis/timestamp.c:313
 #, c-format
 msgid "Can't open timestamp file for %s map %s in mapset %s"
-msgstr "Kann die Zeitstempel-Datei fÃ¼r %s Karte %s in Mapset %s nicht Ã¶ffnen."
+msgstr "Kann die Zeitstempel-Datei für %s Karte %s in Mapset %s nicht öffnen."
 
 #: ../lib/gis/timestamp.c:322
 #, c-format
 msgid "Invalid timestamp file for %s map %s in mapset %s"
-msgstr "UngÃ¼ltige Zeitstempel-Datei fÃ¼r %s Karte %s in Mapset %s."
+msgstr "Ungültige Zeitstempel-Datei für %s Karte %s in Mapset %s."
 
 #: ../lib/gis/system.c:85
 msgid "Can not create a new process!"
@@ -1170,7 +1170,7 @@ msgstr "Raster Karte"
 #: ../lib/gis/get_row.c:324
 #, c-format
 msgid "cell_values_float: xdr_float failed for index %d"
-msgstr "cell_values_double: xdr_float ist fehlerhaft fÃ¼r Index %d."
+msgstr "cell_values_double: xdr_float ist fehlerhaft für Index %d."
 
 #: ../lib/gis/get_row.c:365
 #, fuzzy, c-format
@@ -1207,7 +1207,7 @@ msgstr "Kann keinen neuen Prozess erzeugen."
 
 #: ../lib/gis/spawn.c:146 ../lib/gis/spawn.c:241 ../lib/gis/spawn.c:428
 msgid "Unable to execute command"
-msgstr "Kann das Kommando nicht ausfÃ¼hren."
+msgstr "Kann das Kommando nicht ausführen."
 
 #: ../lib/gis/spawn.c:266 ../lib/gis/spawn.c:274
 #, c-format
@@ -1217,7 +1217,7 @@ msgstr "G_spawn: Kann das Signal %d nicht wieder herstellen."
 #: ../lib/gis/spawn.c:305
 #, c-format
 msgid "G_spawn: unable to reset signal %d"
-msgstr "G_spawn: Kann das Signal %d nicht zurÃ¼cksetzen."
+msgstr "G_spawn: Kann das Signal %d nicht zurücksetzen."
 
 #: ../lib/gis/spawn.c:314
 #, c-format
@@ -1237,7 +1237,7 @@ msgstr "G_spawn: Kann das Signal %d nicht entsperren."
 #: ../lib/gis/spawn.c:357
 #, c-format
 msgid "G_spawn: unable to open file %s"
-msgstr "G_spawn: Kann die Datei %s nicht Ã¶ffnen."
+msgstr "G_spawn: Kann die Datei %s nicht öffnen."
 
 #: ../lib/gis/spawn.c:362 ../lib/gis/spawn.c:371
 #, c-format
@@ -1251,7 +1251,7 @@ msgstr "Kann nicht zum Verzeichnis %s wechseln."
 
 #: ../lib/gis/proj2.c:46
 msgid "Latitude-Longitude"
-msgstr "LÃ¤ngen- und Breitengrad"
+msgstr "Längen- und Breitengrad"
 
 #: ../lib/gis/proj2.c:48
 msgid "Other Projection"
@@ -1260,7 +1260,7 @@ msgstr "Andere Projektion"
 #: ../lib/gis/datum.c:160
 #, c-format
 msgid "unable to open datum table file: %s"
-msgstr "Kann Datums-Tabelle %s nicht Ã¶ffnen."
+msgstr "Kann Datums-Tabelle %s nicht öffnen."
 
 #: ../lib/gis/datum.c:181
 #, c-format
@@ -1284,12 +1284,12 @@ msgstr "Kann das Home-Verzeichnis des Benutzers nicht finden."
 #: ../lib/gis/put_cellhd.c:26
 #, c-format
 msgid "Unable to create header file for [%s]"
-msgstr "Kann Header-Datei fÃ¼r [%s] nicht erstellen."
+msgstr "Kann Header-Datei für [%s] nicht erstellen."
 
 #: ../lib/gis/raster_metadata.c:111
 #, fuzzy, c-format
 msgid "Can't read %s for [%s in %s]"
-msgstr "Kann das Histogramm fÃ¼r [%s in %s] nicht lesen."
+msgstr "Kann das Histogramm für [%s in %s] nicht lesen."
 
 #: ../lib/gis/raster_metadata.c:144
 #, fuzzy, c-format
@@ -1308,7 +1308,7 @@ msgstr ""
 #: ../lib/gis/get_ell_name.c:44
 #, c-format
 msgid "Enter 'list' for the list of available ellipsoids\n"
-msgstr "Geben Sie 'list' fÃ¼r eine Liste der verfÃ¼gbaren Ellipsoiden ein.\n"
+msgstr "Geben Sie 'list' für eine Liste der verfügbaren Ellipsoiden ein.\n"
 
 #: ../lib/gis/get_ell_name.c:67
 #, c-format
@@ -1317,7 +1317,7 @@ msgid ""
 "invalid ellipsoid\n"
 msgstr ""
 "\n"
-"UngÃ¼ltiger Ellipsoid\n"
+"Ungültiger Ellipsoid\n"
 
 #: ../lib/gis/get_window.c:67 ../lib/gis/get_window.c:85
 #, c-format
@@ -1325,8 +1325,8 @@ msgid ""
 "region for current mapset %s\n"
 "run \"g.region\""
 msgstr ""
-"Region des gegenwÃ¤rtigen Mapsets %s\n"
-"FÃ¼hren Sie \"g.region\" aus"
+"Region des gegenwärtigen Mapsets %s\n"
+"Führen Sie \"g.region\" aus"
 
 #: ../lib/gis/get_window.c:120
 #, c-format
@@ -1343,7 +1343,7 @@ msgid ""
 "is invalid\n"
 "%s"
 msgstr ""
-"ist ungÃ¼ltig\n"
+"ist ungültig\n"
 "%s"
 
 #: ../lib/gis/list.c:116
@@ -1359,7 +1359,7 @@ msgstr "Keine %s Dateien in Mapset %s vorhanden\n"
 #: ../lib/gis/list.c:134
 #, c-format
 msgid "hit RETURN to continue -->"
-msgstr "Bitte RETURN zum Weitermachen drÃ¼cken -->"
+msgstr "Bitte RETURN zum Weitermachen drücken -->"
 
 #: ../lib/gis/list.c:185
 #, fuzzy, c-format
@@ -1374,22 +1374,22 @@ msgstr "unbekannt"
 #: ../lib/gis/histogram.c:57
 #, c-format
 msgid "Histogram for [%s in %s] missing (run r.support)"
-msgstr "Ein Histogramm fÃ¼r [%s in %s] fehlt. Bitte fÃ¼hren Sie r.support aus."
+msgstr "Ein Histogramm für [%s in %s] fehlt. Bitte führen Sie r.support aus."
 
 #: ../lib/gis/histogram.c:65
 #, c-format
 msgid "Can't read histogram for [%s in %s]"
-msgstr "Kann das Histogramm fÃ¼r [%s in %s] nicht lesen."
+msgstr "Kann das Histogramm für [%s in %s] nicht lesen."
 
 #: ../lib/gis/histogram.c:74 ../lib/gis/histogram.c:84
 #, c-format
 msgid "Invalid histogram file for [%s in %s]"
-msgstr "UngÃ¼ltige Histogramdatei fÃ¼r [%s in %s]."
+msgstr "Ungültige Histogramdatei für [%s in %s]."
 
 #: ../lib/gis/histogram.c:356
 #, c-format
 msgid "can't create histogram for [%s in %s]"
-msgstr "Kann kein Histogramm fÃ¼r [%s in %s] erstellen."
+msgstr "Kann kein Histogramm für [%s in %s] erstellen."
 
 #: ../lib/gis/ask.c:341
 msgid "to cancel request"
@@ -1414,13 +1414,13 @@ msgstr "Bitte geben Sie %s Dateinamen ein."
 #, c-format
 msgid "Enter 'list' for a list of existing %s files\n"
 msgstr ""
-"Bitte geben Sie 'list' fÃ¼r eine Liste der bereits existierenden %s Dateien "
+"Bitte geben Sie 'list' für eine Liste der bereits existierenden %s Dateien "
 "ein.\n"
 
 #: ../lib/gis/ask.c:424
 #, c-format
 msgid "Enter 'list -f' for "
-msgstr "Geben Sie 'list -f' fÃ¼r "
+msgstr "Geben Sie 'list -f' für "
 
 #: ../lib/gis/ask.c:426
 #, c-format
@@ -1435,7 +1435,7 @@ msgstr "eine erweiterte Liste ein."
 #: ../lib/gis/ask.c:432
 #, c-format
 msgid "Hit RETURN %s\n"
-msgstr "DrÃ¼cken Sie RETURN %s\n"
+msgstr "Drücken Sie RETURN %s\n"
 
 #: ../lib/gis/ask.c:452 ../lib/gis/ask.c:557 ../lib/gis/ask.c:577
 #, c-format
@@ -1453,7 +1453,7 @@ msgid ""
 "** %s exists. ok to overwrite? "
 msgstr ""
 "\n"
-"** %s existiert. Soll sie Ã¼berschrieben werden? "
+"** %s existiert. Soll sie überschrieben werden? "
 
 #: ../lib/gis/ask.c:506
 #, c-format
@@ -1480,7 +1480,7 @@ msgid ""
 "** %s - exists, select another name **\n"
 msgstr ""
 "\n"
-"** %s - existiert bereits, bitte wÃ¤hlen Sie einen anderen Namen **\n"
+"** %s - existiert bereits, bitte wählen Sie einen anderen Namen **\n"
 
 #: ../lib/gis/ask.c:561
 msgid "ask: can't happen"
@@ -1489,12 +1489,12 @@ msgstr "Frage: Das kann nicht passieren"
 #: ../lib/gis/legal_name.c:39
 #, c-format
 msgid "Illegal filename.  Cannot be '.' or 'NULL'\n"
-msgstr "UngÃ¼ltiger Dateiname.  Er darf nicht '.' oder 'NULL' sein.\n"
+msgstr "Ungültiger Dateiname.  Er darf nicht '.' oder 'NULL' sein.\n"
 
 #: ../lib/gis/legal_name.c:47
 #, c-format
 msgid "Illegal filename. Character <%c> not allowed.\n"
-msgstr "UngÃ¼ltiger Dateiname. Das Zeichen <%c> ist nicht erlaubt.\n"
+msgstr "Ungültiger Dateiname. Das Zeichen <%c> ist nicht erlaubt.\n"
 
 #: ../lib/gis/legal_name.c:77 ../lib/gis/legal_name.c:81
 #, fuzzy, c-format
@@ -1519,32 +1519,32 @@ msgstr "Ergebnis Raster Karte"
 #: ../lib/gis/reclass.c:143
 #, c-format
 msgid "Too many reclass categories for [%s in %s]"
-msgstr "Zu viele reklassifizierte Kategorien fÃ¼r [%s in %s]."
+msgstr "Zu viele reklassifizierte Kategorien für [%s in %s]."
 
 #: ../lib/gis/reclass.c:146
 #, c-format
 msgid "Illegal reclass format in header file for [%s in %s]"
 msgstr ""
-"UngÃ¼ltiges Reklassifizierungs-Format in der Header-Datei fÃ¼r Karte [%s in %"
+"Ungültiges Reklassifizierungs-Format in der Header-Datei für Karte [%s in %"
 "s]."
 
 #: ../lib/gis/reclass.c:235
 msgid "Illegal reclass request"
-msgstr "UngÃ¼ltige Reklassifizierungsanfrage."
+msgstr "Ungültige Reklassifizierungsanfrage."
 
 #: ../lib/gis/reclass.c:240
 msgid "Illegal reclass type"
-msgstr "UngÃ¼ltiger Reklassifizierungs-Typ."
+msgstr "Ungültiger Reklassifizierungs-Typ."
 
 #: ../lib/gis/reclass.c:246
 #, c-format
 msgid "Unable to create header file for [%s in %s]"
-msgstr "Kann Header-Datei fÃ¼r [%s in %s] nicht erstellen."
+msgstr "Kann Header-Datei für [%s in %s] nicht erstellen."
 
 #: ../lib/gis/reclass.c:294
 #, c-format
 msgid "Unable to create dependency file in [%s in %s]"
-msgstr "Kann AbhÃ¤ngigkeitsdatei in [%s in %s] nicht erstellen."
+msgstr "Kann Abhängigkeitsdatei in [%s in %s] nicht erstellen."
 
 #: ../lib/gis/env.c:242
 msgid "GISRC - variable not set"
@@ -1585,21 +1585,21 @@ msgstr "Datei <%s> ist nicht in der Location <%s> zu finden"
 #: ../lib/gis/get_projinfo.c:39 ../lib/gis/get_projinfo.c:66
 #, c-format
 msgid "ERROR in reading <%s> file for location <%s>"
-msgstr "FEHLER beim Lesen der Datei %s fÃ¼r die Location <%s>."
+msgstr "FEHLER beim Lesen der Datei %s für die Location <%s>."
 
 #: ../lib/gis/gdal.c:56
 #, fuzzy, c-format
 msgid "Unable to locate symbol <%s>"
-msgstr "Kann Datei %s nicht Ã¶ffnen."
+msgstr "Kann Datei %s nicht öffnen."
 
 #: ../lib/gis/gdal.c:98
 #, fuzzy
 msgid "Unable to load GDAL library"
-msgstr "Kann topo fÃ¼r FlÃ¤chen nicht lesen."
+msgstr "Kann topo für Flächen nicht lesen."
 
 #: ../lib/gis/auto_mask.c:64
 msgid "Unable to open automatic MASK file"
-msgstr "Kann automatische MASK-Datei nicht Ã¶ffnen."
+msgstr "Kann automatische MASK-Datei nicht öffnen."
 
 #: ../lib/gis/closecell.c:228
 #, c-format
@@ -1613,7 +1613,7 @@ msgstr ""
 #: ../lib/gis/closecell.c:250
 #, c-format
 msgid "Error writing floating point format file for map %s"
-msgstr "Fehler beim Schreiben der FliÃŸekommakarte %s."
+msgstr "Fehler beim Schreiben der Flißekommakarte %s."
 
 #: ../lib/gis/closecell.c:300
 #, c-format
@@ -1710,7 +1710,7 @@ msgstr "Raster Karte"
 #: ../lib/gis/opencell.c:649
 #, fuzzy, c-format
 msgid "<%s> is an illegal file name"
-msgstr "opencell: %s - ungÃ¼ltiger Dateiname"
+msgstr "opencell: %s - ungültiger Dateiname"
 
 #: ../lib/gis/opencell.c:655
 #, fuzzy, c-format
@@ -1750,12 +1750,12 @@ msgstr "Kann [%s] nicht finden."
 #: ../lib/gis/opencell.c:1075
 #, fuzzy, c-format
 msgid "Unable to open '%s'"
-msgstr "Kann %s nicht Ã¶ffnen."
+msgstr "Kann %s nicht öffnen."
 
 #: ../lib/gis/opencell.c:1085
 #, fuzzy, c-format
 msgid "Invalid type: field '%s' in file '%s'"
-msgstr "ungÃ¼ltiger Typ: Feld %s in Datei %s. "
+msgstr "ungültiger Typ: Feld %s in Datei %s. "
 
 #: ../lib/gis/opencell.c:1099
 #, fuzzy, c-format
@@ -1793,7 +1793,7 @@ msgstr ""
 #: ../lib/gis/get_datum_name.c:55
 #, c-format
 msgid "Enter 'list' for the list of available datums\n"
-msgstr "Geben Sie 'list' fÃ¼r eine Liste der verfÃ¼gbaren Datums ein\n"
+msgstr "Geben Sie 'list' für eine Liste der verfügbaren Datums ein\n"
 
 #: ../lib/gis/get_datum_name.c:57
 #, c-format
@@ -1807,12 +1807,12 @@ msgid ""
 "invalid datum\n"
 msgstr ""
 "\n"
-"UngÃ¼ltiges Datum\n"
+"Ungültiges Datum\n"
 
 #: ../lib/gis/location.c:44
 #, c-format
 msgid "LOCATION << %s >> not available"
-msgstr "LOCATION  << %s >>  ist nicht verfÃ¼gbar."
+msgstr "LOCATION  << %s >>  ist nicht verfügbar."
 
 #: ../lib/gis/myname.c:50
 msgid "Unknown Location"
@@ -1821,7 +1821,7 @@ msgstr "Unbekannte Location"
 #: ../lib/gis/debug.c:74
 #, c-format
 msgid "Cannot open debug file '%s'"
-msgstr "Kann die Debug-Datei '%s' nicht Ã¶ffnen."
+msgstr "Kann die Debug-Datei '%s' nicht öffnen."
 
 #: ../lib/gis/open.c:62
 #, c-format
@@ -1841,52 +1841,52 @@ msgstr "einen Moment bitte...\n"
 #: ../lib/gis/gishelp.c:49
 #, c-format
 msgid "No help available for command [%s]\n"
-msgstr "Leider keine Hilfe fÃ¼r das Kommando [%s] verfÃ¼gbar.\n"
+msgstr "Leider keine Hilfe für das Kommando [%s] verfügbar.\n"
 
 #: ../lib/gis/put_title.c:29
 #, c-format
 msgid "category information for [%s] in [%s] missing or invalid"
-msgstr "Kategorie-Informationen fÃ¼r [%s] in [%s] fehlen oder sind ungÃ¼ltig."
+msgstr "Kategorie-Informationen für [%s] in [%s] fehlen oder sind ungültig."
 
 #: ../lib/gis/put_title.c:39
 #, c-format
 msgid "G_put_title - can't create a temp file"
-msgstr "G_put_title - Kann keine temporÃ¤re Datei erstellen."
+msgstr "G_put_title - Kann keine temporäre Datei erstellen."
 
 #: ../lib/gis/put_title.c:56
 #, c-format
 msgid "category information for [%s] in [%s] invalid"
-msgstr "Kategorie-Informationen fÃ¼r [%s] in [%s] sind ungÃ¼ltig."
+msgstr "Kategorie-Informationen für [%s] in [%s] sind ungültig."
 
 #: ../lib/gis/put_title.c:64
 #, c-format
 msgid "G_put_title - can't reopen temp file"
-msgstr "G_put_title - kann temporÃ¤re Datei nicht wieder Ã¶ffnen."
+msgstr "G_put_title - kann temporäre Datei nicht wieder öffnen."
 
 #: ../lib/gis/put_title.c:72
 #, c-format
 msgid "can't write category information for [%s] in [%s]"
-msgstr "Kann Kategorie-Informationen fÃ¼r [%s] in [%s] nicht schreiben."
+msgstr "Kann Kategorie-Informationen für [%s] in [%s] nicht schreiben."
 
 #: ../lib/gis/get_ellipse.c:85
 #, fuzzy, c-format
 msgid "Unable to open file %s in <%s>"
-msgstr "Kann Datei %s in %s nicht Ã¶ffnen"
+msgstr "Kann Datei %s in %s nicht öffnen"
 
 #: ../lib/gis/get_ellipse.c:358 ../lib/gis/get_ellipse.c:384
 #, fuzzy, c-format
 msgid "Invalid a: field '%s' in file %s in <%s>"
-msgstr "UngÃ¼ltig a: Feld %s in Datei %s in %s"
+msgstr "Ungültig a: Feld %s in Datei %s in %s"
 
 #: ../lib/gis/get_ellipse.c:371
 #, fuzzy, c-format
 msgid "Invalid ellipsoid '%s' in file %s in <%s>"
-msgstr "UngÃ¼ltiger Ellipsoid %s in Datei %s in %s"
+msgstr "Ungültiger Ellipsoid %s in Datei %s in %s"
 
 #: ../lib/gis/get_ellipse.c:388
 #, fuzzy, c-format
 msgid "Invalid es: field '%s' in file %s in <%s>"
-msgstr "UngÃ¼ltig es: Feld %s in Datei %s in %s"
+msgstr "Ungültig es: Feld %s in Datei %s in %s"
 
 #: ../lib/gis/get_ellipse.c:402
 #, fuzzy, c-format
@@ -1919,7 +1919,7 @@ msgstr "Doppeltes Nord-Feld"
 
 #: ../lib/gis/rd_cellhd.c:186
 msgid "duplicate south field"
-msgstr "Doppeltes SÃ¼d-Feld"
+msgstr "Doppeltes Süd-Feld"
 
 #: ../lib/gis/rd_cellhd.c:194
 msgid "duplicate east field"
@@ -1935,27 +1935,27 @@ msgstr "Doppeltes top-Feld"
 
 #: ../lib/gis/rd_cellhd.c:218
 msgid "duplicate bottom field"
-msgstr "Doppeltes SÃ¼d-Feld"
+msgstr "Doppeltes Süd-Feld"
 
 #: ../lib/gis/rd_cellhd.c:226
 msgid "duplicate e-w resolution field"
-msgstr "Doppelte Ost-West AuflÃ¶sung"
+msgstr "Doppelte Ost-West Auflösung"
 
 #: ../lib/gis/rd_cellhd.c:236
 msgid "duplicate 3D e-w resolution field"
-msgstr "Doppelte 3D Ost-West AuflÃ¶sung"
+msgstr "Doppelte 3D Ost-West Auflösung"
 
 #: ../lib/gis/rd_cellhd.c:246
 msgid "duplicate n-s resolution field"
-msgstr "Doppelte Nord-SÃ¼d AuflÃ¶sung"
+msgstr "Doppelte Nord-Süd Auflösung"
 
 #: ../lib/gis/rd_cellhd.c:256
 msgid "duplicate 3D n-s resolution field"
-msgstr "Doppelte 3D Nord-SÃ¼d AuflÃ¶sung"
+msgstr "Doppelte 3D Nord-Süd Auflösung"
 
 #: ../lib/gis/rd_cellhd.c:266
 msgid "duplicate t-b resolution field"
-msgstr "Doppelte t-b AuflÃ¶sung"
+msgstr "Doppelte t-b Auflösung"
 
 #: ../lib/gis/rd_cellhd.c:276
 msgid "duplicate rows field"
@@ -1991,7 +1991,7 @@ msgstr "Nord-Feld fehlt"
 
 #: ../lib/gis/rd_cellhd.c:347
 msgid "south field missing"
-msgstr "SÃ¼d-Feld fehlt"
+msgstr "Süd-Feld fehlt"
 
 #: ../lib/gis/rd_cellhd.c:349
 msgid "west field missing"
@@ -2038,17 +2038,17 @@ msgstr "Fehler des initialen Einlesens der komprimierten Datei [%s in %s]"
 #: ../lib/gis/range.c:192
 #, c-format
 msgid "can't read f_range file for [%s in %s]"
-msgstr "Kann f_range Datei fÃ¼r [%s in %s] nicht lesen."
+msgstr "Kann f_range Datei für [%s in %s] nicht lesen."
 
 #: ../lib/gis/range.c:308
 #, c-format
 msgid "can't read range file for [%s in %s]"
-msgstr "Kann range Datei fÃ¼r [%s in %s] nicht lesen."
+msgstr "Kann range Datei für [%s in %s] nicht lesen."
 
 #: ../lib/gis/range.c:359 ../lib/gis/range.c:412
 #, c-format
 msgid "can't write range file for [%s in %s]"
-msgstr "Kann range Datei fÃ¼r [%s in %s] nicht schreiben."
+msgstr "Kann range Datei für [%s in %s] nicht schreiben."
 
 #: ../lib/gis/ls.c:96
 #, fuzzy, c-format
@@ -2076,7 +2076,7 @@ msgstr ""
 #: ../lib/gis/color_rules.c:114
 #, fuzzy
 msgid "invalid color name"
-msgstr "UngÃ¼ltige Koordinaten"
+msgstr "Ungültige Koordinaten"
 
 #: ../lib/gis/color_rules.c:116
 msgid "percentage not in range 0-100"
@@ -2087,7 +2087,7 @@ msgstr ""
 msgid "invalid value"
 msgstr ""
 "\n"
-"UngÃ¼ltiges Datum\n"
+"Ungültiges Datum\n"
 
 #: ../lib/gis/color_rules.c:120
 #, fuzzy
@@ -2127,7 +2127,7 @@ msgstr "welche fehlt"
 #: ../lib/gis/get_cellhd.c:80
 #, fuzzy, c-format
 msgid "whose header file can't be opened."
-msgstr "deren Header-Datei nicht geÃ¶ffnet werden kann."
+msgstr "deren Header-Datei nicht geöffnet werden kann."
 
 #: ../lib/gis/get_cellhd.c:88
 #, fuzzy, c-format
@@ -2142,7 +2142,7 @@ msgstr "Raster Karte."
 #: ../lib/gis/get_cellhd.c:109
 #, fuzzy, c-format
 msgid " Invalid format."
-msgstr "UngÃ¼ltiges Format\n"
+msgstr "Ungültiges Format\n"
 
 #: ../lib/gis/gisinit.c:54 ../lib/gis/gisinit.c:90
 msgid ""
@@ -2176,12 +2176,12 @@ msgstr "Kann die History-Informationen der Karte [%s] nicht schreiben."
 #: ../lib/gis/history.c:263
 msgid "Not enough room in history file to record command line."
 msgstr ""
-"Nicht genÃ¼gend Platz in der History-Datei um die Kommandozeile zu speichern."
+"Nicht genügend Platz in der History-Datei um die Kommandozeile zu speichern."
 
 #: ../lib/gis/history.c:285
 msgid "Not enough room in history file for command line (truncated)."
 msgstr ""
-"Nicht genÃ¼gend Platz in der History-Datei fÃ¼r die Kommandozeile "
+"Nicht genügend Platz in der History-Datei für die Kommandozeile "
 "(angeschnitten)."
 
 #: ../lib/driver/main.c:90
@@ -2243,12 +2243,12 @@ msgstr "Kann Datei head nicht lesen"
 
 #: ../lib/vector/diglib/plus.c:308
 msgid "Unable to read topo for areas"
-msgstr "Kann Topologie der FlÃ¤chen nicht lesen"
+msgstr "Kann Topologie der Flächen nicht lesen"
 
 #: ../lib/vector/diglib/plus.c:313
 #, c-format
 msgid "Unable read topology for area %d"
-msgstr "Kann Topologie der FlÃ¤che %d nicht lesen"
+msgstr "Kann Topologie der Fläche %d nicht lesen"
 
 #: ../lib/vector/diglib/plus.c:318
 msgid "Unable to read topology for isles"
@@ -2297,31 +2297,31 @@ msgstr "Linie"
 
 #: ../lib/vector/diglib/plus_area.c:287
 msgid "Attempt to delete isle from dead area"
-msgstr "Versuch eine tote Insel von einer toten FlÃ¤che zu lÃ¶schen"
+msgstr "Versuch eine tote Insel von einer toten Fläche zu löschen"
 
 #: ../lib/vector/diglib/plus_area.c:304
 #, c-format
 msgid "Attempt to delete not registered isle %d from area %d"
-msgstr "Versuch, eine nicht registrierte Insel %d der FlÃ¤che %d zu lÃ¶schen"
+msgstr "Versuch, eine nicht registrierte Insel %d der Fläche %d zu löschen"
 
 #: ../lib/vector/diglib/plus_area.c:342
 msgid "Attempt to delete dead area"
-msgstr "Versuch, eine tote FlÃ¤che zu lÃ¶schen"
+msgstr "Versuch, eine tote Fläche zu löschen"
 
 #: ../lib/vector/diglib/plus_area.c:382
 #, c-format
 msgid "Dead centroid %d registered for area (bug in the vector library)"
-msgstr "Toter Zentroid %d fÃ¼r FlÃ¤che registriert (Bug in der Library)."
+msgstr "Toter Zentroid %d für Fläche registriert (Bug in der Library)."
 
 #: ../lib/vector/diglib/plus_area.c:406
 #, c-format
 msgid "Attempt to delete area %d info from dead isle %d"
-msgstr "Versuch, FlÃ¤cheninfos der FlÃ¤che %d von toter Insel %d zu lÃ¶schen"
+msgstr "Versuch, Flächeninfos der Fläche %d von toter Insel %d zu löschen"
 
 #: ../lib/vector/diglib/plus_area.c:749
 #, c-format
 msgid "Attempt to delete isle %d info from dead area %d"
-msgstr "Versuch, Insel %d von toter FlÃ¤che %d zu lÃ¶schen"
+msgstr "Versuch, Insel %d von toter Fläche %d zu löschen"
 
 #: ../lib/vector/diglib/file.c:157
 msgid "Writing to file loaded to memory not supported"
@@ -2330,7 +2330,7 @@ msgstr ""
 #: ../lib/vector/diglib/file.c:200
 #, fuzzy
 msgid "Unable to load file to memory, file not open"
-msgstr "Kann Datei %s nicht Ã¶ffnen."
+msgstr "Kann Datei %s nicht öffnen."
 
 #: ../lib/vector/diglib/file.c:215
 msgid "Vector memory mode not supported, using 'AUTO'"
@@ -2339,27 +2339,27 @@ msgstr ""
 #: ../lib/vector/diglib/spindex.c:248
 #, fuzzy, c-format
 msgid "Unable to delete node %d from spatial index"
-msgstr "Kann Datei %s nicht Ã¶ffnen."
+msgstr "Kann Datei %s nicht öffnen."
 
 #: ../lib/vector/diglib/spindex.c:288
 #, fuzzy, c-format
 msgid "Unable to delete line %d from spatial index"
-msgstr "Kann Datei %s nicht Ã¶ffnen."
+msgstr "Kann Datei %s nicht öffnen."
 
 #: ../lib/vector/diglib/spindex.c:314
 #, fuzzy
 msgid "Attempt to delete sidx for dead area"
-msgstr "Versuch eine tote Insel von einer toten FlÃ¤che zu lÃ¶schen"
+msgstr "Versuch eine tote Insel von einer toten Fläche zu löschen"
 
 #: ../lib/vector/diglib/spindex.c:327
 #, fuzzy, c-format
 msgid "Unable to delete area %d from spatial index"
-msgstr "Kann Datei %s nicht Ã¶ffnen."
+msgstr "Kann Datei %s nicht öffnen."
 
 #: ../lib/vector/diglib/spindex.c:362
 #, fuzzy, c-format
 msgid "Unable to delete isle %d from spatial index"
-msgstr "Kann Datei %s nicht Ã¶ffnen."
+msgstr "Kann Datei %s nicht öffnen."
 
 #: ../lib/vector/Vlib/write_nat.c:50 ../lib/vector/Vlib/write_nat.c:83
 #, c-format
@@ -2369,12 +2369,12 @@ msgstr ""
 #: ../lib/vector/Vlib/write_nat.c:640
 #, fuzzy
 msgid "Attempt to delete dead feature"
-msgstr "Versuch, eine tote FlÃ¤che zu lÃ¶schen"
+msgstr "Versuch, eine tote Fläche zu löschen"
 
 #: ../lib/vector/Vlib/write_nat.c:885
 #, fuzzy
 msgid "Attempt to restore alive feature"
-msgstr "Versuch, eine tote FlÃ¤che zu lÃ¶schen"
+msgstr "Versuch, eine tote Fläche zu löschen"
 
 #: ../lib/vector/Vlib/legal_vname.c:48
 #, fuzzy, c-format
@@ -2418,7 +2418,7 @@ msgstr "Ergebnis Vektor Karte"
 #: ../lib/vector/Vlib/build_ogr.c:309
 #, fuzzy, c-format
 msgid "OGR feature type %d not supported"
-msgstr "OGR Feature Typ %d wird nicht unterstÃ¼tzt."
+msgstr "OGR Feature Typ %d wird nicht unterstützt."
 
 #: ../lib/vector/Vlib/read_ogr.c:178
 #, fuzzy
@@ -2452,7 +2452,7 @@ msgstr ""
 #: ../lib/vector/Vlib/sindex.c:109
 #, fuzzy, c-format
 msgid "Unable to delete item %d from spatial index"
-msgstr "Kann Datei %s nicht Ã¶ffnen."
+msgstr "Kann Datei %s nicht öffnen."
 
 #: ../lib/vector/Vlib/sindex.c:127
 #, fuzzy
@@ -2479,7 +2479,7 @@ msgstr ""
 
 #: ../lib/vector/Vlib/intersect.c:127
 msgid "3D not supported by Vect_segment_intersection()"
-msgstr "3D wird von Vect_segment_intersection() nicht unterstÃ¼tzt."
+msgstr "3D wird von Vect_segment_intersection() nicht unterstützt."
 
 #: ../lib/vector/Vlib/intersect.c:322
 msgid "Vect_segment_intersection() ERROR (collinear vertical segments)"
@@ -2540,12 +2540,12 @@ msgstr "Datenbank"
 #: ../lib/db/dbmi_client/delete_tab.c:49 ../lib/sites/sites.c:372
 #, c-format
 msgid "Unable to open database <%s> by driver <%s>"
-msgstr "Kann Datenbank '%s' mit Treiber <%s>nicht Ã¶ffnen"
+msgstr "Kann Datenbank '%s' mit Treiber <%s>nicht öffnen"
 
 #: ../lib/vector/Vlib/array.c:294
 #, fuzzy, c-format
 msgid "Unable to select record from table <%s> (key %s, where %s)"
-msgstr "Kann Header-Datei fÃ¼r [%s in %s] nicht erstellen."
+msgstr "Kann Header-Datei für [%s in %s] nicht erstellen."
 
 #: ../lib/vector/Vlib/rewind.c:35 ../lib/vector/Vlib/build.c:31
 #: ../lib/vector/Vlib/read.c:30 ../lib/vector/Vlib/write.c:53
@@ -2561,7 +2561,7 @@ msgstr ""
 #: ../lib/vector/Vlib/graph.c:143
 #, fuzzy
 msgid "Unable to add network arc"
-msgstr "Kann topo fÃ¼r FlÃ¤chen nicht lesen."
+msgstr "Kann topo für Flächen nicht lesen."
 
 #: ../lib/vector/Vlib/graph.c:231 ../lib/vector/Vlib/net.c:514
 #, c-format
@@ -2621,7 +2621,7 @@ msgstr "Anzahl von Kerneln   :   %d\n"
 #: ../lib/vector/Vlib/build.c:205
 #, fuzzy, c-format
 msgid "Number of areas: %d"
-msgstr "Anzahl von FlÃ¤chen    :   %d\n"
+msgstr "Anzahl von Flächen    :   %d\n"
 
 #: ../lib/vector/Vlib/build.c:206
 #, fuzzy, c-format
@@ -2636,7 +2636,7 @@ msgstr "Anzahl inkorrekter Boundaries   :   %d\n"
 #: ../lib/vector/Vlib/build.c:213
 #, fuzzy, c-format
 msgid "Number of centroids outside area: %d"
-msgstr "Anzahl von Zentroiden auÃŸerhalb von FlÃ¤chen :   %d\n"
+msgstr "Anzahl von Zentroiden außerhalb von Flächen :   %d\n"
 
 #: ../lib/vector/Vlib/build.c:217
 #, fuzzy, c-format
@@ -2646,12 +2646,12 @@ msgstr "Anzahl mehrfacher Zentroide    :   %d\n"
 #: ../lib/vector/Vlib/build.c:221
 #, fuzzy, c-format
 msgid "Number of areas without centroid: %d"
-msgstr "Anzahl von FlÃ¤chen ohne Zentroid :   %d\n"
+msgstr "Anzahl von Flächen ohne Zentroid :   %d\n"
 
 #: ../lib/vector/Vlib/build.c:226
 #, fuzzy
 msgid "Number of areas: -"
-msgstr "Anzahl von FlÃ¤chen    :   -\n"
+msgstr "Anzahl von Flächen    :   -\n"
 
 #: ../lib/vector/Vlib/build.c:227
 #, fuzzy
@@ -2661,7 +2661,7 @@ msgstr "Anzahl von Inseln     :   -\n"
 #: ../lib/vector/Vlib/build.c:256
 #, c-format
 msgid "Unable to open topo file for write <%s>"
-msgstr "Kann Topologiedatei nicht zum Schreiben von <%s> Ã¶ffnen"
+msgstr "Kann Topologiedatei nicht zum Schreiben von <%s> öffnen"
 
 #: ../lib/vector/Vlib/build.c:264
 msgid "Error writing out topo file"
@@ -2670,7 +2670,7 @@ msgstr "Fehler beim Schreiben der Topologiedatei"
 #: ../lib/vector/Vlib/build.c:407
 #, c-format
 msgid "Unable open spatial index file for write <%s>"
-msgstr "Kann spatial index-Datei nicht zum Schreiben von <%s> Ã¶ffnen"
+msgstr "Kann spatial index-Datei nicht zum Schreiben von <%s> öffnen"
 
 #: ../lib/vector/Vlib/build.c:415
 msgid "Error writing out spatial index file"
@@ -2689,12 +2689,12 @@ msgstr "Karte"
 #: ../lib/vector/Vlib/field.c:104
 #, fuzzy
 msgid "Unable to add database link"
-msgstr "Kann keine DatenbankverknÃ¼pfung erstellen."
+msgstr "Kann keine Datenbankverknüpfung erstellen."
 
 #: ../lib/vector/Vlib/field.c:110 ../lib/vector/Vlib/field.c:155
 #, fuzzy
 msgid "Unable to write database links"
-msgstr "Kann die DatenbankverknÃ¼pfung nicht schreiben."
+msgstr "Kann die Datenbankverknüpfung nicht schreiben."
 
 #: ../lib/vector/Vlib/field.c:223
 #, fuzzy, c-format
@@ -2720,12 +2720,12 @@ msgstr "Standard-Datenbank ist nicht gesetzt."
 #: ../lib/vector/Vlib/field.c:371
 #, c-format
 msgid "Requested dblink %d, maximum link number %d"
-msgstr "Angeforderte Datenbank-VerknÃ¼pfung %d, maximale VerknÃ¼pfungsnummer %d"
+msgstr "Angeforderte Datenbank-Verknüpfung %d, maximale Verknüpfungsnummer %d"
 
 #: ../lib/vector/Vlib/field.c:512
 #, fuzzy
 msgid "Unable to open OGR DBMI driver"
-msgstr "Kann den OGR DBMI-Treiber nicht Ã¶ffnen."
+msgstr "Kann den OGR DBMI-Treiber nicht öffnen."
 
 #: ../lib/vector/Vlib/field.c:551
 #, fuzzy
@@ -2737,7 +2737,7 @@ msgstr "fehlgeschlagen"
 #: ../lib/vector/Vlib/field.c:606
 #, c-format
 msgid "Don't know how to read links for format %d"
-msgstr "Ich weiÃŸ nicht, wie ich den Link vom Format %d lesen soll."
+msgstr "Ich weiß nicht, wie ich den Link vom Format %d lesen soll."
 
 #: ../lib/vector/Vlib/field.c:639
 #, c-format
@@ -2757,7 +2757,7 @@ msgstr "Karte"
 #: ../lib/vector/Vlib/area.c:53
 #, fuzzy
 msgid "Attempt to read points of nonexistent area"
-msgstr "Versuch eine tote Insel von einer toten FlÃ¤che zu lÃ¶schen"
+msgstr "Versuch eine tote Insel von einer toten Fläche zu löschen"
 
 #: ../lib/vector/Vlib/area.c:125
 #, fuzzy, c-format
@@ -2814,7 +2814,7 @@ msgstr "Karte"
 
 #: ../lib/vector/Vlib/build_nat.c:112
 msgid "Area of size = 0.0 ignored"
-msgstr "FlÃ¤chen mit der GrÃ¶ÃŸe = 0.0 werden ignoriert."
+msgstr "Flächen mit der Größe = 0.0 werden ignoriert."
 
 #: ../lib/vector/Vlib/build_nat.c:148
 msgid "Request to find area outside nonexistent isle"
@@ -2858,12 +2858,12 @@ msgstr "Der Graph wurde erstellt"
 #: ../lib/vector/Vlib/build_nat.c:614
 #, fuzzy
 msgid "Attaching islands..."
-msgstr "FÃ¼ge InselflÃ¤chen hinzu: "
+msgstr "Füge Inselflächen hinzu: "
 
 #: ../lib/vector/Vlib/build_nat.c:629
 #, fuzzy
 msgid "Attaching centroids..."
-msgstr "FÃ¼ge Zentroide hinzu: "
+msgstr "Füge Zentroide hinzu: "
 
 #: ../lib/vector/Vlib/buffer2.c:376
 #, fuzzy
@@ -2925,18 +2925,18 @@ msgstr "Vektor Karte"
 #: ../lib/vector/Vlib/map.c:613 ../lib/vector/Vlib/map.c:720
 #, fuzzy, c-format
 msgid "Unable to copy table <%s>"
-msgstr "Kann Datei %s nicht Ã¶ffnen."
+msgstr "Kann Datei %s nicht öffnen."
 
 #: ../lib/vector/Vlib/map.c:276 ../lib/vector/Vlib/map.c:410
 #: ../lib/vector/Vlib/map.c:626
 #, fuzzy, c-format
 msgid "Unable to create index for table <%s>, key <%s>"
-msgstr "Kann Header-Datei fÃ¼r [%s in %s] nicht erstellen."
+msgstr "Kann Header-Datei für [%s in %s] nicht erstellen."
 
 #: ../lib/vector/Vlib/map.c:395 ../lib/vector/Vlib/map.c:490
 #, fuzzy, c-format
 msgid "Unable to delete table <%s>"
-msgstr "Kann Datei %s nicht Ã¶ffnen."
+msgstr "Kann Datei %s nicht öffnen."
 
 #: ../lib/vector/Vlib/map.c:444
 #, fuzzy, c-format
@@ -2966,7 +2966,7 @@ msgstr "Kann nicht zum Verzeichnis %s wechseln."
 #: ../lib/vector/Vlib/map.c:525
 #, fuzzy, c-format
 msgid "Unable to delete file '%s'"
-msgstr "Kann Datei %s nicht Ã¶ffnen."
+msgstr "Kann Datei %s nicht öffnen."
 
 #: ../lib/vector/Vlib/map.c:542
 #, fuzzy, c-format
@@ -3005,7 +3005,7 @@ msgstr "Erzeuge Topologie ...\n"
 #: ../lib/vector/Vlib/net.c:163
 #, fuzzy
 msgid "Unable to build network graph"
-msgstr "Kann die Eingabeklasse nicht schlieÃŸen"
+msgstr "Kann die Eingabeklasse nicht schließen"
 
 #: ../lib/vector/Vlib/net.c:169
 msgid "Forward costs column not specified"
@@ -3026,7 +3026,7 @@ msgstr "Kann Datenbanktabelle <%s> nicht beschreiben"
 #, fuzzy, c-format
 msgid "Data type of column <%s> not supported (must be numeric)"
 msgstr ""
-"Spaltentype der Spalte z wird nicht unterstÃ¼tzt (muss integer oder double "
+"Spaltentype der Spalte z wird nicht unterstützt (muss integer oder double "
 "sein)."
 
 #: ../lib/vector/Vlib/net.c:226
@@ -3051,7 +3051,7 @@ msgstr "Datenbank"
 #: ../lib/vector/Vlib/net.c:322
 #, fuzzy
 msgid "Cannot add network arc"
-msgstr "Kann topo fÃ¼r FlÃ¤chen nicht lesen."
+msgstr "Kann topo für Flächen nicht lesen."
 
 #: ../lib/vector/Vlib/net.c:346
 msgid "Setting node costs..."
@@ -3111,7 +3111,7 @@ msgstr ""
 #: ../lib/vector/Vlib/write.c:39 ../lib/vector/Vlib/write.c:46
 #, fuzzy
 msgid "for this format/level not supported"
-msgstr "Vect_write_line() wird fÃ¼r dieses Format/Level nicht unterstÃ¼tzt."
+msgstr "Vect_write_line() wird für dieses Format/Level nicht unterstützt."
 
 #: ../lib/vector/Vlib/write.c:135
 #, fuzzy
@@ -3131,7 +3131,7 @@ msgstr "Vektor Karte"
 #: ../lib/vector/Vlib/write.c:194
 #, fuzzy, c-format
 msgid "Unable to rewrite feature %d"
-msgstr "Kann Datei %s nicht Ã¶ffnen."
+msgstr "Kann Datei %s nicht öffnen."
 
 #: ../lib/vector/Vlib/write.c:219
 #, fuzzy, c-format
@@ -3186,8 +3186,8 @@ msgstr "Programmierer fordert unbekanntes open_level %d an"
 msgid ""
 "Vector map which is not in the current mapset cannot be opened for update"
 msgstr ""
-"Eine Karte, die sich nicht im aktuellen Mapset befindet, kann nicht fÃ¼r eine "
-"Aktualisierung geÃ¶ffnet werden"
+"Eine Karte, die sich nicht im aktuellen Mapset befindet, kann nicht für eine "
+"Aktualisierung geöffnet werden"
 
 #: ../lib/vector/Vlib/open.c:199 ../lib/ogsf/Gv3.c:63 ../lib/ogsf/Gp3.c:115
 #, fuzzy, c-format
@@ -3235,12 +3235,12 @@ msgstr "Vektor Karte"
 #: ../lib/vector/Vlib/open.c:622
 #, fuzzy, c-format
 msgid "Unable to stat file <%s>"
-msgstr "Kann Datei %s nicht Ã¶ffnen."
+msgstr "Kann Datei %s nicht öffnen."
 
 #: ../lib/vector/Vlib/open.c:731
 #, fuzzy
 msgid "Size of 'coor' file differs from value saved in topology file"
-msgstr "GrÃ¶ÃŸe"
+msgstr "Größe"
 
 #: ../lib/vector/Vlib/open.c:742
 #, fuzzy, c-format
@@ -3259,7 +3259,7 @@ msgstr "Kann nicht zum Verzeichnis %s wechseln."
 #: ../lib/vector/Vlib/open_ogr.c:85
 #, fuzzy, c-format
 msgid "Unable to open layer <%s>"
-msgstr "Kann Datei %s nicht Ã¶ffnen."
+msgstr "Kann Datei %s nicht öffnen."
 
 #: ../lib/vector/Vlib/open_ogr.c:129
 #, fuzzy, c-format
@@ -3314,7 +3314,7 @@ msgstr "Ebene"
 #: ../lib/vector/Vlib/cindex.c:460
 #, fuzzy, c-format
 msgid "Unable to open cidx file <%s> for write"
-msgstr "Kann %s nicht zum Beschreiben Ã¶ffnen."
+msgstr "Kann %s nicht zum Beschreiben öffnen."
 
 #: ../lib/vector/Vlib/cindex.c:468
 #, fuzzy, c-format
@@ -3329,7 +3329,7 @@ msgstr "Vektor Karte"
 #: ../lib/vector/Vlib/build_ogr.c:272
 #, fuzzy, c-format
 msgid "Unable to calculate centroid for area %d"
-msgstr "Kann den Zentroid fÃ¼r die FlÃ¤che %d nicht berechnen."
+msgstr "Kann den Zentroid für die Fläche %d nicht berechnen."
 
 #: ../lib/vector/Vlib/build_ogr.c:333
 msgid "Partial build for OGR is not supported"
@@ -3363,7 +3363,7 @@ msgstr "G_malloc: Kein Speicher mehr da."
 #: ../lib/vector/Vlib/line.c:199 ../lib/vector/Vlib/line.c:231
 #, fuzzy
 msgid "Index out of range in"
-msgstr "Matrix-Dimensionen liegen auÃŸerhalb der Spanne."
+msgstr "Matrix-Dimensionen liegen außerhalb der Spanne."
 
 #: ../lib/vector/Vlib/line.c:527
 msgid "Segment outside line, no segment created"
@@ -3390,12 +3390,12 @@ msgstr "Kann keinen neuen Prozess erzeugen."
 #: ../lib/nviz/lights.c:144
 #, fuzzy
 msgid "Unable to define new light"
-msgstr "Kann Datei %s nicht Ã¶ffnen."
+msgstr "Kann Datei %s nicht öffnen."
 
 #: ../lib/nviz/position.c:50
 #, fuzzy
 msgid "Unable to set focus"
-msgstr "Kann %s nicht Ã¶ffnen."
+msgstr "Kann %s nicht öffnen."
 
 #: ../lib/nviz/nviz.c:76
 #, fuzzy, c-format
@@ -3444,7 +3444,7 @@ msgstr "Karte"
 #: ../lib/ogsf/Gs3.c:370 ../lib/ogsf/Gs3.c:486 ../lib/ogsf/Gs3.c:577
 #, c-format
 msgid "Unable to open raster map <%s>"
-msgstr "Kann die Rasterkarte <%s> nicht Ã¶ffnen"
+msgstr "Kann die Rasterkarte <%s> nicht öffnen"
 
 #: ../lib/gpde/N_arrays_io.c:96
 #, c-format
@@ -3457,7 +3457,7 @@ msgstr "Kann die Rasterreihe nicht holen"
 
 #: ../lib/gpde/N_arrays_io.c:161 ../lib/gpde/N_arrays_io.c:243
 msgid "Unable to close input map"
-msgstr "Kann die Eingabeklasse nicht schlieÃŸen"
+msgstr "Kann die Eingabeklasse nicht schließen"
 
 #: ../lib/gpde/N_arrays_io.c:190
 msgid "N_array_2d * array is empty"
@@ -3487,7 +3487,7 @@ msgstr "Angeforderte g3d Karte <%s> nicht gefunden."
 #: ../lib/gpde/N_arrays_io.c:303 ../lib/gpde/N_arrays_io.c:445
 #, c-format
 msgid "Error opening g3d map <%s>"
-msgstr "Fehler beim Ã–ffnen der g3d Karte <%s>."
+msgstr "Fehler beim Öffnen der g3d Karte <%s>."
 
 #: ../lib/gpde/N_arrays_io.c:331
 #, c-format
@@ -3496,7 +3496,7 @@ msgstr "Lese 3D-Rasterkarte <%s> in den "
 
 #: ../lib/gpde/N_arrays_io.c:386 ../lib/gpde/N_arrays_io.c:486
 msgid "Error closing g3d file"
-msgstr "Fhler beim SchlieÃŸen der g3d-Datei."
+msgstr "Fhler beim Schließen der g3d-Datei."
 
 #: ../lib/gpde/N_arrays_io.c:447
 #, c-format
@@ -3506,7 +3506,7 @@ msgstr "Schreibe 3d Array in die 3d-Rasterkarte <%s>"
 #: ../lib/gpde/N_solvers.c:50
 msgid "The gauss elimination solver does not work with sparse matrices"
 msgstr ""
-"Der GauÃŸsche EliminierungslÃ¶ser funktionniert nicht mit dÃ¼nnbesetzten "
+"Der Gaußsche Eliminierungslöser funktionniert nicht mit dünnbesetzten "
 "Matrizen."
 
 #: ../lib/gpde/N_solvers.c:55 ../lib/gpde/N_solvers.c:93
@@ -3519,16 +3519,16 @@ msgstr "Das lineare Gleichungssystem ist nicht qudratisch"
 
 #: ../lib/gpde/N_solvers.c:60
 msgid "Starting direct gauss elimination solver"
-msgstr "Starte GauÃŸschen EleminationslÃ¶ser"
+msgstr "Starte Gaußschen Eleminationslöser"
 
 #: ../lib/gpde/N_solvers.c:88
 msgid "The lu solver does not work with sparse matrices"
-msgstr "Der lu-LÃ¶ser funktioniert nicht mit dÃ¼nnbesetzten Matrizen"
+msgstr "Der lu-Löser funktioniert nicht mit dünnbesetzten Matrizen"
 
 #: ../lib/gpde/N_solvers.c:98
 #, fuzzy
 msgid "Starting direct lu decomposition solver"
-msgstr "Starte GauÃŸschen Eleminations-Solver"
+msgstr "Starte Gaußschen Eleminations-Solver"
 
 #: ../lib/gpde/N_solvers.c:155
 #, fuzzy
@@ -3543,33 +3543,33 @@ msgstr "Matrix ist nicht symmetrisch!"
 #: ../lib/gpde/N_solvers.c:170
 #, fuzzy
 msgid "Starting cholesky decomposition solver"
-msgstr "Starte GauÃŸschen Eleminations-Solver"
+msgstr "Starte Gaußschen Eleminations-Solver"
 
 #: ../lib/gpde/N_solvers.c:173 ../lib/gpde/N_solvers_krylov.c:190
 #: ../lib/gpde/N_solvers_krylov.c:357 ../lib/gpde/N_solvers_krylov.c:481
 msgid "Unable to solve the linear equation system"
-msgstr "Kann das lineare Gleichungssystem nicht lÃ¶sen"
+msgstr "Kann das lineare Gleichungssystem nicht lösen"
 
 #: ../lib/gpde/N_parse_options.c:58
 msgid ""
 "The type of solver which should solve the symmetric linear equation system"
-msgstr "Der Solver, der das symmetrische lineare Gleichungssystem lÃ¶sen soll"
+msgstr "Der Solver, der das symmetrische lineare Gleichungssystem lösen soll"
 
 #: ../lib/gpde/N_parse_options.c:69
 msgid "The type of solver which should solve the linear equation system"
-msgstr "Der Solver, der lineare Gleichungssysteme lÃ¶sen soll"
+msgstr "Der Solver, der lineare Gleichungssysteme lösen soll"
 
 #: ../lib/gpde/N_parse_options.c:77
 msgid "Maximum number of iteration used to solver the linear equation system"
 msgstr ""
-"Die maximale Anzahl an Iterationen, die zum LÃ¶sen des linearen "
+"Die maximale Anzahl an Iterationen, die zum Lösen des linearen "
 "Gleichungssystems genutzt werden sollen."
 
 #: ../lib/gpde/N_parse_options.c:85
 msgid ""
 "Error break criteria for iterative solvers (jacobi, sor, cg or bicgstab)"
 msgstr ""
-"Fehlerabbruchkriterien fÃ¼r iterative LÃ¶ser (jacobi, sor, cg or bicgstab)"
+"Fehlerabbruchkriterien für iterative Löser (jacobi, sor, cg or bicgstab)"
 
 #: ../lib/gpde/N_parse_options.c:93
 msgid ""
@@ -3587,7 +3587,7 @@ msgid ""
 "++ Running geom_data unit tests ++"
 msgstr ""
 "\n"
-"++ FÃ¼hre 'geom_data' Unit-Tests aus ++"
+"++ Führe 'geom_data' Unit-Tests aus ++"
 
 #: ../lib/gpde/test/test_geom.c:41
 msgid ""
@@ -3611,7 +3611,7 @@ msgid ""
 "++ Running gradient unit tests ++"
 msgstr ""
 "\n"
-"++ FÃ¼hre 'gradient' Unit-Tests aus ++"
+"++ Führe 'gradient' Unit-Tests aus ++"
 
 #: ../lib/gpde/test/test_gradient.c:44
 msgid "\t 1. testing 2d gradient"
@@ -3639,15 +3639,15 @@ msgstr ""
 
 #: ../lib/gpde/test/test_main.c:49
 msgid "Choose the unit tests to run"
-msgstr "WÃ¤hlen SIe die Unit-Tests, die Sie ausfÃ¼hren wollen"
+msgstr "Wählen SIe die Unit-Tests, die Sie ausführen wollen"
 
 #: ../lib/gpde/test/test_main.c:56
 msgid "Choose the integration tests to run"
-msgstr "WÃ¤hlen Sie die Integrationstest, die laufen sollen."
+msgstr "Wählen Sie die Integrationstest, die laufen sollen."
 
 #: ../lib/gpde/test/test_main.c:61
 msgid "Run all unit tests"
-msgstr "FÃ¼hre alle Unit-Tests aus"
+msgstr "Führe alle Unit-Tests aus"
 
 #: ../lib/gpde/test/test_main.c:65
 msgid "Run all integration tests"
@@ -3663,7 +3663,7 @@ msgstr "test, gpde"
 
 #: ../lib/gpde/test/test_main.c:87
 msgid "Performs unit and integration tests for gpde library"
-msgstr "Lasse Unit- und Integrationstest fÃ¼r die gpde-Bibliothek laufen."
+msgstr "Lasse Unit- und Integrationstest für die gpde-Bibliothek laufen."
 
 #: ../lib/gpde/test/test_solvers.c:37
 msgid ""
@@ -3671,7 +3671,7 @@ msgid ""
 "++ Running solver unit tests ++"
 msgstr ""
 "\n"
-"++ FÃ¼hre 'solver' Unit-Tests aus ++"
+"++ Führe 'solver' Unit-Tests aus ++"
 
 #: ../lib/gpde/test/test_solvers.c:42
 msgid ""
@@ -3759,7 +3759,7 @@ msgid ""
 "++ Running assembling unit tests ++"
 msgstr ""
 "\n"
-"++ FÃ¼hre 'assembling' Unit-Tests aus ++"
+"++ Führe 'assembling' Unit-Tests aus ++"
 
 #: ../lib/gpde/test/test_assemble.c:44
 msgid "\t 1. testing 2d assembling"
@@ -3823,7 +3823,7 @@ msgid ""
 "++ Running array unit tests ++"
 msgstr ""
 "\n"
-"++ FÃ¼hre 'array' Unit-Tests aus ++"
+"++ Führe 'array' Unit-Tests aus ++"
 
 #: ../lib/gpde/test/test_arrays.c:50
 msgid "\t 1. testing 2d arrays"
@@ -3855,7 +3855,7 @@ msgid ""
 "++ Running les creation unit tests ++"
 msgstr ""
 "\n"
-"++ FÃ¼hre 'les creation' Unit-Tests aus ++"
+"++ Führe 'les creation' Unit-Tests aus ++"
 
 #: ../lib/gpde/test/test_les.c:39
 msgid ""
@@ -3887,7 +3887,7 @@ msgid ""
 "++ Running math tool unit tests ++"
 msgstr ""
 "\n"
-"++ FÃ¼hre 'solver' Unit-Tests aus++"
+"++ Führe 'solver' Unit-Tests aus++"
 
 #: ../lib/gpde/test/test_tools.c:39
 msgid ""
@@ -3960,8 +3960,8 @@ msgid ""
 "taking too long to find points for interpolation--please change the region "
 "to area where your points are. Continuing calculations..."
 msgstr ""
-"Es dauert zu lange, um Punkte fÃ¼r die Interpolation zu finden -- bitte "
-"Ã¤ndern Sie die Region auf den Bereich, wo die Punkte sind. Fahre mit der "
+"Es dauert zu lange, um Punkte für die Interpolation zu finden -- bitte "
+"ändern Sie die Region auf den Bereich, wo die Punkte sind. Fahre mit der "
 "Berechnung fort..."
 
 #: ../lib/rst/interp_float/input2d.c:47
@@ -3985,13 +3985,13 @@ msgstr ""
 #, c-format
 msgid "Cannot find z column <%s> (please verify name, e.g. with v.info)"
 msgstr ""
-"Kann die Z-Spalte <%s> nicht finden (Bitte Ã¼berprÃ¼fen Sie den Name, z.B. mit "
+"Kann die Z-Spalte <%s> nicht finden (Bitte überprüfen Sie den Name, z.B. mit "
 "v.info)."
 
 #: ../lib/rst/interp_float/vinput2d.c:97
 msgid "Column type of z column is not supported (must be integer or double)"
 msgstr ""
-"Spaltentype der Spalte z wird nicht unterstÃ¼tzt (muss integer oder double "
+"Spaltentype der Spalte z wird nicht unterstützt (muss integer oder double "
 "sein)."
 
 #: ../lib/rst/interp_float/vinput2d.c:108
@@ -4000,12 +4000,12 @@ msgstr "Kann den Spaltentyp der Smooth-Spalte nicht lesen."
 
 #: ../lib/rst/interp_float/vinput2d.c:110
 msgid "Column type of smooth column (datetime) is not supported"
-msgstr "Spaltentyp der Smooth-Spalte (datetime) wird nicht unterstÃ¼tzt."
+msgstr "Spaltentyp der Smooth-Spalte (datetime) wird nicht unterstützt."
 
 #: ../lib/rst/interp_float/vinput2d.c:112
 msgid "Column type of s column is not supported (must be integer or double)"
 msgstr ""
-"Spaltentyp der s-Spalte wird nicht unterstÃ¼tzt (muss integer oder double "
+"Spaltentyp der s-Spalte wird nicht unterstützt (muss integer oder double "
 "sein)."
 
 #: ../lib/rst/interp_float/vinput2d.c:123
@@ -4017,7 +4017,7 @@ msgstr "Vektor Karte "
 #: ../lib/rst/interp_float/vinput2d.c:273
 #, c-format
 msgid "Database record for cat %d not found"
-msgstr "Datenbank-Eintrag fÃ¼r die Kategorie (cat) %d  nicht gefunden."
+msgstr "Datenbank-Eintrag für die Kategorie (cat) %d  nicht gefunden."
 
 #: ../lib/rst/interp_float/vinput2d.c:236
 #, fuzzy
@@ -4032,7 +4032,7 @@ msgstr "Strip existiert mit unzureichenden Daten."
 #, c-format
 msgid "there are points outside specified 2D/3D region--ignored %d points"
 msgstr ""
-"Es sind Punkte auÃŸerhalb der angegebenen 2d/3D-Region gefunden worden - "
+"Es sind Punkte außerhalb der angegebenen 2d/3D-Region gefunden worden - "
 "ignoriere %d Punkte."
 
 #: ../lib/rst/interp_float/vinput2d.c:336
@@ -4046,7 +4046,7 @@ msgid ""
 "%d points given for interpolation (after thinning) is less than given NPMIN=%"
 "d"
 msgstr ""
-"%d Punkte, die nach nach der AusdÃ¼nnung zur VerfÃ¼gung stehen, sind weniger "
+"%d Punkte, die nach nach der Ausdünnung zur Verfügung stehen, sind weniger "
 "als die angegebenen NPMIN=%d."
 
 #: ../lib/rst/interp_float/vinput2d.c:358
@@ -4061,33 +4061,33 @@ msgstr ""
 
 #: ../lib/rst/interp_float/vinput2d.c:399
 msgid "some points outside of region -- will ignore..."
-msgstr "einige Punkte sind auÃŸerhalb der Region -- ignoriere dies..."
+msgstr "einige Punkte sind außerhalb der Region -- ignoriere dies..."
 
 #: ../lib/g3d/g3dparam.c:52
 msgid "Data type used in the output file"
-msgstr "Datentyp der fÃ¼r die Ausgabedatei benutzt wird."
+msgstr "Datentyp der für die Ausgabedatei benutzt wird."
 
 #: ../lib/g3d/g3dparam.c:61
 msgid "Precision used in the output file (default, max, or 0 to 52)"
 msgstr ""
-"Genauigkeit, die fÃ¼r die Ausgabedatei genutzt wird (default, max, oder 0 bis "
+"Genauigkeit, die für die Ausgabedatei genutzt wird (default, max, oder 0 bis "
 "52)."
 
 #: ../lib/g3d/g3dparam.c:71
 msgid "The compression method used in the output file"
-msgstr "Die Kompressionsmethode, die fÃ¼r die Ausgabe verwendet werden soll."
+msgstr "Die Kompressionsmethode, die für die Ausgabe verwendet werden soll."
 
 #: ../lib/g3d/g3dparam.c:81
 msgid "The dimensions of the tiles used in the output file"
-msgstr "Die Dimension der Kacheln, die fÃ¼r die Ausgabe verwerndet werden soll."
+msgstr "Die Dimension der Kacheln, die für die Ausgabe verwerndet werden soll."
 
 #: ../lib/g3d/g3dparam.c:116
 msgid "G3d_getStandard3dParams: precision value invalid"
-msgstr "G3d_getStandard3dParams: Genauigkeitswert ungÃ¼ltig"
+msgstr "G3d_getStandard3dParams: Genauigkeitswert ungültig"
 
 #: ../lib/g3d/g3dparam.c:149
 msgid "G3d_getStandard3dParams: tile dimension value invalid"
-msgstr "G3d_getStandard3dParams: Kacheldimensionswert ungÃ¼ltig"
+msgstr "G3d_getStandard3dParams: Kacheldimensionswert ungültig"
 
 #: ../lib/g3d/g3dparam.c:173
 msgid "Window replacing the default"
@@ -4111,7 +4111,7 @@ msgstr "G3d_openCellOld: Fehler in G3d_openCellOldNoHeader"
 
 #: ../lib/g3d/g3dopen.c:104
 msgid "G3d_openCellOld: can't rewind file"
-msgstr "G3d_openCellOld: Kann Datei nicht zurÃ¼ckspulen"
+msgstr "G3d_openCellOld: Kann Datei nicht zurückspulen"
 
 #: ../lib/g3d/g3dopen.c:116
 msgid "G3d_openCellOld: error in G3d_readHeader"
@@ -4123,7 +4123,7 @@ msgstr "G3d_openCellOld: Reprojektion passt nicht in das Fenster"
 
 #: ../lib/g3d/g3dopen.c:128
 msgid "G3d_openCellOld: zone does not match window zone"
-msgstr "G3d_openCellOld: Zone passt nicht mit der Fensterzone Ã¼berein."
+msgstr "G3d_openCellOld: Zone passt nicht mit der Fensterzone überein."
 
 #: ../lib/g3d/g3dopen.c:140 ../lib/g3d/g3dopen.c:157
 msgid "G3d_openCellOld: can't read header"
@@ -4151,7 +4151,7 @@ msgstr " G3d_openCellNew: Fehler in G3d_malloc"
 
 #: ../lib/g3d/g3dopen.c:245
 msgid "G3d_openCellNew: could not open file"
-msgstr "G3d_openCellNew: Kann Datei nicht Ã¶ffnen."
+msgstr "G3d_openCellNew: Kann Datei nicht öffnen."
 
 #: ../lib/g3d/g3dopen.c:290 ../lib/g3d/g3dopen.c:295
 msgid "G3d_openCellNew: can't write header"
@@ -4222,12 +4222,12 @@ msgstr ""
 #: ../lib/ogsf/gsd_legend.c:384
 #, fuzzy
 msgid "Unable to show discrete FP range (use list"
-msgstr "Kann die DatenbankverknÃ¼pfung nicht schreiben."
+msgstr "Kann die Datenbankverknüpfung nicht schreiben."
 
 #: ../lib/ogsf/gsd_legend.c:500
 #, fuzzy
 msgid "Too many categories to show as discrete!"
-msgstr "Zu viele reklassifizierte Kategorien fÃ¼r [%s in %s]."
+msgstr "Zu viele reklassifizierte Kategorien für [%s in %s]."
 
 #: ../lib/ogsf/gsd_legend.c:502
 msgid "Try using smaller font!"
@@ -4277,7 +4277,7 @@ msgstr ""
 #: ../lib/ogsf/gsd_img_ppm.c:96 ../lib/ogsf/GK2.c:219
 #, fuzzy, c-format
 msgid "Unable to open file <%s> for writing"
-msgstr "Kann %s nicht zum Beschreiben Ã¶ffnen."
+msgstr "Kann %s nicht zum Beschreiben öffnen."
 
 #: ../lib/ogsf/GK2.c:275 ../lib/ogsf/GK2.c:288
 msgid "Check no. of frames requested and keyframes marked"
@@ -4385,7 +4385,7 @@ msgstr "Eingabevektorkarte <%s> nicht gefunden."
 #: ../lib/ogsf/gsd_img_mpeg.c:162
 #, fuzzy
 msgid "Unable to open codec"
-msgstr "Kann %s nicht Ã¶ffnen."
+msgstr "Kann %s nicht öffnen."
 
 #: ../lib/ogsf/gsd_img_mpeg.c:181
 #, fuzzy
@@ -4414,7 +4414,7 @@ msgstr ""
 #: ../lib/ogsf/gsd_img_mpeg.c:310
 #, fuzzy
 msgid "Unable to find suitable output format"
-msgstr "Kann to topo-Datei der Vektorkarte <%s> nicht Ã¶ffnen."
+msgstr "Kann to topo-Datei der Vektorkarte <%s> nicht öffnen."
 
 #: ../lib/ogsf/gsd_img_mpeg.c:337
 #, fuzzy
@@ -4424,7 +4424,7 @@ msgstr "Kann nicht zum Verzeichnis %s wechseln."
 #: ../lib/ogsf/gsd_img_mpeg.c:351
 #, fuzzy, c-format
 msgid "Unable to open <%s>"
-msgstr "Kann %s nicht Ã¶ffnen."
+msgstr "Kann %s nicht öffnen."
 
 #: ../lib/ogsf/gsd_img_mpeg.c:361
 msgid "NVIZ has not been built with MPEG output support"
@@ -4439,7 +4439,7 @@ msgstr "Vektor Karte"
 #, c-format
 msgid "Illegal table map name <%s>. May not contain '.' or 'NULL'.\n"
 msgstr ""
-"UngÃ¼ltiger Name der Vektorkarte <%s>. Es dÃ¼rfen nicht '.' oder 'NULL' "
+"Ungültiger Name der Vektorkarte <%s>. Es dürfen nicht '.' oder 'NULL' "
 "enthalten sein.\n"
 
 #: ../lib/db/dbmi_base/legal_dbname.c:33
@@ -4456,19 +4456,19 @@ msgstr "Unbekannter Tabellenname <%s>. Zeichen <%c> ist nicht erlaubt.\n"
 #: ../lib/db/dbmi_client/table.c:46
 #, fuzzy, c-format
 msgid "Unable open database <%s> by driver <%s>"
-msgstr "Kann Datenbank '%s' nicht Ã¶ffnen."
+msgstr "Kann Datenbank '%s' nicht öffnen."
 
 #: ../lib/db/dbmi_client/table.c:110 ../lib/db/dbmi_client/copy_tab.c:199
 #: ../lib/db/dbmi_client/copy_tab.c:276 ../lib/sites/sites.c:381
 #, c-format
 msgid "Unable to open select cursor: '%s'"
-msgstr "Kann nicht Select Cursor <%s> Ã¶ffnen"
+msgstr "Kann nicht Select Cursor <%s> öffnen"
 
 #: ../lib/db/dbmi_client/copy_tab.c:100 ../lib/db/dbmi_client/copy_tab.c:120
 #: ../lib/db/dbmi_client/db.c:41
 #, c-format
 msgid "Unable to start driver <%s>"
-msgstr "Kann Treiber <%s> nicht Ã¶ffnen"
+msgstr "Kann Treiber <%s> nicht öffnen"
 
 #: ../lib/db/dbmi_client/copy_tab.c:144
 #, c-format
@@ -4512,17 +4512,17 @@ msgstr ""
 #: ../lib/db/dbmi_client/select.c:282
 #, fuzzy, c-format
 msgid "Unable select records from table <%s>"
-msgstr "Kann Header-Datei fÃ¼r [%s in %s] nicht erstellen."
+msgstr "Kann Header-Datei für [%s in %s] nicht erstellen."
 
 #: ../lib/db/dbmi_client/delete_tab.c:44
 #, c-format
 msgid "Unable to open driver <%s>"
-msgstr "Kann Treiber <%s> nicht Ã¶ffnen"
+msgstr "Kann Treiber <%s> nicht öffnen"
 
 #: ../lib/db/dbmi_client/delete_tab.c:62
 #, c-format
 msgid "Unable to drop table: '%s'"
-msgstr "Kann Tabelle <%s> nicht lÃ¶schen"
+msgstr "Kann Tabelle <%s> nicht löschen"
 
 #: ../lib/db/dbmi_client/column.c:110
 #, c-format
@@ -4570,7 +4570,7 @@ msgstr ""
 #: ../lib/sites/sites.c:1249
 #, fuzzy, c-format
 msgid "Cannot open database %s by driver %s"
-msgstr "Kann Datenbank '%s' nicht Ã¶ffnen."
+msgstr "Kann Datenbank '%s' nicht öffnen."
 
 #: ../lib/sites/sites.c:1257
 msgid "Cannot select attributes"
@@ -4598,7 +4598,7 @@ msgstr "    nehme invertierte FFT..."
 
 #: ../lib/gmath/la.c:64 ../lib/gmath/la.c:120
 msgid "Matrix dimensions out of range"
-msgstr "Matrix-Dimensionen liegen auÃŸerhalb der Spanne."
+msgstr "Matrix-Dimensionen liegen außerhalb der Spanne."
 
 #: ../lib/gmath/la.c:153
 msgid "Matrix is not initialised fully."
@@ -4606,7 +4606,7 @@ msgstr "Matrix ist nicht komplett initialisiert."
 
 #: ../lib/gmath/la.c:158
 msgid "Unable to allocate space for matrix copy"
-msgstr "Kann keinen Speicher fÃ¼r Matrix-Kopie belegen."
+msgstr "Kann keinen Speicher für Matrix-Kopie belegen."
 
 #: ../lib/gmath/la.c:247
 msgid "First scalar multiplier must be non-zero"
@@ -4622,11 +4622,11 @@ msgstr "Matrix-Reihenfolge passt nicht."
 
 #: ../lib/gmath/la.c:272
 msgid "Unable to allocate space for matrix sum"
-msgstr "Kann keinen Speicher fÃ¼r die Matrix-Summe belegen."
+msgstr "Kann keinen Speicher für die Matrix-Summe belegen."
 
 #: ../lib/gmath/la.c:336
 msgid "Unable to allocate space for matrix product"
-msgstr "Kann keinen Speicher fÃ¼r das Matrix-Produkt belegen."
+msgstr "Kann keinen Speicher für das Matrix-Produkt belegen."
 
 #: ../lib/gmath/la.c:448
 msgid "Input: one or both data matrices uninitialised"
@@ -4638,19 +4638,19 @@ msgstr "Matrix (prinzipal) hat nicht die richtigen Dimensionen."
 
 #: ../lib/gmath/la.c:458
 msgid "Input: you must have at least one array to solve"
-msgstr "Eingabe: Mindestens ein Array muss zur LÃ¶sung angegeben werden."
+msgstr "Eingabe: Mindestens ein Array muss zur Lösung angegeben werden."
 
 #: ../lib/gmath/la.c:464
 msgid "Could not allocate space for solution matrix"
-msgstr "Konnte keinen Platz fÃ¼r die LÃ¶sungs-Matrix belegen."
+msgstr "Konnte keinen Platz für die Lösungs-Matrix belegen."
 
 #: ../lib/gmath/la.c:470 ../lib/gmath/la.c:478
 msgid "Could not allocate space for working matrix"
-msgstr "Konnte keinen Platz fÃ¼r die Arbeits-Matrix belegen."
+msgstr "Konnte keinen Platz für die Arbeits-Matrix belegen."
 
 #: ../lib/gmath/la.c:531
 msgid "Matrix (or submatrix is singular). Solution undetermined"
-msgstr "Matrix (oder Untermatrix ist singular). LÃ¶sung ist ungewiss."
+msgstr "Matrix (oder Untermatrix ist singular). Lösung ist ungewiss."
 
 #: ../lib/gmath/la.c:535
 msgid "Problem in LA routine."
@@ -4658,7 +4658,7 @@ msgstr "Probleme in der LA Routine."
 
 #: ../lib/gmath/la.c:542
 msgid "Procedure not yet available for selected matrix type"
-msgstr "Die Prozedur ist fÃ¼r den ausgewÃ¤hlten Matrixtyp noch nicht verfÃ¼gbar."
+msgstr "Die Prozedur ist für den ausgewählten Matrixtyp noch nicht verfügbar."
 
 #: ../lib/gmath/la.c:576
 msgid "Matrix is not square. Cannot determine inverse"
@@ -4666,7 +4666,7 @@ msgstr "Matrix ist nicht quadratisch. Kann keine inverse"
 
 #: ../lib/gmath/la.c:581
 msgid "Unable to allocate space for matrix"
-msgstr "Kann keinen Speicher fÃ¼r die Matrix belegen."
+msgstr "Kann keinen Speicher für die Matrix belegen."
 
 #: ../lib/gmath/la.c:598
 msgid "Matrix is singular"
@@ -4682,11 +4682,11 @@ msgstr "Element-Array wurde nicht belegt."
 
 #: ../lib/gmath/la.c:696
 msgid "Specified element is outside array bounds"
-msgstr "Angegebenes Element ist auÃŸerhalb der Array-Grenzen."
+msgstr "Angegebenes Element ist außerhalb der Array-Grenzen."
 
 #: ../lib/gmath/la.c:750
 msgid "Specified matrix column index is outside range"
-msgstr "Angegebener Matrixspaltenindex ist auÃŸerhalb der Spanne."
+msgstr "Angegebener Matrixspaltenindex ist außerhalb der Spanne."
 
 #: ../lib/gmath/la.c:755 ../lib/gmath/la.c:796 ../lib/gmath/la.c:1109
 #: ../lib/gmath/la.c:1161 ../lib/gmath/la.c:1236
@@ -4695,19 +4695,19 @@ msgstr "Matrix wurde nicht initialisiert."
 
 #: ../lib/gmath/la.c:760 ../lib/gmath/la.c:801
 msgid "Could not allocate space for vector structure"
-msgstr "Konnte keinen Platz fÃ¼r die Vektorstruktur belegen."
+msgstr "Konnte keinen Platz für die Vektorstruktur belegen."
 
 #: ../lib/gmath/la.c:791
 msgid "Specified matrix row index is outside range"
-msgstr "Angegebene Matrixreihe ist auÃŸerhalb der Spanne."
+msgstr "Angegebene Matrixreihe ist außerhalb der Spanne."
 
 #: ../lib/gmath/la.c:831
 msgid "Specified row index is outside range"
-msgstr "Angegebener Reihenindex ist auÃŸerhalb der Spanne."
+msgstr "Angegebener Reihenindex ist außerhalb der Spanne."
 
 #: ../lib/gmath/la.c:836
 msgid "Specified column index is outside range"
-msgstr "Angegebener Spalteindex ist auÃŸerhalb der Spanne."
+msgstr "Angegebener Spalteindex ist außerhalb der Spanne."
 
 #: ../lib/gmath/la.c:856
 msgid "Unknown vector type."
@@ -4739,11 +4739,11 @@ msgstr "Ergebnisvektor hat falsche Dimensionen."
 
 #: ../lib/gmath/la.c:1054
 msgid "Vector dimensions out of range"
-msgstr "Vektordimension auÃŸerhalb der Reichweite"
+msgstr "Vektordimension außerhalb der Reichweite"
 
 #: ../lib/gmath/la.c:1059
 msgid "Row/column out of range"
-msgstr "Reihe/Spalte auÃŸerhalb der Spanne"
+msgstr "Reihe/Spalte außerhalb der Spanne"
 
 #: ../lib/gmath/la.c:1274
 msgid "Vector structure is not initialised"
@@ -4756,12 +4756,12 @@ msgstr "Eingabe-Formatfehler"
 #: ../lib/imagery/points.c:124
 #, fuzzy, c-format
 msgid "Unable to open control point file for group [%s in %s]"
-msgstr "Kann Datei [%s] in der Gruppe [%s in %s] nicht Ã¶ffnen."
+msgstr "Kann Datei [%s] in der Gruppe [%s in %s] nicht öffnen."
 
 #: ../lib/imagery/points.c:132
 #, fuzzy, c-format
 msgid "Bad format in control point file for group [%s in %s]"
-msgstr "Kann Datei [%s] in der Gruppe [%s in %s] nicht Ã¶ffnen."
+msgstr "Kann Datei [%s] in der Gruppe [%s in %s] nicht öffnen."
 
 #: ../lib/imagery/points.c:159
 #, fuzzy, c-format
@@ -4776,7 +4776,7 @@ msgstr "Kann die Datei [%s] der Gruppe [%s in %s] nicht erstellen."
 #: ../lib/imagery/fopen.c:36 ../lib/imagery/fopen.c:57
 #, c-format
 msgid "Unable to open file [%s] of group [%s in %s]"
-msgstr "Kann Datei [%s] in der Gruppe [%s in %s] nicht Ã¶ffnen."
+msgstr "Kann Datei [%s] in der Gruppe [%s in %s] nicht öffnen."
 
 #: ../lib/imagery/fopen.c:49
 #, c-format
@@ -4787,21 +4787,21 @@ msgstr "Kann die Datei [%s] der Gruppe [%s in %s] nicht finden."
 #, c-format
 msgid "Unable to create file [%s] for subgroup [%s] of group [%s in %s]"
 msgstr ""
-"Kann die Datei [%s] fÃ¼r die Untergruppe [%s] der Gruppe [%s in %s] nicht "
+"Kann die Datei [%s] für die Untergruppe [%s] der Gruppe [%s in %s] nicht "
 "erstellen."
 
 #: ../lib/imagery/fopen.c:101 ../lib/imagery/fopen.c:127
 #, c-format
 msgid "Unable to open file [%s] for subgroup [%s] of group [%s in %s]"
 msgstr ""
-"Kann die Datei [%s] fÃ¼r die Untergruppe [%s] der Gruppe [%s in %s] nicht "
-"Ã¶ffnen."
+"Kann die Datei [%s] für die Untergruppe [%s] der Gruppe [%s in %s] nicht "
+"öffnen."
 
 #: ../lib/imagery/fopen.c:116
 #, c-format
 msgid "Unable to find file [%s] for subgroup [%s] of group [%s in %s]"
 msgstr ""
-"Kann die Datei [%s] fÃ¼r die Untergruppe [%s] der Gruppe [%s in %s] nicht "
+"Kann die Datei [%s] für die Untergruppe [%s] der Gruppe [%s in %s] nicht "
 "finden."
 
 #: ../lib/imagery/list_gp.c:34
@@ -4817,7 +4817,7 @@ msgstr "Raster"
 #: ../lib/imagery/target.c:38
 #, fuzzy, c-format
 msgid "Unable to read target file for group [%s]"
-msgstr "Kann Header-Datei fÃ¼r [%s] nicht erstellen."
+msgstr "Kann Header-Datei für [%s] nicht erstellen."
 
 #: ../lib/imagery/list_subgp.c:36
 #, c-format
