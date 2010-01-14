@@ -33,7 +33,6 @@ proc GmLegend::create { tree parent } {
     
 
     set node "legend:$count"
-	set dup($count) 1
 
     set frm [ frame .legendicon$count]
     set check [checkbutton $frm.check \
@@ -455,6 +454,7 @@ proc GmLegend::duplicate { tree parent node id } {
 	variable dup
 
     set node "legend:$count"
+    set dup($count) 1
 
     set frm [ frame .legendicon$count]
     set check [checkbutton $frm.check \

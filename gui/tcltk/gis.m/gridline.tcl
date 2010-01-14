@@ -9,14 +9,14 @@
 ##########################################################################
 
 namespace eval GmGridline {
-    variable array opt # grid current options
+    variable array opt ;# grid current options
     variable count 1
-    variable array tree # mon
-    variable array lfile # raster
-    variable array lfilemask # raster
+    variable array tree ;# mon
+    variable array lfile ;# raster
+    variable array lfilemask ;# raster
     variable optlist
     variable first
-    variable array dup # vector
+    variable array dup ;# vector
 }
 
 proc GmGridline::create { tree parent } {

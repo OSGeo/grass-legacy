@@ -10,14 +10,14 @@
 ##########################################################################
 
 namespace eval GmDframe {
-    variable array opt # frame current options
+    variable array opt ;# frame current options
     variable count 1
-    variable array tree # mon
-    variable array lfile # frame
-    variable array lfilemask # frame
+    variable array tree ;# mon
+    variable array lfile ;# frame
+    variable array lfilemask ;# frame
     variable optlist
     variable first
-    variable array dup # layer
+    variable array dup ;# layer
 }
 
 proc GmDframe::create { tree parent } {

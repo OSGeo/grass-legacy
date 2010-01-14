@@ -10,14 +10,14 @@
 ##########################################################################
 
 namespace eval GmBarscale {
-    variable array opt # barscale current options
+    variable array opt ;# barscale current options
     variable count 1
-    variable array lfile # scale
-    variable array lfilemask # scale
+    variable array lfile ;# scale
+    variable array lfilemask ;# scale
     variable optlist
     variable first
-    variable array dup # layer
-    variable placement #LabelEntry widget for scale bar placment coordinates
+    variable array dup ;# layer
+    variable placement ;#LabelEntry widget for scale bar placment coordinates
 };
 
 

@@ -10,13 +10,13 @@
 ##########################################################################
 
 namespace eval GmArrows {
-    variable array opt # arrows current options
+    variable array opt ;# arrows current options
     variable count 1
-    variable array tree # mon
-    variable array lfile # raster
-    variable array lfilemask # raster
+    variable array tree ;# mon
+    variable array lfile ;# raster
+    variable array lfilemask ;# raster
     variable optlist
-    variable array dup # vector
+    variable array dup ;# vector
 }
 
 ###############################################################################
