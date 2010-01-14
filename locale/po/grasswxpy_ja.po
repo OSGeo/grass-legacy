@@ -4729,7 +4729,6 @@ msgstr "GRASSデータベースとロケーション名の設定"
 #: ../gui/wxpython/gui_modules/gdialogs.py:840
 #: ../gui/wxpython/gui_modules/gdialogs.py:849
 #: ../gui/wxpython/gui_modules/menuform.py:1460 ../gui/wxpython/gis_set.py:133
-#, fuzzy
 msgid "Browse"
 msgstr "参照"
 
