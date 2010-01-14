@@ -10,9 +10,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: grasswxpy_de\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-01-14 03:47+0100\n"
-"PO-Revision-Date: 2010-01-14 04:01+0100\n"
-"Last-Translator: Markus Neteler <neteler@osgeo.org>\n"
+"POT-Creation-Date: 2010-01-14 07:12+0100\n"
+"PO-Revision-Date: 2010-01-14 07:14+0100\n"
+"Last-Translator: Markus Neteler <neteler osgeo.org>\n"
 "Language-Team: Deutsch <grass-translations@lists.osgeo.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=ISO-8859-15\n"
@@ -6588,13 +6588,25 @@ msgstr "Parameter %(name)s (%(desc)s) fehlt.\n"
 msgid "Enter parameters for '"
 msgstr "Geben Sie Parameter an für '"
 
+#: ../gui/wxpython/gui_modules/menuform.py:797
+msgid "&Close"
+msgstr "&Schließen"
+
 #: ../gui/wxpython/gui_modules/menuform.py:798
 msgid "Close this window without executing the command"
 msgstr "Schließe dieses Fenster ohne den Befehl auszuführen."
 
+#: ../gui/wxpython/gui_modules/menuform.py:802
+msgid "&Help"
+msgstr "&Hilfe"
+
 #: ../gui/wxpython/gui_modules/menuform.py:803
 msgid "Show manual page of the command"
 msgstr "Zeige die Handbuchseite des Befehls."
+
+#: ../gui/wxpython/gui_modules/menuform.py:806
+msgid "&Apply"
+msgstr ""
 
 #: ../gui/wxpython/gui_modules/menuform.py:821
 msgid "&Run"
@@ -6604,9 +6616,17 @@ msgstr "&Los"
 msgid "Run the command"
 msgstr "Führe den Befehl aus"
 
+#: ../gui/wxpython/gui_modules/menuform.py:825
+msgid "&Stop"
+msgstr "S&top"
+
 #: ../gui/wxpython/gui_modules/menuform.py:826
 msgid "Abort the running command"
 msgstr "Breche den laufenden Befehl ab"
+
+#: ../gui/wxpython/gui_modules/menuform.py:829
+msgid "C&opy"
+msgstr "&Kopieren"
 
 #: ../gui/wxpython/gui_modules/menuform.py:830
 msgid "Copy the current command string to the clipboard"

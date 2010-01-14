@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: grasswxpy_ja\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-01-14 03:47+0100\n"
+"POT-Creation-Date: 2010-01-14 07:12+0100\n"
 "PO-Revision-Date: 2010-01-12 16:13+0900\n"
 "Last-Translator: \n"
 "Language-Team: Japanese <grass-translations@lists.osgeo.org>\n"
@@ -7302,16 +7302,27 @@ msgstr ""
 msgid "Enter parameters for '"
 msgstr "地形パラメータ"
 
+#: ../gui/wxpython/gui_modules/menuform.py:797
+msgid "&Close"
+msgstr "閉じる"
+
 #: ../gui/wxpython/gui_modules/menuform.py:798
 msgid "Close this window without executing the command"
 msgstr ""
+
+#: ../gui/wxpython/gui_modules/menuform.py:802
+msgid "&Help"
+msgstr "ヘルプ"
 
 #: ../gui/wxpython/gui_modules/menuform.py:803
 msgid "Show manual page of the command"
 msgstr ""
 
+#: ../gui/wxpython/gui_modules/menuform.py:806
+msgid "&Apply"
+msgstr "適用"
+
 #: ../gui/wxpython/gui_modules/menuform.py:821
-#, fuzzy
 msgid "&Run"
 msgstr "実行"
 
@@ -7320,9 +7331,17 @@ msgstr "実行"
 msgid "Run the command"
 msgstr "実行"
 
+#: ../gui/wxpython/gui_modules/menuform.py:825
+msgid "&Stop"
+msgstr "停止"
+
 #: ../gui/wxpython/gui_modules/menuform.py:826
 msgid "Abort the running command"
 msgstr ""
+
+#: ../gui/wxpython/gui_modules/menuform.py:829
+msgid "C&opy"
+msgstr "コピー"
 
 #: ../gui/wxpython/gui_modules/menuform.py:830
 #, fuzzy
