@@ -1609,6 +1609,8 @@ class GMApp(wx.App):
         # call parent class initializer
         wx.App.__init__(self, False)
         
+        self.locale = wx.Locale(language = wx.LANGUAGE_DEFAULT)
+        
     def OnInit(self):
         """!Initialize all available image handlers
 
