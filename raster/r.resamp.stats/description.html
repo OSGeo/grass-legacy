@@ -24,6 +24,16 @@ Resampling modules (<em>r.resample, r.resamp.stats, r.resamp.interp,
 r.resamp.rst</em>) resample the map to match the current region settings.
 </p>
 
+<h2>EXAMPLE</h2>
+
+Resample elevation raster map to a lower resolution (from 6m to 20m;
+North Carolina sample dataset):
+
+<div class="code"><pre>
+g.region rast=el_D782_6m -p
+g.region res=20m -ap
+r.resamp.stats input=el_D782_6m output=el_D782_20m
+</pre></div>
 
 <h2>SEE ALSO</h2>
 
