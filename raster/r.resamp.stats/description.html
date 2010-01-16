@@ -16,22 +16,30 @@ proportion of the source cell which lies inside the output cell. This
 is slower, but produces a more accurate result.
 </p>
 
-
 <h2>NOTES</h2>
 
 <p>
 Resampling modules (<em>r.resample, r.resamp.stats, r.resamp.interp,
 r.resamp.rst</em>) resample the map to match the current region settings.
 </p>
+<p>
+The notion of weighting doesn't make any sense for the min and max
+aggregates. However, the <em>-w</em> flag still has significance in
+that, when multiple destination cells overlap a source cell, the
+source cell is included in the calculation of all of the destination
+cells.
+</p>
 
 <h2>EXAMPLE</h2>
 
+<p>
 Resample elevation raster map to a lower resolution (from 6m to 20m;
 North Carolina sample dataset):
+</p>
 
 <div class="code"><pre>
 g.region rast=el_D782_6m -p
-g.region res=20m -ap
+g.region res=20 -ap
 r.resamp.stats input=el_D782_6m output=el_D782_20m
 </pre></div>
 
