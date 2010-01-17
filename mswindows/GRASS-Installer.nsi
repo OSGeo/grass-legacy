@@ -2,18 +2,17 @@
 
 ;GRASS Installer for Windows
 ;Written by Marco Pasetti
-;Updated for OSGeo4W by Colin Nielsen
-;Last Update: 30 March 2009
+;Updated for OSGeo4W by Colin Nielsen, Helmut Kudrnovsky, and Martin Landa
+;Last Update: 17 Jan 2010
 ;Mail to: grass-dev@lists.osgeo.org 
 
 ;----------------------------------------------------------------------------------------------------------------------------
 
 ;Define the source path of the demolocation files
 
-!define DEMOLOCATION_PATH "c:\osgeo4w\usr\src\grass-6.4.0RC4\demolocation"
+!define DEMOLOCATION_PATH "c:\osgeo4w\usr\src\grass-6.4.0\demolocation"
 
 ;Select if you are building a "Development Version" or a "Release Version" of the GRASS Installer
-;Change the INSTALLER_TYPE variable to Release, Dev6 or Dev7
 
 !define INSTALLER_TYPE "Release"
 
@@ -21,23 +20,17 @@
 
 ;Version variables
 
-!define RELEASE_VERSION_NUMBER "6.4.0RC4"
-!define RELEASE_SVN_REVISION "36599"
-!define RELEASE_BINARY_REVISION "1"
-!define RELEASE_GRASS_COMMAND "grass64"
-!define RELEASE_GRASS_BASE "GRASS"
+!define RELEASE64_VERSION_NUMBER "6.4.0"
+!define RELEASE64_SVN_REVISION "36599"
+!define RELEASE64_BINARY_REVISION "1"
+!define RELEASE64_GRASS_COMMAND "grass64"
+!define RELEASE64_GRASS_BASE "GRASS-64"
 
-!define DEV6_VERSION_NUMBER "6.5.SVN"
-!define DEV6_SVN_REVISION "36599"
-!define DEV6_BINARY_REVISION "1"
-!define DEV6_GRASS_COMMAND "grass65"
-!define DEV6_GRASS_BASE "GRASS-6-SVN"
-
-!define DEV7_VERSION_NUMBER "7.0.SVN"
-!define DEV7_SVN_REVISION ""
-!define DEV7_BINARY_REVISION "1"
-!define DEV7_GRASS_COMMAND "grass7"
-!define DEV7_GRASS_BASE"GRASS-7-SVN"
+!define DEV64_VERSION_NUMBER "6.4.SVN"
+!define DEV64_SVN_REVISION "36599"
+!define DEV64_BINARY_REVISION "1"
+!define DEV64_GRASS_COMMAND "grass64svn"
+!define DEV64_GRASS_BASE "GRASS-64-SVN"
 
 ;----------------------------------------------------------------------------------------------------------------------------
 
@@ -54,36 +47,26 @@
 
 ;Set the installer variables, depending on the selected version to build
 
-!if ${INSTALLER_TYPE} == "Release"
-	!define VERSION_NUMBER "${RELEASE_VERSION_NUMBER}"
-	!define SVN_REVISION "${RELEASE_SVN_REVISION}"
-	!define BINARY_REVISION "${RELEASE_BINARY_REVISION}"
-	!define GRASS_COMMAND "${RELEASE_GRASS_COMMAND}"
-	!define GRASS_BASE "${RELEASE_GRASS_BASE}"
+!if ${INSTALLER_TYPE} == "Release64"
+	!define VERSION_NUMBER "${RELEASE64_VERSION_NUMBER}"
+	!define SVN_REVISION "${RELEASE64_SVN_REVISION}"
+	!define BINARY_REVISION "${RELEASE64_BINARY_REVISION}"
+	!define GRASS_COMMAND "${RELEASE64_GRASS_COMMAND}"
+	!define GRASS_BASE "${RELEASE64_GRASS_BASE}"
 	!define INSTALLER_NAME "WinGRASS-${VERSION_NUMBER}-${BINARY_REVISION}-Setup.exe"
 	!define DISPLAYED_NAME "GRASS ${VERSION_NUMBER}-${BINARY_REVISION}"
 	!define CHECK_INSTALL_NAME "GRASS"
-	!define PACKAGE_FOLDER ".\GRASS-Release-Package"
-!else if ${INSTALLER_TYPE} == "Dev6"
-	!define VERSION_NUMBER "${DEV6_VERSION_NUMBER}"
-	!define SVN_REVISION "${DEV6_SVN_REVISION}"
-	!define BINARY_REVISION "${DEV6_BINARY_REVISION}"
-	!define GRASS_COMMAND "${DEV6_GRASS_COMMAND}"
-	!define GRASS_BASE "${DEV6_GRASS_BASE}"
+	!define PACKAGE_FOLDER ".\GRASS-64-Release-Package"
+!else if ${INSTALLER_TYPE} == "Dev64"
+	!define VERSION_NUMBER "${DEV64_VERSION_NUMBER}"
+	!define SVN_REVISION "${DEV64_SVN_REVISION}"
+	!define BINARY_REVISION "${DEV64_BINARY_REVISION}"
+	!define GRASS_COMMAND "${DEV64_GRASS_COMMAND}"
+	!define GRASS_BASE "${DEV64_GRASS_BASE}"
 	!define INSTALLER_NAME "WinGRASS-${VERSION_NUMBER}-r${SVN_REVISION}-${BINARY_REVISION}-Setup.exe"
 	!define DISPLAYED_NAME "GRASS ${VERSION_NUMBER}-r${SVN_REVISION}-${BINARY_REVISION}"
-	!define CHECK_INSTALL_NAME "GRASS 6 SVN"
-	!define PACKAGE_FOLDER ".\GRASS-6-Dev-Package"
-!else if ${INSTALLER_TYPE} == "Dev7"
-	!define VERSION_NUMBER "${DV7_VERSION_NUMBER}"
-	!define SVN_REVISION "${DV7_SVN_REVISION}"
-	!define BINARY_REVISION "${DV7_BINARY_REVISION}"
-	!define GRASS_COMMAND "${DEV7_GRASS_COMMAND}"
-	!define GRASS_BASE "${DEV7_GRASS_BASE}"
-	!define INSTALLER_NAME "WinGRASS-${VERSION_NUMBER}-r${SVN_REVISION}-${BINARY_REVISION}-Setup.exe"
-	!define DISPLAYED_NAME "GRASS ${VERSION_NUMBER}-r${SVN_REVISION}-${BINARY_REVISION}"
-	!define CHECK_INSTALL_NAME "GRASS 7 SVN"
-	!define PACKAGE_FOLDER ".\GRASS-7-Dev-Package"
+	!define CHECK_INSTALL_NAME "GRASS 64 SVN"
+	!define PACKAGE_FOLDER ".\GRASS-64-Dev-Package"
 !endif
 
 ;----------------------------------------------------------------------------------------------------------------------------
@@ -91,7 +74,7 @@
 ;Publisher variables
 
 !define PUBLISHER "GRASS Development Team"
-!define WEB_SITE "http://grass.osgeo.org/"
+!define WEB_SITE "http://grass.osgeo.org"
 !define WIKI_PAGE "http://grass.osgeo.org/wiki/Main_Page"
 
 ;----------------------------------------------------------------------------------------------------------------------------
@@ -105,7 +88,7 @@ Name "${DISPLAYED_NAME}"
 OutFile "${INSTALLER_NAME}"
 
 ;Define installation folder
-InstallDir "C:\${GRASS_BASE}"
+InstallDir "$PROGRAMFILES\${GRASS_BASE}"
 
 ;Request application privileges for Windows Vista
 RequestExecutionLevel user
@@ -229,7 +212,7 @@ Function .onInit
 	StrCpy $MESSAGE_0_ "${CHECK_INSTALL_NAME} is already installed on your system.$\r$\n"
 	StrCpy $MESSAGE_0_ "$MESSAGE_0_$\r$\n"
 	
-	!if ${INSTALLER_TYPE} == "Release"		
+	!if ${INSTALLER_TYPE} == "Release64"		
 		${If} $INSTALLED_BINARY_REVISION == ""
 			StrCpy $DISPLAYED_INSTALLED_VERSION "$INSTALLED_VERSION_NUMBER"
 		${Else}
@@ -321,33 +304,33 @@ FunctionEnd
 ;----------------------------------------------------------------------------------------------------------------------------
 
 ;CheckInstDir Function
+;this is commented out, because the installation path should be in $PROGRAMFILES
 ;Check if GRASS is going to be installed in a directory containing spaces
 ;if yes, show a warning message
 
-Function CheckInstDir
-
-	Var /GLOBAL INSTDIR_TEST
-	Var /GLOBAL INSTDIR_LENGHT	
-	Var /GLOBAL INSTDIR_TEST_LENGHT
-	Var /GLOBAL MESSAGE_CHKINST_
-	
-	StrCpy $MESSAGE_CHKINST_ "WARNING: you are about to install GRASS into a directory that has spaces$\r$\n"
-	StrCpy $MESSAGE_CHKINST_ "$MESSAGE_CHKINST_in either its name or the path of directories leading up to it.$\r$\n"
-	StrCpy $MESSAGE_CHKINST_ "$MESSAGE_CHKINST_Some functionalities of GRASS might be hampered by this. We would highly$\r$\n"
-	StrCpy $MESSAGE_CHKINST_ "$MESSAGE_CHKINST_appreciate if you tried and reported any problems, so that we can fix them.$\r$\n"
-	StrCpy $MESSAGE_CHKINST_ "$MESSAGE_CHKINST_However, if you want to avoid any such issues, we recommend that you$\r$\n"
-	StrCpy $MESSAGE_CHKINST_ "$MESSAGE_CHKINST_choose a simple installation path without spaces, such as: C:\${GRASS_BASE}.$\r$\n"
-	
-	${StrReplace} "$INSTDIR_TEST" " " "" "$INSTDIR"
-	
-	StrLen $INSTDIR_LENGHT "$INSTDIR"
-	StrLen $INSTDIR_TEST_LENGHT "$INSTDIR_TEST"
-	
-	${If} $INSTDIR_TEST_LENGHT < $INSTDIR_LENGHT	
-		MessageBox MB_OK|MB_ICONEXCLAMATION "$MESSAGE_CHKINST_"
-	${EndIf}
-	
-FunctionEnd
+;Function CheckInstDir
+;	Var /GLOBAL INSTDIR_TEST
+;	Var /GLOBAL INSTDIR_LENGHT	
+;	Var /GLOBAL INSTDIR_TEST_LENGHT
+;	Var /GLOBAL MESSAGE_CHKINST_
+;	
+;	StrCpy $MESSAGE_CHKINST_ "WARNING: you are about to install GRASS into a directory that has spaces$\r$\n"
+;	StrCpy $MESSAGE_CHKINST_ "$MESSAGE_CHKINST_in either its name or the path of directories leading up to it.$\r$\n"
+;	StrCpy $MESSAGE_CHKINST_ "$MESSAGE_CHKINST_Some functionalities of GRASS might be hampered by this. We would highly$\r$\n"
+;	StrCpy $MESSAGE_CHKINST_ "$MESSAGE_CHKINST_appreciate if you tried and reported any problems, so that we can fix them.$\r$\n"
+;	StrCpy $MESSAGE_CHKINST_ "$MESSAGE_CHKINST_However, if you want to avoid any such issues, we recommend that you$\r$\n"
+;	StrCpy $MESSAGE_CHKINST_ "$MESSAGE_CHKINST_choose a simple installation path without spaces, such as: C:\${GRASS_BASE}.$\r$\n"
+;	
+;	${StrReplace} "$INSTDIR_TEST" " " "" "$INSTDIR"
+;	
+;	StrLen $INSTDIR_LENGHT "$INSTDIR"
+;	StrLen $INSTDIR_TEST_LENGHT "$INSTDIR_TEST"
+;	
+;	${If} $INSTDIR_TEST_LENGHT < $INSTDIR_LENGHT	
+;		MessageBox MB_OK|MB_ICONEXCLAMATION "$MESSAGE_CHKINST_"
+;	${EndIf}
+;	
+;FunctionEnd
 
 ;----------------------------------------------------------------------------------------------------------------------------
 
@@ -466,7 +449,7 @@ Section "GRASS" SecGRASS
 	WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${GRASS_BASE}" "DisplayName" "GRASS"
 	WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${GRASS_BASE}" "UninstallString" "$INSTALL_DIR\Uninstall-GRASS.exe"
 	
-	!if ${INSTALLER_TYPE} == "Release"
+	!if ${INSTALLER_TYPE} == "Release64"
 		WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${GRASS_BASE}"\
 		"DisplayVersion" "${VERSION_NUMBER}-${BINARY_REVISION}"
 	!else
@@ -515,7 +498,7 @@ Section "GRASS" SecGRASS
 ; FIXME: ship the WinGrass release notes .html file instead of URL
 ; http://trac.osgeo.org/grass/browser/grass-web/trunk/grass64/binary/mswindows/native/README.html?format=raw
 ; probably ship with devel versions too? ie Release Notes, not the Release Announcement press release.
-	!if ${INSTALLER_TYPE} == "Release"
+	!if ${INSTALLER_TYPE} == "Release64"
 		CreateShortCut "$SMPROGRAMS\${GRASS_BASE}\Release Notes.lnk" "$INSTALL_DIR\WinGRASS-README.url" ""\
 		"$INSTALL_DIR\icons\WinGRASS.ico" "" SW_SHOWNORMAL "" "Visit the WinGRASS Project Web Page"
 	!endif
@@ -640,7 +623,7 @@ Section "GRASS" SecGRASS
 	FileWrite $0 '#   	    	requires a source file because the definition of GISBASE$\r$\n'
 	FileWrite $0 '#   	    	is not known until compile time and is substituted from the$\r$\n'
 	FileWrite $0 '#   	    	Makefile. Any command line options are passed to Init.sh.$\r$\n'
-	FileWrite $0 '# COPYRIGHT:  	(C) 2000-2009 by the GRASS Development Team$\r$\n'
+	FileWrite $0 '# COPYRIGHT:  	(C) 2000-2010 by the GRASS Development Team$\r$\n'
 	FileWrite $0 '#$\r$\n'
 	FileWrite $0 '#             	This program is free software under the GNU General Public$\r$\n'
 	FileWrite $0 '#   	    	License (>=v2). Read the file COPYING that comes with GRASS$\r$\n'
