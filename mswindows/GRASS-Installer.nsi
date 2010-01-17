@@ -15,7 +15,7 @@
 ;Select if you are building a "Development Version" or a "Release Version" of the GRASS Installer
 ;Change the INSTALLER_TYPE variable to Release, Dev6 or Dev7
 
-!define INSTALLER_TYPE "Dev6"
+!define INSTALLER_TYPE "Dev65"
 
 ;----------------------------------------------------------------------------------------------------------------------------
 
