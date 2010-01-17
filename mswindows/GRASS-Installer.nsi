@@ -339,7 +339,7 @@ FunctionEnd
 !define MUI_PAGE_CUSTOMFUNCTION_PRE CheckUpdate
 !insertmacro MUI_PAGE_DIRECTORY
 
-Page custom CheckInstDir
+;Page custom CheckInstDir
 
 !insertmacro MUI_PAGE_COMPONENTS
 !insertmacro MUI_PAGE_INSTFILES
