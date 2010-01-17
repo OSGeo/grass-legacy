@@ -57,6 +57,8 @@ xcopy %GRASS_PREFIX% %PACKAGE_DIR% /S/V/F
 mkdir %PACKAGE_DIR%\extralib
 
 copy %OSGEO4W_DIR%\bin\*.dll %PACKAGE_DIR%\extralib
+del %PACKAGE_DIR%\extralib\libgrass_*6.4*.dll
+del %PACKAGE_DIR%\extralib\libgrass_*7.0*.dll
 rem copy %OSGEO4W_DIR%\pgsql\lib\libpq.dll %PACKAGE_DIR%\extralib
 
 @echo.
