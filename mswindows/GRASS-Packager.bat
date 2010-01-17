@@ -1,5 +1,13 @@
 @echo off
 
+rem -----------------------------------------------------------------------------------------------------------------------
+rem Self Contained GRASS Automated Packager
+rem -----------------------------------------------------------------------------------------------------------------------
+rem Edited by: Marco Pasetti
+rem Revised for OSGeo4W by: Colin Nielsen, Helmut Kudrnovsky, and Martin Landa
+rem Last Update: 17 Jan 2010
+rem -----------------------------------------------------------------------------------------------------------------------
+
 rem --------------------------------------------------------------------------------------------------------------------------
 rem Set the script variables
 rem --------------------------------------------------------------------------------------------------------------------------
@@ -12,13 +20,6 @@ set OSGEO4W_DIR=c:\osgeo4w
 set GRASS_64_RELEASE_INSTALL_FOLDER=%OSGEO4W_DIR%\apps\grass\grass-6.4.0
 set GRASS_64_DEV_INSTALL_FOLDER=%OSGEO4W_DIR%\apps\grass\grass-6.4.0svn
 
-@echo -----------------------------------------------------------------------------------------------------------------------
-@echo Self Contained GRASS Automated Packager
-@echo -----------------------------------------------------------------------------------------------------------------------
-@echo Edited by: Marco Pasetti
-@echo Revised for OSGeo4W by: Colin Nielsen, Helmut Kudrnovsky, and Martin Landa
-@echo Last Update: 17 Jan 2010
-@echo -----------------------------------------------------------------------------------------------------------------------
 @echo Select the GRASS version to pack:
 @echo.
 @echo 1. Current GRASS-64 Release Version
@@ -44,7 +45,7 @@ set GRASS_PREFIX=%GRASS_64_DEV_INSTALL_FOLDER%
 @echo -----------------------------------------------------------------------------------------------------------------------
 @echo.
 
-pause
+rem pause
 
 if exist %PACKAGE_DIR% rmdir /S/Q %PACKAGE_DIR%
 mkdir %PACKAGE_DIR%
@@ -66,6 +67,8 @@ xcopy %GRASS_PREFIX% %PACKAGE_DIR% /S/V/F
 mkdir %PACKAGE_DIR%\extralib
 
 copy %OSGEO4W_DIR%\bin\*.dll %PACKAGE_DIR%\extralib
+del %PACKAGE_DIR%\extralib\libgrass_*6.5*.dll
+del %PACKAGE_DIR%\extralib\libgrass_*7.0*.dll
 rem copy %OSGEO4W_DIR%\pgsql\lib\libpq.dll %PACKAGE_DIR%\extralib
 
 @echo.
