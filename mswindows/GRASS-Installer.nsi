@@ -10,11 +10,11 @@
 
 ;Define the source path of the demolocation files
 
-!define DEMOLOCATION_PATH "c:\osgeo4w\usr\src\grass-6.4.0\demolocation"
+!define DEMOLOCATION_PATH "c:\osgeo4w\usr\src\grass64_release\demolocation"
 
 ;Select if you are building a "Development Version" or a "Release Version" of the GRASS Installer
 
-!define INSTALLER_TYPE "Release"
+!define INSTALLER_TYPE "Dev64"
 
 ;----------------------------------------------------------------------------------------------------------------------------
 
@@ -354,7 +354,7 @@ FunctionEnd
 !define MUI_PAGE_CUSTOMFUNCTION_PRE CheckUpdate
 !insertmacro MUI_PAGE_DIRECTORY
 
-Page custom CheckInstDir
+;Page custom CheckInstDir
 
 !insertmacro MUI_PAGE_COMPONENTS
 !insertmacro MUI_PAGE_INSTFILES
