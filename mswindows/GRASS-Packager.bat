@@ -1,3 +1,11 @@
+rem -----------------------------------------------------------------------------------------------------------------------
+rem Self Contained GRASS Automated Packager
+rem -----------------------------------------------------------------------------------------------------------------------
+rem Edited by: Marco Pasetti
+rem Revised for OSGeo4W by: Colin Nielsen, Helmut Kudrnovsky, and Martin Landa
+rem Last Update: 17 Jan 2010
+rem -----------------------------------------------------------------------------------------------------------------------
+
 @echo off
 
 rem --------------------------------------------------------------------------------------------------------------------------
@@ -8,26 +16,20 @@ set GRASS_65_DEV_PACKAGE_DIR=.\GRASS-65-Dev-Package
 
 set OSGEO4W_DIR=c:\osgeo4w
 
-set GRASS_65_DEV_INSTALL_FOLDER=%OSGEO4W_DIR%\apps\grass\grass-6.5.svn
+set GRASS_65_DEV_INSTALL_DIR=%OSGEO4W_DIR%\apps\grass\grass-6.5.svn
 
-@echo -----------------------------------------------------------------------------------------------------------------------
-@echo Self Contained GRASS Automated Packager
-@echo -----------------------------------------------------------------------------------------------------------------------
-@echo Edited by: Marco Pasetti
-@echo Revised for OSGeo4W by: Colin Nielsen, Helmut Kudrnovsky, and Martin Landa
-@echo Last Update: 17 Jan 2010
-@echo -----------------------------------------------------------------------------------------------------------------------
-@echo Select the GRASS version to pack:
-@echo.
-@echo 1. Current GRASS-65 Development Version
-@echo.
+rem @echo .
+rem @echo Select the GRASS version to pack:
+rem @echo.
+rem @echo 1. Current GRASS-65 Development Version
+rem @echo.
 
-set /p SELECTION=Enter your selection (1):
+rem set /p SELECTION=Enter your selection (1):
 
-if %SELECTION%==1 (
+rem if %SELECTION%==1 (
 set PACKAGE_DIR=%GRASS_65_DEV_PACKAGE_DIR%
-set GRASS_PREFIX=%GRASS_65_DEV_INSTALL_FOLDER%
-)
+set GRASS_PREFIX=%GRASS_65_DEV_INSTALL_DIR%
+rem )
 
 @echo.
 @echo -----------------------------------------------------------------------------------------------------------------------
@@ -35,7 +37,7 @@ set GRASS_PREFIX=%GRASS_65_DEV_INSTALL_FOLDER%
 @echo -----------------------------------------------------------------------------------------------------------------------
 @echo.
 
-pause
+rem pause
 
 if exist %PACKAGE_DIR% rmdir /S/Q %PACKAGE_DIR%
 mkdir %PACKAGE_DIR%
