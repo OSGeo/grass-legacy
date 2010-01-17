@@ -10,7 +10,7 @@
 
 ;Define the source path of the demolocation files
 
-!define DEMOLOCATION_PATH "c:\osgeo4w\usr\src\grass-6.5.svn\demolocation"
+!define DEMOLOCATION_PATH "c:\osgeo4w\usr\src\grass6_devel\demolocation"
 
 ;Select if you are building a "Development Version" or a "Release Version" of the GRASS Installer
 ;Change the INSTALLER_TYPE variable to Release, Dev6 or Dev7
