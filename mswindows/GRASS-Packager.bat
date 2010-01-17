@@ -4,47 +4,29 @@ rem ----------------------------------------------------------------------------
 rem Set the script variables
 rem --------------------------------------------------------------------------------------------------------------------------
 
-set GRASS_RELEASE_PACKAGE_DIR=.\GRASS-Release-Package
-set GRASS_6_DEV_PACKAGE_DIR=.\GRASS-6-Dev-Package
-set GRASS_7_DEV_PACKAGE_DIR=.\GRASS-7-Dev-Package
+set GRASS_65_DEV_PACKAGE_DIR=.\GRASS-65-Dev-Package
 
 set OSGEO4W_DIR=c:\osgeo4w
 
-set GRASS_RELEASE_INSTALL_FOLDER=%OSGEO4W_DIR%\apps\grass\grass-6.4.0RC5
-set GRASS_6_DEV_INSTALL_FOLDER=%OSGEO4W_DIR%\apps\grass\grass-6.5.svn
-set GRASS_7_DEV_INSTALL_FOLDER=%OSGEO4W_DIR%\apps\grass\grass-7.0.svn
+set GRASS_65_DEV_INSTALL_FOLDER=%OSGEO4W_DIR%\apps\grass\grass-6.5.svn
 
 @echo -----------------------------------------------------------------------------------------------------------------------
 @echo Self Contained GRASS Automated Packager
 @echo -----------------------------------------------------------------------------------------------------------------------
 @echo Edited by: Marco Pasetti
-@echo Revised for OSGeo4W by: Colin Nielsen
-@echo Last Update: 10 June 2009
+@echo Revised for OSGeo4W by: Colin Nielsen, Helmut Kudrnovsky, and Martin Landa
+@echo Last Update: 17 Jan 2010
 @echo -----------------------------------------------------------------------------------------------------------------------
 @echo Select the GRASS version to pack:
 @echo.
-@echo 1. Current GRASS Release Version
-@echo.
-@echo 2. Current GRASS-6 Development Version
-@echo.
-@echo 3. Current GRASS-7 Development Version
+@echo 1. Current GRASS-65 Development Version
 @echo.
 
-set /p SELECTION=Enter your selection (1/2/3):
+set /p SELECTION=Enter your selection (1):
 
 if %SELECTION%==1 (
-set PACKAGE_DIR=%GRASS_RELEASE_PACKAGE_DIR%
-set GRASS_PREFIX=%GRASS_RELEASE_INSTALL_FOLDER%
-)
-
-if %SELECTION%==2 (
-set PACKAGE_DIR=%GRASS_6_DEV_PACKAGE_DIR%
-set GRASS_PREFIX=%GRASS_6_DEV_INSTALL_FOLDER%
-)
-
-if %SELECTION%==3 (
-set PACKAGE_DIR=%GRASS_7_DEV_PACKAGE_DIR%
-set GRASS_PREFIX=%GRASS_7_DEV_INSTALL_FOLDER%
+set PACKAGE_DIR=%GRASS_65_DEV_PACKAGE_DIR%
+set GRASS_PREFIX=%GRASS_65_DEV_INSTALL_FOLDER%
 )
 
 @echo.

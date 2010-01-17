@@ -2,8 +2,8 @@
 
 ;GRASS Installer for Windows
 ;Written by Marco Pasetti
-;Updated for OSGeo4W by Colin Nielsen
-;Last Update: 30 March 2009
+;Updated for OSGeo4W by Colin Nielsen, Helmut Kudrnovsky, and Martin Landa
+;Last Update: 17 Jan 2010
 ;Mail to: grass-dev@lists.osgeo.org 
 
 ;----------------------------------------------------------------------------------------------------------------------------
@@ -21,23 +21,11 @@
 
 ;Version variables
 
-!define RELEASE_VERSION_NUMBER "6.4.0RC5"
-!define RELEASE_SVN_REVISION "36599"
-!define RELEASE_BINARY_REVISION "1"
-!define RELEASE_GRASS_COMMAND "grass64"
-!define RELEASE_GRASS_BASE "GRASS"
-
-!define DEV6_VERSION_NUMBER "6.5.SVN"
-!define DEV6_SVN_REVISION "36599"
-!define DEV6_BINARY_REVISION "1"
-!define DEV6_GRASS_COMMAND "grass65"
-!define DEV6_GRASS_BASE "GRASS-6-SVN"
-
-!define DEV7_VERSION_NUMBER "7.0.SVN"
-!define DEV7_SVN_REVISION ""
-!define DEV7_BINARY_REVISION "1"
-!define DEV7_GRASS_COMMAND "grass7"
-!define DEV7_GRASS_BASE"GRASS-7-SVN"
+!define DEV65_VERSION_NUMBER "6.5.SVN"
+!define DEV65_SVN_REVISION "36599"
+!define DEV65_BINARY_REVISION "1"
+!define DEV65_GRASS_COMMAND "grass65svn"
+!define DEV65_GRASS_BASE "GRASS-65-SVN"
 
 ;----------------------------------------------------------------------------------------------------------------------------
 
@@ -54,36 +42,16 @@
 
 ;Set the installer variables, depending on the selected version to build
 
-!if ${INSTALLER_TYPE} == "Release"
-	!define VERSION_NUMBER "${RELEASE_VERSION_NUMBER}"
-	!define SVN_REVISION "${RELEASE_SVN_REVISION}"
-	!define BINARY_REVISION "${RELEASE_BINARY_REVISION}"
-	!define GRASS_COMMAND "${RELEASE_GRASS_COMMAND}"
-	!define GRASS_BASE "${RELEASE_GRASS_BASE}"
-	!define INSTALLER_NAME "WinGRASS-${VERSION_NUMBER}-${BINARY_REVISION}-Setup.exe"
-	!define DISPLAYED_NAME "GRASS ${VERSION_NUMBER}-${BINARY_REVISION}"
-	!define CHECK_INSTALL_NAME "GRASS"
-	!define PACKAGE_FOLDER ".\GRASS-Release-Package"
-!else if ${INSTALLER_TYPE} == "Dev6"
-	!define VERSION_NUMBER "${DEV6_VERSION_NUMBER}"
-	!define SVN_REVISION "${DEV6_SVN_REVISION}"
-	!define BINARY_REVISION "${DEV6_BINARY_REVISION}"
-	!define GRASS_COMMAND "${DEV6_GRASS_COMMAND}"
-	!define GRASS_BASE "${DEV6_GRASS_BASE}"
+!if ${INSTALLER_TYPE} == "Dev65"
+        !define VERSION_NUMBER "${DEV65_VERSION_NUMBER}"
+	!define SVN_REVISION "${DEV65_SVN_REVISION}"
+	!define BINARY_REVISION "${DEV65_BINARY_REVISION}"
+	!define GRASS_COMMAND "${DEV65_GRASS_COMMAND}"
+	!define GRASS_BASE "${DEV65_GRASS_BASE}"
 	!define INSTALLER_NAME "WinGRASS-${VERSION_NUMBER}-r${SVN_REVISION}-${BINARY_REVISION}-Setup.exe"
 	!define DISPLAYED_NAME "GRASS ${VERSION_NUMBER}-r${SVN_REVISION}-${BINARY_REVISION}"
-	!define CHECK_INSTALL_NAME "GRASS 6 SVN"
-	!define PACKAGE_FOLDER ".\GRASS-6-Dev-Package"
-!else if ${INSTALLER_TYPE} == "Dev7"
-	!define VERSION_NUMBER "${DV7_VERSION_NUMBER}"
-	!define SVN_REVISION "${DV7_SVN_REVISION}"
-	!define BINARY_REVISION "${DV7_BINARY_REVISION}"
-	!define GRASS_COMMAND "${DEV7_GRASS_COMMAND}"
-	!define GRASS_BASE "${DEV7_GRASS_BASE}"
-	!define INSTALLER_NAME "WinGRASS-${VERSION_NUMBER}-r${SVN_REVISION}-${BINARY_REVISION}-Setup.exe"
-	!define DISPLAYED_NAME "GRASS ${VERSION_NUMBER}-r${SVN_REVISION}-${BINARY_REVISION}"
-	!define CHECK_INSTALL_NAME "GRASS 7 SVN"
-	!define PACKAGE_FOLDER ".\GRASS-7-Dev-Package"
+	!define CHECK_INSTALL_NAME "GRASS 65 SVN"
+	!define PACKAGE_FOLDER ".\GRASS-65-Dev-Package"
 !endif
 
 ;----------------------------------------------------------------------------------------------------------------------------
@@ -105,7 +73,7 @@ Name "${DISPLAYED_NAME}"
 OutFile "${INSTALLER_NAME}"
 
 ;Define installation folder
-InstallDir "C:\${GRASS_BASE}"
+InstallDir "$PROGRAMFILES\${GRASS_BASE}"
 
 ;Request application privileges for Windows Vista
 RequestExecutionLevel user
@@ -321,33 +289,33 @@ FunctionEnd
 ;----------------------------------------------------------------------------------------------------------------------------
 
 ;CheckInstDir Function
+;this is commented out, because the installation path should be in $PROGRAMFILES
 ;Check if GRASS is going to be installed in a directory containing spaces
 ;if yes, show a warning message
 
-Function CheckInstDir
-
-	Var /GLOBAL INSTDIR_TEST
-	Var /GLOBAL INSTDIR_LENGHT	
-	Var /GLOBAL INSTDIR_TEST_LENGHT
-	Var /GLOBAL MESSAGE_CHKINST_
-	
-	StrCpy $MESSAGE_CHKINST_ "WARNING: you are about to install GRASS into a directory that has spaces$\r$\n"
-	StrCpy $MESSAGE_CHKINST_ "$MESSAGE_CHKINST_in either its name or the path of directories leading up to it.$\r$\n"
-	StrCpy $MESSAGE_CHKINST_ "$MESSAGE_CHKINST_Some functionalities of GRASS might be hampered by this. We would highly$\r$\n"
-	StrCpy $MESSAGE_CHKINST_ "$MESSAGE_CHKINST_appreciate if you tried and reported any problems, so that we can fix them.$\r$\n"
-	StrCpy $MESSAGE_CHKINST_ "$MESSAGE_CHKINST_However, if you want to avoid any such issues, we recommend that you$\r$\n"
-	StrCpy $MESSAGE_CHKINST_ "$MESSAGE_CHKINST_choose a simple installation path without spaces, such as: C:\${GRASS_BASE}.$\r$\n"
-	
-	${StrReplace} "$INSTDIR_TEST" " " "" "$INSTDIR"
-	
-	StrLen $INSTDIR_LENGHT "$INSTDIR"
-	StrLen $INSTDIR_TEST_LENGHT "$INSTDIR_TEST"
-	
-	${If} $INSTDIR_TEST_LENGHT < $INSTDIR_LENGHT	
-		MessageBox MB_OK|MB_ICONEXCLAMATION "$MESSAGE_CHKINST_"
-	${EndIf}
-	
-FunctionEnd
+;Function CheckInstDir
+;	Var /GLOBAL INSTDIR_TEST
+;	Var /GLOBAL INSTDIR_LENGHT	
+;	Var /GLOBAL INSTDIR_TEST_LENGHT
+;	Var /GLOBAL MESSAGE_CHKINST_
+;	
+;	StrCpy $MESSAGE_CHKINST_ "WARNING: you are about to install GRASS into a directory that has spaces$\r$\n"
+;	StrCpy $MESSAGE_CHKINST_ "$MESSAGE_CHKINST_in either its name or the path of directories leading up to it.$\r$\n"
+;	StrCpy $MESSAGE_CHKINST_ "$MESSAGE_CHKINST_Some functionalities of GRASS might be hampered by this. We would highly$\r$\n"
+;	StrCpy $MESSAGE_CHKINST_ "$MESSAGE_CHKINST_appreciate if you tried and reported any problems, so that we can fix them.$\r$\n"
+;	StrCpy $MESSAGE_CHKINST_ "$MESSAGE_CHKINST_However, if you want to avoid any such issues, we recommend that you$\r$\n"
+;	StrCpy $MESSAGE_CHKINST_ "$MESSAGE_CHKINST_choose a simple installation path without spaces, such as: C:\${GRASS_BASE}.$\r$\n"
+;	
+;	${StrReplace} "$INSTDIR_TEST" " " "" "$INSTDIR"
+;	
+;	StrLen $INSTDIR_LENGHT "$INSTDIR"
+;	StrLen $INSTDIR_TEST_LENGHT "$INSTDIR_TEST"
+;	
+;	${If} $INSTDIR_TEST_LENGHT < $INSTDIR_LENGHT	
+;		MessageBox MB_OK|MB_ICONEXCLAMATION "$MESSAGE_CHKINST_"
+;	${EndIf}
+;	
+;FunctionEnd
 
 ;----------------------------------------------------------------------------------------------------------------------------
 
