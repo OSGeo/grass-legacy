@@ -22,10 +22,10 @@ Classes:
  - LocationWizard
  - SelectTransformDialog
 
-COPYRIGHT: (C) 2007-2009 by the GRASS Development Team
-           This program is free software under the GNU General Public
-           License (>=v2). Read the file COPYING that comes with GRASS
-           for details.
+COPYRIGHT: (C) 2007-2010 by the GRASS Development Team
+
+This program is free software under the GNU General Public License
+(>=v2). Read the file COPYING that comes with GRASS for details.
 
 @author Michael Barton
 @author Jachym Cepicky
@@ -242,7 +242,7 @@ class DatabasePage(TitledPage):
         event.Skip()
         
 class CoordinateSystemPage(TitledPage):
-    """
+    """!
     Wizard page for choosing method for location creation
     """
     def __init__(self, wizard, parent):
@@ -352,7 +352,7 @@ class CoordinateSystemPage(TitledPage):
             self.parent.sumpage.SetPrev(self.parent.csystemspage)
 
 class ProjectionsPage(TitledPage):
-    """
+    """!
     Wizard page for selecting projection (select coordinate system option)
     """
     def __init__(self, wizard, parent):
@@ -491,16 +491,14 @@ class ItemList(wx.ListCtrl,
         for column in columns:
             self.InsertColumn(i, column)
             i += 1
-
         if self.sourceData:
             self.Populate()
-            #FIXME: auto sizing doesn't work for some reason
-            for i in range(self.GetColumnCount()):
-                self.SetColumnWidth(i, wx.LIST_AUTOSIZE)
-        else:
-            for i in range(self.GetColumnCount()):
-                self.SetColumnWidth(i, wx.LIST_AUTOSIZE_USEHEADER)
 
+        for i in range(self.GetColumnCount()):
+            self.SetColumnWidth(i, wx.LIST_AUTOSIZE_USEHEADER)
+            if self.GetColumnWidth(i) < 80:
+                self.SetColumnWidth(i, 80)
+        
         #
         # listmix
         #
@@ -676,7 +674,7 @@ class ProjParamsPage(TitledPage):
         self.utmzoneNum = 0
         self.hemischoices = ["north","south"]
         self.parent = parent
-        self.panel = ''
+        self.panel = None
         self.prjparamsizer = ''
         self.pentry = {}
         self.pdesc = {}
@@ -687,14 +685,15 @@ class ProjParamsPage(TitledPage):
         self.paramlist = []
         self.p4projparams = ''
         self.projdesc = ''
-        self.paramSBox = ''
+        self.paramSBox = None
         
         radioSBox = wx.StaticBox(parent=self, id=wx.ID_ANY,
                                label=" %s " % _("Select datum or ellipsoid (next page)"))
         radioSBSizer = wx.StaticBoxSizer(radioSBox)
-        self.sizer.Add(radioSBSizer, pos=(0,1), span=(1,2), 
-                           flag=wx.EXPAND | wx.ALIGN_TOP | wx.TOP, border=10)
-
+        self.sizer.AddGrowableCol(1)
+        self.sizer.Add(item = radioSBSizer, pos = (0, 1), 
+                       flag=wx.EXPAND | wx.ALIGN_TOP | wx.TOP, border=10)
+        
         self.radio1 = wx.RadioButton(parent=self, id=wx.ID_ANY, 
                                 label=_("Datum with associated ellipsoid"),
                                 style = wx.RB_GROUP)
@@ -705,7 +704,7 @@ class ProjParamsPage(TitledPage):
         if self.radio1.GetValue() == False and self.radio2.GetValue() == False:
             self.radio1.SetValue(True)
             self.SetNext(self.parent.datumpage)
-#            self.parent.sumpage.SetPrev(self.parent.datumpage)  
+        #            self.parent.sumpage.SetPrev(self.parent.datumpage)  
 
         radioSBSizer.Add(item=self.radio1,
                          flag=wx.ALIGN_LEFT | wx.RIGHT, border=20)
@@ -719,6 +718,7 @@ class ProjParamsPage(TitledPage):
         self.Bind(wiz.EVT_WIZARD_PAGE_CHANGED, self.OnEnterPage)
         
     def OnParamEntry(self, event):
+        """!Parameter value changed"""
         num = 0
         if event.GetId() >= 2000:
             num = event.GetId() - 2000
@@ -743,7 +743,8 @@ class ProjParamsPage(TitledPage):
         
         event.Skip()
 
-    def OnPageChange(self,event=None):
+    def OnPageChange(self, event = None):
+        """!Go to next page"""
         if event.GetDirection():
             self.p4projparams = ''
             for num in range(self.pcount + 1):
@@ -754,18 +755,20 @@ class ProjParamsPage(TitledPage):
                         self.p4projparams += (' +' + self.proj4param[num])
                 else:
                     if self.pval[num] == '':
-                        wx.MessageBox('You must enter a value for %s' % self.pdesc[num],
-                                      'Something is missing!', wx.ICON_ERROR)
+                        wx.MessageBox(parent = self,
+                                      message = _('You must enter a value for %s') % self.pdesc[num],
+                                      caption = _('Error'), style= wx.ICON_ERROR | wx.CENTRE)
                         event.Veto()
                     else:
                         self.pval[num] = str(self.pval[num])
                         self.p4projparams += (' +' + self.proj4param[num] + '=' + self.pval[num])
 
-    def OnEnterPage(self,event):
+    def OnEnterPage(self, event):
+        """!Page entered"""
         self.projdesc = self.parent.projections[self.parent.projpage.proj][0]
         try:
             # page already formatted
-            if self.pagesizer.GetItem(self.panel) != '':
+            if self.pagesizer.GetItem(self.panel):
                 self.paramSBox.SetLabel(_(" Enter parameters for %s projection ") % self.projdesc)
         except:
             # entering page for the first time
@@ -777,11 +780,7 @@ class ProjParamsPage(TitledPage):
             self.prjparamsizer = wx.GridBagSizer(vgap=0, hgap=0) 
 
             self.panel.SetupScrolling()
-
-#            this ought to work but it doesn't
-#            self.sizer.Add(paramSBSizer, pos=(2,1), span=(3,2), 
-#                           flag=wx.EXPAND )
-
+            
             self.pagesizer.Add(paramSBSizer, proportion=1, 
                                flag=wx.EXPAND | wx.ALIGN_TOP | wx.ALL, border=10)
             paramSBSizer.Add(self.panel, proportion=1, 
@@ -796,7 +795,6 @@ class ProjParamsPage(TitledPage):
             num = 0
             
             for paramgrp in self.parent.projections[self.parent.projpage.proj][1]:
-                
                 # get parameters
                 self.pcount = num
                 self.ptype[num] = self.parent.paramdesc[paramgrp[0]][0]
@@ -804,12 +802,14 @@ class ProjParamsPage(TitledPage):
                 self.pdesc[num] = self.parent.paramdesc[paramgrp[0]][2]
 
                 # default values
-                if self.ptype[num] == 'bool': self.pval[num] = 'No'
+                if self.ptype[num] == 'bool':
+                    self.pval[num] = 'No'
                 elif self.ptype[num] == 'zone': 
                     self.pdesc[num] += ' (1-60)'
                     self.pval[num] = '' 
-                else: self.pval[num] = paramgrp[2]
-
+                else:
+                    self.pval[num] = paramgrp[2]
+                
                 label = wx.StaticText(self.panel, id=1000+num, label=self.pdesc[num], 
                                       style=wx.ALIGN_RIGHT | wx.ST_NO_AUTORESIZE)
                 if self.ptype[num] == 'bool':
@@ -820,20 +820,21 @@ class ProjParamsPage(TitledPage):
                 else:
                     self.pentry[num] = wx.TextCtrl(self.panel, id=2000+num, 
                                                    value=self.pval[num],
-                                                   size=(100,-1))
+                                                   size=(100, -1))
                     self.Bind(wx.EVT_TEXT, self.OnParamEntry)
                     if paramgrp[1] == 'noask':
                         self.pentry[num].SetEditable(False)
                         self.pentry[num].SetBackgroundColour(wx.LIGHT_GREY)
-
+                        self.pval[num] = paramgrp[2]
+                
                 self.prjparamsizer.Add(item=label, pos=(num, 1),
-                               flag=wx.ALIGN_RIGHT | 
-                               wx.ALIGN_CENTER_VERTICAL |
-                               wx.RIGHT, border=5)
+                                       flag=wx.ALIGN_RIGHT | 
+                                       wx.ALIGN_CENTER_VERTICAL |
+                                       wx.RIGHT, border=5)
                 self.prjparamsizer.Add(item=self.pentry[num], pos=(num, 2),
-                               flag=wx.ALIGN_LEFT | 
-                               wx.ALIGN_CENTER_VERTICAL |
-                               wx.LEFT, border=5)                
+                                       flag=wx.ALIGN_LEFT | 
+                                       wx.ALIGN_CENTER_VERTICAL |
+                                       wx.LEFT, border=5)                
                 num += 1    
                 
         self.panel.SetSize(self.panel.GetBestSize())
