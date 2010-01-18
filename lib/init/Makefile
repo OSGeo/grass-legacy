@@ -61,6 +61,7 @@ ifneq ($(strip $(MINGW)),)
 	FILES += \
 		$(ARCH_BINDIR)/$(START_UP).bat \
 		$(ETC)/Init.bat \
+		$(ETC)/winlocale$(EXE) \
 		$(ETC)/grass-run.bat
 endif
 
@@ -129,6 +130,9 @@ $(ETC)/lock$(EXE): $(OBJDIR)/lock.o
 $(BIN)/exit:
 	touch $@
 	chmod 600 $@
+
+$(ETC)/winlocale$(EXE): $(OBJDIR)/winlocale.o
+	$(CC) $(LDFLAGS) $(EXTRA_LDFLAGS) -o $@ $^ -lkernel32
 
 $(ETC)/VERSIONNUMBER:
 	rm -f $@
