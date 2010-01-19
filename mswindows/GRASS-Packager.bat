@@ -12,40 +12,18 @@ rem ----------------------------------------------------------------------------
 rem Set the script variables
 rem --------------------------------------------------------------------------------------------------------------------------
 
-set GRASS_64_RELEASE_PACKAGE_DIR=.\GRASS-64-Release-Package
-set GRASS_64_DEV_PACKAGE_DIR=.\GRASS-64-Dev-Package
-
 set OSGEO4W_DIR=c:\osgeo4w
 
-set GRASS_64_RELEASE_INSTALL_FOLDER=%OSGEO4W_DIR%\apps\grass\grass-6.4.0
-set GRASS_64_DEV_INSTALL_FOLDER=%OSGEO4W_DIR%\apps\grass\grass-6.4.0svn
-
-@echo Select the GRASS version to pack:
-@echo.
-@echo 1. Current GRASS-64 Release Version
-@echo.
-@echo 2. Current GRASS-64 Development Version
-@echo.
-
-set /p SELECTION=Enter your selection (1/2):
-
-if %SELECTION%==1 (
-set PACKAGE_DIR=%GRASS_64_RELEASE_PACKAGE_DIR%
-set GRASS_PREFIX=%GRASS_64_RELEASE_INSTALL_FOLDER%
-)
-
-if %SELECTION%==2 (
-set PACKAGE_DIR=%GRASS_64_DEV_PACKAGE_DIR%
-set GRASS_PREFIX=%GRASS_64_DEV_INSTALL_FOLDER%
-)
+rem set PACKAGE_DIR=.\GRASS-64-Release-Package
+set PACKAGE_DIR=.\GRASS-64-Dev-Package
+rem set GRASS_PREFIX=%OSGEO4W_DIR%\apps\grass\grass-6.4.0
+set GRASS_PREFIX=%OSGEO4W_DIR%\apps\grass\grass-6.4.0svn
 
 @echo.
 @echo -----------------------------------------------------------------------------------------------------------------------
 @echo Remove the previous Selected Package and create a new PACKAGE_DIR
 @echo -----------------------------------------------------------------------------------------------------------------------
 @echo.
-
-rem pause
 
 if exist %PACKAGE_DIR% rmdir /S/Q %PACKAGE_DIR%
 mkdir %PACKAGE_DIR%
@@ -201,4 +179,3 @@ xcopy %OSGEO4W_DIR%\apps\Python25\Scripts %PACKAGE_DIR%\Python25\Scripts /S/V/F/
 @echo Packaging Completed
 @echo -----------------------------------------------------------------------------------------------------------------------
 @echo.
-pause
