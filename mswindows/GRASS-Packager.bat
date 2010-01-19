@@ -12,32 +12,17 @@ rem ----------------------------------------------------------------------------
 rem Set the script variables
 rem --------------------------------------------------------------------------------------------------------------------------
 
-set GRASS_65_DEV_PACKAGE_DIR=.\GRASS-65-Dev-Package
+set PACKAGE_DIR=.\GRASS-65-Dev-Package
 
 set OSGEO4W_DIR=c:\osgeo4w
 
-set GRASS_65_DEV_INSTALL_DIR=%OSGEO4W_DIR%\apps\grass\grass-6.5.svn
-
-rem @echo .
-rem @echo Select the GRASS version to pack:
-rem @echo.
-rem @echo 1. Current GRASS-65 Development Version
-rem @echo.
-
-rem set /p SELECTION=Enter your selection (1):
-
-rem if %SELECTION%==1 (
-set PACKAGE_DIR=%GRASS_65_DEV_PACKAGE_DIR%
-set GRASS_PREFIX=%GRASS_65_DEV_INSTALL_DIR%
-rem )
+set GRASS_PREFIX=%OSGEO4W_DIR%\apps\grass\grass-6.5.svn
 
 @echo.
 @echo -----------------------------------------------------------------------------------------------------------------------
 @echo Remove the previous Selected Package and create a new PACKAGE_DIR
 @echo -----------------------------------------------------------------------------------------------------------------------
 @echo.
-
-rem pause
 
 if exist %PACKAGE_DIR% rmdir /S/Q %PACKAGE_DIR%
 mkdir %PACKAGE_DIR%
@@ -193,4 +178,3 @@ xcopy %OSGEO4W_DIR%\apps\Python25\Scripts %PACKAGE_DIR%\Python25\Scripts /S/V/F/
 @echo Packaging Completed
 @echo -----------------------------------------------------------------------------------------------------------------------
 @echo.
-pause
