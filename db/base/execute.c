@@ -46,7 +46,7 @@ int main(int argc, char **argv)
 
     parse_command_line(argc, argv);
 
-    if (parms.input) {
+    if (parms.input && strcmp(parms.input,"-") != 0) {
 	fd = fopen(parms.input, "r");
 	if (fd == NULL) {
 	    perror(parms.input);
