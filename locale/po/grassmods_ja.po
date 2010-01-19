@@ -2391,9 +2391,8 @@ msgid ""
 msgstr "累積コストを表すラスターマップを作成します"
 
 #: ../raster/r.walk/main.c:188
-#, fuzzy
 msgid "Name of elevation input raster map"
-msgstr "対象マップ"
+msgstr "高度入力ラスターマップ名"
 
 #: ../raster/r.walk/main.c:196
 #, fuzzy
