@@ -14,7 +14,7 @@ void P_Outlier(struct Map_info *Out, struct Map_info *Outlier,
 	       int num_points, dbDriver * driver)
 {
     int i;
-    double interpolation, weight, residual, eta, csi, *gradient;
+    double interpolation, weight, residual, eta, csi, gradient[2];
 
     extern int nsplx, nsply;
     extern double passoN, passoE;
