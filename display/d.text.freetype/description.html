@@ -108,24 +108,24 @@ The following example prints three lines: "<TT><font color=gray>GRASS</font>
 "<TT><font color=gray>for more details.</font></TT>".
 
 <DL>
-<DT><TT><B>d.text.freetype -c</B>
-<dd>.F /usr/X11R6/lib/X11/fonts/TTF/luximb.ttf:ISO-8859-1
-<dd>.S 20p
-<dd>.L 0
-<dd>GRASS 
-<dd>.C red
-<dd> d.text.freetype
-<dd>.C gray
-<dd> output
-<dd>.L 1
-<dd>See test.input file
-<dd>for more details.</TT>
+<DT><TT><B>d.text.freetype -c</B></TT>
 </DL>
-<BR>
+<pre>.F /usr/X11R6/lib/X11/fonts/TTF/luximb.ttf:ISO-8859-1
+.S 20p
+.L 0
+GRASS
+.C red
+ d.text.freetype
+.C gray
+ output
+.L 1
+See test.input file
+for more details.
+</pre>
 
 Command mode instructions may also be read directly from a text file:<BR><BR>
 <TT><B>d.text.freetype</B> -c &lt; test.input</TT>
-<BR><BR>
+
 
 <H2>DEFINITION FILE</H2>
 
