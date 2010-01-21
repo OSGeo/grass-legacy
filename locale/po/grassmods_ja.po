@@ -5,14 +5,16 @@
 # Shinji Masumoto <masumoto@sci.osaka-cu.ac.jp>, 2004
 # Susumu Nonogaki <nonogaki@sci.osaka-cu.ac.jp>, 2008
 # Markus Neteler <neteler@itc.it>, 2004, 2005.
+# Naoki Ueda <nao@locapoint.com>, 2010
+# Akira Taniguchi <taniguti@apptec.co.jp>, 2010
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: grassmods_ja\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2010-01-14 04:41+0100\n"
-"PO-Revision-Date: 2010-01-20 11:26+0900\n"
-"Last-Translator: Akira Taniguchi <taniguti@apptec.co.jp>\n"
+"PO-Revision-Date: 2010-01-21 15:43+0100\n"
+"Last-Translator: Markus Neteler <neteler osgeo.org>\n"
 "Language-Team: Japanese <grass-translations@lists.osgeo.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -71,9 +73,8 @@ msgstr "ラスターマップをASCII形式のファイルとしてエクスポ�
 
 #: ../raster3d/r3.out.ascii/main.c:259 ../raster3d/base/r3.null.main.c:106
 #: ../raster3d/base/r3.mask.main.c:78 ../raster3d/r3.out.v5d/main.c:310
-#, fuzzy
 msgid "Requested 3d raster map not found"
-msgstr "���."
+msgstr ""
 
 #: ../raster3d/r3.out.ascii/main.c:268 ../raster3d/r3.in.ascii/main.c:268
 #: ../raster3d/r3.in.v5d/main.c:215 ../raster3d/r3.out.v5d/main.c:315
@@ -385,23 +386,23 @@ msgid "Bottom cell map <%s> not found"
 msgstr "入力するファイル"
 
 #: ../raster3d/r3.out.vtk/main.c:143
-#, fuzzy, c-format
+#, c-format
 msgid "Requested 3d raster map <%s> not found"
-msgstr "���."
+msgstr ""
 
 #: ../raster3d/r3.out.vtk/main.c:153
-#, fuzzy, c-format
+#, c-format
 msgid "Requested g3d RGB map <%s> not found"
-msgstr "���."
+msgstr ""
 
 #: ../raster3d/r3.out.vtk/main.c:157
 msgid "Please provide three g3d RGB maps"
 msgstr ""
 
 #: ../raster3d/r3.out.vtk/main.c:167
-#, fuzzy, c-format
+#, c-format
 msgid "Requested g3d vector map <%s> not found"
-msgstr "���"
+msgstr ""
 
 #: ../raster3d/r3.out.vtk/main.c:171
 msgid "Please provide three g3d vector maps [x,y,z]"
@@ -419,9 +420,8 @@ msgid "Open rgb 3d raster map %s"
 msgstr "出力するファイル"
 
 #: ../raster3d/r3.out.vtk/main.c:211
-#, fuzzy
 msgid "No RGB Data will be created."
-msgstr "�����"
+msgstr ""
 
 #: ../raster3d/r3.out.vtk/main.c:254
 #, fuzzy
@@ -429,9 +429,8 @@ msgid "Error closing g3d rgb map."
 msgstr "出力するファイル"
 
 #: ../raster3d/r3.out.vtk/main.c:295
-#, fuzzy
 msgid "No vector data will be created."
-msgstr "���"
+msgstr ""
 
 #: ../raster3d/r3.out.vtk/main.c:339
 #, fuzzy
@@ -792,9 +791,9 @@ msgid "The number of subranges has to be equal or greater than 1"
 msgstr "サブレンジの数は １ 以上出なければならない"
 
 #: ../raster3d/r3.stats/main.c:611 ../raster/r.univar2/r3.univar_main.c:104
-#, fuzzy, c-format
+#, c-format
 msgid "Requested g3d map <%s> not found"
-msgstr "���."
+msgstr ""
 
 #: ../raster3d/r3.stats/main.c:664
 msgid "Sort non-null values"
@@ -1587,32 +1586,29 @@ msgid "cols=%d"
 msgstr "カラム=%d"
 
 #: ../raster/r.out.mat/main.c:272
-#, fuzzy
 msgid "Exporting raster as integer values"
-msgstr "入力するファイル"
+msgstr "ラスターを整数値としてエクスポートします"
 
 #: ../raster/r.out.mat/main.c:277
 msgid "Exporting raster as floating point values"
-msgstr ""
+msgstr "ラスターを浮動小数点値でエクスポートします。"
 
 #: ../raster/r.out.mat/main.c:282
 msgid "Exporting raster as double FP values"
-msgstr ""
+msgstr "ラスターを倍精度浮動小数点値でしてエクスポートします"
 
 #: ../raster/r.out.mat/main.c:325
-#, fuzzy
 msgid "Reading in map ... "
-msgstr "入力するファイル"
+msgstr "地図を読込 ... "
 
 #: ../raster/r.out.mat/main.c:339
-#, fuzzy
 msgid "Writing out map..."
-msgstr "入力するファイル"
+msgstr "地図を書出..."
 
 #: ../raster/r.out.mat/main.c:399
-#, fuzzy, c-format
+#, c-format
 msgid "%ld bytes written to '%s'"
-msgstr "���"
+msgstr "%ld バイトを '%s' に書出しました "
 
 #: ../raster/r.in.poly/main.c:29 ../raster/r.in.gdal/main.c:79
 #: ../raster/r.in.bin/main.c:122 ../raster/r.external/main.c:505
@@ -1622,14 +1618,12 @@ msgid "raster, import"
 msgstr "入力するファイル"
 
 #: ../raster/r.in.poly/main.c:31
-#, fuzzy
 msgid "Creates raster maps from ASCII polygon/line/point data files."
-msgstr "ラスターマップの投影変換を行います"
+msgstr "テキストデータ（ポリゴン・ライン・ポイント）からラスターマップを生成"
 
 #: ../raster/r.in.poly/main.c:35
-#, fuzzy
 msgid "Name of input file; or \"-\" to read from stdin"
-msgstr "入力するファイル"
+msgstr "入力するファイル名;（\"-\" で標準入力から読込）"
 
 #: ../raster/r.in.poly/main.c:44 ../raster/r.in.gdal/main.c:114
 #: ../raster/r.in.bin/main.c:166 ../raster/r.external/main.c:536
@@ -1639,63 +1633,53 @@ msgid "Title for resultant raster map"
 msgstr "タイトル"
 
 #: ../raster/r.in.poly/main.c:50 ../vector/v.to.rast/main.c:85
-#, fuzzy
 msgid "Number of rows to hold in memory"
-msgstr "メモリに残す行"
+msgstr "メモリに残す行数"
 
 #: ../raster/r.in.poly/main.c:59
-#, fuzzy
 msgid "Minimum number of rows to hold in memory is 1"
-msgstr "メモリに残す行"
+msgstr "メモリに残す最小行数は１"
 
 #: ../raster/r.in.poly/poly2rast.c:36
-#, fuzzy, c-format
+#, c-format
 msgid "Can't create raster map <%s>"
-msgstr "出力するファイル"
+msgstr "ラスター地図<%s>が作成できません"
 
 #: ../raster/r.in.poly/poly2rast.c:51 ../raster/r.in.xyz/main.c:528
 #, c-format
 msgid "Pass #%d (of %d) ..."
-msgstr ""
+msgstr "#%d (%d中) 経過... "
 
 #: ../raster/r.in.poly/poly2rast.c:73 ../raster/r.carve/raster.c:32
 #: ../vector/v.to.rast/vect2rast.c:182
-#, fuzzy
 msgid "Writing raster map..."
-msgstr "入力するファイル"
+msgstr "ラスターマップを書出.."
 
 #: ../raster/r.contour/main.c:91
-#, fuzzy
 msgid "raster, DEM, contours, vector"
-msgstr "出力するファイル"
+msgstr "ラスター、DEM、コンター、ベクトル"
 
 #: ../raster/r.contour/main.c:92
-#, fuzzy
 msgid "Produces a vector map of specified contours from a raster map."
-msgstr "ラスターマップから指定された高さのコンターマップを作成します"
+msgstr "ラスターマップから特定コンターのベクトルマップを作成する"
 
 #: ../raster/r.contour/main.c:104
-#, fuzzy
 msgid "List of contour levels"
-msgstr "指定する高さ"
+msgstr "コンターレベルのリスト"
 
 #: ../raster/r.contour/main.c:110
-#, fuzzy
 msgid "Minimum contour level"
-msgstr "最小値"
+msgstr "最小コンターレベル"
 
 #: ../raster/r.contour/main.c:116
-#, fuzzy
 msgid "Maximum contour level"
-msgstr "最大値"
+msgstr "最大コンターレベル"
 
 #: ../raster/r.contour/main.c:122
-#, fuzzy
 msgid "Increment between contour levels"
 msgstr "コンター間隔"
 
 #: ../raster/r.contour/main.c:130
-#, fuzzy
 msgid "Minimum number of points for a contour line (0 -> no limit)"
 msgstr "コンターの作成に用いるデータ点の最少数(0 -> 制限なし)"
 
@@ -1712,7 +1696,6 @@ msgid "Run quietly"
 msgstr "説明なし"
 
 #: ../raster/r.contour/main.c:138
-#, fuzzy
 msgid "Suppress single crossing error messages"
 msgstr "単一交差に関するエラーメッセージを出力しない"
 
@@ -1724,13 +1707,13 @@ msgstr ""
 
 #: ../raster/r.contour/main.c:152
 msgid "Neither \"levels\" nor \"step\" parameter specified."
-msgstr ""
+msgstr "\"levels\" または \"step\" のパラメータが指定されていません。 "
 
 #: ../raster/r.contour/main.c:165 ../raster/r.stats/main.c:315
 #: ../raster/r.recode/read_rules.c:19
-#, fuzzy, c-format
+#, c-format
 msgid "Unable to read fp range of raster map <%s>"
-msgstr "出力するファイル"
+msgstr "ラスターマップ <%s> から浮動小数点レンジが読み取れません"
 
 #: ../raster/r.contour/main.c:185 ../raster/r.random/random.c:74
 #: ../raster/r.to.vect/main.c:156 ../display/d.vect.chart/plot.c:44
@@ -1805,59 +1788,53 @@ msgstr "出力するファイル"
 #: ../raster/r.contour/main.c:224 ../vector/v.overlay/line_area.c:217
 #: ../vector/v.overlay/area_area.c:238 ../vector/v.convert/att.c:110
 #: ../vector/v.to.points/main.c:63
-#, fuzzy, c-format
+#, c-format
 msgid "Unable to insert new record: '%s'"
-msgstr "出力するファイル"
+msgstr "新しいレコード '%s' を挿入できません"
 
 #: ../raster/r.contour/main.c:244 ../vector/v.generalize/displacement.c:78
-#, fuzzy
 msgid "Reading data..."
-msgstr "入力するファイル"
+msgstr "データを読取中..."
 
 #: ../raster/r.contour/main.c:270
-#, fuzzy, c-format
+#, c-format
 msgid "Range of data: min=%f, max=%f"
-msgstr "入力するファイル"
+msgstr "データのレンジ:  最小=%f, 最大=%f"
 
 #: ../raster/r.contour/main.c:272
-#, fuzzy
 msgid "Range of data: empty"
-msgstr "入力するファイル"
+msgstr "データのレンジ: 空"
 
 #: ../raster/r.contour/main.c:299 ../raster/r.contour/main.c:303
-#, fuzzy
 msgid "This step value is not allowed"
-msgstr "色に用いるラスターマップ"
+msgstr "このステップ値は許可されていません"
 
 #: ../raster/r.contour/main.c:327
 #, c-format
 msgid "Range of levels: min = %f, max = %f"
-msgstr ""
+msgstr "レベルのレンジ: 最小 = %f, 最大 = %f "
 
 #: ../raster/r.contour/main.c:356
-#, fuzzy
 msgid "Displacing data..."
-msgstr "入力するファイル"
+msgstr "データを移動中..."
 
 #: ../raster/r.contour/cont.c:81
-#, fuzzy, c-format
+#, c-format
 msgid "Writing vector contours (total levels %d)..."
-msgstr "入力するファイル"
+msgstr "ベクトルコンターを書出中 (トータルレベル %d)"
 
 #: ../raster/r.contour/cont.c:211
-#, fuzzy, c-format
+#, c-format
 msgid "%d crossings founds"
-msgstr "対象マップ"
+msgstr "%d 交点が見つかりました"
 
 #: ../raster/r.contour/cont.c:262
-#, fuzzy
 msgid "Illegal edge number"
-msgstr "出力するファイル"
+msgstr "不正なエッジ番号"
 
 #: ../raster/r.contour/cont.c:370
-#, fuzzy
 msgid "Edge number out of range"
-msgstr "行数"
+msgstr "エッジ番号が範囲外です"
 
 #: ../raster/r.out.pov/main.c:123
 #, fuzzy
@@ -1865,9 +1842,8 @@ msgid "Converts a raster map layer into a height-field file for POVRAY."
 msgstr "ラスターマップをASCII形式のファイルとしてエクスポートします"
 
 #: ../raster/r.out.pov/main.c:131 ../raster/r.out.ascii/main.c:70
-#, fuzzy
 msgid "Name of an existing raster map"
-msgstr "入力するファイル"
+msgstr "既存のラスターマップ名"
 
 #: ../raster/r.out.pov/main.c:138
 #, fuzzy
@@ -1875,42 +1851,39 @@ msgid "Name of output povray file (TGA height field file)"
 msgstr "出力するファイル"
 
 #: ../raster/r.out.pov/main.c:145
+#, fuzzy
 msgid "Height-field type (0=actual heights 1=normalized)"
-msgstr ""
+msgstr "Height-領域, フィールド 型 (0=actual heights 1=normalized) "
 
 #: ../raster/r.out.pov/main.c:151
 msgid "Elevation bias"
-msgstr ""
+msgstr "標高 bias "
 
 #: ../raster/r.out.pov/main.c:157 ../raster/r.param.scale/interface.c:114
-#, fuzzy
 msgid "Vertical scaling factor"
-msgstr "サイズ"
+msgstr "垂直スケールファクター"
 
 #: ../raster/r.out.pov/main.c:183
-#, fuzzy, c-format
+#, c-format
 msgid "Invalid output filename <%s>"
-msgstr "出力するファイル"
+msgstr "不正な出力ファイル名 <%s>"
 
 #: ../raster/r.out.pov/main.c:193
 #, c-format
 msgid "Raster map is too big! Exceeds %d columns or %d rows"
-msgstr ""
+msgstr "ラスターマップが大きすぎます。 （最大 %d 列 %d 行まで）"
 
 #: ../raster/r.out.pov/main.c:214
-#, fuzzy
 msgid "Negative elevation values in input"
-msgstr "入力するファイル"
+msgstr "入力した高度に負の値があります"
 
 #: ../raster/r.basins.fill/main.c:55
-#, fuzzy
 msgid "Generates a raster map layer showing watershed subbasins."
 msgstr "分水域を示すラスターマップを作成します"
 
 #: ../raster/r.basins.fill/main.c:61
-#, fuzzy
 msgid "Number of passes through the dataset"
-msgstr "データセットの数"
+msgstr "データセット中のパスの数"
 
 #: ../raster/r.basins.fill/main.c:68
 #, fuzzy
@@ -1934,18 +1907,17 @@ msgstr "���."
 
 #: ../raster/r.basins.fill/main.c:142
 msgid "Forward sweep complete"
-msgstr ""
+msgstr "順走査が完了しました"
 
 #: ../raster/r.basins.fill/main.c:159
-#, fuzzy
 msgid "Reverse sweep complete"
-msgstr "ショートヘルプを表示"
+msgstr "逆走査が完了しました"
 
 #: ../raster/r.basins.fill/main.c:166 ../raster/r.resample/main.c:152
 #: ../raster/r.cross/main.c:194
-#, fuzzy, c-format
+#, c-format
 msgid "Creating support files for <%s>..."
-msgstr "色に用いるラスターマップ"
+msgstr "<%s> 用のサポートファイルを作成します..."
 
 #: ../raster/r.describe/main.c:61
 #, fuzzy
@@ -1958,34 +1930,28 @@ msgid "String representing no data cell value"
 msgstr "データのないセルに代入する記号"
 
 #: ../raster/r.describe/main.c:80
-#, fuzzy
 msgid "Number of quantization steps"
 msgstr "分割の幅"
 
 #: ../raster/r.describe/main.c:86
-#, fuzzy
 msgid "Print the output one value per line"
 msgstr "１項目ごとに改行"
 
 #: ../raster/r.describe/main.c:90
-#, fuzzy
 msgid "Only print the range of the data"
 msgstr "最大値と最小値のみ出力"
 
 #: ../raster/r.describe/main.c:94 ../raster/r.stats/main.c:187
-#, fuzzy
 msgid "Suppress reporting of any NULLs"
 msgstr "Null値の情報を除く"
 
 #: ../raster/r.describe/main.c:98
-#, fuzzy
 msgid "Use the current region"
 msgstr "現在の地域設定を使用"
 
 #: ../raster/r.describe/main.c:102
-#, fuzzy
 msgid "Read fp map as integer"
-msgstr "実数を整数に変換して使用"
+msgstr "実数マップを整数に変換して読込"
 
 #: ../raster/r.describe/main.c:115 ../raster/r.out.png/r.out.png.c:146
 #: ../raster/r.rescale.eq/main.c:107 ../raster/r.compress/main.c:90
@@ -2006,54 +1972,64 @@ msgid ""
 msgstr ""
 
 #: ../raster/r.describe/main.c:126
-#, c-format
+#, fuzzy, c-format
 msgid "%s = %s -- must be greater than zero"
-msgstr ""
+msgstr "%s = %s -- must be greater than zero "
 
 #: ../raster/r.describe/main.c:137
-#, fuzzy, c-format
+#, c-format
 msgid "%s: [%s] not found"
-msgstr "入力するファイル"
+msgstr "%s: [%s] が見つかりません"
 
 #: ../raster/r.le/r.le.trace/main.c:59
+#, fuzzy
 msgid ""
 "Displays the boundary of each r.le patch and shows how the boundary is "
 "traced, displays the attribute, size, perimeter and shape indices for each "
 "patch and saves the data in an output file."
 msgstr ""
+"Displays the 境界 of each r.le patch and shows how the 境界 is traced, "
+"displays the attribute, size, perimeter and shape indices for each patch and "
+"saves the データ in an output file. "
 
 #: ../raster/r.le/r.le.setup/sample.c:1050
-#, fuzzy
 msgid "Cannot read vector"
-msgstr "���"
+msgstr "ベクトルを読取りできません "
 
 #: ../raster/r.le/r.le.setup/main.c:63
+#, fuzzy
 msgid ""
 "Interactive tool used to setup the sampling and analysis framework that will "
 "be used by the other r.le programs."
 msgstr ""
+"Interactive tool used to setup the サンプリング and analysis framework that "
+"will be used by the other r.le programs. "
 
 #: ../raster/r.le/r.le.setup/main.c:67
-#, fuzzy
 msgid "Raster map to use to setup sampling"
-msgstr "対象マップ"
+msgstr "サンプリング設定に使用するラスターマップ"
 
 #: ../raster/r.le/r.le.setup/main.c:71
-#, fuzzy
 msgid "Vector map to overlay"
-msgstr "入力するファイル"
+msgstr "オーバーレイするベクトルマップ"
 
 #: ../raster/r.le/r.le.patch/main.c:49
+#, fuzzy
 msgid ""
 "Calculates attribute, patch size, core (interior) size, shape, fractal "
 "dimension, and perimeter measures for sets of patches in a landscape."
 msgstr ""
+"Calculates attribute, patch size, 核 (interior) size, shape, フラクタル "
+"dimension, and perimeter measures for sets of patches in a landscape. "
 
 #: ../raster/r.le/r.le.pixel/main.c:47
+#, fuzzy
 msgid ""
 "Contains a set of measures for attributes, diversity, texture, "
 "juxtaposition, and edge."
 msgstr ""
+"Contains a 集合 of measures for attributes, diversity, texture, "
+"juxtaposition, and edge. "
 
 #: ../raster/r.mfilter.fp/main.c:58 ../raster/r.mfilter/main.c:51
 #, fuzzy
@@ -2061,24 +2037,20 @@ msgid "raster, map algebra"
 msgstr "入力するファイル"
 
 #: ../raster/r.mfilter.fp/main.c:59 ../raster/r.mfilter/main.c:52
-#, fuzzy
 msgid "Raster map matrix filter."
 msgstr "フィルタをかけたラスターマップを作成します"
 
 #: ../raster/r.mfilter.fp/main.c:70 ../raster/r.mfilter/main.c:63
-#, fuzzy
 msgid "Name of filter file"
-msgstr "フィルタ"
+msgstr "フィルタファイル名"
 
 #: ../raster/r.mfilter.fp/main.c:78 ../raster/r.mfilter/main.c:71
-#, fuzzy
 msgid "Number of times to repeat the filter"
 msgstr "フィルタをかける回数"
 
 #: ../raster/r.mfilter.fp/main.c:84 ../raster/r.mfilter/main.c:77
-#, fuzzy
 msgid "Output raster map title"
-msgstr "タイトル"
+msgstr "出力ラスターマップ・タイトル"
 
 #: ../raster/r.mfilter.fp/main.c:91 ../raster/r.rescale.eq/main.c:98
 #: ../raster/r.slope.aspect/main.c:287 ../raster/r.mfilter/main.c:84
@@ -2090,36 +2062,35 @@ msgstr "タイトル"
 #: ../doc/raster/r.example/main.c:96
 #: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:290
 #: ../imagery/i.cluster/main.c:163 ../diff.c:101
-#, fuzzy
 msgid "Quiet"
 msgstr "説明なし"
 
 #: ../raster/r.mfilter.fp/main.c:101
-#, fuzzy
 msgid "Apply filter only to null data values"
 msgstr "値0にのみフィルタを適用"
 
 #: ../raster/r.mfilter.fp/main.c:109 ../raster/r.mfilter/main.c:102
 #: ../raster/r.out.ppm/main.c:81 ../raster/r.kappa/main.c:133
+#, fuzzy
 msgid ""
 "The '-q' flag is superseded and will be removed in future. Please use '--"
 "quiet' instead"
 msgstr ""
+"The '-q' flag is superseded and will be removed in future. Please use '--"
+"quiet' instead "
 
 #: ../raster/r.mfilter.fp/main.c:138 ../raster/r.mfilter/main.c:131
-#, fuzzy
 msgid "Raster map too small for the size of the filter"
-msgstr "対象マップ"
+msgstr "ラスターマップがフィルターサイズより小さすぎます"
 
 #: ../raster/r.mfilter.fp/getfilt.c:27 ../raster/r.mfilter/getfilt.c:26
-#, fuzzy, c-format
+#, c-format
 msgid "Cannot open filter file '%s'"
-msgstr "出力するファイル"
+msgstr "フィルターファイル '%s' が開けません"
 
 #: ../raster/r.mfilter.fp/getfilt.c:47 ../raster/r.mfilter/getfilt.c:46
-#, fuzzy
 msgid "Illegal filter matrix size specified"
-msgstr "入力するファイル"
+msgstr "不正なフィルターマトリックスサイズです"
 
 #: ../raster/r.mfilter.fp/getfilt.c:50 ../raster/r.mfilter/getfilt.c:49
 #, fuzzy
@@ -2127,33 +2098,31 @@ msgid "Even filter matrix size specified"
 msgstr "入力するファイル"
 
 #: ../raster/r.mfilter.fp/getfilt.c:72 ../raster/r.mfilter/getfilt.c:71
-#, fuzzy
 msgid "Illegal filter matrix"
-msgstr "出力するファイル"
+msgstr "不正なフィルターマトリックス"
 
 #: ../raster/r.mfilter.fp/getfilt.c:80 ../raster/r.mfilter.fp/getfilt.c:107
 #: ../raster/r.mfilter.fp/getfilt.c:124 ../raster/r.mfilter/getfilt.c:79
 #: ../raster/r.mfilter/getfilt.c:105 ../raster/r.mfilter/getfilt.c:122
-#, fuzzy
 msgid "Filter file format error"
-msgstr "入力するファイル"
+msgstr "フィルターファイルのフォーマットが不正です"
 
 #: ../raster/r.mfilter.fp/getfilt.c:83 ../raster/r.mfilter/getfilt.c:82
 msgid "Duplicate filter divisor specified"
 msgstr ""
 
 #: ../raster/r.mfilter.fp/getfilt.c:101 ../raster/r.mfilter/getfilt.c:99
+#, fuzzy
 msgid "Illegal divisor matrix"
-msgstr ""
+msgstr "Illegal divisor 行列 "
 
 #: ../raster/r.mfilter.fp/getfilt.c:110 ../raster/r.mfilter/getfilt.c:108
 msgid "Duplicate filter type specified"
-msgstr ""
+msgstr "重複するフィルタータイプが指定されました"
 
 #: ../raster/r.mfilter.fp/getfilt.c:117 ../raster/r.mfilter/getfilt.c:115
-#, fuzzy
 msgid "Illegal filter type specified"
-msgstr "入力するファイル"
+msgstr "不正なフィルタータイプが指定されました"
 
 #: ../raster/r.mfilter.fp/getfilt.c:127 ../raster/r.mfilter/getfilt.c:125
 msgid "Duplicate filter start specified"
@@ -2165,51 +2134,44 @@ msgid "Filter start %s ignored, using UL"
 msgstr ""
 
 #: ../raster/r.mfilter.fp/getfilt.c:157 ../raster/r.mfilter/getfilt.c:155
-#, fuzzy
 msgid "Illegal filter file format"
-msgstr "入力するファイル"
+msgstr "フィルターファイルのフォーマット不正"
 
 #: ../raster/r.mfilter.fp/getrow.c:12 ../raster/r.mfilter/getrow.c:12
-#, fuzzy, c-format
+#, c-format
 msgid "Cannot read raster row %d"
-msgstr "出力するファイル"
+msgstr "ラスターの %d 行目が読込みできません"
 
 #: ../raster/r.mfilter.fp/getrow.c:23 ../raster/r.mfilter/getrow.c:23
-#, fuzzy
 msgid "Error reading temporary file"
-msgstr "出力するファイル"
+msgstr "一時ファイルの読取エラー"
 
 #: ../raster/r.mfilter.fp/perform.c:38 ../raster/r.mfilter/perform.c:38
 #: ../raster/r.topidx/file_io.c:16 ../raster/r.param.scale/open_files.c:26
 #: ../imagery/i.cca/main.c:218
-#, fuzzy, c-format
+#, c-format
 msgid "Cannot open raster map <%s>"
-msgstr ""
-"#-#-#-#-#  grassmods_ja.po (grassmods_ja)  #-#-#-#-#\n"
-"#-#-#-#-#  grassmods_ja.po (grassmods_ja)  #-#-#-#-#\n"
-"出力するファイル"
+msgstr "ラスターマップ <%s> が開けません"
 
 #: ../raster/r.mfilter.fp/perform.c:43 ../raster/r.mfilter.fp/perform.c:54
 #: ../raster/r.mfilter/perform.c:43 ../raster/r.mfilter/perform.c:54
-#, fuzzy
 msgid "Unable to create temporary file"
-msgstr "シグネチャファイル"
+msgstr "一時ファイルが作成できません"
 
 #: ../raster/r.mfilter.fp/perform.c:84 ../raster/r.mfilter/perform.c:84
 #: ../raster/r.reclass/reclass.c:235 ../raster/r.topidx/file_io.c:88
 #: ../raster/r.param.scale/open_files.c:32
 #: ../raster/r.param.scale/open_files.c:36 ../imagery/i.cca/main.c:224
-#, fuzzy, c-format
+#, c-format
 msgid "Cannot create raster map <%s>"
-msgstr "出力するファイル"
+msgstr "ラスターマップ <%s> が作成出きません"
 
 #: ../raster/r.mfilter.fp/perform.c:87 ../raster/r.mfilter/perform.c:87
-#, fuzzy, c-format
+#, c-format
 msgid "Writing raster map <%s>"
-msgstr "入力するファイル"
+msgstr "ラスターマップ <%s> を書出します。"
 
 #: ../raster/r.out.ascii/main.c:61
-#, fuzzy
 msgid "Converts a raster map layer into an ASCII text file."
 msgstr "ラスターマップをASCII形式のファイルとしてエクスポートします"
 
@@ -2226,49 +2188,47 @@ msgid ""
 msgstr "読み込む桁数"
 
 #: ../raster/r.out.ascii/main.c:100
-#, fuzzy
 msgid "String to represent null cell (GRASS grid only)"
 msgstr "データのないセルに代入する記号"
 
 #: ../raster/r.out.ascii/main.c:108
-#, fuzzy
 msgid "Write SURFER (Golden Software) ASCII grid"
 msgstr "SURFER(Golden Software)用グリッドで出力"
 
 #: ../raster/r.out.ascii/main.c:112
-#, fuzzy
 msgid "Write MODFLOW (USGS) ASCII array"
 msgstr "MODFLOW(USGS)型の配列で出力"
 
 #: ../raster/r.out.ascii/main.c:116
-#, fuzzy
 msgid "Force output of integer values"
-msgstr "カテゴリー値を整数で出力"
+msgstr "強制的に整数で出力"
 
 #: ../raster/r.out.ascii/main.c:123
+#, fuzzy
 msgid "Failed to interpret dp as an integer"
-msgstr ""
+msgstr "Failed to interpret dp as an 整数 "
 
 #: ../raster/r.out.ascii/main.c:131
+#, fuzzy
 msgid "Failed to interpret width as an integer"
-msgstr ""
+msgstr "Failed to interpret width as an 整数 "
 
 #: ../raster/r.out.ascii/main.c:137
 msgid "Both -s and -h doesn't make sense"
-msgstr ""
+msgstr "-s と -h は同時に使用できません"
 
 #: ../raster/r.out.ascii/main.c:140
 msgid "Use -M or -s, not both"
-msgstr ""
+msgstr "-M または -s を使用してください。（同時は不可）"
 
 #: ../raster/r.out.ascii/main.c:172 ../raster/r.out.ppm3/main.c:149
 #: ../raster/r.profile/main.c:157 ../raster/r.out.arc/main.c:142
 #: ../raster/r.cats/main.c:177 ../general/g.pnmcomp/main.c:241
 #: ../general/g.pnmcomp/main.c:258 ../display/d.nviz/main.c:203
 #: ../vector/v.out.vtk/main.c:176 ../vector/v.out.ascii/out.c:161
-#, fuzzy, c-format
+#, c-format
 msgid "Unable to open file <%s>"
-msgstr "入力するファイル"
+msgstr "ファイル <%s> が開けません"
 
 #: ../raster/r.out.ascii/main.c:181
 #, fuzzy, c-format
@@ -2276,16 +2236,20 @@ msgid "Unable to read fp range for <%s>"
 msgstr "出力するファイル"
 
 #: ../raster/r.out.ascii/main.c:197
-#, fuzzy, c-format
+#, c-format
 msgid "Read failed at row %d"
-msgstr "���%s ..."
+msgstr "行 %d で読取エラー"
 
 #: ../raster/r.surf.gauss/main.c:48
+#, fuzzy
 msgid ""
 "GRASS module to produce a raster map layer of gaussian deviates whose mean "
 "and standard deviation can be expressed by the user. It uses a gaussian "
 "random number generator."
 msgstr ""
+"GRASS モジュール to produce a ラスタ地図 レイヤー, 層 of gaussian deviates "
+"whose mean and 標準偏差 can be expressed by the user. It uses a gaussian "
+"random number generator. "
 
 #: ../raster/r.surf.gauss/main.c:55
 #, fuzzy
@@ -2298,23 +2262,22 @@ msgstr ""
 
 #: ../raster/r.surf.gauss/main.c:59
 msgid "Distribution mean"
-msgstr ""
+msgstr "分布平均"
 
 #: ../raster/r.surf.gauss/main.c:65
-#, fuzzy
 msgid "Standard deviation"
 msgstr "標準偏差"
 
 #: ../raster/r.out.png/r.out.png.c:179 ../raster/r.out.ppm/main.c:110
 #: ../raster/r.out.ppm3/main.c:109
-#, fuzzy, c-format
+#, c-format
 msgid "rows = %d, cols = %d"
-msgstr "���"
+msgstr "行 = %d, 列 = %d "
 
 #: ../raster/r.out.png/r.out.png.c:253
-#, fuzzy, c-format
+#, c-format
 msgid "Converting %s..."
-msgstr "���%s ..."
+msgstr "%s を変換中..."
 
 #: ../raster/r.walk/main.c:179
 #, fuzzy
@@ -2330,14 +2293,12 @@ msgid "Name of elevation input raster map"
 msgstr "高度入力ラスターマップ名"
 
 #: ../raster/r.walk/main.c:199
-#, fuzzy
 msgid "Name of input raster map containing friction costs"
-msgstr "入力するファイル"
+msgstr "フリクションコストを含む入力ラスターマップ名"
 
 #: ../raster/r.walk/main.c:206 ../raster/r.water.outlet/main.c:62
-#, fuzzy
 msgid "Name of raster map to contain results"
-msgstr "出力するファイル"
+msgstr "結果を出力するラスターマップ名"
 
 #: ../raster/r.walk/main.c:214 ../raster/r.cost/main.c:147
 #, fuzzy
@@ -2347,38 +2308,33 @@ msgstr "入力するファイル"
 #: ../raster/r.walk/main.c:221
 #, fuzzy
 msgid "Starting points vector map"
-msgstr "���"
+msgstr "Starting points ベクトル地図 "
 
 #: ../raster/r.walk/main.c:228
 #, fuzzy
 msgid "Stop points vector map"
-msgstr "���"
+msgstr "停止 points ベクトル地図 "
 
 #: ../raster/r.walk/main.c:236
-#, fuzzy
 msgid "The map E and N grid coordinates of a starting point (E,N)"
 msgstr "始点の座標値"
 
 #: ../raster/r.walk/main.c:244
-#, fuzzy
 msgid "The map E and N grid coordinates of a stopping point (E,N)"
 msgstr "終点の座標値"
 
 #: ../raster/r.walk/main.c:252
-#, fuzzy
 msgid "An optional maximum cumulative cost"
-msgstr "最大コスト"
+msgstr "オプショナル最大累積コスト"
 
 #: ../raster/r.walk/main.c:260 ../raster/r.cost/main.c:201
-#, fuzzy
 msgid "Cost assigned to null cells. By default, null cells are excluded"
-msgstr "NULL値に代入する値"
+msgstr "NULL値に代入する値（デフォルトではNULLセルは除外）"
 
 #: ../raster/r.walk/main.c:268 ../raster/r.cost/main.c:210
 #: ../raster/r.in.xyz/main.c:235
-#, fuzzy
 msgid "Percent of map to keep in memory"
-msgstr "メモリに残す行"
+msgstr "メモリに残す地図の割合（％）"
 
 #: ../raster/r.walk/main.c:277
 #, fuzzy
@@ -2386,12 +2342,14 @@ msgid "Number of the segment to create (segment library)"
 msgstr "フィルタをかける回数"
 
 #: ../raster/r.walk/main.c:287
+#, fuzzy
 msgid "Coefficients for walking energy formula parameters a,b,c,d"
-msgstr ""
+msgstr "Coefficients for walking エネルギー 公式 parameters a,b,c,d "
 
 #: ../raster/r.walk/main.c:296
+#, fuzzy
 msgid "Lambda coefficients for combining walking energy and friction cost"
-msgstr ""
+msgstr "Lambda coefficients for combining walking エネルギー and 摩擦 cost "
 
 #: ../raster/r.walk/main.c:305
 #, fuzzy
@@ -2404,157 +2362,156 @@ msgid "Use the 'Knight's move'; slower, but more accurate"
 msgstr "精度を上げる"
 
 #: ../raster/r.walk/main.c:314
-#, fuzzy
 msgid "Keep null values in output map"
 msgstr "NULL値も出力"
 
 #: ../raster/r.walk/main.c:318 ../raster/r.cost/main.c:223
-#, fuzzy
 msgid "Start with values in raster map"
-msgstr "出力するファイル"
+msgstr "ラスターマップの値で開始する"
 
 #: ../raster/r.walk/main.c:339 ../raster/r.cost/main.c:256
 #: ../raster/wildfire/r.spread/main.c:338 ../raster/r.water.outlet/main.c:85
-#, fuzzy
 msgid "Unable to read current window parameters"
-msgstr "現在の設定を表示"
+msgstr "現在のウィンドウのパラメータが読み取れません"
 
 #: ../raster/r.walk/main.c:368 ../raster/r.cost/main.c:302
-#, c-format
+#, fuzzy, c-format
 msgid "Inappropriate maximum cost: %d"
-msgstr ""
+msgstr "Inappropriate maximum cost: %d "
 
 #: ../raster/r.walk/main.c:372 ../raster/r.cost/main.c:306
 #, c-format
 msgid "Inappropriate percent memory: %d"
-msgstr ""
+msgstr "不正なメモリーのパーセント: %d "
 
 #: ../raster/r.walk/main.c:377
 #, c-format
 msgid "Missing required value: got %d instead of 4"
-msgstr ""
+msgstr "要求値が見つかりません。4の代わりに %d を取得しました。 "
 
 #: ../raster/r.walk/main.c:381
 #, c-format
 msgid "Walking costs are a=%lf b=%lf c=%lf d=%lf"
-msgstr ""
+msgstr "ウォーキングコスト a=%lf b=%lf c=%lf d=%lf "
 
 #: ../raster/r.walk/main.c:386 ../raster/r.walk/main.c:394
 #: ../raster/r.walk/main.c:401
 #, c-format
 msgid "Missing required value: %d"
-msgstr ""
+msgstr "要求された値: %d が見つかりません"
 
 #: ../raster/r.walk/main.c:389
-#, c-format
+#, fuzzy, c-format
 msgid "Lambda is %lf"
-msgstr ""
+msgstr "Lambda is %lf "
 
 #: ../raster/r.walk/main.c:397
-#, fuzzy, c-format
+#, c-format
 msgid "Slope_factor is %lf"
-msgstr "傾斜値またはdx値を出力するファイル"
+msgstr "傾斜ファクターは %f です"
 
 #: ../raster/r.walk/main.c:404
-#, c-format
+#, fuzzy, c-format
 msgid "Nseg is %d"
-msgstr ""
+msgstr "Nseg is %d "
 
 #: ../raster/r.walk/main.c:410
 msgid "Null cells excluded from cost evaluation."
-msgstr ""
+msgstr "NULL値セルはコスト評価から除外されました"
 
 #: ../raster/r.walk/main.c:414
 msgid "Input null cell will be retained into output map"
-msgstr ""
+msgstr "入力されたNULL値セルは、そのまま出力マップに出力されます"
 
 #: ../raster/r.walk/main.c:426
-#, fuzzy, c-format
+#, c-format
 msgid "Unable to find starting vector <%s> "
-msgstr "��� "
+msgstr " 開始ベクトル <%s> が見つかりません。"
 
 #: ../raster/r.walk/main.c:473
-#, fuzzy, c-format
+#, c-format
 msgid "Unable to find stop vector <%s>"
-msgstr "���"
+msgstr " 終了ベクトル <%s> が見つかりません。"
 
 #: ../raster/r.walk/main.c:512
-#, fuzzy
 msgid "Warning: assigning negative cost to null cell. Null cells excluded."
-msgstr "NULL値に代入する値"
+msgstr "警告：NULL値セルに負の値が割当られています。NULL値セルは除外されます。"
 
 #: ../raster/r.walk/main.c:584 ../raster/r.walk/main.c:586
-#, fuzzy, c-format
+#, c-format
 msgid "Unable to read %s"
-msgstr "出力するファイル"
+msgstr "%s を読み込めません"
 
 #: ../raster/r.walk/main.c:591
 msgid "Map with different projection"
-msgstr ""
+msgstr "異なる投影での地図"
 
 #: ../raster/r.walk/main.c:603
 msgid "DTM_Source map is: Integer cell type"
-msgstr ""
+msgstr "DTMソースマップは整数セル型です "
 
 #: ../raster/r.walk/main.c:606
 msgid "DTM_Source map is: Floating point (float) cell type"
-msgstr ""
+msgstr "DTMソースマップは浮動小数点型です "
 
 #: ../raster/r.walk/main.c:609
 msgid "DTM_Source map is: Floating point (double) cell type"
-msgstr ""
+msgstr "DTMソースマップは倍精度浮動小数点型です "
 
 #: ../raster/r.walk/main.c:612 ../raster/r.walk/main.c:627
 #: ../raster/r.walk/main.c:664
-#, fuzzy, c-format
+#, c-format
 msgid " %d rows, %d cols"
-msgstr "���"
+msgstr " %d 行, %d 列 "
 
 #: ../raster/r.walk/main.c:618
+#, fuzzy
 msgid "COST_Source map is: Integer cell type"
-msgstr ""
+msgstr "COST_ソースコード, 情報源 地図 is: 整数 セル 型 "
 
 #: ../raster/r.walk/main.c:621
+#, fuzzy
 msgid "COST_Source map is: Floating point (float) cell type"
-msgstr ""
+msgstr "COST_ソースコード, 情報源 地図 is: 浮点 (float) セル 型 "
 
 #: ../raster/r.walk/main.c:624
+#, fuzzy
 msgid "COST_Source map is: Floating point (double) cell type"
-msgstr ""
+msgstr "COST_ソースコード, 情報源 地図 is: 浮点 (double) セル 型 "
 
 #: ../raster/r.walk/main.c:655
-#, fuzzy
 msgid "Output map is: Integer cell type"
-msgstr "タイトル"
+msgstr "出力マップは整数セル型です"
 
 #: ../raster/r.walk/main.c:658
+#, fuzzy
 msgid "Output map is: Floating point (float) cell type"
-msgstr ""
+msgstr "Output 地図 is: 浮点 (float) セル 型 "
 
 #: ../raster/r.walk/main.c:661
+#, fuzzy
 msgid "Output map is: Floating point (double) cell type"
-msgstr ""
+msgstr "Output 地図 is: 浮点 (double) セル 型 "
 
 #: ../raster/r.walk/main.c:666
 #, c-format
 msgid " EW resolution %s (%lf)"
-msgstr ""
+msgstr " EW 解像度 %s (%lf) "
 
 #: ../raster/r.walk/main.c:668
 #, c-format
 msgid " NS resolution %s (%lf)"
-msgstr ""
+msgstr " NS 解像度 %s (%lf) "
 
 #: ../raster/r.walk/main.c:682 ../raster/r.cost/main.c:402
-#, fuzzy
 msgid "Creating some temporary files..."
-msgstr "色に用いるラスターマップ"
+msgstr "一時ファイルを作成中..."
 
 #: ../raster/r.walk/main.c:722 ../raster/r.walk/main.c:784
 #: ../raster/wildfire/r.spread/main.c:514 ../raster/r.sum/main.c:74
-#, fuzzy, c-format
+#, c-format
 msgid "Reading %s..."
-msgstr "���%s ..."
+msgstr "%s を読取中..."
 
 #: ../raster/r.walk/main.c:737 ../raster/r.walk/main.c:796
 #: ../raster/r.walk/main.c:940 ../raster/r.walk/main.c:1522
@@ -2584,7 +2541,7 @@ msgstr "NULL値に代入する値"
 
 #: ../raster/r.walk/main.c:852
 msgid "Initializing output "
-msgstr ""
+msgstr "出力を初期化"
 
 #: ../raster/r.walk/main.c:860 ../raster/r.walk/main.c:889
 #, fuzzy
@@ -2599,61 +2556,70 @@ msgstr "入力するファイル"
 #: ../raster/r.walk/main.c:917
 #, fuzzy, c-format
 msgid "Raster output map <%s> not found (no start_points given)"
-msgstr "���"
+msgstr "ラスタ output 地図 <%s> not found (no start_points given) "
 
 #: ../raster/r.walk/main.c:932
-#, c-format
+#, fuzzy, c-format
 msgid "Memory allocation error on reading start points from raster map %s"
 msgstr ""
+"Memory 配置, アロケーション エラー on reading start points from ラスタ地図 %"
+"s "
 
 #: ../raster/r.walk/main.c:935
-#, fuzzy, c-format
+#, c-format
 msgid "Reading %s... "
-msgstr "入力するファイル"
+msgstr "読取中 %s ..."
 
 #: ../raster/r.walk/main.c:982 ../raster/r.cost/main.c:732
+#, fuzzy
 msgid "Specified starting location outside database window"
-msgstr ""
+msgstr "Specified starting 場所, ロケーション outside データベース window "
 
 #: ../raster/r.walk/main.c:999
 msgid "Finding cost path"
-msgstr ""
+msgstr "コスト経路を探す"
 
 #: ../raster/r.walk/main.c:1479
 msgid "End of map!"
-msgstr ""
+msgstr "マップの終端です! "
 
 #: ../raster/r.walk/main.c:1483 ../raster/r.cost/main.c:1018
+#, fuzzy
 msgid "Error, ct == pres_cell"
-msgstr ""
+msgstr "Error, ct == pres_セル "
 
 #: ../raster/r.walk/main.c:1505
-#, fuzzy, c-format
+#, c-format
 msgid "Writing output raster map %s... "
-msgstr "出力するファイル"
+msgstr "ラスターマップ %s を出力しています"
 
 #: ../raster/r.walk/main.c:1509
-#, fuzzy
 msgid "Will copy input map null values into output map"
-msgstr "ルートに沿ってセル値をコピー"
+msgstr "入力マップのNULL値セルを出力マップにコピーします"
 
 #: ../raster/r.walk/main.c:1516
 msgid ""
 "Integer cell type.\n"
 "Writing..."
 msgstr ""
+"整数セルタイプ\n"
+"書込中... "
 
 #: ../raster/r.walk/main.c:1551
 msgid ""
 "Float cell type.\n"
 "Writing..."
 msgstr ""
+"浮動小数点数セルタイプ\n"
+"書込中... "
 
 #: ../raster/r.walk/main.c:1586
 msgid ""
 "Double cell type.\n"
 "Writing..."
 msgstr ""
+"倍精度浮動小数点セルタイプ\n"
+"書き込中... "
 
 #: ../raster/r.walk/main.c:1621 ../raster/r.cost/main.c:1148
 #, fuzzy, c-format
@@ -2663,26 +2629,27 @@ msgstr "入力するファイル"
 #: ../raster/r.walk/main.c:1637
 #, c-format
 msgid "Peak cost value: %f"
-msgstr ""
+msgstr "ピークコスト値: %f "
 
 #: ../raster/r.walk/main.c:1706 ../raster/r.cost/main.c:1223
-#, fuzzy, c-format
+#, c-format
 msgid "Illegal x coordinate <%s>"
-msgstr "Z座標値"
+msgstr "不正なX座標 <%s>"
 
 #: ../raster/r.walk/main.c:1708 ../raster/r.cost/main.c:1225
-#, fuzzy, c-format
+#, c-format
 msgid "Illegal y coordinate <%s>"
-msgstr "Z座標値"
+msgstr "不正なY座標 <%s>"
 
 #: ../raster/r.walk/main.c:1712 ../raster/r.cost/main.c:1229
 #, c-format
 msgid "Warning, ignoring point outside window: %.4f,%.4f"
-msgstr ""
+msgstr "警告：ウィンドウ外のポイントを無視しました: %.4f,%.4f "
 
 #: ../raster/r.sun2/main.c:230 ../raster/r.sun/main.c:176
+#, fuzzy
 msgid "Solar irradiance and irradiation model."
-msgstr ""
+msgstr "Solar ir放射, 放射輝度 and irradiation model. "
 
 #: ../raster/r.sun2/main.c:232 ../raster/r.sun/main.c:178
 #, fuzzy
@@ -2698,9 +2665,8 @@ msgstr "緯度 (dd:mm:ss{N|S})."
 
 #: ../raster/r.sun2/main.c:246 ../raster/r.sun/main.c:208
 #: ../raster/r.horizon/main.c:227
-#, fuzzy
 msgid "Name of the input elevation raster map [meters]"
-msgstr "入力するファイル"
+msgstr "入力する標高ラスターマップ名"
 
 #: ../raster/r.sun2/main.c:247 ../raster/r.sun2/main.c:256
 #: ../raster/r.sun2/main.c:265 ../raster/r.sun2/main.c:274
@@ -2744,14 +2710,14 @@ msgstr "入力するファイル"
 #: ../raster/r.horizon/main.c:269 ../raster/r.horizon/main.c:277
 #: ../raster/r.horizon/main.c:285 ../raster/r.horizon/main.c:293
 msgid "Input_options"
-msgstr ""
+msgstr "入力オプション"
 
 #: ../raster/r.sun2/main.c:255 ../raster/r.sun/main.c:217
 #, fuzzy
 msgid ""
 "Name of the input aspect map (terrain aspect or azimuth of the solar panel) "
 "[decimal degrees]"
-msgstr "����� �����"
+msgstr " "
 
 #: ../raster/r.sun2/main.c:264
 #, fuzzy
@@ -2763,12 +2729,11 @@ msgstr "緯度 (dd:mm:ss{N|S})"
 msgid ""
 "Name of the input slope raster map (terrain slope or solar panel "
 "inclination) [decimal degrees]"
-msgstr "��� ���"
+msgstr " "
 
 #: ../raster/r.sun2/main.c:281
-#, fuzzy
 msgid "A single value of inclination (slope)"
-msgstr "緯度 (dd:mm:ss{N|S})"
+msgstr "傾斜（スロープ）の単一値"
 
 #: ../raster/r.sun2/main.c:290 ../raster/r.sun/main.c:236
 #, fuzzy
@@ -2817,8 +2782,9 @@ msgid "The horizon information input map prefix"
 msgstr "入力ファイルの情報を表示"
 
 #: ../raster/r.sun2/main.c:373 ../raster/r.horizon/main.c:244
+#, fuzzy
 msgid "Angle step size for multidirectional horizon [degrees]"
-msgstr ""
+msgstr "Angle step size for multidirectional horizon [degrees] "
 
 #: ../raster/r.sun2/main.c:382 ../raster/r.sun/main.c:313
 #, fuzzy
@@ -2855,13 +2821,16 @@ msgstr "出力するファイル"
 #: ../vector/v.vol.rst/main.c:398 ../vector/v.vol.rst/main.c:407
 #: ../vector/v.vol.rst/main.c:416 ../vector/v.vol.rst/main.c:425
 msgid "Output_options"
-msgstr ""
+msgstr "出力オプション"
 
 #: ../raster/r.sun2/main.c:391 ../raster/r.sun/main.c:322
+#, fuzzy
 msgid ""
 "Output beam irradiance [W.m-2] (mode 1) or irradiation raster map [Wh.m-2."
 "day-1] (mode 2)"
 msgstr ""
+"Output beam ir放射, 放射輝度 [W.m-2] (モード 1) or irradiation ラスタ地図 "
+"[Wh.m-2.day-1] (モード 2) "
 
 #: ../raster/r.sun2/main.c:400 ../raster/r.sun/main.c:331
 #, fuzzy
@@ -2869,50 +2838,65 @@ msgid "Output insolation time raster map [h] (mode 2 only)"
 msgstr "出力するファイル"
 
 #: ../raster/r.sun2/main.c:409 ../raster/r.sun/main.c:340
+#, fuzzy
 msgid ""
 "Output diffuse irradiance [W.m-2] (mode 1) or irradiation raster map [Wh.m-2."
 "day-1] (mode 2)"
 msgstr ""
+"Output diffuse ir放射, 放射輝度 [W.m-2] (モード 1) or irradiation ラスタ地図 "
+"[Wh.m-2.day-1] (モード 2) "
 
 #: ../raster/r.sun2/main.c:418 ../raster/r.sun/main.c:349
+#, fuzzy
 msgid ""
 "Output ground reflected irradiance [W.m-2] (mode 1) or irradiation raster "
 "map [Wh.m-2.day-1] (mode 2)"
 msgstr ""
+"Output 地盤 reflected ir放射, 放射輝度 [W.m-2] (モード 1) or irradiation ラス"
+"タ 地図 [Wh.m-2.day-1] (モード 2) "
 
 #: ../raster/r.sun2/main.c:427
+#, fuzzy
 msgid ""
 "Output global (total) irradiance/irradiation [W.m-2] (mode 1) or irradiance/"
 "irradiation raster map [Wh.m-2.day-1] (mode 2)"
 msgstr ""
+"Output global (total) irradiance/irradiation [W.m-2] (モード 1) or "
+"irradiance/irradiation ラスタ地図 [Wh.m-2.day-1] (モード 2) "
 
 #: ../raster/r.sun2/main.c:434 ../raster/r.sun/main.c:356
 msgid "No. of day of the year (1-365)"
 msgstr ""
 
 #: ../raster/r.sun2/main.c:443 ../raster/r.sun/main.c:364
+#, fuzzy
 msgid "Time step when computing all-day radiation sums [decimal hours]"
-msgstr ""
+msgstr "Time step when computing all-day radiation sums [decimal hours] "
 
 #: ../raster/r.sun2/main.c:450 ../raster/r.sun/main.c:371
+#, fuzzy
 msgid "Declination value (overriding the internally computed value) [radians]"
-msgstr ""
+msgstr "偏角 value (overriding the internally computed value) [radians] "
 
 #: ../raster/r.sun2/main.c:458 ../raster/r.sun/main.c:379
+#, fuzzy
 msgid "Local (solar) time (to be set for mode 1 only) [decimal hours]"
-msgstr ""
+msgstr "Local (solar) time (to be 集合 for モード 1 only) [decimal hours] "
 
 #: ../raster/r.sun2/main.c:481 ../raster/r.horizon/main.c:319
+#, fuzzy
 msgid "Sampling distance step coefficient (0.5-1.5)"
-msgstr ""
+msgstr "サンプリング distance step 係数 (0.5-1.5) "
 
 #: ../raster/r.sun2/main.c:489
+#, fuzzy
 msgid "Read the input files in this number of chunks"
-msgstr ""
+msgstr "Read the input files in this number of chunks "
 
 #: ../raster/r.sun2/main.c:496
+#, fuzzy
 msgid "Civil time zone value, if none, the time will be local solar time"
-msgstr ""
+msgstr "Civil 標準時刻帯 value, if none, the time will be local solar time "
 
 #: ../raster/r.sun2/main.c:504 ../vector/v.buffer2/main.c:214
 msgid "This does nothing. It is retained for backwards compatibility"
@@ -2924,16 +2908,18 @@ msgid "Unused"
 msgstr ""
 
 #: ../raster/r.sun2/main.c:511 ../raster/r.sun/main.c:384
+#, fuzzy
 msgid "Incorporate the shadowing effect of terrain"
-msgstr ""
+msgstr "Incorporate the shadowing 効果, エフェクト処理 of ter雨 "
 
 #: ../raster/r.sun2/main.c:516
 msgid "Use the low-memory version of the program"
 msgstr ""
 
 #: ../raster/r.sun2/main.c:563
+#, fuzzy
 msgid "You must give the longitude raster if you use civil time"
-msgstr ""
+msgstr "You must give the 経度 ラスタ if you use civil time "
 
 #: ../raster/r.sun2/main.c:566
 #, fuzzy
@@ -2969,27 +2955,35 @@ msgid "The horizon step size must be greater than 0."
 msgstr ""
 
 #: ../raster/r.sun2/main.c:612
+#, fuzzy
 msgid ""
 "If you use the horizon option you must also set the 'horizonstep' parameter."
 msgstr ""
+"If you use the horizon option you must also 集合 the 'horizonstep' "
+"parameter. "
 
 #: ../raster/r.sun2/main.c:618
 msgid "Time and insol_time are incompatible options"
 msgstr ""
 
 #: ../raster/r.sun2/main.c:620
+#, fuzzy
 msgid ""
 "Mode 1: instantaneous solar incidence angle & irradiance using a set local "
 "time"
 msgstr ""
+"モード 1: instantaneous solar incidence angle & ir放射, 放射輝度 using a 集"
+"合 local time "
 
 #: ../raster/r.sun2/main.c:625 ../raster/r.sun/main.c:424
+#, fuzzy
 msgid "incidout requires time parameter to be set"
-msgstr ""
+msgstr "incidout requires time parameter to be 集合 "
 
 #: ../raster/r.sun2/main.c:627 ../raster/r.sun/main.c:425
+#, fuzzy
 msgid "Mode 2: integrated daily irradiation for a given day of the year"
-msgstr ""
+msgstr "モード 2: integrated daily irradiation for a given day of the year "
 
 #: ../raster/r.sun2/main.c:673
 msgid "If you use -s and no horizon rasters, numpartitions must be =1"
@@ -3026,8 +3020,9 @@ msgstr ""
 #: ../raster/r.horizon/main.c:491 ../display/d.grid/plot.c:301
 #: ../display/d.grid/plot.c:328 ../display/d.where/main.c:106
 #: ../display/d.where/main.c:132 ../ps/ps.map/do_geogrid.c:278
+#, fuzzy
 msgid "Unable to set up lat/long projection parameters"
-msgstr ""
+msgstr "Unable to 集合 up lat/long 投影 parameters "
 
 #: ../raster/r.sun2/main.c:752
 msgid "latin and longin raster maps have no effect when in a Lat/Lon location"
@@ -3149,9 +3144,9 @@ msgstr ""
 #: ../raster/r.out.gdal/main.c:230 ../raster/r.proj.seg/main.c:259
 #: ../vector/v.in.ogr/main.c:268 ../vector/v.in.ogr/main.c:320
 #: ../vector/v.proj/main.c:163 ../vector/v.select/main.c:91
-#, fuzzy, c-format
+#, c-format
 msgid "Required parameter <%s> not set"
-msgstr "���."
+msgstr ""
 
 #: ../raster/r.in.gdal/main.c:210 ../raster/r.external/main.c:590
 #, fuzzy
@@ -3344,19 +3339,16 @@ msgid "Import a binary raster file into a GRASS raster map layer."
 msgstr "バイナリーファイルをラスターマップとしてインポートします"
 
 #: ../raster/r.in.bin/main.c:130
-#, fuzzy
 msgid "Import as Floating Point Data (default: Integer)"
 msgstr "浮動小数点データをインポート"
 
 #: ../raster/r.in.bin/main.c:135
-#, fuzzy
 msgid "Import as Double Precision Data (default: Integer)"
-msgstr "浮動小数点データをインポート"
+msgstr "倍精度浮動小数点データをインポート"
 
 #: ../raster/r.in.bin/main.c:139
-#, fuzzy
 msgid "Signed data (high bit means negative value)"
-msgstr "負の値を含む"
+msgstr "負の値を含む（最上位ビットが符号ビット）"
 
 #: ../raster/r.in.bin/main.c:140 ../raster/r.in.bin/main.c:145
 #: ../raster/r.in.bin/main.c:174 ../raster/r.in.bin/main.c:227
@@ -3391,7 +3383,6 @@ msgstr "負の値を含む"
 #: ../imagery/i.cluster/main.c:105 ../imagery/i.cluster/main.c:121
 #: ../imagery/i.cluster/main.c:129 ../imagery/i.cluster/main.c:138
 #: ../imagery/i.cluster/main.c:146 ../imagery/i.cluster/main.c:154
-#, fuzzy
 msgid "Settings"
 msgstr "設定"
 
@@ -3422,58 +3413,49 @@ msgid "Binary raster file to be imported"
 msgstr "入力するファイル"
 
 #: ../raster/r.in.bin/main.c:173
-#, fuzzy
 msgid "Number of bytes per cell (1, 2, 4)"
 msgstr "1セルのバイト数(1, 2, 4)"
 
 #: ../raster/r.in.bin/main.c:181
-#, fuzzy
 msgid "Northern limit of geographic region (outer edge)"
 msgstr "領域の北端"
 
 #: ../raster/r.in.bin/main.c:189
-#, fuzzy
 msgid "Southern limit of geographic region (outer edge)"
 msgstr "領域の南端"
 
 #: ../raster/r.in.bin/main.c:197
-#, fuzzy
 msgid "Eastern limit of geographic region (outer edge)"
 msgstr "領域の東端"
 
 #: ../raster/r.in.bin/main.c:205
-#, fuzzy
 msgid "Western limit of geographic region (outer edge)"
 msgstr "領域の西端"
 
 #: ../raster/r.in.bin/main.c:212
-#, fuzzy
 msgid "Number of rows"
 msgstr "行数"
 
 #: ../raster/r.in.bin/main.c:219
-#, fuzzy
 msgid "Number of columns"
 msgstr "列数"
 
 #: ../raster/r.in.bin/main.c:226
-#, fuzzy
 msgid "Set Value to NULL"
 msgstr "NULL値に代入する値"
 
 #: ../raster/r.in.bin/main.c:242
-#, fuzzy
 msgid "Parsing bytes per cell"
 msgstr "1セルのバイト数"
 
 #: ../raster/r.in.bin/main.c:244
-#, fuzzy
 msgid "Bad number of bytes per cell"
-msgstr "1セルのバイト数"
+msgstr "1セルのバイト数が不正です"
 
 #: ../raster/r.in.bin/main.c:250
+#, fuzzy
 msgid "Byte Swapping Turned On."
-msgstr ""
+msgstr "バイト Swapping Turned On. "
 
 #: ../raster/r.in.bin/main.c:286
 msgid ""
@@ -3765,18 +3747,18 @@ msgstr "90度回転"
 #: ../vector/v.what.rast/main.c:119 ../vector/v.out.dxf/main.c:69
 #: ../visualization/nviz2/cmd/vector.c:83 ../doc/vector/v.example/main.c:73
 #: ../diff.c:145 ../diff.c:147 ../diff.c:251
-#, fuzzy, c-format
+#, c-format
 msgid "Vector map <%s> not found"
-msgstr "���"
+msgstr ""
 
 #: ../raster/r.drain/main.c:290 ../raster/r.cost/main.c:578
 msgid "Failed to guess site file format"
 msgstr ""
 
 #: ../raster/r.drain/main.c:316
-#, fuzzy, c-format
+#, c-format
 msgid "Starting vector map <%s> contains no points in the current region"
-msgstr "���"
+msgstr ""
 
 #: ../raster/r.drain/main.c:322
 #, fuzzy
@@ -3874,9 +3856,9 @@ msgid "Raster map from which to copy category table"
 msgstr "カラーテーブルに用いるラスターマップ"
 
 #: ../raster/r.support/front/front.c:125 ../raster/r.cats/main.c:136
-#, fuzzy, c-format
+#, c-format
 msgid "Raster map <%s> not found in current mapset"
-msgstr "���"
+msgstr ""
 
 #: ../raster/r.support/front/front.c:143
 #, fuzzy
@@ -3887,9 +3869,9 @@ msgstr "シグネチャファイル"
 #: ../raster/r.mapcalc/map3.c:186 ../raster/r.mapcalc/map.c:92
 #: ../raster/r.cats/main.c:155 ../raster/r.cats/main.c:213
 #: ../raster/r.report/parse.c:264 ../display/d.title/main.c:112
-#, fuzzy, c-format
+#, c-format
 msgid "Unable to read category file of raster map <%s@%s>"
-msgstr "���"
+msgstr ""
 
 #: ../raster/r.support/front/front.c:234
 #, fuzzy, c-format
@@ -4048,9 +4030,9 @@ msgid "Cannot open raster map [%s]!"
 msgstr "出力するファイル"
 
 #: ../raster/r.support/modhead/modhead.c:101
-#, fuzzy, c-format
+#, c-format
 msgid "Raster file [%s] is empty."
-msgstr "��."
+msgstr ""
 
 #: ../raster/r.support/modhead/modhead.c:103
 #, fuzzy, c-format
@@ -4167,9 +4149,8 @@ msgid "History file for [%s] not updated."
 msgstr ""
 
 #: ../raster/r.support/modcats/modcats.c:46
-#, fuzzy
 msgid "Which vector map needs updated categories?"
-msgstr "���?"
+msgstr ""
 
 #: ../raster/r.support/modcats/modcats.c:49
 msgid "Which raster map needs updated categories?"
@@ -4317,9 +4298,9 @@ msgid "Output is the interpolation error"
 msgstr "誤差を出力"
 
 #: ../raster/r.surf.idw/main.c:92
-#, fuzzy, c-format
+#, c-format
 msgid "Illegal value for '%s' (%s)"
-msgstr "���� ����"
+msgstr ""
 
 #: ../raster/r.surf.idw/main.c:233
 #, fuzzy, c-format
@@ -4593,9 +4574,8 @@ msgid "Please specify min and/or max radius when using the binary flag"
 msgstr ""
 
 #: ../raster/r.sun/main.c:276
-#, fuzzy
 msgid "Name of the latitudes input raster map [decimal degrees]"
-msgstr "緯度 (dd:mm:ss{N|S})"
+msgstr "緯度入力ラスターマップ名（小数点付の度）"
 
 #: ../raster/r.sun/main.c:286
 #, fuzzy
@@ -4623,10 +4603,13 @@ msgid ""
 msgstr ""
 
 #: ../raster/r.sun/main.c:474 ../raster/r.horizon/main.c:473
+#, fuzzy
 msgid ""
 "Can't get projection info of current location: please set latitude via 'lat' "
 "or 'latin' option!"
 msgstr ""
+"Can't get 投影 info of current location: please 集合 緯度 via 'lat' or "
+"'latin' option! "
 
 #: ../raster/r.sun/main.c:529
 #, fuzzy, c-format
@@ -4711,18 +4694,17 @@ msgid "Cannot create RGB data, please provide three maps [r,g,b]"
 msgstr ""
 
 #: ../raster/r.out.vtk/main.c:102
-#, fuzzy, c-format
+#, c-format
 msgid "Vector cell map <%s> not found"
-msgstr "���"
+msgstr ""
 
 #: ../raster/r.out.vtk/main.c:109
 msgid "Cannot create vector data, please provide three maps [x,y,z]"
 msgstr ""
 
 #: ../raster/r.out.vtk/main.c:149
-#, fuzzy
 msgid "Converts raster maps into the VTK-Ascii format"
-msgstr "���."
+msgstr ""
 
 #: ../raster/r.out.vtk/main.c:215 ../raster/r.out.vtk/main.c:280
 #: ../raster/r.out.vtk/main.c:307 ../raster/r.out.vtk/main.c:353
@@ -4994,16 +4976,14 @@ msgid "Name for output tangential curvature raster map"
 msgstr "正接曲率を出力するファイル"
 
 #: ../raster/r.slope.aspect/main.c:223
-#, fuzzy
 msgid ""
 "Name for output first order partial derivative dx (E-W slope) raster map"
-msgstr "���"
+msgstr ""
 
 #: ../raster/r.slope.aspect/main.c:233
-#, fuzzy
 msgid ""
 "Name for output first order partial derivative dy (N-S slope) raster map"
-msgstr "���"
+msgstr ""
 
 #: ../raster/r.slope.aspect/main.c:243
 #, fuzzy
@@ -5078,9 +5058,9 @@ msgstr "出力するファイル"
 
 #: ../raster/r.slope.aspect/main.c:1035
 #: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:1042
-#, fuzzy, c-format
+#, c-format
 msgid "Min computed aspect %.4f, max computed aspect %.4f"
-msgstr "����� �����"
+msgstr ""
 
 #: ../raster/r.slope.aspect/main.c:1097
 #, fuzzy, c-format
@@ -5089,9 +5069,9 @@ msgstr "入力するファイル"
 
 #: ../raster/r.slope.aspect/main.c:1139
 #: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:1146
-#, fuzzy, c-format
+#, c-format
 msgid "Min computed slope %.4f, max computed slope %.4f"
-msgstr "��� ���"
+msgstr ""
 
 #: ../raster/r.slope.aspect/main.c:1190
 #, fuzzy, c-format
@@ -5152,14 +5132,12 @@ msgid "Name of raster map containing grid cell cost information"
 msgstr "入力するファイル"
 
 #: ../raster/r.cost/main.c:152
-#, fuzzy
 msgid "Name of starting vector points map"
-msgstr "���"
+msgstr ""
 
 #: ../raster/r.cost/main.c:158
-#, fuzzy
 msgid "Name of stop vector points map"
-msgstr "���"
+msgstr ""
 
 #: ../raster/r.cost/main.c:159 ../raster/r.cost/main.c:183
 #, fuzzy
@@ -5262,9 +5240,9 @@ msgid "NULL value computed (row %d, col %d)"
 msgstr ""
 
 #: ../raster/r.cost/btree.c:146
-#, fuzzy, c-format
+#, c-format
 msgid "Unable to find row %d, col %d: %f"
-msgstr "���"
+msgstr ""
 
 #: ../raster/r.cost/btree.c:185
 msgid "Illegal delete request"
@@ -5468,9 +5446,8 @@ msgid "Name of the Mannings n value"
 msgstr "入力するファイル"
 
 #: ../raster/simwe/r.sim.sediment/main.c:180
-#, fuzzy
 msgid "Output transport capacity raster map [kg/ms]"
-msgstr "�����"
+msgstr ""
 
 #: ../raster/simwe/r.sim.sediment/main.c:187
 #, fuzzy
@@ -5553,9 +5530,8 @@ msgid "Using metric conversion factor %f, step=%f"
 msgstr ""
 
 #: ../raster/simwe/r.sim.sediment/main.c:355
-#, fuzzy
 msgid "You are not outputting any raster or site files"
-msgstr "���"
+msgstr ""
 
 #: ../raster/simwe/r.sim.sediment/main.c:358
 #: ../raster/simwe/r.sim.water/main.c:480 ../vector/v.surf.rst/main.c:717
@@ -5647,9 +5623,8 @@ msgid "Time-series output"
 msgstr "上書き"
 
 #: ../raster/simwe/r.sim.water/main.c:477
-#, fuzzy
 msgid "You are not outputting any raster maps"
-msgstr "���"
+msgstr ""
 
 #: ../raster/simwe/simlib/input.c:409
 #, c-format
@@ -5818,9 +5793,8 @@ msgid "Unable to open file <%s> for write"
 msgstr "入力するファイル"
 
 #: ../raster/r.out.ppm/main.c:167
-#, fuzzy
 msgid "Converting..."
-msgstr "���."
+msgstr ""
 
 #: ../raster/r.out.ppm/main.c:250
 #, fuzzy, c-format
@@ -5850,9 +5824,8 @@ msgid "Add comments to describe the region"
 msgstr ""
 
 #: ../raster/r.out.ppm3/main.c:176
-#, fuzzy
 msgid "Converting ... "
-msgstr "���."
+msgstr ""
 
 #: ../raster/r.transect/main.c:56
 #, fuzzy
@@ -5881,11 +5854,10 @@ msgid "End coordinate: %.15g, %.15g"
 msgstr "Z座標値"
 
 #: ../raster/r.random/main.c:53
-#, fuzzy
 msgid ""
 "Creates a raster map layer and vector point map containing randomly located "
 "points."
-msgstr "���."
+msgstr ""
 
 #: ../raster/r.random/main.c:69
 #, fuzzy
@@ -5893,9 +5865,8 @@ msgid "The number of points to allocate"
 msgstr "抽出量(数またはパーセンテージ)"
 
 #: ../raster/r.random/main.c:81
-#, fuzzy
 msgid "Generate points also for NULL category"
-msgstr "���"
+msgstr ""
 
 #: ../raster/r.random/main.c:86
 #, fuzzy
@@ -5903,9 +5874,8 @@ msgid "Report information about input raster and exit"
 msgstr "入力ファイルの情報を表示"
 
 #: ../raster/r.random/main.c:90
-#, fuzzy
 msgid "Generate vector points as 3D points"
-msgstr "���"
+msgstr ""
 
 #: ../raster/r.random/main.c:94 ../vector/v.in.ascii/in.c:161
 #, fuzzy
@@ -6054,9 +6024,9 @@ msgstr "現在の設定を表示"
 
 #: ../raster/r.los/main.c:177 ../raster/r.los/main.c:182
 #: ../raster/r.resamp.rst/main.c:405 ../raster/r.resamp.rst/main.c:428
-#, fuzzy, c-format
+#, c-format
 msgid "[%s]: Cannot read map header"
-msgstr "���"
+msgstr ""
 
 #: ../raster/r.los/main.c:211
 msgid "Pattern map should be a binary 0/1 CELL map"
@@ -6208,9 +6178,8 @@ msgid "Raster map <%s> already exists in mapset <%s>, select another name"
 msgstr "対象マップ"
 
 #: ../raster/wildfire/r.spread/main.c:463
-#, fuzzy
 msgid "Reading inputs..."
-msgstr "���%s ..."
+msgstr ""
 
 #: ../raster/wildfire/r.spreadpath/main.c:74
 msgid ""
@@ -6501,12 +6470,9 @@ msgid ""
 msgstr "凡例のサイズと位置をマウスで決定"
 
 #: ../raster/r.profile/main.c:215
-#, fuzzy, c-format
+#, c-format
 msgid "Buttons:\n"
 msgstr ""
-"\n"
-"\n"
-"���:\n"
 
 #: ../raster/r.profile/main.c:216
 #, c-format
@@ -7529,9 +7495,8 @@ msgid "Print map region only"
 msgstr "入力するファイル"
 
 #: ../raster/r.info/main.c:94
-#, fuzzy
 msgid "Print raster history instead of info"
-msgstr "���"
+msgstr ""
 
 #: ../raster/r.info/main.c:98
 #, fuzzy
@@ -8092,12 +8057,11 @@ msgid "%s: STEP 3 ... "
 msgstr ""
 
 #: ../raster/r.resamp.rst/main.c:158
-#, fuzzy
 msgid ""
 "Reinterpolates and optionally computes topographic analysis from input "
 "raster map to a new raster map (possibly with different resolution) using "
 "regularized spline with tension and smoothing."
-msgstr "���� ����."
+msgstr ""
 
 #: ../raster/r.resamp.rst/main.c:169
 #, fuzzy
@@ -8115,14 +8079,12 @@ msgid "Output z-file (elevation) map"
 msgstr "標高を出力するファイル"
 
 #: ../raster/r.resamp.rst/main.c:190
-#, fuzzy
 msgid "Output slope map (or fx)"
-msgstr "���"
+msgstr ""
 
 #: ../raster/r.resamp.rst/main.c:198
-#, fuzzy
 msgid "Output aspect map (or fy)"
-msgstr "�����"
+msgstr ""
 
 #: ../raster/r.resamp.rst/main.c:206
 #, fuzzy
@@ -8193,19 +8155,16 @@ msgid "Retrieving and setting region failed"
 msgstr ""
 
 #: ../raster/r.resamp.rst/main.c:321
-#, fuzzy
 msgid "Cannot read ew_res value"
-msgstr "���"
+msgstr ""
 
 #: ../raster/r.resamp.rst/main.c:324
-#, fuzzy
 msgid "Cannot read ns_res value"
-msgstr "���"
+msgstr ""
 
 #: ../raster/r.resamp.rst/main.c:327
-#, fuzzy
 msgid "Invalid value for tension"
-msgstr "���� ����"
+msgstr ""
 
 #: ../raster/r.resamp.rst/main.c:330
 msgid "Invalid value for zmult"
@@ -8525,9 +8484,8 @@ msgid "Scale to apply to z data"
 msgstr ""
 
 #: ../raster/r.in.xyz/main.c:242
-#, fuzzy
 msgid "pth percentile of the values"
-msgstr "���"
+msgstr ""
 
 #: ../raster/r.in.xyz/main.c:251
 msgid ""
@@ -9799,19 +9757,19 @@ msgid ""
 msgstr ""
 
 #: ../raster/r.null/null.c:123
-#, fuzzy, c-format
+#, c-format
 msgid "Raster map <%s> is not in your mapset <%s>"
-msgstr "���"
+msgstr ""
 
 #: ../raster/r.null/null.c:130
-#, fuzzy, c-format
+#, c-format
 msgid "%s is illegal entry for null"
-msgstr "���� ����"
+msgstr ""
 
 #: ../raster/r.null/null.c:137
-#, fuzzy, c-format
+#, c-format
 msgid "Raster map <%s> already has a null bitmap file"
-msgstr "���."
+msgstr ""
 
 #: ../raster/r.null/null.c:141
 #, fuzzy, c-format
@@ -10034,14 +9992,14 @@ msgid "Too many arguments for function '%s'"
 msgstr ""
 
 #: ../raster/r.mapcalc/evaluate.c:159
-#, fuzzy, c-format
+#, c-format
 msgid "Invalid argument type for function '%s'"
-msgstr "���� ����"
+msgstr ""
 
 #: ../raster/r.mapcalc/evaluate.c:163
-#, fuzzy, c-format
+#, c-format
 msgid "Invalid return type for function '%s'"
-msgstr "���� ����"
+msgstr ""
 
 #: ../raster/r.mapcalc/evaluate.c:167
 #, fuzzy, c-format
@@ -10587,9 +10545,9 @@ msgid "Maximal number of iterations"
 msgstr "最大反復回数"
 
 #: ../raster/r.thin/io.c:105
-#, fuzzy, c-format
+#, c-format
 msgid "File %s -- %d rows X %d columns"
-msgstr "���"
+msgstr ""
 
 #: ../raster/r.thin/io.c:115
 #, fuzzy, c-format
@@ -10608,14 +10566,14 @@ msgid "%s: Error reading from raster map <%s> in mapset <%s>"
 msgstr "出力するファイル"
 
 #: ../raster/r.thin/io.c:173
-#, fuzzy, c-format
+#, c-format
 msgid "Output file %d rows X %d columns"
-msgstr "���"
+msgstr ""
 
 #: ../raster/r.thin/io.c:174
-#, fuzzy, c-format
+#, c-format
 msgid "Window %d rows X %d columns"
-msgstr "���"
+msgstr ""
 
 #: ../raster/r.thin/thin_lines.c:67
 #, c-format
@@ -10749,9 +10707,9 @@ msgid "Cannot create reclass file of <%s>"
 msgstr "出力するファイル"
 
 #: ../raster/r.reclass/reclass.c:242
-#, fuzzy, c-format
+#, c-format
 msgid "Cannot create category file of <%s>"
-msgstr "���"
+msgstr ""
 
 #: ../raster/r.timestamp/main.c:36
 msgid "Print/add/remove a timestamp for a raster map."
@@ -10767,9 +10725,8 @@ msgid "Extracting points..."
 msgstr "入力するファイル"
 
 #: ../raster/r.to.vect/main.c:51
-#, fuzzy
 msgid "Converts a raster map into a vector map layer."
-msgstr "���."
+msgstr ""
 
 #: ../raster/r.to.vect/main.c:64 ../vector/v.to.db/parse.c:36
 #: ../locale/scriptstrings/d.vect.thematic_to_translate.c:6
@@ -10937,14 +10894,14 @@ msgid "Category table for <%s> set from <%s>"
 msgstr "色に用いるラスターマップ"
 
 #: ../raster/r.cats/main.c:197 ../raster/r.cats/main.c:243
-#, fuzzy, c-format
+#, c-format
 msgid "Cannot create category file for <%s>"
-msgstr "���"
+msgstr ""
 
 #: ../raster/r.cats/main.c:252
-#, fuzzy, c-format
+#, c-format
 msgid "Unable to read category file of raster map <%s> in <%s>"
-msgstr "���"
+msgstr ""
 
 #: ../raster/r.cats/main.c:268
 msgid "The map is floating point! Ignoring cats list, using vals list"
@@ -10955,9 +10912,9 @@ msgid "vals argument is required for floating point map!"
 msgstr ""
 
 #: ../raster/r.cats/cats.c:35
-#, fuzzy, c-format
+#, c-format
 msgid "Cannot read header of raster map <%s> in <%s>"
-msgstr "���"
+msgstr ""
 
 #: ../raster/r.cats/cats.c:43
 #, fuzzy, c-format
@@ -10965,9 +10922,9 @@ msgid "Cannot open cell file of raster map <%s> in <%s>"
 msgstr "出力するファイル"
 
 #: ../raster/r.cats/cats.c:51
-#, fuzzy, c-format
+#, c-format
 msgid "Reading <%s> in <%s>"
-msgstr "���%s ..."
+msgstr ""
 
 #: ../raster/r.kappa/main.c:69
 msgid ""
@@ -11014,24 +10971,24 @@ msgid "Illegal output file name <%s>"
 msgstr "出力するファイル"
 
 #: ../raster/r.kappa/prt_hdr.c:17
-#, fuzzy, c-format
+#, c-format
 msgid "Cannot open file <%s> to write header"
-msgstr "���"
+msgstr ""
 
 #: ../raster/r.kappa/calc_kappa.c:32
-#, fuzzy, c-format
+#, c-format
 msgid "Cannot open file <%s> to write kappa and relevant parameters"
-msgstr "���"
+msgstr ""
 
 #: ../raster/r.kappa/prt_label.c:16
-#, fuzzy, c-format
+#, c-format
 msgid "Can't open file <%s> to write label"
-msgstr "���"
+msgstr ""
 
 #: ../raster/r.kappa/prt_mat.c:39
-#, fuzzy, c-format
+#, c-format
 msgid "Cannot open file <%s> to write cats and counts (error matrix)"
-msgstr "���"
+msgstr ""
 
 #: ../raster/r.kappa/stats.c:13 ../raster/r.report/stats.c:99
 msgid "Problem reading r.stats output"
@@ -11628,9 +11585,9 @@ msgid "Data range of raster map <%s> is empty"
 msgstr "出力するファイル"
 
 #: ../raster/r.recode/read_rules.c:31
-#, fuzzy, c-format
+#, c-format
 msgid "Data range of raster map <%s> is %s to %s (entire map)"
-msgstr "���"
+msgstr ""
 
 #: ../raster/r.recode/read_rules.c:36
 #, fuzzy, c-format
@@ -11681,11 +11638,10 @@ msgid "'%s' is not a valid rule"
 msgstr ""
 
 #: ../raster/r.volume/main.c:59
-#, fuzzy
 msgid ""
 "Calculates the volume of data \"clumps\", and (optionally) produces a GRASS "
 "vector points map containing the calculated centroids of these clumps."
-msgstr "���."
+msgstr ""
 
 #: ../raster/r.volume/main.c:69
 #, fuzzy
@@ -11726,9 +11682,8 @@ msgid "Unable to find clump map"
 msgstr "出力するファイル"
 
 #: ../raster/r.volume/main.c:149
-#, fuzzy
 msgid "Unable to open centroids vector points map"
-msgstr "���."
+msgstr ""
 
 #: ../raster/r.volume/main.c:171
 #, fuzzy
@@ -11778,11 +11733,10 @@ msgid ""
 msgstr ""
 
 #: ../raster/r.carve/main.c:78
-#, fuzzy
 msgid ""
 "Takes vector stream data, transforms it to raster and subtracts depth from "
 "the output DEM."
-msgstr "���"
+msgstr ""
 
 #: ../raster/r.carve/main.c:83
 #, fuzzy
@@ -11795,9 +11749,8 @@ msgid "Name of vector input map containing stream(s)"
 msgstr "入力するファイル"
 
 #: ../raster/r.carve/main.c:96
-#, fuzzy
 msgid "Name for output vector map for adjusted stream points"
-msgstr "���"
+msgstr ""
 
 #: ../raster/r.carve/main.c:101
 msgid "Stream width (in meters). Default is raster cell width"
@@ -12049,9 +12002,8 @@ msgid "raster, volume, conversion"
 msgstr ""
 
 #: ../raster/r.to.rast3/main.c:196
-#, fuzzy
 msgid "Converts 2D raster map slices to one 3D raster volume map."
-msgstr "���."
+msgstr ""
 
 #: ../raster/r.to.rast3/main.c:208
 #, fuzzy
@@ -12094,9 +12046,8 @@ msgid "Input elevation raster map"
 msgstr "出力するファイル"
 
 #: ../raster/r.flow/calc.c:458
-#, fuzzy
 msgid "Input aspect raster map"
-msgstr "�����"
+msgstr ""
 
 #: ../raster/r.flow/calc.c:465
 #, fuzzy
@@ -12119,9 +12070,8 @@ msgid "Output flowline vector map"
 msgstr "流線の密度を示すファイル(出力)"
 
 #: ../raster/r.flow/calc.c:495
-#, fuzzy
 msgid "Output flowpath length raster map"
-msgstr "���"
+msgstr ""
 
 #: ../raster/r.flow/calc.c:502
 #, fuzzy
@@ -12293,10 +12243,9 @@ msgid "Converts ASCII raster file to binary raster map layer."
 msgstr "ASCII形式のファイルをラスターマップとしてインポートします"
 
 #: ../raster/r.in.ascii/main.c:74
-#, fuzzy
 msgid ""
 "ASCII raster file to be imported. If not given reads from standard input"
-msgstr "���"
+msgstr ""
 
 #: ../raster/r.in.ascii/main.c:92 ../raster/r.in.arc/main.c:94
 #, fuzzy
@@ -12568,14 +12517,14 @@ msgid ""
 msgstr ""
 
 #: ../raster/r.univar2/r.univar_main.c:121
-#, fuzzy, c-format
+#, c-format
 msgid "Raster <%s> type mismatch"
-msgstr "���."
+msgstr ""
 
 #: ../raster/r.univar2/r.univar_main.c:201
-#, fuzzy, c-format
+#, c-format
 msgid "Reading row %d"
-msgstr "���%s ..."
+msgstr ""
 
 #: ../raster/r.univar2/r3.univar_main.c:81
 #, fuzzy
@@ -12677,9 +12626,9 @@ msgid "Region <%s> not found"
 msgstr "入力するファイル"
 
 #: ../raster/r.region/main.c:188 ../general/g.region/main.c:413
-#, fuzzy, c-format
+#, c-format
 msgid "Unable to read region <%s> in <%s>"
-msgstr "���"
+msgstr ""
 
 #: ../raster/r.region/main.c:199 ../general/g.region/main.c:425
 #, c-format
@@ -12687,19 +12636,19 @@ msgid "3dview file <%s> not found"
 msgstr ""
 
 #: ../raster/r.region/main.c:205 ../general/g.region/main.c:430
-#, fuzzy, c-format
+#, c-format
 msgid "Unable to open 3dview file <%s> in <%s>"
-msgstr "���"
+msgstr ""
 
 #: ../raster/r.region/main.c:210 ../general/g.region/main.c:436
-#, fuzzy, c-format
+#, c-format
 msgid "Unable to read 3dview file <%s> in <%s>"
-msgstr "���"
+msgstr ""
 
 #: ../raster/r.region/main.c:213 ../general/g.region/main.c:439
-#, fuzzy, c-format
+#, c-format
 msgid "Old 3dview file. Region <%s> not found in <%s>"
-msgstr "���"
+msgstr ""
 
 #: ../raster/r.region/main.c:245
 #, fuzzy, c-format
@@ -12848,9 +12797,9 @@ msgid "E-W and N-S grid resolutions are different. Taking average."
 msgstr ""
 
 #: ../raster/r.param.scale/write_cats.c:47
-#, fuzzy, c-format
+#, c-format
 msgid "Cannot write category file for raster map <%s>"
-msgstr "���"
+msgstr ""
 
 #: ../raster/r.param.scale/interface.c:54
 #, fuzzy
@@ -13321,9 +13270,8 @@ msgid ""
 msgstr ""
 
 #: ../general/g.proj/main.c:59
-#, fuzzy
 msgid "Can also be used to create GRASS locations."
-msgstr "���"
+msgstr ""
 
 #: ../general/g.proj/main.c:65
 msgid "Print projection information (in conventional GRASS format)"
@@ -13429,9 +13377,9 @@ msgid "Location %s created!"
 msgstr ""
 
 #: ../general/g.proj/output.c:155
-#, fuzzy, c-format
+#, c-format
 msgid "Unable to create location: %s"
-msgstr "���"
+msgstr ""
 
 #: ../general/g.proj/output.c:158
 #, fuzzy, c-format
@@ -13561,9 +13509,8 @@ msgid "Name of output mask file"
 msgstr "出力するファイル"
 
 #: ../general/g.pnmcomp/main.c:323
-#, fuzzy
 msgid "Image width"
-msgstr "���"
+msgstr ""
 
 #: ../general/g.pnmcomp/main.c:329
 msgid "Image height"
@@ -13931,9 +13878,8 @@ msgid "The mapset does not exist. Use -c flag to create it."
 msgstr ""
 
 #: ../general/g.mapset/main.c:158
-#, fuzzy
 msgid "Unable to read GIS_LOCK environment variable"
-msgstr "���"
+msgstr ""
 
 #: ../general/g.mapset/main.c:172
 #, c-format
@@ -14091,9 +14037,9 @@ msgid ""
 msgstr ""
 
 #: ../general/g.mremove/do_remove.c:21
-#, fuzzy, c-format
+#, c-format
 msgid "Removing %s <%s>"
-msgstr "���%s ..."
+msgstr ""
 
 #: ../general/g.mremove/do_remove.c:42 ../general/g.mremove/do_remove.c:84
 #, fuzzy
@@ -14116,9 +14062,9 @@ msgid "%s: missing"
 msgstr ""
 
 #: ../general/g.mremove/do_remove.c:71 ../general/g.mremove/do_remove.c:93
-#, fuzzy, c-format
+#, c-format
 msgid "%s: removed"
-msgstr "���"
+msgstr ""
 
 #: ../general/g.mremove/do_remove.c:100
 #, fuzzy, c-format
@@ -14720,21 +14666,18 @@ msgid ""
 msgstr ""
 
 #: ../display/d.rast.arrow/arrow.c:112
-#, fuzzy
 msgid ""
 "Draws arrows representing cell aspect direction for a raster map containing "
 "aspect data."
-msgstr "����� �����."
+msgstr ""
 
 #: ../display/d.rast.arrow/arrow.c:121
-#, fuzzy
 msgid "Name of raster aspect map to be displayed"
-msgstr "�����"
+msgstr ""
 
 #: ../display/d.rast.arrow/arrow.c:129
-#, fuzzy
 msgid "Type of existing raster aspect map"
-msgstr "�����"
+msgstr ""
 
 #: ../display/d.rast.arrow/arrow.c:137
 #, fuzzy
@@ -14769,19 +14712,16 @@ msgid "Scale factor for arrows (magnitude map)"
 msgstr "標高に用いるラスターマップ"
 
 #: ../display/d.rast.arrow/arrow.c:224
-#, fuzzy
 msgid "Illegal value for scale factor"
-msgstr "���� ����"
+msgstr ""
 
 #: ../display/d.rast.arrow/arrow.c:228
-#, fuzzy
 msgid "Illegal value for skip factor"
-msgstr "���� ����"
+msgstr ""
 
 #: ../display/d.rast.arrow/arrow.c:233
-#, fuzzy
 msgid "Magnitude is only supported for GRASS and compass aspect maps."
-msgstr "�����."
+msgstr ""
 
 #: ../display/d.rast.arrow/arrow.c:240
 #, fuzzy
@@ -14892,9 +14832,8 @@ msgid "Rotation angle in degrees (counter-clockwise)"
 msgstr ""
 
 #: ../display/d.text.new/main.c:215 ../display/d.text.freetype/main.c:224
-#, fuzzy
 msgid "Line spacing"
-msgstr "���"
+msgstr ""
 
 #: ../display/d.text.new/main.c:221 ../display/d.text.freetype/main.c:168
 #: ../display/d.vect/main.c:299 ../vector/v.label/main.c:123
@@ -15066,9 +15005,8 @@ msgid "Disable"
 msgstr ""
 
 #: ../display/d.grid/main.c:122
-#, fuzzy
 msgid "Disable border drawing"
-msgstr "���"
+msgstr ""
 
 #: ../display/d.grid/main.c:127
 msgid "Disable text drawing"
@@ -15127,9 +15065,8 @@ msgid "Error in pj_do_proj6"
 msgstr ""
 
 #: ../display/d.grid/fiducial.c:52
-#, fuzzy
 msgid "Reading symbol"
-msgstr "���%s ..."
+msgstr ""
 
 #: ../display/d.frame/frame.c:62
 #, fuzzy
@@ -15196,14 +15133,11 @@ msgid "Error choosing frame [%s]\n"
 msgstr "出力するファイル"
 
 #: ../display/d.frame/select.c:51
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "\n"
 "Buttons:\n"
 msgstr ""
-"\n"
-"\n"
-"���:\n"
 
 #: ../display/d.frame/select.c:52
 #, fuzzy, c-format
@@ -15291,10 +15225,9 @@ msgid "%s - illegal longitude"
 msgstr "出力するファイル"
 
 #: ../display/d.menu/main.c:68
-#, fuzzy
 msgid ""
 "Creates and displays a menu within the active frame on the graphics monitor."
-msgstr "���."
+msgstr ""
 
 #: ../display/d.menu/main.c:77
 #, fuzzy
@@ -15450,9 +15383,8 @@ msgstr "線の色1"
 
 #: ../display/d.path/main.c:102 ../display/d.path/main.c:110
 #: ../display/d.path/main.c:118 ../display/d.path/main.c:128
-#, fuzzy
 msgid "Rendering"
-msgstr "���%s ..."
+msgstr ""
 
 #: ../display/d.path/main.c:108 ../display/d.extract/main.c:71
 msgid "Highlight color"
@@ -15543,9 +15475,8 @@ msgid "display, setup"
 msgstr "ガンマ"
 
 #: ../display/d.extend/main.c:52
-#, fuzzy
 msgid "No raster or vector map displayed"
-msgstr "�����"
+msgstr ""
 
 #: ../display/d.rast.edit/main.c:59 ../display/d.colortable/main.c:62
 #: ../display/d.rast/main.c:51
@@ -15725,9 +15656,9 @@ msgid "Forcing a smooth legend: too many categories for current window height"
 msgstr ""
 
 #: ../display/d.legend/main.c:517 ../display/d.histogram/main.c:171
-#, fuzzy, c-format
+#, c-format
 msgid "Range information for <%s> not available"
-msgstr "��."
+msgstr ""
 
 #: ../display/d.legend/main.c:542
 #, c-format
@@ -15740,10 +15671,9 @@ msgid "Nothing to draw! (no categories with labels?)"
 msgstr "ラベルのないカテゴリーのスキップ"
 
 #: ../display/d.vect.chart/main.c:65
-#, fuzzy
 msgid ""
 "Displays charts of vector data in the active frame on the graphics monitor."
-msgstr "���."
+msgstr ""
 
 #: ../display/d.vect.chart/main.c:82
 #, fuzzy
@@ -16185,11 +16115,10 @@ msgid "You are clicking outside the map"
 msgstr "出力するファイル"
 
 #: ../display/d.thematic.area/main.c:80
-#, fuzzy
 msgid ""
 "Displays a thematic vector area map in the active frame on the graphics "
 "monitor."
-msgstr "���."
+msgstr ""
 
 #: ../display/d.thematic.area/main.c:90
 msgid "Data to be classified: column name or expression"
@@ -16257,9 +16186,8 @@ msgid "Boundaries"
 msgstr "入力するファイル"
 
 #: ../display/d.thematic.area/main.c:141
-#, fuzzy
 msgid "Boundary width"
-msgstr "���"
+msgstr ""
 
 #: ../display/d.thematic.area/main.c:147
 #, fuzzy
@@ -16520,9 +16448,8 @@ msgid "Displays the color table associated with a raster map layer."
 msgstr "ラスターマップのカラーテーブルを表示します"
 
 #: ../display/d.colortable/main.c:68
-#, fuzzy
 msgid "Name of raster map whose color table is to be displayed"
-msgstr "�����"
+msgstr ""
 
 #: ../display/d.colortable/main.c:76
 #, fuzzy
@@ -16563,9 +16490,9 @@ msgid "R_color file for [%s] not available"
 msgstr "色に用いるラスターマップ"
 
 #: ../display/d.colortable/main.c:143
-#, fuzzy, c-format
+#, c-format
 msgid "Range file for [%s] not available"
-msgstr "��."
+msgstr ""
 
 #: ../display/d.colortable/main.c:156
 #, fuzzy
@@ -17050,9 +16977,9 @@ msgid "Nothing Found.\n"
 msgstr ""
 
 #: ../display/d.what.vect/what.c:237
-#, fuzzy, c-format
+#, c-format
 msgid "Line: %d  Type: %s  Left: %d  Right: %d  "
-msgstr "��� "
+msgstr ""
 
 #: ../display/d.what.vect/what.c:241 ../vector/v.what/what.c:162
 #: ../vector/v.what/what.c:217
@@ -17066,9 +16993,9 @@ msgid "  Node[%d]: %d  Number of lines: %d  Coordinates: %.6f, %.6f, %.6f\n"
 msgstr ""
 
 #: ../display/d.what.vect/what.c:266
-#, fuzzy, c-format
+#, c-format
 msgid "    Line: %5d  Angle: %.8f\n"
-msgstr "���"
+msgstr ""
 
 #: ../display/d.what.vect/what.c:275
 #, c-format
@@ -17081,14 +17008,14 @@ msgid "Point height: %f\n"
 msgstr ""
 
 #: ../display/d.what.vect/what.c:313 ../vector/v.what/what.c:248
-#, fuzzy, c-format
+#, c-format
 msgid "Line height: %f\n"
-msgstr "���"
+msgstr ""
 
 #: ../display/d.what.vect/what.c:322
-#, fuzzy, c-format
+#, c-format
 msgid "Line height min: %f max: %f\n"
-msgstr "���"
+msgstr ""
 
 #: ../display/d.what.vect/what.c:343
 #, c-format
@@ -17170,9 +17097,9 @@ msgid " Right: quit\n"
 msgstr ""
 
 #: ../display/d.what.vect/openvect.c:11
-#, fuzzy, c-format
+#, c-format
 msgid "warning: %s - vector map not found\n"
-msgstr "�������: %s - ��������� ����n"
+msgstr ""
 
 #: ../display/d.text/main.c:177
 #, c-format
@@ -17335,9 +17262,8 @@ msgid "Render images off-screen"
 msgstr ""
 
 #: ../display/d.nviz/main.c:138
-#, fuzzy
 msgid "Enable vector and sites drawing"
-msgstr "���"
+msgstr ""
 
 #: ../display/d.nviz/main.c:146
 msgid "Either -i flag and/or route parameter must be used"
@@ -17433,9 +17359,9 @@ msgid "No map is displayed in GRASS monitor"
 msgstr "モニターに表示されているマップ"
 
 #: ../display/d.zoom/main.c:298
-#, fuzzy, c-format
+#, c-format
 msgid "%d raster%s, %d vector%s\n"
-msgstr "���"
+msgstr ""
 
 #: ../display/d.zoom/main.c:307
 #, fuzzy
@@ -17451,15 +17377,12 @@ msgid "Zooming complete."
 msgstr ""
 
 #: ../display/d.zoom/zoom.c:15 ../display/d.zoom/pan.c:17
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "\n"
 "\n"
 "Buttons:\n"
 msgstr ""
-"\n"
-"\n"
-"���:\n"
 
 #: ../display/d.zoom/zoom.c:16
 #, c-format
@@ -17500,9 +17423,8 @@ msgstr ""
 
 #: ../display/d.vect/label.c:28 ../display/d.vect/dir.c:28
 #: ../display/d.vect/attr.c:54
-#, fuzzy
 msgid "Can't read vector map"
-msgstr "���"
+msgstr ""
 
 #: ../display/d.vect/main.c:122
 #, fuzzy
@@ -17510,9 +17432,8 @@ msgid "display, vector"
 msgstr "ガンマ"
 
 #: ../display/d.vect/main.c:124
-#, fuzzy
 msgid "Displays vector data in the active frame on the graphics monitor."
-msgstr "���."
+msgstr ""
 
 #: ../display/d.vect/main.c:136
 #, fuzzy
@@ -17899,9 +17820,8 @@ msgid "Cannot create index"
 msgstr ""
 
 #: ../vector/v.sample/main.c:227
-#, fuzzy
 msgid "Checking vector points..."
-msgstr "���."
+msgstr ""
 
 #: ../vector/v.sample/main.c:252 ../vector/v.sample/main.c:260
 #: ../vector/v.label.sa/labels.c:179 ../vector/v.vol.rst/user1.c:170
@@ -17982,11 +17902,11 @@ msgid "Vertical output (instead of horizontal)"
 msgstr "8bitで出力"
 
 #: ../vector/v.db.select/main.c:141
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Unable to open vector map <%s> at topology level. Flag '%c' requires "
 "topology level."
-msgstr "���"
+msgstr ""
 
 #: ../vector/v.db.select/main.c:176
 #, fuzzy
@@ -17999,9 +17919,9 @@ msgid "Unable to fetch data from table <%s>"
 msgstr "統一する属性の値"
 
 #: ../vector/v.db.select/main.c:243
-#, fuzzy, c-format
+#, c-format
 msgid "Unable to get bounding box of area %d"
-msgstr "���"
+msgstr ""
 
 #: ../vector/v.db.select/main.c:248
 #, fuzzy, c-format
@@ -18067,9 +17987,8 @@ msgid "Performs network maintenance."
 msgstr ""
 
 #: ../vector/v.net/main.c:55
-#, fuzzy
 msgid "Name of input point vector map"
-msgstr "���"
+msgstr ""
 
 #: ../vector/v.net/main.c:56
 msgid "Required for operation 'connect'"
@@ -18128,9 +18047,9 @@ msgid "Threshold value must be >= 0"
 msgstr ""
 
 #: ../vector/v.net/main.c:174
-#, fuzzy, c-format
+#, c-format
 msgid "Unable to open vector map <%s> at topology level %d"
-msgstr "���"
+msgstr ""
 
 #: ../vector/v.net/main.c:190
 #, fuzzy, c-format
@@ -18452,14 +18371,14 @@ msgid "%d records selected from table (layer %d)"
 msgstr "選択するモニター"
 
 #: ../vector/v.to.db/report.c:194
-#, fuzzy, c-format
+#, c-format
 msgid "%d categories read from vector map exist in selection from table"
-msgstr "��� ������"
+msgstr ""
 
 #: ../vector/v.to.db/report.c:197
-#, fuzzy, c-format
+#, c-format
 msgid "%d categories read from vector map don't exist in selection from table"
-msgstr "��� ������"
+msgstr ""
 
 #: ../vector/v.to.db/report.c:199
 #, fuzzy, c-format
@@ -18472,9 +18391,9 @@ msgid "%d update/insert errors (layer %d)"
 msgstr "選択するモニター"
 
 #: ../vector/v.to.db/report.c:205
-#, fuzzy, c-format
+#, c-format
 msgid "%d categories with more points (coordinates not loaded)"
-msgstr "���"
+msgstr ""
 
 #: ../vector/lidar/v.outlier/outlier.c:73
 #: ../vector/lidar/v.outlier/outlier.c:114
@@ -18530,9 +18449,8 @@ msgid "Removes outliers from vector point data."
 msgstr "ベクトルデータの更新をします"
 
 #: ../vector/lidar/v.outlier/main.c:79
-#, fuzzy
 msgid "Name of output outlier vector map"
-msgstr "���"
+msgstr ""
 
 #: ../vector/lidar/v.outlier/main.c:87
 #, fuzzy
@@ -18577,9 +18495,9 @@ msgstr "出力するファイル"
 #: ../vector/lidar/v.outlier/main.c:167
 #: ../vector/lidar/v.surf.bspline/main.c:231
 #: ../vector/lidar/v.surf.bspline/main.c:251
-#, fuzzy, c-format
+#, c-format
 msgid "Unable to open vector map <%s> at the topological level"
-msgstr "���"
+msgstr ""
 
 #: ../vector/lidar/v.outlier/main.c:188
 #: ../vector/lidar/v.surf.bspline/main.c:204
@@ -18599,9 +18517,8 @@ msgstr ""
 #: ../vector/lidar/v.surf.bspline/main.c:714
 #: ../vector/lidar/v.lidar.edgedetection/main.c:374
 #: ../vector/lidar/v.lidar.correction/main.c:335
-#, fuzzy
 msgid "Auxiliar table could not be dropped"
-msgstr "���"
+msgstr ""
 
 #: ../vector/lidar/v.surf.bspline/main.c:79 ../vector/v.surf.idw/main.c:84
 #, fuzzy
@@ -18619,9 +18536,8 @@ msgid ""
 msgstr ""
 
 #: ../vector/lidar/v.surf.bspline/main.c:96
-#, fuzzy
 msgid "Name of input vector map of sparse points"
-msgstr "���"
+msgstr ""
 
 #: ../vector/lidar/v.surf.bspline/main.c:112
 #, fuzzy
@@ -18643,9 +18559,8 @@ msgid "Tykhonov regularization parameter (affects smoothing)"
 msgstr ""
 
 #: ../vector/lidar/v.surf.bspline/main.c:147 ../vector/v.surf.rst/main.c:216
-#, fuzzy
 msgid "If set to 0, z coordinates are used. (3D vector only)"
-msgstr "���"
+msgstr ""
 
 #: ../vector/lidar/v.surf.bspline/main.c:158
 #, fuzzy
@@ -18979,9 +18894,8 @@ msgid "Output classified vector map name"
 msgstr "傾斜の方位を出力するファイル"
 
 #: ../vector/lidar/v.lidar.correction/main.c:82
-#, fuzzy
 msgid "Only 'terrain' points output vector map"
-msgstr "���"
+msgstr ""
 
 #: ../vector/lidar/v.lidar.correction/main.c:105
 msgid "Regularization weight in reclassification evaluation"
@@ -19163,9 +19077,9 @@ msgid "Problem loading category values"
 msgstr "出力するファイル"
 
 #: ../vector/v.generalize/main.c:363
-#, fuzzy, c-format
+#, c-format
 msgid "Generalization (%s)..."
-msgstr "���%s ..."
+msgstr ""
 
 #: ../vector/v.generalize/main.c:453
 #, c-format
@@ -19207,9 +19121,8 @@ msgid "Look ahead parameter must be odd"
 msgstr ""
 
 #: ../vector/v.generalize/smoothing.c:461
-#, fuzzy
 msgid "Unable to find the inverse matrix"
-msgstr "��� "
+msgstr ""
 
 #: ../vector/v.generalize/smoothing.c:468
 #, fuzzy
@@ -19217,9 +19130,8 @@ msgid "Unable to calculate the output vectors"
 msgstr "マップのカテゴリー値について統計解析を行います"
 
 #: ../vector/v.generalize/displacement.c:196
-#, fuzzy
 msgid "Inverting matrix..."
-msgstr "���."
+msgstr ""
 
 #: ../vector/v.generalize/displacement.c:198
 #, fuzzy
@@ -19232,9 +19144,8 @@ msgid "Resolving conflicts..."
 msgstr "入力するファイル"
 
 #: ../vector/v.build/main.c:34 ../vector/v.clean/main.c:43
-#, fuzzy
 msgid "vector, topology"
-msgstr "���"
+msgstr ""
 
 #: ../vector/v.build/main.c:35
 #, fuzzy
@@ -19258,9 +19169,9 @@ msgstr ""
 
 #: ../vector/v.build/main.c:84 ../vector/v.support/main.c:129
 #: ../vector/v.edit/main.c:114 ../vector/v.neighbors/main.c:77
-#, fuzzy, c-format
+#, c-format
 msgid "Vector map <%s> not found in the current mapset"
-msgstr "���"
+msgstr ""
 
 #: ../vector/v.in.ogr/main.c:101 ../vector/v.in.dxf/main.c:60
 #: ../vector/v.in.dwg/main.c:65 ../vector/v.in.ascii/in.c:48
@@ -19408,28 +19319,27 @@ msgid "Data source contains %d layers:"
 msgstr ""
 
 #: ../vector/v.in.ogr/main.c:329
-#, fuzzy, c-format
+#, c-format
 msgid "Vector map <%s> already exists and will be overwritten"
-msgstr "���."
+msgstr ""
 
 #: ../vector/v.in.ogr/main.c:332 ../vector/v.edit/main.c:93
-#, fuzzy, c-format
+#, c-format
 msgid "Vector map <%s> already exists"
-msgstr "���."
+msgstr ""
 
 #: ../vector/v.in.ogr/main.c:357 ../vector/v.external/main.c:128
-#, fuzzy, c-format
+#, c-format
 msgid "Layer <%s> not available"
-msgstr "��."
+msgstr ""
 
 #: ../vector/v.in.ogr/main.c:373
 msgid "Select either the current region flag or the spatial option, not both"
 msgstr ""
 
 #: ../vector/v.in.ogr/main.c:401
-#, fuzzy
 msgid "4 parameters required for 'spatial' parameter"
-msgstr "������"
+msgstr ""
 
 #: ../vector/v.in.ogr/main.c:468
 msgid ""
@@ -19585,11 +19495,10 @@ msgid "Area without category: %e (%d areas)"
 msgstr "出力ファイルの上書き"
 
 #: ../vector/v.in.ogr/main.c:1119
-#, fuzzy
 msgid ""
 "Input data contains 3D features. Created vector is 2D only, use -z flag to "
 "import 3D vector"
-msgstr "��� ���."
+msgstr ""
 
 #: ../vector/v.in.ogr/geom.c:192 ../vector/v.in.ogr/geom.c:205
 #: ../vector/v.in.ogr/geom.c:229 ../vector/v.in.ogr/geom.c:271
@@ -19640,11 +19549,10 @@ msgid "vector, volume, conversion"
 msgstr ""
 
 #: ../vector/v.to.rast3/main.c:46
-#, fuzzy
 msgid ""
 "Converts a binary GRASS vector map (only points) layer into a 3D GRASS "
 "raster map layer."
-msgstr "���."
+msgstr ""
 
 #: ../vector/v.to.rast3/main.c:59
 msgid "Column name (type must be numeric)"
@@ -19655,9 +19563,8 @@ msgstr ""
 #: ../vector/v.univar/main.c:257 ../vector/v.label/main.c:278
 #: ../vector/v.buffer/main.c:383 ../ps/ps.map/catval.c:49
 #: ../ps/ps.map/catval.c:111 ../ps/ps.map/catval.c:177
-#, fuzzy
 msgid "Unable to get layer info for vector map"
-msgstr "���"
+msgstr ""
 
 #: ../vector/v.to.rast3/main.c:108
 #, fuzzy
@@ -19712,14 +19619,12 @@ msgid ""
 msgstr ""
 
 #: ../vector/v.extract/main.c:136
-#, fuzzy
 msgid "Input text file with category numbers/number ranges to be extracted"
-msgstr "���"
+msgstr ""
 
 #: ../vector/v.extract/main.c:137
-#, fuzzy
 msgid "If '-' given reads from standard input"
-msgstr "���"
+msgstr ""
 
 #: ../vector/v.extract/main.c:145
 msgid "Number of random categories matching vector objects to extract"
@@ -19827,10 +19732,9 @@ msgid "vector, import, database, points"
 msgstr "入力するファイル"
 
 #: ../vector/v.in.db/main.c:54
-#, fuzzy
 msgid ""
 "Creates new vector (points) map from database table containing coordinates."
-msgstr "���."
+msgstr ""
 
 #: ../vector/v.in.db/main.c:58
 #, fuzzy
@@ -19867,10 +19771,10 @@ msgid "Must refer to an integer column"
 msgstr ""
 
 #: ../vector/v.in.db/main.c:130
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Output vector map, table <%s> (driver: <%s>, database: <%s>) already exists"
-msgstr "���."
+msgstr ""
 
 #: ../vector/v.in.db/main.c:138 ../vector/v.transform/trans_digit.c:93
 #: ../vector/v.db.connect/main.c:274
@@ -19903,9 +19807,9 @@ msgid "Copying attributes..."
 msgstr "統一する属性の値"
 
 #: ../vector/v.in.db/main.c:235
-#, fuzzy, c-format
+#, c-format
 msgid "%d points written to vector map."
-msgstr "���"
+msgstr ""
 
 #: ../vector/v.net.iso/main.c:72
 msgid "Splits net by cost isolines."
@@ -20001,9 +19905,8 @@ msgid "Destination node [%d] is unreachable from node [%d]"
 msgstr ""
 
 #: ../vector/v.perturb/main.c:75
-#, fuzzy
 msgid "Random location perturbations of GRASS vector points"
-msgstr "���."
+msgstr ""
 
 #: ../vector/v.perturb/main.c:78
 #, fuzzy
@@ -20243,14 +20146,14 @@ msgid "DATETIME type not yet supported, no attributes will be uploaded"
 msgstr ""
 
 #: ../vector/v.distance/main.c:1104
-#, fuzzy, c-format
+#, c-format
 msgid "%d categories with more than 1 feature in vector map <%s>"
-msgstr "���"
+msgstr ""
 
 #: ../vector/v.distance/main.c:1107
-#, fuzzy, c-format
+#, c-format
 msgid "%d categories - no nearest feature found"
-msgstr "���"
+msgstr ""
 
 #: ../vector/v.distance/main.c:1116
 #, c-format
@@ -20273,19 +20176,19 @@ msgid "%d categories read from the map"
 msgstr "タイトル"
 
 #: ../vector/v.distance/main.c:1125
-#, fuzzy, c-format
+#, c-format
 msgid "%d categories exist in the table"
-msgstr "��� ������"
+msgstr ""
 
 #: ../vector/v.distance/main.c:1127
-#, fuzzy, c-format
+#, c-format
 msgid "%d categories read from the map exist in the table"
-msgstr "��� ������"
+msgstr ""
 
 #: ../vector/v.distance/main.c:1130
-#, fuzzy, c-format
+#, c-format
 msgid "%d categories read from the map don't exist in the table"
-msgstr "��� ������"
+msgstr ""
 
 #: ../vector/v.distance/main.c:1132 ../vector/v.what.rast/main.c:372
 #, c-format
@@ -20303,9 +20206,8 @@ msgid "vector, import, sites"
 msgstr "入力するファイル"
 
 #: ../vector/v.in.sites/main.c:59
-#, fuzzy
 msgid "Converts a GRASS site_lists file into a vector map."
-msgstr "���."
+msgstr ""
 
 #: ../vector/v.in.sites/main.c:83
 #, fuzzy, c-format
@@ -26061,9 +25963,9 @@ msgid "Either '%s' or '%s' parameter have to be used"
 msgstr "入力するファイル"
 
 #: ../vector/v.to.3d/main.c:58
-#, fuzzy, c-format
+#, c-format
 msgid "Parameters '%s' ignored"
-msgstr "���."
+msgstr ""
 
 #: ../vector/v.to.3d/main.c:63
 #, fuzzy
@@ -26071,14 +25973,14 @@ msgid "Attribute table required"
 msgstr "入力するファイル"
 
 #: ../vector/v.to.3d/main.c:76
-#, fuzzy, c-format
+#, c-format
 msgid "Vector map <%s> is 2D"
-msgstr "���"
+msgstr ""
 
 #: ../vector/v.to.3d/main.c:81
-#, fuzzy, c-format
+#, c-format
 msgid "Vector map <%s> is 3D"
-msgstr "���"
+msgstr ""
 
 #: ../vector/v.to.3d/main.c:99 ../vector/v.to.3d/main.c:129
 #, fuzzy
@@ -26096,14 +25998,13 @@ msgid "%s failed"
 msgstr "入力するファイル"
 
 #: ../vector/v.to.3d/main.c:138
-#, fuzzy, c-format
+#, c-format
 msgid "Vertical extent of vector map <%s>: B: %f T: %f"
-msgstr "���"
+msgstr ""
 
 #: ../vector/v.to.3d/args.c:11
-#, fuzzy
 msgid "Reverse transformation; 3D vector features to 2D"
-msgstr "���"
+msgstr ""
 
 #: ../vector/v.to.3d/args.c:15
 #, fuzzy
@@ -26111,9 +26012,8 @@ msgid "Do not copy table"
 msgstr "出力するファイル"
 
 #: ../vector/v.to.3d/args.c:30
-#, fuzzy
 msgid "Fixed height for 3D vector features"
-msgstr "���"
+msgstr ""
 
 #: ../vector/v.to.3d/args.c:31 ../vector/v.to.3d/args.c:34
 #: ../vector/v.to.3d/args.c:41
@@ -26151,9 +26051,9 @@ msgid "Skipping feature without category"
 msgstr "出力ファイルの上書き"
 
 #: ../vector/v.to.3d/trans2.c:113
-#, fuzzy, c-format
+#, c-format
 msgid "Unable to get height for feature category %d"
-msgstr "���"
+msgstr ""
 
 #: ../vector/v.out.dxf/main.c:50
 #, fuzzy
@@ -26166,19 +26066,19 @@ msgid "DXF output file"
 msgstr "出力するファイル"
 
 #: ../vector/v.out.dxf/main.c:97
-#, fuzzy, c-format
+#, c-format
 msgid "%d features written to '%s'."
-msgstr "���"
+msgstr ""
 
 #: ../vector/v.out.dxf/write_dxf.c:21
-#, fuzzy, c-format
+#, c-format
 msgid "The file '%s' already exists."
-msgstr "���."
+msgstr ""
 
 #: ../vector/v.out.dxf/write_dxf.c:23
-#, fuzzy, c-format
+#, c-format
 msgid "The file '%s' already exists and will be overwritten."
-msgstr "���."
+msgstr ""
 
 #: ../vector/v.out.dxf/write_dxf.c:27
 #, fuzzy, c-format
@@ -26224,9 +26124,9 @@ msgid "Couldn't open COGO file <%s>"
 msgstr "出力するファイル"
 
 #: ../misc/m.cogo/main.c:275
-#, fuzzy, c-format
+#, c-format
 msgid "Couldn't open output file <%s>"
-msgstr "���"
+msgstr ""
 
 #: ../misc/m.cogo/main.c:305 ../misc/m.cogo/main.c:308
 #, fuzzy
@@ -26548,14 +26448,12 @@ msgstr "出力するファイル"
 #: ../visualization/nviz2/cmd/args.c:306 ../visualization/nviz2/cmd/args.c:317
 #: ../visualization/nviz2/cmd/args.c:328 ../visualization/nviz2/cmd/args.c:340
 #: ../visualization/nviz2/cmd/args.c:350 ../visualization/nviz2/cmd/args.c:362
-#, fuzzy
 msgid "Vector lines"
-msgstr "���"
+msgstr ""
 
 #: ../visualization/nviz2/cmd/args.c:316
-#, fuzzy
 msgid "Vector line width"
-msgstr "���"
+msgstr ""
 
 #: ../visualization/nviz2/cmd/args.c:325
 #, fuzzy
@@ -26571,25 +26469,22 @@ msgid "Vector line height"
 msgstr ""
 
 #: ../visualization/nviz2/cmd/args.c:373
-#, fuzzy
 msgid "Name of point vector overlay map(s)"
-msgstr "���"
+msgstr ""
 
 #: ../visualization/nviz2/cmd/args.c:374 ../visualization/nviz2/cmd/args.c:385
 #: ../visualization/nviz2/cmd/args.c:397 ../visualization/nviz2/cmd/args.c:408
 #: ../visualization/nviz2/cmd/args.c:421 ../visualization/nviz2/cmd/args.c:431
-#, fuzzy
 msgid "Vector points"
-msgstr "���"
+msgstr ""
 
 #: ../visualization/nviz2/cmd/args.c:384
 msgid "Icon size"
 msgstr ""
 
 #: ../visualization/nviz2/cmd/args.c:396
-#, fuzzy
 msgid "Icon width"
-msgstr "���"
+msgstr ""
 
 #: ../visualization/nviz2/cmd/args.c:405
 #, fuzzy
@@ -26801,9 +26696,8 @@ msgid "My first vector module"
 msgstr "対象マップ1"
 
 #: ../doc/vector/v.example/main.c:79
-#, fuzzy
 msgid "Unable to set predetermined vector open level"
-msgstr "���."
+msgstr ""
 
 #: ../doc/vector/v.example/main.c:167
 #, fuzzy, c-format
@@ -26851,14 +26745,12 @@ msgid "Output tangential curvature filename"
 msgstr "正接曲率を出力するファイル"
 
 #: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:226
-#, fuzzy
 msgid "Output first order partial derivative dx (E-W slope) filename"
-msgstr "���"
+msgstr ""
 
 #: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:236
-#, fuzzy
 msgid "Output first order partial derivative dy (N-S slope) filename"
-msgstr "���"
+msgstr ""
 
 #: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:246
 #, fuzzy
@@ -26943,9 +26835,8 @@ msgstr "統一する属性の値"
 
 #: ../ps/ps.map/ps_vlines.c:83 ../ps/ps.map/ps_vpoints.c:127
 #: ../ps/ps.map/ps_vareas.c:66 ../ps/ps.map/ps_vareas.c:77
-#, fuzzy
 msgid "Read error in vector map"
-msgstr "���"
+msgstr ""
 
 #: ../ps/ps.map/ps_vlines.c:118 ../ps/ps.map/ps_vpoints.c:164
 #: ../ps/ps.map/ps_vpoints.c:175 ../ps/ps.map/ps_vpoints.c:199
@@ -27036,9 +26927,8 @@ msgid ""
 msgstr ""
 
 #: ../ps/ps.map/main.c:323
-#, fuzzy
 msgid "Cannot set GRASS_VERBOSE variable."
-msgstr "���"
+msgstr ""
 
 #: ../ps/ps.map/main.c:725
 #, c-format
@@ -27058,9 +26948,9 @@ msgid "Can't get group information"
 msgstr "出力するファイル"
 
 #: ../ps/ps.map/do_psfiles.c:20
-#, fuzzy, c-format
+#, c-format
 msgid "Reading PostScript include file <%s> ..."
-msgstr "���%s ..."
+msgstr ""
 
 #: ../ps/ps.map/ps_fclrtbl.c:46 ../ps/ps.map/ps_clrtbl.c:30
 #, fuzzy, c-format
@@ -27131,9 +27021,8 @@ msgid "PSmap: do_scale(): shouldn't happen"
 msgstr ""
 
 #: ../ps/ps.map/do_masking.c:23
-#, fuzzy
 msgid "Can't open temporary PostScript mask file."
-msgstr "���"
+msgstr ""
 
 #: ../ps/ps.map/map_setup.c:88
 #, c-format
@@ -27151,19 +27040,19 @@ msgid "Paper '%s' not found, using defaults"
 msgstr "入力するファイル"
 
 #: ../ps/ps.map/do_labels.c:43
-#, fuzzy, c-format
+#, c-format
 msgid "Can't open label file <%s> in mapset <%s>"
-msgstr "���"
+msgstr ""
 
 #: ../ps/ps.map/do_labels.c:47
-#, fuzzy, c-format
+#, c-format
 msgid "Reading labels file <%s in %s> ..."
-msgstr "���%s ..."
+msgstr ""
 
 #: ../ps/ps.map/do_labels.c:65
-#, fuzzy, c-format
+#, c-format
 msgid "Can't open temporary label file <%s>"
-msgstr "���"
+msgstr ""
 
 #: ../ps/ps.map/do_labels.c:68
 #, fuzzy
@@ -27199,9 +27088,9 @@ msgid "Reading vector map <%s in %s> ..."
 msgstr "入力するファイル"
 
 #: ../ps/ps.map/do_vectors.c:139
-#, fuzzy, c-format
+#, c-format
 msgid "Reading vector points file <%s in %s> ..."
-msgstr "���."
+msgstr ""
 
 #: ../db/drivers/postgres/fetch.c:172
 msgid "Cannot recognize boolean value"
@@ -27288,9 +27177,8 @@ msgid "Cannot allocate cursor."
 msgstr "入力するファイル"
 
 #: ../db/drivers/mysql/cursor.c:55
-#, fuzzy
 msgid "Cannot ad new token."
-msgstr "���"
+msgstr ""
 
 #: ../db/drivers/mysql/describe.c:120
 #, c-format
@@ -27475,9 +27363,8 @@ msgid "Copy table failed"
 msgstr ""
 
 #: ../db/base/connect.c:47
-#, fuzzy
 msgid "Prints/sets general DB connection for current mapset and exits."
-msgstr "���"
+msgstr ""
 
 #: ../db/base/connect.c:52
 #, fuzzy
@@ -27759,11 +27646,10 @@ msgid "Label with coordinates instead of numbering"
 msgstr "入力ファイルの座標を使用"
 
 #: ../locale/scriptstrings/v.convert.all_to_translate.c:1
-#, fuzzy
 msgid ""
 "Convert all old GRASS < Ver5.7 vector maps in current mapset to current "
 "format"
-msgstr "���."
+msgstr ""
 
 #: ../locale/scriptstrings/v.convert.all_to_translate.c:3
 #, fuzzy
@@ -27812,9 +27698,8 @@ msgid ""
 msgstr ""
 
 #: ../locale/scriptstrings/v.in.e00_to_translate.c:1
-#, fuzzy
 msgid "Import E00 file into a vector map."
-msgstr "���"
+msgstr ""
 
 #: ../locale/scriptstrings/v.in.e00_to_translate.c:4
 msgid "E00 file"
@@ -27836,11 +27721,10 @@ msgid "Name for output vector map"
 msgstr "出力するファイル"
 
 #: ../locale/scriptstrings/r.plane_to_translate.c:1
-#, fuzzy
 msgid ""
 "Creates raster plane map given dip (inclination), aspect (azimuth) and one "
 "point."
-msgstr "���."
+msgstr ""
 
 #: ../locale/scriptstrings/r.plane_to_translate.c:2
 #: ../locale/scriptstrings/r.shaded.relief_to_translate.c:2
@@ -28386,14 +28270,12 @@ msgid "Greater value option that sets the >= area size limit [hectares]"
 msgstr ""
 
 #: ../locale/scriptstrings/v.what.vect_to_translate.c:1
-#, fuzzy
 msgid "Uploads vector values at positions of vector points to the table."
-msgstr "���"
+msgstr ""
 
 #: ../locale/scriptstrings/v.what.vect_to_translate.c:3
-#, fuzzy
 msgid "Vector map to modify"
-msgstr "���"
+msgstr ""
 
 #: ../locale/scriptstrings/v.what.vect_to_translate.c:4
 #, fuzzy
@@ -28468,9 +28350,8 @@ msgstr "出力するファイル"
 #: ../locale/scriptstrings/v.colors_to_translate.c:3
 #: ../locale/scriptstrings/v.dissolve_to_translate.c:3
 #: ../locale/scriptstrings/v.centroids_to_translate.c:3
-#, fuzzy
 msgid "Name of input vector map"
-msgstr "���"
+msgstr ""
 
 #: ../locale/scriptstrings/v.report_to_translate.c:7
 #, fuzzy
@@ -28489,9 +28370,8 @@ msgid ""
 msgstr "対象マップ"
 
 #: ../locale/scriptstrings/v.db.update_to_translate.c:3
-#, fuzzy
 msgid "Vector map to edit the attribute table for"
-msgstr "���"
+msgstr ""
 
 #: ../locale/scriptstrings/v.db.update_to_translate.c:4
 #: ../locale/scriptstrings/v.rast.stats_to_translate.c:6
@@ -28546,9 +28426,8 @@ msgid "Name of raster map to generate legend from"
 msgstr "<%s>に対応させるラスターマップ"
 
 #: ../locale/scriptstrings/d.rast.leg_to_translate.c:8
-#, fuzzy
 msgid "Name of raster map to print in legend"
-msgstr "�����"
+msgstr ""
 
 #: ../locale/scriptstrings/d.rast.leg_to_translate.c:9
 msgid "Position of vertical map-legend separator (in percent)"
@@ -28639,10 +28518,9 @@ msgid "Manual entry to be displayed"
 msgstr "対象マップ"
 
 #: ../locale/scriptstrings/v.in.sites.all_to_translate.c:1
-#, fuzzy
 msgid ""
 "Converts all old GRASS < Ver5.7 sites maps in current mapset to vector maps."
-msgstr "���."
+msgstr ""
 
 #: ../locale/scriptstrings/v.in.sites.all_to_translate.c:2
 #, fuzzy
@@ -28661,9 +28539,8 @@ msgid ""
 msgstr "対象マップ"
 
 #: ../locale/scriptstrings/v.db.renamecol_to_translate.c:3
-#, fuzzy
 msgid "Vector map for which to rename attribute column"
-msgstr "���"
+msgstr ""
 
 #: ../locale/scriptstrings/v.db.renamecol_to_translate.c:4
 #, fuzzy
@@ -28864,9 +28741,8 @@ msgid "Path to rules file"
 msgstr "出力するファイル"
 
 #: ../locale/scriptstrings/v.colors_to_translate.c:15
-#, fuzzy
 msgid "Save placeholder raster map for use with d.legend"
-msgstr "�����"
+msgstr ""
 
 #: ../locale/scriptstrings/db.out.ogr_to_translate.c:1
 #, fuzzy
@@ -28923,9 +28799,8 @@ msgid "Do not preserve individual regions when redrawing all frames"
 msgstr ""
 
 #: ../locale/scriptstrings/d.slide.show_to_translate.c:1
-#, fuzzy
 msgid "Slide show of GRASS raster/vector maps."
-msgstr "���"
+msgstr ""
 
 #: ../locale/scriptstrings/d.slide.show_to_translate.c:2
 #, fuzzy
@@ -28933,9 +28808,8 @@ msgid "display, slideshow"
 msgstr "ガンマ"
 
 #: ../locale/scriptstrings/d.slide.show_to_translate.c:3
-#, fuzzy
 msgid "Show vector maps rather than raster maps"
-msgstr "���."
+msgstr ""
 
 #: ../locale/scriptstrings/d.slide.show_to_translate.c:4
 msgid "Map prefix. Specify character(s) to view selected maps only"
@@ -29204,11 +29078,10 @@ msgid "Table to drop"
 msgstr "出力するファイル"
 
 #: ../locale/scriptstrings/v.in.gns_to_translate.c:1
-#, fuzzy
 msgid ""
 "Imports US-NGA GEOnet Names Server (GNS) country files into a GRASS vector "
 "points map."
-msgstr "���"
+msgstr ""
 
 #: ../locale/scriptstrings/v.in.gns_to_translate.c:2
 #: ../locale/scriptstrings/v.in.geonames_to_translate.c:2
@@ -29251,9 +29124,8 @@ msgid "Column prefix for new attribute columns"
 msgstr "統一する属性の値"
 
 #: ../locale/scriptstrings/v.in.geonames_to_translate.c:1
-#, fuzzy
 msgid "Imports geonames.org country files into a GRASS vector points map."
-msgstr "���"
+msgstr ""
 
 #: ../locale/scriptstrings/v.in.geonames_to_translate.c:3
 msgid "Uncompressed geonames file from (with .txt extension)"
@@ -29285,9 +29157,8 @@ msgid "Drops a column from selected attribute table"
 msgstr "統一する属性の値"
 
 #: ../locale/scriptstrings/db.dropcol_to_translate.c:4
-#, fuzzy
 msgid "Table from which to drop attribute column"
-msgstr "���"
+msgstr ""
 
 #: ../locale/scriptstrings/db.dropcol_to_translate.c:5
 #: ../locale/scriptstrings/v.db.dropcol_to_translate.c:5
@@ -29324,9 +29195,8 @@ msgid "Input map is in Matlab format"
 msgstr "入力するファイル"
 
 #: ../locale/scriptstrings/v.in.mapgen_to_translate.c:4
-#, fuzzy
 msgid "Create a 3D vector points map from 3 column Matlab data"
-msgstr "���."
+msgstr ""
 
 #: ../locale/scriptstrings/v.in.mapgen_to_translate.c:5
 #, fuzzy
@@ -29334,9 +29204,8 @@ msgid "Name of input file in Mapgen/Matlab format"
 msgstr "最終レポートを出力するファイル"
 
 #: ../locale/scriptstrings/v.build.all_to_translate.c:1
-#, fuzzy
 msgid "Rebuilds topology on all vector maps in the current mapset."
-msgstr "���"
+msgstr ""
 
 #: ../locale/scriptstrings/r.univar.sh_to_translate.c:1
 #, fuzzy
@@ -29723,9 +29592,8 @@ msgid "Adds missing centroids to closed boundaries."
 msgstr "対象ファイル<%s>"
 
 #: ../locale/scriptstrings/v.centroids_to_translate.c:2
-#, fuzzy
 msgid "vector, centroid, area"
-msgstr "���"
+msgstr ""
 
 #: ../locale/scriptstrings/v.centroids_to_translate.c:5
 #, fuzzy
@@ -29790,9 +29658,8 @@ msgid "Force removal (required for actual deletion of table)"
 msgstr ""
 
 #: ../locale/scriptstrings/v.db.droptable_to_translate.c:4
-#, fuzzy
 msgid "Vector map from which to remove attribute table"
-msgstr "���"
+msgstr ""
 
 #: ../locale/scriptstrings/v.db.droptable_to_translate.c:5
 #, fuzzy
@@ -29800,9 +29667,8 @@ msgid "Name of existing attribute table (default: vector map name)"
 msgstr "対象マップ"
 
 #: ../locale/scriptstrings/v.db.droptable_to_translate.c:6
-#, fuzzy
 msgid "Layer from which to drop linked attribute table"
-msgstr "���"
+msgstr ""
 
 #: ../locale/scriptstrings/v.db.join_to_translate.c:1
 #, fuzzy
@@ -29810,9 +29676,8 @@ msgid "Allows to join a table to a vector map table."
 msgstr "対象マップ"
 
 #: ../locale/scriptstrings/v.db.join_to_translate.c:3
-#, fuzzy
 msgid "Vector map to which to join other table"
-msgstr "���"
+msgstr "入力するファイル"
 
 #: ../locale/scriptstrings/v.db.join_to_translate.c:4
 #, fuzzy
@@ -29844,19 +29709,16 @@ msgid "raster, imagery"
 msgstr "入力するファイル"
 
 #: ../locale/scriptstrings/i.tasscap_to_translate.c:3
-#, fuzzy
 msgid "use transformation rules for LANDSAT-4"
-msgstr "���"
+msgstr ""
 
 #: ../locale/scriptstrings/i.tasscap_to_translate.c:4
-#, fuzzy
 msgid "use transformation rules for LANDSAT-5"
-msgstr "���"
+msgstr ""
 
 #: ../locale/scriptstrings/i.tasscap_to_translate.c:5
-#, fuzzy
 msgid "use transformation rules for LANDSAT-7"
-msgstr "���"
+msgstr ""
 
 #: ../locale/scriptstrings/i.tasscap_to_translate.c:6
 #, fuzzy
@@ -29901,9 +29763,8 @@ msgid ""
 msgstr "対象マップ"
 
 #: ../locale/scriptstrings/v.db.addtable_to_translate.c:3
-#, fuzzy
 msgid "Vector map for which to add new attribute table"
-msgstr "���"
+msgstr ""
 
 #: ../locale/scriptstrings/v.db.addtable_to_translate.c:4
 #, fuzzy
@@ -29953,9 +29814,8 @@ msgid "Azimuth of the sun in degrees to the east of north"
 msgstr ""
 
 #: ../locale/scriptstrings/r.shaded.relief_to_translate.c:7
-#, fuzzy
 msgid "Factor for exaggerating relief"
-msgstr "���"
+msgstr ""
 
 #: ../locale/scriptstrings/r.shaded.relief_to_translate.c:8
 #, fuzzy
@@ -30080,9 +29940,8 @@ msgid ""
 msgstr "対象マップ"
 
 #: ../locale/scriptstrings/v.db.dropcol_to_translate.c:3
-#, fuzzy
 msgid "Vector map for which to drop attribute column"
-msgstr "���"
+msgstr ""
 
 #: ../locale/scriptstrings/v.db.dropcol_to_translate.c:4
 #, fuzzy
@@ -30219,9 +30078,9 @@ msgstr ""
 #: ../imagery/i.smap/shapiro/read_sig.c:13
 #: ../imagery/i.smap/shapiro/openfiles.c:15
 #: ../imagery/i.gensigset/openfiles.c:15 ../imagery/i.gensig/openfiles.c:16
-#, fuzzy, c-format
+#, c-format
 msgid "Unable to read REF file for subgroup <%s> in group <%s>"
-msgstr "���"
+msgstr ""
 
 #: ../imagery/i.smap/shapiro/read_sig.c:17
 #: ../imagery/i.smap/shapiro/openfiles.c:19
@@ -30236,9 +30095,9 @@ msgid "Unable to read signature file <%s>"
 msgstr "出力するファイル"
 
 #: ../imagery/i.smap/shapiro/read_sig.c:27
-#, fuzzy, c-format
+#, c-format
 msgid "Signature file <%s> is invalid"
-msgstr "��."
+msgstr ""
 
 #: ../imagery/i.smap/shapiro/parse.c:21 ../imagery/i.maxlik/main.c:79
 #, fuzzy
@@ -30402,9 +30261,9 @@ msgid "Fewer than 1 orientation classes not allowed"
 msgstr ""
 
 #: ../imagery/i.zc/main.c:147
-#, fuzzy, c-format
+#, c-format
 msgid "Power 2 values : %d rows %d columns"
-msgstr "���"
+msgstr ""
 
 #: ../imagery/i.zc/main.c:157
 #, fuzzy
@@ -30517,9 +30376,8 @@ msgid " Can not generate the transformation equation."
 msgstr "���"
 
 #: ../imagery/i.rectify/cp.c:29
-#, fuzzy
 msgid "Not enough memory to solve for transformation equation"
-msgstr "���"
+msgstr ""
 
 #: ../imagery/i.rectify/cp.c:32
 #, fuzzy
@@ -30527,9 +30385,9 @@ msgid "Invalid order"
 msgstr "Z座標値"
 
 #: ../imagery/i.rectify/target.c:14
-#, fuzzy, c-format
+#, c-format
 msgid "Target information for group <%s> missing"
-msgstr "��."
+msgstr ""
 
 #: ../imagery/i.rectify/target.c:20
 #, fuzzy, c-format
@@ -30585,14 +30443,14 @@ msgid "Rectified input raster map <%s> will be saved as <%s>"
 msgstr "出力するファイル"
 
 #: ../imagery/i.rectify/rectify.c:94
-#, fuzzy, c-format
+#, c-format
 msgid "Raster map <%s@%s>: projection don't match current settings"
-msgstr "���"
+msgstr ""
 
 #: ../imagery/i.rectify/rectify.c:100
-#, fuzzy, c-format
+#, c-format
 msgid "Raster map <%s@%s>: zone don't match current settings"
-msgstr "���"
+msgstr ""
 
 #: ../imagery/i.vpoints/main.c:96
 msgid ""
@@ -30865,23 +30723,21 @@ msgid "Name of input raster map (image fft, imaginary part"
 msgstr "虚部を含む入力ファイル"
 
 #: ../imagery/i.ifft/ifftmain.c:101
-#, fuzzy
 msgid ""
 "Unable to open real-image in the 'cell_misc' directory. Raster map probably "
 "wasn't created by i.fft"
-msgstr "���"
+msgstr ""
 
 #: ../imagery/i.ifft/ifftmain.c:111
-#, fuzzy
 msgid ""
 "Unable to open imaginary-image in the 'cell_misc' directory. Raster map "
 "probably wasn't created by i.fft"
-msgstr "���"
+msgstr ""
 
 #: ../imagery/i.ifft/ifftmain.c:134
-#, fuzzy, c-format
+#, c-format
 msgid "Power 2 values: %d rows %d columns"
-msgstr "���"
+msgstr ""
 
 #: ../imagery/i.ifft/ifftmain.c:151
 #, fuzzy
@@ -31128,9 +30984,8 @@ msgid "Poorly placed psuedo control points. "
 msgstr "90度回転"
 
 #: ../imagery/i.ortho.photo/photo.rectify/ps_cp.c:54
-#, fuzzy
 msgid "Cannot generate the transformation equation."
-msgstr "���"
+msgstr ""
 
 #: ../imagery/i.ortho.photo/photo.rectify/ps_cp.c:58
 #, fuzzy
@@ -31163,14 +31018,14 @@ msgid "Please select the file(s) you wish to rectify by naming an output file"
 msgstr ""
 
 #: ../imagery/i.ortho.photo/photo.rectify/rectify.c:245
-#, fuzzy, c-format
+#, c-format
 msgid "%s@%s: projection doesn't match current settings"
-msgstr "���"
+msgstr ""
 
 #: ../imagery/i.ortho.photo/photo.rectify/rectify.c:251
-#, fuzzy, c-format
+#, c-format
 msgid "%s@%s: zone doesn't match current settings"
-msgstr "���"
+msgstr ""
 
 #: ../imagery/i.ortho.photo/photo.elev/main.c:64
 #, fuzzy
@@ -31178,9 +31033,9 @@ msgid "Interactively select or modify the target elevation model."
 msgstr "対話形式で終点を選択"
 
 #: ../imagery/i.ortho.photo/photo.elev/main.c:91
-#, fuzzy, c-format
+#, c-format
 msgid "Target information for group [%s] missing\n"
-msgstr "��."
+msgstr ""
 
 #: ../imagery/i.ortho.photo/photo.elev/main.c:98
 #, fuzzy, c-format
@@ -31242,9 +31097,9 @@ msgid "Enter a camera reference file to be used with this imagery group"
 msgstr "出力するファイル"
 
 #: ../imagery/i.ortho.photo/photo.camera/main.c:100
-#, fuzzy, c-format
+#, c-format
 msgid "Group [%s] in location [%s] mapset [%s] now has camera file [%s]"
-msgstr "���."
+msgstr ""
 
 #: ../imagery/i.ortho.photo/menu/menu.c:44
 msgid "Menu driver for the photo imagery programs."
@@ -31362,19 +31217,19 @@ msgid "Calculating class means..."
 msgstr "入力するファイル"
 
 #: ../imagery/i.gensig/check.c:21
-#, fuzzy, c-format
+#, c-format
 msgid "Signature %d not invertible"
-msgstr "��."
+msgstr ""
 
 #: ../imagery/i.gensig/check.c:27
-#, fuzzy, c-format
+#, c-format
 msgid "Signature %d unable to get eigen values"
-msgstr "��."
+msgstr ""
 
 #: ../imagery/i.gensig/check.c:33
-#, fuzzy, c-format
+#, c-format
 msgid "Signature %d not positive definite"
-msgstr "��."
+msgstr ""
 
 #: ../imagery/i.cluster/print1.c:12
 #, c-format
@@ -31457,29 +31312,29 @@ msgid "Illegal number of initial classes (%s)"
 msgstr "初期のクラスター数"
 
 #: ../imagery/i.cluster/main.c:193
-#, fuzzy, c-format
+#, c-format
 msgid "Illegal value(s) of sample intervals (%s)"
-msgstr "���� ����"
+msgstr ""
 
 #: ../imagery/i.cluster/main.c:207
-#, fuzzy, c-format
+#, c-format
 msgid "Illegal value of iterations (%s>)"
-msgstr "���� ����"
+msgstr ""
 
 #: ../imagery/i.cluster/main.c:213
-#, fuzzy, c-format
+#, c-format
 msgid "Illegal value of convergence (%s)"
-msgstr "���� ����"
+msgstr ""
 
 #: ../imagery/i.cluster/main.c:218
-#, fuzzy, c-format
+#, c-format
 msgid "Illegal value of separation (%s)"
-msgstr "���� ����"
+msgstr ""
 
 #: ../imagery/i.cluster/main.c:223
-#, fuzzy, c-format
+#, c-format
 msgid "Illegal value of min_size (%s)"
-msgstr "���� ����"
+msgstr ""
 
 #: ../imagery/i.cluster/main.c:234
 #, fuzzy, c-format
@@ -31994,9 +31849,8 @@ msgid ""
 msgstr "非教師付き分類用スペクトルシグネチャを最短距離法により作成します"
 
 #: ../imagery/i.class/main.c:62
-#, fuzzy
 msgid "Name of raster map to be displayed"
-msgstr "�����"
+msgstr ""
 
 #: ../imagery/i.class/main.c:77
 #, fuzzy
@@ -36212,9 +36066,8 @@ msgstr "入力するファイル"
 #~ msgid "Unable to open MASK"
 #~ msgstr "入力するファイル"
 
-#, fuzzy
 #~ msgid "Name of the longitude input raster map [decimal degrees]"
-#~ msgstr "緯度 (dd:mm:ss{N|S})"
+#~ msgstr "経度入力ラスターマップ名（小数点付の度）"
 
 #, fuzzy
 #~ msgid "Columns"
