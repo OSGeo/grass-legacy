@@ -105,8 +105,8 @@ AC_CONFIG_AUX_DIR($SRCDIR)
 
 # Set GISBASE and GRASS_BIN
 
-GISBASE=${WINDSTDIR}/dist.${ARCH}
-GRASS_BIN=${DSTDIR}/bin.${ARCH}
+GISBASE="${WINDSTDIR}/dist.${ARCH}"
+GRASS_BIN="${DSTDIR}/bin.${ARCH}"
 
 AC_SUBST(GISBASE)
 AC_SUBST(GRASS_BIN)
@@ -114,10 +114,10 @@ AC_SUBST(GRASS_BIN)
 # Set GRASS_VERSION_*
 
 GRASS_VERSION_FILE=include/VERSION
-GRASS_VERSION_MAJOR=`sed -n 1p ${GRASS_VERSION_FILE}`
-GRASS_VERSION_MINOR=`sed -n 2p ${GRASS_VERSION_FILE}`
-GRASS_VERSION_RELEASE=`sed -n 3p ${GRASS_VERSION_FILE}`
-GRASS_VERSION_DATE=`sed -n 4p ${GRASS_VERSION_FILE}`
+GRASS_VERSION_MAJOR=`sed -n 1p "${GRASS_VERSION_FILE}"`
+GRASS_VERSION_MINOR=`sed -n 2p "${GRASS_VERSION_FILE}"`
+GRASS_VERSION_RELEASE=`sed -n 3p "${GRASS_VERSION_FILE}"`
+GRASS_VERSION_DATE=`sed -n 4p "${GRASS_VERSION_FILE}"`
 GRASS_VERSION_NUMBER=`echo ${GRASS_VERSION_MAJOR}.${GRASS_VERSION_MINOR}.${GRASS_VERSION_RELEASE}`
 NAME_VER=`echo ${GRASS_VERSION_NUMBER} | sed 's/\..*//'`
 changequote(,)
@@ -546,8 +546,8 @@ AC_SUBST(COMPATLIB)
 ac_save_libs="$LIBS"
 LIBS=""
 AC_SEARCH_LIBS(cuserid,[compat])
-DBMIEXTRALIB=$LIBS
-LIBS=$ac_save_libs
+DBMIEXTRALIB="$LIBS"
+LIBS="$ac_save_libs"
 AC_SUBST(DBMIEXTRALIB)
 
 # Note: -lxdr -liberty -lws2_32 is for MinGW
@@ -852,6 +852,7 @@ GEOS_LIBS=
 GGEOS_CFLAGS=
 USE_GEOS=
 
+# FIXME: "quote" $with_geos ?
 if test "`basename xx/$with_geos`" = "geos-config" ; then
   GEOS_CONFIG="$with_geos"
 fi
@@ -976,7 +977,7 @@ AC_CHECK_LIB(pq,PQcmdTuples, [AC_DEFINE(HAVE_PQCMDTUPLES)], [
 AC_CHECK_LIB(pq,PQcmdTuples, [AC_DEFINE(HAVE_PQCMDTUPLES)], [
 ], -lcrypt)
 ])
-LDFLAGS=${ac_save_ldflags}
+LDFLAGS="${ac_save_ldflags}"
 
 fi # $USE_POSTGRES
 
@@ -1183,7 +1184,7 @@ ac_save_ldflags="$LDFLAGS"
 LDFLAGS="$LDFLAGS $OPENGLLIB"
 AC_CHECK_FUNC(glXCreatePbuffer, [AC_DEFINE(HAVE_PBUFFERS)])
 AC_CHECK_FUNC(glXCreateGLXPixmap, [AC_DEFINE(HAVE_PIXMAPS)])
-LDFLAGS=${ac_save_ldflags}
+LDFLAGS="${ac_save_ldflags}"
 
 AC_DEFINE(OPENGL_X11)
 
@@ -1211,7 +1212,7 @@ USE_OPENGL=1
 OPENGL_AQUA=1
 ],[AC_MSG_ERROR([*** Unable to locate GLU library.])])
 ],[AC_MSG_ERROR([*** Unable to locate OpenGL library.])])
-LDFLAGS=${ac_save_ldflags}
+LDFLAGS="${ac_save_ldflags}"
 
 AC_DEFINE(OPENGL_AQUA)
 
@@ -1233,7 +1234,7 @@ ac_save_cflags="$CFLAGS"
 CFLAGS="$CFLAGS $OPENGLINC"
 LOC_CHECK_LINK(opengl32,[#include <GL/gl.h>],[glEnd();],OpenGL,$OPENGL_LIB_PATH,OPENGLLIB)
 LOC_CHECK_LINK(glu32,[#include <GL/glu.h>],[gluNewQuadric();],GLU,$OPENGL_LIB_PATH,OPENGLULIB,$OPENGLLIB)
-CFLAGS=${ac_save_cflags}
+CFLAGS="${ac_save_cflags}"
 
 OPENGLLIB="$OPENGL_LIB_PATH $OPENGLLIB"
 OPENGLULIB="$OPENGL_LIB_PATH $OPENGLULIB"
@@ -1279,7 +1280,7 @@ LOC_CHECK_VERSION_STRING(tcl.h,TCL_VERSION,Tcl,tcl_ver,$TCLINCDIR,UNKNOWN)
 LOC_CHECK_VERSION_STRING(tk.h,TK_VERSION,Tk,tk_ver,$TCLINCDIR $X_CFLAGS,UNKNOWN)
 
 if test "$tcl_ver" = "$tk_ver" ; then
-    tcltk_ver=$tcl_ver
+    tcltk_ver="$tcl_ver"
 else
     AC_MSG_ERROR([*** Tcl/Tk version mismatch.])
 fi
@@ -1287,7 +1288,7 @@ fi
 TCL_VERSION="$tcl_ver"
 
 # FreeBSD and CygWin don't have a "dot" between major/minor version number
-tcltk_ver2=`echo $tcltk_ver | sed 's/\.//g'`
+tcltk_ver2=`echo "$tcltk_ver" | sed 's/\.//g'`
 
 # With Tcl/Tk library directory
 
@@ -1388,7 +1389,7 @@ ac_save_cflags="$CFLAGS"
 CFLAGS="$CFLAGS $ODBCINC"
 LOC_CHECK_LINK(odbc32,[#include <windows.h>
 #include <sql.h>],[SQLAllocEnv((SQLHENV *)0);],ODBC,$ODBCLIB,ODBCLIB)
-CFLAGS=${ac_save_cflags}
+CFLAGS="${ac_save_cflags}"
 ])
 ])
 
@@ -1455,7 +1456,7 @@ LOC_CHECK_LIB_PATH(blas, BLAS, BLASLIB)
 save_CPPFLAGS="$CPPFLAGS"
 CPPFLAGS="$BLASINC $CPPFLAGS"
 AC_CHECK_HEADERS(cblas.h)
-CPPFLAGS=$save_CPPFLAGS
+CPPFLAGS="$save_CPPFLAGS"
 
 LOC_CHECK_LIBS(blas,dnrm2_,BLAS,$BLASLIB,BLASLIB,$MATHLIB,,,-lg2c)
 
@@ -1554,7 +1555,7 @@ LOC_CHECK_LIB_PATH(lapack, LAPACK, LAPACKLIB)
 save_CPPFLAGS="$CPPFLAGS"
 CPPFLAGS="$LAPACKINC $CPPFLAGS"
 AC_CHECK_HEADERS(clapack.h)
-CPPFLAGS=$save_CPPFLAGS
+CPPFLAGS="$save_CPPFLAGS"
 
 # LAPACK linked to by default?
 if test lapack_ok=no; then
@@ -1632,7 +1633,7 @@ if test -n "$USE_X11"; then
 fi
 
 # With Cairo includes directory
-
+#FIXME: somehow quote dirs with spaces in $cairo ?
 CAIROINC=`pkg-config --cflags $cairo`
 
 LOC_CHECK_INC_PATH(cairo,cairo,CAIROINC)
@@ -1795,9 +1796,9 @@ LOC_CHECK_LIB_PATH(opendwg,openDWG,OPENDWGLIBPATH)
 #LOC_CHECK_LIBS(ad?.a,adSeekLayer,openDWG,$OPENDWGLIBPATH,OPENDWGLIB,,)
 #
 #for now hack (but working):
-TRUEOPENDWGLIBPATH=`echo $OPENDWGLIBPATH | cut -b3-`
-adlib=`ls -1 $TRUEOPENDWGLIBPATH/ad?.a | tail -1`
-OPENDWGLIB=$adlib
+TRUEOPENDWGLIBPATH=`echo "$OPENDWGLIBPATH" | cut -b3-`
+adlib=`ls -1 "$TRUEOPENDWGLIBPATH"/ad?.a | tail -1`
+OPENDWGLIB="$adlib"
 
 fi # $USE_OPENDWG
 
@@ -2000,7 +2001,7 @@ AC_SUBST(USE_TERMIO)
 STRIPFLAG=
 AC_SUBST(STRIPFLAG)
 
-GRASS_HOME=${DSTDIR}
+GRASS_HOME="${DSTDIR}"
 AC_SUBST(GRASS_HOME)
 
 AC_OUTPUT(include/Make/Grass.make include/Make/Platform.make include/version.h include/winname.h swig/perl/Makefile.PL swig/perl2/make.pl grass.pc)
