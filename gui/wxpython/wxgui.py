@@ -969,7 +969,7 @@ class GMFrame(wx.Frame):
 
         gisbase = os.environ['GISBASE']
 
-        if sys.platform == win32:
+        if sys.platform == "win32":
             runbat = os.path.join(gisbase,'etc','grass-run.bat')
             cmdlist = ["cmd.exe", "/c", 'start "%s"' % runbat, command]
         else:
