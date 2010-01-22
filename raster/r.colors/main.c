@@ -274,7 +274,7 @@ int main(int argc, char **argv)
 	G_fatal_error(_("Interactive mode is incompatible with \"color\", \"rules\", and \"raster\" options"));
 
     if ((style && (cmap || rules)) || (cmap && rules)) {
-	if(((style && rules && !cmap) && strcmp(style, "rules") == 0))
+	if ((style && rules && !cmap) && strcmp(style, "rules") == 0)
 	    style = NULL;
 	else
 	    G_fatal_error(
