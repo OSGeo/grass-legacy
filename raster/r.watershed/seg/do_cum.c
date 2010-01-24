@@ -114,7 +114,7 @@ int do_cum_mfd(void)
     double dx, dy;
     CELL ele, ele_nbr, asp_val, asp_val2, cvalue, *worked_nbr;
     double prop, max_acc;
-    int workedon, edge;
+    int workedon, edge, flat;
     SHORT asp_r[9] = { 0, -1, -1, -1, 0, 1, 1, 1, 0 };
     SHORT asp_c[9] = { 0, 1, 0, -1, -1, -1, 0, 1, 1 };
 
@@ -188,6 +188,7 @@ int do_cum_mfd(void)
 	    cseg_get(&alt, &ele, r, c);
 	    is_null = 0;
 	    edge = 0;
+	    flat = 1;
 	    /* this loop is needed to get the sum of weights */
 	    for (ct_dir = 0; ct_dir < sides; ct_dir++) {
 		/* get r, c (r_nbr, c_nbr) for neighbours */
@@ -205,15 +206,18 @@ int do_cum_mfd(void)
 			swale_cells++;
 		    dseg_get(&wat, &valued, r_nbr, c_nbr);
 		    wat_nbr[ct_dir] = valued;
-		    if ((ABS(wat_nbr[ct_dir]) + 0.5) >= threshold)
+		    cseg_get(&alt, &ele_nbr, r_nbr, c_nbr);
+		    if ((ABS(wat_nbr[ct_dir]) + 0.5) >= threshold &&
+		        ct_dir != np_side && ele_nbr > ele)
 			stream_cells++;
 
 		    bseg_get(&worked, &cvalue, r_nbr, c_nbr);
 		    worked_nbr[ct_dir] = cvalue;
 		    if (worked_nbr[ct_dir] == 0) {
-			cseg_get(&alt, &ele_nbr, r_nbr, c_nbr);
 			is_null = G_is_c_null_value(&ele_nbr);
 			edge = is_null;
+			if (ele_nbr != ele)
+			    flat = 0;
 			if (!is_null && ele_nbr <= ele) {
 			    if (ele_nbr < ele) {
 				weight[ct_dir] =
@@ -361,7 +365,7 @@ int do_cum_mfd(void)
 	    /* start new stream */
 	    value = ABS(value) + 0.5;
 	    if (!is_swale && (int)value >= threshold && stream_cells < 1 &&
-		swale_cells < 1) {
+		swale_cells < 1 && !flat) {
 		bseg_put(&swale, &one, r, c);
 		is_swale = 1;
 	    }

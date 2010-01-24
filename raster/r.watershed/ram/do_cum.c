@@ -108,7 +108,7 @@ int do_cum_mfd(void)
     double dx, dy;
     CELL ele, ele_nbr, aspect, is_worked;
     double prop, max_acc;
-    int workedon, edge;
+    int workedon, edge, flat;
     SHORT asp_r[9] = { 0, -1, -1, -1, 0, 1, 1, 1, 0 };
     SHORT asp_c[9] = { 0, 1, 0, -1, -1, -1, 0, 1, 1 };
     int this_index, down_index, nbr_index;
@@ -172,6 +172,7 @@ int do_cum_mfd(void)
 	    ele = alt[this_index];
 	    is_null = 0;
 	    edge = 0;
+	    flat = 1;
 	    /* this loop is needed to get the sum of weights */
 	    for (ct_dir = 0; ct_dir < sides; ct_dir++) {
 		/* get r, c (r_nbr, c_nbr) for neighbours */
@@ -189,14 +190,17 @@ int do_cum_mfd(void)
 		    if (is_swale)
 			swale_cells++;
 		    valued = wat[nbr_index];
-		    if ((ABS(valued) + 0.5) >= threshold)
+		    ele_nbr = alt[nbr_index];
+		    if ((ABS(valued) + 0.5) >= threshold &&
+		        ct_dir != np_side && ele_nbr > ele)
 			stream_cells++;
 
 		    is_worked = FLAG_GET(worked, r_nbr, c_nbr);
 		    if (is_worked == 0) {
-			ele_nbr = alt[nbr_index];
 			is_null = G_is_c_null_value(&ele_nbr);
 			edge = is_null;
+			if (ele_nbr != ele)
+			    flat = 0;
 			if (!is_null && ele_nbr <= ele) {
 			    if (ele_nbr < ele) {
 				weight[ct_dir] =
@@ -343,7 +347,7 @@ int do_cum_mfd(void)
 	    /* start new stream */
 	    value = ABS(value) + 0.5;
 	    if (!is_swale && (int)value >= threshold && stream_cells < 1 &&
-		swale_cells < 1) {
+		swale_cells < 1 && !flat) {
 		FLAG_SET(swale, r, c);
 		is_swale = 1;
 	    }

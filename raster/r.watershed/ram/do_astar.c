@@ -295,8 +295,8 @@ get_slope(SHORT r, SHORT c, SHORT downr, SHORT downc, CELL ele, CELL downe)
 
 double get_slope2(CELL ele, CELL up_ele, double dist)
 {
-    if (ele == up_ele)
-	return 0.5 / dist;
+    if (ele >= up_ele)
+	return 0.0;
     else
 	return (double)(up_ele - ele) / dist;
 }

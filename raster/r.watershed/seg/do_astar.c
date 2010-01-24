@@ -113,8 +113,7 @@ int do_astar(void)
 		}
 		/* put neighbour in search list if not yet in */
 		if (in_val == 0 && skip_diag == 0) {
-		    cseg_get(&alt, &alt_up, upr, upc);
-		    add_pt(upr, upc, alt_up, alt_val);
+		    add_pt(upr, upc, alt_nbr[ct_dir], alt_val);
 		    /* flow direction is set here */
 		    drain_val = drain[upr - r + 1][upc - c + 1];
 		    cseg_put(&asp, &drain_val, upr, upc);
@@ -316,8 +315,8 @@ get_slope(SHORT r, SHORT c, SHORT downr, SHORT downc, CELL ele, CELL downe)
 
 double get_slope2(CELL ele, CELL up_ele, double dist)
 {
-    if (ele == up_ele)
-	return 0.5 / dist;
+    if (ele >= up_ele)
+	return 0.0;
     else
 	return (double)(up_ele - ele) / dist;
 }
