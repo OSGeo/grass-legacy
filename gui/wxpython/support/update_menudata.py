@@ -41,7 +41,7 @@ def ParseInterface(cmd):
     handler = menuform.processTask(grass_task)
     enc = locale.getdefaultlocale()[1]
     if enc and enc.lower() not in ("utf8", "utf-8"):
-        xml.sax.parseString(menuform.getInterfaceDescription(cmd[0]).decode(enc).encode("utf-8"),
+        xml.sax.parseString(menuform.getInterfaceDescription(cmd[0]).decode(enc).split('\n',1)[1].replace('', '<?xml version="1.0" encoding="utf-8"?>\n', 1).encode("utf-8"),
                             handler)
     else:
         xml.sax.parseString(menuform.getInterfaceDescription(cmd[0]),
