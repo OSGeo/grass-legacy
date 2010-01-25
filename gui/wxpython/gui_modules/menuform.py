@@ -1815,9 +1815,14 @@ class GUI:
         # parse the interface decription
         self.grass_task = grassTask()
         handler = processTask(self.grass_task)
-        xml.sax.parseString(getInterfaceDescription(cmd[0]),
+        enc = locale.getdefaultlocale()[1]
+        if enc and enc.lower() not in ("utf8", "utf-8"):
+            xml.sax.parseString(getInterfaceDescription(cmd[0]).decode(enc).split('\n',1)[1].replace('', '<?xml version="1.0" encoding="utf-8"?>\n', 1).encode("utf-8"),
                             handler)
-        
+        else:
+            xml.sax.parseString(getInterfaceDescription(cmd[0]),
+                            handler)
+  
         # if layer parameters previously set, re-insert them into dialog
         if completed is not None:
             if 'params' in dcmd_params:
