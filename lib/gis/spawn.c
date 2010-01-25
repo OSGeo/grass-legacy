@@ -705,7 +705,7 @@ static void begin_spawn(struct spawn *sp)
     sp->directory = NULL;
 }
 
-#define NEXT_ARG(var, type) ((type) *(var)++)
+#define NEXT_ARG(var, type) ((type) (ssize_t) *(var)++)
 
 static void parse_argvec(struct spawn *sp, const char **va)
 {
