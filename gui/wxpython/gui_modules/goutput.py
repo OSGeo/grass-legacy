@@ -319,7 +319,7 @@ class GMConsole(wx.Panel):
                                  'd.rhumbline'    : 'rhumb',
                                  'd.labels'       : 'labels'}[cmdlist[0]]
                 except KeyError:
-                    wx.MessageBox(message=_("Command '%s' not yet implemented.") % cmdlist[0])
+                    wx.MessageBox(message=_("Command '%s' not yet implemented in the GUI. Try adding it as a command layer instead.") % cmdlist[0])
                     return None
 
                 # add layer into layer tree
