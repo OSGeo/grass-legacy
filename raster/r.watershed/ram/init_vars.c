@@ -194,6 +194,12 @@ int init_vars(int argc, char *argv[])
 	}
 	G_close_cell(fd);
     }
+    else {
+	for (r = 0; r < nrows; r++) {
+	    for (c = 0; c < ncols; c++)
+		asp[SEG_INDEX(wat_seg, r, c)] = 0;
+	}
+    }
 
     if (ob_flag) {
 	fd = G_open_cell_old(ob_name, ob_mapset);
