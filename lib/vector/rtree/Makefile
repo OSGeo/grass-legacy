@@ -1,6 +1,7 @@
 MODULE_TOPDIR = ../../..
 
 LIB_NAME = $(RTREE_LIBNAME)
+EXTRA_LIBS = $(MATHLIB)
 
 LIB_OBJS = card.o \
 	gammavol.o \

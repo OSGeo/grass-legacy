@@ -1,6 +1,7 @@
 MODULE_TOPDIR = ../..
 
 LIB_NAME = $(CDHC_LIBNAME)
+EXTRA_LIBS = $(MATHLIB)
 
 LIB_OBJS = \
 	dcmp.o \
