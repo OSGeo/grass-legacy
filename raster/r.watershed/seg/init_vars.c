@@ -10,7 +10,7 @@ int ele_round(double);
 int init_vars(int argc, char *argv[])
 {
     SHORT r, c;
-    int fd, num_cseg_total, num_open_segs;
+    int fd, num_cseg_total, num_open_segs, n_array_segs;
     int seg_rows, seg_cols;
     double segs_mb;
 
@@ -345,12 +345,22 @@ int init_vars(int argc, char *argv[])
     if (ls_flag)
 	dseg_open(&l_s, 1, seg_rows * seg_cols, num_open_segs);
 
+    if (num_open_segs / 2 > 0)
+	n_array_segs = num_open_segs / 2;
+    else
+	n_array_segs = 1;
+
     seg_open(&astar_pts, 1, do_points, 1, seg_rows * seg_cols * 2,
-	     num_open_segs / 2, sizeof(POINT));
+	     n_array_segs, sizeof(POINT));
 
     /* heap_index will track astar_pts in ternary min-heap */
     /* heap_index is one-based */
-    seg_open(&heap_index, 1, do_points + 1, 1, seg_cols * num_open_segs * seg_rows / 10,
+    if (seg_cols * num_open_segs * seg_rows / 10 > 0)
+	n_array_segs = seg_cols * num_open_segs * seg_rows / 10;
+    else
+	n_array_segs = 1;
+
+    seg_open(&heap_index, 1, do_points + 1, 1, n_array_segs,
 	     10, sizeof(HEAP));
 
     G_message(_("SECTION 1b (of %1d): Determining Offmap Flow."), tot_parts);
