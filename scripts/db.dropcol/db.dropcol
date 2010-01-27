@@ -67,15 +67,15 @@ LC_NUMERIC=C
 export LC_NUMERIC
 
 #### setup temporary file
-TMP="`g.tempfile pid=$$`"
-if [ $? -ne 0 ] || [ -z "$TMP" ] ; then
+TEMPFILE="`g.tempfile pid=$$`"
+if [ $? -ne 0 ] || [ -z "$TEMPFILE" ] ; then
     g.message -e "Unable to create temporary files" 
     exit 1
 fi
 
 cleanup()
 {
- \rm -f "$TMP" "$TMP.coltypes" "$TMP.colnames" "$TMP.coldesc"
+ \rm -f "$TEMPFILE" "$TEMPFILE.coltypes" "$TEMPFILE.colnames" "$TEMPFILE.coldesc"
 }
 
 # what to do in case of user break:
@@ -133,11 +133,11 @@ fi
 if [ "$driver" = "sqlite" ] ; then
 	#echo "Using special trick for SQLite"
 	# http://www.sqlite.org/faq.html#q13
-	db.describe -c $table | grep '^Column ' | cut -d':' -f2,3 | grep -v "${col}:" > "$TMP.coldesc"
-	cat "$TMP.coldesc" | cut -d':' -f2 > "$TMP.coltypes"
-	cat "$TMP.coldesc" | cut -d':' -f1 > "$TMP.colnames"
-	COLDEF=`paste -d' ' "$TMP.colnames" "$TMP.coltypes" | tr '\n' ',' | sed 's+,$++g'`
-	COLNAMES=`cat "$TMP.colnames" | tr '\n' ',' | sed 's+,$++g'`
+	db.describe -c $table | grep '^Column ' | cut -d':' -f2,3 | grep -v "${col}:" > "$TEMPFILE.coldesc"
+	cat "$TEMPFILE.coldesc" | cut -d':' -f2 > "$TEMPFILE.coltypes"
+	cat "$TEMPFILE.coldesc" | cut -d':' -f1 > "$TEMPFILE.colnames"
+	COLDEF=`paste -d' ' "$TEMPFILE.colnames" "$TEMPFILE.coltypes" | tr '\n' ',' | sed 's+,$++g'`
+	COLNAMES=`cat "$TEMPFILE.colnames" | tr '\n' ',' | sed 's+,$++g'`
 echo "BEGIN TRANSACTION;
 CREATE TEMPORARY TABLE ${table}_backup(${COLDEF});
 INSERT INTO ${table}_backup SELECT ${COLNAMES} FROM ${table};
@@ -145,8 +145,8 @@ DROP TABLE ${table};
 CREATE TABLE ${table}(${COLDEF});
 INSERT INTO ${table} SELECT ${COLNAMES} FROM ${table}_backup;
 DROP TABLE ${table}_backup;
-COMMIT;" > "$TMP"
-	db.execute input="$TMP"
+COMMIT;" > "$TEMPFILE"
+	db.execute input="$TEMPFILE"
 	if [ $? -eq 1 ] ; then
 	    	g.message -e "Cannot continue (problem deleting column)."
 	    	cleanup
