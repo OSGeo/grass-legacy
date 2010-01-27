@@ -806,6 +806,7 @@ Section "Uninstall"
 	Delete "$INSTDIR\GRASS-WebSite.url"	
 	Delete "$INSTDIR\WinGRASS-README.url"
 	Delete "$INSTDIR\REQUIREMENTS.html"
+	Delete "$INSTDIR\README.html"
 	
 	;remove folders
 	RMDir /r "$INSTDIR\bin"
@@ -827,6 +828,7 @@ Section "Uninstall"
 	RMDir /r "$INSTDIR\scripts"
 	RMDir /r "$INSTDIR\sqlite"
 	RMDir /r "$INSTDIR\tcl-tk"
+	RMDir /r "$INSTDIR\tools"	
 	
 	;if empty, remove the install folder
 	RMDir "$INSTDIR"
