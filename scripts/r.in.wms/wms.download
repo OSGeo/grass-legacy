@@ -64,8 +64,8 @@ fi
 g.message -d "[wms.download]"
 
 #### setup temporary file
-TMP="`g.tempfile pid=$$`"
-if [ $? -ne 0 ] || [ -z "$TMP" ] ; then
+TEMPFILE="`g.tempfile pid=$$`"
+if [ $? -ne 0 ] || [ -z "$TEMPFILE" ] ; then
     g.message -e "Unable to create temporary files"
     exit 1
 fi
@@ -92,7 +92,7 @@ defaultIFS=$IFS
 exitprocedure()
 {
 	g.message -e 'User break!'
-	rm -f "${TMP}"*
+	rm -f "${TEMPFILE}"*
 	exit 1
 }
 trap "exitprocedure" 2 3 15
@@ -212,5 +212,5 @@ REQUESTFILE="${GIS_OPT_REQUESTFILE}"
 GetTiles
 
 # Clean up:
-rm -f "${TMP}"*
+rm -f "${TEMPFILE}"*
 

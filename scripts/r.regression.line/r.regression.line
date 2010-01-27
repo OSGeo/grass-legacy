@@ -86,8 +86,8 @@ if [ "$ok" = "no" ] ; then
  exit 1
 fi
 
-TMP="`g.tempfile pid=$$`"
-if [ $? -ne 0 ] || [ -z "$TMP" ] ; then
+TEMPFILE="`g.tempfile pid=$$`"
+if [ $? -ne 0 ] || [ -z "$TEMPFILE" ] ; then
     g.message -e "Unable to create temporary files"
     exit 1
 fi
@@ -96,13 +96,13 @@ fi
 #calculate regression equation
 if [ $GIS_FLAG_S -eq 1 ] ; then
    # slower but accurate
-   r.stats -n1  input=$GIS_OPT_MAP1,$GIS_OPT_MAP2 | sed 's+$+ 1+g' > "$TMP"
+   r.stats -n1  input=$GIS_OPT_MAP1,$GIS_OPT_MAP2 | sed 's+$+ 1+g' > "$TEMPFILE"
 else
    # count "identical" pixels
-   r.stats -cnA input=$GIS_OPT_MAP1,$GIS_OPT_MAP2  > "$TMP"
+   r.stats -cnA input=$GIS_OPT_MAP1,$GIS_OPT_MAP2  > "$TEMPFILE"
 fi
 
-if [ ! -s "$TMP" ] ; then
+if [ ! -s "$TEMPFILE" ] ; then
     g.message -e "One or both input maps only contain no data (NULL) pixels in the current region"
     exit 1
 fi
@@ -115,16 +115,16 @@ R= (sumXY - sumX*sumY/tot)/((sumsqX - sumX^2/tot)*(sumsqY - sumY^2/tot))^0.5;\
 mediaX=sumX/tot;sumsqX=sumsqX/tot;varX=sumsqX-(mediaX^2);sdX=varX^0.5;\
 mediaY=sumY/tot;sumsqY=sumsqY/tot;varY=sumsqY-(mediaY^2);sdY=varY^0.5;\
 A=mediaY - B*mediaX; F= R^2/(1-R^2/tot-2);\
-print A, B, R, tot, F, mediaX, sdX, mediaY, sdY}' "$TMP" > "$TMP"b
+print A, B, R, tot, F, mediaX, sdX, mediaY, sdY}' "$TEMPFILE" > "$TEMPFILE"b
 
-echo "a b R N F medX sdX medY sdY" | tr -s ' ' '\n' > "$TMP"d
-cat "$TMP"b | tr -s ' ' '\n' > "$TMP"e
+echo "a b R N F medX sdX medY sdY" | tr -s ' ' '\n' > "$TEMPFILE"d
+cat "$TEMPFILE"b | tr -s ' ' '\n' > "$TEMPFILE"e
 
 #send output to screen or text file
 if [ -z "$GIS_OPT_OUTPUT" ] 
 then
 	if [ $GIS_FLAG_G -eq 1 ] ; then
-	   paste -d'=' "$TMP"d "$TMP"e
+	   paste -d'=' "$TEMPFILE"d "$TEMPFILE"e
 	else
 	   echo "y = a + b*x"
            echo "   a: offset"
@@ -134,24 +134,24 @@ then
            echo "   medX, medY: Means"
            echo "   sdX, sdY: Standard deviations"
            echo "a  b  R  N  F medX  sdX  medY  sdY"
-	   RESULTADO=`cat "$TMP"b`
+	   RESULTADO=`cat "$TEMPFILE"b`
            echo ${RESULTADO}
 	fi
 else
 	if [ $GIS_FLAG_G -eq 1 ] ; then
-	   paste -d'=' "$TMP"d "$TMP"e >> "$TMP"c
+	   paste -d'=' "$TEMPFILE"d "$TEMPFILE"e >> "$TEMPFILE"c
 	else
-	   echo "y = a + b*x" > "$TMP"c
-           echo "   a: offset" >> "$TMP"c
-           echo "   b: gain" >> "$TMP"c
-           echo "   R: sumXY - sumX*sumY/tot" >> "$TMP"c
-           echo "   N: number of elements" >> "$TMP"c
-           echo "   medX, medY: Means" >> "$TMP"c
-           echo "   sdX, sdY: Standard deviations" >> "$TMP"c
-           echo "a  b  R  N  F medX  sdX  medY  sdY" >> "$TMP"c
-	   cat "$TMP"b >> "$TMP"c
+	   echo "y = a + b*x" > "$TEMPFILE"c
+           echo "   a: offset" >> "$TEMPFILE"c
+           echo "   b: gain" >> "$TEMPFILE"c
+           echo "   R: sumXY - sumX*sumY/tot" >> "$TEMPFILE"c
+           echo "   N: number of elements" >> "$TEMPFILE"c
+           echo "   medX, medY: Means" >> "$TEMPFILE"c
+           echo "   sdX, sdY: Standard deviations" >> "$TEMPFILE"c
+           echo "a  b  R  N  F medX  sdX  medY  sdY" >> "$TEMPFILE"c
+	   cat "$TEMPFILE"b >> "$TEMPFILE"c
 	fi
-	mv "$TMP"c "$GIS_OPT_OUTPUT"
+	mv "$TEMPFILE"c "$GIS_OPT_OUTPUT"
 	cat "$GIS_OPT_OUTPUT"
 fi
-rm -f "$TMP" "$TMP"b "$TMP"c "$TMP"d "$TMP"e
+rm -f "$TEMPFILE" "$TEMPFILE"b "$TEMPFILE"c "$TEMPFILE"d "$TEMPFILE"e
