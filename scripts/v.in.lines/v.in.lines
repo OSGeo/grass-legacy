@@ -58,14 +58,14 @@ fi
 
 
 #### setup temporary file
-TMP="`g.tempfile pid=$$`"
-if [ $? -ne 0 ] || [ -z "$TMP" ] ; then
+TEMPFILE="`g.tempfile pid=$$`"
+if [ $? -ne 0 ] || [ -z "$TEMPFILE" ] ; then
     g.message -e "unable to create temporary files"
     exit 1
 fi
 
 #### trap ctrl-c so that we can clean up tmp
-trap 'rm -f "$TMP"' 2 3 15
+trap 'rm -f "$TEMPFILE"' 2 3 15
 
 #### parse field separator
 if [ "$GIS_OPT_FS" = "space" ] || [ "$GIS_OPT_FS" = "tab" ] ; then
@@ -83,30 +83,30 @@ if [ "$GIS_OPT_INPUT" = "-" ] ; then
       read REPLY
       EXITCODE=$?
       if [ -n "$REPLY" ] ; then
-	 echo "$REPLY" >> "$TMP.raw"
+	 echo "$REPLY" >> "$TEMPFILE.raw"
       fi
    done
 
    if [ "$fs" = " " ] ; then
-     \mv -f "$TMP.raw" "$TMP"
+     \mv -f "$TEMPFILE.raw" "$TEMPFILE"
    else
-     tr "$fs" ' ' < "$TMP.raw" > "$TMP"
-     \rm  -f "$TMP.raw"
+     tr "$fs" ' ' < "$TEMPFILE.raw" > "$TEMPFILE"
+     \rm  -f "$TEMPFILE.raw"
    fi
 
    # make sure we have at least one line of data
-   if [ "`wc -l "$TMP" | cut -f1 -d' '`" -eq 0 ] ; then
+   if [ "`wc -l "$TEMPFILE" | cut -f1 -d' '`" -eq 0 ] ; then
       g.message -e "Problem reading data from stdin"
       exit 1
    fi
 
-   INFILE="$TMP"
+   INFILE="$TEMPFILE"
 else
    if [ "$fs" = " " ] ; then
       INFILE="$GIS_OPT_INPUT"
    else
-      tr "$fs" ' ' < "$GIS_OPT_INPUT" > "$TMP"
-      INFILE="$TMP"
+      tr "$fs" ' ' < "$GIS_OPT_INPUT" > "$TEMPFILE"
+      INFILE="$TEMPFILE"
    fi
 fi
 
@@ -119,7 +119,7 @@ fi
 
 if [ -z "`head -n 1 "$INFILE" | sed -e 's/[^ \t]*$//'`" ] ; then
    g.message -e "Not enough data columns. (incorrect fs setting?)"
-   rm -f "$TMP"
+   rm -f "$TEMPFILE"
    exit 1
 fi
 
@@ -127,7 +127,7 @@ v.in.mapgen -f $ZFLAG in="$INFILE" out="$GIS_OPT_OUTPUT"
 EXITCODE=$?
 
 #cleanup
-rm -f "$TMP"
+rm -f "$TEMPFILE"
 
 
 exit $EXITCODE
