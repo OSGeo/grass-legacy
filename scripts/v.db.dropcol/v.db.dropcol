@@ -42,8 +42,10 @@
 #%option
 #% key: column
 #% type: string
-#% description: Name of the column
+##TODO: #% description: Name of the column(s) to remove
+#% description: Name of the column to remove
 #% required : yes
+##TODO #% multiple : yes
 #%end
 
 
