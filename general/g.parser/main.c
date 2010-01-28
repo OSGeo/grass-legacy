@@ -398,11 +398,10 @@ int main(int argc, char *argv[])
 
 	if (shell == NULL)
 	    shell = "sh";
-	ret =
-	    _spawnlp(_P_WAIT, shell, shell, filename, "@ARGS_PARSED@", NULL);
+	ret = G_spawn(shell, shell, filename, "@ARGS_PARSED@", NULL);
 	G_debug(1, "ret = %d", ret);
 	if (ret == -1) {
-	    perror("_spawnlp() failed");
+	    perror("G_spawn() failed");
 	    return 1;
 	}
 	return ret;
