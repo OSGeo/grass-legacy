@@ -37,19 +37,19 @@ if [ -z "$GISBASE" ] ; then
 fi
 
 if [ "$1" != "@ARGS_PARSED@" ] ; then
-  exec $GISBASE/bin/g.parser "$0" "$@"
+  exec "$GISBASE/bin/g.parser" "$0" "$@"
 fi
 
 #add your code here
 echo ""
-if [ $GIS_FLAG_f -eq 1 ] ; then
+if [ "$GIS_FLAG_F" -eq 1 ] ; then
   echo "Flag -f set"
 else
   echo "Flag -f not set"
 fi
 
-echo "Value of GIS_OPT_option1: '$GIS_OPT_option1'"
-echo "Value of GIS_OPT_raster: '$GIS_OPT_raster'"
-echo "Value of GIS_OPT_vect: '$GIS_OPT_vector'"
+echo "Value of option1=: '$GIS_OPT_OPTION1'"
+echo "Value of raster=: '$GIS_OPT_RASTER'"
+echo "Value of vect=: '$GIS_OPT_VECTOR'"
 
 #add your code here
