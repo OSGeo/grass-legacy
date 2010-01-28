@@ -51,7 +51,7 @@
  *    is part of the first option (flags do not count).
  *
  * command num=12
- *    This command line is in error in two ways.  The user will be told 
+ *    This command line is in error in two ways.  The user will be told
  *    that the "map" option is required and also that the number 12 is
  *    out of range.  The acceptable range (or list) will be printed.
  *
@@ -149,10 +149,10 @@ static void G_script(void);
 /**
  * \brief Disables the ability of the parser to operate interactively.
  *
- * When a user calls a command with no arguments on the command line, 
- * the parser will enter its own standardized interactive session in 
- * which all flags and options  are presented to the user for input. A 
- * call to <i>G_disable_interactive()</i> disables the parser's 
+ * When a user calls a command with no arguments on the command line,
+ * the parser will enter its own standardized interactive session in
+ * which all flags and options  are presented to the user for input. A
+ * call to <i>G_disable_interactive()</i> disables the parser's
  * interactive prompting.
  *
  * \return always returns 0
@@ -169,7 +169,7 @@ int G_disable_interactive(void)
 /**
  * \brief Initializes a Flag struct.
  *
- * Allocates memory for the Flag structure and returns a pointer to this 
+ * Allocates memory for the Flag structure and returns a pointer to this
  * memory (of <i>type struct Flag *</i>).<br>
  *
  * Flags are always represented by single letters.  A user "turns them on"
@@ -226,10 +226,10 @@ struct Flag *G_define_flag(void)
  * this memory (of <i>type struct Option *</i>).<br>
  *
  * Options are provided by user on command line using the standard
- * format: <i>key=value</i>. Options identified as REQUIRED must be 
- * specified by user on command line. The option string can either 
- * specify a range of values (e.g. "10-100") or a list of acceptable 
- * values (e.g. "red,orange,yellow").  Unless the option string is NULL, 
+ * format: <i>key=value</i>. Options identified as REQUIRED must be
+ * specified by user on command line. The option string can either
+ * specify a range of values (e.g. "10-100") or a list of acceptable
+ * values (e.g. "red,orange,yellow").  Unless the option string is NULL,
  * user provided input will be evaluated agaist this string.
  *
  * \return Option * Pointer to an Option struct
@@ -297,7 +297,7 @@ struct Option *G_define_option(void)
  * It allocates memory for the Option structure and returns a pointer to
  * this memory (of <i>type struct Option *</i>).<br>
  *
- * If an invalid parameter was specified a empty Option structure will 
+ * If an invalid parameter was specified a empty Option structure will
  * be returned (not NULL).
  *
  *  - general: G_OPT_WHERE, G_OPT_COLUMN, G_OPT_COLUMNS, G_OPT_TABLE, G_OPT_DRIVER, G_OPT_DATABASE
@@ -689,13 +689,13 @@ struct GModule *G_define_module(void)
 /**
  * \brief Parse command line.
  *
- * The command line parameters <b>argv</b> and the number of parameters 
- * <b>argc</b> from the main() routine are passed directly to 
- * <i>G_parser()</i>. <i>G_parser()</i> accepts the command line input 
- * entered by the user, and parses this input according to the input 
+ * The command line parameters <b>argv</b> and the number of parameters
+ * <b>argc</b> from the main() routine are passed directly to
+ * <i>G_parser()</i>. <i>G_parser()</i> accepts the command line input
+ * entered by the user, and parses this input according to the input
  * options and/or flags that were defined by the programmer.<br>
  *
- * <b>Note:</b> The only functions which can legitimately be called 
+ * <b>Note:</b> The only functions which can legitimately be called
  * before G_parser() are:<br>
  * <ul>
  *  <li>G_gisinit()</li>
@@ -1010,20 +1010,20 @@ static int uses_new_gisprompt(void)
 /**
  * \brief Command line help/usage message.
  *
- * Calls to <i>G_usage()</i> allow the programmer to print the usage 
- * message at any time. This will explain the allowed and required 
- * command line input to the user. This description is given according 
- * to the programmer's definitions for options and flags. This function 
- * becomes useful when the user enters options and/or flags on the 
- * command line that are syntactically valid to the parser, but 
+ * Calls to <i>G_usage()</i> allow the programmer to print the usage
+ * message at any time. This will explain the allowed and required
+ * command line input to the user. This description is given according
+ * to the programmer's definitions for options and flags. This function
+ * becomes useful when the user enters options and/or flags on the
+ * command line that are syntactically valid to the parser, but
  * functionally invalid for the command (e.g. an invalid file name.)<br>
- * For example, the parser logic doesn't directly support grouping 
- * options. If two options be specified together or not at all, the 
- * parser must be told that these options are not required and the 
- * programmer must check that if one is specified the other must be as 
- * well. If this additional check fails, then <i>G_parser()</i> will 
- * succeed, but the programmer can then call <i>G_usage()</i>  to print 
- * the standard usage message and print additional information about how 
+ * For example, the parser logic doesn't directly support grouping
+ * options. If two options be specified together or not at all, the
+ * parser must be told that these options are not required and the
+ * programmer must check that if one is specified the other must be as
+ * well. If this additional check fails, then <i>G_parser()</i> will
+ * succeed, but the programmer can then call <i>G_usage()</i>  to print
+ * the standard usage message and print additional information about how
  * the two options work together.
  *
  * \return always returns 0
@@ -1311,7 +1311,7 @@ static void G_usage_xml(void)
 	fprintf(stdout, "\n\t</keywords>\n");
     }
 
-	/***** Don't use parameter-groups for now.  We'll reimplement this later 
+	/***** Don't use parameter-groups for now.  We'll reimplement this later
 	 ***** when we have a concept of several mutually exclusive option
 	 ***** groups
 	if (n_opts || n_flags)
@@ -1459,7 +1459,7 @@ static void G_usage_xml(void)
 	}
     }
 
-	/***** Don't use parameter-groups for now.  We'll reimplement this later 
+	/***** Don't use parameter-groups for now.  We'll reimplement this later
 	 ***** when we have a concept of several mutually exclusive option
 	 ***** groups
 	if (n_opts || n_flags)
@@ -2017,7 +2017,7 @@ static void G_gui(void)
 }
 
 /**
-   \brief Send Tcl/Tk code to tcltkgrass 
+   \brief Send Tcl/Tk code to tcltkgrass
 **/
 static void G_tcltk(void)
 {
@@ -2779,7 +2779,7 @@ static int gis_prompt(struct Option *opt, char *buff)
     else {
 	return -1;
     }
-    
+
     if (ptr1 == '\0')
 	*buff = '\0';
 
