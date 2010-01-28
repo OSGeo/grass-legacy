@@ -311,24 +311,37 @@ def set_fatal_exit(exit = True):
     
 # interface to g.parser
 
-def _parse_env():
+def _parse_opts(lines):
     options = {}
     flags = {}
-    for var, val in os.environ.iteritems():
-	if var.startswith("GIS_OPT_"):
-	    opt = var.replace("GIS_OPT_", "", 1).lower()
-	    options[opt] = val;
-	if var.startswith("GIS_FLAG_"):
-	    flg = var.replace("GIS_FLAG_", "", 1).lower()
-	    flags[flg] = bool(int(val));
+    for line in lines:
+	line = line.rstrip('\r\n')
+	if not line:
+	    break
+	try:
+	    [var, val] = line.split('=', 1)
+	except:
+	    raise SyntaxError("invalid output from g.parser: %s" % line)
+
+	if var.startswith('flag_'):
+	    flags[var[5:]] = bool(int(val))
+	elif var.startswith('opt_'):
+	    options[var[4:]] = val
+	elif var in ['GRASS_OVERWRITE', 'GRASS_VERBOSE']:
+	    os.environ[var] = val
+	else:
+	    raise SyntaxError("invalid output from g.parser: %s" % line)
+
     return (options, flags)
 
 def parser():
     """!Interface to g.parser, intended to be run from the top-level, e.g.:
 
+    @code
 	if __name__ == "__main__":
 	    options, flags = grass.parser()
 	    main()
+    @endcode
 
     Thereafter, the global variables "options" and "flags" will be
     dictionaries containing option/flag values, keyed by lower-case
@@ -338,9 +351,6 @@ def parser():
     if not os.getenv("GISBASE"):
         print >> sys.stderr, "You must be in GRASS GIS to run this program."
         sys.exit(1)
-
-    if len(sys.argv) > 1 and sys.argv[1] == "@ARGS_PARSED@":
-	return _parse_env()
 
     cmdline = [basename(sys.argv[0])]
     cmdline += ['"' + arg + '"' for arg in sys.argv[1:]]
@@ -354,11 +364,15 @@ def parser():
 	else:
 	    argv[0] = os.path.join(sys.path[0], name)
 
-    if sys.platform == "win32":
-       os.execvp("g.parser.exe", [name] + argv)
-    else:
-       os.execvp("g.parser", [name] + argv)
-    raise OSError("error executing g.parser")
+    p = Popen(['g.parser', '-s'] + argv, stdout = PIPE)
+    s = p.communicate()[0]
+    lines = s.splitlines()
+
+    if not lines or lines[0].rstrip('\r\n') != "@ARGS_PARSED@":
+	sys.stdout.write(s)
+	sys.exit()
+
+    return _parse_opts(lines[1:])
 
 # interface to g.tempfile
 
