@@ -578,7 +578,7 @@ struct Option *G_define_standard_option(int opt)
 	    _("A single vector map can be connected to multiple database "
 	      "tables. This number determines which table to use.");
 	Opt->gisprompt = "old_layer,layer,layer";
-	
+
 	break;
     case G_OPT_V_CAT:
 	Opt->key = "cat";
@@ -1955,14 +1955,14 @@ static void G_gui_tcltk(void)
 
 #ifdef __MINGW32__
     if (getenv("GRASS_DEBUG_GUI"))
-	fp = G_popen("tee gui_dump.tcl | %GRASS_WISH%", "w");
+	fp = G_popen("tee gui_dump.tcl | \"%GRASS_WISH%\"", "w");
     else
-	fp = G_popen("%GRASS_WISH%", "w");
+	fp = G_popen("\"%GRASS_WISH%\"", "w");
 #else
     if (getenv("GRASS_DEBUG_GUI"))
-	fp = G_popen("tee gui_dump.tcl | $GRASS_WISH", "w");
+	fp = G_popen("tee gui_dump.tcl | '$GRASS_WISH'", "w");
     else
-	fp = G_popen("$GRASS_WISH", "w");
+	fp = G_popen("'$GRASS_WISH'", "w");
 #endif
 
     if (!fp)
@@ -1993,7 +1993,7 @@ static void G_gui_wx(void)
 }
 
 /**
-   \brief Invoke GUI dialog 
+   \brief Invoke GUI dialog
 
    Use G_gui_wx() or G_gui_tcltk() to generate GUI dialog.
 
