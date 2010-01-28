@@ -1969,9 +1969,9 @@ static void G_gui_tcltk(void)
 	fp = G_popen("\"%GRASS_WISH%\"", "w");
 #else
     if (getenv("GRASS_DEBUG_GUI"))
-	fp = G_popen("tee gui_dump.tcl | '$GRASS_WISH'", "w");
+	fp = G_popen("tee gui_dump.tcl | \"$GRASS_WISH\"", "w");
     else
-	fp = G_popen("'$GRASS_WISH'", "w");
+	fp = G_popen("\"$GRASS_WISH\"", "w");
 #endif
 
     if (!fp)
