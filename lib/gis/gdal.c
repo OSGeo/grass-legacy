@@ -104,11 +104,19 @@ static void init_gdal(void)
 {
     load_library();
 
+#ifdef _WIN32
+    pGDALAllRegister   = get_symbol("_GDALAllRegister@0");
+    pGDALOpen          = get_symbol("_GDALOpen@8");
+    pGDALClose         = get_symbol("_GDALClose@4");
+    pGDALGetRasterBand = get_symbol("_GDALGetRasterBand@8");
+    pGDALRasterIO      = get_symbol("_GDALRasterIO@48");
+#else
     pGDALAllRegister = get_symbol("GDALAllRegister");
     pGDALOpen = get_symbol("GDALOpen");
     pGDALClose = get_symbol("GDALClose");
     pGDALGetRasterBand = get_symbol("GDALGetRasterBand");
     pGDALRasterIO = get_symbol("GDALRasterIO");
+#endif
 }
 
 #else /* GDAL_DYNAMIC */
