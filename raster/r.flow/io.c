@@ -27,6 +27,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
+#include <math.h>
+#include <grass/raster.h>
 #include <grass/glocale.h>
 #include "r.flow.h"
 #include "mem.h"
@@ -68,6 +70,12 @@ static int open_existing_cell_file(char *fname, struct Cell_head *chd)
     return G_open_cell_old(fname, mapset);
 }
 
+static int compare_regions(const struct Cell_head *a, const struct Cell_head *b)
+{
+    return (fabs(a->ew_res - b->ew_res) < 1e-6 * b->ew_res &&
+	    fabs(a->ns_res - b->ns_res) < 1e-6 * b->ns_res);
+}
+
 void read_input_files(void)
 {
     DCELL *barc;
@@ -77,8 +85,7 @@ void read_input_files(void)
     G_message(_("Reading input files: elevation"));
 
     fd = open_existing_cell_file(parm.elevin, &hd);
-    if (!((region.ew_res == hd.ew_res)
-	  && (region.ns_res == hd.ns_res)))
+    if (!compare_regions(&region, &hd))
 	G_fatal_error(_("Elevation file's resolution differs from current region resolution"));
 
     for (row = 0; row < region.rows; row++) {
@@ -93,8 +100,7 @@ void read_input_files(void)
     if (parm.aspin) {
 	G_message(_("Reading input files: aspect"));
 	fd = open_existing_cell_file(parm.aspin, &hd);
-	if (!((region.ew_res == hd.ew_res)
-	      && (region.ns_res == hd.ns_res)))
+	if (!compare_regions(&region, &hd))
 	    G_fatal_error(_("Resolution of aspect file differs from "
 			    "current region resolution"));
 
