@@ -821,7 +821,7 @@ Section "Uninstall"
 	;remove the Desktop ShortCut
 	SetShellVarContext current
 	Delete "$DESKTOP\GRASS ${VERSION_NUMBER}.lnk"
-	Delete "$DESKTOP\GRASS ${VERSION_NUMBER} msys.lnk"
+	Delete "$DESKTOP\GRASS ${VERSION_NUMBER} with MSYS.lnk"
 	
 	;remove the Programs Start ShortCuts
 	SetShellVarContext all
