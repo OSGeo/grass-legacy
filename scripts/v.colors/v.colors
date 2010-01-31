@@ -167,8 +167,8 @@ fi
 
 if [ -n "$GIS_OPT_COLOR" ] ; then
    #### check the color rule is valid
-   COLOR_OPTS=`ls $GISBASE/etc/colors/`
-   COLOR_OPTS="`echo $COLOR_OPTS | tr '\n' ' '` random grey.eq grey.log rules"
+   COLOR_OPTS=`ls "$GISBASE/etc/colors/"`
+   COLOR_OPTS="`echo "$COLOR_OPTS" | tr '\n' ' '` random grey.eq grey.log rules"
 
    HAVE_COLR=0
    for COLR in $COLOR_OPTS ; do
