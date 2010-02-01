@@ -27,6 +27,8 @@
 * Code clean-up and port to GRASS 6.3, 15.12.2006:
   Yann Chemin, ychemin(at)gmail.com 
 
+* Addition of IRS-1C LISS, Feb 2009: Markus Neteler
+
 TODO: use dynamic allocation for TiCache 
 ***************************************************************************/
 
