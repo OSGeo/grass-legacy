@@ -362,6 +362,8 @@ void GeomCond::parse()
     case 6: /* hrv   ( spot )    * enter month,day,hh.ddd,long.,lat. */
     case 7: /* tm    ( landsat ) * enter month,day,hh.ddd,long.,lat. */
     case 8: /* etm+  ( landsat7) * enter month,day,hh.ddd,long.,lat. */
+    case 9: /* liss  ( IRS 1C)   * enter month,day,hh.ddd,long.,lat. */
+     case 10: /* aster            * enter month,day,hh.ddd,long.,lat. */
     {
 	cin >> month;
 	cin >> jday;
@@ -407,7 +409,7 @@ void GeomCond::parse()
 /* ---- print geometrical conditions ---- */
 void GeomCond::print()
 {
-    static const string etiq1[9] = {
+    static const string etiq1[11] = {
 	string(" user defined conditions     "),
 	string(" meteosat observation        "),
 	string(" goes east observation       "),
@@ -416,7 +418,9 @@ void GeomCond::print()
 	string(" avhrr (PM noaa) observation "),
 	string(" h.r.v.   observation        "),
 	string(" t.m.     observation        "),
-	string(" etm+     observation        ")
+	string(" etm+     observation        "),
+	string(" liss     observation        "),
+	string(" aster    observation        ")
     };
 
     static const string head(" geometrical conditions identity  ");
