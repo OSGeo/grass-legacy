@@ -19,8 +19,6 @@
 # ifdef _WIN32
 #  include <windows.h>
 # endif
-# undef CPL_STDCALL
-# define CPL_STDCALL
 #endif
 
 static void CPL_STDCALL(*pGDALAllRegister) (void);
