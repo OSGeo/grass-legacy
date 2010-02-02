@@ -807,6 +807,8 @@ Section "Uninstall"
 	Delete "$INSTDIR\WinGRASS-README.url"
 	Delete "$INSTDIR\REQUIREMENTS.html"
 	Delete "$INSTDIR\README.html"
+	Delete "$INSTDIR\contributors.csv"	
+	Delete "$INSTDIR\translators.csv"	
 	
 	;remove folders
 	RMDir /r "$INSTDIR\bin"
