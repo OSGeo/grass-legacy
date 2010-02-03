@@ -623,7 +623,7 @@ Section "GRASS" SecGRASS
 	FileWrite $0 '#########################################################################$\r$\n'
 	FileWrite $0 '$\r$\n'
 	FileWrite $0 'trap "echo '
-	FileWrite $0 '"User break!"$\r$\n'
+	FileWrite $0 "'User break!' ; "
 	FileWrite $0 'exit" 2 3 9 15$\r$\n'
 	FileWrite $0 '$\r$\n'
 	FileWrite $0 '# Set the GISBASE variable$\r$\n'
