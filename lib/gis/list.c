@@ -27,7 +27,7 @@ static int broken_pipe;
 static int hit_return = 0;
 static int list_element(FILE *, const char *, const char *, const char *,
 			int (*)(const char *, const char *, const char *));
-static void sigpipe_catch(int);
+static RETSIGTYPE sigpipe_catch(int);
 
 int G_set_list_hit_return(int flag)
 {
@@ -67,7 +67,7 @@ int G_list_element(const char *element,
     int count;
 
 #ifdef SIGPIPE
-    void (*sigpipe) ();
+    RETSIGTYPE (*sigpipe)(int);
 #endif
 
     /* must catch broken pipe in case "more" quits */
@@ -80,16 +80,15 @@ int G_list_element(const char *element,
     if (desc == 0 || *desc == 0)
 	desc = element;
 
-    /* G_popen() does not work with MinGW? */
 #ifndef __MINGW32__
     /*
-     * G_popen() the more command to page the output
+     * popen() the more command to page the output
      */
     if (isatty(1)) {
 #ifdef __MINGW32__
-	more = G_popen("%GRASS_PAGER%", "w");
+	more = popen("%GRASS_PAGER%", "w");
 #else
-	more = G_popen("$GRASS_PAGER", "w");
+	more = popen("$GRASS_PAGER", "w");
 #endif
 	if (!more)
 	    more = stdout;
@@ -138,7 +137,7 @@ int G_list_element(const char *element,
     return 0;
 }
 
-static void sigpipe_catch(int n)
+static RETSIGTYPE sigpipe_catch(int n)
 {
     broken_pipe = 1;
     signal(n, sigpipe_catch);

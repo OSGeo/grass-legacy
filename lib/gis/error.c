@@ -373,7 +373,7 @@ static int mail_msg(const char *msg, int fatal)
 	return 1;
 
     sprintf(command, "mail '%s'", G_whoami());
-    if ((mail = G_popen(command, "w"))) {
+    if ((mail = popen(command, "w"))) {
 	fprintf(mail, "GIS %s: %s\n", fatal ? "ERROR" : "WARNING", msg);
 	G_pclose(mail);
     }
