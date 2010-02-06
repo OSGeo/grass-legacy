@@ -14,8 +14,8 @@ msgstr ""
 "Project-Id-Version: grassmods_ja\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2010-01-14 07:12+0100\n"
-"PO-Revision-Date: 2010-02-05 17:35+0900\n"
-"Last-Translator: \n"
+"PO-Revision-Date: 2010-02-05 12:20+0900\n"
+"Last-Translator: Hirotoshi TOYODA <toyoda@ex.media.osaka-cu.ac.jp>\n"
 "Language-Team: Japanese <grass-translations@lists.osgeo.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -20674,8 +20674,7 @@ msgstr "フォント '%s'が見つかりません\n"
 #: ../vector/v.label.sa/labels.c:97
 #, c-format
 msgid "Font '%s' is not a FreeType font\n"
-msgstr ""
-"フォント '%s' はFreeType フォントではありません\n"
+msgstr "フォント '%s' はFreeType フォントではありません\n"
 
 #: ../vector/v.label.sa/labels.c:101
 msgid "Font file format is not supported by FreeType"
@@ -20882,268 +20881,225 @@ msgid "end of file while looking for HEADER"
 msgstr "HEADER検索中にファイルを終了しました"
 
 #: ../vector/v.qcount/main.c:70
-#, fuzzy
 msgid "Indices for quadrat counts of sites lists."
-msgstr "Indices for quadrat counts of sites lists.  "
+msgstr "サイトリストの区画カウンターのインデックス"
 
 #: ../vector/v.qcount/main.c:76
-#, fuzzy
 msgid "Vector of points defining sample points"
-msgstr "入力するファイル "
+msgstr "サンプルポイントを指定するベクトルポイント"
 
 #: ../vector/v.qcount/main.c:84
-#, fuzzy
 msgid "Output quadrant centres, number of points is written as category"
-msgstr "Output quadrant centres, number of 点 is written as category  "
+msgstr "出力する区画の中心，カテゴリーに応じてポイント数を書き込み"
 
 #: ../vector/v.qcount/main.c:91
-#, fuzzy
 msgid "Number of quadrats"
-msgstr "行数 "
+msgstr "区画数"
 
 #: ../vector/v.qcount/main.c:98
-#, fuzzy
 msgid "Quadrat radius"
-msgstr "Quadrat radius  "
+msgstr "区画半径"
 
 #: ../vector/v.qcount/main.c:103
-#, fuzzy
 msgid "Print results in shell script style"
-msgstr "現在の設定を表示(シェルスクリプト) "
+msgstr "結果をシェルスクリプト形式で出力"
 
 #: ../vector/v.qcount/main.c:134
-#, fuzzy
 msgid "Finding quadrats..."
-msgstr "入力するファイル "
+msgstr "区画を検索中、、、"
 
 #: ../vector/v.qcount/main.c:139
-#, fuzzy
 msgid "Counting sites in quadrats..."
-msgstr "入力するファイル "
+msgstr "区画内のサイトを計算中、、、"
 
 #: ../vector/v.mkgrid/main.c:65
-#, fuzzy
 msgid "Creates a GRASS vector map of a user-defined grid."
-msgstr "ベクトル. "
+msgstr "指定された格子のGRASSベクトルマップを生成中"
 
 #: ../vector/v.mkgrid/main.c:76
-#, fuzzy
 msgid "Number of rows and columns in grid"
-msgstr "格子数 "
+msgstr "格子内の行数と列数"
 
 #: ../vector/v.mkgrid/main.c:85
-#, fuzzy
 msgid "Where to place the grid"
-msgstr "Where to place the 格子  "
+msgstr "グリッドを置く場所"
 
 #: ../vector/v.mkgrid/main.c:86
-#, fuzzy
 msgid "region;current region;coor;use 'coor' and 'box' options"
-msgstr "region;current region;coor;use 'coor' and 'box' options  "
+msgstr "範囲；現在の範囲；coor; 'coor' と 'box' オプションを使用"
 
 #: ../vector/v.mkgrid/main.c:96
-#, fuzzy
 msgid "Lower left easting and northing coordinates of map"
-msgstr "左下隅の座標値 "
+msgstr "地図の左下隅での東進と北進の座標"
 
 #: ../vector/v.mkgrid/main.c:104
-#, fuzzy
 msgid "Width and height of boxes in grid"
-msgstr "格子間隔 "
+msgstr "格子間隔"
 
 #: ../vector/v.mkgrid/main.c:111
-#, fuzzy
 msgid "Angle of rotation (in degrees counter-clockwise)"
-msgstr "異方性の角度 "
+msgstr "回転角 （半時計回りの角度）"
 
 #: ../vector/v.mkgrid/main.c:116
-#, fuzzy
 msgid "Create grid of points instead of areas and centroids"
-msgstr "Create 格子 of 点 instead of 面、地域 and centroids  "
+msgstr "エリアと重心の代わりに格子点を生成"
 
 #: ../vector/v.mkgrid/main.c:123
-#, fuzzy
 msgid "Quiet; No chatter"
-msgstr "説明なし "
+msgstr "説明なし"
 
 #: ../vector/v.mkgrid/main.c:178
 msgid "'coor' option missing"
-msgstr ""
+msgstr "'coor'オプションがありません"
 
 #: ../vector/v.mkgrid/main.c:181
 msgid "'box' option missing"
-msgstr ""
+msgstr "'box'オプションがありません"
 
 #: ../vector/v.mkgrid/main.c:185
-#, fuzzy
 msgid "Invalid easting"
-msgstr "Z座標値 "
+msgstr "無効な東進"
 
 #: ../vector/v.mkgrid/main.c:188
-#, fuzzy
 msgid "Invalid northing"
-msgstr "Z座標値 "
+msgstr "無効な北進"
 
 #: ../vector/v.mkgrid/main.c:192 ../vector/v.mkgrid/main.c:195
-#, fuzzy
 msgid "Invalid distance"
-msgstr "Z座標値 "
+msgstr "無効な距離"
 
 #: ../vector/v.mkgrid/main.c:261
-#, fuzzy
 msgid "Creating centroids..."
-msgstr "入力するファイル "
+msgstr "重心を生成中、、、"
 
 #: ../vector/v.mkgrid/write_grid.c:42
-#, fuzzy
 msgid "Writing out vector rows..."
-msgstr "入力するファイル "
+msgstr "ベクトル行を書き込み中、、、"
 
 #: ../vector/v.mkgrid/write_grid.c:79
-#, fuzzy
 msgid "Writing out vector columns..."
-msgstr "入力するファイル "
+msgstr "ベクトル列を書き込み中、、、"
 
 #: ../vector/v.lrs/v.lrs.where/main.c:58
 #: ../vector/v.lrs/v.lrs.create/main.c:120
 #: ../vector/v.lrs/v.lrs.label/main.c:102
 #: ../vector/v.lrs/v.lrs.segment/main.c:70
-#, fuzzy
 msgid "vector, LRS, networking"
-msgstr "vector, LRS, networking  "
+msgstr "ベクトル， LRS, ネットワーク"
 
 #: ../vector/v.lrs/v.lrs.where/main.c:60
-#, fuzzy
 msgid ""
 "Finds line id and real km+offset for given points in vector map using linear "
 "reference system."
-msgstr "ベクトル. "
+msgstr "線形参照系でベクトルマップ中の指定された点の線のIDとオフセット(km)"
 
 #: ../vector/v.lrs/v.lrs.where/main.c:65
 #: ../vector/v.lrs/v.lrs.create/main.c:125
 #: ../vector/v.lrs/v.lrs.label/main.c:107
 #: ../vector/v.lrs/v.lrs.segment/main.c:76 ../vector/v.to.points/main.c:178
-#, fuzzy
 msgid "Input vector map containing lines"
-msgstr "入力するファイル "
+msgstr "入力したベクトルマップは線を含む"
 
 #: ../vector/v.lrs/v.lrs.where/main.c:69
-#, fuzzy
 msgid "Input vector map containing points"
-msgstr "Input ベクトルマップ containing 点  "
+msgstr "入力したベクトルマップは点を含む"
 
 #: ../vector/v.lrs/v.lrs.where/main.c:74
 #: ../vector/v.lrs/v.lrs.create/main.c:144
 #: ../vector/v.lrs/v.lrs.label/main.c:116
 #: ../vector/v.lrs/v.lrs.segment/main.c:85 ../vector/v.segment/main.c:66
-#, fuzzy
 msgid "Line layer"
-msgstr "線の色 "
+msgstr "線のレイヤー"
 
 #: ../vector/v.lrs/v.lrs.where/main.c:79
 #: ../vector/v.lrs/v.lrs.create/main.c:148
-#, fuzzy
 msgid "Point layer"
-msgstr "入力するファイル "
+msgstr "点のレイヤー"
 
 #: ../vector/v.lrs/v.lrs.where/main.c:85
 #: ../vector/v.lrs/v.lrs.create/main.c:204
 #: ../vector/v.lrs/v.lrs.label/main.c:122
 #: ../vector/v.lrs/v.lrs.segment/main.c:91
-#, fuzzy
 msgid "Driver name for reference system table"
-msgstr "初期のクラスター数 "
+msgstr "基準システム表のドライバ名"
 
 #: ../vector/v.lrs/v.lrs.where/main.c:93
 #: ../vector/v.lrs/v.lrs.create/main.c:212
 #: ../vector/v.lrs/v.lrs.label/main.c:130
 #: ../vector/v.lrs/v.lrs.segment/main.c:99
-#, fuzzy
 msgid "Database name for reference system table"
-msgstr "初期のクラスター数 "
+msgstr "基準システム表のデータベース名"
 
 #: ../vector/v.lrs/v.lrs.where/main.c:101
 #: ../vector/v.lrs/v.lrs.label/main.c:138
 #: ../vector/v.lrs/v.lrs.segment/main.c:107
-#, fuzzy
 msgid "Name of the reference system table"
-msgstr "出力するファイル "
+msgstr "基準システム表名"
 
 #: ../vector/v.lrs/v.lrs.where/main.c:108
-#, fuzzy
 msgid "Maximum distance to nearest line"
-msgstr "補間を行う2点間の最大距離 "
+msgstr "直近の2線間の最大距離 "
 
 #: ../vector/v.lrs/v.lrs.where/main.c:145
 #: ../vector/v.lrs/v.lrs.create/main.c:303
 #: ../vector/v.lrs/v.lrs.label/main.c:308
 #: ../vector/v.lrs/v.lrs.segment/main.c:151
-#, fuzzy
 msgid "Unable to open database for reference table"
-msgstr "出力するファイル "
+msgstr "基準の表データベースを読めません"
 
 #: ../vector/v.lrs/v.lrs.where/main.c:220
 #: ../vector/v.lrs/v.lrs.segment/main.c:346
-#, fuzzy, c-format
+#, c-format
 msgid "[%d] points read from input"
-msgstr "出力ファイルの上書き "
+msgstr "[%d]点が入力されました"
 
 #: ../vector/v.lrs/v.lrs.where/main.c:221
-#, fuzzy, c-format
+#, c-format
 msgid "[%d] positions found"
-msgstr "対象マップ "
+msgstr "[%d] の位置が見つかりました"
 
 #: ../vector/v.lrs/v.lrs.where/main.c:223
-#, fuzzy, c-format
+#, c-format
 msgid "[%d] points outside threshold"
-msgstr "閾値のユーザ定義 "
+msgstr "[%d} 点が閾値以下"
 
 #: ../vector/v.lrs/v.lrs.where/main.c:225
-#, fuzzy, c-format
+#, c-format
 msgid "[%d] points - no record found"
-msgstr "現在の設定を表示 "
+msgstr "[%d] 点 - 記録なし"
 
 #: ../vector/v.lrs/v.lrs.where/main.c:227
-#, fuzzy, c-format
+#, c-format
 msgid "[%d] points - too many records found"
-msgstr "現在の設定を表示 "
+msgstr "[%d] 点 - 記録が多過ぎます"
 
 #: ../vector/v.lrs/v.lrs.create/main.c:121
-#, fuzzy
 msgid "Create Linear Reference System"
-msgstr "Create 線型参照系  "
+msgstr "線型参照系を生成"
 
 #: ../vector/v.lrs/v.lrs.create/main.c:130
-#, fuzzy
 msgid "Output vector map where oriented lines are written"
-msgstr "出力するファイル "
+msgstr "はじめの線を含むベクトルマップを出力"
 
 #: ../vector/v.lrs/v.lrs.create/main.c:135
-#, fuzzy
 msgid "Output vector map of errors"
-msgstr "出力するファイル "
+msgstr "ベクトルマップの誤差を出力"
 
 #: ../vector/v.lrs/v.lrs.create/main.c:140
-#, fuzzy
 msgid "Input vector map containing reference points"
-msgstr "Input ベクトルマップ containing reference 点  "
+msgstr "基準点を含むベクトルマップを入力"
 
 #: ../vector/v.lrs/v.lrs.create/main.c:155
-#, fuzzy
 msgid "Column containing line identifiers for lines"
-msgstr "列 containing 線 identifiers for 線  "
+msgstr "線の識別子を含む列"
 
 #: ../vector/v.lrs/v.lrs.create/main.c:162
-#, fuzzy
 msgid "Column containing line identifiers for points"
-msgstr "列 containing 線 identifiers for 点  "
+msgstr "点の識別子を含む列"
 
 #: ../vector/v.lrs/v.lrs.create/main.c:170
-#, fuzzy
 msgid "Column containing milepost position for the beginning of next segment"
-msgstr ""
-"列 containing milepost 位置 for the beginning of next 線分, 一部分, セグメン"
-"ト  "
+msgstr "隣のセグメントの始点のマイル標の位置を含む列"
 
 #: ../vector/v.lrs/v.lrs.create/main.c:179
 #, fuzzy
@@ -21173,9 +21129,8 @@ msgid "Name of table where the reference system will be written"
 msgstr "出力するファイル "
 
 #: ../vector/v.lrs/v.lrs.create/main.c:222
-#, fuzzy
 msgid "New table is created by this module"
-msgstr "出力するファイル "
+msgstr "このモジュールで新規の表を作成"
 
 #: ../vector/v.lrs/v.lrs.create/main.c:229
 #, fuzzy
@@ -21183,19 +21138,17 @@ msgid "Maximum distance of point to line allowed"
 msgstr "補間を行う2点間の最大距離 "
 
 #: ../vector/v.lrs/v.lrs.create/main.c:276
-#, fuzzy
 msgid "Cannot get layer info for lines"
-msgstr "入力するファイル "
+msgstr "線のレイヤー情報を得られない"
 
 #: ../vector/v.lrs/v.lrs.create/main.c:279
-#, fuzzy
 msgid "Cannot get layer info for points"
-msgstr "Cannot get レイヤー, 層 info for 点  "
+msgstr "点のレイヤー情報を得られない"
 
 #: ../vector/v.lrs/v.lrs.create/main.c:314
-#, fuzzy, c-format
+#, c-format
 msgid "Unable to drop table: %s"
-msgstr "出力するファイル "
+msgstr "表を外せません：%s"
 
 #: ../vector/v.lrs/v.lrs.create/main.c:333
 #, fuzzy, c-format
@@ -22954,7 +22907,7 @@ msgstr "指定した位置でのベクトルマップのカテゴリー情報を
 
 #: ../vector/v.what/main.c:70
 msgid "If not given reads from standard input"
-msgstr ""
+msgstr "無い場合は標準入力から読み込む"
 
 #: ../vector/v.what/main.c:77
 #, fuzzy
@@ -22984,6 +22937,10 @@ msgid ""
 "Left: %d\n"
 "Right: %d\n"
 msgstr ""
+"Id：%d\n"
+"タイプ：%s\n"
+"左：%d\n"
+"右：%d\n"
 
 #: ../vector/v.what/what.c:161
 #, c-format
@@ -22992,6 +22949,9 @@ msgid ""
 "Number of lines: %d\n"
 "Coordinates: %.6f, %.6f, %.6f\n"
 msgstr ""
+"ノード[%d]：%d\n"
+"線数：%d\n"
+"座標：%.6f, %.6f, %.6f\n"
 
 #: ../vector/v.what/what.c:169
 #, c-format
@@ -22999,16 +22959,18 @@ msgid ""
 "Id: %5d\n"
 "Angle: %.8f\n"
 msgstr ""
+"Id： %5d\n"
+"角度：%8f\n"
 
 #: ../vector/v.what/what.c:176
 #, c-format
 msgid "Type: %s"
-msgstr ""
+msgstr "タイプ：%s"
 
 #: ../vector/v.what/what.c:177
 #, c-format
 msgid "Id: %d\n"
-msgstr ""
+msgstr "Id:%d\n"
 
 #: ../vector/v.what/what.c:203
 #, c-format
@@ -23016,6 +22978,8 @@ msgid ""
 "Line height min: %f\n"
 "Line height max: %f\n"
 msgstr ""
+"線高の最小：%f\n"
+"線高の最大：%f\n"
 
 #: ../vector/v.what/what.c:212
 #, c-format
@@ -23023,6 +22987,8 @@ msgid ""
 "Type: Area\n"
 "Area height: %f\n"
 msgstr ""
+"タイプ：エリア\n"
+"エリアの高さ：%f\n"
 
 #: ../vector/v.what/what.c:216
 #, fuzzy, c-format
@@ -23039,12 +23005,12 @@ msgstr "行数"
 #: ../vector/v.what/what.c:237
 #, c-format
 msgid "Isle[%d]: %d\n"
-msgstr ""
+msgstr "島[%d]：%d\n"
 
 #: ../vector/v.what/what.c:244
 #, c-format
 msgid "Island: %d In area: %d\n"
-msgstr ""
+msgstr "エリア：%d 内の島：%d\n"
 
 #: ../vector/v.what/what.c:249 ../vector/v.what/what.c:255
 #, c-format
@@ -23052,6 +23018,8 @@ msgid ""
 "Sq Meters: %.3f\n"
 "Hectares: %.3f\n"
 msgstr ""
+"平方メートル：%.3f\n"
+"ヘクタール：%.3f\n"
 
 #: ../vector/v.what/what.c:251 ../vector/v.what/what.c:258
 #, c-format
@@ -23059,6 +23027,8 @@ msgid ""
 "Acres: %.3f\n"
 "Sq Miles: %.4f\n"
 msgstr ""
+"エーカー：%.3f\n"
+"平方マイル：%.4f\n"
 
 #: ../vector/v.what/what.c:275
 #, c-format
@@ -23066,6 +23036,8 @@ msgid ""
 "Layer: %d\n"
 "Category: %d\n"
 msgstr ""
+"レイヤー：%d\n"
+"カテゴリー：%d\n"
 
 #: ../vector/v.what/what.c:282
 #, c-format
@@ -23076,6 +23048,11 @@ msgid ""
 "Table: %s\n"
 "Key column: %s\n"
 msgstr ""
+"\n"
+"ドライバ：%s\n"
+"データベース：%s\n"
+"テーブル：%s\n"
+"キー列：%s\n"
 
 #: ../vector/v.transform/get_coor.c:36
 #, fuzzy
@@ -24378,7 +24355,7 @@ msgstr "出力するファイル"
 #: ../vector/v.in.ascii/head.c:56
 #, c-format
 msgid "Unknown keyword <%s> in vector head"
-msgstr ""
+msgstr "ベクトルヘッド内の不明なキーワード <%s>"
 
 #: ../vector/v.in.ascii/in.c:50
 #, fuzzy
@@ -24387,11 +24364,11 @@ msgstr "複数のベクトルマップを合成し新しいマップを作成し
 
 #: ../vector/v.in.ascii/in.c:56
 msgid "ASCII file to be imported, if not given reads from standard input"
-msgstr ""
+msgstr "標準入力がない場合，ASCIIファイルがインポートされます"
 
 #: ../vector/v.in.ascii/in.c:67
 msgid "point;simple x,y[,z] list;standard;GRASS's vector ASCII format"
-msgstr ""
+msgstr "ポイント；単に x,y [,z] リスト；標準；GRASSのベクトルASCIIフォーマット"
 
 #: ../vector/v.in.ascii/in.c:70
 #, fuzzy
@@ -24400,7 +24377,7 @@ msgstr "入力するファイル"
 
 #: ../vector/v.in.ascii/in.c:81
 msgid "Number of header lines to skip at top of input file (points mode)"
-msgstr ""
+msgstr "入力ファイルのトップからスキップするヘッダーライン数（ポイントモード）"
 
 #: ../vector/v.in.ascii/in.c:88 ../vector/v.in.ascii/in.c:100
 #: ../vector/v.in.ascii/in.c:110 ../vector/v.in.ascii/in.c:120
@@ -24411,49 +24388,50 @@ msgstr "更新するカラム1"
 
 #: ../vector/v.in.ascii/in.c:89
 msgid "Column definition in SQL style (points mode)"
-msgstr ""
+msgstr "SQLスタイルでの列の定義（ポイントモード）"
 
 #: ../vector/v.in.ascii/in.c:90
 msgid ""
 "For example: 'x double precision, y double precision, cat int, name varchar"
 "(10)'"
-msgstr ""
+msgstr "例：'x 倍精度，y 倍精度，cat 整数，名前 varchar(10)'"
 
 #: ../vector/v.in.ascii/in.c:102
 msgid ""
 "Number of column used as x coordinate (first column is 1) for points mode"
-msgstr ""
+msgstr "ポイントモードで x 座標に使う列の数（最初の列は1）"
 
 #: ../vector/v.in.ascii/in.c:112
 msgid ""
 "Number of column used as y coordinate (first column is 1) for points mode"
-msgstr ""
+msgstr "ポイントモードで y 座標に使う列の数（最初の列は1）"
 
 #: ../vector/v.in.ascii/in.c:122
 msgid ""
 "Number of column used as z coordinate (first column is 1) for points mode"
-msgstr ""
+msgstr "ポイントモードで z 座標に使う列の数（最初の列は1）"
 
 #: ../vector/v.in.ascii/in.c:124
 msgid "If 0, z coordinate is not used"
-msgstr ""
+msgstr "0の場合，z 座標は使用しない"
 
 #: ../vector/v.in.ascii/in.c:134
 msgid "Number of column used as category (first column is 1) for points mode"
-msgstr ""
+msgstr "ポイントモードでカテゴリーに使う列の数（最初の列は1）"
 
 #: ../vector/v.in.ascii/in.c:136
 msgid ""
 "If 0, unique category is assigned to each row and written to new column 'cat'"
 msgstr ""
+"0の場合，各行に1つだけのカテゴリーが指定されて新規に「cat」列が書き込まれます"
 
 #: ../vector/v.in.ascii/in.c:145
 msgid "Create a new empty vector map and exit. Nothing is read from input"
-msgstr ""
+msgstr "新規に空白のベクトルマップが生成され，入力から読み込まない"
 
 #: ../vector/v.in.ascii/in.c:150
 msgid "Don't expect a header when reading in standard format"
-msgstr ""
+msgstr "標準フォーマットを読み込んでいるときはヘッダーを読めません"
 
 #: ../vector/v.in.ascii/in.c:154
 #, fuzzy
@@ -24467,19 +24445,19 @@ msgstr "統一する属性の値"
 
 #: ../vector/v.in.ascii/in.c:164
 msgid "Only import points falling within current region (points mode)"
-msgstr ""
+msgstr "現在の範囲内に含まれるポイントをインポートするだけ（ポイントモード）"
 
 #: ../vector/v.in.ascii/in.c:178
 msgid "Please specify reasonable number of lines to skip"
-msgstr ""
+msgstr "スキップする適切な線の数を指定して下さい"
 
 #: ../vector/v.in.ascii/in.c:181
 msgid "Please specify z column"
-msgstr ""
+msgstr "z 列を指定して下さい"
 
 #: ../vector/v.in.ascii/in.c:192
 msgid "Please specify reasonable z column"
-msgstr ""
+msgstr "適切な z 列を指定して下さい"
 
 #: ../vector/v.in.ascii/in.c:197
 #, fuzzy
@@ -24511,48 +24489,54 @@ msgid ""
 "x column number > minimum last column number\n"
 "(incorrect field separator?)"
 msgstr ""
+"x の列番号 > 最後に使用した最小の列番号\n"
+"(不正なフィールドセパレーター？)"
 
 #: ../vector/v.in.ascii/in.c:264
 msgid ""
 "y column number > minimum last column number\n"
 "(incorrect field separator?)"
 msgstr ""
+"y の列番号 > 最後に使用した最小の列番号\n"
+"（不正なフィールドセパレーター？）"
 
 #: ../vector/v.in.ascii/in.c:268
 msgid ""
 "z column number > minimum last column number (incorrect field separator?)"
 msgstr ""
+"z の列番号 > 最後に使用した最小の列番号（不正なフィールドセパレーター？）"
 
 #: ../vector/v.in.ascii/in.c:273
 msgid ""
 "cat column number > minimum last column number (incorrect field separator?)"
 msgstr ""
+"cat の列番号 > 最後に使用した最小の列番号（不正なフィールドセパレーター？）"
 
 #: ../vector/v.in.ascii/in.c:279
 msgid "x column is not of number type"
-msgstr ""
+msgstr "x 列が数値ではありません"
 
 #: ../vector/v.in.ascii/in.c:283
 msgid "y column is not of number type"
-msgstr ""
+msgstr "y 列が数値ではありません"
 
 #: ../vector/v.in.ascii/in.c:287
 msgid "z column is not of number type"
-msgstr ""
+msgstr "z 列が数値ではありません"
 
 #: ../vector/v.in.ascii/in.c:291
 msgid "cat column is not of number type"
-msgstr ""
+msgstr "cat 列が数値ではありません"
 
 #: ../vector/v.in.ascii/in.c:333
 msgid "Category column is not of integer type"
-msgstr ""
+msgstr "カテゴリー列が整数ではありません"
 
 #: ../vector/v.in.ascii/in.c:414
 #, c-format
 msgid ""
 "Number of columns defined (%d) does not match number of columns (%d) in input"
-msgstr ""
+msgstr "定義した列の数（%d）が入力した列の数（%d）と一致していません"
 
 #: ../vector/v.in.ascii/in.c:442
 #, fuzzy, c-format
@@ -24587,7 +24571,7 @@ msgstr "列数"
 #: ../vector/v.in.ascii/in.c:480
 #, c-format
 msgid "Length of column %d <%s> (%d) is less than maximum value length (%d)"
-msgstr ""
+msgstr "列の長さ%d <%s> (%d) は最大の列の長さ（%d）以下です"
 
 #: ../vector/v.in.ascii/in.c:520
 #, fuzzy
@@ -24599,6 +24583,7 @@ msgid ""
 "Could not close attribute table. The DBMI driver did not accept all "
 "attributes"
 msgstr ""
+"属性テーブルを閉じられません．DBMIドライバーが一部の属性を許可しませんでした"
 
 #: ../vector/v.external/main.c:60
 #, fuzzy
@@ -25392,11 +25377,11 @@ msgstr "ベクトルマップの基礎情報を出力します"
 
 #: ../vector/v.info/main.c:75
 msgid "Print vector history instead of info"
-msgstr ""
+msgstr "情報の代わりにベクトルの履歴を表示"
 
 #: ../vector/v.info/main.c:81
 msgid "Print types/names of table columns for specified layer instead of info"
-msgstr ""
+msgstr "情報の代わりに，指定したレイヤーのタイプ・名前のテーブルの列を表示"
 
 #: ../vector/v.info/main.c:96
 #, fuzzy
@@ -25406,47 +25391,47 @@ msgstr "出力するファイル"
 #: ../vector/v.info/main.c:191 ../vector/v.db.connect/main.c:154
 #, c-format
 msgid "Database connection for map <%s> is not defined in DB file"
-msgstr ""
+msgstr "マップ <%s> のデータベース接続がDBファイル内で指定されていません"
 
 #: ../vector/v.info/main.c:197
 #, c-format
 msgid "Displaying column types/names for database connection of layer %d:"
-msgstr ""
+msgstr "レイヤーのデータベース接続の列タイプ・名前 %d を表示中："
 
 #: ../vector/v.info/main.c:232
 #, c-format
 msgid "Layer:           %s"
-msgstr ""
+msgstr "レイヤー： %s"
 
 #: ../vector/v.info/main.c:234
 #, c-format
 msgid "Mapset:          %s"
-msgstr ""
+msgstr "マップセット： %s"
 
 #: ../vector/v.info/main.c:236
 #, c-format
 msgid "Location:        %s"
-msgstr ""
+msgstr "ロケーション： %s"
 
 #: ../vector/v.info/main.c:238
 #, c-format
 msgid "Database:        %s"
-msgstr ""
+msgstr "データベース： %s"
 
 #: ../vector/v.info/main.c:240
 #, c-format
 msgid "Title:           %s"
-msgstr ""
+msgstr "タイトル： %s"
 
 #: ../vector/v.info/main.c:242
 #, c-format
 msgid "Map scale:       1:%d"
-msgstr ""
+msgstr "縮尺： 1:%d"
 
 #: ../vector/v.info/main.c:244
 #, c-format
 msgid "Map format:      %s"
-msgstr ""
+msgstr "地図形式： %s"
 
 #: ../vector/v.info/main.c:246
 #, fuzzy, c-format
@@ -25456,42 +25441,42 @@ msgstr "入力するファイル(ラスター)"
 #: ../vector/v.info/main.c:248
 #, c-format
 msgid "Organization:    %s"
-msgstr ""
+msgstr "組織： %s"
 
 #: ../vector/v.info/main.c:251
 #, c-format
 msgid "Source date:     %s"
-msgstr ""
+msgstr "ソースの日付： %s"
 
 #: ../vector/v.info/main.c:256
 #, c-format
 msgid "  Type of Map:  %s (level: %i)        "
-msgstr ""
+msgstr "地図のタイプ： %s(レベル： %i)"
 
 #: ../vector/v.info/main.c:264
 #, c-format
 msgid "  Number of points:       %-9ld       Number of areas:      %-9ld"
-msgstr ""
+msgstr "ポイント数： %-9ld エリア数： %-9ld"
 
 #: ../vector/v.info/main.c:269
 #, c-format
 msgid "  Number of lines:        %-9ld       Number of islands:    %-9ld"
-msgstr ""
+msgstr "線の数： %-9ld 島の数： %-9ld"
 
 #: ../vector/v.info/main.c:274
 #, c-format
 msgid "  Number of boundaries:   %-9ld       Number of faces:      %-9ld"
-msgstr ""
+msgstr "境界数： %-9ld 面数： %-9ld"
 
 #: ../vector/v.info/main.c:279
 #, c-format
 msgid "  Number of centroids:    %-9ld       Number of kernels:    %-9ld"
-msgstr ""
+msgstr "座標数： %-9ld 核の数： %-9ld"
 
 #: ../vector/v.info/main.c:284
 #, c-format
 msgid "  Map is 3D:              %s"
-msgstr ""
+msgstr "マップは3D: %s"
 
 #: ../vector/v.info/main.c:287
 #, fuzzy, c-format
@@ -25501,27 +25486,27 @@ msgstr "行数"
 #: ../vector/v.info/main.c:292
 #, c-format
 msgid "                No topology present"
-msgstr ""
+msgstr "地形がありません"
 
 #: ../vector/v.info/main.c:300
 #, c-format
 msgid "        Projection: %s (zone %d)"
-msgstr ""
+msgstr "射影： %s (ゾーン %d)"
 
 #: ../vector/v.info/main.c:303
 #, c-format
 msgid "        Projection: %s"
-msgstr ""
+msgstr "射影：%s"
 
 #: ../vector/v.info/main.c:328
 #, c-format
 msgid "  Digitization threshold: %s"
-msgstr ""
+msgstr "デジタル化時のしきい値：%s"
 
 #: ../vector/v.info/main.c:330
 #, c-format
 msgid "  Comments:"
-msgstr ""
+msgstr "コメント："
 
 #: ../vector/v.extrude/main.c:68
 #, fuzzy
@@ -26261,15 +26246,15 @@ msgstr "入力するファイル"
 
 #: ../vector/v.what.rast/main.c:100
 msgid "Column name (will be updated by raster values)"
-msgstr ""
+msgstr "列の名前（ラスター値により変更されます）"
 
 #: ../vector/v.what.rast/main.c:161
 msgid "Raster type is integer and column type is float"
-msgstr ""
+msgstr "ラスターのタイプは整数，列のタイプは実数"
 
 #: ../vector/v.what.rast/main.c:164
 msgid "Raster type is float and column type is integer, some data lost!!"
-msgstr ""
+msgstr "ラスターのタイプが実数，列のタイプが整数です，一部のデータが消失！"
 
 #: ../vector/v.what.rast/main.c:244
 #, fuzzy, c-format
@@ -26284,7 +26269,7 @@ msgstr "出力ファイルの上書き"
 #: ../vector/v.what.rast/main.c:302
 #, c-format
 msgid "More points (%d) of category %d, value set to 'NULL'"
-msgstr ""
+msgstr "カテゴリー %d 以上のポイント(%d)，値が'NULL'になります"
 
 #: ../vector/v.what.rast/main.c:367
 #, fuzzy, c-format
@@ -27567,10 +27552,13 @@ msgstr ""
 #: ../db/drivers/postgres/parse.c:55 ../db/drivers/mysql/parse.c:71
 msgid "'user' in database definition is not supported, use db.login"
 msgstr ""
+"データベース中の'user'の定義はサポートされません，db.loginを使用してください"
 
 #: ../db/drivers/postgres/parse.c:59 ../db/drivers/mysql/parse.c:75
 msgid "'password' in database definition is not supported, use db.login"
 msgstr ""
+"データベース中の'password'の定義はサポートされません，db.loginを使用して下さ"
+"い"
 
 #: ../db/drivers/postgres/parse.c:63
 #, fuzzy
@@ -28175,10 +28163,12 @@ msgstr "入力するファイル"
 msgid ""
 "Creation option to the output format driver. Multiple options may be listed"
 msgstr ""
+"出力するフォーマットドライバーの生成オプション．重複したオプションがリストさ"
+"れています"
 
 #: ../locale/scriptstrings/r.out.gdal.sh_to_translate.c:10
 msgid "Metadata key passed on the output dataset if possible"
-msgstr ""
+msgstr "可能であれば，メタデータキーを出力するデータセットへ譲渡"
 
 #: ../locale/scriptstrings/r.regression.line_to_translate.c:1
 #, fuzzy
@@ -28558,7 +28548,7 @@ msgstr "説明付き表示 "
 #: ../locale/scriptstrings/i.fusion.brovey_to_translate.c:1
 msgid ""
 "Brovey transform to merge multispectral and high-res panchromatic channels"
-msgstr ""
+msgstr "複数波長と高解像度パンクロチャンネルを統合するBrovey変換"
 
 #: ../locale/scriptstrings/i.fusion.brovey_to_translate.c:2
 #, fuzzy
@@ -28567,7 +28557,7 @@ msgstr "入力するファイル"
 
 #: ../locale/scriptstrings/i.fusion.brovey_to_translate.c:3
 msgid "LANDSAT sensor"
-msgstr ""
+msgstr "LANDSATセンサー"
 
 #: ../locale/scriptstrings/i.fusion.brovey_to_translate.c:4
 #: ../locale/scriptstrings/i.fusion.brovey_to_translate.c:6
@@ -28578,11 +28568,11 @@ msgstr "センサ"
 
 #: ../locale/scriptstrings/i.fusion.brovey_to_translate.c:5
 msgid "QuickBird sensor"
-msgstr ""
+msgstr "QuickBirdセンサー"
 
 #: ../locale/scriptstrings/i.fusion.brovey_to_translate.c:7
 msgid "SPOT sensor"
-msgstr ""
+msgstr "SPOTセンサー"
 
 #: ../locale/scriptstrings/i.fusion.brovey_to_translate.c:9
 #, fuzzy
@@ -28709,11 +28699,11 @@ msgstr "Greater value option that sets the >= 地域 size limit [hectares]  "
 
 #: ../locale/scriptstrings/v.what.vect_to_translate.c:1
 msgid "Uploads vector values at positions of vector points to the table."
-msgstr ""
+msgstr "ベクトルポイントの位置のベクトル値テーブルへアップロード"
 
 #: ../locale/scriptstrings/v.what.vect_to_translate.c:3
 msgid "Vector map to modify"
-msgstr ""
+msgstr "修正するベクトルマップ"
 
 #: ../locale/scriptstrings/v.what.vect_to_translate.c:4
 #, fuzzy
@@ -28722,7 +28712,7 @@ msgstr "入力するファイル"
 
 #: ../locale/scriptstrings/v.what.vect_to_translate.c:5
 msgid "Column to be updated with the query result"
-msgstr ""
+msgstr "クエリの結果と共に更新される列"
 
 #: ../locale/scriptstrings/v.what.vect_to_translate.c:6
 #, fuzzy
@@ -29176,7 +29166,7 @@ msgstr ""
 #: ../locale/scriptstrings/v.colors_to_translate.c:1
 msgid ""
 "Set color rules for features in a vector using a numeric attribute column."
-msgstr ""
+msgstr "数値属性の列でのベクトルの特徴の色規則"
 
 #: ../locale/scriptstrings/v.colors_to_translate.c:2
 #, fuzzy
@@ -29200,7 +29190,7 @@ msgstr "対象マップ"
 
 #: ../locale/scriptstrings/v.colors_to_translate.c:8
 msgid "Manually set range (min,max)"
-msgstr ""
+msgstr "手動で範囲をセット（min,max）"
 
 #: ../locale/scriptstrings/v.colors_to_translate.c:13
 #, fuzzy
@@ -29209,7 +29199,7 @@ msgstr "出力するファイル"
 
 #: ../locale/scriptstrings/v.colors_to_translate.c:15
 msgid "Save placeholder raster map for use with d.legend"
-msgstr ""
+msgstr "d.legendと使用するプレイスホルダーラスターマップを保存"
 
 #: ../locale/scriptstrings/db.out.ogr_to_translate.c:1
 #, fuzzy
@@ -29715,7 +29705,7 @@ msgstr "ラスターマップにおいて統計解析を行います"
 
 #: ../locale/scriptstrings/r.univar.sh_to_translate.c:3
 msgid "extended statistics (quartiles and percentile)"
-msgstr ""
+msgstr "増やした統計（四分位と百分率）"
 
 #: ../locale/scriptstrings/r.univar.sh_to_translate.c:5
 #, fuzzy
@@ -29724,11 +29714,11 @@ msgstr "座標成分を出力"
 
 #: ../locale/scriptstrings/r.mapcalculator_to_translate.c:1
 msgid "Calculate new raster map from a r.mapcalc expression."
-msgstr ""
+msgstr "r.mapcalc表現から新しいラスターマップを計算"
 
 #: ../locale/scriptstrings/r.mapcalculator_to_translate.c:2
 msgid "A"
-msgstr ""
+msgstr "A"
 
 #: ../locale/scriptstrings/r.mapcalculator_to_translate.c:3
 #, fuzzy
@@ -29737,11 +29727,11 @@ msgstr "青"
 
 #: ../locale/scriptstrings/r.mapcalculator_to_translate.c:4
 msgid "C"
-msgstr ""
+msgstr "C"
 
 #: ../locale/scriptstrings/r.mapcalculator_to_translate.c:5
 msgid "D"
-msgstr ""
+msgstr "D"
 
 #: ../locale/scriptstrings/r.mapcalculator_to_translate.c:6
 #, fuzzy
@@ -29750,21 +29740,21 @@ msgstr "東"
 
 #: ../locale/scriptstrings/r.mapcalculator_to_translate.c:7
 msgid "F"
-msgstr ""
+msgstr "F"
 
 #: ../locale/scriptstrings/r.mapcalculator_to_translate.c:8
 #: ../locale/scriptstrings/r3.mapcalculator_to_translate.c:8
 msgid "Formula (e.g. A-B or A*C+B)"
-msgstr ""
+msgstr "数式（例： A-B や A*C+B）"
 
 #: ../locale/scriptstrings/r.mapcalculator_to_translate.c:10
 #: ../locale/scriptstrings/r3.mapcalculator_to_translate.c:10
 msgid "Show help"
-msgstr ""
+msgstr "ヘルプを見る"
 
 #: ../locale/scriptstrings/r.mapcalculator_to_translate.c:11
 msgid "Expert mode (enter a set of r.mapcalc expressions)"
-msgstr ""
+msgstr "エキスパートモード（r.mapcalc表現を入力）"
 
 #: ../locale/scriptstrings/r.mapcalculator_to_translate.c:12
 #: ../locale/scriptstrings/r3.mapcalculator_to_translate.c:12
@@ -29774,7 +29764,7 @@ msgstr "出力するファイル"
 
 #: ../locale/scriptstrings/i.landsat.rgb_to_translate.c:1
 msgid "Performs auto-balancing of colors for LANDSAT images."
-msgstr ""
+msgstr "LANDSAT イメージを自動色調整"
 
 #: ../locale/scriptstrings/i.landsat.rgb_to_translate.c:2
 #, fuzzy
@@ -29783,31 +29773,31 @@ msgstr "入力するファイル"
 
 #: ../locale/scriptstrings/i.landsat.rgb_to_translate.c:3
 msgid "LANDSAT red channel"
-msgstr ""
+msgstr "LANDSAT 赤チャンネル"
 
 #: ../locale/scriptstrings/i.landsat.rgb_to_translate.c:4
 msgid "LANDSAT green channel"
-msgstr ""
+msgstr "LANDSAT 緑チャンネル"
 
 #: ../locale/scriptstrings/i.landsat.rgb_to_translate.c:5
 msgid "LANDSAT blue channel"
-msgstr ""
+msgstr "LANDSAT 青チャンネル"
 
 #: ../locale/scriptstrings/i.landsat.rgb_to_translate.c:6
 msgid "Cropping intensity (upper brightness level)"
-msgstr ""
+msgstr "輝度を切り取る（上側のブライトネスレベル）"
 
 #: ../locale/scriptstrings/i.landsat.rgb_to_translate.c:7
 msgid "Extend colors to full range of data on each channel"
-msgstr ""
+msgstr "全てのチャンネルのデータの色を全領域に拡張"
 
 #: ../locale/scriptstrings/i.landsat.rgb_to_translate.c:8
 msgid "Preserve relative colors, adjust brightness only"
-msgstr ""
+msgstr "色の相対性を維持，明るさだけを調整"
 
 #: ../locale/scriptstrings/i.landsat.rgb_to_translate.c:9
 msgid "Reset to standard color range"
-msgstr ""
+msgstr "標準の色の範囲へリセット"
 
 #: ../locale/scriptstrings/d.monsize_to_translate.c:1
 #, fuzzy
@@ -30051,7 +30041,7 @@ msgstr "使用可能なマップセットの一覧表示 "
 
 #: ../locale/scriptstrings/r.colors.stddev_to_translate.c:1
 msgid "Set color rules based on stddev from a map's mean value."
-msgstr ""
+msgstr "マップの平均値を元にした標準偏差をベースにて色の規則をセット"
 
 #: ../locale/scriptstrings/r.colors.stddev_to_translate.c:4
 #, fuzzy
@@ -30060,7 +30050,7 @@ msgstr "補間を行う2点間の最大距離"
 
 #: ../locale/scriptstrings/r.colors.stddev_to_translate.c:5
 msgid "Force center at zero"
-msgstr ""
+msgstr "中心をゼロにする"
 
 #: ../locale/scriptstrings/r.fillnulls_to_translate.c:1
 #, fuzzy
@@ -31106,7 +31096,7 @@ msgstr "補間に用いる近傍点"
 msgid ""
 "Transforms raster maps from RGB (Red-Green-Blue) color space to HIS (Hue-"
 "Intensity-Saturation) color space."
-msgstr ""
+msgstr "ラスターマップをRGB(赤緑青)色空間からHIS(色相，輝度，彩度)色空間へ変換"
 
 #: ../imagery/i.rgb.his/r2hmain.c:53
 #, fuzzy
@@ -31142,7 +31132,7 @@ msgstr "タイトル"
 msgid ""
 "Transforms raster maps from HIS (Hue-Intensity-Saturation) color space to "
 "RGB (Red-Green-Blue) color space."
-msgstr ""
+msgstr "ラスターマップをHIS(色相，輝度，彩度)色空間からRGB(赤緑青)色空間へ変換"
 
 #: ../imagery/i.his.rgb/h2rmain.c:53
 #, fuzzy
@@ -32814,5 +32804,5 @@ msgstr "エラー while removing the old MASK セル map.  "
 msgid "Can't mark another point.  Only %d points allowed.  Sorry."
 msgstr "Can't mark another point.  Only %d 点 allowed.  Sorry.  "
 
-msgid "%s' must be greater than zero; using %s=255"
-msgstr "%s はゼロ以上が条件; %s=255 を使用中 "
+#~ msgid "%s' must be greater than zero; using %s=255"
+#~ msgstr "%s はゼロ以上が条件; %s=255 を使用中 "
