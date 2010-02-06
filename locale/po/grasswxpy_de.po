@@ -8754,8 +8754,8 @@ msgstr ""
 "Erstellen Sie jetzt eins, wenn Sie es noch nicht getan haben. Eine beliebte "
 "Wahl ist \"grassdata\" im eigenen Heimatverzeichnis."
 
-msgid "GRASS SQL Builder: %s"
-msgstr "GRASS SQL Editor: %s"
+#~ msgid "GRASS SQL Builder: %s"
+#~ msgstr "GRASS SQL Editor: %s"
 
 #~ msgid " (those in bold typeface are required)"
 #~ msgstr " (fett gedruckte sind erforderlich)"

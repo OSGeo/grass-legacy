@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: grasswxpy_ja\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-01-14 04:41+0100\n"
+"POT-Creation-Date: 2010-01-14 08:01+0100\n"
 "PO-Revision-Date: 2010-02-04 16:07+0900\n"
 "Last-Translator: \n"
 "Language-Team: Japanese <grass-translations@lists.osgeo.org>\n"
@@ -3967,6 +3967,7 @@ msgid "Prints/sets DB connection for a vector map to attribute table."
 msgstr "ベクトルマップと属性テーブルのDB接続を出力/設定"
 
 #: ../gui/wxpython/menustrings.py:765
+#: ../gui/wxpython/gui_modules/menuform.py:695
 msgid "&Help"
 msgstr "ヘルプ(&H)"
 
@@ -4733,7 +4734,7 @@ msgstr "GRASSデータベースとロケーション名の設定 "
 #: ../gui/wxpython/gui_modules/location_wizard.py:1322
 #: ../gui/wxpython/gui_modules/gdialogs.py:961
 #: ../gui/wxpython/gui_modules/gdialogs.py:970
-#: ../gui/wxpython/gui_modules/menuform.py:1392 ../gui/wxpython/gis_set.py:130
+#: ../gui/wxpython/gui_modules/menuform.py:1396 ../gui/wxpython/gis_set.py:130
 msgid "Browse"
 msgstr "参照 "
 
@@ -6400,7 +6401,7 @@ msgid "Kriging"
 msgstr ""
 
 #: ../gui/wxpython/gui_modules/v_krige_wxGUI.py:113
-#: ../gui/wxpython/gui_modules/menuform.py:1005
+#: ../gui/wxpython/gui_modules/menuform.py:1009
 msgid "Command output"
 msgstr "コマンド出力 "
 
@@ -6421,7 +6422,7 @@ msgid "Allow output files to overwrite existing files"
 msgstr "既存のファイルに上書きする"
 
 #: ../gui/wxpython/gui_modules/v_krige_wxGUI.py:157
-#: ../gui/wxpython/gui_modules/menuform.py:712
+#: ../gui/wxpython/gui_modules/menuform.py:716
 msgid "&Run"
 msgstr "実行(&R)"
 
@@ -7073,7 +7074,7 @@ msgid "Create attribute table"
 msgstr "属性テーブル作成"
 
 #: ../gui/wxpython/gui_modules/gdialogs.py:200
-#: ../gui/wxpython/gui_modules/menuform.py:754
+#: ../gui/wxpython/gui_modules/menuform.py:758
 #: ../gui/wxpython/gui_modules/preferences.py:1220
 msgid "Add created map into layer tree"
 msgstr "レイヤーツリーに作成したマップを追加"
@@ -7441,7 +7442,7 @@ msgid "Show legend"
 msgstr "凡例表示"
 
 #: ../gui/wxpython/gui_modules/menuform.py:141
-#: ../gui/wxpython/gui_modules/menuform.py:1354
+#: ../gui/wxpython/gui_modules/menuform.py:1358
 msgid "Select Color"
 msgstr "色選択 "
 
@@ -7468,94 +7469,102 @@ msgstr "<必須>"
 msgid "Parameter %(name)s (%(desc)s) is missing.\n"
 msgstr "パラメータ %(name)s (%(desc)s) が有りません\n"
 
-#: ../gui/wxpython/gui_modules/menuform.py:676
+#: ../gui/wxpython/gui_modules/menuform.py:680
 msgid "Enter parameters for '"
 msgstr "パラメータを入力してください '"
 
-#: ../gui/wxpython/gui_modules/menuform.py:687
+#: ../gui/wxpython/gui_modules/menuform.py:690
+msgid "&Close"
+msgstr "閉じる(&C)"
+
+#: ../gui/wxpython/gui_modules/menuform.py:691
 msgid "Close this window without executing the command (Ctrl+Q)"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menuform.py:692
+#: ../gui/wxpython/gui_modules/menuform.py:696
 msgid "Show manual page of the command (Ctrl+H)"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menuform.py:713
+#: ../gui/wxpython/gui_modules/menuform.py:701
+msgid "&Apply"
+msgstr "適用(&A)"
+
+#: ../gui/wxpython/gui_modules/menuform.py:717
 #, fuzzy
 msgid "Run the command (Ctrl+R)"
 msgstr "実行"
 
-#: ../gui/wxpython/gui_modules/menuform.py:720
+#: ../gui/wxpython/gui_modules/menuform.py:724
 msgid "C&opy"
 msgstr "コピー(&o)"
 
-#: ../gui/wxpython/gui_modules/menuform.py:721
+#: ../gui/wxpython/gui_modules/menuform.py:725
 #, fuzzy
 msgid "Copy the current command string to the clipboard (Ctrl+C)"
 msgstr "コピー"
 
-#: ../gui/wxpython/gui_modules/menuform.py:763
+#: ../gui/wxpython/gui_modules/menuform.py:767
 #: ../gui/wxpython/gui_modules/preferences.py:1210
 msgid "Close dialog on finish"
 msgstr "終了のためダイアログを閉じる"
 
-#: ../gui/wxpython/gui_modules/menuform.py:904
+#: ../gui/wxpython/gui_modules/menuform.py:908
 #, python-format
 msgid "'%s' copied to clipboard"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menuform.py:964
-#: ../gui/wxpython/gui_modules/menuform.py:977
-#: ../gui/wxpython/gui_modules/menuform.py:1503
+#: ../gui/wxpython/gui_modules/menuform.py:968
+#: ../gui/wxpython/gui_modules/menuform.py:981
+#: ../gui/wxpython/gui_modules/menuform.py:1507
 msgid "Required"
 msgstr "必須"
 
-#: ../gui/wxpython/gui_modules/menuform.py:967
-#: ../gui/wxpython/gui_modules/menuform.py:977
+#: ../gui/wxpython/gui_modules/menuform.py:971
+#: ../gui/wxpython/gui_modules/menuform.py:981
 msgid "Optional"
 msgstr "オプション"
 
-#: ../gui/wxpython/gui_modules/menuform.py:1015
+#: ../gui/wxpython/gui_modules/menuform.py:1019
 msgid "Manual"
 msgstr "マニュアル "
 
-#: ../gui/wxpython/gui_modules/menuform.py:1114
+#: ../gui/wxpython/gui_modules/menuform.py:1118
 msgid "[multiple]"
 msgstr "[複数] "
 
-#: ../gui/wxpython/gui_modules/menuform.py:1162
+#: ../gui/wxpython/gui_modules/menuform.py:1166
 msgid "Valid range"
 msgstr "有効範囲 "
 
-#: ../gui/wxpython/gui_modules/menuform.py:1373
+#: ../gui/wxpython/gui_modules/menuform.py:1377
 msgid "Transparent"
 msgstr "透過 "
 
-#: ../gui/wxpython/gui_modules/menuform.py:1390
+#: ../gui/wxpython/gui_modules/menuform.py:1394
 #, python-format
 msgid "Choose %s"
 msgstr "選択 %s "
 
-#: ../gui/wxpython/gui_modules/menuform.py:1391
+#: ../gui/wxpython/gui_modules/menuform.py:1395
 msgid "File"
 msgstr "ファイル "
 
-#: ../gui/wxpython/gui_modules/menuform.py:1655
+#: ../gui/wxpython/gui_modules/menuform.py:1659
 #, python-format
 msgid "Error in %s"
 msgstr "%s でエラー "
 
-#: ../gui/wxpython/gui_modules/menuform.py:1689
+#: ../gui/wxpython/gui_modules/menuform.py:1693
 #, python-format
 msgid "Unable to fetch interface description for command '%s'."
 msgstr "コマンドの変換情報を取得することができません '%s'"
 
-#: ../gui/wxpython/gui_modules/menuform.py:1792
+#: ../gui/wxpython/gui_modules/menuform.py:1796
 #, python-format
 msgid "Unable to parse command %s"
 msgstr "コマンドを解析することができません %s"
 
-#: ../gui/wxpython/gui_modules/menuform.py:1885
+#: ../gui/wxpython/gui_modules/menuform.py:1889
 #, python-format
 msgid "usage: %s <grass command>"
 msgstr "用法： %s <GRASS コマンド> "
@@ -8477,42 +8486,42 @@ msgstr ""
 "ください。一般には \"grassdata\"が使用されます。"
 
 #, fuzzy
-msgid "Output vector map name"
-msgstr "ベクトル"
+#~ msgid "Output vector map name"
+#~ msgstr "ベクトル"
 
 #, fuzzy
-msgid "Create/edit projection information for current location"
-msgstr "の"
+#~ msgid "Create/edit projection information for current location"
+#~ msgstr "の"
 
 #, fuzzy
-msgid "Digitize raster map"
-msgstr "デジタイズ"
+#~ msgid "Digitize raster map"
+#~ msgstr "デジタイズ"
 
 #, fuzzy
-msgid "Reclassify vector objects interactively by entering SQL rules"
-msgstr "ベクトル"
+#~ msgid "Reclassify vector objects interactively by entering SQL rules"
+#~ msgstr "ベクトル"
 
 #, fuzzy
-msgid ""
-"Hue-intensity-saturation (his) to red-green-blue (rgb) raster map color "
-"transformation function."
-msgstr "色."
+#~ msgid ""
+#~ "Hue-intensity-saturation (his) to red-green-blue (rgb) raster map color "
+#~ "transformation function."
+#~ msgstr "色."
 
 #, fuzzy
-msgid ""
-"Red-green-blue (rgb) to hue-intensity-saturation (his) raster map color "
-"transformation function"
-msgstr "色"
+#~ msgid ""
+#~ "Red-green-blue (rgb) to hue-intensity-saturation (his) raster map color "
+#~ "transformation function"
+#~ msgstr "色"
 
 #, fuzzy
-msgid "Interactive input for supervised classification"
-msgstr "入力 の"
+#~ msgid "Interactive input for supervised classification"
+#~ msgstr "入力 の"
 
 #, fuzzy
-msgid ""
-"Copy a table. Either 'from_table' (optionally with 'where') can be used or "
-"'select' option, but not 'from_table' and 'select' at the same time."
-msgstr "コピー."
+#~ msgid ""
+#~ "Copy a table. Either 'from_table' (optionally with 'where') can be used "
+#~ "or 'select' option, but not 'from_table' and 'select' at the same time."
+#~ msgstr "コピー."
 
 #~ msgid "Save workspace to open file"
 #~ msgstr "保存 "
@@ -8639,17 +8648,11 @@ msgstr "コピー."
 #~ "\n"
 #~ "%(details)s "
 
-#~ msgid "&Close"
-#~ msgstr "閉じる(&C)"
-
 #~ msgid "Close this window without executing the command"
 #~ msgstr "コマンドをせずに画面を閉じる"
 
 #~ msgid "Show manual page of the command"
 #~ msgstr "コマンドのマニュアルを見てください "
-
-#~ msgid "&Apply"
-#~ msgstr "適用(&A)"
 
 #~ msgid "&Stop"
 #~ msgstr "ストップ(&S)"
