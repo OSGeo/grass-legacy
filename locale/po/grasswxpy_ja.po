@@ -4415,6 +4415,7 @@ msgstr "GISデータディレクトリ："
 msgid "Project Location"
 msgstr "プロジェクトロケーション "
 
+#: ../gui/wxpython/gui_modules/location_wizard.py:209
 msgid "Choose GRASS data directory:"
 msgstr "GRASSデータディレクトリの選択："
 
@@ -7667,6 +7668,7 @@ msgid "Manage"
 msgstr "管理"
 
 #: ../gui/wxpython/gis_set.py:96
+#, python-format
 msgid ""
 "Welcome to GRASS GIS %s\n"
 "The world's leading open source GIS"
