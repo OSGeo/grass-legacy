@@ -1955,14 +1955,14 @@ static void G_gui_tcltk(void)
 
 #ifdef __MINGW32__
     if (getenv("GRASS_DEBUG_GUI"))
-	fp = G_popen("tee gui_dump.tcl | \"%GRASS_WISH%\"", "w");
+	fp = popen("tee gui_dump.tcl | \"%GRASS_WISH%\"", "w");
     else
-	fp = G_popen("\"%GRASS_WISH%\"", "w");
+	fp = popen("\"%GRASS_WISH%\"", "w");
 #else
     if (getenv("GRASS_DEBUG_GUI"))
-	fp = G_popen("tee gui_dump.tcl | '$GRASS_WISH'", "w");
+	fp = popen("tee gui_dump.tcl | '$GRASS_WISH'", "w");
     else
-	fp = G_popen("'$GRASS_WISH'", "w");
+	fp = popen("'$GRASS_WISH'", "w");
 #endif
 
     if (!fp)
