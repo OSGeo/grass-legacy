@@ -11,7 +11,7 @@ proc create_submit_msg { formid  }  {
     destroy $formf($formid).sbw 
     destroy $formf($formid).sbt
 
-    if { $submit_result == 1 } { set color "green" } else { set color "red" }
+    if { $submit_result == 1 } { set color "#048822" } else { set color "red" }
     set sbw [ScrolledWindow $formf($formid).sbw -relief sunken -borderwidth 2]
     set sbt [text $formf($formid).sbt -height 3 -width 20 -foreground $color ]
     pack $sbw $sbt -fill x
