@@ -922,10 +922,6 @@ int G_plot_icon(double, double, int, double, double);
 /* pole_in_poly.c */
 int G_pole_in_polygon(const double *, const double *, int);
 
-/* popen.c */
-FILE *G_popen(const char *, const char *);
-int G_pclose(FILE *);
-
 /* progrm_nme.c */
 const char *G_program_name(void);
 int G_set_program_name(const char *);
