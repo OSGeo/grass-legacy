@@ -1981,7 +1981,7 @@ static void G_gui_tcltk(void)
 
     generate_tcl(fp);
 
-    G_pclose(fp);
+    pclose(fp);
 }
 
 /**

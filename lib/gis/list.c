@@ -125,7 +125,7 @@ int G_list_element(const char *element,
      * close the more
      */
     if (more != stdout)
-	G_pclose(more);
+	pclose(more);
 #ifdef SIGPIPE
     signal(SIGPIPE, sigpipe);
 #endif
