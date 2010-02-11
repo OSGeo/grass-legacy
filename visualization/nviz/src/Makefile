@@ -3,12 +3,11 @@
 
 MODULE_TOPDIR = ../../..
 
+PGM = nviz
+
 include $(MODULE_TOPDIR)/include/Make/Platform.make
 include $(MODULE_TOPDIR)/include/Make/Grass.make
 include $(MODULE_TOPDIR)/include/Make/Rules.make
-
-# These should be set by the doconfigure script
-NVWISH_VER=NVWISH2.2
 
 ifeq ($(OPENGL_X11),1)
 OGL_LIBS := $(OPENGLULIB) $(OPENGLLIB) $(XLIBPATH) $(XLIB) -lXmu -lXext $(XEXTRALIBS) $(MATHLIB)
@@ -59,10 +58,9 @@ ARCH_OBJS := $(foreach obj,$(OBJS),$(OBJDIR)/$(obj))
 
 EXTRA_CLEAN_FILES = nvwish$(EXE)
 
-#default: $(BIN)/$(PGM) htmlcmd
-default: nvwish$(EXE)
+default: $(BIN)/$(PGM)$(EXE)
 
-nvwish$(EXE): $(ARCH_OBJS) $(VECTDEP) $(BITMAPDEP) $(LINKMDEP) $(FORMDEP) $(DBMIDEP $(GISDEP)
+$(BIN)/$(PGM)$(EXE): $(ARCH_OBJS) $(VECTDEP) $(BITMAPDEP) $(LINKMDEP) $(FORMDEP) $(DBMIDEP $(GISDEP)
 	$(CC) $(LDFLAGS) -o $@ $(ARCH_OBJS) $(FMODE_OBJ) $(SURFLIB) $(XTRA_LDFLAGS) \
 		$(BITMAPLIB) $(LINKMLIB) $(VECTLIB) $(SITESLIB) $(FORMLIB) $(DBMILIB) \
 		$(G3DLIB) $(GISLIB) $(XDRLIB) \

@@ -34,13 +34,8 @@ default:
 # Install the scripts in the appropriate directory
 install:
 	-$(MKDIR) $(INSTALL_DIR)
-	$(INSTALL) src/nvwish$(EXE) $(INSTALL_DIR)/$(PROG)$(EXE)
-	$(INSTALL) scripts/$(PROG) $(GISBASE)/bin
-ifneq ($(strip $(MINGW)),)
-	$(INSTALL) scripts/nviz.bat $(GISBASE)/bin
-endif
 	-$(MKDIR) $(INSTALL_DIR)/scripts
-	for file in $(SCRIPTS) ; do $(INSTALL) $$file $(INSTALL_DIR)/scripts ; done
+	for file in $(SCRIPTS) ; do $(INSTALL_DATA) $$file $(INSTALL_DIR)/scripts ; done
 	-$(MKDIR) $(INSTALL_DIR)/bitmaps
 	-$(MKDIR) $(INSTALL_DIR)/bitmaps/flythrough
 	$(FIND) bitmaps -path '*/.svn' -prune -o -type f -print | \
