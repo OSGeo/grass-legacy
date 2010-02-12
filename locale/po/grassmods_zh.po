@@ -1823,9 +1823,9 @@ msgid "This step value is not allowed"
 msgstr "** 不允许负值！"
 
 #: ../raster/r.contour/main.c:327
-#, c-format
+#, fuzzy, c-format
 msgid "Range of levels: min = %f, max = %f"
-msgstr ""
+msgstr "整数范围：min,max"
 
 #: ../raster/r.contour/main.c:356
 #, fuzzy
@@ -2700,8 +2700,9 @@ msgid ""
 msgstr "输入的坡向地图的名称(地形坡向或太阳能板的方位角) [十进制度]"
 
 #: ../raster/r.sun2/main.c:264
+#, fuzzy
 msgid "A single value of the orientation (aspect), 270 is south"
-msgstr ""
+msgstr "纬度值 [十进制度]"
 
 #: ../raster/r.sun2/main.c:273 ../raster/r.sun/main.c:227
 msgid ""
@@ -3390,8 +3391,9 @@ msgid "Set Value to NULL"
 msgstr "将该值置为NULL"
 
 #: ../raster/r.in.bin/main.c:242
+#, fuzzy
 msgid "Parsing bytes per cell"
-msgstr ""
+msgstr "        每个像元所占的字节数"
 
 #: ../raster/r.in.bin/main.c:244
 #, fuzzy
@@ -8146,9 +8148,9 @@ msgid "Title, in quotes"
 msgstr "标题，使用引号"
 
 #: ../raster/r.clump/main.c:120
-#, c-format
+#, fuzzy, c-format
 msgid "%d clumps."
-msgstr ""
+msgstr "%s - 未发现"
 
 #: ../raster/r.clump/clump.c:98
 #, c-format
@@ -9601,9 +9603,9 @@ msgid "<%s> is integer raster map (CELL)"
 msgstr "%s - 无法打开栅格文件"
 
 #: ../raster/r.null/null.c:145
-#, c-format
+#, fuzzy, c-format
 msgid "<%s> is integer raster map (CELL). Using null=%d."
-msgstr ""
+msgstr "%s - 无法打开栅格文件"
 
 #: ../raster/r.null/null.c:151
 #, fuzzy, c-format
@@ -11172,8 +11174,9 @@ msgid "You didn't specify a horizon raster name. Aborting."
 msgstr ""
 
 #: ../raster/r.horizon/main.c:377
+#, fuzzy
 msgid "You didn't specify an angle step size. Aborting."
-msgstr ""
+msgstr "无法读取范围文件"
 
 #: ../raster/r.horizon/main.c:390
 #, fuzzy
@@ -11204,8 +11207,9 @@ msgid "north"
 msgstr ""
 
 #: ../raster/r.horizon/main.c:421
+#, fuzzy
 msgid "Could not read maximum distance. Aborting."
-msgstr ""
+msgstr "无法读取范围文件"
 
 #: ../raster/r.horizon/main.c:617 ../raster/r.in.ascii/main.c:193
 #: ../raster/r.in.arc/main.c:135
@@ -11424,7 +11428,7 @@ msgstr "无法写入 <%s>"
 #: ../raster/r.recode/read_rules.c:41
 #, fuzzy, c-format
 msgid "Integer data range of raster map <%s> is empty"
-msgstr "数据范围是%ld至%ld\n"
+msgstr "无法写入 <%s>"
 
 #: ../raster/r.recode/read_rules.c:44
 #, fuzzy, c-format
@@ -17100,8 +17104,12 @@ msgid "Display"
 msgstr ""
 
 #: ../display/d.vect/main.c:146
+#, fuzzy
 msgid "Layer number (if -1, all layers are displayed)"
 msgstr ""
+"OGR 图层名称。如果不给出，那么所有可用的图层都会被导入。\n"
+"\t\tESRI Shapefile：shapefile 名称\n"
+"\t\tMapInfo File：mapinfo 文件名"
 
 #: ../display/d.vect/main.c:165 ../display/d.vect/main.c:175
 #: ../display/d.vect/main.c:276 ../display/d.vect/main.c:286
@@ -17279,12 +17287,14 @@ msgid "%d errors in cat option"
 msgstr ""
 
 #: ../display/d.vect/main.c:687
+#, fuzzy
 msgid "Unable to display areas, topology not available"
-msgstr ""
+msgstr "图层 '%s' 不可用"
 
 #: ../display/d.vect/main.c:692
+#, fuzzy
 msgid "Unable to display lines by id, topology not available"
-msgstr ""
+msgstr "图层 '%s' 不可用"
 
 #: ../display/d.vect/main.c:735
 #, fuzzy
@@ -17344,11 +17354,11 @@ msgid "Unable to read vector map"
 msgstr "不能创建输出地图 <%s>"
 
 #: ../display/d.vect/plot1.c:461
-#, c-format
+#, fuzzy, c-format
 msgid ""
 "Error in color definition column '%s', feature id %d with cat %d: "
 "colorstring '%s'"
-msgstr ""
+msgstr "类别[%d]的行[%s]无效的RGB颜色定义"
 
 #: ../display/d.vect/plot1.c:469
 #, fuzzy, c-format
@@ -17693,9 +17703,9 @@ msgid "Unable to open vector map <%s> at topology level %d"
 msgstr "无法打开矢量文件<%s>在<%s>中"
 
 #: ../vector/v.net/main.c:190
-#, c-format
+#, fuzzy, c-format
 msgid "%d arcs added to network (nlayer %d)"
-msgstr ""
+msgstr "%d 个类别从表中加载"
 
 #: ../vector/v.net/main.c:197 ../vector/v.type/main.c:234
 #: ../vector/v.proj/main.c:278 ../vector/v.kcv/main.c:161
@@ -17861,7 +17871,7 @@ msgstr ""
 #: ../vector/v.to.db/update.c:32 ../vector/v.to.db/query.c:83
 #, fuzzy, c-format
 msgid "Database connection not defined for layer %d. Use v.db.connect first."
-msgstr "图层 <%d> 的数据库连接未定义。请先使用 v.db.connect"
+msgstr "图层 <%d> ��数据库连接未定义。请先使用 v.db.connect"
 
 #: ../vector/v.to.db/update.c:82
 #, fuzzy
@@ -17894,8 +17904,9 @@ msgid "Layer number (write to)"
 msgstr "图层 %d"
 
 #: ../vector/v.to.db/parse.c:46
+#, fuzzy
 msgid "Query layer number (read from)"
-msgstr ""
+msgstr "图层 %d"
 
 #: ../vector/v.to.db/parse.c:47 ../vector/v.to.db/parse.c:99
 #: ../db/base/select.c:191 ../db/base/select.c:196 ../db/base/select.c:202
@@ -18271,10 +18282,11 @@ msgid ""
 msgstr ""
 
 #: ../vector/lidar/v.surf.bspline/main.c:385
+#, fuzzy
 msgid ""
 "Cannot allocate memory for auxiliar matrix.Consider changing region "
 "resolution"
-msgstr ""
+msgstr "无法为字符串分配内存"
 
 #: ../vector/lidar/v.surf.bspline/main.c:559
 #, fuzzy, c-format
@@ -18339,9 +18351,9 @@ msgid "Mean = %.5lf"
 msgstr ""
 
 #: ../vector/lidar/v.surf.bspline/crosscorr.c:288
-#, c-format
+#, fuzzy, c-format
 msgid "Root Means Square (RMS) = %.5lf"
-msgstr ""
+msgstr "%d 个点在当前范围之外，将被忽略"
 
 #: ../vector/lidar/v.surf.bspline/crosscorr.c:304
 msgid ""
@@ -18506,7 +18518,7 @@ msgstr ""
 #: ../vector/lidar/v.lidar.growing/main.c:192
 #, fuzzy, c-format
 msgid "Unable to open table <%s_edge_Interpolation>"
-msgstr "无法打开数据库 <%s>"
+msgstr "无法打开输出文件 <%s>"
 
 #: ../vector/lidar/v.lidar.growing/main.c:239
 #, c-format
@@ -19282,9 +19294,13 @@ msgid "Types to be extracted"
 msgstr "将要导入的栅格文件"
 
 #: ../vector/v.extract/main.c:122
+#, fuzzy
 msgid ""
 "Layer number (if -1, all features in all layers of given type are extracted)"
 msgstr ""
+"OGR 图层名称。如果不给出，那么所有可用的图层都会被导入。\n"
+"\t\tESRI Shapefile：shapefile 名称\n"
+"\t\tMapInfo File：mapinfo 文件名"
 
 #: ../vector/v.extract/main.c:136
 #, fuzzy
@@ -19462,7 +19478,7 @@ msgstr "x/y/z 字段必须是整型或双精度的"
 #: ../vector/v.in.db/main.c:173
 #, fuzzy
 msgid "Writing features..."
-msgstr "写入属性 ..."
+msgstr "写入 %s ... "
 
 #: ../vector/v.in.db/main.c:180
 msgid "Key column must be integer"
@@ -20038,8 +20054,9 @@ msgid "Cannot select attributes for cat = %d"
 msgstr "无法选择类别 = %d 的属性"
 
 #: ../vector/v.out.vtk/writeVTK.c:622
+#, fuzzy
 msgid "Cannot export attribute table fields for layer < 1. Skipping export"
-msgstr ""
+msgstr "%d 个点在当前范围之外，将被忽略"
 
 #: ../vector/v.out.vtk/writeVTK.c:630
 #, fuzzy
@@ -20085,9 +20102,9 @@ msgid "Only export points falling within current 3D region (points mode)"
 msgstr ""
 
 #: ../vector/v.out.ascii/out.c:111
-#, c-format
+#, fuzzy, c-format
 msgid "Parameter '%s' ignored in standard mode"
-msgstr ""
+msgstr "需要的 g3d 文件未找到"
 
 #: ../vector/v.out.ascii/out.c:119
 msgid "Format 'point' is not supported for old version"
@@ -21678,9 +21695,9 @@ msgid "Use numeric type for attribute \"layer\""
 msgstr ""
 
 #: ../vector/v.in.dwg/main.c:120
-#, c-format
+#, fuzzy, c-format
 msgid "Unable to initialize OpenDWG Toolkit, error: %d: %s."
-msgstr ""
+msgstr "无法打开输入文件 <%s@%s>"
 
 #: ../vector/v.in.dwg/main.c:123
 #, fuzzy, c-format
@@ -25649,8 +25666,9 @@ msgid "Vertical extent of vector map <%s>: B: %f T: %f"
 msgstr "无法打开矢量文件<%s>在<%s>中"
 
 #: ../vector/v.to.3d/args.c:11
+#, fuzzy
 msgid "Reverse transformation; 3D vector features to 2D"
-msgstr ""
+msgstr "3D 矢量对象的固定高度"
 
 #: ../vector/v.to.3d/args.c:15
 #, fuzzy
@@ -25688,9 +25706,9 @@ msgid "Feature id %d has no category - skipping"
 msgstr "%d 个点没有类别，将被忽略"
 
 #: ../vector/v.to.3d/trans3.c:102
-#, c-format
+#, fuzzy, c-format
 msgid "Feature id %d has more categories. Using category %d."
-msgstr ""
+msgstr "%d 个点没有类别，将被忽略"
 
 #: ../vector/v.to.3d/trans2.c:98
 #, fuzzy
@@ -27189,8 +27207,9 @@ msgid "Enter raster map to display in 1st frame"
 msgstr "作为背景的栅格图的名称"
 
 #: ../locale/scriptstrings/d.split_to_translate.c:4
+#, fuzzy
 msgid "Enter command to execute in 1st frame"
-msgstr ""
+msgstr "作为背景的栅格图的名称"
 
 #: ../locale/scriptstrings/d.split_to_translate.c:5
 #, fuzzy
@@ -27203,8 +27222,9 @@ msgid "Enter command to execute in 2nd frame"
 msgstr "作为背景的栅格图的名称"
 
 #: ../locale/scriptstrings/d.split_to_translate.c:7
+#, fuzzy
 msgid "How to split display"
-msgstr ""
+msgstr "无法关闭输入地图"
 
 #: ../locale/scriptstrings/i.spectral_to_translate.c:1
 msgid ""
@@ -27234,8 +27254,9 @@ msgid "Use image list and not group"
 msgstr ""
 
 #: ../locale/scriptstrings/i.spectral_to_translate.c:7
+#, fuzzy
 msgid "Select multiple points"
-msgstr ""
+msgstr "要素类型"
 
 #: ../locale/scriptstrings/i.spectral_to_translate.c:8
 #, fuzzy
@@ -27243,10 +27264,11 @@ msgid "Label with coordinates instead of numbering"
 msgstr "使用地图坐标而不是 xyz 坐标"
 
 #: ../locale/scriptstrings/v.convert.all_to_translate.c:1
+#, fuzzy
 msgid ""
 "Convert all old GRASS < Ver5.7 vector maps in current mapset to current "
 "format"
-msgstr ""
+msgstr "将栅格图转化为矢量图层。"
 
 #: ../locale/scriptstrings/v.convert.all_to_translate.c:3
 msgid "run non-interactively"
@@ -27318,10 +27340,11 @@ msgid "Name for output vector map"
 msgstr "输出矢量文件的名称"
 
 #: ../locale/scriptstrings/r.plane_to_translate.c:1
+#, fuzzy
 msgid ""
 "Creates raster plane map given dip (inclination), aspect (azimuth) and one "
 "point."
-msgstr ""
+msgstr "创建一格栅格图层和一个包含随机位置点的矢量地图。"
 
 #: ../locale/scriptstrings/r.plane_to_translate.c:2
 #: ../locale/scriptstrings/r.shaded.relief_to_translate.c:2
@@ -27367,8 +27390,9 @@ msgid "Convert coordinates from one projection to another (cs2cs frontend)."
 msgstr ""
 
 #: ../locale/scriptstrings/m.proj_to_translate.c:2
+#, fuzzy
 msgid "miscellaneous, projection"
-msgstr ""
+msgstr "无法获取栅格行\n"
 
 #: ../locale/scriptstrings/m.proj_to_translate.c:3
 #, fuzzy
@@ -27376,8 +27400,9 @@ msgid "Input coordinate file (omit to read from stdin)"
 msgstr "导入的ASCII栅格文件"
 
 #: ../locale/scriptstrings/m.proj_to_translate.c:4
+#, fuzzy
 msgid "Output coordinate file (omit to send to stdout)"
-msgstr ""
+msgstr "导入的ASCII栅格文件"
 
 #: ../locale/scriptstrings/m.proj_to_translate.c:5
 #: ../locale/scriptstrings/v.in.lines_to_translate.c:6
@@ -27534,8 +27559,9 @@ msgid "Images"
 msgstr "输入文件"
 
 #: ../locale/scriptstrings/d.out.file_to_translate.c:8
+#, fuzzy
 msgid "Width and height of output image (overrides resolution setting)"
-msgstr ""
+msgstr "输出地图的名称"
 
 #: ../locale/scriptstrings/d.out.file_to_translate.c:10
 #, fuzzy
@@ -27602,12 +27628,14 @@ msgid "Use the Cario driver to render images"
 msgstr ""
 
 #: ../locale/scriptstrings/d.out.file_to_translate.c:31
+#, fuzzy
 msgid "Set paper orientation to landscape (for PostScript output)"
-msgstr ""
+msgstr "PostScript 输出文件"
 
 #: ../locale/scriptstrings/d.out.file_to_translate.c:33
+#, fuzzy
 msgid "Do not crop away margins"
-msgstr ""
+msgstr "无法拷贝表"
 
 #: ../locale/scriptstrings/db.test_to_translate.c:1
 msgid "Test database driver, database must exist and set by db.connect."
@@ -27640,9 +27668,10 @@ msgid "Produces web map server query string output"
 msgstr "PostScript 输出文件"
 
 #: ../locale/scriptstrings/r.tileset_to_translate.c:5
+#, fuzzy
 msgid ""
 "Name of region to use instead of current region for bounds and resolution"
-msgstr ""
+msgstr "沿着剖面的分辨率(默认为当前区域的分辨率)"
 
 #: ../locale/scriptstrings/r.tileset_to_translate.c:6
 #, fuzzy
@@ -27687,8 +27716,9 @@ msgid ""
 msgstr ""
 
 #: ../locale/scriptstrings/i.fusion.brovey_to_translate.c:2
+#, fuzzy
 msgid "imagery, fusion, Brovey"
-msgstr ""
+msgstr "矢量导入完成"
 
 #: ../locale/scriptstrings/i.fusion.brovey_to_translate.c:3
 msgid "LANDSAT sensor"
@@ -27795,8 +27825,9 @@ msgid "Mosaics up to 4 images and extends colormap; creates map *.mosaic"
 msgstr ""
 
 #: ../locale/scriptstrings/i.image.mosaic_to_translate.c:2
+#, fuzzy
 msgid "raster, imagery, mosaicking"
-msgstr ""
+msgstr "矢量导入完成"
 
 #: ../locale/scriptstrings/i.image.mosaic_to_translate.c:3
 msgid "1st map for mosaic (top of image stack)."
@@ -27844,8 +27875,9 @@ msgid ""
 msgstr ""
 
 #: ../locale/scriptstrings/r.reclass.area_to_translate.c:2
+#, fuzzy
 msgid "raster, statistics, aggregation"
-msgstr ""
+msgstr "包含结果的栅格图的名称"
 
 #: ../locale/scriptstrings/r.reclass.area_to_translate.c:5
 msgid "Lesser value option that sets the <= area size limit [hectares]"
@@ -27940,8 +27972,9 @@ msgid "Name of input vector map"
 msgstr "输入的 2D 矢量地图的名称"
 
 #: ../locale/scriptstrings/v.report_to_translate.c:7
+#, fuzzy
 msgid "Value to calculate"
-msgstr ""
+msgstr "无法计算面的质心"
 
 #: ../locale/scriptstrings/v.report_to_translate.c:8
 #, fuzzy
@@ -27987,8 +28020,9 @@ msgid ""
 msgstr ""
 
 #: ../locale/scriptstrings/d.rast.leg_to_translate.c:1
+#, fuzzy
 msgid "Displays a raster map and its legend on a graphics window"
-msgstr ""
+msgstr "选择字体，该字体用于图形监视器上文本的显示。"
 
 #: ../locale/scriptstrings/d.rast.leg_to_translate.c:4
 msgid "Omit entries with missing label"
@@ -28023,8 +28057,9 @@ msgid "Export display monitor to a GpsDrive compatible backdrop image"
 msgstr ""
 
 #: ../locale/scriptstrings/d.out.gpsdrive_to_translate.c:2
+#, fuzzy
 msgid "display, export, GPS"
-msgstr ""
+msgstr "矢量导入完成"
 
 #: ../locale/scriptstrings/d.out.gpsdrive_to_translate.c:3
 msgid "name for new map image (lives in ~/.gpsdrive/maps/)"
@@ -28083,8 +28118,9 @@ msgid "Display the HTML man pages of GRASS"
 msgstr ""
 
 #: ../locale/scriptstrings/g.manual_to_translate.c:2
+#, fuzzy
 msgid "general, manual, help"
-msgstr ""
+msgstr "无法获取栅格行\n"
 
 #: ../locale/scriptstrings/g.manual_to_translate.c:3
 msgid "Display index"
@@ -28164,8 +28200,9 @@ msgid "Create inverse mask from specified 'maskcats' list"
 msgstr ""
 
 #: ../locale/scriptstrings/r.mask_to_translate.c:9
+#, fuzzy
 msgid "Overwrite existing MASK"
-msgstr ""
+msgstr "无法创建栅格地图 %s"
 
 #: ../locale/scriptstrings/r.mask_to_translate.c:10
 msgid "Remove existing mask (overrides other options)"
@@ -28197,8 +28234,9 @@ msgid "Export as routes"
 msgstr "导入地图 %d 的要素..."
 
 #: ../locale/scriptstrings/v.out.gpsbabel_to_translate.c:5
+#, fuzzy
 msgid "Export as tracks"
-msgstr ""
+msgstr "导入地图 %d 的要素..."
 
 #: ../locale/scriptstrings/v.out.gpsbabel_to_translate.c:7
 #, fuzzy
@@ -28232,8 +28270,9 @@ msgid "Example: income < 1000 and inhab >= 10000"
 msgstr ""
 
 #: ../locale/scriptstrings/v.db.reconnect.all_to_translate.c:1
+#, fuzzy
 msgid "Reconnects vectors to a new database."
-msgstr ""
+msgstr "移除一个数据库"
 
 #: ../locale/scriptstrings/v.db.reconnect.all_to_translate.c:3
 #, fuzzy
@@ -28256,8 +28295,9 @@ msgid "Old schema"
 msgstr ""
 
 #: ../locale/scriptstrings/v.db.reconnect.all_to_translate.c:7
+#, fuzzy
 msgid "New schema"
-msgstr ""
+msgstr "数据库模式"
 
 #: ../locale/scriptstrings/r.in.aster_to_translate.c:1
 msgid ""
@@ -28321,8 +28361,9 @@ msgid "Path to rules file"
 msgstr "结果矢量文件的名称"
 
 #: ../locale/scriptstrings/v.colors_to_translate.c:15
+#, fuzzy
 msgid "Save placeholder raster map for use with d.legend"
-msgstr ""
+msgstr "作为背景的栅格图的名称"
 
 #: ../locale/scriptstrings/db.out.ogr_to_translate.c:1
 #, fuzzy
@@ -28552,12 +28593,14 @@ msgid "Number of classes for interval theme (integer)"
 msgstr "重复过滤的次数"
 
 #: ../locale/scriptstrings/d.vect.thematic_to_translate.c:28
+#, fuzzy
 msgid "Color scheme for graduated color mapping"
-msgstr ""
+msgstr "[%s] 的色彩表已更新。"
 
 #: ../locale/scriptstrings/d.vect.thematic_to_translate.c:29
+#, fuzzy
 msgid "Select 'single_color' for graduated point/line display"
-msgstr ""
+msgstr "[%s] 的色彩表已更新。"
 
 #: ../locale/scriptstrings/d.vect.thematic_to_translate.c:31
 #, fuzzy
@@ -28569,21 +28612,24 @@ msgid "GRASS named color or R:G:B triplet. Set color scheme to single color"
 msgstr ""
 
 #: ../locale/scriptstrings/d.vect.thematic_to_translate.c:34
+#, fuzzy
 msgid "Color for graduated lines or point/area outlines"
-msgstr ""
+msgstr "[%s] 的色彩表已更新。"
 
 #: ../locale/scriptstrings/d.vect.thematic_to_translate.c:35
 msgid "GRASS named color or R:G:B triplet. Set color scheme to single color."
 msgstr ""
 
 #: ../locale/scriptstrings/d.vect.thematic_to_translate.c:37
+#, fuzzy
 msgid "Beginning color for custom color gradient"
-msgstr ""
+msgstr "z 坐标的偏移值"
 
 #: ../locale/scriptstrings/d.vect.thematic_to_translate.c:38
 #: ../locale/scriptstrings/d.vect.thematic_to_translate.c:41
+#, fuzzy
 msgid "Must be expressed as R:G:B triplet"
-msgstr ""
+msgstr "z 坐标的偏移值"
 
 #: ../locale/scriptstrings/d.vect.thematic_to_translate.c:40
 #, fuzzy
@@ -28648,10 +28694,11 @@ msgid "Table to drop"
 msgstr "无法创建栅格地图 %s"
 
 #: ../locale/scriptstrings/v.in.gns_to_translate.c:1
+#, fuzzy
 msgid ""
 "Imports US-NGA GEOnet Names Server (GNS) country files into a GRASS vector "
 "points map."
-msgstr ""
+msgstr "输入的 2D 矢量地图的名称"
 
 #: ../locale/scriptstrings/v.in.gns_to_translate.c:2
 #: ../locale/scriptstrings/v.in.geonames_to_translate.c:2
@@ -28788,8 +28835,9 @@ msgid "extended statistics (quartiles and percentile)"
 msgstr ""
 
 #: ../locale/scriptstrings/r.univar.sh_to_translate.c:5
+#, fuzzy
 msgid "Percentile to calculate (requires -e flag)"
-msgstr ""
+msgstr "无法关闭输入地图"
 
 #: ../locale/scriptstrings/r.mapcalculator_to_translate.c:1
 msgid "Calculate new raster map from a r.mapcalc expression."
@@ -28929,8 +28977,9 @@ msgid "Import routes"
 msgstr "导入地图 %d 的要素..."
 
 #: ../locale/scriptstrings/v.in.gpsbabel_to_translate.c:6
+#, fuzzy
 msgid "Import track"
-msgstr ""
+msgstr "导入地图 %d 的要素..."
 
 #: ../locale/scriptstrings/v.in.gpsbabel_to_translate.c:7
 msgid "Force vertices of track or route data as points"
@@ -28999,8 +29048,9 @@ msgstr ""
 #: ../locale/scriptstrings/r.in.wms_to_translate.c:14
 #: ../locale/scriptstrings/r.in.wms_to_translate.c:19
 #: ../locale/scriptstrings/r.in.wms_to_translate.c:46
+#, fuzzy
 msgid "Import"
-msgstr ""
+msgstr "导入地图 %d 的要素..."
 
 #: ../locale/scriptstrings/r.in.wms_to_translate.c:13
 msgid "Don't reproject the data, just patch it"
@@ -29015,16 +29065,19 @@ msgid "This may be needed to connect to servers which lack POST capability"
 msgstr ""
 
 #: ../locale/scriptstrings/r.in.wms_to_translate.c:20
+#, fuzzy
 msgid "Mapserver to request data from"
-msgstr ""
+msgstr "无法从表中选取数据"
 
 #: ../locale/scriptstrings/r.in.wms_to_translate.c:22
+#, fuzzy
 msgid "Layers to request from map server"
-msgstr ""
+msgstr "使用的插值方法"
 
 #: ../locale/scriptstrings/r.in.wms_to_translate.c:24
+#, fuzzy
 msgid "Styles to request from map server"
-msgstr ""
+msgstr "使用的插值方法"
 
 #: ../locale/scriptstrings/r.in.wms_to_translate.c:26
 #, fuzzy
@@ -29032,8 +29085,9 @@ msgid "Source projection to request from server"
 msgstr "使用的插值方法"
 
 #: ../locale/scriptstrings/r.in.wms_to_translate.c:28
+#, fuzzy
 msgid "Image format requested from the server"
-msgstr ""
+msgstr "使用的插值方法"
 
 #: ../locale/scriptstrings/r.in.wms_to_translate.c:30
 msgid "Addition query options for server"
@@ -29044,8 +29098,9 @@ msgid "Maximum columns to request at a time"
 msgstr ""
 
 #: ../locale/scriptstrings/r.in.wms_to_translate.c:34
+#, fuzzy
 msgid "Maximum rows to request at a time"
-msgstr ""
+msgstr "点到网络的最小距离"
 
 #: ../locale/scriptstrings/r.in.wms_to_translate.c:36
 msgid "Additional options for r.tileset"
@@ -29160,12 +29215,14 @@ msgid "vector, centroid, area"
 msgstr "打印矢量的属性"
 
 #: ../locale/scriptstrings/v.centroids_to_translate.c:5
+#, fuzzy
 msgid "Action to be taken"
-msgstr ""
+msgstr "将被重新编码的栅格图"
 
 #: ../locale/scriptstrings/v.centroids_to_translate.c:7
+#, fuzzy
 msgid "Category number starting value"
-msgstr ""
+msgstr "类别字段的名称"
 
 #: ../locale/scriptstrings/r3.mapcalculator_to_translate.c:1
 msgid "Calculates new grid3D volume from r3.mapcalc expression."
@@ -29274,16 +29331,19 @@ msgid "raster, imagery"
 msgstr "矢量导入完成"
 
 #: ../locale/scriptstrings/i.tasscap_to_translate.c:3
+#, fuzzy
 msgid "use transformation rules for LANDSAT-4"
-msgstr ""
+msgstr "3D 矢量对象的固定高度"
 
 #: ../locale/scriptstrings/i.tasscap_to_translate.c:4
+#, fuzzy
 msgid "use transformation rules for LANDSAT-5"
-msgstr ""
+msgstr "3D 矢量对象的固定高度"
 
 #: ../locale/scriptstrings/i.tasscap_to_translate.c:5
+#, fuzzy
 msgid "use transformation rules for LANDSAT-7"
-msgstr ""
+msgstr "3D 矢量对象的固定高度"
 
 #: ../locale/scriptstrings/i.tasscap_to_translate.c:6
 #, fuzzy
@@ -29333,8 +29393,9 @@ msgid "Vector map for which to add new attribute table"
 msgstr "需要编辑属性表的输入矢量点地图的名称"
 
 #: ../locale/scriptstrings/v.db.addtable_to_translate.c:4
+#, fuzzy
 msgid "Name of new attribute table (default: vector map name)"
-msgstr ""
+msgstr "已有输入栅格文件大的名称"
 
 #: ../locale/scriptstrings/v.db.addtable_to_translate.c:5
 #, fuzzy
@@ -29443,12 +29504,14 @@ msgid "LANDSAT TM band 7."
 msgstr ""
 
 #: ../locale/scriptstrings/r.li.setup_to_translate.c:1
+#, fuzzy
 msgid "Configuration editor for r.li.'index'"
-msgstr ""
+msgstr "非法的输出文件名"
 
 #: ../locale/scriptstrings/r.li.setup_to_translate.c:2
+#, fuzzy
 msgid "raster, landscape structure analysis"
-msgstr ""
+msgstr "包含结果的栅格图的名称"
 
 #: ../locale/scriptstrings/db.in.ogr_to_translate.c:1
 #, fuzzy
@@ -29464,8 +29527,9 @@ msgid "Table name of SQL DB table"
 msgstr ""
 
 #: ../locale/scriptstrings/db.in.ogr_to_translate.c:6
+#, fuzzy
 msgid "Name for auto-generated unique key column"
-msgstr ""
+msgstr "栅格地图的名称 <%s>"
 
 #: ../locale/scriptstrings/d.rast.edit_to_translate.c:5
 #, fuzzy
@@ -29506,8 +29570,9 @@ msgid "Vector map for which to drop attribute column"
 msgstr "需要编辑属性表的输入矢量点地图的名称"
 
 #: ../locale/scriptstrings/v.db.dropcol_to_translate.c:4
+#, fuzzy
 msgid "Layer where to drop column"
-msgstr ""
+msgstr "无法创建属性表"
 
 #: ../locale/scriptstrings/d.polar_to_translate.c:1
 msgid "Draws polar diagram of angle map such as aspect or flow directions"
@@ -29579,12 +29644,14 @@ msgid "kill source monitor after moving"
 msgstr ""
 
 #: ../locale/scriptstrings/d.mvmon_to_translate.c:6
+#, fuzzy
 msgid "Target monitor"
-msgstr ""
+msgstr "写入 %s ... "
 
 #: ../locale/scriptstrings/d.mvmon_to_translate.c:7
+#, fuzzy
 msgid "Source monitor"
-msgstr ""
+msgstr "无法获取栅格行\n"
 
 #: ../sites/s.out.ascii/main.c:47 ../sites/s.in.ascii/main.c:50
 msgid "sites"
@@ -29620,8 +29687,9 @@ msgid "Nonpositive eigenvalues for class %d subclass %d"
 msgstr ""
 
 #: ../imagery/i.smap/shapiro/main.c:38 ../imagery/i.gensigset/main.c:40
+#, fuzzy
 msgid "imagery, classification, supervised, SMAP"
-msgstr ""
+msgstr "分类结果的文件名称"
 
 #: ../imagery/i.smap/shapiro/main.c:40
 msgid ""
@@ -29931,8 +29999,9 @@ msgid " Can not generate the transformation equation."
 msgstr "无法为矢量地图获得图层信息"
 
 #: ../imagery/i.rectify/cp.c:29
+#, fuzzy
 msgid "Not enough memory to solve for transformation equation"
-msgstr ""
+msgstr "无法为矢量地图获得图层信息"
 
 #: ../imagery/i.rectify/cp.c:32
 #, fuzzy
@@ -30163,9 +30232,9 @@ msgid "Generates statistics for i.smap from raster map."
 msgstr "为栅格图层生成区域统计值。"
 
 #: ../imagery/i.gensigset/main.c:52
-#, c-format
+#, fuzzy, c-format
 msgid "Clustering class %d (%d pixels)..."
-msgstr ""
+msgstr "通过DEM计算阴影..."
 
 #: ../imagery/i.gensigset/main.c:55
 #, fuzzy, c-format
@@ -30217,8 +30286,9 @@ msgid "Training class %d only has one cell - this class will be ignored"
 msgstr ""
 
 #: ../imagery/i.gensigset/get_train.c:62 ../imagery/i.gensig/get_train.c:58
+#, fuzzy
 msgid "Training map has no classes"
-msgstr ""
+msgstr "无法打开输入的dig_att文件。"
 
 #: ../imagery/i.gensigset/get_train.c:78 ../imagery/i.gensig/get_train.c:73
 #, fuzzy
@@ -30294,16 +30364,18 @@ msgid "Name of input raster map (image fft, imaginary part"
 msgstr "输出栅格文件的标题"
 
 #: ../imagery/i.ifft/ifftmain.c:101
+#, fuzzy
 msgid ""
 "Unable to open real-image in the 'cell_misc' directory. Raster map probably "
 "wasn't created by i.fft"
-msgstr ""
+msgstr "无法以此坐标打开文件：%s\n"
 
 #: ../imagery/i.ifft/ifftmain.c:111
+#, fuzzy
 msgid ""
 "Unable to open imaginary-image in the 'cell_misc' directory. Raster map "
 "probably wasn't created by i.fft"
-msgstr ""
+msgstr "无法以此坐标打开文件：%s\n"
 
 #: ../imagery/i.ifft/ifftmain.c:134
 #, fuzzy, c-format
@@ -30458,9 +30530,9 @@ msgstr "未发现区域<%s>"
 #: ../imagery/i.ortho.photo/photo.2target/main.c:114
 #: ../imagery/i.ortho.photo/photo.rectify/main.c:107
 #: ../imagery/i.ortho.photo/photo.2image/main.c:98
-#, c-format
+#, fuzzy, c-format
 msgid "No camera reference file selected for group [%s]"
-msgstr ""
+msgstr "新的栅格文件的名称"
 
 #: ../imagery/i.ortho.photo/photo.2target/main.c:118
 #: ../imagery/i.ortho.photo/photo.rectify/main.c:111
@@ -30470,14 +30542,14 @@ msgid "Bad format in camera file for group [%s]"
 msgstr "%s：读取 %s 的类别文件时发生错误"
 
 #: ../imagery/i.ortho.photo/photo.2target/main.c:125
-#, c-format
+#, fuzzy, c-format
 msgid "No initial camera exposure station for group [%s]"
-msgstr ""
+msgstr "%s：读取 %s 的类别文件时发生错误"
 
 #: ../imagery/i.ortho.photo/photo.2target/main.c:129
-#, c-format
+#, fuzzy, c-format
 msgid "Bad format in initial camera exposure station for group [%s]"
-msgstr ""
+msgstr "%s：读取 %s 的类别文件时发生错误"
 
 #: ../imagery/i.ortho.photo/photo.2target/main.c:143
 #, fuzzy, c-format
@@ -30485,9 +30557,9 @@ msgid "No photo points for group [%s]"
 msgstr "未找到任何记录。\n"
 
 #: ../imagery/i.ortho.photo/photo.2target/main.c:145
-#, c-format
+#, fuzzy, c-format
 msgid "Poorly placed photo points for group [%s]"
-msgstr ""
+msgstr "未找到任何记录。\n"
 
 #: ../imagery/i.ortho.photo/photo.2target/main.c:167
 #, fuzzy
@@ -30533,9 +30605,9 @@ msgid "No files in this group!"
 msgstr ""
 
 #: ../imagery/i.ortho.photo/photo.rectify/main.c:117
-#, c-format
+#, fuzzy, c-format
 msgid "Bad format in initial exposusre station file for group [%s]"
-msgstr ""
+msgstr "%s：读取 %s 的类别文件时发生错误"
 
 #: ../imagery/i.ortho.photo/photo.rectify/ps_cp.c:53
 #, fuzzy
@@ -30592,9 +30664,9 @@ msgid "Interactively select or modify the target elevation model."
 msgstr ""
 
 #: ../imagery/i.ortho.photo/photo.elev/main.c:91
-#, c-format
+#, fuzzy, c-format
 msgid "Target information for group [%s] missing\n"
-msgstr ""
+msgstr "范围信息无效 (请运行 r.support)"
 
 #: ../imagery/i.ortho.photo/photo.elev/main.c:98
 #, fuzzy, c-format
@@ -30650,8 +30722,9 @@ msgid "Name of camera reference file to use"
 msgstr "新的栅格文件的名称"
 
 #: ../imagery/i.ortho.photo/photo.camera/main.c:83
+#, fuzzy
 msgid "Enter a camera reference file to be used with this imagery group"
-msgstr ""
+msgstr "新的栅格文件的名称"
 
 #: ../imagery/i.ortho.photo/photo.camera/main.c:100
 #, fuzzy, c-format
@@ -30675,7 +30748,7 @@ msgstr "将要调整的栅格地图的名称"
 #: ../imagery/i.ortho.photo/menu/menu.c:74
 #, fuzzy, c-format
 msgid "Group [%s] contains no files"
-msgstr "无法打开输出文件 <%s>"
+msgstr "%s - 无法打开栅格文件"
 
 #: ../imagery/i.fft/fftmain.c:76
 msgid "Fast Fourier Transform (FFT) for image processing."
@@ -30719,8 +30792,9 @@ msgid "Writing transformed data..."
 msgstr "写入新文件...\n"
 
 #: ../imagery/i.fft/fftmain.c:231
+#, fuzzy
 msgid "Writing viewable versions of transformed data..."
-msgstr ""
+msgstr "写入新文件...\n"
 
 #: ../imagery/i.fft/fftmain.c:274
 msgid " "
@@ -30752,8 +30826,9 @@ msgid "fullname=%s\n"
 msgstr ""
 
 #: ../imagery/i.gensig/main.c:39
+#, fuzzy
 msgid "imagery, classification, supervised, MLC"
-msgstr ""
+msgstr "分类结果的文件名称"
 
 #: ../imagery/i.gensig/main.c:41
 #, fuzzy
@@ -30825,7 +30900,7 @@ msgstr ""
 #: ../imagery/i.cluster/main.c:112
 #, fuzzy
 msgid "Name of file containing initial signatures"
-msgstr "无法打开输入的dig_att文件。"
+msgstr "包含SQL语句的文件名"
 
 #: ../imagery/i.cluster/main.c:120
 msgid "Sampling intervals (by row and col); default: ~10,000 pixels"
@@ -30850,7 +30925,7 @@ msgstr ""
 #: ../imagery/i.cluster/main.c:159
 #, fuzzy
 msgid "Name for output file containing final report"
-msgstr "包含线的输入地图"
+msgstr "包含错误矩阵和K曲线的输出文件的名称"
 
 #: ../imagery/i.cluster/main.c:182
 #, fuzzy, c-format
@@ -31131,9 +31206,9 @@ msgid "No raster maps found"
 msgstr "将要导入的二进制栅格文件"
 
 #: ../imagery/i.cluster/open_files.c:42
-#, c-format
+#, fuzzy, c-format
 msgid "Subgroup <%s> doesn't have any raster maps"
-msgstr ""
+msgstr "%s - 无法打开栅格文件"
 
 #: ../imagery/i.cluster/open_files.c:45
 #, fuzzy, c-format
@@ -31148,7 +31223,7 @@ msgstr "无法关闭输出地图"
 #: ../imagery/i.cluster/open_files.c:64
 #, fuzzy, c-format
 msgid "Unable to open seed signature file <%s>"
-msgstr "无法创建文件 [%s]"
+msgstr "无法打开输入文件 <%s@%s>"
 
 #: ../imagery/i.cluster/open_files.c:74 ../imagery/i.maxlik/open.c:58
 #, c-format
@@ -31618,2528 +31693,6 @@ msgstr ""
 msgid "Output"
 msgstr "输出图"
 
-#~ msgid "Use db.select for SELECT SQL statements"
-#~ msgstr "为SELECT SQL语句使用db.select"
-
-#~ msgid "Selects data from table."
-#~ msgstr "从表中选择数据。"
-
-#~ msgid "Output drain raster map"
-#~ msgstr "输出的流域栅格图"
-
 #, fuzzy
-#~ msgid "Can't find %d,%d:%f"
-#~ msgstr "无法找到 %s"
-
-#~ msgid "Starting points raster map"
-#~ msgstr "起始点栅格文件"
-
-#~ msgid "Source map is: Floating point (float) cell type"
-#~ msgstr "源地图是：浮点类型"
-
-#~ msgid "Source map is: Floating point (double) cell type"
-#~ msgstr "源地图是：双精度类型"
-
-#, fuzzy
-#~ msgid "Reading %s"
-#~ msgstr "读取 %s ..."
-
-#~ msgid "can't open raster map [%s] needed for input coordinates"
-#~ msgstr "无法打开需要输入坐标的栅格文件 [%s]"
-
-#, fuzzy
-#~ msgid "Writing %s"
-#~ msgstr "写入 %s ... "
-
-#~ msgid "Error getting input null cells"
-#~ msgstr "获取输入的空值像元时发生错误"
-
-#, fuzzy
-#~ msgid "unable to open MASK"
-#~ msgstr "无法读取掩模"
-
-#, fuzzy
-#~ msgid "Unable to open MASK"
-#~ msgstr "无法读取掩模"
-
-#, fuzzy
-#~ msgid "Name of the longitude input raster map [decimal degrees]"
-#~ msgstr "输入纬度的栅格图的名称 [十进制度]"
-
-#, fuzzy
-#~ msgid "It was impossible to open table"
-#~ msgstr "无法创建 %s"
-
-#, fuzzy
-#~ msgid "Spline type of interpolation"
-#~ msgstr "输出的是内插误差"
-
-#, fuzzy
-#~ msgid "Columns"
-#~ msgstr "列名"
-
-#~ msgid ""
-#~ "Number of column used as x coordinate (first column is 1) for points mode"
-#~ msgstr "点模式下，用作 x 坐标 (第一个字段是 1) 的字段序号"
-
-#, fuzzy
-#~ msgid "Output more comments (default=quiet)"
-#~ msgstr "输出栅格文件的标题"
-
-#, fuzzy
-#~ msgid "Vector map to display thematically"
-#~ msgstr "矢量导入完成"
-
-#, fuzzy
-#~ msgid "Vector map type"
-#~ msgstr "矢量导入完成"
-
-#, fuzzy
-#~ msgid "Layer to use for thematic display"
-#~ msgstr "用作缓冲区距离的属性字段"
-
-#, fuzzy
-#~ msgid "Data type"
-#~ msgstr "要素类型"
-
-#, fuzzy
-#~ msgid "Mapset(s) to list (default: current mapset search path)"
-#~ msgstr "打印当前连接参数并退出"
-
-#, fuzzy
-#~ msgid "Output separator (default: newline)"
-#~ msgstr "输出分隔符(默认：tab)"
-
-#, fuzzy
-#~ msgid "Raster to remove"
-#~ msgstr "将要导入的二进制栅格文件"
-
-#, fuzzy
-#~ msgid "3d raster to remove"
-#~ msgstr "将要导入的二进制栅格文件"
-
-#, fuzzy
-#~ msgid "Vector to remove"
-#~ msgstr "将要导入的二进制栅格文件"
-
-#, fuzzy
-#~ msgid "Region to remove"
-#~ msgstr "将要导入的二进制栅格文件"
-
-#, fuzzy
-#~ msgid "Label to remove"
-#~ msgstr "将要导入的二进制栅格文件"
-
-#, fuzzy
-#~ msgid "3dview to remove"
-#~ msgstr "将要导入的二进制栅格文件"
-
-#, fuzzy
-#~ msgid "Group to remove"
-#~ msgstr "将要导入的二进制栅格文件"
-
-#, fuzzy
-#~ msgid "raster input maps"
-#~ msgstr "输入的栅格图"
-
-#, fuzzy
-#~ msgid "reclass raster output map"
-#~ msgstr "无法创建输出地图"
-
-#, fuzzy
-#~ msgid "Output field seperator"
-#~ msgstr "输出字段分隔符"
-
-#~ msgid "Name of fractal surface raster layer"
-#~ msgstr "不规则表面栅格图层的名称"
-
-#, fuzzy
-#~ msgid "ERROR: Problem opening output file."
-#~ msgstr "无法打开输出文件 <%s>"
-
-#, fuzzy
-#~ msgid "Name of the sampling locations vector points map"
-#~ msgstr "输入的 2D 矢量地图的名称"
-
-#, fuzzy
-#~ msgid "Density of output walkers"
-#~ msgstr "输出文件的名称"
-
-#, fuzzy
-#~ msgid "File [%s] not found"
-#~ msgstr "未找到栅格图<%s>"
-
-#, fuzzy
-#~ msgid "Unable to open file [%s]"
-#~ msgstr "无法打开输出文件 <%s>"
-
-#, fuzzy
-#~ msgid "Reading sites map (%s) ..."
-#~ msgstr "读取栅格文件 [%s] 时发生错误。"
-
-#, fuzzy
-#~ msgid "Name of the output walkers vector points map"
-#~ msgstr "输入的 2D 矢量地图的名称"
-
-#, fuzzy
-#~ msgid "You are not outputting any raster or vector points maps"
-#~ msgstr "您没有输出任何的栅格或矢量文件"
-
-#, fuzzy
-#~ msgid "%s=%s - illegal value"
-#~ msgstr "%s=%s - 非法的名称"
-
-#, fuzzy
-#~ msgid "Unable to read current region parameters"
-#~ msgstr "无法读取当前窗口的参数"
-
-#, fuzzy
-#~ msgid "Cannot open cover raster map <%s>"
-#~ msgstr "无法打开像元文件 [%s]"
-
-#~ msgid "Cannot open database <%s> by driver <%s>"
-#~ msgstr "无法打开数据库 <%s> 通过驱动器 <%s>"
-
-#, fuzzy
-#~ msgid "No map specified"
-#~ msgstr "没有指定数据地图"
-
-#, fuzzy
-#~ msgid "%s - unable to remove color table"
-#~ msgstr "无法创建文件 [%s]"
-
-#, fuzzy
-#~ msgid "%s - color table not found"
-#~ msgstr "%s - 未发现"
-
-#, fuzzy
-#~ msgid "Can't make logarithmic color table for floating point map"
-#~ msgstr "浮点型地图需要 vals 变量！"
-
-#, fuzzy
-#~ msgid "Starting map [%s]"
-#~ msgstr "无法找到 %s"
-
-#, fuzzy
-#~ msgid "Percent done:"
-#~ msgstr "完成率："
-
-#, fuzzy
-#~ msgid "Unable to properly read input raster map"
-#~ msgstr "%s - 无法打开栅格文件"
-
-#, fuzzy
-#~ msgid "Unable to properly write output raster map"
-#~ msgstr "无法打开输出文件 <%s>"
-
-#, fuzzy
-#~ msgid "Unable to read f_range for map %s"
-#~ msgstr "%s：无法为 [%s] 读取范围"
-
-#~ msgid "Name of raster map layer to be used for <%s>"
-#~ msgstr "将要使用的栅格图层的名称<%s>"
-
-#~ msgid "Run verbosly"
-#~ msgstr "以详细模式运行"
-
-#, fuzzy
-#~ msgid "%d points converted to centroids"
-#~ msgstr "%-5d个点读入内存\n"
-
-#, fuzzy
-#~ msgid "%d centroids converted to points"
-#~ msgstr "%-5d个质心写入输出文件。\n"
-
-#, fuzzy
-#~ msgid "%d lines converted to boundaries"
-#~ msgstr "将要导入的栅格文件"
-
-#, fuzzy
-#~ msgid "CrossCorrelation: %d points read in region.\n"
-#~ msgstr "%d 个点在当前范围之外，将被忽略"
-
-#, fuzzy
-#~ msgid "CrossCorrelation: Cannot read field info"
-#~ msgstr "无法读取字段信息"
-
-#, fuzzy
-#~ msgid "CrossCorrelation: Cannot open database %s by driver %s"
-#~ msgstr "无法打开数据库%s，通过驱动%s"
-
-#, fuzzy
-#~ msgid "CrossCorrelation: Column type not supported"
-#~ msgstr "列的类型不支持"
-
-#, fuzzy
-#~ msgid "CrossCorrelation: Cannot select data from table"
-#~ msgstr "无法从表中选取数据"
-
-#, fuzzy
-#~ msgid "CrossCorrelation: %d records selected from table"
-#~ msgstr "从表中选取了%d条记录"
-
-#, fuzzy
-#~ msgid "CrossCorrelation: No record for point (cat = %d)"
-#~ msgstr "没有线记录(类别 = %d)"
-
-#, fuzzy
-#~ msgid "To type"
-#~ msgstr "未知的类型"
-
-#, fuzzy
-#~ msgid "vector, attribute table"
-#~ msgstr "打印矢量的属性"
-
-#, fuzzy
-#~ msgid "Select type"
-#~ msgstr "要素类型"
-
-#, fuzzy
-#~ msgid "Cannot select records from database"
-#~ msgstr "无法从表中选取数据"
-
-#~ msgid "Cannot fetch data"
-#~ msgstr "无法获取数据"
-
-#, fuzzy
-#~ msgid "Do not print polyline info"
-#~ msgstr "点模式下不建立拓扑"
-
-#, fuzzy
-#~ msgid "Calculating costs from centres..."
-#~ msgstr "通过DEM计算阴影..."
-
-#~ msgid "Cannot open database %s by driver %s"
-#~ msgstr "无法打开数据库%s，通过驱动%s"
-
-#, fuzzy
-#~ msgid "Feature id(s)"
-#~ msgstr "要素类型"
-
-#~ msgid "Input vector was not found."
-#~ msgstr "未发现输入的矢量"
-
-#~ msgid "Cannot open dig_cats file."
-#~ msgstr "无法打开dig_cats文件。"
-
-#~ msgid "Cannot open database %s"
-#~ msgstr "无法打开数据库%s"
-
-#~ msgid "Cannot insert into table: %s"
-#~ msgstr "无法向表中插入新记录：%s"
-
-#, fuzzy
-#~ msgid "Hilight color for text"
-#~ msgstr "文本高亮显示的颜色 (仅用于 ps.map 输出)"
-
-#, fuzzy
-#~ msgid "Removed vertices"
-#~ msgstr "移除 [%s] 的空文件...\n"
-
-#, fuzzy
-#~ msgid "Node layer (points)"
-#~ msgstr "色调图层的名称"
-
-#, fuzzy
-#~ msgid "Line: %d\n"
-#~ msgstr "线的高度：%f\n"
-
-#, fuzzy
-#~ msgid "Reading data from the map..."
-#~ msgstr "读取栅格文件 [%s] 时发生错误。"
-
-#, fuzzy
-#~ msgid "Type of elements"
-#~ msgstr "输入图层的名称"
-
-#, fuzzy
-#~ msgid "Query layer (used by 'query' option)"
-#~ msgstr "查询图层。用于 'query' 选项。"
-
-#, fuzzy
-#~ msgid "%d categories read from map"
-#~ msgstr "%d 个类别从表中加载"
-
-#~ msgid "Writing attributes ..."
-#~ msgstr "写入属性 ..."
-
-#, fuzzy
-#~ msgid "Current region does not include the entire input vector map <%s>"
-#~ msgstr "无法找到输入的矢量地图 <%s>"
-
-#, fuzzy
-#~ msgid "Output inverse raster map after IFFT"
-#~ msgstr "填充后输出的高程栅格图"
-
-#, fuzzy
-#~ msgid "Hue map name"
-#~ msgstr "%s - 非法的名称"
-
-#, fuzzy
-#~ msgid "Intensity map name"
-#~ msgstr "栅格图名称"
-
-#, fuzzy
-#~ msgid "Saturation map name"
-#~ msgstr "栅格图名称"
-
-#, fuzzy
-#~ msgid "Output map representing the red"
-#~ msgstr "将要写入点的输出地图"
-
-#, fuzzy
-#~ msgid "Output map representing the green"
-#~ msgstr "将要写入点的输出地图"
-
-#, fuzzy
-#~ msgid "Output map representing the blue"
-#~ msgstr "表达坡度的格式"
-
-#, fuzzy
-#~ msgid "Cannot read row from raster map"
-#~ msgstr "无法获取行 %d (从栅格图 %s 中)"
-
-#, fuzzy
-#~ msgid "Cannot write row to raster map"
-#~ msgstr "无法创建栅格地图 %s"
-
-#, fuzzy
-#~ msgid "Red input raster map"
-#~ msgstr "输入的栅格图"
-
-#, fuzzy
-#~ msgid "Green input raster map"
-#~ msgstr "输入栅格图的名称"
-
-#, fuzzy
-#~ msgid "Blue input raster map"
-#~ msgstr "输入的栅格图"
-
-#, fuzzy
-#~ msgid "Output intensity raster map"
-#~ msgstr "输出的坡面栅格文件"
-
-#, fuzzy
-#~ msgid "Output saturation raster map"
-#~ msgstr "输出的流域栅格图"
-
-#, fuzzy
-#~ msgid "Name of imagery signaturefile"
-#~ msgstr "过滤器文件的名称"
-
-#, fuzzy
-#~ msgid "Cannot write color table of raster map <%s>"
-#~ msgstr "无法写入 <%s>"
-
-#, fuzzy
-#~ msgid "Resultant signature file"
-#~ msgstr "无法创建文件 [%s]"
-
-#, fuzzy
-#~ msgid "Input raster map being fft"
-#~ msgstr "输入的栅格图"
-
-#, fuzzy
-#~ msgid "Illegal file name for real part: %s"
-#~ msgstr "输入文件"
-
-#, fuzzy
-#~ msgid "Illegal file name for imaginary part: %s"
-#~ msgstr "输入文件"
-
-#, fuzzy
-#~ msgid "Unable to read head of %s"
-#~ msgstr "无法读取 [%s] 的文件头"
-
-#, fuzzy
-#~ msgid "Cannot select attributes: %s"
-#~ msgstr "无法选择属性。"
-
-#~ msgid ""
-#~ "Optional where condition (without WHERE key word), e.g.:\n"
-#~ "\t\tobec = 'Liptakov'"
-#~ msgstr ""
-#~ "可选的where条件(不使用WHERE关键字)，例如：\n"
-#~ "\t\t城市 = '上海'"
-
-#, fuzzy
-#~ msgid "Keep band numbers instead of using band color names."
-#~ msgstr "使用波段数，而不使用波段的颜色名称"
-
-#~ msgid "Memory allocation error"
-#~ msgstr "内存分配错误"
-
-#, fuzzy
-#~ msgid "Saving new map"
-#~ msgstr "读取地图"
-
-#, fuzzy
-#~ msgid "Output raster map with lake"
-#~ msgstr "输出的栅格图"
-
-#, fuzzy
-#~ msgid "Cannot write lake raster map <%s>!"
-#~ msgstr "无法写入 <%s>"
-
-#, fuzzy
-#~ msgid "Terrain raster map <%s> not found!"
-#~ msgstr "未找到栅格图<%s>"
-
-#, fuzzy
-#~ msgid "Cannot open terrain raster map <%s@%s>!"
-#~ msgstr "无法打开栅格地图"
-
-#, fuzzy
-#~ msgid "Seed map <%s> not found!"
-#~ msgstr "未找到栅格图<%s>"
-
-#, fuzzy
-#~ msgid "Cannot open seed map <%s@%s>!"
-#~ msgstr "无法打开栅格地图"
-
-#, fuzzy
-#~ msgid "Failure to allocate memory for row pointers"
-#~ msgstr "无法为字符串分配内存"
-
-#, fuzzy
-#~ msgid "Loading maps: "
-#~ msgstr "读取地图"
-
-#, fuzzy
-#~ msgid "Error reading terrain raster map. Probably broken file."
-#~ msgstr "读取栅格文件 [%s] 时发生错误。"
-
-#, fuzzy
-#~ msgid "Error reading seed raster map. Probably broken file."
-#~ msgstr "读取栅格文件 [%s] 时发生错误。"
-
-#, fuzzy
-#~ msgid "Cannot write lake raster map <%s@%s>!"
-#~ msgstr "无法写入 <%s>"
-
-#, fuzzy
-#~ msgid "Error writing color file for <%s@%s>!"
-#~ msgstr "为 <%s> 写入色彩文件时发生错误。"
-
-#, fuzzy
-#~ msgid "Name of the vector points map with x,y locations"
-#~ msgstr "输出矢量文件的名称"
-
-#, fuzzy
-#~ msgid "Number of time iterations (sec.)"
-#~ msgstr "插值点的数量"
-
-#, fuzzy
-#~ msgid "Name of the elevation raster map, same units as N,E: [m] or [ft] "
-#~ msgstr "输入的高程栅格图的名称[米]"
-
-#, fuzzy
-#~ msgid "Name of the x-derivatives raster map [m/m] or [ft/ft]"
-#~ msgstr "输入栅格文件的名称"
-
-#, fuzzy
-#~ msgid "Name of the y-derivatives raster map [m/m] or [ft/ft]"
-#~ msgstr "输入栅格文件的名称"
-
-#~ msgid "Raster input maps(s)"
-#~ msgstr "输入栅格图"
-
-#~ msgid "Output file name"
-#~ msgstr "输出文件的名称"
-
-#~ msgid "%s: can't read fp range for [%s]"
-#~ msgstr "%s：无法为 [%s] 读取 fp 的范围"
-
-#, fuzzy
-#~ msgid ""
-#~ "Raster map [%s] already exists.\n"
-#~ "Please try another."
-#~ msgstr "栅格地图 %i 文件名成： %s 已经存在。它将被覆盖！\n"
-
-#, fuzzy
-#~ msgid "Error reading '%s' map"
-#~ msgstr "读取地图 %s 时发生错误"
-
-#, fuzzy
-#~ msgid "Threshold distance"
-#~ msgstr "距离的单位"
-
-#, fuzzy
-#~ msgid "Cannot execute: %s"
-#~ msgstr "无法创建表：%s"
-
-#, fuzzy
-#~ msgid "Cannot link table: %s"
-#~ msgstr "无法打开数据库%s"
-
-#, fuzzy
-#~ msgid "DXF input file"
-#~ msgstr "输入文件"
-
-#, fuzzy
-#~ msgid "Cannot open dxf file <%s>"
-#~ msgstr "无法打开像元文件 [%s]"
-
-#, fuzzy
-#~ msgid "Cannot open new vector map <%s>"
-#~ msgstr "无法打开矢量文件 <%s>"
-
-#, fuzzy
-#~ msgid "Conversion of <%s> to vector map:"
-#~ msgstr "将栅格图转化为矢量图层。"
-
-#~ msgid "Create 3D file"
-#~ msgstr "创建 3D 文件"
-
-#, fuzzy
-#~ msgid "Raster file(s) for Elevation"
-#~ msgstr "第%d幅视图的栅格文件"
-
-#, fuzzy
-#~ msgid "Raster file(s) for Color"
-#~ msgstr "第%d幅视图的栅格文件"
-
-#~ msgid "Raster map to zoom into"
-#~ msgstr "要放大地栅格图"
-
-#~ msgid "Save the current region to region definition file"
-#~ msgstr "将当前区域存储到区域定义文件中"
-
-#, fuzzy
-#~ msgid "Could not open input file <%s>."
-#~ msgstr "无法打开矢量文件 <%s>"
-
-#, fuzzy
-#~ msgid "Unable to open file: <%s>"
-#~ msgstr "无法打开输出文件 <%s>"
-
-#~ msgid ""
-#~ "Projection of input dataset and current location appear to match.\n"
-#~ "Proceeding with import...\n"
-#~ msgstr ""
-#~ "输入数据集的投影和当前区域相匹配。\n"
-#~ "继续导入...\n"
-
-#~ msgid "Name of the resultant map"
-#~ msgstr "结果图的名称"
-
-#~ msgid "%s: percent complete: "
-#~ msgstr "百分之 %s 已完成："
-
-#, fuzzy
-#~ msgid "Raster map not found."
-#~ msgstr "栅格地图 [%s] 未发现"
-
-#~ msgid "%s: can't read range for [%s]"
-#~ msgstr "%s：无法为 [%s] 读取范围"
-
-#, fuzzy
-#~ msgid "Raster file [%s] not found"
-#~ msgstr "栅格文件 <%s> 未找到"
-
-#, fuzzy
-#~ msgid "It was not possible writing in <%s>."
-#~ msgstr "无法创建 %s"
-
-#, fuzzy
-#~ msgid "\rDuplicate area centroids: %5d"
-#~ msgstr "无法计算面的质心"
-
-#, fuzzy
-#~ msgid "Cannot create table: '%s'"
-#~ msgstr "无法创建表：%s"
-
-#, fuzzy
-#~ msgid "Unable to get category list <%s>, editing terminated"
-#~ msgstr "无法读取 <%s>"
-
-#, fuzzy
-#~ msgid "Unable to delete layer/category [%d/%d] line %d"
-#~ msgstr "无法打开 ascii 文件 [%s]"
-
-#, fuzzy
-#~ msgid "Unable to write line %d"
-#~ msgstr "无法创建文件 [%s]"
-
-#, fuzzy
-#~ msgid "Unable to delete line %d"
-#~ msgstr "无法描述表 %s"
-
-#, fuzzy
-#~ msgid "Unknown query tool '%s'"
-#~ msgstr "未知的类型"
-
-#, fuzzy
-#~ msgid "No layer database connection"
-#~ msgstr "数据库位置"
-
-#, fuzzy
-#~ msgid "%d categories loaded from the database"
-#~ msgstr "%d 个类别从表中加载"
-
-#, fuzzy
-#~ msgid "Done"
-#~ msgstr "完成\n"
-
-#~ msgid "Cannot open OGR data source '%s'"
-#~ msgstr "无法打开 OGR 数据源 '%s'"
-
-#~ msgid "Cannot create layer"
-#~ msgstr "无法创建图层"
-
-#, fuzzy
-#~ msgid "Vector map <%s> in location <%s> in mapset <%s> not available"
-#~ msgstr "矢量文件 [%s] 不可用"
-
-#, fuzzy
-#~ msgid "Column(s)"
-#~ msgstr "列名"
-
-#, fuzzy
-#~ msgid "Column type [%d] not supported"
-#~ msgstr "列的类型不支持"
-
-#, fuzzy
-#~ msgid "Cannot read map header for <%s>"
-#~ msgstr "无法读取 [%s] 的文件头"
-
-#, fuzzy
-#~ msgid "Cannot read category file for <%s>"
-#~ msgstr "编辑 [%s] 的类别文件？"
-
-#, fuzzy
-#~ msgid "Cannot read category file of raster map <%s>"
-#~ msgstr "编辑 [%s] 的类别文件？"
-
-#~ msgid "Cell file [%s] not found\n"
-#~ msgstr "像元文件 [%s] 未找到\n"
-
-#, fuzzy
-#~ msgid "vector cell map [%s] not found\n"
-#~ msgstr "像元文件 [%s] 未发现"
-
-#~ msgid "can't read header for <%s> in <%s>"
-#~ msgstr "无法读取<%s>的头信息在<%s>中"
-
-#~ msgid "can't read region <%s> in <%s>"
-#~ msgstr "无法读取区域<%s>在<%s>中"
-
-#~ msgid "can't open 3dview file <%s> in <%s>"
-#~ msgstr "无法打开3D视图文件<%s>在<%s>中"
-
-#~ msgid "can't read 3dview file <%s> in <%s>"
-#~ msgstr "无法读取3D视图文件<%s>在<%s>中"
-
-#~ msgid "invalid region: %s"
-#~ msgstr "无效的区域：%s"
-
-#, fuzzy
-#~ msgid "Unable to read category file for raster map <%s>"
-#~ msgstr "编辑 [%s] 的类别文件？"
-
-#~ msgid "%s file [%s] not found!"
-#~ msgstr "%s 文件 [%s] 未找到！"
-
-#, fuzzy
-#~ msgid "Unavle to open database <%s> by driver <%s>"
-#~ msgstr "无法打开数据库%s，通过驱动%s"
-
-#, fuzzy
-#~ msgid "Unable create table: %s"
-#~ msgstr "无法创建文件 [%s]"
-
-#, fuzzy
-#~ msgid "Print;Shell Script"
-#~ msgstr "打印像元数"
-
-#~ msgid "%s: <%s> raster map not found"
-#~ msgstr "%s：<%s> 栅格文件未找到"
-
-#~ msgid "unable to create %s"
-#~ msgstr "无法创建 %s"
-
-#, fuzzy
-#~ msgid "%s - map not found"
-#~ msgstr "%s - 未发现"
-
-#, fuzzy
-#~ msgid "%s not found"
-#~ msgstr "%s - 未发现"
-
-#~ msgid "Could not access %s layer"
-#~ msgstr "无法获取 %s 图层"
-
-#~ msgid "Vector map %s - not found"
-#~ msgstr "矢量地图 %s - 未发现"
-
-#~ msgid "Raster map containing elevation data"
-#~ msgstr "包含高程数据的栅格图"
-
-#~ msgid "Raster map name for storing results"
-#~ msgstr "存储结果的栅格图的名称"
-
-#~ msgid "Height of the viewing location"
-#~ msgstr "视点的高度"
-
-#, fuzzy
-#~ msgid "%s: <%s> cellfile not found"
-#~ msgstr "<%s> 像元文件未发现"
-
-#, fuzzy
-#~ msgid "%s - %s not found"
-#~ msgstr "%s - 未发现"
-
-#, fuzzy
-#~ msgid "Creating support files"
-#~ msgstr "为 %s 创建支持文件"
-
-#~ msgid "can't open %s"
-#~ msgstr "无法打开%s"
-
-#, fuzzy
-#~ msgid "%s: %s - map not found"
-#~ msgstr "%s：[%s] 未找到"
-
-#, fuzzy
-#~ msgid "%s: unable to open %s"
-#~ msgstr "无法打开<%s>"
-
-#~ msgid "%s - not found"
-#~ msgstr "%s - 未发现"
-
-#~ msgid "Cannot read %s"
-#~ msgstr "无法读取 %s"
-
-#~ msgid "Reading %s ... "
-#~ msgstr "读取 %s ... "
-
-#, fuzzy
-#~ msgid "[%s] map not found."
-#~ msgstr "%s - 未发现"
-
-#, fuzzy
-#~ msgid "[%s] map not found"
-#~ msgstr "%s - 未发现"
-
-#, fuzzy
-#~ msgid "Cannot describe table <%s>"
-#~ msgstr "无法描述表 %s"
-
-#, fuzzy
-#~ msgid "Cannot insert values: %s"
-#~ msgstr "无法向表中插入新记录：%s"
-
-#, fuzzy
-#~ msgid "%s given an illegal number of points [%d]"
-#~ msgstr "%s 给出了一个非法的站点数 [%d]"
-
-#, fuzzy
-#~ msgid "Unable to open database %s by driver %s"
-#~ msgstr "无法打开数据库%s，通过驱动%s"
-
-#~ msgid "No DB connection settings defined. Set with db.connect"
-#~ msgstr "数据库连接未定义，请用db.connect进行设置。"
-
-#~ msgid "Could not find input %s"
-#~ msgstr "未找到输入%s"
-
-#~ msgid "Could not open input"
-#~ msgstr "无法打开输入"
-
-#~ msgid "Could not open output"
-#~ msgstr "无法打开输出"
-
-#~ msgid "Could not find input map <%s>"
-#~ msgstr "无法找到输入地图 <%s>"
-
-#, fuzzy
-#~ msgid "Unkown item type in pad: %s"
-#~ msgstr "未知的类型：%c"
-
-#~ msgid "Database connection not defined\n"
-#~ msgstr "数据库连接未定义\n"
-
-#, fuzzy
-#~ msgid "Can't read header for <%s> in <%s>"
-#~ msgstr "无法读取<%s>的头信息在<%s>中"
-
-#, fuzzy
-#~ msgid "Can't read header for 3D raster <%s> in <%s>"
-#~ msgstr "无法读取3D栅格<%s>的头信息，在<%s>中"
-
-#~ msgid "%s in %s: %s"
-#~ msgstr "%s在%s中： %s"
-
-#, fuzzy
-#~ msgid "Can't write region <%s>"
-#~ msgstr "无法写入区域<%s>"
-
-#~ msgid "<%s=%s> ** invalid input **"
-#~ msgstr "<%s=%s> ** 无效的输入 **"
-
-#, fuzzy
-#~ msgid "%s map not found"
-#~ msgstr "%s - 未发现"
-
-#, fuzzy
-#~ msgid "cannot read head of %s"
-#~ msgstr "无法读取 [%s] 的文件头"
-
-#, fuzzy
-#~ msgid "input raster map"
-#~ msgstr "输入的栅格图"
-
-#, fuzzy
-#~ msgid "Illegal file name: %s"
-#~ msgstr "非法的输出文件名"
-
-#~ msgid "Cannot get layer info for vector map"
-#~ msgstr "无法获得矢量地图的图层信息"
-
-#, fuzzy
-#~ msgid "Cannot open raster map <%s> in <%s>"
-#~ msgstr "无法打开像元文件 [%s]"
-
-#~ msgid "cover values extracted from the category labels of the cover map"
-#~ msgstr "叠加值从叠加图的类别标签中提取"
-
-#~ msgid "%s: %s - raster map not found"
-#~ msgstr "%s： %s - 栅格地图未找到"
-
-#~ msgid "%s: %s - illegal name"
-#~ msgstr "%s： %s - 非法的名称"
-
-#~ msgid "%s: ERROR reading category file for %s"
-#~ msgstr "%s：读取 %s 的类别文件时发生错误"
-
-#, fuzzy
-#~ msgid "%s: %s - not found"
-#~ msgstr "%s：[%s] 未找到"
-
-#, fuzzy
-#~ msgid "%s: %s - illegal units"
-#~ msgstr "%s： %s - 非法的名称"
-
-#, fuzzy
-#~ msgid "%s: %s - can't open"
-#~ msgstr "%s：[%s] 未找到"
-
-#, fuzzy
-#~ msgid "Reading input map (%s)    ... "
-#~ msgstr "读取 %s ... "
-
-#, fuzzy
-#~ msgid "%s - ERROR reading %s"
-#~ msgstr "%s：读取 %s 的类别文件时发生错误"
-
-#, fuzzy
-#~ msgid "%s: %s - can't create raster map"
-#~ msgstr "%s：%s (在 %s  中) - 无法读取类别文件"
-
-#, fuzzy
-#~ msgid "Writing output map (%s)   ... "
-#~ msgstr "输出栅格地图 %s ... "
-
-#, fuzzy
-#~ msgid "%s - ERROR re-reading %s"
-#~ msgstr "%s：读取 %s 的类别文件时发生错误"
-
-#, fuzzy
-#~ msgid "Writing raster map... "
-#~ msgstr "写入新文件...\n"
-
-#~ msgid "Category list: e.g. 1,3-8,13"
-#~ msgstr "类别列表：如 1,3-8,13"
-
-#~ msgid "Output separator character (default: tab)"
-#~ msgstr "输出分隔符(默认：tab)"
-
-#, fuzzy
-#~ msgid "Cannot read category file of raster map <%s> in <%s>"
-#~ msgstr "编辑 [%s] 的类别文件？"
-
-#, fuzzy
-#~ msgid "Cannot find file %s"
-#~ msgstr "无法找到 %s"
-
-#, fuzzy
-#~ msgid "Cannot get header for %s"
-#~ msgstr "无法读取 [%s] 的文件头"
-
-#, fuzzy
-#~ msgid "Cannot create raster map %s"
-#~ msgstr "无法创建栅格地图 %s"
-
-#, fuzzy
-#~ msgid "Cannot create vector map %s"
-#~ msgstr "无法找到矢量地图 [%s]"
-
-#, fuzzy
-#~ msgid "Cannot create raster map '%s'"
-#~ msgstr "无法创建栅格地图 %s"
-
-#, fuzzy
-#~ msgid "Number of raster rows to hold in memory"
-#~ msgstr "载入内存的行数"
-
-#, fuzzy
-#~ msgid "Print raster map title only"
-#~ msgstr "只打印栅格图的类型"
-
-#, fuzzy
-#~ msgid "unknown type: %d"
-#~ msgstr "未知的类型：%c"
-
-#~ msgid "Cannot open raster map [%s]"
-#~ msgstr "无法打开像元文件 [%s]"
-
-#, fuzzy
-#~ msgid "Cannot get raster band."
-#~ msgstr "无法打开栅格地图"
-
-#, fuzzy
-#~ msgid "Cannot allocate buffer for reading null values."
-#~ msgstr "无法为字符串分配内存"
-
-#, fuzzy
-#~ msgid "Cannot read GRASS raster."
-#~ msgstr "无法读取栅格"
-
-#, fuzzy
-#~ msgid "Cannot get [%s] driver"
-#~ msgstr "无法创建树"
-
-#, fuzzy
-#~ msgid "Couldn't set geo transform."
-#~ msgstr "无法获取栅格行\n"
-
-#, fuzzy
-#~ msgid "Couldn't set projection."
-#~ msgstr "无法获取栅格行\n"
-
-#, fuzzy
-#~ msgid "Cannot export [%s] raster map."
-#~ msgstr "无法打开栅格文件 [%s]！"
-
-#, fuzzy
-#~ msgid "Cannot create [%s] raster map using [%s] driver."
-#~ msgstr "无法打开栅格文件 [%s]！"
-
-#, fuzzy
-#~ msgid "Cannot read header of raster map <%s>"
-#~ msgstr "无法写入 <%s>"
-
-#, fuzzy
-#~ msgid "Cannot open TIFF file <%s>"
-#~ msgstr "无法打开像元文件 [%s]"
-
-#, fuzzy
-#~ msgid "Reading raster map"
-#~ msgstr "读取栅格文件 [%s] 时发生错误。"
-
-#~ msgid "Cannot open output map."
-#~ msgstr "无法打开输出地图。"
-
-#, fuzzy
-#~ msgid "Illegal file name. Please try another."
-#~ msgstr "非法的输出文件名"
-
-#, fuzzy
-#~ msgid "%s: can't open %s"
-#~ msgstr "无法打开%s"
-
-#, fuzzy
-#~ msgid "memory allocation failure"
-#~ msgstr "内存分配错误"
-
-#~ msgid "Can't find data map."
-#~ msgstr "无法找到数据地图。"
-
-#~ msgid "Can't find clump map."
-#~ msgstr "无法找到重叠地图。"
-
-#, fuzzy
-#~ msgid "Cannot open vector map <%s> at the topological level"
-#~ msgstr "无法打开矢量文件<%s>在<%s>中"
-
-#, fuzzy
-#~ msgid "Rebuilding topology ..."
-#~ msgstr "矢量文件读取错误"
-
-#~ msgid "No record for cat = %d"
-#~ msgstr "类别 = %d 没有记录"
-
-#, fuzzy
-#~ msgid "Removing duplicates ..."
-#~ msgstr "移除 [%s] 的空文件...\n"
-
-#, fuzzy
-#~ msgid "Attaching islands ..."
-#~ msgstr "分类...\n"
-
-#, fuzzy
-#~ msgid "Attaching centroids ..."
-#~ msgstr "分类...\n"
-
-#, fuzzy
-#~ msgid "Vector map <%s> not found in current mapset"
-#~ msgstr "未发现矢量地图<%s>"
-
-#, fuzzy
-#~ msgid "The number of lines in the input vector map is [%d]"
-#~ msgstr "指定输入地图的数目最小值是 2"
-
-#, fuzzy
-#~ msgid "Database connection not defined for layer <%d>"
-#~ msgstr "数据库连接未定义"
-
-#~ msgid "Attribute column(s)"
-#~ msgstr "属性字段"
-
-#~ msgid "Cannot open select cursor"
-#~ msgstr "无法打开选择游标"
-
-#, fuzzy
-#~ msgid "Cannot get layer info"
-#~ msgstr "无法读取字段信息"
-
-#~ msgid "cell file [%s] not found"
-#~ msgstr "像元文件 [%s] 未发现"
-
-#~ msgid "can't open raster map [%s]"
-#~ msgstr "无法打开像元文件 [%s]"
-
-#, fuzzy
-#~ msgid "Cannot rewrite line %d"
-#~ msgstr "无法创建索引"
-
-#, fuzzy
-#~ msgid "Editing tool"
-#~ msgstr "写入 %s ... "
-
-#, fuzzy
-#~ msgid "Cannot copy line %d, editing terminated"
-#~ msgstr "无法读取 <%s>"
-
-#, fuzzy
-#~ msgid "No layer database connection."
-#~ msgstr "数据库位置"
-
-#, fuzzy
-#~ msgid "Cannot snap lines %d,%d"
-#~ msgstr "无法打开像元文件 [%s]"
-
-#, fuzzy
-#~ msgid "%d lines modified"
-#~ msgstr "跳过%-5d条坏线\n"
-
-#, fuzzy
-#~ msgid "Could not open ASCII file <%s>"
-#~ msgstr "无法打开 ascii 文件 [%s]"
-
-#~ msgid "Print vector map region only"
-#~ msgstr "只打印矢量地图的范围"
-
-#, fuzzy
-#~ msgid "Cannot open vector map <%s> at topo level [%d]"
-#~ msgstr "无法打开矢量文件<%s>在<%s>中"
-
-#, fuzzy
-#~ msgid "Cannot get layer info for vector map <%s>"
-#~ msgstr "无法获得矢量地图的图层信息"
-
-#~ msgid "Cannot select attribute."
-#~ msgstr "无法选择属性。"
-
-#, fuzzy
-#~ msgid "Creating vector grid..."
-#~ msgstr "创建一些临时文件 ..."
-
-#, fuzzy
-#~ msgid "Could not find vector map <%s> in current mapset"
-#~ msgstr "未找到矢量文件 %s"
-
-#, fuzzy
-#~ msgid "Could not find input map <%s>."
-#~ msgstr "无法找到输入地图 <%s>"
-
-#, fuzzy
-#~ msgid "[%d] features written"
-#~ msgstr "%d 个点写入矢量文件"
-
-#, fuzzy
-#~ msgid "Output map where segments will be written"
-#~ msgstr "将要写入点的输出地图"
-
-#~ msgid "<%s> cellfile not found"
-#~ msgstr "<%s> 像元文件未发现"
-
-#, fuzzy
-#~ msgid "Not able to open vector map <%s>"
-#~ msgstr "无法找到矢量地图 [%s]"
-
-#~ msgid "Can't read raster"
-#~ msgstr "无法读取栅格"
-
-#~ msgid "driver name"
-#~ msgstr "驱动名称"
-
-#~ msgid "database name"
-#~ msgstr "数据库名称"
-
-#~ msgid "Driver name"
-#~ msgstr "驱动名称"
-
-#~ msgid "Cannot list databases."
-#~ msgstr "无法获取数据库列表。"
-
-#~ msgid "database location"
-#~ msgstr "数据库位置"
-
-#~ msgid "Table name, select all from this table"
-#~ msgstr "表名，选中这张表中的所有记录"
-
-#~ msgid "output field separator"
-#~ msgstr "输出字段分隔符"
-
-#~ msgid "output vertical record separator"
-#~ msgstr "输出纵向记录分隔符"
-
-#~ msgid "null value indicator"
-#~ msgstr "空值指示符"
-
-#~ msgid "do not include column names in output"
-#~ msgstr "在输出中不包含列名"
-
-#~ msgid "vertical output (instead of horizontal)"
-#~ msgstr "纵向输出(而不是横向)"
-
-#, fuzzy
-#~ msgid "unable to open [%s] in [%s]"
-#~ msgstr "无法为[%s]打开像元文件"
-
-#, fuzzy
-#~ msgid "warning: unable to open [%s] in [%s]"
-#~ msgstr "无法为[%s]打开像元文件"
-
-#, fuzzy
-#~ msgid "Unable to find input cell map '%s'"
-#~ msgstr "无法创建栅格地图 %s"
-
-#, fuzzy
-#~ msgid "Unable to open cellfile for <%s>"
-#~ msgstr "无法为[%s]打开像元文件"
-
-#, fuzzy
-#~ msgid "Unable to create raster map [%s]"
-#~ msgstr "无法创建栅格地图 %s"
-
-#, fuzzy
-#~ msgid "Unable to create output <%s>"
-#~ msgstr "不能创建输出地图 <%s>"
-
-#~ msgid "Input file [%s] not found."
-#~ msgstr "输入文件 [%s] 未找到。"
-
-#~ msgid "Unable to open output file <%s>."
-#~ msgstr "无法打开输出文件 <%s>"
-
-#~ msgid "Multiplier for ascii data"
-#~ msgstr "ASCII数据的乘数"
-
-#, fuzzy
-#~ msgid "Could not open temporary file: [%s]"
-#~ msgstr "无法打开 ascii 文件 [%s]"
-
-#, fuzzy
-#~ msgid "Could not open input file [%s]"
-#~ msgstr "无法打开 ascii 文件 [%s]"
-
-#, fuzzy
-#~ msgid "Unable to create output raster map <%s>"
-#~ msgstr "不能创建输出地图 <%s>"
-
-#~ msgid "Name of the random surface to be produced"
-#~ msgstr "将要产生的随机表面的名称"
-
-#, fuzzy
-#~ msgid "%s: Unable to find raster map <%s>"
-#~ msgstr "无法创建栅格地图 %s"
-
-#, fuzzy
-#~ msgid "%s: Unable to open raster map <%s> in mapset <%s>"
-#~ msgstr "无法创建栅格地图 %s"
-
-#, fuzzy
-#~ msgid "%s:  Unable to open output raster map <%s>"
-#~ msgstr "无法创建栅格地图 %s"
-
-#, fuzzy
-#~ msgid "Vector <%s> could not be opened"
-#~ msgstr "未发现矢量地图<%s>"
-
-#, fuzzy
-#~ msgid "No db connection for driver <%s> defined. Run db.connect."
-#~ msgstr "数据库连接未定义，请用db.connect进行设置。"
-
-#~ msgid "Table name"
-#~ msgstr "表名称"
-
-#, fuzzy
-#~ msgid ""
-#~ "Print current map connection parameters and exit (shell script style)\n"
-#~ "\tformat:  layer[/layer name] table key database driver"
-#~ msgstr ""
-#~ "打印当前连接参数并退出 (shell 教本样式)\n"
-#~ "\t格式：  图层[/图层名称] 表 关键字 数据库 驱动"
-
-#~ msgid "x column name"
-#~ msgstr "x 字段的名称"
-
-#~ msgid "z column name"
-#~ msgstr "z 字段的名称"
-
-#, fuzzy
-#~ msgid "Cannot drop table: %s"
-#~ msgstr "无法打开数据库%s"
-
-#, fuzzy
-#~ msgid "Cannot open labels <%s>"
-#~ msgstr "无法打开数据库%s"
-
-#, fuzzy
-#~ msgid "Cannot fetch data from table"
-#~ msgstr "无法从表中选取数据"
-
-#, fuzzy
-#~ msgid "Cannot open file [%s]"
-#~ msgstr "无法打开像元文件 [%s]"
-
-#, fuzzy
-#~ msgid ""
-#~ "OGR output datasource name. For example:\n"
-#~ "\t\tESRI Shapefile: filename or directory for storage\n"
-#~ "\t\tMapInfo File: filename or directory for storage"
-#~ msgstr ""
-#~ "OGR 数据源名称。\n"
-#~ "\t\tESRI Shapefile：包含 shapefiles 的目录\n"
-#~ "\t\tMapInfo File：包含 mapinfo 文件的目录"
-
-#, fuzzy
-#~ msgid "SVG file <%s> cannot be opened"
-#~ msgstr "未发现矢量地图<%s>"
-
-#, fuzzy
-#~ msgid "Querying input '%s' ... "
-#~ msgstr "读取 %s ..."
-
-#, fuzzy
-#~ msgid "Copying %s input lines ... "
-#~ msgstr "无法打开矢量质心点地图。"
-
-#, fuzzy
-#~ msgid "Cannot create table <%s>"
-#~ msgstr "无法创建表：%s"
-
-#, fuzzy
-#~ msgid "no record for cat = %d"
-#~ msgstr "类别 = %d 没有记录"
-
-#, fuzzy
-#~ msgid "cannot insert row: %s"
-#~ msgstr "无法插入新行：%s"
-
-#, fuzzy
-#~ msgid "Cannot find line of cat %d"
-#~ msgstr "无法找到矢量地图 [%s]"
-
-#, fuzzy
-#~ msgid "Unalbe to open vector map <%s>"
-#~ msgstr "无法找到矢量地图 [%s]"
-
-#, fuzzy
-#~ msgid ""
-#~ "Database connection not defined for layer [%d]. Use v.db.connect first"
-#~ msgstr "图层 <%d> 的数据库连接未定义。请先使用 v.db.connect"
-
-#, fuzzy
-#~ msgid "Transforms a vector map via a set of tie points."
-#~ msgstr "将GRASS栅格输出为二元数组。"
-
-#, fuzzy
-#~ msgid "Raster map <%s>] not found"
-#~ msgstr "未找到栅格图<%s>"
-
-#~ msgid "Cannot start driver '%s'."
-#~ msgstr "无法初始化驱动'%s'。"
-
-#~ msgid "Cannot describe table"
-#~ msgstr "无法描述表"
-
-#~ msgid "Cannot start driver <%s>."
-#~ msgstr "无法启动 <%s>"
-
-#~ msgid "Could not open <%s>"
-#~ msgstr "无法打开 <%s>"
-
-#~ msgid "Cannot write to <%s>"
-#~ msgstr "无法写入 <%s>"
-
-#~ msgid "Not able to open cellfile for [%s]"
-#~ msgstr "无法为[%s]打开像元文件"
-
-#, fuzzy
-#~ msgid "Not able to find cellfile [%s]"
-#~ msgstr "无法为[%s]打开像元文件"
-
-#~ msgid "Raster map [%s] not found"
-#~ msgstr "栅格地图 [%s] 未发现"
-
-#, fuzzy
-#~ msgid "Unable to open raster map [%s]"
-#~ msgstr "无法创建栅格地图 %s"
-
-#~ msgid "Vector file [%s] not available"
-#~ msgstr "矢量文件 [%s] 不可用"
-
-#~ msgid "Cannot open driver %s"
-#~ msgstr "无法打开驱动 %s"
-
-#, fuzzy
-#~ msgid "<%s> illegal name"
-#~ msgstr "%s： %s - 非法的名称"
-
-#, fuzzy
-#~ msgid "Exports GRASS raster data into various formats (requires GDAL)."
-#~ msgstr "将GRASS栅格输出为二元数组。"
-
-#~ msgid "Couldn't find raster map %s"
-#~ msgstr "无法找到栅格文件%s"
-
-#, fuzzy
-#~ msgid "%s: <%s> not found"
-#~ msgstr "%s：[%s] 未找到"
-
-#, fuzzy
-#~ msgid "%s: <%s> illegal name"
-#~ msgstr "%s： %s - 非法的名称"
-
-#, fuzzy
-#~ msgid "%s: Cannot open <%s>"
-#~ msgstr "无法打开 %s"
-
-#~ msgid "Cannot find %s"
-#~ msgstr "无法找到 %s"
-
-#~ msgid "could not read range file"
-#~ msgstr "无法读取范围文件"
-
-#, fuzzy
-#~ msgid "Filtering [%s] in [%s]"
-#~ msgstr "无法为[%s]打开像元文件"
-
-#, fuzzy
-#~ msgid "Open raster map %s in %s = %d"
-#~ msgstr "打开 3D 栅格文件 %s"
-
-#, fuzzy
-#~ msgid "Closing raster map"
-#~ msgstr "叠加栅格图"
-
-#, fuzzy
-#~ msgid "Swap temp files"
-#~ msgstr "无法打开临时文件 %s"
-
-#, fuzzy
-#~ msgid "Writing [%s]"
-#~ msgstr "写入 %s ... "
-
-#, fuzzy
-#~ msgid "%s: illegal map name"
-#~ msgstr "%s - 非法的名称"
-
-#~ msgid "Name of the new raster map"
-#~ msgstr "新的栅格文件的名称"
-
-#, fuzzy
-#~ msgid "%s: <%s> illegal file name"
-#~ msgstr "%s： %s - 非法的名称"
-
-#~ msgid ""
-#~ "Converts a GRASS raster map to a PPM image file at the pixel resolution "
-#~ "of the CURRENTLY DEFINED REGION."
-#~ msgstr "以当前区域的像素分辨率，将GRASS栅格文件输出为PPM影像文件。"
-
-#~ msgid "Mapset of input map"
-#~ msgstr "输入地图的地图集"
-
-#, fuzzy
-#~ msgid "Checking location %s, mapset %s:"
-#~ msgstr "输入的栅格图"
-
-#, fuzzy
-#~ msgid "Error writing output map"
-#~ msgstr "输出地图的分辨率"
-
-#, fuzzy
-#~ msgid "<%s> is illegal file name"
-#~ msgstr "<%s> 是非法的名称"
-
-#, fuzzy
-#~ msgid "[%s] is an illegal file name"
-#~ msgstr "<%s> 是非法的名称"
-
-#, fuzzy
-#~ msgid "no rules specified"
-#~ msgstr "没有指定数据地图"
-
-#~ msgid "Can't open temp file [%s]"
-#~ msgstr "无法打开临时文件 [%s]"
-
-#~ msgid "Names of existing raster maps"
-#~ msgstr "已有栅格文件的名称"
-
-#, fuzzy
-#~ msgid "%s - illegal name "
-#~ msgstr "%s - 非法的名称"
-
-#, fuzzy
-#~ msgid "Couldn't find raster map [%s]"
-#~ msgstr "无法找到栅格文件%s"
-
-#, fuzzy
-#~ msgid "%s - can't create raster map"
-#~ msgstr "%s - 无法打开栅格文件"
-
-#~ msgid "%s=%s - illegal name"
-#~ msgstr "%s=%s - 非法的名称"
-
-#~ msgid "%s: can't create %s"
-#~ msgstr "%s：无法创建 %s"
-
-#~ msgid "Normalized"
-#~ msgstr "归一化"
-
-#, fuzzy
-#~ msgid "Cell file [%s] not found"
-#~ msgstr "像元文件 [%s] 未找到\n"
-
-#~ msgid "Can't read current window parameters"
-#~ msgstr "无法读取当前窗口的参数"
-
-#, fuzzy
-#~ msgid "[%s] file name not legal"
-#~ msgstr "<%s> 是非法的名称"
-
-#, fuzzy
-#~ msgid "[%s] file name not legal\n"
-#~ msgstr "<%s> 是非法的名称"
-
-#, fuzzy
-#~ msgid "Requested 3d raster map not found <%s>"
-#~ msgstr "需要的 g3d 文件未找到"
-
-#, fuzzy
-#~ msgid "Could not open elevation map"
-#~ msgstr "无法打开地图 %s\n"
-
-#, fuzzy
-#~ msgid "Could not open output map"
-#~ msgstr "无法打开输出"
-
-#~ msgid "unable to close output map"
-#~ msgstr "无法关闭输出地图"
-
-#, fuzzy
-#~ msgid "Could not close the 3d raster map"
-#~ msgstr "无法关闭新的 g3d 地图"
-
-#, fuzzy
-#~ msgid "Cannot create output map [%s]"
-#~ msgstr "无法创建输出地图 [%s]"
-
-#, fuzzy
-#~ msgid "Database's name couldn't be read"
-#~ msgstr "数据库连接未定义"
-
-#, fuzzy
-#~ msgid "Cannot open vector points map <%s>"
-#~ msgstr "无法打开矢量质心点地图。"
-
-#, fuzzy
-#~ msgid "Cannot create vector map <%s>"
-#~ msgstr "无法找到矢量地图 [%s]"
-
-#, fuzzy
-#~ msgid ""
-#~ "Interpolation: No database connection for driver <%s> defined. Run db."
-#~ "connect"
-#~ msgstr "数据库连接未定义，请用db.connect进行设置。"
-
-#, fuzzy
-#~ msgid "Vector file [%s] not available in search list"
-#~ msgstr "矢量文件 [%s] 不可用"
-
-#, fuzzy
-#~ msgid "Cannot open database <%s>"
-#~ msgstr "无法打开数据库%s"
-
-#, fuzzy
-#~ msgid "Cannot open table <%s>"
-#~ msgstr "无法打开数据库%s"
-
-#, fuzzy
-#~ msgid "Cannot open driver <%s>"
-#~ msgstr "无法打开驱动 %s"
-
-#~ msgid "Could not find input vector map %s"
-#~ msgstr "无法找到输入的矢量地图 %s"
-
-#~ msgid "Could not find input map '%s'."
-#~ msgstr "无法找到输入地图 '%s'。"
-
-#~ msgid "Could not find network input map '%s'."
-#~ msgstr "无法找到包含网络的输入地图 '%s'。"
-
-#~ msgid "error opening raster map [%s]."
-#~ msgstr "打开栅格地图 [%s] 时发生错误。"
-
-#~ msgid "Cannot describe table %s"
-#~ msgstr "无法描述表 %s"
-
-#, fuzzy
-#~ msgid "Patching file <%s@%s>"
-#~ msgstr "无法打开输入文件 <%s@%s>"
-
-#, fuzzy
-#~ msgid "[%d] files patched"
-#~ msgstr "%d 个点写入矢量文件"
-
-#, fuzzy
-#~ msgid "Column type  not supported"
-#~ msgstr "列的类型不支持"
-
-#~ msgid "Could not open vector map <%s>"
-#~ msgstr "无法打开矢量文件 <%s>"
-
-#~ msgid ""
-#~ "Database connection not defined for layer <%d>. Use v.db.connect first."
-#~ msgstr "图层 <%d> 的数据库连接未定义。请先使用 v.db.connect"
-
-#~ msgid "Can't create output map"
-#~ msgstr "无法创建输出地图"
-
-#~ msgid "Could not close new 3d raster map"
-#~ msgstr "无法关闭新的 g3d 地图"
-
-#, fuzzy
-#~ msgid "name for new raster map"
-#~ msgstr "新的栅格文件的名称"
-
-#, fuzzy
-#~ msgid "Output GRASS image file"
-#~ msgstr "输出的坡面栅格文件"
-
-#, fuzzy
-#~ msgid "Resulting output map"
-#~ msgstr "输出地图的分辨率"
-
-#, fuzzy
-#~ msgid "name for new vector map (omit for display to stdout)"
-#~ msgstr "新的PPM文件的名称。(out=-用于标准输出)"
-
-#, fuzzy
-#~ msgid "Input vector map"
-#~ msgstr "输入的栅格图"
-
-#~ msgid "%s: ERROR can't open tempfile"
-#~ msgstr "%s：错误，不能打开临时文件"
-
-#~ msgid "vector map <%s> not found"
-#~ msgstr "未发现矢量地图<%s>"
-
-#, fuzzy
-#~ msgid "unable to find raster map [%s]"
-#~ msgstr "无法找到文件 [%s]。"
-
-#, fuzzy
-#~ msgid "<%s> raster map not found"
-#~ msgstr "%s：<%s> 栅格文件未找到"
-
-#~ msgid "Cannot find vector map [%s]"
-#~ msgstr "无法找到矢量地图 [%s]"
-
-#~ msgid "%s - can't open raster map"
-#~ msgstr "%s - 无法打开栅格文件"
-
-#~ msgid "Can't get row %d from raster map %s"
-#~ msgstr "无法获取行 %d (从栅格图 %s 中)"
-
-#, fuzzy
-#~ msgid "%s - raster map not found"
-#~ msgstr "%s： %s - 栅格地图未找到"
-
-#~ msgid "string representing no data cell value"
-#~ msgstr "代表无数据像元的字符"
-
-#~ msgid "File name of reference classes"
-#~ msgstr "基准分类的文件名称"
-
-#~ msgid "wide report, 132 columns (default: 80)"
-#~ msgstr "宽幅报告，132列(默认值：80)"
-
-#~ msgid "quiet"
-#~ msgstr "安静模式"
-
-#, fuzzy
-#~ msgid "<%s> - illegal output file name"
-#~ msgstr "非法的输出文件名"
-
-#~ msgid "Base raster map"
-#~ msgstr "基础栅格图"
-
-#~ msgid "Resultant raster map"
-#~ msgstr "结果图"
-
-#, fuzzy
-#~ msgid "%s: raster map not found"
-#~ msgstr "%s： %s - 栅格地图未找到"
-
-#~ msgid ""
-#~ "Raster map that represents the elevation, used for the 3D information"
-#~ msgstr "表现高程的栅格地图，用于 3D 信息"
-
-#, fuzzy
-#~ msgid "Problem opening input file [%s]"
-#~ msgstr "打开显示文件 [%s] 时发生错误"
-
-#, fuzzy
-#~ msgid "Problem opening output file [%s]"
-#~ msgstr "无法打开输出文件 <%s>"
-
-#, fuzzy
-#~ msgid "can't write category file for <%s>"
-#~ msgstr "编辑 [%s] 的类别文件？"
-
-#, fuzzy
-#~ msgid "%s: can't open tempfile"
-#~ msgstr "%s：错误，不能打开临时文件"
-
-#, fuzzy
-#~ msgid "Unable to read row %d in raster map [%s]"
-#~ msgstr "无法创建栅格地图 %s"
-
-#~ msgid "Elevation map"
-#~ msgstr "高程图"
-
-#~ msgid "Topographic index ln(a/tanB) map"
-#~ msgstr "地形索引ln(a/tanB)图"
-
-#~ msgid "Output verbosely"
-#~ msgstr "详细输出"
-
-#~ msgid "Can't open raster map %s"
-#~ msgstr "无法打开栅格文件 %s"
-
-#, fuzzy
-#~ msgid "It could not be find input map <%s>"
-#~ msgstr "无法找到输入地图 <%s>"
-
-#, fuzzy
-#~ msgid "It could not be found input map <%s>"
-#~ msgstr "无法找到输入地图 <%s>"
-
-#, fuzzy
-#~ msgid "Cannot find input map <%s>"
-#~ msgstr "无法找到输入地图 <%s>"
-
-#, fuzzy
-#~ msgid "Input vector map <%s> not found."
-#~ msgstr "未发现输入的矢量"
-
-#, fuzzy
-#~ msgid "Category ranges: e.g. 1,3-8,13"
-#~ msgstr "类别列表：如 1,3-8,13"
-
-#, fuzzy
-#~ msgid "Writing attributes ...\n"
-#~ msgstr "写入属性 ..."
-
-#, fuzzy
-#~ msgid "Could not open ascii file <%s>"
-#~ msgstr "无法打开 ascii 文件 [%s]"
-
-#, fuzzy
-#~ msgid "Could not open temp file <%s>"
-#~ msgstr "无法打开矢量文件 <%s>"
-
-#~ msgid "List available formats and exit"
-#~ msgstr "列出可用的格式并退出"
-
-#, fuzzy
-#~ msgid "Vector map <%s> not fould"
-#~ msgstr "未发现矢量地图<%s>"
-
-#, fuzzy
-#~ msgid "SVG output file"
-#~ msgstr "输入文件"
-
-#~ msgid "Could not find vector '%s'"
-#~ msgstr "无法找到矢量 '%s'"
-
-#~ msgid "Could not find vector map %s"
-#~ msgstr "未找到矢量文件 %s"
-
-#, fuzzy
-#~ msgid "Unable to get row %d from <%s>"
-#~ msgstr "无法获取行 %d (从栅格图 %s 中)"
-
-#~ msgid "Input file"
-#~ msgstr "输入文件"
-
-#~ msgid "Raster output file"
-#~ msgstr "输出的栅格文件"
-
-#, fuzzy
-#~ msgid "Writing raster map ... "
-#~ msgstr "写入栅格地图 %i\n"
-
-#~ msgid "Keep existing color table"
-#~ msgstr "保留已有的色彩表"
-
-#~ msgid "List rules"
-#~ msgstr "列出规则"
-
-#, fuzzy
-#~ msgid "Name of the output walkers site file"
-#~ msgstr "输出栅格文件的名称"
-
-#, fuzzy
-#~ msgid "Verbose mode."
-#~ msgstr "详细模式"
-
-#~ msgid " %d rows, %d cols."
-#~ msgstr " %d 行， %d 列。"
-
-#, fuzzy
-#~ msgid ""
-#~ "Integer cell type.\n"
-#~ "Writing"
-#~ msgstr ""
-#~ "双精度类型。\n"
-#~ "写入..."
-
-#, fuzzy
-#~ msgid ""
-#~ "Float cell type.\n"
-#~ "Writing"
-#~ msgstr ""
-#~ "双精度类型。\n"
-#~ "写入..."
-
-#, fuzzy
-#~ msgid ""
-#~ "Double cell type.\n"
-#~ "Writing"
-#~ msgstr ""
-#~ "双精度类型。\n"
-#~ "写入..."
-
-#, fuzzy
-#~ msgid "%s in %s - can't read header file"
-#~ msgstr "%s：%s (在 %s  中) - 无法读取类别文件"
-
-#, fuzzy
-#~ msgid "%s - unable to create raster map"
-#~ msgstr "无法创建栅格地图 %s"
-
-#, fuzzy
-#~ msgid "%s - unable to create category file"
-#~ msgstr "无法创建文件 [%s]"
-
-#, fuzzy
-#~ msgid "verbose mode"
-#~ msgstr "详细模式"
-
-#, fuzzy
-#~ msgid "Vector map with points for which to modify the attribute table"
-#~ msgstr "需要编辑属性表的输入矢量点地图的名称"
-
-#, fuzzy
-#~ msgid "Layer of the vector for which to modify the attribute table"
-#~ msgstr "需要编辑属性表的输入矢量点地图的名称"
-
-#, fuzzy
-#~ msgid "Path to the input file"
-#~ msgstr "过滤器文件的名称"
-
-#, fuzzy
-#~ msgid "Path to an output file"
-#~ msgstr "无法打开输出文件 <%s>"
-
-#~ msgid "driver name:"
-#~ msgstr "驱动名称："
-
-#~ msgid "Database name:"
-#~ msgstr "数据库名称："
-
-#, fuzzy
-#~ msgid ""
-#~ "ASCII file to be converted to binary vector map, if not given (or \"-\") "
-#~ "reads from standard input"
-#~ msgstr "如果不指定从标准输入读取，ASCII 文件将被转化为二进制矢量文件"
-
-#, fuzzy
-#~ msgid "could not find input map <%s>"
-#~ msgstr "无法找到输入地图 <%s>"
-
-#, fuzzy
-#~ msgid "unable to open raster map [%s]"
-#~ msgstr "无法为[%s]打开像元文件"
-
-#, fuzzy
-#~ msgid "cannot get layer info for vector map"
-#~ msgstr "无法获得矢量地图的图层信息"
-
-#, fuzzy
-#~ msgid "cannot open database %s by driver %s"
-#~ msgstr "无法打开数据库%s，通过驱动%s"
-
-#, fuzzy
-#~ msgid "column type not supported"
-#~ msgstr "列的类型不支持"
-
-#, fuzzy
-#~ msgid "cannot select data from table"
-#~ msgstr "无法从表中选取数据"
-
-#, fuzzy
-#~ msgid "cannot create table: %s"
-#~ msgstr "无法创建表：%s"
-
-#, fuzzy
-#~ msgid "cannot create index"
-#~ msgstr "无法创建索引"
-
-#, fuzzy
-#~ msgid "cannot grant privileges on table %s"
-#~ msgstr "无法为表%s授予权限"
-
-#, fuzzy
-#~ msgid "column type  not supported"
-#~ msgstr "列的类型不支持"
-
-#~ msgid "Cannot find vector map"
-#~ msgstr "无法找到矢量地图"
-
-#~ msgid "Cannot find raster map"
-#~ msgstr "无法找到栅格地图"
-
-#~ msgid "Cannot open raster map"
-#~ msgstr "无法打开栅格地图"
-
-#~ msgid "Can't open temp file %s"
-#~ msgstr "无法打开临时文件 %s"
-
-#, fuzzy
-#~ msgid "Error while reading cell map."
-#~ msgstr "读取地图 %s 时发生错误"
-
-#, fuzzy
-#~ msgid "Error while writing new cell map."
-#~ msgstr "输出 grid 时发生错误，磁盘是否已满？"
-
-#, fuzzy
-#~ msgid "Error in opening output file <%s>"
-#~ msgstr "无法打开输出文件 <%s>"
-
-#, fuzzy
-#~ msgid "Unable to find input cell map <%s>"
-#~ msgstr "无法创建栅格地图 %s"
-
-#, fuzzy
-#~ msgid "Error in opening input file <%s>"
-#~ msgstr "无法打开矢量文件 <%s>"
-
-#, fuzzy
-#~ msgid "Cannot find map %s"
-#~ msgstr "无法找到 %s"
-
-#, fuzzy
-#~ msgid "Cannot open map %s"
-#~ msgstr "无法打开 %s"
-
-#~ msgid "Name of predefined rules file"
-#~ msgstr "规则文件的名称"
-
-#, fuzzy
-#~ msgid "R:G:B value(s) out of range [0..255]: %d:%d:%d"
-#~ msgstr "** 警告：R:G:B值超出范围[0..255]： %d:%d:%d **\n"
-
-#, fuzzy
-#~ msgid "R G B value(s) out of range [0..255]: %d %d %d"
-#~ msgstr "** 警告：R G B值超出范围[0..255]： %d %d %d **\n"
-
-#, fuzzy
-#~ msgid "no such value"
-#~ msgstr "** 警告：没有这样的值 **\n"
-
-#, fuzzy
-#~ msgid "%s:line %d:%s"
-#~ msgstr "%s：行%d：%s\n"
-
-#, fuzzy
-#~ msgid "bad color specification"
-#~ msgstr "** 错误的颜色规范 **\n"
-
-#, fuzzy
-#~ msgid "%s - unknown color"
-#~ msgstr "%s - 未知的颜色\n"
-
-#~ msgid "Valid colors are:\n"
-#~ msgstr "有效的颜色是：\n"
-
-#, fuzzy
-#~ msgid "Unable to find base map <%s>"
-#~ msgstr "无法创建栅格地图 %s"
-
-#, fuzzy
-#~ msgid "Unable to find cover map <%s>"
-#~ msgstr "无法创建栅格地图 %s"
-
-#, fuzzy
-#~ msgid "%s: unable to open raster map [%s]"
-#~ msgstr "无法为[%s]打开像元文件"
-
-#, fuzzy
-#~ msgid "%s: unable to create raster map [%s]"
-#~ msgstr "无法创建栅格地图 %s"
-
-#, fuzzy
-#~ msgid "Unable to open database %s with driver %s"
-#~ msgstr "无法打开数据库%s，通过驱动%s"
-
-#, fuzzy
-#~ msgid "%s: Unable to read raster map [%s]"
-#~ msgstr "无法创建栅格地图 %s"
-
-#, fuzzy
-#~ msgid "%s: unable to open raster map <%s>"
-#~ msgstr "无法创建栅格地图 %s"
-
-#, fuzzy
-#~ msgid "%s: Failed to read raster row %d"
-#~ msgstr "无法读取行 %i\n"
-
-#~ msgid "Unable to find [%s]."
-#~ msgstr "无法找到 [%s]。"
-
-#, fuzzy
-#~ msgid "Unable to read cats table for %s"
-#~ msgstr "无法为色彩条读取颜色"
-
-#, fuzzy
-#~ msgid "Could not open raster <%s>"
-#~ msgstr "无法打开地图 %s\n"
-
-#~ msgid "%s - too many patch files. only %d allowed"
-#~ msgstr "%s - 补丁文件太多。只允许 %d"
-
-#~ msgid ""
-#~ "Font name (not supported interactively, see also -l flag) or path to "
-#~ "TrueType font (including file name)"
-#~ msgstr ""
-#~ "字体名称(不支持交互式选择，请参阅-l参数)或TrueType字体的路径(包括文件名)"
-
-#, fuzzy
-#~ msgid "%s: o_open_file: raster map %s not found"
-#~ msgstr "%s： %s - 栅格地图未找到"
-
-#, fuzzy
-#~ msgid "%s: o_open_file: could not open raster map %s in %s"
-#~ msgstr "无法创建栅格地图 %s"
-
-#, fuzzy
-#~ msgid "No record for category for [%d]"
-#~ msgstr "类别 = %d 没有记录"
-
-#, fuzzy
-#~ msgid "Error reading ASCII file <%s>"
-#~ msgstr "为 <%s> 读取类别文件时发生错误。"
-
-#, fuzzy
-#~ msgid "Error reading categories: <%s>"
-#~ msgstr "为 <%s> 读取类别文件时发生错误。"
-
-#, fuzzy
-#~ msgid "category [%d]"
-#~ msgstr ""
-#~ "图层：%d\n"
-#~ "类别：%d\n"
-
-#, fuzzy
-#~ msgid "List of point coordinates. Required for add and move actions."
-#~ msgstr "选择类型：线 或 面"
-
-#, fuzzy
-#~ msgid "Could not find input vector '%s'"
-#~ msgstr "无法找到输入的矢量地图 %s"
-
-#, fuzzy
-#~ msgid "Failed opening output vector map '%s'"
-#~ msgstr "输出矢量文件的名称"
-
-#~ msgid "Do not create attribute table."
-#~ msgstr "不能创建属性表。"
-
-#~ msgid "Could not find input %s\n"
-#~ msgstr "未找到输入%s\n"
-
-#, fuzzy
-#~ msgid "Error reading ascii file: [%s]"
-#~ msgstr "为 <%s> 读取类别文件时发生错误。"
-
-#, fuzzy
-#~ msgid ""
-#~ "List vector maps in input location and exit (a dummy value must be given "
-#~ "for input)"
-#~ msgstr "列出输入区域内的栅格文件并退出"
-
-#, fuzzy
-#~ msgid "| Tool                            | Threshold     |"
-#~ msgstr "                当前地图                  新地图\n"
-
-#, fuzzy
-#~ msgid "| Prune                           |  "
-#~ msgstr ""
-#~ "                          检查地图残差\n"
-#~ "\n"
-
-#~ msgid "%s: <%s> vector map not found"
-#~ msgstr "%s：<%s> 矢量地图未发现"
-
-#, fuzzy
-#~ msgid "Vector <%s> could not be open"
-#~ msgstr "未发现矢量地图<%s>"
-
-#, fuzzy
-#~ msgid "Raster <%s> could not be open."
-#~ msgstr "未找到栅格图<%s>"
-
-#, fuzzy
-#~ msgid "CrossCorrelation()"
-#~ msgstr "相关性"
-
-#, fuzzy
-#~ msgid "Interpolation()"
-#~ msgstr "使用的插值方法"
-
-#, fuzzy
-#~ msgid "Interpolation: Setting regions and boxes"
-#~ msgstr "使用的插值方法"
-
-#, fuzzy
-#~ msgid "Interpolation: nsply = %d"
-#~ msgstr "使用的插值方法"
-
-#, fuzzy
-#~ msgid "Interpolation: (%d,%d): Bilinear interpolation..."
-#~ msgstr "插值点的数量"
-
-#, fuzzy
-#~ msgid "Interpolation: (%d,%d): Bicubic interpolation..."
-#~ msgstr "插值点的数量"
-
-#, fuzzy
-#~ msgid "%s: Dropping <s>"
-#~ msgstr "无法打开 %s"
-
-#, fuzzy
-#~ msgid "Interpolation was a success!"
-#~ msgstr "使用的插值方法"
-
-#, fuzzy
-#~ msgid "CrossCorrelation: %d points read in region. "
-#~ msgstr "%d 个点在当前范围之外，将被忽略"
-
-#, fuzzy
-#~ msgid "CrossCorrelation: It shouldn't take too long."
-#~ msgstr "无法从表中选取数据"
-
-#, fuzzy
-#~ msgid "%s -- illegal output file name"
-#~ msgstr "非法的输出文件名"
-
-#, fuzzy
-#~ msgid "Sorry, with method '%s' you have to define an output map."
-#~ msgstr "无法关闭输出地图"
-
-#~ msgid "%s: %s in %s - can't read category file"
-#~ msgstr "%s：%s (在 %s  中) - 无法读取类别文件"
-
-#, fuzzy
-#~ msgid "Calculation time"
-#~ msgstr "通过DEM计算阴影..."
-
-#~ msgid "Finished.\n"
-#~ msgstr "完成。\n"
-
-#, fuzzy
-#~ msgid "Existing raster map name"
-#~ msgstr "已有栅格文件的名称"
-
-#, fuzzy
-#~ msgid "%s - can't read raster cellhd"
-#~ msgstr "%s - 无法打开栅格文件"
-
-#, fuzzy
-#~ msgid "error reading cell data"
-#~ msgstr "读取地图 %s 时发生错误"
-
-#, fuzzy
-#~ msgid "Done!"
-#~ msgstr "完成\n"
-
-#, fuzzy
-#~ msgid "No line found."
-#~ msgstr "未找到任何记录。\n"
-
-#, fuzzy
-#~ msgid "Nothing Found."
-#~ msgstr "未找到任何记录。\n"
-
-#, fuzzy
-#~ msgid "Do not build topology."
-#~ msgstr "点模式下不建立拓扑"
-
-#~ msgid "Could not open ascii file [%s]"
-#~ msgstr "无法打开 ascii 文件 [%s]"
-
-#~ msgid "vector map to be created"
-#~ msgstr "将要创建的矢量文件"
-
-#, fuzzy
-#~ msgid "Conversion of [%s] to vector map ..."
-#~ msgstr "将栅格图转化为矢量图层。"
-
-#, fuzzy
-#~ msgid "Finished"
-#~ msgstr "完成。\n"
-
-#~ msgid "Name of output 3d raster map"
-#~ msgstr "输出的 G3D grid 文件名称"
-
-#~ msgid "Print the current region (shell script style)"
-#~ msgstr "打印当前区域(shell脚本样式)"
-
-#, fuzzy
-#~ msgid "%s: - no such database %s\n"
-#~ msgstr "无法打开数据库%s"
-
-#, fuzzy
-#~ msgid "ERROR: <%s> not found\n"
-#~ msgstr "%s：[%s] 未找到"
-
-#, fuzzy
-#~ msgid "ERROR: <%s> illegal name\n"
-#~ msgstr "%s： %s - 非法的名称"
-
-#, fuzzy
-#~ msgid "Cannot open toolbox: %s"
-#~ msgstr "无法打开 %s"
-
-#, fuzzy
-#~ msgid "Cannot open toolbox."
-#~ msgstr "无法打开 %s"
-
-#~ msgid "Could not find input map <%s>\n"
-#~ msgstr "无法找到输入地图<%s>\n"
-
-#~ msgid "'%s' has finished the transformation of the vectors.\n"
-#~ msgstr "'%s'完成了矢量转换。\n"
-
-#~ msgid ""
-#~ "                          CHECK MAP RESIDUALS\n"
-#~ "\n"
-#~ msgstr ""
-#~ "                          检查地图残差\n"
-#~ "\n"
-
-#~ msgid "                Current Map                  New Map\n"
-#~ msgstr "                当前地图                  新地图\n"
-
-#~ msgid ""
-#~ " POINT      X coord    Y coord  |        X coord   Y coord    |      "
-#~ "residuals\n"
-#~ msgstr ""
-#~ "  点        X坐标      Y坐标    |         X坐标     Y坐标    |      残差\n"
-
-#~ msgid "  Residual mean average   : %f\n"
-#~ msgstr "  平均残差：%f\n"
-
-#, fuzzy
-#~ msgid "Vector map(s) -- source for composite"
-#~ msgstr "矢量导入完成"
-
-#, fuzzy
-#~ msgid "New vector composite"
-#~ msgstr "输出的矢量文件的名称"
-
-#, fuzzy
-#~ msgid "Append files to existing file"
-#~ msgstr "已有栅格文件的名称"
-
-#, fuzzy
-#~ msgid "No database updates."
-#~ msgstr "数据库名称"
-
-#~ msgid "Vector map '%s' not found"
-#~ msgstr "矢量地图 '%s' 未找到"
-
-#, fuzzy
-#~ msgid "Input aspect file"
-#~ msgstr "输出坡向的文件名"
-
-#, fuzzy
-#~ msgid "Input barrier file"
-#~ msgstr "输入文件"
-
-#, fuzzy
-#~ msgid "Quiet operation"
-#~ msgstr "聚合操作"
-
-#, fuzzy
-#~ msgid "%s\n"
-#~ msgstr "%s"
-
-#, fuzzy
-#~ msgid "output layer name"
-#~ msgstr "输出图层的名称"
-
-#~ msgid "L: from  M: to R: quit\n"
-#~ msgstr "左键：起点  中键：终点  右键：退出\n"
-
-#~ msgid "datetime, datetime1/datetime2, or none"
-#~ msgstr "日期时间，日期时间1/日期时间2，或者为 none"
-
-#~ msgid ""
-#~ "\n"
-#~ "Done\n"
-#~ msgstr ""
-#~ "\n"
-#~ "完成\n"
-
-#, fuzzy
-#~ msgid "Open vector 3d raster map %s"
-#~ msgstr "打开 3D 栅格文件 %s"
-
-#, fuzzy
-#~ msgid "Open 3d raster map %s"
-#~ msgstr "打开 3D 栅格文件 %s"
-
-#~ msgid ""
-#~ "OGR datasource name.\n"
-#~ "\t\tESRI Shapefile: directory containing shapefiles\n"
-#~ "\t\tMapInfo File: directory containing mapinfo files"
-#~ msgstr ""
-#~ "OGR 数据源名称。\n"
-#~ "\t\tESRI Shapefile：包含 shapefiles 的目录\n"
-#~ "\t\tMapInfo File：包含 mapinfo 文件的目录"
-
-#~ msgid "Vector import complete"
-#~ msgstr "矢量导入完成"
-
-#, fuzzy
-#~ msgid "ERROR: A line needs at least 2 points"
-#~ msgstr "至少需要输入%d个点。"
-
-#, fuzzy
-#~ msgid "ERROR: An area needs at least 3 points"
-#~ msgstr "至少需要输入%d个点。"
-
-#, fuzzy
-#~ msgid "Unable to create raster map for [%s]"
-#~ msgstr "无法创建文件 [%s]"
-
-#~ msgid "Writing g3d slice %i\n"
-#~ msgstr "写入 g3d 分块 %i\n"
-
-#~ msgid "error opening 3d raster map"
-#~ msgstr "打开 g3d 文件时发生错误"
-
-#~ msgid "Done\n"
-#~ msgstr "完成\n"
-
-#~ msgid "Read fp map as integer (use map's quant rules"
-#~ msgstr "将fp地图作为整数读取(使用地图的量化规则)"
-
-#~ msgid "Name for the resulting raster map"
-#~ msgstr "重编码后的栅格图的名称"
-
-#, fuzzy
-#~ msgid "Open Raster file %s in Mapset %s"
-#~ msgstr "打开栅格文件 %s (在地图集 %s 中)\n"
-
-#, fuzzy
-#~ msgid "Open 3d raster map %s\n"
-#~ msgstr "打开 3D 栅格文件 %s"
-
-#, fuzzy
-#~ msgid "Open elev raster map %s\n"
-#~ msgstr "输出的高程栅格图"
-
-#~ msgid "Could not open map %s\n"
-#~ msgstr "无法打开地图 %s\n"
-
-#~ msgid "Bin raster map to be imported"
-#~ msgstr "将要导入的二进制栅格文件"
-
-#~ msgid "Output partial derivatives instead"
-#~ msgstr "输出偏导数"
-
-#~ msgid "Region size is lower than minreg, nothing displayed.\n"
-#~ msgstr "区域范围过小，无法显示。\n"
-
-#~ msgid "Region size is greater than maxreg, nothing displayed.\n"
-#~ msgstr "区域范围过大，无法显示。\n"
-
-#, fuzzy
-#~ msgid "Maximum distance"
-#~ msgstr "最大随机值"
-
-#~ msgid "Do not rebuild and store the topology at the end"
-#~ msgstr "结束时没有重建并存储拓扑信息"
-
-#, fuzzy
-#~ msgid "Makes 3D trees from input point vector map"
-#~ msgstr "输入矢量文件的名称"
-
-#, fuzzy
-#~ msgid "Diameter of the tree crown in map units"
-#~ msgstr "离散化错误 (地图单位)"
-
-#, fuzzy
-#~ msgid "Name of the column with tree crown width"
-#~ msgstr "包含平滑参数的字段名称"
-
-#, fuzzy
-#~ msgid "Name of the column with tree height"
-#~ msgstr "包含平滑参数的字段名称"
-
-#, fuzzy
-#~ msgid "Name of the column with tree species"
-#~ msgstr "包含平滑参数的字段名称"
-
-#, fuzzy
-#~ msgid "Cannot select attributes for point #%d"
-#~ msgstr "无法选择类别 = %d 的属性"
-
-#~ msgid "%s Pan\n"
-#~ msgstr "%s 漫游\n"
-
-#~ msgid "%s Quit\n"
-#~ msgstr "%s 退出\n"
-
-#~ msgid "Quiet mode"
-#~ msgstr "安静模式"
-
-#~ msgid ""
-#~ "3 raster maps (r,g,b) which are used to create rgb values [redmap,"
-#~ "greenmap,bluemap]"
-#~ msgstr "3 栅格地图 (r,g,b)，他们用来生成 rgb 值 [redmap,greenmap,bluemap]"
-
-#, fuzzy
-#~ msgid "%s[%d]: No raster map specified."
-#~ msgstr "栅格文件 [%s] 文件头已更新。"
-
-#~ msgid ""
-#~ "GRASS module to create a fractal surface of a given fractal dimension. "
-#~ "Uses spectral synthesis method. Can create intermediate layers showing "
-#~ "the build up of different spectral coefficients (see Saupe, pp.106-107 "
-#~ "for an example of this). Use this module to generate naturally looking "
-#~ "synthetical elevation models (DEM)."
-#~ msgstr ""
-#~ "创建给定维数的不规则表面。使用谱综合方法。可以创建中间图层来显示不同光谱系"
-#~ "数的构成。使用这一模块生成合成高程模型(DEM)。"
-
-#, fuzzy
-#~ msgid "Query column name"
-#~ msgstr "y 字段的名称"
-
-#, fuzzy
-#~ msgid "name for new binary vector map (omit for display to stdout)"
-#~ msgstr "新的PPM文件的名称。(out=-用于标准输出)"
-
-#~ msgid "Name for G3d raster map"
-#~ msgstr "G3d 栅格地图的名称"
-
-#~ msgid "No output maps"
-#~ msgstr "没有输出地图"
-
-#, fuzzy
-#~ msgid "Wrong rgb map values! Values should in between 0 and 255!\n"
-#~ msgstr "错误的地图值！地图值必须在 0 至 255 之间！\n"
-
-#~ msgid "Print all, inclusive range"
-#~ msgstr "打印所有包含的范围"
-
-#~ msgid "Resolution of raster and raster3d maps should be equal!"
-#~ msgstr "栅格地图和3D栅格地图的分辨率应该一致！"
-
-#~ msgid "The resolution of raster and raster3d maps should be equal!"
-#~ msgstr "栅格地图和3D栅格地图的分辨率应该一致！"
-
-#~ msgid "Connect to the database through DBMI."
-#~ msgstr "通过DBMI连接到数据库。"
-
-#~ msgid ""
-#~ "Feature type. Possible combinations of more types: point,centroid or line,"
-#~ "boundary."
-#~ msgstr "要素类型。可能包含多种类型：点，质心或线，边界。"
-
-#~ msgid "unknown interpolation method"
-#~ msgstr "未知的内插方法"
-
-#~ msgid "The map E and N grid coordinates of a starting point"
-#~ msgstr "起点的地图格网坐标"
-
-#~ msgid "Name of existing raster map."
-#~ msgstr "已有栅格文件的名称"
-
-#~ msgid "Wrong RGB maps. RGB output not added!"
-#~ msgstr "错误的 RGB 地图。 RGB 输出没有添加！"
-
-#~ msgid "cover raster map"
-#~ msgstr "叠加栅格图"
-
-#~ msgid "resultant raster map"
-#~ msgstr "结果图"
-
-#~ msgid "Name of the resulting map"
-#~ msgstr "结果地图的名称"
-
-#~ msgid "Invoke fast, but memory intensive operation"
-#~ msgstr "快速调用，但内存操作频繁"
-
-#~ msgid "Done.\n"
-#~ msgstr "完成。\n"
-
-#~ msgid "Zooming finished.\n"
-#~ msgstr "缩放完称。\n"
-
-#, fuzzy
-#~ msgid "%s: unable to re-open %s"
-#~ msgstr "无法打开<%s>"
-
-#, fuzzy
-#~ msgid ""
-#~ "No database connection for driver <%s> is defined. Try to run db.connect."
-#~ msgstr "数据库连接未定义"
-
-#, fuzzy
-#~ msgid "Database connection not defined for layer %d "
-#~ msgstr "数据库连接未定义"
-
-#, fuzzy
-#~ msgid "Can't open vector map <%s> in <%s>"
-#~ msgstr "无法打开矢量文件<%s>在<%s>中"
+msgid "Select type"
+msgstr "要素类型"

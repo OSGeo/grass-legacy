@@ -1,8 +1,8 @@
-# translation of grasslibs_zh.po to Simplified Chinese
+# translation of grasstcl_zh.po to Simplified Chinese
 # This file is distributed under the same license as the GRASS package.
 # Copyright (C) 2007, GRASS Development Team
-# Carlos Davila <carluti@users.sourceforge.net>, 2007.
 #
+# Su Yongheng <night2008@gmail.com>
 msgid ""
 msgstr ""
 "Project-Id-Version: grasstcl_zh\n"
@@ -6241,9 +6241,3 @@ msgstr ""
 #: ../gui/tcltk/d.m/rgbhis.tcl:118
 msgid "blue (RGB) or saturation (HIS):"
 msgstr ""
-
-#~ msgid "Run (in Xterm)"
-#~ msgstr "运行（在Xterm中"
-
-#~ msgid "WARNING: Error creating new location"
-#~ msgstr "警告："
