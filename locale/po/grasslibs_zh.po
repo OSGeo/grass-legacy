@@ -3,6 +3,7 @@
 # Copyright (C) 2005, GRASS Development Team
 #
 # Zhang Jun <nilarcs@gmail.com>, 2005, 2006.
+# Su Yongheng <night2008@gmail.com>
 msgid ""
 msgstr ""
 "Project-Id-Version: grasslibs_zh\n"
