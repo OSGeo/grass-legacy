@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: grasswxpy_de\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2010-01-14 08:01+0100\n"
-"PO-Revision-Date: 2010-01-14 07:14+0100\n"
+"PO-Revision-Date: 2010-02-12 21:10+0100\n"
 "Last-Translator: Markus Neteler <neteler osgeo.org>\n"
 "Language-Team: Deutsch <grass-translations@lists.osgeo.org>\n"
 "MIME-Version: 1.0\n"
@@ -5042,7 +5042,7 @@ msgstr "Wählen Sie eine Projektion"
 
 #: ../gui/wxpython/gui_modules/location_wizard.py:693
 msgid "Select datum or ellipsoid (next page)"
-msgstr "Wählen Sie das Datum mit zugehörigen Ellipsoid (nächste Seite)"
+msgstr "Wählen Sie Datum oder Ellipsoid (nächste Seite)"
 
 #: ../gui/wxpython/gui_modules/location_wizard.py:699
 msgid "Datum with associated ellipsoid"
@@ -6383,9 +6383,8 @@ msgid "Get all values"
 msgstr "Alle Werte bekommen"
 
 #: ../gui/wxpython/gui_modules/sqlbuilder.py:106
-#, fuzzy
 msgid "Get sample"
-msgstr "Wert erhalten"
+msgstr "Beispiel abfragen"
 
 #: ../gui/wxpython/gui_modules/sqlbuilder.py:149
 msgid "Add on double-click"
@@ -7738,7 +7737,7 @@ msgstr "Zeige die Handbuchseite des Befehls."
 
 #: ../gui/wxpython/gui_modules/menuform.py:701
 msgid "&Apply"
-msgstr ""
+msgstr "&Anwenden"
 
 #: ../gui/wxpython/gui_modules/menuform.py:717
 #, fuzzy
@@ -8754,120 +8753,273 @@ msgstr ""
 "Erstellen Sie jetzt eins, wenn Sie es noch nicht getan haben. Eine beliebte "
 "Wahl ist \"grassdata\" im eigenen Heimatverzeichnis."
 
-#~ msgid "GRASS SQL Builder: %s"
-#~ msgstr "GRASS SQL Editor: %s"
+msgid "GRASS SQL Builder: %s"
+msgstr "GRASS SQL Editor: %s"
 
-#~ msgid " (those in bold typeface are required)"
-#~ msgstr " (fett gedruckte sind erforderlich)"
+msgid " (those in bold typeface are required)"
+msgstr " (fett gedruckte sind erforderlich)"
 
-#~ msgid "Cmd >"
-#~ msgstr "Cmd >"
+msgid "Cmd >"
+msgstr "Cmd >"
 
-#~ msgid "Click for erasing command prompt"
-#~ msgstr "Klicke um die Eingabeaufforderung (prompt) zu löschen."
+msgid "Click for erasing command prompt"
+msgstr "Klicke um die Eingabeaufforderung (prompt) zu löschen."
 
-#~ msgid "Add overlay"
-#~ msgstr "Überlagerungen hinzufügen"
+msgid "Add overlay"
+msgstr "Überlagerungen hinzufügen"
 
-#~ msgid "Add graphic overlays to map"
-#~ msgstr "Überlagernde Grafik hinzufügen"
+msgid "Add graphic overlays to map"
+msgstr "Überlagernde Grafik hinzufügen"
 
-#~ msgid ""
-#~ "Do you want to close display %(display)d?\n"
-#~ "\n"
-#~ "%(message)s"
-#~ msgstr ""
-#~ "Wollen Sie das Fenster %(display)d schließen?\n"
-#~ "\n"
-#~ "%(message)s"
+msgid ""
+"Do you want to close display %(display)d?\n"
+"\n"
+"%(message)s"
+msgstr ""
+"Wollen Sie das Fenster %(display)d schließen?\n"
+"\n"
+"%(message)s"
+
+msgid "Encoding"
+msgstr "Kodierung"
+
+msgid ""
+"Error loading attribute data. Record number: %(rec)d. Unable to cast value '%"
+"(val)s' in key column (%(key)s) to integer.\n"
+"\n"
+"Details: %(detail)s"
+msgstr ""
+"Fehler beim Laden der Attributdaten. Datensatz Nummer: %(rec)d. Kann den "
+"Wert '%(val)s' in der Schlüsselspalte (%(key)s) nicht nach integer "
+"umwandeln.\n"
+"\n"
+"Einzelheiten: %(detail)s"
+
+msgid "Click here to show database connection information"
+msgstr ""
+"Klicken Sie hier, um Informationen zu der Datenbankverbindung anzuzeigen."
+
+msgid "Click here to hide database connection information"
+msgstr ""
+"Klicken Sie hier, um Informationen zu der Datenbankverbindung zu verbergen."
+
+msgid "Casting value '%(value)s' to %(type)s failed."
+msgstr "Umwandeln des Wertes  '%(value)s' nach %(type)s ist fehlgeschlagen."
+
+msgid ""
+"Unable to start Nviz. The OpenGL package was not found. You can get it at "
+"http://PyOpenGL.sourceforge.net. Switching back to 2D display mode.\n"
+"\n"
+"Details: %s"
+msgstr ""
+"Kann Nviz nicht starten. Das OpenGL-Paket konnte nicht gefunden werden. Sie "
+"können es unter http://PyOpenGL.sourceforge.net bekommen. Schalte zurück auf "
+"2D Grafikausgabe.\n"
+"\n"
+"Einzelheiten: %s "
+
+msgid "Vector map <%s> georectified successfully"
+msgstr "Vektorkarte <%s> erfolgreich georektifiziert."
+
+msgid "Copying attributes..."
+msgstr "Kopiere Attribute..."
+
+msgid "Output vector map name"
+msgstr "Name der Ausgabe-Vektorkarte"
+
+msgid "Use coordinate system of selected georeferenced file"
+msgstr "Verwende das Koordinatensystem der gewählten georefenzierten Datei"
+
+msgid "Use coordinate system of selected WKT or PRJ file"
+msgstr "Verwende das Koordinatensystem der gewählten WKT- oder PRJ-Datei"
+
+msgid "Create custom PROJ.4 parameters string for coordinate system"
+msgstr ""
+"Erzeuge benutzerdefinierten PROJ.4-Zeichenkette für das Koordinatensystem"
+
+msgid "Select ellipsoid"
+msgstr "Wählen Sie den Ellipsoid"
+
+msgid "Set zone for UTM projection:"
+msgstr "Wählen Sie die Zone der UTM Projektion:"
+
+msgid "Zone:"
+msgstr "Zone:"
+
+msgid "Hemisphere for zone:"
+msgstr "Hemisphäre der Zone:"
+
+msgid "Datum"
+msgstr "Datum"
+
+msgid "Transformation parameters:"
+msgstr "Transformationsparameter:"
+
+msgid "Browse EPSG Codes"
+msgstr "Blättern in den EPSG Codes"
+
+msgid "Datum transform is required."
+msgstr "Datumstransformation ist notwendig."
+
+msgid "Datums:"
+msgstr "Datum:"
+
+msgid "Apply regular expressions and wildcards to g.list"
+msgstr "Reguläre Ausdrücke und Wildcards auf g.list anwenden"
+
+msgid "Apply regular expressions and wildcards to g.remove"
+msgstr "Reguläre Ausdrücke und Wildcards auf g.remove anwenden"
+
+msgid "It assumes a cartesian coordinate system"
+msgstr "Es scheint ein kartesisches Koordinatensystem zu sein"
+
+msgid "Create/edit projection information for current location"
+msgstr "Erstelle/editiere Projektion der aktuellen Location."
+
+msgid "Digitize raster map"
+msgstr "Digitalisiere Rasterkarte"
+
+msgid "Creates explicitly the NULL-value bitmap file."
+msgstr "Erzeugt explizit eine NULL-Wert Bitmap-Datei."
+
+msgid ""
+"Computes direct (beam), diffuse and reflected solar irradiation raster maps "
+"for given day, latitude, surface and atmospheric conditions. Solar "
+"parameters (e.g. sunrise, sunset times, declination, extraterrestrial "
+"irradiance, daylight length) are saved in the map history file. "
+"Alternatively, a local time can be specified to compute solar incidence "
+"angle and/or irradiance raster maps. The shadowing effect of the topography "
+"is optionally incorporated."
+msgstr ""
+"Berechnet direkte (beam), diffuse und reflektierte Sonneneinstrahlung für  "
+"einen angegebenen Tag, geographische Breite, Oberfläche und atmosphärische "
+"Kondition. Parameter (z.B. Sonnenauf- und -untergangszeiten, Sonnenwinkel, "
+"extraterrestrische Strahlung und Tageslänge) werden in der History-Datei der "
+"Rasterkarte abgespeichert. Alternativ kann die lokale Zeit angegeben werden, "
+"daraus wird der Einfallswinkel der Strahlung und/oder die "
+"Strahlungsintensität berechnet. Ein Schatteneffekt der Topographie kann "
+"eingebunden werden."
+
+msgid ""
+"Uses a multi-scale approach by taking fitting quadratic parameters to any "
+"size window (via least squares)."
+msgstr ""
+"Extrahiert Reliefinformationen aus einem DEM. Dazu benutzt das Modul einen "
+"multi-skalaren Ansatz, in dem quadratische Parameter auf jede Fenstergröße "
+"angepasst werden (kleinste Quadrate)."
+
+msgid ""
+"It optionally produces raster maps to contain backlink UTM coordinates for "
+"tracing spread paths."
+msgstr ""
+"Dies erzeugt optional Rasterkarten mit 'backlink'-UTM-Koordinaten, um "
+"Ausbreitungspfade nachzuzeichnen."
+
+msgid "Reclassify raster categories interactively by entering reclass rules"
+msgstr "Reklassifiziert Rasterkategorien interaktiv"
+
+msgid ""
+"Recode raster categories interactively by entering recode rules (create new "
+"raster map)"
+msgstr ""
+"Neukodieren von Rasterwerten nach interaktiven Regeln, erzeugt eine neue "
+"Karte"
+
+msgid "Smooth or simplify lines/boundaries (remove vertices)."
+msgstr "Glättet oder Vereinfacht Linien/Grenzen (entfernt Vertices)."
+
+msgid ""
+"Centre node must be opened (costs >= 0). Costs of centre node are used in "
+"calculation"
+msgstr ""
+"Zentraler Knoten muss geöffnet sein (Kosten >= 0). Kosten des zentralen "
+"Knoten gehen im die Berechnung mit ein."
+
+msgid ""
+"Display shortest route along network between 2 nodes (visualization only, "
+"requires XTerm))"
+msgstr ""
+"Zeige kürzeste Route in einem Netzwerk zwischen 2 Knoten (nur "
+"Visualisierung, erfordert XTerm)"
+
+msgid ""
+"Splits net to bands between cost isolines (direction from centre). Centre "
+"node must be opened (costs >= 0). Costs of centre node are used in "
+"calculation."
+msgstr ""
+"Teilt das Netz in Bänder zwischen Isokostenlinien (Richtung vom Zentrum). "
+"Zentraler Knoten muss geöffnet sein (Kosten >= 0). Kosten des zentralen "
+"Knotens gehen in die Berechnung ein."
+
+msgid ""
+"Note that 'Minimum Steiner Tree' problem is NP-hard and heuristic algorithm "
+"is used in this module so the result may be sub optimal"
+msgstr ""
+"Bedenken Sie das 'Minimum Steiner Tree'-Problem ist NP-hart und in diesem "
+"Modul wird ein heuristischer Algorithmus verwenden, so kann das Ergebnis "
+"suboptimal sein."
+
+msgid ""
+"Note that TSP is NP-hard, heuristic algorithm is used by this module and "
+"created cycle may be sub optimal"
+msgstr ""
+"Bedenken Sie das: Das Handelsreisenden-Problem ist NP-hart. Dies Modul setzt "
+"ein heuristischen Algorithmus ein und erzeugte Ringen können suboptimal sein."
+
+msgid "Reclassify vector objects interactively by entering SQL rules"
+msgstr ""
+"Reklassifiziere Vektorobjekte interaktive durch Eingabe von SQL Regeln."
+
+msgid ""
+"Hue-intensity-saturation (his) to red-green-blue (rgb) raster map color "
+"transformation function."
+msgstr ""
+"Farbwert-Intensität-Sättigung (HIS) zu Rot-Grün-Blau (RGB) Rasterkarten "
+"Farbtransformationsfunktion."
+
+msgid ""
+"Red-green-blue (rgb) to hue-intensity-saturation (his) raster map color "
+"transformation function"
+msgstr ""
+"Rot-Grün-Blau (RGB) zu Farbwert-Intensität-Sättigung (HIS) Rasterkarten "
+"Farbtransformationsfunktion."
+
+msgid "Ortho Photo rectification"
+msgstr "Orthophoto Rektifizierung"
+
+msgid ""
+"The resulting signature file is used as input for i.maxlik, to generate an "
+"unsupervised image classification."
+msgstr ""
+"Die resultierende Signaturdatei wird als Eingabe für i.maxlik verwendet, um "
+"eine unüberwachte Bildklassifikation zu erzeugen."
+
+msgid ""
+"Classification is based on the spectral signature information generated by "
+"either i.cluster, i.class, or i.gensig."
+msgstr ""
+"Die Klassifikation basiert auf der Information der spektralen Signatur "
+"erzeugt von .cluster, i.class, oder i.gensig."
+
+msgid "Interactive input for supervised classification"
+msgstr "Interaktive Eingabe für eine überwachte Klassifikation"
+
+msgid ""
+"Copy a table. Either 'from_table' (optionally with 'where') can be used or "
+"'select' option, but not 'from_table' and 'select' at the same time."
+msgstr ""
+"Kopiere eine Tabelle. Entweder kann 'from_table' (gegebenenfalls mit "
+"'where') oder die 'select'Option verwendet werden. 'from_table' und 'select' "
+"können aber nicht zur gleichen Zeit verwendet werden."
+
+msgid "Datums (select to see description):"
+msgstr "Datum (auswählen um die Beschreibung zu sehen):"
+
+msgid "Reload EPSG Codes"
+msgstr "EPSG Codes erneut laden"
 
 #~ msgid "Unable to read workspace file"
 #~ msgstr "Kann die Projektdatei nicht lesen"
-
-#~ msgid "Encoding"
-#~ msgstr "Kodierung"
-
-#~ msgid ""
-#~ "Error loading attribute data. Record number: %(rec)d. Unable to cast "
-#~ "value '%(val)s' in key column (%(key)s) to integer.\n"
-#~ "\n"
-#~ "Details: %(detail)s"
-#~ msgstr ""
-#~ "Fehler beim Laden der Attributdaten. Datensatz Nummer: %(rec)d. Kann den "
-#~ "Wert '%(val)s' in der Schlüsselspalte (%(key)s) nicht nach integer "
-#~ "umwandeln.\n"
-#~ "\n"
-#~ "Einzelheiten: %(detail)s"
-
-#~ msgid "Click here to show database connection information"
-#~ msgstr ""
-#~ "Klicken Sie hier, um Informationen zu der Datenbankverbindung anzuzeigen."
-
-#~ msgid "Click here to hide database connection information"
-#~ msgstr ""
-#~ "Klicken Sie hier, um Informationen zu der Datenbankverbindung zu "
-#~ "verbergen."
-
-#~ msgid "Casting value '%(value)s' to %(type)s failed."
-#~ msgstr "Umwandeln des Wertes  '%(value)s' nach %(type)s ist fehlgeschlagen."
-
-#~ msgid ""
-#~ "Unable to start Nviz. The OpenGL package was not found. You can get it at "
-#~ "http://PyOpenGL.sourceforge.net. Switching back to 2D display mode.\n"
-#~ "\n"
-#~ "Details: %s"
-#~ msgstr ""
-#~ "Kann Nviz nicht starten. Das OpenGL-Paket konnte nicht gefunden werden. "
-#~ "Sie können es unter http://PyOpenGL.sourceforge.net bekommen. Schalte "
-#~ "zurück auf 2D Grafikausgabe.\n"
-#~ "\n"
-#~ "Einzelheiten: %s "
-
-#~ msgid "Vector map <%s> georectified successfully"
-#~ msgstr "Vektorkarte <%s> erfolgreich georektifiziert."
-
-#~ msgid "Copying attributes..."
-#~ msgstr "Kopiere Attribute..."
-
-#~ msgid "Output vector map name"
-#~ msgstr "Name der Ausgabe-Vektorkarte"
-
-#~ msgid "Use coordinate system of selected georeferenced file"
-#~ msgstr "Verwende das Koordinatensystem der gewählten georefenzierten Datei"
-
-#~ msgid "Use coordinate system of selected WKT or PRJ file"
-#~ msgstr "Verwende das Koordinatensystem der gewählten WKT- oder PRJ-Datei"
-
-#~ msgid "Create custom PROJ.4 parameters string for coordinate system"
-#~ msgstr ""
-#~ "Erzeuge benutzerdefinierten PROJ.4-Zeichenkette für das Koordinatensystem"
-
-#~ msgid "Select ellipsoid"
-#~ msgstr "Wählen Sie den Ellipsoid"
-
-#~ msgid "Set zone for UTM projection:"
-#~ msgstr "Wählen Sie die Zone der UTM Projektion:"
-
-#~ msgid "Zone:"
-#~ msgstr "Zone:"
-
-#~ msgid "Hemisphere for zone:"
-#~ msgstr "Hemisphäre der Zone:"
-
-#~ msgid "Datum"
-#~ msgstr "Datum"
-
-#~ msgid "Transformation parameters:"
-#~ msgstr "Transformationsparameter:"
-
-#~ msgid "Browse EPSG Codes"
-#~ msgstr "Blättern in den EPSG Codes"
-
-#~ msgid "Datum transform is required."
-#~ msgstr "Datumstransformation ist notwendig."
-
-#~ msgid "Datums:"
-#~ msgstr "Datum:"
 
 #~ msgid "Save workspace to open file"
 #~ msgstr "Speichere das Projekt in die offene Datei"
@@ -8881,166 +9033,14 @@ msgstr ""
 #~ msgid "MAT-File (v.4) export"
 #~ msgstr "MAT-File (v.4) Export"
 
-#~ msgid "Apply regular expressions and wildcards to g.list"
-#~ msgstr "Reguläre Ausdrücke und Wildcards auf g.list anwenden"
-
-#~ msgid "Apply regular expressions and wildcards to g.remove"
-#~ msgstr "Reguläre Ausdrücke und Wildcards auf g.remove anwenden"
-
-#~ msgid "It assumes a cartesian coordinate system"
-#~ msgstr "Es scheint ein kartesisches Koordinatensystem zu sein"
-
 #~ msgid "E&xit"
 #~ msgstr "B&eenden"
-
-#~ msgid "Create/edit projection information for current location"
-#~ msgstr "Erstelle/editiere Projektion der aktuellen Location."
-
-#~ msgid "Digitize raster map"
-#~ msgstr "Digitalisiere Rasterkarte"
-
-#~ msgid "Creates explicitly the NULL-value bitmap file."
-#~ msgstr "Erzeugt explizit eine NULL-Wert Bitmap-Datei."
-
-#~ msgid ""
-#~ "Computes direct (beam), diffuse and reflected solar irradiation raster "
-#~ "maps for given day, latitude, surface and atmospheric conditions. Solar "
-#~ "parameters (e.g. sunrise, sunset times, declination, extraterrestrial "
-#~ "irradiance, daylight length) are saved in the map history file. "
-#~ "Alternatively, a local time can be specified to compute solar incidence "
-#~ "angle and/or irradiance raster maps. The shadowing effect of the "
-#~ "topography is optionally incorporated."
-#~ msgstr ""
-#~ "Berechnet direkte (beam), diffuse und reflektierte Sonneneinstrahlung "
-#~ "für  einen angegebenen Tag, geographische Breite, Oberfläche und "
-#~ "atmosphärische Kondition. Parameter (z.B. Sonnenauf- und -"
-#~ "untergangszeiten, Sonnenwinkel, extraterrestrische Strahlung und "
-#~ "Tageslänge) werden in der History-Datei der Rasterkarte abgespeichert. "
-#~ "Alternativ kann die lokale Zeit angegeben werden, daraus wird der "
-#~ "Einfallswinkel der Strahlung und/oder die Strahlungsintensität berechnet. "
-#~ "Ein Schatteneffekt der Topographie kann eingebunden werden."
-
-#~ msgid ""
-#~ "Uses a multi-scale approach by taking fitting quadratic parameters to any "
-#~ "size window (via least squares)."
-#~ msgstr ""
-#~ "Extrahiert Reliefinformationen aus einem DEM. Dazu benutzt das Modul "
-#~ "einen multi-skalaren Ansatz, in dem quadratische Parameter auf jede "
-#~ "Fenstergröße angepasst werden (kleinste Quadrate)."
-
-#~ msgid ""
-#~ "It optionally produces raster maps to contain backlink UTM coordinates "
-#~ "for tracing spread paths."
-#~ msgstr ""
-#~ "Dies erzeugt optional Rasterkarten mit 'backlink'-UTM-Koordinaten, um "
-#~ "Ausbreitungspfade nachzuzeichnen."
-
-#~ msgid "Reclassify raster categories interactively by entering reclass rules"
-#~ msgstr "Reklassifiziert Rasterkategorien interaktiv"
-
-#~ msgid ""
-#~ "Recode raster categories interactively by entering recode rules (create "
-#~ "new raster map)"
-#~ msgstr ""
-#~ "Neukodieren von Rasterwerten nach interaktiven Regeln, erzeugt eine neue "
-#~ "Karte"
-
-#~ msgid "Smooth or simplify lines/boundaries (remove vertices)."
-#~ msgstr "Glättet oder Vereinfacht Linien/Grenzen (entfernt Vertices)."
-
-#~ msgid ""
-#~ "Centre node must be opened (costs >= 0). Costs of centre node are used in "
-#~ "calculation"
-#~ msgstr ""
-#~ "Zentraler Knoten muss geöffnet sein (Kosten >= 0). Kosten des zentralen "
-#~ "Knoten gehen im die Berechnung mit ein."
-
-#~ msgid ""
-#~ "Display shortest route along network between 2 nodes (visualization only, "
-#~ "requires XTerm))"
-#~ msgstr ""
-#~ "Zeige kürzeste Route in einem Netzwerk zwischen 2 Knoten (nur "
-#~ "Visualisierung, erfordert XTerm)"
-
-#~ msgid ""
-#~ "Splits net to bands between cost isolines (direction from centre). Centre "
-#~ "node must be opened (costs >= 0). Costs of centre node are used in "
-#~ "calculation."
-#~ msgstr ""
-#~ "Teilt das Netz in Bänder zwischen Isokostenlinien (Richtung vom Zentrum). "
-#~ "Zentraler Knoten muss geöffnet sein (Kosten >= 0). Kosten des zentralen "
-#~ "Knotens gehen in die Berechnung ein."
-
-#~ msgid ""
-#~ "Note that 'Minimum Steiner Tree' problem is NP-hard and heuristic "
-#~ "algorithm is used in this module so the result may be sub optimal"
-#~ msgstr ""
-#~ "Bedenken Sie das 'Minimum Steiner Tree'-Problem ist NP-hart und in diesem "
-#~ "Modul wird ein heuristischer Algorithmus verwenden, so kann das Ergebnis "
-#~ "suboptimal sein."
-
-#~ msgid ""
-#~ "Note that TSP is NP-hard, heuristic algorithm is used by this module and "
-#~ "created cycle may be sub optimal"
-#~ msgstr ""
-#~ "Bedenken Sie das: Das Handelsreisenden-Problem ist NP-hart. Dies Modul "
-#~ "setzt ein heuristischen Algorithmus ein und erzeugte Ringen können "
-#~ "suboptimal sein."
-
-#~ msgid "Reclassify vector objects interactively by entering SQL rules"
-#~ msgstr ""
-#~ "Reklassifiziere Vektorobjekte interaktive durch Eingabe von SQL Regeln."
-
-#~ msgid ""
-#~ "Hue-intensity-saturation (his) to red-green-blue (rgb) raster map color "
-#~ "transformation function."
-#~ msgstr ""
-#~ "Farbwert-Intensität-Sättigung (HIS) zu Rot-Grün-Blau (RGB) Rasterkarten "
-#~ "Farbtransformationsfunktion."
-
-#~ msgid ""
-#~ "Red-green-blue (rgb) to hue-intensity-saturation (his) raster map color "
-#~ "transformation function"
-#~ msgstr ""
-#~ "Rot-Grün-Blau (RGB) zu Farbwert-Intensität-Sättigung (HIS) Rasterkarten "
-#~ "Farbtransformationsfunktion."
-
-#~ msgid "Ortho Photo rectification"
-#~ msgstr "Orthophoto Rektifizierung"
-
-#~ msgid ""
-#~ "The resulting signature file is used as input for i.maxlik, to generate "
-#~ "an unsupervised image classification."
-#~ msgstr ""
-#~ "Die resultierende Signaturdatei wird als Eingabe für i.maxlik verwendet, "
-#~ "um eine unüberwachte Bildklassifikation zu erzeugen."
-
-#~ msgid ""
-#~ "Classification is based on the spectral signature information generated "
-#~ "by either i.cluster, i.class, or i.gensig."
-#~ msgstr ""
-#~ "Die Klassifikation basiert auf der Information der spektralen Signatur "
-#~ "erzeugt von .cluster, i.class, oder i.gensig."
-
-#~ msgid "Interactive input for supervised classification"
-#~ msgstr "Interaktive Eingabe für eine überwachte Klassifikation"
-
-#~ msgid ""
-#~ "Copy a table. Either 'from_table' (optionally with 'where') can be used "
-#~ "or 'select' option, but not 'from_table' and 'select' at the same time."
-#~ msgstr ""
-#~ "Kopiere eine Tabelle. Entweder kann 'from_table' (gegebenenfalls mit "
-#~ "'where') oder die 'select'Option verwendet werden. 'from_table' und "
-#~ "'select' können aber nicht zur gleichen Zeit verwendet werden."
 
 #~ msgid "Selects data from table."
 #~ msgstr "Selektiert Daten einer Tabelle."
 
 #~ msgid "GRASS GIS GUI help"
 #~ msgstr "GRASS GIS GUI-Hilfe"
-
-#~ msgid "Datums (select to see description):"
-#~ msgstr "Datum (auswählen um die Beschreibung zu sehen):"
 
 #~ msgid ""
 #~ "Reading workspace file <%s> failed. Invalid file, unable to parse XML "
@@ -9138,6 +9138,3 @@ msgstr ""
 
 #~ msgid "Copy the current command string to the clipboard"
 #~ msgstr "Kopiere die aktuelle Befehlszeile in die Zwischenablage"
-
-#~ msgid "Reload EPSG Codes"
-#~ msgstr "EPSG Codes erneut laden"
