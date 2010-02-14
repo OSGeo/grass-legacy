@@ -1552,7 +1552,7 @@
 	    </menuitem>
 	    <menuitem>
 	      <label>Digitize vector map (requires TclTk)</label>
-	      <help>Interactive editing and digitization of vector maps</help>
+	      <help>Interactive editing and digitization of vector maps.</help>
 	      <keywords>vector, editing, digitization</keywords>
 	      <handler>self.OnMenuCmd</handler>
 	      <command>v.digit</command>
@@ -1585,7 +1585,7 @@
 	    <separator />
 	    <menuitem>
 	      <label>Convert object types</label>
-	      <help>Change the type of geometry elements</help>
+	      <help>Change the type of geometry elements.</help>
 	      <handler>self.OnMenuCmd</handler>
 	      <command>v.type_wrapper.sh</command>
 	    </menuitem>
