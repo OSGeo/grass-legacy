@@ -197,7 +197,7 @@
 	    </menuitem>
 	    <menuitem>
 	      <label>ASCII points as a vector lines</label>
-	      <help>Creates a lines vector map from an ASCII x,y points file.</help>
+	      <help>Import ASCII x,y[,z] coordinates as a series of lines.</help>
 	      <keywords>vector,import</keywords>
 	      <handler>self.OnMenuCmd</handler>
 	      <command>v.in.lines</command>
@@ -1830,7 +1830,7 @@
 	    <separator />
 	    <menuitem>
 	      <label>Convert object types</label>
-	      <help>Change the type of geometry elements</help>
+	      <help>Change the type of geometry elements.</help>
 	      <keywords>vector,geometry</keywords>
 	      <handler>self.OnMenuCmd</handler>
 	      <command>v.type_wrapper.sh</command>
@@ -1898,17 +1898,17 @@
 	    <separator />
 	    <menuitem>
 	      <label>Create labels</label>
-	      <help>Creates paint labels for a vector map from attached attributes.</help>
-	      <keywords>vector,paint labels</keywords>
-	      <handler>self.OnMenuCmd</handler>
-	      <command>v.label</command>
-	    </menuitem>
-	    <menuitem>
-	      <label>Create optimally placed labels</label>
 	      <help>Create optimally placed labels for vector map(s)</help>
 	      <keywords>vector,paint labels</keywords>
 	      <handler>self.OnMenuCmd</handler>
 	      <command>v.label.sa</command>
+	    </menuitem>
+	    <menuitem>
+	      <label>Create optimally placed labels</label>
+	      <help>Creates paint labels for a vector map from attached attributes.</help>
+	      <keywords>vector,paint labels</keywords>
+	      <handler>self.OnMenuCmd</handler>
+	      <command>v.label</command>
 	    </menuitem>
 	    <separator />
 	    <menuitem>
@@ -2730,7 +2730,7 @@
 	    </menuitem>
 	    <menuitem>
 	      <label>New table</label>
-	      <help>Creates and adds a new attribute table to a given layer of an existing vector map.</help>
+	      <help>Creates and connects a new attribute table to a given layer of an existing vector map.</help>
 	      <keywords>vector,database,attribute table</keywords>
 	      <handler>self.OnMenuCmd</handler>
 	      <command>v.db.addtable</command>
