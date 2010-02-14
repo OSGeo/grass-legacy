@@ -134,7 +134,7 @@ static void compute_transformation(void)
 		update_stats(&rev, n, rx, ry, rd, rd2);
 	}
 
-	if (!columns)
+	if (!columns[0])
 	    continue;
 
 	for (i = 0;; i++) {
