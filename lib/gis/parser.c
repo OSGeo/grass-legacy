@@ -1482,7 +1482,7 @@ static void G_usage_xml(void)
 	fprintf(stdout, "\t<flag name=\"%s\">\n", "overwrite");
 	fprintf(stdout, "\t\t<description>\n\t\t\t");
 	print_escaped_for_xml(stdout,
-			      "Allow output files to overwrite existing files");
+			      _("Allow output files to overwrite existing files"));
 	fprintf(stdout, "\n\t\t</description>\n");
 	fprintf(stdout, "\t</flag>\n");
     }
