@@ -10,8 +10,8 @@ msgstr ""
 "Project-Id-Version: grasstcl_ja\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2010-01-14 07:12+0100\n"
-"PO-Revision-Date: 2010-02-09 13:29+0900\n"
-"Last-Translator: \n"
+"PO-Revision-Date: 2010-02-15 14:06+0900\n"
+"Last-Translator: ueda <nao@locapoint.com>\n"
 "Language-Team: Japanese <grass-translations@lists.osgeo.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -92,7 +92,7 @@ msgstr "境界をデジタイズ"
 
 #: ../vector/v.digit/toolbox.tcl:128
 msgid "Digitize new centroid"
-msgstr "重心をデジタイズ"
+msgstr "セントロイドをデジタイズ"
 
 #: ../vector/v.digit/toolbox.tcl:134
 msgid "Move vertex"
@@ -116,11 +116,11 @@ msgstr "ライン/境界の修正"
 
 #: ../vector/v.digit/toolbox.tcl:159
 msgid "Move point, line, boundary, or centroid"
-msgstr "ポイント、ライン、境界、重心の移動"
+msgstr "ポイント、ライン、境界、セントロイドの移動"
 
 #: ../vector/v.digit/toolbox.tcl:164
 msgid "Delete point, line, boundary, or centroid"
-msgstr "ポイント、ライン、境界、重心の削除"
+msgstr "ポイント、ライン、境界、セントロイドの削除"
 
 #: ../vector/v.digit/toolbox.tcl:175
 msgid "Redraw"
@@ -141,15 +141,15 @@ msgstr "パン"
 
 #: ../vector/v.digit/toolbox.tcl:195
 msgid "Zoom to default region"
-msgstr "デフォルトリージョンにズーム"
+msgstr "デフォルト領域にズーム"
 
 #: ../vector/v.digit/toolbox.tcl:208
 msgid "Zoom to saved region"
-msgstr "セーブドリージョンでズーム"
+msgstr "セーブド領域でズーム"
 
 #: ../vector/v.digit/toolbox.tcl:214
 msgid "Display categories"
-msgstr "カテゴリを表示"
+msgstr "カテゴリーを表示"
 
 #: ../vector/v.digit/toolbox.tcl:219
 msgid "Copy categories"
@@ -173,7 +173,7 @@ msgstr "マウスボタン操作 (左、中央、右) "
 
 #: ../vector/v.digit/settings.tcl:75
 msgid "Add new column"
-msgstr "カラム追加"
+msgstr "列追加"
 
 #: ../vector/v.digit/settings.tcl:78
 msgid "Create table"
@@ -232,15 +232,15 @@ msgstr "境界(2エリア)"
 
 #: ../vector/v.digit/settings.tcl:244
 msgid "Centroid (in area)"
-msgstr "重心（エリア内）"
+msgstr "セントロイド（エリア内）"
 
 #: ../vector/v.digit/settings.tcl:252
 msgid "Centroid (outside area)"
-msgstr "重心（エリア外）"
+msgstr "セントロイド（エリア外）"
 
 #: ../vector/v.digit/settings.tcl:260
 msgid "Centroid (duplicate in area)"
-msgstr "重心(重複エリア) "
+msgstr "セントロイド(重複エリア) "
 
 #: ../vector/v.digit/settings.tcl:269
 msgid "Node (1 line)"
@@ -470,8 +470,7 @@ msgstr "ロケーションは存在します"
 #: ../lib/init/epsg_option.tcl:199
 #, tcl-format
 msgid "WARNING: Location '%s' already exists: please try another name."
-msgstr ""
-"警告: 場所, ロケーション '%s' は既に存在します：別の名前を指定してください"
+msgstr "警告: 場所, ロケーション '%s' は既に存在します：別名を指定してください"
 
 #: ../lib/init/epsg_option.tcl:236 ../lib/init/epsg_option.tcl:263
 #: ../lib/init/file_option.tcl:186 ../lib/init/file_option.tcl:213
@@ -722,8 +721,8 @@ msgid ""
 "have not already done so.  A popular choice is \"grassdata\", located in "
 "your home directory."
 msgstr ""
-"GRASSをスタートさせるためにはデータを格納するフォルダが必要ですので、作成して"
-"ください。一般には \"grassdata\"が使用されます。"
+"GRASSをスタートさせるためにはデータを格納するディレクトリが必要ですので、作成"
+"してください。一般には \"grassdata\"が使用されます。"
 
 #: ../lib/init/gis_set.tcl:564
 msgid "Select GIS data directory"
@@ -779,7 +778,7 @@ msgstr "地理参照ファイルのパス"
 
 #: ../lib/init/file_option.tcl:103
 msgid "Path to georeferenced file (format must be readable by GDAL/OGR)"
-msgstr "地理参照ファイルのパス (GDAL/OGRによって読み込める形式) "
+msgstr "地理参照ファイルのパス (GDAL/OGRによって読み込めるフォーマット) "
 
 #: ../lib/init/file_option.tcl:107
 msgid "Browse to locate georeferenced file"
@@ -859,7 +858,7 @@ msgstr "セル値 %s "
 
 #: ../gui/tcltk/gis.m/rastnums.tcl:134
 msgid "Display cell values from raster map or image"
-msgstr "ラスターマップまたはイメージのセル値を表示"
+msgstr "ラスターマップまたは画像のセル値を表示"
 
 #: ../gui/tcltk/gis.m/rastnums.tcl:140
 msgid "  (resolution must be 100x100 or less)"
@@ -898,7 +897,7 @@ msgid ""
 "for regions of < 10,000 cells"
 msgstr ""
 "セル値を表示できるのは\n"
-"リージョン内で最大10,000までです"
+"領域内で最大10,000までです"
 
 #: ../gui/tcltk/gis.m/rastnums.tcl:279
 msgid "Constrain map to region geometry?"
@@ -935,7 +934,7 @@ msgstr "ラスター ドレープ マップ"
 #: ../gui/tcltk/gis.m/vector.tcl:243 ../gui/tcltk/gis.m/vector.tcl:265
 #: ../gui/tcltk/gis.m/vector.tcl:298
 msgid "This action requires map name to be set"
-msgstr "このアクションを設定するマップの名前が必要です"
+msgstr "このアクションを設定するマップ名が必要です"
 
 #: ../gui/tcltk/gis.m/raster.tcl:177
 msgid "Display raster maps"
@@ -1037,7 +1036,7 @@ msgstr "ヒストグラム %s "
 
 #: ../gui/tcltk/gis.m/histogram.tcl:138
 msgid "Draw histogram of values from raster map or image"
-msgstr "ラスターマップまたはイメージからヒストグラムを表示"
+msgstr "ラスターマップまたは画像からヒストグラムを表示"
 
 #: ../gui/tcltk/gis.m/histogram.tcl:155
 msgid "Raster to histogram: "
@@ -1262,7 +1261,7 @@ msgstr "全レイヤー再描画"
 
 #: ../gui/tcltk/gis.m/maptool.tcl:55
 msgid "Start NVIZ using active layers in current region"
-msgstr "カレントリージョンのレイヤーにNVIZを使用"
+msgstr "現在の領域のレイヤーにNVIZを使用"
 
 #: ../gui/tcltk/gis.m/maptool.tcl:61
 msgid "Create flythough path for NVIZ"
@@ -1278,23 +1277,23 @@ msgstr "選択したマップをズーム表示"
 
 #: ../gui/tcltk/gis.m/maptool.tcl:188
 msgid "Zoom display to saved region"
-msgstr "セーブドリージョンでズーム"
+msgstr "セーブド領域でズーム"
 
 #: ../gui/tcltk/gis.m/maptool.tcl:191
 msgid "Save display extents to named region"
-msgstr "表示範囲をリージョンファイルに保存"
+msgstr "表示範囲を領域ファイルに保存"
 
 #: ../gui/tcltk/gis.m/maptool.tcl:194
 msgid "Zoom display to computational region (set with g.region)"
-msgstr "計算リージョンでズーム (g.regionで設定)"
+msgstr "計算領域でズーム (g.regionで設定)"
 
 #: ../gui/tcltk/gis.m/maptool.tcl:197
 msgid "Zoom display to default region"
-msgstr "デフォルトリージョンでズーム"
+msgstr "デフォルト領域でズーム"
 
 #: ../gui/tcltk/gis.m/maptool.tcl:200
 msgid "Set computational region extents to match display"
-msgstr "画面を計算リージョンとして設定"
+msgstr "画面を計算領域として設定"
 
 #: ../gui/tcltk/gis.m/maptool.tcl:229 ../gui/tcltk/gis.m/gmmenu.tcl:631
 #: ../gui/tcltk/gis.m/mapcanvas.tcl:2196 ../gui/tcltk/d.m/menu.tcl:560
@@ -1497,7 +1496,7 @@ msgstr "多項式変換  (ラスターのみ)10以上の GCPが必要"
 
 #: ../gui/tcltk/gis.m/georect.tcl:1028
 msgid "Clip map/image to target region"
-msgstr "対象リージョンのマップ/イメージをクリップ"
+msgstr "対象領域のマップ/画像をクリップ"
 
 #: ../gui/tcltk/gis.m/georect.tcl:1038
 msgid "Use"
@@ -1561,20 +1560,20 @@ msgid ""
 "least 3 points for 1st order, 6 points for 2nd order and 10 points for 3rd "
 "order."
 msgstr ""
-"地図幾何補正のための地上基準点が不足しています 第１選択では最低３点、第２では"
-"６点、第３では１０点以上必要です"
+"マップ幾何補正のための地上基準点が不足しています 第１選択では最低３点、第２で"
+"は６点、第３では１０点以上必要です"
 
 #: ../gui/tcltk/gis.m/georect.tcl:1384
 msgid ""
 "No valid ground control points in GCP file. You must create valid ground "
 "control points before georectifying map."
 msgstr ""
-"GCPファイルの点に値が定義されていません 幾何補正の前にGCPを作成する必要があり"
-"ます"
+"GCPファイルのポイントに値が定義されていません 幾何補正の前にGCPを作成する必要"
+"があります"
 
 #: ../gui/tcltk/gis.m/georect.tcl:1587
 msgid "Error setting region"
-msgstr "リージョン設定エラー"
+msgstr "領域設定エラー"
 
 #: ../gui/tcltk/gis.m/georect.tcl:1596
 msgid "Please wait..."
@@ -1645,7 +1644,7 @@ msgstr "NVIZのフライスルー行路を作成"
 
 #: ../gui/tcltk/gis.m/dnviz.tcl:129
 msgid "Raster surface map "
-msgstr "ラスター地表面マップ"
+msgstr "ラスター地曲面マップ"
 
 #: ../gui/tcltk/gis.m/dnviz.tcl:140
 msgid "Output script file "
@@ -1665,11 +1664,11 @@ msgstr "フライスルー行路の座標 (x1,y1,x2,y2,...) "
 
 #: ../gui/tcltk/gis.m/dnviz.tcl:169
 msgid "Flythrough images prefix "
-msgstr "フライスルーイメージ拡張子"
+msgstr "フライスルー画像拡張子"
 
 #: ../gui/tcltk/gis.m/dnviz.tcl:170
 msgid "Prefix for image series created by flythough"
-msgstr "フライスルーで作成されたイメージの接頭語"
+msgstr "フライスルーで作成された画像の接頭語"
 
 #: ../gui/tcltk/gis.m/dnviz.tcl:177
 msgid "Camera layback "
@@ -1709,7 +1708,7 @@ msgstr "ベクトルレンダリング可能"
 
 #: ../gui/tcltk/gis.m/dnviz.tcl:201
 msgid "Full render (save images)"
-msgstr "完全レンダリング（イメージ保存）"
+msgstr "完全レンダリング（画像保存）"
 
 #: ../gui/tcltk/gis.m/dnviz.tcl:203
 msgid "Render images offscreen"
@@ -1859,7 +1858,7 @@ msgstr "階調色でベクトルの主題表示 (全タイプ) "
 
 #: ../gui/tcltk/gis.m/thematic.tcl:240
 msgid "  or by graduated sizes (points and lines)"
-msgstr "  または サイズの目盛 (点と線) による"
+msgstr "  または サイズの目盛 (ポイントとライン) による"
 
 #: ../gui/tcltk/gis.m/thematic.tcl:257 ../gui/tcltk/gis.m/vector.tcl:350
 #: ../gui/tcltk/d.m/thematic.tcl:116
@@ -1880,24 +1879,24 @@ msgstr " 属性レイヤー"
 
 #: ../gui/tcltk/gis.m/thematic.tcl:285
 msgid "    NUMERIC attribute column to use for thematic map"
-msgstr "    主題図で使用する数値属性のカラム"
+msgstr "    主題図で使用する数値属性の列"
 
 #: ../gui/tcltk/gis.m/thematic.tcl:292 ../gui/tcltk/d.m/thematic.tcl:150
 #: ../gui/tcltk/d.m/vector.tcl:348
 msgid "    show attribute columns"
-msgstr "    属性カラム表示"
+msgstr "    属性列表示"
 
 #: ../gui/tcltk/gis.m/thematic.tcl:293 ../gui/tcltk/gis.m/chart.tcl:237
 #: ../gui/tcltk/gis.m/vector.tcl:519 ../gui/tcltk/d.m/thematic.tcl:151
 #: ../gui/tcltk/d.m/chart.tcl:121 ../gui/tcltk/d.m/vector.tcl:349
 msgid "columns"
-msgstr "カラム"
+msgstr "列"
 
 #: ../gui/tcltk/gis.m/thematic.tcl:297 ../gui/tcltk/gis.m/chart.tcl:241
 #: ../gui/tcltk/gis.m/vector.tcl:523 ../gui/tcltk/d.m/thematic.tcl:155
 #: ../gui/tcltk/d.m/chart.tcl:125 ../gui/tcltk/d.m/vector.tcl:353
 msgid "Show columns"
-msgstr "カラム表示"
+msgstr "列表示"
 
 #: ../gui/tcltk/gis.m/thematic.tcl:298
 msgid "   show data"
@@ -1921,7 +1920,7 @@ msgstr "主題図：タイプ"
 
 #: ../gui/tcltk/gis.m/thematic.tcl:312 ../gui/tcltk/d.m/thematic.tcl:171
 msgid " map by"
-msgstr " 地図－"
+msgstr " マップ－"
 
 #: ../gui/tcltk/gis.m/thematic.tcl:321
 msgid "    number of intervals to map (interval themes):"
@@ -1937,7 +1936,7 @@ msgstr "    SQL where句でクエリ"
 
 #: ../gui/tcltk/gis.m/thematic.tcl:343
 msgid "Graduated points & lines: "
-msgstr "点とラインの目盛："
+msgstr "ポイントとラインの目盛："
 
 #: ../gui/tcltk/gis.m/thematic.tcl:344 ../gui/tcltk/d.m/thematic.tcl:205
 #: ../gui/tcltk/d.m/vector.tcl:245
@@ -1986,7 +1985,7 @@ msgstr "境界描画"
 
 #: ../gui/tcltk/gis.m/thematic.tcl:389 ../gui/tcltk/d.m/thematic.tcl:250
 msgid "save thematic colors to GRASSRGB column of vector file"
-msgstr "ベクトルファイルのGRASS RGBカラムに主題色を保存"
+msgstr "ベクトルファイルのGRASS RGB列に主題色を保存"
 
 #: ../gui/tcltk/gis.m/thematic.tcl:396
 msgid "Legend: title font "
@@ -2022,12 +2021,12 @@ msgstr "凡例で使用する数学の表記法"
 
 #: ../gui/tcltk/gis.m/thematic.tcl:444
 msgid "Name for ps.map instruction files"
-msgstr "ps.map命令ファイルの名前"
+msgstr "ps.map命令ファイル名"
 
 #: ../gui/tcltk/gis.m/thematic.tcl:654
 #, tcl-format
 msgid "Legend for Map %d, %s"
-msgstr "凡例地図の凡例 %d, %s "
+msgstr "マップの凡例 %d, %s "
 
 #: ../gui/tcltk/gis.m/thematic.tcl:677
 msgid "clear"
@@ -2164,7 +2163,7 @@ msgstr "凡例 反転"
 
 #: ../gui/tcltk/gis.m/legend.tcl:293
 msgid "    interval between categories (integer maps)"
-msgstr "   カテゴリ内で反転 (整数マップ) "
+msgstr "   カテゴリー内で反転 (整数マップ) "
 
 #: ../gui/tcltk/gis.m/legend.tcl:295
 msgid "Thinning interval"
@@ -2225,7 +2224,7 @@ msgstr "ゴーストスクリプトは利用出来ません"
 
 #: ../gui/tcltk/gis.m/mapprint.tcl:250
 msgid "Postscript and LPR printing of map display"
-msgstr "地図のポストスクリプトとLPR印刷"
+msgstr "マップのポストスクリプトとLPR出力"
 
 #: ../gui/tcltk/gis.m/mapprint.tcl:264
 msgid "Preset paper type"
@@ -2253,11 +2252,11 @@ msgstr " 右："
 
 #: ../gui/tcltk/gis.m/mapprint.tcl:289
 msgid " top:"
-msgstr " トップ："
+msgstr " 上："
 
 #: ../gui/tcltk/gis.m/mapprint.tcl:291
 msgid " bottom:"
-msgstr " ボトム："
+msgstr " 下："
 
 #: ../gui/tcltk/gis.m/mapprint.tcl:299
 msgid "Resolution (dpi) for printing and PDF "
@@ -2265,11 +2264,11 @@ msgstr "プリントとPDFの解像度(dpi)"
 
 #: ../gui/tcltk/gis.m/mapprint.tcl:317
 msgid "Print on LPR printer"
-msgstr "LPRプリンタで印刷"
+msgstr "LPRプリンタで出力"
 
 #: ../gui/tcltk/gis.m/mapprint.tcl:325
 msgid "Print on postscript device* "
-msgstr "ポストスクリプトデバイス*で印刷"
+msgstr "ポストスクリプトデバイス*で出力"
 
 #: ../gui/tcltk/gis.m/mapprint.tcl:336
 msgid "Save to PDF file*              "
@@ -2367,7 +2366,7 @@ msgstr "標高差０"
 
 #: ../gui/tcltk/gis.m/profile.tcl:542
 msgid "Error reading region values"
-msgstr "リージョン値読み込みエラー"
+msgstr "領域値読み込みエラー"
 
 #: ../gui/tcltk/gis.m/profile.tcl:566 ../gui/tcltk/gis.m/profile.tcl:651
 msgid "r.profile error"
@@ -2492,7 +2491,7 @@ msgstr "フレームの境界をディスプレイの左下端から0-100% で�
 
 #: ../gui/tcltk/gis.m/frames.tcl:141
 msgid "     set borders (bottom,top,left,right): "
-msgstr "     境界指定 (ボトム,トップ,左,右)："
+msgstr "     境界指定 (下,上,左,右)："
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:85 ../gui/tcltk/d.m/menu.tcl:75
 msgid "&File"
@@ -2618,7 +2617,7 @@ msgstr "MatlabとMapGen "
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:125
 msgid "Import grid 3D volume"
-msgstr "３Dグリッド値のインポート"
+msgstr "3Dグリッド値のインポート"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:126 ../gui/tcltk/gis.m/gmmenu.tcl:163
 msgid "ASCII 3D"
@@ -2691,7 +2690,7 @@ msgstr "SVG"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:162
 msgid "Export grid 3D volume"
-msgstr "３Dグリッド値 エクスポート"
+msgstr "3Dグリッド値 エクスポート"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:167
 msgid "Export data table"
@@ -2763,7 +2762,7 @@ msgstr "座標の角度/距離"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:198
 msgid "3D rendering"
-msgstr "３Dレンダリング"
+msgstr "3Dレンダリング"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:199
 msgid "NVIZ"
@@ -2787,15 +2786,15 @@ msgstr "設定(&C)"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:207 ../gui/tcltk/d.m/menu.tcl:189
 msgid "Region"
-msgstr "リージョン"
+msgstr "領域"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:208 ../gui/tcltk/d.m/menu.tcl:190
 msgid "Display region settings"
-msgstr "ディスプレイリージョン設定"
+msgstr "ディスプレイ領域設定"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:209 ../gui/tcltk/d.m/menu.tcl:191
 msgid "Change region settings"
-msgstr "リージョン設定の変更"
+msgstr "領域設定の変更"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:211 ../gui/tcltk/d.m/menu.tcl:194
 msgid "GRASS working environment"
@@ -2853,7 +2852,7 @@ msgstr "ラスター(&R)"
 #: ../gui/tcltk/gis.m/gmmenu.tcl:229 ../gui/tcltk/gis.m/gmmenu.tcl:430
 #: ../gui/tcltk/d.m/menu.tcl:222 ../gui/tcltk/d.m/menu.tcl:381
 msgid "Develop map"
-msgstr "地図の作成"
+msgstr "マップの作成"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:230 ../gui/tcltk/d.m/menu.tcl:223
 msgid "Digitize raster"
@@ -3028,7 +3027,7 @@ msgstr "陰影"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:292 ../gui/tcltk/d.m/menu.tcl:280
 msgid "Slope and aspect"
-msgstr "斜面とアスペクト"
+msgstr "傾斜と方位"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:293 ../gui/tcltk/d.m/menu.tcl:281
 msgid "Terrain parameters"
@@ -3220,7 +3219,7 @@ msgstr "カテゴリー値・ラベルの変更"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:365
 msgid "Interactively edit category values"
-msgstr "対話形式でカテゴリ値を編集"
+msgstr "対話形式でカテゴリー値を編集"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:367
 msgid "Reclassify by size"
@@ -3268,7 +3267,7 @@ msgstr "ランダムセルとベクトルポイント"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:383 ../gui/tcltk/d.m/menu.tcl:339
 msgid "Generate surfaces"
-msgstr "面の生成"
+msgstr "面の作成"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:384
 msgid "Fractal surface"
@@ -3284,7 +3283,7 @@ msgstr "ガウス偏差面"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:389
 msgid "Plane"
-msgstr "面 "
+msgstr "平面 "
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:391
 msgid "Random deviates surface"
@@ -3343,7 +3342,7 @@ msgstr "基本ファイル情報のレポート "
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:410
 msgid "Manage category information"
-msgstr "カテゴリ情報の管理"
+msgstr "カテゴリー情報の管理"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:412 ../gui/tcltk/d.m/menu.tcl:363
 msgid "General statistics"
@@ -3355,11 +3354,11 @@ msgstr "大規模データセットの分位数 "
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:414
 msgid "Range of category values"
-msgstr "カテゴリ値の範囲"
+msgstr "カテゴリー値の範囲"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:415
 msgid "Sum cell category values"
-msgstr "セルカテゴリ値の合計"
+msgstr "セルカテゴリー値の合計"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:416 ../gui/tcltk/d.m/menu.tcl:366
 msgid "Sum area by map and category"
@@ -3371,7 +3370,7 @@ msgstr "塊状セルによる統計解析 (r.clumpでの処理)"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:418 ../gui/tcltk/d.m/menu.tcl:368
 msgid "Total surface area corrected for topography"
-msgstr "地形補正された表面積"
+msgstr "地形補正された曲面積"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:419 ../gui/tcltk/d.m/menu.tcl:369
 #: ../gui/tcltk/d.m/menu.tcl:469
@@ -3428,11 +3427,11 @@ msgstr "オブジェクトタイプの変換"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:440
 msgid "Add centroids"
-msgstr "重心追加"
+msgstr "セントロイド追加"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:442
 msgid "Build polylines"
-msgstr "ポリラインの生成"
+msgstr "ポリラインの作成"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:443
 msgid "Split polylines"
@@ -3448,11 +3447,11 @@ msgstr "境界の融合"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:448
 msgid "Create 3D vector over raster"
-msgstr "３Dベクトルまたはラスターの作成"
+msgstr "3Dベクトルまたはラスターの作成"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:449
 msgid "Extrude 3D vector"
-msgstr "３Dベクトルの立上げ"
+msgstr "3Dベクトルの立上げ"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:451
 msgid "Link to OGR"
@@ -3524,7 +3523,7 @@ msgstr "配置測点作成"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:476
 msgid "Create points/segments"
-msgstr "点/セグメントの作成 "
+msgstr "ポイント/セグメントの作成 "
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:477
 msgid "Find ID and offset"
@@ -3592,11 +3591,11 @@ msgstr "対話形式でオブジェクトを再分類"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:505
 msgid "Generate area for current region"
-msgstr "カレントリージョンからエリアを生成"
+msgstr "現在の領域からエリアを作成"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:506 ../gui/tcltk/d.m/menu.tcl:451
 msgid "Generate areas from points"
-msgstr "複数の点からエリアを生成"
+msgstr "複数のポイントからエリアを作成"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:507
 msgid "Convex hull"
@@ -3608,27 +3607,27 @@ msgstr "ドローネ三角形"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:509
 msgid "Voronoi diagram/Thiessen polygons"
-msgstr "ボロノイ図/ティーセン多角形"
+msgstr "ボロノイ図/ティーセンポリゴン"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:511
 msgid "Generate grid"
-msgstr "グリッドの生成"
+msgstr "グリッドの作成"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:512 ../gui/tcltk/d.m/menu.tcl:446
 msgid "Generate points"
-msgstr "点生成"
+msgstr "ポイントの作成"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:513
 msgid "Generate points from database"
-msgstr "データベースからポイント生成"
+msgstr "データベースからポイント作成"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:514
 msgid "Generate points along lines"
-msgstr "線に沿った点を生成"
+msgstr "ラインに沿ったポイントを作成"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:515 ../gui/tcltk/d.m/menu.tcl:448
 msgid "Generate random points"
-msgstr "ランダムな点を生成"
+msgstr "ランダムなポイントを作成"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:516
 msgid "Perturb points"
@@ -3636,7 +3635,7 @@ msgstr "摂動点"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:519
 msgid "Remove outliers in point sets"
-msgstr "点群から異常値を削除"
+msgstr "ポイント群から異常値を削除"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:520
 msgid "Test/training sets"
@@ -3648,11 +3647,11 @@ msgstr "ラスターからエリア属性を更新"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:523
 msgid "Update point attributes from areas"
-msgstr "エリアから点の属性を更新"
+msgstr "エリアからポイントの属性を更新"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:524
 msgid "Update point attributes from raster"
-msgstr "ラスターから点の属性を更新"
+msgstr "ラスターからポイントの属性を更新"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:525 ../gui/tcltk/d.m/menu.tcl:458
 msgid "Sample raster map at point locations"
@@ -3669,7 +3668,7 @@ msgstr "基礎情報 "
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:532
 msgid "Report topology by category"
-msgstr "カテゴリ別トポロジーのレポート作成"
+msgstr "カテゴリー別トポロジーのレポート作成"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:533
 msgid "Upload or report topology"
@@ -3813,15 +3812,15 @@ msgstr "ボリューム(&V)"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:594 ../gui/tcltk/d.m/menu.tcl:531
 msgid "Develop grid3D volumes"
-msgstr "グリッド3Dボリュームの作成 "
+msgstr "3Dグリッドボリュームの作成 "
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:595 ../gui/tcltk/d.m/menu.tcl:532
 msgid "Manage nulls for grid3D volume"
-msgstr "グリッド3Dボリューム用NULLの管理 "
+msgstr "3Dグリッドボリューム用NULLの管理 "
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:596 ../gui/tcltk/d.m/menu.tcl:533
 msgid "Manage timestamp for grid3D volume"
-msgstr "グリッド3Dボリューム用タイムスタンプの管理 "
+msgstr "3Dグリッドボリューム用タイムスタンプの管理 "
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:598
 msgid "3D MASK"
@@ -3857,7 +3856,7 @@ msgstr "テーブル定義"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:610 ../gui/tcltk/d.m/menu.tcl:555
 msgid "List columns"
-msgstr "カラム一覧"
+msgstr "列一覧"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:611 ../gui/tcltk/d.m/menu.tcl:556
 msgid "List drivers"
@@ -3893,7 +3892,7 @@ msgstr "テーブル削除"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:623
 msgid "Add columns"
-msgstr "カラム追加"
+msgstr "列追加"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:624
 msgid "Change values"
@@ -3901,11 +3900,11 @@ msgstr "値の変更"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:625
 msgid "Drop column"
-msgstr "カラム削除"
+msgstr "列削除"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:626
 msgid "Rename a column"
-msgstr "カラム名の変更 "
+msgstr "列名の変更 "
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:628 ../gui/tcltk/d.m/menu.tcl:551
 msgid "Test database"
@@ -4010,7 +4009,7 @@ msgstr "境界"
 #: ../gui/tcltk/gis.m/chart.tcl:222 ../gui/tcltk/d.m/chart.tcl:110
 #: ../gui/tcltk/d.m/vector.tcl:233
 msgid "centroids"
-msgstr "重心"
+msgstr "セントロイド"
 
 #: ../gui/tcltk/gis.m/chart.tcl:223 ../gui/tcltk/d.m/chart.tcl:111
 #: ../gui/tcltk/d.m/vector.tcl:235
@@ -4023,7 +4022,7 @@ msgstr "グラフにする属性：属性レイヤー"
 
 #: ../gui/tcltk/gis.m/chart.tcl:236
 msgid "     show attribute columns"
-msgstr "     属性カラム表示"
+msgstr "     属性列表示"
 
 #: ../gui/tcltk/gis.m/chart.tcl:242
 msgid "   show attribute data"
@@ -4031,15 +4030,15 @@ msgstr "   属性データ表示 "
 
 #: ../gui/tcltk/gis.m/chart.tcl:253
 msgid "\tcolumns to chart (col1,col2,...)  "
-msgstr "\tグラフにするカラム (カラム1,カラム2,...)"
+msgstr "\tグラフにする列 (列1,列2,...)"
 
 #: ../gui/tcltk/gis.m/chart.tcl:260
 msgid "\tcolors for columns (clr1,clr2,...)"
-msgstr "\tカラムの色 (色1,色2,...)"
+msgstr "\t列の色 (色1,色2,...)"
 
 #: ../gui/tcltk/gis.m/chart.tcl:267
 msgid "\tcolumn for variable chart size"
-msgstr "\t可変グラフサイズのカラム"
+msgstr "\t可変グラフサイズの列"
 
 #: ../gui/tcltk/gis.m/chart.tcl:269
 msgid "  scale factor"
@@ -4051,7 +4050,7 @@ msgstr "グラフタイプ："
 
 #: ../gui/tcltk/gis.m/chart.tcl:279
 msgid "\tfixed chart size (if size column not used)"
-msgstr "\t固定グラフサイズ (iサイズ用のカラムは使用しない)"
+msgstr "\t固定グラフサイズ (iサイズ用の列は使用しない)"
 
 #: ../gui/tcltk/gis.m/chart.tcl:286
 msgid "\tchart outline color:"
@@ -4087,7 +4086,7 @@ msgstr "最大値"
 
 #: ../gui/tcltk/gis.m/labels.tcl:151 ../gui/tcltk/d.m/labels.tcl:85
 msgid "region size"
-msgstr "リージョンサイズ"
+msgstr "領域サイズ"
 
 #: ../gui/tcltk/gis.m/labels.tcl:157 ../gui/tcltk/d.m/labels.tcl:91
 msgid " ignore rotation setting and draw horizontally"
@@ -4131,7 +4130,7 @@ msgstr "図形"
 
 #: ../gui/tcltk/gis.m/vector.tcl:377
 msgid "Categories "
-msgstr "カテゴリ"
+msgstr "カテゴリー"
 
 #: ../gui/tcltk/gis.m/vector.tcl:379
 msgid "Topology "
@@ -4159,7 +4158,7 @@ msgstr "エリア"
 
 #: ../gui/tcltk/gis.m/vector.tcl:397
 msgid "Centroids "
-msgstr "重心"
+msgstr "セントロイド"
 
 #: ../gui/tcltk/gis.m/vector.tcl:399
 msgid "Faces "
@@ -4211,7 +4210,7 @@ msgstr "ランダムカラー"
 
 #: ../gui/tcltk/gis.m/vector.tcl:445 ../gui/tcltk/d.m/vector.tcl:284
 msgid "GRASSRGB column colors"
-msgstr "GRASS RGBカラムカラー"
+msgstr "GRASS RGB列カラー"
 
 #: ../gui/tcltk/gis.m/vector.tcl:452 ../gui/tcltk/d.m/vector.tcl:291
 msgid "Label vectors:"
@@ -4247,7 +4246,7 @@ msgstr "     ラベルのレイヤー"
 
 #: ../gui/tcltk/gis.m/vector.tcl:483
 msgid "   Attribute column for labels"
-msgstr "   ラベルにする属性カラム"
+msgstr "   ラベルにする属性列"
 
 #: ../gui/tcltk/gis.m/vector.tcl:490
 msgid "Query vectors for display: "
@@ -4267,7 +4266,7 @@ msgstr "SQLクエリ使用"
 
 #: ../gui/tcltk/gis.m/vector.tcl:518
 msgid "    Show attribute columns"
-msgstr "    属性カラム表示"
+msgstr "    属性列表示"
 
 #: ../gui/tcltk/gis.m/vector.tcl:524
 msgid "      Show attribute data"
@@ -4291,7 +4290,7 @@ msgstr "検索されたオブジェクトを保存するため既存のベクト
 
 #: ../gui/tcltk/gis.m/vector.tcl:557 ../gui/tcltk/d.m/vector.tcl:376
 msgid "Display when avg. region dimension is"
-msgstr "表示時の平均リージョン寸法"
+msgstr "表示時の平均領域寸法"
 
 #: ../gui/tcltk/gis.m/vector.tcl:560
 msgid " or <"
@@ -4456,7 +4455,7 @@ msgstr "ラベルとボックスの水平間隔距離："
 
 #: ../gui/tcltk/gis.m/maplabels.tcl:253
 msgid " Vertical: "
-msgstr " 垂直："
+msgstr " 鉛直："
 
 #: ../gui/tcltk/gis.m/maplabels.tcl:261
 msgid "Font"
@@ -4480,7 +4479,7 @@ msgstr "ラベルファイルをオープン出来ません"
 
 #: ../gui/tcltk/gis.m/rastarrows.tcl:106
 msgid "Aspect map"
-msgstr "アスペクトマップ"
+msgstr "方位マップ"
 
 #: ../gui/tcltk/gis.m/rastarrows.tcl:109 ../gui/tcltk/gis.m/rastarrows.tcl:121
 #, tcl-format
@@ -4493,7 +4492,7 @@ msgstr "傾斜/照度マップ"
 
 #: ../gui/tcltk/gis.m/rastarrows.tcl:134
 msgid "Display arrows whose orientations are based on raster aspect map"
-msgstr "ラスターアスペクトマップに基づいて矢印を表示"
+msgstr "ラスター方位マップに基づいて矢印を表示"
 
 #: ../gui/tcltk/gis.m/rastarrows.tcl:140
 msgid "  (optionally, arrow lengths are based on slope or intensity map)"
@@ -4501,11 +4500,11 @@ msgstr "  (オプション 矢印の長さは傾斜または照度に比例) "
 
 #: ../gui/tcltk/gis.m/rastarrows.tcl:157
 msgid "Aspect map: "
-msgstr "アスペクト図："
+msgstr "方位図："
 
 #: ../gui/tcltk/gis.m/rastarrows.tcl:173
 msgid "    aspect value type"
-msgstr "    アスペクト値のタイプ"
+msgstr "    方位値のタイプ"
 
 #: ../gui/tcltk/gis.m/rastarrows.tcl:181
 msgid "    draw arrows every Nth grid cell"
@@ -4657,7 +4656,7 @@ msgstr "最大ズームに達しました"
 
 #: ../gui/tcltk/gis.m/mapcanvas.tcl:661
 msgid "Error setting region 1"
-msgstr "リージョン１設定エラー"
+msgstr "領域１設定エラー"
 
 #: ../gui/tcltk/gis.m/mapcanvas.tcl:670
 msgid "please wait..."
@@ -4673,15 +4672,15 @@ msgstr "マップレイヤーが選択されていません "
 
 #: ../gui/tcltk/gis.m/mapcanvas.tcl:900
 msgid "Save Region"
-msgstr "リージョン保存"
+msgstr "領域の保存"
 
 #: ../gui/tcltk/gis.m/mapcanvas.tcl:903
 msgid "Save current display geometry to named region"
-msgstr "表示中のジオメトリをリージョン名を付けて保存"
+msgstr "表示中のジオメトリを領域名を付けて保存"
 
 #: ../gui/tcltk/gis.m/mapcanvas.tcl:909
 msgid "Enter region name"
-msgstr "リージョン名入力"
+msgstr "領域名入力"
 
 #: ../gui/tcltk/gis.m/mapcanvas.tcl:944
 #, tcl-format
@@ -4689,22 +4688,22 @@ msgid ""
 "Region file %s already exists. \n"
 "Do you want to overwrite it?"
 msgstr ""
-"リージョンファイル %s は既に存在します\n"
+"領域ファイル %s は既に存在します\n"
 "上書きしますか？"
 
 #: ../gui/tcltk/gis.m/mapcanvas.tcl:1297
 #, tcl-format
 msgid "Display: rows=%d  cols=%d  N-S res=%s  E-W res=%s"
-msgstr "表示: 行=%d  カラム=%d  N-S解像度=%s  E-W解像度=%s "
+msgstr "表示: 行=%d  列=%d  N-S解像度=%s  E-W解像度=%s "
 
 #: ../gui/tcltk/gis.m/mapcanvas.tcl:1300
 #, tcl-format
 msgid "Display: rows=%d  cols=%d  N-S res=%g  E-W res=%g"
-msgstr "表示: 行=%d  カラム=%d  N-S解像度=%g  E-W解像度=%g "
+msgstr "表示: 行=%d  列=%d  N-S解像度=%g  E-W解像度=%g "
 
 #: ../gui/tcltk/gis.m/mapcanvas.tcl:1375
 msgid "Error setting region (Problem with g.region?)"
-msgstr "リージョン設定エラー (g.regionの問題かも？) "
+msgstr "領域設定エラー (g.regionの問題かも？) "
 
 #: ../gui/tcltk/gis.m/mapcanvas.tcl:1441 ../gui/tcltk/gis.m/mapcanvas.tcl:1446
 msgid "Error reading current resolution with g.region"
@@ -4712,7 +4711,7 @@ msgstr "g.regionで現在の解像度の読み込みエラー"
 
 #: ../gui/tcltk/gis.m/mapcanvas.tcl:1478
 msgid "Error setting region 2"
-msgstr "リージョン２設定エラー"
+msgstr "領域２設定エラー"
 
 #: ../gui/tcltk/gis.m/mapcanvas.tcl:1941
 msgid "Measurement"
@@ -4764,15 +4763,15 @@ msgstr "モニターにドレープマップの凡例を表示"
 
 #: ../gui/tcltk/d.m/tool1.tcl:22
 msgid "Display active layers in current region"
-msgstr "カレントリージョンのアクティブレイヤーを表示"
+msgstr "現在の領域のアクティブレイヤーを表示"
 
 #: ../gui/tcltk/d.m/tool1.tcl:28
 msgid "Display active layers in default region"
-msgstr "デフォルトリージョンのアクティブレイヤーを表示"
+msgstr "デフォルト領域のアクティブレイヤーを表示"
 
 #: ../gui/tcltk/d.m/tool1.tcl:34
 msgid "Display active layers in saved region setting"
-msgstr "リージョン設定に保存されたアクティブレイヤーを表示"
+msgstr "領域設定に保存されたアクティブレイヤーを表示"
 
 #: ../gui/tcltk/d.m/tool1.tcl:54
 msgid "NVIZ - n dimensional visualization"
@@ -4804,7 +4803,7 @@ msgstr "指定位置の座標値"
 
 #: ../gui/tcltk/d.m/tool1.tcl:130
 msgid "Print raster & vector maps using ps.map"
-msgstr "ps.mapを使用したマップ印刷"
+msgstr "ps.mapを使用したマップ出力"
 
 #: ../gui/tcltk/d.m/tool2.tcl:33
 msgid "Add legend"
@@ -4980,11 +4979,11 @@ msgstr "右："
 
 #: ../gui/tcltk/d.m/print.tcl:195
 msgid "top:"
-msgstr "トップ："
+msgstr "上："
 
 #: ../gui/tcltk/d.m/print.tcl:197
 msgid "bottom:"
-msgstr "ボトム："
+msgstr "下："
 
 #: ../gui/tcltk/d.m/print.tcl:210
 msgid "PS file:"
@@ -5048,7 +5047,7 @@ msgstr "全フレーム削除"
 
 #: ../gui/tcltk/d.m/chart.tcl:120
 msgid "  show attribute columns"
-msgstr "  属性カラム表示"
+msgstr "  属性列表示"
 
 #: ../gui/tcltk/d.m/chart.tcl:169
 msgid "    chart outline color:"
@@ -5072,7 +5071,7 @@ msgstr "図形"
 
 #: ../gui/tcltk/d.m/vector.tcl:215
 msgid "categories"
-msgstr "カテゴリ "
+msgstr "カテゴリー "
 
 #: ../gui/tcltk/d.m/vector.tcl:217
 msgid "topology"
@@ -5080,7 +5079,7 @@ msgstr "トポロジ "
 
 #: ../gui/tcltk/d.m/vector.tcl:219
 msgid "line directions"
-msgstr "線の方向"
+msgstr "ラインの方向"
 
 #: ../gui/tcltk/d.m/vector.tcl:226
 msgid "            "
@@ -5117,7 +5116,7 @@ msgstr "     ラベルのレイヤ"
 
 #: ../gui/tcltk/d.m/vector.tcl:318
 msgid " attribute col for labels"
-msgstr "ラベルの属性カラム"
+msgstr "ラベルの属性列"
 
 #: ../gui/tcltk/d.m/vector.tcl:326
 msgid "Query vectors: "
@@ -5153,7 +5152,7 @@ msgstr "ps.map印刷出力時の線幅："
 
 #: ../gui/tcltk/d.m/vector.tcl:388
 msgid "Line width used for printing"
-msgstr "印刷時の線幅"
+msgstr "出力時の線幅"
 
 #: ../gui/tcltk/d.m/menu.tcl:76
 msgid "Import"
@@ -5217,7 +5216,7 @@ msgstr "DXFファイル"
 
 #: ../gui/tcltk/d.m/menu.tcl:101
 msgid "ESRI e00 format"
-msgstr "e00(ESRI)形式 "
+msgstr "e00(ESRI)フォーマット "
 
 #: ../gui/tcltk/d.m/menu.tcl:102
 msgid "Garmin GPS Waypoints/Routes/Tracks"
@@ -5310,11 +5309,12 @@ msgstr "DXFファイル(ASCII) "
 
 #: ../gui/tcltk/d.m/menu.tcl:138
 msgid "ASCII vector or point file/old GRASS ASCII vector file"
-msgstr "GRASS ASCIIベクトルファイル(旧形式も可)あるいはASCIIポイントファイル "
+msgstr ""
+"GRASS ASCIIベクトルファイル(旧フォーマットも可)あるいはASCIIポイントファイル "
 
 #: ../gui/tcltk/d.m/menu.tcl:140
 msgid "POV-Ray format"
-msgstr "POV-Ray形式 "
+msgstr "POV-Rayフォーマット "
 
 #: ../gui/tcltk/d.m/menu.tcl:152
 msgid "Copy maps"
@@ -5546,7 +5546,7 @@ msgstr "他のロケーションからラスターの投影変換 "
 
 #: ../gui/tcltk/d.m/menu.tcl:241
 msgid "Generate tiling for other projection"
-msgstr "他の投影方法によるタイルの生成"
+msgstr "他の投影方法によるタイルの作成"
 
 #: ../gui/tcltk/d.m/menu.tcl:244
 msgid "Set colors to predefined color tables"
@@ -5584,7 +5584,7 @@ msgstr "ラスターマスクの作成"
 
 #: ../gui/tcltk/d.m/menu.tcl:257
 msgid "Locate closest points between areas in 2 raster maps"
-msgstr "2つのラスターマップの2地域間の最近接点 "
+msgstr "2つのラスターマップの2つのエリア間の最近接点 "
 
 #: ../gui/tcltk/d.m/menu.tcl:260
 msgid "Moving window analysis of raster cells"
@@ -5720,43 +5720,43 @@ msgstr "ヒストグラム平滑化によるカテゴリーのリスケール(�
 
 #: ../gui/tcltk/d.m/menu.tcl:334
 msgid "Generate concentric circles around points"
-msgstr "同心円の生成 "
+msgstr "同心円の作成 "
 
 #: ../gui/tcltk/d.m/menu.tcl:335
 msgid "Generate random raster cells"
-msgstr "ランダムラスターセルの生成 "
+msgstr "ランダムラスターセルの作成 "
 
 #: ../gui/tcltk/d.m/menu.tcl:337
 msgid "Generate random cells and vector points from raster map"
-msgstr "ランダムセルとベクトルポイントの生成 "
+msgstr "ランダムセルとベクトルポイントの作成 "
 
 #: ../gui/tcltk/d.m/menu.tcl:340
 msgid "Generate density surface using moving Gausian kernal"
-msgstr "移動Gaussian kernalを用いた密度曲面の生成 "
+msgstr "移動Gaussian kernalを用いた密度曲面の作成 "
 
 #: ../gui/tcltk/d.m/menu.tcl:341
 msgid "Generate fractal surface"
-msgstr "フラクタル曲面の生成 "
+msgstr "フラクタル曲面の作成 "
 
 #: ../gui/tcltk/d.m/menu.tcl:342
 msgid "Generate gaussian deviates surface"
-msgstr "Gaussian deviate曲面の生成 "
+msgstr "Gaussian deviate曲面の作成 "
 
 #: ../gui/tcltk/d.m/menu.tcl:343
 msgid "Generate plane"
-msgstr "平面の生成 "
+msgstr "平面の作成 "
 
 #: ../gui/tcltk/d.m/menu.tcl:344
 msgid "Generate random deviates surface"
-msgstr "ランダム逸脱曲面生成"
+msgstr "ランダム逸脱曲面作成"
 
 #: ../gui/tcltk/d.m/menu.tcl:345
 msgid "Generate random surface with spatial dependence"
-msgstr "空間依存したランダム曲面の生成 "
+msgstr "空間依存したランダム曲面の作成 "
 
 #: ../gui/tcltk/d.m/menu.tcl:347
 msgid "Generate vector contour lines"
-msgstr "ベクトル等高線の生成 "
+msgstr "ベクトル等高線の作成 "
 
 #: ../gui/tcltk/d.m/menu.tcl:349
 msgid "Bilinear interpolation from raster points"
@@ -5785,7 +5785,7 @@ msgstr "レギュラースプライン・テンション補間によるNULLセ�
 
 #: ../gui/tcltk/d.m/menu.tcl:361
 msgid "Manage category labels and values"
-msgstr "カテゴリラベルと値の管理"
+msgstr "カテゴリーラベルと値の管理"
 
 #: ../gui/tcltk/d.m/menu.tcl:364
 msgid "Range of all category values"
@@ -5825,15 +5825,15 @@ msgstr "ベクトルファイルの削除"
 
 #: ../gui/tcltk/d.m/menu.tcl:386
 msgid "Add missing centroids"
-msgstr "欠けている重心を追加"
+msgstr "欠けているセントロイドを追加"
 
 #: ../gui/tcltk/d.m/menu.tcl:388
 msgid "Build polylines from adjacent segments"
-msgstr "近傍のセグメントから多角形の作成 "
+msgstr "近傍のセグメントからポリゴンの作成 "
 
 #: ../gui/tcltk/d.m/menu.tcl:389
 msgid "Split polylines into segments"
-msgstr "多角形をセグメントに分割 "
+msgstr "ポリゴンをセグメントに分割 "
 
 #: ../gui/tcltk/d.m/menu.tcl:390
 msgid "Create lines parallel to existing lines"
@@ -5849,11 +5849,11 @@ msgstr "ベクトルフィーチャタイプの変換 "
 
 #: ../gui/tcltk/d.m/menu.tcl:394
 msgid "Convert 2D vector to 3D by sampling raster"
-msgstr "ラスターをサンプリングして２Dベクトルを3D化"
+msgstr "ラスターをサンプリングして2Dベクトルを3D化"
 
 #: ../gui/tcltk/d.m/menu.tcl:395
 msgid "Extrude 2D vector into 3D vector"
-msgstr "２Dベクトルを３Dベクトルに立上げ"
+msgstr "2Dベクトルを3Dベクトルに立上げ"
 
 #: ../gui/tcltk/d.m/menu.tcl:397
 msgid "Create text label file for vector features"
@@ -5861,7 +5861,7 @@ msgstr "ベクトルフィーチャのためのテキストラベルファイル
 
 #: ../gui/tcltk/d.m/menu.tcl:398
 msgid "Assign colors from a numeric attribute column"
-msgstr "数値属性カラムを色に割り当て"
+msgstr "数値属性列を色に割り当て"
 
 #: ../gui/tcltk/d.m/menu.tcl:400
 msgid "Reproject vector from other location"
@@ -5869,7 +5869,7 @@ msgstr "他のロケーションからベクトルの投影変換 "
 
 #: ../gui/tcltk/d.m/menu.tcl:403
 msgid "Create new vector as link to external OGR layer"
-msgstr "外部OGRレイヤーとリンクする新しいベクトルの生成 "
+msgstr "外部OGRレイヤーとリンクする新しいベクトルの作成 "
 
 #: ../gui/tcltk/d.m/menu.tcl:404
 msgid "Set database connection for vector attributes"
@@ -5889,7 +5889,7 @@ msgstr "フィーチャによる検索 "
 
 #: ../gui/tcltk/d.m/menu.tcl:412
 msgid "Create vector buffers"
-msgstr "ベクトルバッファーの生成 "
+msgstr "ベクトルバッファーの作成 "
 
 #: ../gui/tcltk/d.m/menu.tcl:413
 msgid "Linear referencing for vectors"
@@ -5916,20 +5916,20 @@ msgid ""
 "Find line id and real km+offset for given points in vector map using linear "
 "reference system"
 msgstr ""
-"線形参照システムを利用し、ベクトルマップの点からラインIDと実距離（Km)オフセッ"
-"トを表示"
+"線形参照システムを利用し、ベクトルマップのポイントからラインIDと実距離（Km)オ"
+"フセットを表示"
 
 #: ../gui/tcltk/d.m/menu.tcl:420
 msgid "Locate nearest features to points or centroids"
-msgstr "ポイントまたは重心への近接するフィーチャ "
+msgstr "ポイントまたはセントロイドへの近接するフィーチャ "
 
 #: ../gui/tcltk/d.m/menu.tcl:421
 msgid "Generate Thiessen polygons around points (Voronoi diagram)"
-msgstr "ポイントの周りにティーセン多角形を生成 (ボロノイ図) "
+msgstr "ポイントの周りにティーセンポリゴンを作成 (ボロノイ図) "
 
 #: ../gui/tcltk/d.m/menu.tcl:422
 msgid "Connect points to create Delaunay triangles"
-msgstr "ドローネ三角形を作成するため点を接続"
+msgstr "ドローネ三角形を作成するためポイントを接続"
 
 #: ../gui/tcltk/d.m/menu.tcl:428
 msgid "Shortest route (visualization only)"
@@ -5949,11 +5949,11 @@ msgstr "複数のマップのパッチ(結合) "
 
 #: ../gui/tcltk/d.m/menu.tcl:437
 msgid "Generate area feature for extent of current region"
-msgstr "カレントリージョンの拡大のためのエリアフィーチャーの生成 "
+msgstr "現在の領域の拡大のためのエリアフィーチャーの作成 "
 
 #: ../gui/tcltk/d.m/menu.tcl:438
 msgid "Generate rectangular vector grid"
-msgstr "長方形のベクトルグリッドの生成 "
+msgstr "長方形のベクトルグリッドの作成 "
 
 #: ../gui/tcltk/d.m/menu.tcl:441
 msgid "Attach, delete, or report categories"
@@ -5969,7 +5969,7 @@ msgstr "ベクトルポイントを用いた作業 "
 
 #: ../gui/tcltk/d.m/menu.tcl:447
 msgid "Generate points from database with x/y coordinates"
-msgstr "X/Y座標でのデータベースからポイントの生成 "
+msgstr "X/Y座標でのデータベースからポイントの作成 "
 
 #: ../gui/tcltk/d.m/menu.tcl:449
 msgid "Random location perturbations of points"
@@ -5977,15 +5977,15 @@ msgstr "ポイントのランダムな移動 "
 
 #: ../gui/tcltk/d.m/menu.tcl:452
 msgid "Generate convex hull for point set"
-msgstr "ポイントセットに対する凸包(convex hull)生成 "
+msgstr "ポイントセットに対する凸包(convex hull)作成 "
 
 #: ../gui/tcltk/d.m/menu.tcl:453
 msgid "Generate Delaunay triangles for point set"
-msgstr "ポイントセットにたいするドローネ三角形(Delaunay triangles)の生成 "
+msgstr "ポイントセットにたいするドローネ三角形(Delaunay triangles)の作成 "
 
 #: ../gui/tcltk/d.m/menu.tcl:454
 msgid "Generate Voronoi diagram/Thiessen polygons for point set"
-msgstr "ポイントセットによるボロノイ図/ティーセン多角形の生成 "
+msgstr "ポイントセットによるボロノイ図/ティーセンポリゴンの作成 "
 
 #: ../gui/tcltk/d.m/menu.tcl:456
 msgid "Sample raster maps"
@@ -6001,7 +6001,7 @@ msgstr "k-分割交差検定に向けたポイントのテスト/トレーニン
 
 #: ../gui/tcltk/d.m/menu.tcl:462
 msgid "Transfer attribute data from queried vector map to points"
-msgstr "検索されたベクトルマップから属性データを点に転送"
+msgstr "検索されたベクトルマップから属性データをポイントに転送"
 
 #: ../gui/tcltk/d.m/menu.tcl:467
 msgid "Load vector attributes to database or create reports"
@@ -6122,35 +6122,35 @@ msgstr "ランドサット TMの最適インデックスファクター "
 
 #: ../gui/tcltk/d.m/menu.tcl:530
 msgid "&Grid3D"
-msgstr "グリッド3D(&G) "
+msgstr "3Dグリッド(&G) "
 
 #: ../gui/tcltk/d.m/menu.tcl:535
 msgid "Create 3D mask for grid3D operations"
-msgstr "グリッド3d処理用3Dマスクの作成 "
+msgstr "3Dグリッド処理用3Dマスクの作成 "
 
 #: ../gui/tcltk/d.m/menu.tcl:536
 msgid "Create 2D raster cross section from grid3d volume"
-msgstr "グリッド3D立体から2Dラスター断面図を作成"
+msgstr "3Dグリッド立体から2Dラスター断面図を作成"
 
 #: ../gui/tcltk/d.m/menu.tcl:537
 msgid "Map calculator for grid3D operations"
-msgstr "グリッド3D処理用の計算 "
+msgstr "3Dグリッド処理用のマップカリキュレータ "
 
 #: ../gui/tcltk/d.m/menu.tcl:538
 msgid "Interpolate volume from vector points using splines"
-msgstr "スプラインによる点から立体への補間 "
+msgstr "スプラインによるポイントから立体への補間 "
 
 #: ../gui/tcltk/d.m/menu.tcl:540
 msgid "Display information about grid3D volume"
-msgstr "グリッド3D立体の情報表示 "
+msgstr "3Dグリッド立体の情報表示 "
 
 #: ../gui/tcltk/d.m/menu.tcl:549
 msgid "Add columns to table"
-msgstr "テーブルにカラムを追加"
+msgstr "テーブルに列を追加"
 
 #: ../gui/tcltk/d.m/menu.tcl:550
 msgid "Change values in a column"
-msgstr "カラムの値を変更"
+msgstr "列の値を変更"
 
 #: ../gui/tcltk/d.m/menu.tcl:561
 msgid "Query data (SQL select)"
@@ -6208,8 +6208,8 @@ msgstr "青 (RGB) または 彩度 (HIS)："
 #~ "youhave not already done so.  A popular choice is \"grassdata\", located "
 #~ "inyour home directory."
 #~ msgstr ""
-#~ "GRASSをスタートさせるためにはデータを格納するフォルダが必要ですので、作成"
-#~ "してください。一般には \"grassdata\"が使用されます。"
+#~ "GRASSをスタートさせるためにはデータを格納するディレクトリが必要ですので、"
+#~ "作成してください。一般には \"grassdata\"が使用されます。"
 
 #~ msgid "Opaque"
 #~ msgstr "不透明"
@@ -6282,18 +6282,18 @@ msgstr "青 (RGB) または 彩度 (HIS)："
 #~ "atleast 3 points for 1st order, 6 points for 2nd order and 10 points for "
 #~ "3rdorder."
 #~ msgstr ""
-#~ "地図幾何補正のための地上基準点が不足しています 第１選択では最低３点、第２"
-#~ "では６点、第３では１０点以上必要です"
+#~ "マップ幾何補正のための地上基準点が不足しています 第１選択では最低３点、第"
+#~ "２では６点、第３では１０点以上必要です"
 
 #~ msgid ""
 #~ "No valid ground control points in GCP file. You must create valid "
 #~ "groundcontrol points before georectifying map."
 #~ msgstr ""
-#~ "GCPファイルの点に値が定義されていません 幾何補正の前にGCPを作成する必要が"
-#~ "あります"
+#~ "GCPファイルのポイントに値が定義されていません 幾何補正の前にGCPを作成する"
+#~ "必要があります"
 
 #~ msgid "Flythrough images prefix"
-#~ msgstr "フライスルーイメージ接頭語"
+#~ msgstr "フライスルー画像接頭語"
 
 #~ msgid "Camera layback"
 #~ msgstr "カメラ レイバック"
@@ -6330,7 +6330,7 @@ msgstr "青 (RGB) または 彩度 (HIS)："
 #~ msgstr "    SQL where句でクエリ"
 
 #~ msgid "Graduated points & lines:"
-#~ msgstr "点とラインの目盛："
+#~ msgstr "ポイントとラインの目盛："
 
 #~ msgid "    legend for only these categories    "
 #~ msgstr "    カテゴリー値のみの凡例"
@@ -6346,10 +6346,10 @@ msgstr "青 (RGB) または 彩度 (HIS)："
 #~ msgstr "フレームの境界をディスプレイの左下端から0-100% で指定"
 
 #~ msgid "     set borders (bottom,top,left,right):"
-#~ msgstr "     境界指定 (ボトム,トップ,左,右)："
+#~ msgstr "     境界指定 (下,上,左,右)："
 
 #~ msgid "\tcolumns to chart (col1,col2,...) "
-#~ msgstr "\tグラフにするカラム (カラム1,カラム2,...)   "
+#~ msgstr "\tグラフにする列 (列1,列2,...)   "
 
 #~ msgid "Points"
 #~ msgstr "ポイント "
@@ -6409,10 +6409,10 @@ msgstr "青 (RGB) または 彩度 (HIS)："
 #~ msgstr "ラベルとボックスの水平間隔距離："
 
 #~ msgid " Vertical:"
-#~ msgstr "垂直："
+#~ msgstr "鉛直："
 
 #~ msgid "Aspect map:"
-#~ msgstr "アスペクトマップ："
+#~ msgstr "方位マップ："
 
 #~ msgid "Slope/intensity map:"
 #~ msgstr "傾斜/照度マップ:  "
@@ -6442,5 +6442,5 @@ msgstr "青 (RGB) または 彩度 (HIS)："
 #~ "Find line id and real km+offset for given points in vector map using "
 #~ "linearreference system"
 #~ msgstr ""
-#~ "線形参照システムを利用し、ベクトルマップの点からラインIDと実距離（Km)オフ"
-#~ "セットを表示"
+#~ "線形参照システムを利用し、ベクトルマップのポイントからラインIDと実距離"
+#~ "（Km)オフセットを表示"
