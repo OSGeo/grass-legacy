@@ -1473,7 +1473,7 @@ static void G_usage_xml(void)
 	fprintf(stdout, "\t<flag name=\"%s\">\n", "overwrite");
 	fprintf(stdout, "\t\t<description>\n\t\t\t");
 	print_escaped_for_xml(stdout,
-			      "Allow output files to overwrite existing files");
+			      _("Allow output files to overwrite existing files"));
 	fprintf(stdout, "\n\t\t</description>\n");
 	fprintf(stdout, "\t</flag>\n");
     }
@@ -1481,14 +1481,14 @@ static void G_usage_xml(void)
     /* verbose */
     fprintf(stdout, "\t<flag name=\"%s\">\n", "verbose");
     fprintf(stdout, "\t\t<description>\n\t\t\t");
-    print_escaped_for_xml(stdout, "Verbose module output");
+    print_escaped_for_xml(stdout, _("Verbose module output"));
     fprintf(stdout, "\n\t\t</description>\n");
     fprintf(stdout, "\t</flag>\n");
 
     /* quiet */
     fprintf(stdout, "\t<flag name=\"%s\">\n", "quiet");
     fprintf(stdout, "\t\t<description>\n\t\t\t");
-    print_escaped_for_xml(stdout, "Quiet module output");
+    print_escaped_for_xml(stdout, _("Quiet module output"));
     fprintf(stdout, "\n\t\t</description>\n");
     fprintf(stdout, "\t</flag>\n");
 
