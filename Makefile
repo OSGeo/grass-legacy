@@ -91,6 +91,7 @@ default: builddemolocation
 	for subdir in $$list; do \
 		$(MAKE) -C $$subdir; \
 	done
+	$(MAKE) manifests 
 	if [ ${LOCALE} -eq 1 ] ; then $(MAKE) -C locale; fi
 	-cp -f $(FILES) ${ARCH_DISTDIR}/
 	-cp -f ${ARCH_BINDIR}/grass${GRASS_VERSION_MAJOR}${GRASS_VERSION_MINOR} ${ARCH_DISTDIR}/grass${GRASS_VERSION_MAJOR}${GRASS_VERSION_MINOR}.tmp
@@ -111,6 +112,15 @@ default: builddemolocation
 	@cat $(ERRORLOG)
 	@if [ `cat "$(ERRORLOG)" | wc -l` -gt 8 ] ; then false ; else true ; fi
 
+manifests:
+ifneq ($(strip $(MINGW)),)
+	find $(ARCH_DISTDIR) -type f -name '*.exe' | \
+	while read file ; do \
+	    cmd=`basename "$$file" .exe` ; \
+	    sed "s/@CMD@/$$cmd/" mswindows/generic.manifest > "$$file".manifest ; \
+	done
+endif
+	
 LIBDIRS = \
 	lib/external/shapelib \
 	lib/datetime \
