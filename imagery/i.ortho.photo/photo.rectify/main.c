@@ -92,8 +92,10 @@ int main(int argc, char *argv[])
     G_debug(1, "Looking for elevation file in group: <%s>", group.name);
 
     /* get the block elevation layer raster map  in target location */
-    I_get_group_elev(group.name, elev_layer, mapset_elev, tl, math_exp,
-		     units, nd);
+    if (!I_get_group_elev(group.name, elev_layer, mapset_elev, tl,
+			 math_exp, units, nd))
+	G_fatal_error(_("No target elevation model selected for group <%s>"),
+		      group.name);
 
     G_debug(1, "Block elevation: <%s> in <%s>", elev_layer, mapset_elev);
 
@@ -104,17 +106,17 @@ int main(int argc, char *argv[])
 
     /** look for camera info  for this block **/
     if (!I_get_group_camera(group.name, camera))
-	G_fatal_error(_("No camera reference file selected for group [%s]"),
+	G_fatal_error(_("No camera reference file selected for group <%s>"),
 		      group.name);
 
     if (!I_get_cam_info(camera, &group.camera_ref))
-	G_fatal_error(_("Bad format in camera file for group [%s]"),
+	G_fatal_error(_("Bad format in camera file for group <%s>"),
 		      group.name);
 
     /* get initial camera exposure station, if any */
     if (I_find_initial(group.name)) {
 	if (!I_get_init_info(group.name, &group.camera_exp))
-	    G_warning(_("Bad format in initial exposusre station file for group [%s]"),
+	    G_warning(_("Bad format in initial exposusre station file for group <%s>"),
 		      group.name);
     }
 
