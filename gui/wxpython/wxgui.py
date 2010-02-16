@@ -966,41 +966,48 @@ class GMFrame(wx.Frame):
     
                 self.goutput.RunCmd(cmdlist)
 
-    def OnXTerm(self, event, need_xmon = True):
+    def OnXTermNoXMon(self, event):
+        """!
+        Run commands that need xterm
         """
+        self.OnXTerm(event, need_xmon = False)
+        
+    def OnXTerm(self, event, need_xmon = True):
+        """!
         Run commands that need interactive xmon
+
+        @param need_xmon True to start X monitor
         """
         # unset display mode
         del os.environ['GRASS_RENDER_IMMEDIATE']
-
-        if(need_xmon):
+        
+        if need_xmon:
             # open next available xmon
             xmonlist = []
-
+            
             # make list of xmons that are not running
             ret = gcmd.RunCommand('d.mon',
                                   flags = 'L',
                                   read = True)
-
+            
             for line in ret.split('\n'):               
                 line = line.strip()
                 if line.startswith('x') and 'not running' in line:
                     xmonlist.append(line[0:2])
-
+            
             # find available xmon
             xmon = xmonlist[0]
-
+            
             # bring up the xmon
             cmdlist = ['d.mon', xmon]
             p = gcmd.Command(cmdlist, wait=False)
-
-
+        
         # run the command        
         command = self.GetMenuCmd(event)
         command = ' '.join(command)
-
+        
         gisbase = os.environ['GISBASE']
-
+        
         if sys.platform == "win32":
             runbat = os.path.join(gisbase,'etc','grass-run.bat')
             cmdlist = ["cmd.exe", "/c", 'start "%s"' % runbat, command]
@@ -1009,12 +1016,12 @@ class GMFrame(wx.Frame):
                 xtermwrapper = os.path.join(gisbase,'etc','grass-xterm-mac')
             else:
                 xtermwrapper = os.path.join(gisbase,'etc','grass-xterm-wrapper')
-
+            
             grassrun = os.path.join(gisbase,'etc','grass-run.sh')
             cmdlist = [xtermwrapper, '-e', grassrun, command]
-
+        
         p = gcmd.Command(cmdlist, wait=False)
-
+        
         # reset display mode
         os.environ['GRASS_RENDER_IMMEDIATE'] = 'TRUE'
 
