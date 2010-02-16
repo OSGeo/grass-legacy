@@ -772,7 +772,7 @@
 	      <label>Projection for current location</label>
 	      <help>Interactively reset the location's projection settings.</help>
 	      <keywords>general,projection</keywords>
-	      <handler>self.OnXTerm</handler>
+	      <handler>self.OnXTermNoXMon</handler>
 	      <command>g.setproj</command>
 	    </menuitem>
 	    <separator />
