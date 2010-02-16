@@ -1836,7 +1836,10 @@ class GUI:
             cmd_validated = [cmd[0]]
             for option in cmd[1:]:
                 if option[0] == '-': # flag
-                    self.grass_task.set_flag(option[1], True)
+                    if option[1] == '-':
+                        self.grass_task.set_flag(option[2:], True)
+                    else:
+                        self.grass_task.set_flag(option[1], True)
                     cmd_validated.append(option)
                 else: # parameter
                     try:

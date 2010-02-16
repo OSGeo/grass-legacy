@@ -1,4 +1,4 @@
-"""
+"""!
 @package workspace.py
 
 @brief Open/save workspace definition file
@@ -9,7 +9,7 @@ Classes:
  - WriteWorkspaceFile
  - ProcessGrcFile
 
-(C) 2007-2009 by the GRASS Development Team
+(C) 2007-2010 by the GRASS Development Team
 This program is free software under the GNU General Public
 License (>=v2). Read the file COPYING that comes with GRASS
 for details.
@@ -153,12 +153,15 @@ class ProcessWorkspaceFile(HandlerBase):
             self.value = ''
 
         elif name == 'flag':
-            name = attrs.get('name', None)
-            self.cmd.append('-' + name)
-
+            flag = attrs.get('name', None)
+            if len(flag) > 1:
+                self.cmd.append('--' + flag)
+            else:
+                self.cmd.append('-' + flag)
+        
         elif name == 'selected':
             if self.inTag['layer']:
-                self.layerSelected = True;
+                self.layerSelected = True
 
         elif name == 'layer_manager':
             posAttr = attrs.get('dim', '')
@@ -713,8 +716,12 @@ class WriteWorkspaceFile(object):
                 self.indent += 4
                 for option in cmd[1:]:
                     if option[0] == '-': # flag
-                        self.file.write('%s<flag name="%s" />\n' %
-                                   (' ' * self.indent, option[1]))
+                        if option[1] == '-':
+                            self.file.write('%s<flag name="%s" />\n' %
+                                            (' ' * self.indent, option[2:]))
+                        else:
+                            self.file.write('%s<flag name="%s" />\n' %
+                                            (' ' * self.indent, option[1]))
                     else: # parameter
                         key, value = option.split('=', 1)
                         self.file.write('%s<parameter name="%s">\n' %
