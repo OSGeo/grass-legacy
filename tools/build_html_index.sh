@@ -14,6 +14,8 @@ d.text.freetype \
 i.ask \
 i.find \
 p.out.vrml \
+photo.elev \
+photo.target \
 r.cats \
 r.watershed.ram \
 r.watershed.seg \
