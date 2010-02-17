@@ -22,6 +22,7 @@
  /*INCLUDES*/
 #include <stdlib.h>
 #include <string.h>
+#include <math.h>
 #include <grass/config.h>
 #include <grass/gis.h>
 #include <grass/Vect.h>
@@ -38,6 +39,8 @@ int main(int argc, char *argv[])
 
     /* Variables' declarations */
     int row, nrows, col, ncols, MaxPoints;
+    int nsubregion_col, nsubregion_row;
+    int subregion = 0, nsubregions = 0;
     int last_row, last_column;
     int nlines, nlines_first, line_num;
     int more;
@@ -45,7 +48,8 @@ int main(int argc, char *argv[])
     double Z_interp;
     double Thres_j, Thres_d, ew_resol, ns_resol;
     double minNS, minEW, maxNS, maxEW;
-    char *mapset, buf[1024];
+    const char *mapset;
+    char buf[1024], table_name[GNAME_MAX];
     char xname[GNAME_MAX], xmapset[GMAPSET_MAX];
 
     int colorBordo, ripieno, conta, lungPunti, lungHull, xi, c1, c2;
@@ -68,8 +72,6 @@ int main(int argc, char *argv[])
     dbString sql;
     dbTable *table;
     dbCursor cursor;
-    const char *p;
-    int found;
 
 /*------------------------------------------------------------------------------------------*/
     /* Options' declaration */ ;
@@ -80,6 +82,8 @@ int main(int argc, char *argv[])
 	  "algorithm for determining the building inside");
 
     in_opt = G_define_standard_option(G_OPT_V_INPUT);
+    in_opt->description =
+	_("Input vector (v.lidar.edgedetection output");
 
     out_opt = G_define_standard_option(G_OPT_V_OUTPUT);
 
@@ -121,27 +125,22 @@ int main(int argc, char *argv[])
     Vect_check_input_output_name(in_opt->answer, out_opt->answer,
 				 GV_FATAL_EXIT);
 
-    sprintf(xname, "%s", in_opt->answer);
-    found = 0;
-    for (p = in_opt->answer; *p; p++)
-	if (*p == '@') {
-	    found = 1;
-	    break;
-	}
-
-    if (found) {
-	if (G__name_is_fully_qualified(in_opt->answer, xname, xmapset) < 0)	/* strip off mapset from input for SQL */
-	    G_fatal_error(_("Vector map <%s> not found"), xname);
-    }
     if ((mapset = G_find_vector2(in_opt->answer, "")) == NULL) {
 	G_fatal_error(_("Vector map <%s> not found"), in_opt->answer);
     }
 
-    /*Vect_set_open_level (2);          WITH TOPOLOGY */
+    /* Setting auxiliar table's name */
+    if (G__name_is_fully_qualified(in_opt->answer, xname, xmapset)) {
+	sprintf(table_name, "%s_edge_Interpolation", xname);
+    }
+    else
+	sprintf(table_name, "%s_edge_Interpolation", in_opt->answer);
+
     Vect_set_open_level(1);	/* WITHOUT TOPOLOGY */
     if (Vect_open_old(&In, in_opt->answer, mapset) < 1)
 	G_fatal_error(_("Unable to open vector map <%s>"), in_opt->answer);
 
+    Vect_set_open_level(1);	/* WITHOUT TOPOLOGY */
     if (Vect_open_old(&First, first_opt->answer, mapset) < 1)
 	G_fatal_error(_("Unable to open vector map <%s>"), first_opt->answer);
 
@@ -167,39 +166,64 @@ int main(int argc, char *argv[])
 	G_fatal_error(_("No database connection for driver <%s> is defined. Run db.connect."),
 		      field->driver);
 
+    /* is this the right place to open the cursor ??? */
+    
+    db_init_string(&sql);
+    db_zero_string(&sql);
+
+    sprintf(buf, "SELECT Interp,ID FROM %s", table_name);
+    G_debug(1, "buf: %s", buf);
+    db_append_string(&sql, buf);
+
+    if (db_open_select_cursor(driver, &sql, &cursor, DB_SEQUENTIAL) != DB_OK)
+	G_fatal_error(_("Unable to open table <%s>"), table_name);
+
+    count_obj = 1;
+
+    /* no topology, get number of lines in input vector */
+    nlines = 0;
+    points = Vect_new_line_struct();
+    Cats = Vect_new_cats_struct();
+    Vect_rewind(&In);
+    while (Vect_read_next_line(&In, points, Cats) > 0) {
+	nlines++;
+    }
+    Vect_rewind(&In);
+
+    /* no topology, get number of lines in first pulse input vector */
+    nlines_first = 0;
+    points_first = Vect_new_line_struct();
+    Cats_first = Vect_new_cats_struct();
+    Vect_rewind(&First);
+    while (Vect_read_next_line(&First, points_first, Cats_first) > 0) {
+	nlines_first++;
+    }
+    Vect_rewind(&First);
+
     /* Setting regions and boxes */
     G_debug(1, _("Setting regions and boxes"));
     G_get_set_window(&original_reg);
     G_get_set_window(&elaboration_reg);
 
-    /*  Fixxing parameters of the elaboration region */
-    /*! The original_region will be divided into several subregions */
+    /*  Fixing parameters of the elaboration region */
+    /*! The original_region will be divided into subregions */
     ew_resol = original_reg.ew_res;
     ns_resol = original_reg.ns_res;
+
+    /* calculate number of subregions */
+    nsubregion_col = ceil((original_reg.east - original_reg.west) / (LATO * ew_resol)) + 0.5;
+    nsubregion_row = ceil((original_reg.north - original_reg.south) / (LATO * ns_resol)) + 0.5;
+
+    if (nsubregion_col < 0)
+	nsubregion_col = 0;
+    if (nsubregion_row < 0)
+	nsubregion_row = 0;
+
+    nsubregions = nsubregion_row * nsubregion_col;
 
     /* Subdividing and working with tiles */
     elaboration_reg.south = original_reg.north;
     last_row = FALSE;
-
-    db_init_string(&sql);
-    db_zero_string(&sql);
-
-    sprintf(buf, "SELECT Interp,ID FROM %s_edge_Interpolation", xname);
-    G_debug(1, "buf: %s", buf);
-    db_append_string(&sql, buf);
-
-    if (db_open_select_cursor(driver, &sql, &cursor, DB_SEQUENTIAL) != DB_OK)
-	G_fatal_error(_("Unable to open table <%s_edge_Interpolation>"), xname);
-
-    count_obj = 1;
-
-    nlines = Vect_get_num_lines(&In);
-    points = Vect_new_line_struct();
-    Cats = Vect_new_cats_struct();
-
-    nlines_first = Vect_get_num_lines(&First);
-    points_first = Vect_new_line_struct();
-    Cats_first = Vect_new_cats_struct();
 
     while (last_row == FALSE) {	/* For each strip of LATO rows */
 
@@ -220,6 +244,10 @@ int main(int argc, char *argv[])
 	while (last_column == FALSE) {	/* For each strip of LATO columns */
 	    BOUND_BOX elaboration_box;
 
+	    subregion++;
+	    if (nsubregions > 1)
+		G_message(_("subregion %d of %d"), subregion, nsubregions);
+
 	    elaboration_reg.west = elaboration_reg.east;
 	    if (elaboration_reg.west < original_reg.west)	/* First column */
 		elaboration_reg.west = original_reg.west;
@@ -231,10 +259,13 @@ int main(int argc, char *argv[])
 		last_column = TRUE;
 	    }
 
-	    /*Setting the active region */
-	    G_set_window(&elaboration_reg);
-	    nrows = G_window_rows();
-	    ncols = G_window_cols();
+	    /* Setting the active region */
+	    elaboration_reg.ns_res = ns_resol;
+	    elaboration_reg.ew_res = ew_resol;
+	    nrows = (elaboration_reg.north - elaboration_reg.south) / ns_resol + 0.1;
+	    ncols = (elaboration_reg.east - elaboration_reg.west) / ew_resol + 0.1;
+	    elaboration_reg.rows = nrows;
+	    elaboration_reg.cols = ncols;
 
 	    G_debug(1, _("Rows = %d"), nrows);
 	    G_debug(1, _("Columns = %d"), ncols);
@@ -257,12 +288,12 @@ int main(int argc, char *argv[])
 		}
 	    }
 
+	    G_verbose_message(_("read points in input vector"));
+	    Vect_region_box(&elaboration_reg, &elaboration_box);
 	    line_num = 0;
 	    Vect_rewind(&In);
 	    while (Vect_read_next_line(&In, points, Cats) > 0) {
 		line_num++;
-
-		Vect_region_box(&elaboration_reg, &elaboration_box);
 
 		if ((Vect_point_in_box
 		     (points->x[0], points->y[0], points->z[0],
@@ -279,6 +310,37 @@ int main(int argc, char *argv[])
 			(int)(G_easting_to_col
 			      (points->x[0], &elaboration_reg));
 
+		    Z_interp = 0;
+		    /* TODO: make sure the current db_fetch() usage works */
+		    /* why not: */
+		    /*
+		    db_init_string(&sql);
+		    sprintf(buf, "SELECT Interp,ID FROM %s WHERE ID=%d", table_name, line_num);
+		    db_append_string(&sql, buf);
+
+		    if (db_open_select_cursor(driver, &sql, &cursor, DB_SEQUENTIAL) != DB_OK)
+			G_fatal_error(_("Unable to open table <%s>"), table_name);
+
+		    while (db_fetch(&cursor, DB_NEXT, &more) == DB_OK && more) {
+			dbColumn *Z_Interp_col;
+			dbValue *Z_Interp_value;
+			table = db_get_cursor_table(&cursor);
+
+			Z_Interp_col = db_get_table_column(table, 1);
+
+			if (db_sqltype_to_Ctype(db_get_column_sqltype(Z_Interp_col)) ==
+			    DB_C_TYPE_DOUBLE)
+			    Z_Interp_value = db_get_column_value(Z_Interp_col);
+			else
+			    continue;
+
+			Z_interp = db_get_value_double(Z_Interp_value);
+			break;
+		    }
+		    db_close_cursor(&cursor);
+		    db_free_string(&sql);
+		    */
+		    /* instead of */
 		    while (1) {
 			if (db_fetch(&cursor, DB_NEXT, &more) != DB_OK ||
 			    !more)
@@ -353,13 +415,9 @@ int main(int argc, char *argv[])
 		     (points_first->x[0], points_first->y[0],
 		      points_first->z[0], &elaboration_box)) &&
 		    ((points->x[0] != elaboration_reg.west) ||
-		     (points->x[0] == original_reg.west)) && ((points->y[0]
-							       !=
-							       elaboration_reg.
-							       north) ||
-							      (points->y[0] ==
-							       original_reg.
-							       north))) {
+		     (points->x[0] == original_reg.west)) &&
+		    ((points->y[0] != elaboration_reg.north) ||
+		     (points->y[0] == original_reg.north))) {
 
 		    row =
 			(int)(G_northing_to_row
@@ -379,7 +437,7 @@ int main(int argc, char *argv[])
 
 	    /* REGION GROWING */
 	    if (region == TRUE) {
-		G_debug(1, "Region Growing");
+		G_verbose_message(_("Region Growing"));
 
 		punti_bordo = G_alloc_matrix(MaxPoints, 3);
 		P = Pvector(0, MaxPoints);
@@ -388,6 +446,7 @@ int main(int argc, char *argv[])
 		ripieno = 6;
 
 		for (row = 0; row <= nrows; row++) {
+		    G_percent(row, nrows, 2);
 		    for (col = 0; col <= ncols; col++) {
 
 			if ((raster_matrix[row][col].clas >= Thres_j) &&
@@ -416,7 +475,7 @@ int main(int argc, char *argv[])
 				     punti_bordo, &lungPunti, row, col,
 				     colorBordo, Thres_j, MaxPoints);
 
-			    /*CONVEX-HULL COMPUTATION */
+			    /* CONVEX-HULL COMPUTATION */
 			    lungHull = ch2d(P, lungPunti);
 			    cvxHull = G_alloc_matrix(lungHull, 3);
 

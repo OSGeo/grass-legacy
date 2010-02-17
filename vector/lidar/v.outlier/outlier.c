@@ -1,31 +1,36 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <math.h>
 #include <grass/gis.h>
 #include <grass/Vect.h>
 #include <grass/dbmi.h>
 
 #include "outlier.h"
 
+extern double Thres_Outlier;
+
 void P_Outlier(struct Map_info *Out, struct Map_info *Outlier,
 	       struct Map_info *Qgis, struct Cell_head Elaboration,
-	       BOUND_BOX General, BOUND_BOX Overlap, double **obs,
-	       double *parBilin, double mean, double overlap, int *line_num,
-	       int num_points, dbDriver * driver)
+	       BOUND_BOX General, BOUND_BOX Overlap,
+	       double **obs, double *parBilin, double mean, double overlap,
+	       int *line_num, int num_points, dbDriver * driver,
+	       char *tab_name)
 {
     int i;
-    double interpolation, weight, residual, eta, csi, gradient[2];
-
+    double interpolation, weight, residual, eta, csi;
     extern int nsplx, nsply;
     extern double passoN, passoE;
-
     struct line_pnts *point;
     struct line_cats *categories;
 
     point = Vect_new_line_struct();
     categories = Vect_new_cats_struct();
 
+    db_begin_transaction(driver);
+    
     for (i = 0; i < num_points; i++) {	/* Sparse points */
+	G_percent(i, num_points, 2);
 	Vect_reset_line(point);
 	Vect_reset_cats(categories);
 
@@ -57,60 +62,53 @@ void P_Outlier(struct Map_info *Out, struct Map_info *Outlier,
 
 	    }
 	    else {
-		if ((*point->x > Overlap.E) && (*point->x != General.E)) {
+		if ((*point->x > Overlap.E) && (*point->x < General.E)) {
+		    if ((*point->y > Overlap.N) && (*point->y < General.N)) {	/*(3) */
+			csi = (General.E - *point->x) / overlap;
+			eta = (General.N - *point->y) / overlap;
+			weight = csi * eta;
 
-		    if ((*point->y > Overlap.N) && (*point->y != General.N)) {	/*(3) */
-			csi = (*point->x - Overlap.E) / overlap;
-			eta = (*point->y - Overlap.N) / overlap;
-			weight = (1 - csi) * (1 - eta);
-
-			gradient[0] *= weight;
-			gradient[1] *= weight;
 			interpolation *= weight;
 
-			if (Select_Outlier(&gradient[0], line_num[i], driver)
-			    != DB_OK)
+			if (Select_Outlier(&interpolation, line_num[i],
+					   driver, tab_name) != DB_OK)
 			    G_fatal_error(_("Impossible to read the database"));
 
-			if (UpDate_Outlier(gradient[0], line_num[i], driver)
-			    != DB_OK)
+			if (UpDate_Outlier(interpolation, line_num[i],
+			                   driver, tab_name) != DB_OK)
 			    G_fatal_error(_("Impossible to update the database"));
-
 		    }
-		    else if ((*point->y < Overlap.S) && (*point->y != General.S)) {	/*(1) */
-			csi = (*point->x - Overlap.E) / overlap;
+		    else if ((*point->y < Overlap.S) && (*point->y > General.S)) {	/*(1) */
+			csi = (General.E - *point->x) / overlap;
 			eta = (*point->y - General.S) / overlap;
-			weight = (1 - csi) * eta;
+			weight = csi * eta;
 
-			if (Insert_Outlier
-			    (interpolation * weight, line_num[i],
-			     driver) != DB_OK)
-			    G_fatal_error(_("Impossible to write in the database"));
-
-		    }
-		    else if ((*point->y <= Overlap.N) && (*point->y >= Overlap.S)) {	/*(1) */
-			weight = (*point->x - Overlap.E) / overlap;
-
-			if (Insert_Outlier
-			    (interpolation * weight, line_num[i],
-			     driver) != DB_OK)
-			    G_fatal_error(_("Impossible to write in the database"));
-		    }
-
-		}
-		else if ((*point->x < Overlap.W) && (*point->x != General.W)) {
-
-		    if ((*point->y > Overlap.N) && (*point->y != General.N)) {	/*(4) */
-			csi = (*point->x - General.W) / overlap;
-			eta = (*point->y - Overlap.N) / overlap;
-			weight = (1 - eta) * csi;
-
-			gradient[0] *= weight;
-			gradient[1] *= weight;
 			interpolation *= weight;
 
-			if (Select_Outlier(&gradient[0], line_num[i], driver)
-			    != DB_OK)
+			if (Insert_Outlier(interpolation, line_num[i],
+					   driver, tab_name) != DB_OK)
+			    G_fatal_error(_("Impossible to write in the database"));
+		    }
+		    else if ((*point->y <= Overlap.N) && (*point->y >= Overlap.S)) {	/*(1) */
+			weight = (General.E - *point->x) / overlap;
+
+			interpolation *= weight;
+
+			if (Insert_Outlier(interpolation, line_num[i],
+					   driver, tab_name) != DB_OK)
+			    G_fatal_error(_("Impossible to write in the database"));
+		    }
+		}
+		else if ((*point->x < Overlap.W) && (*point->x > General.W)) {
+		    if ((*point->y > Overlap.N) && (*point->y < General.N)) {	/*(4) */
+			csi = (*point->x - General.W) / overlap;
+			eta = (General.N - *point->y) / overlap;
+			weight = eta * csi;
+
+			interpolation *= weight;
+
+			if (Select_Outlier(&interpolation, line_num[i],
+			                   driver, tab_name) != DB_OK)
 			    G_fatal_error(_("Impossible to read the database"));
 
 			residual = *point->z - interpolation;
@@ -122,38 +120,34 @@ void P_Outlier(struct Map_info *Out, struct Map_info *Outlier,
 				Vect_write_line(Qgis, GV_POINT, point,
 						categories);
 			}
-			else
+			else {
 			    Vect_write_line(Outlier, GV_POINT, point,
 					    categories);
-
+			    G_message("here we are");
+			}
 		    }
-		    else if ((*point->y < Overlap.S) && (*point->y != General.S)) {	/*(2) */
+		    else if ((*point->y < Overlap.S) && (*point->y > General.S)) {	/*(2) */
 			csi = (*point->x - General.W) / overlap;
 			eta = (*point->y - General.S) / overlap;
 			weight = csi * eta;
 
-			gradient[0] *= weight;
-			gradient[1] *= weight;
 			interpolation *= weight;
 
-			if (Select_Outlier(&gradient[0], line_num[i], driver)
-			    != DB_OK)
+			if (Select_Outlier(&interpolation, line_num[i],
+			                   driver, tab_name) != DB_OK)
 			    G_fatal_error(_("Impossible to read the database"));
 
-			if (UpDate_Outlier(gradient[0], line_num[i], driver)
-			    != DB_OK)
+			if (UpDate_Outlier(interpolation, line_num[i],
+			                   driver, tab_name) != DB_OK)
 			    G_fatal_error(_("Impossible to update the database"));
-
 		    }
 		    else if ((*point->y <= Overlap.N) && (*point->y >= Overlap.S)) {	/*(2) */
-			weight = (Overlap.W - *point->x) / overlap;
+			weight = (*point->x - General.W) / overlap;
 
-			gradient[0] *= weight;
-			gradient[1] *= weight;
 			interpolation *= weight;
 
-			if (Select_Outlier(&gradient[0], line_num[i], driver)
-			    != DB_OK)
+			if (Select_Outlier(&interpolation, line_num[i],
+			                   driver, tab_name) != DB_OK)
 			    G_fatal_error(_("Impossible to read the database"));
 
 			residual = *point->z - interpolation;
@@ -169,18 +163,15 @@ void P_Outlier(struct Map_info *Out, struct Map_info *Outlier,
 			    Vect_write_line(Outlier, GV_POINT, point,
 					    categories);
 		    }
-
 		}
 		else if ((*point->x <= Overlap.E) && (*point->x >= Overlap.W)) {
-		    if ((*point->y > Overlap.N) && (*point->y != General.N)) {	/*(3) */
-			weight = (*point->y - Overlap.N) / overlap;
+		    if ((*point->y > Overlap.N) && (*point->y < General.N)) {	/*(3) */
+			weight = (General.N - *point->y) / overlap;
 
-			gradient[0] *= weight;
-			gradient[1] *= weight;
 			interpolation *= weight;
 
-			if (Select_Outlier(&gradient[0], line_num[i], driver)
-			    != DB_OK)
+			if (Select_Outlier(&interpolation, line_num[i],
+			                   driver, tab_name) != DB_OK)
 			    G_fatal_error(_("Impossible to read the database"));
 
 			residual = *point->z - interpolation;
@@ -195,14 +186,14 @@ void P_Outlier(struct Map_info *Out, struct Map_info *Outlier,
 			else
 			    Vect_write_line(Outlier, GV_POINT, point,
 					    categories);
-
 		    }
-		    else if ((*point->y < Overlap.S) && (*point->y != General.S)) {	/*(1) */
-			weight = (Overlap.S - *point->y) / overlap;
+		    else if ((*point->y < Overlap.S) && (*point->y > General.S)) {	/*(1) */
+			weight = (*point->y - General.S) / overlap;
 
-			if (Insert_Outlier
-			    (interpolation * weight, line_num[i], driver)
-			    != DB_OK)
+			interpolation *= weight;
+
+			if (Insert_Outlier(interpolation, line_num[i],
+					   driver, tab_name) != DB_OK)
 			    G_fatal_error(_("Impossible to write in the database"));
 
 		    }		/*else (1) */
@@ -210,42 +201,56 @@ void P_Outlier(struct Map_info *Out, struct Map_info *Outlier,
 	    }
 	}			/*end if obs */
     }				/*end for */
+
+    G_percent(num_points, num_points, 2);
+    G_debug(2, "P_outlier: done");
+
+    db_commit_transaction(driver);
+
     Vect_destroy_line_struct(point);
     Vect_destroy_cats_struct(categories);
 }				/*end puntisparsi_select */
 
-int Insert_Outlier(double Interp, int line_num, dbDriver * driver)
+int Insert_Outlier(double Interp, int line_num, dbDriver * driver,
+		   char *tab_name)
 {
-
     char buf[1024];
     dbString sql;
+    int ret;
 
     db_init_string(&sql);
-    sprintf(buf, "INSERT INTO Auxiliar_outlier_table (ID, Interp)");
+    sprintf(buf, "INSERT INTO %s (ID, Interp)", tab_name);
     db_append_string(&sql, buf);
     sprintf(buf, " VALUES (%d, %lf)", line_num, Interp);
     db_append_string(&sql, buf);
 
-    return db_execute_immediate(driver, &sql);
+    ret = db_execute_immediate(driver, &sql);
+    db_free_string(&sql);
+
+    return ret;
 }
 
-int UpDate_Outlier(double Interp, int line_num, dbDriver * driver)
+int UpDate_Outlier(double Interp, int line_num, dbDriver * driver,
+		   char *tab_name)
 {
-
     char buf[1024];
     dbString sql;
+    int ret;
 
     db_init_string(&sql);
-    sprintf(buf, "UPDATE Auxiliar_outlier_table SET Interp=%lf WHERE ID=%d",
-	    Interp, line_num);
+    sprintf(buf, "UPDATE %s SET Interp=%lf WHERE ID=%d",
+	    tab_name, Interp, line_num);
     db_append_string(&sql, buf);
 
-    return db_execute_immediate(driver, &sql);
+    ret = db_execute_immediate(driver, &sql);
+    db_free_string(&sql);
+
+    return ret;
 }
 
-int Select_Outlier(double *Interp, int line_num, dbDriver * driver)
+int Select_Outlier(double *Interp, int line_num, dbDriver * driver,
+		   char *tab_name)
 {
-
     int more;
     char buf[1024];
     dbString sql;
@@ -255,8 +260,7 @@ int Select_Outlier(double *Interp, int line_num, dbDriver * driver)
     dbValue *Interp_value;
 
     db_init_string(&sql);
-    sprintf(buf, "SELECT ID, Interp FROM Auxiliar_outlier_table WHERE ID=%d",
-	    line_num);
+    sprintf(buf, "SELECT ID, Interp FROM %s WHERE ID=%d", tab_name, line_num);
     db_append_string(&sql, buf);
 
     if (db_open_select_cursor(driver, &sql, &cursor, DB_SEQUENTIAL) != DB_OK)
@@ -276,36 +280,42 @@ int Select_Outlier(double *Interp, int line_num, dbDriver * driver)
 	*Interp += db_get_value_double(Interp_value);
     }
     db_close_cursor(&cursor);
+    db_free_string(&sql);
     return DB_OK;
 }
 
 int P_is_outlier(double pippo)
 {
-    extern double Thres_Outlier;
-
     if (fabs(pippo) < Thres_Outlier)
 	return FALSE;
 
     return TRUE;
 }
 
-#ifdef notdef
 /*! DEFINITION OF THE SUBZONES 
 
-   -----------------------
-   |4|   3   |3|       | |
-   -----------------------
-   | |       | |       | |
-   |2|   5   |1|       | |
-   | |       | |       | |
-   -----------------------
-   |2|   1   |1|       | |
-   -----------------------
-   | |       | |       | |
-   | |       | |       | |
-   | |       | |       | |
-   -----------------------
-   | |       | |       | |
-   -----------------------
+  5: inside Overlap region
+  all others: inside General region but outside Overlap region
+
+   ---------------------------------
+   | |       | |       | |       | |
+   ---------------------------------
+   | |       | |       | |       | |
+   | |       | |       | |       | |
+   | |       | |       | |       | |
+   ---------------------------------
+   | |       |4|   3   |3|       | |
+   ---------------------------------
+   | |       | |       | |       | |
+   | |       |2|   5   |1|       | |
+   | |       | |       | |       | |
+   ---------------------------------
+   | |       |2|   1   |1|       | |
+   ---------------------------------
+   | |       | |       | |       | |
+   | |       | |       | |       | |
+   | |       | |       | |       | |
+   ---------------------------------
+   | |       | |       | |       | |
+   ---------------------------------
  */
-#endif

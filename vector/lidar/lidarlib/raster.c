@@ -21,16 +21,15 @@ P_Sparse_Points(struct Map_info *Out, struct Cell_head *Elaboration,
 {
     int i;
     char buf[1024];
+    dbString sql;
 
     double interpolation, csi, eta, weight;
     struct line_pnts *point;
-    dbString sql;
-
-
-    /*CREARE LA TABELLA */
 
     point = Vect_new_line_struct();
 
+    db_begin_transaction(driver);
+    
     for (i = 0; i < num_points; i++) {
 
 	if (Vect_point_in_box(obs[i][0], obs[i][1], mean, &General)) {	/*Here mean is just for asking if obs point is in box */
@@ -52,10 +51,8 @@ P_Sparse_Points(struct Map_info *Out, struct Cell_head *Elaboration,
 
 	    if (Vect_point_in_box(obs[i][0], obs[i][1], interpolation, &Overlap)) {	/*(5) */
 		Vect_write_line(Out, GV_POINT, point, categories);
-
 	    }
 	    else {
-
 		db_init_string(&sql);
 
 		sprintf(buf, "INSERT INTO %s (ID, X, Y, Interp)", tab_name);
@@ -67,75 +64,10 @@ P_Sparse_Points(struct Map_info *Out, struct Cell_head *Elaboration,
 			obs[i][1]);
 		db_append_string(&sql, buf);
 
-		if ((point->x[0] > Overlap.E)) {
-
-		    if ((*point->y > Overlap.N)) {	/*(3) */
-			csi = (*point->x - Overlap.E) / overlap;
-			eta = (*point->y - Overlap.N) / overlap;
-			weight = (1 - csi) * (1 - eta);
-			*point->z = weight * interpolation;
-
-			sprintf(buf, "%lf", *point->z);
-			db_append_string(&sql, buf);
-			sprintf(buf, ")");
-			db_append_string(&sql, buf);
-
-			if (db_execute_immediate(driver, &sql) != DB_OK)
-			    G_fatal_error(_("Unable to create table: %s"),
-					  buf);
-
-		    }
-		    else if ((*point->y < Overlap.S)) {	/*(1) */
-			csi = (*point->x - Overlap.E) / overlap;
-			eta = (Overlap.S - *point->y) / overlap;
-			weight = (1 - csi) * eta;
-			*point->z = weight * interpolation;
-
-			sprintf(buf, "%lf", *point->z);
-			db_append_string(&sql, buf);
-			sprintf(buf, ")");
-			db_append_string(&sql, buf);
-
-			if (db_execute_immediate(driver, &sql) != DB_OK)
-			    G_fatal_error(_("Unable to create table: %s"),
-					  buf);
-
-		    }
-		    else {	/*(1) */
-			weight = (*point->x - Overlap.E) / overlap;
-			*point->z = (1 - weight) * interpolation;
-
-			sprintf(buf, "%lf", *point->z);
-			db_append_string(&sql, buf);
-			sprintf(buf, ")");
-			db_append_string(&sql, buf);
-
-			if (db_execute_immediate(driver, &sql) != DB_OK)
-			    G_fatal_error(_("Unable to create table: %s"),
-					  buf);
-		    }
-
-		}
-		else if ((point->x[0] < Overlap.W)) {
-		    if ((*point->y > Overlap.N)) {	/*(4) */
-			csi = (Overlap.W - *point->x) / overlap;
-			eta = (*point->y - Overlap.N) / overlap;
-			weight = (1 - eta) * csi;
-			*point->z = weight * interpolation;
-
-			sprintf(buf, "%lf", *point->z);
-			db_append_string(&sql, buf);
-			sprintf(buf, ")");
-			db_append_string(&sql, buf);
-
-			if (db_execute_immediate(driver, &sql) != DB_OK)
-			    G_fatal_error(_("Unable to create table: %s"),
-					  buf);
-
-		    }
-		    else if ((*point->y < Overlap.S)) {	/*(2) */
-			csi = (*point->x - General.W) / overlap;
-			eta = (Overlap.S - *point->y) / overlap;
+		if ((*point->x > Overlap.E) && (*point->x < General.E)) {
+		    if ((*point->y > Overlap.N) && (*point->y < General.N)) {	/*(3) */
+			csi = (General.E - *point->x) / overlap;
+			eta = (General.N - *point->y) / overlap;
 			weight = csi * eta;
 			*point->z = weight * interpolation;
 
@@ -145,13 +77,14 @@ P_Sparse_Points(struct Map_info *Out, struct Cell_head *Elaboration,
 			db_append_string(&sql, buf);
 
 			if (db_execute_immediate(driver, &sql) != DB_OK)
-			    G_fatal_error(_("Unable to create table: %s"),
+			    G_fatal_error(_("Unable to access table <%s>"),
 					  buf);
-
 		    }
-		    else {	/*(2) */
-			weight = (Overlap.W - *point->x) / overlap;
-			*point->z = (1 - weight) * interpolation;
+		    else if ((*point->y < Overlap.S) && (*point->y > General.S)) {	/*(1) */
+			csi = (General.E - *point->x) / overlap;
+			eta = (*point->y - General.S) / overlap;
+			weight = csi * eta;
+			*point->z = weight * interpolation;
 
 			sprintf(buf, "%lf", *point->z);
 			db_append_string(&sql, buf);
@@ -159,15 +92,29 @@ P_Sparse_Points(struct Map_info *Out, struct Cell_head *Elaboration,
 			db_append_string(&sql, buf);
 
 			if (db_execute_immediate(driver, &sql) != DB_OK)
-			    G_fatal_error(_("Unable to create table: %s"),
+			    G_fatal_error(_("Unable to access table <%s>"),
 					  buf);
 		    }
+		    else if ((*point->y <= Overlap.N) && (*point->y >= Overlap.S)) {	/*(1) */
+			weight = (General.E - *point->x) / overlap;
+			*point->z = weight * interpolation;
 
+			sprintf(buf, "%lf", *point->z);
+			db_append_string(&sql, buf);
+			sprintf(buf, ")");
+			db_append_string(&sql, buf);
+
+			if (db_execute_immediate(driver, &sql) != DB_OK)
+			    G_fatal_error(_("Unable to access table <%s>"),
+					  buf);
+		    }
 		}
-		else {
-		    if ((point->y[0] > Overlap.N)) {	/*(3) */
-			weight = (*point->y - Overlap.N) / overlap;
-			*point->z = (1 - weight) * interpolation;
+		else if ((*point->x < Overlap.W) && (*point->x > General.W)) {
+		    if ((*point->y > Overlap.N) && (*point->y < General.N)) {	/*(4) */
+			csi = (*point->x - General.W) / overlap;
+			eta = (General.N - *point->y) / overlap;
+			weight = eta * csi;
+			*point->z = weight * interpolation;
 
 			sprintf(buf, "%lf", *point->z);
 			db_append_string(&sql, buf);
@@ -175,11 +122,54 @@ P_Sparse_Points(struct Map_info *Out, struct Cell_head *Elaboration,
 			db_append_string(&sql, buf);
 
 			if (db_execute_immediate(driver, &sql) != DB_OK)
-			    G_fatal_error(_("Unable to create table: %s"),
+			    G_fatal_error(_("Unable to access table <%s>"),
 					  buf);
 		    }
-		    else {	/*(1) */
-			weight = (Overlap.S - *point->y) / overlap;
+		    else if ((*point->y < Overlap.S) && (*point->y > General.S)) {	/*(2) */
+			csi = (*point->x - General.W) / overlap;
+			eta = (*point->y - General.S) / overlap;
+			weight = csi * eta;
+			*point->z = weight * interpolation;
+
+			sprintf(buf, "%lf", *point->z);
+			db_append_string(&sql, buf);
+			sprintf(buf, ")");
+			db_append_string(&sql, buf);
+
+			if (db_execute_immediate(driver, &sql) != DB_OK)
+			    G_fatal_error(_("Unable to access table <%s>"),
+					  buf);
+		    }
+		    else if ((*point->y >= Overlap.S) && (*point->y <= Overlap.N)) {	/*(2) */
+			weight = (*point->x - General.W) / overlap;
+			*point->z = weight * interpolation;
+
+			sprintf(buf, "%lf", *point->z);
+			db_append_string(&sql, buf);
+			sprintf(buf, ")");
+			db_append_string(&sql, buf);
+
+			if (db_execute_immediate(driver, &sql) != DB_OK)
+			    G_fatal_error(_("Unable to access table <%s>"),
+					  buf);
+		    }
+		}
+		else if ((*point->x >= Overlap.W) && (*point->x <= Overlap.E)){
+		    if ((*point->y > Overlap.N) && (*point->y < General.N)) {	/*(3) */
+			weight = (General.N - *point->y) / overlap;
+			*point->z = weight * interpolation;
+
+			sprintf(buf, "%lf", *point->z);
+			db_append_string(&sql, buf);
+			sprintf(buf, ")");
+			db_append_string(&sql, buf);
+
+			if (db_execute_immediate(driver, &sql) != DB_OK)
+			    G_fatal_error(_("Unable to access table <%s>"),
+					  buf);
+		    }
+		    else if ((*point->y < Overlap.S) && (*point->y > General.S)) {	/*(1) */
+			weight = (*point->y - General.S) / overlap;
 			*point->z = (1 - weight) * interpolation;
 
 			sprintf(buf, "%lf", *point->z);
@@ -188,14 +178,17 @@ P_Sparse_Points(struct Map_info *Out, struct Cell_head *Elaboration,
 			db_append_string(&sql, buf);
 
 			if (db_execute_immediate(driver, &sql) != DB_OK)
-			    G_fatal_error(_("Unable to create table: %s"),
+			    G_fatal_error(_("Unable to access table <%s>"),
 					  buf);
 		    }
 		}
 	    }
-	}
-     /*IF*/}
-     /*FOR*/ return;
+	}  /*IF*/
+    }  /*FOR*/
+
+    db_commit_transaction(driver);
+
+    return;
 }
 
 
@@ -207,13 +200,36 @@ double **P_Regular_Points(struct Cell_head *Elaboration, BOUND_BOX General,
 			  int ncols, int bilin)
 {
 
-    int col, row;
+    int col, row, startcol, endcol, startrow, endrow;
     double X, Y, interpolation, weight, csi, eta;
     struct Cell_head Original;
 
     G_get_window(&Original);
-    for (row = 0; row < nrows; row++) {
-	for (col = 0; col < ncols; col++) {
+    if (Original.north > General.N)
+	startrow = (Original.north - General.N) / Original.ns_res -1;
+    else
+	startrow = 0;
+    if (Original.north > General.S) {
+	endrow = (Original.north - General.S) / Original.ns_res + 1;
+	if (endrow > nrows)
+	    endrow = nrows;
+    }
+    else
+	endrow = nrows;
+    if (General.W > Original.west)
+	startcol = (General.W - Original.west) / Original.ew_res - 1;
+    else
+	startcol = 0;
+    if (General.E > Original.west) {
+	endcol = (General.E - Original.west) / Original.ew_res + 1;
+	if (endcol > ncols)
+	    endcol = ncols;
+    }
+    else
+	endcol = ncols;
+
+    for (row = startrow; row < endrow; row++) {
+	for (col = startcol; col < endcol; col++) {
 	    X = G_col_to_easting((double)(col) + 0.5, &Original);
 	    Y = G_row_to_northing((double)(row) + 0.5, &Original);
 
@@ -234,70 +250,59 @@ double **P_Regular_Points(struct Cell_head *Elaboration, BOUND_BOX General,
 
 		if (Vect_point_in_box(X, Y, interpolation, &Overlap)) {	/* (5) */
 		    matrix[row][col] = interpolation;
-
 		}
 		else {
-
-		    if ((X > Overlap.E)) {
-
-			if ((Y > Overlap.N)) {	/* (3) */
-			    csi = (X - Overlap.E) / overlap;
-			    eta = (Y - Overlap.N) / overlap;
-			    weight = (1 - csi) * (1 - eta);
+		    if ((X > Overlap.E) && (X < General.E)) {
+			if ((Y > Overlap.N) && (Y < General.N)) {	/* (3) */
+			    csi = (General.E - X) / overlap;
+			    eta = (General.N - Y) / overlap;
+			    weight = csi * eta;
 			    interpolation *= weight;
 			    matrix[row][col] += interpolation;
-
 			}
-			else if ((Y < Overlap.S)) {	/* (1) */
-			    csi = (X - Overlap.E) / overlap;
+			else if ((Y < Overlap.S) && (Y > General.S)) {	/* (1) */
+			    csi = (General.E - X) / overlap;
 			    eta = (Y - General.S) / overlap;
-			    weight = (1 - csi) * eta;
+			    weight = csi * eta;
 			    interpolation *= weight;
 			    matrix[row][col] = interpolation;
-
 			}
-			else {	/* (1) */
-			    weight = (X - Overlap.E) / overlap;
-			    interpolation *= 1 - weight;
+			else if ((Y >= Overlap.S) && (Y <= Overlap.N)) {	/* (1) */
+			    weight = (General.E - X ) / overlap;
+			    interpolation *= weight;
 			    matrix[row][col] = interpolation;
 			}
-
 		    }
-		    else if ((X < Overlap.W)) {
-
-			if ((Y > Overlap.N)) {	/* (4) */
+		    else if ((X < Overlap.W) && (X > General.W)) {
+			if ((Y > Overlap.N) && (Y < General.N)) {	/* (4) */
 			    csi = (X - General.W) / overlap;
-			    eta = (Y - Overlap.N) / overlap;
-			    weight = (1 - eta) * csi;
+			    eta = (General.N - Y) / overlap;
+			    weight = eta * csi;
 			    interpolation *= weight;
 			    matrix[row][col] += interpolation;
-
 			}
-			else if ((Y < Overlap.S)) {	/* (2) */
+			else if ((Y < Overlap.S) && (Y > General.S)) {	/* (2) */
 			    csi = (X - General.W) / overlap;
 			    eta = (Y - General.S) / overlap;
 			    weight = csi * eta;
 			    interpolation *= weight;
 			    matrix[row][col] += interpolation;
-
 			}
-			else {	/* (2) */
-			    weight = (Overlap.W - X) / overlap;
-			    interpolation *= 1 - weight;
+			else if ((Y >= Overlap.S) && (Y <= Overlap.N)) {	/* (2) */
+			    weight = (X - General.W) / overlap;
+			    interpolation *= weight;
 			    matrix[row][col] += interpolation;
 			}
-
 		    }
-		    else {
-			if ((Y > Overlap.N)) {	/* (3) */
-			    weight = (Y - Overlap.N) / overlap;
-			    interpolation *= 1 - weight;
+		    else if ((X >= Overlap.W) && (X <= Overlap.E)) {
+			if ((Y > Overlap.N) && (Y < General.N)) {	/* (3) */
+			    weight = (General.N - Y) / overlap;
+			    interpolation *= weight;
 			    matrix[row][col] += interpolation;
-
 			}
-			else {	/* (1) */
-			    weight = (Overlap.S - Y) / overlap;
-			    interpolation *= 1 - weight;
+			else if ((Y < Overlap.S) && (Y > General.S)) {	/* (1) */
+			    weight = (Y - General.S) / overlap;
+			    interpolation *= weight;
 			    matrix[row][col] = interpolation;
 			}
 		    }
