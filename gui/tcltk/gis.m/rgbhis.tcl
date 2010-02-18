@@ -10,12 +10,12 @@
 ##########################################################################
 
 namespace eval GmRgbhis {
-    variable array opt # rgbhis current options
+    variable array opt ;# rgbhis current options
     variable count 1
-    variable array lfile # rgbhis
-    variable array lfilemask # rgbhis
+    variable array lfile ;# rgbhis
+    variable array lfilemask ;# rgbhis
     variable optlist
-    variable array dup # vector
+    variable array dup ;# vector
 }
 
 
