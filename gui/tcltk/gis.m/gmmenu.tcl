@@ -485,7 +485,7 @@ set descmenu [subst  {
 		{command {[G_msg "Display shortest route"]} {} "d.path: Display shortest route along network between 2 nodes (visualization only)" {} -command {
 			unset env(GRASS_RENDER_IMMEDIATE)
 			guarantee_xmon
-			spawn d.path.sh -b --ui
+			spawn d.path.sh
 			set env(GRASS_RENDER_IMMEDIATE) "TRUE"}}
 		{command {[G_msg "Split net"]} {} "v.net.iso: Split net into bands between cost isolines" {} -command {execute v.net.iso }}
 		{command {[G_msg "Steiner tree"]} {} "v.net.steiner: Create Steiner tree for network and given terminals" {} -command {execute v.net.steiner }}

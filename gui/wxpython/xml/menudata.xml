@@ -1808,7 +1808,7 @@
 	      <label>Display shortest route (requires XTerm)</label>
 	      <help>Finds shortest path for selected starting and ending node.</help>
 	      <handler>self.OnXTerm</handler>
-	      <command>d.path</command>
+	      <command>d.path.sh</command>
 	    </menuitem>
 	    <menuitem>
 	      <label>Split net</label>
