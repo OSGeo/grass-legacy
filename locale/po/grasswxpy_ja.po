@@ -6,15 +6,13 @@
 # Naoki Ueda <nao@locapoint.com>, 2010
 # Akira Taniguchi <taniguti@apptec.co.jp>, 2010
 # Hirotoshi Toyoda <toyoda@ex.media.osaka-cu.ac.jp>, 2010
-# Haruka Fujii <haruka.fujii@la.tezuka-gu.ac.jp>, 2010.
-# Yuka Tohhana <yuka.tohhana@la.tezuka-gu.ac.jp>, 2010.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: grasswxpy_ja\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2010-01-14 08:01+0100\n"
-"PO-Revision-Date: 2010-02-15 17:54+0900\n"
+"PO-Revision-Date: 2010-02-15 14:06+0900\n"
 "Last-Translator: ueda <nao@locapoint.com>\n"
 "Language-Team: Japanese <grass-translations@lists.osgeo.org>\n"
 "MIME-Version: 1.0\n"
@@ -848,7 +846,7 @@ msgstr "GRIDATB.FOR インポート "
 
 #: ../gui/wxpython/menustrings.py:38
 msgid "Imports GRIDATB.FOR map file (TOPMODEL) into GRASS raster map"
-msgstr "バイナリーファイルをラスターマップとしてインポートします "
+msgstr "GRIDATB.FORファイル (TOPMODEL) をインポートします "
 
 #: ../gui/wxpython/menustrings.py:39
 msgid "Matlab 2D array import"
@@ -1165,7 +1163,7 @@ msgstr "POV-Rayのエクスポート "
 
 #: ../gui/wxpython/menustrings.py:112
 msgid "Converts a raster map layer into a height-field file for POVRAY."
-msgstr "POV-Rayのハイト・フィールドにラスターマップを変換"
+msgstr "POV-Rayの標高フィールドにラスターマップを変換"
 
 #: ../gui/wxpython/menustrings.py:113
 msgid "TIFF export"
@@ -7504,7 +7502,7 @@ msgstr "コピー"
 #: ../gui/wxpython/gui_modules/menuform.py:767
 #: ../gui/wxpython/gui_modules/preferences.py:1210
 msgid "Close dialog on finish"
-msgstr "終了のためダイアログを閉じる"
+msgstr "終了時にダイアログを閉じる"
 
 #: ../gui/wxpython/gui_modules/menuform.py:908
 #, python-format
@@ -8017,8 +8015,8 @@ msgid ""
 "Check mapset to make it accessible, uncheck it to hide it.%sNote: PERMANENT "
 "and current mapset are always accessible."
 msgstr ""
-"アクセスするマップセットをチャックアクセスしない場合はチェックをはずす%s 備"
-"考: PERMANENT と 現在のマップセットは常にアクセスできます "
+"アクセスするマップセットをチェック（アクセスしない場合はチェックをはずす）%s "
+"備考: PERMANENT と 現在のマップセットは常にアクセスできます "
 
 #: ../gui/wxpython/gui_modules/preferences.py:2140
 msgid "Mapset"
@@ -8537,7 +8535,7 @@ msgstr "コピー."
 #~ msgstr "コマンド実行エラー %s"
 
 #~ msgid "E&xit"
-#~ msgstr "終了(E&) "
+#~ msgstr "終了(&x) "
 
 #~ msgid "Open existing workspace file"
 #~ msgstr "ワークスペースを開く "
@@ -8650,7 +8648,7 @@ msgstr "コピー."
 #~ msgstr "コマンドを実行せずに画面を閉じる"
 
 #~ msgid "Show manual page of the command"
-#~ msgstr "コマンドのマニュアルを見てください "
+#~ msgstr "コマンドマニュアルを表示"
 
 #~ msgid "&Stop"
 #~ msgstr "ストップ(&S)"
