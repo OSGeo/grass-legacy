@@ -52,7 +52,7 @@ int main(int argc, char *argv[])
     dista_opt->key = "distance";
     dista_opt->type = TYPE_DOUBLE;
     dista_opt->required = YES;
-    dista_opt->options = "0-100000000";
+    /* dista_opt->options = "0-100000000"; */
     dista_opt->multiple = NO;
     dista_opt->description = _("Offset along major axis in map units");
 
@@ -70,7 +70,7 @@ int main(int argc, char *argv[])
     angle_opt->required = NO;
     angle_opt->answer = "0";
     angle_opt->multiple = NO;
-    angle_opt->description = _("Angle of major axis in degrees");
+    angle_opt->description = _("Angle of major axis in degrees"); /* CW or CCW? or this does nothing at all?? */
 
     side_opt = G_define_option();
     side_opt->key = "side";
@@ -110,7 +110,7 @@ int main(int argc, char *argv[])
     if (distb_opt->answer)
 	db = atof(distb_opt->answer);
     else
-	db = da;
+	db = fabs(da);
 
     if (angle_opt->answer)
 	dalpha = atof(angle_opt->answer);
@@ -128,6 +128,13 @@ int main(int argc, char *argv[])
 	side = -1;
     else
 	side = 0;
+
+    /* backwawrds compatibility with v.parallel from GRASS 6.2,
+       where negative distances mean left side */
+    if (da < 0) {
+	da *= -1;
+	side = -1;
+    }
 
     Vect_set_open_level(2);
     Vect_open_old(&In, in_opt->answer, "");
