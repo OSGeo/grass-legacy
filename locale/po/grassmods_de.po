@@ -27428,7 +27428,7 @@ msgstr "Datenbanktreiber"
 #: ../locale/scriptstrings/d.vect.thematic_to_translate.c:47
 #: ../locale/scriptstrings/v.db.univar_to_translate.c:8
 msgid "WHERE conditions of SQL statement without 'where' keyword"
-msgstr "WHERE Bedingungen des SQL-Ausdrucksohne das Schlüsselwort 'where'."
+msgstr "WHERE Bedingungen des SQL-Ausdrucks ohne das Schlüsselwort 'where'."
 
 #: ../locale/scriptstrings/g.manual_to_translate.c:1
 msgid "Display the HTML man pages of GRASS"
