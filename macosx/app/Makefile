@@ -37,9 +37,9 @@ endif
 
 default: macosxapp
 
-macosxapp: PkgInfo app.icns English.lproj/MainMenu.nib build_html_user_index.sh build_gui_user_menu.sh $(ARCH_OBJS) $(APPDIR)/MacOS/GRASS
+macosxapp: PkgInfo app.icns English.lproj/MainMenu.nib build_html_user_index.sh build_gui_user_menu.sh python_wrapper $(ARCH_OBJS) $(APPDIR)/MacOS/GRASS
 	-${MAKE_DIR_CMD} ${APPDIR}/Resources/Scripts
-	-${MAKE_DIR_CMD} ${APPDIR}/MacOS/scripts
+	-${MAKE_DIR_CMD} ${APPDIR}/MacOS/bin
 	-${MAKE_DIR_CMD} ${APPDIR}/MacOS/etc
 	-${INSTALL_DATA} app.icns ${APPDIR}/Resources
 	-tar cBf - English.lproj --exclude CVS | (cd ${APPDIR}/Resources ; tar xBf - ) 2>/dev/null
@@ -49,6 +49,7 @@ macosxapp: PkgInfo app.icns English.lproj/MainMenu.nib build_html_user_index.sh 
 	-${INSTALL_DATA} $(OBJDIR)/GRASS.scpt ${APPDIR}/Resources/Scripts
 	-${INSTALL} build_html_user_index.sh ${APPDIR}/MacOS/etc
 	-${INSTALL} build_gui_user_menu.sh ${APPDIR}/MacOS/etc
+	-${INSTALL} python_wrapper ${APPDIR}/MacOS/bin/python
 
 $(OBJDIR)/main.o: main.m
 	$(MAKE_DIR_CMD) $(OBJDIR)
