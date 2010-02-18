@@ -547,7 +547,8 @@ You have to type 'exit' in terminal manualy."]
 		}
 	}
 
-	exit
+	# It's unsafe to call exit during Destroy event
+	after idle [list destroy .]
 }
 
 ###############################################################################
