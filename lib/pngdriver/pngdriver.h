@@ -8,7 +8,7 @@
 
 #define FILE_NAME  "map.png"
 
-#define HEADER_SIZE 54
+#define HEADER_SIZE 64
 
 extern char *file_name;
 extern int currentColor;
