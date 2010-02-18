@@ -2086,7 +2086,7 @@
 	      <help>Finds shortest path for selected starting and ending node.</help>
 	      <keywords>display,networking</keywords>
 	      <handler>self.OnXTerm</handler>
-	      <command>d.path</command>
+	      <command>d.path.sh</command>
 	    </menuitem>
 	    <menuitem>
 	      <label>Split net</label>
