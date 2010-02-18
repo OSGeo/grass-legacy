@@ -34,7 +34,7 @@ namespace eval GmProfile {
     variable liney1 0.0
     variable linex2 0.0
     variable liney2 0.0	
-    variable array psegment len #
+    variable array psegment len ;#
     variable elevrange 0.0
     variable elevmax 0.0
     variable elevmin 0.0

@@ -42,7 +42,7 @@ namespace eval psprint {
 	variable PVar 
 	variable PView
 	variable PWid 
-	global array can # mon
+	global array can ;# mon
 }
 
 

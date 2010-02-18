@@ -9,14 +9,14 @@
 ##########################################################################
 
 namespace eval GmHist {
-    variable array opt # hist current options
+    variable array opt ;# hist current options
     variable count 1
-    variable array tree # mon
-    variable array lfile # histogram
-    variable array lfilemask # histogram
+    variable array tree ;# mon
+    variable array lfile ;# histogram
+    variable array lfilemask ;# histogram
     variable optlist
     variable first
-    variable array dup # layer
+    variable array dup ;# layer
 }
 
 proc GmHist::create { tree parent } {

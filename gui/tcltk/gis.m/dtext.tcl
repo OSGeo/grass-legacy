@@ -10,7 +10,7 @@
 ##########################################################################
 
 namespace eval GmDtext {
-    variable array opt # d.text options
+    variable array opt ;# d.text options
     variable count 1
     variable array lfile 
     variable array lfilemask
