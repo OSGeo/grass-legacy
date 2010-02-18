@@ -139,7 +139,11 @@ if [ "$1" != "@ARGS_PARSED@" ] ; then
     exec g.parser "$0" "$@"
 fi
 
+
 d.vect map="$GIS_OPT_MAP" color="$GIS_OPT_COLOR"
+
+echo "Left mouse button: set start point     Middle: set end point     Right: quit" | \
+   d.text size=2.25 bgcolor="240:240:240" color=red
 
 
 if [ "$GIS_FLAG_G" -eq 1 ] ; then
