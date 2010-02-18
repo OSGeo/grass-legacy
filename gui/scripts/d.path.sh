@@ -28,7 +28,7 @@
 #%End
 #%Flag
 #% key: b
-#% description: Render bold lines
+#% description: Do not render bold lines
 #% guisection: Rendering
 #%End
 #%Option
@@ -133,6 +133,8 @@ if [ -z "$GISBASE" ] ; then
     exit 1
 fi
 
+unset GRASS_UI_TERM
+
 if [ "$1" != "@ARGS_PARSED@" ] ; then
     exec g.parser "$0" "$@"
 fi
@@ -145,7 +147,7 @@ if [ "$GIS_FLAG_G" -eq 1 ] ; then
 else
     flag_g=""
 fi
-if [ "$GIS_FLAG_B" -eq 1 ] ; then
+if [ "$GIS_FLAG_B" -eq 0 ] ; then
     flag_b="-b"
 else
     flag_b=""
