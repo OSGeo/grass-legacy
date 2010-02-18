@@ -12,7 +12,7 @@ msgstr ""
 "Project-Id-Version: grasslibs_de\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2010-01-14 08:01+0100\n"
-"PO-Revision-Date: 2010-02-12 08:45+0100\n"
+"PO-Revision-Date: 2010-02-18 14:33+0100\n"
 "Last-Translator: Markus Neteler <neteler osgeo.org>\n"
 "Language-Team: Deutsch <grass-translations@lists.osgeo.org>\n"
 "MIME-Version: 1.0\n"
@@ -30,7 +30,7 @@ msgstr "FEHLER %s vom Grafiktreiber.\n"
 #: ../lib/raster/rem_io.c:167
 #, c-format
 msgid "Unable to allocate memory\n"
-msgstr "Kann keinen Speicher belegen.\n"
+msgstr "Kann keinen Speicher belegen\n"
 
 #: ../lib/raster/rem_io.c:217
 #, c-format
@@ -76,7 +76,7 @@ msgstr "Socket wird bereits benutzt oder akzeptiert keine Verbindungen."
 
 #: ../lib/raster/io_sock.c:99
 msgid "Use d.mon to select a monitor"
-msgstr "Bitte verwenden Sie \"d.mon\", um ein Grafikfenster auszuwählen."
+msgstr "Bitte verwenden Sie d.mon, um ein Grafikfenster auszuwählen"
 
 #: ../lib/raster/io_sock.c:105
 msgid "Trying to connect to something not a socket."
@@ -127,9 +127,9 @@ msgid "Incorrect symbol color: '%s', using default."
 msgstr "Falsche Symbolfarbe: '%s', benutze Standardfarbe."
 
 #: ../lib/proj/get_proj.c:150
-#, fuzzy, c-format
+#, c-format
 msgid "Invalid zone %s specified"
-msgstr "ungültiger Ellipsoid %s in Datei."
+msgstr "Ungültige Zone %s angegeben"
 
 #: ../lib/proj/get_proj.c:230
 msgid "Unable to initialise PROJ.4 with the following parameter list:"
@@ -138,35 +138,32 @@ msgstr ""
 #: ../lib/proj/get_proj.c:238
 #, c-format
 msgid "The error message: %s"
-msgstr ""
+msgstr "Die Fehlermeldung: %s"
 
 #: ../lib/proj/get_proj.c:296
 msgid "Option input overflowed option table"
 msgstr ""
 
 #: ../lib/proj/get_proj.c:327
-#, fuzzy, c-format
+#, c-format
 msgid "Unable to initialize pj cause: %s"
-msgstr "Kann Datei %s in %s nicht öffnen"
+msgstr "Kann pj nicht initialisieren: %s"
 
 #: ../lib/proj/get_proj.c:403
-#, fuzzy
 msgid "Input Projection Parameters"
-msgstr "Parameter"
+msgstr "Eingabeparameter der Projektion"
 
 #: ../lib/proj/get_proj.c:406
 msgid "Input Unit Factor"
-msgstr ""
+msgstr "Einheitenfaktor der Eingabe"
 
 #: ../lib/proj/get_proj.c:416
-#, fuzzy
 msgid "Output Projection Parameters"
-msgstr "Ergebnis Parameter"
+msgstr "Ausgabeparameter der Projektion"
 
 #: ../lib/proj/get_proj.c:419
-#, fuzzy
 msgid "Output Unit Factor"
-msgstr "Ergebnis"
+msgstr "Einheitfaktor der Ausgabe"
 
 #: ../lib/proj/datum.c:251
 msgid "Unable to open temporary file"
@@ -365,9 +362,9 @@ msgid "'%s/%s' was found in more mapsets (also found in <%s>)"
 msgstr ""
 
 #: ../lib/gis/find_file.c:82
-#, fuzzy, c-format
+#, c-format
 msgid "Using <%s@%s>"
-msgstr "Kann [%s] nicht finden."
+msgstr "Benutze <%s@%s>"
 
 #: ../lib/gis/quant_rw.c:206
 #, c-format
@@ -651,7 +648,7 @@ msgstr "Oben muss größer sein als Unten"
 
 #: ../lib/gis/parser.c:331
 msgid "WHERE conditions of SQL statement without 'where' keyword"
-msgstr "WHERE Bedingungen des SQL-Ausdrucksohne das Schlüsselwort 'where'."
+msgstr "WHERE Bedingungen des SQL-Ausdrucks ohne das Schlüsselwort 'where'."
 
 #: ../lib/gis/parser.c:332
 msgid "Example: income < 1000 and inhab >= 10000"
@@ -887,15 +884,15 @@ msgstr "  %*s    Standard: %s\n"
 
 #: ../lib/gis/parser.c:1536
 msgid "NAME"
-msgstr ""
+msgstr "NAME"
 
 #: ../lib/gis/parser.c:1549
 msgid "KEYWORDS"
-msgstr ""
+msgstr "SCHLÜSSELWÖRTER"
 
 #: ../lib/gis/parser.c:1554
 msgid "SYNOPSIS"
-msgstr ""
+msgstr "SYNOPSIS"
 
 #: ../lib/gis/parser.c:1622
 msgid "Flags"
@@ -915,11 +912,11 @@ msgstr "Standardwert"
 
 #: ../lib/gis/parser.c:1935
 msgid "Allow overwrite"
-msgstr ""
+msgstr "Erlaube Überschreiben"
 
 #: ../lib/gis/parser.c:1943
 msgid "Run with minimal output messages"
-msgstr ""
+msgstr "Lasse mit minimalen Ausgabemeldungen laufen"
 
 #: ../lib/gis/parser.c:1945
 msgid "Run quietly"
@@ -2040,7 +2037,7 @@ msgstr "Eingabe-Formatfehler"
 
 #: ../lib/gis/color_rules.c:112
 msgid "R/G/B not in range 0-255"
-msgstr ""
+msgstr "R/G/B nicht im Bereich 0-255"
 
 #: ../lib/gis/color_rules.c:114
 msgid "invalid color name"
@@ -2048,7 +2045,7 @@ msgstr "ungültiger Farbname"
 
 #: ../lib/gis/color_rules.c:116
 msgid "percentage not in range 0-100"
-msgstr ""
+msgstr "Prozent nicht im Bereich 0-100"
 
 #: ../lib/gis/color_rules.c:118
 msgid "invalid value"
@@ -2084,9 +2081,9 @@ msgid " It is a reclass of raster map <%s@%s> "
 msgstr "Raster Karte "
 
 #: ../lib/gis/get_cellhd.c:78
-#, fuzzy, c-format
+#, c-format
 msgid "which is missing."
-msgstr "welche fehlt"
+msgstr "welches fehlt."
 
 #: ../lib/gis/get_cellhd.c:80
 #, fuzzy, c-format
@@ -2104,9 +2101,9 @@ msgid " It is a reclass of raster map <%s@%s> whose header file is invalid."
 msgstr "Raster Karte."
 
 #: ../lib/gis/get_cellhd.c:109
-#, fuzzy, c-format
+#, c-format
 msgid " Invalid format."
-msgstr "Ungültiges Format\n"
+msgstr " Ungültiges Format."
 
 #: ../lib/gis/gisinit.c:54 ../lib/gis/gisinit.c:90
 msgid ""
@@ -2327,7 +2324,7 @@ msgstr "Kann Datei %s nicht öffnen."
 #: ../lib/vector/Vlib/write_nat.c:50 ../lib/vector/Vlib/write_nat.c:83
 #, c-format
 msgid "%s: Area %d does not exist"
-msgstr ""
+msgstr "%s: Fläche %d existiert nicht"
 
 #: ../lib/vector/Vlib/write_nat.c:640
 #, fuzzy
@@ -2412,7 +2409,7 @@ msgstr ""
 
 #: ../lib/vector/Vlib/sindex.c:97
 msgid "not implemented"
-msgstr ""
+msgstr "nicht implementiert"
 
 #: ../lib/vector/Vlib/sindex.c:109
 #, fuzzy, c-format
@@ -2513,9 +2510,8 @@ msgid "Unable to select record from table <%s> (key %s, where %s)"
 msgstr "Kann Header-Datei für [%s in %s] nicht erstellen."
 
 #: ../lib/vector/Vlib/geos.c:53 ../lib/vector/Vlib/read.c:99
-#, fuzzy
 msgid "vector map is not opened"
-msgstr "Vektor Karte"
+msgstr "Vektorkarte ist nicht geöffnet"
 
 #: ../lib/vector/Vlib/geos.c:56
 #, fuzzy, c-format
@@ -2587,9 +2583,8 @@ msgid "Building topology for vector map <%s>..."
 msgstr "Erstelle Topologie für die Vektorkarte <%s>..."
 
 #: ../lib/vector/Vlib/build.c:141
-#, fuzzy
 msgid "Topology was built"
-msgstr "Die Topologie wurde erstellt\n"
+msgstr "Die Topologie wurde erstellt"
 
 #: ../lib/vector/Vlib/build.c:153
 #, c-format
@@ -2830,9 +2825,8 @@ msgid "Request to find area outside nonexistent isle"
 msgstr ""
 
 #: ../lib/vector/Vlib/build_nat.c:514
-#, fuzzy
 msgid "Registering primitives..."
-msgstr "Registriere Linien..."
+msgstr "Registriere Primitive..."
 
 #: ../lib/vector/Vlib/build_nat.c:523
 msgid "Unable to read vector map"
@@ -3250,7 +3244,7 @@ msgstr "Vektor Karte"
 
 #: ../lib/vector/Vlib/open_ogr.c:53
 msgid "OGR format cannot be updated"
-msgstr ""
+msgstr "OGR Format kann nicht aktualisiert werden"
 
 #: ../lib/vector/Vlib/open_ogr.c:65
 #, c-format
