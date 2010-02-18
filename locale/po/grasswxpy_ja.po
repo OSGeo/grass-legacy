@@ -6,15 +6,13 @@
 # Naoki Ueda <nao@locapoint.com>, 2010
 # Akira Taniguchi <taniguti@apptec.co.jp>, 2010
 # Hirotoshi Toyoda <toyoda@ex.media.osaka-cu.ac.jp>, 2010
-# Haruka Fujii <haruka.fujii@la.tezuka-gu.ac.jp>, 2010.
-# Yuka Tohhana <yuka.tohhana@la.tezuka-gu.ac.jp>, 2010.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: grasswxpy_ja\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2010-01-14 07:12+0100\n"
-"PO-Revision-Date: 2010-02-15 17:54+0900\n"
+"PO-Revision-Date: 2010-02-15 14:06+0900\n"
 "Last-Translator: ueda <nao@locapoint.com>\n"
 "Language-Team: Japanese <grass-translations@lists.osgeo.org>\n"
 "MIME-Version: 1.0\n"
@@ -838,7 +836,7 @@ msgstr "GRIDATB.FOR インポート "
 
 #: ../gui/wxpython/menustrings.py:38
 msgid "Imports GRIDATB.FOR map file (TOPMODEL) into GRASS raster map"
-msgstr "バイナリーファイルをラスターマップとしてインポートします "
+msgstr "GRIDATB.FORファイル (TOPMODEL) をインポートします "
 
 #: ../gui/wxpython/menustrings.py:39
 msgid "MAT-File (v.4) import"
@@ -1145,7 +1143,7 @@ msgstr "POV-Rayのエクスポート "
 
 #: ../gui/wxpython/menustrings.py:110
 msgid "Converts a raster map layer into a height-field file for POVRAY."
-msgstr "POV-Rayのハイト・フィールドにラスターマップを変換"
+msgstr "POV-Rayの標高フィールドにラスターマップを変換"
 
 #: ../gui/wxpython/menustrings.py:111
 msgid "TIFF export"
@@ -1412,7 +1410,7 @@ msgstr "ポストスクリプト出力ユーティリティ "
 
 #: ../gui/wxpython/menustrings.py:180
 msgid "E&xit"
-msgstr "終了(E&) "
+msgstr "終了(&x) "
 
 #: ../gui/wxpython/menustrings.py:181
 msgid "Exit GUI"
@@ -6927,7 +6925,7 @@ msgstr "ヘルプ(&H)"
 
 #: ../gui/wxpython/gui_modules/menuform.py:803
 msgid "Show manual page of the command"
-msgstr "コマンドのマニュアルを見てください "
+msgstr "コマンドマニュアルを表示"
 
 #: ../gui/wxpython/gui_modules/menuform.py:806
 msgid "&Apply"
@@ -6960,7 +6958,7 @@ msgstr "クリップボードに現在のコマンド文をコピー"
 #: ../gui/wxpython/gui_modules/menuform.py:871
 #: ../gui/wxpython/gui_modules/preferences.py:1131
 msgid "Close dialog on finish"
-msgstr "終了のためダイアログを閉じる"
+msgstr "終了時にダイアログを閉じる"
 
 #: ../gui/wxpython/gui_modules/menuform.py:982
 #, python-format
@@ -7397,8 +7395,8 @@ msgid ""
 "Check mapset to make it accessible, uncheck it to hide it.%sNote: PERMANENT "
 "and current mapset are always accessible."
 msgstr ""
-"アクセスするマップセットをチャックアクセスしない場合はチェックをはずす%s 備"
-"考: PERMANENT と 現在のマップセットは常にアクセスできます "
+"アクセスするマップセットをチェック（アクセスしない場合はチェックをはずす）%s "
+"備考: PERMANENT と 現在のマップセットは常にアクセスできます "
 
 #: ../gui/wxpython/gui_modules/preferences.py:1796
 msgid "Mapset"
