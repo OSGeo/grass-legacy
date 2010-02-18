@@ -187,6 +187,9 @@ class wxQgisGrassModule( handleQgisGrassModule ):
 from sys import argv
 
 if __name__ ==  '__main__':
+    import os,gettext
+    gettext.install('grasswxpy', os.path.join(os.getenv("GISBASE"), 'locale'), unicode=True)
+
     if len( argv ) != 2:
         print "Usage: %s <toolbox command>" % sys.argv[0]
     else:

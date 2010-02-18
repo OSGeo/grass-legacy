@@ -72,6 +72,8 @@ class Data:
 
 if __name__ == "__main__":
     import sys
+    import gettext
+    gettext.install('grasswxpy', os.path.join(os.getenv("GISBASE"), 'locale'), unicode=True)
     if len(sys.argv) < 2:
         sys.exit(1)
     
