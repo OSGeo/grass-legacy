@@ -147,8 +147,9 @@ int main(int argc, char *argv[])
 
     dfield_opt = G_define_standard_option(G_OPT_V_FIELD);
     dfield_opt->description =
-	_("If set to -1, z coordinates are used. (3D vector only)");
-    dfield_opt->answer = "-1";
+	_("If set to 0, z coordinates are used. (3D vector only)");
+    dfield_opt->answer = "0";
+    dfield_opt->gisprompt = "old_layer,layer,layer_zero";
     dfield_opt->guisection = _("Settings");
 
     col_opt = G_define_option();
