@@ -152,9 +152,8 @@ int main(int argc, char *argv[])
     dfield_opt->gisprompt = "old_layer,layer,layer_zero";
     dfield_opt->guisection = _("Settings");
 
-    col_opt = G_define_option();
+    col_opt = G_define_standard_option(G_OPT_COLUMN);
     col_opt->key = "column";
-    col_opt->type = TYPE_STRING;
     col_opt->required = NO;
     col_opt->description =
 	_("Attribute table column with values to interpolate (if layer>0)");
