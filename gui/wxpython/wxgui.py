@@ -1010,7 +1010,7 @@ class GMFrame(wx.Frame):
         
         if sys.platform == "win32":
             runbat = os.path.join(gisbase,'etc','grass-run.bat')
-            cmdlist = ["cmd.exe", "/c", 'start "%s"' % runbat, command]
+            cmdlist = ["start", runbat, runbat, command]
         else:
             if sys.platform == "darwin":
                 xtermwrapper = os.path.join(gisbase,'etc','grass-xterm-mac')
