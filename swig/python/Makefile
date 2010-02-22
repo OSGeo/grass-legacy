@@ -36,7 +36,7 @@ vedit_LIBS      = $(VEDITLIB)
 
 EXTRA_INC = $(VECT_INC) $(PROJINC) $(GDALCFLAGS) $(GEOSCFLAGS)
 
-EXTRA_SWG = ../include/python/my_typemaps.i ../include/python/common.i
+EXTRA_SWIG = ../include/python/my_typemaps.i ../include/python/common.i
 SWIGFLAGS = $(ARCH_INC) -I../include/python -outdir .
 EXTRA_CFLAGS = $(PYMOD_CFLAGS)
 EXTRA_CLEAN_FILES := $(foreach M,$(MODULES),$(M)_wrap.o $(M)_wrap.c $(M).pyc $(M).py _$(M).so)
