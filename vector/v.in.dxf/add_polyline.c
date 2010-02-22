@@ -11,7 +11,6 @@ int add_polyline(struct dxf_file *dxf, struct Map_info *Map)
     int layer_flag = 0;		/* indicates if a layer name has been found */
     int polyline_flag = 0;	/* indicates the type of polyline */
     int warn_flag66 = 1;	/* indicates if error message printed once */
-    int warn_flag70 = 1;	/* indicates if error message printed once */
     int vert_flag;		/* indicates that vertices are following */
     int xflag = 0;		/* indicates if a x value has been found */
     int yflag = 0;		/* indicates if a y value has been found */
@@ -62,14 +61,6 @@ int add_polyline(struct dxf_file *dxf, struct Map_info *Map)
 	     128 = The linetype pattern is generated continuously around
 	           the vertices of this polyline.
 	     ******************************************************************/
-	    /* NOTE: code only exists for flag = 1 (closed polyline) or 0 */
-	    G_debug(1, "polyline_flag: %d", polyline_flag);
-	    if (polyline_flag & (8 | 16 | 32))
-		if (warn_flag70) {
-		    G_warning(_("3-d data in dxf file. Polyline_flag: %d"),
-			      polyline_flag);
-		    warn_flag70 = 0;
-		}
 	    break;
 	}
     }
@@ -145,7 +136,7 @@ int add_polyline(struct dxf_file *dxf, struct Map_info *Map)
 	     8 = Spline vertex created by spline-fitting
 	     16 = Spline frame control point
 	     32 = 3D polyline vertex
-	     64 = 3D polygon mesh
+	     64 = 3D polygon mesh vertex
 	     128 = Polyface mesh vertex
 	     ******************************************************************/
 		    if (vertex_flag == 16) {
