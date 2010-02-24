@@ -1,6 +1,6 @@
 # translation of grasstcl_it.po to Italian
 # This file is distributed under the same license as the GRASS package.
-# Copyright (C) 2006-2009, GRASS Development Team
+# Copyright (C) 2006-2010, GRASS Development Team
 # Lorenzo Moretti <lorenzo.moretti@bologna.enea.it>
 #
 # Markus Neteler <neteler@itc.it>, 2006.
@@ -2155,12 +2155,12 @@ msgid "Raster map: "
 msgstr "Mappa Raster:"
 
 #: ../gui/tcltk/gis.m/legend.tcl:229
-#, tcl-format
+#, fuzzy, tcl-format
 msgid "Legend placement and size as 0-100% of display"
 msgstr "Posizione legenda e grandezza 0-100% della finestra"
 
 #: ../gui/tcltk/gis.m/legend.tcl:235
-#, tcl-format
+#, fuzzy, tcl-format
 msgid "    x,y of lower left corner (in % from display top left)"
 msgstr "x,y dall'angolo sinistro in basso (in % dal display. alto a sinistra)"
 
@@ -2169,7 +2169,7 @@ msgid "    legend height "
 msgstr "    altezza legenda "
 
 #: ../gui/tcltk/gis.m/legend.tcl:248
-#, tcl-format
+#, fuzzy, tcl-format
 msgid "Legend height (% of display)"
 msgstr "Altezza Legenda (% della fin.)"
 
@@ -2178,7 +2178,7 @@ msgid "%  width"
 msgstr "%  larghezza"
 
 #: ../gui/tcltk/gis.m/legend.tcl:251
-#, tcl-format
+#, fuzzy, tcl-format
 msgid "Legend width (% of display)"
 msgstr "Largezza Legenda (% della fin.)"
 
@@ -2541,7 +2541,7 @@ msgid "Frame name (optional): "
 msgstr "Nome frame (opzionale): "
 
 #: ../gui/tcltk/gis.m/frames.tcl:135
-#, tcl-format
+#, fuzzy, tcl-format
 msgid "Set frame borders at 0-100% from lower left corner of display "
 msgstr "Imposta bordi frame a 0-100% da angolo basso sx della finestra "
 
@@ -6398,5 +6398,3 @@ msgstr "verde (RGB) o intensity (HIS):"
 msgid "blue (RGB) or saturation (HIS):"
 msgstr "blu (RGB) o saturation (HIS):"
 
-#~ msgid "Run (in Xterm)"
-#~ msgstr "Esegui (in Xterm)"
