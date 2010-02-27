@@ -1,4 +1,4 @@
-"""
+"""!
 @package georect.py
 
 @brief Georectification module for GRASS GIS. Includes ground control
@@ -15,7 +15,7 @@ Classes:
  - EditGCP
  - GrSettingsDialog
 
-(C) 2006-2008 by the GRASS Development Team
+(C) 2006-2010 by the GRASS Development Team
 
 This program is free software under the GNU General Public License
 (>=v2). Read the file COPYING that comes with GRASS for details.
@@ -193,6 +193,9 @@ class GeorectWizard(object):
                                                size=globalvar.MAP_WINDOW_SIZE,
                                                toolbars=["georect"],
                                                Map=self.Map, gismgr=self.parent)
+            self.xy_mapdisp.SetTitle(_("GRASS GIS Map Display: 1" +
+                                       " - Location: " + self.newlocation +
+                                       " (source location)"))
 
             self.gcpmgr.SetMapDisplay(self.xy_mapdisp)
             
@@ -674,7 +677,7 @@ class GCP(wx.Frame):
     """
 
     def __init__(self, parent, grwiz, mapdisp=None, id=wx.ID_ANY,
-                 title=_("Create & manage ground control points"),
+                 title=_("Define/manage ground control points"),
                  size=wx.DefaultSize):
 
         wx.Frame.__init__(self, parent, id, title, size=(625, 300))

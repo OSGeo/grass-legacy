@@ -1,4 +1,4 @@
-"""
+"""!
 @package toolbar
 
 @brief Toolbars for Map Display window
@@ -12,7 +12,7 @@ Classes:
  - ProfileToolbar
  - NvizToolbar
 
-(C) 2007-2008 by the GRASS Development Team This program is free
+(C) 2007-2010 by the GRASS Development Team This program is free
 software under the GNU General Public License (>=v2). Read the file
 COPYING that comes with GRASS for details.
 
@@ -351,15 +351,14 @@ class GRToolbar(AbstractToolbar):
             (self.zoomtomap, "zoomtomap", Icons["zoommenu"].GetBitmap(),
              wx.ITEM_NORMAL, _("Zoom to map"), _("Zoom to displayed map"),
              self.OnZoomMap),
-            ("", "", "", "", "", "", ""),
             )
 
     def OnZoomMap(self, event):
         """Zoom to selected map"""
-        layer = self.mapcontent.GetListOfLayers()[0]
-
+        layer = self.mapcontent.GetListOfLayers()
+        
         self.mapdisplay.MapWindow.ZoomToMap(layer=layer)
-
+        
         event.Skip()
         
 class GCPToolbar(AbstractToolbar):
