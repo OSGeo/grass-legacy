@@ -196,6 +196,7 @@ class GeorectWizard(object):
             self.xy_mapdisp.SetTitle(_("GRASS GIS Map Display: 1" +
                                        " - Location: " + self.newlocation +
                                        " (source location)"))
+            self.xy_mapdisp.SetName("GRMapWindow")
 
             self.gcpmgr.SetMapDisplay(self.xy_mapdisp)
             
@@ -211,6 +212,7 @@ class GeorectWizard(object):
             #
             # show new display & draw map
             #
+            self.xy_mapdisp.toolbars['georect'].OnZoomMap(None)
             self.xy_mapdisp.CenterOnScreen()
             self.xy_mapdisp.Show()
             self.gcpmgr.Centre()
