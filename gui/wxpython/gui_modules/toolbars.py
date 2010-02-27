@@ -177,6 +177,7 @@ class MapToolbar(AbstractToolbar):
         self.action = { 'id' : self.pointer }
         self.defaultAction = { 'id' : self.pointer,
                                'bind' : self.mapdisplay.OnPointer }
+        
         self.OnTool(None)
         
         self.FixSize(width = 90)
@@ -288,7 +289,7 @@ class MapToolbar(AbstractToolbar):
                      self.savefile,
                      self.printmap):
             self.toolbar.EnableTool(tool, enabled)
-
+        
 class GRToolbar(AbstractToolbar):
     """
     Georectification Display toolbar
@@ -308,6 +309,12 @@ class GRToolbar(AbstractToolbar):
         # realize the toolbar
         self.toolbar.Realize()
 
+        self.action = { 'id' : self.gcpset }
+        self.defaultAction = { 'id' : self.gcpset,
+                               'bind' : self.parent.OnPointer }
+        
+        self.OnTool(None)
+                
     def ToolbarData(self):
         """Toolbar data"""
 
@@ -356,10 +363,10 @@ class GRToolbar(AbstractToolbar):
     def OnZoomMap(self, event):
         """Zoom to selected map"""
         layer = self.mapcontent.GetListOfLayers()
-        
         self.mapdisplay.MapWindow.ZoomToMap(layer=layer)
         
-        event.Skip()
+        if event:
+            event.Skip()
         
 class GCPToolbar(AbstractToolbar):
     """
