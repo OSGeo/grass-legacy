@@ -1,7 +1,8 @@
 # translation of grasstcl_ja.po to Japanese
 # This file is distributed under the same license as the GRASS package.
-# Copyright (C) 2005, GRASS Development Team
-# Susumu Nonogaki <nonogaki@sci.osaka-cu.ac.jp>
+# Copyright (C) 2005,2010 GRASS Development Team
+# Shinji Masumoto <masumoto@sci.osaka-cu.ac.jp>, 2004
+# Susumu Nonogaki <nonogaki@sci.osaka-cu.ac.jp>, 2008
 # Markus Neteler <neteler@itc.it>, 2004, 2005, 2006.
 #
 msgid ""
@@ -9,8 +10,8 @@ msgstr ""
 "Project-Id-Version: grasstcl_ja\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2007-10-26 21:10+0200\n"
-"PO-Revision-Date: 2006-06-29 11:49+0200\n"
-"Last-Translator: Markus Neteler <neteler@itc.it>\n"
+"PO-Revision-Date: 2010-02-15 14:06+0900\n"
+"Last-Translator: ueda <nao@locapoint.com>\n"
 "Language-Team: Japanese <grass-translations@lists.osgeo.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -18,23 +19,20 @@ msgstr ""
 "X-Generator: KBabel 1.10.2\n"
 
 #: ../gui/tcltk/d.m/barscale.tcl:67 ../gui/tcltk/d.m/legend.tcl:106
-#, fuzzy
 msgid "Text color: "
-msgstr "テキスト 色 "
+msgstr "テキストカラー："
 
 #: ../gui/tcltk/d.m/barscale.tcl:69
-#, fuzzy
 msgid " Background color: "
-msgstr "色 "
+msgstr "背景色："
 
 #: ../gui/tcltk/d.m/barscale.tcl:71
-#, fuzzy
 msgid "no background color"
-msgstr "色"
+msgstr "背景色なし"
 
 #: ../gui/tcltk/d.m/barscale.tcl:73
 msgid " "
-msgstr ""
+msgstr "   "
 
 #: ../gui/tcltk/d.m/barscale.tcl:74 ../gui/tcltk/d.m/barscale.tcl:78
 #: ../gui/tcltk/d.m/chart.tcl:96 ../gui/tcltk/d.m/chart.tcl:100
@@ -68,392 +66,358 @@ msgstr ""
 #: ../gui/tcltk/gis.m/animate.tcl:474 ../gui/tcltk/gis.m/dnviz.tcl:208
 #: ../gui/tcltk/gis.m/dnviz.tcl:212 ../lib/gis/gui.tcl:504
 #: ../lib/init/gis_set.tcl:508
-#, fuzzy
 msgid "Help"
 msgstr "ヘルプ"
 
 #: ../gui/tcltk/d.m/barscale.tcl:92
 msgid "display N. arrow only "
-msgstr ""
+msgstr "北方位のみ表示"
 
 #: ../gui/tcltk/d.m/barscale.tcl:94 ../gui/tcltk/gis.m/barscale.tcl:224
 msgid "display scale only"
-msgstr ""
+msgstr "スケールのみ表示"
 
 #: ../gui/tcltk/d.m/barscale.tcl:101
 msgid "line scale instead of bar scale "
-msgstr ""
+msgstr "バーの代わりにラインスケール"
 
 #: ../gui/tcltk/d.m/barscale.tcl:103 ../gui/tcltk/gis.m/barscale.tcl:232
 msgid "text on top of scale, instead of to right"
-msgstr ""
+msgstr "右側の変わりにスケールのトップにテキスト"
 
 #: ../gui/tcltk/d.m/barscale.tcl:110 ../gui/tcltk/gis.m/barscale.tcl:242
 msgid "use feet/miles instead of meters"
-msgstr ""
+msgstr "メーターの代わりにフィート/マイルを使用 "
 
 #: ../gui/tcltk/d.m/barscale.tcl:118 ../gui/tcltk/d.m/legend.tcl:185
-#, fuzzy
 msgid "place with mouse (cannot save placement with group)"
-msgstr "グループ"
+msgstr "マウスで位置指定(グループでの配置を保存することはできません)"
 
 #: ../gui/tcltk/d.m/chart.tcl:91 ../gui/tcltk/gis.m/chart.tcl:176
-#, fuzzy
 msgid "Vector map to chart:"
-msgstr "ベクトル:"
+msgstr "グラフにするベクトルマップ："
 
 #: ../gui/tcltk/d.m/chart.tcl:106 ../gui/tcltk/gis.m/chart.tcl:194
-#, fuzzy
 msgid "Vector type:"
-msgstr "ベクトル アイコン:"
+msgstr "ベクトル タイプ："
 
 #: ../gui/tcltk/d.m/chart.tcl:107 ../gui/tcltk/d.m/vector.tcl:227
 #: ../gui/tcltk/gis.m/chart.tcl:195 ../gui/tcltk/gis.m/vector.tcl:355
 msgid "points"
-msgstr ""
+msgstr "ポイント"
 
 #: ../gui/tcltk/d.m/chart.tcl:108 ../gui/tcltk/d.m/vector.tcl:229
 #: ../gui/tcltk/gis.m/chart.tcl:196 ../gui/tcltk/gis.m/legend.tcl:277
 #: ../gui/tcltk/gis.m/vector.tcl:357
 msgid "lines"
-msgstr ""
+msgstr "ライン"
 
 #: ../gui/tcltk/d.m/chart.tcl:109 ../gui/tcltk/d.m/vector.tcl:231
 #: ../gui/tcltk/gis.m/chart.tcl:197 ../gui/tcltk/gis.m/vector.tcl:359
 msgid "boundaries"
-msgstr ""
+msgstr "境界"
 
 #: ../gui/tcltk/d.m/chart.tcl:110 ../gui/tcltk/d.m/vector.tcl:233
 #: ../gui/tcltk/gis.m/chart.tcl:198 ../gui/tcltk/gis.m/vector.tcl:363
 msgid "centroids"
-msgstr ""
+msgstr "セントロイド"
 
 #: ../gui/tcltk/d.m/chart.tcl:111 ../gui/tcltk/d.m/vector.tcl:235
 #: ../gui/tcltk/gis.m/chart.tcl:199 ../gui/tcltk/gis.m/vector.tcl:361
 msgid "areas"
-msgstr ""
+msgstr "エリア"
 
 #: ../gui/tcltk/d.m/chart.tcl:120
 msgid "  show attribute columns"
-msgstr ""
+msgstr "  属性列表示"
 
 #: ../gui/tcltk/d.m/chart.tcl:121 ../gui/tcltk/d.m/thematic.tcl:151
 #: ../gui/tcltk/d.m/vector.tcl:349 ../gui/tcltk/gis.m/chart.tcl:213
 #: ../gui/tcltk/gis.m/thematic.tcl:269 ../gui/tcltk/gis.m/vector.tcl:484
 msgid "columns"
-msgstr ""
+msgstr "列"
 
 #: ../gui/tcltk/d.m/chart.tcl:125 ../gui/tcltk/d.m/thematic.tcl:155
 #: ../gui/tcltk/d.m/vector.tcl:353 ../gui/tcltk/gis.m/chart.tcl:217
 #: ../gui/tcltk/gis.m/thematic.tcl:273 ../gui/tcltk/gis.m/vector.tcl:488
 msgid "Show columns"
-msgstr ""
+msgstr "列表示"
 
 #: ../gui/tcltk/d.m/chart.tcl:158 ../gui/tcltk/gis.m/chart.tcl:252
-#, fuzzy
 msgid "Chart type:"
-msgstr "アイコン:"
+msgstr "グラフタイプ："
 
 #: ../gui/tcltk/d.m/chart.tcl:169
-#, fuzzy
 msgid "    chart outline color:"
-msgstr "色:"
+msgstr "    グラフ外郭線色："
 
 #: ../gui/tcltk/d.m/cmd.tcl:52 ../gui/tcltk/gis.m/cmd.tcl:115
 msgid "Command:"
-msgstr ""
+msgstr "コマンド："
 
 #: ../gui/tcltk/d.m/d.m.tcl:314 ../gui/tcltk/gis.m/gm.tcl:220
 msgid "Loading GIS Manager"
-msgstr ""
+msgstr "GISマネージャーロード"
 
 #: ../gui/tcltk/d.m/d.m.tcl:404 ../gui/tcltk/gis.m/gm.tcl:267
 msgid "Done"
-msgstr ""
+msgstr "完了"
 
 #: ../gui/tcltk/d.m/d.m.tcl:406
 msgid "Welcome to the GRASS GIS manager"
-msgstr ""
+msgstr "GRASS GISマネージャーへようこそ"
 
 #: ../gui/tcltk/d.m/dtext.tcl:101
-#, fuzzy
 msgid "Text options: color"
-msgstr "テキスト 色"
+msgstr "テキストオプション：カラー"
 
 #: ../gui/tcltk/d.m/dtext.tcl:106 ../gui/tcltk/d.m/fttext.tcl:151
 #: ../gui/tcltk/gis.m/dtext.tcl:230
-#, fuzzy
 msgid "bold text"
-msgstr "太字"
+msgstr "太字 "
 
 #: ../gui/tcltk/d.m/frames.tcl:60 ../gui/tcltk/gis.m/frames.tcl:112
 msgid "create and select frame"
-msgstr ""
+msgstr "フレームの作成と選択"
 
 #: ../gui/tcltk/d.m/frames.tcl:62 ../gui/tcltk/gis.m/frames.tcl:114
 msgid "select frame"
-msgstr ""
+msgstr "フレーム選択"
 
 #: ../gui/tcltk/d.m/frames.tcl:64
 msgid "remove all frames"
-msgstr ""
+msgstr "全フレーム削除"
 
 #: ../gui/tcltk/d.m/fttext.tcl:102
 msgid "     (leave blank to place with mouse; position will not save)"
-msgstr ""
+msgstr "     (マウスをブランクのところで放す、位置が保存されません) "
 
 #: ../gui/tcltk/d.m/fttext.tcl:108
-#, fuzzy
 msgid "     coordinate type"
-msgstr "アイコン"
+msgstr "     座標タイプ"
 
 #: ../gui/tcltk/d.m/fttext.tcl:111
 msgid "  align text with coordinate point"
-msgstr ""
+msgstr "   座標を指定しテキストの位置を補正"
 
 #: ../gui/tcltk/d.m/fttext.tcl:120
-#, fuzzy, tcl-format
+#, tcl-format
 msgid ""
 "     (for coordinates, % is from bottom left of display, pixels from top "
 "left)"
-msgstr " "
+msgstr "     (座標は, % は画面の左下から定義,ピクセルは左上)"
 
 #: ../gui/tcltk/d.m/fttext.tcl:126
 msgid "     text rotation (degrees counterclockwise)"
-msgstr ""
+msgstr "     テキスト回転 (角度 反時計回り) "
 
 #: ../gui/tcltk/d.m/fttext.tcl:129
 msgid "rotation in radians"
-msgstr ""
+msgstr "ラジアンでの回転"
 
 #: ../gui/tcltk/d.m/fttext.tcl:144 ../gui/tcltk/gis.m/maptext.tcl:177
-#, fuzzy
 msgid "Font:"
 msgstr "フォント:"
 
 #: ../gui/tcltk/d.m/fttext.tcl:149 ../gui/tcltk/gis.m/dtext.tcl:228
 #: ../gui/tcltk/gis.m/maplabels.tcl:272 ../gui/tcltk/gis.m/maptext.tcl:184
-#, fuzzy
 msgid "  color"
-msgstr "色"
+msgstr "  カラー"
 
 #: ../gui/tcltk/d.m/fttext.tcl:164
 msgid "height in pixels instead of %"
-msgstr ""
+msgstr "ピクセル単位の高さの代わりに % "
 
 #: ../gui/tcltk/d.m/gridline.tcl:77 ../gui/tcltk/gis.m/gridline.tcl:158
 msgid "draw grid"
-msgstr ""
+msgstr "グリッド表示"
 
 #: ../gui/tcltk/d.m/gridline.tcl:78
 msgid "geodetic grid"
-msgstr ""
+msgstr "測地グリッド"
 
 #: ../gui/tcltk/d.m/gridline.tcl:80
-#, fuzzy
 msgid " grid color "
-msgstr "色 "
+msgstr "グリッドカラー"
 
 #: ../gui/tcltk/d.m/gridline.tcl:85 ../gui/tcltk/gis.m/gridline.tcl:166
-#, fuzzy
 msgid "Help for grids"
-msgstr "ヘルプ の"
+msgstr "グリッドのヘルプ"
 
 #: ../gui/tcltk/d.m/gridline.tcl:86
-#, fuzzy
 msgid " grid color"
-msgstr "色"
+msgstr "グリッドカラー"
 
 #: ../gui/tcltk/d.m/gridline.tcl:92
 msgid "     "
-msgstr ""
+msgstr "     "
 
 #: ../gui/tcltk/d.m/gridline.tcl:93
 msgid "draw grid border"
-msgstr ""
+msgstr "グリッド境界描画"
 
 #: ../gui/tcltk/d.m/gridline.tcl:94
 msgid "draw border text"
-msgstr ""
+msgstr "境界テキスト描画"
 
 #: ../gui/tcltk/d.m/gridline.tcl:95
-#, fuzzy
 msgid " border & text color"
-msgstr "色"
+msgstr " 境界＆テキストカラー"
 
 #: ../gui/tcltk/d.m/gridline.tcl:119 ../gui/tcltk/gis.m/gridline.tcl:213
 msgid "draw geodesic line"
-msgstr ""
+msgstr "測地線描画"
 
 #: ../gui/tcltk/d.m/gridline.tcl:124 ../gui/tcltk/gis.m/gridline.tcl:218
-#, fuzzy
 msgid "Help for geodesic lines"
-msgstr "ヘルプ の"
+msgstr "測地線のヘルプ"
 
 #: ../gui/tcltk/d.m/gridline.tcl:149 ../gui/tcltk/gis.m/gridline.tcl:240
 msgid "draw rhumbline"
-msgstr ""
+msgstr "航程線描画"
 
 #: ../gui/tcltk/d.m/gridline.tcl:154 ../gui/tcltk/gis.m/gridline.tcl:245
-#, fuzzy
 msgid "Help for rhumblines"
-msgstr "ヘルプ の"
+msgstr "航程線のヘルプ"
 
 #: ../gui/tcltk/d.m/labels.tcl:65
 msgid "Labels name:"
-msgstr ""
+msgstr "ラベル名："
 
 #: ../gui/tcltk/d.m/labels.tcl:80 ../gui/tcltk/gis.m/labels.tcl:146
-#, fuzzy
 msgid "Display constraints:"
-msgstr "ガンマ:"
+msgstr " ディスプレイ 制約："
 
 #: ../gui/tcltk/d.m/labels.tcl:85 ../gui/tcltk/gis.m/labels.tcl:151
-#, fuzzy
 msgid "region size"
-msgstr "地域"
+msgstr "領域サイズ"
 
 #: ../gui/tcltk/d.m/labels.tcl:91 ../gui/tcltk/gis.m/labels.tcl:157
 msgid " ignore rotation setting and draw horizontally"
-msgstr ""
+msgstr " 回転の設定を無視して水平方向に描画"
 
 #: ../gui/tcltk/d.m/legend.tcl:81
-#, fuzzy
 msgid "Raster map for legend:"
-msgstr "ラスター の:"
+msgstr "凡例用のラスターマップ："
 
 #: ../gui/tcltk/d.m/legend.tcl:96
-#, fuzzy
 msgid "Display legend in monitor: "
-msgstr "ガンマ "
+msgstr "モニタ内に凡例表示："
 
 #: ../gui/tcltk/d.m/legend.tcl:99
-#, fuzzy
 msgid " erase monitor before drawing legend"
-msgstr "モニター"
+msgstr " 凡例描画前にモニタ内をクリア"
 
 #: ../gui/tcltk/d.m/legend.tcl:164
 msgid "do not show cat labels"
-msgstr ""
+msgstr "カタログラベルが表示出来ません"
 
 #: ../gui/tcltk/d.m/legend.tcl:166
 msgid "do not show cat numbers"
-msgstr ""
+msgstr "カタログ番号が表示出来ません"
 
 #: ../gui/tcltk/d.m/legend.tcl:173
 msgid "skip cats with no labels"
-msgstr ""
+msgstr "ラベルが無いカタログはスキップ"
 
 #: ../gui/tcltk/d.m/legend.tcl:175
 msgid "draw smooth gradient"
-msgstr ""
+msgstr "スムーズグラデーション描画"
 
 #: ../gui/tcltk/d.m/legend.tcl:177
 msgid "flip legend"
-msgstr ""
+msgstr "凡例の反転"
 
 #: ../gui/tcltk/d.m/menu.tcl:75 ../gui/tcltk/gis.m/gmmenu.tcl:84
-#, fuzzy
 msgid "&File"
-msgstr "ファイル"
+msgstr "ファイル(&F) "
 
 #: ../gui/tcltk/d.m/menu.tcl:76
-#, fuzzy
 msgid "Import"
 msgstr "インポート"
 
 #: ../gui/tcltk/d.m/menu.tcl:77 ../gui/tcltk/d.m/menu.tcl:113
 #: ../gui/tcltk/gis.m/raster.tcl:114 ../gui/tcltk/gis.m/rastnums.tcl:103
-#, fuzzy
 msgid "Raster map"
-msgstr "ラスター"
+msgstr "ラスターマップ"
 
 #: ../gui/tcltk/d.m/menu.tcl:78 ../gui/tcltk/d.m/menu.tcl:114
 #: ../gui/tcltk/gis.m/gmmenu.tcl:93 ../gui/tcltk/gis.m/gmmenu.tcl:128
 msgid "Multiple formats using GDAL"
-msgstr ""
+msgstr "GDALの利用 "
 
 #: ../gui/tcltk/d.m/menu.tcl:80
-#, fuzzy
 msgid "Aggregate ASCII xyz data into raster grid"
-msgstr "xyz ファイル"
+msgstr "ラスターグリッド内のASCII XYZデータを集計"
 
 #: ../gui/tcltk/d.m/menu.tcl:81
 msgid "ASCII GRID (includes GRASS ASCII)"
-msgstr ""
+msgstr "ASCIIグリッド(GRASSを含む) "
 
 #: ../gui/tcltk/d.m/menu.tcl:82
-#, fuzzy
 msgid "Polygons and lines from ASCII file"
-msgstr "ファイル"
+msgstr "ASCIIファイルからのポリゴンとライン"
 
 #: ../gui/tcltk/d.m/menu.tcl:84
-#, fuzzy
 msgid "Binary file (includes GTOPO30 format)"
-msgstr "ファイル"
+msgstr "バイナリーファイル(GTOPO30を含む) "
 
 #: ../gui/tcltk/d.m/menu.tcl:85
 msgid "ESRI Arc/Info ASCII grid"
-msgstr ""
+msgstr " Arc/Info(ESRI) ASCIIグリッド "
 
 #: ../gui/tcltk/d.m/menu.tcl:86 ../gui/tcltk/d.m/menu.tcl:120
-#, fuzzy
 msgid "GRIDATB.FOR map file (TOPMODEL)"
-msgstr "ファイル"
+msgstr " GRIDATB.FORマップファイル(TOPMODEL) "
 
 #: ../gui/tcltk/d.m/menu.tcl:87 ../gui/tcltk/d.m/menu.tcl:121
-#, fuzzy
 msgid "MAT-File (v.4) array (Matlab or Octave)"
-msgstr "ファイル"
+msgstr "MAT-ファイル (v.4) 配列 (MatlabやOctave)"
 
 #: ../gui/tcltk/d.m/menu.tcl:88
 msgid "SPOT vegetation NDVI data sets"
-msgstr ""
+msgstr "SPOT 植生 NDVI データセット"
 
 #: ../gui/tcltk/d.m/menu.tcl:89
 msgid "SRTM hgt files"
-msgstr ""
+msgstr " SRTM(hgt)ファイル "
 
 #: ../gui/tcltk/d.m/menu.tcl:90
 msgid "Terra ASTER HDF files"
-msgstr ""
+msgstr "テラ ASTER HDFファイル"
 
 #: ../gui/tcltk/d.m/menu.tcl:92 ../gui/tcltk/gis.m/gmmenu.tcl:107
 msgid "Web Mapping Server"
-msgstr ""
+msgstr "Web マッピングサーバー"
 
 #: ../gui/tcltk/d.m/menu.tcl:94 ../gui/tcltk/d.m/menu.tcl:134
 #: ../gui/tcltk/gis.m/thematic.tcl:129 ../gui/tcltk/gis.m/vector.tcl:220
-#, fuzzy
 msgid "Vector map"
-msgstr "ベクトル"
+msgstr "ベクトルマップ"
 
 #: ../gui/tcltk/d.m/menu.tcl:95
 msgid "Various formats using OGR"
-msgstr ""
+msgstr "OGRの利用 "
 
 #: ../gui/tcltk/d.m/menu.tcl:97
-#, fuzzy
 msgid "ASCII points file or GRASS ASCII vector file"
-msgstr "ファイル ファイル ファイル"
+msgstr "ASCIIポイントファイル あるいは GRASS ASCIIベクトルファイル "
 
 #: ../gui/tcltk/d.m/menu.tcl:98
-#, fuzzy
 msgid "Import old GRASS vector format"
-msgstr "インポート ファイル"
+msgstr "旧GRASSのベクトルのインポート "
 
 #: ../gui/tcltk/d.m/menu.tcl:100
-#, fuzzy
 msgid "DXF file"
-msgstr "ファイル:"
+msgstr "DXFファイル"
 
 #: ../gui/tcltk/d.m/menu.tcl:101
 msgid "ESRI e00 format"
-msgstr ""
+msgstr "e00(ESRI)フォーマット "
 
 #: ../gui/tcltk/d.m/menu.tcl:102
 msgid "Garmin GPS Waypoints/Routes/Tracks"
-msgstr ""
+msgstr "ガーミンGPS用通過点/ルート/軌跡"
 
 #: ../gui/tcltk/d.m/menu.tcl:103
 msgid "GPS Waypoints/Routes/Tracks using GPSBabel"
@@ -461,1309 +425,1168 @@ msgstr ""
 
 #: ../gui/tcltk/d.m/menu.tcl:104
 msgid "GEOnet Name server country files (US-NGA GNS)"
-msgstr ""
+msgstr "ジオネットネームサーバカントリーファイル (US-NGA GNS) "
 
 #: ../gui/tcltk/d.m/menu.tcl:105
 msgid "Matlab and MapGen files"
-msgstr ""
+msgstr "MatlabとMapGenファイル"
 
 #: ../gui/tcltk/d.m/menu.tcl:107 ../gui/tcltk/d.m/menu.tcl:142
 msgid "Grid 3D"
-msgstr ""
+msgstr "グリッド 3D "
 
 #: ../gui/tcltk/d.m/menu.tcl:108 ../gui/tcltk/d.m/menu.tcl:143
-#, fuzzy
 msgid "ASCII 3D file"
-msgstr "ファイル"
+msgstr "ASCII 3D ファイル "
 
 #: ../gui/tcltk/d.m/menu.tcl:109 ../gui/tcltk/d.m/menu.tcl:144
-#, fuzzy
 msgid "Vis5D file"
-msgstr "ファイル"
+msgstr "Vis5D ファイル "
 
 #: ../gui/tcltk/d.m/menu.tcl:112
-#, fuzzy
 msgid "Export"
-msgstr "エクスポート"
+msgstr "エクスポート "
 
 #: ../gui/tcltk/d.m/menu.tcl:116
-#, fuzzy
 msgid "ASCII grid (for GRASS, Surfer, Modflow, etc)"
-msgstr "の"
+msgstr "ASCII グリッド (GRASS, Surfer, Modflow など用) "
 
 #: ../gui/tcltk/d.m/menu.tcl:117
 msgid "ASCII x,y,z values of cell centers"
-msgstr ""
+msgstr "セル中心のASCII x,y,z値"
 
 #: ../gui/tcltk/d.m/menu.tcl:119
 msgid "ESRI ARC/INFO ASCII grid"
-msgstr ""
+msgstr " Arc/Info(ESRI) ASCIIグリッド "
 
 #: ../gui/tcltk/d.m/menu.tcl:123
-#, fuzzy
 msgid "Binary file"
-msgstr "ファイル"
+msgstr "バイナリーファイル"
 
 #: ../gui/tcltk/d.m/menu.tcl:125
 msgid "MPEG-1 animations"
-msgstr ""
+msgstr "MPEG-1アニメーション "
 
 #: ../gui/tcltk/d.m/menu.tcl:126
 msgid "PNG image (not georeferenced)"
-msgstr ""
+msgstr "PNG画像(地理情報非参照) "
 
 #: ../gui/tcltk/d.m/menu.tcl:127
 msgid "PPM image (24bit)"
-msgstr ""
+msgstr "PPM 画像(24bit) "
 
 #: ../gui/tcltk/d.m/menu.tcl:128
-#, fuzzy
 msgid "PPM image from red, green, blue raster maps"
-msgstr "ファイル"
+msgstr "赤，緑，青のラスターからのPPM 画像(24bit) "
 
 #: ../gui/tcltk/d.m/menu.tcl:129
 msgid "POVray height-field"
-msgstr ""
+msgstr "POVrayの高さフィールド "
 
 #: ../gui/tcltk/d.m/menu.tcl:130
 msgid "TIFF image (8/24bit)"
-msgstr ""
+msgstr "TIFF画像(8/24bit) "
 
 #: ../gui/tcltk/d.m/menu.tcl:131
-#, fuzzy
 msgid "VRML file"
-msgstr "ファイル"
+msgstr "VRMLファイル "
 
 #: ../gui/tcltk/d.m/menu.tcl:132 ../gui/tcltk/d.m/menu.tcl:140
 #: ../gui/tcltk/d.m/menu.tcl:145
-#, fuzzy
 msgid "VTK ASCII file"
-msgstr "ファイル"
+msgstr "VTK ASCIIファイル "
 
 #: ../gui/tcltk/d.m/menu.tcl:135
 msgid "Various formats using OGR (SHAPE, MapInfo etc)"
-msgstr ""
+msgstr "OGRの利用(SHAPE, MapInfo など) "
 
 #: ../gui/tcltk/d.m/menu.tcl:137
-#, fuzzy
 msgid "DXF file (ASCII)"
-msgstr "ファイル"
+msgstr "DXFファイル(ASCII) "
 
 #: ../gui/tcltk/d.m/menu.tcl:138
-#, fuzzy
 msgid "ASCII vector or point file/old GRASS ASCII vector file"
-msgstr "ファイル ファイル ファイル ファイル"
+msgstr ""
+"GRASS ASCIIベクトルファイル(旧フォーマットも可)あるいはASCIIポイントファイル "
 
 #: ../gui/tcltk/d.m/menu.tcl:139
 msgid "POV-Ray format"
-msgstr ""
+msgstr "POV-Rayフォーマット "
 
 #: ../gui/tcltk/d.m/menu.tcl:149 ../gui/tcltk/gis.m/gmmenu.tcl:163
 msgid "Manage maps and volumes"
-msgstr ""
+msgstr "マップと値の管理"
 
 #: ../gui/tcltk/d.m/menu.tcl:150
-#, fuzzy
 msgid "Copy maps"
-msgstr "コピー"
+msgstr "マップコピー"
 
 #: ../gui/tcltk/d.m/menu.tcl:151
-#, fuzzy
 msgid "List maps"
-msgstr "一覧"
+msgstr "マップ一覧 "
 
 #: ../gui/tcltk/d.m/menu.tcl:152
-#, fuzzy
 msgid "List maps using expressions and 'wildcards'"
-msgstr "一覧"
+msgstr "一覧(拡張子・ワイルドカードを利用) "
 
 #: ../gui/tcltk/d.m/menu.tcl:153
-#, fuzzy
 msgid "Rename maps"
-msgstr "名前の変更"
+msgstr "名前の変更 "
 
 #: ../gui/tcltk/d.m/menu.tcl:154
-#, fuzzy
 msgid "Remove maps"
-msgstr "削除"
+msgstr "マップ削除 "
 
 #: ../gui/tcltk/d.m/menu.tcl:155
-#, fuzzy
 msgid "Remove maps using expressions and 'wildcards'"
-msgstr "削除"
+msgstr "削除(拡張子・ワイルドカードを利用) "
 
 #: ../gui/tcltk/d.m/menu.tcl:157 ../gui/tcltk/gis.m/gmmenu.tcl:174
-#, fuzzy
 msgid "Map type conversions"
-msgstr "管理 アイコン"
+msgstr "マップタイプの変換"
 
 #: ../gui/tcltk/d.m/menu.tcl:158
-#, fuzzy
 msgid "Raster to vector map"
-msgstr "ラスター ファイル"
+msgstr "ラスター→ベクトル "
 
 #: ../gui/tcltk/d.m/menu.tcl:159
-#, fuzzy
 msgid "Raster map series to volume"
-msgstr "ラスター"
+msgstr "ラスターマップシリーズ → 立体"
 
 #: ../gui/tcltk/d.m/menu.tcl:160
-#, fuzzy
 msgid "Raster 2.5D map to volume"
-msgstr "ラスター"
+msgstr "ラスター2.5Dマップ → 立体"
 
 #: ../gui/tcltk/d.m/menu.tcl:161 ../gui/tcltk/gis.m/gmmenu.tcl:179
-#, fuzzy
 msgid "Vector to raster"
-msgstr "ベクトル ファイル"
+msgstr "ベクトル → ラスター"
 
 #: ../gui/tcltk/d.m/menu.tcl:162
-#, fuzzy
 msgid "Vector to vector"
-msgstr "ベクトル ファイル"
+msgstr "ベクトル → ベクトル"
 
 #: ../gui/tcltk/d.m/menu.tcl:163
-#, fuzzy
 msgid "Vector lines to points"
-msgstr "ベクトル"
+msgstr "ベクトルライン → ポイント"
 
 #: ../gui/tcltk/d.m/menu.tcl:164
-#, fuzzy
 msgid "Vector 3D points to volume voxels"
-msgstr "ベクトル"
+msgstr "ベクトル3Dポイント → ボクセル"
 
 #: ../gui/tcltk/d.m/menu.tcl:165
-#, fuzzy
 msgid "Sites (GRASS 5.x) to vector"
-msgstr "サイト ファイル"
+msgstr "サイト (GRASS 5.x) → ベクトル"
 
 #: ../gui/tcltk/d.m/menu.tcl:166
-#, fuzzy
 msgid "Volumes to raster map series"
-msgstr "ファイル"
+msgstr "立体 → ラスターマップシリーズ"
 
 #: ../gui/tcltk/d.m/menu.tcl:169
 msgid "Groups"
-msgstr ""
+msgstr "グループ"
 
 #: ../gui/tcltk/d.m/menu.tcl:170
 msgid "New"
-msgstr ""
+msgstr "新規 "
 
 #: ../gui/tcltk/d.m/menu.tcl:170
-#, fuzzy
 msgid "Create new group file"
-msgstr "グループ ファイル"
+msgstr "新規グループ ファイル作成"
 
 #: ../gui/tcltk/d.m/menu.tcl:171 ../gui/tcltk/gis.m/gmmenu.tcl:86
 msgid "Open..."
-msgstr ""
+msgstr "開く... "
 
 #: ../gui/tcltk/d.m/menu.tcl:171
-#, fuzzy
 msgid "Open group file"
-msgstr "グループ ファイル"
+msgstr "グループ ファイル オープン"
 
 #: ../gui/tcltk/d.m/menu.tcl:172 ../gui/tcltk/gis.m/gmmenu.tcl:87
 #: ../gui/tcltk/gis.m/mapcanvas.tcl:858
 #: ../gui/tcltk/gis.m/runandoutput.tcl:125
-#, fuzzy
 msgid "Save"
 msgstr "保存"
 
 #: ../gui/tcltk/d.m/menu.tcl:172
-#, fuzzy
 msgid "Save group file"
-msgstr "保存 グループ ファイル"
+msgstr "グループファイル保存"
 
 #: ../gui/tcltk/d.m/menu.tcl:173 ../gui/tcltk/gis.m/gmmenu.tcl:88
-#, fuzzy
 msgid "Save as..."
-msgstr "保存."
+msgstr "名前を付けて保存"
 
 #: ../gui/tcltk/d.m/menu.tcl:173
-#, fuzzy
 msgid "Save group file as name"
-msgstr "保存 グループ ファイル"
+msgstr "グループファイルに名前を付けて保存"
 
 #: ../gui/tcltk/d.m/menu.tcl:174 ../gui/tcltk/d.m/print.tcl:281
 #: ../gui/tcltk/gis.m/gmmenu.tcl:89 ../gui/tcltk/gis.m/mapprint.tcl:364
 #: ../gui/tcltk/gis.m/runandoutput.tcl:48 ../lib/gis/gui.tcl:506
 #: ../lib/init/epsg_option.tcl:395 ../lib/init/epsg_option.tcl:439
 msgid "Close"
-msgstr ""
+msgstr "閉じる"
 
 #: ../gui/tcltk/d.m/menu.tcl:174
-#, fuzzy
 msgid "Close group"
-msgstr "グループ"
+msgstr "グループを閉じる"
 
 #: ../gui/tcltk/d.m/menu.tcl:177
-#, fuzzy
 msgid "Save display to image file"
-msgstr "保存 ファイル"
+msgstr "表示画像のファイル保存 "
 
 #: ../gui/tcltk/d.m/menu.tcl:178
-#, fuzzy
 msgid "XWD (Save display, selected with mouse, to map.xwd in home directory )"
-msgstr "保存"
+msgstr "XWD (マウスで選択した画面をhomeディレクトリのmap.xwdに保存) "
 
 #: ../gui/tcltk/d.m/menu.tcl:179
-#, fuzzy
 msgid "Save displays to multiple graphic file formats"
-msgstr "保存 ファイル"
+msgstr "表示画像を複数の画像フォーマットで保存"
 
 #: ../gui/tcltk/d.m/menu.tcl:181
-#, fuzzy
 msgid "Save map to Postscript file"
-msgstr "保存 ファイル"
+msgstr "Postscriptファイルに保存"
 
 #: ../gui/tcltk/d.m/menu.tcl:182
 msgid "Print to default printer"
-msgstr ""
+msgstr "デフォルトのプリンタで印刷"
 
 #: ../gui/tcltk/d.m/menu.tcl:182
 msgid "print"
-msgstr ""
+msgstr "印刷"
 
 #: ../gui/tcltk/d.m/menu.tcl:184 ../gui/tcltk/gis.m/gmmenu.tcl:198
 msgid "E&xit"
-msgstr ""
+msgstr "終了(E&)"
 
 #: ../gui/tcltk/d.m/menu.tcl:184
-#, fuzzy
 msgid "Exit Display Manager"
-msgstr "ガンマ"
+msgstr "ディスプレイマネージャー終了"
 
 #: ../gui/tcltk/d.m/menu.tcl:186 ../gui/tcltk/gis.m/gmmenu.tcl:200
-#, fuzzy
 msgid "&Config"
-msgstr "設定"
+msgstr "設定(&C)"
 
 #: ../gui/tcltk/d.m/menu.tcl:187 ../gui/tcltk/gis.m/gmmenu.tcl:201
-#, fuzzy
 msgid "Region"
-msgstr "地域"
+msgstr "領域"
 
 #: ../gui/tcltk/d.m/menu.tcl:188 ../gui/tcltk/gis.m/gmmenu.tcl:202
-#, fuzzy
 msgid "Display region settings"
-msgstr "ガンマ"
+msgstr "ディスプレイ領域設定"
 
 #: ../gui/tcltk/d.m/menu.tcl:189 ../gui/tcltk/gis.m/gmmenu.tcl:203
-#, fuzzy
 msgid "Change region settings"
-msgstr "ガンマ"
+msgstr "領域設定の変更"
 
 #: ../gui/tcltk/d.m/menu.tcl:190
-#, fuzzy
 msgid "Zoom to maximum extent of all displayed maps"
-msgstr "ズーム"
+msgstr "全てのマップを表示できる領域を選択"
 
 #: ../gui/tcltk/d.m/menu.tcl:192 ../gui/tcltk/gis.m/gmmenu.tcl:205
 msgid "GRASS working environment"
-msgstr ""
+msgstr "GRASS作業環境"
 
 #: ../gui/tcltk/d.m/menu.tcl:193
-#, fuzzy
 msgid "Access other mapsets in current location"
-msgstr "マップセット"
+msgstr "現在の場所の別のマップセットにアクセス"
 
 #: ../gui/tcltk/d.m/menu.tcl:194
-#, fuzzy
 msgid "Change current working session to new mapset, location, or GISDBASE"
-msgstr "マップセット"
+msgstr "現在の作業を新しいマップセット，ロケーションあるいはGISDBASEに変更 "
 
 #: ../gui/tcltk/d.m/menu.tcl:195
-#, fuzzy
 msgid "Modify access by other users to current mapset"
-msgstr "マップセット"
+msgstr "他ユーザによる現在のマップセットに対するアクセスの変更"
 
 #: ../gui/tcltk/d.m/menu.tcl:196
 msgid "Show current GRASS environment settings"
-msgstr ""
+msgstr "環境設定の表示 "
 
 #: ../gui/tcltk/d.m/menu.tcl:197
 msgid "Set GRASS environment settings"
-msgstr ""
+msgstr "GRASS環境設定"
 
 #: ../gui/tcltk/d.m/menu.tcl:198 ../gui/tcltk/gis.m/gmmenu.tcl:211
 msgid "Show current GRASS version"
-msgstr ""
+msgstr "GRASSのバージョン表示"
 
 #: ../gui/tcltk/d.m/menu.tcl:200 ../gui/tcltk/gis.m/gmmenu.tcl:213
 #: ../gui/tcltk/gis.m/gmmenu.tcl:214
 msgid "Manage projections"
-msgstr ""
+msgstr "投影法の管理"
 
 #: ../gui/tcltk/d.m/menu.tcl:201
-#, fuzzy
 msgid "Create/edit projection information for current location"
-msgstr "の"
+msgstr "現在の場所の投影情報を作成/編集 "
 
 #: ../gui/tcltk/d.m/menu.tcl:202
 msgid "Show projection information and create projection files"
-msgstr ""
+msgstr "投影情報の表示と投影ファイルの作成 "
 
 #: ../gui/tcltk/d.m/menu.tcl:204
 msgid "Convert coordinates from one projection to another"
-msgstr ""
+msgstr "座標を別の投影法で変換"
 
 #: ../gui/tcltk/d.m/menu.tcl:206
-#, fuzzy
 msgid "Text"
-msgstr "テキスト"
+msgstr "テキスト "
 
 #: ../gui/tcltk/d.m/menu.tcl:207
-#, fuzzy
 msgid "Select default text font"
-msgstr "選択 フォント"
+msgstr "デフォルトテキストフォント選択"
 
 #: ../gui/tcltk/d.m/menu.tcl:208
-#, fuzzy
 msgid "Select default freetype text font"
-msgstr "選択 フォント"
+msgstr "デフォルトフリータイプテキストフォント選択"
 
 #: ../gui/tcltk/d.m/menu.tcl:210
-#, fuzzy
 msgid "X-monitor displays"
-msgstr "モニター"
+msgstr "X-モニター"
 
 #: ../gui/tcltk/d.m/menu.tcl:211
 msgid "Configure xmonitor displays"
-msgstr ""
+msgstr "X-モニターの構成"
 
 #: ../gui/tcltk/d.m/menu.tcl:212
-#, fuzzy
 msgid "Configure frames for xmonitors"
-msgstr "の"
+msgstr "X-モニターのフレーム構成"
 
 #: ../gui/tcltk/d.m/menu.tcl:213
-#, fuzzy
 msgid "Start/restart xmonitor at specified window size"
-msgstr "開始"
+msgstr "定義されたウィンドウサイズでX-モニターを表示/再表示"
 
 #: ../gui/tcltk/d.m/menu.tcl:214
 msgid "Set active xmonitor to specified size"
-msgstr ""
+msgstr "指定されたサイズでX-モニターをアクティブにする"
 
 #: ../gui/tcltk/d.m/menu.tcl:215
-#, fuzzy
 msgid "Display information about active xmonitor"
-msgstr "ガンマ"
+msgstr "アクティブモニターについての情報表示"
 
 #: ../gui/tcltk/d.m/menu.tcl:218 ../gui/tcltk/gis.m/gmmenu.tcl:221
-#, fuzzy
 msgid "&Raster"
-msgstr "ラスター"
+msgstr "ラスター(&R)"
 
 #: ../gui/tcltk/d.m/menu.tcl:219 ../gui/tcltk/d.m/menu.tcl:376
 #: ../gui/tcltk/gis.m/gmmenu.tcl:222 ../gui/tcltk/gis.m/gmmenu.tcl:418
 msgid "Develop map"
-msgstr ""
+msgstr "マップの作成"
 
 #: ../gui/tcltk/d.m/menu.tcl:220 ../gui/tcltk/gis.m/gmmenu.tcl:223
-#, fuzzy
 msgid "Digitize raster"
-msgstr "デジタイズ ファイル"
+msgstr "ラスターのデジタイズ"
 
 #: ../gui/tcltk/d.m/menu.tcl:222
-#, fuzzy
 msgid "Compress/decompress raster file"
-msgstr "ファイル ファイル"
+msgstr "ラスターファイルの圧縮/解凍 "
 
 #: ../gui/tcltk/d.m/menu.tcl:223
 msgid "Manage boundary definitions"
-msgstr ""
+msgstr "境界設定の管理 "
 
 #: ../gui/tcltk/d.m/menu.tcl:224
 msgid "Manage null values"
-msgstr ""
+msgstr "NULL値の管理 "
 
 #: ../gui/tcltk/d.m/menu.tcl:225
-#, fuzzy
 msgid "Manage timestamps for files"
-msgstr "の"
+msgstr "ファイルのタイムスタンプ管理 "
 
 #: ../gui/tcltk/d.m/menu.tcl:226
-#, fuzzy
 msgid "Quantization for floating-point maps"
-msgstr "の"
+msgstr "実数マップの量子化 "
 
 #: ../gui/tcltk/d.m/menu.tcl:228
-#, fuzzy
 msgid "Resample (change resolution)"
-msgstr "方法"
+msgstr "リサンプリング(解像度の変更) "
 
 #: ../gui/tcltk/d.m/menu.tcl:229
-#, fuzzy
 msgid "Resample using nearest neighbor method"
-msgstr "方法"
+msgstr "最も最近の手法を使用してリサンプリング"
 
 #: ../gui/tcltk/d.m/menu.tcl:230
-#, fuzzy
 msgid "Resample using various interpolation methods"
-msgstr "方法"
+msgstr "様々な補間方法を利用してリサンプリング"
 
 #: ../gui/tcltk/d.m/menu.tcl:231 ../gui/tcltk/gis.m/gmmenu.tcl:236
 msgid "Resample using aggregate statistics"
-msgstr ""
+msgstr "総量統計を使用した再サンプリング"
 
 #: ../gui/tcltk/d.m/menu.tcl:232
-#, fuzzy
 msgid "Resample using regularized spline with tension method"
-msgstr "���� ����"
+msgstr "テンション補間によるスプライン正規化手法を使用したリサンプリング "
 
 #: ../gui/tcltk/d.m/menu.tcl:235
-#, fuzzy
 msgid "Support file creation and maintenance"
-msgstr "ファイル"
+msgstr "サポートファイルの作成と保守"
 
 #: ../gui/tcltk/d.m/menu.tcl:237
-#, fuzzy
 msgid "Reproject raster from other location"
-msgstr "ファイル"
+msgstr "他のロケーションからラスターの投影変換 "
 
 #: ../gui/tcltk/d.m/menu.tcl:238
-#, fuzzy
 msgid "Generate tiling for other projection"
-msgstr "の"
+msgstr "他の投影方法によるタイルの作成"
 
 #: ../gui/tcltk/d.m/menu.tcl:240 ../gui/tcltk/gis.m/gmmenu.tcl:247
 msgid "Manage map colors"
-msgstr ""
+msgstr "カラーの管理"
 
 #: ../gui/tcltk/d.m/menu.tcl:241
-#, fuzzy
 msgid "Set colors to predefined color tables"
-msgstr "色"
+msgstr "定義済みのカラーテーブルに指定 "
 
 #: ../gui/tcltk/d.m/menu.tcl:242
-#, fuzzy
 msgid "Set colors using color rules"
-msgstr "色"
+msgstr "ルールを用いたカラーの指定"
 
 #: ../gui/tcltk/d.m/menu.tcl:244
-#, fuzzy
 msgid "Blend 2 color maps to produce 3 RGB files"
-msgstr "色"
+msgstr "RGBのファイル作成のために2つのカラーマップを合成 "
 
 #: ../gui/tcltk/d.m/menu.tcl:245
-#, fuzzy
 msgid "Create color image from RGB files"
-msgstr "色"
+msgstr "RGBファイルからカラー画像作成 "
 
 #: ../gui/tcltk/d.m/menu.tcl:246
 msgid ""
 "Create 3 RGB (red, green, blue) maps from 3 HIS (hue, intensity, saturation) "
 "maps"
-msgstr ""
+msgstr "３HIS(色相/明度/彩度)マップから３RGB（赤/緑/青)マップを作成"
 
 #: ../gui/tcltk/d.m/menu.tcl:249 ../gui/tcltk/d.m/menu.tcl:403
 #: ../gui/tcltk/gis.m/gmmenu.tcl:256
-#, fuzzy
 msgid "Query by coordinate(s)"
-msgstr " "
+msgstr "座標値からの検索"
 
 #: ../gui/tcltk/d.m/menu.tcl:251
-#, fuzzy
 msgid "Create raster buffers"
-msgstr "ファイル"
+msgstr "ラスターバッファーの作成"
 
 #: ../gui/tcltk/d.m/menu.tcl:252
-#, fuzzy
 msgid "Create raster MASK"
-msgstr "ファイル"
+msgstr "ラスターマスクの作成"
 
 #: ../gui/tcltk/d.m/menu.tcl:253
-#, fuzzy
 msgid "Locate closest points between areas in 2 raster maps"
-msgstr "ファイル"
+msgstr "2つのラスターマップの2つのエリア間の最近接点 "
 
 #: ../gui/tcltk/d.m/menu.tcl:254 ../gui/tcltk/gis.m/gmmenu.tcl:261
-#, fuzzy
 msgid "Map calculator"
-msgstr "管理"
+msgstr "マップカリキュレーター"
 
 #: ../gui/tcltk/d.m/menu.tcl:255 ../gui/tcltk/d.m/menu.tcl:413
 #: ../gui/tcltk/gis.m/gmmenu.tcl:262
 msgid "Neighborhood analysis"
-msgstr ""
+msgstr "近接性分析"
 
 #: ../gui/tcltk/d.m/menu.tcl:256
-#, fuzzy
 msgid "Moving window analysis of raster cells"
-msgstr "ファイル"
+msgstr "ラスターセルから移動窓解析 "
 
 #: ../gui/tcltk/d.m/menu.tcl:257
-#, fuzzy
 msgid "Analyze vector points in neighborhood of raster cells"
-msgstr "ファイル ファイル"
+msgstr "近傍点におけるベクトルポイントの解析 "
 
 #: ../gui/tcltk/d.m/menu.tcl:259 ../gui/tcltk/d.m/menu.tcl:427
 #: ../gui/tcltk/gis.m/gmmenu.tcl:266 ../gui/tcltk/gis.m/gmmenu.tcl:478
 msgid "Overlay maps"
-msgstr ""
+msgstr "オーバーレイ(重ね合わせ) "
 
 #: ../gui/tcltk/d.m/menu.tcl:260 ../gui/tcltk/gis.m/gmmenu.tcl:267
 msgid "Cross product"
-msgstr ""
+msgstr "カテゴリー値の掛け合わせ"
 
 #: ../gui/tcltk/d.m/menu.tcl:261
 msgid "Function of map series (time series)"
-msgstr ""
+msgstr "マップ(時間)シリーズ機能 "
 
 #: ../gui/tcltk/d.m/menu.tcl:262 ../gui/tcltk/gis.m/gmmenu.tcl:269
 msgid "Patch maps"
-msgstr ""
+msgstr "パッチ(貼り合わせ) "
 
 #: ../gui/tcltk/d.m/menu.tcl:264
-#, fuzzy
 msgid "Statistical calculations for cover map over base map"
-msgstr "の"
+msgstr "カバーマップのための統計処理 "
 
 #: ../gui/tcltk/d.m/menu.tcl:266 ../gui/tcltk/gis.m/gmmenu.tcl:273
 msgid "Solar radiance and shadows"
-msgstr ""
+msgstr "太陽輝度と影"
 
 #: ../gui/tcltk/d.m/menu.tcl:267
 msgid "Solar irradiance and daily irradiation"
-msgstr ""
+msgstr "太陽照射と日射量 "
 
 #: ../gui/tcltk/d.m/menu.tcl:268
-#, fuzzy
 msgid "Shadows map for sun position or date/time"
-msgstr "の"
+msgstr "太陽の位置あるいは日時に対する陰影図 "
 
 #: ../gui/tcltk/d.m/menu.tcl:270 ../gui/tcltk/gis.m/gmmenu.tcl:277
 msgid "Terrain analysis"
-msgstr ""
+msgstr "地形解析"
 
 #: ../gui/tcltk/d.m/menu.tcl:271
 msgid "Calculate cumulative movement costs between locales"
-msgstr ""
+msgstr "地域間の移動コスト積算 "
 
 #: ../gui/tcltk/d.m/menu.tcl:272 ../gui/tcltk/gis.m/gmmenu.tcl:279
 msgid "Cost surface"
-msgstr ""
+msgstr "表層断面図"
 
 #: ../gui/tcltk/d.m/menu.tcl:273 ../gui/tcltk/gis.m/gmmenu.tcl:280
 msgid "Least cost route or flow"
-msgstr ""
+msgstr "最小コストルートあるいはフロー"
 
 #: ../gui/tcltk/d.m/menu.tcl:274
 msgid "Profile analysis"
-msgstr ""
+msgstr "断面図解析"
 
 #: ../gui/tcltk/d.m/menu.tcl:275
 msgid "Shaded relief map"
-msgstr ""
+msgstr "陰影図 "
 
 #: ../gui/tcltk/d.m/menu.tcl:276 ../gui/tcltk/gis.m/gmmenu.tcl:284
-#, fuzzy
 msgid "Slope and aspect"
-msgstr "��� �����"
+msgstr "傾斜と方位"
 
 #: ../gui/tcltk/d.m/menu.tcl:277 ../gui/tcltk/gis.m/gmmenu.tcl:285
 msgid "Terrain parameters"
-msgstr ""
+msgstr "地形パラメータ"
 
 #: ../gui/tcltk/d.m/menu.tcl:278 ../gui/tcltk/gis.m/gmmenu.tcl:286
 msgid "Textural features"
-msgstr ""
+msgstr "テキストフューチャ"
 
 #: ../gui/tcltk/d.m/menu.tcl:279
 msgid "Visibility/line of sight"
-msgstr ""
+msgstr "可視性/視線 "
 
 #: ../gui/tcltk/d.m/menu.tcl:281 ../gui/tcltk/gis.m/gmmenu.tcl:290
 msgid "Transform features"
-msgstr ""
+msgstr "フューチャの変形"
 
 #: ../gui/tcltk/d.m/menu.tcl:282
 msgid "Clump small areas (statistics calculated by r.volume)"
-msgstr ""
+msgstr "微小エリアをクランプ (r.volumeによる統計計算) "
 
 #: ../gui/tcltk/d.m/menu.tcl:283
 msgid "Grow areas"
-msgstr ""
+msgstr "エリアの拡大 "
 
 #: ../gui/tcltk/d.m/menu.tcl:284
 msgid "Thin linear features"
-msgstr ""
+msgstr "リニアフィーチャの細線化 "
 
 #: ../gui/tcltk/d.m/menu.tcl:287 ../gui/tcltk/gis.m/gmmenu.tcl:296
 msgid "Hydrologic modeling"
-msgstr ""
+msgstr "水文モデリング"
 
 #: ../gui/tcltk/d.m/menu.tcl:288
-#, fuzzy
 msgid "Carve stream channels into elevation map using vector streams map"
-msgstr "ファイル"
+msgstr "ベクトル河川マップを使用して標高マップ中に河川チャンネルを作成"
 
 #: ../gui/tcltk/d.m/menu.tcl:289
 msgid "Depressionless elevation map and flowline map"
-msgstr ""
+msgstr "くぼ地無しのDEMと流水線図 "
 
 #: ../gui/tcltk/d.m/menu.tcl:290
 msgid "Fill lake from seed point to specified level"
-msgstr ""
+msgstr "指定された水準の面識別点から水面を満たす"
 
 #: ../gui/tcltk/d.m/menu.tcl:291
-#, fuzzy
 msgid "Flow accumulation for massive grids"
-msgstr "の"
+msgstr "大きな格子の累積流量の算出 "
 
 #: ../gui/tcltk/d.m/menu.tcl:292
-#, fuzzy
 msgid "Generate flow lines for raster map"
-msgstr "の ファイル"
+msgstr "流水線図作成 "
 
 #: ../gui/tcltk/d.m/menu.tcl:293 ../gui/tcltk/gis.m/gmmenu.tcl:306
 msgid "SIMWE overland flow modeling"
-msgstr ""
+msgstr "SIMWE 地表流モデル"
 
 #: ../gui/tcltk/d.m/menu.tcl:294
 msgid "SIMWE sediment erosion, transport, & deposition modeling"
-msgstr ""
+msgstr "SIMWE堆積物の浸食、運搬、沈着モデリング"
 
 #: ../gui/tcltk/d.m/menu.tcl:295 ../gui/tcltk/gis.m/gmmenu.tcl:309
 msgid "Topographic index map"
-msgstr ""
+msgstr "地形図インデックスマップ"
 
 #: ../gui/tcltk/d.m/menu.tcl:296 ../gui/tcltk/gis.m/gmmenu.tcl:310
 msgid "TOPMODEL simulation"
-msgstr ""
+msgstr "TOPMODELシミュレーション"
 
 #: ../gui/tcltk/d.m/menu.tcl:297 ../gui/tcltk/gis.m/gmmenu.tcl:312
 msgid "Watershed subbasins"
-msgstr ""
+msgstr "集水域(流域)小盆地"
 
 #: ../gui/tcltk/d.m/menu.tcl:298 ../gui/tcltk/gis.m/gmmenu.tcl:313
 msgid "Watershed analysis"
-msgstr ""
+msgstr "集水域(流域)解析"
 
 #: ../gui/tcltk/d.m/menu.tcl:299 ../gui/tcltk/gis.m/gmmenu.tcl:314
 msgid "Watershed basin creation"
-msgstr ""
+msgstr "集水域(流域)作成"
 
 #: ../gui/tcltk/d.m/menu.tcl:301 ../gui/tcltk/gis.m/gmmenu.tcl:316
 msgid "Landscape structure modeling"
-msgstr ""
+msgstr "景観構造モデリング"
 
 #: ../gui/tcltk/d.m/menu.tcl:302 ../gui/tcltk/gis.m/gmmenu.tcl:328
 msgid "Set up sampling and analysis framework"
-msgstr ""
+msgstr "サンプリングと解析フレームワークのための設定"
 
 #: ../gui/tcltk/d.m/menu.tcl:304
 msgid "Analyze landscape characteristics"
-msgstr ""
+msgstr "景観特性解析 "
 
 #: ../gui/tcltk/d.m/menu.tcl:305
 msgid "Analyze landscape patch characteristics"
-msgstr ""
+msgstr "景観パッチ特性解析 "
 
 #: ../gui/tcltk/d.m/menu.tcl:306
 msgid "Output landscape patch information"
-msgstr ""
+msgstr "景観パッチ情報出力"
 
 #: ../gui/tcltk/d.m/menu.tcl:308 ../gui/tcltk/gis.m/gmmenu.tcl:347
 msgid "Wildfire modeling"
-msgstr ""
+msgstr "森林火災モデリング"
 
 #: ../gui/tcltk/d.m/menu.tcl:309
 msgid "Generate rate of spread (ROS) maps"
-msgstr ""
+msgstr "拡散率(ROS)図の作成 "
 
 #: ../gui/tcltk/d.m/menu.tcl:310
 msgid "Generate least-cost spread paths"
-msgstr ""
+msgstr "最小コスト拡大パスの作成 "
 
 #: ../gui/tcltk/d.m/menu.tcl:311
 msgid "Simulate anisotropic spread phenomena"
-msgstr ""
+msgstr "異方的拡散現象のシミュレーション "
 
 #: ../gui/tcltk/d.m/menu.tcl:314 ../gui/tcltk/gis.m/gmmenu.tcl:353
 msgid "Change category values and labels"
-msgstr ""
+msgstr "カテゴリー値・ラベルの変更"
 
 #: ../gui/tcltk/d.m/menu.tcl:315
-#, fuzzy
 msgid "Edit category values of individual cells for displayed raster map"
-msgstr "の ファイル"
+msgstr "表示されたラスター図の個々のセルのカテゴリー値の編集 "
 
 #: ../gui/tcltk/d.m/menu.tcl:318
-#, fuzzy
 msgid "Reclassify categories for areas of specified sizes"
-msgstr "の"
+msgstr "指定サイズのエリアのカテゴリー再分類 "
 
 #: ../gui/tcltk/d.m/menu.tcl:319
 msgid "Reclassify categories using rules"
-msgstr ""
+msgstr "ルールを用いたカテゴリー再分類 "
 
 #: ../gui/tcltk/d.m/menu.tcl:320
-#, fuzzy
 msgid "Reclassify categories using rules file"
-msgstr "ファイル"
+msgstr "ルールファイルを用いたカテゴリー再分類 "
 
 #: ../gui/tcltk/d.m/menu.tcl:322
 msgid "Recode categories using rules (create new map)"
-msgstr ""
+msgstr "ルールを用いたカテゴリーの記録(新規作成) "
 
 #: ../gui/tcltk/d.m/menu.tcl:323
-#, fuzzy
 msgid "Recode categories using rules file (create new map)"
-msgstr "ファイル"
+msgstr "ルールファイルを用いたカテゴリーの記録(新規作成) "
 
 #: ../gui/tcltk/d.m/menu.tcl:325
 msgid "Rescale categories (create new map)"
-msgstr ""
+msgstr "カテゴリーのリスケール(新規作成) "
 
 #: ../gui/tcltk/d.m/menu.tcl:326
 msgid "Rescale categories with equalized histogram (create new map)"
-msgstr ""
+msgstr "ヒストグラム平滑化によるカテゴリーのリスケール(新規作成) "
 
 #: ../gui/tcltk/d.m/menu.tcl:329
 msgid "Generate concentric circles around points"
-msgstr ""
+msgstr "同心円の作成 "
 
 #: ../gui/tcltk/d.m/menu.tcl:330
-#, fuzzy
 msgid "Generate random raster cells"
-msgstr "ファイル"
+msgstr "ランダムラスターセルの作成 "
 
 #: ../gui/tcltk/d.m/menu.tcl:331 ../gui/tcltk/gis.m/gmmenu.tcl:368
 msgid "Generate random cells"
-msgstr ""
+msgstr "ランダムセルの作成"
 
 #: ../gui/tcltk/d.m/menu.tcl:332
-#, fuzzy
 msgid "Generate random cells and vector points from raster map"
-msgstr "ファイル ファイル"
+msgstr "ランダムセルとベクトルポイントの作成 "
 
 #: ../gui/tcltk/d.m/menu.tcl:334 ../gui/tcltk/gis.m/gmmenu.tcl:372
 msgid "Generate surfaces"
-msgstr ""
+msgstr "面の作成"
 
 #: ../gui/tcltk/d.m/menu.tcl:335
 msgid "Generate density surface using moving Gausian kernal"
-msgstr ""
+msgstr "移動Gaussian kernalを用いた密度曲面の作成 "
 
 #: ../gui/tcltk/d.m/menu.tcl:336
 msgid "Generate fractal surface"
-msgstr ""
+msgstr "フラクタル曲面の作成 "
 
 #: ../gui/tcltk/d.m/menu.tcl:337
 msgid "Generate gaussian deviates surface"
-msgstr ""
+msgstr "Gaussian deviate曲面の作成 "
 
 #: ../gui/tcltk/d.m/menu.tcl:338
 msgid "Generate plane"
-msgstr ""
+msgstr "平面の作成 "
 
 #: ../gui/tcltk/d.m/menu.tcl:339
 msgid "Generate random deviates surface"
-msgstr ""
+msgstr "ランダム逸脱曲面作成"
 
 #: ../gui/tcltk/d.m/menu.tcl:340
 msgid "Generate random surface with spatial dependence"
-msgstr ""
+msgstr "空間依存したランダム曲面の作成 "
 
 #: ../gui/tcltk/d.m/menu.tcl:342
-#, fuzzy
 msgid "Generate vector contour lines"
-msgstr "ファイル"
+msgstr "ベクトル等高線の作成 "
 
 #: ../gui/tcltk/d.m/menu.tcl:343 ../gui/tcltk/gis.m/gmmenu.tcl:384
 msgid "Interpolate surfaces"
-msgstr ""
+msgstr "曲面補間 "
 
 #: ../gui/tcltk/d.m/menu.tcl:344
-#, fuzzy
 msgid "Bilinear interpolation from raster points"
-msgstr "ファイル"
+msgstr "ラスターポイントデータを用いた双線形補間 "
 
 #: ../gui/tcltk/d.m/menu.tcl:345
-#, fuzzy
 msgid "Inverse distance weighted interpolation from raster points"
-msgstr "単位 ファイル"
+msgstr "ラスターポイントデータを用いた距離逆関数重み付補間 "
 
 #: ../gui/tcltk/d.m/menu.tcl:346
-#, fuzzy
 msgid "Interpolation from raster contours"
-msgstr "補間 ファイル"
+msgstr "ラスター等高線を用いた補間 "
 
 #: ../gui/tcltk/d.m/menu.tcl:348
-#, fuzzy
 msgid "Inverse distance weighted interpolation from vector points"
-msgstr "単位 ファイル"
+msgstr "ベクトルポイントデータを用いた距離逆関数重み付補間 "
 
 #: ../gui/tcltk/d.m/menu.tcl:349
-#, fuzzy
 msgid "Regularized spline tension interpolation from vector points or contours"
-msgstr "���� ����"
+msgstr ""
+"ベクトルポイントまたは等高線を用いたレギュラースプライン・テンション補間 "
 
 #: ../gui/tcltk/d.m/menu.tcl:351
-#, fuzzy
 msgid "Fill NULL cells by interpolation using regularized spline tension"
-msgstr "���� ����"
+msgstr "レギュラースプライン・テンション補間によるNULLセルの穴埋め "
 
 #: ../gui/tcltk/d.m/menu.tcl:354 ../gui/tcltk/d.m/menu.tcl:459
 #: ../gui/tcltk/d.m/menu.tcl:515 ../gui/tcltk/gis.m/gmmenu.tcl:397
 #: ../gui/tcltk/gis.m/gmmenu.tcl:513 ../gui/tcltk/gis.m/gmmenu.tcl:567
 msgid "Reports and statistics"
-msgstr ""
+msgstr "レポートと統計"
 
 #: ../gui/tcltk/d.m/menu.tcl:355 ../gui/tcltk/d.m/menu.tcl:516
 #: ../gui/tcltk/gis.m/gmmenu.tcl:398
-#, fuzzy
 msgid "Report basic file information"
-msgstr "ファイル"
+msgstr "基本ファイル情報のレポート "
 
 #: ../gui/tcltk/d.m/menu.tcl:356
 msgid "Report category labels and values"
 msgstr ""
 
 #: ../gui/tcltk/d.m/menu.tcl:358 ../gui/tcltk/gis.m/gmmenu.tcl:401
-#, fuzzy
 msgid "General statistics"
-msgstr "データベース管理全般"
+msgstr "一般設定 "
 
 #: ../gui/tcltk/d.m/menu.tcl:359
 msgid "Range of all category values"
-msgstr ""
+msgstr "全カテゴリー値の範囲 "
 
 #: ../gui/tcltk/d.m/menu.tcl:360
 msgid "Sum all cell category values"
-msgstr ""
+msgstr "全セルカテゴリー値の総和 "
 
 #: ../gui/tcltk/d.m/menu.tcl:361 ../gui/tcltk/gis.m/gmmenu.tcl:404
-#, fuzzy
 msgid "Sum area by map and category"
-msgstr "単位"
+msgstr "マップとカテゴリー別総面積"
 
 #: ../gui/tcltk/d.m/menu.tcl:362
-#, fuzzy
 msgid "Summary statistics for clumped cells (works with r.clump)"
-msgstr "の"
+msgstr "クランプセルの要約統計 (r.clumpによる処理)"
 
 #: ../gui/tcltk/d.m/menu.tcl:363 ../gui/tcltk/gis.m/gmmenu.tcl:406
-#, fuzzy
 msgid "Total surface area corrected for topography"
-msgstr "単位 の"
+msgstr "地形補正された曲面積"
 
 #: ../gui/tcltk/d.m/menu.tcl:364 ../gui/tcltk/d.m/menu.tcl:463
 #: ../gui/tcltk/gis.m/gmmenu.tcl:407
 msgid "Univariate statistics"
-msgstr ""
+msgstr "一変量統計"
 
 #: ../gui/tcltk/d.m/menu.tcl:365
 msgid "Univariate statistics (script version)"
-msgstr ""
+msgstr "一変量統計(スクリプト版) "
 
 #: ../gui/tcltk/d.m/menu.tcl:367
 msgid "Sample values along transects"
-msgstr ""
+msgstr "横断線に沿ったサンプリング "
 
 #: ../gui/tcltk/d.m/menu.tcl:368
-#, fuzzy
 msgid "Sample values along transects (use azimuth, distance)"
-msgstr "単位"
+msgstr "横断線に沿ったサンプリング(方位・距離利用) "
 
 #: ../gui/tcltk/d.m/menu.tcl:370 ../gui/tcltk/gis.m/gmmenu.tcl:412
-#, fuzzy
 msgid "Covariance/correlation"
 msgstr "共分散/相関"
 
 #: ../gui/tcltk/d.m/menu.tcl:371
 msgid "Linear regression between 2 maps"
-msgstr ""
+msgstr "2つのマップ間の線形回帰分析 "
 
 #: ../gui/tcltk/d.m/menu.tcl:372
 msgid "Mutual category occurences (coincidence)"
-msgstr ""
+msgstr "カテゴリーの相互関係表(一致)"
 
 #: ../gui/tcltk/d.m/menu.tcl:375 ../gui/tcltk/gis.m/gmmenu.tcl:417
-#, fuzzy
 msgid "&Vector"
-msgstr "ベクトル"
+msgstr "ベクトル(&V) "
 
 #: ../gui/tcltk/d.m/menu.tcl:377 ../gui/tcltk/gis.m/gmmenu.tcl:419
-#, fuzzy
 msgid "Digitize"
 msgstr "デジタイズ"
 
 #: ../gui/tcltk/d.m/menu.tcl:379
 msgid "Create/rebuild topology"
-msgstr ""
+msgstr "トポロジーの作成/編集 "
 
 #: ../gui/tcltk/d.m/menu.tcl:380
-#, fuzzy
 msgid "Clean vector files"
-msgstr "ファイル"
+msgstr "ベクトルファイルの削除"
 
 #: ../gui/tcltk/d.m/menu.tcl:381
 msgid "Add missing centroids"
-msgstr ""
+msgstr "欠けているセントロイドを追加"
 
 #: ../gui/tcltk/d.m/menu.tcl:383
 msgid "Build polylines from adjacent segments"
-msgstr ""
+msgstr "近傍のセグメントからポリゴンの作成 "
 
 #: ../gui/tcltk/d.m/menu.tcl:384
 msgid "Split polylines into segments"
-msgstr ""
+msgstr "ポリゴンをセグメントに分割 "
 
 #: ../gui/tcltk/d.m/menu.tcl:385
 msgid "Create lines parallel to existing lines"
-msgstr ""
+msgstr "既存のラインから平行線を作成"
 
 #: ../gui/tcltk/d.m/menu.tcl:386
 msgid "Dissolve common boundaries"
-msgstr ""
+msgstr "共通境界の融合"
 
 #: ../gui/tcltk/d.m/menu.tcl:388
-#, fuzzy
 msgid "Convert vector feature types"
-msgstr "ファイル"
+msgstr "ベクトルフィーチャタイプの変換 "
 
 #: ../gui/tcltk/d.m/menu.tcl:389
-#, fuzzy
 msgid "Convert 2D vector to 3D by sampling raster"
-msgstr "ファイル ファイル"
+msgstr "ラスターをサンプリングして2Dベクトルを3D化"
 
 #: ../gui/tcltk/d.m/menu.tcl:390
-#, fuzzy
 msgid "Extrude 2D vector into 3D vector"
-msgstr "ファイル ファイル"
+msgstr "2Dベクトルを3Dベクトルに立上げ"
 
 #: ../gui/tcltk/d.m/menu.tcl:392
-#, fuzzy
 msgid "Create text label file for vector features"
-msgstr "ラベル ファイル の ファイル"
+msgstr "ベクトルフィーチャのためのテキストラベルファイルの作成 "
 
 #: ../gui/tcltk/d.m/menu.tcl:394
-#, fuzzy
 msgid "Reproject vector from other location"
-msgstr "ファイル"
+msgstr "他のロケーションからベクトルの投影変換 "
 
 #: ../gui/tcltk/d.m/menu.tcl:396 ../gui/tcltk/gis.m/gmmenu.tcl:616
-#, fuzzy
 msgid "Vector<->database connections"
-msgstr "ベクトル"
+msgstr "ベクトル<->データベース接続 "
 
 #: ../gui/tcltk/d.m/menu.tcl:397
-#, fuzzy
 msgid "Create new vector as link to external OGR layer"
-msgstr "ファイル"
+msgstr "外部OGRレイヤーとリンクする新しいベクトルの作成 "
 
 #: ../gui/tcltk/d.m/menu.tcl:398
-#, fuzzy
 msgid "Set database connection for vector attributes"
-msgstr "の ファイル"
+msgstr "ベクトル属性のためのデータベース接続設定 "
 
 #: ../gui/tcltk/d.m/menu.tcl:400
-#, fuzzy
 msgid "Rectify and georeference vector map"
-msgstr "ファイル"
+msgstr "ベクトルマップの位置補正 "
 
 #: ../gui/tcltk/d.m/menu.tcl:402
-#, fuzzy
 msgid "Query by attributes"
-msgstr "データ情報"
+msgstr "属性による検索 "
 
 #: ../gui/tcltk/d.m/menu.tcl:404
-#, fuzzy
 msgid "Query by map features"
-msgstr "データ情報"
+msgstr "フィーチャによる検索 "
 
 #: ../gui/tcltk/d.m/menu.tcl:406
-#, fuzzy
 msgid "Create vector buffers"
-msgstr "ファイル"
+msgstr "ベクトルバッファーの作成 "
 
 #: ../gui/tcltk/d.m/menu.tcl:407
-#, fuzzy
 msgid "Linear referencing for vectors"
-msgstr "の"
+msgstr "ベクトルの線形参照"
 
 #: ../gui/tcltk/d.m/menu.tcl:408
 msgid "Create linear reference system"
-msgstr ""
+msgstr "線型参照システム作成"
 
 #: ../gui/tcltk/d.m/menu.tcl:409
 msgid "Create stationing from imput lines, and linear reference system"
-msgstr ""
+msgstr "入力ラインから配置測点と線型参照システム作成"
 
 #: ../gui/tcltk/d.m/menu.tcl:410
-#, fuzzy
 msgid ""
 "Create points/segments from input lines, linear reference system and "
 "positions read from stdin"
-msgstr "入力"
+msgstr ""
+"入力ラインからポイント/セグメントを作成と標準入力からの位置による線型参照シス"
+"テム"
 
 #: ../gui/tcltk/d.m/menu.tcl:411
-#, fuzzy
 msgid ""
 "Find line id and real km+offset for given points in vector map using linear "
 "reference system"
-msgstr "の ファイル"
+msgstr ""
+"線形参照システムを利用し、ベクトルマップのポイントからラインIDと実距離（Km)オ"
+"フセットを表示"
 
 #: ../gui/tcltk/d.m/menu.tcl:414
 msgid "Locate nearest features to points or centroids"
-msgstr ""
+msgstr "ポイントまたはセントロイドへの近接するフィーチャ "
 
 #: ../gui/tcltk/d.m/menu.tcl:415
 msgid "Generate Thiessen polygons around points (Voronoi diagram)"
-msgstr ""
+msgstr "ポイントの周りにティーセンポリゴンを作成 (ボロノイ図) "
 
 #: ../gui/tcltk/d.m/menu.tcl:416
-#, fuzzy
 msgid "Connect points to create Delaunay triangles"
-msgstr "接続"
+msgstr "ドローネ三角形を作成するためポイントを接続"
 
 #: ../gui/tcltk/d.m/menu.tcl:418 ../gui/tcltk/gis.m/gmmenu.tcl:465
 msgid "Network analysis"
-msgstr ""
+msgstr "ネットワーク解析 "
 
 #: ../gui/tcltk/d.m/menu.tcl:419 ../gui/tcltk/gis.m/gmmenu.tcl:466
 msgid "Allocate subnets"
-msgstr ""
+msgstr "サブネットの設定 "
 
 #: ../gui/tcltk/d.m/menu.tcl:420 ../gui/tcltk/gis.m/gmmenu.tcl:467
 msgid "Network maintenance"
-msgstr ""
+msgstr "ネットワークメンテナンス "
 
 #: ../gui/tcltk/d.m/menu.tcl:421 ../gui/tcltk/gis.m/gmmenu.tcl:468
 msgid "Shortest route"
-msgstr ""
+msgstr "最短ルート "
 
 #: ../gui/tcltk/d.m/menu.tcl:422
 msgid "Shortest route (visualization only)"
-msgstr ""
+msgstr "最短ルート(表示のみ) "
 
 #: ../gui/tcltk/d.m/menu.tcl:423
 msgid "Split net to bands between cost isolines"
-msgstr ""
+msgstr "コスト等値線間のネットのバンドへの分割 "
 
 #: ../gui/tcltk/d.m/menu.tcl:424 ../gui/tcltk/gis.m/gmmenu.tcl:475
 msgid "Steiner tree"
-msgstr ""
+msgstr "シュタイナーツリー"
 
 #: ../gui/tcltk/d.m/menu.tcl:425 ../gui/tcltk/gis.m/gmmenu.tcl:476
 msgid "Traveling salesman analysis"
-msgstr ""
+msgstr "巡回セールスマン問題 "
 
 #: ../gui/tcltk/d.m/menu.tcl:428
-#, fuzzy
 msgid "Overlay/combine 2 vector maps"
-msgstr "ファイル"
+msgstr "2つのベクトルマップのオーバーレイ/結合 "
 
 #: ../gui/tcltk/d.m/menu.tcl:429
 msgid "Patch multiple maps (combine)"
-msgstr ""
+msgstr "複数のマップのパッチ(結合) "
 
 #: ../gui/tcltk/d.m/menu.tcl:431
-#, fuzzy
 msgid "Generate area feature for extent of current region"
-msgstr "単位 の 地域"
+msgstr "現在の領域の拡大のためのエリアフィーチャーの作成 "
 
 #: ../gui/tcltk/d.m/menu.tcl:432
-#, fuzzy
 msgid "Generate rectangular vector grid"
-msgstr "ファイル"
+msgstr "長方形のベクトルグリッドの作成 "
 
 #: ../gui/tcltk/d.m/menu.tcl:434 ../gui/tcltk/gis.m/gmmenu.tcl:483
 msgid "Change attributes"
-msgstr ""
+msgstr "属性の変更"
 
 #: ../gui/tcltk/d.m/menu.tcl:435
 msgid "Attach, delete, or report categories"
-msgstr ""
+msgstr "カテゴリーの追加・削除あるいはレポート "
 
 #: ../gui/tcltk/d.m/menu.tcl:436
-#, fuzzy
 msgid "Reclassify features using rules file"
-msgstr "ファイル"
+msgstr "ルールファイルを用いたフィーチャーの再分類 "
 
 #: ../gui/tcltk/d.m/menu.tcl:439
-#, fuzzy
 msgid "Work with vector points"
-msgstr "ファイル"
+msgstr "ベクトルポイントを用いた作業 "
 
 #: ../gui/tcltk/d.m/menu.tcl:440 ../gui/tcltk/gis.m/gmmenu.tcl:496
 msgid "Generate points"
-msgstr ""
+msgstr "ポイントの作成"
 
 #: ../gui/tcltk/d.m/menu.tcl:441
 msgid "Generate points from database with x/y coordinates"
-msgstr ""
+msgstr "X/Y座標でのデータベースからポイントの作成 "
 
 #: ../gui/tcltk/d.m/menu.tcl:442 ../gui/tcltk/gis.m/gmmenu.tcl:499
 msgid "Generate random points"
-msgstr ""
+msgstr "ランダムなポイントを作成"
 
 #: ../gui/tcltk/d.m/menu.tcl:443
 msgid "Random location perturbations of points"
-msgstr ""
+msgstr "ポイントのランダムな移動 "
 
 #: ../gui/tcltk/d.m/menu.tcl:445 ../gui/tcltk/gis.m/gmmenu.tcl:490
 msgid "Generate areas from points"
-msgstr ""
+msgstr "複数のポイントからエリアを作成"
 
 #: ../gui/tcltk/d.m/menu.tcl:446
-#, fuzzy
 msgid "Generate convex hull for point set"
-msgstr "の"
+msgstr "ポイントセットに対する凸包(convex hull)作成 "
 
 #: ../gui/tcltk/d.m/menu.tcl:447
-#, fuzzy
 msgid "Generate Delaunay triangles for point set"
-msgstr "の"
+msgstr "ポイントセットにたいするドローネ三角形(Delaunay triangles)の作成 "
 
 #: ../gui/tcltk/d.m/menu.tcl:448
-#, fuzzy
 msgid "Generate Voronoi diagram/Thiessen polygons for point set"
-msgstr "の"
+msgstr "ポイントセットによるボロノイ図/ティーセンポリゴンの作成 "
 
 #: ../gui/tcltk/d.m/menu.tcl:450
-#, fuzzy
 msgid "Sample raster maps"
-msgstr "ファイル"
+msgstr "ラスターマップのサンプリング "
 
 #: ../gui/tcltk/d.m/menu.tcl:451
-#, fuzzy
 msgid "Calculate statistics for raster map overlain by vector map"
-msgstr "の ファイル ファイル"
+msgstr "ベクトルマップに覆われたラスターマップの統計計算"
 
 #: ../gui/tcltk/d.m/menu.tcl:452 ../gui/tcltk/gis.m/gmmenu.tcl:509
-#, fuzzy
 msgid "Sample raster map at point locations"
-msgstr "ファイル"
+msgstr "ポイント地点でのラスターマップのサンプリング "
 
 #: ../gui/tcltk/d.m/menu.tcl:453 ../gui/tcltk/gis.m/gmmenu.tcl:510
-#, fuzzy
 msgid "Sample raster neighborhood around points"
-msgstr "ファイル"
+msgstr "ポイント近傍でのラスターマップのサンプリング"
 
 #: ../gui/tcltk/d.m/menu.tcl:455
-#, fuzzy
 msgid "Partition points into test/training sets for k-fold cross validatation"
-msgstr "の"
+msgstr "k-分割交差検定に向けたポイントのテスト/トレーニングへの分割 "
 
 #: ../gui/tcltk/d.m/menu.tcl:456
-#, fuzzy
 msgid "Transfer attribute data from queried vector map to points"
-msgstr "ファイル"
+msgstr "検索されたベクトルマップから属性データをポイントに転送"
 
 #: ../gui/tcltk/d.m/menu.tcl:460 ../gui/tcltk/gis.m/gmmenu.tcl:514
 #: ../gui/tcltk/gis.m/gmmenu.tcl:584
 msgid "Basic information"
-msgstr ""
+msgstr "基礎情報 "
 
 #: ../gui/tcltk/d.m/menu.tcl:461
-#, fuzzy
 msgid "Load vector attributes to database or create reports"
-msgstr "ファイル"
+msgstr "データベースあるいはレポート作成のためのベクトル属性の読み込み "
 
 #: ../gui/tcltk/d.m/menu.tcl:462
-#, fuzzy
 msgid "Report areas for vector attribute categories"
-msgstr "の ファイル"
+msgstr "ベクトル属性カテゴリーの分類をレポート"
 
 #: ../gui/tcltk/d.m/menu.tcl:465
 msgid "Test normality of point distribution"
-msgstr ""
+msgstr "代表点の正規性検定 "
 
 #: ../gui/tcltk/d.m/menu.tcl:466
-#, fuzzy
 msgid "Calculate stats for raster map underlying vector objects"
-msgstr "の ファイル ファイル"
+msgstr "ベクトルオブジェクトの下部にあるラスターマップの統計計算"
 
 #: ../gui/tcltk/d.m/menu.tcl:467
 msgid "Indices of point counts in quadrats"
-msgstr ""
+msgstr "区画内でのポイントカウントの指標 "
 
 #: ../gui/tcltk/d.m/menu.tcl:470 ../gui/tcltk/gis.m/gmmenu.tcl:525
-#, fuzzy
 msgid "&Imagery"
-msgstr "画像"
+msgstr "画像(&I)"
 
 #: ../gui/tcltk/d.m/menu.tcl:471 ../gui/tcltk/gis.m/gmmenu.tcl:526
 msgid "Develop images and groups"
-msgstr ""
+msgstr "画像とグループの作成 "
 
 #: ../gui/tcltk/d.m/menu.tcl:472
-#, fuzzy
 msgid "Create/edit imagery group"
-msgstr "グループ"
+msgstr "画像グループの作成/編集 "
 
 #: ../gui/tcltk/d.m/menu.tcl:473
-#, fuzzy
 msgid "Target imagery group"
-msgstr "グループ"
+msgstr "ターゲットの画像グループ "
 
 #: ../gui/tcltk/d.m/menu.tcl:475
 msgid "Mosaic up to 4 adjacent images"
-msgstr ""
+msgstr "4つの隣り合う画像までのモザイク "
 
 #: ../gui/tcltk/d.m/menu.tcl:477 ../gui/tcltk/gis.m/gmmenu.tcl:532
 msgid "Manage image colors"
-msgstr ""
+msgstr "カラーの管理 "
 
 #: ../gui/tcltk/d.m/menu.tcl:478
-#, fuzzy
 msgid ""
 "Color balance and enhance color tables of multiband imagery for rgb display"
-msgstr "色 色 の"
+msgstr "RGB表示するマルチバンド画像のカラーバランスと拡張カラーテーブル"
 
 #: ../gui/tcltk/d.m/menu.tcl:479
-#, fuzzy
 msgid ""
 "Transform HIS (Hue/Intensity/Saturation) color image to RGB (Red/Green/Blue)"
-msgstr "色"
+msgstr "HIS(色相/明度/彩度)カラーからRGB（赤/緑/青)カラーへ変換"
 
 #: ../gui/tcltk/d.m/menu.tcl:480
-#, fuzzy
 msgid ""
 "Transform RGB (Red/Green/Blue) color image to HIS (Hue/Intensity/Saturation)"
-msgstr "色"
+msgstr "RGB（赤/緑/青)カラーからHIS(色相/明度/彩度)カラーへ変換"
 
 #: ../gui/tcltk/d.m/menu.tcl:482
-#, fuzzy
 msgid "Rectify and georeference image group"
-msgstr "グループ"
+msgstr "画像の位置補正 "
 
 #: ../gui/tcltk/d.m/menu.tcl:483
-#, fuzzy
 msgid "Set ground control points (GCP's) from raster map or keyboard entry"
-msgstr " "
+msgstr ""
+"ラスターあるいはキーボードからのグラウンドコントロールポイント(GCP)の設定 "
 
 #: ../gui/tcltk/d.m/menu.tcl:485
-#, fuzzy
 msgid "Set ground control points (GCP's) from vector map or keyboard entry"
-msgstr " "
+msgstr ""
+"ベクトルあるいはキーボードからのグラウンドコントロールポイント(GCP)の設定 "
 
 #: ../gui/tcltk/d.m/menu.tcl:487
 msgid "Affine and Polynomial rectification (rubber sheet)"
-msgstr ""
+msgstr "アフィン 多項式変換(ラバーシート)"
 
 #: ../gui/tcltk/d.m/menu.tcl:488 ../gui/tcltk/gis.m/gmmenu.tcl:537
 msgid "Ortho photo rectification"
-msgstr ""
+msgstr "オルソフォト補正 "
 
 #: ../gui/tcltk/d.m/menu.tcl:491
 msgid "Brovey transformation and pan sharpening"
-msgstr ""
+msgstr "Brovey変換とパンシャープニング "
 
 #: ../gui/tcltk/d.m/menu.tcl:492 ../gui/tcltk/gis.m/gmmenu.tcl:544
 msgid "Classify image"
-msgstr ""
+msgstr "画像分類 "
 
 #: ../gui/tcltk/d.m/menu.tcl:493 ../gui/tcltk/gis.m/gmmenu.tcl:545
-#, fuzzy
 msgid "Clustering input for unsupervised classification"
-msgstr "入力 の"
+msgstr "非監視下分類用クラスタリング入力"
 
 #: ../gui/tcltk/d.m/menu.tcl:495 ../gui/tcltk/gis.m/gmmenu.tcl:547
 msgid "Maximum likelyhood classification (MLC)"
@@ -1771,818 +1594,738 @@ msgstr ""
 
 #: ../gui/tcltk/d.m/menu.tcl:496 ../gui/tcltk/gis.m/gmmenu.tcl:548
 msgid "Sequential maximum a posteriory classification (SMAP)"
-msgstr ""
+msgstr "逐次最大事後確率推定法による分類(SMAP) "
 
 #: ../gui/tcltk/d.m/menu.tcl:498 ../gui/tcltk/gis.m/gmmenu.tcl:550
-#, fuzzy
 msgid "Interactive input for supervised classification"
-msgstr "入力 の"
+msgstr "対話型入力による監視下分類"
 
 #: ../gui/tcltk/d.m/menu.tcl:499
-#, fuzzy
 msgid "Non-interactive input for supervised classification (MLC)"
-msgstr "入力 の"
+msgstr "監視下分類(MLC)のための非対話型入力 "
 
 #: ../gui/tcltk/d.m/menu.tcl:500
-#, fuzzy
 msgid "Non-interactive input for supervised classification (SMAP)"
-msgstr "入力 の"
+msgstr "監視下分類(SMAP)のための非対話型入力 "
 
 #: ../gui/tcltk/d.m/menu.tcl:502 ../gui/tcltk/gis.m/gmmenu.tcl:554
 msgid "Filter image"
-msgstr ""
+msgstr "画像フィルター "
 
 #: ../gui/tcltk/d.m/menu.tcl:503
 msgid "Zero edge crossing detection"
-msgstr ""
+msgstr "ゼロエッジ交差検出"
 
 #: ../gui/tcltk/d.m/menu.tcl:504
 msgid "User defined matrix/convolving filter"
-msgstr ""
+msgstr "ユーザー定義のマトリックス/コンボリューションフィルター "
 
 #: ../gui/tcltk/d.m/menu.tcl:506 ../gui/tcltk/gis.m/gmmenu.tcl:558
 msgid "Spectral response"
-msgstr ""
+msgstr "スペクトル応答 "
 
 #: ../gui/tcltk/d.m/menu.tcl:507 ../gui/tcltk/gis.m/gmmenu.tcl:559
 msgid "Tassled cap vegetation index"
-msgstr ""
+msgstr "Tasseled cap植生指標 "
 
 #: ../gui/tcltk/d.m/menu.tcl:508 ../gui/tcltk/gis.m/gmmenu.tcl:560
 msgid "Transform image"
-msgstr ""
+msgstr "画像変換 "
 
 #: ../gui/tcltk/d.m/menu.tcl:509
 msgid "Canonical component"
-msgstr ""
+msgstr "正準分析 "
 
 #: ../gui/tcltk/d.m/menu.tcl:510
 msgid "Principal component"
-msgstr ""
+msgstr "主成分分析 "
 
 #: ../gui/tcltk/d.m/menu.tcl:511
 msgid "Fast Fourier Transform"
-msgstr ""
+msgstr "高速フーリエ変換(FFT) "
 
 #: ../gui/tcltk/d.m/menu.tcl:512
 msgid "Inverse Fast Fourier Transform"
-msgstr ""
+msgstr "高速フーリエ逆変換 "
 
 #: ../gui/tcltk/d.m/menu.tcl:517
 msgid "Range of image values"
-msgstr ""
+msgstr "画像の値の範囲 "
 
 #: ../gui/tcltk/d.m/menu.tcl:519
-#, fuzzy
 msgid "Bit pattern comparison for ID of low quality pixels"
-msgstr "の"
+msgstr "低品質ピクセルのIDをビットパターン比較"
 
 #: ../gui/tcltk/d.m/menu.tcl:520
 msgid "Kappa classification accuracy assessment"
-msgstr ""
+msgstr "Kappa係数を用いた分類精度評価 "
 
 #: ../gui/tcltk/d.m/menu.tcl:521
-#, fuzzy
 msgid "Optimum index factor for LandSat TM"
-msgstr "の"
+msgstr "ランドサット TMの最適インデックスファクター "
 
 #: ../gui/tcltk/d.m/menu.tcl:524
 msgid "&Grid3D"
-msgstr ""
+msgstr "3Dグリッド(&G) "
 
 #: ../gui/tcltk/d.m/menu.tcl:525 ../gui/tcltk/gis.m/gmmenu.tcl:574
 msgid "Develop grid3D volumes"
-msgstr ""
+msgstr "3Dグリッドボリュームの作成 "
 
 #: ../gui/tcltk/d.m/menu.tcl:526 ../gui/tcltk/gis.m/gmmenu.tcl:575
-#, fuzzy
 msgid "Manage nulls for grid3D volume"
-msgstr "の"
+msgstr "3Dグリッドボリューム用NULLの管理 "
 
 #: ../gui/tcltk/d.m/menu.tcl:527 ../gui/tcltk/gis.m/gmmenu.tcl:576
-#, fuzzy
 msgid "Manage timestamp for grid3D volume"
-msgstr "の"
+msgstr "3Dグリッドボリューム用タイムスタンプの管理 "
 
 #: ../gui/tcltk/d.m/menu.tcl:529
-#, fuzzy
 msgid "Create 3D mask for grid3D operations"
-msgstr "の"
+msgstr "3Dグリッド処理用3Dマスクの作成 "
 
 #: ../gui/tcltk/d.m/menu.tcl:530
-#, fuzzy
 msgid "Create 2D raster cross section from grid3d volume"
-msgstr "ファイル"
+msgstr "3Dグリッド立体から2Dラスター断面図を作成"
 
 #: ../gui/tcltk/d.m/menu.tcl:531
-#, fuzzy
 msgid "Map calculator for grid3D operations"
-msgstr "管理 の"
+msgstr "3Dグリッド処理用のマップカリキュレータ "
 
 #: ../gui/tcltk/d.m/menu.tcl:532
-#, fuzzy
 msgid "Interpolate volume from vector points using splines"
-msgstr "ファイル"
+msgstr "スプラインによるポイントから立体への補間 "
 
 #: ../gui/tcltk/d.m/menu.tcl:533 ../gui/tcltk/gis.m/gmmenu.tcl:583
 msgid "Report and Statistics"
-msgstr ""
+msgstr "レポートと統計"
 
 #: ../gui/tcltk/d.m/menu.tcl:534
-#, fuzzy
 msgid "Display information about grid3D volume"
-msgstr "ガンマ"
+msgstr "3Dグリッド立体の情報表示 "
 
 #: ../gui/tcltk/d.m/menu.tcl:537 ../gui/tcltk/gis.m/gmmenu.tcl:587
-#, fuzzy
 msgid "&Databases"
-msgstr "外部データベースの利用"
+msgstr "データベース(&D) "
 
 #: ../gui/tcltk/d.m/menu.tcl:538 ../gui/tcltk/gis.m/gmmenu.tcl:595
 msgid "Manage database"
-msgstr ""
+msgstr "データベースの管理 "
 
 #: ../gui/tcltk/d.m/menu.tcl:539 ../gui/tcltk/gis.m/gmmenu.tcl:596
-#, fuzzy
 msgid "Connect to database"
-msgstr "接続"
+msgstr "データベース接続 "
 
 #: ../gui/tcltk/d.m/menu.tcl:540 ../gui/tcltk/gis.m/gmmenu.tcl:597
 msgid "Login to database"
-msgstr ""
+msgstr "データベースへログイン"
 
 #: ../gui/tcltk/d.m/menu.tcl:542 ../gui/tcltk/gis.m/gmmenu.tcl:599
-#, fuzzy
 msgid "Copy table"
-msgstr "コピー"
+msgstr "テーブルコピー"
 
 #: ../gui/tcltk/d.m/menu.tcl:543
 msgid "Add columns to table"
-msgstr ""
+msgstr "テーブルに列を追加"
 
 #: ../gui/tcltk/d.m/menu.tcl:544
 msgid "Change values in a column"
-msgstr ""
+msgstr "列の値を変更"
 
 #: ../gui/tcltk/d.m/menu.tcl:545 ../gui/tcltk/gis.m/gmmenu.tcl:608
 msgid "Test database"
-msgstr ""
+msgstr "テストデータベース "
 
 #: ../gui/tcltk/d.m/menu.tcl:547 ../gui/tcltk/gis.m/gmmenu.tcl:588
 msgid "Database information"
-msgstr ""
+msgstr "データベース情報"
 
 #: ../gui/tcltk/d.m/menu.tcl:548 ../gui/tcltk/gis.m/gmmenu.tcl:589
 msgid "Describe table"
-msgstr ""
+msgstr "テーブル定義"
 
 #: ../gui/tcltk/d.m/menu.tcl:549 ../gui/tcltk/gis.m/gmmenu.tcl:590
-#, fuzzy
 msgid "List columns"
-msgstr "一覧"
+msgstr "列一覧"
 
 #: ../gui/tcltk/d.m/menu.tcl:550 ../gui/tcltk/gis.m/gmmenu.tcl:591
-#, fuzzy
 msgid "List drivers"
-msgstr "一覧"
+msgstr "ドライバー一覧"
 
 #: ../gui/tcltk/d.m/menu.tcl:551 ../gui/tcltk/gis.m/gmmenu.tcl:592
-#, fuzzy
 msgid "List tables"
-msgstr "一覧"
+msgstr "テーブル一覧"
 
 #: ../gui/tcltk/d.m/menu.tcl:554 ../gui/tcltk/gis.m/gmmenu.tcl:611
 #: ../gui/tcltk/gis.m/mapcanvas.tcl:1828 ../gui/tcltk/gis.m/maptool.tcl:228
-#, fuzzy
 msgid "Query"
-msgstr "データ情報"
+msgstr "クエリ"
 
 #: ../gui/tcltk/d.m/menu.tcl:555
-#, fuzzy
 msgid "Query data (SQL select)"
-msgstr "データ情報"
+msgstr "データ検索(SQL選択) "
 
 #: ../gui/tcltk/d.m/menu.tcl:556
-#, fuzzy
 msgid "Execute SQL statement"
-msgstr "実行"
+msgstr "SQL文の実行 "
 
 #: ../gui/tcltk/d.m/menu.tcl:559 ../gui/tcltk/gis.m/gmmenu.tcl:621
-#, fuzzy
 msgid "&Help"
-msgstr "ヘルプ"
+msgstr "ヘルプ(&H)"
 
 #: ../gui/tcltk/d.m/menu.tcl:560 ../gui/tcltk/gis.m/gmmenu.tcl:622
 msgid "GRASS help"
-msgstr ""
+msgstr "GRASSのヘルプ "
 
 #: ../gui/tcltk/d.m/menu.tcl:561 ../gui/tcltk/gis.m/gmmenu.tcl:623
 msgid "GIS Manager &help"
-msgstr ""
+msgstr "GIS管理者 &help "
 
 #: ../gui/tcltk/d.m/menu.tcl:561 ../gui/tcltk/gis.m/gmmenu.tcl:623
 msgid "GIS Manager help"
-msgstr ""
+msgstr "GIS管理者 ヘルプ"
 
 #: ../gui/tcltk/d.m/menu.tcl:562 ../gui/tcltk/gis.m/gmmenu.tcl:624
-#, fuzzy
 msgid "About &GRASS"
-msgstr "&GRASSについて"
+msgstr "GRASSについて(&G) "
 
 #: ../gui/tcltk/d.m/menu.tcl:562 ../gui/tcltk/gis.m/gmmenu.tcl:624
-#, fuzzy
 msgid "About GRASS"
-msgstr "GRASSについて"
+msgstr "GRASSについて "
 
 #: ../gui/tcltk/d.m/menu.tcl:563 ../gui/tcltk/gis.m/gmmenu.tcl:625
-#, fuzzy
 msgid "About &System"
-msgstr "GRA&SSについて"
+msgstr "システムについて(&S) "
 
 #: ../gui/tcltk/d.m/menu.tcl:563 ../gui/tcltk/gis.m/gmmenu.tcl:625
-#, fuzzy
 msgid "About System"
-msgstr "GRASSについて"
+msgstr "システム情報 "
 
 #: ../gui/tcltk/d.m/menu.tcl:571 ../gui/tcltk/gis.m/gmmenu.tcl:633
 msgid "&Xtns"
-msgstr ""
+msgstr "&Xtns "
 
 #: ../gui/tcltk/d.m/monitorsel.tcl:33
 msgid "x0"
-msgstr ""
+msgstr "x0 "
 
 #: ../gui/tcltk/d.m/monitorsel.tcl:35
-#, fuzzy
 msgid "Start/select display monitor x0"
-msgstr "開始 モニター"
+msgstr "ディスプレイモニタ x0 開始/選択"
 
 #: ../gui/tcltk/d.m/monitorsel.tcl:38
 msgid "x1"
-msgstr ""
+msgstr "x1"
 
 #: ../gui/tcltk/d.m/monitorsel.tcl:40
-#, fuzzy
 msgid "Start/select display monitor x1"
-msgstr "開始 モニター"
+msgstr "ディスプレイモニタ x1 開始/選択"
 
 #: ../gui/tcltk/d.m/monitorsel.tcl:43
 msgid "x2"
-msgstr ""
+msgstr "x2"
 
 #: ../gui/tcltk/d.m/monitorsel.tcl:45
-#, fuzzy
 msgid "Start/select display monitor x2"
-msgstr "開始 モニター"
+msgstr "ディスプレイモニタ x2 開始/選択"
 
 #: ../gui/tcltk/d.m/monitorsel.tcl:48
 msgid "x3"
-msgstr ""
+msgstr "x3"
 
 #: ../gui/tcltk/d.m/monitorsel.tcl:50
-#, fuzzy
 msgid "Start/select display monitor x3"
-msgstr "開始 モニター"
+msgstr "ディスプレイモニタ x3 開始/選択"
 
 #: ../gui/tcltk/d.m/monitorsel.tcl:53
 msgid "x4"
-msgstr ""
+msgstr "x4"
 
 #: ../gui/tcltk/d.m/monitorsel.tcl:55
-#, fuzzy
 msgid "Start/select display monitor x4"
-msgstr "開始 モニター"
+msgstr "ディスプレイモニタ x4 開始/選択"
 
 #: ../gui/tcltk/d.m/monitorsel.tcl:58
 msgid "x5"
-msgstr ""
+msgstr "x5"
 
 #: ../gui/tcltk/d.m/monitorsel.tcl:60
-#, fuzzy
 msgid "Start/select display monitor x5"
-msgstr "開始 モニター"
+msgstr "ディスプレイモニタ x5 開始/選択"
 
 #: ../gui/tcltk/d.m/monitorsel.tcl:63
 msgid "x6"
-msgstr ""
+msgstr "x6"
 
 #: ../gui/tcltk/d.m/monitorsel.tcl:65
-#, fuzzy
 msgid "Start/select display monitor x6"
-msgstr "開始 モニター"
+msgstr "ディスプレイモニタ x6 開始/選択"
 
 #: ../gui/tcltk/d.m/print.tcl:169
 msgid "Paper format"
-msgstr ""
+msgstr "紙の種類"
 
 #: ../gui/tcltk/d.m/print.tcl:180
 msgid "Custom"
-msgstr ""
+msgstr "カスタム"
 
 #: ../gui/tcltk/d.m/print.tcl:181 ../gui/tcltk/gis.m/mapprint.tcl:274
 msgid "width:"
-msgstr ""
+msgstr "幅："
 
 #: ../gui/tcltk/d.m/print.tcl:184
 msgid "height:"
-msgstr ""
+msgstr "高さ："
 
 #: ../gui/tcltk/d.m/print.tcl:191
 msgid "left:"
-msgstr ""
+msgstr "左："
 
 #: ../gui/tcltk/d.m/print.tcl:193
 msgid "right:"
-msgstr ""
+msgstr "右："
 
 #: ../gui/tcltk/d.m/print.tcl:195
 msgid "top:"
-msgstr ""
+msgstr "上："
 
 #: ../gui/tcltk/d.m/print.tcl:197
 msgid "bottom:"
-msgstr ""
+msgstr "下："
 
 #: ../gui/tcltk/d.m/print.tcl:210
-#, fuzzy
 msgid "PS file:"
-msgstr "ファイル:"
+msgstr "PSファイル："
 
 #: ../gui/tcltk/d.m/print.tcl:212 ../gui/tcltk/d.m/print.tcl:223
 #: ../gui/tcltk/d.m/print.tcl:234 ../gui/tcltk/d.m/print.tcl:261
 #: ../gui/tcltk/gis.m/mapprint.tcl:337 ../gui/tcltk/gis.m/mapprint.tcl:349
 msgid "Browse"
-msgstr ""
+msgstr "参照"
 
 #: ../gui/tcltk/d.m/print.tcl:221
-#, fuzzy
 msgid "PDF file:"
-msgstr "ファイル:"
+msgstr "PDFファイル："
 
 #: ../gui/tcltk/d.m/print.tcl:232
-#, fuzzy
 msgid "PNG file:"
-msgstr "ファイル:"
+msgstr "PNG ファイル："
 
 #: ../gui/tcltk/d.m/print.tcl:241
-#, fuzzy
 msgid "PNG file resolution (points/inch):"
-msgstr "ファイル:"
+msgstr "PNGファイルの解像度 (points/inch)："
 
 #: ../gui/tcltk/d.m/print.tcl:250
 msgid "Printer:"
-msgstr ""
+msgstr "プリンタ："
 
 #: ../gui/tcltk/d.m/print.tcl:259
-#, fuzzy
 msgid "Script file:"
-msgstr "スクリプト ファイル:"
+msgstr "スクリプトファイル："
 
 #: ../gui/tcltk/d.m/print.tcl:279 ../gui/tcltk/gis.m/mapprint.tcl:363
 msgid "Print"
-msgstr ""
+msgstr "プリント"
 
 #: ../gui/tcltk/d.m/print.tcl:280
 msgid "Preview"
-msgstr ""
+msgstr "プレビュー"
 
 #: ../gui/tcltk/d.m/raster.tcl:85
-#, fuzzy
 msgid "Raster name:"
-msgstr "ラスター:"
+msgstr "ラスター名："
 
 #: ../gui/tcltk/d.m/raster.tcl:108
-#, fuzzy
 msgid "show legend in selected display monitor"
-msgstr "モニター"
+msgstr "選択されたディスプレイに凡例を表示"
 
 #: ../gui/tcltk/d.m/raster.tcl:111 ../gui/tcltk/d.m/raster.tcl:136
 msgid " thin legend by "
-msgstr ""
+msgstr " 小さい凡例"
 
 #: ../gui/tcltk/d.m/raster.tcl:118
-#, fuzzy
 msgid "Raster to drape over 1st map:"
-msgstr "ラスター:"
+msgstr "最初のマップにドレープするラスター："
 
 #: ../gui/tcltk/d.m/raster.tcl:132
-#, fuzzy
 msgid "show legend for drape map in monitor"
-msgstr "の モニター"
+msgstr "モニターにドレープマップの凡例を表示"
 
 #: ../gui/tcltk/d.m/raster.tcl:143 ../gui/tcltk/d.m/rgbhis.tcl:147
 #: ../gui/tcltk/gis.m/raster.tcl:246 ../gui/tcltk/gis.m/rgbhis.tcl:220
 msgid "overlay maps from other layers (transparent null value cells)"
-msgstr ""
+msgstr "別のレイヤーからマップを重ね合せ (NULL値のセルを透過) "
 
 #: ../gui/tcltk/d.m/rgbhis.tcl:96
 msgid "red (RGB) or hue (HIS):"
-msgstr ""
+msgstr "赤 (RGB)または 色相 (HIS)："
 
 #: ../gui/tcltk/d.m/rgbhis.tcl:107
 msgid "green (RGB) or intensity (HIS):"
-msgstr ""
+msgstr "緑 (RGB) または照度 (HIS):  "
 
 #: ../gui/tcltk/d.m/rgbhis.tcl:118
 msgid "blue (RGB) or saturation (HIS):"
-msgstr ""
+msgstr "青 (RGB) または 彩度 (HIS)："
 
 #: ../gui/tcltk/d.m/rgbhis.tcl:128 ../gui/tcltk/gis.m/rgbhis.tcl:155
 msgid "display maps as RGB"
-msgstr ""
+msgstr "RGBとしてマップを表示"
 
 #: ../gui/tcltk/d.m/rgbhis.tcl:134 ../gui/tcltk/gis.m/rgbhis.tcl:160
-#, fuzzy
 msgid "Help for RGB"
-msgstr "ヘルプ の"
+msgstr "RGBのヘルプ"
 
 #: ../gui/tcltk/d.m/rgbhis.tcl:135 ../gui/tcltk/gis.m/rgbhis.tcl:164
 msgid "display maps as HIS"
-msgstr ""
+msgstr "HISとしてマップを表示"
 
 #: ../gui/tcltk/d.m/rgbhis.tcl:141 ../gui/tcltk/gis.m/rgbhis.tcl:169
-#, fuzzy
 msgid "Help for HIS"
-msgstr "ヘルプ の"
+msgstr "HISのヘルプ"
 
 #: ../gui/tcltk/d.m/thematic.tcl:116 ../gui/tcltk/gis.m/thematic.tcl:233
 #: ../gui/tcltk/gis.m/vector.tcl:316
-#, fuzzy
 msgid "Vector map:"
-msgstr "��������"
+msgstr "ベクトルマップ："
 
 #: ../gui/tcltk/d.m/thematic.tcl:131 ../gui/tcltk/gis.m/thematic.tcl:251
-#, fuzzy
 msgid "    vector type"
-msgstr "ファイル アイコン"
+msgstr "    ベクトルタイプ"
 
 #: ../gui/tcltk/d.m/thematic.tcl:150 ../gui/tcltk/d.m/vector.tcl:348
 #: ../gui/tcltk/gis.m/thematic.tcl:268 ../gui/tcltk/gis.m/vector.tcl:483
 msgid "    show attribute columns"
-msgstr ""
+msgstr "    属性列表示"
 
 #: ../gui/tcltk/d.m/thematic.tcl:156 ../gui/tcltk/d.m/vector.tcl:354
 msgid "     show data"
-msgstr ""
+msgstr "     データ表示"
 
 #: ../gui/tcltk/d.m/thematic.tcl:157 ../gui/tcltk/d.m/vector.tcl:355
 #: ../gui/tcltk/gis.m/chart.tcl:219 ../gui/tcltk/gis.m/thematic.tcl:275
 #: ../gui/tcltk/gis.m/vector.tcl:490
 msgid "data"
-msgstr ""
+msgstr "データ"
 
 #: ../gui/tcltk/d.m/thematic.tcl:161 ../gui/tcltk/d.m/vector.tcl:359
 #: ../gui/tcltk/gis.m/chart.tcl:223 ../gui/tcltk/gis.m/thematic.tcl:279
 #: ../gui/tcltk/gis.m/vector.tcl:494
 msgid "Show data"
-msgstr ""
+msgstr "データ表示"
 
 #: ../gui/tcltk/d.m/thematic.tcl:168 ../gui/tcltk/gis.m/thematic.tcl:285
-#, fuzzy
 msgid "Thematic map: type"
-msgstr "アイコン"
+msgstr "主題図：タイプ"
 
 #: ../gui/tcltk/d.m/thematic.tcl:171 ../gui/tcltk/gis.m/thematic.tcl:288
 msgid " map by"
-msgstr ""
+msgstr " マップ－"
 
 #: ../gui/tcltk/d.m/thematic.tcl:205 ../gui/tcltk/d.m/vector.tcl:245
 #: ../gui/tcltk/gis.m/thematic.tcl:320 ../gui/tcltk/gis.m/vector.tcl:373
-#, fuzzy
 msgid "icon"
 msgstr "アイコン"
 
 #: ../gui/tcltk/d.m/thematic.tcl:210 ../gui/tcltk/gis.m/thematic.tcl:324
-#, fuzzy
 msgid "point color"
-msgstr "色"
+msgstr "ポイントカラー"
 
 #: ../gui/tcltk/d.m/thematic.tcl:212 ../gui/tcltk/gis.m/thematic.tcl:326
-#, fuzzy
 msgid "line color"
-msgstr "色"
+msgstr "ラインカラー"
 
 #: ../gui/tcltk/d.m/thematic.tcl:230
-#, fuzzy
 msgid "Graduate colors: preset color schemes"
-msgstr "色"
+msgstr "カラーグラデーション：カラースキーマプリセット"
 
 #: ../gui/tcltk/d.m/thematic.tcl:243 ../gui/tcltk/gis.m/thematic.tcl:358
 msgid "draw border"
-msgstr ""
+msgstr "境界描画"
 
 #: ../gui/tcltk/d.m/thematic.tcl:250 ../gui/tcltk/gis.m/thematic.tcl:365
-#, fuzzy
 msgid "save thematic colors to GRASSRGB column of vector file"
-msgstr "ファイル ファイル"
+msgstr "ベクトルファイルのGRASS RGB列に主題色を保存"
 
 #: ../gui/tcltk/d.m/thematic.tcl:258
 msgid "create graphic legend"
-msgstr ""
+msgstr "表示用凡例 作成"
 
 #: ../gui/tcltk/d.m/thematic.tcl:260 ../gui/tcltk/gis.m/thematic.tcl:413
 msgid "use math notation in legend"
-msgstr ""
+msgstr "凡例で使用する数学の表記法"
 
 #: ../gui/tcltk/d.m/thematic.tcl:267
-#, fuzzy
 msgid "    select monitor for legend"
-msgstr "モニター の"
+msgstr "    凡例用のモニタ選択"
 
 #: ../gui/tcltk/d.m/tool1.tcl:22
-#, fuzzy
 msgid "Display active layers in current region"
-msgstr "ガンマ"
+msgstr "現在の領域のアクティブレイヤーを表示"
 
 #: ../gui/tcltk/d.m/tool1.tcl:28
-#, fuzzy
 msgid "Display active layers in default region"
-msgstr "ガンマ"
+msgstr "デフォルト領域のアクティブレイヤーを表示"
 
 #: ../gui/tcltk/d.m/tool1.tcl:34
-#, fuzzy
 msgid "Display active layers in saved region setting"
-msgstr "ガンマ"
+msgstr "領域設定に保存されたアクティブレイヤーを表示"
 
 #: ../gui/tcltk/d.m/tool1.tcl:40 ../gui/tcltk/gis.m/georecttool.tcl:47
 #: ../gui/tcltk/gis.m/maptool.tcl:68
 msgid "Erase to white"
-msgstr ""
+msgstr "白色で消す"
 
 #: ../gui/tcltk/d.m/tool1.tcl:54
 msgid "NVIZ - n dimensional visualization"
-msgstr ""
+msgstr "NVIZ - N 次元視覚化 "
 
 #: ../gui/tcltk/d.m/tool1.tcl:60
-#, fuzzy
 msgid "Fly through path for NVIZ"
-msgstr "の"
+msgstr "NVIZのフライスルーパス"
 
 #: ../gui/tcltk/d.m/tool1.tcl:66 ../gui/tcltk/gis.m/gmtool2.tcl:111
-#, fuzzy
 msgid "Animate raster map series"
-msgstr "ファイル"
+msgstr "ラスターマップのアニメーション"
 
 #: ../gui/tcltk/d.m/tool1.tcl:81
-#, fuzzy
 msgid "Zoom"
 msgstr "ズーム"
 
 #: ../gui/tcltk/d.m/tool1.tcl:87 ../gui/tcltk/gis.m/georecttool.tcl:144
 #: ../gui/tcltk/gis.m/maptool.tcl:165
 msgid "Return to previous zoom"
-msgstr ""
+msgstr "ズームを戻す "
 
 #: ../gui/tcltk/d.m/tool1.tcl:93
 msgid "Pan and recenter"
-msgstr ""
+msgstr "パン(中心の再設定) "
 
 #: ../gui/tcltk/d.m/tool1.tcl:99
-#, fuzzy
 msgid "Query map (select map first)"
-msgstr "データ情報"
+msgstr "マップ検索（最初にマップ選択）"
 
 #: ../gui/tcltk/d.m/tool1.tcl:104
 msgid "Measure lengths and areas"
-msgstr ""
+msgstr "距離と面積の測定 "
 
 #: ../gui/tcltk/d.m/tool1.tcl:109
 msgid "Geographical position"
-msgstr ""
+msgstr "指定位置の座標値"
 
 #: ../gui/tcltk/d.m/tool1.tcl:121 ../gui/tcltk/gis.m/gmtool2.tcl:84
-#, fuzzy
 msgid "Create new workspace file (erase current workspace settings first)"
-msgstr "ファイル"
+msgstr "ワークスペースの新規作成(まず現在のワークスペース設定を消去) "
 
 #: ../gui/tcltk/d.m/tool1.tcl:124 ../gui/tcltk/gis.m/gmtool2.tcl:90
-#, fuzzy
 msgid "Open existing workspace file"
-msgstr "ファイル"
+msgstr "ワークスペースを開く"
 
 #: ../gui/tcltk/d.m/tool1.tcl:127 ../gui/tcltk/gis.m/gmtool2.tcl:96
-#, fuzzy
 msgid "Save workspace file"
-msgstr "保存 ファイル"
+msgstr "ワークスペースを保存"
 
 #: ../gui/tcltk/d.m/tool1.tcl:130
-#, fuzzy
 msgid "Print raster & vector maps using ps.map"
-msgstr "ファイル ファイル"
+msgstr "ps.mapを使用したマップ出力"
 
 #: ../gui/tcltk/d.m/tool2.tcl:22 ../gui/tcltk/gis.m/gmtool1.tcl:42
-#, fuzzy
 msgid "Add raster layer"
-msgstr "ファイル"
+msgstr "ラスターレイヤー追加"
 
 #: ../gui/tcltk/d.m/tool2.tcl:28 ../gui/tcltk/gis.m/gmtool1.tcl:49
 msgid "Add RGB or HIS layer"
-msgstr ""
+msgstr "RGB または HIS レイヤー追加"
 
 #: ../gui/tcltk/d.m/tool2.tcl:33
 msgid "Add legend"
-msgstr ""
+msgstr "凡例追加 "
 
 #: ../gui/tcltk/d.m/tool2.tcl:48 ../gui/tcltk/gis.m/gmtool1.tcl:92
-#, fuzzy
 msgid "Add vector layer"
-msgstr "ファイル"
+msgstr "ベクトルレイヤー追加"
 
 #: ../gui/tcltk/d.m/tool2.tcl:54 ../gui/tcltk/gis.m/gmtool1.tcl:108
 msgid "Add thematic charts layer"
-msgstr ""
+msgstr "主題図チャートレイヤー追加"
 
 #: ../gui/tcltk/d.m/tool2.tcl:62 ../gui/tcltk/gis.m/gmtool1.tcl:99
 msgid "Add thematic map layer"
-msgstr ""
+msgstr "主題図 レイヤー追加"
 
 #: ../gui/tcltk/d.m/tool2.tcl:76
-#, fuzzy
 msgid "Add paint labels layer (from directory paint/labels)"
-msgstr "ペインタ ペインタ"
+msgstr "ペイントラベルレイヤー追加(ディレクトリ ペイント/ラベル)"
 
 #: ../gui/tcltk/d.m/tool2.tcl:82
 msgid "Add freetype text layer"
-msgstr ""
+msgstr "フリータイプテキストレイヤー追加"
 
 #: ../gui/tcltk/d.m/tool2.tcl:88 ../gui/tcltk/gis.m/gmtool1.tcl:128
 msgid "Add text layer"
-msgstr ""
+msgstr "テキストレイヤー追加"
 
 #: ../gui/tcltk/d.m/tool2.tcl:100 ../gui/tcltk/gis.m/gmtool2.tcl:26
 msgid "Scalebar and north arrow"
-msgstr ""
+msgstr "縮尺と方位"
 
 #: ../gui/tcltk/d.m/tool2.tcl:105 ../gui/tcltk/gis.m/gmtool2.tcl:32
 msgid "Overlay grids and lines"
-msgstr ""
+msgstr "グリッドとラインを重ね合わせ"
 
 #: ../gui/tcltk/d.m/tool2.tcl:110
 msgid "Create or select display frame"
-msgstr ""
+msgstr "表示フレーム 作成/選択"
 
 #: ../gui/tcltk/d.m/tool2.tcl:116 ../gui/tcltk/gis.m/gmtool2.tcl:39
 msgid "Add command layer"
-msgstr ""
+msgstr "コマンドレイヤー追加"
 
 #: ../gui/tcltk/d.m/tool2.tcl:130 ../gui/tcltk/gis.m/gmtool2.tcl:59
-#, fuzzy
 msgid "Add group"
-msgstr "グループ"
+msgstr "グループ追加"
 
 #: ../gui/tcltk/d.m/tool2.tcl:135 ../gui/tcltk/gis.m/gmtool2.tcl:65
 msgid "Duplicate Layer"
-msgstr ""
+msgstr "レイヤを複製"
 
 #: ../gui/tcltk/d.m/tool2.tcl:139 ../gui/tcltk/gis.m/gmtool2.tcl:70
 msgid "Delete layer"
-msgstr ""
+msgstr "レイヤー削除"
 
 #: ../gui/tcltk/d.m/tool2.tcl:153 ../gui/tcltk/gis.m/gmtool2.tcl:127
-#, fuzzy
 msgid "Digitize map (select or create new map first)"
-msgstr "デジタイズ"
+msgstr "マップのデジタイズ(マップを選択または新規マップを作成) "
 
 #: ../gui/tcltk/d.m/vector.tcl:197
-#, fuzzy
 msgid "Vector name:"
-msgstr "ベクトル:"
+msgstr "ベクトル名："
 
 #: ../gui/tcltk/d.m/vector.tcl:212
-#, fuzzy
 msgid "Display:"
-msgstr "ガンマ:"
+msgstr "ディスプレイ："
 
 #: ../gui/tcltk/d.m/vector.tcl:213 ../gui/tcltk/gis.m/vector.tcl:341
 msgid "shapes"
-msgstr ""
+msgstr "図形"
 
 #: ../gui/tcltk/d.m/vector.tcl:215 ../gui/tcltk/gis.m/vector.tcl:343
 msgid "categories"
-msgstr ""
+msgstr "カテゴリー "
 
 #: ../gui/tcltk/d.m/vector.tcl:217 ../gui/tcltk/gis.m/vector.tcl:345
 msgid "topology"
-msgstr ""
+msgstr "トポロジ "
 
 #: ../gui/tcltk/d.m/vector.tcl:219 ../gui/tcltk/gis.m/vector.tcl:347
 msgid "line directions"
-msgstr ""
+msgstr "ラインの方向"
 
 #: ../gui/tcltk/d.m/vector.tcl:226
 msgid "            "
-msgstr ""
+msgstr "            "
 
 #: ../gui/tcltk/d.m/vector.tcl:237 ../gui/tcltk/gis.m/vector.tcl:365
 msgid "faces"
-msgstr ""
+msgstr "面"
 
 #: ../gui/tcltk/d.m/vector.tcl:259 ../gui/tcltk/gis.m/vector.tcl:385
 msgid "Draw lines:"
-msgstr ""
+msgstr "ライン描画: "
 
 #: ../gui/tcltk/d.m/vector.tcl:262 ../gui/tcltk/d.m/vector.tcl:278
 #: ../gui/tcltk/d.m/vector.tcl:294 ../gui/tcltk/gis.m/vector.tcl:388
 #: ../gui/tcltk/gis.m/vector.tcl:404
-#, fuzzy
 msgid "color"
-msgstr "色"
+msgstr "カラー"
 
 #: ../gui/tcltk/d.m/vector.tcl:275 ../gui/tcltk/gis.m/vector.tcl:401
 msgid "Fill areas:"
-msgstr ""
+msgstr "塗りつぶし："
 
 #: ../gui/tcltk/d.m/vector.tcl:281
 msgid "  "
-msgstr ""
+msgstr "  "
 
 #: ../gui/tcltk/d.m/vector.tcl:282 ../gui/tcltk/gis.m/vector.tcl:408
 msgid "random colors"
-msgstr ""
+msgstr "ランダムカラー"
 
 #: ../gui/tcltk/d.m/vector.tcl:284 ../gui/tcltk/gis.m/vector.tcl:410
 msgid "GRASSRGB column colors"
-msgstr ""
+msgstr "GRASS RGB列カラー"
 
 #: ../gui/tcltk/d.m/vector.tcl:291 ../gui/tcltk/gis.m/vector.tcl:417
 msgid "Label vectors:"
-msgstr ""
+msgstr "ラベルベクトル："
 
 #: ../gui/tcltk/d.m/vector.tcl:292 ../gui/tcltk/gis.m/vector.tcl:418
-#, fuzzy
 msgid "label"
-msgstr "ラベル"
+msgstr "ラベル "
 
 #: ../gui/tcltk/d.m/vector.tcl:297 ../gui/tcltk/gis.m/vector.tcl:377
 msgid " size"
-msgstr ""
+msgstr " サイズ"
 
 #: ../gui/tcltk/d.m/vector.tcl:299 ../gui/tcltk/gis.m/vector.tcl:425
 msgid "text size"
-msgstr ""
+msgstr "テキストサイズ"
 
 #: ../gui/tcltk/d.m/vector.tcl:301
 msgid " align with pt"
-msgstr ""
+msgstr " ｐｔで調整"
 
 #: ../gui/tcltk/d.m/vector.tcl:315 ../gui/tcltk/gis.m/vector.tcl:446
-#, fuzzy
 msgid "     layer for labels"
-msgstr "の"
+msgstr "     ラベルのレイヤ"
 
 #: ../gui/tcltk/d.m/vector.tcl:318 ../gui/tcltk/gis.m/vector.tcl:448
-#, fuzzy
 msgid " attribute col for labels"
-msgstr "の"
+msgstr "ラベルの属性列"
 
 #: ../gui/tcltk/d.m/vector.tcl:326
-#, fuzzy
 msgid "Query vectors: "
-msgstr "データ情報 "
+msgstr "ベクトル検索："
 
 #: ../gui/tcltk/d.m/vector.tcl:327 ../gui/tcltk/gis.m/vector.tcl:456
-#, fuzzy
 msgid "layer for query"
-msgstr "の"
+msgstr "検索するレイヤー"
 
 #: ../gui/tcltk/d.m/vector.tcl:330
 msgid " query cat values"
-msgstr ""
+msgstr "検索するカテゴリー値"
 
 #: ../gui/tcltk/d.m/vector.tcl:333
 msgid "SQL query"
-msgstr ""
+msgstr "SQL検索"
 
 #: ../gui/tcltk/d.m/vector.tcl:340
 msgid "     SQL where statement"
-msgstr ""
+msgstr "     SQL where句"
 
 #: ../gui/tcltk/d.m/vector.tcl:366
 msgid "Mouse query setup:"
-msgstr ""
+msgstr "マウス検索設定："
 
 #: ../gui/tcltk/d.m/vector.tcl:367
 msgid "edit attributes (form mode)"
-msgstr ""
+msgstr "属性編集 (モードから) "
 
 #: ../gui/tcltk/d.m/vector.tcl:369
 msgid "results as text in terminal"
-msgstr ""
+msgstr "ターミナル内のテキストの検索結果"
 
 #: ../gui/tcltk/d.m/vector.tcl:376 ../gui/tcltk/gis.m/vector.tcl:522
-#, fuzzy
 msgid "Display when avg. region dimension is"
-msgstr "ガンマ"
+msgstr "表示時の平均領域寸法"
 
 #: ../gui/tcltk/d.m/vector.tcl:386
-#, fuzzy
 msgid "Line width for ps.map print output:"
-msgstr "の 出力:"
+msgstr "ps.map印刷出力時の線幅："
 
 #: ../gui/tcltk/d.m/vector.tcl:388
-#, fuzzy
 msgid "Line width used for printing"
-msgstr "の"
+msgstr "出力時の線幅"
 
 #: ../gui/tcltk/gis.m/barscale.tcl:91 ../gui/tcltk/gis.m/barscale.tcl:401
 #: ../gui/tcltk/gis.m/chart.tcl:89 ../gui/tcltk/gis.m/chart.tcl:441
@@ -2604,12 +2347,11 @@ msgstr "の"
 #: ../gui/tcltk/gis.m/thematic.tcl:680 ../gui/tcltk/gis.m/vector.tcl:194
 #: ../gui/tcltk/gis.m/vector.tcl:819 ../gui/tcltk/gis.m/animate.tcl:91
 msgid "Error creating tempfile"
-msgstr ""
+msgstr "テンポラリファイル作成エラー"
 
 #: ../gui/tcltk/gis.m/barscale.tcl:153
-#, fuzzy
 msgid "Display scale and north arrow"
-msgstr "ガンマ "
+msgstr "スケールと方位表示"
 
 #: ../gui/tcltk/gis.m/barscale.tcl:160 ../gui/tcltk/gis.m/chart.tcl:166
 #: ../gui/tcltk/gis.m/cmd.tcl:105 ../gui/tcltk/gis.m/dtext.tcl:166
@@ -2619,7 +2361,7 @@ msgstr "ガンマ "
 #: ../gui/tcltk/gis.m/rastnums.tcl:146 ../gui/tcltk/gis.m/rgbhis.tcl:143
 #: ../gui/tcltk/gis.m/thematic.tcl:223 ../gui/tcltk/gis.m/vector.tcl:306
 msgid "Opaque "
-msgstr ""
+msgstr "不透明"
 
 #: ../gui/tcltk/gis.m/barscale.tcl:164 ../gui/tcltk/gis.m/chart.tcl:170
 #: ../gui/tcltk/gis.m/cmd.tcl:109 ../gui/tcltk/gis.m/dtext.tcl:170
@@ -2629,342 +2371,309 @@ msgstr ""
 #: ../gui/tcltk/gis.m/rastnums.tcl:150 ../gui/tcltk/gis.m/rgbhis.tcl:147
 #: ../gui/tcltk/gis.m/thematic.tcl:227 ../gui/tcltk/gis.m/vector.tcl:310
 msgid " Transparent"
-msgstr ""
+msgstr " 透過"
 
 #: ../gui/tcltk/gis.m/barscale.tcl:170
 #, tcl-format
 msgid "Scale placement: 0-100% from top left of display"
-msgstr ""
+msgstr "縮尺パーセント: 0-100% でディスプレイの左上から指定"
 
 #: ../gui/tcltk/gis.m/barscale.tcl:176
 msgid "\t enter x,y of scale/arrow upper left corner"
-msgstr ""
+msgstr "\t スケール/方位の左上端のXY入力"
 
 #: ../gui/tcltk/gis.m/barscale.tcl:179
 msgid "    "
-msgstr ""
+msgstr "      "
 
 #: ../gui/tcltk/gis.m/barscale.tcl:190
 msgid "\t "
-msgstr ""
+msgstr "\t "
 
 #: ../gui/tcltk/gis.m/barscale.tcl:191 ../gui/tcltk/gis.m/dtext.tcl:197
 #: ../gui/tcltk/gis.m/legend.tcl:208 ../gui/tcltk/gis.m/maptext.tcl:150
 msgid "place with mouse"
-msgstr ""
+msgstr "マウスを使って位置指定"
 
 #: ../gui/tcltk/gis.m/barscale.tcl:199
-#, fuzzy
 msgid "Scale appearance:  text color"
-msgstr "色"
+msgstr "スケール外観：テキストの色"
 
 #: ../gui/tcltk/gis.m/barscale.tcl:201
-#, fuzzy
 msgid "  font "
-msgstr "フォント "
+msgstr "  フォント"
 
 #: ../gui/tcltk/gis.m/barscale.tcl:204 ../gui/tcltk/gis.m/dtext.tcl:226
 #: ../gui/tcltk/gis.m/gridline.tcl:187 ../gui/tcltk/gis.m/histogram.tcl:177
 #: ../gui/tcltk/gis.m/legend.tcl:234 ../gui/tcltk/gis.m/maptext.tcl:180
 #: ../gui/tcltk/gis.m/rastnums.tcl:180
-#, fuzzy
 msgid "select font for text"
-msgstr "フォント の"
+msgstr "テキストのフォント選択"
 
 #: ../gui/tcltk/gis.m/barscale.tcl:211
-#, fuzzy
 msgid "\tbackground color "
-msgstr "色 "
+msgstr "\t 背景色"
 
 #: ../gui/tcltk/gis.m/barscale.tcl:214 ../gui/tcltk/gis.m/histogram.tcl:189
 msgid "transparent background"
-msgstr ""
+msgstr "透明 背景"
 
 #: ../gui/tcltk/gis.m/barscale.tcl:222
 msgid "display N. arrow only"
-msgstr ""
+msgstr "磁北のみ表示"
 
 #: ../gui/tcltk/gis.m/barscale.tcl:240
 msgid "line scale instead of bar"
-msgstr ""
+msgstr "バーの代わりにラインスケール"
 
 #: ../gui/tcltk/gis.m/chart.tcl:111
-#, fuzzy
 msgid "Vector map for chart"
-msgstr "ベクトル:"
+msgstr "主題図のためのベクトルマップ"
 
 #: ../gui/tcltk/gis.m/chart.tcl:114
 #, tcl-format
 msgid "chart for %s"
-msgstr ""
+msgstr " %s のグラフ"
 
 #: ../gui/tcltk/gis.m/chart.tcl:159
 msgid ""
 "Display pie and bar charts of attribute values at vector object locations"
-msgstr ""
+msgstr "ベクトルオブジェクトの位置に属性の円グラフと棒グラフを表示"
 
 #: ../gui/tcltk/gis.m/chart.tcl:179
-#, fuzzy
 msgid "vector map to chart"
-msgstr "ファイル"
+msgstr "グラフにするベクトルマップ"
 
 #: ../gui/tcltk/gis.m/chart.tcl:205
 msgid "Attributes to chart: attribute layer"
-msgstr ""
+msgstr "グラフにする属性：属性レイヤー"
 
 #: ../gui/tcltk/gis.m/chart.tcl:212
 msgid "     show attribute columns"
-msgstr ""
+msgstr "     属性列表示"
 
 #: ../gui/tcltk/gis.m/chart.tcl:218 ../gui/tcltk/gis.m/vector.tcl:489
 msgid "   show attribute data"
-msgstr ""
+msgstr "   属性データ表示 "
 
 #: ../gui/tcltk/gis.m/chart.tcl:229
 msgid "\tcolumns to chart (col1,col2,...)  "
-msgstr ""
+msgstr "\tグラフにする列 (列1,列2,...)"
 
 #: ../gui/tcltk/gis.m/chart.tcl:236
 msgid "\tcolors for columns (clr1,clr2,...)"
-msgstr ""
+msgstr "\t列の色 (色1,色2,...)"
 
 #: ../gui/tcltk/gis.m/chart.tcl:243
 msgid "\tcolumn for variable chart size"
-msgstr ""
+msgstr "\t可変グラフサイズの列"
 
 #: ../gui/tcltk/gis.m/chart.tcl:245
 msgid "  scale factor"
-msgstr ""
+msgstr "  縮尺要素"
 
 #: ../gui/tcltk/gis.m/chart.tcl:255
 msgid "\tfixed chart size (if size column not used)"
-msgstr ""
+msgstr "\t固定グラフサイズ (iサイズ用の列は使用しない)"
 
 #: ../gui/tcltk/gis.m/chart.tcl:262
-#, fuzzy
 msgid "\tchart outline color:"
-msgstr "色:"
+msgstr "\tグラフ外枠線の色："
 
 #: ../gui/tcltk/gis.m/dtext.tcl:159
-#, fuzzy
 msgid "Display text"
-msgstr "ガンマ "
+msgstr "テキスト表示"
 
 #: ../gui/tcltk/gis.m/dtext.tcl:176
-#, fuzzy
 msgid "Text to display: "
-msgstr "ファイル"
+msgstr "表示テキスト："
 
 #: ../gui/tcltk/gis.m/dtext.tcl:188 ../gui/tcltk/gis.m/maptext.tcl:140
 msgid "Text placement: x,y coordinates (from upper left) "
-msgstr ""
+msgstr "テキスト位置: XY座標値 (左上から)  "
 
 #: ../gui/tcltk/gis.m/dtext.tcl:194 ../gui/tcltk/gis.m/maptext.tcl:147
-#, fuzzy
 msgid "     coordinate type for text placement "
-msgstr "アイコン の"
+msgstr "     テキスト表示位置の座標タイプ"
 
 #: ../gui/tcltk/gis.m/dtext.tcl:205 ../gui/tcltk/gis.m/maptext.tcl:158
 msgid "     align text with coordinate point  "
-msgstr ""
+msgstr "     テキスト座標値位置調整"
 
 #: ../gui/tcltk/gis.m/dtext.tcl:214
 msgid "     text rotation (degrees)"
-msgstr ""
+msgstr "     テキスト回転 (度) "
 
 #: ../gui/tcltk/gis.m/dtext.tcl:223
-#, fuzzy
 msgid "Text options: font "
-msgstr "テキスト 色"
+msgstr "テキストオプション：フォント"
 
 #: ../gui/tcltk/gis.m/dtext.tcl:237
 msgid "     text height in pixels "
-msgstr ""
+msgstr "     ピクセルでのテキスト高さ"
 
 #: ../gui/tcltk/gis.m/dtext.tcl:239
 msgid "  line spacing"
-msgstr ""
+msgstr "  線間隔"
 
 #: ../gui/tcltk/gis.m/frames.tcl:105
 msgid "Divide map display into frames for displaying multiple maps"
-msgstr ""
+msgstr "複数のマップを表示するためマップをフレームに分割する"
 
 #: ../gui/tcltk/gis.m/frames.tcl:116
 msgid "remove all frames   "
-msgstr ""
+msgstr "全てのフレーム削除"
 
 #: ../gui/tcltk/gis.m/frames.tcl:128
 msgid "Frame name (optional): "
-msgstr ""
+msgstr "フレーム名 (オプション)："
 
 #: ../gui/tcltk/gis.m/frames.tcl:135
 #, tcl-format
 msgid "Set frame borders at 0-100% from lower left corner of display "
-msgstr ""
+msgstr "フレームの境界をディスプレイの左下端から0-100% で指定"
 
 #: ../gui/tcltk/gis.m/frames.tcl:141
 msgid "     set borders (bottom,top,left,right): "
-msgstr ""
+msgstr "     境界指定 (下,上,左,右)："
 
 #: ../gui/tcltk/gis.m/georect.tcl:446
-#, fuzzy
 msgid "Create/replace vector group"
-msgstr "ファイル グループ"
+msgstr "ベクトルループの作成/置換え"
 
 #: ../gui/tcltk/gis.m/georect.tcl:472
-#, fuzzy
 msgid "group name"
-msgstr "保存 グループ ファイル"
+msgstr "グループ名"
 
 #: ../gui/tcltk/gis.m/georect.tcl:474
-#, fuzzy
 msgid "Select existing vector group or name new group"
-msgstr "選択 xy ファイル グループ"
+msgstr "既存ベクトルグループ名または新しいグループ名選択"
 
 #: ../gui/tcltk/gis.m/georect.tcl:484
-#, fuzzy
 msgid "vector"
 msgstr "ベクトル"
 
 #: ../gui/tcltk/gis.m/georect.tcl:486
 msgid "Select xy vector(s) for group"
-msgstr ""
+msgstr "グループのXYベクトル選択"
 
 #: ../gui/tcltk/gis.m/georect.tcl:496
-#, fuzzy
 msgid "Vector group"
-msgstr "ベクトル"
+msgstr "ベクトルグループ"
 
 #: ../gui/tcltk/gis.m/georect.tcl:632
-#, fuzzy
 msgid "Georeference raster"
-msgstr "ファイル"
+msgstr "地理参照ラスター"
 
 #: ../gui/tcltk/gis.m/georect.tcl:636
-#, fuzzy
 msgid "Georeference vector"
-msgstr "ファイル"
+msgstr "地理参照ベクトル"
 
 #: ../gui/tcltk/gis.m/georect.tcl:643
-#, fuzzy
 msgid "1. Select mapset"
-msgstr "選択 マップセット"
+msgstr "1. マップセット選択"
 
 #: ../gui/tcltk/gis.m/georect.tcl:645
-#, fuzzy
 msgid "Mapset of xy raster group"
-msgstr "マップセット xy ファイル グループ"
+msgstr "XYラスターグループのマップセット"
 
 #: ../gui/tcltk/gis.m/georect.tcl:655
-#, fuzzy
 msgid "2. Create/edit group"
-msgstr "グループ"
+msgstr "２．グループ作成/編集"
 
 #: ../gui/tcltk/gis.m/georect.tcl:657
-#, fuzzy
 msgid "Create/edit group (rasters or vectors to georectify)"
-msgstr "選択 xy ファイル グループ"
+msgstr "グループ作成/編集（幾何補正するラスターまたはベクトル）"
 
 #: ../gui/tcltk/gis.m/georect.tcl:665
-#, fuzzy
 msgid "3. Select group"
-msgstr "選択 グループ"
+msgstr "３．グループ選択"
 
 #: ../gui/tcltk/gis.m/georect.tcl:667
-#, fuzzy
 msgid "Select existing group to georectify"
-msgstr "選択 xy ファイル グループ"
+msgstr "幾何補正するグループ選択"
 
 #: ../gui/tcltk/gis.m/georect.tcl:677
-#, fuzzy
 msgid "4. Select map"
-msgstr "選択 マップセット"
+msgstr "４．マップ選択"
 
 #: ../gui/tcltk/gis.m/georect.tcl:679
-#, fuzzy
 msgid ""
 "Select non-georectified raster or vector to display for marking ground "
 "control points"
-msgstr "選択 xy ファイル"
+msgstr "地上基準点を作成するため非幾何補正ラスターまたはベクトルを選択"
 
 #: ../gui/tcltk/gis.m/georect.tcl:689
-#, fuzzy
 msgid "5. Start georectifying"
-msgstr "開始"
+msgstr "５．幾何補正開始"
 
 #: ../gui/tcltk/gis.m/georect.tcl:691
-#, fuzzy
 msgid "Start georectifying"
-msgstr "開始"
+msgstr "幾何補正を開始"
 
 #: ../gui/tcltk/gis.m/georect.tcl:699 ../gui/tcltk/gis.m/gm.tcl:507
 #: ../gui/tcltk/gis.m/mapcanvas.tcl:854 ../gui/tcltk/gis.m/rules.tcl:172
 #: ../gui/tcltk/gis.m/animate.tcl:526 ../gui/tcltk/gis.m/dnviz.tcl:230
 #: ../lib/gtcltk/select.tcl:209 ../lib/init/epsg_option.tcl:167
 #: ../lib/init/epsg_option.tcl:314 ../lib/init/file_option.tcl:114
-#, fuzzy
 msgid "Cancel"
 msgstr "キャンセル"
 
 #: ../gui/tcltk/gis.m/georect.tcl:701
-#, fuzzy
 msgid "Cancel georectification"
-msgstr "開始"
+msgstr "幾何補正キャンセル"
 
 #: ../gui/tcltk/gis.m/georect.tcl:998
-#, fuzzy
 msgid "Select rectification method for rasters"
-msgstr "選択 方法"
+msgstr "ラスターの多項式変換方法の選択"
 
 #: ../gui/tcltk/gis.m/georect.tcl:1001
 msgid "1st order"
-msgstr ""
+msgstr "第１選択"
 
 #: ../gui/tcltk/gis.m/georect.tcl:1002
 msgid "affine transformation  (rasters & vectors). Requires 3+ GCPs."
-msgstr ""
+msgstr "アフィン変換  (ラスターまたはベクトル). ３以上のGCPが必要"
 
 #: ../gui/tcltk/gis.m/georect.tcl:1007
 msgid "2nd order"
-msgstr ""
+msgstr "第２選択"
 
 #: ../gui/tcltk/gis.m/georect.tcl:1008
 msgid "polynomial transformation  (rasters only). Requires 6+ GCPs."
-msgstr ""
+msgstr "多項式変換  (ラスターのみ). ６以上の GCPが必要"
 
 #: ../gui/tcltk/gis.m/georect.tcl:1012
 msgid "3rd order"
-msgstr ""
+msgstr "第３選択"
 
 #: ../gui/tcltk/gis.m/georect.tcl:1013
 msgid "polynomial transformation  (rasters only). Requires 10+ GCPs."
-msgstr ""
+msgstr "多項式変換  (ラスターのみ)10以上の GCPが必要"
 
 #: ../gui/tcltk/gis.m/georect.tcl:1020
 msgid "Use"
-msgstr ""
+msgstr "用法"
 
 #: ../gui/tcltk/gis.m/georect.tcl:1022
-#, fuzzy
 msgid "xy coordinates"
-msgstr " "
+msgstr " XY座標"
 
 #: ../gui/tcltk/gis.m/georect.tcl:1024
-#, fuzzy
 msgid "geographic coordinates"
-msgstr " "
+msgstr "地理座標"
 
 #: ../gui/tcltk/gis.m/georect.tcl:1026
 msgid "forward error"
-msgstr ""
+msgstr "上位のエラー"
 
 #: ../gui/tcltk/gis.m/georect.tcl:1028
 msgid "backward error"
-msgstr ""
+msgstr "下位のエラー"
 
 #: ../gui/tcltk/gis.m/georect.tcl:1069
 msgid "Manage ground control points (GCPs)"
-msgstr ""
+msgstr "地上基準点 (GCP) 管理"
 
 #: ../gui/tcltk/gis.m/georect.tcl:1094
 #, fuzzy
@@ -2981,798 +2690,718 @@ msgstr ""
 
 #: ../gui/tcltk/gis.m/georect.tcl:1115
 msgid "Rectify maps in group"
-msgstr ""
+msgstr "グループ内マップの位置補正"
 
 #: ../gui/tcltk/gis.m/georect.tcl:1118
-#, fuzzy
 msgid "Quit"
 msgstr "終了"
 
 #: ../gui/tcltk/gis.m/georect.tcl:1122
-#, fuzzy
 msgid "Exit georectifier"
-msgstr "開始"
+msgstr "幾何補正"
 
 #: ../gui/tcltk/gis.m/georect.tcl:1560 ../gui/tcltk/gis.m/mapcanvas.tcl:591
 #: ../gui/tcltk/gis.m/mapcanvas.tcl:1135 ../gui/tcltk/gis.m/mapcanvas.tcl:1188
 msgid "Error setting region"
-msgstr ""
+msgstr "領域設定エラー"
 
 #: ../gui/tcltk/gis.m/georecttool.tcl:40 ../gui/tcltk/gis.m/maptool.tcl:41
-#, fuzzy
 msgid "Display active layers"
-msgstr "ガンマ"
+msgstr "アクティブなレイヤーを表示"
 
 #: ../gui/tcltk/gis.m/georecttool.tcl:73
 msgid "Set ground control points"
-msgstr ""
+msgstr "GCP（地上基準点）の定義"
 
 #: ../gui/tcltk/gis.m/georecttool.tcl:92 ../gui/tcltk/gis.m/maptool.tcl:113
-#, fuzzy
 msgid "Zoom In"
-msgstr "ズーム"
+msgstr "ズーム "
 
 #: ../gui/tcltk/gis.m/georecttool.tcl:111 ../gui/tcltk/gis.m/maptool.tcl:132
-#, fuzzy
 msgid "Zoom Out"
-msgstr "ズーム"
+msgstr "ズームアウト "
 
 #: ../gui/tcltk/gis.m/georecttool.tcl:130 ../gui/tcltk/gis.m/maptool.tcl:151
 #: ../vector/v.digit/toolbox.tcl:189
 msgid "Pan"
-msgstr ""
+msgstr "パン"
 
 #: ../gui/tcltk/gis.m/georecttool.tcl:151
-#, fuzzy
 msgid "Zoom to map"
-msgstr "ズーム"
+msgstr "マップにズーム"
 
 #: ../gui/tcltk/gis.m/gm.tcl:227
 msgid "Creating MainFrame..."
-msgstr ""
+msgstr "メインフレーム作成中...."
 
 #: ../gui/tcltk/gis.m/gm.tcl:269
 msgid "Welcome to GRASS GIS"
-msgstr ""
+msgstr "GRASS GIS へようこそ"
 
 #: ../gui/tcltk/gis.m/gm.tcl:302
-#, fuzzy, tcl-format
+#, tcl-format
 msgid "Map Display %d"
-msgstr "ガンマ "
+msgstr "マップ表示 %d"
 
 #: ../gui/tcltk/gis.m/gm.tcl:327
-#, fuzzy, tcl-format
+#, tcl-format
 msgid "GRASS%s GIS Manager - %s"
-msgstr "   "
+msgstr "GRASS%s GISマネージャー%s"
 
 #: ../gui/tcltk/gis.m/gm.tcl:399 ../gui/tcltk/gis.m/gm.tcl:429
 msgid "Map Resource File"
-msgstr ""
+msgstr "マップリソースファイル"
 
 #: ../gui/tcltk/gis.m/gm.tcl:400 ../gui/tcltk/gis.m/gm.tcl:431
-#, fuzzy
 msgid "All Files"
-msgstr "色 ファイル:"
+msgstr "全てのファイル"
 
 #: ../gui/tcltk/gis.m/gm.tcl:404
-#, fuzzy
 msgid "Open File"
-msgstr "ファイル."
+msgstr "ファイルを開く"
 
 #: ../gui/tcltk/gis.m/gm.tcl:430
 msgid "DM Resource File"
-msgstr ""
+msgstr "DMリソースファイル"
 
 #: ../gui/tcltk/gis.m/gm.tcl:434 ../lib/gis/gui.tcl:229
-#, fuzzy
 msgid "Save File"
-msgstr "保存 グループ ファイル"
+msgstr "上書き保存"
 
 #: ../gui/tcltk/gis.m/gm.tcl:452
-#, fuzzy
 msgid "Select GRASS display font"
-msgstr "選択 フォント"
+msgstr "表示フォント選択"
 
 #: ../gui/tcltk/gis.m/gm.tcl:462
-#, fuzzy
 msgid "Font: "
-msgstr "フォント:"
+msgstr "フォント："
 
 #: ../gui/tcltk/gis.m/gm.tcl:497
 msgid "Character encoding: "
-msgstr ""
+msgstr "文字エンコード："
 
 #: ../gui/tcltk/gis.m/gm.tcl:504 ../gui/tcltk/gis.m/rules.tcl:170
 #: ../gui/tcltk/gis.m/animate.tcl:524 ../gui/tcltk/gis.m/dnviz.tcl:228
 #: ../lib/init/epsg_option.tcl:311 ../vector/v.digit/settings.tcl:160
-#, fuzzy
 msgid "OK"
 msgstr "OK"
 
 #: ../gui/tcltk/gis.m/gm.tcl:553 ../gui/tcltk/gis.m/grassabout.tcl:94
 #: ../gui/tcltk/gis.m/runandoutput.tcl:258 ../lib/gis/gui.tcl:11
 #: ../lib/gis/gui.tcl:15 ../lib/gis/gui.tcl:19 ../lib/gis/gui.tcl:310
-#, fuzzy
 msgid "Error"
-msgstr "ファイル"
+msgstr "エラー"
 
 #: ../gui/tcltk/gis.m/gm.tcl:596
-#, fuzzy, tcl-format
+#, tcl-format
 msgid "GRASS%s GIS Manager - %s %s"
-msgstr "   "
+msgstr "GRASS%s GIS マネージャー %s %s"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:85
 msgid "Workspace"
-msgstr ""
+msgstr "ワークスペース"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:92
-#, fuzzy
 msgid "Import raster map"
-msgstr "ファイル"
+msgstr "ラスターマップのインポート"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:95
-#, fuzzy
 msgid "Aggregate ASCII xyz"
-msgstr "xyz ファイル"
+msgstr "ASCII xyz集計"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:96 ../gui/tcltk/gis.m/gmmenu.tcl:130
-#, fuzzy
 msgid "ASCII grid"
-msgstr "ファイル"
+msgstr "ASCIIグリッド"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:97
 msgid "ASCII polygons and lines"
-msgstr ""
+msgstr "ASCIIポリゴンおよびライン"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:99 ../gui/tcltk/gis.m/gmmenu.tcl:137
-#, fuzzy
 msgid "Binary"
-msgstr "ファイル"
+msgstr "バイナリ"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:100
 msgid "ESRI grid"
-msgstr ""
+msgstr "ESRIグリッド"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:101 ../gui/tcltk/gis.m/gmmenu.tcl:134
 msgid "GRIDATB.FOR"
-msgstr ""
+msgstr "GRIDATB.FOR "
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:102 ../gui/tcltk/gis.m/gmmenu.tcl:135
 msgid "MAT-File (v.4)"
-msgstr ""
+msgstr "MAT-ファイル (v.4) "
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:103
 msgid "SPOT NDVI"
-msgstr ""
+msgstr "SPOT NDVI "
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:104
 msgid "SRTM hgt"
-msgstr ""
+msgstr "SRTM hgt"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:105
 msgid "Terra ASTER"
-msgstr ""
+msgstr "Terra ASTER"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:109
-#, fuzzy
 msgid "Import vector map"
-msgstr "ラスター ファイル"
+msgstr "ベクトルマップのインポート"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:110 ../gui/tcltk/gis.m/gmmenu.tcl:149
 msgid "Multiple formats using OGR"
-msgstr ""
+msgstr "OGRを使用した複数フォーマット"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:112 ../gui/tcltk/gis.m/gmmenu.tcl:151
-#, fuzzy
 msgid "ASCII points or GRASS ASCII vector"
-msgstr "ファイル ファイル ファイル"
+msgstr "ASCIIポイントまたはGRASS ASCIIベクトル"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:113
-#, fuzzy
 msgid "Old GRASS vector"
-msgstr "インポート ファイル"
+msgstr "旧GRASSベクトル"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:115 ../gui/tcltk/gis.m/gmmenu.tcl:152
 msgid "DXF"
-msgstr ""
+msgstr "DXF"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:116
 msgid "ESRI e00"
-msgstr ""
+msgstr "ESRI e00 "
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:117
 msgid "Garmin GPS"
-msgstr ""
+msgstr "ガーミンGPS "
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:118
 msgid "GPSBabel GPS"
-msgstr ""
+msgstr "GPSバベルGPS "
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:119
 msgid "GEOnet"
-msgstr ""
+msgstr "ジオネット "
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:120
 msgid "Matlab and MapGen"
-msgstr ""
+msgstr "MatlabとMapGen "
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:122
-#, fuzzy
 msgid "Import grid 3D volume"
-msgstr "の"
+msgstr "3Dグリッド値のインポート"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:123 ../gui/tcltk/gis.m/gmmenu.tcl:158
-#, fuzzy
 msgid "ASCII 3D"
-msgstr "ファイル"
+msgstr "ASCII 3D"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:124 ../gui/tcltk/gis.m/gmmenu.tcl:159
-#, fuzzy
 msgid "Vis5D"
-msgstr "ファイル"
+msgstr "Vis５D"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:127
-#, fuzzy
 msgid "Export raster map"
-msgstr "ファイル"
+msgstr "ラスターマップのエクスポート"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:131
 msgid "ASCII x,y,z"
-msgstr ""
+msgstr "ASCII x,y,z "
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:133
 msgid "ESRI ASCII grid"
-msgstr ""
+msgstr "ESRI ASCIIグリッド"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:139
 msgid "MPEG-1"
-msgstr ""
+msgstr "MPEG-1"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:140
 msgid "PNG"
-msgstr ""
+msgstr "PNG"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:141
 msgid "PPM"
-msgstr ""
+msgstr "PPM画像"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:142
 msgid "PPM from RGB"
-msgstr ""
+msgstr "RGBからPPM"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:143 ../gui/tcltk/gis.m/gmmenu.tcl:153
 msgid "POV-Ray"
-msgstr ""
+msgstr "POV-レイ"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:144
 msgid "TIFF"
-msgstr ""
+msgstr "TIFF画像"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:145
-#, fuzzy
 msgid "VRML"
-msgstr "ファイル"
+msgstr "VRML"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:146 ../gui/tcltk/gis.m/gmmenu.tcl:155
 #: ../gui/tcltk/gis.m/gmmenu.tcl:160
 msgid "VTK"
-msgstr ""
+msgstr "VTK"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:148
-#, fuzzy
 msgid "Export vector map"
-msgstr "ラスター ファイル"
+msgstr "ベクトルマップのエクスポート"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:154
 msgid "SVG"
-msgstr ""
+msgstr "SVG"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:157
-#, fuzzy
 msgid "Export grid 3D volume"
-msgstr "の"
+msgstr "3Dグリッド値 エクスポート"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:164 ../lib/gis/gui.tcl:464
-#, fuzzy
 msgid "Copy"
 msgstr "コピー"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:166
-#, fuzzy
 msgid "List"
-msgstr "一覧"
+msgstr "リスト"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:167
-#, fuzzy
 msgid "List filtered"
-msgstr "一覧"
+msgstr "フィルター"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:169
-#, fuzzy
 msgid "Rename"
-msgstr "名前の変更"
+msgstr "名前変更"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:171 ../vector/v.digit/cats.tcl:20
 msgid "Delete"
-msgstr ""
+msgstr "削除"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:172
-#, fuzzy
 msgid "Delete filtered"
-msgstr "選択 ファイル"
+msgstr "フィルターを削除"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:175
-#, fuzzy
 msgid "Raster to vector"
-msgstr "ラスター ファイル"
+msgstr "ラスタ → ベクトル"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:176
-#, fuzzy
 msgid "Raster series to volume"
-msgstr "ラスター"
+msgstr "ラスターシリーズの値"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:177
-#, fuzzy
 msgid "Raster 2.5D to volume"
-msgstr "ラスター"
+msgstr "ラスター 2.5Dの値"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:180
-#, fuzzy
 msgid "Vector to volume"
-msgstr "ベクトル ファイル"
+msgstr "ベクトル → ボリューム"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:181
-#, fuzzy
 msgid "Sites to vector"
-msgstr "サイト ファイル"
+msgstr "サイト → ベクトル"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:183
-#, fuzzy
 msgid "Volume to raster series"
-msgstr "ファイル"
+msgstr "ボリューム → ラスターシリーズ"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:186
 msgid "Georectify"
-msgstr ""
+msgstr " 幾何補正処理"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:188
-#, fuzzy
 msgid "Animate raster maps"
-msgstr "ファイル"
+msgstr "ラスターマップのアニメーション"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:190
-#, fuzzy
 msgid "Bearing/distance to coordinates"
-msgstr " "
+msgstr "座標の角度/距離"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:192
-#, fuzzy
 msgid "3D rendering"
-msgstr "の"
+msgstr "3Dレンダリング"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:193
 msgid "NVIZ"
-msgstr ""
+msgstr "NVIZ"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:194
-#, fuzzy
 msgid "NVIZ fly through path"
-msgstr "の"
+msgstr "NVIZフライスルーパス"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:196
 msgid "PostScript plot"
-msgstr ""
+msgstr "ポストスクリプトプロット"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:206
-#, fuzzy
 msgid "Mapset access"
-msgstr "マップセット"
+msgstr "マップセット作成"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:207
 msgid "Change working environment"
-msgstr ""
+msgstr "作業環境を変更する"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:208
 msgid "User access"
-msgstr ""
+msgstr "ユーザーアクセス"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:209
-#, fuzzy
 msgid "Show settings"
-msgstr "ガンマ"
+msgstr "設定情報"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:210
-#, fuzzy
 msgid "Change settings"
-msgstr "ガンマ"
+msgstr "設定変更"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:215
-#, fuzzy
 msgid "Projection for current location"
-msgstr "の"
+msgstr "現在のロケーションの投影法"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:217
-#, fuzzy
 msgid "Convert coordinates"
-msgstr " "
+msgstr "座標変換"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:219
-#, fuzzy
 msgid "Display font"
-msgstr "ガンマ "
+msgstr "表示フォント"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:229
-#, fuzzy
 msgid "Compress/decompress"
-msgstr "ファイル ファイル"
+msgstr "圧縮/解凍"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:231
 msgid "Boundaries"
-msgstr ""
+msgstr "境界"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:232
-#, fuzzy
 msgid "Null values"
-msgstr "色 ファイル:"
+msgstr "NULL値"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:233
 msgid "Quantization"
-msgstr ""
+msgstr "量子化 "
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:234
-#, fuzzy
 msgid "Timestamps"
-msgstr "一覧"
+msgstr "タイムスタンプ "
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:237
-#, fuzzy
 msgid "Resample using multiple methods"
-msgstr "方法"
+msgstr "複数手法による再サンプリング"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:238
-#, fuzzy
 msgid "Resample using nearest neighbor"
-msgstr "方法"
+msgstr "近接情報を利用した再サンプリング"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:239
-#, fuzzy
 msgid "Resample using spline tension"
-msgstr "���� ����"
+msgstr " スプラインテンションによる再サンプリング"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:241
-#, fuzzy
 msgid "Support file maintenance"
-msgstr "ファイル"
+msgstr "サポートファイルの保守"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:242
-#, fuzzy
 msgid "Update map statistics"
-msgstr "ファイル"
+msgstr "マップ統計の更新"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:244
 msgid "Reproject"
-msgstr ""
+msgstr "投影変換"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:245
 msgid "Tiling"
-msgstr ""
+msgstr "タイル"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:248
-#, fuzzy
 msgid "Color tables"
-msgstr "コピー"
+msgstr "カラーテーブル"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:249
-#, fuzzy
 msgid "Color rules"
-msgstr "色 "
+msgstr "カラールール "
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:251
 msgid "Blend"
-msgstr ""
+msgstr "ブレンド"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:252
 msgid "Create RGB"
-msgstr ""
+msgstr "RGB 作成"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:253 ../gui/tcltk/gis.m/gmmenu.tcl:534
-#, fuzzy
 msgid "HIS to RGB"
-msgstr "ヘルプ の"
+msgstr "HIS → RGB"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:258
 msgid "Buffers"
-msgstr ""
+msgstr "バッファー"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:259
-#, fuzzy
 msgid "Closest points"
-msgstr "ベクトル"
+msgstr "最寄のポイント"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:260
 msgid "MASK"
-msgstr ""
+msgstr "マスク"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:263
-#, fuzzy
 msgid "Moving window"
-msgstr "ズーム"
+msgstr "ウィンドウを移動"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:264
-#, fuzzy
 msgid "Neighborhood points"
-msgstr "ファイル"
+msgstr "近接点"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:268
-#, fuzzy
 msgid "Map series"
-msgstr "管理"
+msgstr "マップシリーズ "
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:271
 msgid "Statistical overlay"
-msgstr ""
+msgstr "統計オーバーレイ"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:274
-#, fuzzy
 msgid "Solar irradiance irradiation"
-msgstr "共分散/相関"
+msgstr "太陽放射照度"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:275
 msgid "Shadows map"
-msgstr ""
+msgstr "陰影図"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:278
 msgid "Cumulative movement costs"
-msgstr ""
+msgstr "移動コスト積算"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:282
 msgid "Shaded relief"
-msgstr ""
+msgstr "陰影"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:288
 msgid "Visibility"
-msgstr ""
+msgstr "可視"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:291
 msgid "Clump"
-msgstr ""
+msgstr "クランプ"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:292
 msgid "Grow"
-msgstr ""
+msgstr "増加"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:293
 msgid "Thin"
-msgstr ""
+msgstr "減少"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:297
 msgid "Carve stream channels"
-msgstr ""
+msgstr "河川水路の作成"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:298
 msgid "Fill lake"
-msgstr ""
+msgstr "湖沼塗潰し"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:300
 msgid "Depressionless map and flowlines"
-msgstr ""
+msgstr "凹地の無いマップとフローライン"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:301
-#, fuzzy
 msgid "Flow accumulation"
-msgstr "の"
+msgstr "フローアキュミュレーション"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:302
 msgid "Flow lines"
-msgstr ""
+msgstr "流線"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:304 ../gui/tcltk/gis.m/gmmenu.tcl:581
 msgid "Groundwater flow model"
-msgstr ""
+msgstr "地下水流モデル "
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:307
 msgid "SIMWE sediment flux modeling"
-msgstr ""
+msgstr "SIMWE 透過流束モデリング"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:317
-#, fuzzy
 msgid "Set up"
-msgstr "中止"
+msgstr "設定"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:323
 msgid "Analyze landscape"
-msgstr ""
+msgstr "景観分析"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:324
 msgid "Analyze patches"
-msgstr ""
+msgstr "パッチ分析"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:325 ../lib/gis/gui.tcl:295
 #: ../lib/gis/gui.tcl:480
 msgid "Output"
-msgstr ""
+msgstr "出力"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:327
 msgid "Landscape patch analysis"
-msgstr ""
+msgstr "景観パッチ分析"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:330
 msgid "Edge density"
-msgstr ""
+msgstr "周辺密度"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:331
 msgid "Contrast weighted edge density"
-msgstr ""
+msgstr "対照的加重周辺密度"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:333
 msgid "Patch size mean"
-msgstr ""
+msgstr "パッチサイズ平均値"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:334
 msgid "Patch area range"
-msgstr ""
+msgstr "パッチ領域の範囲"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:335
 msgid "Patch area Std Dev"
-msgstr ""
+msgstr "パッチ領域標準偏差"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:336
 msgid "Patch area Coeff Var"
-msgstr ""
+msgstr "パッチ領域COEFF演算子"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:337
 msgid "Patch density"
-msgstr ""
+msgstr "パッチ密度"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:338
 msgid "Patch number"
-msgstr ""
+msgstr "パッチ番号"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:340
 msgid "Dominance's diversity"
-msgstr ""
+msgstr "順位多様性"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:341
 msgid "Shannon's diversity"
-msgstr ""
+msgstr "シャノン 多様性  "
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:342
 msgid "Simpson's diversity"
-msgstr ""
+msgstr "シンプソン多様性"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:344
 msgid "Ricness"
-msgstr ""
+msgstr "濃厚"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:345
-#, fuzzy
 msgid "Shape index"
-msgstr "保存 終了"
+msgstr "形状係数"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:348
-#, fuzzy
 msgid "Rate of spread"
-msgstr "ファイル"
+msgstr "拡散比率"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:349
 msgid "Least-cost spread paths"
-msgstr ""
+msgstr "最小コストの拡散経路"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:350
 msgid "Anisotropic spread simulation"
-msgstr ""
+msgstr "非等方性拡散シミュレーション"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:354
 msgid "Interactively edit category values"
-msgstr ""
+msgstr "対話形式でカテゴリー値を編集"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:356
 msgid "Reclassify by size"
-msgstr ""
+msgstr "サイズで再分類"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:357
-#, fuzzy
 msgid "Reclassify interactively"
-msgstr "ファイル"
+msgstr "対話形式による再分類"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:358 ../gui/tcltk/gis.m/gmmenu.tcl:486
-#, fuzzy
 msgid "Reclassify using rules file"
-msgstr "ファイル"
+msgstr "定義ファイルを利用した再分類"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:360
 msgid "Recode interactively"
-msgstr ""
+msgstr "対話情報記録"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:361
-#, fuzzy
 msgid "Recode using rules file"
-msgstr "ファイル"
+msgstr "定義ファイルを利用した記録"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:363
 msgid "Rescale"
-msgstr ""
+msgstr "再スケール"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:364
-#, fuzzy
 msgid "Rescale with histogram"
-msgstr "ラスター ファイル"
+msgstr "ヒストグラムの再スケール"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:367
 msgid "Concentric circles"
-msgstr ""
+msgstr "同心円"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:369
 msgid "Random cells"
-msgstr ""
+msgstr "ランダムセル"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:370
-#, fuzzy
 msgid "Random cells and vector points"
-msgstr "ファイル ファイル"
+msgstr "ランダムセルとベクトルポイント"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:373
 msgid "Fractal surface"
-msgstr ""
+msgstr "フラクタル面"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:375
 msgid "Gausian kernal density surface"
-msgstr ""
+msgstr "ガウスカーネル等密度面"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:376
 msgid "Gaussian deviates surface"
-msgstr ""
+msgstr "ガウス偏差面"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:378
-#, fuzzy
 msgid "Plane"
-msgstr "ラベル"
+msgstr "平面 "
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:380
 msgid "Random deviates surface"
-msgstr ""
+msgstr "ランダム逸脱曲面"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:381
 msgid "Random surface with spatial dependence"
-msgstr ""
+msgstr "空間依存性ランダム曲面"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:383
 msgid "Contour lines"
-msgstr ""
+msgstr "等高線"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:385
-#, fuzzy
 msgid "Bilinear from raster points"
-msgstr "ファイル"
+msgstr "ラスターポイントからの共一次"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:386
-#, fuzzy
 msgid "Bilinear and bicubic from vector points"
-msgstr "ファイル"
+msgstr "ベクトルポイントからの共一次と三次補間"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:388
-#, fuzzy
 msgid "IDW from raster points"
-msgstr "補間 ファイル"
+msgstr "ラスターポイントから加重平均補間"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:389
-#, fuzzy
 msgid "IDW from vector points"
-msgstr "ファイル"
+msgstr "ベクトルポイントでの加重平均補間"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:391
-#, fuzzy
 msgid "Raster contours"
-msgstr "ラスター ファイル"
+msgstr "ラスターコンター"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:392
-#, fuzzy
 msgid "Regularized spline tension"
-msgstr "���� ����"
+msgstr "正則化スプライン張力"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:394
 msgid "Fill NULL cells"
-msgstr ""
+msgstr "nullセルの穴埋め "
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:399
 #, fuzzy
@@ -3781,775 +3410,695 @@ msgstr "ファイル"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:402
 msgid "Range of category values"
-msgstr ""
+msgstr "カテゴリー値の範囲"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:403
 msgid "Sum cell category values"
-msgstr ""
+msgstr "セルカテゴリー値の合計"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:405
-#, fuzzy
 msgid "Statistics for clumped cells (works with r.clump)"
-msgstr "の"
+msgstr "塊状セルによる統計解析 (r.clumpでの処理)"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:409
-#, fuzzy
 msgid "Sample transects"
-msgstr "ファイル"
+msgstr "サンプル横断面"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:410
-#, fuzzy
 msgid "Sample transects (bearing/distance)"
-msgstr "単位"
+msgstr "サンプル横断面（角度/距離） "
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:413
-#, fuzzy
 msgid "Linear regression"
-msgstr "地域"
+msgstr "線形回帰"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:414
 msgid "Mutual category occurences"
-msgstr ""
+msgstr "カテゴリーの相互関係表"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:420
 msgid "Edit features"
-msgstr ""
+msgstr "フューチャ編集"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:422
 msgid "Create/rebuild topology: "
 msgstr ""
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:423
-#, fuzzy
 msgid "Clean vector"
-msgstr "ファイル"
+msgstr "ベクトル消去"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:425
-#, fuzzy
 msgid "Convert object types"
-msgstr "アイコン"
+msgstr "オブジェクトタイプの変換"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:427
 msgid "Add centroids"
-msgstr ""
+msgstr "セントロイド追加"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:429
 msgid "Build polylines"
-msgstr ""
+msgstr "ポリラインの作成"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:430
 msgid "Split polylines"
-msgstr ""
+msgstr "ポリラインの分割"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:431
 msgid "Parallel lines"
-msgstr ""
+msgstr "平行線"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:433
 msgid "Dissolve boundaries"
-msgstr ""
+msgstr "境界の融合"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:435
-#, fuzzy
 msgid "Create 3D vector over raster"
-msgstr "ファイル"
+msgstr "3Dベクトルまたはラスターの作成"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:436
-#, fuzzy
 msgid "Extrude 3D vector"
-msgstr "ファイル ファイル"
+msgstr "3Dベクトルの立上げ"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:438
 msgid "Link to OGR"
-msgstr ""
+msgstr "OGRのリンク "
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:440
-#, fuzzy
 msgid "Create labels"
-msgstr "ファイル"
+msgstr "ラベル作成"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:442
-#, fuzzy
 msgid "Reposition vector"
-msgstr "サイト ファイル"
+msgstr "ベクトルの再配置"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:443
-#, fuzzy
 msgid "Reproject vector"
-msgstr "ラスター ファイル"
+msgstr "ベクトルの投影変換"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:445
 msgid "Metadata support"
-msgstr ""
+msgstr "メタデータサポート"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:448
-#, fuzzy
 msgid "Query with attributes"
-msgstr "データ情報"
+msgstr "属性で検索"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:449
-#, fuzzy
 msgid "Query with coordinate(s)"
-msgstr " "
+msgstr "座標で検索"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:450
 msgid "Query with another map"
-msgstr ""
+msgstr "別のマップと共に検索"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:452
-#, fuzzy
 msgid "Buffer vectors"
-msgstr "データ情報 ファイル"
+msgstr "バッファーベクトル"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:453
 msgid "Lidar analysis"
-msgstr ""
+msgstr "ライダー分析"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:454
-#, fuzzy
 msgid "Detect edges"
-msgstr "を実行しました"
+msgstr "エッジ検出"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:455
 msgid "Detect interiors"
-msgstr ""
+msgstr "内面検出"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:456
 msgid "Correct and reclassify objects"
-msgstr ""
+msgstr "オブジェクトの修正と再分類"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:458
-#, fuzzy
 msgid "Linear referencing"
-msgstr "の"
+msgstr "線形参照"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:459
 msgid "Create LRS"
-msgstr ""
+msgstr "線形参照システム作成"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:460
-#, fuzzy
 msgid "Create stationing"
-msgstr "ロケーション"
+msgstr "配置測点作成"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:461
-#, fuzzy
 msgid "Create points/segments"
-msgstr "マップセット"
+msgstr "ポイント/セグメントの作成 "
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:462
 msgid "Find ID and offset"
-msgstr ""
+msgstr "IDとオフセットを表示"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:464
 msgid "Nearest features"
-msgstr ""
+msgstr "最寄のフューチャ"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:469
-#, fuzzy
 msgid "Display shortest route"
-msgstr "ガンマ"
+msgstr "最短ルート表示"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:474
-#, fuzzy
 msgid "Split net"
-msgstr "サイト"
+msgstr "ネットの分割"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:479
 msgid "Overlay"
-msgstr ""
+msgstr "重ね合わせ"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:480
 msgid "Patch (combine)"
-msgstr ""
+msgstr "パッチ (結合) "
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:484
-#, fuzzy
 msgid "Manage or report categories"
-msgstr "コピー"
+msgstr "カテゴリーの管理と出力"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:485
 msgid "Reclassify objects interactively"
-msgstr ""
+msgstr "対話形式でオブジェクトを再分類"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:489
-#, fuzzy
 msgid "Generate area for current region"
-msgstr "単位 の 地域"
+msgstr "現在の領域からエリアを作成"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:491
 msgid "Convex hull"
-msgstr ""
+msgstr "凸包 "
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:492
-#, fuzzy
 msgid "Delaunay triangles"
-msgstr "の"
+msgstr "ドローネ三角形"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:493
-#, fuzzy
 msgid "Voronoi diagram/Thiessen polygons"
-msgstr "の"
+msgstr "ボロノイ図/ティーセンポリゴン"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:495
 msgid "Generate grid"
-msgstr ""
+msgstr "グリッドの作成"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:497
-#, fuzzy
 msgid "Generate points from database"
-msgstr "の ファイル"
+msgstr "データベースからポイント作成"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:498
-#, fuzzy
 msgid "Generate points along lines"
-msgstr "ファイル"
+msgstr "ラインに沿ったポイントを作成"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:500
-#, fuzzy
 msgid "Perturb points"
-msgstr "ベクトル"
+msgstr "摂動点"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:503
-#, fuzzy
 msgid "Remove outliers in point sets"
-msgstr "ファイル"
+msgstr "ポイント群から異常値を削除"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:504
 msgid "Test/training sets"
-msgstr ""
+msgstr "テスト/トレーニング 設定"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:506
 msgid "Update area attributes from raster"
-msgstr ""
+msgstr "ラスターからエリア属性を更新"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:507
 msgid "Update point attributes from areas"
-msgstr ""
+msgstr "エリアからポイントの属性を更新"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:508
 msgid "Update point attributes from raster"
-msgstr ""
+msgstr "ラスターからポイントの属性を更新"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:516
 msgid "Report topology by category"
-msgstr ""
+msgstr "カテゴリー別トポロジーのレポート作成"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:517
 msgid "Upload or report topology"
-msgstr ""
+msgstr "トポロジーをアップロードまたはレポート作成"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:519
-#, fuzzy
 msgid "Univariate attribute statistics"
-msgstr "ファイル"
+msgstr "単変量ラスタ統計"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:521
 msgid "Quadrat indices"
-msgstr ""
+msgstr "２次補間インデックス"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:522
-#, fuzzy
 msgid "Test normality"
-msgstr "標準"
+msgstr "正規性検定"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:527
-#, fuzzy
 msgid "Create/edit group"
-msgstr "グループ"
+msgstr "グループの作成/修正"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:528
-#, fuzzy
 msgid "Target group"
-msgstr "グループ"
+msgstr "対象グループ"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:530
 msgid "Mosaic images"
-msgstr ""
+msgstr "モザイク画像"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:533
 msgid "Color balance for RGB"
-msgstr ""
+msgstr "RGBのカラーバランス"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:535
 msgid "RGB to HIS"
-msgstr ""
+msgstr "RGB → HIS "
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:543
 msgid "Brovey sharpening"
-msgstr ""
+msgstr "ブロービーシャープニング"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:551
 msgid "Input for supervised MLC"
-msgstr ""
+msgstr "最尤法による分類法監視下の入力"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:552
 msgid "Input for supervised SMAP"
-msgstr ""
+msgstr "逐次最大事後確率推定法監視下の入力"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:555
 msgid "Edge detection"
-msgstr ""
+msgstr "縁辺検出"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:556
 msgid "Matrix/convolving filter"
-msgstr ""
+msgstr "行列/畳み込みフィルタ"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:561
-#, fuzzy
 msgid "Canonical correlation"
-msgstr "共分散/相関"
+msgstr "正準相関"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:562
 msgid "Principal components"
-msgstr ""
+msgstr "主成分"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:563
 msgid "Fast Fourier"
-msgstr ""
+msgstr "高速フーリエ変換"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:564
 msgid "Inverse Fast Fourier"
-msgstr ""
+msgstr "高速フーリエ逆変換 "
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:568
-#, fuzzy
 msgid "Bit pattern comparison"
-msgstr "の"
+msgstr "ビットパタ-ン比較"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:569
 msgid "Kappa analysis"
-msgstr ""
+msgstr "カッパ分析"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:570
-#, fuzzy
 msgid "OIF for LandSat TM"
-msgstr "の"
+msgstr "ランドサットのバンド選定指標"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:573
 msgid "&Volumes"
-msgstr ""
+msgstr "ボリューム(&V)"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:578
 msgid "3D MASK"
-msgstr ""
+msgstr "3D マスク"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:579
-#, fuzzy
 msgid "3D Map calculator"
-msgstr "管理"
+msgstr "3D マップカリキュレータ"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:580
-#, fuzzy
 msgid "Cross section from volume"
-msgstr "ファイル"
+msgstr "立体からの断面図"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:582
-#, fuzzy
 msgid "Interpolate volume from vector points"
-msgstr "ファイル"
+msgstr "ペクトルポイントからの立体補間"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:600
-#, fuzzy
 msgid "New table"
-msgstr "コピー"
+msgstr "新規テーブル"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:601
-#, fuzzy
 msgid "Remove table"
-msgstr "削除"
+msgstr "テーブル削除"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:603
-#, fuzzy
 msgid "Add columns"
-msgstr "一覧"
+msgstr "列追加"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:604
 msgid "Change values"
-msgstr ""
+msgstr "値の変更"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:605
-#, fuzzy
 msgid "Drop column"
-msgstr "一覧"
+msgstr "列削除"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:606
-#, fuzzy
 msgid "Rename a column"
-msgstr "名前の変更"
+msgstr "列名の変更 "
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:612
-#, fuzzy
 msgid "Query any table"
-msgstr "データ情報"
+msgstr "テーブルの検索"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:613
-#, fuzzy
 msgid "Query vector attribute table"
-msgstr "データ情報"
+msgstr "ベクトル属性テーブル検索"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:614
-#, fuzzy
 msgid "SQL statement"
-msgstr "実行"
+msgstr "SQL文"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:617
-#, fuzzy
 msgid "Reconnect vector to database"
-msgstr "接続"
+msgstr "ベクトルとデータベースの再接続"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:618
-#, fuzzy
 msgid "Set vector - database connection"
-msgstr "ベクトル"
+msgstr "ベクトル - データベース接続設定"
 
 #: ../gui/tcltk/gis.m/gmtool1.tcl:28
-#, fuzzy
 msgid "Start new map display monitor"
-msgstr "開始 モニター"
+msgstr "マップディスプレイモニター開始"
 
 #: ../gui/tcltk/gis.m/gmtool1.tcl:56
 msgid "Add histogram layer"
-msgstr ""
+msgstr "ヒストグラムレイヤー追加"
 
 #: ../gui/tcltk/gis.m/gmtool1.tcl:63
 msgid "Add cell values layer"
-msgstr ""
+msgstr "セル値レイヤー追加"
 
 #: ../gui/tcltk/gis.m/gmtool1.tcl:70
 msgid "Add directional arrows layer"
-msgstr ""
+msgstr "流方向レイヤー追加"
 
 #: ../gui/tcltk/gis.m/gmtool1.tcl:76
-#, fuzzy
 msgid "Add raster legend layer"
-msgstr "ファイル"
+msgstr "ラスター凡例レイヤー追加"
 
 #: ../gui/tcltk/gis.m/gmtool1.tcl:121
-#, fuzzy
 msgid "Add raster labels layer (using v.labels file)"
-msgstr "ファイル ファイル"
+msgstr "ラスターラベルレイヤー追加（v.labelsファイル使用）"
 
 #: ../gui/tcltk/gis.m/gmtool1.tcl:135
-#, fuzzy
 msgid "Add postscript labels layer (using v.labels file)"
-msgstr "ポストスクリプト ファイル"
+msgstr "ポストスクリプトラベルレイヤー追加（v.labelsファイル使用）"
 
 #: ../gui/tcltk/gis.m/gmtool1.tcl:142
-#, fuzzy
 msgid "Add postscript text layer"
-msgstr "ファイル"
+msgstr "ポストスクリプトテキストレイヤー追加"
 
 #: ../gui/tcltk/gis.m/gmtree.tcl:69
-#, fuzzy, tcl-format
+#, tcl-format
 msgid "Map Layers for Display %s"
-msgstr "データ情報 の "
+msgstr "表示するマップレイヤー %s"
 
 #: ../gui/tcltk/gis.m/gmtree.tcl:308
 msgid "You must open a display before adding map layers"
-msgstr ""
+msgstr "マップレイヤーを追加する前にディスプレイをオープンしなければなりません"
 
 #: ../gui/tcltk/gis.m/gmtree.tcl:483 ../gui/tcltk/gis.m/gmtree.tcl:631
 #: ../gui/tcltk/gis.m/gmtree.tcl:1150 ../gui/tcltk/gis.m/gmtree.tcl:1156
-#, fuzzy
 msgid "No layer selected"
-msgstr "��"
+msgstr "レイヤーが選択されていません"
 
 #: ../gui/tcltk/gis.m/gmtree.tcl:865
 msgid "Loading layers..."
-msgstr ""
+msgstr "レイヤーロード中... "
 
 #: ../gui/tcltk/gis.m/gmtree.tcl:1050
 msgid "Layers loaded"
-msgstr ""
+msgstr "レイヤーがロードされました"
 
 #: ../gui/tcltk/gis.m/gmtree.tcl:1171
-#, fuzzy
 msgid "You can digitize raster or vector maps only"
-msgstr "ファイル ファイル ファイル"
+msgstr "デジタイズできるのはラスターまたはベクトルマップのみです"
 
 #: ../gui/tcltk/gis.m/gridline.tcl:140
 msgid "Display grid lines, and geodesic lines or rhumblines"
-msgstr ""
+msgstr "グリッド線と測地線や航程線を表示"
 
 #: ../gui/tcltk/gis.m/gridline.tcl:157
-#, fuzzy
 msgid "Grid options: "
-msgstr "テキスト 色"
+msgstr "グリッドオプション："
 
 #: ../gui/tcltk/gis.m/gridline.tcl:159
 msgid "geodetic grid  "
-msgstr ""
+msgstr "測地系グリッド"
 
 #: ../gui/tcltk/gis.m/gridline.tcl:161
-#, fuzzy
 msgid "grid color "
-msgstr "色 "
+msgstr "グリッドカラー"
 
 #: ../gui/tcltk/gis.m/gridline.tcl:172
 msgid "    grid size (map units)"
-msgstr ""
+msgstr "    グリッドサイズ (マップユニット) "
 
 #: ../gui/tcltk/gis.m/gridline.tcl:174
 msgid " grid origin (east, north)"
-msgstr ""
+msgstr " グリッド原点 (東、北) "
 
 #: ../gui/tcltk/gis.m/gridline.tcl:182
-#, fuzzy
 msgid "draw border text "
-msgstr "色"
+msgstr "境界テキスト描画"
 
 #: ../gui/tcltk/gis.m/gridline.tcl:184
-#, fuzzy
 msgid "text color "
-msgstr "色"
+msgstr "テキストカラー"
 
 #: ../gui/tcltk/gis.m/gridline.tcl:189
-#, fuzzy
 msgid "text font "
-msgstr "選択 色"
+msgstr "テキストフォント"
 
 #: ../gui/tcltk/gis.m/gridline.tcl:190
-#, fuzzy
 msgid "  text size"
-msgstr "ファイル"
+msgstr "  テキストサイズ"
 
 #: ../gui/tcltk/gis.m/gridline.tcl:192
-#, fuzzy
 msgid "Grid text size in points"
-msgstr "デジタイズ"
+msgstr "ポイントによるグリッドテキストサイズ"
 
 #: ../gui/tcltk/gis.m/gridline.tcl:199
-#, fuzzy
 msgid "draw grid border "
-msgstr "色"
+msgstr "グリッド境界描画"
 
 #: ../gui/tcltk/gis.m/gridline.tcl:201
-#, fuzzy
 msgid "border color "
-msgstr "色"
+msgstr "境界色"
 
 #: ../gui/tcltk/gis.m/gridline.tcl:206
 msgid "Geodesic and rhumblines for latlong locations only"
-msgstr ""
+msgstr "緯経度地点による測地線と航程線"
 
 #: ../gui/tcltk/gis.m/gridline.tcl:219 ../gui/tcltk/gis.m/gridline.tcl:246
-#, fuzzy
 msgid " line color"
-msgstr "色"
+msgstr " ラインカラー"
 
 #: ../gui/tcltk/gis.m/gridline.tcl:223
-#, fuzzy
 msgid " text color"
-msgstr "色"
+msgstr "テキストカラー"
 
 #: ../gui/tcltk/gis.m/gridline.tcl:232 ../gui/tcltk/gis.m/gridline.tcl:255
 msgid "     line endpoints (x1,y1,x2,y2)"
-msgstr ""
+msgstr "     ライン始終点 (x1,y1,x2,y2) "
 
 #: ../gui/tcltk/gis.m/histogram.tcl:107
-#, fuzzy
 msgid "Raster map for histogram"
-msgstr "ラスター の:"
+msgstr "ヒストグラムのラスターマップ"
 
 #: ../gui/tcltk/gis.m/histogram.tcl:110
 #, tcl-format
 msgid "histogram of %s"
-msgstr ""
+msgstr "ヒストグラム %s "
 
 #: ../gui/tcltk/gis.m/histogram.tcl:138
 msgid "Draw histogram of values from raster map or image"
-msgstr ""
+msgstr "ラスターマップまたは画像からヒストグラムを表示"
 
 #: ../gui/tcltk/gis.m/histogram.tcl:155
-#, fuzzy
 msgid "Raster to histogram: "
-msgstr "ラスター ファイル"
+msgstr "ラスターのヒストグラム："
 
 #: ../gui/tcltk/gis.m/histogram.tcl:171
 msgid "Graph style"
-msgstr ""
+msgstr "グラフスタイル"
 
 #: ../gui/tcltk/gis.m/histogram.tcl:174
-#, fuzzy
 msgid "\ttext font "
-msgstr "選択 色"
+msgstr "\t テキストフォント"
 
 #: ../gui/tcltk/gis.m/histogram.tcl:184
-#, fuzzy
 msgid "Histogram color: text & frame"
-msgstr "色"
+msgstr "ヒストグラムカラー: テキスト & フレーム"
 
 #: ../gui/tcltk/gis.m/histogram.tcl:186
-#, fuzzy
 msgid "  background"
-msgstr "実行"
+msgstr "  背景 "
 
 #: ../gui/tcltk/gis.m/histogram.tcl:196
 msgid "Steps/bins for values (fp maps only)"
-msgstr ""
+msgstr "値のステップ/ビン (実数マップのみ) "
 
 #: ../gui/tcltk/gis.m/histogram.tcl:200
 msgid "include null values"
-msgstr ""
+msgstr "NULL値を含む"
 
 #: ../gui/tcltk/gis.m/histogram.tcl:263
 msgid "r.info error"
-msgstr ""
+msgstr "r.info エラー "
 
 #: ../gui/tcltk/gis.m/labels.tcl:96
-#, fuzzy
 msgid "Labels for vectors"
-msgstr "の"
+msgstr "ベクトルのラベル"
 
 #: ../gui/tcltk/gis.m/labels.tcl:111
 msgid "Display labels for vector objects (created with v.label)"
-msgstr ""
+msgstr "ベクトルオブジェクトのラベル表示 (v.labelのよる作成) "
 
 #: ../gui/tcltk/gis.m/labels.tcl:128 ../gui/tcltk/gis.m/maplabels.tcl:172
-#, fuzzy
 msgid "Labels file:"
-msgstr "ファイル:"
+msgstr "ラベルファイル："
 
 #: ../gui/tcltk/gis.m/labels.tcl:131 ../gui/tcltk/gis.m/maplabels.tcl:175
-#, fuzzy
 msgid "labels file to display"
-msgstr "ファイル"
+msgstr "表示するラベルファイル"
 
 #: ../gui/tcltk/gis.m/labels.tcl:147
 msgid "min"
-msgstr ""
+msgstr "最小値 "
 
 #: ../gui/tcltk/gis.m/labels.tcl:149
 msgid "max"
-msgstr ""
+msgstr "最大値"
 
 #: ../gui/tcltk/gis.m/labels.tcl:164 ../gui/tcltk/gis.m/maplabels.tcl:279
 msgid "Launch v.label to create labels file"
-msgstr ""
+msgstr "ラベルファイル作成のため v.label を起動"
 
 #: ../gui/tcltk/gis.m/labels.tcl:165 ../gui/tcltk/gis.m/maplabels.tcl:280
-#, fuzzy
 msgid "v.label"
-msgstr "ラベル"
+msgstr "v.label"
 
 #: ../gui/tcltk/gis.m/legend.tcl:149
-#, fuzzy
 msgid "Raster map for legend"
-msgstr "ラスター の:"
+msgstr "凡例(ラスター)の表示"
 
 #: ../gui/tcltk/gis.m/legend.tcl:152
 #, tcl-format
 msgid "legend for %s"
-msgstr ""
+msgstr " %s の凡例"
 
 #: ../gui/tcltk/gis.m/legend.tcl:165
 msgid "Display legend for raster map using cat values and labels"
-msgstr ""
+msgstr "カテゴリー値とラベルを使用してラスターマップの凡例を表示"
 
 #: ../gui/tcltk/gis.m/legend.tcl:182
-#, fuzzy
 msgid "Raster map: "
-msgstr "ラスター"
+msgstr "ラスターマップ："
 
 #: ../gui/tcltk/gis.m/legend.tcl:199
 #, tcl-format
 msgid "Legend placement and size as 0-100% of display"
-msgstr ""
+msgstr "ディスプレイを0-100 % として凡例の配置とサイズを設定"
 
 #: ../gui/tcltk/gis.m/legend.tcl:205
 #, tcl-format
 msgid "    x,y of lower left corner (in % from display top left)"
-msgstr ""
+msgstr "    左下端のXY (ディスプレイの左上端から %  ) "
 
 #: ../gui/tcltk/gis.m/legend.tcl:216
 msgid "    legend height "
-msgstr ""
+msgstr "    凡例 高さ  "
 
 #: ../gui/tcltk/gis.m/legend.tcl:218
 #, tcl-format
 msgid "Legend height (% of display)"
-msgstr ""
+msgstr "凡例 高さ (ディスプレイの%  ) "
 
 #: ../gui/tcltk/gis.m/legend.tcl:219
 msgid "%  width"
-msgstr ""
+msgstr "%   幅"
 
 #: ../gui/tcltk/gis.m/legend.tcl:221
 #, tcl-format
 msgid "Legend width (% of display)"
-msgstr ""
+msgstr "凡例の幅 (ディスプレイの%  ) "
 
 #: ../gui/tcltk/gis.m/legend.tcl:228
-#, fuzzy
 msgid "Legend appearance: text color"
-msgstr "色"
+msgstr "凡例の外観：テキストカラー"
 
 #: ../gui/tcltk/gis.m/legend.tcl:232
-#, fuzzy
 msgid "  legend text font "
-msgstr "フォント "
+msgstr "  凡例テキストフォント"
 
 #: ../gui/tcltk/gis.m/legend.tcl:243
 msgid "do not display labels"
-msgstr ""
+msgstr "ラベルを表示出来ません"
 
 #: ../gui/tcltk/gis.m/legend.tcl:245
 msgid "do not display values"
-msgstr ""
+msgstr "値を表示出来ません"
 
 #: ../gui/tcltk/gis.m/legend.tcl:252
 msgid "    number of lines (0=display all):"
-msgstr ""
+msgstr "    ライン数 (0=全表示): "
 
 #: ../gui/tcltk/gis.m/legend.tcl:254
-#, fuzzy
 msgid "Lines to display"
-msgstr "ファイル"
+msgstr "表示するライン数"
 
 #: ../gui/tcltk/gis.m/legend.tcl:256
 msgid "invert legend"
-msgstr ""
+msgstr "凡例 反転"
 
 #: ../gui/tcltk/gis.m/legend.tcl:263
 msgid "    interval between categories (integer maps)"
-msgstr ""
+msgstr "   カテゴリー内で反転 (整数マップ) "
 
 #: ../gui/tcltk/gis.m/legend.tcl:265
 msgid "Thinning interval"
-msgstr ""
+msgstr "細線化間隔"
 
 #: ../gui/tcltk/gis.m/legend.tcl:272
 msgid "draw smooth gradient (fp maps)"
-msgstr ""
+msgstr "スムーズ階調表示 (実数マップ) "
 
 #: ../gui/tcltk/gis.m/legend.tcl:274
 msgid "with maximum of"
-msgstr ""
+msgstr "最大値"
 
 #: ../gui/tcltk/gis.m/legend.tcl:276
 msgid "Maximum lines to display for gradient"
-msgstr ""
+msgstr "階調表示を行う区分の最大値"
 
 #: ../gui/tcltk/gis.m/legend.tcl:283
 msgid "Display legend for subset of raster values"
-msgstr ""
+msgstr "ラスター値のサブセットで凡例を表示"
 
 #: ../gui/tcltk/gis.m/legend.tcl:290
 msgid "skip categories with no labels"
-msgstr ""
+msgstr "ラベルのないカテゴリーをスキップ"
 
 #: ../gui/tcltk/gis.m/legend.tcl:297
 msgid "    legend for only these categories     "
-msgstr ""
+msgstr "    カテゴリー値のみの凡例"
 
 #: ../gui/tcltk/gis.m/legend.tcl:304
 msgid "    legend for only this range of values"
-msgstr ""
+msgstr "    値の範囲を区切った凡例"
 
 #: ../gui/tcltk/gis.m/mapcanvas.tcl:433 ../gui/tcltk/gis.m/profile.tcl:407
 msgid "g.proj or projection error"
-msgstr ""
+msgstr "g.proj または投影 エラー "
 
 #: ../gui/tcltk/gis.m/mapcanvas.tcl:522
 msgid "Max zoom in reached"
@@ -4557,30 +4106,27 @@ msgstr ""
 
 #: ../gui/tcltk/gis.m/mapcanvas.tcl:600
 msgid "please wait..."
-msgstr ""
+msgstr "しばらくお待ちください... "
 
 #: ../gui/tcltk/gis.m/mapcanvas.tcl:759 ../gui/tcltk/gis.m/mapcanvas.tcl:1782
-#, fuzzy
 msgid "You have to select map layer first"
-msgstr "データ情報"
+msgstr "マップレイヤーをはじめに選択してください"
 
 #: ../gui/tcltk/gis.m/mapcanvas.tcl:760 ../gui/tcltk/gis.m/mapcanvas.tcl:1783
-#, fuzzy
 msgid "No map layer selected"
-msgstr "��"
+msgstr "マップレイヤーが選択されていません "
 
 #: ../gui/tcltk/gis.m/mapcanvas.tcl:832
-#, fuzzy
 msgid "Save Region"
-msgstr "地域"
+msgstr "領域の保存"
 
 #: ../gui/tcltk/gis.m/mapcanvas.tcl:835
 msgid "Save current display geometry to named region"
-msgstr ""
+msgstr "表示中のジオメトリを領域名を付けて保存"
 
 #: ../gui/tcltk/gis.m/mapcanvas.tcl:841
 msgid "Enter region name"
-msgstr ""
+msgstr "領域名入力"
 
 #: ../gui/tcltk/gis.m/mapcanvas.tcl:876
 #, tcl-format
@@ -4588,6 +4134,8 @@ msgid ""
 "Region file %s already exists. \n"
 "Do you want to overwrite it?"
 msgstr ""
+"領域ファイル %s は既に存在します\n"
+"上書きしますか？"
 
 #: ../gui/tcltk/gis.m/mapcanvas.tcl:1063
 #, tcl-format
@@ -4596,247 +4144,229 @@ msgstr ""
 
 #: ../gui/tcltk/gis.m/mapcanvas.tcl:1213
 msgid "Drag or click mouse to zoom"
-msgstr ""
+msgstr "マウスのドラッグで拡大表示"
 
 #: ../gui/tcltk/gis.m/mapcanvas.tcl:1215
 msgid "Drag or click mouse to unzoom"
-msgstr ""
+msgstr "マウスのドラッグで縮小表示"
 
 #: ../gui/tcltk/gis.m/mapcanvas.tcl:1450
 msgid "Drag with mouse to pan"
-msgstr ""
+msgstr "マウスのドラッグでパン"
 
 #: ../gui/tcltk/gis.m/mapcanvas.tcl:1577
 msgid "Measurement"
-msgstr ""
+msgstr "計測"
 
 #: ../gui/tcltk/gis.m/mapcanvas.tcl:1596
 msgid "Draw measure line with mouse"
-msgstr ""
+msgstr "マウスで計測線描画"
 
 #: ../gui/tcltk/gis.m/mapcanvas.tcl:1753
 msgid "Click to query feature"
-msgstr ""
+msgstr "クリックしてフューチャ問合せ"
 
 #: ../gui/tcltk/gis.m/mapcanvas.tcl:1821
 msgid "This layer type does not support queries"
-msgstr ""
+msgstr "このレイヤータイプはクエリに対応していません"
 
 #: ../gui/tcltk/gis.m/mapcanvas.tcl:1822
 msgid "Query not supported"
-msgstr ""
+msgstr "クエリはサポートしていません"
 
 #: ../gui/tcltk/gis.m/mapcanvas.tcl:1829
 msgid "You must select a map to query\n"
-msgstr ""
+msgstr "クエリするためにマップを選択してください\n"
 
 #: ../gui/tcltk/gis.m/maplabels.tcl:135 ../gui/tcltk/gis.m/maptext.tcl:80
 #: ../gui/tcltk/gis.m/thematic.tcl:141 ../gui/tcltk/gis.m/thematic.tcl:148
 #: ../gui/tcltk/gis.m/thematic.tcl:154
 msgid "This is font sample text."
-msgstr ""
+msgstr "フォントのサンプルテキスト"
 
 #: ../gui/tcltk/gis.m/maplabels.tcl:135 ../gui/tcltk/gis.m/maptext.tcl:80
-#, fuzzy
 msgid "Select label font"
-msgstr "選択 フォント"
+msgstr "ラベルフォント選択"
 
 #: ../gui/tcltk/gis.m/maplabels.tcl:158
-#, fuzzy
 msgid "Create postscript labels for vector objects from v.labels file"
-msgstr "ポストスクリプト ファイル"
+msgstr " v.labelsからベクトルオブジェクトのポストスクリプトラベルを作成"
 
 #: ../gui/tcltk/gis.m/maplabels.tcl:165
 msgid "  (for postscript eps, pdf, and print output only)"
-msgstr ""
+msgstr "  (ポストスクリプト eps, pdf, プリント出力のみ) "
 
 #: ../gui/tcltk/gis.m/maplabels.tcl:184
-#, fuzzy
 msgid "Override offset, alignment, and color settings in v.labels file: "
-msgstr "色 ファイル "
+msgstr "v.labelsファイルにオフセット,配置,および色の設定を上書き："
 
 #: ../gui/tcltk/gis.m/maplabels.tcl:191
-#, fuzzy
 msgid "Align label with vector object: "
-msgstr "ラベル ファイル "
+msgstr "ベクトルオブジェクトのラベル整列："
 
 #: ../gui/tcltk/gis.m/maplabels.tcl:200
-#, fuzzy
 msgid "Offset label from vector object: "
-msgstr "ラベル ファイル "
+msgstr "オブジェクトのラベルオフセット："
 
 #: ../gui/tcltk/gis.m/maplabels.tcl:201
 msgid "x offset"
-msgstr ""
+msgstr "Xオフセット"
 
 #: ../gui/tcltk/gis.m/maplabels.tcl:204
 msgid "y offset"
-msgstr ""
+msgstr "Yオフセット"
 
 #: ../gui/tcltk/gis.m/maplabels.tcl:212
 msgid "Justification: "
-msgstr ""
+msgstr "行揃え："
 
 #: ../gui/tcltk/gis.m/maplabels.tcl:215
 msgid " Label line max length: "
-msgstr ""
+msgstr " ラベル線最大長："
 
 #: ../gui/tcltk/gis.m/maplabels.tcl:222
 msgid "Enclose label in box: "
-msgstr ""
+msgstr "ラベルをボックスで囲む："
 
 #: ../gui/tcltk/gis.m/maplabels.tcl:225
 msgid "Draw label background: "
-msgstr ""
+msgstr "背景にラベルを描画："
 
 #: ../gui/tcltk/gis.m/maplabels.tcl:229
-#, fuzzy
 msgid "Background color:"
-msgstr "色 "
+msgstr "背景色："
 
 #: ../gui/tcltk/gis.m/maplabels.tcl:236
 msgid "Draw box outline: "
-msgstr ""
+msgstr "ボックス外枠描画："
 
 #: ../gui/tcltk/gis.m/maplabels.tcl:240
 msgid "Border width:"
-msgstr ""
+msgstr "境界幅："
 
 #: ../gui/tcltk/gis.m/maplabels.tcl:243
-#, fuzzy
 msgid "Border color:"
-msgstr "色"
+msgstr "境界色："
 
 #: ../gui/tcltk/gis.m/maplabels.tcl:250
 msgid "Distance between label and enclosing box. Horizontal: "
-msgstr ""
+msgstr "ラベルとボックスの水平間隔距離："
 
 #: ../gui/tcltk/gis.m/maplabels.tcl:253
 msgid " Vertical: "
-msgstr ""
+msgstr " 鉛直："
 
 #: ../gui/tcltk/gis.m/maplabels.tcl:261
-#, fuzzy
 msgid "Font"
-msgstr "フォント:"
+msgstr "フォント "
 
 #: ../gui/tcltk/gis.m/maplabels.tcl:264
-#, fuzzy
 msgid "select font for label"
-msgstr "フォント の ラベル"
+msgstr "フォントのラベル選択"
 
 #: ../gui/tcltk/gis.m/maplabels.tcl:266
-#, fuzzy
 msgid "family:"
-msgstr "フォント:"
+msgstr "種類："
 
 #: ../gui/tcltk/gis.m/maplabels.tcl:269
-#, fuzzy
 msgid "size:"
-msgstr "サイズ:"
+msgstr "サイズ："
 
 #: ../gui/tcltk/gis.m/mapprint.tcl:107
-#, fuzzy
 msgid "Ghostscript not available"
-msgstr "出力"
+msgstr "ゴーストスクリプトは利用出来ません"
 
 #: ../gui/tcltk/gis.m/mapprint.tcl:248
 msgid "Postscript and LPR printing of map display"
-msgstr ""
+msgstr "マップのポストスクリプトとLPR出力"
 
 #: ../gui/tcltk/gis.m/mapprint.tcl:262
-#, fuzzy
 msgid "Preset paper type"
-msgstr "アイコン"
+msgstr "プリセットの用紙の種類"
 
 #: ../gui/tcltk/gis.m/mapprint.tcl:273
 msgid "Custom paper size"
-msgstr ""
+msgstr "独自用紙サイズ"
 
 #: ../gui/tcltk/gis.m/mapprint.tcl:276
 msgid "  height:"
-msgstr ""
+msgstr "  高さ："
 
 #: ../gui/tcltk/gis.m/mapprint.tcl:283
 msgid "Margins  left:"
-msgstr ""
+msgstr "左マージン: "
 
 #: ../gui/tcltk/gis.m/mapprint.tcl:285
 msgid " right:"
-msgstr ""
+msgstr " 右："
 
 #: ../gui/tcltk/gis.m/mapprint.tcl:287
 msgid " top:"
-msgstr ""
+msgstr " 上："
 
 #: ../gui/tcltk/gis.m/mapprint.tcl:289
 msgid " bottom:"
-msgstr ""
+msgstr " 下："
 
 #: ../gui/tcltk/gis.m/mapprint.tcl:297
-#, fuzzy
 msgid "Resolution (dpi) for printing and PDF "
-msgstr "の "
+msgstr "プリントとPDFの解像度(dpi)"
 
 #: ../gui/tcltk/gis.m/mapprint.tcl:315
 msgid "Print on LPR printer"
-msgstr ""
+msgstr "LPRプリンタで出力"
 
 #: ../gui/tcltk/gis.m/mapprint.tcl:323
-#, fuzzy
 msgid "Print on postscript device* "
-msgstr "ポストスクリプト "
+msgstr "ポストスクリプトデバイス*で出力"
 
 #: ../gui/tcltk/gis.m/mapprint.tcl:334
-#, fuzzy
 msgid "Save to PDF file*              "
-msgstr "保存 ファイル "
+msgstr "PDFファイル*で保存"
 
 #: ../gui/tcltk/gis.m/mapprint.tcl:347
-#, fuzzy
 msgid "Save to EPS file               "
-msgstr "保存 ファイル "
+msgstr "EPSファイルに保存"
 
 #: ../gui/tcltk/gis.m/mapprint.tcl:355
 msgid "*requires ghostscript to be installed and in path"
-msgstr ""
+msgstr "*ゴーストスクリプトをインストールする必要があります"
 
 #: ../gui/tcltk/gis.m/maptext.tcl:126
 msgid ""
 "Create postscript text object (for postscript eps, pdf, and print output "
 "only)"
 msgstr ""
+"ポストスクリプトテキストオブジェクト作成 (ポストスクリプト eps, pdf, プリント"
+"出力のみ) "
 
 #: ../gui/tcltk/gis.m/maptext.tcl:133
-#, fuzzy
 msgid "Text to display:"
-msgstr "ファイル"
+msgstr "表示テキスト："
 
 #: ../gui/tcltk/gis.m/maptext.tcl:167
 msgid "     justification"
-msgstr ""
+msgstr "    行揃え "
 
 #: ../gui/tcltk/gis.m/maptext.tcl:170
 msgid "  line width"
-msgstr ""
+msgstr "  線幅"
 
 #: ../gui/tcltk/gis.m/maptool.tcl:48
 msgid "Redraw all layers"
-msgstr ""
+msgstr "全レイヤー再描画"
 
 #: ../gui/tcltk/gis.m/maptool.tcl:55
-#, fuzzy
 msgid "Start NVIZ using active layers in current region"
-msgstr "開始 地域"
+msgstr "現在の領域のレイヤーにNVIZを使用"
 
 #: ../gui/tcltk/gis.m/maptool.tcl:61
-#, fuzzy
 msgid "Create flythough path for NVIZ"
-msgstr "の"
+msgstr "NVIZのフライスルー行路を作成"
 
 #: ../gui/tcltk/gis.m/maptool.tcl:94
 msgid "Pointer"
-msgstr ""
+msgstr "ポインタ"
 
 #: ../gui/tcltk/gis.m/maptool.tcl:172
 #, fuzzy
@@ -4849,9 +4379,8 @@ msgid "Zoom to selected map"
 msgstr "ズーム"
 
 #: ../gui/tcltk/gis.m/maptool.tcl:187 ../vector/v.digit/toolbox.tcl:207
-#, fuzzy
 msgid "Zoom to saved region"
-msgstr "ズーム 地域"
+msgstr "セーブド領域でズーム"
 
 #: ../gui/tcltk/gis.m/maptool.tcl:190
 #, fuzzy
@@ -4863,9 +4392,8 @@ msgid "Zoom to current region (set with g.region)"
 msgstr ""
 
 #: ../gui/tcltk/gis.m/maptool.tcl:196 ../vector/v.digit/toolbox.tcl:194
-#, fuzzy
 msgid "Zoom to default region"
-msgstr "ズーム 地域"
+msgstr "デフォルト領域にズーム"
 
 #: ../gui/tcltk/gis.m/maptool.tcl:199
 msgid "Set current region (WIND file) to match display"
@@ -4873,17 +4401,15 @@ msgstr ""
 
 #: ../gui/tcltk/gis.m/maptool.tcl:247
 msgid "Measure"
-msgstr ""
+msgstr "計測"
 
 #: ../gui/tcltk/gis.m/maptool.tcl:254
-#, fuzzy
 msgid "Create profile of raster map"
-msgstr "ファイル"
+msgstr "ラスタファイルのプロファイルを作成"
 
 #: ../gui/tcltk/gis.m/maptool.tcl:271
-#, fuzzy
 msgid "Print raster & vector maps to eps file"
-msgstr "ファイル ファイル ファイル"
+msgstr "ラスターとベクトルマップをEPSファイルに出力"
 
 #: ../gui/tcltk/gis.m/maptool.tcl:278
 #, fuzzy
@@ -4892,401 +4418,365 @@ msgstr "エクスポート ファイル"
 
 #: ../gui/tcltk/gis.m/maptool.tcl:289
 msgid "low quality (50)"
-msgstr ""
+msgstr "低品質 (50) "
 
 #: ../gui/tcltk/gis.m/maptool.tcl:291
 msgid "mid quality (75)"
-msgstr ""
+msgstr "中品質 (75) "
 
 #: ../gui/tcltk/gis.m/maptool.tcl:293
 msgid "high quality (95)"
-msgstr ""
+msgstr "高品質 (95) "
 
 #: ../gui/tcltk/gis.m/maptool.tcl:295
 msgid "very high resolution (300% your current resolution)"
-msgstr ""
+msgstr "超高解像度 (300% の解像度) "
 
 #: ../gui/tcltk/gis.m/maptool.tcl:300
 msgid "(* requires gdal)"
-msgstr ""
+msgstr "(*GDALが必要) "
 
 #: ../gui/tcltk/gis.m/maptool.tcl:325
-#, fuzzy
 msgid "Constrain map to region geometry"
-msgstr "地域"
+msgstr "ジオメトリをマップに割り当てます"
 
 #: ../gui/tcltk/gis.m/maptool.tcl:344
-#, fuzzy
 msgid "Map fills display window"
-msgstr "管理"
+msgstr "ディスプレイ画面全面にマップを展開"
 
 #: ../gui/tcltk/gis.m/maptool.tcl:394
 msgid "Could not create BMP"
-msgstr ""
+msgstr "BMP を作成できません"
 
 #: ../gui/tcltk/gis.m/maptool.tcl:401 ../gui/tcltk/gis.m/maptool.tcl:406
 msgid "Could not create JPG"
-msgstr ""
+msgstr "JPGを作成できません"
 
 #: ../gui/tcltk/gis.m/maptool.tcl:414
 msgid "Could not create PNG"
-msgstr ""
+msgstr "PNGを作成できません"
 
 #: ../gui/tcltk/gis.m/maptool.tcl:424
 msgid "Could not create TIF"
-msgstr ""
+msgstr "TIFを作成できません"
 
 #: ../gui/tcltk/gis.m/profile.tcl:108
 msgid ""
 "Select raster map to profile.\n"
 "Currently selected raster is default."
 msgstr ""
+"だんめんを作成するラスターマップを選択.\n"
+"現在はデフォルトが選択されています"
 
 #: ../gui/tcltk/gis.m/profile.tcl:113
 msgid "Draw profile transect in map display"
-msgstr ""
+msgstr "マップの横断面を表示 "
 
 #: ../gui/tcltk/gis.m/profile.tcl:118
 msgid "Draw profile"
-msgstr ""
+msgstr "断面図表示"
 
 #: ../gui/tcltk/gis.m/profile.tcl:123
-#, fuzzy
 msgid "Clear profile"
-msgstr "クリア"
+msgstr "断面図クリア"
 
 #: ../gui/tcltk/gis.m/profile.tcl:128
-#, fuzzy
 msgid "Save profile to EPS file"
-msgstr "保存 ファイル"
+msgstr "EPSファイルで断面図を保存"
 
 #: ../gui/tcltk/gis.m/profile.tcl:169
 msgid "r.univar error"
-msgstr ""
+msgstr "r.univar エラー "
 
 #: ../gui/tcltk/gis.m/profile.tcl:428
-#, fuzzy
 msgid "You must select a raster to profile"
-msgstr "選択 ファイル"
+msgstr "断面図用ラスターマップを選択する必要があります"
 
 #: ../gui/tcltk/gis.m/profile.tcl:429
-#, fuzzy
 msgid "No raster map selected"
-msgstr "ファイル"
+msgstr "ラスターマップが指定されていません"
 
 #: ../gui/tcltk/gis.m/profile.tcl:435
 msgid "You must draw a transect to profile"
-msgstr ""
+msgstr "断面を定義する必要があります"
 
 #: ../gui/tcltk/gis.m/profile.tcl:436
 msgid "No transect drawn"
-msgstr ""
+msgstr "断面が定義されていません"
 
 #: ../gui/tcltk/gis.m/profile.tcl:441
 msgid "Please wait while profile elevations are calculated"
-msgstr ""
+msgstr "断面の標高を計算する間しばらくお待ちください"
 
 #: ../gui/tcltk/gis.m/profile.tcl:446
 msgid ""
 "Elevation range for selected raster is zero.\n"
 "No profile can be created."
 msgstr ""
+"指定された標高の幅が０です\n"
+"断面は作成出来ません"
 
 #: ../gui/tcltk/gis.m/profile.tcl:447
 msgid "Zero elevation range"
-msgstr ""
+msgstr "標高差０"
 
 #: ../gui/tcltk/gis.m/profile.tcl:526 ../gui/tcltk/gis.m/profile.tcl:611
-#, fuzzy
 msgid "r.profile error"
-msgstr "ファイル"
+msgstr "r.profile エラー"
 
 #: ../gui/tcltk/gis.m/rastarrows.tcl:106
-#, fuzzy
 msgid "Aspect map"
-msgstr "ベクトル"
+msgstr "方位マップ"
 
 #: ../gui/tcltk/gis.m/rastarrows.tcl:109 ../gui/tcltk/gis.m/rastarrows.tcl:121
 #, tcl-format
 msgid "arrows for %s"
-msgstr ""
+msgstr " %s の矢印"
 
 #: ../gui/tcltk/gis.m/rastarrows.tcl:118
 msgid "Slope/intensity map"
-msgstr ""
+msgstr "傾斜/照度マップ"
 
 #: ../gui/tcltk/gis.m/rastarrows.tcl:134
 msgid "Display arrows whose orientations are based on raster aspect map"
-msgstr ""
+msgstr "ラスター方位マップに基づいて矢印を表示"
 
 #: ../gui/tcltk/gis.m/rastarrows.tcl:140
 msgid "  (optionally, arrow lengths are based on slope or intensity map)"
-msgstr ""
+msgstr "  (オプション 矢印の長さは傾斜または照度に比例) "
 
 #: ../gui/tcltk/gis.m/rastarrows.tcl:157
-#, fuzzy
 msgid "Aspect map: "
-msgstr "��������"
+msgstr "方位図："
 
 #: ../gui/tcltk/gis.m/rastarrows.tcl:173
-#, fuzzy
 msgid "    aspect value type"
-msgstr "ファイル アイコン"
+msgstr "    方位値のタイプ"
 
 #: ../gui/tcltk/gis.m/rastarrows.tcl:181
 msgid "    draw arrows every Nth grid cell"
-msgstr ""
+msgstr "    N番のグリッド毎に矢印を描画"
 
 #: ../gui/tcltk/gis.m/rastarrows.tcl:189
-#, fuzzy
 msgid "    arrow color      "
-msgstr "色 "
+msgstr "    矢印の色"
 
 #: ../gui/tcltk/gis.m/rastarrows.tcl:194
-#, fuzzy
 msgid "     cell grid color"
-msgstr "色"
+msgstr "     セルのグリッドの色"
 
 #: ../gui/tcltk/gis.m/rastarrows.tcl:204
-#, fuzzy
 msgid "    null value color"
-msgstr "ファイル"
+msgstr "    NULL値の色"
 
 #: ../gui/tcltk/gis.m/rastarrows.tcl:219
 msgid "Slope/intensity map: "
-msgstr ""
+msgstr "傾斜/照度マップ："
 
 #: ../gui/tcltk/gis.m/rastarrows.tcl:230
-#, fuzzy
 msgid "    scale factor for computing arrow length"
-msgstr "の"
+msgstr "    矢印の長さを計算する要素"
 
 #: ../gui/tcltk/gis.m/raster.tcl:127
-#, fuzzy
 msgid "Raster drape map"
-msgstr "ラスター"
+msgstr "ラスター ドレープ マップ"
 
 #: ../gui/tcltk/gis.m/raster.tcl:161
-#, fuzzy
 msgid "Display raster maps"
-msgstr "ファイル"
+msgstr "ラスターマップの表示 "
 
 #: ../gui/tcltk/gis.m/raster.tcl:178
-#, fuzzy
 msgid "Base map:\t"
-msgstr "ラスター"
+msgstr "ベースマップ:\t"
 
 #: ../gui/tcltk/gis.m/raster.tcl:181
-#, fuzzy
 msgid "base raster map to display"
-msgstr "ファイル"
+msgstr "表示ベースラスターマップ"
 
 #: ../gui/tcltk/gis.m/raster.tcl:186 ../gui/tcltk/gis.m/raster.tcl:190
-#, fuzzy
 msgid "base map info"
-msgstr "ラスター"
+msgstr "ベースマップ情報"
 
 #: ../gui/tcltk/gis.m/raster.tcl:202
-#, fuzzy
 msgid "\tvalues to display"
-msgstr "ファイル"
+msgstr "\t 表示する値"
 
 #: ../gui/tcltk/gis.m/raster.tcl:209
 msgid "\tOptional color draping. Use base map for shading,"
-msgstr ""
+msgstr "\t オプションの色のドレーピング 陰影付ベースマップ使用"
 
 #: ../gui/tcltk/gis.m/raster.tcl:214
 msgid "\tdrape map for color in color relief map or data fusion"
-msgstr ""
+msgstr "\t　カラーレリーフマップやデータ融合色のドレープマップ"
 
 #: ../gui/tcltk/gis.m/raster.tcl:219
 msgid "\tdrape map:  "
-msgstr ""
+msgstr "\t ドレープ マップ："
 
 #: ../gui/tcltk/gis.m/raster.tcl:222
-#, fuzzy
 msgid "raster map to drape over base map"
-msgstr "ファイル"
+msgstr "ベースマップの上にドレープするラスターマップ"
 
 #: ../gui/tcltk/gis.m/raster.tcl:227 ../gui/tcltk/gis.m/raster.tcl:231
-#, fuzzy
 msgid "drape map info"
-msgstr "ラスター"
+msgstr "ドレープマップ情報"
 
 #: ../gui/tcltk/gis.m/raster.tcl:237
 msgid "\tdrape map brightness adjustment\t "
-msgstr ""
+msgstr "\tドレープマップの明るさ調節\t  "
 
 #: ../gui/tcltk/gis.m/raster.tcl:239
 msgid "Adjust brightness of drape map"
-msgstr ""
+msgstr "ドレープマップの明るさ調節"
 
 #: ../gui/tcltk/gis.m/raster.tcl:253
 msgid " Set background color (colored null value cells)"
-msgstr ""
+msgstr " 背景色設定 (NULL値セルの色設定) "
 
 #: ../gui/tcltk/gis.m/rastnums.tcl:106
 #, tcl-format
 msgid "cell values for %s"
-msgstr ""
+msgstr "セル値 %s "
 
 #: ../gui/tcltk/gis.m/rastnums.tcl:134
 msgid "Display cell values from raster map or image"
-msgstr ""
+msgstr "ラスターマップまたは画像のセル値を表示"
 
 #: ../gui/tcltk/gis.m/rastnums.tcl:140
 msgid "  (resolution must be 100x100 or less)"
-msgstr ""
+msgstr "  (解像度は100x100以下で無ければなりません) "
 
 #: ../gui/tcltk/gis.m/rastnums.tcl:156
-#, fuzzy
 msgid "Raster to display: "
-msgstr "ファイル"
+msgstr "表示するラスター："
 
 #: ../gui/tcltk/gis.m/rastnums.tcl:172
 msgid "Color for cell grid:       "
-msgstr ""
+msgstr "セルグリッド色:       "
 
 #: ../gui/tcltk/gis.m/rastnums.tcl:177
-#, fuzzy
 msgid "  cell values font "
-msgstr "ファイル の"
+msgstr "  セル値のフォント "
 
 #: ../gui/tcltk/gis.m/rastnums.tcl:187
-#, fuzzy
 msgid "Color for cell values:   "
-msgstr "ファイル の"
+msgstr "セル値の色："
 
 #: ../gui/tcltk/gis.m/rastnums.tcl:192
-#, fuzzy
 msgid "use raster colors for cell values"
-msgstr "ファイル の"
+msgstr "セル値にラスターカラーを使用"
 
 #: ../gui/tcltk/gis.m/rastnums.tcl:273
 msgid ""
 "Cell values can only be displayed\n"
 "for regions of < 10,000 cells"
 msgstr ""
+"セル値を表示できるのは\n"
+"領域内で最大10,000までです"
 
 #: ../gui/tcltk/gis.m/rgbhis.tcl:104
-#, fuzzy
 msgid "Raster map for red or hue channel"
-msgstr "ファイル の"
+msgstr "赤または色相チャンネルのラスターマップ"
 
 #: ../gui/tcltk/gis.m/rgbhis.tcl:107
 #, tcl-format
 msgid "RGB-HIS %s"
-msgstr ""
+msgstr "RGB-HIS %s "
 
 #: ../gui/tcltk/gis.m/rgbhis.tcl:114
-#, fuzzy
 msgid "Raster map for green or intensity channel"
-msgstr "ファイル の"
+msgstr "緑または照度チャンネルのラスターマップ"
 
 #: ../gui/tcltk/gis.m/rgbhis.tcl:122
-#, fuzzy
 msgid "Raster map for blue or saturation channel"
-msgstr "ファイル の"
+msgstr "青または彩度チャンネルのラスターマップ"
 
 #: ../gui/tcltk/gis.m/rgbhis.tcl:136
-#, fuzzy
 msgid ""
 "Display 3 raster maps as Red/Green/Blue or Hue/Intensity/Saturation channels"
-msgstr "ファイル の"
+msgstr "R，G，Bまたは色相/照度/彩度チャンネルとして３つのラスターを表示"
 
 #: ../gui/tcltk/gis.m/rgbhis.tcl:175
 msgid "red (RGB) or hue (HIS): "
-msgstr ""
+msgstr "赤 (RGB)又は 色相 (HIS)："
 
 #: ../gui/tcltk/gis.m/rgbhis.tcl:178
-#, fuzzy
 msgid "raster map for red or hue channel (HIS drape)"
-msgstr "ファイル の"
+msgstr "赤または色相のラスターマップ（HISドレープ）"
 
 #: ../gui/tcltk/gis.m/rgbhis.tcl:187
 msgid "green (RGB) or intensity (HIS): "
-msgstr ""
+msgstr "緑 (RGB) または照度 (HIS)："
 
 #: ../gui/tcltk/gis.m/rgbhis.tcl:190
-#, fuzzy
 msgid "raster map for green or intensity channel (HIS relief)"
-msgstr "ファイル の"
+msgstr "緑または照度チャンネルのラスターマップ（HIS陰影図)"
 
 #: ../gui/tcltk/gis.m/rgbhis.tcl:199
 msgid "blue (RGB) or saturation (HIS): "
-msgstr ""
+msgstr "青 (RGB) または 彩度 (HIS)："
 
 #: ../gui/tcltk/gis.m/rgbhis.tcl:202
-#, fuzzy
 msgid "raster map for blue or saturation channel"
-msgstr "ファイル の"
+msgstr "青または彩度のラスターマップ"
 
 #: ../gui/tcltk/gis.m/rgbhis.tcl:211
 msgid "HIS brightness adjustment\t "
-msgstr ""
+msgstr "HIS輝度調整\t "
 
 #: ../gui/tcltk/gis.m/rgbhis.tcl:213
 msgid "Adjusts the HIS intensity channel brightness"
-msgstr ""
+msgstr "HIS照度チャンネルの輝度調整"
 
 #: ../gui/tcltk/gis.m/rules.tcl:35 ../gui/tcltk/gis.m/dnviz.tcl:49
-#, fuzzy
 msgid "Select input map"
-msgstr "選択 ファイル"
+msgstr "マップの選択"
 
 #: ../gui/tcltk/gis.m/rules.tcl:97
 msgid "Interactive rules entry"
-msgstr ""
+msgstr "対話形式ルール入力"
 
 #: ../gui/tcltk/gis.m/rules.tcl:147 ../gui/tcltk/gis.m/dnviz.tcl:219
-#, fuzzy
 msgid "Overwrite existing file"
-msgstr "ファイル"
+msgstr "既存のファイルを上書き"
 
 #: ../gui/tcltk/gis.m/rules.tcl:174 ../gui/tcltk/gis.m/animate.tcl:528
 #: ../gui/tcltk/gis.m/dnviz.tcl:232
 msgid "Apply"
-msgstr ""
+msgstr "適用"
 
 #: ../gui/tcltk/gis.m/rules.tcl:194 ../gui/tcltk/gis.m/dnviz.tcl:359
-#, fuzzy
 msgid "You must select an input map"
-msgstr "選択 ファイル"
+msgstr "入力するマップを選択しなければなりません"
 
 #: ../gui/tcltk/gis.m/rules.tcl:194 ../gui/tcltk/gis.m/dnviz.tcl:360
-#, fuzzy
 msgid "No input map selected"
-msgstr "ファイル"
+msgstr "マップが選択されていません"
 
 #: ../gui/tcltk/gis.m/rules.tcl:199
 msgid "You must specify an output map"
-msgstr ""
+msgstr "出力マップを指定する必要があります"
 
 #: ../gui/tcltk/gis.m/rules.tcl:199
-#, fuzzy
 msgid "No output map specified"
-msgstr "ファイル"
+msgstr "出力マップが定義されていません"
 
 #: ../gui/tcltk/gis.m/rules.tcl:221
-#, fuzzy
 msgid "Error creating rules file"
-msgstr "ファイル"
+msgstr "ルールファイル作成エラー"
 
 #: ../gui/tcltk/gis.m/runandoutput.tcl:44
 #: ../gui/tcltk/gis.m/runandoutput.tcl:116 ../lib/gis/gui.tcl:503
-#, fuzzy
 msgid "Run"
 msgstr "実行"
 
 #: ../gui/tcltk/gis.m/runandoutput.tcl:118
-#, fuzzy
 msgid "Run (background)"
-msgstr "実行"
+msgstr "実行（バックグランド）"
 
 #: ../gui/tcltk/gis.m/runandoutput.tcl:120
-#, fuzzy
 msgid "Run (GUI)"
-msgstr "実行"
+msgstr "実行(GUI)"
 
 #: ../gui/tcltk/gis.m/runandoutput.tcl:122
 #, fuzzy
@@ -5294,213 +4784,191 @@ msgid "Run (in Xterm)"
 msgstr "実行"
 
 #: ../gui/tcltk/gis.m/runandoutput.tcl:127 ../lib/gis/gui.tcl:505
-#, fuzzy
 msgid "Clear"
 msgstr "クリア"
 
 #: ../gui/tcltk/gis.m/runandoutput.tcl:148
 msgid "Output - GIS.m"
-msgstr ""
+msgstr "出力 - GIS.m "
 
 #: ../gui/tcltk/gis.m/thematic.tcl:132
-#, fuzzy, tcl-format
+#, tcl-format
 msgid "thematic map for %s"
-msgstr "アイコン"
+msgstr "%s の主題図"
 
 #: ../gui/tcltk/gis.m/thematic.tcl:141 ../gui/tcltk/gis.m/thematic.tcl:148
 #: ../gui/tcltk/gis.m/thematic.tcl:154
-#, fuzzy
 msgid "Select font"
-msgstr "選択 色"
+msgstr "フォントの選択"
 
 #: ../gui/tcltk/gis.m/thematic.tcl:194 ../gui/tcltk/gis.m/vector.tcl:281
-#, fuzzy
 msgid "Vector point symbol"
-msgstr "ベクトル"
+msgstr "ベクトルポイントシンボル"
 
 #: ../gui/tcltk/gis.m/thematic.tcl:210
 msgid "Display vector maps thematically by graduate colors (all types)"
-msgstr ""
+msgstr "階調色でベクトルの主題表示 (全タイプ) "
 
 #: ../gui/tcltk/gis.m/thematic.tcl:216
 msgid "  or by graduated sizes (points and lines)"
-msgstr ""
+msgstr "  または サイズの目盛 (ポイントとライン) による"
 
 #: ../gui/tcltk/gis.m/thematic.tcl:236
-#, fuzzy
 msgid "vector for thematic mapping"
-msgstr "ファイル の"
+msgstr "主題図のベクトル"
 
 #: ../gui/tcltk/gis.m/thematic.tcl:254
-#, fuzzy
 msgid " attribute layer"
-msgstr "の"
+msgstr " 属性レイヤー"
 
 #: ../gui/tcltk/gis.m/thematic.tcl:261
 msgid "    NUMERIC attribute column to use for thematic map"
-msgstr ""
+msgstr "    主題図で使用する数値属性の列"
 
 #: ../gui/tcltk/gis.m/thematic.tcl:274
 msgid "   show data"
-msgstr ""
+msgstr "   データ表示"
 
 #: ../gui/tcltk/gis.m/thematic.tcl:297
 msgid "    number of intervals to map (interval themes):"
-msgstr ""
+msgstr "    マップの間隔数(インターバルテーマ)："
 
 #: ../gui/tcltk/gis.m/thematic.tcl:305
 msgid "    custom breakpoints (val val ...)  "
-msgstr ""
+msgstr "    独自分割点 (val val ...)   "
 
 #: ../gui/tcltk/gis.m/thematic.tcl:312
 msgid "    query with SQL where clause   "
-msgstr ""
+msgstr "    SQL where句でクエリ"
 
 #: ../gui/tcltk/gis.m/thematic.tcl:319
 msgid "Graduated points & lines: "
-msgstr ""
+msgstr "ポイントとラインの目盛："
 
 #: ../gui/tcltk/gis.m/thematic.tcl:333
 msgid "    size/min size (graduated pts/lines)"
-msgstr ""
+msgstr "   サイズ/最小値 (ポイント/ラインで階調) "
 
 #: ../gui/tcltk/gis.m/thematic.tcl:335
 msgid "icon size/min size (graduated pts/lines)"
-msgstr ""
+msgstr "アイコンサイズ/最小値 (ポイント/ラインで階調) "
 
 #: ../gui/tcltk/gis.m/thematic.tcl:336
 msgid "max size (graduated pts)"
-msgstr ""
+msgstr "最大値 (ポイントで階調) "
 
 #: ../gui/tcltk/gis.m/thematic.tcl:338
 msgid " max size (graduated pts/lines)"
-msgstr ""
+msgstr "最大値 (ポイント/ラインで階調) "
 
 #: ../gui/tcltk/gis.m/thematic.tcl:344
-#, fuzzy
 msgid "Graduated colors: preset color schemes"
-msgstr "色"
+msgstr "階調色：カラースキーマでプリセット"
 
 #: ../gui/tcltk/gis.m/thematic.tcl:354
 msgid "    custom color scheme - start color"
-msgstr ""
+msgstr "    カスタムカラースキーマ - スタートカラー"
 
 #: ../gui/tcltk/gis.m/thematic.tcl:356
-#, fuzzy
 msgid " end color"
-msgstr "色"
+msgstr "エンドカラー"
 
 #: ../gui/tcltk/gis.m/thematic.tcl:372
-#, fuzzy
 msgid "Legend: title font "
-msgstr "フォント "
+msgstr "凡例：タイトルフォント"
 
 #: ../gui/tcltk/gis.m/thematic.tcl:375
-#, fuzzy
 msgid "title font for legend"
-msgstr "フォント の"
+msgstr "凡例タイトルのフォント"
 
 #: ../gui/tcltk/gis.m/thematic.tcl:379 ../gui/tcltk/gis.m/thematic.tcl:405
-#, fuzzy
 msgid " font color"
-msgstr "色"
+msgstr "フォントカラー"
 
 #: ../gui/tcltk/gis.m/thematic.tcl:386
-#, fuzzy
 msgid "    subtitle font    "
-msgstr "フォント "
+msgstr "   サブタイトルフォント"
 
 #: ../gui/tcltk/gis.m/thematic.tcl:389
-#, fuzzy
 msgid "subtitle font for legend"
-msgstr "フォント の"
+msgstr "凡例のサブタイトルフォント"
 
 #: ../gui/tcltk/gis.m/thematic.tcl:398
-#, fuzzy
 msgid "    label font       "
-msgstr "ラベル フォント "
+msgstr "    ラベルフォント"
 
 #: ../gui/tcltk/gis.m/thematic.tcl:401
-#, fuzzy
 msgid "label font for legend"
-msgstr "ラベル フォント の"
+msgstr "凡例のラベルフォント"
 
 #: ../gui/tcltk/gis.m/thematic.tcl:420
 msgid "Name for ps.map instruction files"
-msgstr ""
+msgstr "ps.map命令ファイル名"
 
 #: ../gui/tcltk/gis.m/thematic.tcl:630
 #, tcl-format
 msgid "Legend for Map %d, %s"
-msgstr ""
+msgstr "マップの凡例 %d, %s "
 
 #: ../gui/tcltk/gis.m/thematic.tcl:653
-#, fuzzy
 msgid "clear"
 msgstr "クリア"
 
 #: ../gui/tcltk/gis.m/thematic.tcl:655
-#, fuzzy
 msgid "Clear legend"
-msgstr "クリア"
+msgstr "凡例クリア"
 
 #: ../gui/tcltk/gis.m/thematic.tcl:656
-#, fuzzy
 msgid "save"
 msgstr "保存"
 
 #: ../gui/tcltk/gis.m/thematic.tcl:658
-#, fuzzy
 msgid "Save legend to EPS file"
-msgstr "保存 ファイル"
+msgstr "EPSファイルに凡例保存"
 
 #: ../gui/tcltk/gis.m/tksys.tcl:57
 msgid ""
 "\n"
 "***** Please wait *****"
 msgstr ""
+"\n"
+"* しばらくお待ちください ** "
 
 #: ../gui/tcltk/gis.m/tksys.tcl:58
 msgid "Gathering information about your system"
-msgstr ""
+msgstr "システムに関する情報を収集"
 
 #: ../gui/tcltk/gis.m/tksys.tcl:230
 msgid "***** Done *****"
-msgstr ""
+msgstr "***** 実行 ***** "
 
 #: ../gui/tcltk/gis.m/vector.tcl:229
-#, fuzzy
 msgid "Vector output map"
-msgstr "ベクトル"
+msgstr "出力するベクトルマップ"
 
 #: ../gui/tcltk/gis.m/vector.tcl:299
-#, fuzzy
 msgid "Display vector maps"
-msgstr "ガンマ"
+msgstr "ベクトルマップの表示 "
 
 #: ../gui/tcltk/gis.m/vector.tcl:319
-#, fuzzy
 msgid "vector map to display"
-msgstr "ファイル"
+msgstr "表示するベクトルマップ"
 
 #: ../gui/tcltk/gis.m/vector.tcl:324 ../gui/tcltk/gis.m/vector.tcl:328
-#, fuzzy
 msgid "Vector Info"
-msgstr "ベクトル:"
+msgstr "ベクトル情報"
 
 #: ../gui/tcltk/gis.m/vector.tcl:340
-#, fuzzy
 msgid "Display: "
-msgstr "ガンマ "
+msgstr "表示："
 
 #: ../gui/tcltk/gis.m/vector.tcl:372
 msgid "Point symbols:"
-msgstr ""
+msgstr "ポイントシンボル："
 
 #: ../gui/tcltk/gis.m/vector.tcl:379
-#, fuzzy
 msgid "Icon size"
-msgstr "地域"
+msgstr "アイコンサイズ"
 
 #: ../gui/tcltk/gis.m/vector.tcl:391
 msgid " width"
@@ -5508,11 +4976,11 @@ msgstr ""
 
 #: ../gui/tcltk/gis.m/vector.tcl:393
 msgid "Line width"
-msgstr ""
+msgstr "線幅"
 
 #: ../gui/tcltk/gis.m/vector.tcl:395
 msgid "(pixels) "
-msgstr ""
+msgstr "(ピクセル) "
 
 #: ../gui/tcltk/gis.m/vector.tcl:420
 #, fuzzy
@@ -5533,9 +5001,8 @@ msgid " justification"
 msgstr ""
 
 #: ../gui/tcltk/gis.m/vector.tcl:455
-#, fuzzy
 msgid "Query vectors for display: "
-msgstr "データ情報 の "
+msgstr "表示するベクトルの検索："
 
 #: ../gui/tcltk/gis.m/vector.tcl:464
 msgid "query cat values    "
@@ -5566,266 +5033,244 @@ msgstr "ファイル の"
 
 #: ../gui/tcltk/gis.m/vector.tcl:525
 msgid " or <"
-msgstr ""
+msgstr " または < "
 
 #: ../gui/tcltk/gis.m/animate.tcl:299
-#, fuzzy
 msgid "Select maps to animate"
-msgstr "ファイル"
+msgstr "アニメーションするマップを選択"
 
 #: ../gui/tcltk/gis.m/animate.tcl:313
 msgid "Rewind animation"
-msgstr ""
+msgstr "アニメーションを戻す"
 
 #: ../gui/tcltk/gis.m/animate.tcl:319
-#, fuzzy
 msgid "Replay animation"
-msgstr "ファイル"
+msgstr "アニメーション再生"
 
 #: ../gui/tcltk/gis.m/animate.tcl:325
 msgid "Step backwards through animation"
-msgstr ""
+msgstr "アニメーションのコマ巻き戻し"
 
 #: ../gui/tcltk/gis.m/animate.tcl:331
 msgid "Stop animation"
-msgstr ""
+msgstr "アニメーション停止"
 
 #: ../gui/tcltk/gis.m/animate.tcl:337
 msgid "Step forwards through animation"
-msgstr ""
+msgstr "アニメーションのコマ送り"
 
 #: ../gui/tcltk/gis.m/animate.tcl:343
 msgid "Play animation"
-msgstr ""
+msgstr "アニメーション表示"
 
 #: ../gui/tcltk/gis.m/animate.tcl:356
-#, fuzzy
 msgid "Slower animation"
-msgstr "の"
+msgstr "スロー再生"
 
 #: ../gui/tcltk/gis.m/animate.tcl:362
-#, fuzzy
 msgid "Faster animation"
-msgstr "ラスター"
+msgstr "早送り"
 
 #: ../gui/tcltk/gis.m/animate.tcl:372
 msgid "Continuously loop through animation"
-msgstr ""
+msgstr "アニメーションの連続再生"
 
 #: ../gui/tcltk/gis.m/animate.tcl:380
 msgid "Run animation alternately forward and backward"
-msgstr ""
+msgstr "アニメーションを再生と逆再生を交互に実行"
 
 #: ../gui/tcltk/gis.m/animate.tcl:391
 msgid "Show map names in animation window"
-msgstr ""
+msgstr "アニメーション内にマップ名を表示"
 
 #: ../gui/tcltk/gis.m/animate.tcl:404
 msgid "Quit animation"
-msgstr ""
+msgstr "アニメーション終了"
 
 #: ../gui/tcltk/gis.m/animate.tcl:424
-#, fuzzy
 msgid "Select maps"
-msgstr "選択 マップセット"
+msgstr "マップ選択"
 
 #: ../gui/tcltk/gis.m/animate.tcl:452
 msgid "Maps for Animation"
-msgstr ""
+msgstr "アニメーションのマップ"
 
 #: ../gui/tcltk/gis.m/animate.tcl:468
 msgid "Select maps to animate in one or more frames (1 frame required)"
 msgstr ""
+"1つまたは複数のフレームでアニメーション化するマップ選択(1 フレーム必要) "
 
 #: ../gui/tcltk/gis.m/animate.tcl:480
 msgid "Maps for frame 1 (required): "
-msgstr ""
+msgstr " フレーム１のマップ (必須)："
 
 #: ../gui/tcltk/gis.m/animate.tcl:491
 msgid "Maps for frame 2 (optional): "
-msgstr ""
+msgstr " フレーム２のマップ  (オプション)："
 
 #: ../gui/tcltk/gis.m/animate.tcl:502
 msgid "Maps for frame 3 (optional): "
-msgstr ""
+msgstr " フレーム３のマップ  (オプション)："
 
 #: ../gui/tcltk/gis.m/animate.tcl:513
 msgid "Maps for frame 4 (optional): "
-msgstr ""
+msgstr " フレーム４のマップ  (オプション)："
 
 #: ../gui/tcltk/gis.m/animate.tcl:551
-#, fuzzy
 msgid "You must select maps to animate for frame 1"
-msgstr "選択 ファイル"
+msgstr "フレーム１でアニメーションするマップを選択する必要があります"
 
 #: ../gui/tcltk/gis.m/animate.tcl:552
-#, fuzzy
 msgid "No maps selected"
-msgstr "��"
+msgstr "マップが選択されていません"
 
 #: ../gui/tcltk/gis.m/animate.tcl:1019
 msgid "Animation Window"
-msgstr ""
+msgstr "アニメーションウィンドウ"
 
 #: ../gui/tcltk/gis.m/dnviz.tcl:106
-#, fuzzy
 msgid "NVIZ flythrough path"
-msgstr "の"
+msgstr "NVIZフライスルー行路"
 
 #: ../gui/tcltk/gis.m/dnviz.tcl:122
-#, fuzzy
 msgid "Create flythough path for NVIZ display"
-msgstr "の"
+msgstr "NVIZのフライスルー行路を作成"
 
 #: ../gui/tcltk/gis.m/dnviz.tcl:129
-#, fuzzy
 msgid "Raster surface map "
-msgstr "ラスター"
+msgstr "ラスター地曲面マップ"
 
 #: ../gui/tcltk/gis.m/dnviz.tcl:140
-#, fuzzy
 msgid "Output script file "
-msgstr "スクリプト ファイル:"
+msgstr "スクリプト ファイル出力"
 
 #: ../gui/tcltk/gis.m/dnviz.tcl:151
-#, fuzzy
 msgid "Flythrough path "
-msgstr "の"
+msgstr "フライスルー行路"
 
 #: ../gui/tcltk/gis.m/dnviz.tcl:157
 msgid "Create path with mouse in map display"
-msgstr ""
+msgstr "マップにマウスで行路を作成"
 
 #: ../gui/tcltk/gis.m/dnviz.tcl:160
 msgid "Coordinate pairs for flythrough path (x1,y1,x2,y2,...)"
-msgstr ""
+msgstr "フライスルー行路の座標 (x1,y1,x2,y2,...) "
 
 #: ../gui/tcltk/gis.m/dnviz.tcl:169
-#, fuzzy
 msgid "Flythrough images prefix "
-msgstr "の"
+msgstr "フライスルー画像拡張子"
 
 #: ../gui/tcltk/gis.m/dnviz.tcl:170
 msgid "Prefix for image series created by flythough"
-msgstr ""
+msgstr "フライスルーで作成された画像の接頭語"
 
 #: ../gui/tcltk/gis.m/dnviz.tcl:177
 msgid "Camera layback "
-msgstr ""
+msgstr "カメラ レイバック"
 
 #: ../gui/tcltk/gis.m/dnviz.tcl:178
 msgid "Camera layback distance (in map units)"
-msgstr ""
+msgstr "カメラ レイバック 距離 (マップユニット内) "
 
 #: ../gui/tcltk/gis.m/dnviz.tcl:180
 msgid "Camera height "
-msgstr ""
+msgstr "カメラ 高さ"
 
 #: ../gui/tcltk/gis.m/dnviz.tcl:181
 msgid "Camera height above terrain"
-msgstr ""
+msgstr "地表からの高さ"
 
 #: ../gui/tcltk/gis.m/dnviz.tcl:188
 msgid "Number of frames "
-msgstr ""
+msgstr "フレーム数"
 
 #: ../gui/tcltk/gis.m/dnviz.tcl:189
 msgid "Number of frames to create for flythrough"
-msgstr ""
+msgstr "フライスルーで作成するフレーム数"
 
 #: ../gui/tcltk/gis.m/dnviz.tcl:191
 msgid "Start frame "
-msgstr ""
+msgstr "スタートフレーム"
 
 #: ../gui/tcltk/gis.m/dnviz.tcl:192
 msgid "Starting frame number..."
-msgstr ""
+msgstr "スタートフレーム番号... "
 
 #: ../gui/tcltk/gis.m/dnviz.tcl:199
 msgid "Enable vector rendering"
-msgstr ""
+msgstr "ベクトルレンダリング可能"
 
 #: ../gui/tcltk/gis.m/dnviz.tcl:201
-#, fuzzy
 msgid "Full render (save images)"
-msgstr "実行 保存"
+msgstr "完全レンダリング（画像保存）"
 
 #: ../gui/tcltk/gis.m/dnviz.tcl:203
 msgid "Render images offscreen"
-msgstr ""
+msgstr "レンダリング画像をオフスクリーン"
 
 #: ../gui/tcltk/gis.m/dnviz.tcl:215
 msgid "Height value is elevation"
-msgstr ""
+msgstr "高さデータは標高 "
 
 #: ../gui/tcltk/gis.m/dnviz.tcl:217
-#, fuzzy
 msgid "Output keyframe file"
-msgstr "ファイル:"
+msgstr "キーフレームファイル出力"
 
 #: ../gui/tcltk/gis.m/dnviz.tcl:224
-#, fuzzy
 msgid "Reset"
-msgstr "テキスト"
+msgstr "リセット"
 
 #: ../gui/tcltk/gis.m/dnviz.tcl:226
-#, fuzzy
 msgid "Clear all path coordinates"
-msgstr " "
+msgstr " 全通過座標をクリア"
 
 #: ../gui/tcltk/gis.m/dnviz.tcl:365
-#, fuzzy
 msgid "You must specify an output file"
-msgstr "選択 ファイル"
+msgstr "出力ファイルを指定しなければなりません"
 
 #: ../gui/tcltk/gis.m/dnviz.tcl:366
-#, fuzzy
 msgid "No output file specified"
-msgstr "ファイル"
+msgstr "出力ファイルが定義されていません"
 
 #: ../gui/tcltk/gis.m/dnviz.tcl:374
 msgid "You must specify at least 4 points (x,y coordinate pairs)"
-msgstr ""
+msgstr "４点以上指定する必要があります (x,y 座標のセット) "
 
 #: ../gui/tcltk/gis.m/dnviz.tcl:375
 msgid "Insufficient coordinates specified"
-msgstr ""
+msgstr "指定された座標が不足しています"
 
 #: ../lib/gis/gui.tcl:231
-#, fuzzy
 msgid "Load File"
-msgstr "色 ファイル:"
+msgstr "ファイル読込み"
 
 #: ../lib/gis/gui.tcl:355
-#, fuzzy
 msgid "Options"
 msgstr "オプション"
 
 #: ../lib/gis/gui.tcl:577
 msgid "required"
-msgstr ""
+msgstr "必須"
 
 #: ../lib/gis/gui.tcl:577
 msgid "optional"
-msgstr ""
+msgstr "オプション"
 
 #: ../lib/gis/gui.tcl:578
 msgid "multiple"
-msgstr ""
+msgstr "重複"
 
 #: ../lib/gtcltk/select.tcl:103
-#, fuzzy
 msgid "Select item"
-msgstr "選択 ファイル"
+msgstr "マップの選択"
 
 #: ../lib/gtcltk/select.tcl:208
-#, fuzzy
 msgid "Ok"
 msgstr "OK"
 
 #: ../lib/init/epsg_option.tcl:93
 msgid "WARNING: cant get enviromental variable"
-msgstr ""
+msgstr "警告： 環境変数を取得出来ません"
 
 #: ../lib/init/epsg_option.tcl:94
 msgid ""
@@ -5834,85 +5279,80 @@ msgid ""
 "Set enviromental variable GRASS_PROJSHARE to point to directory with Proj4 "
 "EPSG file. "
 msgstr ""
+"警告：環境変数GRASS_PROJSHAREを取得することができません \n"
+"これは、GRASSのインストール時のエラーです \n"
+"GRASS_PROJSHAREの環境変数に Proj4 EPSGの設定をしてください"
 
 #: ../lib/init/epsg_option.tcl:103
 msgid "Define location using EPSG projection codes"
-msgstr ""
+msgstr "EPSF投影コードを利用してロケーションを定義"
 
 #: ../lib/init/epsg_option.tcl:122 ../lib/init/file_option.tcl:92
 msgid "Name of new location"
-msgstr ""
+msgstr "新規ロケーション名"
 
 #: ../lib/init/epsg_option.tcl:125
-#, fuzzy
 msgid "Enter name for location to be created"
-msgstr "入力"
+msgstr "作成するロケーション名を入力"
 
 #: ../lib/init/epsg_option.tcl:129 ../lib/init/epsg_option.tcl:132
-#, fuzzy
 msgid "Path to the EPSG-codes file"
-msgstr "ファイル"
+msgstr "EPSGコードファイルのファイルパス"
 
 #: ../lib/init/epsg_option.tcl:135 ../lib/init/epsg_option.tcl:148
 #: ../lib/init/file_option.tcl:105 ../lib/init/gis_set.tcl:243
-#, fuzzy
 msgid "Browse..."
 msgstr "参照..."
 
 #: ../lib/init/epsg_option.tcl:136
-#, fuzzy
 msgid "Browse to locate EPSG file"
-msgstr "保存 ファイル"
+msgstr "EPSGコードファイルの参照"
 
 #: ../lib/init/epsg_option.tcl:143
 msgid "EPSG code number of projection"
-msgstr ""
+msgstr "投影するEPSGコード番号"
 
 #: ../lib/init/epsg_option.tcl:146
 msgid "Enter EPSG code for selected projection"
-msgstr ""
+msgstr "選択された投影法のEPSGコード入力"
 
 #: ../lib/init/epsg_option.tcl:149
 msgid "View EPSG codes and projection information."
-msgstr ""
+msgstr "EPSGコードおよび投影情報の表示"
 
 #: ../lib/init/epsg_option.tcl:155
-#, fuzzy
 msgid "WARNING: epsg-codes file not found"
-msgstr "�������"
+msgstr "警告： EPSGコードファイルが見つかりません"
 
 #: ../lib/init/epsg_option.tcl:156
-#, fuzzy
 msgid "WARNING: The epsg-codes file was not found!"
-msgstr "�������!"
+msgstr "警告： EPSGコードファイルが見つかりません"
 
 #: ../lib/init/epsg_option.tcl:164 ../lib/init/file_option.tcl:111
 msgid "Define location"
-msgstr ""
+msgstr "ロケーション定義"
 
 #: ../lib/init/epsg_option.tcl:187
 msgid "Invalid EPSG Code!"
-msgstr ""
+msgstr "EPSGコードが間違っています"
 
 #: ../lib/init/epsg_option.tcl:188
 #, tcl-format
 msgid "ERROR: Invalid EPSG code %s: should be an integer."
-msgstr ""
+msgstr "エラー： EPSGコード %s ：は整数でなければなりません"
 
 #: ../lib/init/epsg_option.tcl:198
-#, fuzzy
 msgid "Location Exists!"
-msgstr "ロケーション"
+msgstr "ロケーションは存在します"
 
 #: ../lib/init/epsg_option.tcl:199
 #, tcl-format
 msgid "WARNING: Location '%s' already exists: please try another name."
-msgstr ""
+msgstr "警告: 場所, ロケーション '%s' は既に存在します：別名を指定してください"
 
 #: ../lib/init/epsg_option.tcl:236 ../lib/init/epsg_option.tcl:263
-#, fuzzy
 msgid "Error creating location!"
-msgstr "�������"
+msgstr "ロケーション作成エラー！"
 
 #: ../lib/init/epsg_option.tcl:237 ../lib/init/epsg_option.tcl:264
 #, tcl-format
@@ -5920,10 +5360,12 @@ msgid ""
 "g.proj returned the following message:\n"
 "%s"
 msgstr ""
+"g.proj は下記のようなメッセージを出しています:\n"
+"%s "
 
 #: ../lib/init/epsg_option.tcl:244 ../lib/init/epsg_option.tcl:268
 msgid "Informational output from g.proj"
-msgstr ""
+msgstr "g.proj からの情報出力 "
 
 #: ../lib/init/epsg_option.tcl:245 ../lib/init/epsg_option.tcl:269
 #, tcl-format
@@ -5931,11 +5373,12 @@ msgid ""
 "g.proj returned the following informational message:\n"
 "%s"
 msgstr ""
+"g.proj は下記のようなメッセージを出しています:\n"
+"%s "
 
 #: ../lib/init/epsg_option.tcl:288
-#, fuzzy
 msgid "Select datum transformation parameters:"
-msgstr "選択 フォント"
+msgstr "データム変換パラメータ選択："
 
 #: ../lib/init/epsg_option.tcl:292
 msgid ""
@@ -5943,73 +5386,74 @@ msgid ""
 "other GRASS modules will use the \"default\" (likely non-optimum) parameters "
 "for this datum if necessary in the future."
 msgstr ""
+"パラメータを指定せずに続行 - ロケーションを作成した場合、他のGRASSのデータム"
+"を使用する場合は、\"デフォルト\"（最適化されていない可能性があります）が適用"
+"されます"
 
 #: ../lib/init/epsg_option.tcl:344
 msgid "You can select EPSG code (in <braces>) and copy it for later use."
-msgstr ""
+msgstr "EPSGコードを選択してコピーしてください (<括弧>内) "
 
 #: ../lib/init/epsg_option.tcl:381
 msgid "GUESS THAT IS NOT THE EPSG FILE"
-msgstr ""
+msgstr "EPSGファイルではない可能性が高い"
 
 #: ../lib/init/epsg_option.tcl:387 ../lib/init/epsg_option.tcl:417
 #: ../lib/init/epsg_option.tcl:436
 msgid "Search"
-msgstr ""
+msgstr "検索"
 
 #: ../lib/init/epsg_option.tcl:390
 msgid "Grab code"
-msgstr ""
+msgstr "グラブコード"
 
 #: ../lib/init/epsg_option.tcl:423
 msgid "Search text: "
-msgstr ""
+msgstr "テキスト検索: "
 
 #: ../lib/init/epsg_option.tcl:424
 msgid "Search for entered text in EPSG file"
-msgstr ""
+msgstr "EPSG ファイル 中のテキストを検索"
 
 #: ../lib/init/epsg_option.tcl:429
 msgid "forward search"
-msgstr ""
+msgstr "下候補"
 
 #: ../lib/init/epsg_option.tcl:430
 msgid "backward search"
-msgstr ""
+msgstr "上候補"
 
 #: ../lib/init/file_option.tcl:72
 msgid "Define location using projection information in georeferenced file"
-msgstr ""
+msgstr "地理参照ファイルの投影法情報を使用したロケーションの定義"
 
 #: ../lib/init/file_option.tcl:95
-#, fuzzy
 msgid "Enter name of location to be created"
-msgstr "入力"
+msgstr "作成するロケーション名を入力"
 
 #: ../lib/init/file_option.tcl:99
-#, fuzzy
 msgid "Path to georeferenced file"
-msgstr "ファイル"
+msgstr "地理参照ファイルのパス"
 
 #: ../lib/init/file_option.tcl:102
 msgid "Path to georeferenced file (format must be readable by GDAL/OGR)"
-msgstr ""
+msgstr "地理参照ファイルのパス (GDAL/OGRによって読み込めるフォーマット) "
 
 #: ../lib/init/file_option.tcl:106
-#, fuzzy
 msgid "Browse to locate georeferenced file"
-msgstr "ファイル"
+msgstr "地理参照ファイルの参照"
 
 #: ../lib/init/file_option.tcl:131 ../lib/init/file_option.tcl:134
-#, fuzzy
 msgid "Choose georeferenced file"
-msgstr "ファイル"
+msgstr "地理参照ファイルの選択"
 
 #: ../lib/init/file_option.tcl:152
 msgid ""
 "WARNING: Please supply a\n"
 "valid georeferenced file"
 msgstr ""
+"警告: 正しい地理参照 a\n"
+"ファイルを指定してください"
 
 #: ../lib/init/file_option.tcl:184
 #, fuzzy
@@ -6026,9 +5470,8 @@ msgid ""
 msgstr ""
 
 #: ../lib/init/gis_set.tcl:109
-#, fuzzy
 msgid "WARNING: can not save"
-msgstr "�������"
+msgstr "警告: 保存されません"
 
 #: ../lib/init/gis_set.tcl:110
 #, tcl-format
@@ -6036,53 +5479,56 @@ msgid ""
 "Warning: unable to save data to <%s> file.\n"
 "Error message: %s"
 msgstr ""
+"警告: データを  <%s> に保存出来ません.\n"
+"エラーメッセージ： %s "
 
 #: ../lib/init/gis_set.tcl:131 ../lib/init/gis_set.tcl:379
 #: ../lib/init/gis_set.tcl:485 ../lib/init/gis_set.tcl:606
 #: ../lib/init/gis_set.tcl:627 ../lib/init/gis_set.tcl:645
 #: ../lib/init/gis_set.tcl:674
-#, fuzzy
 msgid "WARNING: invalid location"
-msgstr "�������"
+msgstr "警告: i間違った ロケーション "
 
 #: ../lib/init/gis_set.tcl:132
 #, tcl-format
 msgid ""
 "Warning: location <%s> at GISDBASE <%s> is not a directory or does not exist."
 msgstr ""
+"警告:  ロケーション <%s>  （GISデータベース <%s>） はディレクトリでないかまた"
+"はディレクトリが存在しません"
 
 #: ../lib/init/gis_set.tcl:177
-#, fuzzy, tcl-format
+#, tcl-format
 msgid "GRASS %s Startup"
-msgstr " "
+msgstr "GRASS %s スタート"
 
 #: ../lib/init/gis_set.tcl:200
 msgid "Welcome to GRASS GIS Version"
-msgstr ""
+msgstr " GRASS GIS へようこそ"
 
 #: ../lib/init/gis_set.tcl:202
-#, fuzzy
 msgid ""
 "The world's leading open source GIS\n"
 "\n"
-msgstr " "
+msgstr ""
+"世界をリードするオープンソースGIS\n"
+"\n"
 
 #: ../lib/init/gis_set.tcl:203
-#, fuzzy
 msgid "Select an existing project location and mapset\n"
-msgstr "選択 マップセット"
+msgstr "プロジェクトロケーションとマップセットを選択\n"
 
 #: ../lib/init/gis_set.tcl:204
 msgid "or define a new location\n"
-msgstr ""
+msgstr "または新規ロケーションを作成してください\n"
 
 #: ../lib/init/gis_set.tcl:228
 msgid "GIS Data Directory: "
-msgstr ""
+msgstr "GISデータディレクトリ："
 
 #: ../lib/init/gis_set.tcl:245
 msgid "New GIS data directory"
-msgstr ""
+msgstr "新しいGISデータディレクトリ"
 
 #: ../lib/init/gis_set.tcl:269
 msgid ""
@@ -6104,14 +5550,12 @@ msgid ""
 msgstr "マップセット"
 
 #: ../lib/init/gis_set.tcl:366
-#, fuzzy
 msgid "Create new mapset"
-msgstr "マップセット"
+msgstr "新しいマップセットの作成"
 
 #: ../lib/init/gis_set.tcl:371
-#, fuzzy
 msgid "WARNING: invalid mapset name"
-msgstr "�������"
+msgstr "警告:正しくないマップセット名"
 
 #: ../lib/init/gis_set.tcl:372
 #, tcl-format
@@ -6120,6 +5564,9 @@ msgid ""
 "New mapset is NOT created. \n"
 "Choose different mapset name and try again."
 msgstr ""
+"警告: マップセット名 <%s> は既に存在します\n"
+"新しいマップセットは作成出来ませんでした \n"
+"マップセット名を作成しなおしてください"
 
 #: ../lib/init/gis_set.tcl:380
 #, tcl-format
@@ -6128,11 +5575,13 @@ msgid ""
 " New mapset is NOT created. \n"
 " Select valid location and try again."
 msgstr ""
+"警告:選択したロケーション <%s> は正しくありません \n"
+"マップセットは作成出来ませんでした. \n"
+"正しいロケーションを選択しなおしてください"
 
 #: ../lib/init/gis_set.tcl:387
-#, fuzzy
 msgid "WARNING: unable to mkdir"
-msgstr "�������"
+msgstr "警告: ディレクトリ作成出来ません"
 
 #: ../lib/init/gis_set.tcl:388
 #, tcl-format
@@ -6140,28 +5589,28 @@ msgid ""
 "Warning: Unable to create directory for new mapset. \n"
 "Error message: %s"
 msgstr ""
+"警告：マップセットのための新しいディレクトリが作成出来ません. \n"
+"エラーメッセージ： %s "
 
 #: ../lib/init/gis_set.tcl:414
 msgid "Define new location with..."
-msgstr ""
+msgstr "新しいロケーション定義... "
 
 #: ../lib/init/gis_set.tcl:418
-#, fuzzy
 msgid "Georeferenced file"
-msgstr "ファイル"
+msgstr "地理参照ファイル"
 
 #: ../lib/init/gis_set.tcl:431
 msgid "EPSG codes"
-msgstr ""
+msgstr "EPSGコード"
 
 #: ../lib/init/gis_set.tcl:444
-#, fuzzy
 msgid "Projection values"
-msgstr "ロケーション"
+msgstr "投影法値"
 
 #: ../lib/init/gis_set.tcl:481
 msgid "Enter GRASS"
-msgstr ""
+msgstr "GRASSの起動"
 
 #: ../lib/init/gis_set.tcl:486
 #, tcl-format
@@ -6169,35 +5618,33 @@ msgid ""
 "Warning: selected location <%s> is not valid. \n"
 " Select valid location and try again."
 msgstr ""
+"警告:選択したロケーション <%s> は正しくありません \n"
+"正しいロケーションを選択しなおしてください"
 
 #: ../lib/init/gis_set.tcl:491 ../lib/init/gis_set.tcl:651
-#, fuzzy
 msgid "WARNING: invalid mapset"
-msgstr "�������"
+msgstr "警告:正しくないマップセット"
 
 #: ../lib/init/gis_set.tcl:492
-#, fuzzy, tcl-format
+#, tcl-format
 msgid "Warning: <%s> is not a valid mapset"
-msgstr "   "
+msgstr "警告: <%s> は正しいマップセットではありません"
 
 #: ../lib/init/gis_set.tcl:513
-#, fuzzy
 msgid "Help already opened"
-msgstr "ヘルプ"
+msgstr "ヘルプは既にオープンしています"
 
 #: ../lib/init/gis_set.tcl:526
 msgid "Exit"
-msgstr ""
+msgstr "終了"
 
 #: ../lib/init/gis_set.tcl:558
-#, fuzzy
 msgid "WARNING: Invalid Database"
-msgstr "�������"
+msgstr "警告: データベースが無効です "
 
 #: ../lib/init/gis_set.tcl:559
-#, fuzzy
 msgid "WARNING: Invalid database. Finding first valid directory in parent tree"
-msgstr "�������"
+msgstr "警告: データベースが正しくありません DBツリーのが異常です"
 
 #: ../lib/init/gis_set.tcl:607 ../lib/init/gis_set.tcl:628
 #: ../lib/init/gis_set.tcl:646 ../lib/init/gis_set.tcl:675
@@ -6206,15 +5653,17 @@ msgid ""
 "Warning: selected location <%%s> is not valid. \n"
 " Select valid location and try again."
 msgstr ""
+"警告: 選択されたロケーション <%%s> が正しくおありません\n"
+"正しいロケーションを選択しなおしてください"
 
 #: ../lib/init/gis_set.tcl:652
-#, fuzzy, tcl-format
+#, tcl-format
 msgid "Warning: <%%s> is not a valid mapset"
-msgstr "   "
+msgstr "警告: <%%s> は正しくないマップセットです"
 
 #: ../lib/init/gis_set.tcl:745
 msgid "WARNING: change directory failed"
-msgstr ""
+msgstr "警告: ディレクトリ変更に失敗しました"
 
 #: ../lib/init/gis_set.tcl:746
 #, tcl-format
@@ -6222,759 +5671,241 @@ msgid ""
 "Warning: could not change directory to <%s>.\n"
 "Check directory permissions."
 msgstr ""
+"警告: ディレクトリの変更ができません <%s>.\n"
+"ディレクトリの権限をチェックしてください"
 
 #: ../vector/v.digit/cats.tcl:34
-#, fuzzy
 msgid "Categories already opened"
-msgstr "ヘルプ"
+msgstr "カテゴリーは既にオープンされています"
 
 #: ../vector/v.digit/cats.tcl:42
 msgid "Categories"
-msgstr ""
+msgstr "カテゴリー"
 
 #: ../vector/v.digit/cats.tcl:53
 msgid "Layer:"
-msgstr ""
+msgstr "レイヤー："
 
 #: ../vector/v.digit/cats.tcl:55
 msgid "   Category:"
-msgstr ""
+msgstr "   カテゴリー:："
 
 #: ../vector/v.digit/cats.tcl:62
 msgid "Insert new record to table"
-msgstr ""
+msgstr "テーブルに新しいレコードを追加"
 
 #: ../vector/v.digit/cats.tcl:63
 msgid "Add new"
-msgstr ""
+msgstr "新規作成"
 
 #: ../vector/v.digit/settings.tcl:63
 msgid "Add new column"
-msgstr ""
+msgstr "列追加"
 
 #: ../vector/v.digit/settings.tcl:66
 msgid "Create table"
-msgstr ""
+msgstr "テーブル作成"
 
 #: ../vector/v.digit/settings.tcl:99
 msgid "Add command"
-msgstr ""
+msgstr "コマンド追加 "
 
 #: ../vector/v.digit/settings.tcl:135
-#, fuzzy
 msgid "Table successfully created"
-msgstr "テーブル"
+msgstr "テーブルは正常に作成されました"
 
 #: ../vector/v.digit/settings.tcl:151
-#, fuzzy
 msgid "Settings already opened"
-msgstr "ヘルプ"
+msgstr "設定は既にオープンしています"
 
 #: ../vector/v.digit/settings.tcl:169
 msgid "Symbology"
-msgstr ""
+msgstr "シンボロジー"
 
 #: ../vector/v.digit/settings.tcl:173 ../vector/v.digit/settings.tcl:326
 msgid "Background"
-msgstr ""
+msgstr "背景"
 
 #: ../vector/v.digit/settings.tcl:180
 msgid "Highlight"
-msgstr ""
+msgstr "強調"
 
 #: ../vector/v.digit/settings.tcl:187
 msgid "Point"
-msgstr ""
+msgstr "ポイント"
 
 #: ../vector/v.digit/settings.tcl:196
 msgid "Line"
-msgstr ""
+msgstr "ライン"
 
 #: ../vector/v.digit/settings.tcl:205
-#, fuzzy
 msgid "Boundary (no area)"
-msgstr "単位"
+msgstr "境界（エリアなし）"
 
 #: ../vector/v.digit/settings.tcl:213
-#, fuzzy
 msgid "Boundary (1 area)"
-msgstr "単位"
+msgstr "境界(1エリア)"
 
 #: ../vector/v.digit/settings.tcl:221
 msgid "Boundary (2 areas)"
-msgstr ""
+msgstr "境界(2エリア)"
 
 #: ../vector/v.digit/settings.tcl:230
-#, fuzzy
 msgid "Centroid (in area)"
-msgstr "単位"
+msgstr "セントロイド（エリア内）"
 
 #: ../vector/v.digit/settings.tcl:238
-#, fuzzy
 msgid "Centroid (outside area)"
-msgstr "単位"
+msgstr "セントロイド（エリア外）"
 
 #: ../vector/v.digit/settings.tcl:246
-#, fuzzy
 msgid "Centroid (duplicate in area)"
-msgstr "単位"
+msgstr "セントロイド(重複エリア) "
 
 #: ../vector/v.digit/settings.tcl:255
 msgid "Node (1 line)"
-msgstr ""
+msgstr "ノード(1ライン) "
 
 #: ../vector/v.digit/settings.tcl:263
 msgid "Node (2 lines)"
-msgstr ""
+msgstr "ノード(2ライン) "
 
 #: ../vector/v.digit/settings.tcl:273
 msgid "Settings"
-msgstr ""
+msgstr "設定"
 
 #: ../vector/v.digit/settings.tcl:278
 msgid "Snapping threshold in screen pixels"
-msgstr ""
+msgstr "スナップするしきい値(ピクセル) "
 
 #: ../vector/v.digit/settings.tcl:288
 msgid "Snapping threshold in map units"
-msgstr ""
+msgstr "スナップするしきい値(マップで使用する単位) "
 
 #: ../vector/v.digit/settings.tcl:305
-#, fuzzy
 msgid "Line width in screen pixels"
-msgstr " "
+msgstr " ピクセルでのライン幅"
 
 #: ../vector/v.digit/settings.tcl:307
 msgid "Set line width in pixels"
-msgstr ""
+msgstr "ピクセルでライン幅を設定"
 
 #: ../vector/v.digit/settings.tcl:315
-#, fuzzy
 msgid "Table"
 msgstr "テーブル"
 
 #: ../vector/v.digit/toolbox.tcl:19
 msgid "Welcome to v.digit"
-msgstr ""
+msgstr "v.digitにようこそ"
 
 #: ../vector/v.digit/toolbox.tcl:20
 msgid "Left button"
-msgstr ""
+msgstr "左ボタン"
 
 #: ../vector/v.digit/toolbox.tcl:21
 msgid "Middle button"
-msgstr ""
+msgstr "中央ボタン"
 
 #: ../vector/v.digit/toolbox.tcl:22
 msgid "Right button"
-msgstr ""
+msgstr "右ボタン"
 
 #: ../vector/v.digit/toolbox.tcl:75
 msgid "  Layer"
-msgstr ""
+msgstr "  レイヤー"
 
 #: ../vector/v.digit/toolbox.tcl:79
 msgid "  Category"
-msgstr ""
+msgstr "  カテゴリー"
 
 #: ../vector/v.digit/toolbox.tcl:83
 msgid "  Mode "
-msgstr ""
+msgstr "  モード"
 
 #: ../vector/v.digit/toolbox.tcl:95
 msgid "Insert new record into table"
-msgstr ""
+msgstr "テーブルに新しいレコードを挿入"
 
 #: ../vector/v.digit/toolbox.tcl:112
-#, fuzzy
 msgid "Digitize new point"
-msgstr "デジタイズ"
+msgstr "ポイントをデジタイズ"
 
 #: ../vector/v.digit/toolbox.tcl:117
-#, fuzzy
 msgid "Digitize new line"
-msgstr "デジタイズ"
+msgstr "ラインをデジタイズ"
 
 #: ../vector/v.digit/toolbox.tcl:122
-#, fuzzy
 msgid "Digitize new boundary"
-msgstr "デジタイズ"
+msgstr "境界をデジタイズ"
 
 #: ../vector/v.digit/toolbox.tcl:127
-#, fuzzy
 msgid "Digitize new centroid"
-msgstr "デジタイズ"
+msgstr "セントロイドをデジタイズ"
 
 #: ../vector/v.digit/toolbox.tcl:133
 msgid "Move vertex"
-msgstr ""
+msgstr "頂点の移動"
 
 #: ../vector/v.digit/toolbox.tcl:138
 msgid "Add vertex"
-msgstr ""
+msgstr "頂点を追加"
 
 #: ../vector/v.digit/toolbox.tcl:143
-#, fuzzy
 msgid "Remove vertex"
-msgstr "削除"
+msgstr "頂点の削除"
 
 #: ../vector/v.digit/toolbox.tcl:148
 msgid "Split line"
-msgstr ""
+msgstr "ラインを分割"
 
 #: ../vector/v.digit/toolbox.tcl:153
 msgid "Edit line/boundary"
-msgstr ""
+msgstr "ライン/境界の修正"
 
 #: ../vector/v.digit/toolbox.tcl:158
 msgid "Move point, line, boundary, or centroid"
-msgstr ""
+msgstr "ポイント、ライン、境界、セントロイドの移動"
 
 #: ../vector/v.digit/toolbox.tcl:163
 msgid "Delete point, line, boundary, or centroid"
-msgstr ""
+msgstr "ポイント、ライン、境界、セントロイドの削除"
 
 #: ../vector/v.digit/toolbox.tcl:174
 msgid "Redraw"
-msgstr ""
+msgstr "再描画"
 
 #: ../vector/v.digit/toolbox.tcl:179
-#, fuzzy
 msgid "Zoom in by window"
-msgstr "ズーム"
+msgstr "ズームイン"
 
 #: ../vector/v.digit/toolbox.tcl:184
-#, fuzzy
 msgid "Zoom out"
-msgstr "ズーム"
+msgstr "ズームアウト"
 
 #: ../vector/v.digit/toolbox.tcl:213
-#, fuzzy
 msgid "Display categories"
-msgstr "ガンマ"
+msgstr "カテゴリーを表示"
 
 #: ../vector/v.digit/toolbox.tcl:218
-#, fuzzy
 msgid "Copy categories"
-msgstr "コピー"
+msgstr "カテゴリーコピー"
 
 #: ../vector/v.digit/toolbox.tcl:223
-#, fuzzy
 msgid "Display attributes"
-msgstr "ガンマ"
+msgstr "属性表示"
 
 #: ../vector/v.digit/toolbox.tcl:235
 msgid "Open settings"
-msgstr ""
+msgstr "設定を開く"
 
 #: ../vector/v.digit/toolbox.tcl:241
-#, fuzzy
 msgid "Save and exit"
 msgstr "保存 終了"
 
 #: ../vector/v.digit/toolbox.tcl:252
 msgid "mouse button actions (left, middle, right)"
-msgstr ""
+msgstr "マウスボタン操作 (左、中央、右) "
 
 #: ../visualization/nviz/scripts/panel_animation.tcl:275
-#, fuzzy
 msgid "Test"
-msgstr "テキスト"
-
-#, fuzzy
-#~ msgid ""
-#~ "Could not open file for writing.\n"
-#~ "%s"
-#~ msgstr "ファイル"
-
-#, fuzzy
-#~ msgid "Select default font for GRASS displays"
-#~ msgstr "選択 フォント"
-
-#, fuzzy
-#~ msgid "   grid & text color "
-#~ msgstr "色 "
-
-#, fuzzy
-#~ msgid "  grid text font "
-#~ msgstr "色 "
-
-#, fuzzy
-#~ msgid "Recode using rules"
-#~ msgstr "色"
-
-#, fuzzy
-#~ msgid "Convert vector lines to points"
-#~ msgstr "ベクトル"
-
-#, fuzzy
-#~ msgid "Create stationing from input lines and a linear reference system"
-#~ msgstr "入力"
-
-#, fuzzy
-#~ msgid "Create points and line segments along a linear reference system"
-#~ msgstr "入力"
-
-#, fuzzy
-#~ msgid ""
-#~ "Find line ID and real km+offset for given points in vector map using "
-#~ "linear reference system"
-#~ msgstr "の ファイル"
-
-#, fuzzy
-#~ msgid "Select font file"
-#~ msgstr "フォント の ラベル"
-
-#, fuzzy
-#~ msgid "GRASS"
-#~ msgstr "ヘルプ"
-
-#, fuzzy
-#~ msgid "select font for text (default is GRASS romans)"
-#~ msgstr "フォント の"
-
-#, fuzzy
-#~ msgid "SVG file"
-#~ msgstr "ファイル:"
-
-#, fuzzy
-#~ msgid ""
-#~ "Bicubic and bilinear interpolation with Tykhonov regularization from "
-#~ "vector points"
-#~ msgstr "ファイル"
-
-#, fuzzy
-#~ msgid "Copy attribute table"
-#~ msgstr "の"
-
-#, fuzzy
-#~ msgid "Remove existing attribute table for vector map"
-#~ msgstr "ラベル ファイル の ファイル"
-
-#, fuzzy
-#~ msgid "Create ps.map file for postscript printing"
-#~ msgstr "ファイル の ポストスクリプト"
-
-#, fuzzy
-#~ msgid "     chart outline color:"
-#~ msgstr "色:"
-
-#, fuzzy
-#~ msgid "The file must have georeferencing information readable\n"
-#~ msgstr "ファイル"
-
-#, fuzzy
-#~ msgid ""
-#~ "\n"
-#~ "   Path to georeferenced file:\n"
-#~ "\n"
-#~ msgstr ""
-#~ "\n"
-#~ " ファイル"
-
-#, fuzzy
-#~ msgid ""
-#~ "\n"
-#~ "Georeferenced file with projection information that can be read\n"
-#~ msgstr "ファイル"
-
-#, fuzzy
-#~ msgid ""
-#~ "\n"
-#~ "by GDAL (raster) or OGR (vector)\n"
-#~ "\n"
-#~ msgstr "ファイル ファイル"
-
-#, fuzzy
-#~ msgid "dxf file"
-#~ msgstr "ファイル"
-
-#, fuzzy
-#~ msgid "html-browser"
-#~ msgstr "ブラウザのヘルプ"
-
-#, fuzzy
-#~ msgid "Scripting "
-#~ msgstr "スクリプトの作成/実行 "
-
-#, fuzzy
-#~ msgid "About "
-#~ msgstr "GRASSについて "
-
-#, fuzzy
-#~ msgid "Pick"
-#~ msgstr "フォント"
-
-#, fuzzy
-#~ msgid "Font family"
-#~ msgstr "フォント"
-
-#, fuzzy
-#~ msgid "Weight:"
-#~ msgstr "太さ:"
-
-#, fuzzy
-#~ msgid "bold"
-#~ msgstr "太字"
-
-#, fuzzy
-#~ msgid "Slant:"
-#~ msgstr "字体:"
-
-#, fuzzy
-#~ msgid "roman"
-#~ msgstr "標準"
-
-#, fuzzy
-#~ msgid "italic"
-#~ msgstr "斜体"
-
-#, fuzzy
-#~ msgid "Display dimensions"
-#~ msgstr "ガンマ"
-
-#, fuzzy
-#~ msgid "CELL driver WIDTH"
-#~ msgstr "セル"
-
-#, fuzzy
-#~ msgid "CELL driver HEIGHT"
-#~ msgstr "セル"
-
-#, fuzzy
-#~ msgid "Cont"
-#~ msgstr "継続"
-
-#, fuzzy
-#~ msgid "Finished."
-#~ msgstr "終了."
-
-#, fuzzy
-#~ msgid "Terminated."
-#~ msgstr "終了."
-
-#, fuzzy
-#~ msgid "output"
-#~ msgstr "出力"
-
-#, fuzzy
-#~ msgid "quit_window"
-#~ msgstr "TCLTKGRASSの終了"
-
-#, fuzzy
-#~ msgid "CANCEL"
-#~ msgstr "キャンセル"
-
-#, fuzzy
-#~ msgid "Scripting already running, stop first"
-#~ msgstr "スクリプトの作成/実行"
-
-#, fuzzy
-#~ msgid "Scripting not running, start first"
-#~ msgstr "スクリプトの作成/実行"
-
-#, fuzzy
-#~ msgid "Script recording in progress, stop first"
-#~ msgstr "スクリプト"
-
-#, fuzzy
-#~ msgid "Open recorded script file for replay"
-#~ msgstr "ファイル の"
-
-#, fuzzy
-#~ msgid "is empty file"
-#~ msgstr "  ��"
-
-#, fuzzy
-#~ msgid "is not a valid tcltkgrass script:"
-#~ msgstr " :"
-
-#, fuzzy
-#~ msgid "invalid script file:"
-#~ msgstr "ファイル:"
-
-#, fuzzy
-#~ msgid "Script"
-#~ msgstr "スクリプト"
-
-#, fuzzy
-#~ msgid "for"
-#~ msgstr "の"
-
-#, fuzzy
-#~ msgid "first."
-#~ msgstr "を起動してください"
-
-#, fuzzy
-#~ msgid "Configure html-browser"
-#~ msgstr "ブラウザ"
-
-#, fuzzy
-#~ msgid "html browser (netscape)"
-#~ msgstr "ブラウザ"
-
-#, fuzzy
-#~ msgid "path or url for html manual pages"
-#~ msgstr "の"
-
-#, fuzzy
-#~ msgid "prefix for html path or url (file:)"
-#~ msgstr "の ファイル"
-
-#, fuzzy
-#~ msgid "postfix for html files (.html)"
-#~ msgstr "の"
-
-#, fuzzy
-#~ msgid "auto raise window of browser"
-#~ msgstr "ブラウザ"
-
-#, fuzzy
-#~ msgid "open in new window instance of browser"
-#~ msgstr "ブラウザ"
-
-#, fuzzy
-#~ msgid "Location:"
-#~ msgstr "ロケーション"
-
-#, fuzzy
-#~ msgid "About"
-#~ msgstr "GRASSについて"
-
-#, fuzzy
-#~ msgid "Please select location and mapset\n"
-#~ msgstr "マップセット"
-
-#, fuzzy
-#~ msgid "Vector Panel"
-#~ msgstr "ベクトル"
-
-#, fuzzy
-#~ msgid "Color"
-#~ msgstr "色"
-
-#, fuzzy
-#~ msgid "Display on surface(s):"
-#~ msgstr "ガンマ:"
-
-#, fuzzy
-#~ msgid "Input File:"
-#~ msgstr "ファイル:"
-
-#, fuzzy
-#~ msgid "Threshold Type"
-#~ msgstr "アイコン"
-
-#, fuzzy
-#~ msgid "Interpolation"
-#~ msgstr "補間"
-
-#, fuzzy
-#~ msgid "Pipe to: None"
-#~ msgstr "��"
-
-#, fuzzy
-#~ msgid "Query map: None"
-#~ msgstr "��"
-
-#, fuzzy
-#~ msgid "What's Here?"
-#~ msgstr " ?"
-
-#, fuzzy
-#~ msgid "What's Here Panel"
-#~ msgstr " "
-
-#, fuzzy
-#~ msgid "sites"
-#~ msgstr "ファイル"
-
-#, fuzzy
-#~ msgid "distance along surface:      "
-#~ msgstr "単位 "
-
-#, fuzzy
-#~ msgid "Query map: "
-#~ msgstr "データ情報 "
-
-#, fuzzy
-#~ msgid "xy distance from previous:  "
-#~ msgstr "xy 単位 "
-
-#, fuzzy
-#~ msgid "xyz distance from previous:  "
-#~ msgstr "xyz 単位 "
-
-#, fuzzy
-#~ msgid "distance along exag. surface: "
-#~ msgstr "単位 "
-
-#, fuzzy
-#~ msgid "Remove"
-#~ msgstr "削除"
-
-#, fuzzy
-#~ msgid "Map Type:"
-#~ msgstr "管理 アイコン:"
-
-#, fuzzy
-#~ msgid "Sites"
-#~ msgstr "サイト"
-
-#, fuzzy
-#~ msgid "3D Sites"
-#~ msgstr "サイト"
-
-#, fuzzy
-#~ msgid "show site"
-#~ msgstr "ファイル"
-
-#, fuzzy
-#~ msgid "tension"
-#~ msgstr "���� ����"
-
-#, fuzzy
-#~ msgid "There is already a keyframe at this time, do you wish to replace it?"
-#~ msgstr " ?"
-
-#, fuzzy
-#~ msgid "Can't create file"
-#~ msgstr "ファイル"
-
-#, fuzzy
-#~ msgid "None"
-#~ msgstr "��"
-
-#, fuzzy
-#~ msgid "for keyframe"
-#~ msgstr "の"
-
-#, fuzzy
-#~ msgid "There is already a keyframe at this time, replace it?"
-#~ msgstr " ?"
-
-#, fuzzy
-#~ msgid "There are no keys in the current animation to save"
-#~ msgstr " "
-
-#, fuzzy
-#~ msgid "Use Surface Color"
-#~ msgstr "色"
-
-#, fuzzy
-#~ msgid "File Browser"
-#~ msgstr "ファイル"
-
-#, fuzzy
-#~ msgid "Raster"
-#~ msgstr "ラスター"
-
-#, fuzzy
-#~ msgid "Site"
-#~ msgstr "サイト"
-
-#, fuzzy
-#~ msgid "Color Panel"
-#~ msgstr "色"
-
-#, fuzzy
-#~ msgid "Wire Color"
-#~ msgstr "色"
-
-#, fuzzy
-#~ msgid "New Map"
-#~ msgstr "管理"
-
-#, fuzzy
-#~ msgid "Remove Mask"
-#~ msgstr "削除"
-
-#, fuzzy
-#~ msgid "Use as color"
-#~ msgstr "色"
-
-#, fuzzy
-#~ msgid "color:"
-#~ msgstr "色:"
-
-#, fuzzy
-#~ msgid "Surface Color"
-#~ msgstr "色"
-
-#, fuzzy
-#~ msgid "Font Size:"
-#~ msgstr "フォント:"
-
-#, fuzzy
-#~ msgid "Label Text"
-#~ msgstr "テキスト"
-
-#, fuzzy
-#~ msgid "Current List"
-#~ msgstr "一覧"
-
-#, fuzzy
-#~ msgid "  Label Sites  "
-#~ msgstr "サイト "
-
-#, fuzzy
-#~ msgid "Create new mapset : "
-#~ msgstr "マップセット "
-
-#, fuzzy
-#~ msgid "Create Location From EPSG"
-#~ msgstr "ロケーション"
-
-#, fuzzy
-#~ msgid "Increase font size"
-#~ msgstr "フォント"
-
-#, fuzzy
-#~ msgid "Decrease font size"
-#~ msgstr "フォント"
-
-#, fuzzy
-#~ msgid "Save as HTML files..."
-#~ msgstr "保存."
-
-#, fuzzy
-#~ msgid "Select directory to Save HTML files"
-#~ msgstr "選択 保存"
-
-#, fuzzy
-#~ msgid "Can't open output file:"
-#~ msgstr "出力 ファイル:"
-
-#, fuzzy
-#~ msgid "Generating HTMLs...  %i of %i  \"%s\""
-#~ msgstr " "
-
-#, fuzzy
-#~ msgid "Searching in %s..."
-#~ msgstr " ."
-
-#, fuzzy
-#~ msgid ""
-#~ "Error in regular expression:\n"
-#~ "\"%s\""
-#~ msgstr " "
-
-#, fuzzy
-#~ msgid "Select xy raster to display for georectification"
-#~ msgstr "選択 xy ファイル の"
-
-#, fuzzy
-#~ msgid "a. Select vector"
-#~ msgstr "選択 ファイル"
-
-#, fuzzy
-#~ msgid "Create WIND3 (default 3D window) from current 2D region"
-#~ msgstr "地域"
-
-#, fuzzy
-#~ msgid "Manage 3D region"
-#~ msgstr "地域"
-
-#, fuzzy
-#~ msgid "Modify mapset search path"
-#~ msgstr "マップセット"
+msgstr "テストモード"
