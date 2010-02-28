@@ -12,8 +12,8 @@ msgstr ""
 "Project-Id-Version: grasswxpy_ja\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2010-02-25 12:23+0100\n"
-"PO-Revision-Date: 2010-02-15 14:06+0900\n"
-"Last-Translator: ueda <nao@locapoint.com>\n"
+"PO-Revision-Date: 2010-02-18 17:52+0900\n"
+"Last-Translator: \n"
 "Language-Team: Japanese <grass-translations@lists.osgeo.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -8478,8 +8478,46 @@ msgid "No map layer selected. Operation cancelled."
 msgstr "マップレイヤーが選択されていません 処理はキャンセルされました "
 
 #, fuzzy
-#~ msgid "Creates a lines vector map from an ASCII x,y points file."
-#~ msgstr "ベクトル ベクトル."
+msgid "Creates a lines vector map from an ASCII x,y points file."
+msgstr "ベクトル ベクトル."
+
+#, fuzzy
+msgid "Output vector map name"
+msgstr "ベクトル"
+
+#, fuzzy
+msgid "Create/edit projection information for current location"
+msgstr "の"
+
+#, fuzzy
+msgid "Digitize raster map"
+msgstr "デジタイズ"
+
+#, fuzzy
+msgid "Reclassify vector objects interactively by entering SQL rules"
+msgstr "ベクトル"
+
+#, fuzzy
+msgid ""
+"Hue-intensity-saturation (his) to red-green-blue (rgb) raster map color "
+"transformation function."
+msgstr "色."
+
+#, fuzzy
+msgid ""
+"Red-green-blue (rgb) to hue-intensity-saturation (his) raster map color "
+"transformation function"
+msgstr "色"
+
+#, fuzzy
+msgid "Interactive input for supervised classification"
+msgstr "入力 の"
+
+#, fuzzy
+msgid ""
+"Copy a table. Either 'from_table' (optionally with 'where') can be used or "
+"'select' option, but not 'from_table' and 'select' at the same time."
+msgstr "コピー."
 
 #~ msgid "Coarse style:"
 #~ msgstr "粗密型："
@@ -8537,44 +8575,6 @@ msgstr "マップレイヤーが選択されていません 処理はキャン�
 
 #~ msgid "Help"
 #~ msgstr "ヘルプ "
-
-#, fuzzy
-#~ msgid "Output vector map name"
-#~ msgstr "ベクトル"
-
-#, fuzzy
-#~ msgid "Create/edit projection information for current location"
-#~ msgstr "の"
-
-#, fuzzy
-#~ msgid "Digitize raster map"
-#~ msgstr "デジタイズ"
-
-#, fuzzy
-#~ msgid "Reclassify vector objects interactively by entering SQL rules"
-#~ msgstr "ベクトル"
-
-#, fuzzy
-#~ msgid ""
-#~ "Hue-intensity-saturation (his) to red-green-blue (rgb) raster map color "
-#~ "transformation function."
-#~ msgstr "色."
-
-#, fuzzy
-#~ msgid ""
-#~ "Red-green-blue (rgb) to hue-intensity-saturation (his) raster map color "
-#~ "transformation function"
-#~ msgstr "色"
-
-#, fuzzy
-#~ msgid "Interactive input for supervised classification"
-#~ msgstr "入力 の"
-
-#, fuzzy
-#~ msgid ""
-#~ "Copy a table. Either 'from_table' (optionally with 'where') can be used "
-#~ "or 'select' option, but not 'from_table' and 'select' at the same time."
-#~ msgstr "コピー."
 
 #~ msgid "Save workspace to open file"
 #~ msgstr "ワークスペースの保存 "
@@ -8709,3 +8709,32 @@ msgstr "マップレイヤーが選択されていません 処理はキャン�
 
 #~ msgid "%s' copied to clipboard"
 #~ msgstr "%s'クリップボードにコピー "
+
+#~ msgid "Change the type of geometry elements"
+#~ msgstr "ジオメトリエレメントのタイプ変更"
+
+#~ msgid ""
+#~ "Creates and adds a new attribute table to a given layer of an existing "
+#~ "vector map."
+#~ msgstr "ベクトルマップの指定されたレイヤーに新しい属性テーブルを作成・追加"
+
+#~ msgid "coarse:"
+#~ msgstr "粗さ:"
+
+#~ msgid "fine:"
+#~ msgstr "細かさ:  "
+
+#~ msgid "Wire color:"
+#~ msgstr "ワイヤー色："
+
+#~ msgid "Icon size:"
+#~ msgstr "アイコンサイズ："
+
+#~ msgid "width:"
+#~ msgstr "幅："
+
+#~ msgid "symbol:"
+#~ msgstr "シンボル："
+
+#~ msgid "color:"
+#~ msgstr "カラー："
