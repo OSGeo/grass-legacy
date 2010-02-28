@@ -14,8 +14,8 @@ msgstr ""
 "Project-Id-Version: grassmods_ja\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2010-02-25 12:01+0100\n"
-"PO-Revision-Date: 2010-02-18 21:18+0900\n"
-"Last-Translator: ueda <nao@locapoint.com>\n"
+"PO-Revision-Date: 2010-02-19 17:56+0900\n"
+"Last-Translator: AkiraTaniguchi <taniguti@apptec.co.jp>\n"
 "Language-Team: Japanese <grass-translations@lists.osgeo.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -604,7 +604,7 @@ msgstr "エラー:3Dラスターマップを閉じれません"
 
 #: ../raster3d/r3.out.ascii/main.c:76
 msgid "3d raster map to be converted to ASCII"
-msgstr "3DラスターマップはASCIIテキストファイルに変換されます"
+msgstr "ASCIIテキストファイルに変換する3Dラスターマップ"
 
 #: ../raster3d/r3.out.ascii/main.c:83
 msgid "Name for ASCII output file"
@@ -1593,7 +1593,7 @@ msgstr ""
 #: ../raster3d/r3.to.rast/main.c:304
 #, c-format
 msgid "Creating %i raster maps"
-msgstr " %i ラスターマップを作成中"
+msgstr " %i ラスターマップを作成"
 
 #: ../raster3d/r3.to.rast/main.c:310
 #, c-format
@@ -3099,8 +3099,7 @@ msgstr "可能であれば，メタデータキーを出力するデータセッ
 msgid ""
 "Export a raster map to a text file as x,y,z values based on cell centers."
 msgstr ""
-"セルの中心をベースとするx,y,z 値として、テキストファイルをラスターマップにエ"
-"クスポート"
+"をラスターマップをセルの中心のx,y,z 値としたテキストファイルにエクスポート"
 
 #: ../locale/scriptstrings/r.out.xyz_to_translate.c:4
 #: ../raster/r.stats/main.c:114
@@ -6003,11 +6002,11 @@ msgstr "NULL値データセルを表すストリング"
 
 #: ../raster/r.in.ascii/main.c:104
 msgid "Integer values are imported"
-msgstr "整数データはインポートされています"
+msgstr "整数データをインポート"
 
 #: ../raster/r.in.ascii/main.c:108
 msgid "Floating point values are imported"
-msgstr "浮動小数点値はインポートされています"
+msgstr "浮動小数点データをインポート"
 
 #: ../raster/r.in.ascii/main.c:112
 msgid "Double floating point values are imported"
@@ -6015,7 +6014,7 @@ msgstr "倍精度の浮動小数点データをインポート "
 
 #: ../raster/r.in.ascii/main.c:117
 msgid "SURFER (Golden Software) ASCII file will be imported"
-msgstr "SURFER(Golden Software) ASCII ファイルはインポートされます"
+msgstr "SURFER(Golden Software) ASCII ファイルをインポート"
 
 #: ../raster/r.in.ascii/main.c:128 ../raster/r.in.ascii/main.c:155
 #: ../raster/r.resamp.rst/main.c:616 ../raster/r.resamp.rst/main.c:628
@@ -7741,7 +7740,7 @@ msgstr "アッパーセルを埋める値、既定値はNULL値"
 
 #: ../raster/r.to.rast3elev/main.c:218
 msgid "The value to fill the lower cells, default is null"
-msgstr "ロウワーセルを埋める値、既定値はNULL値"
+msgstr "ローワーセルを埋める値、既定値はNULL値"
 
 #: ../raster/r.to.rast3elev/main.c:223
 msgid "Use the input map values to fill the upper cells"
@@ -7749,7 +7748,7 @@ msgstr "入力マップの値を使ってアッパーセルを埋める"
 
 #: ../raster/r.to.rast3elev/main.c:228
 msgid "Use the input map values to fill the lower cells"
-msgstr "入力マップの値を使ってロウワーセルを埋める  "
+msgstr "入力マップの値を使ってローワーセルを埋める  "
 
 #: ../raster/r.to.rast3elev/main.c:276
 msgid "Could not get raster row from input map"
@@ -7781,7 +7780,7 @@ msgstr "不正なローワー値です"
 
 #: ../raster/r.to.rast3elev/main.c:498 ../raster/r.to.rast3/main.c:285
 msgid "Creating 3D raster map"
-msgstr "3Dラスターマップを作成中"
+msgstr "3Dラスターマップを作成"
 
 #: ../raster/r.statistics/o_kurt.c:96
 msgid "o_kurto: No data in array"
@@ -11269,7 +11268,7 @@ msgstr "標高 (標高マップの指定無しの場合)  "
 msgid ""
 "Create VTK point data instead of VTK cell data (if no elevation map is given)"
 msgstr ""
-"VTK ポイントデータを VTK セルデータの代わりに作成中（標高マップがない場合）"
+"VTK ポイントデータを VTK セルデータの代わりに作成（標高マップがない場合）"
 
 #: ../raster/r.out.vtk/parameters.c:76
 msgid ""
@@ -12089,20 +12088,19 @@ msgstr "エリアフィーチャの平坦なコーナー"
 #: ../raster/r.to.vect/main.c:73
 msgid "Use raster values as categories instead of unique sequence (CELL only)"
 msgstr ""
-"唯一のシーケンスの代わりにラスター値をカテゴリーとして使用してください (セル "
-"のみ)  "
+"ユニークなシーケンスの代わりにラスター値をカテゴリーとして使用 (セル のみ)  "
 
 #: ../raster/r.to.vect/main.c:78
 msgid ""
 "Write raster values as z coordinate. Table is not created. Currently "
 "supported only for points."
 msgstr ""
-"ラスタ値をz座標として書き込みます. 表は作成されていません. 現在はポイントのみ"
-"サポートされています.  "
+"ラスタ値をz座標として書き込む. テーブルは作成されていません. 現在はポイントの"
+"みサポートされています.  "
 
 #: ../raster/r.to.vect/main.c:84
 msgid "Do not build vector topology (use with care for massive point export)"
-msgstr "ベクトルトポロジーを作成しないでください (大量ポイント出力に使用)  "
+msgstr "ベクトルトポロジーを作成しない(大量ポイント出力に使用)  "
 
 #: ../raster/r.to.vect/main.c:89
 msgid "Quiet - Do not show progress"
@@ -13259,7 +13257,7 @@ msgstr "旧整数データの範囲は %d から %d までです"
 
 #: ../raster/r.quant/main.c:43
 msgid "Produces the quantization file for a floating-point map."
-msgstr "浮動小数点マップの量子化ファイルを作成中"
+msgstr "浮動小数点マップの量子化ファイルを作成"
 
 #: ../raster/r.quant/main.c:51
 msgid "Base map to take quant rules from"
@@ -14723,7 +14721,7 @@ msgstr "<%s> に書き込めません"
 
 #: ../raster/r.to.rast3/main.c:77
 msgid "2d raster maps which represent the slices"
-msgstr "断片を表す2Dラスターマップ"
+msgstr "断面を定義する2Dラスターマップ"
 
 #: ../raster/r.to.rast3/main.c:83
 msgid "Use G3D mask (if exists) with output map"
@@ -15540,7 +15538,7 @@ msgstr "フラッグに続く頂点がありません"
 #: ../vector/v.in.dxf/add_text.c:35 ../vector/v.in.dxf/add_3dface.c:29
 #, c-format
 msgid "Layer %d: %s\n"
-msgstr "ﾚｲﾔｰ %d: %s\n"
+msgstr "レイヤー %d: %s\n"
 
 #: ../vector/v.in.dxf/write_vect.c:58 ../vector/v.in.ascii/points.c:401
 #: ../vector/v.in.sites/main.c:240 ../vector/v.mkgrid/main.c:298
@@ -15573,7 +15571,7 @@ msgstr "HEADER検索中にファイルを終了しました"
 #: ../vector/v.in.dxf/main.c:62
 msgid "Converts files in DXF format to GRASS vector map format."
 msgstr ""
-"ベDXFフォーマットのファイルをGRASSベクトルマップフォーマットに変換します. "
+"DXFフォーマットのファイルをGRASSベクトルマップフォーマットに変換します. "
 
 #: ../vector/v.in.dxf/main.c:66
 msgid "Ignore the map extent of DXF file"
@@ -15736,11 +15734,11 @@ msgstr "逆変換； 3D ベクトルフィーチャーを 2D へ"
 
 #: ../vector/v.to.3d/args.c:15
 msgid "Do not copy table"
-msgstr "テーブルをコピーしないで下さい"
+msgstr "テーブルをコピーしない"
 
 #: ../vector/v.to.3d/args.c:30
 msgid "Fixed height for 3D vector features"
-msgstr "3D ベクトルフィーチャーの高度を固定"
+msgstr "3D ベクトルフィーチャーの高度を指定"
 
 #: ../vector/v.to.3d/args.c:31 ../vector/v.to.3d/args.c:34
 #: ../vector/v.to.3d/args.c:41
@@ -15966,7 +15964,7 @@ msgstr "ドロップしています <%s>  "
 #: ../vector/lidar/v.outlier/main.c:433
 #: ../vector/lidar/v.surf.bspline/main.c:703
 msgid "Auxiliar table could not be dropped"
-msgstr "Auxiliar表はドロップできませんでした"
+msgstr "Auxiliarテーブルはドロップできませんでした"
 
 #: ../vector/lidar/lidarlib/TcholBand.c:28
 msgid "Decomposition failed"
@@ -16424,7 +16422,7 @@ msgstr "Arc レイヤー"
 
 #: ../vector/v.net.salesman/main.c:119
 msgid "Node layer (used for cities)"
-msgstr "ノードﾚｲﾔｰ (都市に使用)"
+msgstr "ノードレイヤー (都市に使用)"
 
 #: ../vector/v.net.salesman/main.c:125 ../vector/v.net.steiner/main.c:375
 msgid "Arcs' cost column (for both directions)"
@@ -17153,7 +17151,7 @@ msgstr "GRASSバイナリベクトルマップをGRASS ASCIIベクトルマッ�
 
 #: ../vector/v.out.ascii/out.c:54
 msgid "Path to resulting ASCII file or ASCII vector name if '-o' is defined"
-msgstr "'-o' が定義されればASCIIファイルまたはASCIIベクトル名になるパス"
+msgstr "ASCIIベクトル名になるパス '-o' が定義されればASCIIファイル名"
 
 #: ../vector/v.out.ascii/out.c:63 ../general/g.transform/main.c:278
 msgid "Output format"
@@ -17173,7 +17171,7 @@ msgstr "旧 (バージョン 4) ASCII ファイルを作成します  "
 
 #: ../vector/v.out.ascii/out.c:96
 msgid "Only export points falling within current 3D region (points mode)"
-msgstr "エクスポートポイントのみこの3D領域 (ポイントモード)に入ります  "
+msgstr "現在の3D領域内のポイントのみエクスポート (ポイントモード)"
 
 #: ../vector/v.out.ascii/out.c:111
 #, c-format
@@ -19203,7 +19201,7 @@ msgid ""
 "the table is overwritten."
 msgstr ""
 "テーブル名と出力するベクトルマップ名は別名にする必要があります．そうでない場"
-"合，表は上書きされます"
+"合，テーブルは上書きされます"
 
 #: ../vector/v.transform/main.c:231
 #, c-format
@@ -19425,7 +19423,7 @@ msgstr "ベクトル列を書き込み中、、、"
 
 #: ../vector/v.mkgrid/main.c:65
 msgid "Creates a GRASS vector map of a user-defined grid."
-msgstr "指定された格子のGRASSベクトルマップを作成中"
+msgstr "指定された格子のGRASSベクトルマップを作成"
 
 #: ../vector/v.mkgrid/main.c:76
 msgid "Number of rows and columns in grid"
@@ -19481,7 +19479,7 @@ msgstr "無効な距離"
 
 #: ../vector/v.mkgrid/main.c:261
 msgid "Creating centroids..."
-msgstr "セントロイドを作成中、、、"
+msgstr "セントロイドを作成中..."
 
 #: ../vector/v.convert/old2new.c:31
 msgid "Failed opening input dig file."
@@ -19547,7 +19545,8 @@ msgstr "入力するベクトルマップのエンディアン"
 
 #: ../vector/v.convert/att.c:36
 msgid "No category labels (dig_cats) found, no table created"
-msgstr "カテゴリーラベル (dig_cats) がありません．表は作成されませんでした"
+msgstr ""
+"カテゴリーラベル (dig_cats) がありません．テーブルは作成されませんでした"
 
 #: ../vector/v.convert/att.c:41
 msgid "Unable to open dig_cats file"
@@ -19720,7 +19719,7 @@ msgstr "ポイントの数は > 0 でなければなりません (%d 与えら�
 
 #: ../vector/v.random/main.c:206
 msgid "Table should contain only two columns"
-msgstr "表は2つ以上の列を含めません"
+msgstr "テーブルは2つ以上の列を含めません"
 
 #: ../vector/v.random/main.c:219
 msgid ""
@@ -21754,7 +21753,7 @@ msgstr "ベクトルマップ <%s> のラインで問題を処理，集計中、
 
 #: ../vector/v.to.rast/vect2rast.c:199
 msgid "Creating support files for raster map..."
-msgstr "ラスターマップをサポートするファイルを作成中、、、"
+msgstr "ラスターマップをサポートするファイルを作成中..."
 
 #: ../vector/v.to.rast/vect2rast.c:206
 msgid "Color can be updated from database only if use=attr"
@@ -21962,7 +21961,7 @@ msgstr "サポートするOGRベクトルフォーマットのひとつに変換
 
 #: ../vector/v.out.ogr/main.c:96
 msgid "Feature type. Combination of types is not supported by all formats."
-msgstr "地物の型． 複合型は全てのフォーマットにサポートされていません"
+msgstr "地物の型． 複合型は全てのフォーマットでサポートされる訳ではありません"
 
 #: ../vector/v.out.ogr/main.c:104
 msgid "OGR output datasource name"
@@ -22002,8 +22001,8 @@ msgid ""
 "Export features with category (labeled) only. Otherwise all features are "
 "exported"
 msgstr ""
-"地物をカテゴリー（ラベル付）だけを付けてエクスポート，もしくは全ての地物をエ"
-"クスポート"
+"地物をカテゴリー（ラベル付）だけを付けてエクスポート チェックしないと全ての地"
+"物をエクスポート"
 
 #: ../vector/v.out.ogr/main.c:157
 msgid "Use ESRI-style .prj file format (applies to Shapefile output only)"
@@ -22855,7 +22854,7 @@ msgstr ""
 
 #: ../vector/v.extract/main.c:157
 msgid "If new >= 0, table is not copied"
-msgstr "新しい >= 0 の場合, 表はコピーされていません"
+msgstr "新しい >= 0 の場合, テーブルはコピーされていません"
 
 #: ../vector/v.extract/main.c:175
 msgid ""
@@ -23021,7 +23020,7 @@ msgstr "ラスターマップ <%s (%s の)> エリアの輪郭を処理中、、
 #: ../ps/ps.map/ps_clrtbl.c:30 ../ps/ps.map/ps_fclrtbl.c:46
 #, c-format
 msgid "Creating color table for <%s in %s>..."
-msgstr "<%s (%s 内)> のカラーテーブルを作成中、、、"
+msgstr "<%s (%s 内)> のカラーテーブルを作成中..."
 
 #: ../ps/ps.map/ps_clrtbl.c:34 ../display/d.histogram/main.c:168
 #: ../display/d.legend/main.c:269
@@ -23159,7 +23158,7 @@ msgstr "ハードコピーのポストスクリプト マップ 出力ユーテ�
 
 #: ../ps/ps.map/main.c:105
 msgid "Rotate plot 90 degrees"
-msgstr "プロットを90度回転"
+msgstr "出力を90度回転"
 
 #: ../ps/ps.map/main.c:110
 msgid "List paper formats ( name width height left right top bottom(margin) )"
@@ -23259,8 +23258,8 @@ msgid ""
 "A simple utility for converting bearing and distance measurements to "
 "coordinates and vice versa."
 msgstr ""
-"地心座標（極座標）をデカルト座標（緯度/経度）へ変換する単純ユニティー，また逆"
-"も同じ"
+"地心座標（極座標）をデカルト座標（緯度/経度）へ変換（逆変換）する単純ユーティ"
+"リティ"
 
 #: ../misc/m.cogo/main.c:228
 msgid "It assumes a cartesian coordinate system"
@@ -25869,8 +25868,7 @@ msgstr "ラスターマップを読み込めません"
 
 #: ../display/d.profile/main.c:63
 msgid "Interactive profile plotting utility with optional output."
-msgstr ""
-"オプションの出力のあるインタラクティブプロフィールプロットユーティリティー"
+msgstr "オプションの出力のあるインタラクティブプロフィール出力ユーティリティー"
 
 #: ../display/d.profile/main.c:71
 msgid "Raster map to be profiled"
@@ -26821,7 +26819,7 @@ msgstr "表示 "
 
 #: ../display/d.vect/main.c:148
 msgid "Layer number (if -1, all layers are displayed)"
-msgstr "レイヤー数 (-1であれば, すべてのﾚｲﾔｰは表示されます)  "
+msgstr "レイヤー数 (-1であれば, すべてのレイヤーは表示されます)  "
 
 #: ../display/d.vect/main.c:167 ../display/d.vect/main.c:177
 #: ../display/d.vect/main.c:264 ../display/d.vect/main.c:274
@@ -26879,7 +26877,7 @@ msgstr "ラベル "
 
 #: ../display/d.vect/main.c:239
 msgid "Layer number for labels (default: the given layer number)"
-msgstr "ラベルのレイヤー数 (デフォルト: 与えられたﾚｲﾔｰ数)  "
+msgstr "ラベルのレイヤー数 (デフォルト: 与えられたレイヤー数)  "
 
 #: ../display/d.vect/main.c:245
 msgid "Name of column to be displayed"
@@ -26949,7 +26947,8 @@ msgid ""
 "Random colors according to category number (or layer number if 'layer=-1' is "
 "given)"
 msgstr ""
-"分類数によるランダム色 (またはレイヤー数  'ﾚｲﾔｰ=-1' が与えられている場合)  "
+"分類数によるランダム色 (またはレイヤー数  'レイヤー=-1' が与えられている場"
+"合)  "
 
 #: ../display/d.vect/main.c:359
 msgid "Use values from 'cats' option as feature id"
@@ -27007,7 +27006,7 @@ msgstr " cat オプションにおけるエラー %d "
 
 #: ../display/d.vect/main.c:638 ../display/d.thematic.area/main.c:402
 msgid "Plotting ..."
-msgstr "プロットしています ..."
+msgstr "出力しています ..."
 
 #: ../display/d.vect/main.c:646 ../display/d.thematic.area/main.c:409
 msgid ""
@@ -28497,7 +28496,7 @@ msgstr "間違ったタイプ： %s"
 
 #: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:1021
 msgid "Creating support files..."
-msgstr "サポートファイルを作成中、、、"
+msgstr "サポートファイルを作成中..."
 
 #: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:1023
 #, c-format
@@ -29828,12 +29827,11 @@ msgstr "新しいロケーション名 (ロケーションパスではありま�
 
 #: ../general/g.mapset/main.c:71
 msgid "New GISDBASE (full path to the directory where the new location is)"
-msgstr ""
-"新しいGISDBASE (新しゅうロケーションのあるディレクトリーへのフルパス)  "
+msgstr "新しいGISDBASE (新しいロケーションのあるディレクトリーへのフルパス)  "
 
 #: ../general/g.mapset/main.c:75
 msgid "Create mapset if it doesn't exist"
-msgstr "ない場合はマップセットを作成してください"
+msgstr "マップセットがない場合はマップセットを作成"
 
 #: ../general/g.mapset/main.c:80
 msgid "List available mapsets"
@@ -29899,6 +29897,9 @@ msgstr ""
 "コマンドで履歴を切り替えることができます:\n"
 "履歴 -S; 履歴 -L %s/.履歴; setenv histfile=%s/.履歴"
 
+msgid "%s' must be greater than zero; using %s=255"
+msgstr "%s はゼロ以上が条件; %s=255 を使用中 "
+
 #~ msgid "Band to select"
 #~ msgstr "選択するバンド"
 
@@ -29935,5 +29936,22 @@ msgstr ""
 #~ msgid "3-d data in dxf file. Polyline_flag: %d"
 #~ msgstr " dxf fileの3-d データ. Polyline_flag: %d  "
 
-#~ msgid "%s' must be greater than zero; using %s=255"
-#~ msgstr "%s はゼロ以上が条件; %s=255 を使用中 "
+#~ msgid "No raster nor vector output"
+#~ msgstr "ラスターもベクトル出力もありません"
+
+#~ msgid "No data within this subzone. Consider changing the spline step."
+#~ msgstr ""
+#~ "このサブゾーン内にデータはありません. スプラインステップを変更してみてくだ"
+#~ "さい.  "
+
+#~ msgid "Allocation memory for bilinear interpolation"
+#~ msgstr "双線形補間のための割り当てメモリー"
+
+#~ msgid "Allocation memory for bicubic interpolation"
+#~ msgstr "バイキュービック補間のための割り当てメモリー  "
+
+#~ msgid "Mean's calculation"
+#~ msgstr "平均値の計算"
+
+#~ msgid "Bad format in initial exposusre station file for group [%s]"
+#~ msgstr "グループ [%s]の初期暴露駅ファイルの不正なフォーマット"
