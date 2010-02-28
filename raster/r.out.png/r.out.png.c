@@ -194,8 +194,6 @@ int main(int argc, char *argv[])
     ret = G_str_to_color(DEFAULT_BG_COLOR, &def_red, &def_grn, &def_blu);
 #endif
 
-/*    png_set_background() */
-
     /*G_get_set_window (&w); *//* 10/99 MN: check for current region */
     G_get_window(&w);
 
@@ -269,6 +267,11 @@ int main(int argc, char *argv[])
 
     png_set_compression_level(png_ptr, png_compr);
 
+/* FIXME: this should be set
+    if(do_alpha)
+	png_set_background(png_structp png_ptr, png_color_16p background_color,
+	    int background_gamma_code, int need_expand, double background_gamma);
+*/
 
     G_verbose_message(_("Converting <%s>..."), rast->answer);
 
