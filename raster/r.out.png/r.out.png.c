@@ -271,8 +271,8 @@ int main(int argc, char *argv[])
     if(do_alpha) {
 	png_color_16p background_color;
 	background_color->red = (png_uint_16)def_red;
-	background_color->blue = (png_uint_16)def_grn;
-	background_color->green = (png_uint_16)def_blu;
+	background_color->green = (png_uint_16)def_grn;
+	background_color->blue = (png_uint_16)def_blu;
 	png_set_bKGD(png_ptr, info_ptr, background_color);
     }
 */
