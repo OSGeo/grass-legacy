@@ -83,7 +83,7 @@ int main(int argc, char **argv)
     int r, g, b;
     int has_color, has_fcolor;
     struct color_rgb color, fcolor;
-    int size;
+    double size;
     int default_width;
     double width_scale;
     int verbose = FALSE;
@@ -224,10 +224,12 @@ int main(int argc, char **argv)
 
     size_opt = G_define_option();
     size_opt->key = "size";
-    size_opt->type = TYPE_INTEGER;
+    size_opt->type = TYPE_DOUBLE;
     size_opt->answer = "5";
     size_opt->guisection = _("Symbols");
-    size_opt->description = _("Symbol size");
+    size_opt->label = _("Symbol size");
+    size_opt->description =
+	_("When used with the size_column option this becomes the scale factor");
 
     sizecolumn_opt = G_define_standard_option(G_OPT_COLUMN);
     sizecolumn_opt->key = "size_column";
@@ -479,7 +481,7 @@ int main(int argc, char **argv)
 	G_fatal_error(_("Unknown color: '%s'"), fcolor_opt->answer);
     }
 
-    size = atoi(size_opt->answer);
+    size = atof(size_opt->answer);
 
     /* Make sure map is available */
     mapset = G_find_vector2(map_name, "");
