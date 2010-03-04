@@ -25,6 +25,7 @@ int PS_colortable(void)
     double col_width;
     int do_color;
     double grey_color_val;
+    RASTER_MAP_TYPE rast_type;
 
     /* let user know what's happenning */
     G_message(_("Creating color table for <%s in %s>..."),
@@ -37,6 +38,8 @@ int PS_colortable(void)
 
     if (G_read_colors(ct.name, ct.mapset, &colors) == -1)
 	G_warning(_("Unable to read colors for colorbar"));
+
+    rast_type = G_raster_map_type(ct.name, ct.mapset);
 
     do_color = (PS.grey == 0 && PS.level == 2);
 
@@ -86,9 +89,12 @@ int PS_colortable(void)
 	    i++;		/* step over 'no data' */
 	if (!i)
 	    fprintf(PS.fp, "(%s)\n", "no data");
-	else
+	else {
 	    fprintf(PS.fp, "(%s)\n",
 		    G_get_ith_d_raster_cat(&PS.cats, i - 1, &dmin, &dmax));
+	    G_debug(5, "i=%d  dmin=%f  dmax=%f  catlabel=[%s]", i, dmin, dmax,
+		    G_get_ith_d_raster_cat(&PS.cats, i - 1, &dmin, &dmax));
+	}
     }
     fprintf(PS.fp, "] def\n");
 
@@ -134,8 +140,10 @@ int PS_colortable(void)
 	    /* get the data range */
 
 	    /* fill box and outline in black */
-	    if (i)
+	    if (i) {
 		label = G_get_ith_d_raster_cat(&PS.cats, i - 1, &dmin, &dmax);
+		G_debug(5, "j=%d i=%d label=[%s]", j, i, label);
+	    }
 
 	    x1 = l + (double)j *72.0 * col_width;
 
@@ -147,8 +155,21 @@ int PS_colortable(void)
 		/* set box fill color */
 		if (!i)
 		    G_get_null_value_color(&R, &G, &B, &colors);
-		else
-		    G_get_d_raster_color(&dmin, &R, &G, &B, &colors);
+		else {
+		    if (rast_type == CELL_TYPE) {
+			CELL cmin = (CELL)dmin;
+			G_get_c_raster_color(&cmin, &R, &G, &B, &colors);
+		    }
+		    else if (rast_type == FCELL_TYPE) {
+			FCELL fmin = (FCELL)dmin;
+			G_get_f_raster_color(&fmin, &R, &G, &B, &colors);
+		    }
+		    else if (rast_type == DCELL_TYPE)
+			G_get_raster_color(&dmin, &R, &G, &B, &colors, rast_type);
+		    else G_fatal_error("Please contact development team");
+
+		    G_debug(5, "    dmin=%f  RGB=%d:%d:%d", dmin, R, G, B);
+		}
 
 		if (do_color)
 		    fprintf(PS.fp, "%.3f %.3f %.3f C\n",
