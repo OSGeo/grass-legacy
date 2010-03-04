@@ -112,9 +112,6 @@ if [ "$1" != "@ARGS_PARSED@" ] ; then
 fi
 
 
-GRASS_VERBOSE=0
-export GRASS_VERBOSE
-
 cleanup()
 {
    if [ -n "$TMP" ] ; then
@@ -123,11 +120,11 @@ cleanup()
    eval `g.findfile elem=windows file="tmp_vcolors.$$" | grep '^name='`
    if [ -n "$name" ] ; then
       unset WIND_OVERRIDE
-      g.remove region="tmp_vcolors.$$"
+      g.remove region="tmp_vcolors.$$" --quiet
    fi
    eval `g.findfile elem=cell file="tmp_colr_$$" | grep '^name='`
    if [ -n "$name" ] ; then
-      g.remove rast="tmp_colr_$$"
+      g.remove rast="tmp_colr_$$" --quiet
    fi
 }
 trap "cleanup" 2 3 15
@@ -198,7 +195,7 @@ fi
 
 #### column checks
 # check input data column 
-NCOLUMN_TYPE=`v.info -c map="$GIS_OPT_MAP" layer="$GIS_OPT_LAYER" | grep -i "|$GIS_OPT_COLUMN$" | cut -f1 -d'|'`
+NCOLUMN_TYPE=`v.info -c map="$GIS_OPT_MAP" layer="$GIS_OPT_LAYER" --quiet | grep -i "|$GIS_OPT_COLUMN$" | cut -f1 -d'|'`
 if [ -z "$NCOLUMN_TYPE" ] ; then
     g.message -e "Column <$GIS_OPT_COLUMN> not found"
     exit 1
@@ -210,7 +207,7 @@ fi
 
 # check if GRASSRGB column exists, make it if it doesn't
 TABLE=`v.db.connect -g map="$GIS_OPT_MAP" layer="$GIS_OPT_LAYER" fs=";" | grep "^$GIS_OPT_LAYER;" | cut -f2 -d';'`
-COLUMN_TYPE=`v.info -c map="$GIS_OPT_MAP" layer="$GIS_OPT_LAYER" | grep -i "|$GIS_OPT_RGB_COLUMN$" | cut -f1 -d'|'`
+COLUMN_TYPE=`v.info -c map="$GIS_OPT_MAP" layer="$GIS_OPT_LAYER" --quiet | grep -i "|$GIS_OPT_RGB_COLUMN$" | cut -f1 -d'|'`
 if [ -z "$COLUMN_TYPE" ] ; then
     # RGB Column not found, create it
     g.message "Creating column <$GIS_OPT_RGB_COLUMN> ..."
@@ -241,7 +238,7 @@ else
    MINVAL=`v.db.select map="$GIS_OPT_MAP" column="$GIS_OPT_COLUMN" layer="$GIS_OPT_LAYER" | sort -n | grep '^[-0-9]' | head -n 1`
    MAXVAL=`v.db.select map="$GIS_OPT_MAP" column="$GIS_OPT_COLUMN" layer="$GIS_OPT_LAYER" | sort -n | grep '^[-0-9]' | tail -n 1`
 fi
-g.message message=" min=[$MINVAL]  max=[$MAXVAL]"
+g.message -v message=" min=[$MINVAL]  max=[$MAXVAL]"
 if [ -z "$MINVAL" ] || [ -z "$MAXVAL" ] ; then
    g.message -e "Scanning data range"
    exit 1
@@ -274,7 +271,7 @@ if [ $GIS_FLAG_N -eq 1 ] ; then
 else
    FLIP_FLAG=""
 fi
-r.colors map="tmp_colr_$$" "$COLOR_CMD" $FLIP_FLAG
+r.colors map="tmp_colr_$$" "$COLOR_CMD" $FLIP_FLAG --quiet
 
 
 
@@ -318,7 +315,7 @@ fi
 
 
 if [ $GIS_FLAG_S -eq 1 ] ; then
-   g.rename rast="tmp_colr_$$","vcolors_$$"
+   g.rename rast="tmp_colr_$$","vcolors_$$" --quiet
    g.message "Raster map containing color rules saved to <vcolors_$$>"
    # TODO save full v.colors command line history
    r.support map="vcolors_$$" history="" \
@@ -329,7 +326,7 @@ if [ $GIS_FLAG_S -eq 1 ] ; then
    r.support map="vcolors_$$" \
 	history="RGB saved into <$GIS_OPT_RGB_COLUMN> using <$GIS_OPT_COLOR$GIS_OPT_RASTER$GIS_OPT_RULES>"
 else
-   g.remove rast="tmp_colr_$$"
+   g.remove rast="tmp_colr_$$" --quiet
 fi
 cleanup
 
