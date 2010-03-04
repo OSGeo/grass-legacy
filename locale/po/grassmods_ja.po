@@ -14,7 +14,7 @@ msgstr ""
 "Project-Id-Version: grassmods_ja\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2010-02-25 12:01+0100\n"
-"PO-Revision-Date: 2010-02-19 17:56+0900\n"
+"PO-Revision-Date: 2010-03-03 14:00+0900\n"
 "Last-Translator: AkiraTaniguchi <taniguti@apptec.co.jp>\n"
 "Language-Team: Japanese <grass-translations@lists.osgeo.org>\n"
 "MIME-Version: 1.0\n"
@@ -4332,7 +4332,6 @@ msgid "Name of non-file GDAL data source"
 msgstr "非ファイルGDAL データソース名"
 
 #: ../raster/r.external/main.c:530
-#, fuzzy
 msgid "Band to select (default: all)"
 msgstr "選択するバンド(デフォルト:すべてのバンド)"
 
@@ -15758,22 +15757,19 @@ msgstr "ポイントの高度を保管するため，逆変換に使用できま
 #: ../vector/lidar/v.lidar.edgedetection/edgedetection.c:308
 #: ../vector/lidar/v.lidar.edgedetection/edgedetection.c:326
 #: ../vector/lidar/v.lidar.edgedetection/edgedetection.c:356
-#, fuzzy
 msgid "Impossible to read from aux table"
-msgstr "データベース読み込み不可能  "
+msgstr "外部テーブルからの読み込み不可能  "
 
 #: ../vector/lidar/v.lidar.edgedetection/edgedetection.c:237
 #: ../vector/lidar/v.lidar.edgedetection/edgedetection.c:313
-#, fuzzy
 msgid "Impossible to update aux table"
-msgstr "データベースアップデート不可能 "
+msgstr "外部テーブルのアップデート不可能 "
 
 #: ../vector/lidar/v.lidar.edgedetection/edgedetection.c:250
 #: ../vector/lidar/v.lidar.edgedetection/edgedetection.c:262
 #: ../vector/lidar/v.lidar.edgedetection/edgedetection.c:383
-#, fuzzy
 msgid "Impossible to write to aux table"
-msgstr "データベースにおいて書き込み不可能"
+msgstr "外部テーブルへの書き込み不可能"
 
 #: ../vector/lidar/v.lidar.edgedetection/main.c:78
 msgid "vector, LIDAR, edges"
@@ -15865,14 +15861,13 @@ msgstr ""
 #: ../vector/lidar/v.lidar.correction/main.c:172
 #: ../vector/lidar/v.outlier/main.c:174
 #: ../vector/lidar/v.surf.bspline/main.c:213
-#, fuzzy
 msgid "Old auxiliar table could not be dropped"
-msgstr "Auxiliar表はドロップできませんでした"
+msgstr "古いAuxiliarテーブルを削除できませんでした"
 
 #: ../vector/lidar/v.lidar.edgedetection/main.c:227
 #: ../vector/lidar/v.lidar.correction/main.c:190
 #: ../vector/lidar/v.outlier/main.c:186
-#, fuzzy, c-format
+#, c-format
 msgid "Input vector map <%s> is not 3D!"
 msgstr "ベクトルマップ <%s> は 3D ではありません"
 
@@ -15880,9 +15875,8 @@ msgstr "ベクトルマップ <%s> は 3D ではありません"
 #: ../vector/lidar/v.lidar.correction/main.c:200
 #: ../vector/lidar/v.outlier/main.c:196
 #: ../vector/lidar/v.surf.bspline/main.c:241
-#, fuzzy
 msgid "No points in current region!"
-msgstr "現在の領域中のポイントのみを使用"
+msgstr "カレントリージョンにポイントがありません"
 
 #: ../vector/lidar/v.lidar.edgedetection/main.c:260
 #, c-format
@@ -15900,7 +15894,7 @@ msgstr "データベースに <%s> 補間を作成できませんでした.  "
 #: ../vector/lidar/v.surf.bspline/main.c:415
 #, c-format
 msgid "adjusted EW splines %d"
-msgstr ""
+msgstr "東西のスプラインの調整 %d"
 
 #: ../vector/lidar/v.lidar.edgedetection/main.c:299
 #: ../vector/lidar/v.lidar.correction/main.c:279
@@ -15908,21 +15902,20 @@ msgstr ""
 #: ../vector/lidar/v.surf.bspline/main.c:416
 #, c-format
 msgid "adjusted NS splines %d"
-msgstr ""
+msgstr "南北のスプラインの調整 %d"
 
 #: ../vector/lidar/v.lidar.edgedetection/main.c:354
 #: ../vector/lidar/v.lidar.correction/main.c:334
 #: ../vector/lidar/v.outlier/main.c:332
 #: ../vector/lidar/v.lidar.growing/main.c:249
 #: ../vector/lidar/v.surf.bspline/main.c:480
-#, fuzzy, c-format
+#, c-format
 msgid "subregion %d of %d"
-msgstr " %d の %d が通りました：  "
+msgstr "サブリージョン %d の %d　"
 
 #: ../vector/lidar/v.lidar.edgedetection/main.c:396
-#, fuzzy
 msgid "Allocating memory for bilinear interpolation"
-msgstr "双線形補間のための割り当てメモリー"
+msgstr "双線形補間のためのメモリー割り当て"
 
 #: ../vector/lidar/v.lidar.edgedetection/main.c:417
 #: ../vector/lidar/v.lidar.correction/main.c:403
@@ -15931,9 +15924,8 @@ msgid "Bilinear interpolation"
 msgstr "バイニリア補間"
 
 #: ../vector/lidar/v.lidar.edgedetection/main.c:429
-#, fuzzy
 msgid "Allocating memory for bicubic interpolation"
-msgstr "バイキュービック補間のための割り当てメモリー  "
+msgstr "バイキュービック補間のためのメモリー割り当て"
 
 #: ../vector/lidar/v.lidar.edgedetection/main.c:434
 msgid "Bicubic interpolation"
@@ -15947,7 +15939,6 @@ msgstr "点分類"
 #: ../vector/lidar/v.lidar.correction/main.c:429
 #: ../vector/lidar/v.outlier/main.c:423
 #: ../vector/lidar/v.surf.bspline/main.c:681
-#, fuzzy
 msgid "No data within this subregion. Consider changing the spline step."
 msgstr ""
 "このサブゾーン内にデータはありません. スプラインステップを変更してみてくださ"
@@ -15984,9 +15975,9 @@ msgstr "<%s> はデータベースに作成されませんでた"
 #: ../vector/lidar/lidarlib/raster.c:108 ../vector/lidar/lidarlib/raster.c:125
 #: ../vector/lidar/lidarlib/raster.c:140 ../vector/lidar/lidarlib/raster.c:153
 #: ../vector/lidar/lidarlib/raster.c:168 ../vector/lidar/lidarlib/raster.c:181
-#, fuzzy, c-format
+#, c-format
 msgid "Unable to access table <%s>"
-msgstr "表 <%s> を作成できません"
+msgstr "テーブル <%s> を作成できません"
 
 #: ../vector/lidar/v.lidar.correction/correction.c:96
 #: ../vector/lidar/v.lidar.correction/correction.c:130
@@ -16073,7 +16064,6 @@ msgid "npoints = %d, nterrain = %d"
 msgstr "nポイント = %d, n地形 = %d  "
 
 #: ../vector/lidar/v.lidar.correction/main.c:372
-#, fuzzy
 msgid "Mean calculation"
 msgstr "平均値の計算"
 
@@ -16113,14 +16103,13 @@ msgid "Unable to open vector map <%s> at the topological level"
 msgstr "トポロジカル水準でベクトルマップ <%s> を開けません"
 
 #: ../vector/lidar/v.outlier/main.c:243
-#, fuzzy, c-format
+#, c-format
 msgid "It was impossible to create <%s> table."
-msgstr "作成できませんでした <%s>"
+msgstr "テーブルを作成できませんでした <%s>"
 
 #: ../vector/lidar/v.outlier/main.c:405
-#, fuzzy
 msgid "Outlier detection"
-msgstr "アウトラインカラー"
+msgstr "外れ値検出"
 
 #: ../vector/lidar/v.lidar.growing/main.c:81
 msgid ""
@@ -16129,9 +16118,8 @@ msgid ""
 msgstr "内部建物測定の輪郭測定と領域成長アルゴリズム "
 
 #: ../vector/lidar/v.lidar.growing/main.c:86
-#, fuzzy
 msgid "Input vector (v.lidar.edgedetection output"
-msgstr "入力観測ベクトルマップ名 (v.lidar.growing output)  "
+msgstr "ベクトル入力 (v.lidar.edgedetection出力"
 
 #: ../vector/lidar/v.lidar.growing/main.c:96
 msgid "Name of the first pulse vector map"
@@ -16146,9 +16134,9 @@ msgid "Threshold for double pulse in region growing"
 msgstr "発展中の領域におけるダブルパルスの閾値"
 
 #: ../vector/lidar/v.lidar.growing/main.c:179
-#, fuzzy, c-format
+#, c-format
 msgid "Unable to open table <%s>"
-msgstr "表 <%s> をコピーできません"
+msgstr "テーブル <%s> をオープンできません"
 
 #: ../vector/lidar/v.lidar.growing/main.c:204
 msgid "Setting regions and boxes"
@@ -16165,14 +16153,12 @@ msgid "Columns = %d"
 msgstr "列 = %d"
 
 #: ../vector/lidar/v.lidar.growing/main.c:291
-#, fuzzy
 msgid "read points in input vector"
-msgstr "指定されたベクトルマップを読み込み中"
+msgstr "入力ベクトルのポイントを読み込み"
 
 #: ../vector/lidar/v.lidar.growing/main.c:440
-#, fuzzy
 msgid "Region Growing"
-msgstr "レンダリング"
+msgstr "領域成長"
 
 #: ../vector/lidar/v.lidar.growing/ConvexHull.c:269
 msgid "...now exiting to system..."
@@ -16311,18 +16297,16 @@ msgid "Choose either vector or raster output, not both"
 msgstr "両方ではなく、ベクトルまたはラスター出力のどちらかを選択してください"
 
 #: ../vector/lidar/v.surf.bspline/main.c:175
-#, fuzzy
 msgid "No raster or vector or cross-validation output"
-msgstr "ラスターもベクトル出力もありません"
+msgstr "ラスター、ベクトル、クロス検証の出力をしません"
 
 #: ../vector/lidar/v.surf.bspline/main.c:229
 msgid "Need either 3D vector or layer and column with z values"
-msgstr ""
+msgstr "３Dベクトルまたはレイヤーと列のZ-値のいづれかが必要です"
 
 #: ../vector/lidar/v.surf.bspline/main.c:231
-#, fuzzy
 msgid "Layer but not column with z values given"
-msgstr "補間のための数値の属性テーブル列"
+msgstr "Z値の情報が定義されていないレイヤー"
 
 #: ../vector/lidar/v.surf.bspline/main.c:254
 msgid "Cross validation didn't finish correctly"
@@ -16331,7 +16315,7 @@ msgstr "交差検証は正常に終了しませんでした  "
 #: ../vector/lidar/v.surf.bspline/main.c:260
 #, c-format
 msgid "Cross validation finished for sie = %f and sin = %f"
-msgstr ""
+msgstr "sie=　%f とsin=　%f のクロス検証を終了"
 
 #: ../vector/lidar/v.surf.bspline/main.c:268
 #, c-format
@@ -16384,9 +16368,8 @@ msgid "Interpolation: (%d,%d): No record for point (cat = %d)"
 msgstr "補間: (%d,%d): ポイントの記録がありません (cat = %d)  "
 
 #: ../vector/lidar/v.surf.bspline/main.c:687
-#, fuzzy
 msgid "Writing output..."
-msgstr "マップを書出... "
+msgstr "出力中..."
 
 #: ../vector/v.net.salesman/main.c:97 ../vector/v.net.iso/main.c:73
 #: ../vector/v.net.path/main.c:41 ../vector/v.net/main.c:47
@@ -25035,24 +25018,24 @@ msgid "No files in this group!"
 msgstr "このグループ内にファイルがありません!"
 
 #: ../imagery/i.ortho.photo/photo.rectify/main.c:97
-#, fuzzy, c-format
+#, c-format
 msgid "No target elevation model selected for group <%s>"
-msgstr "グループの選択されたカメラ参照ファイルがありません [%s]"
+msgstr "グループを選択するために指定された標高モデルが存在しません [%s]"
 
 #: ../imagery/i.ortho.photo/photo.rectify/main.c:109
-#, fuzzy, c-format
+#, c-format
 msgid "No camera reference file selected for group <%s>"
 msgstr "グループの選択されたカメラ参照ファイルがありません [%s]"
 
 #: ../imagery/i.ortho.photo/photo.rectify/main.c:113
-#, fuzzy, c-format
+#, c-format
 msgid "Bad format in camera file for group <%s>"
 msgstr "グループ[%s]のカメラファイルにある不正なフォーマット"
 
 #: ../imagery/i.ortho.photo/photo.rectify/main.c:119
-#, fuzzy, c-format
+#, c-format
 msgid "Bad format in initial exposusre station file for group <%s>"
-msgstr "グループ [%s]の初期暴露駅ファイルの不正なフォーマット"
+msgstr "グループ [%s]の初期風雨ステーションファイルの不正なフォーマット"
 
 #: ../imagery/i.ortho.photo/photo.rectify/write.c:34
 #, c-format
