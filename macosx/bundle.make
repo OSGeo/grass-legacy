@@ -20,14 +20,5 @@
 #	${INSTALL} /usr/local/pgsql/lib/libpq.5.1.dylib ${INST_DIR_TARGET}/lib
 #	${LN} libpq.5.1.dylib ${INST_DIR_TARGET}/lib/libpq.5.dylib
 
-WXPREFIX=/usr/local/lib/wxPython-unicode-2.8.10.1
 bundle-macosx:
-	${INSTALL} ${WXPREFIX}/lib/libwx_macud-2.8.0.dylib ${INST_DIR_TARGET}/lib
-	${INSTALL} ${WXPREFIX}/lib/libwx_macud_gl-2.8.0.dylib ${INST_DIR_TARGET}/lib
-	${INSTALL} ${WXPREFIX}/lib/libwx_macud_stc-2.8.0.dylib ${INST_DIR_TARGET}/lib
-	${INSTALL} ${WXPREFIX}/lib/libwx_macud_gizmos-2.8.0.dylib ${INST_DIR_TARGET}/lib
-	${INSTALL} ${WXPREFIX}/lib/libwx_macud_gizmos_xrc-2.8.0.dylib ${INST_DIR_TARGET}/lib
-	cp -Rfp ${WXPREFIX}/lib/python2.5/site-packages/wx-2.8-mac-unicode/wx ${INST_DIR_TARGET}/etc/python
-	cp -Rfp ${WXPREFIX}/lib/python2.5/site-packages/wx-2.8-mac-unicode/wxPython ${INST_DIR_TARGET}/etc/python
-	cp -fp ${WXPREFIX}/lib/python2.5/site-packages/wxversion.py ${INST_DIR_TARGET}/etc/python
-	sed -i '' -e 's/^GRASS_WXBUNDLED=.*/GRASS_WXBUNDLED=1/' ${INST_DIR_TARGET}/grass.sh
+	@# add custom bundle commands here:
