@@ -642,12 +642,9 @@ class DispMapPage(TitledPage):
         try:
         # set computational region to match selected map and zoom display to region
             if maptype == 'cell':
-                p = gcmd.Command(['g.region', 'rast=xy_map'])
+                p = gcmd.RunCommand('g.region', rast = xy_map)
             elif maptype == 'vector':
-                p = gcmd.Command(['g.region', 'vect=xy_map'])
-            
-            if p.returncode == 0:
-                self.parent.Map.region = self.parent.Map.GetRegion()
+                p = gcmd.RunCommand('g.region', vect = xy_map)       
         except:
             pass
 
