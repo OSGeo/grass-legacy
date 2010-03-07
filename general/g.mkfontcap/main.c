@@ -59,6 +59,7 @@ int main(int argc, char *argv[])
 
     G_set_program_name(argv[0]);
     G_no_gisinit();
+    G_set_gisrc_mode(G_GISRC_MODE_MEMORY);
 
     module = G_define_module();
     module->keywords = "general";
