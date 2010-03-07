@@ -406,9 +406,10 @@ class GRASSStartup(wx.Frame):
             return None
 
     def OnWizard(self, event):
-        """Location wizard started"""
+        """!Location wizard started"""
         from gui_modules import location_wizard
-        gWizard = location_wizard.LocationWizard(self, self.tgisdbase.GetValue())
+        gWizard = location_wizard.LocationWizard(parent = self,
+                                                 grassdatabase = self.tgisdbase.GetValue())
         if gWizard.location != None:
             self.OnSetDatabase(event)
             self.UpdateMapsets(os.path.join(self.gisdbase, gWizard.location))
