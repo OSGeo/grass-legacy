@@ -142,14 +142,14 @@ fi
 
 
 #### setup temporary file
-TMP="`g.tempfile pid=$$`"
-if [ $? -ne 0 ] || [ -z "$TMP" ] ; then
+TEMPFILE="`g.tempfile pid=$$`"
+if [ $? -ne 0 ] || [ -z "$TEMPFILE" ] ; then
     g.message -e "Unable to create temporary files"
     exit 1
 fi
 
 #### trap ctrl-c so that we can clean up tmp
-trap 'rm -f "${TMP}"*' 2 3 15
+trap 'rm -f "${TEMPFILE}"*' 2 3 15
 
 
 #### process command line arguments
@@ -180,7 +180,7 @@ fi
 
 if [ "`expr $GIS_FLAG_W + $GIS_FLAG_R + $GIS_FLAG_T`" -gt 1 ] ; then
     g.message -e "One feature at a time please. Use v.patch if you need to combine them."
-    rm -f "$TMP"
+    rm -f "$TEMPFILE"
     exit 1
 fi
 
@@ -207,13 +207,13 @@ fi
 
 if [ "`expr $WPT + $TRK + $RTE`" -eq 0 ] ; then
     g.message -e "Must request either waypoints, route, or track."
-    rm -f "$TMP"
+    rm -f "$TEMPFILE"
     exit 1
 fi
 
 if [ $GIS_FLAG_Z -eq 1 ] &&  [ $TRK -ne 1 ] ; then
     g.message -e "3D import is only supported for tracks so far"
-    rm -f "$TMP"
+    rm -f "$TEMPFILE"
     exit 1
 fi
 
@@ -224,7 +224,7 @@ if [ $GIS_FLAG_U -eq 0 ] ; then
     gpstrans "$GPSPORT" -i 1> /dev/null
     if [ $? -ne 0 ] ; then
 	g.message -e message="Receiver on $GIS_OPT_PORT not responding, exiting"
-	rm -f "$TMP"
+	rm -f "$TEMPFILE"
 	exit 1
     fi
 elif [ $VERBOSE -eq 1 ] ; then
@@ -233,7 +233,7 @@ elif [ $VERBOSE -eq 1 ] ; then
     gardump -u -p "$GIS_OPT_PORT" 1>&2
     if [ $? -ne 0 ] ; then
 	g.message -e message="Receiver on $GIS_OPT_PORT not responding, exiting"
-	rm -f "$TMP"
+	rm -f "$TEMPFILE"
 	exit 1
     fi
     g.message "GPS connection ok"
@@ -245,7 +245,7 @@ OUT_PROJ="`g.proj -jf`"
 PROJ_TYPE=`g.region -p | grep 'projection' | cut -f2 -d" "`
 if [ $PROJ_TYPE -eq 0 ] && [ $KEEP_WGS84 -ne 1 ] ; then
     g.message -e "Cannot project to a XY location."
-    rm -f "$TMP"
+    rm -f "$TEMPFILE"
     exit 1
 fi
 
@@ -254,57 +254,57 @@ fi
 if [ $WPT -eq 1 ] ; then
     g.message "Receiving Waypoints..."
     if [ $GIS_FLAG_U -eq 0 ] ; then
-	gpstrans "$GPSPORT" -dw > "$TMP".gpst 2>/dev/null
+	gpstrans "$GPSPORT" -dw > "$TEMPFILE".gpst 2>/dev/null
 	EXITCODE=$?
     else
-	gardump -w -p "$GIS_OPT_PORT" > "$TMP".gard
+	gardump -w -p "$GIS_OPT_PORT" > "$TEMPFILE".gard
 	EXITCODE=$?
     fi
 fi
 if [ $RTE -eq 1 ] ; then
     g.message "Receiving Routes..."
     if [ $GIS_FLAG_U -eq 0 ] ; then
-	gpstrans "$GPSPORT" -dr > "$TMP".gpst 2>/dev/null
+	gpstrans "$GPSPORT" -dr > "$TEMPFILE".gpst 2>/dev/null
 	EXITCODE=$?
     else
-	gardump -r -p "$GIS_OPT_PORT" > "$TMP".gard
+	gardump -r -p "$GIS_OPT_PORT" > "$TEMPFILE".gard
 	EXITCODE=$?
     fi
 fi
 if [ $TRK -eq 1 ] ; then
     g.message "Receiving Tracks..."
     if [ $GIS_FLAG_U -eq 0 ] ; then
-	gpstrans "$GPSPORT" -dt > "$TMP".gpst 2>/dev/null
+	gpstrans "$GPSPORT" -dt > "$TEMPFILE".gpst 2>/dev/null
 	EXITCODE=$?
     else
-	gardump -t -p "$GIS_OPT_PORT" > "$TMP".gard
+	gardump -t -p "$GIS_OPT_PORT" > "$TEMPFILE".gard
 	EXITCODE=$?
     fi
 fi
 #### check success/failure
 if [ "$EXITCODE" -ne 0 ] ; then
     g.message -e "Retrieving data."
-    rm -f "${TMP}"*
+    rm -f "${TEMPFILE}"*
     exit 1
 fi
 
 if [ $GIS_FLAG_U -eq 0 ] ; then
-    if [ ! -e "${TMP}.gpst" ] || [ `wc -l < "${TMP}.gpst"` -le 1 ] ; then
+    if [ ! -e "${TEMPFILE}.gpst" ] || [ `wc -l < "${TEMPFILE}.gpst"` -le 1 ] ; then
 	g.message -w 'No Data! Exiting.'
-	rm -f "${TMP}"*
+	rm -f "${TEMPFILE}"*
 	exit 0
     fi
 else
-    if [ "`cat "${TMP}.gard" | grep -v '^\[' | grep -v '^#' -c`" -eq 0 ] ; then
+    if [ "`cat "${TEMPFILE}.gard" | grep -v '^\[' | grep -v '^#' -c`" -eq 0 ] ; then
 	g.message -w 'No Data! Exiting.'
-	rm -f "${TMP}"*
+	rm -f "${TEMPFILE}"*
 	exit 0
     fi
 fi
 
 if [ $GIS_FLAG_U -eq 0 ] ; then
     #### check which projection we are working with
-    PROJ="`head -n 1 "${TMP}.gpst" | sed -e 's/Format: //' | sed -e 's/  UTC.*//'`"
+    PROJ="`head -n 1 "${TEMPFILE}.gpst" | sed -e 's/Format: //' | sed -e 's/  UTC.*//'`"
     if [ $VERBOSE -eq 1 ] ; then
 	g.message message="Coordinate format: ${PROJ}"
     fi
@@ -313,10 +313,10 @@ if [ $GIS_FLAG_U -eq 0 ] ; then
 	# or DM.MM formatted input and I'm not going to start doing that sort
 	# of math in a shell script.
 	g.message -e message="Only DDD coordinates currently supported. [$PROJ]"
-	rm -f "${TMP}"*
+	rm -f "${TEMPFILE}"*
 	exit 1
     fi
-    IS_WGS84="`head -n 1 "$TMP".gpst | grep 'WGS 84'`"
+    IS_WGS84="`head -n 1 "$TEMPFILE".gpst | grep 'WGS 84'`"
 else
     # gardump
     IS_WGS84=TRUE
@@ -331,19 +331,19 @@ if [ $CREATE_POINTS -eq 1 ] ; then
     if [ $GIS_FLAG_U -eq 0 ] ; then
         # gpstrans
 	if [ $WPT -eq 1 ] ; then
-	    cat "${TMP}.gpst" | sed -e '1d' | awk -F '\t' '{print $6 " " $5}' > "$TMP".base
-	    cat "${TMP}.gpst" | sed -e '1d' | cut -f1,2,3 | tr '\t' '|' > "$TMP".attributes
+	    cat "${TEMPFILE}.gpst" | sed -e '1d' | awk -F '\t' '{print $6 " " $5}' > "$TEMPFILE".base
+	    cat "${TEMPFILE}.gpst" | sed -e '1d' | cut -f1,2,3 | tr '\t' '|' > "$TEMPFILE".attributes
 	    ATTR_COLS='x DOUBLE PRECISION, y DOUBLE PRECISION, type VARCHAR(1), name VARCHAR(10), comments VARCHAR(40)'
 	fi
 	if [ $RTE -eq 1 ] ; then
-	    cat "${TMP}.gpst" | sed -e '1d' | grep '^W' | awk -F '\t' '{print $6 " " $5}' > "$TMP".base
-	    cat "${TMP}.gpst" | sed -e '1d' | grep '^W' | cut -f1,2,3 | tr '\t' '|' > "$TMP".attributes
+	    cat "${TEMPFILE}.gpst" | sed -e '1d' | grep '^W' | awk -F '\t' '{print $6 " " $5}' > "$TEMPFILE".base
+	    cat "${TEMPFILE}.gpst" | sed -e '1d' | grep '^W' | cut -f1,2,3 | tr '\t' '|' > "$TEMPFILE".attributes
 	    ATTR_COLS='x DOUBLE PRECISION, y DOUBLE PRECISION, type VARCHAR(1), name varchar(10), comments VARCHAR(40)'
 	fi
 	if [ $TRK -eq 1 ] ; then
 	    # we use uniq here as gpstrans can dupe up track points !?
-	    uniq "${TMP}.gpst" | sed -e '1d' | grep '^T' | awk -F '\t' '{print $4 " " $3}' > "$TMP".base
-	    uniq "${TMP}.gpst" | sed -e '1d' | grep '^T' | cut -f1,2 | tr '\t' '|' > "$TMP".attributes
+	    uniq "${TEMPFILE}.gpst" | sed -e '1d' | grep '^T' | awk -F '\t' '{print $4 " " $3}' > "$TEMPFILE".base
+	    uniq "${TEMPFILE}.gpst" | sed -e '1d' | grep '^T' | cut -f1,2 | tr '\t' '|' > "$TEMPFILE".attributes
 	    ATTR_COLS='x DOUBLE PRECISION, y DOUBLE PRECISION, type VARCHAR(1), localtime VARCHAR(40)'
 	    HAVE_ALT=FALSE
 	fi
@@ -352,7 +352,7 @@ if [ $CREATE_POINTS -eq 1 ] ; then
 	if [ $WPT -eq 1 ] || [ $RTE -eq 1 ] ; then
 	    # **n [route name]
 	    # lat long [A:alt] [S:sym] [D:display] [I:id] [C:cmnt] [W:wpt info] [L:link]
-	    grep -E -v '^\[|^#|^\*\*' "${TMP}.gard" | awk '{print $2 " " $1}' > "$TMP".base
+	    grep -E -v '^\[|^#|^\*\*' "${TEMPFILE}.gard" | awk '{print $2 " " $1}' > "$TEMPFILE".base
 
 	    ROUTE_NUM=""
 	    ROUTE_NAME=""
@@ -381,11 +381,11 @@ if [ $CREATE_POINTS -eq 1 ] ; then
 		fi
 
 		if [ $WPT -eq 1 ] ; then
-		    echo "$A_VAL|$S_VAL|$D_VAL|$I_VAL|$C_VAL|$W_VAL|$L_VAL" >> "$TMP".attributes
+		    echo "$A_VAL|$S_VAL|$D_VAL|$I_VAL|$C_VAL|$W_VAL|$L_VAL" >> "$TEMPFILE".attributes
 		elif [ $RTE -eq 1 ] ; then
-		    echo "$ROUTE_NUM|$ROUTE_NAME|$A_VAL|$S_VAL|$D_VAL|$I_VAL|$C_VAL|$W_VAL|$L_VAL" >> "$TMP".attributes
+		    echo "$ROUTE_NUM|$ROUTE_NAME|$A_VAL|$S_VAL|$D_VAL|$I_VAL|$C_VAL|$W_VAL|$L_VAL" >> "$TEMPFILE".attributes
 		fi
-	    done < "${TMP}.gard"
+	    done < "${TEMPFILE}.gard"
 
 	    if [ $WPT -eq 1 ] ; then
 		ATTR_COLS='x DOUBLE PRECISION, y DOUBLE PRECISION, altitude DOUBLE PRECISION, symbol INTEGER, smbl_flag INTEGER, name VARCHAR(15), comments VARCHAR(50), poi_code VARCHAR(40), poi_link VARCHAR(4)'
@@ -398,24 +398,24 @@ if [ $CREATE_POINTS -eq 1 ] ; then
 	    # [yyyy-mm-dd hh:mm:ss] lat long [alt] [start]
 	    unset HAVE_ALT
 	    # some tracks don't have time/date, so we have to decide on the fly
-	    grep -v '^\[\|^#\|^Track:' "${TMP}.gard" | \
+	    grep -v '^\[\|^#\|^Track:' "${TEMPFILE}.gard" | \
 	      awk '{ if ( $0 ~ /..:..:../) {
 			print $4 " " $3
 		     } else {
 			print $2 " " $1
 		     }
-		   }' > "$TMP".base
+		   }' > "$TEMPFILE".base
 
-	    grep -v '^\[\|^#\|^Track:' "${TMP}.gard" | \
+	    grep -v '^\[\|^#\|^Track:' "${TEMPFILE}.gard" | \
 	      awk '{ if ( $0 ~ /..:..:../) {
 			print $1 "|" $2 "|" $5 "|" $6
 		     } else {
 			print "||" $3 "|" $4
 		     }
-		   }' > "$TMP.attr"
+		   }' > "$TEMPFILE.attr"
 
 	    # check if there is any altitude data
-	    if [ `cut -f3 -d'|' "$TMP.attr" | grep -c 'start'` -ge 1 ] ; then
+	    if [ `cut -f3 -d'|' "$TEMPFILE.attr" | grep -c 'start'` -ge 1 ] ; then
 		HAVE_ALT=FALSE
 		ATTR_COLS='x DOUBLE PRECISION, y DOUBLE PRECISION, gmt_date VARCHAR(10), gmt_time VARCHAR(8), new_track VARCHAR(5)'
 		if [ $GIS_FLAG_Z -eq 1 ] ; then
@@ -427,17 +427,17 @@ if [ $CREATE_POINTS -eq 1 ] ; then
 	    fi
 
 	    # check if there is any track name data
-	    if [ `grep -c '^Track:' "${TMP}.gard"` -ge 1 ] ; then
+	    if [ `grep -c '^Track:' "${TEMPFILE}.gard"` -ge 1 ] ; then
 		ATTR_COLS="$ATTR_COLS, track_name VARCHAR(15)"
 
 		# create data for track name column
 # need extra if(TRK) else NULL stuff for v.in.ascii empty last column bug
-		grep -v '^\[\|^#' "${TMP}.gard" | awk \
+		grep -v '^\[\|^#' "${TEMPFILE}.gard" | awk \
 		  '/^Track:/ {TRK=$0; sub(/^Track: /, "", TRK)} ;
-		   /^[-0-9]/ {if(TRK) {print TRK} else {print "NULL"}}' > "$TMP.trackname"
-		paste -d'|' "$TMP.attr" "$TMP.trackname"  > "$TMP.attributes"
+		   /^[-0-9]/ {if(TRK) {print TRK} else {print "NULL"}}' > "$TEMPFILE.trackname"
+		paste -d'|' "$TEMPFILE.attr" "$TEMPFILE.trackname"  > "$TEMPFILE.attributes"
 	    else
-		cp "$TMP.attr" "$TMP.attributes"
+		cp "$TEMPFILE.attr" "$TEMPFILE.attributes"
 	    fi
 	fi
     fi
@@ -445,13 +445,13 @@ if [ $CREATE_POINTS -eq 1 ] ; then
     #### reproject if needed (only consider 2D)
     if [ -z "$IS_WGS84" ] || [ $KEEP_WGS84 -eq 1 ] ; then
 	g.message "No projection transformation performed"
-	cp "${TMP}.base" "${TMP}.P_base"
+	cp "${TEMPFILE}.base" "${TEMPFILE}.P_base"
     else
 	g.message "Attempting waypoint projection transform with cs2cs..."
-	cs2cs -f %.7f $IN_PROJ +to $OUT_PROJ < "${TMP}.base" > "${TMP}.P_base"
+	cs2cs -f %.7f $IN_PROJ +to $OUT_PROJ < "${TEMPFILE}.base" > "${TEMPFILE}.P_base"
 	EXITCODE=$?
 	# check if transform REALLY worked (e.g. grid file not found)
-	BAD_PTS="`grep -c "^\*" "${TMP}.P_base"`"
+	BAD_PTS="`grep -c "^\*" "${TEMPFILE}.P_base"`"
 	if [ "$BAD_PTS" -gt 0 ] ; then
 	    g.message message=""
 	    g.message -w "$BAD_PTS point(s) failed reprojection."
@@ -460,46 +460,46 @@ if [ $CREATE_POINTS -eq 1 ] ; then
 	if [ $EXITCODE -ne 0 ] ; then
 	    g.message -w "Projection transform failed, retaining WGS84"
 	    g.message message=""
-	    cp -f "${TMP}.base" "${TMP}.P_base"
+	    cp -f "${TEMPFILE}.base" "${TEMPFILE}.P_base"
 	fi
     fi
-    cat "${TMP}.P_base" | awk '{print $1 "|" $2}' > "${TMP}.vertices"
+    cat "${TEMPFILE}.P_base" | awk '{print $1 "|" $2}' > "${TEMPFILE}.vertices"
 
     #### and put back together
     # wpt list:   x|y|    W   MOB    04-OCT-03 08:07
-    paste -d"|" "$TMP".vertices "$TMP".attributes > "$TMP".asc
+    paste -d"|" "$TEMPFILE".vertices "$TEMPFILE".attributes > "$TEMPFILE".asc
 
 
     if [ -z "$NAME" ] ; then
 	g.message "ASCII file redirected to stdout"
-	cat "${TMP}.asc" 2> /dev/null
+	cat "${TEMPFILE}.asc" 2> /dev/null
     else
 	#### import into new ascii points file
 	if [ $WPT -eq 1 ] ; then
 	    g.message "Importing Waypoints..."
-	    v.in.ascii input="${TMP}.asc" output="$NAME" cat=0 columns="$ATTR_COLS" --quiet
+	    v.in.ascii input="${TEMPFILE}.asc" output="$NAME" cat=0 columns="$ATTR_COLS" --quiet
 	    EXITCODE=$?
 	fi
 	if [ $RTE -eq 1 ] ; then
 	    g.message "Importing Routes as points..."
-	    v.in.ascii input="${TMP}.asc" output="$NAME" cat=0 columns="$ATTR_COLS"
+	    v.in.ascii input="${TEMPFILE}.asc" output="$NAME" cat=0 columns="$ATTR_COLS"
 	    EXITCODE=$?
 	fi
 	if [ $TRK -eq 1 ] ; then
 	    if [ $GIS_FLAG_Z -eq 1 ] && [ "$HAVE_ALT" = "TRUE" ] ; then
 		g.message "Importing Track as 3D points..."
-		v.in.ascii input="${TMP}.asc" output="$NAME" cat=0 columns="$ATTR_COLS" -z z=5
+		v.in.ascii input="${TEMPFILE}.asc" output="$NAME" cat=0 columns="$ATTR_COLS" -z z=5
 		EXITCODE=$?
 	    else
 		g.message "Importing Track as points..."
-		v.in.ascii input="${TMP}.asc" output="$NAME" cat=0 columns="$ATTR_COLS"
+		v.in.ascii input="${TEMPFILE}.asc" output="$NAME" cat=0 columns="$ATTR_COLS"
 		EXITCODE=$?
 	    fi
 	fi
 
 	if [ $EXITCODE -ne 0 ] ; then
 	    g.message -e "While importing data with v.in.ascii"
-	    rm -f "${TMP}"*
+	    rm -f "${TEMPFILE}"*
 	    exit 1
 	fi
 
@@ -515,32 +515,32 @@ else # CREATE_LINES
 	#### prepare line components
 	if [ $RTE -eq 1 ] ; then
 	    # add vertex counts
-	    cat "${TMP}.gpst" | sed -e '1d' | tac | awk 'BEGIN { FS="\t" ; R=0 } \
+	    cat "${TEMPFILE}.gpst" | sed -e '1d' | tac | awk 'BEGIN { FS="\t" ; R=0 } \
 		$1=="W" { printf(" %.7f %.7f\n", $6, $5) ; ++R } ; \
-		$1=="R" { printf("L %d 1\n", R) ; R=0 } END {;}' | tac > "${TMP}.base"
+		$1=="R" { printf("L %d 1\n", R) ; R=0 } END {;}' | tac > "${TEMPFILE}.base"
 
 	    # create attr table: cat(int), id number(int 0-19), name varchar(16+), starting_wpt(varchar 10)
-	    cat "${TMP}.gpst" | grep '^R' | cut -f2,3 | grep -n '^' | \
-		sed -e 's/:/\t/' > "${TMP}.route_ids"
-	    cat "${TMP}.gpst" | sed -e '1d' | grep '^R' -A 1 | grep '^W' | cut -f2 > "${TMP}.route_start"
-	    paste "${TMP}.route_ids" "${TMP}.route_start" > "${TMP}.route_atts"
-	    ATTR_FILE="${TMP}.route_atts"
+	    cat "${TEMPFILE}.gpst" | grep '^R' | cut -f2,3 | grep -n '^' | \
+		sed -e 's/:/\t/' > "${TEMPFILE}.route_ids"
+	    cat "${TEMPFILE}.gpst" | sed -e '1d' | grep '^R' -A 1 | grep '^W' | cut -f2 > "${TEMPFILE}.route_start"
+	    paste "${TEMPFILE}.route_ids" "${TEMPFILE}.route_start" > "${TEMPFILE}.route_atts"
+	    ATTR_FILE="${TEMPFILE}.route_atts"
 	    ATTR_COLS='cat INT, route_id INT, name VARCHAR(20), start_wpt VARCHAR(10)'
 
 	elif [ $TRK -eq 1 ] ; then
 	    # add vertex counts
-	    cat "${TMP}.gpst" | sed -e '1d' | tac | awk 'BEGIN { FS="\t" ; R=0 } \
+	    cat "${TEMPFILE}.gpst" | sed -e '1d' | tac | awk 'BEGIN { FS="\t" ; R=0 } \
 		$1=="T" { printf(" %.7f %.7f\n", $4, $3) ; ++R } ; \
-		$1=="" { printf("L %d 1\n", R) ; R=0 } END {;}' | tac > "${TMP}.base"
+		$1=="" { printf("L %d 1\n", R) ; R=0 } END {;}' | tac > "${TEMPFILE}.base"
 
 	    # create attr table: cat(int), start_time varchar(40), start_lat(double precision), start_lon(double precision), \
 	    #			    end_time varchar(40), end_lat(double precision), end_lon(double precision)
-	    cat "${TMP}.gpst" | sed -e '1d' | grep '^$' -B 1 | grep '^T' | cut -f2,3,4 > "${TMP}.end_time"
-	    cat "${TMP}.gpst" | grep '^T' | tail -n 1 | cut -f2,3,4 >> "${TMP}.end_time"
-	    cat "${TMP}.gpst" | sed -e '1d' | grep '^$' -A 1 | grep '^T' | cut -f2,3,4 | \
-		grep -n '^' | sed -e 's/:/\t/'  > "${TMP}.start_time"
-	    paste "${TMP}.start_time" "${TMP}.end_time" > "${TMP}.track_atts"
-	    ATTR_FILE="${TMP}.track_atts"
+	    cat "${TEMPFILE}.gpst" | sed -e '1d' | grep '^$' -B 1 | grep '^T' | cut -f2,3,4 > "${TEMPFILE}.end_time"
+	    cat "${TEMPFILE}.gpst" | grep '^T' | tail -n 1 | cut -f2,3,4 >> "${TEMPFILE}.end_time"
+	    cat "${TEMPFILE}.gpst" | sed -e '1d' | grep '^$' -A 1 | grep '^T' | cut -f2,3,4 | \
+		grep -n '^' | sed -e 's/:/\t/'  > "${TEMPFILE}.start_time"
+	    paste "${TEMPFILE}.start_time" "${TEMPFILE}.end_time" > "${TEMPFILE}.track_atts"
+	    ATTR_FILE="${TEMPFILE}.track_atts"
 	    ATTR_COLS='cat INT, start_time VARCHAR(40), start_lat DOUBLE PRECISION, start_lon DOUBLE PRECISION, end_time VARCHAR(40), end_lat DOUBLE PRECISION, end_lon DOUBLE PRECISION'
 	fi
 
@@ -548,27 +548,27 @@ else # CREATE_LINES
 	# gardump
 	if [ $RTE -eq 1 ] ; then
 	    # add vertex counts
-	    grep -v '^\[\|^#' "${TMP}.gard" | tac | awk 'BEGIN { R=0 } \
+	    grep -v '^\[\|^#' "${TEMPFILE}.gard" | tac | awk 'BEGIN { R=0 } \
 		/^[-0-9]/ { printf(" %.7f %.7f\n", $2, $1) ; ++R } ; \
-		/^\*\*/ { printf("L %d 1\n", R) ; R=0 } END {;}' | tac > "${TMP}.base"
+		/^\*\*/ { printf("L %d 1\n", R) ; R=0 } END {;}' | tac > "${TEMPFILE}.base"
 
 	    # create attr table: cat(int), id number(int 0-19), name varchar(40), starting_wpt(varchar 15)
 	    # grep -n is to insert cat number, starting from 1. (route numbers start from 0)
-	    grep '^\*\*' "${TMP}.gard" | sed -e 's/^\*\*//' -e 's/ /|/' \
-	       | grep -n '^' | sed -e 's/:/|/' > "${TMP}.route_ids"
+	    grep '^\*\*' "${TEMPFILE}.gard" | sed -e 's/^\*\*//' -e 's/ /|/' \
+	       | grep -n '^' | sed -e 's/:/|/' > "${TEMPFILE}.route_ids"
 
-	    grep -A 1 '^\*\*' "${TMP}.gard" | grep -E -v '^\*\*|^--' | \
-	      sed -e 's/.* I://' | awk '{print $1}' > "${TMP}.route_start"
+	    grep -A 1 '^\*\*' "${TEMPFILE}.gard" | grep -E -v '^\*\*|^--' | \
+	      sed -e 's/.* I://' | awk '{print $1}' > "${TEMPFILE}.route_start"
 
-	    paste -d'|' "${TMP}.route_ids" "${TMP}.route_start" > "${TMP}.route_atts"
+	    paste -d'|' "${TEMPFILE}.route_ids" "${TEMPFILE}.route_start" > "${TEMPFILE}.route_atts"
 
-	    ATTR_FILE="${TMP}.route_atts"
+	    ATTR_FILE="${TEMPFILE}.route_atts"
 	    ATTR_COLS='cat int, route_id INT, name VARCHAR(40), start_wpt VARCHAR(15)'
 
 	elif [ $TRK -eq 1 ] ; then
 	    # add vertex counts
 	    # some tracks don't have time/date, so we have to decide on the fly
-	    grep -v '^\[\|^#\|^Track:' "${TMP}.gard" | tac | awk 'BEGIN { R=0 } \
+	    grep -v '^\[\|^#\|^Track:' "${TEMPFILE}.gard" | tac | awk 'BEGIN { R=0 } \
 	    ! /start/ {
 	      if($0 ~ /..:..:../ ) { printf(" %.7f %.7f\n", $4, $3) }
 	      else { printf(" %.7f %.7f\n", $2, $1) }
@@ -580,7 +580,7 @@ else # CREATE_LINES
 	      else { printf(" %.7f %.7f\nL %d 1\n", $2, $1, R+1) }
 	      R=0
 	    }
-	    END {;}' | tac > "${TMP}.base"
+	    END {;}' | tac > "${TEMPFILE}.base"
 
 	    # create attr table: cat(int), \
 	    #  start_time varchar(40), start_lat(double precision), start_lon(double precision), \
@@ -592,16 +592,16 @@ else # CREATE_LINES
 	    # - use grep -n to add "line number: string" for cat as track nums start as 0
 
 	    # crop out start times
-	    grep 'start$' "${TMP}.gard" | \
+	    grep 'start$' "${TEMPFILE}.gard" | \
 	      awk '{ if ( $0 ~ /..:..:../ ) {
 			print $1 "T" $2 "Z|" $3 "|" $4
 		     } else {
 			print "|" $1 "|" $2
 		     }
-		   }' | grep -n '^' | sed -e 's/:/|/' > "${TMP}.start_time"
+		   }' | grep -n '^' | sed -e 's/:/|/' > "${TEMPFILE}.start_time"
 
 	    # find and crop out end times. if only 1 pt in trk, use start as end time
-	    grep -v '^#\|^\[\|^Track:' "${TMP}.gard" | grep -B 1 'start$' | \
+	    grep -v '^#\|^\[\|^Track:' "${TEMPFILE}.gard" | grep -B 1 'start$' | \
 	      grep -v '^--' | awk 'BEGIN { FIRST=1 } \
 		/start/ {
 		  if (FIRST != 1) { print TIME "|" LAT "|" LON } else { FIRST=0 } ;
@@ -617,49 +617,49 @@ else # CREATE_LINES
 		  } else {
 		    TIME=""; LAT=$1; LON=$2
 		  }
-		}' > "${TMP}.end_time"
+		}' > "${TEMPFILE}.end_time"
 
 	    # get time & coord of final point
-	    grep -B 1 'end transfer' "${TMP}.gard" | grep '^[0-9]' | awk \
+	    grep -B 1 'end transfer' "${TEMPFILE}.gard" | grep '^[0-9]' | awk \
 	       '{ if ( $0 ~ /..:..:../ ) {
 		    print $1 "T" $2 "Z|" $3 "|" $4
 		  } else {
 		    print "|" $1 "|" $2
 		  }
-		}' >> "${TMP}.end_time"
+		}' >> "${TEMPFILE}.end_time"
 
 	    ATTR_COLS='cat INT, start_time VARCHAR(40), start_lat DOUBLE PRECISION, start_lon DOUBLE PRECISION, end_time VARCHAR(40), end_lat DOUBLE PRECISION, end_lon DOUBLE PRECISION'
 
 	    # check if there is any track name data
 	    unset HAVE_TRACK_NAME
-	    if [ `grep -c '^Track:' "${TMP}.gard"` -ge 1 ] ; then
+	    if [ `grep -c '^Track:' "${TEMPFILE}.gard"` -ge 1 ] ; then
 		HAVE_TRACK_NAME=TRUE
 		ATTR_COLS="$ATTR_COLS, track_name VARCHAR(15)"
 
 		# extract data for track name column
-		grep -v '^\[\|^#' "${TMP}.gard" | grep '^Track:\|start' | awk \
+		grep -v '^\[\|^#' "${TEMPFILE}.gard" | grep '^Track:\|start' | awk \
 		  '/^Track:/ {TRK=$0; sub(/^Track: /, "", TRK)} ;
-		   /^[-0-9]/ {print TRK}' > "$TMP.trackname"
-		paste -d'|' "${TMP}.start_time" "${TMP}.end_time" "$TMP.trackname" > "${TMP}.track_atts"
+		   /^[-0-9]/ {print TRK}' > "$TEMPFILE.trackname"
+		paste -d'|' "${TEMPFILE}.start_time" "${TEMPFILE}.end_time" "$TEMPFILE.trackname" > "${TEMPFILE}.track_atts"
 	    else
 		HAVE_TRACK_NAME=FALSE
-		paste -d'|' "${TMP}.start_time" "${TMP}.end_time" > "${TMP}.track_atts"
+		paste -d'|' "${TEMPFILE}.start_time" "${TEMPFILE}.end_time" > "${TEMPFILE}.track_atts"
 	    fi
-	    ATTR_FILE="${TMP}.track_atts"
+	    ATTR_FILE="${TEMPFILE}.track_atts"
 	fi
     fi
 
     #### reproject if needed
     if [ -z "$IS_WGS84" ] || [ $KEEP_WGS84 -eq 1 ] ; then
 	g.message "No projection transformation performed"
-	cat "${TMP}.base" | awk 'BEGIN {;} $1=="L" { print } ; \
-	    $1!="L" { printf(" %.7f %.7f\n", $1, $2) } END {;}' > "${TMP}.P_base"
+	cat "${TEMPFILE}.base" | awk 'BEGIN {;} $1=="L" { print } ; \
+	    $1!="L" { printf(" %.7f %.7f\n", $1, $2) } END {;}' > "${TEMPFILE}.P_base"
     else
 	g.message "Attempting waypoint projection transform with cs2cs..."
-	cs2cs -tL -f %.7f $IN_PROJ +to $OUT_PROJ < "${TMP}.base" > "${TMP}.P_mid"
+	cs2cs -tL -f %.7f $IN_PROJ +to $OUT_PROJ < "${TEMPFILE}.base" > "${TEMPFILE}.P_mid"
 	EXITCODE=$?
 	# check if transform REALLY worked (e.g. grid file not found)
-	BAD_PTS="`grep -c "^\*" "${TMP}.P_mid"`"
+	BAD_PTS="`grep -c "^\*" "${TEMPFILE}.P_mid"`"
 	if [ "$BAD_PTS" -gt 0 ] ; then
 	    g.message message=""
 	    g.message -w "$BAD_PTS vertices failed reprojection."
@@ -668,24 +668,24 @@ else # CREATE_LINES
 	if [ $EXITCODE -ne 0 ] ; then
 	    g.message -w "Projection transform failed, retaining WGS84"
 	    g.message message=""
-	    cat "${TMP}.base" | awk 'BEGIN {;} $1=="L" { print } ; \
-		$1!="L" { printf(" %.7f %.7f\n", $1, $2) } END {;}' > "${TMP}.P_base"
+	    cat "${TEMPFILE}.base" | awk 'BEGIN {;} $1=="L" { print } ; \
+		$1!="L" { printf(" %.7f %.7f\n", $1, $2) } END {;}' > "${TEMPFILE}.P_base"
 	else
-	    cat "${TMP}.P_mid" | awk 'BEGIN {;} $1=="L" { print } ; \
-		$1!="L" { printf(" %.7f %.7f\n", $1, $2) } END {;}' > "${TMP}.P_base"
+	    cat "${TEMPFILE}.P_mid" | awk 'BEGIN {;} $1=="L" { print } ; \
+		$1!="L" { printf(" %.7f %.7f\n", $1, $2) } END {;}' > "${TEMPFILE}.P_base"
 	fi
     fi
 
     # add category numbers
-    cat "${TMP}.P_base" | awk 'BEGIN { FS=" " ; R=0 } \
+    cat "${TEMPFILE}.P_base" | awk 'BEGIN { FS=" " ; R=0 } \
 	$1=="L" { printf(" 1 %d\nL %d 1\n", R, $2) ; ++R } ; \
-	$1!="L" { print } END { printf(" 1 %d\n", R) }' | sed -e '1d' > "${TMP}.P_baseC"
+	$1!="L" { print } END { printf(" 1 %d\n", R) }' | sed -e '1d' > "${TEMPFILE}.P_baseC"
 
     # add z for 3D maps
     unset HAVE_ALT
     if [ $GIS_FLAG_Z -eq 1 ] ; then
 	# check if there is any altitude data
-	if [ `grep -v '^\[\|^#\|^Track:' "${TMP}.gard" | tr -s ' ' '|' | cut -f6 -d'|' | grep -c start` -ge 1 ] ; then
+	if [ `grep -v '^\[\|^#\|^Track:' "${TEMPFILE}.gard" | tr -s ' ' '|' | cut -f6 -d'|' | grep -c start` -ge 1 ] ; then
 	    HAVE_ALT=TRUE
 	else
 	    HAVE_ALT=FALSE
@@ -699,28 +699,28 @@ else # CREATE_LINES
 
     if [ "$HAVE_ALT" = "TRUE" ] ; then
 	# cut out altitude data and add blank lines between track lines
-	grep -v '^\[\|^#\|^Track:' "${TMP}.gard" | tac | \
+	grep -v '^\[\|^#\|^Track:' "${TEMPFILE}.gard" | tac | \
 	  awk '{ if($0 ~ /..:..:../ ) {
 		   print $5 " " $6
 		 } else {
 		   print $3 " " $4
 		 }
-	       }' | sed -e 's/ start/\n/' -e 's/ $//' | tac > "${TMP}.alt"
+	       }' | sed -e 's/ start/\n/' -e 's/ $//' | tac > "${TEMPFILE}.alt"
 
-	paste -d' ' "${TMP}.P_base" "${TMP}.alt" > "${TMP}.P_baseZ"
+	paste -d' ' "${TEMPFILE}.P_base" "${TEMPFILE}.alt" > "${TEMPFILE}.P_baseZ"
     else
-	cp "${TMP}.P_base" "${TMP}.P_baseZ"
+	cp "${TEMPFILE}.P_base" "${TEMPFILE}.P_baseZ"
     fi
 
     # add category numbers
-    cat "${TMP}.P_baseZ" | awk 'BEGIN { FS=" " ; R=0 } \
+    cat "${TEMPFILE}.P_baseZ" | awk 'BEGIN { FS=" " ; R=0 } \
 	$1=="L" { printf(" 1 %d\nL %d 1\n", R, $2) ; ++R } ; \
 	$1!="L" { print } END { printf(" 1 %d\n", R) }' | sed -e '1d' \
-	  > "${TMP}.P_baseC"
+	  > "${TEMPFILE}.P_baseC"
 
 
     #### create digit header
-    cat << EOF > "${TMP}.dig"
+    cat << EOF > "${TEMPFILE}.dig"
 ORGANIZATION: GRASSroots organization
 DIGIT DATE:   `date "+%Y/%m/%d"`
 DIGIT NAME:   $PROG
@@ -734,12 +734,12 @@ VERTI:
 EOF
 
     #### merge in vertices
-    cat "${TMP}.P_baseC" >> "${TMP}.dig"
+    cat "${TEMPFILE}.P_baseC" >> "${TEMPFILE}.dig"
 
     #### if no name for vector file given, cat to stdout
     if [ -z "$NAME" ] ; then
 	g.message "ASCII file redirected to stdout"
-	cat "${TMP}.dig" 2> /dev/null
+	cat "${TEMPFILE}.dig" 2> /dev/null
     else
 	#### import to binary vector file
 	if [ $GIS_FLAG_Z -eq 1 ] && [ "$HAVE_ALT" = "TRUE" ] ; then
@@ -749,14 +749,14 @@ EOF
 	fi
 
 	g.message "Importing with v.in.ascii..."
-	v.in.ascii format=standard output="$NAME" input="${TMP}.dig" $ZFLAG
+	v.in.ascii format=standard output="$NAME" input="${TEMPFILE}.dig" $ZFLAG
 
 	#### check success/failure
 	if [ $? -eq 0 ] ; then
 	    g.message -v message="Line vector <$NAME> successfully created"
 	else
 	    g.message -e "An error occured creating <$NAME>, please check"'!'
-	    rm -f "${TMP}"*
+	    rm -f "${TEMPFILE}"*
 	    exit 1
 	fi
 
@@ -771,7 +771,7 @@ EOF
 	echo "CREATE TABLE $NAME ($ATTR_COLS)" | db.execute
 	if [ $? -ne 0 ] ; then
 	    g.message -e "Map created but failed to create database table."
-	    rm -f "${TMP}"*
+	    rm -f "${TEMPFILE}"*
 	    exit 1
 	fi
 
@@ -810,7 +810,7 @@ EOF
 	    # need to connect it before we can delete it. :-/
 	    v.db.connect map="$NAME" table="$NAME" 2> /dev/null
 	    v.db.droptable -f map=$NAME --quiet
-	    rm -f "${TMP}"*
+	    rm -f "${TEMPFILE}"*
 	    exit 1
 	fi
 ### </hack>
@@ -832,7 +832,7 @@ fi
 v.support map="$NAME" cmdhist="${CMDLINE}"
 
 #### clean up the mess
-\rm -f "${TMP}"*
+\rm -f "${TEMPFILE}"*
 
 #### end
 g.message "Done."

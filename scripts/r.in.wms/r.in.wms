@@ -199,8 +199,8 @@ if [ "$1" != "@ARGS_PARSED@" ] ; then
 fi
 
 #### setup temporary file
-TMP="`g.tempfile pid=$$`"
-if [ $? -ne 0 ] || [ -z "$TMP" ] ; then
+TEMPFILE="`g.tempfile pid=$$`"
+if [ $? -ne 0 ] || [ -z "$TEMPFILE" ] ; then
     g.message -e "Unable to create temporary files" 
     exit 1
 fi
@@ -283,7 +283,7 @@ exitprocedure()
 	# is this bogus? won't PATH revert on exit anyway?
 	PATH="$prevPATH"
 	export PATH
-	\rm -f "${TMP}"*
+	\rm -f "${TEMPFILE}"*
 	exit 1
 }
 trap "exitprocedure" 2 3 15
@@ -331,7 +331,7 @@ calculate() {
 
 listLayers() {
 
-	CAPABILITIES_FILE="${TMP}capabilities.xml"
+	CAPABILITIES_FILE="${TEMPFILE}capabilities.xml"
 
 	STRING="service=WMS&request=GetCapabilities&${GIS_OPT_WMSQUERY}";
 	g.message -d message="POST-data: [$STRING]"
@@ -354,7 +354,7 @@ listLayers() {
 
 	    if [ ! -e "$CAPABILITIES_FILE" ] ; then
 		g.message -e "Downloading XML file"
-		\rm "$TMP"
+		\rm "$TEMPFILE"
 		exit 1
 	    fi
 
@@ -382,13 +382,13 @@ listLayers() {
 
 	if [ ! -e "$CAPABILITIES_FILE" ] ; then
 	    g.message -e "Downloading XML file"
-	    \rm "$TMP"
+	    \rm "$TEMPFILE"
 	    exit 1
 	fi
 
 	if [ `wc -c < "$CAPABILITIES_FILE"` -eq 0 ] ; then
 	     g.message -e "Downloaded XML file was empty"
-	     \rm -f "$CAPABILITIES_FILE" "$TMP"
+	     \rm -f "$CAPABILITIES_FILE" "$TEMPFILE"
 	     exit 1
 	fi
 
@@ -402,7 +402,7 @@ listLayers() {
 		      -e "s/.*Layer\\/Abstract=/  |/" \
 		      -e "s/.*Layer\\/Style\\/Name=/  STYLE: /" \
 		      -e "s/.*Layer\\/Style\\/Title=/    Style title: /" \
-		  > "${TMP}capabilities.txt"
+		  > "${TEMPFILE}capabilities.txt"
 
 	else : # xml2 is not available
 		g.message -w "The 'xml2' program was not found. Proceeding with internal XML parsing which may not be as reliable."
@@ -421,21 +421,21 @@ listLayers() {
 		      -e "s/<Title>\(.*\)<\/Title>/\t --\1 /" \
 		      -e "s/<\/Title>//" \
 		      -e "s/<\/*.*\/*\/*>//" \
-		    > "${TMP}capabilities.txt"
+		    > "${TEMPFILE}capabilities.txt"
 	fi
 
-	if [ `wc -l < "${TMP}capabilities.txt"` -eq 0 ] ; then
+	if [ `wc -l < "${TEMPFILE}capabilities.txt"` -eq 0 ] ; then
 	    g.message message=""
 	    g.message -e "Parsing XML file"
 	    g.message message="------------------------"
 	    cat "$CAPABILITIES_FILE"
 	else
-	    cat "${TMP}capabilities.txt"
+	    cat "${TEMPFILE}capabilities.txt"
 	fi
 	g.message message=""
 
 	if [ -e "$CAPABILITIES_FILE" ] ; then
-	    \rm -f "${TMP}capabilities.txt" "$TMP"
+	    \rm -f "${TEMPFILE}capabilities.txt" "$TEMPFILE"
 
 	    if [ -n "$GIS_OPT_CAP_FILE" ] ; then
 		mv "$CAPABILITIES_FILE" "$GIS_OPT_CAP_FILE"
@@ -555,7 +555,7 @@ if [ `file -b "$FILES" | grep -c "^HTML\|^XML"` -eq 1 ] ; then
   g.message "#################################"
   cat "$FILES"
   g.message message=""
-  \rm -f "${TMP}"*
+  \rm -f "${TEMPFILE}"*
   exit 1
 fi
 
@@ -592,6 +592,6 @@ r.support map="$GIS_OPT_OUTPUT" history="$CMDLINE"
 g.message -v message="Map <${GIS_OPT_OUTPUT}> written"
 
 # Clean up:
-\rm -f "${TMP}"*
+\rm -f "${TEMPFILE}"*
 
 exit

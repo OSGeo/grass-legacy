@@ -65,8 +65,8 @@ export LC_NUMERIC
 
 COVER="$GIS_OPT_MAP"
 
-TMP="`g.tempfile pid=$$`"
-if [ $? -ne 0 ] || [ -z "$TMP" ] ; then
+TEMPFILE="`g.tempfile pid=$$`"
+if [ $? -ne 0 ] || [ -z "$TEMPFILE" ] ; then
     g.message -e "Unable to create temporary files"
     exit 1
 fi
@@ -74,7 +74,7 @@ fi
 
 cleanup()
 {
-   \rm -f "$TMP" "$TMP.sort"
+   \rm -f "$TEMPFILE" "$TEMPFILE.sort"
 }
 
 # what to do in case of user break:
@@ -89,10 +89,10 @@ trap "exitprocedure" 2 3 15
 
 g.message "Calculation for map $COVER (ignoring NULL cells)..."
 g.message "Reading raster map..."
-r.stats -1n input=$COVER > "$TMP"
+r.stats -1n input=$COVER > "$TEMPFILE"
 
 #check if map contains only NULL's in current region
-LINES=`wc -l "$TMP" | awk '{print $1}'`
+LINES=`wc -l "$TEMPFILE" | awk '{print $1}'`
 if [ "$LINES" -eq 0 ] ; then
  g.message -e "Map $COVER contains only NULL data in current region."
  cleanup
@@ -101,7 +101,7 @@ fi
 
 # calculate statistics
 g.message "Calculating statistics..."
-cat "$TMP" | awk 'BEGIN {sum = 0.0 ; sum2 = 0.0}
+cat "$TEMPFILE" | awk 'BEGIN {sum = 0.0 ; sum2 = 0.0}
 function abs(x){return x < 0 ? -x : x}
 NR == 1{min = $1 ; max = $1}
        {sum += $1 ; sum2 += $1 * $1 ; sum3 += abs($1) ; N++}
@@ -124,14 +124,14 @@ print "Variation coefficient:",100*(sqrt((sum2 - sum*sum/N)/N))/(sqrt(sum*sum)/N
 
 if [ $GIS_FLAG_E -eq 1 ] ; then
   #preparations:
-  cat "$TMP" | sort -n > "$TMP.sort"
-  NUMBER=`cat "$TMP.sort" | wc -l | awk '{print $1}'`
+  cat "$TEMPFILE" | sort -n > "$TEMPFILE.sort"
+  NUMBER=`cat "$TEMPFILE.sort" | wc -l | awk '{print $1}'`
   ODDEVEN=`echo $NUMBER | awk '{print $1%2}'`
 
   # 0.25 quartile
   QUARTILE=0.25
   QPOS=`echo $NUMBER $QUARTILE | awk '{printf "%d", $1 * $2 + 0.5}'`
-  QELEMENT=`head -n $QPOS "$TMP.sort" | tail -n 1`
+  QELEMENT=`head -n $QPOS "$TEMPFILE.sort" | tail -n 1`
   echo "1st Quartile: $QELEMENT"
 
   #Calculate median
@@ -141,13 +141,13 @@ if [ $GIS_FLAG_E -eq 1 ] ; then
    EVENMEDIANNUMBER=`expr $NUMBER / 2`
    EVENMEDIANNUMBERPLUSONE=`expr $EVENMEDIANNUMBER + 1`
    # select two numbers
-   SELECTEDNUMBERS=`cat "$TMP.sort" | head -n "$EVENMEDIANNUMBERPLUSONE" | tail -n 2`
+   SELECTEDNUMBERS=`cat "$TEMPFILE.sort" | head -n "$EVENMEDIANNUMBERPLUSONE" | tail -n 2`
    RESULTEVENMEDIAN=`echo $SELECTEDNUMBERS | awk '{printf "%f", ($1 + $2)/2.0}'`
    echo "Median (even N): $RESULTEVENMEDIAN"
   else
    # odd
    ODDMEDIANNUMBER=`echo $NUMBER | awk '{printf "%d", int($1/2+.5)}'`
-   RESULTODDMEDIAN=`cat "$TMP.sort" | head -n $ODDMEDIANNUMBER | tail -n 1 | awk '{printf "%f", $1}'`
+   RESULTODDMEDIAN=`cat "$TEMPFILE.sort" | head -n $ODDMEDIANNUMBER | tail -n 1 | awk '{printf "%f", $1}'`
    echo "Median (odd N): $RESULTODDMEDIAN"
   fi
 
@@ -155,13 +155,13 @@ if [ $GIS_FLAG_E -eq 1 ] ; then
   # 0.75 quartile
   QUARTILE=0.75
   QPOS=`echo $NUMBER $QUARTILE | awk '{printf "%d", $1 * $2 + 0.5}'`
-  QELEMENT=`head -n $QPOS "$TMP.sort" | tail -n 1`
+  QELEMENT=`head -n $QPOS "$TEMPFILE.sort" | tail -n 1`
   echo "3rd Quartile: $QELEMENT"
 
   # XX percentile
   QUARTILE=$GIS_OPT_PERCENTILE
   QPOS=`echo $NUMBER $QUARTILE | awk '{printf "%d", $1 * $2/100. + 0.5}'`
-  QELEMENT=`head -n $QPOS "$TMP.sort" | tail -1`
+  QELEMENT=`head -n $QPOS "$TEMPFILE.sort" | tail -1`
   echo "${GIS_OPT_PERCENTILE} Percentile: $QELEMENT"
 
 fi

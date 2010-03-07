@@ -102,7 +102,7 @@ cleanup()
 {
    #remove temporary region file
    unset WIND_OVERRIDE
-   g.remove region="i.fusion.brovey.$TMP" --quiet
+   g.remove region="i.fusion.brovey.$TMPPID" --quiet
 }
 
 # what to do in case of user break:
@@ -129,7 +129,7 @@ unset LC_ALL
 LC_NUMERIC=C
 export LC_NUMERIC
 
-TMP=$$
+TMPPID=$$
 
 if [ $GIS_FLAG_S -eq 0 -a $GIS_FLAG_L -eq 0 -a $GIS_FLAG_Q -eq 0 ] ; then
    g.message -e "Please select a flag to specify the satellite sensor"
@@ -144,10 +144,10 @@ if [ $? -ne 0 ] ; then
 fi
 
 # clone current region
-g.region save="i.fusion.brovey.$TMP"
+g.region save="i.fusion.brovey.$TMPPID"
 
 g.message -v message="Using resolution from PAN: $PANRES"
-WIND_OVERRIDE="i.fusion.brovey.$TMP"
+WIND_OVERRIDE="i.fusion.brovey.$TMPPID"
 export WIND_OVERRIDE
 g.region res="$PANRES" -a
 
@@ -209,9 +209,9 @@ if [ $GIS_FLAG_S -eq 1 ] ; then
    r.colors "$GIS_OPT_OUTPUTPREFIX.green" col=aspect
    r.colors "$GIS_OPT_OUTPUTPREFIX.red" col=aspect
    g.message "Fixing output names..."
-   g.rename "$GIS_OPT_OUTPUTPREFIX.green","$GIS_OPT_OUTPUTPREFIX.$TMP" --quiet
+   g.rename "$GIS_OPT_OUTPUTPREFIX.green","$GIS_OPT_OUTPUTPREFIX.$TMPPID" --quiet
    g.rename "$GIS_OPT_OUTPUTPREFIX.red","$GIS_OPT_OUTPUTPREFIX.green" --quiet
-   g.rename "$GIS_OPT_OUTPUTPREFIX.$TMP","$GIS_OPT_OUTPUTPREFIX.red" --quiet
+   g.rename "$GIS_OPT_OUTPUTPREFIX.$TMPPID","$GIS_OPT_OUTPUTPREFIX.red" --quiet
 else
    #aspect table is nice for LANDSAT and QuickBird:
    g.message message="Assigning color tables for LANDSAT or QuickBird... (step 4/4)"

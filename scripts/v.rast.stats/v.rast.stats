@@ -88,14 +88,14 @@ LC_NUMERIC=C
 export LC_NUMERIC
 
 #### setup temporary file
-TMP="`g.tempfile pid=$$`"
-if [ $? -ne 0 ] || [ -z "$TMP" ] ; then
+TEMPFILE="`g.tempfile pid=$$`"
+if [ $? -ne 0 ] || [ -z "$TEMPFILE" ] ; then
     g.message -e "Unable to create temporary files" 
     exit 1
 fi
-SQLTMP="$TMP.sql"
+SQLTMP="$TEMPFILE.sql"
 # we need a random name
-TMPNAME=`basename "$TMP"`
+TMPNAME=`basename "$TEMPFILE"`
 
 cleanup()
 {
@@ -108,7 +108,7 @@ cleanup()
       g.message "Restoring previous MASK..."
       g.rename "${TMPNAME}_origmask",MASK --quiet
    fi
-   rm -f "$TMP" "$TMPNAME" "$TMP.cats" "$SQLTMP"
+   rm -f "$TEMPFILE" "$TMPNAME" "$TEMPFILE.cats" "$SQLTMP"
 }
 
 # what to do in case of user break:
@@ -185,9 +185,9 @@ fi
 
 
 #dump cats to file to avoid "too many argument" problem:
-r.category "${VECTOR}_${TMPNAME}" fs=';' --quiet | cut -d';' -f1 > "$TMP.cats"
+r.category "${VECTOR}_${TMPNAME}" fs=';' --quiet | cut -d';' -f1 > "$TEMPFILE.cats"
 #echo "List of categories found: $CATSLIST"
-NUMBER=`cat "$TMP.cats" | wc -l | awk '{print $1}'`
+NUMBER=`cat "$TEMPFILE.cats" | wc -l | awk '{print $1}'`
 if [ $NUMBER -lt 1 ] ; then
    g.message -e "No categories found in raster map"
    cleanup
@@ -285,7 +285,7 @@ else
    EXTSTAT=""
 fi
 
-for i in `cat "$TMP.cats"` ; do
+for i in `cat "$TEMPFILE.cats"` ; do
    g.message -v message="Processing category $i ($CURRNUM/$NUMBER)"
    g.remove MASK --quiet 2>/dev/null
    # r.mapcalc doesn't use the parser, so we set the env var version instead
