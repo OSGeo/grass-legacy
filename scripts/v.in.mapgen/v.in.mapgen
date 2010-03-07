@@ -104,14 +104,14 @@ else
 fi
 
 #### setup temporary file
-TMP="`g.tempfile pid=$$`"
-if [ $? -ne 0 ] || [ -z "$TMP" ] ; then
+TMPFILE="`g.tempfile pid=$$`"
+if [ $? -ne 0 ] || [ -z "$TMPFILE" ] ; then
     g.message -e "unable to create temporary files"
     exit 1
 fi
 
 #### trap ctrl-c so that we can clean up tmp
-trap 'rm -f "$TMP"' 2 3 15
+trap 'rm -f "$TMPFILE"' 2 3 15
 
 #### create ascii vector file
 if [ $GIS_FLAG_F -eq 1 ] ; then
@@ -122,7 +122,7 @@ if [ $GIS_FLAG_F -eq 1 ] ; then
   #  tac $FILE | $AWK 'BEGIN { FS="," ; R=0 }
   #    $1~/\d*/   { printf("L %d\n", R) }
   #    $1~/   .*/ { printf(" %lf %lf\n", $2, $1) ; ++R }
-  #    $1~/END/   { }' | tac > "$TMP"
+  #    $1~/END/   { }' | tac > "$TMPFILE"
 
   ## matlab format. Cleanse with NaN->nan and spaces to tabs
   tac "$FILE" | awk '{print $1 "\t" $2 "\t" $3}
@@ -133,7 +133,7 @@ if [ $GIS_FLAG_F -eq 1 ] ; then
     $1~/nan.*/ { printf("L %d\n", R) ; R=0 }
     $1~/\d*\.\d*/ { printf(" %.8f %.8f %.8f\n", $1, $2, $3) ; ++R }
     END {;}' | \
-   grep -v "^L 0$" | tac > "$TMP"
+   grep -v "^L 0$" | tac > "$TMPFILE"
 
 else
   ## mapgen format.
@@ -141,11 +141,11 @@ else
     BEGIN { FS="\t" ; R=0 }
     $1~/#.*/ { printf("L %d\n", R) ; R=0 }
     $1~/\d*\.\d*/ { printf(" %.8f %.8f\n", $1, $2) ; ++R }
-    END {;}' | tac > "$TMP"
+    END {;}' | tac > "$TMPFILE"
 fi
 
 #### create digit header
-cat << EOF > "${TMP}.dig"
+cat << EOF > "${TMPFILE}.dig"
 ORGANIZATION: GRASSroots organization
 DIGIT DATE:   `date +%D`
 DIGIT NAME:   $PROG
@@ -159,16 +159,16 @@ VERTI:
 EOF
 
 #### process points list to ascii vector file (merge in vertices)
-cat "${TMP}" >> "${TMP}.dig"
+cat "${TMPFILE}" >> "${TMPFILE}.dig"
 
 #### if no name for vector file given, cat to stdout
 if [ "$NAME" = "" ] ; then
     g.message "Output to stdout" 
-    cat "${TMP}.dig" 2>/dev/null
+    cat "${TMPFILE}.dig" 2>/dev/null
 else
     #### import to binary vector file
     g.message "Importing with v.in.ascii ..." 
-    v.in.ascii $do3D input="${TMP}.dig" output="$NAME" format=standard
+    v.in.ascii $do3D input="${TMPFILE}.dig" output="$NAME" format=standard
 
     #### check success/failure
     if [ $? -eq 0 ] ; then
@@ -179,7 +179,7 @@ else
 fi
 
 #### clean up the mess
-rm -f "$TMP" "${TMP}.dig"
+rm -f "$TMPFILE" "${TMPFILE}.dig"
 
 #### end
 exit 0

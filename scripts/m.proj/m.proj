@@ -154,7 +154,7 @@ if [ -n "$GIS_OPT_PROJ_IN" ] ; then
 fi
 if [ -z "$IN_PROJ" ] ; then
    g.message -e "Missing input projection parameters."
-   rm -f "$TMP"
+   rm -f "$TEMPFILE"
    exit 1
 fi
 
@@ -178,8 +178,8 @@ g.message message="input parameters=[$IN_PROJ]"
 g.message message="output parameters=[$OUT_PROJ]"
 
 #### setup temporary file
-TMP="`g.tempfile pid=$$`"
-if [ $? -ne 0 ] || [ -z "$TMP" ] ; then
+TEMPFILE="`g.tempfile pid=$$`"
+if [ $? -ne 0 ] || [ -z "$TEMPFILE" ] ; then
    g.message -e "Unable to create temporary file" 
    exit 1
 fi
@@ -193,16 +193,16 @@ if [ -z "$GIS_OPT_INPUT" ] || [ "$GIS_OPT_INPUT" = "-" ] ; then
       read REPLY
       EXITCODE=$?
       if [ -n "$REPLY" ] ; then
-	 echo "$REPLY" >> "$TMP"
+	 echo "$REPLY" >> "$TMPFILE"
       fi
    done
 
    # make sure we have at least one line of data
-   if [ "`wc -l "$TMP" | cut -f1 -d' '`" -eq 0 ] ; then
+   if [ "`wc -l "$TMPFILE" | cut -f1 -d' '`" -eq 0 ] ; then
       g.message -e "ERROR reading data from stdin"
       exit 1
    fi
-   infile="$TMP"
+   infile="$TMPFILE"
 else
    infile="$GIS_OPT_INPUT"
 fi
@@ -268,8 +268,8 @@ if [ $EXITCODE -ne 0 ] ; then
 fi
 
 #### cleanup
-if [ -e "$TMP" ] ; then
-   rm -f "$TMP"
+if [ -e "$TEMPFILE" ] ; then
+   rm -f "$TEMPFILE"
 fi
 
 exit 0

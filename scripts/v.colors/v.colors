@@ -114,8 +114,8 @@ fi
 
 cleanup()
 {
-   if [ -n "$TMP" ] ; then
-      \rm "$TMP" "${TMP}_vcol.sql"
+   if [ -n "$TEMPFILE" ] ; then
+      \rm "$TEMPFILE" "${TEMPFILE}_vcol.sql"
    fi
    eval `g.findfile elem=windows file="tmp_vcolors.$$" | grep '^name='`
    if [ -n "$name" ] ; then
@@ -275,8 +275,8 @@ r.colors map="tmp_colr_$$" "$COLOR_CMD" $FLIP_FLAG --quiet
 
 
 
-TMP="`g.tempfile pid=$$`"
-if [ $? -ne 0 ] || [ -z "${TMP}" ] ; then
+TEMPFILE="`g.tempfile pid=$$`"
+if [ $? -ne 0 ] || [ -z "$TEMPFILE" ] ; then
     g.message -e "Unable to create temporary file"
     cleanup
     exit 1
@@ -292,21 +292,21 @@ v.db.select map="$GIS_OPT_MAP" layer="$GIS_OPT_LAYER" column="$GIS_OPT_COLUMN" |
       #g.message message="LINE=[$LINE]"
       VALUE=`echo $LINE | cut -f1 -d'|'`
       COLR=`echo $LINE | cut -f2 -d'|'`
-      echo "UPDATE $TABLE SET $GIS_OPT_RGB_COLUMN = '$COLR' WHERE $GIS_OPT_COLUMN = $VALUE;" >> "${TMP}_vcol.sql"
+      echo "UPDATE $TABLE SET $GIS_OPT_RGB_COLUMN = '$COLR' WHERE $GIS_OPT_COLUMN = $VALUE;" >> "${TEMPFILE}_vcol.sql"
   done )
 
 
-if [ ! -e "${TMP}_vcol.sql" ] ; then
+if [ ! -e "${TEMPFILE}_vcol.sql" ] ; then
     g.message -e "No values found in color range"
     cleanup
     exit 1
 fi
 
 # apply SQL commands to update the table with values
-NUM_RULES=`wc -l < "${TMP}_vcol.sql"`
+NUM_RULES=`wc -l < "${TEMPFILE}_vcol.sql"`
 g.message "Writing $NUM_RULES colors ..."
-#less "$TMP"
-db.execute input="${TMP}_vcol.sql"
+#less "$TEMPFILE"
+db.execute input="${TEMPFILE}_vcol.sql"
 if [ $? -ne 0 ] ; then
    g.message -e "Processing SQL transaction"
    cleanup

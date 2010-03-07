@@ -83,8 +83,8 @@ fi
 g.message -d "[r.in.gdalwarp]"
 
 #### setup temporary file
-TMP="`g.tempfile pid=$$`"
-if [ $? -ne 0 ] || [ -z "$TMP" ] ; then
+TEMPFILE="`g.tempfile pid=$$`"
+if [ $? -ne 0 ] || [ -z "$TEMPFILE" ] ; then
     g.message -e "Unable to create temporary files"
     exit 1
 fi
@@ -96,7 +96,7 @@ fi
 exitprocedure()
 {
 	g.message -e 'User break!'
-	rm -f "${TMP}"*
+	rm -f "${TEMPFILE}"*
 	exit 1
 }
 trap "exitprocedure" 2 3 15
@@ -118,7 +118,7 @@ defaultIFS="$IFS"
 warpimport () {
 	FILE="$1"
 	MAP=$2
-	WARPFILE="${TMP}warped.geotiff"
+	WARPFILE="${TEMPFILE}warped.geotiff"
 	TMPMAPNAME=${2}_tmp
 
 	# Warp it and convert it to geotiff with alpha band to be sure we get nulls:
@@ -129,7 +129,7 @@ warpimport () {
 
 	if [ $? -ne 0 ] ; then
 	    g.message -e message="`basename $0`: gdalwarp failure."
-	    rm -f "${TMP}"*
+	    rm -f "${TEMPFILE}"*
 	    exit 1
 	fi
 
@@ -137,7 +137,7 @@ warpimport () {
 	r.in.gdal $FLAGS input="$WARPFILE" output="$TMPMAPNAME" --quiet
 	if [ $? -ne 0 ] ; then
 	    g.message -e message="`basename $0`: r.in.gdal failure."
-	    rm -f "${TMP}"*
+	    rm -f "${TEMPFILE}"*
 	    exit 1
 	fi
 
@@ -237,7 +237,7 @@ nowarpimport () {
 	r.in.gdal -o $FLAGS input="$FILE" output="$MAP" --quiet
 	if [ $? -ne 0 ] ; then
 	    g.message -e message="`basename $0`: r.in.gdal failure."
-	    rm -f "${TMP}"*
+	    rm -f "${TEMPFILE}"*
 	    exit 1
 	fi
 
@@ -427,4 +427,4 @@ if [ $COLORS -eq 3 ] && [ $GIS_FLAG_C -eq 1 ] ; then
 fi
 
 # Clean up:
-rm -f "${TMP}"*
+rm -f "${TEMPFILE}"*

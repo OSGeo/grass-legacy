@@ -150,8 +150,8 @@ fi
 
 
 #### set temporary files
-TMP="`g.tempfile pid=$$`"
-if [ $? -ne 0 ] || [ -z "$TMP" ] ; then
+TEMPFILE="`g.tempfile pid=$$`"
+if [ $? -ne 0 ] || [ -z "$TEMPFILE" ] ; then
     g.message -e "Unable to create temporary files"
     exit 1
 fi
@@ -160,7 +160,7 @@ fi
 cleanup()
 {
    g.message -v "Cleaning up ..."
-   \rm -f "$TMP" "$TMP.gpx"
+   \rm -f "$TEMPFILE" "$TEMPFILE.gpx"
    # only try to remove map if it exists to avoid ugly warnings
    g.findfile element=vector file="tmp_vogb_epsg4326_$$" > /dev/null
    if [ $? -eq 0 ] ; then
@@ -181,13 +181,13 @@ WPT=$GIS_FLAG_W ; RTE=$GIS_FLAG_R ; TRK=$GIS_FLAG_T
 
 if [ $WPT -eq 1 ] && ([ $RTE -eq 1 ] || [ $TRK -eq 1 ]) ; then
     g.message -e "One feature at a time please."
-    rm -f "${TMP}"
+    rm -f "$TEMPFILE"
     exit 1
 fi
 # logic eludes me at pressent..  [combine with above]
 if [ $RTE -eq 1 ] && [ $TRK -eq 1 ] ; then
     g.message -e "One feature at a time please."
-    rm -f "${TMP}"
+    rm -f "$TEMPFILE"
     exit 1
 fi
 
@@ -310,7 +310,7 @@ fi
 
 g.message -v "Exporting data ..."
 
-v.out.ogr in="tmp_vogb_epsg4326_$$" dsn="$TMP.gpx" type="$GIS_OPT_TYPE" \
+v.out.ogr in="tmp_vogb_epsg4326_$$" dsn="$TEMPFILE.gpx" type="$GIS_OPT_TYPE" \
   format=GPX ${LINETYPE} dsco="GPX_USE_EXTENSIONS=YES" --quiet
 
 if [ $? -ne 0 ] ; then
@@ -321,7 +321,7 @@ fi
 
 if [ "$GIS_OPT_FORMAT" = gpx ] ; then
    # short circuit, we have what we came for.
-   mv -f "$TMP.gpx" "$GIS_OPT_OUTPUT"
+   mv -f "$TEMPFILE.gpx" "$GIS_OPT_OUTPUT"
    cleanup
    g.message -v "Fast exit."
    exit 0
@@ -340,7 +340,7 @@ fi
 
 g.message -v "Running GpsBabel ..."
 
-gpsbabel $GTYPE -i gpx -f "$TMP.gpx" \
+gpsbabel $GTYPE -i gpx -f "$TEMPFILE.gpx" \
     -o "$GIS_OPT_FORMAT" -F "$GIS_OPT_OUTPUT"
 
 if [ $? -ne 0 ] ; then

@@ -56,11 +56,11 @@ if [ "$1" != "@ARGS_PARSED@" ] ; then
 fi
 
 # temp file
-TMP="r_mask_$$"
+TEMPRAST="r_mask_$$"
 
 cleanup()
 {
- g.remove --q rast=$TMP
+ g.remove --q rast=$TEMPRAST
 }
 
 # what to do in case of user break:
@@ -111,9 +111,9 @@ else
 	fi
 
         if [ "$GIS_FLAG_I" -eq 1 ]; then
-		g.rename --q rast=MASK,$TMP
-		r.mapcalc "MASK=if(isnull($TMP),1,null())"
-		g.remove --q rast=$TMP
+		g.rename --q rast=MASK,$TEMPRAST
+		r.mapcalc "MASK=if(isnull($TEMPRAST),1,null())"
+		g.remove --q rast=$TEMPRAST
 		g.message "Inverted MASK created. All subsequent raster operations"
 	else
 	  g.message "MASK created. All subsequent raster operations"
