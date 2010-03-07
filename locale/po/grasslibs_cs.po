@@ -15,7 +15,7 @@ msgstr ""
 "Project-Id-Version: grasslibs_cs\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2010-02-25 12:23+0100\n"
-"PO-Revision-Date: 2009-02-24 10:43+0100\n"
+"PO-Revision-Date: 2010-03-07 15:47+0100\n"
 "Last-Translator: \n"
 "Language-Team:  <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -443,7 +443,7 @@ msgstr "Neplatné název tabulky vektorové mapy <%s>. Znak <%c> není povolen.\n"
 
 #: ../lib/db/dbmi_base/login.c:98
 msgid "Login file corrupted"
-msgstr ""
+msgstr "POru¹en soubor pro pøihlá¹ení"
 
 #: ../lib/db/dbmi_client/copy_tab.c:100 ../lib/db/dbmi_client/copy_tab.c:120
 #: ../lib/db/dbmi_client/db.c:41
@@ -506,11 +506,11 @@ msgstr "Neznámý typ sloupce (sloupec <%s>)"
 #: ../lib/db/dbmi_client/select.c:119 ../lib/db/dbmi_client/select.c:217
 #: ../lib/db/dbmi_client/select.c:283
 msgid "Missing column name"
-msgstr ""
+msgstr "Chybí jméno sloupce"
 
 #: ../lib/db/dbmi_client/select.c:212 ../lib/db/dbmi_client/select.c:278
 msgid "Missing key column name"
-msgstr ""
+msgstr "Chybí jméno klíèového sloupce"
 
 #: ../lib/db/dbmi_client/select.c:305
 #, c-format
@@ -725,16 +725,15 @@ msgstr "Pokus o odstranìní informace o ostrovì %d z mrtvé plochy %d"
 
 #: ../lib/vector/diglib/file.c:157
 msgid "Writing to file loaded to memory not supported"
-msgstr ""
+msgstr "Zapisování do souboru naèteného do pamìti není podporováno"
 
 #: ../lib/vector/diglib/file.c:200
-#, fuzzy
 msgid "Unable to load file to memory, file not open"
-msgstr "Nelze otevøít doèasný soubor"
+msgstr "nelze naèíst soubor do pamìti, sobor není otevøen"
 
 #: ../lib/vector/diglib/file.c:215
 msgid "Vector memory mode not supported, using 'AUTO'"
-msgstr ""
+msgstr "Vemód vektorové pamìti není podporován, pou¾iji 'AUTO'"
 
 #: ../lib/vector/diglib/plus.c:288
 msgid "Unable read topology for nodes"
@@ -1429,9 +1428,8 @@ msgid "BUG (Vect_build_sidx_from_topo): isle does not exist"
 msgstr "BUG (Vect_build_sidx_from_topo): Ostrov neexistuje"
 
 #: ../lib/vector/Vlib/buffer2.c:376
-#, fuzzy
 msgid "Line is not looped"
-msgstr "Matice nejsou povoleny"
+msgstr "Linie není ukonèena smyèkou"
 
 #: ../lib/vector/Vlib/buffer2.c:611 ../lib/vector/Vlib/buffer2.c:622
 msgid "Next edge was visited but it is not the first one !!! breaking loop"
@@ -2415,12 +2413,12 @@ msgstr "Neznámá Location"
 #: ../lib/gis/spawn.c:385
 #, c-format
 msgid "CreateProcess() failed: error = %d"
-msgstr ""
+msgstr "CreateProcess() selhal: chyba = %d"
 
 #: ../lib/gis/spawn.c:410
-#, fuzzy, c-format
+#, c-format
 msgid "G_spawn: unable to redirect descriptor %d"
-msgstr "G_spawn: nelze duplikovat popisovaè %d na %d"
+msgstr "G_spawn: nelze pøesmìrovat popisovaè %d"
 
 #: ../lib/gis/spawn.c:418 ../lib/gis/spawn.c:603
 #, c-format
@@ -2500,9 +2498,9 @@ msgid "bad rule (%s): [%s]"
 msgstr "chybné pravidlo (%s): [%s]"
 
 #: ../lib/gis/color_rules.c:265
-#, fuzzy, c-format
+#, c-format
 msgid "Unable to load color rules <%s>"
-msgstr "Nelze zavøít vektorovou vrstvu <%s>"
+msgstr "Nelze naèíst pravidla barev <%s>"
 
 #: ../lib/gis/mapset.c:39
 msgid "MAPSET is not set"
@@ -2661,6 +2659,8 @@ msgid ""
 "Incompatible library version for module. You need to rebuild GRASS or "
 "untangle multiple installations."
 msgstr ""
+"Neompatibilní verze knihovny pro modul. Je potøeba znovu zkompilovat GRASS "
+"nebo vyøe¹it problém více instalací."
 
 #: ../lib/gis/gisinit.c:63
 #, c-format
@@ -2961,14 +2961,14 @@ msgstr ""
 "(%f,%f)"
 
 #: ../lib/gis/mapset_msc.c:60
-#, fuzzy, c-format
+#, c-format
 msgid "Unable to make mapset element %s (%s): %s"
-msgstr "Nelze vytvoøit prvek %s(%s) mapsetu"
+msgstr "Nelze vytvoøit prvek mapsetu %s (%s): %s"
 
 #: ../lib/gis/mapset_msc.c:64
-#, fuzzy, c-format
+#, c-format
 msgid "Unable to access mapset element %s (%s): %s"
-msgstr "Nelze vytvoøit prvek %s(%s) mapsetu"
+msgstr "Nelze zpøístupnit prvek mapsetu %s(%s): %s"
 
 #: ../lib/gis/parser.c:331
 msgid "WHERE conditions of SQL statement without 'where' keyword"
@@ -4006,7 +4006,7 @@ msgstr "Nelze definovat novou linii"
 #: ../lib/sites/sites.c:97
 #, c-format
 msgid "Attributes for category %d not found"
-msgstr "atribut pro kategorii %d nebyl nalezen"
+msgstr "Atribut pro kategorii %d nebyl nalezen"
 
 #: ../lib/sites/sites.c:136
 msgid "Category must be integer"
@@ -4022,7 +4022,7 @@ msgstr "Nepovolená èasová znaèka"
 
 #: ../lib/sites/sites.c:241
 msgid "Memory error in allocating timestamp"
-msgstr "Chyba pamìti pøi alokování èasové znaèky"
+msgstr "Chyba pamìti pøi pødìlování èasové znaèky"
 
 #: ../lib/sites/sites.c:348 ../lib/sites/sites.c:478
 msgid ""
@@ -4033,9 +4033,8 @@ msgstr ""
 "by mìl být aktualizován na vektorovou knihovnu GRASS 6)"
 
 #: ../lib/sites/sites.c:397
-#, fuzzy
 msgid "Cannot fetch row"
-msgstr "Nelze získat informace o vrstvì"
+msgstr "Nelze naèíst øádek"
 
 #: ../lib/sites/sites.c:579
 msgid "G_oldsite_new_struct: invalid # dims or fields"
@@ -4101,19 +4100,19 @@ msgid "subgroup <%s> of group <%s> references the following raster maps\n"
 msgstr "Podskupina <%s>skupiny <%s> okazuja na následující rastrové mapy\n"
 
 #: ../lib/imagery/points.c:124
-#, fuzzy, c-format
+#, c-format
 msgid "Unable to open control point file for group [%s in %s]"
-msgstr "Nelze otevøít soubor [%s] skupiny [%s v %s]"
+msgstr "Nelze otevøít soubor s vlicovacími body (GCP) pro skupinu [%s v %s]"
 
 #: ../lib/imagery/points.c:132
-#, fuzzy, c-format
+#, c-format
 msgid "Bad format in control point file for group [%s in %s]"
-msgstr "Nelze otevøít soubor [%s] skupiny [%s v %s]"
+msgstr "Nelze otevøít soubor s vlicovacími body (GCP) skupiny [%s v %s]"
 
 #: ../lib/imagery/points.c:159
-#, fuzzy, c-format
+#, c-format
 msgid "Unable to create control point file for group [%s in %s]"
-msgstr "Nelze vytvoøit soubor [%s] pro skupinu [%s v %s]"
+msgstr "Nelze vytvoøit soubor s vlicovacími body (GCP) pro skupinu [%s v %s]"
 
 #: ../lib/imagery/target.c:38
 #, c-format
@@ -4132,11 +4131,11 @@ msgstr "Vektorová mapa <%s> naètena (%d prvkù)"
 
 #: ../lib/ogsf/gk.c:322
 msgid "Need at least 3 keyframes for spline"
-msgstr ""
+msgstr "Je poteba nejménì 3 klíèové snímky pro vytvoøení køivky"
 
 #: ../lib/ogsf/gk.c:624
 msgid "Need at least 2 keyframes for interpolation"
-msgstr ""
+msgstr "Je poteba nejménì 3 klíèové snímky pro interpolaci"
 
 #: ../lib/ogsf/GVL2.c:248
 #, c-format
@@ -4153,9 +4152,8 @@ msgid "3D raster map <%s> not found"
 msgstr "3D rastrová mapa <%s> nebyla nalezena"
 
 #: ../lib/ogsf/gs_bm.c:124
-#, fuzzy
 msgid "Bitmap mismatch"
-msgstr "bitmapová maska vytvoøena"
+msgstr "Bitmapová neshoda"
 
 #: ../lib/ogsf/gsd_img_mpeg.c:63
 msgid "Unable to allocate stream"
@@ -4295,7 +4293,7 @@ msgstr ""
 
 #: ../lib/ogsf/gsd_surf.c:1742
 msgid "Cut-plane points mis-match between surfaces. Check resolution(s)."
-msgstr ""
+msgstr "Neshoda pøi øezání povrchu. Zkontrolujte rozli¹ení"
 
 #: ../lib/ogsf/gsd_label.c:58
 msgid "Max. number of labels reached!"
@@ -4303,7 +4301,7 @@ msgstr "Dosa¾en maximální poèet popiskù!"
 
 #: ../lib/ogsf/GK2.c:275 ../lib/ogsf/GK2.c:288
 msgid "Check no. of frames requested and keyframes marked"
-msgstr ""
+msgstr "Zkontrolujte poèet snímkù po¾adovaných a oznaèených klíèových snímkù"
 
 #: ../lib/ogsf/gvl_file.c:104
 msgid "Maximum number of datafiles exceeded"
@@ -4326,11 +4324,11 @@ msgstr "Nelze zavøít rastrovou mapu <%s>"
 
 #: ../lib/ogsf/trans.c:180
 msgid "Out of matrix stack space"
-msgstr ""
+msgstr "Ji¾ mimo plochu "
 
 #: ../lib/ogsf/trans.c:200
 msgid "Tried to pop an empty stack"
-msgstr ""
+msgstr "POkus naplnit prázdnou frontu"
 
 #: ../lib/ogsf/Gp3.c:204
 #, c-format
@@ -4962,8 +4960,11 @@ msgid ""
 "cell. Z-value %f, zmin %f, zmax %f."
 msgstr ""
 
-#~ msgid "Too many arguments"
-#~ msgstr "Pøíli¹ mnoho argumentù"
+msgid "Too many arguments"
+msgstr "Pøíli¹ mnoho argumentù"
+
+msgid "Incompatible library version for module"
+msgstr "Nekompatibilní verze knihovny pro modul"
 
 #~ msgid "Vector is not 3D"
 #~ msgstr "Vektorová mapa není 3D"
@@ -4984,9 +4985,6 @@ msgstr ""
 
 #~ msgid "Column type of s column is not supported (must be integer or double)"
 #~ msgstr "Datový typ sloupce s není podporován (musí být integer nebo double)"
-
-#~ msgid "Incompatible library version for module"
-#~ msgstr "Nekompatibilní verze knihovny pro modul"
 
 #~ msgid "Null values have not been initialized. "
 #~ msgstr "Nebyly inicializovány nulové hodnoty. "
@@ -5011,3 +5009,40 @@ msgstr ""
 
 #~ msgid "The cholesky solver does not work with sparse matrices"
 #~ msgstr "Cholesky metodu nelze pou¾ít pro øídké matice"
+
+#~ msgid "This location has no description."
+#~ msgstr "Location nemá popisek."
+
+#~ msgid "G_malloc: unable to allocate %lu bytes at %s:%d"
+#~ msgstr "G_malloc: Nelze pøidìlit %lu bytù v %s:%d"
+
+#~ msgid "G_calloc: unable to allocate %lu * %lu bytes at %s:%d"
+#~ msgstr "G_calloc: Nelze pøidìlit %lu * %lu bytù v %s:%d"
+
+#~ msgid "G_realloc: unable to allocate %lu bytes at %s:%d"
+#~ msgstr "G_realloc: Nelze alokovat %lu bytù v %s:%d"
+
+#~ msgid ""
+#~ "taking too long to find points for interpolation--please change the "
+#~ "region to area where your points are. Continuing calculations..."
+#~ msgstr ""
+#~ "hledání bodù pro interpolaci trvá pøíli¹ dlouho -- prosím, zmìòte region "
+#~ "na území, které je tìmito body pokryto. Pokraèuji ve výpoètu..."
+
+#~ msgid "Reading lines from vector map ... "
+#~ msgstr "Naèítání linií z vektorové mapy ..."
+
+#~ msgid "Reading nodes from vector map ... "
+#~ msgstr "Naèítání uzlù z vektorové mapy ... "
+
+#~ msgid "strip exists with insufficient data"
+#~ msgstr "pás existuje s nedostaèujícími daty"
+
+#~ msgid "there are points outside specified 2D/3D region--ignored %d points"
+#~ msgstr "nìkteré body le¾í mimo specifikovaný region -- %d bodù ignorováno"
+
+#~ msgid "ignoring %d points -- too dense"
+#~ msgstr "ignoruji %d bodù -- pøíli¹ husté pole"
+
+#~ msgid "some points outside of region -- will ignore..."
+#~ msgstr "nìkteré body mimo region -- budou ignorovány..."

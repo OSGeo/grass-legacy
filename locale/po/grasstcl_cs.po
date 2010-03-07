@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: grasstcl_cs\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2010-02-25 12:23+0100\n"
-"PO-Revision-Date: 2009-02-24 10:18+0100\n"
+"PO-Revision-Date: 2010-03-07 14:41+0100\n"
 "Last-Translator: \n"
 "Language-Team:  <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -554,7 +554,7 @@ msgstr "Konec"
 
 #: ../lib/init/gis_set.tcl:558
 msgid "Starting GRASS for the first time"
-msgstr ""
+msgstr "První spu¹tìní GIS GRASS"
 
 #: ../lib/init/gis_set.tcl:559
 msgid ""
@@ -562,11 +562,13 @@ msgid ""
 "have not already done so.  A popular choice is \"grassdata\", located in "
 "your home directory."
 msgstr ""
+"GIS GRASS potøebuje adresáø ve kterém bude ukládat data. Vytvoøte prosím "
+"takový adresáø, pokud ho u¾ nemáte vytvoøený. Oblíbená volba je \"grassdata"
+"\" umístìný ve va¹em domovském adresáøi."
 
 #: ../lib/init/gis_set.tcl:564
-#, fuzzy
 msgid "Select GIS data directory"
-msgstr "Nový adresáø s GIS daty"
+msgstr "Vyberte adresáø s GIS daty"
 
 #: ../lib/init/gis_set.tcl:569
 msgid "WARNING: Invalid Database"
@@ -920,14 +922,14 @@ msgstr "Vybrat font"
 #: ../gui/tcltk/gis.m/vector.tcl:245 ../gui/tcltk/gis.m/vector.tcl:267
 #: ../gui/tcltk/gis.m/vector.tcl:300
 msgid "This action requires map name to be set"
-msgstr ""
+msgstr "Tato akce vy¾aduje nastavit jméno mapy"
 
 #: ../gui/tcltk/gis.m/thematic.tcl:175 ../gui/tcltk/gis.m/thematic.tcl:196
 #: ../gui/tcltk/gis.m/chart.tcl:134 ../gui/tcltk/gis.m/chart.tcl:155
 #: ../gui/tcltk/gis.m/vector.tcl:251 ../gui/tcltk/gis.m/vector.tcl:273
 #: ../gui/tcltk/gis.m/vector.tcl:306
 msgid "You must provide valid vector layer number"
-msgstr ""
+msgstr "Musíte zadat platné èíslo vrstvy"
 
 #: ../gui/tcltk/gis.m/thematic.tcl:218 ../gui/tcltk/gis.m/vector.tcl:317
 msgid "Vector point symbol"
@@ -1199,9 +1201,8 @@ msgid "Zero elevation range"
 msgstr "Nulové rozmezí vý¹ek"
 
 #: ../gui/tcltk/gis.m/profile.tcl:539
-#, fuzzy
 msgid "Error reading region values"
-msgstr "Chyba pøi nastavení regionu"
+msgstr "Chyba pøi ètení hodnot regionu"
 
 #: ../gui/tcltk/gis.m/profile.tcl:563 ../gui/tcltk/gis.m/profile.tcl:648
 msgid "r.profile error"
@@ -1534,9 +1535,8 @@ msgstr ""
 "jen pro regiony < 10000 bunìk"
 
 #: ../gui/tcltk/gis.m/rastnums.tcl:279
-#, fuzzy
 msgid "Constrain map to region geometry?"
-msgstr "Omezit mapu podle geometrie regionu"
+msgstr "Vnutit mapu do nastavení regionu?"
 
 #: ../gui/tcltk/gis.m/rastnums.tcl:280
 msgid ""
@@ -1546,10 +1546,15 @@ msgid ""
 "\n"
 " It's suggested to constrain map to region geometry to display cell values."
 msgstr ""
+"Hodnoty bunìk mohou být zobrazeny pouze\n"
+"pro regiony <10,000 bunìk. Mapa v obsahuje více ne¾ 10 000 bunìk.\n"
+"\n"
+"\n"
+" Doporuèuji vnutit mapu do nastavení regionu pro zobrazení hodnot bunìk"
 
 #: ../gui/tcltk/gis.m/rastnums.tcl:282
 msgid "Leave in explore mode"
-msgstr ""
+msgstr "POnechat v prùzkumném re¾imu"
 
 #: ../gui/tcltk/gis.m/frames.tcl:105
 msgid "Divide map display into frames for displaying multiple maps"
@@ -2181,7 +2186,7 @@ msgstr "Zmìnit nastavení"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:219 ../gui/tcltk/d.m/menu.tcl:200
 msgid "Change default GUI"
-msgstr ""
+msgstr "Zmìnit výchozí GUI"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:220 ../gui/tcltk/d.m/menu.tcl:201
 msgid "Show current GRASS version"
@@ -4194,7 +4199,6 @@ msgid "     Layer for labels"
 msgstr "     Vrstva pro popisky"
 
 #: ../gui/tcltk/gis.m/vector.tcl:494
-#, fuzzy
 msgid "   Attribute column for labels"
 msgstr "   Atributový sloupec s popisky"
 
@@ -4255,9 +4259,8 @@ msgid "Maximum zoom-in reached"
 msgstr "Dosa¾eno maximální pøiblí¾ení"
 
 #: ../gui/tcltk/gis.m/mapcanvas.tcl:660
-#, fuzzy
 msgid "Error setting region 1"
-msgstr "Chyba pøi nastavení regionu"
+msgstr "Chyba nastavování regionu 1"
 
 #: ../gui/tcltk/gis.m/mapcanvas.tcl:669
 msgid "please wait..."
@@ -4293,14 +4296,14 @@ msgstr ""
 "Pøejete si ho pøepsat? "
 
 #: ../gui/tcltk/gis.m/mapcanvas.tcl:1296
-#, fuzzy, tcl-format
+#, tcl-format
 msgid "Display: rows=%d  cols=%d  N-S res=%s  E-W res=%s"
-msgstr "Zobrazení: øádkù=%d sloupcù=%d S-J rozli¹ení=%g V-Z rozli¹ení= %g"
+msgstr "Displej: øádky=%d  sloupce=%d  S-J rozl=%s  V-Z rozl=%s"
 
 #: ../gui/tcltk/gis.m/mapcanvas.tcl:1299
-#, fuzzy, tcl-format
+#, tcl-format
 msgid "Display: rows=%d  cols=%d  N-S res=%g  E-W res=%g"
-msgstr "Zobrazení: øádkù=%d sloupcù=%d S-J rozli¹ení=%g V-Z rozli¹ení= %g"
+msgstr "Displej: øádky=%d  sloupce=%d  S-J rozl=%g  V-Z rozl=%g"
 
 #: ../gui/tcltk/gis.m/mapcanvas.tcl:1374
 msgid "Error setting region (Problem with g.region?)"
@@ -4311,9 +4314,8 @@ msgid "Error reading current resolution with g.region"
 msgstr "Chyb pøi ètení souèasného rozli¹ení pomocí g.region"
 
 #: ../gui/tcltk/gis.m/mapcanvas.tcl:1477
-#, fuzzy
 msgid "Error setting region 2"
-msgstr "Chyba pøi nastavení regionu"
+msgstr "Chybanastavování regionu 2"
 
 #: ../gui/tcltk/gis.m/mapcanvas.tcl:1503 ../gui/tcltk/gis.m/georect.tcl:2029
 msgid "Drag or click mouse to zoom"
@@ -4699,7 +4701,7 @@ msgstr ""
 
 #: ../gui/tcltk/gis.m/georect.tcl:1028
 msgid "Clip map/image to target region"
-msgstr ""
+msgstr "Pøilo¾it mapu/obrazová data k cílové location"
 
 #: ../gui/tcltk/gis.m/georect.tcl:1038
 msgid "Use"
@@ -6340,5 +6342,5 @@ msgstr "Náhled"
 msgid "Test"
 msgstr "Test"
 
-#~ msgid "Run (in Xterm)"
-#~ msgstr "Spustit v pøíkazové konzoli (Xterm)"
+msgid "Run (in Xterm)"
+msgstr "Spustit v pøíkazové konzoli (Xterm)"

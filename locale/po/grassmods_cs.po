@@ -14,7 +14,7 @@ msgstr ""
 "Project-Id-Version: grassmods_cs\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2010-02-25 12:23+0100\n"
-"PO-Revision-Date: 2009-10-09 12:58+0200\n"
+"PO-Revision-Date: 2010-03-07 15:38+0100\n"
 "Last-Translator: \n"
 "Language-Team:  <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -181,18 +181,17 @@ msgid "List all database drivers."
 msgstr "Vypi¹ v¹echny databázové ovladaèe."
 
 #: ../db/base/select.c:93
-#, fuzzy, c-format
+#, c-format
 msgid "Test %s."
-msgstr "Typ: %s"
+msgstr "Test %s."
 
 #: ../db/base/select.c:93 ../imagery/i.rectify/report.c:16
 msgid "failed"
 msgstr "Selhalo"
 
 #: ../db/base/select.c:93
-#, fuzzy
 msgid "succeeded"
-msgstr "...uspìl."
+msgstr "úspìch"
 
 #: ../db/base/select.c:130 ../raster/r.stats/main.c:208
 #: ../vector/v.db.select/main.c:111
@@ -964,7 +963,6 @@ msgid "The z-part of the hydraulic conductivity tensor in [m/s]"
 msgstr "souøadnice z hydraulického napøimovaèe vodivosti v [m/s]"
 
 #: ../raster3d/r3.gwflow/main.c:97
-#, fuzzy
 msgid "Sources and sinks in [m^3/s]"
 msgstr "Prameny a jezera v [m^3/s]"
 
@@ -4598,7 +4596,6 @@ msgid "Name of non-file GDAL data source"
 msgstr "Jméno datového zdroje GDAL, který není soubor"
 
 #: ../raster/r.external/main.c:530
-#, fuzzy
 msgid "Band to select (default: all)"
 msgstr "Kanál, který má být vybrán (výchozí: v¹echny kanály)"
 
@@ -5085,9 +5082,8 @@ msgid "Sampling distance step coefficient (0.5-1.5)"
 msgstr "Vzorkování koeficient kroku vzdálenosti (0.5-1.5)"
 
 #: ../raster/r.sun2/main.c:489
-#, fuzzy
 msgid "Read the input files in this number of chunks"
-msgstr "Vyèíst vstupní soubor mezi "
+msgstr "Vyèíst vstupní soubor vtomto poètu kusù"
 
 #: ../raster/r.sun2/main.c:496
 msgid "Civil time zone value, if none, the time will be local solar time"
@@ -5095,7 +5091,7 @@ msgstr "Èasové pásmo, pokud nezadáno, bude pou¾it lokální sluneèní èas"
 
 #: ../raster/r.sun2/main.c:504 ../vector/v.buffer2/main.c:214
 msgid "This does nothing. It is retained for backwards compatibility"
-msgstr ""
+msgstr "Toto nedìlá nic. Je zde ponecháno pro zpìtnou kompatibilitu"
 
 #: ../raster/r.sun2/main.c:505 ../vector/v.build.polylines/main.c:128
 #: ../vector/v.buffer2/main.c:212 ../vector/v.buffer2/main.c:224
@@ -8115,9 +8111,9 @@ msgid "Unable to write et file"
 msgstr "Nelze zapsat soubor eroze/transportu"
 
 #: ../raster/simwe/simlib/hydro.c:119
-#, fuzzy, c-format
+#, c-format
 msgid "nwalk (%d) > maxw (%d)!"
-msgstr "nwalk > maxw!"
+msgstr "nwalk (%d) > maxw (%d)!"
 
 #: ../raster/simwe/simlib/hydro.c:339
 msgid "Unable to write raster maps"
@@ -9234,6 +9230,8 @@ msgid ""
 "%.2f]! Needs to be at least identical or the current region resolution lower "
 "than the input map resolution"
 msgstr ""
+"Rozli¹ení aktuálního regionu [%.2fx%.2f] je ni¾¹í ne¾ má vstupní mapa  "
+"[%.2fx %.2f]!Je potøeba mít nejménì stejné rozli¹ení jako má vstupní mapa"
 
 #: ../raster/r.topidx/file_io.c:36
 msgid "Reading elevation map..."
@@ -10819,9 +10817,9 @@ msgid "Unable to read range for map <%s>"
 msgstr "Nelze èíst rozsah mapy <%s>"
 
 #: ../raster/r.stats/cell_stats.c:51
-#, fuzzy, c-format
+#, c-format
 msgid "Unable to read raster <map %d of %d> row %d"
-msgstr "Nelze èíst rastrovou mapu <%s> øádek %d"
+msgstr "Nelze èíst rastrovou mapu <map %d of %d> øádek %d"
 
 #: ../raster/r.surf.random/main.c:46
 msgid ""
@@ -10937,9 +10935,8 @@ msgid "Please specify a reasonable column number."
 msgstr "Prosím, zadejte pøijatelné èíslo sloupce."
 
 #: ../raster/r.in.xyz/main.c:302
-#, fuzzy
 msgid "Invalid zrange"
-msgstr "Chybný smìr východu"
+msgstr "Neplatné zrange"
 
 #: ../raster/r.in.xyz/main.c:389
 msgid "Unable to calculate percentile without the pth option specified!"
@@ -10968,7 +10965,6 @@ msgid "zrange will not be taken into account during scan"
 msgstr "na rozsah z nebude bìhem hledání brán zøetel"
 
 #: ../raster/r.in.xyz/main.c:521
-#, fuzzy
 msgid "Reading data ..."
 msgstr "Ètu data... "
 
@@ -13472,7 +13468,7 @@ msgstr "ÈÁST 2: A * Hledání."
 #: ../raster/r.watershed/ram/do_astar.c:160
 #: ../raster/r.watershed/seg/do_astar.c:161
 msgid "heapsize too large"
-msgstr ""
+msgstr "P5íli¹ velké heapsize"
 
 #: ../raster/r.watershed/shed/valid.c:24
 msgid "accum file missing in valid_basins()"
@@ -15171,7 +15167,7 @@ msgstr "stara_hodnota:*:nova:hodnota       (interval [stara_hodnota,inf])"
 
 #: ../raster/r.recode/read_rules.c:94
 msgid "When finished type \"end\"."
-msgstr ""
+msgstr "Pøi dokonèení napsat \"end\""
 
 #: ../raster/r.recode/read_rules.c:134
 #, c-format
@@ -15274,9 +15270,8 @@ msgid "Y-part of the hydraulic conductivity tensor in [m/s]"
 msgstr "Y-èást hydraulièkého napøimovaèe napìtí v [m/s]"
 
 #: ../raster/r.gwflow/main.c:88
-#, fuzzy
 msgid "Water sources and sinks in [m^3/s]"
-msgstr "Prameny a jezera v [m^3/s]"
+msgstr "Vodní zdroje a jezera v [m^3/s]"
 
 #: ../raster/r.gwflow/main.c:95
 msgid "Specific yield in [1/m]"
@@ -15893,7 +15888,7 @@ msgstr "Formát: vrstva[/jméno vrstvy] tabulka klíè databáze ovladaè"
 
 #: ../vector/v.db.connect/main.c:98
 msgid "When printing, limit to layer specified by the layer option"
-msgstr ""
+msgstr "Pøi tisku je omezení urèeno nastavením vrstvy"
 
 #: ../vector/v.db.connect/main.c:103
 msgid "Print types/names of table columns for specified layer and exit"
@@ -16109,14 +16104,12 @@ msgid "Output triangulation as a graph (lines), not areas"
 msgstr "Výstup triangulace jako graf (linie), ne plochy"
 
 #: ../vector/v.delaunay2/main.c:141
-#, fuzzy
 msgid "no points to triangulate"
-msgstr "Poèet bodù, které mají být rozmístìny"
+msgstr "®ádné body pro triangulaci"
 
 #: ../vector/v.delaunay2/main.c:149
-#, fuzzy
 msgid "Delaunay triangulation..."
-msgstr "Pøedbì¾né kalkulace povrchu..."
+msgstr "Delaunay triangulace...."
 
 #: ../vector/v.delaunay2/main.c:152
 #, fuzzy
@@ -16124,9 +16117,8 @@ msgid "writing edges..."
 msgstr "Zapisuji body ..."
 
 #: ../vector/v.delaunay2/main.c:162
-#, fuzzy
 msgid "Calculate area centroids..."
-msgstr "Nelze spoèítat centroid oblasti"
+msgstr "Vypoèítat centroidy plochy"
 
 #: ../vector/v.delaunay2/main.c:172 ../vector/v.category/main.c:263
 msgid "Unable to calculate area centroid"
@@ -16696,9 +16688,9 @@ msgid "Transforming features..."
 msgstr "Pøevádím prvky..."
 
 #: ../vector/v.to.3d/main.c:123
-#, fuzzy, c-format
+#, c-format
 msgid "%s failed"
-msgstr "Selhalo"
+msgstr "%s selhalo"
 
 #: ../vector/v.to.3d/main.c:138
 #, c-format
@@ -16776,22 +16768,19 @@ msgstr "Mù¾e být pou¾ito zpìtné transformace, pro ulo¾ení vý¹ky bodù"
 #: ../vector/lidar/v.lidar.edgedetection/edgedetection.c:308
 #: ../vector/lidar/v.lidar.edgedetection/edgedetection.c:326
 #: ../vector/lidar/v.lidar.edgedetection/edgedetection.c:356
-#, fuzzy
 msgid "Impossible to read from aux table"
-msgstr "Nelze èíst íºdaje z databáze"
+msgstr "Nelze èíst údaje z aux tabulky"
 
 #: ../vector/lidar/v.lidar.edgedetection/edgedetection.c:237
 #: ../vector/lidar/v.lidar.edgedetection/edgedetection.c:313
-#, fuzzy
 msgid "Impossible to update aux table"
-msgstr "Nelze aktualizovat íºdaje v databázi"
+msgstr "Nelze aktualizovat údaje v aux tabulce"
 
 #: ../vector/lidar/v.lidar.edgedetection/edgedetection.c:250
 #: ../vector/lidar/v.lidar.edgedetection/edgedetection.c:262
 #: ../vector/lidar/v.lidar.edgedetection/edgedetection.c:383
-#, fuzzy
 msgid "Impossible to write to aux table"
-msgstr "Nelze zapsat íºdaje do databáze"
+msgstr "Nelze zapsat údaje do aux tabulky"
 
 #: ../vector/lidar/v.lidar.edgedetection/main.c:78
 msgid "vector, LIDAR, edges"
@@ -16806,7 +16795,7 @@ msgstr "Detekovat hrany objektù z LIDAR dat."
 #: ../vector/lidar/v.outlier/main.c:78
 #: ../vector/lidar/v.surf.bspline/main.c:94
 msgid "Estimate point density and distance"
-msgstr ""
+msgstr "Odhad hustoty bodù a vzdálenosti"
 
 #: ../vector/lidar/v.lidar.edgedetection/main.c:86
 #: ../vector/lidar/v.lidar.correction/main.c:81
@@ -16816,6 +16805,8 @@ msgid ""
 "Estimate point density and distance for the input vector points within the "
 "current region extends and quit"
 msgstr ""
+"Odhadne hustotu bodù a vzdálenosti pro vstupní vektorovou bodovou vrstvu "
+"uvnitø aktuálního regionu a ukonèí se"
 
 #: ../vector/lidar/v.lidar.edgedetection/main.c:98
 #: ../vector/lidar/v.lidar.correction/main.c:105
@@ -16882,24 +16873,22 @@ msgstr ""
 #: ../vector/lidar/v.lidar.correction/main.c:172
 #: ../vector/lidar/v.outlier/main.c:174
 #: ../vector/lidar/v.surf.bspline/main.c:213
-#, fuzzy
 msgid "Old auxiliar table could not be dropped"
 msgstr "Nemohla být odstranìna pomocná tabulka"
 
 #: ../vector/lidar/v.lidar.edgedetection/main.c:227
 #: ../vector/lidar/v.lidar.correction/main.c:190
 #: ../vector/lidar/v.outlier/main.c:186
-#, fuzzy, c-format
+#, c-format
 msgid "Input vector map <%s> is not 3D!"
-msgstr "Vektorová mapa <%s> není 3D"
+msgstr "Vektorová mapa <%s> není 3D!"
 
 #: ../vector/lidar/v.lidar.edgedetection/main.c:237
 #: ../vector/lidar/v.lidar.correction/main.c:200
 #: ../vector/lidar/v.outlier/main.c:196
 #: ../vector/lidar/v.surf.bspline/main.c:241
-#, fuzzy
 msgid "No points in current region!"
-msgstr "Pou¾ít pouze body v souèasném regionu"
+msgstr "Nejsou ¾ádné body v aktuálním regionu!"
 
 #: ../vector/lidar/v.lidar.edgedetection/main.c:260
 #, c-format
@@ -16917,7 +16906,7 @@ msgstr "Nelz vytvoøit interpolaèní tabulku <%s> v databázi."
 #: ../vector/lidar/v.surf.bspline/main.c:415
 #, c-format
 msgid "adjusted EW splines %d"
-msgstr ""
+msgstr "Upravené V-Z køivky %d"
 
 #: ../vector/lidar/v.lidar.edgedetection/main.c:299
 #: ../vector/lidar/v.lidar.correction/main.c:279
@@ -16925,21 +16914,20 @@ msgstr ""
 #: ../vector/lidar/v.surf.bspline/main.c:416
 #, c-format
 msgid "adjusted NS splines %d"
-msgstr ""
+msgstr "Upravené S-J køivky %d"
 
 #: ../vector/lidar/v.lidar.edgedetection/main.c:354
 #: ../vector/lidar/v.lidar.correction/main.c:334
 #: ../vector/lidar/v.outlier/main.c:332
 #: ../vector/lidar/v.lidar.growing/main.c:249
 #: ../vector/lidar/v.surf.bspline/main.c:480
-#, fuzzy, c-format
+#, c-format
 msgid "subregion %d of %d"
-msgstr "Prùchod %d z %d:"
+msgstr "podregion %d z %d"
 
 #: ../vector/lidar/v.lidar.edgedetection/main.c:396
-#, fuzzy
 msgid "Allocating memory for bilinear interpolation"
-msgstr "Alokace pamìti pro bilineární interpolace"
+msgstr "Pøidìlení pamìti pro bilineární interpolaci"
 
 #: ../vector/lidar/v.lidar.edgedetection/main.c:417
 #: ../vector/lidar/v.lidar.correction/main.c:403
@@ -16948,9 +16936,8 @@ msgid "Bilinear interpolation"
 msgstr "Bilineární interpolace"
 
 #: ../vector/lidar/v.lidar.edgedetection/main.c:429
-#, fuzzy
 msgid "Allocating memory for bicubic interpolation"
-msgstr "Alokace pamìti pro bikubickou interpolaci"
+msgstr "Pøidìlení pamìti pro bikubickou interpolaci"
 
 #: ../vector/lidar/v.lidar.edgedetection/main.c:434
 msgid "Bicubic interpolation"
@@ -16965,7 +16952,7 @@ msgstr "Bodová klasifikace"
 #: ../vector/lidar/v.outlier/main.c:423
 #: ../vector/lidar/v.surf.bspline/main.c:681
 msgid "No data within this subregion. Consider changing the spline step."
-msgstr ""
+msgstr "Subregion neosahuje ¾ádná data. zva¾e zmìnu kroku køivosti"
 
 #: ../vector/lidar/v.lidar.edgedetection/main.c:468
 #: ../vector/lidar/v.lidar.correction/main.c:438
@@ -16998,9 +16985,9 @@ msgstr "<%s> nebyla v databázi vytvoøena."
 #: ../vector/lidar/lidarlib/raster.c:108 ../vector/lidar/lidarlib/raster.c:125
 #: ../vector/lidar/lidarlib/raster.c:140 ../vector/lidar/lidarlib/raster.c:153
 #: ../vector/lidar/lidarlib/raster.c:168 ../vector/lidar/lidarlib/raster.c:181
-#, fuzzy, c-format
+#, c-format
 msgid "Unable to access table <%s>"
-msgstr "Nelze vytvoøit tabulku <%s>"
+msgstr "Nelzepøistoupit k tabulce <%s>"
 
 #: ../vector/lidar/v.lidar.correction/correction.c:96
 #: ../vector/lidar/v.lidar.correction/correction.c:130
@@ -17088,7 +17075,6 @@ msgid "npoints = %d, nterrain = %d"
 msgstr "npoints = %d, nterrain = %d"
 
 #: ../vector/lidar/v.lidar.correction/main.c:372
-#, fuzzy
 msgid "Mean calculation"
 msgstr "Výpoèet støední hodnoty"
 
@@ -17128,14 +17114,13 @@ msgid "Unable to open vector map <%s> at the topological level"
 msgstr "Vektorová mapa <%s> nemohla být otevøena na úrovní topologie"
 
 #: ../vector/lidar/v.outlier/main.c:243
-#, fuzzy, c-format
+#, c-format
 msgid "It was impossible to create <%s> table."
-msgstr "Nelze vytvoøit <%s>."
+msgstr "Nebylo mo¾né vytvoøit tabulku <%s>"
 
 #: ../vector/lidar/v.outlier/main.c:405
-#, fuzzy
 msgid "Outlier detection"
-msgstr "Barva zvýraznìní"
+msgstr "Zji¹tìní bodù mimo region"
 
 #: ../vector/lidar/v.lidar.growing/main.c:81
 msgid ""
@@ -17146,9 +17131,8 @@ msgstr ""
 "vnitøkù budov"
 
 #: ../vector/lidar/v.lidar.growing/main.c:86
-#, fuzzy
 msgid "Input vector (v.lidar.edgedetection output"
-msgstr "Název vstupní vektorové vrstvy observace (výstup v.lidar.growing)"
+msgstr "Vstupní vektor (výstup z v.lidar. edgedetection"
 
 #: ../vector/lidar/v.lidar.growing/main.c:96
 msgid "Name of the first pulse vector map"
@@ -17163,9 +17147,9 @@ msgid "Threshold for double pulse in region growing"
 msgstr "Práh pro dvojitý impuls v rostoucím regionu"
 
 #: ../vector/lidar/v.lidar.growing/main.c:179
-#, fuzzy, c-format
+#, c-format
 msgid "Unable to open table <%s>"
-msgstr "Nelze kopírovat tabullku <%s>"
+msgstr "Nelze otevøít tabulku <%s>"
 
 #: ../vector/lidar/v.lidar.growing/main.c:204
 msgid "Setting regions and boxes"
@@ -17182,14 +17166,12 @@ msgid "Columns = %d"
 msgstr "Sloupce = %d"
 
 #: ../vector/lidar/v.lidar.growing/main.c:291
-#, fuzzy
 msgid "read points in input vector"
-msgstr "Naèítání vstupní vektorovou mapu"
+msgstr "naèítání bodù ve vstupní vektorové vrstvì "
 
 #: ../vector/lidar/v.lidar.growing/main.c:440
-#, fuzzy
 msgid "Region Growing"
-msgstr "Vykresluji"
+msgstr "Zvìt¹ení regionu"
 
 #: ../vector/lidar/v.lidar.growing/ConvexHull.c:269
 msgid "...now exiting to system..."
@@ -17290,35 +17272,32 @@ msgid "Bicubic or bilinear spline interpolation with Tykhonov regularization."
 msgstr "Bikubická nebo bilineární interpolace s Tykhonovou regularizací"
 
 #: ../vector/lidar/v.surf.bspline/main.c:90
-#, fuzzy
 msgid ""
 "Find the best Tykhonov regularizing parameter using a \"leave-one-out\" "
 "cross validation method"
-msgstr "Nalézt nejlep¹í parametry pomocí metody køí¾ové validace."
+msgstr ""
+"Nalézt nejlep¹í parametrytykhonova upravujícího parametru pomocí metody "
+"køí¾ové validace."
 
 #: ../vector/lidar/v.surf.bspline/main.c:104
 msgid "Name of input vector map of sparse points"
 msgstr "Název vstupní vektorové vrstvy øídkého bodového pole"
 
 #: ../vector/lidar/v.surf.bspline/main.c:119
-#, fuzzy
 msgid "Length of each spline step in the east-west direction"
-msgstr "Hodnota kroku spline interpolace v východním smìru"
+msgstr "Hodnota kroku spline ve v-z smìru"
 
 #: ../vector/lidar/v.surf.bspline/main.c:128
-#, fuzzy
 msgid "Length of each spline step in the north-south direction"
-msgstr "Hodnota kroku spline interpolace v severním smìru"
+msgstr "Hodnota kroku spline ve s-j severním smìru"
 
 #: ../vector/lidar/v.surf.bspline/main.c:135
-#, fuzzy
 msgid "Spline interpolation algorithm"
-msgstr "Algoritmus generalizace"
+msgstr "Algoritmus Spline interpolace"
 
 #: ../vector/lidar/v.surf.bspline/main.c:144
-#, fuzzy
 msgid "Tykhonov regularization parameter (affects smoothing)"
-msgstr "Váha Tychonovy regularizace"
+msgstr "Tykhonovùv upravující parametr (ovlivòuje vyhlazení)"
 
 #: ../vector/lidar/v.surf.bspline/main.c:150 ../vector/v.surf.rst/main.c:216
 msgid "If set to 0, z coordinates are used. (3D vector only)"
@@ -17335,18 +17314,17 @@ msgid "Choose either vector or raster output, not both"
 msgstr "Vektorový a souèasnì rastrový výstup není mo¾ný, vyberte jeden z nich"
 
 #: ../vector/lidar/v.surf.bspline/main.c:175
-#, fuzzy
 msgid "No raster or vector or cross-validation output"
-msgstr "Bez rastrového nebo vektorového výstupu"
+msgstr "®ádný výstup rastr nebo vektor nebo výstup z  køí¾ové validace"
 
 #: ../vector/lidar/v.surf.bspline/main.c:229
 msgid "Need either 3D vector or layer and column with z values"
 msgstr ""
+"Je potøeba buï 3D vektorová vrstva nebo vrstva a sloupec se z souøadnicemi"
 
 #: ../vector/lidar/v.surf.bspline/main.c:231
-#, fuzzy
 msgid "Layer but not column with z values given"
-msgstr "Tabulka atributù s hodnotami pro interpolaci"
+msgstr "Vrstva zadána, ale ne sloupec s z souøadnicemi"
 
 #: ../vector/lidar/v.surf.bspline/main.c:254
 msgid "Cross validation didn't finish correctly"
@@ -17355,7 +17333,7 @@ msgstr "Køí¾ová validace nebyla správnì ukonèena"
 #: ../vector/lidar/v.surf.bspline/main.c:260
 #, c-format
 msgid "Cross validation finished for sie = %f and sin = %f"
-msgstr ""
+msgstr "Køí¾ová validace skonèila pro sie = %f a pro sin = %f"
 
 #: ../vector/lidar/v.surf.bspline/main.c:268
 #, c-format
@@ -17407,9 +17385,8 @@ msgid "Interpolation: (%d,%d): No record for point (cat = %d)"
 msgstr "Interpolation: (%d,%d): Pro bod (cat = %d) ¾ádný záznam nenalezen"
 
 #: ../vector/lidar/v.surf.bspline/main.c:687
-#, fuzzy
 msgid "Writing output..."
-msgstr "Zapisuji výstupní mapu..."
+msgstr "Zapisuji výstupní vrstvu..."
 
 #: ../vector/v.net.salesman/main.c:97 ../vector/v.net.iso/main.c:73
 #: ../vector/v.net.path/main.c:41 ../vector/v.net/main.c:47
@@ -18122,6 +18099,7 @@ msgid ""
 "Could not close attribute table. The DBMI driver did not accept all "
 "attributes"
 msgstr ""
+"Nelze uzavøít atributovou tabulku. Ovladaè DBMI nepøijal v¹echny atributy"
 
 #: ../vector/v.in.ascii/points.c:83
 msgid "Scanning input for column types..."
@@ -19171,7 +19149,7 @@ msgstr "Generalizace (%s)..."
 #: ../vector/v.generalize/main.c:453
 #, c-format
 msgid "%d boundaries were deleted, input areas are not preserved"
-msgstr ""
+msgstr "%d hranic bylo vymazáno, vstupní plochy nejsou zachovány"
 
 #: ../vector/v.generalize/main.c:476
 #, c-format
@@ -19180,7 +19158,7 @@ msgstr "Nelze spoèítat centroid pro plochu %d"
 
 #: ../vector/v.generalize/main.c:483
 msgid "New centroids were calculated, attribute attachment may be changed"
-msgstr ""
+msgstr "Nové centroidy byly vypoèteny, atributová pøíloha ml¾e být zmìnìna"
 
 #: ../vector/v.generalize/main.c:502
 #, c-format
@@ -19190,12 +19168,12 @@ msgstr "Poèet opìrných bodù byl sní¾en z %d na %d [%d%%]"
 #: ../vector/v.generalize/main.c:508
 msgid ""
 "Areas may have disappeared and/or area attribute attachment may have changed"
-msgstr ""
+msgstr "Plochy mohou zmizet a/nebo se mohou zmìnit jejich atributy"
 
 #: ../vector/v.generalize/main.c:509
 #, c-format
 msgid "Try v.clean tool=prune thresh=%f"
-msgstr ""
+msgstr "Zkuste v.clean tool=prune tresh=%f"
 
 #: ../vector/v.generalize/displacement.c:196
 msgid "Inverting matrix..."
@@ -19744,7 +19722,7 @@ msgstr ""
 #: ../vector/v.in.ogr/geom.c:192 ../vector/v.in.ogr/geom.c:205
 #: ../vector/v.in.ogr/geom.c:229 ../vector/v.in.ogr/geom.c:271
 msgid "Skipping empty geometry feature"
-msgstr ""
+msgstr "Pøeskakuji prvky bez geometrie"
 
 #: ../vector/v.in.ogr/geom.c:245
 #, c-format
@@ -20120,7 +20098,6 @@ msgid "Cannot open %s"
 msgstr "Nelze otevøít %s"
 
 #: ../vector/v.qcount/main.c:70
-#, fuzzy
 msgid "Indices for quadrat counts of sites lists."
 msgstr "Indexy pro kvadratické poèty pro seznam bodù"
 
@@ -20145,14 +20122,12 @@ msgid "Print results in shell script style"
 msgstr "Vypi¹ výsledek ve stylu pro shell skript"
 
 #: ../vector/v.qcount/main.c:134
-#, fuzzy
 msgid "Finding quadrats..."
-msgstr "Hledám zkusné plochy ... "
+msgstr "Hledám kvadráty..."
 
 #: ../vector/v.qcount/main.c:139
-#, fuzzy
 msgid "Counting sites in quadrats..."
-msgstr "Poèítám plochy ve zkusných plochách ..."
+msgstr "Poèítám body v kvadrátech..."
 
 #: ../vector/v.out.pov/main.c:207 ../vector/v.out.ogr/main.c:913
 #, c-format
@@ -20289,9 +20264,9 @@ msgid "Unable to open file with coordinates <%s>"
 msgstr "Nemohl jsem otevøít soubor se souøadnicemi : <%s>"
 
 #: ../vector/v.transform/main.c:311
-#, fuzzy, c-format
+#, c-format
 msgid "Unable to tokenize column string: [%s]"
-msgstr "Nelze oznaèit øetìzec ve sloupci: %s"
+msgstr "Nelze zacyklit øetìzec ve sloupci: [%s]"
 
 #: ../vector/v.transform/main.c:338
 #, c-format
@@ -21465,9 +21440,8 @@ msgid "Cannot alter table: %s"
 msgstr "Nelze vytvoøit tabulku: %s"
 
 #: ../vector/v.net/main.c:48
-#, fuzzy
 msgid "Performs network maintenance."
-msgstr "Servisní sí»"
+msgstr "Provádí správu sí»ì"
 
 #: ../vector/v.net/main.c:55
 msgid "Name of input point vector map"
@@ -22575,9 +22549,8 @@ msgstr "Pou¾ij napìtí závislé na mìøítku"
 #: ../vector/v.surf.rst/main.c:258 ../vector/v.surf.rst/main.c:266
 #: ../vector/v.surf.rst/main.c:273 ../vector/v.surf.rst/main.c:280
 #: ../vector/v.surf.rst/main.c:287
-#, fuzzy
 msgid "Outputs"
-msgstr "Výstup:"
+msgstr "Výstupy"
 
 #: ../vector/v.surf.rst/main.c:227
 msgid "Output surface raster map (elevation)"
@@ -23006,9 +22979,8 @@ msgid "Sampling method"
 msgstr "Typ vzorkování"
 
 #: ../vector/v.drape/main.c:199
-#, fuzzy
 msgid "Scale sampled raster values"
-msgstr "Statistika pou¾itá pro rastrové hodnoty"
+msgstr "Mìøítko vzorových rastrových hodnot"
 
 #: ../vector/v.drape/main.c:206
 msgid "Layer is only used for WHERE SQL statement"
@@ -23088,6 +23060,8 @@ msgid ""
 "This is an alias to the distance option. It is retained for backwards "
 "compatibility"
 msgstr ""
+"Toto je náhrada pro volbu vzálenosti. Je zde ponecháno pro zpìtnou "
+"kompatibilitu"
 
 #: ../vector/v.buffer2/main.c:223 ../vector/v.buffer/main.c:271
 msgid "Buffer distance in map units"
@@ -23121,11 +23095,11 @@ msgid ""
 "The buffer option has been replaced by the distance option and will be "
 "removed in future."
 msgstr ""
+"Volba Buferu byla nahrazena volbou vzdálenosti  a bude v budoucnu odstranìna."
 
 #: ../vector/v.buffer2/main.c:258
-#, fuzzy
 msgid "Use the distance option instead of the buffer option."
-msgstr "Pou¾ít pro rotaci radiány namísto stupòù"
+msgstr "Pou¾ít volbu vzdálenosti místo volby buferu"
 
 #: ../vector/v.buffer2/main.c:262
 #, c-format
@@ -23265,6 +23239,8 @@ msgstr "Kombinace typù není podporována v¹emi formáty."
 msgid ""
 "The map contains islands. To preserve them in the output map, use the -c flag"
 msgstr ""
+"Mapa obsahuje ostrovy. Pro jejich zachování ve výstupní mapì pou¾ijte "
+"pøepínaè -c"
 
 #: ../vector/v.out.ogr/main.c:343
 #, c-format
@@ -24190,7 +24166,7 @@ msgstr ""
 
 #: ../vector/v.extract/main.c:147
 msgid "Number must be smaller than unique cat count in layer"
-msgstr ""
+msgstr "Poèet musí být me¹í ne¾ souèet kategorií ve vrstvì"
 
 #: ../vector/v.extract/main.c:156
 msgid "Enter -1 to keep original categories or the desired NEW category value"
@@ -24230,9 +24206,9 @@ msgid "Ignored text entry: %s"
 msgstr "Ignoruji textový vstup: %s"
 
 #: ../vector/v.extract/main.c:297
-#, fuzzy, c-format
+#, c-format
 msgid "Unable select records from table <%s>"
-msgstr "Nelze vybrat data z LRS tabulky: %s"
+msgstr "Nelze vybrat data z tabulky <%s>"
 
 #: ../vector/v.extract/main.c:298
 #, c-format
@@ -24257,6 +24233,8 @@ msgid ""
 "Random category count must be smaller than feature count. There are only %d "
 "features of type(s): %s"
 msgstr ""
+"Souèet náhodných kategorií musí být men¹í ne¾ poèet prvkù. Je pouze %d prvkù "
+"typu: %s"
 
 #: ../vector/v.extract/main.c:346
 #, c-format
@@ -24264,11 +24242,12 @@ msgid ""
 "Random category count is larger or equal to uniq \"%s\" feature category "
 "count %d"
 msgstr ""
+"Souèet náhodných kategoií musí být stejný nebo vìt¹í  ne¾ unikátní \"%s\" "
+"souèet kategorí prvkù %d"
 
 #: ../vector/v.extract/main.c:383
-#, fuzzy
 msgid "Extracting features..."
-msgstr "Extrahuji plochy..."
+msgstr "Rozbaluji prvky..."
 
 #: ../vector/v.extract/main.c:498
 msgid "Removing duplicate centroids..."
@@ -24375,16 +24354,15 @@ msgid "Unable to read colors for colorbar"
 msgstr "Nelze èíst barvy pro barevný prou¾ek"
 
 #: ../ps/ps.map/ps_clrtbl.c:47
-#, fuzzy
 msgid ""
 "Your cats/ file is invalid. A cats/ file with categories and labels is "
 "required for 'colortable' when using categorical legends; see the r.category "
 "help page. Colortable creation has been skipped."
 msgstr ""
 "Vá¹ soubor cats/ není platný. Soubor cats/ s kategoriemi a ¹títky je "
-"vy¾adován pro 'tabulku barev' v pøípadì rastrových souborù CELL. K "
-"výstupnímu souboru ve formátu PostScript tak nebude pøiøazena ¾ádná tabulka "
-"berev."
+"vy¾adován pro 'tabulku barev' v pøípadì pou¾ití nespojité legendy; "
+"zkontrolujte manuálovou stránku pro r.category. vytváøení barevkné abulky "
+"bylo vynecháno."
 
 #: ../ps/ps.map/ps_clrtbl.c:62 ../ps/ps.map/ps_fclrtbl.c:92
 #: ../ps/ps.map/ps_fclrtbl.c:97
@@ -24761,11 +24739,11 @@ msgstr "Kombinace podtøíd (%d,%d)...."
 #: ../imagery/i.gensigset/subcluster.c:312
 #, c-format
 msgid "Subsignature %d only contains %f pixels"
-msgstr "Podpøíznak %d obsahuje pouze %f pixelù"
+msgstr "subsignatura %d obsahuje pouze %f pixelù"
 
 #: ../imagery/i.gensigset/subcluster.c:547
 msgid "Unreliable clustering. Try a smaller initial number of clusters"
-msgstr ""
+msgstr "Nespolehlivé shlukování. Pou¾ijte men¹í poèáteèní poèet shlukù"
 
 #: ../imagery/i.gensigset/subcluster.c:556
 #, c-format
@@ -24782,9 +24760,8 @@ msgid "Writing signatures..."
 msgstr "Zapisuji pøíznaky...."
 
 #: ../imagery/i.ifft/orig_wind.c:27
-#, fuzzy
 msgid "The real and imaginary original windows did not match"
-msgstr "Reálná a imaginární originální okna nesouhlasily."
+msgstr "Reálná a imaginární originální okna nesouhlasí."
 
 #: ../imagery/i.ifft/ifftmain.c:68 ../imagery/i.fft/fftmain.c:74
 msgid "imagery, FFT"
@@ -25151,24 +25128,20 @@ msgid "Principal components analysis (pca) program for image processing."
 msgstr "Program pro analýzu hlavních komponent (pca) snímkù."
 
 #: ../imagery/i.pca/main.c:69
-#, fuzzy
 msgid "Name of two or more input raster maps"
-msgstr "Název vstupní rastrové mapy"
+msgstr "Název dvou nebo více vstupních rsatrových vrstev"
 
 #: ../imagery/i.pca/main.c:72
-#, fuzzy
 msgid "Base name for output raster maps"
-msgstr "Název výstupní rastrové mapy"
+msgstr "Základ jména výstupních rastrovách vrstev"
 
 #: ../imagery/i.pca/main.c:74
-#, fuzzy
 msgid "A numerical suffix will be added for each component map"
-msgstr "Poèet úrovní, které budou pou¾ity pro ka¾dou souèást"
+msgstr "Èíselná pøípona bude pøidána pro ka¾dou komponentu mapy "
 
 #: ../imagery/i.pca/main.c:83
-#, fuzzy
 msgid "Rescaling range for output maps (for no rescaling use 0,0)"
-msgstr "Vytváøím nový rozsah výstupu (Pro ponechání pou¾ijte 0,0)"
+msgstr "pøevzorkovávám rozsah výstupní mapy (Pro ponechání pou¾ijte 0,0)"
 
 #: ../imagery/i.pca/main.c:93
 msgid "Sorry, at least 2 input bands must be provided"
@@ -25188,9 +25161,9 @@ msgid "Unable allocate memory for row buffer"
 msgstr "Nelze alokovat pamì» pro okolí øádku"
 
 #: ../imagery/i.pca/main.c:248
-#, fuzzy, c-format
+#, c-format
 msgid "Computing means for band %d..."
-msgstr "Poèítám prùmìr pro skupinu %d...."
+msgstr "Poèítám prùmìr pro vrstvu %d...."
 
 #: ../imagery/i.pca/main.c:297
 #, fuzzy, c-format
@@ -25206,18 +25179,18 @@ msgid "Unable to allocate memory for raster row"
 msgstr "Nelze alokovat pamì» pro øádek rastru"
 
 #: ../imagery/i.pca/main.c:385
-#, fuzzy, c-format
+#, c-format
 msgid "Transforming <%s>..."
-msgstr "Pøevádím prvky..."
+msgstr "Pøevádím prvky <%s>..."
 
 #: ../imagery/i.pca/main.c:404
-#, fuzzy, c-format
+#, c-format
 msgid "Rescaling <%s> to range %d,%d..."
-msgstr "Upravuji data <%s> do rozmezí %d,%d..."
+msgstr "Pøevzorkovávám <%s> do rozmezí %d,%d..."
 
 #: ../imagery/i.pca/support.c:44
 msgid "Eigen values, (vectors), and [percent importance]:"
-msgstr ""
+msgstr "Eigen hodonty, (vektory) a [procenta dùle¾itosti]:"
 
 #: ../imagery/i.rectify/get_wind.c:46
 #, c-format
@@ -26239,12 +26212,12 @@ msgstr "©patný formát souboru kamery ve skupinì [%s]"
 #: ../imagery/i.ortho.photo/photo.2target/main.c:125
 #, c-format
 msgid "No initial camera exposure station for group [%s]"
-msgstr ""
+msgstr "Není poèáteèní expozice postavení kamery pro skupinu [%s]"
 
 #: ../imagery/i.ortho.photo/photo.2target/main.c:129
 #, c-format
 msgid "Bad format in initial camera exposure station for group [%s]"
-msgstr ""
+msgstr "©patný formát v poèáteèní expozici postavení kamery pro skupinu [%s]"
 
 #: ../imagery/i.ortho.photo/photo.2target/main.c:143
 #, c-format
@@ -26349,10 +26322,12 @@ msgid ""
 "Interactively creates or modifies entries in a camera initial exposure "
 "station file for imagery group referenced by a sub-block."
 msgstr ""
+"Interaktivnì vytvoøí nebo upraví vstupy v souboru poèáteèní expozice "
+"postavení kamery pro skupinu obrazových dat podle podle sub-blokù."
 
 #: ../imagery/i.ortho.photo/photo.2image/main.c:56
 msgid "Interactively mark fiducial or reseau points on an image."
-msgstr ""
+msgstr "Interaktivnì oznaèí vzta¾né nebo sí»ové body v obraze"
 
 #: ../imagery/i.ortho.photo/photo.2image/main.c:86
 #, c-format
@@ -26362,6 +26337,8 @@ msgstr "Skupina [%s] nebyla nalezena"
 #: ../imagery/i.ortho.photo/photo.rectify/ask_files.c:36
 msgid "Please select the file(s) you wish to rectify by naming an output file"
 msgstr ""
+"Prosím vyberte soubory, které si pøejete rektifikovat pojmenováním "
+"výstupního souboru"
 
 #: ../imagery/i.ortho.photo/photo.rectify/ps_cp.c:53
 msgid "Poorly placed psuedo control points. "
@@ -26395,24 +26372,25 @@ msgid "No files in this group!"
 msgstr "®ádné soubory v této skupinì!"
 
 #: ../imagery/i.ortho.photo/photo.rectify/main.c:97
-#, fuzzy, c-format
+#, c-format
 msgid "No target elevation model selected for group <%s>"
-msgstr "Nebyl vybrán ¾ádný referenèní soubor pro skupinu [%s]"
+msgstr "Nebyl vybrán ¾ádný model terénu pro vybranou skupinu <%s>"
 
 #: ../imagery/i.ortho.photo/photo.rectify/main.c:109
-#, fuzzy, c-format
+#, c-format
 msgid "No camera reference file selected for group <%s>"
-msgstr "Nebyl vybrán ¾ádný referenèní soubor pro skupinu [%s]"
+msgstr "Nebyl vybrán ¾ádný referenèní soubor kamery pro skupinu <%s>"
 
 #: ../imagery/i.ortho.photo/photo.rectify/main.c:113
-#, fuzzy, c-format
+#, c-format
 msgid "Bad format in camera file for group <%s>"
-msgstr "©patný formát souboru kamery ve skupinì [%s]"
+msgstr "©patný formát souboru kamery pro skupinu <%s>"
 
 #: ../imagery/i.ortho.photo/photo.rectify/main.c:119
-#, fuzzy, c-format
+#, c-format
 msgid "Bad format in initial exposusre station file for group <%s>"
-msgstr "©patný formát souboru kamery ve skupinì [%s]"
+msgstr ""
+"©patný formát souboru poèáteèní expozice postavení kamery pro skupinu <%s>"
 
 #: ../imagery/i.ortho.photo/photo.rectify/write.c:34
 #, c-format
@@ -26491,9 +26469,8 @@ msgid "Name for raster map holding classification results"
 msgstr "Jméno rastrové mapy obsahující výsledky klasifikace"
 
 #: ../imagery/i.maxlik/main.c:91
-#, fuzzy
 msgid "Name for raster map holding reject threshold results"
-msgstr "Rastrová mapa s výsledkem zamítnutí"
+msgstr "Název rastrové mapy obsahující prahové výsledky"
 
 #: ../imagery/i.maxlik/invert.c:28
 #, c-format
@@ -31371,94 +31348,112 @@ msgstr ""
 "history -S; history -L %s/.history; setenv histfile=%s/.history"
 
 #, fuzzy
-#~ msgid "Threshold to calculate for method=threshold"
-#~ msgstr "Nelze vypoèítat centroid plochy"
+msgid "Threshold to calculate for method=threshold"
+msgstr "Nelze vypoèítat centroid plochy"
 
-#~ msgid "Band to select"
-#~ msgstr "Výbìr vrstvy"
-
-#, fuzzy
-#~ msgid "Unhandled vector feature type <%s>"
-#~ msgstr "Nelze vytvoøit tabulku <%s>"
+msgid "Band to select"
+msgstr "Výbìr vrstvy"
 
 #, fuzzy
-#~ msgid "No areas found, skipping type=area"
-#~ msgstr "Nic nebylo nalezeno, pøeskakuji type=poly"
+msgid "Unhandled vector feature type <%s>"
+msgstr "Nelze vytvoøit tabulku <%s>"
 
 #, fuzzy
-#~ msgid "No points found, skipping%s%s"
-#~ msgstr "®ádné body nebyly nalezeny, pøeskakuji type=point"
+msgid "No areas found, skipping type=area"
+msgstr "Nic nebylo nalezeno, pøeskakuji type=poly"
 
 #, fuzzy
-#~ msgid "No lines found, skipping%s%s"
-#~ msgstr "Nic nebylo nalezeno, pøeskakuji typ=line"
-
-#~ msgid "It was impossible to create <Auxiliar_outlier_table>."
-#~ msgstr "Bylo mo¾no vytvoøit <Auxiliar_outlier_table>."
-
-#~ msgid ""
-#~ "It was not possible to drop <%s> table. Nothing will be done. Try to drop "
-#~ "it manually."
-#~ msgstr ""
-#~ "Nelze vyjmout tabulku <%s>. Nic se nestalo. Zkuste vyjmout tabulku ruènì."
-
-#~ msgid "Cross Validation was success!"
-#~ msgstr "Køí¾ová validace byla íºspì¹ná!"
-
-#~ msgid ""
-#~ "Interpolation: The region resolution is too high: %d cells. Consider to "
-#~ "change it."
-#~ msgstr ""
-#~ "Interpolace: Rozli¹ení regionu je pøíli¹ vysoké: %d bunìk. Prosím, zmìòte "
-#~ "jej."
+msgid "No points found, skipping%s%s"
+msgstr "®ádné body nebyly nalezeny, pøeskakuji type=point"
 
 #, fuzzy
-#~ msgid "Pass %d:"
-#~ msgstr "Prùchod %d..."
+msgid "No lines found, skipping%s%s"
+msgstr "Nic nebylo nalezeno, pøeskakuji typ=line"
 
-#~ msgid "Creating auxiliar table for archiving overlapping zones"
-#~ msgstr "Vytvoøení pomocné tabulky pro archivaci pøekrývajících se zón"
+msgid "It was impossible to create <Auxiliar_outlier_table>."
+msgstr "Bylo mo¾no vytvoøit <Auxiliar_outlier_table>."
 
-#~ msgid "<Auxiliar_edge_table> created in database."
-#~ msgstr "<pomocná_tabulka> vytvoøena v databázi."
+msgid ""
+"It was not possible to drop <%s> table. Nothing will be done. Try to drop it "
+"manually."
+msgstr ""
+"Nelze vyjmout tabulku <%s>. Nic se nestalo. Zkuste vyjmout tabulku ruènì."
 
-#, fuzzy
-#~ msgid "Unable to open table <%s_edge_Interpolation>"
-#~ msgstr "Nelze otevøít databázi <%s>"
+msgid "Cross Validation was success!"
+msgstr "Køí¾ová validace byla íºspì¹ná!"
 
-#~ msgid "M.Q. solution"
-#~ msgstr "Øe¹ení M.Q."
-
-#~ msgid "3-d data in dxf file. Polyline_flag: %d"
-#~ msgstr "3-d data v souboru dxf. Polyline_flag: %d"
-
-#, fuzzy
-#~ msgid "The '-q' flag is superseded and will be removed "
-#~ msgstr ""
-#~ "Pøepínaè '-q' je zastaralý a bude v budoucnosti odstranìn. prosím, "
-#~ "peou¾ijte pøepínaè '--quiet'."
+msgid ""
+"Interpolation: The region resolution is too high: %d cells. Consider to "
+"change it."
+msgstr ""
+"Interpolace: Rozli¹ení regionu je pøíli¹ vysoké: %d bunìk. Prosím, zmìòte "
+"jej."
 
 #, fuzzy
-#~ msgid "Unable to create table <%s_edge_Interpolation>"
-#~ msgstr "Nelze otevøít databázi <%s>"
+msgid "Pass %d:"
+msgstr "Prùchod %d..."
+
+msgid "Creating auxiliar table for archiving overlapping zones"
+msgstr "Vytvoøení pomocné tabulky pro archivaci pøekrývajících se zón"
+
+msgid "<Auxiliar_edge_table> created in database."
+msgstr "<pomocná_tabulka> vytvoøena v databázi."
 
 #, fuzzy
-#~ msgid "Rescale output raster map [0,255]"
-#~ msgstr "Název výstupní rastrové mapy"
+msgid "Unable to open table <%s_edge_Interpolation>"
+msgstr "Nelze otevøít databázi <%s>"
+
+msgid "M.Q. solution"
+msgstr "Øe¹ení M.Q."
+
+msgid "3-d data in dxf file. Polyline_flag: %d"
+msgstr "3-d data v souboru dxf. Polyline_flag: %d"
 
 #, fuzzy
-#~ msgid "Output"
-#~ msgstr "Výstup:"
+msgid "The '-q' flag is superseded and will be removed "
+msgstr ""
+"Pøepínaè '-q' je zastaralý a bude v budoucnosti odstranìn. prosím, peou¾ijte "
+"pøepínaè '--quiet'."
 
 #, fuzzy
-#~ msgid ""
-#~ "Input raster map contains cells with NULL-value (no-data). The value %g "
-#~ "was used to represent no-data values in the input map. You can specify a "
-#~ "nodata value with the %s option."
-#~ msgstr ""
-#~ "Vstupní rastrová mapa obsahuje NULLové hodnoty (¾ádná data).  Pro NULLové "
-#~ "hodnoty byla pou¾ita hodnota %g. Mù¾ete urèit hodnotu reprezentující "
-#~ "NULLové hodnoty parametrem %s."
+msgid "Unable to create table <%s_edge_Interpolation>"
+msgstr "Nelze otevøít databázi <%s>"
+
+#, fuzzy
+msgid "Rescale output raster map [0,255]"
+msgstr "Název výstupní rastrové mapy"
+
+#, fuzzy
+msgid "Output"
+msgstr "Výstup:"
+
+#, fuzzy
+msgid ""
+"Input raster map contains cells with NULL-value (no-data). The value %g was "
+"used to represent no-data values in the input map. You can specify a nodata "
+"value with the %s option."
+msgstr ""
+"Vstupní rastrová mapa obsahuje NULLové hodnoty (¾ádná data).  Pro NULLové "
+"hodnoty byla pou¾ita hodnota %g. Mù¾ete urèit hodnotu reprezentující NULLové "
+"hodnoty parametrem %s."
+
+msgid "Script kill option"
+msgstr "Volba skriptu kill"
+
+msgid "Start in Demo mode"
+msgstr "Spustit v módu Demo"
+
+msgid "Output more comments (default=quiet)"
+msgstr "Více komentáøù na výstup (výchozí=potichu)"
+
+msgid "Please choose only one print style"
+msgstr "Prosím, vyberte pouze jeden zpùsob výstupu"
+
+msgid "Spline type of interpolation"
+msgstr "Spline typ interpolace"
+
+msgid "It was impossible to open table"
+msgstr "Nebylo mo¾né otevøít tabulku"
 
 #~ msgid "Selects data from table."
 #~ msgstr "Vyber data z tabulky."
@@ -31469,15 +31464,6 @@ msgstr ""
 #~ msgstr ""
 #~ "Podskupina je pøili¹ objemná. Maximální poèet kanálù je %d\n"
 #~ "."
-
-#~ msgid "Script kill option"
-#~ msgstr "Volba skriptu kill"
-
-#~ msgid "Start in Demo mode"
-#~ msgstr "Spustit v módu Demo"
-
-#~ msgid "Output more comments (default=quiet)"
-#~ msgstr "Více komentáøù na výstup (výchozí=potichu)"
 
 #~ msgid "Could not read east bufferzone size. Aborting."
 #~ msgstr "Nelze naèíst velikost východní okolní zóny. Pøeru¹uji."
@@ -31493,15 +31479,6 @@ msgstr ""
 
 #~ msgid "Name of the longitude input raster map [decimal degrees]"
 #~ msgstr "Jméno vstupní rastrové mapy zemìpisné délky (stupnì desítkovì)"
-
-#~ msgid "Please choose only one print style"
-#~ msgstr "Prosím, vyberte pouze jeden zpùsob výstupu"
-
-#~ msgid "Spline type of interpolation"
-#~ msgstr "Spline typ interpolace"
-
-#~ msgid "It was impossible to open table"
-#~ msgstr "Nebylo mo¾né otevøít tabulku"
 
 #~ msgid "mi(les),f(eet),me(ters),k(ilometers),a(cres),h(ectares)"
 #~ msgstr "mi(míle),f(stopy),me(metry),k(kilometery),a(akry),h(hektary)"
@@ -31537,3 +31514,166 @@ msgstr ""
 #~ msgstr ""
 #~ "Èíslo sloupce pou¾itého jako souøadnice x (první sloupec je 1) pro bodový "
 #~ "re¾im"
+
+#~ msgid ""
+#~ "Calculate the groundwater distance velocity vector field and write the x, "
+#~ "y, and z components to maps named name_[xyz]. Name is basename for the "
+#~ "new raster3d maps"
+#~ msgstr ""
+#~ "Vypoèítat prùtokovou rychlost vektorového pole a zapi¹ x,y a z èásti do "
+#~ "map pojmenovaných jmeno_[xyz]. Jméno mapy je základ pro r3d rastrovou "
+#~ "mapu."
+
+#~ msgid "Lat/Long location is not supported"
+#~ msgstr "Location lat/long není podporována"
+
+#~ msgid "Calculating map %01d of %01d (angle %lf, raster map <%s>)"
+#~ msgstr "Výpoèet mapy %01d z %01d (úhel %lf, rastrová mapa <%s>)"
+
+#~ msgid "Do not export long colortable"
+#~ msgstr "nelze exportovat dlouhou tabulku barev"
+
+#~ msgid ""
+#~ "Input raster map contains cells with NULL-value (no-data). The value %d "
+#~ "was used to represent no-data values in the input map. You can specify "
+#~ "nodata value by %s parameter."
+#~ msgstr ""
+#~ "Vstupní rastrová mapa obsahující NULLové hodnoty (¾ádná data). Pro "
+#~ "NULLové hodnoty byla pou¾ita hodnota %d. Mù¾ete urèit hodnotu "
+#~ "reprezentující NULLové hodnoty parametrem %s."
+
+#~ msgid ""
+#~ "Input raster map contains cells with NULL-value (no-data). The value %g "
+#~ "was used to represent no-data values in the input map. You can specify "
+#~ "nodata value by %s parameter."
+#~ msgstr ""
+#~ "Vstupní rastrová mapa obsahuje NULLové hodnoty (¾ádná data).  Pro NULLové "
+#~ "hodnoty byla pou¾ita hodnota %g. Mù¾ete urèit hodnotu reprezentující "
+#~ "NULLové hodnoty parametrem %s."
+
+#~ msgid "r.li.worker (pid %i) exited with abnormal status %i"
+#~ msgstr "r.li.worker (pid %i) byl ukonèen s abnormálním statusem %i"
+
+#~ msgid "r.li.worker (pid %i) terminated"
+#~ msgstr "r.li.worker (pid %i) ukonèen"
+
+#~ msgid "Cannot make stat of %s configuration file"
+#~ msgstr "Nelze vytvoøit statistiku pro konfiguraèní soubor %s"
+
+#~ msgid "Illegal configuration file"
+#~ msgstr "Neplatný konfiguraèní soubor"
+
+#~ msgid "CHILD[pid = %i]: unable to open %s mask ... continue without!!!"
+#~ msgstr ""
+#~ "DCEØINÝ PROCES[pid = %i]: nelze otevøít soubor s maskou %s ... pokraèuji "
+#~ "bez ní!"
+
+#~ msgid "Show the category label in the grid cell(s)"
+#~ msgstr "Uka¾ ¹títek kategorie v buòce rastrového souboru"
+
+#~ msgid "Seed [%d] larger than maximum [%d]"
+#~ msgstr "Poèátek [%d] je vìt¹í ne¾ maximum [%d]"
+
+#~ msgid "Seed [%d] smaller than minimum [%d]"
+#~ msgstr "Poèátek [%d] je men¹í, ne¾ minimum [%d]"
+
+#~ msgid "SECTION 3: Accumulating Surface Flow."
+#~ msgstr "ÈÁST 3: Akumulace povrchového odtoku."
+
+#~ msgid "SECTION 4: Length Slope determination."
+#~ msgstr "ÈÁST 4: Urèuji délku svahu."
+
+#~ msgid "unable to open new L map layer."
+#~ msgstr "Nelze otevøít novou mapu L (faktoru délky svahu)"
+
+#~ msgid "unable to open new S map layer."
+#~ msgstr "nemohu otevøít novou mapu S (faktor sklonu svahu)"
+
+#~ msgid "Input value: maximum length of surface flow, for USLE"
+#~ msgstr "Vstupní hodnota: maximální délka povrchového odtoku, pro USLE"
+
+#~ msgid "Output map: useful for visual display of results"
+#~ msgstr "Výstupní mapa: u¾iteèná pro vizuální zobrazení výsledkù"
+
+#~ msgid ""
+#~ "Sorry, if any of the following options are set:\n"
+#~ "    basin, stream, half.basin, slope, or lS\n"
+#~ "    you MUST provide a value for the basin threshold parameter."
+#~ msgstr ""
+#~ "Promiòte, pokud je zadána nìkterá z následujících voleb:\n"
+#~ "    basin, stream, half.basin, slope nebo LS\n"
+#~ "    MUSÍTE zadat prahovou hodnotu povodí (basin threshold)."
+
+#~ msgid "The height of the river bed in [m]"
+#~ msgstr "Vý¹ka øeèi¹tì v [m]"
+
+#~ msgid "The height of the drainage bed in [m]"
+#~ msgstr "Vý¹ka odvodòovacího kanálu v [m]"
+
+#~ msgid "Calculation of unconfined groundwater flow loop %i\n"
+#~ msgstr "Výpoèet cyklu nesoustøedìného vodního toku %i\n"
+
+#~ msgid "Writing edges..."
+#~ msgstr "Zapisuji body ..."
+
+#~ msgid "point;simple x,y[,z] list;standard;GRASS's vector ASCII format"
+#~ msgstr "point;bodový formát (x,y[,z]);standard;GRASS vektorový ASCII formát"
+
+#~ msgid ""
+#~ "Number of column used as y coordinate (first column is 1) for points mode"
+#~ msgstr ""
+#~ "Èíslo sloupce pou¾itého jako souøadnice y (první sloupec je 1) pro bodový "
+#~ "re¾im"
+
+#~ msgid ""
+#~ "Number of column used as z coordinate (first column is 1) for points mode"
+#~ msgstr ""
+#~ "Èíslo sloupce pou¾itého jako souøadnice z (první sloupec je 1) pro bodový "
+#~ "re¾im"
+
+#~ msgid "If 0, z coordinate is not used"
+#~ msgstr "Jestli 0, z souøadnice nebude pou¾ita"
+
+#~ msgid ""
+#~ "Number of column used as category (first column is 1) for points mode"
+#~ msgstr ""
+#~ "Èíslo sloupce pou¾itého jako categorie (první sloupec je 1) pro bodový "
+#~ "re¾im"
+
+#~ msgid ""
+#~ "If 0, unique category is assigned to each row and written to new column "
+#~ "'cat'"
+#~ msgstr ""
+#~ "Pokud 0, bude pøiøazena ka¾dému øádku unikátní kategorie a zapsána do "
+#~ "nového sloupce 'cat'."
+
+#~ msgid "Create a new empty vector map and exit. Nothing is read from input"
+#~ msgstr ""
+#~ "Vytvoøit novou prázdnou vektorovou mapu a ukonèit se. Nic nebude èteno ze "
+#~ "vstupu."
+
+#~ msgid "Cannot allocate %d bytes of memory"
+#~ msgstr "Nelze pøiøadit %d bytù pamìti"
+
+#~ msgid "vector, query"
+#~ msgstr "vektor, dotazování"
+
+#~ msgid "Feature type. Combination of types is not supported by all formats."
+#~ msgstr "Typ prvky. Kombinace typù není podporována v¹emi formáty."
+
+#~ msgid ""
+#~ "%d faces found, but not requested to be exported. Verify 'type' parameter."
+#~ msgstr ""
+#~ "Nalezeno %d 3D polygonù, nebyly v¹ak po¾adovány pro export. Ovìøte "
+#~ "parametr 'type'."
+
+#~ msgid "Exporting %i points/lines..."
+#~ msgstr "Exportuji %i body/linie..."
+
+#~ msgid "Computing row %d of covariance matrix..."
+#~ msgstr "Poèítám øádek %d matice kovariance..."
+
+#~ msgid "The output cell map <%s.%d> has values outside the 0-255 range."
+#~ msgstr ""
+#~ "Výstupní rastrová (cell) mapa <%s.%d> obsahuje hodnoty mimo interval 0-"
+#~ "255."
