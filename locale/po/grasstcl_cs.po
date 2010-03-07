@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: grasstcl_cs\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-02-25 12:01+0100\n"
-"PO-Revision-Date: 2009-02-24 10:18+0100\n"
+"POT-Creation-Date: 2010-03-07 11:06+0100\n"
+"PO-Revision-Date: 2010-03-07 14:41+0100\n"
 "Last-Translator: \n"
 "Language-Team:  <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -518,8 +518,7 @@ msgstr ""
 
 #: ../lib/init/epsg_option.tcl:344
 msgid "You can select EPSG code (in <braces>) and copy it for later use."
-msgstr ""
-"Mù¾eze vybrat EPSG kód (v <závorkách>) a zkopírovat pro pozdìj¹í pou¾ití."
+msgstr "Mù¾eze vybrat EPSG kód (v <závorkách>) a zkopírovat pro pozdìj¹í pou¾ití."
 
 #: ../lib/init/epsg_option.tcl:381
 msgid "GUESS THAT IS NOT THE EPSG FILE"
@@ -572,8 +571,7 @@ msgstr "UPOZORNÌNÍ: neplatná location"
 
 #: ../lib/init/gis_set.tcl:128
 #, tcl-format
-msgid ""
-"Warning: location <%s> at GISDBASE <%s> is not a directory or does not exist."
+msgid "Warning: location <%s> at GISDBASE <%s> is not a directory or does not exist."
 msgstr "Varování: locatio <%s> v GISDBASE <%s> nenjí adresáø nebo neexistuje."
 
 #: ../lib/init/gis_set.tcl:178
@@ -710,19 +708,18 @@ msgstr "Konec"
 
 #: ../lib/init/gis_set.tcl:558
 msgid "Starting GRASS for the first time"
-msgstr ""
+msgstr "První spu¹tìní GIS GRASS"
 
 #: ../lib/init/gis_set.tcl:559
 msgid ""
 "GRASS needs a directory in which to store its data.  Create one now if you "
 "have not already done so.  A popular choice is \"grassdata\", located in "
 "your home directory."
-msgstr ""
+msgstr "GIS GRASS potøebuje adresáø ve kterém bude ukládat data. Vytvoøte prosím takový adresáø, pokud ho u¾ nemáte vytvoøený. Oblíbená volba je \"grassdata\" umístìný ve va¹em domovském adresáøi."
 
 #: ../lib/init/gis_set.tcl:564
-#, fuzzy
 msgid "Select GIS data directory"
-msgstr "Nový adresáø s GIS daty"
+msgstr "Vyberte adresáø s GIS daty"
 
 #: ../lib/init/gis_set.tcl:569
 msgid "WARNING: Invalid Database"
@@ -764,8 +761,7 @@ msgstr ""
 
 #: ../lib/init/file_option.tcl:73
 msgid "Define location using projection information in georeferenced file"
-msgstr ""
-"Zalo¾it location podle informací o projekci z georeferencovaného souboru"
+msgstr "Zalo¾it location podle informací o projekci z georeferencovaného souboru"
 
 #: ../lib/init/file_option.tcl:96
 msgid "Enter name of location to be created"
@@ -838,8 +834,7 @@ msgstr "Zobrazit smìrovky, jejich¾ orientace je zalo¾ena v mapì expozice"
 
 #: ../gui/tcltk/gis.m/rastarrows.tcl:140
 msgid "  (optionally, arrow lengths are based on slope or intensity map)"
-msgstr ""
-"  (optimálnì, délka smìrovky je závislá na sklonu nebo na mapì intenzity)"
+msgstr "  (optimálnì, délka smìrovky je závislá na sklonu nebo na mapì intenzity)"
 
 #: ../gui/tcltk/gis.m/rastarrows.tcl:147 ../gui/tcltk/gis.m/thematic.tcl:247
 #: ../gui/tcltk/gis.m/labels.tcl:118 ../gui/tcltk/gis.m/rastnums.tcl:146
@@ -920,14 +915,14 @@ msgstr "Vybrat font"
 #: ../gui/tcltk/gis.m/vector.tcl:243 ../gui/tcltk/gis.m/vector.tcl:265
 #: ../gui/tcltk/gis.m/vector.tcl:298
 msgid "This action requires map name to be set"
-msgstr ""
+msgstr "Tato akce vy¾aduje nastavit jméno mapy"
 
 #: ../gui/tcltk/gis.m/thematic.tcl:175 ../gui/tcltk/gis.m/thematic.tcl:196
 #: ../gui/tcltk/gis.m/chart.tcl:134 ../gui/tcltk/gis.m/chart.tcl:155
 #: ../gui/tcltk/gis.m/vector.tcl:249 ../gui/tcltk/gis.m/vector.tcl:271
 #: ../gui/tcltk/gis.m/vector.tcl:304
 msgid "You must provide valid vector layer number"
-msgstr ""
+msgstr "Musíte zadat platné èíslo vrstvy"
 
 #: ../gui/tcltk/gis.m/thematic.tcl:218 ../gui/tcltk/gis.m/vector.tcl:315
 msgid "Vector point symbol"
@@ -935,8 +930,7 @@ msgstr "Symbol vektorových bodù"
 
 #: ../gui/tcltk/gis.m/thematic.tcl:234
 msgid "Display vector maps thematically by graduate colors (all types)"
-msgstr ""
-"Zobrazit vektorové mapy tématicky podle stoupající barvy (v¹echny typy)"
+msgstr "Zobrazit vektorové mapy tématicky podle stoupající barvy (v¹echny typy)"
 
 #: ../gui/tcltk/gis.m/thematic.tcl:240
 msgid "  or by graduated sizes (points and lines)"
@@ -1199,9 +1193,8 @@ msgid "Zero elevation range"
 msgstr "Nulové rozmezí vý¹ek"
 
 #: ../gui/tcltk/gis.m/profile.tcl:542
-#, fuzzy
 msgid "Error reading region values"
-msgstr "Chyba pøi nastavení regionu"
+msgstr "Chyba pøi ètení hodnot regionu"
 
 #: ../gui/tcltk/gis.m/profile.tcl:566 ../gui/tcltk/gis.m/profile.tcl:651
 msgid "r.profile error"
@@ -1503,9 +1496,8 @@ msgstr ""
 "jen pro regiony < 10000 bunìk"
 
 #: ../gui/tcltk/gis.m/rastnums.tcl:279
-#, fuzzy
 msgid "Constrain map to region geometry?"
-msgstr "Omezit mapu podle geometrie regionu"
+msgstr "Vnutit mapu do nastavení regionu?"
 
 #: ../gui/tcltk/gis.m/rastnums.tcl:280
 msgid ""
@@ -1515,10 +1507,15 @@ msgid ""
 "\n"
 " It's suggested to constrain map to region geometry to display cell values."
 msgstr ""
+"Hodnoty bunìk mohou být zobrazeny pouze\n"
+"pro regiony <10,000 bunìk. Mapa v obsahuje více ne¾ 10 000 bunìk.\n"
+"\n"
+"\n"
+" Doporuèuji vnutit mapu do nastavení regionu pro zobrazení hodnot bunìk"
 
 #: ../gui/tcltk/gis.m/rastnums.tcl:282
 msgid "Leave in explore mode"
-msgstr ""
+msgstr "POnechat v prùzkumném re¾imu"
 
 #: ../gui/tcltk/gis.m/frames.tcl:105
 msgid "Divide map display into frames for displaying multiple maps"
@@ -1543,8 +1540,7 @@ msgstr "Jméno èásti (volitelné):"
 #: ../gui/tcltk/gis.m/frames.tcl:135
 #, tcl-format
 msgid "Set frame borders at 0-100% from lower left corner of display "
-msgstr ""
-"Natavit hranice èásti displeje v 0-100% ze spodního levého rohu displeje"
+msgstr "Natavit hranice èásti displeje v 0-100% ze spodního levého rohu displeje"
 
 #: ../gui/tcltk/gis.m/frames.tcl:141
 msgid "     set borders (bottom,top,left,right): "
@@ -1705,8 +1701,7 @@ msgstr "Pøidat tématickou vrstvu"
 
 #: ../gui/tcltk/gis.m/gmtool1.tcl:121
 msgid "Add raster labels layer (using v.labels file)"
-msgstr ""
-"Pøidat vrstvu s rastrovými popisky (s vyu¾itím souboru vytvoøeného v.labels)"
+msgstr "Pøidat vrstvu s rastrovými popisky (s vyu¾itím souboru vytvoøeného v.labels)"
 
 #: ../gui/tcltk/gis.m/gmtool1.tcl:128 ../gui/tcltk/d.m/tool2.tcl:88
 msgid "Add text layer"
@@ -2139,7 +2134,7 @@ msgstr "Zmìnit nastavení"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:217 ../gui/tcltk/d.m/menu.tcl:200
 msgid "Change default GUI"
-msgstr ""
+msgstr "Zmìnit výchozí GUI"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:218 ../gui/tcltk/d.m/menu.tcl:201
 msgid "Show current GRASS version"
@@ -2209,8 +2204,7 @@ msgstr "Pøevzorkování (zmìna rozli¹ení) metodou nejbli¾¹ího souseda"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:246
 msgid "Resample using spline tension"
-msgstr ""
-"Pøevzorkování (zmìna rozli¹ení) pomocí RST (regularized spline tension)"
+msgstr "Pøevzorkování (zmìna rozli¹ení) pomocí RST (regularized spline tension)"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:248
 msgid "Support file maintenance"
@@ -2641,8 +2635,7 @@ msgstr "Obrysy rsatrové mapy"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:403
 msgid "Regularized spline tension"
-msgstr ""
-"Pøevzorkování (zmìna rozli¹ení) pomocí RST (regularized spline tension)"
+msgstr "Pøevzorkování (zmìna rozli¹ení) pomocí RST (regularized spline tension)"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:405
 msgid "Fill NULL cells"
@@ -3687,8 +3680,7 @@ msgstr "interval ztenèení"
 
 #: ../gui/tcltk/gis.m/legend.tcl:302
 msgid "draw smooth gradient (fp maps)"
-msgstr ""
-"vykreslit vyhlazený gradient (mapové vrstvy s plovoucí desetinnou èárkou)"
+msgstr "vykreslit vyhlazený gradient (mapové vrstvy s plovoucí desetinnou èárkou)"
 
 #: ../gui/tcltk/gis.m/legend.tcl:304
 msgid "with maximum of"
@@ -3891,8 +3883,7 @@ msgid "chart for %s"
 msgstr "graf pro %s"
 
 #: ../gui/tcltk/gis.m/chart.tcl:183
-msgid ""
-"Display pie and bar charts of attribute values at vector object locations"
+msgid "Display pie and bar charts of attribute values at vector object locations"
 msgstr ""
 "Zobrazit koláèvý a sloupcový graf hodnot atributu v umístìní vektorových "
 "prvkù"
@@ -4114,7 +4105,6 @@ msgid "     Layer for labels"
 msgstr "     Vrstva pro popisky"
 
 #: ../gui/tcltk/gis.m/vector.tcl:483
-#, fuzzy
 msgid "   Attribute column for labels"
 msgstr "   Atributový sloupec s popisky"
 
@@ -4175,9 +4165,8 @@ msgid "Maximum zoom-in reached"
 msgstr "Dosa¾eno maximální pøiblí¾ení"
 
 #: ../gui/tcltk/gis.m/mapcanvas.tcl:661
-#, fuzzy
 msgid "Error setting region 1"
-msgstr "Chyba pøi nastavení regionu"
+msgstr "Chyba nastavování regionu 1"
 
 #: ../gui/tcltk/gis.m/mapcanvas.tcl:670
 msgid "please wait..."
@@ -4213,14 +4202,14 @@ msgstr ""
 "Pøejete si ho pøepsat? "
 
 #: ../gui/tcltk/gis.m/mapcanvas.tcl:1297
-#, fuzzy, tcl-format
+#, tcl-format
 msgid "Display: rows=%d  cols=%d  N-S res=%s  E-W res=%s"
-msgstr "Zobrazení: øádkù=%d sloupcù=%d S-J rozli¹ení=%g V-Z rozli¹ení= %g"
+msgstr "Displej: øádky=%d  sloupce=%d  S-J rozl=%s  V-Z rozl=%s"
 
 #: ../gui/tcltk/gis.m/mapcanvas.tcl:1300
-#, fuzzy, tcl-format
+#, tcl-format
 msgid "Display: rows=%d  cols=%d  N-S res=%g  E-W res=%g"
-msgstr "Zobrazení: øádkù=%d sloupcù=%d S-J rozli¹ení=%g V-Z rozli¹ení= %g"
+msgstr "Displej: øádky=%d  sloupce=%d  S-J rozl=%g  V-Z rozl=%g"
 
 #: ../gui/tcltk/gis.m/mapcanvas.tcl:1375
 msgid "Error setting region (Problem with g.region?)"
@@ -4231,9 +4220,8 @@ msgid "Error reading current resolution with g.region"
 msgstr "Chyb pøi ètení souèasného rozli¹ení pomocí g.region"
 
 #: ../gui/tcltk/gis.m/mapcanvas.tcl:1478
-#, fuzzy
 msgid "Error setting region 2"
-msgstr "Chyba pøi nastavení regionu"
+msgstr "Chybanastavování regionu 2"
 
 #: ../gui/tcltk/gis.m/mapcanvas.tcl:1504 ../gui/tcltk/gis.m/georect.tcl:2029
 msgid "Drag or click mouse to zoom"
@@ -4346,8 +4334,7 @@ msgid "Raster map for blue or saturation channel"
 msgstr "rastrová mapa pro kanál modré nebo sytosti"
 
 #: ../gui/tcltk/gis.m/rgbhis.tcl:136
-msgid ""
-"Display 3 raster maps as Red/Green/Blue or Hue/Intensity/Saturation channels"
+msgid "Display 3 raster maps as Red/Green/Blue or Hue/Intensity/Saturation channels"
 msgstr ""
 "Zobrazit 3 rastrové mapy jako kanály Èervený/Zelený/Modrý (RGB) nebo Jas/"
 "Intenzita/Sytost (HIS)"
@@ -4619,7 +4606,7 @@ msgstr ""
 
 #: ../gui/tcltk/gis.m/georect.tcl:1028
 msgid "Clip map/image to target region"
-msgstr ""
+msgstr "Pøilo¾it mapu/obrazová data k cílové location"
 
 #: ../gui/tcltk/gis.m/georect.tcl:1038
 msgid "Use"
@@ -5241,13 +5228,11 @@ msgstr "Nastavit prostøedí GRASSu"
 
 #: ../gui/tcltk/d.m/menu.tcl:204
 msgid "Create/edit projection information for current location"
-msgstr ""
-"Vytvoøit/modifikovat informace o kartografické zobrazení aktuální lokace"
+msgstr "Vytvoøit/modifikovat informace o kartografické zobrazení aktuální lokace"
 
 #: ../gui/tcltk/d.m/menu.tcl:205
 msgid "Show projection information and create projection files"
-msgstr ""
-"Zobrazit informace o kartografickém zobrazení a vytvoøit související soubory"
+msgstr "Zobrazit informace o kartografickém zobrazení a vytvoøit související soubory"
 
 #: ../gui/tcltk/d.m/menu.tcl:207
 msgid "Convert coordinates from one projection to another"
@@ -5323,8 +5308,7 @@ msgstr "Pøevzorkování (zmìna rozli¹ení) za pou¾ití rùzných metod"
 
 #: ../gui/tcltk/d.m/menu.tcl:235
 msgid "Resample using regularized spline with tension method"
-msgstr ""
-"Pøevzorkování (zmìna rozli¹ení) pomocí RST (regularized spline tension)"
+msgstr "Pøevzorkování (zmìna rozli¹ení) pomocí RST (regularized spline tension)"
 
 #: ../gui/tcltk/d.m/menu.tcl:238
 msgid "Support file creation and maintenance"
@@ -5480,8 +5464,7 @@ msgstr "Simulovat anisotropický jev ¹íøení"
 
 #: ../gui/tcltk/d.m/menu.tcl:320
 msgid "Edit category values of individual cells for displayed raster map"
-msgstr ""
-"Editovat hodnoty kategorií individuálních bunìk zobrazené rastrové vrstvy"
+msgstr "Editovat hodnoty kategorií individuálních bunìk zobrazené rastrové vrstvy"
 
 #: ../gui/tcltk/d.m/menu.tcl:323
 msgid "Reclassify categories for areas of specified sizes"
@@ -5501,8 +5484,7 @@ msgstr "Pøekí³dovat kategorie na základì pravidel (vytvoøit novou mapu)"
 
 #: ../gui/tcltk/d.m/menu.tcl:328
 msgid "Recode categories using rules file (create new map)"
-msgstr ""
-"Pøekí³dovat kategorie na základì souboru s pravidly (vytvoøit novou mapu)"
+msgstr "Pøekí³dovat kategorie na základì souboru s pravidly (vytvoøit novou mapu)"
 
 #: ../gui/tcltk/d.m/menu.tcl:330
 msgid "Rescale categories (create new map)"
@@ -5572,8 +5554,7 @@ msgstr "Interpolace IDW (inverse distance weighted) vektorových bodù"
 
 #: ../gui/tcltk/d.m/menu.tcl:354
 msgid "Regularized spline tension interpolation from vector points or contours"
-msgstr ""
-"Interpolace RST (regularized spline tension) vektorových bodù nebo vrstevnic"
+msgstr "Interpolace RST (regularized spline tension) vektorových bodù nebo vrstevnic"
 
 #: ../gui/tcltk/d.m/menu.tcl:356
 msgid "Fill NULL cells by interpolation using regularized spline tension"
@@ -5815,8 +5796,7 @@ msgstr "Test normality rozlo¾ení bodù"
 
 #: ../gui/tcltk/d.m/menu.tcl:472
 msgid "Calculate stats for raster map underlying vector objects"
-msgstr ""
-"Sestavit statistiku pro rastrovou vrstvu pøekrývající vektorové objekty"
+msgstr "Sestavit statistiku pro rastrovou vrstvu pøekrývající vektorové objekty"
 
 #: ../gui/tcltk/d.m/menu.tcl:473
 msgid "Indices of point counts in quadrats"
@@ -5835,21 +5815,17 @@ msgid "Mosaic up to 4 adjacent images"
 msgstr "Vytvoøit mozaiku více jak 4 sousední obrazové soubory"
 
 #: ../gui/tcltk/d.m/menu.tcl:484
-msgid ""
-"Color balance and enhance color tables of multiband imagery for rgb display"
-msgstr ""
-"Zvýraznìní a vyrovnání barev tabulky barev pro multikanálová obrazová data"
+msgid "Color balance and enhance color tables of multiband imagery for rgb display"
+msgstr "Zvýraznìní a vyrovnání barev tabulky barev pro multikanálová obrazová data"
 
 #: ../gui/tcltk/d.m/menu.tcl:485
-msgid ""
-"Transform HIS (Hue/Intensity/Saturation) color image to RGB (Red/Green/Blue)"
+msgid "Transform HIS (Hue/Intensity/Saturation) color image to RGB (Red/Green/Blue)"
 msgstr ""
 "Pøevést obrazový soubor z HIS (Hue/Intensity/Saturation) na RGB (Red/Green/"
 "Blue)"
 
 #: ../gui/tcltk/d.m/menu.tcl:486
-msgid ""
-"Transform RGB (Red/Green/Blue) color image to HIS (Hue/Intensity/Saturation)"
+msgid "Transform RGB (Red/Green/Blue) color image to HIS (Hue/Intensity/Saturation)"
 msgstr ""
 "Pøevést obrazový soubor z RGB (Red/Green/Blue) na HIS (Hue/Intensity/"
 "Saturation)"
@@ -6252,9 +6228,3 @@ msgstr "Skript:"
 msgid "Preview"
 msgstr "Náhled"
 
-#: ../visualization/nviz/scripts/panel_animation.tcl:275
-msgid "Test"
-msgstr "Test"
-
-#~ msgid "Run (in Xterm)"
-#~ msgstr "Spustit v pøíkazové konzoli (Xterm)"
