@@ -65,14 +65,6 @@ global resolution
 global wizerror
 global translist
 
-coordsys = ''
-north = ''
-south = ''
-east = ''
-west = ''
-resolution = ''
-transformlist = []
-
 class BaseClass(wx.Object):
     """!Base class providing basic methods"""
     def __init__(self):
@@ -268,6 +260,7 @@ class CoordinateSystemPage(TitledPage):
                                              "PROJ.4 parameters"))
         self.radio6 = wx.RadioButton(parent=self, id=wx.ID_ANY,
                                      label=_("Create an arbitrary non-earth coordinate system (XY)"))
+        
         # layout
         self.sizer.AddGrowableCol(1)
         self.sizer.SetVGap(10)
@@ -1308,13 +1301,13 @@ class EPSGPage(TitledPage):
                                     style=wx.ALIGN_LEFT | wx.ALIGN_CENTER_VERTICAL)
         # text input
         epsgdir = utils.PathJoin(os.environ["GRASS_PROJSHARE"], 'epsg')
-        self.tfile = self.MakeTextCtrl(text=epsgdir, size=(200,-1))
+        self.tfile = self.MakeTextCtrl(text=epsgdir, size=(200,-1),
+                                       style = wx.TE_PROCESS_ENTER)
         self.tcode = self.MakeTextCtrl(size=(200,-1))
 
         # buttons
         self.bbrowse = self.MakeButton(_("Browse"))
-#        self.bbcodes = self.MakeButton(_("Reload EPSG Codes"))
-
+        
         # search box
         self.searchb = wx.SearchCtrl(self, size=(200,-1),
                                      style=wx.TE_PROCESS_ENTER)
@@ -1348,11 +1341,7 @@ class EPSGPage(TitledPage):
                        flag=wx.ALIGN_LEFT |
                        wx.ALIGN_CENTER_VERTICAL |
                        wx.ALL, border=5, pos=(3, 3))
-#        self.sizer.Add(item=self.bbcodes,
-#                       flag=wx.ALIGN_LEFT |
-#                       wx.ALIGN_CENTER_VERTICAL |
-#                       wx.ALL, border=5, pos=(3, 4))
-
+        
         self.sizer.AddGrowableRow(4)
         self.sizer.Add(item=self.epsglist,
                        flag=wx.ALIGN_LEFT | wx.EXPAND, pos=(4, 1),
@@ -1360,7 +1349,7 @@ class EPSGPage(TitledPage):
 
         # events
         self.bbrowse.Bind(wx.EVT_BUTTON, self.OnBrowse)
-#        self.bbcodes.Bind(wx.EVT_BUTTON, self.OnBrowseCodes)
+        self.tfile.Bind(wx.EVT_TEXT_ENTER, self.OnBrowseCodes)
         self.tcode.Bind(wx.EVT_TEXT, self.OnText)
         self.tcode.Bind(wx.EVT_TEXT_ENTER, self.OnText)
         self.epsglist.Bind(wx.EVT_LIST_ITEM_SELECTED, self.OnItemSelected)
@@ -1459,15 +1448,15 @@ class EPSGPage(TitledPage):
         path = os.path.dirname(self.tfile.GetValue())
         if not path:
             path = os.getcwd()
-
+        
         dlg = wx.FileDialog(parent=self, message=_("Choose EPSG codes file"),
                             defaultDir=path, defaultFile="", wildcard="*", style=wx.OPEN)
-
+        
         if dlg.ShowModal() == wx.ID_OK:
             path = dlg.GetPath()
             self.tfile.SetValue(path)
             self.OnBrowseCodes(None)
-
+        
         dlg.Destroy()
 
         event.Skip()
@@ -1488,7 +1477,15 @@ class EPSGPage(TitledPage):
         if True:
             data = []
             self.epsgCodeDict = {}
-            f = open(self.tfile.GetValue(), "r")
+            try:
+                f = open(self.tfile.GetValue(), "r")
+            except IOError:
+                wx.MessageBox(parent=self,
+                              message=_("Unable to read EPGS file: '%s'") % self.tfile.GetValue(),
+                              caption=_("Error"),  style=wx.OK | wx.ICON_ERROR | wx.CENTRE)
+                self.epsglist.Populate([], update=True)
+                return
+            
             i = 0
             code = None
             for line in f.readlines():
@@ -1500,15 +1497,18 @@ class EPSGPage(TitledPage):
                     descr = line[1:].strip()
                 elif line[0] == '<':
                     code, params = line.split(" ", 1)
-                    code = int(code.replace('<', '').replace('>', ''))
-
+                    try:
+                        code = int(code.replace('<', '').replace('>', ''))
+                    except ValueError:
+                        code = None
+                
                 if code is not None:
                     data.append((code, descr, params))
                     self.epsgCodeDict[code] = (descr, params)
                     code = None
                 i += 1
             f.close()
-
+        
         if type(self.epsgCodeDict) == type(''):
             wx.MessageBox(parent=self,
                           message=_("Unable to read EPGS codes: %s") % self.epsgCodeDict,
@@ -1745,23 +1745,22 @@ class SummaryPage(TitledPage):
             event.Skip()
 
 class LocationWizard(wx.Object):
-    """
+    """!
     Start wizard here and finish wizard here
     """
     def __init__(self, parent, grassdatabase):
+        self.__cleanUp()
+        
         global coordsys
         self.parent = parent
 
         #
         # define wizard image
         #
-        # file = "loc_wizard.png"
-        file = "loc_wizard_qgis.png"
-        imagePath = os.path.join(globalvar.ETCWXDIR, "images", file)
+        imagePath = os.path.join(globalvar.ETCWXDIR, "images", "loc_wizard_qgis.png")
         wizbmp = wx.Image(imagePath, wx.BITMAP_TYPE_PNG)
-        # wizbmp.Rescale(250,600)
         wizbmp = wizbmp.ConvertToBitmap()
-
+        
         #
         # get georeferencing information from tables in $GISBASE/etc
         #
@@ -1881,12 +1880,34 @@ class LocationWizard(wx.Object):
                                     'err' : msg },
                               caption=_("Location wizard"),
                               style=wx.OK | wx.ICON_ERROR | wx.CENTRE)
-        else:
-            win = wx.MessageBox(parent=self.parent,
-                                message=_("Location wizard canceled. "
-                                          "Location not created."),
-                                caption=_("Location wizard"))
-    
+        else: # -> cancelled
+            self.wizard.Destroy()
+            wx.MessageBox(parent=self.parent,
+                          message=_("Location wizard canceled. "
+                                    "Location not created."),
+                          caption=_("Location wizard"),
+                          style=wx.OK | wx.ICON_INFORMATION | wx.CENTRE)
+        
+        self.__cleanUp()
+        
+    def __cleanUp(self):
+        global coordsys
+        global north
+        global south
+        global east
+        global west
+        global resolution
+        global wizerror
+        global translist
+        
+        coordsys = ''
+        north = ''
+        south = ''
+        east = ''
+        west = ''
+        resolution = ''
+        transformlist = []
+
     def __readData(self):
         """!Get georeferencing information from tables in $GISBASE/etc"""
 
