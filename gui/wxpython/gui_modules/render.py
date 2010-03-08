@@ -754,9 +754,17 @@ class Map(object):
         """
 
         projinfo = {}
-
+        
+        gisrc_orig = os.getenv("GISRC")
+        if self.gisrc:
+            os.environ["GISRC"] = self.gisrc
+        
         p = gcmd.Command(['g.proj', '-p'])
-
+        
+        # back to original gisrc
+        if self.gisrc:
+            os.environ["GISRC"] = gisrc_orig
+        
         if p.returncode == 0:
             for line in p.ReadStdOutput():
                 if ':' in line:
