@@ -447,8 +447,12 @@ class Command:
 
         for type, msg in self.__ProcessStdErr():
             if type == 'ERROR':
-                return unicode(msg, locale.getdefaultlocale()[1])
-
+                enc = locale.getdefaultlocale()[1]
+                if enc:
+                    return unicode(msg, enc)
+                else:
+                    return msg
+        
         return ''
     
     def PrintModuleOutput(self, error=True, warning=False, message=False):
