@@ -395,7 +395,7 @@ FunctionEnd
 
 Function LaunchGrass
 
-      Exec '"$INSTDIR\${GRASS_COMMAND}.bat" "-wxpython"'
+     ExecShell "" "$DESKTOP\GRASS ${VERSION_NUMBER}.lnk"
 
 FunctionEnd
 
