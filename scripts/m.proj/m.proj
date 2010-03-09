@@ -164,7 +164,6 @@ if [ -n "$GIS_OPT_PROJ_IN" ] ; then
 fi
 if [ -z "$IN_PROJ" ] ; then
    g.message -e "Missing input projection parameters."
-   rm -f "$TEMPFILE"
    exit 1
 fi
 
