@@ -364,7 +364,7 @@ FunctionEnd
     !define MUI_FINISHPAGE_RUN_FUNCTION "LaunchGrass"
     !define MUI_FINISHPAGE_SHOWREADME
     !define MUI_FINISHPAGE_SHOWREADME_NOTCHECKED
-    !define MUI_FINISHPAGE_SHOWREADME_TEXT "Launch Reference Manual in browser"
+    !define MUI_FINISHPAGE_SHOWREADME_TEXT "View the reference manual"
     !define MUI_FINISHPAGE_SHOWREADME_FUNCTION "ViewReadme"
 !insertmacro MUI_PAGE_FINISH
 
