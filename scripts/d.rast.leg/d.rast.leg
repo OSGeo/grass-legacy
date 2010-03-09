@@ -112,6 +112,10 @@ if [ ! "$file" ] ; then
    g.message -e "Raster map '$GIS_OPT_MAP' not found in mapset search path"
    exit 1
 fi
+filemapset="${mapset}"
+# would it be better to search for cats/ file ??
+eval `g.gisenv`
+HISTFILEDIR=$GISDBASE/$LOCATION_NAME/$filemapset/cell_misc/
 eval `r.info -t "$GIS_OPT_MAP"`
 
 # for rast=
