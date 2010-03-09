@@ -208,7 +208,7 @@ if [ -z "$GIS_OPT_INPUT" ] || [ "$GIS_OPT_INPUT" = "-" ] ; then
    done
 
    # make sure we have at least one line of data
-   if [ "`wc -l "$TEMPFILE" | cut -f1 -d' '`" -eq 0 ] ; then
+   if [ `cat "$TEMPFILE" | wc -l` -eq 0 ] ; then
       g.message -e "Problem reading data from stdin"
       exit 1
    fi

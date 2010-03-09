@@ -85,7 +85,7 @@ if [ $? -ne 0 ] ; then
 fi
 
 # check if table is used somewhere (connected to vector map)
-USEDINMAPS=`grep "$table" "$GISDBASE/$LOCATION_NAME"/*/vector/*/dbln | sed -e 's+/dbln:.*$++g' -e 's+^.*/++'`
+USEDINMAPS=`grep -l "$table" "$GISDBASE/$LOCATION_NAME"/*/vector/*/dbln | sed -e 's+/dbln$++g' -e 's+^.*/++'`
 if  [ -n "$USEDINMAPS" ] ; then
    g.message -w "Deleting <$table> table which is attached to following map(s):"
    for i in $USEDINMAPS ; do
