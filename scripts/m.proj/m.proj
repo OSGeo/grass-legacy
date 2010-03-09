@@ -154,7 +154,6 @@ if [ -n "$GIS_OPT_PROJ_IN" ] ; then
 fi
 if [ -z "$IN_PROJ" ] ; then
    g.message -e "Missing input projection parameters."
-   rm -f "$TEMPFILE"
    exit 1
 fi
 
@@ -193,16 +192,16 @@ if [ -z "$GIS_OPT_INPUT" ] || [ "$GIS_OPT_INPUT" = "-" ] ; then
       read REPLY
       EXITCODE=$?
       if [ -n "$REPLY" ] ; then
-	 echo "$REPLY" >> "$TMPFILE"
+	 echo "$REPLY" >> "$TEMPFILE"
       fi
    done
 
    # make sure we have at least one line of data
-   if [ "`wc -l "$TMPFILE" | cut -f1 -d' '`" -eq 0 ] ; then
+   if [ `cat "$TEMPFILE" | wc -l` -eq 0 ] ; then
       g.message -e "ERROR reading data from stdin"
       exit 1
    fi
-   infile="$TMPFILE"
+   infile="$TEMPFILE"
 else
    infile="$GIS_OPT_INPUT"
 fi
