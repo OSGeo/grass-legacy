@@ -147,7 +147,7 @@ rinterface = None
 
 #classes in alphabetical order. methods in logical order :)
 
-class Controller():
+class Controller:
     """ Executes analysis. For the moment, only with gstat functions."""
     
     def ImportMap(self, map, column):
