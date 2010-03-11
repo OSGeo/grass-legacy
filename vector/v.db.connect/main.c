@@ -7,12 +7,11 @@
  *               
  * PURPOSE:      sets/prints DB connection for a given vector map
  *               
- * COPYRIGHT:    (C) 2002-2008 by the GRASS Development Team
+ * COPYRIGHT:    (C) 2002-2010 by the GRASS Development Team
  *
- *               This program is free software under the 
- *               GNU General Public License (>=v2). 
- *               Read the file COPYING that comes with GRASS
- *               for details.
+ *               This program is free software under the GNU General
+ *               Public License (>=v2).  Read the file COPYING that
+ *               comes with GRASS for details.
  *
  * TODO: - fix -o flag (needs fix in Vect lib)
  *
@@ -58,10 +57,12 @@ int main(int argc, char **argv)
     dbdriver->options = db_list_drivers();
     if ((drv = G__getenv2("DB_DRIVER", G_VAR_MAPSET)))
 	dbdriver->answer = G_store(drv);
+    dbdriver->guisection = _("Settings");
 
     dbdatabase = G_define_standard_option(G_OPT_DATABASE);
     if ((db = G__getenv2("DB_DATABASE", G_VAR_MAPSET)))
 	dbdatabase->answer = G_store(db);
+    dbdatabase->guisection = _("Settings");
 
     dbtable = G_define_standard_option(G_OPT_TABLE);
 
@@ -75,11 +76,14 @@ int main(int argc, char **argv)
     field_opt->gisprompt = "new_layer,layer,layer";
 
     sep_opt = G_define_standard_option(G_OPT_F_SEP);
+    sep_opt->description = _("Field separator for shell script style output");
     sep_opt->answer = " ";
-
+    sep_opt->guisection = _("Print");
+    
     print = G_define_flag();
     print->key = 'p';
     print->description = _("Print all map connection parameters and exit");
+    print->guisection = _("Print");
 
     shell_print = G_define_flag();
     shell_print->key = 'g';
@@ -87,6 +91,7 @@ int main(int argc, char **argv)
 			   "in shell script style");
     shell_print->description =
 	_("Format: layer[/layer name] table key database driver");
+    shell_print->guisection = _("Print");
 
     /* This should be changed in GRASS 7.
        Printing options shouldn't ignore layer=%d option.
@@ -102,6 +107,7 @@ int main(int argc, char **argv)
     columns->description =
 	_("Print types/names of table columns for specified "
 	  "layer and exit");
+    columns->guisection = _("Print");
 
     overwrite = G_define_flag();
     overwrite->key = 'o';
