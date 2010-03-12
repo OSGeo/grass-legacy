@@ -556,13 +556,16 @@ def GetListOfLocations(dbase):
     @return list of locations (sorted)
     """
     listOfLocations = list()
-    
-    for location in glob.glob(os.path.join(dbase, "*")):
-        try:
-            if os.path.join(location, "PERMANENT") in glob.glob(os.path.join(location, "*")):
-                listOfLocations.append(os.path.basename(location))
-        except:
-            pass
+
+    try:
+        for location in glob.glob(os.path.join(dbase, "*")):
+            try:
+                if os.path.join(location, "PERMANENT") in glob.glob(os.path.join(location, "*")):
+                    listOfLocations.append(os.path.basename(location))
+            except:
+                pass
+    except UnicodeEncodeError, e:
+        raise e
     
     ListSortLower(listOfLocations)
     
