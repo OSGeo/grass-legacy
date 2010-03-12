@@ -17,6 +17,7 @@ import sys
 import platform
 import string
 import glob
+import locale
 
 import globalvar
 grassPath = os.path.join(globalvar.ETCDIR, "python")
@@ -467,7 +468,7 @@ def PathJoin(*args):
         return path[1].upper() + ':\\' + path[3:].replace('/', '\\')
     
     return path
-    
+
 def ReadEpsgCodes(path):
     """!Read EPSG code from the file
 
@@ -611,3 +612,16 @@ def GetColorTables():
         return list()
     
     return ret.splitlines()
+
+def EncodeString(string):
+    """!Return encoded string
+
+    @param string string to be encoded
+
+    @return encoded string
+    """
+    enc = locale.getdefaultlocale()[1]
+    if enc:
+        return string.encode(enc)
+    
+    return string
