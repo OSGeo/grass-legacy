@@ -201,8 +201,14 @@ class GRASSStartup(wx.Frame):
                 self.gisdbase = os.getenv("HOME")
             else:
                 self.gisdbase = os.getcwd()
-        self.tgisdbase.SetValue(self.gisdbase)
-
+        try:
+            self.tgisdbase.SetValue(self.gisdbase)
+        except UnicodeDecodeError:
+            wx.MessageBox(parent = self, caption = _("Error"),
+                          message = _("Unable to set GRASS database. "
+                                      "Check your locale settings."),
+                          style=wx.OK | wx.ICON_ERROR | wx.CENTRE)
+        
         self.OnSetDatabase(None)
         location = self.GetRCValue("LOCATION_NAME")
         if location == "<UNKNOWN>" or \
@@ -537,13 +543,19 @@ class GRASSStartup(wx.Frame):
         """Update list of locations"""
         self.listOfLocations = []
 
-        for location in glob.glob(os.path.join(dbase, "*")):
-            try:
-                if os.path.join(location, "PERMANENT") in glob.glob(os.path.join(location, "*")):
-                    self.listOfLocations.append(os.path.basename(location))
-            except:
-                pass
-
+        try:
+            for location in glob.glob(os.path.join(dbase, "*")):
+                try:
+                    if os.path.join(location, "PERMANENT") in glob.glob(os.path.join(location, "*")):
+                        self.listOfLocations.append(os.path.basename(location))
+                except:
+                    pass
+        except UnicodeError:
+            wx.MessageBox(parent = self, caption = _("Error"),
+                          message = _("Unable to set GRASS database. "
+                                      "Check your locale settings."),
+                          style=wx.OK | wx.ICON_ERROR | wx.CENTRE)
+        
         utils.ListSortLower(self.listOfLocations)
 
         self.lblocations.Clear()
