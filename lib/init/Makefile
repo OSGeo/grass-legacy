@@ -72,7 +72,7 @@ default: $(FILES)
 	$(INSTALL_DATA) helptext.html $(GISBASE)/docs/html/helptext.html
 	$(INSTALL_DATA) help_loc_struct.png $(GISBASE)/docs/html/help_loc_struct.png
 	$(INSTALL_DATA) circle_*.png $(GISBASE)/docs/html/
-	$(INSTALL_DATA) grass64_start.png grass64_start_small.jpg $(GISBASE)/docs/html/
+	$(INSTALL_DATA) grass_start.png $(GISBASE)/docs/html/
 
 $(ARCH_BINDIR)/$(START_UP): init.sh grass.src
 	@test -d $(ARCH_BINDIR) || (echo 'ARCH_DISTDIR($(ARCH_BINDIR))' not found; exit 1)
