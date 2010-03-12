@@ -17,6 +17,7 @@ for details.
 import os
 import sys
 import platform
+import locale
 
 import globalvar
 grassPath = os.path.join(globalvar.ETCDIR, "python")
@@ -331,3 +332,16 @@ def PathJoin(*args):
         return path[1].upper() + ':\\' + path[3:].replace('/', '\\')
     
     return path
+
+def EncodeString(string):
+    """!Return encoded string
+
+    @param string string to be encoded
+
+    @return encoded string
+    """
+    enc = locale.getdefaultlocale()[1]
+    if enc:
+        return string.encode(enc)
+    
+    return string

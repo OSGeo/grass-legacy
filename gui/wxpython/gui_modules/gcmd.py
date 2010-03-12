@@ -520,7 +520,7 @@ class CommandThread(Thread):
         self.startTime = time.time()
         
         try:
-            self.module = Popen(self.cmd,
+            self.module = Popen(map(utils.EncodeString, self.cmd),
                                 stdin=subprocess.PIPE,
                                 stdout=subprocess.PIPE,
                                 stderr=subprocess.PIPE,
