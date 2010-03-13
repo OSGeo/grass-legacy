@@ -570,27 +570,35 @@ class TableSelect(wx.ComboBox):
         self.SetValue('')
         
 class ColumnSelect(wx.ComboBox):
-    """
-    Creates combo box for selecting columns in the attribute table for a vector.
-    The 'layer' terminology is likely to change for GRASS 7
+    """!Creates combo box for selecting columns in the attribute table
+    for a vector map.
+
+    @param parent window parent
+    @param id window id
+    @param value default value
+    @param size window size
+    @param vector vector map name
+    @param layer layer number
+    @param **kwags wx.ComboBox parameters
     """
     def __init__(self, parent,
                  id = wx.ID_ANY, value = '',
                  size = globalvar.DIALOG_COMBOBOX_SIZE,
-                 vector = None, layer = 1, choices = [], readonly = False,
+                 vector = None, layer = 1, choices = [], readonly = False, param = None,
                  **kwargs):
         if readonly:
             if kwargs.has_key('style'):
                 style |= wx.CB_READONLY
             else:
                 style = wx.CB_READONLY
+        
         self.defaultValue = value
+        self.param = param
         
         super(ColumnSelect, self).__init__(parent, id, value = value, choices = choices, size = size,
                                            **kwargs)
-        
         self.SetName("ColumnSelect")
-
+        
         if vector:
             self.InsertColumns(vector, layer)
     
@@ -605,14 +613,22 @@ class ColumnSelect(wx.ComboBox):
             for key, val in columnchoices.iteritems():
                 columns[val['index']] = key
         except (KeyError, ValueError):
-            columns = []
-
+            columns = list()
+        
         self.SetItems(columns)
         self.SetValue(self.defaultValue)
-
+        
+        if self.param:
+            self.param['value'] = ''
+        
     def InsertTableColumns(self, table, driver=None, database=None):
-        """Insert table columns"""
-        columns = []
+        """!Insert table columns
+
+        @param table table name
+        @param driver driver name
+        @param database database name
+        """
+        columns = list()
         
         ret = gcmd.RunCommand('db.columns',
                               read = True,
@@ -622,9 +638,12 @@ class ColumnSelect(wx.ComboBox):
         
         if ret:
             columns = ret.splitlines()
-
+        
         self.SetItems(columns)
         self.SetValue(self.defaultValue)
+        
+        if self.param:
+            self.param['value'] = ''
         
 class DbColumnSelect(wx.ComboBox):
     """
@@ -633,7 +652,7 @@ class DbColumnSelect(wx.ComboBox):
     def __init__(self, parent,
                  id=wx.ID_ANY, value='', pos=wx.DefaultPosition,
                  size=wx.DefaultSize, choices=[''], **kargs):
-
+        
         super(ColumnSelect, self).__init__(parent, id, value, pos, size, choices)
 
         dbtable = kargs['table'] # table to check for columns
