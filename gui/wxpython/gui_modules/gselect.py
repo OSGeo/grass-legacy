@@ -631,6 +631,7 @@ class ColumnSelect(wx.ComboBox):
                 style |= wx.CB_READONLY
             else:
                 style = wx.CB_READONLY
+        self.defaultValue = value
         
         super(ColumnSelect, self).__init__(parent, id, value = value, choices = choices, size = size,
                                            **kwargs)
@@ -667,7 +668,7 @@ class ColumnSelect(wx.ComboBox):
             columns = []
 
         self.SetItems(columns)
-        self.SetValue('')
+        self.SetValue(self.defaultValue)
     
     def InsertTableColumns(self, table, driver=None, database=None):
         """!Insert table columns"""
@@ -683,6 +684,7 @@ class ColumnSelect(wx.ComboBox):
             columns = ret.splitlines()
 
         self.SetItems(columns)
+        self.SetValue(self.defaultValue)
         
 class LocationSelect(wx.ComboBox):
     """!Widget for selecting GRASS location"""
