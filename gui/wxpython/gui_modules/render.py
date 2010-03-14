@@ -458,6 +458,9 @@ class Map(object):
     def GetWindow(self):
         """Read WIND file and set up self.wind dictionary"""
         # FIXME: duplicated region WIND == g.region (at least some values)
+        if not self.env.has_key('GISDBASE'):
+            sys.exit(_("Quit wxGUI. GRASS is not running."))
+        
         filename = os.path.join (self.env['GISDBASE'],
                                  self.env['LOCATION_NAME'],
                                  self.env['MAPSET'],
