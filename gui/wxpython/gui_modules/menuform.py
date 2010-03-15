@@ -936,13 +936,13 @@ class mainFrame(wx.Frame):
         return cmd
 
     def OnRun(self, event):
-        """Run the command"""
+        """!Run the command"""
         cmd = self.createCmd()
         
         if cmd == None or len(cmd) < 2:
             return
 
-        if cmd[0][0:2] != "d.":
+        if self.standalone or cmd[0][0:2] != "d.":
             # Send any non-display command to parent window (probably wxgui.py)
             # put to parents
             # switch to 'Command output'
@@ -951,13 +951,13 @@ class mainFrame(wx.Frame):
             
             try:
                 self.goutput.RunCmd(cmd)
-            except AttributeError,e:
+            except AttributeError, e:
                 print >> sys.stderr, "%s: Propably not running in wxgui.py session?" % (e)
                 print >> sys.stderr, "parent window is: %s" % (str(self.parent))
             # Send any other command to the shell.
         else:
             gcmd.Command(cmd)
-
+        
         # update buttons status
         for btn in (self.btn_run,
                     self.btn_cancel,

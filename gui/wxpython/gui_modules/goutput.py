@@ -95,13 +95,13 @@ class CmdThread(threading.Thread):
                 aborted = False
             
             time.sleep(.1)
-            
+
             event = wxCmdDone(aborted = aborted,
                               returncode = returncode,
                               time = requestTime,
                               pid = requestId,
                               onDone = onDone)
-            
+
             wx.PostEvent(self.parent, event)
 
     def abort(self):
@@ -289,17 +289,17 @@ class GMConsole(wx.Panel):
             self.Map = curr_disp.GetRender()
         except:
             curr_disp = None
-
+        
         # command given as a string ?
         try:
             cmdlist = command.strip().split(' ')
         except:
             cmdlist = command
-
+        
         if cmdlist[0] in globalvar.grassCmd['all']:
             # send GRASS command without arguments to GUI command interface
             # except display commands (they are handled differently)
-            if cmdlist[0][0:2] == "d.":
+            if self.parent.GetName() == "LayerManager" and cmdlist[0][0:2] == "d.":
                 #
                 # display GRASS commands
                 #
@@ -319,13 +319,15 @@ class GMConsole(wx.Panel):
                                  'd.rhumbline'    : 'rhumb',
                                  'd.labels'       : 'labels'}[cmdlist[0]]
                 except KeyError:
-                    wx.MessageBox(message=_("Command '%s' not yet implemented in the GUI. Try adding it as a command layer instead.") % cmdlist[0])
+                    wx.MessageBox(caption = _("Message"),
+                                  message=_("Command '%s' not yet implemented in the GUI. "
+                                            "Try adding it as a command layer instead.") % cmdlist[0])
                     return None
 
                 # add layer into layer tree
-                self.parent.curr_page.maptree.AddLayer(ltype=layertype,
-                                                       lcmd=cmdlist)
-
+                if self.parent.GetName() == "LayerManager":
+                    self.parent.curr_page.maptree.AddLayer(ltype=layertype,
+                                                           lcmd=cmdlist)
             else:
                 #
                 # other GRASS commands (r|v|g|...)
