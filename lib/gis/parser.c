@@ -958,14 +958,14 @@ int G_parser(int argc, char **argv)
 	}
     }
 
+    /* Split options where multiple answers are OK */
+    split_opts();
+
     /* Run the gui if it was specifically requested */
     if (force_gui) {
 	G_gui();
 	return -1;
     }
-
-    /* Split options where multiple answers are OK */
-    split_opts();
 
     /* Check multiple options */
     error += check_multiple_opts();
@@ -976,8 +976,7 @@ int G_parser(int argc, char **argv)
 
     /* Make sure all required options are set */
     error += check_required();
-
-
+    
     if (error) {
 	if (G_verbose() > G_verbose_min())
 	    G_usage();
@@ -1998,7 +1997,7 @@ static void G_gui_wx(void)
 
     sprintf(script, "%s/etc/wxpython/gui_modules/menuform.py",
 	    getenv("GISBASE"));
-    G_spawn(getenv("GRASS_PYTHON"), getenv("GRASS_PYTHON"), script, pgm_name, NULL);
+    G_spawn(getenv("GRASS_PYTHON"), getenv("GRASS_PYTHON"), script, G_recreate_command(), NULL);
 }
 
 /**
