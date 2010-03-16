@@ -327,7 +327,7 @@ int export_band(GDALDatasetH hMEMDS, GDALDataType export_datatype, int band,
 		    sColor.c4 = 255;
 
 		    G_debug(3,
-			    "Rast_get_c_color: Y, rcount %d, nRed %d, nGreen %d, nBlue %d",
+			    "G_get_color: Y, rcount %d, nRed %d, nGreen %d, nBlue %d",
 			    rcount, nRed, nGreen, nBlue);
 		    GDALSetColorEntry(hCT, iColor, &sColor);
 		}
@@ -338,7 +338,7 @@ int export_band(GDALDatasetH hMEMDS, GDALDataType export_datatype, int band,
 		    sColor.c4 = 0;
 
 		    G_debug(3,
-			    "Rast_get_c_color: N, rcount %d, nRed %d, nGreen %d, nBlue %d",
+			    "G_get_color: N, rcount %d, nRed %d, nGreen %d, nBlue %d",
 			    rcount, nRed, nGreen, nBlue);
 		    GDALSetColorEntry(hCT, iColor, &sColor);
 		}
