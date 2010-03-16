@@ -579,7 +579,7 @@ class GRASSStartup(wx.Frame):
             if os.path.isdir(mapset) and \
                     os.path.isfile(os.path.join(self.gisdbase, location, mapset, "WIND")) and \
                     os.path.basename(mapset) != 'PERMANENT':
-                self.listOfMapsets.append(os.path.basename(mapset))
+                self.listOfMapsets.append(utils.EncodeString(os.path.basename(mapset)))
         
         utils.ListSortLower(self.listOfMapsets)
         self.listOfMapsets.insert(0, 'PERMANENT')
