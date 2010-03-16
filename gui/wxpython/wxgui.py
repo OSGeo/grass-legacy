@@ -457,19 +457,16 @@ class GMFrame(wx.Frame):
 
         @todo: Handle unicode with shlex
         """
-        try:
-            cmdString = str(event.GetString())
-        except UnicodeError:
-            cmdString = event.GetString()
+        cmdString = event.GetString()
         
         if cmdString[:2] == 'd.' and not self.curr_page:
             self.NewDisplay(show=True)
-
-        if isinstance(cmdString, unicode):
-            cmd = cmdString.split(' ')
-        else:
-            cmd = shlex.split(cmdString)
         
+        try:
+            cmd = shlex.split(str(cmdString))
+        except UnicodeError:
+            cmd = shlex.split(utils.EncodeString((cmdString)))
+            
         if len(cmd) > 1:
             self.goutput.RunCmd(cmd, switchPage=True)
         else:
