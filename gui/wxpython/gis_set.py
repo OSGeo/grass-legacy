@@ -547,7 +547,7 @@ class GRASSStartup(wx.Frame):
             for location in glob.glob(os.path.join(dbase, "*")):
                 try:
                     if os.path.join(location, "PERMANENT") in glob.glob(os.path.join(location, "*")):
-                        self.listOfLocations.append(os.path.basename(location))
+                        self.listOfLocations.append(utils.EncodeString(os.path.basename(location)))
                 except:
                     pass
         except UnicodeError:
