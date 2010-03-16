@@ -453,13 +453,23 @@ class GMFrame(wx.Frame):
         event.Skip()
 
     def OnRunCmd(self, event):
-        """Run command"""
-        cmdString = event.GetString()
+        """!Run command
 
+        @todo: Handle unicode with shlex
+        """
+        try:
+            cmdString = str(event.GetString())
+        except UnicodeError:
+            cmdString = event.GetString()
+        
         if cmdString[:2] == 'd.' and not self.curr_page:
             self.NewDisplay(show=True)
+
+        if isinstance(cmdString, unicode):
+            cmd = cmdString.split(' ')
+        else:
+            cmd = shlex.split(cmdString)
         
-        cmd = shlex.split(str(cmdString))
         if len(cmd) > 1:
             self.goutput.RunCmd(cmd, switchPage=True)
         else:
