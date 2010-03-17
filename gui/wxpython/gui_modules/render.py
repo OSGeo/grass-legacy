@@ -446,7 +446,7 @@ class Map(object):
 
         for line in gisenvCmd.ReadStdOutput():
             line = line.strip()
-            key, val = line.split("=")
+            key, val = line.split("=", 1)
             val = val.replace(";","")
             val = val.replace("'","")
             self.env[key] = val
