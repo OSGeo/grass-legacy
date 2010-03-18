@@ -16042,7 +16042,7 @@ msgid ""
 "distance;dangle;Select dangles shorter/longer than threshold distance"
 msgstr ""
 "length; Selektiere nur Linien oder Grenzen kürzer/länger als der "
-"Schwellwert; dangle; Selektiere lose Enden kürzer/länger als der Schwellwert"
+"Schwellwert; dangle; Selektiere Überstände (dangles) kürzer/länger als der Schwellwert"
 
 #: ../vector/v.edit/args.c:178
 msgid "Name of background vector map(s)"
@@ -19326,11 +19326,11 @@ msgstr "Säubere Grenzen an den Knoten:"
 
 #: ../vector/v.in.ogr/main.c:952
 msgid "Change boundary dangles to lines:"
-msgstr "Ändere Schwänze der Grenzen zu Linien:"
+msgstr "Ändere Grenzüberstände zu Linien:"
 
 #: ../vector/v.in.ogr/main.c:956
 msgid "Change dangles to lines:"
-msgstr "Ändere abstehende Schwänze zu Linien:"
+msgstr "Ändere Überstände zu Linien:"
 
 #: ../vector/v.in.ogr/main.c:962
 msgid "Change boundary bridges to lines:"
@@ -20891,9 +20891,9 @@ msgid ""
 "is ignored;rmsa;remove small angles between lines at nodes"
 msgstr ""
 "break;Teilt Linien an jeder Überschneidung;rmdupl;Entfernt doppelte "
-"Geometrie-Feature (Achten Sie auf die Kategorien!);rmdangle;Entfernt lose "
-"Enden, Schwellwert wird ignoriert, wenn <0;chdangle;Ändert den Typ eines "
-"losen Endes einer Grenze zu einer Linie, Schwellwert wird ignoriert, wenn "
+"Geometrie-Feature (Achten Sie auf die Kategorien!);rmdangle;Entfernt Überstände "
+"(dangles), Schwellwert wird ignoriert, wenn <0;chdangle;Ändert den Typ eines "
+"Überstands (dangle) zu einer Linie, Schwellwert wird ignoriert, wenn "
 "<0, Eingabe-Linien-Typ wird ignoriert;rmbridge;Entfernt Brücken, die eine "
 "Fläche und eine Insel oder 2 Inseln verbindet;chbridge;Ändert den Typ einer "
 "Brücke, die eine Fläche und eine Insel oder 2 Inseln verbindet von Grenze zu "
@@ -20948,11 +20948,11 @@ msgstr "Entferne Doppelte"
 
 #: ../vector/v.clean/main.c:196
 msgid "Remove dangles"
-msgstr "Entferne lose Enden"
+msgstr "Entferne Überstände (dangles)"
 
 #: ../vector/v.clean/main.c:199
 msgid "Change type of boundary dangles"
-msgstr "Ändere den Typ von losen Enden von Grenzen"
+msgstr "Ändere den Typ von Grenzüberstände (dangles)"
 
 #: ../vector/v.clean/main.c:203
 msgid "Remove bridges"
@@ -21008,11 +21008,11 @@ msgstr "Werkzeug: Entferne Doppelte"
 
 #: ../vector/v.clean/main.c:321
 msgid "Tool: Remove dangles"
-msgstr "Werkzeug: Entferne lose Enden"
+msgstr "Werkzeug: Entferne Überstände (dangles)"
 
 #: ../vector/v.clean/main.c:325
 msgid "Tool: Change type of boundary dangles"
-msgstr "Werkzeug: Ändere den Typ von losen Enden von Grenzen"
+msgstr "Werkzeug: Ändere den Typ der Grenzüberstände (dangles)"
 
 #: ../vector/v.clean/main.c:329
 msgid "Tool: Remove bridges"
