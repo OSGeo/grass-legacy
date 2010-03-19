@@ -4,7 +4,6 @@
  * MODULE:       v.info
  * 
  * AUTHOR(S):    CERL, updated to 5.7 by Markus Neteler
- *               Update to 7.0 by Martin Landa <landa.martin gmail.com> (2009)
  *               Support for level 1 by Markus Metz (2009)
  *               
  * PURPOSE:      Print vector map info
