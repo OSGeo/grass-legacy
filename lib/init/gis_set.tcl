@@ -722,7 +722,7 @@ A popular choice is \"grassdata\", located in your home directory."] 0 OK
 		exit 2
 	}
   
-	grab .
+	catch { grab . }
 	tkwait window . 
 
 }
