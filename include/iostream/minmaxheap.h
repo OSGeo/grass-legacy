@@ -24,6 +24,10 @@
 #include <stdlib.h>
 #include <math.h>
 
+#ifdef log2
+#undef log2
+#endif
+
 #include <sstream>
 using namespace std;
 
