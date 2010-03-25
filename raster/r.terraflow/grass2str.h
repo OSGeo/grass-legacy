@@ -140,7 +140,9 @@ cell2stream(char* cellname, elevation_type T_max_value, long* nodata_count) {
   G_free(inrast);
   /* close map files */
   G_close_cell (infd);
-  
+
+  G_debug(3, "nrows=%d   ncols=%d    stream_len()=%d", nrows, ncols,
+		str->stream_len());  
   assert(nrows * ncols == str->stream_len());
   rt_stop(rt);
   stats->recordTime("reading raster map", rt);
