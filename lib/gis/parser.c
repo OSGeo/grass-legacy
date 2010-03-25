@@ -2854,7 +2854,7 @@ char *G_recreate_command(void)
 
     opt = &first_option;
     while (opt != '\0') {
-	if (opt->answer != '\0' && opt->answers[0] != NULL) {
+	if (opt->answer != '\0' && opt->answers && opt->answers[0] != NULL) {
 	    slen = strlen(opt->key) + strlen(opt->answers[0]) + 4;	/* +4 for: ' ' = " " */
 	    if (len + slen >= nalloced) {
 		nalloced += (nalloced + 1024 > len + slen) ? 1024 : slen + 1;
