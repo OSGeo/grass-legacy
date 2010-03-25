@@ -46,10 +46,10 @@ int main(int argc, char *argv[])
     module->description =
 	_("Prints/sets general DB connection for current mapset and exits.");
 
-
     print = G_define_flag();
     print->key = 'p';
     print->description = _("Print current connection parameters and exit");
+    print->guisection = _("Print");
 
     check_set_default = G_define_flag();
     check_set_default->key = 'c';
@@ -59,9 +59,11 @@ int main(int argc, char *argv[])
     driver = G_define_standard_option(G_OPT_DRIVER);
     driver->options = db_list_drivers();
     driver->answer = (char *) db_get_default_driver_name();
+    driver->guisection = _("Settings");
 
     database = G_define_standard_option(G_OPT_DATABASE);
     database->answer = (char *) db_get_default_database_name();
+    database->guisection = _("Settings");
 
     schema = G_define_option();
     schema->key = "schema";
@@ -72,6 +74,7 @@ int main(int argc, char *argv[])
     schema->label = _("Database schema");
     schema->description = _("Do not use this option if schemas "
 			    "are not supported by driver/database server");
+    schema->guisection = _("Settings");
 
     group = G_define_option();
     group->key = "group";
@@ -81,6 +84,7 @@ int main(int argc, char *argv[])
     group->answer = (char*) db_get_default_group_name();
     group->description = _("Default group of database users to which "
 			   "select privilege is granted");
+    group->guisection = _("Settings");
 
     /* commented due to new mechanism:
        user = G_define_option() ;
