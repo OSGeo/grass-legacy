@@ -14,8 +14,8 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Lokalize 0.2\n"
-"Plural-Forms:  nplurals=2; plural=(n != 1);\n"
 
 #: ../gui/wxpython/icons/icon.py:81
 msgid "Unable to load icon theme..."
@@ -784,7 +784,7 @@ msgstr "Solo Elissoide"
 #: ../gui/wxpython/gui_modules/location_wizard.py:751
 #, python-format
 msgid "You must enter a value for %s"
-msgstr ""
+msgstr "È necessario inserire un valore per %s"
 
 #: ../gui/wxpython/gui_modules/location_wizard.py:763
 #, python-format
@@ -1023,15 +1023,15 @@ msgstr "Celle 3D: %d"
 
 #: ../gui/wxpython/gui_modules/location_wizard.py:2406
 msgid "Top"
-msgstr ""
+msgstr "Alto"
 
 #: ../gui/wxpython/gui_modules/location_wizard.py:2414
 msgid "Bottom"
-msgstr ""
+msgstr "Basso"
 
 #: ../gui/wxpython/gui_modules/location_wizard.py:2422
 msgid "T-B resolution"
-msgstr ""
+msgstr "Risoluzione alto-basso"
 
 #: ../gui/wxpython/gui_modules/location_wizard.py:2485
 msgid "North"
@@ -8546,8 +8546,146 @@ msgid "No map layer selected. Operation cancelled."
 msgstr "Nessun layer selezionato. Operazione cancellata"
 
 #, fuzzy
-#~ msgid "Creates a lines vector map from an ASCII x,y points file."
-#~ msgstr "Crea un vettore da file ASCI points o ASCII vector"
+msgid "Creates a lines vector map from an ASCII x,y points file."
+msgstr "Crea un vettore da file ASCI points o ASCII vector"
+
+msgid " (those in bold typeface are required)"
+msgstr " (quelli in grassetto sono richiesti)"
+
+msgid "Cmd >"
+msgstr "Cmd >"
+
+msgid ""
+"Change current location and mapset (note that current workspace will be "
+"closed)."
+msgstr ""
+"Cambia location e mapset correnti (nota che l'ambiente di lavoro corrente "
+"sarà chiuso)"
+
+msgid "Click here to show database connection information"
+msgstr "Clicca qui per mostrare le informazione della connessione del database"
+
+msgid "Click here to hide database connection information"
+msgstr ""
+"Clicca qui per nascondere le informazione della connessione del database"
+
+msgid "Use coordinate system of selected georeferenced file"
+msgstr "Usa il sistema di coordinate del file georeferenziato selezionato"
+
+msgid "Use coordinate system of selected WKT or PRJ file"
+msgstr "Usa il sistema di coordinate del file WKT o file PRJ"
+
+msgid "Select ellipsoid"
+msgstr "Seleziona elissoide"
+
+msgid "Set zone for UTM projection:"
+msgstr "Imposta la zona per la proiezione UTM:"
+
+msgid "Zone:"
+msgstr "Zona:"
+
+msgid "Hemisphere for zone:"
+msgstr "Emisfero per la zona:"
+
+msgid "Datum"
+msgstr "Datum"
+
+msgid "Transformation parameters:"
+msgstr "Parametri di trasformazione:"
+
+msgid "Browse EPSG Codes"
+msgstr "Naviga i codici EPSG"
+
+msgid "Datums:"
+msgstr "Datum:"
+
+#, fuzzy
+msgid "Vector map <%s> georectified successfully"
+msgstr "nnome"
+
+#, fuzzy
+msgid "Copying attributes..."
+msgstr "Mostra attributi"
+
+#, fuzzy
+msgid "Output vector map name"
+msgstr "nnome"
+
+#, fuzzy
+msgid "Digitize raster map"
+msgstr "Stampa"
+
+#, fuzzy
+msgid "Reclassify vector objects interactively by entering SQL rules"
+msgstr "vettoriale"
+
+#, fuzzy
+msgid "Ortho Photo rectification"
+msgstr "Esci"
+
+#, fuzzy
+msgid "GRASS GIS Layer Manager (Experimental Prototype)"
+msgstr ""
+"Layer: %d\n"
+"categoria: %d\n"
+
+msgid "Parameter element '%(element)s' not found: '%(value)s'"
+msgstr "Parametro dell'elemento '%(element)s' non trovato: '%(value)s'"
+
+msgid "Format"
+msgstr "Formato"
+
+msgid "Native"
+msgstr "Nativo"
+
+msgid "OGR"
+msgstr "OGR"
+
+msgid "Choose OGR data source"
+msgstr "Scegli sorgente dei dati OGR"
+
+msgid "Name of OGR data source:"
+msgstr "Nome della sorgente dei dati OGR:"
+
+msgid "Make null cells opaque"
+msgstr "Rendi celle nulle opache"
+
+msgid ""
+"Georeference, rectify, and import Terra-ASTER imagery and relative DEM's "
+"using gdalwarp."
+msgstr ""
+"Georeferenzia, rettifica e importa immagine Terra-ASTER e relativo DEM "
+"usando gdalwarp"
+
+msgid "Converts coordinates from one projection to another (cs2cs frontend)."
+msgstr "Converti coordinate da una proiezione ad un'altra (cs2cs frontend)."
+
+msgid "creates a sunshine hours map"
+msgstr "Crea una mappa delle ore di insolazione"
+
+msgid "Removes a table from database."
+msgstr "Elimina una tabella da un database"
+
+msgid "Manage extensions"
+msgstr "Gestisci estensioni"
+
+msgid "Outputs basic information about a vector map."
+msgstr "Visualizza informazioni basilari su un vettoriale"
+
+msgid "Mosaics several images and extends colormap"
+msgstr "Crea un mosaico da più immagini ed estende la mappa dei colore"
+
+msgid "Latitude/longitude maps"
+msgstr "Mappa latitudine/longitudine"
+
+msgid "Potential Sunshine Hours"
+msgstr "Ore potenziali di insolazione"
+
+msgid "Actual Evapotranspiration"
+msgstr "Evapotraspirazione attuale"
+
+msgid "actual evapotranspiration for diurnal period (Bastiaanssen, 1995)"
+msgstr "Evapotraspirazione attuale per il periodo diurno (Bastiaanssen, 1995)"
 
 #~ msgid "(value)"
 #~ msgstr "(valore)"
@@ -8582,7 +8720,6 @@ msgstr "Nessun layer selezionato. Operazione cancellata"
 #~ msgid "Command '%s' not yet implemented."
 #~ msgstr "Comando %s non ancora implementato"
 
-#, fuzzy
 #~ msgid "&Close"
 #~ msgstr "Chiudi"
 
@@ -8591,147 +8728,6 @@ msgstr "Nessun layer selezionato. Operazione cancellata"
 
 #~ msgid "Help"
 #~ msgstr "Aiuto"
-
-#~ msgid " (those in bold typeface are required)"
-#~ msgstr " (quelli in grassetto sono richiesti)"
-
-#~ msgid "Cmd >"
-#~ msgstr "Cmd >"
-
-#~ msgid ""
-#~ "Change current location and mapset (note that current workspace will be "
-#~ "closed)."
-#~ msgstr ""
-#~ "Cambia location e mapset correnti (nota che l'ambiente di lavoro corrente "
-#~ "sarà chiuso)"
-
-#~ msgid "Click here to show database connection information"
-#~ msgstr ""
-#~ "Clicca qui per mostrare le informazione della connessione del database"
-
-#~ msgid "Click here to hide database connection information"
-#~ msgstr ""
-#~ "Clicca qui per nascondere le informazione della connessione del database"
-
-#~ msgid "Use coordinate system of selected georeferenced file"
-#~ msgstr "Usa il sistema di coordinate del file georeferenziato selezionato"
-
-#~ msgid "Use coordinate system of selected WKT or PRJ file"
-#~ msgstr "Usa il sistema di coordinate del file WKT o file PRJ"
-
-#~ msgid "Select ellipsoid"
-#~ msgstr "Seleziona elissoide"
-
-#~ msgid "Set zone for UTM projection:"
-#~ msgstr "Imposta la zona per la proiezione UTM:"
-
-#~ msgid "Zone:"
-#~ msgstr "Zona:"
-
-#~ msgid "Hemisphere for zone:"
-#~ msgstr "Emisfero per la zona:"
-
-#~ msgid "Datum"
-#~ msgstr "Datum"
-
-#~ msgid "Transformation parameters:"
-#~ msgstr "Parametri di trasformazione:"
-
-#~ msgid "Browse EPSG Codes"
-#~ msgstr "Naviga i codici EPSG"
-
-#~ msgid "Datums:"
-#~ msgstr "Datum:"
-
-#, fuzzy
-#~ msgid "Vector map <%s> georectified successfully"
-#~ msgstr "nnome"
-
-#, fuzzy
-#~ msgid "Copying attributes..."
-#~ msgstr "Mostra attributi"
-
-#, fuzzy
-#~ msgid "Output vector map name"
-#~ msgstr "nnome"
-
-#, fuzzy
-#~ msgid "Digitize raster map"
-#~ msgstr "Stampa"
-
-#, fuzzy
-#~ msgid "Reclassify vector objects interactively by entering SQL rules"
-#~ msgstr "vettoriale"
-
-#, fuzzy
-#~ msgid "Ortho Photo rectification"
-#~ msgstr "Esci"
-
-#, fuzzy
-#~ msgid "GRASS GIS Layer Manager (Experimental Prototype)"
-#~ msgstr ""
-#~ "Layer: %d\n"
-#~ "categoria: %d\n"
-
-#~ msgid "Parameter element '%(element)s' not found: '%(value)s'"
-#~ msgstr "Parametro dell'elemento '%(element)s' non trovato: '%(value)s'"
-
-#~ msgid "Format"
-#~ msgstr "Formato"
-
-#~ msgid "Native"
-#~ msgstr "Nativo"
-
-#~ msgid "OGR"
-#~ msgstr "OGR"
-
-#~ msgid "Choose OGR data source"
-#~ msgstr "Scegli sorgente dei dati OGR"
-
-#~ msgid "Name of OGR data source:"
-#~ msgstr "Nome della sorgente dei dati OGR:"
-
-#~ msgid "Make null cells opaque"
-#~ msgstr "Rendi celle nulle opache"
-
-#~ msgid ""
-#~ "Georeference, rectify, and import Terra-ASTER imagery and relative DEM's "
-#~ "using gdalwarp."
-#~ msgstr ""
-#~ "Georeferenzia, rettifica e importa immagine Terra-ASTER e relativo DEM "
-#~ "usando gdalwarp"
-
-#~ msgid ""
-#~ "Converts coordinates from one projection to another (cs2cs frontend)."
-#~ msgstr "Converti coordinate da una proiezione ad un'altra (cs2cs frontend)."
-
-#~ msgid "creates a sunshine hours map"
-#~ msgstr "Crea una mappa delle ore di insolazione"
-
-#~ msgid "Removes a table from database."
-#~ msgstr "Elimina una tabella da un database"
-
-#~ msgid "Manage extensions"
-#~ msgstr "Gestisci estensioni"
-
-#~ msgid "Outputs basic information about a vector map."
-#~ msgstr "Visualizza informazioni basilari su un vettoriale"
-
-#~ msgid "Mosaics several images and extends colormap"
-#~ msgstr "Crea un mosaico da più immagini ed estende la mappa dei colore"
-
-#~ msgid "Latitude/longitude maps"
-#~ msgstr "Mappa latitudine/longitudine"
-
-#~ msgid "Potential Sunshine Hours"
-#~ msgstr "Ore potenziali di insolazione"
-
-#~ msgid "Actual Evapotranspiration"
-#~ msgstr "Evapotraspirazione attuale"
-
-#~ msgid "actual evapotranspiration for diurnal period (Bastiaanssen, 1995)"
-#~ msgstr ""
-#~ "Evapotraspirazione attuale per il periodo diurno (Bastiaanssen, 1995)"
 
 #~ msgid "GPL.TXT file missing"
 #~ msgstr "File GPL.TXT mancante"
@@ -8786,7 +8782,6 @@ msgstr "Nessun layer selezionato. Operazione cancellata"
 #~ msgid "Unable to read workspace file"
 #~ msgstr "Impossibile leggere il file dell'ambiente di lavoro"
 
-#, fuzzy
 #~ msgid "Command %s could not be run"
 #~ msgstr "Comando %s non ancora implementato"
 
@@ -8826,10 +8821,39 @@ msgstr "Nessun layer selezionato. Operazione cancellata"
 #~ msgid "Volumes"
 #~ msgstr "Volumi"
 
-#, fuzzy
 #~ msgid "Resolution cannot be 0"
-#~ msgstr "Risoluzione:"
+#~ msgstr "La risoluzione non può essere 0"
 
-#, fuzzy
 #~ msgid "&Stop"
 #~ msgstr "C&opia"
+
+#~ msgid "Extents set incorrectly"
+#~ msgstr "Estensione impostata non correttamente"
+
+#~ msgid ""
+#~ "File <%(file)s>: Unable to get list of DXF layers.\n"
+#~ "\n"
+#~ "%(details)s"
+#~ msgstr ""
+#~ "File <%(file)s>: Impossibile ottenere la lista dei layer DXF.\n"
+#~ "\n"
+#~ "%(details)s"
+
+#~ msgid "Icon size:"
+#~ msgstr "Dimensione dell'icona:"
+
+#~ msgid "width:"
+#~ msgstr "larghezza:"
+
+#~ msgid "symbol:"
+#~ msgstr "simbolo:"
+
+#~ msgid "color:"
+#~ msgstr "colore:"
+
+#~ msgid ""
+#~ "Creates and adds a new attribute table to a given layer of an existing "
+#~ "vector map."
+#~ msgstr ""
+#~ "Crea e aggiunge una nuova tabella degli attributi per un certo layer di "
+#~ "una mappa vettoriale esistente"
