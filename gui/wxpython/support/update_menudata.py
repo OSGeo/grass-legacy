@@ -7,12 +7,14 @@ updates: - description (i.e. help)
 
 Prints warning for missing modules.
 
-(C) 2008-2009 by the GRASS Development Team
+(C) 2008-2010 by the GRASS Development Team
 This program is free software under the GNU General Public
 License (>=v2). Read the file COPYING that comes with GRASS
 for details.
 
-Usage: python update_menudata.py
+Usage: python support/update_menudata.py [-d]
+
+ -d - dry run (prints diff, file is not updated)
 
 @author Martin Landa <landa.martin gmail.com>
 """
@@ -20,10 +22,7 @@ Usage: python update_menudata.py
 import os
 import sys
 import locale
-try:
-    import xml.etree.ElementTree as etree
-except ImportError:
-    import elementtree.ElementTree as etree # Python <= 2.4
+import tempfile
 
 import xml.sax
 import xml.sax.handler
@@ -110,34 +109,61 @@ def updateData(data, modules):
             desc = modules[module]['desc']
         node.find('help').text = desc
     
-def writeData(data):
+def writeData(data, file = None):
     """!Write updated menudata.xml"""
-    file = os.path.join('xml', 'menudata.xml')
+    if file is None:
+        file = os.path.join('xml', 'menudata.xml')
+    
     try:
-        if not os.path.exists(file):
-            raise IOError
         data.tree.write(file)
     except IOError:
         print >> sys.stderr, "'%s' not found. Please run the script from 'gui/wxpython'." % file
-        
-
+        return
+    
+    try:
+        f = open(file, 'a')
+        try:
+            f.write('\n')
+        finally:
+            f.close()
+    except IOError:
+        print >> sys.stderr, "ERROR: Unable to write to menudata file."
+    
 def main(argv = None):
     if argv is None:
         argv = sys.argv
-
-    if len(argv) != 1:
+    
+    if len(argv) > 1 and argv[1] == '-d':
+        printDiff = True
+    else:
+        printDiff = False
+    
+    if len(argv) > 1 and argv[1] == '-h':
         print >> sys.stderr, __doc__
         return 1
     
-    grass.info("Step 1: parsing modules...")
+    nuldev = file(os.devnull, 'w+')
+    grass.info("Step 1: running make...")
+    grass.call(['make'], stderr = nuldev)
+    grass.info("Step 2: parsing modules...")
     modules = dict()
     modules = parseModules()
-    grass.info("Step 2: reading menu data...")
+    grass.info("Step 3: reading menu data...")
     data = menudata.Data()
-    grass.info("Step 3: updating menu data...")
+    grass.info("Step 4: updating menu data...")
     updateData(data, modules)
-    grass.info("Step 4: writing menu data (menudata.xml)...")
-    writeData(data)
+    
+    if printDiff:
+        tempFile = tempfile.NamedTemporaryFile()
+        grass.info("Step 5: diff menu data...")
+        writeData(data, tempFile.name)
+        
+        grass.call(['diff', '-u',
+                    os.path.join('xml', 'menudata.xml'),
+                    tempFile.name], stderr = nuldev)
+    else:
+        grass.info("Step 5: writing menu data (menudata.xml)...")
+        writeData(data)
     
     return 0
 
