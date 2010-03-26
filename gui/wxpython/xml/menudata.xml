@@ -1806,7 +1806,7 @@
 	    </menuitem>
 	    <menuitem>
 	      <label>Display shortest route (requires XTerm)</label>
-	      <help>Finds shortest path for selected starting and ending node.</help>
+	      <help>Find shortest path for selected starting and ending node</help>
 	      <handler>self.OnXTerm</handler>
 	      <command>d.path.sh</command>
 	    </menuitem>
@@ -2328,28 +2328,32 @@
 	  <label>Database information</label>
 	  <items>
 	    <menuitem>
-	      <label>Describe table</label>
-	      <help>Describes a table in detail.</help>
-	      <handler>self.OnMenuCmd</handler>
-	      <command>db.describe</command>
-	    </menuitem>
-	    <menuitem>
-	      <label>List columns</label>
-	      <help>List all columns for a given table.</help>
-	      <handler>self.OnMenuCmd</handler>
-	      <command>db.columns</command>
-	    </menuitem>
-	    <menuitem>
 	      <label>List drivers</label>
 	      <help>List all database drivers.</help>
+	      <keywords>database,attribute table</keywords>
 	      <handler>self.OnMenuCmd</handler>
 	      <command>db.drivers</command>
 	    </menuitem>
 	    <menuitem>
 	      <label>List tables</label>
 	      <help>Lists all tables for a given database.</help>
+	      <keywords>database,attribute table</keywords>
 	      <handler>self.OnMenuCmd</handler>
 	      <command>db.tables</command>
+	    </menuitem>
+	    <menuitem>
+	      <label>Describe table</label>
+	      <help>Describes a table in detail.</help>
+	      <keywords>database,attribute table</keywords>
+	      <handler>self.OnMenuCmd</handler>
+	      <command>db.describe</command>
+	    </menuitem>
+	    <menuitem>
+	      <label>List columns</label>
+	      <help>List all columns for a given table.</help>
+	      <keywords>database,attribute table</keywords>
+	      <handler>self.OnMenuCmd</handler>
+	      <command>db.columns</command>
 	    </menuitem>
 	  </items>
 	</menu>
@@ -2360,57 +2364,37 @@
 	    <menuitem>
 	      <label>Connect</label>
 	      <help>Prints/sets general DB connection for current mapset and exits.</help>
+	      <keywords>database,attribute table,connection settings</keywords>
 	      <handler>self.OnMenuCmd</handler>
 	      <command>db.connect</command>
 	    </menuitem>
 	    <menuitem>
 	      <label>Login</label>
 	      <help>Sets user/password for driver/database.</help>
+	      <keywords>database,connection</keywords>
 	      <handler>self.OnMenuCmd</handler>
 	      <command>db.login</command>
 	    </menuitem>
 	    <separator />
 	    <menuitem>
-	      <label>Copy table</label>
-	      <help>Copy a table.</help>
-	      <handler>self.OnMenuCmd</handler>
-	      <command>db.copy</command>
-	    </menuitem>
-	    <menuitem>
-	      <label>New table</label>
-	      <help>Creates and adds a new attribute table to a given layer of an existing vector map.</help>
-	      <handler>self.OnMenuCmd</handler>
-	      <command>v.db.addtable</command>
-	    </menuitem>
-	    <menuitem>
-	      <label>Remove table</label>
+	      <label>Drop table</label>
 	      <help>Drops an attribute table.</help>
+	      <keywords>database,SQL</keywords>
 	      <handler>self.OnMenuCmd</handler>
 	      <command>db.droptable</command>
 	    </menuitem>
-	    <separator />
 	    <menuitem>
-	      <label>Add columns</label>
-	      <help>Adds one or more columns to the attribute table connected to a given vector map.</help>
+	      <label>Copy table</label>
+	      <help>Copy a table.</help>
+	      <keywords>database,attribute table,SQL</keywords>
 	      <handler>self.OnMenuCmd</handler>
-	      <command>v.db.addcol</command>
-	    </menuitem>
-	    <menuitem>
-	      <label>Change values</label>
-	      <help>Allows to update a column in the attribute table connected to a vector map.</help>
-	      <handler>self.OnMenuCmd</handler>
-	      <command>v.db.update</command>
-	    </menuitem>
-	    <menuitem>
-	      <label>Rename column</label>
-	      <help>Renames a column in the attribute table connected to a given vector map.</help>
-	      <handler>self.OnMenuCmd</handler>
-	      <command>v.db.renamecol</command>
+	      <command>db.copy</command>
 	    </menuitem>
 	    <separator />
 	    <menuitem>
 	      <label>Test</label>
 	      <help>Test database driver, database must exist and set by db.connect.</help>
+	      <keywords>database,attribute table</keywords>
 	      <handler>self.OnMenuCmd</handler>
 	      <command>db.test</command>
 	    </menuitem>
@@ -2422,18 +2406,21 @@
 	    <menuitem>
 	      <label>Query any table</label>
 	      <help>Selects data from table.</help>
+	      <keywords>database,attribute table,SQL</keywords>
 	      <handler>self.OnMenuCmd</handler>
 	      <command>db.select</command>
 	    </menuitem>
 	    <menuitem>
 	      <label>Query vector attribute data</label>
 	      <help>Prints vector map attributes.</help>
+	      <keywords>vector,database,attribute table</keywords>
 	      <handler>self.OnMenuCmd</handler>
 	      <command>v.db.select</command>
 	    </menuitem>
 	    <menuitem>
 	      <label>SQL statement</label>
 	      <help>Executes any SQL statement.</help>
+	      <keywords>database,attribute table,SQL</keywords>
 	      <handler>self.OnMenuCmd</handler>
 	      <command>db.execute</command>
 	    </menuitem>
@@ -2444,14 +2431,68 @@
 	  <label>Vector database connections</label>
 	  <items>
 	    <menuitem>
-	      <label>Reconnect vector to database</label>
+	      <label>New table</label>
+	      <help>Creates and connects a new attribute table to a given layer of an existing vector map.</help>
+	      <keywords>vector,database,attribute table</keywords>
+	      <handler>self.OnMenuCmd</handler>
+	      <command>v.db.addtable</command>
+	    </menuitem>
+	    <menuitem>
+	      <label>Remove table</label>
+	      <help>Removes existing attribute table of a vector map.</help>
+	      <keywords>vector,database,attribute table</keywords>
+	      <handler>self.OnMenuCmd</handler>
+	      <command>v.db.droptable</command>
+	    </menuitem>
+	    <menuitem>
+	      <label>Join table</label>
+	      <help>Allows to join a table to a vector map table.</help>
+	      <keywords>vector,database,attribute table</keywords>
+	      <handler>self.OnMenuCmd</handler>
+	      <command>v.db.join</command>
+	    </menuitem>
+	    <separator />
+	    <menuitem>
+	      <label>Add columns</label>
+	      <help>Adds one or more columns to the attribute table connected to a given vector map.</help>
+	      <keywords>vector,database,attribute table</keywords>
+	      <handler>self.OnMenuCmd</handler>
+	      <command>v.db.addcol</command>
+	    </menuitem>
+	    <menuitem>
+	      <label>Drop column</label>
+	      <help>Drops a column from the attribute table connected to a given vector map.</help>
+	      <keywords>vector,database,attribute table</keywords>
+	      <handler>self.OnMenuCmd</handler>
+	      <command>v.db.dropcol</command>
+	    </menuitem>
+	    <menuitem>
+	      <label>Rename column</label>
+	      <help>Renames a column in the attribute table connected to a given vector map.</help>
+	      <keywords>vector,database,attribute table</keywords>
+	      <handler>self.OnMenuCmd</handler>
+	      <command>v.db.renamecol</command>
+	    </menuitem>
+	    <separator />
+	    <menuitem>
+	      <label>Change values</label>
+	      <help>Allows to update a column in the attribute table connected to a vector map.</help>
+	      <keywords>vector,database,attribute table</keywords>
+	      <handler>self.OnMenuCmd</handler>
+	      <command>v.db.update</command>
+	    </menuitem>
+	    <separator />
+	    <menuitem>
+	      <label>Reconnect vectors to database</label>
 	      <help>Reconnects vectors to a new database.</help>
+	      <keywords>vector,database,attribute table</keywords>
 	      <handler>self.OnMenuCmd</handler>
 	      <command>v.db.reconnect.all</command>
 	    </menuitem>
 	    <menuitem>
 	      <label>Set vector map - database connection</label>
 	      <help>Prints/sets DB connection for a vector map to attribute table.</help>
+	      <keywords>vector,database,attribute table</keywords>
 	      <handler>self.OnMenuCmd</handler>
 	      <command>v.db.connect</command>
 	    </menuitem>
