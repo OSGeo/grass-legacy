@@ -57,12 +57,12 @@ cell2stream(char* cellname, elevation_type T_max_value, long* nodata_count) {
   char *mapset;
   mapset = G_find_cell (cellname, "");
   if (mapset == NULL)
-    G_fatal_error (_("Raster map <%s> not found"), cellname);
+    G_fatal_error(_("Raster map <%s> not found"), cellname);
   
   /* open map */
   int infd;
   if ( (infd = G_open_cell_old (cellname, mapset)) < 0)
-    G_fatal_error (_("Unable to open raster map <%s>"), cellname);
+    G_fatal_error(_("Unable to open raster map <%s>"), cellname);
   
   /* determine map type (CELL/FCELL/DCELL) */
   RASTER_MAP_TYPE data_type;
@@ -82,7 +82,7 @@ cell2stream(char* cellname, elevation_type T_max_value, long* nodata_count) {
 	
 	/* read input map */
     if (G_get_raster_row (infd, inrast, i, data_type) < 0)
-      G_fatal_error (_("Unable to read raster map <%s>, row %d"),cellname, i);
+      G_fatal_error(_("Unable to read raster map <%s>, row %d"),cellname, i);
   
 	for (int j=0; j<ncols; j++) {
 
@@ -119,9 +119,9 @@ cell2stream(char* cellname, elevation_type T_max_value, long* nodata_count) {
 	  } else {
 		/* check range */
 		if ((d > (DCELL)T_max_value) || (d < (DCELL)T_min_value)) {
-		  fprintf(stderr, "reading raster map %s at (i=%d,j=%d) value=%.1f\n",
-				  cellname, i, j, d);
-		  G_fatal_error("value out of range.");
+		  G_fatal_error("Value out of range, reading raster map <%s> "
+				"at (i=%d, j=%d) value=%.1f",
+				cellname, i, j, d);
 		}
 	  }  
 	  /* write x to stream */
@@ -170,15 +170,15 @@ stream2_CELL(AMI_STREAM<T>* str, dimension_type nrows, dimension_type ncols,
   {
     char * foo;
     str->name(&foo); 
-    *stats << "writing stream " << foo << " to raster map  " << cellname << "\n";
-    fprintf(stderr, "writing stream %s to raster map %s: ", foo, cellname);
+    *stats << "Writing stream <" << foo << "> to raster map <" << cellname << ">.\n";
+    G_verbose_message(_("Writing stream <%s> to raster map <%s>"), foo, cellname);
   }
 
   /* open output raster map */
   int outfd;
-  if ( (outfd = G_open_raster_new (cellname, mtype)) < 0) {
+  if ( (outfd = G_open_raster_new (cellname, mtype)) < 0)
     G_fatal_error (_("Unable to create raster map <%s>"), cellname);
-  }
+
   
   /* Allocate output buffer */
   unsigned char *outrast;
@@ -193,8 +193,8 @@ stream2_CELL(AMI_STREAM<T>* str, dimension_type nrows, dimension_type ncols,
 	  ae = str->read_item(&elt);
 	  if (ae != AMI_ERROR_NO_ERROR) {
 		str->sprint();
-		fprintf(stderr, "reading stream failed at (%d,%d)\n", i,j);
-		G_fatal_error("stream2cell failed");
+		G_fatal_error(_("stream2cell: Reading stream failed at (%d,%d)"),
+				i, j);
 	  }
 
 	  /* WRITE VALUE */
@@ -214,7 +214,7 @@ stream2_CELL(AMI_STREAM<T>* str, dimension_type nrows, dimension_type ncols,
 
   } /* for j*/
   if (G_put_raster_row (outfd, outrast, mtype) < 0)
-    G_fatal_error ("Cannot write to <%s>",cellname);
+    G_fatal_error(_("Cannot write to <%s>"), cellname);
 
   G_percent(i, nrows, 2);
   }/* for i */
@@ -255,14 +255,14 @@ stream2_CELL(AMI_STREAM<T> *str, dimension_type nrows, dimension_type ncols,
   {
     char * foo;
     str->name(&foo); 
-    *stats << "writing stream " << foo << "cellfile  " << cellname << endl;
-    fprintf(stderr, "writing stream %s to raster map %s: ", foo, cellname);
+    *stats << "Writing stream <" << foo << "> to raster map <" << cellname << ">." << endl;
+    G_verbose_message(_("Writing stream <%s> to raster map <%s>"), foo, cellname);
   }
   
   /* open output raster map */
   int outfd;
   if ( (outfd = G_open_raster_new (cellname, CELL_TYPE)) < 0) {
-    G_fatal_error ("Could not open <%s>", cellname);
+    G_fatal_error(_("Could not open <%s>"), cellname);
   }
   
   /* Allocate output buffer */
@@ -293,7 +293,7 @@ stream2_CELL(AMI_STREAM<T> *str, dimension_type nrows, dimension_type ncols,
       
     } /* for j*/
     if (G_put_raster_row (outfd, outrast, CELL_TYPE) < 0)
-      G_fatal_error ("Cannot write to <%s>",cellname);
+      G_fatal_error(_("Cannot write to <%s>"), cellname);
 
     G_percent(i, nrows, 2);
   }/* for i */
@@ -329,14 +329,14 @@ stream2_FCELL(AMI_STREAM<T> *str, dimension_type nrows, dimension_type ncols,
   {
     char * foo;
     str->name(&foo); 
-    *stats << "writing stream " << foo << "cellfile  " << cellname << endl;
-    fprintf(stderr, "writing stream %s to raster map %s: ", foo, cellname);
+    *stats << "Writing stream <" << foo << "> to raster map <" << cellname << ">." << endl;
+    G_verbose_message(_("Writing stream <%s> to raster map <%s>"), foo, cellname);
   }
   
   /* open output raster map */
   int outfd;
   if ( (outfd = G_open_raster_new (cellname, FCELL_TYPE)) < 0) {
-    G_fatal_error ("Could not open <%s>", cellname);
+    G_fatal_error(_("Could not open <%s>"), cellname);
   }
   
   /* Allocate output buffer */
@@ -367,7 +367,7 @@ stream2_FCELL(AMI_STREAM<T> *str, dimension_type nrows, dimension_type ncols,
       
     } /* for j*/
     if (G_put_raster_row (outfd, outrast, FCELL_TYPE) < 0)
-      G_fatal_error ("Cannot write to <%s>",cellname);
+      G_fatal_error(_("Cannot write to <%s>"), cellname);
 
     G_percent(i, nrows, 2);
   }/* for i */
@@ -410,7 +410,7 @@ stream2_FCELL(AMI_STREAM<T>* str,  dimension_type nrows, dimension_type ncols,
   assert(str);
 #ifndef   OUTPUT_TCI 
   /* this function should be used only if tci is wanted as output */
-  fprintf(stderr, "use this function only if tci is wanted as output\n");
+  G_warning("Use this function only if tci is wanted as output");
   exit(1);
 #else 
   rt_start(rt); 
@@ -419,20 +419,20 @@ stream2_FCELL(AMI_STREAM<T>* str,  dimension_type nrows, dimension_type ncols,
   {
     char * foo;
     str->name(&foo); 
-    *stats << "writing stream " << foo << "to raster maps  "
-	   << cellname1 << ", " << cellname2 << endl;
-    fprintf(stderr, "writing stream %s to raster maps %s, %s: ", 
-	    foo, cellname1, cellname2);
+    *stats << "Writing stream <" << foo << "> to raster maps <"
+	   << cellname1 << "> and <" << cellname2 << ">." << endl;
+    G_verbose_message(_("Writing stream <%s> to raster maps <%s> and <%s>"), 
+		foo, cellname1, cellname2);
   }
 
   /* open  raster maps */
   int fd1;
   if ( (fd1 = G_open_raster_new (cellname1, FCELL_TYPE)) < 0) {
-    G_fatal_error ("Could not open <%s>", cellname1);
+    G_fatal_error (_("Could not open <%s>"), cellname1);
   }
   int fd2;
   if ( (fd2 = G_open_raster_new (cellname2, FCELL_TYPE)) < 0) {
-    G_fatal_error ("Could not open <%s>", cellname2);
+    G_fatal_error (_("Could not open <%s>"), cellname2);
   }
   
 
@@ -476,9 +476,9 @@ stream2_FCELL(AMI_STREAM<T>* str,  dimension_type nrows, dimension_type ncols,
     } /* for j*/
 
     if (G_put_raster_row (fd1, rast1, FCELL_TYPE) < 0)
-      G_fatal_error ("Cannot write to <%s>", cellname1);
+      G_fatal_error(_("Cannot write to <%s>"), cellname1);
     if (G_put_raster_row (fd2, rast2, FCELL_TYPE) < 0)
-      G_fatal_error ("Cannot write to <%s>", cellname2);
+      G_fatal_error(_("Cannot write to <%s>"), cellname2);
     
     G_percent(i, nrows, 2);
 
