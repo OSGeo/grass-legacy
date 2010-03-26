@@ -12,13 +12,16 @@ This program is free software under the GNU General Public
 License (>=v2). Read the file COPYING that comes with GRASS
 for details.
 
-Usage: python support/update_menudata.py
+Usage: python support/update_menudata.py [-d]
+
+ -d - dry run (prints diff, file is not updated)
 
 @author Martin Landa <landa.martin gmail.com>
 """
 
 import os
 import sys
+import tempfile
 try:
     import xml.etree.ElementTree as etree
 except ImportError:
@@ -53,16 +56,16 @@ def parseModules():
         modules[interface.name] = { 'label'   : interface.label,
                                     'desc'    : interface.description,
                                     'keywords': interface.keywords }
-    
+        
     return modules
 
 def updateData(data, modules):
     """!Update menu data tree"""
     # list of modules to be ignored
-    ignore =  [ 'v.type_wrapper.py',
-                'vcolors' ]
+    ignore = ['v.type_wrapper.py',
+              'vcolors']
     
-
+    menu_modules = list()    
     for node in data.tree.getiterator():
         if node.tag != 'menuitem':
             continue
@@ -73,7 +76,7 @@ def updateData(data, modules):
         
         if not item.has_key('command'):
             continue
-
+        
         if item['command'] in ignore:
             continue
         
@@ -87,7 +90,7 @@ def updateData(data, modules):
         else:
             desc = modules[module]['desc']
         node.find('help').text = desc
-
+        
         if not modules[module].has_key('keywords'):
             grass.warning('%s: keywords missing' % module)
         else:
@@ -96,12 +99,18 @@ def updateData(data, modules):
                 grass.warning("Adding tag 'keywords' to '%s'" % module)
             node.find('keywords').text = ','.join(modules[module]['keywords'])
         
-def writeData(data):
+        menu_modules.append(item['command'])
+    
+    for module in modules.keys():
+        if module not in menu_modules:
+            grass.warning("'%s' not available from the menu" % module)
+    
+def writeData(data, file = None):
     """!Write updated menudata.xml"""
-    file = os.path.join('xml', 'menudata.xml')
+    if file is None:
+        file = os.path.join('xml', 'menudata.xml')
+    
     try:
-        if not os.path.exists(file):
-            raise IOError
         data.tree.write(file)
     except IOError:
         print >> sys.stderr, "'%s' not found. Please run the script from 'gui/wxpython'." % file
@@ -120,26 +129,43 @@ def main(argv = None):
     if argv is None:
         argv = sys.argv
 
-    if len(argv) != 1:
+    if len(argv) > 1 and argv[1] == '-d':
+        printDiff = True
+    else:
+        printDiff = False
+
+    if len(argv) > 1 and argv[1] == '-h':
         print >> sys.stderr, __doc__
         return 1
     
-    grass.info("Step 1: parsing modules...")
+    nuldev = file(os.devnull, 'w+')
+    grass.info("Step 1: running make...")
+    grass.call(['make'], stderr = nuldev)
+    grass.info("Step 2: parsing modules...")
     modules = dict()
     modules = parseModules()
-    grass.info("Step 2: reading menu data...")
+    grass.info("Step 3: reading menu data...")
     data = menudata.Data()
-    grass.info("Step 3: updating menu data...")
+    grass.info("Step 4: updating menu data...")
     updateData(data, modules)
-    grass.info("Step 4: writing menu data (menudata.xml)...")
-    writeData(data)
     
+    if printDiff:
+        tempFile = tempfile.NamedTemporaryFile()
+        grass.info("Step 5: diff menu data...")
+        writeData(data, tempFile.name)
+        
+        grass.call(['diff', '-u',
+                    os.path.join('xml', 'menudata.xml'),
+                    tempFile.name], stderr = nuldev)
+    else:
+        grass.info("Step 5: writing menu data (menudata.xml)...")
+        writeData(data)
+        
     return 0
 
 if __name__ == '__main__':
     if os.getenv("GISBASE") is None:
-        print >> sys.stderr, "You must be in GRASS GIS to run this program."
-        sys.exit(1)
+        sys.exit("You must be in GRASS GIS to run this program.")
     
     sys.path.append(os.path.join(os.getenv("GISBASE"), 'etc', 'wxpython', 'gui_modules'))
     import menudata
