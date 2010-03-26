@@ -21,6 +21,7 @@
 #define _gras2str_H
 
 #include <grass/iostream/ami.h>
+#include <grass/glocale.h>
 #include "option.h"
 #include "types.h"
 #include "common.h"
@@ -48,12 +49,11 @@ cell2stream(char* cellname, elevation_type T_max_value, long* nodata_count) {
   { 
     char * foo;
     str->name(&foo); 
-    *stats << "reading raster map " << cellname 
-		   << "to stream " << foo << endl;
-    if (opt->verbose) 
-      fprintf(stderr, "reading data from %s to stream %s: ", cellname, foo);
+    *stats << "Reading raster map <" << cellname 
+		   << "> to stream <" << foo << ">." << endl;
+    G_verbose_message(_("Reading data from <%s> to stream <%s>"), cellname, foo);
   }
-  
+
   char *mapset;
   mapset = G_find_cell (cellname, "");
   if (mapset == NULL)
