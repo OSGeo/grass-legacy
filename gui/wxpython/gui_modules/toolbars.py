@@ -1162,7 +1162,7 @@ class VDigitToolbar(AbstractToolbar):
         
         # save changes
         if UserSettings.Get(group='vdigit', key='saveOnExit', subkey='enabled') is False:
-            if self.parent.digit.GetUndoLevel() > 0:
+            if self.parent.digit.GetUndoLevel() > -1:
                 dlg = wx.MessageDialog(parent=self.parent,
                                        message=_("Do you want to save changes "
                                                  "in vector map <%s>?") % self.mapLayer.GetName(),
