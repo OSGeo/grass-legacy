@@ -345,3 +345,19 @@ def EncodeString(string):
         return string.encode(enc)
     
     return string
+
+def UnicodeString(string):
+    """!Return unicode string
+    
+    @param string string to be converted
+    
+    @return unicode string
+    """
+    if isinstance(string, unicode):
+        return string
+    
+    enc = locale.getdefaultlocale()[1]
+    if enc:
+        return unicode(string, enc)
+    
+    return string
