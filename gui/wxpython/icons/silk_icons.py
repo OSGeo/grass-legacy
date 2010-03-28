@@ -8,6 +8,8 @@ __version__ = "1.3"
 
 import os
 
+import wx
+
 import globalvar
 
 iconpath = os.path.join(globalvar.ETCDIR, "gui", "icons", "silk")
@@ -106,4 +108,5 @@ IconsSilk = {
     "nvizSettings"   : 'color_swatch.png',
     # modeler
     "modelActionAdd" : wx.ART_ERROR,
+    "modelDataAdd"   : wx.ART_ERROR,
     }

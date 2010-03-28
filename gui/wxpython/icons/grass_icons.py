@@ -107,4 +107,5 @@ IconsGrass = {
     "nvizSettings" : 'edit-color.gif',  
     # modeler
     "modelActionAdd" : wx.ART_ERROR,
+    "modelDataAdd"   : wx.ART_ERROR,
     }
