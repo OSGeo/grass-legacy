@@ -20,6 +20,7 @@ This program is free software under the GNU General Public License
 """
 
 import os
+import sys
 import shlex
 import time
 import traceback
@@ -45,8 +46,6 @@ from   debug import Debug
 from   gcmd import GMessage
 
 from grass.script import core as grass
-
-debug = False
 
 class ModelFrame(wx.Frame):
     def __init__(self, parent, id = wx.ID_ANY, title = _("Graphical modeler (under development)"), **kwargs):
@@ -118,17 +117,12 @@ class ModelFrame(wx.Frame):
     def OnModelOpen(self, event):
         """!Load model from file"""
         filename = ''
-        global debug
-        if debug is False:
-            dlg = wx.FileDialog(parent = self, message=_("Choose model file"),
-                                defaultDir = os.getcwd(),
-                                wildcard=_("GRASS Model File (*.gxm)|*.gxm"))
-            if dlg.ShowModal() == wx.ID_OK:
-                filename = dlg.GetPath()
-        
-        else:
-            filename = '/home/martin/model1.gxm'
-            
+        dlg = wx.FileDialog(parent = self, message=_("Choose model file"),
+                            defaultDir = os.getcwd(),
+                            wildcard=_("GRASS Model File (*.gxm)|*.gxm"))
+        if dlg.ShowModal() == wx.ID_OK:
+            filename = dlg.GetPath()
+                    
         if not filename:
             return
         
@@ -162,19 +156,16 @@ class ModelFrame(wx.Frame):
         
     def OnModelSaveAs(self, event):
         """!Create model to file as"""
-        global debug
-        if debug is False:
-            dlg = wx.FileDialog(parent = self,
-                                message = _("Choose file to save current model"),
-                                defaultDir = os.getcwd(),
-                                wildcard=_("GRASS Model File (*.gxm)|*.gxm"),
-                                style=wx.FD_SAVE)
-            
-            filename = ''
-            if dlg.ShowModal() == wx.ID_OK:
-                filename = dlg.GetPath()
-        else:
-            filename = '/home/martin/model1.gxm'
+        filename = ''
+        dlg = wx.FileDialog(parent = self,
+                            message = _("Choose file to save current model"),
+                            defaultDir = os.getcwd(),
+                            wildcard=_("GRASS Model File (*.gxm)|*.gxm"),
+                            style=wx.FD_SAVE)
+        
+        
+        if dlg.ShowModal() == wx.ID_OK:
+            filename = dlg.GetPath()
         
         if not filename:
             return
@@ -215,22 +206,18 @@ class ModelFrame(wx.Frame):
 
     def OnAddAction(self, event):
         """!Add action to model"""
-        global debug
-        if debug == False:
-            if self.searchDialog is None:
-                self.searchDialog = ModelSearchDialog(self)
-                self.searchDialog.CentreOnParent()
-            else:
-                self.searchDialog.Reset()
-            
-            if self.searchDialog.ShowModal() == wx.ID_CANCEL:
-                self.searchDialog.Hide()
-                return
-            
-            cmd = self.searchDialog.GetCmd()
-            self.searchDialog.Hide()
+        if self.searchDialog is None:
+            self.searchDialog = ModelSearchDialog(self)
+            self.searchDialog.CentreOnParent()
         else:
-            cmd = ['r.buffer']
+            self.searchDialog.Reset()
+            
+        if self.searchDialog.ShowModal() == wx.ID_CANCEL:
+            self.searchDialog.Hide()
+            return
+            
+        cmd = self.searchDialog.GetCmd()
+        self.searchDialog.Hide()
         
         # add action to canvas
         width, height = self.canvas.GetSize()
@@ -276,7 +263,7 @@ class ModelFrame(wx.Frame):
     def GetOptData(self, dcmd, layer, params, propwin):
         """!Process action data"""
         layer.SetProperties(dcmd, params, propwin)
-        
+            
         if params: # add data items
             width, height = self.canvas.GetSize()
             x = [width/2 + 200, width/2 - 200]
@@ -447,8 +434,8 @@ class ModelAction(ogl.RectangleShape):
 
     def SetProperties(self, dcmd, params, propwin):
         """!Record properties dialog"""
-        self.cmd     = dcmd
-        self.params  = params
+        self.cmd = dcmd
+        self.params = params
         self.propWin = propwin
 
     def GetPropDialog(self):
@@ -899,6 +886,8 @@ class WriteModelFile:
 def main():
     app = wx.PySimpleApp()
     frame = ModelFrame(parent = None)
+    if len(sys.argv) > 1:
+        frame.LoadModelFile(sys.argv[1])
     # frame.CentreOnScreen()
     frame.Show()
     

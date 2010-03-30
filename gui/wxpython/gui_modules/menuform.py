@@ -872,7 +872,7 @@ class mainFrame(wx.Frame):
         if cmd is not None and self.get_dcmd is not None:
             # return d.* command to layer tree for rendering
             self.get_dcmd(cmd, self.layer, {"params": self.task.params, 
-                                            "flags" :self.task.flags},
+                                            "flags" : self.task.flags},
                           self)
             # echo d.* command to output console
             # self.parent.writeDCommand(cmd)
@@ -946,7 +946,7 @@ class mainFrame(wx.Frame):
                 self.parent.Delete(self.layer)
                 self.Destroy()
         elif self.parent and self.parent.GetName() == 'Modeler':
-            self.Hide()
+            self.Destroy()
         else:
             # cancel for non-display commands
             self.Destroy()
