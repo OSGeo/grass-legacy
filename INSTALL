@@ -47,14 +47,14 @@ that you do not need root access to run `make', and in fact it is HIGHLY
 recommended that you do not compile GRASS as the root user. At this point
 you should be able to run grass by typing
 
-	bin.$ARCH/grass5
+	bin.$ARCH/grass55
 
 where $ARCH is a reference to your machine (eg mips-sgi-irix6.5 - is an
 SGI machine running IRIX 6.5). Running `ls' will show you the appropriate
 name for your system.
 
 The `make install' command should install GRASS in the main filesystem. By
-default, the majority of the GRASS files are stored under /usr/local/grass5,
+default, the majority of the GRASS files are stored under /usr/local/grass55,
 while a few user executable files (eg. the GRASS executable) are stored
 under /usr/local/bin. These directories are typically only writable by user
 'root'. Thus, you will probably need to have root access if you use the
@@ -66,18 +66,18 @@ If you want to change the default locations, use a sequence like this:
         make
 	make install
 
-Here the default directories have been changed to /opt/grass5 for most of
+Here the default directories have been changed to /opt/grass55 for most of
 the GRASS files, and /local/grass/bin for the executable files. If you had
 not specified --bindir then the bindir would have been /opt/bin. See the
 configure options below for more information.
 
 At this point the system should be installed and ready to run by typing
-grass5, with a few known exceptions (see below).  If you identify problems
+grass55, with a few known exceptions (see below).  If you identify problems
 (e.g., system dependencies not already accounted for by `configure') please
 pass along the relevant information (e.g., operating system, dependency
 information, and ideally a fix) so the configuration system can be
 fixed. Please see information about our bug report page at
-http://grass.itc.it/grass5/index.html
+http://grass.osgeo.org/grass55/
 
 If you want to catch the compiler output into a file, modify the above
 "make" call. For sh or bash shells
@@ -102,10 +102,10 @@ STARTING GRASS
 
 Ensure that the path to grass is in your PATH environment or
 start grass with the full path name.  To start grass:
-  grass53
+  grass55
 
 Usage:
-  grass53 [-h | -help | --help] [-text | -tcltk | -gui] [[[<GISDBASE>/]<LOCATION_NAME>/]<MAPSET>]
+  grass55 [-h | -help | --help] [-text | -tcltk | -gui] [[[<GISDBASE>/]<LOCATION_NAME>/]<MAPSET>]
 
 Flags:
   -h or -help or --help          print this help message
@@ -291,9 +291,9 @@ make savebinclean    	- delete object files, next step file, the binary
    	    	    	  configure files, and Makefile - good for deleting
    	    	    	  everything but the binary files
 make uninstall		- deletes the installation files, by default
-			  /usr/local/grass5, /usr/local/bin/grass5, 
-			  /usr/local/bin/gmake5, and
-			  /usr/local/bin/gmakelinks5. This option does not
+			  /usr/local/grass55, /usr/local/bin/grass55, 
+			  /usr/local/bin/gmake55, and
+			  /usr/local/bin/gmakelinks55. This option does not
 			  delete any files that were compiled only the 
 			  installation files. You may need root access for
 			  this option.
@@ -301,16 +301,16 @@ make uninstall		- deletes the installation files, by default
 
 COMPILING MODULES NOT COMPILED BY DEFAULT (INDIVIDUAL MODULES)
 
-As part of the installation a general "gmake5" script is created in
+As part of the installation a general "gmake55" script is created in
 /usr/local/bin (default) which allows you to compile modules separately.
 
 To compile a single module go into the module's directory and compile it with:
 
-   gmake5
+   gmake55
 
 Then the module has to be linked to the GRASS front.end by:
   
-   gmakelinks5
+   gmakelinks55
 
 Finally you have to install it:
 
@@ -319,52 +319,51 @@ a) either with a full installation:
    make install
 
 b) simplified you can also install just this module:
-   gmake5 -i
-   gmakelinks5 -i
+   gmake55 -i
+   gmakelinks55 -i
 
-Then you should be able to use the module. Note that gmakelinks5 only needs
+Then you should be able to use the module. Note that gmakelinks55 only needs
 to be run once after the module is compiled, but you always need to run the
 make install procedure (full installation or using the "-i" flag). 
-This will be finally improved in GRASS 5.1.
+This will be finally improved in later GRASS versions.
 
-If you never run "make install" then gmake5 and gmakelinks5 will be located
+If you never run "make install" then gmake55 and gmakelinks55 will be located
 in the bin.$ARCH/ directory. Note that you will have to specify the absolute 
 path to these executables in order to run them. For example
     
-    /home/grass/bin.i686-pc-linux-gnu/gmake5
-    /home/grass/bin.i686-pc-linux-gnu/gmakelinks5
+    /home/grass/bin.i686-pc-linux-gnu/gmake55
+    /home/grass/bin.i686-pc-linux-gnu/gmakelinks55
 
 If you want to compile your own modules then please see the "SUBMITTING" file
 for instructions regarding programming and submitting GRASS modules.
 
-To save the gmake5/compiler related messages into a file, use the following
+To save the gmake55/compiler related messages into a file, use the following
 call for sh or bash shells:
 
-	gmake5 2>&1 | tee gmake5.log
+	gmake55 2>&1 | tee gmake55.log
 	
 or for csh or tcsh shells:
 
-	gmake5 | & tee gmake5.log
+	gmake55 | & tee gmake55.log
 
 The tee command sends output to both the terminal and the specified file
-so you will still be able to see the output of gmake5.
+so you will still be able to see the output of gmake55.
 
 
 THINGS TO DO
 
 A major task remaining is to replace the GISGEN system with a
 proper set of Makefiles, all of which include a common one containing
-the system dependencies (scheduled and started for GRASS 5.1).
-GRASS 5.1 is in /grass51 in CVS.
+the system dependencies (scheduled and started for GRASS 6.0).
 
 
 UNINSTALLING GRASS
 
 Uninstallation of GRASS binaries is pretty simple (example for installation
-in /usr/local/grass5):
+in /usr/local/grass55):
 
-	rm -rf /usr/local/grass5
-	rm -f /usr/local/bin/{grass5,gmake5,gmakelinks5}
+	rm -rf /usr/local/grass55
+	rm -f /usr/local/bin/{grass55,gmake55,gmakelinks55}
 
 should suffice.
 
@@ -386,7 +385,7 @@ Unfortunately, any LZW compressed G3D files must be dumped with
 r3.out.ascii, and then reimported.
 
 The GRASS 5.0 team apologizes for this inconvenience. See also:
-http://grass.itc.it/announces/announce_lzw_removal.html
+http://grass.osgeo.org/announces/announce_lzw_removal.html
 
 
 GRASS Development Team

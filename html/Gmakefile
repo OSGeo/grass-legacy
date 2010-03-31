@@ -50,7 +50,7 @@ htmlpages:
 	@test -d $(GRASS_HTMLDIR) || mkdir -p $(GRASS_HTMLDIR)
 	@test -d $(GRASS_HTMLDIR)/html || mkdir -p $(GRASS_HTMLDIR)/html
 	@echo Copying html module pages
-	@(for h in `find $(HTML_DIR) *.html *.gif | grep -v /CVS`; \
+	@(for h in `find $(HTML_DIR) *.html *.gif | grep -v '\.svn'`; \
 	  do \
 	  	test -d $$h && continue; \
 		f=`echo $$h | sed 's@^@$(GRASS_HTMLDIR)/@;'`; \
