@@ -4124,11 +4124,11 @@ msgstr "länger als"
 
 #: ../gui/wxpython/gui_modules/vdigit.py:1366
 msgid "dangle"
-msgstr "loses Ende"
+msgstr "Überstand (dangle)"
 
 #: ../gui/wxpython/gui_modules/vdigit.py:1371
 msgid "Select dangles"
-msgstr "Selektiere lose Enden"
+msgstr "Selektiere Überstände (dangles)"
 
 #: ../gui/wxpython/gui_modules/vdigit.py:1411
 msgid "Digitize new feature"
