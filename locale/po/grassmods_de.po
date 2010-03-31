@@ -3218,23 +3218,20 @@ msgstr ""
 "Kategoriewerte, die für die Maske verwendet werden (Format: 1 2 3 thru 7 *)."
 
 #: ../locale/scriptstrings/r.mask_to_translate.c:7
-#, fuzzy
 msgid "Create inverse mask from specified 'maskcats' list"
-msgstr "Erzeuge eine inverse Maske aus der angegebenen 'maskcats' Liste."
+msgstr "Erzeuge eine inverse Maske aus der angegebenen 'maskcats' Liste"
 
 #: ../locale/scriptstrings/r.mask_to_translate.c:9
 msgid "Overwrite existing MASK"
 msgstr "Überschreibe existierende Maske (MASK)."
 
 #: ../locale/scriptstrings/r.mask_to_translate.c:10
-#, fuzzy
 msgid "Remove existing mask (overrides other options)"
-msgstr "Entferne existierende Maske (MASK). Übersteuert andere Optionen."
+msgstr "Entferne existierende Maske (MASK). Übersteuert andere Optionen"
 
 #: ../locale/scriptstrings/r.mask_to_translate.c:11
-#, fuzzy
 msgid "Remove"
-msgstr "Entferne lose Enden"
+msgstr "Entferne"
 
 #: ../locale/scriptstrings/r.out.gdal.sh_to_translate.c:1
 msgid "Exports GRASS raster into GDAL supported formats."

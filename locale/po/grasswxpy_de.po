@@ -4613,7 +4613,7 @@ msgstr "loses Ende"
 
 #: ../gui/wxpython/gui_modules/vdigit.py:1426
 msgid "Select dangles"
-msgstr "Selektiere lose Enden"
+msgstr "Selektiere Überstände (dangles)"
 
 #: ../gui/wxpython/gui_modules/vdigit.py:1466
 msgid "Digitize new feature"
