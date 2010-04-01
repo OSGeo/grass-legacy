@@ -50,85 +50,54 @@ N_les *create_solve_les(N_geom_data * geom, N_gwflow_data2d * data,
 /* ************************************************************************* */
 void set_params(void)
 {
-    param.phead = G_define_option();
+    param.phead =  G_define_standard_option(G_OPT_R_INPUT);
     param.phead->key = "phead";
-    param.phead->type = TYPE_STRING;
-    param.phead->required = YES;
-    param.phead->gisprompt = "old,raster,raster";
     param.phead->description = _("The initial piezometric head in [m]");
 
-    param.status = G_define_option();
+    param.status =  G_define_standard_option(G_OPT_R_INPUT);
     param.status->key = "status";
-    param.status->type = TYPE_STRING;
-    param.status->required = YES;
-    param.status->gisprompt = "old,raster,raster";
     param.status->description =
 	_("Boundary condition status, 0-inactive, 1-active, 2-dirichlet");
 
-    param.hc_x = G_define_option();
+    param.hc_x =  G_define_standard_option(G_OPT_R_INPUT);
     param.hc_x->key = "hc_x";
-    param.hc_x->type = TYPE_STRING;
-    param.hc_x->required = YES;
-    param.hc_x->gisprompt = "old,raster,raster";
     param.hc_x->description =
 	_("X-part of the hydraulic conductivity tensor in [m/s]");
 
-    param.hc_y = G_define_option();
+    param.hc_y =  G_define_standard_option(G_OPT_R_INPUT);
     param.hc_y->key = "hc_y";
-    param.hc_y->type = TYPE_STRING;
-    param.hc_y->required = YES;
-    param.hc_y->gisprompt = "old,raster,raster";
     param.hc_y->description =
 	_("Y-part of the hydraulic conductivity tensor in [m/s]");
 
-    param.q = G_define_option();
+    param.q =  G_define_standard_option(G_OPT_R_INPUT);
     param.q->key = "q";
-    param.q->type = TYPE_STRING;
-    param.q->required = NO;
-    param.q->gisprompt = "old,raster,raster";
     param.q->description = _("Water sources and sinks in [m^3/s]");
 
-    param.s = G_define_option();
+    param.s =  G_define_standard_option(G_OPT_R_INPUT);
     param.s->key = "s";
-    param.s->type = TYPE_STRING;
-    param.s->required = YES;
-    param.s->gisprompt = "old,raster,raster";
     param.s->description = _("Specific yield in [1/m]");
 
-    param.r = G_define_option();
+    param.r =  G_define_standard_option(G_OPT_R_INPUT);
     param.r->key = "r";
-    param.r->type = TYPE_STRING;
-    param.r->required = NO;
-    param.r->gisprompt = "old,raster,raster";
+    param.r->guisection = _("Recharge");
     param.r->description =
 	_("Recharge map e.g: 6*10^-9 per cell in [m^3/s*m^2]");
 
-    param.top = G_define_option();
+    param.top =  G_define_standard_option(G_OPT_R_INPUT);
     param.top->key = "top";
-    param.top->type = TYPE_STRING;
-    param.top->required = YES;
-    param.top->gisprompt = "old,raster,raster";
     param.top->description = _("Top surface of the aquifer in [m]");
 
-    param.bottom = G_define_option();
+    param.bottom =  G_define_standard_option(G_OPT_R_INPUT);
     param.bottom->key = "bottom";
-    param.bottom->type = TYPE_STRING;
-    param.bottom->required = YES;
-    param.bottom->gisprompt = "old,raster,raster";
     param.bottom->description = _("Bottom surface of the aquifer in [m]");
 
-    param.output = G_define_option();
+    param.output =  G_define_standard_option(G_OPT_R_OUTPUT);
     param.output->key = "output";
-    param.output->type = TYPE_STRING;
-    param.output->required = YES;
-    param.output->gisprompt = "new,raster,raster";
     param.output->description = _("The map storing the numerical result [m]");
 
-    param.vector = G_define_option();
+    param.vector = G_define_standard_option(G_OPT_R_OUTPUT);
     param.vector->key = "velocity";
-    param.vector->type = TYPE_STRING;
     param.vector->required = NO;
-    param.vector->gisprompt = "new,raster,raster";
     param.vector->description =
 	_("Calculate the groundwater filter velocity vector field [m/s]\n"
 	  "and write the x, and y components to maps named name_[xy]");
@@ -142,41 +111,36 @@ void set_params(void)
     param.type->description = _("The type of groundwater flow");
 
     /*Variants of the cauchy boundary condition */
-    param.river_bed = G_define_option();
+    param.river_bed =  G_define_standard_option(G_OPT_R_INPUT);
     param.river_bed->key = "river_bed";
-    param.river_bed->type = TYPE_STRING;
+    param.river_bed->guisection = "River";
     param.river_bed->required = NO;
-    param.river_bed->gisprompt = "old,raster,raster";
     param.river_bed->description = _("The height of the river bed in [m]");
 
-    param.river_head = G_define_option();
+    param.river_head =  G_define_standard_option(G_OPT_R_INPUT);
     param.river_head->key = "river_head";
-    param.river_head->type = TYPE_STRING;
+    param.river_head->guisection = "River";
     param.river_head->required = NO;
-    param.river_head->gisprompt = "old,raster,raster";
     param.river_head->description =
 	_("Water level (head) of the river with leakage connection in [m]");
 
-    param.river_leak = G_define_option();
+    param.river_leak =  G_define_standard_option(G_OPT_R_INPUT);
     param.river_leak->key = "river_leak";
-    param.river_leak->type = TYPE_STRING;
+    param.river_leak->guisection = "River";
     param.river_leak->required = NO;
-    param.river_leak->gisprompt = "old,raster,raster";
     param.river_leak->description =
 	_("The leakage coefficient of the river bed in [1/s].");
 
-    param.drain_bed = G_define_option();
-    param.drain_bed->key = "drain_bed";
-    param.drain_bed->type = TYPE_STRING;
+    param.drain_bed =  G_define_standard_option(G_OPT_R_INPUT);
+    param.drain_bed->key = "drain_bed";;
+    param.drain_bed->guisection = "Drainage";
     param.drain_bed->required = NO;
-    param.drain_bed->gisprompt = "old,raster,raster";
     param.drain_bed->description = _("The height of the drainage bed in [m]");
 
-    param.drain_leak = G_define_option();
+    param.drain_leak =  G_define_standard_option(G_OPT_R_INPUT);
     param.drain_leak->key = "drain_leak";
-    param.drain_leak->type = TYPE_STRING;
+    param.drain_leak->guisection = "Drainage";
     param.drain_leak->required = NO;
-    param.drain_leak->gisprompt = "old,raster,raster";
     param.drain_leak->description =
 	_("The leakage coefficient of the drainage bed in [1/s]");
 
@@ -188,6 +152,7 @@ void set_params(void)
 
     param.sparse = G_define_flag();
     param.sparse->key = 's';
+    param.sparse->guisection = "Solver";
     param.sparse->description =
 	_("Use a sparse matrix, only available with iterative solvers");
 
@@ -229,6 +194,11 @@ int main(int argc, char *argv[])
 
     if (G_parser(argc, argv))
 	exit(EXIT_FAILURE);
+
+    /* Make sure that the current projection is not lat/long */
+    if ((G_projection() == PROJECTION_LL))
+	G_fatal_error(_("Lat/Long location is not supported by %s. Please reproject map first."),
+		      G_program_name());
 
 
     /*Check the river  parameters */
@@ -351,7 +321,7 @@ int main(int argc, char *argv[])
     /* Set the inactive values to zero, to assure a no flow boundary */
     for (y = 0; y < geom->rows; y++) {
 	for (x = 0; x < geom->cols; x++) {
-	    stat = (int)N_get_array_2d_d_value(data->status, x, y);
+	    stat = N_get_array_2d_c_value(data->status, x, y);
 	    if (stat == N_CELL_INACTIVE) {	/*only inactive cells */
 		N_put_array_2d_d_value(data->hc_x, x, y, 0);
 		N_put_array_2d_d_value(data->hc_y, x, y, 0);
@@ -360,7 +330,6 @@ int main(int argc, char *argv[])
 	    }
 	}
     }
-
 
     /*assemble the linear equation system  and solve it */
     les = create_solve_les(geom, data, call, solver, maxit, error, sor);
@@ -489,7 +458,7 @@ copy_result(N_array_2d * status, N_array_2d * phead_start, double *result,
     for (y = 0; y < rows; y++) {
 	G_percent(y, rows - 1, 10);
 	for (x = 0; x < cols; x++) {
-	    stat = (int)N_get_array_2d_d_value(status, x, y);
+	    stat = N_get_array_2d_c_value(status, x, y);
 	    if (stat == N_CELL_ACTIVE) {	/*only active cells */
 		d1 = result[count];
 		val = (DCELL) d1;

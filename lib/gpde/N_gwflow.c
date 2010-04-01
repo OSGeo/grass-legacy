@@ -154,7 +154,7 @@ N_gwflow_data2d *N_alloc_gwflow_data2d(int cols, int rows, int river,
 
     data->phead = N_alloc_array_2d(cols, rows, 1, DCELL_TYPE);
     data->phead_start = N_alloc_array_2d(cols, rows, 1, DCELL_TYPE);
-    data->status = N_alloc_array_2d(cols, rows, 1, DCELL_TYPE);
+    data->status = N_alloc_array_2d(cols, rows, 1, CELL_TYPE);
     data->hc_x = N_alloc_array_2d(cols, rows, 1, DCELL_TYPE);
     data->hc_y = N_alloc_array_2d(cols, rows, 1, DCELL_TYPE);
     data->q = N_alloc_array_2d(cols, rows, 1, DCELL_TYPE);
