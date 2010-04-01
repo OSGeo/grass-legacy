@@ -260,6 +260,19 @@ class ModelFrame(wx.Frame):
         grass.run_command('g.manual',
                           entry = 'wxGUI.Modeler')
 
+    def OnAbout(self, event):
+        """!Display About window"""
+        info = wx.AboutDialogInfo()
+
+        info.SetIcon(wx.Icon(os.path.join(globalvar.ETCICONDIR, 'grass.ico'), wx.BITMAP_TYPE_ICO))
+        info.SetName(_('wxGUI Graphical Modeler'))
+        info.SetWebSite('http://grass.osgeo.org')
+        info.SetDescription(_('(C) 2010 by the GRASS Development Team\n\n'
+                              'This program is free software under the GNU General Public License'
+                              '(>=v2). Read the file COPYING that comes with GRASS for details.'))
+        
+        wx.AboutBox(info)
+        
     def GetOptData(self, dcmd, layer, params, propwin):
         """!Process action data"""
         layer.SetProperties(dcmd, params, propwin)
@@ -398,7 +411,7 @@ class ModelFrame(wx.Frame):
         file.close()
         
         return True
-
+    
 class ModelCanvas(ogl.ShapeCanvas):
     """!Canvas where model is drawn"""
     def __init__(self, parent):
