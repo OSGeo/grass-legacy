@@ -74,6 +74,11 @@ from wx.lib.expando import ExpandoTextCtrl, EVT_ETC_LAYOUT_NEEDED
 from wx.lib.newevent import NewEvent
 
 try:
+    import wx.lib.agw.floatspin as FS
+except ImportError:
+    FS = None
+
+try:
     import xml.etree.ElementTree as etree
 except ImportError:
     import elementtree.ElementTree as etree # Python <= 2.4
@@ -1204,7 +1209,7 @@ class cmdPanel(wx.Panel):
                         title_txt.SetLabel("%s. %s %s" % (title, _('Valid range'),
                                                           str(valuelist[0]) + ':'))
                         
-                        if p.get('type','') == 'integer' and \
+                        if p.get('type', '') == 'integer' and \
                                 p.get('multiple','no') == 'no':
 
                             # for multiple integers use textctrl instead of spinsctrl
@@ -1256,7 +1261,7 @@ class cmdPanel(wx.Panel):
 
                 title_txt.SetLabel(title + ':' )
                 if p.get('multiple','yes') == 'yes' or \
-                        p.get('type', 'string') in ('string', 'float') or \
+                        p.get('type', 'string') == 'string' or \
                         len(p.get('key_desc', [])) > 1:
                     txt3 = wx.TextCtrl(parent=which_panel, value = p.get('default',''))
                     
@@ -1268,15 +1273,35 @@ class cmdPanel(wx.Panel):
                 else:
                     minValue = -1e9
                     maxValue = 1e9
-                    txt3 = wx.SpinCtrl(parent=which_panel, value=p.get('default',''),
-                                       size=globalvar.DIALOG_SPIN_SIZE,
-                                       min=minValue, max=maxValue)
-                    if p.get('value','') != '':
-                        txt3.SetValue(int(p['value'])) # parameter previously set
-
-                    txt3.Bind(wx.EVT_SPINCTRL, self.OnSetValue)
-                    txt3.Bind(wx.EVT_TEXT, self.OnSetValue)
-                    style = wx.BOTTOM | wx.LEFT | wx.RIGHT
+                    if p.get('type', '') == 'integer':
+                        txt3 = wx.SpinCtrl(parent=which_panel, value=p.get('default',''),
+                                           size=globalvar.DIALOG_SPIN_SIZE,
+                                           min=minValue, max=maxValue)
+                        style = wx.BOTTOM | wx.LEFT | wx.RIGHT
+                        
+                        if p.get('value', '') != '':
+                            txt3.SetValue(int(p['value'])) # parameter previously set
+                        
+                        txt3.Bind(wx.EVT_SPINCTRL, self.OnSetValue)
+                    elif FS:
+                        txt3 = FS.FloatSpin(parent = which_panel, id = wx.ID_ANY,
+                                            size = globalvar.DIALOG_SPIN_SIZE,
+                                            min_val = minValue, max_val = maxValue)
+                        txt3.SetDigits(3)
+                        style = wx.BOTTOM | wx.LEFT | wx.RIGHT
+                        
+                        if p.get('value', '') != '':
+                            txt3.SetValue(float(p['value'])) # parameter previously set
+                        
+                        txt3.Bind(FS.EVT_FLOATSPIN, self.OnSetValue)
+                    else:
+                        txt3 = wx.TextCtrl(parent=which_panel, value = p.get('default',''))
+                        style = wx.EXPAND | wx.BOTTOM | wx.LEFT | wx.RIGHT
+                        
+                        if p.get('value', '') != '':
+                            txt3.SetValue(str(p['value'])) # parameter previously set
+                    
+                txt3.Bind(wx.EVT_TEXT, self.OnSetValue)
                 
                 which_sizer.Add(item=txt3, proportion=0,
                                 flag=style, border=5)
@@ -1650,10 +1675,11 @@ class cmdPanel(wx.Panel):
         self.OnUpdateValues()
 
     def OnSetValue(self, event):
-        """
-        Retrieve the widget value and set the task value field accordingly.
-
-        Use for widgets that have a proper GetValue() method, i.e. not for selectors.
+        """!Retrieve the widget value and set the task value field
+        accordingly.
+        
+        Use for widgets that have a proper GetValue() method, i.e. not
+        for selectors.
         """
         myId = event.GetId()
         me = wx.FindWindowById( myId )
