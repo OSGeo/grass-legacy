@@ -1,25 +1,21 @@
 
-/******************************************************************************
-* hull.c <s.hull>
-* Creates the convex hull surrounding a sites list
-
-* @Copyright Andrea Aime <aaime@libero.it>
-* 23 Sept. 2001
-* Updated 19 Dec 2003, Markus Neteler to 5.7
-* Last updated 16 jan 2007, Benjamin Ducke to support 3D hull creation
-
-* This file is part of GRASS GIS. It is free software. You can
-* redistribute it and/or modify it under the terms of
-* the GNU General Public License as published by the Free Software
-* Foundation; either version 2 of the License, or (at your option)
-* any later version.
-
-* This program is distributed in the hope that it will be useful,
-* but WITHOUT ANY WARRANTY; without even the implied warranty of
-* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-* GNU General Public License for more details.
-******************************************************************************/
-
+/***************************************************************
+ *
+ * MODULE:       v.hull (based s.hull)
+ * 
+ * AUTHOR(S):    Andrea Aime <aaime@libero.it>
+ *               Updated by Markus Neteler to 5.7
+ *               Updated by Benjamin Ducke to support 3D hull creation
+ *               
+ * PURPOSE:      Creates the convex hull surrounding a vector points
+ *               
+ * COPYRIGHT:    (C) 2001, 2010 by the GRASS Development Team
+ *
+ *               This program is free software under the GNU General
+ *               Public License (>=v2).  Read the file COPYING that
+ *               comes with GRASS for details.
+ *
+ **************************************************************/
 
 #include <stdlib.h>
 #include <stdio.h>
@@ -89,13 +85,10 @@ int convexHull(struct Point *P, const int numPoints, int **hull)
 	}
     }
 
-    /*
-       printf("upPoints: %d\n", upPoints);
-       for(pointIdx = 0; pointIdx <= upPoints; pointIdx ++)
-       printf("%d ", upHull[pointIdx]);
-       printf("\n");
-     */
-
+    G_debug(3, "upPoints: %d", upPoints);
+    for(pointIdx = 0; pointIdx <= upPoints; pointIdx++)
+	G_debug(5, " %d", upHull[pointIdx]);
+    
     /* compute lower hull, overwrite last point of upper hull */
     loHull = &(upHull[upPoints]);
     loHull[0] = numPoints - 1;
@@ -115,23 +108,17 @@ int convexHull(struct Point *P, const int numPoints, int **hull)
 
     G_debug(3, "numPoints:%d loPoints:%d upPoints:%d",
 	    numPoints, loPoints, upPoints);
-    /*
-       printf("loPoints: %d\n", loPoints);
-       for(pointIdx = 0; pointIdx <= loPoints; pointIdx ++)
-       printf("%d ", loHull[pointIdx]);
-       printf("\n");
-     */
 
+    for (pointIdx = 0; pointIdx <= loPoints; pointIdx++) 
+	G_debug(5, " %d", loHull[pointIdx]);
+    
     /* reclaim uneeded memory */
     *hull = (int *)G_realloc(*hull, (loPoints + upPoints) * sizeof(int));
     return loPoints + upPoints;
 }
 
-
-
 void convexHull3d(struct Point *P, const int numPoints, struct Map_info *Map)
 {
-
     int error;
     int i;
     double *px;
@@ -151,9 +138,9 @@ void convexHull3d(struct Point *P, const int numPoints, struct Map_info *Map)
     /* make 3D hull */
     error = make3DHull(px, py, pz, numPoints, Map);
     if (error < 0) {
-	G_fatal_error("Simple planar hulls not implemented yet");
+	G_fatal_error(_("Simple planar hulls not implemented yet"));
     }
-
+    
     G_free(px);
     G_free(py);
     G_free(pz);
@@ -164,7 +151,7 @@ void convexHull3d(struct Point *P, const int numPoints, struct Map_info *Map)
 int loadSiteCoordinates(struct Map_info *Map, struct Point **points, int all,
 			struct Cell_head *window)
 {
-    int pointIdx = 0;
+    int i, pointIdx;
     struct line_pnts *sites;
     struct line_cats *cats;
     BOUND_BOX box;
@@ -174,35 +161,34 @@ int loadSiteCoordinates(struct Map_info *Map, struct Point **points, int all,
     cats = Vect_new_cats_struct();
 
     *points = NULL;
-
+    pointIdx = 0;
+    
     /* copy window to box */
     Vect_region_box(window, &box);
 
     while ((type = Vect_read_next_line(Map, sites, cats)) > -1) {
 
-	if (type != GV_POINT)
+	if (type != GV_POINT && !(type & GV_LINES))
 	    continue;
-
+	
 	Vect_cat_get(cats, 1, &cat);
-
-	G_debug(4, "Point: %f|%f|%f|#%d", sites->x[0], sites->y[0],
-		sites->z[0], cat);
-
-	if (all ||
-	    Vect_point_in_box(sites->x[0], sites->y[0], sites->z[0], &box)) {
-
+	
+	for (i = 0; i < sites->n_points; i++) {
+	    G_debug(4, "Point: %f|%f|%f|#%d", sites->x[i], sites->y[i],
+		    sites->z[i], cat);
+	    
+	    if (!all && !Vect_point_in_box(sites->x[i], sites->y[i], sites->z[i], &box))
+		continue;
+	    
 	    G_debug(4, "Point in the box");
 
 	    if ((pointIdx % ALLOC_CHUNK) == 0)
-		*points =
-		    (struct Point *)G_realloc(*points,
-					      (pointIdx +
-					       ALLOC_CHUNK) *
-					      sizeof(struct Point));
-
-	    (*points)[pointIdx].x = sites->x[0];
-	    (*points)[pointIdx].y = sites->y[0];
-	    (*points)[pointIdx].z = sites->z[0];
+		*points = (struct Point *) G_realloc(*points,
+						     (pointIdx + ALLOC_CHUNK) * sizeof(struct Point));
+	    
+	    (*points)[pointIdx].x = sites->x[i];
+	    (*points)[pointIdx].y = sites->y[i];
+	    (*points)[pointIdx].z = sites->z[i];
 	    pointIdx++;
 	}
     }
@@ -281,20 +267,19 @@ int main(int argc, char **argv)
 
     int MODE2D;
 
-
     G_gisinit(argv[0]);
 
     module = G_define_module();
     module->keywords = _("vector, geometry");
     module->description =
-	_("Uses a GRASS vector points map to produce a convex hull vector map.");
+	_("Produces a convex hull for a given vector map.");
 
     input = G_define_standard_option(G_OPT_V_INPUT);
-    input->description = _("Name of input vector points map");
-
+    input->label = _("Name of input vector map");
+    input->description = _("For vector lines reads their vertices");
+    
     output = G_define_standard_option(G_OPT_V_OUTPUT);
-    output->description = _("Name of output vector area map");
-
+    
     all = G_define_flag();
     all->key = 'a';
     all->description =
@@ -304,7 +289,7 @@ int main(int argc, char **argv)
     flat->key = 'f';
     flat->description =
 	_("Create a 'flat' 2D hull even if the input is 3D points");
-
+    
     if (G_parser(argc, argv))
 	exit(EXIT_FAILURE);
 
@@ -319,18 +304,22 @@ int main(int argc, char **argv)
 
     /* open site file */
     if (Vect_open_old(&Map, sitefile, mapset) < 0)
-	G_fatal_error(_("Cannot open vector map <%s>"), sitefile);
-
+	G_fatal_error(_("Unable to open vector map <%s>"),
+		      G_fully_qualified_name(sitefile, mapset));
+    
     /* load site coordinates */
     G_get_window(&window);
     numSitePoints = loadSiteCoordinates(&Map, &points, all->answer, &window);
     if (numSitePoints < 0)
-	G_fatal_error(_("Error loading vector points map <%s>"), sitefile);
+	G_fatal_error(_("Error loading vector points from <%s>"),
+		      G_fully_qualified_name(sitefile, mapset));
 
     if (numSitePoints < 3)
-	G_fatal_error(_("Convex hull calculation requires at least three points"));
+	G_fatal_error(_("Convex hull calculation requires at least three points. Exiting."));
 
-
+    G_verbose_message(_("%d points read from vector map <%s>"),
+		      numSitePoints, G_fully_qualified_name(sitefile, mapset));
+    
     /* create a 2D or a 3D hull? */
     MODE2D = 1;
     if (Vect_is_3d(&Map)) {
@@ -340,38 +329,25 @@ int main(int argc, char **argv)
 	MODE2D = 1;
     }
 
-
     /* create vector map */
-    if (MODE2D) {
-	if (0 > Vect_open_new(&Map, output->answer, 0)) {
-	    G_fatal_error(_("Cannot open vector map <%s>"), output->answer);
-	}
+    if (0 > Vect_open_new(&Map, output->answer, MODE2D ? WITHOUT_Z : WITH_Z)) {
+	G_fatal_error(_("Unable to create vector map <%s>"), output->answer);
     }
-    else {
-	if (0 > Vect_open_new(&Map, output->answer, 1)) {
-	    G_fatal_error(_("Cannot open vector map <%s>"), output->answer);
-	}
-    }
-
+    
     Vect_hist_command(&Map);
 
     if (MODE2D) {
-
 	/* compute convex hull */
 	numHullPoints = convexHull(points, numSitePoints, &hull);
 
 	/* output vector map */
 	outputHull(&Map, points, hull, numHullPoints);
-
     }
     else {
-
 	/* this does everything for the 3D hull including vector map creation */
 	convexHull3d(points, numSitePoints, &Map);
-
     }
-
-
+    
     /* clean up and bye bye */
     Vect_build(&Map);
     Vect_close(&Map);
