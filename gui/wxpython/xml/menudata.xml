@@ -1068,7 +1068,7 @@
 	    </menuitem>
 	    <menuitem>
 	      <label>Shadows map</label>
-	      <help>Calculates cast shadow areas from sun position and DEM. Either A: exact sun position is specified, or B: date/time to calculate the sun position by r.sunmask it</help>
+	      <help>Calculates cast shadow areas from sun position and elevation raster map.</help>
 	      <keywords>raster</keywords>
 	      <handler>OnMenuCmd</handler>
 	      <command>r.sunmask</command>
@@ -1186,51 +1186,51 @@
 	  <items>
 	    <menuitem>
 	      <label>Carve stream channels</label>
-	      <help>Takes vector stream data, transforms it to raster and subtracts depth from the output DEM.</help>
-	      <keywords>raster</keywords>
+	      <help>Generates stream channels.</help>
+	      <keywords>raster,hydrology</keywords>
 	      <handler>OnMenuCmd</handler>
 	      <command>r.carve</command>
 	    </menuitem>
 	    <menuitem>
 	      <label>Fill lake</label>
 	      <help>Fills lake from seed at given level.</help>
-	      <keywords>raster</keywords>
+	      <keywords>raster,hydrology</keywords>
 	      <handler>OnMenuCmd</handler>
 	      <command>r.lake</command>
 	    </menuitem>
 	    <separator />
 	    <menuitem>
 	      <label>Depressionless map and flowlines</label>
-	      <help>Filters and generates a depressionless elevation map and a flow direction map from a given elevation layer.</help>
-	      <keywords>raster</keywords>
+	      <help>Filters and generates a depressionless elevation map and a flow direction map from a given elevation raster map.</help>
+	      <keywords>raster,hydrology</keywords>
 	      <handler>OnMenuCmd</handler>
 	      <command>r.fill.dir</command>
 	    </menuitem>
 	    <menuitem>
 	      <label>Flow accumulation</label>
-	      <help>Flow computation for massive grids (Float version).</help>
-	      <keywords>raster</keywords>
+	      <help>Flow computation for massive grids (float version).</help>
+	      <keywords>raster,hydrology</keywords>
 	      <handler>OnMenuCmd</handler>
 	      <command>r.terraflow</command>
 	    </menuitem>
 	    <menuitem>
 	      <label>Flow lines</label>
-	      <help>Construction of slope curves (flowlines), flowpath lengths, and flowline densities (upslope areas) from a raster digital elevation model (DEM)</help>
-	      <keywords>raster</keywords>
+	      <help>Constructs flow lines.</help>
+	      <keywords>raster,hydrology</keywords>
 	      <handler>OnMenuCmd</handler>
 	      <command>r.flow</command>
 	    </menuitem>
 	    <separator />
 	    <menuitem>
 	      <label>SIMWE Overland flow modeling</label>
-	      <help>Overland flow hydrologic simulation using path sampling method (SIMWE)</help>
+	      <help>Overland flow hydrologic simulation using path sampling method (SIMWE).</help>
 	      <keywords>raster,flow,hydrology</keywords>
 	      <handler>OnMenuCmd</handler>
 	      <command>r.sim.water</command>
 	    </menuitem>
 	    <menuitem>
 	      <label>SIMWE Sediment flux modeling</label>
-	      <help>Sediment transport and erosion/deposition simulation using path sampling method (SIMWE)</help>
+	      <help>Sediment transport and erosion/deposition simulation using path sampling method (SIMWE).</help>
 	      <keywords>raster,sediment flow,erosion,deposition</keywords>
 	      <handler>OnMenuCmd</handler>
 	      <command>r.sim.sediment</command>
@@ -1238,37 +1238,37 @@
 	    <separator />
 	    <menuitem>
 	      <label>Topographic index map</label>
-	      <help>Creates topographic index [ln(a/tan(beta))] map from elevation map.</help>
-	      <keywords>raster</keywords>
+	      <help>Creates topographic index map from elevation raster map.</help>
+	      <keywords>raster,hydrology</keywords>
 	      <handler>OnMenuCmd</handler>
 	      <command>r.topidx</command>
 	    </menuitem>
 	    <menuitem>
 	      <label>TOPMODEL simulation</label>
 	      <help>Simulates TOPMODEL which is a physically based hydrologic model.</help>
-	      <keywords>raster</keywords>
+	      <keywords>raster,hydrology</keywords>
 	      <handler>OnMenuCmd</handler>
 	      <command>r.topmodel</command>
 	    </menuitem>
 	    <separator />
 	    <menuitem>
 	      <label>Watershed subbasins</label>
-	      <help>Generates a raster map layer showing watershed subbasins.</help>
-	      <keywords>raster</keywords>
+	      <help>Generates watershed subbasins raster map.</help>
+	      <keywords>raster,hydrology</keywords>
 	      <handler>OnMenuCmd</handler>
 	      <command>r.basins.fill</command>
 	    </menuitem>
 	    <menuitem>
 	      <label>Watershed analysis</label>
-	      <help>Watershed basin analysis program.</help>
-	      <keywords>raster</keywords>
+	      <help>Creates watershed basins.</help>
+	      <keywords>raster,hydrology</keywords>
 	      <handler>OnMenuCmd</handler>
 	      <command>r.watershed</command>
 	    </menuitem>
 	    <menuitem>
 	      <label>Watershed basin creation</label>
-	      <help>Watershed basin creation program.</help>
-	      <keywords>raster</keywords>
+	      <help>Creates watershed basins.</help>
+	      <keywords>raster,hydrology</keywords>
 	      <handler>OnMenuCmd</handler>
 	      <command>r.water.outlet</command>
 	    </menuitem>
@@ -2714,22 +2714,22 @@
 	    <menuitem>
 	      <label>Connect</label>
 	      <help>Prints/sets general DB connection for current mapset and exits.</help>
-	      <keywords>database,attribute table,connection settings</keywords>
+	      <keywords>database,attribute table</keywords>
 	      <handler>OnMenuCmd</handler>
 	      <command>db.connect</command>
 	    </menuitem>
 	    <menuitem>
 	      <label>Login</label>
 	      <help>Sets user/password for driver/database.</help>
-	      <keywords>database,connection</keywords>
+	      <keywords>database,SQL</keywords>
 	      <handler>OnMenuCmd</handler>
 	      <command>db.login</command>
 	    </menuitem>
 	    <separator />
 	    <menuitem>
 	      <label>Drop table</label>
-	      <help>Removes a table from database.</help>
-	      <keywords>database,SQL</keywords>
+	      <help>Drops an attribute table.</help>
+	      <keywords>database,attribute table</keywords>
 	      <handler>OnMenuCmd</handler>
 	      <command>db.droptable</command>
 	    </menuitem>
