@@ -10,7 +10,7 @@
  * PURPOSE:      Creates topographic index map from elevation map.
  *               Based on GRIDATB.FOR.
  *
- * COPYRIGHT:    (C) 2000-2007 by the GRASS Development Team
+ * COPYRIGHT:    (C) 2000-2010 by the GRASS Development Team
  *
  *               This program is free software under the GNU General Public
  *               License (>=v2). Read the file COPYING that comes with GRASS
@@ -34,17 +34,14 @@ int main(int argc, char **argv)
     G_gisinit(argv[0]);
 
     module = G_define_module();
-    module->keywords = _("raster");
+    module->keywords = _("raster, hydrology");
     module->description =
-	_("Creates topographic index [ln(a/tan(beta))] map from elevation map.");
+	_("Creates topographic index map from elevation raster map.");
 
     params.input = G_define_standard_option(G_OPT_R_INPUT);
-    params.input->description = _("Input elevation map");
 
     params.output = G_define_standard_option(G_OPT_R_OUTPUT);
-    params.output->key = "output";
-    params.output->description = _("Output topographic index map");
-
+    
     if (G_parser(argc, argv))
 	exit(EXIT_FAILURE);
 

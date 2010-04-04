@@ -10,7 +10,7 @@
  *               As seed You can use already existing map or
  *               X,Y coordinates.
  *
- * COPYRIGHT:    (C) 2005-2008 by the GRASS Development Team
+ * COPYRIGHT:    (C) 2005-2008, 2010 by the GRASS Development Team
  *
  *               This program is free software under the GNU General Public
  *               License (>=v2). Read the file COPYING that comes with GRASS
@@ -145,29 +145,20 @@ int main(int argc, char *argv[])
     struct History history;
 
     module = G_define_module();
-    module->keywords = _("raster");
+    module->keywords = _("raster, hydrology");
     module->description = _("Fills lake from seed at given level.");
 
-    tmap_opt = G_define_option();
+    tmap_opt = G_define_standard_option(G_OPT_R_ELEV);
     tmap_opt->key = "dem";
-    tmap_opt->key_desc = "name";
-    tmap_opt->description = _("Name of terrain raster map (DEM)");
-    tmap_opt->type = TYPE_STRING;
-    tmap_opt->gisprompt = "old,cell,raster";
-    tmap_opt->required = YES;
-
+    
     wlvl_opt = G_define_option();
     wlvl_opt->key = "wl";
     wlvl_opt->description = _("Water level");
     wlvl_opt->type = TYPE_DOUBLE;
     wlvl_opt->required = YES;
 
-    lake_opt = G_define_option();
+    lake_opt = G_define_standard_option(G_OPT_R_OUTPUT);
     lake_opt->key = "lake";
-    lake_opt->key_desc = "name";
-    lake_opt->description = _("Name for output raster map with lake");
-    lake_opt->type = TYPE_STRING;
-    lake_opt->gisprompt = "new,cell,raster";
     lake_opt->required = NO;
 
     sdxy_opt = G_define_option();
@@ -178,13 +169,10 @@ int main(int argc, char *argv[])
     sdxy_opt->required = NO;
     sdxy_opt->multiple = NO;
 
-    smap_opt = G_define_option();
+    smap_opt = G_define_standard_option(G_OPT_R_INPUT);
     smap_opt->key = "seed";
-    smap_opt->key_desc = "name";
     smap_opt->description =
-	_("Name of raster map with seed (at least 1 cell > 0)");
-    smap_opt->type = TYPE_STRING;
-    smap_opt->gisprompt = "old,cell,raster";
+	_("Name of input raster map with seed (at least 1 cell > 0)");
     smap_opt->required = NO;
 
     negative_flag = G_define_flag();
