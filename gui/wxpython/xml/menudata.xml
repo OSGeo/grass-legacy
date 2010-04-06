@@ -47,30 +47,30 @@
 	</menu>
 	<separator />
 	<menu>
-	  <label>Import raster map</label>
+	  <label>Import raster data</label>
 	  <items>
 	    <menuitem>
-	      <label>Import raster data using GDAL</label>
+	      <label>Import raster data</label>
 	      <help>Import GDAL supported raster file into a binary raster map layer.</help>
 	      <handler>self.OnMenuCmd</handler>
 	      <command>r.in.gdal</command>
 	    </menuitem>
 	    <menuitem>
-	      <label>Multiple raster data import using GDAL</label>
-	      <help>Converts selected GDAL layers to GRASS raster maps using r.in.gdal</help>
+	      <label>Bulk import of raster data</label>
+	      <help>Converts multiple GDAL supported layers to GRASS raster maps.</help>
 	      <handler>self.OnImportGdalLayers</handler>
 	    </menuitem>
 	    <separator />
 	    <menuitem>
-	      <label>Link to GDAL</label>
-	      <help>Link GDAL supported raster file to a binary raster map layer.</help>
+	      <label>Link raster data</label>
+	      <help>Link GDAL supported raster data as a pseudo GRASS raster map layer.</help>
 	      <keywords>raster,import</keywords>
               <handler>self.OnMenuCmd</handler>
 	      <command>r.external</command>
 	    </menuitem>
 	    <menuitem>
-	      <label>Multiple link to GDAL</label>
-	      <help>Link GDAL supported raster files to a binary raster map layers</help>
+	      <label>Bulk link of raster data</label>
+	      <help>Link multiple GDAL supported raster maps as pseudo GRASS raster map layers.</help>
               <handler>self.OnLinkGdalLayers</handler>
 	    </menuitem>
 	    <separator />
@@ -145,30 +145,30 @@
 	  </items>
 	</menu>
 	<menu>
-	  <label>Import vector map</label>
+	  <label>Import vector data</label>
 	  <items>
 	    <menuitem>
-	      <label>Import vector data using OGR</label>
+	      <label>Import vector data</label>
 	      <help>Convert OGR vector layers to GRASS vector map.</help>
 	      <handler>self.OnMenuCmd</handler>
 	      <command>v.in.ogr</command>
 	    </menuitem>
 	    <menuitem>
-	      <label>Multiple vector data import using OGR</label>
+	      <label>Bulk import of vector data</label>
 	      <help>Converts selected OGR layers to GRASS vector maps using v.in.ogr</help>
 	      <handler>self.OnImportOgrLayers</handler>
 	    </menuitem>
 	    <separator />
 	    <menuitem>
-	      <label>Link to OGR</label>
-	      <help>Creates a new vector as a read-only link to OGR layer.</help>
-	      <keywords>vector</keywords>
+	      <label>Link vector data</label>
+	      <help>Creates a new pseudo-vector map as a link to an OGR-supported layer.</help>
+	      <keywords>vector,external,ogr</keywords>
               <handler>self.OnMenuCmd</handler>
 	      <command>v.external</command>
 	    </menuitem>
 	    <menuitem>
-	      <label>Multiple link to OGR</label>
-	      <help>Creates a new vectors as a read-only link to OGR layers</help>
+	      <label>Bulk link of vector data</label>
+	      <help>Creates multiple new pseduo-vector maps as a read-only links using OGR.</help>
               <handler>self.OnLinkOgrLayers</handler>
 	    </menuitem>
 	    <separator />
@@ -192,8 +192,8 @@
 	      <command>v.in.dxf</command>
 	    </menuitem>
 	    <menuitem>
-	      <label>Multiple DXF layers import</label>
-	      <help>Converts selected DXF layers to GRASS vector maps (using v.in.dxf)</help>
+	      <label>Bulk import of DXF</label>
+	      <help>Converts multiple DXF layers to GRASS vector maps.</help>
 	      <handler>self.OnImportDxfFile</handler>
 	    </menuitem>
 	    <separator />
@@ -236,7 +236,7 @@
 	  </items>
 	</menu>
 	<menu>
-	  <label>Import grid 3D volume</label>
+	  <label>Import 3D raster data</label>
 	  <items>
 	    <menuitem>
 	      <label>ASCII 3D import</label>
@@ -268,7 +268,7 @@
 	  <label>Export raster map</label>
 	  <items>
 	    <menuitem>
-	      <label>Multiple export formats using GDAL</label>
+	      <label>Common export formats</label>
 	      <help>Exports GRASS raster maps into GDAL supported formats.</help>
 	      <handler>self.OnMenuCmd</handler>
 	      <command>r.out.gdal</command>
@@ -367,7 +367,7 @@
 	  <label>Export vector map</label>
 	  <items>
 	    <menuitem>
-	      <label>Multiple export formats using OGR</label>
+	      <label>Common export formats</label>
 	      <help>Converts to one of the supported OGR vector formats.</help>
 	      <handler>self.OnMenuCmd</handler>
 	      <command>v.out.ogr</command>
@@ -412,7 +412,7 @@
 	  </items>
 	</menu>
 	<menu>
-	  <label>Export grid 3D volume</label>
+	  <label>Export 3D raster maps</label>
 	  <items>
 	    <menuitem>
 	      <label>ASCII 3D export</label>
