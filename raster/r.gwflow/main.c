@@ -71,6 +71,7 @@ void set_params(void)
 
     param.q =  G_define_standard_option(G_OPT_R_INPUT);
     param.q->key = "q";
+    param.q->required = NO;
     param.q->description = _("Water sources and sinks in [m^3/s]");
 
     param.s =  G_define_standard_option(G_OPT_R_INPUT);
@@ -79,6 +80,7 @@ void set_params(void)
 
     param.r =  G_define_standard_option(G_OPT_R_INPUT);
     param.r->key = "r";
+    param.r->required = NO;
     param.r->guisection = _("Recharge");
     param.r->description =
 	_("Recharge map e.g: 6*10^-9 per cell in [m^3/s*m^2]");
@@ -180,7 +182,6 @@ int main(int argc, char *argv[])
     char *buff = NULL;
     int with_river = 0, with_drain = 0;
 
-
     /* Initialize GRASS */
     G_gisinit(argv[0]);
 
@@ -199,7 +200,6 @@ int main(int argc, char *argv[])
     if ((G_projection() == PROJECTION_LL))
 	G_fatal_error(_("Lat/Long location is not supported by %s. Please reproject map first."),
 		      G_program_name());
-
 
     /*Check the river  parameters */
     if (param.river_leak->answer == NULL && param.river_bed->answer == NULL &&
@@ -228,7 +228,6 @@ int main(int argc, char *argv[])
 	G_fatal_error(_("Please provide drain_head and drain_leak maps"));
     }
 
-
     /*Set the maximum iterations */
     sscanf(param.maxit->answer, "%i", &(maxit));
     /*Set the calculation error break criteria */
@@ -243,7 +242,6 @@ int main(int argc, char *argv[])
 	G_fatal_error(_("The direct Gauss solver do not work with sparse matrices"));
     if (strcmp(solver, N_SOLVER_DIRECT_CHOLESKY) == 0 && param.sparse->answer)
 	G_fatal_error(_("The direct cholesky solver do not work with sparse matrices"));
-
 
     /*get the current region */
     G_get_set_window(&region);
@@ -277,16 +275,13 @@ int main(int argc, char *argv[])
      * null values.*/
     N_read_rast_to_array_2d(param.phead->answer, data->phead);
     N_convert_array_2d_null_to_zero(data->phead);
-    N_read_rast_to_array_2d(param.phead->answer, data->phead_start);
-    N_convert_array_2d_null_to_zero(data->phead_start);
+    N_copy_array_2d(data->phead, data->phead_start);
     N_read_rast_to_array_2d(param.status->answer, data->status);
     N_convert_array_2d_null_to_zero(data->status);
     N_read_rast_to_array_2d(param.hc_x->answer, data->hc_x);
     N_convert_array_2d_null_to_zero(data->hc_x);
     N_read_rast_to_array_2d(param.hc_y->answer, data->hc_y);
     N_convert_array_2d_null_to_zero(data->hc_y);
-    N_read_rast_to_array_2d(param.q->answer, data->q);
-    N_convert_array_2d_null_to_zero(data->q);
     N_read_rast_to_array_2d(param.s->answer, data->s);
     N_convert_array_2d_null_to_zero(data->s);
     N_read_rast_to_array_2d(param.top->answer, data->top);
@@ -316,6 +311,12 @@ int main(int argc, char *argv[])
     if (param.r->answer) {
 	N_read_rast_to_array_2d(param.r->answer, data->r);
 	N_convert_array_2d_null_to_zero(data->r);
+    }
+
+    /*Sources or sinks are optional */
+    if (param.q->answer) {
+        N_read_rast_to_array_2d(param.q->answer, data->q);
+        N_convert_array_2d_null_to_zero(data->q);
     }
 
     /* Set the inactive values to zero, to assure a no flow boundary */
@@ -401,7 +402,6 @@ int main(int argc, char *argv[])
     if (les)
 	N_free_les(les);
 
-
     /*Compute the the velocity field if required and write the result into three rast maps */
     if (param.vector->answer) {
 	field =
@@ -427,7 +427,6 @@ int main(int argc, char *argv[])
 	if (field)
 	    N_free_gradient_field_2d(field);
     }
-
 
     if (data)
 	N_free_gwflow_data2d(data);
