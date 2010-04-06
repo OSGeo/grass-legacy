@@ -16,7 +16,6 @@ r.mapcalc "status=if((col() == 1 && row() == 13) ||\
 		     (col() == 2 && row() == 14) ||\
 		     (row() == 19), 2, 1)"
 
-r.mapcalc "well=0.0"
 r.mapcalc "hydcond=0.001"
 r.mapcalc "recharge=0.000000006"
 r.mapcalc "top=20"
@@ -26,7 +25,7 @@ r.mapcalc "null=0.0"
 
 #compute a steady state groundwater flow
 r.gwflow --o solver=cholesky top=top bottom=bottom phead=phead \
- status=status hc_x=hydcond hc_y=hydcond q=well s=syield \
+ status=status hc_x=hydcond hc_y=hydcond s=syield \
  r=recharge output=gwresult dt=864000000000 type=unconfined 
 
 # create contour lines
