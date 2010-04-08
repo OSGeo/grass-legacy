@@ -219,6 +219,11 @@ def parse_command(*args, **kwargs):
     @code
     parse_command(..., parse = (grass.parse_key_val, { 'sep' : ':' }))
     @endcode
+
+    @param args
+    @param kwargs
+
+    @return parsed module output
     """
     parse = None
     if kwargs.has_key('parse'):
@@ -744,6 +749,8 @@ def try_remove(path):
 def try_rmdir(path):
     """!Attempt to remove a directory; no exception is generated if the
     attempt fails.
+
+    @param path path
     """
     try:
 	os.rmdir(path)
