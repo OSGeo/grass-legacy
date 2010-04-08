@@ -151,6 +151,11 @@ def run_command(*args, **kwargs):
     """!Passes all arguments to start_command, then waits for the process to
     complete, returning its exit code. Similar to subprocess.call(), but
     with the make_command() interface.
+
+    @param args
+    @param kwargs
+
+    @return exit code
     """
     ps = start_command(*args, **kwargs)
     return ps.wait()
@@ -183,6 +188,11 @@ def pipe_command(*args, **kwargs):
 def feed_command(*args, **kwargs):
     """!Passes all arguments to start_command, but also adds
     "stdin = PIPE". Returns the Popen object.
+
+    @param args
+    @param kwargs
+
+    @return Popen object
     """
     kwargs['stdin'] = PIPE
     return start_command(*args, **kwargs)
@@ -190,6 +200,11 @@ def feed_command(*args, **kwargs):
 def read_command(*args, **kwargs):
     """!Passes all arguments to pipe_command, then waits for the process to
     complete, returning its stdout (i.e. similar to shell `backticks`).
+
+    @param args
+    @param kwargs
+
+    @return stdout
     """
     ps = pipe_command(*args, **kwargs)
     return ps.communicate()[0]
@@ -223,6 +238,11 @@ def parse_command(*args, **kwargs):
 def write_command(*args, **kwargs):
     """!Passes all arguments to feed_command, with the string specified
     by the 'stdin' argument fed to the process' stdin.
+
+    @param args
+    @param kwargs
+
+    @return return code
     """
     stdin = kwargs['stdin']
     p = feed_command(*args, **kwargs)
@@ -387,6 +407,14 @@ def tempfile():
 def parse_key_val(s, sep = '=', dflt = None, val_type = None, vsep = None):
     """!Parse a string into a dictionary, where entries are separated
     by newlines and the key and value are separated by `sep' (default: `=')
+
+    @param s string to be parsed
+    @param sep key/value separator
+    @param dflt default value to be used
+    @param val_type value type (None for no cast)
+    @param vsep vertical separator (default os.linesep)
+
+    @return parsed input (dictionary of keys/values)
     """
     result = {}
 
@@ -526,6 +554,9 @@ def list_grouped(type):
 def mlist_grouped(type, mapset = None, pattern = None):
     """!Returns the output from running g.mlist, as a dictionary where the keys
     are mapset names and the values are lists of maps in that mapset. 
+
+    @param type element type
+    @param mapset mapset name (default all mapset in search path)
     @param pattern pattern string
     """
     result = {}
@@ -617,7 +648,7 @@ def parse_color(val, dflt = None):
 
     @param val color value
     @param dflt default color value
-    
+
     @return tuple RGB
     """
     if val in named_colors:
@@ -653,6 +684,9 @@ def verbosity():
 def basename(path, ext = None):
     """!Remove leading directory components and an optional extension
     from the specified path
+
+    @param path path
+    @param ext extension
     """
     name = os.path.basename(path)
     if not ext:
@@ -667,6 +701,9 @@ def basename(path, ext = None):
 def find_program(pgm, args = []):
     """!Attempt to run a program, with optional arguments. Return False
     if the attempt failed due to a missing executable, True otherwise
+
+    @param pgm program name
+    @param args list of arguments
     """
     nuldev = file(os.devnull, 'w+')
     try:
@@ -682,6 +719,8 @@ def find_program(pgm, args = []):
 def try_remove(path):
     """!Attempt to remove a file; no exception is generated if the
     attempt fails.
+
+    @param path path
     """
     try:
 	os.remove(path)
