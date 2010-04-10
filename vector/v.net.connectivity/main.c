@@ -19,7 +19,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <grass/gis.h>
-#include <grass/vector.h>
+#include <grass/Vect.h>
 #include <grass/glocale.h>
 #include <grass/dbmi.h>
 #include <grass/neta.h>
@@ -50,9 +50,7 @@ int main(int argc, char *argv[])
 
     /* initialize module */
     module = G_define_module();
-    G_add_keyword(_("vector"));
-    G_add_keyword(_("network"));
-    G_add_keyword(_("connectivity"));
+    module->keywords = _("vector, network, connectivity");
     module->description =
 	_("Computes vertex connectivity between two sets of nodes in the network.");
 
