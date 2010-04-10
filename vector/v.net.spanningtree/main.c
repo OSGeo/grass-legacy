@@ -53,7 +53,7 @@ int main(int argc, char *argv[])
 
     field_opt = G_define_standard_option(G_OPT_V_FIELD);
 
-    accol = G_define_standard_option(G_OPT_DB_COLUMN);
+    accol = G_define_standard_option(G_OPT_COLUMN);
     accol->key = "accol";
     accol->required = NO;
     accol->description = _("Name of Arc cost column");

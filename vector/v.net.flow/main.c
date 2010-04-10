@@ -70,13 +70,13 @@ int main(int argc, char *argv[])
     cut_out->description =
 	_("Name for output vector map containing a minimum cut");
 
-    afcol = G_define_standard_option(G_OPT_DB_COLUMN);
+    afcol = G_define_standard_option(G_OPT_COLUMN);
     afcol->key = "afcolumn";
     afcol->required = NO;
     afcol->description =
 	_("Name of arc forward/both direction(s) capacity column");
 
-    abcol = G_define_standard_option(G_OPT_DB_COLUMN);
+    abcol = G_define_standard_option(G_OPT_COLUMN);
     abcol->key = "abcolumn";
     abcol->required = NO;
     abcol->description = _("Name of arc backward direction capacity column");
@@ -91,7 +91,7 @@ int main(int argc, char *argv[])
     catsource_opt->label = _("Source category values");
     catsource_opt->guisection = _("Source");
 
-    wheresource_opt = G_define_standard_option(G_OPT_DB_WHERE);
+    wheresource_opt = G_define_standard_option(G_OPT_WHERE);
     wheresource_opt->key = "source_where";
     wheresource_opt->label =
 	_("Source WHERE conditions of SQL statement without 'where' keyword");
@@ -107,7 +107,7 @@ int main(int argc, char *argv[])
     catsink_opt->label = _("Sink category values");
     catsink_opt->guisection = _("Sink");
 
-    wheresink_opt = G_define_standard_option(G_OPT_DB_WHERE);
+    wheresink_opt = G_define_standard_option(G_OPT_WHERE);
     wheresink_opt->key = "sink_where";
     wheresink_opt->label =
 	_("Sink WHERE conditions of SQL statement without 'where' keyword");

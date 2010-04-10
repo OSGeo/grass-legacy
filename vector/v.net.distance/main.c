@@ -78,7 +78,7 @@ int main(int argc, char *argv[])
     catf_opt->label = _("From category values");
     catf_opt->guisection = _("From");
 
-    wheref_opt = G_define_standard_option(G_OPT_DB_WHERE);
+    wheref_opt = G_define_standard_option(G_OPT_WHERE);
     wheref_opt->key = "from_where";
     wheref_opt->label =
 	_("From WHERE conditions of SQL statement without 'where' keyword");
@@ -94,7 +94,7 @@ int main(int argc, char *argv[])
     catt_opt->label = _("To category values");
     catt_opt->guisection = _("To");
 
-    wheret_opt = G_define_standard_option(G_OPT_DB_WHERE);
+    wheret_opt = G_define_standard_option(G_OPT_WHERE);
     wheret_opt->key = "to_where";
     wheret_opt->label =
 	_("To WHERE conditions of SQL statement without 'where' keyword");
@@ -107,12 +107,12 @@ int main(int argc, char *argv[])
     to_type_opt->description = _("To feature type");
     to_type_opt->guisection = _("To");
 
-    afcol = G_define_standard_option(G_OPT_DB_COLUMN);
+    afcol = G_define_standard_option(G_OPT_COLUMN);
     afcol->key = "afcolumn";
     afcol->required = YES;
     afcol->description = _("Arc forward/both direction(s) cost column");
 
-    abcol = G_define_standard_option(G_OPT_DB_COLUMN);
+    abcol = G_define_standard_option(G_OPT_COLUMN);
     abcol->key = "abcolumn";
     abcol->required = NO;
     abcol->description = _("Arc backward direction cost column");

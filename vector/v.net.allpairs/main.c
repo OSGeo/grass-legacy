@@ -63,17 +63,17 @@ int main(int argc, char *argv[])
     field_opt->guisection = _("Selection");
     cat_opt = G_define_standard_option(G_OPT_V_CATS);
     cat_opt->guisection = _("Selection");
-    where_opt = G_define_standard_option(G_OPT_DB_WHERE);
+    where_opt = G_define_standard_option(G_OPT_WHERE);
     where_opt->guisection = _("Selection");
 
-    afcol = G_define_standard_option(G_OPT_DB_COLUMN);
+    afcol = G_define_standard_option(G_OPT_COLUMN);
     afcol->key = "afcolumn";
     afcol->required = NO;
     afcol->description =
 	_("Name of arc forward/both direction(s) cost column");
     afcol->guisection = _("Cost");
 
-    abcol = G_define_standard_option(G_OPT_DB_COLUMN);
+    abcol = G_define_standard_option(G_OPT_COLUMN);
     abcol->key = "abcolumn";
     abcol->required = NO;
     abcol->description = _("Name of arc backward direction cost column");

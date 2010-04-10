@@ -105,41 +105,41 @@ int main(int argc, char *argv[])
 
     cat_opt = G_define_standard_option(G_OPT_V_CATS);
     cat_opt->guisection = _("Selection");
-    where_opt = G_define_standard_option(G_OPT_DB_WHERE);
+    where_opt = G_define_standard_option(G_OPT_WHERE);
     where_opt->guisection = _("Selection");
 
-    afcol = G_define_standard_option(G_OPT_DB_COLUMN);
+    afcol = G_define_standard_option(G_OPT_COLUMN);
     afcol->key = "afcolumn";
     afcol->required = NO;
     afcol->description =
 	_("Name of arc forward/both direction(s) cost column");
     afcol->guisection = _("Cost");
 
-    abcol = G_define_standard_option(G_OPT_DB_COLUMN);
+    abcol = G_define_standard_option(G_OPT_COLUMN);
     abcol->key = "abcolumn";
     abcol->required = NO;
     abcol->description = _("Name of arc backward direction cost column");
     abcol->guisection = _("Cost");
 
-    deg_opt = G_define_standard_option(G_OPT_DB_COLUMN);
+    deg_opt = G_define_standard_option(G_OPT_COLUMN);
     deg_opt->key = "degree";
     deg_opt->required = NO;
     deg_opt->description = _("Name of degree centrality column");
     deg_opt->guisection = _("Columns");
 
-    close_opt = G_define_standard_option(G_OPT_DB_COLUMN);
+    close_opt = G_define_standard_option(G_OPT_COLUMN);
     close_opt->key = "closeness";
     close_opt->required = NO;
     close_opt->description = _("Name of closeness centrality column");
     close_opt->guisection = _("Columns");
 
-    betw_opt = G_define_standard_option(G_OPT_DB_COLUMN);
+    betw_opt = G_define_standard_option(G_OPT_COLUMN);
     betw_opt->key = "betweenness";
     betw_opt->required = NO;
     betw_opt->description = _("Name of betweenness centrality column");
     betw_opt->guisection = _("Columns");
 
-    eigen_opt = G_define_standard_option(G_OPT_DB_COLUMN);
+    eigen_opt = G_define_standard_option(G_OPT_COLUMN);
     eigen_opt->key = "eigenvector";
     eigen_opt->required = NO;
     eigen_opt->description = _("Name of eigenvector centrality column");

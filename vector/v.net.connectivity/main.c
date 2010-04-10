@@ -60,7 +60,7 @@ int main(int argc, char *argv[])
 
     map_out = G_define_standard_option(G_OPT_V_OUTPUT);
 
-    ncol = G_define_standard_option(G_OPT_DB_COLUMN);
+    ncol = G_define_standard_option(G_OPT_COLUMN);
     ncol->key = "ncolumn";
     ncol->required = NO;
     ncol->description = _("Name of node capacity column");
@@ -75,7 +75,7 @@ int main(int argc, char *argv[])
     catset1_opt->label = _("Set1 category values");
     catset1_opt->guisection = _("Set1");
 
-    whereset1_opt = G_define_standard_option(G_OPT_DB_WHERE);
+    whereset1_opt = G_define_standard_option(G_OPT_WHERE);
     whereset1_opt->key = "set1_where";
     whereset1_opt->label =
 	_("Set1 WHERE conditions of SQL statement without 'where' keyword");
@@ -91,7 +91,7 @@ int main(int argc, char *argv[])
     catset2_opt->description = _("Set2 category values");
     catset2_opt->guisection = _("Set2");
 
-    whereset2_opt = G_define_standard_option(G_OPT_DB_WHERE);
+    whereset2_opt = G_define_standard_option(G_OPT_WHERE);
     whereset2_opt->key = "set2_where";
     whereset2_opt->label =
 	_("Set2 WHERE conditions of SQL statement without 'where' keyword");

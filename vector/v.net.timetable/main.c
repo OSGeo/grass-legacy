@@ -271,26 +271,26 @@ int main(int argc, char *argv[])
     path_layer_opt->answer = "-1";
     path_layer_opt->label = _("Layer number or name with route paths or -1");
 
-    route_id_opt = G_define_standard_option(G_OPT_DB_COLUMN);
+    route_id_opt = G_define_standard_option(G_OPT_COLUMN);
     route_id_opt->key = "route_id";
     route_id_opt->required = YES;
     route_id_opt->answer = "route_id";
     route_id_opt->description = _("Name of column name with route ids");
 
-    stop_time_opt = G_define_standard_option(G_OPT_DB_COLUMN);
+    stop_time_opt = G_define_standard_option(G_OPT_COLUMN);
     stop_time_opt->key = "stop_time";
     stop_time_opt->required = YES;
     stop_time_opt->answer = "stop_time";
     stop_time_opt->description =
 	_("Name of column name with stop timestamps");
 
-    to_stop_opt = G_define_standard_option(G_OPT_DB_COLUMN);
+    to_stop_opt = G_define_standard_option(G_OPT_COLUMN);
     to_stop_opt->key = "to_stop";
     to_stop_opt->required = YES;
     to_stop_opt->answer = "to_stop";
     to_stop_opt->description = _("Name of column name with stop ids");
 
-    walk_length_opt = G_define_standard_option(G_OPT_DB_COLUMN);
+    walk_length_opt = G_define_standard_option(G_OPT_COLUMN);
     walk_length_opt->key = "walk_length";
     walk_length_opt->required = YES;
     walk_length_opt->answer = "length";
