@@ -260,13 +260,13 @@ int main(int argc, char *argv[])
 
     map_out = G_define_standard_option(G_OPT_V_OUTPUT);
 
-    walk_layer_opt = G_define_standard_option(G_OPT_V_FIELD_ALL);
+    walk_layer_opt = G_define_standard_option(G_OPT_V_FIELD);
     walk_layer_opt->key = "walk_layer";
     walk_layer_opt->answer = "-1";
     walk_layer_opt->label =
 	_("Layer number or name with walking connections or -1");
 
-    path_layer_opt = G_define_standard_option(G_OPT_V_FIELD_ALL);
+    path_layer_opt = G_define_standard_option(G_OPT_V_FIELD);
     path_layer_opt->key = "path_layer";
     path_layer_opt->answer = "-1";
     path_layer_opt->label = _("Layer number or name with route paths or -1");
