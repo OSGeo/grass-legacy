@@ -1,12 +1,12 @@
-
-/**
- * \file parser.c
+/*!
+ * \file gis/parser.c
  *
  * \brief GIS Library - Argument parsing functions.
  *
  * Parses the command line provided through argc and argv.  Example:
  * Assume the previous calls:
  *
+ * \code
  *  opt1 = G_define_option() ;
  *  opt1->key        = "map",
  *  opt1->type       = TYPE_STRING,
@@ -29,28 +29,37 @@
  *  opt3->answer     = "12345.67",
  *  opt3->options    = "0-99999",
  *  opt3->description= "Number to test parser" ;
+ * \endcode
  *
  * G_parser() will respond to the following command lines as described:
  *
+ * \verbatim
  * command      (No command line arguments)
+ * \endverbatim
  *    Parser enters interactive mode.
  *
+ * \verbatim
  * command map=map.name
+ * \endverbatim
  *    Parser will accept this line.  Map will be set to "map.name", the
  *    'a' and 'b' flags will remain off and the num option will be set
  *    to the default of 5.
  *
+ * \verbatim
  * command -ab map=map.name num=9
  * command -a -b map=map.name num=9
  * command -ab map.name num=9
  * command map.name num=9 -ab
  * command num=9 -a map=map.name -b
+ * \endverbatim
  *    These are all treated as acceptable and identical. Both flags are
  *    set to on, the map option is "map.name" and the num option is "9".
  *    Note that the "map=" may be omitted from the command line if it
  *    is part of the first option (flags do not count).
  *
+ * \verbatim
  * command num=12
+ * \endverbatim
  *    This command line is in error in two ways.  The user will be told
  *    that the "map" option is required and also that the number 12 is
  *    out of range.  The acceptable range (or list) will be printed.
@@ -60,7 +69,7 @@
  * This program is free software under the GNU General Public License
  * (>=v2). Read the file COPYING that comes with GRASS for details.
  *
- * \author Radim Blazek
+ * \author Original author CERL; enhancements: Radim Blazek
  *
  * \date 2003-2009
  *
@@ -289,7 +298,7 @@ struct Option *G_define_option(void)
 }
 
 
-/**
+/*!
  * \brief Create standardised Option structure.
  *
  * This function will create a standardised Option structure
