@@ -102,6 +102,7 @@ class ModelFrame(wx.Frame):
                 
         self.modelPage   = self.notebook.AddPage(self.canvas, text=_('Model'))
         self.commandPage = self.notebook.AddPage(self.goutput, text=_('Command output'))
+        wx.CallAfter(self.notebook.SetSelection, 0)
         
         self.Bind(wx.EVT_CLOSE, self.OnCloseWindow)
         
@@ -1095,7 +1096,7 @@ class ModelEvtHandler(ogl.ShapeEvtHandler):
         self.frame.canvas.Refresh()
         
 class ModelSearchDialog(wx.Dialog):
-    def __init__(self, parent, id = wx.ID_ANY, title = _("Find GRASS module"),
+    def __init__(self, parent, id = wx.ID_ANY, title = _("Select GRASS module"),
                  style = wx.DEFAULT_DIALOG_STYLE | wx.RESIZE_BORDER, **kwargs):
         """!Graphical modeler module search window
         
@@ -1112,6 +1113,11 @@ class ModelSearchDialog(wx.Dialog):
         self.SetIcon(wx.Icon(os.path.join(globalvar.ETCICONDIR, 'grass.ico'), wx.BITMAP_TYPE_ICO))
         
         self.panel = wx.Panel(parent = self, id = wx.ID_ANY)
+
+        self.findBox = wx.StaticBox(parent = self.panel, id = wx.ID_ANY,
+                                    label=" %s " % _("Find module(s) by"))
+        self.cmdBox = wx.StaticBox(parent = self.panel, id = wx.ID_ANY,
+                                   label=" %s " % _("Command"))
         
         self.searchBy = wx.Choice(parent = self.panel, id = wx.ID_ANY,
                                   choices = [_("description"),
@@ -1126,35 +1132,37 @@ class ModelSearchDialog(wx.Dialog):
 
         self._layout()
         
+        self.SetSize((500, 200))
+        
     def _layout(self):
         btnSizer = wx.StdDialogButtonSizer()
         btnSizer.AddButton(self.btnCancel)
         btnSizer.AddButton(self.btnOk)
         btnSizer.Realize()
 
-        bodyBox = wx.StaticBox(parent=self.panel, id=wx.ID_ANY,
-                               label=" %s " % _("Find GRASS module"))
-        bodySizer = wx.StaticBoxSizer(bodyBox, wx.VERTICAL)
-        searchSizer = wx.BoxSizer(wx.HORIZONTAL)
+        findSizer = wx.StaticBoxSizer(self.findBox, wx.HORIZONTAL)
+        cmdSizer = wx.StaticBoxSizer(self.cmdBox, wx.VERTICAL)
         
-        searchSizer.Add(item = self.searchBy,
-                        proportion = 0, flag = wx.LEFT, border = 3)
-        searchSizer.Add(item = self.search,
-                        proportion = 1, flag = wx.LEFT | wx.EXPAND, border = 3)
+        findSizer.Add(item = self.searchBy,
+                      proportion = 0, flag = wx.ALL, border = 1)
+        findSizer.Add(item = self.search,
+                      proportion = 1, flag = wx.ALL, border = 1)
         
-        bodySizer.Add(item=searchSizer, proportion=0,
+        cmdSizer.Add(item=self.cmd_prompt, proportion=1,
                       flag=wx.EXPAND | wx.ALL, border=1)
-        bodySizer.Add(item=self.cmd_prompt, proportion=1,
-                      flag=wx.EXPAND | wx.LEFT | wx.RIGHT | wx.TOP, border=3)
         
         mainSizer = wx.BoxSizer(wx.VERTICAL)
-        mainSizer.Add(item=bodySizer, proportion=1,
+        mainSizer.Add(item=findSizer, proportion=1,
                       flag=wx.EXPAND | wx.ALL, border=5)
+        mainSizer.Add(item=cmdSizer, proportion=1,
+                      flag=wx.EXPAND | wx.LEFT | wx.RIGHT | wx.BOTTOM, border = 5)
         mainSizer.Add(item=btnSizer, proportion=0,
                       flag=wx.EXPAND | wx.ALL | wx.ALIGN_CENTER, border=5)
         
         self.panel.SetSizer(mainSizer)
         mainSizer.Fit(self.panel)
+        
+        self.Layout()
         
     def GetPanel(self):
         """!Get dialog panel"""
