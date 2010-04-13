@@ -567,7 +567,7 @@ if __name__ == "__main__":
                 if p.get('prompt', '') in ('raster', 'vector', 'raster3d'):
                     try:
                         name, mapset = p.get('value', '').split('@', 1)
-                    except IndexError:
+                    except (ValueError, IndexError):
                         continue
                     
                     if mapset != grass.gisenv()['MAPSET']:
@@ -1124,15 +1124,28 @@ class ModelSearchDialog(wx.Dialog):
                                              _("keywords")])
         self.search = wx.TextCtrl(parent = self.panel, id = wx.ID_ANY,
                                   value = "", size = (-1, 25))
+        self.searchTip  = menuform.StaticWrapText(parent = self.panel, id = wx.ID_ANY,
+                                                  size = (-1, 35))
+        
+        self.searchChoice = wx.Choice(parent = self.panel, id = wx.ID_ANY)
+        
         self.cmd_prompt = prompt.GPromptSTC(parent = self)
+
+        # get commands
+        items = self.cmd_prompt.GetCommandItems()
+        self.searchTip.SetLabel(_("%d modules found") % len(items))
+        self.searchChoice.SetItems(items)
         
         self.btnCancel = wx.Button(self.panel, wx.ID_CANCEL)
         self.btnOk     = wx.Button(self.panel, wx.ID_OK)
         self.btnOk.SetDefault()
-
+        
+        self.search.Bind(wx.EVT_TEXT, self.OnSearchModule)
+        self.searchChoice.Bind(wx.EVT_CHOICE, self.OnSelectModule)
+        
         self._layout()
         
-        self.SetSize((500, 200))
+        self.SetSize((500, 250))
         
     def _layout(self):
         btnSizer = wx.StdDialogButtonSizer()
@@ -1141,18 +1154,26 @@ class ModelSearchDialog(wx.Dialog):
         btnSizer.Realize()
 
         findSizer = wx.StaticBoxSizer(self.findBox, wx.HORIZONTAL)
+        gridSizer = wx.GridBagSizer(hgap = 3, vgap = 3)
+        gridSizer.AddGrowableCol(1)
+
         cmdSizer = wx.StaticBoxSizer(self.cmdBox, wx.VERTICAL)
         
-        findSizer.Add(item = self.searchBy,
-                      proportion = 0, flag = wx.ALL, border = 1)
-        findSizer.Add(item = self.search,
-                      proportion = 1, flag = wx.ALL, border = 1)
+        gridSizer.Add(item = self.searchBy,
+                      flag=wx.ALIGN_CENTER_VERTICAL, pos = (0, 0))
+        gridSizer.Add(item = self.search,
+                      flag=wx.ALIGN_CENTER_VERTICAL | wx.EXPAND, pos = (0, 1))
+        gridSizer.Add(item = self.searchTip,
+                      flag=wx.ALIGN_CENTER_VERTICAL | wx.EXPAND, pos = (1, 0), span = (1, 2))
+        gridSizer.Add(item = self.searchChoice,
+                      flag=wx.ALIGN_CENTER_VERTICAL | wx.EXPAND, pos = (2, 0), span = (1, 2))
+        findSizer.Add(item = gridSizer, proportion = 1)
         
         cmdSizer.Add(item=self.cmd_prompt, proportion=1,
                       flag=wx.EXPAND | wx.ALL, border=1)
         
         mainSizer = wx.BoxSizer(wx.VERTICAL)
-        mainSizer.Add(item=findSizer, proportion=1,
+        mainSizer.Add(item=findSizer, proportion=0,
                       flag=wx.EXPAND | wx.ALL, border=5)
         mainSizer.Add(item=cmdSizer, proportion=1,
                       flag=wx.EXPAND | wx.LEFT | wx.RIGHT | wx.BOTTOM, border = 5)
@@ -1163,7 +1184,7 @@ class ModelSearchDialog(wx.Dialog):
         mainSizer.Fit(self.panel)
         
         self.Layout()
-        
+
     def GetPanel(self):
         """!Get dialog panel"""
         return self.panel
@@ -1181,6 +1202,52 @@ class ModelSearchDialog(wx.Dialog):
             
         return cmd
 
+    def OnSearchModule(self, event):
+        """!Search module by keywords or description"""
+        text = event.GetString()
+        if not text:
+            self.cmd_prompt.SetFilter(None)
+            return
+        
+        modules = dict()
+        iFound = 0
+        for module, data in self.cmd_prompt.moduleDesc.iteritems():
+            found = False
+            if self.searchBy.GetSelection() == 0: # -> description
+                if text in data['desc']:
+                    found = True
+            else: # -> keywords
+                if self.cmd_prompt.CheckKey(text, data['keywords']):
+                    found = True
+
+            if found:
+                iFound += 1
+                try:
+                    group, name = module.split('.')
+                except ValueError:
+                    continue # TODO
+                
+                if not modules.has_key(group):
+                    modules[group] = list()
+                modules[group].append(name)
+
+        self.cmd_prompt.SetFilter(modules)
+        self.searchTip.SetLabel(_("%d modules found") % iFound)
+        self.searchChoice.SetItems(self.cmd_prompt.GetCommandItems())
+        
+    def OnSelectModule(self, event):
+        """!Module selected from choice, update command prompt"""
+        cmd  = event.GetString().split(' ', 1)[0]
+        text = cmd + ' '
+        pos = len(text)
+        self.cmd_prompt.SetText(text)
+        self.cmd_prompt.SetSelectionStart(pos)
+        self.cmd_prompt.SetCurrentPos(pos)
+        self.cmd_prompt.SetFocus()
+        
+        desc = self.cmd_prompt.GetCommandDesc(cmd)
+        self.searchTip.SetLabel(desc)
+                                
     def OnOk(self, event):
         self.btnOk.SetFocus()
         
