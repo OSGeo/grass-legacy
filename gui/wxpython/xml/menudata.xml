@@ -1657,7 +1657,7 @@
 	      <help>Performs ordinary or block kriging.</help>
 	      <keywords>vector,interpolation,kriging</keywords>
               <handler>RunMenuCmd</handler>
-	      <command>v.krige</command>
+	      <command>v.krige.py</command>
 	    </menuitem>
 	    <separator />
 	    <menuitem>

@@ -32,9 +32,11 @@ $(ETCDIR)/scripts/%: scripts/%
 $(ETCDIR)/%: %
 	$(INSTALL_DATA) $< $@
 
-menustrings.py: gui_modules/menudata.py xml/menudata.xml
+menustrings.py: gui_modules/menudata.py $(ETCDIR)/xml/menudata.xml $(ETCDIR)/xml/menudata_modeler.xml 
 	GISBASE="$(GISBASE)" \
 	$(PYTHON) $< > $@
+	GISBASE="$(GISBASE)" \
+	$(PYTHON) $< "modeler" >> $@
 
 #doxygen:
 DOXNAME=wxpython
