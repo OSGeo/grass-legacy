@@ -4,4 +4,4 @@ PGM = v.krige.py
 
 include $(MODULE_TOPDIR)/include/Make/Script.make
 
-default: 
+default: script
