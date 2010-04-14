@@ -104,10 +104,10 @@ from tempfile import gettempdir
 import time
 import thread
 
-GUIModulesPath = os.path.join(os.getenv("GISBASE"), "etc", "gui", "wxpython", "gui_modules")
+GUIModulesPath = os.path.join(os.getenv("GISBASE"), "etc", "wxpython", "gui_modules")
 sys.path.append(GUIModulesPath)
 
-GUIPath = os.path.join(os.getenv("GISBASE"), "etc", "gui", "wxpython", "scripts")
+GUIPath = os.path.join(os.getenv("GISBASE"), "etc", "wxpython", "scripts")
 sys.path.append(GUIPath)
 
 ### i18N
