@@ -1551,7 +1551,7 @@
 	      <handler>self.OnNewVector</handler>
 	    </menuitem>
 	    <menuitem>
-	      <label>Digitize vector map (requires TclTk)</label>
+	      <label>Digitize vector map using Tcl/Tk digitizer</label>
 	      <help>Interactive editing and digitization of vector maps.</help>
 	      <keywords>vector, editing, digitization</keywords>
 	      <handler>self.OnMenuCmd</handler>
