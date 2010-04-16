@@ -685,6 +685,7 @@ class GMConsole(wx.SplitterWindow):
                 pass
             
             self.btn_abort.Enable(False)
+        
         if event.onDone:
             event.onDone(returncode = event.returncode)
         
