@@ -20,6 +20,7 @@
 #include <grass/gis.h>
 #include <grass/glocale.h>
 #include "../r.li.daemon/daemon.h"
+#include "../r.li.daemon/defs.h"
 
 int main(int argc, char *argv[])
 {
@@ -198,5 +199,7 @@ int patch_density(int fd, char **par, area_des ad, double *result)
 	*result = (count / area) * 1000000;
     else
 	*result = -1;
-    return 1;
+
+    G_free(sup);
+    return RLI_OK;
 }
