@@ -289,7 +289,7 @@ xtract_line(int num_index, int *num_array, struct Map_info *In,
 
 	    /* centroid */
 	    if ((type == GV_CENTROID && (select_type & GV_AREA)) &&
-		!(centroid_in_area && field_match))
+		!centroid_in_area)
 		write = 0;
 
 	    /* areas */
