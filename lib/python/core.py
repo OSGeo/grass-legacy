@@ -55,6 +55,8 @@ class Popen(subprocess.Popen):
 PIPE = subprocess.PIPE
 STDOUT = subprocess.STDOUT
 
+fatal_exit = True # abort on fatal()
+
 def call(*args, **kwargs):
     return Popen(*args, **kwargs).wait()
 
@@ -335,20 +337,42 @@ def fatal(msg):
     @return g.message's exit code
     """
     error(msg)
-    sys.exit(1)
+    
+    global fatal_exit
+    if fatal_exit:
+        sys.exit(1)
+    
+def set_fatal_exit(exit = True):
+    """!Set fatal_exit variable
 
+    @param exit True to abort on fatal() otherwise just error message
+    is printed"""
+    global fatal_exit
+    fatal_exit = exit
+    
 # interface to g.parser
 
-def _parse_env():
+def _parse_opts(lines):
     options = {}
     flags = {}
-    for var, val in os.environ.iteritems():
-	if var.startswith("GIS_OPT_"):
-	    opt = var.replace("GIS_OPT_", "", 1).lower()
-	    options[opt] = val;
-	if var.startswith("GIS_FLAG_"):
-	    flg = var.replace("GIS_FLAG_", "", 1).lower()
-	    flags[flg] = bool(int(val));
+    for line in lines:
+	line = line.rstrip('\r\n')
+	if not line:
+	    break
+	try:
+	    [var, val] = line.split('=', 1)
+	except:
+	    raise SyntaxError("invalid output from g.parser: %s" % line)
+
+	if var.startswith('flag_'):
+	    flags[var[5:]] = bool(int(val))
+	elif var.startswith('opt_'):
+	    options[var[4:]] = val
+	elif var in ['GRASS_OVERWRITE', 'GRASS_VERBOSE']:
+	    os.environ[var] = val
+	else:
+	    raise SyntaxError("invalid output from g.parser: %s" % line)
+
     return (options, flags)
 
 def parser():
@@ -369,9 +393,6 @@ def parser():
         print >> sys.stderr, "You must be in GRASS GIS to run this program."
         sys.exit(1)
 
-    if len(sys.argv) > 1 and sys.argv[1] == "@ARGS_PARSED@":
-	return _parse_env()
-
     cmdline = [basename(sys.argv[0])]
     cmdline += ['"' + arg + '"' for arg in sys.argv[1:]]
     os.environ['CMDLINE'] = ' '.join(cmdline)
@@ -384,11 +405,15 @@ def parser():
 	else:
 	    argv[0] = os.path.join(sys.path[0], name)
 
-    if sys.platform == "win32":
-       os.execvp("g.parser.exe", [name] + argv)
-    else:
-       os.execvp("g.parser", [name] + argv)
-    raise OSError("error executing g.parser")
+    p = Popen(['g.parser', '-s'] + argv, stdout = PIPE)
+    s = p.communicate()[0]
+    lines = s.splitlines()
+
+    if not lines or lines[0].rstrip('\r\n') != "@ARGS_PARSED@":
+	sys.stdout.write(s)
+	sys.exit()
+
+    return _parse_opts(lines[1:])
 
 # interface to g.tempfile
 
@@ -471,7 +496,10 @@ def region():
     @return dictionary of region values
     """
     s = read_command("g.region", flags='g')
-    return parse_key_val(s, val_type = float)
+    reg = parse_key_val(s, val_type = float)
+    for k in ['rows', 'cols']:
+	reg[k] = int(reg[k])
+    return reg
 
 def use_temp_region():
     """!Copies the current region to a temporary region with "g.region save=",
@@ -742,3 +770,68 @@ def float_or_dms(s):
     @return float value
     """
     return sum(float(x) / 60 ** n for (n, x) in enumerate(s.split(':')))
+
+def command_info(cmd):
+    """!Returns 'help' information for any command as dictionary with entries
+    for description, keywords, usage, flags, and parameters"""
+    
+    cmdinfo = {}
+    s = start_command(cmd, 'help', stdout = subprocess.PIPE, stderr = subprocess.PIPE)
+    out, err = s.communicate()
+    
+    sections = err.split('\n\n')
+
+    #Description
+    first, desc = sections[0].split(':\n', 1)
+    desclines = desc.splitlines()
+    for line in desclines:
+        line = line.strip()+' '
+    
+    # Keywords
+    first, keywords = sections[1].split(':\n', 1)
+    keylines = keywords.splitlines()
+    list = []
+    list = keywords.strip().split(',')
+    cmdinfo['keywords'] = list
+        
+    cmdinfo['description'] = ''.join(desclines).strip()
+
+    # Usage
+    first, usage = sections[2].split(':\n', 1)
+    usagelines = usage.splitlines()
+    list = []
+    for line in usagelines:        
+        line = line.strip()
+        if line == '': continue
+        line = line+' '
+        list.append(line)
+        
+    cmdinfo['usage'] = ''.join(list).strip()
+
+    # Flags
+    first, flags = sections[3].split(':\n', 1)
+    flaglines = flags.splitlines()
+    dict = {}
+    for line in flaglines:
+        line = line.strip()
+        if line == '': continue
+        item = line.split(' ',1)[0].strip()
+        val = line.split(' ',1)[1].strip()
+        dict[item] = val
+        
+    cmdinfo['flags'] = dict
+    
+    # Parameters
+    first, params = err.rsplit(':\n', 1)
+    paramlines = params.splitlines()
+    dict = {}
+    for line in paramlines:
+        line = line.strip()
+        if line == '': continue
+        item = line.split(' ',1)[0].strip()
+        val = line.split(' ',1)[1].strip()
+        dict[item] = val
+         
+    cmdinfo['parameters'] = dict
+                
+    return cmdinfo
