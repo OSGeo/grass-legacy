@@ -34,6 +34,8 @@ def raster_history(map):
     """!Set the command history for a raster map to the command used to
     invoke the script (interface to `r.support').
 
+    @param map map name
+
     @return True on success
     @return False on failure
     """
@@ -82,6 +84,5 @@ def mapcalc(exp, **kwargs):
     """
     t = string.Template(exp)
     e = t.substitute(**kwargs)
-
     if write_command('r.mapcalc', stdin = e) != 0:
 	fatal("An error occurred while running r.mapcalc")
