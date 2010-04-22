@@ -1283,8 +1283,8 @@ class MultiImportDialog(wx.Dialog):
         if self.importType == 'gdal':
             cmd = ['d.rast',
                    'map=%s' % name]
-            if UserSettings.Get(group='cmd', key='rasterOpaque', subkey='enabled'):
-                cmd.append('-n')
+            if UserSettings.Get(group='cmd', key='rasterOverlay', subkey='enabled'):
+                cmd.append('-o')
             
             item = maptree.AddLayer(ltype='raster',
                                     lname=name,
