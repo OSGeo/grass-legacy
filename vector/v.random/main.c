@@ -8,7 +8,7 @@
  *
  * PURPOSE:      Randomly generate a 2D/3D GRASS vector points map.
  *
- * COPYRIGHT:    (C) 2003-2007 by the GRASS Development Team
+ * COPYRIGHT:    (C) 2003-2007, 2010 by the GRASS Development Team
  *
  *               This program is free software under the
  *               GNU General Public License (>=v2).
@@ -99,6 +99,7 @@ int main(int argc, char *argv[])
     parm.zmin->description =
 	_("Minimum z height (needs -z flag or column name)");
     parm.zmin->answer = "0.0";
+    parm.zmin->guisection = _("3D output");
 
     parm.zmax = G_define_option();
     parm.zmax->key = "zmax";
@@ -107,19 +108,24 @@ int main(int argc, char *argv[])
     parm.zmax->description =
 	_("Maximum z height (needs -z flag or column name)");
     parm.zmax->answer = "0.0";
-
-    parm.zcol = G_define_standard_option(G_OPT_COLUMN);
+    parm.zmax->guisection = _("3D output");
+    
+    parm.zcol = G_define_option();
     parm.zcol->key = "column";
-    parm.zcol->required = NO;
+    parm.zcol->type = TYPE_STRING;
     parm.zcol->multiple = NO;
+    parm.zcol->required = NO;
     parm.zcol->label =
 	_("Column name and type (i.e. INTEGER, DOUBLE PRECISION) for z values");
     parm.zcol->description =
-	_("Writes Z data to column instead of 3D vector");
+	_("If type is not given then DOUBLE PRECISION is used. "
+	  "Writes Z data to column instead of 3D vector.");
+    parm.zcol->guisection = _("3D output");
 
     flag.z = G_define_flag();
     flag.z->key = 'z';
     flag.z->description = _("Create 3D output");
+    flag.z->guisection = _("3D output");
 
     flag.drand48 = G_define_flag();
     flag.drand48->key = 'd';
@@ -151,6 +157,8 @@ int main(int argc, char *argv[])
 
     /* Do we need to write random values into attribute table? */
     if (parm.zcol->answer) {
+	char **token = G_tokenize(parm.zcol->answer, " ");
+	
 	Fi = Vect_default_field_info(&Out, 1, NULL, GV_1TABLE);
 	driver =
 	    db_start_driver_open_database(Fi->driver,
@@ -163,8 +171,15 @@ int main(int argc, char *argv[])
 	db_begin_transaction(driver);
 
 	db_init_string(&sql);
-	sprintf(buf, "create table %s (cat integer, %s double precision)", Fi->table,
-		parm.zcol->answer);
+	if (G_number_of_tokens(token) > 1) {
+	    sprintf(buf, "create table %s (cat integer, %s)", Fi->table,
+		    parm.zcol->answer);
+	}
+	else {
+	    G_verbose_message(_("Using 'double precision' for column <%s>"), parm.zcol->answer);
+	    sprintf(buf, "create table %s (cat integer, %s double precision)", Fi->table,
+		    parm.zcol->answer);
+	}
 	db_set_string(&sql, buf);
 	Vect_map_add_dblink(&Out, 1, NULL, Fi->table, "cat", Fi->database,
 			    Fi->driver);
@@ -219,6 +234,7 @@ int main(int argc, char *argv[])
 	    G_fatal_error(_("You have created unsupported column type. This module supports only INTEGER"
 			   " and DOUBLE PRECISION column types."));
 	}
+	G_free_tokens(token);
     }
 
     Vect_hist_command(&Out);
