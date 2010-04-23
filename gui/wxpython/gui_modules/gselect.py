@@ -11,10 +11,11 @@ Classes:
  - DriverSelect
  - DatabaseSelect
  - ColumnSelect
+ - SubGroupSelect
 
-(C) 2007-2008 by the GRASS Development Team This program is free
-software under the GNU General Public License (>=v2). Read the file
-COPYING that comes with GRASS for details.
+(C) 2007-2010 by the GRASS Development Team
+This program is free software under the GNU General Public License
+(>=v2). Read the file COPYING that comes with GRASS for details.
 
 @author Michael Barton
 @author Martin Landa <landa.martin gmail.com>
@@ -684,3 +685,30 @@ class DbColumnSelect(wx.ComboBox):
         # columnchoices.sort()
         self.SetItems(columnchoices)
     
+class SubGroupSelect(wx.ComboBox):
+    """!Widget for selecting subgroups"""
+    def __init__(self, parent, id = wx.ID_ANY, size = globalvar.DIALOG_GSELECT_SIZE, 
+                 **kwargs):
+        super(SubGroupSelect, self).__init__(parent, id, size = size, 
+                                             style = wx.CB_READONLY, **kwargs)
+        self.SetName("SubGroupSelect")
+
+    def Insert(self, group):
+        """!Insert subgroups for defined group"""
+        if not group:
+            return
+        gisenv = grass.gisenv()
+        try:
+            name, mapset = group.split('@', 1)
+        except ValueError:
+            name = group
+            mapset = gisenv['MAPSET']
+        
+        path = os.path.join(gisenv['GISDBASE'], gisenv['LOCATION_NAME'], mapset,
+                            'group', name, 'subgroup')
+        try:
+            self.SetItems(os.listdir(path))
+        except OSError:
+            self.SetItems([])
+        self.SetValue('')
+        
