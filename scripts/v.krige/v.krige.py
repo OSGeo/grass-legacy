@@ -212,7 +212,8 @@ class Controller:
             # obtain the model name. *Too* complicated to get the string instead of level, unlike R does.
             VariogramAsDF = robjects.r['as.data.frame'](VariogramModel.rx('var_model')[0]) # force conversion
             ModelDF = VariogramAsDF.rx('model')[0]
-            Variograms['model'] = robjects.r.levels(ModelDF).subset(ModelDF[1])[0]
+            #Variograms['model'] = robjects.r.levels(ModelDF).subset(ModelDF[1])[0]
+            Variograms['model'] = ModelDF.levels[ModelDF[1] - 1]
         else:
             DataVariogram = robjects.r['variogram'](formula, inputdata)
             VariogramModel = robjects.r['fit.variogram'](DataVariogram,
