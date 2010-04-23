@@ -397,7 +397,7 @@ class RBookgstatPanel(RBookPanel):
             self.SetSizerAndFit(self.Sizer)
             self.VariogramCheckBox.Bind(wx.EVT_CHECKBOX, self.HideOptions)
             self.VariogramCheckBox.SetValue(state = True) # check it by default
-        
+
         ModelFactor = robjects.r.vgm().rx('long')
         ModelList = robjects.r.levels(ModelFactor[0])
         #@FIXME: no other way to let the Python pick it up..
