@@ -33,7 +33,7 @@ except ImportError:
     sys.exit(_("No GRASS-python library found."))
 ### wxGUI imports
 
-GUIModulesPath = os.path.join(os.getenv("GISBASE"), "etc", "gui", "wxpython", "gui_modules")
+GUIModulesPath = os.path.join(os.getenv("GISBASE"), "etc", "wxpython", "gui_modules")
 sys.path.append(GUIModulesPath)
 
 import globalvar
