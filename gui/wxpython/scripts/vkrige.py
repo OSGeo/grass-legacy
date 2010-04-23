@@ -33,10 +33,8 @@ except ImportError:
     sys.exit(_("No GRASS-python library found."))
 ### wxGUI imports
 
-GUIModulesPath = os.path.join(os.getenv("GISBASE"), "etc", "wxpython", "gui_modules")
+GUIModulesPath = os.path.join(os.getenv("GISBASE"), "etc", "gui", "wxpython", "gui_modules")
 sys.path.append(GUIModulesPath)
-GUIPath = os.path.join(os.getenv("GISBASE"), "etc", "wxpython")
-sys.path.append(GUIPath)
 
 import globalvar
 if not os.getenv("GRASS_WXBUNDLED"):
@@ -399,8 +397,8 @@ class RBookgstatPanel(RBookPanel):
             self.SetSizerAndFit(self.Sizer)
             self.VariogramCheckBox.Bind(wx.EVT_CHECKBOX, self.HideOptions)
             self.VariogramCheckBox.SetValue(state = True) # check it by default
-
-        ModelFactor = robjects.r.vgm().r['long']
+        
+        ModelFactor = robjects.r.vgm().rx('long')
         ModelList = robjects.r.levels(ModelFactor[0])
         #@FIXME: no other way to let the Python pick it up..
         # and this is te wrong place where to load this list. should be at the very beginning.

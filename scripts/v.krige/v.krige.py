@@ -149,8 +149,8 @@ class Controller:
         if "x" not in robjects.r.names(Rpointmap): 
             # extract coordinates with S4 method
             coordinatesPreDF = robjects.r['as.data.frame'](robjects.r.coordinates(Rpointmap))
-            coordinatesDF = robjects.r['data.frame'](x = coordinatesPreDF.r['coords.x1'][0],
-                                                     y = coordinatesPreDF.r['coords.x2'][0])
+            coordinatesDF = robjects.r['data.frame'](x = coordinatesPreDF.rx('coords.x1')[0],
+                                                     y = coordinatesPreDF.rx('coords.x2')[0])
             # match coordinates with data slot of SpatialPointsDataFrame - maptools function
             # match is done on row.names
             Rpointmap = robjects.r.spCbind(Rpointmap, coordinatesDF)
@@ -176,8 +176,8 @@ class Controller:
 
         # addition of coordinates columns into dataframe.
         coordinatesDF = robjects.r['as.data.frame'](robjects.r.coordinates(Grid))
-        data = robjects.r['data.frame'](x = coordinatesDF.r['s1'][0],
-                                        y = coordinatesDF.r['s2'][0],
+        data = robjects.r['data.frame'](x = coordinatesDF.rx('s1')[0],
+                                        y = coordinatesDF.rx('s2')[0],
                                         k = robjects.r.rep(1, Region['cols']*Region['rows']))
         GridPredicted = robjects.r.SpatialGridDataFrame(Grid,
                                                         data,
@@ -188,8 +188,8 @@ class Controller:
         if isblock is True:
             predictor = 'x+y'
         else:
-            predictor = 1
-        Formula = robjects.r['as.formula'](robjects.r.paste(column, "~", predictor))
+            predictor = '1'
+        Formula = robjects.Formula(column + "~" + predictor)
         #print Formula
         return Formula
     
@@ -207,11 +207,11 @@ class Controller:
             
             VariogramModel = robjects.r.autofitVariogram(formula, inputdata, **DottedParams)
             #print robjects.r.warnings()
-            Variograms['datavariogram'] = VariogramModel.r['exp_var'][0]
-            Variograms['variogrammodel'] = VariogramModel.r['var_model'][0]
+            Variograms['datavariogram'] = VariogramModel.rx('exp_var')[0]
+            Variograms['variogrammodel'] = VariogramModel.rx('var_model')[0]
             # obtain the model name. *Too* complicated to get the string instead of level, unlike R does.
-            VariogramAsDF = robjects.r['as.data.frame'](VariogramModel.r['var_model'][0]) # force conversion
-            ModelDF = VariogramAsDF.r['model'][0]
+            VariogramAsDF = robjects.r['as.data.frame'](VariogramModel.rx('var_model')[0]) # force conversion
+            ModelDF = VariogramAsDF.rx('model')[0]
             Variograms['model'] = robjects.r.levels(ModelDF).subset(ModelDF[1])[0]
         else:
             DataVariogram = robjects.r['variogram'](formula, inputdata)
@@ -261,7 +261,9 @@ class Controller:
         
         logger.message(_("Fitting variogram..."))
         isblock = block is not ''
+        logger.message(column)
         Formula = self.ComposeFormula(column, isblock, InputData)
+        logger.message(Formula)
         if globals()["Variogram"] is None:
             globals()["Variogram"] = self.FitVariogram(Formula,
                                           InputData,
