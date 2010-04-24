@@ -4,9 +4,9 @@
 #
 # MODULE:       g.extension
 # AUTHOR(S):   	Markus Neteler
-# PURPOSE:      tool to download and install extensions from GRASS Addons SVN into 
+# PURPOSE:      Tool to download and install extensions from GRASS Addons SVN into 
 #               local GRASS installation
-# COPYRIGHT:    (C) 2009 by the Markus Neteler, GRASS Development Team
+# COPYRIGHT:    (C) 2009-2010 by the Markus Neteler, GRASS Development Team
 #
 #               This program is free software under the GNU General Public
 #               License (>=v2). Read the file COPYING that comes with GRASS
@@ -18,8 +18,7 @@
 #%Module
 #% label: Tool to maintain GRASS extensions in local GRASS installation.
 #% description: Downloads, installs extensions from GRASS Addons SVN repository into local GRASS installation or removes installed extensions.
-#% keywords: installation
-#% keywords: extensions
+#% keywords: general, extensions
 #%End
 
 #%option
@@ -35,7 +34,7 @@
 #% key_desc: name
 #% description: Operation to be performed
 #% required: no
-#% options: add
+#% options: add,remove
 #% answer: add
 #%end
 #%option
@@ -51,12 +50,8 @@
 #% type: string
 #% key_desc: path
 #% description: Prefix where to install extension
-#% answer: ${GISBASE}
+#% answer: $GRASS_ADDON_PATH
 #% required: yes
-#%end
-#%flag
-#% key: a
-#% description: Install to $GRASS_ADDON_PATH instead of using prefix option
 #%end
 #%flag
 #% key: l
@@ -77,21 +72,8 @@ fi
 # definitions
 
 SVNURL_ADDONS=${GIS_OPT_SVNURL}
-
-if [ $GIS_FLAG_A -eq 0 ] ; then
-   if [ "$GIS_OPT_PREFIX" = '${GISBASE}' ] ; then
-      MYINST_DIR=${GISBASE}
-   else
-      MYINST_DIR=${GIS_OPT_PREFIX}
-   fi
-else
-   if [ -d "$GRASS_ADDON_PATH" ] ; then
-      MYINST_DIR="$GRASS_ADDON_PATH"
-   else
-      g.message -e '$GRASS_ADDON_PATH does not exist'
-      exit 1
-   fi
-fi
+MODULE="$GIS_OPT_EXTENSION"
+PREFIX="$GIS_OPT_PREFIX"
 
 #make a temporary directory
 TMPDIR="`g.tempfile pid=$$`"
@@ -158,8 +140,6 @@ expand_module_class_name()
  fi
 }
 
-MODULE="$GIS_OPT_EXTENSION"
-
 if [ `echo "$MODULE" | grep -c '/'` -eq 0 ] ; then
    CLASSCHAR=`echo $MODULE | cut -d'.' -f1`
    MODULECLASS=`expand_module_class_name $CLASSCHAR`
@@ -211,6 +191,37 @@ if [ -z "$GIS_OPT_EXTENSION" -a $GIS_FLAG_L -eq 0 ] ; then
    exit 1
 fi
 
+if [ "$PREFIX" == '$GRASS_ADDON_PATH' ] ; then
+    if [ -z "$GRASS_ADDON_PATH" ] ; then
+        g.message -e "GRASS_ADDON_PATH is not defined"
+        exit 1
+    fi
+    PREFIX=$GRASS_ADDON_PATH
+fi
+
+if [ -d "$PREFIX" ] ; then
+    MYINST_DIR="$PREFIX"
+else
+    g.message -e "'$PREFIX' does not exist"
+    exit 1
+fi
+
+if [ "$GIS_OPT_OPERATION" == "remove" ] ; then
+   g.message message="Removing <$MODULE>..."
+   
+   if test -f "${MYINST_DIR}/bin/${MODULE}" ; then
+       rm -f "${MYINST_DIR}/bin/${MODULE}"
+   fi
+   if test -f "${MYINST_DIR}/docs/html/${MODULE}.html" ; then
+       rm -f "${MYINST_DIR}/docs/html/${MODULE}.html"
+   fi
+   if test -f "${MYINST_DIR}/man/man1/${MODULE}.1" ; then
+       rm -f "${MYINST_DIR}/man/man1/${MODULE}.1"
+   fi
+
+   exit 0
+fi
+
 g.message -d "svn co [$SVNURL_ADDONS]/[$MODULECLASS]/[$MODULE]"
 
 cd "$TMPDIR"
@@ -223,7 +234,7 @@ if [ $? -ne 0 ] ; then
 fi
 
 cd "$TMPDIR/$MODULE"
-g.message message="Compiling ${MODULE}..."
+g.message message="Compiling <${MODULE}>..."
 make MODULE_TOPDIR="$GISBASE"
 if [ $? -ne 0 ] ; then
    g.message -e message="Compilation failed, sorry. Please check above error messages."
@@ -253,7 +264,7 @@ else
       if test -f "${MYINST_DIR}/bin/${MODULE}" ; then
          rm -f "${MYINST_DIR}/bin/${MODULE}"
       fi
-      make MODULE_TOPDIR="$GISBASE" INST_DIR="$MYINST_DIR"
+      make MODULE_TOPDIR="$GISBASE" INST_DIR="$MYINST_DIR" install
       if [ $? -ne 0 ] ; then
          g.message -e message="Installation failed, sorry. Please check above error messages."
          cleanup
@@ -263,10 +274,6 @@ else
 	g.message -e "Module did not install properly"
 	cleanup
 	exit 1
-      fi
-      if [ $GIS_FLAG_A -eq 1 ] ; then
-         \mv "${MYINST_DIR}/bin/${MODULE}" "$MYINST_DIR"/
-	 rmdir "${MYINST_DIR}/bin"
       fi
    fi
 fi
