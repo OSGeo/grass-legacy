@@ -38,7 +38,7 @@ class NvizToolWindow(wx.Frame):
 
     @todo integrate with Map display
     """
-    def __init__(self, parent=None, id=wx.ID_ANY, title=_("3d view tools"),
+    def __init__(self, parent=None, id=wx.ID_ANY, title=_("3D View Tools"),
                  pos=wx.DefaultPosition, size=wx.DefaultSize,
                  mapWindow=None, 
                  style=wx.CAPTION|wx.MINIMIZE_BOX|wx.RESIZE_BORDER):
@@ -1058,7 +1058,7 @@ class NvizToolWindow(wx.Frame):
         self.win['settings']['view']['height'] = {}
         hvals = UserSettings.Get(group='nviz', key='view', subkey='height')
         gridSizer.Add(item=wx.StaticText(parent=panel, id=wx.ID_ANY,
-                                         label=_("Height")),
+                                         label=_("Height:")),
                       pos=(2, 0), flag=wx.ALIGN_CENTER_VERTICAL)
         gridSizer.Add(item=wx.StaticText(parent=panel, id=wx.ID_ANY,
                                          label=_("(step)")),
@@ -1077,7 +1077,7 @@ class NvizToolWindow(wx.Frame):
         tvals = UserSettings.Get(group='nviz', key='view', subkey='twist')
         itvals = UserSettings.Get(group='nviz', key='view', subkey='twist', internal=True)
         gridSizer.Add(item=wx.StaticText(parent=panel, id=wx.ID_ANY,
-                                         label=_("Twist")),
+                                         label=_("Twist:")),
                       pos=(3, 0), flag=wx.ALIGN_CENTER_VERTICAL)
         gridSizer.Add(item=wx.StaticText(parent=panel, id=wx.ID_ANY,
                                          label=_("(value)")),
@@ -1107,7 +1107,7 @@ class NvizToolWindow(wx.Frame):
         self.win['settings']['view']['z-exag'] = {}
         zvals = UserSettings.Get(group='nviz', key='view', subkey='z-exag')
         gridSizer.Add(item=wx.StaticText(parent=panel, id=wx.ID_ANY,
-                                         label=_("Z-exag")),
+                                         label=_("Z-exag:")),
                       pos=(4, 0), flag=wx.ALIGN_CENTER_VERTICAL)
         gridSizer.Add(item=wx.StaticText(parent=panel, id=wx.ID_ANY,
                                          label=_("(value)")),
@@ -1122,7 +1122,7 @@ class NvizToolWindow(wx.Frame):
                       flag=wx.ALIGN_CENTER_VERTICAL)
 
         gridSizer.Add(item=wx.StaticText(parent=panel, id=wx.ID_ANY,
-                                         label=_("(step):")),
+                                         label=_("(step)")),
                       pos=(4, 3), flag=wx.ALIGN_CENTER_VERTICAL | wx.ALIGN_RIGHT)
 
         zstep = wx.SpinCtrl(parent=panel, id=wx.ID_ANY, size=(65, -1),
@@ -1138,23 +1138,7 @@ class NvizToolWindow(wx.Frame):
         pageSizer.Add(item=boxSizer, proportion=0,
                       flag=wx.EXPAND | wx.LEFT | wx.RIGHT | wx.BOTTOM,
                       border=5)
-
-        #
-        # surface
-        #
-        self.win['settings']['surface'] = {}
-        box = wx.StaticBox (parent=panel, id=wx.ID_ANY,
-                            label=" %s " % (_("Surface")))
-        boxSizer = wx.StaticBoxSizer(box, wx.VERTICAL)
-        gridSizer = wx.GridBagSizer(vgap=3, hgap=3)
-
-
-        boxSizer.Add(item=gridSizer, proportion=1,
-                  flag=wx.ALL | wx.EXPAND, border=3)
-        pageSizer.Add(item=boxSizer, proportion=0,
-                      flag=wx.EXPAND | wx.LEFT | wx.RIGHT | wx.BOTTOM,
-                      border=5)
-
+        
         #
         # vector lines
         #
