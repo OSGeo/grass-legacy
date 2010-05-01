@@ -583,7 +583,7 @@ int main(int argc, char *argv[])
 	/* TODO: Do not hardcode temp paths */
 	strcpy(TMP_NULL, "/tmp/grass.extension.log.XXXXXX");	/* TMP_NULL is a global variable */
 	mkstemp(TMP_NULL);
-	fd = open(TMP_NULL, O_CREAT);
+	fd = open(TMP_NULL, O_CREAT, 0777);
 	if (fd == -1) {
 	    print_error(ERR_TMPFILE, "could not create temp file: %s",
 			strerror(errno));
