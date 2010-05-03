@@ -57,6 +57,8 @@ int do_astar(void)
 
 	seg_get(&astar_pts, (char *)&point, 0, doer);
 
+	alt_val = heap_pos.ele;
+
 	/* drop astar_pts[doer] from heap */
 	drop_pt();
 
@@ -71,8 +73,6 @@ int do_astar(void)
 	c = point.c;
 
 	bseg_put(&worked, &one, r, c);
-	/* cseg_get(&alt, &alt_val, r, c); */
-	alt_val = heap_pos.ele;
 
 	/* check all neighbours, breadth first search */
 	for (ct_dir = 0; ct_dir < sides; ct_dir++) {
@@ -97,14 +97,14 @@ int do_astar(void)
 		    if (ct_dir > 3 && slope[ct_dir] > 0) {
 			if (slope[nbr_ew[ct_dir]] > 0) {
 			    /* slope to ew nbr > slope to center */
-			    if (slope[ct_dir] <=
+			    if (slope[ct_dir] <
 				get_slope2(alt_nbr[nbr_ew[ct_dir]],
 					   alt_nbr[ct_dir], ew_res))
 				skip_diag = 1;
 			}
 			if (!skip_diag && slope[nbr_ns[ct_dir]] > 0) {
 			    /* slope to ns nbr > slope to center */
-			    if (slope[ct_dir] <=
+			    if (slope[ct_dir] <
 				get_slope2(alt_nbr[nbr_ns[ct_dir]],
 					   alt_nbr[ct_dir], ns_res))
 				skip_diag = 1;
