@@ -241,7 +241,6 @@ if [ $CREATE_POINTS -eq 1 ] ; then
     if [ $WPT -eq 1 ] ; then
 	g.message "Loading Waypoints from <$GIS_OPT_INPUT>..." 
 	TYPE="-w"
-	EXITCODE=$?
     elif [ $RTE -eq 1 ] ; then
 	g.message "Loading Routes as points from <$GIS_OPT_INPUT>..." 
 	TYPE="-r"
@@ -264,11 +263,9 @@ else
     if [ $RTE -eq 1 ] ; then
 	g.message "Loading Routes from <$GIS_OPT_INPUT>..." 
 	TYPE="-r"
-	EXITCODE=$?
     elif [ $TRK -eq 1 ] ; then
 	g.message "Loading Tracks from <$GIS_OPT_INPUT>..." 
 	TYPE="-t"
-	EXITCODE=$?
     fi
     gpsbabel $TYPE -i $GIS_OPT_FORMAT -f "$GPSdevice" $PROGVERBOSE \
 	-o gpx -F "$TEMPFILE".gpx
