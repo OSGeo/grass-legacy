@@ -54,14 +54,14 @@ int main(int argc, char *argv[])
     /* Set description */
     module = G_define_module();
     module->keywords = _("raster, hydrology");
-    module->description = _("Creates watershed basins.");
+    module->description = _("Watershed basin analysis program");
 
     opt1 = G_define_standard_option(G_OPT_R_ELEV);
     opt1->guisection = _("Input_options");
 
     opt2 = G_define_standard_option(G_OPT_R_INPUT);
     opt2->key = "depression";
-    opt2->label = _("Name of input depressions raster map");
+    opt2->label = _("Name of input raster map with real depressions");
     opt2->description = _("All non-NULL and non-zero cells are considered as real depressions");
     opt2->required = NO;
     opt2->guisection = _("Input_options");
