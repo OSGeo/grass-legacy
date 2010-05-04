@@ -135,6 +135,13 @@ if [ ! -x "`which awk`" ] ; then
     exit 1
 fi
 
+if [ `ogr2ogr --formats | grep -cw GPX` -eq 1 ] ; then
+    g.message -v "OGR is GPX capable."
+    OGR_GPX=1
+else
+    OGR_GPX=0
+fi
+
 #### set temporary files
 TEMPFILE="`g.tempfile pid=$$`"
 if [ $? -ne 0 ] || [ -z "$TEMPFILE" ] ; then
@@ -362,7 +369,18 @@ else # CREATE_LINES
 
     #### prepare line components
     if [ $RTE -eq 1 ] ; then
-	
+
+	if [ $ORG_GPX -eq 1 ] ; then
+	    # http://www.gdal.org/ogr/drv_gpx.html
+	    # make it really easy ; but need to reproject from WGS84/LL.
+	    #   use '-c location=', then v.proj it in, then rm -rf the temp locn?
+	    #? GPX_USE_EXTENSIONS=YES
+	    #? export GPX_USE_EXTENSIONS
+	    #v.in.ogr dsn="$TEMPFILE.gpx" out=$map_name
+	    echo
+	fi
+
+
 	# this part is quite difficult using gpx... I'll explain all I've done
 	# if someone has any suggest please mail!!!!
 
