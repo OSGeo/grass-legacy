@@ -141,7 +141,7 @@ class GMConsole(wx.SplitterWindow):
                  **kwargs):
         wx.SplitterWindow.__init__(self, parent, id, style = style, *kwargs)
         self.SetName("GMConsole")
-
+        
         self.panelOutput = wx.Panel(parent = self, id = wx.ID_ANY)
         self.panelPrompt = wx.Panel(parent = self, id = wx.ID_ANY)
         
@@ -182,7 +182,7 @@ class GMConsole(wx.SplitterWindow):
         self.cmd_output.Bind(wx.EVT_TIMER, self.OnProcessPendingOutputWindowEvents)
         self.Bind(EVT_CMD_RUN, self.OnCmdRun)
         self.Bind(EVT_CMD_DONE, self.OnCmdDone)
-
+        
         #
         # search & command prompt
         #
@@ -204,12 +204,12 @@ class GMConsole(wx.SplitterWindow):
         #
         self.cmd_stdout = GMStdout(self)
         self.cmd_stderr = GMStderr(self)
-
+        
         #
         # thread
         #
         self.cmdThread = CmdThread(self, self.requestQ, self.resultQ)
-
+        
         #
         # buttons
         #
@@ -236,7 +236,7 @@ class GMConsole(wx.SplitterWindow):
         self.search.Bind(wx.EVT_TEXT,              self.OnSearchModule)
         
         self.__layout()
-
+        
     def __layout(self):
         """!Do layout"""
         OutputSizer = wx.BoxSizer(wx.VERTICAL)
@@ -276,10 +276,10 @@ class GMConsole(wx.SplitterWindow):
         
         OutputSizer.Fit(self)
         OutputSizer.SetSizeHints(self)
-
+        
         PromptSizer.Fit(self)
         PromptSizer.SetSizeHints(self)
-
+        
         self.panelOutput.SetSizer(OutputSizer)
         self.panelPrompt.SetSizer(PromptSizer)
         
