@@ -641,7 +641,9 @@ int main(int argc, char *argv[])
     nareas = Vect_get_num_areas(&Out);
     Areas = (char *)G_calloc(nareas + 1, sizeof(char));
 
+    G_message(_("Calculating centroids for areas..."));
     for (area = 1; area <= nareas; area++) {
+	G_percent(area, nareas, 2);
 	G_debug(3, "area = %d", area);
 
 /*** BUG *** if dynamic bufcol was used, "buffer" will only hold last value ***/
@@ -681,7 +683,9 @@ int main(int argc, char *argv[])
     G_debug(3, "nlines = %d", nlines);
     Lines = (char *)G_calloc(nlines + 1, sizeof(char));
 
+    G_message(_("Generating list of boundaries to be deleted..."));
     for (line = 1; line <= nlines; line++) {
+	G_percent(line, nlines, 2);
 	int j, side[2], areas[2];
 
 	G_debug(3, "line = %d", line);
@@ -711,7 +715,9 @@ int main(int argc, char *argv[])
     G_free(Areas);
 
     /* Delete boundaries */
+    G_message(_("Deleting boundaries..."));
     for (line = 1; line <= nlines; line++) {
+	G_percent(line, nlines, 2);
 	if (Lines[line]) {
 	    G_debug(3, " delete line %d", line);
 	    Vect_delete_line(&Out, line);
@@ -724,7 +730,10 @@ int main(int argc, char *argv[])
     Vect_reset_cats(Cats);
     Vect_cat_set(Cats, 1, 1);
     nareas = Vect_get_num_areas(&Out);
+
+    G_message(_("Calculating centroids for areas..."));    
     for (area = 1; area <= nareas; area++) {
+	G_percent(area, nareas, 2);
 	double x, y;
 
 	G_debug(3, "area = %d", area);
