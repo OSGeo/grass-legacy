@@ -629,7 +629,7 @@ int range_check(double min, double max, GDALDataType datatype)
 	    G_warning(_("GDAL datatype: %s, range: %d - %d"),
 		      GDALGetDataTypeName(datatype), TYPE_BYTE_MIN,
 		      TYPE_BYTE_MAX);
-	    G_warning(_("Range to be exported: %f - %f"), min, max);
+	    G_warning(_("Range to be exported: %g - %g"), min, max);
 	    return 1;
 	}
 	else
@@ -641,7 +641,7 @@ int range_check(double min, double max, GDALDataType datatype)
 	    G_warning(_("GDAL datatype: %s, range: %d - %d"),
 		      GDALGetDataTypeName(datatype), TYPE_UINT16_MIN,
 		      TYPE_UINT16_MAX);
-	    G_warning(_("Range to be exported: %f - %f"), min, max);
+	    G_warning(_("Range to be exported: %g - %g"), min, max);
 	    return 1;
 	}
 	else
@@ -654,7 +654,7 @@ int range_check(double min, double max, GDALDataType datatype)
 	    G_warning(_("GDAL datatype: %s, range: %d - %d"),
 		      GDALGetDataTypeName(datatype), TYPE_INT16_MIN,
 		      TYPE_INT16_MAX);
-	    G_warning(_("Range to be exported: %f - %f"), min, max);
+	    G_warning(_("Range to be exported: %g - %g"), min, max);
 	    return 1;
 	}
 	else
@@ -667,7 +667,7 @@ int range_check(double min, double max, GDALDataType datatype)
 	    G_warning(_("GDAL datatype: %s, range: %d - %d"),
 		      GDALGetDataTypeName(datatype), TYPE_INT32_MIN,
 		      TYPE_INT32_MAX);
-	    G_warning(_("Range to be exported: %f - %f"), min, max);
+	    G_warning(_("Range to be exported: %g - %g"), min, max);
 	    return 1;
 	}
 	else
@@ -679,7 +679,7 @@ int range_check(double min, double max, GDALDataType datatype)
 	    G_warning(_("GDAL datatype: %s, range: %u - %u"),
 		      GDALGetDataTypeName(datatype), TYPE_UINT32_MIN,
 		      TYPE_UINT32_MAX);
-	    G_warning(_("Range to be exported: %f - %f"), min, max);
+	    G_warning(_("Range to be exported: %g - %g"), min, max);
 	    return 1;
 	}
 	else
