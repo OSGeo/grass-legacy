@@ -1,22 +1,28 @@
 #include <stdlib.h>
+#include <string.h>
 #include <unistd.h>
 #include "Gwater.h"
 #include <grass/gis.h>
 #include <grass/glocale.h>
 
+int ele_round(double);
 
 int init_vars(int argc, char *argv[])
 {
     SHORT r, c;
-    int fd, num_cseg_total, num_open_segs;
+    int fd, num_cseg_total, num_open_segs, n_array_segs;
     int seg_rows, seg_cols;
     double segs_mb;
 
     /* int page_block, num_cseg; */
     int max_bytes;
-    CELL *buf, alt_value, wat_value, asp_value, worked_value;
-    extern FILE *fopen();
-    char MASK_flag, *do_exist();
+    CELL *buf, alt_value, asp_value, worked_value, block_value;
+    DCELL wat_value;
+    DCELL dvalue;
+    char MASK_flag;
+    void *elebuf, *ptr;
+    int ele_map_type;
+    size_t ele_size;
 
     G_gisinit(argv[0]);
     ele_flag = wat_flag = asp_flag = pit_flag = run_flag = ril_flag = 0;
@@ -24,11 +30,16 @@ int init_vars(int argc, char *argv[])
     zero = sl_flag = sg_flag = ls_flag = er_flag = bas_thres = 0;
     nxt_avail_pt = 0;
     /* dep_flag = 0; */
-    max_length = dzero = 0.0;
+    max_length = d_zero = 0.0;
+    d_one = 1.0;
     ril_value = -1.0;
     /* dep_slope = 0.0; */
     max_bytes = 0;
     sides = 8;
+    mfd = 1;
+    c_fac = 5;
+    abs_acc = 0;
+    ele_scale = 1;
     segs_mb = 300;
     for (r = 1; r < argc; r++) {
 	if (sscanf(argv[r], "el=%[^\n]", ele_name) == 1)
@@ -73,8 +84,16 @@ int init_vars(int argc, char *argv[])
 	    if (sides != 4)
 		usage(argv[0]);
 	}
+	else if (sscanf(argv[r], "conv=%d", &c_fac) == 1) ;
+	else if (strcmp(argv[r], "-s") == 0)
+	    mfd = 0;
+	else if (strcmp(argv[r], "-a") == 0)
+	    abs_acc = 1;
 	else
 	    usage(argv[0]);
+    }
+    if (mfd == 1 && (c_fac < 1 || c_fac > 10)) {
+	G_fatal_error("Convergence factor must be between 1 and 10.");
     }
     if ((ele_flag != 1)
 	||
@@ -96,27 +115,11 @@ int init_vars(int argc, char *argv[])
 	      tot_parts);
 
     this_mapset = G_mapset();
-    if (asp_flag)
-	do_legal(asp_name);
-    if (bas_flag)
-	do_legal(bas_name);
-    if (seg_flag)
-	do_legal(seg_name);
-    if (haf_flag)
-	do_legal(haf_name);
-    if (sl_flag)
-	do_legal(sl_name);
-    if (sg_flag)
-	do_legal(sg_name);
-    if (ls_flag)
-	do_legal(ls_name);
     if (sl_flag || sg_flag || ls_flag)
 	er_flag = 1;
-    ele_mapset = do_exist(ele_name);
     /* for sd factor
        if (dep_flag)        {
        if (sscanf (dep_name, "%lf", &dep_slope) != 1)       {
-       dep_mapset = do_exist (dep_name);
        dep_flag = -1;
        }
        }
@@ -124,7 +127,7 @@ int init_vars(int argc, char *argv[])
     G_get_set_window(&window);
     nrows = G_window_rows();
     ncols = G_window_cols();
-    if (max_length <= dzero)
+    if (max_length <= d_zero)
 	max_length = 10 * nrows * window.ns_res + 10 * ncols * window.ew_res;
     if (window.ew_res < window.ns_res)
 	half_res = .5 * window.ew_res;
@@ -137,8 +140,7 @@ int init_vars(int argc, char *argv[])
 
     /* segment parameters: one size fits all. Fine tune? */
     /* Segment rows and cols: 200 */
-    /* 1 segment open for all rasters: 2.86 MB */
-    /* num_open_segs = segs_mb / 2.86 */
+    /* 1 segment open for all rasters: 1.34 MB */
 
     seg_rows = SROW;
     seg_cols = SCOL;
@@ -148,7 +150,7 @@ int init_vars(int argc, char *argv[])
 	G_warning(_("Maximum memory to be used was smaller than 3 MB, set to default = 300 MB."));
     }
 
-    num_open_segs = segs_mb / 2.86;
+    num_open_segs = segs_mb / 1.34;
 
     G_debug(1, "segs MB: %.0f", segs_mb);
     G_debug(1, "region rows: %d", nrows);
@@ -172,26 +174,124 @@ int init_vars(int argc, char *argv[])
     G_debug(1, "  open segments after adjusting:\t%d", num_open_segs);
 
     cseg_open(&alt, seg_rows, seg_cols, num_open_segs);
-    cseg_open(&r_h, seg_rows, seg_cols, num_open_segs);
-    cseg_read_cell(&alt, ele_name, ele_mapset);
-    cseg_read_cell(&r_h, ele_name, ele_mapset);
-    cseg_open(&wat, seg_rows, seg_cols, num_open_segs);
+    cseg_read_cell(&alt, ele_name, "");
+    if (er_flag) {
+	cseg_open(&r_h, seg_rows, seg_cols, num_open_segs);
+	cseg_read_cell(&r_h, ele_name, "");
+    }
+    
+    /* read elevation input and mark NULL/masked cells */
+    bseg_open(&in_list, seg_rows, seg_cols, num_open_segs);
+    bseg_open(&worked, seg_rows, seg_cols, num_open_segs);
+    G_verbose_message("Checking for masked and NULL cells in input elevation <%s>", ele_name);
 
+    /* open elevation input */
+    fd = G_open_cell_old(ele_name, "");
+    if (fd < 0) {
+	G_fatal_error(_("unable to open elevation map layer"));
+    }
+
+    ele_map_type = G_get_raster_map_type(fd);
+    ele_size = G_raster_size(ele_map_type);
+    elebuf = G_allocate_raster_buf(ele_map_type);
+
+    if (ele_map_type == FCELL_TYPE || ele_map_type == DCELL_TYPE)
+	ele_scale = 1000; 	/* should be enough to do the trick */
+
+    /* read elevation input and mark NULL/masked cells */
+    MASK_flag = 0;
+    do_points = nrows * ncols;
+    for (r = 0; r < nrows; r++) {
+	G_get_raster_row(fd, elebuf, r, ele_map_type);
+	ptr = elebuf;
+	for (c = 0; c < ncols; c++) {
+
+	    /* check for masked and NULL cells */
+	    if (G_is_null_value(ptr, ele_map_type)) {
+		bseg_put(&worked, &one, r, c);
+		bseg_put(&in_list, &one, r, c);
+		G_set_c_null_value(&alt_value, 1);
+		do_points--;
+	    }
+	    else {
+		if (ele_map_type == CELL_TYPE) {
+		    alt_value = *((CELL *)ptr);
+		}
+		else if (ele_map_type == FCELL_TYPE) {
+		    dvalue = *((FCELL *)ptr);
+		    dvalue *= ele_scale;
+		    alt_value = ele_round(dvalue);
+		}
+		else if (ele_map_type == DCELL_TYPE) {
+		    dvalue = *((DCELL *)ptr);
+		    dvalue *= ele_scale;
+		    alt_value = ele_round(dvalue);
+		}
+	    }
+	    cseg_put(&alt, &alt_value, r, c);
+	    if (er_flag) {
+		cseg_put(&r_h, &alt_value, r, c);
+	    }
+	    ptr = G_incr_void_ptr(ptr, ele_size);
+	}
+    }
+    G_close_cell(fd);
+    G_free(elebuf);
+    if (do_points < nrows * ncols)
+	MASK_flag = 1;
+    
+    /* initial flow accumulation */
+    dseg_open(&wat, seg_rows, seg_cols, num_open_segs);
     if (run_flag) {
-	run_mapset = do_exist(run_name);
-	cseg_read_cell(&wat, run_name, run_mapset);
+	dseg_read_cell(&wat, run_name, "");
+	if (MASK_flag) {
+	    for (r = 0; r < nrows; r++) {
+		for (c = 0; c < ncols; c++) {
+		    bseg_get(&worked, &worked_value, r, c);
+		    if (worked_value)
+			dseg_put(&wat, &d_zero, r, c);
+		}
+	    }
+	}
     }
     else {
 	for (r = 0; r < nrows; r++) {
 	    for (c = 0; c < ncols; c++)
-		if (-1 == cseg_put(&wat, &one, r, c))
-		    exit(EXIT_FAILURE);
+		if (MASK_flag) {
+		    bseg_get(&worked, &worked_value, r, c);
+		    if (worked_value)
+			dseg_put(&wat, &d_zero, r, c);
+		    else
+			dseg_put(&wat, &d_one, r, c);
+		}
+		else {
+		    if (-1 == dseg_put(&wat, &d_one, r, c))
+			exit(EXIT_FAILURE);
+		}
 	}
     }
     cseg_open(&asp, seg_rows, seg_cols, num_open_segs);
+    /* depression: drainage direction will be set to zero later */
     if (pit_flag) {
-	pit_mapset = do_exist(pit_name);
-	cseg_read_cell(&asp, pit_name, pit_mapset);
+	fd = G_open_cell_old(pit_name, "");
+	if (fd < 0) {
+	    G_fatal_error(_("unable to open depression map layer"));
+	}
+	buf = G_allocate_cell_buf();
+	for (r = 0; r < nrows; r++) {
+	    G_get_c_raster_row(fd, buf, r);
+	    for (c = 0; c < ncols; c++) {
+		asp_value = buf[c];
+		if (!G_is_c_null_value(&asp_value) && asp_value) {
+		    cseg_put(&asp, &one, r, c);
+		}
+		else {
+		    cseg_put(&asp, &zero, r, c);
+		}
+	    }
+	}
+	G_close_cell(fd);
+	G_free(buf);
     }
     else {
 	for (r = 0; r < nrows; r++) {
@@ -202,8 +302,25 @@ int init_vars(int argc, char *argv[])
     }
     bseg_open(&swale, seg_rows, seg_cols, num_open_segs);
     if (ob_flag) {
-	ob_mapset = do_exist(ob_name);
-	bseg_read_cell(&swale, ob_name, ob_mapset);
+	fd = G_open_cell_old(ob_name, "");
+	if (fd < 0) {
+	    G_fatal_error(_("unable to open blocking map layer"));
+	}
+	buf = G_allocate_cell_buf();
+	for (r = 0; r < nrows; r++) {
+	    G_get_c_raster_row(fd, buf, r);
+	    for (c = 0; c < ncols; c++) {
+		block_value = buf[c];
+		if (!G_is_c_null_value(&block_value) && block_value) {
+		    bseg_put(&swale, &one, r, c);
+		}
+		else {
+		    bseg_put(&swale, &zero, r, c);
+		}
+	    }
+	}
+	G_close_cell(fd);
+	G_free(buf);
     }
     else {
 	for (r = 0; r < nrows; r++) {
@@ -212,48 +329,39 @@ int init_vars(int argc, char *argv[])
 	}
     }
     if (ril_flag) {
-	ril_mapset = do_exist(ril_name);
 	dseg_open(&ril, 1, seg_rows * seg_cols, num_open_segs);
-	dseg_read_cell(&ril, ril_name, ril_mapset);
+	dseg_read_cell(&ril, ril_name, "");
     }
-    bseg_open(&in_list, seg_rows, seg_cols, num_open_segs);
-    bseg_open(&worked, seg_rows, seg_cols, num_open_segs);
-    MASK_flag = 0;
-    do_points = nrows * ncols;
-    if (NULL != G_find_file("cell", "MASK", G_mapset())) {
-	MASK_flag = 1;
-	if ((fd = G_open_cell_old("MASK", G_mapset())) < 0) {
-	    G_fatal_error(_("Unable to open MASK"));
-	}
-	else {
-	    buf = G_allocate_cell_buf();
-	    for (r = 0; r < nrows; r++) {
-		G_get_c_raster_row_nomask(fd, buf, r);
-		for (c = 0; c < ncols; c++) {
-		    if (!buf[c]) {
-			do_points--;
-			bseg_put(&worked, &one, r, c);
-			bseg_put(&in_list, &one, r, c);
-		    }
-		}
-	    }
-	    G_close_cell(fd);
-	    G_free(buf);
-	}
-    }
+    
     /* dseg_open(&slp, SROW, SCOL, num_open_segs); */
-    dseg_open(&s_l, seg_rows, seg_cols, num_open_segs);
+
+    /* RUSLE: LS and/or S factor */
+
+    if (er_flag) {
+	dseg_open(&s_l, seg_rows, seg_cols, num_open_segs);
+    }
     if (sg_flag)
 	dseg_open(&s_g, 1, seg_rows * seg_cols, num_open_segs);
     if (ls_flag)
 	dseg_open(&l_s, 1, seg_rows * seg_cols, num_open_segs);
-    seg_open(&astar_pts, 1, do_points, 1, seg_rows * seg_cols,
-	     num_open_segs, sizeof(POINT));
 
-    /* heap_index will track astar_pts in the binary min-heap */
+    if (num_open_segs / 2 > 0)
+	n_array_segs = num_open_segs / 2;
+    else
+	n_array_segs = 1;
+
+    seg_open(&astar_pts, 1, do_points, 1, seg_rows * seg_cols * 2,
+	     n_array_segs, sizeof(POINT));
+
+    /* heap_index will track astar_pts in ternary min-heap */
     /* heap_index is one-based */
-    seg_open(&heap_index, 1, do_points + 1, 1, seg_rows * seg_cols,
-	     num_open_segs, sizeof(HEAP));
+    if (seg_cols * num_open_segs * seg_rows / 10 > 0)
+	n_array_segs = seg_cols * num_open_segs * seg_rows / 10;
+    else
+	n_array_segs = 1;
+
+    seg_open(&heap_index, 1, do_points + 1, 1, n_array_segs,
+	     10, sizeof(HEAP));
 
     G_message(_("SECTION 1b (of %1d): Determining Offmap Flow."), tot_parts);
 
@@ -264,23 +372,32 @@ int init_vars(int argc, char *argv[])
 
     if (MASK_flag) {
 	for (r = 0; r < nrows; r++) {
-	    G_percent(r, nrows, 3);
+	    G_percent(r, nrows, 2);
 	    for (c = 0; c < ncols; c++) {
 		bseg_get(&worked, &worked_value, r, c);
 		if (worked_value) {
-		    cseg_put(&wat, &zero, r, c);
+		    dseg_put(&wat, &d_zero, r, c);
 		}
 		else {
-		    dseg_put(&s_l, &half_res, r, c);
+		    if (er_flag)
+			dseg_put(&s_l, &half_res, r, c);
 		    cseg_get(&asp, &asp_value, r, c);
 		    if (r == 0 || c == 0 || r == nrows - 1 ||
 			c == ncols - 1 || asp_value != 0) {
-			cseg_get(&wat, &wat_value, r, c);
+			dseg_get(&wat, &wat_value, r, c);
 			if (wat_value > 0) {
 			    wat_value = -wat_value;
-			    cseg_put(&wat, &wat_value, r, c);
+			    dseg_put(&wat, &wat_value, r, c);
 			}
-			if (r == 0)
+			/* set depression */
+			if (asp_value) {
+			    asp_value = 0;
+			    if (wat_value < 0) {
+				wat_value = -wat_value;
+				dseg_put(&wat, &wat_value, r, c);
+			    }
+			}
+			else if (r == 0)
 			    asp_value = -2;
 			else if (c == 0)
 			    asp_value = -4;
@@ -288,111 +405,109 @@ int init_vars(int argc, char *argv[])
 			    asp_value = -6;
 			else if (c == ncols - 1)
 			    asp_value = -8;
-			else
-			    asp_value = -1;
 			if (-1 == cseg_put(&asp, &asp_value, r, c))
 			    exit(EXIT_FAILURE);
 			cseg_get(&alt, &alt_value, r, c);
-			add_pt(r, c, -1, -1, alt_value, alt_value);
+			add_pt(r, c, alt_value, alt_value);
 		    }
 		    else if (!bseg_get(&worked, &worked_value, r - 1, c)
 			     && worked_value != 0) {
 			cseg_get(&alt, &alt_value, r, c);
-			add_pt(r, c, -1, -1, alt_value, alt_value);
+			add_pt(r, c, alt_value, alt_value);
 			asp_value = -2;
 			cseg_put(&asp, &asp_value, r, c);
-			cseg_get(&wat, &wat_value, r, c);
+			dseg_get(&wat, &wat_value, r, c);
 			if (wat_value > 0) {
 			    wat_value = -wat_value;
-			    cseg_put(&wat, &wat_value, r, c);
+			    dseg_put(&wat, &wat_value, r, c);
 			}
 		    }
 		    else if (!bseg_get(&worked, &worked_value, r + 1, c)
 			     && worked_value != 0) {
 			cseg_get(&alt, &alt_value, r, c);
-			add_pt(r, c, -1, -1, alt_value, alt_value);
+			add_pt(r, c, alt_value, alt_value);
 			asp_value = -6;
 			cseg_put(&asp, &asp_value, r, c);
-			cseg_get(&wat, &wat_value, r, c);
+			dseg_get(&wat, &wat_value, r, c);
 			if (wat_value > 0) {
 			    wat_value = -wat_value;
-			    cseg_put(&wat, &wat_value, r, c);
+			    dseg_put(&wat, &wat_value, r, c);
 			}
 		    }
 		    else if (!bseg_get(&worked, &worked_value, r, c - 1)
 			     && worked_value != 0) {
 			cseg_get(&alt, &alt_value, r, c);
-			add_pt(r, c, -1, -1, alt_value, alt_value);
+			add_pt(r, c, alt_value, alt_value);
 			asp_value = -4;
 			cseg_put(&asp, &asp_value, r, c);
-			cseg_get(&wat, &wat_value, r, c);
+			dseg_get(&wat, &wat_value, r, c);
 			if (wat_value > 0) {
 			    wat_value = -wat_value;
-			    cseg_put(&wat, &wat_value, r, c);
+			    dseg_put(&wat, &wat_value, r, c);
 			}
 		    }
 		    else if (!bseg_get(&worked, &worked_value, r, c + 1)
 			     && worked_value != 0) {
 			cseg_get(&alt, &alt_value, r, c);
-			add_pt(r, c, -1, -1, alt_value, alt_value);
+			add_pt(r, c, alt_value, alt_value);
 			asp_value = -8;
 			cseg_put(&asp, &asp_value, r, c);
-			cseg_get(&wat, &wat_value, r, c);
+			dseg_get(&wat, &wat_value, r, c);
 			if (wat_value > 0) {
 			    wat_value = -wat_value;
-			    cseg_put(&wat, &wat_value, r, c);
+			    dseg_put(&wat, &wat_value, r, c);
 			}
 		    }
 		    else if (sides == 8 &&
 			     !bseg_get(&worked, &worked_value, r - 1, c - 1)
 			     && worked_value != 0) {
 			cseg_get(&alt, &alt_value, r, c);
-			add_pt(r, c, -1, -1, alt_value, alt_value);
+			add_pt(r, c, alt_value, alt_value);
 			asp_value = -3;
 			cseg_put(&asp, &asp_value, r, c);
-			cseg_get(&wat, &wat_value, r, c);
+			dseg_get(&wat, &wat_value, r, c);
 			if (wat_value > 0) {
 			    wat_value = -wat_value;
-			    cseg_put(&wat, &wat_value, r, c);
+			    dseg_put(&wat, &wat_value, r, c);
 			}
 		    }
 		    else if (sides == 8 &&
 			     !bseg_get(&worked, &worked_value, r - 1, c + 1)
 			     && worked_value != 0) {
 			cseg_get(&alt, &alt_value, r, c);
-			add_pt(r, c, -1, -1, alt_value, alt_value);
+			add_pt(r, c, alt_value, alt_value);
 			asp_value = -1;
 			cseg_put(&asp, &asp_value, r, c);
-			cseg_get(&wat, &wat_value, r, c);
+			dseg_get(&wat, &wat_value, r, c);
 			if (wat_value > 0) {
 			    wat_value = -wat_value;
-			    cseg_put(&wat, &wat_value, r, c);
+			    dseg_put(&wat, &wat_value, r, c);
 			}
 		    }
 		    else if (sides == 8 &&
 			     !bseg_get(&worked, &worked_value, r + 1, c - 1)
 			     && worked_value != 0) {
 			cseg_get(&alt, &alt_value, r, c);
-			add_pt(r, c, -1, -1, alt_value, alt_value);
+			add_pt(r, c, alt_value, alt_value);
 			asp_value = -5;
 			cseg_put(&asp, &asp_value, r, c);
-			cseg_get(&wat, &wat_value, r, c);
+			dseg_get(&wat, &wat_value, r, c);
 			if (wat_value > 0) {
 			    wat_value = -wat_value;
-			    cseg_put(&wat, &wat_value, r, c);
+			    dseg_put(&wat, &wat_value, r, c);
 			}
 		    }
 		    else if (sides == 8 &&
 			     !bseg_get(&worked, &worked_value, r + 1, c + 1)
 			     && worked_value != 0) {
 			cseg_get(&alt, &alt_value, r, c);
-			add_pt(r, c, -1, -1, alt_value, alt_value);
+			add_pt(r, c, alt_value, alt_value);
 			asp_value = -7;
 			cseg_put(&asp, &asp_value, r, c);
-			cseg_get(&wat, &wat_value, r, c);
+			dseg_get(&wat, &wat_value, r, c);
 			if (wat_value > 0) {
 			    wat_value = -wat_value;
-			    cseg_put(&wat, &wat_value, r, c);
+			    dseg_put(&wat, &wat_value, r, c);
 			}
 		    }
 		    else {
@@ -405,20 +520,29 @@ int init_vars(int argc, char *argv[])
     }
     else {
 	for (r = 0; r < nrows; r++) {
-	    G_percent(r, nrows, 3);
+	    G_percent(r, nrows, 2);
 	    for (c = 0; c < ncols; c++) {
 		bseg_put(&worked, &zero, r, c);
-		dseg_put(&s_l, &half_res, r, c);
+		if (er_flag)
+		    dseg_put(&s_l, &half_res, r, c);
 		cseg_get(&asp, &asp_value, r, c);
 		if (r == 0 || c == 0 || r == nrows - 1 ||
 		    c == ncols - 1 || asp_value != 0) {
-		    cseg_get(&wat, &wat_value, r, c);
+		    dseg_get(&wat, &wat_value, r, c);
 		    if (wat_value > 0) {
 			wat_value = -wat_value;
-			if (-1 == cseg_put(&wat, &wat_value, r, c))
+			if (-1 == dseg_put(&wat, &wat_value, r, c))
 			    exit(EXIT_FAILURE);
 		    }
-		    if (r == 0)
+		    /* set depression */
+		    if (asp_value) {
+			asp_value = 0;
+			if (wat_value < 0) {
+			    wat_value = -wat_value;
+			    dseg_put(&wat, &wat_value, r, c);
+			}
+		    }
+		    else if (r == 0)
 			asp_value = -2;
 		    else if (c == 0)
 			asp_value = -4;
@@ -426,12 +550,10 @@ int init_vars(int argc, char *argv[])
 			asp_value = -6;
 		    else if (c == ncols - 1)
 			asp_value = -8;
-		    else
-			asp_value = -1;
 		    if (-1 == cseg_put(&asp, &asp_value, r, c))
 			exit(EXIT_FAILURE);
 		    cseg_get(&alt, &alt_value, r, c);
-		    add_pt(r, c, -1, -1, alt_value, alt_value);
+		    add_pt(r, c, alt_value, alt_value);
 		}
 		else {
 		    bseg_put(&in_list, &zero, r, c);
@@ -440,25 +562,21 @@ int init_vars(int argc, char *argv[])
 	    }
 	}
     }
-    G_percent(r, nrows, 3);	/* finish it */
+    G_percent(r, nrows, 1);	/* finish it */
 
     return 0;
 }
 
-int do_legal(char *file_name)
+int ele_round(double x)
 {
-    if (G_legal_filename(file_name) == -1)
-	G_fatal_error(_("<%s> is an illegal file name"), file_name);
+    int n;
 
-    return 0;
-}
+    if (x >= 0.0)
+	n = x + .5;
+    else {
+	n = -x + .5;
+	n = -n;
+    }
 
-char *do_exist(char *file_name)
-{
-    char *file_mapset = G_find_cell2(file_name, "");
-
-    if (file_mapset == NULL)
-	G_fatal_error(_("Raster map <%s> not found"), file_name);
-
-    return (file_mapset);
+    return n;
 }

@@ -9,16 +9,15 @@ int sg_factor(void)
     CELL downer, low_elev, hih_elev;
     double height, length, S, sin_theta;
 
-    G_message(_("SECTION 4: Length Slope determination."));
+    G_message(_("SECTION 4: RUSLE LS and/or S factor determination."));
     for (r = nrows - 1; r >= 0; r--) {
-/* FIXME: G_percent params count backwards */
-	G_percent(r, nrows, 3);
+	G_percent(nrows - r, nrows, 3);
 	for (c = ncols - 1; c >= 0; c--) {
 	    cseg_get(&alt, &low_elev, r, c);
 	    cseg_get(&r_h, &hih_elev, r, c);
 	    dseg_get(&s_l, &length, r, c);
 	    cseg_get(&asp, &downer, r, c);
-	    height = hih_elev - low_elev;
+	    height = 1.0 * (hih_elev - low_elev) / ele_scale;
 	    if (length > max_length) {
 		height *= max_length / length;
 		length = max_length;
@@ -33,12 +32,12 @@ int sg_factor(void)
 		len_slp_equ(length, sin_theta, S, r, c);
 	    }
 	    if (sg_flag) {
-		S *= 100.0;
+		S *= 100.0; /* factor 100 for backwards compatibility */
 		dseg_put(&s_g, &S, r, c);
 	    }
 	}
     }
-    G_percent(r, nrows, 3);	/* finish it */
+    G_percent(nrows, nrows, 1);	/* finish it */
 
     return 0;
 }
@@ -61,7 +60,7 @@ int len_slp_equ(double slope_length, double sin_theta, double S, int r, int c)
     /* rill_ratio equation from Steve Warren */
     rill_ratio *= .5 + .005 * rill + .0001 * rill * rill;
     s_l_exp = rill_ratio / (1 + rill_ratio);
-    LS = S * 100 * pow((slope_length / 72.6), s_l_exp);
+    LS = S * 100 * pow((slope_length / 72.6), s_l_exp); /* factor 100 for backwards compatibility */
     dseg_put(&l_s, &LS, r, c);
 
     return 0;
