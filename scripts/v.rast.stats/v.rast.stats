@@ -16,7 +16,7 @@
 #############################################################################
 
 #%Module
-#%  description: Calculates univariate statistics from a GRASS raster map based on vector polygons and uploads statistics to new attribute columns.
+#%  description: Calculates univariate statistics from a raster map based on vector polygons and uploads statistics to new attribute columns.
 #%  keywords: vector, raster, statistics
 #%End
 #%flag
@@ -38,7 +38,8 @@
 #%option
 #% key: layer
 #% type: integer
-#% description: Layer to which the table to be changed is connected
+#% label: Layer number
+#% description: A single vector map can be connected to multiple database tables. This number determines which table to use
 #% answer: 1
 #% required : no
 #%end
@@ -263,7 +264,7 @@ for i in $BASECOLS $EXTRACOLS ; do
   fi
 done
 
-g.message -v "Adding columns <$ADDCOLS>"
+g.message -v "Adding columns '$ADDCOLS'"
 v.db.addcol map="$VECTOR" columns="$ADDCOLS"
 if [ $? -ne 0 ] ; then
    g.message -e "Cannot continue (problem adding columns)."
@@ -273,7 +274,7 @@ fi
 
 
 #loop over cats and calculate statistics:
-g.message -v "Processing data ..."
+g.message "Processing data ($NUMBER categories)..."
 CURRNUM=1
 # get rid of any earlier attempts
 rm -f "$SQLTMP"
@@ -318,7 +319,7 @@ for i in `cat "$TEMPFILE.cats"` ; do
 done
 
 
-g.message -v "Updating the database ..."
+g.message "Updating the database ..."
 db.execute input="$SQLTMP" database="${DB_DATABASE}" driver="$DB_SQLDRIVER"
 EXITCODE=$?
 
