@@ -6,10 +6,12 @@ no_stream(int row, int col, CELL basin_num, double stream_length,
 {
     int r, rr, c, cc, uprow = 0, upcol = 0;
     double slope;
-    CELL downdir, max_drain, value, asp_value, hih_ele, new_ele, aspect;
+    CELL downdir, asp_value, hih_ele, new_ele, aspect, value;
+    DCELL dvalue, max_drain;	/* flow acc is now DCELL */
     SHORT updir, riteflag, leftflag, thisdir;
 
     while (1) {
+	cseg_put(&bas, &basin_num, row, col);
 	max_drain = -1;
 	for (r = row - 1, rr = 0; r <= row + 1; r++, rr++) {
 	    for (c = col - 1, cc = 0; c <= col + 1; c++, cc++) {
@@ -17,13 +19,13 @@ no_stream(int row, int col, CELL basin_num, double stream_length,
 
 		    cseg_get(&asp, &aspect, r, c);
 		    if (aspect == drain[rr][cc]) {
-			cseg_get(&wat, &value, r, c);
-			if (value < 0)
-			    value = -value;
-			if (value > max_drain) {
+			dseg_get(&wat, &dvalue, r, c);
+			if (dvalue < 0)
+			    dvalue = -dvalue;
+			if ((dvalue - max_drain) > 5E-8f) {	/* floating point comparison problem workaround */
 			    uprow = r;
 			    upcol = c;
-			    max_drain = value;
+			    max_drain = dvalue;
 			}
 		    }
 		}
@@ -66,14 +68,15 @@ no_stream(int row, int col, CELL basin_num, double stream_length,
 			cseg_get(&asp, &aspect, r, c);
 			if (aspect == drain[rr][cc]) {
 			    thisdir = updrain[rr][cc];
-			    if (haf_basin_side(updir,
+			    switch (haf_basin_side(updir,
 					       (SHORT) downdir,
-					       thisdir) == RITE) {
+					       thisdir)) {
+			    case RITE:
 				overland_cells(r, c, basin_num, basin_num,
 					       &new_ele);
 				riteflag++;
-			    }
-			    else {
+				break;
+			    case LEFT:
 				overland_cells(r, c, basin_num, basin_num - 1,
 					       &new_ele);
 				leftflag++;
@@ -82,7 +85,7 @@ no_stream(int row, int col, CELL basin_num, double stream_length,
 		    }
 		}
 	    }
-	    if (leftflag >= riteflag) {
+	    if (leftflag > riteflag) {
 		value = basin_num - 1;
 		cseg_put(&haf, &value, row, col);
 	    }
@@ -99,6 +102,7 @@ no_stream(int row, int col, CELL basin_num, double stream_length,
 		    slope = MIN_SLOPE;
 		fprintf(fp, " %f %f\n", slope, stream_length);
 	    }
+	    cseg_put(&haf, &basin_num, row, col);
 	    return 0;
 	}
     }

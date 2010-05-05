@@ -67,7 +67,7 @@ int close_array_seg(void)
 	else
 	    G_debug(1,
 		    "Too many subbasins to reasonably check for color brightness");
-	/* using the existing method ... */
+	/* using the existing stack of while/for/for/for/while loops ... */
     }
 
     /* stream segments map */
