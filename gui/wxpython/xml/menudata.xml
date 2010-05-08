@@ -796,6 +796,14 @@
 	  </items>
 	</menu>
 	<separator />
+	    <menuitem>
+	      <label>Manage add-ons extensions</label>
+	      <help>Tool to maintain GRASS extensions in local GRASS installation.</help>
+	      <keywords>general,extensions</keywords>
+	      <handler>OnMenuCmd</handler>
+	      <command>g.extension</command>
+	    </menuitem>
+	<separator />
 	<menuitem>
 	  <label>Preferences</label>
 	  <help>User GUI preferences (display font, commands, digitizer, etc.)</help>
@@ -2152,7 +2160,7 @@
 	    </menuitem>
 	    <menuitem>
 	      <label>Centrality</label>
-	      <help>Computes degree, centrality, betweeness, closeness and eigenvector cetrality measures in the network.</help>
+	      <help>Computes degree, centrality, betweeness, closeness and eigenvector centrality measures in the network.</help>
 	      <keywords>vector,network,centrality measures</keywords>
 	      <handler>OnMenuCmd</handler>
 	      <command>v.net.centrality</command>
