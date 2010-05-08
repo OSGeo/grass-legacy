@@ -30,8 +30,7 @@ int main(int argc, char *argv[])
     G_gisinit(argv[0]);
 
     module = G_define_module();
-    module->keywords = _("general");
-    G_add_keyword(_("scripts"));
+    module->keywords = _("general, scripts");
     module->label =
 	_("Prints a message, warning, progress info, or fatal error in the GRASS way.");
     module->description =
