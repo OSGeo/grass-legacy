@@ -855,9 +855,9 @@
 	  <command>r.mask</command>
 	</menuitem>
 	<menuitem>
-	  <label>Map calculator</label>
-	  <help>Map calculator for raster map algebra</help>
-	  <handler>self.DispMapCalculator</handler>
+	  <label>Raster calculator</label>
+	  <help>Map calculator for raster map algebra.</help>
+	  <handler>self.OnMapCalculator</handler>
 	</menuitem>
 	<menu>
 	  <label>Neighborhood analysis</label>
@@ -2273,9 +2273,9 @@
 	  <command>r3.mask</command>
 	</menuitem>
 	<menuitem>
-	  <label>3D raster map calculator</label>
-	  <help>Map calculator for volumetric map algebra</help>
-	  <handler>self.Disp3DMapCalculator</handler>
+	  <label>Volume calculator</label>
+	  <help>Map calculator for 3D raster map algebra.</help>
+	  <handler>self.OnMapCalculator3D</handler>
 	</menuitem>
 	<menuitem>
 	  <label>Cross section</label>
