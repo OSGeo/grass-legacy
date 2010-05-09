@@ -197,10 +197,6 @@ class MapCalcFrame(wx.Frame):
                                     style = wx.CB_DROPDOWN |
                                     wx.CB_READONLY | wx.TE_PROCESS_ENTER)
         
-        self.overwrite = wx.CheckBox(parent = self, id = wx.ID_ANY,
-                                     label=_("Allow output files to overwrite existing files"))
-        self.overwrite.SetValue(UserSettings.Get(group='cmd', key='overwrite', subkey='enabled'))
-        
         #
         # Bindings
         #
@@ -297,8 +293,6 @@ class MapCalcFrame(wx.Frame):
         sizer.Add(item = controlSizer, flag = wx.EXPAND | wx.ALL,
                       border = 5)        
         sizer.Add(item = expressSizer, flag = wx.EXPAND | wx.LEFT | wx.RIGHT,
-                      border = 5)
-        sizer.Add(item = self.overwrite, flag = wx.EXPAND | wx.LEFT | wx.RIGHT,
                       border = 5)
         sizer.Add(item = buttonSizer4, proportion = 0,
                       flag = wx.ALIGN_RIGHT | wx.ALL, border = 1)
@@ -397,18 +391,11 @@ class MapCalcFrame(wx.Frame):
 
         if self.log:
             cmd = [prg, str('%s = %s' % (name, mctxt))]
-            if self.overwrite.IsChecked():
-                cmd.append('--overwrite')
             self.log.RunCmd(cmd)
             self.parent.Raise()
         else:
-            if self.overwrite.IsChecked():
-                overwrite = True
-            else:
-                overwrite = False
             gcmd.RunCommand(prg,
-                            "%s=%s" % (name, mctxt),
-                            overwrite = overwrite)
+                            "%s=%s" % (name, mctxt))
         
     def OnClear(self, event):
         """!Clears text area
