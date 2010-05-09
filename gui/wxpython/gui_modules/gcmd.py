@@ -490,16 +490,16 @@ class Command:
         return msgString
 
 class CommandThread(Thread):
-    """Create separate thread for command
-
-    @param cmd GRASS command (given as list)
-    @param stdin standard input stream 
-    @param stdout  redirect standard output or None
-    @param stderr  redirect standard error output or None
+    """!Create separate thread for command
     """
     def __init__ (self, cmd, stdin=None,
                   stdout=sys.stdout, stderr=sys.stderr):
-
+        """
+        @param cmd command (given as list)
+        @param stdin standard input stream 
+        @param stdout redirect standard output or None
+        @param stderr redirect standard error output or None
+        """
         Thread.__init__(self)
 
         self.cmd    = cmd
@@ -530,7 +530,6 @@ class CommandThread(Thread):
             return
 
         self.startTime = time.time()
-        
         try:
             self.module = Popen(self.cmd,
                                 stdin=subprocess.PIPE,
