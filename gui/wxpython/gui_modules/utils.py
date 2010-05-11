@@ -648,8 +648,8 @@ def UnicodeString(string):
 
 def _getGDALFormats():
     """!Get dictionary of avaialble GDAL drivers"""
-    if not grass.find_program('r.in.gdal'):
-        return _parseFormats(None)
+    # if not grass.find_program('r.in.gdal'):
+    #    return _parseFormats(None)
     
     ret = grass.read_command('r.in.gdal',
                              quiet = True,

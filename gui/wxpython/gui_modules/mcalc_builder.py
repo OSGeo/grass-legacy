@@ -47,6 +47,7 @@ class MapCalcFrame(wx.Frame):
         
         self.rast3d = rast3d
         wx.Frame.__init__(self, parent, id = id, title = title, **kwargs)
+        self.SetIcon(wx.Icon(os.path.join(globalvar.ETCICONDIR, 'grass.ico'), wx.BITMAP_TYPE_ICO))
         
         self.panel = wx.Panel(parent = self, id = wx.ID_ANY)
         
@@ -182,6 +183,7 @@ class MapCalcFrame(wx.Frame):
         #
         self.text_mcalc = wx.TextCtrl(parent = self.panel, id = wx.ID_ANY, size = (-1, 75),
                                       style = wx.TE_MULTILINE)
+        wx.CallAfter(self.text_mcalc.SetFocus)
         
         #
         # Map and function insertion text and ComboBoxes
@@ -216,6 +218,8 @@ class MapCalcFrame(wx.Frame):
         
         self._layout()
 
+        self.SetMinSize(self.GetBestSize())
+        
     def _layout(self):
         sizer = wx.BoxSizer(wx.VERTICAL)
         
@@ -278,26 +282,30 @@ class MapCalcFrame(wx.Frame):
                          flag = wx.ALL, border = 5)
         
         operatorSizer.Add(item = buttonSizer1, proportion = 0,
-                          flag = wx.ALL, border = 5)
+                          flag = wx.ALL | wx.EXPAND, border = 5)
         operatorSizer.Add(item = buttonSizer2, proportion = 0,
-                          flag = wx.TOP | wx.BOTTOM | wx.RIGHT, border = 5)
+                          flag = wx.TOP | wx.BOTTOM | wx.RIGHT | wx.EXPAND, border = 5)
         
         operandSizer.Add(item = buttonSizer3, proportion = 0,
                          flag = wx.TOP | wx.BOTTOM | wx.RIGHT, border = 5)
         
-        controlSizer.Add(item = operatorSizer, proportion = 0,
+        controlSizer.Add(item = operatorSizer, proportion = 1,
                          flag = wx.RIGHT, border = 5)
-        controlSizer.Add(item = operandSizer, proportion = 0)
+        controlSizer.Add(item = operandSizer, proportion = 0,
+                         flag = wx.EXPAND)
 
         expressSizer = wx.StaticBoxSizer(self.expressBox, wx.HORIZONTAL)
-        expressSizer.Add(item = self.text_mcalc, proportion = 1)
+        expressSizer.Add(item = self.text_mcalc, proportion = 1,
+                         flag = wx.EXPAND)
 
-        sizer.Add(item = controlSizer, flag = wx.EXPAND | wx.ALL,
-                      border = 5)        
-        sizer.Add(item = expressSizer, flag = wx.EXPAND | wx.LEFT | wx.RIGHT,
-                      border = 5)
+        sizer.Add(item = controlSizer, proportion = 0,
+                  flag = wx.EXPAND | wx.ALL,
+                  border = 5)        
+        sizer.Add(item = expressSizer, proportion = 1,
+                  flag = wx.EXPAND | wx.LEFT | wx.RIGHT,
+                  border = 5)
         sizer.Add(item = buttonSizer4, proportion = 0,
-                      flag = wx.ALIGN_RIGHT | wx.ALL, border = 1)
+                  flag = wx.ALIGN_RIGHT | wx.ALL, border = 1)
         
         self.panel.SetAutoLayout(True)        
         self.panel.SetSizer(sizer)
