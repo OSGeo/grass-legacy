@@ -656,7 +656,7 @@ def _getGDALFormats():
 
 def _getOGRFormats():
     """!Get dictionary of avaialble OGR drivers"""
-    ret = grass.read_command('v.in.ogrx',
+    ret = grass.read_command('v.in.ogr',
                              quiet = True,
                              flags = 'f')
     
