@@ -830,7 +830,7 @@ class FormatSelect(wx.Choice):
             'VTP .bt (Binary Terrain) 1.3 Format' : 'bt',
             'FARSITE v.4 Landscape File (.lcp)' : 'lcp',
             'Swedish Grid RIK (.rik)' : 'rik',
-            'USGS Optional ASCII DEM (and CDED)' : '.dem',
+            'USGS Optional ASCII DEM (and CDED)' : 'dem',
             'Northwood Numeric Grid Format .grd/.tab' : '',
             'Northwood Classified Grid Format .grc/.tab' : '',
             'ARC Digitized Raster Graphics' : 'arc',
@@ -876,6 +876,7 @@ class GdalSelect(wx.Panel):
         @param ogr    use OGR selector instead of GDAL
         """
         self.parent = parent
+        self.ogr    = ogr
         wx.Panel.__init__(self, parent = panel, id = wx.ID_ANY)
         
         self.inputBox = wx.StaticBox(parent = self, id=wx.ID_ANY,
@@ -1077,7 +1078,12 @@ class GdalSelect(wx.Panel):
         
         self.dsnText.SetLabel(self.input[self.dsnType][0])
         self.format.SetItems(self.input[self.dsnType][2])
-        self.format.SetSelection(0)
+        if sel in (self.sourceMap['file'],
+                   self.sourceMap['dir']):
+            if not self.ogr:
+                self.format.SetStringSelection('GeoTIFF')
+            else:
+                self.format.SetStringSelection('ESRI Shapefile')
         
         self.dsnSizer.Layout()
         
