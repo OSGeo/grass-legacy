@@ -1008,6 +1008,7 @@ class GdalSelect(wx.Panel):
         inputSizer = wx.StaticBoxSizer(self.inputBox, wx.HORIZONTAL)
         
         self.dsnSizer = wx.GridBagSizer(vgap=3, hgap=3)
+        self.dsnSizer.AddGrowableRow(1)
         self.dsnSizer.AddGrowableCol(1)
         
         self.dsnSizer.Add(item=self.dsnText,
@@ -1021,6 +1022,7 @@ class GdalSelect(wx.Panel):
                           flag=wx.ALIGN_CENTER_VERTICAL,
                           pos = (1, 0))
         self.dsnSizer.Add(item=self.format,
+                          flag = wx.ALIGN_CENTER_VERTICAL,
                           pos = (1, 1))
         
         inputSizer.Add(item=self.dsnSizer, proportion=1,
@@ -1067,23 +1069,31 @@ class GdalSelect(wx.Panel):
         elif sel == self.sourceMap['pro']: # protocol
             self.dsnType = 'pro'
         
-        win = self.input[self.dsnType][1]
-        self.dsnSizer.Add(item=self.input[self.dsnType][1],
-                          flag = wx.ALIGN_CENTER_VERTICAL | wx.EXPAND,
-                          pos = (0, 1))
-        win.SetValue('')
+        self.dsnText.SetLabel(self.input[self.dsnType][0])
         if self.parent.GetName() == 'MultiImportDialog':
             self.parent.list.DeleteAllItems()
-        win.Show()
-        
-        self.dsnText.SetLabel(self.input[self.dsnType][0])
-        self.format.SetItems(self.input[self.dsnType][2])
+        self.format.SetItems(self.input[self.dsnType][2])        
+
         if sel in (self.sourceMap['file'],
                    self.sourceMap['dir']):
+            win = self.input[self.dsnType][1]
+            self.dsnSizer.Add(item=self.input[self.dsnType][1],
+                              flag = wx.ALIGN_CENTER_VERTICAL | wx.EXPAND,
+                              pos = (0, 1))
+            win.SetValue('')
+            win.Show()
+            
             if not self.ogr:
                 self.format.SetStringSelection('GeoTIFF')
             else:
                 self.format.SetStringSelection('ESRI Shapefile')
+        elif sel == self.sourceMap['pro']:
+            win = self.input[self.dsnType][1]
+            self.dsnSizer.Add(item=self.input[self.dsnType][1],
+                              flag = wx.ALIGN_CENTER_VERTICAL | wx.EXPAND,
+                              pos = (0, 1))
+            win.SetValue('')
+            win.Show()
         
         self.dsnSizer.Layout()
         
@@ -1177,9 +1187,9 @@ class GdalSelect(wx.Panel):
                                               changeCallback=self.OnSetDsn,
                                               fileMask = format)
         else: # database
-            if format == 'SQLite':
+            if format == 'SQLite' or format == 'Rasterlite':
                 win = self.input['db-win']['file']
-            elif format == 'PostgreSQL':
+            elif format == 'PostgreSQL' or format == 'PostGIS WKT Raster driver':
                 if grass.find_program('psql'):
                     win = self.input['db-win']['choice']
                     if not win.GetItems():
