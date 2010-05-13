@@ -37,15 +37,22 @@ class MapCalcFrame(wx.Frame):
     """!Mapcalc Frame class. Calculator-style window to create and run
     r(3).mapcalc statements
     """
-    def __init__(self, parent, id = wx.ID_ANY, title = _('Map calculator'), 
-                 rast3d = False, style = wx.DEFAULT_FRAME_STYLE | wx.RESIZE_BORDER, **kwargs):
+    def __init__(self, parent, cmd, id = wx.ID_ANY, title = _('Map calculator'), 
+                 style = wx.DEFAULT_FRAME_STYLE | wx.RESIZE_BORDER, **kwargs):
         self.parent = parent
         if self.parent:
             self.log = self.parent.GetLogWindow()
         else:
             self.log = None
         
-        self.rast3d = rast3d
+        # grass command
+        self.cmd = cmd
+
+        if self.cmd == 'r.mapcalc':
+            self.rast3d = False
+        if self.cmd == 'r3.mapcalc':
+            self.rast3d = True
+
         wx.Frame.__init__(self, parent, id = id, title = title, **kwargs)
         self.SetIcon(wx.Icon(os.path.join(globalvar.ETCICONDIR, 'grass.ico'), wx.BITMAP_TYPE_ICO))
         
@@ -304,6 +311,7 @@ class MapCalcFrame(wx.Frame):
         sizer.Add(item = expressSizer, proportion = 1,
                   flag = wx.EXPAND | wx.LEFT | wx.RIGHT,
                   border = 5)
+        
         sizer.Add(item = buttonSizer4, proportion = 0,
                   flag = wx.ALIGN_RIGHT | wx.ALL, border = 1)
         
@@ -394,17 +402,13 @@ class MapCalcFrame(wx.Frame):
         
         mctxt = self.text_mcalc.GetValue().strip().replace("\n"," ")
         mctxt = mctxt.replace(" " , "")
-        if self.rast3d:
-            prg = 'r3.mapcalc'
-        else:
-            prg = 'r.mapcalc'
 
         if self.log:
-            cmd = [prg, str('%s = %s' % (name, mctxt))]
+            cmd = [self.cmd, str('%s = %s' % (name, mctxt))]
             self.log.RunCmd(cmd)
             self.parent.Raise()
         else:
-            gcmd.RunCommand(prg,
+            gcmd.RunCommand(self.cmd,
                             "%s=%s" % (name, mctxt))
         
     def OnClear(self, event):
@@ -415,7 +419,7 @@ class MapCalcFrame(wx.Frame):
     def OnHelp(self, event):
         """!Launches r.mapcalc help
         """
-        gcmd.RunCommand('g.manual', entry = 'r.mapcalc')
+        gcmd.RunCommand('g.manual', parent = self, entry = self.cmd)
         
     def OnClose(self,event):
         """!Close window"""

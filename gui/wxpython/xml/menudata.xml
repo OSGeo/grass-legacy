@@ -1014,7 +1014,9 @@
 	<menuitem>
 	  <label>Raster calculator</label>
 	  <help>Map calculator for raster map algebra.</help>
+	  <keywords>raster,algebra</keywords>
 	  <handler>OnMapCalculator</handler>
+	  <command>r.mapcalc</command>
 	</menuitem>
 	<menu>
 	  <label>Neighborhood analysis</label>
@@ -2692,7 +2694,9 @@
 	<menuitem>
 	  <label>Volume calculator</label>
 	  <help>Map calculator for 3D raster map algebra.</help>
+	  <keywords>raster,algebra</keywords>
 	  <handler>OnMapCalculator3D</handler>
+	  <command>r3.mapcalc</command>
 	</menuitem>
 	<menuitem>
 	  <label>Cross section</label>
