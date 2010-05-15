@@ -442,6 +442,12 @@ class GRASSStartup(wx.Frame):
         """
         location = utils.UnicodeString(self.listOfLocations[self.lblocations.GetSelection()])
         mapset   = utils.UnicodeString(self.listOfMapsets[self.lbmapsets.GetSelection()])
+        if mapset == 'PERMANENT':
+            wx.MessageBox(parent = self,
+                          message = _('Mapset <PERMANENT> is required for valid GRASS location.\n\n'
+                                      'This mapset cannot be renamed.'),
+                          style=wx.OK | wx.ICON_INFORMATION | wx.CENTRE)
+            return
         
         dlg = wx.TextEntryDialog(parent=self,
                                  message=_('Current name: %s\n\nEnter new name:') % mapset,
@@ -510,13 +516,17 @@ class GRASSStartup(wx.Frame):
         dlg.Destroy()
 
     def DeleteMapset(self):
+        """!Delete selected mapset
         """
-        Delete selected mapset
-        """
-
         location = self.listOfLocations[self.lblocations.GetSelection()]
         mapset   = self.listOfMapsets[self.lbmapsets.GetSelection()]
-
+        if mapset == 'PERMANENT':
+            wx.MessageBox(parent = self,
+                          message = _('Mapset <PERMANENT> is required for valid GRASS location.\n\n'
+                                      'This mapset cannot be deleted.'),
+                          style=wx.OK | wx.ICON_INFORMATION | wx.CENTRE)
+            return
+        
         dlg = wx.MessageDialog(parent=self, message=_("Do you want to continue with deleting mapset <%(mapset)s> "
                                                       "from location <%(location)s>?\n\n"
                                                       "ALL MAPS included in this mapset will be "
