@@ -97,6 +97,8 @@ if [ "$ok" = "no" ] ; then
 fi
 
 d.erase
+GRASS_PNG_READ=TRUE
+export GRASS_PNG_READ
 if [ $? != 0 ] ; then
  exit 1
 fi
