@@ -1033,8 +1033,7 @@ class cmdPanel(wx.Panel):
             self.label_id.append(chk.GetId())
             if tooltip:
                 chk.SetToolTipString(tooltip)
-            if 'value' in f:
-                chk.SetValue( f['value'] )
+            chk.SetValue(f.get('value', False))
             title_sizer.Add(item=chk, proportion=1,
                             flag=wx.EXPAND)
             title_sizer.Add(item=rtitle_txt, proportion=0,
@@ -1063,7 +1062,7 @@ class cmdPanel(wx.Panel):
                 if f['name'] == vq:
                     chk.SetValue(True)
                     f['value'] = True
-            elif f['name'] == 'overwrite':
+            elif f['name'] == 'overwrite' and not f.has_key('value'):
                 chk.SetValue(UserSettings.Get(group='cmd', key='overwrite', subkey='enabled'))
                 f['value'] = UserSettings.Get(group='cmd', key='overwrite', subkey='enabled')
                 
