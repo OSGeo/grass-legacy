@@ -1045,9 +1045,9 @@ class cmdPanel(wx.Panel):
             
             if self.parent.GetName() == 'MainFrame' and self.parent.modeler:
                 parChk = wx.CheckBox(parent = which_panel, id = wx.ID_ANY,
-                                     label = _("Parametrized in model"))
+                                     label = _("Parameterized in model"))
                 parChk.SetName('ModelParam')
-                parChk.SetValue(f.get('parametrized', False))
+                parChk.SetValue(f.get('parameterized', False))
                 if f.has_key('wxId'):
                     f['wxId'].append(parChk.GetId())
                 else:
@@ -1439,9 +1439,9 @@ class cmdPanel(wx.Panel):
             
             if self.parent.GetName() == 'MainFrame' and self.parent.modeler:
                 parChk = wx.CheckBox(parent = which_panel, id = wx.ID_ANY,
-                                     label = _("Parametrized in model"))
+                                     label = _("Parameterized in model"))
                 parChk.SetName('ModelParam')
-                parChk.SetValue(p.get('parametrized', False))
+                parChk.SetValue(p.get('parameterized', False))
                 if p.has_key('wxId'):
                     p['wxId'].append(parChk.GetId())
                 else:
@@ -1686,7 +1686,7 @@ class cmdPanel(wx.Panel):
                 elif name == 'GdalSelect':
                     porf['value'] = event.dsn
                 elif name == 'ModelParam':
-                    porf['parametrized'] = me.IsChecked()
+                    porf['parameterized'] = me.IsChecked()
                 else:
                     porf['value'] = me.GetValue()
         
