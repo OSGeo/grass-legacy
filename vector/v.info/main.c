@@ -45,10 +45,10 @@ int main(int argc, char *argv[])
     struct Option *in_opt, *fieldopt;
     struct Flag *histf, *columns, *gflag, *tflag, *mflag, *lflag;
     struct Map_info Map;
-    struct dig_head v_head;
     BOUND_BOX box;
     char *mapset, line[200], buf[1001];
     int i;
+    int level1_flag;
     int with_z;
     struct field_info *fi;
     dbDriver *driver = NULL;
@@ -108,25 +108,26 @@ int main(int argc, char *argv[])
 	G_fatal_error(_("Vector map <%s> not found"), in_opt->answer);
     }
 
-    if (lflag->answer) {
-        Vect_set_open_level(1); /* no topology */
-        if (tflag->answer && Vect_get_num_primitives(&Map, GV_POINT) == 0){
-            G_warning(_("Vector map requested on level 1 (flag -t ignored)"));
-            tflag->answer = 0;
-        }
+    level1_flag = lflag->answer;
+    if (!level1_flag) {
+	 /* try to open head-only on level 2 */
+	if (Vect_open_old_head(&Map, in_opt->answer, "") == 1) {
+	    G_warning(_("Unable to open vector map <%s> on level 2, using level 1"),
+		      Vect_get_full_name(&Map));
+	    Vect_close(&Map);
+	    level1_flag = 1;
+	}
     }
-    else
-      Vect_set_open_level(2); /* topology requested */
 
-    if (lflag->answer) {
-       Vect_open_old(&Map, in_opt->answer, "");
-       level_one_info(&Map);
+    /* force level 1, open fully
+     * NOTE: number of points, lines, boundaries, centroids, faces, kernels is still available */
+    if (level1_flag) {
+	Vect_set_open_level(1); /* no topology */
+	Vect_open_old(&Map, in_opt->answer, "");
+	level_one_info(&Map);
     }
-    else
-      Vect_open_old_head(&Map, in_opt->answer, "");
 
     with_z = Vect_is_3d(&Map);
-    v_head = Map.head;
 
     if (histf->answer) {
 	Vect_hist_rewind(&Map);
@@ -344,7 +345,7 @@ int main(int argc, char *argv[])
 	    printline(line);
 	    sprintf(line, _("  Comments:"));
 	    printline(line);
-	    sprintf(line, "    %s", v_head.line_3);
+	    sprintf(line, "    %s", Vect_get_comment(&Map));
 	    printline(line);
 	    divider('+');
 	    fprintf(stdout, "\n");
@@ -374,13 +375,15 @@ int level_one_info(struct Map_info *Map)
     struct line_cats *Cats;
     struct bound_box box;
 
-    int n_primitives, n_points, n_lines, n_boundaries, n_centroids, n_kernels;
+    int n_primitives, n_points, n_lines, n_boundaries, n_centroids;
+    int n_faces, n_kernels;
 
     G_debug(1, "Count vector objects for level 1");
 
     plus = &(Map->plus);
 
-    n_primitives = n_points = n_lines = n_boundaries = n_centroids = n_kernels = 0;
+    n_primitives = n_points = n_lines = n_boundaries = n_centroids = 0;
+    n_faces = n_kernels = 0;
 
     Points = Vect_new_line_struct();
     Cats = Vect_new_cats_struct();
@@ -414,6 +417,8 @@ int level_one_info(struct Map_info *Map)
 	    n_centroids++;
 	else if (type & GV_KERNEL)
 	    n_kernels++;
+	else if (type & GV_FACE)
+	    n_faces++;
 
 	offset = Map->head.last_offset;
 
@@ -445,6 +450,7 @@ int level_one_info(struct Map_info *Map)
     plus->n_blines = n_boundaries;
     plus->n_clines = n_centroids;
     plus->n_klines = n_kernels;
+    plus->n_flines = n_faces;
 
     return 1;
 }
