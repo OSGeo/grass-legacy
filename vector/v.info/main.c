@@ -43,12 +43,11 @@ int main(int argc, char *argv[])
 {
     struct GModule *module;
     struct Option *in_opt, *fieldopt;
-    struct Flag *histf, *columns, *gflag, *tflag, *mflag, *lflag;
+    struct Flag *histf, *columns, *gflag, *tflag, *mflag;
     struct Map_info Map;
     BOUND_BOX box;
     char *mapset, line[200], buf[1001];
     int i;
-    int level1_flag;
     int with_z;
     struct field_info *fi;
     dbDriver *driver = NULL;
@@ -86,10 +85,6 @@ int main(int argc, char *argv[])
     gflag->description = _("Print map region only");
     gflag->guisection = _("Print");
 
-    lflag = G_define_flag();
-    lflag->key = 'l';
-    lflag->description = _("Open Vector without topology (level 1)");
-
     mflag = G_define_flag();
     mflag->key = 'm';
     mflag->description = _("Print map title only");
@@ -108,24 +103,16 @@ int main(int argc, char *argv[])
 	G_fatal_error(_("Vector map <%s> not found"), in_opt->answer);
     }
 
-    level1_flag = lflag->answer;
-    if (!level1_flag) {
-	 /* try to open head-only on level 2 */
-	if (Vect_open_old_head(&Map, in_opt->answer, "") < 2) {
-	    G_warning(_("Unable to open vector map <%s> on level 2, using level 1"),
-		      Vect_get_full_name(&Map));
-	    Vect_close(&Map);
-	    level1_flag = 1;
-	}
-    }
-
-    /* force level 1, open fully
-     * NOTE: number of points, lines, boundaries, centroids, faces, kernels is still available */
-    if (level1_flag) {
+     /* try to open head-only on level 2 */
+    if (Vect_open_old_head(&Map, in_opt->answer, "") < 2) {
+	/* force level 1, open fully
+	 * NOTE: number of points, lines, boundaries, centroids, faces, kernels is still available */
+	Vect_close(&Map);
 	Vect_set_open_level(1); /* no topology */
 	if (Vect_open_old(&Map, in_opt->answer, "") < 1)
 	    G_fatal_error(_("Unable to open vector map <%s>"), Vect_get_full_name(&Map));
-	level_one_info(&Map);
+	if (!histf->answer && !mflag->answer && ((gflag->answer || tflag->answer) || !columns->answer))
+	    level_one_info(&Map);
     }
 
     with_z = Vect_is_3d(&Map);
