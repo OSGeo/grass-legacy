@@ -1567,8 +1567,19 @@ class AttributeManager(wx.Frame):
     def OnTableItemDelete(self, event):
         """Delete selected item(s) from the list"""
         list = self.FindWindowById(self.layerPage[self.layer]['tableData'])
-
+        
         item = list.GetFirstSelected()
+        
+        if UserSettings.Get(group='atm', key='askOnDeleteRec', subkey='enabled'):
+            deleteDialog = wx.MessageBox(parent=self,
+                                         message=_("Selected column '%s' will PERMANENTLY removed "
+                                                   "from table. Do you want to drop the column?") % \
+                                             (list.GetItemText(item)),
+                                         caption=_("Drop column(s)"),
+                                         style=wx.YES_NO | wx.CENTRE)
+            if deleteDialog != wx.YES:
+                return False
+        
         while item != -1:
             self.listOfCommands.append(['v.db.dropcol',
                                         'map=%s' % self.vectmap,
@@ -1576,21 +1587,35 @@ class AttributeManager(wx.Frame):
                                         'column=%s' % list.GetItemText(item)])
             list.DeleteItem(item)
             item = list.GetFirstSelected()
-
+        
         # apply changes
         self.ApplyCommands()
-
+        
         # update widgets
         table = self.mapDBInfo.layers[self.layer]['table']
         self.FindWindowById(self.layerPage[self.layer]['renameCol']).SetItems(self.mapDBInfo.GetColumns(table))
         self.FindWindowById(self.layerPage[self.layer]['renameCol']).SetSelection(0)
-
+        
         event.Skip()
 
     def OnTableItemDeleteAll(self, event):
         """Delete all items from the list"""
-        table = self.mapDBInfo.layers[self.layer]['table']
-        cols = self.mapDBInfo.GetColumns(table)
+        table     = self.mapDBInfo.layers[self.layer]['table']
+        cols      = self.mapDBInfo.GetColumns(table)
+        keyColumn = self.mapDBInfo.layers[self.layer]['key']
+        if keyColumn in cols:
+            cols.remove(keyColumn)
+        
+        if UserSettings.Get(group='atm', key='askOnDeleteRec', subkey='enabled'):
+            deleteDialog = wx.MessageBox(parent=self,
+                                         message=_("Selected columns\n%s\nwill PERMANENTLY removed "
+                                                   "from table. Do you want to drop the columns?") % \
+                                             ('\n'.join(cols)),
+                                         caption=_("Drop column(s)"),
+                                         style=wx.YES_NO | wx.CENTRE)
+            if deleteDialog != wx.YES:
+                return False
+        
         for col in cols:
             self.listOfCommands = [['v.db.dropcol',
                                     'map=%s' % self.vectmap,
