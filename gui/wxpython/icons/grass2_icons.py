@@ -111,4 +111,6 @@ IconsGrass2 = {
     "modelValidate"  : 'check.png',
     "imageSave"      : 'image-export.png',
     "pythonSave"     : 'python-export.png',
+    "modelSettings"  : 'settings.png',
+    "modelProperties" : 'options.png',
     }
