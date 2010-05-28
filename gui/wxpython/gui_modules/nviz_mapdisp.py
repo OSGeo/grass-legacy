@@ -1064,12 +1064,19 @@ class GLWindow(MapWindow, glcanvas.GLCanvas):
         
         return -1
     
-    def SaveToFile(self, FileName, FileType):
+    def SaveToFile(self, FileName, FileType, width, height):
         """!This draws the DC to a buffer that can be saved to a file.
-
+        
         @todo fix BufferedPaintDC
+        
+        @param FileName file name
+        @param FileType type of bitmap
+        @param width image width
+        @param height image height
         """
-        self._display.SaveToFile(FileName)
+        self.SetCurrent()
+        self._display.SaveToFile(FileName, width, height)
+        
         # pbuffer = wx.EmptyBitmap(max(1, self.Map.width), max(1, self.Map.height))
         # dc = wx.BufferedPaintDC(self, pbuffer)
         # dc.Clear()
@@ -1077,7 +1084,7 @@ class GLWindow(MapWindow, glcanvas.GLCanvas):
         # self._display.Draw(False, -1)
         # pbuffer.SaveFile(FileName, FileType)
         # self.SwapBuffers()
-
+        
     def GetDisplay(self):
         """!Get display instance"""
         return self._display
