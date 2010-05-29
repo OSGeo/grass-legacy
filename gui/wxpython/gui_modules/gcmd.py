@@ -317,7 +317,7 @@ class Command:
     def __init__ (self, cmd, stdin=None,
                   verbose=None, wait=True, rerr=False,
                   stdout=None, stderr=None):
-
+        Debug.msg(1, "gcmd.Command(): %s" % cmd)
         self.cmd = cmd
         self.stderr = stderr
 	
