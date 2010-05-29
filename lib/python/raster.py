@@ -84,5 +84,17 @@ def mapcalc(exp, **kwargs):
     """
     t = string.Template(exp)
     e = t.substitute(**kwargs)
+    verbose = os.getenv('GRASS_VERBOSE')
+    if kwargs.has_key('quiet') and kwargs['quiet']:
+        os.environ['GRASS_VERBOSE'] = '0'
+    if kwargs.has_key('verbose') and kwargs['verbose']:
+        os.environ['GRASS_VERBOSE'] = '3'
+    
     if write_command('r.mapcalc', stdin = e) != 0:
 	fatal("An error occurred while running r.mapcalc")
+    
+    if verbose:
+        os.environ['GRASS_VERBOSE'] = verbose
+    elif os.getenv('GRASS_VERBOSE'):
+        del os.environ['GRASS_VERBOSE']
+    
