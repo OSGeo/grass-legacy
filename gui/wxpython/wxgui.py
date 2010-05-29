@@ -80,6 +80,7 @@ import gui_modules.ogc_services as ogc_services
 import gui_modules.prompt as prompt
 import gui_modules.menu as menu
 import gui_modules.gmodeler as gmodeler
+import gui_modules.vclean as vclean
 from   gui_modules.debug import Debug
 from   gui_modules.ghelp import MenuTreeWindow
 from   gui_modules.ghelp import AboutWindow
@@ -1010,6 +1011,17 @@ class GMFrame(wx.Frame):
 
         win = mapcalculator.MapCalcFrame(parent = self, title = _('GRASS GIS Map Calculator (3D raster)'),
                                          cmd=cmd[0])
+        win.CentreOnScreen()
+        win.Show()
+        
+    def OnVectorCleaning(self, event, cmd = ''):
+        """!Init interactive vector cleaning
+        """
+        
+        if event:
+            cmd = self.GetMenuCmd(event)
+
+        win = vclean.VectorCleaningFrame(parent = self, cmd = cmd[0])
         win.CentreOnScreen()
         win.Show()
         
