@@ -284,22 +284,23 @@ class HistFrame(wx.Frame):
     Uses d.histogram rendered onto canvas
     """
 
-    def __init__(self, parent=None, id = wx.ID_ANY, title="Histogram of image or raster map",
+    def __init__(self, parent=None, id = wx.ID_ANY,
+                 title= _("GRASS GIS Histogram of image or raster map"),
                  pos=wx.DefaultPosition, size=wx.DefaultSize,
                  style=wx.DEFAULT_FRAME_STYLE):
 
         wx.Frame.__init__(self, parent, id, title, pos, size, style)
-
+        self.SetIcon(wx.Icon(os.path.join(globalvar.ETCICONDIR, 'grass.ico'), wx.BITMAP_TYPE_ICO))
+        
         toolbar = self.__createToolBar()
-
+        
         self.Map   = render.Map()  # instance of render.Map to be associated with display
         self.layer = None          # reference to layer with histogram
         #
         # Set the size & cursor
         #
         self.SetClientSize(size)
-        self.iconsize = (16, 16)
-
+        
         # Init variables
         self.params = {}  # previously set histogram parameters
         self.propwin = '' # ID of properties dialog
@@ -344,12 +345,14 @@ class HistFrame(wx.Frame):
 
     def __createToolBar(self):
         """Creates toolbar"""
-
         toolbar = self.CreateToolBar()
+        toolbar.SetToolBitmapSize(globalvar.toolbarSize)
         for each in self.toolbarData():
             self.AddToolbarButton(toolbar, *each)
         toolbar.Realize()
-
+        
+        return toolbar
+    
     def AddToolbarButton(self, toolbar, label, icon, help, handler):
         """Adds buttons to the toolbar"""
 
