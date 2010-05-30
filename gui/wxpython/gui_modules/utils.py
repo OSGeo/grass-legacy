@@ -282,20 +282,16 @@ def ListSortLower(list):
 
 def GetVectorNumberOfLayers(vector):
     """!Get list of vector layers"""
-    cmdlist = ['v.category',
-               'input=%s' % vector,
-               'option=report']
+    layers = []
     if not vector:
         return layers
-    
-    layers = []
     
     ret = gcmd.RunCommand('v.category',
                           flags = 'g',
                           read = True,
                           input = vector,
                           option = 'report')
-
+    
     if not ret:
         return layers
     

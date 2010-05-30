@@ -652,7 +652,7 @@ class ColumnSelect(wx.ComboBox):
         if vector:
             self.InsertColumns(vector, layer)
     
-    def InsertColumns(self, vector, layer, excludeKey = False, type = None):
+    def InsertColumns(self, vector, layer, excludeKey = False, type = None, dbInfo = None):
         """!Insert columns for a vector attribute table into the columns combobox
 
         @param vector vector name
@@ -660,7 +660,8 @@ class ColumnSelect(wx.ComboBox):
         @param excludeKey exclude key column from the list?
         @param type only columns of given type (given as list)
         """
-        dbInfo = VectorDBInfo(vector)
+        if not dbInfo:
+            dbInfo = VectorDBInfo(vector)
         
         try:
             table = dbInfo.GetTable(int(layer))
