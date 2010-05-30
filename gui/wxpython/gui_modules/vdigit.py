@@ -60,10 +60,11 @@ except ImportError, err:
     errorMsg = err
     # is there a way to have this display on the terminal before the wx gui exits?
     print >> sys.stderr, "\nWARNING: Vector digitizer is not available (%s).\n\n" \
-        "Note that the vector digitizer is currently not working under MS Windows " \
-        "(hopefully this will be fixed soon). " \
+        "Note that the vector digitizer is currently not working under MS Windows\n" \
+        "(hopefully this will be fixed soon).\n" \
         "Please keep an eye out for updated versions of GRASS." % err
-
+    sys.stderr.flush()
+    
 class AbstractDigit:
     """
     Abstract digitization class
