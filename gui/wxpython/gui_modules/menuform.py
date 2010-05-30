@@ -211,6 +211,11 @@ class UpdateThread(Thread):
             map = pMap.get('value', '')
         else:
             map = None
+
+        # avoid running db.describe several times
+        cparams = dict()
+        cparams[map] = { 'dbInfo' : None,
+                         'layers' : None, }
         
         # update reference widgets
         for uid in p['wxId-bind']:
@@ -218,8 +223,10 @@ class UpdateThread(Thread):
             name = win.GetName()
             
             if name == 'LayerSelect':
-                self.data[win.InsertLayers] = { 'vector' : map }
-                
+                if not cparams[map]['layers']:
+                    win.InsertLayers(vector = map)
+                    cparams[map]['layers'] = win.GetItems()
+            
             elif name == 'TableSelect':
                 pDriver = self.task.get_param('dbdriver', element='prompt', raiseError=False)
                 driver = db = None
@@ -243,7 +250,10 @@ class UpdateThread(Thread):
                     layer = 1
                 
                 if map:
-                    self.data[win.InsertColumns] = { 'vector' : map, 'layer' : layer }
+                    if not cparams[map]['dbInfo']:
+                        cparams[map]['dbInfo'] = gselect.VectorDBInfo(map)
+                    self.data[win.InsertColumns] = { 'vector' : map, 'layer' : layer,
+                                                     'dbInfo' : cparams[map]['dbInfo'] }
                 else: # table
                     driver = db = None
                     pDriver = self.task.get_param('dbdriver', element='prompt', raiseError=False)

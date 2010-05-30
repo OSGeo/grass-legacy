@@ -596,6 +596,9 @@ class CommandThread(Thread):
 def RunCommand(prog, flags = "", overwrite = False, quiet = False, verbose = False,
                parent = None, read = False, stdin = None, **kwargs):
     """Run GRASS command"""
+    Debug.msg(1, "gcmd.RunCommand(): %s" % ' '.join(grass.make_command(prog, flags, overwrite,
+                                                                       quiet, verbose, **kwargs)))
+    
     kwargs['stderr'] = subprocess.PIPE
     
     if read:
