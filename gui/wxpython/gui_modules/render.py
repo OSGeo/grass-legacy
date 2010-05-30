@@ -957,19 +957,22 @@ class Map(object):
         else:
             del os.environ["GRASS_REGION"]
         
-        # run g.pngcomp to get composite image
-        try:
-            gcmd.Command(complist)
-        except gcmd.CmdError, e:
-            print >> sys.stderr, e
-            return None
-
+        if maps:
+            # run g.pngcomp to get composite image
+            try:
+                gcmd.Command(complist)
+            except gcmd.CmdError, e:
+                print >> sys.stderr, e
+                return None
+            Debug.msg (2, "Map.Render() force=%s file=%s" % (force, self.mapfile))
+        
         # back to original gisrc
         if self.gisrc:
             os.environ["GISRC"] = gisrc_orig
-
-        Debug.msg (2, "Map.Render() force=%s file=%s" % (force, self.mapfile))
-
+        
+        if not maps:
+            return None
+        
         return self.mapfile
 
     def AddLayer(self, type, command, name=None,
