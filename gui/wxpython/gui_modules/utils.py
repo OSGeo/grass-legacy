@@ -32,6 +32,7 @@ except:
     compatPath = os.path.join(globalvar.ETCWXDIR, "compat")
     sys.path.append(compatPath)
     import subprocess
+from debug import Debug
 
 def GetTempfile(pref=None):
     """
@@ -251,16 +252,24 @@ def GetVectorNumberOfLayers(vector):
     if not vector:
         return layers
     
-    cmdlist = ['v.category', '-g',
-               'input=%s' % vector,
-               'option=report']
+    ret = gcmd.RunCommand('v.category',
+                          flags = 'g',
+                          read = True,
+                          input = vector,
+                          option = 'report')
     
-    for line in gcmd.Command(cmdlist, rerr=None).ReadStdOutput():
-        if 'all' in line:
-            try:
-                layers.append(line.split(' ')[0])
-            except IndexError:
-                pass
+    if not ret:
+        return layers
+    
+    for line in ret.splitlines():
+        try:
+            layer = line.split(' ')[0]
+            if layer not in layers:
+                layers.append(layer)
+        except ValueError:
+            pass
+    Debug.msg(3, "utils.GetVectorNumberOfLayers(): vector=%s -> %s" % \
+                  (vector, ','.join(layers)))
     
     return layers
 

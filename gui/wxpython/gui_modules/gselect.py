@@ -603,9 +603,14 @@ class ColumnSelect(wx.ComboBox):
         if vector:
             self.InsertColumns(vector, layer)
     
-    def InsertColumns(self, vector, layer):
-        """Insert columns for a vector attribute table into the columns combobox"""
-        dbInfo = VectorDBInfo(vector)
+    def InsertColumns(self, vector, layer, dbInfo = None):
+        """!Insert columns for a vector attribute table into the columns combobox
+
+        @param vector vector name
+        @param layer vector layer number
+        """
+        if not dbInfo:
+            dbInfo = VectorDBInfo(vector)
         
         try:
             table = dbInfo.layers[int(layer)]['table']
