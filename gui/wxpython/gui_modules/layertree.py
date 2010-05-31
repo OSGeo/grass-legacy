@@ -266,6 +266,11 @@ class LayerTree(treemixin.DragAndDrop, CT.CustomTreeCtrl):
             self.Bind(wx.EVT_MENU, self.OnPopupOpacityLevel, id=self.popupID8)
             self.popupMenu.Append(self.popupID3, text=_("Properties"))
             self.Bind(wx.EVT_MENU, self.OnPopupProperties, id=self.popupID3)
+            
+            if ltype in ('raster', 'vector', 'raster3d') and self.mapdisplay.toolbars['nviz']:
+                self.popupMenu.Append(self.popupID11, _("3D view properties"))
+                self.Bind (wx.EVT_MENU, self.OnNvizProperties, id=self.popupID11)
+            
             if ltype in ('raster', 'vector', 'rgb'):
                 self.popupMenu.Append(self.popupID9, text=_("Zoom to selected map(s)"))
                 self.Bind(wx.EVT_MENU, self.mapdisplay.MapWindow.OnZoomToMap, id=self.popupID9)
@@ -358,7 +363,7 @@ class LayerTree(treemixin.DragAndDrop, CT.CustomTreeCtrl):
             self.popupMenu.Append(self.popupID6, _("Metadata"))
             self.Bind (wx.EVT_MENU, self.OnMetadata, id=self.popupID6)
             if self.mapdisplay.toolbars['nviz']:
-                self.popupMenu.Append(self.popupID11, _("Nviz properties"))
+                self.popupMenu.Append(self.popupID11, _("3D view properties"))
                 self.Bind (wx.EVT_MENU, self.OnNvizProperties, id=self.popupID11)
 
             if numSelected > 1:
@@ -592,11 +597,15 @@ class LayerTree(treemixin.DragAndDrop, CT.CustomTreeCtrl):
 
         @todo vector/volume
         """
-        if not self.mapdisplay.nvizToolWin.IsShown():
-            self.mapdisplay.nvizToolWin.Show()
-
-        self.mapdisplay.nvizToolWin.SetPage('surface')
-
+        self.lmgr.notebook.SetSelection(3)
+        ltype = self.GetPyData(self.layer_selected)[0]['type']
+        if ltype == 'raster':
+            self.lmgr.nviz.SetPage('surface')
+        elif ltype == 'vector':
+            self.lmgr.nviz.SetPage('vector')
+        elif ltype == 'raster3d':
+            self.lmgr.nviz.SetPage('volume')
+        
     def RenameLayer (self, event):
         """!Rename layer"""
         self.EditLabel(self.layer_selected)
@@ -1029,8 +1038,8 @@ class LayerTree(treemixin.DragAndDrop, CT.CustomTreeCtrl):
                 elif mapLayer.type == 'vector':
                     self.mapdisplay.MapWindow.UnloadVector(item)
                     
-                    if hasattr(self.mapdisplay, "nvizToolWin"):
-                        toolWin = self.mapdisplay.nvizToolWin
+                    if hasattr(self.parent, "nviz"):
+                        toolWin = self.lmgr.nviz
                         # remove vector page
                         if toolWin.notebook.GetSelection() == toolWin.page['vector']['id']:
                             toolWin.notebook.RemovePage(toolWin.page['vector']['id'])
@@ -1121,21 +1130,21 @@ class LayerTree(treemixin.DragAndDrop, CT.CustomTreeCtrl):
                 type = self.GetPyData(self.layer_selected)[0]['maplayer'].type
 
                 if type == 'raster':
-                    self.mapdisplay.nvizToolWin.UpdatePage('surface')
-                    self.mapdisplay.nvizToolWin.SetPage('surface')
+                    self.lmgr.nviz.UpdatePage('surface')
+                    self.lmgr.nviz.SetPage('surface')
                 elif type == 'vector':
-                    self.mapdisplay.nvizToolWin.UpdatePage('vector')
-                    self.mapdisplay.nvizToolWin.SetPage('vector')
+                    self.lmgr.nviz.UpdatePage('vector')
+                    self.lmgr.nviz.SetPage('vector')
                 elif type == '3d-raster':
-                    self.mapdisplay.nvizToolWin.UpdatePage('volume')
-                    self.mapdisplay.nvizToolWin.SetPage('volume')
+                    self.lmgr.nviz.UpdatePage('volume')
+                    self.lmgr.nviz.SetPage('volume')
             else:
                 for page in ('surface', 'vector', 'volume'):
-                    pageId = self.mapdisplay.nvizToolWin.page[page]['id']
+                    pageId = self.lmgr.nviz.page[page]['id']
                     if pageId > -1:
-                        self.mapdisplay.nvizToolWin.notebook.RemovePage(pageId)
-                        self.mapdisplay.nvizToolWin.page[page]['id'] = -1
-                        self.mapdisplay.nvizToolWin.page['settings']['id'] = 1 
+                        self.lmgr.nviz.notebook.RemovePage(pageId)
+                        self.lmgr.nviz.page[page]['id'] = -1
+                        self.lmgr.nviz.page['settings']['id'] = 1 
 
     def OnCollapseNode(self, event):
         """!Collapse node

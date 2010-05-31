@@ -1948,7 +1948,7 @@ class NvizToolWindow(FN.FlatNotebook):
         event = wxUpdateProperties(data = data)
         wx.PostEvent(self.mapWindow, event)
         
-        if self.parent.statusbarWin['render'].IsChecked():
+        if self.mapDisplay.statusbarWin['render'].IsChecked():
             self.mapWindow.Refresh(False)
         
     def OnSurfaceAxis(self, event):
@@ -2008,7 +2008,7 @@ class NvizToolWindow(FN.FlatNotebook):
         event = wxUpdateProperties(data = data)
         wx.PostEvent(self.mapWindow, event)
         
-        if self.parent.statusbarWin['render'].IsChecked():
+        if self.mapDisplay.statusbarWin['render'].IsChecked():
             self.mapWindow.Refresh(False)
         #        self.UpdatePage('surface')
 
@@ -2069,7 +2069,7 @@ class NvizToolWindow(FN.FlatNotebook):
                 event = wxUpdateProperties(data = data)
                 wx.PostEvent(self.mapWindow, event)
         
-        if self.parent.statusbarWin['render'].IsChecked():
+        if self.mapDisplay.statusbarWin['render'].IsChecked():
             self.mapWindow.Refresh(False)
         
         event.Skip()
@@ -2127,7 +2127,7 @@ class NvizToolWindow(FN.FlatNotebook):
         event = wxUpdateProperties(data = data)
         wx.PostEvent(self.mapWindow, event)
                         
-        if self.parent.statusbarWin['render'].IsChecked():
+        if self.mapDisplay.statusbarWin['render'].IsChecked():
             self.mapWindow.Refresh(False)
         
     def OnVectorHeight(self, event):
@@ -2198,7 +2198,7 @@ class NvizToolWindow(FN.FlatNotebook):
         event = wxUpdateProperties(data = data)
         wx.PostEvent(self.mapWindow, event)
         
-        if self.parent.statusbarWin['render'].IsChecked():
+        if self.mapDisplay.statusbarWin['render'].IsChecked():
             self.mapWindow.Refresh(False)
         
     def OnVectorPoints(self, event):
@@ -2227,7 +2227,7 @@ class NvizToolWindow(FN.FlatNotebook):
         event = wxUpdateProperties(data = data)
         wx.PostEvent(self.mapWindow, event)
         
-        if self.parent.statusbarWin['render'].IsChecked():
+        if self.mapDisplay.statusbarWin['render'].IsChecked():
             self.mapWindow.Refresh(False)
 
     def UpdateIsosurfButtons(self, list):
@@ -2280,7 +2280,7 @@ class NvizToolWindow(FN.FlatNotebook):
         
         self._display.SetIsosurfaceMode(id, mode)
         
-        if self.parent.statusbarWin['render'].IsChecked():
+        if self.mapDisplay.statusbarWin['render'].IsChecked():
             self.mapWindow.Refresh(False)
         
     def OnVolumeIsosurfResolution(self, event):
@@ -2299,7 +2299,7 @@ class NvizToolWindow(FN.FlatNotebook):
         id = data['object']['id']
         self._display.SetIsosurfaceRes(id, res)
         
-        if self.parent.statusbarWin['render'].IsChecked():
+        if self.mapDisplay.statusbarWin['render'].IsChecked():
             self.mapWindow.Refresh(False)
         
     def OnVolumeIsosurfMap(self, event):
@@ -2321,7 +2321,7 @@ class NvizToolWindow(FN.FlatNotebook):
             # disable -> make transparent
             self._display.SetIsosurfaceTransp(id, isosurfId, False, "255")
         
-        if self.parent.statusbarWin['render'].IsChecked():
+        if self.mapDisplay.statusbarWin['render'].IsChecked():
             self.mapWindow.Refresh(False)
         
     def OnVolumeIsosurfSelect(self, event):
@@ -2409,7 +2409,7 @@ class NvizToolWindow(FN.FlatNotebook):
         # update buttons
         self.UpdateIsosurfButtons(list)
         
-        if self.parent.statusbarWin['render'].IsChecked():
+        if self.mapDisplay.statusbarWin['render'].IsChecked():
             self.mapWindow.Refresh(False)
         
         event.Skip()
@@ -2437,7 +2437,7 @@ class NvizToolWindow(FN.FlatNotebook):
         # update buttons
         self.UpdateIsosurfButtons(list)
         
-        if self.parent.statusbarWin['render'].IsChecked():
+        if self.mapDisplay.statusbarWin['render'].IsChecked():
             self.mapWindow.Refresh(False)
         
         event.Skip()
@@ -2467,7 +2467,7 @@ class NvizToolWindow(FN.FlatNotebook):
         # update buttons
         self.UpdateIsosurfButtons(list)
         
-        if self.parent.statusbarWin['render'].IsChecked():
+        if self.mapDisplay.statusbarWin['render'].IsChecked():
             self.mapWindow.Refresh(False)
         
         event.Skip()
@@ -2497,7 +2497,7 @@ class NvizToolWindow(FN.FlatNotebook):
         # update buttons
         self.UpdateIsosurfButtons(list)
         
-        if self.parent.statusbarWin['render'].IsChecked():
+        if self.mapDisplay.statusbarWin['render'].IsChecked():
             self.mapWindow.Refresh(False)
         
         event.Skip()
@@ -2641,7 +2641,7 @@ class NvizToolWindow(FN.FlatNotebook):
         
         npoints = nprimitives = 0
         for line in vInfo.splitlines():
-            key, value = line.split(' = ')
+            key, value = line.split('=')
             if key == 'map3d':
                 mapIs3D = int(value)
             
