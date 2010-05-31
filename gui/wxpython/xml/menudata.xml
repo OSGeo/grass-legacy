@@ -561,8 +561,8 @@
 	  <items>
 	    <menuitem>
 	      <label>Raster to vector</label>
-	      <help>Converts a raster map into a vector map layer.</help>
-	      <keywords>raster</keywords>
+	      <help>Converts a raster map into a vector map.</help>
+	      <keywords>raster,conversion,vectorization</keywords>
 	      <handler>OnMenuCmd</handler>
 	      <command>r.to.vect</command>
 	    </menuitem>
@@ -643,6 +643,13 @@
 	  <keywords>raster,vector,visualization</keywords>
 	  <handler>OnMenuCmd</handler>
 	  <command>nviz</command>
+	</menuitem>
+	<menuitem>
+	  <label>NVIZ (non-interactive)</label>
+	  <help>Experimental NVIZ CLI prototype.</help>
+	  <keywords>visualization,raster,vector,raster3d</keywords>
+	  <handler>OnMenuCmd</handler>
+	  <command>nviz_cmd</command>
 	</menuitem>
 	<separator />
 	<menuitem>
@@ -1125,8 +1132,8 @@
 	    <separator />
 	    <menuitem>
 	      <label>Slope and aspect</label>
-	      <help>Generates raster map layers of slope, aspect, curvatures and partial derivatives from a raster map layer of true elevation values. Aspect is calculated counterclockwise from east.</help>
-	      <keywords>raster,terrain analysis</keywords>
+	      <help>Generates raster maps of slope, aspect, curvatures and partial derivatives from a elevation raster map.</help>
+	      <keywords>raster,terrain</keywords>
 	      <handler>OnMenuCmd</handler>
 	      <command>r.slope.aspect</command>
 	    </menuitem>
@@ -1275,7 +1282,7 @@
 	    </menuitem>
 	    <menuitem>
 	      <label>Watershed analysis</label>
-	      <help>Creates watershed basins.</help>
+	      <help>Watershed basin analysis program</help>
 	      <keywords>raster,hydrology</keywords>
 	      <handler>OnMenuCmd</handler>
 	      <command>r.watershed</command>
@@ -2329,7 +2336,7 @@
 	<separator />
 	<menuitem>
 	  <label>Update area attributes from raster</label>
-	  <help>Calculates univariate statistics from a GRASS raster map based on vector polygons and uploads statistics to new attribute columns.</help>
+	  <help>Calculates univariate statistics from a raster map based on vector polygons and uploads statistics to new attribute columns.</help>
 	  <keywords>vector,raster,statistics</keywords>
 	  <handler>OnMenuCmd</handler>
 	  <command>v.rast.stats</command>

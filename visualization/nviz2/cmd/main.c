@@ -5,7 +5,7 @@
  *               
  * AUTHOR(S):    Martin Landa <landa.martin gmail.com> (Google SoC 2008/2010)
  *               
- * PURPOSE:      Experimental NVIZ CLI prototype
+ * PURPOSE:      Renders GIS data in 3D space.
  *               
  * COPYRIGHT:    (C) 2008,2010 by the GRASS Development Team
  *
@@ -44,7 +44,10 @@ int main(int argc, char *argv[])
 
     module = G_define_module();
     module->keywords = _("visualization, raster, vector, raster3d");
-    module->description = _("Experimental NVIZ CLI prototype.");
+    module->label = _("Allows rendering GIS data is a 3D space.");
+    module->description = _("Renders surfaces (raster data), "
+			    "2D/3D vector data, and "
+			    "volumes (3D raster data) in a 3D space.");
 
     params = (struct GParams *)G_malloc(sizeof(struct GParams));
 
