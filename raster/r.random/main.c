@@ -101,11 +101,11 @@ int main(int argc, char *argv[])
     myState.use_nulls = flag.zero->answer;
     myState.inraster = parm.input->answer;
     if (parm.cover->answer) {
-	myState.docover = 1;
+	myState.docover = TRUE;
 	myState.inrcover = parm.cover->answer;
     }
     else {
-	myState.docover = 0;
+	myState.docover = FALSE;
 	myState.cmapset = NULL;
 	myState.inrcover = NULL;
     }
@@ -118,7 +118,7 @@ int main(int argc, char *argv[])
     if (myState.mapset == NULL)
 	G_fatal_error(_("Raster map <%s> not found"), myState.inraster);
 
-    if (myState.docover == 1) {
+    if (myState.docover == TRUE) {
 	myState.cmapset = G_find_cell(myState.inrcover, "");
 	if (myState.cmapset == NULL)
 	    G_fatal_error(_("Raster map <%s> not found"), myState.inrcover);
