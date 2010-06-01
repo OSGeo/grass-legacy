@@ -821,7 +821,6 @@ class GMFrame(wx.Frame):
 
     def OnWorkspaceSave(self, event=None):
         """!Save file with workspace definition"""
-
         if self.workspaceFile:
             dlg = wx.MessageDialog(self, message=_("Workspace file <%s> already exists. "
                                                    "Do you want to overwrite this file?") % \
@@ -832,6 +831,7 @@ class GMFrame(wx.Frame):
             else:
                 Debug.msg(4, "GMFrame.OnWorkspaceSave(): filename=%s" % self.workspaceFile)
                 self.SaveToWorkspaceFile(self.workspaceFile)
+                self.SetTitle(self.baseTitle + " - " + os.path.basename(self.workspaceFile))
         else:
             self.OnWorkspaceSaveAs()
 
