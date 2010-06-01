@@ -287,6 +287,12 @@ int main(int argc, char **argv)
 	    check(col, 1, -1);
 	}
 
+	for (col = 0; col < ncols; col++)
+	    check(col, -1, 0);
+
+	for (col = ncols - 1; col >= 0; col--)
+	    check(col, 1, 0);
+
 	if (dist_name) {
 	    if (out_row != dist_row)
 		for (col = 0; col < ncols; col++)
