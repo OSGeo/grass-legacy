@@ -1,25 +1,26 @@
 # translation of grasslibs_it.po to Italian
 # This file is distributed under the same license as the GRASS package.
-# Copyright (C) 2005, 2006, 2007 GRASS Development Team
+# Copyright (C) 2005, 2006, 2007, 2010 GRASS Development Team
 #
 # Maurizio Napolitano <napo at itc.it>, 2005.
 # Markus Neteler <neteler at itc.it>, 2005.
 # Luciano Montanaro <mikelima at cirulla.net>, 2006.
 # Giuseppe Patti <gpatt at tiscali.it>, 2006.
 # Tobias Vigl <vigltobias at icqmail.com>, 2007.
+# Andrea Giacomelli <pibinko at gmail.com>, 2010.
 msgid ""
 msgstr ""
 "Project-Id-Version: grasslibs_it\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2010-02-25 12:01+0100\n"
 "PO-Revision-Date: 2007-11-21 12:41+0100\n"
-"Last-Translator: Tobias Vigl <vigltobias@icqmail.com>\n"
+"Last-Translator: Andrea Giacomelli <pibinko at gmail.com>\n"
 "Language-Team: Italian <grass-translations@lists.osgeo.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: KBabel 1.11.4\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: KBabel 1.11.4\n"
 
 #: ../lib/gpde/test/test_arrays.c:48
 msgid ""
@@ -443,16 +444,16 @@ msgstr ""
 #: ../lib/gpde/N_arrays_io.c:303 ../lib/gpde/N_arrays_io.c:445
 #, c-format
 msgid "Error opening g3d map <%s>"
-msgstr ""
+msgstr "Errore nell'apertura della mappa g3d <%s>"
 
 #: ../lib/gpde/N_arrays_io.c:331
 #, c-format
 msgid "Read g3d map <%s> into the memory"
-msgstr ""
+msgstr "Mappa g3d <%s> caricata in memoria"
 
 #: ../lib/gpde/N_arrays_io.c:386 ../lib/gpde/N_arrays_io.c:486
 msgid "Error closing g3d file"
-msgstr ""
+msgstr "Errore nella chiusura del file g3d"
 
 #: ../lib/gpde/N_arrays_io.c:447
 #, c-format
@@ -4509,7 +4510,7 @@ msgstr ""
 
 #: ../lib/gmath/la.c:266 ../lib/gmath/la.c:331
 msgid "Matrix order does not match"
-msgstr ""
+msgstr "L'ordine delle matrici non corrisponde"
 
 #: ../lib/gmath/la.c:272
 #, fuzzy
@@ -4535,11 +4536,11 @@ msgstr ""
 
 #: ../lib/gmath/la.c:464
 msgid "Could not allocate space for solution matrix"
-msgstr ""
+msgstr "Impossibile allocare lo spazio per la matrice della soluzione"
 
 #: ../lib/gmath/la.c:470 ../lib/gmath/la.c:478
 msgid "Could not allocate space for working matrix"
-msgstr ""
+msgstr "Impossibile allocare lo spazio per la matrice di lavoro"
 
 #: ../lib/gmath/la.c:531
 msgid "Matrix (or submatrix is singular). Solution undetermined"
@@ -4626,7 +4627,7 @@ msgstr ""
 
 #: ../lib/gmath/la.c:1002
 msgid "Vectors have differing dimensions"
-msgstr ""
+msgstr "I vettori hanno dimensioni differenti"
 
 #: ../lib/gmath/la.c:1008
 msgid "Output vector has incorrect dimension"
@@ -4646,7 +4647,7 @@ msgstr ""
 
 #: ../lib/gmath/la.c:1395 ../lib/gmath/la.c:1403 ../lib/gmath/la.c:1408
 msgid "Input format error"
-msgstr ""
+msgstr "Errore nel formato di input"
 
 #: ../lib/gmath/del2g.c:50
 msgid "    taking FFT of image..."
@@ -4707,12 +4708,14 @@ msgstr "Il vettore non è 3D"
 
 #: ../lib/rst/interp_float/vinput2d.c:76
 msgid "Loading data from attribute table ..."
-msgstr ""
+msgstr "Caricamento dati dalla tabella degli attributi in corso..."
 
 #: ../lib/rst/interp_float/vinput2d.c:94
 #, c-format
 msgid "Cannot find z column <%s> (please verify name, e.g. with v.info)"
 msgstr ""
+"Impossibile trovare la colonna z <%s> (si prega di verificarne il nome con v."
+"info)"
 
 #: ../lib/rst/interp_float/vinput2d.c:97
 msgid "Column type of z column is not supported (must be integer or double)"
@@ -4732,17 +4735,17 @@ msgstr ""
 
 #: ../lib/rst/interp_float/vinput2d.c:123
 msgid "Reading lines from vector map ... "
-msgstr ""
+msgstr "Lettura linee dalla mappa vettorialie..."
 
 #: ../lib/rst/interp_float/vinput2d.c:155
 #: ../lib/rst/interp_float/vinput2d.c:273
 #, c-format
 msgid "Database record for cat %d not found"
-msgstr ""
+msgstr "Non trovo il record database per la cat %d"
 
 #: ../lib/rst/interp_float/vinput2d.c:236
 msgid "Reading nodes from vector map ... "
-msgstr ""
+msgstr "Lettura nodi dalla mappa vettoriale..."
 
 #: ../lib/rst/interp_float/vinput2d.c:318
 msgid "strip exists with insufficient data"
@@ -4756,7 +4759,7 @@ msgstr ""
 #: ../lib/rst/interp_float/vinput2d.c:336
 #, c-format
 msgid "ignoring %d points -- too dense"
-msgstr ""
+msgstr "Ignorati %d punti -- densità eccessiva"
 
 #: ../lib/rst/interp_float/vinput2d.c:340
 #, c-format
@@ -4785,6 +4788,5 @@ msgstr "Non riesco a trovare il vettore '%s' di input"
 msgid "Bitmap mask created"
 msgstr ""
 
-#, fuzzy
 #~ msgid "Too many arguments"
 #~ msgstr "troppi argomenti"
