@@ -38,8 +38,11 @@ from preferences import PreferencesBaseDialog
 from nviz_mapdisp import wxUpdateView as wxUpdateView
 from nviz_mapdisp import wxUpdateProperties as wxUpdateProperties
 
-sys.path.append(os.path.join(globalvar.ETCWXDIR, "nviz"))
-import grass6_wxnviz as wxnviz
+try:
+    sys.path.append(os.path.join(globalvar.ETCWXDIR, "nviz"))
+    import grass6_wxnviz as wxnviz
+except ImportError:
+    pass
 
 class NvizToolWindow(FN.FlatNotebook):
     """!Nviz (3D view) tools panel

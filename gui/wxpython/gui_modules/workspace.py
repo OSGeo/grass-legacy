@@ -36,8 +36,8 @@ import utils
 import globalvar
 from preferences import globalSettings as UserSettings
 
-sys.path.append(os.path.join(globalvar.ETCWXDIR, "nviz"))
 try:
+    sys.path.append(os.path.join(globalvar.ETCWXDIR, "nviz"))
     import grass6_wxnviz as wxnviz
 except ImportError:
     wxnviz = None
