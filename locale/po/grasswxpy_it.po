@@ -14,8 +14,8 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Lokalize 1.0\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: ../gui/wxpython/icons/icon.py:81
 msgid "Unable to load icon theme..."
@@ -6489,7 +6489,7 @@ msgstr "Riclassifica usando un file di regole"
 
 #: ../gui/wxpython/menustrings.py:406
 msgid "Recode interactively"
-msgstr ""
+msgstr "Ricodifica interattivamente"
 
 #: ../gui/wxpython/menustrings.py:407
 msgid "Recodes categorical raster maps."
@@ -6627,13 +6627,12 @@ msgid "Interpolate surfaces"
 msgstr "Interpolazione superfici"
 
 #: ../gui/wxpython/menustrings.py:437
-#, fuzzy
 msgid "Bilinear from raster points"
-msgstr "Interpolazione da isolinee raster"
+msgstr "Interpolazione bilineare da punti raster"
 
 #: ../gui/wxpython/menustrings.py:438
 msgid "Bilinear interpolation utility for raster map layers."
-msgstr ""
+msgstr "Interpolazione bilineare da layer raster"
 
 #: ../gui/wxpython/menustrings.py:439
 msgid "Bilinear and bicubic from vector points"
@@ -6910,9 +6909,8 @@ msgid "Convert object types"
 msgstr "Converti tipologia d'oggetto"
 
 #: ../gui/wxpython/menustrings.py:501
-#, fuzzy
 msgid "Change the type of geometry elements."
-msgstr "Cambia la tipologia della geometri degli elementi."
+msgstr "Cambia la tipologia della geometria degli elementi."
 
 #: ../gui/wxpython/menustrings.py:502
 msgid "Add centroids"
@@ -7097,7 +7095,7 @@ msgstr ""
 
 #: ../gui/wxpython/menustrings.py:546
 msgid "Correct and reclassify objects"
-msgstr ""
+msgstr "Corregge e riclassifica oggetti"
 
 #: ../gui/wxpython/menustrings.py:547
 msgid ""
@@ -7197,11 +7195,12 @@ msgstr "Trova il percorso più breve in una rete vettoriale."
 
 #: ../gui/wxpython/menustrings.py:568
 msgid "Display shortest route (requires XTerm)"
-msgstr ""
+msgstr "Visualizza il percorso più breve (richiede XTerm)"
 
 #: ../gui/wxpython/menustrings.py:569
 msgid "Finds shortest path for selected starting and ending node."
 msgstr ""
+"Trova il percorso più breve per i nodi di partenza ed arrivo selezionati"
 
 #: ../gui/wxpython/menustrings.py:570
 msgid "Split net"
@@ -7551,12 +7550,16 @@ msgid ""
 "Transforms raster maps from HIS (Hue-Intensity-Saturation) color space to "
 "RGB (Red-Green-Blue) color space."
 msgstr ""
+"Trasforma mappe raster dallo spazio di colore HIS (Hue-Intensity-Saturation) "
+"allo spazio di colore RGB (Red-Green-Blue)"
 
 #: ../gui/wxpython/menustrings.py:652
 msgid ""
 "Transforms raster maps from RGB (Red-Green-Blue) color space to HIS (Hue-"
 "Intensity-Saturation) color space."
 msgstr ""
+"Trasforma mappe raster dallo spazio di colore RGB (Red-Green-Blue) allo "
+"spazio di colore HIS (Hue-Intensity-Saturation)"
 
 #: ../gui/wxpython/menustrings.py:653
 msgid "Rectify image or raster"
@@ -7570,7 +7573,7 @@ msgstr ""
 
 #: ../gui/wxpython/menustrings.py:655
 msgid "Ortho photo rectification (requires Xterm)"
-msgstr ""
+msgstr "Ortorettificazione (richiede Xterm)"
 
 #: ../gui/wxpython/menustrings.py:656
 msgid "Menu driver for the photo imagery programs."
@@ -8681,9 +8684,8 @@ msgstr "Evapotraspirazione attuale per il periodo diurno (Bastiaanssen, 1995)"
 #~ msgid "Copy the current command string to the clipboard"
 #~ msgstr "Copia la seguente stringa di comando negli appunti"
 
-#, fuzzy
 #~ msgid "Error in command execution %s"
-#~ msgstr "Errore nell'esecuzione del comando '%s'"
+#~ msgstr "Errore nell'esecuzione del comando %s"
 
 #~ msgid "GRASS GIS help"
 #~ msgstr "Aiuto GRASS GIS"
