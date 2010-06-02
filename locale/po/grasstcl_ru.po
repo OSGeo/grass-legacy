@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: grasstcl_ru\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-02-25 12:01+0100\n"
+"POT-Creation-Date: 2010-06-02 21:15+0200\n"
 "PO-Revision-Date: 2009-01-28 23:05-0600\n"
 "Last-Translator: Maxim Dubinin <sim@gis-lab.info>\n"
 "Language-Team: Russian <grass-translations@lists.osgeo.org>\n"
@@ -15,108 +15,33 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: KBabel 1.9.1\n"
 
-#: ../vector/v.digit/settings.tcl:75
-msgid "Add new column"
-msgstr "Добавить новое поле"
+#: ../vector/v.digit/cats.tcl:20 ../gui/tcltk/gis.m/gmmenu.tcl:177
+msgid "Delete"
+msgstr "Удалить"
 
-#: ../vector/v.digit/settings.tcl:78
-msgid "Create table"
-msgstr "Создать таблицу"
+#: ../vector/v.digit/cats.tcl:34
+msgid "Categories already opened"
+msgstr "Категорий уже открыто"
 
-#: ../vector/v.digit/settings.tcl:111
-msgid "Add command"
-msgstr "Добавить команду"
+#: ../vector/v.digit/cats.tcl:42
+msgid "Categories"
+msgstr "Категории"
 
-#: ../vector/v.digit/settings.tcl:149
-msgid "Table successfully created"
-msgstr "Таблица успешно создана"
+#: ../vector/v.digit/cats.tcl:53
+msgid "Layer:"
+msgstr "Слой:"
 
-#: ../vector/v.digit/settings.tcl:165
-msgid "Settings already opened"
-msgstr "Настройки уже открыты"
+#: ../vector/v.digit/cats.tcl:55
+msgid "   Category:"
+msgstr "   Категория:"
 
-#: ../vector/v.digit/settings.tcl:174 ../lib/init/epsg_option.tcl:311
-#: ../lib/init/file_option.tcl:264 ../gui/tcltk/gis.m/gm.tcl:455
-#: ../gui/tcltk/gis.m/animate.tcl:536 ../gui/tcltk/gis.m/dnviz.tcl:228
-#: ../gui/tcltk/gis.m/rules.tcl:170
-msgid "OK"
-msgstr "ОК"
+#: ../vector/v.digit/cats.tcl:62
+msgid "Insert new record to table"
+msgstr "Вставить новую запись в таблицу"
 
-#: ../vector/v.digit/settings.tcl:183
-msgid "Symbology"
-msgstr "Символика"
-
-#: ../vector/v.digit/settings.tcl:187 ../vector/v.digit/settings.tcl:340
-msgid "Background"
-msgstr "Фон"
-
-#: ../vector/v.digit/settings.tcl:194
-msgid "Highlight"
-msgstr "Подсветка"
-
-#: ../vector/v.digit/settings.tcl:201
-msgid "Point"
-msgstr "Точка"
-
-#: ../vector/v.digit/settings.tcl:210
-msgid "Line"
-msgstr "Линия"
-
-#: ../vector/v.digit/settings.tcl:219
-msgid "Boundary (no area)"
-msgstr "Граница (нет полигонов)"
-
-#: ../vector/v.digit/settings.tcl:227
-msgid "Boundary (1 area)"
-msgstr "Граница (1 полигон)"
-
-#: ../vector/v.digit/settings.tcl:235
-msgid "Boundary (2 areas)"
-msgstr "Граница (2 полигона)"
-
-#: ../vector/v.digit/settings.tcl:244
-msgid "Centroid (in area)"
-msgstr "Центроид (в полигоне)"
-
-#: ../vector/v.digit/settings.tcl:252
-msgid "Centroid (outside area)"
-msgstr "Центроид (вне полигона)"
-
-#: ../vector/v.digit/settings.tcl:260
-msgid "Centroid (duplicate in area)"
-msgstr "Центроид (дубликат в полигоне)"
-
-#: ../vector/v.digit/settings.tcl:269
-msgid "Node (1 line)"
-msgstr "Узел (1 линия)"
-
-#: ../vector/v.digit/settings.tcl:277
-msgid "Node (2 lines)"
-msgstr "Узел (2 линии)"
-
-#: ../vector/v.digit/settings.tcl:287
-msgid "Settings"
-msgstr "Настройки"
-
-#: ../vector/v.digit/settings.tcl:292
-msgid "Snapping threshold in screen pixels"
-msgstr "Порог прилипания в пикселях экрана"
-
-#: ../vector/v.digit/settings.tcl:302
-msgid "Snapping threshold in map units"
-msgstr "Порог прилипания в единицах слоя"
-
-#: ../vector/v.digit/settings.tcl:319
-msgid "Line width in screen pixels"
-msgstr "Ширина линии в пикселях"
-
-#: ../vector/v.digit/settings.tcl:321
-msgid "Set line width in pixels"
-msgstr "Установить толщину линии в пикселях"
-
-#: ../vector/v.digit/settings.tcl:329
-msgid "Table"
-msgstr "Таблица"
+#: ../vector/v.digit/cats.tcl:63
+msgid "Add new"
+msgstr "Добавить новый"
 
 #: ../vector/v.digit/toolbox.tcl:20
 msgid "Welcome to v.digit"
@@ -206,8 +131,8 @@ msgstr "Увеличить окном"
 msgid "Zoom out"
 msgstr "Уменьшить"
 
-#: ../vector/v.digit/toolbox.tcl:190 ../gui/tcltk/gis.m/maptool.tcl:151
-#: ../gui/tcltk/gis.m/georecttool.tcl:130
+#: ../vector/v.digit/toolbox.tcl:190 ../gui/tcltk/gis.m/georecttool.tcl:130
+#: ../gui/tcltk/gis.m/maptool.tcl:151
 msgid "Pan"
 msgstr "Сдвиг"
 
@@ -243,33 +168,108 @@ msgstr "Сохранить и выйти"
 msgid "mouse button actions (left, middle, right)"
 msgstr "действия для кнопок мыши (левая, средняя, правая)"
 
-#: ../vector/v.digit/cats.tcl:20 ../gui/tcltk/gis.m/gmmenu.tcl:177
-msgid "Delete"
-msgstr "Удалить"
+#: ../vector/v.digit/settings.tcl:75
+msgid "Add new column"
+msgstr "Добавить новое поле"
 
-#: ../vector/v.digit/cats.tcl:34
-msgid "Categories already opened"
-msgstr "Категорий уже открыто"
+#: ../vector/v.digit/settings.tcl:78
+msgid "Create table"
+msgstr "Создать таблицу"
 
-#: ../vector/v.digit/cats.tcl:42
-msgid "Categories"
-msgstr "Категории"
+#: ../vector/v.digit/settings.tcl:111
+msgid "Add command"
+msgstr "Добавить команду"
 
-#: ../vector/v.digit/cats.tcl:53
-msgid "Layer:"
-msgstr "Слой:"
+#: ../vector/v.digit/settings.tcl:149
+msgid "Table successfully created"
+msgstr "Таблица успешно создана"
 
-#: ../vector/v.digit/cats.tcl:55
-msgid "   Category:"
-msgstr "   Категория:"
+#: ../vector/v.digit/settings.tcl:165
+msgid "Settings already opened"
+msgstr "Настройки уже открыты"
 
-#: ../vector/v.digit/cats.tcl:62
-msgid "Insert new record to table"
-msgstr "Вставить новую запись в таблицу"
+#: ../vector/v.digit/settings.tcl:174 ../lib/init/epsg_option.tcl:311
+#: ../lib/init/file_option.tcl:264 ../gui/tcltk/gis.m/rules.tcl:170
+#: ../gui/tcltk/gis.m/gm.tcl:455 ../gui/tcltk/gis.m/dnviz.tcl:228
+#: ../gui/tcltk/gis.m/animate.tcl:536
+msgid "OK"
+msgstr "ОК"
 
-#: ../vector/v.digit/cats.tcl:63
-msgid "Add new"
-msgstr "Добавить новый"
+#: ../vector/v.digit/settings.tcl:183
+msgid "Symbology"
+msgstr "Символика"
+
+#: ../vector/v.digit/settings.tcl:187 ../vector/v.digit/settings.tcl:340
+msgid "Background"
+msgstr "Фон"
+
+#: ../vector/v.digit/settings.tcl:194
+msgid "Highlight"
+msgstr "Подсветка"
+
+#: ../vector/v.digit/settings.tcl:201
+msgid "Point"
+msgstr "Точка"
+
+#: ../vector/v.digit/settings.tcl:210
+msgid "Line"
+msgstr "Линия"
+
+#: ../vector/v.digit/settings.tcl:219
+msgid "Boundary (no area)"
+msgstr "Граница (нет полигонов)"
+
+#: ../vector/v.digit/settings.tcl:227
+msgid "Boundary (1 area)"
+msgstr "Граница (1 полигон)"
+
+#: ../vector/v.digit/settings.tcl:235
+msgid "Boundary (2 areas)"
+msgstr "Граница (2 полигона)"
+
+#: ../vector/v.digit/settings.tcl:244
+msgid "Centroid (in area)"
+msgstr "Центроид (в полигоне)"
+
+#: ../vector/v.digit/settings.tcl:252
+msgid "Centroid (outside area)"
+msgstr "Центроид (вне полигона)"
+
+#: ../vector/v.digit/settings.tcl:260
+msgid "Centroid (duplicate in area)"
+msgstr "Центроид (дубликат в полигоне)"
+
+#: ../vector/v.digit/settings.tcl:269
+msgid "Node (1 line)"
+msgstr "Узел (1 линия)"
+
+#: ../vector/v.digit/settings.tcl:277
+msgid "Node (2 lines)"
+msgstr "Узел (2 линии)"
+
+#: ../vector/v.digit/settings.tcl:287
+msgid "Settings"
+msgstr "Настройки"
+
+#: ../vector/v.digit/settings.tcl:292
+msgid "Snapping threshold in screen pixels"
+msgstr "Порог прилипания в пикселях экрана"
+
+#: ../vector/v.digit/settings.tcl:302
+msgid "Snapping threshold in map units"
+msgstr "Порог прилипания в единицах слоя"
+
+#: ../vector/v.digit/settings.tcl:319
+msgid "Line width in screen pixels"
+msgstr "Ширина линии в пикселях"
+
+#: ../vector/v.digit/settings.tcl:321
+msgid "Set line width in pixels"
+msgstr "Установить толщину линии в пикселях"
+
+#: ../vector/v.digit/settings.tcl:329
+msgid "Table"
+msgstr "Таблица"
 
 #: ../lib/gtcltk/select.tcl:107
 msgid "Select item"
@@ -281,17 +281,17 @@ msgstr "Ок"
 
 #: ../lib/gtcltk/select.tcl:210 ../lib/init/epsg_option.tcl:167
 #: ../lib/init/epsg_option.tcl:314 ../lib/init/file_option.tcl:115
-#: ../lib/init/file_option.tcl:267 ../gui/tcltk/gis.m/gm.tcl:458
-#: ../gui/tcltk/gis.m/animate.tcl:538 ../gui/tcltk/gis.m/dnviz.tcl:230
-#: ../gui/tcltk/gis.m/mapcanvas.tcl:922 ../gui/tcltk/gis.m/georect.tcl:703
-#: ../gui/tcltk/gis.m/rules.tcl:172
+#: ../lib/init/file_option.tcl:267 ../gui/tcltk/gis.m/rules.tcl:172
+#: ../gui/tcltk/gis.m/georect.tcl:703 ../gui/tcltk/gis.m/gm.tcl:458
+#: ../gui/tcltk/gis.m/dnviz.tcl:230 ../gui/tcltk/gis.m/animate.tcl:538
+#: ../gui/tcltk/gis.m/mapcanvas.tcl:922
 msgid "Cancel"
 msgstr "Отмена"
 
 #: ../lib/gis/gui.tcl:11 ../lib/gis/gui.tcl:15 ../lib/gis/gui.tcl:19
 #: ../lib/gis/gui.tcl:310 ../gui/tcltk/gis.m/runandoutput.tcl:277
-#: ../gui/tcltk/gis.m/runandoutput.tcl:283
-#: ../gui/tcltk/gis.m/grassabout.tcl:94 ../gui/tcltk/gis.m/gmlib.tcl:141
+#: ../gui/tcltk/gis.m/runandoutput.tcl:283 ../gui/tcltk/gis.m/gmlib.tcl:141
+#: ../gui/tcltk/gis.m/grassabout.tcl:94
 msgid "Error"
 msgstr "Ошибка"
 
@@ -327,41 +327,41 @@ msgid "Run"
 msgstr "Запустить"
 
 #: ../lib/gis/gui.tcl:509 ../lib/init/gis_set.tcl:506
-#: ../gui/tcltk/gis.m/rastarrows.tcl:164 ../gui/tcltk/gis.m/rastarrows.tcl:167
-#: ../gui/tcltk/gis.m/thematic.tcl:265 ../gui/tcltk/gis.m/thematic.tcl:269
-#: ../gui/tcltk/gis.m/profile.tcl:131 ../gui/tcltk/gis.m/profile.tcl:135
-#: ../gui/tcltk/gis.m/labels.tcl:136 ../gui/tcltk/gis.m/labels.tcl:140
-#: ../gui/tcltk/gis.m/runandoutput.tcl:47 ../gui/tcltk/gis.m/rastnums.tcl:163
-#: ../gui/tcltk/gis.m/rastnums.tcl:166 ../gui/tcltk/gis.m/frames.tcl:118
-#: ../gui/tcltk/gis.m/frames.tcl:122 ../gui/tcltk/gis.m/animate.tcl:408
-#: ../gui/tcltk/gis.m/animate.tcl:412 ../gui/tcltk/gis.m/animate.tcl:481
-#: ../gui/tcltk/gis.m/animate.tcl:484 ../gui/tcltk/gis.m/dnviz.tcl:208
-#: ../gui/tcltk/gis.m/dnviz.tcl:212 ../gui/tcltk/gis.m/gridline.tcl:162
-#: ../gui/tcltk/gis.m/gridline.tcl:214 ../gui/tcltk/gis.m/gridline.tcl:241
-#: ../gui/tcltk/gis.m/legend.tcl:219 ../gui/tcltk/gis.m/legend.tcl:222
+#: ../gui/tcltk/gis.m/rastnums.tcl:163 ../gui/tcltk/gis.m/rastnums.tcl:166
 #: ../gui/tcltk/gis.m/raster.tcl:208 ../gui/tcltk/gis.m/raster.tcl:212
+#: ../gui/tcltk/gis.m/runandoutput.tcl:47 ../gui/tcltk/gis.m/histogram.tcl:162
+#: ../gui/tcltk/gis.m/histogram.tcl:165 ../gui/tcltk/gis.m/barscale.tcl:180
+#: ../gui/tcltk/gis.m/barscale.tcl:184 ../gui/tcltk/gis.m/rules.tcl:139
+#: ../gui/tcltk/gis.m/rules.tcl:143 ../gui/tcltk/gis.m/georect.tcl:708
+#: ../gui/tcltk/gis.m/georect.tcl:712 ../gui/tcltk/gis.m/georect.tcl:1142
+#: ../gui/tcltk/gis.m/georect.tcl:1146 ../gui/tcltk/gis.m/dnviz.tcl:208
+#: ../gui/tcltk/gis.m/dnviz.tcl:212 ../gui/tcltk/gis.m/dtext.tcl:177
+#: ../gui/tcltk/gis.m/dtext.tcl:181 ../gui/tcltk/gis.m/thematic.tcl:265
+#: ../gui/tcltk/gis.m/thematic.tcl:269 ../gui/tcltk/gis.m/legend.tcl:219
+#: ../gui/tcltk/gis.m/legend.tcl:222 ../gui/tcltk/gis.m/profile.tcl:131
+#: ../gui/tcltk/gis.m/profile.tcl:135 ../gui/tcltk/gis.m/gridline.tcl:162
+#: ../gui/tcltk/gis.m/gridline.tcl:214 ../gui/tcltk/gis.m/gridline.tcl:241
+#: ../gui/tcltk/gis.m/frames.tcl:118 ../gui/tcltk/gis.m/frames.tcl:122
 #: ../gui/tcltk/gis.m/chart.tcl:208 ../gui/tcltk/gis.m/chart.tcl:212
+#: ../gui/tcltk/gis.m/labels.tcl:136 ../gui/tcltk/gis.m/labels.tcl:140
 #: ../gui/tcltk/gis.m/vector.tcl:364 ../gui/tcltk/gis.m/vector.tcl:368
-#: ../gui/tcltk/gis.m/barscale.tcl:180 ../gui/tcltk/gis.m/barscale.tcl:184
+#: ../gui/tcltk/gis.m/animate.tcl:408 ../gui/tcltk/gis.m/animate.tcl:412
+#: ../gui/tcltk/gis.m/animate.tcl:481 ../gui/tcltk/gis.m/animate.tcl:484
+#: ../gui/tcltk/gis.m/rastarrows.tcl:164 ../gui/tcltk/gis.m/rastarrows.tcl:167
 #: ../gui/tcltk/gis.m/rgbhis.tcl:156 ../gui/tcltk/gis.m/rgbhis.tcl:165
-#: ../gui/tcltk/gis.m/dtext.tcl:177 ../gui/tcltk/gis.m/dtext.tcl:181
-#: ../gui/tcltk/gis.m/georect.tcl:708 ../gui/tcltk/gis.m/georect.tcl:712
-#: ../gui/tcltk/gis.m/georect.tcl:1142 ../gui/tcltk/gis.m/georect.tcl:1146
-#: ../gui/tcltk/gis.m/rules.tcl:139 ../gui/tcltk/gis.m/rules.tcl:143
-#: ../gui/tcltk/gis.m/histogram.tcl:162 ../gui/tcltk/gis.m/histogram.tcl:165
+#: ../gui/tcltk/d.m/raster.tcl:90 ../gui/tcltk/d.m/raster.tcl:94
+#: ../gui/tcltk/d.m/barscale.tcl:74 ../gui/tcltk/d.m/barscale.tcl:78
+#: ../gui/tcltk/d.m/dtext.tcl:75 ../gui/tcltk/d.m/dtext.tcl:79
 #: ../gui/tcltk/d.m/thematic.tcl:121 ../gui/tcltk/d.m/thematic.tcl:125
-#: ../gui/tcltk/d.m/labels.tcl:70 ../gui/tcltk/d.m/labels.tcl:74
-#: ../gui/tcltk/d.m/frames.tcl:66 ../gui/tcltk/d.m/frames.tcl:70
+#: ../gui/tcltk/d.m/legend.tcl:86 ../gui/tcltk/d.m/legend.tcl:90
 #: ../gui/tcltk/d.m/gridline.tcl:81 ../gui/tcltk/d.m/gridline.tcl:120
-#: ../gui/tcltk/d.m/gridline.tcl:150 ../gui/tcltk/d.m/legend.tcl:86
-#: ../gui/tcltk/d.m/legend.tcl:90 ../gui/tcltk/d.m/raster.tcl:90
-#: ../gui/tcltk/d.m/raster.tcl:94 ../gui/tcltk/d.m/chart.tcl:96
-#: ../gui/tcltk/d.m/chart.tcl:100 ../gui/tcltk/d.m/rgbhis.tcl:130
-#: ../gui/tcltk/d.m/rgbhis.tcl:137 ../gui/tcltk/d.m/fttext.tcl:83
-#: ../gui/tcltk/d.m/fttext.tcl:87 ../gui/tcltk/d.m/vector.tcl:202
-#: ../gui/tcltk/d.m/vector.tcl:206 ../gui/tcltk/d.m/barscale.tcl:74
-#: ../gui/tcltk/d.m/barscale.tcl:78 ../gui/tcltk/d.m/dtext.tcl:75
-#: ../gui/tcltk/d.m/dtext.tcl:79
+#: ../gui/tcltk/d.m/gridline.tcl:150 ../gui/tcltk/d.m/frames.tcl:66
+#: ../gui/tcltk/d.m/frames.tcl:70 ../gui/tcltk/d.m/chart.tcl:96
+#: ../gui/tcltk/d.m/chart.tcl:100 ../gui/tcltk/d.m/labels.tcl:70
+#: ../gui/tcltk/d.m/labels.tcl:74 ../gui/tcltk/d.m/vector.tcl:202
+#: ../gui/tcltk/d.m/vector.tcl:206 ../gui/tcltk/d.m/fttext.tcl:83
+#: ../gui/tcltk/d.m/fttext.tcl:87 ../gui/tcltk/d.m/rgbhis.tcl:130
+#: ../gui/tcltk/d.m/rgbhis.tcl:137
 msgid "Help"
 msgstr "Справка"
 
@@ -371,8 +371,8 @@ msgstr "Очистить"
 
 #: ../lib/gis/gui.tcl:511 ../lib/init/epsg_option.tcl:394
 #: ../lib/init/epsg_option.tcl:438 ../gui/tcltk/gis.m/runandoutput.tcl:48
-#: ../gui/tcltk/gis.m/gmmenu.tcl:90 ../gui/tcltk/gis.m/mapprint.tcl:366
-#: ../gui/tcltk/d.m/menu.tcl:176 ../gui/tcltk/d.m/print.tcl:281
+#: ../gui/tcltk/gis.m/mapprint.tcl:366 ../gui/tcltk/gis.m/gmmenu.tcl:90
+#: ../gui/tcltk/d.m/print.tcl:281 ../gui/tcltk/d.m/menu.tcl:176
 msgid "Close"
 msgstr "Закрыть"
 
@@ -798,101 +798,1036 @@ msgstr ""
 "ПРЕДУПРЕЖДЕНИЕ: Пожалуйста, укажите\n"
 "правильный файл привязки"
 
-#: ../gui/tcltk/gis.m/rastarrows.tcl:83 ../gui/tcltk/gis.m/rastarrows.tcl:357
-#: ../gui/tcltk/gis.m/thematic.tcl:107 ../gui/tcltk/gis.m/thematic.tcl:631
-#: ../gui/tcltk/gis.m/thematic.tcl:704 ../gui/tcltk/gis.m/labels.tcl:78
-#: ../gui/tcltk/gis.m/labels.tcl:279 ../gui/tcltk/gis.m/rastnums.tcl:79
-#: ../gui/tcltk/gis.m/rastnums.tcl:369 ../gui/tcltk/gis.m/frames.tcl:78
-#: ../gui/tcltk/gis.m/frames.tcl:275 ../gui/tcltk/gis.m/animate.tcl:91
-#: ../gui/tcltk/gis.m/mapprint.tcl:194 ../gui/tcltk/gis.m/mapprint.tcl:201
-#: ../gui/tcltk/gis.m/gridline.tcl:99 ../gui/tcltk/gis.m/gridline.tcl:406
-#: ../gui/tcltk/gis.m/legend.tcl:95 ../gui/tcltk/gis.m/legend.tcl:506
-#: ../gui/tcltk/gis.m/raster.tcl:86 ../gui/tcltk/gis.m/raster.tcl:479
-#: ../gui/tcltk/gis.m/chart.tcl:89 ../gui/tcltk/gis.m/chart.tcl:465
-#: ../gui/tcltk/gis.m/vector.tcl:192 ../gui/tcltk/gis.m/vector.tcl:856
+#: ../visualization/nviz/scripts/panel_animation.tcl:275
+msgid "Test"
+msgstr "Тест"
+
 #: ../gui/tcltk/gis.m/cmd.tcl:75 ../gui/tcltk/gis.m/cmd.tcl:206
-#: ../gui/tcltk/gis.m/mapcanvas.tcl:228 ../gui/tcltk/gis.m/mapcanvas.tcl:238
-#: ../gui/tcltk/gis.m/barscale.tcl:91 ../gui/tcltk/gis.m/barscale.tcl:401
-#: ../gui/tcltk/gis.m/rgbhis.tcl:83 ../gui/tcltk/gis.m/rgbhis.tcl:362
-#: ../gui/tcltk/gis.m/dtext.tcl:92 ../gui/tcltk/gis.m/dtext.tcl:401
-#: ../gui/tcltk/gis.m/georect.tcl:409 ../gui/tcltk/gis.m/rules.tcl:207
+#: ../gui/tcltk/gis.m/rastnums.tcl:79 ../gui/tcltk/gis.m/rastnums.tcl:369
+#: ../gui/tcltk/gis.m/raster.tcl:86 ../gui/tcltk/gis.m/raster.tcl:479
 #: ../gui/tcltk/gis.m/histogram.tcl:84 ../gui/tcltk/gis.m/histogram.tcl:368
+#: ../gui/tcltk/gis.m/barscale.tcl:91 ../gui/tcltk/gis.m/barscale.tcl:401
+#: ../gui/tcltk/gis.m/rules.tcl:207 ../gui/tcltk/gis.m/georect.tcl:409
+#: ../gui/tcltk/gis.m/dtext.tcl:92 ../gui/tcltk/gis.m/dtext.tcl:401
+#: ../gui/tcltk/gis.m/thematic.tcl:107 ../gui/tcltk/gis.m/thematic.tcl:631
+#: ../gui/tcltk/gis.m/thematic.tcl:704 ../gui/tcltk/gis.m/legend.tcl:95
+#: ../gui/tcltk/gis.m/legend.tcl:506 ../gui/tcltk/gis.m/mapprint.tcl:194
+#: ../gui/tcltk/gis.m/mapprint.tcl:201 ../gui/tcltk/gis.m/gridline.tcl:99
+#: ../gui/tcltk/gis.m/gridline.tcl:406 ../gui/tcltk/gis.m/frames.tcl:78
+#: ../gui/tcltk/gis.m/frames.tcl:275 ../gui/tcltk/gis.m/chart.tcl:89
+#: ../gui/tcltk/gis.m/chart.tcl:465 ../gui/tcltk/gis.m/labels.tcl:78
+#: ../gui/tcltk/gis.m/labels.tcl:279 ../gui/tcltk/gis.m/vector.tcl:192
+#: ../gui/tcltk/gis.m/vector.tcl:856 ../gui/tcltk/gis.m/animate.tcl:91
+#: ../gui/tcltk/gis.m/rastarrows.tcl:83 ../gui/tcltk/gis.m/rastarrows.tcl:357
+#: ../gui/tcltk/gis.m/rgbhis.tcl:83 ../gui/tcltk/gis.m/rgbhis.tcl:362
+#: ../gui/tcltk/gis.m/mapcanvas.tcl:228 ../gui/tcltk/gis.m/mapcanvas.tcl:238
 msgid "Error creating tempfile"
 msgstr "Ошибка создания шаблона"
 
-#: ../gui/tcltk/gis.m/rastarrows.tcl:106
-msgid "Aspect map"
-msgstr "Слой экспозиций"
-
-#: ../gui/tcltk/gis.m/rastarrows.tcl:109 ../gui/tcltk/gis.m/rastarrows.tcl:121
-#, tcl-format
-msgid "arrows for %s"
-msgstr "стрелки для %s"
-
-#: ../gui/tcltk/gis.m/rastarrows.tcl:118
-msgid "Slope/intensity map"
-msgstr "слой крутизны/яркости"
-
-#: ../gui/tcltk/gis.m/rastarrows.tcl:134
-msgid "Display arrows whose orientations are based on raster aspect map"
-msgstr "Показать стрелки чья ориентация основана на растровом слое экспозиций"
-
-#: ../gui/tcltk/gis.m/rastarrows.tcl:140
-msgid "  (optionally, arrow lengths are based on slope or intensity map)"
-msgstr ""
-"  (по выбору, длина стрелок основана на крутизне или слое интенсивности)"
-
-#: ../gui/tcltk/gis.m/rastarrows.tcl:147 ../gui/tcltk/gis.m/thematic.tcl:247
-#: ../gui/tcltk/gis.m/labels.tcl:118 ../gui/tcltk/gis.m/rastnums.tcl:146
-#: ../gui/tcltk/gis.m/gridline.tcl:147 ../gui/tcltk/gis.m/legend.tcl:200
-#: ../gui/tcltk/gis.m/raster.tcl:184 ../gui/tcltk/gis.m/chart.tcl:190
-#: ../gui/tcltk/gis.m/vector.tcl:340 ../gui/tcltk/gis.m/cmd.tcl:105
-#: ../gui/tcltk/gis.m/barscale.tcl:160 ../gui/tcltk/gis.m/rgbhis.tcl:143
-#: ../gui/tcltk/gis.m/dtext.tcl:166 ../gui/tcltk/gis.m/histogram.tcl:145
+#: ../gui/tcltk/gis.m/cmd.tcl:105 ../gui/tcltk/gis.m/rastnums.tcl:146
+#: ../gui/tcltk/gis.m/raster.tcl:184 ../gui/tcltk/gis.m/histogram.tcl:145
+#: ../gui/tcltk/gis.m/barscale.tcl:160 ../gui/tcltk/gis.m/dtext.tcl:166
+#: ../gui/tcltk/gis.m/thematic.tcl:247 ../gui/tcltk/gis.m/legend.tcl:200
+#: ../gui/tcltk/gis.m/gridline.tcl:147 ../gui/tcltk/gis.m/chart.tcl:190
+#: ../gui/tcltk/gis.m/labels.tcl:118 ../gui/tcltk/gis.m/vector.tcl:340
+#: ../gui/tcltk/gis.m/rastarrows.tcl:147 ../gui/tcltk/gis.m/rgbhis.tcl:143
 msgid "Opaque "
 msgstr "Прозрачность "
 
-#: ../gui/tcltk/gis.m/rastarrows.tcl:151 ../gui/tcltk/gis.m/thematic.tcl:251
-#: ../gui/tcltk/gis.m/labels.tcl:122 ../gui/tcltk/gis.m/rastnums.tcl:150
-#: ../gui/tcltk/gis.m/gridline.tcl:151 ../gui/tcltk/gis.m/legend.tcl:204
-#: ../gui/tcltk/gis.m/raster.tcl:188 ../gui/tcltk/gis.m/chart.tcl:194
-#: ../gui/tcltk/gis.m/cmd.tcl:109 ../gui/tcltk/gis.m/barscale.tcl:164
-#: ../gui/tcltk/gis.m/rgbhis.tcl:147 ../gui/tcltk/gis.m/dtext.tcl:170
-#: ../gui/tcltk/gis.m/histogram.tcl:149
+#: ../gui/tcltk/gis.m/cmd.tcl:109 ../gui/tcltk/gis.m/rastnums.tcl:150
+#: ../gui/tcltk/gis.m/raster.tcl:188 ../gui/tcltk/gis.m/histogram.tcl:149
+#: ../gui/tcltk/gis.m/barscale.tcl:164 ../gui/tcltk/gis.m/dtext.tcl:170
+#: ../gui/tcltk/gis.m/thematic.tcl:251 ../gui/tcltk/gis.m/legend.tcl:204
+#: ../gui/tcltk/gis.m/gridline.tcl:151 ../gui/tcltk/gis.m/chart.tcl:194
+#: ../gui/tcltk/gis.m/labels.tcl:122 ../gui/tcltk/gis.m/rastarrows.tcl:151
+#: ../gui/tcltk/gis.m/rgbhis.tcl:147
 msgid " Transparent"
 msgstr " Прозрачный"
 
-#: ../gui/tcltk/gis.m/rastarrows.tcl:157
-msgid "Aspect map: "
-msgstr "Слой экспозиций: "
+#: ../gui/tcltk/gis.m/cmd.tcl:115 ../gui/tcltk/d.m/cmd.tcl:52
+msgid "Command:"
+msgstr "Команда:"
 
-#: ../gui/tcltk/gis.m/rastarrows.tcl:173
-msgid "    aspect value type"
-msgstr "    тип значений экспозиции"
+#: ../gui/tcltk/gis.m/rastnums.tcl:103 ../gui/tcltk/gis.m/raster.tcl:114
+#: ../gui/tcltk/d.m/menu.tcl:77 ../gui/tcltk/d.m/menu.tcl:113
+msgid "Raster map"
+msgstr "Растровый слой"
 
-#: ../gui/tcltk/gis.m/rastarrows.tcl:181
-msgid "    draw arrows every Nth grid cell"
-msgstr "    нарисовать стрелки через каждую N-ую ячейку"
+#: ../gui/tcltk/gis.m/rastnums.tcl:106
+#, tcl-format
+msgid "cell values for %s"
+msgstr "значения ячейки для %s"
 
-#: ../gui/tcltk/gis.m/rastarrows.tcl:189
-msgid "    arrow color      "
-msgstr "    цвет стрелки"
+#: ../gui/tcltk/gis.m/rastnums.tcl:134
+msgid "Display cell values from raster map or image"
+msgstr "Показать значения ячеек растрового слоя или изображения"
 
-#: ../gui/tcltk/gis.m/rastarrows.tcl:194
-msgid "     cell grid color"
-msgstr "     цвет ячейки"
+#: ../gui/tcltk/gis.m/rastnums.tcl:140
+msgid "  (resolution must be 100x100 or less)"
+msgstr "  (разрешение должно быть 100x100 или меньше)"
 
-#: ../gui/tcltk/gis.m/rastarrows.tcl:204
-msgid "    null value color"
-msgstr "    цвет null-значения"
+#: ../gui/tcltk/gis.m/rastnums.tcl:156
+msgid "Raster to display: "
+msgstr "Показать растр:"
 
-#: ../gui/tcltk/gis.m/rastarrows.tcl:219
-msgid "Slope/intensity map: "
-msgstr "Слой крутизны/интенсивности:"
+#: ../gui/tcltk/gis.m/rastnums.tcl:172
+msgid "Color for cell grid:       "
+msgstr "Цвет ячейки грида:"
 
-#: ../gui/tcltk/gis.m/rastarrows.tcl:230
-msgid "    scale factor for computing arrow length"
-msgstr "    коэффициент масштабирования для вычисления длин стрелок"
+#: ../gui/tcltk/gis.m/rastnums.tcl:177
+msgid "  cell values font "
+msgstr "  шрифт значения ячейки"
+
+#: ../gui/tcltk/gis.m/rastnums.tcl:180 ../gui/tcltk/gis.m/histogram.tcl:177
+#: ../gui/tcltk/gis.m/barscale.tcl:204 ../gui/tcltk/gis.m/maptext.tcl:180
+#: ../gui/tcltk/gis.m/dtext.tcl:226 ../gui/tcltk/gis.m/legend.tcl:264
+#: ../gui/tcltk/gis.m/gridline.tcl:187
+msgid "select font for text"
+msgstr "выбор шрифта для текста"
+
+#: ../gui/tcltk/gis.m/rastnums.tcl:187
+msgid "Color for cell values:   "
+msgstr "Цвет для значений ячейки:"
+
+#: ../gui/tcltk/gis.m/rastnums.tcl:192
+msgid "use raster colors for cell values"
+msgstr "использовать цвета растра для значений ячейки"
+
+#: ../gui/tcltk/gis.m/rastnums.tcl:274
+msgid ""
+"Cell values can only be displayed\n"
+"for regions of < 10,000 cells"
+msgstr ""
+"Значения ячеек могут быть отображены для\n"
+"регионов с количество ячеек < 10,000"
+
+#: ../gui/tcltk/gis.m/rastnums.tcl:279
+#, fuzzy
+msgid "Constrain map to region geometry?"
+msgstr "Ограничить слой геометрией региона"
+
+#: ../gui/tcltk/gis.m/rastnums.tcl:280
+msgid ""
+"Cell values can only be displayed for \n"
+"regions of < 10,000 cells. Map in explore mode may contain more than 10,000 "
+"cells.\n"
+"\n"
+" It's suggested to constrain map to region geometry to display cell values."
+msgstr ""
+
+#: ../gui/tcltk/gis.m/rastnums.tcl:282 ../gui/tcltk/gis.m/maptool.tcl:327
+msgid "Constrain map to region geometry"
+msgstr "Ограничить слой геометрией региона"
+
+#: ../gui/tcltk/gis.m/rastnums.tcl:282
+msgid "Leave in explore mode"
+msgstr ""
+
+#: ../gui/tcltk/gis.m/raster.tcl:127
+msgid "Raster drape map"
+msgstr "Растровый драпируемый слой"
+
+#: ../gui/tcltk/gis.m/raster.tcl:144 ../gui/tcltk/gis.m/raster.tcl:160
+#: ../gui/tcltk/gis.m/thematic.tcl:169 ../gui/tcltk/gis.m/thematic.tcl:190
+#: ../gui/tcltk/gis.m/chart.tcl:128 ../gui/tcltk/gis.m/chart.tcl:149
+#: ../gui/tcltk/gis.m/vector.tcl:243 ../gui/tcltk/gis.m/vector.tcl:265
+#: ../gui/tcltk/gis.m/vector.tcl:298
+msgid "This action requires map name to be set"
+msgstr ""
+
+#: ../gui/tcltk/gis.m/raster.tcl:177
+msgid "Display raster maps"
+msgstr "Показать растровые слои"
+
+#: ../gui/tcltk/gis.m/raster.tcl:194
+msgid "Base map:\t"
+msgstr "Базовый слой:\t"
+
+#: ../gui/tcltk/gis.m/raster.tcl:197
+msgid "base raster map to display"
+msgstr "базовый слоя для показа"
+
+#: ../gui/tcltk/gis.m/raster.tcl:202 ../gui/tcltk/gis.m/raster.tcl:206
+msgid "base map info"
+msgstr "информация о базовом слое"
+
+#: ../gui/tcltk/gis.m/raster.tcl:218
+msgid "\tvalues to display"
+msgstr "\tпоказываемые значения"
+
+#: ../gui/tcltk/gis.m/raster.tcl:225
+msgid "\tOptional color draping. Use base map for shading,"
+msgstr ""
+"\tЦветовая драпировка (опция). Использовать базовый слой для затенения,"
+
+#: ../gui/tcltk/gis.m/raster.tcl:230
+msgid "\tdrape map for color in color relief map or data fusion"
+msgstr "\tдрапировать слой для цвета в цветном слое рельефа или слияние данных"
+
+#: ../gui/tcltk/gis.m/raster.tcl:235
+msgid "\tdrape map:  "
+msgstr "\tдрапируемый слой:  "
+
+#: ../gui/tcltk/gis.m/raster.tcl:238
+msgid "raster map to drape over base map"
+msgstr "растрового слоя и драпировать поверх базового слоя"
+
+#: ../gui/tcltk/gis.m/raster.tcl:243 ../gui/tcltk/gis.m/raster.tcl:247
+msgid "drape map info"
+msgstr "информация о драпируемом слое"
+
+#: ../gui/tcltk/gis.m/raster.tcl:253
+msgid "\tdrape map brightness adjustment\t "
+msgstr "\tнастройка яркости драпируемого слоя\t "
+
+#: ../gui/tcltk/gis.m/raster.tcl:255
+msgid "Adjust brightness of drape map"
+msgstr "Настроить яркость драпируемого слоя"
+
+#: ../gui/tcltk/gis.m/raster.tcl:262 ../gui/tcltk/gis.m/rgbhis.tcl:220
+#: ../gui/tcltk/d.m/raster.tcl:143 ../gui/tcltk/d.m/rgbhis.tcl:147
+msgid "overlay maps from other layers (transparent null value cells)"
+msgstr "Наложить другие слои (прозрачные null-значения ячеек)"
+
+#: ../gui/tcltk/gis.m/raster.tcl:269
+msgid " Set background color (colored null value cells)"
+msgstr " Установить цвет фона (цветные null-значения ячеек)"
+
+#: ../gui/tcltk/gis.m/runandoutput.tcl:121
+msgid "Run (background)"
+msgstr "Запустить (в фоне)"
+
+#: ../gui/tcltk/gis.m/runandoutput.tcl:124
+msgid "Run (GUI)"
+msgstr "Запустить (GUI)"
+
+#: ../gui/tcltk/gis.m/runandoutput.tcl:136
+msgid " Save "
+msgstr " Сохранить"
+
+#: ../gui/tcltk/gis.m/runandoutput.tcl:138
+msgid " Clear "
+msgstr " Очистить"
+
+#: ../gui/tcltk/gis.m/runandoutput.tcl:159
+msgid "Output - GIS.m"
+msgstr "Вывод - GIS.m"
+
+#: ../gui/tcltk/gis.m/runandoutput.tcl:261
+msgid "X Windows not available"
+msgstr "X Windows недоступны"
+
+#: ../gui/tcltk/gis.m/runandoutput.tcl:262
+msgid "Functions that require X Windows are not available in Windows"
+msgstr "Функции, которые требуют X Windows недоступны в Windows"
+
+#: ../gui/tcltk/gis.m/runandoutput.tcl:284
+msgid "This module requires X11 support, but no xmons were found"
+msgstr "Этому модулю нужна поддержка X11, но xmons не найдены"
+
+#: ../gui/tcltk/gis.m/histogram.tcl:107
+msgid "Raster map for histogram"
+msgstr "Растровый слой для гистограммы"
+
+#: ../gui/tcltk/gis.m/histogram.tcl:110
+#, tcl-format
+msgid "histogram of %s"
+msgstr "гистограмма %s"
+
+#: ../gui/tcltk/gis.m/histogram.tcl:138
+msgid "Draw histogram of values from raster map or image"
+msgstr "Создать гистограмму значений из растра или изображения"
+
+#: ../gui/tcltk/gis.m/histogram.tcl:155
+msgid "Raster to histogram: "
+msgstr "Растр в гистограмму"
+
+#: ../gui/tcltk/gis.m/histogram.tcl:171
+msgid "Graph style"
+msgstr "Стиль графа"
+
+#: ../gui/tcltk/gis.m/histogram.tcl:174
+msgid "\ttext font "
+msgstr "\tшрифт текста"
+
+#: ../gui/tcltk/gis.m/histogram.tcl:184
+msgid "Histogram color: text & frame"
+msgstr "Цвет гистограммы: текст & рамка"
+
+#: ../gui/tcltk/gis.m/histogram.tcl:186
+msgid "  background"
+msgstr " фон"
+
+#: ../gui/tcltk/gis.m/histogram.tcl:189 ../gui/tcltk/gis.m/barscale.tcl:214
+msgid "transparent background"
+msgstr "прозрачный фон"
+
+#: ../gui/tcltk/gis.m/histogram.tcl:196
+msgid "Steps/bins for values (fp maps only)"
+msgstr "Шаги/диапазоны для значений (только слои fp)"
+
+#: ../gui/tcltk/gis.m/histogram.tcl:200
+msgid "include null values"
+msgstr "включить NULL-значения "
+
+#: ../gui/tcltk/gis.m/histogram.tcl:263
+msgid "r.info error"
+msgstr "r.info ошибка"
+
+#: ../gui/tcltk/gis.m/barscale.tcl:153
+msgid "Display scale and north arrow"
+msgstr "Показать масштаб и стрелку на север"
+
+#: ../gui/tcltk/gis.m/barscale.tcl:170
+#, tcl-format
+msgid "Scale placement: 0-100% from top left of display"
+msgstr ""
+"Расположение масштаба: 0-100 процентов от левого верхнего угла дисплея "
+
+#: ../gui/tcltk/gis.m/barscale.tcl:176
+msgid "\t enter x,y of scale/arrow upper left corner"
+msgstr "\t введите x,y или масштаб/стрелку в верхнем левом углу"
+
+#: ../gui/tcltk/gis.m/barscale.tcl:179
+msgid "    "
+msgstr "    "
+
+#: ../gui/tcltk/gis.m/barscale.tcl:190
+msgid "\t "
+msgstr "\t "
+
+#: ../gui/tcltk/gis.m/barscale.tcl:191 ../gui/tcltk/gis.m/maptext.tcl:150
+#: ../gui/tcltk/gis.m/dtext.tcl:197 ../gui/tcltk/gis.m/legend.tcl:238
+msgid "place with mouse"
+msgstr "расположить мышью"
+
+#: ../gui/tcltk/gis.m/barscale.tcl:199
+msgid "Scale appearance:  text color"
+msgstr "Настройки масштаба: цвет текста"
+
+#: ../gui/tcltk/gis.m/barscale.tcl:201
+msgid "  font "
+msgstr "  шрифт"
+
+#: ../gui/tcltk/gis.m/barscale.tcl:211
+msgid "\tbackground color "
+msgstr "\tцвет фона"
+
+#: ../gui/tcltk/gis.m/barscale.tcl:222
+msgid "display N. arrow only"
+msgstr "Показать только стрелку на север"
+
+#: ../gui/tcltk/gis.m/barscale.tcl:224 ../gui/tcltk/d.m/barscale.tcl:94
+msgid "display scale only"
+msgstr "показать только масштаб"
+
+#: ../gui/tcltk/gis.m/barscale.tcl:232 ../gui/tcltk/d.m/barscale.tcl:103
+msgid "text on top of scale, instead of to right"
+msgstr "текст сверху масштаба, а не справа"
+
+#: ../gui/tcltk/gis.m/barscale.tcl:240
+msgid "line scale instead of bar"
+msgstr "линейный масштаб, а не колонка"
+
+#: ../gui/tcltk/gis.m/barscale.tcl:242 ../gui/tcltk/d.m/barscale.tcl:110
+msgid "use feet/miles instead of meters"
+msgstr "использовать футы/мили, а не метры"
+
+#: ../gui/tcltk/gis.m/georecttool.tcl:40 ../gui/tcltk/gis.m/maptool.tcl:41
+msgid "Display active layers"
+msgstr "Отобразить активные слои"
+
+#: ../gui/tcltk/gis.m/georecttool.tcl:47 ../gui/tcltk/gis.m/maptool.tcl:68
+#: ../gui/tcltk/d.m/tool1.tcl:40
+msgid "Erase to white"
+msgstr "Очистить до белого"
+
+#: ../gui/tcltk/gis.m/georecttool.tcl:73
+msgid "Set ground control points"
+msgstr "Установить точки привязки"
+
+#: ../gui/tcltk/gis.m/georecttool.tcl:92 ../gui/tcltk/gis.m/maptool.tcl:113
+msgid "Zoom In"
+msgstr "Увеличить"
+
+#: ../gui/tcltk/gis.m/georecttool.tcl:111 ../gui/tcltk/gis.m/maptool.tcl:132
+msgid "Zoom Out"
+msgstr "Уменьшить"
+
+#: ../gui/tcltk/gis.m/georecttool.tcl:144 ../gui/tcltk/gis.m/maptool.tcl:165
+#: ../gui/tcltk/d.m/tool1.tcl:87
+msgid "Return to previous zoom"
+msgstr "Вернуться к предыдущему масштабу"
+
+#: ../gui/tcltk/gis.m/georecttool.tcl:151
+msgid "Zoom to map"
+msgstr "Масштабировать до слоя"
+
+#: ../gui/tcltk/gis.m/rules.tcl:35 ../gui/tcltk/gis.m/dnviz.tcl:49
+msgid "Select input map"
+msgstr "Выбрать исходный слой"
+
+#: ../gui/tcltk/gis.m/rules.tcl:97
+msgid "Interactive rules entry"
+msgstr "Интерактивный ввод правил"
+
+#: ../gui/tcltk/gis.m/rules.tcl:147 ../gui/tcltk/gis.m/dnviz.tcl:219
+msgid "Overwrite existing file"
+msgstr "Перезаписать существующий файл"
+
+#: ../gui/tcltk/gis.m/rules.tcl:174 ../gui/tcltk/gis.m/dnviz.tcl:232
+#: ../gui/tcltk/gis.m/animate.tcl:540
+msgid "Apply"
+msgstr "Применить"
+
+#: ../gui/tcltk/gis.m/rules.tcl:194 ../gui/tcltk/gis.m/dnviz.tcl:359
+msgid "You must select an input map"
+msgstr "Вы должны выбрать выходной слой"
+
+#: ../gui/tcltk/gis.m/rules.tcl:194 ../gui/tcltk/gis.m/dnviz.tcl:360
+msgid "No input map selected"
+msgstr "Исходный слой не выбран "
+
+#: ../gui/tcltk/gis.m/rules.tcl:199
+msgid "You must specify an output map"
+msgstr "Вы должны выбрать выходной слой"
+
+#: ../gui/tcltk/gis.m/rules.tcl:199
+msgid "No output map specified"
+msgstr "Не указана выходной слой"
+
+#: ../gui/tcltk/gis.m/rules.tcl:221
+msgid "Error creating rules file"
+msgstr "Ошибка создания файла правил"
+
+#: ../gui/tcltk/gis.m/gmtool1.tcl:28
+msgid "Start new map display monitor"
+msgstr "Запустить новый дисплей"
+
+#: ../gui/tcltk/gis.m/gmtool1.tcl:42 ../gui/tcltk/d.m/tool2.tcl:22
+msgid "Add raster layer"
+msgstr "Добавить растровый слой"
+
+#: ../gui/tcltk/gis.m/gmtool1.tcl:49 ../gui/tcltk/d.m/tool2.tcl:28
+msgid "Add RGB or HIS layer"
+msgstr "Добавить RGB или HIS слой"
+
+#: ../gui/tcltk/gis.m/gmtool1.tcl:56
+msgid "Add histogram layer"
+msgstr "Добавить слой гистограммы"
+
+#: ../gui/tcltk/gis.m/gmtool1.tcl:63
+msgid "Add cell values layer"
+msgstr "Добавить слой значений ячеек"
+
+#: ../gui/tcltk/gis.m/gmtool1.tcl:70
+msgid "Add directional arrows layer"
+msgstr "Добавить слой направлений"
+
+#: ../gui/tcltk/gis.m/gmtool1.tcl:76
+msgid "Add raster legend layer"
+msgstr "Добавить слой легенды растра"
+
+#: ../gui/tcltk/gis.m/gmtool1.tcl:92 ../gui/tcltk/d.m/tool2.tcl:48
+msgid "Add vector layer"
+msgstr "Добавить векторный слой"
+
+#: ../gui/tcltk/gis.m/gmtool1.tcl:99 ../gui/tcltk/d.m/tool2.tcl:62
+msgid "Add thematic map layer"
+msgstr "Добавить слой тематической карты"
+
+#: ../gui/tcltk/gis.m/gmtool1.tcl:108 ../gui/tcltk/d.m/tool2.tcl:54
+msgid "Add thematic charts layer"
+msgstr "Добавить слой тематических диаграмм"
+
+#: ../gui/tcltk/gis.m/gmtool1.tcl:121
+msgid "Add raster labels layer (using v.labels file)"
+msgstr "Добавить слой подписей растра (используя файл v.labels)"
+
+#: ../gui/tcltk/gis.m/gmtool1.tcl:128 ../gui/tcltk/d.m/tool2.tcl:88
+msgid "Add text layer"
+msgstr "Добавить текстовый слой"
+
+#: ../gui/tcltk/gis.m/gmtool1.tcl:135
+msgid "Add postscript labels layer (using v.labels file)"
+msgstr "Добавить слой подписей postscript (используя файл v.labels)"
+
+#: ../gui/tcltk/gis.m/gmtool1.tcl:142
+msgid "Add postscript text layer"
+msgstr "Добавить слой текста postscript "
+
+#: ../gui/tcltk/gis.m/maptool.tcl:48
+msgid "Redraw all layers"
+msgstr "Перерисовать все слои"
+
+#: ../gui/tcltk/gis.m/maptool.tcl:55
+msgid "Start NVIZ using active layers in current region"
+msgstr "Запустить NVIZ используя активные слои текущего региона"
+
+#: ../gui/tcltk/gis.m/maptool.tcl:61
+msgid "Create flythough path for NVIZ"
+msgstr "Создать пролет для NVIZ"
+
+#: ../gui/tcltk/gis.m/maptool.tcl:94
+msgid "Pointer"
+msgstr "Указатель"
+
+#: ../gui/tcltk/gis.m/maptool.tcl:185
+msgid "Zoom display to selected map"
+msgstr "Масштабировать дисплей до выбранного слоя"
+
+#: ../gui/tcltk/gis.m/maptool.tcl:188
+msgid "Zoom display to saved region"
+msgstr "Масштабировать дисплей до сохраненного региона"
+
+#: ../gui/tcltk/gis.m/maptool.tcl:191
+msgid "Save display extents to named region"
+msgstr "Сохранить охват дисплея в регион с названием"
+
+#: ../gui/tcltk/gis.m/maptool.tcl:194
+msgid "Zoom display to computational region (set with g.region)"
+msgstr ""
+"Масштабировать дисплей до расчетного региона (установить с помощью g.region)"
+
+#: ../gui/tcltk/gis.m/maptool.tcl:197
+msgid "Zoom display to default region"
+msgstr "Масштабировать дисплей до региона по умолчанию"
+
+#: ../gui/tcltk/gis.m/maptool.tcl:200
+msgid "Set computational region extents to match display"
+msgstr "Установить охват расчетного региона соответствующий дисплею"
+
+#: ../gui/tcltk/gis.m/maptool.tcl:229 ../gui/tcltk/gis.m/gmmenu.tcl:631
+#: ../gui/tcltk/gis.m/mapcanvas.tcl:2196 ../gui/tcltk/d.m/menu.tcl:560
+msgid "Query"
+msgstr "Запрос"
+
+#: ../gui/tcltk/gis.m/maptool.tcl:248
+msgid "Measure"
+msgstr "Измерение"
+
+#: ../gui/tcltk/gis.m/maptool.tcl:255
+msgid "Create profile of raster map"
+msgstr "Создать профиль растрового слоя"
+
+#: ../gui/tcltk/gis.m/maptool.tcl:272
+msgid "Print raster & vector maps to eps file"
+msgstr "Вывести растровые & векторные слои в файл eps"
+
+#: ../gui/tcltk/gis.m/maptool.tcl:291
+msgid "low quality (50)"
+msgstr "низкое качество (50)"
+
+#: ../gui/tcltk/gis.m/maptool.tcl:293
+msgid "mid quality (75)"
+msgstr "среднее качество (75)"
+
+#: ../gui/tcltk/gis.m/maptool.tcl:295
+msgid "high quality (95)"
+msgstr "высокое качество (95)"
+
+#: ../gui/tcltk/gis.m/maptool.tcl:297
+msgid "very high resolution (300% your current resolution)"
+msgstr "очень высокое разрешение (300% текущего разрешения)"
+
+#: ../gui/tcltk/gis.m/maptool.tcl:302
+msgid "(* requires gdal)"
+msgstr "(* требует gdal)"
+
+#: ../gui/tcltk/gis.m/maptool.tcl:346
+msgid "Map fills display window"
+msgstr "Слой заполняет окно дисплея"
+
+#: ../gui/tcltk/gis.m/maptool.tcl:403
+msgid "Could not create BMP"
+msgstr "Не могу создать BMP"
+
+#: ../gui/tcltk/gis.m/maptool.tcl:415 ../gui/tcltk/gis.m/maptool.tcl:420
+msgid "Could not create JPG"
+msgstr "Не могу создать JPG"
+
+#: ../gui/tcltk/gis.m/maptool.tcl:433
+msgid "Could not create PNG"
+msgstr "Не могу создать PNG"
+
+#: ../gui/tcltk/gis.m/maptool.tcl:448
+msgid "Could not create TIF"
+msgstr "Не могу создать TIF"
+
+#: ../gui/tcltk/gis.m/georect.tcl:285
+msgid ""
+"There is no raster group file (REF). You must select the 'create/edit group' "
+"option to create a group file."
+msgstr ""
+"Нет группы растров (REF). Нужно выбрать опцию 'создать/редактировать группу' "
+"чтобы создать группу."
+
+#: ../gui/tcltk/gis.m/georect.tcl:307
+msgid ""
+"There is no vector group file (VREF). You must select the 'create/edit "
+"group' option to create a group file."
+msgstr ""
+"Нет группы векторов (VREF). Нужно выбрать опцию 'создать/редактировать "
+"группу' чтобы создать группу."
+
+#: ../gui/tcltk/gis.m/georect.tcl:388
+msgid "Select mapset of raster to georectify"
+msgstr "Выбрать набор растров для привязки"
+
+#: ../gui/tcltk/gis.m/georect.tcl:436
+msgid "Create a group REF file and directory for vectors"
+msgstr "Создать файл группы REF и папку для векторов"
+
+#: ../gui/tcltk/gis.m/georect.tcl:449
+msgid "Create/replace vector group"
+msgstr "Создать/заменить векторную группу"
+
+#: ../gui/tcltk/gis.m/georect.tcl:475
+msgid "group name"
+msgstr "имя группы"
+
+#: ../gui/tcltk/gis.m/georect.tcl:477
+msgid "Select existing vector group or name new group"
+msgstr "Выбрать существующую векторную группу или назвать новую группу"
+
+#: ../gui/tcltk/gis.m/georect.tcl:487
+msgid "vector"
+msgstr "вектор"
+
+#: ../gui/tcltk/gis.m/georect.tcl:489
+msgid "Select xy vector(s) for group"
+msgstr "Выбрать xy вектор(а) для группы"
+
+#: ../gui/tcltk/gis.m/georect.tcl:499
+msgid "Vector group"
+msgstr "Векторная группа"
+
+#: ../gui/tcltk/gis.m/georect.tcl:616
+msgid "GRASS Georectifier"
+msgstr "GRASS Georectifier"
+
+#: ../gui/tcltk/gis.m/georect.tcl:627
+msgid "Set up environment for georectifying rasters or vectors"
+msgstr "Установить среду для привязки растров или векторов"
+
+#: ../gui/tcltk/gis.m/georect.tcl:636
+msgid "Georeference raster"
+msgstr "Привязать растр"
+
+#: ../gui/tcltk/gis.m/georect.tcl:640
+msgid "Georeference vector"
+msgstr "Привязать вектор"
+
+#: ../gui/tcltk/gis.m/georect.tcl:647
+msgid "1. Select mapset"
+msgstr "1. Выбрать набор"
+
+#: ../gui/tcltk/gis.m/georect.tcl:649
+msgid "Mapset of xy raster group"
+msgstr "Набор группы xy растров"
+
+#: ../gui/tcltk/gis.m/georect.tcl:659
+msgid "2. Create/edit group"
+msgstr "2. Создать/редактировать группу"
+
+#: ../gui/tcltk/gis.m/georect.tcl:661
+msgid "Create/edit group (rasters or vectors to georectify)"
+msgstr "Создать/редактировать группу (привязываемые растры или вектора)"
+
+#: ../gui/tcltk/gis.m/georect.tcl:669
+msgid "3. Select group"
+msgstr "3. Выбор группы"
+
+#: ../gui/tcltk/gis.m/georect.tcl:671
+msgid "Select existing group to georectify"
+msgstr "Выбрать существующую группу для привязки"
+
+#: ../gui/tcltk/gis.m/georect.tcl:681
+msgid "4. Select map"
+msgstr "4. Выбор карты"
+
+#: ../gui/tcltk/gis.m/georect.tcl:683
+msgid ""
+"Select non-georectified raster or vector to display for marking ground "
+"control points"
+msgstr "Выбрать не привязанный растр или вектор для создания опорных точек"
+
+#: ../gui/tcltk/gis.m/georect.tcl:693
+msgid "5. Start georectifying"
+msgstr "5. Начать привязку"
+
+#: ../gui/tcltk/gis.m/georect.tcl:695
+msgid "Start georectifying"
+msgstr "Начать привязку"
+
+#: ../gui/tcltk/gis.m/georect.tcl:705
+msgid "Cancel georectification"
+msgstr "Отменить привязку"
+
+#: ../gui/tcltk/gis.m/georect.tcl:802
+msgid "Displaying xy map to be georectified"
+msgstr "Показать привязываемый слой xy"
+
+#: ../gui/tcltk/gis.m/georect.tcl:1010
+msgid "Select rectification method for rasters"
+msgstr "Выбрать метод трансформации для растров"
+
+#: ../gui/tcltk/gis.m/georect.tcl:1013
+msgid "1st order"
+msgstr "1-ый порядок"
+
+#: ../gui/tcltk/gis.m/georect.tcl:1014
+msgid "affine transformation  (rasters & vectors). Requires 3+ GCPs."
+msgstr "аффинная трансформация (растры & вектора). Требует 3+ GCP."
+
+#: ../gui/tcltk/gis.m/georect.tcl:1019
+msgid "2nd order"
+msgstr "2-ой порядок"
+
+#: ../gui/tcltk/gis.m/georect.tcl:1020
+#, fuzzy
+msgid "polynomial transformation  (rasters only). Requires 6+ GCPs."
+msgstr "полиномиальная трансформация (только растры). Требует 7+ GCP."
+
+#: ../gui/tcltk/gis.m/georect.tcl:1024
+msgid "3rd order"
+msgstr "3-ий порядок"
+
+#: ../gui/tcltk/gis.m/georect.tcl:1025
+msgid "polynomial transformation  (rasters only). Requires 10+ GCPs."
+msgstr "полиномиальная трансформация (только растры). Требует 10+ GCP."
+
+#: ../gui/tcltk/gis.m/georect.tcl:1028
+msgid "Clip map/image to target region"
+msgstr ""
+
+#: ../gui/tcltk/gis.m/georect.tcl:1038
+msgid "Use"
+msgstr "Использовать"
+
+#: ../gui/tcltk/gis.m/georect.tcl:1040
+msgid "xy coordinates"
+msgstr "координаты xy"
+
+#: ../gui/tcltk/gis.m/georect.tcl:1042
+msgid "geographic coordinates"
+msgstr "географические координаты"
+
+#: ../gui/tcltk/gis.m/georect.tcl:1044
+msgid "forward error"
+msgstr "прямая ошибка"
+
+#: ../gui/tcltk/gis.m/georect.tcl:1046
+msgid "backward error"
+msgstr "обратная ошибка"
+
+#: ../gui/tcltk/gis.m/georect.tcl:1087
+msgid "Manage ground control points (GCPs)"
+msgstr "Управлять точками привязки (GCP)"
+
+#: ../gui/tcltk/gis.m/georect.tcl:1112
+msgid "Save GCPs to POINTS file"
+msgstr "Сохранить GCP в файл POINTS"
+
+#: ../gui/tcltk/gis.m/georect.tcl:1119
+msgid "Clear all unchecked GCP entries"
+msgstr "Очистить все не включенные GCP"
+
+#: ../gui/tcltk/gis.m/georect.tcl:1126
+msgid "Calculate RMS error"
+msgstr "Вычислить RMS ошибку"
+
+#: ../gui/tcltk/gis.m/georect.tcl:1133
+msgid "Rectify maps in group"
+msgstr "Трансформировать слои в группе"
+
+#: ../gui/tcltk/gis.m/georect.tcl:1136
+msgid "Quit"
+msgstr "Выход"
+
+#: ../gui/tcltk/gis.m/georect.tcl:1140
+msgid "Exit georectifier"
+msgstr "Выйти из режима привязки"
+
+#: ../gui/tcltk/gis.m/georect.tcl:1323
+msgid ""
+"There is no POINTS file of ground control points for group. You must create "
+"ground control points before georectifying map."
+msgstr ""
+"Нет файла POINTS опорных точек для создания группы. Нужно создать опорные "
+"точки до привязки слоя."
+
+#: ../gui/tcltk/gis.m/georect.tcl:1353
+msgid ""
+"Insufficient ground control points for georectification method. You need at "
+"least 3 points for 1st order, 6 points for 2nd order and 10 points for 3rd "
+"order."
+msgstr ""
+"Недостаточно опорных точек для данного метода привязки. Нужно по крайней "
+"мере 3 точки для 1-го порядка, 6 точек для 2-го и 10 для 3-го."
+
+#: ../gui/tcltk/gis.m/georect.tcl:1384
+msgid ""
+"No valid ground control points in GCP file. You must create valid ground "
+"control points before georectifying map."
+msgstr ""
+"Нет правильных опорных точек в файле GCP. Нужно создать правильные опорные "
+"точки перед привязкой слоя."
+
+#: ../gui/tcltk/gis.m/georect.tcl:1587
+msgid "Error setting region"
+msgstr "Ошибка установки региона"
+
+#: ../gui/tcltk/gis.m/georect.tcl:1596
+msgid "Please wait..."
+msgstr "Пожалуйста подождите.."
+
+#: ../gui/tcltk/gis.m/georect.tcl:2029 ../gui/tcltk/gis.m/mapcanvas.tcl:1504
+msgid "Drag or click mouse to zoom"
+msgstr "Масштабирование щелчком мыши или перетаскиванием"
+
+#: ../gui/tcltk/gis.m/georect.tcl:2031 ../gui/tcltk/gis.m/mapcanvas.tcl:1506
+msgid "Drag or click mouse to unzoom"
+msgstr "Уменьшите карту щелчком мыши или перетаскиванием"
+
+#: ../gui/tcltk/gis.m/georect.tcl:2229 ../gui/tcltk/gis.m/mapcanvas.tcl:1809
+msgid "Drag with mouse to pan"
+msgstr "Перетащите мышью, чтобы сдвинуть"
+
+#: ../gui/tcltk/gis.m/gm.tcl:213 ../gui/tcltk/d.m/d.m.tcl:314
+msgid "Loading GIS Manager"
+msgstr "Загрузка GIS менеджера"
+
+#: ../gui/tcltk/gis.m/gm.tcl:220
+msgid "Creating MainFrame..."
+msgstr "Создание MainFrame..."
+
+#: ../gui/tcltk/gis.m/gm.tcl:260 ../gui/tcltk/d.m/d.m.tcl:404
+msgid "Done"
+msgstr "Готово"
+
+#: ../gui/tcltk/gis.m/gm.tcl:262
+msgid "Welcome to GRASS GIS"
+msgstr "Добро пожаловать в ГИС GRASS"
+
+#: ../gui/tcltk/gis.m/gm.tcl:295
+#, tcl-format
+msgid "Map Display %d"
+msgstr "Дисплей слоя %d"
+
+#: ../gui/tcltk/gis.m/gm.tcl:320
+#, tcl-format
+msgid "GRASS%s GIS Manager - %s"
+msgstr "GIS менеджер GRASS%s - %s"
+
+#: ../gui/tcltk/gis.m/gm.tcl:395
+msgid "Select GRASS display font"
+msgstr "Выбрать шрифт GRASS"
+
+#: ../gui/tcltk/gis.m/gm.tcl:409
+msgid "Font: "
+msgstr "Шрифт:"
+
+#: ../gui/tcltk/gis.m/gm.tcl:448
+msgid "Character encoding: "
+msgstr "Кодировка:"
+
+#: ../gui/tcltk/gis.m/gm.tcl:529
+#, tcl-format
+msgid "GRASS%s GIS Manager - %s %s"
+msgstr "GIS менеджер GRASS%s - %s %s"
+
+#: ../gui/tcltk/gis.m/dnviz.tcl:106
+msgid "NVIZ flythrough path"
+msgstr "Маршрут пролета NVIZ"
+
+#: ../gui/tcltk/gis.m/dnviz.tcl:122
+msgid "Create flythough path for NVIZ display"
+msgstr "Создать маршрут пролета для дисплея NVIZ"
+
+#: ../gui/tcltk/gis.m/dnviz.tcl:129
+msgid "Raster surface map "
+msgstr "Растровый слой поверхности"
+
+#: ../gui/tcltk/gis.m/dnviz.tcl:140
+msgid "Output script file "
+msgstr "Имя выходного скрипта"
+
+#: ../gui/tcltk/gis.m/dnviz.tcl:151
+msgid "Flythrough path "
+msgstr "Маршрут пролета"
+
+#: ../gui/tcltk/gis.m/dnviz.tcl:157
+msgid "Create path with mouse in map display"
+msgstr "Создать маршрут с помощью мыши в дисплее"
+
+#: ../gui/tcltk/gis.m/dnviz.tcl:160
+msgid "Coordinate pairs for flythrough path (x1,y1,x2,y2,...)"
+msgstr "Пары координат для маршрута пролета (x1,y1,x2,y2,...)"
+
+#: ../gui/tcltk/gis.m/dnviz.tcl:169
+msgid "Flythrough images prefix "
+msgstr "Префикс изображений пролета"
+
+#: ../gui/tcltk/gis.m/dnviz.tcl:170
+msgid "Prefix for image series created by flythough"
+msgstr "Префикс для серии изображений созданных с помощью пролета"
+
+#: ../gui/tcltk/gis.m/dnviz.tcl:177
+msgid "Camera layback "
+msgstr ""
+
+#: ../gui/tcltk/gis.m/dnviz.tcl:178
+msgid "Camera layback distance (in map units)"
+msgstr ""
+
+#: ../gui/tcltk/gis.m/dnviz.tcl:180
+msgid "Camera height "
+msgstr "Высота камеры"
+
+#: ../gui/tcltk/gis.m/dnviz.tcl:181
+msgid "Camera height above terrain"
+msgstr "Высота камеры над землей "
+
+#: ../gui/tcltk/gis.m/dnviz.tcl:188
+msgid "Number of frames "
+msgstr "Количество фреймов"
+
+#: ../gui/tcltk/gis.m/dnviz.tcl:189
+msgid "Number of frames to create for flythrough"
+msgstr "Количество фреймов создаваемых для пролета"
+
+#: ../gui/tcltk/gis.m/dnviz.tcl:191
+msgid "Start frame "
+msgstr "Начальный фрейм"
+
+#: ../gui/tcltk/gis.m/dnviz.tcl:192
+msgid "Starting frame number..."
+msgstr "Начинается фрейм номер..."
+
+#: ../gui/tcltk/gis.m/dnviz.tcl:199
+msgid "Enable vector rendering"
+msgstr "Включить отрисовку вектора"
+
+#: ../gui/tcltk/gis.m/dnviz.tcl:201
+msgid "Full render (save images)"
+msgstr "Полная отрисовка (сохранить изображения)"
+
+#: ../gui/tcltk/gis.m/dnviz.tcl:203
+msgid "Render images offscreen"
+msgstr "Отрисовать изображения вне экрана"
+
+#: ../gui/tcltk/gis.m/dnviz.tcl:215
+msgid "Height value is elevation"
+msgstr "Значение высоты по рельефу"
+
+#: ../gui/tcltk/gis.m/dnviz.tcl:217
+msgid "Output keyframe file"
+msgstr "Выходной файл ключевого фрейма"
+
+#: ../gui/tcltk/gis.m/dnviz.tcl:224
+msgid "Reset"
+msgstr "Reset"
+
+#: ../gui/tcltk/gis.m/dnviz.tcl:226
+msgid "Clear all path coordinates"
+msgstr "Очистить все координаты маршрута"
+
+#: ../gui/tcltk/gis.m/dnviz.tcl:365
+msgid "You must specify an output file"
+msgstr "Вы должны выбрать выходной слой."
+
+#: ../gui/tcltk/gis.m/dnviz.tcl:366
+msgid "No output file specified"
+msgstr "Не выбран выходной файл"
+
+#: ../gui/tcltk/gis.m/dnviz.tcl:374
+msgid "You must specify at least 4 points (x,y coordinate pairs)"
+msgstr "Нужно указать минимум 4 точки (пары координат x,y)"
+
+#: ../gui/tcltk/gis.m/dnviz.tcl:375
+msgid "Insufficient coordinates specified"
+msgstr "Задано недостаточно координат"
+
+#: ../gui/tcltk/gis.m/maptext.tcl:80 ../gui/tcltk/gis.m/thematic.tcl:141
+#: ../gui/tcltk/gis.m/thematic.tcl:148 ../gui/tcltk/gis.m/thematic.tcl:154
+#: ../gui/tcltk/gis.m/maplabels.tcl:135
+msgid "This is font sample text."
+msgstr "Это пример текста."
+
+#: ../gui/tcltk/gis.m/maptext.tcl:80 ../gui/tcltk/gis.m/maplabels.tcl:135
+msgid "Select label font"
+msgstr "Выбор шрифта подписи"
+
+#: ../gui/tcltk/gis.m/maptext.tcl:126
+msgid ""
+"Create postscript text object (for postscript eps, pdf, and print output "
+"only)"
+msgstr ""
+"Создать текстовый объект postscript (только для postscript eps, pdf, и "
+"вывода на печать)"
+
+#: ../gui/tcltk/gis.m/maptext.tcl:133
+msgid "Text to display:"
+msgstr "Текст для отображения:"
+
+#: ../gui/tcltk/gis.m/maptext.tcl:140 ../gui/tcltk/gis.m/dtext.tcl:188
+msgid "Text placement: x,y coordinates (from upper left) "
+msgstr "Расположение текста: координаты x,y (начиная с верхнего левого)"
+
+#: ../gui/tcltk/gis.m/maptext.tcl:147 ../gui/tcltk/gis.m/dtext.tcl:194
+msgid "     coordinate type for text placement "
+msgstr "     тип координат для расположения текста"
+
+#: ../gui/tcltk/gis.m/maptext.tcl:158 ../gui/tcltk/gis.m/dtext.tcl:205
+msgid "     align text with coordinate point  "
+msgstr "     выравнять текст с точкой"
+
+#: ../gui/tcltk/gis.m/maptext.tcl:167
+msgid "     justification"
+msgstr "     выравнивание"
+
+#: ../gui/tcltk/gis.m/maptext.tcl:170
+msgid "  line width"
+msgstr "  ширина линии"
+
+#: ../gui/tcltk/gis.m/maptext.tcl:177 ../gui/tcltk/d.m/fttext.tcl:144
+msgid "Font:"
+msgstr "Шрифт:"
+
+#: ../gui/tcltk/gis.m/maptext.tcl:184 ../gui/tcltk/gis.m/dtext.tcl:228
+#: ../gui/tcltk/gis.m/maplabels.tcl:272 ../gui/tcltk/d.m/fttext.tcl:149
+msgid "  color"
+msgstr "  цвет"
+
+#: ../gui/tcltk/gis.m/dtext.tcl:159
+msgid "Display text"
+msgstr "Показать текст"
+
+#: ../gui/tcltk/gis.m/dtext.tcl:176
+msgid "Text to display: "
+msgstr "Текст для отображения:"
+
+#: ../gui/tcltk/gis.m/dtext.tcl:214
+msgid "     text rotation (degrees)"
+msgstr "     вращение текста (градусы)"
+
+#: ../gui/tcltk/gis.m/dtext.tcl:223
+msgid "Text options: font "
+msgstr "Опции текста: шрифт"
+
+#: ../gui/tcltk/gis.m/dtext.tcl:230 ../gui/tcltk/d.m/dtext.tcl:106
+#: ../gui/tcltk/d.m/fttext.tcl:151
+msgid "bold text"
+msgstr "жирный текст"
+
+#: ../gui/tcltk/gis.m/dtext.tcl:237
+msgid "     text height in pixels "
+msgstr "     высота текста в пикселях "
+
+#: ../gui/tcltk/gis.m/dtext.tcl:239
+msgid "  line spacing"
+msgstr "  межстрочный интервал"
 
 #: ../gui/tcltk/gis.m/thematic.tcl:129 ../gui/tcltk/gis.m/vector.tcl:218
 #: ../gui/tcltk/d.m/menu.tcl:94 ../gui/tcltk/d.m/menu.tcl:134
@@ -905,23 +1840,9 @@ msgid "thematic map for %s"
 msgstr "тематическая карта для %s"
 
 #: ../gui/tcltk/gis.m/thematic.tcl:141 ../gui/tcltk/gis.m/thematic.tcl:148
-#: ../gui/tcltk/gis.m/thematic.tcl:154 ../gui/tcltk/gis.m/maplabels.tcl:135
-#: ../gui/tcltk/gis.m/maptext.tcl:80
-msgid "This is font sample text."
-msgstr "Это пример текста."
-
-#: ../gui/tcltk/gis.m/thematic.tcl:141 ../gui/tcltk/gis.m/thematic.tcl:148
 #: ../gui/tcltk/gis.m/thematic.tcl:154
 msgid "Select font"
 msgstr "Выберите шрифт"
-
-#: ../gui/tcltk/gis.m/thematic.tcl:169 ../gui/tcltk/gis.m/thematic.tcl:190
-#: ../gui/tcltk/gis.m/raster.tcl:144 ../gui/tcltk/gis.m/raster.tcl:160
-#: ../gui/tcltk/gis.m/chart.tcl:128 ../gui/tcltk/gis.m/chart.tcl:149
-#: ../gui/tcltk/gis.m/vector.tcl:243 ../gui/tcltk/gis.m/vector.tcl:265
-#: ../gui/tcltk/gis.m/vector.tcl:298
-msgid "This action requires map name to be set"
-msgstr ""
 
 #: ../gui/tcltk/gis.m/thematic.tcl:175 ../gui/tcltk/gis.m/thematic.tcl:196
 #: ../gui/tcltk/gis.m/chart.tcl:134 ../gui/tcltk/gis.m/chart.tcl:155
@@ -1129,6 +2050,257 @@ msgstr "сохранить"
 msgid "Save legend to EPS file"
 msgstr "Сохранить легенду в файл EPS"
 
+#: ../gui/tcltk/gis.m/gmtool2.tcl:26 ../gui/tcltk/d.m/tool2.tcl:100
+msgid "Scalebar and north arrow"
+msgstr "Масштабная линейка и указатель на север"
+
+#: ../gui/tcltk/gis.m/gmtool2.tcl:32 ../gui/tcltk/d.m/tool2.tcl:105
+msgid "Overlay grids and lines"
+msgstr "Наложить гриды и линии"
+
+#: ../gui/tcltk/gis.m/gmtool2.tcl:39 ../gui/tcltk/d.m/tool2.tcl:116
+msgid "Add command layer"
+msgstr "Добавить командный слой"
+
+#: ../gui/tcltk/gis.m/gmtool2.tcl:59 ../gui/tcltk/d.m/tool2.tcl:130
+msgid "Add group"
+msgstr "Добавить группу"
+
+#: ../gui/tcltk/gis.m/gmtool2.tcl:65 ../gui/tcltk/d.m/tool2.tcl:135
+msgid "Duplicate Layer"
+msgstr "Дублировать слой"
+
+#: ../gui/tcltk/gis.m/gmtool2.tcl:70 ../gui/tcltk/d.m/tool2.tcl:139
+msgid "Delete layer"
+msgstr "Удалить слой"
+
+#: ../gui/tcltk/gis.m/gmtool2.tcl:84 ../gui/tcltk/d.m/tool1.tcl:121
+msgid "Create new workspace file (erase current workspace settings first)"
+msgstr ""
+"Создать новый файл проекта (сначала очистить настройки текущего проекта)"
+
+#: ../gui/tcltk/gis.m/gmtool2.tcl:90 ../gui/tcltk/d.m/tool1.tcl:124
+msgid "Open existing workspace file"
+msgstr "Открыть  существующий файл проекта"
+
+#: ../gui/tcltk/gis.m/gmtool2.tcl:96 ../gui/tcltk/d.m/tool1.tcl:127
+msgid "Save workspace file"
+msgstr "Сохранить файл проекта"
+
+#: ../gui/tcltk/gis.m/gmtool2.tcl:111 ../gui/tcltk/d.m/tool1.tcl:66
+msgid "Animate raster map series"
+msgstr "Анимировать растровую серию"
+
+#: ../gui/tcltk/gis.m/gmtool2.tcl:127 ../gui/tcltk/d.m/tool2.tcl:153
+msgid "Digitize map (select or create new map first)"
+msgstr "Векторизовать слой (сначала выберите или создайте новый слой)"
+
+#: ../gui/tcltk/gis.m/legend.tcl:149
+msgid "Raster map for legend"
+msgstr "Растровый слой для легенды"
+
+#: ../gui/tcltk/gis.m/legend.tcl:152
+#, tcl-format
+msgid "legend for %s"
+msgstr "Легенда для %s"
+
+#: ../gui/tcltk/gis.m/legend.tcl:193
+msgid "Display legend for raster map using cat values and labels"
+msgstr ""
+"Показать легенду для растрового слоя используя значения категорий и подписи"
+
+#: ../gui/tcltk/gis.m/legend.tcl:210
+msgid "Raster map: "
+msgstr "Растровый слой:"
+
+#: ../gui/tcltk/gis.m/legend.tcl:229
+#, tcl-format
+msgid "Legend placement and size as 0-100% of display"
+msgstr "Расположение легенды и размер как 0-100 процентов дисплея"
+
+#: ../gui/tcltk/gis.m/legend.tcl:235
+#, tcl-format
+msgid "    x,y of lower left corner (in % from display top left)"
+msgstr ""
+"    x,y нижнего левого угла (в процентах от верхнего левого угла дисплея)"
+
+#: ../gui/tcltk/gis.m/legend.tcl:246
+msgid "    legend height "
+msgstr "    высота легенды"
+
+#: ../gui/tcltk/gis.m/legend.tcl:248
+#, tcl-format
+msgid "Legend height (% of display)"
+msgstr "Высота легенды (в процентах дисплея)"
+
+#: ../gui/tcltk/gis.m/legend.tcl:249
+msgid "%  width"
+msgstr "%  ширина"
+
+#: ../gui/tcltk/gis.m/legend.tcl:251
+#, tcl-format
+msgid "Legend width (% of display)"
+msgstr "Ширина легенды (в процентах дисплея)"
+
+#: ../gui/tcltk/gis.m/legend.tcl:258
+msgid "Legend appearance: text color"
+msgstr "Представление легенды: цвет текста"
+
+#: ../gui/tcltk/gis.m/legend.tcl:262
+msgid "  legend text font "
+msgstr "  шрифт текста легенды"
+
+#: ../gui/tcltk/gis.m/legend.tcl:273
+msgid "do not display labels"
+msgstr "не показывать подписи"
+
+#: ../gui/tcltk/gis.m/legend.tcl:275
+msgid "do not display values"
+msgstr "не показывать значения"
+
+#: ../gui/tcltk/gis.m/legend.tcl:282
+msgid "    number of lines (0=display all):"
+msgstr "    число линий (0=показать все):"
+
+#: ../gui/tcltk/gis.m/legend.tcl:284
+msgid "Lines to display"
+msgstr "Показываемые линии"
+
+#: ../gui/tcltk/gis.m/legend.tcl:286
+msgid "invert legend"
+msgstr "инвертировать легенду"
+
+#: ../gui/tcltk/gis.m/legend.tcl:293
+msgid "    interval between categories (integer maps)"
+msgstr "    интервал между категориями (целочисленные слои)"
+
+#: ../gui/tcltk/gis.m/legend.tcl:295
+msgid "Thinning interval"
+msgstr "Интервал прореживания"
+
+#: ../gui/tcltk/gis.m/legend.tcl:302
+msgid "draw smooth gradient (fp maps)"
+msgstr "рисовать гладкий градиент (fp слои)"
+
+#: ../gui/tcltk/gis.m/legend.tcl:304
+msgid "with maximum of"
+msgstr "с максимумом"
+
+#: ../gui/tcltk/gis.m/legend.tcl:306
+msgid "Maximum lines to display for gradient"
+msgstr "Максимальное количество линий для градиента"
+
+#: ../gui/tcltk/gis.m/legend.tcl:307 ../gui/tcltk/gis.m/chart.tcl:220
+#: ../gui/tcltk/d.m/chart.tcl:108 ../gui/tcltk/d.m/vector.tcl:229
+msgid "lines"
+msgstr "линии"
+
+#: ../gui/tcltk/gis.m/legend.tcl:313
+msgid "Display legend for subset of raster values"
+msgstr "Показывать легенду для выборки значений растра"
+
+#: ../gui/tcltk/gis.m/legend.tcl:320
+msgid "skip categories with no labels"
+msgstr "пропустить категории без подписей"
+
+#: ../gui/tcltk/gis.m/legend.tcl:327
+msgid "    legend for only these categories     "
+msgstr "    легенда только для этих категорий"
+
+#: ../gui/tcltk/gis.m/legend.tcl:334
+msgid "    legend for only this range of values"
+msgstr "    легенда только для этого диапазона значений"
+
+#: ../gui/tcltk/gis.m/gmlib.tcl:85 ../gui/tcltk/gis.m/gmlib.tcl:114
+msgid "Map Resource File"
+msgstr "Ресурсный файл слоя"
+
+#: ../gui/tcltk/gis.m/gmlib.tcl:86 ../gui/tcltk/gis.m/gmlib.tcl:116
+msgid "All Files"
+msgstr "Все Файлы"
+
+#: ../gui/tcltk/gis.m/gmlib.tcl:90
+msgid "Open File"
+msgstr "Открыть файл"
+
+#: ../gui/tcltk/gis.m/gmlib.tcl:115
+msgid "DM Resource File"
+msgstr "Ресурсный файл DM"
+
+#: ../gui/tcltk/gis.m/mapprint.tcl:109
+msgid "Ghostscript not available"
+msgstr "Ghostscript не доступен"
+
+#: ../gui/tcltk/gis.m/mapprint.tcl:250
+msgid "Postscript and LPR printing of map display"
+msgstr "Postscript и LPR печать дисплея"
+
+#: ../gui/tcltk/gis.m/mapprint.tcl:264
+msgid "Preset paper type"
+msgstr "Предустановленный тип бумаги"
+
+#: ../gui/tcltk/gis.m/mapprint.tcl:275
+msgid "Custom paper size"
+msgstr "Пользовательский размер бумаги"
+
+#: ../gui/tcltk/gis.m/mapprint.tcl:276 ../gui/tcltk/d.m/print.tcl:181
+msgid "width:"
+msgstr "ширина:"
+
+#: ../gui/tcltk/gis.m/mapprint.tcl:278
+msgid "  height:"
+msgstr "  высота:"
+
+#: ../gui/tcltk/gis.m/mapprint.tcl:285
+msgid "Margins  left:"
+msgstr "Поля слева:"
+
+#: ../gui/tcltk/gis.m/mapprint.tcl:287
+msgid " right:"
+msgstr " справа:"
+
+#: ../gui/tcltk/gis.m/mapprint.tcl:289
+msgid " top:"
+msgstr " сверху:"
+
+#: ../gui/tcltk/gis.m/mapprint.tcl:291
+msgid " bottom:"
+msgstr " снизу:"
+
+#: ../gui/tcltk/gis.m/mapprint.tcl:299
+msgid "Resolution (dpi) for printing and PDF "
+msgstr "Разрешение (dpi) для печати и PDF "
+
+#: ../gui/tcltk/gis.m/mapprint.tcl:317
+msgid "Print on LPR printer"
+msgstr "Печатать на LPR принтере"
+
+#: ../gui/tcltk/gis.m/mapprint.tcl:325
+msgid "Print on postscript device* "
+msgstr "Печатать на устройстве postscript* "
+
+#: ../gui/tcltk/gis.m/mapprint.tcl:336
+msgid "Save to PDF file*              "
+msgstr "Сохранить в файл PDF*              "
+
+#: ../gui/tcltk/gis.m/mapprint.tcl:339 ../gui/tcltk/gis.m/mapprint.tcl:351
+#: ../gui/tcltk/d.m/print.tcl:212 ../gui/tcltk/d.m/print.tcl:223
+#: ../gui/tcltk/d.m/print.tcl:234 ../gui/tcltk/d.m/print.tcl:261
+msgid "Browse"
+msgstr "Просмотр"
+
+#: ../gui/tcltk/gis.m/mapprint.tcl:349
+msgid "Save to EPS file               "
+msgstr "Сохранить в файл EPS"
+
+#: ../gui/tcltk/gis.m/mapprint.tcl:357
+msgid "*requires ghostscript to be installed and in path"
+msgstr "*требует установленного ghostscript"
+
+#: ../gui/tcltk/gis.m/mapprint.tcl:365 ../gui/tcltk/d.m/print.tcl:279
+msgid "Print"
+msgstr "Печать"
+
 #: ../gui/tcltk/gis.m/profile.tcl:54
 msgid "Raster map for profile"
 msgstr "Растровый слой для профиля"
@@ -1210,319 +2382,97 @@ msgstr "Ошибка установки региона"
 msgid "r.profile error"
 msgstr "r.profile ошибка"
 
-#: ../gui/tcltk/gis.m/labels.tcl:96
-msgid "Labels for vectors"
-msgstr "Подписи векторов"
-
-#: ../gui/tcltk/gis.m/labels.tcl:111
-msgid "Display labels for vector objects (created with v.label)"
-msgstr "Показать подписи для векторных объектов (созданные с помощью v.label)"
-
-#: ../gui/tcltk/gis.m/labels.tcl:128 ../gui/tcltk/gis.m/maplabels.tcl:172
-msgid "Labels file:"
-msgstr "Файл подписей:"
-
-#: ../gui/tcltk/gis.m/labels.tcl:131 ../gui/tcltk/gis.m/maplabels.tcl:175
-msgid "labels file to display"
-msgstr "показываемый файл подписей"
-
-#: ../gui/tcltk/gis.m/labels.tcl:146 ../gui/tcltk/d.m/labels.tcl:80
-msgid "Display constraints:"
-msgstr "Ограничения дисплея:"
-
-#: ../gui/tcltk/gis.m/labels.tcl:147
-msgid "min"
-msgstr "минимум"
-
-#: ../gui/tcltk/gis.m/labels.tcl:149
-msgid "max"
-msgstr "максимум"
-
-#: ../gui/tcltk/gis.m/labels.tcl:151 ../gui/tcltk/d.m/labels.tcl:85
-msgid "region size"
-msgstr "размер региона"
-
-#: ../gui/tcltk/gis.m/labels.tcl:157 ../gui/tcltk/d.m/labels.tcl:91
-msgid " ignore rotation setting and draw horizontally"
-msgstr " игнорировать настройку поворота и отрисовывать горизонтально"
-
-#: ../gui/tcltk/gis.m/labels.tcl:164 ../gui/tcltk/gis.m/maplabels.tcl:279
-msgid "Launch v.label to create labels file"
-msgstr "Запустить v.label для создания файла подписей"
-
-#: ../gui/tcltk/gis.m/labels.tcl:165 ../gui/tcltk/gis.m/maplabels.tcl:280
-msgid "v.label"
-msgstr "v.label"
-
-#: ../gui/tcltk/gis.m/gm.tcl:213 ../gui/tcltk/d.m/d.m.tcl:314
-msgid "Loading GIS Manager"
-msgstr "Загрузка GIS менеджера"
-
-#: ../gui/tcltk/gis.m/gm.tcl:220
-msgid "Creating MainFrame..."
-msgstr "Создание MainFrame..."
-
-#: ../gui/tcltk/gis.m/gm.tcl:260 ../gui/tcltk/d.m/d.m.tcl:404
-msgid "Done"
-msgstr "Готово"
-
-#: ../gui/tcltk/gis.m/gm.tcl:262
-msgid "Welcome to GRASS GIS"
-msgstr "Добро пожаловать в ГИС GRASS"
-
-#: ../gui/tcltk/gis.m/gm.tcl:295
-#, tcl-format
-msgid "Map Display %d"
-msgstr "Дисплей слоя %d"
-
-#: ../gui/tcltk/gis.m/gm.tcl:320
-#, tcl-format
-msgid "GRASS%s GIS Manager - %s"
-msgstr "GIS менеджер GRASS%s - %s"
-
-#: ../gui/tcltk/gis.m/gm.tcl:395
-msgid "Select GRASS display font"
-msgstr "Выбрать шрифт GRASS"
-
-#: ../gui/tcltk/gis.m/gm.tcl:409
-msgid "Font: "
-msgstr "Шрифт:"
-
-#: ../gui/tcltk/gis.m/gm.tcl:448
-msgid "Character encoding: "
-msgstr "Кодировка:"
-
-#: ../gui/tcltk/gis.m/gm.tcl:529
-#, tcl-format
-msgid "GRASS%s GIS Manager - %s %s"
-msgstr "GIS менеджер GRASS%s - %s %s"
-
-#: ../gui/tcltk/gis.m/runandoutput.tcl:121
-msgid "Run (background)"
-msgstr "Запустить (в фоне)"
-
-#: ../gui/tcltk/gis.m/runandoutput.tcl:124
-msgid "Run (GUI)"
-msgstr "Запустить (GUI)"
-
-#: ../gui/tcltk/gis.m/runandoutput.tcl:136
-msgid " Save "
-msgstr " Сохранить"
-
-#: ../gui/tcltk/gis.m/runandoutput.tcl:138
-msgid " Clear "
-msgstr " Очистить"
-
-#: ../gui/tcltk/gis.m/runandoutput.tcl:159
-msgid "Output - GIS.m"
-msgstr "Вывод - GIS.m"
-
-#: ../gui/tcltk/gis.m/runandoutput.tcl:261
-msgid "X Windows not available"
-msgstr "X Windows недоступны"
-
-#: ../gui/tcltk/gis.m/runandoutput.tcl:262
-msgid "Functions that require X Windows are not available in Windows"
-msgstr "Функции, которые требуют X Windows недоступны в Windows"
-
-#: ../gui/tcltk/gis.m/runandoutput.tcl:284
-msgid "This module requires X11 support, but no xmons were found"
-msgstr "Этому модулю нужна поддержка X11, но xmons не найдены"
-
-#: ../gui/tcltk/gis.m/maptool.tcl:41 ../gui/tcltk/gis.m/georecttool.tcl:40
-msgid "Display active layers"
-msgstr "Отобразить активные слои"
-
-#: ../gui/tcltk/gis.m/maptool.tcl:48
-msgid "Redraw all layers"
-msgstr "Перерисовать все слои"
-
-#: ../gui/tcltk/gis.m/maptool.tcl:55
-msgid "Start NVIZ using active layers in current region"
-msgstr "Запустить NVIZ используя активные слои текущего региона"
-
-#: ../gui/tcltk/gis.m/maptool.tcl:61
-msgid "Create flythough path for NVIZ"
-msgstr "Создать пролет для NVIZ"
-
-#: ../gui/tcltk/gis.m/maptool.tcl:68 ../gui/tcltk/gis.m/georecttool.tcl:47
-#: ../gui/tcltk/d.m/tool1.tcl:40
-msgid "Erase to white"
-msgstr "Очистить до белого"
-
-#: ../gui/tcltk/gis.m/maptool.tcl:94
-msgid "Pointer"
-msgstr "Указатель"
-
-#: ../gui/tcltk/gis.m/maptool.tcl:113 ../gui/tcltk/gis.m/georecttool.tcl:92
-msgid "Zoom In"
-msgstr "Увеличить"
-
-#: ../gui/tcltk/gis.m/maptool.tcl:132 ../gui/tcltk/gis.m/georecttool.tcl:111
-msgid "Zoom Out"
-msgstr "Уменьшить"
-
-#: ../gui/tcltk/gis.m/maptool.tcl:165 ../gui/tcltk/gis.m/georecttool.tcl:144
-#: ../gui/tcltk/d.m/tool1.tcl:87
-msgid "Return to previous zoom"
-msgstr "Вернуться к предыдущему масштабу"
-
-#: ../gui/tcltk/gis.m/maptool.tcl:185
-msgid "Zoom display to selected map"
-msgstr "Масштабировать дисплей до выбранного слоя"
-
-#: ../gui/tcltk/gis.m/maptool.tcl:188
-msgid "Zoom display to saved region"
-msgstr "Масштабировать дисплей до сохраненного региона"
-
-#: ../gui/tcltk/gis.m/maptool.tcl:191
-msgid "Save display extents to named region"
-msgstr "Сохранить охват дисплея в регион с названием"
-
-#: ../gui/tcltk/gis.m/maptool.tcl:194
-msgid "Zoom display to computational region (set with g.region)"
-msgstr ""
-"Масштабировать дисплей до расчетного региона (установить с помощью g.region)"
-
-#: ../gui/tcltk/gis.m/maptool.tcl:197
-msgid "Zoom display to default region"
-msgstr "Масштабировать дисплей до региона по умолчанию"
-
-#: ../gui/tcltk/gis.m/maptool.tcl:200
-msgid "Set computational region extents to match display"
-msgstr "Установить охват расчетного региона соответствующий дисплею"
-
-#: ../gui/tcltk/gis.m/maptool.tcl:229 ../gui/tcltk/gis.m/gmmenu.tcl:631
-#: ../gui/tcltk/gis.m/mapcanvas.tcl:2196 ../gui/tcltk/d.m/menu.tcl:560
-msgid "Query"
-msgstr "Запрос"
-
-#: ../gui/tcltk/gis.m/maptool.tcl:248
-msgid "Measure"
-msgstr "Измерение"
-
-#: ../gui/tcltk/gis.m/maptool.tcl:255
-msgid "Create profile of raster map"
-msgstr "Создать профиль растрового слоя"
-
-#: ../gui/tcltk/gis.m/maptool.tcl:272
-msgid "Print raster & vector maps to eps file"
-msgstr "Вывести растровые & векторные слои в файл eps"
-
-#: ../gui/tcltk/gis.m/maptool.tcl:291
-msgid "low quality (50)"
-msgstr "низкое качество (50)"
-
-#: ../gui/tcltk/gis.m/maptool.tcl:293
-msgid "mid quality (75)"
-msgstr "среднее качество (75)"
-
-#: ../gui/tcltk/gis.m/maptool.tcl:295
-msgid "high quality (95)"
-msgstr "высокое качество (95)"
-
-#: ../gui/tcltk/gis.m/maptool.tcl:297
-msgid "very high resolution (300% your current resolution)"
-msgstr "очень высокое разрешение (300% текущего разрешения)"
-
-#: ../gui/tcltk/gis.m/maptool.tcl:302
-msgid "(* requires gdal)"
-msgstr "(* требует gdal)"
-
-#: ../gui/tcltk/gis.m/maptool.tcl:327 ../gui/tcltk/gis.m/rastnums.tcl:282
-msgid "Constrain map to region geometry"
-msgstr "Ограничить слой геометрией региона"
-
-#: ../gui/tcltk/gis.m/maptool.tcl:346
-msgid "Map fills display window"
-msgstr "Слой заполняет окно дисплея"
-
-#: ../gui/tcltk/gis.m/maptool.tcl:403
-msgid "Could not create BMP"
-msgstr "Не могу создать BMP"
-
-#: ../gui/tcltk/gis.m/maptool.tcl:415 ../gui/tcltk/gis.m/maptool.tcl:420
-msgid "Could not create JPG"
-msgstr "Не могу создать JPG"
-
-#: ../gui/tcltk/gis.m/maptool.tcl:433
-msgid "Could not create PNG"
-msgstr "Не могу создать PNG"
-
-#: ../gui/tcltk/gis.m/maptool.tcl:448
-msgid "Could not create TIF"
-msgstr "Не могу создать TIF"
-
-#: ../gui/tcltk/gis.m/rastnums.tcl:103 ../gui/tcltk/gis.m/raster.tcl:114
-#: ../gui/tcltk/d.m/menu.tcl:77 ../gui/tcltk/d.m/menu.tcl:113
-msgid "Raster map"
-msgstr "Растровый слой"
-
-#: ../gui/tcltk/gis.m/rastnums.tcl:106
-#, tcl-format
-msgid "cell values for %s"
-msgstr "значения ячейки для %s"
-
-#: ../gui/tcltk/gis.m/rastnums.tcl:134
-msgid "Display cell values from raster map or image"
-msgstr "Показать значения ячеек растрового слоя или изображения"
-
-#: ../gui/tcltk/gis.m/rastnums.tcl:140
-msgid "  (resolution must be 100x100 or less)"
-msgstr "  (разрешение должно быть 100x100 или меньше)"
-
-#: ../gui/tcltk/gis.m/rastnums.tcl:156
-msgid "Raster to display: "
-msgstr "Показать растр:"
-
-#: ../gui/tcltk/gis.m/rastnums.tcl:172
-msgid "Color for cell grid:       "
-msgstr "Цвет ячейки грида:"
-
-#: ../gui/tcltk/gis.m/rastnums.tcl:177
-msgid "  cell values font "
-msgstr "  шрифт значения ячейки"
-
-#: ../gui/tcltk/gis.m/rastnums.tcl:180 ../gui/tcltk/gis.m/gridline.tcl:187
-#: ../gui/tcltk/gis.m/legend.tcl:264 ../gui/tcltk/gis.m/barscale.tcl:204
-#: ../gui/tcltk/gis.m/maptext.tcl:180 ../gui/tcltk/gis.m/dtext.tcl:226
-#: ../gui/tcltk/gis.m/histogram.tcl:177
-msgid "select font for text"
-msgstr "выбор шрифта для текста"
-
-#: ../gui/tcltk/gis.m/rastnums.tcl:187
-msgid "Color for cell values:   "
-msgstr "Цвет для значений ячейки:"
-
-#: ../gui/tcltk/gis.m/rastnums.tcl:192
-msgid "use raster colors for cell values"
-msgstr "использовать цвета растра для значений ячейки"
-
-#: ../gui/tcltk/gis.m/rastnums.tcl:274
-msgid ""
-"Cell values can only be displayed\n"
-"for regions of < 10,000 cells"
-msgstr ""
-"Значения ячеек могут быть отображены для\n"
-"регионов с количество ячеек < 10,000"
-
-#: ../gui/tcltk/gis.m/rastnums.tcl:279
-#, fuzzy
-msgid "Constrain map to region geometry?"
-msgstr "Ограничить слой геометрией региона"
-
-#: ../gui/tcltk/gis.m/rastnums.tcl:280
-msgid ""
-"Cell values can only be displayed for \n"
-"regions of < 10,000 cells. Map in explore mode may contain more than 10,000 "
-"cells.\n"
-"\n"
-" It's suggested to constrain map to region geometry to display cell values."
-msgstr ""
-
-#: ../gui/tcltk/gis.m/rastnums.tcl:282
-msgid "Leave in explore mode"
-msgstr ""
+#: ../gui/tcltk/gis.m/gridline.tcl:140
+msgid "Display grid lines, and geodesic lines or rhumblines"
+msgstr "Показать линии сетки и геодезические линии или линии румба"
+
+#: ../gui/tcltk/gis.m/gridline.tcl:157
+msgid "Grid options: "
+msgstr "Настройки сетки:"
+
+#: ../gui/tcltk/gis.m/gridline.tcl:158 ../gui/tcltk/d.m/gridline.tcl:77
+msgid "draw grid"
+msgstr "нарисовать сетку"
+
+#: ../gui/tcltk/gis.m/gridline.tcl:159
+msgid "geodetic grid  "
+msgstr "геодезический грид"
+
+#: ../gui/tcltk/gis.m/gridline.tcl:161
+msgid "grid color "
+msgstr "цвет сетки"
+
+#: ../gui/tcltk/gis.m/gridline.tcl:166 ../gui/tcltk/d.m/gridline.tcl:85
+msgid "Help for grids"
+msgstr "Справка для гридов"
+
+#: ../gui/tcltk/gis.m/gridline.tcl:172
+msgid "    grid size (map units)"
+msgstr "    размер грида (единицы карты)"
+
+#: ../gui/tcltk/gis.m/gridline.tcl:174
+msgid " grid origin (east, north)"
+msgstr " начало отсчета сетки (восток, север)"
+
+#: ../gui/tcltk/gis.m/gridline.tcl:182
+msgid "draw border text "
+msgstr "отрисовать текст границы"
+
+#: ../gui/tcltk/gis.m/gridline.tcl:184
+msgid "text color "
+msgstr "цветтекста"
+
+#: ../gui/tcltk/gis.m/gridline.tcl:189
+msgid "text font "
+msgstr "шрифт текста"
+
+#: ../gui/tcltk/gis.m/gridline.tcl:190
+msgid "  text size"
+msgstr "  размер текста"
+
+#: ../gui/tcltk/gis.m/gridline.tcl:192
+msgid "Grid text size in points"
+msgstr "Размер текста сетки в points"
+
+#: ../gui/tcltk/gis.m/gridline.tcl:199
+msgid "draw grid border "
+msgstr "нарисовать границу сетки"
+
+#: ../gui/tcltk/gis.m/gridline.tcl:201
+msgid "border color "
+msgstr "цвет границы"
+
+#: ../gui/tcltk/gis.m/gridline.tcl:206
+msgid "Geodesic and rhumblines for latlong locations only"
+msgstr "Геодезические линии и линии румба только для локаций в lat/long"
+
+#: ../gui/tcltk/gis.m/gridline.tcl:213 ../gui/tcltk/d.m/gridline.tcl:119
+msgid "draw geodesic line"
+msgstr "нарисовать геодезическую линию"
+
+#: ../gui/tcltk/gis.m/gridline.tcl:218 ../gui/tcltk/d.m/gridline.tcl:124
+msgid "Help for geodesic lines"
+msgstr "Помощь для геодезических линий"
+
+#: ../gui/tcltk/gis.m/gridline.tcl:219 ../gui/tcltk/gis.m/gridline.tcl:246
+msgid " line color"
+msgstr " цвет линии"
+
+#: ../gui/tcltk/gis.m/gridline.tcl:223
+msgid " text color"
+msgstr " цвет текста"
+
+#: ../gui/tcltk/gis.m/gridline.tcl:232 ../gui/tcltk/gis.m/gridline.tcl:255
+msgid "     line endpoints (x1,y1,x2,y2)"
+msgstr "     конечные точки линии (x1,y1,x2,y2)"
+
+#: ../gui/tcltk/gis.m/gridline.tcl:240 ../gui/tcltk/d.m/gridline.tcl:149
+msgid "draw rhumbline"
+msgstr "нарисовать локсодромию"
+
+#: ../gui/tcltk/gis.m/gridline.tcl:245 ../gui/tcltk/d.m/gridline.tcl:154
+msgid "Help for rhumblines"
+msgstr "Помощь для линий румбов"
 
 #: ../gui/tcltk/gis.m/frames.tcl:105
 msgid "Divide map display into frames for displaying multiple maps"
@@ -1554,262 +2504,6 @@ msgstr ""
 #: ../gui/tcltk/gis.m/frames.tcl:141
 msgid "     set borders (bottom,top,left,right): "
 msgstr "     установить границы (низ,верх,лево,право): "
-
-#: ../gui/tcltk/gis.m/tksys.tcl:57
-msgid ""
-"\n"
-"***** Please wait *****"
-msgstr ""
-"\n"
-"***** Пожалуйста подождите *****"
-
-#: ../gui/tcltk/gis.m/tksys.tcl:58
-msgid "Gathering information about your system"
-msgstr "Сбор информации о вашей системе"
-
-#: ../gui/tcltk/gis.m/tksys.tcl:230
-msgid "***** Done *****"
-msgstr "***** Готово *****"
-
-#: ../gui/tcltk/gis.m/animate.tcl:299
-msgid "Select maps to animate"
-msgstr "Выбор слоев для анимации"
-
-#: ../gui/tcltk/gis.m/animate.tcl:313
-msgid "Rewind animation"
-msgstr "Перемотать анимацию назад"
-
-#: ../gui/tcltk/gis.m/animate.tcl:319
-msgid "Replay animation"
-msgstr "Повторить анимацию"
-
-#: ../gui/tcltk/gis.m/animate.tcl:325
-msgid "Step backwards through animation"
-msgstr "Шагать по анимации назад"
-
-#: ../gui/tcltk/gis.m/animate.tcl:331
-msgid "Stop animation"
-msgstr "Остановить анимацию"
-
-#: ../gui/tcltk/gis.m/animate.tcl:337
-msgid "Step forwards through animation"
-msgstr "Шагать по анимации вперед"
-
-#: ../gui/tcltk/gis.m/animate.tcl:343
-msgid "Play animation"
-msgstr "Проиграть анимацию"
-
-#: ../gui/tcltk/gis.m/animate.tcl:356
-msgid "Slower animation"
-msgstr "Замедлить анимацию"
-
-#: ../gui/tcltk/gis.m/animate.tcl:362
-msgid "Faster animation"
-msgstr "Ускорить анимацию"
-
-#: ../gui/tcltk/gis.m/animate.tcl:372
-msgid "Continuously loop through animation"
-msgstr "Зациклить анимацию"
-
-#: ../gui/tcltk/gis.m/animate.tcl:380
-msgid "Run animation alternately forward and backward"
-msgstr "Запустить анимацию чередуя вперед и назад"
-
-#: ../gui/tcltk/gis.m/animate.tcl:391
-msgid "Show map names in animation window"
-msgstr "Показать имена слоев в окне анимации"
-
-#: ../gui/tcltk/gis.m/animate.tcl:404
-msgid "Quit animation"
-msgstr "Выйти из анимации"
-
-#: ../gui/tcltk/gis.m/animate.tcl:435
-msgid "Select maps"
-msgstr "Выбор слоев"
-
-#: ../gui/tcltk/gis.m/animate.tcl:463
-msgid "Maps for Animation"
-msgstr "Слои для Анимации"
-
-#: ../gui/tcltk/gis.m/animate.tcl:479
-msgid "Select maps to animate in one or more frames (1 frame required)"
-msgstr "Выбрать слои для анимации в одном или более фреймов (минимум 1)"
-
-#: ../gui/tcltk/gis.m/animate.tcl:492
-msgid "Maps for frame 1 (required): "
-msgstr "Слои для фрейма 1 (требуются):"
-
-#: ../gui/tcltk/gis.m/animate.tcl:503
-msgid "Maps for frame 2 (optional): "
-msgstr "Слои для фрейма 2 (опция):"
-
-#: ../gui/tcltk/gis.m/animate.tcl:514
-msgid "Maps for frame 3 (optional): "
-msgstr "Слои для фрейма 3 (опция):"
-
-#: ../gui/tcltk/gis.m/animate.tcl:525
-msgid "Maps for frame 4 (optional): "
-msgstr "Слои для фрейма 4 (опция):"
-
-#: ../gui/tcltk/gis.m/animate.tcl:540 ../gui/tcltk/gis.m/dnviz.tcl:232
-#: ../gui/tcltk/gis.m/rules.tcl:174
-msgid "Apply"
-msgstr "Применить"
-
-#: ../gui/tcltk/gis.m/animate.tcl:563
-msgid "You must select maps to animate for frame 1"
-msgstr "Вы должны выбрать слои для анимации для фрейма 1"
-
-#: ../gui/tcltk/gis.m/animate.tcl:564
-msgid "No maps selected"
-msgstr "Слои не выбраны"
-
-#: ../gui/tcltk/gis.m/animate.tcl:1031
-msgid "Animation Window"
-msgstr "Окно анимации"
-
-#: ../gui/tcltk/gis.m/gmtool1.tcl:28
-msgid "Start new map display monitor"
-msgstr "Запустить новый дисплей"
-
-#: ../gui/tcltk/gis.m/gmtool1.tcl:42 ../gui/tcltk/d.m/tool2.tcl:22
-msgid "Add raster layer"
-msgstr "Добавить растровый слой"
-
-#: ../gui/tcltk/gis.m/gmtool1.tcl:49 ../gui/tcltk/d.m/tool2.tcl:28
-msgid "Add RGB or HIS layer"
-msgstr "Добавить RGB или HIS слой"
-
-#: ../gui/tcltk/gis.m/gmtool1.tcl:56
-msgid "Add histogram layer"
-msgstr "Добавить слой гистограммы"
-
-#: ../gui/tcltk/gis.m/gmtool1.tcl:63
-msgid "Add cell values layer"
-msgstr "Добавить слой значений ячеек"
-
-#: ../gui/tcltk/gis.m/gmtool1.tcl:70
-msgid "Add directional arrows layer"
-msgstr "Добавить слой направлений"
-
-#: ../gui/tcltk/gis.m/gmtool1.tcl:76
-msgid "Add raster legend layer"
-msgstr "Добавить слой легенды растра"
-
-#: ../gui/tcltk/gis.m/gmtool1.tcl:92 ../gui/tcltk/d.m/tool2.tcl:48
-msgid "Add vector layer"
-msgstr "Добавить векторный слой"
-
-#: ../gui/tcltk/gis.m/gmtool1.tcl:99 ../gui/tcltk/d.m/tool2.tcl:62
-msgid "Add thematic map layer"
-msgstr "Добавить слой тематической карты"
-
-#: ../gui/tcltk/gis.m/gmtool1.tcl:108 ../gui/tcltk/d.m/tool2.tcl:54
-msgid "Add thematic charts layer"
-msgstr "Добавить слой тематических диаграмм"
-
-#: ../gui/tcltk/gis.m/gmtool1.tcl:121
-msgid "Add raster labels layer (using v.labels file)"
-msgstr "Добавить слой подписей растра (используя файл v.labels)"
-
-#: ../gui/tcltk/gis.m/gmtool1.tcl:128 ../gui/tcltk/d.m/tool2.tcl:88
-msgid "Add text layer"
-msgstr "Добавить текстовый слой"
-
-#: ../gui/tcltk/gis.m/gmtool1.tcl:135
-msgid "Add postscript labels layer (using v.labels file)"
-msgstr "Добавить слой подписей postscript (используя файл v.labels)"
-
-#: ../gui/tcltk/gis.m/gmtool1.tcl:142
-msgid "Add postscript text layer"
-msgstr "Добавить слой текста postscript "
-
-#: ../gui/tcltk/gis.m/gmtool2.tcl:26 ../gui/tcltk/d.m/tool2.tcl:100
-msgid "Scalebar and north arrow"
-msgstr "Масштабная линейка и указатель на север"
-
-#: ../gui/tcltk/gis.m/gmtool2.tcl:32 ../gui/tcltk/d.m/tool2.tcl:105
-msgid "Overlay grids and lines"
-msgstr "Наложить гриды и линии"
-
-#: ../gui/tcltk/gis.m/gmtool2.tcl:39 ../gui/tcltk/d.m/tool2.tcl:116
-msgid "Add command layer"
-msgstr "Добавить командный слой"
-
-#: ../gui/tcltk/gis.m/gmtool2.tcl:59 ../gui/tcltk/d.m/tool2.tcl:130
-msgid "Add group"
-msgstr "Добавить группу"
-
-#: ../gui/tcltk/gis.m/gmtool2.tcl:65 ../gui/tcltk/d.m/tool2.tcl:135
-msgid "Duplicate Layer"
-msgstr "Дублировать слой"
-
-#: ../gui/tcltk/gis.m/gmtool2.tcl:70 ../gui/tcltk/d.m/tool2.tcl:139
-msgid "Delete layer"
-msgstr "Удалить слой"
-
-#: ../gui/tcltk/gis.m/gmtool2.tcl:84 ../gui/tcltk/d.m/tool1.tcl:121
-msgid "Create new workspace file (erase current workspace settings first)"
-msgstr ""
-"Создать новый файл проекта (сначала очистить настройки текущего проекта)"
-
-#: ../gui/tcltk/gis.m/gmtool2.tcl:90 ../gui/tcltk/d.m/tool1.tcl:124
-msgid "Open existing workspace file"
-msgstr "Открыть  существующий файл проекта"
-
-#: ../gui/tcltk/gis.m/gmtool2.tcl:96 ../gui/tcltk/d.m/tool1.tcl:127
-msgid "Save workspace file"
-msgstr "Сохранить файл проекта"
-
-#: ../gui/tcltk/gis.m/gmtool2.tcl:111 ../gui/tcltk/d.m/tool1.tcl:66
-msgid "Animate raster map series"
-msgstr "Анимировать растровую серию"
-
-#: ../gui/tcltk/gis.m/gmtool2.tcl:127 ../gui/tcltk/d.m/tool2.tcl:153
-msgid "Digitize map (select or create new map first)"
-msgstr "Векторизовать слой (сначала выберите или создайте новый слой)"
-
-#: ../gui/tcltk/gis.m/gmtree.tcl:69
-#, tcl-format
-msgid "Map Layers for Display %s"
-msgstr "Слои для дисплея %s"
-
-#: ../gui/tcltk/gis.m/gmtree.tcl:308
-msgid "You must open a display before adding map layers"
-msgstr "Вы должны открыть дисплей перед тем как добавлять слои"
-
-#: ../gui/tcltk/gis.m/gmtree.tcl:483 ../gui/tcltk/gis.m/gmtree.tcl:631
-#: ../gui/tcltk/gis.m/gmtree.tcl:1150 ../gui/tcltk/gis.m/gmtree.tcl:1156
-msgid "No layer selected"
-msgstr "Слой не выбран"
-
-#: ../gui/tcltk/gis.m/gmtree.tcl:865
-msgid "Loading layers..."
-msgstr "Загрузка слоев..."
-
-#: ../gui/tcltk/gis.m/gmtree.tcl:1050
-msgid "Layers loaded"
-msgstr "Слои загружены"
-
-#: ../gui/tcltk/gis.m/gmtree.tcl:1166
-msgid "Selected raster layer is empty"
-msgstr "Выбранный растровый слой пуст"
-
-#: ../gui/tcltk/gis.m/gmtree.tcl:1177
-msgid "Selected vector layer is empty"
-msgstr "Выбранный векторный слои пуст"
-
-#: ../gui/tcltk/gis.m/gmtree.tcl:1183
-msgid "You can digitize raster or vector maps only"
-msgstr "Вы можете оцифровать только растровые или векторные слои"
-
-#: ../gui/tcltk/gis.m/georecttool.tcl:73
-msgid "Set ground control points"
-msgstr "Установить точки привязки"
-
-#: ../gui/tcltk/gis.m/georecttool.tcl:151
-msgid "Zoom to map"
-msgstr "Масштабировать до слоя"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:85 ../gui/tcltk/d.m/menu.tcl:75
 msgid "&File"
@@ -3289,596 +3983,6 @@ msgstr "О Системе"
 msgid "&Xtns"
 msgstr "&Xtns"
 
-#: ../gui/tcltk/gis.m/dnviz.tcl:49 ../gui/tcltk/gis.m/rules.tcl:35
-msgid "Select input map"
-msgstr "Выбрать исходный слой"
-
-#: ../gui/tcltk/gis.m/dnviz.tcl:106
-msgid "NVIZ flythrough path"
-msgstr "Маршрут пролета NVIZ"
-
-#: ../gui/tcltk/gis.m/dnviz.tcl:122
-msgid "Create flythough path for NVIZ display"
-msgstr "Создать маршрут пролета для дисплея NVIZ"
-
-#: ../gui/tcltk/gis.m/dnviz.tcl:129
-msgid "Raster surface map "
-msgstr "Растровый слой поверхности"
-
-#: ../gui/tcltk/gis.m/dnviz.tcl:140
-msgid "Output script file "
-msgstr "Имя выходного скрипта"
-
-#: ../gui/tcltk/gis.m/dnviz.tcl:151
-msgid "Flythrough path "
-msgstr "Маршрут пролета"
-
-#: ../gui/tcltk/gis.m/dnviz.tcl:157
-msgid "Create path with mouse in map display"
-msgstr "Создать маршрут с помощью мыши в дисплее"
-
-#: ../gui/tcltk/gis.m/dnviz.tcl:160
-msgid "Coordinate pairs for flythrough path (x1,y1,x2,y2,...)"
-msgstr "Пары координат для маршрута пролета (x1,y1,x2,y2,...)"
-
-#: ../gui/tcltk/gis.m/dnviz.tcl:169
-msgid "Flythrough images prefix "
-msgstr "Префикс изображений пролета"
-
-#: ../gui/tcltk/gis.m/dnviz.tcl:170
-msgid "Prefix for image series created by flythough"
-msgstr "Префикс для серии изображений созданных с помощью пролета"
-
-#: ../gui/tcltk/gis.m/dnviz.tcl:177
-msgid "Camera layback "
-msgstr ""
-
-#: ../gui/tcltk/gis.m/dnviz.tcl:178
-msgid "Camera layback distance (in map units)"
-msgstr ""
-
-#: ../gui/tcltk/gis.m/dnviz.tcl:180
-msgid "Camera height "
-msgstr "Высота камеры"
-
-#: ../gui/tcltk/gis.m/dnviz.tcl:181
-msgid "Camera height above terrain"
-msgstr "Высота камеры над землей "
-
-#: ../gui/tcltk/gis.m/dnviz.tcl:188
-msgid "Number of frames "
-msgstr "Количество фреймов"
-
-#: ../gui/tcltk/gis.m/dnviz.tcl:189
-msgid "Number of frames to create for flythrough"
-msgstr "Количество фреймов создаваемых для пролета"
-
-#: ../gui/tcltk/gis.m/dnviz.tcl:191
-msgid "Start frame "
-msgstr "Начальный фрейм"
-
-#: ../gui/tcltk/gis.m/dnviz.tcl:192
-msgid "Starting frame number..."
-msgstr "Начинается фрейм номер..."
-
-#: ../gui/tcltk/gis.m/dnviz.tcl:199
-msgid "Enable vector rendering"
-msgstr "Включить отрисовку вектора"
-
-#: ../gui/tcltk/gis.m/dnviz.tcl:201
-msgid "Full render (save images)"
-msgstr "Полная отрисовка (сохранить изображения)"
-
-#: ../gui/tcltk/gis.m/dnviz.tcl:203
-msgid "Render images offscreen"
-msgstr "Отрисовать изображения вне экрана"
-
-#: ../gui/tcltk/gis.m/dnviz.tcl:215
-msgid "Height value is elevation"
-msgstr "Значение высоты по рельефу"
-
-#: ../gui/tcltk/gis.m/dnviz.tcl:217
-msgid "Output keyframe file"
-msgstr "Выходной файл ключевого фрейма"
-
-#: ../gui/tcltk/gis.m/dnviz.tcl:219 ../gui/tcltk/gis.m/rules.tcl:147
-msgid "Overwrite existing file"
-msgstr "Перезаписать существующий файл"
-
-#: ../gui/tcltk/gis.m/dnviz.tcl:224
-msgid "Reset"
-msgstr "Reset"
-
-#: ../gui/tcltk/gis.m/dnviz.tcl:226
-msgid "Clear all path coordinates"
-msgstr "Очистить все координаты маршрута"
-
-#: ../gui/tcltk/gis.m/dnviz.tcl:359 ../gui/tcltk/gis.m/rules.tcl:194
-msgid "You must select an input map"
-msgstr "Вы должны выбрать выходной слой"
-
-#: ../gui/tcltk/gis.m/dnviz.tcl:360 ../gui/tcltk/gis.m/rules.tcl:194
-msgid "No input map selected"
-msgstr "Исходный слой не выбран "
-
-#: ../gui/tcltk/gis.m/dnviz.tcl:365
-msgid "You must specify an output file"
-msgstr "Вы должны выбрать выходной слой."
-
-#: ../gui/tcltk/gis.m/dnviz.tcl:366
-msgid "No output file specified"
-msgstr "Не выбран выходной файл"
-
-#: ../gui/tcltk/gis.m/dnviz.tcl:374
-msgid "You must specify at least 4 points (x,y coordinate pairs)"
-msgstr "Нужно указать минимум 4 точки (пары координат x,y)"
-
-#: ../gui/tcltk/gis.m/dnviz.tcl:375
-msgid "Insufficient coordinates specified"
-msgstr "Задано недостаточно координат"
-
-#: ../gui/tcltk/gis.m/gmlib.tcl:85 ../gui/tcltk/gis.m/gmlib.tcl:114
-msgid "Map Resource File"
-msgstr "Ресурсный файл слоя"
-
-#: ../gui/tcltk/gis.m/gmlib.tcl:86 ../gui/tcltk/gis.m/gmlib.tcl:116
-msgid "All Files"
-msgstr "Все Файлы"
-
-#: ../gui/tcltk/gis.m/gmlib.tcl:90
-msgid "Open File"
-msgstr "Открыть файл"
-
-#: ../gui/tcltk/gis.m/gmlib.tcl:115
-msgid "DM Resource File"
-msgstr "Ресурсный файл DM"
-
-#: ../gui/tcltk/gis.m/mapprint.tcl:109
-msgid "Ghostscript not available"
-msgstr "Ghostscript не доступен"
-
-#: ../gui/tcltk/gis.m/mapprint.tcl:250
-msgid "Postscript and LPR printing of map display"
-msgstr "Postscript и LPR печать дисплея"
-
-#: ../gui/tcltk/gis.m/mapprint.tcl:264
-msgid "Preset paper type"
-msgstr "Предустановленный тип бумаги"
-
-#: ../gui/tcltk/gis.m/mapprint.tcl:275
-msgid "Custom paper size"
-msgstr "Пользовательский размер бумаги"
-
-#: ../gui/tcltk/gis.m/mapprint.tcl:276 ../gui/tcltk/d.m/print.tcl:181
-msgid "width:"
-msgstr "ширина:"
-
-#: ../gui/tcltk/gis.m/mapprint.tcl:278
-msgid "  height:"
-msgstr "  высота:"
-
-#: ../gui/tcltk/gis.m/mapprint.tcl:285
-msgid "Margins  left:"
-msgstr "Поля слева:"
-
-#: ../gui/tcltk/gis.m/mapprint.tcl:287
-msgid " right:"
-msgstr " справа:"
-
-#: ../gui/tcltk/gis.m/mapprint.tcl:289
-msgid " top:"
-msgstr " сверху:"
-
-#: ../gui/tcltk/gis.m/mapprint.tcl:291
-msgid " bottom:"
-msgstr " снизу:"
-
-#: ../gui/tcltk/gis.m/mapprint.tcl:299
-msgid "Resolution (dpi) for printing and PDF "
-msgstr "Разрешение (dpi) для печати и PDF "
-
-#: ../gui/tcltk/gis.m/mapprint.tcl:317
-msgid "Print on LPR printer"
-msgstr "Печатать на LPR принтере"
-
-#: ../gui/tcltk/gis.m/mapprint.tcl:325
-msgid "Print on postscript device* "
-msgstr "Печатать на устройстве postscript* "
-
-#: ../gui/tcltk/gis.m/mapprint.tcl:336
-msgid "Save to PDF file*              "
-msgstr "Сохранить в файл PDF*              "
-
-#: ../gui/tcltk/gis.m/mapprint.tcl:339 ../gui/tcltk/gis.m/mapprint.tcl:351
-#: ../gui/tcltk/d.m/print.tcl:212 ../gui/tcltk/d.m/print.tcl:223
-#: ../gui/tcltk/d.m/print.tcl:234 ../gui/tcltk/d.m/print.tcl:261
-msgid "Browse"
-msgstr "Просмотр"
-
-#: ../gui/tcltk/gis.m/mapprint.tcl:349
-msgid "Save to EPS file               "
-msgstr "Сохранить в файл EPS"
-
-#: ../gui/tcltk/gis.m/mapprint.tcl:357
-msgid "*requires ghostscript to be installed and in path"
-msgstr "*требует установленного ghostscript"
-
-#: ../gui/tcltk/gis.m/mapprint.tcl:365 ../gui/tcltk/d.m/print.tcl:279
-msgid "Print"
-msgstr "Печать"
-
-#: ../gui/tcltk/gis.m/gridline.tcl:140
-msgid "Display grid lines, and geodesic lines or rhumblines"
-msgstr "Показать линии сетки и геодезические линии или линии румба"
-
-#: ../gui/tcltk/gis.m/gridline.tcl:157
-msgid "Grid options: "
-msgstr "Настройки сетки:"
-
-#: ../gui/tcltk/gis.m/gridline.tcl:158 ../gui/tcltk/d.m/gridline.tcl:77
-msgid "draw grid"
-msgstr "нарисовать сетку"
-
-#: ../gui/tcltk/gis.m/gridline.tcl:159
-msgid "geodetic grid  "
-msgstr "геодезический грид"
-
-#: ../gui/tcltk/gis.m/gridline.tcl:161
-msgid "grid color "
-msgstr "цвет сетки"
-
-#: ../gui/tcltk/gis.m/gridline.tcl:166 ../gui/tcltk/d.m/gridline.tcl:85
-msgid "Help for grids"
-msgstr "Справка для гридов"
-
-#: ../gui/tcltk/gis.m/gridline.tcl:172
-msgid "    grid size (map units)"
-msgstr "    размер грида (единицы карты)"
-
-#: ../gui/tcltk/gis.m/gridline.tcl:174
-msgid " grid origin (east, north)"
-msgstr " начало отсчета сетки (восток, север)"
-
-#: ../gui/tcltk/gis.m/gridline.tcl:182
-msgid "draw border text "
-msgstr "отрисовать текст границы"
-
-#: ../gui/tcltk/gis.m/gridline.tcl:184
-msgid "text color "
-msgstr "цветтекста"
-
-#: ../gui/tcltk/gis.m/gridline.tcl:189
-msgid "text font "
-msgstr "шрифт текста"
-
-#: ../gui/tcltk/gis.m/gridline.tcl:190
-msgid "  text size"
-msgstr "  размер текста"
-
-#: ../gui/tcltk/gis.m/gridline.tcl:192
-msgid "Grid text size in points"
-msgstr "Размер текста сетки в points"
-
-#: ../gui/tcltk/gis.m/gridline.tcl:199
-msgid "draw grid border "
-msgstr "нарисовать границу сетки"
-
-#: ../gui/tcltk/gis.m/gridline.tcl:201
-msgid "border color "
-msgstr "цвет границы"
-
-#: ../gui/tcltk/gis.m/gridline.tcl:206
-msgid "Geodesic and rhumblines for latlong locations only"
-msgstr "Геодезические линии и линии румба только для локаций в lat/long"
-
-#: ../gui/tcltk/gis.m/gridline.tcl:213 ../gui/tcltk/d.m/gridline.tcl:119
-msgid "draw geodesic line"
-msgstr "нарисовать геодезическую линию"
-
-#: ../gui/tcltk/gis.m/gridline.tcl:218 ../gui/tcltk/d.m/gridline.tcl:124
-msgid "Help for geodesic lines"
-msgstr "Помощь для геодезических линий"
-
-#: ../gui/tcltk/gis.m/gridline.tcl:219 ../gui/tcltk/gis.m/gridline.tcl:246
-msgid " line color"
-msgstr " цвет линии"
-
-#: ../gui/tcltk/gis.m/gridline.tcl:223
-msgid " text color"
-msgstr " цвет текста"
-
-#: ../gui/tcltk/gis.m/gridline.tcl:232 ../gui/tcltk/gis.m/gridline.tcl:255
-msgid "     line endpoints (x1,y1,x2,y2)"
-msgstr "     конечные точки линии (x1,y1,x2,y2)"
-
-#: ../gui/tcltk/gis.m/gridline.tcl:240 ../gui/tcltk/d.m/gridline.tcl:149
-msgid "draw rhumbline"
-msgstr "нарисовать локсодромию"
-
-#: ../gui/tcltk/gis.m/gridline.tcl:245 ../gui/tcltk/d.m/gridline.tcl:154
-msgid "Help for rhumblines"
-msgstr "Помощь для линий румбов"
-
-#: ../gui/tcltk/gis.m/legend.tcl:149
-msgid "Raster map for legend"
-msgstr "Растровый слой для легенды"
-
-#: ../gui/tcltk/gis.m/legend.tcl:152
-#, tcl-format
-msgid "legend for %s"
-msgstr "Легенда для %s"
-
-#: ../gui/tcltk/gis.m/legend.tcl:193
-msgid "Display legend for raster map using cat values and labels"
-msgstr ""
-"Показать легенду для растрового слоя используя значения категорий и подписи"
-
-#: ../gui/tcltk/gis.m/legend.tcl:210
-msgid "Raster map: "
-msgstr "Растровый слой:"
-
-#: ../gui/tcltk/gis.m/legend.tcl:229
-#, tcl-format
-msgid "Legend placement and size as 0-100% of display"
-msgstr "Расположение легенды и размер как 0-100 процентов дисплея"
-
-#: ../gui/tcltk/gis.m/legend.tcl:235
-#, tcl-format
-msgid "    x,y of lower left corner (in % from display top left)"
-msgstr ""
-"    x,y нижнего левого угла (в процентах от верхнего левого угла дисплея)"
-
-#: ../gui/tcltk/gis.m/legend.tcl:238 ../gui/tcltk/gis.m/barscale.tcl:191
-#: ../gui/tcltk/gis.m/maptext.tcl:150 ../gui/tcltk/gis.m/dtext.tcl:197
-msgid "place with mouse"
-msgstr "расположить мышью"
-
-#: ../gui/tcltk/gis.m/legend.tcl:246
-msgid "    legend height "
-msgstr "    высота легенды"
-
-#: ../gui/tcltk/gis.m/legend.tcl:248
-#, tcl-format
-msgid "Legend height (% of display)"
-msgstr "Высота легенды (в процентах дисплея)"
-
-#: ../gui/tcltk/gis.m/legend.tcl:249
-msgid "%  width"
-msgstr "%  ширина"
-
-#: ../gui/tcltk/gis.m/legend.tcl:251
-#, tcl-format
-msgid "Legend width (% of display)"
-msgstr "Ширина легенды (в процентах дисплея)"
-
-#: ../gui/tcltk/gis.m/legend.tcl:258
-msgid "Legend appearance: text color"
-msgstr "Представление легенды: цвет текста"
-
-#: ../gui/tcltk/gis.m/legend.tcl:262
-msgid "  legend text font "
-msgstr "  шрифт текста легенды"
-
-#: ../gui/tcltk/gis.m/legend.tcl:273
-msgid "do not display labels"
-msgstr "не показывать подписи"
-
-#: ../gui/tcltk/gis.m/legend.tcl:275
-msgid "do not display values"
-msgstr "не показывать значения"
-
-#: ../gui/tcltk/gis.m/legend.tcl:282
-msgid "    number of lines (0=display all):"
-msgstr "    число линий (0=показать все):"
-
-#: ../gui/tcltk/gis.m/legend.tcl:284
-msgid "Lines to display"
-msgstr "Показываемые линии"
-
-#: ../gui/tcltk/gis.m/legend.tcl:286
-msgid "invert legend"
-msgstr "инвертировать легенду"
-
-#: ../gui/tcltk/gis.m/legend.tcl:293
-msgid "    interval between categories (integer maps)"
-msgstr "    интервал между категориями (целочисленные слои)"
-
-#: ../gui/tcltk/gis.m/legend.tcl:295
-msgid "Thinning interval"
-msgstr "Интервал прореживания"
-
-#: ../gui/tcltk/gis.m/legend.tcl:302
-msgid "draw smooth gradient (fp maps)"
-msgstr "рисовать гладкий градиент (fp слои)"
-
-#: ../gui/tcltk/gis.m/legend.tcl:304
-msgid "with maximum of"
-msgstr "с максимумом"
-
-#: ../gui/tcltk/gis.m/legend.tcl:306
-msgid "Maximum lines to display for gradient"
-msgstr "Максимальное количество линий для градиента"
-
-#: ../gui/tcltk/gis.m/legend.tcl:307 ../gui/tcltk/gis.m/chart.tcl:220
-#: ../gui/tcltk/d.m/chart.tcl:108 ../gui/tcltk/d.m/vector.tcl:229
-msgid "lines"
-msgstr "линии"
-
-#: ../gui/tcltk/gis.m/legend.tcl:313
-msgid "Display legend for subset of raster values"
-msgstr "Показывать легенду для выборки значений растра"
-
-#: ../gui/tcltk/gis.m/legend.tcl:320
-msgid "skip categories with no labels"
-msgstr "пропустить категории без подписей"
-
-#: ../gui/tcltk/gis.m/legend.tcl:327
-msgid "    legend for only these categories     "
-msgstr "    легенда только для этих категорий"
-
-#: ../gui/tcltk/gis.m/legend.tcl:334
-msgid "    legend for only this range of values"
-msgstr "    легенда только для этого диапазона значений"
-
-#: ../gui/tcltk/gis.m/raster.tcl:127
-msgid "Raster drape map"
-msgstr "Растровый драпируемый слой"
-
-#: ../gui/tcltk/gis.m/raster.tcl:177
-msgid "Display raster maps"
-msgstr "Показать растровые слои"
-
-#: ../gui/tcltk/gis.m/raster.tcl:194
-msgid "Base map:\t"
-msgstr "Базовый слой:\t"
-
-#: ../gui/tcltk/gis.m/raster.tcl:197
-msgid "base raster map to display"
-msgstr "базовый слоя для показа"
-
-#: ../gui/tcltk/gis.m/raster.tcl:202 ../gui/tcltk/gis.m/raster.tcl:206
-msgid "base map info"
-msgstr "информация о базовом слое"
-
-#: ../gui/tcltk/gis.m/raster.tcl:218
-msgid "\tvalues to display"
-msgstr "\tпоказываемые значения"
-
-#: ../gui/tcltk/gis.m/raster.tcl:225
-msgid "\tOptional color draping. Use base map for shading,"
-msgstr ""
-"\tЦветовая драпировка (опция). Использовать базовый слой для затенения,"
-
-#: ../gui/tcltk/gis.m/raster.tcl:230
-msgid "\tdrape map for color in color relief map or data fusion"
-msgstr "\tдрапировать слой для цвета в цветном слое рельефа или слияние данных"
-
-#: ../gui/tcltk/gis.m/raster.tcl:235
-msgid "\tdrape map:  "
-msgstr "\tдрапируемый слой:  "
-
-#: ../gui/tcltk/gis.m/raster.tcl:238
-msgid "raster map to drape over base map"
-msgstr "растрового слоя и драпировать поверх базового слоя"
-
-#: ../gui/tcltk/gis.m/raster.tcl:243 ../gui/tcltk/gis.m/raster.tcl:247
-msgid "drape map info"
-msgstr "информация о драпируемом слое"
-
-#: ../gui/tcltk/gis.m/raster.tcl:253
-msgid "\tdrape map brightness adjustment\t "
-msgstr "\tнастройка яркости драпируемого слоя\t "
-
-#: ../gui/tcltk/gis.m/raster.tcl:255
-msgid "Adjust brightness of drape map"
-msgstr "Настроить яркость драпируемого слоя"
-
-#: ../gui/tcltk/gis.m/raster.tcl:262 ../gui/tcltk/gis.m/rgbhis.tcl:220
-#: ../gui/tcltk/d.m/raster.tcl:143 ../gui/tcltk/d.m/rgbhis.tcl:147
-msgid "overlay maps from other layers (transparent null value cells)"
-msgstr "Наложить другие слои (прозрачные null-значения ячеек)"
-
-#: ../gui/tcltk/gis.m/raster.tcl:269
-msgid " Set background color (colored null value cells)"
-msgstr " Установить цвет фона (цветные null-значения ячеек)"
-
-#: ../gui/tcltk/gis.m/maplabels.tcl:135 ../gui/tcltk/gis.m/maptext.tcl:80
-msgid "Select label font"
-msgstr "Выбор шрифта подписи"
-
-#: ../gui/tcltk/gis.m/maplabels.tcl:158
-msgid "Create postscript labels for vector objects from v.labels file"
-msgstr "Создать подписи в postscript для векторных объектов из файла v.labels"
-
-#: ../gui/tcltk/gis.m/maplabels.tcl:165
-msgid "  (for postscript eps, pdf, and print output only)"
-msgstr "  (только для postscript eps, pdf, и вывода на печать)"
-
-#: ../gui/tcltk/gis.m/maplabels.tcl:184
-msgid "Override offset, alignment, and color settings in v.labels file: "
-msgstr "Override offset, alignment, and color settings in v.labels file: "
-
-#: ../gui/tcltk/gis.m/maplabels.tcl:191
-msgid "Align label with vector object: "
-msgstr "Выравнять подпись с векторным объектом:"
-
-#: ../gui/tcltk/gis.m/maplabels.tcl:200
-msgid "Offset label from vector object: "
-msgstr "Сдвинуть подпись относительно векторного объекта:"
-
-#: ../gui/tcltk/gis.m/maplabels.tcl:201
-msgid "x offset"
-msgstr "сдвиг по x"
-
-#: ../gui/tcltk/gis.m/maplabels.tcl:204
-msgid "y offset"
-msgstr "сдвиг по y"
-
-#: ../gui/tcltk/gis.m/maplabels.tcl:212
-msgid "Justification: "
-msgstr "Выравнивание:"
-
-#: ../gui/tcltk/gis.m/maplabels.tcl:215
-msgid " Label line max length: "
-msgstr " Максимальная длина линии подписи: "
-
-#: ../gui/tcltk/gis.m/maplabels.tcl:222
-msgid "Enclose label in box: "
-msgstr "Заключить подпись в прямоугольник: "
-
-#: ../gui/tcltk/gis.m/maplabels.tcl:225
-msgid "Draw label background: "
-msgstr "Нарисовать фон подписи: "
-
-#: ../gui/tcltk/gis.m/maplabels.tcl:229
-msgid "Background color:"
-msgstr "Цвет фона:"
-
-#: ../gui/tcltk/gis.m/maplabels.tcl:236
-msgid "Draw box outline: "
-msgstr "Нарисовать границу прямоугольника:"
-
-#: ../gui/tcltk/gis.m/maplabels.tcl:240
-msgid "Border width:"
-msgstr "Ширина границы:"
-
-#: ../gui/tcltk/gis.m/maplabels.tcl:243
-msgid "Border color:"
-msgstr "Цвет границы:"
-
-#: ../gui/tcltk/gis.m/maplabels.tcl:250
-msgid "Distance between label and enclosing box. Horizontal: "
-msgstr "Расстояние между подписью и рамкой. Горизонтальное: "
-
-#: ../gui/tcltk/gis.m/maplabels.tcl:253
-msgid " Vertical: "
-msgstr " Вертикальный: "
-
-#: ../gui/tcltk/gis.m/maplabels.tcl:261
-msgid "Font"
-msgstr "Шрифт"
-
-#: ../gui/tcltk/gis.m/maplabels.tcl:264
-msgid "select font for label"
-msgstr "выбрать шрифт для подписи"
-
-#: ../gui/tcltk/gis.m/maplabels.tcl:266
-msgid "family:"
-msgstr "семейство:"
-
-#: ../gui/tcltk/gis.m/maplabels.tcl:269
-msgid "size:"
-msgstr "размер:"
-
-#: ../gui/tcltk/gis.m/maplabels.tcl:272 ../gui/tcltk/gis.m/maptext.tcl:184
-#: ../gui/tcltk/gis.m/dtext.tcl:228 ../gui/tcltk/d.m/fttext.tcl:149
-msgid "  color"
-msgstr "  цвет"
-
-#: ../gui/tcltk/gis.m/maplabels.tcl:326
-msgid "Could not open labels file "
-msgstr "Невозможно открыть файл подписей"
-
 #: ../gui/tcltk/gis.m/chart.tcl:111
 msgid "Vector map for chart"
 msgstr "Векторный слой для диаграммы"
@@ -3966,6 +4070,50 @@ msgstr "\tфиксированный размер графика (если по�
 #: ../gui/tcltk/gis.m/chart.tcl:286
 msgid "\tchart outline color:"
 msgstr "\tцвет обводки диаграммы:"
+
+#: ../gui/tcltk/gis.m/labels.tcl:96
+msgid "Labels for vectors"
+msgstr "Подписи векторов"
+
+#: ../gui/tcltk/gis.m/labels.tcl:111
+msgid "Display labels for vector objects (created with v.label)"
+msgstr "Показать подписи для векторных объектов (созданные с помощью v.label)"
+
+#: ../gui/tcltk/gis.m/labels.tcl:128 ../gui/tcltk/gis.m/maplabels.tcl:172
+msgid "Labels file:"
+msgstr "Файл подписей:"
+
+#: ../gui/tcltk/gis.m/labels.tcl:131 ../gui/tcltk/gis.m/maplabels.tcl:175
+msgid "labels file to display"
+msgstr "показываемый файл подписей"
+
+#: ../gui/tcltk/gis.m/labels.tcl:146 ../gui/tcltk/d.m/labels.tcl:80
+msgid "Display constraints:"
+msgstr "Ограничения дисплея:"
+
+#: ../gui/tcltk/gis.m/labels.tcl:147
+msgid "min"
+msgstr "минимум"
+
+#: ../gui/tcltk/gis.m/labels.tcl:149
+msgid "max"
+msgstr "максимум"
+
+#: ../gui/tcltk/gis.m/labels.tcl:151 ../gui/tcltk/d.m/labels.tcl:85
+msgid "region size"
+msgstr "размер региона"
+
+#: ../gui/tcltk/gis.m/labels.tcl:157 ../gui/tcltk/d.m/labels.tcl:91
+msgid " ignore rotation setting and draw horizontally"
+msgstr " игнорировать настройку поворота и отрисовывать горизонтально"
+
+#: ../gui/tcltk/gis.m/labels.tcl:164 ../gui/tcltk/gis.m/maplabels.tcl:279
+msgid "Launch v.label to create labels file"
+msgstr "Запустить v.label для создания файла подписей"
+
+#: ../gui/tcltk/gis.m/labels.tcl:165 ../gui/tcltk/gis.m/maplabels.tcl:280
+msgid "v.label"
+msgstr "v.label"
 
 #: ../gui/tcltk/gis.m/vector.tcl:227
 msgid "Vector output map"
@@ -4165,168 +4313,239 @@ msgstr "Показать когда средние размеры региона
 msgid " or <"
 msgstr "или <"
 
-#: ../gui/tcltk/gis.m/cmd.tcl:115 ../gui/tcltk/d.m/cmd.tcl:52
-msgid "Command:"
-msgstr "Команда:"
+#: ../gui/tcltk/gis.m/animate.tcl:299
+msgid "Select maps to animate"
+msgstr "Выбор слоев для анимации"
 
-#: ../gui/tcltk/gis.m/mapcanvas.tcl:585
-msgid "Maximum zoom-in reached"
-msgstr "Достигнуто максимальное увеличение"
+#: ../gui/tcltk/gis.m/animate.tcl:313
+msgid "Rewind animation"
+msgstr "Перемотать анимацию назад"
 
-#: ../gui/tcltk/gis.m/mapcanvas.tcl:661
-#, fuzzy
-msgid "Error setting region 1"
-msgstr "Ошибка установки региона"
+#: ../gui/tcltk/gis.m/animate.tcl:319
+msgid "Replay animation"
+msgstr "Повторить анимацию"
 
-#: ../gui/tcltk/gis.m/mapcanvas.tcl:670
-msgid "please wait..."
-msgstr "пожалуйста, подождите..."
+#: ../gui/tcltk/gis.m/animate.tcl:325
+msgid "Step backwards through animation"
+msgstr "Шагать по анимации назад"
 
-#: ../gui/tcltk/gis.m/mapcanvas.tcl:827 ../gui/tcltk/gis.m/mapcanvas.tcl:2150
-msgid "You have to select map layer first"
-msgstr "Нужно сначала выбрать слой"
+#: ../gui/tcltk/gis.m/animate.tcl:331
+msgid "Stop animation"
+msgstr "Остановить анимацию"
 
-#: ../gui/tcltk/gis.m/mapcanvas.tcl:828 ../gui/tcltk/gis.m/mapcanvas.tcl:2151
-msgid "No map layer selected"
-msgstr "Не выбран слой"
+#: ../gui/tcltk/gis.m/animate.tcl:337
+msgid "Step forwards through animation"
+msgstr "Шагать по анимации вперед"
 
-#: ../gui/tcltk/gis.m/mapcanvas.tcl:900
-msgid "Save Region"
-msgstr "Сохранить регион"
+#: ../gui/tcltk/gis.m/animate.tcl:343
+msgid "Play animation"
+msgstr "Проиграть анимацию"
 
-#: ../gui/tcltk/gis.m/mapcanvas.tcl:903
-msgid "Save current display geometry to named region"
-msgstr "Сохранить текущую геометрию дисплея в регион с названием"
+#: ../gui/tcltk/gis.m/animate.tcl:356
+msgid "Slower animation"
+msgstr "Замедлить анимацию"
 
-#: ../gui/tcltk/gis.m/mapcanvas.tcl:909
-msgid "Enter region name"
-msgstr "Введите имя региона"
+#: ../gui/tcltk/gis.m/animate.tcl:362
+msgid "Faster animation"
+msgstr "Ускорить анимацию"
 
-#: ../gui/tcltk/gis.m/mapcanvas.tcl:944
+#: ../gui/tcltk/gis.m/animate.tcl:372
+msgid "Continuously loop through animation"
+msgstr "Зациклить анимацию"
+
+#: ../gui/tcltk/gis.m/animate.tcl:380
+msgid "Run animation alternately forward and backward"
+msgstr "Запустить анимацию чередуя вперед и назад"
+
+#: ../gui/tcltk/gis.m/animate.tcl:391
+msgid "Show map names in animation window"
+msgstr "Показать имена слоев в окне анимации"
+
+#: ../gui/tcltk/gis.m/animate.tcl:404
+msgid "Quit animation"
+msgstr "Выйти из анимации"
+
+#: ../gui/tcltk/gis.m/animate.tcl:435
+msgid "Select maps"
+msgstr "Выбор слоев"
+
+#: ../gui/tcltk/gis.m/animate.tcl:463
+msgid "Maps for Animation"
+msgstr "Слои для Анимации"
+
+#: ../gui/tcltk/gis.m/animate.tcl:479
+msgid "Select maps to animate in one or more frames (1 frame required)"
+msgstr "Выбрать слои для анимации в одном или более фреймов (минимум 1)"
+
+#: ../gui/tcltk/gis.m/animate.tcl:492
+msgid "Maps for frame 1 (required): "
+msgstr "Слои для фрейма 1 (требуются):"
+
+#: ../gui/tcltk/gis.m/animate.tcl:503
+msgid "Maps for frame 2 (optional): "
+msgstr "Слои для фрейма 2 (опция):"
+
+#: ../gui/tcltk/gis.m/animate.tcl:514
+msgid "Maps for frame 3 (optional): "
+msgstr "Слои для фрейма 3 (опция):"
+
+#: ../gui/tcltk/gis.m/animate.tcl:525
+msgid "Maps for frame 4 (optional): "
+msgstr "Слои для фрейма 4 (опция):"
+
+#: ../gui/tcltk/gis.m/animate.tcl:563
+msgid "You must select maps to animate for frame 1"
+msgstr "Вы должны выбрать слои для анимации для фрейма 1"
+
+#: ../gui/tcltk/gis.m/animate.tcl:564
+msgid "No maps selected"
+msgstr "Слои не выбраны"
+
+#: ../gui/tcltk/gis.m/animate.tcl:1031
+msgid "Animation Window"
+msgstr "Окно анимации"
+
+#: ../gui/tcltk/gis.m/maplabels.tcl:158
+msgid "Create postscript labels for vector objects from v.labels file"
+msgstr "Создать подписи в postscript для векторных объектов из файла v.labels"
+
+#: ../gui/tcltk/gis.m/maplabels.tcl:165
+msgid "  (for postscript eps, pdf, and print output only)"
+msgstr "  (только для postscript eps, pdf, и вывода на печать)"
+
+#: ../gui/tcltk/gis.m/maplabels.tcl:184
+msgid "Override offset, alignment, and color settings in v.labels file: "
+msgstr "Override offset, alignment, and color settings in v.labels file: "
+
+#: ../gui/tcltk/gis.m/maplabels.tcl:191
+msgid "Align label with vector object: "
+msgstr "Выравнять подпись с векторным объектом:"
+
+#: ../gui/tcltk/gis.m/maplabels.tcl:200
+msgid "Offset label from vector object: "
+msgstr "Сдвинуть подпись относительно векторного объекта:"
+
+#: ../gui/tcltk/gis.m/maplabels.tcl:201
+msgid "x offset"
+msgstr "сдвиг по x"
+
+#: ../gui/tcltk/gis.m/maplabels.tcl:204
+msgid "y offset"
+msgstr "сдвиг по y"
+
+#: ../gui/tcltk/gis.m/maplabels.tcl:212
+msgid "Justification: "
+msgstr "Выравнивание:"
+
+#: ../gui/tcltk/gis.m/maplabels.tcl:215
+msgid " Label line max length: "
+msgstr " Максимальная длина линии подписи: "
+
+#: ../gui/tcltk/gis.m/maplabels.tcl:222
+msgid "Enclose label in box: "
+msgstr "Заключить подпись в прямоугольник: "
+
+#: ../gui/tcltk/gis.m/maplabels.tcl:225
+msgid "Draw label background: "
+msgstr "Нарисовать фон подписи: "
+
+#: ../gui/tcltk/gis.m/maplabels.tcl:229
+msgid "Background color:"
+msgstr "Цвет фона:"
+
+#: ../gui/tcltk/gis.m/maplabels.tcl:236
+msgid "Draw box outline: "
+msgstr "Нарисовать границу прямоугольника:"
+
+#: ../gui/tcltk/gis.m/maplabels.tcl:240
+msgid "Border width:"
+msgstr "Ширина границы:"
+
+#: ../gui/tcltk/gis.m/maplabels.tcl:243
+msgid "Border color:"
+msgstr "Цвет границы:"
+
+#: ../gui/tcltk/gis.m/maplabels.tcl:250
+msgid "Distance between label and enclosing box. Horizontal: "
+msgstr "Расстояние между подписью и рамкой. Горизонтальное: "
+
+#: ../gui/tcltk/gis.m/maplabels.tcl:253
+msgid " Vertical: "
+msgstr " Вертикальный: "
+
+#: ../gui/tcltk/gis.m/maplabels.tcl:261
+msgid "Font"
+msgstr "Шрифт"
+
+#: ../gui/tcltk/gis.m/maplabels.tcl:264
+msgid "select font for label"
+msgstr "выбрать шрифт для подписи"
+
+#: ../gui/tcltk/gis.m/maplabels.tcl:266
+msgid "family:"
+msgstr "семейство:"
+
+#: ../gui/tcltk/gis.m/maplabels.tcl:269
+msgid "size:"
+msgstr "размер:"
+
+#: ../gui/tcltk/gis.m/maplabels.tcl:326
+msgid "Could not open labels file "
+msgstr "Невозможно открыть файл подписей"
+
+#: ../gui/tcltk/gis.m/rastarrows.tcl:106
+msgid "Aspect map"
+msgstr "Слой экспозиций"
+
+#: ../gui/tcltk/gis.m/rastarrows.tcl:109 ../gui/tcltk/gis.m/rastarrows.tcl:121
 #, tcl-format
-msgid ""
-"Region file %s already exists. \n"
-"Do you want to overwrite it?"
+msgid "arrows for %s"
+msgstr "стрелки для %s"
+
+#: ../gui/tcltk/gis.m/rastarrows.tcl:118
+msgid "Slope/intensity map"
+msgstr "слой крутизны/яркости"
+
+#: ../gui/tcltk/gis.m/rastarrows.tcl:134
+msgid "Display arrows whose orientations are based on raster aspect map"
+msgstr "Показать стрелки чья ориентация основана на растровом слое экспозиций"
+
+#: ../gui/tcltk/gis.m/rastarrows.tcl:140
+msgid "  (optionally, arrow lengths are based on slope or intensity map)"
 msgstr ""
-"Файл региона %s уже существует.\n"
-"Перезаписать?"
+"  (по выбору, длина стрелок основана на крутизне или слое интенсивности)"
 
-#: ../gui/tcltk/gis.m/mapcanvas.tcl:1297
-#, fuzzy, tcl-format
-msgid "Display: rows=%d  cols=%d  N-S res=%s  E-W res=%s"
-msgstr "Дисплей: ряды=%d солбцы=%d  разрешение С-Ю=%g  разрешение В-З=%g"
+#: ../gui/tcltk/gis.m/rastarrows.tcl:157
+msgid "Aspect map: "
+msgstr "Слой экспозиций: "
 
-#: ../gui/tcltk/gis.m/mapcanvas.tcl:1300
-#, fuzzy, tcl-format
-msgid "Display: rows=%d  cols=%d  N-S res=%g  E-W res=%g"
-msgstr "Дисплей: ряды=%d солбцы=%d  разрешение С-Ю=%g  разрешение В-З=%g"
+#: ../gui/tcltk/gis.m/rastarrows.tcl:173
+msgid "    aspect value type"
+msgstr "    тип значений экспозиции"
 
-#: ../gui/tcltk/gis.m/mapcanvas.tcl:1375
-msgid "Error setting region (Problem with g.region?)"
-msgstr "Ошибка установки региона (проблема с g.region?)"
+#: ../gui/tcltk/gis.m/rastarrows.tcl:181
+msgid "    draw arrows every Nth grid cell"
+msgstr "    нарисовать стрелки через каждую N-ую ячейку"
 
-#: ../gui/tcltk/gis.m/mapcanvas.tcl:1441 ../gui/tcltk/gis.m/mapcanvas.tcl:1446
-msgid "Error reading current resolution with g.region"
-msgstr "Ошибка чтения текущего разрешения с помощью g.region"
+#: ../gui/tcltk/gis.m/rastarrows.tcl:189
+msgid "    arrow color      "
+msgstr "    цвет стрелки"
 
-#: ../gui/tcltk/gis.m/mapcanvas.tcl:1478
-#, fuzzy
-msgid "Error setting region 2"
-msgstr "Ошибка установки региона"
+#: ../gui/tcltk/gis.m/rastarrows.tcl:194
+msgid "     cell grid color"
+msgstr "     цвет ячейки"
 
-#: ../gui/tcltk/gis.m/mapcanvas.tcl:1504 ../gui/tcltk/gis.m/georect.tcl:2029
-msgid "Drag or click mouse to zoom"
-msgstr "Масштабирование щелчком мыши или перетаскиванием"
+#: ../gui/tcltk/gis.m/rastarrows.tcl:204
+msgid "    null value color"
+msgstr "    цвет null-значения"
 
-#: ../gui/tcltk/gis.m/mapcanvas.tcl:1506 ../gui/tcltk/gis.m/georect.tcl:2031
-msgid "Drag or click mouse to unzoom"
-msgstr "Уменьшите карту щелчком мыши или перетаскиванием"
+#: ../gui/tcltk/gis.m/rastarrows.tcl:219
+msgid "Slope/intensity map: "
+msgstr "Слой крутизны/интенсивности:"
 
-#: ../gui/tcltk/gis.m/mapcanvas.tcl:1809 ../gui/tcltk/gis.m/georect.tcl:2229
-msgid "Drag with mouse to pan"
-msgstr "Перетащите мышью, чтобы сдвинуть"
-
-#: ../gui/tcltk/gis.m/mapcanvas.tcl:1941
-msgid "Measurement"
-msgstr "Изменение"
-
-#: ../gui/tcltk/gis.m/mapcanvas.tcl:1966
-msgid "Draw measure line with mouse"
-msgstr "Использовать мышь для проведения линии измерения"
-
-#: ../gui/tcltk/gis.m/mapcanvas.tcl:2121
-msgid "Click to query feature"
-msgstr "Щелкните чтобы запросить объект"
-
-#: ../gui/tcltk/gis.m/mapcanvas.tcl:2189
-msgid "This layer type does not support queries"
-msgstr "Этот слой не поддерживает запросы"
-
-#: ../gui/tcltk/gis.m/mapcanvas.tcl:2190
-msgid "Query not supported"
-msgstr "Запрос не поддерживается"
-
-#: ../gui/tcltk/gis.m/mapcanvas.tcl:2197
-msgid "You must select a map to query\n"
-msgstr "Нужно выбрать слоя, чтобы сделать запрос\n"
-
-#: ../gui/tcltk/gis.m/barscale.tcl:153
-msgid "Display scale and north arrow"
-msgstr "Показать масштаб и стрелку на север"
-
-#: ../gui/tcltk/gis.m/barscale.tcl:170
-#, tcl-format
-msgid "Scale placement: 0-100% from top left of display"
-msgstr ""
-"Расположение масштаба: 0-100 процентов от левого верхнего угла дисплея "
-
-#: ../gui/tcltk/gis.m/barscale.tcl:176
-msgid "\t enter x,y of scale/arrow upper left corner"
-msgstr "\t введите x,y или масштаб/стрелку в верхнем левом углу"
-
-#: ../gui/tcltk/gis.m/barscale.tcl:179
-msgid "    "
-msgstr "    "
-
-#: ../gui/tcltk/gis.m/barscale.tcl:190
-msgid "\t "
-msgstr "\t "
-
-#: ../gui/tcltk/gis.m/barscale.tcl:199
-msgid "Scale appearance:  text color"
-msgstr "Настройки масштаба: цвет текста"
-
-#: ../gui/tcltk/gis.m/barscale.tcl:201
-msgid "  font "
-msgstr "  шрифт"
-
-#: ../gui/tcltk/gis.m/barscale.tcl:211
-msgid "\tbackground color "
-msgstr "\tцвет фона"
-
-#: ../gui/tcltk/gis.m/barscale.tcl:214 ../gui/tcltk/gis.m/histogram.tcl:189
-msgid "transparent background"
-msgstr "прозрачный фон"
-
-#: ../gui/tcltk/gis.m/barscale.tcl:222
-msgid "display N. arrow only"
-msgstr "Показать только стрелку на север"
-
-#: ../gui/tcltk/gis.m/barscale.tcl:224 ../gui/tcltk/d.m/barscale.tcl:94
-msgid "display scale only"
-msgstr "показать только масштаб"
-
-#: ../gui/tcltk/gis.m/barscale.tcl:232 ../gui/tcltk/d.m/barscale.tcl:103
-msgid "text on top of scale, instead of to right"
-msgstr "текст сверху масштаба, а не справа"
-
-#: ../gui/tcltk/gis.m/barscale.tcl:240
-msgid "line scale instead of bar"
-msgstr "линейный масштаб, а не колонка"
-
-#: ../gui/tcltk/gis.m/barscale.tcl:242 ../gui/tcltk/d.m/barscale.tcl:110
-msgid "use feet/miles instead of meters"
-msgstr "использовать футы/мили, а не метры"
+#: ../gui/tcltk/gis.m/rastarrows.tcl:230
+msgid "    scale factor for computing arrow length"
+msgstr "    коэффициент масштабирования для вычисления длин стрелок"
 
 #: ../gui/tcltk/gis.m/rgbhis.tcl:104
 msgid "Raster map for red or hue channel"
@@ -4400,359 +4619,310 @@ msgstr "настройка яркости HIS\t "
 msgid "Adjusts the HIS intensity channel brightness"
 msgstr "Настроить яркость канала яркости HIS"
 
-#: ../gui/tcltk/gis.m/maptext.tcl:126
+#: ../gui/tcltk/gis.m/gmtree.tcl:69
+#, tcl-format
+msgid "Map Layers for Display %s"
+msgstr "Слои для дисплея %s"
+
+#: ../gui/tcltk/gis.m/gmtree.tcl:308
+msgid "You must open a display before adding map layers"
+msgstr "Вы должны открыть дисплей перед тем как добавлять слои"
+
+#: ../gui/tcltk/gis.m/gmtree.tcl:483 ../gui/tcltk/gis.m/gmtree.tcl:631
+#: ../gui/tcltk/gis.m/gmtree.tcl:1150 ../gui/tcltk/gis.m/gmtree.tcl:1156
+msgid "No layer selected"
+msgstr "Слой не выбран"
+
+#: ../gui/tcltk/gis.m/gmtree.tcl:865
+msgid "Loading layers..."
+msgstr "Загрузка слоев..."
+
+#: ../gui/tcltk/gis.m/gmtree.tcl:1050
+msgid "Layers loaded"
+msgstr "Слои загружены"
+
+#: ../gui/tcltk/gis.m/gmtree.tcl:1166
+msgid "Selected raster layer is empty"
+msgstr "Выбранный растровый слой пуст"
+
+#: ../gui/tcltk/gis.m/gmtree.tcl:1177
+msgid "Selected vector layer is empty"
+msgstr "Выбранный векторный слои пуст"
+
+#: ../gui/tcltk/gis.m/gmtree.tcl:1183
+msgid "You can digitize raster or vector maps only"
+msgstr "Вы можете оцифровать только растровые или векторные слои"
+
+#: ../gui/tcltk/gis.m/tksys.tcl:57
 msgid ""
-"Create postscript text object (for postscript eps, pdf, and print output "
-"only)"
+"\n"
+"***** Please wait *****"
 msgstr ""
-"Создать текстовый объект postscript (только для postscript eps, pdf, и "
-"вывода на печать)"
+"\n"
+"***** Пожалуйста подождите *****"
 
-#: ../gui/tcltk/gis.m/maptext.tcl:133
-msgid "Text to display:"
-msgstr "Текст для отображения:"
+#: ../gui/tcltk/gis.m/tksys.tcl:58
+msgid "Gathering information about your system"
+msgstr "Сбор информации о вашей системе"
 
-#: ../gui/tcltk/gis.m/maptext.tcl:140 ../gui/tcltk/gis.m/dtext.tcl:188
-msgid "Text placement: x,y coordinates (from upper left) "
-msgstr "Расположение текста: координаты x,y (начиная с верхнего левого)"
+#: ../gui/tcltk/gis.m/tksys.tcl:230
+msgid "***** Done *****"
+msgstr "***** Готово *****"
 
-#: ../gui/tcltk/gis.m/maptext.tcl:147 ../gui/tcltk/gis.m/dtext.tcl:194
-msgid "     coordinate type for text placement "
-msgstr "     тип координат для расположения текста"
+#: ../gui/tcltk/gis.m/mapcanvas.tcl:585
+msgid "Maximum zoom-in reached"
+msgstr "Достигнуто максимальное увеличение"
 
-#: ../gui/tcltk/gis.m/maptext.tcl:158 ../gui/tcltk/gis.m/dtext.tcl:205
-msgid "     align text with coordinate point  "
-msgstr "     выравнять текст с точкой"
-
-#: ../gui/tcltk/gis.m/maptext.tcl:167
-msgid "     justification"
-msgstr "     выравнивание"
-
-#: ../gui/tcltk/gis.m/maptext.tcl:170
-msgid "  line width"
-msgstr "  ширина линии"
-
-#: ../gui/tcltk/gis.m/maptext.tcl:177 ../gui/tcltk/d.m/fttext.tcl:144
-msgid "Font:"
-msgstr "Шрифт:"
-
-#: ../gui/tcltk/gis.m/dtext.tcl:159
-msgid "Display text"
-msgstr "Показать текст"
-
-#: ../gui/tcltk/gis.m/dtext.tcl:176
-msgid "Text to display: "
-msgstr "Текст для отображения:"
-
-#: ../gui/tcltk/gis.m/dtext.tcl:214
-msgid "     text rotation (degrees)"
-msgstr "     вращение текста (градусы)"
-
-#: ../gui/tcltk/gis.m/dtext.tcl:223
-msgid "Text options: font "
-msgstr "Опции текста: шрифт"
-
-#: ../gui/tcltk/gis.m/dtext.tcl:230 ../gui/tcltk/d.m/fttext.tcl:151
-#: ../gui/tcltk/d.m/dtext.tcl:106
-msgid "bold text"
-msgstr "жирный текст"
-
-#: ../gui/tcltk/gis.m/dtext.tcl:237
-msgid "     text height in pixels "
-msgstr "     высота текста в пикселях "
-
-#: ../gui/tcltk/gis.m/dtext.tcl:239
-msgid "  line spacing"
-msgstr "  межстрочный интервал"
-
-#: ../gui/tcltk/gis.m/georect.tcl:285
-msgid ""
-"There is no raster group file (REF). You must select the 'create/edit group' "
-"option to create a group file."
-msgstr ""
-"Нет группы растров (REF). Нужно выбрать опцию 'создать/редактировать группу' "
-"чтобы создать группу."
-
-#: ../gui/tcltk/gis.m/georect.tcl:307
-msgid ""
-"There is no vector group file (VREF). You must select the 'create/edit "
-"group' option to create a group file."
-msgstr ""
-"Нет группы векторов (VREF). Нужно выбрать опцию 'создать/редактировать "
-"группу' чтобы создать группу."
-
-#: ../gui/tcltk/gis.m/georect.tcl:388
-msgid "Select mapset of raster to georectify"
-msgstr "Выбрать набор растров для привязки"
-
-#: ../gui/tcltk/gis.m/georect.tcl:436
-msgid "Create a group REF file and directory for vectors"
-msgstr "Создать файл группы REF и папку для векторов"
-
-#: ../gui/tcltk/gis.m/georect.tcl:449
-msgid "Create/replace vector group"
-msgstr "Создать/заменить векторную группу"
-
-#: ../gui/tcltk/gis.m/georect.tcl:475
-msgid "group name"
-msgstr "имя группы"
-
-#: ../gui/tcltk/gis.m/georect.tcl:477
-msgid "Select existing vector group or name new group"
-msgstr "Выбрать существующую векторную группу или назвать новую группу"
-
-#: ../gui/tcltk/gis.m/georect.tcl:487
-msgid "vector"
-msgstr "вектор"
-
-#: ../gui/tcltk/gis.m/georect.tcl:489
-msgid "Select xy vector(s) for group"
-msgstr "Выбрать xy вектор(а) для группы"
-
-#: ../gui/tcltk/gis.m/georect.tcl:499
-msgid "Vector group"
-msgstr "Векторная группа"
-
-#: ../gui/tcltk/gis.m/georect.tcl:616
-msgid "GRASS Georectifier"
-msgstr "GRASS Georectifier"
-
-#: ../gui/tcltk/gis.m/georect.tcl:627
-msgid "Set up environment for georectifying rasters or vectors"
-msgstr "Установить среду для привязки растров или векторов"
-
-#: ../gui/tcltk/gis.m/georect.tcl:636
-msgid "Georeference raster"
-msgstr "Привязать растр"
-
-#: ../gui/tcltk/gis.m/georect.tcl:640
-msgid "Georeference vector"
-msgstr "Привязать вектор"
-
-#: ../gui/tcltk/gis.m/georect.tcl:647
-msgid "1. Select mapset"
-msgstr "1. Выбрать набор"
-
-#: ../gui/tcltk/gis.m/georect.tcl:649
-msgid "Mapset of xy raster group"
-msgstr "Набор группы xy растров"
-
-#: ../gui/tcltk/gis.m/georect.tcl:659
-msgid "2. Create/edit group"
-msgstr "2. Создать/редактировать группу"
-
-#: ../gui/tcltk/gis.m/georect.tcl:661
-msgid "Create/edit group (rasters or vectors to georectify)"
-msgstr "Создать/редактировать группу (привязываемые растры или вектора)"
-
-#: ../gui/tcltk/gis.m/georect.tcl:669
-msgid "3. Select group"
-msgstr "3. Выбор группы"
-
-#: ../gui/tcltk/gis.m/georect.tcl:671
-msgid "Select existing group to georectify"
-msgstr "Выбрать существующую группу для привязки"
-
-#: ../gui/tcltk/gis.m/georect.tcl:681
-msgid "4. Select map"
-msgstr "4. Выбор карты"
-
-#: ../gui/tcltk/gis.m/georect.tcl:683
-msgid ""
-"Select non-georectified raster or vector to display for marking ground "
-"control points"
-msgstr "Выбрать не привязанный растр или вектор для создания опорных точек"
-
-#: ../gui/tcltk/gis.m/georect.tcl:693
-msgid "5. Start georectifying"
-msgstr "5. Начать привязку"
-
-#: ../gui/tcltk/gis.m/georect.tcl:695
-msgid "Start georectifying"
-msgstr "Начать привязку"
-
-#: ../gui/tcltk/gis.m/georect.tcl:705
-msgid "Cancel georectification"
-msgstr "Отменить привязку"
-
-#: ../gui/tcltk/gis.m/georect.tcl:802
-msgid "Displaying xy map to be georectified"
-msgstr "Показать привязываемый слой xy"
-
-#: ../gui/tcltk/gis.m/georect.tcl:1010
-msgid "Select rectification method for rasters"
-msgstr "Выбрать метод трансформации для растров"
-
-#: ../gui/tcltk/gis.m/georect.tcl:1013
-msgid "1st order"
-msgstr "1-ый порядок"
-
-#: ../gui/tcltk/gis.m/georect.tcl:1014
-msgid "affine transformation  (rasters & vectors). Requires 3+ GCPs."
-msgstr "аффинная трансформация (растры & вектора). Требует 3+ GCP."
-
-#: ../gui/tcltk/gis.m/georect.tcl:1019
-msgid "2nd order"
-msgstr "2-ой порядок"
-
-#: ../gui/tcltk/gis.m/georect.tcl:1020
+#: ../gui/tcltk/gis.m/mapcanvas.tcl:661
 #, fuzzy
-msgid "polynomial transformation  (rasters only). Requires 6+ GCPs."
-msgstr "полиномиальная трансформация (только растры). Требует 7+ GCP."
-
-#: ../gui/tcltk/gis.m/georect.tcl:1024
-msgid "3rd order"
-msgstr "3-ий порядок"
-
-#: ../gui/tcltk/gis.m/georect.tcl:1025
-msgid "polynomial transformation  (rasters only). Requires 10+ GCPs."
-msgstr "полиномиальная трансформация (только растры). Требует 10+ GCP."
-
-#: ../gui/tcltk/gis.m/georect.tcl:1028
-msgid "Clip map/image to target region"
-msgstr ""
-
-#: ../gui/tcltk/gis.m/georect.tcl:1038
-msgid "Use"
-msgstr "Использовать"
-
-#: ../gui/tcltk/gis.m/georect.tcl:1040
-msgid "xy coordinates"
-msgstr "координаты xy"
-
-#: ../gui/tcltk/gis.m/georect.tcl:1042
-msgid "geographic coordinates"
-msgstr "географические координаты"
-
-#: ../gui/tcltk/gis.m/georect.tcl:1044
-msgid "forward error"
-msgstr "прямая ошибка"
-
-#: ../gui/tcltk/gis.m/georect.tcl:1046
-msgid "backward error"
-msgstr "обратная ошибка"
-
-#: ../gui/tcltk/gis.m/georect.tcl:1087
-msgid "Manage ground control points (GCPs)"
-msgstr "Управлять точками привязки (GCP)"
-
-#: ../gui/tcltk/gis.m/georect.tcl:1112
-msgid "Save GCPs to POINTS file"
-msgstr "Сохранить GCP в файл POINTS"
-
-#: ../gui/tcltk/gis.m/georect.tcl:1119
-msgid "Clear all unchecked GCP entries"
-msgstr "Очистить все не включенные GCP"
-
-#: ../gui/tcltk/gis.m/georect.tcl:1126
-msgid "Calculate RMS error"
-msgstr "Вычислить RMS ошибку"
-
-#: ../gui/tcltk/gis.m/georect.tcl:1133
-msgid "Rectify maps in group"
-msgstr "Трансформировать слои в группе"
-
-#: ../gui/tcltk/gis.m/georect.tcl:1136
-msgid "Quit"
-msgstr "Выход"
-
-#: ../gui/tcltk/gis.m/georect.tcl:1140
-msgid "Exit georectifier"
-msgstr "Выйти из режима привязки"
-
-#: ../gui/tcltk/gis.m/georect.tcl:1323
-msgid ""
-"There is no POINTS file of ground control points for group. You must create "
-"ground control points before georectifying map."
-msgstr ""
-"Нет файла POINTS опорных точек для создания группы. Нужно создать опорные "
-"точки до привязки слоя."
-
-#: ../gui/tcltk/gis.m/georect.tcl:1353
-msgid ""
-"Insufficient ground control points for georectification method. You need at "
-"least 3 points for 1st order, 6 points for 2nd order and 10 points for 3rd "
-"order."
-msgstr ""
-"Недостаточно опорных точек для данного метода привязки. Нужно по крайней "
-"мере 3 точки для 1-го порядка, 6 точек для 2-го и 10 для 3-го."
-
-#: ../gui/tcltk/gis.m/georect.tcl:1384
-msgid ""
-"No valid ground control points in GCP file. You must create valid ground "
-"control points before georectifying map."
-msgstr ""
-"Нет правильных опорных точек в файле GCP. Нужно создать правильные опорные "
-"точки перед привязкой слоя."
-
-#: ../gui/tcltk/gis.m/georect.tcl:1587
-msgid "Error setting region"
+msgid "Error setting region 1"
 msgstr "Ошибка установки региона"
 
-#: ../gui/tcltk/gis.m/georect.tcl:1596
-msgid "Please wait..."
-msgstr "Пожалуйста подождите.."
+#: ../gui/tcltk/gis.m/mapcanvas.tcl:670
+msgid "please wait..."
+msgstr "пожалуйста, подождите..."
 
-#: ../gui/tcltk/gis.m/rules.tcl:97
-msgid "Interactive rules entry"
-msgstr "Интерактивный ввод правил"
+#: ../gui/tcltk/gis.m/mapcanvas.tcl:827 ../gui/tcltk/gis.m/mapcanvas.tcl:2150
+msgid "You have to select map layer first"
+msgstr "Нужно сначала выбрать слой"
 
-#: ../gui/tcltk/gis.m/rules.tcl:199
-msgid "You must specify an output map"
-msgstr "Вы должны выбрать выходной слой"
+#: ../gui/tcltk/gis.m/mapcanvas.tcl:828 ../gui/tcltk/gis.m/mapcanvas.tcl:2151
+msgid "No map layer selected"
+msgstr "Не выбран слой"
 
-#: ../gui/tcltk/gis.m/rules.tcl:199
-msgid "No output map specified"
-msgstr "Не указана выходной слой"
+#: ../gui/tcltk/gis.m/mapcanvas.tcl:900
+msgid "Save Region"
+msgstr "Сохранить регион"
 
-#: ../gui/tcltk/gis.m/rules.tcl:221
-msgid "Error creating rules file"
-msgstr "Ошибка создания файла правил"
+#: ../gui/tcltk/gis.m/mapcanvas.tcl:903
+msgid "Save current display geometry to named region"
+msgstr "Сохранить текущую геометрию дисплея в регион с названием"
 
-#: ../gui/tcltk/gis.m/histogram.tcl:107
-msgid "Raster map for histogram"
-msgstr "Растровый слой для гистограммы"
+#: ../gui/tcltk/gis.m/mapcanvas.tcl:909
+msgid "Enter region name"
+msgstr "Введите имя региона"
 
-#: ../gui/tcltk/gis.m/histogram.tcl:110
+#: ../gui/tcltk/gis.m/mapcanvas.tcl:944
 #, tcl-format
-msgid "histogram of %s"
-msgstr "гистограмма %s"
+msgid ""
+"Region file %s already exists. \n"
+"Do you want to overwrite it?"
+msgstr ""
+"Файл региона %s уже существует.\n"
+"Перезаписать?"
 
-#: ../gui/tcltk/gis.m/histogram.tcl:138
-msgid "Draw histogram of values from raster map or image"
-msgstr "Создать гистограмму значений из растра или изображения"
+#: ../gui/tcltk/gis.m/mapcanvas.tcl:1297
+#, fuzzy, tcl-format
+msgid "Display: rows=%d  cols=%d  N-S res=%s  E-W res=%s"
+msgstr "Дисплей: ряды=%d солбцы=%d  разрешение С-Ю=%g  разрешение В-З=%g"
 
-#: ../gui/tcltk/gis.m/histogram.tcl:155
-msgid "Raster to histogram: "
-msgstr "Растр в гистограмму"
+#: ../gui/tcltk/gis.m/mapcanvas.tcl:1300
+#, fuzzy, tcl-format
+msgid "Display: rows=%d  cols=%d  N-S res=%g  E-W res=%g"
+msgstr "Дисплей: ряды=%d солбцы=%d  разрешение С-Ю=%g  разрешение В-З=%g"
 
-#: ../gui/tcltk/gis.m/histogram.tcl:171
-msgid "Graph style"
-msgstr "Стиль графа"
+#: ../gui/tcltk/gis.m/mapcanvas.tcl:1375
+msgid "Error setting region (Problem with g.region?)"
+msgstr "Ошибка установки региона (проблема с g.region?)"
 
-#: ../gui/tcltk/gis.m/histogram.tcl:174
-msgid "\ttext font "
-msgstr "\tшрифт текста"
+#: ../gui/tcltk/gis.m/mapcanvas.tcl:1441 ../gui/tcltk/gis.m/mapcanvas.tcl:1446
+msgid "Error reading current resolution with g.region"
+msgstr "Ошибка чтения текущего разрешения с помощью g.region"
 
-#: ../gui/tcltk/gis.m/histogram.tcl:184
-msgid "Histogram color: text & frame"
-msgstr "Цвет гистограммы: текст & рамка"
+#: ../gui/tcltk/gis.m/mapcanvas.tcl:1478
+#, fuzzy
+msgid "Error setting region 2"
+msgstr "Ошибка установки региона"
 
-#: ../gui/tcltk/gis.m/histogram.tcl:186
-msgid "  background"
-msgstr " фон"
+#: ../gui/tcltk/gis.m/mapcanvas.tcl:1941
+msgid "Measurement"
+msgstr "Изменение"
 
-#: ../gui/tcltk/gis.m/histogram.tcl:196
-msgid "Steps/bins for values (fp maps only)"
-msgstr "Шаги/диапазоны для значений (только слои fp)"
+#: ../gui/tcltk/gis.m/mapcanvas.tcl:1966
+msgid "Draw measure line with mouse"
+msgstr "Использовать мышь для проведения линии измерения"
 
-#: ../gui/tcltk/gis.m/histogram.tcl:200
-msgid "include null values"
-msgstr "включить NULL-значения "
+#: ../gui/tcltk/gis.m/mapcanvas.tcl:2121
+msgid "Click to query feature"
+msgstr "Щелкните чтобы запросить объект"
 
-#: ../gui/tcltk/gis.m/histogram.tcl:263
-msgid "r.info error"
-msgstr "r.info ошибка"
+#: ../gui/tcltk/gis.m/mapcanvas.tcl:2189
+msgid "This layer type does not support queries"
+msgstr "Этот слой не поддерживает запросы"
+
+#: ../gui/tcltk/gis.m/mapcanvas.tcl:2190
+msgid "Query not supported"
+msgstr "Запрос не поддерживается"
+
+#: ../gui/tcltk/gis.m/mapcanvas.tcl:2197
+msgid "You must select a map to query\n"
+msgstr "Нужно выбрать слоя, чтобы сделать запрос\n"
+
+#: ../gui/tcltk/d.m/d.m.tcl:406
+msgid "Welcome to the GRASS GIS manager"
+msgstr "Добро пожаловать в менеджер ГИС GRASS"
+
+#: ../gui/tcltk/d.m/raster.tcl:85
+msgid "Raster name:"
+msgstr "Имя растра:"
+
+#: ../gui/tcltk/d.m/raster.tcl:108
+msgid "show legend in selected display monitor"
+msgstr "показать легенду для драпированного слоя на выбранном дисплее"
+
+#: ../gui/tcltk/d.m/raster.tcl:111 ../gui/tcltk/d.m/raster.tcl:136
+msgid " thin legend by "
+msgstr " проредить легенду через"
+
+#: ../gui/tcltk/d.m/raster.tcl:118
+msgid "Raster to drape over 1st map:"
+msgstr "Растр драпируемый поверх первого слоя:"
+
+#: ../gui/tcltk/d.m/raster.tcl:132
+msgid "show legend for drape map in monitor"
+msgstr "показать легенду для драпированного слоя на дисплее"
+
+#: ../gui/tcltk/d.m/tool1.tcl:22
+msgid "Display active layers in current region"
+msgstr "Показать активные слои в текущем регионе"
+
+#: ../gui/tcltk/d.m/tool1.tcl:28
+msgid "Display active layers in default region"
+msgstr "Показать активные слои в регионе по умолчанию"
+
+#: ../gui/tcltk/d.m/tool1.tcl:34
+msgid "Display active layers in saved region setting"
+msgstr "Показать активные слои в сохраненном регионе"
+
+#: ../gui/tcltk/d.m/tool1.tcl:54
+msgid "NVIZ - n dimensional visualization"
+msgstr "NVIZ - n-мерная визуализация"
+
+#: ../gui/tcltk/d.m/tool1.tcl:60
+msgid "Fly through path for NVIZ"
+msgstr "Маршрут пролета для NVIZ"
+
+#: ../gui/tcltk/d.m/tool1.tcl:81
+msgid "Zoom"
+msgstr "Масштабировать"
+
+#: ../gui/tcltk/d.m/tool1.tcl:93
+msgid "Pan and recenter"
+msgstr "Сдвинуть и отцентрировать"
+
+#: ../gui/tcltk/d.m/tool1.tcl:99
+msgid "Query map (select map first)"
+msgstr "Запросить слой (сначала выбрать слой)"
+
+#: ../gui/tcltk/d.m/tool1.tcl:104
+msgid "Measure lengths and areas"
+msgstr "Изменить длины и площади"
+
+#: ../gui/tcltk/d.m/tool1.tcl:109
+msgid "Geographical position"
+msgstr "Географическое положение"
+
+#: ../gui/tcltk/d.m/tool1.tcl:130
+msgid "Print raster & vector maps using ps.map"
+msgstr "Вывести растровые и векторные слои с помощью ps.map"
+
+#: ../gui/tcltk/d.m/tool2.tcl:33
+msgid "Add legend"
+msgstr "Добавить легенду"
+
+#: ../gui/tcltk/d.m/tool2.tcl:76
+#, fuzzy
+msgid "Add paint labels layer (from directory paint/labels)"
+msgstr "Добавить слой подписей (из папки красок/подписей)"
+
+#: ../gui/tcltk/d.m/tool2.tcl:82
+msgid "Add freetype text layer"
+msgstr "Добавить freetype текстовый слой "
+
+#: ../gui/tcltk/d.m/tool2.tcl:110
+msgid "Create or select display frame"
+msgstr "Создать или выбрать дисплей"
+
+#: ../gui/tcltk/d.m/barscale.tcl:67 ../gui/tcltk/d.m/legend.tcl:106
+msgid "Text color: "
+msgstr "Цвет текста:"
+
+#: ../gui/tcltk/d.m/barscale.tcl:69
+msgid " Background color: "
+msgstr " Цвет фона:"
+
+#: ../gui/tcltk/d.m/barscale.tcl:71
+msgid "no background color"
+msgstr "нет цвета фона"
+
+#: ../gui/tcltk/d.m/barscale.tcl:73
+msgid " "
+msgstr " "
+
+#: ../gui/tcltk/d.m/barscale.tcl:92
+msgid "display N. arrow only "
+msgstr "показать только стрелку на север"
+
+#: ../gui/tcltk/d.m/barscale.tcl:101
+msgid "line scale instead of bar scale "
+msgstr "линейный масштаб вместо колонки"
+
+#: ../gui/tcltk/d.m/barscale.tcl:118 ../gui/tcltk/d.m/legend.tcl:185
+msgid "place with mouse (cannot save placement with group)"
+msgstr ""
+"расположить с помощью мыши (невозможно сохранить расположение с группой)"
+
+#: ../gui/tcltk/d.m/dtext.tcl:101
+msgid "Text options: color"
+msgstr "Опции текста: цвет"
+
+#: ../gui/tcltk/d.m/thematic.tcl:156 ../gui/tcltk/d.m/vector.tcl:354
+msgid "     show data"
+msgstr "     показать данные"
+
+#: ../gui/tcltk/d.m/thematic.tcl:230
+msgid "Graduate colors: preset color schemes"
+msgstr "Градуированные цвета: готовые цветовые схемы"
+
+#: ../gui/tcltk/d.m/thematic.tcl:258
+msgid "create graphic legend"
+msgstr "создать графическую легенду"
+
+#: ../gui/tcltk/d.m/thematic.tcl:267
+msgid "    select monitor for legend"
+msgstr "    выбрать дисплей для легенды"
+
+#: ../gui/tcltk/d.m/legend.tcl:81
+msgid "Raster map for legend:"
+msgstr "Растровый слой для легенды:"
+
+#: ../gui/tcltk/d.m/legend.tcl:96
+msgid "Display legend in monitor: "
+msgstr "Показать легенду на дисплее: "
+
+#: ../gui/tcltk/d.m/legend.tcl:99
+msgid " erase monitor before drawing legend"
+msgstr "очистить дисплей перед отрисовкой легенды"
+
+#: ../gui/tcltk/d.m/legend.tcl:164
+msgid "do not show cat labels"
+msgstr "не показывать подписи категорий"
+
+#: ../gui/tcltk/d.m/legend.tcl:166
+msgid "do not show cat numbers"
+msgstr "не показывать номера категорий"
+
+#: ../gui/tcltk/d.m/legend.tcl:173
+msgid "skip cats with no labels"
+msgstr "пропустить категории без подписей"
+
+#: ../gui/tcltk/d.m/legend.tcl:175
+msgid "draw smooth gradient"
+msgstr "отрисовать гладкий градиент"
+
+#: ../gui/tcltk/d.m/legend.tcl:177
+msgid "flip legend"
+msgstr "перевернуть легенду"
 
 #: ../gui/tcltk/d.m/monitorsel.tcl:33
 msgid "x0"
@@ -4810,29 +4980,61 @@ msgstr "x6"
 msgid "Start/select display monitor x6"
 msgstr "Запустить/выбрать дисплей x6"
 
-#: ../gui/tcltk/d.m/thematic.tcl:156 ../gui/tcltk/d.m/vector.tcl:354
-msgid "     show data"
-msgstr "     показать данные"
+#: ../gui/tcltk/d.m/print.tcl:169
+msgid "Paper format"
+msgstr "Формат бумаги"
 
-#: ../gui/tcltk/d.m/thematic.tcl:230
-msgid "Graduate colors: preset color schemes"
-msgstr "Градуированные цвета: готовые цветовые схемы"
+#: ../gui/tcltk/d.m/print.tcl:180
+msgid "Custom"
+msgstr "По выбору"
 
-#: ../gui/tcltk/d.m/thematic.tcl:258
-msgid "create graphic legend"
-msgstr "создать графическую легенду"
+#: ../gui/tcltk/d.m/print.tcl:184
+msgid "height:"
+msgstr "высота:"
 
-#: ../gui/tcltk/d.m/thematic.tcl:267
-msgid "    select monitor for legend"
-msgstr "    выбрать дисплей для легенды"
+#: ../gui/tcltk/d.m/print.tcl:191
+msgid "left:"
+msgstr "слева:"
 
-#: ../gui/tcltk/d.m/labels.tcl:65
-msgid "Labels name:"
-msgstr "Имя подписей:"
+#: ../gui/tcltk/d.m/print.tcl:193
+msgid "right:"
+msgstr "справа:"
 
-#: ../gui/tcltk/d.m/frames.tcl:64
-msgid "remove all frames"
-msgstr "убрать все фреймы"
+#: ../gui/tcltk/d.m/print.tcl:195
+msgid "top:"
+msgstr "верх:"
+
+#: ../gui/tcltk/d.m/print.tcl:197
+msgid "bottom:"
+msgstr "низ:"
+
+#: ../gui/tcltk/d.m/print.tcl:210
+msgid "PS file:"
+msgstr "файл PS:"
+
+#: ../gui/tcltk/d.m/print.tcl:221
+msgid "PDF file:"
+msgstr "файл PDF:"
+
+#: ../gui/tcltk/d.m/print.tcl:232
+msgid "PNG file:"
+msgstr "файл PNG:"
+
+#: ../gui/tcltk/d.m/print.tcl:241
+msgid "PNG file resolution (points/inch):"
+msgstr "Разрешение PNG файла (точки/дюймы):"
+
+#: ../gui/tcltk/d.m/print.tcl:250
+msgid "Printer:"
+msgstr "Принтер:"
+
+#: ../gui/tcltk/d.m/print.tcl:259
+msgid "Script file:"
+msgstr "Файл скрипта:"
+
+#: ../gui/tcltk/d.m/print.tcl:280
+msgid "Preview"
+msgstr "Предпросмотр"
 
 #: ../gui/tcltk/d.m/gridline.tcl:78
 msgid "geodetic grid"
@@ -4862,66 +5064,9 @@ msgstr "отрисовать текст границы"
 msgid " border & text color"
 msgstr " граница & цвет текста"
 
-#: ../gui/tcltk/d.m/legend.tcl:81
-msgid "Raster map for legend:"
-msgstr "Растровый слой для легенды:"
-
-#: ../gui/tcltk/d.m/legend.tcl:96
-msgid "Display legend in monitor: "
-msgstr "Показать легенду на дисплее: "
-
-#: ../gui/tcltk/d.m/legend.tcl:99
-msgid " erase monitor before drawing legend"
-msgstr "очистить дисплей перед отрисовкой легенды"
-
-#: ../gui/tcltk/d.m/legend.tcl:106 ../gui/tcltk/d.m/barscale.tcl:67
-msgid "Text color: "
-msgstr "Цвет текста:"
-
-#: ../gui/tcltk/d.m/legend.tcl:164
-msgid "do not show cat labels"
-msgstr "не показывать подписи категорий"
-
-#: ../gui/tcltk/d.m/legend.tcl:166
-msgid "do not show cat numbers"
-msgstr "не показывать номера категорий"
-
-#: ../gui/tcltk/d.m/legend.tcl:173
-msgid "skip cats with no labels"
-msgstr "пропустить категории без подписей"
-
-#: ../gui/tcltk/d.m/legend.tcl:175
-msgid "draw smooth gradient"
-msgstr "отрисовать гладкий градиент"
-
-#: ../gui/tcltk/d.m/legend.tcl:177
-msgid "flip legend"
-msgstr "перевернуть легенду"
-
-#: ../gui/tcltk/d.m/legend.tcl:185 ../gui/tcltk/d.m/barscale.tcl:118
-msgid "place with mouse (cannot save placement with group)"
-msgstr ""
-"расположить с помощью мыши (невозможно сохранить расположение с группой)"
-
-#: ../gui/tcltk/d.m/raster.tcl:85
-msgid "Raster name:"
-msgstr "Имя растра:"
-
-#: ../gui/tcltk/d.m/raster.tcl:108
-msgid "show legend in selected display monitor"
-msgstr "показать легенду для драпированного слоя на выбранном дисплее"
-
-#: ../gui/tcltk/d.m/raster.tcl:111 ../gui/tcltk/d.m/raster.tcl:136
-msgid " thin legend by "
-msgstr " проредить легенду через"
-
-#: ../gui/tcltk/d.m/raster.tcl:118
-msgid "Raster to drape over 1st map:"
-msgstr "Растр драпируемый поверх первого слоя:"
-
-#: ../gui/tcltk/d.m/raster.tcl:132
-msgid "show legend for drape map in monitor"
-msgstr "показать легенду для драпированного слоя на дисплее"
+#: ../gui/tcltk/d.m/frames.tcl:64
+msgid "remove all frames"
+msgstr "убрать все фреймы"
 
 #: ../gui/tcltk/d.m/chart.tcl:120
 msgid "  show attribute columns"
@@ -4930,6 +5075,107 @@ msgstr " показать поля атрибутов"
 #: ../gui/tcltk/d.m/chart.tcl:169
 msgid "    chart outline color:"
 msgstr "    цвет обводки диаграммы:"
+
+#: ../gui/tcltk/d.m/labels.tcl:65
+msgid "Labels name:"
+msgstr "Имя подписей:"
+
+#: ../gui/tcltk/d.m/vector.tcl:197
+msgid "Vector name:"
+msgstr "Имя вектора:"
+
+#: ../gui/tcltk/d.m/vector.tcl:212
+msgid "Display:"
+msgstr "Показать:"
+
+#: ../gui/tcltk/d.m/vector.tcl:213
+msgid "shapes"
+msgstr "формы"
+
+#: ../gui/tcltk/d.m/vector.tcl:215
+msgid "categories"
+msgstr "категории"
+
+#: ../gui/tcltk/d.m/vector.tcl:217
+msgid "topology"
+msgstr "топология"
+
+#: ../gui/tcltk/d.m/vector.tcl:219
+msgid "line directions"
+msgstr "направления линии"
+
+#: ../gui/tcltk/d.m/vector.tcl:226
+msgid "            "
+msgstr "            "
+
+#: ../gui/tcltk/d.m/vector.tcl:237
+msgid "faces"
+msgstr "грани"
+
+#: ../gui/tcltk/d.m/vector.tcl:262 ../gui/tcltk/d.m/vector.tcl:278
+#: ../gui/tcltk/d.m/vector.tcl:294
+msgid "color"
+msgstr "цвет"
+
+#: ../gui/tcltk/d.m/vector.tcl:281
+msgid "  "
+msgstr "  "
+
+#: ../gui/tcltk/d.m/vector.tcl:282
+msgid "random colors"
+msgstr "случайные цвета"
+
+#: ../gui/tcltk/d.m/vector.tcl:297
+msgid " size"
+msgstr " размер"
+
+#: ../gui/tcltk/d.m/vector.tcl:301
+msgid " align with pt"
+msgstr " выравнить с pt"
+
+#: ../gui/tcltk/d.m/vector.tcl:315
+msgid "     layer for labels"
+msgstr "     слой для подписей"
+
+#: ../gui/tcltk/d.m/vector.tcl:318
+msgid " attribute col for labels"
+msgstr " поле атрибутов для подписей"
+
+#: ../gui/tcltk/d.m/vector.tcl:326
+msgid "Query vectors: "
+msgstr "Запрос к векторам: "
+
+#: ../gui/tcltk/d.m/vector.tcl:330
+msgid " query cat values"
+msgstr " запрос значений категорий"
+
+#: ../gui/tcltk/d.m/vector.tcl:333
+msgid "SQL query"
+msgstr "SQL запрос"
+
+#: ../gui/tcltk/d.m/vector.tcl:340
+msgid "     SQL where statement"
+msgstr "     выражение SQL where"
+
+#: ../gui/tcltk/d.m/vector.tcl:366
+msgid "Mouse query setup:"
+msgstr "Настройки мыши для запроса:"
+
+#: ../gui/tcltk/d.m/vector.tcl:367
+msgid "edit attributes (form mode)"
+msgstr "редактировать атрибуты (режим формы)"
+
+#: ../gui/tcltk/d.m/vector.tcl:369
+msgid "results as text in terminal"
+msgstr "результаты как текст в терминале"
+
+#: ../gui/tcltk/d.m/vector.tcl:386
+msgid "Line width for ps.map print output:"
+msgstr "Ширина лини для вывода с помощью ps.map:"
+
+#: ../gui/tcltk/d.m/vector.tcl:388
+msgid "Line width used for printing"
+msgstr "Ширина линии используемая для вывода"
 
 #: ../gui/tcltk/d.m/menu.tcl:76
 msgid "Import"
@@ -5947,18 +6193,6 @@ msgstr "Запрос данных (SQL выбор)"
 msgid "Execute SQL statement"
 msgstr "Выполнить SQL выражение"
 
-#: ../gui/tcltk/d.m/rgbhis.tcl:96
-msgid "red (RGB) or hue (HIS):"
-msgstr "красный (RGB) или тон (HIS):"
-
-#: ../gui/tcltk/d.m/rgbhis.tcl:107
-msgid "green (RGB) or intensity (HIS):"
-msgstr "зеленый (RGB) или яркость (HIS):"
-
-#: ../gui/tcltk/d.m/rgbhis.tcl:118
-msgid "blue (RGB) or saturation (HIS):"
-msgstr "синий (RGB) или насыщенность (HIS):"
-
 #: ../gui/tcltk/d.m/fttext.tcl:102
 msgid "     (leave blank to place with mouse; position will not save)"
 msgstr ""
@@ -5993,251 +6227,17 @@ msgstr "вращение в радианах"
 msgid "height in pixels instead of %"
 msgstr "высота в пикселях, а не %"
 
-#: ../gui/tcltk/d.m/d.m.tcl:406
-msgid "Welcome to the GRASS GIS manager"
-msgstr "Добро пожаловать в менеджер ГИС GRASS"
+#: ../gui/tcltk/d.m/rgbhis.tcl:96
+msgid "red (RGB) or hue (HIS):"
+msgstr "красный (RGB) или тон (HIS):"
 
-#: ../gui/tcltk/d.m/tool1.tcl:22
-msgid "Display active layers in current region"
-msgstr "Показать активные слои в текущем регионе"
+#: ../gui/tcltk/d.m/rgbhis.tcl:107
+msgid "green (RGB) or intensity (HIS):"
+msgstr "зеленый (RGB) или яркость (HIS):"
 
-#: ../gui/tcltk/d.m/tool1.tcl:28
-msgid "Display active layers in default region"
-msgstr "Показать активные слои в регионе по умолчанию"
-
-#: ../gui/tcltk/d.m/tool1.tcl:34
-msgid "Display active layers in saved region setting"
-msgstr "Показать активные слои в сохраненном регионе"
-
-#: ../gui/tcltk/d.m/tool1.tcl:54
-msgid "NVIZ - n dimensional visualization"
-msgstr "NVIZ - n-мерная визуализация"
-
-#: ../gui/tcltk/d.m/tool1.tcl:60
-msgid "Fly through path for NVIZ"
-msgstr "Маршрут пролета для NVIZ"
-
-#: ../gui/tcltk/d.m/tool1.tcl:81
-msgid "Zoom"
-msgstr "Масштабировать"
-
-#: ../gui/tcltk/d.m/tool1.tcl:93
-msgid "Pan and recenter"
-msgstr "Сдвинуть и отцентрировать"
-
-#: ../gui/tcltk/d.m/tool1.tcl:99
-msgid "Query map (select map first)"
-msgstr "Запросить слой (сначала выбрать слой)"
-
-#: ../gui/tcltk/d.m/tool1.tcl:104
-msgid "Measure lengths and areas"
-msgstr "Изменить длины и площади"
-
-#: ../gui/tcltk/d.m/tool1.tcl:109
-msgid "Geographical position"
-msgstr "Географическое положение"
-
-#: ../gui/tcltk/d.m/tool1.tcl:130
-msgid "Print raster & vector maps using ps.map"
-msgstr "Вывести растровые и векторные слои с помощью ps.map"
-
-#: ../gui/tcltk/d.m/tool2.tcl:33
-msgid "Add legend"
-msgstr "Добавить легенду"
-
-#: ../gui/tcltk/d.m/tool2.tcl:76
-#, fuzzy
-msgid "Add paint labels layer (from directory paint/labels)"
-msgstr "Добавить слой подписей (из папки красок/подписей)"
-
-#: ../gui/tcltk/d.m/tool2.tcl:82
-msgid "Add freetype text layer"
-msgstr "Добавить freetype текстовый слой "
-
-#: ../gui/tcltk/d.m/tool2.tcl:110
-msgid "Create or select display frame"
-msgstr "Создать или выбрать дисплей"
-
-#: ../gui/tcltk/d.m/vector.tcl:197
-msgid "Vector name:"
-msgstr "Имя вектора:"
-
-#: ../gui/tcltk/d.m/vector.tcl:212
-msgid "Display:"
-msgstr "Показать:"
-
-#: ../gui/tcltk/d.m/vector.tcl:213
-msgid "shapes"
-msgstr "формы"
-
-#: ../gui/tcltk/d.m/vector.tcl:215
-msgid "categories"
-msgstr "категории"
-
-#: ../gui/tcltk/d.m/vector.tcl:217
-msgid "topology"
-msgstr "топология"
-
-#: ../gui/tcltk/d.m/vector.tcl:219
-msgid "line directions"
-msgstr "направления линии"
-
-#: ../gui/tcltk/d.m/vector.tcl:226
-msgid "            "
-msgstr "            "
-
-#: ../gui/tcltk/d.m/vector.tcl:237
-msgid "faces"
-msgstr "грани"
-
-#: ../gui/tcltk/d.m/vector.tcl:262 ../gui/tcltk/d.m/vector.tcl:278
-#: ../gui/tcltk/d.m/vector.tcl:294
-msgid "color"
-msgstr "цвет"
-
-#: ../gui/tcltk/d.m/vector.tcl:281
-msgid "  "
-msgstr "  "
-
-#: ../gui/tcltk/d.m/vector.tcl:282
-msgid "random colors"
-msgstr "случайные цвета"
-
-#: ../gui/tcltk/d.m/vector.tcl:297
-msgid " size"
-msgstr " размер"
-
-#: ../gui/tcltk/d.m/vector.tcl:301
-msgid " align with pt"
-msgstr " выравнить с pt"
-
-#: ../gui/tcltk/d.m/vector.tcl:315
-msgid "     layer for labels"
-msgstr "     слой для подписей"
-
-#: ../gui/tcltk/d.m/vector.tcl:318
-msgid " attribute col for labels"
-msgstr " поле атрибутов для подписей"
-
-#: ../gui/tcltk/d.m/vector.tcl:326
-msgid "Query vectors: "
-msgstr "Запрос к векторам: "
-
-#: ../gui/tcltk/d.m/vector.tcl:330
-msgid " query cat values"
-msgstr " запрос значений категорий"
-
-#: ../gui/tcltk/d.m/vector.tcl:333
-msgid "SQL query"
-msgstr "SQL запрос"
-
-#: ../gui/tcltk/d.m/vector.tcl:340
-msgid "     SQL where statement"
-msgstr "     выражение SQL where"
-
-#: ../gui/tcltk/d.m/vector.tcl:366
-msgid "Mouse query setup:"
-msgstr "Настройки мыши для запроса:"
-
-#: ../gui/tcltk/d.m/vector.tcl:367
-msgid "edit attributes (form mode)"
-msgstr "редактировать атрибуты (режим формы)"
-
-#: ../gui/tcltk/d.m/vector.tcl:369
-msgid "results as text in terminal"
-msgstr "результаты как текст в терминале"
-
-#: ../gui/tcltk/d.m/vector.tcl:386
-msgid "Line width for ps.map print output:"
-msgstr "Ширина лини для вывода с помощью ps.map:"
-
-#: ../gui/tcltk/d.m/vector.tcl:388
-msgid "Line width used for printing"
-msgstr "Ширина линии используемая для вывода"
-
-#: ../gui/tcltk/d.m/barscale.tcl:69
-msgid " Background color: "
-msgstr " Цвет фона:"
-
-#: ../gui/tcltk/d.m/barscale.tcl:71
-msgid "no background color"
-msgstr "нет цвета фона"
-
-#: ../gui/tcltk/d.m/barscale.tcl:73
-msgid " "
-msgstr " "
-
-#: ../gui/tcltk/d.m/barscale.tcl:92
-msgid "display N. arrow only "
-msgstr "показать только стрелку на север"
-
-#: ../gui/tcltk/d.m/barscale.tcl:101
-msgid "line scale instead of bar scale "
-msgstr "линейный масштаб вместо колонки"
-
-#: ../gui/tcltk/d.m/dtext.tcl:101
-msgid "Text options: color"
-msgstr "Опции текста: цвет"
-
-#: ../gui/tcltk/d.m/print.tcl:169
-msgid "Paper format"
-msgstr "Формат бумаги"
-
-#: ../gui/tcltk/d.m/print.tcl:180
-msgid "Custom"
-msgstr "По выбору"
-
-#: ../gui/tcltk/d.m/print.tcl:184
-msgid "height:"
-msgstr "высота:"
-
-#: ../gui/tcltk/d.m/print.tcl:191
-msgid "left:"
-msgstr "слева:"
-
-#: ../gui/tcltk/d.m/print.tcl:193
-msgid "right:"
-msgstr "справа:"
-
-#: ../gui/tcltk/d.m/print.tcl:195
-msgid "top:"
-msgstr "верх:"
-
-#: ../gui/tcltk/d.m/print.tcl:197
-msgid "bottom:"
-msgstr "низ:"
-
-#: ../gui/tcltk/d.m/print.tcl:210
-msgid "PS file:"
-msgstr "файл PS:"
-
-#: ../gui/tcltk/d.m/print.tcl:221
-msgid "PDF file:"
-msgstr "файл PDF:"
-
-#: ../gui/tcltk/d.m/print.tcl:232
-msgid "PNG file:"
-msgstr "файл PNG:"
-
-#: ../gui/tcltk/d.m/print.tcl:241
-msgid "PNG file resolution (points/inch):"
-msgstr "Разрешение PNG файла (точки/дюймы):"
-
-#: ../gui/tcltk/d.m/print.tcl:250
-msgid "Printer:"
-msgstr "Принтер:"
-
-#: ../gui/tcltk/d.m/print.tcl:259
-msgid "Script file:"
-msgstr "Файл скрипта:"
-
-#: ../gui/tcltk/d.m/print.tcl:280
-msgid "Preview"
-msgstr "Предпросмотр"
-
-#: ../visualization/nviz/scripts/panel_animation.tcl:275
-msgid "Test"
-msgstr "Тест"
+#: ../gui/tcltk/d.m/rgbhis.tcl:118
+msgid "blue (RGB) or saturation (HIS):"
+msgstr "синий (RGB) или насыщенность (HIS):"
 
 #~ msgid "Maximum likelyhood classification (MLC)"
 #~ msgstr "Классификация максимального подобия (MLC)"
