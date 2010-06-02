@@ -179,7 +179,7 @@ class TreeCtrlComboPopup(wx.combo.ComboPopup):
         if not force and not self.updateOnPopup:
             return
         if self.onPopup:
-            selected, exclude = self.onPopup()
+            selected, exclude = self.onPopup(self.type)
         else:
             selected = None
             exclude  = False
