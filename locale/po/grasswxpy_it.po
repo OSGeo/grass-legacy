@@ -14,8 +14,8 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Lokalize 1.0\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Lokalize 1.0\n"
 
 #: ../gui/wxpython/wxgui.py:101
 msgid "GRASS GIS Layer Manager"
@@ -492,11 +492,11 @@ msgstr "Aggiungi mappa dell'ombreggiature dei rilievi"
 
 #: ../gui/wxpython/icons/icon.py:212
 msgid "Add raster flow arrows"
-msgstr ""
+msgstr "Aggiungi le direzioni di flusso raster"
 
 #: ../gui/wxpython/icons/icon.py:214
 msgid "Add raster cell numbers"
-msgstr ""
+msgstr "Aggiungi i valori numerici delle celle raster"
 
 #: ../gui/wxpython/icons/icon.py:216
 msgid "Add thematic layer"
@@ -512,11 +512,11 @@ msgstr "Aggiungi layer grid"
 
 #: ../gui/wxpython/icons/icon.py:222
 msgid "Add geodesic line layer"
-msgstr ""
+msgstr "Aggiungi layer di linee geodetiche"
 
 #: ../gui/wxpython/icons/icon.py:224
 msgid "Add rhumbline layer"
-msgstr ""
+msgstr "Aggiungi layer di linee lossodromiche"
 
 #: ../gui/wxpython/icons/icon.py:226
 msgid "Add labels"
@@ -974,7 +974,6 @@ msgid "Multiple raster data import using GDAL"
 msgstr "Importa più raster usando GDAL"
 
 #: ../gui/wxpython/menustrings.py:22
-#, fuzzy
 msgid "Converts selected GDAL layers to GRASS raster maps using r.in.gdal"
 msgstr ""
 "Converti i layer GDAL selezionati in una mappa raster GRASS usando r.in.gdal"
@@ -992,7 +991,6 @@ msgid "Multiple link to GDAL"
 msgstr ""
 
 #: ../gui/wxpython/menustrings.py:26
-#, fuzzy
 msgid "Link GDAL supported raster files to a binary raster map layers"
 msgstr "Importa file raster supportato da GDAL in un layer raster binario"
 
@@ -1111,7 +1109,6 @@ msgid "Multiple vector data import using OGR"
 msgstr "Importa diversi dati vettoriali usando OGR"
 
 #: ../gui/wxpython/menustrings.py:53
-#, fuzzy
 msgid "Converts selected OGR layers to GRASS vector maps using v.in.ogr"
 msgstr "Converte i layer OGR selezionati in vettori GRASS usando v.in.ogr"
 
@@ -1128,7 +1125,6 @@ msgid "Multiple link to OGR"
 msgstr ""
 
 #: ../gui/wxpython/menustrings.py:57
-#, fuzzy
 msgid "Creates a new vectors as a read-only link to OGR layers"
 msgstr "Crea nuovo vettore come link in sola lettura a un layer OGR"
 
@@ -1169,7 +1165,6 @@ msgid "Multiple DXF layers import"
 msgstr "Importa diversi layer DXF"
 
 #: ../gui/wxpython/menustrings.py:67
-#, fuzzy
 msgid "Converts selected DXF layers to GRASS vector maps (using v.in.dxf)"
 msgstr ""
 "Converte i layer DXF selezionati in mappe vettoriali GRASS (usando v.in.dxf)"
@@ -4338,7 +4333,7 @@ msgstr "Crea istogramma di immagini o file raster"
 
 #: ../gui/wxpython/gui_modules/histogram.py:351
 msgid "Select font for histogram text"
-msgstr ""
+msgstr "Seleziona il tipo di carattere per il testo dell'istogramma"
 
 #: ../gui/wxpython/gui_modules/histogram.py:397
 #: ../gui/wxpython/gui_modules/mapdisp.py:1187
@@ -4394,26 +4389,23 @@ msgstr ""
 
 #: ../gui/wxpython/gui_modules/mcalc_builder.py:138
 msgid "divide"
-msgstr ""
+msgstr "dividi"
 
 #: ../gui/wxpython/gui_modules/mcalc_builder.py:140
-#, fuzzy
 msgid "add"
-msgstr "Aggiungi"
+msgstr "somma"
 
 #: ../gui/wxpython/gui_modules/mcalc_builder.py:142
-#, fuzzy
 msgid "subtract"
-msgstr "superficie"
+msgstr "sottrai"
 
 #: ../gui/wxpython/gui_modules/mcalc_builder.py:144
 msgid "modulus"
 msgstr ""
 
 #: ../gui/wxpython/gui_modules/mcalc_builder.py:146
-#, fuzzy
 msgid "multiply"
-msgstr "[multiplo]"
+msgstr "moltiplica"
 
 #: ../gui/wxpython/gui_modules/mcalc_builder.py:151
 msgid "left shift"
@@ -4428,40 +4420,36 @@ msgid "right shift (unsigned)"
 msgstr ""
 
 #: ../gui/wxpython/gui_modules/mcalc_builder.py:157
-#, fuzzy
 msgid "greater than"
-msgstr "più corto di"
+msgstr "maggiore di"
 
 #: ../gui/wxpython/gui_modules/mcalc_builder.py:159
-#, fuzzy
 msgid "greater than or equal to"
 msgstr "Crea o ricrea topologia"
 
 #: ../gui/wxpython/gui_modules/mcalc_builder.py:161
 msgid "less than or equal to"
-msgstr ""
+msgstr "minore o uguale a"
 
 #: ../gui/wxpython/gui_modules/mcalc_builder.py:163
-#, fuzzy
 msgid "less than"
-msgstr "più lungo di"
+msgstr "minore di"
 
 #: ../gui/wxpython/gui_modules/mcalc_builder.py:165
 msgid "equal to"
-msgstr ""
+msgstr "uguale a"
 
 #: ../gui/wxpython/gui_modules/mcalc_builder.py:167
 msgid "not equal to"
-msgstr ""
+msgstr "non uguale a"
 
 #: ../gui/wxpython/gui_modules/mcalc_builder.py:170
-#, fuzzy
 msgid "one's complement"
 msgstr "Mostra region computazionale"
 
 #: ../gui/wxpython/gui_modules/mcalc_builder.py:172
 msgid "NOT"
-msgstr ""
+msgstr "NOT"
 
 #: ../gui/wxpython/gui_modules/mcalc_builder.py:174
 msgid "bitwise AND"
@@ -5702,7 +5690,7 @@ msgstr "Altezza:"
 #: ../gui/wxpython/gui_modules/nviz_tools.py:166
 #: ../gui/wxpython/gui_modules/nviz_tools.py:2638
 msgid "Z-exag:"
-msgstr ""
+msgstr "esagerazione verticale"
 
 #: ../gui/wxpython/gui_modules/nviz_tools.py:180
 msgid "Look at:"
@@ -6061,9 +6049,8 @@ msgid "Width:"
 msgstr "Larghezza:"
 
 #: ../gui/wxpython/gui_modules/nviz_tools.py:2779
-#, fuzzy
 msgid "Marker:"
-msgstr "Livello:"
+msgstr ""
 
 #: ../gui/wxpython/gui_modules/nviz_tools.py:2793
 #: ../gui/wxpython/gui_modules/preferences.py:1465
@@ -6242,11 +6229,11 @@ msgstr "Database"
 
 #: ../gui/wxpython/gui_modules/gselect.py:923
 msgid "Protocol"
-msgstr ""
+msgstr "Protocollo"
 
 #: ../gui/wxpython/gui_modules/gselect.py:927
 msgid "Source type"
-msgstr ""
+msgstr "Tipo di sorgente"
 
 #: ../gui/wxpython/gui_modules/gselect.py:941
 #: ../gui/wxpython/gui_modules/gselect.py:1077
@@ -8078,6 +8065,8 @@ msgid ""
 "Drag %s with mouse in pointer mode to position.\n"
 "Double-click to change options."
 msgstr ""
+"Trascina %s con il mouse in modalità puntatore per posizionarlo.\n"
+"Dai un doppio clic per modificare le opzioni."
 
 #: ../gui/wxpython/gui_modules/gdialogs.py:420
 msgid ""
@@ -8111,6 +8100,8 @@ msgid ""
 "Drag text with mouse in pointer mode to position.\n"
 "Double-click to change options"
 msgstr ""
+"Trascina il testo con il mouse in modalità puntatore per posizionarlo.\n"
+"Dai un doppio clic per modificare le opzioni."
 
 #: ../gui/wxpython/gui_modules/gdialogs.py:733
 msgid "&Load"
@@ -8544,7 +8535,7 @@ msgstr "numeri delle celle raster"
 
 #: ../gui/wxpython/gui_modules/layertree.py:714
 msgid "raster flow arrows"
-msgstr ""
+msgstr "direzioni di flusso raster"
 
 #: ../gui/wxpython/gui_modules/layertree.py:717
 #: ../gui/wxpython/gui_modules/georect.py:316
@@ -8569,7 +8560,7 @@ msgstr "linea geodetica"
 
 #: ../gui/wxpython/gui_modules/layertree.py:732
 msgid "rhumbline"
-msgstr ""
+msgstr "linea lossodromica"
 
 #: ../gui/wxpython/gui_modules/layertree.py:735
 msgid "vector labels"
@@ -9667,6 +9658,26 @@ msgstr ""
 "non lo hai gi? fatto. Una scelta popolare ? \"grassdata\", situata nella tua "
 "home"
 
+#, fuzzy
+msgid "Creates a lines vector map from an ASCII x,y points file."
+msgstr "Crea un vettore da file ASCI points o ASCII vector"
+
+msgid ""
+"Georeference, rectify, and import Terra-ASTER imagery and relative DEM's "
+"using gdalwarp."
+msgstr ""
+"Georeferenzia, rettifica e importa immagine Terra-ASTER e relativo DEM "
+"usando gdalwarp"
+
+msgid "Latitude/longitude maps"
+msgstr "Mappa latitudine/longitudine"
+
+msgid "Potential Sunshine Hours"
+msgstr "Ore potenziali di insolazione"
+
+msgid "Actual Evapotranspiration"
+msgstr "Evapotraspirazione attuale"
+
 #~ msgid "Input DXF file"
 #~ msgstr "File DXF di input"
 
@@ -9727,10 +9738,6 @@ msgstr ""
 
 #~ msgid "Link OGR layers"
 #~ msgstr "Collegati a layers OGR"
-
-#, fuzzy
-#~ msgid "Creates a lines vector map from an ASCII x,y points file."
-#~ msgstr "Crea un vettore da file ASCI points o ASCII vector"
 
 #~ msgid " (those in bold typeface are required)"
 #~ msgstr " (quelli in grassetto sono richiesti)"
@@ -9820,13 +9827,6 @@ msgstr ""
 #~ msgstr "Rendi celle nulle opache"
 
 #~ msgid ""
-#~ "Georeference, rectify, and import Terra-ASTER imagery and relative DEM's "
-#~ "using gdalwarp."
-#~ msgstr ""
-#~ "Georeferenzia, rettifica e importa immagine Terra-ASTER e relativo DEM "
-#~ "usando gdalwarp"
-
-#~ msgid ""
 #~ "Converts coordinates from one projection to another (cs2cs frontend)."
 #~ msgstr "Converti coordinate da una proiezione ad un'altra (cs2cs frontend)."
 
@@ -9838,15 +9838,6 @@ msgstr ""
 
 #~ msgid "Mosaics several images and extends colormap"
 #~ msgstr "Crea un mosaico da più immagini ed estende la mappa dei colore"
-
-#~ msgid "Latitude/longitude maps"
-#~ msgstr "Mappa latitudine/longitudine"
-
-#~ msgid "Potential Sunshine Hours"
-#~ msgstr "Ore potenziali di insolazione"
-
-#~ msgid "Actual Evapotranspiration"
-#~ msgstr "Evapotraspirazione attuale"
 
 #~ msgid "actual evapotranspiration for diurnal period (Bastiaanssen, 1995)"
 #~ msgstr ""
@@ -10325,3 +10316,120 @@ msgstr ""
 
 #~ msgid "Univariate attribute statistics"
 #~ msgstr "Statistiche univariate attributi"
+
+#~ msgid ""
+#~ "Reading workspace file <%s> failed. Invalid file, unable to parse XML "
+#~ "document."
+#~ msgstr ""
+#~ "Lettura file dell'ambiente di lavoro <%s> fallita. File invalido, "
+#~ "impossibile parsare il documento XML."
+
+#~ msgid "Official GRASS site: http://grass.osgeo.org"
+#~ msgstr "Sito ufficiale di GRASS: http://grass.osgeo.org"
+
+#~ msgid "GIS Library"
+#~ msgstr "Librerie GIS"
+
+#~ msgid "Force re-rendering of all layers"
+#~ msgstr "Forza l'aggiornamento di tutti i layers"
+
+#~ msgid "Show Nviz settings dialog"
+#~ msgstr "Mostra impostazioni NVIZ"
+
+#~ msgid "Nviz properties"
+#~ msgstr "Proprietà di NVIZ"
+
+#, fuzzy
+#~ msgid "Unable to read EPGS file: '%s'"
+#~ msgstr "Impossibile leggere i codici EPSG: %s"
+
+#, fuzzy
+#~ msgid "3D View Tools"
+#~ msgstr "Strumenti visualizzazione 3D"
+
+#~ msgid "Layer properties"
+#~ msgstr "Proprietà del layer"
+
+#~ msgid "Vector map <%s> is 3D"
+#~ msgstr "Mappa vettoriale <%s> è 3D"
+
+#~ msgid "Vector map <%s> is 2D"
+#~ msgstr "Mappa vettoriale <%s> è 2D"
+
+#~ msgid "Quit wxGUI. GRASS is not running."
+#~ msgstr "Esci da wxGUI. GRASS non è in esecuzione."
+
+#~ msgid "Unable to open file"
+#~ msgstr "Impossibile aprire il file"
+
+#, fuzzy
+#~ msgid "DXF file:"
+#~ msgstr "Scegli file DXF:"
+
+#~ msgid "Parameter not found: %s"
+#~ msgstr "Paramentro non trovato:%s"
+
+#~ msgid "Parameter %(name)s (%(desc)s) is missing.\n"
+#~ msgstr "Parametro %(name)s (%(desc)s) manca.\n"
+
+#~ msgid "Copy the current command string to the clipboard"
+#~ msgstr "Copia la seguente stringa di comando negli appunti"
+
+#~ msgid "Vector point layer not found (id=%d)"
+#~ msgstr "Vettore puntuale non trovato (id=%d)"
+
+#~ msgid "Unable to set data layer properties (id=%d)"
+#~ msgstr "Impossibile impostare proprietà del layer (id=%d)"
+
+#~ msgid "User GUI settings"
+#~ msgstr "Impostazione dell'interfaccia grafica"
+
+#~ msgid ""
+#~ "Check mapset to make it accessible, uncheck it to hide it.%sNote: "
+#~ "PERMANENT and current mapset are always accessible."
+#~ msgstr ""
+#~ "Marca mapset per renderlo accessibile, demarca per nasconderlo.%sNote: "
+#~ "PERMANENT e mapset corrente sono sembre accessibili"
+
+#~ msgid "Select file extension:"
+#~ msgstr "Seleziona l'estensione del file:"
+
+#~ msgid "Export GRASS raster as non-georeferenced PNG image format."
+#~ msgstr "Esporta raster GRASS in un'immagine PNG non georeferenziata"
+
+#~ msgid "E&xit"
+#~ msgstr "E&sci"
+
+#~ msgid "Raster"
+#~ msgstr "Raster"
+
+#~ msgid "Finds shortest path for selected starting and ending node."
+#~ msgstr ""
+#~ "Trova il percorso più breve per i nodi di partenza ed arrivo selezionati"
+
+#~ msgid "Volumes"
+#~ msgstr "Volumi"
+
+#~ msgid "Reconnect vector to database"
+#~ msgstr "Riconnetti mappa vettoriale al database"
+
+#~ msgid "GRASS GIS help"
+#~ msgstr "Aiuto GRASS GIS"
+
+#~ msgid "Warning: flag <%s> not found in '%s'"
+#~ msgstr "Attenzione: opzione <%s> non trovata in '%s'"
+
+#~ msgid "Warning: option <%s> not found in '%s'"
+#~ msgstr "Attenzione: opzione <%s> non trovata in '%s'"
+
+#~ msgid "Close dialog on run"
+#~ msgstr "Chiudi dialogo dopo l'invio"
+
+#~ msgid "Search:"
+#~ msgstr "Cerca:"
+
+#~ msgid "Find module:"
+#~ msgstr "Trova modulo:"
+
+#~ msgid "Manage extensions"
+#~ msgstr "Gestisci estensioni"
