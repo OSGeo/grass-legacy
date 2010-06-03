@@ -1,17 +1,19 @@
 # translation of grasstcl_it.po to Italian
 # This file is distributed under the same license as the GRASS package.
 # Copyright (C) 2006-2010, GRASS Development Team
-# Lorenzo Moretti <lorenzo.moretti@bologna.enea.it>
 #
+# Lorenzo Moretti <lorenzo.moretti@bologna.enea.it>, 2006.
 # Markus Neteler <neteler@itc.it>, 2006.
 # Luciano Montanaro <mikelima@cirulla.net>, 2006.
 # Luca Delucchi <lucadeluge@gmail.com>, 2009.
+# Andrea Giacomelli <pibinko at gmail.com>, 2010.
 msgid ""
 msgstr ""
 "Project-Id-Version: grasstcl_it\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2010-06-02 21:15+0200\n"
 "PO-Revision-Date: 2009-02-17 12:14+0100\n"
+"Last-Translator: Andrea Giacomelli <pibinko at gmail.com>\n"
 "Language-Team: italian <grass-translations@lists.osgeo.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -464,7 +466,7 @@ msgstr "Codice EPSG Invalido"
 #: ../lib/init/epsg_option.tcl:188
 #, tcl-format
 msgid "ERROR: Invalid EPSG code %s: should be an integer."
-msgstr "ERRORE: codice EPSG %s invalido: dovrebbe essere un numero intero"
+msgstr "ERRORE: codice EPSG %s invalido: dovrebbe essere un numero intero."
 
 #: ../lib/init/epsg_option.tcl:198
 msgid "Location Exists!"
@@ -502,6 +504,8 @@ msgid ""
 "g.proj returned the following informational message:\n"
 "%s"
 msgstr ""
+"g.proj ha fornito le seguenti informazioni:\n"
+"%s"
 
 #: ../lib/init/epsg_option.tcl:288 ../lib/init/file_option.tcl:241
 msgid "Select datum transformation parameters:"
@@ -513,6 +517,10 @@ msgid ""
 "other GRASS modules will use the \"default\" (likely non-optimum) parameters "
 "for this datum if necessary in the future."
 msgstr ""
+"Continua senza specificare parametri - Se usato nella creazione di una "
+"location, gli altri moduli di GRASS utilizzeranno i parametri \"di default"
+"\" (tipicamente non ottimali) per questo sistema di riferimento, se "
+"necessario in futuro."
 
 #: ../lib/init/epsg_option.tcl:344
 msgid "You can select EPSG code (in <braces>) and copy it for later use."
@@ -711,7 +719,7 @@ msgstr "Esci"
 
 #: ../lib/init/gis_set.tcl:558
 msgid "Starting GRASS for the first time"
-msgstr ""
+msgstr "Primo avvio di GRASS"
 
 #: ../lib/init/gis_set.tcl:559
 msgid ""
@@ -719,6 +727,9 @@ msgid ""
 "have not already done so.  A popular choice is \"grassdata\", located in "
 "your home directory."
 msgstr ""
+"GRASS necessita di una cartella in cui salvare i dati. Creane una ora se già "
+"non hai provveduto. Una tipica scelta è \"grassdata\", ubicata nella vostra "
+"cartella personale."
 
 #: ../lib/init/gis_set.tcl:564
 #, fuzzy
@@ -799,9 +810,8 @@ msgstr ""
 "valido file georeferenziato"
 
 #: ../visualization/nviz/scripts/panel_animation.tcl:275
-#, fuzzy
 msgid "Test"
-msgstr "Testo"
+msgstr "Test"
 
 #: ../gui/tcltk/gis.m/cmd.tcl:75 ../gui/tcltk/gis.m/cmd.tcl:206
 #: ../gui/tcltk/gis.m/rastnums.tcl:79 ../gui/tcltk/gis.m/rastnums.tcl:369
@@ -822,9 +832,8 @@ msgstr "Testo"
 #: ../gui/tcltk/gis.m/rastarrows.tcl:83 ../gui/tcltk/gis.m/rastarrows.tcl:357
 #: ../gui/tcltk/gis.m/rgbhis.tcl:83 ../gui/tcltk/gis.m/rgbhis.tcl:362
 #: ../gui/tcltk/gis.m/mapcanvas.tcl:228 ../gui/tcltk/gis.m/mapcanvas.tcl:238
-#, fuzzy
 msgid "Error creating tempfile"
-msgstr "Crea titolo..."
+msgstr "Errore nella creazione del file temporaneo"
 
 #: ../gui/tcltk/gis.m/cmd.tcl:105 ../gui/tcltk/gis.m/rastnums.tcl:146
 #: ../gui/tcltk/gis.m/raster.tcl:184 ../gui/tcltk/gis.m/histogram.tcl:145
@@ -935,7 +944,7 @@ msgstr "Mappa Drape Raster"
 #: ../gui/tcltk/gis.m/vector.tcl:243 ../gui/tcltk/gis.m/vector.tcl:265
 #: ../gui/tcltk/gis.m/vector.tcl:298
 msgid "This action requires map name to be set"
-msgstr ""
+msgstr "Questa azione richiede che il nome della mappa sia assegnato"
 
 #: ../gui/tcltk/gis.m/raster.tcl:177
 msgid "Display raster maps"
@@ -1056,7 +1065,7 @@ msgstr "Stile grafico"
 
 #: ../gui/tcltk/gis.m/histogram.tcl:174
 msgid "\ttext font "
-msgstr "font del testo"
+msgstr "\tfont del testo"
 
 #: ../gui/tcltk/gis.m/histogram.tcl:184
 #, fuzzy
@@ -1065,7 +1074,7 @@ msgstr "Frame istogramma e colore testo"
 
 #: ../gui/tcltk/gis.m/histogram.tcl:186
 msgid "  background"
-msgstr "sfondo"
+msgstr "  sfondo"
 
 #: ../gui/tcltk/gis.m/histogram.tcl:189 ../gui/tcltk/gis.m/barscale.tcl:214
 msgid "transparent background"
@@ -1088,9 +1097,8 @@ msgid "Display scale and north arrow"
 msgstr "Mostra barra Scala e freccia nord"
 
 #: ../gui/tcltk/gis.m/barscale.tcl:170
-#, tcl-format
 msgid "Scale placement: 0-100% from top left of display"
-msgstr ""
+msgstr "Posizionamento della scala: 0-100% dall'angolo in alto a sinistra del display"
 
 #: ../gui/tcltk/gis.m/barscale.tcl:176
 msgid "\t enter x,y of scale/arrow upper left corner"
@@ -1098,11 +1106,11 @@ msgstr ""
 
 #: ../gui/tcltk/gis.m/barscale.tcl:179
 msgid "    "
-msgstr ""
+msgstr "    "
 
 #: ../gui/tcltk/gis.m/barscale.tcl:190
 msgid "\t "
-msgstr "\t"
+msgstr "\t "
 
 #: ../gui/tcltk/gis.m/barscale.tcl:191 ../gui/tcltk/gis.m/maptext.tcl:150
 #: ../gui/tcltk/gis.m/dtext.tcl:197 ../gui/tcltk/gis.m/legend.tcl:238
@@ -1177,7 +1185,7 @@ msgstr "Seleziona una mappa di input"
 
 #: ../gui/tcltk/gis.m/rules.tcl:97
 msgid "Interactive rules entry"
-msgstr ""
+msgstr "Inserimento interattivo delle regole"
 
 #: ../gui/tcltk/gis.m/rules.tcl:147 ../gui/tcltk/gis.m/dnviz.tcl:219
 msgid "Overwrite existing file"
@@ -1404,9 +1412,8 @@ msgid "group name"
 msgstr "nome gruppo"
 
 #: ../gui/tcltk/gis.m/georect.tcl:477
-#, fuzzy
 msgid "Select existing vector group or name new group"
-msgstr "Seleziona un esistente gruppo vettore o nomina un nuovo gruppo"
+msgstr "Seleziona un gruppo di vettori esistente o nomina un nuovo gruppo"
 
 #: ../gui/tcltk/gis.m/georect.tcl:487
 msgid "vector"
@@ -1417,9 +1424,8 @@ msgid "Select xy vector(s) for group"
 msgstr "Seleziona vettore(i) xy per gruppo"
 
 #: ../gui/tcltk/gis.m/georect.tcl:499
-#, fuzzy
 msgid "Vector group"
-msgstr "Gruppo vettore"
+msgstr "Gruppo di vettori"
 
 #: ../gui/tcltk/gis.m/georect.tcl:616
 #, fuzzy
@@ -1429,6 +1435,7 @@ msgstr "Esci georettificazione"
 #: ../gui/tcltk/gis.m/georect.tcl:627
 msgid "Set up environment for georectifying rasters or vectors"
 msgstr ""
+"Imposta l'ambiente per la georeferenziazione di dati raster o vettoriali"
 
 #: ../gui/tcltk/gis.m/georect.tcl:636
 #, fuzzy
@@ -1562,14 +1569,12 @@ msgid "Save GCPs to POINTS file"
 msgstr "Salva GCPs in file POINTS"
 
 #: ../gui/tcltk/gis.m/georect.tcl:1119
-#, fuzzy
 msgid "Clear all unchecked GCP entries"
-msgstr "pulisci TUTTI i GCP inseriti"
+msgstr "Azzera TUTTI i GCP inseriti ma non selezionati"
 
 #: ../gui/tcltk/gis.m/georect.tcl:1126
-#, fuzzy
 msgid "Calculate RMS error"
-msgstr "calcola errore RMS"
+msgstr "Calcola errore RMS"
 
 #: ../gui/tcltk/gis.m/georect.tcl:1133
 msgid "Rectify maps in group"
@@ -1606,6 +1611,8 @@ msgid ""
 "No valid ground control points in GCP file. You must create valid ground "
 "control points before georectifying map."
 msgstr ""
+"Nessun punto di controllo valido nel file GCP. E' necessario creare dei "
+"punti di controllo validi prima di georeferenziare la mappa."
 
 #: ../gui/tcltk/gis.m/georect.tcl:1587
 msgid "Error setting region"
@@ -1626,7 +1633,7 @@ msgstr "Trascina o clicca sul mouse per unzoom"
 #: ../gui/tcltk/gis.m/georect.tcl:2229 ../gui/tcltk/gis.m/mapcanvas.tcl:1809
 #, fuzzy
 msgid "Drag with mouse to pan"
-msgstr "Trascina con il mouse per area"
+msgstr "Trascina con il mouse per spostare"
 
 #: ../gui/tcltk/gis.m/gm.tcl:213 ../gui/tcltk/d.m/d.m.tcl:314
 msgid "Loading GIS Manager"
@@ -1734,7 +1741,7 @@ msgstr "Numeri di frames"
 
 #: ../gui/tcltk/gis.m/dnviz.tcl:189
 msgid "Number of frames to create for flythrough"
-msgstr ""
+msgstr "Numero di fotogrammi da creare per il volo"
 
 #: ../gui/tcltk/gis.m/dnviz.tcl:191
 msgid "Start frame "
@@ -1746,12 +1753,11 @@ msgstr ""
 
 #: ../gui/tcltk/gis.m/dnviz.tcl:199
 msgid "Enable vector rendering"
-msgstr ""
+msgstr "Abilita il rendering vettoriale"
 
 #: ../gui/tcltk/gis.m/dnviz.tcl:201
-#, fuzzy
 msgid "Full render (save images)"
-msgstr "esegui e salva immagini"
+msgstr "Esegui il rendering completo (e salva immagini)"
 
 #: ../gui/tcltk/gis.m/dnviz.tcl:203
 msgid "Render images offscreen"
@@ -1892,7 +1898,7 @@ msgstr "Seleziona font"
 #: ../gui/tcltk/gis.m/vector.tcl:249 ../gui/tcltk/gis.m/vector.tcl:271
 #: ../gui/tcltk/gis.m/vector.tcl:304
 msgid "You must provide valid vector layer number"
-msgstr ""
+msgstr "Devi fornire un numero valido di layer vettoriale"
 
 #: ../gui/tcltk/gis.m/thematic.tcl:218 ../gui/tcltk/gis.m/vector.tcl:315
 msgid "Vector point symbol"
@@ -3217,9 +3223,8 @@ msgid "Landscape structure modeling"
 msgstr ""
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:328
-#, fuzzy
 msgid "Set up"
-msgstr "Alt"
+msgstr "Configura"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:334
 msgid "Analyze landscape"
@@ -3296,7 +3301,7 @@ msgstr "Salva e esci"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:358 ../gui/tcltk/d.m/menu.tcl:313
 msgid "Wildfire modeling"
-msgstr ""
+msgstr "modellazione incendi"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:359
 #, fuzzy
@@ -3313,12 +3318,11 @@ msgstr ""
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:364 ../gui/tcltk/d.m/menu.tcl:319
 msgid "Change category values and labels"
-msgstr ""
+msgstr "Modifica i valori e le etichette per le categorie"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:365
-#, fuzzy
 msgid "Interactively edit category values"
-msgstr "Range di tutti i valori di categoria"
+msgstr "Modifica interattivamente i valori di categoria"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:367
 msgid "Reclassify by size"
@@ -3346,9 +3350,8 @@ msgid "Rescale"
 msgstr "Riscala"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:375
-#, fuzzy
 msgid "Rescale with histogram"
-msgstr "Raster a istogramma: "
+msgstr "Riscalare con istogramma: "
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:378
 msgid "Concentric circles"
@@ -3372,9 +3375,8 @@ msgid "Generate surfaces"
 msgstr "Genera superfici"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:384
-#, fuzzy
 msgid "Fractal surface"
-msgstr "Genera superfici frattali"
+msgstr "Superficie frattale"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:386
 #, fuzzy
@@ -3401,9 +3403,8 @@ msgid "Random surface with spatial dependence"
 msgstr "Genera superfice casuale con dipendenza spaziale"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:394
-#, fuzzy
 msgid "Contour lines"
-msgstr "Categorie"
+msgstr "Curve di livello"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:395 ../gui/tcltk/d.m/menu.tcl:348
 msgid "Interpolate surfaces"
@@ -3581,9 +3582,8 @@ msgid "Link to OGR"
 msgstr ""
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:453
-#, fuzzy
 msgid "Create labels"
-msgstr "Crea tabella"
+msgstr "Crea etichette"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:454
 msgid "Assign colors"
@@ -3631,7 +3631,7 @@ msgstr ""
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:471
 msgid "Correct and reclassify objects"
-msgstr ""
+msgstr "Correggi e riclassifica gli oggetti"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:473
 #, fuzzy
@@ -3716,9 +3716,8 @@ msgid "Manage or report categories"
 msgstr "Collega, elimina, o vedi categorie"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:501
-#, fuzzy
 msgid "Reclassify objects interactively"
-msgstr "Classifica image"
+msgstr "Riclassifica gli oggetti interattivamente"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:505
 #, fuzzy
@@ -4464,7 +4463,7 @@ msgstr "Riguarda Animazione"
 
 #: ../gui/tcltk/gis.m/animate.tcl:325
 msgid "Step backwards through animation"
-msgstr ""
+msgstr "Avanza di un passo nelll'animazione"
 
 #: ../gui/tcltk/gis.m/animate.tcl:331
 msgid "Stop animation"
@@ -4472,7 +4471,7 @@ msgstr "Ferma animazione"
 
 #: ../gui/tcltk/gis.m/animate.tcl:337
 msgid "Step forwards through animation"
-msgstr ""
+msgstr "Arretra di un passo nell'animazione"
 
 #: ../gui/tcltk/gis.m/animate.tcl:343
 msgid "Play animation"
@@ -4672,14 +4671,12 @@ msgid "    draw arrows every Nth grid cell"
 msgstr "    disegna frecce ogni griglia Nord"
 
 #: ../gui/tcltk/gis.m/rastarrows.tcl:189
-#, fuzzy
 msgid "    arrow color      "
-msgstr "    colore frecce      "
+msgstr "colore della freccia"
 
 #: ../gui/tcltk/gis.m/rastarrows.tcl:194
-#, fuzzy
 msgid "     cell grid color"
-msgstr " colore griglia"
+msgstr "colore della griglia"
 
 #: ../gui/tcltk/gis.m/rastarrows.tcl:204
 msgid "    null value color"
@@ -4862,9 +4859,8 @@ msgstr ""
 "Vuoi sovrascriverlo?"
 
 #: ../gui/tcltk/gis.m/mapcanvas.tcl:1297
-#, fuzzy, tcl-format
 msgid "Display: rows=%d  cols=%d  N-S res=%s  E-W res=%s"
-msgstr "Visualizza: righe=%d col=%d  N-S ris=%g  E-W ris=%g"
+msgstr "Visualizza: righe=%d col=%d  N-S ris=%gs E-W ris=%s"
 
 #: ../gui/tcltk/gis.m/mapcanvas.tcl:1300
 #, fuzzy, tcl-format
@@ -4881,9 +4877,8 @@ msgid "Error reading current resolution with g.region"
 msgstr "Errore leggendo la corrente risoluzione con g.region"
 
 #: ../gui/tcltk/gis.m/mapcanvas.tcl:1478
-#, fuzzy
 msgid "Error setting region 2"
-msgstr "Errore nelle impostazione della regione"
+msgstr "Errore nell'impostazione della regione 2"
 
 #: ../gui/tcltk/gis.m/mapcanvas.tcl:1941
 msgid "Measurement"
@@ -5869,7 +5864,7 @@ msgstr ""
 
 #: ../gui/tcltk/d.m/menu.tcl:316
 msgid "Simulate anisotropic spread phenomena"
-msgstr ""
+msgstr "Simula fenomeni di diffusione anistropica"
 
 #: ../gui/tcltk/d.m/menu.tcl:320
 msgid "Edit category values of individual cells for displayed raster map"
@@ -5899,11 +5894,11 @@ msgstr "Ricodifica categorie usando file regole (crea una nuova mappa)"
 
 #: ../gui/tcltk/d.m/menu.tcl:330
 msgid "Rescale categories (create new map)"
-msgstr ""
+msgstr "Riscala le categorie (creando una nuova mappa)"
 
 #: ../gui/tcltk/d.m/menu.tcl:331
 msgid "Rescale categories with equalized histogram (create new map)"
-msgstr ""
+msgstr "Riscala le categorie con istogramma equalizzato (creando nuova mappa)"
 
 #: ../gui/tcltk/d.m/menu.tcl:334
 msgid "Generate concentric circles around points"
@@ -6049,7 +6044,7 @@ msgstr "Crea file label testo dalle caratteristiche del vettore"
 
 #: ../gui/tcltk/d.m/menu.tcl:398
 msgid "Assign colors from a numeric attribute column"
-msgstr ""
+msgstr "Assegna i colori da una colonna di attributi numerica"
 
 #: ../gui/tcltk/d.m/menu.tcl:400
 msgid "Reproject vector from other location"
