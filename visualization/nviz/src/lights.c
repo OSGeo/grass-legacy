@@ -225,7 +225,6 @@ static int setlgt_position(Nv_data * data, Tcl_Interp * interp,	/* Current inter
     int num, w;
     float x, y, z;
     double atof();
-
     if (argc != 6)
 	return (TCL_ERROR);
 
@@ -235,6 +234,7 @@ static int setlgt_position(Nv_data * data, Tcl_Interp * interp,	/* Current inter
     data->light[num].y = y = (float)atof(argv[3]);
     data->light[num].z = z = (float)atof(argv[4]);
     data->light[num].w = w = (float)atoi(argv[5]);
+    fprintf(stderr, "%d %f %f %f %f\n", num, data->light[num].x, data->light[num].y, data->light[num].z, data->light[num].w);
     GS_setlight_position(num, x, y, z, w);
     return (TCL_OK);
 }
