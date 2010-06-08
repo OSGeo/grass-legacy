@@ -112,10 +112,10 @@ awk '{tot += $3;sumX +=$1 * $3; sumsqX +=$1*$1*$3;sumY +=$2 * $3; sumsqY +=$2*$2
 }\
 END {B=(sumXY - sumX*sumY/tot)/(sumsqX - sumX*sumX/tot);\
 R= (sumXY - sumX*sumY/tot)/((sumsqX - sumX^2/tot)*(sumsqY - sumY^2/tot))^0.5;\
-mediaX=sumX/tot;sumsqX=sumsqX/tot;varX=sumsqX-(mediaX^2);sdX=varX^0.5;\
-mediaY=sumY/tot;sumsqY=sumsqY/tot;varY=sumsqY-(mediaY^2);sdY=varY^0.5;\
-A=mediaY - B*mediaX; F= R^2/(1-R^2/tot-2);\
-print A, B, R, tot, F, mediaX, sdX, mediaY, sdY}' "$TEMPFILE" > "$TEMPFILE"b
+meanX=sumX/tot; sumsqX=sumsqX/tot; varX=sumsqX-(meanX^2); sdX=varX^0.5;\
+meanY=sumY/tot; sumsqY=sumsqY/tot; varY=sumsqY-(meanY^2); sdY=varY^0.5;\
+A=meanY - B*meanX; F= R^2/(1-R^2/tot-2);\
+print A, B, R, tot, F, meanX, sdX, meanY, sdY}' "$TEMPFILE" > "$TEMPFILE"b
 
 echo "a b R N F medX sdX medY sdY" | tr -s ' ' '\n' > "$TEMPFILE"d
 cat "$TEMPFILE"b | tr -s ' ' '\n' > "$TEMPFILE"e
@@ -131,6 +131,7 @@ then
            echo "   b: gain"
            echo "   R: sumXY - sumX*sumY/tot"
            echo "   N: number of elements"
+	   echo "   F: F-test significance"
            echo "   medX, medY: Means"
            echo "   sdX, sdY: Standard deviations"
            echo "a  b  R  N  F medX  sdX  medY  sdY"
@@ -146,6 +147,7 @@ else
            echo "   b: gain" >> "$TEMPFILE"c
            echo "   R: sumXY - sumX*sumY/tot" >> "$TEMPFILE"c
            echo "   N: number of elements" >> "$TEMPFILE"c
+	   echo "   F: F-test significance" >> "$TEMPFILE"c
            echo "   medX, medY: Means" >> "$TEMPFILE"c
            echo "   sdX, sdY: Standard deviations" >> "$TEMPFILE"c
            echo "a  b  R  N  F medX  sdX  medY  sdY" >> "$TEMPFILE"c
