@@ -147,7 +147,7 @@ else
            echo "   b: gain" >> "$TEMPFILE"c
            echo "   R: sumXY - sumX*sumY/tot" >> "$TEMPFILE"c
            echo "   N: number of elements" >> "$TEMPFILE"c
-	   echo "   F: significance" >> "$TEMPFILE"c
+	   echo "   F: F-test significance" >> "$TEMPFILE"c
            echo "   medX, medY: Means" >> "$TEMPFILE"c
            echo "   sdX, sdY: Standard deviations" >> "$TEMPFILE"c
            echo "a  b  R  N  F medX  sdX  medY  sdY" >> "$TEMPFILE"c
