@@ -131,7 +131,7 @@ then
            echo "   b: gain"
            echo "   R: sumXY - sumX*sumY/tot"
            echo "   N: number of elements"
-	   echo "   F: significance"
+	   echo "   F: F-test significance"
            echo "   medX, medY: Means"
            echo "   sdX, sdY: Standard deviations"
            echo "a  b  R  N  F medX  sdX  medY  sdY"
