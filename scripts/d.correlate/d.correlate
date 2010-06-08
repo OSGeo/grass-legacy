@@ -3,7 +3,9 @@
 ############################################################################
 #
 # MODULE:       d.correlate for GRASS 6; based on dcorrelate.sh for GRASS 4,5
-# AUTHOR(S):    CERL - Michael Shapiro; updated to GRASS 6 by Markus Neteler 5/2005
+# AUTHOR(S):    CERL - Michael Shapiro;
+#		 updated to GRASS 6 by Markus Neteler 5/2005
+#		 H.Bowman added trend line & model fix flag June 2010
 # PURPOSE:      prints a graph of the correlation between data layers (in pairs)
 #               derived from <grass5>/src.local/d.correlate.sh
 # COPYRIGHT:    (C) 2005 by the GRASS Development Team
