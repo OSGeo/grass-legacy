@@ -367,6 +367,8 @@ Icons = {
                                 label=_("Show modeler settings")),
     "modelProperties" : MetaIcon (img=Icons["modelProperties"],
                                   label=_("Show model properties")),
+    "modelVariables" : MetaIcon (img=Icons["modelProperties"],
+                                 label=_("Manage model variables")),
     }
 
 # testing ...
