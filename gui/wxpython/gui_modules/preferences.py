@@ -561,6 +561,12 @@ class Settings:
                         'height' : 50,
                         },
                     },
+                'loop' : {
+                    'size' : {
+                        'width' : 175,
+                        'height' : 50,
+                        },
+                    },
                 },
             }
         
