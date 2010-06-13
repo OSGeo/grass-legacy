@@ -36,7 +36,7 @@ check = True
 def CheckWxVersion(version = [2, 8, 11, 0]):
     """!Check wx version"""
     ver = wx.version().split(' ')[0]
-    if map(int, ver.split('.')) <= version:
+    if map(int, ver.split('.')) < version:
         return False
     
     return True
