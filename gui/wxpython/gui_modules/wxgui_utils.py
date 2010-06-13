@@ -25,7 +25,12 @@ import sys
 import string
 
 import wx
-import wx.lib.customtreectrl as CT
+try:
+    import wx.lib.agw.customtreectrl as CT
+    hasAgw = True
+except ImportError:
+    import wx.lib.customtreectrl as CT
+    hasAgw = False
 import wx.combo
 import wx.lib.newevent
 import wx.lib.buttons  as  buttons
@@ -73,7 +78,10 @@ class LayerTree(treemixin.DragAndDrop, CT.CustomTreeCtrl):
         if 'style' in kargs:
             ctstyle |= kargs['style']
             del kargs['style']
-        super(LayerTree, self).__init__(parent, id, pos, size, style = ctstyle)
+        if hasAgw:
+            super(LayerTree, self).__init__(parent, id, pos, size, agwStyle = ctstyle)
+        else:
+            super(LayerTree, self).__init__(parent, id, pos, size, style = ctstyle)
         self.SetName("LayerTree")
 
         ### SetAutoLayout() causes that no vertical scrollbar is displayed

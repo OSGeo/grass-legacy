@@ -66,6 +66,15 @@ import wx.lib.flatnotebook as FN
 import  wx.lib.scrolledpanel as scrolled
 from wx.lib.wordwrap import wordwrap
 try:
+    import wx.lib.agw.customtreectrl as CT
+    import wx.lib.agw.flatnotebook   as FN
+    hasAgw = True
+except ImportError:
+    import wx.lib.customtreectrl as CT
+    import wx.lib.flatnotebook   as FN
+    hasAgw = False
+
+try:
     import subprocess
 except:
     import compat.subprocess as subprocess
@@ -305,14 +314,17 @@ class GMFrame(wx.Frame):
             FN.FNB_NO_NAV_BUTTONS | \
             FN.FNB_NO_X_BUTTON
         
-        self.notebook = FN.FlatNotebook(parent=self, id=wx.ID_ANY, style=nbStyle)
-
-        #self.notebook = wx.aui.AuiNotebook(parent=self, id=wx.ID_ANY, style=wx.aui.AUI_NB_BOTTOM)
-        #self.notebook.SetFont(wx.Font(pointSize=11, family=wx.FONTFAMILY_DEFAULT, style=wx.NORMAL, weight=0))
-
+        if hasAgw:
+            self.notebook = FN.FlatNotebook(parent=self, id=wx.ID_ANY, agwStyle = nbStyle)
+        else:
+            self.notebook = FN.FlatNotebook(parent=self, id=wx.ID_ANY, style = nbStyle)
+        
         # create displays notebook widget and add it to main notebook page
         cbStyle = globalvar.FNPageStyle
-        self.gm_cb = FN.FlatNotebook(self, id=wx.ID_ANY, style=cbStyle)
+        if hasAgw:
+            self.gm_cb = FN.FlatNotebook(self, id=wx.ID_ANY, agwStyle = cbStyle)
+        else:
+            self.gm_cb = FN.FlatNotebook(self, id=wx.ID_ANY, style = cbStyle)
         self.gm_cb.SetTabAreaColour(globalvar.FNPageColor)
         self.notebook.AddPage(self.gm_cb, text=_("Map layers for each display"))
 
