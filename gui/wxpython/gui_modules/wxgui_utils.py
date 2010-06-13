@@ -70,7 +70,10 @@ class LayerTree(treemixin.DragAndDrop, CT.CustomTreeCtrl):
                  CT.TR_MULTIPLE,**kargs):
         self.items = []
         self.itemCounter = 0
-        super(LayerTree, self).__init__(parent, id, pos, size, style=style, ctstyle=ctstyle)
+        if 'style' in kargs:
+            ctstyle |= kargs['style']
+            del kargs['style']
+        super(LayerTree, self).__init__(parent, id, pos, size, style = ctstyle)
         self.SetName("LayerTree")
 
         ### SetAutoLayout() causes that no vertical scrollbar is displayed
