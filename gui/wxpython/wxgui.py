@@ -68,11 +68,10 @@ from wx.lib.wordwrap import wordwrap
 try:
     import wx.lib.agw.customtreectrl as CT
     import wx.lib.agw.flatnotebook   as FN
-    hasAgw = True
 except ImportError:
     import wx.lib.customtreectrl as CT
     import wx.lib.flatnotebook   as FN
-    hasAgw = False
+hasAgw = globalvar.CheckWxVersion()
 
 try:
     import subprocess
