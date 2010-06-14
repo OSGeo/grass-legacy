@@ -1501,7 +1501,7 @@ class cmdPanel(wx.Panel):
                     title_txt.SetToolTipString(tooltip)
 
             if p == first_param:
-                if type(p['wxId']) == type(1):
+                if p.has_key('wxId') and len(p['wxId']) > 0:
                     self.FindWindowById(p['wxId'][0]).SetFocus()
         
         #
@@ -1748,7 +1748,7 @@ class cmdPanel(wx.Panel):
                     porf['parameterized'] = me.IsChecked()
                 else:
                     porf['value'] = me.GetValue()
-        
+                
         self.OnUpdateValues(event)
         
         event.Skip()
@@ -1756,6 +1756,10 @@ class cmdPanel(wx.Panel):
     def OnUpdateSelection(self, event):
         """!Update dialog (layers, tables, columns, etc.)
         """
+        if not hasattr(self.parent, "updateThread"):
+            if event:
+                event.Skip()
+            return
         if event:
             self.parent.updateThread.Update(UpdateDialog,
                                             self,
