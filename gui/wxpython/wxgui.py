@@ -71,7 +71,6 @@ try:
 except ImportError:
     import wx.lib.customtreectrl as CT
     import wx.lib.flatnotebook   as FN
-hasAgw = globalvar.CheckWxVersion()
 
 try:
     import subprocess
@@ -313,14 +312,14 @@ class GMFrame(wx.Frame):
             FN.FNB_NO_NAV_BUTTONS | \
             FN.FNB_NO_X_BUTTON
         
-        if hasAgw:
+        if globalvar.hasAgw:
             self.notebook = FN.FlatNotebook(parent=self, id=wx.ID_ANY, agwStyle = nbStyle)
         else:
             self.notebook = FN.FlatNotebook(parent=self, id=wx.ID_ANY, style = nbStyle)
         
         # create displays notebook widget and add it to main notebook page
         cbStyle = globalvar.FNPageStyle
-        if hasAgw:
+        if globalvar.hasAgw:
             self.gm_cb = FN.FlatNotebook(self, id=wx.ID_ANY, agwStyle = cbStyle)
         else:
             self.gm_cb = FN.FlatNotebook(self, id=wx.ID_ANY, style = cbStyle)
@@ -1700,7 +1699,10 @@ class AboutWindow(wx.Frame):
                 FN.FNB_TABS_BORDER_SIMPLE | \
                 FN.FNB_NO_X_BUTTON
         
-        aboutNotebook = FN.FlatNotebook(panel, id=wx.ID_ANY, style=nbstyle)
+        if globalvar.hasAgw:
+            aboutNotebook = FN.FlatNotebook(panel, id=wx.ID_ANY, agwStyle=nbstyle)
+        else:
+            aboutNotebook = FN.FlatNotebook(panel, id=wx.ID_ANY, style=nbstyle)
         aboutNotebook.SetTabAreaColour(globalvar.FNPageColor)
         
         # make pages for About GRASS notebook

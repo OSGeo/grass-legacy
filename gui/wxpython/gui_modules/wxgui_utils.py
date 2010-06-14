@@ -34,7 +34,6 @@ import wx.lib.newevent
 import wx.lib.buttons  as  buttons
 
 import globalvar
-hasAgw = globalvar.CheckWxVersion()
 
 import gdialogs
 import menuform
@@ -78,7 +77,8 @@ class LayerTree(treemixin.DragAndDrop, CT.CustomTreeCtrl):
         if 'style' in kargs:
             ctstyle |= kargs['style']
             del kargs['style']
-        if hasAgw:
+        
+        if globalvar.hasAgw:
             super(LayerTree, self).__init__(parent, id, pos, size, agwStyle = ctstyle)
         else:
             super(LayerTree, self).__init__(parent, id, pos, size, style = ctstyle)
