@@ -1078,6 +1078,12 @@ if __name__ == "__main__":
         
         # add action to canvas
         width, height = self.canvas.GetSize()
+        if cmd[0] == 'r.mapcalc':
+            GMessage(parent = self,
+                     message = _("Module r.mapcalc cannot be used in the model. "
+                                 "Use r.mapcalculator instead."))
+            return
+        
         action = ModelAction(self.model, cmd = cmd, x = width/2, y = height/2,
                              id = len(self.model.GetActions()) + 1)
         overwrite = self.model.GetProperties().get('overwrite', None)
