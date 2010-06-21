@@ -2178,11 +2178,12 @@ class MapsetAccess(wx.Dialog):
     """!Controls setting options and displaying/hiding map overlay
     decorations
     """
-    def __init__(self, parent, id, title=_('Set/unset access to mapsets in current location'),
-                 pos=wx.DefaultPosition, size=(350, 400),
-                 style=wx.DEFAULT_DIALOG_STYLE|wx.RESIZE_BORDER):
+    def __init__(self, parent, id = wx.ID_ANY,
+                 title=_('Set/unset access to mapsets in current location'),
+                 size = (350, 400),
+                 style = wx.DEFAULT_DIALOG_STYLE | wx.RESIZE_BORDER, **kwargs):
         
-        wx.Dialog.__init__(self, parent, id, title, pos, size, style)
+        wx.Dialog.__init__(self, parent, id, title, size = size, style = style, **kwargs)
 
         self.all_mapsets_ordered = utils.ListOfMapsets(ordered=True)
         self.accessible_mapsets = utils.ListOfMapsets(accessible=True)
