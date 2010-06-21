@@ -68,20 +68,14 @@ class NvizThread(Thread):
     
 class GLWindow(MapWindow, glcanvas.GLCanvas):
     """!OpenGL canvas for Map Display Window"""
-    def __init__(self, parent, id,
-                 pos = wx.DefaultPosition,
-                 size = wx.DefaultSize,
-                 style = wx.NO_FULL_REPAINT_ON_RESIZE,
+    def __init__(self, parent, id = wx.ID_ANY,
                  Map = None, tree = None, lmgr = None):
         
         self.parent = parent # MapFrame
-        self.Map = Map
-        self.tree = tree
-        self._layermanager = lmgr
         
         glcanvas.GLCanvas.__init__(self, parent, id)
-        MapWindow.__init__(self, parent, id, pos, size, style,
-                           Map, tree, self._layermanager)
+        MapWindow.__init__(self, parent, id, 
+                           Map, tree, lmgr)
         self.Hide()
         
         self.init = False
@@ -104,9 +98,9 @@ class GLWindow(MapWindow, glcanvas.GLCanvas):
         #
         # create nviz instance
         #
-        if self._layermanager:
-            logerr = self._layermanager.goutput.cmd_stderr
-            logmsg = self._layermanager.goutput.cmd_output
+        if self.lmgr:
+            logerr = self.lmgr.goutput.cmd_stderr
+            logmsg = self.lmgr.goutput.cmd_output
         else:
             logerr = logmsg = None
         self.nvizThread = NvizThread(logerr,
@@ -178,21 +172,21 @@ class GLWindow(MapWindow, glcanvas.GLCanvas):
         if not self.init:
             self.ResetView()
             
-            if hasattr(self._layermanager, "nviz"):
-                self._layermanager.nviz.UpdatePage('view')
-                self._layermanager.nviz.UpdatePage('light')
+            if hasattr(self.lmgr, "nviz"):
+                self.lmgr.nviz.UpdatePage('view')
+                self.lmgr.nviz.UpdatePage('light')
                 layer = self.GetSelectedLayer()
                 if layer:
                     if layer.type ==  'raster':
-                        self._layermanager.nviz.UpdatePage('surface')
+                        self.lmgr.nviz.UpdatePage('surface')
                     elif layer.type ==  'vector':
-                        self._layermanager.nviz.UpdatePage('vector')
+                        self.lmgr.nviz.UpdatePage('vector')
                 
-                ### self._layermanager.nviz.UpdateSettings()
+                ### self.lmgr.nviz.UpdateSettings()
                 
                 # update widgets
-                win = self._layermanager.nviz.FindWindowById( \
-                    self._layermanager.nviz.win['vector']['lines']['surface'])
+                win = self.lmgr.nviz.FindWindowById( \
+                    self.lmgr.nviz.win['vector']['lines']['surface'])
                 win.SetItems(self.GetLayerNames('raster'))
             
             self.init = True
@@ -225,8 +219,8 @@ class GLWindow(MapWindow, glcanvas.GLCanvas):
                 self.view['persp']['value'] = 100
             
             if prev_value !=  self.view['persp']['value']:
-                if hasattr(self._layermanager, "nviz"):
-                    self._layermanager.nviz.UpdateSettings()
+                if hasattr(self.lmgr, "nviz"):
+                    self.lmgr.nviz.UpdateSettings()
                     
                     self._display.SetView(self.view['pos']['x'], self.view['pos']['y'],
                                           self.iview['height']['value'],
@@ -434,7 +428,7 @@ class GLWindow(MapWindow, glcanvas.GLCanvas):
                 except gcmd.NvizError, e:
                     print >> sys.stderr, "Nviz:" + e.message
                 
-                self._layermanager.nviz.UpdateSettings()        
+                self.lmgr.nviz.UpdateSettings()        
         
         stop = time.time()
         
@@ -553,9 +547,9 @@ class GLWindow(MapWindow, glcanvas.GLCanvas):
         wx.PostEvent(self, event)
         
         # update tools window
-        if hasattr(self._layermanager, "nviz") and \
+        if hasattr(self.lmgr, "nviz") and \
                 item ==  self.GetSelectedLayer(type = 'item'):
-            toolWin = self._layermanager.nviz
+            toolWin = self.lmgr.nviz
             if layer.type ==  'raster':
                 win = toolWin.FindWindowById( \
                     toolWin.win['vector']['lines']['surface'])
@@ -615,9 +609,9 @@ class GLWindow(MapWindow, glcanvas.GLCanvas):
         self.layers.remove(item)
         
         # update tools window
-        if hasattr(self._layermanager, "nviz") and \
+        if hasattr(self.lmgr, "nviz") and \
                 layer.type ==  'raster':
-            toolWin = self._layermanager.nviz
+            toolWin = self.lmgr.nviz
             win = toolWin.FindWindowById( \
                 toolWin.win['vector']['lines']['surface'])
             win.SetItems(self.GetLayerNames(layer.type))
@@ -674,9 +668,9 @@ class GLWindow(MapWindow, glcanvas.GLCanvas):
         wx.PostEvent(self, event)
         
         # update tools window
-        if hasattr(self._layermanager, "nviz") and \
+        if hasattr(self.lmgr, "nviz") and \
                 item ==  self.GetSelectedLayer(type = 'item'):
-            toolWin = self._layermanager.nviz
+            toolWin = self.lmgr.nviz
             
             toolWin.UpdatePage('vector')
             toolWin.SetPage('vector')
@@ -721,9 +715,9 @@ class GLWindow(MapWindow, glcanvas.GLCanvas):
             ### self.layers.remove(id)
         
         # update tools window
-        if hasattr(self._layermanager, "nviz") and \
+        if hasattr(self.lmgr, "nviz") and \
                 vecType is None:
-            toolWin = self._layermanager.nviz
+            toolWin = self.lmgr.nviz
             # remove surface page
             if toolWin.GetSelection() ==  toolWin.page['surface']['id']:
                 toolWin.RemovePage(toolWin.page['surface']['id'])

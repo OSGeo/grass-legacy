@@ -35,7 +35,6 @@ int main(int argc, char *argv[])
     int ret;
     int red, grn, blu;
     double vp_height, z_exag;	/* calculated viewpoint height, z-exag */
-    double light_ambient;
     int width, height;		/* output image size */
     char *output_name;
 
@@ -100,9 +99,8 @@ int main(int argc, char *argv[])
 	red = grn = blu = 255;
     }
     Nviz_set_light_color(&data, 1, red, grn, blu);
-    light_ambient = atof(params->light_ambient->answer) / 100.0;
     Nviz_set_light_ambient(&data, 1,
-			   light_ambient, light_ambient, light_ambient);
+			   atof(params->light_ambient->answer) / 100.0);
     
     /* load raster maps (surface topography) & set attributes (map/constant) */
     load_rasters(params, &data);
@@ -142,8 +140,9 @@ int main(int argc, char *argv[])
     }
     else {
 	z_exag = Nviz_get_exag();
-	G_message(_("Vertical exaggeration not given, using calculated value %.0f"),
-		  z_exag);
+	G_verbose_message(_("Vertical exaggeration not given, using calculated "
+			    "value %.0f"),
+			  z_exag);
     }
     Nviz_change_exag(&data, z_exag);
 
@@ -152,8 +151,9 @@ int main(int argc, char *argv[])
     }
     else {
 	Nviz_get_exag_height(&vp_height, NULL, NULL);
-	G_message(_("Viewpoint height not given, using calculated value %.0f"),
-		  vp_height);
+	G_verbose_message(_("Viewpoint height not given, using calculated "
+			    "value %.0f"),
+			  vp_height);
     }
     Nviz_set_viewpoint_height(vp_height);
 
