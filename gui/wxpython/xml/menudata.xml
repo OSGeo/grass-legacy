@@ -2702,7 +2702,7 @@
 	  <label>Volume calculator</label>
 	  <help>Map calculator for 3D raster map algebra.</help>
 	  <keywords>raster,algebra</keywords>
-	  <handler>OnMapCalculator3D</handler>
+	  <handler>OnMapCalculator</handler>
 	  <command>r3.mapcalc</command>
 	</menuitem>
 	<menuitem>
