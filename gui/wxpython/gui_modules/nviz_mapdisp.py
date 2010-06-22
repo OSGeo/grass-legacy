@@ -1104,3 +1104,8 @@ class GLWindow(MapWindow, glcanvas.GLCanvas):
         """!Get display instance"""
         return self._display
         
+    def ZoomToMap(self):
+        """!Reset view
+        """
+        self.lmgr.nviz.OnResetView(None)
+
