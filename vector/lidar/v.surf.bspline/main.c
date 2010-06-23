@@ -263,13 +263,8 @@ int main(int argc, char *argv[])
     }
 
     /* Open input ext vector */
-    if (!in_ext_opt->answer) {
-	ext = FALSE;
-	G_message(_("No vector map of sparse points to interpolate was specified. "
-		    "Interpolation will be done with <%s> vector map"),
-		  in_opt->answer);
-    }
-    else {
+    ext = FALSE;
+    if (in_ext_opt->answer) {
 	ext = TRUE;
 	G_message(_("Vector map <%s> of sparse points will be interpolated"),
 		  in_ext_opt->answer);
@@ -308,6 +303,9 @@ int main(int argc, char *argv[])
 	    Vect_hist_copy(&In_ext, &Out);
 	}
 	Vect_hist_command(&Out);
+
+	G_message(_("Points in input vector map <%s> will be interpolated"),
+		  vector);
     }
 
     /* raster output */
@@ -318,6 +316,9 @@ int main(int argc, char *argv[])
 	if ((raster = G_open_fp_cell_new(out_map_opt->answer)) < 0)
 	    G_fatal_error(_("Unable to create raster map <%s>"),
 			  out_map_opt->answer);
+
+	G_message(_("Cells for raster map <%s> will be interpolated"),
+		  map);
     }
 
     /* read z values from attribute table */
@@ -473,6 +474,10 @@ int main(int argc, char *argv[])
 
 	while (last_column == FALSE) {	/* For each subregion column */
 	    int npoints = 0;
+	    /* needed for sparse points interpolation */
+	    int npoints_ext, *lineVect_ext = NULL;
+	    double **obsVect_ext;	/*, mean_ext = .0; */
+	    struct Point *observ_ext;
 
 	    subregion_col++;
 	    subregion++;
@@ -513,14 +518,31 @@ int main(int argc, char *argv[])
 
 	    /* reading points in interpolation region */
 	    dim_vect = nsplx * nsply;
-	    observ =
-		P_Read_Vector_Region_Map(&In, &elaboration_reg, &npoints,
-					 dim_vect, bspline_field);
+	    if (grid == FALSE && ext == TRUE) {
+		observ_ext =
+		    P_Read_Vector_Region_Map(&In_ext,
+					     &elaboration_reg,
+					     &npoints_ext, dim_vect,
+					     1);
+	    }
+	    else
+		npoints_ext = 1;
+
+	    observ = NULL;
+	    if (npoints_ext > 0) {
+		observ =
+		    P_Read_Vector_Region_Map(&In, &elaboration_reg, &npoints,
+					     dim_vect, bspline_field);
+	    }
+	    else
+		npoints = 0;
+
 	    G_debug(1,
 		    "Interpolation: (%d,%d): Number of points in <elaboration_box> is %d",
 		    subregion_row, subregion_col, npoints);
 
-	    if (npoints > 0) {	/*  */
+	    /* only interpolate if there are any points in current subregion */
+	    if (npoints > 0 && npoints_ext > 0) {
 		int i;
 
 		nparameters = nsplx * nsply;
@@ -637,8 +659,11 @@ int main(int argc, char *argv[])
 					table_name);
 		    }
 		    else {	/* FLAG_EXT == TRUE */
+
+			/* done that earlier */
+			/*
 			int npoints_ext, *lineVect_ext = NULL;
-			double **obsVect_ext;	/*, mean_ext = .0; */
+			double **obsVect_ext;
 			struct Point *observ_ext;
 
 			observ_ext =
@@ -646,6 +671,7 @@ int main(int argc, char *argv[])
 						     &elaboration_reg,
 						     &npoints_ext, dim_vect,
 						     1);
+			*/
 
 			obsVect_ext = G_alloc_matrix(npoints_ext, 3);	/* Observation vector_ext */
 			lineVect_ext = G_alloc_ivector(npoints_ext);
@@ -677,9 +703,11 @@ int main(int argc, char *argv[])
 		G_free_ivector(lineVect);
 	    }
 	    else {
-		G_free(observ);
-		G_warning(_("No data within this subregion. "
-			    "Consider changing the spline step."));
+		if (observ)
+		    G_free(observ);
+		if (npoints == 0)
+		    G_warning(_("No data within this subregion. "
+				"Consider increasing spline step values."));
 	    }
 	}			/*! END WHILE; last_column = TRUE */
     }				/*! END WHILE; last_row = TRUE */
