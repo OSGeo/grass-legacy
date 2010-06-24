@@ -340,7 +340,7 @@ class GMConsole(wx.SplitterWindow):
         @return True redirected
         @return False failed
         """
-        if Debug.get_level() == 0:
+        if Debug.get_level() == 0 and int(grass.gisenv().get('DEBUG', 0)) == 0:
             # don't redirect when debugging is enabled
             sys.stdout = self.cmd_stdout
             sys.stderr = self.cmd_stderr
@@ -816,6 +816,9 @@ class GMStderr:
         self.message = ''
         self.printMessage = False
         
+    def flush(self):
+        pass
+    
     def write(self, s):
         if "GtkPizza" in s:
             return
