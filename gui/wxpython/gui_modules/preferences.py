@@ -1722,28 +1722,28 @@ class MapsetAccess(wx.Dialog):
         
         wx.Dialog.__init__(self, parent, id, title, pos, size, style)
 
-        self.all_mapsets = utils.ListOfMapsets(all=True)
-        self.accessible_mapsets = utils.ListOfMapsets(all=False)
+        self.all_mapsets_ordered = utils.ListOfMapsets(ordered=True)
+        self.accessible_mapsets = utils.ListOfMapsets(accessible=True)
         self.curr_mapset = grassenv.GetGRASSVariable('MAPSET')
 
         # make a checklistbox from available mapsets and check those that are active
         sizer = wx.BoxSizer(wx.VERTICAL)
 
         label = wx.StaticText(parent=self, id=wx.ID_ANY,
-                              label=_("Check mapset to make it accessible, uncheck it to hide it.%s"
-                                      "Note: PERMANENT and current mapset are always accessible.") % os.linesep)
+                              label=_("Check a mapset to make it accessible, uncheck it to hide it.%s"
+                                      "Note: The current mapset is always accessible.") % os.linesep)
         sizer.Add(item=label, proportion=0,
                   flag=wx.ALL, border=5)
 
         self.mapsetlb = CheckListMapset(parent=self)
-        self.mapsetlb.LoadData(self.all_mapsets)
+        self.mapsetlb.LoadData(self.all_mapsets_ordered)
         
         sizer.Add(item=self.mapsetlb, proportion=1,
                   flag=wx.ALL | wx.EXPAND, border=5)
 
         # check all accessible mapsets
         for mset in self.accessible_mapsets:
-            self.mapsetlb.CheckItem(self.all_mapsets.index(mset), True)
+            self.mapsetlb.CheckItem(self.all_mapsets_ordered.index(mset), True)
 
         # dialog buttons
         line = wx.StaticLine(parent=self, id=wx.ID_ANY,
@@ -1774,7 +1774,7 @@ class MapsetAccess(wx.Dialog):
         """Get list of checked mapsets"""
         ms = []
         i = 0
-        for mset in self.all_mapsets:
+        for mset in self.all_mapsets_ordered:
             if self.mapsetlb.IsChecked(i):
                 ms.append(mset)
             i += 1
@@ -1804,14 +1804,7 @@ class CheckListMapset(wx.ListCtrl, listmix.ListCtrlAutoWidthMixin, listmix.Check
         locationPath = os.path.join(grassenv.GetGRASSVariable('GISDBASE'),
                                     grassenv.GetGRASSVariable('LOCATION_NAME'))
         
-        ret = gcmd.RunCommand('g.mapsets',
-                              flags = 'l',
-                              read = True)
-        mapsets = []
-        if ret:
-            mapsets = ret.replace('\n', '').split()
-        
-        for mapset in mapsets:
+        for mapset in self.parent.all_mapsets_ordered:
             index = self.InsertStringItem(sys.maxint, mapset)
             mapsetPath = os.path.join(locationPath,
                                       mapset)
@@ -1830,6 +1823,6 @@ class CheckListMapset(wx.ListCtrl, listmix.ListCtrlAutoWidthMixin, listmix.Check
         
     def OnCheckItem(self, index, flag):
         """Mapset checked/unchecked"""
-        mapset = self.parent.all_mapsets[index]
-        if mapset == 'PERMANENT' or mapset == self.parent.curr_mapset:
+        mapset = self.parent.all_mapsets_ordered[index]
+        if mapset == self.parent.curr_mapset:
             self.CheckItem(index, True)
