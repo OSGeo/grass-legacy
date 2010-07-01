@@ -8,7 +8,6 @@ Classes:
  - PositionWindow
  - ViewPositionWindow
  - LightPositionWindow
- - NvizPreferencesDialog
 
 (C) 2008-2010 by the GRASS Development Team
 
@@ -36,15 +35,10 @@ import globalvar
 import gselect
 import gcmd
 from preferences import globalSettings as UserSettings
-from preferences import PreferencesBaseDialog
 from nviz_mapdisp import wxUpdateView, wxUpdateLight, wxUpdateProperties
 from debug import Debug
 
-try:
-    sys.path.append(os.path.join(globalvar.ETCWXDIR, "nviz"))
-    import grass6_wxnviz as wxnviz
-except ImportError:
-    pass
+import wxnviz
 
 class NvizToolWindow(FN.FlatNotebook):
     """!Nviz (3D view) tools panel
@@ -258,8 +252,13 @@ class NvizToolWindow(FN.FlatNotebook):
 
     def _createDataPage(self):
         """!Create data (surface, vector, volume) settings page"""
-        self.notebookData = FN.FlatNotebook(parent = self, id = wx.ID_ANY,
-                                            style = globalvar.FNPageDStyle)         
+        if globalvar.hasAgw:
+            self.notebookData = FN.FlatNotebook(parent = self, id = wx.ID_ANY,
+                                                agwStyle = globalvar.FNPageDStyle)
+        else:
+            self.notebookData = FN.FlatNotebook(parent = self, id = wx.ID_ANY,
+                                                agwStyle = globalvar.FNPageDStyle)
+        
         # surface page
         self.notebookData.AddPage(page = self._createSurfacePage(),
                                   text = " %s " % _("Surface"))
@@ -274,8 +273,13 @@ class NvizToolWindow(FN.FlatNotebook):
     
     def _createAppearancePage(self):
         """!Create data (surface, vector, volume) settings page"""
-        self.notebookAppearance = FN.FlatNotebook(parent = self, id = wx.ID_ANY,
-                                                  style = globalvar.FNPageDStyle)         
+        if globalvar.hasAgw:
+            self.notebookAppearance = FN.FlatNotebook(parent = self, id = wx.ID_ANY,
+                                                      agwStyle = globalvar.FNPageDStyle)
+        else:
+            self.notebookAppearance = FN.FlatNotebook(parent = self, id = wx.ID_ANY,
+                                                      style = globalvar.FNPageDStyle)
+        
         # light page
         self.notebookAppearance.AddPage(page = self._createLightPage(),
                                         text = " %s " % _("Lighting"))
@@ -2853,6 +2857,7 @@ class LightPositionWindow(PositionWindow):
         if event.LeftUp():
             self.mapWindow.render['quick'] = False
             self.mapWindow.Refresh(eraseBackground = False)
+<<<<<<< .working
         
 class NvizPreferencesDialog(PreferencesBaseDialog):
     """!Nviz preferences dialog"""
@@ -3362,4 +3367,3 @@ class NvizPreferencesDialog(PreferencesBaseDialog):
         UserSettings.Set(group = 'nviz', value = nvsettings)
         file = UserSettings.SaveToFile()
         self.parent.goutput.WriteLog(_('Nviz settings saved to file <%s>.') % file)
-
