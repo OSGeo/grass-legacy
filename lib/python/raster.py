@@ -75,7 +75,7 @@ def raster_info(map):
 
 # interface to r.mapcalc
 
-def mapcalc(exp, **kwargs):
+def mapcalc(exp, quiet = False, verbose = False, overwrite = False, **kwargs):
     """!Interface to r.mapcalc.
 
     @param exp expression
@@ -83,17 +83,14 @@ def mapcalc(exp, **kwargs):
     """
     t = string.Template(exp)
     e = t.substitute(**kwargs)
-    verbose = os.getenv('GRASS_VERBOSE')
-    if kwargs.has_key('quiet') and kwargs['quiet']:
-        os.environ['GRASS_VERBOSE'] = '0'
-    if kwargs.has_key('verbose') and kwargs['verbose']:
-        os.environ['GRASS_VERBOSE'] = '3'
-    
-    if write_command('r.mapcalc', stdin = e) != 0:
-	fatal("An error occurred while running r.mapcalc")
-    
+
+    env = os.environ.copy()
+    if quiet:
+        env['GRASS_VERBOSE'] = '0'
     if verbose:
-        os.environ['GRASS_VERBOSE'] = verbose
-    elif os.getenv('GRASS_VERBOSE'):
-        del os.environ['GRASS_VERBOSE']
-    
+        env['GRASS_VERBOSE'] = '3'
+    if overwrite:
+        env['GRASS_OVERWRITE'] = '1'
+
+    if write_command('r.mapcalc', stdin = e, env = env) != 0:
+	fatal("An error occurred while running r.mapcalc")
