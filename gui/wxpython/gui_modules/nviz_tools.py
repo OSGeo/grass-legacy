@@ -2833,7 +2833,7 @@ class ViewPositionWindow(PositionWindow):
             self.mapWindow.Refresh(eraseBackground = False)
         
         event.Skip()
-    
+
 class LightPositionWindow(PositionWindow):
     """!Light position control widget"""
     def __init__(self, parent, mapwindow, id = wx.ID_ANY,
@@ -2857,8 +2857,7 @@ class LightPositionWindow(PositionWindow):
         if event.LeftUp():
             self.mapWindow.render['quick'] = False
             self.mapWindow.Refresh(eraseBackground = False)
-<<<<<<< .working
-        
+
 class NvizPreferencesDialog(PreferencesBaseDialog):
     """!Nviz preferences dialog"""
     def __init__(self, parent, title = _("3D view settings"),
