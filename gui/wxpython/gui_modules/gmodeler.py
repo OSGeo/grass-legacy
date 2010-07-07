@@ -151,12 +151,24 @@ class Model(object):
         self.data.append(item)
         
     def RemoveItem(self, item):
-        """!Remove item from model"""
+        """!Remove item from model
+
+        @return list of related items
+        """
+        relList = list()
         if isinstance(item, ModelAction):
             self.actions.remove(item)
+            for data in self.data:
+                for rel in data.GetRelations(direction = 'to'):
+                    relList.append(rel)
+                    relList.append(data)
+                    self.data.remove(data)
+        
         elif isinstance(item, ModelData):
             self.data.remove(item)
         
+        return relList
+    
     def FindAction(self, id):
         """!Find action by id"""
         for action in self.actions:
@@ -1339,8 +1351,8 @@ if __name__ == "__main__":
             self.DefineLoop(loop)
         
         # load variables
-        self.variablePanel.OnReload()
-        self.actionPanel.OnReload()
+        self.variablePanel.Update()
+        self.actionPanel.Update()
         self.SetStatusText('', 0)
         
         self.canvas.Refresh(True)
@@ -1453,10 +1465,12 @@ class ModelCanvas(ogl.ShapeCanvas):
         for shape in diagram.GetShapeList():
             if not shape.Selected():
                 continue
-            self.parent.GetModel().RemoveItem(shape)
+            remList = self.parent.GetModel().RemoveItem(shape)
             shape.Select(False)
             diagram.RemoveShape(shape)
-                    
+            for item in remList:
+                diagram.RemoveShape(item)
+        
         self.Refresh()
         
 class ModelAction(ogl.RectangleShape):
@@ -2100,6 +2114,7 @@ class ModelEvtHandler(ogl.ShapeEvtHandler):
         """!Remove shape
         """
         self.frame.GetCanvas().RemoveSelected()
+        self.frame.actionPanel.Update()
         
 class ModelSearchDialog(wx.Dialog):
     def __init__(self, parent, id = wx.ID_ANY, title = _("Add new GRASS module to the model"),
@@ -3198,7 +3213,8 @@ class ModelListCtrl(wx.ListCtrl,
                  wx.LC_VRULES, **kwargs):
         """!List of model variables"""
         self.parent = parent
-        
+        self.frame  = parent.parent
+                
         wx.ListCtrl.__init__(self, parent, id = id, style = style, **kwargs)
         listmix.ListCtrlAutoWidthMixin.__init__(self)
         listmix.TextEditMixin.__init__(self)
@@ -3216,7 +3232,9 @@ class ModelListCtrl(wx.ListCtrl,
         self.Bind(wx.EVT_LIST_BEGIN_LABEL_EDIT, self.OnBeginEdit)
         self.Bind(wx.EVT_LIST_END_LABEL_EDIT, self.OnEndEdit)
         self.Bind(wx.EVT_LIST_COL_CLICK, self.OnColClick)
-        
+        self.Bind(wx.EVT_COMMAND_RIGHT_CLICK, self.OnRightUp) #wxMSW
+        self.Bind(wx.EVT_RIGHT_UP, self.OnRightUp)            #wxGTK
+                
     def OnBeginEdit(self, event):
         """!Editing of item started"""
         event.Allow()
@@ -3228,7 +3246,7 @@ class ModelListCtrl(wx.ListCtrl,
     def OnColClick(self, event):
         """!Click on column header (order by)"""
         event.Skip()
-        
+
 class VariablePanel(wx.Panel):
     def __init__(self, parent, id = wx.ID_ANY,
                  **kwargs):
@@ -3269,10 +3287,6 @@ class VariablePanel(wx.Panel):
         self.value.Bind(wx.EVT_TEXT, self.OnText)
         self.desc.Bind(wx.EVT_TEXT, self.OnText)
         self.btnAdd.Bind(wx.EVT_BUTTON, self.OnAdd)
-        
-        # list
-        self.list.Bind(wx.EVT_COMMAND_RIGHT_CLICK, self.OnRightUp) #wxMSW
-        self.list.Bind(wx.EVT_RIGHT_UP, self.OnRightUp) #wxGTK
         
         self._layout()
 
@@ -3352,34 +3366,6 @@ class VariablePanel(wx.Panel):
             self.desc.SetValue('')
             self.UpdateModelVariables()
         
-    def OnRightUp(self, event):
-        """!Mouse right button up"""
-        if not hasattr(self, "popupID1"):
-            self.popupID1 = wx.NewId()
-            self.popupID2 = wx.NewId()
-            self.popupID3 = wx.NewId()
-            self.Bind(wx.EVT_MENU, self.list.OnRemove,    id = self.popupID1)
-            self.Bind(wx.EVT_MENU, self.list.OnRemoveAll, id = self.popupID2)
-            self.Bind(wx.EVT_MENU, self.OnReload,    id = self.popupID3)
-        
-        # generate popup-menu
-        menu = wx.Menu()
-        menu.Append(self.popupID1, _("Delete selected"))
-        menu.Append(self.popupID2, _("Delete all"))
-        if self.list.GetFirstSelected() == -1:
-            menu.Enable(self.popupID1, False)
-            menu.Enable(self.popupID2, False)
-        
-        menu.AppendSeparator()
-        menu.Append(self.popupID3, _("Reload"))
-        
-        self.PopupMenu(menu)
-        menu.Destroy()
-
-    def OnReload(self, event = None):
-        """!Reload list of variables"""
-        self.list.Populate(self.parent.GetModel().GetVariables())
-        
     def UpdateModelVariables(self):
         """!Update model variables"""
         variables = dict()
@@ -3393,6 +3379,10 @@ class VariablePanel(wx.Panel):
         
         self.parent.GetModel().SetVariables(variables)
         self.parent.ModelChanged()
+
+    def Update(self):
+        """!Reload list of variables"""
+        self.list.OnReload(None)
         
 class VariableListCtrl(ModelListCtrl):
     def __init__(self, parent, columns, **kwargs):
@@ -3465,6 +3455,14 @@ class VariableListCtrl(ModelListCtrl):
         
     def OnRemoveAll(self, event):
         """!Remove all variable(s) from the model"""
+        dlg = wx.MessageBox(parent=self,
+                            message=_("Do you want to delete all variables from "
+                                      "the model?"),
+                            caption=_("Delete variables"),
+                            style=wx.YES_NO | wx.CENTRE)
+        if dlg != wx.YES:
+            return
+        
         self.DeleteAllItems()
         self.itemDataMap = dict()
         
@@ -3483,6 +3481,34 @@ class VariableListCtrl(ModelListCtrl):
         
         self.parent.UpdateModelVariables()
 
+    def OnReload(self, event):
+        """!Reload list of variables"""
+        self.Populate(self.parent.parent.GetModel().GetVariables())
+
+    def OnRightUp(self, event):
+        """!Mouse right button up"""
+        if not hasattr(self, "popupID1"):
+            self.popupID1 = wx.NewId()
+            self.popupID2 = wx.NewId()
+            self.popupID3 = wx.NewId()
+            self.Bind(wx.EVT_MENU, self.OnRemove,    id = self.popupID1)
+            self.Bind(wx.EVT_MENU, self.OnRemoveAll, id = self.popupID2)
+            self.Bind(wx.EVT_MENU, self.OnReload,    id = self.popupID3)
+        
+        # generate popup-menu
+        menu = wx.Menu()
+        menu.Append(self.popupID1, _("Delete selected"))
+        menu.Append(self.popupID2, _("Delete all"))
+        if self.GetFirstSelected() == -1:
+            menu.Enable(self.popupID1, False)
+            menu.Enable(self.popupID2, False)
+        
+        menu.AppendSeparator()
+        menu.Append(self.popupID3, _("Reload"))
+        
+        self.PopupMenu(menu)
+        menu.Destroy()
+        
 class ModelLoop(ogl.RectangleShape):
     def __init__(self, parent, x, y, id = -1, width = None, height = None, text = None, actions = []):
         """!Defines a loop"""
@@ -3627,9 +3653,9 @@ class ActionPanel(wx.Panel):
         self.SetSizer(mainSizer)
         mainSizer.Fit(self)
         
-    def OnReload(self, event = None):
-        """!Reload list of actions"""
-        self.list.Populate(self.parent.GetModel().GetActions())
+    def Update(self):
+        """!Reload list of variables"""
+        self.list.OnReload(None)
         
 class ActionListCtrl(ModelListCtrl):
     def __init__(self, parent, columns, **kwargs):
@@ -3685,18 +3711,42 @@ class ActionListCtrl(ModelListCtrl):
                 i += 1
         
     def OnRemove(self, event):
-        """!Remove selected variable(s) from the model"""
+        """!Remove selected action(s) from the model"""
+        model = self.frame.GetModel()
+        canvas = self.frame.GetCanvas()
+        
         item = self.GetFirstSelected()
         while item != -1:
             self.DeleteItem(item)
             del self.itemDataMap[item]
+            
+            aId = self.GetItem(item, 0).GetText()
+            action = model.GetAction(int(aId))
+            if not action:
+                item = self.GetFirstSelected()
+                continue
+            print aId, action
+            model.RemoveItem(action)
+            canvas.GetDiagram().RemoveShape(action)
+            self.frame.ModelChanged()
+            
             item = self.GetFirstSelected()
-        self.parent.UpdateModelVariables()
+        
+        canvas.Refresh()
         
         event.Skip()
     
     def OnRemoveAll(self, event):
         """!Remove all variable(s) from the model"""
+        deleteDialog = wx.MessageBox(parent=self,
+                                     message=_("Selected data records (%d) will permanently deleted "
+                                               "from table. Do you want to delete them?") % \
+                                         (len(self.listOfSQLStatements)),
+                                     caption=_("Delete records"),
+                                     style=wx.YES_NO | wx.CENTRE)
+        if deleteDialog != wx.YES:
+            return False
+        
         self.DeleteAllItems()
         self.itemDataMap = dict()
 
@@ -3710,11 +3760,57 @@ class ActionListCtrl(ModelListCtrl):
         self.itemDataMap[itemIndex][columnIndex] = event.GetText()
         
         aId = int(self.GetItem(itemIndex, 0).GetText())
-        action = self.parent.parent.GetModel().GetAction(aId)
+        action = self.frame.GetModel().GetAction(aId)
         if not action:
             event.Veto()
         if columnIndex == 0:
+            action.SetId(int(event.GetText()))
+        
+        self.frame.ModelChanged()
+
+    def OnReload(self, event = None):
+        """!Reload list of actions"""
+        self.Populate(self.frame.GetModel().GetActions())
+
+    def OnRightUp(self, event):
+        """!Mouse right button up"""
+        if not hasattr(self, "popupID1"):
+            self.popupID1 = wx.NewId()
+            self.popupID2 = wx.NewId()
+            self.popupID3 = wx.NewId()
+            self.popupID4 = wx.NewId()
+            self.Bind(wx.EVT_MENU, self.OnRemove,    id = self.popupID1)
+            self.Bind(wx.EVT_MENU, self.OnRemoveAll, id = self.popupID2)
+            self.Bind(wx.EVT_MENU, self.OnReload,    id = self.popupID3)
+            self.Bind(wx.EVT_MENU, self.OnNormalize, id = self.popupID4)
+
+        # generate popup-menu
+        menu = wx.Menu()
+        menu.Append(self.popupID1, _("Delete selected"))
+        menu.Append(self.popupID2, _("Delete all"))
+        if self.GetFirstSelected() == -1:
+            menu.Enable(self.popupID1, False)
+            menu.Enable(self.popupID2, False)
+        
+        menu.AppendSeparator()
+        menu.Append(self.popupID4, _("Normalize"))
+        menu.Append(self.popupID3, _("Reload"))
+        
+        self.PopupMenu(menu)
+        menu.Destroy()
+    
+    def OnNormalize(self, event):
+        """!Update id of actions"""
+        model = self.frame.GetModel()
+        
+        aId = 1
+        for action in model.GetActions():
             action.SetId(aId)
+            aId += 1
+        
+        self.OnReload(None)
+        self.frame.GetCanvas().Refresh()
+        self.frame.ModelChanged()
     
 def main():
     app = wx.PySimpleApp()
