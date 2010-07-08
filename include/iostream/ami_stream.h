@@ -353,6 +353,30 @@ off_t AMI_STREAM<T>::stream_len(void) {
 
   fflush(fp);
 
+#ifdef __MINGW32__
+  //stat() fails on MS Windows if the file is open, so try ftell() instead.
+  //FIXME: not 64bit safe, but WinGrass isn't either right now.
+  //try something with #ifdef HAVE_LARGEFILES ? (see fseeko() elsewhere in this file)
+  long posn_save, st_size;
+
+  posn_save = ftell(fp);
+  if(posn_save == -1) {
+     perror("ERROR: AMI_STREAM::stream_len(): ftell(fp) failed ");
+     perror(path);
+     exit(1);
+  }
+
+  fseek(fp, 0, SEEK_END);
+  st_size = ftell(fp);
+  if(st_size == -1) {
+     perror("ERROR: AMI_STREAM::stream_len(): ftell[SEEK_END] failed ");
+     perror(path);
+     exit(1);
+  }
+
+  fseek(fp, posn_save, SEEK_SET);
+
+#else
   struct stat buf;
   if (stat(path, &buf) == -1) {
     perror("AMI_STREAM::stream_len(): fstat failed ");
@@ -360,12 +384,22 @@ off_t AMI_STREAM<T>::stream_len(void) {
     assert(0);
     exit(1);
   }
+#endif
 
-  //DEBUG:
+
+#ifdef __MINGW32__
+  //TEMPORARY DEBUG:
+  fprintf(stderr, "%s: length = %lld   sizeof(T)=%d\n",
+	  path, st_size, sizeof(T));
+
+  return (st_size / sizeof(T));
+#else
+  //TEMPORARY DEBUG:
   fprintf(stderr, "%s: length = %lld   sizeof(T)=%d\n",
 	  path, buf.st_size, sizeof(T));
 
   return (buf.st_size / sizeof(T));
+#endif
 };
 
 
