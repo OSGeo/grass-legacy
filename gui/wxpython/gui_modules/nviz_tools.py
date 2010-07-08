@@ -35,6 +35,7 @@ import globalvar
 import gselect
 import gcmd
 from preferences import globalSettings as UserSettings
+from preferences import PreferencesBaseDialog
 from nviz_mapdisp import wxUpdateView, wxUpdateLight, wxUpdateProperties
 from debug import Debug
 
