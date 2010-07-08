@@ -877,9 +877,9 @@ class Settings:
         @param subkey subkey (value or list)
         @param value value
         """
-        print dict
-        print group, key, subkey, value
-        print 'x'
+        # print dict
+        # print group, key, subkey, value
+        # print 'x'
         if not dict.has_key(group):
             dict[group] = {}
 
@@ -890,8 +890,8 @@ class Settings:
             # TODO: len(subkey) > 2
             if not dict[group][key].has_key(subkey[0]):
                 dict[group][key][subkey[0]] = {}
-            print group, key, subkey, value
-            print dict[group][key]
+            # print group, key, subkey, value
+            # print dict[group][key]
             dict[group][key][subkey[0]][subkey[1]] = value
         else:
             dict[group][key][subkey] = value
