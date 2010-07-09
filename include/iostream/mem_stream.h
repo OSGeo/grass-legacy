@@ -123,12 +123,6 @@ AMI_err MEM_STREAM<T>::read_item(T **elt)  {
 
   assert(data);
 
-
-  //DEBUG:
-#ifdef __MINGW32__
-  fprintf(stderr, "read_item(): curr=%x  dataend=%x\n", curr, dataend);
-#endif
-
   if(curr == dataend) {
     return AMI_ERROR_END_OF_STREAM;
   }
