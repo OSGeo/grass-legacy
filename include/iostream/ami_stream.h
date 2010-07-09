@@ -302,6 +302,12 @@ AMI_err AMI_STREAM<T>::new_substream(AMI_stream_type st,
   //assume this for now
   assert(st == AMI_READ_STREAM);
 
+#ifdef __MINGW32__
+  /* MINGW32: reopen file here for stream_len() below */
+  //reopen the file 
+  AMI_STREAM<T> *substr = new AMI_STREAM<T>(path, st);
+#endif
+
   //check range
   if (substream_level) {
      if( (sub_begin >= (logical_eos - logical_bos)) ||
@@ -317,9 +323,11 @@ AMI_err AMI_STREAM<T>::new_substream(AMI_stream_type st,
     }
   }
 
+#ifndef __MINGW32__
   //reopen the file 
   AMI_STREAM<T> *substr = new AMI_STREAM<T>(path, st);
-  
+#endif
+
   // Set up the beginning and end positions.
   if (substream_level) {
     substr->logical_bos = logical_bos + sub_begin;
