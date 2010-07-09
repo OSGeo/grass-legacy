@@ -567,6 +567,12 @@ class Settings:
                         'height' : 50,
                         },
                     },
+                'condition' : {
+                    'size' : {
+                        'width' : 100,
+                        'height' : 50,
+                        },
+                    },
                 },
             }
         
