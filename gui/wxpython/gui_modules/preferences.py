@@ -570,7 +570,7 @@ class Settings:
                 'condition' : {
                     'size' : {
                         'width' : 100,
-                        'height' : 50,
+                        'height' : 40,
                         },
                     },
                 },
@@ -883,21 +883,16 @@ class Settings:
         @param subkey subkey (value or list)
         @param value value
         """
-        # print dict
-        # print group, key, subkey, value
-        # print 'x'
         if not dict.has_key(group):
             dict[group] = {}
-
+        
         if not dict[group].has_key(key):
             dict[group][key] = {}
-
+        
         if type(subkey) == types.ListType:
             # TODO: len(subkey) > 2
             if not dict[group][key].has_key(subkey[0]):
                 dict[group][key][subkey[0]] = {}
-            # print group, key, subkey, value
-            # print dict[group][key]
             dict[group][key][subkey[0]][subkey[1]] = value
         else:
             dict[group][key][subkey] = value
