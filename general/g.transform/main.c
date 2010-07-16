@@ -137,9 +137,6 @@ static void compute_transformation(void)
 	if (!columns[0])
 	    continue;
 	
-	if (coord_file)
-	    continue;
-
 	for (i = 0;; i++) {
 	    const char *col = columns[i];
 
