@@ -281,24 +281,27 @@ class GMFrame(wx.Frame):
 
     def __createMenuItem(self, menu, label, help, handler, gcmd, kind=wx.ITEM_NORMAL):
         """Creates menu items"""
-
         if not label:
             menu.AppendSeparator()
             return
-
+        
         if len(gcmd) > 0:
             helpString = gcmd + ' -- ' + help
         else:
             helpString = help
-
+        
         menuItem = menu.Append(wx.ID_ANY, label, helpString, kind)
         
         self.menucmd[menuItem.GetId()] = gcmd
-
-        if len(gcmd) > 0 and \
-                gcmd.split()[0] not in globalvar.grassCmd['all']:
-            menuItem.Enable (False)
-
+        
+        if gcmd:
+            try:
+                cmd = shlex.split(str(gcmd))
+            except UnicodeError:
+                cmd = shlex.split(utils.EncodeString((gcmd)))
+            if cmd and cmd[0] not in globalvar.grassCmd['all']:
+                menuItem.Enable(False)
+        
         rhandler = eval(handler)
 
         self.Bind(wx.EVT_MENU, rhandler, menuItem)

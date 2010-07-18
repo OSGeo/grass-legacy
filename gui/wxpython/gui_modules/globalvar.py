@@ -6,7 +6,7 @@
 This module provide the space for global variables
 used in the code.
 
-(C) 2007-2009 by the GRASS Development Team
+(C) 2007-2010 by the GRASS Development Team
 
 This program is free software under the GNU General Public
 License (>=v2). Read the file COPYING that comes with GRASS
@@ -130,7 +130,9 @@ def GetGRASSCmds(bin=True, scripts=True, gui_scripts=True):
     cmd = list()
     if bin is True:
         for file in os.listdir(os.path.join(gisbase, 'bin')):
-            if not EXT_BIN or file[-4:] == EXT_BIN:
+            if not EXT_BIN or \
+                    file[-4:] == EXT_BIN or \
+                    file[-4:] == EXT_SCT:
                 cmd.append(file)
         
         # add special call for setting vector colors
