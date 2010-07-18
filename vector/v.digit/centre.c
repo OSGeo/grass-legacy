@@ -167,7 +167,9 @@ void update(int wx, int wy)
 
 void end(void)
 {
-    G_debug(1, "end()");
+    G_debug(1, "end(): Building toplogy for <%s> in <%s> and then closing.",
+	Map.name, Map.mapset);
+
     Vect_build_partial(&Map, GV_BUILD_NONE);
     Vect_build(&Map);
     Vect_close(&Map);
