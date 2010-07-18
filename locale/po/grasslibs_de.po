@@ -12,7 +12,7 @@ msgstr ""
 "Project-Id-Version: grasslibs_de\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2010-06-02 21:15+0200\n"
-"PO-Revision-Date: 2010-04-05 20:09+0200\n"
+"PO-Revision-Date: 2010-07-17 13:25+0200\n"
 "Last-Translator: Robert Nuske <rnuske gwdg.de>\n"
 "Language-Team: Deutsch <grass-translations@lists.osgeo.org>\n"
 "MIME-Version: 1.0\n"
@@ -1812,7 +1812,7 @@ msgstr "LOCATION  << %s >>  ist nicht verfügbar."
 
 #: ../lib/gis/myname.c:50
 msgid "This location has no description."
-msgstr ""
+msgstr "Diese Location hat keine Beschreibung."
 
 #: ../lib/gis/debug.c:74
 #, c-format
@@ -4434,9 +4434,8 @@ msgid "Login file corrupted"
 msgstr "Logindatei kaputt"
 
 #: ../lib/db/dbmi_base/default_name.c:127
-#, fuzzy
 msgid "Programmer error"
-msgstr "Wahrscheinlich ein Programmfehler."
+msgstr "Programmfehler"
 
 #: ../lib/db/dbmi_client/table.c:46
 #, c-format
