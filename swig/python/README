@@ -1,3 +1,19 @@
+
+
+
+
+
+*****                                                            *****
+  SWIG in GRASS 6.4.0 will be replaced by ctypes in future releases,
+         as is already the case in GRASS "trunk" development.
+  Do not rely on the presence of SWIG/Python for custom development!
+*****                                                            *****
+
+
+
+
+
+
 What is this?
 -------------
 	 This is SWIG based python wrapping for GRASS API
