@@ -30,10 +30,11 @@ import gcmd
 import grassenv
 import gdialogs
 import vdigit
-from vdigit import VDigitSettingsDialog as VDigitSettingsDialog
-from debug import Debug as Debug
-from icon import Icons as Icons
+from vdigit import VDigitSettingsDialog, haveVDigit
+from debug import Debug
+from icon import Icons
 from preferences import globalSettings as UserSettings
+from nviz import haveNviz
 
 gmpath = os.path.join(globalvar.ETCWXDIR, "icons")
 sys.path.append(gmpath)
@@ -159,8 +160,29 @@ class MapToolbar(AbstractToolbar):
         self.InitToolbar(self.mapdisplay, self.toolbar, self.ToolbarData())
         
         # optional tools
+        choices = [ _('2D view'), ]
+        self.toolId = { '2d' : 0 }
+        log = self.parent.gismanager.goutput
+        if haveNviz:
+            choices.append(_('3D view'))
+            self.toolId['3d'] = 1
+        else:
+            from nviz import errorMsg 
+            log.WriteWarning(errorMsg)
+            self.toolId['3d'] = -1
+        if haveVDigit:
+            choices.append(_('Digitize'))
+            if self.toolId['3d'] > -1:
+                self.toolId['vdigit'] = 2
+            else:
+                self.toolId['vdigit'] = 1
+        else:
+            from vdigit import errorMsg 
+            log.WriteWarning(errorMsg)
+            self.toolId['vdigit'] = -1
+        
         self.combo = wx.ComboBox(parent=self.toolbar, id=wx.ID_ANY, value=_('2D view'),
-                                 choices=[_('2D view'), _('3D view'), _('Digitize')],
+                                 choices=choices,
                                  style=wx.CB_READONLY, size=(90, -1))
         
         self.comboid = self.toolbar.AddControl(self.combo)
@@ -257,15 +279,17 @@ class MapToolbar(AbstractToolbar):
         """
         tool =  event.GetSelection()
         
-        if tool == 0:
+        if tool == self.toolId['2d']:
             self.ExitToolbars()
             self.Enable2D(True)
 
-        elif tool == 1 and not self.mapdisplay.toolbars['nviz']:
+        elif tool == self.toolId['3d'] and \
+                not self.mapdisplay.toolbars['nviz']:
             self.ExitToolbars()
             self.mapdisplay.AddToolbar("nviz")
             
-        elif tool == 2 and not self.mapdisplay.toolbars['vdigit']:
+        elif tool == self.toolId['vdigit'] and \
+                not self.mapdisplay.toolbars['vdigit']:
             self.ExitToolbars()
             self.mapdisplay.AddToolbar("vdigit")
 
