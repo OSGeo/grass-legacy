@@ -56,14 +56,12 @@ try:
 except ImportError, err:
     haveVDigit = False
     GV_LINES = None
-    PseudoDC = None
-    errorMsg = err
-    # is there a way to have this display on the terminal before the wx gui exits?
-    print >> sys.stderr, "\nWARNING: Vector digitizer is not available (%s).\n\n" \
-        "Note that the vector digitizer is currently not working under MS Windows\n" \
-        "(hopefully this will be fixed soon).\n" \
-        "Please keep an eye out for updated versions of GRASS." % err
-    sys.stderr.flush()
+    PseudoDC = wx.PseudoDC
+    errorMsg = _("Vector digitizer is not available.\n"
+                 "Reason: %s\n"
+                 "Note that the vector digitizer is currently not working under\nMS Windows "
+                 "(hopefully this will be fixed soon). "
+                 "Please keep\nan eye out for updated versions of GRASS." % err)
     
 class AbstractDigit:
     """

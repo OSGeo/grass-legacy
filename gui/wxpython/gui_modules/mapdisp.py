@@ -2766,21 +2766,26 @@ class MapFrame(wx.Frame):
             from vdigit import haveVDigit
             if not haveVDigit:
                 from vdigit import errorMsg
-                msg = _("Unable to start vector digitizer.\nThe VDigit python extension "
-                        "was not found or loaded properly.\n"
-                        "Switching back to 2D display mode.\n\nDetails: %s" % errorMsg)
+                msg = _("Unable to start wxGUI vector digitizer.\nDo you want to start "
+                        "TCL/TK digitizer (v.digit) instead?\n\n"
+                        "Details: %s" % errorMsg)
                 
                 self.toolbars['map'].combo.SetValue (_("2D view"))
-                wx.MessageBox(parent=self,
-                              message=msg,
-                              caption=_("Error"),
-                              style=wx.OK | wx.ICON_ERROR | wx.CENTRE)
+                dlg = wx.MessageDialog(parent = self,
+                                       message = msg,
+                                       caption=_("Vector digitizer failed"),
+                                       style = wx.YES_NO | wx.CENTRE)
+                if dlg.ShowModal() == wx.ID_YES:
+                    mapName = self.tree.GetPyData(self.tree.layer_selected)[0]['maplayer'].name
+                    self.gismanager.goutput.RunCmd(['v.digit', 'map=%s' % mapName],
+                                                   switchPage=False)
+                dlg.Destroy()
                 return
             
             self.toolbars['vdigit'] = toolbars.VDigitToolbar(parent=self, map=self.Map,
                                                              layerTree=self.tree,
                                                              log=self.gismanager.goutput)
-
+            
             for toolRow in range(0, self.toolbars['vdigit'].numOfRows):
                 self._mgr.AddPane(self.toolbars['vdigit'].toolbar[toolRow],
                                   wx.aui.AuiPaneInfo().
@@ -2790,12 +2795,13 @@ class MapFrame(wx.Frame):
                                   BottomDockable(False).TopDockable(True).
                                   CloseButton(False).Layer(2).
                                   BestSize((self.toolbars['vdigit'].GetToolbar().GetSize())))
-	
+            
             # change mouse to draw digitized line
             self.MapWindow.mouse['box'] = "point"
             self.MapWindow.zoomtype = 0
             self.MapWindow.pen     = wx.Pen(colour='red',   width=2, style=wx.SOLID)
             self.MapWindow.polypen = wx.Pen(colour='green', width=2, style=wx.SOLID)
+        
         # georectifier
         elif name == "georect":
             self.toolbars['georect'] = toolbars.GRToolbar(self, self.Map)
@@ -2810,27 +2816,18 @@ class MapFrame(wx.Frame):
         # nviz
         elif name == "nviz":
             import nviz
-
+            
             # check for GLCanvas and OpenGL
-            msg = None
-            if not nviz.haveGLCanvas:
-                msg = _("Unable to switch to 3D display mode.\nThe GLCanvas class has not been "
-                        "included with this build "
-                        "of wxPython!\nSwitching back to "
-                        "2D display mode.\n\nDetails: %s" % nviz.errorMsg)
             if not nviz.haveNviz:
-                msg = _("Unable to switch to 3D display mode.\nThe Nviz python extension "
-                        "was not found or loaded properly.\n"
-                        "Switching back to 2D display mode.\n\nDetails: %s" % nviz.errorMsg)
-
-            if msg:
-                self.toolbars['map'].combo.SetValue (_("2D view"))
                 wx.MessageBox(parent=self,
-                              message=msg,
+                              message = _("Unable to switch to 3D display mode.\nThe Nviz python extension "
+                                          "was not found or loaded properly.\n"
+                                          "Switching back to 2D display mode.\n\nDetails: %s" % nviz.errorMsg),
                               caption=_("Error"),
                               style=wx.OK | wx.ICON_ERROR | wx.CENTRE)
+                self.toolbars['map'].combo.SetValue (_("2D view"))
                 return
-
+            
             #
             # add Nviz toolbar and disable 2D display mode tools
             #

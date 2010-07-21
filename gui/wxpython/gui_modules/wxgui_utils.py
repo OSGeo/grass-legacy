@@ -511,33 +511,19 @@ class LayerTree(treemixin.DragAndDrop, CT.CustomTreeCtrl):
         """
         Start editing vector map layer requested by the user
         """
-        if not haveVDigit:
-            from vdigit import errorMsg
-            msg = _("Unable to start vector digitizer.\nThe VDigit python extension "
-                    "was not found or loaded properly.\n"
-                    "Switching back to 2D display mode.\n\nDetails: %s" % errorMsg)
-            
-            self.mapdisplay.toolbars['map'].combo.SetValue (_("2D view"))
-            wx.MessageBox(parent=self.mapdisplay,
-                          message=msg,
-                          caption=_("Error"),
-                          style=wx.OK | wx.ICON_ERROR | wx.CENTRE)
-            return
-        
         try:
             maplayer = self.GetPyData(self.layer_selected)[0]['maplayer']
         except:
             event.Skip()
             return
-
+        
         if not self.mapdisplay.toolbars['vdigit']: # enable tool
             self.mapdisplay.AddToolbar('vdigit')
-        else: # tool already enabled
-            pass
-
+        
         # mark layer as 'edited'
-        self.mapdisplay.toolbars['vdigit'].StartEditing (maplayer)
-
+        if self.mapdisplay.toolbars['vdigit']:
+            self.mapdisplay.toolbars['vdigit'].StartEditing(maplayer)
+        
     def OnStopEditing(self, event):
         """
         Stop editing the current vector map layer
