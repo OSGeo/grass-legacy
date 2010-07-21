@@ -40,8 +40,8 @@ from workspace import Nviz as NvizDefault
 
 import wxnviz
 
-wxUpdateProperties, EVT_UPDATE_PROP = NewEvent()
-wxUpdateView,       EVT_UPDATE_VIEW = NewEvent()
+wxUpdateProperties, EVT_UPDATE_PROP  = NewEvent()
+wxUpdateView,       EVT_UPDATE_VIEW  = NewEvent()
 wxUpdateLight,      EVT_UPDATE_LIGHT = NewEvent()
 
 class NvizThread(Thread):
@@ -152,9 +152,9 @@ class GLWindow(MapWindow, glcanvas.GLCanvas):
                                        size.height)
         
         event.Skip()
-
+        
     def OnPaint(self, event):
-        Debug.msg(3, "GLCanvas.OnPaint()")
+        Debug.msg(1, "GLCanvas.OnPaint()")
         
         dc = wx.PaintDC(self)
         self.SetCurrent()
