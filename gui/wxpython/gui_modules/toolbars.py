@@ -1104,16 +1104,12 @@ class VDigitToolbar(AbstractToolbar):
         return True
     
     def StartEditing (self, mapLayer):
-        """
-        Start editing selected vector map layer.
-
+        """!Start editing selected vector map layer.
+        
         @param mapLayer reference to MapLayer instance
         """
         # deactive layer
         self.mapcontent.ChangeLayerActive(mapLayer, False)
-        
-        # clean map canvas
-        ### self.parent.MapWindow.EraseMap()
         
         # unset background map if needed
         if mapLayer:
@@ -1137,17 +1133,15 @@ class VDigitToolbar(AbstractToolbar):
         self.mapLayer = mapLayer
         
         # open vector map
-        try:
-            if not self.parent.MapWindow.CheckPseudoDC():
-                raise gcmd.DigitError(parent=self.parent,
-                                      message=_("Unable to initialize display driver of vector "
-                                                "digitizer. See 'Command output' for details."))
-            self.parent.digit.SetMapName(mapLayer.GetName())
-        except gcmd.DigitError, e:
+        if not self.parent.MapWindow.CheckPseudoDC():
+            # gcmd.GMessage(parent = self.parent,
+            #              message = _("Unable to initialize display driver of vector "
+            #                          "digitizer. See 'Command output' for details."))
             self.mapLayer = None
             self.StopEditing()
-            print >> sys.stderr, e # wxMessageBox
             return False
+        
+        self.parent.digit.SetMapName(mapLayer.GetName())
         
         # update toolbar
         self.combo.SetValue(mapLayer.GetName())
@@ -1162,7 +1156,7 @@ class VDigitToolbar(AbstractToolbar):
         # create pseudoDC for drawing the map
         self.parent.MapWindow.pdcVector = vdigit.PseudoDC()
         self.parent.digit.driver.SetDevice(self.parent.MapWindow.pdcVector)
-
+        
         if not self.parent.MapWindow.resize:
             self.parent.MapWindow.UpdateMap(render=True)
         

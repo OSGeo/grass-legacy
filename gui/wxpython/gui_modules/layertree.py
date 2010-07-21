@@ -516,8 +516,20 @@ class LayerTree(treemixin.DragAndDrop, CT.CustomTreeCtrl):
             event.Skip()
             return
         
-        if not haveVDigit:
-            from vdigit import errorMsg
+        if not self.mapdisplay.toolbars['vdigit']: # enable tool
+            self.mapdisplay.AddToolbar('vdigit')
+        else: # tool already enabled
+            pass
+        
+        # mark layer as 'edited'
+                
+        if not self.mapdisplay.toolbars['vdigit'].StartEditing(maplayer) or \
+                not haveVDigit:
+            if not haveVDigit:
+                from vdigit import errorMsg
+            else:
+                errorMsg = _("Unable to initialize display driver of vector "
+                             "digitizer")
             msg = _("Unable to start wxGUI vector digitizer.\nDo you want to start "
                     "TCL/TK digitizer (v.digit) instead?\n\n"
                     "Details: %s" % errorMsg)
@@ -532,16 +544,7 @@ class LayerTree(treemixin.DragAndDrop, CT.CustomTreeCtrl):
                                          switchPage=False)
             
             dlg.Destroy()
-            return
         
-        if not self.mapdisplay.toolbars['vdigit']: # enable tool
-            self.mapdisplay.AddToolbar('vdigit')
-        else: # tool already enabled
-            pass
-
-        # mark layer as 'edited'
-        self.mapdisplay.toolbars['vdigit'].StartEditing (maplayer)
-
     def OnStopEditing(self, event):
         """
         Stop editing the current vector map layer
