@@ -17,8 +17,6 @@ for details.
 @author Martin Landa <landa.martin gmail.com> (Google SoC 2008)
 """
 
-errorMsg = ''
-
 import os
 import sys
 
@@ -31,13 +29,10 @@ try:
     sys.path.append(os.path.join(globalvar.ETCWXDIR, "nviz"))
     import grass6_wxnviz as wxnviz
     haveNviz = True
-except ImportError, e:
+    errorMsg = ''
+except ImportError, err:
     haveNviz = False
-    errorMsg = _("3D view mode is not available.\n"
-                 "Reason: %s\n"
-                 "Note that the 3D view mode is currently not working under\nMS Windows "
-                 "(hopefully this will be fixed soon). "
-                 "Please keep\nan eye out for updated versions of GRASS." % e)
+    errorMsg = err
 
 if haveNviz:
     GLWindow = nviz_mapdisp.GLWindow

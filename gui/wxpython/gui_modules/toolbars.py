@@ -167,8 +167,13 @@ class MapToolbar(AbstractToolbar):
             choices.append(_('3D view'))
             self.toolId['3d'] = 1
         else:
-            from nviz import errorMsg 
-            log.WriteWarning(errorMsg)
+            from nviz import errorMsg
+            log.WriteCmdLog(_('3D view mode not available'))
+            log.WriteWarning(_('Reason: %s\n'
+                               'Note that the 3D view mode is currently not working under\nMS Windows '
+                               '(hopefully this will be fixed soon). '
+                               'Please keep\nan eye out for updated versions of GRASS.') % errorMsg)
+            
             self.toolId['3d'] = -1
         if haveVDigit:
             choices.append(_('Digitize'))
@@ -177,8 +182,13 @@ class MapToolbar(AbstractToolbar):
             else:
                 self.toolId['vdigit'] = 1
         else:
-            from vdigit import errorMsg 
-            log.WriteWarning(errorMsg)
+            from vdigit import errorMsg
+            log.WriteCmdLog(_('Vector digitizer not available'))
+            log.WriteWarning(_('Reason: %s\n'
+                               'Note that the vector digitizer is currently not working under\nMS Windows '
+                               '(hopefully this will be fixed soon). '
+                               'Please keep\nan eye out for updated versions of GRASS.') % errorMsg)
+            
             self.toolId['vdigit'] = -1
         
         self.combo = wx.ComboBox(parent=self.toolbar, id=wx.ID_ANY, value=_('2D view'),
