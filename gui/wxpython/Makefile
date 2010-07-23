@@ -1,8 +1,8 @@
 MODULE_TOPDIR = ../..
 
-SUBDIRS = docs vdigit nviz
+SUBDIRS = docs vdigit
 EXTRA_CLEAN_FILES = menustrings.py
-CLEAN_SUBDIRS = vdigit nviz
+CLEAN_SUBDIRS = vdigit
 
 include $(MODULE_TOPDIR)/include/Make/Dir.make
 include $(MODULE_TOPDIR)/include/Make/Doxygen.make
@@ -17,7 +17,7 @@ default: install_scripts
 	$(MAKE) parsubdirs
 
 install_scripts:
-	-for dir in '' compat gui_modules icons icons/silk images scripts vdigit xml nviz ; do \
+	-for dir in '' compat gui_modules icons icons/silk images scripts vdigit xml; do \
 	if [ ! -d $(ETCDIR)/$$dir ] ; then $(MKDIR) $(ETCDIR)/$$dir ; fi ; \
 	done
 	$(MAKE) $(DSTFILES)
