@@ -50,7 +50,7 @@
 #% type: string
 #% key_desc: path
 #% description: Prefix where to install extension
-#% answer: $GRASS_ADDON_PATH
+#% answer: $GISBASE
 #% required: yes
 #%end
 #%flag
@@ -191,12 +191,8 @@ if [ -z "$GIS_OPT_EXTENSION" -a $GIS_FLAG_L -eq 0 ] ; then
    exit 1
 fi
 
-if [ "$PREFIX" == '$GRASS_ADDON_PATH' ] ; then
-    if [ -z "$GRASS_ADDON_PATH" ] ; then
-        g.message -e "GRASS_ADDON_PATH is not defined"
-        exit 1
-    fi
-    PREFIX=$GRASS_ADDON_PATH
+if [ "$PREFIX" == '$GISBASE' ] ; then                               
+   PREFIX=$GISBASE                                                  
 fi
 
 if [ -d "$PREFIX" ] ; then
@@ -242,12 +238,20 @@ if [ $? -ne 0 ] ; then
    exit 1
 else
    g.message message="Installing ${MODULE}..."
+
+   # is it a script?
+   grep "default: script" $TMPDIR/${MODULE}/Makefile 2>&1 >/dev/null
+   if [ $? -eq 0 ] ; then
+      PROGTYPE=scripts
+   else
+      PROGTYPE=bin
+   fi
    # can we write? Install dir present?
    if test ! -d "${MYINST_DIR}" ; then
       mkdir -p "${MYINST_DIR}"
    fi
-   if test ! -d "${MYINST_DIR}/bin" ; then
-      mkdir -p "${MYINST_DIR}/bin"
+   if test ! -d "${MYINST_DIR}/$PROGTYPE" ; then
+      mkdir -p "${MYINST_DIR}/$PROGTYPE"
    fi
    if test ! -d "${MYINST_DIR}/docs/html" ; then
       mkdir -p "${MYINST_DIR}/docs/html"
@@ -261,8 +265,8 @@ else
       exit 1
    else
       rm -f "${MYINST_DIR}/`basename $0`.$$"
-      if test -f "${MYINST_DIR}/bin/${MODULE}" ; then
-         rm -f "${MYINST_DIR}/bin/${MODULE}"
+      if test -f "${MYINST_DIR}/$PROGTYPE/${MODULE}" ; then
+         rm -f "${MYINST_DIR}/$PROGTYPE/${MODULE}"
       fi
       make MODULE_TOPDIR="$GISBASE" INST_DIR="$MYINST_DIR" install
       if [ $? -ne 0 ] ; then
@@ -270,7 +274,7 @@ else
          cleanup
          exit 1
       fi
-      if [ ! -x "${MYINST_DIR}/bin/${MODULE}" ] ; then
+      if [ ! -x "${MYINST_DIR}/$PROGTYPE/${MODULE}" ] ; then
 	g.message -e "Module did not install properly"
 	cleanup
 	exit 1
