@@ -283,3 +283,4 @@ cleanup
 g.message message=""
 g.message message="Installation of <$MODULE> in <$MYINST_DIR> successfully finished."
 exit 0
+
