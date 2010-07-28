@@ -256,10 +256,6 @@ fi
 # Remember the intial field seperator
 defaultIFS="$IFS"
 
-# Remember the previous path
-prevPATH="$PATH"
-PATH="$PATH:${GISBASE}/etc/r.in.wms/"
-export PATH
 
 #####################
 # name:     message
@@ -280,9 +276,6 @@ message () {
 exitprocedure()
 {
 	g.message -e 'User break!'
-	# is this bogus? won't PATH revert on exit anyway?
-	PATH="$prevPATH"
-	export PATH
 	\rm -f "${TEMPFILE}"*
 	exit 1
 }
