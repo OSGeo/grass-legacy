@@ -49,7 +49,7 @@ Maintainer: M. Neteler
 * GRASS user manual HTML:
 ** generated during compilation of weekly Linux binary snapshot
 
-* GRASS programmer's manual (http://download.osgeo.org/grass/grass6_progman/):
+* GRASS programmer's manual (http://grass.osgeo.org/programming6/)
 ** HTML: cronjob run Saturday morning California time
 ** PDF: cronjob run Saturday morning California time
 
@@ -109,7 +109,7 @@ Available lists:
    grass-announce 	GRASS announcements
    grass-commit 	Mailing list to distribute GRASS-CVS commits
    grass-dev 		GRASS GIS Development mailing list
-   grass-es 		La lista de correo de GRASS GIS en español
+   grass-es 		La lista de correo de GRASS GIS en espaÃ±ol
    grass-gui 		GRASSGUI mailing list
    grass-psc 		GRASS-PSC: GRASS Project Steering Committee
    grass-qa 		GRASS Quality Assessment and monitoring list
