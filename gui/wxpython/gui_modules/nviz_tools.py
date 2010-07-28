@@ -116,7 +116,7 @@ class NvizToolWindow(FN.FlatNotebook):
                      pos = (0, 1), flag = wx.ALIGN_CENTER | wx.ALIGN_BOTTOM)
         view = ViewPositionWindow(panel, size = (175, 175),
                                   mapwindow = self.mapWindow)
-        self.win['view']['pos'] = view.GetId()
+        self.win['view']['position'] = view.GetId()
         posSizer.Add(item = view,
                      pos = (1, 1), flag = wx.ALIGN_CENTER | wx.ALIGN_CENTER_VERTICAL)
         posSizer.Add(item = wx.StaticText(panel, id = wx.ID_ANY, label = _("S")),
@@ -1137,7 +1137,7 @@ class NvizToolWindow(FN.FlatNotebook):
                      pos = (0, 1), flag = wx.ALIGN_CENTER | wx.ALIGN_BOTTOM)
         pos = LightPositionWindow(panel, id = wx.ID_ANY, size = (175, 175),
                                   mapwindow = self.mapWindow)
-        self.win['light']['pos'] = pos.GetId()
+        self.win['light']['position'] = pos.GetId()
         posSizer.Add(item = pos,
                      pos = (1, 1), flag = wx.ALIGN_CENTER | wx.ALIGN_CENTER_VERTICAL)
         posSizer.Add(item = wx.StaticText(panel, id = wx.ID_ANY, label = _("S")),
@@ -1407,9 +1407,9 @@ class NvizToolWindow(FN.FlatNotebook):
                 
                 self.FindWindowById(win).SetValue(value)
         
-        viewWin = self.FindWindowById(self.win['view']['pos'])
-        x, y = viewWin.UpdatePos(self.mapWindow.view['pos']['x'],
-                                 self.mapWindow.view['pos']['y'])
+        viewWin = self.FindWindowById(self.win['view']['position'])
+        x, y = viewWin.UpdatePos(self.mapWindow.view['position']['x'],
+                                 self.mapWindow.view['position']['y'])
         viewWin.Draw(pos = (x, y), scale = True)
         viewWin.Refresh(False)
         
@@ -1433,7 +1433,7 @@ class NvizToolWindow(FN.FlatNotebook):
             return
         
         val = event.GetInt()
-        self.mapWindow.light['pos']['z'] = val / 100.
+        self.mapWindow.light['position']['z'] = val / 100.
         for win in self.win['light'][winName].itervalues():
             self.FindWindowById(win).SetValue(val)
         
@@ -1557,32 +1557,32 @@ class NvizToolWindow(FN.FlatNotebook):
         """!Look at (view page)"""
         sel = event.GetSelection()
         if sel == 0: # top
-            self.mapWindow.view['pos']['x'] = 0.5
-            self.mapWindow.view['pos']['y'] = 0.5
+            self.mapWindow.view['position']['x'] = 0.5
+            self.mapWindow.view['position']['y'] = 0.5
         elif sel == 1: # north
-            self.mapWindow.view['pos']['x'] = 0.5
-            self.mapWindow.view['pos']['y'] = 0.0
+            self.mapWindow.view['position']['x'] = 0.5
+            self.mapWindow.view['position']['y'] = 0.0
         elif sel == 2: # south
-            self.mapWindow.view['pos']['x'] = 0.5
-            self.mapWindow.view['pos']['y'] = 1.0
+            self.mapWindow.view['position']['x'] = 0.5
+            self.mapWindow.view['position']['y'] = 1.0
         elif sel == 3: # east
-            self.mapWindow.view['pos']['x'] = 1.0
-            self.mapWindow.view['pos']['y'] = 0.5
+            self.mapWindow.view['position']['x'] = 1.0
+            self.mapWindow.view['position']['y'] = 0.5
         elif sel == 4: # west
-            self.mapWindow.view['pos']['x'] = 0.0
-            self.mapWindow.view['pos']['y'] = 0.5
+            self.mapWindow.view['position']['x'] = 0.0
+            self.mapWindow.view['position']['y'] = 0.5
         elif sel == 5: # north-west
-            self.mapWindow.view['pos']['x'] = 0.0
-            self.mapWindow.view['pos']['y'] = 0.0
+            self.mapWindow.view['position']['x'] = 0.0
+            self.mapWindow.view['position']['y'] = 0.0
         elif sel == 6: # north-east
-            self.mapWindow.view['pos']['x'] = 1.0
-            self.mapWindow.view['pos']['y'] = 0.0
+            self.mapWindow.view['position']['x'] = 1.0
+            self.mapWindow.view['position']['y'] = 0.0
         elif sel == 7: # south-east
-            self.mapWindow.view['pos']['x'] = 1.0
-            self.mapWindow.view['pos']['y'] = 1.0
+            self.mapWindow.view['position']['x'] = 1.0
+            self.mapWindow.view['position']['y'] = 1.0
         elif sel == 8: # south-west
-            self.mapWindow.view['pos']['x'] = 0.0
-            self.mapWindow.view['pos']['y'] = 1.0
+            self.mapWindow.view['position']['x'] = 0.0
+            self.mapWindow.view['position']['y'] = 1.0
         
         self.PostViewEvent(zExag = True)
         
@@ -2427,7 +2427,7 @@ class NvizToolWindow(FN.FlatNotebook):
             elif pageId == 'volume':
                 self.UpdateVectorPage(layer, data['vector'])
         elif pageId == 'light':
-            zval = self.mapWindow.light['pos']['z']
+            zval = self.mapWindow.light['position']['z']
             bval = self.mapWindow.light['bright']
             aval = self.mapWindow.light['ambient']
             for control in ('spin', 'slider'):
@@ -2785,8 +2785,8 @@ class PositionWindow(wx.Window):
         elif ycoord > 1.0:
             ycoord = 1.0
 
-        self.data['pos']['x'] = xcoord        
-        self.data['pos']['y'] = ycoord
+        self.data['position']['x'] = xcoord        
+        self.data['position']['y'] = ycoord
         
         return xcoord, ycoord
     
@@ -2803,8 +2803,8 @@ class PositionWindow(wx.Window):
         event.Skip()
         
     def PostDraw(self):
-        x, y = self.UpdatePos(self.data['pos']['x'],
-                              self.data['pos']['y'])
+        x, y = self.UpdatePos(self.data['position']['x'],
+                              self.data['position']['y'])
         self.Draw(pos = (x, y), scale = True)
 
 class ViewPositionWindow(PositionWindow):
@@ -2923,8 +2923,8 @@ class NvizPreferencesDialog(PreferencesBaseDialog):
                       flag = wx.ALIGN_CENTER_VERTICAL)
         
         # position
-        self.win['view']['pos'] = {}
-        posvals = UserSettings.Get(group = 'nviz', key = 'view', subkey = 'pos')
+        self.win['view']['position'] = {}
+        posvals = UserSettings.Get(group = 'nviz', key = 'view', subkey = 'position')
         gridSizer.Add(item = wx.StaticText(parent = panel, id = wx.ID_ANY,
                                          label = _("Position:")),
                       pos = (1, 0), flag = wx.ALIGN_CENTER_VERTICAL)
@@ -2936,7 +2936,7 @@ class NvizPreferencesDialog(PreferencesBaseDialog):
                            initial = posvals['x'] * 100,
                            min = 0,
                            max = 100)
-        self.win['view']['pos']['x'] = px.GetId()
+        self.win['view']['position']['x'] = px.GetId()
         gridSizer.Add(item = px, pos = (1, 2),
                       flag = wx.ALIGN_CENTER_VERTICAL)
         
@@ -2948,7 +2948,7 @@ class NvizPreferencesDialog(PreferencesBaseDialog):
                            initial = posvals['y'] * 100,
                            min = 0,
                            max = 100)
-        self.win['view']['pos']['y'] = py.GetId()
+        self.win['view']['position']['y'] = py.GetId()
         gridSizer.Add(item = py, pos = (1, 4),
                       flag = wx.ALIGN_CENTER_VERTICAL)
         
@@ -3193,7 +3193,7 @@ class NvizPreferencesDialog(PreferencesBaseDialog):
                 for subvalue in value.keys():
                     win = self.FindWindowById(self.win[subgroup][subkey][subvalue])
                     val = settings[subgroup][subkey][subvalue]
-                    if subkey == 'pos':
+                    if subkey == 'position':
                         val = int(val * 100)
                     
                     win.SetValue(val)
@@ -3218,7 +3218,7 @@ class NvizPreferencesDialog(PreferencesBaseDialog):
                         value = tuple(win.GetColour())
                     else:
                         value = win.GetValue()
-                    if subkey == 'pos':
+                    if subkey == 'position':
                         value = float(value) / 100
                     
                     settings[subgroup][subkey][subvalue] = value
@@ -3288,8 +3288,8 @@ class NvizPreferencesDialog(PreferencesBaseDialog):
                                         continue
                                 
         self.toolWin.UpdateSettings()
-        self.FindWindowById(self.win['view']['pos']).Draw()
-        self.FindWindowById(self.win['view']['pos']).Refresh(False)
+        self.FindWindowById(self.win['view']['position']).Draw()
+        self.FindWindowById(self.win['view']['position']).Refresh(False)
         
         self.mapWindow.render['quick'] = False
         self.mapWindow.Refresh(False)

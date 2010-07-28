@@ -37,8 +37,7 @@ import globalvar
 from preferences import globalSettings as UserSettings
 
 try:
-    sys.path.append(os.path.join(globalvar.ETCWXDIR, "nviz"))
-    import grass6_wxnviz as wxnviz
+    import wxnviz
 except ImportError:
     wxnviz = None
 
@@ -455,11 +454,11 @@ class Nviz:
 
             data['draw'][control] = { 'value' : value }
             data['draw'][control]['update'] = None
-            
+        
         value, desc = self.GetDrawMode(UserSettings.Get(group='nviz', key='surface', subkey=['draw', 'mode']),
                                        UserSettings.Get(group='nviz', key='surface', subkey=['draw', 'style']),
                                        UserSettings.Get(group='nviz', key='surface', subkey=['draw', 'shading']))
-
+    
         data['draw']['mode'] = { 'value' : value,
                                  'desc' : desc, 
                                  'update': None }

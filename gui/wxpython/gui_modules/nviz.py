@@ -27,8 +27,8 @@ import globalvar
 try:
     from wx import glcanvas
     import nviz_mapdisp
-    sys.path.append(os.path.join(globalvar.ETCWXDIR, "nviz"))
-    import grass6_wxnviz as wxnviz
+    import nviz_tools
+    import wxnviz
     haveNviz = True
 except ImportError, err:
     haveNviz = False
@@ -36,5 +36,7 @@ except ImportError, err:
 
 if haveNviz:
     GLWindow = nviz_mapdisp.GLWindow
+    NvizToolWindow = nviz_tools.NvizToolWindow
 else:
     GLWindow = None
+    NvizToolWindow = None
