@@ -511,7 +511,7 @@ addargument REQUEST tileoptions "${GIS_OPT_TILEOPTIONS}"
 
 if [ $GIS_FLAG_D -eq 0 ] ; then
 	message 1 "wms.request $REQUEST"
-	eval "wms.request $REQUEST"
+	eval "\"$GISBASE/etc/r.in.wms/wms.request\" $REQUEST"
 	if [ $? -ne 0 ] ; then
 	   g.message -e "wms.request failure" 
 	   exit 1
@@ -524,7 +524,7 @@ addargument DOWNLOAD wgetoptions "${GIS_OPT_WGETOPTIONS}"
 addargument DOWNLOAD curloptions "${GIS_OPT_CURLOPTIONS}"
 
 message 1 "wms.download $DOWNLOAD"
-eval "wms.download $DOWNLOAD"
+eval "\"$GISBASE/etc/r.in.wms/wms.download\" $DOWNLOAD"
 
 # Job 2: make list of files
 
@@ -560,7 +560,7 @@ if [ `file -b "$FILES" | grep -c "^HTML\|^XML"` -eq 1 ] ; then
 fi
 
 message 1 "r.in.gdalwarp $GDALWARP"
-eval "r.in.gdalwarp $GDALWARP"
+eval "\"$GISBASE/etc/r.in.wms/r.in.gdalwarp\" $GDALWARP"
 if [ $? -ne 0 ] ; then
    g.message -e message="r.in.gdalwarp failed"
    exit 1
