@@ -113,6 +113,7 @@ class GMConsole(wx.Panel):
     GIS Manager command line.
     """
     def __init__(self, parent, id=wx.ID_ANY, margin=False, pageid=0,
+                 notebook = None,
                  pos=wx.DefaultPosition, size=wx.DefaultSize,
                  style=wx.TAB_TRAVERSAL | wx.FULL_REPAINT_ON_RESIZE):
         wx.Panel.__init__(self, parent, id, pos, size, style)
@@ -121,6 +122,8 @@ class GMConsole(wx.Panel):
         # initialize variables
         self.Map             = None
         self.parent          = parent # GMFrame | CmdPanel
+        if notebook:
+            self.parent.notebook = notebook
         self.lineWidth       = 80
         self.pageid          = pageid
         # remember position of line begining (used for '\r')
