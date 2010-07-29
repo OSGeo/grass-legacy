@@ -462,7 +462,7 @@ double brad(double sh, double *bh, struct SunGeometryVarDay *sunVarGeom,
 
     locSolarAltitude = sunVarGeom->solarAltitude;
 
-
+/* FIXME: please document all coefficients */
     elevationCorr = exp(-sunVarGeom->z_orig / 8434.5);
     temp1 = 0.1594 + locSolarAltitude * (1.123 + 0.065656 * locSolarAltitude);
     temp2 = 1. + locSolarAltitude * (28.9344 + 277.3971 * locSolarAltitude);
@@ -508,7 +508,7 @@ double brad_angle_loss(double sh, double *bh,
 
     locSolarAltitude = sunVarGeom->solarAltitude;
 
-
+/* FIXME: please document all coefficients */
     p = exp(-sunVarGeom->z_orig / 8434.5);
     temp1 = 0.1594 + locSolarAltitude * (1.123 + 0.065656 * locSolarAltitude);
     temp2 = 1. + locSolarAltitude * (28.9344 + 277.3971 * locSolarAltitude);
@@ -561,6 +561,7 @@ double drad(double sh, double bh, double *rr,
     cosslope = cos(sunSlopeGeom->slope);
     sinslope = sin(sunSlopeGeom->slope);
 
+/* FIXME: please document all coefficients */
     tn = -0.015843 + locLinke * (0.030543 + 0.0003797 * locLinke);
     A1b = 0.26463 + locLinke * (-0.061581 + 0.0031408 * locLinke);
     if (A1b * tn < 0.0022)
@@ -633,7 +634,7 @@ double drad_angle_loss(double sh, double bh, double *rr,
     cosslope = cos(sunSlopeGeom->slope);
     sinslope = sin(sunSlopeGeom->slope);
 
-
+/* FIXME: please document all coefficients */
     tn = -0.015843 + locLinke * (0.030543 + 0.0003797 * locLinke);
     A1b = 0.26463 + locLinke * (-0.061581 + 0.0031408 * locLinke);
 
