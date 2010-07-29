@@ -241,7 +241,15 @@ fi
 
 #### set up projection info
 IN_PROJ="+proj=longlat +datum=WGS84"
-OUT_PROJ="`g.proj -jf`"
+
+OUT_PROJ=`g.proj -j | (
+    OUT_PROJ=
+    while read line ; do
+	OUT_PROJ="$OUT_PROJ '$line'"
+    done
+    echo "$OUT_PROJ"
+)`
+
 PROJ_TYPE=`g.region -p | grep 'projection' | cut -f2 -d" "`
 if [ $PROJ_TYPE -eq 0 ] && [ $KEEP_WGS84 -ne 1 ] ; then
     g.message -e "Cannot project to a XY location."

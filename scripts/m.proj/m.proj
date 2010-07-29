@@ -157,7 +157,13 @@ if [ $GIS_FLAG_I -eq 1 ] ; then
    g.message -v "Assuming LL WGS84 as input, current projection as output."
 fi
 if [ $GIS_FLAG_O -eq 1 ] ; then
-   IN_PROJ="`g.proj -jf`"
+   IN_PROJ=`g.proj -j | (
+       IN_PROJ=
+       while read line ; do
+           IN_PROJ="$IN_PROJ '$line'"
+       done
+       echo "$IN_PROJ"
+   )`
 fi
 if [ -n "$GIS_OPT_PROJ_IN" ] ; then
    IN_PROJ="$GIS_OPT_PROJ_IN"
@@ -173,7 +179,13 @@ if [ $GIS_FLAG_O -eq 1 ] ; then
    g.message -v "Assuming current projection as input, LL WGS84 as output."
 fi
 if [ $GIS_FLAG_I -eq 1 ] ; then
-   OUT_PROJ="`g.proj -jf`"
+   OUT_PROJ=`g.proj -j | (
+       OUT_PROJ=
+       while read line ; do
+           OUT_PROJ="$OUT_PROJ '$line'"
+       done
+       echo "$OUT_PROJ"
+   )`
 fi
 if [ -n "$GIS_OPT_PROJ_OUT" ] ; then
    OUT_PROJ="$GIS_OPT_PROJ_OUT"
