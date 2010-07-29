@@ -386,9 +386,16 @@ calculate MAX_ROWS "$GIS_OPT_MAXROWS - $OVERLAP"
 g.message "Getting destination projection"
 
 if [ -z "$GIS_OPT_DESTPROJ" ] ; then
-	DEST_PROJ=`g.proj -j`
+
+    DEST_PROJ=`g.proj -j | (
+        DEST_PROJ=
+        while read line ; do
+            DEST_PROJ="$DEST_PROJ '$line'"
+        done
+        echo "$DEST_PROJ"
+    )`
 else
-	DEST_PROJ=`echo $GIS_OPT_DESTPROJ`
+    DEST_PROJ=`echo $GIS_OPT_DESTPROJ`
 fi
 
 	g.message "Getting projection scale"
