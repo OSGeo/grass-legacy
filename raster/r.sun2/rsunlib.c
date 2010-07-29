@@ -6,7 +6,7 @@ a new version of r.sun was prepared using ESRA solar radiation formulas.
 See manual pages for details.
 (C) 2002 Copyright Jaro Hofierka, Gresaka 22, 085 01 Bardejov, Slovakia, 
               and GeoModel, s.r.o., Bratislava, Slovakia
-email: hofierka@geomodel.sk,marcel.suri@jrc.it,suri@geomodel.sk
+email: hofierka@geomodel.sk, marcel.suri@jrc.it, suri@geomodel.sk
 *******************************************************************************/
 /*
  * This program is free software; you can redistribute it and/or
@@ -102,7 +102,7 @@ void setHorizonInterval(double val)
 }
 
 
-/* com_sol_const(): compute the solar constant corrected for the day of the
+/* com_sol_const(): compute the Solar Constant corrected for the day of the
    year. The Earth is closest to the Sun (Perigee) on about January 3rd,
    it is furthest from the sun (Apogee) about July 6th. The 1367 W/m^2 solar
    constant is at the average 1AU distance, but on Jan 3 it gets up to
@@ -161,12 +161,12 @@ void com_par_const(double longitTime, struct SunGeometryConstDay *sungeom,
 	}
 	else {
 	    if (pom < 0) {
-		/*        G_debug(3,"\n Sun is ABOVE the surface during the whole day"); */
+		/* G_debug(3,"\n Sun is ABOVE the surface during the whole day"); */
 		sungeom->sunrise_time = 0;
 		sungeom->sunset_time = 24;
 	    }
 	    else {
-		/*                G_debug(3,"\n The sun is BELOW the surface during the whole day"); */
+		/* G_debug(3,"\n The sun is BELOW the surface during the whole day"); */
 		if (fabs(pom) - 1 <= EPS) {
 		    sungeom->sunrise_time = 12;
 		    sungeom->sunset_time = 12;
@@ -208,7 +208,7 @@ void com_par(struct SunGeometryConstDay *sungeom,
     if (fabs(sungeom->lum_C31) < EPS) {
 	if (fabs(sunVarGeom->sinSolarAltitude) >= EPS) {
 	    if (sunVarGeom->sinSolarAltitude > 0) {
-		/*                        G_debug(3,"\tSun is ABOVE area during the whole day"); */
+		/* G_debug(3,"\tSun is ABOVE area during the whole day"); */
 		sungeom->sunrise_time = 0;
 		sungeom->sunset_time = 24;
 	    }
@@ -236,7 +236,7 @@ void com_par(struct SunGeometryConstDay *sungeom,
     if (fabs(pom) > EPS) {
 	sunVarGeom->solarAzimuth = lum_Ly / pom;
 	sunVarGeom->solarAzimuth = acos(sunVarGeom->solarAzimuth);	/* horiz. angle of the Sun */
-	/*                      solarAzimuth *= RAD; */
+	/* solarAzimuth *= RAD; */
 	if (lum_Lx < 0)
 	    sunVarGeom->solarAzimuth = pi2 - sunVarGeom->solarAzimuth;
     }
@@ -680,7 +680,7 @@ double drad_angle_loss(double sh, double bh, double *rr,
 	/* refl. rad */
 	*rr = sunRadVar->alb * gh * (1 - cosslope) / 2.;
     }
-    else {			/* plane */
+    else {	/* plane */
 	dr = dh;
 	*rr = 0.;
     }
