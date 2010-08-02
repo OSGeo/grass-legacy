@@ -1446,6 +1446,9 @@ class MapFrame(wx.Frame):
                              kind=wx.ITEM_CHECK)
         toolsmenu.AppendItem(modify)
         self.Bind(wx.EVT_MENU, self.OnQueryModify, modify)
+        if self.toolbars['nviz']:
+            modify.Enable(False)
+        
         digitToolbar = self.toolbars['vdigit']
         if self.tree.layer_selected:
             layer_selected = self.tree.GetPyData(self.tree.layer_selected)[0]['maplayer']
