@@ -706,7 +706,8 @@ void Gs_pack_colors(const char *filename, int *buff, int rows, int cols)
 
     cur = buff;
 
-    G_message(_("Translating colors from raster map <%s>..."), filename);
+    G_message(_("Translating colors from raster map <%s>..."),
+	      G_fully_qualified_name(filename, mapset));
 
     for (i = 0; i < rows; i++) {
 	G_lookup_colors(cur, r, g, b, set, cols, &colrules);
@@ -777,8 +778,9 @@ void Gs_pack_colors_float(const char *filename, float *fbuf, int *ibuf,
     fcur = fbuf;
     icur = ibuf;
 
-    G_message(_("Translating colors from raster map <%s>..."), filename);
-
+    G_message(_("Translating colors from raster map <%s>..."),
+	      G_fully_qualified_name(filename, mapset));
+    
     for (i = 0; i < rows; i++) {
 	G_lookup_f_raster_colors(fcur, r, g, b, set, cols, &colrules);
 	G_percent(i, rows, 2);
