@@ -1,4 +1,3 @@
-
 /****************************************************************
  *
  * MODULE:     v.edit
@@ -18,6 +17,7 @@
  * TODO:       3D support
  ****************************************************************/
 
+#include <grass/dbmi.h>
 #include "global.h"
 
 int main(int argc, char *argv[])
@@ -94,6 +94,10 @@ int main(int argc, char *argv[])
 			      params.map->answer);
 	}
 
+	if (! db_get_default_driver_name() ) {
+	    G_message(_("Creating new DB connection based on default mapset settings..."));
+	    db_set_default_connection();
+	}
 	/* 3D vector maps? */
 	ret = Vect_open_new(&Map, params.map->answer, WITHOUT_Z);
 	if (ret == -1) {
