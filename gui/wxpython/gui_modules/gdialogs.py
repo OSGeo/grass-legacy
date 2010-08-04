@@ -146,10 +146,10 @@ def CreateNewVector(parent, cmdDef, title=_('Create new vector map'),
                           message=_("Unable to create vector map <%s>.") % outmap,
                           caption=_("Error"),
                           style=wx.ID_OK | wx.ICON_ERROR | wx.CENTRE)
-            return False
+            return (None, None)
         
         if outmap == '': # should not happen
-            return False
+            return (None, None)
         
         cmd.append("%s=%s" % (cmdDef[1], outmap))
         
@@ -169,16 +169,17 @@ def CreateNewVector(parent, cmdDef, title=_('Create new vector map'),
                 cmd.append('--overwrite')
             else:
                 dlgOw.Destroy()
-                return False
+                return (None, None)
 
         if UserSettings.Get(group='cmd', key='overwrite', subkey='enabled') is True:
             cmd.append('--overwrite')
         
         try:
             gcmd.Command(cmd)
-        except gcmd.CmdError, e:
-            print >> sys.stderr, e
-            return None
+        except gcmd.GException, e:
+            gcmd.GError(parent = self,
+                        message = e)
+            return (None, None)
 
         #
         # create attribute table
@@ -187,17 +188,22 @@ def CreateNewVector(parent, cmdDef, title=_('Create new vector map'),
             key = UserSettings.Get(group='atm', key='keycolumn', subkey='value')
             sql = 'CREATE TABLE %s (%s INTEGER)' % (outmap, key)
             
-            gcmd.Command(['db.execute',
-                          '--q'],
-                         stdin=sql)
-
-            gcmd.Command(['v.db.connect',
-                          '--q',
-                          'map=%s' % outmap,
-                          'table=%s' % outmap,
-                          'key=%s' % key,
-                          'layer=1'])
-
+            gcmd.RunCommand('db.connect',
+                            flags = 'c')
+            
+            gcmd.RunCommand('db.execute',
+                            quiet = True,
+                            parent = parent,
+                            stdin = sql)
+            
+            gcmd.RunCommand('v.db.connect',
+                            quiet = True,
+                            parent = parent,
+                            map = outmap,
+                            table = outmap,
+                            key = key,
+                            layer = '1')
+        
         # return fully qualified map name
         if '@' not in outmap:
             outmap += '@' + grassenv.GetGRASSVariable('MAPSET')
