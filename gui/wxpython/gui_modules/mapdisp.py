@@ -1192,29 +1192,33 @@ class MapFrame(wx.Frame):
     def GetWindow(self):
         """!Get map window"""
         return self.MapWindow
-    
+
+    def _OnQuery(self):
+        """!Internal method used by OnQuery*() methods"""
+        # switch GIS Manager to output console to show query results
+        self._layerManager.notebook.SetSelection(1)
+        
+        self.MapWindow.mouse['box'] = "point"
+        self.MapWindow.zoomtype = 0
+        
+        # change the cursor
+        self.MapWindow.SetCursor(self.cursors["cross"])
+        
     def OnQueryDisplay(self, event):
-        """!Query currrent raster/vector map layers (display mode)
+        """!Query currrent raster/vector map layers (display mode) -
+        2D view mode
         """
         if self.toolbars['map'].GetAction() == 'displayAttrb': # select previous action
             self.toolbars['map'].SelectDefault(event)
             return
-
+        
         self.toolbars['map'].action['desc'] = 'displayAttrb'
         
-        # switch GIS Manager to output console to show query results
-        self._layerManager.notebook.SetSelection(1)
-
         self.MapWindow.mouse['use'] = "query"
-        self.MapWindow.mouse['box'] = "point"
-        self.MapWindow.zoomtype = 0
-
-        # change the cursor
-        self.MapWindow.SetCursor(self.cursors["cross"])
-
+        self._OnQuery()
+        
     def OnQueryModify(self, event):
-        """
-        Query vector map layer (edit mode)
+        """!Query vector map layer (edit mode) - 2D view mode
         """
         if self.toolbars['map'].GetAction() == 'modifyAttrb': # select previous action
             self.toolbars['map'].SelectDefault(event)
@@ -1223,12 +1227,30 @@ class MapFrame(wx.Frame):
         self.toolbars['map'].action['desc'] = 'modifyAttrb'
         
         self.MapWindow.mouse['use'] = "queryVector"
-        self.MapWindow.mouse['box'] = "point"
         self.MapWindow.pen = wx.Pen(colour='Red', width=2, style=wx.SHORT_DASH)
-        self.MapWindow.zoomtype = 0
+        self._OnQuery()
+        
+    def OnNvizQuerySurface(self, event):
+        """!Query current surface in 3D view mode"""
+        if self.toolbars['map'].GetAction() == 'nvizQuerySurface':
+            self.toolbars['map'].SelectDefault(event)
+            return
+        
+        self.toolbars['map'].action['desc'] = 'nvizQuerySurface'
+        
+        self.MapWindow.mouse['use'] = "nvizQuerySurface"
+        self._OnQuery()
 
-        # change the cursor
-        self.MapWindow.SetCursor(self.cursors["cross"])
+    def OnNvizQueryVector(self, event):
+        """!Query current vector in 3D view mode"""
+        if self.toolbars['map'].GetAction() == 'nvizQueryVector':
+            self.toolbars['map'].SelectDefault(event)
+            return
+        
+        self.toolbars['map'].action['desc'] = 'nvizQueryVector'
+        
+        self.MapWindow.mouse['use'] = "nvizQueryVector"
+        self._OnQuery()
         
     def QueryMap(self, x, y):
         """!Query map layer features
@@ -1429,14 +1451,16 @@ class MapFrame(wx.Frame):
                                  text = _("Query surface (raster map)"),
                                  kind = wx.ITEM_CHECK)
             toolsmenu.AppendItem(raster)
-            self.Bind(wx.EVT_MENU, self.OnQueryDisplay, raster)
-            if action == "displayAttrb":
-                display.Check(True)
+            self.Bind(wx.EVT_MENU, self.OnNvizQuerySurface, raster)
+            if action == "nvizQuerySurface":
+                raster.Check(True)
             vector = wx.MenuItem(parentMenu = toolsmenu, id = wx.ID_ANY,
                                  text = _("Query vector map"),
                                  kind = wx.ITEM_CHECK)
             toolsmenu.AppendItem(vector)
-            self.Bind(wx.EVT_MENU, self.OnQueryDisplay, vector)
+            self.Bind(wx.EVT_MENU, self.OnNvizQueryVector, vector)
+            if action == "nvizQueryVector":
+                vector.Check(True)
         else:
             display = wx.MenuItem(parentMenu=toolsmenu, id=wx.ID_ANY,
                                   text=_("Query raster/vector map(s) (display mode)"),
@@ -1476,9 +1500,8 @@ class MapFrame(wx.Frame):
         self.PopupMenu(toolsmenu)
         toolsmenu.Destroy()
 
-    def AddTmpVectorMapLayer(self, name, cats, useId=False, addLayer=True):
-        """
-        Add temporal vector map layer to map composition
+    def AddTmpVectorMapLayer(self, name, cats, useId = False, addLayer = True):
+        """!Add temporal vector map layer to map composition
 
         @param name name of map layer
         @param useId use feature id instead of category 
@@ -1537,8 +1560,7 @@ class MapFrame(wx.Frame):
             return cmd
 
     def OnAnalyze(self, event):
-        """
-        Analysis tools menu
+        """!Analysis tools menu
         """
         point = wx.GetMousePosition()
         toolsmenu = wx.Menu()
@@ -1564,12 +1586,9 @@ class MapFrame(wx.Frame):
         toolsmenu.Destroy()
 
     def OnMeasure(self, event):
+        """!Init measurement routine that calculates map distance
+        along transect drawn on map display
         """
-        Init measurement routine that calculates
-        map distance along transect drawn on
-        map display
-        """
-
         self.totaldist = 0.0 # total measured distance
 
         # switch GIS Manager to output console to show measure results
@@ -1636,8 +1655,7 @@ class MapFrame(wx.Frame):
         return dist
 
     def Profile(self, event):
-        """
-        Init profile canvas and tools
+        """!Init profile canvas and tools
         """
         raster = []
         if self.tree.layer_selected and \
@@ -1700,8 +1718,7 @@ class MapFrame(wx.Frame):
 
 
     def Histogram(self, event):
-        """
-        Init histogram display canvas and tools
+        """!Init histogram display canvas and tools
         """
         self.histogram = histogram.HistFrame(self,
                                              id=wx.ID_ANY, size=globalvar.HIST_WINDOW_SIZE,
@@ -1714,8 +1731,7 @@ class MapFrame(wx.Frame):
 
 
     def OnDecoration(self, event):
-        """
-        Decorations overlay menu
+        """!Decorations overlay menu
         """
         point = wx.GetMousePosition()
         decmenu = wx.Menu()
@@ -1741,8 +1757,7 @@ class MapFrame(wx.Frame):
         decmenu.Destroy()
 
     def OnAddBarscale(self, event):
-        """
-        Handler for scale/arrow map decoration menu selection.
+        """!Handler for scale/arrow map decoration menu selection.
         """
         if self.dialogs['barscale']:
             return
@@ -1774,8 +1789,7 @@ class MapFrame(wx.Frame):
         self.MapWindow.mouse['use'] = 'pointer'        
 
     def OnAddLegend(self, event):
-        """
-        Handler for legend map decoration menu selection.
+        """!Handler for legend map decoration menu selection.
         """
         if self.dialogs['legend']:
             return
@@ -1805,8 +1819,7 @@ class MapFrame(wx.Frame):
         self.MapWindow.mouse['use'] = 'pointer'
 
     def OnAddText(self, event):
-        """
-        Handler for text decoration menu selection.
+        """!Handler for text decoration menu selection.
         """
         if self.MapWindow.dragid > -1:
             id = self.MapWindow.dragid
@@ -1850,8 +1863,7 @@ class MapFrame(wx.Frame):
         self.MapWindow.mouse['use'] = 'pointer'
 
     def GetOptData(self, dcmd, type, params, propwin):
-        """
-        Callback method for decoration overlay command generated by
+        """!Callback method for decoration overlay command generated by
         dialog created in menuform.py
         """
         # Reset comand and rendering options in render.Map. Always render decoration.
@@ -1869,8 +1881,7 @@ class MapFrame(wx.Frame):
         self.MapWindow.ZoomToMap()
 
     def OnZoomToRaster(self, event):
-        """!
-        Set display extents to match selected raster map (ignore NULLs)
+        """!Set display extents to match selected raster map (ignore NULLs)
         """
         self.MapWindow.ZoomToMap(ignoreNulls = True)
 
@@ -1964,10 +1975,6 @@ class MapFrame(wx.Frame):
 # end of class MapFrame
 
 class MapApp(wx.App):
-    """
-    MapApp class
-    """
-
     def OnInit(self):
         wx.InitAllImageHandlers()
         if __name__ == "__main__":
