@@ -55,9 +55,9 @@ class NvizThread(Thread):
         self._display = None
         
         self.setDaemon(True)
-        
+
     def run(self):
-        self._display = wxnviz.Nviz(self.log)
+        self._display = wxnviz.Nviz(self.log, self.progressbar)
         
     def GetDisplay(self):
         """!Get display instance"""
@@ -103,6 +103,7 @@ class GLWindow(MapWindow, glcanvas.GLCanvas):
         else:
             self.log = logmsg = sys.stdout
             logerr = sys.stderr
+        
         self.nvizThread = NvizThread(logerr,
                                      self.parent.statusbarWin['progress'],
                                      logmsg)
@@ -586,9 +587,9 @@ class GLWindow(MapWindow, glcanvas.GLCanvas):
         
         if id < 0:
             if layer.type in ('raster', '3d-raster'):
-                print >> sys.stderr, "Nviz:" + "%s <%s> %s" % (errorMsg, layer.name, _("failed"))
+                self.log.WriteError("%s <%s> %s" % (errorMsg, layer.name, _("failed")))
             else:
-                print >> sys.stderr, "Nviz:" + _("Unsupported layer type '%s'") % layer.type
+                self.log.WriteError(_("Unsupported layer type '%s'") % layer.type)
         
         self.layers.append(item)
         
@@ -653,9 +654,9 @@ class GLWindow(MapWindow, glcanvas.GLCanvas):
         id = data[nvizType]['object']['id']
         
         if unloadFn(id) ==  0:
-            print >> sys.stderr, "Nviz:" + "%s <%s>" % (errorMsg, layer.name)
+            self.log.WriteError("%s <%s>" % (errorMsg, layer.name))
         else:
-            print "Nviz:" + "%s <%s> %s" % (successMsg, layer.name, _("unloaded successfully"))
+            self.log.WriteLog("%s <%s> %s" % (successMsg, layer.name, _("unloaded successfully")))
         
         data[nvizType].pop('object')
         
@@ -707,8 +708,8 @@ class GLWindow(MapWindow, glcanvas.GLCanvas):
             else:
                 id = self._display.LoadVector(str(layer.GetName()), True)
             if id < 0:
-                print >> sys.stderr, "Nviz:" + _("Loading vector map <%(name)s> (%(type)s) failed") % \
-                    { 'name' : layer.name, 'type' : vecType }
+                self.log.WriteError(_("Loading vector map <%(name)s> (%(type)s) failed") % \
+                    { 'name' : layer.name, 'type' : vecType })
             # update layer properties
             self.SetMapObjProperties(item, id, vecType)
         
@@ -763,11 +764,11 @@ class GLWindow(MapWindow, glcanvas.GLCanvas):
             else:
                 ret = self._display.UnloadVector(id, True)
             if ret ==  0:
-                print >> sys.stderr, "Nviz:" + _("Unable to unload vector map <%(name)s> (%(type)s)") % \
-                    { 'name': layer.name, 'type' : vecType }
+                self.log.WriteError(_("Unable to unload vector map <%(name)s> (%(type)s)") % \
+                    { 'name': layer.name, 'type' : vecType })
             else:
-                print "Nviz:" + _("Vector map <%(name)s> (%(type)s) unloaded successfully") % \
-                    { 'name' : layer.name, 'type' : vecType }
+                self.log.WriteLog(_("Vector map <%(name)s> (%(type)s) unloaded successfully") % \
+                    { 'name' : layer.name, 'type' : vecType })
             
             data[vecType].pop('object')
             
