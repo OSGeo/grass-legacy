@@ -1,6 +1,5 @@
 import date
 import grass
-import raster
 import gmath
 import proj
 import imagery
