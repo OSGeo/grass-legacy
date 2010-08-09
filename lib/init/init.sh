@@ -14,7 +14,7 @@
 #   	    	command line options for setting the GISDBASE, LOCATION, and/or
 #   	    	MAPSET. Finally it starts GRASS with the appropriate user
 #   	    	interface and cleans up after it is finished.
-# COPYRIGHT:    (C) 2000 by the GRASS Development Team
+# COPYRIGHT:    (C) 2000, 2010 by the GRASS Development Team
 #
 #               This program is free software under the GNU General Public
 #   	    	License (>=v2). Read the file COPYING that comes with GRASS
@@ -826,7 +826,7 @@ case "$GRASS_GUI" in
 	"$GISBASE/scripts/d.m"
 	;;
     wxpython)
-        "$GISBASE/etc/wxpython/scripts/wxgui"
+        "$GRASS_PYTHON" "$GISBASE/etc/wxpython/wxgui.py" &
 	;;
 
     # Ignore others
