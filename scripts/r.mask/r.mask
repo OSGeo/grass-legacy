@@ -92,7 +92,7 @@ fi
 
 
 if [ "$GIS_FLAG_R" -eq 1 ]; then
-	if test -f `g.gisenv GISDBASE`/`g.gisenv LOCATION_NAME`/`g.gisenv MAPSET`/cell/MASK ; then
+	if test -f "`g.gisenv GISDBASE`/`g.gisenv LOCATION_NAME`/`g.gisenv MAPSET`/cell/MASK" ; then
  		g.remove rast=MASK
  		g.message ${BEQUIET} "Raster MASK removed"
  	else
