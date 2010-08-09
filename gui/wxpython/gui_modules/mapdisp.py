@@ -393,10 +393,6 @@ class MapFrame(wx.Frame):
             self.toolbars['nviz'] = toolbars.NvizToolbar(self, self.Map)
             self.toolbars['map'].Enable2D(False)
             
-            # update layer tree (-> enable 3d-rasters)
-            if self.tree:
-                self.tree.EnableItemType(type='3d-raster', enable=True)
-            
             # update status bar
             self.statusbarWin['toggle'].Enable(False)
 
@@ -477,11 +473,6 @@ class MapFrame(wx.Frame):
             # remove nviz notebook page
             self._layerManager.RemoveNviz()
             
-            # update layer tree (-> disable 3d-rasters)
-            if self.tree:
-                self.tree.EnableItemType(type='3d-raster', enable=False)
-            
-           
             self.MapWindow.UpdateMap()
             
         self.toolbars['map'].combo.SetValue (_("2D view"))

@@ -154,6 +154,7 @@ def GetGRASSCmds(bin=True, scripts=True, gui_scripts=True):
         cmd = cmd + os.listdir(os.path.join(gisbase, 'scripts')) 
     if gui_scripts is True:
         os.environ["PATH"] = os.getenv("PATH") + os.pathsep + os.path.join(gisbase, 'etc', 'gui', 'scripts')
+        os.environ["PATH"] = os.getenv("PATH") + os.pathsep + os.path.join(gisbase, 'etc', 'wxpython', 'scripts')
         cmd = cmd + os.listdir(os.path.join(gisbase, 'etc', 'gui', 'scripts'))
 
     if subprocess.mswindows:
