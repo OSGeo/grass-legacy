@@ -228,8 +228,8 @@
 	      <command>v.in.gns</command>
 	    </menuitem>
 	    <menuitem>
-	      <label>Matlab and MapGen import</label>
-	      <help>Import Mapgen or Matlab vector maps into GRASS.</help>
+	      <label>Matlab-ASCII or Mapgen import</label>
+	      <help>Import Mapgen or Matlab-ASCII vector maps into GRASS.</help>
 	      <handler>self.OnMenuCmd</handler>
 	      <command>v.in.mapgen</command>
 	    </menuitem>
