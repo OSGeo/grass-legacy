@@ -53,8 +53,11 @@ DIRS = \
 	vector \
 	visualization \
 	man \
-	swig \
-	macosx
+	swig
+
+ifneq ($(strip $(MACOSX_APP)),)
+	DIRS += macosx
+endif
 
 SUBDIRS = $(DIRS)
 
@@ -120,7 +123,7 @@ ifneq ($(strip $(MINGW)),)
 	    sed "s/@CMD@/$$cmd/" mswindows/generic.manifest > "$$file".manifest ; \
 	done
 endif
-	
+
 LIBDIRS = \
 	lib/external/shapelib \
 	lib/datetime \
