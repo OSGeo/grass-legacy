@@ -52,8 +52,8 @@ DIRS = \
 	tools \
 	vector \
 	visualization \
-	man \
-	swig
+	man
+#	swig
 
 ifneq ($(strip $(MACOSX_APP)),)
 	DIRS += macosx
