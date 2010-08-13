@@ -107,7 +107,6 @@ from GRASS 5 Programmer's manual) or are simply undocumented.</i>
 
 \section interfaces Interfaces
 
- - GRASS <a href="http://download.osgeo.org/grass/grass6_progman/swig/">SWIG interface</a>
  - \ref pythonlib
 
 \section gui GUI
