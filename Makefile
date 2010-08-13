@@ -53,7 +53,6 @@ DIRS = \
 	vector \
 	visualization \
 	man \
-	swig \
 	macosx
 
 SUBDIRS = $(DIRS)
@@ -111,7 +110,7 @@ default: builddemolocation
 	@echo "Finished compilation: `date`" >> $(ERRORLOG)
 	@cat $(ERRORLOG)
 	@if [ `cat "$(ERRORLOG)" | wc -l` -gt 8 ] ; then false ; else true ; fi
-	
+
 manifests:
 ifneq ($(strip $(MINGW)),)
 	find $(ARCH_DISTDIR) -type f -name '*.exe' | \
@@ -198,7 +197,6 @@ distclean: clean
 	-rm -f config.cache config.log config.status config.status.${ARCH} 2>/dev/null
 	-rm -f ChangeLog ChangeLog.bak $(ERRORLOG) grass.pc
 	-rm -f include/config.h include/version.h include/winname.h include/Make/Grass.make include/Make/Platform.make 2>/dev/null
-	-rm -f swig/perl/Makefile.PL swig/perl2/make.pl 2>/dev/null
 
 strip: FORCE
 	@ if [ ! -f ${ARCH_BINDIR}/grass${GRASS_VERSION_MAJOR}${GRASS_VERSION_MINOR} ] ; then \
@@ -378,7 +376,6 @@ htmldocs-single:
 	(cd lib/ ; $(MAKE) cleandocs ; $(MAKE) htmldocs-single)
 	(cd rfc/ ; $(MAKE) cleandocs ; $(MAKE) htmldocs-single)
 	(cd gui/wxpython/ ; $(MAKE) cleandocs ; $(MAKE) htmldocs-single)
-	(cd swig/; $(MAKE) cleandocs ; $(MAKE) htmldocs-single)
 
 # generate docs as multiple HTML documents:
 htmldocs:
@@ -395,10 +392,9 @@ htmldocs:
 	(cd lib/vector/dglib/ ; $(MAKE) cleandocs ; $(MAKE) htmldocs)
 	(cd rfc/ ; $(MAKE) cleandocs ; $(MAKE) htmldocs)
 	(cd gui/wxpython/ ; $(MAKE) cleandocs ; $(MAKE) htmldocs)
-	(cd swig/; $(MAKE) cleandocs ; $(MAKE) htmldocs)
 
 packagehtmldocs: htmldocs
-	tar chvfz grass${GRASS_VERSION_MAJOR}${GRASS_VERSION_MINOR}refman_`date '+%Y_%m_%d'`_html.tar.gz lib/db/html lib/g3d/html lib/gis/html lib/gmath/html lib/gpde/html lib/proj/html lib/python/html lib/ogsf/html lib/segment/html lib/vector/html lib/vector/dglib/html gui/wxpython/html rfc/html swig/html
+	tar chvfz grass${GRASS_VERSION_MAJOR}${GRASS_VERSION_MINOR}refman_`date '+%Y_%m_%d'`_html.tar.gz lib/db/html lib/g3d/html lib/gis/html lib/gmath/html lib/gpde/html lib/proj/html lib/python/html lib/ogsf/html lib/segment/html lib/vector/html lib/vector/dglib/html gui/wxpython/html rfc/html
 
 #alternatively, the docs can be generated as single PDF document (see doxygen FAQ for 'TeX capacity exceeded'):
 #  (cd lib/ ; make pdfdocs)
@@ -417,8 +413,7 @@ pdfdocs:
 	(cd lib/vector/dglib/ ; $(MAKE) cleandocs ; $(MAKE) pdfdocs)
 	(cd gui/wxpython/ ; $(MAKE) cleandocs ; $(MAKE) pdfdocs)
 	(cd rfc/ ; $(MAKE) cleandocs ; $(MAKE) pdfdocs)
-	(cd swig/; $(MAKE) cleandocs ; $(MAKE) pdfdocs)
-	@echo "Written PDF docs in: lib/db/latex/, lib/g3d/latex/, lib/gis/latex/, lib/gmath/latex/ lib/gpde/latex/ lib/ogsf/latex/, lib/proj/latex/, lib/python/latex/, lib/segment/latex/, lib/vector/latex/, lib/vector/dglib/latex/, gui/wxpython/, rfc/latex/, swig/latex/"
+	@echo "Written PDF docs in: lib/db/latex/, lib/g3d/latex/, lib/gis/latex/, lib/gmath/latex/ lib/gpde/latex/ lib/ogsf/latex/, lib/proj/latex/, lib/python/latex/, lib/segment/latex/, lib/vector/latex/, lib/vector/dglib/latex/, gui/wxpython/, rfc/latex/"
 
 cleandocs:
 	(cd lib/db/ ; $(MAKE) cleandocs)
@@ -435,7 +430,6 @@ cleandocs:
 	(cd lib/ ; $(MAKE) cleandocs)
 	(cd gui/wxpython/ ; $(MAKE) cleandocs)
 	(cd rfc/ ; $(MAKE) cleandocs)
-	(cd swig/; $(MAKE) cleandocs)
 
 html2pdfdoc:
 	@ echo "Light PDF document from modules' HTML documentation"
