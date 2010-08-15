@@ -111,7 +111,7 @@ from GRASS 5 Programmer's manual) or are simply undocumented.</i>
 
 \section gui GUI
 
- - <a href="http://download.osgeo.org/grass/grass6_progman/gui/wxpython/">wxGUI</a></li>
+ - <a href="http://grass.osgeo.org/programming6/gui/wxpython/">wxGUI</a></li>
 
 \section location File structure of GRASS Location
 
