@@ -100,7 +100,7 @@ int main(int argc, char *argv[])
     if(nolaunch->answer)
 	exit(EXIT_SUCCESS);
 
-    G_debug(1, "Attempting to start '%s' GUI ...", type->answer);
+    G_message(_("Launching '%s' GUI in the background, please wait ..."), type->answer);
 
     if (strcmp(type->answer, "oldtcltk") == 0) {
 #ifdef __MINGW32__
