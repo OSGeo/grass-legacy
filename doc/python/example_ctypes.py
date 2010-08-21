@@ -55,7 +55,7 @@ if not mapset:
     sys.exit(1)
 
 
-# determine the inputmap type (CELL/FCELL/DCELL) */
+# determine the inputmap type (CELL/FCELL/DCELL)
 data_type = grass.G_raster_map_type(input, mapset)
 
 if data_type == 0:
@@ -79,6 +79,7 @@ cols = grass.G_window_cols()
 print "Current region is %d rows x %d columns.\n" % (rows, cols)
 
 # iterate through map rows
+print "Map data:"
 for row_n in xrange(rows):
     # read a row of raster data into memory, then print it
     grass.G_get_raster_row(in_fd, in_rast, row_n, data_type)
