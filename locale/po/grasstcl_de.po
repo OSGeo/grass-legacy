@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: grasstcl_de\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-06-02 21:15+0200\n"
+"POT-Creation-Date: 2010-08-22 02:31+0200\n"
 "PO-Revision-Date: 2010-07-24 22:41+0200\n"
 "Last-Translator: Robert Nuske <rnuske gwdg.de>\n"
 "Language-Team: Deutsch <grass-translations@lists.osgeo.org>\n"
@@ -524,8 +524,7 @@ msgstr ""
 #: ../lib/init/epsg_option.tcl:344
 msgid "You can select EPSG code (in <braces>) and copy it for later use."
 msgstr ""
-"Sie können die EPSG-Codes (in <Klammern>) auswählen und für später "
-"kopieren. "
+"Sie können die EPSG-Codes (in <Klammern>) auswählen und für später kopieren. "
 
 #: ../lib/init/epsg_option.tcl:381
 msgid "GUESS THAT IS NOT THE EPSG FILE"
@@ -727,8 +726,8 @@ msgid ""
 "have not already done so.  A popular choice is \"grassdata\", located in "
 "your home directory."
 msgstr ""
-"GRASS benötigt ein Verzeichnis um seine Daten zu speichern. Erzeugen Sie "
-"ein Verzeichnis jetzt, wenn noch keins existiert. Die übliche Variante ist "
+"GRASS benötigt ein Verzeichnis um seine Daten zu speichern. Erzeugen Sie ein "
+"Verzeichnis jetzt, wenn noch keins existiert. Die übliche Variante ist "
 "\"grassdata\" in ihrem Heimatverzeichnis."
 
 #: ../lib/init/gis_set.tcl:564
@@ -1371,16 +1370,16 @@ msgid ""
 "There is no raster group file (REF). You must select the 'create/edit group' "
 "option to create a group file."
 msgstr ""
-"Es existiert keine Rastergruppendatei (REF). Wählen Sie die Option "
-"'Erzeuge/Bearbeite Gruppe' um eine Gruppendatei zu erzeugen."
+"Es existiert keine Rastergruppendatei (REF). Wählen Sie die Option 'Erzeuge/"
+"Bearbeite Gruppe' um eine Gruppendatei zu erzeugen."
 
 #: ../gui/tcltk/gis.m/georect.tcl:307
 msgid ""
 "There is no vector group file (VREF). You must select the 'create/edit "
 "group' option to create a group file."
 msgstr ""
-"Es existiert keine Vektorgruppendatei (VREF). Wählen Sie die Option "
-"'Erzeuge/Bearbeite Gruppe' um eine Gruppendatei zu erzeugen."
+"Es existiert keine Vektorgruppendatei (VREF). Wählen Sie die Option 'Erzeuge/"
+"Bearbeite Gruppe' um eine Gruppendatei zu erzeugen."
 
 #: ../gui/tcltk/gis.m/georect.tcl:388
 msgid "Select mapset of raster to georectify"
@@ -5640,8 +5639,7 @@ msgstr "Funktion von Kartenserie (Zeitreihe)"
 #: ../gui/tcltk/d.m/menu.tcl:268
 msgid "Statistical calculations for cover map over base map"
 msgstr ""
-"Statistische Berechnung von einer Überlagerungskarte über einer "
-"Basiskarte"
+"Statistische Berechnung von einer Überlagerungskarte über einer Basiskarte"
 
 #: ../gui/tcltk/d.m/menu.tcl:271
 msgid "Solar irradiance and daily irradiation"
@@ -5958,8 +5956,8 @@ msgid ""
 "Find line id and real km+offset for given points in vector map using linear "
 "reference system"
 msgstr ""
-"Finde Linien-ID und reale Kilometer- und Abstandsangabe für einen "
-"gegebenen Punkt unter Zuhilfenahme des linearen Referenzsystems."
+"Finde Linien-ID und reale Kilometer- und Abstandsangabe für einen gegebenen "
+"Punkt unter Zuhilfenahme des linearen Referenzsystems."
 
 #: ../gui/tcltk/d.m/menu.tcl:420
 msgid "Locate nearest features to points or centroids"
@@ -6092,15 +6090,15 @@ msgstr ""
 msgid ""
 "Transform HIS (Hue/Intensity/Saturation) color image to RGB (Red/Green/Blue)"
 msgstr ""
-"Tranformiere HIS (Farbe/Intensität/Sättigung) Farbbild ins RGB "
-"(Rot/Grün/Blau) Format."
+"Tranformiere HIS (Farbe/Intensität/Sättigung) Farbbild ins RGB (Rot/Grün/"
+"Blau) Format."
 
 #: ../gui/tcltk/d.m/menu.tcl:486
 msgid ""
 "Transform RGB (Red/Green/Blue) color image to HIS (Hue/Intensity/Saturation)"
 msgstr ""
-"Tranformiere RGB (Rot/Grün/Blau) Farbbild ins HIS-Format "
-"(Farbe/Intensität/Sättigung)."
+"Tranformiere RGB (Rot/Grün/Blau) Farbbild ins HIS-Format (Farbe/Intensität/"
+"Sättigung)."
 
 #: ../gui/tcltk/d.m/menu.tcl:488
 msgid "Rectify and georeference image group"
@@ -6255,5 +6253,3 @@ msgstr "Grün (RGB) oder Intensität (HIS):"
 #: ../gui/tcltk/d.m/rgbhis.tcl:118
 msgid "blue (RGB) or saturation (HIS):"
 msgstr "Blau (RGB) oder Sättigung (HIS):"
-
-

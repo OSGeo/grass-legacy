@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: grassmods_cs\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-06-02 21:15+0200\n"
+"POT-Creation-Date: 2010-08-22 02:31+0200\n"
 "PO-Revision-Date: 2010-03-07 15:38+0100\n"
 "Last-Translator: \n"
 "Language-Team:  <cs@li.org>\n"
@@ -947,7 +947,6 @@ msgstr ""
 #: ../vector/v.what.rast/main.c:138 ../visualization/xganim/main.c:366
 #: ../visualization/nviz2/cmd/surface.c:56
 #: ../visualization/nviz2/cmd/surface.c:106 ../doc/raster/r.example/main.c:111
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:392
 #: ../ps/ps.map/outl_io.c:68 ../imagery/i.pca/main.c:129
 #: ../imagery/i.zc/main.c:111 ../imagery/i.rgb.his/openfiles.c:14
 #: ../imagery/i.rgb.his/openfiles.c:16 ../imagery/i.rgb.his/openfiles.c:18
@@ -974,7 +973,7 @@ msgstr "Rastrová mapa <%s> nenalezena"
 #: ../raster3d/base/r3.info.main.c:285 ../raster3d/base/r3.info.main.c:298
 #: ../raster3d/base/r3.info.main.c:308 ../raster3d/base/r3.info.main.c:313
 #: ../raster3d/base/r3.info.main.c:321 ../raster3d/base/r3.info.main.c:334
-#: ../raster/r.info/main.c:303 ../raster/r.info/main.c:428
+#: ../raster/r.info/main.c:303 ../raster/r.info/main.c:424
 msgid "Cannot allocate memory for string"
 msgstr "Nelze alokovat pro øetìzec pamì»"
 
@@ -1130,7 +1129,7 @@ msgstr "Pou¾ít mapové souøadnice namísto souøadnic xyz"
 #: ../raster/r.region/main.c:54 ../raster/r.in.mat/main.c:92
 #: ../raster/r.in.arc/main.c:59 ../raster/r.neighbors/main.c:106
 #: ../raster/r.bitpattern/main.c:62
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:153
+#: ../locale/scriptstrings/r.blend_to_translate.c:2
 msgid "raster"
 msgstr "rastr"
 
@@ -1139,7 +1138,13 @@ msgid "Exports a GRASS raster to a binary array."
 msgstr "Exportuje rastrový soubor GRASSu do binárního pole."
 
 #: ../raster/r.out.bin/main.c:73 ../raster/r.random/main.c:57
-#: ../raster/r.water.outlet/main.c:55 ../imagery/i.zc/main.c:69
+#: ../raster/r.water.outlet/main.c:55
+#: ../locale/scriptstrings/r.out.gdal.sh_to_translate.c:5
+#: ../locale/scriptstrings/r.reclass.area_to_translate.c:3
+#: ../locale/scriptstrings/r.out.xyz_to_translate.c:3
+#: ../locale/scriptstrings/r.colors.stddev_to_translate.c:3
+#: ../locale/scriptstrings/d.rast.edit_to_translate.c:3
+#: ../imagery/i.zc/main.c:69
 msgid "Name of input raster map"
 msgstr "Název vstupní rastrové mapy"
 
@@ -1389,9 +1394,8 @@ msgstr "podkladová rastrová vrstva <%s> nebyla nalezena"
 #: ../general/manage/cmd/rename.c:84 ../vector/v.in.ogr/main.c:326
 #: ../vector/v.to.rast3/main.c:69 ../vector/v.kernel/main.c:263
 #: ../vector/v.surf.idw/main.c:132 ../vector/v.edit/main.c:86
-#: ../doc/raster/r.example/main.c:114
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/opennew.c:11
-#: ../imagery/i.zc/main.c:119 ../imagery/i.ifft/ifftmain.c:116
+#: ../doc/raster/r.example/main.c:114 ../imagery/i.zc/main.c:119
+#: ../imagery/i.ifft/ifftmain.c:116
 #: ../imagery/i.ortho.photo/photo.camera/main.c:90
 #: ../imagery/i.fft/fftmain.c:121 ../imagery/i.fft/fftmain.c:124
 #, c-format
@@ -1474,6 +1478,8 @@ msgstr "Chyba pøi ètení mapy nasycení (saturation))"
 #: ../raster/r.out.mat/main.c:64 ../raster/r.out.ascii/main.c:59
 #: ../raster/r.out.ppm/main.c:54 ../raster/r.out.tiff/r.out.tiff.c:99
 #: ../raster/r.out.gdal/main.c:128
+#: ../locale/scriptstrings/r.out.gdal.sh_to_translate.c:2
+#: ../locale/scriptstrings/r.out.xyz_to_translate.c:2
 msgid "raster, export"
 msgstr "rastr, export"
 
@@ -1487,6 +1493,9 @@ msgstr "Název výstupního binárního souboru MAT"
 
 #: ../raster/r.out.mat/main.c:81 ../raster/r.out.tiff/r.out.tiff.c:136
 #: ../raster/r.in.mat/main.c:115
+#: ../locale/scriptstrings/v.in.e00_to_translate.c:3
+#: ../locale/scriptstrings/v.in.garmin_to_translate.c:3
+#: ../locale/scriptstrings/v.in.gpsbabel_to_translate.c:3
 msgid "Verbose mode"
 msgstr "Roz¹íøený mód"
 
@@ -1584,6 +1593,7 @@ msgstr "%ld bytù zapsáno do '%s'"
 
 #: ../raster/r.in.poly/main.c:29 ../raster/r.in.gdal/main.c:79
 #: ../raster/r.in.bin/main.c:122 ../raster/r.external/main.c:506
+#: ../locale/scriptstrings/r.in.srtm_to_translate.c:2
 msgid "raster, import"
 msgstr "rastr, import"
 
@@ -1928,7 +1938,6 @@ msgstr "Naèti mapu s plovoucí desetinnou èárkou jako celoèíselnou"
 #: ../raster/r.distance/parse.c:72 ../raster/r.carve/main.c:126
 #: ../raster/r.neighbors/main.c:277 ../vector/v.qcount/main.c:117
 #: ../vector/v.mkgrid/main.c:132
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:328
 msgid ""
 "The '-q' flag is superseded and will be removed in future. Please use '--"
 "quiet' instead."
@@ -2018,9 +2027,7 @@ msgstr "Titulek výstupního rastru"
 #: ../raster/r.kappa/main.c:102 ../raster/r.report/parse.c:95
 #: ../raster/r.bitpattern/main.c:87 ../vector/v.sample/main.c:129
 #: ../vector/v.perturb/main.c:117 ../vector/v.kcv/main.c:106
-#: ../doc/raster/r.example/main.c:96
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:290
-#: ../imagery/i.cluster/main.c:163
+#: ../doc/raster/r.example/main.c:96 ../imagery/i.cluster/main.c:163
 msgid "Quiet"
 msgstr "Potichu"
 
@@ -2980,12 +2987,14 @@ msgstr "Vypi¹ podporované formáty a ukonèi se"
 #: ../vector/v.info/main.c:92 ../vector/v.info/main.c:97
 #: ../vector/v.db.connect/main.c:81 ../vector/v.db.connect/main.c:86
 #: ../vector/v.db.connect/main.c:94 ../vector/v.db.connect/main.c:110
-#: ../db/base/connect.c:52 ../imagery/i.group/main.c:77
-#: ../imagery/i.group/main.c:83
+#: ../db/base/connect.c:52
+#: ../locale/scriptstrings/g.extension_to_translate.c:9
+#: ../imagery/i.group/main.c:77 ../imagery/i.group/main.c:83
 msgid "Print"
 msgstr "Tisk"
 
 #: ../raster/r.in.gdal/main.c:146
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:11
 msgid "Keep band numbers instead of using band color names"
 msgstr "Ponechej èísla kanálù místo pou¾ití jmen jejich barev"
 
@@ -3234,11 +3243,6 @@ msgstr "Oznaèená data (vysoký bit znamená negativní hodnotu)"
 #: ../vector/v.vol.rst/main.c:319 ../vector/v.vol.rst/main.c:328
 #: ../vector/v.vol.rst/main.c:337 ../vector/v.vol.rst/main.c:345
 #: ../vector/v.db.connect/main.c:60 ../vector/v.db.connect/main.c:65
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:189
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:199
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:276
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:285
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:296
 #: ../db/base/connect.c:62 ../db/base/connect.c:66 ../db/base/connect.c:77
 #: ../db/base/connect.c:87 ../imagery/i.cluster/main.c:105
 #: ../imagery/i.cluster/main.c:121 ../imagery/i.cluster/main.c:129
@@ -4116,6 +4120,8 @@ msgstr "Nelze èíst rastrovou mapu, øádek %d"
 #: ../raster/r.stats/main.c:103 ../raster/r.statistics/main.c:42
 #: ../raster/r.report/main.c:64 ../raster/r.univar2/r.univar_main.c:75
 #: ../raster/r.support.stats/main.c:39 ../raster/r.quantile/main.c:254
+#: ../locale/scriptstrings/r.regression.line_to_translate.c:2
+#: ../locale/scriptstrings/r.univar.sh_to_translate.c:2
 msgid "raster, statistics"
 msgstr "rastr, statistika"
 
@@ -4124,12 +4130,13 @@ msgid "Generates area statistics for raster map layers."
 msgstr "Vytvoøí statistiku ploch pro rastrové mapy."
 
 #: ../raster/r.stats/main.c:114
+#: ../locale/scriptstrings/r.out.xyz_to_translate.c:4
 msgid "Name for output file (if omitted or \"-\" output to stdout)"
 msgstr "Název výstupní mapy (pro standardní výstup pou¾ijte \"-\")"
 
 #: ../raster/r.stats/main.c:119 ../raster/r.cats/main.c:72
 #: ../raster/r.distance/parse.c:50 ../vector/v.db.select/main.c:63
-#: ../db/base/select.c:202
+#: ../db/base/select.c:202 ../locale/scriptstrings/r.tileset_to_translate.c:13
 msgid "Output field separator"
 msgstr "Výstupní oddìlovaè sloupcù"
 
@@ -4704,12 +4711,10 @@ msgid "Name for output aspect raster map"
 msgstr "Název výstupní rastrové mapy orientace"
 
 #: ../raster/r.slope.aspect/main.c:178
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:188
 msgid "Format for reporting the slope"
 msgstr "Formát sklonu svahu"
 
 #: ../raster/r.slope.aspect/main.c:188
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:198
 msgid "Type of output aspect and slope maps"
 msgstr "Typ výstupních map expozice a sklonu svahu"
 
@@ -4748,19 +4753,16 @@ msgid "Name for output second order partial derivative dxy raster map"
 msgstr "Název výstupní rastrové mapy parciálních derivací druhého øádu dxy"
 
 #: ../raster/r.slope.aspect/main.c:243
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:272
 msgid "Multiplicative factor to convert elevation units to meters"
 msgstr "Koeficient pro pøevod jednotek vý¹ky na metry"
 
 #: ../raster/r.slope.aspect/main.c:252
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:281
 msgid "Minimum slope val. (in percent) for which aspect is computed"
 msgstr ""
 "Minimální hodnota sklonu svahu (v procentech), pro kterou je poèítána "
 "expozice"
 
 #: ../raster/r.slope.aspect/main.c:266
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:295
 msgid "Do not align the current region to the elevation layer"
 msgstr "Nenastavuj aktuální region podle mapy vý¹ek "
 
@@ -4804,7 +4806,6 @@ msgid "Elevation products for mapset <%s> in <%s>"
 msgstr "Vý¹kové produkty pro mapset <%s> v <%s>"
 
 #: ../raster/r.slope.aspect/main.c:1009
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:1042
 #, c-format
 msgid "Min computed aspect %.4f, max computed aspect %.4f"
 msgstr "Min vypoètená expozice %.4f, max vypoètená expozice %.4f"
@@ -4815,7 +4816,6 @@ msgid "Aspect raster map <%s> complete"
 msgstr "Rastrová mapa orientace <%s> je hotova"
 
 #: ../raster/r.slope.aspect/main.c:1113
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:1146
 #, c-format
 msgid "Min computed slope %.4f, max computed slope %.4f"
 msgstr "Min vypoètený sklon svahu %.4f, max vypoètený sklon svahu %.4f"
@@ -5017,7 +5017,14 @@ msgid "Imports GRIDATB.FOR map file (TOPMODEL) into GRASS raster map"
 msgstr ""
 "Importuje mapový soubor GRIDATB.FOR (TOPMODEL) jako rastrovou mapu GRASSu"
 
-#: ../raster/r.in.gridatb/main.c:53 ../imagery/i.ifft/ifftmain.c:83
+#: ../raster/r.in.gridatb/main.c:53
+#: ../locale/scriptstrings/r.reclass.area_to_translate.c:4
+#: ../locale/scriptstrings/r.in.aster_to_translate.c:6
+#: ../locale/scriptstrings/r.mapcalculator_to_translate.c:9
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:18
+#: ../locale/scriptstrings/d.rast.edit_to_translate.c:4
+#: ../locale/scriptstrings/i.in.spotvgt_to_translate.c:5
+#: ../imagery/i.ifft/ifftmain.c:83
 msgid "Name for output raster map"
 msgstr "Název výstupní rastrové mapy"
 
@@ -5048,7 +5055,6 @@ msgstr "Název výstupní vrstvy"
 
 #: ../raster/r.resample/main.c:137 ../raster/r.resamp.rst/main.c:527
 #: ../vector/v.surf.rst/main.c:602 ../vector/v.surf.rst/main.c:753
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:600
 msgid "Percent complete: "
 msgstr "Hotovo procent:"
 
@@ -7535,6 +7541,7 @@ msgid "Raster file(s) for View%d"
 msgstr "Rastrové soubor(y), které mají být zobrazeny%d"
 
 #: ../raster/r.out.mpeg/main.c:406
+#: ../locale/scriptstrings/r.out.gdal.sh_to_translate.c:8
 msgid "Name for output file"
 msgstr "Název výstupního souboru"
 
@@ -8404,6 +8411,7 @@ msgstr ""
 "v budoucnu vyjmuto)"
 
 #: ../raster/r.colors/main.c:165
+#: ../locale/scriptstrings/r.colors.stddev_to_translate.c:2
 msgid "raster, color table"
 msgstr "rastr, tabulka barev"
 
@@ -8412,6 +8420,7 @@ msgid "Creates/modifies the color table associated with a raster map layer."
 msgstr "Vytvoøí/upraví tabulku barev spojenou s rastrovou mapou."
 
 #: ../raster/r.colors/main.c:181
+#: ../locale/scriptstrings/v.colors_to_translate.c:9
 msgid "Type of color table"
 msgstr "Typ tabulky barev"
 
@@ -8428,10 +8437,16 @@ msgstr "Typ tabulky barev"
 #: ../vector/v.label/main.c:153 ../vector/v.label/main.c:177
 #: ../vector/v.label/main.c:190 ../vector/v.label/main.c:196
 #: ../vector/v.label/main.c:206
+#: ../locale/scriptstrings/v.colors_to_translate.c:7
+#: ../locale/scriptstrings/v.colors_to_translate.c:10
+#: ../locale/scriptstrings/v.colors_to_translate.c:12
+#: ../locale/scriptstrings/v.colors_to_translate.c:14
+#: ../locale/scriptstrings/v.colors_to_translate.c:17
 msgid "Colors"
 msgstr "Barvy"
 
 #: ../raster/r.colors/main.c:191
+#: ../locale/scriptstrings/v.colors_to_translate.c:11
 msgid "Raster map name from which to copy color table"
 msgstr "Název rastrové mapy, ze které se má kopírovat tabulka barev"
 
@@ -8453,6 +8468,7 @@ msgid "List available rules then exit"
 msgstr "Vypi¹ dostupná pravidla barev a ukonèi se"
 
 #: ../raster/r.colors/main.c:214
+#: ../locale/scriptstrings/v.colors_to_translate.c:16
 msgid "Invert colors"
 msgstr "Invertovat barvy"
 
@@ -8990,6 +9006,7 @@ msgstr ""
 "GDAL."
 
 #: ../raster/r.out.gdal/main.c:132
+#: ../locale/scriptstrings/r.out.gdal.sh_to_translate.c:3
 msgid "List supported output formats"
 msgstr "Seznam podporovaných výstupních formátù"
 
@@ -9015,10 +9032,12 @@ msgid "Name of raster map (or group) to export"
 msgstr "Jméno rastrové mapy (nebo skupiny) k exportování"
 
 #: ../raster/r.out.gdal/main.c:154
+#: ../locale/scriptstrings/r.out.gdal.sh_to_translate.c:6
 msgid "GIS format to write (case sensitive, see also -l flag)"
 msgstr "Formát souboru (na velikosti písmen zále¾í, viz také pøepínaè -l)"
 
 #: ../raster/r.out.gdal/main.c:175
+#: ../locale/scriptstrings/r.out.gdal.sh_to_translate.c:7
 msgid "File type"
 msgstr "Typ souboru"
 
@@ -9031,6 +9050,7 @@ msgid "Creation option(s) to pass to the output format driver"
 msgstr "Vytvoøení mo¾ností pro uspì¹né projítí ovladaèem formátu výstupu"
 
 #: ../raster/r.out.gdal/main.c:192
+#: ../locale/scriptstrings/d.out.file_to_translate.c:21
 msgid "In the form of \"NAME=VALUE\", separate multiple entries with a comma."
 msgstr "Ve výrazu \"NAME=VALUE\", oddìlte více polo¾ek èárkami."
 
@@ -9297,8 +9317,8 @@ msgstr ""
 #: ../raster/r.out.gdal/export_band.c:215
 #, c-format
 msgid ""
-"The given nodata value is present in rasterband <%s> and would lead to data "
-"loss. Please specify a different nodata value with the %s parameter."
+"The user given nodata value %g is present in rasterband <%s> and would lead "
+"to data loss. Please specify a different nodata value with the %s parameter."
 msgstr ""
 
 #: ../raster/r.out.gdal/export_band.c:259
@@ -10240,6 +10260,7 @@ msgid "Converts a raster map into a vector map layer."
 msgstr "Pøevede rastrovou mapu na vektorovou."
 
 #: ../raster/r.to.vect/main.c:64 ../vector/v.to.db/parse.c:36
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:6
 msgid "Feature type"
 msgstr "Typ prvku"
 
@@ -11903,6 +11924,7 @@ msgstr ""
 "digitálního modelu terénu."
 
 #: ../raster/r.topidx/main.c:42
+#: ../locale/scriptstrings/r.shaded.relief_to_translate.c:3
 msgid "Input elevation map"
 msgstr "Vstupní mapa elevace."
 
@@ -11930,6 +11952,7 @@ msgstr "Zapisuji mapu topografického indexu..."
 
 #: ../raster/r.univar2/r.univar_main.c:40
 #: ../raster/r.univar2/r3.univar_main.c:39 ../vector/v.univar/main.c:92
+#: ../locale/scriptstrings/v.rast.stats_to_translate.c:10
 msgid "Percentile to calculate (requires extended statistics flag)"
 msgstr ""
 "Percentil, který se má spoèítat (vy¾aduje pøepínaè roz¹íøení statistiky)"
@@ -11941,6 +11964,7 @@ msgstr "Vypi¹ statistiku ve stylu pro shell skript"
 
 #: ../raster/r.univar2/r.univar_main.c:49
 #: ../raster/r.univar2/r3.univar_main.c:48 ../vector/v.univar/main.c:100
+#: ../locale/scriptstrings/v.rast.stats_to_translate.c:4
 msgid "Calculate extended statistics"
 msgstr "Spoèítej roz¹íøenou statistiku"
 
@@ -12571,11 +12595,15 @@ msgstr ""
 msgid "Access for others"
 msgstr ""
 
-#: ../general/g.access/main.c:63
-msgid "Access to the PERMANENT mapset must be open, nothing changed"
+#: ../general/g.access/main.c:59
+msgid "UNIX filesystem access controls are not supported by MS-Windows"
 msgstr ""
 
 #: ../general/g.access/main.c:67
+msgid "Access to the PERMANENT mapset must be open, nothing changed"
+msgstr ""
+
+#: ../general/g.access/main.c:71
 #, fuzzy
 msgid "Unable to determine mapset permissions"
 msgstr "Nelze zjistit typ rastrové (cell) mapy."
@@ -13428,6 +13456,8 @@ msgid "Use extended regular expressions instead of wildcards"
 msgstr ""
 
 #: ../general/g.mremove/main.c:76
+#: ../locale/scriptstrings/db.droptable_to_translate.c:3
+#: ../locale/scriptstrings/db.dropcol_to_translate.c:3
 msgid "Force removal (required for actual deletion of files)"
 msgstr ""
 
@@ -13638,6 +13668,8 @@ msgid "Print the maximum bounding box in lat/long on WGS84"
 msgstr ""
 
 #: ../general/g.region/main.c:133
+#: ../locale/scriptstrings/r.regression.line_to_translate.c:3
+#: ../locale/scriptstrings/i.oif_to_translate.c:9
 #, fuzzy
 msgid "Print in shell script style"
 msgstr "Vypi¹ výsledek ve stylu pro shell skript"
@@ -13919,6 +13951,8 @@ msgstr ""
 #: ../display/d.text/main.c:66 ../display/d.rast.num/number.c:84
 #: ../display/d.nviz/main.c:68 ../display/d.zoom/main.c:57
 #: ../visualization/ximgview/main.c:270
+#: ../locale/scriptstrings/d.rast.leg_to_translate.c:2
+#: ../locale/scriptstrings/d.redraw_to_translate.c:2
 msgid "display"
 msgstr "zobrazení"
 
@@ -14367,6 +14401,13 @@ msgstr "Barva rámeèku"
 
 #: ../display/d.grid/main.c:76 ../display/d.grid/main.c:81
 #: ../display/d.grid/main.c:87
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:27
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:30
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:33
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:36
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:39
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:55
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:57
 #, fuzzy
 msgid "Color"
 msgstr "Barvy"
@@ -14865,6 +14906,10 @@ msgid ""
 msgstr ""
 
 #: ../display/d.extend/main.c:31
+#: ../locale/scriptstrings/d.split_to_translate.c:2
+#: ../locale/scriptstrings/d.resize_to_translate.c:2
+#: ../locale/scriptstrings/d.monsize_to_translate.c:2
+#: ../locale/scriptstrings/d.mvmon_to_translate.c:2
 #, fuzzy
 msgid "display, setup"
 msgstr "zobrazení"
@@ -14876,11 +14921,13 @@ msgstr "Název rastrové mapy která bude zobrazena"
 
 #: ../display/d.rast.edit/main.c:59 ../display/d.colortable/main.c:60
 #: ../display/d.rast/main.c:51
+#: ../locale/scriptstrings/d.rast.edit_to_translate.c:2
 #, fuzzy
 msgid "display, raster"
 msgstr "zobrazení"
 
 #: ../display/d.rast.edit/main.c:61
+#: ../locale/scriptstrings/d.rast.edit_to_translate.c:1
 #, fuzzy
 msgid "Interactively edit cell values in a raster map."
 msgstr "Zaèni s hodnotami v rastrové mapì"
@@ -14932,6 +14979,8 @@ msgid ""
 msgstr ""
 
 #: ../display/d.legend/main.c:92 ../display/d.zoom/main.c:90
+#: ../locale/scriptstrings/d.rast.leg_to_translate.c:5
+#: ../locale/scriptstrings/r.univar.sh_to_translate.c:4
 #, fuzzy
 msgid "Name of raster map"
 msgstr "Název základní rastrové mapy"
@@ -14951,13 +15000,6 @@ msgstr ""
 #: ../display/d.legend/main.c:180 ../display/d.legend/main.c:185
 #: ../vector/v.buffer/main.c:279 ../vector/v.buffer/main.c:287
 #: ../vector/v.buffer/main.c:294 ../vector/v.buffer/main.c:304
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:208
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:217
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:227
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:237
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:247
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:257
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:267
 msgid "Advanced"
 msgstr "Pokroèilé"
 
@@ -15008,6 +15050,7 @@ msgid "Draw smooth gradient"
 msgstr ""
 
 #: ../display/d.legend/main.c:184
+#: ../locale/scriptstrings/d.rast.leg_to_translate.c:3
 msgid "Flip legend"
 msgstr ""
 
@@ -16694,6 +16737,7 @@ msgid ""
 msgstr ""
 
 #: ../display/d.zoom/main.c:100
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:4
 #, fuzzy
 msgid "Name of vector map"
 msgstr "Jméno vektorové mapy k editaci"
@@ -17077,6 +17121,7 @@ msgstr "Nelze získat atributové data pro cat= %d"
 #: ../vector/v.external/main.c:58 ../vector/v.clean/test/topocheck.c:42
 #: ../vector/v.buffer/main.c:254 ../vector/v.info/main.c:257
 #: ../vector/v.surf.rst/main.c:161
+#: ../locale/scriptstrings/v.build.all_to_translate.c:2
 msgid "vector"
 msgstr "vektor"
 
@@ -17181,6 +17226,15 @@ msgstr "Nelze vlo¾it nový øádek: %s"
 
 #: ../vector/v.db.select/main.c:52 ../vector/v.to.db/main.c:33
 #: ../vector/v.distance/main.c:115 ../vector/v.db.connect/main.c:50
+#: ../locale/scriptstrings/v.what.vect_to_translate.c:2
+#: ../locale/scriptstrings/v.db.update_to_translate.c:2
+#: ../locale/scriptstrings/v.db.renamecol_to_translate.c:2
+#: ../locale/scriptstrings/v.db.reconnect.all_to_translate.c:2
+#: ../locale/scriptstrings/v.db.droptable_to_translate.c:2
+#: ../locale/scriptstrings/v.db.join_to_translate.c:2
+#: ../locale/scriptstrings/v.db.addtable_to_translate.c:2
+#: ../locale/scriptstrings/v.db.dropcol_to_translate.c:2
+#: ../locale/scriptstrings/v.db.addcol_to_translate.c:2
 msgid "vector, database, attribute table"
 msgstr "vektor, databáze, tabulka atributù"
 
@@ -17315,6 +17369,7 @@ msgid "Required for operation 'connect'"
 msgstr "Po¾adováno pro operaci 'spojení'"
 
 #: ../vector/v.net/main.c:69
+#: ../locale/scriptstrings/g.extension_to_translate.c:5
 msgid "Operation to be performed"
 msgstr "Operace bude vykonána"
 
@@ -17723,6 +17778,8 @@ msgstr "Nelze zapsat íºdaje do databáze"
 #: ../vector/v.qcount/main.c:69 ../vector/v.kcv/main.c:76
 #: ../vector/v.class/main.c:45 ../vector/v.normal/main.c:79
 #: ../vector/v.univar/main.c:64
+#: ../locale/scriptstrings/v.univar.sh_to_translate.c:2
+#: ../locale/scriptstrings/v.db.univar_to_translate.c:2
 msgid "vector, statistics"
 msgstr "vektor, statistika"
 
@@ -18549,6 +18606,9 @@ msgstr "Vektorová mapa <%s> nebyla nalezena v souèasném mapsetu"
 
 #: ../vector/v.in.ogr/main.c:101 ../vector/v.in.dxf/main.c:60
 #: ../vector/v.in.dwg/main.c:65 ../vector/v.in.ascii/in.c:48
+#: ../locale/scriptstrings/v.convert.all_to_translate.c:2
+#: ../locale/scriptstrings/v.in.e00_to_translate.c:2
+#: ../locale/scriptstrings/v.in.mapgen_to_translate.c:2
 msgid "vector, import"
 msgstr "vektor, import"
 
@@ -19716,6 +19776,11 @@ msgid "Path to resulting VTK file"
 msgstr "Cesta k výslednému souboru VTK"
 
 #: ../vector/v.out.vtk/main.c:83
+#: ../locale/scriptstrings/v.report_to_translate.c:6
+#: ../locale/scriptstrings/v.out.gpsbabel_to_translate.c:10
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:17
+#: ../locale/scriptstrings/v.rast.stats_to_translate.c:6
+#: ../locale/scriptstrings/v.centroids_to_translate.c:6
 msgid "Layer number"
 msgstr "Èíslo vrstvy"
 
@@ -19786,6 +19851,9 @@ msgstr "Oddìlovaè sloupcù (bodový mód)"
 
 #: ../vector/v.out.ascii/out.c:67 ../vector/v.out.ascii/out.c:77
 #: ../vector/v.out.ascii/out.c:84 ../vector/v.out.ascii/out.c:97
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:18
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:20
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:23
 msgid "Points"
 msgstr "Body"
 
@@ -20036,6 +20104,7 @@ msgid "Import polyface meshes as 3D wire frame"
 msgstr "Importuj polyface sítì jako 3D plochy"
 
 #: ../vector/v.in.dxf/main.c:82 ../vector/v.in.dwg/main.c:96
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:3
 msgid "List available layers and exit"
 msgstr "Vypi¹ pøítomné vrstvy a ukonèi se"
 
@@ -21173,6 +21242,11 @@ msgid "Produces a convex hull for a given vector map."
 msgstr ""
 
 #: ../vector/v.hull/main.c:278
+#: ../locale/scriptstrings/v.report_to_translate.c:5
+#: ../locale/scriptstrings/v.out.gpsbabel_to_translate.c:6
+#: ../locale/scriptstrings/v.colors_to_translate.c:3
+#: ../locale/scriptstrings/v.dissolve_to_translate.c:3
+#: ../locale/scriptstrings/v.centroids_to_translate.c:3
 #, fuzzy
 msgid "Name of input vector map"
 msgstr "Jméno vstupní 2D vektorové mapy"
@@ -24442,6 +24516,7 @@ msgid "Feature ids (by default all features are processed)"
 msgstr "Id prvkù (ve výchozím nastavení bude id pøidìleno v¹em prvkùm)"
 
 #: ../vector/v.category/main.c:112
+#: ../locale/scriptstrings/v.centroids_to_translate.c:8
 msgid "Category increment"
 msgstr "Zvìt¹ení hodnoty kategorií o"
 
@@ -25383,6 +25458,7 @@ msgid "Image"
 msgstr "dpz, obrazové zpracování"
 
 #: ../visualization/nviz2/cmd/args.c:87
+#: ../locale/scriptstrings/d.out.file_to_translate.c:4
 #, fuzzy
 msgid "Graphics file format"
 msgstr "Formát vstupního souboru"
@@ -25767,135 +25843,6 @@ msgstr "Chyba bìhem získání záznamu databáze pro kategorii %d"
 #, c-format
 msgid "Unable to copy attribute table to vector map <%s>"
 msgstr "Nelze kopírovat atributovou tabulku do vektorové mapy <%s>"
-
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/opennew.c:19
-#, fuzzy, c-format
-msgid "Failed in attempt to open %s"
-msgstr "Selhalo zapisování øádku %d rastrové mapy"
-
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:155
-msgid ""
-"Generates raster map layers of slope, aspect, curvatures and partial "
-"derivatives from a raster map layer of true elevation values. Aspect is "
-"calculated counterclockwise from east."
-msgstr ""
-"Vytvoøí rastrovou mapu sklonu, expozice, køivosti a parciálních derivací "
-"odvozenou z digitálního modelu terénu. Expozice je poèítána proti smìru "
-"hodinových ruèièek s poèátkem na východì."
-
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:164
-#, fuzzy
-msgid "Raster elevation file name"
-msgstr "Rastrová mapa %i Název souboru: %s"
-
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:172
-#, fuzzy
-msgid "Output slope filename"
-msgstr "Název výstupní tabulky"
-
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:180
-#, fuzzy
-msgid "Output aspect filename"
-msgstr "Název výstupní tabulky"
-
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:207
-#, fuzzy
-msgid "Output profile curvature filename"
-msgstr "Název výstupního souboru profilových køivostí"
-
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:216
-#, fuzzy
-msgid "Output tangential curvature filename"
-msgstr "Název výstupního souboru tangenciálních køivostí"
-
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:226
-#, fuzzy
-msgid "Output first order partial derivative dx (E-W slope) filename"
-msgstr ""
-"Název výstupní rastrové mapy parciálních derivací prvního øádu dx (V-Z sklon "
-"svahu)"
-
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:236
-#, fuzzy
-msgid "Output first order partial derivative dy (N-S slope) filename"
-msgstr ""
-"Název výstupní rastrové mapy parciálních derivací prvního øádu dy (S-J sklon "
-"svahu)"
-
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:246
-#, fuzzy
-msgid "Output second order partial derivative dxx filename"
-msgstr "Název výstupnírastrové mapy parciálních derivací druhého øádu dxx"
-
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:256
-#, fuzzy
-msgid "Output second order partial derivative dyy filename"
-msgstr "Název výstupnírastrové mapy parciálních derivací druhého øádu dyy"
-
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:266
-#, fuzzy
-msgid "Output second order partial derivative dxy filename"
-msgstr "Název výstupní rastrové mapy parciálních derivací druhého øádu dxy"
-
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:412
-#, fuzzy, c-format
-msgid "wrong type: %s"
-msgstr "Chybný typ rastrové mapy: %s"
-
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:1021
-#, fuzzy
-msgid "Creating support files..."
-msgstr "Vytváøím podpùrné soubory BIL..."
-
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:1023
-#, fuzzy, c-format
-msgid "Elevation products for mapset [%s] in [%s]"
-msgstr "Vý¹kové produkty pro mapset <%s> v <%s>"
-
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:1104
-#, c-format
-msgid "ASPECT [%s] COMPLETE"
-msgstr ""
-
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:1197
-#, c-format
-msgid "SLOPE [%s] COMPLETE"
-msgstr ""
-
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:1268
-#, c-format
-msgid "PROFILE CURVE [%s] COMPLETE"
-msgstr ""
-
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:1294
-#, c-format
-msgid "TANGENTIAL CURVE [%s] COMPLETE"
-msgstr ""
-
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:1318
-#, c-format
-msgid "E-W SLOPE [%s] COMPLETE"
-msgstr ""
-
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:1342
-#, c-format
-msgid "N-S SLOPE [%s] COMPLETE"
-msgstr ""
-
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:1366
-#, c-format
-msgid "DXX [%s] COMPLETE"
-msgstr ""
-
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:1390
-#, c-format
-msgid "DYY [%s] COMPLETE"
-msgstr ""
-
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:1414
-#, c-format
-msgid "DXY [%s] COMPLETE"
-msgstr ""
 
 #: ../ps/ps.map/ps_vlines.c:55 ../ps/ps.map/ps_vpoints.c:71
 #: ../ps/ps.map/ps_vareas.c:163
@@ -26338,6 +26285,11 @@ msgstr "Nelze otevøít databázi: "
 
 #: ../db/base/columns.c:92 ../db/base/drivers.c:74 ../db/base/connect.c:45
 #: ../db/base/describe.c:125 ../db/base/tables.c:95
+#: ../locale/scriptstrings/db.test_to_translate.c:2
+#: ../locale/scriptstrings/db.out.ogr_to_translate.c:2
+#: ../locale/scriptstrings/db.droptable_to_translate.c:2
+#: ../locale/scriptstrings/db.dropcol_to_translate.c:2
+#: ../locale/scriptstrings/db.in.ogr_to_translate.c:2
 msgid "database, attribute table"
 msgstr "databáze, atributová tabulka"
 
@@ -26632,6 +26584,2324 @@ msgstr "Nelze nastavit u¾ivatele/heslo"
 msgid "The password was stored in file"
 msgstr "Heslo bylo ulo¾eno v souboru."
 
+#: ../locale/scriptstrings/d.split_to_translate.c:1
+msgid ""
+"Divides active display into two frames & displays maps/executes commands in "
+"each frame."
+msgstr ""
+
+#: ../locale/scriptstrings/d.split_to_translate.c:3
+#, fuzzy
+msgid "Enter raster map to display in 1st frame"
+msgstr "Název rastrové mapy která bude zobrazena"
+
+#: ../locale/scriptstrings/d.split_to_translate.c:4
+msgid "Enter command to execute in 1st frame"
+msgstr ""
+
+#: ../locale/scriptstrings/d.split_to_translate.c:5
+#, fuzzy
+msgid "Enter raster map to display in 2nd frame"
+msgstr "Název rastrové mapy která bude zobrazena"
+
+#: ../locale/scriptstrings/d.split_to_translate.c:6
+msgid "Enter command to execute in 2nd frame"
+msgstr ""
+
+#: ../locale/scriptstrings/d.split_to_translate.c:7
+#, fuzzy
+msgid "How to split display"
+msgstr "Nelze otevøít displej"
+
+#: ../locale/scriptstrings/i.spectral_to_translate.c:1
+msgid ""
+"Displays spectral response at user specified locations in group or images."
+msgstr ""
+
+#: ../locale/scriptstrings/i.spectral_to_translate.c:2
+msgid "imagery, raster, multispectral"
+msgstr ""
+
+#: ../locale/scriptstrings/i.spectral_to_translate.c:3
+msgid "Group input"
+msgstr ""
+
+#: ../locale/scriptstrings/i.spectral_to_translate.c:4
+#, fuzzy
+msgid "Raster input maps"
+msgstr "Nelze zavøít vstupní mapu"
+
+#: ../locale/scriptstrings/i.spectral_to_translate.c:5
+#, fuzzy
+msgid "Write output to PNG image"
+msgstr "Rozsah výstupních dat"
+
+#: ../locale/scriptstrings/i.spectral_to_translate.c:6
+msgid "Use image list and not group"
+msgstr ""
+
+#: ../locale/scriptstrings/i.spectral_to_translate.c:7
+msgid "Select multiple points"
+msgstr ""
+
+#: ../locale/scriptstrings/i.spectral_to_translate.c:8
+#, fuzzy
+msgid "Label with coordinates instead of numbering"
+msgstr "Pou¾ít mapové souøadnice namísto souøadnic xyz"
+
+#: ../locale/scriptstrings/v.convert.all_to_translate.c:1
+msgid ""
+"Convert all old GRASS < Ver5.7 vector maps in current mapset to current "
+"format"
+msgstr ""
+
+#: ../locale/scriptstrings/v.convert.all_to_translate.c:3
+#, fuzzy
+msgid "run non-interactively"
+msgstr "Spustit interaktivnì"
+
+#: ../locale/scriptstrings/r.out.gdal.sh_to_translate.c:1
+#, fuzzy
+msgid "Exports GRASS raster into GDAL supported formats."
+msgstr ""
+"Exportuje GRASS rastrové mapy do jednoho z formátù podporovaných knihovnou "
+"GDAL."
+
+#: ../locale/scriptstrings/r.out.gdal.sh_to_translate.c:4
+#, fuzzy
+msgid "Region sensitive output"
+msgstr "Ètu výstup z r.stats"
+
+#: ../locale/scriptstrings/r.out.gdal.sh_to_translate.c:9
+#, fuzzy
+msgid ""
+"Creation option to the output format driver. Multiple options may be listed"
+msgstr "Vytvoøení mo¾ností pro uspì¹né projítí ovladaèem formátu výstupu"
+
+#: ../locale/scriptstrings/r.out.gdal.sh_to_translate.c:10
+msgid "Metadata key passed on the output dataset if possible"
+msgstr ""
+
+#: ../locale/scriptstrings/r.regression.line_to_translate.c:1
+msgid "Calculates linear regression from two raster maps: y = a + b*x"
+msgstr ""
+
+#: ../locale/scriptstrings/r.regression.line_to_translate.c:4
+msgid "Slower but accurate (applies to FP maps only)"
+msgstr ""
+
+#: ../locale/scriptstrings/r.regression.line_to_translate.c:5
+msgid "Map for x coefficient"
+msgstr ""
+
+#: ../locale/scriptstrings/r.regression.line_to_translate.c:6
+msgid "Map for y coefficient"
+msgstr ""
+
+#: ../locale/scriptstrings/r.regression.line_to_translate.c:7
+msgid ""
+"ASCII file for storing regression coefficients (output to screen if file not "
+"specified)."
+msgstr ""
+
+#: ../locale/scriptstrings/v.in.e00_to_translate.c:1
+#, fuzzy
+msgid "Import E00 file into a vector map."
+msgstr "Importuje star¹í verze GRASS vektorových map."
+
+#: ../locale/scriptstrings/v.in.e00_to_translate.c:4
+msgid "E00 file"
+msgstr ""
+
+#: ../locale/scriptstrings/v.in.e00_to_translate.c:5
+#, fuzzy
+msgid "Input type point, line or area"
+msgstr "Vyberte typ: linie nebo plocha"
+
+#: ../locale/scriptstrings/v.in.e00_to_translate.c:6
+#: ../locale/scriptstrings/v.in.gns_to_translate.c:4
+#: ../locale/scriptstrings/v.in.geonames_to_translate.c:4
+#: ../locale/scriptstrings/v.dissolve_to_translate.c:4
+#: ../locale/scriptstrings/v.centroids_to_translate.c:4
+#, fuzzy
+msgid "Name for output vector map"
+msgstr "Název výstupní vektorové vrstvy"
+
+#: ../locale/scriptstrings/r.plane_to_translate.c:1
+#, fuzzy
+msgid ""
+"Creates raster plane map given dip (inclination), aspect (azimuth) and one "
+"point."
+msgstr ""
+"Vytvoøí rastrovou mapu a bodovou vektorovou mapu obsahující náhodnì "
+"rozmístìné body."
+
+#: ../locale/scriptstrings/r.plane_to_translate.c:2
+#: ../locale/scriptstrings/r.shaded.relief_to_translate.c:2
+#, fuzzy
+msgid "raster, elevation"
+msgstr "Sleduj terén"
+
+#: ../locale/scriptstrings/r.plane_to_translate.c:3
+#, fuzzy
+msgid "Name of raster plane to be created"
+msgstr "Název rastrové mapy která bude zobrazena"
+
+#: ../locale/scriptstrings/r.plane_to_translate.c:4
+msgid "Dip of plane. Value must be between -90 and 90 degrees"
+msgstr ""
+
+#: ../locale/scriptstrings/r.plane_to_translate.c:5
+msgid "Azimuth of the plane. Value must be between 0 and 360 degrees"
+msgstr ""
+
+#: ../locale/scriptstrings/r.plane_to_translate.c:6
+#, fuzzy
+msgid "Easting coordinate of a point on the plane"
+msgstr "Východní souøadnice (bod zájmu, výchozí: støed mapy)"
+
+#: ../locale/scriptstrings/r.plane_to_translate.c:7
+#, fuzzy
+msgid "Northing coordinate of a point on the plane"
+msgstr "Severní souøadnice (bod zájmu, výchozí: støed mapy)"
+
+#: ../locale/scriptstrings/r.plane_to_translate.c:8
+#, fuzzy
+msgid "Elevation coordinate of a point on the plane"
+msgstr "Souøadnice bodu pro zastavení (V,S)"
+
+#: ../locale/scriptstrings/r.plane_to_translate.c:9
+#, fuzzy
+msgid "Type of the raster map to be created"
+msgstr "Název rastrové mapy, její¾ mìøítko má být zmìnìno."
+
+#: ../locale/scriptstrings/m.proj_to_translate.c:1
+msgid "Convert coordinates from one projection to another (cs2cs frontend)."
+msgstr ""
+
+#: ../locale/scriptstrings/m.proj_to_translate.c:2
+#, fuzzy
+msgid "miscellaneous, projection"
+msgstr "rùzné"
+
+#: ../locale/scriptstrings/m.proj_to_translate.c:3
+#, fuzzy
+msgid "Input coordinate file (omit to read from stdin)"
+msgstr "Jméno vstupního souboru, nebo \"-\" proètení ze standardního vstupu"
+
+#: ../locale/scriptstrings/m.proj_to_translate.c:4
+msgid "Output coordinate file (omit to send to stdout)"
+msgstr ""
+
+#: ../locale/scriptstrings/m.proj_to_translate.c:5
+#: ../locale/scriptstrings/r.out.xyz_to_translate.c:5
+#, fuzzy
+msgid "Field separator"
+msgstr "Výstupní oddìlovaè sloupcù"
+
+#: ../locale/scriptstrings/m.proj_to_translate.c:6
+#, fuzzy
+msgid "Input projection parameters (PROJ.4 style)"
+msgstr "* Vstupní projekce pro GCP tabulku: %s"
+
+#: ../locale/scriptstrings/m.proj_to_translate.c:7
+#, fuzzy
+msgid "Output projection parameters (PROJ.4 style)"
+msgstr "á Výstupní projekce pro GCP tabulk: %s"
+
+#: ../locale/scriptstrings/m.proj_to_translate.c:8
+msgid "Use LL WGS84 as input and current location as output projection"
+msgstr ""
+
+#: ../locale/scriptstrings/m.proj_to_translate.c:9
+msgid "Use current location as input and LL WGS84 as output projection"
+msgstr ""
+
+#: ../locale/scriptstrings/m.proj_to_translate.c:10
+msgid ""
+"Output long/lat in decimal degrees or other projections with many decimal "
+"places"
+msgstr ""
+
+#: ../locale/scriptstrings/m.proj_to_translate.c:11
+msgid ""
+"Script style output in CSV format respecting the field separator settings"
+msgstr ""
+
+#: ../locale/scriptstrings/m.proj_to_translate.c:12
+msgid "Verbose mode (print projection parameters and filenames to stderr)"
+msgstr ""
+
+#: ../locale/scriptstrings/d.out.file_to_translate.c:1
+msgid "Saves the contents of the active display monitor to a graphics file."
+msgstr ""
+
+#: ../locale/scriptstrings/d.out.file_to_translate.c:2
+#: ../locale/scriptstrings/d.out.png_to_translate.c:2
+#, fuzzy
+msgid "display, export"
+msgstr "zobrazení"
+
+#: ../locale/scriptstrings/d.out.file_to_translate.c:3
+#, fuzzy
+msgid "Name for output file (do NOT add extension)"
+msgstr "Jméno výstupního souboru s výsledky chybové matice a kappa index"
+
+#: ../locale/scriptstrings/d.out.file_to_translate.c:5
+msgid "Dimensions of output file versus current window size"
+msgstr ""
+
+#: ../locale/scriptstrings/d.out.file_to_translate.c:6
+msgid "(same=1, double size=2, quadruple size=4)"
+msgstr ""
+
+#: ../locale/scriptstrings/d.out.file_to_translate.c:7
+#: ../locale/scriptstrings/d.out.file_to_translate.c:9
+#: ../locale/scriptstrings/d.out.file_to_translate.c:12
+#: ../locale/scriptstrings/d.out.file_to_translate.c:15
+#: ../locale/scriptstrings/d.out.file_to_translate.c:28
+#: ../locale/scriptstrings/d.out.file_to_translate.c:30
+#, fuzzy
+msgid "Images"
+msgstr "dpz, obrazové zpracování"
+
+#: ../locale/scriptstrings/d.out.file_to_translate.c:8
+#, fuzzy
+msgid "Width and height of output image (overrides resolution setting)"
+msgstr "©íøka a vá¹ka oken v møí¾ce"
+
+#: ../locale/scriptstrings/d.out.file_to_translate.c:10
+#, fuzzy
+msgid "Compression for PNG files"
+msgstr "Hodnota izolinií"
+
+#: ../locale/scriptstrings/d.out.file_to_translate.c:11
+msgid "(0=none, 1=fastest, 9=most; lossless, only time vs. filesize)"
+msgstr ""
+
+#: ../locale/scriptstrings/d.out.file_to_translate.c:13
+msgid "File size/quality for JPEG files"
+msgstr ""
+
+#: ../locale/scriptstrings/d.out.file_to_translate.c:14
+msgid "(10=smallest/worst, 100=largest/best)"
+msgstr ""
+
+#: ../locale/scriptstrings/d.out.file_to_translate.c:16
+#, fuzzy
+msgid "Paper size for PostScript output"
+msgstr "Výstupní soubor ve formátu PostScript"
+
+#: ../locale/scriptstrings/d.out.file_to_translate.c:17
+#: ../locale/scriptstrings/d.out.file_to_translate.c:19
+#: ../locale/scriptstrings/d.out.file_to_translate.c:32
+#, fuzzy
+msgid "PostScript"
+msgstr "Výstupní soubor ve formátu PostScript"
+
+#: ../locale/scriptstrings/d.out.file_to_translate.c:18
+msgid "PostScript level (only limits functionality!)"
+msgstr ""
+
+#: ../locale/scriptstrings/d.out.file_to_translate.c:20
+msgid "GeoTIFF creation option(s)"
+msgstr ""
+
+#: ../locale/scriptstrings/d.out.file_to_translate.c:22
+#: ../locale/scriptstrings/d.out.file_to_translate.c:25
+#: ../locale/scriptstrings/d.out.file_to_translate.c:34
+msgid "GeoTIFF"
+msgstr ""
+
+#: ../locale/scriptstrings/d.out.file_to_translate.c:23
+#, fuzzy
+msgid "GeoTIFF metadata key(s) and value(s) to add"
+msgstr "Klíèe metadat a hodnoty pro vlo¾ení"
+
+#: ../locale/scriptstrings/d.out.file_to_translate.c:24
+#, fuzzy
+msgid ""
+"In the form of \"META-TAG=VALUE\", separate multiple entries with a comma."
+msgstr "Ve výrazu \"NAME=VALUE\", oddìlte více polo¾ek èárkami."
+
+#: ../locale/scriptstrings/d.out.file_to_translate.c:26
+msgid "Set background color to black (white default)"
+msgstr ""
+
+#: ../locale/scriptstrings/d.out.file_to_translate.c:27
+msgid "Set transparent background"
+msgstr ""
+
+#: ../locale/scriptstrings/d.out.file_to_translate.c:29
+msgid "Use the Cario driver to render images"
+msgstr ""
+
+#: ../locale/scriptstrings/d.out.file_to_translate.c:31
+msgid "Set paper orientation to landscape (for PostScript output)"
+msgstr ""
+
+#: ../locale/scriptstrings/d.out.file_to_translate.c:33
+#, fuzzy
+msgid "Do not crop away margins"
+msgstr "Nekopírovat atributovou tabulku"
+
+#: ../locale/scriptstrings/db.test_to_translate.c:1
+msgid "Test database driver, database must exist and set by db.connect."
+msgstr ""
+
+#: ../locale/scriptstrings/db.test_to_translate.c:3
+#, fuzzy
+msgid "Test name"
+msgstr "Název písma"
+
+#: ../locale/scriptstrings/r.tileset_to_translate.c:1
+msgid ""
+"Produces tilings of the source projection for use in the destination region "
+"and projection."
+msgstr ""
+
+#: ../locale/scriptstrings/r.tileset_to_translate.c:2
+#, fuzzy
+msgid "raster, tiling"
+msgstr "rastr, interpolace"
+
+#: ../locale/scriptstrings/r.tileset_to_translate.c:3
+#, fuzzy
+msgid "Produces shell script output"
+msgstr "Vypi¹ výsledek ve stylu pro shell skript"
+
+#: ../locale/scriptstrings/r.tileset_to_translate.c:4
+msgid "Produces web map server query string output"
+msgstr ""
+
+#: ../locale/scriptstrings/r.tileset_to_translate.c:5
+#, fuzzy
+msgid ""
+"Name of region to use instead of current region for bounds and resolution"
+msgstr ""
+"Rozli¹ení rastrové mapy expozice je rùzné od aktuálního rozli¹ení regionu"
+
+#: ../locale/scriptstrings/r.tileset_to_translate.c:6
+#, fuzzy
+msgid "Source projection"
+msgstr "raster, projekce"
+
+#: ../locale/scriptstrings/r.tileset_to_translate.c:7
+#: ../locale/scriptstrings/r.tileset_to_translate.c:9
+#, fuzzy
+msgid "Conversion factor from units to meters in source projection"
+msgstr "Pou¾ívám konverzní faktor %f, krok=%f"
+
+#: ../locale/scriptstrings/r.tileset_to_translate.c:8
+#, fuzzy
+msgid "Destination projection, defaults to this location's projection"
+msgstr "Pøepi¹ mapovou projekci (pou¾ij map. projekci location)"
+
+#: ../locale/scriptstrings/r.tileset_to_translate.c:10
+#, fuzzy
+msgid "Maximum number of columns for a tile in the source projection"
+msgstr "Poèet sloupcù se li¹í."
+
+#: ../locale/scriptstrings/r.tileset_to_translate.c:11
+#, fuzzy
+msgid "Maximum number of rows for a tile in the source projection"
+msgstr "Minimální poèet øádkù, který má být uchován v pamìti je 1"
+
+#: ../locale/scriptstrings/r.tileset_to_translate.c:12
+#, fuzzy
+msgid "Number of cells tiles should overlap in each direction"
+msgstr "Poèet úrovní, které budou pou¾ity pro ka¾dou souèást"
+
+#: ../locale/scriptstrings/r.tileset_to_translate.c:14
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:50
+#, fuzzy
+msgid "Verbosity level"
+msgstr "Úroveò hladiny"
+
+#: ../locale/scriptstrings/i.fusion.brovey_to_translate.c:1
+msgid ""
+"Brovey transform to merge multispectral and high-res panchromatic channels"
+msgstr ""
+
+#: ../locale/scriptstrings/i.fusion.brovey_to_translate.c:2
+#, fuzzy
+msgid "imagery, fusion, Brovey"
+msgstr "obrazová data, ortorektifikace"
+
+#: ../locale/scriptstrings/i.fusion.brovey_to_translate.c:3
+msgid "LANDSAT sensor"
+msgstr ""
+
+#: ../locale/scriptstrings/i.fusion.brovey_to_translate.c:4
+#: ../locale/scriptstrings/i.fusion.brovey_to_translate.c:6
+#: ../locale/scriptstrings/i.fusion.brovey_to_translate.c:8
+msgid "Sensor"
+msgstr ""
+
+#: ../locale/scriptstrings/i.fusion.brovey_to_translate.c:5
+msgid "QuickBird sensor"
+msgstr ""
+
+#: ../locale/scriptstrings/i.fusion.brovey_to_translate.c:7
+msgid "SPOT sensor"
+msgstr ""
+
+#: ../locale/scriptstrings/i.fusion.brovey_to_translate.c:9
+#, fuzzy
+msgid "Name of input raster map (green: tm2 | qbird_green | spot1)"
+msgstr "Název vstupní rastrové mapy(green-zelená)"
+
+#: ../locale/scriptstrings/i.fusion.brovey_to_translate.c:10
+#, fuzzy
+msgid "Name of input raster map (NIR: tm4 | qbird_nir | spot2)"
+msgstr "Název vstupní rastrové mapy(red -èervená)"
+
+#: ../locale/scriptstrings/i.fusion.brovey_to_translate.c:11
+#, fuzzy
+msgid "Name of input raster map (MIR; tm5 | qbird_red | spot3)"
+msgstr "Název vstupní rastrové mapy(red -èervená)"
+
+#: ../locale/scriptstrings/i.fusion.brovey_to_translate.c:12
+#, fuzzy
+msgid "Name of input raster map (etmpan | qbird_pan | spotpan)"
+msgstr "Jméno vstupního rastrového souboru (obraz fft, reálná èást)"
+
+#: ../locale/scriptstrings/i.fusion.brovey_to_translate.c:13
+#, fuzzy
+msgid "Name for output raster map prefix (e.g. 'brov')"
+msgstr "Název výstupní rastrové mapy(green-zelená)"
+
+#: ../locale/scriptstrings/g.extension_to_translate.c:1
+msgid "Tool to maintain GRASS extensions in local GRASS installation."
+msgstr ""
+
+#: ../locale/scriptstrings/g.extension_to_translate.c:2
+msgid ""
+"Downloads, installs extensions from GRASS Addons SVN repository into local "
+"GRASS installation or removes installed extensions."
+msgstr ""
+
+#: ../locale/scriptstrings/g.extension_to_translate.c:3
+#, fuzzy
+msgid "general, extensions"
+msgstr "Opravte prosím nastavení."
+
+#: ../locale/scriptstrings/g.extension_to_translate.c:4
+#, fuzzy
+msgid "Name of extension to install/remove"
+msgstr "Název nové location, která má být vytvoøena"
+
+#: ../locale/scriptstrings/g.extension_to_translate.c:6
+msgid "SVN Addons repository URL"
+msgstr ""
+
+#: ../locale/scriptstrings/g.extension_to_translate.c:7
+msgid "Prefix where to install extension"
+msgstr ""
+
+#: ../locale/scriptstrings/g.extension_to_translate.c:8
+#, fuzzy
+msgid "List available modules in the GRASS Addons SVN repository"
+msgstr "Vypi¹ dostupná pravidla barev a ukonèi se"
+
+#: ../locale/scriptstrings/d.correlate_to_translate.c:1
+msgid "Prints a graph of the correlation between data layers (in pairs)."
+msgstr ""
+
+#: ../locale/scriptstrings/d.correlate_to_translate.c:2
+#: ../locale/scriptstrings/d.polar_to_translate.c:2
+#, fuzzy
+msgid "display, diagram"
+msgstr "zobrazení"
+
+#: ../locale/scriptstrings/d.correlate_to_translate.c:3
+#: ../locale/scriptstrings/d.correlate_to_translate.c:4
+#: ../locale/scriptstrings/d.correlate_to_translate.c:5
+#: ../locale/scriptstrings/d.correlate_to_translate.c:6
+#, fuzzy
+msgid "raster input map"
+msgstr "rastr, import"
+
+#: ../locale/scriptstrings/i.image.mosaic_to_translate.c:1
+msgid "Mosaics up to 4 images and extends colormap; creates map *.mosaic"
+msgstr ""
+
+#: ../locale/scriptstrings/i.image.mosaic_to_translate.c:2
+#, fuzzy
+msgid "raster, imagery, mosaicking"
+msgstr "rastr, import, pøevod"
+
+#: ../locale/scriptstrings/i.image.mosaic_to_translate.c:3
+msgid "1st map for mosaic (top of image stack)."
+msgstr ""
+
+#: ../locale/scriptstrings/i.image.mosaic_to_translate.c:4
+msgid "2nd map for mosaic."
+msgstr ""
+
+#: ../locale/scriptstrings/i.image.mosaic_to_translate.c:5
+msgid "3rd map for mosaic."
+msgstr ""
+
+#: ../locale/scriptstrings/i.image.mosaic_to_translate.c:6
+msgid "4th map for mosaic."
+msgstr ""
+
+#: ../locale/scriptstrings/r.blend_to_translate.c:1
+msgid "Blends color components of two raster maps by a given ratio."
+msgstr ""
+
+#: ../locale/scriptstrings/r.blend_to_translate.c:3
+#, fuzzy
+msgid "Name of first raster map for blending"
+msgstr "Název první rastrové mapy"
+
+#: ../locale/scriptstrings/r.blend_to_translate.c:4
+#, fuzzy
+msgid "Name of second raster map for blending"
+msgstr "Název druhé rastrové mapy"
+
+#: ../locale/scriptstrings/r.blend_to_translate.c:5
+msgid "Base name for red, green and blue output maps containing the blend"
+msgstr ""
+
+#: ../locale/scriptstrings/r.blend_to_translate.c:6
+msgid "Percentage weight of first map for color blending"
+msgstr ""
+
+#: ../locale/scriptstrings/r.reclass.area_to_translate.c:1
+msgid ""
+"Reclasses a raster map greater or less than user specified area size (in "
+"hectares)."
+msgstr ""
+
+#: ../locale/scriptstrings/r.reclass.area_to_translate.c:2
+#, fuzzy
+msgid "raster, statistics, aggregation"
+msgstr "rastr, statistika, reklasifikace"
+
+#: ../locale/scriptstrings/r.reclass.area_to_translate.c:5
+msgid "Lesser value option that sets the <= area size limit [hectares]"
+msgstr ""
+
+#: ../locale/scriptstrings/r.reclass.area_to_translate.c:6
+msgid "Greater value option that sets the >= area size limit [hectares]"
+msgstr ""
+
+#: ../locale/scriptstrings/v.what.vect_to_translate.c:1
+#, fuzzy
+msgid "Uploads vector values at positions of vector points to the table."
+msgstr ""
+"Ulo¾í hodnoty rastru pod vektorovými body do jejich atributové tabulky."
+
+#: ../locale/scriptstrings/v.what.vect_to_translate.c:3
+#, fuzzy
+msgid "Vector map to modify"
+msgstr "Vektorová mapa pro pøekrytí"
+
+#: ../locale/scriptstrings/v.what.vect_to_translate.c:4
+#, fuzzy
+msgid "Layer in the vector to be modified"
+msgstr "Bodová vektorová mapa musí být specifikována"
+
+#: ../locale/scriptstrings/v.what.vect_to_translate.c:5
+msgid "Column to be updated with the query result"
+msgstr ""
+
+#: ../locale/scriptstrings/v.what.vect_to_translate.c:6
+#, fuzzy
+msgid "Vector map to be queried"
+msgstr "Rastrová mapa, která bude dotazována"
+
+#: ../locale/scriptstrings/v.what.vect_to_translate.c:7
+#, fuzzy
+msgid "Layer of the query vector containing data"
+msgstr "Vstupní mapa obsahující linie"
+
+#: ../locale/scriptstrings/v.what.vect_to_translate.c:8
+#, fuzzy
+msgid "Column to be queried"
+msgstr "|Sloupec musí být èíselnéh typu"
+
+#: ../locale/scriptstrings/v.what.vect_to_translate.c:9
+#, fuzzy
+msgid "Maximum query distance in map units"
+msgstr "Vzdálenost bufferu v mapových jednotkách"
+
+#: ../locale/scriptstrings/r.in.srtm_to_translate.c:1
+msgid "Import SRTM HGT files into GRASS"
+msgstr ""
+
+#: ../locale/scriptstrings/r.in.srtm_to_translate.c:3
+msgid "SRTM input tile (file without .hgt.zip extension)"
+msgstr ""
+
+#: ../locale/scriptstrings/r.in.srtm_to_translate.c:4
+#, fuzzy
+msgid "Output raster map (default: input tile)"
+msgstr "Jméno výstupní rastrové mapy (výchozí: jméno vstupní mapy)"
+
+#: ../locale/scriptstrings/r.in.srtm_to_translate.c:5
+msgid "Input is a 1-arcsec tile (default: 3-arcsec)"
+msgstr ""
+
+#: ../locale/scriptstrings/v.report_to_translate.c:1
+#, fuzzy
+msgid "Reports geometry statistics for vectors."
+msgstr "Vypí¹e statistiku pro rastrovou mapu."
+
+#: ../locale/scriptstrings/v.report_to_translate.c:2
+#, fuzzy
+msgid "vector, report, statistics"
+msgstr "vektor, statistika"
+
+#: ../locale/scriptstrings/v.report_to_translate.c:3
+#, fuzzy
+msgid "Reverse sort the result"
+msgstr "obrácený výbìr"
+
+#: ../locale/scriptstrings/v.report_to_translate.c:4
+msgid "Sort the result"
+msgstr ""
+
+#: ../locale/scriptstrings/v.report_to_translate.c:7
+#, fuzzy
+msgid "Value to calculate"
+msgstr "Hodnota pro aktualizaci"
+
+#: ../locale/scriptstrings/v.report_to_translate.c:8
+#, fuzzy
+msgid "mi(les),f(eet),me(ters),k(ilometers),a(cres),h(ectares),p(ercent)"
+msgstr "mi(míle),f(stopy),me(metry),k(kilometery),a(akry),h(hektary)"
+
+#: ../locale/scriptstrings/v.db.update_to_translate.c:1
+msgid ""
+"Allows to update a column in the attribute table connected to a vector map."
+msgstr ""
+
+#: ../locale/scriptstrings/v.db.update_to_translate.c:3
+#, fuzzy
+msgid "Vector map to edit the attribute table for"
+msgstr "vektor, rastr, tabulka atributù"
+
+#: ../locale/scriptstrings/v.db.update_to_translate.c:4
+msgid "Layer to which the table to be changed is connected"
+msgstr ""
+
+#: ../locale/scriptstrings/v.db.update_to_translate.c:5
+#, fuzzy
+msgid "Column to update"
+msgstr "Typ sloupce není podporován"
+
+#: ../locale/scriptstrings/v.db.update_to_translate.c:6
+msgid ""
+"Value to update the column with (varchar values have to be in single quotes, "
+"e.g. 'grass')"
+msgstr ""
+
+#: ../locale/scriptstrings/v.db.update_to_translate.c:7
+#, fuzzy
+msgid "Column to query"
+msgstr "|Sloupec musí být èíselnéh typu"
+
+#: ../locale/scriptstrings/v.db.update_to_translate.c:8
+msgid ""
+"WHERE conditions for update, without 'where' keyword (e.g. cat=1 or col1/"
+"col2>1)"
+msgstr ""
+
+#: ../locale/scriptstrings/d.rast.leg_to_translate.c:1
+msgid "Displays a raster map and its legend on a graphics window"
+msgstr ""
+
+#: ../locale/scriptstrings/d.rast.leg_to_translate.c:4
+#, fuzzy
+msgid "Omit entries with missing label"
+msgstr "v tabulce existuje %d kategorií "
+
+#: ../locale/scriptstrings/d.rast.leg_to_translate.c:6
+#, fuzzy
+msgid "Number of lines to appear in the legend"
+msgstr "Poèet iterací"
+
+#: ../locale/scriptstrings/d.rast.leg_to_translate.c:7
+#, fuzzy
+msgid "Name of raster map to generate legend from"
+msgstr "Název rastrové mapy, která má být pou¾ita pro <%s>"
+
+#: ../locale/scriptstrings/d.rast.leg_to_translate.c:8
+#, fuzzy
+msgid "Name of raster map to print in legend"
+msgstr "Název rastrové mapy která bude zobrazena"
+
+#: ../locale/scriptstrings/d.rast.leg_to_translate.c:9
+msgid "Position of vertical map-legend separator (in percent)"
+msgstr ""
+
+#: ../locale/scriptstrings/d.out.gpsdrive_to_translate.c:1
+msgid "Export display monitor to a GpsDrive compatible backdrop image"
+msgstr ""
+
+#: ../locale/scriptstrings/d.out.gpsdrive_to_translate.c:2
+#, fuzzy
+msgid "display, export, GPS"
+msgstr "zobrazení"
+
+#: ../locale/scriptstrings/d.out.gpsdrive_to_translate.c:3
+msgid "name for new map image (lives in ~/.gpsdrive/maps/)"
+msgstr ""
+
+#: ../locale/scriptstrings/d.out.gpsdrive_to_translate.c:4
+msgid "Make JPEG instead of PNG image"
+msgstr ""
+
+#: ../locale/scriptstrings/v.univar.sh_to_translate.c:1
+#: ../locale/scriptstrings/v.db.univar_to_translate.c:1
+#, fuzzy
+msgid ""
+"Calculates univariate statistics on selected table column for a GRASS vector "
+"map."
+msgstr "Spoèítá univariantní statistiku z ne-nullových bunìk rastrové mapy."
+
+#: ../locale/scriptstrings/v.univar.sh_to_translate.c:3
+#: ../locale/scriptstrings/v.db.univar_to_translate.c:3
+msgid "Extended statistics (quartiles and 90th percentile)"
+msgstr ""
+
+#: ../locale/scriptstrings/v.univar.sh_to_translate.c:4
+#: ../locale/scriptstrings/v.db.univar_to_translate.c:4
+#, fuzzy
+msgid "Name of data table"
+msgstr "Název souboru s filtrem"
+
+#: ../locale/scriptstrings/v.univar.sh_to_translate.c:5
+#: ../locale/scriptstrings/v.db.univar_to_translate.c:5
+#, fuzzy
+msgid "Column on which to calculate statistics (must be numeric)"
+msgstr "Jméno sloupce (musí být èíselného typu)"
+
+#: ../locale/scriptstrings/v.univar.sh_to_translate.c:6
+#: ../locale/scriptstrings/v.db.univar_to_translate.c:6
+msgid "Database/directory for table"
+msgstr ""
+
+#: ../locale/scriptstrings/v.univar.sh_to_translate.c:7
+#: ../locale/scriptstrings/v.db.univar_to_translate.c:7
+#, fuzzy
+msgid "Database driver"
+msgstr "Vypi¹ v¹echny databázové ovladaèe."
+
+#: ../locale/scriptstrings/v.univar.sh_to_translate.c:8
+#: ../locale/scriptstrings/v.out.gpsbabel_to_translate.c:13
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:47
+#: ../locale/scriptstrings/v.db.univar_to_translate.c:8
+msgid "WHERE conditions of SQL statement without 'where' keyword"
+msgstr ""
+
+#: ../locale/scriptstrings/g.manual_to_translate.c:1
+msgid "Display the HTML man pages of GRASS"
+msgstr ""
+
+#: ../locale/scriptstrings/g.manual_to_translate.c:2
+msgid "general, manual, help"
+msgstr ""
+
+#: ../locale/scriptstrings/g.manual_to_translate.c:3
+#, fuzzy
+msgid "Display index"
+msgstr "zobrazení"
+
+#: ../locale/scriptstrings/g.manual_to_translate.c:4
+msgid "Display as MAN text page instead of HTML page in browser"
+msgstr ""
+
+#: ../locale/scriptstrings/g.manual_to_translate.c:5
+#, fuzzy
+msgid "Manual entry to be displayed"
+msgstr "Rastrová mapa, která má být vzorkována"
+
+#: ../locale/scriptstrings/v.in.sites.all_to_translate.c:1
+#, fuzzy
+msgid ""
+"Converts all old GRASS < Ver5.7 sites maps in current mapset to vector maps."
+msgstr "PøevedeGRASS bodovou vrstvu na vektorovou mapu."
+
+#: ../locale/scriptstrings/v.in.sites.all_to_translate.c:2
+#, fuzzy
+msgid "sites, vector, import"
+msgstr "vektor, import"
+
+#: ../locale/scriptstrings/v.in.sites.all_to_translate.c:3
+#, fuzzy
+msgid "Run non-interactively"
+msgstr "Spustit interaktivnì"
+
+#: ../locale/scriptstrings/v.db.renamecol_to_translate.c:1
+#, fuzzy
+msgid ""
+"Renames a column in the attribute table connected to a given vector map."
+msgstr "Nelze kopírovat atributovou tabulku do vektorové mapy <%s>"
+
+#: ../locale/scriptstrings/v.db.renamecol_to_translate.c:3
+#, fuzzy
+msgid "Vector map for which to rename attribute column"
+msgstr "Jméno vstupní vektorové bodové mapy"
+
+#: ../locale/scriptstrings/v.db.renamecol_to_translate.c:4
+msgid "Layer where to rename column"
+msgstr ""
+
+#: ../locale/scriptstrings/v.db.renamecol_to_translate.c:5
+msgid "Old and new name of the column (old,new)"
+msgstr ""
+
+#: ../locale/scriptstrings/r.mask_to_translate.c:1
+msgid "Create a MASK for limiting raster operation"
+msgstr ""
+
+#: ../locale/scriptstrings/r.mask_to_translate.c:2
+#, fuzzy
+msgid "raster, mask"
+msgstr "rastr, metadata"
+
+#: ../locale/scriptstrings/r.mask_to_translate.c:3
+#, fuzzy
+msgid "Raster map to use as MASK"
+msgstr "Rastrová mapa, která má být vzorkována"
+
+#: ../locale/scriptstrings/r.mask_to_translate.c:4
+msgid "Category values to use for MASK (format: 1 2 3 thru 7 *)"
+msgstr ""
+
+#: ../locale/scriptstrings/r.mask_to_translate.c:5
+msgid "Create inverse MASK from specified 'maskcats' list"
+msgstr ""
+
+#: ../locale/scriptstrings/r.mask_to_translate.c:6
+msgid "Overwrite existing MASK"
+msgstr ""
+
+#: ../locale/scriptstrings/r.mask_to_translate.c:7
+msgid "Remove existing MASK (overrides other options)"
+msgstr ""
+
+#: ../locale/scriptstrings/v.out.gpsbabel_to_translate.c:1
+msgid ""
+"Exports a vector map to a GPS receiver or file format supported by GpsBabel."
+msgstr ""
+
+#: ../locale/scriptstrings/v.out.gpsbabel_to_translate.c:2
+#, fuzzy
+msgid "vector, export, GPS"
+msgstr "vektor, export"
+
+#: ../locale/scriptstrings/v.out.gpsbabel_to_translate.c:3
+#, fuzzy
+msgid "Export as waypoints"
+msgstr "Exportuj linie jako polygony"
+
+#: ../locale/scriptstrings/v.out.gpsbabel_to_translate.c:4
+#, fuzzy
+msgid "Export as routes"
+msgstr "Exportuj linie jako polygony"
+
+#: ../locale/scriptstrings/v.out.gpsbabel_to_translate.c:5
+msgid "Export as tracks"
+msgstr ""
+
+#: ../locale/scriptstrings/v.out.gpsbabel_to_translate.c:7
+#, fuzzy
+msgid "Feature type(s)"
+msgstr "Typ prvku"
+
+#: ../locale/scriptstrings/v.out.gpsbabel_to_translate.c:8
+#, fuzzy
+msgid "Name for output file or GPS device"
+msgstr "Název výstupního souboru"
+
+#: ../locale/scriptstrings/v.out.gpsbabel_to_translate.c:9
+#, fuzzy
+msgid "GpsBabel supported output format"
+msgstr "Seznam podporovaných výstupních formátù"
+
+#: ../locale/scriptstrings/v.out.gpsbabel_to_translate.c:11
+#: ../locale/scriptstrings/v.dissolve_to_translate.c:6
+msgid ""
+"A single vector map can be connected to multiple database tables. This "
+"number determines which table to use."
+msgstr ""
+
+#: ../locale/scriptstrings/v.out.gpsbabel_to_translate.c:12
+#: ../locale/scriptstrings/v.out.gpsbabel_to_translate.c:15
+msgid "Subset"
+msgstr ""
+
+#: ../locale/scriptstrings/v.out.gpsbabel_to_translate.c:14
+msgid "Example: income < 1000 and inhab >= 10000"
+msgstr ""
+
+#: ../locale/scriptstrings/v.db.reconnect.all_to_translate.c:1
+#, fuzzy
+msgid "Reconnects vectors to a new database."
+msgstr "Odstraòuji databázi."
+
+#: ../locale/scriptstrings/v.db.reconnect.all_to_translate.c:3
+#, fuzzy
+msgid "Name of old database"
+msgstr "Název souboru s filtrem"
+
+#: ../locale/scriptstrings/v.db.reconnect.all_to_translate.c:4
+msgid ""
+"The database must be in form printed by v.db.connect -g, i.e. with "
+"substituted variables"
+msgstr ""
+
+#: ../locale/scriptstrings/v.db.reconnect.all_to_translate.c:5
+#, fuzzy
+msgid "Name of new database"
+msgstr "Název souboru s filtrem"
+
+#: ../locale/scriptstrings/v.db.reconnect.all_to_translate.c:6
+msgid "Old schema"
+msgstr ""
+
+#: ../locale/scriptstrings/v.db.reconnect.all_to_translate.c:7
+#, fuzzy
+msgid "New schema"
+msgstr "Schéma databáze."
+
+#: ../locale/scriptstrings/r.in.aster_to_translate.c:1
+msgid ""
+"Georeference, rectify and import Terra-ASTER imagery and relative DEM's "
+"using gdalwarp."
+msgstr ""
+
+#: ../locale/scriptstrings/r.in.aster_to_translate.c:2
+#: ../locale/scriptstrings/i.in.spotvgt_to_translate.c:2
+#, fuzzy
+msgid "raster, imagery, import"
+msgstr "rastr, import"
+
+#: ../locale/scriptstrings/r.in.aster_to_translate.c:3
+msgid "Input ASTER image to be georeferenced & rectified"
+msgstr ""
+
+#: ../locale/scriptstrings/r.in.aster_to_translate.c:4
+msgid "ASTER imagery processing type (Level 1A, Level 1B, or relative DEM)"
+msgstr ""
+
+#: ../locale/scriptstrings/r.in.aster_to_translate.c:5
+msgid ""
+"L1A or L1B band to translate (1, 2, 3n, 3b, 4-14). Can only translate a "
+"single band"
+msgstr ""
+
+#: ../locale/scriptstrings/v.colors_to_translate.c:1
+msgid ""
+"Set color rules for features in a vector using a numeric attribute column."
+msgstr ""
+
+#: ../locale/scriptstrings/v.colors_to_translate.c:2
+#, fuzzy
+msgid "vector, color table"
+msgstr "rastr, tabulka barev"
+
+#: ../locale/scriptstrings/v.colors_to_translate.c:4
+#, fuzzy
+msgid "Name of column containing numeric data"
+msgstr "Jméno sloupce obsahujícího souøadnici x"
+
+#: ../locale/scriptstrings/v.colors_to_translate.c:5
+#, fuzzy
+msgid "Layer number of data column"
+msgstr "Èíslo vrstvy (from)"
+
+#: ../locale/scriptstrings/v.colors_to_translate.c:6
+#, fuzzy
+msgid "Name of color column to populate"
+msgstr "Název rastrové mapy která bude zobrazena"
+
+#: ../locale/scriptstrings/v.colors_to_translate.c:8
+#, fuzzy
+msgid "Manually set range (min,max)"
+msgstr "Rozsah celoèíselných hodnot: min,max"
+
+#: ../locale/scriptstrings/v.colors_to_translate.c:13
+#, fuzzy
+msgid "Path to rules file"
+msgstr "Cesta k výslednému souboru VTK"
+
+#: ../locale/scriptstrings/v.colors_to_translate.c:15
+msgid "Save placeholder raster map for use with d.legend"
+msgstr ""
+
+#: ../locale/scriptstrings/db.out.ogr_to_translate.c:1
+#, fuzzy
+msgid "Exports attribute tables into various formats."
+msgstr ""
+"Exportuje GRASS rastrové mapy do jednoho z formátù podporovaných knihovnou "
+"GDAL."
+
+#: ../locale/scriptstrings/db.out.ogr_to_translate.c:3
+#, fuzzy
+msgid "GRASS table name"
+msgstr "Jméno vstupní tabulky"
+
+#: ../locale/scriptstrings/db.out.ogr_to_translate.c:4
+msgid "Table file to be exported or DB connection string"
+msgstr ""
+
+#: ../locale/scriptstrings/db.out.ogr_to_translate.c:5
+#, fuzzy
+msgid "Table format"
+msgstr "Formát"
+
+#: ../locale/scriptstrings/db.out.ogr_to_translate.c:6
+#: ../locale/scriptstrings/db.in.ogr_to_translate.c:5
+#, fuzzy
+msgid "Name for output table"
+msgstr "Název výstupního souboru"
+
+#: ../locale/scriptstrings/d.redraw_to_translate.c:1
+msgid "Redraws the current display frame in the GRASS monitor"
+msgstr ""
+
+#: ../locale/scriptstrings/d.redraw_to_translate.c:3
+#, fuzzy
+msgid "Redraw all frames"
+msgstr "Vytiskni celkový rozsah ploch"
+
+#: ../locale/scriptstrings/d.redraw_to_translate.c:4
+msgid "Do not preserve individual regions when redrawing all frames"
+msgstr ""
+
+#: ../locale/scriptstrings/d.slide.show_to_translate.c:1
+#, fuzzy
+msgid "Slide show of GRASS raster/vector maps."
+msgstr "Importuje star¹í verze GRASS vektorových map."
+
+#: ../locale/scriptstrings/d.slide.show_to_translate.c:2
+#, fuzzy
+msgid "display, slideshow"
+msgstr "zobrazení"
+
+#: ../locale/scriptstrings/d.slide.show_to_translate.c:3
+#, fuzzy
+msgid "Show vector maps rather than raster maps"
+msgstr "Nastav region tak, aby odpovídal této rastrové mapì"
+
+#: ../locale/scriptstrings/d.slide.show_to_translate.c:4
+msgid "Map prefix. Specify character(s) to view selected maps only"
+msgstr ""
+
+#: ../locale/scriptstrings/d.slide.show_to_translate.c:5
+msgid "Map number show across the monitor"
+msgstr ""
+
+#: ../locale/scriptstrings/d.slide.show_to_translate.c:6
+msgid "Map number show down the monitor"
+msgstr ""
+
+#: ../locale/scriptstrings/d.slide.show_to_translate.c:7
+msgid "Mapsets to use. Specify multiple mapsets comma separated"
+msgstr ""
+
+#: ../locale/scriptstrings/d.slide.show_to_translate.c:8
+#, fuzzy
+msgid "Number of seconds to pause between slides"
+msgstr "Poèet bunìk mezi drahami odtoku"
+
+#: ../locale/scriptstrings/v.in.garmin_to_translate.c:1
+msgid ""
+"Download waypoints, routes, and tracks from a Garmin GPS receiver into a "
+"vector map."
+msgstr ""
+
+#: ../locale/scriptstrings/v.in.garmin_to_translate.c:2
+#: ../locale/scriptstrings/v.in.gpsbabel_to_translate.c:2
+#, fuzzy
+msgid "vector, import, GPS"
+msgstr "vektor, import"
+
+#: ../locale/scriptstrings/v.in.garmin_to_translate.c:4
+msgid "Download Waypoints from GPS"
+msgstr ""
+
+#: ../locale/scriptstrings/v.in.garmin_to_translate.c:5
+msgid "Download Routes from GPS"
+msgstr ""
+
+#: ../locale/scriptstrings/v.in.garmin_to_translate.c:6
+msgid "Download Track from GPS"
+msgstr ""
+
+#: ../locale/scriptstrings/v.in.garmin_to_translate.c:7
+msgid "Force import of track or route data as points"
+msgstr ""
+
+#: ../locale/scriptstrings/v.in.garmin_to_translate.c:8
+msgid "Use gardump instead of gpstrans as the download program"
+msgstr ""
+
+#: ../locale/scriptstrings/v.in.garmin_to_translate.c:9
+msgid "Import track in 3D (gardump only)"
+msgstr ""
+
+#: ../locale/scriptstrings/v.in.garmin_to_translate.c:10
+#: ../locale/scriptstrings/v.in.gpsbabel_to_translate.c:8
+msgid "Do not attempt projection transform from WGS84"
+msgstr ""
+
+#: ../locale/scriptstrings/v.in.garmin_to_translate.c:11
+#: ../locale/scriptstrings/v.in.mapgen_to_translate.c:6
+#: ../locale/scriptstrings/v.in.gpsbabel_to_translate.c:10
+#, fuzzy
+msgid "Name for output vector map (omit for display to stdout)"
+msgstr "Jméno výstupního vektoru pro zarovnané body bystøin"
+
+#: ../locale/scriptstrings/v.in.garmin_to_translate.c:12
+msgid "Port Garmin receiver is connected to"
+msgstr ""
+
+#: ../locale/scriptstrings/d.split.frame_to_translate.c:1
+msgid "Split the display into subframes."
+msgstr ""
+
+#: ../locale/scriptstrings/d.split.frame_to_translate.c:2
+#, fuzzy
+msgid "Number of subframes"
+msgstr "Poèet øádkù"
+
+#: ../locale/scriptstrings/d.split.frame_to_translate.c:3
+msgid "Split horizontally not vertically"
+msgstr ""
+
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:1
+#, fuzzy
+msgid "Displays thematic vector map"
+msgstr "Pøekrytí dvo vektorových map."
+
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:2
+#, fuzzy
+msgid "display, vector, thematic, legend"
+msgstr "zobrazení"
+
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:3
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:44
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:48
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:51
+#, fuzzy
+msgid "Files"
+msgstr "Linie"
+
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:5
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:7
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:9
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:11
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:13
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:16
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:25
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:46
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:53
+msgid "Theme"
+msgstr ""
+
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:8
+#, fuzzy
+msgid "Name of attribute column to use for thematic display (must be numeric)"
+msgstr "Název sloupce atributu, který má být pou¾it pro ¹títky"
+
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:10
+#, fuzzy
+msgid "Type of thematic display"
+msgstr "Název rastrové mapy která bude zobrazena"
+
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:12
+msgid "Thematic divisions of data for display"
+msgstr ""
+
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:14
+msgid "Break points for custom breaks option"
+msgstr ""
+
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:15
+msgid "Separate values by spaces (0 10 20 30 ...)"
+msgstr ""
+
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:19
+#, fuzzy
+msgid "Vector point icon for point data"
+msgstr "Vektorová mapa s bodovými vzorky"
+
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:21
+#, fuzzy
+msgid "Icon size for point data"
+msgstr "Zaokrouhli data s plovoucí desetinnou èárkou"
+
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:22
+msgid "Minimum icon size/line width for graduated points/lines)"
+msgstr ""
+
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:24
+msgid "Maximum icon size/line width for graduated points and lines"
+msgstr ""
+
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:26
+#, fuzzy
+msgid "Number of classes for interval theme (integer)"
+msgstr "Poèet tøid "
+
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:28
+msgid "Color scheme for graduated color mapping"
+msgstr ""
+
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:29
+msgid "Select 'single_color' for graduated point/line display"
+msgstr ""
+
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:31
+#, fuzzy
+msgid "Color for graduated points map"
+msgstr "Tabulka barev pro <%s> byla aktualizována"
+
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:32
+msgid "GRASS named color or R:G:B triplet. Set color scheme to single color"
+msgstr ""
+
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:34
+msgid "Color for graduated lines or point/area outlines"
+msgstr ""
+
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:35
+msgid "GRASS named color or R:G:B triplet. Set color scheme to single color."
+msgstr ""
+
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:37
+msgid "Beginning color for custom color gradient"
+msgstr ""
+
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:38
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:41
+msgid "Must be expressed as R:G:B triplet"
+msgstr ""
+
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:40
+#, fuzzy
+msgid "Ending color for custom color gradient"
+msgstr "Mìøítkový faktor souøadnic x"
+
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:42
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:59
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:61
+#, fuzzy
+msgid "Misc"
+msgstr "Metrický"
+
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:43
+msgid "Select x11 display monitor for legend"
+msgstr ""
+
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:45
+msgid "Save thematic map commands to group file for GIS Manager"
+msgstr ""
+
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:49
+msgid "Root for the name of psmap instruction files to be in current directory"
+msgstr ""
+
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:50
+msgid "If not set, no psmap instruction files will be created)"
+msgstr ""
+
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:52
+msgid "Name of group file where thematic map commands will be saved"
+msgstr ""
+
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:54
+msgid "Create graphic legend in x11 display monitor"
+msgstr ""
+
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:56
+msgid "Only draw fills (no outlines) for areas and points"
+msgstr ""
+
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:58
+msgid "Update color values to GRASSRGB column in attribute table"
+msgstr ""
+
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:60
+msgid "Output legend for GIS Manager (for scripting use only)"
+msgstr ""
+
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:62
+msgid "Use math notation brackets in legend"
+msgstr ""
+
+#: ../locale/scriptstrings/db.droptable_to_translate.c:1
+#, fuzzy
+msgid "Drops an attribute table."
+msgstr "Zkopíruj také atributovou tabulku."
+
+#: ../locale/scriptstrings/db.droptable_to_translate.c:4
+#, fuzzy
+msgid "Table to drop"
+msgstr "Nelze vyjmout tabulku: %s"
+
+#: ../locale/scriptstrings/v.in.gns_to_translate.c:1
+msgid ""
+"Imports US-NGA GEOnet Names Server (GNS) country files into a GRASS vector "
+"points map."
+msgstr ""
+
+#: ../locale/scriptstrings/v.in.gns_to_translate.c:2
+#: ../locale/scriptstrings/v.in.geonames_to_translate.c:2
+#, fuzzy
+msgid "vector, import, gazetteer"
+msgstr "vektor, import, body"
+
+#: ../locale/scriptstrings/v.in.gns_to_translate.c:3
+msgid "Uncompressed GNS file from NGA (with .txt extension)"
+msgstr ""
+
+#: ../locale/scriptstrings/v.rast.stats_to_translate.c:1
+#, fuzzy
+msgid ""
+"Calculates univariate statistics from a raster map based on vector polygons "
+"and uploads statistics to new attribute columns."
+msgstr "Spoèítá univariantní statistiku z ne-nullových bunìk rastrové mapy."
+
+#: ../locale/scriptstrings/v.rast.stats_to_translate.c:2
+#, fuzzy
+msgid "vector, raster, statistics"
+msgstr "rastr, statistika"
+
+#: ../locale/scriptstrings/v.rast.stats_to_translate.c:3
+msgid "Continue if upload column(s) already exist"
+msgstr ""
+
+#: ../locale/scriptstrings/v.rast.stats_to_translate.c:5
+#, fuzzy
+msgid "Name of vector polygon map"
+msgstr "Jméno vektorové mapy k editaci"
+
+#: ../locale/scriptstrings/v.rast.stats_to_translate.c:7
+msgid ""
+"A single vector map can be connected to multiple database tables. This "
+"number determines which table to use"
+msgstr ""
+
+#: ../locale/scriptstrings/v.rast.stats_to_translate.c:8
+#, fuzzy
+msgid "Name of raster map to calculate statistics from"
+msgstr "Název rastrové mapy pro vlo¾ení do skupiny"
+
+#: ../locale/scriptstrings/v.rast.stats_to_translate.c:9
+#, fuzzy
+msgid "Column prefix for new attribute columns"
+msgstr "Mìøítkový faktor pro hodnoty atributù"
+
+#: ../locale/scriptstrings/v.in.geonames_to_translate.c:1
+#, fuzzy
+msgid "Imports geonames.org country files into a GRASS vector points map."
+msgstr "Importuje star¹í verze GRASS vektorových map."
+
+#: ../locale/scriptstrings/v.in.geonames_to_translate.c:3
+msgid "Uncompressed geonames file from (with .txt extension)"
+msgstr ""
+
+#: ../locale/scriptstrings/d.m_to_translate.c:1
+#, fuzzy
+msgid "Display manager for GRASS"
+msgstr "Poèáteèní poèet tøíd"
+
+#: ../locale/scriptstrings/d.m_to_translate.c:2
+#, fuzzy
+msgid "Name of .dmrc settings file"
+msgstr "Jméno souboru s barvou"
+
+#: ../locale/scriptstrings/gis.m_to_translate.c:1
+msgid "GIS manager for GRASS"
+msgstr ""
+
+#: ../locale/scriptstrings/gis.m_to_translate.c:2
+#, fuzzy
+msgid "Name of GIS manager settings file (.grc)"
+msgstr "Název existujícího MAT-souboru(v4)"
+
+#: ../locale/scriptstrings/db.dropcol_to_translate.c:1
+#, fuzzy
+msgid "Drops a column from selected attribute table"
+msgstr "Nevytváøet atributovou tabulku"
+
+#: ../locale/scriptstrings/db.dropcol_to_translate.c:4
+#, fuzzy
+msgid "Table from which to drop attribute column"
+msgstr "Mìøítkový faktor pro hodnoty atributù"
+
+#: ../locale/scriptstrings/db.dropcol_to_translate.c:5
+#: ../locale/scriptstrings/v.db.dropcol_to_translate.c:5
+#, fuzzy
+msgid "Name of the column"
+msgstr "Poèet sloupcù"
+
+#: ../locale/scriptstrings/r.out.xyz_to_translate.c:1
+msgid ""
+"Export a raster map to a text file as x,y,z values based on cell centers."
+msgstr ""
+
+#: ../locale/scriptstrings/d.resize_to_translate.c:1
+#, fuzzy
+msgid "Resizes active display monitor"
+msgstr "Nahla¹ informace o vstupním rastru a ukonèi se"
+
+#: ../locale/scriptstrings/d.resize_to_translate.c:3
+msgid "New width for window"
+msgstr ""
+
+#: ../locale/scriptstrings/d.resize_to_translate.c:4
+msgid "New height for window"
+msgstr ""
+
+#: ../locale/scriptstrings/v.in.mapgen_to_translate.c:1
+msgid "Import Mapgen or Matlab-ASCII vector maps into GRASS."
+msgstr ""
+
+#: ../locale/scriptstrings/v.in.mapgen_to_translate.c:3
+#, fuzzy
+msgid "Input map is in Matlab format"
+msgstr "Oblast neobsahuje ¾ádná data"
+
+#: ../locale/scriptstrings/v.in.mapgen_to_translate.c:4
+#, fuzzy
+msgid "Create a 3D vector points map from 3 column Matlab data"
+msgstr ""
+"Vytvoøí novou vektorovou (bodovou) mapu na základì databázové takulky "
+"obsahující souøadnice."
+
+#: ../locale/scriptstrings/v.in.mapgen_to_translate.c:5
+#, fuzzy
+msgid "Name of input file in Mapgen/Matlab format"
+msgstr "Název vstupní bodové vektorové vrstvy"
+
+#: ../locale/scriptstrings/v.build.all_to_translate.c:1
+#, fuzzy
+msgid "Rebuilds topology on all vector maps in the current mapset."
+msgstr "Nelze editovat vektorovou vrstvu ulo¾enou v jiném mapsetu."
+
+#: ../locale/scriptstrings/r.univar.sh_to_translate.c:1
+#, fuzzy
+msgid "calculates univariate statistics from a GRASS raster map"
+msgstr "Spoèítá univariantní statistiku z ne-nullových bunìk rastrové mapy."
+
+#: ../locale/scriptstrings/r.univar.sh_to_translate.c:3
+msgid "extended statistics (quartiles and percentile)"
+msgstr ""
+
+#: ../locale/scriptstrings/r.univar.sh_to_translate.c:5
+#, fuzzy
+msgid "Percentile to calculate (requires -e flag)"
+msgstr ""
+"Percentil, který se má spoèítat (vy¾aduje pøepínaè roz¹íøení statistiky)"
+
+#: ../locale/scriptstrings/r.mapcalculator_to_translate.c:1
+msgid "Calculate new raster map from a r.mapcalc expression."
+msgstr ""
+
+#: ../locale/scriptstrings/r.mapcalculator_to_translate.c:2
+msgid "A"
+msgstr ""
+
+#: ../locale/scriptstrings/r.mapcalculator_to_translate.c:3
+msgid "B"
+msgstr ""
+
+#: ../locale/scriptstrings/r.mapcalculator_to_translate.c:4
+msgid "C"
+msgstr ""
+
+#: ../locale/scriptstrings/r.mapcalculator_to_translate.c:5
+msgid "D"
+msgstr ""
+
+#: ../locale/scriptstrings/r.mapcalculator_to_translate.c:6
+msgid "E"
+msgstr ""
+
+#: ../locale/scriptstrings/r.mapcalculator_to_translate.c:7
+msgid "F"
+msgstr ""
+
+#: ../locale/scriptstrings/r.mapcalculator_to_translate.c:8
+#: ../locale/scriptstrings/r3.mapcalculator_to_translate.c:8
+msgid "Formula (e.g. A-B or A*C+B)"
+msgstr ""
+
+#: ../locale/scriptstrings/r.mapcalculator_to_translate.c:10
+#: ../locale/scriptstrings/r3.mapcalculator_to_translate.c:10
+msgid "Show help"
+msgstr ""
+
+#: ../locale/scriptstrings/r.mapcalculator_to_translate.c:11
+msgid "Expert mode (enter a set of r.mapcalc expressions)"
+msgstr ""
+
+#: ../locale/scriptstrings/r.mapcalculator_to_translate.c:12
+#: ../locale/scriptstrings/r3.mapcalculator_to_translate.c:12
+#, fuzzy
+msgid "Do not overwrite existing map"
+msgstr "Pou¾ijte -o k pøepsání existujícího spojení pro vrstvu <%d>"
+
+#: ../locale/scriptstrings/i.landsat.rgb_to_translate.c:1
+msgid "Performs auto-balancing of colors for LANDSAT images."
+msgstr ""
+
+#: ../locale/scriptstrings/i.landsat.rgb_to_translate.c:2
+#, fuzzy
+msgid "raster, imagery, colors"
+msgstr "rastr, import, pøevod"
+
+#: ../locale/scriptstrings/i.landsat.rgb_to_translate.c:3
+msgid "LANDSAT red channel"
+msgstr ""
+
+#: ../locale/scriptstrings/i.landsat.rgb_to_translate.c:4
+msgid "LANDSAT green channel"
+msgstr ""
+
+#: ../locale/scriptstrings/i.landsat.rgb_to_translate.c:5
+msgid "LANDSAT blue channel"
+msgstr ""
+
+#: ../locale/scriptstrings/i.landsat.rgb_to_translate.c:6
+msgid "Cropping intensity (upper brightness level)"
+msgstr ""
+
+#: ../locale/scriptstrings/i.landsat.rgb_to_translate.c:7
+msgid "Extend colors to full range of data on each channel"
+msgstr ""
+
+#: ../locale/scriptstrings/i.landsat.rgb_to_translate.c:8
+msgid "Preserve relative colors, adjust brightness only"
+msgstr ""
+
+#: ../locale/scriptstrings/i.landsat.rgb_to_translate.c:9
+#, fuzzy
+msgid "Reset to standard color range"
+msgstr "nelze exportovat dlouhou tabulku barev"
+
+#: ../locale/scriptstrings/d.monsize_to_translate.c:1
+msgid "Selects/starts specified monitor at specified size"
+msgstr ""
+
+#: ../locale/scriptstrings/d.monsize_to_translate.c:3
+#, fuzzy
+msgid "Display monitor to start"
+msgstr "Jméno rastrové mapy, obsahující výsledky"
+
+#: ../locale/scriptstrings/d.monsize_to_translate.c:4
+msgid "Width in pixels of new display monitor"
+msgstr ""
+
+#: ../locale/scriptstrings/d.monsize_to_translate.c:5
+msgid "Height in pixels of new display monitor"
+msgstr ""
+
+#: ../locale/scriptstrings/d.shadedmap_to_translate.c:1
+msgid "Drapes a color raster over a shaded relief map using d.his"
+msgstr ""
+
+#: ../locale/scriptstrings/d.shadedmap_to_translate.c:2
+#, fuzzy
+msgid "Name of shaded relief or aspect map"
+msgstr "Název druhé rastrové mapy"
+
+#: ../locale/scriptstrings/d.shadedmap_to_translate.c:3
+#, fuzzy
+msgid "Name of raster to drape over relief map"
+msgstr "Název rastrové mapy pro vlo¾ení do skupiny"
+
+#: ../locale/scriptstrings/d.shadedmap_to_translate.c:4
+#, fuzzy
+msgid "Percent to brighten"
+msgstr "Procentuální konvergence"
+
+#: ../locale/scriptstrings/v.in.gpsbabel_to_translate.c:1
+msgid ""
+"Import waypoints, routes, and tracks from a GPS receiver or GPS download "
+"file into a vector map."
+msgstr ""
+
+#: ../locale/scriptstrings/v.in.gpsbabel_to_translate.c:4
+#, fuzzy
+msgid "Import waypoints"
+msgstr "Importuji body ..."
+
+#: ../locale/scriptstrings/v.in.gpsbabel_to_translate.c:5
+#, fuzzy
+msgid "Import routes"
+msgstr "Importuji body ..."
+
+#: ../locale/scriptstrings/v.in.gpsbabel_to_translate.c:6
+msgid "Import track"
+msgstr ""
+
+#: ../locale/scriptstrings/v.in.gpsbabel_to_translate.c:7
+msgid "Force vertices of track or route data as points"
+msgstr ""
+
+#: ../locale/scriptstrings/v.in.gpsbabel_to_translate.c:9
+#, fuzzy
+msgid "Device or file used to import data"
+msgstr "Název rastrového souboru, který má být importován"
+
+#: ../locale/scriptstrings/v.in.gpsbabel_to_translate.c:11
+msgid "Format of GPS input data (use gpsbabel supported formats)"
+msgstr ""
+
+#: ../locale/scriptstrings/v.in.gpsbabel_to_translate.c:12
+msgid ""
+"Projection of input data (PROJ.4 style), if not set Lat/Lon WGS84 is assumed"
+msgstr ""
+
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:1
+msgid "Downloads and imports data from WMS servers."
+msgstr ""
+
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:2
+msgid "wms"
+msgstr ""
+
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:4
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:8
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:17
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:21
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:23
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:25
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:27
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:29
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:31
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:33
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:35
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:38
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:49
+#, fuzzy
+msgid "Request"
+msgstr "Po¾adováno"
+
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:5
+msgid "Skip to downloading (to resume downloads faster)"
+msgstr ""
+
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:6
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:10
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:40
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:42
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:44
+msgid "Download"
+msgstr ""
+
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:7
+msgid "Don't request transparent data"
+msgstr ""
+
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:9
+msgid "Clean existing data out of download directory"
+msgstr ""
+
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:12
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:14
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:19
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:46
+msgid "Import"
+msgstr ""
+
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:13
+msgid "Don't reproject the data, just patch it"
+msgstr ""
+
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:15
+msgid "Use GET method instead of POST data method"
+msgstr ""
+
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:16
+msgid "This may be needed to connect to servers which lack POST capability"
+msgstr ""
+
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:20
+#, fuzzy
+msgid "Mapserver to request data from"
+msgstr "Nelze vybrat data z tabulky"
+
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:22
+msgid "Layers to request from map server"
+msgstr ""
+
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:24
+msgid "Styles to request from map server"
+msgstr ""
+
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:26
+msgid "Source projection to request from server"
+msgstr ""
+
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:28
+msgid "Image format requested from the server"
+msgstr ""
+
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:30
+msgid "Addition query options for server"
+msgstr ""
+
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:32
+msgid "Maximum columns to request at a time"
+msgstr ""
+
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:34
+#, fuzzy
+msgid "Maximum rows to request at a time"
+msgstr "Maximální vzdálenost k nejbli¾¹ímu prvku"
+
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:36
+msgid "Additional options for r.tileset"
+msgstr ""
+
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:37
+msgid "Named region to request data for. Current region used if omitted"
+msgstr ""
+
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:39
+msgid "Folder to save downloaded data to"
+msgstr ""
+
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:41
+msgid "Additional options for wget"
+msgstr ""
+
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:43
+msgid "Additional options for curl"
+msgstr ""
+
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:45
+#, fuzzy
+msgid "Reprojection method to use"
+msgstr "Interpolaèní metoda, která má být pou¾ita"
+
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:47
+msgid "Filename to save capabilities XML file to"
+msgstr ""
+
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:48
+#, fuzzy
+msgid "Requires list available layers flag"
+msgstr "Vypi¹ pøítomné vrstvy a ukonèi se"
+
+#: ../locale/scriptstrings/r.colors.stddev_to_translate.c:1
+msgid "Set color rules based on stddev from a map's mean value."
+msgstr ""
+
+#: ../locale/scriptstrings/r.colors.stddev_to_translate.c:4
+#, fuzzy
+msgid "Color using standard deviation bands"
+msgstr "prùmìry a smìrodatné odchylky pro %d kanál%s\n"
+
+#: ../locale/scriptstrings/r.colors.stddev_to_translate.c:5
+msgid "Force center at zero"
+msgstr ""
+
+#: ../locale/scriptstrings/r.fillnulls_to_translate.c:1
+msgid ""
+"Fills no-data areas in raster maps using v.surf.rst splines interpolation"
+msgstr ""
+
+#: ../locale/scriptstrings/r.fillnulls_to_translate.c:2
+#, fuzzy
+msgid "raster, elevation, interpolation"
+msgstr "rastr, interpolace"
+
+#: ../locale/scriptstrings/r.fillnulls_to_translate.c:3
+#, fuzzy
+msgid "Raster map in which to fill nulls"
+msgstr "Rastrová její¾ soubor NULL bude editován"
+
+#: ../locale/scriptstrings/r.fillnulls_to_translate.c:4
+msgid ""
+"Output raster map with nulls filled by interpolation from surrounding values"
+msgstr ""
+
+#: ../locale/scriptstrings/r.fillnulls_to_translate.c:5
+#, fuzzy
+msgid "Spline tension parameter"
+msgstr "Parametr pnutí (tension)"
+
+#: ../locale/scriptstrings/r.fillnulls_to_translate.c:6
+#, fuzzy
+msgid "Spline smoothing parameter"
+msgstr "Parametr vyhlazení (smoothing)"
+
+#: ../locale/scriptstrings/v.dissolve_to_translate.c:1
+#, fuzzy
+msgid ""
+"Dissolves boundaries between adjacent areas sharing a common category number "
+"or attribute."
+msgstr ""
+"Nebyla nalezena ¾ádná atributová tabulka -> pou¾iji jako atributy pouze "
+"èísla kategorie"
+
+#: ../locale/scriptstrings/v.dissolve_to_translate.c:2
+#, fuzzy
+msgid "vector, area, dissolve"
+msgstr "vektor, metadata, historie"
+
+#: ../locale/scriptstrings/v.dissolve_to_translate.c:5
+#, fuzzy
+msgid "Layer number. If -1, all layers are extracted."
+msgstr ""
+"Jméno OGR vrstvy, pokud není zadán, jsou pouze vyti¹tìny pøítomné vrstvy"
+
+#: ../locale/scriptstrings/v.dissolve_to_translate.c:7
+#, fuzzy
+msgid "Name of column used to dissolve common boundaries"
+msgstr ""
+"Název sloupce atributu, který má být pou¾it jaok ¹títky pro kategorie "
+"rastrové mapy"
+
+#: ../locale/scriptstrings/v.centroids_to_translate.c:1
+msgid "Adds missing centroids to closed boundaries."
+msgstr ""
+
+#: ../locale/scriptstrings/v.centroids_to_translate.c:2
+#, fuzzy
+msgid "vector, centroid, area"
+msgstr "vektor, metadata"
+
+#: ../locale/scriptstrings/v.centroids_to_translate.c:5
+#, fuzzy
+msgid "Action to be taken"
+msgstr "Akce, mající být vykonána"
+
+#: ../locale/scriptstrings/v.centroids_to_translate.c:7
+#, fuzzy
+msgid "Category number starting value"
+msgstr "Re¾im èísel katagorií"
+
+#: ../locale/scriptstrings/r3.mapcalculator_to_translate.c:1
+msgid "Calculates new grid3D volume from r3.mapcalc expression."
+msgstr ""
+
+#: ../locale/scriptstrings/r3.mapcalculator_to_translate.c:2
+#, fuzzy
+msgid "A (grid3D file)"
+msgstr "Vstupní soubor grid3"
+
+#: ../locale/scriptstrings/r3.mapcalculator_to_translate.c:3
+#, fuzzy
+msgid "B (grid3D file)"
+msgstr "Vstupní soubor grid3"
+
+#: ../locale/scriptstrings/r3.mapcalculator_to_translate.c:4
+#, fuzzy
+msgid "C (grid3D file)"
+msgstr "Vstupní soubor grid3"
+
+#: ../locale/scriptstrings/r3.mapcalculator_to_translate.c:5
+#, fuzzy
+msgid "D (grid3D file)"
+msgstr "Vstupní soubor grid3"
+
+#: ../locale/scriptstrings/r3.mapcalculator_to_translate.c:6
+#, fuzzy
+msgid "E (grid3D file)"
+msgstr "Vstupní soubor grid3"
+
+#: ../locale/scriptstrings/r3.mapcalculator_to_translate.c:7
+#, fuzzy
+msgid "F (grid3D file)"
+msgstr "Vstupní soubor grid3"
+
+#: ../locale/scriptstrings/r3.mapcalculator_to_translate.c:9
+#, fuzzy
+msgid "Name for output grid3D volume"
+msgstr "Název výstupního souboru"
+
+#: ../locale/scriptstrings/r3.mapcalculator_to_translate.c:11
+msgid "Expert mode (enter a set of r3.mapcalc expressions)"
+msgstr ""
+
+#: ../locale/scriptstrings/v.db.droptable_to_translate.c:1
+#, fuzzy
+msgid "Removes existing attribute table of a vector map."
+msgstr "Nelze kopírovat atributovou tabulku do vektorové mapy <%s>"
+
+#: ../locale/scriptstrings/v.db.droptable_to_translate.c:3
+msgid "Force removal (required for actual deletion of table)"
+msgstr ""
+
+#: ../locale/scriptstrings/v.db.droptable_to_translate.c:4
+#, fuzzy
+msgid "Vector map from which to remove attribute table"
+msgstr "Název rastrové mapy, ze které se má kopírovat tabulka kategorií"
+
+#: ../locale/scriptstrings/v.db.droptable_to_translate.c:5
+#, fuzzy
+msgid "Name of existing attribute table (default: vector map name)"
+msgstr "Nelze kopírovat atributovou tabulku do vektorové mapy <%s>"
+
+#: ../locale/scriptstrings/v.db.droptable_to_translate.c:6
+#, fuzzy
+msgid "Layer from which to drop linked attribute table"
+msgstr "Název rastrové mapy, ze které se má kopírovat tabulka kategorií"
+
+#: ../locale/scriptstrings/v.db.join_to_translate.c:1
+#, fuzzy
+msgid "Allows to join a table to a vector map table."
+msgstr "Nelze kopírovat atributovou tabulku do vektorové mapy <%s>"
+
+#: ../locale/scriptstrings/v.db.join_to_translate.c:3
+#, fuzzy
+msgid "Vector map to which to join other table"
+msgstr "Název rastrové mapy, ze které se má kopírovat tabulka kategorií"
+
+#: ../locale/scriptstrings/v.db.join_to_translate.c:4
+#, fuzzy
+msgid "Layer where to join"
+msgstr "Èíslo vrstvy (to)"
+
+#: ../locale/scriptstrings/v.db.join_to_translate.c:5
+#, fuzzy
+msgid "Join column in map table"
+msgstr "Sloupec <%s> nebyl nalezen v tabulce <%s>"
+
+#: ../locale/scriptstrings/v.db.join_to_translate.c:6
+#, fuzzy
+msgid "Other table name"
+msgstr "Název výstupní tabulky"
+
+#: ../locale/scriptstrings/v.db.join_to_translate.c:7
+#, fuzzy
+msgid "Join column in other table"
+msgstr "Poèet iterací"
+
+#: ../locale/scriptstrings/i.tasscap_to_translate.c:1
+msgid "Tasseled Cap (Kauth Thomas) transformation for LANDSAT-TM data"
+msgstr ""
+
+#: ../locale/scriptstrings/i.tasscap_to_translate.c:2
+#, fuzzy
+msgid "raster, imagery"
+msgstr "rastr, mapová algebra"
+
+#: ../locale/scriptstrings/i.tasscap_to_translate.c:3
+#, fuzzy
+msgid "use transformation rules for LANDSAT-4"
+msgstr "Zpìtná transformave, 3Dvektorové prvky na 2D"
+
+#: ../locale/scriptstrings/i.tasscap_to_translate.c:4
+#, fuzzy
+msgid "use transformation rules for LANDSAT-5"
+msgstr "Zpìtná transformave, 3Dvektorové prvky na 2D"
+
+#: ../locale/scriptstrings/i.tasscap_to_translate.c:5
+#, fuzzy
+msgid "use transformation rules for LANDSAT-7"
+msgstr "Zpìtná transformave, 3Dvektorové prvky na 2D"
+
+#: ../locale/scriptstrings/i.tasscap_to_translate.c:6
+msgid "raster input map (LANDSAT channel 1)"
+msgstr ""
+
+#: ../locale/scriptstrings/i.tasscap_to_translate.c:7
+msgid "raster input map (LANDSAT channel 2)"
+msgstr ""
+
+#: ../locale/scriptstrings/i.tasscap_to_translate.c:8
+msgid "raster input map (LANDSAT channel 3)"
+msgstr ""
+
+#: ../locale/scriptstrings/i.tasscap_to_translate.c:9
+msgid "raster input map (LANDSAT channel 4)"
+msgstr ""
+
+#: ../locale/scriptstrings/i.tasscap_to_translate.c:10
+msgid "raster input map (LANDSAT channel 5)"
+msgstr ""
+
+#: ../locale/scriptstrings/i.tasscap_to_translate.c:11
+msgid "raster input map (LANDSAT channel 7)"
+msgstr ""
+
+#: ../locale/scriptstrings/i.tasscap_to_translate.c:12
+#, fuzzy
+msgid "raster output TC maps prefix"
+msgstr "Pøepsat výstupní soubor mapy"
+
+#: ../locale/scriptstrings/v.db.addtable_to_translate.c:1
+msgid ""
+"Creates and connects a new attribute table to a given layer of an existing "
+"vector map."
+msgstr ""
+
+#: ../locale/scriptstrings/v.db.addtable_to_translate.c:3
+#, fuzzy
+msgid "Vector map for which to add new attribute table"
+msgstr "Jméno vstupní vektorové bodové mapy"
+
+#: ../locale/scriptstrings/v.db.addtable_to_translate.c:4
+#, fuzzy
+msgid "Name of new attribute table (default: vector map name)"
+msgstr "Nelze kopírovat atributovou tabulku do vektorové mapy <%s>"
+
+#: ../locale/scriptstrings/v.db.addtable_to_translate.c:5
+#, fuzzy
+msgid "Layer where to add new attribute table"
+msgstr "vektor, rastr, tabulka atributù"
+
+#: ../locale/scriptstrings/v.db.addtable_to_translate.c:6
+#: ../locale/scriptstrings/v.db.addcol_to_translate.c:5
+msgid ""
+"Name and type of the new column(s) (types depend on database backend, but "
+"all support VARCHAR(), INT, DOUBLE PRECISION and DATE)"
+msgstr ""
+
+#: ../locale/scriptstrings/v.in.wfs_to_translate.c:1
+msgid "Import GetFeature from WFS"
+msgstr ""
+
+#: ../locale/scriptstrings/v.in.wfs_to_translate.c:2
+msgid "GetFeature URL starting with http"
+msgstr ""
+
+#: ../locale/scriptstrings/v.in.wfs_to_translate.c:3
+#, fuzzy
+msgid "Vector output map"
+msgstr "®ádné výstupní mapy"
+
+#: ../locale/scriptstrings/r.shaded.relief_to_translate.c:1
+#, fuzzy
+msgid "Creates shaded relief map from an elevation map (DEM)."
+msgstr ""
+"Vytvoøí mapu topografického indexu, [ln(a/tan(beta))], z rastrové mapy "
+"digitálního modelu terénu."
+
+#: ../locale/scriptstrings/r.shaded.relief_to_translate.c:4
+#, fuzzy
+msgid "Output shaded relief map name"
+msgstr "Název výstupního ovladaèe"
+
+#: ../locale/scriptstrings/r.shaded.relief_to_translate.c:5
+#, fuzzy
+msgid "Altitude of the sun in degrees above the horizon"
+msgstr "A: vý¹ka Slunce nad horizontem, stupnì"
+
+#: ../locale/scriptstrings/r.shaded.relief_to_translate.c:6
+#, fuzzy
+msgid "Azimuth of the sun in degrees to the east of north"
+msgstr "A: azimut Slunce od serveru, stupnì"
+
+#: ../locale/scriptstrings/r.shaded.relief_to_translate.c:7
+#, fuzzy
+msgid "Factor for exaggerating relief"
+msgstr "Formát sklonu svahu"
+
+#: ../locale/scriptstrings/r.shaded.relief_to_translate.c:8
+#, fuzzy
+msgid "Scale factor for converting horizontal units to elevation units"
+msgstr "Faktor mìøítka ovlivní vstup (pokud není zadaná mapa elevace)"
+
+#: ../locale/scriptstrings/r.shaded.relief_to_translate.c:9
+msgid ""
+"Set scaling factor (applies to lat./long. locations only, none: scale=1)"
+msgstr ""
+
+#: ../locale/scriptstrings/d.out.png_to_translate.c:1
+msgid "Saves active display monitor to PNG file in home directory"
+msgstr ""
+
+#: ../locale/scriptstrings/d.out.png_to_translate.c:3
+#, fuzzy
+msgid "Name of PNG file"
+msgstr "Jméno souboru s barvou"
+
+#: ../locale/scriptstrings/d.out.png_to_translate.c:4
+msgid "Resolution of output file (single=1, double=2, quad=4)"
+msgstr ""
+
+#: ../locale/scriptstrings/i.oif_to_translate.c:1
+msgid "Calculates Optimum-Index-Factor table for LANDSAT TM bands 1-5, & 7"
+msgstr ""
+
+#: ../locale/scriptstrings/i.oif_to_translate.c:2
+#, fuzzy
+msgid "raster, imagery, statistics"
+msgstr "rastr, statistika"
+
+#: ../locale/scriptstrings/i.oif_to_translate.c:3
+msgid "LANDSAT TM band 1."
+msgstr ""
+
+#: ../locale/scriptstrings/i.oif_to_translate.c:4
+msgid "LANDSAT TM band 2."
+msgstr ""
+
+#: ../locale/scriptstrings/i.oif_to_translate.c:5
+msgid "LANDSAT TM band 3."
+msgstr ""
+
+#: ../locale/scriptstrings/i.oif_to_translate.c:6
+msgid "LANDSAT TM band 4."
+msgstr ""
+
+#: ../locale/scriptstrings/i.oif_to_translate.c:7
+msgid "LANDSAT TM band 5."
+msgstr ""
+
+#: ../locale/scriptstrings/i.oif_to_translate.c:8
+msgid "LANDSAT TM band 7."
+msgstr ""
+
+#: ../locale/scriptstrings/r.li.setup_to_translate.c:1
+#, fuzzy
+msgid "Configuration editor for r.li.'index'"
+msgstr "Neplatný konfiguraèní soubor"
+
+#: ../locale/scriptstrings/r.li.setup_to_translate.c:2
+#, fuzzy
+msgid "raster, landscape structure analysis"
+msgstr "rastr, analýza krajiny, index místa"
+
+#: ../locale/scriptstrings/db.in.ogr_to_translate.c:1
+msgid "Imports attribute tables in various formats."
+msgstr ""
+
+#: ../locale/scriptstrings/db.in.ogr_to_translate.c:3
+msgid "Table file to be imported or DB connection string"
+msgstr ""
+
+#: ../locale/scriptstrings/db.in.ogr_to_translate.c:4
+msgid "Table name of SQL DB table"
+msgstr ""
+
+#: ../locale/scriptstrings/db.in.ogr_to_translate.c:6
+msgid "Name for auto-generated unique key column"
+msgstr ""
+
+#: ../locale/scriptstrings/d.rast.edit_to_translate.c:5
+#, fuzzy
+msgid "Name of aspect raster map"
+msgstr "Název základní rastrové mapy"
+
+#: ../locale/scriptstrings/d.rast.edit_to_translate.c:6
+msgid "Width of display canvas"
+msgstr ""
+
+#: ../locale/scriptstrings/d.rast.edit_to_translate.c:7
+#, fuzzy
+msgid "Height of display canvas"
+msgstr "Nelze otevøít displej"
+
+#: ../locale/scriptstrings/d.rast.edit_to_translate.c:8
+#, fuzzy
+msgid "Minimum size of each cell"
+msgstr "Minimální íºroveò isopovrchu"
+
+#: ../locale/scriptstrings/d.rast.edit_to_translate.c:9
+#, fuzzy
+msgid "Maximum number of rows to load"
+msgstr "Minimální poèet sloupcù: %d"
+
+#: ../locale/scriptstrings/d.rast.edit_to_translate.c:10
+#, fuzzy
+msgid "Maximum number of columns to load"
+msgstr "Minimální poèet sloupcù: %d"
+
+#: ../locale/scriptstrings/v.db.dropcol_to_translate.c:1
+msgid ""
+"Drops a column from the attribute table connected to a given vector map."
+msgstr ""
+
+#: ../locale/scriptstrings/v.db.dropcol_to_translate.c:3
+#, fuzzy
+msgid "Vector map for which to drop attribute column"
+msgstr "Jméno vstupní vektorové bodové mapy"
+
+#: ../locale/scriptstrings/v.db.dropcol_to_translate.c:4
+msgid "Layer where to drop column"
+msgstr ""
+
+#: ../locale/scriptstrings/d.polar_to_translate.c:1
+msgid "Draws polar diagram of angle map such as aspect or flow directions"
+msgstr ""
+
+#: ../locale/scriptstrings/d.polar_to_translate.c:3
+#, fuzzy
+msgid "Name of raster angle map"
+msgstr "Název základní rastrové mapy"
+
+#: ../locale/scriptstrings/d.polar_to_translate.c:4
+msgid "Pixel value to be interpreted as undefined (different from NULL)"
+msgstr ""
+
+#: ../locale/scriptstrings/d.polar_to_translate.c:5
+#, fuzzy
+msgid "Name of optional EPS output file"
+msgstr "Název výstupního souboru SVG"
+
+#: ../locale/scriptstrings/d.polar_to_translate.c:6
+msgid "Plot using Xgraph"
+msgstr ""
+
+#: ../locale/scriptstrings/i.in.spotvgt_to_translate.c:1
+#, fuzzy
+msgid "Import of SPOT VGT NDVI file into a raster map"
+msgstr "Importuje binární rastrový soubor jako GRASS rastrovou mapu."
+
+#: ../locale/scriptstrings/i.in.spotvgt_to_translate.c:3
+msgid "also import quality map (SM status map layer) and filter NDVI map"
+msgstr ""
+
+#: ../locale/scriptstrings/i.in.spotvgt_to_translate.c:4
+msgid "existing SPOT VGT NDVI HDF file (0001_NDV.HDF)"
+msgstr ""
+
+#: ../locale/scriptstrings/v.db.addcol_to_translate.c:1
+msgid ""
+"Adds one or more columns to the attribute table connected to a given vector "
+"map."
+msgstr ""
+
+#: ../locale/scriptstrings/v.db.addcol_to_translate.c:3
+#, fuzzy
+msgid "Vector map for which to edit attribute table"
+msgstr "Jméno vstupní vektorové bodové mapy"
+
+#: ../locale/scriptstrings/v.db.addcol_to_translate.c:4
+msgid "Layer where to add column"
+msgstr ""
+
+#: ../locale/scriptstrings/d.mvmon_to_translate.c:1
+msgid "Moves displayed maps to another monitor"
+msgstr ""
+
+#: ../locale/scriptstrings/d.mvmon_to_translate.c:3
+msgid "clear target monitor before moving"
+msgstr ""
+
+#: ../locale/scriptstrings/d.mvmon_to_translate.c:4
+msgid "stay with source monitor"
+msgstr ""
+
+#: ../locale/scriptstrings/d.mvmon_to_translate.c:5
+msgid "kill source monitor after moving"
+msgstr ""
+
+#: ../locale/scriptstrings/d.mvmon_to_translate.c:6
+#, fuzzy
+msgid "Target monitor"
+msgstr "Extrahuji body..."
+
+#: ../locale/scriptstrings/d.mvmon_to_translate.c:7
+msgid "Source monitor"
+msgstr ""
+
 #: ../sites/s.out.ascii/main.c:47 ../sites/s.in.ascii/main.c:50
 msgid "sites"
 msgstr "body"
@@ -26697,6 +28967,11 @@ msgstr "Nelze naèíst soubor s pøíznaky <%s>"
 #: ../imagery/i.smap/shapiro/read_sig.c:27
 #, c-format
 msgid "Signature file <%s> is invalid"
+msgstr "Soubor s pøíznaky <%s> je neplatný."
+
+#: ../imagery/i.smap/shapiro/read_sig.c:30
+#, fuzzy, c-format
+msgid "Signature file <%s> is empty"
 msgstr "Soubor s pøíznaky <%s> je neplatný."
 
 #: ../imagery/i.smap/shapiro/parse.c:21 ../imagery/i.maxlik/main.c:79
@@ -28594,6 +30869,75 @@ msgstr "Chyba bìhem odstraòování staré MASKY rastrové (cell) mapy."
 msgid "Can't mark another point.  Only %d points allowed.  Sorry."
 msgstr "Nelze oznaèit dal¹í bod. Promiòte, je povoleno pouze %d bodù."
 
+#, fuzzy
+#~ msgid "Failed in attempt to open %s"
+#~ msgstr "Selhalo zapisování øádku %d rastrové mapy"
+
+#~ msgid ""
+#~ "Generates raster map layers of slope, aspect, curvatures and partial "
+#~ "derivatives from a raster map layer of true elevation values. Aspect is "
+#~ "calculated counterclockwise from east."
+#~ msgstr ""
+#~ "Vytvoøí rastrovou mapu sklonu, expozice, køivosti a parciálních derivací "
+#~ "odvozenou z digitálního modelu terénu. Expozice je poèítána proti smìru "
+#~ "hodinových ruèièek s poèátkem na východì."
+
+#, fuzzy
+#~ msgid "Raster elevation file name"
+#~ msgstr "Rastrová mapa %i Název souboru: %s"
+
+#, fuzzy
+#~ msgid "Output slope filename"
+#~ msgstr "Název výstupní tabulky"
+
+#, fuzzy
+#~ msgid "Output aspect filename"
+#~ msgstr "Název výstupní tabulky"
+
+#, fuzzy
+#~ msgid "Output profile curvature filename"
+#~ msgstr "Název výstupního souboru profilových køivostí"
+
+#, fuzzy
+#~ msgid "Output tangential curvature filename"
+#~ msgstr "Název výstupního souboru tangenciálních køivostí"
+
+#, fuzzy
+#~ msgid "Output first order partial derivative dx (E-W slope) filename"
+#~ msgstr ""
+#~ "Název výstupní rastrové mapy parciálních derivací prvního øádu dx (V-Z "
+#~ "sklon svahu)"
+
+#, fuzzy
+#~ msgid "Output first order partial derivative dy (N-S slope) filename"
+#~ msgstr ""
+#~ "Název výstupní rastrové mapy parciálních derivací prvního øádu dy (S-J "
+#~ "sklon svahu)"
+
+#, fuzzy
+#~ msgid "Output second order partial derivative dxx filename"
+#~ msgstr "Název výstupnírastrové mapy parciálních derivací druhého øádu dxx"
+
+#, fuzzy
+#~ msgid "Output second order partial derivative dyy filename"
+#~ msgstr "Název výstupnírastrové mapy parciálních derivací druhého øádu dyy"
+
+#, fuzzy
+#~ msgid "Output second order partial derivative dxy filename"
+#~ msgstr "Název výstupní rastrové mapy parciálních derivací druhého øádu dxy"
+
+#, fuzzy
+#~ msgid "wrong type: %s"
+#~ msgstr "Chybný typ rastrové mapy: %s"
+
+#, fuzzy
+#~ msgid "Creating support files..."
+#~ msgstr "Vytváøím podpùrné soubory BIL..."
+
+#, fuzzy
+#~ msgid "Elevation products for mapset [%s] in [%s]"
+#~ msgstr "Vý¹kové produkty pro mapset <%s> v <%s>"
+
 #~ msgid ""
 #~ "Input raster map contains cells with NULL-value (no-data). The value %g "
 #~ "was used to represent no-data values in the input map. You can specify "
@@ -28619,9 +30963,6 @@ msgstr "Nelze oznaèit dal¹í bod. Promiòte, je povoleno pouze %d bodù."
 
 #~ msgid "Name of input vector points map"
 #~ msgstr "Název vstupní bodové vektorové vrstvy"
-
-#~ msgid "Name of output vector area map"
-#~ msgstr "Název výstupní vektorové vrstvy"
 
 #~ msgid "Cannot open vector map <%s>"
 #~ msgstr "Nelze otevøít vektorovou mapu <%s>"

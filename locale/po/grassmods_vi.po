@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: grassmods_vi\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-06-02 21:15+0200\n"
+"POT-Creation-Date: 2010-08-22 02:31+0200\n"
 "PO-Revision-Date: 2009-09-11 15:39+0700\n"
 "Last-Translator: \n"
 "Language-Team: American English <kde-i18n-doc@lists.kde.org>\n"
@@ -941,7 +941,6 @@ msgstr "Chỉ in ra đánh dấu thời gian của bản đồ raster 3D (ng.th.
 #: ../vector/v.what.rast/main.c:138 ../visualization/xganim/main.c:366
 #: ../visualization/nviz2/cmd/surface.c:56
 #: ../visualization/nviz2/cmd/surface.c:106 ../doc/raster/r.example/main.c:111
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:392
 #: ../ps/ps.map/outl_io.c:68 ../imagery/i.pca/main.c:129
 #: ../imagery/i.zc/main.c:111 ../imagery/i.rgb.his/openfiles.c:14
 #: ../imagery/i.rgb.his/openfiles.c:16 ../imagery/i.rgb.his/openfiles.c:18
@@ -968,7 +967,7 @@ msgstr "Không tìm thấy bản đồ raster <%s>"
 #: ../raster3d/base/r3.info.main.c:285 ../raster3d/base/r3.info.main.c:298
 #: ../raster3d/base/r3.info.main.c:308 ../raster3d/base/r3.info.main.c:313
 #: ../raster3d/base/r3.info.main.c:321 ../raster3d/base/r3.info.main.c:334
-#: ../raster/r.info/main.c:303 ../raster/r.info/main.c:428
+#: ../raster/r.info/main.c:303 ../raster/r.info/main.c:424
 msgid "Cannot allocate memory for string"
 msgstr "Không thể cấp phát bộ nhớ cho chuỗi "
 
@@ -1123,7 +1122,7 @@ msgstr "Dùng tọa độ bản đồ thay vì tọa độ xyz"
 #: ../raster/r.region/main.c:54 ../raster/r.in.mat/main.c:92
 #: ../raster/r.in.arc/main.c:59 ../raster/r.neighbors/main.c:106
 #: ../raster/r.bitpattern/main.c:62
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:153
+#: ../locale/scriptstrings/r.blend_to_translate.c:2
 msgid "raster"
 msgstr "raster"
 
@@ -1132,7 +1131,13 @@ msgid "Exports a GRASS raster to a binary array."
 msgstr "Xuất dữ liệu raster GRASS thành một mảng nhị phân."
 
 #: ../raster/r.out.bin/main.c:73 ../raster/r.random/main.c:57
-#: ../raster/r.water.outlet/main.c:55 ../imagery/i.zc/main.c:69
+#: ../raster/r.water.outlet/main.c:55
+#: ../locale/scriptstrings/r.out.gdal.sh_to_translate.c:5
+#: ../locale/scriptstrings/r.reclass.area_to_translate.c:3
+#: ../locale/scriptstrings/r.out.xyz_to_translate.c:3
+#: ../locale/scriptstrings/r.colors.stddev_to_translate.c:3
+#: ../locale/scriptstrings/d.rast.edit_to_translate.c:3
+#: ../imagery/i.zc/main.c:69
 msgid "Name of input raster map"
 msgstr "Tên bản đồ raster đầu vào"
 
@@ -1384,9 +1389,8 @@ msgstr "Không tìm thấy bản đồ raster gốc <%s>"
 #: ../general/manage/cmd/rename.c:84 ../vector/v.in.ogr/main.c:326
 #: ../vector/v.to.rast3/main.c:69 ../vector/v.kernel/main.c:263
 #: ../vector/v.surf.idw/main.c:132 ../vector/v.edit/main.c:86
-#: ../doc/raster/r.example/main.c:114
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/opennew.c:11
-#: ../imagery/i.zc/main.c:119 ../imagery/i.ifft/ifftmain.c:116
+#: ../doc/raster/r.example/main.c:114 ../imagery/i.zc/main.c:119
+#: ../imagery/i.ifft/ifftmain.c:116
 #: ../imagery/i.ortho.photo/photo.camera/main.c:90
 #: ../imagery/i.fft/fftmain.c:121 ../imagery/i.fft/fftmain.c:124
 #, c-format
@@ -1470,6 +1474,8 @@ msgstr "Lỗi khi đọc bản đồ 'saturation' (độ bão hòa)"
 #: ../raster/r.out.mat/main.c:64 ../raster/r.out.ascii/main.c:59
 #: ../raster/r.out.ppm/main.c:54 ../raster/r.out.tiff/r.out.tiff.c:99
 #: ../raster/r.out.gdal/main.c:128
+#: ../locale/scriptstrings/r.out.gdal.sh_to_translate.c:2
+#: ../locale/scriptstrings/r.out.xyz_to_translate.c:2
 msgid "raster, export"
 msgstr "raster, xuất"
 
@@ -1483,6 +1489,9 @@ msgstr "Tên tập tin MAT-File nhị phân đầu ra"
 
 #: ../raster/r.out.mat/main.c:81 ../raster/r.out.tiff/r.out.tiff.c:136
 #: ../raster/r.in.mat/main.c:115
+#: ../locale/scriptstrings/v.in.e00_to_translate.c:3
+#: ../locale/scriptstrings/v.in.garmin_to_translate.c:3
+#: ../locale/scriptstrings/v.in.gpsbabel_to_translate.c:3
 msgid "Verbose mode"
 msgstr "Chế độ đầy đủ"
 
@@ -1579,6 +1588,7 @@ msgstr "%ld byte được ghi vào '%s'"
 
 #: ../raster/r.in.poly/main.c:29 ../raster/r.in.gdal/main.c:79
 #: ../raster/r.in.bin/main.c:122 ../raster/r.external/main.c:506
+#: ../locale/scriptstrings/r.in.srtm_to_translate.c:2
 msgid "raster, import"
 msgstr "raster, nhập"
 
@@ -1926,7 +1936,6 @@ msgstr "Đọc bản đồ fp (dấu chấm động) ở dạng số nguyên"
 #: ../raster/r.distance/parse.c:72 ../raster/r.carve/main.c:126
 #: ../raster/r.neighbors/main.c:277 ../vector/v.qcount/main.c:117
 #: ../vector/v.mkgrid/main.c:132
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:328
 msgid ""
 "The '-q' flag is superseded and will be removed in future. Please use '--"
 "quiet' instead."
@@ -2018,9 +2027,7 @@ msgstr "Tiêu đề bản đồ raster đầu ra"
 #: ../raster/r.kappa/main.c:102 ../raster/r.report/parse.c:95
 #: ../raster/r.bitpattern/main.c:87 ../vector/v.sample/main.c:129
 #: ../vector/v.perturb/main.c:117 ../vector/v.kcv/main.c:106
-#: ../doc/raster/r.example/main.c:96
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:290
-#: ../imagery/i.cluster/main.c:163
+#: ../doc/raster/r.example/main.c:96 ../imagery/i.cluster/main.c:163
 msgid "Quiet"
 msgstr "Im lặng"
 
@@ -2994,12 +3001,14 @@ msgstr "Liệt kê các định dạng được hỗ trợ và thoát"
 #: ../vector/v.info/main.c:92 ../vector/v.info/main.c:97
 #: ../vector/v.db.connect/main.c:81 ../vector/v.db.connect/main.c:86
 #: ../vector/v.db.connect/main.c:94 ../vector/v.db.connect/main.c:110
-#: ../db/base/connect.c:52 ../imagery/i.group/main.c:77
-#: ../imagery/i.group/main.c:83
+#: ../db/base/connect.c:52
+#: ../locale/scriptstrings/g.extension_to_translate.c:9
+#: ../imagery/i.group/main.c:77 ../imagery/i.group/main.c:83
 msgid "Print"
 msgstr "In"
 
 #: ../raster/r.in.gdal/main.c:146
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:11
 msgid "Keep band numbers instead of using band color names"
 msgstr "Giữ số hiệu băng thay vì sử dụng tên màu của băng"
 
@@ -3245,11 +3254,6 @@ msgstr "Dữ liệu có dấu (bit cao có nghĩa là giá trị âm)"
 #: ../vector/v.vol.rst/main.c:319 ../vector/v.vol.rst/main.c:328
 #: ../vector/v.vol.rst/main.c:337 ../vector/v.vol.rst/main.c:345
 #: ../vector/v.db.connect/main.c:60 ../vector/v.db.connect/main.c:65
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:189
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:199
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:276
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:285
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:296
 #: ../db/base/connect.c:62 ../db/base/connect.c:66 ../db/base/connect.c:77
 #: ../db/base/connect.c:87 ../imagery/i.cluster/main.c:105
 #: ../imagery/i.cluster/main.c:121 ../imagery/i.cluster/main.c:129
@@ -4121,6 +4125,8 @@ msgstr "Không thể đọc bản đồ raster hàng %d"
 #: ../raster/r.stats/main.c:103 ../raster/r.statistics/main.c:42
 #: ../raster/r.report/main.c:64 ../raster/r.univar2/r.univar_main.c:75
 #: ../raster/r.support.stats/main.c:39 ../raster/r.quantile/main.c:254
+#: ../locale/scriptstrings/r.regression.line_to_translate.c:2
+#: ../locale/scriptstrings/r.univar.sh_to_translate.c:2
 msgid "raster, statistics"
 msgstr "raster, thống kê"
 
@@ -4129,13 +4135,14 @@ msgid "Generates area statistics for raster map layers."
 msgstr "Tạo thống kê diện tích cho các lớp bản đồ raster."
 
 #: ../raster/r.stats/main.c:114
+#: ../locale/scriptstrings/r.out.xyz_to_translate.c:4
 msgid "Name for output file (if omitted or \"-\" output to stdout)"
 msgstr ""
 "Tên tập tin đầu ra (nếu bỏ qua hoặc \"-\" thì xuất ra đầu ra tiêu chuẩn)"
 
 #: ../raster/r.stats/main.c:119 ../raster/r.cats/main.c:72
 #: ../raster/r.distance/parse.c:50 ../vector/v.db.select/main.c:63
-#: ../db/base/select.c:202
+#: ../db/base/select.c:202 ../locale/scriptstrings/r.tileset_to_translate.c:13
 msgid "Output field separator"
 msgstr "Dấu phân cách trường đầu ra"
 
@@ -4713,12 +4720,10 @@ msgid "Name for output aspect raster map"
 msgstr "Tên của bản đồ raster hướng đầu ra"
 
 #: ../raster/r.slope.aspect/main.c:178
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:188
 msgid "Format for reporting the slope"
 msgstr "Định dạng để báo cáo độ dốc"
 
 #: ../raster/r.slope.aspect/main.c:188
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:198
 msgid "Type of output aspect and slope maps"
 msgstr "Kiểu bản đồ hướng và độ dốc đầu ra"
 
@@ -4753,17 +4758,14 @@ msgid "Name for output second order partial derivative dxy raster map"
 msgstr "Tên của bản đồ raster đạo hàm riêng bậc hai dxy đầu ra"
 
 #: ../raster/r.slope.aspect/main.c:243
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:272
 msgid "Multiplicative factor to convert elevation units to meters"
 msgstr "Hệ số nhân để đổi đơn vị độ cao thành mét"
 
 #: ../raster/r.slope.aspect/main.c:252
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:281
 msgid "Minimum slope val. (in percent) for which aspect is computed"
 msgstr "Giá trị độ dốc nhỏ nhất (theo phần trăm) để tính toán hướng"
 
 #: ../raster/r.slope.aspect/main.c:266
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:295
 msgid "Do not align the current region to the elevation layer"
 msgstr "Không canh thẳng vùng hiện tại theo lớp độ cao"
 
@@ -4807,7 +4809,6 @@ msgid "Elevation products for mapset <%s> in <%s>"
 msgstr "Các sản phẩm độ cao cho bộ bản đồ <%s> trong <%s>"
 
 #: ../raster/r.slope.aspect/main.c:1009
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:1042
 #, c-format
 msgid "Min computed aspect %.4f, max computed aspect %.4f"
 msgstr "Hướng nhỏ nhất tính được %.4f   hướng lớn nhất tính được %.4f"
@@ -4818,7 +4819,6 @@ msgid "Aspect raster map <%s> complete"
 msgstr "Bản đồ raster hướng <%s> hoàn tất"
 
 #: ../raster/r.slope.aspect/main.c:1113
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:1146
 #, c-format
 msgid "Min computed slope %.4f, max computed slope %.4f"
 msgstr "Độ dốc nhỏ nhất tính được %.4f   độ dốc lớn nhất tính được %.4f"
@@ -5017,7 +5017,14 @@ msgid "Imports GRIDATB.FOR map file (TOPMODEL) into GRASS raster map"
 msgstr ""
 "Nhập tập tin bản đồ GRIDATB.FOR (TOPMODEL) vào thành bản đồ raster GRASS"
 
-#: ../raster/r.in.gridatb/main.c:53 ../imagery/i.ifft/ifftmain.c:83
+#: ../raster/r.in.gridatb/main.c:53
+#: ../locale/scriptstrings/r.reclass.area_to_translate.c:4
+#: ../locale/scriptstrings/r.in.aster_to_translate.c:6
+#: ../locale/scriptstrings/r.mapcalculator_to_translate.c:9
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:18
+#: ../locale/scriptstrings/d.rast.edit_to_translate.c:4
+#: ../locale/scriptstrings/i.in.spotvgt_to_translate.c:5
+#: ../imagery/i.ifft/ifftmain.c:83
 msgid "Name for output raster map"
 msgstr "Tên của bản đồ raster đầu ra"
 
@@ -5048,7 +5055,6 @@ msgstr "Tên của lớp đầu ra"
 
 #: ../raster/r.resample/main.c:137 ../raster/r.resamp.rst/main.c:527
 #: ../vector/v.surf.rst/main.c:602 ../vector/v.surf.rst/main.c:753
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:600
 msgid "Percent complete: "
 msgstr "Phần trăm hoàn tất:"
 
@@ -7551,6 +7557,7 @@ msgid "Raster file(s) for View%d"
 msgstr "(Các) tập tin raster cho Phép xem %d"
 
 #: ../raster/r.out.mpeg/main.c:406
+#: ../locale/scriptstrings/r.out.gdal.sh_to_translate.c:8
 msgid "Name for output file"
 msgstr "Tên cho tập tin đầu ra"
 
@@ -8433,6 +8440,7 @@ msgstr ""
 "bị loại bỏ trong tương lai)"
 
 #: ../raster/r.colors/main.c:165
+#: ../locale/scriptstrings/r.colors.stddev_to_translate.c:2
 msgid "raster, color table"
 msgstr "raster, bảng màu"
 
@@ -8441,6 +8449,7 @@ msgid "Creates/modifies the color table associated with a raster map layer."
 msgstr "Tạo/Thay đổi bảng màu liên quan đến một lớp bản đồ raster."
 
 #: ../raster/r.colors/main.c:181
+#: ../locale/scriptstrings/v.colors_to_translate.c:9
 msgid "Type of color table"
 msgstr "Kiểu bảng màu"
 
@@ -8457,10 +8466,16 @@ msgstr "Kiểu bảng màu"
 #: ../vector/v.label/main.c:153 ../vector/v.label/main.c:177
 #: ../vector/v.label/main.c:190 ../vector/v.label/main.c:196
 #: ../vector/v.label/main.c:206
+#: ../locale/scriptstrings/v.colors_to_translate.c:7
+#: ../locale/scriptstrings/v.colors_to_translate.c:10
+#: ../locale/scriptstrings/v.colors_to_translate.c:12
+#: ../locale/scriptstrings/v.colors_to_translate.c:14
+#: ../locale/scriptstrings/v.colors_to_translate.c:17
 msgid "Colors"
 msgstr "Màu"
 
 #: ../raster/r.colors/main.c:191
+#: ../locale/scriptstrings/v.colors_to_translate.c:11
 msgid "Raster map name from which to copy color table"
 msgstr "Tên bản đồ raster để sao chép bảng màu từ đó"
 
@@ -8481,6 +8496,7 @@ msgid "List available rules then exit"
 msgstr "Liệt kê các quy tắc và thoát"
 
 #: ../raster/r.colors/main.c:214
+#: ../locale/scriptstrings/v.colors_to_translate.c:16
 msgid "Invert colors"
 msgstr "Đảo màu"
 
@@ -9020,6 +9036,7 @@ msgid "Exports GRASS raster maps into GDAL supported formats."
 msgstr "Xuất các bản đồ raster GRASS ra các định dạng được GDAL hỗ trợ."
 
 #: ../raster/r.out.gdal/main.c:132
+#: ../locale/scriptstrings/r.out.gdal.sh_to_translate.c:3
 msgid "List supported output formats"
 msgstr "Liệt kê các định dạng đầu ra được hỗ trợ"
 
@@ -9045,10 +9062,12 @@ msgid "Name of raster map (or group) to export"
 msgstr "Tên bản đồ raster (hoặc nhóm) cần xuất"
 
 #: ../raster/r.out.gdal/main.c:154
+#: ../locale/scriptstrings/r.out.gdal.sh_to_translate.c:6
 msgid "GIS format to write (case sensitive, see also -l flag)"
 msgstr "Định dạng GIS cần ghi (phân biệt chữ hoa/thường, xem thêm cờ -l)"
 
 #: ../raster/r.out.gdal/main.c:175
+#: ../locale/scriptstrings/r.out.gdal.sh_to_translate.c:7
 msgid "File type"
 msgstr "Kiểu tập tin"
 
@@ -9061,6 +9080,7 @@ msgid "Creation option(s) to pass to the output format driver"
 msgstr "Các tùy chọn tạo để truyền đến trình điều khiển định dạng đầu ra"
 
 #: ../raster/r.out.gdal/main.c:192
+#: ../locale/scriptstrings/d.out.file_to_translate.c:21
 msgid "In the form of \"NAME=VALUE\", separate multiple entries with a comma."
 msgstr "Ở dạng \"TÊN=GIÁ_TRỊ\", các mục cách nhau bởi dấu phẩy."
 
@@ -9328,8 +9348,8 @@ msgstr ""
 #: ../raster/r.out.gdal/export_band.c:215
 #, c-format
 msgid ""
-"The given nodata value is present in rasterband <%s> and would lead to data "
-"loss. Please specify a different nodata value with the %s parameter."
+"The user given nodata value %g is present in rasterband <%s> and would lead "
+"to data loss. Please specify a different nodata value with the %s parameter."
 msgstr ""
 
 #: ../raster/r.out.gdal/export_band.c:259
@@ -10279,6 +10299,7 @@ msgid "Converts a raster map into a vector map layer."
 msgstr "Đổi một bản đồ raster thành một lớp bản đồ vec-tơ."
 
 #: ../raster/r.to.vect/main.c:64 ../vector/v.to.db/parse.c:36
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:6
 msgid "Feature type"
 msgstr "Kiểu đối tượng"
 
@@ -11947,6 +11968,7 @@ msgid "Creates topographic index [ln(a/tan(beta))] map from elevation map."
 msgstr "Tạo bản đồ chỉ mục địa hình (ln(a/tan(beta))) từ bản đồ độ cao."
 
 #: ../raster/r.topidx/main.c:42
+#: ../locale/scriptstrings/r.shaded.relief_to_translate.c:3
 msgid "Input elevation map"
 msgstr "Bản đồ độ cao đầu vào"
 
@@ -11972,6 +11994,7 @@ msgstr "Đang ghi bản đồ chỉ mục địa hình..."
 
 #: ../raster/r.univar2/r.univar_main.c:40
 #: ../raster/r.univar2/r3.univar_main.c:39 ../vector/v.univar/main.c:92
+#: ../locale/scriptstrings/v.rast.stats_to_translate.c:10
 msgid "Percentile to calculate (requires extended statistics flag)"
 msgstr "Phân vị để tính toán (cần cờ thống kê mở rộng)"
 
@@ -11982,6 +12005,7 @@ msgstr "In ra các thống kê ở dạng tập lệnh shell"
 
 #: ../raster/r.univar2/r.univar_main.c:49
 #: ../raster/r.univar2/r3.univar_main.c:48 ../vector/v.univar/main.c:100
+#: ../locale/scriptstrings/v.rast.stats_to_translate.c:4
 msgid "Calculate extended statistics"
 msgstr "Tính thống kê mở rộng"
 
@@ -12625,11 +12649,15 @@ msgstr "Truy cập cho nhóm"
 msgid "Access for others"
 msgstr "Truy cập cho các người khác"
 
-#: ../general/g.access/main.c:63
+#: ../general/g.access/main.c:59
+msgid "UNIX filesystem access controls are not supported by MS-Windows"
+msgstr ""
+
+#: ../general/g.access/main.c:67
 msgid "Access to the PERMANENT mapset must be open, nothing changed"
 msgstr "Truy cập vào bộ bản đồ PERMANENT phải được mở, không có gì bị thay đổi"
 
-#: ../general/g.access/main.c:67
+#: ../general/g.access/main.c:71
 msgid "Unable to determine mapset permissions"
 msgstr "Không thể xác định các quyền đối với bộ bản đồ"
 
@@ -13456,6 +13484,8 @@ msgid "Use extended regular expressions instead of wildcards"
 msgstr "Dùng biểu thức quy tắc mở rộng thay vì các ký tự đại diện"
 
 #: ../general/g.mremove/main.c:76
+#: ../locale/scriptstrings/db.droptable_to_translate.c:3
+#: ../locale/scriptstrings/db.dropcol_to_translate.c:3
 msgid "Force removal (required for actual deletion of files)"
 msgstr "Buộc loại bỏ (cần thiết để thực sự xóa bỏ các tập tin)"
 
@@ -13652,6 +13682,8 @@ msgid "Print the maximum bounding box in lat/long on WGS84"
 msgstr "In ra khung bao lớn nhất theo kinh/vĩ trong WGS84"
 
 #: ../general/g.region/main.c:133
+#: ../locale/scriptstrings/r.regression.line_to_translate.c:3
+#: ../locale/scriptstrings/i.oif_to_translate.c:9
 msgid "Print in shell script style"
 msgstr "In ra ở dạng tập lệnh shell"
 
@@ -13928,6 +13960,8 @@ msgstr ""
 #: ../display/d.text/main.c:66 ../display/d.rast.num/number.c:84
 #: ../display/d.nviz/main.c:68 ../display/d.zoom/main.c:57
 #: ../visualization/ximgview/main.c:270
+#: ../locale/scriptstrings/d.rast.leg_to_translate.c:2
+#: ../locale/scriptstrings/d.redraw_to_translate.c:2
 msgid "display"
 msgstr "trình bày"
 
@@ -14363,6 +14397,13 @@ msgstr "Màu lưới"
 
 #: ../display/d.grid/main.c:76 ../display/d.grid/main.c:81
 #: ../display/d.grid/main.c:87
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:27
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:30
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:33
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:36
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:39
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:55
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:57
 msgid "Color"
 msgstr "Màu"
 
@@ -14848,6 +14889,10 @@ msgstr ""
 " \n"
 
 #: ../display/d.extend/main.c:31
+#: ../locale/scriptstrings/d.split_to_translate.c:2
+#: ../locale/scriptstrings/d.resize_to_translate.c:2
+#: ../locale/scriptstrings/d.monsize_to_translate.c:2
+#: ../locale/scriptstrings/d.mvmon_to_translate.c:2
 msgid "display, setup"
 msgstr "trình bày, cài đặt"
 
@@ -14857,10 +14902,12 @@ msgstr "Không có bản đồ raster hoặc vec-tơ nào được trình bày"
 
 #: ../display/d.rast.edit/main.c:59 ../display/d.colortable/main.c:60
 #: ../display/d.rast/main.c:51
+#: ../locale/scriptstrings/d.rast.edit_to_translate.c:2
 msgid "display, raster"
 msgstr "trình bày, raster"
 
 #: ../display/d.rast.edit/main.c:61
+#: ../locale/scriptstrings/d.rast.edit_to_translate.c:1
 msgid "Interactively edit cell values in a raster map."
 msgstr "Chỉnh sửa ở chế độ tương tác các giá trị ô trong một bản đồ raster."
 
@@ -14909,6 +14956,8 @@ msgstr ""
 "đồ họa."
 
 #: ../display/d.legend/main.c:92 ../display/d.zoom/main.c:90
+#: ../locale/scriptstrings/d.rast.leg_to_translate.c:5
+#: ../locale/scriptstrings/r.univar.sh_to_translate.c:4
 msgid "Name of raster map"
 msgstr "Tên của bản đồ raster"
 
@@ -14927,13 +14976,6 @@ msgstr "Số lượng dòng chữ (có ích để cắt bớt các chú giải d
 #: ../display/d.legend/main.c:180 ../display/d.legend/main.c:185
 #: ../vector/v.buffer/main.c:279 ../vector/v.buffer/main.c:287
 #: ../vector/v.buffer/main.c:294 ../vector/v.buffer/main.c:304
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:208
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:217
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:227
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:237
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:247
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:257
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:267
 msgid "Advanced"
 msgstr "Nâng cao"
 
@@ -14978,6 +15020,7 @@ msgid "Draw smooth gradient"
 msgstr "Vẽ  gradient trơn"
 
 #: ../display/d.legend/main.c:184
+#: ../locale/scriptstrings/d.rast.leg_to_translate.c:3
 msgid "Flip legend"
 msgstr "Lật chú giải"
 
@@ -16635,6 +16678,7 @@ msgstr ""
 "tương tác bằng cách dùng chuột."
 
 #: ../display/d.zoom/main.c:100
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:4
 msgid "Name of vector map"
 msgstr "Tên của bản đồ vector"
 
@@ -17012,6 +17056,7 @@ msgstr "Không tìm thấy thuộc tính cho cat %d: %s"
 #: ../vector/v.external/main.c:58 ../vector/v.clean/test/topocheck.c:42
 #: ../vector/v.buffer/main.c:254 ../vector/v.info/main.c:257
 #: ../vector/v.surf.rst/main.c:161
+#: ../locale/scriptstrings/v.build.all_to_translate.c:2
 msgid "vector"
 msgstr "vector"
 
@@ -17117,6 +17162,15 @@ msgstr "Không thể chèn hàng: %s"
 
 #: ../vector/v.db.select/main.c:52 ../vector/v.to.db/main.c:33
 #: ../vector/v.distance/main.c:115 ../vector/v.db.connect/main.c:50
+#: ../locale/scriptstrings/v.what.vect_to_translate.c:2
+#: ../locale/scriptstrings/v.db.update_to_translate.c:2
+#: ../locale/scriptstrings/v.db.renamecol_to_translate.c:2
+#: ../locale/scriptstrings/v.db.reconnect.all_to_translate.c:2
+#: ../locale/scriptstrings/v.db.droptable_to_translate.c:2
+#: ../locale/scriptstrings/v.db.join_to_translate.c:2
+#: ../locale/scriptstrings/v.db.addtable_to_translate.c:2
+#: ../locale/scriptstrings/v.db.dropcol_to_translate.c:2
+#: ../locale/scriptstrings/v.db.addcol_to_translate.c:2
 msgid "vector, database, attribute table"
 msgstr "vector, CSDL, bảng thuộc tính"
 
@@ -17250,6 +17304,7 @@ msgid "Required for operation 'connect'"
 msgstr "Cần có đối với lệnh 'connect' (kết nối)"
 
 #: ../vector/v.net/main.c:69
+#: ../locale/scriptstrings/g.extension_to_translate.c:5
 msgid "Operation to be performed"
 msgstr "Tác vụ cần thực hiện"
 
@@ -17663,6 +17718,8 @@ msgstr "Không thể nào ghi được CSDL"
 #: ../vector/v.qcount/main.c:69 ../vector/v.kcv/main.c:76
 #: ../vector/v.class/main.c:45 ../vector/v.normal/main.c:79
 #: ../vector/v.univar/main.c:64
+#: ../locale/scriptstrings/v.univar.sh_to_translate.c:2
+#: ../locale/scriptstrings/v.db.univar_to_translate.c:2
 msgid "vector, statistics"
 msgstr "vector, thống kê"
 
@@ -18508,6 +18565,9 @@ msgstr "Không tìm thấy bản đồ vector <%s> trong bộ bản đồ hiện
 
 #: ../vector/v.in.ogr/main.c:101 ../vector/v.in.dxf/main.c:60
 #: ../vector/v.in.dwg/main.c:65 ../vector/v.in.ascii/in.c:48
+#: ../locale/scriptstrings/v.convert.all_to_translate.c:2
+#: ../locale/scriptstrings/v.in.e00_to_translate.c:2
+#: ../locale/scriptstrings/v.in.mapgen_to_translate.c:2
 msgid "vector, import"
 msgstr "vector, nhập"
 
@@ -19675,6 +19735,11 @@ msgid "Path to resulting VTK file"
 msgstr "Đường dẫn đến tập tin VTK tạo thành"
 
 #: ../vector/v.out.vtk/main.c:83
+#: ../locale/scriptstrings/v.report_to_translate.c:6
+#: ../locale/scriptstrings/v.out.gpsbabel_to_translate.c:10
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:17
+#: ../locale/scriptstrings/v.rast.stats_to_translate.c:6
+#: ../locale/scriptstrings/v.centroids_to_translate.c:6
 msgid "Layer number"
 msgstr "Lớp số"
 
@@ -19745,6 +19810,9 @@ msgstr "Dấu phân cách trường (chế độ điểm)"
 
 #: ../vector/v.out.ascii/out.c:67 ../vector/v.out.ascii/out.c:77
 #: ../vector/v.out.ascii/out.c:84 ../vector/v.out.ascii/out.c:97
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:18
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:20
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:23
 msgid "Points"
 msgstr "Điểm"
 
@@ -19999,6 +20067,7 @@ msgid "Import polyface meshes as 3D wire frame"
 msgstr "Nhập các mắt lưới polyface ở dạng khung lưới 3D"
 
 #: ../vector/v.in.dxf/main.c:82 ../vector/v.in.dwg/main.c:96
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:3
 msgid "List available layers and exit"
 msgstr "Liệt kê các lớp hiện có và thoát"
 
@@ -21144,6 +21213,11 @@ msgid "Produces a convex hull for a given vector map."
 msgstr ""
 
 #: ../vector/v.hull/main.c:278
+#: ../locale/scriptstrings/v.report_to_translate.c:5
+#: ../locale/scriptstrings/v.out.gpsbabel_to_translate.c:6
+#: ../locale/scriptstrings/v.colors_to_translate.c:3
+#: ../locale/scriptstrings/v.dissolve_to_translate.c:3
+#: ../locale/scriptstrings/v.centroids_to_translate.c:3
 msgid "Name of input vector map"
 msgstr "Tên của bản đồ vector đầu vào"
 
@@ -24442,6 +24516,7 @@ msgstr ""
 "lý)"
 
 #: ../vector/v.category/main.c:112
+#: ../locale/scriptstrings/v.centroids_to_translate.c:8
 msgid "Category increment"
 msgstr "Số gia phạm trù"
 
@@ -25367,6 +25442,7 @@ msgid "Image"
 msgstr "Ảnh"
 
 #: ../visualization/nviz2/cmd/args.c:87
+#: ../locale/scriptstrings/d.out.file_to_translate.c:4
 msgid "Graphics file format"
 msgstr "Định dạng tập tin đồ họa"
 
@@ -25717,120 +25793,6 @@ msgstr "Lỗi khi đang thu thập bản ghi CSDL cho phạm trù %d"
 #, c-format
 msgid "Unable to copy attribute table to vector map <%s>"
 msgstr "Không thể chép bảng thuộc tính vào bản đồ vec-tơ <%s>"
-
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/opennew.c:19
-#, c-format
-msgid "Failed in attempt to open %s"
-msgstr "Thất bại trong việc mở %s"
-
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:155
-msgid ""
-"Generates raster map layers of slope, aspect, curvatures and partial "
-"derivatives from a raster map layer of true elevation values. Aspect is "
-"calculated counterclockwise from east."
-msgstr ""
-"Tạo ra các lớp bản đồ độ dốc, hướng, độ cong và các đạo hàm riêng từ một lớp "
-"bản đồ raster có các giá trị độ cao thực. Hướng được tính ngược chiều kim "
-"đồng hồ từ hướng đông."
-
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:164
-msgid "Raster elevation file name"
-msgstr "Tên tập tin độ cao raster"
-
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:172
-msgid "Output slope filename"
-msgstr "Tên tập tin độ dốc đầu ra"
-
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:180
-msgid "Output aspect filename"
-msgstr "Tên tập tin hướng đầu ra"
-
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:207
-msgid "Output profile curvature filename"
-msgstr "Tên tập tin độ cong thiết diện đầu ra"
-
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:216
-msgid "Output tangential curvature filename"
-msgstr "Tên tập tin độ cong tiếp tuyến đầu ra"
-
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:226
-msgid "Output first order partial derivative dx (E-W slope) filename"
-msgstr "Tên tập tin đạo hàm riêng dx bậc một (độ dốc Đ-T) đầu ra"
-
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:236
-msgid "Output first order partial derivative dy (N-S slope) filename"
-msgstr "Tên tập tin đạo hàm riêng dy bậc một (độ dốc B-N) đầu ra"
-
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:246
-msgid "Output second order partial derivative dxx filename"
-msgstr "Tên tập tin đạo hàm riêng dxx bậc hai đầu ra"
-
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:256
-msgid "Output second order partial derivative dyy filename"
-msgstr "Tên tập tin đạo hàm riêng dyy bậc hai đầu ra"
-
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:266
-msgid "Output second order partial derivative dxy filename"
-msgstr "Tên tập tin đạo hàm riêng dxy bậc hai đầu ra"
-
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:412
-#, c-format
-msgid "wrong type: %s"
-msgstr "kiểu không đúng: %s"
-
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:1021
-msgid "Creating support files..."
-msgstr "Đang tạo các tập tin hỗ trợ..."
-
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:1023
-#, c-format
-msgid "Elevation products for mapset [%s] in [%s]"
-msgstr "Các sản phẩm độ cao cho bộ bản đồ [%s] trong [%s]"
-
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:1104
-#, c-format
-msgid "ASPECT [%s] COMPLETE"
-msgstr "HƯỚNG [%s] HOÀN TẤT"
-
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:1197
-#, c-format
-msgid "SLOPE [%s] COMPLETE"
-msgstr "ĐỘ DỐC [%s] HOÀN TẤT"
-
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:1268
-#, c-format
-msgid "PROFILE CURVE [%s] COMPLETE"
-msgstr "ĐỘ CONG THIẾT DIỆN [%s] HOÀN TẤT"
-
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:1294
-#, c-format
-msgid "TANGENTIAL CURVE [%s] COMPLETE"
-msgstr "ĐỘ CONG TIẾP TUYẾN [%s] HOÀN TẤT"
-
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:1318
-#, c-format
-msgid "E-W SLOPE [%s] COMPLETE"
-msgstr "ĐỘ DỐC Đ-T [%s] HOÀN TẤT"
-
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:1342
-#, c-format
-msgid "N-S SLOPE [%s] COMPLETE"
-msgstr "ĐỘ DỐC B-N [%s] HOÀN TẤT"
-
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:1366
-#, c-format
-msgid "DXX [%s] COMPLETE"
-msgstr "DXX [%s] HOÀN TẤT"
-
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:1390
-#, c-format
-msgid "DYY [%s] COMPLETE"
-msgstr "DYY [%s] HOÀN TẤT"
-
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:1414
-#, c-format
-msgid "DXY [%s] COMPLETE"
-msgstr "DXY [%s] HOÀN TẤT"
 
 #: ../ps/ps.map/ps_vlines.c:55 ../ps/ps.map/ps_vpoints.c:71
 #: ../ps/ps.map/ps_vareas.c:163
@@ -26278,6 +26240,11 @@ msgstr "Không thể mở csdl:"
 
 #: ../db/base/columns.c:92 ../db/base/drivers.c:74 ../db/base/connect.c:45
 #: ../db/base/describe.c:125 ../db/base/tables.c:95
+#: ../locale/scriptstrings/db.test_to_translate.c:2
+#: ../locale/scriptstrings/db.out.ogr_to_translate.c:2
+#: ../locale/scriptstrings/db.droptable_to_translate.c:2
+#: ../locale/scriptstrings/db.dropcol_to_translate.c:2
+#: ../locale/scriptstrings/db.in.ogr_to_translate.c:2
 msgid "database, attribute table"
 msgstr "CSDL, bảng thuộc tính"
 
@@ -26570,6 +26537,2437 @@ msgstr "Không thể thiết lập người dùng/mật mã"
 msgid "The password was stored in file"
 msgstr "Mật mã được lưu trong tập tin"
 
+#: ../locale/scriptstrings/d.split_to_translate.c:1
+msgid ""
+"Divides active display into two frames & displays maps/executes commands in "
+"each frame."
+msgstr ""
+"Chia phần trình bày kích hoạt thành hai khung và trình bày bản đồ/thực thi "
+"các lệnh trong mỗi khung."
+
+#: ../locale/scriptstrings/d.split_to_translate.c:3
+msgid "Enter raster map to display in 1st frame"
+msgstr "Nhập bản đồ cần trình bày ở khung thứ nhất"
+
+#: ../locale/scriptstrings/d.split_to_translate.c:4
+msgid "Enter command to execute in 1st frame"
+msgstr "Nhập lệnh cần thực thi trong khung thứ nhất"
+
+#: ../locale/scriptstrings/d.split_to_translate.c:5
+msgid "Enter raster map to display in 2nd frame"
+msgstr "Nhập bản đồ cần trình bày ở khung thứ hai"
+
+#: ../locale/scriptstrings/d.split_to_translate.c:6
+msgid "Enter command to execute in 2nd frame"
+msgstr "Nhập lệnh cần thực thi trong khung thứ hai"
+
+#: ../locale/scriptstrings/d.split_to_translate.c:7
+msgid "How to split display"
+msgstr "Chia phần trình bày như thế nào"
+
+#: ../locale/scriptstrings/i.spectral_to_translate.c:1
+#, fuzzy
+msgid ""
+"Displays spectral response at user specified locations in group or images."
+msgstr ""
+"trình bày phản ứng phổ tại các vị trí do người dùng chỉ định trong nhóm hoặc "
+"các ảnh"
+
+#: ../locale/scriptstrings/i.spectral_to_translate.c:2
+msgid "imagery, raster, multispectral"
+msgstr "ảnh, raster, đa phổ"
+
+#: ../locale/scriptstrings/i.spectral_to_translate.c:3
+#, fuzzy
+msgid "Group input"
+msgstr "nhóm đầu vào"
+
+#: ../locale/scriptstrings/i.spectral_to_translate.c:4
+#, fuzzy
+msgid "Raster input maps"
+msgstr "Bản đồ raster đầu vào"
+
+#: ../locale/scriptstrings/i.spectral_to_translate.c:5
+#, fuzzy
+msgid "Write output to PNG image"
+msgstr "Ghi đè tập tin bản đồ đầu ra"
+
+#: ../locale/scriptstrings/i.spectral_to_translate.c:6
+msgid "Use image list and not group"
+msgstr "Dùng danh sách ảnh chứ không dùng nhóm"
+
+#: ../locale/scriptstrings/i.spectral_to_translate.c:7
+msgid "Select multiple points"
+msgstr "Cho nhiều điểm một lượt"
+
+#: ../locale/scriptstrings/i.spectral_to_translate.c:8
+#, fuzzy
+msgid "Label with coordinates instead of numbering"
+msgstr "nhãn bằng tọa độ thay vì đánh số"
+
+#: ../locale/scriptstrings/v.convert.all_to_translate.c:1
+#, fuzzy
+msgid ""
+"Convert all old GRASS < Ver5.7 vector maps in current mapset to current "
+"format"
+msgstr ""
+"đổi tất cả các bản đồ vector GRASS kiểu cũ < 5.7 trong bộ bản đồ hiện tại "
+"thành định dạng hiện tại"
+
+#: ../locale/scriptstrings/v.convert.all_to_translate.c:3
+msgid "run non-interactively"
+msgstr "Chạy ở chế độ không tương tác"
+
+#: ../locale/scriptstrings/r.out.gdal.sh_to_translate.c:1
+#, fuzzy
+msgid "Exports GRASS raster into GDAL supported formats."
+msgstr "Xuất các tập tin vector GRASS thành định dạng tập tin DXF."
+
+#: ../locale/scriptstrings/r.out.gdal.sh_to_translate.c:4
+#, fuzzy
+msgid "Region sensitive output"
+msgstr "Trục trặc khi đọc đầu ra r.stats"
+
+#: ../locale/scriptstrings/r.out.gdal.sh_to_translate.c:9
+#, fuzzy
+msgid ""
+"Creation option to the output format driver. Multiple options may be listed"
+msgstr ""
+"tùy chọn tạo đối với trình điều khiển định dạng đầu ra. Nhiều tùy chọn có "
+"thể được liệt kê cùng lúc"
+
+#: ../locale/scriptstrings/r.out.gdal.sh_to_translate.c:10
+#, fuzzy
+msgid "Metadata key passed on the output dataset if possible"
+msgstr "truyền khóa metadata đến bộ dữ liệu đầu ra nếu được"
+
+#: ../locale/scriptstrings/r.regression.line_to_translate.c:1
+msgid "Calculates linear regression from two raster maps: y = a + b*x"
+msgstr "Tính toán hồi quy tuyến tính từ hai bản đồ raster: y = a + b*x"
+
+#: ../locale/scriptstrings/r.regression.line_to_translate.c:4
+msgid "Slower but accurate (applies to FP maps only)"
+msgstr ""
+
+#: ../locale/scriptstrings/r.regression.line_to_translate.c:5
+msgid "Map for x coefficient"
+msgstr "Bản đồ dùng làm hệ số x"
+
+#: ../locale/scriptstrings/r.regression.line_to_translate.c:6
+msgid "Map for y coefficient"
+msgstr "Bản đồ dùng làm hệ số y"
+
+#: ../locale/scriptstrings/r.regression.line_to_translate.c:7
+msgid ""
+"ASCII file for storing regression coefficients (output to screen if file not "
+"specified)."
+msgstr ""
+"Tập tin ASCII để lưu các hệ số hồi quy (xuất ra màn hình nếu tên tập tin "
+"không được chỉ định)."
+
+#: ../locale/scriptstrings/v.in.e00_to_translate.c:1
+#, fuzzy
+msgid "Import E00 file into a vector map."
+msgstr "Nhập tập tin E00 vào một bản đồ vector"
+
+#: ../locale/scriptstrings/v.in.e00_to_translate.c:4
+msgid "E00 file"
+msgstr "tập tin E00"
+
+#: ../locale/scriptstrings/v.in.e00_to_translate.c:5
+msgid "Input type point, line or area"
+msgstr "Kiểu đầu vào điểm (point), đường (line) hoặc vùng (area)"
+
+#: ../locale/scriptstrings/v.in.e00_to_translate.c:6
+#: ../locale/scriptstrings/v.in.gns_to_translate.c:4
+#: ../locale/scriptstrings/v.in.geonames_to_translate.c:4
+#: ../locale/scriptstrings/v.dissolve_to_translate.c:4
+#: ../locale/scriptstrings/v.centroids_to_translate.c:4
+#, fuzzy
+msgid "Name for output vector map"
+msgstr "Tên của bản đồ vector đầu ra"
+
+#: ../locale/scriptstrings/r.plane_to_translate.c:1
+#, fuzzy
+msgid ""
+"Creates raster plane map given dip (inclination), aspect (azimuth) and one "
+"point."
+msgstr ""
+"Tạo bản đồ mặt (plane) raster ở độ nhúng (độ xiên), hướng (góc phương vị) và "
+"ở một điểm cho trước"
+
+#: ../locale/scriptstrings/r.plane_to_translate.c:2
+#: ../locale/scriptstrings/r.shaded.relief_to_translate.c:2
+msgid "raster, elevation"
+msgstr "raster, độ cao"
+
+#: ../locale/scriptstrings/r.plane_to_translate.c:3
+#, fuzzy
+msgid "Name of raster plane to be created"
+msgstr "Tên của bản đồ mặt (plane) raster cần tạo."
+
+#: ../locale/scriptstrings/r.plane_to_translate.c:4
+#, fuzzy
+msgid "Dip of plane. Value must be between -90 and 90 degrees"
+msgstr "Độ nhúng của mặt. Giá trị phải ở trong khoảng -90 đến 90 độ."
+
+#: ../locale/scriptstrings/r.plane_to_translate.c:5
+#, fuzzy
+msgid "Azimuth of the plane. Value must be between 0 and 360 degrees"
+msgstr "Góc phương vị của mặt. Giá trị phải ở trong khoảng 0-360 độ"
+
+#: ../locale/scriptstrings/r.plane_to_translate.c:6
+#, fuzzy
+msgid "Easting coordinate of a point on the plane"
+msgstr "Tọa độ easting của một điểm trên mặt"
+
+#: ../locale/scriptstrings/r.plane_to_translate.c:7
+#, fuzzy
+msgid "Northing coordinate of a point on the plane"
+msgstr "Tọa độ northing của một điểm trên mặt"
+
+#: ../locale/scriptstrings/r.plane_to_translate.c:8
+#, fuzzy
+msgid "Elevation coordinate of a point on the plane"
+msgstr "Tọa độ độ cao của một điểm trên mặt."
+
+#: ../locale/scriptstrings/r.plane_to_translate.c:9
+#, fuzzy
+msgid "Type of the raster map to be created"
+msgstr "Kiểu bản đồ raster cần tạo."
+
+#: ../locale/scriptstrings/m.proj_to_translate.c:1
+msgid "Convert coordinates from one projection to another (cs2cs frontend)."
+msgstr "Đổi tọa độ từ phép chiếu này sang phép chiếu khác ('mặt tiền' cs2cs)"
+
+#: ../locale/scriptstrings/m.proj_to_translate.c:2
+msgid "miscellaneous, projection"
+msgstr "linh tinh, phép chiếu, Projektion"
+
+#: ../locale/scriptstrings/m.proj_to_translate.c:3
+msgid "Input coordinate file (omit to read from stdin)"
+msgstr "Tập tin tọa độ đầu vào (bỏ qua để đọc từ stdin)"
+
+#: ../locale/scriptstrings/m.proj_to_translate.c:4
+msgid "Output coordinate file (omit to send to stdout)"
+msgstr "Tập tin tọa độ đầu ra (bỏ qua để gửi ra stdout) "
+
+#: ../locale/scriptstrings/m.proj_to_translate.c:5
+#: ../locale/scriptstrings/r.out.xyz_to_translate.c:5
+msgid "Field separator"
+msgstr "Dấu phân cách trường"
+
+#: ../locale/scriptstrings/m.proj_to_translate.c:6
+msgid "Input projection parameters (PROJ.4 style)"
+msgstr "Các tham số phép chiếu đầu vào (kiểu PROJ.4)"
+
+#: ../locale/scriptstrings/m.proj_to_translate.c:7
+msgid "Output projection parameters (PROJ.4 style)"
+msgstr "Các tham số phép chiếu đầu ra (kiểu PROJ.4)"
+
+#: ../locale/scriptstrings/m.proj_to_translate.c:8
+msgid "Use LL WGS84 as input and current location as output projection"
+msgstr ""
+"Dùng WGS84 kinh/vĩ làm phép chiếu đầu vào và location hiện tại làm phép "
+"chiếu đầu ra"
+
+#: ../locale/scriptstrings/m.proj_to_translate.c:9
+msgid "Use current location as input and LL WGS84 as output projection"
+msgstr ""
+"Dùng location hiện tại làm đầu vào và WGS84 kinh/vĩ làm phép chiếu đầu ra"
+
+#: ../locale/scriptstrings/m.proj_to_translate.c:10
+msgid ""
+"Output long/lat in decimal degrees or other projections with many decimal "
+"places"
+msgstr ""
+"Xuất ra kinh/vĩ dạng độ thập phân hoặc các phép chiếu khác có nhiều chữ số "
+"thập phân"
+
+#: ../locale/scriptstrings/m.proj_to_translate.c:11
+msgid ""
+"Script style output in CSV format respecting the field separator settings"
+msgstr ""
+
+#: ../locale/scriptstrings/m.proj_to_translate.c:12
+msgid "Verbose mode (print projection parameters and filenames to stderr)"
+msgstr "Chế độ đầy đủ (in các tham số phép chiếu và tên tập tin vào stderr)"
+
+#: ../locale/scriptstrings/d.out.file_to_translate.c:1
+#, fuzzy
+msgid "Saves the contents of the active display monitor to a graphics file."
+msgstr "Lưu màn hình trình bày kích hoạt vào tập tin đồ họa trong thư mục nhà"
+
+#: ../locale/scriptstrings/d.out.file_to_translate.c:2
+#: ../locale/scriptstrings/d.out.png_to_translate.c:2
+msgid "display, export"
+msgstr "trình bày, xuất"
+
+#: ../locale/scriptstrings/d.out.file_to_translate.c:3
+#, fuzzy
+msgid "Name for output file (do NOT add extension)"
+msgstr "Tên của tập tin đầu ra (ĐỪNG thêm đuôi mở rộng)"
+
+#: ../locale/scriptstrings/d.out.file_to_translate.c:5
+msgid "Dimensions of output file versus current window size"
+msgstr ""
+
+#: ../locale/scriptstrings/d.out.file_to_translate.c:6
+msgid "(same=1, double size=2, quadruple size=4)"
+msgstr ""
+
+#: ../locale/scriptstrings/d.out.file_to_translate.c:7
+#: ../locale/scriptstrings/d.out.file_to_translate.c:9
+#: ../locale/scriptstrings/d.out.file_to_translate.c:12
+#: ../locale/scriptstrings/d.out.file_to_translate.c:15
+#: ../locale/scriptstrings/d.out.file_to_translate.c:28
+#: ../locale/scriptstrings/d.out.file_to_translate.c:30
+#, fuzzy
+msgid "Images"
+msgstr "Nhóm phụ các tập tin ảnh"
+
+#: ../locale/scriptstrings/d.out.file_to_translate.c:8
+#, fuzzy
+msgid "Width and height of output image (overrides resolution setting)"
+msgstr "Chiều rộng và chiều cao của ảnh đầu ra"
+
+#: ../locale/scriptstrings/d.out.file_to_translate.c:10
+#, fuzzy
+msgid "Compression for PNG files"
+msgstr "Nén cho các tập tin PNG (0=không nén, 1=nhanh nhất, 9=nén nhiều nhất)"
+
+#: ../locale/scriptstrings/d.out.file_to_translate.c:11
+msgid "(0=none, 1=fastest, 9=most; lossless, only time vs. filesize)"
+msgstr ""
+
+#: ../locale/scriptstrings/d.out.file_to_translate.c:13
+msgid "File size/quality for JPEG files"
+msgstr ""
+
+#: ../locale/scriptstrings/d.out.file_to_translate.c:14
+#, fuzzy
+msgid "(10=smallest/worst, 100=largest/best)"
+msgstr ""
+"K.thước/chất lượng của các tập tin JPEG (10=nhỏ nhất/kém nhất, 100=lớn nhất/"
+"tốt nhất)"
+
+#: ../locale/scriptstrings/d.out.file_to_translate.c:16
+#, fuzzy
+msgid "Paper size for PostScript output"
+msgstr "Tạo đầu ra tập lệnh shell"
+
+#: ../locale/scriptstrings/d.out.file_to_translate.c:17
+#: ../locale/scriptstrings/d.out.file_to_translate.c:19
+#: ../locale/scriptstrings/d.out.file_to_translate.c:32
+#, fuzzy
+msgid "PostScript"
+msgstr "Tập tin đầu ra PostScript"
+
+#: ../locale/scriptstrings/d.out.file_to_translate.c:18
+msgid "PostScript level (only limits functionality!)"
+msgstr ""
+
+#: ../locale/scriptstrings/d.out.file_to_translate.c:20
+msgid "GeoTIFF creation option(s)"
+msgstr ""
+
+#: ../locale/scriptstrings/d.out.file_to_translate.c:22
+#: ../locale/scriptstrings/d.out.file_to_translate.c:25
+#: ../locale/scriptstrings/d.out.file_to_translate.c:34
+msgid "GeoTIFF"
+msgstr ""
+
+#: ../locale/scriptstrings/d.out.file_to_translate.c:23
+#, fuzzy
+msgid "GeoTIFF metadata key(s) and value(s) to add"
+msgstr "Các khoá và các giá trị mô tả dữ liệu cần đưa vào"
+
+#: ../locale/scriptstrings/d.out.file_to_translate.c:24
+#, fuzzy
+msgid ""
+"In the form of \"META-TAG=VALUE\", separate multiple entries with a comma."
+msgstr "Ở dạng \"TÊN=GIÁ_TRỊ\", các mục cách nhau bởi dấu phẩy."
+
+#: ../locale/scriptstrings/d.out.file_to_translate.c:26
+msgid "Set background color to black (white default)"
+msgstr "Thiết lập màu nền thành đen (mặc định là trắng)"
+
+#: ../locale/scriptstrings/d.out.file_to_translate.c:27
+#, fuzzy
+msgid "Set transparent background"
+msgstr "Màu nền trong suốt"
+
+#: ../locale/scriptstrings/d.out.file_to_translate.c:29
+msgid "Use the Cario driver to render images"
+msgstr ""
+
+#: ../locale/scriptstrings/d.out.file_to_translate.c:31
+#, fuzzy
+msgid "Set paper orientation to landscape (for PostScript output)"
+msgstr "Tạo đầu ra tập lệnh shell"
+
+#: ../locale/scriptstrings/d.out.file_to_translate.c:33
+#, fuzzy
+msgid "Do not crop away margins"
+msgstr "Không chép bảng"
+
+#: ../locale/scriptstrings/db.test_to_translate.c:1
+msgid "Test database driver, database must exist and set by db.connect."
+msgstr ""
+"Kiểm tra trình điều khiển CSDL, CSDL phải tồn tại và được db.connect thiết "
+"lập"
+
+#: ../locale/scriptstrings/db.test_to_translate.c:3
+msgid "Test name"
+msgstr "Kiểm tra tên"
+
+#: ../locale/scriptstrings/r.tileset_to_translate.c:1
+msgid ""
+"Produces tilings of the source projection for use in the destination region "
+"and projection."
+msgstr ""
+"Tạo các phép xếp chồng (tiling) của phép chiếu nguồn để dùng trong vùng và "
+"phép chiếu đích"
+
+#: ../locale/scriptstrings/r.tileset_to_translate.c:2
+msgid "raster, tiling"
+msgstr "raster, xếp chồng"
+
+#: ../locale/scriptstrings/r.tileset_to_translate.c:3
+msgid "Produces shell script output"
+msgstr "Tạo đầu ra tập lệnh shell"
+
+#: ../locale/scriptstrings/r.tileset_to_translate.c:4
+msgid "Produces web map server query string output"
+msgstr "Tạo đầu ra dạng chuỗi truy vấn kiểu web map server"
+
+#: ../locale/scriptstrings/r.tileset_to_translate.c:5
+msgid ""
+"Name of region to use instead of current region for bounds and resolution"
+msgstr ""
+"Tên của vùng cần dùng thay vì sử dụng vùng hiện tại để lấy thông tin về ranh "
+"giới và độ phân giải"
+
+#: ../locale/scriptstrings/r.tileset_to_translate.c:6
+#, fuzzy
+msgid "Source projection"
+msgstr "Phép chiếu nguồn"
+
+#: ../locale/scriptstrings/r.tileset_to_translate.c:7
+#: ../locale/scriptstrings/r.tileset_to_translate.c:9
+msgid "Conversion factor from units to meters in source projection"
+msgstr "Hệ số chuyển đổi từ các đơn vị khác thành mét trong phép chiếu nguồn"
+
+#: ../locale/scriptstrings/r.tileset_to_translate.c:8
+msgid "Destination projection, defaults to this location's projection"
+msgstr "Phép chiếu đích, mặc định là phép chiếu của location này"
+
+#: ../locale/scriptstrings/r.tileset_to_translate.c:10
+msgid "Maximum number of columns for a tile in the source projection"
+msgstr "Số cột tối đa cho một lần xếp chồng trong phép chiếu nguồn"
+
+#: ../locale/scriptstrings/r.tileset_to_translate.c:11
+msgid "Maximum number of rows for a tile in the source projection"
+msgstr "Số hàng tối đa cho một lần xếp chồng trong phép chiếu nguồn"
+
+#: ../locale/scriptstrings/r.tileset_to_translate.c:12
+msgid "Number of cells tiles should overlap in each direction"
+msgstr "Số ô chồng nhau theo mỗi hướng"
+
+#: ../locale/scriptstrings/r.tileset_to_translate.c:14
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:50
+msgid "Verbosity level"
+msgstr "Mức độ đầy đủ khi chạy lệnh"
+
+#: ../locale/scriptstrings/i.fusion.brovey_to_translate.c:1
+msgid ""
+"Brovey transform to merge multispectral and high-res panchromatic channels"
+msgstr ""
+"Chuyển đổi Brovey để nhập các kênh đa phổ và toàn sắc độ phân giải cao với "
+"nhau"
+
+#: ../locale/scriptstrings/i.fusion.brovey_to_translate.c:2
+#, fuzzy
+msgid "imagery, fusion, Brovey"
+msgstr "raster, ảnh, nhập dữ liệu"
+
+#: ../locale/scriptstrings/i.fusion.brovey_to_translate.c:3
+#, fuzzy
+msgid "LANDSAT sensor"
+msgstr "Kênh đỏ LANDSAT"
+
+#: ../locale/scriptstrings/i.fusion.brovey_to_translate.c:4
+#: ../locale/scriptstrings/i.fusion.brovey_to_translate.c:6
+#: ../locale/scriptstrings/i.fusion.brovey_to_translate.c:8
+#, fuzzy
+msgid "Sensor"
+msgstr "Kênh đỏ LANDSAT"
+
+#: ../locale/scriptstrings/i.fusion.brovey_to_translate.c:5
+msgid "QuickBird sensor"
+msgstr ""
+
+#: ../locale/scriptstrings/i.fusion.brovey_to_translate.c:7
+#, fuzzy
+msgid "SPOT sensor"
+msgstr "Kênh đỏ LANDSAT"
+
+#: ../locale/scriptstrings/i.fusion.brovey_to_translate.c:9
+#, fuzzy
+msgid "Name of input raster map (green: tm2 | qbird_green | spot1)"
+msgstr "bản đồ raster đầu vào (green: tm2 | qbird_green | spot1)"
+
+#: ../locale/scriptstrings/i.fusion.brovey_to_translate.c:10
+#, fuzzy
+msgid "Name of input raster map (NIR: tm4 | qbird_nir | spot2)"
+msgstr "bản đồ raster đầu vào (NIR: tm4 | qbird_nir | spot2)"
+
+#: ../locale/scriptstrings/i.fusion.brovey_to_translate.c:11
+#, fuzzy
+msgid "Name of input raster map (MIR; tm5 | qbird_red | spot3)"
+msgstr "bản đồ raster đầu vào (MIR; tm5 | qbird_red | spot3)"
+
+#: ../locale/scriptstrings/i.fusion.brovey_to_translate.c:12
+#, fuzzy
+msgid "Name of input raster map (etmpan | qbird_pan | spotpan)"
+msgstr "bản đồ raster đầu vào (etmpan | qbird_pan | spotpan)"
+
+#: ../locale/scriptstrings/i.fusion.brovey_to_translate.c:13
+#, fuzzy
+msgid "Name for output raster map prefix (e.g. 'brov')"
+msgstr "tiền tố cho bản đồ raster đầu ra (ví dụ 'brov')"
+
+#: ../locale/scriptstrings/g.extension_to_translate.c:1
+msgid "Tool to maintain GRASS extensions in local GRASS installation."
+msgstr ""
+
+#: ../locale/scriptstrings/g.extension_to_translate.c:2
+msgid ""
+"Downloads, installs extensions from GRASS Addons SVN repository into local "
+"GRASS installation or removes installed extensions."
+msgstr ""
+
+#: ../locale/scriptstrings/g.extension_to_translate.c:3
+#, fuzzy
+msgid "general, extensions"
+msgstr "tổng quát, thiết lập"
+
+#: ../locale/scriptstrings/g.extension_to_translate.c:4
+#, fuzzy
+msgid "Name of extension to install/remove"
+msgstr "Tên của vị trí mới cần tạo"
+
+#: ../locale/scriptstrings/g.extension_to_translate.c:6
+msgid "SVN Addons repository URL"
+msgstr ""
+
+#: ../locale/scriptstrings/g.extension_to_translate.c:7
+msgid "Prefix where to install extension"
+msgstr ""
+
+#: ../locale/scriptstrings/g.extension_to_translate.c:8
+#, fuzzy
+msgid "List available modules in the GRASS Addons SVN repository"
+msgstr "Liệt kê các quy tắc và thoát"
+
+#: ../locale/scriptstrings/d.correlate_to_translate.c:1
+#, fuzzy
+msgid "Prints a graph of the correlation between data layers (in pairs)."
+msgstr ""
+"in ra một đồ thị biểu diễn mối tương quan giữa các lớp dữ liệu (theo cặp)."
+
+#: ../locale/scriptstrings/d.correlate_to_translate.c:2
+#: ../locale/scriptstrings/d.polar_to_translate.c:2
+#, fuzzy
+msgid "display, diagram"
+msgstr "trình bày, biểu đồ"
+
+#: ../locale/scriptstrings/d.correlate_to_translate.c:3
+#: ../locale/scriptstrings/d.correlate_to_translate.c:4
+#: ../locale/scriptstrings/d.correlate_to_translate.c:5
+#: ../locale/scriptstrings/d.correlate_to_translate.c:6
+msgid "raster input map"
+msgstr "bản đồ raster đầu vào"
+
+#: ../locale/scriptstrings/i.image.mosaic_to_translate.c:1
+msgid "Mosaics up to 4 images and extends colormap; creates map *.mosaic"
+msgstr "Ghép khảm tối đa 4 ảnh và mở rộng bản đồ màu; tạo map*.mosaic"
+
+#: ../locale/scriptstrings/i.image.mosaic_to_translate.c:2
+msgid "raster, imagery, mosaicking"
+msgstr "raster, ảnh, ghép khảm"
+
+#: ../locale/scriptstrings/i.image.mosaic_to_translate.c:3
+msgid "1st map for mosaic (top of image stack)."
+msgstr "bản đồ thứ nhất để ghép khảm (trên cùng chồng ảnh)"
+
+#: ../locale/scriptstrings/i.image.mosaic_to_translate.c:4
+msgid "2nd map for mosaic."
+msgstr "bản đồ thứ hai để ghép khảm."
+
+#: ../locale/scriptstrings/i.image.mosaic_to_translate.c:5
+msgid "3rd map for mosaic."
+msgstr "bản đồ thứ ba để ghép khảm."
+
+#: ../locale/scriptstrings/i.image.mosaic_to_translate.c:6
+msgid "4th map for mosaic."
+msgstr "bản đồ thứ tư để ghép khảm."
+
+#: ../locale/scriptstrings/r.blend_to_translate.c:1
+#, fuzzy
+msgid "Blends color components of two raster maps by a given ratio."
+msgstr "Trộn các thành phần màu của hai bản đồ raster theo một tỷ lệ cho trước"
+
+#: ../locale/scriptstrings/r.blend_to_translate.c:3
+msgid "Name of first raster map for blending"
+msgstr "Tên của bản đồ raster đầu tiên để trộn"
+
+#: ../locale/scriptstrings/r.blend_to_translate.c:4
+msgid "Name of second raster map for blending"
+msgstr "Tên của bản đồ raster thứ hai để trộn"
+
+#: ../locale/scriptstrings/r.blend_to_translate.c:5
+#, fuzzy
+msgid "Base name for red, green and blue output maps containing the blend"
+msgstr "Tên gốc cho các bản đồ đầu ra đỏ, lục và xanh chứa kết quả trộn"
+
+#: ../locale/scriptstrings/r.blend_to_translate.c:6
+msgid "Percentage weight of first map for color blending"
+msgstr "Trọng số phần trăm của bản đồ thứ nhất dùng cho phép trộn màu"
+
+#: ../locale/scriptstrings/r.reclass.area_to_translate.c:1
+#, fuzzy
+msgid ""
+"Reclasses a raster map greater or less than user specified area size (in "
+"hectares)."
+msgstr ""
+"Phân loại lại một bản đồ raster lớn hơn hay nhỏ hơn kích thước vùng do người "
+"dùng chỉ định (tính theo hecta)"
+
+#: ../locale/scriptstrings/r.reclass.area_to_translate.c:2
+msgid "raster, statistics, aggregation"
+msgstr "raster, thống kê, tổng hợp"
+
+#: ../locale/scriptstrings/r.reclass.area_to_translate.c:5
+#, fuzzy
+msgid "Lesser value option that sets the <= area size limit [hectares]"
+msgstr ""
+"tùy chọn lesser val (giá trị nhỏ hơn) thiết lập giới hạn kích thước vùng lớn "
+"hơn lesser val [hecta]"
+
+#: ../locale/scriptstrings/r.reclass.area_to_translate.c:6
+#, fuzzy
+msgid "Greater value option that sets the >= area size limit [hectares]"
+msgstr ""
+"tùy chọn greater val thiết lập giới hạn kích thước vùng nhỏ hơn greater val "
+"[hecta]"
+
+#: ../locale/scriptstrings/v.what.vect_to_translate.c:1
+#, fuzzy
+msgid "Uploads vector values at positions of vector points to the table."
+msgstr "Tải vào bảng các giá trị vector tại vị trí của các điểm vector"
+
+#: ../locale/scriptstrings/v.what.vect_to_translate.c:3
+#, fuzzy
+msgid "Vector map to modify"
+msgstr "Chỉ in ra vùng của bản đồ vector"
+
+#: ../locale/scriptstrings/v.what.vect_to_translate.c:4
+#, fuzzy
+msgid "Layer in the vector to be modified"
+msgstr "bản đồ vector cần truy vấn"
+
+#: ../locale/scriptstrings/v.what.vect_to_translate.c:5
+msgid "Column to be updated with the query result"
+msgstr ""
+
+#: ../locale/scriptstrings/v.what.vect_to_translate.c:6
+#, fuzzy
+msgid "Vector map to be queried"
+msgstr "bản đồ vector cần truy vấn"
+
+#: ../locale/scriptstrings/v.what.vect_to_translate.c:7
+#, fuzzy
+msgid "Layer of the query vector containing data"
+msgstr "Tên của tập tin vector chứa dữ liệu đầu vào"
+
+#: ../locale/scriptstrings/v.what.vect_to_translate.c:8
+#, fuzzy
+msgid "Column to be queried"
+msgstr "bản đồ vector cần truy vấn"
+
+#: ../locale/scriptstrings/v.what.vect_to_translate.c:9
+#, fuzzy
+msgid "Maximum query distance in map units"
+msgstr "Khoảng cách đệm tính theo đơn vị bản đồ"
+
+#: ../locale/scriptstrings/r.in.srtm_to_translate.c:1
+msgid "Import SRTM HGT files into GRASS"
+msgstr "Nhập các tập tin SRTM HGT vào GRASS"
+
+#: ../locale/scriptstrings/r.in.srtm_to_translate.c:3
+msgid "SRTM input tile (file without .hgt.zip extension)"
+msgstr "Tiêu đề đầu vào SRTM (tập tin không có đuôi mở rộng .hgt.zip)"
+
+#: ../locale/scriptstrings/r.in.srtm_to_translate.c:4
+msgid "Output raster map (default: input tile)"
+msgstr "Bản đồ raster đầu ra (mặc định: tiêu đề đầu vào)"
+
+#: ../locale/scriptstrings/r.in.srtm_to_translate.c:5
+msgid "Input is a 1-arcsec tile (default: 3-arcsec)"
+msgstr "Đầu vào là tiêu đề 1-arcsec (mặc định: 3-arcsec)"
+
+#: ../locale/scriptstrings/v.report_to_translate.c:1
+#, fuzzy
+msgid "Reports geometry statistics for vectors."
+msgstr "Báo cáo các thống kê hình học cho các bản đồ vector"
+
+#: ../locale/scriptstrings/v.report_to_translate.c:2
+msgid "vector, report, statistics"
+msgstr "vector, báo cáo, thống kê"
+
+#: ../locale/scriptstrings/v.report_to_translate.c:3
+#, fuzzy
+msgid "Reverse sort the result"
+msgstr "raster, độ cao"
+
+#: ../locale/scriptstrings/v.report_to_translate.c:4
+#, fuzzy
+msgid "Sort the result"
+msgstr "Tên bản đồ kết quả"
+
+#: ../locale/scriptstrings/v.report_to_translate.c:7
+msgid "Value to calculate"
+msgstr "Giá trị cần tính"
+
+#: ../locale/scriptstrings/v.report_to_translate.c:8
+#, fuzzy
+msgid "mi(les),f(eet),me(ters),k(ilometers),a(cres),h(ectares),p(ercent)"
+msgstr "mi(les)_dặm,f(eet)_bộ_Anh,me(t),k(ilomet),a(cres)_mẫu_Anh,h(ecta)"
+
+#: ../locale/scriptstrings/v.db.update_to_translate.c:1
+#, fuzzy
+msgid ""
+"Allows to update a column in the attribute table connected to a vector map."
+msgstr ""
+"cho phép gán một giá trị mới vào một cột trong bảng thuộc tính được kết nối "
+"với một bản đồ cho trước"
+
+#: ../locale/scriptstrings/v.db.update_to_translate.c:3
+#, fuzzy
+msgid "Vector map to edit the attribute table for"
+msgstr "bản đồ vector cần chỉnh sửa bảng thuộc tính"
+
+#: ../locale/scriptstrings/v.db.update_to_translate.c:4
+msgid "Layer to which the table to be changed is connected"
+msgstr ""
+
+#: ../locale/scriptstrings/v.db.update_to_translate.c:5
+#, fuzzy
+msgid "Column to update"
+msgstr "cột cần cập nhật"
+
+#: ../locale/scriptstrings/v.db.update_to_translate.c:6
+#, fuzzy
+msgid ""
+"Value to update the column with (varchar values have to be in single quotes, "
+"e.g. 'grass')"
+msgstr ""
+"giá trị mới cần gán cho cột (các giá trị varchar (biến ký tự) phải ở dạng "
+"trích dẫn trong dấu nháy đơn, ví dụ : 'grass')"
+
+#: ../locale/scriptstrings/v.db.update_to_translate.c:7
+#, fuzzy
+msgid "Column to query"
+msgstr "bản đồ vector cần truy vấn"
+
+#: ../locale/scriptstrings/v.db.update_to_translate.c:8
+#, fuzzy
+msgid ""
+"WHERE conditions for update, without 'where' keyword (e.g. cat=1 or col1/"
+"col2>1)"
+msgstr "Các điều kiện WHERE của câu lệnh SQL không có từ khóa 'where'"
+
+#: ../locale/scriptstrings/d.rast.leg_to_translate.c:1
+msgid "Displays a raster map and its legend on a graphics window"
+msgstr "Trình bày một bản đồ raster và chú giải của nó trên một cửa sổ đồ họa"
+
+#: ../locale/scriptstrings/d.rast.leg_to_translate.c:4
+#, fuzzy
+msgid "Omit entries with missing label"
+msgstr "Bỏ các mục bị thiếu nhãn"
+
+#: ../locale/scriptstrings/d.rast.leg_to_translate.c:6
+msgid "Number of lines to appear in the legend"
+msgstr "Số dòng xuất hiện trong chú giải"
+
+#: ../locale/scriptstrings/d.rast.leg_to_translate.c:7
+#, fuzzy
+msgid "Name of raster map to generate legend from"
+msgstr "Tên của bản đồ raster cần dùng cho <%s>"
+
+#: ../locale/scriptstrings/d.rast.leg_to_translate.c:8
+#, fuzzy
+msgid "Name of raster map to print in legend"
+msgstr "Tên của bản đồ hướng raster cần trình bày"
+
+#: ../locale/scriptstrings/d.rast.leg_to_translate.c:9
+msgid "Position of vertical map-legend separator (in percent)"
+msgstr ""
+
+#: ../locale/scriptstrings/d.out.gpsdrive_to_translate.c:1
+msgid "Export display monitor to a GpsDrive compatible backdrop image"
+msgstr "Xuất màn hình trình bày thành một ảnh nền tương thích với một GpsDrive"
+
+#: ../locale/scriptstrings/d.out.gpsdrive_to_translate.c:2
+msgid "display, export, GPS"
+msgstr "trình bày, xuất, GPS"
+
+#: ../locale/scriptstrings/d.out.gpsdrive_to_translate.c:3
+#, fuzzy
+msgid "name for new map image (lives in ~/.gpsdrive/maps/)"
+msgstr "tên của ảnh bản đồ mới (ở trong ~/.gpsdrive)"
+
+#: ../locale/scriptstrings/d.out.gpsdrive_to_translate.c:4
+msgid "Make JPEG instead of PNG image"
+msgstr "Tạo ảnh JPEG thay vì PNG"
+
+#: ../locale/scriptstrings/v.univar.sh_to_translate.c:1
+#: ../locale/scriptstrings/v.db.univar_to_translate.c:1
+#, fuzzy
+msgid ""
+"Calculates univariate statistics on selected table column for a GRASS vector "
+"map."
+msgstr ""
+"Tính toán thống kê một biến trên cột của bảng được chọn cho một bản đồ "
+"vector của GRASS"
+
+#: ../locale/scriptstrings/v.univar.sh_to_translate.c:3
+#: ../locale/scriptstrings/v.db.univar_to_translate.c:3
+#, fuzzy
+msgid "Extended statistics (quartiles and 90th percentile)"
+msgstr "các thống kê mở rộng (các tứ phân vị và phân vị thứ 90)"
+
+#: ../locale/scriptstrings/v.univar.sh_to_translate.c:4
+#: ../locale/scriptstrings/v.db.univar_to_translate.c:4
+msgid "Name of data table"
+msgstr "Tên của bảng dữ liệu"
+
+#: ../locale/scriptstrings/v.univar.sh_to_translate.c:5
+#: ../locale/scriptstrings/v.db.univar_to_translate.c:5
+#, fuzzy
+msgid "Column on which to calculate statistics (must be numeric)"
+msgstr "cột để tính toán các thống kê (phải là cột kiểu số)"
+
+#: ../locale/scriptstrings/v.univar.sh_to_translate.c:6
+#: ../locale/scriptstrings/v.db.univar_to_translate.c:6
+msgid "Database/directory for table"
+msgstr "CSDL/thư mục dùng cho bảng"
+
+#: ../locale/scriptstrings/v.univar.sh_to_translate.c:7
+#: ../locale/scriptstrings/v.db.univar_to_translate.c:7
+msgid "Database driver"
+msgstr "Trình điều khiển CSDL"
+
+#: ../locale/scriptstrings/v.univar.sh_to_translate.c:8
+#: ../locale/scriptstrings/v.out.gpsbabel_to_translate.c:13
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:47
+#: ../locale/scriptstrings/v.db.univar_to_translate.c:8
+msgid "WHERE conditions of SQL statement without 'where' keyword"
+msgstr "Các điều kiện WHERE của câu lệnh SQL không có từ khóa 'where'"
+
+#: ../locale/scriptstrings/g.manual_to_translate.c:1
+#, fuzzy
+msgid "Display the HTML man pages of GRASS"
+msgstr "trình bày các trang man HTML của GRASS"
+
+#: ../locale/scriptstrings/g.manual_to_translate.c:2
+msgid "general, manual, help"
+msgstr "tổng quát, hướng dẫn, trợ giúp"
+
+#: ../locale/scriptstrings/g.manual_to_translate.c:3
+#, fuzzy
+msgid "Display index"
+msgstr "trình bày chỉ mục"
+
+#: ../locale/scriptstrings/g.manual_to_translate.c:4
+#, fuzzy
+msgid "Display as MAN text page instead of HTML page in browser"
+msgstr ""
+"Trình bày dưới dạng trang văn bản MAN thay vì trang HTML trong trình duyệt"
+
+#: ../locale/scriptstrings/g.manual_to_translate.c:5
+#, fuzzy
+msgid "Manual entry to be displayed"
+msgstr "mục hướng dẫn cần trình bày"
+
+#: ../locale/scriptstrings/v.in.sites.all_to_translate.c:1
+#, fuzzy
+msgid ""
+"Converts all old GRASS < Ver5.7 sites maps in current mapset to vector maps."
+msgstr ""
+"đổi tất cả các bản đồ vector GRASS kiểu cũ < 5.7 trong bộ bản đồ hiện tại "
+"thành định dạng hiện tại"
+
+#: ../locale/scriptstrings/v.in.sites.all_to_translate.c:2
+msgid "sites, vector, import"
+msgstr "địa điểm, vector, nhập dữ liệu"
+
+#: ../locale/scriptstrings/v.in.sites.all_to_translate.c:3
+#, fuzzy
+msgid "Run non-interactively"
+msgstr "Chạy ở chế độ không tương tác"
+
+#: ../locale/scriptstrings/v.db.renamecol_to_translate.c:1
+#, fuzzy
+msgid ""
+"Renames a column in the attribute table connected to a given vector map."
+msgstr ""
+"thêm một hay nhiều cột vào bảng thuộc tính được kết nối vào một bản đồ "
+"vector cho trước"
+
+#: ../locale/scriptstrings/v.db.renamecol_to_translate.c:3
+#, fuzzy
+msgid "Vector map for which to rename attribute column"
+msgstr "bản đồ vector cần chỉnh sửa bảng thuộc tính"
+
+#: ../locale/scriptstrings/v.db.renamecol_to_translate.c:4
+#, fuzzy
+msgid "Layer where to rename column"
+msgstr "Lớp cần thêm cột vào"
+
+#: ../locale/scriptstrings/v.db.renamecol_to_translate.c:5
+msgid "Old and new name of the column (old,new)"
+msgstr ""
+
+#: ../locale/scriptstrings/r.mask_to_translate.c:1
+msgid "Create a MASK for limiting raster operation"
+msgstr "Tạo một MẶT NẠ để giới hạn lệnh raster"
+
+#: ../locale/scriptstrings/r.mask_to_translate.c:2
+msgid "raster, mask"
+msgstr "raster, mặt nạ"
+
+#: ../locale/scriptstrings/r.mask_to_translate.c:3
+msgid "Raster map to use as MASK"
+msgstr "Bản đồ raster dùng làm MẶT NẠ"
+
+#: ../locale/scriptstrings/r.mask_to_translate.c:4
+msgid "Category values to use for MASK (format: 1 2 3 thru 7 *)"
+msgstr "Các giá trị phạm trù dùng cho MẶT NẠ (dạng: 1 2 3 thru 7 *)"
+
+#: ../locale/scriptstrings/r.mask_to_translate.c:5
+msgid "Create inverse MASK from specified 'maskcats' list"
+msgstr ""
+
+#: ../locale/scriptstrings/r.mask_to_translate.c:6
+msgid "Overwrite existing MASK"
+msgstr "Ghi đè  MẶT NẠ hiện có"
+
+#: ../locale/scriptstrings/r.mask_to_translate.c:7
+msgid "Remove existing MASK (overrides other options)"
+msgstr "Loại bỏ MẶT NẠ hiện có (ghi đè các tùy chọn khác)"
+
+#: ../locale/scriptstrings/v.out.gpsbabel_to_translate.c:1
+msgid ""
+"Exports a vector map to a GPS receiver or file format supported by GpsBabel."
+msgstr ""
+
+#: ../locale/scriptstrings/v.out.gpsbabel_to_translate.c:2
+#, fuzzy
+msgid "vector, export, GPS"
+msgstr "vector, nhập dữ liệu, GPS"
+
+#: ../locale/scriptstrings/v.out.gpsbabel_to_translate.c:3
+#, fuzzy
+msgid "Export as waypoints"
+msgstr "Đang trích các điểm..."
+
+#: ../locale/scriptstrings/v.out.gpsbabel_to_translate.c:4
+#, fuzzy
+msgid "Export as routes"
+msgstr "Nhập"
+
+#: ../locale/scriptstrings/v.out.gpsbabel_to_translate.c:5
+#, fuzzy
+msgid "Export as tracks"
+msgstr "Nhập"
+
+#: ../locale/scriptstrings/v.out.gpsbabel_to_translate.c:7
+#, fuzzy
+msgid "Feature type(s)"
+msgstr "Kiểu đối tượng"
+
+#: ../locale/scriptstrings/v.out.gpsbabel_to_translate.c:8
+#, fuzzy
+msgid "Name for output file or GPS device"
+msgstr "Tên cho tập tin đầu ra"
+
+#: ../locale/scriptstrings/v.out.gpsbabel_to_translate.c:9
+#, fuzzy
+msgid "GpsBabel supported output format"
+msgstr "Liệt kê các định dạng đầu ra được hỗ trợ"
+
+#: ../locale/scriptstrings/v.out.gpsbabel_to_translate.c:11
+#: ../locale/scriptstrings/v.dissolve_to_translate.c:6
+msgid ""
+"A single vector map can be connected to multiple database tables. This "
+"number determines which table to use."
+msgstr ""
+
+#: ../locale/scriptstrings/v.out.gpsbabel_to_translate.c:12
+#: ../locale/scriptstrings/v.out.gpsbabel_to_translate.c:15
+msgid "Subset"
+msgstr ""
+
+#: ../locale/scriptstrings/v.out.gpsbabel_to_translate.c:14
+msgid "Example: income < 1000 and inhab >= 10000"
+msgstr ""
+
+#: ../locale/scriptstrings/v.db.reconnect.all_to_translate.c:1
+#, fuzzy
+msgid "Reconnects vectors to a new database."
+msgstr "Kết nối lại các vector vào một CSDL mới"
+
+#: ../locale/scriptstrings/v.db.reconnect.all_to_translate.c:3
+#, fuzzy
+msgid "Name of old database"
+msgstr "Tên của CSDL mới"
+
+#: ../locale/scriptstrings/v.db.reconnect.all_to_translate.c:4
+#, fuzzy
+msgid ""
+"The database must be in form printed by v.db.connect -g, i.e. with "
+"substituted variables"
+msgstr ""
+"Tên của CSDL cũ, CSDL này phải ở dạng được in ra bởi v.db.connect -g, tức là "
+"với các biến được thay thế"
+
+#: ../locale/scriptstrings/v.db.reconnect.all_to_translate.c:5
+msgid "Name of new database"
+msgstr "Tên của CSDL mới"
+
+#: ../locale/scriptstrings/v.db.reconnect.all_to_translate.c:6
+msgid "Old schema"
+msgstr "Schema cũ"
+
+#: ../locale/scriptstrings/v.db.reconnect.all_to_translate.c:7
+msgid "New schema"
+msgstr "Schema mới"
+
+#: ../locale/scriptstrings/r.in.aster_to_translate.c:1
+#, fuzzy
+msgid ""
+"Georeference, rectify and import Terra-ASTER imagery and relative DEM's "
+"using gdalwarp."
+msgstr ""
+"r.in.aster - tham chiếu địa lý, nắn chỉnh và nhập ảnh Terra-ASTER và DEM "
+"tương đối bằng cách dùng gdalwarp"
+
+#: ../locale/scriptstrings/r.in.aster_to_translate.c:2
+#: ../locale/scriptstrings/i.in.spotvgt_to_translate.c:2
+msgid "raster, imagery, import"
+msgstr "raster, ảnh, nhập dữ liệu"
+
+#: ../locale/scriptstrings/r.in.aster_to_translate.c:3
+#, fuzzy
+msgid "Input ASTER image to be georeferenced & rectified"
+msgstr "Ảnh ASTER đầu vào cần tham chiếu địa lý và nắn chỉnh"
+
+#: ../locale/scriptstrings/r.in.aster_to_translate.c:4
+msgid "ASTER imagery processing type (Level 1A, Level 1B, or relative DEM)"
+msgstr "Kiểu xử lý ảnh ASTER (Cấp 1A, Cấp 1B hoặc DEM tương đối)"
+
+#: ../locale/scriptstrings/r.in.aster_to_translate.c:5
+#, fuzzy
+msgid ""
+"L1A or L1B band to translate (1, 2, 3n, 3b, 4-14). Can only translate a "
+"single band"
+msgstr ""
+"Băng L1A hoặc L1B cần dịch (1, 2, 3n, 4-14). Chỉ có thể dịch một băng duy "
+"nhất "
+
+#: ../locale/scriptstrings/v.colors_to_translate.c:1
+msgid ""
+"Set color rules for features in a vector using a numeric attribute column."
+msgstr ""
+
+#: ../locale/scriptstrings/v.colors_to_translate.c:2
+#, fuzzy
+msgid "vector, color table"
+msgstr "raster, xuất dữ liệu."
+
+#: ../locale/scriptstrings/v.colors_to_translate.c:4
+#, fuzzy
+msgid "Name of column containing numeric data"
+msgstr "Tên của cột chứa thuộc tính w để nội suy"
+
+#: ../locale/scriptstrings/v.colors_to_translate.c:5
+#, fuzzy
+msgid "Layer number of data column"
+msgstr "Lớp cần thêm cột vào"
+
+#: ../locale/scriptstrings/v.colors_to_translate.c:6
+#, fuzzy
+msgid "Name of color column to populate"
+msgstr "Tên của cột cần trình bày"
+
+#: ../locale/scriptstrings/v.colors_to_translate.c:8
+#, fuzzy
+msgid "Manually set range (min,max)"
+msgstr "Miền số nguyên: min,max"
+
+#: ../locale/scriptstrings/v.colors_to_translate.c:13
+#, fuzzy
+msgid "Path to rules file"
+msgstr "Đường dẫn đến tập tin VTK tạo thành"
+
+#: ../locale/scriptstrings/v.colors_to_translate.c:15
+#, fuzzy
+msgid "Save placeholder raster map for use with d.legend"
+msgstr "Tên của bản đồ hướng raster cần trình bày"
+
+#: ../locale/scriptstrings/db.out.ogr_to_translate.c:1
+#, fuzzy
+msgid "Exports attribute tables into various formats."
+msgstr "loại bỏ bảng thuộc tính hiện tại của một bản đồ vector"
+
+#: ../locale/scriptstrings/db.out.ogr_to_translate.c:3
+#, fuzzy
+msgid "GRASS table name"
+msgstr "tên bảng"
+
+#: ../locale/scriptstrings/db.out.ogr_to_translate.c:4
+#, fuzzy
+msgid "Table file to be exported or DB connection string"
+msgstr "Tập tin raster ascii cần nhập"
+
+#: ../locale/scriptstrings/db.out.ogr_to_translate.c:5
+#, fuzzy
+msgid "Table format"
+msgstr "Định dạng OGR."
+
+#: ../locale/scriptstrings/db.out.ogr_to_translate.c:6
+#: ../locale/scriptstrings/db.in.ogr_to_translate.c:5
+#, fuzzy
+msgid "Name for output table"
+msgstr "Tên cho tập tin đầu ra"
+
+#: ../locale/scriptstrings/d.redraw_to_translate.c:1
+#, fuzzy
+msgid "Redraws the current display frame in the GRASS monitor"
+msgstr "vẽ lại các bản đồ được trình bày hiện tại trong màn hình GRASS"
+
+#: ../locale/scriptstrings/d.redraw_to_translate.c:3
+#, fuzzy
+msgid "Redraw all frames"
+msgstr "Lưu tất cả các khung"
+
+#: ../locale/scriptstrings/d.redraw_to_translate.c:4
+msgid "Do not preserve individual regions when redrawing all frames"
+msgstr ""
+
+#: ../locale/scriptstrings/d.slide.show_to_translate.c:1
+#, fuzzy
+msgid "Slide show of GRASS raster/vector maps."
+msgstr "Trình chiếu các bản đồ raster/vector của GRASS"
+
+#: ../locale/scriptstrings/d.slide.show_to_translate.c:2
+msgid "display, slideshow"
+msgstr "trình bày, trình chiếu"
+
+#: ../locale/scriptstrings/d.slide.show_to_translate.c:3
+#, fuzzy
+msgid "Show vector maps rather than raster maps"
+msgstr "Hiển thị các bản đồ vector chứ không phải raster"
+
+#: ../locale/scriptstrings/d.slide.show_to_translate.c:4
+#, fuzzy
+msgid "Map prefix. Specify character(s) to view selected maps only"
+msgstr "tiền tố bản đồ. Chỉ định (các) ký tự để chỉ xem các bản đồ được chọn"
+
+#: ../locale/scriptstrings/d.slide.show_to_translate.c:5
+#, fuzzy
+msgid "Map number show across the monitor"
+msgstr "số bản đồ hiển thị theo chiều ngang màn hình"
+
+#: ../locale/scriptstrings/d.slide.show_to_translate.c:6
+#, fuzzy
+msgid "Map number show down the monitor"
+msgstr "số bản đồ hiển thị theo chiều đứng màn hình"
+
+#: ../locale/scriptstrings/d.slide.show_to_translate.c:7
+#, fuzzy
+msgid "Mapsets to use. Specify multiple mapsets comma separated"
+msgstr ""
+"các bộ bản đồ sử dụng. Chỉ định nhiều bộ bản đồ cách nhau bằng dấu phẩy"
+
+#: ../locale/scriptstrings/d.slide.show_to_translate.c:8
+#, fuzzy
+msgid "Number of seconds to pause between slides"
+msgstr "Số lượng ô giữa các đường dòng chảy"
+
+#: ../locale/scriptstrings/v.in.garmin_to_translate.c:1
+#, fuzzy
+msgid ""
+"Download waypoints, routes, and tracks from a Garmin GPS receiver into a "
+"vector map."
+msgstr ""
+"Tải các Điểm tọa độ, Lộ trình và Đường đi từ một máy định vị Garmin vào một "
+"bản đồ vector."
+
+#: ../locale/scriptstrings/v.in.garmin_to_translate.c:2
+#: ../locale/scriptstrings/v.in.gpsbabel_to_translate.c:2
+msgid "vector, import, GPS"
+msgstr "vector, nhập dữ liệu, GPS"
+
+#: ../locale/scriptstrings/v.in.garmin_to_translate.c:4
+#, fuzzy
+msgid "Download Waypoints from GPS"
+msgstr "tải các Điểm tọa độ từ GPS"
+
+#: ../locale/scriptstrings/v.in.garmin_to_translate.c:5
+#, fuzzy
+msgid "Download Routes from GPS"
+msgstr "tải Lộ trình từ GPS"
+
+#: ../locale/scriptstrings/v.in.garmin_to_translate.c:6
+#, fuzzy
+msgid "Download Track from GPS"
+msgstr "tải Đường đi từ GPS"
+
+#: ../locale/scriptstrings/v.in.garmin_to_translate.c:7
+#, fuzzy
+msgid "Force import of track or route data as points"
+msgstr "buộc nhập dữ liệu đường đi hoặc lộ trình thành dạng điểm"
+
+#: ../locale/scriptstrings/v.in.garmin_to_translate.c:8
+msgid "Use gardump instead of gpstrans as the download program"
+msgstr ""
+
+#: ../locale/scriptstrings/v.in.garmin_to_translate.c:9
+msgid "Import track in 3D (gardump only)"
+msgstr ""
+
+#: ../locale/scriptstrings/v.in.garmin_to_translate.c:10
+#: ../locale/scriptstrings/v.in.gpsbabel_to_translate.c:8
+#, fuzzy
+msgid "Do not attempt projection transform from WGS84"
+msgstr "không cố gắng chuyển đổi phép chiếu từ WGS84"
+
+#: ../locale/scriptstrings/v.in.garmin_to_translate.c:11
+#: ../locale/scriptstrings/v.in.mapgen_to_translate.c:6
+#: ../locale/scriptstrings/v.in.gpsbabel_to_translate.c:10
+#, fuzzy
+msgid "Name for output vector map (omit for display to stdout)"
+msgstr "Tên của tập tin vector mới (bỏ qua để trình bày tại stdout)"
+
+#: ../locale/scriptstrings/v.in.garmin_to_translate.c:12
+#, fuzzy
+msgid "Port Garmin receiver is connected to"
+msgstr "cổng mà máy Garmin nối vào"
+
+#: ../locale/scriptstrings/d.split.frame_to_translate.c:1
+#, fuzzy
+msgid "Split the display into subframes."
+msgstr "Nhập bản đồ cần trình bày ở khung thứ nhất"
+
+#: ../locale/scriptstrings/d.split.frame_to_translate.c:2
+#, fuzzy
+msgid "Number of subframes"
+msgstr "Số khung ảnh"
+
+#: ../locale/scriptstrings/d.split.frame_to_translate.c:3
+msgid "Split horizontally not vertically"
+msgstr ""
+
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:1
+#, fuzzy
+msgid "Displays thematic vector map"
+msgstr "Trình bày bản đồ vector kiểu chủ đề"
+
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:2
+#, fuzzy
+msgid "display, vector, thematic, legend"
+msgstr "trình bày, chú giải"
+
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:3
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:44
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:48
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:51
+#, fuzzy
+msgid "Files"
+msgstr "địa điểm"
+
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:5
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:7
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:9
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:11
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:13
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:16
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:25
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:46
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:53
+msgid "Theme"
+msgstr ""
+
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:8
+#, fuzzy
+msgid "Name of attribute column to use for thematic display (must be numeric)"
+msgstr "Cột thuộc tính dùng để trình bày chủ đề (phải là dạng số)"
+
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:10
+msgid "Type of thematic display"
+msgstr "Kiểu trình bày chủ đề"
+
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:12
+msgid "Thematic divisions of data for display"
+msgstr "Các phép phân chia dữ liệu theo chủ đề để trình bày"
+
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:14
+#, fuzzy
+msgid "Break points for custom breaks option"
+msgstr ""
+"Các điểm ngắt dùng cho tùy chọn ngắt tùy ý. Tách các giá trị ra bằng khoảng "
+"trắng (0 10 20 30 ...)"
+
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:15
+#, fuzzy
+msgid "Separate values by spaces (0 10 20 30 ...)"
+msgstr ""
+"Các điểm ngắt dùng cho tùy chọn ngắt tùy ý. Tách các giá trị ra bằng khoảng "
+"trắng (0 10 20 30 ...)"
+
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:19
+msgid "Vector point icon for point data"
+msgstr "Biểu tượng điểm vector dùng cho dữ liệu điểm"
+
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:21
+#, fuzzy
+msgid "Icon size for point data"
+msgstr "Biểu tượng điểm vector dùng cho dữ liệu điểm"
+
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:22
+#, fuzzy
+msgid "Minimum icon size/line width for graduated points/lines)"
+msgstr ""
+"Kích thước biểu tượng/chiều dày đường tối đa đối với các điểm/đường được "
+"phân cấp)"
+
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:24
+msgid "Maximum icon size/line width for graduated points and lines"
+msgstr ""
+"Kích thước biểu tượng/chiều dày đường tối đa đối với các điểm/đường được "
+"phân cấp)"
+
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:26
+msgid "Number of classes for interval theme (integer)"
+msgstr "Số nhóm giá trị cho chủ đề (số nguyên)"
+
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:28
+#, fuzzy
+msgid "Color scheme for graduated color mapping"
+msgstr "Màu cho chữ"
+
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:29
+#, fuzzy
+msgid "Select 'single_color' for graduated point/line display"
+msgstr ""
+"Chế độ màu dùng cho việc vẽ bản đồ màu phân cấp (chọn 'single_color' để dùng "
+"cho việc trình bày điểm/đường phân cấp)"
+
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:31
+#, fuzzy
+msgid "Color for graduated points map"
+msgstr "Màu cho chữ"
+
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:32
+#, fuzzy
+msgid "GRASS named color or R:G:B triplet. Set color scheme to single color"
+msgstr ""
+"Màu dùng cho bản đồ điểm được phân cấp (màu gọi tên theo chuẩn của GRASS "
+"hoặc kiểu bộ ba R:G:B). Thiết lập chế độ màu thành một màu duy nhất"
+
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:34
+#, fuzzy
+msgid "Color for graduated lines or point/area outlines"
+msgstr "Màu cho chữ"
+
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:35
+#, fuzzy
+msgid "GRASS named color or R:G:B triplet. Set color scheme to single color."
+msgstr ""
+"Màu dùng cho bản đồ điểm được phân cấp (màu gọi tên theo chuẩn của GRASS "
+"hoặc kiểu bộ ba R:G:B). Thiết lập chế độ màu thành một màu duy nhất"
+
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:37
+#, fuzzy
+msgid "Beginning color for custom color gradient"
+msgstr ""
+"Màu bắt đầu đối với gradient màu tùy chọn. Phải được biểu diễn ở dạng Bộ ba "
+"R:G:B)"
+
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:38
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:41
+#, fuzzy
+msgid "Must be expressed as R:G:B triplet"
+msgstr ""
+"Màu kết thúc dùng cho gradient màu tùy chọn. Phải được biểu diễn ở dạng Bộ "
+"ba R:G:B)"
+
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:40
+#, fuzzy
+msgid "Ending color for custom color gradient"
+msgstr ""
+"Màu kết thúc dùng cho gradient màu tùy chọn. Phải được biểu diễn ở dạng Bộ "
+"ba R:G:B)"
+
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:42
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:59
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:61
+#, fuzzy
+msgid "Misc"
+msgstr "Hệ mét"
+
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:43
+msgid "Select x11 display monitor for legend"
+msgstr "Chọn màn hình trình bày x11 cho chú giải"
+
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:45
+msgid "Save thematic map commands to group file for GIS Manager"
+msgstr ""
+"Lưu các lệnh của bản đồ chủ đề vào tập tin nhóm dùng cho Trình Quản lý GIS"
+
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:49
+#, fuzzy
+msgid "Root for the name of psmap instruction files to be in current directory"
+msgstr ""
+"Thư mục gốc (root) dùng cho tên của các tập tin hướng dẫn psmap ở trong thư "
+"mục hiện tại (nếu không thiết lập, các tập tin hướng dẫn psmap sẽ không được "
+"tạo ra."
+
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:50
+#, fuzzy
+msgid "If not set, no psmap instruction files will be created)"
+msgstr ""
+"Thư mục gốc (root) dùng cho tên của các tập tin hướng dẫn psmap ở trong thư "
+"mục hiện tại (nếu không thiết lập, các tập tin hướng dẫn psmap sẽ không được "
+"tạo ra."
+
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:52
+msgid "Name of group file where thematic map commands will be saved"
+msgstr "Tên của tập tin nhóm, nơi sẽ lưu các lệnh bản đồ chủ đề"
+
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:54
+msgid "Create graphic legend in x11 display monitor"
+msgstr "Tạo chú giải đồ họa trong màn hình trình bày x11"
+
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:56
+msgid "Only draw fills (no outlines) for areas and points"
+msgstr "Chỉ tô màu vùng (không tô màu đường viền) các vùng và các điểm"
+
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:58
+msgid "Update color values to GRASSRGB column in attribute table"
+msgstr "Cập nhật các giá trị màu vào cột GRASSRGB trong bảng thuộc tính"
+
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:60
+msgid "Output legend for GIS Manager (for scripting use only)"
+msgstr ""
+
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:62
+msgid "Use math notation brackets in legend"
+msgstr "Dùng cách ghi kiểu toán học trong chú giải"
+
+#: ../locale/scriptstrings/db.droptable_to_translate.c:1
+#, fuzzy
+msgid "Drops an attribute table."
+msgstr "CSDL, bảng thuộc tính"
+
+#: ../locale/scriptstrings/db.droptable_to_translate.c:4
+#, fuzzy
+msgid "Table to drop"
+msgstr "Không thể tiếp tục"
+
+#: ../locale/scriptstrings/v.in.gns_to_translate.c:1
+#, fuzzy
+msgid ""
+"Imports US-NGA GEOnet Names Server (GNS) country files into a GRASS vector "
+"points map."
+msgstr ""
+"Nhập các tập tin quốc gia US-NGA GEOnet Names Server (GNS) vào một bản đồ "
+"vector GRASS kiểu điểm"
+
+#: ../locale/scriptstrings/v.in.gns_to_translate.c:2
+#: ../locale/scriptstrings/v.in.geonames_to_translate.c:2
+msgid "vector, import, gazetteer"
+msgstr "vector, nhập dữ liệu, gazetteer"
+
+#: ../locale/scriptstrings/v.in.gns_to_translate.c:3
+msgid "Uncompressed GNS file from NGA (with .txt extension)"
+msgstr "Tập tin GNS không nén từ NGA (với đuôi mở rộng .txt)"
+
+#: ../locale/scriptstrings/v.rast.stats_to_translate.c:1
+#, fuzzy
+msgid ""
+"Calculates univariate statistics from a raster map based on vector polygons "
+"and uploads statistics to new attribute columns."
+msgstr ""
+"Tính toán các thống kê một biến từ một bản đồ raster GRASS dựa trên các đối "
+"tượng vector"
+
+#: ../locale/scriptstrings/v.rast.stats_to_translate.c:2
+msgid "vector, raster, statistics"
+msgstr "vector, raster, thống kê"
+
+#: ../locale/scriptstrings/v.rast.stats_to_translate.c:3
+#, fuzzy
+msgid "Continue if upload column(s) already exist"
+msgstr "tiếp tục nếu (các) cột tải lên đã có"
+
+#: ../locale/scriptstrings/v.rast.stats_to_translate.c:5
+msgid "Name of vector polygon map"
+msgstr "Tên bản đồ vector polygon (vùng) mới"
+
+#: ../locale/scriptstrings/v.rast.stats_to_translate.c:7
+msgid ""
+"A single vector map can be connected to multiple database tables. This "
+"number determines which table to use"
+msgstr ""
+
+#: ../locale/scriptstrings/v.rast.stats_to_translate.c:8
+msgid "Name of raster map to calculate statistics from"
+msgstr "Tên bản đồ raster để tính toán các thống kê từ đó "
+
+#: ../locale/scriptstrings/v.rast.stats_to_translate.c:9
+#, fuzzy
+msgid "Column prefix for new attribute columns"
+msgstr "Tiền tố cột dùng cho các cột thuộc tính mới"
+
+#: ../locale/scriptstrings/v.in.geonames_to_translate.c:1
+#, fuzzy
+msgid "Imports geonames.org country files into a GRASS vector points map."
+msgstr ""
+"Nhập các tập tin quốc gia US-NGA GEOnet Names Server (GNS) vào một bản đồ "
+"vector GRASS kiểu điểm"
+
+#: ../locale/scriptstrings/v.in.geonames_to_translate.c:3
+#, fuzzy
+msgid "Uncompressed geonames file from (with .txt extension)"
+msgstr "Tập tin GNS không nén từ NGA (với đuôi mở rộng .txt)"
+
+#: ../locale/scriptstrings/d.m_to_translate.c:1
+#, fuzzy
+msgid "Display manager for GRASS"
+msgstr "trình bày các trang man HTML của GRASS"
+
+#: ../locale/scriptstrings/d.m_to_translate.c:2
+#, fuzzy
+msgid "Name of .dmrc settings file"
+msgstr "Tên tập tin MAT-File(v4) hiện có"
+
+#: ../locale/scriptstrings/gis.m_to_translate.c:1
+#, fuzzy
+msgid "GIS manager for GRASS"
+msgstr "trình bày các trang man HTML của GRASS"
+
+#: ../locale/scriptstrings/gis.m_to_translate.c:2
+#, fuzzy
+msgid "Name of GIS manager settings file (.grc)"
+msgstr "Tên tập tin MAT-File(v4) hiện có"
+
+#: ../locale/scriptstrings/db.dropcol_to_translate.c:1
+#, fuzzy
+msgid "Drops a column from selected attribute table"
+msgstr "Không tạo bảng thuộc tính."
+
+#: ../locale/scriptstrings/db.dropcol_to_translate.c:4
+#, fuzzy
+msgid "Table from which to drop attribute column"
+msgstr "bản đồ vector cần chỉnh sửa bảng thuộc tính"
+
+#: ../locale/scriptstrings/db.dropcol_to_translate.c:5
+#: ../locale/scriptstrings/v.db.dropcol_to_translate.c:5
+#, fuzzy
+msgid "Name of the column"
+msgstr "Số cột"
+
+#: ../locale/scriptstrings/r.out.xyz_to_translate.c:1
+msgid ""
+"Export a raster map to a text file as x,y,z values based on cell centers."
+msgstr ""
+
+#: ../locale/scriptstrings/d.resize_to_translate.c:1
+msgid "Resizes active display monitor"
+msgstr "Thay đổi k.thước màn hình trình bày"
+
+#: ../locale/scriptstrings/d.resize_to_translate.c:3
+msgid "New width for window"
+msgstr "Chiều rộng mới cho cửa sổ"
+
+#: ../locale/scriptstrings/d.resize_to_translate.c:4
+msgid "New height for window"
+msgstr "Chiều cao mới cho cửa sổ"
+
+#: ../locale/scriptstrings/v.in.mapgen_to_translate.c:1
+#, fuzzy
+msgid "Import Mapgen or Matlab-ASCII vector maps into GRASS."
+msgstr "Nhập các bản đồ vector Mapgen hoặc Matlab vào GRASS"
+
+#: ../locale/scriptstrings/v.in.mapgen_to_translate.c:3
+msgid "Input map is in Matlab format"
+msgstr "Bản đồ đầu vào thuộc định dạng Matlab"
+
+#: ../locale/scriptstrings/v.in.mapgen_to_translate.c:4
+#, fuzzy
+msgid "Create a 3D vector points map from 3 column Matlab data"
+msgstr "Tạo dữ liệu vector (điểm) mới từ bảng CSDL chứa các tọa độ."
+
+#: ../locale/scriptstrings/v.in.mapgen_to_translate.c:5
+#, fuzzy
+msgid "Name of input file in Mapgen/Matlab format"
+msgstr "Tên của tập tin đầu vào ở định dạng Mapgen/Matlab"
+
+#: ../locale/scriptstrings/v.build.all_to_translate.c:1
+#, fuzzy
+msgid "Rebuilds topology on all vector maps in the current mapset."
+msgstr "Kann die Vektordatei %s nicht finden."
+
+#: ../locale/scriptstrings/r.univar.sh_to_translate.c:1
+#, fuzzy
+msgid "calculates univariate statistics from a GRASS raster map"
+msgstr ""
+"Tính toán các thống kê một biến từ một bản đồ raster GRASS dựa trên các đối "
+"tượng vector"
+
+#: ../locale/scriptstrings/r.univar.sh_to_translate.c:3
+msgid "extended statistics (quartiles and percentile)"
+msgstr "các thống kê mở rộng (tứ phân vị và phân vị)"
+
+#: ../locale/scriptstrings/r.univar.sh_to_translate.c:5
+#, fuzzy
+msgid "Percentile to calculate (requires -e flag)"
+msgstr "Phân vị để tính toán (cần cờ -e)"
+
+#: ../locale/scriptstrings/r.mapcalculator_to_translate.c:1
+#, fuzzy
+msgid "Calculate new raster map from a r.mapcalc expression."
+msgstr "r.mapcalculator - tính toán bản đồ raster mới từ biểu thức r.mapcalc"
+
+#: ../locale/scriptstrings/r.mapcalculator_to_translate.c:2
+#, fuzzy
+msgid "A"
+msgstr "Biểu thức A"
+
+#: ../locale/scriptstrings/r.mapcalculator_to_translate.c:3
+#, fuzzy
+msgid "B"
+msgstr "Biểu thức B"
+
+#: ../locale/scriptstrings/r.mapcalculator_to_translate.c:4
+#, fuzzy
+msgid "C"
+msgstr "Biểu thức C"
+
+#: ../locale/scriptstrings/r.mapcalculator_to_translate.c:5
+#, fuzzy
+msgid "D"
+msgstr "Biểu thức D"
+
+#: ../locale/scriptstrings/r.mapcalculator_to_translate.c:6
+#, fuzzy
+msgid "E"
+msgstr "Biểu thức E"
+
+#: ../locale/scriptstrings/r.mapcalculator_to_translate.c:7
+#, fuzzy
+msgid "F"
+msgstr "Biểu thức F"
+
+#: ../locale/scriptstrings/r.mapcalculator_to_translate.c:8
+#: ../locale/scriptstrings/r3.mapcalculator_to_translate.c:8
+#, fuzzy
+msgid "Formula (e.g. A-B or A*C+B)"
+msgstr "Công thức (ví dụ A-B hoặc A*C+B):"
+
+#: ../locale/scriptstrings/r.mapcalculator_to_translate.c:10
+#: ../locale/scriptstrings/r3.mapcalculator_to_translate.c:10
+msgid "Show help"
+msgstr "Hiển thị trợ giúp"
+
+#: ../locale/scriptstrings/r.mapcalculator_to_translate.c:11
+msgid "Expert mode (enter a set of r.mapcalc expressions)"
+msgstr "Chế độ chuyên gia (nhập tập hợp các biểu thức r.mapcalc)"
+
+#: ../locale/scriptstrings/r.mapcalculator_to_translate.c:12
+#: ../locale/scriptstrings/r3.mapcalculator_to_translate.c:12
+#, fuzzy
+msgid "Do not overwrite existing map"
+msgstr "Không ghi đè bản đồ hiện có"
+
+#: ../locale/scriptstrings/i.landsat.rgb_to_translate.c:1
+#, fuzzy
+msgid "Performs auto-balancing of colors for LANDSAT images."
+msgstr "Cân bằng màu tự động cho các ảnh LANDSAT"
+
+#: ../locale/scriptstrings/i.landsat.rgb_to_translate.c:2
+msgid "raster, imagery, colors"
+msgstr "raster, ảnh, màu sắc"
+
+#: ../locale/scriptstrings/i.landsat.rgb_to_translate.c:3
+msgid "LANDSAT red channel"
+msgstr "Kênh đỏ LANDSAT"
+
+#: ../locale/scriptstrings/i.landsat.rgb_to_translate.c:4
+msgid "LANDSAT green channel"
+msgstr "Kênh lục LANDSAT"
+
+#: ../locale/scriptstrings/i.landsat.rgb_to_translate.c:5
+msgid "LANDSAT blue channel"
+msgstr "Kênh xanh LANDSAT"
+
+#: ../locale/scriptstrings/i.landsat.rgb_to_translate.c:6
+msgid "Cropping intensity (upper brightness level)"
+msgstr "Xén bớt cường độ (mức chiếu sáng cận trên)"
+
+#: ../locale/scriptstrings/i.landsat.rgb_to_translate.c:7
+msgid "Extend colors to full range of data on each channel"
+msgstr "Mở rộng các màu ra toàn bộ khoảng giá trị của dữ liệu trên từng kênh"
+
+#: ../locale/scriptstrings/i.landsat.rgb_to_translate.c:8
+msgid "Preserve relative colors, adjust brightness only"
+msgstr "Bảo toàn các màu tương đối, chỉ điều chỉnh độ sáng"
+
+#: ../locale/scriptstrings/i.landsat.rgb_to_translate.c:9
+msgid "Reset to standard color range"
+msgstr "Thiết lập lại thành khoảng giá trị màu tiêu chuẩn"
+
+#: ../locale/scriptstrings/d.monsize_to_translate.c:1
+msgid "Selects/starts specified monitor at specified size"
+msgstr "Chọn/Khởi động màn hình được chỉ định với kích thước được chỉ định"
+
+#: ../locale/scriptstrings/d.monsize_to_translate.c:3
+msgid "Display monitor to start"
+msgstr "Trình bày màn hình để khởi động"
+
+#: ../locale/scriptstrings/d.monsize_to_translate.c:4
+msgid "Width in pixels of new display monitor"
+msgstr "Chiều rộng tính theo điểm ảnh của màn hình trình bày mới"
+
+#: ../locale/scriptstrings/d.monsize_to_translate.c:5
+msgid "Height in pixels of new display monitor"
+msgstr "Chiều cao tính theo điểm ảnh của màn hình trình bày mới"
+
+#: ../locale/scriptstrings/d.shadedmap_to_translate.c:1
+msgid "Drapes a color raster over a shaded relief map using d.his"
+msgstr ""
+
+#: ../locale/scriptstrings/d.shadedmap_to_translate.c:2
+#, fuzzy
+msgid "Name of shaded relief or aspect map"
+msgstr "Tên tập tin raster mới"
+
+#: ../locale/scriptstrings/d.shadedmap_to_translate.c:3
+#, fuzzy
+msgid "Name of raster to drape over relief map"
+msgstr "Tên của bản đồ góc raster"
+
+#: ../locale/scriptstrings/d.shadedmap_to_translate.c:4
+#, fuzzy
+msgid "Percent to brighten"
+msgstr "Phần trăm hội tụ"
+
+#: ../locale/scriptstrings/v.in.gpsbabel_to_translate.c:1
+#, fuzzy
+msgid ""
+"Import waypoints, routes, and tracks from a GPS receiver or GPS download "
+"file into a vector map."
+msgstr ""
+"Tải xuống Điểm tọa độ, Lộ trình và Đường đi từ một máy GPS hoặc một tập tin "
+"ascii GPS vào một bản đồ vector."
+
+#: ../locale/scriptstrings/v.in.gpsbabel_to_translate.c:4
+#, fuzzy
+msgid "Import waypoints"
+msgstr "Đang trích các điểm..."
+
+#: ../locale/scriptstrings/v.in.gpsbabel_to_translate.c:5
+#, fuzzy
+msgid "Import routes"
+msgstr "Nhập"
+
+#: ../locale/scriptstrings/v.in.gpsbabel_to_translate.c:6
+#, fuzzy
+msgid "Import track"
+msgstr "Nhập"
+
+#: ../locale/scriptstrings/v.in.gpsbabel_to_translate.c:7
+#, fuzzy
+msgid "Force vertices of track or route data as points"
+msgstr "buộc đổi các đỉnh của dữ liệu đường đi hoặc lộ trình thành điểm"
+
+#: ../locale/scriptstrings/v.in.gpsbabel_to_translate.c:9
+#, fuzzy
+msgid "Device or file used to import data"
+msgstr "Thiết bị hoặc tập tin dùng để nhập dữ liệu"
+
+#: ../locale/scriptstrings/v.in.gpsbabel_to_translate.c:11
+#, fuzzy
+msgid "Format of GPS input data (use gpsbabel supported formats)"
+msgstr ""
+"định dạng của dữ liệu GPS đầu vào (dùng các định dạng được gpsbabel hỗ trợ)"
+
+#: ../locale/scriptstrings/v.in.gpsbabel_to_translate.c:12
+#, fuzzy
+msgid ""
+"Projection of input data (PROJ.4 style), if not set Lat/Lon WGS84 is assumed"
+msgstr ""
+"phép chiếu của dữ liệu đầu vào (dùng các tùy chọn của PROJ.4); nếu không "
+"thiết lập, giả định rằng dữ liệu là Kinh/vĩ WGS84"
+
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:1
+#, fuzzy
+msgid "Downloads and imports data from WMS servers."
+msgstr "Tải xuống và nhập các dữ liệu từ các máy chủ WMS"
+
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:2
+msgid "wms"
+msgstr "wms"
+
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:4
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:8
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:17
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:21
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:23
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:25
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:27
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:29
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:31
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:33
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:35
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:38
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:49
+msgid "Request"
+msgstr "Yêu_cầu"
+
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:5
+msgid "Skip to downloading (to resume downloads faster)"
+msgstr "Bỏ qua đến mục tải xuống (phục hồi việc tải nhanh hơn)"
+
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:6
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:10
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:40
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:42
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:44
+msgid "Download"
+msgstr "Tải_xuống"
+
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:7
+#, fuzzy
+msgid "Don't request transparent data"
+msgstr "Không yêu cầu dữ liệu 'trong suốt'"
+
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:9
+#, fuzzy
+msgid "Clean existing data out of download directory"
+msgstr "Xóa dữ liệu hiện có khỏi thư mục tải xuống"
+
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:12
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:14
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:19
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:46
+msgid "Import"
+msgstr "Nhập"
+
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:13
+#, fuzzy
+msgid "Don't reproject the data, just patch it"
+msgstr "Không quy chiếu lại dữ liệu, chỉ 'vá' nó vào"
+
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:15
+msgid "Use GET method instead of POST data method"
+msgstr ""
+
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:16
+msgid "This may be needed to connect to servers which lack POST capability"
+msgstr ""
+
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:20
+msgid "Mapserver to request data from"
+msgstr "Mapserver để yêu cầu dữ liệu từ đó"
+
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:22
+msgid "Layers to request from map server"
+msgstr "Các lớp yêu cầu từ máy chủ bản đồ"
+
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:24
+msgid "Styles to request from map server"
+msgstr "Kiểu để yêu cầu từ máy chủ bản đồ"
+
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:26
+msgid "Source projection to request from server"
+msgstr "Phép chiếu nguồn để yêu cầu từ máy chủ"
+
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:28
+msgid "Image format requested from the server"
+msgstr "Định dạng ảnh yêu cầu từ máy chủ"
+
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:30
+msgid "Addition query options for server"
+msgstr "Các tùy chọn truy vấn bổ sung cho máy chủ"
+
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:32
+msgid "Maximum columns to request at a time"
+msgstr "Số cột tối đa yêu cầu trong một lần"
+
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:34
+msgid "Maximum rows to request at a time"
+msgstr "Số hàng tối đa yêu cầu trong một lần"
+
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:36
+msgid "Additional options for r.tileset"
+msgstr "Các tùy chọn bổ sung cho r.tileset"
+
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:37
+#, fuzzy
+msgid "Named region to request data for. Current region used if omitted"
+msgstr ""
+"Vùng có tên để yêu cầu dữ liệu cho nó. Vùng hiện tại được dùng nếu bỏ qua "
+"tùy chọn này."
+
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:39
+msgid "Folder to save downloaded data to"
+msgstr "Thư mục để lưu dữ liệu tải về"
+
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:41
+msgid "Additional options for wget"
+msgstr "Các tùy chọn bổ sung cho wget"
+
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:43
+#, fuzzy
+msgid "Additional options for curl"
+msgstr "Các tùy chọn bổ sung cho wget"
+
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:45
+msgid "Reprojection method to use"
+msgstr "Phương pháp quy chiếu lại cần dùng"
+
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:47
+msgid "Filename to save capabilities XML file to"
+msgstr ""
+
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:48
+#, fuzzy
+msgid "Requires list available layers flag"
+msgstr "Liệt kê các lớp hiện có và thoát"
+
+#: ../locale/scriptstrings/r.colors.stddev_to_translate.c:1
+msgid "Set color rules based on stddev from a map's mean value."
+msgstr ""
+
+#: ../locale/scriptstrings/r.colors.stddev_to_translate.c:4
+#, fuzzy
+msgid "Color using standard deviation bands"
+msgstr ""
+"các trị tr.bình và độ lệch chuẩn cho %d băng%s\n"
+"\n"
+
+#: ../locale/scriptstrings/r.colors.stddev_to_translate.c:5
+msgid "Force center at zero"
+msgstr ""
+
+#: ../locale/scriptstrings/r.fillnulls_to_translate.c:1
+msgid ""
+"Fills no-data areas in raster maps using v.surf.rst splines interpolation"
+msgstr ""
+"Lấp đầy vùng không có dữ liệu trong các bản đồ raster, dùng phép nội suy các "
+"đường spline v.surf.rst"
+
+#: ../locale/scriptstrings/r.fillnulls_to_translate.c:2
+msgid "raster, elevation, interpolation"
+msgstr "raster, độ cao, nội suy"
+
+#: ../locale/scriptstrings/r.fillnulls_to_translate.c:3
+#, fuzzy
+msgid "Raster map in which to fill nulls"
+msgstr "Bản đồ raster cần lấp đầy các giá trị null"
+
+#: ../locale/scriptstrings/r.fillnulls_to_translate.c:4
+msgid ""
+"Output raster map with nulls filled by interpolation from surrounding values"
+msgstr ""
+"Bản đồ raster đầu ra với các giá trị null được lấp đầy bằng cách nội suy từ "
+"các giá trị xung quanh"
+
+#: ../locale/scriptstrings/r.fillnulls_to_translate.c:5
+msgid "Spline tension parameter"
+msgstr "Tham số sức căng của đường spline"
+
+#: ../locale/scriptstrings/r.fillnulls_to_translate.c:6
+msgid "Spline smoothing parameter"
+msgstr "Tham số làm trơn của đường spline"
+
+#: ../locale/scriptstrings/v.dissolve_to_translate.c:1
+#, fuzzy
+msgid ""
+"Dissolves boundaries between adjacent areas sharing a common category number "
+"or attribute."
+msgstr ""
+"Không tìm thấy bảng thuộc tính -> chỉ dùng chỉ số phạm trù làm thuộc tính"
+
+#: ../locale/scriptstrings/v.dissolve_to_translate.c:2
+#, fuzzy
+msgid "vector, area, dissolve"
+msgstr "vector, nhập"
+
+#: ../locale/scriptstrings/v.dissolve_to_translate.c:5
+#, fuzzy
+msgid "Layer number. If -1, all layers are extracted."
+msgstr "Lớp số. Nếu là -1, tất cả các lớp được trình bày."
+
+#: ../locale/scriptstrings/v.dissolve_to_translate.c:7
+#, fuzzy
+msgid "Name of column used to dissolve common boundaries"
+msgstr "Tên của cột thuộc tính dùng làm nhãn"
+
+#: ../locale/scriptstrings/v.centroids_to_translate.c:1
+#, fuzzy
+msgid "Adds missing centroids to closed boundaries."
+msgstr "Không đóng các ranh giới"
+
+#: ../locale/scriptstrings/v.centroids_to_translate.c:2
+#, fuzzy
+msgid "vector, centroid, area"
+msgstr "vector, raster, tích hợp"
+
+#: ../locale/scriptstrings/v.centroids_to_translate.c:5
+#, fuzzy
+msgid "Action to be taken"
+msgstr "Lệnh chỉnh sửa cần thực hiện."
+
+#: ../locale/scriptstrings/v.centroids_to_translate.c:7
+#, fuzzy
+msgid "Category number starting value"
+msgstr "Chế độ số phạm trù"
+
+#: ../locale/scriptstrings/r3.mapcalculator_to_translate.c:1
+#, fuzzy
+msgid "Calculates new grid3D volume from r3.mapcalc expression."
+msgstr "r3.mapcalculator - Tính thể tích grid3D mới từ biểu thức r3.mapcalc"
+
+#: ../locale/scriptstrings/r3.mapcalculator_to_translate.c:2
+#, fuzzy
+msgid "A (grid3D file)"
+msgstr "A (tập tin grid3D"
+
+#: ../locale/scriptstrings/r3.mapcalculator_to_translate.c:3
+#, fuzzy
+msgid "B (grid3D file)"
+msgstr "B (tập tin grid3D):"
+
+#: ../locale/scriptstrings/r3.mapcalculator_to_translate.c:4
+#, fuzzy
+msgid "C (grid3D file)"
+msgstr "C (tập grid3D)"
+
+#: ../locale/scriptstrings/r3.mapcalculator_to_translate.c:5
+#, fuzzy
+msgid "D (grid3D file)"
+msgstr "D (tập tin grid3D):"
+
+#: ../locale/scriptstrings/r3.mapcalculator_to_translate.c:6
+#, fuzzy
+msgid "E (grid3D file)"
+msgstr "E (tập tin grid3D):"
+
+#: ../locale/scriptstrings/r3.mapcalculator_to_translate.c:7
+#, fuzzy
+msgid "F (grid3D file)"
+msgstr "F (tập tin grid3D):"
+
+#: ../locale/scriptstrings/r3.mapcalculator_to_translate.c:9
+#, fuzzy
+msgid "Name for output grid3D volume"
+msgstr "Tên cho tập tin đầu ra"
+
+#: ../locale/scriptstrings/r3.mapcalculator_to_translate.c:11
+msgid "Expert mode (enter a set of r3.mapcalc expressions)"
+msgstr "Chế độ chuyên gia (nhập tập hợp các biểu thức r3.mapcalc)"
+
+#: ../locale/scriptstrings/v.db.droptable_to_translate.c:1
+#, fuzzy
+msgid "Removes existing attribute table of a vector map."
+msgstr "loại bỏ bảng thuộc tính hiện tại của một bản đồ vector"
+
+#: ../locale/scriptstrings/v.db.droptable_to_translate.c:3
+#, fuzzy
+msgid "Force removal (required for actual deletion of table)"
+msgstr "Buộc loại bỏ (cần thiết để thực sự xóa bỏ các tập tin)"
+
+#: ../locale/scriptstrings/v.db.droptable_to_translate.c:4
+#, fuzzy
+msgid "Vector map from which to remove attribute table"
+msgstr "tên bản đồ vector cần loại bỏ bảng thuộc tính"
+
+#: ../locale/scriptstrings/v.db.droptable_to_translate.c:5
+#, fuzzy
+msgid "Name of existing attribute table (default: vector map name)"
+msgstr "Tên của bảng thuộc tính hiện có (mặc định: tên bản đồ vector)"
+
+#: ../locale/scriptstrings/v.db.droptable_to_translate.c:6
+msgid "Layer from which to drop linked attribute table"
+msgstr "Lớp cần bỏ (drop) bảng thuộc tính liên kết"
+
+#: ../locale/scriptstrings/v.db.join_to_translate.c:1
+#, fuzzy
+msgid "Allows to join a table to a vector map table."
+msgstr "loại bỏ bảng thuộc tính hiện tại của một bản đồ vector"
+
+#: ../locale/scriptstrings/v.db.join_to_translate.c:3
+#, fuzzy
+msgid "Vector map to which to join other table"
+msgstr "bản đồ vector cần chỉnh sửa bảng thuộc tính"
+
+#: ../locale/scriptstrings/v.db.join_to_translate.c:4
+#, fuzzy
+msgid "Layer where to join"
+msgstr "Lớp cần thêm cột vào"
+
+#: ../locale/scriptstrings/v.db.join_to_translate.c:5
+#, fuzzy
+msgid "Join column in map table"
+msgstr "Kiểu cột không biết"
+
+#: ../locale/scriptstrings/v.db.join_to_translate.c:6
+#, fuzzy
+msgid "Other table name"
+msgstr "Tên bảng đầu ra"
+
+#: ../locale/scriptstrings/v.db.join_to_translate.c:7
+#, fuzzy
+msgid "Join column in other table"
+msgstr "Kiểu cột không biết"
+
+#: ../locale/scriptstrings/i.tasscap_to_translate.c:1
+msgid "Tasseled Cap (Kauth Thomas) transformation for LANDSAT-TM data"
+msgstr "Phép chuyển đổi Tasseled Cap (Kauth Thomas) cho các dữ liệu LANDSAT-TM"
+
+#: ../locale/scriptstrings/i.tasscap_to_translate.c:2
+msgid "raster, imagery"
+msgstr "raster, ảnh"
+
+#: ../locale/scriptstrings/i.tasscap_to_translate.c:3
+msgid "use transformation rules for LANDSAT-4"
+msgstr "dùng các quy tắc chuyển đổi cho LANDSAT-4"
+
+#: ../locale/scriptstrings/i.tasscap_to_translate.c:4
+msgid "use transformation rules for LANDSAT-5"
+msgstr "dùng các quy tắc chuyển đổi cho LANDSAT-5"
+
+#: ../locale/scriptstrings/i.tasscap_to_translate.c:5
+msgid "use transformation rules for LANDSAT-7"
+msgstr "dùng các quy tắc chuyển đổi cho LANDSAT-7"
+
+#: ../locale/scriptstrings/i.tasscap_to_translate.c:6
+msgid "raster input map (LANDSAT channel 1)"
+msgstr "Bản đồ raster đầu vào (LANDSAT kênh 1)"
+
+#: ../locale/scriptstrings/i.tasscap_to_translate.c:7
+msgid "raster input map (LANDSAT channel 2)"
+msgstr "Bản đồ raster đầu vào (LANDSAT kênh 2)"
+
+#: ../locale/scriptstrings/i.tasscap_to_translate.c:8
+msgid "raster input map (LANDSAT channel 3)"
+msgstr "Bản đồ raster đầu vào (LANDSAT kênh 3)"
+
+#: ../locale/scriptstrings/i.tasscap_to_translate.c:9
+msgid "raster input map (LANDSAT channel 4)"
+msgstr "Bản đồ raster đầu vào (LANDSAT kênh 4)"
+
+#: ../locale/scriptstrings/i.tasscap_to_translate.c:10
+msgid "raster input map (LANDSAT channel 5)"
+msgstr "Bản đồ raster đầu vào (LANDSAT kênh 5)"
+
+#: ../locale/scriptstrings/i.tasscap_to_translate.c:11
+msgid "raster input map (LANDSAT channel 7)"
+msgstr "Bản đồ raster đầu vào (LANDSAT kênh 7)"
+
+#: ../locale/scriptstrings/i.tasscap_to_translate.c:12
+msgid "raster output TC maps prefix"
+msgstr "Tiền tố cho bản đồ raster TC đầu ra"
+
+#: ../locale/scriptstrings/v.db.addtable_to_translate.c:1
+#, fuzzy
+msgid ""
+"Creates and connects a new attribute table to a given layer of an existing "
+"vector map."
+msgstr ""
+"tạo và thêm bảng thuộc tính mới vào một lớp cho trước của một bản đồ vector "
+"hiện có"
+
+#: ../locale/scriptstrings/v.db.addtable_to_translate.c:3
+msgid "Vector map for which to add new attribute table"
+msgstr "Bản đồ vector cần thêm bảng thuộc tính mới"
+
+#: ../locale/scriptstrings/v.db.addtable_to_translate.c:4
+msgid "Name of new attribute table (default: vector map name)"
+msgstr "Tên của bảng thuộc tính mới (mặc định: tên bản đồ vector)"
+
+#: ../locale/scriptstrings/v.db.addtable_to_translate.c:5
+msgid "Layer where to add new attribute table"
+msgstr "Lớp để thêm bảng thuộc tính mới"
+
+#: ../locale/scriptstrings/v.db.addtable_to_translate.c:6
+#: ../locale/scriptstrings/v.db.addcol_to_translate.c:5
+#, fuzzy
+msgid ""
+"Name and type of the new column(s) (types depend on database backend, but "
+"all support VARCHAR(), INT, DOUBLE PRECISION and DATE)"
+msgstr ""
+"Tên và kiểu của (các) cột mới (kiểu tùy thuộc vào CSDL đầu cuối (backend), "
+"nhưng tất cả đều hỗ trợ các định dạng VARCHAR(), INT, DOUBLE và DATE)"
+
+#: ../locale/scriptstrings/v.in.wfs_to_translate.c:1
+msgid "Import GetFeature from WFS"
+msgstr ""
+
+#: ../locale/scriptstrings/v.in.wfs_to_translate.c:2
+msgid "GetFeature URL starting with http"
+msgstr ""
+
+#: ../locale/scriptstrings/v.in.wfs_to_translate.c:3
+#, fuzzy
+msgid "Vector output map"
+msgstr "Không có bản đồ đầu ra"
+
+#: ../locale/scriptstrings/r.shaded.relief_to_translate.c:1
+msgid "Creates shaded relief map from an elevation map (DEM)."
+msgstr "Tạo bản đồ nổi đổ bóng từ một bản đồ độ cao (DEM)."
+
+#: ../locale/scriptstrings/r.shaded.relief_to_translate.c:4
+msgid "Output shaded relief map name"
+msgstr "Tên bản đồ nổi đổ bóng đầu ra"
+
+#: ../locale/scriptstrings/r.shaded.relief_to_translate.c:5
+msgid "Altitude of the sun in degrees above the horizon"
+msgstr "Độ cao mặt trời (độ) trên đường chân trời"
+
+#: ../locale/scriptstrings/r.shaded.relief_to_translate.c:6
+msgid "Azimuth of the sun in degrees to the east of north"
+msgstr "Góc phương vị của mặt trời (độ) từ phía đông của hướng bắc."
+
+#: ../locale/scriptstrings/r.shaded.relief_to_translate.c:7
+msgid "Factor for exaggerating relief"
+msgstr "Hệ số để phóng đại độ nổi"
+
+#: ../locale/scriptstrings/r.shaded.relief_to_translate.c:8
+msgid "Scale factor for converting horizontal units to elevation units"
+msgstr "Hệ số tỷ lệ để đổi đơn vị chiều ngang thành đơn vị chiều đứng"
+
+#: ../locale/scriptstrings/r.shaded.relief_to_translate.c:9
+#, fuzzy
+msgid ""
+"Set scaling factor (applies to lat./long. locations only, none: scale=1)"
+msgstr "Thiết lập hệ số tỷ lệ (chỉ áp dụng cho các location vĩ/kinh độ)"
+
+#: ../locale/scriptstrings/d.out.png_to_translate.c:1
+msgid "Saves active display monitor to PNG file in home directory"
+msgstr "Lưu màn hình trình bày kích hoạt vào tập tin PNG trong thư mục nhà"
+
+#: ../locale/scriptstrings/d.out.png_to_translate.c:3
+msgid "Name of PNG file"
+msgstr "Tên của tập tin PNG "
+
+#: ../locale/scriptstrings/d.out.png_to_translate.c:4
+msgid "Resolution of output file (single=1, double=2, quad=4)"
+msgstr "Độ phân giải của tập tin đầu ra (đơn=1, gấp đôi=2, gấp bốn=4)"
+
+#: ../locale/scriptstrings/i.oif_to_translate.c:1
+msgid "Calculates Optimum-Index-Factor table for LANDSAT TM bands 1-5, & 7"
+msgstr ""
+"Tính toán Hệ số-Chỉ mục-Tối ưu (OIF) cho các băng 1-5 & 7 của ảnh LANDSAT TM"
+
+#: ../locale/scriptstrings/i.oif_to_translate.c:2
+msgid "raster, imagery, statistics"
+msgstr "raster, ảnh, thống kê"
+
+#: ../locale/scriptstrings/i.oif_to_translate.c:3
+msgid "LANDSAT TM band 1."
+msgstr "băng 1 của LANDSAT TM."
+
+#: ../locale/scriptstrings/i.oif_to_translate.c:4
+msgid "LANDSAT TM band 2."
+msgstr "băng 2 của LANDSAT TM."
+
+#: ../locale/scriptstrings/i.oif_to_translate.c:5
+msgid "LANDSAT TM band 3."
+msgstr "băng 3 của LANDSAT TM."
+
+#: ../locale/scriptstrings/i.oif_to_translate.c:6
+msgid "LANDSAT TM band 4."
+msgstr "băng 4 của LANDSAT TM."
+
+#: ../locale/scriptstrings/i.oif_to_translate.c:7
+msgid "LANDSAT TM band 5."
+msgstr "băng 5 của LANDSAT TM."
+
+#: ../locale/scriptstrings/i.oif_to_translate.c:8
+msgid "LANDSAT TM band 7."
+msgstr "băng 7 của LANDSAT TM."
+
+#: ../locale/scriptstrings/r.li.setup_to_translate.c:1
+#, fuzzy
+msgid "Configuration editor for r.li.'index'"
+msgstr "Tập tin cấu hình"
+
+#: ../locale/scriptstrings/r.li.setup_to_translate.c:2
+#, fuzzy
+msgid "raster, landscape structure analysis"
+msgstr "raster, phân tích cấu trúc cảnh quan, chỉ mục vá"
+
+#: ../locale/scriptstrings/db.in.ogr_to_translate.c:1
+#, fuzzy
+msgid "Imports attribute tables in various formats."
+msgstr "loại bỏ bảng thuộc tính hiện tại của một bản đồ vector"
+
+#: ../locale/scriptstrings/db.in.ogr_to_translate.c:3
+#, fuzzy
+msgid "Table file to be imported or DB connection string"
+msgstr "Tập tin raster ascii cần nhập"
+
+#: ../locale/scriptstrings/db.in.ogr_to_translate.c:4
+msgid "Table name of SQL DB table"
+msgstr ""
+
+#: ../locale/scriptstrings/db.in.ogr_to_translate.c:6
+#, fuzzy
+msgid "Name for auto-generated unique key column"
+msgstr "Tên của bản đồ raster cần dùng cho <%s>"
+
+#: ../locale/scriptstrings/d.rast.edit_to_translate.c:5
+#, fuzzy
+msgid "Name of aspect raster map"
+msgstr "Tên của bản đồ raster"
+
+#: ../locale/scriptstrings/d.rast.edit_to_translate.c:6
+#, fuzzy
+msgid "Width of display canvas"
+msgstr "Chữ cần trình bày"
+
+#: ../locale/scriptstrings/d.rast.edit_to_translate.c:7
+#, fuzzy
+msgid "Height of display canvas"
+msgstr "Chữ cần trình bày"
+
+#: ../locale/scriptstrings/d.rast.edit_to_translate.c:8
+#, fuzzy
+msgid "Minimum size of each cell"
+msgstr "Cấp mặt đồng giá trị tối thiểu"
+
+#: ../locale/scriptstrings/d.rast.edit_to_translate.c:9
+#, fuzzy
+msgid "Maximum number of rows to load"
+msgstr "Số lần lặp lớn nhất: %d\n"
+
+#: ../locale/scriptstrings/d.rast.edit_to_translate.c:10
+#, fuzzy
+msgid "Maximum number of columns to load"
+msgstr "Số lần lặp lớn nhất: %d\n"
+
+#: ../locale/scriptstrings/v.db.dropcol_to_translate.c:1
+#, fuzzy
+msgid ""
+"Drops a column from the attribute table connected to a given vector map."
+msgstr ""
+"thêm một hay nhiều cột vào bảng thuộc tính được kết nối vào một bản đồ "
+"vector cho trước"
+
+#: ../locale/scriptstrings/v.db.dropcol_to_translate.c:3
+#, fuzzy
+msgid "Vector map for which to drop attribute column"
+msgstr "bản đồ vector cần chỉnh sửa bảng thuộc tính"
+
+#: ../locale/scriptstrings/v.db.dropcol_to_translate.c:4
+#, fuzzy
+msgid "Layer where to drop column"
+msgstr "Lớp cần thêm cột vào"
+
+#: ../locale/scriptstrings/d.polar_to_translate.c:1
+msgid "Draws polar diagram of angle map such as aspect or flow directions"
+msgstr ""
+"Vẽ sơ đồ cực của bản đồ góc, ví dụ như các bản đồ hướng hoặc hướng dòng chảy"
+
+#: ../locale/scriptstrings/d.polar_to_translate.c:3
+msgid "Name of raster angle map"
+msgstr "Tên của bản đồ góc raster"
+
+#: ../locale/scriptstrings/d.polar_to_translate.c:4
+msgid "Pixel value to be interpreted as undefined (different from NULL)"
+msgstr "Giá trị điểm ảnh được diễn giải là không được xác định (khác với NULL)"
+
+#: ../locale/scriptstrings/d.polar_to_translate.c:5
+msgid "Name of optional EPS output file"
+msgstr "Tên của tập tin đầu ra EPS tùy chọn."
+
+#: ../locale/scriptstrings/d.polar_to_translate.c:6
+msgid "Plot using Xgraph"
+msgstr "Vẽ đồ thị bằng Xgraph"
+
+#: ../locale/scriptstrings/i.in.spotvgt_to_translate.c:1
+msgid "Import of SPOT VGT NDVI file into a raster map"
+msgstr "Nhập tập tin SPOT VGT NDVI vào một bản đồ raster GRASS"
+
+#: ../locale/scriptstrings/i.in.spotvgt_to_translate.c:3
+msgid "also import quality map (SM status map layer) and filter NDVI map"
+msgstr ""
+"nhập cả bản đồ chất lượng (lớp bản đồ trạng thái SM) và lọc bản đồ NDVI"
+
+#: ../locale/scriptstrings/i.in.spotvgt_to_translate.c:4
+msgid "existing SPOT VGT NDVI HDF file (0001_NDV.HDF)"
+msgstr "tập tin SPOT VGT NDVI hiện có (0001_NDV.HDF)"
+
+#: ../locale/scriptstrings/v.db.addcol_to_translate.c:1
+#, fuzzy
+msgid ""
+"Adds one or more columns to the attribute table connected to a given vector "
+"map."
+msgstr ""
+"thêm một hay nhiều cột vào bảng thuộc tính được kết nối vào một bản đồ "
+"vector cho trước"
+
+#: ../locale/scriptstrings/v.db.addcol_to_translate.c:3
+#, fuzzy
+msgid "Vector map for which to edit attribute table"
+msgstr "bản đồ vector cần chỉnh sửa bảng thuộc tính"
+
+#: ../locale/scriptstrings/v.db.addcol_to_translate.c:4
+msgid "Layer where to add column"
+msgstr "Lớp cần thêm cột vào"
+
+#: ../locale/scriptstrings/d.mvmon_to_translate.c:1
+#, fuzzy
+msgid "Moves displayed maps to another monitor"
+msgstr "chuyển các bản đồ được trình bày hiện tại sang một màn hình khác"
+
+#: ../locale/scriptstrings/d.mvmon_to_translate.c:3
+msgid "clear target monitor before moving"
+msgstr "xóa màn hình đích trước khi chuyển"
+
+#: ../locale/scriptstrings/d.mvmon_to_translate.c:4
+msgid "stay with source monitor"
+msgstr "'ở lại' với màn hình nguồn"
+
+#: ../locale/scriptstrings/d.mvmon_to_translate.c:5
+msgid "kill source monitor after moving"
+msgstr "tắt màn hình nguồn sau khi chuyển"
+
+#: ../locale/scriptstrings/d.mvmon_to_translate.c:6
+msgid "Target monitor"
+msgstr "Màn hình đích"
+
+#: ../locale/scriptstrings/d.mvmon_to_translate.c:7
+msgid "Source monitor"
+msgstr "Màn hình nguồn"
+
 #: ../sites/s.out.ascii/main.c:47 ../sites/s.in.ascii/main.c:50
 msgid "sites"
 msgstr "địa điểm"
@@ -26635,6 +29033,11 @@ msgstr "Không thể đọc tập tin chữ ký <%s>"
 #: ../imagery/i.smap/shapiro/read_sig.c:27
 #, c-format
 msgid "Signature file <%s> is invalid"
+msgstr "Tập tin chữ ký <%s> không hợp lệ."
+
+#: ../imagery/i.smap/shapiro/read_sig.c:30
+#, fuzzy, c-format
+msgid "Signature file <%s> is empty"
 msgstr "Tập tin chữ ký <%s> không hợp lệ."
 
 #: ../imagery/i.smap/shapiro/parse.c:21 ../imagery/i.maxlik/main.c:79
@@ -28535,1743 +30938,83 @@ msgid "Can't mark another point.  Only %d points allowed.  Sorry."
 msgstr ""
 "Không thể đánh dấu một điểm khác. Chỉ có %d điểm được chấp nhận. Xin lỗi."
 
-#, fuzzy
-#~ msgid "GIS manager for GRASS"
-#~ msgstr "trình bày các trang man HTML của GRASS"
-
-#, fuzzy
-#~ msgid "Name of GIS manager settings file (.grc)"
-#~ msgstr "Tên tập tin MAT-File(v4) hiện có"
-
-#, fuzzy
-#~ msgid "Display manager for GRASS"
-#~ msgstr "trình bày các trang man HTML của GRASS"
-
-#, fuzzy
-#~ msgid "Name of .dmrc settings file"
-#~ msgstr "Tên tập tin MAT-File(v4) hiện có"
-
-#, fuzzy
-#~ msgid "Configuration editor for r.li.'index'"
-#~ msgstr "Tập tin cấu hình"
-
-#, fuzzy
-#~ msgid "raster, landscape structure analysis"
-#~ msgstr "raster, phân tích cấu trúc cảnh quan, chỉ mục vá"
-
-#, fuzzy
-#~ msgid "Prints a graph of the correlation between data layers (in pairs)."
-#~ msgstr ""
-#~ "in ra một đồ thị biểu diễn mối tương quan giữa các lớp dữ liệu (theo cặp)."
-
-#, fuzzy
-#~ msgid "display, diagram"
-#~ msgstr "trình bày, biểu đồ"
-
-#~ msgid "raster input map"
-#~ msgstr "bản đồ raster đầu vào"
-
-#~ msgid "Selects/starts specified monitor at specified size"
-#~ msgstr "Chọn/Khởi động màn hình được chỉ định với kích thước được chỉ định"
-
-#~ msgid "Display monitor to start"
-#~ msgstr "Trình bày màn hình để khởi động"
-
-#~ msgid "Width in pixels of new display monitor"
-#~ msgstr "Chiều rộng tính theo điểm ảnh của màn hình trình bày mới"
-
-#~ msgid "Height in pixels of new display monitor"
-#~ msgstr "Chiều cao tính theo điểm ảnh của màn hình trình bày mới"
-
-#, fuzzy
-#~ msgid "Moves displayed maps to another monitor"
-#~ msgstr "chuyển các bản đồ được trình bày hiện tại sang một màn hình khác"
-
-#~ msgid "clear target monitor before moving"
-#~ msgstr "xóa màn hình đích trước khi chuyển"
-
-#~ msgid "stay with source monitor"
-#~ msgstr "'ở lại' với màn hình nguồn"
-
-#~ msgid "kill source monitor after moving"
-#~ msgstr "tắt màn hình nguồn sau khi chuyển"
-
-#~ msgid "Target monitor"
-#~ msgstr "Màn hình đích"
-
-#~ msgid "Source monitor"
-#~ msgstr "Màn hình nguồn"
-
-#~ msgid "Export display monitor to a GpsDrive compatible backdrop image"
-#~ msgstr ""
-#~ "Xuất màn hình trình bày thành một ảnh nền tương thích với một GpsDrive"
-
-#~ msgid "display, export, GPS"
-#~ msgstr "trình bày, xuất, GPS"
-
-#, fuzzy
-#~ msgid "name for new map image (lives in ~/.gpsdrive/maps/)"
-#~ msgstr "tên của ảnh bản đồ mới (ở trong ~/.gpsdrive)"
-
-#~ msgid "Make JPEG instead of PNG image"
-#~ msgstr "Tạo ảnh JPEG thay vì PNG"
-
-#~ msgid "Saves active display monitor to PNG file in home directory"
-#~ msgstr "Lưu màn hình trình bày kích hoạt vào tập tin PNG trong thư mục nhà"
-
-#~ msgid "display, export"
-#~ msgstr "trình bày, xuất"
-
-#~ msgid "Name of PNG file"
-#~ msgstr "Tên của tập tin PNG "
-
-#~ msgid "Resolution of output file (single=1, double=2, quad=4)"
-#~ msgstr "Độ phân giải của tập tin đầu ra (đơn=1, gấp đôi=2, gấp bốn=4)"
-
-#, fuzzy
-#~ msgid "Saves the contents of the active display monitor to a graphics file."
-#~ msgstr ""
-#~ "Lưu màn hình trình bày kích hoạt vào tập tin đồ họa trong thư mục nhà"
-
-#, fuzzy
-#~ msgid "Name for output file (do NOT add extension)"
-#~ msgstr "Tên của tập tin đầu ra (ĐỪNG thêm đuôi mở rộng)"
-
-#, fuzzy
-#~ msgid "Images"
-#~ msgstr "Nhóm phụ các tập tin ảnh"
-
-#, fuzzy
-#~ msgid "Width and height of output image (overrides resolution setting)"
-#~ msgstr "Chiều rộng và chiều cao của ảnh đầu ra"
-
-#, fuzzy
-#~ msgid "Compression for PNG files"
-#~ msgstr ""
-#~ "Nén cho các tập tin PNG (0=không nén, 1=nhanh nhất, 9=nén nhiều nhất)"
-
-#, fuzzy
-#~ msgid "(10=smallest/worst, 100=largest/best)"
-#~ msgstr ""
-#~ "K.thước/chất lượng của các tập tin JPEG (10=nhỏ nhất/kém nhất, 100=lớn "
-#~ "nhất/tốt nhất)"
-
-#, fuzzy
-#~ msgid "Paper size for PostScript output"
-#~ msgstr "Tạo đầu ra tập lệnh shell"
-
-#, fuzzy
-#~ msgid "PostScript"
-#~ msgstr "Tập tin đầu ra PostScript"
-
-#, fuzzy
-#~ msgid "GeoTIFF metadata key(s) and value(s) to add"
-#~ msgstr "Các khoá và các giá trị mô tả dữ liệu cần đưa vào"
-
-#, fuzzy
-#~ msgid ""
-#~ "In the form of \"META-TAG=VALUE\", separate multiple entries with a comma."
-#~ msgstr "Ở dạng \"TÊN=GIÁ_TRỊ\", các mục cách nhau bởi dấu phẩy."
-
-#~ msgid "Set background color to black (white default)"
-#~ msgstr "Thiết lập màu nền thành đen (mặc định là trắng)"
-
-#, fuzzy
-#~ msgid "Set transparent background"
-#~ msgstr "Màu nền trong suốt"
-
-#, fuzzy
-#~ msgid "Set paper orientation to landscape (for PostScript output)"
-#~ msgstr "Tạo đầu ra tập lệnh shell"
-
-#, fuzzy
-#~ msgid "Do not crop away margins"
-#~ msgstr "Không chép bảng"
-
-#~ msgid "Draws polar diagram of angle map such as aspect or flow directions"
-#~ msgstr ""
-#~ "Vẽ sơ đồ cực của bản đồ góc, ví dụ như các bản đồ hướng hoặc hướng dòng "
-#~ "chảy"
-
-#~ msgid "Name of raster angle map"
-#~ msgstr "Tên của bản đồ góc raster"
-
-#~ msgid "Pixel value to be interpreted as undefined (different from NULL)"
-#~ msgstr ""
-#~ "Giá trị điểm ảnh được diễn giải là không được xác định (khác với NULL)"
-
-#~ msgid "Name of optional EPS output file"
-#~ msgstr "Tên của tập tin đầu ra EPS tùy chọn."
-
-#~ msgid "Plot using Xgraph"
-#~ msgstr "Vẽ đồ thị bằng Xgraph"
-
-#, fuzzy
-#~ msgid "Name of aspect raster map"
-#~ msgstr "Tên của bản đồ raster"
-
-#, fuzzy
-#~ msgid "Width of display canvas"
-#~ msgstr "Chữ cần trình bày"
-
-#, fuzzy
-#~ msgid "Height of display canvas"
-#~ msgstr "Chữ cần trình bày"
-
-#, fuzzy
-#~ msgid "Minimum size of each cell"
-#~ msgstr "Cấp mặt đồng giá trị tối thiểu"
-
-#, fuzzy
-#~ msgid "Maximum number of rows to load"
-#~ msgstr "Số lần lặp lớn nhất: %d\n"
-
-#, fuzzy
-#~ msgid "Maximum number of columns to load"
-#~ msgstr "Số lần lặp lớn nhất: %d\n"
-
-#~ msgid "Displays a raster map and its legend on a graphics window"
-#~ msgstr ""
-#~ "Trình bày một bản đồ raster và chú giải của nó trên một cửa sổ đồ họa"
-
-#, fuzzy
-#~ msgid "Omit entries with missing label"
-#~ msgstr "Bỏ các mục bị thiếu nhãn"
-
-#~ msgid "Number of lines to appear in the legend"
-#~ msgstr "Số dòng xuất hiện trong chú giải"
-
-#, fuzzy
-#~ msgid "Name of raster map to generate legend from"
-#~ msgstr "Tên của bản đồ raster cần dùng cho <%s>"
-
-#, fuzzy
-#~ msgid "Name of raster map to print in legend"
-#~ msgstr "Tên của bản đồ hướng raster cần trình bày"
-
-#, fuzzy
-#~ msgid "Redraws the current display frame in the GRASS monitor"
-#~ msgstr "vẽ lại các bản đồ được trình bày hiện tại trong màn hình GRASS"
-
-#, fuzzy
-#~ msgid "Redraw all frames"
-#~ msgstr "Lưu tất cả các khung"
-
-#~ msgid "Resizes active display monitor"
-#~ msgstr "Thay đổi k.thước màn hình trình bày"
-
-#~ msgid "New width for window"
-#~ msgstr "Chiều rộng mới cho cửa sổ"
-
-#~ msgid "New height for window"
-#~ msgstr "Chiều cao mới cho cửa sổ"
-
-#, fuzzy
-#~ msgid "Name of shaded relief or aspect map"
-#~ msgstr "Tên tập tin raster mới"
-
-#, fuzzy
-#~ msgid "Name of raster to drape over relief map"
-#~ msgstr "Tên của bản đồ góc raster"
-
-#, fuzzy
-#~ msgid "Percent to brighten"
-#~ msgstr "Phần trăm hội tụ"
-
-#, fuzzy
-#~ msgid "Slide show of GRASS raster/vector maps."
-#~ msgstr "Trình chiếu các bản đồ raster/vector của GRASS"
-
-#~ msgid "display, slideshow"
-#~ msgstr "trình bày, trình chiếu"
-
-#, fuzzy
-#~ msgid "Show vector maps rather than raster maps"
-#~ msgstr "Hiển thị các bản đồ vector chứ không phải raster"
-
-#, fuzzy
-#~ msgid "Map prefix. Specify character(s) to view selected maps only"
-#~ msgstr ""
-#~ "tiền tố bản đồ. Chỉ định (các) ký tự để chỉ xem các bản đồ được chọn"
-
-#, fuzzy
-#~ msgid "Map number show across the monitor"
-#~ msgstr "số bản đồ hiển thị theo chiều ngang màn hình"
-
-#, fuzzy
-#~ msgid "Map number show down the monitor"
-#~ msgstr "số bản đồ hiển thị theo chiều đứng màn hình"
-
-#, fuzzy
-#~ msgid "Mapsets to use. Specify multiple mapsets comma separated"
-#~ msgstr ""
-#~ "các bộ bản đồ sử dụng. Chỉ định nhiều bộ bản đồ cách nhau bằng dấu phẩy"
-
-#, fuzzy
-#~ msgid "Number of seconds to pause between slides"
-#~ msgstr "Số lượng ô giữa các đường dòng chảy"
+#~ msgid "Failed in attempt to open %s"
+#~ msgstr "Thất bại trong việc mở %s"
 
 #~ msgid ""
-#~ "Divides active display into two frames & displays maps/executes commands "
-#~ "in each frame."
+#~ "Generates raster map layers of slope, aspect, curvatures and partial "
+#~ "derivatives from a raster map layer of true elevation values. Aspect is "
+#~ "calculated counterclockwise from east."
 #~ msgstr ""
-#~ "Chia phần trình bày kích hoạt thành hai khung và trình bày bản đồ/thực "
-#~ "thi các lệnh trong mỗi khung."
+#~ "Tạo ra các lớp bản đồ độ dốc, hướng, độ cong và các đạo hàm riêng từ một "
+#~ "lớp bản đồ raster có các giá trị độ cao thực. Hướng được tính ngược chiều "
+#~ "kim đồng hồ từ hướng đông."
 
-#~ msgid "Enter raster map to display in 1st frame"
-#~ msgstr "Nhập bản đồ cần trình bày ở khung thứ nhất"
+#~ msgid "Raster elevation file name"
+#~ msgstr "Tên tập tin độ cao raster"
 
-#~ msgid "Enter command to execute in 1st frame"
-#~ msgstr "Nhập lệnh cần thực thi trong khung thứ nhất"
+#~ msgid "Output slope filename"
+#~ msgstr "Tên tập tin độ dốc đầu ra"
 
-#~ msgid "Enter raster map to display in 2nd frame"
-#~ msgstr "Nhập bản đồ cần trình bày ở khung thứ hai"
+#~ msgid "Output aspect filename"
+#~ msgstr "Tên tập tin hướng đầu ra"
 
-#~ msgid "Enter command to execute in 2nd frame"
-#~ msgstr "Nhập lệnh cần thực thi trong khung thứ hai"
+#~ msgid "Output profile curvature filename"
+#~ msgstr "Tên tập tin độ cong thiết diện đầu ra"
 
-#~ msgid "How to split display"
-#~ msgstr "Chia phần trình bày như thế nào"
+#~ msgid "Output tangential curvature filename"
+#~ msgstr "Tên tập tin độ cong tiếp tuyến đầu ra"
 
-#, fuzzy
-#~ msgid "Split the display into subframes."
-#~ msgstr "Nhập bản đồ cần trình bày ở khung thứ nhất"
+#~ msgid "Output first order partial derivative dx (E-W slope) filename"
+#~ msgstr "Tên tập tin đạo hàm riêng dx bậc một (độ dốc Đ-T) đầu ra"
 
-#, fuzzy
-#~ msgid "Number of subframes"
-#~ msgstr "Số khung ảnh"
+#~ msgid "Output first order partial derivative dy (N-S slope) filename"
+#~ msgstr "Tên tập tin đạo hàm riêng dy bậc một (độ dốc B-N) đầu ra"
 
-#, fuzzy
-#~ msgid "Displays thematic vector map"
-#~ msgstr "Trình bày bản đồ vector kiểu chủ đề"
+#~ msgid "Output second order partial derivative dxx filename"
+#~ msgstr "Tên tập tin đạo hàm riêng dxx bậc hai đầu ra"
 
-#, fuzzy
-#~ msgid "display, vector, thematic, legend"
-#~ msgstr "trình bày, chú giải"
+#~ msgid "Output second order partial derivative dyy filename"
+#~ msgstr "Tên tập tin đạo hàm riêng dyy bậc hai đầu ra"
 
-#, fuzzy
-#~ msgid "Files"
-#~ msgstr "địa điểm"
+#~ msgid "Output second order partial derivative dxy filename"
+#~ msgstr "Tên tập tin đạo hàm riêng dxy bậc hai đầu ra"
 
-#, fuzzy
-#~ msgid ""
-#~ "Name of attribute column to use for thematic display (must be numeric)"
-#~ msgstr "Cột thuộc tính dùng để trình bày chủ đề (phải là dạng số)"
+#~ msgid "wrong type: %s"
+#~ msgstr "kiểu không đúng: %s"
 
-#~ msgid "Type of thematic display"
-#~ msgstr "Kiểu trình bày chủ đề"
+#~ msgid "Creating support files..."
+#~ msgstr "Đang tạo các tập tin hỗ trợ..."
 
-#~ msgid "Thematic divisions of data for display"
-#~ msgstr "Các phép phân chia dữ liệu theo chủ đề để trình bày"
+#~ msgid "Elevation products for mapset [%s] in [%s]"
+#~ msgstr "Các sản phẩm độ cao cho bộ bản đồ [%s] trong [%s]"
 
-#, fuzzy
-#~ msgid "Break points for custom breaks option"
-#~ msgstr ""
-#~ "Các điểm ngắt dùng cho tùy chọn ngắt tùy ý. Tách các giá trị ra bằng "
-#~ "khoảng trắng (0 10 20 30 ...)"
+#~ msgid "ASPECT [%s] COMPLETE"
+#~ msgstr "HƯỚNG [%s] HOÀN TẤT"
 
-#, fuzzy
-#~ msgid "Separate values by spaces (0 10 20 30 ...)"
-#~ msgstr ""
-#~ "Các điểm ngắt dùng cho tùy chọn ngắt tùy ý. Tách các giá trị ra bằng "
-#~ "khoảng trắng (0 10 20 30 ...)"
+#~ msgid "SLOPE [%s] COMPLETE"
+#~ msgstr "ĐỘ DỐC [%s] HOÀN TẤT"
 
-#~ msgid "Vector point icon for point data"
-#~ msgstr "Biểu tượng điểm vector dùng cho dữ liệu điểm"
+#~ msgid "PROFILE CURVE [%s] COMPLETE"
+#~ msgstr "ĐỘ CONG THIẾT DIỆN [%s] HOÀN TẤT"
 
-#, fuzzy
-#~ msgid "Icon size for point data"
-#~ msgstr "Biểu tượng điểm vector dùng cho dữ liệu điểm"
+#~ msgid "TANGENTIAL CURVE [%s] COMPLETE"
+#~ msgstr "ĐỘ CONG TIẾP TUYẾN [%s] HOÀN TẤT"
 
-#, fuzzy
-#~ msgid "Minimum icon size/line width for graduated points/lines)"
-#~ msgstr ""
-#~ "Kích thước biểu tượng/chiều dày đường tối đa đối với các điểm/đường được "
-#~ "phân cấp)"
+#~ msgid "E-W SLOPE [%s] COMPLETE"
+#~ msgstr "ĐỘ DỐC Đ-T [%s] HOÀN TẤT"
 
-#~ msgid "Maximum icon size/line width for graduated points and lines"
-#~ msgstr ""
-#~ "Kích thước biểu tượng/chiều dày đường tối đa đối với các điểm/đường được "
-#~ "phân cấp)"
+#~ msgid "N-S SLOPE [%s] COMPLETE"
+#~ msgstr "ĐỘ DỐC B-N [%s] HOÀN TẤT"
 
-#~ msgid "Number of classes for interval theme (integer)"
-#~ msgstr "Số nhóm giá trị cho chủ đề (số nguyên)"
+#~ msgid "DXX [%s] COMPLETE"
+#~ msgstr "DXX [%s] HOÀN TẤT"
 
-#, fuzzy
-#~ msgid "Color scheme for graduated color mapping"
-#~ msgstr "Màu cho chữ"
+#~ msgid "DYY [%s] COMPLETE"
+#~ msgstr "DYY [%s] HOÀN TẤT"
 
-#, fuzzy
-#~ msgid "Select 'single_color' for graduated point/line display"
-#~ msgstr ""
-#~ "Chế độ màu dùng cho việc vẽ bản đồ màu phân cấp (chọn 'single_color' để "
-#~ "dùng cho việc trình bày điểm/đường phân cấp)"
-
-#, fuzzy
-#~ msgid "Color for graduated points map"
-#~ msgstr "Màu cho chữ"
-
-#, fuzzy
-#~ msgid "GRASS named color or R:G:B triplet. Set color scheme to single color"
-#~ msgstr ""
-#~ "Màu dùng cho bản đồ điểm được phân cấp (màu gọi tên theo chuẩn của GRASS "
-#~ "hoặc kiểu bộ ba R:G:B). Thiết lập chế độ màu thành một màu duy nhất"
-
-#, fuzzy
-#~ msgid "Color for graduated lines or point/area outlines"
-#~ msgstr "Màu cho chữ"
-
-#, fuzzy
-#~ msgid ""
-#~ "GRASS named color or R:G:B triplet. Set color scheme to single color."
-#~ msgstr ""
-#~ "Màu dùng cho bản đồ điểm được phân cấp (màu gọi tên theo chuẩn của GRASS "
-#~ "hoặc kiểu bộ ba R:G:B). Thiết lập chế độ màu thành một màu duy nhất"
-
-#, fuzzy
-#~ msgid "Beginning color for custom color gradient"
-#~ msgstr ""
-#~ "Màu bắt đầu đối với gradient màu tùy chọn. Phải được biểu diễn ở dạng Bộ "
-#~ "ba R:G:B)"
-
-#, fuzzy
-#~ msgid "Must be expressed as R:G:B triplet"
-#~ msgstr ""
-#~ "Màu kết thúc dùng cho gradient màu tùy chọn. Phải được biểu diễn ở dạng "
-#~ "Bộ ba R:G:B)"
-
-#, fuzzy
-#~ msgid "Ending color for custom color gradient"
-#~ msgstr ""
-#~ "Màu kết thúc dùng cho gradient màu tùy chọn. Phải được biểu diễn ở dạng "
-#~ "Bộ ba R:G:B)"
-
-#, fuzzy
-#~ msgid "Misc"
-#~ msgstr "Hệ mét"
-
-#~ msgid "Select x11 display monitor for legend"
-#~ msgstr "Chọn màn hình trình bày x11 cho chú giải"
-
-#~ msgid "Save thematic map commands to group file for GIS Manager"
-#~ msgstr ""
-#~ "Lưu các lệnh của bản đồ chủ đề vào tập tin nhóm dùng cho Trình Quản lý GIS"
-
-#~ msgid "WHERE conditions of SQL statement without 'where' keyword"
-#~ msgstr "Các điều kiện WHERE của câu lệnh SQL không có từ khóa 'where'"
-
-#, fuzzy
-#~ msgid ""
-#~ "Root for the name of psmap instruction files to be in current directory"
-#~ msgstr ""
-#~ "Thư mục gốc (root) dùng cho tên của các tập tin hướng dẫn psmap ở trong "
-#~ "thư mục hiện tại (nếu không thiết lập, các tập tin hướng dẫn psmap sẽ "
-#~ "không được tạo ra."
-
-#~ msgid "Name of group file where thematic map commands will be saved"
-#~ msgstr "Tên của tập tin nhóm, nơi sẽ lưu các lệnh bản đồ chủ đề"
-
-#~ msgid "Create graphic legend in x11 display monitor"
-#~ msgstr "Tạo chú giải đồ họa trong màn hình trình bày x11"
-
-#~ msgid "Only draw fills (no outlines) for areas and points"
-#~ msgstr "Chỉ tô màu vùng (không tô màu đường viền) các vùng và các điểm"
-
-#~ msgid "Update color values to GRASSRGB column in attribute table"
-#~ msgstr "Cập nhật các giá trị màu vào cột GRASSRGB trong bảng thuộc tính"
-
-#~ msgid "Use math notation brackets in legend"
-#~ msgstr "Dùng cách ghi kiểu toán học trong chú giải"
-
-#, fuzzy
-#~ msgid "Drops a column from selected attribute table"
-#~ msgstr "Không tạo bảng thuộc tính."
-
-#, fuzzy
-#~ msgid "Table from which to drop attribute column"
-#~ msgstr "bản đồ vector cần chỉnh sửa bảng thuộc tính"
-
-#, fuzzy
-#~ msgid "Name of the column"
-#~ msgstr "Số cột"
-
-#, fuzzy
-#~ msgid "Drops an attribute table."
-#~ msgstr "CSDL, bảng thuộc tính"
-
-#, fuzzy
-#~ msgid "Table to drop"
-#~ msgstr "Không thể tiếp tục"
-
-#, fuzzy
-#~ msgid "Imports attribute tables in various formats."
-#~ msgstr "loại bỏ bảng thuộc tính hiện tại của một bản đồ vector"
-
-#, fuzzy
-#~ msgid "Table file to be imported or DB connection string"
-#~ msgstr "Tập tin raster ascii cần nhập"
-
-#, fuzzy
-#~ msgid "Name for output table"
-#~ msgstr "Tên cho tập tin đầu ra"
-
-#, fuzzy
-#~ msgid "Name for auto-generated unique key column"
-#~ msgstr "Tên của bản đồ raster cần dùng cho <%s>"
-
-#, fuzzy
-#~ msgid "Exports attribute tables into various formats."
-#~ msgstr "loại bỏ bảng thuộc tính hiện tại của một bản đồ vector"
-
-#, fuzzy
-#~ msgid "GRASS table name"
-#~ msgstr "tên bảng"
-
-#, fuzzy
-#~ msgid "Table file to be exported or DB connection string"
-#~ msgstr "Tập tin raster ascii cần nhập"
-
-#, fuzzy
-#~ msgid "Table format"
-#~ msgstr "Định dạng OGR."
-
-#~ msgid "Test database driver, database must exist and set by db.connect."
-#~ msgstr ""
-#~ "Kiểm tra trình điều khiển CSDL, CSDL phải tồn tại và được db.connect "
-#~ "thiết lập"
-
-#~ msgid "Test name"
-#~ msgstr "Kiểm tra tên"
-
-#, fuzzy
-#~ msgid "Display the HTML man pages of GRASS"
-#~ msgstr "trình bày các trang man HTML của GRASS"
-
-#~ msgid "general, manual, help"
-#~ msgstr "tổng quát, hướng dẫn, trợ giúp"
-
-#, fuzzy
-#~ msgid "Display index"
-#~ msgstr "trình bày chỉ mục"
-
-#, fuzzy
-#~ msgid "Display as MAN text page instead of HTML page in browser"
-#~ msgstr ""
-#~ "Trình bày dưới dạng trang văn bản MAN thay vì trang HTML trong trình duyệt"
-
-#, fuzzy
-#~ msgid "Manual entry to be displayed"
-#~ msgstr "mục hướng dẫn cần trình bày"
-
-#~ msgid ""
-#~ "Brovey transform to merge multispectral and high-res panchromatic channels"
-#~ msgstr ""
-#~ "Chuyển đổi Brovey để nhập các kênh đa phổ và toàn sắc độ phân giải cao "
-#~ "với nhau"
-
-#, fuzzy
-#~ msgid "imagery, fusion, Brovey"
-#~ msgstr "raster, ảnh, nhập dữ liệu"
-
-#, fuzzy
-#~ msgid "LANDSAT sensor"
-#~ msgstr "Kênh đỏ LANDSAT"
-
-#, fuzzy
-#~ msgid "Sensor"
-#~ msgstr "Kênh đỏ LANDSAT"
-
-#, fuzzy
-#~ msgid "SPOT sensor"
-#~ msgstr "Kênh đỏ LANDSAT"
-
-#, fuzzy
-#~ msgid "Name of input raster map (green: tm2 | qbird_green | spot1)"
-#~ msgstr "bản đồ raster đầu vào (green: tm2 | qbird_green | spot1)"
-
-#, fuzzy
-#~ msgid "Name of input raster map (NIR: tm4 | qbird_nir | spot2)"
-#~ msgstr "bản đồ raster đầu vào (NIR: tm4 | qbird_nir | spot2)"
-
-#, fuzzy
-#~ msgid "Name of input raster map (MIR; tm5 | qbird_red | spot3)"
-#~ msgstr "bản đồ raster đầu vào (MIR; tm5 | qbird_red | spot3)"
-
-#, fuzzy
-#~ msgid "Name of input raster map (etmpan | qbird_pan | spotpan)"
-#~ msgstr "bản đồ raster đầu vào (etmpan | qbird_pan | spotpan)"
-
-#, fuzzy
-#~ msgid "Name for output raster map prefix (e.g. 'brov')"
-#~ msgstr "tiền tố cho bản đồ raster đầu ra (ví dụ 'brov')"
-
-#~ msgid "Mosaics up to 4 images and extends colormap; creates map *.mosaic"
-#~ msgstr "Ghép khảm tối đa 4 ảnh và mở rộng bản đồ màu; tạo map*.mosaic"
-
-#~ msgid "raster, imagery, mosaicking"
-#~ msgstr "raster, ảnh, ghép khảm"
-
-#~ msgid "1st map for mosaic (top of image stack)."
-#~ msgstr "bản đồ thứ nhất để ghép khảm (trên cùng chồng ảnh)"
-
-#~ msgid "2nd map for mosaic."
-#~ msgstr "bản đồ thứ hai để ghép khảm."
-
-#~ msgid "3rd map for mosaic."
-#~ msgstr "bản đồ thứ ba để ghép khảm."
-
-#~ msgid "4th map for mosaic."
-#~ msgstr "bản đồ thứ tư để ghép khảm."
-
-#~ msgid "Import of SPOT VGT NDVI file into a raster map"
-#~ msgstr "Nhập tập tin SPOT VGT NDVI vào một bản đồ raster GRASS"
-
-#~ msgid "raster, imagery, import"
-#~ msgstr "raster, ảnh, nhập dữ liệu"
-
-#~ msgid "also import quality map (SM status map layer) and filter NDVI map"
-#~ msgstr ""
-#~ "nhập cả bản đồ chất lượng (lớp bản đồ trạng thái SM) và lọc bản đồ NDVI"
-
-#~ msgid "existing SPOT VGT NDVI HDF file (0001_NDV.HDF)"
-#~ msgstr "tập tin SPOT VGT NDVI hiện có (0001_NDV.HDF)"
-
-#, fuzzy
-#~ msgid "Performs auto-balancing of colors for LANDSAT images."
-#~ msgstr "Cân bằng màu tự động cho các ảnh LANDSAT"
-
-#~ msgid "raster, imagery, colors"
-#~ msgstr "raster, ảnh, màu sắc"
-
-#~ msgid "LANDSAT red channel"
-#~ msgstr "Kênh đỏ LANDSAT"
-
-#~ msgid "LANDSAT green channel"
-#~ msgstr "Kênh lục LANDSAT"
-
-#~ msgid "LANDSAT blue channel"
-#~ msgstr "Kênh xanh LANDSAT"
-
-#~ msgid "Cropping intensity (upper brightness level)"
-#~ msgstr "Xén bớt cường độ (mức chiếu sáng cận trên)"
-
-#~ msgid "Extend colors to full range of data on each channel"
-#~ msgstr ""
-#~ "Mở rộng các màu ra toàn bộ khoảng giá trị của dữ liệu trên từng kênh"
-
-#~ msgid "Preserve relative colors, adjust brightness only"
-#~ msgstr "Bảo toàn các màu tương đối, chỉ điều chỉnh độ sáng"
-
-#~ msgid "Reset to standard color range"
-#~ msgstr "Thiết lập lại thành khoảng giá trị màu tiêu chuẩn"
-
-#~ msgid "Calculates Optimum-Index-Factor table for LANDSAT TM bands 1-5, & 7"
-#~ msgstr ""
-#~ "Tính toán Hệ số-Chỉ mục-Tối ưu (OIF) cho các băng 1-5 & 7 của ảnh LANDSAT "
-#~ "TM"
-
-#~ msgid "raster, imagery, statistics"
-#~ msgstr "raster, ảnh, thống kê"
-
-#~ msgid "LANDSAT TM band 1."
-#~ msgstr "băng 1 của LANDSAT TM."
-
-#~ msgid "LANDSAT TM band 2."
-#~ msgstr "băng 2 của LANDSAT TM."
-
-#~ msgid "LANDSAT TM band 3."
-#~ msgstr "băng 3 của LANDSAT TM."
-
-#~ msgid "LANDSAT TM band 4."
-#~ msgstr "băng 4 của LANDSAT TM."
-
-#~ msgid "LANDSAT TM band 5."
-#~ msgstr "băng 5 của LANDSAT TM."
-
-#~ msgid "LANDSAT TM band 7."
-#~ msgstr "băng 7 của LANDSAT TM."
-
-#, fuzzy
-#~ msgid ""
-#~ "Displays spectral response at user specified locations in group or images."
-#~ msgstr ""
-#~ "trình bày phản ứng phổ tại các vị trí do người dùng chỉ định trong nhóm "
-#~ "hoặc các ảnh"
-
-#~ msgid "imagery, raster, multispectral"
-#~ msgstr "ảnh, raster, đa phổ"
-
-#, fuzzy
-#~ msgid "Group input"
-#~ msgstr "nhóm đầu vào"
-
-#, fuzzy
-#~ msgid "Raster input maps"
-#~ msgstr "Bản đồ raster đầu vào"
-
-#, fuzzy
-#~ msgid "Write output to PNG image"
-#~ msgstr "Ghi đè tập tin bản đồ đầu ra"
-
-#~ msgid "Use image list and not group"
-#~ msgstr "Dùng danh sách ảnh chứ không dùng nhóm"
-
-#~ msgid "Select multiple points"
-#~ msgstr "Cho nhiều điểm một lượt"
-
-#, fuzzy
-#~ msgid "Label with coordinates instead of numbering"
-#~ msgstr "nhãn bằng tọa độ thay vì đánh số"
-
-#~ msgid "Tasseled Cap (Kauth Thomas) transformation for LANDSAT-TM data"
-#~ msgstr ""
-#~ "Phép chuyển đổi Tasseled Cap (Kauth Thomas) cho các dữ liệu LANDSAT-TM"
-
-#~ msgid "raster, imagery"
-#~ msgstr "raster, ảnh"
-
-#~ msgid "use transformation rules for LANDSAT-4"
-#~ msgstr "dùng các quy tắc chuyển đổi cho LANDSAT-4"
-
-#~ msgid "use transformation rules for LANDSAT-5"
-#~ msgstr "dùng các quy tắc chuyển đổi cho LANDSAT-5"
-
-#~ msgid "use transformation rules for LANDSAT-7"
-#~ msgstr "dùng các quy tắc chuyển đổi cho LANDSAT-7"
-
-#~ msgid "raster input map (LANDSAT channel 1)"
-#~ msgstr "Bản đồ raster đầu vào (LANDSAT kênh 1)"
-
-#~ msgid "raster input map (LANDSAT channel 2)"
-#~ msgstr "Bản đồ raster đầu vào (LANDSAT kênh 2)"
-
-#~ msgid "raster input map (LANDSAT channel 3)"
-#~ msgstr "Bản đồ raster đầu vào (LANDSAT kênh 3)"
-
-#~ msgid "raster input map (LANDSAT channel 4)"
-#~ msgstr "Bản đồ raster đầu vào (LANDSAT kênh 4)"
-
-#~ msgid "raster input map (LANDSAT channel 5)"
-#~ msgstr "Bản đồ raster đầu vào (LANDSAT kênh 5)"
-
-#~ msgid "raster input map (LANDSAT channel 7)"
-#~ msgstr "Bản đồ raster đầu vào (LANDSAT kênh 7)"
-
-#~ msgid "raster output TC maps prefix"
-#~ msgstr "Tiền tố cho bản đồ raster TC đầu ra"
-
-#~ msgid "Convert coordinates from one projection to another (cs2cs frontend)."
-#~ msgstr ""
-#~ "Đổi tọa độ từ phép chiếu này sang phép chiếu khác ('mặt tiền' cs2cs)"
-
-#~ msgid "miscellaneous, projection"
-#~ msgstr "linh tinh, phép chiếu, Projektion"
-
-#~ msgid "Input coordinate file (omit to read from stdin)"
-#~ msgstr "Tập tin tọa độ đầu vào (bỏ qua để đọc từ stdin)"
-
-#~ msgid "Output coordinate file (omit to send to stdout)"
-#~ msgstr "Tập tin tọa độ đầu ra (bỏ qua để gửi ra stdout) "
-
-#~ msgid "Field separator"
-#~ msgstr "Dấu phân cách trường"
-
-#~ msgid "Input projection parameters (PROJ.4 style)"
-#~ msgstr "Các tham số phép chiếu đầu vào (kiểu PROJ.4)"
-
-#~ msgid "Output projection parameters (PROJ.4 style)"
-#~ msgstr "Các tham số phép chiếu đầu ra (kiểu PROJ.4)"
-
-#~ msgid "Use LL WGS84 as input and current location as output projection"
-#~ msgstr ""
-#~ "Dùng WGS84 kinh/vĩ làm phép chiếu đầu vào và location hiện tại làm phép "
-#~ "chiếu đầu ra"
-
-#~ msgid "Use current location as input and LL WGS84 as output projection"
-#~ msgstr ""
-#~ "Dùng location hiện tại làm đầu vào và WGS84 kinh/vĩ làm phép chiếu đầu ra"
-
-#~ msgid ""
-#~ "Output long/lat in decimal degrees or other projections with many decimal "
-#~ "places"
-#~ msgstr ""
-#~ "Xuất ra kinh/vĩ dạng độ thập phân hoặc các phép chiếu khác có nhiều chữ "
-#~ "số thập phân"
-
-#~ msgid "Verbose mode (print projection parameters and filenames to stderr)"
-#~ msgstr "Chế độ đầy đủ (in các tham số phép chiếu và tên tập tin vào stderr)"
-
-#, fuzzy
-#~ msgid "Blends color components of two raster maps by a given ratio."
-#~ msgstr ""
-#~ "Trộn các thành phần màu của hai bản đồ raster theo một tỷ lệ cho trước"
-
-#~ msgid "Name of first raster map for blending"
-#~ msgstr "Tên của bản đồ raster đầu tiên để trộn"
-
-#~ msgid "Name of second raster map for blending"
-#~ msgstr "Tên của bản đồ raster thứ hai để trộn"
-
-#, fuzzy
-#~ msgid "Base name for red, green and blue output maps containing the blend"
-#~ msgstr "Tên gốc cho các bản đồ đầu ra đỏ, lục và xanh chứa kết quả trộn"
-
-#~ msgid "Percentage weight of first map for color blending"
-#~ msgstr "Trọng số phần trăm của bản đồ thứ nhất dùng cho phép trộn màu"
-
-#, fuzzy
-#~ msgid "Color using standard deviation bands"
-#~ msgstr ""
-#~ "các trị tr.bình và độ lệch chuẩn cho %d băng%s\n"
-#~ "\n"
-
-#~ msgid ""
-#~ "Fills no-data areas in raster maps using v.surf.rst splines interpolation"
-#~ msgstr ""
-#~ "Lấp đầy vùng không có dữ liệu trong các bản đồ raster, dùng phép nội suy "
-#~ "các đường spline v.surf.rst"
-
-#~ msgid "raster, elevation, interpolation"
-#~ msgstr "raster, độ cao, nội suy"
-
-#, fuzzy
-#~ msgid "Raster map in which to fill nulls"
-#~ msgstr "Bản đồ raster cần lấp đầy các giá trị null"
-
-#~ msgid ""
-#~ "Output raster map with nulls filled by interpolation from surrounding "
-#~ "values"
-#~ msgstr ""
-#~ "Bản đồ raster đầu ra với các giá trị null được lấp đầy bằng cách nội suy "
-#~ "từ các giá trị xung quanh"
-
-#~ msgid "Spline tension parameter"
-#~ msgstr "Tham số sức căng của đường spline"
-
-#~ msgid "Spline smoothing parameter"
-#~ msgstr "Tham số làm trơn của đường spline"
-
-#, fuzzy
-#~ msgid ""
-#~ "Georeference, rectify and import Terra-ASTER imagery and relative DEM's "
-#~ "using gdalwarp."
-#~ msgstr ""
-#~ "r.in.aster - tham chiếu địa lý, nắn chỉnh và nhập ảnh Terra-ASTER và DEM "
-#~ "tương đối bằng cách dùng gdalwarp"
-
-#, fuzzy
-#~ msgid "Input ASTER image to be georeferenced & rectified"
-#~ msgstr "Ảnh ASTER đầu vào cần tham chiếu địa lý và nắn chỉnh"
-
-#~ msgid "ASTER imagery processing type (Level 1A, Level 1B, or relative DEM)"
-#~ msgstr "Kiểu xử lý ảnh ASTER (Cấp 1A, Cấp 1B hoặc DEM tương đối)"
-
-#, fuzzy
-#~ msgid ""
-#~ "L1A or L1B band to translate (1, 2, 3n, 3b, 4-14). Can only translate a "
-#~ "single band"
-#~ msgstr ""
-#~ "Băng L1A hoặc L1B cần dịch (1, 2, 3n, 4-14). Chỉ có thể dịch một băng duy "
-#~ "nhất "
-
-#~ msgid "Import SRTM HGT files into GRASS"
-#~ msgstr "Nhập các tập tin SRTM HGT vào GRASS"
-
-#~ msgid "SRTM input tile (file without .hgt.zip extension)"
-#~ msgstr "Tiêu đề đầu vào SRTM (tập tin không có đuôi mở rộng .hgt.zip)"
-
-#~ msgid "Output raster map (default: input tile)"
-#~ msgstr "Bản đồ raster đầu ra (mặc định: tiêu đề đầu vào)"
-
-#~ msgid "Input is a 1-arcsec tile (default: 3-arcsec)"
-#~ msgstr "Đầu vào là tiêu đề 1-arcsec (mặc định: 3-arcsec)"
-
-#, fuzzy
-#~ msgid "Downloads and imports data from WMS servers."
-#~ msgstr "Tải xuống và nhập các dữ liệu từ các máy chủ WMS"
-
-#~ msgid "wms"
-#~ msgstr "wms"
-
-#~ msgid "Request"
-#~ msgstr "Yêu_cầu"
-
-#~ msgid "Skip to downloading (to resume downloads faster)"
-#~ msgstr "Bỏ qua đến mục tải xuống (phục hồi việc tải nhanh hơn)"
-
-#~ msgid "Download"
-#~ msgstr "Tải_xuống"
-
-#, fuzzy
-#~ msgid "Don't request transparent data"
-#~ msgstr "Không yêu cầu dữ liệu 'trong suốt'"
-
-#, fuzzy
-#~ msgid "Clean existing data out of download directory"
-#~ msgstr "Xóa dữ liệu hiện có khỏi thư mục tải xuống"
-
-#~ msgid "Import"
-#~ msgstr "Nhập"
-
-#, fuzzy
-#~ msgid "Don't reproject the data, just patch it"
-#~ msgstr "Không quy chiếu lại dữ liệu, chỉ 'vá' nó vào"
-
-#~ msgid "Mapserver to request data from"
-#~ msgstr "Mapserver để yêu cầu dữ liệu từ đó"
-
-#~ msgid "Layers to request from map server"
-#~ msgstr "Các lớp yêu cầu từ máy chủ bản đồ"
-
-#~ msgid "Styles to request from map server"
-#~ msgstr "Kiểu để yêu cầu từ máy chủ bản đồ"
-
-#~ msgid "Source projection to request from server"
-#~ msgstr "Phép chiếu nguồn để yêu cầu từ máy chủ"
-
-#~ msgid "Image format requested from the server"
-#~ msgstr "Định dạng ảnh yêu cầu từ máy chủ"
-
-#~ msgid "Addition query options for server"
-#~ msgstr "Các tùy chọn truy vấn bổ sung cho máy chủ"
-
-#~ msgid "Maximum columns to request at a time"
-#~ msgstr "Số cột tối đa yêu cầu trong một lần"
-
-#~ msgid "Maximum rows to request at a time"
-#~ msgstr "Số hàng tối đa yêu cầu trong một lần"
-
-#~ msgid "Additional options for r.tileset"
-#~ msgstr "Các tùy chọn bổ sung cho r.tileset"
-
-#, fuzzy
-#~ msgid "Named region to request data for. Current region used if omitted"
-#~ msgstr ""
-#~ "Vùng có tên để yêu cầu dữ liệu cho nó. Vùng hiện tại được dùng nếu bỏ qua "
-#~ "tùy chọn này."
-
-#~ msgid "Folder to save downloaded data to"
-#~ msgstr "Thư mục để lưu dữ liệu tải về"
-
-#~ msgid "Additional options for wget"
-#~ msgstr "Các tùy chọn bổ sung cho wget"
-
-#, fuzzy
-#~ msgid "Additional options for curl"
-#~ msgstr "Các tùy chọn bổ sung cho wget"
-
-#~ msgid "Reprojection method to use"
-#~ msgstr "Phương pháp quy chiếu lại cần dùng"
-
-#, fuzzy
-#~ msgid "Requires list available layers flag"
-#~ msgstr "Liệt kê các lớp hiện có và thoát"
-
-#~ msgid "Verbosity level"
-#~ msgstr "Mức độ đầy đủ khi chạy lệnh"
-
-#, fuzzy
-#~ msgid "Calculate new raster map from a r.mapcalc expression."
-#~ msgstr ""
-#~ "r.mapcalculator - tính toán bản đồ raster mới từ biểu thức r.mapcalc"
-
-#, fuzzy
-#~ msgid "A"
-#~ msgstr "Biểu thức A"
-
-#, fuzzy
-#~ msgid "B"
-#~ msgstr "Biểu thức B"
-
-#, fuzzy
-#~ msgid "C"
-#~ msgstr "Biểu thức C"
-
-#, fuzzy
-#~ msgid "D"
-#~ msgstr "Biểu thức D"
-
-#, fuzzy
-#~ msgid "E"
-#~ msgstr "Biểu thức E"
-
-#, fuzzy
-#~ msgid "F"
-#~ msgstr "Biểu thức F"
-
-#, fuzzy
-#~ msgid "Formula (e.g. A-B or A*C+B)"
-#~ msgstr "Công thức (ví dụ A-B hoặc A*C+B):"
-
-#~ msgid "Show help"
-#~ msgstr "Hiển thị trợ giúp"
-
-#~ msgid "Expert mode (enter a set of r.mapcalc expressions)"
-#~ msgstr "Chế độ chuyên gia (nhập tập hợp các biểu thức r.mapcalc)"
-
-#, fuzzy
-#~ msgid "Do not overwrite existing map"
-#~ msgstr "Không ghi đè bản đồ hiện có"
-
-#~ msgid "Create a MASK for limiting raster operation"
-#~ msgstr "Tạo một MẶT NẠ để giới hạn lệnh raster"
-
-#~ msgid "raster, mask"
-#~ msgstr "raster, mặt nạ"
-
-#~ msgid "Raster map to use as MASK"
-#~ msgstr "Bản đồ raster dùng làm MẶT NẠ"
-
-#~ msgid "Category values to use for MASK (format: 1 2 3 thru 7 *)"
-#~ msgstr "Các giá trị phạm trù dùng cho MẶT NẠ (dạng: 1 2 3 thru 7 *)"
-
-#~ msgid "Overwrite existing MASK"
-#~ msgstr "Ghi đè  MẶT NẠ hiện có"
-
-#~ msgid "Remove existing MASK (overrides other options)"
-#~ msgstr "Loại bỏ MẶT NẠ hiện có (ghi đè các tùy chọn khác)"
-
-#, fuzzy
-#~ msgid "Exports GRASS raster into GDAL supported formats."
-#~ msgstr "Xuất các tập tin vector GRASS thành định dạng tập tin DXF."
-
-#, fuzzy
-#~ msgid "Region sensitive output"
-#~ msgstr "Trục trặc khi đọc đầu ra r.stats"
-
-#, fuzzy
-#~ msgid ""
-#~ "Creation option to the output format driver. Multiple options may be "
-#~ "listed"
-#~ msgstr ""
-#~ "tùy chọn tạo đối với trình điều khiển định dạng đầu ra. Nhiều tùy chọn có "
-#~ "thể được liệt kê cùng lúc"
-
-#, fuzzy
-#~ msgid "Metadata key passed on the output dataset if possible"
-#~ msgstr "truyền khóa metadata đến bộ dữ liệu đầu ra nếu được"
-
-#, fuzzy
-#~ msgid ""
-#~ "Creates raster plane map given dip (inclination), aspect (azimuth) and "
-#~ "one point."
-#~ msgstr ""
-#~ "Tạo bản đồ mặt (plane) raster ở độ nhúng (độ xiên), hướng (góc phương vị) "
-#~ "và ở một điểm cho trước"
-
-#~ msgid "raster, elevation"
-#~ msgstr "raster, độ cao"
-
-#, fuzzy
-#~ msgid "Name of raster plane to be created"
-#~ msgstr "Tên của bản đồ mặt (plane) raster cần tạo."
-
-#, fuzzy
-#~ msgid "Dip of plane. Value must be between -90 and 90 degrees"
-#~ msgstr "Độ nhúng của mặt. Giá trị phải ở trong khoảng -90 đến 90 độ."
-
-#, fuzzy
-#~ msgid "Azimuth of the plane. Value must be between 0 and 360 degrees"
-#~ msgstr "Góc phương vị của mặt. Giá trị phải ở trong khoảng 0-360 độ"
-
-#, fuzzy
-#~ msgid "Easting coordinate of a point on the plane"
-#~ msgstr "Tọa độ easting của một điểm trên mặt"
-
-#, fuzzy
-#~ msgid "Northing coordinate of a point on the plane"
-#~ msgstr "Tọa độ northing của một điểm trên mặt"
-
-#, fuzzy
-#~ msgid "Elevation coordinate of a point on the plane"
-#~ msgstr "Tọa độ độ cao của một điểm trên mặt."
-
-#, fuzzy
-#~ msgid "Type of the raster map to be created"
-#~ msgstr "Kiểu bản đồ raster cần tạo."
-
-#, fuzzy
-#~ msgid ""
-#~ "Reclasses a raster map greater or less than user specified area size (in "
-#~ "hectares)."
-#~ msgstr ""
-#~ "Phân loại lại một bản đồ raster lớn hơn hay nhỏ hơn kích thước vùng do "
-#~ "người dùng chỉ định (tính theo hecta)"
-
-#~ msgid "raster, statistics, aggregation"
-#~ msgstr "raster, thống kê, tổng hợp"
-
-#, fuzzy
-#~ msgid "Lesser value option that sets the <= area size limit [hectares]"
-#~ msgstr ""
-#~ "tùy chọn lesser val (giá trị nhỏ hơn) thiết lập giới hạn kích thước vùng "
-#~ "lớn hơn lesser val [hecta]"
-
-#, fuzzy
-#~ msgid "Greater value option that sets the >= area size limit [hectares]"
-#~ msgstr ""
-#~ "tùy chọn greater val thiết lập giới hạn kích thước vùng nhỏ hơn greater "
-#~ "val [hecta]"
-
-#~ msgid "Calculates linear regression from two raster maps: y = a + b*x"
-#~ msgstr "Tính toán hồi quy tuyến tính từ hai bản đồ raster: y = a + b*x"
-
-#~ msgid "Map for x coefficient"
-#~ msgstr "Bản đồ dùng làm hệ số x"
-
-#~ msgid "Map for y coefficient"
-#~ msgstr "Bản đồ dùng làm hệ số y"
-
-#~ msgid ""
-#~ "ASCII file for storing regression coefficients (output to screen if file "
-#~ "not specified)."
-#~ msgstr ""
-#~ "Tập tin ASCII để lưu các hệ số hồi quy (xuất ra màn hình nếu tên tập tin "
-#~ "không được chỉ định)."
-
-#~ msgid "Creates shaded relief map from an elevation map (DEM)."
-#~ msgstr "Tạo bản đồ nổi đổ bóng từ một bản đồ độ cao (DEM)."
-
-#~ msgid "Output shaded relief map name"
-#~ msgstr "Tên bản đồ nổi đổ bóng đầu ra"
-
-#~ msgid "Altitude of the sun in degrees above the horizon"
-#~ msgstr "Độ cao mặt trời (độ) trên đường chân trời"
-
-#~ msgid "Azimuth of the sun in degrees to the east of north"
-#~ msgstr "Góc phương vị của mặt trời (độ) từ phía đông của hướng bắc."
-
-#~ msgid "Factor for exaggerating relief"
-#~ msgstr "Hệ số để phóng đại độ nổi"
-
-#~ msgid "Scale factor for converting horizontal units to elevation units"
-#~ msgstr "Hệ số tỷ lệ để đổi đơn vị chiều ngang thành đơn vị chiều đứng"
-
-#, fuzzy
-#~ msgid ""
-#~ "Set scaling factor (applies to lat./long. locations only, none: scale=1)"
-#~ msgstr "Thiết lập hệ số tỷ lệ (chỉ áp dụng cho các location vĩ/kinh độ)"
-
-#~ msgid ""
-#~ "Produces tilings of the source projection for use in the destination "
-#~ "region and projection."
-#~ msgstr ""
-#~ "Tạo các phép xếp chồng (tiling) của phép chiếu nguồn để dùng trong vùng "
-#~ "và phép chiếu đích"
-
-#~ msgid "raster, tiling"
-#~ msgstr "raster, xếp chồng"
-
-#~ msgid "Produces shell script output"
-#~ msgstr "Tạo đầu ra tập lệnh shell"
-
-#~ msgid "Produces web map server query string output"
-#~ msgstr "Tạo đầu ra dạng chuỗi truy vấn kiểu web map server"
-
-#~ msgid ""
-#~ "Name of region to use instead of current region for bounds and resolution"
-#~ msgstr ""
-#~ "Tên của vùng cần dùng thay vì sử dụng vùng hiện tại để lấy thông tin về "
-#~ "ranh giới và độ phân giải"
-
-#, fuzzy
-#~ msgid "Source projection"
-#~ msgstr "Phép chiếu nguồn"
-
-#~ msgid "Conversion factor from units to meters in source projection"
-#~ msgstr ""
-#~ "Hệ số chuyển đổi từ các đơn vị khác thành mét trong phép chiếu nguồn"
-
-#~ msgid "Destination projection, defaults to this location's projection"
-#~ msgstr "Phép chiếu đích, mặc định là phép chiếu của location này"
-
-#~ msgid "Maximum number of columns for a tile in the source projection"
-#~ msgstr "Số cột tối đa cho một lần xếp chồng trong phép chiếu nguồn"
-
-#~ msgid "Maximum number of rows for a tile in the source projection"
-#~ msgstr "Số hàng tối đa cho một lần xếp chồng trong phép chiếu nguồn"
-
-#~ msgid "Number of cells tiles should overlap in each direction"
-#~ msgstr "Số ô chồng nhau theo mỗi hướng"
-
-#, fuzzy
-#~ msgid "calculates univariate statistics from a GRASS raster map"
-#~ msgstr ""
-#~ "Tính toán các thống kê một biến từ một bản đồ raster GRASS dựa trên các "
-#~ "đối tượng vector"
-
-#~ msgid "extended statistics (quartiles and percentile)"
-#~ msgstr "các thống kê mở rộng (tứ phân vị và phân vị)"
-
-#, fuzzy
-#~ msgid "Percentile to calculate (requires -e flag)"
-#~ msgstr "Phân vị để tính toán (cần cờ -e)"
-
-#, fuzzy
-#~ msgid "Calculates new grid3D volume from r3.mapcalc expression."
-#~ msgstr "r3.mapcalculator - Tính thể tích grid3D mới từ biểu thức r3.mapcalc"
-
-#, fuzzy
-#~ msgid "A (grid3D file)"
-#~ msgstr "A (tập tin grid3D"
-
-#, fuzzy
-#~ msgid "B (grid3D file)"
-#~ msgstr "B (tập tin grid3D):"
-
-#, fuzzy
-#~ msgid "C (grid3D file)"
-#~ msgstr "C (tập grid3D)"
-
-#, fuzzy
-#~ msgid "D (grid3D file)"
-#~ msgstr "D (tập tin grid3D):"
-
-#, fuzzy
-#~ msgid "E (grid3D file)"
-#~ msgstr "E (tập tin grid3D):"
-
-#, fuzzy
-#~ msgid "F (grid3D file)"
-#~ msgstr "F (tập tin grid3D):"
-
-#, fuzzy
-#~ msgid "Name for output grid3D volume"
-#~ msgstr "Tên cho tập tin đầu ra"
-
-#~ msgid "Expert mode (enter a set of r3.mapcalc expressions)"
-#~ msgstr "Chế độ chuyên gia (nhập tập hợp các biểu thức r3.mapcalc)"
-
-#, fuzzy
-#~ msgid "Rebuilds topology on all vector maps in the current mapset."
-#~ msgstr "Kann die Vektordatei %s nicht finden."
-
-#, fuzzy
-#~ msgid "Adds missing centroids to closed boundaries."
-#~ msgstr "Không đóng các ranh giới"
-
-#, fuzzy
-#~ msgid "vector, centroid, area"
-#~ msgstr "vector, raster, tích hợp"
-
-#, fuzzy
-#~ msgid "Name for output vector map"
-#~ msgstr "Tên của bản đồ vector đầu ra"
-
-#, fuzzy
-#~ msgid "Action to be taken"
-#~ msgstr "Lệnh chỉnh sửa cần thực hiện."
-
-#, fuzzy
-#~ msgid "Category number starting value"
-#~ msgstr "Chế độ số phạm trù"
-
-#, fuzzy
-#~ msgid "vector, color table"
-#~ msgstr "raster, xuất dữ liệu."
-
-#, fuzzy
-#~ msgid "Name of column containing numeric data"
-#~ msgstr "Tên của cột chứa thuộc tính w để nội suy"
-
-#, fuzzy
-#~ msgid "Layer number of data column"
-#~ msgstr "Lớp cần thêm cột vào"
-
-#, fuzzy
-#~ msgid "Name of color column to populate"
-#~ msgstr "Tên của cột cần trình bày"
-
-#, fuzzy
-#~ msgid "Manually set range (min,max)"
-#~ msgstr "Miền số nguyên: min,max"
-
-#, fuzzy
-#~ msgid "Path to rules file"
-#~ msgstr "Đường dẫn đến tập tin VTK tạo thành"
-
-#, fuzzy
-#~ msgid "Save placeholder raster map for use with d.legend"
-#~ msgstr "Tên của bản đồ hướng raster cần trình bày"
-
-#, fuzzy
-#~ msgid ""
-#~ "Convert all old GRASS < Ver5.7 vector maps in current mapset to current "
-#~ "format"
-#~ msgstr ""
-#~ "đổi tất cả các bản đồ vector GRASS kiểu cũ < 5.7 trong bộ bản đồ hiện tại "
-#~ "thành định dạng hiện tại"
-
-#~ msgid "run non-interactively"
-#~ msgstr "Chạy ở chế độ không tương tác"
-
-#, fuzzy
-#~ msgid ""
-#~ "Adds one or more columns to the attribute table connected to a given "
-#~ "vector map."
-#~ msgstr ""
-#~ "thêm một hay nhiều cột vào bảng thuộc tính được kết nối vào một bản đồ "
-#~ "vector cho trước"
-
-#, fuzzy
-#~ msgid "Vector map for which to edit attribute table"
-#~ msgstr "bản đồ vector cần chỉnh sửa bảng thuộc tính"
-
-#~ msgid "Layer where to add column"
-#~ msgstr "Lớp cần thêm cột vào"
-
-#, fuzzy
-#~ msgid ""
-#~ "Name and type of the new column(s) (types depend on database backend, but "
-#~ "all support VARCHAR(), INT, DOUBLE PRECISION and DATE)"
-#~ msgstr ""
-#~ "Tên và kiểu của (các) cột mới (kiểu tùy thuộc vào CSDL đầu cuối "
-#~ "(backend), nhưng tất cả đều hỗ trợ các định dạng VARCHAR(), INT, DOUBLE "
-#~ "và DATE)"
-
-#, fuzzy
-#~ msgid ""
-#~ "Creates and connects a new attribute table to a given layer of an "
-#~ "existing vector map."
-#~ msgstr ""
-#~ "tạo và thêm bảng thuộc tính mới vào một lớp cho trước của một bản đồ "
-#~ "vector hiện có"
-
-#~ msgid "Vector map for which to add new attribute table"
-#~ msgstr "Bản đồ vector cần thêm bảng thuộc tính mới"
-
-#~ msgid "Name of new attribute table (default: vector map name)"
-#~ msgstr "Tên của bảng thuộc tính mới (mặc định: tên bản đồ vector)"
-
-#~ msgid "Layer where to add new attribute table"
-#~ msgstr "Lớp để thêm bảng thuộc tính mới"
-
-#, fuzzy
-#~ msgid "Allows to join a table to a vector map table."
-#~ msgstr "loại bỏ bảng thuộc tính hiện tại của một bản đồ vector"
-
-#, fuzzy
-#~ msgid "Vector map to which to join other table"
-#~ msgstr "bản đồ vector cần chỉnh sửa bảng thuộc tính"
-
-#, fuzzy
-#~ msgid "Layer where to join"
-#~ msgstr "Lớp cần thêm cột vào"
-
-#, fuzzy
-#~ msgid "Join column in map table"
-#~ msgstr "Kiểu cột không biết"
-
-#, fuzzy
-#~ msgid "Other table name"
-#~ msgstr "Tên bảng đầu ra"
-
-#, fuzzy
-#~ msgid "Join column in other table"
-#~ msgstr "Kiểu cột không biết"
-
-#, fuzzy
-#~ msgid ""
-#~ "Drops a column from the attribute table connected to a given vector map."
-#~ msgstr ""
-#~ "thêm một hay nhiều cột vào bảng thuộc tính được kết nối vào một bản đồ "
-#~ "vector cho trước"
-
-#, fuzzy
-#~ msgid "Vector map for which to drop attribute column"
-#~ msgstr "bản đồ vector cần chỉnh sửa bảng thuộc tính"
-
-#, fuzzy
-#~ msgid "Layer where to drop column"
-#~ msgstr "Lớp cần thêm cột vào"
-
-#, fuzzy
-#~ msgid "Removes existing attribute table of a vector map."
-#~ msgstr "loại bỏ bảng thuộc tính hiện tại của một bản đồ vector"
-
-#, fuzzy
-#~ msgid "Force removal (required for actual deletion of table)"
-#~ msgstr "Buộc loại bỏ (cần thiết để thực sự xóa bỏ các tập tin)"
-
-#, fuzzy
-#~ msgid "Vector map from which to remove attribute table"
-#~ msgstr "tên bản đồ vector cần loại bỏ bảng thuộc tính"
-
-#, fuzzy
-#~ msgid "Name of existing attribute table (default: vector map name)"
-#~ msgstr "Tên của bảng thuộc tính hiện có (mặc định: tên bản đồ vector)"
-
-#~ msgid "Layer from which to drop linked attribute table"
-#~ msgstr "Lớp cần bỏ (drop) bảng thuộc tính liên kết"
-
-#, fuzzy
-#~ msgid ""
-#~ "Renames a column in the attribute table connected to a given vector map."
-#~ msgstr ""
-#~ "thêm một hay nhiều cột vào bảng thuộc tính được kết nối vào một bản đồ "
-#~ "vector cho trước"
-
-#, fuzzy
-#~ msgid "Vector map for which to rename attribute column"
-#~ msgstr "bản đồ vector cần chỉnh sửa bảng thuộc tính"
-
-#, fuzzy
-#~ msgid "Layer where to rename column"
-#~ msgstr "Lớp cần thêm cột vào"
-
-#, fuzzy
-#~ msgid "Reconnects vectors to a new database."
-#~ msgstr "Kết nối lại các vector vào một CSDL mới"
-
-#, fuzzy
-#~ msgid "Name of old database"
-#~ msgstr "Tên của CSDL mới"
-
-#, fuzzy
-#~ msgid ""
-#~ "The database must be in form printed by v.db.connect -g, i.e. with "
-#~ "substituted variables"
-#~ msgstr ""
-#~ "Tên của CSDL cũ, CSDL này phải ở dạng được in ra bởi v.db.connect -g, tức "
-#~ "là với các biến được thay thế"
-
-#~ msgid "Name of new database"
-#~ msgstr "Tên của CSDL mới"
-
-#~ msgid "Old schema"
-#~ msgstr "Schema cũ"
-
-#~ msgid "New schema"
-#~ msgstr "Schema mới"
-
-#, fuzzy
-#~ msgid ""
-#~ "Calculates univariate statistics on selected table column for a GRASS "
-#~ "vector map."
-#~ msgstr ""
-#~ "Tính toán thống kê một biến trên cột của bảng được chọn cho một bản đồ "
-#~ "vector của GRASS"
-
-#, fuzzy
-#~ msgid "Extended statistics (quartiles and 90th percentile)"
-#~ msgstr "các thống kê mở rộng (các tứ phân vị và phân vị thứ 90)"
-
-#~ msgid "Name of data table"
-#~ msgstr "Tên của bảng dữ liệu"
-
-#, fuzzy
-#~ msgid "Column on which to calculate statistics (must be numeric)"
-#~ msgstr "cột để tính toán các thống kê (phải là cột kiểu số)"
-
-#~ msgid "Database/directory for table"
-#~ msgstr "CSDL/thư mục dùng cho bảng"
-
-#~ msgid "Database driver"
-#~ msgstr "Trình điều khiển CSDL"
-
-#, fuzzy
-#~ msgid ""
-#~ "Allows to update a column in the attribute table connected to a vector "
-#~ "map."
-#~ msgstr ""
-#~ "cho phép gán một giá trị mới vào một cột trong bảng thuộc tính được kết "
-#~ "nối với một bản đồ cho trước"
-
-#, fuzzy
-#~ msgid "Vector map to edit the attribute table for"
-#~ msgstr "bản đồ vector cần chỉnh sửa bảng thuộc tính"
-
-#, fuzzy
-#~ msgid "Column to update"
-#~ msgstr "cột cần cập nhật"
-
-#, fuzzy
-#~ msgid ""
-#~ "Value to update the column with (varchar values have to be in single "
-#~ "quotes, e.g. 'grass')"
-#~ msgstr ""
-#~ "giá trị mới cần gán cho cột (các giá trị varchar (biến ký tự) phải ở dạng "
-#~ "trích dẫn trong dấu nháy đơn, ví dụ : 'grass')"
-
-#, fuzzy
-#~ msgid "Column to query"
-#~ msgstr "bản đồ vector cần truy vấn"
-
-#, fuzzy
-#~ msgid ""
-#~ "WHERE conditions for update, without 'where' keyword (e.g. cat=1 or col1/"
-#~ "col2>1)"
-#~ msgstr "Các điều kiện WHERE của câu lệnh SQL không có từ khóa 'where'"
-
-#, fuzzy
-#~ msgid ""
-#~ "Dissolves boundaries between adjacent areas sharing a common category "
-#~ "number or attribute."
-#~ msgstr ""
-#~ "Không tìm thấy bảng thuộc tính -> chỉ dùng chỉ số phạm trù làm thuộc tính"
-
-#, fuzzy
-#~ msgid "vector, area, dissolve"
-#~ msgstr "vector, nhập"
-
-#, fuzzy
-#~ msgid "Layer number. If -1, all layers are extracted."
-#~ msgstr "Lớp số. Nếu là -1, tất cả các lớp được trình bày."
-
-#, fuzzy
-#~ msgid "Name of column used to dissolve common boundaries"
-#~ msgstr "Tên của cột thuộc tính dùng làm nhãn"
-
-#, fuzzy
-#~ msgid "Import E00 file into a vector map."
-#~ msgstr "Nhập tập tin E00 vào một bản đồ vector"
-
-#~ msgid "E00 file"
-#~ msgstr "tập tin E00"
-
-#~ msgid "Input type point, line or area"
-#~ msgstr "Kiểu đầu vào điểm (point), đường (line) hoặc vùng (area)"
-
-#, fuzzy
-#~ msgid ""
-#~ "Download waypoints, routes, and tracks from a Garmin GPS receiver into a "
-#~ "vector map."
-#~ msgstr ""
-#~ "Tải các Điểm tọa độ, Lộ trình và Đường đi từ một máy định vị Garmin vào "
-#~ "một bản đồ vector."
-
-#~ msgid "vector, import, GPS"
-#~ msgstr "vector, nhập dữ liệu, GPS"
-
-#, fuzzy
-#~ msgid "Download Waypoints from GPS"
-#~ msgstr "tải các Điểm tọa độ từ GPS"
-
-#, fuzzy
-#~ msgid "Download Routes from GPS"
-#~ msgstr "tải Lộ trình từ GPS"
-
-#, fuzzy
-#~ msgid "Download Track from GPS"
-#~ msgstr "tải Đường đi từ GPS"
-
-#, fuzzy
-#~ msgid "Force import of track or route data as points"
-#~ msgstr "buộc nhập dữ liệu đường đi hoặc lộ trình thành dạng điểm"
-
-#, fuzzy
-#~ msgid "Do not attempt projection transform from WGS84"
-#~ msgstr "không cố gắng chuyển đổi phép chiếu từ WGS84"
-
-#, fuzzy
-#~ msgid "Name for output vector map (omit for display to stdout)"
-#~ msgstr "Tên của tập tin vector mới (bỏ qua để trình bày tại stdout)"
-
-#, fuzzy
-#~ msgid "Port Garmin receiver is connected to"
-#~ msgstr "cổng mà máy Garmin nối vào"
-
-#, fuzzy
-#~ msgid "Imports geonames.org country files into a GRASS vector points map."
-#~ msgstr ""
-#~ "Nhập các tập tin quốc gia US-NGA GEOnet Names Server (GNS) vào một bản đồ "
-#~ "vector GRASS kiểu điểm"
-
-#~ msgid "vector, import, gazetteer"
-#~ msgstr "vector, nhập dữ liệu, gazetteer"
-
-#, fuzzy
-#~ msgid "Uncompressed geonames file from (with .txt extension)"
-#~ msgstr "Tập tin GNS không nén từ NGA (với đuôi mở rộng .txt)"
-
-#, fuzzy
-#~ msgid ""
-#~ "Imports US-NGA GEOnet Names Server (GNS) country files into a GRASS "
-#~ "vector points map."
-#~ msgstr ""
-#~ "Nhập các tập tin quốc gia US-NGA GEOnet Names Server (GNS) vào một bản đồ "
-#~ "vector GRASS kiểu điểm"
-
-#~ msgid "Uncompressed GNS file from NGA (with .txt extension)"
-#~ msgstr "Tập tin GNS không nén từ NGA (với đuôi mở rộng .txt)"
-
-#, fuzzy
-#~ msgid ""
-#~ "Import waypoints, routes, and tracks from a GPS receiver or GPS download "
-#~ "file into a vector map."
-#~ msgstr ""
-#~ "Tải xuống Điểm tọa độ, Lộ trình và Đường đi từ một máy GPS hoặc một tập "
-#~ "tin ascii GPS vào một bản đồ vector."
-
-#, fuzzy
-#~ msgid "Import waypoints"
-#~ msgstr "Đang trích các điểm..."
-
-#, fuzzy
-#~ msgid "Import routes"
-#~ msgstr "Nhập"
-
-#, fuzzy
-#~ msgid "Import track"
-#~ msgstr "Nhập"
-
-#, fuzzy
-#~ msgid "Force vertices of track or route data as points"
-#~ msgstr "buộc đổi các đỉnh của dữ liệu đường đi hoặc lộ trình thành điểm"
-
-#, fuzzy
-#~ msgid "Device or file used to import data"
-#~ msgstr "Thiết bị hoặc tập tin dùng để nhập dữ liệu"
-
-#, fuzzy
-#~ msgid "Format of GPS input data (use gpsbabel supported formats)"
-#~ msgstr ""
-#~ "định dạng của dữ liệu GPS đầu vào (dùng các định dạng được gpsbabel hỗ "
-#~ "trợ)"
-
-#, fuzzy
-#~ msgid ""
-#~ "Projection of input data (PROJ.4 style), if not set Lat/Lon WGS84 is "
-#~ "assumed"
-#~ msgstr ""
-#~ "phép chiếu của dữ liệu đầu vào (dùng các tùy chọn của PROJ.4); nếu không "
-#~ "thiết lập, giả định rằng dữ liệu là Kinh/vĩ WGS84"
-
-#~ msgid "Import Mapgen or Matlab vector maps into GRASS."
-#~ msgstr "Nhập các bản đồ vector Mapgen hoặc Matlab vào GRASS"
-
-#~ msgid "Input map is in Matlab format"
-#~ msgstr "Bản đồ đầu vào thuộc định dạng Matlab"
-
-#, fuzzy
-#~ msgid "Create a 3D vector points map from 3 column Matlab data"
-#~ msgstr "Tạo dữ liệu vector (điểm) mới từ bảng CSDL chứa các tọa độ."
-
-#, fuzzy
-#~ msgid "Name of input file in Mapgen/Matlab format"
-#~ msgstr "Tên của tập tin đầu vào ở định dạng Mapgen/Matlab"
-
-#, fuzzy
-#~ msgid ""
-#~ "Converts all old GRASS < Ver5.7 sites maps in current mapset to vector "
-#~ "maps."
-#~ msgstr ""
-#~ "đổi tất cả các bản đồ vector GRASS kiểu cũ < 5.7 trong bộ bản đồ hiện tại "
-#~ "thành định dạng hiện tại"
-
-#~ msgid "sites, vector, import"
-#~ msgstr "địa điểm, vector, nhập dữ liệu"
-
-#, fuzzy
-#~ msgid "Run non-interactively"
-#~ msgstr "Chạy ở chế độ không tương tác"
-
-#, fuzzy
-#~ msgid "Vector output map"
-#~ msgstr "Không có bản đồ đầu ra"
-
-#, fuzzy
-#~ msgid "vector, export, GPS"
-#~ msgstr "vector, nhập dữ liệu, GPS"
-
-#, fuzzy
-#~ msgid "Export as waypoints"
-#~ msgstr "Đang trích các điểm..."
-
-#, fuzzy
-#~ msgid "Export as routes"
-#~ msgstr "Nhập"
-
-#, fuzzy
-#~ msgid "Export as tracks"
-#~ msgstr "Nhập"
-
-#, fuzzy
-#~ msgid "Feature type(s)"
-#~ msgstr "Kiểu đối tượng"
-
-#, fuzzy
-#~ msgid "Name for output file or GPS device"
-#~ msgstr "Tên cho tập tin đầu ra"
-
-#, fuzzy
-#~ msgid "GpsBabel supported output format"
-#~ msgstr "Liệt kê các định dạng đầu ra được hỗ trợ"
-
-#, fuzzy
-#~ msgid ""
-#~ "Calculates univariate statistics from a GRASS raster map based on vector "
-#~ "polygons and uploads statistics to new attribute columns."
-#~ msgstr ""
-#~ "Tính toán các thống kê một biến từ một bản đồ raster GRASS dựa trên các "
-#~ "đối tượng vector"
-
-#~ msgid "vector, raster, statistics"
-#~ msgstr "vector, raster, thống kê"
-
-#, fuzzy
-#~ msgid "Continue if upload column(s) already exist"
-#~ msgstr "tiếp tục nếu (các) cột tải lên đã có"
-
-#~ msgid "Name of vector polygon map"
-#~ msgstr "Tên bản đồ vector polygon (vùng) mới"
-
-#~ msgid "Name of raster map to calculate statistics from"
-#~ msgstr "Tên bản đồ raster để tính toán các thống kê từ đó "
-
-#, fuzzy
-#~ msgid "Column prefix for new attribute columns"
-#~ msgstr "Tiền tố cột dùng cho các cột thuộc tính mới"
-
-#, fuzzy
-#~ msgid "Reports geometry statistics for vectors."
-#~ msgstr "Báo cáo các thống kê hình học cho các bản đồ vector"
-
-#~ msgid "vector, report, statistics"
-#~ msgstr "vector, báo cáo, thống kê"
-
-#, fuzzy
-#~ msgid "Reverse sort the result"
-#~ msgstr "raster, độ cao"
-
-#, fuzzy
-#~ msgid "Sort the result"
-#~ msgstr "Tên bản đồ kết quả"
-
-#~ msgid "Value to calculate"
-#~ msgstr "Giá trị cần tính"
-
-#, fuzzy
-#~ msgid "mi(les),f(eet),me(ters),k(ilometers),a(cres),h(ectares),p(ercent)"
-#~ msgstr "mi(les)_dặm,f(eet)_bộ_Anh,me(t),k(ilomet),a(cres)_mẫu_Anh,h(ecta)"
-
-#, fuzzy
-#~ msgid "Uploads vector values at positions of vector points to the table."
-#~ msgstr "Tải vào bảng các giá trị vector tại vị trí của các điểm vector"
-
-#, fuzzy
-#~ msgid "Vector map to modify"
-#~ msgstr "Chỉ in ra vùng của bản đồ vector"
-
-#, fuzzy
-#~ msgid "Layer in the vector to be modified"
-#~ msgstr "bản đồ vector cần truy vấn"
-
-#, fuzzy
-#~ msgid "Vector map to be queried"
-#~ msgstr "bản đồ vector cần truy vấn"
-
-#, fuzzy
-#~ msgid "Layer of the query vector containing data"
-#~ msgstr "Tên của tập tin vector chứa dữ liệu đầu vào"
-
-#, fuzzy
-#~ msgid "Column to be queried"
-#~ msgstr "bản đồ vector cần truy vấn"
-
-#, fuzzy
-#~ msgid "Maximum query distance in map units"
-#~ msgstr "Khoảng cách đệm tính theo đơn vị bản đồ"
+#~ msgid "DXY [%s] COMPLETE"
+#~ msgstr "DXY [%s] HOÀN TẤT"
 
 #~ msgid ""
 #~ "Input raster map contains cells with NULL-value (no-data). The value %g "

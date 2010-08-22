@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: grassmods_ar\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-06-02 21:15+0200\n"
+"POT-Creation-Date: 2010-08-22 02:31+0200\n"
 "PO-Revision-Date: 2005-03-09 12:50+0100\n"
 "Last-Translator: Dr. Alaa Masoud <alaamasoud@hotmail.com>\n"
 "Language-Team: Arabic <grass-translations@lists.osgeo.org>\n"
@@ -955,7 +955,6 @@ msgstr ""
 #: ../vector/v.what.rast/main.c:138 ../visualization/xganim/main.c:366
 #: ../visualization/nviz2/cmd/surface.c:56
 #: ../visualization/nviz2/cmd/surface.c:106 ../doc/raster/r.example/main.c:111
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:392
 #: ../ps/ps.map/outl_io.c:68 ../imagery/i.pca/main.c:129
 #: ../imagery/i.zc/main.c:111 ../imagery/i.rgb.his/openfiles.c:14
 #: ../imagery/i.rgb.his/openfiles.c:16 ../imagery/i.rgb.his/openfiles.c:18
@@ -982,7 +981,7 @@ msgstr "غير موجودة <%s> الخريطة الراسترية "
 #: ../raster3d/base/r3.info.main.c:285 ../raster3d/base/r3.info.main.c:298
 #: ../raster3d/base/r3.info.main.c:308 ../raster3d/base/r3.info.main.c:313
 #: ../raster3d/base/r3.info.main.c:321 ../raster3d/base/r3.info.main.c:334
-#: ../raster/r.info/main.c:303 ../raster/r.info/main.c:428
+#: ../raster/r.info/main.c:303 ../raster/r.info/main.c:424
 #, fuzzy
 msgid "Cannot allocate memory for string"
 msgstr "لم يتم حساب شبه مركز المساحة"
@@ -1141,7 +1140,7 @@ msgstr "استخدام احداثيات مركز الخريطة\n"
 #: ../raster/r.region/main.c:54 ../raster/r.in.mat/main.c:92
 #: ../raster/r.in.arc/main.c:59 ../raster/r.neighbors/main.c:106
 #: ../raster/r.bitpattern/main.c:62
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:153
+#: ../locale/scriptstrings/r.blend_to_translate.c:2
 msgid "raster"
 msgstr ""
 
@@ -1150,7 +1149,13 @@ msgid "Exports a GRASS raster to a binary array."
 msgstr "تحويل راستر جراسى الى بينرى"
 
 #: ../raster/r.out.bin/main.c:73 ../raster/r.random/main.c:57
-#: ../raster/r.water.outlet/main.c:55 ../imagery/i.zc/main.c:69
+#: ../raster/r.water.outlet/main.c:55
+#: ../locale/scriptstrings/r.out.gdal.sh_to_translate.c:5
+#: ../locale/scriptstrings/r.reclass.area_to_translate.c:3
+#: ../locale/scriptstrings/r.out.xyz_to_translate.c:3
+#: ../locale/scriptstrings/r.colors.stddev_to_translate.c:3
+#: ../locale/scriptstrings/d.rast.edit_to_translate.c:3
+#: ../imagery/i.zc/main.c:69
 msgid "Name of input raster map"
 msgstr "اسم الخريطة الراسترية المدخلة"
 
@@ -1409,9 +1414,8 @@ msgstr "غير موجود <%s>الملف للمنظر ثلاثى الأبعاد 
 #: ../general/manage/cmd/rename.c:84 ../vector/v.in.ogr/main.c:326
 #: ../vector/v.to.rast3/main.c:69 ../vector/v.kernel/main.c:263
 #: ../vector/v.surf.idw/main.c:132 ../vector/v.edit/main.c:86
-#: ../doc/raster/r.example/main.c:114
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/opennew.c:11
-#: ../imagery/i.zc/main.c:119 ../imagery/i.ifft/ifftmain.c:116
+#: ../doc/raster/r.example/main.c:114 ../imagery/i.zc/main.c:119
+#: ../imagery/i.ifft/ifftmain.c:116
 #: ../imagery/i.ortho.photo/photo.camera/main.c:90
 #: ../imagery/i.fft/fftmain.c:121 ../imagery/i.fft/fftmain.c:124
 #, fuzzy, c-format
@@ -1496,6 +1500,8 @@ msgstr ""
 #: ../raster/r.out.mat/main.c:64 ../raster/r.out.ascii/main.c:59
 #: ../raster/r.out.ppm/main.c:54 ../raster/r.out.tiff/r.out.tiff.c:99
 #: ../raster/r.out.gdal/main.c:128
+#: ../locale/scriptstrings/r.out.gdal.sh_to_translate.c:2
+#: ../locale/scriptstrings/r.out.xyz_to_translate.c:2
 #, fuzzy
 msgid "raster, export"
 msgstr "الملف الراسترى المدخل"
@@ -1510,6 +1516,9 @@ msgstr "اسم الملف المخرج"
 
 #: ../raster/r.out.mat/main.c:81 ../raster/r.out.tiff/r.out.tiff.c:136
 #: ../raster/r.in.mat/main.c:115
+#: ../locale/scriptstrings/v.in.e00_to_translate.c:3
+#: ../locale/scriptstrings/v.in.garmin_to_translate.c:3
+#: ../locale/scriptstrings/v.in.gpsbabel_to_translate.c:3
 msgid "Verbose mode"
 msgstr "تنفيذ باسهاب"
 
@@ -1609,6 +1618,7 @@ msgstr "%d نقطة كتبت للمخرج\n"
 
 #: ../raster/r.in.poly/main.c:29 ../raster/r.in.gdal/main.c:79
 #: ../raster/r.in.bin/main.c:122 ../raster/r.external/main.c:506
+#: ../locale/scriptstrings/r.in.srtm_to_translate.c:2
 #, fuzzy
 msgid "raster, import"
 msgstr "الملف الراسترى المدخل"
@@ -1966,7 +1976,6 @@ msgstr "قراءة ال اف بى كاعداد صحيحة"
 #: ../raster/r.distance/parse.c:72 ../raster/r.carve/main.c:126
 #: ../raster/r.neighbors/main.c:277 ../vector/v.qcount/main.c:117
 #: ../vector/v.mkgrid/main.c:132
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:328
 msgid ""
 "The '-q' flag is superseded and will be removed in future. Please use '--"
 "quiet' instead."
@@ -2051,9 +2060,7 @@ msgstr "وصف مبسط للملف الراسترى المخرج"
 #: ../raster/r.kappa/main.c:102 ../raster/r.report/parse.c:95
 #: ../raster/r.bitpattern/main.c:87 ../vector/v.sample/main.c:129
 #: ../vector/v.perturb/main.c:117 ../vector/v.kcv/main.c:106
-#: ../doc/raster/r.example/main.c:96
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:290
-#: ../imagery/i.cluster/main.c:163
+#: ../doc/raster/r.example/main.c:96 ../imagery/i.cluster/main.c:163
 msgid "Quiet"
 msgstr "خروج"
 
@@ -3026,12 +3033,14 @@ msgstr "عرض الهيئات المدعمة والخروج"
 #: ../vector/v.info/main.c:92 ../vector/v.info/main.c:97
 #: ../vector/v.db.connect/main.c:81 ../vector/v.db.connect/main.c:86
 #: ../vector/v.db.connect/main.c:94 ../vector/v.db.connect/main.c:110
-#: ../db/base/connect.c:52 ../imagery/i.group/main.c:77
-#: ../imagery/i.group/main.c:83
+#: ../db/base/connect.c:52
+#: ../locale/scriptstrings/g.extension_to_translate.c:9
+#: ../imagery/i.group/main.c:77 ../imagery/i.group/main.c:83
 msgid "Print"
 msgstr ""
 
 #: ../raster/r.in.gdal/main.c:146
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:11
 msgid "Keep band numbers instead of using band color names"
 msgstr "الإحتفاظ بأعداد الشرائح بدلا من استخدام اسماء لون الشرائح"
 
@@ -3274,11 +3283,6 @@ msgstr "(بيانات ذات علامة(البت العليا تعنى قيم س
 #: ../vector/v.vol.rst/main.c:319 ../vector/v.vol.rst/main.c:328
 #: ../vector/v.vol.rst/main.c:337 ../vector/v.vol.rst/main.c:345
 #: ../vector/v.db.connect/main.c:60 ../vector/v.db.connect/main.c:65
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:189
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:199
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:276
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:285
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:296
 #: ../db/base/connect.c:62 ../db/base/connect.c:66 ../db/base/connect.c:77
 #: ../db/base/connect.c:87 ../imagery/i.cluster/main.c:105
 #: ../imagery/i.cluster/main.c:121 ../imagery/i.cluster/main.c:129
@@ -4153,6 +4157,8 @@ msgstr "اسم الخريطة الراسترية الناتجة"
 #: ../raster/r.stats/main.c:103 ../raster/r.statistics/main.c:42
 #: ../raster/r.report/main.c:64 ../raster/r.univar2/r.univar_main.c:75
 #: ../raster/r.support.stats/main.c:39 ../raster/r.quantile/main.c:254
+#: ../locale/scriptstrings/r.regression.line_to_translate.c:2
+#: ../locale/scriptstrings/r.univar.sh_to_translate.c:2
 msgid "raster, statistics"
 msgstr ""
 
@@ -4161,13 +4167,14 @@ msgid "Generates area statistics for raster map layers."
 msgstr "انشاء احصائيات المساحة لطبقات الخرائط الراسترية"
 
 #: ../raster/r.stats/main.c:114
+#: ../locale/scriptstrings/r.out.xyz_to_translate.c:4
 #, fuzzy
 msgid "Name for output file (if omitted or \"-\" output to stdout)"
 msgstr "(1/0) اسم الملف البينرى "
 
 #: ../raster/r.stats/main.c:119 ../raster/r.cats/main.c:72
 #: ../raster/r.distance/parse.c:50 ../vector/v.db.select/main.c:63
-#: ../db/base/select.c:202
+#: ../db/base/select.c:202 ../locale/scriptstrings/r.tileset_to_translate.c:13
 msgid "Output field separator"
 msgstr "الفاصل الحقلى بين بيانات المخرج"
 
@@ -4723,12 +4730,10 @@ msgid "Name for output aspect raster map"
 msgstr "اسم الخريطة الراسترية المخرجة"
 
 #: ../raster/r.slope.aspect/main.c:178
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:188
 msgid "Format for reporting the slope"
 msgstr "طريقة تقرير الإنحدار"
 
 #: ../raster/r.slope.aspect/main.c:188
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:198
 msgid "Type of output aspect and slope maps"
 msgstr "نوع خرائط الإنحدار واتجاهه"
 
@@ -4772,17 +4777,14 @@ msgid "Name for output second order partial derivative dxy raster map"
 msgstr "اسم ملف المشتق الجزئى من الرتبة الثانية في الاتجاه السينى ااصادى"
 
 #: ../raster/r.slope.aspect/main.c:243
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:272
 msgid "Multiplicative factor to convert elevation units to meters"
 msgstr "عامل المضاعفة لتحويل وحدات الارتفاعات الي امتار"
 
 #: ../raster/r.slope.aspect/main.c:252
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:281
 msgid "Minimum slope val. (in percent) for which aspect is computed"
 msgstr " القيمة الصغري للانحدار (نسبية) المحسوب اتجاه الانحدار لها"
 
 #: ../raster/r.slope.aspect/main.c:266
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:295
 msgid "Do not align the current region to the elevation layer"
 msgstr "لاتضبط المنطقة الحالية على ابعاد خريطة الارتفاعات"
 
@@ -4825,7 +4827,6 @@ msgid "Elevation products for mapset <%s> in <%s>"
 msgstr "<%s> لم يمكن فتح"
 
 #: ../raster/r.slope.aspect/main.c:1009
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:1042
 #, c-format
 msgid "Min computed aspect %.4f, max computed aspect %.4f"
 msgstr ""
@@ -4836,7 +4837,6 @@ msgid "Aspect raster map <%s> complete"
 msgstr "غير موجود <%s>الملف للمنظر ثلاثى الأبعاد "
 
 #: ../raster/r.slope.aspect/main.c:1113
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:1146
 #, c-format
 msgid "Min computed slope %.4f, max computed slope %.4f"
 msgstr ""
@@ -5051,7 +5051,14 @@ msgstr ""
 msgid "Imports GRIDATB.FOR map file (TOPMODEL) into GRASS raster map"
 msgstr "كخريطة راسترية جراسية GRIDATB.FOR (TOPMODEL) ادخال ملف الخريطة من نوع "
 
-#: ../raster/r.in.gridatb/main.c:53 ../imagery/i.ifft/ifftmain.c:83
+#: ../raster/r.in.gridatb/main.c:53
+#: ../locale/scriptstrings/r.reclass.area_to_translate.c:4
+#: ../locale/scriptstrings/r.in.aster_to_translate.c:6
+#: ../locale/scriptstrings/r.mapcalculator_to_translate.c:9
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:18
+#: ../locale/scriptstrings/d.rast.edit_to_translate.c:4
+#: ../locale/scriptstrings/i.in.spotvgt_to_translate.c:5
+#: ../imagery/i.ifft/ifftmain.c:83
 #, fuzzy
 msgid "Name for output raster map"
 msgstr "اسم الخريطة الراسترية المخرجة"
@@ -5084,7 +5091,6 @@ msgstr "اسم الخريطة المخرجة"
 
 #: ../raster/r.resample/main.c:137 ../raster/r.resamp.rst/main.c:527
 #: ../vector/v.surf.rst/main.c:602 ../vector/v.surf.rst/main.c:753
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:600
 msgid "Percent complete: "
 msgstr ""
 
@@ -7511,6 +7517,7 @@ msgid "Raster file(s) for View%d"
 msgstr "الملفات الراسترية المطلوب رؤيتها%d"
 
 #: ../raster/r.out.mpeg/main.c:406
+#: ../locale/scriptstrings/r.out.gdal.sh_to_translate.c:8
 msgid "Name for output file"
 msgstr "اسم الملف المخرج"
 
@@ -8408,6 +8415,7 @@ msgid ""
 msgstr ""
 
 #: ../raster/r.colors/main.c:165
+#: ../locale/scriptstrings/r.colors.stddev_to_translate.c:2
 #, fuzzy
 msgid "raster, color table"
 msgstr "الخريطة الراسترية المطلوب تسجيلها"
@@ -8418,6 +8426,7 @@ msgid "Creates/modifies the color table associated with a raster map layer."
 msgstr "إنشاء وتعديل جدول الألوان المصاحب لطبقة الخريطة الراسترية"
 
 #: ../raster/r.colors/main.c:181
+#: ../locale/scriptstrings/v.colors_to_translate.c:9
 msgid "Type of color table"
 msgstr "نوع جدول الألوان"
 
@@ -8434,10 +8443,16 @@ msgstr "نوع جدول الألوان"
 #: ../vector/v.label/main.c:153 ../vector/v.label/main.c:177
 #: ../vector/v.label/main.c:190 ../vector/v.label/main.c:196
 #: ../vector/v.label/main.c:206
+#: ../locale/scriptstrings/v.colors_to_translate.c:7
+#: ../locale/scriptstrings/v.colors_to_translate.c:10
+#: ../locale/scriptstrings/v.colors_to_translate.c:12
+#: ../locale/scriptstrings/v.colors_to_translate.c:14
+#: ../locale/scriptstrings/v.colors_to_translate.c:17
 msgid "Colors"
 msgstr ""
 
 #: ../raster/r.colors/main.c:191
+#: ../locale/scriptstrings/v.colors_to_translate.c:11
 msgid "Raster map name from which to copy color table"
 msgstr "اسم لخريطة الراسترية انسخ جدول ألوانها"
 
@@ -8461,6 +8476,7 @@ msgid "List available rules then exit"
 msgstr "طباعة الجداول والخروج"
 
 #: ../raster/r.colors/main.c:214
+#: ../locale/scriptstrings/v.colors_to_translate.c:16
 #, fuzzy
 msgid "Invert colors"
 msgstr " nv لون\n"
@@ -8976,6 +8992,7 @@ msgid "Exports GRASS raster maps into GDAL supported formats."
 msgstr "تحويل راستر جراسى الى بينرى"
 
 #: ../raster/r.out.gdal/main.c:132
+#: ../locale/scriptstrings/r.out.gdal.sh_to_translate.c:3
 #, fuzzy
 msgid "List supported output formats"
 msgstr "عرض الهيئات المدعمة والخروج"
@@ -9003,10 +9020,12 @@ msgid "Name of raster map (or group) to export"
 msgstr "اسم الخريطة الراسترية الناتجة"
 
 #: ../raster/r.out.gdal/main.c:154
+#: ../locale/scriptstrings/r.out.gdal.sh_to_translate.c:6
 msgid "GIS format to write (case sensitive, see also -l flag)"
 msgstr ""
 
 #: ../raster/r.out.gdal/main.c:175
+#: ../locale/scriptstrings/r.out.gdal.sh_to_translate.c:7
 #, fuzzy
 msgid "File type"
 msgstr "نوع المظهر"
@@ -9021,6 +9040,7 @@ msgid "Creation option(s) to pass to the output format driver"
 msgstr ""
 
 #: ../raster/r.out.gdal/main.c:192
+#: ../locale/scriptstrings/d.out.file_to_translate.c:21
 msgid "In the form of \"NAME=VALUE\", separate multiple entries with a comma."
 msgstr ""
 
@@ -9283,8 +9303,8 @@ msgstr ""
 #: ../raster/r.out.gdal/export_band.c:215
 #, c-format
 msgid ""
-"The given nodata value is present in rasterband <%s> and would lead to data "
-"loss. Please specify a different nodata value with the %s parameter."
+"The user given nodata value %g is present in rasterband <%s> and would lead "
+"to data loss. Please specify a different nodata value with the %s parameter."
 msgstr ""
 
 #: ../raster/r.out.gdal/export_band.c:259
@@ -10258,6 +10278,7 @@ msgid "Converts a raster map into a vector map layer."
 msgstr "تحويل خريطة راسترية إلى فيكتورية"
 
 #: ../raster/r.to.vect/main.c:64 ../vector/v.to.db/parse.c:36
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:6
 msgid "Feature type"
 msgstr "نوع المظهر"
 
@@ -11952,6 +11973,7 @@ msgid "Creates topographic index [ln(a/tan(beta))] map from elevation map."
 msgstr "ln(a/tan(beta)) تعيين الدليل الطبوغرافى من خريطة الإرتفاعات"
 
 #: ../raster/r.topidx/main.c:42
+#: ../locale/scriptstrings/r.shaded.relief_to_translate.c:3
 #, fuzzy
 msgid "Input elevation map"
 msgstr "اسم ملف الإرتفاعات الراستري"
@@ -11981,6 +12003,7 @@ msgstr "خريطة الدليل الطبوغرافى"
 
 #: ../raster/r.univar2/r.univar_main.c:40
 #: ../raster/r.univar2/r3.univar_main.c:39 ../vector/v.univar/main.c:92
+#: ../locale/scriptstrings/v.rast.stats_to_translate.c:10
 msgid "Percentile to calculate (requires extended statistics flag)"
 msgstr ""
 
@@ -11991,6 +12014,7 @@ msgstr "طباعة الأحصاء فى صورة شل سكربت"
 
 #: ../raster/r.univar2/r.univar_main.c:49
 #: ../raster/r.univar2/r3.univar_main.c:48 ../vector/v.univar/main.c:100
+#: ../locale/scriptstrings/v.rast.stats_to_translate.c:4
 #, fuzzy
 msgid "Calculate extended statistics"
 msgstr "احصائيات ااشئ او الفئة الموجهة"
@@ -12647,11 +12671,15 @@ msgstr ""
 msgid "Access for others"
 msgstr ""
 
-#: ../general/g.access/main.c:63
-msgid "Access to the PERMANENT mapset must be open, nothing changed"
+#: ../general/g.access/main.c:59
+msgid "UNIX filesystem access controls are not supported by MS-Windows"
 msgstr ""
 
 #: ../general/g.access/main.c:67
+msgid "Access to the PERMANENT mapset must be open, nothing changed"
+msgstr ""
+
+#: ../general/g.access/main.c:71
 #, fuzzy
 msgid "Unable to determine mapset permissions"
 msgstr "اسم الخريطة الراسترية الموجودة"
@@ -13462,6 +13490,8 @@ msgid "Use extended regular expressions instead of wildcards"
 msgstr ""
 
 #: ../general/g.mremove/main.c:76
+#: ../locale/scriptstrings/db.droptable_to_translate.c:3
+#: ../locale/scriptstrings/db.dropcol_to_translate.c:3
 msgid "Force removal (required for actual deletion of files)"
 msgstr ""
 
@@ -13667,6 +13697,8 @@ msgid "Print the maximum bounding box in lat/long on WGS84"
 msgstr ""
 
 #: ../general/g.region/main.c:133
+#: ../locale/scriptstrings/r.regression.line_to_translate.c:3
+#: ../locale/scriptstrings/i.oif_to_translate.c:9
 #, fuzzy
 msgid "Print in shell script style"
 msgstr "طباعة الأحصاء فى صورة شل سكربت"
@@ -13945,6 +13977,8 @@ msgstr ""
 #: ../display/d.text/main.c:66 ../display/d.rast.num/number.c:84
 #: ../display/d.nviz/main.c:68 ../display/d.zoom/main.c:57
 #: ../visualization/ximgview/main.c:270
+#: ../locale/scriptstrings/d.rast.leg_to_translate.c:2
+#: ../locale/scriptstrings/d.redraw_to_translate.c:2
 msgid "display"
 msgstr ""
 
@@ -14380,6 +14414,13 @@ msgstr " nv لون\n"
 
 #: ../display/d.grid/main.c:76 ../display/d.grid/main.c:81
 #: ../display/d.grid/main.c:87
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:27
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:30
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:33
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:36
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:39
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:55
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:57
 msgid "Color"
 msgstr ""
 
@@ -14882,6 +14923,10 @@ msgid ""
 msgstr "%f = المسافة من شبكة الأعمال , %f = المسافة الى شبكة الأعمال\n"
 
 #: ../display/d.extend/main.c:31
+#: ../locale/scriptstrings/d.split_to_translate.c:2
+#: ../locale/scriptstrings/d.resize_to_translate.c:2
+#: ../locale/scriptstrings/d.monsize_to_translate.c:2
+#: ../locale/scriptstrings/d.mvmon_to_translate.c:2
 msgid "display, setup"
 msgstr ""
 
@@ -14892,10 +14937,12 @@ msgstr "اسم الخريطة الراسترية  للعرض كخلفية"
 
 #: ../display/d.rast.edit/main.c:59 ../display/d.colortable/main.c:60
 #: ../display/d.rast/main.c:51
+#: ../locale/scriptstrings/d.rast.edit_to_translate.c:2
 msgid "display, raster"
 msgstr ""
 
 #: ../display/d.rast.edit/main.c:61
+#: ../locale/scriptstrings/d.rast.edit_to_translate.c:1
 #, fuzzy
 msgid "Interactively edit cell values in a raster map."
 msgstr "بدء بالقيم فى الخريطة الراسترية"
@@ -14948,6 +14995,8 @@ msgid ""
 msgstr ""
 
 #: ../display/d.legend/main.c:92 ../display/d.zoom/main.c:90
+#: ../locale/scriptstrings/d.rast.leg_to_translate.c:5
+#: ../locale/scriptstrings/r.univar.sh_to_translate.c:4
 msgid "Name of raster map"
 msgstr "اسم الخريطة الراسترية"
 
@@ -14966,13 +15015,6 @@ msgstr ""
 #: ../display/d.legend/main.c:180 ../display/d.legend/main.c:185
 #: ../vector/v.buffer/main.c:279 ../vector/v.buffer/main.c:287
 #: ../vector/v.buffer/main.c:294 ../vector/v.buffer/main.c:304
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:208
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:217
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:227
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:237
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:247
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:257
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:267
 msgid "Advanced"
 msgstr ""
 
@@ -15019,6 +15061,7 @@ msgid "Draw smooth gradient"
 msgstr ""
 
 #: ../display/d.legend/main.c:184
+#: ../locale/scriptstrings/d.rast.leg_to_translate.c:3
 msgid "Flip legend"
 msgstr ""
 
@@ -16654,6 +16697,7 @@ msgid ""
 msgstr ""
 
 #: ../display/d.zoom/main.c:100
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:4
 #, fuzzy
 msgid "Name of vector map"
 msgstr "اسم الخريطة الراسترية"
@@ -17031,6 +17075,7 @@ msgstr "cat = %d لا يوجد تسجيل للخط"
 #: ../vector/v.external/main.c:58 ../vector/v.clean/test/topocheck.c:42
 #: ../vector/v.buffer/main.c:254 ../vector/v.info/main.c:257
 #: ../vector/v.surf.rst/main.c:161
+#: ../locale/scriptstrings/v.build.all_to_translate.c:2
 msgid "vector"
 msgstr ""
 
@@ -17138,6 +17183,15 @@ msgstr "لم يمكن حشر صف جديد: %s"
 
 #: ../vector/v.db.select/main.c:52 ../vector/v.to.db/main.c:33
 #: ../vector/v.distance/main.c:115 ../vector/v.db.connect/main.c:50
+#: ../locale/scriptstrings/v.what.vect_to_translate.c:2
+#: ../locale/scriptstrings/v.db.update_to_translate.c:2
+#: ../locale/scriptstrings/v.db.renamecol_to_translate.c:2
+#: ../locale/scriptstrings/v.db.reconnect.all_to_translate.c:2
+#: ../locale/scriptstrings/v.db.droptable_to_translate.c:2
+#: ../locale/scriptstrings/v.db.join_to_translate.c:2
+#: ../locale/scriptstrings/v.db.addtable_to_translate.c:2
+#: ../locale/scriptstrings/v.db.dropcol_to_translate.c:2
+#: ../locale/scriptstrings/v.db.addcol_to_translate.c:2
 #, fuzzy
 msgid "vector, database, attribute table"
 msgstr "عدم انشاء جدول الخواص"
@@ -17277,6 +17331,7 @@ msgid "Required for operation 'connect'"
 msgstr ""
 
 #: ../vector/v.net/main.c:69
+#: ../locale/scriptstrings/g.extension_to_translate.c:5
 #, fuzzy
 msgid "Operation to be performed"
 msgstr "غير موجودة <%s> المنطقة"
@@ -17705,6 +17760,8 @@ msgstr ""
 #: ../vector/v.qcount/main.c:69 ../vector/v.kcv/main.c:76
 #: ../vector/v.class/main.c:45 ../vector/v.normal/main.c:79
 #: ../vector/v.univar/main.c:64
+#: ../locale/scriptstrings/v.univar.sh_to_translate.c:2
+#: ../locale/scriptstrings/v.db.univar_to_translate.c:2
 msgid "vector, statistics"
 msgstr ""
 
@@ -18545,6 +18602,9 @@ msgstr "لم توجد<%s>الخريطة الفيكتورية"
 
 #: ../vector/v.in.ogr/main.c:101 ../vector/v.in.dxf/main.c:60
 #: ../vector/v.in.dwg/main.c:65 ../vector/v.in.ascii/in.c:48
+#: ../locale/scriptstrings/v.convert.all_to_translate.c:2
+#: ../locale/scriptstrings/v.in.e00_to_translate.c:2
+#: ../locale/scriptstrings/v.in.mapgen_to_translate.c:2
 msgid "vector, import"
 msgstr ""
 
@@ -19715,6 +19775,11 @@ msgid "Path to resulting VTK file"
 msgstr "اسم الخريطة الراسترية الموجودة"
 
 #: ../vector/v.out.vtk/main.c:83
+#: ../locale/scriptstrings/v.report_to_translate.c:6
+#: ../locale/scriptstrings/v.out.gpsbabel_to_translate.c:10
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:17
+#: ../locale/scriptstrings/v.rast.stats_to_translate.c:6
+#: ../locale/scriptstrings/v.centroids_to_translate.c:6
 msgid "Layer number"
 msgstr ""
 
@@ -19785,6 +19850,9 @@ msgstr "الفاصل الحقلي للمخرج"
 
 #: ../vector/v.out.ascii/out.c:67 ../vector/v.out.ascii/out.c:77
 #: ../vector/v.out.ascii/out.c:84 ../vector/v.out.ascii/out.c:97
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:18
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:20
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:23
 #, fuzzy
 msgid "Points"
 msgstr "اسم الجدول"
@@ -20046,6 +20114,7 @@ msgid "Import polyface meshes as 3D wire frame"
 msgstr ""
 
 #: ../vector/v.in.dxf/main.c:82 ../vector/v.in.dwg/main.c:96
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:3
 #, fuzzy
 msgid "List available layers and exit"
 msgstr "طباعة الجداول والخروج"
@@ -21203,6 +21272,11 @@ msgid "Produces a convex hull for a given vector map."
 msgstr ""
 
 #: ../vector/v.hull/main.c:278
+#: ../locale/scriptstrings/v.report_to_translate.c:5
+#: ../locale/scriptstrings/v.out.gpsbabel_to_translate.c:6
+#: ../locale/scriptstrings/v.colors_to_translate.c:3
+#: ../locale/scriptstrings/v.dissolve_to_translate.c:3
+#: ../locale/scriptstrings/v.centroids_to_translate.c:3
 #, fuzzy
 msgid "Name of input vector map"
 msgstr "اسم الخريطة الراسترية المدخلة"
@@ -24483,6 +24557,7 @@ msgid "Feature ids (by default all features are processed)"
 msgstr ""
 
 #: ../vector/v.category/main.c:112
+#: ../locale/scriptstrings/v.centroids_to_translate.c:8
 msgid "Category increment"
 msgstr ""
 
@@ -25446,6 +25521,7 @@ msgid "Image"
 msgstr "ملف المدخل"
 
 #: ../visualization/nviz2/cmd/args.c:87
+#: ../locale/scriptstrings/d.out.file_to_translate.c:4
 #, fuzzy
 msgid "Graphics file format"
 msgstr "ملف المدخل"
@@ -25831,124 +25907,6 @@ msgstr "cat = %d لا يوجد تسجيل للخط"
 #, fuzzy, c-format
 msgid "Unable to copy attribute table to vector map <%s>"
 msgstr "[%s]لم يتم فتح ملف الخلية ل "
-
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/opennew.c:19
-#, fuzzy, c-format
-msgid "Failed in attempt to open %s"
-msgstr "اسم الملف الفيكتورى المخرج"
-
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:155
-msgid ""
-"Generates raster map layers of slope, aspect, curvatures and partial "
-"derivatives from a raster map layer of true elevation values. Aspect is "
-"calculated counterclockwise from east."
-msgstr "تعيين خواص تضاريسية كالإنحدار واتجاهة والإنحناءات بانواعها"
-
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:164
-msgid "Raster elevation file name"
-msgstr "اسم ملف الإرتفاعات الراستري"
-
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:172
-#, fuzzy
-msgid "Output slope filename"
-msgstr "اسم ملف الإنحدار المخرج"
-
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:180
-#, fuzzy
-msgid "Output aspect filename"
-msgstr "اسم خريطة اتجاه الإنحدار"
-
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:207
-#, fuzzy
-msgid "Output profile curvature filename"
-msgstr "اسم ملف انحناء التضاريس"
-
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:216
-#, fuzzy
-msgid "Output tangential curvature filename"
-msgstr "اسم ملف الإنحناء المماسى"
-
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:226
-msgid "Output first order partial derivative dx (E-W slope) filename"
-msgstr ""
-"(اسم ملف المشتق الجزئى من الرتبة الاولى في الاتجاه السينى (انحدار شرق-غرب "
-
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:236
-msgid "Output first order partial derivative dy (N-S slope) filename"
-msgstr ""
-"(اسم ملف المشتق الجزئى من الرتبة الاولى في الاتجاه الصادى (انحدار شمال-جنوب"
-
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:246
-msgid "Output second order partial derivative dxx filename"
-msgstr "اسم ملف المشتق الجزئى من الرتبة الثانية في الاتجاه السينى"
-
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:256
-msgid "Output second order partial derivative dyy filename"
-msgstr "اسم ملف المشتق الجزئى من الرتبة الثانية في الاتجاه ااصادى "
-
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:266
-msgid "Output second order partial derivative dxy filename"
-msgstr "اسم ملف المشتق الجزئى من الرتبة الثانية في الاتجاه السينى ااصادى"
-
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:412
-#, fuzzy, c-format
-msgid "wrong type: %s"
-msgstr "%c :نوع غير معروف"
-
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:1021
-#, fuzzy
-msgid "Creating support files..."
-msgstr "%s لم يمكن فتح ملف المدى ل"
-
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:1023
-#, fuzzy, c-format
-msgid "Elevation products for mapset [%s] in [%s]"
-msgstr "<%s> لم يمكن فتح"
-
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:1104
-#, c-format
-msgid "ASPECT [%s] COMPLETE"
-msgstr ""
-
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:1197
-#, c-format
-msgid "SLOPE [%s] COMPLETE"
-msgstr ""
-
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:1268
-#, c-format
-msgid "PROFILE CURVE [%s] COMPLETE"
-msgstr ""
-
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:1294
-#, c-format
-msgid "TANGENTIAL CURVE [%s] COMPLETE"
-msgstr ""
-
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:1318
-#, c-format
-msgid "E-W SLOPE [%s] COMPLETE"
-msgstr ""
-
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:1342
-#, c-format
-msgid "N-S SLOPE [%s] COMPLETE"
-msgstr ""
-
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:1366
-#, c-format
-msgid "DXX [%s] COMPLETE"
-msgstr ""
-
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:1390
-#, c-format
-msgid "DYY [%s] COMPLETE"
-msgstr ""
-
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:1414
-#, c-format
-msgid "DXY [%s] COMPLETE"
-msgstr ""
 
 #: ../ps/ps.map/ps_vlines.c:55 ../ps/ps.map/ps_vpoints.c:71
 #: ../ps/ps.map/ps_vareas.c:163
@@ -26395,6 +26353,11 @@ msgstr "<%s> لم يمكن فتح"
 
 #: ../db/base/columns.c:92 ../db/base/drivers.c:74 ../db/base/connect.c:45
 #: ../db/base/describe.c:125 ../db/base/tables.c:95
+#: ../locale/scriptstrings/db.test_to_translate.c:2
+#: ../locale/scriptstrings/db.out.ogr_to_translate.c:2
+#: ../locale/scriptstrings/db.droptable_to_translate.c:2
+#: ../locale/scriptstrings/db.dropcol_to_translate.c:2
+#: ../locale/scriptstrings/db.in.ogr_to_translate.c:2
 #, fuzzy
 msgid "database, attribute table"
 msgstr "عدم انشاء جدول الخواص"
@@ -26710,6 +26673,2353 @@ msgstr "لم يمكن ضبط المستخدمكلمة المرور"
 msgid "The password was stored in file"
 msgstr "حفظت كلمة المرور فى ملف"
 
+#: ../locale/scriptstrings/d.split_to_translate.c:1
+msgid ""
+"Divides active display into two frames & displays maps/executes commands in "
+"each frame."
+msgstr ""
+
+#: ../locale/scriptstrings/d.split_to_translate.c:3
+#, fuzzy
+msgid "Enter raster map to display in 1st frame"
+msgstr "الخريطة الراسترية المطلوب تسجيلها"
+
+#: ../locale/scriptstrings/d.split_to_translate.c:4
+#, fuzzy
+msgid "Enter command to execute in 1st frame"
+msgstr "الخريطة الراسترية المطلوب تسجيلها"
+
+#: ../locale/scriptstrings/d.split_to_translate.c:5
+#, fuzzy
+msgid "Enter raster map to display in 2nd frame"
+msgstr "الخريطة الراسترية المطلوب تسجيلها"
+
+#: ../locale/scriptstrings/d.split_to_translate.c:6
+#, fuzzy
+msgid "Enter command to execute in 2nd frame"
+msgstr "الخريطة الراسترية المطلوب تسجيلها"
+
+#: ../locale/scriptstrings/d.split_to_translate.c:7
+#, fuzzy
+msgid "How to split display"
+msgstr "<%s> لم يمكن فتح"
+
+#: ../locale/scriptstrings/i.spectral_to_translate.c:1
+msgid ""
+"Displays spectral response at user specified locations in group or images."
+msgstr ""
+
+#: ../locale/scriptstrings/i.spectral_to_translate.c:2
+msgid "imagery, raster, multispectral"
+msgstr ""
+
+#: ../locale/scriptstrings/i.spectral_to_translate.c:3
+msgid "Group input"
+msgstr ""
+
+#: ../locale/scriptstrings/i.spectral_to_translate.c:4
+#, fuzzy
+msgid "Raster input maps"
+msgstr "اسم الراستر المدخل"
+
+#: ../locale/scriptstrings/i.spectral_to_translate.c:5
+#, fuzzy
+msgid "Write output to PNG image"
+msgstr "تغلب على الخريطة المخرجة"
+
+#: ../locale/scriptstrings/i.spectral_to_translate.c:6
+msgid "Use image list and not group"
+msgstr ""
+
+#: ../locale/scriptstrings/i.spectral_to_translate.c:7
+#, fuzzy
+msgid "Select multiple points"
+msgstr "نوع المظهر"
+
+#: ../locale/scriptstrings/i.spectral_to_translate.c:8
+#, fuzzy
+msgid "Label with coordinates instead of numbering"
+msgstr "استخدام احداثيات مركز الخريطة\n"
+
+#: ../locale/scriptstrings/v.convert.all_to_translate.c:1
+#, fuzzy
+msgid ""
+"Convert all old GRASS < Ver5.7 vector maps in current mapset to current "
+"format"
+msgstr "تحويل خريطة راسترية إلى فيكتورية"
+
+#: ../locale/scriptstrings/v.convert.all_to_translate.c:3
+msgid "run non-interactively"
+msgstr ""
+
+#: ../locale/scriptstrings/r.out.gdal.sh_to_translate.c:1
+#, fuzzy
+msgid "Exports GRASS raster into GDAL supported formats."
+msgstr "تحويل راستر جراسى الى بينرى"
+
+#: ../locale/scriptstrings/r.out.gdal.sh_to_translate.c:4
+#, fuzzy
+msgid "Region sensitive output"
+msgstr "خريطة الإرتفاعات"
+
+#: ../locale/scriptstrings/r.out.gdal.sh_to_translate.c:9
+msgid ""
+"Creation option to the output format driver. Multiple options may be listed"
+msgstr ""
+
+#: ../locale/scriptstrings/r.out.gdal.sh_to_translate.c:10
+msgid "Metadata key passed on the output dataset if possible"
+msgstr ""
+
+#: ../locale/scriptstrings/r.regression.line_to_translate.c:1
+msgid "Calculates linear regression from two raster maps: y = a + b*x"
+msgstr ""
+
+#: ../locale/scriptstrings/r.regression.line_to_translate.c:4
+msgid "Slower but accurate (applies to FP maps only)"
+msgstr ""
+
+#: ../locale/scriptstrings/r.regression.line_to_translate.c:5
+msgid "Map for x coefficient"
+msgstr ""
+
+#: ../locale/scriptstrings/r.regression.line_to_translate.c:6
+msgid "Map for y coefficient"
+msgstr ""
+
+#: ../locale/scriptstrings/r.regression.line_to_translate.c:7
+msgid ""
+"ASCII file for storing regression coefficients (output to screen if file not "
+"specified)."
+msgstr ""
+
+#: ../locale/scriptstrings/v.in.e00_to_translate.c:1
+#, fuzzy
+msgid "Import E00 file into a vector map."
+msgstr "اسم الخريطة الراسترية المدخلة"
+
+#: ../locale/scriptstrings/v.in.e00_to_translate.c:4
+msgid "E00 file"
+msgstr ""
+
+#: ../locale/scriptstrings/v.in.e00_to_translate.c:5
+#, fuzzy
+msgid "Input type point, line or area"
+msgstr " خط أم مساحة"
+
+#: ../locale/scriptstrings/v.in.e00_to_translate.c:6
+#: ../locale/scriptstrings/v.in.gns_to_translate.c:4
+#: ../locale/scriptstrings/v.in.geonames_to_translate.c:4
+#: ../locale/scriptstrings/v.dissolve_to_translate.c:4
+#: ../locale/scriptstrings/v.centroids_to_translate.c:4
+#, fuzzy
+msgid "Name for output vector map"
+msgstr "اسم الملف الفيكتورى المخرج"
+
+#: ../locale/scriptstrings/r.plane_to_translate.c:1
+#, fuzzy
+msgid ""
+"Creates raster plane map given dip (inclination), aspect (azimuth) and one "
+"point."
+msgstr ""
+"خلق طبقة خريطة راسترية وخريطة نقط فيكتورية تحتوى على اماكن عشوائية التوزيع"
+
+#: ../locale/scriptstrings/r.plane_to_translate.c:2
+#: ../locale/scriptstrings/r.shaded.relief_to_translate.c:2
+#, fuzzy
+msgid "raster, elevation"
+msgstr "الصفر قيمة حقيقية"
+
+#: ../locale/scriptstrings/r.plane_to_translate.c:3
+#, fuzzy
+msgid "Name of raster plane to be created"
+msgstr "اسم الخريطة المدخلة"
+
+#: ../locale/scriptstrings/r.plane_to_translate.c:4
+msgid "Dip of plane. Value must be between -90 and 90 degrees"
+msgstr ""
+
+#: ../locale/scriptstrings/r.plane_to_translate.c:5
+msgid "Azimuth of the plane. Value must be between 0 and 360 degrees"
+msgstr ""
+
+#: ../locale/scriptstrings/r.plane_to_translate.c:6
+#, fuzzy
+msgid "Easting coordinate of a point on the plane"
+msgstr "احداثى الشرق, الأساس هو مركز الخريطة"
+
+#: ../locale/scriptstrings/r.plane_to_translate.c:7
+#, fuzzy
+msgid "Northing coordinate of a point on the plane"
+msgstr "احداثى الشمال, الأساس هو مركز الخريطة"
+
+#: ../locale/scriptstrings/r.plane_to_translate.c:8
+#, fuzzy
+msgid "Elevation coordinate of a point on the plane"
+msgstr "احداثى الشرق, الأساس هو مركز الخريطة"
+
+#: ../locale/scriptstrings/r.plane_to_translate.c:9
+#, fuzzy
+msgid "Type of the raster map to be created"
+msgstr "اسم الخريطة المدخلة"
+
+#: ../locale/scriptstrings/m.proj_to_translate.c:1
+msgid "Convert coordinates from one projection to another (cs2cs frontend)."
+msgstr ""
+
+#: ../locale/scriptstrings/m.proj_to_translate.c:2
+#, fuzzy
+msgid "miscellaneous, projection"
+msgstr "طباعة نوع الملف الراسترى فقط"
+
+#: ../locale/scriptstrings/m.proj_to_translate.c:3
+#, fuzzy
+msgid "Input coordinate file (omit to read from stdin)"
+msgstr "إدخال خريطة راسترية بينرية "
+
+#: ../locale/scriptstrings/m.proj_to_translate.c:4
+#, fuzzy
+msgid "Output coordinate file (omit to send to stdout)"
+msgstr "إدخال خريطة راسترية بينرية "
+
+#: ../locale/scriptstrings/m.proj_to_translate.c:5
+#: ../locale/scriptstrings/r.out.xyz_to_translate.c:5
+#, fuzzy
+msgid "Field separator"
+msgstr "الفاصل الحقلي للمخرج"
+
+#: ../locale/scriptstrings/m.proj_to_translate.c:6
+#, fuzzy
+msgid "Input projection parameters (PROJ.4 style)"
+msgstr "خريطة الإتجاه المخرجة"
+
+#: ../locale/scriptstrings/m.proj_to_translate.c:7
+#, fuzzy
+msgid "Output projection parameters (PROJ.4 style)"
+msgstr "خريطة الإتجاه المخرجة"
+
+#: ../locale/scriptstrings/m.proj_to_translate.c:8
+msgid "Use LL WGS84 as input and current location as output projection"
+msgstr ""
+
+#: ../locale/scriptstrings/m.proj_to_translate.c:9
+msgid "Use current location as input and LL WGS84 as output projection"
+msgstr ""
+
+#: ../locale/scriptstrings/m.proj_to_translate.c:10
+msgid ""
+"Output long/lat in decimal degrees or other projections with many decimal "
+"places"
+msgstr ""
+
+#: ../locale/scriptstrings/m.proj_to_translate.c:11
+msgid ""
+"Script style output in CSV format respecting the field separator settings"
+msgstr ""
+
+#: ../locale/scriptstrings/m.proj_to_translate.c:12
+msgid "Verbose mode (print projection parameters and filenames to stderr)"
+msgstr ""
+
+#: ../locale/scriptstrings/d.out.file_to_translate.c:1
+#, fuzzy
+msgid "Saves the contents of the active display monitor to a graphics file."
+msgstr "اختيار الخط الذى سيعرض به النص على الشاشة"
+
+#: ../locale/scriptstrings/d.out.file_to_translate.c:2
+#: ../locale/scriptstrings/d.out.png_to_translate.c:2
+#, fuzzy
+msgid "display, export"
+msgstr "الملف الراسترى المدخل"
+
+#: ../locale/scriptstrings/d.out.file_to_translate.c:3
+#, fuzzy
+msgid "Name for output file (do NOT add extension)"
+msgstr "اسم ملف التقرير"
+
+#: ../locale/scriptstrings/d.out.file_to_translate.c:5
+msgid "Dimensions of output file versus current window size"
+msgstr ""
+
+#: ../locale/scriptstrings/d.out.file_to_translate.c:6
+msgid "(same=1, double size=2, quadruple size=4)"
+msgstr ""
+
+#: ../locale/scriptstrings/d.out.file_to_translate.c:7
+#: ../locale/scriptstrings/d.out.file_to_translate.c:9
+#: ../locale/scriptstrings/d.out.file_to_translate.c:12
+#: ../locale/scriptstrings/d.out.file_to_translate.c:15
+#: ../locale/scriptstrings/d.out.file_to_translate.c:28
+#: ../locale/scriptstrings/d.out.file_to_translate.c:30
+#, fuzzy
+msgid "Images"
+msgstr "ملف المدخل"
+
+#: ../locale/scriptstrings/d.out.file_to_translate.c:8
+msgid "Width and height of output image (overrides resolution setting)"
+msgstr ""
+
+#: ../locale/scriptstrings/d.out.file_to_translate.c:10
+#, fuzzy
+msgid "Compression for PNG files"
+msgstr "اسم ملف المرشح"
+
+#: ../locale/scriptstrings/d.out.file_to_translate.c:11
+msgid "(0=none, 1=fastest, 9=most; lossless, only time vs. filesize)"
+msgstr ""
+
+#: ../locale/scriptstrings/d.out.file_to_translate.c:13
+msgid "File size/quality for JPEG files"
+msgstr ""
+
+#: ../locale/scriptstrings/d.out.file_to_translate.c:14
+msgid "(10=smallest/worst, 100=largest/best)"
+msgstr ""
+
+#: ../locale/scriptstrings/d.out.file_to_translate.c:16
+#, fuzzy
+msgid "Paper size for PostScript output"
+msgstr "الملف الراسترى المخرج"
+
+#: ../locale/scriptstrings/d.out.file_to_translate.c:17
+#: ../locale/scriptstrings/d.out.file_to_translate.c:19
+#: ../locale/scriptstrings/d.out.file_to_translate.c:32
+#, fuzzy
+msgid "PostScript"
+msgstr "الملف الراسترى المخرج"
+
+#: ../locale/scriptstrings/d.out.file_to_translate.c:18
+msgid "PostScript level (only limits functionality!)"
+msgstr ""
+
+#: ../locale/scriptstrings/d.out.file_to_translate.c:20
+msgid "GeoTIFF creation option(s)"
+msgstr ""
+
+#: ../locale/scriptstrings/d.out.file_to_translate.c:22
+#: ../locale/scriptstrings/d.out.file_to_translate.c:25
+#: ../locale/scriptstrings/d.out.file_to_translate.c:34
+msgid "GeoTIFF"
+msgstr ""
+
+#: ../locale/scriptstrings/d.out.file_to_translate.c:23
+msgid "GeoTIFF metadata key(s) and value(s) to add"
+msgstr ""
+
+#: ../locale/scriptstrings/d.out.file_to_translate.c:24
+msgid ""
+"In the form of \"META-TAG=VALUE\", separate multiple entries with a comma."
+msgstr ""
+
+#: ../locale/scriptstrings/d.out.file_to_translate.c:26
+msgid "Set background color to black (white default)"
+msgstr ""
+
+#: ../locale/scriptstrings/d.out.file_to_translate.c:27
+msgid "Set transparent background"
+msgstr ""
+
+#: ../locale/scriptstrings/d.out.file_to_translate.c:29
+msgid "Use the Cario driver to render images"
+msgstr ""
+
+#: ../locale/scriptstrings/d.out.file_to_translate.c:31
+#, fuzzy
+msgid "Set paper orientation to landscape (for PostScript output)"
+msgstr "الملف الراسترى المخرج"
+
+#: ../locale/scriptstrings/d.out.file_to_translate.c:33
+#, fuzzy
+msgid "Do not crop away margins"
+msgstr "لم يتم نسخ الجدول"
+
+#: ../locale/scriptstrings/db.test_to_translate.c:1
+msgid "Test database driver, database must exist and set by db.connect."
+msgstr ""
+
+#: ../locale/scriptstrings/db.test_to_translate.c:3
+#, fuzzy
+msgid "Test name"
+msgstr "اسم الجدول"
+
+#: ../locale/scriptstrings/r.tileset_to_translate.c:1
+msgid ""
+"Produces tilings of the source projection for use in the destination region "
+"and projection."
+msgstr ""
+
+#: ../locale/scriptstrings/r.tileset_to_translate.c:2
+#, fuzzy
+msgid "raster, tiling"
+msgstr "الملف الراسترى المدخل"
+
+#: ../locale/scriptstrings/r.tileset_to_translate.c:3
+#, fuzzy
+msgid "Produces shell script output"
+msgstr "الملف الراسترى المخرج"
+
+#: ../locale/scriptstrings/r.tileset_to_translate.c:4
+#, fuzzy
+msgid "Produces web map server query string output"
+msgstr "الملف الراسترى المخرج"
+
+#: ../locale/scriptstrings/r.tileset_to_translate.c:5
+#, fuzzy
+msgid ""
+"Name of region to use instead of current region for bounds and resolution"
+msgstr "(دقة الوضوح عبر التضاريس (الأساس : دقة وضوح المنطقة الحالية"
+
+#: ../locale/scriptstrings/r.tileset_to_translate.c:6
+#, fuzzy
+msgid "Source projection"
+msgstr "طباعة نوع الملف الراسترى فقط"
+
+#: ../locale/scriptstrings/r.tileset_to_translate.c:7
+#: ../locale/scriptstrings/r.tileset_to_translate.c:9
+#, fuzzy
+msgid "Conversion factor from units to meters in source projection"
+msgstr "عامل الضرب لقيم الإرتفاعات"
+
+#: ../locale/scriptstrings/r.tileset_to_translate.c:8
+#, fuzzy
+msgid "Destination projection, defaults to this location's projection"
+msgstr "تغلب على الإسقاط مستخدما إسقاط الموقع"
+
+#: ../locale/scriptstrings/r.tileset_to_translate.c:10
+#, fuzzy
+msgid "Maximum number of columns for a tile in the source projection"
+msgstr "المسافة العظمى بين النقاط بوحدات الخريطة"
+
+#: ../locale/scriptstrings/r.tileset_to_translate.c:11
+#, fuzzy
+msgid "Maximum number of rows for a tile in the source projection"
+msgstr "المسافة العظمى بين النقاط بوحدات الخريطة"
+
+#: ../locale/scriptstrings/r.tileset_to_translate.c:12
+#, fuzzy
+msgid "Number of cells tiles should overlap in each direction"
+msgstr "عدد مستويات الألوان لكل مركب"
+
+#: ../locale/scriptstrings/r.tileset_to_translate.c:14
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:50
+msgid "Verbosity level"
+msgstr ""
+
+#: ../locale/scriptstrings/i.fusion.brovey_to_translate.c:1
+msgid ""
+"Brovey transform to merge multispectral and high-res panchromatic channels"
+msgstr ""
+
+#: ../locale/scriptstrings/i.fusion.brovey_to_translate.c:2
+#, fuzzy
+msgid "imagery, fusion, Brovey"
+msgstr "الملف الراسترى الطلوب إدخالة"
+
+#: ../locale/scriptstrings/i.fusion.brovey_to_translate.c:3
+#, fuzzy
+msgid "LANDSAT sensor"
+msgstr "الشد"
+
+#: ../locale/scriptstrings/i.fusion.brovey_to_translate.c:4
+#: ../locale/scriptstrings/i.fusion.brovey_to_translate.c:6
+#: ../locale/scriptstrings/i.fusion.brovey_to_translate.c:8
+#, fuzzy
+msgid "Sensor"
+msgstr "الشد"
+
+#: ../locale/scriptstrings/i.fusion.brovey_to_translate.c:5
+msgid "QuickBird sensor"
+msgstr ""
+
+#: ../locale/scriptstrings/i.fusion.brovey_to_translate.c:7
+#, fuzzy
+msgid "SPOT sensor"
+msgstr "الشد"
+
+#: ../locale/scriptstrings/i.fusion.brovey_to_translate.c:9
+#, fuzzy
+msgid "Name of input raster map (green: tm2 | qbird_green | spot1)"
+msgstr "اسم الخريطة الراسترية المدخلة"
+
+#: ../locale/scriptstrings/i.fusion.brovey_to_translate.c:10
+#, fuzzy
+msgid "Name of input raster map (NIR: tm4 | qbird_nir | spot2)"
+msgstr "اسم الخريطة الراسترية المدخلة"
+
+#: ../locale/scriptstrings/i.fusion.brovey_to_translate.c:11
+#, fuzzy
+msgid "Name of input raster map (MIR; tm5 | qbird_red | spot3)"
+msgstr "اسم الخريطة الراسترية المدخلة"
+
+#: ../locale/scriptstrings/i.fusion.brovey_to_translate.c:12
+#, fuzzy
+msgid "Name of input raster map (etmpan | qbird_pan | spotpan)"
+msgstr "اسم الخريطة الراسترية المدخلة"
+
+#: ../locale/scriptstrings/i.fusion.brovey_to_translate.c:13
+#, fuzzy
+msgid "Name for output raster map prefix (e.g. 'brov')"
+msgstr "الملف الراسترى المخرج"
+
+#: ../locale/scriptstrings/g.extension_to_translate.c:1
+msgid "Tool to maintain GRASS extensions in local GRASS installation."
+msgstr ""
+
+#: ../locale/scriptstrings/g.extension_to_translate.c:2
+msgid ""
+"Downloads, installs extensions from GRASS Addons SVN repository into local "
+"GRASS installation or removes installed extensions."
+msgstr ""
+
+#: ../locale/scriptstrings/g.extension_to_translate.c:3
+#, fuzzy
+msgid "general, extensions"
+msgstr "طباعة نوع الملف الراسترى فقط"
+
+#: ../locale/scriptstrings/g.extension_to_translate.c:4
+#, fuzzy
+msgid "Name of extension to install/remove"
+msgstr "اسم المقع الجديد"
+
+#: ../locale/scriptstrings/g.extension_to_translate.c:6
+msgid "SVN Addons repository URL"
+msgstr ""
+
+#: ../locale/scriptstrings/g.extension_to_translate.c:7
+msgid "Prefix where to install extension"
+msgstr ""
+
+#: ../locale/scriptstrings/g.extension_to_translate.c:8
+#, fuzzy
+msgid "List available modules in the GRASS Addons SVN repository"
+msgstr "طباعة الجداول والخروج"
+
+#: ../locale/scriptstrings/d.correlate_to_translate.c:1
+msgid "Prints a graph of the correlation between data layers (in pairs)."
+msgstr ""
+
+#: ../locale/scriptstrings/d.correlate_to_translate.c:2
+#: ../locale/scriptstrings/d.polar_to_translate.c:2
+#, fuzzy
+msgid "display, diagram"
+msgstr "الملف الراسترى المدخل"
+
+#: ../locale/scriptstrings/d.correlate_to_translate.c:3
+#: ../locale/scriptstrings/d.correlate_to_translate.c:4
+#: ../locale/scriptstrings/d.correlate_to_translate.c:5
+#: ../locale/scriptstrings/d.correlate_to_translate.c:6
+#, fuzzy
+msgid "raster input map"
+msgstr "اسم الراستر المدخل"
+
+#: ../locale/scriptstrings/i.image.mosaic_to_translate.c:1
+msgid "Mosaics up to 4 images and extends colormap; creates map *.mosaic"
+msgstr ""
+
+#: ../locale/scriptstrings/i.image.mosaic_to_translate.c:2
+#, fuzzy
+msgid "raster, imagery, mosaicking"
+msgstr "الملف الراسترى الطلوب إدخالة"
+
+#: ../locale/scriptstrings/i.image.mosaic_to_translate.c:3
+msgid "1st map for mosaic (top of image stack)."
+msgstr ""
+
+#: ../locale/scriptstrings/i.image.mosaic_to_translate.c:4
+msgid "2nd map for mosaic."
+msgstr ""
+
+#: ../locale/scriptstrings/i.image.mosaic_to_translate.c:5
+msgid "3rd map for mosaic."
+msgstr ""
+
+#: ../locale/scriptstrings/i.image.mosaic_to_translate.c:6
+msgid "4th map for mosaic."
+msgstr ""
+
+#: ../locale/scriptstrings/r.blend_to_translate.c:1
+msgid "Blends color components of two raster maps by a given ratio."
+msgstr ""
+
+#: ../locale/scriptstrings/r.blend_to_translate.c:3
+#, fuzzy
+msgid "Name of first raster map for blending"
+msgstr "اسم الملف الراسترى الموجود"
+
+#: ../locale/scriptstrings/r.blend_to_translate.c:4
+#, fuzzy
+msgid "Name of second raster map for blending"
+msgstr "اسم الملف الراسترى الموجود"
+
+#: ../locale/scriptstrings/r.blend_to_translate.c:5
+msgid "Base name for red, green and blue output maps containing the blend"
+msgstr ""
+
+#: ../locale/scriptstrings/r.blend_to_translate.c:6
+#, fuzzy
+msgid "Percentage weight of first map for color blending"
+msgstr "اسم الملف الراسترى الموجود"
+
+#: ../locale/scriptstrings/r.reclass.area_to_translate.c:1
+msgid ""
+"Reclasses a raster map greater or less than user specified area size (in "
+"hectares)."
+msgstr ""
+
+#: ../locale/scriptstrings/r.reclass.area_to_translate.c:2
+#, fuzzy
+msgid "raster, statistics, aggregation"
+msgstr "عدم انشاء جدول الخواص"
+
+#: ../locale/scriptstrings/r.reclass.area_to_translate.c:5
+msgid "Lesser value option that sets the <= area size limit [hectares]"
+msgstr ""
+
+#: ../locale/scriptstrings/r.reclass.area_to_translate.c:6
+msgid "Greater value option that sets the >= area size limit [hectares]"
+msgstr ""
+
+#: ../locale/scriptstrings/v.what.vect_to_translate.c:1
+msgid "Uploads vector values at positions of vector points to the table."
+msgstr ""
+
+#: ../locale/scriptstrings/v.what.vect_to_translate.c:3
+#, fuzzy
+msgid "Vector map to modify"
+msgstr "طباعة نوع الملف الراسترى فقط"
+
+#: ../locale/scriptstrings/v.what.vect_to_translate.c:4
+#, fuzzy
+msgid "Layer in the vector to be modified"
+msgstr "الخريطة الراسترية المطلوب استفهامها"
+
+#: ../locale/scriptstrings/v.what.vect_to_translate.c:5
+msgid "Column to be updated with the query result"
+msgstr ""
+
+#: ../locale/scriptstrings/v.what.vect_to_translate.c:6
+#, fuzzy
+msgid "Vector map to be queried"
+msgstr "الخريطة الراسترية المطلوب استفهامها"
+
+#: ../locale/scriptstrings/v.what.vect_to_translate.c:7
+#, fuzzy
+msgid "Layer of the query vector containing data"
+msgstr "اسم الملف الفيكتورى المخرج"
+
+#: ../locale/scriptstrings/v.what.vect_to_translate.c:8
+#, fuzzy
+msgid "Column to be queried"
+msgstr "الخريطة الراسترية المطلوب استفهامها"
+
+#: ../locale/scriptstrings/v.what.vect_to_translate.c:9
+#, fuzzy
+msgid "Maximum query distance in map units"
+msgstr "المسافة العظمى بين النقاط بوحدات الخريطة"
+
+#: ../locale/scriptstrings/r.in.srtm_to_translate.c:1
+msgid "Import SRTM HGT files into GRASS"
+msgstr ""
+
+#: ../locale/scriptstrings/r.in.srtm_to_translate.c:3
+msgid "SRTM input tile (file without .hgt.zip extension)"
+msgstr ""
+
+#: ../locale/scriptstrings/r.in.srtm_to_translate.c:4
+#, fuzzy
+msgid "Output raster map (default: input tile)"
+msgstr "اسم خريطة الراستر المخرجة"
+
+#: ../locale/scriptstrings/r.in.srtm_to_translate.c:5
+msgid "Input is a 1-arcsec tile (default: 3-arcsec)"
+msgstr ""
+
+#: ../locale/scriptstrings/v.report_to_translate.c:1
+#, fuzzy
+msgid "Reports geometry statistics for vectors."
+msgstr "تقرير الإحصائيات للخرائط الراسترية"
+
+#: ../locale/scriptstrings/v.report_to_translate.c:2
+#, fuzzy
+msgid "vector, report, statistics"
+msgstr "احصائيات ااشئ او الفئة الموجهة"
+
+#: ../locale/scriptstrings/v.report_to_translate.c:3
+#, fuzzy
+msgid "Reverse sort the result"
+msgstr "الصفر قيمة حقيقية"
+
+#: ../locale/scriptstrings/v.report_to_translate.c:4
+#, fuzzy
+msgid "Sort the result"
+msgstr "اسم الخريطة الناتجة"
+
+#: ../locale/scriptstrings/v.report_to_translate.c:7
+#, fuzzy
+msgid "Value to calculate"
+msgstr "لم يتم حساب شبه مركز المساحة"
+
+#: ../locale/scriptstrings/v.report_to_translate.c:8
+#, fuzzy
+msgid "mi(les),f(eet),me(ters),k(ilometers),a(cres),h(ectares),p(ercent)"
+msgstr ""
+"أميال mi, أمتار me, كيلومترات k, افدنة a, هيكتارات h, عدات الخلية c,  p نسبة "
+"التغطية"
+
+#: ../locale/scriptstrings/v.db.update_to_translate.c:1
+#, fuzzy
+msgid ""
+"Allows to update a column in the attribute table connected to a vector map."
+msgstr "اسم الخريطة الراسترية الموجودة"
+
+#: ../locale/scriptstrings/v.db.update_to_translate.c:3
+#, fuzzy
+msgid "Vector map to edit the attribute table for"
+msgstr "عدم انشاء جدول الخواص"
+
+#: ../locale/scriptstrings/v.db.update_to_translate.c:4
+msgid "Layer to which the table to be changed is connected"
+msgstr ""
+
+#: ../locale/scriptstrings/v.db.update_to_translate.c:5
+#, fuzzy
+msgid "Column to update"
+msgstr "نوع العمود غير مدعم"
+
+#: ../locale/scriptstrings/v.db.update_to_translate.c:6
+msgid ""
+"Value to update the column with (varchar values have to be in single quotes, "
+"e.g. 'grass')"
+msgstr ""
+
+#: ../locale/scriptstrings/v.db.update_to_translate.c:7
+#, fuzzy
+msgid "Column to query"
+msgstr "الخريطة الراسترية المطلوب استفهامها"
+
+#: ../locale/scriptstrings/v.db.update_to_translate.c:8
+msgid ""
+"WHERE conditions for update, without 'where' keyword (e.g. cat=1 or col1/"
+"col2>1)"
+msgstr ""
+
+#: ../locale/scriptstrings/d.rast.leg_to_translate.c:1
+#, fuzzy
+msgid "Displays a raster map and its legend on a graphics window"
+msgstr "اختيار الخط الذى سيعرض به النص على الشاشة"
+
+#: ../locale/scriptstrings/d.rast.leg_to_translate.c:4
+msgid "Omit entries with missing label"
+msgstr ""
+
+#: ../locale/scriptstrings/d.rast.leg_to_translate.c:6
+#, fuzzy
+msgid "Number of lines to appear in the legend"
+msgstr "عدد مرات تكرار المرشح"
+
+#: ../locale/scriptstrings/d.rast.leg_to_translate.c:7
+#, fuzzy
+msgid "Name of raster map to generate legend from"
+msgstr "<%s> اسم الملف المستخدم لل"
+
+#: ../locale/scriptstrings/d.rast.leg_to_translate.c:8
+#, fuzzy
+msgid "Name of raster map to print in legend"
+msgstr "اسم الخريطة الراسترية  للعرض كخلفية"
+
+#: ../locale/scriptstrings/d.rast.leg_to_translate.c:9
+msgid "Position of vertical map-legend separator (in percent)"
+msgstr ""
+
+#: ../locale/scriptstrings/d.out.gpsdrive_to_translate.c:1
+msgid "Export display monitor to a GpsDrive compatible backdrop image"
+msgstr ""
+
+#: ../locale/scriptstrings/d.out.gpsdrive_to_translate.c:2
+#, fuzzy
+msgid "display, export, GPS"
+msgstr "الملف الراسترى المدخل"
+
+#: ../locale/scriptstrings/d.out.gpsdrive_to_translate.c:3
+msgid "name for new map image (lives in ~/.gpsdrive/maps/)"
+msgstr ""
+
+#: ../locale/scriptstrings/d.out.gpsdrive_to_translate.c:4
+msgid "Make JPEG instead of PNG image"
+msgstr ""
+
+#: ../locale/scriptstrings/v.univar.sh_to_translate.c:1
+#: ../locale/scriptstrings/v.db.univar_to_translate.c:1
+#, fuzzy
+msgid ""
+"Calculates univariate statistics on selected table column for a GRASS vector "
+"map."
+msgstr "حساب إحصائيات المتغير الأحادى من خلايا ذات قيمة بالخريطة الراسترية"
+
+#: ../locale/scriptstrings/v.univar.sh_to_translate.c:3
+#: ../locale/scriptstrings/v.db.univar_to_translate.c:3
+msgid "Extended statistics (quartiles and 90th percentile)"
+msgstr ""
+
+#: ../locale/scriptstrings/v.univar.sh_to_translate.c:4
+#: ../locale/scriptstrings/v.db.univar_to_translate.c:4
+#, fuzzy
+msgid "Name of data table"
+msgstr "اسم الخريطة الراسترية الجديدة"
+
+#: ../locale/scriptstrings/v.univar.sh_to_translate.c:5
+#: ../locale/scriptstrings/v.db.univar_to_translate.c:5
+#, fuzzy
+msgid "Column on which to calculate statistics (must be numeric)"
+msgstr "<%s> اسم الملف المستخدم لل"
+
+#: ../locale/scriptstrings/v.univar.sh_to_translate.c:6
+#: ../locale/scriptstrings/v.db.univar_to_translate.c:6
+#, fuzzy
+msgid "Database/directory for table"
+msgstr "cat = %d لا يوجد تسجيل للخط"
+
+#: ../locale/scriptstrings/v.univar.sh_to_translate.c:7
+#: ../locale/scriptstrings/v.db.univar_to_translate.c:7
+#, fuzzy
+msgid "Database driver"
+msgstr ":اسم قاعدة البيانات"
+
+#: ../locale/scriptstrings/v.univar.sh_to_translate.c:8
+#: ../locale/scriptstrings/v.out.gpsbabel_to_translate.c:13
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:47
+#: ../locale/scriptstrings/v.db.univar_to_translate.c:8
+msgid "WHERE conditions of SQL statement without 'where' keyword"
+msgstr ""
+
+#: ../locale/scriptstrings/g.manual_to_translate.c:1
+#, fuzzy
+msgid "Display the HTML man pages of GRASS"
+msgstr "عدد الأعمدة"
+
+#: ../locale/scriptstrings/g.manual_to_translate.c:2
+#, fuzzy
+msgid "general, manual, help"
+msgstr "طباعة نوع الملف الراسترى فقط"
+
+#: ../locale/scriptstrings/g.manual_to_translate.c:3
+#, fuzzy
+msgid "Display index"
+msgstr "التوقيع ..."
+
+#: ../locale/scriptstrings/g.manual_to_translate.c:4
+msgid "Display as MAN text page instead of HTML page in browser"
+msgstr ""
+
+#: ../locale/scriptstrings/g.manual_to_translate.c:5
+#, fuzzy
+msgid "Manual entry to be displayed"
+msgstr "الخريطة الراسترية المطلوب تسجيلها"
+
+#: ../locale/scriptstrings/v.in.sites.all_to_translate.c:1
+#, fuzzy
+msgid ""
+"Converts all old GRASS < Ver5.7 sites maps in current mapset to vector maps."
+msgstr "تحويل خريطة راسترية إلى فيكتورية"
+
+#: ../locale/scriptstrings/v.in.sites.all_to_translate.c:2
+#, fuzzy
+msgid "sites, vector, import"
+msgstr "الملف الراسترى الطلوب إدخالة"
+
+#: ../locale/scriptstrings/v.in.sites.all_to_translate.c:3
+msgid "Run non-interactively"
+msgstr ""
+
+#: ../locale/scriptstrings/v.db.renamecol_to_translate.c:1
+#, fuzzy
+msgid ""
+"Renames a column in the attribute table connected to a given vector map."
+msgstr "اسم الخريطة الراسترية الموجودة"
+
+#: ../locale/scriptstrings/v.db.renamecol_to_translate.c:3
+#, fuzzy
+msgid "Vector map for which to rename attribute column"
+msgstr "عدم انشاء جدول الخواص"
+
+#: ../locale/scriptstrings/v.db.renamecol_to_translate.c:4
+#, fuzzy
+msgid "Layer where to rename column"
+msgstr "عدم انشاء جدول الخواص"
+
+#: ../locale/scriptstrings/v.db.renamecol_to_translate.c:5
+msgid "Old and new name of the column (old,new)"
+msgstr ""
+
+#: ../locale/scriptstrings/r.mask_to_translate.c:1
+msgid "Create a MASK for limiting raster operation"
+msgstr ""
+
+#: ../locale/scriptstrings/r.mask_to_translate.c:2
+#, fuzzy
+msgid "raster, mask"
+msgstr "الخريطة الراسترية الأساس"
+
+#: ../locale/scriptstrings/r.mask_to_translate.c:3
+#, fuzzy
+msgid "Raster map to use as MASK"
+msgstr "الخرائط الراسترية المطلوب قرائتها"
+
+#: ../locale/scriptstrings/r.mask_to_translate.c:4
+msgid "Category values to use for MASK (format: 1 2 3 thru 7 *)"
+msgstr ""
+
+#: ../locale/scriptstrings/r.mask_to_translate.c:5
+msgid "Create inverse MASK from specified 'maskcats' list"
+msgstr ""
+
+#: ../locale/scriptstrings/r.mask_to_translate.c:6
+#, fuzzy
+msgid "Overwrite existing MASK"
+msgstr "%s:لم يتم إنشاء الجدول"
+
+#: ../locale/scriptstrings/r.mask_to_translate.c:7
+msgid "Remove existing MASK (overrides other options)"
+msgstr ""
+
+#: ../locale/scriptstrings/v.out.gpsbabel_to_translate.c:1
+msgid ""
+"Exports a vector map to a GPS receiver or file format supported by GpsBabel."
+msgstr ""
+
+#: ../locale/scriptstrings/v.out.gpsbabel_to_translate.c:2
+#, fuzzy
+msgid "vector, export, GPS"
+msgstr "عدم انشاء جدول الخواص"
+
+#: ../locale/scriptstrings/v.out.gpsbabel_to_translate.c:3
+#, fuzzy
+msgid "Export as waypoints"
+msgstr "الخريطة الفيكتورية لنقاط البدء"
+
+#: ../locale/scriptstrings/v.out.gpsbabel_to_translate.c:4
+#, fuzzy
+msgid "Export as routes"
+msgstr "الخريطة الفيكتورية لنقاط البدء"
+
+#: ../locale/scriptstrings/v.out.gpsbabel_to_translate.c:5
+#, fuzzy
+msgid "Export as tracks"
+msgstr "الخريطة الفيكتورية لنقاط البدء"
+
+#: ../locale/scriptstrings/v.out.gpsbabel_to_translate.c:7
+#, fuzzy
+msgid "Feature type(s)"
+msgstr "نوع المظهر"
+
+#: ../locale/scriptstrings/v.out.gpsbabel_to_translate.c:8
+#, fuzzy
+msgid "Name for output file or GPS device"
+msgstr "اسم الملف المخرج"
+
+#: ../locale/scriptstrings/v.out.gpsbabel_to_translate.c:9
+#, fuzzy
+msgid "GpsBabel supported output format"
+msgstr "عرض الهيئات المدعمة والخروج"
+
+#: ../locale/scriptstrings/v.out.gpsbabel_to_translate.c:11
+#: ../locale/scriptstrings/v.dissolve_to_translate.c:6
+msgid ""
+"A single vector map can be connected to multiple database tables. This "
+"number determines which table to use."
+msgstr ""
+
+#: ../locale/scriptstrings/v.out.gpsbabel_to_translate.c:12
+#: ../locale/scriptstrings/v.out.gpsbabel_to_translate.c:15
+msgid "Subset"
+msgstr ""
+
+#: ../locale/scriptstrings/v.out.gpsbabel_to_translate.c:14
+msgid "Example: income < 1000 and inhab >= 10000"
+msgstr ""
+
+#: ../locale/scriptstrings/v.db.reconnect.all_to_translate.c:1
+#, fuzzy
+msgid "Reconnects vectors to a new database."
+msgstr "لم يتم حساب شبه مركز المساحة"
+
+#: ../locale/scriptstrings/v.db.reconnect.all_to_translate.c:3
+#, fuzzy
+msgid "Name of old database"
+msgstr "اسم الخريطة الراسترية الجديدة"
+
+#: ../locale/scriptstrings/v.db.reconnect.all_to_translate.c:4
+msgid ""
+"The database must be in form printed by v.db.connect -g, i.e. with "
+"substituted variables"
+msgstr ""
+
+#: ../locale/scriptstrings/v.db.reconnect.all_to_translate.c:5
+#, fuzzy
+msgid "Name of new database"
+msgstr "اسم الخريطة الراسترية الجديدة"
+
+#: ../locale/scriptstrings/v.db.reconnect.all_to_translate.c:6
+#, fuzzy
+msgid "Old schema"
+msgstr ":اسم قاعدة البيانات"
+
+#: ../locale/scriptstrings/v.db.reconnect.all_to_translate.c:7
+#, fuzzy
+msgid "New schema"
+msgstr ":اسم قاعدة البيانات"
+
+#: ../locale/scriptstrings/r.in.aster_to_translate.c:1
+msgid ""
+"Georeference, rectify and import Terra-ASTER imagery and relative DEM's "
+"using gdalwarp."
+msgstr ""
+
+#: ../locale/scriptstrings/r.in.aster_to_translate.c:2
+#: ../locale/scriptstrings/i.in.spotvgt_to_translate.c:2
+#, fuzzy
+msgid "raster, imagery, import"
+msgstr "الملف الراسترى الطلوب إدخالة"
+
+#: ../locale/scriptstrings/r.in.aster_to_translate.c:3
+msgid "Input ASTER image to be georeferenced & rectified"
+msgstr ""
+
+#: ../locale/scriptstrings/r.in.aster_to_translate.c:4
+msgid "ASTER imagery processing type (Level 1A, Level 1B, or relative DEM)"
+msgstr ""
+
+#: ../locale/scriptstrings/r.in.aster_to_translate.c:5
+msgid ""
+"L1A or L1B band to translate (1, 2, 3n, 3b, 4-14). Can only translate a "
+"single band"
+msgstr ""
+
+#: ../locale/scriptstrings/v.colors_to_translate.c:1
+msgid ""
+"Set color rules for features in a vector using a numeric attribute column."
+msgstr ""
+
+#: ../locale/scriptstrings/v.colors_to_translate.c:2
+#, fuzzy
+msgid "vector, color table"
+msgstr "الخريطة الراسترية المطلوب تسجيلها"
+
+#: ../locale/scriptstrings/v.colors_to_translate.c:4
+#, fuzzy
+msgid "Name of column containing numeric data"
+msgstr "اسم الخريطة الراسترية المحتوية على معلومات التكلفة لخلية الشبكة"
+
+#: ../locale/scriptstrings/v.colors_to_translate.c:5
+#, fuzzy
+msgid "Layer number of data column"
+msgstr "عدم انشاء جدول الخواص"
+
+#: ../locale/scriptstrings/v.colors_to_translate.c:6
+#, fuzzy
+msgid "Name of color column to populate"
+msgstr "اسم الخريطة المدخلة"
+
+#: ../locale/scriptstrings/v.colors_to_translate.c:8
+#, fuzzy
+msgid "Manually set range (min,max)"
+msgstr "min,max :المدى الصحيح"
+
+#: ../locale/scriptstrings/v.colors_to_translate.c:13
+#, fuzzy
+msgid "Path to rules file"
+msgstr "اسم الخريطة الراسترية الموجودة"
+
+#: ../locale/scriptstrings/v.colors_to_translate.c:15
+#, fuzzy
+msgid "Save placeholder raster map for use with d.legend"
+msgstr "اسم الخريطة الراسترية  للعرض كخلفية"
+
+#: ../locale/scriptstrings/db.out.ogr_to_translate.c:1
+#, fuzzy
+msgid "Exports attribute tables into various formats."
+msgstr "اسم الخريطة الراسترية الموجودة"
+
+#: ../locale/scriptstrings/db.out.ogr_to_translate.c:3
+#, fuzzy
+msgid "GRASS table name"
+msgstr "اسم الجدول"
+
+#: ../locale/scriptstrings/db.out.ogr_to_translate.c:4
+msgid "Table file to be exported or DB connection string"
+msgstr ""
+
+#: ../locale/scriptstrings/db.out.ogr_to_translate.c:5
+#, fuzzy
+msgid "Table format"
+msgstr "الخريطة المخرجة"
+
+#: ../locale/scriptstrings/db.out.ogr_to_translate.c:6
+#: ../locale/scriptstrings/db.in.ogr_to_translate.c:5
+#, fuzzy
+msgid "Name for output table"
+msgstr "اسم الملف المخرج"
+
+#: ../locale/scriptstrings/d.redraw_to_translate.c:1
+#, fuzzy
+msgid "Redraws the current display frame in the GRASS monitor"
+msgstr "خطا: لم يتم عرض الخريطة\n"
+
+#: ../locale/scriptstrings/d.redraw_to_translate.c:3
+#, fuzzy
+msgid "Redraw all frames"
+msgstr "طباعة مجموع المساحة"
+
+#: ../locale/scriptstrings/d.redraw_to_translate.c:4
+msgid "Do not preserve individual regions when redrawing all frames"
+msgstr ""
+
+#: ../locale/scriptstrings/d.slide.show_to_translate.c:1
+#, fuzzy
+msgid "Slide show of GRASS raster/vector maps."
+msgstr "اسم خريطة الراستر المخرجة"
+
+#: ../locale/scriptstrings/d.slide.show_to_translate.c:2
+#, fuzzy
+msgid "display, slideshow"
+msgstr "الملف الراسترى المدخل"
+
+#: ../locale/scriptstrings/d.slide.show_to_translate.c:3
+#, fuzzy
+msgid "Show vector maps rather than raster maps"
+msgstr "تحويل خريطة راسترية إلى فيكتورية"
+
+#: ../locale/scriptstrings/d.slide.show_to_translate.c:4
+msgid "Map prefix. Specify character(s) to view selected maps only"
+msgstr ""
+
+#: ../locale/scriptstrings/d.slide.show_to_translate.c:5
+msgid "Map number show across the monitor"
+msgstr ""
+
+#: ../locale/scriptstrings/d.slide.show_to_translate.c:6
+msgid "Map number show down the monitor"
+msgstr ""
+
+#: ../locale/scriptstrings/d.slide.show_to_translate.c:7
+msgid "Mapsets to use. Specify multiple mapsets comma separated"
+msgstr ""
+
+#: ../locale/scriptstrings/d.slide.show_to_translate.c:8
+#, fuzzy
+msgid "Number of seconds to pause between slides"
+msgstr "<%s> عدد مستويات الألوان المستخدمة فى"
+
+#: ../locale/scriptstrings/v.in.garmin_to_translate.c:1
+msgid ""
+"Download waypoints, routes, and tracks from a Garmin GPS receiver into a "
+"vector map."
+msgstr ""
+
+#: ../locale/scriptstrings/v.in.garmin_to_translate.c:2
+#: ../locale/scriptstrings/v.in.gpsbabel_to_translate.c:2
+#, fuzzy
+msgid "vector, import, GPS"
+msgstr "عدم انشاء جدول الخواص"
+
+#: ../locale/scriptstrings/v.in.garmin_to_translate.c:4
+msgid "Download Waypoints from GPS"
+msgstr ""
+
+#: ../locale/scriptstrings/v.in.garmin_to_translate.c:5
+msgid "Download Routes from GPS"
+msgstr ""
+
+#: ../locale/scriptstrings/v.in.garmin_to_translate.c:6
+msgid "Download Track from GPS"
+msgstr ""
+
+#: ../locale/scriptstrings/v.in.garmin_to_translate.c:7
+msgid "Force import of track or route data as points"
+msgstr ""
+
+#: ../locale/scriptstrings/v.in.garmin_to_translate.c:8
+msgid "Use gardump instead of gpstrans as the download program"
+msgstr ""
+
+#: ../locale/scriptstrings/v.in.garmin_to_translate.c:9
+msgid "Import track in 3D (gardump only)"
+msgstr ""
+
+#: ../locale/scriptstrings/v.in.garmin_to_translate.c:10
+#: ../locale/scriptstrings/v.in.gpsbabel_to_translate.c:8
+msgid "Do not attempt projection transform from WGS84"
+msgstr ""
+
+#: ../locale/scriptstrings/v.in.garmin_to_translate.c:11
+#: ../locale/scriptstrings/v.in.mapgen_to_translate.c:6
+#: ../locale/scriptstrings/v.in.gpsbabel_to_translate.c:10
+#, fuzzy
+msgid "Name for output vector map (omit for display to stdout)"
+msgstr "اسم  الملف المخرج"
+
+#: ../locale/scriptstrings/v.in.garmin_to_translate.c:12
+msgid "Port Garmin receiver is connected to"
+msgstr ""
+
+#: ../locale/scriptstrings/d.split.frame_to_translate.c:1
+#, fuzzy
+msgid "Split the display into subframes."
+msgstr "الخريطة الراسترية المطلوب تسجيلها"
+
+#: ../locale/scriptstrings/d.split.frame_to_translate.c:2
+#, fuzzy
+msgid "Number of subframes"
+msgstr "عدد الصفوف"
+
+#: ../locale/scriptstrings/d.split.frame_to_translate.c:3
+msgid "Split horizontally not vertically"
+msgstr ""
+
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:1
+#, fuzzy
+msgid "Displays thematic vector map"
+msgstr "اسم الخريطة الراسترية"
+
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:2
+#, fuzzy
+msgid "display, vector, thematic, legend"
+msgstr "الملف الراسترى المدخل"
+
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:3
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:44
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:48
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:51
+msgid "Files"
+msgstr ""
+
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:5
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:7
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:9
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:11
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:13
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:16
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:25
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:46
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:53
+msgid "Theme"
+msgstr ""
+
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:8
+#, fuzzy
+msgid "Name of attribute column to use for thematic display (must be numeric)"
+msgstr "<%s> اسم الملف المستخدم لل"
+
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:10
+#, fuzzy
+msgid "Type of thematic display"
+msgstr "اسم الخريطة الراسترية  للعرض كخلفية"
+
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:12
+msgid "Thematic divisions of data for display"
+msgstr ""
+
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:14
+msgid "Break points for custom breaks option"
+msgstr ""
+
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:15
+msgid "Separate values by spaces (0 10 20 30 ...)"
+msgstr ""
+
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:19
+#, fuzzy
+msgid "Vector point icon for point data"
+msgstr "قطع بيانات النقط العشرية"
+
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:21
+#, fuzzy
+msgid "Icon size for point data"
+msgstr "قطع بيانات النقط العشرية"
+
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:22
+msgid "Minimum icon size/line width for graduated points/lines)"
+msgstr ""
+
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:24
+msgid "Maximum icon size/line width for graduated points and lines"
+msgstr ""
+
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:26
+#, fuzzy
+msgid "Number of classes for interval theme (integer)"
+msgstr "عدد مرات تكرار المرشح"
+
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:28
+msgid "Color scheme for graduated color mapping"
+msgstr ""
+
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:29
+msgid "Select 'single_color' for graduated point/line display"
+msgstr ""
+
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:31
+msgid "Color for graduated points map"
+msgstr ""
+
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:32
+msgid "GRASS named color or R:G:B triplet. Set color scheme to single color"
+msgstr ""
+
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:34
+msgid "Color for graduated lines or point/area outlines"
+msgstr ""
+
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:35
+msgid "GRASS named color or R:G:B triplet. Set color scheme to single color."
+msgstr ""
+
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:37
+#, fuzzy
+msgid "Beginning color for custom color gradient"
+msgstr "استخدام احداثيات مركز الخريطة\n"
+
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:38
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:41
+#, fuzzy
+msgid "Must be expressed as R:G:B triplet"
+msgstr "استخدام احداثيات مركز الخريطة\n"
+
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:40
+#, fuzzy
+msgid "Ending color for custom color gradient"
+msgstr "استخدام احداثيات مركز الخريطة\n"
+
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:42
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:59
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:61
+#, fuzzy
+msgid "Misc"
+msgstr "مترى"
+
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:43
+msgid "Select x11 display monitor for legend"
+msgstr ""
+
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:45
+msgid "Save thematic map commands to group file for GIS Manager"
+msgstr ""
+
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:49
+msgid "Root for the name of psmap instruction files to be in current directory"
+msgstr ""
+
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:50
+msgid "If not set, no psmap instruction files will be created)"
+msgstr ""
+
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:52
+msgid "Name of group file where thematic map commands will be saved"
+msgstr ""
+
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:54
+msgid "Create graphic legend in x11 display monitor"
+msgstr ""
+
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:56
+msgid "Only draw fills (no outlines) for areas and points"
+msgstr ""
+
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:58
+msgid "Update color values to GRASSRGB column in attribute table"
+msgstr ""
+
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:60
+msgid "Output legend for GIS Manager (for scripting use only)"
+msgstr ""
+
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:62
+msgid "Use math notation brackets in legend"
+msgstr ""
+
+#: ../locale/scriptstrings/db.droptable_to_translate.c:1
+#, fuzzy
+msgid "Drops an attribute table."
+msgstr "عدم انشاء جدول الخواص"
+
+#: ../locale/scriptstrings/db.droptable_to_translate.c:4
+#, fuzzy
+msgid "Table to drop"
+msgstr "<%s> لم يمكن فتح"
+
+#: ../locale/scriptstrings/v.in.gns_to_translate.c:1
+#, fuzzy
+msgid ""
+"Imports US-NGA GEOnet Names Server (GNS) country files into a GRASS vector "
+"points map."
+msgstr "اسم الخريطة الراسترية المدخلة"
+
+#: ../locale/scriptstrings/v.in.gns_to_translate.c:2
+#: ../locale/scriptstrings/v.in.geonames_to_translate.c:2
+#, fuzzy
+msgid "vector, import, gazetteer"
+msgstr "عدم انشاء جدول الخواص"
+
+#: ../locale/scriptstrings/v.in.gns_to_translate.c:3
+msgid "Uncompressed GNS file from NGA (with .txt extension)"
+msgstr ""
+
+#: ../locale/scriptstrings/v.rast.stats_to_translate.c:1
+#, fuzzy
+msgid ""
+"Calculates univariate statistics from a raster map based on vector polygons "
+"and uploads statistics to new attribute columns."
+msgstr "حساب إحصائيات المتغير الأحادى من خلايا ذات قيمة بالخريطة الراسترية"
+
+#: ../locale/scriptstrings/v.rast.stats_to_translate.c:2
+#, fuzzy
+msgid "vector, raster, statistics"
+msgstr "عدم انشاء جدول الخواص"
+
+#: ../locale/scriptstrings/v.rast.stats_to_translate.c:3
+msgid "Continue if upload column(s) already exist"
+msgstr ""
+
+#: ../locale/scriptstrings/v.rast.stats_to_translate.c:5
+#, fuzzy
+msgid "Name of vector polygon map"
+msgstr "اسم الخريطة الراسترية"
+
+#: ../locale/scriptstrings/v.rast.stats_to_translate.c:7
+msgid ""
+"A single vector map can be connected to multiple database tables. This "
+"number determines which table to use"
+msgstr ""
+
+#: ../locale/scriptstrings/v.rast.stats_to_translate.c:8
+#, fuzzy
+msgid "Name of raster map to calculate statistics from"
+msgstr "اسم الخريطة الراسترية الناتجة"
+
+#: ../locale/scriptstrings/v.rast.stats_to_translate.c:9
+#, fuzzy
+msgid "Column prefix for new attribute columns"
+msgstr "عدم انشاء جدول الخواص"
+
+#: ../locale/scriptstrings/v.in.geonames_to_translate.c:1
+#, fuzzy
+msgid "Imports geonames.org country files into a GRASS vector points map."
+msgstr "اسم الخريطة الراسترية المدخلة"
+
+#: ../locale/scriptstrings/v.in.geonames_to_translate.c:3
+msgid "Uncompressed geonames file from (with .txt extension)"
+msgstr ""
+
+#: ../locale/scriptstrings/d.m_to_translate.c:1
+#, fuzzy
+msgid "Display manager for GRASS"
+msgstr "عدد الأعمدة"
+
+#: ../locale/scriptstrings/d.m_to_translate.c:2
+#, fuzzy
+msgid "Name of .dmrc settings file"
+msgstr "MAT-File(v4) اسم الملف"
+
+#: ../locale/scriptstrings/gis.m_to_translate.c:1
+#, fuzzy
+msgid "GIS manager for GRASS"
+msgstr "عدد الأعمدة"
+
+#: ../locale/scriptstrings/gis.m_to_translate.c:2
+#, fuzzy
+msgid "Name of GIS manager settings file (.grc)"
+msgstr "MAT-File(v4) اسم الملف"
+
+#: ../locale/scriptstrings/db.dropcol_to_translate.c:1
+#, fuzzy
+msgid "Drops a column from selected attribute table"
+msgstr "عدم انشاء جدول الخواص"
+
+#: ../locale/scriptstrings/db.dropcol_to_translate.c:4
+#, fuzzy
+msgid "Table from which to drop attribute column"
+msgstr "عدم انشاء جدول الخواص"
+
+#: ../locale/scriptstrings/db.dropcol_to_translate.c:5
+#: ../locale/scriptstrings/v.db.dropcol_to_translate.c:5
+#, fuzzy
+msgid "Name of the column"
+msgstr "عدد الأعمدة"
+
+#: ../locale/scriptstrings/r.out.xyz_to_translate.c:1
+msgid ""
+"Export a raster map to a text file as x,y,z values based on cell centers."
+msgstr ""
+
+#: ../locale/scriptstrings/d.resize_to_translate.c:1
+#, fuzzy
+msgid "Resizes active display monitor"
+msgstr "تقرير عن الراستر المدخلة والخروج"
+
+#: ../locale/scriptstrings/d.resize_to_translate.c:3
+msgid "New width for window"
+msgstr ""
+
+#: ../locale/scriptstrings/d.resize_to_translate.c:4
+msgid "New height for window"
+msgstr ""
+
+#: ../locale/scriptstrings/v.in.mapgen_to_translate.c:1
+msgid "Import Mapgen or Matlab-ASCII vector maps into GRASS."
+msgstr ""
+
+#: ../locale/scriptstrings/v.in.mapgen_to_translate.c:3
+#, fuzzy
+msgid "Input map is in Matlab format"
+msgstr "ملف المدخل"
+
+#: ../locale/scriptstrings/v.in.mapgen_to_translate.c:4
+msgid "Create a 3D vector points map from 3 column Matlab data"
+msgstr ""
+
+#: ../locale/scriptstrings/v.in.mapgen_to_translate.c:5
+#, fuzzy
+msgid "Name of input file in Mapgen/Matlab format"
+msgstr "اسم ملف التقرير"
+
+#: ../locale/scriptstrings/v.build.all_to_translate.c:1
+#, fuzzy
+msgid "Rebuilds topology on all vector maps in the current mapset."
+msgstr "%s لم يتم العثور على الخريطة الراسترية"
+
+#: ../locale/scriptstrings/r.univar.sh_to_translate.c:1
+#, fuzzy
+msgid "calculates univariate statistics from a GRASS raster map"
+msgstr "حساب إحصائيات المتغير الأحادى من خلايا ذات قيمة بالخريطة الراسترية"
+
+#: ../locale/scriptstrings/r.univar.sh_to_translate.c:3
+msgid "extended statistics (quartiles and percentile)"
+msgstr ""
+
+#: ../locale/scriptstrings/r.univar.sh_to_translate.c:5
+#, fuzzy
+msgid "Percentile to calculate (requires -e flag)"
+msgstr "اسم الخريطة الراسترية المدخلة"
+
+#: ../locale/scriptstrings/r.mapcalculator_to_translate.c:1
+msgid "Calculate new raster map from a r.mapcalc expression."
+msgstr ""
+
+#: ../locale/scriptstrings/r.mapcalculator_to_translate.c:2
+msgid "A"
+msgstr ""
+
+#: ../locale/scriptstrings/r.mapcalculator_to_translate.c:3
+msgid "B"
+msgstr ""
+
+#: ../locale/scriptstrings/r.mapcalculator_to_translate.c:4
+msgid "C"
+msgstr ""
+
+#: ../locale/scriptstrings/r.mapcalculator_to_translate.c:5
+msgid "D"
+msgstr ""
+
+#: ../locale/scriptstrings/r.mapcalculator_to_translate.c:6
+msgid "E"
+msgstr ""
+
+#: ../locale/scriptstrings/r.mapcalculator_to_translate.c:7
+msgid "F"
+msgstr ""
+
+#: ../locale/scriptstrings/r.mapcalculator_to_translate.c:8
+#: ../locale/scriptstrings/r3.mapcalculator_to_translate.c:8
+msgid "Formula (e.g. A-B or A*C+B)"
+msgstr ""
+
+#: ../locale/scriptstrings/r.mapcalculator_to_translate.c:10
+#: ../locale/scriptstrings/r3.mapcalculator_to_translate.c:10
+msgid "Show help"
+msgstr ""
+
+#: ../locale/scriptstrings/r.mapcalculator_to_translate.c:11
+msgid "Expert mode (enter a set of r.mapcalc expressions)"
+msgstr ""
+
+#: ../locale/scriptstrings/r.mapcalculator_to_translate.c:12
+#: ../locale/scriptstrings/r3.mapcalculator_to_translate.c:12
+#, fuzzy
+msgid "Do not overwrite existing map"
+msgstr "%s:لم يتم إنشاء الجدول"
+
+#: ../locale/scriptstrings/i.landsat.rgb_to_translate.c:1
+msgid "Performs auto-balancing of colors for LANDSAT images."
+msgstr ""
+
+#: ../locale/scriptstrings/i.landsat.rgb_to_translate.c:2
+#, fuzzy
+msgid "raster, imagery, colors"
+msgstr "الملف الراسترى الطلوب إدخالة"
+
+#: ../locale/scriptstrings/i.landsat.rgb_to_translate.c:3
+msgid "LANDSAT red channel"
+msgstr ""
+
+#: ../locale/scriptstrings/i.landsat.rgb_to_translate.c:4
+msgid "LANDSAT green channel"
+msgstr ""
+
+#: ../locale/scriptstrings/i.landsat.rgb_to_translate.c:5
+msgid "LANDSAT blue channel"
+msgstr ""
+
+#: ../locale/scriptstrings/i.landsat.rgb_to_translate.c:6
+msgid "Cropping intensity (upper brightness level)"
+msgstr ""
+
+#: ../locale/scriptstrings/i.landsat.rgb_to_translate.c:7
+msgid "Extend colors to full range of data on each channel"
+msgstr ""
+
+#: ../locale/scriptstrings/i.landsat.rgb_to_translate.c:8
+msgid "Preserve relative colors, adjust brightness only"
+msgstr ""
+
+#: ../locale/scriptstrings/i.landsat.rgb_to_translate.c:9
+#, fuzzy
+msgid "Reset to standard color range"
+msgstr "بقاء جدول الألوان الحالى "
+
+#: ../locale/scriptstrings/d.monsize_to_translate.c:1
+msgid "Selects/starts specified monitor at specified size"
+msgstr ""
+
+#: ../locale/scriptstrings/d.monsize_to_translate.c:3
+msgid "Display monitor to start"
+msgstr ""
+
+#: ../locale/scriptstrings/d.monsize_to_translate.c:4
+#, fuzzy
+msgid "Width in pixels of new display monitor"
+msgstr "تقرير عن الراستر المدخلة والخروج"
+
+#: ../locale/scriptstrings/d.monsize_to_translate.c:5
+#, fuzzy
+msgid "Height in pixels of new display monitor"
+msgstr "تقرير عن الراستر المدخلة والخروج"
+
+#: ../locale/scriptstrings/d.shadedmap_to_translate.c:1
+msgid "Drapes a color raster over a shaded relief map using d.his"
+msgstr ""
+
+#: ../locale/scriptstrings/d.shadedmap_to_translate.c:2
+#, fuzzy
+msgid "Name of shaded relief or aspect map"
+msgstr "اسم ملف الإنحدار الراسترى"
+
+#: ../locale/scriptstrings/d.shadedmap_to_translate.c:3
+#, fuzzy
+msgid "Name of raster to drape over relief map"
+msgstr "اسم الخريطة الراسترية"
+
+#: ../locale/scriptstrings/d.shadedmap_to_translate.c:4
+#, fuzzy
+msgid "Percent to brighten"
+msgstr "مقلوب فرق العزم"
+
+#: ../locale/scriptstrings/v.in.gpsbabel_to_translate.c:1
+msgid ""
+"Import waypoints, routes, and tracks from a GPS receiver or GPS download "
+"file into a vector map."
+msgstr ""
+
+#: ../locale/scriptstrings/v.in.gpsbabel_to_translate.c:4
+#, fuzzy
+msgid "Import waypoints"
+msgstr "الخريطة الفيكتورية لنقاط البدء"
+
+#: ../locale/scriptstrings/v.in.gpsbabel_to_translate.c:5
+#, fuzzy
+msgid "Import routes"
+msgstr "الخريطة الفيكتورية لنقاط البدء"
+
+#: ../locale/scriptstrings/v.in.gpsbabel_to_translate.c:6
+#, fuzzy
+msgid "Import track"
+msgstr "الخريطة الفيكتورية لنقاط البدء"
+
+#: ../locale/scriptstrings/v.in.gpsbabel_to_translate.c:7
+msgid "Force vertices of track or route data as points"
+msgstr ""
+
+#: ../locale/scriptstrings/v.in.gpsbabel_to_translate.c:9
+#, fuzzy
+msgid "Device or file used to import data"
+msgstr "الملف الراسترى الطلوب إدخالة"
+
+#: ../locale/scriptstrings/v.in.gpsbabel_to_translate.c:11
+msgid "Format of GPS input data (use gpsbabel supported formats)"
+msgstr ""
+
+#: ../locale/scriptstrings/v.in.gpsbabel_to_translate.c:12
+msgid ""
+"Projection of input data (PROJ.4 style), if not set Lat/Lon WGS84 is assumed"
+msgstr ""
+
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:1
+msgid "Downloads and imports data from WMS servers."
+msgstr ""
+
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:2
+msgid "wms"
+msgstr ""
+
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:4
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:8
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:17
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:21
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:23
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:25
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:27
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:29
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:31
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:33
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:35
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:38
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:49
+#, fuzzy
+msgid "Request"
+msgstr "خروج"
+
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:5
+msgid "Skip to downloading (to resume downloads faster)"
+msgstr ""
+
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:6
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:10
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:40
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:42
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:44
+msgid "Download"
+msgstr ""
+
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:7
+msgid "Don't request transparent data"
+msgstr ""
+
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:9
+msgid "Clean existing data out of download directory"
+msgstr ""
+
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:12
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:14
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:19
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:46
+#, fuzzy
+msgid "Import"
+msgstr "الخريطة الفيكتورية لنقاط البدء"
+
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:13
+msgid "Don't reproject the data, just patch it"
+msgstr ""
+
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:15
+msgid "Use GET method instead of POST data method"
+msgstr ""
+
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:16
+msgid "This may be needed to connect to servers which lack POST capability"
+msgstr ""
+
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:20
+#, fuzzy
+msgid "Mapserver to request data from"
+msgstr "لم يمكن اختيار البيانات من الجدول"
+
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:22
+#, fuzzy
+msgid "Layers to request from map server"
+msgstr "طريقة الاستيفاء المستخدمة"
+
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:24
+#, fuzzy
+msgid "Styles to request from map server"
+msgstr "طريقة الاستيفاء المستخدمة"
+
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:26
+#, fuzzy
+msgid "Source projection to request from server"
+msgstr "طريقة الاستيفاء المستخدمة"
+
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:28
+#, fuzzy
+msgid "Image format requested from the server"
+msgstr "طريقة الاستيفاء المستخدمة"
+
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:30
+msgid "Addition query options for server"
+msgstr ""
+
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:32
+#, fuzzy
+msgid "Maximum columns to request at a time"
+msgstr "المسافة العظمى بين النقاط بوحدات الخريطة"
+
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:34
+#, fuzzy
+msgid "Maximum rows to request at a time"
+msgstr "المسافة العظمى بين النقاط بوحدات الخريطة"
+
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:36
+msgid "Additional options for r.tileset"
+msgstr ""
+
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:37
+#, fuzzy
+msgid "Named region to request data for. Current region used if omitted"
+msgstr "(دقة الوضوح عبر التضاريس (الأساس : دقة وضوح المنطقة الحالية"
+
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:39
+msgid "Folder to save downloaded data to"
+msgstr ""
+
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:41
+msgid "Additional options for wget"
+msgstr ""
+
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:43
+msgid "Additional options for curl"
+msgstr ""
+
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:45
+#, fuzzy
+msgid "Reprojection method to use"
+msgstr "طريقة الاستيفاء المستخدمة"
+
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:47
+msgid "Filename to save capabilities XML file to"
+msgstr ""
+
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:48
+#, fuzzy
+msgid "Requires list available layers flag"
+msgstr "طباعة الجداول والخروج"
+
+#: ../locale/scriptstrings/r.colors.stddev_to_translate.c:1
+msgid "Set color rules based on stddev from a map's mean value."
+msgstr ""
+
+#: ../locale/scriptstrings/r.colors.stddev_to_translate.c:4
+#, fuzzy
+msgid "Color using standard deviation bands"
+msgstr "الإنحراف المعيارى"
+
+#: ../locale/scriptstrings/r.colors.stddev_to_translate.c:5
+msgid "Force center at zero"
+msgstr ""
+
+#: ../locale/scriptstrings/r.fillnulls_to_translate.c:1
+msgid ""
+"Fills no-data areas in raster maps using v.surf.rst splines interpolation"
+msgstr ""
+
+#: ../locale/scriptstrings/r.fillnulls_to_translate.c:2
+#, fuzzy
+msgid "raster, elevation, interpolation"
+msgstr "عدد نقاط الإستيفاء"
+
+#: ../locale/scriptstrings/r.fillnulls_to_translate.c:3
+#, fuzzy
+msgid "Raster map in which to fill nulls"
+msgstr "اسم لخريطة الراسترية انسخ جدول ألوانها"
+
+#: ../locale/scriptstrings/r.fillnulls_to_translate.c:4
+msgid ""
+"Output raster map with nulls filled by interpolation from surrounding values"
+msgstr ""
+
+#: ../locale/scriptstrings/r.fillnulls_to_translate.c:5
+#, fuzzy
+msgid "Spline tension parameter"
+msgstr "تنعيم الأركان"
+
+#: ../locale/scriptstrings/r.fillnulls_to_translate.c:6
+#, fuzzy
+msgid "Spline smoothing parameter"
+msgstr "تنعيم الأركان"
+
+#: ../locale/scriptstrings/v.dissolve_to_translate.c:1
+msgid ""
+"Dissolves boundaries between adjacent areas sharing a common category number "
+"or attribute."
+msgstr ""
+
+#: ../locale/scriptstrings/v.dissolve_to_translate.c:2
+#, fuzzy
+msgid "vector, area, dissolve"
+msgstr "عدم انشاء جدول الخواص"
+
+#: ../locale/scriptstrings/v.dissolve_to_translate.c:5
+msgid "Layer number. If -1, all layers are extracted."
+msgstr ""
+
+#: ../locale/scriptstrings/v.dissolve_to_translate.c:7
+#, fuzzy
+msgid "Name of column used to dissolve common boundaries"
+msgstr "<%s> اسم الملف المستخدم لل"
+
+#: ../locale/scriptstrings/v.centroids_to_translate.c:1
+#, fuzzy
+msgid "Adds missing centroids to closed boundaries."
+msgstr "لم يتم تحديث الحدود"
+
+#: ../locale/scriptstrings/v.centroids_to_translate.c:2
+#, fuzzy
+msgid "vector, centroid, area"
+msgstr "عدم انشاء جدول الخواص"
+
+#: ../locale/scriptstrings/v.centroids_to_translate.c:5
+#, fuzzy
+msgid "Action to be taken"
+msgstr "الملف الراسترى الطلوب إدخالة"
+
+#: ../locale/scriptstrings/v.centroids_to_translate.c:7
+#, fuzzy
+msgid "Category number starting value"
+msgstr "اسم الخريطة الراسترية"
+
+#: ../locale/scriptstrings/r3.mapcalculator_to_translate.c:1
+msgid "Calculates new grid3D volume from r3.mapcalc expression."
+msgstr ""
+
+#: ../locale/scriptstrings/r3.mapcalculator_to_translate.c:2
+#, fuzzy
+msgid "A (grid3D file)"
+msgstr "اسم ااملف المخرج"
+
+#: ../locale/scriptstrings/r3.mapcalculator_to_translate.c:3
+#, fuzzy
+msgid "B (grid3D file)"
+msgstr "اسم ااملف المخرج"
+
+#: ../locale/scriptstrings/r3.mapcalculator_to_translate.c:4
+#, fuzzy
+msgid "C (grid3D file)"
+msgstr "اسم ااملف المخرج"
+
+#: ../locale/scriptstrings/r3.mapcalculator_to_translate.c:5
+#, fuzzy
+msgid "D (grid3D file)"
+msgstr "اسم ااملف المخرج"
+
+#: ../locale/scriptstrings/r3.mapcalculator_to_translate.c:6
+#, fuzzy
+msgid "E (grid3D file)"
+msgstr "اسم ااملف المخرج"
+
+#: ../locale/scriptstrings/r3.mapcalculator_to_translate.c:7
+#, fuzzy
+msgid "F (grid3D file)"
+msgstr "اسم ااملف المخرج"
+
+#: ../locale/scriptstrings/r3.mapcalculator_to_translate.c:9
+#, fuzzy
+msgid "Name for output grid3D volume"
+msgstr "اسم الملف المخرج"
+
+#: ../locale/scriptstrings/r3.mapcalculator_to_translate.c:11
+msgid "Expert mode (enter a set of r3.mapcalc expressions)"
+msgstr ""
+
+#: ../locale/scriptstrings/v.db.droptable_to_translate.c:1
+#, fuzzy
+msgid "Removes existing attribute table of a vector map."
+msgstr "اسم الخريطة الراسترية الموجودة"
+
+#: ../locale/scriptstrings/v.db.droptable_to_translate.c:3
+msgid "Force removal (required for actual deletion of table)"
+msgstr ""
+
+#: ../locale/scriptstrings/v.db.droptable_to_translate.c:4
+#, fuzzy
+msgid "Vector map from which to remove attribute table"
+msgstr "عدم انشاء جدول الخواص"
+
+#: ../locale/scriptstrings/v.db.droptable_to_translate.c:5
+#, fuzzy
+msgid "Name of existing attribute table (default: vector map name)"
+msgstr "اسم الخريطة الراسترية الموجودة"
+
+#: ../locale/scriptstrings/v.db.droptable_to_translate.c:6
+#, fuzzy
+msgid "Layer from which to drop linked attribute table"
+msgstr "اسم لخريطة الراسترية انسخ جدول ألوانها"
+
+#: ../locale/scriptstrings/v.db.join_to_translate.c:1
+#, fuzzy
+msgid "Allows to join a table to a vector map table."
+msgstr "اسم الخريطة الراسترية الموجودة"
+
+#: ../locale/scriptstrings/v.db.join_to_translate.c:3
+#, fuzzy
+msgid "Vector map to which to join other table"
+msgstr "عدم انشاء جدول الخواص"
+
+#: ../locale/scriptstrings/v.db.join_to_translate.c:4
+#, fuzzy
+msgid "Layer where to join"
+msgstr "عدم انشاء جدول الخواص"
+
+#: ../locale/scriptstrings/v.db.join_to_translate.c:5
+#, fuzzy
+msgid "Join column in map table"
+msgstr "نوع غير معروف"
+
+#: ../locale/scriptstrings/v.db.join_to_translate.c:6
+#, fuzzy
+msgid "Other table name"
+msgstr "إسم الجدول المخرج"
+
+#: ../locale/scriptstrings/v.db.join_to_translate.c:7
+#, fuzzy
+msgid "Join column in other table"
+msgstr "نوع غير معروف"
+
+#: ../locale/scriptstrings/i.tasscap_to_translate.c:1
+msgid "Tasseled Cap (Kauth Thomas) transformation for LANDSAT-TM data"
+msgstr ""
+
+#: ../locale/scriptstrings/i.tasscap_to_translate.c:2
+#, fuzzy
+msgid "raster, imagery"
+msgstr "الملف الراسترى المدخل"
+
+#: ../locale/scriptstrings/i.tasscap_to_translate.c:3
+msgid "use transformation rules for LANDSAT-4"
+msgstr ""
+
+#: ../locale/scriptstrings/i.tasscap_to_translate.c:4
+msgid "use transformation rules for LANDSAT-5"
+msgstr ""
+
+#: ../locale/scriptstrings/i.tasscap_to_translate.c:5
+msgid "use transformation rules for LANDSAT-7"
+msgstr ""
+
+#: ../locale/scriptstrings/i.tasscap_to_translate.c:6
+#, fuzzy
+msgid "raster input map (LANDSAT channel 1)"
+msgstr "الخرائط الراسترية المدخلة"
+
+#: ../locale/scriptstrings/i.tasscap_to_translate.c:7
+#, fuzzy
+msgid "raster input map (LANDSAT channel 2)"
+msgstr "الخرائط الراسترية المدخلة"
+
+#: ../locale/scriptstrings/i.tasscap_to_translate.c:8
+#, fuzzy
+msgid "raster input map (LANDSAT channel 3)"
+msgstr "الخرائط الراسترية المدخلة"
+
+#: ../locale/scriptstrings/i.tasscap_to_translate.c:9
+#, fuzzy
+msgid "raster input map (LANDSAT channel 4)"
+msgstr "الخرائط الراسترية المدخلة"
+
+#: ../locale/scriptstrings/i.tasscap_to_translate.c:10
+#, fuzzy
+msgid "raster input map (LANDSAT channel 5)"
+msgstr "الخرائط الراسترية المدخلة"
+
+#: ../locale/scriptstrings/i.tasscap_to_translate.c:11
+#, fuzzy
+msgid "raster input map (LANDSAT channel 7)"
+msgstr "الخرائط الراسترية المدخلة"
+
+#: ../locale/scriptstrings/i.tasscap_to_translate.c:12
+#, fuzzy
+msgid "raster output TC maps prefix"
+msgstr "الملف الراسترى المخرج"
+
+#: ../locale/scriptstrings/v.db.addtable_to_translate.c:1
+#, fuzzy
+msgid ""
+"Creates and connects a new attribute table to a given layer of an existing "
+"vector map."
+msgstr "اسم الخريطة الراسترية الموجودة"
+
+#: ../locale/scriptstrings/v.db.addtable_to_translate.c:3
+#, fuzzy
+msgid "Vector map for which to add new attribute table"
+msgstr "عدم انشاء جدول الخواص"
+
+#: ../locale/scriptstrings/v.db.addtable_to_translate.c:4
+#, fuzzy
+msgid "Name of new attribute table (default: vector map name)"
+msgstr "اسم الخريطة الراسترية الموجودة"
+
+#: ../locale/scriptstrings/v.db.addtable_to_translate.c:5
+#, fuzzy
+msgid "Layer where to add new attribute table"
+msgstr "عدم انشاء جدول الخواص"
+
+#: ../locale/scriptstrings/v.db.addtable_to_translate.c:6
+#: ../locale/scriptstrings/v.db.addcol_to_translate.c:5
+msgid ""
+"Name and type of the new column(s) (types depend on database backend, but "
+"all support VARCHAR(), INT, DOUBLE PRECISION and DATE)"
+msgstr ""
+
+#: ../locale/scriptstrings/v.in.wfs_to_translate.c:1
+msgid "Import GetFeature from WFS"
+msgstr ""
+
+#: ../locale/scriptstrings/v.in.wfs_to_translate.c:2
+msgid "GetFeature URL starting with http"
+msgstr ""
+
+#: ../locale/scriptstrings/v.in.wfs_to_translate.c:3
+#, fuzzy
+msgid "Vector output map"
+msgstr "اسم الخريطة المخرجة"
+
+#: ../locale/scriptstrings/r.shaded.relief_to_translate.c:1
+#, fuzzy
+msgid "Creates shaded relief map from an elevation map (DEM)."
+msgstr "ln(a/tan(beta)) تعيين الدليل الطبوغرافى من خريطة الإرتفاعات"
+
+#: ../locale/scriptstrings/r.shaded.relief_to_translate.c:4
+#, fuzzy
+msgid "Output shaded relief map name"
+msgstr "سم مشغّل الإخراج"
+
+#: ../locale/scriptstrings/r.shaded.relief_to_translate.c:5
+#, fuzzy
+msgid "Altitude of the sun in degrees above the horizon"
+msgstr "A:ارتفاع الشمس فوق الأفق, درجات"
+
+#: ../locale/scriptstrings/r.shaded.relief_to_translate.c:6
+#, fuzzy
+msgid "Azimuth of the sun in degrees to the east of north"
+msgstr "A: زاوية الشمس مقاسة من الشمال, درجات"
+
+#: ../locale/scriptstrings/r.shaded.relief_to_translate.c:7
+#, fuzzy
+msgid "Factor for exaggerating relief"
+msgstr "طريقة تقرير الإنحدار"
+
+#: ../locale/scriptstrings/r.shaded.relief_to_translate.c:8
+#, fuzzy
+msgid "Scale factor for converting horizontal units to elevation units"
+msgstr "عامل المضاعفة لتحويل وحدات الارتفاعات الي امتار"
+
+#: ../locale/scriptstrings/r.shaded.relief_to_translate.c:9
+msgid ""
+"Set scaling factor (applies to lat./long. locations only, none: scale=1)"
+msgstr ""
+
+#: ../locale/scriptstrings/d.out.png_to_translate.c:1
+msgid "Saves active display monitor to PNG file in home directory"
+msgstr ""
+
+#: ../locale/scriptstrings/d.out.png_to_translate.c:3
+#, fuzzy
+msgid "Name of PNG file"
+msgstr "اسم ملف المرشح"
+
+#: ../locale/scriptstrings/d.out.png_to_translate.c:4
+msgid "Resolution of output file (single=1, double=2, quad=4)"
+msgstr ""
+
+#: ../locale/scriptstrings/i.oif_to_translate.c:1
+msgid "Calculates Optimum-Index-Factor table for LANDSAT TM bands 1-5, & 7"
+msgstr ""
+
+#: ../locale/scriptstrings/i.oif_to_translate.c:2
+#, fuzzy
+msgid "raster, imagery, statistics"
+msgstr "الملف الراسترى الطلوب إدخالة"
+
+#: ../locale/scriptstrings/i.oif_to_translate.c:3
+msgid "LANDSAT TM band 1."
+msgstr ""
+
+#: ../locale/scriptstrings/i.oif_to_translate.c:4
+msgid "LANDSAT TM band 2."
+msgstr ""
+
+#: ../locale/scriptstrings/i.oif_to_translate.c:5
+msgid "LANDSAT TM band 3."
+msgstr ""
+
+#: ../locale/scriptstrings/i.oif_to_translate.c:6
+msgid "LANDSAT TM band 4."
+msgstr ""
+
+#: ../locale/scriptstrings/i.oif_to_translate.c:7
+msgid "LANDSAT TM band 5."
+msgstr ""
+
+#: ../locale/scriptstrings/i.oif_to_translate.c:8
+msgid "LANDSAT TM band 7."
+msgstr ""
+
+#: ../locale/scriptstrings/r.li.setup_to_translate.c:1
+#, fuzzy
+msgid "Configuration editor for r.li.'index'"
+msgstr "اسم ااملف المخرج"
+
+#: ../locale/scriptstrings/r.li.setup_to_translate.c:2
+#, fuzzy
+msgid "raster, landscape structure analysis"
+msgstr "عدم انشاء جدول الخواص"
+
+#: ../locale/scriptstrings/db.in.ogr_to_translate.c:1
+#, fuzzy
+msgid "Imports attribute tables in various formats."
+msgstr "اسم الخريطة الراسترية الموجودة"
+
+#: ../locale/scriptstrings/db.in.ogr_to_translate.c:3
+msgid "Table file to be imported or DB connection string"
+msgstr ""
+
+#: ../locale/scriptstrings/db.in.ogr_to_translate.c:4
+msgid "Table name of SQL DB table"
+msgstr ""
+
+#: ../locale/scriptstrings/db.in.ogr_to_translate.c:6
+#, fuzzy
+msgid "Name for auto-generated unique key column"
+msgstr "<%s> اسم الملف المستخدم لل"
+
+#: ../locale/scriptstrings/d.rast.edit_to_translate.c:5
+#, fuzzy
+msgid "Name of aspect raster map"
+msgstr "اسم الخريطة الراسترية"
+
+#: ../locale/scriptstrings/d.rast.edit_to_translate.c:6
+#, fuzzy
+msgid "Width of display canvas"
+msgstr "تقرير عن الراستر المدخلة والخروج"
+
+#: ../locale/scriptstrings/d.rast.edit_to_translate.c:7
+#, fuzzy
+msgid "Height of display canvas"
+msgstr "تقرير عن الراستر المدخلة والخروج"
+
+#: ../locale/scriptstrings/d.rast.edit_to_translate.c:8
+#, fuzzy
+msgid "Minimum size of each cell"
+msgstr "مستوى الكنتور الأصغر"
+
+#: ../locale/scriptstrings/d.rast.edit_to_translate.c:9
+#, fuzzy
+msgid "Maximum number of rows to load"
+msgstr ""
+"\n"
+"\n"
+"%d :عدد النقاط\n"
+
+#: ../locale/scriptstrings/d.rast.edit_to_translate.c:10
+#, fuzzy
+msgid "Maximum number of columns to load"
+msgstr ""
+"\n"
+"\n"
+"%d :عدد النقاط\n"
+
+#: ../locale/scriptstrings/v.db.dropcol_to_translate.c:1
+#, fuzzy
+msgid ""
+"Drops a column from the attribute table connected to a given vector map."
+msgstr "اسم الخريطة الراسترية الموجودة"
+
+#: ../locale/scriptstrings/v.db.dropcol_to_translate.c:3
+#, fuzzy
+msgid "Vector map for which to drop attribute column"
+msgstr "عدم انشاء جدول الخواص"
+
+#: ../locale/scriptstrings/v.db.dropcol_to_translate.c:4
+#, fuzzy
+msgid "Layer where to drop column"
+msgstr "عدم انشاء جدول الخواص"
+
+#: ../locale/scriptstrings/d.polar_to_translate.c:1
+msgid "Draws polar diagram of angle map such as aspect or flow directions"
+msgstr ""
+
+#: ../locale/scriptstrings/d.polar_to_translate.c:3
+#, fuzzy
+msgid "Name of raster angle map"
+msgstr "اسم الخريطة الراسترية"
+
+#: ../locale/scriptstrings/d.polar_to_translate.c:4
+msgid "Pixel value to be interpreted as undefined (different from NULL)"
+msgstr ""
+
+#: ../locale/scriptstrings/d.polar_to_translate.c:5
+#, fuzzy
+msgid "Name of optional EPS output file"
+msgstr "اسم الملف المخرج"
+
+#: ../locale/scriptstrings/d.polar_to_translate.c:6
+msgid "Plot using Xgraph"
+msgstr ""
+
+#: ../locale/scriptstrings/i.in.spotvgt_to_translate.c:1
+#, fuzzy
+msgid "Import of SPOT VGT NDVI file into a raster map"
+msgstr "ادخال ملف راسترى ثنائى كطبقة خريطة راسترية جراسية"
+
+#: ../locale/scriptstrings/i.in.spotvgt_to_translate.c:3
+msgid "also import quality map (SM status map layer) and filter NDVI map"
+msgstr ""
+
+#: ../locale/scriptstrings/i.in.spotvgt_to_translate.c:4
+msgid "existing SPOT VGT NDVI HDF file (0001_NDV.HDF)"
+msgstr ""
+
+#: ../locale/scriptstrings/v.db.addcol_to_translate.c:1
+#, fuzzy
+msgid ""
+"Adds one or more columns to the attribute table connected to a given vector "
+"map."
+msgstr "اسم الخريطة الراسترية الموجودة"
+
+#: ../locale/scriptstrings/v.db.addcol_to_translate.c:3
+#, fuzzy
+msgid "Vector map for which to edit attribute table"
+msgstr "عدم انشاء جدول الخواص"
+
+#: ../locale/scriptstrings/v.db.addcol_to_translate.c:4
+#, fuzzy
+msgid "Layer where to add column"
+msgstr "عدم انشاء جدول الخواص"
+
+#: ../locale/scriptstrings/d.mvmon_to_translate.c:1
+#, fuzzy
+msgid "Moves displayed maps to another monitor"
+msgstr "اختيار الخط الذى سيعرض به النص على الشاشة"
+
+#: ../locale/scriptstrings/d.mvmon_to_translate.c:3
+msgid "clear target monitor before moving"
+msgstr ""
+
+#: ../locale/scriptstrings/d.mvmon_to_translate.c:4
+msgid "stay with source monitor"
+msgstr ""
+
+#: ../locale/scriptstrings/d.mvmon_to_translate.c:5
+msgid "kill source monitor after moving"
+msgstr ""
+
+#: ../locale/scriptstrings/d.mvmon_to_translate.c:6
+#, fuzzy
+msgid "Target monitor"
+msgstr "الخريطة الفيكتورية لنقاط البدء"
+
+#: ../locale/scriptstrings/d.mvmon_to_translate.c:7
+#, fuzzy
+msgid "Source monitor"
+msgstr "الخريطة الفيكتورية لنقاط البدء"
+
 #: ../sites/s.out.ascii/main.c:47 ../sites/s.in.ascii/main.c:50
 msgid "sites"
 msgstr ""
@@ -26776,6 +29086,11 @@ msgstr "[%s]لم يتم فتح ملف الخلية ل "
 #: ../imagery/i.smap/shapiro/read_sig.c:27
 #, fuzzy, c-format
 msgid "Signature file <%s> is invalid"
+msgstr "غير موجود <%s>الملف للمنظر ثلاثى الأبعاد "
+
+#: ../imagery/i.smap/shapiro/read_sig.c:30
+#, fuzzy, c-format
+msgid "Signature file <%s> is empty"
 msgstr "غير موجود <%s>الملف للمنظر ثلاثى الأبعاد "
 
 #: ../imagery/i.smap/shapiro/parse.c:21 ../imagery/i.maxlik/main.c:79
@@ -28713,1071 +31028,63 @@ msgid "Can't mark another point.  Only %d points allowed.  Sorry."
 msgstr ""
 
 #, fuzzy
-#~ msgid "GIS manager for GRASS"
-#~ msgstr "عدد الأعمدة"
-
-#, fuzzy
-#~ msgid "Name of GIS manager settings file (.grc)"
-#~ msgstr "MAT-File(v4) اسم الملف"
-
-#, fuzzy
-#~ msgid "Display manager for GRASS"
-#~ msgstr "عدد الأعمدة"
-
-#, fuzzy
-#~ msgid "Name of .dmrc settings file"
-#~ msgstr "MAT-File(v4) اسم الملف"
-
-#, fuzzy
-#~ msgid "Configuration editor for r.li.'index'"
-#~ msgstr "اسم ااملف المخرج"
-
-#, fuzzy
-#~ msgid "raster, landscape structure analysis"
-#~ msgstr "عدم انشاء جدول الخواص"
-
-#, fuzzy
-#~ msgid "display, diagram"
-#~ msgstr "الملف الراسترى المدخل"
-
-#, fuzzy
-#~ msgid "raster input map"
-#~ msgstr "اسم الراستر المدخل"
-
-#, fuzzy
-#~ msgid "Width in pixels of new display monitor"
-#~ msgstr "تقرير عن الراستر المدخلة والخروج"
-
-#, fuzzy
-#~ msgid "Height in pixels of new display monitor"
-#~ msgstr "تقرير عن الراستر المدخلة والخروج"
-
-#, fuzzy
-#~ msgid "Moves displayed maps to another monitor"
-#~ msgstr "اختيار الخط الذى سيعرض به النص على الشاشة"
-
-#, fuzzy
-#~ msgid "Target monitor"
-#~ msgstr "الخريطة الفيكتورية لنقاط البدء"
-
-#, fuzzy
-#~ msgid "display, export, GPS"
-#~ msgstr "الملف الراسترى المدخل"
-
-#, fuzzy
-#~ msgid "display, export"
-#~ msgstr "الملف الراسترى المدخل"
-
-#, fuzzy
-#~ msgid "Name of PNG file"
-#~ msgstr "اسم ملف المرشح"
-
-#, fuzzy
-#~ msgid "Saves the contents of the active display monitor to a graphics file."
-#~ msgstr "اختيار الخط الذى سيعرض به النص على الشاشة"
-
-#, fuzzy
-#~ msgid "Name for output file (do NOT add extension)"
-#~ msgstr "اسم ملف التقرير"
-
-#, fuzzy
-#~ msgid "Images"
-#~ msgstr "ملف المدخل"
-
-#, fuzzy
-#~ msgid "Compression for PNG files"
-#~ msgstr "اسم ملف المرشح"
-
-#, fuzzy
-#~ msgid "Paper size for PostScript output"
-#~ msgstr "الملف الراسترى المخرج"
-
-#, fuzzy
-#~ msgid "PostScript"
-#~ msgstr "الملف الراسترى المخرج"
-
-#, fuzzy
-#~ msgid "Set paper orientation to landscape (for PostScript output)"
-#~ msgstr "الملف الراسترى المخرج"
-
-#, fuzzy
-#~ msgid "Do not crop away margins"
-#~ msgstr "لم يتم نسخ الجدول"
-
-#, fuzzy
-#~ msgid "Name of raster angle map"
-#~ msgstr "اسم الخريطة الراسترية"
-
-#, fuzzy
-#~ msgid "Name of optional EPS output file"
-#~ msgstr "اسم الملف المخرج"
-
-#, fuzzy
-#~ msgid "Name of aspect raster map"
-#~ msgstr "اسم الخريطة الراسترية"
-
-#, fuzzy
-#~ msgid "Width of display canvas"
-#~ msgstr "تقرير عن الراستر المدخلة والخروج"
-
-#, fuzzy
-#~ msgid "Height of display canvas"
-#~ msgstr "تقرير عن الراستر المدخلة والخروج"
-
-#, fuzzy
-#~ msgid "Minimum size of each cell"
-#~ msgstr "مستوى الكنتور الأصغر"
-
-#, fuzzy
-#~ msgid "Maximum number of rows to load"
-#~ msgstr ""
-#~ "\n"
-#~ "\n"
-#~ "%d :عدد النقاط\n"
-
-#, fuzzy
-#~ msgid "Maximum number of columns to load"
-#~ msgstr ""
-#~ "\n"
-#~ "\n"
-#~ "%d :عدد النقاط\n"
-
-#, fuzzy
-#~ msgid "Displays a raster map and its legend on a graphics window"
-#~ msgstr "اختيار الخط الذى سيعرض به النص على الشاشة"
-
-#, fuzzy
-#~ msgid "Number of lines to appear in the legend"
-#~ msgstr "عدد مرات تكرار المرشح"
-
-#, fuzzy
-#~ msgid "Name of raster map to generate legend from"
-#~ msgstr "<%s> اسم الملف المستخدم لل"
-
-#, fuzzy
-#~ msgid "Name of raster map to print in legend"
-#~ msgstr "اسم الخريطة الراسترية  للعرض كخلفية"
-
-#, fuzzy
-#~ msgid "Redraws the current display frame in the GRASS monitor"
-#~ msgstr "خطا: لم يتم عرض الخريطة\n"
-
-#, fuzzy
-#~ msgid "Redraw all frames"
-#~ msgstr "طباعة مجموع المساحة"
-
-#, fuzzy
-#~ msgid "Resizes active display monitor"
-#~ msgstr "تقرير عن الراستر المدخلة والخروج"
-
-#, fuzzy
-#~ msgid "Name of shaded relief or aspect map"
-#~ msgstr "اسم ملف الإنحدار الراسترى"
-
-#, fuzzy
-#~ msgid "Name of raster to drape over relief map"
-#~ msgstr "اسم الخريطة الراسترية"
-
-#, fuzzy
-#~ msgid "Percent to brighten"
-#~ msgstr "مقلوب فرق العزم"
-
-#, fuzzy
-#~ msgid "Slide show of GRASS raster/vector maps."
-#~ msgstr "اسم خريطة الراستر المخرجة"
-
-#, fuzzy
-#~ msgid "display, slideshow"
-#~ msgstr "الملف الراسترى المدخل"
-
-#, fuzzy
-#~ msgid "Show vector maps rather than raster maps"
-#~ msgstr "تحويل خريطة راسترية إلى فيكتورية"
-
-#, fuzzy
-#~ msgid "Number of seconds to pause between slides"
-#~ msgstr "<%s> عدد مستويات الألوان المستخدمة فى"
-
-#, fuzzy
-#~ msgid "Enter raster map to display in 1st frame"
-#~ msgstr "الخريطة الراسترية المطلوب تسجيلها"
-
-#, fuzzy
-#~ msgid "Enter command to execute in 1st frame"
-#~ msgstr "الخريطة الراسترية المطلوب تسجيلها"
-
-#, fuzzy
-#~ msgid "Enter raster map to display in 2nd frame"
-#~ msgstr "الخريطة الراسترية المطلوب تسجيلها"
-
-#, fuzzy
-#~ msgid "Enter command to execute in 2nd frame"
-#~ msgstr "الخريطة الراسترية المطلوب تسجيلها"
-
-#, fuzzy
-#~ msgid "How to split display"
-#~ msgstr "<%s> لم يمكن فتح"
-
-#, fuzzy
-#~ msgid "Split the display into subframes."
-#~ msgstr "الخريطة الراسترية المطلوب تسجيلها"
-
-#, fuzzy
-#~ msgid "Number of subframes"
-#~ msgstr "عدد الصفوف"
-
-#, fuzzy
-#~ msgid "Displays thematic vector map"
-#~ msgstr "اسم الخريطة الراسترية"
-
-#, fuzzy
-#~ msgid "display, vector, thematic, legend"
-#~ msgstr "الملف الراسترى المدخل"
-
-#, fuzzy
-#~ msgid ""
-#~ "Name of attribute column to use for thematic display (must be numeric)"
-#~ msgstr "<%s> اسم الملف المستخدم لل"
-
-#, fuzzy
-#~ msgid "Type of thematic display"
-#~ msgstr "اسم الخريطة الراسترية  للعرض كخلفية"
-
-#, fuzzy
-#~ msgid "Vector point icon for point data"
-#~ msgstr "قطع بيانات النقط العشرية"
-
-#, fuzzy
-#~ msgid "Icon size for point data"
-#~ msgstr "قطع بيانات النقط العشرية"
-
-#, fuzzy
-#~ msgid "Number of classes for interval theme (integer)"
-#~ msgstr "عدد مرات تكرار المرشح"
-
-#, fuzzy
-#~ msgid "Beginning color for custom color gradient"
-#~ msgstr "استخدام احداثيات مركز الخريطة\n"
-
-#, fuzzy
-#~ msgid "Must be expressed as R:G:B triplet"
-#~ msgstr "استخدام احداثيات مركز الخريطة\n"
-
-#, fuzzy
-#~ msgid "Ending color for custom color gradient"
-#~ msgstr "استخدام احداثيات مركز الخريطة\n"
-
-#, fuzzy
-#~ msgid "Misc"
-#~ msgstr "مترى"
-
-#, fuzzy
-#~ msgid "Drops a column from selected attribute table"
-#~ msgstr "عدم انشاء جدول الخواص"
-
-#, fuzzy
-#~ msgid "Table from which to drop attribute column"
-#~ msgstr "عدم انشاء جدول الخواص"
-
-#, fuzzy
-#~ msgid "Name of the column"
-#~ msgstr "عدد الأعمدة"
-
-#, fuzzy
-#~ msgid "Drops an attribute table."
-#~ msgstr "عدم انشاء جدول الخواص"
-
-#, fuzzy
-#~ msgid "Table to drop"
-#~ msgstr "<%s> لم يمكن فتح"
-
-#, fuzzy
-#~ msgid "Imports attribute tables in various formats."
-#~ msgstr "اسم الخريطة الراسترية الموجودة"
-
-#, fuzzy
-#~ msgid "Name for output table"
-#~ msgstr "اسم الملف المخرج"
-
-#, fuzzy
-#~ msgid "Name for auto-generated unique key column"
-#~ msgstr "<%s> اسم الملف المستخدم لل"
-
-#, fuzzy
-#~ msgid "Exports attribute tables into various formats."
-#~ msgstr "اسم الخريطة الراسترية الموجودة"
-
-#, fuzzy
-#~ msgid "GRASS table name"
-#~ msgstr "اسم الجدول"
-
-#, fuzzy
-#~ msgid "Table format"
-#~ msgstr "الخريطة المخرجة"
-
-#, fuzzy
-#~ msgid "Test name"
-#~ msgstr "اسم الجدول"
-
-#, fuzzy
-#~ msgid "Display the HTML man pages of GRASS"
-#~ msgstr "عدد الأعمدة"
-
-#, fuzzy
-#~ msgid "general, manual, help"
-#~ msgstr "طباعة نوع الملف الراسترى فقط"
-
-#, fuzzy
-#~ msgid "Display index"
-#~ msgstr "التوقيع ..."
-
-#, fuzzy
-#~ msgid "Manual entry to be displayed"
-#~ msgstr "الخريطة الراسترية المطلوب تسجيلها"
-
-#, fuzzy
-#~ msgid "imagery, fusion, Brovey"
-#~ msgstr "الملف الراسترى الطلوب إدخالة"
-
-#, fuzzy
-#~ msgid "Sensor"
-#~ msgstr "الشد"
-
-#, fuzzy
-#~ msgid "Name of input raster map (green: tm2 | qbird_green | spot1)"
-#~ msgstr "اسم الخريطة الراسترية المدخلة"
-
-#, fuzzy
-#~ msgid "Name of input raster map (NIR: tm4 | qbird_nir | spot2)"
-#~ msgstr "اسم الخريطة الراسترية المدخلة"
-
-#, fuzzy
-#~ msgid "Name of input raster map (MIR; tm5 | qbird_red | spot3)"
-#~ msgstr "اسم الخريطة الراسترية المدخلة"
-
-#, fuzzy
-#~ msgid "Name of input raster map (etmpan | qbird_pan | spotpan)"
-#~ msgstr "اسم الخريطة الراسترية المدخلة"
-
-#, fuzzy
-#~ msgid "Name for output raster map prefix (e.g. 'brov')"
-#~ msgstr "الملف الراسترى المخرج"
-
-#, fuzzy
-#~ msgid "raster, imagery, mosaicking"
-#~ msgstr "الملف الراسترى الطلوب إدخالة"
-
-#, fuzzy
-#~ msgid "Import of SPOT VGT NDVI file into a raster map"
-#~ msgstr "ادخال ملف راسترى ثنائى كطبقة خريطة راسترية جراسية"
-
-#, fuzzy
-#~ msgid "raster, imagery, import"
-#~ msgstr "الملف الراسترى الطلوب إدخالة"
-
-#, fuzzy
-#~ msgid "raster, imagery, colors"
-#~ msgstr "الملف الراسترى الطلوب إدخالة"
-
-#, fuzzy
-#~ msgid "raster, imagery, statistics"
-#~ msgstr "الملف الراسترى الطلوب إدخالة"
-
-#, fuzzy
-#~ msgid "Raster input maps"
-#~ msgstr "اسم الراستر المدخل"
-
-#, fuzzy
-#~ msgid "Write output to PNG image"
-#~ msgstr "تغلب على الخريطة المخرجة"
-
-#, fuzzy
-#~ msgid "Select multiple points"
-#~ msgstr "نوع المظهر"
-
-#, fuzzy
-#~ msgid "Label with coordinates instead of numbering"
-#~ msgstr "استخدام احداثيات مركز الخريطة\n"
-
-#, fuzzy
-#~ msgid "raster, imagery"
-#~ msgstr "الملف الراسترى المدخل"
-
-#, fuzzy
-#~ msgid "raster input map (LANDSAT channel 1)"
-#~ msgstr "الخرائط الراسترية المدخلة"
-
-#, fuzzy
-#~ msgid "raster input map (LANDSAT channel 2)"
-#~ msgstr "الخرائط الراسترية المدخلة"
-
-#, fuzzy
-#~ msgid "raster input map (LANDSAT channel 3)"
-#~ msgstr "الخرائط الراسترية المدخلة"
-
-#, fuzzy
-#~ msgid "raster input map (LANDSAT channel 4)"
-#~ msgstr "الخرائط الراسترية المدخلة"
-
-#, fuzzy
-#~ msgid "raster input map (LANDSAT channel 5)"
-#~ msgstr "الخرائط الراسترية المدخلة"
-
-#, fuzzy
-#~ msgid "raster input map (LANDSAT channel 7)"
-#~ msgstr "الخرائط الراسترية المدخلة"
-
-#, fuzzy
-#~ msgid "raster output TC maps prefix"
-#~ msgstr "الملف الراسترى المخرج"
-
-#, fuzzy
-#~ msgid "miscellaneous, projection"
-#~ msgstr "طباعة نوع الملف الراسترى فقط"
-
-#, fuzzy
-#~ msgid "Input coordinate file (omit to read from stdin)"
-#~ msgstr "إدخال خريطة راسترية بينرية "
-
-#, fuzzy
-#~ msgid "Output coordinate file (omit to send to stdout)"
-#~ msgstr "إدخال خريطة راسترية بينرية "
-
-#, fuzzy
-#~ msgid "Field separator"
-#~ msgstr "الفاصل الحقلي للمخرج"
-
-#, fuzzy
-#~ msgid "Input projection parameters (PROJ.4 style)"
-#~ msgstr "خريطة الإتجاه المخرجة"
-
-#, fuzzy
-#~ msgid "Output projection parameters (PROJ.4 style)"
-#~ msgstr "خريطة الإتجاه المخرجة"
-
-#, fuzzy
-#~ msgid "Name of first raster map for blending"
-#~ msgstr "اسم الملف الراسترى الموجود"
-
-#, fuzzy
-#~ msgid "Name of second raster map for blending"
-#~ msgstr "اسم الملف الراسترى الموجود"
-
-#, fuzzy
-#~ msgid "Percentage weight of first map for color blending"
-#~ msgstr "اسم الملف الراسترى الموجود"
-
-#, fuzzy
-#~ msgid "Color using standard deviation bands"
-#~ msgstr "الإنحراف المعيارى"
-
-#, fuzzy
-#~ msgid "raster, elevation, interpolation"
-#~ msgstr "عدد نقاط الإستيفاء"
-
-#, fuzzy
-#~ msgid "Raster map in which to fill nulls"
-#~ msgstr "اسم لخريطة الراسترية انسخ جدول ألوانها"
-
-#, fuzzy
-#~ msgid "Spline tension parameter"
-#~ msgstr "تنعيم الأركان"
-
-#, fuzzy
-#~ msgid "Spline smoothing parameter"
-#~ msgstr "تنعيم الأركان"
-
-#, fuzzy
-#~ msgid "Output raster map (default: input tile)"
-#~ msgstr "اسم خريطة الراستر المخرجة"
-
-#, fuzzy
-#~ msgid "Request"
-#~ msgstr "خروج"
-
-#, fuzzy
-#~ msgid "Import"
-#~ msgstr "الخريطة الفيكتورية لنقاط البدء"
-
-#, fuzzy
-#~ msgid "Mapserver to request data from"
-#~ msgstr "لم يمكن اختيار البيانات من الجدول"
-
-#, fuzzy
-#~ msgid "Layers to request from map server"
-#~ msgstr "طريقة الاستيفاء المستخدمة"
-
-#, fuzzy
-#~ msgid "Styles to request from map server"
-#~ msgstr "طريقة الاستيفاء المستخدمة"
-
-#, fuzzy
-#~ msgid "Source projection to request from server"
-#~ msgstr "طريقة الاستيفاء المستخدمة"
-
-#, fuzzy
-#~ msgid "Image format requested from the server"
-#~ msgstr "طريقة الاستيفاء المستخدمة"
-
-#, fuzzy
-#~ msgid "Maximum rows to request at a time"
-#~ msgstr "المسافة العظمى بين النقاط بوحدات الخريطة"
-
-#, fuzzy
-#~ msgid "Reprojection method to use"
-#~ msgstr "طريقة الاستيفاء المستخدمة"
-
-#, fuzzy
-#~ msgid "Requires list available layers flag"
-#~ msgstr "طباعة الجداول والخروج"
-
-#, fuzzy
-#~ msgid "Do not overwrite existing map"
-#~ msgstr "%s:لم يتم إنشاء الجدول"
-
-#, fuzzy
-#~ msgid "raster, mask"
-#~ msgstr "الخريطة الراسترية الأساس"
-
-#, fuzzy
-#~ msgid "Raster map to use as MASK"
-#~ msgstr "الخرائط الراسترية المطلوب قرائتها"
-
-#, fuzzy
-#~ msgid "Overwrite existing MASK"
-#~ msgstr "%s:لم يتم إنشاء الجدول"
-
-#, fuzzy
-#~ msgid "Exports GRASS raster into GDAL supported formats."
-#~ msgstr "تحويل راستر جراسى الى بينرى"
-
-#, fuzzy
-#~ msgid "Region sensitive output"
-#~ msgstr "خريطة الإرتفاعات"
-
-#, fuzzy
-#~ msgid ""
-#~ "Creates raster plane map given dip (inclination), aspect (azimuth) and "
-#~ "one point."
-#~ msgstr ""
-#~ "خلق طبقة خريطة راسترية وخريطة نقط فيكتورية تحتوى على اماكن عشوائية التوزيع"
-
-#, fuzzy
-#~ msgid "raster, elevation"
-#~ msgstr "الصفر قيمة حقيقية"
-
-#, fuzzy
-#~ msgid "Name of raster plane to be created"
-#~ msgstr "اسم الخريطة المدخلة"
-
-#, fuzzy
-#~ msgid "Easting coordinate of a point on the plane"
-#~ msgstr "احداثى الشرق, الأساس هو مركز الخريطة"
-
-#, fuzzy
-#~ msgid "Northing coordinate of a point on the plane"
-#~ msgstr "احداثى الشمال, الأساس هو مركز الخريطة"
-
-#, fuzzy
-#~ msgid "Elevation coordinate of a point on the plane"
-#~ msgstr "احداثى الشرق, الأساس هو مركز الخريطة"
-
-#, fuzzy
-#~ msgid "Type of the raster map to be created"
-#~ msgstr "اسم الخريطة المدخلة"
-
-#, fuzzy
-#~ msgid "raster, statistics, aggregation"
-#~ msgstr "عدم انشاء جدول الخواص"
-
-#, fuzzy
-#~ msgid "Creates shaded relief map from an elevation map (DEM)."
-#~ msgstr "ln(a/tan(beta)) تعيين الدليل الطبوغرافى من خريطة الإرتفاعات"
-
-#, fuzzy
-#~ msgid "Output shaded relief map name"
-#~ msgstr "سم مشغّل الإخراج"
-
-#, fuzzy
-#~ msgid "Altitude of the sun in degrees above the horizon"
-#~ msgstr "A:ارتفاع الشمس فوق الأفق, درجات"
-
-#, fuzzy
-#~ msgid "Azimuth of the sun in degrees to the east of north"
-#~ msgstr "A: زاوية الشمس مقاسة من الشمال, درجات"
-
-#, fuzzy
-#~ msgid "Factor for exaggerating relief"
-#~ msgstr "طريقة تقرير الإنحدار"
-
-#, fuzzy
-#~ msgid "Scale factor for converting horizontal units to elevation units"
-#~ msgstr "عامل المضاعفة لتحويل وحدات الارتفاعات الي امتار"
-
-#, fuzzy
-#~ msgid "raster, tiling"
-#~ msgstr "الملف الراسترى المدخل"
-
-#, fuzzy
-#~ msgid "Produces shell script output"
-#~ msgstr "الملف الراسترى المخرج"
-
-#, fuzzy
-#~ msgid "Produces web map server query string output"
-#~ msgstr "الملف الراسترى المخرج"
-
-#, fuzzy
-#~ msgid ""
-#~ "Name of region to use instead of current region for bounds and resolution"
-#~ msgstr "(دقة الوضوح عبر التضاريس (الأساس : دقة وضوح المنطقة الحالية"
-
-#, fuzzy
-#~ msgid "Source projection"
-#~ msgstr "طباعة نوع الملف الراسترى فقط"
-
-#, fuzzy
-#~ msgid "Conversion factor from units to meters in source projection"
-#~ msgstr "عامل الضرب لقيم الإرتفاعات"
-
-#, fuzzy
-#~ msgid "Destination projection, defaults to this location's projection"
-#~ msgstr "تغلب على الإسقاط مستخدما إسقاط الموقع"
-
-#, fuzzy
-#~ msgid "Maximum number of columns for a tile in the source projection"
-#~ msgstr "المسافة العظمى بين النقاط بوحدات الخريطة"
-
-#, fuzzy
-#~ msgid "Maximum number of rows for a tile in the source projection"
-#~ msgstr "المسافة العظمى بين النقاط بوحدات الخريطة"
-
-#, fuzzy
-#~ msgid "Number of cells tiles should overlap in each direction"
-#~ msgstr "عدد مستويات الألوان لكل مركب"
-
-#, fuzzy
-#~ msgid "calculates univariate statistics from a GRASS raster map"
-#~ msgstr "حساب إحصائيات المتغير الأحادى من خلايا ذات قيمة بالخريطة الراسترية"
-
-#, fuzzy
-#~ msgid "Percentile to calculate (requires -e flag)"
-#~ msgstr "اسم الخريطة الراسترية المدخلة"
-
-#, fuzzy
-#~ msgid "A (grid3D file)"
-#~ msgstr "اسم ااملف المخرج"
-
-#, fuzzy
-#~ msgid "B (grid3D file)"
-#~ msgstr "اسم ااملف المخرج"
-
-#, fuzzy
-#~ msgid "C (grid3D file)"
-#~ msgstr "اسم ااملف المخرج"
-
-#, fuzzy
-#~ msgid "D (grid3D file)"
-#~ msgstr "اسم ااملف المخرج"
-
-#, fuzzy
-#~ msgid "E (grid3D file)"
-#~ msgstr "اسم ااملف المخرج"
-
-#, fuzzy
-#~ msgid "F (grid3D file)"
-#~ msgstr "اسم ااملف المخرج"
-
-#, fuzzy
-#~ msgid "Name for output grid3D volume"
-#~ msgstr "اسم الملف المخرج"
-
-#, fuzzy
-#~ msgid "Rebuilds topology on all vector maps in the current mapset."
-#~ msgstr "%s لم يتم العثور على الخريطة الراسترية"
-
-#, fuzzy
-#~ msgid "Adds missing centroids to closed boundaries."
-#~ msgstr "لم يتم تحديث الحدود"
-
-#, fuzzy
-#~ msgid "vector, centroid, area"
-#~ msgstr "عدم انشاء جدول الخواص"
-
-#, fuzzy
-#~ msgid "Name for output vector map"
+#~ msgid "Failed in attempt to open %s"
 #~ msgstr "اسم الملف الفيكتورى المخرج"
 
-#, fuzzy
-#~ msgid "Action to be taken"
-#~ msgstr "الملف الراسترى الطلوب إدخالة"
-
-#, fuzzy
-#~ msgid "Category number starting value"
-#~ msgstr "اسم الخريطة الراسترية"
-
-#, fuzzy
-#~ msgid "vector, color table"
-#~ msgstr "الخريطة الراسترية المطلوب تسجيلها"
-
-#, fuzzy
-#~ msgid "Name of column containing numeric data"
-#~ msgstr "اسم الخريطة الراسترية المحتوية على معلومات التكلفة لخلية الشبكة"
-
-#, fuzzy
-#~ msgid "Layer number of data column"
-#~ msgstr "عدم انشاء جدول الخواص"
-
-#, fuzzy
-#~ msgid "Name of color column to populate"
-#~ msgstr "اسم الخريطة المدخلة"
-
-#, fuzzy
-#~ msgid "Manually set range (min,max)"
-#~ msgstr "min,max :المدى الصحيح"
-
-#, fuzzy
-#~ msgid "Path to rules file"
-#~ msgstr "اسم الخريطة الراسترية الموجودة"
-
-#, fuzzy
-#~ msgid "Save placeholder raster map for use with d.legend"
-#~ msgstr "اسم الخريطة الراسترية  للعرض كخلفية"
-
-#, fuzzy
 #~ msgid ""
-#~ "Convert all old GRASS < Ver5.7 vector maps in current mapset to current "
-#~ "format"
-#~ msgstr "تحويل خريطة راسترية إلى فيكتورية"
+#~ "Generates raster map layers of slope, aspect, curvatures and partial "
+#~ "derivatives from a raster map layer of true elevation values. Aspect is "
+#~ "calculated counterclockwise from east."
+#~ msgstr "تعيين خواص تضاريسية كالإنحدار واتجاهة والإنحناءات بانواعها"
 
-#, fuzzy
-#~ msgid ""
-#~ "Adds one or more columns to the attribute table connected to a given "
-#~ "vector map."
-#~ msgstr "اسم الخريطة الراسترية الموجودة"
-
-#, fuzzy
-#~ msgid "Vector map for which to edit attribute table"
-#~ msgstr "عدم انشاء جدول الخواص"
-
-#, fuzzy
-#~ msgid "Layer where to add column"
-#~ msgstr "عدم انشاء جدول الخواص"
-
-#, fuzzy
-#~ msgid ""
-#~ "Creates and connects a new attribute table to a given layer of an "
-#~ "existing vector map."
-#~ msgstr "اسم الخريطة الراسترية الموجودة"
-
-#, fuzzy
-#~ msgid "Vector map for which to add new attribute table"
-#~ msgstr "عدم انشاء جدول الخواص"
-
-#, fuzzy
-#~ msgid "Name of new attribute table (default: vector map name)"
-#~ msgstr "اسم الخريطة الراسترية الموجودة"
-
-#, fuzzy
-#~ msgid "Layer where to add new attribute table"
-#~ msgstr "عدم انشاء جدول الخواص"
-
-#, fuzzy
-#~ msgid "Allows to join a table to a vector map table."
-#~ msgstr "اسم الخريطة الراسترية الموجودة"
-
-#, fuzzy
-#~ msgid "Vector map to which to join other table"
-#~ msgstr "عدم انشاء جدول الخواص"
-
-#, fuzzy
-#~ msgid "Layer where to join"
-#~ msgstr "عدم انشاء جدول الخواص"
-
-#, fuzzy
-#~ msgid "Join column in map table"
-#~ msgstr "نوع غير معروف"
-
-#, fuzzy
-#~ msgid "Other table name"
-#~ msgstr "إسم الجدول المخرج"
-
-#, fuzzy
-#~ msgid "Join column in other table"
-#~ msgstr "نوع غير معروف"
-
-#, fuzzy
-#~ msgid ""
-#~ "Drops a column from the attribute table connected to a given vector map."
-#~ msgstr "اسم الخريطة الراسترية الموجودة"
-
-#, fuzzy
-#~ msgid "Vector map for which to drop attribute column"
-#~ msgstr "عدم انشاء جدول الخواص"
-
-#, fuzzy
-#~ msgid "Layer where to drop column"
-#~ msgstr "عدم انشاء جدول الخواص"
-
-#, fuzzy
-#~ msgid "Removes existing attribute table of a vector map."
-#~ msgstr "اسم الخريطة الراسترية الموجودة"
-
-#, fuzzy
-#~ msgid "Vector map from which to remove attribute table"
-#~ msgstr "عدم انشاء جدول الخواص"
-
-#, fuzzy
-#~ msgid "Name of existing attribute table (default: vector map name)"
-#~ msgstr "اسم الخريطة الراسترية الموجودة"
-
-#, fuzzy
-#~ msgid "Layer from which to drop linked attribute table"
-#~ msgstr "اسم لخريطة الراسترية انسخ جدول ألوانها"
-
-#, fuzzy
-#~ msgid ""
-#~ "Renames a column in the attribute table connected to a given vector map."
-#~ msgstr "اسم الخريطة الراسترية الموجودة"
-
-#, fuzzy
-#~ msgid "Vector map for which to rename attribute column"
-#~ msgstr "عدم انشاء جدول الخواص"
-
-#, fuzzy
-#~ msgid "Layer where to rename column"
-#~ msgstr "عدم انشاء جدول الخواص"
-
-#, fuzzy
-#~ msgid "Reconnects vectors to a new database."
-#~ msgstr "لم يتم حساب شبه مركز المساحة"
-
-#, fuzzy
-#~ msgid "Name of old database"
-#~ msgstr "اسم الخريطة الراسترية الجديدة"
-
-#, fuzzy
-#~ msgid "Name of new database"
-#~ msgstr "اسم الخريطة الراسترية الجديدة"
-
-#, fuzzy
-#~ msgid "New schema"
-#~ msgstr ":اسم قاعدة البيانات"
-
-#, fuzzy
-#~ msgid ""
-#~ "Calculates univariate statistics on selected table column for a GRASS "
-#~ "vector map."
-#~ msgstr "حساب إحصائيات المتغير الأحادى من خلايا ذات قيمة بالخريطة الراسترية"
-
-#, fuzzy
-#~ msgid "Name of data table"
-#~ msgstr "اسم الخريطة الراسترية الجديدة"
-
-#, fuzzy
-#~ msgid "Column on which to calculate statistics (must be numeric)"
-#~ msgstr "<%s> اسم الملف المستخدم لل"
-
-#, fuzzy
-#~ msgid "Database/directory for table"
-#~ msgstr "cat = %d لا يوجد تسجيل للخط"
-
-#, fuzzy
-#~ msgid "Database driver"
-#~ msgstr ":اسم قاعدة البيانات"
-
-#, fuzzy
-#~ msgid ""
-#~ "Allows to update a column in the attribute table connected to a vector "
-#~ "map."
-#~ msgstr "اسم الخريطة الراسترية الموجودة"
-
-#, fuzzy
-#~ msgid "Vector map to edit the attribute table for"
-#~ msgstr "عدم انشاء جدول الخواص"
+#~ msgid "Raster elevation file name"
+#~ msgstr "اسم ملف الإرتفاعات الراستري"
 
 #, fuzzy
-#~ msgid "Column to update"
-#~ msgstr "نوع العمود غير مدعم"
+#~ msgid "Output slope filename"
+#~ msgstr "اسم ملف الإنحدار المخرج"
 
 #, fuzzy
-#~ msgid "Column to query"
-#~ msgstr "الخريطة الراسترية المطلوب استفهامها"
+#~ msgid "Output aspect filename"
+#~ msgstr "اسم خريطة اتجاه الإنحدار"
 
 #, fuzzy
-#~ msgid "vector, area, dissolve"
-#~ msgstr "عدم انشاء جدول الخواص"
+#~ msgid "Output profile curvature filename"
+#~ msgstr "اسم ملف انحناء التضاريس"
 
 #, fuzzy
-#~ msgid "Name of column used to dissolve common boundaries"
-#~ msgstr "<%s> اسم الملف المستخدم لل"
+#~ msgid "Output tangential curvature filename"
+#~ msgstr "اسم ملف الإنحناء المماسى"
 
-#, fuzzy
-#~ msgid "Import E00 file into a vector map."
-#~ msgstr "اسم الخريطة الراسترية المدخلة"
-
-#, fuzzy
-#~ msgid "Input type point, line or area"
-#~ msgstr " خط أم مساحة"
-
-#, fuzzy
-#~ msgid "vector, import, GPS"
-#~ msgstr "عدم انشاء جدول الخواص"
-
-#, fuzzy
-#~ msgid "Name for output vector map (omit for display to stdout)"
-#~ msgstr "اسم  الملف المخرج"
-
-#, fuzzy
-#~ msgid "Imports geonames.org country files into a GRASS vector points map."
-#~ msgstr "اسم الخريطة الراسترية المدخلة"
-
-#, fuzzy
-#~ msgid "vector, import, gazetteer"
-#~ msgstr "عدم انشاء جدول الخواص"
-
-#, fuzzy
-#~ msgid ""
-#~ "Imports US-NGA GEOnet Names Server (GNS) country files into a GRASS "
-#~ "vector points map."
-#~ msgstr "اسم الخريطة الراسترية المدخلة"
-
-#, fuzzy
-#~ msgid "Import waypoints"
-#~ msgstr "الخريطة الفيكتورية لنقاط البدء"
-
-#, fuzzy
-#~ msgid "Import routes"
-#~ msgstr "الخريطة الفيكتورية لنقاط البدء"
-
-#, fuzzy
-#~ msgid "Import track"
-#~ msgstr "الخريطة الفيكتورية لنقاط البدء"
-
-#, fuzzy
-#~ msgid "Device or file used to import data"
-#~ msgstr "الملف الراسترى الطلوب إدخالة"
-
-#, fuzzy
-#~ msgid "Input map is in Matlab format"
-#~ msgstr "ملف المدخل"
-
-#, fuzzy
-#~ msgid "Name of input file in Mapgen/Matlab format"
-#~ msgstr "اسم ملف التقرير"
-
-#, fuzzy
-#~ msgid ""
-#~ "Converts all old GRASS < Ver5.7 sites maps in current mapset to vector "
-#~ "maps."
-#~ msgstr "تحويل خريطة راسترية إلى فيكتورية"
-
-#, fuzzy
-#~ msgid "sites, vector, import"
-#~ msgstr "الملف الراسترى الطلوب إدخالة"
-
-#, fuzzy
-#~ msgid "Vector output map"
-#~ msgstr "اسم الخريطة المخرجة"
-
-#, fuzzy
-#~ msgid "vector, export, GPS"
-#~ msgstr "عدم انشاء جدول الخواص"
-
-#, fuzzy
-#~ msgid "Export as waypoints"
-#~ msgstr "الخريطة الفيكتورية لنقاط البدء"
-
-#, fuzzy
-#~ msgid "Export as routes"
-#~ msgstr "الخريطة الفيكتورية لنقاط البدء"
-
-#, fuzzy
-#~ msgid "Export as tracks"
-#~ msgstr "الخريطة الفيكتورية لنقاط البدء"
-
-#, fuzzy
-#~ msgid "Feature type(s)"
-#~ msgstr "نوع المظهر"
-
-#, fuzzy
-#~ msgid "Name for output file or GPS device"
-#~ msgstr "اسم الملف المخرج"
-
-#, fuzzy
-#~ msgid "GpsBabel supported output format"
-#~ msgstr "عرض الهيئات المدعمة والخروج"
-
-#, fuzzy
-#~ msgid ""
-#~ "Calculates univariate statistics from a GRASS raster map based on vector "
-#~ "polygons and uploads statistics to new attribute columns."
-#~ msgstr "حساب إحصائيات المتغير الأحادى من خلايا ذات قيمة بالخريطة الراسترية"
-
-#, fuzzy
-#~ msgid "vector, raster, statistics"
-#~ msgstr "عدم انشاء جدول الخواص"
-
-#, fuzzy
-#~ msgid "Name of vector polygon map"
-#~ msgstr "اسم الخريطة الراسترية"
-
-#, fuzzy
-#~ msgid "Name of raster map to calculate statistics from"
-#~ msgstr "اسم الخريطة الراسترية الناتجة"
-
-#, fuzzy
-#~ msgid "Column prefix for new attribute columns"
-#~ msgstr "عدم انشاء جدول الخواص"
-
-#, fuzzy
-#~ msgid "Reports geometry statistics for vectors."
-#~ msgstr "تقرير الإحصائيات للخرائط الراسترية"
-
-#, fuzzy
-#~ msgid "vector, report, statistics"
-#~ msgstr "احصائيات ااشئ او الفئة الموجهة"
-
-#, fuzzy
-#~ msgid "Reverse sort the result"
-#~ msgstr "الصفر قيمة حقيقية"
-
-#, fuzzy
-#~ msgid "Sort the result"
-#~ msgstr "اسم الخريطة الناتجة"
-
-#, fuzzy
-#~ msgid "Value to calculate"
-#~ msgstr "لم يتم حساب شبه مركز المساحة"
-
-#, fuzzy
-#~ msgid "mi(les),f(eet),me(ters),k(ilometers),a(cres),h(ectares),p(ercent)"
+#~ msgid "Output first order partial derivative dx (E-W slope) filename"
 #~ msgstr ""
-#~ "أميال mi, أمتار me, كيلومترات k, افدنة a, هيكتارات h, عدات الخلية c,  p "
-#~ "نسبة التغطية"
+#~ "(اسم ملف المشتق الجزئى من الرتبة الاولى في الاتجاه السينى (انحدار شرق-غرب "
+
+#~ msgid "Output first order partial derivative dy (N-S slope) filename"
+#~ msgstr ""
+#~ "(اسم ملف المشتق الجزئى من الرتبة الاولى في الاتجاه الصادى (انحدار شمال-"
+#~ "جنوب"
+
+#~ msgid "Output second order partial derivative dxx filename"
+#~ msgstr "اسم ملف المشتق الجزئى من الرتبة الثانية في الاتجاه السينى"
+
+#~ msgid "Output second order partial derivative dyy filename"
+#~ msgstr "اسم ملف المشتق الجزئى من الرتبة الثانية في الاتجاه ااصادى "
+
+#~ msgid "Output second order partial derivative dxy filename"
+#~ msgstr "اسم ملف المشتق الجزئى من الرتبة الثانية في الاتجاه السينى ااصادى"
 
 #, fuzzy
-#~ msgid "Vector map to modify"
-#~ msgstr "طباعة نوع الملف الراسترى فقط"
+#~ msgid "wrong type: %s"
+#~ msgstr "%c :نوع غير معروف"
 
 #, fuzzy
-#~ msgid "Layer in the vector to be modified"
-#~ msgstr "الخريطة الراسترية المطلوب استفهامها"
+#~ msgid "Creating support files..."
+#~ msgstr "%s لم يمكن فتح ملف المدى ل"
 
 #, fuzzy
-#~ msgid "Vector map to be queried"
-#~ msgstr "الخريطة الراسترية المطلوب استفهامها"
-
-#, fuzzy
-#~ msgid "Layer of the query vector containing data"
-#~ msgstr "اسم الملف الفيكتورى المخرج"
-
-#, fuzzy
-#~ msgid "Column to be queried"
-#~ msgstr "الخريطة الراسترية المطلوب استفهامها"
-
-#, fuzzy
-#~ msgid "Maximum query distance in map units"
-#~ msgstr "المسافة العظمى بين النقاط بوحدات الخريطة"
+#~ msgid "Elevation products for mapset [%s] in [%s]"
+#~ msgstr "<%s> لم يمكن فتح"
 
 #, fuzzy
 #~ msgid "raster, terrain analysis"

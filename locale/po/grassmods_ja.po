@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: grassmods_ja\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-06-02 21:15+0200\n"
+"POT-Creation-Date: 2010-08-22 02:31+0200\n"
 "PO-Revision-Date: 2010-03-03 14:00+0900\n"
 "Last-Translator: AkiraTaniguchi <taniguti@apptec.co.jp>\n"
 "Language-Team: Japanese <grass-translations@lists.osgeo.org>\n"
@@ -939,7 +939,6 @@ msgstr "3Dラスターマップ日時 (日,月,年 時:分:秒) の出力のみ 
 #: ../vector/v.what.rast/main.c:138 ../visualization/xganim/main.c:366
 #: ../visualization/nviz2/cmd/surface.c:56
 #: ../visualization/nviz2/cmd/surface.c:106 ../doc/raster/r.example/main.c:111
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:392
 #: ../ps/ps.map/outl_io.c:68 ../imagery/i.pca/main.c:129
 #: ../imagery/i.zc/main.c:111 ../imagery/i.rgb.his/openfiles.c:14
 #: ../imagery/i.rgb.his/openfiles.c:16 ../imagery/i.rgb.his/openfiles.c:18
@@ -966,7 +965,7 @@ msgstr "ラスタマップ <%s> が見つかりません"
 #: ../raster3d/base/r3.info.main.c:285 ../raster3d/base/r3.info.main.c:298
 #: ../raster3d/base/r3.info.main.c:308 ../raster3d/base/r3.info.main.c:313
 #: ../raster3d/base/r3.info.main.c:321 ../raster3d/base/r3.info.main.c:334
-#: ../raster/r.info/main.c:303 ../raster/r.info/main.c:428
+#: ../raster/r.info/main.c:303 ../raster/r.info/main.c:424
 msgid "Cannot allocate memory for string"
 msgstr "文字列を格納するメモリを割当できません"
 
@@ -1121,7 +1120,7 @@ msgstr "xyz座標系の代わりにマップ座標系を"
 #: ../raster/r.region/main.c:54 ../raster/r.in.mat/main.c:92
 #: ../raster/r.in.arc/main.c:59 ../raster/r.neighbors/main.c:106
 #: ../raster/r.bitpattern/main.c:62
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:153
+#: ../locale/scriptstrings/r.blend_to_translate.c:2
 msgid "raster"
 msgstr "ラスター"
 
@@ -1130,7 +1129,13 @@ msgid "Exports a GRASS raster to a binary array."
 msgstr "ラスターマップをバイナリーファイルとしてエクスポートします"
 
 #: ../raster/r.out.bin/main.c:73 ../raster/r.random/main.c:57
-#: ../raster/r.water.outlet/main.c:55 ../imagery/i.zc/main.c:69
+#: ../raster/r.water.outlet/main.c:55
+#: ../locale/scriptstrings/r.out.gdal.sh_to_translate.c:5
+#: ../locale/scriptstrings/r.reclass.area_to_translate.c:3
+#: ../locale/scriptstrings/r.out.xyz_to_translate.c:3
+#: ../locale/scriptstrings/r.colors.stddev_to_translate.c:3
+#: ../locale/scriptstrings/d.rast.edit_to_translate.c:3
+#: ../imagery/i.zc/main.c:69
 msgid "Name of input raster map"
 msgstr "入力ラスターマップ名"
 
@@ -1379,9 +1384,8 @@ msgstr "基本ラスターマップ <%s> が見つかりません"
 #: ../general/manage/cmd/rename.c:84 ../vector/v.in.ogr/main.c:326
 #: ../vector/v.to.rast3/main.c:69 ../vector/v.kernel/main.c:263
 #: ../vector/v.surf.idw/main.c:132 ../vector/v.edit/main.c:86
-#: ../doc/raster/r.example/main.c:114
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/opennew.c:11
-#: ../imagery/i.zc/main.c:119 ../imagery/i.ifft/ifftmain.c:116
+#: ../doc/raster/r.example/main.c:114 ../imagery/i.zc/main.c:119
+#: ../imagery/i.ifft/ifftmain.c:116
 #: ../imagery/i.ortho.photo/photo.camera/main.c:90
 #: ../imagery/i.fft/fftmain.c:121 ../imagery/i.fft/fftmain.c:124
 #, c-format
@@ -1462,6 +1466,8 @@ msgstr "彩度マップ読み込みエラー"
 #: ../raster/r.out.mat/main.c:64 ../raster/r.out.ascii/main.c:59
 #: ../raster/r.out.ppm/main.c:54 ../raster/r.out.tiff/r.out.tiff.c:99
 #: ../raster/r.out.gdal/main.c:128
+#: ../locale/scriptstrings/r.out.gdal.sh_to_translate.c:2
+#: ../locale/scriptstrings/r.out.xyz_to_translate.c:2
 msgid "raster, export"
 msgstr "ラスター、エクスポート"
 
@@ -1475,6 +1481,9 @@ msgstr "出力バイナリー MAT ファイル名"
 
 #: ../raster/r.out.mat/main.c:81 ../raster/r.out.tiff/r.out.tiff.c:136
 #: ../raster/r.in.mat/main.c:115
+#: ../locale/scriptstrings/v.in.e00_to_translate.c:3
+#: ../locale/scriptstrings/v.in.garmin_to_translate.c:3
+#: ../locale/scriptstrings/v.in.gpsbabel_to_translate.c:3
 msgid "Verbose mode"
 msgstr "説明付き表示"
 
@@ -1570,6 +1579,7 @@ msgstr "%ld バイトを '%s' に書出しました  "
 
 #: ../raster/r.in.poly/main.c:29 ../raster/r.in.gdal/main.c:79
 #: ../raster/r.in.bin/main.c:122 ../raster/r.external/main.c:506
+#: ../locale/scriptstrings/r.in.srtm_to_translate.c:2
 msgid "raster, import"
 msgstr "ラスター、インポート"
 
@@ -1914,7 +1924,6 @@ msgstr "実数マップを整数に変換して読込 "
 #: ../raster/r.distance/parse.c:72 ../raster/r.carve/main.c:126
 #: ../raster/r.neighbors/main.c:277 ../vector/v.qcount/main.c:117
 #: ../vector/v.mkgrid/main.c:132
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:328
 msgid ""
 "The '-q' flag is superseded and will be removed in future. Please use '--"
 "quiet' instead."
@@ -2000,9 +2009,7 @@ msgstr "出力ラスターマップ・タイトル "
 #: ../raster/r.kappa/main.c:102 ../raster/r.report/parse.c:95
 #: ../raster/r.bitpattern/main.c:87 ../vector/v.sample/main.c:129
 #: ../vector/v.perturb/main.c:117 ../vector/v.kcv/main.c:106
-#: ../doc/raster/r.example/main.c:96
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:290
-#: ../imagery/i.cluster/main.c:163
+#: ../doc/raster/r.example/main.c:96 ../imagery/i.cluster/main.c:163
 msgid "Quiet"
 msgstr "説明なし "
 
@@ -2946,12 +2953,14 @@ msgstr "使用可能なフォーマットの一覧を表示して終了"
 #: ../vector/v.info/main.c:92 ../vector/v.info/main.c:97
 #: ../vector/v.db.connect/main.c:81 ../vector/v.db.connect/main.c:86
 #: ../vector/v.db.connect/main.c:94 ../vector/v.db.connect/main.c:110
-#: ../db/base/connect.c:52 ../imagery/i.group/main.c:77
-#: ../imagery/i.group/main.c:83
+#: ../db/base/connect.c:52
+#: ../locale/scriptstrings/g.extension_to_translate.c:9
+#: ../imagery/i.group/main.c:77 ../imagery/i.group/main.c:83
 msgid "Print"
 msgstr "出力"
 
 #: ../raster/r.in.gdal/main.c:146
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:11
 msgid "Keep band numbers instead of using band color names"
 msgstr "バンド色名を使う代わりに、バンド番号を保持します"
 
@@ -3195,11 +3204,6 @@ msgstr "負の値を含む（最上位ビットが符号ビット） "
 #: ../vector/v.vol.rst/main.c:319 ../vector/v.vol.rst/main.c:328
 #: ../vector/v.vol.rst/main.c:337 ../vector/v.vol.rst/main.c:345
 #: ../vector/v.db.connect/main.c:60 ../vector/v.db.connect/main.c:65
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:189
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:199
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:276
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:285
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:296
 #: ../db/base/connect.c:62 ../db/base/connect.c:66 ../db/base/connect.c:77
 #: ../db/base/connect.c:87 ../imagery/i.cluster/main.c:105
 #: ../imagery/i.cluster/main.c:121 ../imagery/i.cluster/main.c:129
@@ -4065,6 +4069,8 @@ msgstr "ラスターマップの %d 行を読み込めません"
 #: ../raster/r.stats/main.c:103 ../raster/r.statistics/main.c:42
 #: ../raster/r.report/main.c:64 ../raster/r.univar2/r.univar_main.c:75
 #: ../raster/r.support.stats/main.c:39 ../raster/r.quantile/main.c:254
+#: ../locale/scriptstrings/r.regression.line_to_translate.c:2
+#: ../locale/scriptstrings/r.univar.sh_to_translate.c:2
 msgid "raster, statistics"
 msgstr "ラスター、統計"
 
@@ -4073,12 +4079,13 @@ msgid "Generates area statistics for raster map layers."
 msgstr "ラスターマップレイヤーのエリア統計を作成"
 
 #: ../raster/r.stats/main.c:114
+#: ../locale/scriptstrings/r.out.xyz_to_translate.c:4
 msgid "Name for output file (if omitted or \"-\" output to stdout)"
 msgstr "出力ファイル名 (省略または \"-\" で標準出力)"
 
 #: ../raster/r.stats/main.c:119 ../raster/r.cats/main.c:72
 #: ../raster/r.distance/parse.c:50 ../vector/v.db.select/main.c:63
-#: ../db/base/select.c:202
+#: ../db/base/select.c:202 ../locale/scriptstrings/r.tileset_to_translate.c:13
 msgid "Output field separator"
 msgstr "フィールドセパレーターの出力"
 
@@ -4635,12 +4642,10 @@ msgid "Name for output aspect raster map"
 msgstr "出力する傾斜方位ラスターマップ名"
 
 #: ../raster/r.slope.aspect/main.c:178
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:188
 msgid "Format for reporting the slope"
 msgstr "傾斜のレポートフォーマット "
 
 #: ../raster/r.slope.aspect/main.c:188
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:198
 msgid "Type of output aspect and slope maps"
 msgstr "傾斜方位および傾斜マップの出力型 "
 
@@ -4675,17 +4680,14 @@ msgid "Name for output second order partial derivative dxy raster map"
 msgstr "dxy値の偏導関数を出力するファイル "
 
 #: ../raster/r.slope.aspect/main.c:243
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:272
 msgid "Multiplicative factor to convert elevation units to meters"
 msgstr "標高単位をメートル変換する乗数ファクター"
 
 #: ../raster/r.slope.aspect/main.c:252
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:281
 msgid "Minimum slope val. (in percent) for which aspect is computed"
 msgstr "傾斜の最小値 "
 
 #: ../raster/r.slope.aspect/main.c:266
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:295
 msgid "Do not align the current region to the elevation layer"
 msgstr "現在領域を標高レイヤーに対して調整しない"
 
@@ -4729,7 +4731,6 @@ msgid "Elevation products for mapset <%s> in <%s>"
 msgstr "マップセットの標高プロダクト <%s> （<%s> 中)"
 
 #: ../raster/r.slope.aspect/main.c:1009
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:1042
 #, c-format
 msgid "Min computed aspect %.4f, max computed aspect %.4f"
 msgstr "傾斜方位の最小計算値 %.4f、　最大計算値 %.4f"
@@ -4740,7 +4741,6 @@ msgid "Aspect raster map <%s> complete"
 msgstr "傾斜方位ラスターマップ <%s> が完了しました"
 
 #: ../raster/r.slope.aspect/main.c:1113
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:1146
 #, c-format
 msgid "Min computed slope %.4f, max computed slope %.4f"
 msgstr "傾斜の最小計算値 %.4f、　最大計算値 %.4f"
@@ -4936,7 +4936,14 @@ msgstr ""
 "GRIDATB.FOR形式(TOPMODEL)のマップファイルをラスターマップとしてインポートしま"
 "す "
 
-#: ../raster/r.in.gridatb/main.c:53 ../imagery/i.ifft/ifftmain.c:83
+#: ../raster/r.in.gridatb/main.c:53
+#: ../locale/scriptstrings/r.reclass.area_to_translate.c:4
+#: ../locale/scriptstrings/r.in.aster_to_translate.c:6
+#: ../locale/scriptstrings/r.mapcalculator_to_translate.c:9
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:18
+#: ../locale/scriptstrings/d.rast.edit_to_translate.c:4
+#: ../locale/scriptstrings/i.in.spotvgt_to_translate.c:5
+#: ../imagery/i.ifft/ifftmain.c:83
 msgid "Name for output raster map"
 msgstr "出力ラスターマップ名"
 
@@ -4967,7 +4974,6 @@ msgstr "出力レイヤー名"
 
 #: ../raster/r.resample/main.c:137 ../raster/r.resamp.rst/main.c:527
 #: ../vector/v.surf.rst/main.c:602 ../vector/v.surf.rst/main.c:753
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:600
 msgid "Percent complete: "
 msgstr "完了（％）"
 
@@ -7330,6 +7336,7 @@ msgid "Raster file(s) for View%d"
 msgstr "ビュー %d に使うラスターマップ"
 
 #: ../raster/r.out.mpeg/main.c:406
+#: ../locale/scriptstrings/r.out.gdal.sh_to_translate.c:8
 msgid "Name for output file"
 msgstr "出力するファイル"
 
@@ -8194,6 +8201,7 @@ msgstr ""
 "来削除されます)  "
 
 #: ../raster/r.colors/main.c:165
+#: ../locale/scriptstrings/r.colors.stddev_to_translate.c:2
 msgid "raster, color table"
 msgstr "ラスター，カラーテーブル"
 
@@ -8202,6 +8210,7 @@ msgid "Creates/modifies the color table associated with a raster map layer."
 msgstr "ラスターマップ レイヤーのカラーテーブルを作成/編集します"
 
 #: ../raster/r.colors/main.c:181
+#: ../locale/scriptstrings/v.colors_to_translate.c:9
 msgid "Type of color table"
 msgstr "カラーテーブルのタイプ"
 
@@ -8218,10 +8227,16 @@ msgstr "カラーテーブルのタイプ"
 #: ../vector/v.label/main.c:153 ../vector/v.label/main.c:177
 #: ../vector/v.label/main.c:190 ../vector/v.label/main.c:196
 #: ../vector/v.label/main.c:206
+#: ../locale/scriptstrings/v.colors_to_translate.c:7
+#: ../locale/scriptstrings/v.colors_to_translate.c:10
+#: ../locale/scriptstrings/v.colors_to_translate.c:12
+#: ../locale/scriptstrings/v.colors_to_translate.c:14
+#: ../locale/scriptstrings/v.colors_to_translate.c:17
 msgid "Colors"
 msgstr "色"
 
 #: ../raster/r.colors/main.c:191
+#: ../locale/scriptstrings/v.colors_to_translate.c:11
 msgid "Raster map name from which to copy color table"
 msgstr "カラーテーブルからコピーされるラスターマップ名"
 
@@ -8242,6 +8257,7 @@ msgid "List available rules then exit"
 msgstr "使用可能なルールの一覧表示"
 
 #: ../raster/r.colors/main.c:214
+#: ../locale/scriptstrings/v.colors_to_translate.c:16
 msgid "Invert colors"
 msgstr "カラーテーブルを反転"
 
@@ -8769,6 +8785,7 @@ msgid "Exports GRASS raster maps into GDAL supported formats."
 msgstr "GRASS ラスターマップを GDAL サポートのフォーマットへエクスポート"
 
 #: ../raster/r.out.gdal/main.c:132
+#: ../locale/scriptstrings/r.out.gdal.sh_to_translate.c:3
 msgid "List supported output formats"
 msgstr "サポートされている出力フォーマット一覧を表示"
 
@@ -8794,10 +8811,12 @@ msgid "Name of raster map (or group) to export"
 msgstr "エクスポートするラスターマップ（またはグループ）名"
 
 #: ../raster/r.out.gdal/main.c:154
+#: ../locale/scriptstrings/r.out.gdal.sh_to_translate.c:6
 msgid "GIS format to write (case sensitive, see also -l flag)"
 msgstr "書き出すGISフォーマット(大文字小文字を区別、 -l フラッグの説明を参照)"
 
 #: ../raster/r.out.gdal/main.c:175
+#: ../locale/scriptstrings/r.out.gdal.sh_to_translate.c:7
 msgid "File type"
 msgstr "ファイルタイプ"
 
@@ -8810,6 +8829,7 @@ msgid "Creation option(s) to pass to the output format driver"
 msgstr "ファイル作成に関するオプションを指定"
 
 #: ../raster/r.out.gdal/main.c:192
+#: ../locale/scriptstrings/d.out.file_to_translate.c:21
 msgid "In the form of \"NAME=VALUE\", separate multiple entries with a comma."
 msgstr ""
 "オプションの指定は\"NAME=VALUE\"の形式で、複数指定の場合はカンマで区切る"
@@ -9077,8 +9097,8 @@ msgstr ""
 #: ../raster/r.out.gdal/export_band.c:215
 #, c-format
 msgid ""
-"The given nodata value is present in rasterband <%s> and would lead to data "
-"loss. Please specify a different nodata value with the %s parameter."
+"The user given nodata value %g is present in rasterband <%s> and would lead "
+"to data loss. Please specify a different nodata value with the %s parameter."
 msgstr ""
 
 #: ../raster/r.out.gdal/export_band.c:259
@@ -10017,6 +10037,7 @@ msgid "Converts a raster map into a vector map layer."
 msgstr "ラスターマップをベクトルマップレイヤーに変換します. "
 
 #: ../raster/r.to.vect/main.c:64 ../vector/v.to.db/parse.c:36
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:6
 msgid "Feature type"
 msgstr "地物フィーチャ"
 
@@ -11668,6 +11689,7 @@ msgstr ""
 "ます.  "
 
 #: ../raster/r.topidx/main.c:42
+#: ../locale/scriptstrings/r.shaded.relief_to_translate.c:3
 msgid "Input elevation map"
 msgstr "入力標高マップ"
 
@@ -11695,6 +11717,7 @@ msgstr "トポグラフィーのインデックスマップを書き込んでい
 
 #: ../raster/r.univar2/r.univar_main.c:40
 #: ../raster/r.univar2/r3.univar_main.c:39 ../vector/v.univar/main.c:92
+#: ../locale/scriptstrings/v.rast.stats_to_translate.c:10
 msgid "Percentile to calculate (requires extended statistics flag)"
 msgstr "計算するパーセンテージ（拡張統計解析フラッグには必須）"
 
@@ -11705,6 +11728,7 @@ msgstr "シェルスクリプトスタイルの統計を出力します"
 
 #: ../raster/r.univar2/r.univar_main.c:49
 #: ../raster/r.univar2/r3.univar_main.c:48 ../vector/v.univar/main.c:100
+#: ../locale/scriptstrings/v.rast.stats_to_translate.c:4
 msgid "Calculate extended statistics"
 msgstr "拡張統計解析を行います"
 
@@ -12340,13 +12364,17 @@ msgstr "グループのアクセス"
 msgid "Access for others"
 msgstr "他のアクセス"
 
-#: ../general/g.access/main.c:63
+#: ../general/g.access/main.c:59
+msgid "UNIX filesystem access controls are not supported by MS-Windows"
+msgstr ""
+
+#: ../general/g.access/main.c:67
 msgid "Access to the PERMANENT mapset must be open, nothing changed"
 msgstr ""
 "PERMANENTマップセットへのアクセスは開かれてなければなりません, 何も変更されま"
 "せんでした"
 
-#: ../general/g.access/main.c:67
+#: ../general/g.access/main.c:71
 msgid "Unable to determine mapset permissions"
 msgstr "マップセット許可を決定できません"
 
@@ -13155,6 +13183,8 @@ msgid "Use extended regular expressions instead of wildcards"
 msgstr "ワイルドカードの代わりに拡張された正規表現を使用してください"
 
 #: ../general/g.mremove/main.c:76
+#: ../locale/scriptstrings/db.droptable_to_translate.c:3
+#: ../locale/scriptstrings/db.dropcol_to_translate.c:3
 msgid "Force removal (required for actual deletion of files)"
 msgstr "強制削除 (実際ファイル削除に必要)"
 
@@ -13347,6 +13377,8 @@ msgid "Print the maximum bounding box in lat/long on WGS84"
 msgstr "WGS84の緯度経度で最大境界ボックスを表示"
 
 #: ../general/g.region/main.c:133
+#: ../locale/scriptstrings/r.regression.line_to_translate.c:3
+#: ../locale/scriptstrings/i.oif_to_translate.c:9
 msgid "Print in shell script style"
 msgstr "シェルスクリプト形式で表示"
 
@@ -13616,6 +13648,8 @@ msgstr ""
 #: ../display/d.text/main.c:66 ../display/d.rast.num/number.c:84
 #: ../display/d.nviz/main.c:68 ../display/d.zoom/main.c:57
 #: ../visualization/ximgview/main.c:270
+#: ../locale/scriptstrings/d.rast.leg_to_translate.c:2
+#: ../locale/scriptstrings/d.redraw_to_translate.c:2
 msgid "display"
 msgstr "表示"
 
@@ -14051,6 +14085,13 @@ msgstr "グリッドカラー"
 
 #: ../display/d.grid/main.c:76 ../display/d.grid/main.c:81
 #: ../display/d.grid/main.c:87
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:27
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:30
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:33
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:36
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:39
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:55
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:57
 msgid "Color"
 msgstr "色"
 
@@ -14538,6 +14579,10 @@ msgstr ""
 "\n"
 
 #: ../display/d.extend/main.c:31
+#: ../locale/scriptstrings/d.split_to_translate.c:2
+#: ../locale/scriptstrings/d.resize_to_translate.c:2
+#: ../locale/scriptstrings/d.monsize_to_translate.c:2
+#: ../locale/scriptstrings/d.mvmon_to_translate.c:2
 msgid "display, setup"
 msgstr "表示、セットアップ"
 
@@ -14547,10 +14592,12 @@ msgstr "ラスターもベクトルマップも表示されません "
 
 #: ../display/d.rast.edit/main.c:59 ../display/d.colortable/main.c:60
 #: ../display/d.rast/main.c:51
+#: ../locale/scriptstrings/d.rast.edit_to_translate.c:2
 msgid "display, raster"
 msgstr "表示、ラスター"
 
 #: ../display/d.rast.edit/main.c:61
+#: ../locale/scriptstrings/d.rast.edit_to_translate.c:1
 msgid "Interactively edit cell values in a raster map."
 msgstr "ラスターマップにおいてセル値をインタラクティブに編集します"
 
@@ -14598,6 +14645,8 @@ msgstr ""
 "グラフィックモニターの作動中のフレームにおけるラスターマップ凡例を表示します"
 
 #: ../display/d.legend/main.c:92 ../display/d.zoom/main.c:90
+#: ../locale/scriptstrings/d.rast.leg_to_translate.c:5
+#: ../locale/scriptstrings/r.univar.sh_to_translate.c:4
 msgid "Name of raster map"
 msgstr "ラスターマップ名"
 
@@ -14616,13 +14665,6 @@ msgstr "テキストラインの数 (長い凡例の切捨てに有用)"
 #: ../display/d.legend/main.c:180 ../display/d.legend/main.c:185
 #: ../vector/v.buffer/main.c:279 ../vector/v.buffer/main.c:287
 #: ../vector/v.buffer/main.c:294 ../vector/v.buffer/main.c:304
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:208
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:217
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:227
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:237
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:247
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:257
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:267
 msgid "Advanced"
 msgstr "アドバンス "
 
@@ -14667,6 +14709,7 @@ msgid "Draw smooth gradient"
 msgstr "穏やかな勾配を描きます"
 
 #: ../display/d.legend/main.c:184
+#: ../locale/scriptstrings/d.rast.leg_to_translate.c:3
 msgid "Flip legend"
 msgstr "凡例の反転 "
 
@@ -16301,6 +16344,7 @@ msgstr ""
 "ユーザーは現在の地理領域の設定をマウスでインタラクティブに変更できます."
 
 #: ../display/d.zoom/main.c:100
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:4
 msgid "Name of vector map"
 msgstr "ベクトルマップ名"
 
@@ -16674,6 +16718,7 @@ msgstr "cat %d に属性を見つけられませんでした: %s"
 #: ../vector/v.external/main.c:58 ../vector/v.clean/test/topocheck.c:42
 #: ../vector/v.buffer/main.c:254 ../vector/v.info/main.c:257
 #: ../vector/v.surf.rst/main.c:161
+#: ../locale/scriptstrings/v.build.all_to_translate.c:2
 msgid "vector"
 msgstr "ベクトル"
 
@@ -16778,6 +16823,15 @@ msgstr "行: %s を挿入できません"
 
 #: ../vector/v.db.select/main.c:52 ../vector/v.to.db/main.c:33
 #: ../vector/v.distance/main.c:115 ../vector/v.db.connect/main.c:50
+#: ../locale/scriptstrings/v.what.vect_to_translate.c:2
+#: ../locale/scriptstrings/v.db.update_to_translate.c:2
+#: ../locale/scriptstrings/v.db.renamecol_to_translate.c:2
+#: ../locale/scriptstrings/v.db.reconnect.all_to_translate.c:2
+#: ../locale/scriptstrings/v.db.droptable_to_translate.c:2
+#: ../locale/scriptstrings/v.db.join_to_translate.c:2
+#: ../locale/scriptstrings/v.db.addtable_to_translate.c:2
+#: ../locale/scriptstrings/v.db.dropcol_to_translate.c:2
+#: ../locale/scriptstrings/v.db.addcol_to_translate.c:2
 msgid "vector, database, attribute table"
 msgstr "ベクトル、データベース、属性テーブル"
 
@@ -16911,6 +16965,7 @@ msgid "Required for operation 'connect'"
 msgstr "オペレーション '接続'に必要です  "
 
 #: ../vector/v.net/main.c:69
+#: ../locale/scriptstrings/g.extension_to_translate.c:5
 msgid "Operation to be performed"
 msgstr "実行するオペレーション"
 
@@ -17316,6 +17371,8 @@ msgstr "データベースにおいて書き込み不可能"
 #: ../vector/v.qcount/main.c:69 ../vector/v.kcv/main.c:76
 #: ../vector/v.class/main.c:45 ../vector/v.normal/main.c:79
 #: ../vector/v.univar/main.c:64
+#: ../locale/scriptstrings/v.univar.sh_to_translate.c:2
+#: ../locale/scriptstrings/v.db.univar_to_translate.c:2
 msgid "vector, statistics"
 msgstr "ベクトル, 統計  "
 
@@ -18134,6 +18191,9 @@ msgstr "ベクトルマップ <%s> はこのマップセットに見つかりま
 
 #: ../vector/v.in.ogr/main.c:101 ../vector/v.in.dxf/main.c:60
 #: ../vector/v.in.dwg/main.c:65 ../vector/v.in.ascii/in.c:48
+#: ../locale/scriptstrings/v.convert.all_to_translate.c:2
+#: ../locale/scriptstrings/v.in.e00_to_translate.c:2
+#: ../locale/scriptstrings/v.in.mapgen_to_translate.c:2
 msgid "vector, import"
 msgstr "ベクトル、インポート"
 
@@ -19301,6 +19361,11 @@ msgid "Path to resulting VTK file"
 msgstr "VTKファイルへのパス"
 
 #: ../vector/v.out.vtk/main.c:83
+#: ../locale/scriptstrings/v.report_to_translate.c:6
+#: ../locale/scriptstrings/v.out.gpsbabel_to_translate.c:10
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:17
+#: ../locale/scriptstrings/v.rast.stats_to_translate.c:6
+#: ../locale/scriptstrings/v.centroids_to_translate.c:6
 msgid "Layer number"
 msgstr "レイヤー数"
 
@@ -19367,6 +19432,9 @@ msgstr "区切り(簡易表示のときのみ有効）"
 
 #: ../vector/v.out.ascii/out.c:67 ../vector/v.out.ascii/out.c:77
 #: ../vector/v.out.ascii/out.c:84 ../vector/v.out.ascii/out.c:97
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:18
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:20
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:23
 msgid "Points"
 msgstr "ポイント"
 
@@ -19619,6 +19687,7 @@ msgid "Import polyface meshes as 3D wire frame"
 msgstr "3Dワイヤーフレームにしたがってpolyface meshをインポートします"
 
 #: ../vector/v.in.dxf/main.c:82 ../vector/v.in.dwg/main.c:96
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:3
 msgid "List available layers and exit"
 msgstr "使用可能なマップセットの一覧表示"
 
@@ -20754,6 +20823,11 @@ msgid "Produces a convex hull for a given vector map."
 msgstr ""
 
 #: ../vector/v.hull/main.c:278
+#: ../locale/scriptstrings/v.report_to_translate.c:5
+#: ../locale/scriptstrings/v.out.gpsbabel_to_translate.c:6
+#: ../locale/scriptstrings/v.colors_to_translate.c:3
+#: ../locale/scriptstrings/v.dissolve_to_translate.c:3
+#: ../locale/scriptstrings/v.centroids_to_translate.c:3
 msgid "Name of input vector map"
 msgstr "入力するベクトルマップ名"
 
@@ -23980,6 +24054,7 @@ msgid "Feature ids (by default all features are processed)"
 msgstr "フィーチャー ID (全てのフィーチャーが処理されます)  "
 
 #: ../vector/v.category/main.c:112
+#: ../locale/scriptstrings/v.centroids_to_translate.c:8
 msgid "Category increment"
 msgstr "カテゴリーが増加"
 
@@ -24892,6 +24967,7 @@ msgid "Image"
 msgstr "画像"
 
 #: ../visualization/nviz2/cmd/args.c:87
+#: ../locale/scriptstrings/d.out.file_to_translate.c:4
 msgid "Graphics file format"
 msgstr "グラフィックファイルフォーマット"
 
@@ -25241,119 +25317,6 @@ msgstr "カテゴリー %d のデータベース レコード取得中にエラ�
 #, c-format
 msgid "Unable to copy attribute table to vector map <%s>"
 msgstr "属性テーブルをベクトルマップ <%s> へコピーできません"
-
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/opennew.c:19
-#, c-format
-msgid "Failed in attempt to open %s"
-msgstr "%s を開けませんでした"
-
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:155
-msgid ""
-"Generates raster map layers of slope, aspect, curvatures and partial "
-"derivatives from a raster map layer of true elevation values. Aspect is "
-"calculated counterclockwise from east."
-msgstr ""
-"真の標高値ラスターマップレイヤーから、斜面、方位、曲面、偏導関数のラスター"
-"マップを作成します.　方位は東から反時計回りに計算します"
-
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:164
-msgid "Raster elevation file name"
-msgstr "ラスター標高ファイル名"
-
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:172
-msgid "Output slope filename"
-msgstr "傾斜を出力するファイル名"
-
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:180
-msgid "Output aspect filename"
-msgstr "方位を出力するファイル名"
-
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:207
-msgid "Output profile curvature filename"
-msgstr "断面曲率を出力するファイル名"
-
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:216
-msgid "Output tangential curvature filename"
-msgstr "正接曲率を出力するファイル名"
-
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:226
-msgid "Output first order partial derivative dx (E-W slope) filename"
-msgstr "一次の偏導関数 dx (E-W 傾斜) を出力するファイル名"
-
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:236
-msgid "Output first order partial derivative dy (N-S slope) filename"
-msgstr "一次の偏導関数 dy (N-S 傾斜) を出力するファイル名"
-
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:246
-msgid "Output second order partial derivative dxx filename"
-msgstr "二次の偏導関数 dxx を出力するファイル名"
-
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:256
-msgid "Output second order partial derivative dyy filename"
-msgstr "二次の偏導関数 dyy を出力するファイル名"
-
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:266
-msgid "Output second order partial derivative dxy filename"
-msgstr "二次の偏導関数 dxy を出力するファイル名"
-
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:412
-#, c-format
-msgid "wrong type: %s"
-msgstr "間違ったタイプ： %s"
-
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:1021
-msgid "Creating support files..."
-msgstr "サポートファイルを作成中..."
-
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:1023
-#, c-format
-msgid "Elevation products for mapset [%s] in [%s]"
-msgstr "マップセット [%s] （[%s] 内）の標高のプロダクト"
-
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:1104
-#, c-format
-msgid "ASPECT [%s] COMPLETE"
-msgstr "方位 [%s] 完了"
-
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:1197
-#, c-format
-msgid "SLOPE [%s] COMPLETE"
-msgstr "傾斜 [%s] 完了"
-
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:1268
-#, c-format
-msgid "PROFILE CURVE [%s] COMPLETE"
-msgstr "プロファイル曲線 [%s] 完了"
-
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:1294
-#, c-format
-msgid "TANGENTIAL CURVE [%s] COMPLETE"
-msgstr "正接曲線 [%s] 完了"
-
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:1318
-#, c-format
-msgid "E-W SLOPE [%s] COMPLETE"
-msgstr "E-W 傾斜 [%s] 完了"
-
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:1342
-#, c-format
-msgid "N-S SLOPE [%s] COMPLETE"
-msgstr "N-S 傾斜 [%s] 完了"
-
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:1366
-#, c-format
-msgid "DXX [%s] COMPLETE"
-msgstr "DXX [%s] 完了"
-
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:1390
-#, c-format
-msgid "DYY [%s] COMPLETE"
-msgstr "DYY [%s] 完了"
-
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:1414
-#, c-format
-msgid "DXY [%s] COMPLETE"
-msgstr "DXY [%s] 完了"
 
 #: ../ps/ps.map/ps_vlines.c:55 ../ps/ps.map/ps_vpoints.c:71
 #: ../ps/ps.map/ps_vareas.c:163
@@ -25793,6 +25756,11 @@ msgstr "データベースを開けません:"
 
 #: ../db/base/columns.c:92 ../db/base/drivers.c:74 ../db/base/connect.c:45
 #: ../db/base/describe.c:125 ../db/base/tables.c:95
+#: ../locale/scriptstrings/db.test_to_translate.c:2
+#: ../locale/scriptstrings/db.out.ogr_to_translate.c:2
+#: ../locale/scriptstrings/db.droptable_to_translate.c:2
+#: ../locale/scriptstrings/db.dropcol_to_translate.c:2
+#: ../locale/scriptstrings/db.in.ogr_to_translate.c:2
 msgid "database, attribute table"
 msgstr "データベース、属性テーブル"
 
@@ -26081,6 +26049,2141 @@ msgstr "ユーザー/パスワードの設定ができません。"
 msgid "The password was stored in file"
 msgstr "パスワードはファイルに保存されました。"
 
+#: ../locale/scriptstrings/d.split_to_translate.c:1
+msgid ""
+"Divides active display into two frames & displays maps/executes commands in "
+"each frame."
+msgstr ""
+"アクティブなディスプレイを2つのフレームに分ける＆各フレームのマップ/実行コマ"
+"ンドを表示する"
+
+#: ../locale/scriptstrings/d.split_to_translate.c:3
+msgid "Enter raster map to display in 1st frame"
+msgstr "第1フレームに表示用ラスターマップを入力"
+
+#: ../locale/scriptstrings/d.split_to_translate.c:4
+msgid "Enter command to execute in 1st frame"
+msgstr "第1フレームに実行コマンドを入力"
+
+#: ../locale/scriptstrings/d.split_to_translate.c:5
+msgid "Enter raster map to display in 2nd frame"
+msgstr "第2フレームに表示用ラスターマップを入力"
+
+#: ../locale/scriptstrings/d.split_to_translate.c:6
+msgid "Enter command to execute in 2nd frame"
+msgstr "第2フレームに実行コマンドを入力"
+
+#: ../locale/scriptstrings/d.split_to_translate.c:7
+msgid "How to split display"
+msgstr "ディスプレイの分割方法"
+
+#: ../locale/scriptstrings/i.spectral_to_translate.c:1
+msgid ""
+"Displays spectral response at user specified locations in group or images."
+msgstr ""
+"グループあるいは画像内のロケーションを明確にしたユーザーにスペクトル感度を表"
+"示する"
+
+#: ../locale/scriptstrings/i.spectral_to_translate.c:2
+msgid "imagery, raster, multispectral"
+msgstr "画像、ラスター、マルチスペクトル"
+
+#: ../locale/scriptstrings/i.spectral_to_translate.c:3
+msgid "Group input"
+msgstr "グループ入力"
+
+#: ../locale/scriptstrings/i.spectral_to_translate.c:4
+msgid "Raster input maps"
+msgstr "ラスター入力マップ"
+
+#: ../locale/scriptstrings/i.spectral_to_translate.c:5
+msgid "Write output to PNG image"
+msgstr "PNG画像に出力を書き込む"
+
+#: ../locale/scriptstrings/i.spectral_to_translate.c:6
+msgid "Use image list and not group"
+msgstr "グループではなく画像リストの使用"
+
+#: ../locale/scriptstrings/i.spectral_to_translate.c:7
+msgid "Select multiple points"
+msgstr "重複ポイントを選択"
+
+#: ../locale/scriptstrings/i.spectral_to_translate.c:8
+msgid "Label with coordinates instead of numbering"
+msgstr "番号付けの代わりに座標をラベル付けする"
+
+#: ../locale/scriptstrings/v.convert.all_to_translate.c:1
+msgid ""
+"Convert all old GRASS < Ver5.7 vector maps in current mapset to current "
+"format"
+msgstr ""
+"現在のマップセット内のすべての前のGRASS < Ver5.7 ベクトルマップ を現在の"
+"フォーマットに変換する"
+
+#: ../locale/scriptstrings/v.convert.all_to_translate.c:3
+msgid "run non-interactively"
+msgstr "非対話形式で実行"
+
+#: ../locale/scriptstrings/r.out.gdal.sh_to_translate.c:1
+msgid "Exports GRASS raster into GDAL supported formats."
+msgstr "GRASSラスターマップをGDALのサポートされたフォーマットにエクスポート"
+
+#: ../locale/scriptstrings/r.out.gdal.sh_to_translate.c:4
+msgid "Region sensitive output"
+msgstr "領域の精度の高い出力"
+
+#: ../locale/scriptstrings/r.out.gdal.sh_to_translate.c:9
+msgid ""
+"Creation option to the output format driver. Multiple options may be listed"
+msgstr ""
+"出力するフォーマットドライバーの作成オプション．重複したオプションがリストさ"
+"れています"
+
+#: ../locale/scriptstrings/r.out.gdal.sh_to_translate.c:10
+msgid "Metadata key passed on the output dataset if possible"
+msgstr "可能であれば，メタデータキーを出力するデータセットへ譲渡"
+
+#: ../locale/scriptstrings/r.regression.line_to_translate.c:1
+msgid "Calculates linear regression from two raster maps: y = a + b*x"
+msgstr "2つのラスターマップから直線回帰を計算する: y = a + b*x  "
+
+#: ../locale/scriptstrings/r.regression.line_to_translate.c:4
+msgid "Slower but accurate (applies to FP maps only)"
+msgstr "遅いですが正確です (FPマップのみ適用)  "
+
+#: ../locale/scriptstrings/r.regression.line_to_translate.c:5
+msgid "Map for x coefficient"
+msgstr "x係数のマップ"
+
+#: ../locale/scriptstrings/r.regression.line_to_translate.c:6
+msgid "Map for y coefficient"
+msgstr "y係数のマップ"
+
+#: ../locale/scriptstrings/r.regression.line_to_translate.c:7
+msgid ""
+"ASCII file for storing regression coefficients (output to screen if file not "
+"specified)."
+msgstr ""
+"回帰係数を保存するASCII ファイル (ファイルが特定されていない場合スクリーンに"
+"出力).  "
+
+#: ../locale/scriptstrings/v.in.e00_to_translate.c:1
+msgid "Import E00 file into a vector map."
+msgstr "ベクトルマップへE00ファイルをインポート"
+
+#: ../locale/scriptstrings/v.in.e00_to_translate.c:4
+msgid "E00 file"
+msgstr "E00ファイル"
+
+#: ../locale/scriptstrings/v.in.e00_to_translate.c:5
+msgid "Input type point, line or area"
+msgstr "ポイント、ライン、エリアの入力タイプ"
+
+#: ../locale/scriptstrings/v.in.e00_to_translate.c:6
+#: ../locale/scriptstrings/v.in.gns_to_translate.c:4
+#: ../locale/scriptstrings/v.in.geonames_to_translate.c:4
+#: ../locale/scriptstrings/v.dissolve_to_translate.c:4
+#: ../locale/scriptstrings/v.centroids_to_translate.c:4
+msgid "Name for output vector map"
+msgstr "出力するベクトルマップ名"
+
+#: ../locale/scriptstrings/r.plane_to_translate.c:1
+msgid ""
+"Creates raster plane map given dip (inclination), aspect (azimuth) and one "
+"point."
+msgstr ""
+" くぼみ (傾斜)、 方位 (アジマス) 、1点 が与えられたラスター平面マップの作成"
+
+#: ../locale/scriptstrings/r.plane_to_translate.c:2
+#: ../locale/scriptstrings/r.shaded.relief_to_translate.c:2
+msgid "raster, elevation"
+msgstr "ラスター、標高"
+
+#: ../locale/scriptstrings/r.plane_to_translate.c:3
+msgid "Name of raster plane to be created"
+msgstr "作成したラスター平面マップ名"
+
+#: ../locale/scriptstrings/r.plane_to_translate.c:4
+msgid "Dip of plane. Value must be between -90 and 90 degrees"
+msgstr "平面のくぼみ。 値は-90から90度の間でなくてはなりません。  "
+
+#: ../locale/scriptstrings/r.plane_to_translate.c:5
+msgid "Azimuth of the plane. Value must be between 0 and 360 degrees"
+msgstr "平面の方位（アジマス）。 値は0から360度の間でなくてはなりません。"
+
+#: ../locale/scriptstrings/r.plane_to_translate.c:6
+msgid "Easting coordinate of a point on the plane"
+msgstr "平面上のポイントの東座標"
+
+#: ../locale/scriptstrings/r.plane_to_translate.c:7
+msgid "Northing coordinate of a point on the plane"
+msgstr "平面上のポイントの北座標"
+
+#: ../locale/scriptstrings/r.plane_to_translate.c:8
+msgid "Elevation coordinate of a point on the plane"
+msgstr "平面上のポイントの標高座標"
+
+#: ../locale/scriptstrings/r.plane_to_translate.c:9
+msgid "Type of the raster map to be created"
+msgstr "作成されたラスターマップのタイプ"
+
+#: ../locale/scriptstrings/m.proj_to_translate.c:1
+msgid "Convert coordinates from one projection to another (cs2cs frontend)."
+msgstr "1つの投影から他に座標を変換する (cs2cs フロントエンド).  "
+
+#: ../locale/scriptstrings/m.proj_to_translate.c:2
+msgid "miscellaneous, projection"
+msgstr "さまざまな投影"
+
+#: ../locale/scriptstrings/m.proj_to_translate.c:3
+msgid "Input coordinate file (omit to read from stdin)"
+msgstr "入力する座標ファイル（標準入力からの読み取りを除く）"
+
+#: ../locale/scriptstrings/m.proj_to_translate.c:4
+msgid "Output coordinate file (omit to send to stdout)"
+msgstr "出力する座標ファイル（標準出力への送信を除く）"
+
+#: ../locale/scriptstrings/m.proj_to_translate.c:5
+#: ../locale/scriptstrings/r.out.xyz_to_translate.c:5
+msgid "Field separator"
+msgstr "フィールドセパレーター"
+
+#: ../locale/scriptstrings/m.proj_to_translate.c:6
+msgid "Input projection parameters (PROJ.4 style)"
+msgstr "入力する投影パラメータ (PROJ.4 スタイル)"
+
+#: ../locale/scriptstrings/m.proj_to_translate.c:7
+msgid "Output projection parameters (PROJ.4 style)"
+msgstr "出力する投影パラメータ (PROJ.4 スタイル)"
+
+#: ../locale/scriptstrings/m.proj_to_translate.c:8
+msgid "Use LL WGS84 as input and current location as output projection"
+msgstr "入力に LL WGS84、 出力する投影に現在のロケーションを使用"
+
+#: ../locale/scriptstrings/m.proj_to_translate.c:9
+msgid "Use current location as input and LL WGS84 as output projection"
+msgstr "入力に現在のロケーション、出力する投影に LL WGS84を使用"
+
+#: ../locale/scriptstrings/m.proj_to_translate.c:10
+msgid ""
+"Output long/lat in decimal degrees or other projections with many decimal "
+"places"
+msgstr "十進法あるいは小数位で他の投影で 出力する 経度/緯度 "
+
+#: ../locale/scriptstrings/m.proj_to_translate.c:11
+msgid ""
+"Script style output in CSV format respecting the field separator settings"
+msgstr ""
+"フィールドセパレーター設定に関するCSVフォーマットのスクリプトスタイルアウト"
+"プット"
+
+#: ../locale/scriptstrings/m.proj_to_translate.c:12
+msgid "Verbose mode (print projection parameters and filenames to stderr)"
+msgstr "冗長モード（標準誤差の投影パラメータとファイル名を出力する）"
+
+#: ../locale/scriptstrings/d.out.file_to_translate.c:1
+msgid "Saves the contents of the active display monitor to a graphics file."
+msgstr "アクティブディスプレイモニターのコンテンツを画像ファイルに保存する"
+
+#: ../locale/scriptstrings/d.out.file_to_translate.c:2
+#: ../locale/scriptstrings/d.out.png_to_translate.c:2
+msgid "display, export"
+msgstr "ディスプレイ、エクスポート"
+
+#: ../locale/scriptstrings/d.out.file_to_translate.c:3
+msgid "Name for output file (do NOT add extension)"
+msgstr "出力するファイル名（拡張子を追加しないでください）"
+
+#: ../locale/scriptstrings/d.out.file_to_translate.c:5
+msgid "Dimensions of output file versus current window size"
+msgstr "出力ファイルの次元 対 現在のウインドウサイズ"
+
+#: ../locale/scriptstrings/d.out.file_to_translate.c:6
+msgid "(same=1, double size=2, quadruple size=4)"
+msgstr "(同じ=1, 2倍=2, 4倍=4)  "
+
+#: ../locale/scriptstrings/d.out.file_to_translate.c:7
+#: ../locale/scriptstrings/d.out.file_to_translate.c:9
+#: ../locale/scriptstrings/d.out.file_to_translate.c:12
+#: ../locale/scriptstrings/d.out.file_to_translate.c:15
+#: ../locale/scriptstrings/d.out.file_to_translate.c:28
+#: ../locale/scriptstrings/d.out.file_to_translate.c:30
+msgid "Images"
+msgstr "画像"
+
+#: ../locale/scriptstrings/d.out.file_to_translate.c:8
+msgid "Width and height of output image (overrides resolution setting)"
+msgstr "出力する画像の幅と高さ（解像度設定を無効にする）"
+
+#: ../locale/scriptstrings/d.out.file_to_translate.c:10
+msgid "Compression for PNG files"
+msgstr "PNGファイルの圧縮"
+
+#: ../locale/scriptstrings/d.out.file_to_translate.c:11
+msgid "(0=none, 1=fastest, 9=most; lossless, only time vs. filesize)"
+msgstr "(0=なし, 1=最速, 9=最大; 可逆, 時間 対 ファイルサイズ)  "
+
+#: ../locale/scriptstrings/d.out.file_to_translate.c:13
+msgid "File size/quality for JPEG files"
+msgstr "JPEGファイルのサイズ/質"
+
+#: ../locale/scriptstrings/d.out.file_to_translate.c:14
+msgid "(10=smallest/worst, 100=largest/best)"
+msgstr "(10=最小/最低, 100=最大/最高)  "
+
+#: ../locale/scriptstrings/d.out.file_to_translate.c:16
+msgid "Paper size for PostScript output"
+msgstr "PostScript出力の用紙サイズ"
+
+#: ../locale/scriptstrings/d.out.file_to_translate.c:17
+#: ../locale/scriptstrings/d.out.file_to_translate.c:19
+#: ../locale/scriptstrings/d.out.file_to_translate.c:32
+msgid "PostScript"
+msgstr "ポストスクリプト"
+
+#: ../locale/scriptstrings/d.out.file_to_translate.c:18
+msgid "PostScript level (only limits functionality!)"
+msgstr "ポストスクリプトレベル (機能性の制限のみ!)  "
+
+#: ../locale/scriptstrings/d.out.file_to_translate.c:20
+msgid "GeoTIFF creation option(s)"
+msgstr "GeoTIFF 作成オプション"
+
+#: ../locale/scriptstrings/d.out.file_to_translate.c:22
+#: ../locale/scriptstrings/d.out.file_to_translate.c:25
+#: ../locale/scriptstrings/d.out.file_to_translate.c:34
+msgid "GeoTIFF"
+msgstr "GeoTIFF"
+
+#: ../locale/scriptstrings/d.out.file_to_translate.c:23
+msgid "GeoTIFF metadata key(s) and value(s) to add"
+msgstr "追加するGeoTIFF メタデータキーと値 "
+
+#: ../locale/scriptstrings/d.out.file_to_translate.c:24
+msgid ""
+"In the form of \"META-TAG=VALUE\", separate multiple entries with a comma."
+msgstr " \"META-TAG=VALUE\"のフォーム、コンマで重複する項目を分ける"
+
+#: ../locale/scriptstrings/d.out.file_to_translate.c:26
+msgid "Set background color to black (white default)"
+msgstr "背景の色を黒に設定（白は既定色）"
+
+#: ../locale/scriptstrings/d.out.file_to_translate.c:27
+msgid "Set transparent background"
+msgstr "背景を透明に設定"
+
+#: ../locale/scriptstrings/d.out.file_to_translate.c:29
+msgid "Use the Cario driver to render images"
+msgstr "画像レンダーリングのCarioドライバーを使用"
+
+#: ../locale/scriptstrings/d.out.file_to_translate.c:31
+msgid "Set paper orientation to landscape (for PostScript output)"
+msgstr "用紙の向きを横方向に設定する（ポストスクリプト出力）"
+
+#: ../locale/scriptstrings/d.out.file_to_translate.c:33
+msgid "Do not crop away margins"
+msgstr "余白を切り取らないでください。"
+
+#: ../locale/scriptstrings/db.test_to_translate.c:1
+msgid "Test database driver, database must exist and set by db.connect."
+msgstr ""
+"テストデータベースドライバー、データベースは存在し、db.接続に設定しなければな"
+"りません。"
+
+#: ../locale/scriptstrings/db.test_to_translate.c:3
+msgid "Test name"
+msgstr "テスト名"
+
+#: ../locale/scriptstrings/r.tileset_to_translate.c:1
+msgid ""
+"Produces tilings of the source projection for use in the destination region "
+"and projection."
+msgstr "目的領域と投影の使用のためのソース投影タイルを作成する"
+
+#: ../locale/scriptstrings/r.tileset_to_translate.c:2
+msgid "raster, tiling"
+msgstr "ラスター、タイル表示"
+
+#: ../locale/scriptstrings/r.tileset_to_translate.c:3
+msgid "Produces shell script output"
+msgstr "シェルスクリプト出力を生産"
+
+#: ../locale/scriptstrings/r.tileset_to_translate.c:4
+msgid "Produces web map server query string output"
+msgstr "ウェブマップサーバー検索文字列アウトプットを作成する"
+
+#: ../locale/scriptstrings/r.tileset_to_translate.c:5
+msgid ""
+"Name of region to use instead of current region for bounds and resolution"
+msgstr "境界と解像度用の現在の領域の代わりに使用される領域名"
+
+#: ../locale/scriptstrings/r.tileset_to_translate.c:6
+msgid "Source projection"
+msgstr "ソース投影"
+
+#: ../locale/scriptstrings/r.tileset_to_translate.c:7
+#: ../locale/scriptstrings/r.tileset_to_translate.c:9
+msgid "Conversion factor from units to meters in source projection"
+msgstr "ユニットからソース投影のメーターへの換算率"
+
+#: ../locale/scriptstrings/r.tileset_to_translate.c:8
+msgid "Destination projection, defaults to this location's projection"
+msgstr "目的投影、このロケーション投影にデフォルトする"
+
+#: ../locale/scriptstrings/r.tileset_to_translate.c:10
+msgid "Maximum number of columns for a tile in the source projection"
+msgstr "ソース投影のタイルの列最大数"
+
+#: ../locale/scriptstrings/r.tileset_to_translate.c:11
+msgid "Maximum number of rows for a tile in the source projection"
+msgstr "ソース投影のタイルの行最大数"
+
+#: ../locale/scriptstrings/r.tileset_to_translate.c:12
+msgid "Number of cells tiles should overlap in each direction"
+msgstr "セルタイル数は各方向と重複しているべきです"
+
+#: ../locale/scriptstrings/r.tileset_to_translate.c:14
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:50
+msgid "Verbosity level"
+msgstr "詳細レベル"
+
+#: ../locale/scriptstrings/i.fusion.brovey_to_translate.c:1
+msgid ""
+"Brovey transform to merge multispectral and high-res panchromatic channels"
+msgstr "複数波長と高解像度パンクロチャンネルを統合するBrovey変換"
+
+#: ../locale/scriptstrings/i.fusion.brovey_to_translate.c:2
+msgid "imagery, fusion, Brovey"
+msgstr "画像、フュージョン、Brovey"
+
+#: ../locale/scriptstrings/i.fusion.brovey_to_translate.c:3
+msgid "LANDSAT sensor"
+msgstr "LANDSATセンサー"
+
+#: ../locale/scriptstrings/i.fusion.brovey_to_translate.c:4
+#: ../locale/scriptstrings/i.fusion.brovey_to_translate.c:6
+#: ../locale/scriptstrings/i.fusion.brovey_to_translate.c:8
+msgid "Sensor"
+msgstr "センサー"
+
+#: ../locale/scriptstrings/i.fusion.brovey_to_translate.c:5
+msgid "QuickBird sensor"
+msgstr "QuickBirdセンサー"
+
+#: ../locale/scriptstrings/i.fusion.brovey_to_translate.c:7
+msgid "SPOT sensor"
+msgstr "SPOTセンサー"
+
+#: ../locale/scriptstrings/i.fusion.brovey_to_translate.c:9
+msgid "Name of input raster map (green: tm2 | qbird_green | spot1)"
+msgstr "入力するラスターマップ名 (緑: tm2 | qbird_green | spot1)"
+
+#: ../locale/scriptstrings/i.fusion.brovey_to_translate.c:10
+msgid "Name of input raster map (NIR: tm4 | qbird_nir | spot2)"
+msgstr "入力するラスターマップ名 (NIR: tm4 | qbird_nir | spot2)"
+
+#: ../locale/scriptstrings/i.fusion.brovey_to_translate.c:11
+msgid "Name of input raster map (MIR; tm5 | qbird_red | spot3)"
+msgstr "入力するラスターマップ名 (MIR; tm5 | qbird_red | spot3)"
+
+#: ../locale/scriptstrings/i.fusion.brovey_to_translate.c:12
+msgid "Name of input raster map (etmpan | qbird_pan | spotpan)"
+msgstr "入力するラスターマップ名 (etmpan | qbird_pan | spotpan)"
+
+#: ../locale/scriptstrings/i.fusion.brovey_to_translate.c:13
+msgid "Name for output raster map prefix (e.g. 'brov')"
+msgstr "出力するラスターマッププリフィックス名 (例 'brov')"
+
+#: ../locale/scriptstrings/g.extension_to_translate.c:1
+msgid "Tool to maintain GRASS extensions in local GRASS installation."
+msgstr ""
+
+#: ../locale/scriptstrings/g.extension_to_translate.c:2
+msgid ""
+"Downloads, installs extensions from GRASS Addons SVN repository into local "
+"GRASS installation or removes installed extensions."
+msgstr ""
+
+#: ../locale/scriptstrings/g.extension_to_translate.c:3
+#, fuzzy
+msgid "general, extensions"
+msgstr "一般的な, 設定"
+
+#: ../locale/scriptstrings/g.extension_to_translate.c:4
+#, fuzzy
+msgid "Name of extension to install/remove"
+msgstr "作成する新しいロケーション名"
+
+#: ../locale/scriptstrings/g.extension_to_translate.c:6
+msgid "SVN Addons repository URL"
+msgstr ""
+
+#: ../locale/scriptstrings/g.extension_to_translate.c:7
+msgid "Prefix where to install extension"
+msgstr ""
+
+#: ../locale/scriptstrings/g.extension_to_translate.c:8
+#, fuzzy
+msgid "List available modules in the GRASS Addons SVN repository"
+msgstr "使用可能なルールの一覧表示"
+
+#: ../locale/scriptstrings/d.correlate_to_translate.c:1
+msgid "Prints a graph of the correlation between data layers (in pairs)."
+msgstr "データレイヤーの相関関係のグラフを出力する（ペア）"
+
+#: ../locale/scriptstrings/d.correlate_to_translate.c:2
+#: ../locale/scriptstrings/d.polar_to_translate.c:2
+msgid "display, diagram"
+msgstr "ディスプレイ、図表"
+
+#: ../locale/scriptstrings/d.correlate_to_translate.c:3
+#: ../locale/scriptstrings/d.correlate_to_translate.c:4
+#: ../locale/scriptstrings/d.correlate_to_translate.c:5
+#: ../locale/scriptstrings/d.correlate_to_translate.c:6
+msgid "raster input map"
+msgstr "ラスター入力マップ"
+
+#: ../locale/scriptstrings/i.image.mosaic_to_translate.c:1
+msgid "Mosaics up to 4 images and extends colormap; creates map *.mosaic"
+msgstr ""
+"モザイクは最大4つの画像まで、 カラーマップを拡張する; マップ *.mosaicを作成す"
+"る  "
+
+#: ../locale/scriptstrings/i.image.mosaic_to_translate.c:2
+msgid "raster, imagery, mosaicking"
+msgstr "ラスター、画像、モザイク"
+
+#: ../locale/scriptstrings/i.image.mosaic_to_translate.c:3
+msgid "1st map for mosaic (top of image stack)."
+msgstr "第1モザイクマップ (画像スタックの上部).  "
+
+#: ../locale/scriptstrings/i.image.mosaic_to_translate.c:4
+msgid "2nd map for mosaic."
+msgstr "第2モザイクマップ"
+
+#: ../locale/scriptstrings/i.image.mosaic_to_translate.c:5
+msgid "3rd map for mosaic."
+msgstr "第3モザイクマップ"
+
+#: ../locale/scriptstrings/i.image.mosaic_to_translate.c:6
+msgid "4th map for mosaic."
+msgstr "第4モザイクマップ"
+
+#: ../locale/scriptstrings/r.blend_to_translate.c:1
+msgid "Blends color components of two raster maps by a given ratio."
+msgstr "与えられた比率で2つのラスターマップのカラー要素を合わせる"
+
+#: ../locale/scriptstrings/r.blend_to_translate.c:3
+msgid "Name of first raster map for blending"
+msgstr "融合する第1ラスターマップ名"
+
+#: ../locale/scriptstrings/r.blend_to_translate.c:4
+msgid "Name of second raster map for blending"
+msgstr "融合する第2ラスターマップ名"
+
+#: ../locale/scriptstrings/r.blend_to_translate.c:5
+msgid "Base name for red, green and blue output maps containing the blend"
+msgstr "混合を含む赤、緑、青出力ファイルのベース名"
+
+#: ../locale/scriptstrings/r.blend_to_translate.c:6
+msgid "Percentage weight of first map for color blending"
+msgstr "カラー融合の最初のマップの重量パーセント"
+
+#: ../locale/scriptstrings/r.reclass.area_to_translate.c:1
+msgid ""
+"Reclasses a raster map greater or less than user specified area size (in "
+"hectares)."
+msgstr ""
+"ラスターマップをユーザーが特定したエリアサイズより大きく、あるいは小さく再分"
+"類する（ヘクタール）"
+
+#: ../locale/scriptstrings/r.reclass.area_to_translate.c:2
+msgid "raster, statistics, aggregation"
+msgstr "ラスター、統計値、集約 "
+
+#: ../locale/scriptstrings/r.reclass.area_to_translate.c:5
+msgid "Lesser value option that sets the <= area size limit [hectares]"
+msgstr "小さい値のオプション<= エリアサイズ制限[ヘクタール]"
+
+#: ../locale/scriptstrings/r.reclass.area_to_translate.c:6
+msgid "Greater value option that sets the >= area size limit [hectares]"
+msgstr "大きい値のオプション>= エリアサイズ [ヘクタール]  "
+
+#: ../locale/scriptstrings/v.what.vect_to_translate.c:1
+msgid "Uploads vector values at positions of vector points to the table."
+msgstr "ベクトルポイントの位置のベクトル値テーブルへアップロード"
+
+#: ../locale/scriptstrings/v.what.vect_to_translate.c:3
+msgid "Vector map to modify"
+msgstr "修正するベクトルマップ"
+
+#: ../locale/scriptstrings/v.what.vect_to_translate.c:4
+msgid "Layer in the vector to be modified"
+msgstr "修正されたベクトル内のレイヤー"
+
+#: ../locale/scriptstrings/v.what.vect_to_translate.c:5
+msgid "Column to be updated with the query result"
+msgstr "検索結果に更新される列"
+
+#: ../locale/scriptstrings/v.what.vect_to_translate.c:6
+msgid "Vector map to be queried"
+msgstr "問い合わせされたベクトルマップ"
+
+#: ../locale/scriptstrings/v.what.vect_to_translate.c:7
+msgid "Layer of the query vector containing data"
+msgstr "データを含む検索ベクトルレイヤー"
+
+#: ../locale/scriptstrings/v.what.vect_to_translate.c:8
+msgid "Column to be queried"
+msgstr "検索された列"
+
+#: ../locale/scriptstrings/v.what.vect_to_translate.c:9
+msgid "Maximum query distance in map units"
+msgstr "マップユニットの最大検索距離"
+
+#: ../locale/scriptstrings/r.in.srtm_to_translate.c:1
+msgid "Import SRTM HGT files into GRASS"
+msgstr "SRTM HGT ファイルを GRASSにインポート"
+
+#: ../locale/scriptstrings/r.in.srtm_to_translate.c:3
+msgid "SRTM input tile (file without .hgt.zip extension)"
+msgstr "SRTM 入力タイル ( .hgt.zip 拡張ファイルなし)  "
+
+#: ../locale/scriptstrings/r.in.srtm_to_translate.c:4
+msgid "Output raster map (default: input tile)"
+msgstr "出力するラスターマップ (初期値: 入力タイル)"
+
+#: ../locale/scriptstrings/r.in.srtm_to_translate.c:5
+msgid "Input is a 1-arcsec tile (default: 3-arcsec)"
+msgstr "入力は1-arcsec タイルです (デフォルト: 3-arcsec)"
+
+#: ../locale/scriptstrings/v.report_to_translate.c:1
+msgid "Reports geometry statistics for vectors."
+msgstr "ベクトルのジオメトリー統計をレポートする"
+
+#: ../locale/scriptstrings/v.report_to_translate.c:2
+msgid "vector, report, statistics"
+msgstr "ベクトル、レポート、統計値"
+
+#: ../locale/scriptstrings/v.report_to_translate.c:3
+msgid "Reverse sort the result"
+msgstr "結果のソートを無効にする"
+
+#: ../locale/scriptstrings/v.report_to_translate.c:4
+msgid "Sort the result"
+msgstr "結果をソートする"
+
+#: ../locale/scriptstrings/v.report_to_translate.c:7
+msgid "Value to calculate"
+msgstr "計算値"
+
+#: ../locale/scriptstrings/v.report_to_translate.c:8
+msgid "mi(les),f(eet),me(ters),k(ilometers),a(cres),h(ectares),p(ercent)"
+msgstr ""
+"マイル、フィート、メートル、キロメートル、エーカー、ヘクタール、パーセント"
+
+#: ../locale/scriptstrings/v.db.update_to_translate.c:1
+msgid ""
+"Allows to update a column in the attribute table connected to a vector map."
+msgstr "ベクトルマップに接続する属性テーブルの列のアップデートを許可する。"
+
+#: ../locale/scriptstrings/v.db.update_to_translate.c:3
+msgid "Vector map to edit the attribute table for"
+msgstr "属性テーブルを編集するベクトルマップ"
+
+#: ../locale/scriptstrings/v.db.update_to_translate.c:4
+msgid "Layer to which the table to be changed is connected"
+msgstr "変更されたテーブルのレイヤーは接続されました"
+
+#: ../locale/scriptstrings/v.db.update_to_translate.c:5
+msgid "Column to update"
+msgstr "アップデートする列"
+
+#: ../locale/scriptstrings/v.db.update_to_translate.c:6
+msgid ""
+"Value to update the column with (varchar values have to be in single quotes, "
+"e.g. 'grass')"
+msgstr ""
+"列をアップデートする値 (varchar値は一重引用符がないといけません、 例. "
+"'grass')  "
+
+#: ../locale/scriptstrings/v.db.update_to_translate.c:7
+msgid "Column to query"
+msgstr "検索する列"
+
+#: ../locale/scriptstrings/v.db.update_to_translate.c:8
+msgid ""
+"WHERE conditions for update, without 'where' keyword (e.g. cat=1 or col1/"
+"col2>1)"
+msgstr ""
+"'where' 句なしのアップデートのWHEREコンディション (例　cat=1 or col1/"
+"col2>1)  "
+
+#: ../locale/scriptstrings/d.rast.leg_to_translate.c:1
+msgid "Displays a raster map and its legend on a graphics window"
+msgstr "グラフィックウィンドウにラスターマップと凡例を表示します。"
+
+#: ../locale/scriptstrings/d.rast.leg_to_translate.c:4
+msgid "Omit entries with missing label"
+msgstr "ラベルのない項目のを除く"
+
+#: ../locale/scriptstrings/d.rast.leg_to_translate.c:6
+msgid "Number of lines to appear in the legend"
+msgstr "凡例に表示するライン数"
+
+#: ../locale/scriptstrings/d.rast.leg_to_translate.c:7
+msgid "Name of raster map to generate legend from"
+msgstr "凡例を作成するラスターマップ名"
+
+#: ../locale/scriptstrings/d.rast.leg_to_translate.c:8
+msgid "Name of raster map to print in legend"
+msgstr "凡例に出力されるラスターマップ名"
+
+#: ../locale/scriptstrings/d.rast.leg_to_translate.c:9
+msgid "Position of vertical map-legend separator (in percent)"
+msgstr "水平マップ－凡例セパレーターのポジション（パーセント）"
+
+#: ../locale/scriptstrings/d.out.gpsdrive_to_translate.c:1
+msgid "Export display monitor to a GpsDrive compatible backdrop image"
+msgstr " GpsDrive 互換性のある背景画像に表示モニターをエクスポート"
+
+#: ../locale/scriptstrings/d.out.gpsdrive_to_translate.c:2
+msgid "display, export, GPS"
+msgstr "ディスプレイ、エクスポート、GPS"
+
+#: ../locale/scriptstrings/d.out.gpsdrive_to_translate.c:3
+msgid "name for new map image (lives in ~/.gpsdrive/maps/)"
+msgstr "新しいマップ画像名 ( ~/.gpsdrive/maps/にあります)  "
+
+#: ../locale/scriptstrings/d.out.gpsdrive_to_translate.c:4
+msgid "Make JPEG instead of PNG image"
+msgstr "PNG画像の代わりにJPEGを作ります。"
+
+#: ../locale/scriptstrings/v.univar.sh_to_translate.c:1
+#: ../locale/scriptstrings/v.db.univar_to_translate.c:1
+msgid ""
+"Calculates univariate statistics on selected table column for a GRASS vector "
+"map."
+msgstr "GRASSベクトルマップの選択されたテーブル列の一変量の統計を計算します"
+
+#: ../locale/scriptstrings/v.univar.sh_to_translate.c:3
+#: ../locale/scriptstrings/v.db.univar_to_translate.c:3
+msgid "Extended statistics (quartiles and 90th percentile)"
+msgstr "拡張された統計 (四分位 と 90パーセンタイル)  "
+
+#: ../locale/scriptstrings/v.univar.sh_to_translate.c:4
+#: ../locale/scriptstrings/v.db.univar_to_translate.c:4
+msgid "Name of data table"
+msgstr "データテーブル名"
+
+#: ../locale/scriptstrings/v.univar.sh_to_translate.c:5
+#: ../locale/scriptstrings/v.db.univar_to_translate.c:5
+msgid "Column on which to calculate statistics (must be numeric)"
+msgstr "計算する統計の列（数値でなくてはなりません）"
+
+#: ../locale/scriptstrings/v.univar.sh_to_translate.c:6
+#: ../locale/scriptstrings/v.db.univar_to_translate.c:6
+msgid "Database/directory for table"
+msgstr "テーブルのデータベース/ディレクトリ"
+
+#: ../locale/scriptstrings/v.univar.sh_to_translate.c:7
+#: ../locale/scriptstrings/v.db.univar_to_translate.c:7
+msgid "Database driver"
+msgstr "データベースドライバー"
+
+#: ../locale/scriptstrings/v.univar.sh_to_translate.c:8
+#: ../locale/scriptstrings/v.out.gpsbabel_to_translate.c:13
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:47
+#: ../locale/scriptstrings/v.db.univar_to_translate.c:8
+msgid "WHERE conditions of SQL statement without 'where' keyword"
+msgstr "'where' 句なしのSQL文のWHEREコンディション"
+
+#: ../locale/scriptstrings/g.manual_to_translate.c:1
+msgid "Display the HTML man pages of GRASS"
+msgstr "GRASSのHTMLmanページを表示"
+
+#: ../locale/scriptstrings/g.manual_to_translate.c:2
+msgid "general, manual, help"
+msgstr "概要、マニュアル、ヘルプ"
+
+#: ../locale/scriptstrings/g.manual_to_translate.c:3
+msgid "Display index"
+msgstr "インデックスの表示"
+
+#: ../locale/scriptstrings/g.manual_to_translate.c:4
+msgid "Display as MAN text page instead of HTML page in browser"
+msgstr "ブラウザー内のHTMLページの代わりにMANテキストページを表示する。"
+
+#: ../locale/scriptstrings/g.manual_to_translate.c:5
+msgid "Manual entry to be displayed"
+msgstr "表示されるマニュアル入力"
+
+#: ../locale/scriptstrings/v.in.sites.all_to_translate.c:1
+msgid ""
+"Converts all old GRASS < Ver5.7 sites maps in current mapset to vector maps."
+msgstr ""
+"現在のマップセット内のすべての前のGRASS < Ver5.7 サイトマップをベクトルマップ"
+"に変換する"
+
+#: ../locale/scriptstrings/v.in.sites.all_to_translate.c:2
+msgid "sites, vector, import"
+msgstr "サイト、ベクトル、インポート"
+
+#: ../locale/scriptstrings/v.in.sites.all_to_translate.c:3
+msgid "Run non-interactively"
+msgstr "非対話形式で実行"
+
+#: ../locale/scriptstrings/v.db.renamecol_to_translate.c:1
+msgid ""
+"Renames a column in the attribute table connected to a given vector map."
+msgstr "接続された属性テーブルの列を与えられたベクトルマップに名前を変更する"
+
+#: ../locale/scriptstrings/v.db.renamecol_to_translate.c:3
+msgid "Vector map for which to rename attribute column"
+msgstr "属性列名を変更するベクトルマップ"
+
+#: ../locale/scriptstrings/v.db.renamecol_to_translate.c:4
+msgid "Layer where to rename column"
+msgstr "列名を変更するレイヤー"
+
+#: ../locale/scriptstrings/v.db.renamecol_to_translate.c:5
+msgid "Old and new name of the column (old,new)"
+msgstr "新旧の列名（旧、新）"
+
+#: ../locale/scriptstrings/r.mask_to_translate.c:1
+msgid "Create a MASK for limiting raster operation"
+msgstr "制限ラスターオプションのMASKを作成する"
+
+#: ../locale/scriptstrings/r.mask_to_translate.c:2
+msgid "raster, mask"
+msgstr "ラスター、マスク"
+
+#: ../locale/scriptstrings/r.mask_to_translate.c:3
+msgid "Raster map to use as MASK"
+msgstr "MASKを使用するためのラスターマップ"
+
+#: ../locale/scriptstrings/r.mask_to_translate.c:4
+msgid "Category values to use for MASK (format: 1 2 3 thru 7 *)"
+msgstr "MASKを使うカテゴリ値 (フォーマット: 1 2 3 から 7 *)  "
+
+#: ../locale/scriptstrings/r.mask_to_translate.c:5
+msgid "Create inverse MASK from specified 'maskcats' list"
+msgstr "特定された 'maskcats' リストから逆MASKを作成する"
+
+#: ../locale/scriptstrings/r.mask_to_translate.c:6
+msgid "Overwrite existing MASK"
+msgstr "既存のMASKに上書きする"
+
+#: ../locale/scriptstrings/r.mask_to_translate.c:7
+msgid "Remove existing MASK (overrides other options)"
+msgstr "既存のMASKを削除する（他のオプションを無効にする）"
+
+#: ../locale/scriptstrings/v.out.gpsbabel_to_translate.c:1
+msgid ""
+"Exports a vector map to a GPS receiver or file format supported by GpsBabel."
+msgstr ""
+"ベクトルマップをGPSレシーバーあるいはGpsBabelにサポートされたファイルフォー"
+"マットにエクスポート"
+
+#: ../locale/scriptstrings/v.out.gpsbabel_to_translate.c:2
+msgid "vector, export, GPS"
+msgstr "ベクトル、エクスポート、GPS"
+
+#: ../locale/scriptstrings/v.out.gpsbabel_to_translate.c:3
+msgid "Export as waypoints"
+msgstr "ウェイポイントとしてエクスポート"
+
+#: ../locale/scriptstrings/v.out.gpsbabel_to_translate.c:4
+msgid "Export as routes"
+msgstr "ルートとしてエクスポート"
+
+#: ../locale/scriptstrings/v.out.gpsbabel_to_translate.c:5
+msgid "Export as tracks"
+msgstr "トラックとしてエクスポート"
+
+#: ../locale/scriptstrings/v.out.gpsbabel_to_translate.c:7
+msgid "Feature type(s)"
+msgstr "フィーチャータイプ"
+
+#: ../locale/scriptstrings/v.out.gpsbabel_to_translate.c:8
+msgid "Name for output file or GPS device"
+msgstr "出力ファイル名、GPSデバイス名"
+
+#: ../locale/scriptstrings/v.out.gpsbabel_to_translate.c:9
+msgid "GpsBabel supported output format"
+msgstr "GpsBabelをサポートする出力フォーマット"
+
+#: ../locale/scriptstrings/v.out.gpsbabel_to_translate.c:11
+#: ../locale/scriptstrings/v.dissolve_to_translate.c:6
+msgid ""
+"A single vector map can be connected to multiple database tables. This "
+"number determines which table to use."
+msgstr ""
+"単独のベクトルマップは多数のデータベーステーブルに接続されていなければなりま"
+"せん。この数値はどのテーブルを使用しているか決定します"
+
+#: ../locale/scriptstrings/v.out.gpsbabel_to_translate.c:12
+#: ../locale/scriptstrings/v.out.gpsbabel_to_translate.c:15
+msgid "Subset"
+msgstr "サブセット"
+
+#: ../locale/scriptstrings/v.out.gpsbabel_to_translate.c:14
+msgid "Example: income < 1000 and inhab >= 10000"
+msgstr "例: 収入 < 1000 かつ　住人 >= 10000"
+
+#: ../locale/scriptstrings/v.db.reconnect.all_to_translate.c:1
+msgid "Reconnects vectors to a new database."
+msgstr "ベクトルを新しいデータベースに再接続します。"
+
+#: ../locale/scriptstrings/v.db.reconnect.all_to_translate.c:3
+msgid "Name of old database"
+msgstr "古いデータベース名"
+
+#: ../locale/scriptstrings/v.db.reconnect.all_to_translate.c:4
+msgid ""
+"The database must be in form printed by v.db.connect -g, i.e. with "
+"substituted variables"
+msgstr ""
+"データベースは置換変数とともにv.db.connect -g, i.e. と出力されたフォームの中"
+"にないといけません。 "
+
+#: ../locale/scriptstrings/v.db.reconnect.all_to_translate.c:5
+msgid "Name of new database"
+msgstr "新しいデータベース名"
+
+#: ../locale/scriptstrings/v.db.reconnect.all_to_translate.c:6
+msgid "Old schema"
+msgstr "古い"
+
+#: ../locale/scriptstrings/v.db.reconnect.all_to_translate.c:7
+msgid "New schema"
+msgstr "新しいスキーマ"
+
+#: ../locale/scriptstrings/r.in.aster_to_translate.c:1
+msgid ""
+"Georeference, rectify and import Terra-ASTER imagery and relative DEM's "
+"using gdalwarp."
+msgstr ""
+"地理参照、修正とTerra-ASTER画像とGDALwarpを使用する近接のDEMのインポート  "
+
+#: ../locale/scriptstrings/r.in.aster_to_translate.c:2
+#: ../locale/scriptstrings/i.in.spotvgt_to_translate.c:2
+msgid "raster, imagery, import"
+msgstr "ラスター、画像、インポート"
+
+#: ../locale/scriptstrings/r.in.aster_to_translate.c:3
+msgid "Input ASTER image to be georeferenced & rectified"
+msgstr "地理参照・修正するASTER画像"
+
+#: ../locale/scriptstrings/r.in.aster_to_translate.c:4
+msgid "ASTER imagery processing type (Level 1A, Level 1B, or relative DEM)"
+msgstr "ASTER 画像処理タイプ (レベル 1A, レベル 1B, あるいは 相対 DEM)  "
+
+#: ../locale/scriptstrings/r.in.aster_to_translate.c:5
+msgid ""
+"L1A or L1B band to translate (1, 2, 3n, 3b, 4-14). Can only translate a "
+"single band"
+msgstr ""
+"変換するL1A あるいは L1B バンド (1, 2, 3n, 3b, 4-14)。単一のバンドとのみ変換"
+"できます。"
+
+#: ../locale/scriptstrings/v.colors_to_translate.c:1
+msgid ""
+"Set color rules for features in a vector using a numeric attribute column."
+msgstr "数値属性の列でのベクトルの特徴の色ルール"
+
+#: ../locale/scriptstrings/v.colors_to_translate.c:2
+msgid "vector, color table"
+msgstr "ベクトル、カラーテーブル"
+
+#: ../locale/scriptstrings/v.colors_to_translate.c:4
+msgid "Name of column containing numeric data"
+msgstr "数値データを含む列名"
+
+#: ../locale/scriptstrings/v.colors_to_translate.c:5
+msgid "Layer number of data column"
+msgstr "データ列のレイヤー数"
+
+#: ../locale/scriptstrings/v.colors_to_translate.c:6
+msgid "Name of color column to populate"
+msgstr "追加するカラー列名"
+
+#: ../locale/scriptstrings/v.colors_to_translate.c:8
+msgid "Manually set range (min,max)"
+msgstr "手動で範囲をセット（min,max）"
+
+#: ../locale/scriptstrings/v.colors_to_translate.c:13
+msgid "Path to rules file"
+msgstr "ルールファイルへのパス"
+
+#: ../locale/scriptstrings/v.colors_to_translate.c:15
+msgid "Save placeholder raster map for use with d.legend"
+msgstr "d.legendと使用するプレイスホルダーラスターマップを保存"
+
+#: ../locale/scriptstrings/db.out.ogr_to_translate.c:1
+msgid "Exports attribute tables into various formats."
+msgstr "属性テーブルをさまざまなフォーマットにエクスポート"
+
+#: ../locale/scriptstrings/db.out.ogr_to_translate.c:3
+msgid "GRASS table name"
+msgstr "GRASSテーブル名"
+
+#: ../locale/scriptstrings/db.out.ogr_to_translate.c:4
+msgid "Table file to be exported or DB connection string"
+msgstr "エクスポートされるかDB接続ストリングするテーブルファイル"
+
+#: ../locale/scriptstrings/db.out.ogr_to_translate.c:5
+msgid "Table format"
+msgstr "テーブルフォーマット"
+
+#: ../locale/scriptstrings/db.out.ogr_to_translate.c:6
+#: ../locale/scriptstrings/db.in.ogr_to_translate.c:5
+msgid "Name for output table"
+msgstr "出力テーブル名"
+
+#: ../locale/scriptstrings/d.redraw_to_translate.c:1
+msgid "Redraws the current display frame in the GRASS monitor"
+msgstr "GRASSモニターの現在の表示フレームを再描画する"
+
+#: ../locale/scriptstrings/d.redraw_to_translate.c:3
+msgid "Redraw all frames"
+msgstr "全フレームを再描画する"
+
+#: ../locale/scriptstrings/d.redraw_to_translate.c:4
+msgid "Do not preserve individual regions when redrawing all frames"
+msgstr "全フレームを再描画する際、単一の領域に保存しないでください。"
+
+#: ../locale/scriptstrings/d.slide.show_to_translate.c:1
+msgid "Slide show of GRASS raster/vector maps."
+msgstr "GRASS ラスター/ベクトル マップのスライドショー"
+
+#: ../locale/scriptstrings/d.slide.show_to_translate.c:2
+msgid "display, slideshow"
+msgstr "ディスプレイ、スライドショー"
+
+#: ../locale/scriptstrings/d.slide.show_to_translate.c:3
+msgid "Show vector maps rather than raster maps"
+msgstr "ラスターマップではなく、ベクトルマップの表示"
+
+#: ../locale/scriptstrings/d.slide.show_to_translate.c:4
+msgid "Map prefix. Specify character(s) to view selected maps only"
+msgstr "マッププリフィックス。選択されたマップのみ表示する特定した文字"
+
+#: ../locale/scriptstrings/d.slide.show_to_translate.c:5
+msgid "Map number show across the monitor"
+msgstr "マップ数をモニターに表示"
+
+#: ../locale/scriptstrings/d.slide.show_to_translate.c:6
+msgid "Map number show down the monitor"
+msgstr "マップ数をモニターに表示"
+
+#: ../locale/scriptstrings/d.slide.show_to_translate.c:7
+msgid "Mapsets to use. Specify multiple mapsets comma separated"
+msgstr "使用するマップセット。コンマで分けられた特定の重複するマップセット"
+
+#: ../locale/scriptstrings/d.slide.show_to_translate.c:8
+msgid "Number of seconds to pause between slides"
+msgstr "スライド間の停止秒数"
+
+#: ../locale/scriptstrings/v.in.garmin_to_translate.c:1
+msgid ""
+"Download waypoints, routes, and tracks from a Garmin GPS receiver into a "
+"vector map."
+msgstr ""
+"Garmin GPSレシーバーからベクトルマップへウェイポイント、ルート、トラックをダ"
+"ウンロードする"
+
+#: ../locale/scriptstrings/v.in.garmin_to_translate.c:2
+#: ../locale/scriptstrings/v.in.gpsbabel_to_translate.c:2
+msgid "vector, import, GPS"
+msgstr "ベクトル、インポート、GPS"
+
+#: ../locale/scriptstrings/v.in.garmin_to_translate.c:4
+msgid "Download Waypoints from GPS"
+msgstr "GPSからウェイポイントをダウンロードする"
+
+#: ../locale/scriptstrings/v.in.garmin_to_translate.c:5
+msgid "Download Routes from GPS"
+msgstr "GPSからルートをダウンロードする"
+
+#: ../locale/scriptstrings/v.in.garmin_to_translate.c:6
+msgid "Download Track from GPS"
+msgstr "GPSからトラックをダウンロードする"
+
+#: ../locale/scriptstrings/v.in.garmin_to_translate.c:7
+msgid "Force import of track or route data as points"
+msgstr "トラックまたはルートのデータをポイント郡としてインポート"
+
+#: ../locale/scriptstrings/v.in.garmin_to_translate.c:8
+msgid "Use gardump instead of gpstrans as the download program"
+msgstr "ダウンロードプログラムとしてgpstransの代わりにgardumpを使用する"
+
+#: ../locale/scriptstrings/v.in.garmin_to_translate.c:9
+msgid "Import track in 3D (gardump only)"
+msgstr "3Dにトラックをインポート (gardumpのみ)  "
+
+#: ../locale/scriptstrings/v.in.garmin_to_translate.c:10
+#: ../locale/scriptstrings/v.in.gpsbabel_to_translate.c:8
+msgid "Do not attempt projection transform from WGS84"
+msgstr "WGS84 から投影変換をしない "
+
+#: ../locale/scriptstrings/v.in.garmin_to_translate.c:11
+#: ../locale/scriptstrings/v.in.mapgen_to_translate.c:6
+#: ../locale/scriptstrings/v.in.gpsbabel_to_translate.c:10
+msgid "Name for output vector map (omit for display to stdout)"
+msgstr "出力するベクトルマップ名（標準出力のディスプレイを除く）"
+
+#: ../locale/scriptstrings/v.in.garmin_to_translate.c:12
+msgid "Port Garmin receiver is connected to"
+msgstr "Port Garmin レシーバーは接続されています"
+
+#: ../locale/scriptstrings/d.split.frame_to_translate.c:1
+msgid "Split the display into subframes."
+msgstr "ディスプレイをサブフレームに分ける"
+
+#: ../locale/scriptstrings/d.split.frame_to_translate.c:2
+msgid "Number of subframes"
+msgstr "サブフレーム名"
+
+#: ../locale/scriptstrings/d.split.frame_to_translate.c:3
+msgid "Split horizontally not vertically"
+msgstr "鉛直ではなく水平に分割"
+
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:1
+msgid "Displays thematic vector map"
+msgstr "主題ベクトルマップを表示"
+
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:2
+msgid "display, vector, thematic, legend"
+msgstr "ディスプレイ、ベクトル、テーマ、凡例"
+
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:3
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:44
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:48
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:51
+msgid "Files"
+msgstr "ファイル"
+
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:5
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:7
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:9
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:11
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:13
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:16
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:25
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:46
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:53
+msgid "Theme"
+msgstr "テーマ"
+
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:8
+msgid "Name of attribute column to use for thematic display (must be numeric)"
+msgstr "主題ディスプレイに使う属性列名（数字でなくてはなりません）"
+
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:10
+msgid "Type of thematic display"
+msgstr "主題ディスプレイのタイプ"
+
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:12
+msgid "Thematic divisions of data for display"
+msgstr "ディスプレイのデータの主題除算"
+
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:14
+msgid "Break points for custom breaks option"
+msgstr "カスタムブレークオプションのブレークポイント"
+
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:15
+msgid "Separate values by spaces (0 10 20 30 ...)"
+msgstr "スペースで値を分ける (0 10 20 30 ...)  "
+
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:19
+msgid "Vector point icon for point data"
+msgstr "ポイントデータのベクトルポイントアイコン"
+
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:21
+msgid "Icon size for point data"
+msgstr "ポイントデータのアイコンサイズ"
+
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:22
+msgid "Minimum icon size/line width for graduated points/lines)"
+msgstr "段階 ポイント/ライン)のアイコン サイズ/ライン 最小幅 "
+
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:24
+msgid "Maximum icon size/line width for graduated points and lines"
+msgstr "段階ポイントとラインのアイコン サイズ/ライン 最大幅"
+
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:26
+msgid "Number of classes for interval theme (integer)"
+msgstr "区間主題のクラス数（整数）"
+
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:28
+msgid "Color scheme for graduated color mapping"
+msgstr "段階的カラーマップのカラー配列"
+
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:29
+msgid "Select 'single_color' for graduated point/line display"
+msgstr "段階的 ポイント/ライン ディスプレイの 'single_color' を選択"
+
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:31
+msgid "Color for graduated points map"
+msgstr "段階的ポイントマップの色"
+
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:32
+msgid "GRASS named color or R:G:B triplet. Set color scheme to single color"
+msgstr "GRASSは色あるいは赤：緑：青にしました。カラー配列を単一色に設定する。"
+
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:34
+msgid "Color for graduated lines or point/area outlines"
+msgstr "段階的なラインあるいはポイント/エリア アウトラインの色"
+
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:35
+msgid "GRASS named color or R:G:B triplet. Set color scheme to single color."
+msgstr "GRASSは色あるいは赤：青：緑としました。カラー配列を単一色に設定する。"
+
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:37
+msgid "Beginning color for custom color gradient"
+msgstr "カスタムカラーグラデーションの最初の色"
+
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:38
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:41
+msgid "Must be expressed as R:G:B triplet"
+msgstr "赤：緑：青で表されなければなりません"
+
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:40
+msgid "Ending color for custom color gradient"
+msgstr "カスタムカラーグラデーションの最後の色"
+
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:42
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:59
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:61
+msgid "Misc"
+msgstr "その他 "
+
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:43
+msgid "Select x11 display monitor for legend"
+msgstr "凡例に x11 ディスプレイモニターを選択"
+
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:45
+msgid "Save thematic map commands to group file for GIS Manager"
+msgstr "GISマネージャーのグループファイルに主題マップコマンドを保存"
+
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:49
+msgid "Root for the name of psmap instruction files to be in current directory"
+msgstr "現在のディレクトリにあるpsmap命令ファイル名のルート"
+
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:50
+msgid "If not set, no psmap instruction files will be created)"
+msgstr "設定されていない場合、 psmap命令ファイルは作成されません)  "
+
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:52
+msgid "Name of group file where thematic map commands will be saved"
+msgstr "主題マップコマンドのグループファイル名は保存されます"
+
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:54
+msgid "Create graphic legend in x11 display monitor"
+msgstr "x11 ディスプレイモニターにグラフィックの凡例を作成 "
+
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:56
+msgid "Only draw fills (no outlines) for areas and points"
+msgstr "描画のみ(アウトラインなし) エリアとポイントを埋めます"
+
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:58
+msgid "Update color values to GRASSRGB column in attribute table"
+msgstr "属性テーブルのGRASS RGB列にカラー値をアップデートする"
+
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:60
+msgid "Output legend for GIS Manager (for scripting use only)"
+msgstr "GISマネージャーの出力する凡例 (スクリプト使用のみ)  "
+
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:62
+msgid "Use math notation brackets in legend"
+msgstr "凡例の数学表記角括弧を使用"
+
+#: ../locale/scriptstrings/db.droptable_to_translate.c:1
+msgid "Drops an attribute table."
+msgstr "属性テーブルを消去"
+
+#: ../locale/scriptstrings/db.droptable_to_translate.c:4
+msgid "Table to drop"
+msgstr "消去するテーブル"
+
+#: ../locale/scriptstrings/v.in.gns_to_translate.c:1
+msgid ""
+"Imports US-NGA GEOnet Names Server (GNS) country files into a GRASS vector "
+"points map."
+msgstr ""
+"US-NGA GEOnet Names Server (GNS) カントリーファイルをGRASSベクトルポイント"
+"マップへインポート"
+
+#: ../locale/scriptstrings/v.in.gns_to_translate.c:2
+#: ../locale/scriptstrings/v.in.geonames_to_translate.c:2
+msgid "vector, import, gazetteer"
+msgstr "ベクトル、インポート、地名索引"
+
+#: ../locale/scriptstrings/v.in.gns_to_translate.c:3
+msgid "Uncompressed GNS file from NGA (with .txt extension)"
+msgstr "NGAから圧縮されていないGNSファイル (.txt 拡張子)  "
+
+#: ../locale/scriptstrings/v.rast.stats_to_translate.c:1
+#, fuzzy
+msgid ""
+"Calculates univariate statistics from a raster map based on vector polygons "
+"and uploads statistics to new attribute columns."
+msgstr ""
+"ベクトルポリゴンとアップロードされた統計をベースにしたGRASSラスターマップから"
+"新しい属性列へ一変量の統計を計算する"
+
+#: ../locale/scriptstrings/v.rast.stats_to_translate.c:2
+msgid "vector, raster, statistics"
+msgstr "ベクトル、ラスター、統計値"
+
+#: ../locale/scriptstrings/v.rast.stats_to_translate.c:3
+msgid "Continue if upload column(s) already exist"
+msgstr "列が既にある場合は続行"
+
+#: ../locale/scriptstrings/v.rast.stats_to_translate.c:5
+msgid "Name of vector polygon map"
+msgstr "ベクトルポリゴンマップ名"
+
+#: ../locale/scriptstrings/v.rast.stats_to_translate.c:7
+#, fuzzy
+msgid ""
+"A single vector map can be connected to multiple database tables. This "
+"number determines which table to use"
+msgstr ""
+"単独のベクトルマップは多数のデータベーステーブルに接続されていなければなりま"
+"せん。この数値はどのテーブルを使用しているか決定します"
+
+#: ../locale/scriptstrings/v.rast.stats_to_translate.c:8
+msgid "Name of raster map to calculate statistics from"
+msgstr "統計値を計算するラスターマップ名"
+
+#: ../locale/scriptstrings/v.rast.stats_to_translate.c:9
+msgid "Column prefix for new attribute columns"
+msgstr "新しい属性列の列プリフィックス"
+
+#: ../locale/scriptstrings/v.in.geonames_to_translate.c:1
+msgid "Imports geonames.org country files into a GRASS vector points map."
+msgstr ""
+"geonames.org カントリーファイルをGRASSベクトルポイントマップにインポート"
+
+#: ../locale/scriptstrings/v.in.geonames_to_translate.c:3
+msgid "Uncompressed geonames file from (with .txt extension)"
+msgstr "解凍された geonamesファイル( .txt 拡張子)  "
+
+#: ../locale/scriptstrings/d.m_to_translate.c:1
+msgid "Display manager for GRASS"
+msgstr "GRASSのディスプレイマネージャー"
+
+#: ../locale/scriptstrings/d.m_to_translate.c:2
+msgid "Name of .dmrc settings file"
+msgstr " .dmrc 設定ファイル名"
+
+#: ../locale/scriptstrings/gis.m_to_translate.c:1
+msgid "GIS manager for GRASS"
+msgstr "GRASSのGISマネージャー"
+
+#: ../locale/scriptstrings/gis.m_to_translate.c:2
+msgid "Name of GIS manager settings file (.grc)"
+msgstr "GISマネージャー設定ファイル名(.grc)"
+
+#: ../locale/scriptstrings/db.dropcol_to_translate.c:1
+msgid "Drops a column from selected attribute table"
+msgstr "選択された属性テーブルから列を消去"
+
+#: ../locale/scriptstrings/db.dropcol_to_translate.c:4
+msgid "Table from which to drop attribute column"
+msgstr "属性列を消去するテーブル"
+
+#: ../locale/scriptstrings/db.dropcol_to_translate.c:5
+#: ../locale/scriptstrings/v.db.dropcol_to_translate.c:5
+msgid "Name of the column"
+msgstr "列名"
+
+#: ../locale/scriptstrings/r.out.xyz_to_translate.c:1
+msgid ""
+"Export a raster map to a text file as x,y,z values based on cell centers."
+msgstr ""
+"をラスターマップをセルの中心のx,y,z 値としたテキストファイルにエクスポート"
+
+#: ../locale/scriptstrings/d.resize_to_translate.c:1
+msgid "Resizes active display monitor"
+msgstr "アクティブディスプレイモニターのサイズ変更"
+
+#: ../locale/scriptstrings/d.resize_to_translate.c:3
+msgid "New width for window"
+msgstr "ウィンドウの新しい幅"
+
+#: ../locale/scriptstrings/d.resize_to_translate.c:4
+msgid "New height for window"
+msgstr "ウィンドウの新しい高さ"
+
+#: ../locale/scriptstrings/v.in.mapgen_to_translate.c:1
+#, fuzzy
+msgid "Import Mapgen or Matlab-ASCII vector maps into GRASS."
+msgstr "MapgenあるいはMatlabベクトルマップをGRASSにインポート"
+
+#: ../locale/scriptstrings/v.in.mapgen_to_translate.c:3
+msgid "Input map is in Matlab format"
+msgstr "入力するマップはMatlabフォーマットにあります"
+
+#: ../locale/scriptstrings/v.in.mapgen_to_translate.c:4
+msgid "Create a 3D vector points map from 3 column Matlab data"
+msgstr "3列 Matlabデータから3Dベクトルポイントマップを作成する"
+
+#: ../locale/scriptstrings/v.in.mapgen_to_translate.c:5
+msgid "Name of input file in Mapgen/Matlab format"
+msgstr "Mapgen/Matlab フォーマットの入力ファイル名"
+
+#: ../locale/scriptstrings/v.build.all_to_translate.c:1
+msgid "Rebuilds topology on all vector maps in the current mapset."
+msgstr "現在のマップセットにある全ベクトルマップのトポロジーを復元する"
+
+#: ../locale/scriptstrings/r.univar.sh_to_translate.c:1
+msgid "calculates univariate statistics from a GRASS raster map"
+msgstr "GRASSラスターマップから一変量の統計値を計算する"
+
+#: ../locale/scriptstrings/r.univar.sh_to_translate.c:3
+msgid "extended statistics (quartiles and percentile)"
+msgstr "拡張された統計（四分位と百分率）"
+
+#: ../locale/scriptstrings/r.univar.sh_to_translate.c:5
+msgid "Percentile to calculate (requires -e flag)"
+msgstr "百分率で計算(-e flagが必要)"
+
+#: ../locale/scriptstrings/r.mapcalculator_to_translate.c:1
+msgid "Calculate new raster map from a r.mapcalc expression."
+msgstr "r.mapcalc表現から新しいラスターマップを計算"
+
+#: ../locale/scriptstrings/r.mapcalculator_to_translate.c:2
+msgid "A"
+msgstr "A"
+
+#: ../locale/scriptstrings/r.mapcalculator_to_translate.c:3
+msgid "B"
+msgstr "B"
+
+#: ../locale/scriptstrings/r.mapcalculator_to_translate.c:4
+msgid "C"
+msgstr "C"
+
+#: ../locale/scriptstrings/r.mapcalculator_to_translate.c:5
+msgid "D"
+msgstr "D"
+
+#: ../locale/scriptstrings/r.mapcalculator_to_translate.c:6
+msgid "E"
+msgstr "E"
+
+#: ../locale/scriptstrings/r.mapcalculator_to_translate.c:7
+msgid "F"
+msgstr "F"
+
+#: ../locale/scriptstrings/r.mapcalculator_to_translate.c:8
+#: ../locale/scriptstrings/r3.mapcalculator_to_translate.c:8
+msgid "Formula (e.g. A-B or A*C+B)"
+msgstr "数式（例： A-B や A*C+B）"
+
+#: ../locale/scriptstrings/r.mapcalculator_to_translate.c:10
+#: ../locale/scriptstrings/r3.mapcalculator_to_translate.c:10
+msgid "Show help"
+msgstr "ヘルプを表示"
+
+#: ../locale/scriptstrings/r.mapcalculator_to_translate.c:11
+msgid "Expert mode (enter a set of r.mapcalc expressions)"
+msgstr "エキスパートモード（r.mapcalc表現を入力）"
+
+#: ../locale/scriptstrings/r.mapcalculator_to_translate.c:12
+#: ../locale/scriptstrings/r3.mapcalculator_to_translate.c:12
+msgid "Do not overwrite existing map"
+msgstr "既存のマップに上書きしないでください"
+
+#: ../locale/scriptstrings/i.landsat.rgb_to_translate.c:1
+msgid "Performs auto-balancing of colors for LANDSAT images."
+msgstr "LANDSAT 画像を自動色調整"
+
+#: ../locale/scriptstrings/i.landsat.rgb_to_translate.c:2
+msgid "raster, imagery, colors"
+msgstr "ラスター、画像、色"
+
+#: ../locale/scriptstrings/i.landsat.rgb_to_translate.c:3
+msgid "LANDSAT red channel"
+msgstr "LANDSAT 赤チャンネル"
+
+#: ../locale/scriptstrings/i.landsat.rgb_to_translate.c:4
+msgid "LANDSAT green channel"
+msgstr "LANDSAT 緑チャンネル"
+
+#: ../locale/scriptstrings/i.landsat.rgb_to_translate.c:5
+msgid "LANDSAT blue channel"
+msgstr "LANDSAT 青チャンネル"
+
+#: ../locale/scriptstrings/i.landsat.rgb_to_translate.c:6
+msgid "Cropping intensity (upper brightness level)"
+msgstr "輝度を切り取る（上側のブライトネスレベル）"
+
+#: ../locale/scriptstrings/i.landsat.rgb_to_translate.c:7
+msgid "Extend colors to full range of data on each channel"
+msgstr "全てのチャンネルのデータの色を全領域に拡張"
+
+#: ../locale/scriptstrings/i.landsat.rgb_to_translate.c:8
+msgid "Preserve relative colors, adjust brightness only"
+msgstr "色の相対性を維持，明るさだけを調整"
+
+#: ../locale/scriptstrings/i.landsat.rgb_to_translate.c:9
+msgid "Reset to standard color range"
+msgstr "標準の色の範囲へリセット"
+
+#: ../locale/scriptstrings/d.monsize_to_translate.c:1
+msgid "Selects/starts specified monitor at specified size"
+msgstr "既定サイズで特定のモニターを選択/スタート"
+
+#: ../locale/scriptstrings/d.monsize_to_translate.c:3
+msgid "Display monitor to start"
+msgstr "スタートするディスプレイモニター"
+
+#: ../locale/scriptstrings/d.monsize_to_translate.c:4
+msgid "Width in pixels of new display monitor"
+msgstr "新しいディスプレイモニターのピクセル幅"
+
+#: ../locale/scriptstrings/d.monsize_to_translate.c:5
+msgid "Height in pixels of new display monitor"
+msgstr "新しいディスプレイモニターのピクセル高さ"
+
+#: ../locale/scriptstrings/d.shadedmap_to_translate.c:1
+msgid "Drapes a color raster over a shaded relief map using d.his"
+msgstr "d.his を使用している陰影レリーフマップにカラーラスターをドレープ "
+
+#: ../locale/scriptstrings/d.shadedmap_to_translate.c:2
+msgid "Name of shaded relief or aspect map"
+msgstr "陰影レリーフおよび方位マップ名"
+
+#: ../locale/scriptstrings/d.shadedmap_to_translate.c:3
+msgid "Name of raster to drape over relief map"
+msgstr "レリーフマップにドレープするラスター名"
+
+#: ../locale/scriptstrings/d.shadedmap_to_translate.c:4
+msgid "Percent to brighten"
+msgstr "明度"
+
+#: ../locale/scriptstrings/v.in.gpsbabel_to_translate.c:1
+msgid ""
+"Import waypoints, routes, and tracks from a GPS receiver or GPS download "
+"file into a vector map."
+msgstr ""
+"GPSレシーバーあるいはGPSダウンロードファイルからベクトルマップへウェイポイン"
+"ト、ルート、トラックをインポート"
+
+#: ../locale/scriptstrings/v.in.gpsbabel_to_translate.c:4
+msgid "Import waypoints"
+msgstr "ウェイポイントをインポート"
+
+#: ../locale/scriptstrings/v.in.gpsbabel_to_translate.c:5
+msgid "Import routes"
+msgstr "ルートをインポート"
+
+#: ../locale/scriptstrings/v.in.gpsbabel_to_translate.c:6
+msgid "Import track"
+msgstr "トラックをインポート"
+
+#: ../locale/scriptstrings/v.in.gpsbabel_to_translate.c:7
+msgid "Force vertices of track or route data as points"
+msgstr "トラックまたはルートの頂点をポイント郡としてインポート"
+
+#: ../locale/scriptstrings/v.in.gpsbabel_to_translate.c:9
+msgid "Device or file used to import data"
+msgstr "インポートデータに使われるデバイスあるいはファイル"
+
+#: ../locale/scriptstrings/v.in.gpsbabel_to_translate.c:11
+msgid "Format of GPS input data (use gpsbabel supported formats)"
+msgstr "GPS入力データのフォーマット(GPSバベルでサポートされるフォーマット)  "
+
+#: ../locale/scriptstrings/v.in.gpsbabel_to_translate.c:12
+msgid ""
+"Projection of input data (PROJ.4 style), if not set Lat/Lon WGS84 is assumed"
+msgstr ""
+"入力データ(PROJ.4 スタイル)の投影. 緯度経度が設定されていないときはWGS84と仮"
+"定"
+
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:1
+msgid "Downloads and imports data from WMS servers."
+msgstr "WMS サーバーからデータをダウンロード、インポート"
+
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:2
+msgid "wms"
+msgstr "wms"
+
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:4
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:8
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:17
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:21
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:23
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:25
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:27
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:29
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:31
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:33
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:35
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:38
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:49
+msgid "Request"
+msgstr "要求"
+
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:5
+msgid "Skip to downloading (to resume downloads faster)"
+msgstr "ダウンロードをスキップ（ダウンロードを早く再開）"
+
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:6
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:10
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:40
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:42
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:44
+msgid "Download"
+msgstr "ダウンロード"
+
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:7
+msgid "Don't request transparent data"
+msgstr "トランスペアレントデータを要求しないでください"
+
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:9
+msgid "Clean existing data out of download directory"
+msgstr "ダウンロードディレクトリから既存のデータを削除"
+
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:12
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:14
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:19
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:46
+msgid "Import"
+msgstr "インポート"
+
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:13
+msgid "Don't reproject the data, just patch it"
+msgstr "データを再投影しないでください。パッチのみ"
+
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:15
+msgid "Use GET method instead of POST data method"
+msgstr "POSTデータメソッドの代わりにGETメソッドを使用"
+
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:16
+msgid "This may be needed to connect to servers which lack POST capability"
+msgstr "これはPOST機能が不足しているサーバーに接続されている必要があります"
+
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:20
+msgid "Mapserver to request data from"
+msgstr "データを要求するマップサーバー"
+
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:22
+msgid "Layers to request from map server"
+msgstr "マップサーバーからの要求のレイヤー"
+
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:24
+msgid "Styles to request from map server"
+msgstr "マップサーバーからの要求のスタイル"
+
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:26
+msgid "Source projection to request from server"
+msgstr "サーバーからの要求のソース投影"
+
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:28
+msgid "Image format requested from the server"
+msgstr "サーバーから要求された画像フォーマット"
+
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:30
+msgid "Addition query options for server"
+msgstr "サーバーに検索オプションを追加"
+
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:32
+msgid "Maximum columns to request at a time"
+msgstr "一度に要求する列の最大値"
+
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:34
+msgid "Maximum rows to request at a time"
+msgstr "一度に要求する行の最大値"
+
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:36
+msgid "Additional options for r.tileset"
+msgstr "r.tilesetの追加オプション"
+
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:37
+msgid "Named region to request data for. Current region used if omitted"
+msgstr ""
+"データを要求するための名づけられた領域。除かれている場合は現在の領域を使用し"
+"ます。"
+
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:39
+msgid "Folder to save downloaded data to"
+msgstr "ダウンロードデータを保存するディレクトリ"
+
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:41
+msgid "Additional options for wget"
+msgstr "wgetの追加オプション  "
+
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:43
+msgid "Additional options for curl"
+msgstr "curlの追加オプション  "
+
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:45
+msgid "Reprojection method to use"
+msgstr "使用する再投影メソッド"
+
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:47
+msgid "Filename to save capabilities XML file to"
+msgstr "機能XMLファイルを保存するファイル名  "
+
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:48
+msgid "Requires list available layers flag"
+msgstr "可能なレイヤーフラッグのリストを要求"
+
+#: ../locale/scriptstrings/r.colors.stddev_to_translate.c:1
+msgid "Set color rules based on stddev from a map's mean value."
+msgstr "マップの平均値を元にした標準偏差をベースにて色ルールをセット"
+
+#: ../locale/scriptstrings/r.colors.stddev_to_translate.c:4
+msgid "Color using standard deviation bands"
+msgstr "標準偏差バンドを使うカラー"
+
+#: ../locale/scriptstrings/r.colors.stddev_to_translate.c:5
+msgid "Force center at zero"
+msgstr "中心をゼロにする"
+
+#: ../locale/scriptstrings/r.fillnulls_to_translate.c:1
+msgid ""
+"Fills no-data areas in raster maps using v.surf.rst splines interpolation"
+msgstr ""
+"v.surf.rst スプライン補間が使われているラスターマップにデータなしエリアを埋め"
+"る"
+
+#: ../locale/scriptstrings/r.fillnulls_to_translate.c:2
+msgid "raster, elevation, interpolation"
+msgstr "ラスター、標高、補間"
+
+#: ../locale/scriptstrings/r.fillnulls_to_translate.c:3
+msgid "Raster map in which to fill nulls"
+msgstr "nullで埋められたラスターマップ"
+
+#: ../locale/scriptstrings/r.fillnulls_to_translate.c:4
+msgid ""
+"Output raster map with nulls filled by interpolation from surrounding values"
+msgstr "周囲の値からの補間によって埋められたnullで出力するラスターマップ"
+
+#: ../locale/scriptstrings/r.fillnulls_to_translate.c:5
+msgid "Spline tension parameter"
+msgstr "スプラインテンションパラメータ"
+
+#: ../locale/scriptstrings/r.fillnulls_to_translate.c:6
+msgid "Spline smoothing parameter"
+msgstr "スプラインスムージングパラメータ"
+
+#: ../locale/scriptstrings/v.dissolve_to_translate.c:1
+msgid ""
+"Dissolves boundaries between adjacent areas sharing a common category number "
+"or attribute."
+msgstr ""
+"共通のカテゴリ数あるいは属性と共有する直前のエリア間の境界をディゾルブする"
+
+#: ../locale/scriptstrings/v.dissolve_to_translate.c:2
+msgid "vector, area, dissolve"
+msgstr "ベクトル、領域、ディゾルブ"
+
+#: ../locale/scriptstrings/v.dissolve_to_translate.c:5
+msgid "Layer number. If -1, all layers are extracted."
+msgstr "-1、全レイヤーが展開されたときのレイヤー数"
+
+#: ../locale/scriptstrings/v.dissolve_to_translate.c:7
+msgid "Name of column used to dissolve common boundaries"
+msgstr "共通の境界のディゾルブに使われる列名"
+
+#: ../locale/scriptstrings/v.centroids_to_translate.c:1
+msgid "Adds missing centroids to closed boundaries."
+msgstr "見つからない図心をクローズした境界に追加"
+
+#: ../locale/scriptstrings/v.centroids_to_translate.c:2
+msgid "vector, centroid, area"
+msgstr "ベクトル、図心、領域"
+
+#: ../locale/scriptstrings/v.centroids_to_translate.c:5
+msgid "Action to be taken"
+msgstr "取るべき行動"
+
+#: ../locale/scriptstrings/v.centroids_to_translate.c:7
+msgid "Category number starting value"
+msgstr "カテゴリ数の初期値"
+
+#: ../locale/scriptstrings/r3.mapcalculator_to_translate.c:1
+msgid "Calculates new grid3D volume from r3.mapcalc expression."
+msgstr "r3.mapcalc式から新しい3Dグリッド体積を計算"
+
+#: ../locale/scriptstrings/r3.mapcalculator_to_translate.c:2
+msgid "A (grid3D file)"
+msgstr "A (3Dグリッド ファイル)"
+
+#: ../locale/scriptstrings/r3.mapcalculator_to_translate.c:3
+msgid "B (grid3D file)"
+msgstr "B (3Dグリッド ファイル)"
+
+#: ../locale/scriptstrings/r3.mapcalculator_to_translate.c:4
+msgid "C (grid3D file)"
+msgstr "C (3Dグリッド ファイル)"
+
+#: ../locale/scriptstrings/r3.mapcalculator_to_translate.c:5
+msgid "D (grid3D file)"
+msgstr "D (3Dグリッド ファイル)"
+
+#: ../locale/scriptstrings/r3.mapcalculator_to_translate.c:6
+msgid "E (grid3D file)"
+msgstr "E (3Dグリッド ファイル)"
+
+#: ../locale/scriptstrings/r3.mapcalculator_to_translate.c:7
+msgid "F (grid3D file)"
+msgstr "F (3Dグリッド ファイル)"
+
+#: ../locale/scriptstrings/r3.mapcalculator_to_translate.c:9
+msgid "Name for output grid3D volume"
+msgstr "出力する3Dグリッド体積名"
+
+#: ../locale/scriptstrings/r3.mapcalculator_to_translate.c:11
+msgid "Expert mode (enter a set of r3.mapcalc expressions)"
+msgstr "エキスパートモード (r3.mapcalc式の設定を入力)  "
+
+#: ../locale/scriptstrings/v.db.droptable_to_translate.c:1
+msgid "Removes existing attribute table of a vector map."
+msgstr "ベクトルマップの既存の属性テーブルを削除"
+
+#: ../locale/scriptstrings/v.db.droptable_to_translate.c:3
+msgid "Force removal (required for actual deletion of table)"
+msgstr "強制的に削除 (テーブルの削除が要求されました)  "
+
+#: ../locale/scriptstrings/v.db.droptable_to_translate.c:4
+msgid "Vector map from which to remove attribute table"
+msgstr "属性テーブルを削除するベクトルマップ"
+
+#: ../locale/scriptstrings/v.db.droptable_to_translate.c:5
+msgid "Name of existing attribute table (default: vector map name)"
+msgstr "既存の属性テーブル名（デフォルト:ベクトルマップ名）"
+
+#: ../locale/scriptstrings/v.db.droptable_to_translate.c:6
+msgid "Layer from which to drop linked attribute table"
+msgstr "属性テーブルのリンクを削除するレイヤー"
+
+#: ../locale/scriptstrings/v.db.join_to_translate.c:1
+msgid "Allows to join a table to a vector map table."
+msgstr "テーブルのベクトルマップテーブルへの結合を許可する"
+
+#: ../locale/scriptstrings/v.db.join_to_translate.c:3
+msgid "Vector map to which to join other table"
+msgstr "他のテーブルに結合するベクトルマップ"
+
+#: ../locale/scriptstrings/v.db.join_to_translate.c:4
+msgid "Layer where to join"
+msgstr "結合するレイヤー"
+
+#: ../locale/scriptstrings/v.db.join_to_translate.c:5
+msgid "Join column in map table"
+msgstr "マップテーブルに列を結合"
+
+#: ../locale/scriptstrings/v.db.join_to_translate.c:6
+msgid "Other table name"
+msgstr "他のテーブル名"
+
+#: ../locale/scriptstrings/v.db.join_to_translate.c:7
+msgid "Join column in other table"
+msgstr "他のテーブルに列を結合"
+
+#: ../locale/scriptstrings/i.tasscap_to_translate.c:1
+msgid "Tasseled Cap (Kauth Thomas) transformation for LANDSAT-TM data"
+msgstr "LANDSAT-TM データ のTasseled Cap (Kauth Thomas)変換"
+
+#: ../locale/scriptstrings/i.tasscap_to_translate.c:2
+msgid "raster, imagery"
+msgstr "ラスター、画像"
+
+#: ../locale/scriptstrings/i.tasscap_to_translate.c:3
+msgid "use transformation rules for LANDSAT-4"
+msgstr "LANDSAT-4 の変換ルールの使用 "
+
+#: ../locale/scriptstrings/i.tasscap_to_translate.c:4
+msgid "use transformation rules for LANDSAT-5"
+msgstr "LANDSAT-5 の変換ルールの使用"
+
+#: ../locale/scriptstrings/i.tasscap_to_translate.c:5
+msgid "use transformation rules for LANDSAT-7"
+msgstr "LANDSAT-7 の変換ルールの使用"
+
+#: ../locale/scriptstrings/i.tasscap_to_translate.c:6
+msgid "raster input map (LANDSAT channel 1)"
+msgstr "ラスター入力マップ (LANDSAT チャンネル 1)"
+
+#: ../locale/scriptstrings/i.tasscap_to_translate.c:7
+msgid "raster input map (LANDSAT channel 2)"
+msgstr "ラスター入力マップ (LANDSAT チャンネル 2)"
+
+#: ../locale/scriptstrings/i.tasscap_to_translate.c:8
+msgid "raster input map (LANDSAT channel 3)"
+msgstr "ラスター入力マップ (LANDSAT チャンネル 3)"
+
+#: ../locale/scriptstrings/i.tasscap_to_translate.c:9
+msgid "raster input map (LANDSAT channel 4)"
+msgstr "ラスター入力マップ (LANDSAT チャンネル 4)"
+
+#: ../locale/scriptstrings/i.tasscap_to_translate.c:10
+msgid "raster input map (LANDSAT channel 5)"
+msgstr "ラスター入力マップ (LANDSAT チャンネル 5)"
+
+#: ../locale/scriptstrings/i.tasscap_to_translate.c:11
+msgid "raster input map (LANDSAT channel 7)"
+msgstr "ラスター入力マップ (LANDSAT チャンネル 7)"
+
+#: ../locale/scriptstrings/i.tasscap_to_translate.c:12
+msgid "raster output TC maps prefix"
+msgstr "ラスターアウトプットTCマッププリフィックス"
+
+#: ../locale/scriptstrings/v.db.addtable_to_translate.c:1
+msgid ""
+"Creates and connects a new attribute table to a given layer of an existing "
+"vector map."
+msgstr ""
+"新しい属性テーブルを既存のベクトルマップに与えられたレイヤーに作成、接続する"
+
+#: ../locale/scriptstrings/v.db.addtable_to_translate.c:3
+msgid "Vector map for which to add new attribute table"
+msgstr "新しい属性テーブルを追加するベクトルマップ"
+
+#: ../locale/scriptstrings/v.db.addtable_to_translate.c:4
+msgid "Name of new attribute table (default: vector map name)"
+msgstr "新しい属性テーブル名（デフォルト:ベクトルマップ名）"
+
+#: ../locale/scriptstrings/v.db.addtable_to_translate.c:5
+msgid "Layer where to add new attribute table"
+msgstr "新しい属性テーブルを追加するレイヤー"
+
+#: ../locale/scriptstrings/v.db.addtable_to_translate.c:6
+#: ../locale/scriptstrings/v.db.addcol_to_translate.c:5
+msgid ""
+"Name and type of the new column(s) (types depend on database backend, but "
+"all support VARCHAR(), INT, DOUBLE PRECISION and DATE)"
+msgstr ""
+"新しい列名とタイプ(タイプはデータベースの後部に依存しますが、VARCHAR(), INT, "
+"DOUBLE PRECISION and DATEのすべてをサポートします)"
+
+#: ../locale/scriptstrings/v.in.wfs_to_translate.c:1
+msgid "Import GetFeature from WFS"
+msgstr "WFSからGetFeatureをインポート"
+
+#: ../locale/scriptstrings/v.in.wfs_to_translate.c:2
+msgid "GetFeature URL starting with http"
+msgstr "httpから始まるGetFeature URL"
+
+#: ../locale/scriptstrings/v.in.wfs_to_translate.c:3
+msgid "Vector output map"
+msgstr "ベクトル出力マップ"
+
+#: ../locale/scriptstrings/r.shaded.relief_to_translate.c:1
+msgid "Creates shaded relief map from an elevation map (DEM)."
+msgstr "標高マップから陰影レリーフを作成する(DEM).  "
+
+#: ../locale/scriptstrings/r.shaded.relief_to_translate.c:4
+msgid "Output shaded relief map name"
+msgstr "出力する陰影レリーフマップ名"
+
+#: ../locale/scriptstrings/r.shaded.relief_to_translate.c:5
+msgid "Altitude of the sun in degrees above the horizon"
+msgstr "地平線上の太陽高度の角度"
+
+#: ../locale/scriptstrings/r.shaded.relief_to_translate.c:6
+msgid "Azimuth of the sun in degrees to the east of north"
+msgstr "太陽の方位（東から反時計回り）"
+
+#: ../locale/scriptstrings/r.shaded.relief_to_translate.c:7
+msgid "Factor for exaggerating relief"
+msgstr "過大レリーフの因数"
+
+#: ../locale/scriptstrings/r.shaded.relief_to_translate.c:8
+msgid "Scale factor for converting horizontal units to elevation units"
+msgstr "水平ユニットから標高ユニットへの変換倍率"
+
+#: ../locale/scriptstrings/r.shaded.relief_to_translate.c:9
+msgid ""
+"Set scaling factor (applies to lat./long. locations only, none: scale=1)"
+msgstr "倍率を設定 (緯度./経度 ロケーションのみ適用、なし: スケール=1)  "
+
+#: ../locale/scriptstrings/d.out.png_to_translate.c:1
+msgid "Saves active display monitor to PNG file in home directory"
+msgstr ""
+"アクティブディスプレイモニターをホームディレクトリのPNGファイルに保存する"
+
+#: ../locale/scriptstrings/d.out.png_to_translate.c:3
+msgid "Name of PNG file"
+msgstr "PNGファイル名"
+
+#: ../locale/scriptstrings/d.out.png_to_translate.c:4
+msgid "Resolution of output file (single=1, double=2, quad=4)"
+msgstr "出力ファイルの解像度 (同じ=1, 2倍=2, 4倍=4)  "
+
+#: ../locale/scriptstrings/i.oif_to_translate.c:1
+msgid "Calculates Optimum-Index-Factor table for LANDSAT TM bands 1-5, & 7"
+msgstr "LANDSAT TM bands 1-5, & 7のOptimum-Index-Factor テーブルを計算する"
+
+#: ../locale/scriptstrings/i.oif_to_translate.c:2
+msgid "raster, imagery, statistics"
+msgstr "ラスター、画像、統計"
+
+#: ../locale/scriptstrings/i.oif_to_translate.c:3
+msgid "LANDSAT TM band 1."
+msgstr "LANDSAT TM バンド 1.  "
+
+#: ../locale/scriptstrings/i.oif_to_translate.c:4
+msgid "LANDSAT TM band 2."
+msgstr "LANDSAT TM バンド 2.  "
+
+#: ../locale/scriptstrings/i.oif_to_translate.c:5
+msgid "LANDSAT TM band 3."
+msgstr "LANDSAT TM バンド 3.  "
+
+#: ../locale/scriptstrings/i.oif_to_translate.c:6
+msgid "LANDSAT TM band 4."
+msgstr "LANDSAT TM バンド 4.  "
+
+#: ../locale/scriptstrings/i.oif_to_translate.c:7
+msgid "LANDSAT TM band 5."
+msgstr "LANDSAT TM バンド 5.  "
+
+#: ../locale/scriptstrings/i.oif_to_translate.c:8
+msgid "LANDSAT TM band 7."
+msgstr "LANDSAT TM バンド 7.  "
+
+#: ../locale/scriptstrings/r.li.setup_to_translate.c:1
+msgid "Configuration editor for r.li.'index'"
+msgstr "r.li.'index'の設定エディター"
+
+#: ../locale/scriptstrings/r.li.setup_to_translate.c:2
+msgid "raster, landscape structure analysis"
+msgstr "ラスター、景観の構造解析"
+
+#: ../locale/scriptstrings/db.in.ogr_to_translate.c:1
+msgid "Imports attribute tables in various formats."
+msgstr "さまざまなフォーマットに属性テーブルをインポート"
+
+#: ../locale/scriptstrings/db.in.ogr_to_translate.c:3
+msgid "Table file to be imported or DB connection string"
+msgstr "インポートされるテーブルファイル、あるいはDB接続ストリング"
+
+#: ../locale/scriptstrings/db.in.ogr_to_translate.c:4
+msgid "Table name of SQL DB table"
+msgstr "SGL DBテーブルのテーブル名"
+
+#: ../locale/scriptstrings/db.in.ogr_to_translate.c:6
+msgid "Name for auto-generated unique key column"
+msgstr "自動生成されたユニークキー列名"
+
+#: ../locale/scriptstrings/d.rast.edit_to_translate.c:5
+msgid "Name of aspect raster map"
+msgstr "方位ラスターマップ名"
+
+#: ../locale/scriptstrings/d.rast.edit_to_translate.c:6
+msgid "Width of display canvas"
+msgstr "ディスプレイキャンバスの幅 "
+
+#: ../locale/scriptstrings/d.rast.edit_to_translate.c:7
+msgid "Height of display canvas"
+msgstr "ディスプレイキャンバスの高さ"
+
+#: ../locale/scriptstrings/d.rast.edit_to_translate.c:8
+msgid "Minimum size of each cell"
+msgstr "それぞれのセルの最小値"
+
+#: ../locale/scriptstrings/d.rast.edit_to_translate.c:9
+msgid "Maximum number of rows to load"
+msgstr "ロードする行の最大数"
+
+#: ../locale/scriptstrings/d.rast.edit_to_translate.c:10
+msgid "Maximum number of columns to load"
+msgstr "ロードする列の最大数"
+
+#: ../locale/scriptstrings/v.db.dropcol_to_translate.c:1
+msgid ""
+"Drops a column from the attribute table connected to a given vector map."
+msgstr "接続された属性テーブルから与えられたベクトルマップへ列を削除"
+
+#: ../locale/scriptstrings/v.db.dropcol_to_translate.c:3
+msgid "Vector map for which to drop attribute column"
+msgstr "属性列を削除するベクトルマップ"
+
+#: ../locale/scriptstrings/v.db.dropcol_to_translate.c:4
+msgid "Layer where to drop column"
+msgstr "列を削除するレイヤー"
+
+#: ../locale/scriptstrings/d.polar_to_translate.c:1
+msgid "Draws polar diagram of angle map such as aspect or flow directions"
+msgstr "方位や流れ方向といったアングルマップの極線図を描画する"
+
+#: ../locale/scriptstrings/d.polar_to_translate.c:3
+msgid "Name of raster angle map"
+msgstr "ラスターアングルマップ名"
+
+#: ../locale/scriptstrings/d.polar_to_translate.c:4
+msgid "Pixel value to be interpreted as undefined (different from NULL)"
+msgstr "ピクセル値は不明確として解釈されます(NULLとは異なります)  "
+
+#: ../locale/scriptstrings/d.polar_to_translate.c:5
+msgid "Name of optional EPS output file"
+msgstr "任意のEPS出力ファイル名"
+
+#: ../locale/scriptstrings/d.polar_to_translate.c:6
+msgid "Plot using Xgraph"
+msgstr "Xグラフを使用して描画  "
+
+#: ../locale/scriptstrings/i.in.spotvgt_to_translate.c:1
+msgid "Import of SPOT VGT NDVI file into a raster map"
+msgstr "SPOT VGT NDVI ファイルをラスターマップにインポート"
+
+#: ../locale/scriptstrings/i.in.spotvgt_to_translate.c:3
+msgid "also import quality map (SM status map layer) and filter NDVI map"
+msgstr ""
+"性質マップ (SM ステータスマップレイヤー) とフィルターNDVIマップにもインポー"
+"ト "
+
+#: ../locale/scriptstrings/i.in.spotvgt_to_translate.c:4
+msgid "existing SPOT VGT NDVI HDF file (0001_NDV.HDF)"
+msgstr "存在する SPOT VGT NDVI HDF ファイル (0001_NDV.HDF)  "
+
+#: ../locale/scriptstrings/v.db.addcol_to_translate.c:1
+msgid ""
+"Adds one or more columns to the attribute table connected to a given vector "
+"map."
+msgstr "与えられたベクトルマップに接続された属性テーブルに1つ以上の列を追加"
+
+#: ../locale/scriptstrings/v.db.addcol_to_translate.c:3
+msgid "Vector map for which to edit attribute table"
+msgstr "属性テーブルを編集するためのベクトルマップ"
+
+#: ../locale/scriptstrings/v.db.addcol_to_translate.c:4
+msgid "Layer where to add column"
+msgstr "列を追加するレイヤー"
+
+#: ../locale/scriptstrings/d.mvmon_to_translate.c:1
+msgid "Moves displayed maps to another monitor"
+msgstr "表示されているマップを他のモニターに移動"
+
+#: ../locale/scriptstrings/d.mvmon_to_translate.c:3
+msgid "clear target monitor before moving"
+msgstr "移動前にターゲットモニターを削除"
+
+#: ../locale/scriptstrings/d.mvmon_to_translate.c:4
+msgid "stay with source monitor"
+msgstr "ソースモニターをそのままにする"
+
+#: ../locale/scriptstrings/d.mvmon_to_translate.c:5
+msgid "kill source monitor after moving"
+msgstr "移動後ソースモニターを停止する"
+
+#: ../locale/scriptstrings/d.mvmon_to_translate.c:6
+msgid "Target monitor"
+msgstr "ターゲットモニター"
+
+#: ../locale/scriptstrings/d.mvmon_to_translate.c:7
+msgid "Source monitor"
+msgstr "ソースモニター"
+
 #: ../sites/s.out.ascii/main.c:47 ../sites/s.in.ascii/main.c:50
 msgid "sites"
 msgstr "サイト"
@@ -26144,6 +28247,11 @@ msgstr "シグネチャファイルが読み取れません<%s>"
 #: ../imagery/i.smap/shapiro/read_sig.c:27
 #, c-format
 msgid "Signature file <%s> is invalid"
+msgstr "シグネチャファイル <%s> は無効です "
+
+#: ../imagery/i.smap/shapiro/read_sig.c:30
+#, fuzzy, c-format
+msgid "Signature file <%s> is empty"
 msgstr "シグネチャファイル <%s> は無効です "
 
 #: ../imagery/i.smap/shapiro/parse.c:21 ../imagery/i.maxlik/main.c:79
@@ -28033,1558 +30141,82 @@ msgstr "古いMASKセルマップの削除中のエラー"
 msgid "Can't mark another point.  Only %d points allowed.  Sorry."
 msgstr "他のポイントを示すことができません。 %d ポイントのみ可能です。"
 
-#~ msgid "GIS manager for GRASS"
-#~ msgstr "GRASSのGISマネージャー"
+#~ msgid "Failed in attempt to open %s"
+#~ msgstr "%s を開けませんでした"
 
-#~ msgid "Name of GIS manager settings file (.grc)"
-#~ msgstr "GISマネージャー設定ファイル名(.grc)"
-
-#~ msgid "Display manager for GRASS"
-#~ msgstr "GRASSのディスプレイマネージャー"
-
-#~ msgid "Name of .dmrc settings file"
-#~ msgstr " .dmrc 設定ファイル名"
-
-#~ msgid "Configuration editor for r.li.'index'"
-#~ msgstr "r.li.'index'の設定エディター"
-
-#~ msgid "raster, landscape structure analysis"
-#~ msgstr "ラスター、景観の構造解析"
-
-#~ msgid "Prints a graph of the correlation between data layers (in pairs)."
-#~ msgstr "データレイヤーの相関関係のグラフを出力する（ペア）"
-
-#~ msgid "display, diagram"
-#~ msgstr "ディスプレイ、図表"
-
-#~ msgid "raster input map"
-#~ msgstr "ラスター入力マップ"
-
-#~ msgid "Selects/starts specified monitor at specified size"
-#~ msgstr "既定サイズで特定のモニターを選択/スタート"
-
-#~ msgid "Display monitor to start"
-#~ msgstr "スタートするディスプレイモニター"
-
-#~ msgid "Width in pixels of new display monitor"
-#~ msgstr "新しいディスプレイモニターのピクセル幅"
-
-#~ msgid "Height in pixels of new display monitor"
-#~ msgstr "新しいディスプレイモニターのピクセル高さ"
-
-#~ msgid "Moves displayed maps to another monitor"
-#~ msgstr "表示されているマップを他のモニターに移動"
-
-#~ msgid "clear target monitor before moving"
-#~ msgstr "移動前にターゲットモニターを削除"
-
-#~ msgid "stay with source monitor"
-#~ msgstr "ソースモニターをそのままにする"
-
-#~ msgid "kill source monitor after moving"
-#~ msgstr "移動後ソースモニターを停止する"
-
-#~ msgid "Target monitor"
-#~ msgstr "ターゲットモニター"
-
-#~ msgid "Source monitor"
-#~ msgstr "ソースモニター"
-
-#~ msgid "Export display monitor to a GpsDrive compatible backdrop image"
-#~ msgstr " GpsDrive 互換性のある背景画像に表示モニターをエクスポート"
-
-#~ msgid "display, export, GPS"
-#~ msgstr "ディスプレイ、エクスポート、GPS"
-
-#~ msgid "name for new map image (lives in ~/.gpsdrive/maps/)"
-#~ msgstr "新しいマップ画像名 ( ~/.gpsdrive/maps/にあります)  "
-
-#~ msgid "Make JPEG instead of PNG image"
-#~ msgstr "PNG画像の代わりにJPEGを作ります。"
-
-#~ msgid "Saves active display monitor to PNG file in home directory"
+#~ msgid ""
+#~ "Generates raster map layers of slope, aspect, curvatures and partial "
+#~ "derivatives from a raster map layer of true elevation values. Aspect is "
+#~ "calculated counterclockwise from east."
 #~ msgstr ""
-#~ "アクティブディスプレイモニターをホームディレクトリのPNGファイルに保存する"
+#~ "真の標高値ラスターマップレイヤーから、斜面、方位、曲面、偏導関数のラスター"
+#~ "マップを作成します.　方位は東から反時計回りに計算します"
 
-#~ msgid "display, export"
-#~ msgstr "ディスプレイ、エクスポート"
+#~ msgid "Raster elevation file name"
+#~ msgstr "ラスター標高ファイル名"
 
-#~ msgid "Name of PNG file"
-#~ msgstr "PNGファイル名"
+#~ msgid "Output slope filename"
+#~ msgstr "傾斜を出力するファイル名"
 
-#~ msgid "Resolution of output file (single=1, double=2, quad=4)"
-#~ msgstr "出力ファイルの解像度 (同じ=1, 2倍=2, 4倍=4)  "
+#~ msgid "Output aspect filename"
+#~ msgstr "方位を出力するファイル名"
 
-#~ msgid "Saves the contents of the active display monitor to a graphics file."
-#~ msgstr "アクティブディスプレイモニターのコンテンツを画像ファイルに保存する"
+#~ msgid "Output profile curvature filename"
+#~ msgstr "断面曲率を出力するファイル名"
 
-#~ msgid "Name for output file (do NOT add extension)"
-#~ msgstr "出力するファイル名（拡張子を追加しないでください）"
+#~ msgid "Output tangential curvature filename"
+#~ msgstr "正接曲率を出力するファイル名"
 
-#~ msgid "Dimensions of output file versus current window size"
-#~ msgstr "出力ファイルの次元 対 現在のウインドウサイズ"
+#~ msgid "Output first order partial derivative dx (E-W slope) filename"
+#~ msgstr "一次の偏導関数 dx (E-W 傾斜) を出力するファイル名"
 
-#~ msgid "(same=1, double size=2, quadruple size=4)"
-#~ msgstr "(同じ=1, 2倍=2, 4倍=4)  "
+#~ msgid "Output first order partial derivative dy (N-S slope) filename"
+#~ msgstr "一次の偏導関数 dy (N-S 傾斜) を出力するファイル名"
 
-#~ msgid "Images"
-#~ msgstr "画像"
+#~ msgid "Output second order partial derivative dxx filename"
+#~ msgstr "二次の偏導関数 dxx を出力するファイル名"
 
-#~ msgid "Width and height of output image (overrides resolution setting)"
-#~ msgstr "出力する画像の幅と高さ（解像度設定を無効にする）"
+#~ msgid "Output second order partial derivative dyy filename"
+#~ msgstr "二次の偏導関数 dyy を出力するファイル名"
 
-#~ msgid "Compression for PNG files"
-#~ msgstr "PNGファイルの圧縮"
+#~ msgid "Output second order partial derivative dxy filename"
+#~ msgstr "二次の偏導関数 dxy を出力するファイル名"
 
-#~ msgid "(0=none, 1=fastest, 9=most; lossless, only time vs. filesize)"
-#~ msgstr "(0=なし, 1=最速, 9=最大; 可逆, 時間 対 ファイルサイズ)  "
+#~ msgid "wrong type: %s"
+#~ msgstr "間違ったタイプ： %s"
 
-#~ msgid "File size/quality for JPEG files"
-#~ msgstr "JPEGファイルのサイズ/質"
+#~ msgid "Creating support files..."
+#~ msgstr "サポートファイルを作成中..."
 
-#~ msgid "(10=smallest/worst, 100=largest/best)"
-#~ msgstr "(10=最小/最低, 100=最大/最高)  "
+#~ msgid "Elevation products for mapset [%s] in [%s]"
+#~ msgstr "マップセット [%s] （[%s] 内）の標高のプロダクト"
 
-#~ msgid "Paper size for PostScript output"
-#~ msgstr "PostScript出力の用紙サイズ"
+#~ msgid "ASPECT [%s] COMPLETE"
+#~ msgstr "方位 [%s] 完了"
 
-#~ msgid "PostScript"
-#~ msgstr "ポストスクリプト"
+#~ msgid "SLOPE [%s] COMPLETE"
+#~ msgstr "傾斜 [%s] 完了"
 
-#~ msgid "PostScript level (only limits functionality!)"
-#~ msgstr "ポストスクリプトレベル (機能性の制限のみ!)  "
+#~ msgid "PROFILE CURVE [%s] COMPLETE"
+#~ msgstr "プロファイル曲線 [%s] 完了"
 
-#~ msgid "GeoTIFF creation option(s)"
-#~ msgstr "GeoTIFF 作成オプション"
+#~ msgid "TANGENTIAL CURVE [%s] COMPLETE"
+#~ msgstr "正接曲線 [%s] 完了"
 
-#~ msgid "GeoTIFF"
-#~ msgstr "GeoTIFF"
+#~ msgid "E-W SLOPE [%s] COMPLETE"
+#~ msgstr "E-W 傾斜 [%s] 完了"
 
-#~ msgid "GeoTIFF metadata key(s) and value(s) to add"
-#~ msgstr "追加するGeoTIFF メタデータキーと値 "
+#~ msgid "N-S SLOPE [%s] COMPLETE"
+#~ msgstr "N-S 傾斜 [%s] 完了"
 
-#~ msgid ""
-#~ "In the form of \"META-TAG=VALUE\", separate multiple entries with a comma."
-#~ msgstr " \"META-TAG=VALUE\"のフォーム、コンマで重複する項目を分ける"
+#~ msgid "DXX [%s] COMPLETE"
+#~ msgstr "DXX [%s] 完了"
 
-#~ msgid "Set background color to black (white default)"
-#~ msgstr "背景の色を黒に設定（白は既定色）"
+#~ msgid "DYY [%s] COMPLETE"
+#~ msgstr "DYY [%s] 完了"
 
-#~ msgid "Set transparent background"
-#~ msgstr "背景を透明に設定"
-
-#~ msgid "Use the Cario driver to render images"
-#~ msgstr "画像レンダーリングのCarioドライバーを使用"
-
-#~ msgid "Set paper orientation to landscape (for PostScript output)"
-#~ msgstr "用紙の向きを横方向に設定する（ポストスクリプト出力）"
-
-#~ msgid "Do not crop away margins"
-#~ msgstr "余白を切り取らないでください。"
-
-#~ msgid "Draws polar diagram of angle map such as aspect or flow directions"
-#~ msgstr "方位や流れ方向といったアングルマップの極線図を描画する"
-
-#~ msgid "Name of raster angle map"
-#~ msgstr "ラスターアングルマップ名"
-
-#~ msgid "Pixel value to be interpreted as undefined (different from NULL)"
-#~ msgstr "ピクセル値は不明確として解釈されます(NULLとは異なります)  "
-
-#~ msgid "Name of optional EPS output file"
-#~ msgstr "任意のEPS出力ファイル名"
-
-#~ msgid "Plot using Xgraph"
-#~ msgstr "Xグラフを使用して描画  "
-
-#~ msgid "Name of aspect raster map"
-#~ msgstr "方位ラスターマップ名"
-
-#~ msgid "Width of display canvas"
-#~ msgstr "ディスプレイキャンバスの幅 "
-
-#~ msgid "Height of display canvas"
-#~ msgstr "ディスプレイキャンバスの高さ"
-
-#~ msgid "Minimum size of each cell"
-#~ msgstr "それぞれのセルの最小値"
-
-#~ msgid "Maximum number of rows to load"
-#~ msgstr "ロードする行の最大数"
-
-#~ msgid "Maximum number of columns to load"
-#~ msgstr "ロードする列の最大数"
-
-#~ msgid "Displays a raster map and its legend on a graphics window"
-#~ msgstr "グラフィックウィンドウにラスターマップと凡例を表示します。"
-
-#~ msgid "Omit entries with missing label"
-#~ msgstr "ラベルのない項目のを除く"
-
-#~ msgid "Number of lines to appear in the legend"
-#~ msgstr "凡例に表示するライン数"
-
-#~ msgid "Name of raster map to generate legend from"
-#~ msgstr "凡例を作成するラスターマップ名"
-
-#~ msgid "Name of raster map to print in legend"
-#~ msgstr "凡例に出力されるラスターマップ名"
-
-#~ msgid "Position of vertical map-legend separator (in percent)"
-#~ msgstr "水平マップ－凡例セパレーターのポジション（パーセント）"
-
-#~ msgid "Redraws the current display frame in the GRASS monitor"
-#~ msgstr "GRASSモニターの現在の表示フレームを再描画する"
-
-#~ msgid "Redraw all frames"
-#~ msgstr "全フレームを再描画する"
-
-#~ msgid "Do not preserve individual regions when redrawing all frames"
-#~ msgstr "全フレームを再描画する際、単一の領域に保存しないでください。"
-
-#~ msgid "Resizes active display monitor"
-#~ msgstr "アクティブディスプレイモニターのサイズ変更"
-
-#~ msgid "New width for window"
-#~ msgstr "ウィンドウの新しい幅"
-
-#~ msgid "New height for window"
-#~ msgstr "ウィンドウの新しい高さ"
-
-#~ msgid "Drapes a color raster over a shaded relief map using d.his"
-#~ msgstr "d.his を使用している陰影レリーフマップにカラーラスターをドレープ "
-
-#~ msgid "Name of shaded relief or aspect map"
-#~ msgstr "陰影レリーフおよび方位マップ名"
-
-#~ msgid "Name of raster to drape over relief map"
-#~ msgstr "レリーフマップにドレープするラスター名"
-
-#~ msgid "Percent to brighten"
-#~ msgstr "明度"
-
-#~ msgid "Slide show of GRASS raster/vector maps."
-#~ msgstr "GRASS ラスター/ベクトル マップのスライドショー"
-
-#~ msgid "display, slideshow"
-#~ msgstr "ディスプレイ、スライドショー"
-
-#~ msgid "Show vector maps rather than raster maps"
-#~ msgstr "ラスターマップではなく、ベクトルマップの表示"
-
-#~ msgid "Map prefix. Specify character(s) to view selected maps only"
-#~ msgstr "マッププリフィックス。選択されたマップのみ表示する特定した文字"
-
-#~ msgid "Map number show across the monitor"
-#~ msgstr "マップ数をモニターに表示"
-
-#~ msgid "Map number show down the monitor"
-#~ msgstr "マップ数をモニターに表示"
-
-#~ msgid "Mapsets to use. Specify multiple mapsets comma separated"
-#~ msgstr "使用するマップセット。コンマで分けられた特定の重複するマップセット"
-
-#~ msgid "Number of seconds to pause between slides"
-#~ msgstr "スライド間の停止秒数"
-
-#~ msgid ""
-#~ "Divides active display into two frames & displays maps/executes commands "
-#~ "in each frame."
-#~ msgstr ""
-#~ "アクティブなディスプレイを2つのフレームに分ける＆各フレームのマップ/実行コ"
-#~ "マンドを表示する"
-
-#~ msgid "Enter raster map to display in 1st frame"
-#~ msgstr "第1フレームに表示用ラスターマップを入力"
-
-#~ msgid "Enter command to execute in 1st frame"
-#~ msgstr "第1フレームに実行コマンドを入力"
-
-#~ msgid "Enter raster map to display in 2nd frame"
-#~ msgstr "第2フレームに表示用ラスターマップを入力"
-
-#~ msgid "Enter command to execute in 2nd frame"
-#~ msgstr "第2フレームに実行コマンドを入力"
-
-#~ msgid "How to split display"
-#~ msgstr "ディスプレイの分割方法"
-
-#~ msgid "Split the display into subframes."
-#~ msgstr "ディスプレイをサブフレームに分ける"
-
-#~ msgid "Number of subframes"
-#~ msgstr "サブフレーム名"
-
-#~ msgid "Split horizontally not vertically"
-#~ msgstr "鉛直ではなく水平に分割"
-
-#~ msgid "Displays thematic vector map"
-#~ msgstr "主題ベクトルマップを表示"
-
-#~ msgid "display, vector, thematic, legend"
-#~ msgstr "ディスプレイ、ベクトル、テーマ、凡例"
-
-#~ msgid "Files"
-#~ msgstr "ファイル"
-
-#~ msgid "Theme"
-#~ msgstr "テーマ"
-
-#~ msgid ""
-#~ "Name of attribute column to use for thematic display (must be numeric)"
-#~ msgstr "主題ディスプレイに使う属性列名（数字でなくてはなりません）"
-
-#~ msgid "Type of thematic display"
-#~ msgstr "主題ディスプレイのタイプ"
-
-#~ msgid "Thematic divisions of data for display"
-#~ msgstr "ディスプレイのデータの主題除算"
-
-#~ msgid "Break points for custom breaks option"
-#~ msgstr "カスタムブレークオプションのブレークポイント"
-
-#~ msgid "Separate values by spaces (0 10 20 30 ...)"
-#~ msgstr "スペースで値を分ける (0 10 20 30 ...)  "
-
-#~ msgid "Vector point icon for point data"
-#~ msgstr "ポイントデータのベクトルポイントアイコン"
-
-#~ msgid "Icon size for point data"
-#~ msgstr "ポイントデータのアイコンサイズ"
-
-#~ msgid "Minimum icon size/line width for graduated points/lines)"
-#~ msgstr "段階 ポイント/ライン)のアイコン サイズ/ライン 最小幅 "
-
-#~ msgid "Maximum icon size/line width for graduated points and lines"
-#~ msgstr "段階ポイントとラインのアイコン サイズ/ライン 最大幅"
-
-#~ msgid "Number of classes for interval theme (integer)"
-#~ msgstr "区間主題のクラス数（整数）"
-
-#~ msgid "Color scheme for graduated color mapping"
-#~ msgstr "段階的カラーマップのカラー配列"
-
-#~ msgid "Select 'single_color' for graduated point/line display"
-#~ msgstr "段階的 ポイント/ライン ディスプレイの 'single_color' を選択"
-
-#~ msgid "Color for graduated points map"
-#~ msgstr "段階的ポイントマップの色"
-
-#~ msgid "GRASS named color or R:G:B triplet. Set color scheme to single color"
-#~ msgstr ""
-#~ "GRASSは色あるいは赤：緑：青にしました。カラー配列を単一色に設定する。"
-
-#~ msgid "Color for graduated lines or point/area outlines"
-#~ msgstr "段階的なラインあるいはポイント/エリア アウトラインの色"
-
-#~ msgid ""
-#~ "GRASS named color or R:G:B triplet. Set color scheme to single color."
-#~ msgstr ""
-#~ "GRASSは色あるいは赤：青：緑としました。カラー配列を単一色に設定する。"
-
-#~ msgid "Beginning color for custom color gradient"
-#~ msgstr "カスタムカラーグラデーションの最初の色"
-
-#~ msgid "Must be expressed as R:G:B triplet"
-#~ msgstr "赤：緑：青で表されなければなりません"
-
-#~ msgid "Ending color for custom color gradient"
-#~ msgstr "カスタムカラーグラデーションの最後の色"
-
-#~ msgid "Misc"
-#~ msgstr "その他 "
-
-#~ msgid "Select x11 display monitor for legend"
-#~ msgstr "凡例に x11 ディスプレイモニターを選択"
-
-#~ msgid "Save thematic map commands to group file for GIS Manager"
-#~ msgstr "GISマネージャーのグループファイルに主題マップコマンドを保存"
-
-#~ msgid "WHERE conditions of SQL statement without 'where' keyword"
-#~ msgstr "'where' 句なしのSQL文のWHEREコンディション"
-
-#~ msgid ""
-#~ "Root for the name of psmap instruction files to be in current directory"
-#~ msgstr "現在のディレクトリにあるpsmap命令ファイル名のルート"
-
-#~ msgid "If not set, no psmap instruction files will be created)"
-#~ msgstr "設定されていない場合、 psmap命令ファイルは作成されません)  "
-
-#~ msgid "Name of group file where thematic map commands will be saved"
-#~ msgstr "主題マップコマンドのグループファイル名は保存されます"
-
-#~ msgid "Create graphic legend in x11 display monitor"
-#~ msgstr "x11 ディスプレイモニターにグラフィックの凡例を作成 "
-
-#~ msgid "Only draw fills (no outlines) for areas and points"
-#~ msgstr "描画のみ(アウトラインなし) エリアとポイントを埋めます"
-
-#~ msgid "Update color values to GRASSRGB column in attribute table"
-#~ msgstr "属性テーブルのGRASS RGB列にカラー値をアップデートする"
-
-#~ msgid "Output legend for GIS Manager (for scripting use only)"
-#~ msgstr "GISマネージャーの出力する凡例 (スクリプト使用のみ)  "
-
-#~ msgid "Use math notation brackets in legend"
-#~ msgstr "凡例の数学表記角括弧を使用"
-
-#~ msgid "Drops a column from selected attribute table"
-#~ msgstr "選択された属性テーブルから列を消去"
-
-#~ msgid "Table from which to drop attribute column"
-#~ msgstr "属性列を消去するテーブル"
-
-#~ msgid "Name of the column"
-#~ msgstr "列名"
-
-#~ msgid "Drops an attribute table."
-#~ msgstr "属性テーブルを消去"
-
-#~ msgid "Table to drop"
-#~ msgstr "消去するテーブル"
-
-#~ msgid "Imports attribute tables in various formats."
-#~ msgstr "さまざまなフォーマットに属性テーブルをインポート"
-
-#~ msgid "Table file to be imported or DB connection string"
-#~ msgstr "インポートされるテーブルファイル、あるいはDB接続ストリング"
-
-#~ msgid "Table name of SQL DB table"
-#~ msgstr "SGL DBテーブルのテーブル名"
-
-#~ msgid "Name for output table"
-#~ msgstr "出力テーブル名"
-
-#~ msgid "Name for auto-generated unique key column"
-#~ msgstr "自動生成されたユニークキー列名"
-
-#~ msgid "Exports attribute tables into various formats."
-#~ msgstr "属性テーブルをさまざまなフォーマットにエクスポート"
-
-#~ msgid "GRASS table name"
-#~ msgstr "GRASSテーブル名"
-
-#~ msgid "Table file to be exported or DB connection string"
-#~ msgstr "エクスポートされるかDB接続ストリングするテーブルファイル"
-
-#~ msgid "Table format"
-#~ msgstr "テーブルフォーマット"
-
-#~ msgid "Test database driver, database must exist and set by db.connect."
-#~ msgstr ""
-#~ "テストデータベースドライバー、データベースは存在し、db.接続に設定しなけれ"
-#~ "ばなりません。"
-
-#~ msgid "Test name"
-#~ msgstr "テスト名"
-
-#~ msgid "Display the HTML man pages of GRASS"
-#~ msgstr "GRASSのHTMLmanページを表示"
-
-#~ msgid "general, manual, help"
-#~ msgstr "概要、マニュアル、ヘルプ"
-
-#~ msgid "Display index"
-#~ msgstr "インデックスの表示"
-
-#~ msgid "Display as MAN text page instead of HTML page in browser"
-#~ msgstr "ブラウザー内のHTMLページの代わりにMANテキストページを表示する。"
-
-#~ msgid "Manual entry to be displayed"
-#~ msgstr "表示されるマニュアル入力"
-
-#~ msgid ""
-#~ "Brovey transform to merge multispectral and high-res panchromatic channels"
-#~ msgstr "複数波長と高解像度パンクロチャンネルを統合するBrovey変換"
-
-#~ msgid "imagery, fusion, Brovey"
-#~ msgstr "画像、フュージョン、Brovey"
-
-#~ msgid "LANDSAT sensor"
-#~ msgstr "LANDSATセンサー"
-
-#~ msgid "Sensor"
-#~ msgstr "センサー"
-
-#~ msgid "QuickBird sensor"
-#~ msgstr "QuickBirdセンサー"
-
-#~ msgid "SPOT sensor"
-#~ msgstr "SPOTセンサー"
-
-#~ msgid "Name of input raster map (green: tm2 | qbird_green | spot1)"
-#~ msgstr "入力するラスターマップ名 (緑: tm2 | qbird_green | spot1)"
-
-#~ msgid "Name of input raster map (NIR: tm4 | qbird_nir | spot2)"
-#~ msgstr "入力するラスターマップ名 (NIR: tm4 | qbird_nir | spot2)"
-
-#~ msgid "Name of input raster map (MIR; tm5 | qbird_red | spot3)"
-#~ msgstr "入力するラスターマップ名 (MIR; tm5 | qbird_red | spot3)"
-
-#~ msgid "Name of input raster map (etmpan | qbird_pan | spotpan)"
-#~ msgstr "入力するラスターマップ名 (etmpan | qbird_pan | spotpan)"
-
-#~ msgid "Name for output raster map prefix (e.g. 'brov')"
-#~ msgstr "出力するラスターマッププリフィックス名 (例 'brov')"
-
-#~ msgid "Mosaics up to 4 images and extends colormap; creates map *.mosaic"
-#~ msgstr ""
-#~ "モザイクは最大4つの画像まで、 カラーマップを拡張する; マップ *.mosaicを作"
-#~ "成する  "
-
-#~ msgid "raster, imagery, mosaicking"
-#~ msgstr "ラスター、画像、モザイク"
-
-#~ msgid "1st map for mosaic (top of image stack)."
-#~ msgstr "第1モザイクマップ (画像スタックの上部).  "
-
-#~ msgid "2nd map for mosaic."
-#~ msgstr "第2モザイクマップ"
-
-#~ msgid "3rd map for mosaic."
-#~ msgstr "第3モザイクマップ"
-
-#~ msgid "4th map for mosaic."
-#~ msgstr "第4モザイクマップ"
-
-#~ msgid "Import of SPOT VGT NDVI file into a raster map"
-#~ msgstr "SPOT VGT NDVI ファイルをラスターマップにインポート"
-
-#~ msgid "raster, imagery, import"
-#~ msgstr "ラスター、画像、インポート"
-
-#~ msgid "also import quality map (SM status map layer) and filter NDVI map"
-#~ msgstr ""
-#~ "性質マップ (SM ステータスマップレイヤー) とフィルターNDVIマップにもイン"
-#~ "ポート "
-
-#~ msgid "existing SPOT VGT NDVI HDF file (0001_NDV.HDF)"
-#~ msgstr "存在する SPOT VGT NDVI HDF ファイル (0001_NDV.HDF)  "
-
-#~ msgid "Performs auto-balancing of colors for LANDSAT images."
-#~ msgstr "LANDSAT 画像を自動色調整"
-
-#~ msgid "raster, imagery, colors"
-#~ msgstr "ラスター、画像、色"
-
-#~ msgid "LANDSAT red channel"
-#~ msgstr "LANDSAT 赤チャンネル"
-
-#~ msgid "LANDSAT green channel"
-#~ msgstr "LANDSAT 緑チャンネル"
-
-#~ msgid "LANDSAT blue channel"
-#~ msgstr "LANDSAT 青チャンネル"
-
-#~ msgid "Cropping intensity (upper brightness level)"
-#~ msgstr "輝度を切り取る（上側のブライトネスレベル）"
-
-#~ msgid "Extend colors to full range of data on each channel"
-#~ msgstr "全てのチャンネルのデータの色を全領域に拡張"
-
-#~ msgid "Preserve relative colors, adjust brightness only"
-#~ msgstr "色の相対性を維持，明るさだけを調整"
-
-#~ msgid "Reset to standard color range"
-#~ msgstr "標準の色の範囲へリセット"
-
-#~ msgid "Calculates Optimum-Index-Factor table for LANDSAT TM bands 1-5, & 7"
-#~ msgstr "LANDSAT TM bands 1-5, & 7のOptimum-Index-Factor テーブルを計算する"
-
-#~ msgid "raster, imagery, statistics"
-#~ msgstr "ラスター、画像、統計"
-
-#~ msgid "LANDSAT TM band 1."
-#~ msgstr "LANDSAT TM バンド 1.  "
-
-#~ msgid "LANDSAT TM band 2."
-#~ msgstr "LANDSAT TM バンド 2.  "
-
-#~ msgid "LANDSAT TM band 3."
-#~ msgstr "LANDSAT TM バンド 3.  "
-
-#~ msgid "LANDSAT TM band 4."
-#~ msgstr "LANDSAT TM バンド 4.  "
-
-#~ msgid "LANDSAT TM band 5."
-#~ msgstr "LANDSAT TM バンド 5.  "
-
-#~ msgid "LANDSAT TM band 7."
-#~ msgstr "LANDSAT TM バンド 7.  "
-
-#~ msgid ""
-#~ "Displays spectral response at user specified locations in group or images."
-#~ msgstr ""
-#~ "グループあるいは画像内のロケーションを明確にしたユーザーにスペクトル感度を"
-#~ "表示する"
-
-#~ msgid "imagery, raster, multispectral"
-#~ msgstr "画像、ラスター、マルチスペクトル"
-
-#~ msgid "Group input"
-#~ msgstr "グループ入力"
-
-#~ msgid "Raster input maps"
-#~ msgstr "ラスター入力マップ"
-
-#~ msgid "Write output to PNG image"
-#~ msgstr "PNG画像に出力を書き込む"
-
-#~ msgid "Use image list and not group"
-#~ msgstr "グループではなく画像リストの使用"
-
-#~ msgid "Select multiple points"
-#~ msgstr "重複ポイントを選択"
-
-#~ msgid "Label with coordinates instead of numbering"
-#~ msgstr "番号付けの代わりに座標をラベル付けする"
-
-#~ msgid "Tasseled Cap (Kauth Thomas) transformation for LANDSAT-TM data"
-#~ msgstr "LANDSAT-TM データ のTasseled Cap (Kauth Thomas)変換"
-
-#~ msgid "raster, imagery"
-#~ msgstr "ラスター、画像"
-
-#~ msgid "use transformation rules for LANDSAT-4"
-#~ msgstr "LANDSAT-4 の変換ルールの使用 "
-
-#~ msgid "use transformation rules for LANDSAT-5"
-#~ msgstr "LANDSAT-5 の変換ルールの使用"
-
-#~ msgid "use transformation rules for LANDSAT-7"
-#~ msgstr "LANDSAT-7 の変換ルールの使用"
-
-#~ msgid "raster input map (LANDSAT channel 1)"
-#~ msgstr "ラスター入力マップ (LANDSAT チャンネル 1)"
-
-#~ msgid "raster input map (LANDSAT channel 2)"
-#~ msgstr "ラスター入力マップ (LANDSAT チャンネル 2)"
-
-#~ msgid "raster input map (LANDSAT channel 3)"
-#~ msgstr "ラスター入力マップ (LANDSAT チャンネル 3)"
-
-#~ msgid "raster input map (LANDSAT channel 4)"
-#~ msgstr "ラスター入力マップ (LANDSAT チャンネル 4)"
-
-#~ msgid "raster input map (LANDSAT channel 5)"
-#~ msgstr "ラスター入力マップ (LANDSAT チャンネル 5)"
-
-#~ msgid "raster input map (LANDSAT channel 7)"
-#~ msgstr "ラスター入力マップ (LANDSAT チャンネル 7)"
-
-#~ msgid "raster output TC maps prefix"
-#~ msgstr "ラスターアウトプットTCマッププリフィックス"
-
-#~ msgid "Convert coordinates from one projection to another (cs2cs frontend)."
-#~ msgstr "1つの投影から他に座標を変換する (cs2cs フロントエンド).  "
-
-#~ msgid "miscellaneous, projection"
-#~ msgstr "さまざまな投影"
-
-#~ msgid "Input coordinate file (omit to read from stdin)"
-#~ msgstr "入力する座標ファイル（標準入力からの読み取りを除く）"
-
-#~ msgid "Output coordinate file (omit to send to stdout)"
-#~ msgstr "出力する座標ファイル（標準出力への送信を除く）"
-
-#~ msgid "Field separator"
-#~ msgstr "フィールドセパレーター"
-
-#~ msgid "Input projection parameters (PROJ.4 style)"
-#~ msgstr "入力する投影パラメータ (PROJ.4 スタイル)"
-
-#~ msgid "Output projection parameters (PROJ.4 style)"
-#~ msgstr "出力する投影パラメータ (PROJ.4 スタイル)"
-
-#~ msgid "Use LL WGS84 as input and current location as output projection"
-#~ msgstr "入力に LL WGS84、 出力する投影に現在のロケーションを使用"
-
-#~ msgid "Use current location as input and LL WGS84 as output projection"
-#~ msgstr "入力に現在のロケーション、出力する投影に LL WGS84を使用"
-
-#~ msgid ""
-#~ "Output long/lat in decimal degrees or other projections with many decimal "
-#~ "places"
-#~ msgstr "十進法あるいは小数位で他の投影で 出力する 経度/緯度 "
-
-#~ msgid ""
-#~ "Script style output in CSV format respecting the field separator settings"
-#~ msgstr ""
-#~ "フィールドセパレーター設定に関するCSVフォーマットのスクリプトスタイルアウ"
-#~ "トプット"
-
-#~ msgid "Verbose mode (print projection parameters and filenames to stderr)"
-#~ msgstr "冗長モード（標準誤差の投影パラメータとファイル名を出力する）"
-
-#~ msgid "Blends color components of two raster maps by a given ratio."
-#~ msgstr "与えられた比率で2つのラスターマップのカラー要素を合わせる"
-
-#~ msgid "Name of first raster map for blending"
-#~ msgstr "融合する第1ラスターマップ名"
-
-#~ msgid "Name of second raster map for blending"
-#~ msgstr "融合する第2ラスターマップ名"
-
-#~ msgid "Base name for red, green and blue output maps containing the blend"
-#~ msgstr "混合を含む赤、緑、青出力ファイルのベース名"
-
-#~ msgid "Percentage weight of first map for color blending"
-#~ msgstr "カラー融合の最初のマップの重量パーセント"
-
-#~ msgid "Set color rules based on stddev from a map's mean value."
-#~ msgstr "マップの平均値を元にした標準偏差をベースにて色ルールをセット"
-
-#~ msgid "Color using standard deviation bands"
-#~ msgstr "標準偏差バンドを使うカラー"
-
-#~ msgid "Force center at zero"
-#~ msgstr "中心をゼロにする"
-
-#~ msgid ""
-#~ "Fills no-data areas in raster maps using v.surf.rst splines interpolation"
-#~ msgstr ""
-#~ "v.surf.rst スプライン補間が使われているラスターマップにデータなしエリアを"
-#~ "埋める"
-
-#~ msgid "raster, elevation, interpolation"
-#~ msgstr "ラスター、標高、補間"
-
-#~ msgid "Raster map in which to fill nulls"
-#~ msgstr "nullで埋められたラスターマップ"
-
-#~ msgid ""
-#~ "Output raster map with nulls filled by interpolation from surrounding "
-#~ "values"
-#~ msgstr "周囲の値からの補間によって埋められたnullで出力するラスターマップ"
-
-#~ msgid "Spline tension parameter"
-#~ msgstr "スプラインテンションパラメータ"
-
-#~ msgid "Spline smoothing parameter"
-#~ msgstr "スプラインスムージングパラメータ"
-
-#~ msgid ""
-#~ "Georeference, rectify and import Terra-ASTER imagery and relative DEM's "
-#~ "using gdalwarp."
-#~ msgstr ""
-#~ "地理参照、修正とTerra-ASTER画像とGDALwarpを使用する近接のDEMのインポート  "
-
-#~ msgid "Input ASTER image to be georeferenced & rectified"
-#~ msgstr "地理参照・修正するASTER画像"
-
-#~ msgid "ASTER imagery processing type (Level 1A, Level 1B, or relative DEM)"
-#~ msgstr "ASTER 画像処理タイプ (レベル 1A, レベル 1B, あるいは 相対 DEM)  "
-
-#~ msgid ""
-#~ "L1A or L1B band to translate (1, 2, 3n, 3b, 4-14). Can only translate a "
-#~ "single band"
-#~ msgstr ""
-#~ "変換するL1A あるいは L1B バンド (1, 2, 3n, 3b, 4-14)。単一のバンドとのみ変"
-#~ "換できます。"
-
-#~ msgid "Import SRTM HGT files into GRASS"
-#~ msgstr "SRTM HGT ファイルを GRASSにインポート"
-
-#~ msgid "SRTM input tile (file without .hgt.zip extension)"
-#~ msgstr "SRTM 入力タイル ( .hgt.zip 拡張ファイルなし)  "
-
-#~ msgid "Output raster map (default: input tile)"
-#~ msgstr "出力するラスターマップ (初期値: 入力タイル)"
-
-#~ msgid "Input is a 1-arcsec tile (default: 3-arcsec)"
-#~ msgstr "入力は1-arcsec タイルです (デフォルト: 3-arcsec)"
-
-#~ msgid "Downloads and imports data from WMS servers."
-#~ msgstr "WMS サーバーからデータをダウンロード、インポート"
-
-#~ msgid "wms"
-#~ msgstr "wms"
-
-#~ msgid "Request"
-#~ msgstr "要求"
-
-#~ msgid "Skip to downloading (to resume downloads faster)"
-#~ msgstr "ダウンロードをスキップ（ダウンロードを早く再開）"
-
-#~ msgid "Download"
-#~ msgstr "ダウンロード"
-
-#~ msgid "Don't request transparent data"
-#~ msgstr "トランスペアレントデータを要求しないでください"
-
-#~ msgid "Clean existing data out of download directory"
-#~ msgstr "ダウンロードディレクトリから既存のデータを削除"
-
-#~ msgid "Import"
-#~ msgstr "インポート"
-
-#~ msgid "Don't reproject the data, just patch it"
-#~ msgstr "データを再投影しないでください。パッチのみ"
-
-#~ msgid "Use GET method instead of POST data method"
-#~ msgstr "POSTデータメソッドの代わりにGETメソッドを使用"
-
-#~ msgid "This may be needed to connect to servers which lack POST capability"
-#~ msgstr "これはPOST機能が不足しているサーバーに接続されている必要があります"
-
-#~ msgid "Mapserver to request data from"
-#~ msgstr "データを要求するマップサーバー"
-
-#~ msgid "Layers to request from map server"
-#~ msgstr "マップサーバーからの要求のレイヤー"
-
-#~ msgid "Styles to request from map server"
-#~ msgstr "マップサーバーからの要求のスタイル"
-
-#~ msgid "Source projection to request from server"
-#~ msgstr "サーバーからの要求のソース投影"
-
-#~ msgid "Image format requested from the server"
-#~ msgstr "サーバーから要求された画像フォーマット"
-
-#~ msgid "Addition query options for server"
-#~ msgstr "サーバーに検索オプションを追加"
-
-#~ msgid "Maximum columns to request at a time"
-#~ msgstr "一度に要求する列の最大値"
-
-#~ msgid "Maximum rows to request at a time"
-#~ msgstr "一度に要求する行の最大値"
-
-#~ msgid "Additional options for r.tileset"
-#~ msgstr "r.tilesetの追加オプション"
-
-#~ msgid "Named region to request data for. Current region used if omitted"
-#~ msgstr ""
-#~ "データを要求するための名づけられた領域。除かれている場合は現在の領域を使用"
-#~ "します。"
-
-#~ msgid "Folder to save downloaded data to"
-#~ msgstr "ダウンロードデータを保存するディレクトリ"
-
-#~ msgid "Additional options for wget"
-#~ msgstr "wgetの追加オプション  "
-
-#~ msgid "Additional options for curl"
-#~ msgstr "curlの追加オプション  "
-
-#~ msgid "Reprojection method to use"
-#~ msgstr "使用する再投影メソッド"
-
-#~ msgid "Filename to save capabilities XML file to"
-#~ msgstr "機能XMLファイルを保存するファイル名  "
-
-#~ msgid "Requires list available layers flag"
-#~ msgstr "可能なレイヤーフラッグのリストを要求"
-
-#~ msgid "Verbosity level"
-#~ msgstr "詳細レベル"
-
-#~ msgid "Calculate new raster map from a r.mapcalc expression."
-#~ msgstr "r.mapcalc表現から新しいラスターマップを計算"
-
-#~ msgid "A"
-#~ msgstr "A"
-
-#~ msgid "B"
-#~ msgstr "B"
-
-#~ msgid "C"
-#~ msgstr "C"
-
-#~ msgid "D"
-#~ msgstr "D"
-
-#~ msgid "E"
-#~ msgstr "E"
-
-#~ msgid "F"
-#~ msgstr "F"
-
-#~ msgid "Formula (e.g. A-B or A*C+B)"
-#~ msgstr "数式（例： A-B や A*C+B）"
-
-#~ msgid "Show help"
-#~ msgstr "ヘルプを表示"
-
-#~ msgid "Expert mode (enter a set of r.mapcalc expressions)"
-#~ msgstr "エキスパートモード（r.mapcalc表現を入力）"
-
-#~ msgid "Do not overwrite existing map"
-#~ msgstr "既存のマップに上書きしないでください"
-
-#~ msgid "Create a MASK for limiting raster operation"
-#~ msgstr "制限ラスターオプションのMASKを作成する"
-
-#~ msgid "raster, mask"
-#~ msgstr "ラスター、マスク"
-
-#~ msgid "Raster map to use as MASK"
-#~ msgstr "MASKを使用するためのラスターマップ"
-
-#~ msgid "Category values to use for MASK (format: 1 2 3 thru 7 *)"
-#~ msgstr "MASKを使うカテゴリ値 (フォーマット: 1 2 3 から 7 *)  "
-
-#~ msgid "Create inverse MASK from specified 'maskcats' list"
-#~ msgstr "特定された 'maskcats' リストから逆MASKを作成する"
-
-#~ msgid "Overwrite existing MASK"
-#~ msgstr "既存のMASKに上書きする"
-
-#~ msgid "Remove existing MASK (overrides other options)"
-#~ msgstr "既存のMASKを削除する（他のオプションを無効にする）"
-
-#~ msgid "Exports GRASS raster into GDAL supported formats."
-#~ msgstr "GRASSラスターマップをGDALのサポートされたフォーマットにエクスポート"
-
-#~ msgid "Region sensitive output"
-#~ msgstr "領域の精度の高い出力"
-
-#~ msgid ""
-#~ "Creation option to the output format driver. Multiple options may be "
-#~ "listed"
-#~ msgstr ""
-#~ "出力するフォーマットドライバーの作成オプション．重複したオプションがリスト"
-#~ "されています"
-
-#~ msgid "Metadata key passed on the output dataset if possible"
-#~ msgstr "可能であれば，メタデータキーを出力するデータセットへ譲渡"
-
-#~ msgid ""
-#~ "Export a raster map to a text file as x,y,z values based on cell centers."
-#~ msgstr ""
-#~ "をラスターマップをセルの中心のx,y,z 値としたテキストファイルにエクスポート"
-
-#~ msgid ""
-#~ "Creates raster plane map given dip (inclination), aspect (azimuth) and "
-#~ "one point."
-#~ msgstr ""
-#~ " くぼみ (傾斜)、 方位 (アジマス) 、1点 が与えられたラスター平面マップの作"
-#~ "成"
-
-#~ msgid "raster, elevation"
-#~ msgstr "ラスター、標高"
-
-#~ msgid "Name of raster plane to be created"
-#~ msgstr "作成したラスター平面マップ名"
-
-#~ msgid "Dip of plane. Value must be between -90 and 90 degrees"
-#~ msgstr "平面のくぼみ。 値は-90から90度の間でなくてはなりません。  "
-
-#~ msgid "Azimuth of the plane. Value must be between 0 and 360 degrees"
-#~ msgstr "平面の方位（アジマス）。 値は0から360度の間でなくてはなりません。"
-
-#~ msgid "Easting coordinate of a point on the plane"
-#~ msgstr "平面上のポイントの東座標"
-
-#~ msgid "Northing coordinate of a point on the plane"
-#~ msgstr "平面上のポイントの北座標"
-
-#~ msgid "Elevation coordinate of a point on the plane"
-#~ msgstr "平面上のポイントの標高座標"
-
-#~ msgid "Type of the raster map to be created"
-#~ msgstr "作成されたラスターマップのタイプ"
-
-#~ msgid ""
-#~ "Reclasses a raster map greater or less than user specified area size (in "
-#~ "hectares)."
-#~ msgstr ""
-#~ "ラスターマップをユーザーが特定したエリアサイズより大きく、あるいは小さく再"
-#~ "分類する（ヘクタール）"
-
-#~ msgid "raster, statistics, aggregation"
-#~ msgstr "ラスター、統計値、集約 "
-
-#~ msgid "Lesser value option that sets the <= area size limit [hectares]"
-#~ msgstr "小さい値のオプション<= エリアサイズ制限[ヘクタール]"
-
-#~ msgid "Greater value option that sets the >= area size limit [hectares]"
-#~ msgstr "大きい値のオプション>= エリアサイズ [ヘクタール]  "
-
-#~ msgid "Calculates linear regression from two raster maps: y = a + b*x"
-#~ msgstr "2つのラスターマップから直線回帰を計算する: y = a + b*x  "
-
-#~ msgid "Slower but accurate (applies to FP maps only)"
-#~ msgstr "遅いですが正確です (FPマップのみ適用)  "
-
-#~ msgid "Map for x coefficient"
-#~ msgstr "x係数のマップ"
-
-#~ msgid "Map for y coefficient"
-#~ msgstr "y係数のマップ"
-
-#~ msgid ""
-#~ "ASCII file for storing regression coefficients (output to screen if file "
-#~ "not specified)."
-#~ msgstr ""
-#~ "回帰係数を保存するASCII ファイル (ファイルが特定されていない場合スクリーン"
-#~ "に出力).  "
-
-#~ msgid "Creates shaded relief map from an elevation map (DEM)."
-#~ msgstr "標高マップから陰影レリーフを作成する(DEM).  "
-
-#~ msgid "Output shaded relief map name"
-#~ msgstr "出力する陰影レリーフマップ名"
-
-#~ msgid "Altitude of the sun in degrees above the horizon"
-#~ msgstr "地平線上の太陽高度の角度"
-
-#~ msgid "Azimuth of the sun in degrees to the east of north"
-#~ msgstr "太陽の方位（東から反時計回り）"
-
-#~ msgid "Factor for exaggerating relief"
-#~ msgstr "過大レリーフの因数"
-
-#~ msgid "Scale factor for converting horizontal units to elevation units"
-#~ msgstr "水平ユニットから標高ユニットへの変換倍率"
-
-#~ msgid ""
-#~ "Set scaling factor (applies to lat./long. locations only, none: scale=1)"
-#~ msgstr "倍率を設定 (緯度./経度 ロケーションのみ適用、なし: スケール=1)  "
-
-#~ msgid ""
-#~ "Produces tilings of the source projection for use in the destination "
-#~ "region and projection."
-#~ msgstr "目的領域と投影の使用のためのソース投影タイルを作成する"
-
-#~ msgid "raster, tiling"
-#~ msgstr "ラスター、タイル表示"
-
-#~ msgid "Produces shell script output"
-#~ msgstr "シェルスクリプト出力を生産"
-
-#~ msgid "Produces web map server query string output"
-#~ msgstr "ウェブマップサーバー検索文字列アウトプットを作成する"
-
-#~ msgid ""
-#~ "Name of region to use instead of current region for bounds and resolution"
-#~ msgstr "境界と解像度用の現在の領域の代わりに使用される領域名"
-
-#~ msgid "Source projection"
-#~ msgstr "ソース投影"
-
-#~ msgid "Conversion factor from units to meters in source projection"
-#~ msgstr "ユニットからソース投影のメーターへの換算率"
-
-#~ msgid "Destination projection, defaults to this location's projection"
-#~ msgstr "目的投影、このロケーション投影にデフォルトする"
-
-#~ msgid "Maximum number of columns for a tile in the source projection"
-#~ msgstr "ソース投影のタイルの列最大数"
-
-#~ msgid "Maximum number of rows for a tile in the source projection"
-#~ msgstr "ソース投影のタイルの行最大数"
-
-#~ msgid "Number of cells tiles should overlap in each direction"
-#~ msgstr "セルタイル数は各方向と重複しているべきです"
-
-#~ msgid "calculates univariate statistics from a GRASS raster map"
-#~ msgstr "GRASSラスターマップから一変量の統計値を計算する"
-
-#~ msgid "extended statistics (quartiles and percentile)"
-#~ msgstr "拡張された統計（四分位と百分率）"
-
-#~ msgid "Percentile to calculate (requires -e flag)"
-#~ msgstr "百分率で計算(-e flagが必要)"
-
-#~ msgid "Calculates new grid3D volume from r3.mapcalc expression."
-#~ msgstr "r3.mapcalc式から新しい3Dグリッド体積を計算"
-
-#~ msgid "A (grid3D file)"
-#~ msgstr "A (3Dグリッド ファイル)"
-
-#~ msgid "B (grid3D file)"
-#~ msgstr "B (3Dグリッド ファイル)"
-
-#~ msgid "C (grid3D file)"
-#~ msgstr "C (3Dグリッド ファイル)"
-
-#~ msgid "D (grid3D file)"
-#~ msgstr "D (3Dグリッド ファイル)"
-
-#~ msgid "E (grid3D file)"
-#~ msgstr "E (3Dグリッド ファイル)"
-
-#~ msgid "F (grid3D file)"
-#~ msgstr "F (3Dグリッド ファイル)"
-
-#~ msgid "Name for output grid3D volume"
-#~ msgstr "出力する3Dグリッド体積名"
-
-#~ msgid "Expert mode (enter a set of r3.mapcalc expressions)"
-#~ msgstr "エキスパートモード (r3.mapcalc式の設定を入力)  "
-
-#~ msgid "Rebuilds topology on all vector maps in the current mapset."
-#~ msgstr "現在のマップセットにある全ベクトルマップのトポロジーを復元する"
-
-#~ msgid "Adds missing centroids to closed boundaries."
-#~ msgstr "見つからない図心をクローズした境界に追加"
-
-#~ msgid "vector, centroid, area"
-#~ msgstr "ベクトル、図心、領域"
-
-#~ msgid "Name for output vector map"
-#~ msgstr "出力するベクトルマップ名"
-
-#~ msgid "Action to be taken"
-#~ msgstr "取るべき行動"
-
-#~ msgid "Category number starting value"
-#~ msgstr "カテゴリ数の初期値"
-
-#~ msgid ""
-#~ "Set color rules for features in a vector using a numeric attribute column."
-#~ msgstr "数値属性の列でのベクトルの特徴の色ルール"
-
-#~ msgid "vector, color table"
-#~ msgstr "ベクトル、カラーテーブル"
-
-#~ msgid "Name of column containing numeric data"
-#~ msgstr "数値データを含む列名"
-
-#~ msgid "Layer number of data column"
-#~ msgstr "データ列のレイヤー数"
-
-#~ msgid "Name of color column to populate"
-#~ msgstr "追加するカラー列名"
-
-#~ msgid "Manually set range (min,max)"
-#~ msgstr "手動で範囲をセット（min,max）"
-
-#~ msgid "Path to rules file"
-#~ msgstr "ルールファイルへのパス"
-
-#~ msgid "Save placeholder raster map for use with d.legend"
-#~ msgstr "d.legendと使用するプレイスホルダーラスターマップを保存"
-
-#~ msgid ""
-#~ "Convert all old GRASS < Ver5.7 vector maps in current mapset to current "
-#~ "format"
-#~ msgstr ""
-#~ "現在のマップセット内のすべての前のGRASS < Ver5.7 ベクトルマップ を現在の"
-#~ "フォーマットに変換する"
-
-#~ msgid "run non-interactively"
-#~ msgstr "非対話形式で実行"
-
-#~ msgid ""
-#~ "Adds one or more columns to the attribute table connected to a given "
-#~ "vector map."
-#~ msgstr "与えられたベクトルマップに接続された属性テーブルに1つ以上の列を追加"
-
-#~ msgid "Vector map for which to edit attribute table"
-#~ msgstr "属性テーブルを編集するためのベクトルマップ"
-
-#~ msgid "Layer where to add column"
-#~ msgstr "列を追加するレイヤー"
-
-#~ msgid ""
-#~ "Name and type of the new column(s) (types depend on database backend, but "
-#~ "all support VARCHAR(), INT, DOUBLE PRECISION and DATE)"
-#~ msgstr ""
-#~ "新しい列名とタイプ(タイプはデータベースの後部に依存しますが、VARCHAR(), "
-#~ "INT, DOUBLE PRECISION and DATEのすべてをサポートします)"
-
-#~ msgid ""
-#~ "Creates and connects a new attribute table to a given layer of an "
-#~ "existing vector map."
-#~ msgstr ""
-#~ "新しい属性テーブルを既存のベクトルマップに与えられたレイヤーに作成、接続す"
-#~ "る"
-
-#~ msgid "Vector map for which to add new attribute table"
-#~ msgstr "新しい属性テーブルを追加するベクトルマップ"
-
-#~ msgid "Name of new attribute table (default: vector map name)"
-#~ msgstr "新しい属性テーブル名（デフォルト:ベクトルマップ名）"
-
-#~ msgid "Layer where to add new attribute table"
-#~ msgstr "新しい属性テーブルを追加するレイヤー"
-
-#~ msgid "Allows to join a table to a vector map table."
-#~ msgstr "テーブルのベクトルマップテーブルへの結合を許可する"
-
-#~ msgid "Vector map to which to join other table"
-#~ msgstr "他のテーブルに結合するベクトルマップ"
-
-#~ msgid "Layer where to join"
-#~ msgstr "結合するレイヤー"
-
-#~ msgid "Join column in map table"
-#~ msgstr "マップテーブルに列を結合"
-
-#~ msgid "Other table name"
-#~ msgstr "他のテーブル名"
-
-#~ msgid "Join column in other table"
-#~ msgstr "他のテーブルに列を結合"
-
-#~ msgid ""
-#~ "Drops a column from the attribute table connected to a given vector map."
-#~ msgstr "接続された属性テーブルから与えられたベクトルマップへ列を削除"
-
-#~ msgid "Vector map for which to drop attribute column"
-#~ msgstr "属性列を削除するベクトルマップ"
-
-#~ msgid "Layer where to drop column"
-#~ msgstr "列を削除するレイヤー"
-
-#~ msgid "Removes existing attribute table of a vector map."
-#~ msgstr "ベクトルマップの既存の属性テーブルを削除"
-
-#~ msgid "Force removal (required for actual deletion of table)"
-#~ msgstr "強制的に削除 (テーブルの削除が要求されました)  "
-
-#~ msgid "Vector map from which to remove attribute table"
-#~ msgstr "属性テーブルを削除するベクトルマップ"
-
-#~ msgid "Name of existing attribute table (default: vector map name)"
-#~ msgstr "既存の属性テーブル名（デフォルト:ベクトルマップ名）"
-
-#~ msgid "Layer from which to drop linked attribute table"
-#~ msgstr "属性テーブルのリンクを削除するレイヤー"
-
-#~ msgid ""
-#~ "Renames a column in the attribute table connected to a given vector map."
-#~ msgstr ""
-#~ "接続された属性テーブルの列を与えられたベクトルマップに名前を変更する"
-
-#~ msgid "Vector map for which to rename attribute column"
-#~ msgstr "属性列名を変更するベクトルマップ"
-
-#~ msgid "Layer where to rename column"
-#~ msgstr "列名を変更するレイヤー"
-
-#~ msgid "Old and new name of the column (old,new)"
-#~ msgstr "新旧の列名（旧、新）"
-
-#~ msgid "Reconnects vectors to a new database."
-#~ msgstr "ベクトルを新しいデータベースに再接続します。"
-
-#~ msgid "Name of old database"
-#~ msgstr "古いデータベース名"
-
-#~ msgid ""
-#~ "The database must be in form printed by v.db.connect -g, i.e. with "
-#~ "substituted variables"
-#~ msgstr ""
-#~ "データベースは置換変数とともにv.db.connect -g, i.e. と出力されたフォームの"
-#~ "中にないといけません。 "
-
-#~ msgid "Name of new database"
-#~ msgstr "新しいデータベース名"
-
-#~ msgid "Old schema"
-#~ msgstr "古い"
-
-#~ msgid "New schema"
-#~ msgstr "新しいスキーマ"
-
-#~ msgid ""
-#~ "Calculates univariate statistics on selected table column for a GRASS "
-#~ "vector map."
-#~ msgstr "GRASSベクトルマップの選択されたテーブル列の一変量の統計を計算します"
-
-#~ msgid "Extended statistics (quartiles and 90th percentile)"
-#~ msgstr "拡張された統計 (四分位 と 90パーセンタイル)  "
-
-#~ msgid "Name of data table"
-#~ msgstr "データテーブル名"
-
-#~ msgid "Column on which to calculate statistics (must be numeric)"
-#~ msgstr "計算する統計の列（数値でなくてはなりません）"
-
-#~ msgid "Database/directory for table"
-#~ msgstr "テーブルのデータベース/ディレクトリ"
-
-#~ msgid "Database driver"
-#~ msgstr "データベースドライバー"
-
-#~ msgid ""
-#~ "Allows to update a column in the attribute table connected to a vector "
-#~ "map."
-#~ msgstr "ベクトルマップに接続する属性テーブルの列のアップデートを許可する。"
-
-#~ msgid "Vector map to edit the attribute table for"
-#~ msgstr "属性テーブルを編集するベクトルマップ"
-
-#~ msgid "Layer to which the table to be changed is connected"
-#~ msgstr "変更されたテーブルのレイヤーは接続されました"
-
-#~ msgid "Column to update"
-#~ msgstr "アップデートする列"
-
-#~ msgid ""
-#~ "Value to update the column with (varchar values have to be in single "
-#~ "quotes, e.g. 'grass')"
-#~ msgstr ""
-#~ "列をアップデートする値 (varchar値は一重引用符がないといけません、 例. "
-#~ "'grass')  "
-
-#~ msgid "Column to query"
-#~ msgstr "検索する列"
-
-#~ msgid ""
-#~ "WHERE conditions for update, without 'where' keyword (e.g. cat=1 or col1/"
-#~ "col2>1)"
-#~ msgstr ""
-#~ "'where' 句なしのアップデートのWHEREコンディション (例　cat=1 or col1/"
-#~ "col2>1)  "
-
-#~ msgid ""
-#~ "Dissolves boundaries between adjacent areas sharing a common category "
-#~ "number or attribute."
-#~ msgstr ""
-#~ "共通のカテゴリ数あるいは属性と共有する直前のエリア間の境界をディゾルブする"
-
-#~ msgid "vector, area, dissolve"
-#~ msgstr "ベクトル、領域、ディゾルブ"
-
-#~ msgid "Layer number. If -1, all layers are extracted."
-#~ msgstr "-1、全レイヤーが展開されたときのレイヤー数"
-
-#~ msgid ""
-#~ "A single vector map can be connected to multiple database tables. This "
-#~ "number determines which table to use."
-#~ msgstr ""
-#~ "単独のベクトルマップは多数のデータベーステーブルに接続されていなければなり"
-#~ "ません。この数値はどのテーブルを使用しているか決定します"
-
-#~ msgid "Name of column used to dissolve common boundaries"
-#~ msgstr "共通の境界のディゾルブに使われる列名"
-
-#~ msgid "Import E00 file into a vector map."
-#~ msgstr "ベクトルマップへE00ファイルをインポート"
-
-#~ msgid "E00 file"
-#~ msgstr "E00ファイル"
-
-#~ msgid "Input type point, line or area"
-#~ msgstr "ポイント、ライン、エリアの入力タイプ"
-
-#~ msgid ""
-#~ "Download waypoints, routes, and tracks from a Garmin GPS receiver into a "
-#~ "vector map."
-#~ msgstr ""
-#~ "Garmin GPSレシーバーからベクトルマップへウェイポイント、ルート、トラックを"
-#~ "ダウンロードする"
-
-#~ msgid "vector, import, GPS"
-#~ msgstr "ベクトル、インポート、GPS"
-
-#~ msgid "Download Waypoints from GPS"
-#~ msgstr "GPSからウェイポイントをダウンロードする"
-
-#~ msgid "Download Routes from GPS"
-#~ msgstr "GPSからルートをダウンロードする"
-
-#~ msgid "Download Track from GPS"
-#~ msgstr "GPSからトラックをダウンロードする"
-
-#~ msgid "Force import of track or route data as points"
-#~ msgstr "トラックまたはルートのデータをポイント郡としてインポート"
-
-#~ msgid "Use gardump instead of gpstrans as the download program"
-#~ msgstr "ダウンロードプログラムとしてgpstransの代わりにgardumpを使用する"
-
-#~ msgid "Import track in 3D (gardump only)"
-#~ msgstr "3Dにトラックをインポート (gardumpのみ)  "
-
-#~ msgid "Do not attempt projection transform from WGS84"
-#~ msgstr "WGS84 から投影変換をしない "
-
-#~ msgid "Name for output vector map (omit for display to stdout)"
-#~ msgstr "出力するベクトルマップ名（標準出力のディスプレイを除く）"
-
-#~ msgid "Port Garmin receiver is connected to"
-#~ msgstr "Port Garmin レシーバーは接続されています"
-
-#~ msgid "Imports geonames.org country files into a GRASS vector points map."
-#~ msgstr ""
-#~ "geonames.org カントリーファイルをGRASSベクトルポイントマップにインポート"
-
-#~ msgid "vector, import, gazetteer"
-#~ msgstr "ベクトル、インポート、地名索引"
-
-#~ msgid "Uncompressed geonames file from (with .txt extension)"
-#~ msgstr "解凍された geonamesファイル( .txt 拡張子)  "
-
-#~ msgid ""
-#~ "Imports US-NGA GEOnet Names Server (GNS) country files into a GRASS "
-#~ "vector points map."
-#~ msgstr ""
-#~ "US-NGA GEOnet Names Server (GNS) カントリーファイルをGRASSベクトルポイント"
-#~ "マップへインポート"
-
-#~ msgid "Uncompressed GNS file from NGA (with .txt extension)"
-#~ msgstr "NGAから圧縮されていないGNSファイル (.txt 拡張子)  "
-
-#~ msgid ""
-#~ "Import waypoints, routes, and tracks from a GPS receiver or GPS download "
-#~ "file into a vector map."
-#~ msgstr ""
-#~ "GPSレシーバーあるいはGPSダウンロードファイルからベクトルマップへウェイポイ"
-#~ "ント、ルート、トラックをインポート"
-
-#~ msgid "Import waypoints"
-#~ msgstr "ウェイポイントをインポート"
-
-#~ msgid "Import routes"
-#~ msgstr "ルートをインポート"
-
-#~ msgid "Import track"
-#~ msgstr "トラックをインポート"
-
-#~ msgid "Force vertices of track or route data as points"
-#~ msgstr "トラックまたはルートの頂点をポイント郡としてインポート"
-
-#~ msgid "Device or file used to import data"
-#~ msgstr "インポートデータに使われるデバイスあるいはファイル"
-
-#~ msgid "Format of GPS input data (use gpsbabel supported formats)"
-#~ msgstr ""
-#~ "GPS入力データのフォーマット(GPSバベルでサポートされるフォーマット)  "
-
-#~ msgid ""
-#~ "Projection of input data (PROJ.4 style), if not set Lat/Lon WGS84 is "
-#~ "assumed"
-#~ msgstr ""
-#~ "入力データ(PROJ.4 スタイル)の投影. 緯度経度が設定されていないときはWGS84と"
-#~ "仮定"
-
-#~ msgid "Import Mapgen or Matlab vector maps into GRASS."
-#~ msgstr "MapgenあるいはMatlabベクトルマップをGRASSにインポート"
-
-#~ msgid "Input map is in Matlab format"
-#~ msgstr "入力するマップはMatlabフォーマットにあります"
-
-#~ msgid "Create a 3D vector points map from 3 column Matlab data"
-#~ msgstr "3列 Matlabデータから3Dベクトルポイントマップを作成する"
-
-#~ msgid "Name of input file in Mapgen/Matlab format"
-#~ msgstr "Mapgen/Matlab フォーマットの入力ファイル名"
-
-#~ msgid ""
-#~ "Converts all old GRASS < Ver5.7 sites maps in current mapset to vector "
-#~ "maps."
-#~ msgstr ""
-#~ "現在のマップセット内のすべての前のGRASS < Ver5.7 サイトマップをベクトル"
-#~ "マップに変換する"
-
-#~ msgid "sites, vector, import"
-#~ msgstr "サイト、ベクトル、インポート"
-
-#~ msgid "Run non-interactively"
-#~ msgstr "非対話形式で実行"
-
-#~ msgid "Import GetFeature from WFS"
-#~ msgstr "WFSからGetFeatureをインポート"
-
-#~ msgid "GetFeature URL starting with http"
-#~ msgstr "httpから始まるGetFeature URL"
-
-#~ msgid "Vector output map"
-#~ msgstr "ベクトル出力マップ"
-
-#~ msgid ""
-#~ "Exports a vector map to a GPS receiver or file format supported by "
-#~ "GpsBabel."
-#~ msgstr ""
-#~ "ベクトルマップをGPSレシーバーあるいはGpsBabelにサポートされたファイル"
-#~ "フォーマットにエクスポート"
-
-#~ msgid "vector, export, GPS"
-#~ msgstr "ベクトル、エクスポート、GPS"
-
-#~ msgid "Export as waypoints"
-#~ msgstr "ウェイポイントとしてエクスポート"
-
-#~ msgid "Export as routes"
-#~ msgstr "ルートとしてエクスポート"
-
-#~ msgid "Export as tracks"
-#~ msgstr "トラックとしてエクスポート"
-
-#~ msgid "Feature type(s)"
-#~ msgstr "フィーチャータイプ"
-
-#~ msgid "Name for output file or GPS device"
-#~ msgstr "出力ファイル名、GPSデバイス名"
-
-#~ msgid "GpsBabel supported output format"
-#~ msgstr "GpsBabelをサポートする出力フォーマット"
-
-#~ msgid "Subset"
-#~ msgstr "サブセット"
-
-#~ msgid "Example: income < 1000 and inhab >= 10000"
-#~ msgstr "例: 収入 < 1000 かつ　住人 >= 10000"
-
-#~ msgid ""
-#~ "Calculates univariate statistics from a GRASS raster map based on vector "
-#~ "polygons and uploads statistics to new attribute columns."
-#~ msgstr ""
-#~ "ベクトルポリゴンとアップロードされた統計をベースにしたGRASSラスターマップ"
-#~ "から新しい属性列へ一変量の統計を計算する"
-
-#~ msgid "vector, raster, statistics"
-#~ msgstr "ベクトル、ラスター、統計値"
-
-#~ msgid "Continue if upload column(s) already exist"
-#~ msgstr "列が既にある場合は続行"
-
-#~ msgid "Name of vector polygon map"
-#~ msgstr "ベクトルポリゴンマップ名"
-
-#~ msgid "Name of raster map to calculate statistics from"
-#~ msgstr "統計値を計算するラスターマップ名"
-
-#~ msgid "Column prefix for new attribute columns"
-#~ msgstr "新しい属性列の列プリフィックス"
-
-#~ msgid "Reports geometry statistics for vectors."
-#~ msgstr "ベクトルのジオメトリー統計をレポートする"
-
-#~ msgid "vector, report, statistics"
-#~ msgstr "ベクトル、レポート、統計値"
-
-#~ msgid "Reverse sort the result"
-#~ msgstr "結果のソートを無効にする"
-
-#~ msgid "Sort the result"
-#~ msgstr "結果をソートする"
-
-#~ msgid "Value to calculate"
-#~ msgstr "計算値"
-
-#~ msgid "mi(les),f(eet),me(ters),k(ilometers),a(cres),h(ectares),p(ercent)"
-#~ msgstr ""
-#~ "マイル、フィート、メートル、キロメートル、エーカー、ヘクタール、パーセント"
-
-#~ msgid "Uploads vector values at positions of vector points to the table."
-#~ msgstr "ベクトルポイントの位置のベクトル値テーブルへアップロード"
-
-#~ msgid "Vector map to modify"
-#~ msgstr "修正するベクトルマップ"
-
-#~ msgid "Layer in the vector to be modified"
-#~ msgstr "修正されたベクトル内のレイヤー"
-
-#~ msgid "Column to be updated with the query result"
-#~ msgstr "検索結果に更新される列"
-
-#~ msgid "Vector map to be queried"
-#~ msgstr "問い合わせされたベクトルマップ"
-
-#~ msgid "Layer of the query vector containing data"
-#~ msgstr "データを含む検索ベクトルレイヤー"
-
-#~ msgid "Column to be queried"
-#~ msgstr "検索された列"
-
-#~ msgid "Maximum query distance in map units"
-#~ msgstr "マップユニットの最大検索距離"
+#~ msgid "DXY [%s] COMPLETE"
+#~ msgstr "DXY [%s] 完了"
 
 #~ msgid ""
 #~ "Input raster map contains cells with NULL-value (no-data). The value %g "

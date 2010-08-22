@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Grass 6.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-06-02 21:15+0200\n"
+"POT-Creation-Date: 2010-08-22 02:31+0200\n"
 "PO-Revision-Date: 2005-06-02 18:00+0530\n"
 "Last-Translator: Swapnil Hajare <dreamil@gmail.com>\n"
 "Language-Team: Marathi <www.janabhaaratii.org.in>\n"
@@ -1118,55 +1118,55 @@ msgstr "temp फाइल उघडता आली नाही"
 msgid "CreateProcess() failed: error = %d"
 msgstr ""
 
-#: ../lib/gis/spawn.c:410
+#: ../lib/gis/spawn.c:411
 #, c-format
 msgid "G_spawn: unable to redirect descriptor %d"
 msgstr ""
 
-#: ../lib/gis/spawn.c:418 ../lib/gis/spawn.c:603
+#: ../lib/gis/spawn.c:419 ../lib/gis/spawn.c:604
 #, c-format
 msgid "G_spawn: unable to open file %s"
 msgstr ""
 
-#: ../lib/gis/spawn.c:487 ../lib/gis/spawn.c:673
+#: ../lib/gis/spawn.c:488 ../lib/gis/spawn.c:674
 msgid "Unable to execute command"
 msgstr ""
 
-#: ../lib/gis/spawn.c:512 ../lib/gis/spawn.c:520
+#: ../lib/gis/spawn.c:513 ../lib/gis/spawn.c:521
 #, c-format
 msgid "G_spawn: unable to restore signal %d"
 msgstr ""
 
-#: ../lib/gis/spawn.c:551
+#: ../lib/gis/spawn.c:552
 #, c-format
 msgid "G_spawn: unable to reset signal %d"
 msgstr ""
 
-#: ../lib/gis/spawn.c:560
+#: ../lib/gis/spawn.c:561
 #, c-format
 msgid "G_spawn: unable to ignore signal %d"
 msgstr ""
 
-#: ../lib/gis/spawn.c:571
+#: ../lib/gis/spawn.c:572
 #, c-format
 msgid "G_spawn: unable to block signal %d"
 msgstr ""
 
-#: ../lib/gis/spawn.c:579
+#: ../lib/gis/spawn.c:580
 #, c-format
 msgid "G_spawn: unable to unblock signal %d"
 msgstr ""
 
-#: ../lib/gis/spawn.c:608 ../lib/gis/spawn.c:617
+#: ../lib/gis/spawn.c:609 ../lib/gis/spawn.c:618
 #, c-format
 msgid "G_spawn: unable to duplicate descriptor %d to %d"
 msgstr ""
 
-#: ../lib/gis/spawn.c:650
+#: ../lib/gis/spawn.c:651
 msgid "Unable to create a new process"
 msgstr ""
 
-#: ../lib/gis/spawn.c:665
+#: ../lib/gis/spawn.c:666
 #, c-format
 msgid "Unable to change directory to %s"
 msgstr ""
