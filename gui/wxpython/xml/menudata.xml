@@ -855,7 +855,7 @@
 	  <command>r.mask</command>
 	</menuitem>
 	<menuitem>
-	  <label>Raster calculator</label>
+	  <label>Raster map calculator</label>
 	  <help>Map calculator for raster map algebra.</help>
 	  <handler>self.OnMapCalculator</handler>
 	</menuitem>
