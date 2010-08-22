@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: grassmods_el\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-06-02 21:15+0200\n"
+"POT-Creation-Date: 2010-08-22 02:31+0200\n"
 "PO-Revision-Date: 2009-02-19 10:29+0200\n"
 "Last-Translator: Vasilios Antoniou <vantoniou@gmail.com>\n"
 "Language-Team: Greek <grass-translations@lists.osgeo.org>\n"
@@ -922,7 +922,6 @@ msgstr ""
 #: ../vector/v.what.rast/main.c:138 ../visualization/xganim/main.c:366
 #: ../visualization/nviz2/cmd/surface.c:56
 #: ../visualization/nviz2/cmd/surface.c:106 ../doc/raster/r.example/main.c:111
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:392
 #: ../ps/ps.map/outl_io.c:68 ../imagery/i.pca/main.c:129
 #: ../imagery/i.zc/main.c:111 ../imagery/i.rgb.his/openfiles.c:14
 #: ../imagery/i.rgb.his/openfiles.c:16 ../imagery/i.rgb.his/openfiles.c:18
@@ -949,7 +948,7 @@ msgstr "Ο χάρτης raster  <%s> δεν βρέθηκε."
 #: ../raster3d/base/r3.info.main.c:285 ../raster3d/base/r3.info.main.c:298
 #: ../raster3d/base/r3.info.main.c:308 ../raster3d/base/r3.info.main.c:313
 #: ../raster3d/base/r3.info.main.c:321 ../raster3d/base/r3.info.main.c:334
-#: ../raster/r.info/main.c:303 ../raster/r.info/main.c:428
+#: ../raster/r.info/main.c:303 ../raster/r.info/main.c:424
 msgid "Cannot allocate memory for string"
 msgstr ""
 
@@ -1102,7 +1101,7 @@ msgstr "Χρησιμοποιήστε συντεταγμένες χάρτη αντί χψζ συντεταγμένες"
 #: ../raster/r.region/main.c:54 ../raster/r.in.mat/main.c:92
 #: ../raster/r.in.arc/main.c:59 ../raster/r.neighbors/main.c:106
 #: ../raster/r.bitpattern/main.c:62
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:153
+#: ../locale/scriptstrings/r.blend_to_translate.c:2
 msgid "raster"
 msgstr ""
 
@@ -1111,7 +1110,13 @@ msgid "Exports a GRASS raster to a binary array."
 msgstr ""
 
 #: ../raster/r.out.bin/main.c:73 ../raster/r.random/main.c:57
-#: ../raster/r.water.outlet/main.c:55 ../imagery/i.zc/main.c:69
+#: ../raster/r.water.outlet/main.c:55
+#: ../locale/scriptstrings/r.out.gdal.sh_to_translate.c:5
+#: ../locale/scriptstrings/r.reclass.area_to_translate.c:3
+#: ../locale/scriptstrings/r.out.xyz_to_translate.c:3
+#: ../locale/scriptstrings/r.colors.stddev_to_translate.c:3
+#: ../locale/scriptstrings/d.rast.edit_to_translate.c:3
+#: ../imagery/i.zc/main.c:69
 msgid "Name of input raster map"
 msgstr "Όνομα εισαγώμενου ράστερ χάρτη "
 
@@ -1361,9 +1366,8 @@ msgstr ""
 #: ../general/manage/cmd/rename.c:84 ../vector/v.in.ogr/main.c:326
 #: ../vector/v.to.rast3/main.c:69 ../vector/v.kernel/main.c:263
 #: ../vector/v.surf.idw/main.c:132 ../vector/v.edit/main.c:86
-#: ../doc/raster/r.example/main.c:114
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/opennew.c:11
-#: ../imagery/i.zc/main.c:119 ../imagery/i.ifft/ifftmain.c:116
+#: ../doc/raster/r.example/main.c:114 ../imagery/i.zc/main.c:119
+#: ../imagery/i.ifft/ifftmain.c:116
 #: ../imagery/i.ortho.photo/photo.camera/main.c:90
 #: ../imagery/i.fft/fftmain.c:121 ../imagery/i.fft/fftmain.c:124
 #, fuzzy, c-format
@@ -1444,6 +1448,8 @@ msgstr ""
 #: ../raster/r.out.mat/main.c:64 ../raster/r.out.ascii/main.c:59
 #: ../raster/r.out.ppm/main.c:54 ../raster/r.out.tiff/r.out.tiff.c:99
 #: ../raster/r.out.gdal/main.c:128
+#: ../locale/scriptstrings/r.out.gdal.sh_to_translate.c:2
+#: ../locale/scriptstrings/r.out.xyz_to_translate.c:2
 msgid "raster, export"
 msgstr ""
 
@@ -1457,6 +1463,9 @@ msgstr ""
 
 #: ../raster/r.out.mat/main.c:81 ../raster/r.out.tiff/r.out.tiff.c:136
 #: ../raster/r.in.mat/main.c:115
+#: ../locale/scriptstrings/v.in.e00_to_translate.c:3
+#: ../locale/scriptstrings/v.in.garmin_to_translate.c:3
+#: ../locale/scriptstrings/v.in.gpsbabel_to_translate.c:3
 msgid "Verbose mode"
 msgstr ""
 
@@ -1551,6 +1560,7 @@ msgstr ""
 
 #: ../raster/r.in.poly/main.c:29 ../raster/r.in.gdal/main.c:79
 #: ../raster/r.in.bin/main.c:122 ../raster/r.external/main.c:506
+#: ../locale/scriptstrings/r.in.srtm_to_translate.c:2
 msgid "raster, import"
 msgstr ""
 
@@ -1893,7 +1903,6 @@ msgstr ""
 #: ../raster/r.distance/parse.c:72 ../raster/r.carve/main.c:126
 #: ../raster/r.neighbors/main.c:277 ../vector/v.qcount/main.c:117
 #: ../vector/v.mkgrid/main.c:132
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:328
 msgid ""
 "The '-q' flag is superseded and will be removed in future. Please use '--"
 "quiet' instead."
@@ -1973,9 +1982,7 @@ msgstr ""
 #: ../raster/r.kappa/main.c:102 ../raster/r.report/parse.c:95
 #: ../raster/r.bitpattern/main.c:87 ../vector/v.sample/main.c:129
 #: ../vector/v.perturb/main.c:117 ../vector/v.kcv/main.c:106
-#: ../doc/raster/r.example/main.c:96
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:290
-#: ../imagery/i.cluster/main.c:163
+#: ../doc/raster/r.example/main.c:96 ../imagery/i.cluster/main.c:163
 msgid "Quiet"
 msgstr ""
 
@@ -2891,12 +2898,14 @@ msgstr ""
 #: ../vector/v.info/main.c:92 ../vector/v.info/main.c:97
 #: ../vector/v.db.connect/main.c:81 ../vector/v.db.connect/main.c:86
 #: ../vector/v.db.connect/main.c:94 ../vector/v.db.connect/main.c:110
-#: ../db/base/connect.c:52 ../imagery/i.group/main.c:77
-#: ../imagery/i.group/main.c:83
+#: ../db/base/connect.c:52
+#: ../locale/scriptstrings/g.extension_to_translate.c:9
+#: ../imagery/i.group/main.c:77 ../imagery/i.group/main.c:83
 msgid "Print"
 msgstr ""
 
 #: ../raster/r.in.gdal/main.c:146
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:11
 msgid "Keep band numbers instead of using band color names"
 msgstr ""
 
@@ -3124,11 +3133,6 @@ msgstr ""
 #: ../vector/v.vol.rst/main.c:319 ../vector/v.vol.rst/main.c:328
 #: ../vector/v.vol.rst/main.c:337 ../vector/v.vol.rst/main.c:345
 #: ../vector/v.db.connect/main.c:60 ../vector/v.db.connect/main.c:65
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:189
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:199
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:276
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:285
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:296
 #: ../db/base/connect.c:62 ../db/base/connect.c:66 ../db/base/connect.c:77
 #: ../db/base/connect.c:87 ../imagery/i.cluster/main.c:105
 #: ../imagery/i.cluster/main.c:121 ../imagery/i.cluster/main.c:129
@@ -3968,6 +3972,8 @@ msgstr ""
 #: ../raster/r.stats/main.c:103 ../raster/r.statistics/main.c:42
 #: ../raster/r.report/main.c:64 ../raster/r.univar2/r.univar_main.c:75
 #: ../raster/r.support.stats/main.c:39 ../raster/r.quantile/main.c:254
+#: ../locale/scriptstrings/r.regression.line_to_translate.c:2
+#: ../locale/scriptstrings/r.univar.sh_to_translate.c:2
 msgid "raster, statistics"
 msgstr ""
 
@@ -3976,12 +3982,13 @@ msgid "Generates area statistics for raster map layers."
 msgstr ""
 
 #: ../raster/r.stats/main.c:114
+#: ../locale/scriptstrings/r.out.xyz_to_translate.c:4
 msgid "Name for output file (if omitted or \"-\" output to stdout)"
 msgstr ""
 
 #: ../raster/r.stats/main.c:119 ../raster/r.cats/main.c:72
 #: ../raster/r.distance/parse.c:50 ../vector/v.db.select/main.c:63
-#: ../db/base/select.c:202
+#: ../db/base/select.c:202 ../locale/scriptstrings/r.tileset_to_translate.c:13
 msgid "Output field separator"
 msgstr "Διαχωριστής πεδίων εξόδου"
 
@@ -4521,12 +4528,10 @@ msgid "Name for output aspect raster map"
 msgstr ""
 
 #: ../raster/r.slope.aspect/main.c:178
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:188
 msgid "Format for reporting the slope"
 msgstr ""
 
 #: ../raster/r.slope.aspect/main.c:188
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:198
 #, fuzzy
 msgid "Type of output aspect and slope maps"
 msgstr "Τύπος"
@@ -4562,17 +4567,14 @@ msgid "Name for output second order partial derivative dxy raster map"
 msgstr ""
 
 #: ../raster/r.slope.aspect/main.c:243
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:272
 msgid "Multiplicative factor to convert elevation units to meters"
 msgstr ""
 
 #: ../raster/r.slope.aspect/main.c:252
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:281
 msgid "Minimum slope val. (in percent) for which aspect is computed"
 msgstr ""
 
 #: ../raster/r.slope.aspect/main.c:266
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:295
 msgid "Do not align the current region to the elevation layer"
 msgstr ""
 
@@ -4614,7 +4616,6 @@ msgid "Elevation products for mapset <%s> in <%s>"
 msgstr ""
 
 #: ../raster/r.slope.aspect/main.c:1009
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:1042
 #, c-format
 msgid "Min computed aspect %.4f, max computed aspect %.4f"
 msgstr ""
@@ -4625,7 +4626,6 @@ msgid "Aspect raster map <%s> complete"
 msgstr ""
 
 #: ../raster/r.slope.aspect/main.c:1113
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:1146
 #, c-format
 msgid "Min computed slope %.4f, max computed slope %.4f"
 msgstr ""
@@ -4823,7 +4823,14 @@ msgstr ""
 msgid "Imports GRIDATB.FOR map file (TOPMODEL) into GRASS raster map"
 msgstr ""
 
-#: ../raster/r.in.gridatb/main.c:53 ../imagery/i.ifft/ifftmain.c:83
+#: ../raster/r.in.gridatb/main.c:53
+#: ../locale/scriptstrings/r.reclass.area_to_translate.c:4
+#: ../locale/scriptstrings/r.in.aster_to_translate.c:6
+#: ../locale/scriptstrings/r.mapcalculator_to_translate.c:9
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:18
+#: ../locale/scriptstrings/d.rast.edit_to_translate.c:4
+#: ../locale/scriptstrings/i.in.spotvgt_to_translate.c:5
+#: ../imagery/i.ifft/ifftmain.c:83
 msgid "Name for output raster map"
 msgstr "Όνομα εξαγόμενου ράστερ χάρτη"
 
@@ -4854,7 +4861,6 @@ msgstr ""
 
 #: ../raster/r.resample/main.c:137 ../raster/r.resamp.rst/main.c:527
 #: ../vector/v.surf.rst/main.c:602 ../vector/v.surf.rst/main.c:753
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:600
 msgid "Percent complete: "
 msgstr ""
 
@@ -7159,6 +7165,7 @@ msgid "Raster file(s) for View%d"
 msgstr ""
 
 #: ../raster/r.out.mpeg/main.c:406
+#: ../locale/scriptstrings/r.out.gdal.sh_to_translate.c:8
 #, fuzzy
 msgid "Name for output file"
 msgstr "Όνομα αρχείου εξαγωγής"
@@ -8001,6 +8008,7 @@ msgid ""
 msgstr ""
 
 #: ../raster/r.colors/main.c:165
+#: ../locale/scriptstrings/r.colors.stddev_to_translate.c:2
 msgid "raster, color table"
 msgstr ""
 
@@ -8009,6 +8017,7 @@ msgid "Creates/modifies the color table associated with a raster map layer."
 msgstr ""
 
 #: ../raster/r.colors/main.c:181
+#: ../locale/scriptstrings/v.colors_to_translate.c:9
 #, fuzzy
 msgid "Type of color table"
 msgstr "Τύπος"
@@ -8026,10 +8035,16 @@ msgstr "Τύπος"
 #: ../vector/v.label/main.c:153 ../vector/v.label/main.c:177
 #: ../vector/v.label/main.c:190 ../vector/v.label/main.c:196
 #: ../vector/v.label/main.c:206
+#: ../locale/scriptstrings/v.colors_to_translate.c:7
+#: ../locale/scriptstrings/v.colors_to_translate.c:10
+#: ../locale/scriptstrings/v.colors_to_translate.c:12
+#: ../locale/scriptstrings/v.colors_to_translate.c:14
+#: ../locale/scriptstrings/v.colors_to_translate.c:17
 msgid "Colors"
 msgstr ""
 
 #: ../raster/r.colors/main.c:191
+#: ../locale/scriptstrings/v.colors_to_translate.c:11
 msgid "Raster map name from which to copy color table"
 msgstr ""
 
@@ -8050,6 +8065,7 @@ msgid "List available rules then exit"
 msgstr ""
 
 #: ../raster/r.colors/main.c:214
+#: ../locale/scriptstrings/v.colors_to_translate.c:16
 msgid "Invert colors"
 msgstr ""
 
@@ -8540,6 +8556,7 @@ msgid "Exports GRASS raster maps into GDAL supported formats."
 msgstr ""
 
 #: ../raster/r.out.gdal/main.c:132
+#: ../locale/scriptstrings/r.out.gdal.sh_to_translate.c:3
 msgid "List supported output formats"
 msgstr ""
 
@@ -8564,10 +8581,12 @@ msgid "Name of raster map (or group) to export"
 msgstr ""
 
 #: ../raster/r.out.gdal/main.c:154
+#: ../locale/scriptstrings/r.out.gdal.sh_to_translate.c:6
 msgid "GIS format to write (case sensitive, see also -l flag)"
 msgstr ""
 
 #: ../raster/r.out.gdal/main.c:175
+#: ../locale/scriptstrings/r.out.gdal.sh_to_translate.c:7
 msgid "File type"
 msgstr ""
 
@@ -8580,6 +8599,7 @@ msgid "Creation option(s) to pass to the output format driver"
 msgstr ""
 
 #: ../raster/r.out.gdal/main.c:192
+#: ../locale/scriptstrings/d.out.file_to_translate.c:21
 msgid "In the form of \"NAME=VALUE\", separate multiple entries with a comma."
 msgstr ""
 
@@ -8835,8 +8855,8 @@ msgstr ""
 #: ../raster/r.out.gdal/export_band.c:215
 #, c-format
 msgid ""
-"The given nodata value is present in rasterband <%s> and would lead to data "
-"loss. Please specify a different nodata value with the %s parameter."
+"The user given nodata value %g is present in rasterband <%s> and would lead "
+"to data loss. Please specify a different nodata value with the %s parameter."
 msgstr ""
 
 #: ../raster/r.out.gdal/export_band.c:259
@@ -9768,6 +9788,7 @@ msgid "Converts a raster map into a vector map layer."
 msgstr ""
 
 #: ../raster/r.to.vect/main.c:64 ../vector/v.to.db/parse.c:36
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:6
 msgid "Feature type"
 msgstr ""
 
@@ -11352,6 +11373,7 @@ msgid "Creates topographic index [ln(a/tan(beta))] map from elevation map."
 msgstr ""
 
 #: ../raster/r.topidx/main.c:42
+#: ../locale/scriptstrings/r.shaded.relief_to_translate.c:3
 msgid "Input elevation map"
 msgstr ""
 
@@ -11377,6 +11399,7 @@ msgstr ""
 
 #: ../raster/r.univar2/r.univar_main.c:40
 #: ../raster/r.univar2/r3.univar_main.c:39 ../vector/v.univar/main.c:92
+#: ../locale/scriptstrings/v.rast.stats_to_translate.c:10
 msgid "Percentile to calculate (requires extended statistics flag)"
 msgstr ""
 
@@ -11387,6 +11410,7 @@ msgstr ""
 
 #: ../raster/r.univar2/r.univar_main.c:49
 #: ../raster/r.univar2/r3.univar_main.c:48 ../vector/v.univar/main.c:100
+#: ../locale/scriptstrings/v.rast.stats_to_translate.c:4
 msgid "Calculate extended statistics"
 msgstr ""
 
@@ -12007,11 +12031,15 @@ msgstr ""
 msgid "Access for others"
 msgstr ""
 
-#: ../general/g.access/main.c:63
-msgid "Access to the PERMANENT mapset must be open, nothing changed"
+#: ../general/g.access/main.c:59
+msgid "UNIX filesystem access controls are not supported by MS-Windows"
 msgstr ""
 
 #: ../general/g.access/main.c:67
+msgid "Access to the PERMANENT mapset must be open, nothing changed"
+msgstr ""
+
+#: ../general/g.access/main.c:71
 msgid "Unable to determine mapset permissions"
 msgstr ""
 
@@ -12779,6 +12807,8 @@ msgid "Use extended regular expressions instead of wildcards"
 msgstr ""
 
 #: ../general/g.mremove/main.c:76
+#: ../locale/scriptstrings/db.droptable_to_translate.c:3
+#: ../locale/scriptstrings/db.dropcol_to_translate.c:3
 msgid "Force removal (required for actual deletion of files)"
 msgstr ""
 
@@ -12968,6 +12998,8 @@ msgid "Print the maximum bounding box in lat/long on WGS84"
 msgstr ""
 
 #: ../general/g.region/main.c:133
+#: ../locale/scriptstrings/r.regression.line_to_translate.c:3
+#: ../locale/scriptstrings/i.oif_to_translate.c:9
 msgid "Print in shell script style"
 msgstr ""
 
@@ -13227,6 +13259,8 @@ msgstr ""
 #: ../display/d.text/main.c:66 ../display/d.rast.num/number.c:84
 #: ../display/d.nviz/main.c:68 ../display/d.zoom/main.c:57
 #: ../visualization/ximgview/main.c:270
+#: ../locale/scriptstrings/d.rast.leg_to_translate.c:2
+#: ../locale/scriptstrings/d.redraw_to_translate.c:2
 msgid "display"
 msgstr ""
 
@@ -13644,6 +13678,13 @@ msgstr ""
 
 #: ../display/d.grid/main.c:76 ../display/d.grid/main.c:81
 #: ../display/d.grid/main.c:87
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:27
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:30
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:33
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:36
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:39
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:55
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:57
 msgid "Color"
 msgstr "Χρώμα"
 
@@ -14114,6 +14155,10 @@ msgid ""
 msgstr ""
 
 #: ../display/d.extend/main.c:31
+#: ../locale/scriptstrings/d.split_to_translate.c:2
+#: ../locale/scriptstrings/d.resize_to_translate.c:2
+#: ../locale/scriptstrings/d.monsize_to_translate.c:2
+#: ../locale/scriptstrings/d.mvmon_to_translate.c:2
 msgid "display, setup"
 msgstr ""
 
@@ -14123,10 +14168,12 @@ msgstr ""
 
 #: ../display/d.rast.edit/main.c:59 ../display/d.colortable/main.c:60
 #: ../display/d.rast/main.c:51
+#: ../locale/scriptstrings/d.rast.edit_to_translate.c:2
 msgid "display, raster"
 msgstr ""
 
 #: ../display/d.rast.edit/main.c:61
+#: ../locale/scriptstrings/d.rast.edit_to_translate.c:1
 msgid "Interactively edit cell values in a raster map."
 msgstr ""
 
@@ -14173,6 +14220,8 @@ msgid ""
 msgstr ""
 
 #: ../display/d.legend/main.c:92 ../display/d.zoom/main.c:90
+#: ../locale/scriptstrings/d.rast.leg_to_translate.c:5
+#: ../locale/scriptstrings/r.univar.sh_to_translate.c:4
 msgid "Name of raster map"
 msgstr ""
 
@@ -14191,13 +14240,6 @@ msgstr ""
 #: ../display/d.legend/main.c:180 ../display/d.legend/main.c:185
 #: ../vector/v.buffer/main.c:279 ../vector/v.buffer/main.c:287
 #: ../vector/v.buffer/main.c:294 ../vector/v.buffer/main.c:304
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:208
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:217
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:227
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:237
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:247
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:257
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:267
 msgid "Advanced"
 msgstr ""
 
@@ -14242,6 +14284,7 @@ msgid "Draw smooth gradient"
 msgstr ""
 
 #: ../display/d.legend/main.c:184
+#: ../locale/scriptstrings/d.rast.leg_to_translate.c:3
 msgid "Flip legend"
 msgstr ""
 
@@ -15808,6 +15851,7 @@ msgid ""
 msgstr ""
 
 #: ../display/d.zoom/main.c:100
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:4
 msgid "Name of vector map"
 msgstr ""
 
@@ -16167,6 +16211,7 @@ msgstr ""
 #: ../vector/v.external/main.c:58 ../vector/v.clean/test/topocheck.c:42
 #: ../vector/v.buffer/main.c:254 ../vector/v.info/main.c:257
 #: ../vector/v.surf.rst/main.c:161
+#: ../locale/scriptstrings/v.build.all_to_translate.c:2
 msgid "vector"
 msgstr ""
 
@@ -16268,6 +16313,15 @@ msgstr ""
 
 #: ../vector/v.db.select/main.c:52 ../vector/v.to.db/main.c:33
 #: ../vector/v.distance/main.c:115 ../vector/v.db.connect/main.c:50
+#: ../locale/scriptstrings/v.what.vect_to_translate.c:2
+#: ../locale/scriptstrings/v.db.update_to_translate.c:2
+#: ../locale/scriptstrings/v.db.renamecol_to_translate.c:2
+#: ../locale/scriptstrings/v.db.reconnect.all_to_translate.c:2
+#: ../locale/scriptstrings/v.db.droptable_to_translate.c:2
+#: ../locale/scriptstrings/v.db.join_to_translate.c:2
+#: ../locale/scriptstrings/v.db.addtable_to_translate.c:2
+#: ../locale/scriptstrings/v.db.dropcol_to_translate.c:2
+#: ../locale/scriptstrings/v.db.addcol_to_translate.c:2
 msgid "vector, database, attribute table"
 msgstr ""
 
@@ -16395,6 +16449,7 @@ msgid "Required for operation 'connect'"
 msgstr ""
 
 #: ../vector/v.net/main.c:69
+#: ../locale/scriptstrings/g.extension_to_translate.c:5
 msgid "Operation to be performed"
 msgstr ""
 
@@ -16796,6 +16851,8 @@ msgstr ""
 #: ../vector/v.qcount/main.c:69 ../vector/v.kcv/main.c:76
 #: ../vector/v.class/main.c:45 ../vector/v.normal/main.c:79
 #: ../vector/v.univar/main.c:64
+#: ../locale/scriptstrings/v.univar.sh_to_translate.c:2
+#: ../locale/scriptstrings/v.db.univar_to_translate.c:2
 msgid "vector, statistics"
 msgstr ""
 
@@ -17588,6 +17645,9 @@ msgstr ""
 
 #: ../vector/v.in.ogr/main.c:101 ../vector/v.in.dxf/main.c:60
 #: ../vector/v.in.dwg/main.c:65 ../vector/v.in.ascii/in.c:48
+#: ../locale/scriptstrings/v.convert.all_to_translate.c:2
+#: ../locale/scriptstrings/v.in.e00_to_translate.c:2
+#: ../locale/scriptstrings/v.in.mapgen_to_translate.c:2
 msgid "vector, import"
 msgstr ""
 
@@ -18679,6 +18739,11 @@ msgid "Path to resulting VTK file"
 msgstr ""
 
 #: ../vector/v.out.vtk/main.c:83
+#: ../locale/scriptstrings/v.report_to_translate.c:6
+#: ../locale/scriptstrings/v.out.gpsbabel_to_translate.c:10
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:17
+#: ../locale/scriptstrings/v.rast.stats_to_translate.c:6
+#: ../locale/scriptstrings/v.centroids_to_translate.c:6
 msgid "Layer number"
 msgstr "Νούμερο επιπέδου"
 
@@ -18744,6 +18809,9 @@ msgstr ""
 
 #: ../vector/v.out.ascii/out.c:67 ../vector/v.out.ascii/out.c:77
 #: ../vector/v.out.ascii/out.c:84 ../vector/v.out.ascii/out.c:97
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:18
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:20
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:23
 msgid "Points"
 msgstr ""
 
@@ -18990,6 +19058,7 @@ msgid "Import polyface meshes as 3D wire frame"
 msgstr ""
 
 #: ../vector/v.in.dxf/main.c:82 ../vector/v.in.dwg/main.c:96
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:3
 msgid "List available layers and exit"
 msgstr ""
 
@@ -20067,6 +20136,11 @@ msgid "Produces a convex hull for a given vector map."
 msgstr ""
 
 #: ../vector/v.hull/main.c:278
+#: ../locale/scriptstrings/v.report_to_translate.c:5
+#: ../locale/scriptstrings/v.out.gpsbabel_to_translate.c:6
+#: ../locale/scriptstrings/v.colors_to_translate.c:3
+#: ../locale/scriptstrings/v.dissolve_to_translate.c:3
+#: ../locale/scriptstrings/v.centroids_to_translate.c:3
 msgid "Name of input vector map"
 msgstr "Όνομα εισαγώμενου διανυσματικού χάρτη "
 
@@ -23139,6 +23213,7 @@ msgid "Feature ids (by default all features are processed)"
 msgstr ""
 
 #: ../vector/v.category/main.c:112
+#: ../locale/scriptstrings/v.centroids_to_translate.c:8
 msgid "Category increment"
 msgstr ""
 
@@ -24034,6 +24109,7 @@ msgid "Image"
 msgstr ""
 
 #: ../visualization/nviz2/cmd/args.c:87
+#: ../locale/scriptstrings/d.out.file_to_translate.c:4
 msgid "Graphics file format"
 msgstr ""
 
@@ -24383,117 +24459,6 @@ msgstr ""
 #: ../doc/vector/v.example/main.c:209
 #, c-format
 msgid "Unable to copy attribute table to vector map <%s>"
-msgstr ""
-
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/opennew.c:19
-#, c-format
-msgid "Failed in attempt to open %s"
-msgstr ""
-
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:155
-msgid ""
-"Generates raster map layers of slope, aspect, curvatures and partial "
-"derivatives from a raster map layer of true elevation values. Aspect is "
-"calculated counterclockwise from east."
-msgstr ""
-
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:164
-msgid "Raster elevation file name"
-msgstr ""
-
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:172
-msgid "Output slope filename"
-msgstr ""
-
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:180
-msgid "Output aspect filename"
-msgstr ""
-
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:207
-msgid "Output profile curvature filename"
-msgstr ""
-
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:216
-msgid "Output tangential curvature filename"
-msgstr ""
-
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:226
-msgid "Output first order partial derivative dx (E-W slope) filename"
-msgstr ""
-
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:236
-msgid "Output first order partial derivative dy (N-S slope) filename"
-msgstr ""
-
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:246
-msgid "Output second order partial derivative dxx filename"
-msgstr ""
-
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:256
-msgid "Output second order partial derivative dyy filename"
-msgstr ""
-
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:266
-msgid "Output second order partial derivative dxy filename"
-msgstr ""
-
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:412
-#, c-format
-msgid "wrong type: %s"
-msgstr ""
-
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:1021
-msgid "Creating support files..."
-msgstr ""
-
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:1023
-#, c-format
-msgid "Elevation products for mapset [%s] in [%s]"
-msgstr ""
-
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:1104
-#, c-format
-msgid "ASPECT [%s] COMPLETE"
-msgstr ""
-
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:1197
-#, c-format
-msgid "SLOPE [%s] COMPLETE"
-msgstr ""
-
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:1268
-#, c-format
-msgid "PROFILE CURVE [%s] COMPLETE"
-msgstr ""
-
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:1294
-#, c-format
-msgid "TANGENTIAL CURVE [%s] COMPLETE"
-msgstr ""
-
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:1318
-#, c-format
-msgid "E-W SLOPE [%s] COMPLETE"
-msgstr ""
-
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:1342
-#, c-format
-msgid "N-S SLOPE [%s] COMPLETE"
-msgstr ""
-
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:1366
-#, c-format
-msgid "DXX [%s] COMPLETE"
-msgstr ""
-
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:1390
-#, c-format
-msgid "DYY [%s] COMPLETE"
-msgstr ""
-
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:1414
-#, c-format
-msgid "DXY [%s] COMPLETE"
 msgstr ""
 
 #: ../ps/ps.map/ps_vlines.c:55 ../ps/ps.map/ps_vpoints.c:71
@@ -24919,6 +24884,11 @@ msgstr "Αδυναμία ανοίγματος βάσης δεδομενων"
 
 #: ../db/base/columns.c:92 ../db/base/drivers.c:74 ../db/base/connect.c:45
 #: ../db/base/describe.c:125 ../db/base/tables.c:95
+#: ../locale/scriptstrings/db.test_to_translate.c:2
+#: ../locale/scriptstrings/db.out.ogr_to_translate.c:2
+#: ../locale/scriptstrings/db.droptable_to_translate.c:2
+#: ../locale/scriptstrings/db.dropcol_to_translate.c:2
+#: ../locale/scriptstrings/db.in.ogr_to_translate.c:2
 msgid "database, attribute table"
 msgstr "βάση δεδομένων, πίνακας ιδιοτήτων"
 
@@ -25214,6 +25184,2197 @@ msgstr "Δεν είναι δυνατή η αλλαγή χρήστη/κωδικού"
 msgid "The password was stored in file"
 msgstr "Ο κωδικός αποθηκεύτηκε στο αρχείο"
 
+#: ../locale/scriptstrings/d.split_to_translate.c:1
+msgid ""
+"Divides active display into two frames & displays maps/executes commands in "
+"each frame."
+msgstr ""
+
+#: ../locale/scriptstrings/d.split_to_translate.c:3
+msgid "Enter raster map to display in 1st frame"
+msgstr ""
+
+#: ../locale/scriptstrings/d.split_to_translate.c:4
+msgid "Enter command to execute in 1st frame"
+msgstr ""
+
+#: ../locale/scriptstrings/d.split_to_translate.c:5
+msgid "Enter raster map to display in 2nd frame"
+msgstr ""
+
+#: ../locale/scriptstrings/d.split_to_translate.c:6
+msgid "Enter command to execute in 2nd frame"
+msgstr ""
+
+#: ../locale/scriptstrings/d.split_to_translate.c:7
+msgid "How to split display"
+msgstr ""
+
+#: ../locale/scriptstrings/i.spectral_to_translate.c:1
+msgid ""
+"Displays spectral response at user specified locations in group or images."
+msgstr ""
+
+#: ../locale/scriptstrings/i.spectral_to_translate.c:2
+msgid "imagery, raster, multispectral"
+msgstr ""
+
+#: ../locale/scriptstrings/i.spectral_to_translate.c:3
+msgid "Group input"
+msgstr ""
+
+#: ../locale/scriptstrings/i.spectral_to_translate.c:4
+#, fuzzy
+msgid "Raster input maps"
+msgstr "Αδυναμία κλεισίματος του χάρτη input"
+
+#: ../locale/scriptstrings/i.spectral_to_translate.c:5
+msgid "Write output to PNG image"
+msgstr ""
+
+#: ../locale/scriptstrings/i.spectral_to_translate.c:6
+msgid "Use image list and not group"
+msgstr ""
+
+#: ../locale/scriptstrings/i.spectral_to_translate.c:7
+msgid "Select multiple points"
+msgstr ""
+
+#: ../locale/scriptstrings/i.spectral_to_translate.c:8
+#, fuzzy
+msgid "Label with coordinates instead of numbering"
+msgstr "Χρησιμοποιήστε συντεταγμένες χάρτη αντί χψζ συντεταγμένες"
+
+#: ../locale/scriptstrings/v.convert.all_to_translate.c:1
+msgid ""
+"Convert all old GRASS < Ver5.7 vector maps in current mapset to current "
+"format"
+msgstr ""
+
+#: ../locale/scriptstrings/v.convert.all_to_translate.c:3
+msgid "run non-interactively"
+msgstr ""
+
+#: ../locale/scriptstrings/r.out.gdal.sh_to_translate.c:1
+msgid "Exports GRASS raster into GDAL supported formats."
+msgstr ""
+
+#: ../locale/scriptstrings/r.out.gdal.sh_to_translate.c:4
+msgid "Region sensitive output"
+msgstr ""
+
+#: ../locale/scriptstrings/r.out.gdal.sh_to_translate.c:9
+msgid ""
+"Creation option to the output format driver. Multiple options may be listed"
+msgstr ""
+
+#: ../locale/scriptstrings/r.out.gdal.sh_to_translate.c:10
+msgid "Metadata key passed on the output dataset if possible"
+msgstr ""
+
+#: ../locale/scriptstrings/r.regression.line_to_translate.c:1
+msgid "Calculates linear regression from two raster maps: y = a + b*x"
+msgstr ""
+
+#: ../locale/scriptstrings/r.regression.line_to_translate.c:4
+msgid "Slower but accurate (applies to FP maps only)"
+msgstr ""
+
+#: ../locale/scriptstrings/r.regression.line_to_translate.c:5
+msgid "Map for x coefficient"
+msgstr ""
+
+#: ../locale/scriptstrings/r.regression.line_to_translate.c:6
+msgid "Map for y coefficient"
+msgstr ""
+
+#: ../locale/scriptstrings/r.regression.line_to_translate.c:7
+msgid ""
+"ASCII file for storing regression coefficients (output to screen if file not "
+"specified)."
+msgstr ""
+
+#: ../locale/scriptstrings/v.in.e00_to_translate.c:1
+#, fuzzy
+msgid "Import E00 file into a vector map."
+msgstr "Αδυναμία ανάγνωσης διανυσματικού χάρτη"
+
+#: ../locale/scriptstrings/v.in.e00_to_translate.c:4
+msgid "E00 file"
+msgstr ""
+
+#: ../locale/scriptstrings/v.in.e00_to_translate.c:5
+msgid "Input type point, line or area"
+msgstr ""
+
+#: ../locale/scriptstrings/v.in.e00_to_translate.c:6
+#: ../locale/scriptstrings/v.in.gns_to_translate.c:4
+#: ../locale/scriptstrings/v.in.geonames_to_translate.c:4
+#: ../locale/scriptstrings/v.dissolve_to_translate.c:4
+#: ../locale/scriptstrings/v.centroids_to_translate.c:4
+msgid "Name for output vector map"
+msgstr "Όνομα εξαγόμενου διανυσματικού χάρτη"
+
+#: ../locale/scriptstrings/r.plane_to_translate.c:1
+msgid ""
+"Creates raster plane map given dip (inclination), aspect (azimuth) and one "
+"point."
+msgstr ""
+
+#: ../locale/scriptstrings/r.plane_to_translate.c:2
+#: ../locale/scriptstrings/r.shaded.relief_to_translate.c:2
+#, fuzzy
+msgid "raster, elevation"
+msgstr "ράστερ 3Δ, voxel"
+
+#: ../locale/scriptstrings/r.plane_to_translate.c:3
+#, fuzzy
+msgid "Name of raster plane to be created"
+msgstr "Ascii ράστερ χάρτης που θα εισαχθεί"
+
+#: ../locale/scriptstrings/r.plane_to_translate.c:4
+msgid "Dip of plane. Value must be between -90 and 90 degrees"
+msgstr ""
+
+#: ../locale/scriptstrings/r.plane_to_translate.c:5
+msgid "Azimuth of the plane. Value must be between 0 and 360 degrees"
+msgstr ""
+
+#: ../locale/scriptstrings/r.plane_to_translate.c:6
+msgid "Easting coordinate of a point on the plane"
+msgstr ""
+
+#: ../locale/scriptstrings/r.plane_to_translate.c:7
+msgid "Northing coordinate of a point on the plane"
+msgstr ""
+
+#: ../locale/scriptstrings/r.plane_to_translate.c:8
+msgid "Elevation coordinate of a point on the plane"
+msgstr ""
+
+#: ../locale/scriptstrings/r.plane_to_translate.c:9
+#, fuzzy
+msgid "Type of the raster map to be created"
+msgstr "Ascii ράστερ χάρτης που θα εισαχθεί"
+
+#: ../locale/scriptstrings/m.proj_to_translate.c:1
+msgid "Convert coordinates from one projection to another (cs2cs frontend)."
+msgstr ""
+
+#: ../locale/scriptstrings/m.proj_to_translate.c:2
+msgid "miscellaneous, projection"
+msgstr ""
+
+#: ../locale/scriptstrings/m.proj_to_translate.c:3
+msgid "Input coordinate file (omit to read from stdin)"
+msgstr ""
+
+#: ../locale/scriptstrings/m.proj_to_translate.c:4
+#, fuzzy
+msgid "Output coordinate file (omit to send to stdout)"
+msgstr "Όνομα εξαγόμενου διανυσματικού χάρτη"
+
+#: ../locale/scriptstrings/m.proj_to_translate.c:5
+#: ../locale/scriptstrings/r.out.xyz_to_translate.c:5
+msgid "Field separator"
+msgstr "Διαχωριστής πεδίων"
+
+#: ../locale/scriptstrings/m.proj_to_translate.c:6
+msgid "Input projection parameters (PROJ.4 style)"
+msgstr ""
+
+#: ../locale/scriptstrings/m.proj_to_translate.c:7
+msgid "Output projection parameters (PROJ.4 style)"
+msgstr ""
+
+#: ../locale/scriptstrings/m.proj_to_translate.c:8
+msgid "Use LL WGS84 as input and current location as output projection"
+msgstr ""
+
+#: ../locale/scriptstrings/m.proj_to_translate.c:9
+msgid "Use current location as input and LL WGS84 as output projection"
+msgstr ""
+
+#: ../locale/scriptstrings/m.proj_to_translate.c:10
+msgid ""
+"Output long/lat in decimal degrees or other projections with many decimal "
+"places"
+msgstr ""
+
+#: ../locale/scriptstrings/m.proj_to_translate.c:11
+msgid ""
+"Script style output in CSV format respecting the field separator settings"
+msgstr ""
+
+#: ../locale/scriptstrings/m.proj_to_translate.c:12
+msgid "Verbose mode (print projection parameters and filenames to stderr)"
+msgstr ""
+
+#: ../locale/scriptstrings/d.out.file_to_translate.c:1
+msgid "Saves the contents of the active display monitor to a graphics file."
+msgstr ""
+
+#: ../locale/scriptstrings/d.out.file_to_translate.c:2
+#: ../locale/scriptstrings/d.out.png_to_translate.c:2
+msgid "display, export"
+msgstr ""
+
+#: ../locale/scriptstrings/d.out.file_to_translate.c:3
+msgid "Name for output file (do NOT add extension)"
+msgstr "Όνομα αρχείου εξαγωγής (ΜΗΝ προσθέσετε επέκταση αρχείου)"
+
+#: ../locale/scriptstrings/d.out.file_to_translate.c:5
+msgid "Dimensions of output file versus current window size"
+msgstr ""
+
+#: ../locale/scriptstrings/d.out.file_to_translate.c:6
+msgid "(same=1, double size=2, quadruple size=4)"
+msgstr ""
+
+#: ../locale/scriptstrings/d.out.file_to_translate.c:7
+#: ../locale/scriptstrings/d.out.file_to_translate.c:9
+#: ../locale/scriptstrings/d.out.file_to_translate.c:12
+#: ../locale/scriptstrings/d.out.file_to_translate.c:15
+#: ../locale/scriptstrings/d.out.file_to_translate.c:28
+#: ../locale/scriptstrings/d.out.file_to_translate.c:30
+msgid "Images"
+msgstr ""
+
+#: ../locale/scriptstrings/d.out.file_to_translate.c:8
+msgid "Width and height of output image (overrides resolution setting)"
+msgstr ""
+
+#: ../locale/scriptstrings/d.out.file_to_translate.c:10
+#, fuzzy
+msgid "Compression for PNG files"
+msgstr "Όνομα αρχείου PNG."
+
+#: ../locale/scriptstrings/d.out.file_to_translate.c:11
+msgid "(0=none, 1=fastest, 9=most; lossless, only time vs. filesize)"
+msgstr ""
+
+#: ../locale/scriptstrings/d.out.file_to_translate.c:13
+msgid "File size/quality for JPEG files"
+msgstr ""
+
+#: ../locale/scriptstrings/d.out.file_to_translate.c:14
+msgid "(10=smallest/worst, 100=largest/best)"
+msgstr ""
+
+#: ../locale/scriptstrings/d.out.file_to_translate.c:16
+msgid "Paper size for PostScript output"
+msgstr ""
+
+#: ../locale/scriptstrings/d.out.file_to_translate.c:17
+#: ../locale/scriptstrings/d.out.file_to_translate.c:19
+#: ../locale/scriptstrings/d.out.file_to_translate.c:32
+msgid "PostScript"
+msgstr ""
+
+#: ../locale/scriptstrings/d.out.file_to_translate.c:18
+msgid "PostScript level (only limits functionality!)"
+msgstr ""
+
+#: ../locale/scriptstrings/d.out.file_to_translate.c:20
+msgid "GeoTIFF creation option(s)"
+msgstr ""
+
+#: ../locale/scriptstrings/d.out.file_to_translate.c:22
+#: ../locale/scriptstrings/d.out.file_to_translate.c:25
+#: ../locale/scriptstrings/d.out.file_to_translate.c:34
+msgid "GeoTIFF"
+msgstr ""
+
+#: ../locale/scriptstrings/d.out.file_to_translate.c:23
+msgid "GeoTIFF metadata key(s) and value(s) to add"
+msgstr ""
+
+#: ../locale/scriptstrings/d.out.file_to_translate.c:24
+msgid ""
+"In the form of \"META-TAG=VALUE\", separate multiple entries with a comma."
+msgstr ""
+
+#: ../locale/scriptstrings/d.out.file_to_translate.c:26
+msgid "Set background color to black (white default)"
+msgstr ""
+
+#: ../locale/scriptstrings/d.out.file_to_translate.c:27
+msgid "Set transparent background"
+msgstr ""
+
+#: ../locale/scriptstrings/d.out.file_to_translate.c:29
+msgid "Use the Cario driver to render images"
+msgstr ""
+
+#: ../locale/scriptstrings/d.out.file_to_translate.c:31
+msgid "Set paper orientation to landscape (for PostScript output)"
+msgstr ""
+
+#: ../locale/scriptstrings/d.out.file_to_translate.c:33
+#, fuzzy
+msgid "Do not crop away margins"
+msgstr "Αδυναμία αντιγραφής πίνακα <%s>"
+
+#: ../locale/scriptstrings/db.test_to_translate.c:1
+msgid "Test database driver, database must exist and set by db.connect."
+msgstr ""
+
+#: ../locale/scriptstrings/db.test_to_translate.c:3
+msgid "Test name"
+msgstr ""
+
+#: ../locale/scriptstrings/r.tileset_to_translate.c:1
+msgid ""
+"Produces tilings of the source projection for use in the destination region "
+"and projection."
+msgstr ""
+
+#: ../locale/scriptstrings/r.tileset_to_translate.c:2
+#, fuzzy
+msgid "raster, tiling"
+msgstr "ράστερ 3Δ, στατιστικά"
+
+#: ../locale/scriptstrings/r.tileset_to_translate.c:3
+msgid "Produces shell script output"
+msgstr ""
+
+#: ../locale/scriptstrings/r.tileset_to_translate.c:4
+msgid "Produces web map server query string output"
+msgstr ""
+
+#: ../locale/scriptstrings/r.tileset_to_translate.c:5
+msgid ""
+"Name of region to use instead of current region for bounds and resolution"
+msgstr ""
+
+#: ../locale/scriptstrings/r.tileset_to_translate.c:6
+msgid "Source projection"
+msgstr ""
+
+#: ../locale/scriptstrings/r.tileset_to_translate.c:7
+#: ../locale/scriptstrings/r.tileset_to_translate.c:9
+msgid "Conversion factor from units to meters in source projection"
+msgstr ""
+
+#: ../locale/scriptstrings/r.tileset_to_translate.c:8
+msgid "Destination projection, defaults to this location's projection"
+msgstr ""
+
+#: ../locale/scriptstrings/r.tileset_to_translate.c:10
+#, fuzzy
+msgid "Maximum number of columns for a tile in the source projection"
+msgstr "Νούμερο επιπέδου"
+
+#: ../locale/scriptstrings/r.tileset_to_translate.c:11
+msgid "Maximum number of rows for a tile in the source projection"
+msgstr ""
+
+#: ../locale/scriptstrings/r.tileset_to_translate.c:12
+msgid "Number of cells tiles should overlap in each direction"
+msgstr ""
+
+#: ../locale/scriptstrings/r.tileset_to_translate.c:14
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:50
+msgid "Verbosity level"
+msgstr ""
+
+#: ../locale/scriptstrings/i.fusion.brovey_to_translate.c:1
+msgid ""
+"Brovey transform to merge multispectral and high-res panchromatic channels"
+msgstr ""
+
+#: ../locale/scriptstrings/i.fusion.brovey_to_translate.c:2
+msgid "imagery, fusion, Brovey"
+msgstr ""
+
+#: ../locale/scriptstrings/i.fusion.brovey_to_translate.c:3
+msgid "LANDSAT sensor"
+msgstr ""
+
+#: ../locale/scriptstrings/i.fusion.brovey_to_translate.c:4
+#: ../locale/scriptstrings/i.fusion.brovey_to_translate.c:6
+#: ../locale/scriptstrings/i.fusion.brovey_to_translate.c:8
+msgid "Sensor"
+msgstr ""
+
+#: ../locale/scriptstrings/i.fusion.brovey_to_translate.c:5
+msgid "QuickBird sensor"
+msgstr ""
+
+#: ../locale/scriptstrings/i.fusion.brovey_to_translate.c:7
+msgid "SPOT sensor"
+msgstr ""
+
+#: ../locale/scriptstrings/i.fusion.brovey_to_translate.c:9
+#, fuzzy
+msgid "Name of input raster map (green: tm2 | qbird_green | spot1)"
+msgstr "Όνομα εισαγώμενου ράστερ χάρτη (NIR: tm4 | qbird_nir | spot2"
+
+#: ../locale/scriptstrings/i.fusion.brovey_to_translate.c:10
+msgid "Name of input raster map (NIR: tm4 | qbird_nir | spot2)"
+msgstr "Όνομα εισαγώμενου ράστερ χάρτη (NIR: tm4 | qbird_nir | spot2"
+
+#: ../locale/scriptstrings/i.fusion.brovey_to_translate.c:11
+msgid "Name of input raster map (MIR; tm5 | qbird_red | spot3)"
+msgstr "Όνομα εισαγώμενου ράστερ χάρτη (MIR; tm5 | qbird_red | spot3)"
+
+#: ../locale/scriptstrings/i.fusion.brovey_to_translate.c:12
+msgid "Name of input raster map (etmpan | qbird_pan | spotpan)"
+msgstr "Όνομα εισαγώμενου ράστερ χάρτη (etmpan | qbird_pan | spotpan)"
+
+#: ../locale/scriptstrings/i.fusion.brovey_to_translate.c:13
+msgid "Name for output raster map prefix (e.g. 'brov')"
+msgstr "Όνομα εξαγόμενου ράστερ χάρτη prefix (e.g. 'brov')"
+
+#: ../locale/scriptstrings/g.extension_to_translate.c:1
+msgid "Tool to maintain GRASS extensions in local GRASS installation."
+msgstr ""
+
+#: ../locale/scriptstrings/g.extension_to_translate.c:2
+msgid ""
+"Downloads, installs extensions from GRASS Addons SVN repository into local "
+"GRASS installation or removes installed extensions."
+msgstr ""
+
+#: ../locale/scriptstrings/g.extension_to_translate.c:3
+msgid "general, extensions"
+msgstr ""
+
+#: ../locale/scriptstrings/g.extension_to_translate.c:4
+msgid "Name of extension to install/remove"
+msgstr ""
+
+#: ../locale/scriptstrings/g.extension_to_translate.c:6
+msgid "SVN Addons repository URL"
+msgstr ""
+
+#: ../locale/scriptstrings/g.extension_to_translate.c:7
+msgid "Prefix where to install extension"
+msgstr ""
+
+#: ../locale/scriptstrings/g.extension_to_translate.c:8
+msgid "List available modules in the GRASS Addons SVN repository"
+msgstr ""
+
+#: ../locale/scriptstrings/d.correlate_to_translate.c:1
+msgid "Prints a graph of the correlation between data layers (in pairs)."
+msgstr ""
+
+#: ../locale/scriptstrings/d.correlate_to_translate.c:2
+#: ../locale/scriptstrings/d.polar_to_translate.c:2
+msgid "display, diagram"
+msgstr ""
+
+#: ../locale/scriptstrings/d.correlate_to_translate.c:3
+#: ../locale/scriptstrings/d.correlate_to_translate.c:4
+#: ../locale/scriptstrings/d.correlate_to_translate.c:5
+#: ../locale/scriptstrings/d.correlate_to_translate.c:6
+msgid "raster input map"
+msgstr "Αδυναμία κλεισίματος του χάρτη input."
+
+#: ../locale/scriptstrings/i.image.mosaic_to_translate.c:1
+msgid "Mosaics up to 4 images and extends colormap; creates map *.mosaic"
+msgstr ""
+
+#: ../locale/scriptstrings/i.image.mosaic_to_translate.c:2
+#, fuzzy
+msgid "raster, imagery, mosaicking"
+msgstr "ράστερ 3Δ, στατιστικά"
+
+#: ../locale/scriptstrings/i.image.mosaic_to_translate.c:3
+msgid "1st map for mosaic (top of image stack)."
+msgstr ""
+
+#: ../locale/scriptstrings/i.image.mosaic_to_translate.c:4
+msgid "2nd map for mosaic."
+msgstr ""
+
+#: ../locale/scriptstrings/i.image.mosaic_to_translate.c:5
+msgid "3rd map for mosaic."
+msgstr ""
+
+#: ../locale/scriptstrings/i.image.mosaic_to_translate.c:6
+msgid "4th map for mosaic."
+msgstr ""
+
+#: ../locale/scriptstrings/r.blend_to_translate.c:1
+msgid "Blends color components of two raster maps by a given ratio."
+msgstr ""
+
+#: ../locale/scriptstrings/r.blend_to_translate.c:3
+msgid "Name of first raster map for blending"
+msgstr "Όνομα του πρώτου ράστερ χάρτη για blending"
+
+#: ../locale/scriptstrings/r.blend_to_translate.c:4
+msgid "Name of second raster map for blending"
+msgstr "Όνομα του δεύτερου ράστερ χάρτη για blending"
+
+#: ../locale/scriptstrings/r.blend_to_translate.c:5
+msgid "Base name for red, green and blue output maps containing the blend"
+msgstr ""
+
+#: ../locale/scriptstrings/r.blend_to_translate.c:6
+#, fuzzy
+msgid "Percentage weight of first map for color blending"
+msgstr "Όνομα του πρώτου ράστερ χάρτη για blending"
+
+#: ../locale/scriptstrings/r.reclass.area_to_translate.c:1
+msgid ""
+"Reclasses a raster map greater or less than user specified area size (in "
+"hectares)."
+msgstr ""
+
+#: ../locale/scriptstrings/r.reclass.area_to_translate.c:2
+#, fuzzy
+msgid "raster, statistics, aggregation"
+msgstr "ράστερ 3Δ, στατιστικά"
+
+#: ../locale/scriptstrings/r.reclass.area_to_translate.c:5
+msgid "Lesser value option that sets the <= area size limit [hectares]"
+msgstr ""
+
+#: ../locale/scriptstrings/r.reclass.area_to_translate.c:6
+msgid "Greater value option that sets the >= area size limit [hectares]"
+msgstr ""
+
+#: ../locale/scriptstrings/v.what.vect_to_translate.c:1
+msgid "Uploads vector values at positions of vector points to the table."
+msgstr ""
+
+#: ../locale/scriptstrings/v.what.vect_to_translate.c:3
+#, fuzzy
+msgid "Vector map to modify"
+msgstr "Ascii ράστερ χάρτης που θα εισαχθεί"
+
+#: ../locale/scriptstrings/v.what.vect_to_translate.c:4
+msgid "Layer in the vector to be modified"
+msgstr ""
+
+#: ../locale/scriptstrings/v.what.vect_to_translate.c:5
+msgid "Column to be updated with the query result"
+msgstr ""
+
+#: ../locale/scriptstrings/v.what.vect_to_translate.c:6
+#, fuzzy
+msgid "Vector map to be queried"
+msgstr "Ascii ράστερ χάρτης που θα εισαχθεί"
+
+#: ../locale/scriptstrings/v.what.vect_to_translate.c:7
+#, fuzzy
+msgid "Layer of the query vector containing data"
+msgstr "Όνομα εξαγόμενου ράστερ χάρτη"
+
+#: ../locale/scriptstrings/v.what.vect_to_translate.c:8
+#, fuzzy
+msgid "Column to be queried"
+msgstr "Ascii ράστερ χάρτης που θα εισαχθεί"
+
+#: ../locale/scriptstrings/v.what.vect_to_translate.c:9
+msgid "Maximum query distance in map units"
+msgstr ""
+
+#: ../locale/scriptstrings/r.in.srtm_to_translate.c:1
+msgid "Import SRTM HGT files into GRASS"
+msgstr ""
+
+#: ../locale/scriptstrings/r.in.srtm_to_translate.c:3
+msgid "SRTM input tile (file without .hgt.zip extension)"
+msgstr ""
+
+#: ../locale/scriptstrings/r.in.srtm_to_translate.c:4
+#, fuzzy
+msgid "Output raster map (default: input tile)"
+msgstr "Όνομα εξαγόμενου ράστερ χάρτη"
+
+#: ../locale/scriptstrings/r.in.srtm_to_translate.c:5
+msgid "Input is a 1-arcsec tile (default: 3-arcsec)"
+msgstr ""
+
+#: ../locale/scriptstrings/v.report_to_translate.c:1
+#, fuzzy
+msgid "Reports geometry statistics for vectors."
+msgstr "Παράγει στατιστικά όγκου για 3Δ ράστερ χάρτες."
+
+#: ../locale/scriptstrings/v.report_to_translate.c:2
+#, fuzzy
+msgid "vector, report, statistics"
+msgstr "ράστερ 3Δ, στατιστικά"
+
+#: ../locale/scriptstrings/v.report_to_translate.c:3
+msgid "Reverse sort the result"
+msgstr ""
+
+#: ../locale/scriptstrings/v.report_to_translate.c:4
+msgid "Sort the result"
+msgstr ""
+
+#: ../locale/scriptstrings/v.report_to_translate.c:7
+msgid "Value to calculate"
+msgstr ""
+
+#: ../locale/scriptstrings/v.report_to_translate.c:8
+msgid "mi(les),f(eet),me(ters),k(ilometers),a(cres),h(ectares),p(ercent)"
+msgstr ""
+
+#: ../locale/scriptstrings/v.db.update_to_translate.c:1
+#, fuzzy
+msgid ""
+"Allows to update a column in the attribute table connected to a vector map."
+msgstr "Αδυναμία ανάγνωσης διανυσματικού χάρτη"
+
+#: ../locale/scriptstrings/v.db.update_to_translate.c:3
+#, fuzzy
+msgid "Vector map to edit the attribute table for"
+msgstr "βάση δεδομένων, πίνακας ιδιοτήτων"
+
+#: ../locale/scriptstrings/v.db.update_to_translate.c:4
+msgid "Layer to which the table to be changed is connected"
+msgstr ""
+
+#: ../locale/scriptstrings/v.db.update_to_translate.c:5
+#, fuzzy
+msgid "Column to update"
+msgstr "Ascii ράστερ χάρτης που θα εισαχθεί"
+
+#: ../locale/scriptstrings/v.db.update_to_translate.c:6
+msgid ""
+"Value to update the column with (varchar values have to be in single quotes, "
+"e.g. 'grass')"
+msgstr ""
+
+#: ../locale/scriptstrings/v.db.update_to_translate.c:7
+#, fuzzy
+msgid "Column to query"
+msgstr "Ascii ράστερ χάρτης που θα εισαχθεί"
+
+#: ../locale/scriptstrings/v.db.update_to_translate.c:8
+msgid ""
+"WHERE conditions for update, without 'where' keyword (e.g. cat=1 or col1/"
+"col2>1)"
+msgstr ""
+
+#: ../locale/scriptstrings/d.rast.leg_to_translate.c:1
+msgid "Displays a raster map and its legend on a graphics window"
+msgstr ""
+
+#: ../locale/scriptstrings/d.rast.leg_to_translate.c:4
+msgid "Omit entries with missing label"
+msgstr ""
+
+#: ../locale/scriptstrings/d.rast.leg_to_translate.c:6
+msgid "Number of lines to appear in the legend"
+msgstr "Αριθμός γραμμών που θα εμφανίζονται στο υπόμνημα."
+
+#: ../locale/scriptstrings/d.rast.leg_to_translate.c:7
+#, fuzzy
+msgid "Name of raster map to generate legend from"
+msgstr "Χρώμα"
+
+#: ../locale/scriptstrings/d.rast.leg_to_translate.c:8
+#, fuzzy
+msgid "Name of raster map to print in legend"
+msgstr "Χρώμα"
+
+#: ../locale/scriptstrings/d.rast.leg_to_translate.c:9
+msgid "Position of vertical map-legend separator (in percent)"
+msgstr ""
+
+#: ../locale/scriptstrings/d.out.gpsdrive_to_translate.c:1
+msgid "Export display monitor to a GpsDrive compatible backdrop image"
+msgstr ""
+
+#: ../locale/scriptstrings/d.out.gpsdrive_to_translate.c:2
+#, fuzzy
+msgid "display, export, GPS"
+msgstr "ράστερ 3Δ, στατιστικά"
+
+#: ../locale/scriptstrings/d.out.gpsdrive_to_translate.c:3
+msgid "name for new map image (lives in ~/.gpsdrive/maps/)"
+msgstr ""
+
+#: ../locale/scriptstrings/d.out.gpsdrive_to_translate.c:4
+msgid "Make JPEG instead of PNG image"
+msgstr ""
+
+#: ../locale/scriptstrings/v.univar.sh_to_translate.c:1
+#: ../locale/scriptstrings/v.db.univar_to_translate.c:1
+#, fuzzy
+msgid ""
+"Calculates univariate statistics on selected table column for a GRASS vector "
+"map."
+msgstr "Παράγει στατιστικά όγκου για 3Δ ράστερ χάρτες."
+
+#: ../locale/scriptstrings/v.univar.sh_to_translate.c:3
+#: ../locale/scriptstrings/v.db.univar_to_translate.c:3
+msgid "Extended statistics (quartiles and 90th percentile)"
+msgstr ""
+
+#: ../locale/scriptstrings/v.univar.sh_to_translate.c:4
+#: ../locale/scriptstrings/v.db.univar_to_translate.c:4
+#, fuzzy
+msgid "Name of data table"
+msgstr "Αδυναμία λίστας βάσεων δεδομένων"
+
+#: ../locale/scriptstrings/v.univar.sh_to_translate.c:5
+#: ../locale/scriptstrings/v.db.univar_to_translate.c:5
+msgid "Column on which to calculate statistics (must be numeric)"
+msgstr ""
+
+#: ../locale/scriptstrings/v.univar.sh_to_translate.c:6
+#: ../locale/scriptstrings/v.db.univar_to_translate.c:6
+msgid "Database/directory for table"
+msgstr ""
+
+#: ../locale/scriptstrings/v.univar.sh_to_translate.c:7
+#: ../locale/scriptstrings/v.db.univar_to_translate.c:7
+#, fuzzy
+msgid "Database driver"
+msgstr "Δίνει τη λίστα για όλους τους οδηγούς βάσεων δεδομένων"
+
+#: ../locale/scriptstrings/v.univar.sh_to_translate.c:8
+#: ../locale/scriptstrings/v.out.gpsbabel_to_translate.c:13
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:47
+#: ../locale/scriptstrings/v.db.univar_to_translate.c:8
+msgid "WHERE conditions of SQL statement without 'where' keyword"
+msgstr ""
+
+#: ../locale/scriptstrings/g.manual_to_translate.c:1
+msgid "Display the HTML man pages of GRASS"
+msgstr ""
+
+#: ../locale/scriptstrings/g.manual_to_translate.c:2
+msgid "general, manual, help"
+msgstr ""
+
+#: ../locale/scriptstrings/g.manual_to_translate.c:3
+msgid "Display index"
+msgstr ""
+
+#: ../locale/scriptstrings/g.manual_to_translate.c:4
+msgid "Display as MAN text page instead of HTML page in browser"
+msgstr ""
+
+#: ../locale/scriptstrings/g.manual_to_translate.c:5
+msgid "Manual entry to be displayed"
+msgstr ""
+
+#: ../locale/scriptstrings/v.in.sites.all_to_translate.c:1
+msgid ""
+"Converts all old GRASS < Ver5.7 sites maps in current mapset to vector maps."
+msgstr ""
+
+#: ../locale/scriptstrings/v.in.sites.all_to_translate.c:2
+#, fuzzy
+msgid "sites, vector, import"
+msgstr "raster3d, voxel, εισάγεται"
+
+#: ../locale/scriptstrings/v.in.sites.all_to_translate.c:3
+msgid "Run non-interactively"
+msgstr ""
+
+#: ../locale/scriptstrings/v.db.renamecol_to_translate.c:1
+#, fuzzy
+msgid ""
+"Renames a column in the attribute table connected to a given vector map."
+msgstr "Αδυναμία ανάγνωσης διανυσματικού χάρτη"
+
+#: ../locale/scriptstrings/v.db.renamecol_to_translate.c:3
+#, fuzzy
+msgid "Vector map for which to rename attribute column"
+msgstr "βάση δεδομένων, πίνακας ιδιοτήτων"
+
+#: ../locale/scriptstrings/v.db.renamecol_to_translate.c:4
+#, fuzzy
+msgid "Layer where to rename column"
+msgstr "Νούμερο επιπέδου"
+
+#: ../locale/scriptstrings/v.db.renamecol_to_translate.c:5
+msgid "Old and new name of the column (old,new)"
+msgstr ""
+
+#: ../locale/scriptstrings/r.mask_to_translate.c:1
+msgid "Create a MASK for limiting raster operation"
+msgstr ""
+
+#: ../locale/scriptstrings/r.mask_to_translate.c:2
+#, fuzzy
+msgid "raster, mask"
+msgstr "ράστερ 3Δ, στατιστικά"
+
+#: ../locale/scriptstrings/r.mask_to_translate.c:3
+msgid "Raster map to use as MASK"
+msgstr ""
+
+#: ../locale/scriptstrings/r.mask_to_translate.c:4
+msgid "Category values to use for MASK (format: 1 2 3 thru 7 *)"
+msgstr ""
+
+#: ../locale/scriptstrings/r.mask_to_translate.c:5
+msgid "Create inverse MASK from specified 'maskcats' list"
+msgstr ""
+
+#: ../locale/scriptstrings/r.mask_to_translate.c:6
+msgid "Overwrite existing MASK"
+msgstr ""
+
+#: ../locale/scriptstrings/r.mask_to_translate.c:7
+msgid "Remove existing MASK (overrides other options)"
+msgstr ""
+
+#: ../locale/scriptstrings/v.out.gpsbabel_to_translate.c:1
+msgid ""
+"Exports a vector map to a GPS receiver or file format supported by GpsBabel."
+msgstr ""
+
+#: ../locale/scriptstrings/v.out.gpsbabel_to_translate.c:2
+#, fuzzy
+msgid "vector, export, GPS"
+msgstr "ράστερ 3Δ, στατιστικά"
+
+#: ../locale/scriptstrings/v.out.gpsbabel_to_translate.c:3
+msgid "Export as waypoints"
+msgstr ""
+
+#: ../locale/scriptstrings/v.out.gpsbabel_to_translate.c:4
+msgid "Export as routes"
+msgstr ""
+
+#: ../locale/scriptstrings/v.out.gpsbabel_to_translate.c:5
+msgid "Export as tracks"
+msgstr ""
+
+#: ../locale/scriptstrings/v.out.gpsbabel_to_translate.c:7
+#, fuzzy
+msgid "Feature type(s)"
+msgstr "Αδυναμία ανοίγματος διανυσματικού χάρτη <%s>"
+
+#: ../locale/scriptstrings/v.out.gpsbabel_to_translate.c:8
+#, fuzzy
+msgid "Name for output file or GPS device"
+msgstr "Όνομα αρχείου εξαγωγής"
+
+#: ../locale/scriptstrings/v.out.gpsbabel_to_translate.c:9
+msgid "GpsBabel supported output format"
+msgstr ""
+
+#: ../locale/scriptstrings/v.out.gpsbabel_to_translate.c:11
+#: ../locale/scriptstrings/v.dissolve_to_translate.c:6
+msgid ""
+"A single vector map can be connected to multiple database tables. This "
+"number determines which table to use."
+msgstr ""
+
+#: ../locale/scriptstrings/v.out.gpsbabel_to_translate.c:12
+#: ../locale/scriptstrings/v.out.gpsbabel_to_translate.c:15
+msgid "Subset"
+msgstr ""
+
+#: ../locale/scriptstrings/v.out.gpsbabel_to_translate.c:14
+msgid "Example: income < 1000 and inhab >= 10000"
+msgstr ""
+
+#: ../locale/scriptstrings/v.db.reconnect.all_to_translate.c:1
+#, fuzzy
+msgid "Reconnects vectors to a new database."
+msgstr "Αφαιρεί μία βάση δεδομένων"
+
+#: ../locale/scriptstrings/v.db.reconnect.all_to_translate.c:3
+#, fuzzy
+msgid "Name of old database"
+msgstr "Αδυναμία λίστας βάσεων δεδομένων"
+
+#: ../locale/scriptstrings/v.db.reconnect.all_to_translate.c:4
+msgid ""
+"The database must be in form printed by v.db.connect -g, i.e. with "
+"substituted variables"
+msgstr ""
+
+#: ../locale/scriptstrings/v.db.reconnect.all_to_translate.c:5
+#, fuzzy
+msgid "Name of new database"
+msgstr "Αδυναμία λίστας βάσεων δεδομένων"
+
+#: ../locale/scriptstrings/v.db.reconnect.all_to_translate.c:6
+#, fuzzy
+msgid "Old schema"
+msgstr "Η διάταξη της βάσης δεδομένων"
+
+#: ../locale/scriptstrings/v.db.reconnect.all_to_translate.c:7
+#, fuzzy
+msgid "New schema"
+msgstr "Η διάταξη της βάσης δεδομένων"
+
+#: ../locale/scriptstrings/r.in.aster_to_translate.c:1
+msgid ""
+"Georeference, rectify and import Terra-ASTER imagery and relative DEM's "
+"using gdalwarp."
+msgstr ""
+
+#: ../locale/scriptstrings/r.in.aster_to_translate.c:2
+#: ../locale/scriptstrings/i.in.spotvgt_to_translate.c:2
+#, fuzzy
+msgid "raster, imagery, import"
+msgstr "raster3d, voxel, εισάγεται"
+
+#: ../locale/scriptstrings/r.in.aster_to_translate.c:3
+msgid "Input ASTER image to be georeferenced & rectified"
+msgstr ""
+
+#: ../locale/scriptstrings/r.in.aster_to_translate.c:4
+msgid "ASTER imagery processing type (Level 1A, Level 1B, or relative DEM)"
+msgstr ""
+
+#: ../locale/scriptstrings/r.in.aster_to_translate.c:5
+msgid ""
+"L1A or L1B band to translate (1, 2, 3n, 3b, 4-14). Can only translate a "
+"single band"
+msgstr ""
+
+#: ../locale/scriptstrings/v.colors_to_translate.c:1
+msgid ""
+"Set color rules for features in a vector using a numeric attribute column."
+msgstr ""
+
+#: ../locale/scriptstrings/v.colors_to_translate.c:2
+msgid "vector, color table"
+msgstr "διάνυσμα, πίνακας χρωμάτων"
+
+#: ../locale/scriptstrings/v.colors_to_translate.c:4
+#, fuzzy
+msgid "Name of column containing numeric data"
+msgstr "Όνομα του αρχείου που περιέχει υπογραφές (signatures)"
+
+#: ../locale/scriptstrings/v.colors_to_translate.c:5
+#, fuzzy
+msgid "Layer number of data column"
+msgstr "Νούμερο επιπέδου"
+
+#: ../locale/scriptstrings/v.colors_to_translate.c:6
+#, fuzzy
+msgid "Name of color column to populate"
+msgstr "Όνομα αρχείου εξαγωγής"
+
+#: ../locale/scriptstrings/v.colors_to_translate.c:8
+msgid "Manually set range (min,max)"
+msgstr ""
+
+#: ../locale/scriptstrings/v.colors_to_translate.c:13
+#, fuzzy
+msgid "Path to rules file"
+msgstr "Αδυναμία ανοίγματος του χάρτη raster <%s>"
+
+#: ../locale/scriptstrings/v.colors_to_translate.c:15
+#, fuzzy
+msgid "Save placeholder raster map for use with d.legend"
+msgstr "Χρώμα"
+
+#: ../locale/scriptstrings/db.out.ogr_to_translate.c:1
+msgid "Exports attribute tables into various formats."
+msgstr ""
+
+#: ../locale/scriptstrings/db.out.ogr_to_translate.c:3
+#, fuzzy
+msgid "GRASS table name"
+msgstr "Εξαγωγή ονόματος πίνακα"
+
+#: ../locale/scriptstrings/db.out.ogr_to_translate.c:4
+msgid "Table file to be exported or DB connection string"
+msgstr ""
+
+#: ../locale/scriptstrings/db.out.ogr_to_translate.c:5
+#, fuzzy
+msgid "Table format"
+msgstr "Αδυναμία ανοίγματος βάσης δεδομενων <%s>"
+
+#: ../locale/scriptstrings/db.out.ogr_to_translate.c:6
+#: ../locale/scriptstrings/db.in.ogr_to_translate.c:5
+msgid "Name for output table"
+msgstr "Όνομα πίνακα εξαγωγής"
+
+#: ../locale/scriptstrings/d.redraw_to_translate.c:1
+msgid "Redraws the current display frame in the GRASS monitor"
+msgstr ""
+
+#: ../locale/scriptstrings/d.redraw_to_translate.c:3
+msgid "Redraw all frames"
+msgstr ""
+
+#: ../locale/scriptstrings/d.redraw_to_translate.c:4
+msgid "Do not preserve individual regions when redrawing all frames"
+msgstr ""
+
+#: ../locale/scriptstrings/d.slide.show_to_translate.c:1
+msgid "Slide show of GRASS raster/vector maps."
+msgstr ""
+
+#: ../locale/scriptstrings/d.slide.show_to_translate.c:2
+msgid "display, slideshow"
+msgstr ""
+
+#: ../locale/scriptstrings/d.slide.show_to_translate.c:3
+msgid "Show vector maps rather than raster maps"
+msgstr ""
+
+#: ../locale/scriptstrings/d.slide.show_to_translate.c:4
+msgid "Map prefix. Specify character(s) to view selected maps only"
+msgstr ""
+
+#: ../locale/scriptstrings/d.slide.show_to_translate.c:5
+msgid "Map number show across the monitor"
+msgstr ""
+
+#: ../locale/scriptstrings/d.slide.show_to_translate.c:6
+msgid "Map number show down the monitor"
+msgstr ""
+
+#: ../locale/scriptstrings/d.slide.show_to_translate.c:7
+msgid "Mapsets to use. Specify multiple mapsets comma separated"
+msgstr ""
+
+#: ../locale/scriptstrings/d.slide.show_to_translate.c:8
+#, fuzzy
+msgid "Number of seconds to pause between slides"
+msgstr "Αριθμός γραμμών που θα εμφανίζονται στο υπόμνημα."
+
+#: ../locale/scriptstrings/v.in.garmin_to_translate.c:1
+msgid ""
+"Download waypoints, routes, and tracks from a Garmin GPS receiver into a "
+"vector map."
+msgstr ""
+
+#: ../locale/scriptstrings/v.in.garmin_to_translate.c:2
+#: ../locale/scriptstrings/v.in.gpsbabel_to_translate.c:2
+#, fuzzy
+msgid "vector, import, GPS"
+msgstr "raster3d, voxel, εισάγεται"
+
+#: ../locale/scriptstrings/v.in.garmin_to_translate.c:4
+msgid "Download Waypoints from GPS"
+msgstr ""
+
+#: ../locale/scriptstrings/v.in.garmin_to_translate.c:5
+msgid "Download Routes from GPS"
+msgstr ""
+
+#: ../locale/scriptstrings/v.in.garmin_to_translate.c:6
+msgid "Download Track from GPS"
+msgstr ""
+
+#: ../locale/scriptstrings/v.in.garmin_to_translate.c:7
+msgid "Force import of track or route data as points"
+msgstr ""
+
+#: ../locale/scriptstrings/v.in.garmin_to_translate.c:8
+msgid "Use gardump instead of gpstrans as the download program"
+msgstr ""
+
+#: ../locale/scriptstrings/v.in.garmin_to_translate.c:9
+msgid "Import track in 3D (gardump only)"
+msgstr ""
+
+#: ../locale/scriptstrings/v.in.garmin_to_translate.c:10
+#: ../locale/scriptstrings/v.in.gpsbabel_to_translate.c:8
+msgid "Do not attempt projection transform from WGS84"
+msgstr ""
+
+#: ../locale/scriptstrings/v.in.garmin_to_translate.c:11
+#: ../locale/scriptstrings/v.in.mapgen_to_translate.c:6
+#: ../locale/scriptstrings/v.in.gpsbabel_to_translate.c:10
+#, fuzzy
+msgid "Name for output vector map (omit for display to stdout)"
+msgstr "Όνομα εξαγόμενου διανυσματικού χάρτη"
+
+#: ../locale/scriptstrings/v.in.garmin_to_translate.c:12
+msgid "Port Garmin receiver is connected to"
+msgstr ""
+
+#: ../locale/scriptstrings/d.split.frame_to_translate.c:1
+msgid "Split the display into subframes."
+msgstr ""
+
+#: ../locale/scriptstrings/d.split.frame_to_translate.c:2
+#, fuzzy
+msgid "Number of subframes"
+msgstr "Νούμερο των υποπεριοχών για συλλογή στατιστικών από αυτά"
+
+#: ../locale/scriptstrings/d.split.frame_to_translate.c:3
+msgid "Split horizontally not vertically"
+msgstr ""
+
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:1
+#, fuzzy
+msgid "Displays thematic vector map"
+msgstr "Αδυναμία ανάγνωσης διανυσματικού χάρτη"
+
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:2
+msgid "display, vector, thematic, legend"
+msgstr ""
+
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:3
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:44
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:48
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:51
+msgid "Files"
+msgstr ""
+
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:5
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:7
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:9
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:11
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:13
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:16
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:25
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:46
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:53
+msgid "Theme"
+msgstr ""
+
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:8
+#, fuzzy
+msgid "Name of attribute column to use for thematic display (must be numeric)"
+msgstr "Όνομα του δεύτερου ράστερ χάρτη για blending"
+
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:10
+#, fuzzy
+msgid "Type of thematic display"
+msgstr "Τύπος"
+
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:12
+msgid "Thematic divisions of data for display"
+msgstr ""
+
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:14
+msgid "Break points for custom breaks option"
+msgstr ""
+
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:15
+msgid "Separate values by spaces (0 10 20 30 ...)"
+msgstr ""
+
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:19
+msgid "Vector point icon for point data"
+msgstr ""
+
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:21
+msgid "Icon size for point data"
+msgstr ""
+
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:22
+msgid "Minimum icon size/line width for graduated points/lines)"
+msgstr ""
+
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:24
+msgid "Maximum icon size/line width for graduated points and lines"
+msgstr ""
+
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:26
+#, fuzzy
+msgid "Number of classes for interval theme (integer)"
+msgstr "Αριθμός γραμμών που θα εμφανίζονται στο υπόμνημα."
+
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:28
+#, fuzzy
+msgid "Color scheme for graduated color mapping"
+msgstr "Χρώμα"
+
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:29
+#, fuzzy
+msgid "Select 'single_color' for graduated point/line display"
+msgstr "Χρώμα"
+
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:31
+#, fuzzy
+msgid "Color for graduated points map"
+msgstr "Χρώμα"
+
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:32
+msgid "GRASS named color or R:G:B triplet. Set color scheme to single color"
+msgstr ""
+
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:34
+#, fuzzy
+msgid "Color for graduated lines or point/area outlines"
+msgstr "Χρώμα"
+
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:35
+msgid "GRASS named color or R:G:B triplet. Set color scheme to single color."
+msgstr ""
+
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:37
+msgid "Beginning color for custom color gradient"
+msgstr ""
+
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:38
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:41
+msgid "Must be expressed as R:G:B triplet"
+msgstr ""
+
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:40
+msgid "Ending color for custom color gradient"
+msgstr ""
+
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:42
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:59
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:61
+msgid "Misc"
+msgstr ""
+
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:43
+msgid "Select x11 display monitor for legend"
+msgstr ""
+
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:45
+msgid "Save thematic map commands to group file for GIS Manager"
+msgstr ""
+
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:49
+msgid "Root for the name of psmap instruction files to be in current directory"
+msgstr ""
+
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:50
+msgid "If not set, no psmap instruction files will be created)"
+msgstr ""
+
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:52
+msgid "Name of group file where thematic map commands will be saved"
+msgstr ""
+
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:54
+msgid "Create graphic legend in x11 display monitor"
+msgstr ""
+
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:56
+msgid "Only draw fills (no outlines) for areas and points"
+msgstr ""
+
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:58
+msgid "Update color values to GRASSRGB column in attribute table"
+msgstr ""
+
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:60
+msgid "Output legend for GIS Manager (for scripting use only)"
+msgstr ""
+
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:62
+msgid "Use math notation brackets in legend"
+msgstr ""
+
+#: ../locale/scriptstrings/db.droptable_to_translate.c:1
+msgid "Drops an attribute table."
+msgstr "διαγραφή ενός πίνακα ιδιοτήτων."
+
+#: ../locale/scriptstrings/db.droptable_to_translate.c:4
+#, fuzzy
+msgid "Table to drop"
+msgstr "Αδυναμία ανοίγματος βάσης δεδομενων <%s>"
+
+#: ../locale/scriptstrings/v.in.gns_to_translate.c:1
+#, fuzzy
+msgid ""
+"Imports US-NGA GEOnet Names Server (GNS) country files into a GRASS vector "
+"points map."
+msgstr "Αδυναμία ανάγνωσης διανυσματικού χάρτη"
+
+#: ../locale/scriptstrings/v.in.gns_to_translate.c:2
+#: ../locale/scriptstrings/v.in.geonames_to_translate.c:2
+#, fuzzy
+msgid "vector, import, gazetteer"
+msgstr "ράστερ 3Δ, στατιστικά"
+
+#: ../locale/scriptstrings/v.in.gns_to_translate.c:3
+msgid "Uncompressed GNS file from NGA (with .txt extension)"
+msgstr ""
+
+#: ../locale/scriptstrings/v.rast.stats_to_translate.c:1
+msgid ""
+"Calculates univariate statistics from a raster map based on vector polygons "
+"and uploads statistics to new attribute columns."
+msgstr ""
+
+#: ../locale/scriptstrings/v.rast.stats_to_translate.c:2
+#, fuzzy
+msgid "vector, raster, statistics"
+msgstr "ράστερ 3Δ, στατιστικά"
+
+#: ../locale/scriptstrings/v.rast.stats_to_translate.c:3
+msgid "Continue if upload column(s) already exist"
+msgstr ""
+
+#: ../locale/scriptstrings/v.rast.stats_to_translate.c:5
+#, fuzzy
+msgid "Name of vector polygon map"
+msgstr "Όνομα εισαγώμενων ράστερ χαρτών"
+
+#: ../locale/scriptstrings/v.rast.stats_to_translate.c:7
+msgid ""
+"A single vector map can be connected to multiple database tables. This "
+"number determines which table to use"
+msgstr ""
+
+#: ../locale/scriptstrings/v.rast.stats_to_translate.c:8
+#, fuzzy
+msgid "Name of raster map to calculate statistics from"
+msgstr "Νούμερο των υποπεριοχών για συλλογή στατιστικών από αυτά"
+
+#: ../locale/scriptstrings/v.rast.stats_to_translate.c:9
+#, fuzzy
+msgid "Column prefix for new attribute columns"
+msgstr "Αδυναμία αντιγραφής πίνακα <%s>"
+
+#: ../locale/scriptstrings/v.in.geonames_to_translate.c:1
+#, fuzzy
+msgid "Imports geonames.org country files into a GRASS vector points map."
+msgstr "Αδυναμία ανάγνωσης διανυσματικού χάρτη"
+
+#: ../locale/scriptstrings/v.in.geonames_to_translate.c:3
+msgid "Uncompressed geonames file from (with .txt extension)"
+msgstr ""
+
+#: ../locale/scriptstrings/d.m_to_translate.c:1
+msgid "Display manager for GRASS"
+msgstr ""
+
+#: ../locale/scriptstrings/d.m_to_translate.c:2
+msgid "Name of .dmrc settings file"
+msgstr "Όνομα αρχείου .dmrc"
+
+#: ../locale/scriptstrings/gis.m_to_translate.c:1
+msgid "GIS manager for GRASS"
+msgstr ""
+
+#: ../locale/scriptstrings/gis.m_to_translate.c:2
+#, fuzzy
+msgid "Name of GIS manager settings file (.grc)"
+msgstr "Όνομα αρχείου .dmrc"
+
+#: ../locale/scriptstrings/db.dropcol_to_translate.c:1
+#, fuzzy
+msgid "Drops a column from selected attribute table"
+msgstr "διαγραφή ενός πίνακα ιδιοτήτων."
+
+#: ../locale/scriptstrings/db.dropcol_to_translate.c:4
+#, fuzzy
+msgid "Table from which to drop attribute column"
+msgstr "Αδυναμία αντιγραφής πίνακα <%s>"
+
+#: ../locale/scriptstrings/db.dropcol_to_translate.c:5
+#: ../locale/scriptstrings/v.db.dropcol_to_translate.c:5
+#, fuzzy
+msgid "Name of the column"
+msgstr "Νούμερο επιπέδου"
+
+#: ../locale/scriptstrings/r.out.xyz_to_translate.c:1
+msgid ""
+"Export a raster map to a text file as x,y,z values based on cell centers."
+msgstr ""
+
+#: ../locale/scriptstrings/d.resize_to_translate.c:1
+msgid "Resizes active display monitor"
+msgstr ""
+
+#: ../locale/scriptstrings/d.resize_to_translate.c:3
+msgid "New width for window"
+msgstr ""
+
+#: ../locale/scriptstrings/d.resize_to_translate.c:4
+msgid "New height for window"
+msgstr ""
+
+#: ../locale/scriptstrings/v.in.mapgen_to_translate.c:1
+msgid "Import Mapgen or Matlab-ASCII vector maps into GRASS."
+msgstr ""
+
+#: ../locale/scriptstrings/v.in.mapgen_to_translate.c:3
+#, fuzzy
+msgid "Input map is in Matlab format"
+msgstr "Όνομα εισαγώμενου διανυσματικού χάρτη "
+
+#: ../locale/scriptstrings/v.in.mapgen_to_translate.c:4
+msgid "Create a 3D vector points map from 3 column Matlab data"
+msgstr ""
+
+#: ../locale/scriptstrings/v.in.mapgen_to_translate.c:5
+#, fuzzy
+msgid "Name of input file in Mapgen/Matlab format"
+msgstr "Όνομα εισαγώμενου διανυσματικού χάρτη "
+
+#: ../locale/scriptstrings/v.build.all_to_translate.c:1
+msgid "Rebuilds topology on all vector maps in the current mapset."
+msgstr ""
+
+#: ../locale/scriptstrings/r.univar.sh_to_translate.c:1
+#, fuzzy
+msgid "calculates univariate statistics from a GRASS raster map"
+msgstr "Παράγει στατιστικά όγκου για 3Δ ράστερ χάρτες."
+
+#: ../locale/scriptstrings/r.univar.sh_to_translate.c:3
+msgid "extended statistics (quartiles and percentile)"
+msgstr ""
+
+#: ../locale/scriptstrings/r.univar.sh_to_translate.c:5
+msgid "Percentile to calculate (requires -e flag)"
+msgstr ""
+
+#: ../locale/scriptstrings/r.mapcalculator_to_translate.c:1
+msgid "Calculate new raster map from a r.mapcalc expression."
+msgstr ""
+
+#: ../locale/scriptstrings/r.mapcalculator_to_translate.c:2
+msgid "A"
+msgstr ""
+
+#: ../locale/scriptstrings/r.mapcalculator_to_translate.c:3
+msgid "B"
+msgstr ""
+
+#: ../locale/scriptstrings/r.mapcalculator_to_translate.c:4
+msgid "C"
+msgstr ""
+
+#: ../locale/scriptstrings/r.mapcalculator_to_translate.c:5
+msgid "D"
+msgstr ""
+
+#: ../locale/scriptstrings/r.mapcalculator_to_translate.c:6
+msgid "E"
+msgstr ""
+
+#: ../locale/scriptstrings/r.mapcalculator_to_translate.c:7
+msgid "F"
+msgstr ""
+
+#: ../locale/scriptstrings/r.mapcalculator_to_translate.c:8
+#: ../locale/scriptstrings/r3.mapcalculator_to_translate.c:8
+msgid "Formula (e.g. A-B or A*C+B)"
+msgstr ""
+
+#: ../locale/scriptstrings/r.mapcalculator_to_translate.c:10
+#: ../locale/scriptstrings/r3.mapcalculator_to_translate.c:10
+msgid "Show help"
+msgstr ""
+
+#: ../locale/scriptstrings/r.mapcalculator_to_translate.c:11
+msgid "Expert mode (enter a set of r.mapcalc expressions)"
+msgstr ""
+
+#: ../locale/scriptstrings/r.mapcalculator_to_translate.c:12
+#: ../locale/scriptstrings/r3.mapcalculator_to_translate.c:12
+msgid "Do not overwrite existing map"
+msgstr ""
+
+#: ../locale/scriptstrings/i.landsat.rgb_to_translate.c:1
+msgid "Performs auto-balancing of colors for LANDSAT images."
+msgstr ""
+
+#: ../locale/scriptstrings/i.landsat.rgb_to_translate.c:2
+#, fuzzy
+msgid "raster, imagery, colors"
+msgstr "raster3d, voxel, εισάγεται"
+
+#: ../locale/scriptstrings/i.landsat.rgb_to_translate.c:3
+msgid "LANDSAT red channel"
+msgstr ""
+
+#: ../locale/scriptstrings/i.landsat.rgb_to_translate.c:4
+msgid "LANDSAT green channel"
+msgstr ""
+
+#: ../locale/scriptstrings/i.landsat.rgb_to_translate.c:5
+msgid "LANDSAT blue channel"
+msgstr ""
+
+#: ../locale/scriptstrings/i.landsat.rgb_to_translate.c:6
+msgid "Cropping intensity (upper brightness level)"
+msgstr ""
+
+#: ../locale/scriptstrings/i.landsat.rgb_to_translate.c:7
+msgid "Extend colors to full range of data on each channel"
+msgstr ""
+
+#: ../locale/scriptstrings/i.landsat.rgb_to_translate.c:8
+msgid "Preserve relative colors, adjust brightness only"
+msgstr ""
+
+#: ../locale/scriptstrings/i.landsat.rgb_to_translate.c:9
+msgid "Reset to standard color range"
+msgstr ""
+
+#: ../locale/scriptstrings/d.monsize_to_translate.c:1
+msgid "Selects/starts specified monitor at specified size"
+msgstr ""
+
+#: ../locale/scriptstrings/d.monsize_to_translate.c:3
+msgid "Display monitor to start"
+msgstr ""
+
+#: ../locale/scriptstrings/d.monsize_to_translate.c:4
+msgid "Width in pixels of new display monitor"
+msgstr ""
+
+#: ../locale/scriptstrings/d.monsize_to_translate.c:5
+msgid "Height in pixels of new display monitor"
+msgstr ""
+
+#: ../locale/scriptstrings/d.shadedmap_to_translate.c:1
+msgid "Drapes a color raster over a shaded relief map using d.his"
+msgstr ""
+
+#: ../locale/scriptstrings/d.shadedmap_to_translate.c:2
+#, fuzzy
+msgid "Name of shaded relief or aspect map"
+msgstr "Όνομα χάρτη υποβάθρου ράστερ"
+
+#: ../locale/scriptstrings/d.shadedmap_to_translate.c:3
+#, fuzzy
+msgid "Name of raster to drape over relief map"
+msgstr "Όνομα χάρτη υποβάθρου ράστερ"
+
+#: ../locale/scriptstrings/d.shadedmap_to_translate.c:4
+msgid "Percent to brighten"
+msgstr ""
+
+#: ../locale/scriptstrings/v.in.gpsbabel_to_translate.c:1
+msgid ""
+"Import waypoints, routes, and tracks from a GPS receiver or GPS download "
+"file into a vector map."
+msgstr ""
+
+#: ../locale/scriptstrings/v.in.gpsbabel_to_translate.c:4
+msgid "Import waypoints"
+msgstr ""
+
+#: ../locale/scriptstrings/v.in.gpsbabel_to_translate.c:5
+msgid "Import routes"
+msgstr ""
+
+#: ../locale/scriptstrings/v.in.gpsbabel_to_translate.c:6
+msgid "Import track"
+msgstr ""
+
+#: ../locale/scriptstrings/v.in.gpsbabel_to_translate.c:7
+msgid "Force vertices of track or route data as points"
+msgstr ""
+
+#: ../locale/scriptstrings/v.in.gpsbabel_to_translate.c:9
+msgid "Device or file used to import data"
+msgstr ""
+
+#: ../locale/scriptstrings/v.in.gpsbabel_to_translate.c:11
+msgid "Format of GPS input data (use gpsbabel supported formats)"
+msgstr ""
+
+#: ../locale/scriptstrings/v.in.gpsbabel_to_translate.c:12
+msgid ""
+"Projection of input data (PROJ.4 style), if not set Lat/Lon WGS84 is assumed"
+msgstr ""
+
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:1
+msgid "Downloads and imports data from WMS servers."
+msgstr ""
+
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:2
+msgid "wms"
+msgstr ""
+
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:4
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:8
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:17
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:21
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:23
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:25
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:27
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:29
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:31
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:33
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:35
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:38
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:49
+msgid "Request"
+msgstr ""
+
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:5
+msgid "Skip to downloading (to resume downloads faster)"
+msgstr ""
+
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:6
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:10
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:40
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:42
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:44
+msgid "Download"
+msgstr ""
+
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:7
+msgid "Don't request transparent data"
+msgstr ""
+
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:9
+msgid "Clean existing data out of download directory"
+msgstr ""
+
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:12
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:14
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:19
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:46
+msgid "Import"
+msgstr ""
+
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:13
+msgid "Don't reproject the data, just patch it"
+msgstr ""
+
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:15
+msgid "Use GET method instead of POST data method"
+msgstr ""
+
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:16
+msgid "This may be needed to connect to servers which lack POST capability"
+msgstr ""
+
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:20
+msgid "Mapserver to request data from"
+msgstr ""
+
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:22
+msgid "Layers to request from map server"
+msgstr ""
+
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:24
+msgid "Styles to request from map server"
+msgstr ""
+
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:26
+msgid "Source projection to request from server"
+msgstr ""
+
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:28
+msgid "Image format requested from the server"
+msgstr ""
+
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:30
+msgid "Addition query options for server"
+msgstr ""
+
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:32
+msgid "Maximum columns to request at a time"
+msgstr ""
+
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:34
+msgid "Maximum rows to request at a time"
+msgstr ""
+
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:36
+msgid "Additional options for r.tileset"
+msgstr ""
+
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:37
+msgid "Named region to request data for. Current region used if omitted"
+msgstr ""
+
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:39
+msgid "Folder to save downloaded data to"
+msgstr ""
+
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:41
+msgid "Additional options for wget"
+msgstr ""
+
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:43
+msgid "Additional options for curl"
+msgstr ""
+
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:45
+msgid "Reprojection method to use"
+msgstr ""
+
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:47
+msgid "Filename to save capabilities XML file to"
+msgstr ""
+
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:48
+msgid "Requires list available layers flag"
+msgstr ""
+
+#: ../locale/scriptstrings/r.colors.stddev_to_translate.c:1
+msgid "Set color rules based on stddev from a map's mean value."
+msgstr ""
+
+#: ../locale/scriptstrings/r.colors.stddev_to_translate.c:4
+msgid "Color using standard deviation bands"
+msgstr ""
+
+#: ../locale/scriptstrings/r.colors.stddev_to_translate.c:5
+msgid "Force center at zero"
+msgstr ""
+
+#: ../locale/scriptstrings/r.fillnulls_to_translate.c:1
+msgid ""
+"Fills no-data areas in raster maps using v.surf.rst splines interpolation"
+msgstr ""
+
+#: ../locale/scriptstrings/r.fillnulls_to_translate.c:2
+#, fuzzy
+msgid "raster, elevation, interpolation"
+msgstr "ράστερ 3Δ, voxel"
+
+#: ../locale/scriptstrings/r.fillnulls_to_translate.c:3
+msgid "Raster map in which to fill nulls"
+msgstr ""
+
+#: ../locale/scriptstrings/r.fillnulls_to_translate.c:4
+msgid ""
+"Output raster map with nulls filled by interpolation from surrounding values"
+msgstr ""
+
+#: ../locale/scriptstrings/r.fillnulls_to_translate.c:5
+msgid "Spline tension parameter"
+msgstr ""
+
+#: ../locale/scriptstrings/r.fillnulls_to_translate.c:6
+msgid "Spline smoothing parameter"
+msgstr ""
+
+#: ../locale/scriptstrings/v.dissolve_to_translate.c:1
+msgid ""
+"Dissolves boundaries between adjacent areas sharing a common category number "
+"or attribute."
+msgstr ""
+
+#: ../locale/scriptstrings/v.dissolve_to_translate.c:2
+#, fuzzy
+msgid "vector, area, dissolve"
+msgstr "ράστερ 3Δ, στατιστικά"
+
+#: ../locale/scriptstrings/v.dissolve_to_translate.c:5
+msgid "Layer number. If -1, all layers are extracted."
+msgstr ""
+
+#: ../locale/scriptstrings/v.dissolve_to_translate.c:7
+#, fuzzy
+msgid "Name of column used to dissolve common boundaries"
+msgstr "Όνομα του δεύτερου ράστερ χάρτη για blending"
+
+#: ../locale/scriptstrings/v.centroids_to_translate.c:1
+msgid "Adds missing centroids to closed boundaries."
+msgstr ""
+
+#: ../locale/scriptstrings/v.centroids_to_translate.c:2
+#, fuzzy
+msgid "vector, centroid, area"
+msgstr "διάνυσμα, πίνακας χρωμάτων"
+
+#: ../locale/scriptstrings/v.centroids_to_translate.c:5
+msgid "Action to be taken"
+msgstr ""
+
+#: ../locale/scriptstrings/v.centroids_to_translate.c:7
+msgid "Category number starting value"
+msgstr ""
+
+#: ../locale/scriptstrings/r3.mapcalculator_to_translate.c:1
+msgid "Calculates new grid3D volume from r3.mapcalc expression."
+msgstr ""
+
+#: ../locale/scriptstrings/r3.mapcalculator_to_translate.c:2
+msgid "A (grid3D file)"
+msgstr ""
+
+#: ../locale/scriptstrings/r3.mapcalculator_to_translate.c:3
+msgid "B (grid3D file)"
+msgstr ""
+
+#: ../locale/scriptstrings/r3.mapcalculator_to_translate.c:4
+msgid "C (grid3D file)"
+msgstr ""
+
+#: ../locale/scriptstrings/r3.mapcalculator_to_translate.c:5
+msgid "D (grid3D file)"
+msgstr ""
+
+#: ../locale/scriptstrings/r3.mapcalculator_to_translate.c:6
+msgid "E (grid3D file)"
+msgstr ""
+
+#: ../locale/scriptstrings/r3.mapcalculator_to_translate.c:7
+msgid "F (grid3D file)"
+msgstr ""
+
+#: ../locale/scriptstrings/r3.mapcalculator_to_translate.c:9
+#, fuzzy
+msgid "Name for output grid3D volume"
+msgstr "Όνομα αρχείου εξαγωγής"
+
+#: ../locale/scriptstrings/r3.mapcalculator_to_translate.c:11
+msgid "Expert mode (enter a set of r3.mapcalc expressions)"
+msgstr ""
+
+#: ../locale/scriptstrings/v.db.droptable_to_translate.c:1
+#, fuzzy
+msgid "Removes existing attribute table of a vector map."
+msgstr "Αδυναμία ανάγνωσης διανυσματικού χάρτη"
+
+#: ../locale/scriptstrings/v.db.droptable_to_translate.c:3
+msgid "Force removal (required for actual deletion of table)"
+msgstr ""
+
+#: ../locale/scriptstrings/v.db.droptable_to_translate.c:4
+#, fuzzy
+msgid "Vector map from which to remove attribute table"
+msgstr "βάση δεδομένων, πίνακας ιδιοτήτων"
+
+#: ../locale/scriptstrings/v.db.droptable_to_translate.c:5
+#, fuzzy
+msgid "Name of existing attribute table (default: vector map name)"
+msgstr "Όνομα υπάρχοντως 3Δ ράστερ χάρτη"
+
+#: ../locale/scriptstrings/v.db.droptable_to_translate.c:6
+#, fuzzy
+msgid "Layer from which to drop linked attribute table"
+msgstr "βάση δεδομένων, πίνακας ιδιοτήτων"
+
+#: ../locale/scriptstrings/v.db.join_to_translate.c:1
+#, fuzzy
+msgid "Allows to join a table to a vector map table."
+msgstr "Αδυναμία ανάγνωσης διανυσματικού χάρτη"
+
+#: ../locale/scriptstrings/v.db.join_to_translate.c:3
+#, fuzzy
+msgid "Vector map to which to join other table"
+msgstr "βάση δεδομένων, πίνακας ιδιοτήτων"
+
+#: ../locale/scriptstrings/v.db.join_to_translate.c:4
+#, fuzzy
+msgid "Layer where to join"
+msgstr "Νούμερο επιπέδου"
+
+#: ../locale/scriptstrings/v.db.join_to_translate.c:5
+msgid "Join column in map table"
+msgstr ""
+
+#: ../locale/scriptstrings/v.db.join_to_translate.c:6
+#, fuzzy
+msgid "Other table name"
+msgstr "Εξαγωγή ονόματος πίνακα"
+
+#: ../locale/scriptstrings/v.db.join_to_translate.c:7
+#, fuzzy
+msgid "Join column in other table"
+msgstr "Αριθμός γραμμών που θα εμφανίζονται στο υπόμνημα."
+
+#: ../locale/scriptstrings/i.tasscap_to_translate.c:1
+msgid "Tasseled Cap (Kauth Thomas) transformation for LANDSAT-TM data"
+msgstr ""
+
+#: ../locale/scriptstrings/i.tasscap_to_translate.c:2
+#, fuzzy
+msgid "raster, imagery"
+msgstr "ράστερ 3Δ, voxel"
+
+#: ../locale/scriptstrings/i.tasscap_to_translate.c:3
+msgid "use transformation rules for LANDSAT-4"
+msgstr ""
+
+#: ../locale/scriptstrings/i.tasscap_to_translate.c:4
+msgid "use transformation rules for LANDSAT-5"
+msgstr ""
+
+#: ../locale/scriptstrings/i.tasscap_to_translate.c:5
+msgid "use transformation rules for LANDSAT-7"
+msgstr ""
+
+#: ../locale/scriptstrings/i.tasscap_to_translate.c:6
+#, fuzzy
+msgid "raster input map (LANDSAT channel 1)"
+msgstr "Αδυναμία κλεισίματος του χάρτη input."
+
+#: ../locale/scriptstrings/i.tasscap_to_translate.c:7
+#, fuzzy
+msgid "raster input map (LANDSAT channel 2)"
+msgstr "Αδυναμία κλεισίματος του χάρτη input."
+
+#: ../locale/scriptstrings/i.tasscap_to_translate.c:8
+#, fuzzy
+msgid "raster input map (LANDSAT channel 3)"
+msgstr "Αδυναμία κλεισίματος του χάρτη input."
+
+#: ../locale/scriptstrings/i.tasscap_to_translate.c:9
+#, fuzzy
+msgid "raster input map (LANDSAT channel 4)"
+msgstr "Αδυναμία κλεισίματος του χάρτη input."
+
+#: ../locale/scriptstrings/i.tasscap_to_translate.c:10
+#, fuzzy
+msgid "raster input map (LANDSAT channel 5)"
+msgstr "Αδυναμία κλεισίματος του χάρτη input."
+
+#: ../locale/scriptstrings/i.tasscap_to_translate.c:11
+#, fuzzy
+msgid "raster input map (LANDSAT channel 7)"
+msgstr "Αδυναμία κλεισίματος του χάρτη input."
+
+#: ../locale/scriptstrings/i.tasscap_to_translate.c:12
+#, fuzzy
+msgid "raster output TC maps prefix"
+msgstr "Αδυναμία κλεισίματος του χάρτη input."
+
+#: ../locale/scriptstrings/v.db.addtable_to_translate.c:1
+msgid ""
+"Creates and connects a new attribute table to a given layer of an existing "
+"vector map."
+msgstr ""
+
+#: ../locale/scriptstrings/v.db.addtable_to_translate.c:3
+#, fuzzy
+msgid "Vector map for which to add new attribute table"
+msgstr "βάση δεδομένων, πίνακας ιδιοτήτων"
+
+#: ../locale/scriptstrings/v.db.addtable_to_translate.c:4
+#, fuzzy
+msgid "Name of new attribute table (default: vector map name)"
+msgstr "Όνομα υπάρχοντως 3Δ ράστερ χάρτη"
+
+#: ../locale/scriptstrings/v.db.addtable_to_translate.c:5
+#, fuzzy
+msgid "Layer where to add new attribute table"
+msgstr "βάση δεδομένων, πίνακας ιδιοτήτων"
+
+#: ../locale/scriptstrings/v.db.addtable_to_translate.c:6
+#: ../locale/scriptstrings/v.db.addcol_to_translate.c:5
+msgid ""
+"Name and type of the new column(s) (types depend on database backend, but "
+"all support VARCHAR(), INT, DOUBLE PRECISION and DATE)"
+msgstr ""
+
+#: ../locale/scriptstrings/v.in.wfs_to_translate.c:1
+msgid "Import GetFeature from WFS"
+msgstr ""
+
+#: ../locale/scriptstrings/v.in.wfs_to_translate.c:2
+msgid "GetFeature URL starting with http"
+msgstr ""
+
+#: ../locale/scriptstrings/v.in.wfs_to_translate.c:3
+#, fuzzy
+msgid "Vector output map"
+msgstr "Αδυναμία κλεισίματος του εξαγόμενου χάρτη"
+
+#: ../locale/scriptstrings/r.shaded.relief_to_translate.c:1
+msgid "Creates shaded relief map from an elevation map (DEM)."
+msgstr ""
+
+#: ../locale/scriptstrings/r.shaded.relief_to_translate.c:4
+#, fuzzy
+msgid "Output shaded relief map name"
+msgstr "Εξαγωγή όνομα οδηγού"
+
+#: ../locale/scriptstrings/r.shaded.relief_to_translate.c:5
+msgid "Altitude of the sun in degrees above the horizon"
+msgstr ""
+
+#: ../locale/scriptstrings/r.shaded.relief_to_translate.c:6
+msgid "Azimuth of the sun in degrees to the east of north"
+msgstr ""
+
+#: ../locale/scriptstrings/r.shaded.relief_to_translate.c:7
+msgid "Factor for exaggerating relief"
+msgstr ""
+
+#: ../locale/scriptstrings/r.shaded.relief_to_translate.c:8
+msgid "Scale factor for converting horizontal units to elevation units"
+msgstr ""
+
+#: ../locale/scriptstrings/r.shaded.relief_to_translate.c:9
+msgid ""
+"Set scaling factor (applies to lat./long. locations only, none: scale=1)"
+msgstr ""
+
+#: ../locale/scriptstrings/d.out.png_to_translate.c:1
+msgid "Saves active display monitor to PNG file in home directory"
+msgstr ""
+
+#: ../locale/scriptstrings/d.out.png_to_translate.c:3
+msgid "Name of PNG file"
+msgstr "Όνομα αρχείου PNG."
+
+#: ../locale/scriptstrings/d.out.png_to_translate.c:4
+msgid "Resolution of output file (single=1, double=2, quad=4)"
+msgstr ""
+
+#: ../locale/scriptstrings/i.oif_to_translate.c:1
+msgid "Calculates Optimum-Index-Factor table for LANDSAT TM bands 1-5, & 7"
+msgstr ""
+
+#: ../locale/scriptstrings/i.oif_to_translate.c:2
+#, fuzzy
+msgid "raster, imagery, statistics"
+msgstr "ράστερ 3Δ, στατιστικά"
+
+#: ../locale/scriptstrings/i.oif_to_translate.c:3
+msgid "LANDSAT TM band 1."
+msgstr ""
+
+#: ../locale/scriptstrings/i.oif_to_translate.c:4
+msgid "LANDSAT TM band 2."
+msgstr ""
+
+#: ../locale/scriptstrings/i.oif_to_translate.c:5
+msgid "LANDSAT TM band 3."
+msgstr ""
+
+#: ../locale/scriptstrings/i.oif_to_translate.c:6
+msgid "LANDSAT TM band 4."
+msgstr ""
+
+#: ../locale/scriptstrings/i.oif_to_translate.c:7
+msgid "LANDSAT TM band 5."
+msgstr ""
+
+#: ../locale/scriptstrings/i.oif_to_translate.c:8
+msgid "LANDSAT TM band 7."
+msgstr ""
+
+#: ../locale/scriptstrings/r.li.setup_to_translate.c:1
+msgid "Configuration editor for r.li.'index'"
+msgstr ""
+
+#: ../locale/scriptstrings/r.li.setup_to_translate.c:2
+msgid "raster, landscape structure analysis"
+msgstr ""
+
+#: ../locale/scriptstrings/db.in.ogr_to_translate.c:1
+#, fuzzy
+msgid "Imports attribute tables in various formats."
+msgstr "Αδυναμία ανάγνωσης διανυσματικού χάρτη"
+
+#: ../locale/scriptstrings/db.in.ogr_to_translate.c:3
+msgid "Table file to be imported or DB connection string"
+msgstr ""
+
+#: ../locale/scriptstrings/db.in.ogr_to_translate.c:4
+msgid "Table name of SQL DB table"
+msgstr ""
+
+#: ../locale/scriptstrings/db.in.ogr_to_translate.c:6
+#, fuzzy
+msgid "Name for auto-generated unique key column"
+msgstr "Χρώμα"
+
+#: ../locale/scriptstrings/d.rast.edit_to_translate.c:5
+msgid "Name of aspect raster map"
+msgstr "Όνομα χάρτη "
+
+#: ../locale/scriptstrings/d.rast.edit_to_translate.c:6
+msgid "Width of display canvas"
+msgstr ""
+
+#: ../locale/scriptstrings/d.rast.edit_to_translate.c:7
+msgid "Height of display canvas"
+msgstr ""
+
+#: ../locale/scriptstrings/d.rast.edit_to_translate.c:8
+msgid "Minimum size of each cell"
+msgstr "Ελάχιστο μέγεθος κάθε κελιού"
+
+#: ../locale/scriptstrings/d.rast.edit_to_translate.c:9
+#, fuzzy
+msgid "Maximum number of rows to load"
+msgstr "Νούμερο επιπέδου"
+
+#: ../locale/scriptstrings/d.rast.edit_to_translate.c:10
+#, fuzzy
+msgid "Maximum number of columns to load"
+msgstr "Νούμερο επιπέδου"
+
+#: ../locale/scriptstrings/v.db.dropcol_to_translate.c:1
+#, fuzzy
+msgid ""
+"Drops a column from the attribute table connected to a given vector map."
+msgstr "Αδυναμία ανάγνωσης διανυσματικού χάρτη"
+
+#: ../locale/scriptstrings/v.db.dropcol_to_translate.c:3
+#, fuzzy
+msgid "Vector map for which to drop attribute column"
+msgstr "βάση δεδομένων, πίνακας ιδιοτήτων"
+
+#: ../locale/scriptstrings/v.db.dropcol_to_translate.c:4
+#, fuzzy
+msgid "Layer where to drop column"
+msgstr "Νούμερο επιπέδου"
+
+#: ../locale/scriptstrings/d.polar_to_translate.c:1
+msgid "Draws polar diagram of angle map such as aspect or flow directions"
+msgstr ""
+
+#: ../locale/scriptstrings/d.polar_to_translate.c:3
+msgid "Name of raster angle map"
+msgstr "Όνομα χάρτη ράστερ γωνίας"
+
+#: ../locale/scriptstrings/d.polar_to_translate.c:4
+msgid "Pixel value to be interpreted as undefined (different from NULL)"
+msgstr ""
+
+#: ../locale/scriptstrings/d.polar_to_translate.c:5
+msgid "Name of optional EPS output file"
+msgstr "Όνομα αρχείου εξαγωγής EPS"
+
+#: ../locale/scriptstrings/d.polar_to_translate.c:6
+msgid "Plot using Xgraph"
+msgstr ""
+
+#: ../locale/scriptstrings/i.in.spotvgt_to_translate.c:1
+#, fuzzy
+msgid "Import of SPOT VGT NDVI file into a raster map"
+msgstr "Αδυναμία ανάγνωσης διανυσματικού χάρτη"
+
+#: ../locale/scriptstrings/i.in.spotvgt_to_translate.c:3
+msgid "also import quality map (SM status map layer) and filter NDVI map"
+msgstr ""
+
+#: ../locale/scriptstrings/i.in.spotvgt_to_translate.c:4
+msgid "existing SPOT VGT NDVI HDF file (0001_NDV.HDF)"
+msgstr ""
+
+#: ../locale/scriptstrings/v.db.addcol_to_translate.c:1
+#, fuzzy
+msgid ""
+"Adds one or more columns to the attribute table connected to a given vector "
+"map."
+msgstr "Αδυναμία ανάγνωσης διανυσματικού χάρτη"
+
+#: ../locale/scriptstrings/v.db.addcol_to_translate.c:3
+#, fuzzy
+msgid "Vector map for which to edit attribute table"
+msgstr "βάση δεδομένων, πίνακας ιδιοτήτων"
+
+#: ../locale/scriptstrings/v.db.addcol_to_translate.c:4
+#, fuzzy
+msgid "Layer where to add column"
+msgstr "Νούμερο επιπέδου"
+
+#: ../locale/scriptstrings/d.mvmon_to_translate.c:1
+msgid "Moves displayed maps to another monitor"
+msgstr ""
+
+#: ../locale/scriptstrings/d.mvmon_to_translate.c:3
+msgid "clear target monitor before moving"
+msgstr ""
+
+#: ../locale/scriptstrings/d.mvmon_to_translate.c:4
+msgid "stay with source monitor"
+msgstr ""
+
+#: ../locale/scriptstrings/d.mvmon_to_translate.c:5
+msgid "kill source monitor after moving"
+msgstr ""
+
+#: ../locale/scriptstrings/d.mvmon_to_translate.c:6
+msgid "Target monitor"
+msgstr ""
+
+#: ../locale/scriptstrings/d.mvmon_to_translate.c:7
+msgid "Source monitor"
+msgstr ""
+
 #: ../sites/s.out.ascii/main.c:47 ../sites/s.in.ascii/main.c:50
 msgid "sites"
 msgstr ""
@@ -25278,6 +27439,11 @@ msgstr "Αδυναμία ανάγνωσης αρχείου υπογραφής <%s>"
 #, c-format
 msgid "Signature file <%s> is invalid"
 msgstr ""
+
+#: ../imagery/i.smap/shapiro/read_sig.c:30
+#, fuzzy, c-format
+msgid "Signature file <%s> is empty"
+msgstr "Αδυναμία διαβάσματος εύρους fp για τον ραστερ χάρτη <%s>"
 
 #: ../imagery/i.smap/shapiro/parse.c:21 ../imagery/i.maxlik/main.c:79
 msgid "Name of file containing signatures"
@@ -27108,470 +29274,6 @@ msgstr ""
 #, c-format
 msgid "Can't mark another point.  Only %d points allowed.  Sorry."
 msgstr ""
-
-#, fuzzy
-#~ msgid "Name of GIS manager settings file (.grc)"
-#~ msgstr "Όνομα αρχείου .dmrc"
-
-#~ msgid "Name of .dmrc settings file"
-#~ msgstr "Όνομα αρχείου .dmrc"
-
-#~ msgid "raster input map"
-#~ msgstr "Αδυναμία κλεισίματος του χάρτη input."
-
-#~ msgid "Name of PNG file"
-#~ msgstr "Όνομα αρχείου PNG."
-
-#~ msgid "Name for output file (do NOT add extension)"
-#~ msgstr "Όνομα αρχείου εξαγωγής (ΜΗΝ προσθέσετε επέκταση αρχείου)"
-
-#, fuzzy
-#~ msgid "Compression for PNG files"
-#~ msgstr "Όνομα αρχείου PNG."
-
-#, fuzzy
-#~ msgid "Do not crop away margins"
-#~ msgstr "Αδυναμία αντιγραφής πίνακα <%s>"
-
-#~ msgid "Name of raster angle map"
-#~ msgstr "Όνομα χάρτη ράστερ γωνίας"
-
-#~ msgid "Name of optional EPS output file"
-#~ msgstr "Όνομα αρχείου εξαγωγής EPS"
-
-#~ msgid "Name of aspect raster map"
-#~ msgstr "Όνομα χάρτη "
-
-#~ msgid "Minimum size of each cell"
-#~ msgstr "Ελάχιστο μέγεθος κάθε κελιού"
-
-#, fuzzy
-#~ msgid "Maximum number of columns to load"
-#~ msgstr "Νούμερο επιπέδου"
-
-#~ msgid "Number of lines to appear in the legend"
-#~ msgstr "Αριθμός γραμμών που θα εμφανίζονται στο υπόμνημα."
-
-#, fuzzy
-#~ msgid "Name of raster map to generate legend from"
-#~ msgstr "Χρώμα"
-
-#, fuzzy
-#~ msgid "Name of raster map to print in legend"
-#~ msgstr "Χρώμα"
-
-#, fuzzy
-#~ msgid "Name of shaded relief or aspect map"
-#~ msgstr "Όνομα χάρτη υποβάθρου ράστερ"
-
-#, fuzzy
-#~ msgid "Name of raster to drape over relief map"
-#~ msgstr "Όνομα χάρτη υποβάθρου ράστερ"
-
-#, fuzzy
-#~ msgid "Number of seconds to pause between slides"
-#~ msgstr "Αριθμός γραμμών που θα εμφανίζονται στο υπόμνημα."
-
-#, fuzzy
-#~ msgid "Number of subframes"
-#~ msgstr "Νούμερο των υποπεριοχών για συλλογή στατιστικών από αυτά"
-
-#, fuzzy
-#~ msgid "Displays thematic vector map"
-#~ msgstr "Αδυναμία ανάγνωσης διανυσματικού χάρτη"
-
-#, fuzzy
-#~ msgid "Type of thematic display"
-#~ msgstr "Τύπος"
-
-#, fuzzy
-#~ msgid "Number of classes for interval theme (integer)"
-#~ msgstr "Αριθμός γραμμών που θα εμφανίζονται στο υπόμνημα."
-
-#, fuzzy
-#~ msgid "Color scheme for graduated color mapping"
-#~ msgstr "Χρώμα"
-
-#, fuzzy
-#~ msgid "Select 'single_color' for graduated point/line display"
-#~ msgstr "Χρώμα"
-
-#, fuzzy
-#~ msgid "Color for graduated points map"
-#~ msgstr "Χρώμα"
-
-#, fuzzy
-#~ msgid "Color for graduated lines or point/area outlines"
-#~ msgstr "Χρώμα"
-
-#, fuzzy
-#~ msgid "Drops a column from selected attribute table"
-#~ msgstr "διαγραφή ενός πίνακα ιδιοτήτων."
-
-#, fuzzy
-#~ msgid "Table from which to drop attribute column"
-#~ msgstr "Αδυναμία αντιγραφής πίνακα <%s>"
-
-#, fuzzy
-#~ msgid "Name of the column"
-#~ msgstr "Νούμερο επιπέδου"
-
-#~ msgid "Drops an attribute table."
-#~ msgstr "διαγραφή ενός πίνακα ιδιοτήτων."
-
-#, fuzzy
-#~ msgid "Table to drop"
-#~ msgstr "Αδυναμία ανοίγματος βάσης δεδομενων <%s>"
-
-#~ msgid "Name for output table"
-#~ msgstr "Όνομα πίνακα εξαγωγής"
-
-#, fuzzy
-#~ msgid "Name for auto-generated unique key column"
-#~ msgstr "Χρώμα"
-
-#, fuzzy
-#~ msgid "GRASS table name"
-#~ msgstr "Εξαγωγή ονόματος πίνακα"
-
-#, fuzzy
-#~ msgid "Name of input raster map (green: tm2 | qbird_green | spot1)"
-#~ msgstr "Όνομα εισαγώμενου ράστερ χάρτη (NIR: tm4 | qbird_nir | spot2"
-
-#~ msgid "Name of input raster map (NIR: tm4 | qbird_nir | spot2)"
-#~ msgstr "Όνομα εισαγώμενου ράστερ χάρτη (NIR: tm4 | qbird_nir | spot2"
-
-#~ msgid "Name of input raster map (MIR; tm5 | qbird_red | spot3)"
-#~ msgstr "Όνομα εισαγώμενου ράστερ χάρτη (MIR; tm5 | qbird_red | spot3)"
-
-#~ msgid "Name of input raster map (etmpan | qbird_pan | spotpan)"
-#~ msgstr "Όνομα εισαγώμενου ράστερ χάρτη (etmpan | qbird_pan | spotpan)"
-
-#~ msgid "Name for output raster map prefix (e.g. 'brov')"
-#~ msgstr "Όνομα εξαγόμενου ράστερ χάρτη prefix (e.g. 'brov')"
-
-#, fuzzy
-#~ msgid "raster, imagery, mosaicking"
-#~ msgstr "ράστερ 3Δ, στατιστικά"
-
-#, fuzzy
-#~ msgid "Import of SPOT VGT NDVI file into a raster map"
-#~ msgstr "Αδυναμία ανάγνωσης διανυσματικού χάρτη"
-
-#, fuzzy
-#~ msgid "raster, imagery, import"
-#~ msgstr "raster3d, voxel, εισάγεται"
-
-#, fuzzy
-#~ msgid "raster, imagery, colors"
-#~ msgstr "raster3d, voxel, εισάγεται"
-
-#, fuzzy
-#~ msgid "raster, imagery, statistics"
-#~ msgstr "ράστερ 3Δ, στατιστικά"
-
-#, fuzzy
-#~ msgid "Raster input maps"
-#~ msgstr "Αδυναμία κλεισίματος του χάρτη input"
-
-#, fuzzy
-#~ msgid "Label with coordinates instead of numbering"
-#~ msgstr "Χρησιμοποιήστε συντεταγμένες χάρτη αντί χψζ συντεταγμένες"
-
-#, fuzzy
-#~ msgid "raster, imagery"
-#~ msgstr "ράστερ 3Δ, voxel"
-
-#, fuzzy
-#~ msgid "raster input map (LANDSAT channel 1)"
-#~ msgstr "Αδυναμία κλεισίματος του χάρτη input."
-
-#, fuzzy
-#~ msgid "raster input map (LANDSAT channel 2)"
-#~ msgstr "Αδυναμία κλεισίματος του χάρτη input."
-
-#, fuzzy
-#~ msgid "raster input map (LANDSAT channel 3)"
-#~ msgstr "Αδυναμία κλεισίματος του χάρτη input."
-
-#, fuzzy
-#~ msgid "raster input map (LANDSAT channel 4)"
-#~ msgstr "Αδυναμία κλεισίματος του χάρτη input."
-
-#, fuzzy
-#~ msgid "raster input map (LANDSAT channel 5)"
-#~ msgstr "Αδυναμία κλεισίματος του χάρτη input."
-
-#, fuzzy
-#~ msgid "raster input map (LANDSAT channel 7)"
-#~ msgstr "Αδυναμία κλεισίματος του χάρτη input."
-
-#, fuzzy
-#~ msgid "raster output TC maps prefix"
-#~ msgstr "Αδυναμία κλεισίματος του χάρτη input."
-
-#~ msgid "Field separator"
-#~ msgstr "Διαχωριστής πεδίων"
-
-#~ msgid "Name of first raster map for blending"
-#~ msgstr "Όνομα του πρώτου ράστερ χάρτη για blending"
-
-#~ msgid "Name of second raster map for blending"
-#~ msgstr "Όνομα του δεύτερου ράστερ χάρτη για blending"
-
-#, fuzzy
-#~ msgid "Percentage weight of first map for color blending"
-#~ msgstr "Όνομα του πρώτου ράστερ χάρτη για blending"
-
-#, fuzzy
-#~ msgid "raster, elevation, interpolation"
-#~ msgstr "ράστερ 3Δ, voxel"
-
-#, fuzzy
-#~ msgid "Output raster map (default: input tile)"
-#~ msgstr "Όνομα εξαγόμενου ράστερ χάρτη"
-
-#, fuzzy
-#~ msgid "raster, mask"
-#~ msgstr "ράστερ 3Δ, στατιστικά"
-
-#, fuzzy
-#~ msgid "raster, elevation"
-#~ msgstr "ράστερ 3Δ, voxel"
-
-#, fuzzy
-#~ msgid "Name of raster plane to be created"
-#~ msgstr "Ascii ράστερ χάρτης που θα εισαχθεί"
-
-#, fuzzy
-#~ msgid "Type of the raster map to be created"
-#~ msgstr "Ascii ράστερ χάρτης που θα εισαχθεί"
-
-#, fuzzy
-#~ msgid "raster, statistics, aggregation"
-#~ msgstr "ράστερ 3Δ, στατιστικά"
-
-#, fuzzy
-#~ msgid "Output shaded relief map name"
-#~ msgstr "Εξαγωγή όνομα οδηγού"
-
-#, fuzzy
-#~ msgid "calculates univariate statistics from a GRASS raster map"
-#~ msgstr "Παράγει στατιστικά όγκου για 3Δ ράστερ χάρτες."
-
-#, fuzzy
-#~ msgid "Name for output grid3D volume"
-#~ msgstr "Όνομα αρχείου εξαγωγής"
-
-#, fuzzy
-#~ msgid "vector, centroid, area"
-#~ msgstr "διάνυσμα, πίνακας χρωμάτων"
-
-#~ msgid "Name for output vector map"
-#~ msgstr "Όνομα εξαγόμενου διανυσματικού χάρτη"
-
-#~ msgid "vector, color table"
-#~ msgstr "διάνυσμα, πίνακας χρωμάτων"
-
-#, fuzzy
-#~ msgid "Name of column containing numeric data"
-#~ msgstr "Όνομα του αρχείου που περιέχει υπογραφές (signatures)"
-
-#, fuzzy
-#~ msgid "Layer number of data column"
-#~ msgstr "Νούμερο επιπέδου"
-
-#, fuzzy
-#~ msgid "Name of color column to populate"
-#~ msgstr "Όνομα αρχείου εξαγωγής"
-
-#, fuzzy
-#~ msgid "Path to rules file"
-#~ msgstr "Αδυναμία ανοίγματος του χάρτη raster <%s>"
-
-#, fuzzy
-#~ msgid "Save placeholder raster map for use with d.legend"
-#~ msgstr "Χρώμα"
-
-#, fuzzy
-#~ msgid "Vector map for which to edit attribute table"
-#~ msgstr "βάση δεδομένων, πίνακας ιδιοτήτων"
-
-#, fuzzy
-#~ msgid "Layer where to add column"
-#~ msgstr "Νούμερο επιπέδου"
-
-#, fuzzy
-#~ msgid "Vector map for which to add new attribute table"
-#~ msgstr "βάση δεδομένων, πίνακας ιδιοτήτων"
-
-#, fuzzy
-#~ msgid "Layer where to add new attribute table"
-#~ msgstr "βάση δεδομένων, πίνακας ιδιοτήτων"
-
-#, fuzzy
-#~ msgid "Allows to join a table to a vector map table."
-#~ msgstr "Αδυναμία ανάγνωσης διανυσματικού χάρτη"
-
-#, fuzzy
-#~ msgid "Layer where to join"
-#~ msgstr "Νούμερο επιπέδου"
-
-#, fuzzy
-#~ msgid "Other table name"
-#~ msgstr "Εξαγωγή ονόματος πίνακα"
-
-#, fuzzy
-#~ msgid "Layer where to drop column"
-#~ msgstr "Νούμερο επιπέδου"
-
-#, fuzzy
-#~ msgid "Removes existing attribute table of a vector map."
-#~ msgstr "Αδυναμία ανάγνωσης διανυσματικού χάρτη"
-
-#, fuzzy
-#~ msgid "Vector map from which to remove attribute table"
-#~ msgstr "βάση δεδομένων, πίνακας ιδιοτήτων"
-
-#, fuzzy
-#~ msgid "Name of existing attribute table (default: vector map name)"
-#~ msgstr "Όνομα υπάρχοντως 3Δ ράστερ χάρτη"
-
-#, fuzzy
-#~ msgid "Layer from which to drop linked attribute table"
-#~ msgstr "βάση δεδομένων, πίνακας ιδιοτήτων"
-
-#, fuzzy
-#~ msgid "Layer where to rename column"
-#~ msgstr "Νούμερο επιπέδου"
-
-#, fuzzy
-#~ msgid "Reconnects vectors to a new database."
-#~ msgstr "Αφαιρεί μία βάση δεδομένων"
-
-#, fuzzy
-#~ msgid "Name of old database"
-#~ msgstr "Αδυναμία λίστας βάσεων δεδομένων"
-
-#, fuzzy
-#~ msgid "Name of new database"
-#~ msgstr "Αδυναμία λίστας βάσεων δεδομένων"
-
-#, fuzzy
-#~ msgid "Old schema"
-#~ msgstr "Η διάταξη της βάσης δεδομένων"
-
-#, fuzzy
-#~ msgid "New schema"
-#~ msgstr "Η διάταξη της βάσης δεδομένων"
-
-#, fuzzy
-#~ msgid ""
-#~ "Calculates univariate statistics on selected table column for a GRASS "
-#~ "vector map."
-#~ msgstr "Παράγει στατιστικά όγκου για 3Δ ράστερ χάρτες."
-
-#, fuzzy
-#~ msgid "Name of data table"
-#~ msgstr "Αδυναμία λίστας βάσεων δεδομένων"
-
-#, fuzzy
-#~ msgid "Database driver"
-#~ msgstr "Δίνει τη λίστα για όλους τους οδηγούς βάσεων δεδομένων"
-
-#, fuzzy
-#~ msgid ""
-#~ "Allows to update a column in the attribute table connected to a vector "
-#~ "map."
-#~ msgstr "Αδυναμία ανάγνωσης διανυσματικού χάρτη"
-
-#, fuzzy
-#~ msgid "Vector map to edit the attribute table for"
-#~ msgstr "βάση δεδομένων, πίνακας ιδιοτήτων"
-
-#, fuzzy
-#~ msgid "vector, area, dissolve"
-#~ msgstr "ράστερ 3Δ, στατιστικά"
-
-#, fuzzy
-#~ msgid "Import E00 file into a vector map."
-#~ msgstr "Αδυναμία ανάγνωσης διανυσματικού χάρτη"
-
-#, fuzzy
-#~ msgid "vector, import, GPS"
-#~ msgstr "raster3d, voxel, εισάγεται"
-
-#, fuzzy
-#~ msgid "Name for output vector map (omit for display to stdout)"
-#~ msgstr "Όνομα εξαγόμενου διανυσματικού χάρτη"
-
-#, fuzzy
-#~ msgid "Imports geonames.org country files into a GRASS vector points map."
-#~ msgstr "Αδυναμία ανάγνωσης διανυσματικού χάρτη"
-
-#, fuzzy
-#~ msgid "vector, import, gazetteer"
-#~ msgstr "ράστερ 3Δ, στατιστικά"
-
-#, fuzzy
-#~ msgid "Name of input file in Mapgen/Matlab format"
-#~ msgstr "Όνομα εισαγώμενου διανυσματικού χάρτη "
-
-#, fuzzy
-#~ msgid "sites, vector, import"
-#~ msgstr "raster3d, voxel, εισάγεται"
-
-#, fuzzy
-#~ msgid "Vector output map"
-#~ msgstr "Αδυναμία κλεισίματος του εξαγόμενου χάρτη"
-
-#, fuzzy
-#~ msgid "vector, export, GPS"
-#~ msgstr "ράστερ 3Δ, στατιστικά"
-
-#, fuzzy
-#~ msgid "Feature type(s)"
-#~ msgstr "Αδυναμία ανοίγματος διανυσματικού χάρτη <%s>"
-
-#, fuzzy
-#~ msgid "Name for output file or GPS device"
-#~ msgstr "Όνομα αρχείου εξαγωγής"
-
-#, fuzzy
-#~ msgid "vector, raster, statistics"
-#~ msgstr "ράστερ 3Δ, στατιστικά"
-
-#, fuzzy
-#~ msgid "Name of vector polygon map"
-#~ msgstr "Όνομα εισαγώμενων ράστερ χαρτών"
-
-#, fuzzy
-#~ msgid "Name of raster map to calculate statistics from"
-#~ msgstr "Νούμερο των υποπεριοχών για συλλογή στατιστικών από αυτά"
-
-#, fuzzy
-#~ msgid "Reports geometry statistics for vectors."
-#~ msgstr "Παράγει στατιστικά όγκου για 3Δ ράστερ χάρτες."
-
-#, fuzzy
-#~ msgid "vector, report, statistics"
-#~ msgstr "ράστερ 3Δ, στατιστικά"
-
-#, fuzzy
-#~ msgid "Vector map to modify"
-#~ msgstr "Ascii ράστερ χάρτης που θα εισαχθεί"
-
-#, fuzzy
-#~ msgid "Vector map to be queried"
-#~ msgstr "Ascii ράστερ χάρτης που θα εισαχθεί"
-
-#, fuzzy
-#~ msgid "Layer of the query vector containing data"
-#~ msgstr "Όνομα εξαγόμενου ράστερ χάρτη"
-
-#, fuzzy
-#~ msgid "Column to be queried"
-#~ msgstr "Ascii ράστερ χάρτης που θα εισαχθεί"
 
 #, fuzzy
 #~ msgid "Unable to open table <%s_edge_Interpolation>"

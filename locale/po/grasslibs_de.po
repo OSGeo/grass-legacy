@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: grasslibs_de\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-06-02 21:15+0200\n"
+"POT-Creation-Date: 2010-08-22 02:31+0200\n"
 "PO-Revision-Date: 2010-07-17 13:25+0200\n"
 "Last-Translator: Robert Nuske <rnuske gwdg.de>\n"
 "Language-Team: Deutsch <grass-translations@lists.osgeo.org>\n"
@@ -1184,55 +1184,55 @@ msgstr "Kann Buffer nicht wieder belegen."
 msgid "CreateProcess() failed: error = %d"
 msgstr "CreateProcess() fehlgeschlagen: Fehler = %d"
 
-#: ../lib/gis/spawn.c:410
+#: ../lib/gis/spawn.c:411
 #, c-format
 msgid "G_spawn: unable to redirect descriptor %d"
 msgstr "G_spawn: Kann den Deskriptor %d nicht umlenken."
 
-#: ../lib/gis/spawn.c:418 ../lib/gis/spawn.c:603
+#: ../lib/gis/spawn.c:419 ../lib/gis/spawn.c:604
 #, c-format
 msgid "G_spawn: unable to open file %s"
 msgstr "G_spawn: Kann die Datei %s nicht öffnen."
 
-#: ../lib/gis/spawn.c:487 ../lib/gis/spawn.c:673
+#: ../lib/gis/spawn.c:488 ../lib/gis/spawn.c:674
 msgid "Unable to execute command"
 msgstr "Kann den Befehl nicht ausführen."
 
-#: ../lib/gis/spawn.c:512 ../lib/gis/spawn.c:520
+#: ../lib/gis/spawn.c:513 ../lib/gis/spawn.c:521
 #, c-format
 msgid "G_spawn: unable to restore signal %d"
 msgstr "G_spawn: Kann das Signal %d nicht wieder herstellen."
 
-#: ../lib/gis/spawn.c:551
+#: ../lib/gis/spawn.c:552
 #, c-format
 msgid "G_spawn: unable to reset signal %d"
 msgstr "G_spawn: Kann das Signal %d nicht zurücksetzen."
 
-#: ../lib/gis/spawn.c:560
+#: ../lib/gis/spawn.c:561
 #, c-format
 msgid "G_spawn: unable to ignore signal %d"
 msgstr "G_spawn: Kann das Signal %d nicht ignorieren."
 
-#: ../lib/gis/spawn.c:571
+#: ../lib/gis/spawn.c:572
 #, c-format
 msgid "G_spawn: unable to block signal %d"
 msgstr "G_spawn: Kann das Signal %d nicht blocken."
 
-#: ../lib/gis/spawn.c:579
+#: ../lib/gis/spawn.c:580
 #, c-format
 msgid "G_spawn: unable to unblock signal %d"
 msgstr "G_spawn: Kann das Signal %d nicht entsperren."
 
-#: ../lib/gis/spawn.c:608 ../lib/gis/spawn.c:617
+#: ../lib/gis/spawn.c:609 ../lib/gis/spawn.c:618
 #, c-format
 msgid "G_spawn: unable to duplicate descriptor %d to %d"
 msgstr "G_spawn: Kann den Deskriptor %d nicht zu %d dublizieren."
 
-#: ../lib/gis/spawn.c:650
+#: ../lib/gis/spawn.c:651
 msgid "Unable to create a new process"
 msgstr "Kann keinen neuen Prozess erzeugen."
 
-#: ../lib/gis/spawn.c:665
+#: ../lib/gis/spawn.c:666
 #, c-format
 msgid "Unable to change directory to %s"
 msgstr "Kann nicht in das Verzeichnis %s wechseln."

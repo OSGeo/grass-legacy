@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: grassmods_tr\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-06-02 21:15+0200\n"
+"POT-Creation-Date: 2010-08-22 02:31+0200\n"
 "PO-Revision-Date: 2008-11-16 01:15+0200\n"
 "Last-Translator: Osman Yalçın YILMAZ <yilmazy@istanbul.edu.tr>\n"
 "Language-Team: Türkçe <tr@li.org>\n"
@@ -906,7 +906,6 @@ msgstr ""
 #: ../vector/v.what.rast/main.c:138 ../visualization/xganim/main.c:366
 #: ../visualization/nviz2/cmd/surface.c:56
 #: ../visualization/nviz2/cmd/surface.c:106 ../doc/raster/r.example/main.c:111
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:392
 #: ../ps/ps.map/outl_io.c:68 ../imagery/i.pca/main.c:129
 #: ../imagery/i.zc/main.c:111 ../imagery/i.rgb.his/openfiles.c:14
 #: ../imagery/i.rgb.his/openfiles.c:16 ../imagery/i.rgb.his/openfiles.c:18
@@ -933,7 +932,7 @@ msgstr "<%s> raster haritası bulunamadı"
 #: ../raster3d/base/r3.info.main.c:285 ../raster3d/base/r3.info.main.c:298
 #: ../raster3d/base/r3.info.main.c:308 ../raster3d/base/r3.info.main.c:313
 #: ../raster3d/base/r3.info.main.c:321 ../raster3d/base/r3.info.main.c:334
-#: ../raster/r.info/main.c:303 ../raster/r.info/main.c:428
+#: ../raster/r.info/main.c:303 ../raster/r.info/main.c:424
 msgid "Cannot allocate memory for string"
 msgstr "Dizge için hafıza ayrılamıyor"
 
@@ -1086,7 +1085,7 @@ msgstr "xyz koordinatları yerine harita koordinatlarını kullan"
 #: ../raster/r.region/main.c:54 ../raster/r.in.mat/main.c:92
 #: ../raster/r.in.arc/main.c:59 ../raster/r.neighbors/main.c:106
 #: ../raster/r.bitpattern/main.c:62
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:153
+#: ../locale/scriptstrings/r.blend_to_translate.c:2
 msgid "raster"
 msgstr "raster"
 
@@ -1095,7 +1094,13 @@ msgid "Exports a GRASS raster to a binary array."
 msgstr "GRASS raster dosyasını ikili diziye aktar."
 
 #: ../raster/r.out.bin/main.c:73 ../raster/r.random/main.c:57
-#: ../raster/r.water.outlet/main.c:55 ../imagery/i.zc/main.c:69
+#: ../raster/r.water.outlet/main.c:55
+#: ../locale/scriptstrings/r.out.gdal.sh_to_translate.c:5
+#: ../locale/scriptstrings/r.reclass.area_to_translate.c:3
+#: ../locale/scriptstrings/r.out.xyz_to_translate.c:3
+#: ../locale/scriptstrings/r.colors.stddev_to_translate.c:3
+#: ../locale/scriptstrings/d.rast.edit_to_translate.c:3
+#: ../imagery/i.zc/main.c:69
 msgid "Name of input raster map"
 msgstr "Girdi raster haritası adı"
 
@@ -1345,9 +1350,8 @@ msgstr "<%s> girdi bakı dosyası bulunamadı"
 #: ../general/manage/cmd/rename.c:84 ../vector/v.in.ogr/main.c:326
 #: ../vector/v.to.rast3/main.c:69 ../vector/v.kernel/main.c:263
 #: ../vector/v.surf.idw/main.c:132 ../vector/v.edit/main.c:86
-#: ../doc/raster/r.example/main.c:114
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/opennew.c:11
-#: ../imagery/i.zc/main.c:119 ../imagery/i.ifft/ifftmain.c:116
+#: ../doc/raster/r.example/main.c:114 ../imagery/i.zc/main.c:119
+#: ../imagery/i.ifft/ifftmain.c:116
 #: ../imagery/i.ortho.photo/photo.camera/main.c:90
 #: ../imagery/i.fft/fftmain.c:121 ../imagery/i.fft/fftmain.c:124
 #, c-format
@@ -1428,6 +1432,8 @@ msgstr "'saturation' haritasını okumada hata"
 #: ../raster/r.out.mat/main.c:64 ../raster/r.out.ascii/main.c:59
 #: ../raster/r.out.ppm/main.c:54 ../raster/r.out.tiff/r.out.tiff.c:99
 #: ../raster/r.out.gdal/main.c:128
+#: ../locale/scriptstrings/r.out.gdal.sh_to_translate.c:2
+#: ../locale/scriptstrings/r.out.xyz_to_translate.c:2
 msgid "raster, export"
 msgstr "raster, dışa aktar"
 
@@ -1441,6 +1447,9 @@ msgstr ""
 
 #: ../raster/r.out.mat/main.c:81 ../raster/r.out.tiff/r.out.tiff.c:136
 #: ../raster/r.in.mat/main.c:115
+#: ../locale/scriptstrings/v.in.e00_to_translate.c:3
+#: ../locale/scriptstrings/v.in.garmin_to_translate.c:3
+#: ../locale/scriptstrings/v.in.gpsbabel_to_translate.c:3
 msgid "Verbose mode"
 msgstr ""
 
@@ -1535,6 +1544,7 @@ msgstr "%ld byte '%s' vektörüne yazılıyor"
 
 #: ../raster/r.in.poly/main.c:29 ../raster/r.in.gdal/main.c:79
 #: ../raster/r.in.bin/main.c:122 ../raster/r.external/main.c:506
+#: ../locale/scriptstrings/r.in.srtm_to_translate.c:2
 msgid "raster, import"
 msgstr "Raster, içe aktar"
 
@@ -1884,7 +1894,6 @@ msgstr "Kayar nokta değerli haritayı tamsayı olarak oku"
 #: ../raster/r.distance/parse.c:72 ../raster/r.carve/main.c:126
 #: ../raster/r.neighbors/main.c:277 ../vector/v.qcount/main.c:117
 #: ../vector/v.mkgrid/main.c:132
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:328
 msgid ""
 "The '-q' flag is superseded and will be removed in future. Please use '--"
 "quiet' instead."
@@ -1964,9 +1973,7 @@ msgstr "Çıktı raster harita başlığı"
 #: ../raster/r.kappa/main.c:102 ../raster/r.report/parse.c:95
 #: ../raster/r.bitpattern/main.c:87 ../vector/v.sample/main.c:129
 #: ../vector/v.perturb/main.c:117 ../vector/v.kcv/main.c:106
-#: ../doc/raster/r.example/main.c:96
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:290
-#: ../imagery/i.cluster/main.c:163
+#: ../doc/raster/r.example/main.c:96 ../imagery/i.cluster/main.c:163
 msgid "Quiet"
 msgstr ""
 
@@ -2898,12 +2905,14 @@ msgstr "Desteklenen biçimleri yaz ve çık"
 #: ../vector/v.info/main.c:92 ../vector/v.info/main.c:97
 #: ../vector/v.db.connect/main.c:81 ../vector/v.db.connect/main.c:86
 #: ../vector/v.db.connect/main.c:94 ../vector/v.db.connect/main.c:110
-#: ../db/base/connect.c:52 ../imagery/i.group/main.c:77
-#: ../imagery/i.group/main.c:83
+#: ../db/base/connect.c:52
+#: ../locale/scriptstrings/g.extension_to_translate.c:9
+#: ../imagery/i.group/main.c:77 ../imagery/i.group/main.c:83
 msgid "Print"
 msgstr "Yazdır"
 
 #: ../raster/r.in.gdal/main.c:146
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:11
 msgid "Keep band numbers instead of using band color names"
 msgstr ""
 
@@ -3132,11 +3141,6 @@ msgstr ""
 #: ../vector/v.vol.rst/main.c:319 ../vector/v.vol.rst/main.c:328
 #: ../vector/v.vol.rst/main.c:337 ../vector/v.vol.rst/main.c:345
 #: ../vector/v.db.connect/main.c:60 ../vector/v.db.connect/main.c:65
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:189
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:199
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:276
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:285
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:296
 #: ../db/base/connect.c:62 ../db/base/connect.c:66 ../db/base/connect.c:77
 #: ../db/base/connect.c:87 ../imagery/i.cluster/main.c:105
 #: ../imagery/i.cluster/main.c:121 ../imagery/i.cluster/main.c:129
@@ -4003,6 +4007,8 @@ msgstr "%d raster harita satırı okunamıyor"
 #: ../raster/r.stats/main.c:103 ../raster/r.statistics/main.c:42
 #: ../raster/r.report/main.c:64 ../raster/r.univar2/r.univar_main.c:75
 #: ../raster/r.support.stats/main.c:39 ../raster/r.quantile/main.c:254
+#: ../locale/scriptstrings/r.regression.line_to_translate.c:2
+#: ../locale/scriptstrings/r.univar.sh_to_translate.c:2
 msgid "raster, statistics"
 msgstr "raster, istatistikler"
 
@@ -4011,12 +4017,13 @@ msgid "Generates area statistics for raster map layers."
 msgstr "Raster harita katmanlarının alansal istatistiklerini oluştur"
 
 #: ../raster/r.stats/main.c:114
+#: ../locale/scriptstrings/r.out.xyz_to_translate.c:4
 msgid "Name for output file (if omitted or \"-\" output to stdout)"
 msgstr ""
 
 #: ../raster/r.stats/main.c:119 ../raster/r.cats/main.c:72
 #: ../raster/r.distance/parse.c:50 ../vector/v.db.select/main.c:63
-#: ../db/base/select.c:202
+#: ../db/base/select.c:202 ../locale/scriptstrings/r.tileset_to_translate.c:13
 msgid "Output field separator"
 msgstr "Çıktı alan ayracı"
 
@@ -4558,12 +4565,10 @@ msgid "Name for output aspect raster map"
 msgstr "Çıktı bakı raster haritasının adı"
 
 #: ../raster/r.slope.aspect/main.c:178
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:188
 msgid "Format for reporting the slope"
 msgstr "Eğim raporlama formatı"
 
 #: ../raster/r.slope.aspect/main.c:188
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:198
 msgid "Type of output aspect and slope maps"
 msgstr "Çıktı bakı ve eğim haritaları türü"
 
@@ -4598,17 +4603,14 @@ msgid "Name for output second order partial derivative dxy raster map"
 msgstr ""
 
 #: ../raster/r.slope.aspect/main.c:243
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:272
 msgid "Multiplicative factor to convert elevation units to meters"
 msgstr ""
 
 #: ../raster/r.slope.aspect/main.c:252
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:281
 msgid "Minimum slope val. (in percent) for which aspect is computed"
 msgstr ""
 
 #: ../raster/r.slope.aspect/main.c:266
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:295
 msgid "Do not align the current region to the elevation layer"
 msgstr ""
 
@@ -4650,7 +4652,6 @@ msgid "Elevation products for mapset <%s> in <%s>"
 msgstr "<%s> deki  <%s> harita takımı için yükselti ürünleri"
 
 #: ../raster/r.slope.aspect/main.c:1009
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:1042
 #, c-format
 msgid "Min computed aspect %.4f, max computed aspect %.4f"
 msgstr ""
@@ -4661,7 +4662,6 @@ msgid "Aspect raster map <%s> complete"
 msgstr "<%s> bakı raster haritası tamamlandı"
 
 #: ../raster/r.slope.aspect/main.c:1113
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:1146
 #, c-format
 msgid "Min computed slope %.4f, max computed slope %.4f"
 msgstr ""
@@ -4868,7 +4868,14 @@ msgstr ""
 "GRIDATB.FOR harita dosyasını (TOPMODEL) GRASS raster haritası olarak içe "
 "aktar"
 
-#: ../raster/r.in.gridatb/main.c:53 ../imagery/i.ifft/ifftmain.c:83
+#: ../raster/r.in.gridatb/main.c:53
+#: ../locale/scriptstrings/r.reclass.area_to_translate.c:4
+#: ../locale/scriptstrings/r.in.aster_to_translate.c:6
+#: ../locale/scriptstrings/r.mapcalculator_to_translate.c:9
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:18
+#: ../locale/scriptstrings/d.rast.edit_to_translate.c:4
+#: ../locale/scriptstrings/i.in.spotvgt_to_translate.c:5
+#: ../imagery/i.ifft/ifftmain.c:83
 msgid "Name for output raster map"
 msgstr "Çıktı raster haritasının adı"
 
@@ -4899,7 +4906,6 @@ msgstr "Çıktı katmanı adı"
 
 #: ../raster/r.resample/main.c:137 ../raster/r.resamp.rst/main.c:527
 #: ../vector/v.surf.rst/main.c:602 ../vector/v.surf.rst/main.c:753
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:600
 msgid "Percent complete: "
 msgstr "Tamamlanan yüzde:"
 
@@ -7221,6 +7227,7 @@ msgid "Raster file(s) for View%d"
 msgstr "%d Penceresi için raster dosya(lar)"
 
 #: ../raster/r.out.mpeg/main.c:406
+#: ../locale/scriptstrings/r.out.gdal.sh_to_translate.c:8
 msgid "Name for output file"
 msgstr "Çıktı dosya adı"
 
@@ -8069,6 +8076,7 @@ msgid ""
 msgstr ""
 
 #: ../raster/r.colors/main.c:165
+#: ../locale/scriptstrings/r.colors.stddev_to_translate.c:2
 msgid "raster, color table"
 msgstr "raster, renk tablosu"
 
@@ -8078,6 +8086,7 @@ msgstr ""
 "Raster harita katmanıyla ilişkilendirilen renk tablosunu oluştur/değiştir."
 
 #: ../raster/r.colors/main.c:181
+#: ../locale/scriptstrings/v.colors_to_translate.c:9
 msgid "Type of color table"
 msgstr "Renk tablosu tipi"
 
@@ -8094,10 +8103,16 @@ msgstr "Renk tablosu tipi"
 #: ../vector/v.label/main.c:153 ../vector/v.label/main.c:177
 #: ../vector/v.label/main.c:190 ../vector/v.label/main.c:196
 #: ../vector/v.label/main.c:206
+#: ../locale/scriptstrings/v.colors_to_translate.c:7
+#: ../locale/scriptstrings/v.colors_to_translate.c:10
+#: ../locale/scriptstrings/v.colors_to_translate.c:12
+#: ../locale/scriptstrings/v.colors_to_translate.c:14
+#: ../locale/scriptstrings/v.colors_to_translate.c:17
 msgid "Colors"
 msgstr "Renkler"
 
 #: ../raster/r.colors/main.c:191
+#: ../locale/scriptstrings/v.colors_to_translate.c:11
 msgid "Raster map name from which to copy color table"
 msgstr "Renk tablosunun kopyalanacağı raster harita adı"
 
@@ -8119,6 +8134,7 @@ msgid "List available rules then exit"
 msgstr "Kullanılabilir kuralları listele ve çık"
 
 #: ../raster/r.colors/main.c:214
+#: ../locale/scriptstrings/v.colors_to_translate.c:16
 msgid "Invert colors"
 msgstr "Renkleri tersine çevir"
 
@@ -8614,6 +8630,7 @@ msgid "Exports GRASS raster maps into GDAL supported formats."
 msgstr "GRASS raster dosyasını GDAL desteğindeki biçime aktar."
 
 #: ../raster/r.out.gdal/main.c:132
+#: ../locale/scriptstrings/r.out.gdal.sh_to_translate.c:3
 msgid "List supported output formats"
 msgstr "Desteklenen çıktı biçimlerini listele"
 
@@ -8639,10 +8656,12 @@ msgid "Name of raster map (or group) to export"
 msgstr "Dışa aktarılacak raster haritanın (veya grubun) adı"
 
 #: ../raster/r.out.gdal/main.c:154
+#: ../locale/scriptstrings/r.out.gdal.sh_to_translate.c:6
 msgid "GIS format to write (case sensitive, see also -l flag)"
 msgstr ""
 
 #: ../raster/r.out.gdal/main.c:175
+#: ../locale/scriptstrings/r.out.gdal.sh_to_translate.c:7
 msgid "File type"
 msgstr "Dosya tipi"
 
@@ -8655,6 +8674,7 @@ msgid "Creation option(s) to pass to the output format driver"
 msgstr ""
 
 #: ../raster/r.out.gdal/main.c:192
+#: ../locale/scriptstrings/d.out.file_to_translate.c:21
 msgid "In the form of \"NAME=VALUE\", separate multiple entries with a comma."
 msgstr ""
 
@@ -8911,8 +8931,8 @@ msgstr ""
 #: ../raster/r.out.gdal/export_band.c:215
 #, c-format
 msgid ""
-"The given nodata value is present in rasterband <%s> and would lead to data "
-"loss. Please specify a different nodata value with the %s parameter."
+"The user given nodata value %g is present in rasterband <%s> and would lead "
+"to data loss. Please specify a different nodata value with the %s parameter."
 msgstr ""
 
 #: ../raster/r.out.gdal/export_band.c:259
@@ -9842,6 +9862,7 @@ msgid "Converts a raster map into a vector map layer."
 msgstr "Raster haritayı vektör haritaya dönüştür"
 
 #: ../raster/r.to.vect/main.c:64 ../vector/v.to.db/parse.c:36
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:6
 msgid "Feature type"
 msgstr "Obje tipi"
 
@@ -11442,6 +11463,7 @@ msgid "Creates topographic index [ln(a/tan(beta))] map from elevation map."
 msgstr ""
 
 #: ../raster/r.topidx/main.c:42
+#: ../locale/scriptstrings/r.shaded.relief_to_translate.c:3
 msgid "Input elevation map"
 msgstr "Girdi yükselti dosyası"
 
@@ -11467,6 +11489,7 @@ msgstr "Topoğrafik indeks haritası yazılıyor..."
 
 #: ../raster/r.univar2/r.univar_main.c:40
 #: ../raster/r.univar2/r3.univar_main.c:39 ../vector/v.univar/main.c:92
+#: ../locale/scriptstrings/v.rast.stats_to_translate.c:10
 msgid "Percentile to calculate (requires extended statistics flag)"
 msgstr ""
 
@@ -11477,6 +11500,7 @@ msgstr ""
 
 #: ../raster/r.univar2/r.univar_main.c:49
 #: ../raster/r.univar2/r3.univar_main.c:48 ../vector/v.univar/main.c:100
+#: ../locale/scriptstrings/v.rast.stats_to_translate.c:4
 msgid "Calculate extended statistics"
 msgstr "Genişletilmiş istatistikleri hesapla"
 
@@ -12109,11 +12133,15 @@ msgstr "Grup erişimi"
 msgid "Access for others"
 msgstr "Diğerlerinin erişimi"
 
-#: ../general/g.access/main.c:63
+#: ../general/g.access/main.c:59
+msgid "UNIX filesystem access controls are not supported by MS-Windows"
+msgstr ""
+
+#: ../general/g.access/main.c:67
 msgid "Access to the PERMANENT mapset must be open, nothing changed"
 msgstr "PERMANENT harita takımına erişim açık olmalıdır, hiçbirşey değişmedi"
 
-#: ../general/g.access/main.c:67
+#: ../general/g.access/main.c:71
 #, fuzzy
 msgid "Unable to determine mapset permissions"
 msgstr "Harita takımı erişim izinleri belirlenemiyor"
@@ -12899,6 +12927,8 @@ msgid "Use extended regular expressions instead of wildcards"
 msgstr ""
 
 #: ../general/g.mremove/main.c:76
+#: ../locale/scriptstrings/db.droptable_to_translate.c:3
+#: ../locale/scriptstrings/db.dropcol_to_translate.c:3
 msgid "Force removal (required for actual deletion of files)"
 msgstr ""
 
@@ -13093,6 +13123,8 @@ msgid "Print the maximum bounding box in lat/long on WGS84"
 msgstr ""
 
 #: ../general/g.region/main.c:133
+#: ../locale/scriptstrings/r.regression.line_to_translate.c:3
+#: ../locale/scriptstrings/i.oif_to_translate.c:9
 msgid "Print in shell script style"
 msgstr "Kabuk betiği stilinde yazdır"
 
@@ -13356,6 +13388,8 @@ msgstr ""
 #: ../display/d.text/main.c:66 ../display/d.rast.num/number.c:84
 #: ../display/d.nviz/main.c:68 ../display/d.zoom/main.c:57
 #: ../visualization/ximgview/main.c:270
+#: ../locale/scriptstrings/d.rast.leg_to_translate.c:2
+#: ../locale/scriptstrings/d.redraw_to_translate.c:2
 msgid "display"
 msgstr "Görüntü"
 
@@ -13784,6 +13818,13 @@ msgstr "Grid rengi"
 
 #: ../display/d.grid/main.c:76 ../display/d.grid/main.c:81
 #: ../display/d.grid/main.c:87
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:27
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:30
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:33
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:36
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:39
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:55
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:57
 msgid "Color"
 msgstr "Renk"
 
@@ -14264,6 +14305,10 @@ msgstr ""
 "\n"
 
 #: ../display/d.extend/main.c:31
+#: ../locale/scriptstrings/d.split_to_translate.c:2
+#: ../locale/scriptstrings/d.resize_to_translate.c:2
+#: ../locale/scriptstrings/d.monsize_to_translate.c:2
+#: ../locale/scriptstrings/d.mvmon_to_translate.c:2
 msgid "display, setup"
 msgstr "görüntü, ayar"
 
@@ -14273,10 +14318,12 @@ msgstr "Hiç vektör yada raster harita görüntülenmiyecek"
 
 #: ../display/d.rast.edit/main.c:59 ../display/d.colortable/main.c:60
 #: ../display/d.rast/main.c:51
+#: ../locale/scriptstrings/d.rast.edit_to_translate.c:2
 msgid "display, raster"
 msgstr "görüntü, raster"
 
 #: ../display/d.rast.edit/main.c:61
+#: ../locale/scriptstrings/d.rast.edit_to_translate.c:1
 msgid "Interactively edit cell values in a raster map."
 msgstr "Raster haritadaki hücre değerlerini etkileşimli olarak düzenle."
 
@@ -14323,6 +14370,8 @@ msgid ""
 msgstr "Grafik ektanındaki aktif çerçevedeki raster harita için lejand göster"
 
 #: ../display/d.legend/main.c:92 ../display/d.zoom/main.c:90
+#: ../locale/scriptstrings/d.rast.leg_to_translate.c:5
+#: ../locale/scriptstrings/r.univar.sh_to_translate.c:4
 msgid "Name of raster map"
 msgstr "Raster haritanın adı"
 
@@ -14341,13 +14390,6 @@ msgstr "Yazı satırı sayısı ( uzun lejandları kısaltmak için yararlanıl�
 #: ../display/d.legend/main.c:180 ../display/d.legend/main.c:185
 #: ../vector/v.buffer/main.c:279 ../vector/v.buffer/main.c:287
 #: ../vector/v.buffer/main.c:294 ../vector/v.buffer/main.c:304
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:208
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:217
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:227
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:237
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:247
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:257
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:267
 msgid "Advanced"
 msgstr "Gelişmiş"
 
@@ -14392,6 +14434,7 @@ msgid "Draw smooth gradient"
 msgstr ""
 
 #: ../display/d.legend/main.c:184
+#: ../locale/scriptstrings/d.rast.leg_to_translate.c:3
 msgid "Flip legend"
 msgstr "Lejandı çevir"
 
@@ -15999,6 +16042,7 @@ msgstr ""
 "olarak belirlemesini sağlar."
 
 #: ../display/d.zoom/main.c:100
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:4
 msgid "Name of vector map"
 msgstr "Vektör haritanın adı"
 
@@ -16368,6 +16412,7 @@ msgstr "cat %d: %s için öznitelik bulunamıyor"
 #: ../vector/v.external/main.c:58 ../vector/v.clean/test/topocheck.c:42
 #: ../vector/v.buffer/main.c:254 ../vector/v.info/main.c:257
 #: ../vector/v.surf.rst/main.c:161
+#: ../locale/scriptstrings/v.build.all_to_translate.c:2
 msgid "vector"
 msgstr "vektör"
 
@@ -16469,6 +16514,15 @@ msgstr "Satır girilemiyor: %s"
 
 #: ../vector/v.db.select/main.c:52 ../vector/v.to.db/main.c:33
 #: ../vector/v.distance/main.c:115 ../vector/v.db.connect/main.c:50
+#: ../locale/scriptstrings/v.what.vect_to_translate.c:2
+#: ../locale/scriptstrings/v.db.update_to_translate.c:2
+#: ../locale/scriptstrings/v.db.renamecol_to_translate.c:2
+#: ../locale/scriptstrings/v.db.reconnect.all_to_translate.c:2
+#: ../locale/scriptstrings/v.db.droptable_to_translate.c:2
+#: ../locale/scriptstrings/v.db.join_to_translate.c:2
+#: ../locale/scriptstrings/v.db.addtable_to_translate.c:2
+#: ../locale/scriptstrings/v.db.dropcol_to_translate.c:2
+#: ../locale/scriptstrings/v.db.addcol_to_translate.c:2
 msgid "vector, database, attribute table"
 msgstr "vektör, veritabanı, öznitelik tablosu"
 
@@ -16597,6 +16651,7 @@ msgid "Required for operation 'connect'"
 msgstr ""
 
 #: ../vector/v.net/main.c:69
+#: ../locale/scriptstrings/g.extension_to_translate.c:5
 msgid "Operation to be performed"
 msgstr "Yapılacak işlem"
 
@@ -17002,6 +17057,8 @@ msgstr "Veritabanına yazmak imkansız"
 #: ../vector/v.qcount/main.c:69 ../vector/v.kcv/main.c:76
 #: ../vector/v.class/main.c:45 ../vector/v.normal/main.c:79
 #: ../vector/v.univar/main.c:64
+#: ../locale/scriptstrings/v.univar.sh_to_translate.c:2
+#: ../locale/scriptstrings/v.db.univar_to_translate.c:2
 msgid "vector, statistics"
 msgstr "vektör, istatistikler"
 
@@ -17808,6 +17865,9 @@ msgstr "<%s> vektör haritası geçerli harita takımında bulunamadı"
 
 #: ../vector/v.in.ogr/main.c:101 ../vector/v.in.dxf/main.c:60
 #: ../vector/v.in.dwg/main.c:65 ../vector/v.in.ascii/in.c:48
+#: ../locale/scriptstrings/v.convert.all_to_translate.c:2
+#: ../locale/scriptstrings/v.in.e00_to_translate.c:2
+#: ../locale/scriptstrings/v.in.mapgen_to_translate.c:2
 msgid "vector, import"
 msgstr "vektör, içe aktar"
 
@@ -18917,6 +18977,11 @@ msgid "Path to resulting VTK file"
 msgstr "Sonuç VTK dosyası yolu"
 
 #: ../vector/v.out.vtk/main.c:83
+#: ../locale/scriptstrings/v.report_to_translate.c:6
+#: ../locale/scriptstrings/v.out.gpsbabel_to_translate.c:10
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:17
+#: ../locale/scriptstrings/v.rast.stats_to_translate.c:6
+#: ../locale/scriptstrings/v.centroids_to_translate.c:6
 msgid "Layer number"
 msgstr "Katman numarası"
 
@@ -18986,6 +19051,9 @@ msgstr "Alan ayracı (nokta modunda)"
 
 #: ../vector/v.out.ascii/out.c:67 ../vector/v.out.ascii/out.c:77
 #: ../vector/v.out.ascii/out.c:84 ../vector/v.out.ascii/out.c:97
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:18
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:20
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:23
 msgid "Points"
 msgstr "Noktalar"
 
@@ -19231,6 +19299,7 @@ msgid "Import polyface meshes as 3D wire frame"
 msgstr ""
 
 #: ../vector/v.in.dxf/main.c:82 ../vector/v.in.dwg/main.c:96
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:3
 msgid "List available layers and exit"
 msgstr "Kullanılabilir katmanları listele ve çık"
 
@@ -20308,6 +20377,11 @@ msgid "Produces a convex hull for a given vector map."
 msgstr ""
 
 #: ../vector/v.hull/main.c:278
+#: ../locale/scriptstrings/v.report_to_translate.c:5
+#: ../locale/scriptstrings/v.out.gpsbabel_to_translate.c:6
+#: ../locale/scriptstrings/v.colors_to_translate.c:3
+#: ../locale/scriptstrings/v.dissolve_to_translate.c:3
+#: ../locale/scriptstrings/v.centroids_to_translate.c:3
 msgid "Name of input vector map"
 msgstr "Girdi vektör haritasının adı"
 
@@ -23437,6 +23511,7 @@ msgid "Feature ids (by default all features are processed)"
 msgstr "Varsayılan olarak tüm id'ler işlendi"
 
 #: ../vector/v.category/main.c:112
+#: ../locale/scriptstrings/v.centroids_to_translate.c:8
 msgid "Category increment"
 msgstr "Kategori artışı"
 
@@ -24355,6 +24430,7 @@ msgid "Image"
 msgstr "Görüntü"
 
 #: ../visualization/nviz2/cmd/args.c:87
+#: ../locale/scriptstrings/d.out.file_to_translate.c:4
 msgid "Graphics file format"
 msgstr "Grafik dosya biçimi"
 
@@ -24705,117 +24781,6 @@ msgstr ""
 #, fuzzy, c-format
 msgid "Unable to copy attribute table to vector map <%s>"
 msgstr "<%s> vektör haritasına öznitelik tablosu kopyalanamıyor"
-
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/opennew.c:19
-#, c-format
-msgid "Failed in attempt to open %s"
-msgstr "%s dosyasını açmada hata"
-
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:155
-msgid ""
-"Generates raster map layers of slope, aspect, curvatures and partial "
-"derivatives from a raster map layer of true elevation values. Aspect is "
-"calculated counterclockwise from east."
-msgstr ""
-
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:164
-msgid "Raster elevation file name"
-msgstr "Raster yükselti dosyası adı"
-
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:172
-msgid "Output slope filename"
-msgstr "Çıktı eğim dosyası adı"
-
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:180
-msgid "Output aspect filename"
-msgstr "Çıktı bakı dosyası adı"
-
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:207
-msgid "Output profile curvature filename"
-msgstr ""
-
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:216
-msgid "Output tangential curvature filename"
-msgstr ""
-
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:226
-msgid "Output first order partial derivative dx (E-W slope) filename"
-msgstr ""
-
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:236
-msgid "Output first order partial derivative dy (N-S slope) filename"
-msgstr ""
-
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:246
-msgid "Output second order partial derivative dxx filename"
-msgstr ""
-
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:256
-msgid "Output second order partial derivative dyy filename"
-msgstr ""
-
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:266
-msgid "Output second order partial derivative dxy filename"
-msgstr ""
-
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:412
-#, c-format
-msgid "wrong type: %s"
-msgstr "yanlış tip: %s"
-
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:1021
-msgid "Creating support files..."
-msgstr "Destek dosyaları oluşturuluyor..."
-
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:1023
-#, c-format
-msgid "Elevation products for mapset [%s] in [%s]"
-msgstr ""
-
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:1104
-#, c-format
-msgid "ASPECT [%s] COMPLETE"
-msgstr "BAKI [%s] TAMAMLANDI"
-
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:1197
-#, c-format
-msgid "SLOPE [%s] COMPLETE"
-msgstr "EĞİM  [%s] TAMAMLANDI"
-
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:1268
-#, c-format
-msgid "PROFILE CURVE [%s] COMPLETE"
-msgstr ""
-
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:1294
-#, c-format
-msgid "TANGENTIAL CURVE [%s] COMPLETE"
-msgstr ""
-
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:1318
-#, c-format
-msgid "E-W SLOPE [%s] COMPLETE"
-msgstr "D-B EĞİM [%s] TAMAMLANDI"
-
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:1342
-#, c-format
-msgid "N-S SLOPE [%s] COMPLETE"
-msgstr "K-G EĞİM [%s] TAMAMLANDI"
-
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:1366
-#, c-format
-msgid "DXX [%s] COMPLETE"
-msgstr "DXX [%s] TAMAMLANDI"
-
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:1390
-#, c-format
-msgid "DYY [%s] COMPLETE"
-msgstr "DYY [%s] TAMAMLANDI"
-
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:1414
-#, c-format
-msgid "DXY [%s] COMPLETE"
-msgstr "DXY [%s] TAMAMLANDI"
 
 #: ../ps/ps.map/ps_vlines.c:55 ../ps/ps.map/ps_vpoints.c:71
 #: ../ps/ps.map/ps_vareas.c:163
@@ -25240,6 +25205,11 @@ msgstr "<%s> veritabanı açılamıyor"
 
 #: ../db/base/columns.c:92 ../db/base/drivers.c:74 ../db/base/connect.c:45
 #: ../db/base/describe.c:125 ../db/base/tables.c:95
+#: ../locale/scriptstrings/db.test_to_translate.c:2
+#: ../locale/scriptstrings/db.out.ogr_to_translate.c:2
+#: ../locale/scriptstrings/db.droptable_to_translate.c:2
+#: ../locale/scriptstrings/db.dropcol_to_translate.c:2
+#: ../locale/scriptstrings/db.in.ogr_to_translate.c:2
 msgid "database, attribute table"
 msgstr "veritabanı, öznitelik tablosu"
 
@@ -25528,6 +25498,2223 @@ msgstr "Kullanıcı adı/parola ayarlanamadı"
 msgid "The password was stored in file"
 msgstr "Parola dosyada saklandı"
 
+#: ../locale/scriptstrings/d.split_to_translate.c:1
+msgid ""
+"Divides active display into two frames & displays maps/executes commands in "
+"each frame."
+msgstr ""
+
+#: ../locale/scriptstrings/d.split_to_translate.c:3
+msgid "Enter raster map to display in 1st frame"
+msgstr "1. çerçevede gösterilecek raster haritayı gir"
+
+#: ../locale/scriptstrings/d.split_to_translate.c:4
+msgid "Enter command to execute in 1st frame"
+msgstr "1. çerçevede yürütülecek komutu gir"
+
+#: ../locale/scriptstrings/d.split_to_translate.c:5
+msgid "Enter raster map to display in 2nd frame"
+msgstr "2. çerçevede gösterilecek raster haritayı gir"
+
+#: ../locale/scriptstrings/d.split_to_translate.c:6
+msgid "Enter command to execute in 2nd frame"
+msgstr "2. çerçevede yürütülecek komutu gir"
+
+#: ../locale/scriptstrings/d.split_to_translate.c:7
+msgid "How to split display"
+msgstr "Gösterim nasıl bölünecek"
+
+#: ../locale/scriptstrings/i.spectral_to_translate.c:1
+msgid ""
+"Displays spectral response at user specified locations in group or images."
+msgstr ""
+
+#: ../locale/scriptstrings/i.spectral_to_translate.c:2
+msgid "imagery, raster, multispectral"
+msgstr ""
+
+#: ../locale/scriptstrings/i.spectral_to_translate.c:3
+msgid "Group input"
+msgstr ""
+
+#: ../locale/scriptstrings/i.spectral_to_translate.c:4
+#, fuzzy
+msgid "Raster input maps"
+msgstr "raster girdi haritalar"
+
+#: ../locale/scriptstrings/i.spectral_to_translate.c:5
+#, fuzzy
+msgid "Write output to PNG image"
+msgstr "Çıktıyı PNG görüntüye yaz"
+
+#: ../locale/scriptstrings/i.spectral_to_translate.c:6
+msgid "Use image list and not group"
+msgstr ""
+
+#: ../locale/scriptstrings/i.spectral_to_translate.c:7
+#, fuzzy
+msgid "Select multiple points"
+msgstr "Tipi seç"
+
+#: ../locale/scriptstrings/i.spectral_to_translate.c:8
+#, fuzzy
+msgid "Label with coordinates instead of numbering"
+msgstr "xyz koordinatları yerine harita koordinatlarını kullan"
+
+#: ../locale/scriptstrings/v.convert.all_to_translate.c:1
+#, fuzzy
+msgid ""
+"Convert all old GRASS < Ver5.7 vector maps in current mapset to current "
+"format"
+msgstr "GRASS nokta_listesi dosyasını vektör haritaya dönüştürür"
+
+#: ../locale/scriptstrings/v.convert.all_to_translate.c:3
+msgid "run non-interactively"
+msgstr "Etkileşimsiz olarak çalıştır"
+
+#: ../locale/scriptstrings/r.out.gdal.sh_to_translate.c:1
+msgid "Exports GRASS raster into GDAL supported formats."
+msgstr "GRASS raster dosyasını GDAL desteğindeki biçime aktar."
+
+#: ../locale/scriptstrings/r.out.gdal.sh_to_translate.c:4
+#, fuzzy
+msgid "Region sensitive output"
+msgstr "r.stats çıktısı okunuyor"
+
+#: ../locale/scriptstrings/r.out.gdal.sh_to_translate.c:9
+msgid ""
+"Creation option to the output format driver. Multiple options may be listed"
+msgstr ""
+
+#: ../locale/scriptstrings/r.out.gdal.sh_to_translate.c:10
+msgid "Metadata key passed on the output dataset if possible"
+msgstr ""
+
+#: ../locale/scriptstrings/r.regression.line_to_translate.c:1
+msgid "Calculates linear regression from two raster maps: y = a + b*x"
+msgstr ""
+
+#: ../locale/scriptstrings/r.regression.line_to_translate.c:4
+msgid "Slower but accurate (applies to FP maps only)"
+msgstr ""
+
+#: ../locale/scriptstrings/r.regression.line_to_translate.c:5
+msgid "Map for x coefficient"
+msgstr ""
+
+#: ../locale/scriptstrings/r.regression.line_to_translate.c:6
+msgid "Map for y coefficient"
+msgstr ""
+
+#: ../locale/scriptstrings/r.regression.line_to_translate.c:7
+msgid ""
+"ASCII file for storing regression coefficients (output to screen if file not "
+"specified)."
+msgstr ""
+
+#: ../locale/scriptstrings/v.in.e00_to_translate.c:1
+msgid "Import E00 file into a vector map."
+msgstr "E00 dosyasını vektör harita olarak içe aktar."
+
+#: ../locale/scriptstrings/v.in.e00_to_translate.c:4
+msgid "E00 file"
+msgstr "E00 dosyası"
+
+#: ../locale/scriptstrings/v.in.e00_to_translate.c:5
+msgid "Input type point, line or area"
+msgstr "Girdi tipi nokta, çizgi veya alan"
+
+#: ../locale/scriptstrings/v.in.e00_to_translate.c:6
+#: ../locale/scriptstrings/v.in.gns_to_translate.c:4
+#: ../locale/scriptstrings/v.in.geonames_to_translate.c:4
+#: ../locale/scriptstrings/v.dissolve_to_translate.c:4
+#: ../locale/scriptstrings/v.centroids_to_translate.c:4
+msgid "Name for output vector map"
+msgstr "Çıktı vektör haritasının adı"
+
+#: ../locale/scriptstrings/r.plane_to_translate.c:1
+msgid ""
+"Creates raster plane map given dip (inclination), aspect (azimuth) and one "
+"point."
+msgstr ""
+
+#: ../locale/scriptstrings/r.plane_to_translate.c:2
+#: ../locale/scriptstrings/r.shaded.relief_to_translate.c:2
+msgid "raster, elevation"
+msgstr "raster, yükselti"
+
+#: ../locale/scriptstrings/r.plane_to_translate.c:3
+#, fuzzy
+msgid "Name of raster plane to be created"
+msgstr "oluşturulacak raster harita tipi"
+
+#: ../locale/scriptstrings/r.plane_to_translate.c:4
+msgid "Dip of plane. Value must be between -90 and 90 degrees"
+msgstr ""
+
+#: ../locale/scriptstrings/r.plane_to_translate.c:5
+msgid "Azimuth of the plane. Value must be between 0 and 360 degrees"
+msgstr ""
+
+#: ../locale/scriptstrings/r.plane_to_translate.c:6
+#, fuzzy
+msgid "Easting coordinate of a point on the plane"
+msgstr "Bitiş noktasının D ve K grid harita koordinatları (D,K)"
+
+#: ../locale/scriptstrings/r.plane_to_translate.c:7
+#, fuzzy
+msgid "Northing coordinate of a point on the plane"
+msgstr "Bitiş noktasının D ve K grid harita koordinatları (D,K)"
+
+#: ../locale/scriptstrings/r.plane_to_translate.c:8
+#, fuzzy
+msgid "Elevation coordinate of a point on the plane"
+msgstr "Bitiş noktasının D ve K grid harita koordinatları (D,K)"
+
+#: ../locale/scriptstrings/r.plane_to_translate.c:9
+msgid "Type of the raster map to be created"
+msgstr "oluşturulacak raster harita tipi"
+
+#: ../locale/scriptstrings/m.proj_to_translate.c:1
+msgid "Convert coordinates from one projection to another (cs2cs frontend)."
+msgstr ""
+
+#: ../locale/scriptstrings/m.proj_to_translate.c:2
+msgid "miscellaneous, projection"
+msgstr "çeşitli, projeksiyon"
+
+#: ../locale/scriptstrings/m.proj_to_translate.c:3
+#, fuzzy
+msgid "Input coordinate file (omit to read from stdin)"
+msgstr "Yeniden projeksiyonlanacak girdi raster harita adı"
+
+#: ../locale/scriptstrings/m.proj_to_translate.c:4
+#, fuzzy
+msgid "Output coordinate file (omit to send to stdout)"
+msgstr "Yeniden projeksiyonlanacak girdi raster harita adı"
+
+#: ../locale/scriptstrings/m.proj_to_translate.c:5
+#: ../locale/scriptstrings/r.out.xyz_to_translate.c:5
+msgid "Field separator"
+msgstr "Alan ayracı"
+
+#: ../locale/scriptstrings/m.proj_to_translate.c:6
+#, fuzzy
+msgid "Input projection parameters (PROJ.4 style)"
+msgstr "Raster yön çıktı haritası"
+
+#: ../locale/scriptstrings/m.proj_to_translate.c:7
+#, fuzzy
+msgid "Output projection parameters (PROJ.4 style)"
+msgstr "Raster yön çıktı haritası"
+
+#: ../locale/scriptstrings/m.proj_to_translate.c:8
+msgid "Use LL WGS84 as input and current location as output projection"
+msgstr ""
+
+#: ../locale/scriptstrings/m.proj_to_translate.c:9
+msgid "Use current location as input and LL WGS84 as output projection"
+msgstr ""
+
+#: ../locale/scriptstrings/m.proj_to_translate.c:10
+msgid ""
+"Output long/lat in decimal degrees or other projections with many decimal "
+"places"
+msgstr ""
+
+#: ../locale/scriptstrings/m.proj_to_translate.c:11
+msgid ""
+"Script style output in CSV format respecting the field separator settings"
+msgstr ""
+
+#: ../locale/scriptstrings/m.proj_to_translate.c:12
+msgid "Verbose mode (print projection parameters and filenames to stderr)"
+msgstr ""
+
+#: ../locale/scriptstrings/d.out.file_to_translate.c:1
+msgid "Saves the contents of the active display monitor to a graphics file."
+msgstr "Aktif görüntü çerçevesi içeriğini grafik dosyaya kaydeder."
+
+#: ../locale/scriptstrings/d.out.file_to_translate.c:2
+#: ../locale/scriptstrings/d.out.png_to_translate.c:2
+#, fuzzy
+msgid "display, export"
+msgstr "görüntü, dışa aktar, KKS"
+
+#: ../locale/scriptstrings/d.out.file_to_translate.c:3
+#, fuzzy
+msgid "Name for output file (do NOT add extension)"
+msgstr "Çıktı dosya adı (uzantısını eklemeyin)"
+
+#: ../locale/scriptstrings/d.out.file_to_translate.c:5
+msgid "Dimensions of output file versus current window size"
+msgstr ""
+
+#: ../locale/scriptstrings/d.out.file_to_translate.c:6
+msgid "(same=1, double size=2, quadruple size=4)"
+msgstr ""
+
+#: ../locale/scriptstrings/d.out.file_to_translate.c:7
+#: ../locale/scriptstrings/d.out.file_to_translate.c:9
+#: ../locale/scriptstrings/d.out.file_to_translate.c:12
+#: ../locale/scriptstrings/d.out.file_to_translate.c:15
+#: ../locale/scriptstrings/d.out.file_to_translate.c:28
+#: ../locale/scriptstrings/d.out.file_to_translate.c:30
+#, fuzzy
+msgid "Images"
+msgstr "Görüntü"
+
+#: ../locale/scriptstrings/d.out.file_to_translate.c:8
+msgid "Width and height of output image (overrides resolution setting)"
+msgstr ""
+
+#: ../locale/scriptstrings/d.out.file_to_translate.c:10
+#, fuzzy
+msgid "Compression for PNG files"
+msgstr "Etiket dosyası adı"
+
+#: ../locale/scriptstrings/d.out.file_to_translate.c:11
+msgid "(0=none, 1=fastest, 9=most; lossless, only time vs. filesize)"
+msgstr ""
+
+#: ../locale/scriptstrings/d.out.file_to_translate.c:13
+msgid "File size/quality for JPEG files"
+msgstr ""
+
+#: ../locale/scriptstrings/d.out.file_to_translate.c:14
+msgid "(10=smallest/worst, 100=largest/best)"
+msgstr ""
+
+#: ../locale/scriptstrings/d.out.file_to_translate.c:16
+#, fuzzy
+msgid "Paper size for PostScript output"
+msgstr "Kabuk betiği stilinde çıktı üretir"
+
+#: ../locale/scriptstrings/d.out.file_to_translate.c:17
+#: ../locale/scriptstrings/d.out.file_to_translate.c:19
+#: ../locale/scriptstrings/d.out.file_to_translate.c:32
+msgid "PostScript"
+msgstr ""
+
+#: ../locale/scriptstrings/d.out.file_to_translate.c:18
+msgid "PostScript level (only limits functionality!)"
+msgstr ""
+
+#: ../locale/scriptstrings/d.out.file_to_translate.c:20
+msgid "GeoTIFF creation option(s)"
+msgstr ""
+
+#: ../locale/scriptstrings/d.out.file_to_translate.c:22
+#: ../locale/scriptstrings/d.out.file_to_translate.c:25
+#: ../locale/scriptstrings/d.out.file_to_translate.c:34
+msgid "GeoTIFF"
+msgstr ""
+
+#: ../locale/scriptstrings/d.out.file_to_translate.c:23
+msgid "GeoTIFF metadata key(s) and value(s) to add"
+msgstr ""
+
+#: ../locale/scriptstrings/d.out.file_to_translate.c:24
+msgid ""
+"In the form of \"META-TAG=VALUE\", separate multiple entries with a comma."
+msgstr ""
+
+#: ../locale/scriptstrings/d.out.file_to_translate.c:26
+msgid "Set background color to black (white default)"
+msgstr ""
+
+#: ../locale/scriptstrings/d.out.file_to_translate.c:27
+msgid "Set transparent background"
+msgstr "Şeffaf artalan ayarla"
+
+#: ../locale/scriptstrings/d.out.file_to_translate.c:29
+msgid "Use the Cario driver to render images"
+msgstr ""
+
+#: ../locale/scriptstrings/d.out.file_to_translate.c:31
+#, fuzzy
+msgid "Set paper orientation to landscape (for PostScript output)"
+msgstr "Kabuk betiği stilinde çıktı üretir"
+
+#: ../locale/scriptstrings/d.out.file_to_translate.c:33
+#, fuzzy
+msgid "Do not crop away margins"
+msgstr "Tablo kopyalanamıyor"
+
+#: ../locale/scriptstrings/db.test_to_translate.c:1
+msgid "Test database driver, database must exist and set by db.connect."
+msgstr ""
+
+#: ../locale/scriptstrings/db.test_to_translate.c:3
+msgid "Test name"
+msgstr "Sınama adı"
+
+#: ../locale/scriptstrings/r.tileset_to_translate.c:1
+msgid ""
+"Produces tilings of the source projection for use in the destination region "
+"and projection."
+msgstr ""
+
+#: ../locale/scriptstrings/r.tileset_to_translate.c:2
+#, fuzzy
+msgid "raster, tiling"
+msgstr "raster, yükselti"
+
+#: ../locale/scriptstrings/r.tileset_to_translate.c:3
+msgid "Produces shell script output"
+msgstr "Kabuk betiği stilinde çıktı üretir"
+
+#: ../locale/scriptstrings/r.tileset_to_translate.c:4
+#, fuzzy
+msgid "Produces web map server query string output"
+msgstr "Kabuk betiği stilinde çıktı üretir"
+
+#: ../locale/scriptstrings/r.tileset_to_translate.c:5
+msgid ""
+"Name of region to use instead of current region for bounds and resolution"
+msgstr ""
+
+#: ../locale/scriptstrings/r.tileset_to_translate.c:6
+msgid "Source projection"
+msgstr "Kaynak projeksiyon"
+
+#: ../locale/scriptstrings/r.tileset_to_translate.c:7
+#: ../locale/scriptstrings/r.tileset_to_translate.c:9
+msgid "Conversion factor from units to meters in source projection"
+msgstr "Kaynak projeksiyondaki birimlerden metreye dönüşüm çarpanı"
+
+#: ../locale/scriptstrings/r.tileset_to_translate.c:8
+#, fuzzy
+msgid "Destination projection, defaults to this location's projection"
+msgstr "Projeksiyonun üstüne yaz (mevkinin projeksiyonunu kullan)"
+
+#: ../locale/scriptstrings/r.tileset_to_translate.c:10
+#, fuzzy
+msgid "Maximum number of columns for a tile in the source projection"
+msgstr "Yeni bölgedeki sütun sayısı"
+
+#: ../locale/scriptstrings/r.tileset_to_translate.c:11
+#, fuzzy
+msgid "Maximum number of rows for a tile in the source projection"
+msgstr "Hafızada tutulacak en küçük satır sayısı 1'dir"
+
+#: ../locale/scriptstrings/r.tileset_to_translate.c:12
+#, fuzzy
+msgid "Number of cells tiles should overlap in each direction"
+msgstr "Yeni bölgedeki sütun sayısı"
+
+#: ../locale/scriptstrings/r.tileset_to_translate.c:14
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:50
+msgid "Verbosity level"
+msgstr ""
+
+#: ../locale/scriptstrings/i.fusion.brovey_to_translate.c:1
+msgid ""
+"Brovey transform to merge multispectral and high-res panchromatic channels"
+msgstr ""
+
+#: ../locale/scriptstrings/i.fusion.brovey_to_translate.c:2
+#, fuzzy
+msgid "imagery, fusion, Brovey"
+msgstr "Raster, görüntü, kaynaşma"
+
+#: ../locale/scriptstrings/i.fusion.brovey_to_translate.c:3
+#, fuzzy
+msgid "LANDSAT sensor"
+msgstr "LANDSAT kırmızı kanal"
+
+#: ../locale/scriptstrings/i.fusion.brovey_to_translate.c:4
+#: ../locale/scriptstrings/i.fusion.brovey_to_translate.c:6
+#: ../locale/scriptstrings/i.fusion.brovey_to_translate.c:8
+#, fuzzy
+msgid "Sensor"
+msgstr "LANDSAT kırmızı kanal"
+
+#: ../locale/scriptstrings/i.fusion.brovey_to_translate.c:5
+msgid "QuickBird sensor"
+msgstr ""
+
+#: ../locale/scriptstrings/i.fusion.brovey_to_translate.c:7
+#, fuzzy
+msgid "SPOT sensor"
+msgstr "LANDSAT kırmızı kanal"
+
+#: ../locale/scriptstrings/i.fusion.brovey_to_translate.c:9
+#, fuzzy
+msgid "Name of input raster map (green: tm2 | qbird_green | spot1)"
+msgstr "Yeniden projeksiyonlanacak girdi raster harita adı"
+
+#: ../locale/scriptstrings/i.fusion.brovey_to_translate.c:10
+#, fuzzy
+msgid "Name of input raster map (NIR: tm4 | qbird_nir | spot2)"
+msgstr "Yeniden projeksiyonlanacak girdi raster harita adı"
+
+#: ../locale/scriptstrings/i.fusion.brovey_to_translate.c:11
+#, fuzzy
+msgid "Name of input raster map (MIR; tm5 | qbird_red | spot3)"
+msgstr "Yeniden projeksiyonlanacak girdi raster harita adı"
+
+#: ../locale/scriptstrings/i.fusion.brovey_to_translate.c:12
+#, fuzzy
+msgid "Name of input raster map (etmpan | qbird_pan | spotpan)"
+msgstr "Yeniden projeksiyonlanacak girdi raster harita adı"
+
+#: ../locale/scriptstrings/i.fusion.brovey_to_translate.c:13
+#, fuzzy
+msgid "Name for output raster map prefix (e.g. 'brov')"
+msgstr "Çıktı raster harita adı belirlenemedi"
+
+#: ../locale/scriptstrings/g.extension_to_translate.c:1
+msgid "Tool to maintain GRASS extensions in local GRASS installation."
+msgstr ""
+
+#: ../locale/scriptstrings/g.extension_to_translate.c:2
+msgid ""
+"Downloads, installs extensions from GRASS Addons SVN repository into local "
+"GRASS installation or removes installed extensions."
+msgstr ""
+
+#: ../locale/scriptstrings/g.extension_to_translate.c:3
+#, fuzzy
+msgid "general, extensions"
+msgstr "genel, ayarlar"
+
+#: ../locale/scriptstrings/g.extension_to_translate.c:4
+#, fuzzy
+msgid "Name of extension to install/remove"
+msgstr "Oluşturulacak yeni mevkinin adı"
+
+#: ../locale/scriptstrings/g.extension_to_translate.c:6
+msgid "SVN Addons repository URL"
+msgstr ""
+
+#: ../locale/scriptstrings/g.extension_to_translate.c:7
+msgid "Prefix where to install extension"
+msgstr ""
+
+#: ../locale/scriptstrings/g.extension_to_translate.c:8
+#, fuzzy
+msgid "List available modules in the GRASS Addons SVN repository"
+msgstr "Kullanılabilir kuralları listele ve çık"
+
+#: ../locale/scriptstrings/d.correlate_to_translate.c:1
+msgid "Prints a graph of the correlation between data layers (in pairs)."
+msgstr ""
+
+#: ../locale/scriptstrings/d.correlate_to_translate.c:2
+#: ../locale/scriptstrings/d.polar_to_translate.c:2
+msgid "display, diagram"
+msgstr "görüntü, diyagram"
+
+#: ../locale/scriptstrings/d.correlate_to_translate.c:3
+#: ../locale/scriptstrings/d.correlate_to_translate.c:4
+#: ../locale/scriptstrings/d.correlate_to_translate.c:5
+#: ../locale/scriptstrings/d.correlate_to_translate.c:6
+msgid "raster input map"
+msgstr "raster girdi harita"
+
+#: ../locale/scriptstrings/i.image.mosaic_to_translate.c:1
+msgid "Mosaics up to 4 images and extends colormap; creates map *.mosaic"
+msgstr ""
+
+#: ../locale/scriptstrings/i.image.mosaic_to_translate.c:2
+msgid "raster, imagery, mosaicking"
+msgstr "Raster, görüntü, mosaikleme"
+
+#: ../locale/scriptstrings/i.image.mosaic_to_translate.c:3
+msgid "1st map for mosaic (top of image stack)."
+msgstr "Mozaik için 1. harita (görüntü yığınının üstü)"
+
+#: ../locale/scriptstrings/i.image.mosaic_to_translate.c:4
+msgid "2nd map for mosaic."
+msgstr "Mozaik için 2. harita"
+
+#: ../locale/scriptstrings/i.image.mosaic_to_translate.c:5
+msgid "3rd map for mosaic."
+msgstr "Mozaik için 3. harita"
+
+#: ../locale/scriptstrings/i.image.mosaic_to_translate.c:6
+msgid "4th map for mosaic."
+msgstr "Mozaik için 4. harita"
+
+#: ../locale/scriptstrings/r.blend_to_translate.c:1
+msgid "Blends color components of two raster maps by a given ratio."
+msgstr ""
+
+#: ../locale/scriptstrings/r.blend_to_translate.c:3
+#, fuzzy
+msgid "Name of first raster map for blending"
+msgstr "İlk raster haritanın adı"
+
+#: ../locale/scriptstrings/r.blend_to_translate.c:4
+#, fuzzy
+msgid "Name of second raster map for blending"
+msgstr "İkinci raster haritanın adı"
+
+#: ../locale/scriptstrings/r.blend_to_translate.c:5
+msgid "Base name for red, green and blue output maps containing the blend"
+msgstr ""
+
+#: ../locale/scriptstrings/r.blend_to_translate.c:6
+#, fuzzy
+msgid "Percentage weight of first map for color blending"
+msgstr "İlk raster haritanın adı"
+
+#: ../locale/scriptstrings/r.reclass.area_to_translate.c:1
+msgid ""
+"Reclasses a raster map greater or less than user specified area size (in "
+"hectares)."
+msgstr ""
+
+#: ../locale/scriptstrings/r.reclass.area_to_translate.c:2
+msgid "raster, statistics, aggregation"
+msgstr "raster, istatistikler, toplama"
+
+#: ../locale/scriptstrings/r.reclass.area_to_translate.c:5
+msgid "Lesser value option that sets the <= area size limit [hectares]"
+msgstr ""
+
+#: ../locale/scriptstrings/r.reclass.area_to_translate.c:6
+msgid "Greater value option that sets the >= area size limit [hectares]"
+msgstr ""
+
+#: ../locale/scriptstrings/v.what.vect_to_translate.c:1
+msgid "Uploads vector values at positions of vector points to the table."
+msgstr ""
+"Vektör noktaların bulunduğu konumdaki vektör değerlerini tabloya yükler."
+
+#: ../locale/scriptstrings/v.what.vect_to_translate.c:3
+#, fuzzy
+msgid "Vector map to modify"
+msgstr "Değiştirilecek nokta  vektör harita"
+
+#: ../locale/scriptstrings/v.what.vect_to_translate.c:4
+msgid "Layer in the vector to be modified"
+msgstr "Değiştirilecek vektör harita katmanı"
+
+#: ../locale/scriptstrings/v.what.vect_to_translate.c:5
+msgid "Column to be updated with the query result"
+msgstr "Sorgu sonucuyla güncellenecek sütun"
+
+#: ../locale/scriptstrings/v.what.vect_to_translate.c:6
+msgid "Vector map to be queried"
+msgstr "Sorgulanacak vektör harita"
+
+#: ../locale/scriptstrings/v.what.vect_to_translate.c:7
+#, fuzzy
+msgid "Layer of the query vector containing data"
+msgstr "Veri içeren sorgu vektör katmanı"
+
+#: ../locale/scriptstrings/v.what.vect_to_translate.c:8
+msgid "Column to be queried"
+msgstr "Sorgulanacak sütun"
+
+#: ../locale/scriptstrings/v.what.vect_to_translate.c:9
+msgid "Maximum query distance in map units"
+msgstr "Harita birimlerine göre en büyük sorgu mesafesi"
+
+#: ../locale/scriptstrings/r.in.srtm_to_translate.c:1
+msgid "Import SRTM HGT files into GRASS"
+msgstr "SRTM HGT dosyalarını GRASS'a içe aktar"
+
+#: ../locale/scriptstrings/r.in.srtm_to_translate.c:3
+msgid "SRTM input tile (file without .hgt.zip extension)"
+msgstr "SRTM girdi dosyası (.hgt.zip uzantısı hariç)"
+
+#: ../locale/scriptstrings/r.in.srtm_to_translate.c:4
+msgid "Output raster map (default: input tile)"
+msgstr "Çıktı raster harita (varsayılan: girdi)"
+
+#: ../locale/scriptstrings/r.in.srtm_to_translate.c:5
+msgid "Input is a 1-arcsec tile (default: 3-arcsec)"
+msgstr ""
+
+#: ../locale/scriptstrings/v.report_to_translate.c:1
+msgid "Reports geometry statistics for vectors."
+msgstr "Vektör için istatistikleri raporlar."
+
+#: ../locale/scriptstrings/v.report_to_translate.c:2
+msgid "vector, report, statistics"
+msgstr "vektör, rapor, istatistikler"
+
+#: ../locale/scriptstrings/v.report_to_translate.c:3
+#, fuzzy
+msgid "Reverse sort the result"
+msgstr "Sonucu sırala"
+
+#: ../locale/scriptstrings/v.report_to_translate.c:4
+msgid "Sort the result"
+msgstr "Sonucu sırala"
+
+#: ../locale/scriptstrings/v.report_to_translate.c:7
+msgid "Value to calculate"
+msgstr "Hesaplanacak değer"
+
+#: ../locale/scriptstrings/v.report_to_translate.c:8
+msgid "mi(les),f(eet),me(ters),k(ilometers),a(cres),h(ectares),p(ercent)"
+msgstr ""
+
+#: ../locale/scriptstrings/v.db.update_to_translate.c:1
+#, fuzzy
+msgid ""
+"Allows to update a column in the attribute table connected to a vector map."
+msgstr ""
+"Verilen vektör haritaya bağlı öznitelik tablosundaki sütunu yeniden "
+"adlandırır"
+
+#: ../locale/scriptstrings/v.db.update_to_translate.c:3
+msgid "Vector map to edit the attribute table for"
+msgstr "Öznitelik tablosu düzenlenecek vektör harita"
+
+#: ../locale/scriptstrings/v.db.update_to_translate.c:4
+msgid "Layer to which the table to be changed is connected"
+msgstr ""
+
+#: ../locale/scriptstrings/v.db.update_to_translate.c:5
+msgid "Column to update"
+msgstr "Güncellenecek sütun"
+
+#: ../locale/scriptstrings/v.db.update_to_translate.c:6
+msgid ""
+"Value to update the column with (varchar values have to be in single quotes, "
+"e.g. 'grass')"
+msgstr ""
+
+#: ../locale/scriptstrings/v.db.update_to_translate.c:7
+msgid "Column to query"
+msgstr "Sorgulanacak sütun"
+
+#: ../locale/scriptstrings/v.db.update_to_translate.c:8
+msgid ""
+"WHERE conditions for update, without 'where' keyword (e.g. cat=1 or col1/"
+"col2>1)"
+msgstr ""
+
+#: ../locale/scriptstrings/d.rast.leg_to_translate.c:1
+msgid "Displays a raster map and its legend on a graphics window"
+msgstr "raster harita ve onun ölçek çubuğunu grafik ekranında gösterir."
+
+#: ../locale/scriptstrings/d.rast.leg_to_translate.c:4
+#, fuzzy
+msgid "Omit entries with missing label"
+msgstr "Etiketsiz kategorileri atla"
+
+#: ../locale/scriptstrings/d.rast.leg_to_translate.c:6
+#, fuzzy
+msgid "Number of lines to appear in the legend"
+msgstr "Çıktı kopya sayısı"
+
+#: ../locale/scriptstrings/d.rast.leg_to_translate.c:7
+#, fuzzy
+msgid "Name of raster map to generate legend from"
+msgstr "<%s> için kullanılacak raster harita adı"
+
+#: ../locale/scriptstrings/d.rast.leg_to_translate.c:8
+#, fuzzy
+msgid "Name of raster map to print in legend"
+msgstr "Görüntülenecek raster harita adı"
+
+#: ../locale/scriptstrings/d.rast.leg_to_translate.c:9
+msgid "Position of vertical map-legend separator (in percent)"
+msgstr ""
+
+#: ../locale/scriptstrings/d.out.gpsdrive_to_translate.c:1
+msgid "Export display monitor to a GpsDrive compatible backdrop image"
+msgstr ""
+
+#: ../locale/scriptstrings/d.out.gpsdrive_to_translate.c:2
+msgid "display, export, GPS"
+msgstr "görüntü, dışa aktar, KKS"
+
+#: ../locale/scriptstrings/d.out.gpsdrive_to_translate.c:3
+msgid "name for new map image (lives in ~/.gpsdrive/maps/)"
+msgstr ""
+
+#: ../locale/scriptstrings/d.out.gpsdrive_to_translate.c:4
+msgid "Make JPEG instead of PNG image"
+msgstr "PNG görüntüsü yerine JPEG yap"
+
+#: ../locale/scriptstrings/v.univar.sh_to_translate.c:1
+#: ../locale/scriptstrings/v.db.univar_to_translate.c:1
+#, fuzzy
+msgid ""
+"Calculates univariate statistics on selected table column for a GRASS vector "
+"map."
+msgstr "Raster harita katmanlarının alansal istatistiklerini oluştur"
+
+#: ../locale/scriptstrings/v.univar.sh_to_translate.c:3
+#: ../locale/scriptstrings/v.db.univar_to_translate.c:3
+msgid "Extended statistics (quartiles and 90th percentile)"
+msgstr ""
+
+#: ../locale/scriptstrings/v.univar.sh_to_translate.c:4
+#: ../locale/scriptstrings/v.db.univar_to_translate.c:4
+msgid "Name of data table"
+msgstr "Veri tablosunun adı"
+
+#: ../locale/scriptstrings/v.univar.sh_to_translate.c:5
+#: ../locale/scriptstrings/v.db.univar_to_translate.c:5
+#, fuzzy
+msgid "Column on which to calculate statistics (must be numeric)"
+msgstr "Sütun adı (sayı tipinde olmalıdır)"
+
+#: ../locale/scriptstrings/v.univar.sh_to_translate.c:6
+#: ../locale/scriptstrings/v.db.univar_to_translate.c:6
+msgid "Database/directory for table"
+msgstr "Tablo için veritabanı/dizin"
+
+#: ../locale/scriptstrings/v.univar.sh_to_translate.c:7
+#: ../locale/scriptstrings/v.db.univar_to_translate.c:7
+msgid "Database driver"
+msgstr "Veritabanı sürücüsü"
+
+#: ../locale/scriptstrings/v.univar.sh_to_translate.c:8
+#: ../locale/scriptstrings/v.out.gpsbabel_to_translate.c:13
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:47
+#: ../locale/scriptstrings/v.db.univar_to_translate.c:8
+msgid "WHERE conditions of SQL statement without 'where' keyword"
+msgstr ""
+
+#: ../locale/scriptstrings/g.manual_to_translate.c:1
+#, fuzzy
+msgid "Display the HTML man pages of GRASS"
+msgstr "GRASS Gösterim Yöneticisi"
+
+#: ../locale/scriptstrings/g.manual_to_translate.c:2
+msgid "general, manual, help"
+msgstr "genel, kılavuz, yardım"
+
+#: ../locale/scriptstrings/g.manual_to_translate.c:3
+msgid "Display index"
+msgstr "Görüntü indeksi"
+
+#: ../locale/scriptstrings/g.manual_to_translate.c:4
+msgid "Display as MAN text page instead of HTML page in browser"
+msgstr ""
+
+#: ../locale/scriptstrings/g.manual_to_translate.c:5
+#, fuzzy
+msgid "Manual entry to be displayed"
+msgstr "Görüntülenecek raster harita "
+
+#: ../locale/scriptstrings/v.in.sites.all_to_translate.c:1
+#, fuzzy
+msgid ""
+"Converts all old GRASS < Ver5.7 sites maps in current mapset to vector maps."
+msgstr "GRASS nokta_listesi dosyasını vektör haritaya dönüştürür"
+
+#: ../locale/scriptstrings/v.in.sites.all_to_translate.c:2
+#, fuzzy
+msgid "sites, vector, import"
+msgstr "vektör, içe aktar"
+
+#: ../locale/scriptstrings/v.in.sites.all_to_translate.c:3
+msgid "Run non-interactively"
+msgstr "Etkileşimsiz olarak çalıştır"
+
+#: ../locale/scriptstrings/v.db.renamecol_to_translate.c:1
+msgid ""
+"Renames a column in the attribute table connected to a given vector map."
+msgstr ""
+"Verilen vektör haritaya bağlı öznitelik tablosundaki sütunu yeniden "
+"adlandırır"
+
+#: ../locale/scriptstrings/v.db.renamecol_to_translate.c:3
+msgid "Vector map for which to rename attribute column"
+msgstr "Öznitelik sütunu yeniden adlandırılacak vektör harita"
+
+#: ../locale/scriptstrings/v.db.renamecol_to_translate.c:4
+msgid "Layer where to rename column"
+msgstr "Sütunu yeniden adlandırılacak katman"
+
+#: ../locale/scriptstrings/v.db.renamecol_to_translate.c:5
+msgid "Old and new name of the column (old,new)"
+msgstr "Eski ve yeni sütun adı (eski,yeni)"
+
+#: ../locale/scriptstrings/r.mask_to_translate.c:1
+msgid "Create a MASK for limiting raster operation"
+msgstr ""
+
+#: ../locale/scriptstrings/r.mask_to_translate.c:2
+msgid "raster, mask"
+msgstr "raster, maske"
+
+#: ../locale/scriptstrings/r.mask_to_translate.c:3
+msgid "Raster map to use as MASK"
+msgstr "MASKE olarak kullanılacak raster harita"
+
+#: ../locale/scriptstrings/r.mask_to_translate.c:4
+msgid "Category values to use for MASK (format: 1 2 3 thru 7 *)"
+msgstr ""
+
+#: ../locale/scriptstrings/r.mask_to_translate.c:5
+msgid "Create inverse MASK from specified 'maskcats' list"
+msgstr ""
+
+#: ../locale/scriptstrings/r.mask_to_translate.c:6
+msgid "Overwrite existing MASK"
+msgstr "Mevcut MASKE üzerine yaz"
+
+#: ../locale/scriptstrings/r.mask_to_translate.c:7
+msgid "Remove existing MASK (overrides other options)"
+msgstr ""
+
+#: ../locale/scriptstrings/v.out.gpsbabel_to_translate.c:1
+msgid ""
+"Exports a vector map to a GPS receiver or file format supported by GpsBabel."
+msgstr ""
+
+#: ../locale/scriptstrings/v.out.gpsbabel_to_translate.c:2
+#, fuzzy
+msgid "vector, export, GPS"
+msgstr "vektör, içe aktar, KKS"
+
+#: ../locale/scriptstrings/v.out.gpsbabel_to_translate.c:3
+#, fuzzy
+msgid "Export as waypoints"
+msgstr "Çizgileri poligon olarak dışa aktar"
+
+#: ../locale/scriptstrings/v.out.gpsbabel_to_translate.c:4
+#, fuzzy
+msgid "Export as routes"
+msgstr "Rotaları içe aktar"
+
+#: ../locale/scriptstrings/v.out.gpsbabel_to_translate.c:5
+#, fuzzy
+msgid "Export as tracks"
+msgstr "İzleri içe aktar"
+
+#: ../locale/scriptstrings/v.out.gpsbabel_to_translate.c:7
+#, fuzzy
+msgid "Feature type(s)"
+msgstr "Obje tipi"
+
+#: ../locale/scriptstrings/v.out.gpsbabel_to_translate.c:8
+#, fuzzy
+msgid "Name for output file or GPS device"
+msgstr "Çıktı dosya adı"
+
+#: ../locale/scriptstrings/v.out.gpsbabel_to_translate.c:9
+#, fuzzy
+msgid "GpsBabel supported output format"
+msgstr "Desteklenen çıktı biçimlerini listele"
+
+#: ../locale/scriptstrings/v.out.gpsbabel_to_translate.c:11
+#: ../locale/scriptstrings/v.dissolve_to_translate.c:6
+msgid ""
+"A single vector map can be connected to multiple database tables. This "
+"number determines which table to use."
+msgstr ""
+
+#: ../locale/scriptstrings/v.out.gpsbabel_to_translate.c:12
+#: ../locale/scriptstrings/v.out.gpsbabel_to_translate.c:15
+msgid "Subset"
+msgstr ""
+
+#: ../locale/scriptstrings/v.out.gpsbabel_to_translate.c:14
+msgid "Example: income < 1000 and inhab >= 10000"
+msgstr ""
+
+#: ../locale/scriptstrings/v.db.reconnect.all_to_translate.c:1
+msgid "Reconnects vectors to a new database."
+msgstr "Vektörleri yeni bir veritabanına yeniden bağlar."
+
+#: ../locale/scriptstrings/v.db.reconnect.all_to_translate.c:3
+#, fuzzy
+msgid "Name of old database"
+msgstr "Yeni veritabanı adı"
+
+#: ../locale/scriptstrings/v.db.reconnect.all_to_translate.c:4
+msgid ""
+"The database must be in form printed by v.db.connect -g, i.e. with "
+"substituted variables"
+msgstr ""
+
+#: ../locale/scriptstrings/v.db.reconnect.all_to_translate.c:5
+msgid "Name of new database"
+msgstr "Yeni veritabanı adı"
+
+#: ../locale/scriptstrings/v.db.reconnect.all_to_translate.c:6
+msgid "Old schema"
+msgstr "Eski şema"
+
+#: ../locale/scriptstrings/v.db.reconnect.all_to_translate.c:7
+msgid "New schema"
+msgstr "Yeni şema"
+
+#: ../locale/scriptstrings/r.in.aster_to_translate.c:1
+msgid ""
+"Georeference, rectify and import Terra-ASTER imagery and relative DEM's "
+"using gdalwarp."
+msgstr ""
+
+#: ../locale/scriptstrings/r.in.aster_to_translate.c:2
+#: ../locale/scriptstrings/i.in.spotvgt_to_translate.c:2
+msgid "raster, imagery, import"
+msgstr "raster, görüntü, içe aktar"
+
+#: ../locale/scriptstrings/r.in.aster_to_translate.c:3
+msgid "Input ASTER image to be georeferenced & rectified"
+msgstr ""
+
+#: ../locale/scriptstrings/r.in.aster_to_translate.c:4
+msgid "ASTER imagery processing type (Level 1A, Level 1B, or relative DEM)"
+msgstr ""
+
+#: ../locale/scriptstrings/r.in.aster_to_translate.c:5
+msgid ""
+"L1A or L1B band to translate (1, 2, 3n, 3b, 4-14). Can only translate a "
+"single band"
+msgstr ""
+
+#: ../locale/scriptstrings/v.colors_to_translate.c:1
+msgid ""
+"Set color rules for features in a vector using a numeric attribute column."
+msgstr ""
+
+#: ../locale/scriptstrings/v.colors_to_translate.c:2
+#, fuzzy
+msgid "vector, color table"
+msgstr "raster, renk tablosu"
+
+#: ../locale/scriptstrings/v.colors_to_translate.c:4
+#, fuzzy
+msgid "Name of column containing numeric data"
+msgstr "x koordinatı içeren sütun adı"
+
+#: ../locale/scriptstrings/v.colors_to_translate.c:5
+#, fuzzy
+msgid "Layer number of data column"
+msgstr "Sütun eklenecek katman"
+
+#: ../locale/scriptstrings/v.colors_to_translate.c:6
+#, fuzzy
+msgid "Name of color column to populate"
+msgstr "Görüntülenecek sütun adı"
+
+#: ../locale/scriptstrings/v.colors_to_translate.c:8
+#, fuzzy
+msgid "Manually set range (min,max)"
+msgstr "Tamsayı aralığı: en küçük, en büyük"
+
+#: ../locale/scriptstrings/v.colors_to_translate.c:13
+msgid "Path to rules file"
+msgstr "Kural dosyası yolu"
+
+#: ../locale/scriptstrings/v.colors_to_translate.c:15
+#, fuzzy
+msgid "Save placeholder raster map for use with d.legend"
+msgstr "Görüntülenecek raster harita adı"
+
+#: ../locale/scriptstrings/db.out.ogr_to_translate.c:1
+#, fuzzy
+msgid "Exports attribute tables into various formats."
+msgstr "GRASS raster dosyasını GDAL desteğindeki biçime aktar."
+
+#: ../locale/scriptstrings/db.out.ogr_to_translate.c:3
+msgid "GRASS table name"
+msgstr "GRASS tablo adı"
+
+#: ../locale/scriptstrings/db.out.ogr_to_translate.c:4
+msgid "Table file to be exported or DB connection string"
+msgstr ""
+
+#: ../locale/scriptstrings/db.out.ogr_to_translate.c:5
+msgid "Table format"
+msgstr "Tablo biçimi"
+
+#: ../locale/scriptstrings/db.out.ogr_to_translate.c:6
+#: ../locale/scriptstrings/db.in.ogr_to_translate.c:5
+msgid "Name for output table"
+msgstr "Çıktı tablo adı"
+
+#: ../locale/scriptstrings/d.redraw_to_translate.c:1
+msgid "Redraws the current display frame in the GRASS monitor"
+msgstr "GRASS ekranındaki geçerli görüntü çerçevelerini yeniden çizer"
+
+#: ../locale/scriptstrings/d.redraw_to_translate.c:3
+msgid "Redraw all frames"
+msgstr "Tüm çerçeveleri yeniden çiz"
+
+#: ../locale/scriptstrings/d.redraw_to_translate.c:4
+msgid "Do not preserve individual regions when redrawing all frames"
+msgstr ""
+
+#: ../locale/scriptstrings/d.slide.show_to_translate.c:1
+msgid "Slide show of GRASS raster/vector maps."
+msgstr "E"
+
+#: ../locale/scriptstrings/d.slide.show_to_translate.c:2
+#, fuzzy
+msgid "display, slideshow"
+msgstr "görüntü, ayar"
+
+#: ../locale/scriptstrings/d.slide.show_to_translate.c:3
+msgid "Show vector maps rather than raster maps"
+msgstr "Raster haritadan ziyade vektör haritaları göster"
+
+#: ../locale/scriptstrings/d.slide.show_to_translate.c:4
+msgid "Map prefix. Specify character(s) to view selected maps only"
+msgstr ""
+
+#: ../locale/scriptstrings/d.slide.show_to_translate.c:5
+msgid "Map number show across the monitor"
+msgstr ""
+
+#: ../locale/scriptstrings/d.slide.show_to_translate.c:6
+msgid "Map number show down the monitor"
+msgstr ""
+
+#: ../locale/scriptstrings/d.slide.show_to_translate.c:7
+msgid "Mapsets to use. Specify multiple mapsets comma separated"
+msgstr ""
+
+#: ../locale/scriptstrings/d.slide.show_to_translate.c:8
+#, fuzzy
+msgid "Number of seconds to pause between slides"
+msgstr "oluşturulacak nokta sayısı"
+
+#: ../locale/scriptstrings/v.in.garmin_to_translate.c:1
+msgid ""
+"Download waypoints, routes, and tracks from a Garmin GPS receiver into a "
+"vector map."
+msgstr ""
+
+#: ../locale/scriptstrings/v.in.garmin_to_translate.c:2
+#: ../locale/scriptstrings/v.in.gpsbabel_to_translate.c:2
+msgid "vector, import, GPS"
+msgstr "vektör, içe aktar, KKS"
+
+#: ../locale/scriptstrings/v.in.garmin_to_translate.c:4
+msgid "Download Waypoints from GPS"
+msgstr "Noktaları  KKS'nden indir"
+
+#: ../locale/scriptstrings/v.in.garmin_to_translate.c:5
+msgid "Download Routes from GPS"
+msgstr "Rotaları KKS'nden indir"
+
+#: ../locale/scriptstrings/v.in.garmin_to_translate.c:6
+msgid "Download Track from GPS"
+msgstr "İzleri  KKS'nden indir"
+
+#: ../locale/scriptstrings/v.in.garmin_to_translate.c:7
+msgid "Force import of track or route data as points"
+msgstr ""
+
+#: ../locale/scriptstrings/v.in.garmin_to_translate.c:8
+msgid "Use gardump instead of gpstrans as the download program"
+msgstr ""
+
+#: ../locale/scriptstrings/v.in.garmin_to_translate.c:9
+msgid "Import track in 3D (gardump only)"
+msgstr ""
+
+#: ../locale/scriptstrings/v.in.garmin_to_translate.c:10
+#: ../locale/scriptstrings/v.in.gpsbabel_to_translate.c:8
+msgid "Do not attempt projection transform from WGS84"
+msgstr ""
+
+#: ../locale/scriptstrings/v.in.garmin_to_translate.c:11
+#: ../locale/scriptstrings/v.in.mapgen_to_translate.c:6
+#: ../locale/scriptstrings/v.in.gpsbabel_to_translate.c:10
+#, fuzzy
+msgid "Name for output vector map (omit for display to stdout)"
+msgstr "Parçaların yazılacağı çıktı vektör haritasının adı"
+
+#: ../locale/scriptstrings/v.in.garmin_to_translate.c:12
+msgid "Port Garmin receiver is connected to"
+msgstr ""
+
+#: ../locale/scriptstrings/d.split.frame_to_translate.c:1
+#, fuzzy
+msgid "Split the display into subframes."
+msgstr "1. çerçevede gösterilecek raster haritayı gir"
+
+#: ../locale/scriptstrings/d.split.frame_to_translate.c:2
+#, fuzzy
+msgid "Number of subframes"
+msgstr "Çerçeve sayısı"
+
+#: ../locale/scriptstrings/d.split.frame_to_translate.c:3
+msgid "Split horizontally not vertically"
+msgstr ""
+
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:1
+#, fuzzy
+msgid "Displays thematic vector map"
+msgstr "konusal vektör haritayı gösterir."
+
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:2
+#, fuzzy
+msgid "display, vector, thematic, legend"
+msgstr "Gösterim, lejand"
+
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:3
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:44
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:48
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:51
+#, fuzzy
+msgid "Files"
+msgstr "Çizgiler"
+
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:5
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:7
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:9
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:11
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:13
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:16
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:25
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:46
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:53
+msgid "Theme"
+msgstr ""
+
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:8
+#, fuzzy
+msgid "Name of attribute column to use for thematic display (must be numeric)"
+msgstr "Tampon mesafesi için kullanılacak öznitelik sütunu"
+
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:10
+msgid "Type of thematic display"
+msgstr "konusal görüntü tipi"
+
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:12
+msgid "Thematic divisions of data for display"
+msgstr ""
+
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:14
+msgid "Break points for custom breaks option"
+msgstr ""
+
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:15
+msgid "Separate values by spaces (0 10 20 30 ...)"
+msgstr ""
+
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:19
+#, fuzzy
+msgid "Vector point icon for point data"
+msgstr "Diğer tabloya bağlanacak vektör harita"
+
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:21
+#, fuzzy
+msgid "Icon size for point data"
+msgstr "Diğer tabloya bağlanacak vektör harita"
+
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:22
+msgid "Minimum icon size/line width for graduated points/lines)"
+msgstr ""
+
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:24
+msgid "Maximum icon size/line width for graduated points and lines"
+msgstr ""
+
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:26
+#, fuzzy
+msgid "Number of classes for interval theme (integer)"
+msgstr "Belirlenecek sınıf sayısı"
+
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:28
+#, fuzzy
+msgid "Color scheme for graduated color mapping"
+msgstr "Y verisinin rengi"
+
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:29
+#, fuzzy
+msgid "Select 'single_color' for graduated point/line display"
+msgstr "Y verisinin rengi"
+
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:31
+#, fuzzy
+msgid "Color for graduated points map"
+msgstr "Y verisinin rengi"
+
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:32
+msgid "GRASS named color or R:G:B triplet. Set color scheme to single color"
+msgstr ""
+
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:34
+#, fuzzy
+msgid "Color for graduated lines or point/area outlines"
+msgstr "Y verisinin rengi"
+
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:35
+msgid "GRASS named color or R:G:B triplet. Set color scheme to single color."
+msgstr ""
+
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:37
+#, fuzzy
+msgid "Beginning color for custom color gradient"
+msgstr "z koordinatı için ölçek faktörü"
+
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:38
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:41
+#, fuzzy
+msgid "Must be expressed as R:G:B triplet"
+msgstr "z koordinatı için ölçek faktörü"
+
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:40
+#, fuzzy
+msgid "Ending color for custom color gradient"
+msgstr "z koordinatı için ölçek faktörü"
+
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:42
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:59
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:61
+msgid "Misc"
+msgstr "çeşitli"
+
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:43
+msgid "Select x11 display monitor for legend"
+msgstr "Lejand için x11 görüntü ekranını seç"
+
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:45
+msgid "Save thematic map commands to group file for GIS Manager"
+msgstr ""
+
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:49
+msgid "Root for the name of psmap instruction files to be in current directory"
+msgstr ""
+
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:50
+msgid "If not set, no psmap instruction files will be created)"
+msgstr ""
+
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:52
+msgid "Name of group file where thematic map commands will be saved"
+msgstr ""
+
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:54
+msgid "Create graphic legend in x11 display monitor"
+msgstr ""
+
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:56
+msgid "Only draw fills (no outlines) for areas and points"
+msgstr ""
+
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:58
+msgid "Update color values to GRASSRGB column in attribute table"
+msgstr ""
+
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:60
+msgid "Output legend for GIS Manager (for scripting use only)"
+msgstr ""
+
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:62
+msgid "Use math notation brackets in legend"
+msgstr ""
+
+#: ../locale/scriptstrings/db.droptable_to_translate.c:1
+msgid "Drops an attribute table."
+msgstr "Öznitelik tablosunu düşürür"
+
+#: ../locale/scriptstrings/db.droptable_to_translate.c:4
+msgid "Table to drop"
+msgstr "Düşürülecek tablo"
+
+#: ../locale/scriptstrings/v.in.gns_to_translate.c:1
+#, fuzzy
+msgid ""
+"Imports US-NGA GEOnet Names Server (GNS) country files into a GRASS vector "
+"points map."
+msgstr ""
+"geonames.org ülke dosyalarını GRASS vektör nokta haritasını içe aktarır."
+
+#: ../locale/scriptstrings/v.in.gns_to_translate.c:2
+#: ../locale/scriptstrings/v.in.geonames_to_translate.c:2
+#, fuzzy
+msgid "vector, import, gazetteer"
+msgstr "vektör, içe aktar, noktalar"
+
+#: ../locale/scriptstrings/v.in.gns_to_translate.c:3
+msgid "Uncompressed GNS file from NGA (with .txt extension)"
+msgstr ""
+
+#: ../locale/scriptstrings/v.rast.stats_to_translate.c:1
+msgid ""
+"Calculates univariate statistics from a raster map based on vector polygons "
+"and uploads statistics to new attribute columns."
+msgstr ""
+
+#: ../locale/scriptstrings/v.rast.stats_to_translate.c:2
+msgid "vector, raster, statistics"
+msgstr "vektör, raster, istatistikler"
+
+#: ../locale/scriptstrings/v.rast.stats_to_translate.c:3
+msgid "Continue if upload column(s) already exist"
+msgstr ""
+
+#: ../locale/scriptstrings/v.rast.stats_to_translate.c:5
+msgid "Name of vector polygon map"
+msgstr "Vektör poligon haritasının adı"
+
+#: ../locale/scriptstrings/v.rast.stats_to_translate.c:7
+msgid ""
+"A single vector map can be connected to multiple database tables. This "
+"number determines which table to use"
+msgstr ""
+
+#: ../locale/scriptstrings/v.rast.stats_to_translate.c:8
+msgid "Name of raster map to calculate statistics from"
+msgstr "İstatistiklerin hesaplanacağı raster haritanın adı"
+
+#: ../locale/scriptstrings/v.rast.stats_to_translate.c:9
+msgid "Column prefix for new attribute columns"
+msgstr "Yeni öznitelik sütunları için sütun ön eki"
+
+#: ../locale/scriptstrings/v.in.geonames_to_translate.c:1
+msgid "Imports geonames.org country files into a GRASS vector points map."
+msgstr ""
+"geonames.org ülke dosyalarını GRASS vektör nokta haritasını içe aktarır."
+
+#: ../locale/scriptstrings/v.in.geonames_to_translate.c:3
+msgid "Uncompressed geonames file from (with .txt extension)"
+msgstr ""
+
+#: ../locale/scriptstrings/d.m_to_translate.c:1
+msgid "Display manager for GRASS"
+msgstr "GRASS Gösterim Yöneticisi"
+
+#: ../locale/scriptstrings/d.m_to_translate.c:2
+#, fuzzy
+msgid "Name of .dmrc settings file"
+msgstr "Çalışma alanı dosyası adı"
+
+#: ../locale/scriptstrings/gis.m_to_translate.c:1
+msgid "GIS manager for GRASS"
+msgstr "GRASS CBS Yöneticisi"
+
+#: ../locale/scriptstrings/gis.m_to_translate.c:2
+#, fuzzy
+msgid "Name of GIS manager settings file (.grc)"
+msgstr "Çalışma alanı dosyası adı"
+
+#: ../locale/scriptstrings/db.dropcol_to_translate.c:1
+msgid "Drops a column from selected attribute table"
+msgstr "Seçilen öznitelik tablosundan bir sütun siler"
+
+#: ../locale/scriptstrings/db.dropcol_to_translate.c:4
+msgid "Table from which to drop attribute column"
+msgstr "Öznitelik sütunu silinecek tablo"
+
+#: ../locale/scriptstrings/db.dropcol_to_translate.c:5
+#: ../locale/scriptstrings/v.db.dropcol_to_translate.c:5
+msgid "Name of the column"
+msgstr "Sütun adı"
+
+#: ../locale/scriptstrings/r.out.xyz_to_translate.c:1
+msgid ""
+"Export a raster map to a text file as x,y,z values based on cell centers."
+msgstr ""
+
+#: ../locale/scriptstrings/d.resize_to_translate.c:1
+msgid "Resizes active display monitor"
+msgstr "Aktif görüntü ekranını yeniden boyutlandır"
+
+#: ../locale/scriptstrings/d.resize_to_translate.c:3
+msgid "New width for window"
+msgstr "Pencere için yeni genişlik"
+
+#: ../locale/scriptstrings/d.resize_to_translate.c:4
+msgid "New height for window"
+msgstr "Pencere için yeni yükseklik"
+
+#: ../locale/scriptstrings/v.in.mapgen_to_translate.c:1
+#, fuzzy
+msgid "Import Mapgen or Matlab-ASCII vector maps into GRASS."
+msgstr "SRTM HGT dosyalarını GRASS'a içe aktar"
+
+#: ../locale/scriptstrings/v.in.mapgen_to_translate.c:3
+#, fuzzy
+msgid "Input map is in Matlab format"
+msgstr "Girdi harita veri içermiyor"
+
+#: ../locale/scriptstrings/v.in.mapgen_to_translate.c:4
+#, fuzzy
+msgid "Create a 3D vector points map from 3 column Matlab data"
+msgstr ""
+"Koordinatları içeren veritabanı tablosundan yeni vektör(nokta) oluşturur."
+
+#: ../locale/scriptstrings/v.in.mapgen_to_translate.c:5
+#, fuzzy
+msgid "Name of input file in Mapgen/Matlab format"
+msgstr "Girdi nokta vektör haritanın adı"
+
+#: ../locale/scriptstrings/v.build.all_to_translate.c:1
+msgid "Rebuilds topology on all vector maps in the current mapset."
+msgstr ""
+"Geçerli harita takımındaki tüm vektör haritaların topolojisini yeniden "
+"oluşturur."
+
+#: ../locale/scriptstrings/r.univar.sh_to_translate.c:1
+#, fuzzy
+msgid "calculates univariate statistics from a GRASS raster map"
+msgstr "Raster harita katmanlarının alansal istatistiklerini oluştur"
+
+#: ../locale/scriptstrings/r.univar.sh_to_translate.c:3
+msgid "extended statistics (quartiles and percentile)"
+msgstr ""
+
+#: ../locale/scriptstrings/r.univar.sh_to_translate.c:5
+msgid "Percentile to calculate (requires -e flag)"
+msgstr ""
+
+#: ../locale/scriptstrings/r.mapcalculator_to_translate.c:1
+msgid "Calculate new raster map from a r.mapcalc expression."
+msgstr ""
+
+#: ../locale/scriptstrings/r.mapcalculator_to_translate.c:2
+msgid "A"
+msgstr "A"
+
+#: ../locale/scriptstrings/r.mapcalculator_to_translate.c:3
+msgid "B"
+msgstr "B"
+
+#: ../locale/scriptstrings/r.mapcalculator_to_translate.c:4
+msgid "C"
+msgstr "C"
+
+#: ../locale/scriptstrings/r.mapcalculator_to_translate.c:5
+msgid "D"
+msgstr "D"
+
+#: ../locale/scriptstrings/r.mapcalculator_to_translate.c:6
+msgid "E"
+msgstr "E"
+
+#: ../locale/scriptstrings/r.mapcalculator_to_translate.c:7
+msgid "F"
+msgstr "F"
+
+#: ../locale/scriptstrings/r.mapcalculator_to_translate.c:8
+#: ../locale/scriptstrings/r3.mapcalculator_to_translate.c:8
+msgid "Formula (e.g. A-B or A*C+B)"
+msgstr "Formül (örneğin A-B veya A*C+B)"
+
+#: ../locale/scriptstrings/r.mapcalculator_to_translate.c:10
+#: ../locale/scriptstrings/r3.mapcalculator_to_translate.c:10
+msgid "Show help"
+msgstr "Yardımı göster"
+
+#: ../locale/scriptstrings/r.mapcalculator_to_translate.c:11
+msgid "Expert mode (enter a set of r.mapcalc expressions)"
+msgstr ""
+
+#: ../locale/scriptstrings/r.mapcalculator_to_translate.c:12
+#: ../locale/scriptstrings/r3.mapcalculator_to_translate.c:12
+msgid "Do not overwrite existing map"
+msgstr "Mevcut haritanın üzerine yazma"
+
+#: ../locale/scriptstrings/i.landsat.rgb_to_translate.c:1
+msgid "Performs auto-balancing of colors for LANDSAT images."
+msgstr ""
+
+#: ../locale/scriptstrings/i.landsat.rgb_to_translate.c:2
+msgid "raster, imagery, colors"
+msgstr "raster, görüntü, renkler"
+
+#: ../locale/scriptstrings/i.landsat.rgb_to_translate.c:3
+msgid "LANDSAT red channel"
+msgstr "LANDSAT kırmızı kanal"
+
+#: ../locale/scriptstrings/i.landsat.rgb_to_translate.c:4
+msgid "LANDSAT green channel"
+msgstr "LANDSAT yeşil kanal"
+
+#: ../locale/scriptstrings/i.landsat.rgb_to_translate.c:5
+msgid "LANDSAT blue channel"
+msgstr "LANDSAT mavi kanal"
+
+#: ../locale/scriptstrings/i.landsat.rgb_to_translate.c:6
+msgid "Cropping intensity (upper brightness level)"
+msgstr ""
+
+#: ../locale/scriptstrings/i.landsat.rgb_to_translate.c:7
+msgid "Extend colors to full range of data on each channel"
+msgstr ""
+
+#: ../locale/scriptstrings/i.landsat.rgb_to_translate.c:8
+msgid "Preserve relative colors, adjust brightness only"
+msgstr ""
+
+#: ../locale/scriptstrings/i.landsat.rgb_to_translate.c:9
+#, fuzzy
+msgid "Reset to standard color range"
+msgstr "Mevcut renk tablosunu uzaklaştır"
+
+#: ../locale/scriptstrings/d.monsize_to_translate.c:1
+msgid "Selects/starts specified monitor at specified size"
+msgstr ""
+
+#: ../locale/scriptstrings/d.monsize_to_translate.c:3
+#, fuzzy
+msgid "Display monitor to start"
+msgstr "Başlatılacak grafik ekranın adı"
+
+#: ../locale/scriptstrings/d.monsize_to_translate.c:4
+#, fuzzy
+msgid "Width in pixels of new display monitor"
+msgstr "Aktif görüntü ekranını yeniden boyutlandır"
+
+#: ../locale/scriptstrings/d.monsize_to_translate.c:5
+#, fuzzy
+msgid "Height in pixels of new display monitor"
+msgstr "Aktif görüntü ekranını yeniden boyutlandır"
+
+#: ../locale/scriptstrings/d.shadedmap_to_translate.c:1
+msgid "Drapes a color raster over a shaded relief map using d.his"
+msgstr ""
+
+#: ../locale/scriptstrings/d.shadedmap_to_translate.c:2
+msgid "Name of shaded relief or aspect map"
+msgstr "Gölgeli kabartma bakı haritasının adı"
+
+#: ../locale/scriptstrings/d.shadedmap_to_translate.c:3
+msgid "Name of raster to drape over relief map"
+msgstr "Kabartma harita üzerine örtülecek raster haritanın adı"
+
+#: ../locale/scriptstrings/d.shadedmap_to_translate.c:4
+#, fuzzy
+msgid "Percent to brighten"
+msgstr "Tamamlanan yüzde:"
+
+#: ../locale/scriptstrings/v.in.gpsbabel_to_translate.c:1
+msgid ""
+"Import waypoints, routes, and tracks from a GPS receiver or GPS download "
+"file into a vector map."
+msgstr ""
+
+#: ../locale/scriptstrings/v.in.gpsbabel_to_translate.c:4
+#, fuzzy
+msgid "Import waypoints"
+msgstr "Çizgileri poligon olarak dışa aktar"
+
+#: ../locale/scriptstrings/v.in.gpsbabel_to_translate.c:5
+msgid "Import routes"
+msgstr "Rotaları içe aktar"
+
+#: ../locale/scriptstrings/v.in.gpsbabel_to_translate.c:6
+msgid "Import track"
+msgstr "İzleri içe aktar"
+
+#: ../locale/scriptstrings/v.in.gpsbabel_to_translate.c:7
+msgid "Force vertices of track or route data as points"
+msgstr ""
+
+#: ../locale/scriptstrings/v.in.gpsbabel_to_translate.c:9
+msgid "Device or file used to import data"
+msgstr "İçeri veri aktarımında kullanılacak araç yada dosya"
+
+#: ../locale/scriptstrings/v.in.gpsbabel_to_translate.c:11
+msgid "Format of GPS input data (use gpsbabel supported formats)"
+msgstr ""
+
+#: ../locale/scriptstrings/v.in.gpsbabel_to_translate.c:12
+msgid ""
+"Projection of input data (PROJ.4 style), if not set Lat/Lon WGS84 is assumed"
+msgstr ""
+
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:1
+msgid "Downloads and imports data from WMS servers."
+msgstr "veriyi WMS sunucularından indirir ve içe aktarır."
+
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:2
+msgid "wms"
+msgstr ""
+
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:4
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:8
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:17
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:21
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:23
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:25
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:27
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:29
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:31
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:33
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:35
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:38
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:49
+msgid "Request"
+msgstr ""
+
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:5
+msgid "Skip to downloading (to resume downloads faster)"
+msgstr ""
+
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:6
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:10
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:40
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:42
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:44
+msgid "Download"
+msgstr "İndir"
+
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:7
+msgid "Don't request transparent data"
+msgstr ""
+
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:9
+msgid "Clean existing data out of download directory"
+msgstr ""
+
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:12
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:14
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:19
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:46
+msgid "Import"
+msgstr "İçe aktar"
+
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:13
+msgid "Don't reproject the data, just patch it"
+msgstr ""
+
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:15
+msgid "Use GET method instead of POST data method"
+msgstr ""
+
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:16
+msgid "This may be needed to connect to servers which lack POST capability"
+msgstr ""
+
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:20
+#, fuzzy
+msgid "Mapserver to request data from"
+msgstr "Tablodan veri seçilemiyor"
+
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:22
+#, fuzzy
+msgid "Layers to request from map server"
+msgstr "En azından iki raster harita gereklidir"
+
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:24
+#, fuzzy
+msgid "Styles to request from map server"
+msgstr "En azından iki raster harita gereklidir"
+
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:26
+#, fuzzy
+msgid "Source projection to request from server"
+msgstr "Kullanılacak yeniden projeksiyonlandırma yöntemi"
+
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:28
+#, fuzzy
+msgid "Image format requested from the server"
+msgstr "En azından iki raster harita gereklidir"
+
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:30
+msgid "Addition query options for server"
+msgstr "Sunucu için ek sorgu seçenekleri"
+
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:32
+#, fuzzy
+msgid "Maximum columns to request at a time"
+msgstr "Tablodan veri seçilemiyor"
+
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:34
+#, fuzzy
+msgid "Maximum rows to request at a time"
+msgstr "Tablodan veri seçilemiyor"
+
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:36
+msgid "Additional options for r.tileset"
+msgstr "r.tileset için ek seçenekler"
+
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:37
+msgid "Named region to request data for. Current region used if omitted"
+msgstr ""
+
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:39
+msgid "Folder to save downloaded data to"
+msgstr ""
+
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:41
+msgid "Additional options for wget"
+msgstr "wget için ek seçenekler"
+
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:43
+#, fuzzy
+msgid "Additional options for curl"
+msgstr "wget için ek seçenekler"
+
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:45
+msgid "Reprojection method to use"
+msgstr "Kullanılacak yeniden projeksiyonlandırma yöntemi"
+
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:47
+msgid "Filename to save capabilities XML file to"
+msgstr ""
+
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:48
+msgid "Requires list available layers flag"
+msgstr "Kullanılabilir katmanları listele bayrağı gereklidir"
+
+#: ../locale/scriptstrings/r.colors.stddev_to_translate.c:1
+msgid "Set color rules based on stddev from a map's mean value."
+msgstr ""
+
+#: ../locale/scriptstrings/r.colors.stddev_to_translate.c:4
+#, fuzzy
+msgid "Color using standard deviation bands"
+msgstr "Standart sapma"
+
+#: ../locale/scriptstrings/r.colors.stddev_to_translate.c:5
+msgid "Force center at zero"
+msgstr ""
+
+#: ../locale/scriptstrings/r.fillnulls_to_translate.c:1
+msgid ""
+"Fills no-data areas in raster maps using v.surf.rst splines interpolation"
+msgstr ""
+
+#: ../locale/scriptstrings/r.fillnulls_to_translate.c:2
+msgid "raster, elevation, interpolation"
+msgstr "raster, yükselti, enterpolasyon"
+
+#: ../locale/scriptstrings/r.fillnulls_to_translate.c:3
+msgid "Raster map in which to fill nulls"
+msgstr "Boş değer dosyası düzenlenecek raster harita"
+
+#: ../locale/scriptstrings/r.fillnulls_to_translate.c:4
+msgid ""
+"Output raster map with nulls filled by interpolation from surrounding values"
+msgstr ""
+
+#: ../locale/scriptstrings/r.fillnulls_to_translate.c:5
+#, fuzzy
+msgid "Spline tension parameter"
+msgstr "Eğri düzgünleştirme parametresi"
+
+#: ../locale/scriptstrings/r.fillnulls_to_translate.c:6
+msgid "Spline smoothing parameter"
+msgstr "Eğri düzgünleştirme parametresi"
+
+#: ../locale/scriptstrings/v.dissolve_to_translate.c:1
+msgid ""
+"Dissolves boundaries between adjacent areas sharing a common category number "
+"or attribute."
+msgstr ""
+
+#: ../locale/scriptstrings/v.dissolve_to_translate.c:2
+msgid "vector, area, dissolve"
+msgstr "vektör, alan, birleştir"
+
+#: ../locale/scriptstrings/v.dissolve_to_translate.c:5
+#, fuzzy
+msgid "Layer number. If -1, all layers are extracted."
+msgstr "OGR katman adı. Eğer hiç verilmezse, tüm olası katmanlar içe aktarılır"
+
+#: ../locale/scriptstrings/v.dissolve_to_translate.c:7
+msgid "Name of column used to dissolve common boundaries"
+msgstr "Ortak sınırları birleştirmede kullanılacak sütun adı"
+
+#: ../locale/scriptstrings/v.centroids_to_translate.c:1
+msgid "Adds missing centroids to closed boundaries."
+msgstr "Kapalı alanlara eksik alan merkezlerini ekler"
+
+#: ../locale/scriptstrings/v.centroids_to_translate.c:2
+msgid "vector, centroid, area"
+msgstr "vektör, alan merkezi, alan"
+
+#: ../locale/scriptstrings/v.centroids_to_translate.c:5
+msgid "Action to be taken"
+msgstr "Yapılacak eylem"
+
+#: ../locale/scriptstrings/v.centroids_to_translate.c:7
+msgid "Category number starting value"
+msgstr "Kategori başlangıç değeri"
+
+#: ../locale/scriptstrings/r3.mapcalculator_to_translate.c:1
+msgid "Calculates new grid3D volume from r3.mapcalc expression."
+msgstr ""
+
+#: ../locale/scriptstrings/r3.mapcalculator_to_translate.c:2
+msgid "A (grid3D file)"
+msgstr "A (grid3D dosya)"
+
+#: ../locale/scriptstrings/r3.mapcalculator_to_translate.c:3
+msgid "B (grid3D file)"
+msgstr "B (grid3D dosya)"
+
+#: ../locale/scriptstrings/r3.mapcalculator_to_translate.c:4
+msgid "C (grid3D file)"
+msgstr "C (grid3D dosya)"
+
+#: ../locale/scriptstrings/r3.mapcalculator_to_translate.c:5
+msgid "D (grid3D file)"
+msgstr "D (grid3D dosya)"
+
+#: ../locale/scriptstrings/r3.mapcalculator_to_translate.c:6
+msgid "E (grid3D file)"
+msgstr "E (grid3D dosya)"
+
+#: ../locale/scriptstrings/r3.mapcalculator_to_translate.c:7
+msgid "F (grid3D file)"
+msgstr "F (grid3D dosya)"
+
+#: ../locale/scriptstrings/r3.mapcalculator_to_translate.c:9
+msgid "Name for output grid3D volume"
+msgstr "Çıktı grid3D hacim adı"
+
+#: ../locale/scriptstrings/r3.mapcalculator_to_translate.c:11
+msgid "Expert mode (enter a set of r3.mapcalc expressions)"
+msgstr ""
+
+#: ../locale/scriptstrings/v.db.droptable_to_translate.c:1
+#, fuzzy
+msgid "Removes existing attribute table of a vector map."
+msgstr "Mevcut öznitelik tablosunun adı (varsayılan: vektör harita adı)"
+
+#: ../locale/scriptstrings/v.db.droptable_to_translate.c:3
+msgid "Force removal (required for actual deletion of table)"
+msgstr ""
+
+#: ../locale/scriptstrings/v.db.droptable_to_translate.c:4
+msgid "Vector map from which to remove attribute table"
+msgstr "Öznitelik tablosu silinecek vektör harita"
+
+#: ../locale/scriptstrings/v.db.droptable_to_translate.c:5
+msgid "Name of existing attribute table (default: vector map name)"
+msgstr "Mevcut öznitelik tablosunun adı (varsayılan: vektör harita adı)"
+
+#: ../locale/scriptstrings/v.db.droptable_to_translate.c:6
+#, fuzzy
+msgid "Layer from which to drop linked attribute table"
+msgstr "Öznitelik tablosu silinecek vektör harita"
+
+#: ../locale/scriptstrings/v.db.join_to_translate.c:1
+msgid "Allows to join a table to a vector map table."
+msgstr "Vektör harita tablosuna bir tablo bağlamayı sağlar."
+
+#: ../locale/scriptstrings/v.db.join_to_translate.c:3
+msgid "Vector map to which to join other table"
+msgstr "Diğer tabloya bağlanacak vektör harita"
+
+#: ../locale/scriptstrings/v.db.join_to_translate.c:4
+msgid "Layer where to join"
+msgstr "Bağlanacak katman"
+
+#: ../locale/scriptstrings/v.db.join_to_translate.c:5
+msgid "Join column in map table"
+msgstr "Harita tablosundaki bağ sütunu"
+
+#: ../locale/scriptstrings/v.db.join_to_translate.c:6
+msgid "Other table name"
+msgstr "Diğer tablo adı"
+
+#: ../locale/scriptstrings/v.db.join_to_translate.c:7
+msgid "Join column in other table"
+msgstr "Diğer tablodaki bağ sütunu"
+
+#: ../locale/scriptstrings/i.tasscap_to_translate.c:1
+#, fuzzy
+msgid "Tasseled Cap (Kauth Thomas) transformation for LANDSAT-TM data"
+msgstr "LANDSAT-4 için dönüşüm kurallarını kullan"
+
+#: ../locale/scriptstrings/i.tasscap_to_translate.c:2
+msgid "raster, imagery"
+msgstr "raster, görüntü"
+
+#: ../locale/scriptstrings/i.tasscap_to_translate.c:3
+msgid "use transformation rules for LANDSAT-4"
+msgstr "LANDSAT-4 için dönüşüm kurallarını kullan"
+
+#: ../locale/scriptstrings/i.tasscap_to_translate.c:4
+msgid "use transformation rules for LANDSAT-5"
+msgstr "LANDSAT-5 için dönüşüm kurallarını kullan"
+
+#: ../locale/scriptstrings/i.tasscap_to_translate.c:5
+msgid "use transformation rules for LANDSAT-7"
+msgstr "LANDSAT-7 için dönüşüm kurallarını kullan"
+
+#: ../locale/scriptstrings/i.tasscap_to_translate.c:6
+msgid "raster input map (LANDSAT channel 1)"
+msgstr "Raster girdi harita (LANDSAT kanal 1)"
+
+#: ../locale/scriptstrings/i.tasscap_to_translate.c:7
+msgid "raster input map (LANDSAT channel 2)"
+msgstr "Raster girdi harita (LANDSAT kanal 2)"
+
+#: ../locale/scriptstrings/i.tasscap_to_translate.c:8
+msgid "raster input map (LANDSAT channel 3)"
+msgstr "Raster girdi harita (LANDSAT kanal 3)"
+
+#: ../locale/scriptstrings/i.tasscap_to_translate.c:9
+msgid "raster input map (LANDSAT channel 4)"
+msgstr "Raster girdi harita (LANDSAT kanal 4)"
+
+#: ../locale/scriptstrings/i.tasscap_to_translate.c:10
+msgid "raster input map (LANDSAT channel 5)"
+msgstr "Raster girdi harita (LANDSAT kanal 5)"
+
+#: ../locale/scriptstrings/i.tasscap_to_translate.c:11
+msgid "raster input map (LANDSAT channel 7)"
+msgstr "Raster girdi harita (LANDSAT kanal 7)"
+
+#: ../locale/scriptstrings/i.tasscap_to_translate.c:12
+msgid "raster output TC maps prefix"
+msgstr "Çıktı TC harita öneki"
+
+#: ../locale/scriptstrings/v.db.addtable_to_translate.c:1
+#, fuzzy
+msgid ""
+"Creates and connects a new attribute table to a given layer of an existing "
+"vector map."
+msgstr ""
+"Verilen vektör haritaya bağlı öznitelik tablosundaki sütunu yeniden "
+"adlandırır"
+
+#: ../locale/scriptstrings/v.db.addtable_to_translate.c:3
+msgid "Vector map for which to add new attribute table"
+msgstr "Yeni öznitelik tablosu eklenecek vektör harita"
+
+#: ../locale/scriptstrings/v.db.addtable_to_translate.c:4
+msgid "Name of new attribute table (default: vector map name)"
+msgstr "Yeni öznitelik tablosu adı (varsayılan: vektör harita adı)"
+
+#: ../locale/scriptstrings/v.db.addtable_to_translate.c:5
+msgid "Layer where to add new attribute table"
+msgstr "Yeni öznitelik tablosu eklenecek katman"
+
+#: ../locale/scriptstrings/v.db.addtable_to_translate.c:6
+#: ../locale/scriptstrings/v.db.addcol_to_translate.c:5
+msgid ""
+"Name and type of the new column(s) (types depend on database backend, but "
+"all support VARCHAR(), INT, DOUBLE PRECISION and DATE)"
+msgstr ""
+
+#: ../locale/scriptstrings/v.in.wfs_to_translate.c:1
+msgid "Import GetFeature from WFS"
+msgstr ""
+
+#: ../locale/scriptstrings/v.in.wfs_to_translate.c:2
+msgid "GetFeature URL starting with http"
+msgstr ""
+
+#: ../locale/scriptstrings/v.in.wfs_to_translate.c:3
+msgid "Vector output map"
+msgstr "Vektör çıktı harita"
+
+#: ../locale/scriptstrings/r.shaded.relief_to_translate.c:1
+msgid "Creates shaded relief map from an elevation map (DEM)."
+msgstr ""
+
+#: ../locale/scriptstrings/r.shaded.relief_to_translate.c:4
+#, fuzzy
+msgid "Output shaded relief map name"
+msgstr "Çıktı sürücü adı"
+
+#: ../locale/scriptstrings/r.shaded.relief_to_translate.c:5
+msgid "Altitude of the sun in degrees above the horizon"
+msgstr "Güneşin yatay düzlemden olan derece olarak yüksekliği"
+
+#: ../locale/scriptstrings/r.shaded.relief_to_translate.c:6
+#, fuzzy
+msgid "Azimuth of the sun in degrees to the east of north"
+msgstr "Güneşin yatay düzlemden olan derece olarak yüksekliği"
+
+#: ../locale/scriptstrings/r.shaded.relief_to_translate.c:7
+#, fuzzy
+msgid "Factor for exaggerating relief"
+msgstr "Eğim raporlama formatı"
+
+#: ../locale/scriptstrings/r.shaded.relief_to_translate.c:8
+msgid "Scale factor for converting horizontal units to elevation units"
+msgstr ""
+
+#: ../locale/scriptstrings/r.shaded.relief_to_translate.c:9
+msgid ""
+"Set scaling factor (applies to lat./long. locations only, none: scale=1)"
+msgstr ""
+
+#: ../locale/scriptstrings/d.out.png_to_translate.c:1
+msgid "Saves active display monitor to PNG file in home directory"
+msgstr ""
+
+#: ../locale/scriptstrings/d.out.png_to_translate.c:3
+#, fuzzy
+msgid "Name of PNG file"
+msgstr "Etiket dosyası adı"
+
+#: ../locale/scriptstrings/d.out.png_to_translate.c:4
+msgid "Resolution of output file (single=1, double=2, quad=4)"
+msgstr ""
+
+#: ../locale/scriptstrings/i.oif_to_translate.c:1
+msgid "Calculates Optimum-Index-Factor table for LANDSAT TM bands 1-5, & 7"
+msgstr ""
+
+#: ../locale/scriptstrings/i.oif_to_translate.c:2
+msgid "raster, imagery, statistics"
+msgstr "raster, görüntü, istatistikler"
+
+#: ../locale/scriptstrings/i.oif_to_translate.c:3
+msgid "LANDSAT TM band 1."
+msgstr "LANDSAT TM band 1."
+
+#: ../locale/scriptstrings/i.oif_to_translate.c:4
+msgid "LANDSAT TM band 2."
+msgstr "LANDSAT TM band 2."
+
+#: ../locale/scriptstrings/i.oif_to_translate.c:5
+msgid "LANDSAT TM band 3."
+msgstr "LANDSAT TM band 3."
+
+#: ../locale/scriptstrings/i.oif_to_translate.c:6
+msgid "LANDSAT TM band 4."
+msgstr "LANDSAT TM band 4."
+
+#: ../locale/scriptstrings/i.oif_to_translate.c:7
+msgid "LANDSAT TM band 5."
+msgstr "LANDSAT TM band 5."
+
+#: ../locale/scriptstrings/i.oif_to_translate.c:8
+msgid "LANDSAT TM band 7."
+msgstr "LANDSAT TM band 7."
+
+#: ../locale/scriptstrings/r.li.setup_to_translate.c:1
+#, fuzzy
+msgid "Configuration editor for r.li.'index'"
+msgstr "Yapılandırma dosyası"
+
+#: ../locale/scriptstrings/r.li.setup_to_translate.c:2
+#, fuzzy
+msgid "raster, landscape structure analysis"
+msgstr "raster, arazi analizleri"
+
+#: ../locale/scriptstrings/db.in.ogr_to_translate.c:1
+#, fuzzy
+msgid "Imports attribute tables in various formats."
+msgstr "GRASS raster dosyasını GDAL desteğindeki biçime aktar."
+
+#: ../locale/scriptstrings/db.in.ogr_to_translate.c:3
+msgid "Table file to be imported or DB connection string"
+msgstr ""
+
+#: ../locale/scriptstrings/db.in.ogr_to_translate.c:4
+msgid "Table name of SQL DB table"
+msgstr "YSD veritabanı tablosu tablo adı"
+
+#: ../locale/scriptstrings/db.in.ogr_to_translate.c:6
+#, fuzzy
+msgid "Name for auto-generated unique key column"
+msgstr "<%s> için kullanılacak raster harita adı"
+
+#: ../locale/scriptstrings/d.rast.edit_to_translate.c:5
+msgid "Name of aspect raster map"
+msgstr "Raster bakı haritasının adı"
+
+#: ../locale/scriptstrings/d.rast.edit_to_translate.c:6
+msgid "Width of display canvas"
+msgstr "Gösterim kanavası genişliği"
+
+#: ../locale/scriptstrings/d.rast.edit_to_translate.c:7
+msgid "Height of display canvas"
+msgstr "Gösterim kanavası yüksekliği"
+
+#: ../locale/scriptstrings/d.rast.edit_to_translate.c:8
+msgid "Minimum size of each cell"
+msgstr "Her hücrenin en küçük boyutu"
+
+#: ../locale/scriptstrings/d.rast.edit_to_translate.c:9
+msgid "Maximum number of rows to load"
+msgstr "Yüklenecek en büyük satır sayısı"
+
+#: ../locale/scriptstrings/d.rast.edit_to_translate.c:10
+msgid "Maximum number of columns to load"
+msgstr "Yüklenecek en büyük sütun sayısı"
+
+#: ../locale/scriptstrings/v.db.dropcol_to_translate.c:1
+#, fuzzy
+msgid ""
+"Drops a column from the attribute table connected to a given vector map."
+msgstr ""
+"Verilen vektör haritaya bağlı öznitelik tablosundaki sütunu yeniden "
+"adlandırır"
+
+#: ../locale/scriptstrings/v.db.dropcol_to_translate.c:3
+msgid "Vector map for which to drop attribute column"
+msgstr "Öznitelik sütunu silinecek  vektör harita"
+
+#: ../locale/scriptstrings/v.db.dropcol_to_translate.c:4
+msgid "Layer where to drop column"
+msgstr "Sütun silinecek katman"
+
+#: ../locale/scriptstrings/d.polar_to_translate.c:1
+msgid "Draws polar diagram of angle map such as aspect or flow directions"
+msgstr ""
+
+#: ../locale/scriptstrings/d.polar_to_translate.c:3
+#, fuzzy
+msgid "Name of raster angle map"
+msgstr "Raster haritanın adı"
+
+#: ../locale/scriptstrings/d.polar_to_translate.c:4
+msgid "Pixel value to be interpreted as undefined (different from NULL)"
+msgstr ""
+
+#: ../locale/scriptstrings/d.polar_to_translate.c:5
+#, fuzzy
+msgid "Name of optional EPS output file"
+msgstr "Çıktı SVG dosyasının adı"
+
+#: ../locale/scriptstrings/d.polar_to_translate.c:6
+msgid "Plot using Xgraph"
+msgstr ""
+
+#: ../locale/scriptstrings/i.in.spotvgt_to_translate.c:1
+#, fuzzy
+msgid "Import of SPOT VGT NDVI file into a raster map"
+msgstr "E00 dosyasını vektör harita olarak içe aktar."
+
+#: ../locale/scriptstrings/i.in.spotvgt_to_translate.c:3
+msgid "also import quality map (SM status map layer) and filter NDVI map"
+msgstr ""
+
+#: ../locale/scriptstrings/i.in.spotvgt_to_translate.c:4
+msgid "existing SPOT VGT NDVI HDF file (0001_NDV.HDF)"
+msgstr ""
+
+#: ../locale/scriptstrings/v.db.addcol_to_translate.c:1
+msgid ""
+"Adds one or more columns to the attribute table connected to a given vector "
+"map."
+msgstr ""
+"Verilen vektör haritaya bağlı öznitelik tablosuna bir veya daha fazla sütun "
+"ekler."
+
+#: ../locale/scriptstrings/v.db.addcol_to_translate.c:3
+msgid "Vector map for which to edit attribute table"
+msgstr "Öznitelik tablosu düzenlenecek vektör harita"
+
+#: ../locale/scriptstrings/v.db.addcol_to_translate.c:4
+msgid "Layer where to add column"
+msgstr "Sütun eklenecek katman"
+
+#: ../locale/scriptstrings/d.mvmon_to_translate.c:1
+msgid "Moves displayed maps to another monitor"
+msgstr "Gösterilen haritaları başka ekrana taşır"
+
+#: ../locale/scriptstrings/d.mvmon_to_translate.c:3
+msgid "clear target monitor before moving"
+msgstr ""
+
+#: ../locale/scriptstrings/d.mvmon_to_translate.c:4
+msgid "stay with source monitor"
+msgstr "kaynak ekranda kal"
+
+#: ../locale/scriptstrings/d.mvmon_to_translate.c:5
+msgid "kill source monitor after moving"
+msgstr ""
+
+#: ../locale/scriptstrings/d.mvmon_to_translate.c:6
+msgid "Target monitor"
+msgstr "Hedef ekran"
+
+#: ../locale/scriptstrings/d.mvmon_to_translate.c:7
+msgid "Source monitor"
+msgstr "Kaynak ekran"
+
 #: ../sites/s.out.ascii/main.c:47 ../sites/s.in.ascii/main.c:50
 msgid "sites"
 msgstr ""
@@ -25595,6 +27782,11 @@ msgstr "[%s] doku dosyası okunamıyor"
 #: ../imagery/i.smap/shapiro/read_sig.c:27
 #, fuzzy, c-format
 msgid "Signature file <%s> is invalid"
+msgstr "[%s] doku dosyası geçersiz."
+
+#: ../imagery/i.smap/shapiro/read_sig.c:30
+#, fuzzy, c-format
+msgid "Signature file <%s> is empty"
 msgstr "[%s] doku dosyası geçersiz."
 
 #: ../imagery/i.smap/shapiro/parse.c:21 ../imagery/i.maxlik/main.c:79
@@ -27511,1071 +29703,44 @@ msgstr ""
 msgid "Can't mark another point.  Only %d points allowed.  Sorry."
 msgstr "Başka nokta işaretlenemiyor. Sadece %d nokta olanaklıdır.  Üzgünüm "
 
-#~ msgid "GIS manager for GRASS"
-#~ msgstr "GRASS CBS Yöneticisi"
+#~ msgid "Failed in attempt to open %s"
+#~ msgstr "%s dosyasını açmada hata"
 
-#, fuzzy
-#~ msgid "Name of GIS manager settings file (.grc)"
-#~ msgstr "Çalışma alanı dosyası adı"
+#~ msgid "Raster elevation file name"
+#~ msgstr "Raster yükselti dosyası adı"
 
-#~ msgid "Display manager for GRASS"
-#~ msgstr "GRASS Gösterim Yöneticisi"
+#~ msgid "Output slope filename"
+#~ msgstr "Çıktı eğim dosyası adı"
 
-#, fuzzy
-#~ msgid "Name of .dmrc settings file"
-#~ msgstr "Çalışma alanı dosyası adı"
+#~ msgid "Output aspect filename"
+#~ msgstr "Çıktı bakı dosyası adı"
 
-#, fuzzy
-#~ msgid "Configuration editor for r.li.'index'"
-#~ msgstr "Yapılandırma dosyası"
+#~ msgid "wrong type: %s"
+#~ msgstr "yanlış tip: %s"
 
-#, fuzzy
-#~ msgid "raster, landscape structure analysis"
-#~ msgstr "raster, arazi analizleri"
+#~ msgid "Creating support files..."
+#~ msgstr "Destek dosyaları oluşturuluyor..."
 
-#~ msgid "display, diagram"
-#~ msgstr "görüntü, diyagram"
+#~ msgid "ASPECT [%s] COMPLETE"
+#~ msgstr "BAKI [%s] TAMAMLANDI"
 
-#~ msgid "raster input map"
-#~ msgstr "raster girdi harita"
+#~ msgid "SLOPE [%s] COMPLETE"
+#~ msgstr "EĞİM  [%s] TAMAMLANDI"
 
-#, fuzzy
-#~ msgid "Display monitor to start"
-#~ msgstr "Başlatılacak grafik ekranın adı"
+#~ msgid "E-W SLOPE [%s] COMPLETE"
+#~ msgstr "D-B EĞİM [%s] TAMAMLANDI"
 
-#, fuzzy
-#~ msgid "Width in pixels of new display monitor"
-#~ msgstr "Aktif görüntü ekranını yeniden boyutlandır"
+#~ msgid "N-S SLOPE [%s] COMPLETE"
+#~ msgstr "K-G EĞİM [%s] TAMAMLANDI"
 
-#, fuzzy
-#~ msgid "Height in pixels of new display monitor"
-#~ msgstr "Aktif görüntü ekranını yeniden boyutlandır"
+#~ msgid "DXX [%s] COMPLETE"
+#~ msgstr "DXX [%s] TAMAMLANDI"
 
-#~ msgid "Moves displayed maps to another monitor"
-#~ msgstr "Gösterilen haritaları başka ekrana taşır"
+#~ msgid "DYY [%s] COMPLETE"
+#~ msgstr "DYY [%s] TAMAMLANDI"
 
-#~ msgid "stay with source monitor"
-#~ msgstr "kaynak ekranda kal"
-
-#~ msgid "Target monitor"
-#~ msgstr "Hedef ekran"
-
-#~ msgid "Source monitor"
-#~ msgstr "Kaynak ekran"
-
-#~ msgid "display, export, GPS"
-#~ msgstr "görüntü, dışa aktar, KKS"
-
-#~ msgid "Make JPEG instead of PNG image"
-#~ msgstr "PNG görüntüsü yerine JPEG yap"
-
-#, fuzzy
-#~ msgid "display, export"
-#~ msgstr "görüntü, dışa aktar, KKS"
-
-#, fuzzy
-#~ msgid "Name of PNG file"
-#~ msgstr "Etiket dosyası adı"
-
-#~ msgid "Saves the contents of the active display monitor to a graphics file."
-#~ msgstr "Aktif görüntü çerçevesi içeriğini grafik dosyaya kaydeder."
-
-#, fuzzy
-#~ msgid "Name for output file (do NOT add extension)"
-#~ msgstr "Çıktı dosya adı (uzantısını eklemeyin)"
-
-#, fuzzy
-#~ msgid "Images"
-#~ msgstr "Görüntü"
-
-#, fuzzy
-#~ msgid "Compression for PNG files"
-#~ msgstr "Etiket dosyası adı"
-
-#, fuzzy
-#~ msgid "Paper size for PostScript output"
-#~ msgstr "Kabuk betiği stilinde çıktı üretir"
-
-#~ msgid "Set transparent background"
-#~ msgstr "Şeffaf artalan ayarla"
-
-#, fuzzy
-#~ msgid "Set paper orientation to landscape (for PostScript output)"
-#~ msgstr "Kabuk betiği stilinde çıktı üretir"
-
-#, fuzzy
-#~ msgid "Do not crop away margins"
-#~ msgstr "Tablo kopyalanamıyor"
-
-#, fuzzy
-#~ msgid "Name of raster angle map"
-#~ msgstr "Raster haritanın adı"
-
-#, fuzzy
-#~ msgid "Name of optional EPS output file"
-#~ msgstr "Çıktı SVG dosyasının adı"
-
-#~ msgid "Name of aspect raster map"
-#~ msgstr "Raster bakı haritasının adı"
-
-#~ msgid "Width of display canvas"
-#~ msgstr "Gösterim kanavası genişliği"
-
-#~ msgid "Height of display canvas"
-#~ msgstr "Gösterim kanavası yüksekliği"
-
-#~ msgid "Minimum size of each cell"
-#~ msgstr "Her hücrenin en küçük boyutu"
-
-#~ msgid "Maximum number of rows to load"
-#~ msgstr "Yüklenecek en büyük satır sayısı"
-
-#~ msgid "Maximum number of columns to load"
-#~ msgstr "Yüklenecek en büyük sütun sayısı"
-
-#~ msgid "Displays a raster map and its legend on a graphics window"
-#~ msgstr "raster harita ve onun ölçek çubuğunu grafik ekranında gösterir."
-
-#, fuzzy
-#~ msgid "Omit entries with missing label"
-#~ msgstr "Etiketsiz kategorileri atla"
-
-#, fuzzy
-#~ msgid "Number of lines to appear in the legend"
-#~ msgstr "Çıktı kopya sayısı"
-
-#, fuzzy
-#~ msgid "Name of raster map to generate legend from"
-#~ msgstr "<%s> için kullanılacak raster harita adı"
-
-#, fuzzy
-#~ msgid "Name of raster map to print in legend"
-#~ msgstr "Görüntülenecek raster harita adı"
-
-#~ msgid "Redraws the current display frame in the GRASS monitor"
-#~ msgstr "GRASS ekranındaki geçerli görüntü çerçevelerini yeniden çizer"
-
-#~ msgid "Redraw all frames"
-#~ msgstr "Tüm çerçeveleri yeniden çiz"
-
-#~ msgid "Resizes active display monitor"
-#~ msgstr "Aktif görüntü ekranını yeniden boyutlandır"
-
-#~ msgid "New width for window"
-#~ msgstr "Pencere için yeni genişlik"
-
-#~ msgid "New height for window"
-#~ msgstr "Pencere için yeni yükseklik"
-
-#~ msgid "Name of shaded relief or aspect map"
-#~ msgstr "Gölgeli kabartma bakı haritasının adı"
-
-#~ msgid "Name of raster to drape over relief map"
-#~ msgstr "Kabartma harita üzerine örtülecek raster haritanın adı"
-
-#, fuzzy
-#~ msgid "Percent to brighten"
-#~ msgstr "Tamamlanan yüzde:"
-
-#~ msgid "Slide show of GRASS raster/vector maps."
-#~ msgstr "E"
-
-#, fuzzy
-#~ msgid "display, slideshow"
-#~ msgstr "görüntü, ayar"
-
-#~ msgid "Show vector maps rather than raster maps"
-#~ msgstr "Raster haritadan ziyade vektör haritaları göster"
-
-#, fuzzy
-#~ msgid "Number of seconds to pause between slides"
-#~ msgstr "oluşturulacak nokta sayısı"
-
-#~ msgid "Enter raster map to display in 1st frame"
-#~ msgstr "1. çerçevede gösterilecek raster haritayı gir"
-
-#~ msgid "Enter command to execute in 1st frame"
-#~ msgstr "1. çerçevede yürütülecek komutu gir"
-
-#~ msgid "Enter raster map to display in 2nd frame"
-#~ msgstr "2. çerçevede gösterilecek raster haritayı gir"
-
-#~ msgid "Enter command to execute in 2nd frame"
-#~ msgstr "2. çerçevede yürütülecek komutu gir"
-
-#~ msgid "How to split display"
-#~ msgstr "Gösterim nasıl bölünecek"
-
-#, fuzzy
-#~ msgid "Split the display into subframes."
-#~ msgstr "1. çerçevede gösterilecek raster haritayı gir"
-
-#, fuzzy
-#~ msgid "Number of subframes"
-#~ msgstr "Çerçeve sayısı"
-
-#, fuzzy
-#~ msgid "Displays thematic vector map"
-#~ msgstr "konusal vektör haritayı gösterir."
-
-#, fuzzy
-#~ msgid "display, vector, thematic, legend"
-#~ msgstr "Gösterim, lejand"
-
-#, fuzzy
-#~ msgid "Files"
-#~ msgstr "Çizgiler"
-
-#, fuzzy
-#~ msgid ""
-#~ "Name of attribute column to use for thematic display (must be numeric)"
-#~ msgstr "Tampon mesafesi için kullanılacak öznitelik sütunu"
-
-#~ msgid "Type of thematic display"
-#~ msgstr "konusal görüntü tipi"
-
-#, fuzzy
-#~ msgid "Vector point icon for point data"
-#~ msgstr "Diğer tabloya bağlanacak vektör harita"
-
-#, fuzzy
-#~ msgid "Icon size for point data"
-#~ msgstr "Diğer tabloya bağlanacak vektör harita"
-
-#, fuzzy
-#~ msgid "Number of classes for interval theme (integer)"
-#~ msgstr "Belirlenecek sınıf sayısı"
-
-#, fuzzy
-#~ msgid "Color scheme for graduated color mapping"
-#~ msgstr "Y verisinin rengi"
-
-#, fuzzy
-#~ msgid "Select 'single_color' for graduated point/line display"
-#~ msgstr "Y verisinin rengi"
-
-#, fuzzy
-#~ msgid "Color for graduated points map"
-#~ msgstr "Y verisinin rengi"
-
-#, fuzzy
-#~ msgid "Color for graduated lines or point/area outlines"
-#~ msgstr "Y verisinin rengi"
-
-#, fuzzy
-#~ msgid "Beginning color for custom color gradient"
-#~ msgstr "z koordinatı için ölçek faktörü"
-
-#, fuzzy
-#~ msgid "Must be expressed as R:G:B triplet"
-#~ msgstr "z koordinatı için ölçek faktörü"
-
-#, fuzzy
-#~ msgid "Ending color for custom color gradient"
-#~ msgstr "z koordinatı için ölçek faktörü"
-
-#~ msgid "Misc"
-#~ msgstr "çeşitli"
-
-#~ msgid "Select x11 display monitor for legend"
-#~ msgstr "Lejand için x11 görüntü ekranını seç"
-
-#~ msgid "Drops a column from selected attribute table"
-#~ msgstr "Seçilen öznitelik tablosundan bir sütun siler"
-
-#~ msgid "Table from which to drop attribute column"
-#~ msgstr "Öznitelik sütunu silinecek tablo"
-
-#~ msgid "Name of the column"
-#~ msgstr "Sütun adı"
-
-#~ msgid "Drops an attribute table."
-#~ msgstr "Öznitelik tablosunu düşürür"
-
-#~ msgid "Table to drop"
-#~ msgstr "Düşürülecek tablo"
-
-#~ msgid "Table name of SQL DB table"
-#~ msgstr "YSD veritabanı tablosu tablo adı"
-
-#~ msgid "Name for output table"
-#~ msgstr "Çıktı tablo adı"
-
-#, fuzzy
-#~ msgid "Name for auto-generated unique key column"
-#~ msgstr "<%s> için kullanılacak raster harita adı"
-
-#, fuzzy
-#~ msgid "Exports attribute tables into various formats."
-#~ msgstr "GRASS raster dosyasını GDAL desteğindeki biçime aktar."
-
-#~ msgid "GRASS table name"
-#~ msgstr "GRASS tablo adı"
-
-#~ msgid "Table format"
-#~ msgstr "Tablo biçimi"
-
-#~ msgid "Test name"
-#~ msgstr "Sınama adı"
-
-#, fuzzy
-#~ msgid "Display the HTML man pages of GRASS"
-#~ msgstr "GRASS Gösterim Yöneticisi"
-
-#~ msgid "general, manual, help"
-#~ msgstr "genel, kılavuz, yardım"
-
-#~ msgid "Display index"
-#~ msgstr "Görüntü indeksi"
-
-#, fuzzy
-#~ msgid "Manual entry to be displayed"
-#~ msgstr "Görüntülenecek raster harita "
-
-#, fuzzy
-#~ msgid "imagery, fusion, Brovey"
-#~ msgstr "Raster, görüntü, kaynaşma"
-
-#, fuzzy
-#~ msgid "LANDSAT sensor"
-#~ msgstr "LANDSAT kırmızı kanal"
-
-#, fuzzy
-#~ msgid "Sensor"
-#~ msgstr "LANDSAT kırmızı kanal"
-
-#, fuzzy
-#~ msgid "SPOT sensor"
-#~ msgstr "LANDSAT kırmızı kanal"
-
-#, fuzzy
-#~ msgid "Name of input raster map (green: tm2 | qbird_green | spot1)"
-#~ msgstr "Yeniden projeksiyonlanacak girdi raster harita adı"
-
-#, fuzzy
-#~ msgid "Name of input raster map (NIR: tm4 | qbird_nir | spot2)"
-#~ msgstr "Yeniden projeksiyonlanacak girdi raster harita adı"
-
-#, fuzzy
-#~ msgid "Name of input raster map (MIR; tm5 | qbird_red | spot3)"
-#~ msgstr "Yeniden projeksiyonlanacak girdi raster harita adı"
-
-#, fuzzy
-#~ msgid "Name of input raster map (etmpan | qbird_pan | spotpan)"
-#~ msgstr "Yeniden projeksiyonlanacak girdi raster harita adı"
-
-#, fuzzy
-#~ msgid "Name for output raster map prefix (e.g. 'brov')"
-#~ msgstr "Çıktı raster harita adı belirlenemedi"
-
-#~ msgid "raster, imagery, mosaicking"
-#~ msgstr "Raster, görüntü, mosaikleme"
-
-#~ msgid "1st map for mosaic (top of image stack)."
-#~ msgstr "Mozaik için 1. harita (görüntü yığınının üstü)"
-
-#~ msgid "2nd map for mosaic."
-#~ msgstr "Mozaik için 2. harita"
-
-#~ msgid "3rd map for mosaic."
-#~ msgstr "Mozaik için 3. harita"
-
-#~ msgid "4th map for mosaic."
-#~ msgstr "Mozaik için 4. harita"
-
-#, fuzzy
-#~ msgid "Import of SPOT VGT NDVI file into a raster map"
-#~ msgstr "E00 dosyasını vektör harita olarak içe aktar."
-
-#~ msgid "raster, imagery, import"
-#~ msgstr "raster, görüntü, içe aktar"
-
-#~ msgid "raster, imagery, colors"
-#~ msgstr "raster, görüntü, renkler"
-
-#~ msgid "LANDSAT red channel"
-#~ msgstr "LANDSAT kırmızı kanal"
-
-#~ msgid "LANDSAT green channel"
-#~ msgstr "LANDSAT yeşil kanal"
-
-#~ msgid "LANDSAT blue channel"
-#~ msgstr "LANDSAT mavi kanal"
-
-#~ msgid "raster, imagery, statistics"
-#~ msgstr "raster, görüntü, istatistikler"
-
-#~ msgid "LANDSAT TM band 1."
-#~ msgstr "LANDSAT TM band 1."
-
-#~ msgid "LANDSAT TM band 2."
-#~ msgstr "LANDSAT TM band 2."
-
-#~ msgid "LANDSAT TM band 3."
-#~ msgstr "LANDSAT TM band 3."
-
-#~ msgid "LANDSAT TM band 4."
-#~ msgstr "LANDSAT TM band 4."
-
-#~ msgid "LANDSAT TM band 5."
-#~ msgstr "LANDSAT TM band 5."
-
-#~ msgid "LANDSAT TM band 7."
-#~ msgstr "LANDSAT TM band 7."
-
-#, fuzzy
-#~ msgid "Raster input maps"
-#~ msgstr "raster girdi haritalar"
-
-#, fuzzy
-#~ msgid "Write output to PNG image"
-#~ msgstr "Çıktıyı PNG görüntüye yaz"
-
-#, fuzzy
-#~ msgid "Select multiple points"
-#~ msgstr "Tipi seç"
-
-#, fuzzy
-#~ msgid "Label with coordinates instead of numbering"
-#~ msgstr "xyz koordinatları yerine harita koordinatlarını kullan"
-
-#, fuzzy
-#~ msgid "Tasseled Cap (Kauth Thomas) transformation for LANDSAT-TM data"
-#~ msgstr "LANDSAT-4 için dönüşüm kurallarını kullan"
-
-#~ msgid "raster, imagery"
-#~ msgstr "raster, görüntü"
-
-#~ msgid "use transformation rules for LANDSAT-4"
-#~ msgstr "LANDSAT-4 için dönüşüm kurallarını kullan"
-
-#~ msgid "use transformation rules for LANDSAT-5"
-#~ msgstr "LANDSAT-5 için dönüşüm kurallarını kullan"
-
-#~ msgid "use transformation rules for LANDSAT-7"
-#~ msgstr "LANDSAT-7 için dönüşüm kurallarını kullan"
-
-#~ msgid "raster input map (LANDSAT channel 1)"
-#~ msgstr "Raster girdi harita (LANDSAT kanal 1)"
-
-#~ msgid "raster input map (LANDSAT channel 2)"
-#~ msgstr "Raster girdi harita (LANDSAT kanal 2)"
-
-#~ msgid "raster input map (LANDSAT channel 3)"
-#~ msgstr "Raster girdi harita (LANDSAT kanal 3)"
-
-#~ msgid "raster input map (LANDSAT channel 4)"
-#~ msgstr "Raster girdi harita (LANDSAT kanal 4)"
-
-#~ msgid "raster input map (LANDSAT channel 5)"
-#~ msgstr "Raster girdi harita (LANDSAT kanal 5)"
-
-#~ msgid "raster input map (LANDSAT channel 7)"
-#~ msgstr "Raster girdi harita (LANDSAT kanal 7)"
-
-#~ msgid "raster output TC maps prefix"
-#~ msgstr "Çıktı TC harita öneki"
-
-#~ msgid "miscellaneous, projection"
-#~ msgstr "çeşitli, projeksiyon"
-
-#, fuzzy
-#~ msgid "Input coordinate file (omit to read from stdin)"
-#~ msgstr "Yeniden projeksiyonlanacak girdi raster harita adı"
-
-#~ msgid "Field separator"
-#~ msgstr "Alan ayracı"
-
-#, fuzzy
-#~ msgid "Output projection parameters (PROJ.4 style)"
-#~ msgstr "Raster yön çıktı haritası"
-
-#, fuzzy
-#~ msgid "Name of first raster map for blending"
-#~ msgstr "İlk raster haritanın adı"
-
-#, fuzzy
-#~ msgid "Name of second raster map for blending"
-#~ msgstr "İkinci raster haritanın adı"
-
-#, fuzzy
-#~ msgid "Color using standard deviation bands"
-#~ msgstr "Standart sapma"
-
-#~ msgid "raster, elevation, interpolation"
-#~ msgstr "raster, yükselti, enterpolasyon"
-
-#~ msgid "Raster map in which to fill nulls"
-#~ msgstr "Boş değer dosyası düzenlenecek raster harita"
-
-#, fuzzy
-#~ msgid "Spline tension parameter"
-#~ msgstr "Eğri düzgünleştirme parametresi"
-
-#~ msgid "Spline smoothing parameter"
-#~ msgstr "Eğri düzgünleştirme parametresi"
-
-#~ msgid "Import SRTM HGT files into GRASS"
-#~ msgstr "SRTM HGT dosyalarını GRASS'a içe aktar"
-
-#~ msgid "SRTM input tile (file without .hgt.zip extension)"
-#~ msgstr "SRTM girdi dosyası (.hgt.zip uzantısı hariç)"
-
-#~ msgid "Output raster map (default: input tile)"
-#~ msgstr "Çıktı raster harita (varsayılan: girdi)"
-
-#~ msgid "Downloads and imports data from WMS servers."
-#~ msgstr "veriyi WMS sunucularından indirir ve içe aktarır."
-
-#~ msgid "Download"
-#~ msgstr "İndir"
-
-#~ msgid "Import"
-#~ msgstr "İçe aktar"
-
-#, fuzzy
-#~ msgid "Mapserver to request data from"
-#~ msgstr "Tablodan veri seçilemiyor"
-
-#, fuzzy
-#~ msgid "Styles to request from map server"
-#~ msgstr "En azından iki raster harita gereklidir"
-
-#, fuzzy
-#~ msgid "Source projection to request from server"
-#~ msgstr "Kullanılacak yeniden projeksiyonlandırma yöntemi"
-
-#~ msgid "Addition query options for server"
-#~ msgstr "Sunucu için ek sorgu seçenekleri"
-
-#~ msgid "Additional options for r.tileset"
-#~ msgstr "r.tileset için ek seçenekler"
-
-#~ msgid "Additional options for wget"
-#~ msgstr "wget için ek seçenekler"
-
-#, fuzzy
-#~ msgid "Additional options for curl"
-#~ msgstr "wget için ek seçenekler"
-
-#~ msgid "Reprojection method to use"
-#~ msgstr "Kullanılacak yeniden projeksiyonlandırma yöntemi"
-
-#~ msgid "Requires list available layers flag"
-#~ msgstr "Kullanılabilir katmanları listele bayrağı gereklidir"
-
-#~ msgid "A"
-#~ msgstr "A"
-
-#~ msgid "B"
-#~ msgstr "B"
-
-#~ msgid "C"
-#~ msgstr "C"
-
-#~ msgid "D"
-#~ msgstr "D"
-
-#~ msgid "E"
-#~ msgstr "E"
-
-#~ msgid "F"
-#~ msgstr "F"
-
-#~ msgid "Formula (e.g. A-B or A*C+B)"
-#~ msgstr "Formül (örneğin A-B veya A*C+B)"
-
-#~ msgid "Show help"
-#~ msgstr "Yardımı göster"
-
-#~ msgid "Do not overwrite existing map"
-#~ msgstr "Mevcut haritanın üzerine yazma"
-
-#~ msgid "raster, mask"
-#~ msgstr "raster, maske"
-
-#~ msgid "Raster map to use as MASK"
-#~ msgstr "MASKE olarak kullanılacak raster harita"
-
-#~ msgid "Overwrite existing MASK"
-#~ msgstr "Mevcut MASKE üzerine yaz"
-
-#~ msgid "Exports GRASS raster into GDAL supported formats."
-#~ msgstr "GRASS raster dosyasını GDAL desteğindeki biçime aktar."
-
-#, fuzzy
-#~ msgid "Region sensitive output"
-#~ msgstr "r.stats çıktısı okunuyor"
-
-#~ msgid "raster, elevation"
-#~ msgstr "raster, yükselti"
-
-#, fuzzy
-#~ msgid "Name of raster plane to be created"
-#~ msgstr "oluşturulacak raster harita tipi"
-
-#, fuzzy
-#~ msgid "Easting coordinate of a point on the plane"
-#~ msgstr "Bitiş noktasının D ve K grid harita koordinatları (D,K)"
-
-#, fuzzy
-#~ msgid "Northing coordinate of a point on the plane"
-#~ msgstr "Bitiş noktasının D ve K grid harita koordinatları (D,K)"
-
-#, fuzzy
-#~ msgid "Elevation coordinate of a point on the plane"
-#~ msgstr "Bitiş noktasının D ve K grid harita koordinatları (D,K)"
-
-#~ msgid "Type of the raster map to be created"
-#~ msgstr "oluşturulacak raster harita tipi"
-
-#~ msgid "raster, statistics, aggregation"
-#~ msgstr "raster, istatistikler, toplama"
-
-#, fuzzy
-#~ msgid "Output shaded relief map name"
-#~ msgstr "Çıktı sürücü adı"
-
-#~ msgid "Altitude of the sun in degrees above the horizon"
-#~ msgstr "Güneşin yatay düzlemden olan derece olarak yüksekliği"
-
-#, fuzzy
-#~ msgid "Azimuth of the sun in degrees to the east of north"
-#~ msgstr "Güneşin yatay düzlemden olan derece olarak yüksekliği"
-
-#, fuzzy
-#~ msgid "Factor for exaggerating relief"
-#~ msgstr "Eğim raporlama formatı"
-
-#, fuzzy
-#~ msgid "raster, tiling"
-#~ msgstr "raster, yükselti"
-
-#~ msgid "Produces shell script output"
-#~ msgstr "Kabuk betiği stilinde çıktı üretir"
-
-#, fuzzy
-#~ msgid "Produces web map server query string output"
-#~ msgstr "Kabuk betiği stilinde çıktı üretir"
-
-#~ msgid "Source projection"
-#~ msgstr "Kaynak projeksiyon"
-
-#~ msgid "Conversion factor from units to meters in source projection"
-#~ msgstr "Kaynak projeksiyondaki birimlerden metreye dönüşüm çarpanı"
-
-#, fuzzy
-#~ msgid "Destination projection, defaults to this location's projection"
-#~ msgstr "Projeksiyonun üstüne yaz (mevkinin projeksiyonunu kullan)"
-
-#, fuzzy
-#~ msgid "Maximum number of columns for a tile in the source projection"
-#~ msgstr "Yeni bölgedeki sütun sayısı"
-
-#, fuzzy
-#~ msgid "Maximum number of rows for a tile in the source projection"
-#~ msgstr "Hafızada tutulacak en küçük satır sayısı 1'dir"
-
-#, fuzzy
-#~ msgid "Number of cells tiles should overlap in each direction"
-#~ msgstr "Yeni bölgedeki sütun sayısı"
-
-#, fuzzy
-#~ msgid "calculates univariate statistics from a GRASS raster map"
-#~ msgstr "Raster harita katmanlarının alansal istatistiklerini oluştur"
-
-#~ msgid "A (grid3D file)"
-#~ msgstr "A (grid3D dosya)"
-
-#~ msgid "B (grid3D file)"
-#~ msgstr "B (grid3D dosya)"
-
-#~ msgid "C (grid3D file)"
-#~ msgstr "C (grid3D dosya)"
-
-#~ msgid "D (grid3D file)"
-#~ msgstr "D (grid3D dosya)"
-
-#~ msgid "E (grid3D file)"
-#~ msgstr "E (grid3D dosya)"
-
-#~ msgid "F (grid3D file)"
-#~ msgstr "F (grid3D dosya)"
-
-#~ msgid "Name for output grid3D volume"
-#~ msgstr "Çıktı grid3D hacim adı"
-
-#~ msgid "Rebuilds topology on all vector maps in the current mapset."
-#~ msgstr ""
-#~ "Geçerli harita takımındaki tüm vektör haritaların topolojisini yeniden "
-#~ "oluşturur."
-
-#~ msgid "Adds missing centroids to closed boundaries."
-#~ msgstr "Kapalı alanlara eksik alan merkezlerini ekler"
-
-#~ msgid "vector, centroid, area"
-#~ msgstr "vektör, alan merkezi, alan"
-
-#~ msgid "Name for output vector map"
-#~ msgstr "Çıktı vektör haritasının adı"
-
-#~ msgid "Action to be taken"
-#~ msgstr "Yapılacak eylem"
-
-#~ msgid "Category number starting value"
-#~ msgstr "Kategori başlangıç değeri"
-
-#, fuzzy
-#~ msgid "vector, color table"
-#~ msgstr "raster, renk tablosu"
-
-#, fuzzy
-#~ msgid "Name of column containing numeric data"
-#~ msgstr "x koordinatı içeren sütun adı"
-
-#, fuzzy
-#~ msgid "Layer number of data column"
-#~ msgstr "Sütun eklenecek katman"
-
-#, fuzzy
-#~ msgid "Name of color column to populate"
-#~ msgstr "Görüntülenecek sütun adı"
-
-#, fuzzy
-#~ msgid "Manually set range (min,max)"
-#~ msgstr "Tamsayı aralığı: en küçük, en büyük"
-
-#~ msgid "Path to rules file"
-#~ msgstr "Kural dosyası yolu"
-
-#, fuzzy
-#~ msgid "Save placeholder raster map for use with d.legend"
-#~ msgstr "Görüntülenecek raster harita adı"
-
-#~ msgid "run non-interactively"
-#~ msgstr "Etkileşimsiz olarak çalıştır"
-
-#~ msgid ""
-#~ "Adds one or more columns to the attribute table connected to a given "
-#~ "vector map."
-#~ msgstr ""
-#~ "Verilen vektör haritaya bağlı öznitelik tablosuna bir veya daha fazla "
-#~ "sütun ekler."
-
-#~ msgid "Vector map for which to edit attribute table"
-#~ msgstr "Öznitelik tablosu düzenlenecek vektör harita"
-
-#~ msgid "Layer where to add column"
-#~ msgstr "Sütun eklenecek katman"
-
-#, fuzzy
-#~ msgid ""
-#~ "Creates and connects a new attribute table to a given layer of an "
-#~ "existing vector map."
-#~ msgstr ""
-#~ "Verilen vektör haritaya bağlı öznitelik tablosundaki sütunu yeniden "
-#~ "adlandırır"
-
-#~ msgid "Vector map for which to add new attribute table"
-#~ msgstr "Yeni öznitelik tablosu eklenecek vektör harita"
-
-#~ msgid "Name of new attribute table (default: vector map name)"
-#~ msgstr "Yeni öznitelik tablosu adı (varsayılan: vektör harita adı)"
-
-#~ msgid "Layer where to add new attribute table"
-#~ msgstr "Yeni öznitelik tablosu eklenecek katman"
-
-#~ msgid "Allows to join a table to a vector map table."
-#~ msgstr "Vektör harita tablosuna bir tablo bağlamayı sağlar."
-
-#~ msgid "Vector map to which to join other table"
-#~ msgstr "Diğer tabloya bağlanacak vektör harita"
-
-#~ msgid "Layer where to join"
-#~ msgstr "Bağlanacak katman"
-
-#~ msgid "Join column in map table"
-#~ msgstr "Harita tablosundaki bağ sütunu"
-
-#~ msgid "Other table name"
-#~ msgstr "Diğer tablo adı"
-
-#~ msgid "Join column in other table"
-#~ msgstr "Diğer tablodaki bağ sütunu"
-
-#, fuzzy
-#~ msgid ""
-#~ "Drops a column from the attribute table connected to a given vector map."
-#~ msgstr ""
-#~ "Verilen vektör haritaya bağlı öznitelik tablosundaki sütunu yeniden "
-#~ "adlandırır"
-
-#~ msgid "Vector map for which to drop attribute column"
-#~ msgstr "Öznitelik sütunu silinecek  vektör harita"
-
-#~ msgid "Layer where to drop column"
-#~ msgstr "Sütun silinecek katman"
-
-#, fuzzy
-#~ msgid "Removes existing attribute table of a vector map."
-#~ msgstr "Mevcut öznitelik tablosunun adı (varsayılan: vektör harita adı)"
-
-#~ msgid "Vector map from which to remove attribute table"
-#~ msgstr "Öznitelik tablosu silinecek vektör harita"
-
-#~ msgid "Name of existing attribute table (default: vector map name)"
-#~ msgstr "Mevcut öznitelik tablosunun adı (varsayılan: vektör harita adı)"
-
-#, fuzzy
-#~ msgid "Layer from which to drop linked attribute table"
-#~ msgstr "Öznitelik tablosu silinecek vektör harita"
-
-#~ msgid ""
-#~ "Renames a column in the attribute table connected to a given vector map."
-#~ msgstr ""
-#~ "Verilen vektör haritaya bağlı öznitelik tablosundaki sütunu yeniden "
-#~ "adlandırır"
-
-#~ msgid "Vector map for which to rename attribute column"
-#~ msgstr "Öznitelik sütunu yeniden adlandırılacak vektör harita"
-
-#~ msgid "Layer where to rename column"
-#~ msgstr "Sütunu yeniden adlandırılacak katman"
-
-#~ msgid "Old and new name of the column (old,new)"
-#~ msgstr "Eski ve yeni sütun adı (eski,yeni)"
-
-#~ msgid "Reconnects vectors to a new database."
-#~ msgstr "Vektörleri yeni bir veritabanına yeniden bağlar."
-
-#, fuzzy
-#~ msgid "Name of old database"
-#~ msgstr "Yeni veritabanı adı"
-
-#~ msgid "Name of new database"
-#~ msgstr "Yeni veritabanı adı"
-
-#~ msgid "Old schema"
-#~ msgstr "Eski şema"
-
-#~ msgid "New schema"
-#~ msgstr "Yeni şema"
-
-#, fuzzy
-#~ msgid ""
-#~ "Calculates univariate statistics on selected table column for a GRASS "
-#~ "vector map."
-#~ msgstr "Raster harita katmanlarının alansal istatistiklerini oluştur"
-
-#~ msgid "Name of data table"
-#~ msgstr "Veri tablosunun adı"
-
-#, fuzzy
-#~ msgid "Column on which to calculate statistics (must be numeric)"
-#~ msgstr "Sütun adı (sayı tipinde olmalıdır)"
-
-#~ msgid "Database/directory for table"
-#~ msgstr "Tablo için veritabanı/dizin"
-
-#~ msgid "Database driver"
-#~ msgstr "Veritabanı sürücüsü"
-
-#, fuzzy
-#~ msgid ""
-#~ "Allows to update a column in the attribute table connected to a vector "
-#~ "map."
-#~ msgstr ""
-#~ "Verilen vektör haritaya bağlı öznitelik tablosundaki sütunu yeniden "
-#~ "adlandırır"
-
-#~ msgid "Vector map to edit the attribute table for"
-#~ msgstr "Öznitelik tablosu düzenlenecek vektör harita"
-
-#~ msgid "Column to update"
-#~ msgstr "Güncellenecek sütun"
-
-#~ msgid "Column to query"
-#~ msgstr "Sorgulanacak sütun"
-
-#~ msgid "vector, area, dissolve"
-#~ msgstr "vektör, alan, birleştir"
-
-#, fuzzy
-#~ msgid "Layer number. If -1, all layers are extracted."
-#~ msgstr ""
-#~ "OGR katman adı. Eğer hiç verilmezse, tüm olası katmanlar içe aktarılır"
-
-#~ msgid "Name of column used to dissolve common boundaries"
-#~ msgstr "Ortak sınırları birleştirmede kullanılacak sütun adı"
-
-#~ msgid "Import E00 file into a vector map."
-#~ msgstr "E00 dosyasını vektör harita olarak içe aktar."
-
-#~ msgid "E00 file"
-#~ msgstr "E00 dosyası"
-
-#~ msgid "Input type point, line or area"
-#~ msgstr "Girdi tipi nokta, çizgi veya alan"
-
-#~ msgid "vector, import, GPS"
-#~ msgstr "vektör, içe aktar, KKS"
-
-#~ msgid "Download Waypoints from GPS"
-#~ msgstr "Noktaları  KKS'nden indir"
-
-#~ msgid "Download Routes from GPS"
-#~ msgstr "Rotaları KKS'nden indir"
-
-#~ msgid "Download Track from GPS"
-#~ msgstr "İzleri  KKS'nden indir"
-
-#, fuzzy
-#~ msgid "Name for output vector map (omit for display to stdout)"
-#~ msgstr "Parçaların yazılacağı çıktı vektör haritasının adı"
-
-#~ msgid "Imports geonames.org country files into a GRASS vector points map."
-#~ msgstr ""
-#~ "geonames.org ülke dosyalarını GRASS vektör nokta haritasını içe aktarır."
-
-#, fuzzy
-#~ msgid "vector, import, gazetteer"
-#~ msgstr "vektör, içe aktar, noktalar"
-
-#, fuzzy
-#~ msgid ""
-#~ "Imports US-NGA GEOnet Names Server (GNS) country files into a GRASS "
-#~ "vector points map."
-#~ msgstr ""
-#~ "geonames.org ülke dosyalarını GRASS vektör nokta haritasını içe aktarır."
-
-#, fuzzy
-#~ msgid "Import waypoints"
-#~ msgstr "Çizgileri poligon olarak dışa aktar"
-
-#~ msgid "Import routes"
-#~ msgstr "Rotaları içe aktar"
-
-#~ msgid "Import track"
-#~ msgstr "İzleri içe aktar"
-
-#~ msgid "Device or file used to import data"
-#~ msgstr "İçeri veri aktarımında kullanılacak araç yada dosya"
-
-#, fuzzy
-#~ msgid "Import Mapgen or Matlab vector maps into GRASS."
-#~ msgstr "SRTM HGT dosyalarını GRASS'a içe aktar"
-
-#, fuzzy
-#~ msgid "Input map is in Matlab format"
-#~ msgstr "Girdi harita veri içermiyor"
-
-#, fuzzy
-#~ msgid "Create a 3D vector points map from 3 column Matlab data"
-#~ msgstr ""
-#~ "Koordinatları içeren veritabanı tablosundan yeni vektör(nokta) oluşturur."
-
-#, fuzzy
-#~ msgid "Name of input file in Mapgen/Matlab format"
-#~ msgstr "Girdi nokta vektör haritanın adı"
-
-#, fuzzy
-#~ msgid ""
-#~ "Converts all old GRASS < Ver5.7 sites maps in current mapset to vector "
-#~ "maps."
-#~ msgstr "GRASS nokta_listesi dosyasını vektör haritaya dönüştürür"
-
-#, fuzzy
-#~ msgid "sites, vector, import"
-#~ msgstr "vektör, içe aktar"
-
-#~ msgid "Run non-interactively"
-#~ msgstr "Etkileşimsiz olarak çalıştır"
-
-#~ msgid "Vector output map"
-#~ msgstr "Vektör çıktı harita"
-
-#, fuzzy
-#~ msgid "vector, export, GPS"
-#~ msgstr "vektör, içe aktar, KKS"
-
-#, fuzzy
-#~ msgid "Export as waypoints"
-#~ msgstr "Çizgileri poligon olarak dışa aktar"
-
-#, fuzzy
-#~ msgid "Export as routes"
-#~ msgstr "Rotaları içe aktar"
-
-#, fuzzy
-#~ msgid "Export as tracks"
-#~ msgstr "İzleri içe aktar"
-
-#, fuzzy
-#~ msgid "Feature type(s)"
-#~ msgstr "Obje tipi"
-
-#, fuzzy
-#~ msgid "Name for output file or GPS device"
-#~ msgstr "Çıktı dosya adı"
-
-#, fuzzy
-#~ msgid "GpsBabel supported output format"
-#~ msgstr "Desteklenen çıktı biçimlerini listele"
-
-#~ msgid "vector, raster, statistics"
-#~ msgstr "vektör, raster, istatistikler"
-
-#~ msgid "Name of vector polygon map"
-#~ msgstr "Vektör poligon haritasının adı"
-
-#~ msgid "Name of raster map to calculate statistics from"
-#~ msgstr "İstatistiklerin hesaplanacağı raster haritanın adı"
-
-#~ msgid "Column prefix for new attribute columns"
-#~ msgstr "Yeni öznitelik sütunları için sütun ön eki"
-
-#~ msgid "Reports geometry statistics for vectors."
-#~ msgstr "Vektör için istatistikleri raporlar."
-
-#~ msgid "vector, report, statistics"
-#~ msgstr "vektör, rapor, istatistikler"
-
-#, fuzzy
-#~ msgid "Reverse sort the result"
-#~ msgstr "Sonucu sırala"
-
-#~ msgid "Sort the result"
-#~ msgstr "Sonucu sırala"
-
-#~ msgid "Value to calculate"
-#~ msgstr "Hesaplanacak değer"
-
-#~ msgid "Uploads vector values at positions of vector points to the table."
-#~ msgstr ""
-#~ "Vektör noktaların bulunduğu konumdaki vektör değerlerini tabloya yükler."
-
-#, fuzzy
-#~ msgid "Vector map to modify"
-#~ msgstr "Değiştirilecek nokta  vektör harita"
-
-#~ msgid "Layer in the vector to be modified"
-#~ msgstr "Değiştirilecek vektör harita katmanı"
-
-#~ msgid "Column to be updated with the query result"
-#~ msgstr "Sorgu sonucuyla güncellenecek sütun"
-
-#~ msgid "Vector map to be queried"
-#~ msgstr "Sorgulanacak vektör harita"
-
-#, fuzzy
-#~ msgid "Layer of the query vector containing data"
-#~ msgstr "Veri içeren sorgu vektör katmanı"
-
-#~ msgid "Column to be queried"
-#~ msgstr "Sorgulanacak sütun"
-
-#~ msgid "Maximum query distance in map units"
-#~ msgstr "Harita birimlerine göre en büyük sorgu mesafesi"
+#~ msgid "DXY [%s] COMPLETE"
+#~ msgstr "DXY [%s] TAMAMLANDI"
 
 #~ msgid "raster, terrain analysis"
 #~ msgstr "raster, arazi analizleri"

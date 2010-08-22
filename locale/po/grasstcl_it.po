@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: grasstcl_it\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-06-02 21:15+0200\n"
+"POT-Creation-Date: 2010-08-22 02:31+0200\n"
 "PO-Revision-Date: 2009-02-17 12:14+0100\n"
 "Last-Translator: Andrea Giacomelli <pibinko at gmail.com>\n"
 "Language-Team: italian <grass-translations@lists.osgeo.org>\n"
@@ -1097,8 +1097,10 @@ msgid "Display scale and north arrow"
 msgstr "Mostra barra Scala e freccia nord"
 
 #: ../gui/tcltk/gis.m/barscale.tcl:170
+#, fuzzy, tcl-format
 msgid "Scale placement: 0-100% from top left of display"
-msgstr "Posizionamento della scala: 0-100% dall'angolo in alto a sinistra del display"
+msgstr ""
+"Posizionamento della scala: 0-100% dall'angolo in alto a sinistra del display"
 
 #: ../gui/tcltk/gis.m/barscale.tcl:176
 msgid "\t enter x,y of scale/arrow upper left corner"
@@ -4859,6 +4861,7 @@ msgstr ""
 "Vuoi sovrascriverlo?"
 
 #: ../gui/tcltk/gis.m/mapcanvas.tcl:1297
+#, fuzzy, tcl-format
 msgid "Display: rows=%d  cols=%d  N-S res=%s  E-W res=%s"
 msgstr "Visualizza: righe=%d col=%d  N-S ris=%gs E-W ris=%s"
 

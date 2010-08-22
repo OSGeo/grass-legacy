@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: grassmods_zh\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-06-02 21:15+0200\n"
+"POT-Creation-Date: 2010-08-22 02:31+0200\n"
 "PO-Revision-Date: 2007-12-13 16:33+0100\n"
 "Last-Translator: Zhang Jun <nilarcs@gmail.com>\n"
 "Language-Team: Simplified Chinese <translations@grass.itc.it>\n"
@@ -957,7 +957,6 @@ msgstr "打印时间戳 (日.月.年 小时:分钟:秒)"
 #: ../vector/v.what.rast/main.c:138 ../visualization/xganim/main.c:366
 #: ../visualization/nviz2/cmd/surface.c:56
 #: ../visualization/nviz2/cmd/surface.c:106 ../doc/raster/r.example/main.c:111
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:392
 #: ../ps/ps.map/outl_io.c:68 ../imagery/i.pca/main.c:129
 #: ../imagery/i.zc/main.c:111 ../imagery/i.rgb.his/openfiles.c:14
 #: ../imagery/i.rgb.his/openfiles.c:16 ../imagery/i.rgb.his/openfiles.c:18
@@ -984,7 +983,7 @@ msgstr "未找到栅格图<%s>"
 #: ../raster3d/base/r3.info.main.c:285 ../raster3d/base/r3.info.main.c:298
 #: ../raster3d/base/r3.info.main.c:308 ../raster3d/base/r3.info.main.c:313
 #: ../raster3d/base/r3.info.main.c:321 ../raster3d/base/r3.info.main.c:334
-#: ../raster/r.info/main.c:303 ../raster/r.info/main.c:428
+#: ../raster/r.info/main.c:303 ../raster/r.info/main.c:424
 msgid "Cannot allocate memory for string"
 msgstr "无法为字符串分配内存"
 
@@ -1144,7 +1143,7 @@ msgstr "使用地图坐标而不是 xyz 坐标"
 #: ../raster/r.region/main.c:54 ../raster/r.in.mat/main.c:92
 #: ../raster/r.in.arc/main.c:59 ../raster/r.neighbors/main.c:106
 #: ../raster/r.bitpattern/main.c:62
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:153
+#: ../locale/scriptstrings/r.blend_to_translate.c:2
 msgid "raster"
 msgstr ""
 
@@ -1153,7 +1152,13 @@ msgid "Exports a GRASS raster to a binary array."
 msgstr "将GRASS栅格输出为二元数组。"
 
 #: ../raster/r.out.bin/main.c:73 ../raster/r.random/main.c:57
-#: ../raster/r.water.outlet/main.c:55 ../imagery/i.zc/main.c:69
+#: ../raster/r.water.outlet/main.c:55
+#: ../locale/scriptstrings/r.out.gdal.sh_to_translate.c:5
+#: ../locale/scriptstrings/r.reclass.area_to_translate.c:3
+#: ../locale/scriptstrings/r.out.xyz_to_translate.c:3
+#: ../locale/scriptstrings/r.colors.stddev_to_translate.c:3
+#: ../locale/scriptstrings/d.rast.edit_to_translate.c:3
+#: ../imagery/i.zc/main.c:69
 msgid "Name of input raster map"
 msgstr "输入栅格图的名称"
 
@@ -1408,9 +1413,8 @@ msgstr "未找到栅格图<%s>"
 #: ../general/manage/cmd/rename.c:84 ../vector/v.in.ogr/main.c:326
 #: ../vector/v.to.rast3/main.c:69 ../vector/v.kernel/main.c:263
 #: ../vector/v.surf.idw/main.c:132 ../vector/v.edit/main.c:86
-#: ../doc/raster/r.example/main.c:114
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/opennew.c:11
-#: ../imagery/i.zc/main.c:119 ../imagery/i.ifft/ifftmain.c:116
+#: ../doc/raster/r.example/main.c:114 ../imagery/i.zc/main.c:119
+#: ../imagery/i.ifft/ifftmain.c:116
 #: ../imagery/i.ortho.photo/photo.camera/main.c:90
 #: ../imagery/i.fft/fftmain.c:121 ../imagery/i.fft/fftmain.c:124
 #, fuzzy, c-format
@@ -1497,6 +1501,8 @@ msgstr "读取地图 %s 时发生错误"
 #: ../raster/r.out.mat/main.c:64 ../raster/r.out.ascii/main.c:59
 #: ../raster/r.out.ppm/main.c:54 ../raster/r.out.tiff/r.out.tiff.c:99
 #: ../raster/r.out.gdal/main.c:128
+#: ../locale/scriptstrings/r.out.gdal.sh_to_translate.c:2
+#: ../locale/scriptstrings/r.out.xyz_to_translate.c:2
 msgid "raster, export"
 msgstr ""
 
@@ -1510,6 +1516,9 @@ msgstr "输出的二元MAT-File的名称"
 
 #: ../raster/r.out.mat/main.c:81 ../raster/r.out.tiff/r.out.tiff.c:136
 #: ../raster/r.in.mat/main.c:115
+#: ../locale/scriptstrings/v.in.e00_to_translate.c:3
+#: ../locale/scriptstrings/v.in.garmin_to_translate.c:3
+#: ../locale/scriptstrings/v.in.gpsbabel_to_translate.c:3
 msgid "Verbose mode"
 msgstr "详细模式"
 
@@ -1610,6 +1619,7 @@ msgstr "%d 个点写入矢量文件"
 
 #: ../raster/r.in.poly/main.c:29 ../raster/r.in.gdal/main.c:79
 #: ../raster/r.in.bin/main.c:122 ../raster/r.external/main.c:506
+#: ../locale/scriptstrings/r.in.srtm_to_translate.c:2
 #, fuzzy
 msgid "raster, import"
 msgstr "矢量导入完成"
@@ -1967,7 +1977,6 @@ msgstr "将fp地图以整数读取"
 #: ../raster/r.distance/parse.c:72 ../raster/r.carve/main.c:126
 #: ../raster/r.neighbors/main.c:277 ../vector/v.qcount/main.c:117
 #: ../vector/v.mkgrid/main.c:132
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:328
 msgid ""
 "The '-q' flag is superseded and will be removed in future. Please use '--"
 "quiet' instead."
@@ -2052,9 +2061,7 @@ msgstr "输出栅格文件的标题"
 #: ../raster/r.kappa/main.c:102 ../raster/r.report/parse.c:95
 #: ../raster/r.bitpattern/main.c:87 ../vector/v.sample/main.c:129
 #: ../vector/v.perturb/main.c:117 ../vector/v.kcv/main.c:106
-#: ../doc/raster/r.example/main.c:96
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:290
-#: ../imagery/i.cluster/main.c:163
+#: ../doc/raster/r.example/main.c:96 ../imagery/i.cluster/main.c:163
 msgid "Quiet"
 msgstr "安静模式"
 
@@ -3004,12 +3011,14 @@ msgstr "列出支持的格式然后退出"
 #: ../vector/v.info/main.c:92 ../vector/v.info/main.c:97
 #: ../vector/v.db.connect/main.c:81 ../vector/v.db.connect/main.c:86
 #: ../vector/v.db.connect/main.c:94 ../vector/v.db.connect/main.c:110
-#: ../db/base/connect.c:52 ../imagery/i.group/main.c:77
-#: ../imagery/i.group/main.c:83
+#: ../db/base/connect.c:52
+#: ../locale/scriptstrings/g.extension_to_translate.c:9
+#: ../imagery/i.group/main.c:77 ../imagery/i.group/main.c:83
 msgid "Print"
 msgstr ""
 
 #: ../raster/r.in.gdal/main.c:146
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:11
 msgid "Keep band numbers instead of using band color names"
 msgstr "使用波段数，而不使用波段的颜色名称"
 
@@ -3259,11 +3268,6 @@ msgstr "有符号的数据(高位代表负值)"
 #: ../vector/v.vol.rst/main.c:319 ../vector/v.vol.rst/main.c:328
 #: ../vector/v.vol.rst/main.c:337 ../vector/v.vol.rst/main.c:345
 #: ../vector/v.db.connect/main.c:60 ../vector/v.db.connect/main.c:65
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:189
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:199
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:276
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:285
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:296
 #: ../db/base/connect.c:62 ../db/base/connect.c:66 ../db/base/connect.c:77
 #: ../db/base/connect.c:87 ../imagery/i.cluster/main.c:105
 #: ../imagery/i.cluster/main.c:121 ../imagery/i.cluster/main.c:129
@@ -4149,6 +4153,8 @@ msgstr "无法创建栅格地图 %s"
 #: ../raster/r.stats/main.c:103 ../raster/r.statistics/main.c:42
 #: ../raster/r.report/main.c:64 ../raster/r.univar2/r.univar_main.c:75
 #: ../raster/r.support.stats/main.c:39 ../raster/r.quantile/main.c:254
+#: ../locale/scriptstrings/r.regression.line_to_translate.c:2
+#: ../locale/scriptstrings/r.univar.sh_to_translate.c:2
 msgid "raster, statistics"
 msgstr ""
 
@@ -4157,13 +4163,14 @@ msgid "Generates area statistics for raster map layers."
 msgstr "为栅格图层生成区域统计值。"
 
 #: ../raster/r.stats/main.c:114
+#: ../locale/scriptstrings/r.out.xyz_to_translate.c:4
 #, fuzzy
 msgid "Name for output file (if omitted or \"-\" output to stdout)"
 msgstr "输出的二进制地图的名称 (output=- 用于标准输出)"
 
 #: ../raster/r.stats/main.c:119 ../raster/r.cats/main.c:72
 #: ../raster/r.distance/parse.c:50 ../vector/v.db.select/main.c:63
-#: ../db/base/select.c:202
+#: ../db/base/select.c:202 ../locale/scriptstrings/r.tileset_to_translate.c:13
 msgid "Output field separator"
 msgstr "输出字段分隔符"
 
@@ -4728,12 +4735,10 @@ msgstr ""
 "输出栅格文件的名称"
 
 #: ../raster/r.slope.aspect/main.c:178
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:188
 msgid "Format for reporting the slope"
 msgstr "表达坡度的格式"
 
 #: ../raster/r.slope.aspect/main.c:188
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:198
 msgid "Type of output aspect and slope maps"
 msgstr "输出的坡向图和坡度图的类型"
 
@@ -4775,17 +4780,14 @@ msgid "Name for output second order partial derivative dxy raster map"
 msgstr "输出二阶偏导数dxy的文件名"
 
 #: ../raster/r.slope.aspect/main.c:243
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:272
 msgid "Multiplicative factor to convert elevation units to meters"
 msgstr "将高程单位转换到米的乘法因子"
 
 #: ../raster/r.slope.aspect/main.c:252
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:281
 msgid "Minimum slope val. (in percent) for which aspect is computed"
 msgstr "最小的坡度值。(百分数)用于计算坡向"
 
 #: ../raster/r.slope.aspect/main.c:266
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:295
 msgid "Do not align the current region to the elevation layer"
 msgstr "不将当前区域对齐到高程图层上"
 
@@ -4828,7 +4830,6 @@ msgid "Elevation products for mapset <%s> in <%s>"
 msgstr "无法为[%s]打开像元文件"
 
 #: ../raster/r.slope.aspect/main.c:1009
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:1042
 #, c-format
 msgid "Min computed aspect %.4f, max computed aspect %.4f"
 msgstr ""
@@ -4839,7 +4840,6 @@ msgid "Aspect raster map <%s> complete"
 msgstr "未找到栅格图<%s>"
 
 #: ../raster/r.slope.aspect/main.c:1113
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:1146
 #, c-format
 msgid "Min computed slope %.4f, max computed slope %.4f"
 msgstr ""
@@ -5053,7 +5053,14 @@ msgstr ""
 msgid "Imports GRIDATB.FOR map file (TOPMODEL) into GRASS raster map"
 msgstr "将GRIDATB.FOR地图文件(TOPMODEL)导入到GRASS栅格图中"
 
-#: ../raster/r.in.gridatb/main.c:53 ../imagery/i.ifft/ifftmain.c:83
+#: ../raster/r.in.gridatb/main.c:53
+#: ../locale/scriptstrings/r.reclass.area_to_translate.c:4
+#: ../locale/scriptstrings/r.in.aster_to_translate.c:6
+#: ../locale/scriptstrings/r.mapcalculator_to_translate.c:9
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:18
+#: ../locale/scriptstrings/d.rast.edit_to_translate.c:4
+#: ../locale/scriptstrings/i.in.spotvgt_to_translate.c:5
+#: ../imagery/i.ifft/ifftmain.c:83
 #, fuzzy
 msgid "Name for output raster map"
 msgstr ""
@@ -5090,7 +5097,6 @@ msgstr "输出图层的名称"
 
 #: ../raster/r.resample/main.c:137 ../raster/r.resamp.rst/main.c:527
 #: ../vector/v.surf.rst/main.c:602 ../vector/v.surf.rst/main.c:753
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:600
 msgid "Percent complete: "
 msgstr "完成率："
 
@@ -7523,6 +7529,7 @@ msgid "Raster file(s) for View%d"
 msgstr "第%d幅视图的栅格文件"
 
 #: ../raster/r.out.mpeg/main.c:406
+#: ../locale/scriptstrings/r.out.gdal.sh_to_translate.c:8
 msgid "Name for output file"
 msgstr "输出文件的名称"
 
@@ -8407,6 +8414,7 @@ msgid ""
 msgstr ""
 
 #: ../raster/r.colors/main.c:165
+#: ../locale/scriptstrings/r.colors.stddev_to_translate.c:2
 #, fuzzy
 msgid "raster, color table"
 msgstr "将要查询的栅格地图"
@@ -8417,6 +8425,7 @@ msgid "Creates/modifies the color table associated with a raster map layer."
 msgstr "根据栅格图层创建/修改色彩表。"
 
 #: ../raster/r.colors/main.c:181
+#: ../locale/scriptstrings/v.colors_to_translate.c:9
 msgid "Type of color table"
 msgstr "色彩表类型"
 
@@ -8433,10 +8442,16 @@ msgstr "色彩表类型"
 #: ../vector/v.label/main.c:153 ../vector/v.label/main.c:177
 #: ../vector/v.label/main.c:190 ../vector/v.label/main.c:196
 #: ../vector/v.label/main.c:206
+#: ../locale/scriptstrings/v.colors_to_translate.c:7
+#: ../locale/scriptstrings/v.colors_to_translate.c:10
+#: ../locale/scriptstrings/v.colors_to_translate.c:12
+#: ../locale/scriptstrings/v.colors_to_translate.c:14
+#: ../locale/scriptstrings/v.colors_to_translate.c:17
 msgid "Colors"
 msgstr ""
 
 #: ../raster/r.colors/main.c:191
+#: ../locale/scriptstrings/v.colors_to_translate.c:11
 msgid "Raster map name from which to copy color table"
 msgstr "提供色彩表的栅格图名称"
 
@@ -8460,6 +8475,7 @@ msgid "List available rules then exit"
 msgstr "列出可用的格式并退出"
 
 #: ../raster/r.colors/main.c:214
+#: ../locale/scriptstrings/v.colors_to_translate.c:16
 #, fuzzy
 msgid "Invert colors"
 msgstr " nv color\n"
@@ -8978,6 +8994,7 @@ msgid "Exports GRASS raster maps into GDAL supported formats."
 msgstr "将GRASS栅格输出为二元数组。"
 
 #: ../raster/r.out.gdal/main.c:132
+#: ../locale/scriptstrings/r.out.gdal.sh_to_translate.c:3
 #, fuzzy
 msgid "List supported output formats"
 msgstr "列出支持的格式然后退出"
@@ -9005,10 +9022,12 @@ msgid "Name of raster map (or group) to export"
 msgstr "包含结果的栅格图的名称"
 
 #: ../raster/r.out.gdal/main.c:154
+#: ../locale/scriptstrings/r.out.gdal.sh_to_translate.c:6
 msgid "GIS format to write (case sensitive, see also -l flag)"
 msgstr ""
 
 #: ../raster/r.out.gdal/main.c:175
+#: ../locale/scriptstrings/r.out.gdal.sh_to_translate.c:7
 #, fuzzy
 msgid "File type"
 msgstr "要素类型"
@@ -9027,6 +9046,7 @@ msgid "Creation option(s) to pass to the output format driver"
 msgstr ""
 
 #: ../raster/r.out.gdal/main.c:192
+#: ../locale/scriptstrings/d.out.file_to_translate.c:21
 msgid "In the form of \"NAME=VALUE\", separate multiple entries with a comma."
 msgstr ""
 
@@ -9289,8 +9309,8 @@ msgstr ""
 #: ../raster/r.out.gdal/export_band.c:215
 #, c-format
 msgid ""
-"The given nodata value is present in rasterband <%s> and would lead to data "
-"loss. Please specify a different nodata value with the %s parameter."
+"The user given nodata value %g is present in rasterband <%s> and would lead "
+"to data loss. Please specify a different nodata value with the %s parameter."
 msgstr ""
 
 #: ../raster/r.out.gdal/export_band.c:259
@@ -10259,6 +10279,7 @@ msgid "Converts a raster map into a vector map layer."
 msgstr "将栅格图转化为矢量图层。"
 
 #: ../raster/r.to.vect/main.c:64 ../vector/v.to.db/parse.c:36
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:6
 msgid "Feature type"
 msgstr "要素类型"
 
@@ -11951,6 +11972,7 @@ msgid "Creates topographic index [ln(a/tan(beta))] map from elevation map."
 msgstr "从高程地图创建地形索引ln(a/tan(beta))图。"
 
 #: ../raster/r.topidx/main.c:42
+#: ../locale/scriptstrings/r.shaded.relief_to_translate.c:3
 #, fuzzy
 msgid "Input elevation map"
 msgstr "输出的高程 g3d 文件"
@@ -11980,6 +12002,7 @@ msgstr "地形索引ln(a/tanB)图"
 
 #: ../raster/r.univar2/r.univar_main.c:40
 #: ../raster/r.univar2/r3.univar_main.c:39 ../vector/v.univar/main.c:92
+#: ../locale/scriptstrings/v.rast.stats_to_translate.c:10
 msgid "Percentile to calculate (requires extended statistics flag)"
 msgstr ""
 
@@ -11990,6 +12013,7 @@ msgstr "以shell脚本的样式输出统计值"
 
 #: ../raster/r.univar2/r.univar_main.c:49
 #: ../raster/r.univar2/r3.univar_main.c:48 ../vector/v.univar/main.c:100
+#: ../locale/scriptstrings/v.rast.stats_to_translate.c:4
 #, fuzzy
 msgid "Calculate extended statistics"
 msgstr "类别或面向对象的统计。"
@@ -12653,11 +12677,15 @@ msgstr ""
 msgid "Access for others"
 msgstr ""
 
-#: ../general/g.access/main.c:63
-msgid "Access to the PERMANENT mapset must be open, nothing changed"
+#: ../general/g.access/main.c:59
+msgid "UNIX filesystem access controls are not supported by MS-Windows"
 msgstr ""
 
 #: ../general/g.access/main.c:67
+msgid "Access to the PERMANENT mapset must be open, nothing changed"
+msgstr ""
+
+#: ../general/g.access/main.c:71
 #, fuzzy
 msgid "Unable to determine mapset permissions"
 msgstr "无法创建栅格地图 %s"
@@ -13474,6 +13502,8 @@ msgid "Use extended regular expressions instead of wildcards"
 msgstr ""
 
 #: ../general/g.mremove/main.c:76
+#: ../locale/scriptstrings/db.droptable_to_translate.c:3
+#: ../locale/scriptstrings/db.dropcol_to_translate.c:3
 msgid "Force removal (required for actual deletion of files)"
 msgstr ""
 
@@ -13677,6 +13707,8 @@ msgid "Print the maximum bounding box in lat/long on WGS84"
 msgstr "以 WGS84 下的经纬度值打印最大外接矩形的范围 (仅用于-g 模式)"
 
 #: ../general/g.region/main.c:133
+#: ../locale/scriptstrings/r.regression.line_to_translate.c:3
+#: ../locale/scriptstrings/i.oif_to_translate.c:9
 #, fuzzy
 msgid "Print in shell script style"
 msgstr "以shell脚本的样式输出统计值"
@@ -13953,6 +13985,8 @@ msgstr ""
 #: ../display/d.text/main.c:66 ../display/d.rast.num/number.c:84
 #: ../display/d.nviz/main.c:68 ../display/d.zoom/main.c:57
 #: ../visualization/ximgview/main.c:270
+#: ../locale/scriptstrings/d.rast.leg_to_translate.c:2
+#: ../locale/scriptstrings/d.redraw_to_translate.c:2
 msgid "display"
 msgstr ""
 
@@ -14385,6 +14419,13 @@ msgstr "边框颜色"
 
 #: ../display/d.grid/main.c:76 ../display/d.grid/main.c:81
 #: ../display/d.grid/main.c:87
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:27
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:30
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:33
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:36
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:39
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:55
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:57
 msgid "Color"
 msgstr ""
 
@@ -14889,6 +14930,10 @@ msgid ""
 msgstr ""
 
 #: ../display/d.extend/main.c:31
+#: ../locale/scriptstrings/d.split_to_translate.c:2
+#: ../locale/scriptstrings/d.resize_to_translate.c:2
+#: ../locale/scriptstrings/d.monsize_to_translate.c:2
+#: ../locale/scriptstrings/d.mvmon_to_translate.c:2
 msgid "display, setup"
 msgstr ""
 
@@ -14899,10 +14944,12 @@ msgstr "作为背景的栅格图的名称"
 
 #: ../display/d.rast.edit/main.c:59 ../display/d.colortable/main.c:60
 #: ../display/d.rast/main.c:51
+#: ../locale/scriptstrings/d.rast.edit_to_translate.c:2
 msgid "display, raster"
 msgstr ""
 
 #: ../display/d.rast.edit/main.c:61
+#: ../locale/scriptstrings/d.rast.edit_to_translate.c:1
 #, fuzzy
 msgid "Interactively edit cell values in a raster map."
 msgstr "栅格图上的起始值"
@@ -14952,6 +14999,8 @@ msgid ""
 msgstr ""
 
 #: ../display/d.legend/main.c:92 ../display/d.zoom/main.c:90
+#: ../locale/scriptstrings/d.rast.leg_to_translate.c:5
+#: ../locale/scriptstrings/r.univar.sh_to_translate.c:4
 msgid "Name of raster map"
 msgstr "栅格图的名称"
 
@@ -14970,13 +15019,6 @@ msgstr ""
 #: ../display/d.legend/main.c:180 ../display/d.legend/main.c:185
 #: ../vector/v.buffer/main.c:279 ../vector/v.buffer/main.c:287
 #: ../vector/v.buffer/main.c:294 ../vector/v.buffer/main.c:304
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:208
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:217
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:227
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:237
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:247
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:257
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:267
 msgid "Advanced"
 msgstr ""
 
@@ -15021,6 +15063,7 @@ msgid "Draw smooth gradient"
 msgstr ""
 
 #: ../display/d.legend/main.c:184
+#: ../locale/scriptstrings/d.rast.leg_to_translate.c:3
 msgid "Flip legend"
 msgstr ""
 
@@ -16647,6 +16690,7 @@ msgid ""
 msgstr ""
 
 #: ../display/d.zoom/main.c:100
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:4
 #, fuzzy
 msgid "Name of vector map"
 msgstr "输入的 2D 矢量地图的名称"
@@ -17025,6 +17069,7 @@ msgstr "类别 = %d 没有记录"
 #: ../vector/v.external/main.c:58 ../vector/v.clean/test/topocheck.c:42
 #: ../vector/v.buffer/main.c:254 ../vector/v.info/main.c:257
 #: ../vector/v.surf.rst/main.c:161
+#: ../locale/scriptstrings/v.build.all_to_translate.c:2
 msgid "vector"
 msgstr ""
 
@@ -17133,6 +17178,15 @@ msgstr "无法插入新行：%s"
 
 #: ../vector/v.db.select/main.c:52 ../vector/v.to.db/main.c:33
 #: ../vector/v.distance/main.c:115 ../vector/v.db.connect/main.c:50
+#: ../locale/scriptstrings/v.what.vect_to_translate.c:2
+#: ../locale/scriptstrings/v.db.update_to_translate.c:2
+#: ../locale/scriptstrings/v.db.renamecol_to_translate.c:2
+#: ../locale/scriptstrings/v.db.reconnect.all_to_translate.c:2
+#: ../locale/scriptstrings/v.db.droptable_to_translate.c:2
+#: ../locale/scriptstrings/v.db.join_to_translate.c:2
+#: ../locale/scriptstrings/v.db.addtable_to_translate.c:2
+#: ../locale/scriptstrings/v.db.dropcol_to_translate.c:2
+#: ../locale/scriptstrings/v.db.addcol_to_translate.c:2
 #, fuzzy
 msgid "vector, database, attribute table"
 msgstr "无法创建属性表"
@@ -17268,6 +17322,7 @@ msgid "Required for operation 'connect'"
 msgstr ""
 
 #: ../vector/v.net/main.c:69
+#: ../locale/scriptstrings/g.extension_to_translate.c:5
 #, fuzzy
 msgid "Operation to be performed"
 msgstr "未发现区域<%s>"
@@ -17697,6 +17752,8 @@ msgstr ""
 #: ../vector/v.qcount/main.c:69 ../vector/v.kcv/main.c:76
 #: ../vector/v.class/main.c:45 ../vector/v.normal/main.c:79
 #: ../vector/v.univar/main.c:64
+#: ../locale/scriptstrings/v.univar.sh_to_translate.c:2
+#: ../locale/scriptstrings/v.db.univar_to_translate.c:2
 msgid "vector, statistics"
 msgstr ""
 
@@ -18542,6 +18599,9 @@ msgstr "未发现矢量地图<%s>"
 
 #: ../vector/v.in.ogr/main.c:101 ../vector/v.in.dxf/main.c:60
 #: ../vector/v.in.dwg/main.c:65 ../vector/v.in.ascii/in.c:48
+#: ../locale/scriptstrings/v.convert.all_to_translate.c:2
+#: ../locale/scriptstrings/v.in.e00_to_translate.c:2
+#: ../locale/scriptstrings/v.in.mapgen_to_translate.c:2
 #, fuzzy
 msgid "vector, import"
 msgstr "矢量导入完成"
@@ -19734,6 +19794,11 @@ msgid "Path to resulting VTK file"
 msgstr "结果矢量文件的名称"
 
 #: ../vector/v.out.vtk/main.c:83
+#: ../locale/scriptstrings/v.report_to_translate.c:6
+#: ../locale/scriptstrings/v.out.gpsbabel_to_translate.c:10
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:17
+#: ../locale/scriptstrings/v.rast.stats_to_translate.c:6
+#: ../locale/scriptstrings/v.centroids_to_translate.c:6
 #, fuzzy
 msgid "Layer number"
 msgstr "图层 %d"
@@ -19805,6 +19870,9 @@ msgstr "字段分隔符"
 
 #: ../vector/v.out.ascii/out.c:67 ../vector/v.out.ascii/out.c:77
 #: ../vector/v.out.ascii/out.c:84 ../vector/v.out.ascii/out.c:97
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:18
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:20
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:23
 msgid "Points"
 msgstr ""
 
@@ -20066,6 +20134,7 @@ msgid "Import polyface meshes as 3D wire frame"
 msgstr ""
 
 #: ../vector/v.in.dxf/main.c:82 ../vector/v.in.dwg/main.c:96
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:3
 #, fuzzy
 msgid "List available layers and exit"
 msgstr "列出可用的格式并退出"
@@ -21236,6 +21305,11 @@ msgid "Produces a convex hull for a given vector map."
 msgstr ""
 
 #: ../vector/v.hull/main.c:278
+#: ../locale/scriptstrings/v.report_to_translate.c:5
+#: ../locale/scriptstrings/v.out.gpsbabel_to_translate.c:6
+#: ../locale/scriptstrings/v.colors_to_translate.c:3
+#: ../locale/scriptstrings/v.dissolve_to_translate.c:3
+#: ../locale/scriptstrings/v.centroids_to_translate.c:3
 #, fuzzy
 msgid "Name of input vector map"
 msgstr "输入的 2D 矢量地图的名称"
@@ -24525,6 +24599,7 @@ msgid "Feature ids (by default all features are processed)"
 msgstr ""
 
 #: ../vector/v.category/main.c:112
+#: ../locale/scriptstrings/v.centroids_to_translate.c:8
 msgid "Category increment"
 msgstr ""
 
@@ -25473,6 +25548,7 @@ msgid "Image"
 msgstr "输入文件"
 
 #: ../visualization/nviz2/cmd/args.c:87
+#: ../locale/scriptstrings/d.out.file_to_translate.c:4
 #, fuzzy
 msgid "Graphics file format"
 msgstr "输入文件"
@@ -25863,120 +25939,6 @@ msgstr "类别 %d 没有相关的记录"
 #, fuzzy, c-format
 msgid "Unable to copy attribute table to vector map <%s>"
 msgstr "无法找到矢量地图 [%s]"
-
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/opennew.c:19
-#, fuzzy, c-format
-msgid "Failed in attempt to open %s"
-msgstr "输出矢量文件的名称"
-
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:155
-msgid ""
-"Generates raster map layers of slope, aspect, curvatures and partial "
-"derivatives from a raster map layer of true elevation values. Aspect is "
-"calculated counterclockwise from east."
-msgstr ""
-"根据栅格图层的实际高程值，生成坡度、坡向、曲率和偏导数。坡向从东边开始逆时针"
-"计算。"
-
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:164
-msgid "Raster elevation file name"
-msgstr "栅格高程文件的名称"
-
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:172
-msgid "Output slope filename"
-msgstr "输出坡度的文件名"
-
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:180
-msgid "Output aspect filename"
-msgstr "输出坡向的文件名"
-
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:207
-msgid "Output profile curvature filename"
-msgstr "输出剖面曲率的文件名"
-
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:216
-msgid "Output tangential curvature filename"
-msgstr "输出切线曲率的文件名"
-
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:226
-msgid "Output first order partial derivative dx (E-W slope) filename"
-msgstr "输出一阶偏导数dx(东西向坡面)的文件名"
-
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:236
-msgid "Output first order partial derivative dy (N-S slope) filename"
-msgstr "输出一阶偏导数dy(南北向坡面)的文件名"
-
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:246
-msgid "Output second order partial derivative dxx filename"
-msgstr "输出二阶偏导数dxx的文件名"
-
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:256
-msgid "Output second order partial derivative dyy filename"
-msgstr "输出二阶偏导数dyy的文件名"
-
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:266
-msgid "Output second order partial derivative dxy filename"
-msgstr "输出二阶偏导数dxy的文件名"
-
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:412
-#, c-format
-msgid "wrong type: %s"
-msgstr ""
-
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:1021
-#, fuzzy
-msgid "Creating support files..."
-msgstr "为 %s 创建支持文件"
-
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:1023
-#, fuzzy, c-format
-msgid "Elevation products for mapset [%s] in [%s]"
-msgstr "无法为[%s]打开像元文件"
-
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:1104
-#, c-format
-msgid "ASPECT [%s] COMPLETE"
-msgstr ""
-
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:1197
-#, c-format
-msgid "SLOPE [%s] COMPLETE"
-msgstr ""
-
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:1268
-#, c-format
-msgid "PROFILE CURVE [%s] COMPLETE"
-msgstr ""
-
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:1294
-#, c-format
-msgid "TANGENTIAL CURVE [%s] COMPLETE"
-msgstr ""
-
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:1318
-#, c-format
-msgid "E-W SLOPE [%s] COMPLETE"
-msgstr ""
-
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:1342
-#, c-format
-msgid "N-S SLOPE [%s] COMPLETE"
-msgstr ""
-
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:1366
-#, c-format
-msgid "DXX [%s] COMPLETE"
-msgstr ""
-
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:1390
-#, c-format
-msgid "DYY [%s] COMPLETE"
-msgstr ""
-
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:1414
-#, c-format
-msgid "DXY [%s] COMPLETE"
-msgstr ""
 
 #: ../ps/ps.map/ps_vlines.c:55 ../ps/ps.map/ps_vpoints.c:71
 #: ../ps/ps.map/ps_vareas.c:163
@@ -26401,6 +26363,11 @@ msgstr "无法打开数据库 <%s>"
 
 #: ../db/base/columns.c:92 ../db/base/drivers.c:74 ../db/base/connect.c:45
 #: ../db/base/describe.c:125 ../db/base/tables.c:95
+#: ../locale/scriptstrings/db.test_to_translate.c:2
+#: ../locale/scriptstrings/db.out.ogr_to_translate.c:2
+#: ../locale/scriptstrings/db.droptable_to_translate.c:2
+#: ../locale/scriptstrings/db.dropcol_to_translate.c:2
+#: ../locale/scriptstrings/db.in.ogr_to_translate.c:2
 #, fuzzy
 msgid "database, attribute table"
 msgstr "无法创建属性表"
@@ -26695,6 +26662,2345 @@ msgstr "无法设置用户/密码"
 msgid "The password was stored in file"
 msgstr "密码被存储在文件中。"
 
+#: ../locale/scriptstrings/d.split_to_translate.c:1
+msgid ""
+"Divides active display into two frames & displays maps/executes commands in "
+"each frame."
+msgstr ""
+
+#: ../locale/scriptstrings/d.split_to_translate.c:3
+#, fuzzy
+msgid "Enter raster map to display in 1st frame"
+msgstr "作为背景的栅格图的名称"
+
+#: ../locale/scriptstrings/d.split_to_translate.c:4
+#, fuzzy
+msgid "Enter command to execute in 1st frame"
+msgstr "作为背景的栅格图的名称"
+
+#: ../locale/scriptstrings/d.split_to_translate.c:5
+#, fuzzy
+msgid "Enter raster map to display in 2nd frame"
+msgstr "作为背景的栅格图的名称"
+
+#: ../locale/scriptstrings/d.split_to_translate.c:6
+#, fuzzy
+msgid "Enter command to execute in 2nd frame"
+msgstr "作为背景的栅格图的名称"
+
+#: ../locale/scriptstrings/d.split_to_translate.c:7
+#, fuzzy
+msgid "How to split display"
+msgstr "无法关闭输入地图"
+
+#: ../locale/scriptstrings/i.spectral_to_translate.c:1
+msgid ""
+"Displays spectral response at user specified locations in group or images."
+msgstr ""
+
+#: ../locale/scriptstrings/i.spectral_to_translate.c:2
+msgid "imagery, raster, multispectral"
+msgstr ""
+
+#: ../locale/scriptstrings/i.spectral_to_translate.c:3
+msgid "Group input"
+msgstr ""
+
+#: ../locale/scriptstrings/i.spectral_to_translate.c:4
+#, fuzzy
+msgid "Raster input maps"
+msgstr "输入的栅格图"
+
+#: ../locale/scriptstrings/i.spectral_to_translate.c:5
+#, fuzzy
+msgid "Write output to PNG image"
+msgstr "覆盖已有的输出地图文件"
+
+#: ../locale/scriptstrings/i.spectral_to_translate.c:6
+msgid "Use image list and not group"
+msgstr ""
+
+#: ../locale/scriptstrings/i.spectral_to_translate.c:7
+#, fuzzy
+msgid "Select multiple points"
+msgstr "要素类型"
+
+#: ../locale/scriptstrings/i.spectral_to_translate.c:8
+#, fuzzy
+msgid "Label with coordinates instead of numbering"
+msgstr "使用地图坐标而不是 xyz 坐标"
+
+#: ../locale/scriptstrings/v.convert.all_to_translate.c:1
+#, fuzzy
+msgid ""
+"Convert all old GRASS < Ver5.7 vector maps in current mapset to current "
+"format"
+msgstr "将栅格图转化为矢量图层。"
+
+#: ../locale/scriptstrings/v.convert.all_to_translate.c:3
+msgid "run non-interactively"
+msgstr ""
+
+#: ../locale/scriptstrings/r.out.gdal.sh_to_translate.c:1
+#, fuzzy
+msgid "Exports GRASS raster into GDAL supported formats."
+msgstr "将GRASS栅格输出为二元数组。"
+
+#: ../locale/scriptstrings/r.out.gdal.sh_to_translate.c:4
+#, fuzzy
+msgid "Region sensitive output"
+msgstr "读取地图"
+
+#: ../locale/scriptstrings/r.out.gdal.sh_to_translate.c:9
+msgid ""
+"Creation option to the output format driver. Multiple options may be listed"
+msgstr ""
+
+#: ../locale/scriptstrings/r.out.gdal.sh_to_translate.c:10
+msgid "Metadata key passed on the output dataset if possible"
+msgstr ""
+
+#: ../locale/scriptstrings/r.regression.line_to_translate.c:1
+msgid "Calculates linear regression from two raster maps: y = a + b*x"
+msgstr ""
+
+#: ../locale/scriptstrings/r.regression.line_to_translate.c:4
+msgid "Slower but accurate (applies to FP maps only)"
+msgstr ""
+
+#: ../locale/scriptstrings/r.regression.line_to_translate.c:5
+msgid "Map for x coefficient"
+msgstr ""
+
+#: ../locale/scriptstrings/r.regression.line_to_translate.c:6
+msgid "Map for y coefficient"
+msgstr ""
+
+#: ../locale/scriptstrings/r.regression.line_to_translate.c:7
+msgid ""
+"ASCII file for storing regression coefficients (output to screen if file not "
+"specified)."
+msgstr ""
+
+#: ../locale/scriptstrings/v.in.e00_to_translate.c:1
+#, fuzzy
+msgid "Import E00 file into a vector map."
+msgstr "输入的 2D 矢量地图的名称"
+
+#: ../locale/scriptstrings/v.in.e00_to_translate.c:4
+msgid "E00 file"
+msgstr ""
+
+#: ../locale/scriptstrings/v.in.e00_to_translate.c:5
+#, fuzzy
+msgid "Input type point, line or area"
+msgstr "选择类型：线 或 面"
+
+#: ../locale/scriptstrings/v.in.e00_to_translate.c:6
+#: ../locale/scriptstrings/v.in.gns_to_translate.c:4
+#: ../locale/scriptstrings/v.in.geonames_to_translate.c:4
+#: ../locale/scriptstrings/v.dissolve_to_translate.c:4
+#: ../locale/scriptstrings/v.centroids_to_translate.c:4
+#, fuzzy
+msgid "Name for output vector map"
+msgstr "输出矢量文件的名称"
+
+#: ../locale/scriptstrings/r.plane_to_translate.c:1
+#, fuzzy
+msgid ""
+"Creates raster plane map given dip (inclination), aspect (azimuth) and one "
+"point."
+msgstr "创建一格栅格图层和一个包含随机位置点的矢量地图。"
+
+#: ../locale/scriptstrings/r.plane_to_translate.c:2
+#: ../locale/scriptstrings/r.shaded.relief_to_translate.c:2
+#, fuzzy
+msgid "raster, elevation"
+msgstr "栅格高程文件的名称"
+
+#: ../locale/scriptstrings/r.plane_to_translate.c:3
+#, fuzzy
+msgid "Name of raster plane to be created"
+msgstr "将要调整的栅格地图的名称"
+
+#: ../locale/scriptstrings/r.plane_to_translate.c:4
+msgid "Dip of plane. Value must be between -90 and 90 degrees"
+msgstr ""
+
+#: ../locale/scriptstrings/r.plane_to_translate.c:5
+msgid "Azimuth of the plane. Value must be between 0 and 360 degrees"
+msgstr ""
+
+#: ../locale/scriptstrings/r.plane_to_translate.c:6
+#, fuzzy
+msgid "Easting coordinate of a point on the plane"
+msgstr "一行一个坐标对。"
+
+#: ../locale/scriptstrings/r.plane_to_translate.c:7
+#, fuzzy
+msgid "Northing coordinate of a point on the plane"
+msgstr "一行一个坐标对。"
+
+#: ../locale/scriptstrings/r.plane_to_translate.c:8
+#, fuzzy
+msgid "Elevation coordinate of a point on the plane"
+msgstr "一行一个坐标对。"
+
+#: ../locale/scriptstrings/r.plane_to_translate.c:9
+#, fuzzy
+msgid "Type of the raster map to be created"
+msgstr "将要调整的栅格地图的名称"
+
+#: ../locale/scriptstrings/m.proj_to_translate.c:1
+msgid "Convert coordinates from one projection to another (cs2cs frontend)."
+msgstr ""
+
+#: ../locale/scriptstrings/m.proj_to_translate.c:2
+#, fuzzy
+msgid "miscellaneous, projection"
+msgstr "无法获取栅格行\n"
+
+#: ../locale/scriptstrings/m.proj_to_translate.c:3
+#, fuzzy
+msgid "Input coordinate file (omit to read from stdin)"
+msgstr "导入的ASCII栅格文件"
+
+#: ../locale/scriptstrings/m.proj_to_translate.c:4
+#, fuzzy
+msgid "Output coordinate file (omit to send to stdout)"
+msgstr "导入的ASCII栅格文件"
+
+#: ../locale/scriptstrings/m.proj_to_translate.c:5
+#: ../locale/scriptstrings/r.out.xyz_to_translate.c:5
+msgid "Field separator"
+msgstr "字段分隔符"
+
+#: ../locale/scriptstrings/m.proj_to_translate.c:6
+#, fuzzy
+msgid "Input projection parameters (PROJ.4 style)"
+msgstr "输出的流向栅格图"
+
+#: ../locale/scriptstrings/m.proj_to_translate.c:7
+#, fuzzy
+msgid "Output projection parameters (PROJ.4 style)"
+msgstr "输出的流向栅格图"
+
+#: ../locale/scriptstrings/m.proj_to_translate.c:8
+msgid "Use LL WGS84 as input and current location as output projection"
+msgstr ""
+
+#: ../locale/scriptstrings/m.proj_to_translate.c:9
+msgid "Use current location as input and LL WGS84 as output projection"
+msgstr ""
+
+#: ../locale/scriptstrings/m.proj_to_translate.c:10
+msgid ""
+"Output long/lat in decimal degrees or other projections with many decimal "
+"places"
+msgstr ""
+
+#: ../locale/scriptstrings/m.proj_to_translate.c:11
+msgid ""
+"Script style output in CSV format respecting the field separator settings"
+msgstr ""
+
+#: ../locale/scriptstrings/m.proj_to_translate.c:12
+msgid "Verbose mode (print projection parameters and filenames to stderr)"
+msgstr ""
+
+#: ../locale/scriptstrings/d.out.file_to_translate.c:1
+#, fuzzy
+msgid "Saves the contents of the active display monitor to a graphics file."
+msgstr "选择字体，该字体用于图形监视器上文本的显示。"
+
+#: ../locale/scriptstrings/d.out.file_to_translate.c:2
+#: ../locale/scriptstrings/d.out.png_to_translate.c:2
+#, fuzzy
+msgid "display, export"
+msgstr "矢量导入完成"
+
+#: ../locale/scriptstrings/d.out.file_to_translate.c:3
+#, fuzzy
+msgid "Name for output file (do NOT add extension)"
+msgstr "输出报告的名称"
+
+#: ../locale/scriptstrings/d.out.file_to_translate.c:5
+msgid "Dimensions of output file versus current window size"
+msgstr ""
+
+#: ../locale/scriptstrings/d.out.file_to_translate.c:6
+msgid "(same=1, double size=2, quadruple size=4)"
+msgstr ""
+
+#: ../locale/scriptstrings/d.out.file_to_translate.c:7
+#: ../locale/scriptstrings/d.out.file_to_translate.c:9
+#: ../locale/scriptstrings/d.out.file_to_translate.c:12
+#: ../locale/scriptstrings/d.out.file_to_translate.c:15
+#: ../locale/scriptstrings/d.out.file_to_translate.c:28
+#: ../locale/scriptstrings/d.out.file_to_translate.c:30
+#, fuzzy
+msgid "Images"
+msgstr "输入文件"
+
+#: ../locale/scriptstrings/d.out.file_to_translate.c:8
+#, fuzzy
+msgid "Width and height of output image (overrides resolution setting)"
+msgstr "输出地图的名称"
+
+#: ../locale/scriptstrings/d.out.file_to_translate.c:10
+#, fuzzy
+msgid "Compression for PNG files"
+msgstr "输出文件的名称"
+
+#: ../locale/scriptstrings/d.out.file_to_translate.c:11
+msgid "(0=none, 1=fastest, 9=most; lossless, only time vs. filesize)"
+msgstr ""
+
+#: ../locale/scriptstrings/d.out.file_to_translate.c:13
+msgid "File size/quality for JPEG files"
+msgstr ""
+
+#: ../locale/scriptstrings/d.out.file_to_translate.c:14
+msgid "(10=smallest/worst, 100=largest/best)"
+msgstr ""
+
+#: ../locale/scriptstrings/d.out.file_to_translate.c:16
+#, fuzzy
+msgid "Paper size for PostScript output"
+msgstr "PostScript 输出文件"
+
+#: ../locale/scriptstrings/d.out.file_to_translate.c:17
+#: ../locale/scriptstrings/d.out.file_to_translate.c:19
+#: ../locale/scriptstrings/d.out.file_to_translate.c:32
+#, fuzzy
+msgid "PostScript"
+msgstr "PostScript 输出文件"
+
+#: ../locale/scriptstrings/d.out.file_to_translate.c:18
+msgid "PostScript level (only limits functionality!)"
+msgstr ""
+
+#: ../locale/scriptstrings/d.out.file_to_translate.c:20
+msgid "GeoTIFF creation option(s)"
+msgstr ""
+
+#: ../locale/scriptstrings/d.out.file_to_translate.c:22
+#: ../locale/scriptstrings/d.out.file_to_translate.c:25
+#: ../locale/scriptstrings/d.out.file_to_translate.c:34
+msgid "GeoTIFF"
+msgstr ""
+
+#: ../locale/scriptstrings/d.out.file_to_translate.c:23
+msgid "GeoTIFF metadata key(s) and value(s) to add"
+msgstr ""
+
+#: ../locale/scriptstrings/d.out.file_to_translate.c:24
+msgid ""
+"In the form of \"META-TAG=VALUE\", separate multiple entries with a comma."
+msgstr ""
+
+#: ../locale/scriptstrings/d.out.file_to_translate.c:26
+msgid "Set background color to black (white default)"
+msgstr ""
+
+#: ../locale/scriptstrings/d.out.file_to_translate.c:27
+msgid "Set transparent background"
+msgstr ""
+
+#: ../locale/scriptstrings/d.out.file_to_translate.c:29
+msgid "Use the Cario driver to render images"
+msgstr ""
+
+#: ../locale/scriptstrings/d.out.file_to_translate.c:31
+#, fuzzy
+msgid "Set paper orientation to landscape (for PostScript output)"
+msgstr "PostScript 输出文件"
+
+#: ../locale/scriptstrings/d.out.file_to_translate.c:33
+#, fuzzy
+msgid "Do not crop away margins"
+msgstr "无法拷贝表"
+
+#: ../locale/scriptstrings/db.test_to_translate.c:1
+msgid "Test database driver, database must exist and set by db.connect."
+msgstr ""
+
+#: ../locale/scriptstrings/db.test_to_translate.c:3
+#, fuzzy
+msgid "Test name"
+msgstr "表名称"
+
+#: ../locale/scriptstrings/r.tileset_to_translate.c:1
+msgid ""
+"Produces tilings of the source projection for use in the destination region "
+"and projection."
+msgstr ""
+
+#: ../locale/scriptstrings/r.tileset_to_translate.c:2
+#, fuzzy
+msgid "raster, tiling"
+msgstr "栅格输入文件"
+
+#: ../locale/scriptstrings/r.tileset_to_translate.c:3
+#, fuzzy
+msgid "Produces shell script output"
+msgstr "PostScript 输出文件"
+
+#: ../locale/scriptstrings/r.tileset_to_translate.c:4
+#, fuzzy
+msgid "Produces web map server query string output"
+msgstr "PostScript 输出文件"
+
+#: ../locale/scriptstrings/r.tileset_to_translate.c:5
+#, fuzzy
+msgid ""
+"Name of region to use instead of current region for bounds and resolution"
+msgstr "沿着剖面的分辨率(默认为当前区域的分辨率)"
+
+#: ../locale/scriptstrings/r.tileset_to_translate.c:6
+#, fuzzy
+msgid "Source projection"
+msgstr "无法获取栅格行\n"
+
+#: ../locale/scriptstrings/r.tileset_to_translate.c:7
+#: ../locale/scriptstrings/r.tileset_to_translate.c:9
+#, fuzzy
+msgid "Conversion factor from units to meters in source projection"
+msgstr "用于邻近分析的值的变换因子"
+
+#: ../locale/scriptstrings/r.tileset_to_translate.c:8
+#, fuzzy
+msgid "Destination projection, defaults to this location's projection"
+msgstr "覆盖投影(使用区域的投影)"
+
+#: ../locale/scriptstrings/r.tileset_to_translate.c:10
+#, fuzzy
+msgid "Maximum number of columns for a tile in the source projection"
+msgstr "一个片断最多所能包含的点数"
+
+#: ../locale/scriptstrings/r.tileset_to_translate.c:11
+#, fuzzy
+msgid "Maximum number of rows for a tile in the source projection"
+msgstr "一个片断最多所能包含的点数"
+
+#: ../locale/scriptstrings/r.tileset_to_translate.c:12
+#, fuzzy
+msgid "Number of cells tiles should overlap in each direction"
+msgstr "每部分的等级数"
+
+#: ../locale/scriptstrings/r.tileset_to_translate.c:14
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:50
+#, fuzzy
+msgid "Verbosity level"
+msgstr "栅格值"
+
+#: ../locale/scriptstrings/i.fusion.brovey_to_translate.c:1
+msgid ""
+"Brovey transform to merge multispectral and high-res panchromatic channels"
+msgstr ""
+
+#: ../locale/scriptstrings/i.fusion.brovey_to_translate.c:2
+#, fuzzy
+msgid "imagery, fusion, Brovey"
+msgstr "矢量导入完成"
+
+#: ../locale/scriptstrings/i.fusion.brovey_to_translate.c:3
+msgid "LANDSAT sensor"
+msgstr ""
+
+#: ../locale/scriptstrings/i.fusion.brovey_to_translate.c:4
+#: ../locale/scriptstrings/i.fusion.brovey_to_translate.c:6
+#: ../locale/scriptstrings/i.fusion.brovey_to_translate.c:8
+msgid "Sensor"
+msgstr ""
+
+#: ../locale/scriptstrings/i.fusion.brovey_to_translate.c:5
+msgid "QuickBird sensor"
+msgstr ""
+
+#: ../locale/scriptstrings/i.fusion.brovey_to_translate.c:7
+msgid "SPOT sensor"
+msgstr ""
+
+#: ../locale/scriptstrings/i.fusion.brovey_to_translate.c:9
+#, fuzzy
+msgid "Name of input raster map (green: tm2 | qbird_green | spot1)"
+msgstr "输入栅格图的名称"
+
+#: ../locale/scriptstrings/i.fusion.brovey_to_translate.c:10
+#, fuzzy
+msgid "Name of input raster map (NIR: tm4 | qbird_nir | spot2)"
+msgstr "输入栅格图的名称"
+
+#: ../locale/scriptstrings/i.fusion.brovey_to_translate.c:11
+#, fuzzy
+msgid "Name of input raster map (MIR; tm5 | qbird_red | spot3)"
+msgstr "输入栅格图的名称"
+
+#: ../locale/scriptstrings/i.fusion.brovey_to_translate.c:12
+#, fuzzy
+msgid "Name of input raster map (etmpan | qbird_pan | spotpan)"
+msgstr "输入栅格图的名称"
+
+#: ../locale/scriptstrings/i.fusion.brovey_to_translate.c:13
+#, fuzzy
+msgid "Name for output raster map prefix (e.g. 'brov')"
+msgstr "输出的栅格文件"
+
+#: ../locale/scriptstrings/g.extension_to_translate.c:1
+msgid "Tool to maintain GRASS extensions in local GRASS installation."
+msgstr ""
+
+#: ../locale/scriptstrings/g.extension_to_translate.c:2
+msgid ""
+"Downloads, installs extensions from GRASS Addons SVN repository into local "
+"GRASS installation or removes installed extensions."
+msgstr ""
+
+#: ../locale/scriptstrings/g.extension_to_translate.c:3
+#, fuzzy
+msgid "general, extensions"
+msgstr "无法获取栅格行\n"
+
+#: ../locale/scriptstrings/g.extension_to_translate.c:4
+#, fuzzy
+msgid "Name of extension to install/remove"
+msgstr "将要创建的新区域的名称"
+
+#: ../locale/scriptstrings/g.extension_to_translate.c:6
+msgid "SVN Addons repository URL"
+msgstr ""
+
+#: ../locale/scriptstrings/g.extension_to_translate.c:7
+msgid "Prefix where to install extension"
+msgstr ""
+
+#: ../locale/scriptstrings/g.extension_to_translate.c:8
+#, fuzzy
+msgid "List available modules in the GRASS Addons SVN repository"
+msgstr "列出可用的格式并退出"
+
+#: ../locale/scriptstrings/d.correlate_to_translate.c:1
+msgid "Prints a graph of the correlation between data layers (in pairs)."
+msgstr ""
+
+#: ../locale/scriptstrings/d.correlate_to_translate.c:2
+#: ../locale/scriptstrings/d.polar_to_translate.c:2
+msgid "display, diagram"
+msgstr ""
+
+#: ../locale/scriptstrings/d.correlate_to_translate.c:3
+#: ../locale/scriptstrings/d.correlate_to_translate.c:4
+#: ../locale/scriptstrings/d.correlate_to_translate.c:5
+#: ../locale/scriptstrings/d.correlate_to_translate.c:6
+#, fuzzy
+msgid "raster input map"
+msgstr "输入的栅格图"
+
+#: ../locale/scriptstrings/i.image.mosaic_to_translate.c:1
+msgid "Mosaics up to 4 images and extends colormap; creates map *.mosaic"
+msgstr ""
+
+#: ../locale/scriptstrings/i.image.mosaic_to_translate.c:2
+#, fuzzy
+msgid "raster, imagery, mosaicking"
+msgstr "矢量导入完成"
+
+#: ../locale/scriptstrings/i.image.mosaic_to_translate.c:3
+msgid "1st map for mosaic (top of image stack)."
+msgstr ""
+
+#: ../locale/scriptstrings/i.image.mosaic_to_translate.c:4
+msgid "2nd map for mosaic."
+msgstr ""
+
+#: ../locale/scriptstrings/i.image.mosaic_to_translate.c:5
+msgid "3rd map for mosaic."
+msgstr ""
+
+#: ../locale/scriptstrings/i.image.mosaic_to_translate.c:6
+msgid "4th map for mosaic."
+msgstr ""
+
+#: ../locale/scriptstrings/r.blend_to_translate.c:1
+msgid "Blends color components of two raster maps by a given ratio."
+msgstr ""
+
+#: ../locale/scriptstrings/r.blend_to_translate.c:3
+#, fuzzy
+msgid "Name of first raster map for blending"
+msgstr "需要查询的已有栅格地图的名称"
+
+#: ../locale/scriptstrings/r.blend_to_translate.c:4
+#, fuzzy
+msgid "Name of second raster map for blending"
+msgstr "需要查询的已有栅格地图的名称"
+
+#: ../locale/scriptstrings/r.blend_to_translate.c:5
+msgid "Base name for red, green and blue output maps containing the blend"
+msgstr ""
+
+#: ../locale/scriptstrings/r.blend_to_translate.c:6
+#, fuzzy
+msgid "Percentage weight of first map for color blending"
+msgstr "需要查询的已有栅格地图的名称"
+
+#: ../locale/scriptstrings/r.reclass.area_to_translate.c:1
+msgid ""
+"Reclasses a raster map greater or less than user specified area size (in "
+"hectares)."
+msgstr ""
+
+#: ../locale/scriptstrings/r.reclass.area_to_translate.c:2
+#, fuzzy
+msgid "raster, statistics, aggregation"
+msgstr "包含结果的栅格图的名称"
+
+#: ../locale/scriptstrings/r.reclass.area_to_translate.c:5
+msgid "Lesser value option that sets the <= area size limit [hectares]"
+msgstr ""
+
+#: ../locale/scriptstrings/r.reclass.area_to_translate.c:6
+msgid "Greater value option that sets the >= area size limit [hectares]"
+msgstr ""
+
+#: ../locale/scriptstrings/v.what.vect_to_translate.c:1
+msgid "Uploads vector values at positions of vector points to the table."
+msgstr ""
+
+#: ../locale/scriptstrings/v.what.vect_to_translate.c:3
+#, fuzzy
+msgid "Vector map to modify"
+msgstr "只打印矢量地图的范围"
+
+#: ../locale/scriptstrings/v.what.vect_to_translate.c:4
+#, fuzzy
+msgid "Layer in the vector to be modified"
+msgstr "需要查询的已有栅格地图的名称"
+
+#: ../locale/scriptstrings/v.what.vect_to_translate.c:5
+msgid "Column to be updated with the query result"
+msgstr ""
+
+#: ../locale/scriptstrings/v.what.vect_to_translate.c:6
+#, fuzzy
+msgid "Vector map to be queried"
+msgstr "将要查询的栅格地图"
+
+#: ../locale/scriptstrings/v.what.vect_to_translate.c:7
+#, fuzzy
+msgid "Layer of the query vector containing data"
+msgstr "输出矢量文件的名称"
+
+#: ../locale/scriptstrings/v.what.vect_to_translate.c:8
+#, fuzzy
+msgid "Column to be queried"
+msgstr "将要查询的栅格地图"
+
+#: ../locale/scriptstrings/v.what.vect_to_translate.c:9
+#, fuzzy
+msgid "Maximum query distance in map units"
+msgstr "缓冲区距离 (地图单位)"
+
+#: ../locale/scriptstrings/r.in.srtm_to_translate.c:1
+msgid "Import SRTM HGT files into GRASS"
+msgstr ""
+
+#: ../locale/scriptstrings/r.in.srtm_to_translate.c:3
+msgid "SRTM input tile (file without .hgt.zip extension)"
+msgstr ""
+
+#: ../locale/scriptstrings/r.in.srtm_to_translate.c:4
+#, fuzzy
+msgid "Output raster map (default: input tile)"
+msgstr "输出栅格文件的标题"
+
+#: ../locale/scriptstrings/r.in.srtm_to_translate.c:5
+msgid "Input is a 1-arcsec tile (default: 3-arcsec)"
+msgstr ""
+
+#: ../locale/scriptstrings/v.report_to_translate.c:1
+#, fuzzy
+msgid "Reports geometry statistics for vectors."
+msgstr "报告栅格图层的统计数据"
+
+#: ../locale/scriptstrings/v.report_to_translate.c:2
+#, fuzzy
+msgid "vector, report, statistics"
+msgstr "类别或面向对象的统计。"
+
+#: ../locale/scriptstrings/v.report_to_translate.c:3
+#, fuzzy
+msgid "Reverse sort the result"
+msgstr "反向清扫完成"
+
+#: ../locale/scriptstrings/v.report_to_translate.c:4
+#, fuzzy
+msgid "Sort the result"
+msgstr "结果图的名称"
+
+#: ../locale/scriptstrings/v.report_to_translate.c:7
+#, fuzzy
+msgid "Value to calculate"
+msgstr "无法计算面的质心"
+
+#: ../locale/scriptstrings/v.report_to_translate.c:8
+#, fuzzy
+msgid "mi(les),f(eet),me(ters),k(ilometers),a(cres),h(ectares),p(ercent)"
+msgstr "mi(英里)，me(米)，k(公里)，a(英亩)，h(公顷)，c(像元的数据)，p(覆盖率)"
+
+#: ../locale/scriptstrings/v.db.update_to_translate.c:1
+#, fuzzy
+msgid ""
+"Allows to update a column in the attribute table connected to a vector map."
+msgstr "已有输入栅格文件大的名称"
+
+#: ../locale/scriptstrings/v.db.update_to_translate.c:3
+#, fuzzy
+msgid "Vector map to edit the attribute table for"
+msgstr "需要编辑属性表的输入矢量点地图的名称"
+
+#: ../locale/scriptstrings/v.db.update_to_translate.c:4
+msgid "Layer to which the table to be changed is connected"
+msgstr ""
+
+#: ../locale/scriptstrings/v.db.update_to_translate.c:5
+#, fuzzy
+msgid "Column to update"
+msgstr "列的类型不支持"
+
+#: ../locale/scriptstrings/v.db.update_to_translate.c:6
+msgid ""
+"Value to update the column with (varchar values have to be in single quotes, "
+"e.g. 'grass')"
+msgstr ""
+
+#: ../locale/scriptstrings/v.db.update_to_translate.c:7
+#, fuzzy
+msgid "Column to query"
+msgstr "将要查询的栅格地图"
+
+#: ../locale/scriptstrings/v.db.update_to_translate.c:8
+msgid ""
+"WHERE conditions for update, without 'where' keyword (e.g. cat=1 or col1/"
+"col2>1)"
+msgstr ""
+
+#: ../locale/scriptstrings/d.rast.leg_to_translate.c:1
+#, fuzzy
+msgid "Displays a raster map and its legend on a graphics window"
+msgstr "选择字体，该字体用于图形监视器上文本的显示。"
+
+#: ../locale/scriptstrings/d.rast.leg_to_translate.c:4
+msgid "Omit entries with missing label"
+msgstr ""
+
+#: ../locale/scriptstrings/d.rast.leg_to_translate.c:6
+#, fuzzy
+msgid "Number of lines to appear in the legend"
+msgstr "重复过滤的次数"
+
+#: ../locale/scriptstrings/d.rast.leg_to_translate.c:7
+#, fuzzy
+msgid "Name of raster map to generate legend from"
+msgstr "栅格地图的名称 <%s>"
+
+#: ../locale/scriptstrings/d.rast.leg_to_translate.c:8
+#, fuzzy
+msgid "Name of raster map to print in legend"
+msgstr "作为背景的栅格图的名称"
+
+#: ../locale/scriptstrings/d.rast.leg_to_translate.c:9
+msgid "Position of vertical map-legend separator (in percent)"
+msgstr ""
+
+#: ../locale/scriptstrings/d.out.gpsdrive_to_translate.c:1
+msgid "Export display monitor to a GpsDrive compatible backdrop image"
+msgstr ""
+
+#: ../locale/scriptstrings/d.out.gpsdrive_to_translate.c:2
+#, fuzzy
+msgid "display, export, GPS"
+msgstr "矢量导入完成"
+
+#: ../locale/scriptstrings/d.out.gpsdrive_to_translate.c:3
+msgid "name for new map image (lives in ~/.gpsdrive/maps/)"
+msgstr ""
+
+#: ../locale/scriptstrings/d.out.gpsdrive_to_translate.c:4
+msgid "Make JPEG instead of PNG image"
+msgstr ""
+
+#: ../locale/scriptstrings/v.univar.sh_to_translate.c:1
+#: ../locale/scriptstrings/v.db.univar_to_translate.c:1
+#, fuzzy
+msgid ""
+"Calculates univariate statistics on selected table column for a GRASS vector "
+"map."
+msgstr "计算栅格地图中非空像元的一元统计值"
+
+#: ../locale/scriptstrings/v.univar.sh_to_translate.c:3
+#: ../locale/scriptstrings/v.db.univar_to_translate.c:3
+msgid "Extended statistics (quartiles and 90th percentile)"
+msgstr ""
+
+#: ../locale/scriptstrings/v.univar.sh_to_translate.c:4
+#: ../locale/scriptstrings/v.db.univar_to_translate.c:4
+#, fuzzy
+msgid "Name of data table"
+msgstr "栅格图的名称"
+
+#: ../locale/scriptstrings/v.univar.sh_to_translate.c:5
+#: ../locale/scriptstrings/v.db.univar_to_translate.c:5
+#, fuzzy
+msgid "Column on which to calculate statistics (must be numeric)"
+msgstr "用作缓冲区距离的属性字段"
+
+#: ../locale/scriptstrings/v.univar.sh_to_translate.c:6
+#: ../locale/scriptstrings/v.db.univar_to_translate.c:6
+#, fuzzy
+msgid "Database/directory for table"
+msgstr "类别 %d 没有相关的记录"
+
+#: ../locale/scriptstrings/v.univar.sh_to_translate.c:7
+#: ../locale/scriptstrings/v.db.univar_to_translate.c:7
+#, fuzzy
+msgid "Database driver"
+msgstr "数据库名称"
+
+#: ../locale/scriptstrings/v.univar.sh_to_translate.c:8
+#: ../locale/scriptstrings/v.out.gpsbabel_to_translate.c:13
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:47
+#: ../locale/scriptstrings/v.db.univar_to_translate.c:8
+msgid "WHERE conditions of SQL statement without 'where' keyword"
+msgstr ""
+
+#: ../locale/scriptstrings/g.manual_to_translate.c:1
+msgid "Display the HTML man pages of GRASS"
+msgstr ""
+
+#: ../locale/scriptstrings/g.manual_to_translate.c:2
+#, fuzzy
+msgid "general, manual, help"
+msgstr "无法获取栅格行\n"
+
+#: ../locale/scriptstrings/g.manual_to_translate.c:3
+msgid "Display index"
+msgstr ""
+
+#: ../locale/scriptstrings/g.manual_to_translate.c:4
+msgid "Display as MAN text page instead of HTML page in browser"
+msgstr ""
+
+#: ../locale/scriptstrings/g.manual_to_translate.c:5
+#, fuzzy
+msgid "Manual entry to be displayed"
+msgstr "作为背景的栅格图的名称"
+
+#: ../locale/scriptstrings/v.in.sites.all_to_translate.c:1
+#, fuzzy
+msgid ""
+"Converts all old GRASS < Ver5.7 sites maps in current mapset to vector maps."
+msgstr "将栅格图转化为矢量图层。"
+
+#: ../locale/scriptstrings/v.in.sites.all_to_translate.c:2
+#, fuzzy
+msgid "sites, vector, import"
+msgstr "矢量导入完成"
+
+#: ../locale/scriptstrings/v.in.sites.all_to_translate.c:3
+msgid "Run non-interactively"
+msgstr ""
+
+#: ../locale/scriptstrings/v.db.renamecol_to_translate.c:1
+#, fuzzy
+msgid ""
+"Renames a column in the attribute table connected to a given vector map."
+msgstr "已有输入栅格文件大的名称"
+
+#: ../locale/scriptstrings/v.db.renamecol_to_translate.c:3
+#, fuzzy
+msgid "Vector map for which to rename attribute column"
+msgstr "需要编辑属性表的输入矢量点地图的名称"
+
+#: ../locale/scriptstrings/v.db.renamecol_to_translate.c:4
+#, fuzzy
+msgid "Layer where to rename column"
+msgstr "无法创建属性表"
+
+#: ../locale/scriptstrings/v.db.renamecol_to_translate.c:5
+msgid "Old and new name of the column (old,new)"
+msgstr ""
+
+#: ../locale/scriptstrings/r.mask_to_translate.c:1
+msgid "Create a MASK for limiting raster operation"
+msgstr ""
+
+#: ../locale/scriptstrings/r.mask_to_translate.c:2
+#, fuzzy
+msgid "raster, mask"
+msgstr "栅格地图 [%s] 未发现"
+
+#: ../locale/scriptstrings/r.mask_to_translate.c:3
+#, fuzzy
+msgid "Raster map to use as MASK"
+msgstr "需要读取的栅格图"
+
+#: ../locale/scriptstrings/r.mask_to_translate.c:4
+msgid "Category values to use for MASK (format: 1 2 3 thru 7 *)"
+msgstr ""
+
+#: ../locale/scriptstrings/r.mask_to_translate.c:5
+msgid "Create inverse MASK from specified 'maskcats' list"
+msgstr ""
+
+#: ../locale/scriptstrings/r.mask_to_translate.c:6
+#, fuzzy
+msgid "Overwrite existing MASK"
+msgstr "无法创建栅格地图 %s"
+
+#: ../locale/scriptstrings/r.mask_to_translate.c:7
+msgid "Remove existing MASK (overrides other options)"
+msgstr ""
+
+#: ../locale/scriptstrings/v.out.gpsbabel_to_translate.c:1
+msgid ""
+"Exports a vector map to a GPS receiver or file format supported by GpsBabel."
+msgstr ""
+
+#: ../locale/scriptstrings/v.out.gpsbabel_to_translate.c:2
+#, fuzzy
+msgid "vector, export, GPS"
+msgstr "矢量导入完成"
+
+#: ../locale/scriptstrings/v.out.gpsbabel_to_translate.c:3
+#, fuzzy
+msgid "Export as waypoints"
+msgstr "导入地图 %d 的要素..."
+
+#: ../locale/scriptstrings/v.out.gpsbabel_to_translate.c:4
+#, fuzzy
+msgid "Export as routes"
+msgstr "导入地图 %d 的要素..."
+
+#: ../locale/scriptstrings/v.out.gpsbabel_to_translate.c:5
+#, fuzzy
+msgid "Export as tracks"
+msgstr "导入地图 %d 的要素..."
+
+#: ../locale/scriptstrings/v.out.gpsbabel_to_translate.c:7
+#, fuzzy
+msgid "Feature type(s)"
+msgstr "要素类型"
+
+#: ../locale/scriptstrings/v.out.gpsbabel_to_translate.c:8
+#, fuzzy
+msgid "Name for output file or GPS device"
+msgstr "输出文件的名称"
+
+#: ../locale/scriptstrings/v.out.gpsbabel_to_translate.c:9
+#, fuzzy
+msgid "GpsBabel supported output format"
+msgstr "列出支持的格式然后退出"
+
+#: ../locale/scriptstrings/v.out.gpsbabel_to_translate.c:11
+#: ../locale/scriptstrings/v.dissolve_to_translate.c:6
+msgid ""
+"A single vector map can be connected to multiple database tables. This "
+"number determines which table to use."
+msgstr ""
+
+#: ../locale/scriptstrings/v.out.gpsbabel_to_translate.c:12
+#: ../locale/scriptstrings/v.out.gpsbabel_to_translate.c:15
+msgid "Subset"
+msgstr ""
+
+#: ../locale/scriptstrings/v.out.gpsbabel_to_translate.c:14
+msgid "Example: income < 1000 and inhab >= 10000"
+msgstr ""
+
+#: ../locale/scriptstrings/v.db.reconnect.all_to_translate.c:1
+#, fuzzy
+msgid "Reconnects vectors to a new database."
+msgstr "移除一个数据库"
+
+#: ../locale/scriptstrings/v.db.reconnect.all_to_translate.c:3
+#, fuzzy
+msgid "Name of old database"
+msgstr "新的栅格文件的名称"
+
+#: ../locale/scriptstrings/v.db.reconnect.all_to_translate.c:4
+msgid ""
+"The database must be in form printed by v.db.connect -g, i.e. with "
+"substituted variables"
+msgstr ""
+
+#: ../locale/scriptstrings/v.db.reconnect.all_to_translate.c:5
+#, fuzzy
+msgid "Name of new database"
+msgstr "新的栅格文件的名称"
+
+#: ../locale/scriptstrings/v.db.reconnect.all_to_translate.c:6
+#, fuzzy
+msgid "Old schema"
+msgstr "数据库模式"
+
+#: ../locale/scriptstrings/v.db.reconnect.all_to_translate.c:7
+#, fuzzy
+msgid "New schema"
+msgstr "数据库模式"
+
+#: ../locale/scriptstrings/r.in.aster_to_translate.c:1
+msgid ""
+"Georeference, rectify and import Terra-ASTER imagery and relative DEM's "
+"using gdalwarp."
+msgstr ""
+
+#: ../locale/scriptstrings/r.in.aster_to_translate.c:2
+#: ../locale/scriptstrings/i.in.spotvgt_to_translate.c:2
+#, fuzzy
+msgid "raster, imagery, import"
+msgstr "矢量导入完成"
+
+#: ../locale/scriptstrings/r.in.aster_to_translate.c:3
+msgid "Input ASTER image to be georeferenced & rectified"
+msgstr ""
+
+#: ../locale/scriptstrings/r.in.aster_to_translate.c:4
+msgid "ASTER imagery processing type (Level 1A, Level 1B, or relative DEM)"
+msgstr ""
+
+#: ../locale/scriptstrings/r.in.aster_to_translate.c:5
+msgid ""
+"L1A or L1B band to translate (1, 2, 3n, 3b, 4-14). Can only translate a "
+"single band"
+msgstr ""
+
+#: ../locale/scriptstrings/v.colors_to_translate.c:1
+msgid ""
+"Set color rules for features in a vector using a numeric attribute column."
+msgstr ""
+
+#: ../locale/scriptstrings/v.colors_to_translate.c:2
+#, fuzzy
+msgid "vector, color table"
+msgstr "将要查询的栅格地图"
+
+#: ../locale/scriptstrings/v.colors_to_translate.c:4
+#, fuzzy
+msgid "Name of column containing numeric data"
+msgstr "用于内插的包含 w 属性的字段名称"
+
+#: ../locale/scriptstrings/v.colors_to_translate.c:5
+#, fuzzy
+msgid "Layer number of data column"
+msgstr "无法创建属性表"
+
+#: ../locale/scriptstrings/v.colors_to_translate.c:6
+#, fuzzy
+msgid "Name of color column to populate"
+msgstr "将要创建的新区域的名称"
+
+#: ../locale/scriptstrings/v.colors_to_translate.c:8
+#, fuzzy
+msgid "Manually set range (min,max)"
+msgstr "整数范围：min,max"
+
+#: ../locale/scriptstrings/v.colors_to_translate.c:13
+#, fuzzy
+msgid "Path to rules file"
+msgstr "结果矢量文件的名称"
+
+#: ../locale/scriptstrings/v.colors_to_translate.c:15
+#, fuzzy
+msgid "Save placeholder raster map for use with d.legend"
+msgstr "作为背景的栅格图的名称"
+
+#: ../locale/scriptstrings/db.out.ogr_to_translate.c:1
+#, fuzzy
+msgid "Exports attribute tables into various formats."
+msgstr "已有输入栅格文件大的名称"
+
+#: ../locale/scriptstrings/db.out.ogr_to_translate.c:3
+#, fuzzy
+msgid "GRASS table name"
+msgstr "表名称"
+
+#: ../locale/scriptstrings/db.out.ogr_to_translate.c:4
+msgid "Table file to be exported or DB connection string"
+msgstr ""
+
+#: ../locale/scriptstrings/db.out.ogr_to_translate.c:5
+#, fuzzy
+msgid "Table format"
+msgstr "OGR 格式"
+
+#: ../locale/scriptstrings/db.out.ogr_to_translate.c:6
+#: ../locale/scriptstrings/db.in.ogr_to_translate.c:5
+#, fuzzy
+msgid "Name for output table"
+msgstr "输出文件的名称"
+
+#: ../locale/scriptstrings/d.redraw_to_translate.c:1
+#, fuzzy
+msgid "Redraws the current display frame in the GRASS monitor"
+msgstr "错误：没有地图显示在GRASS的监视器上\n"
+
+#: ../locale/scriptstrings/d.redraw_to_translate.c:3
+#, fuzzy
+msgid "Redraw all frames"
+msgstr "打印区域总面积"
+
+#: ../locale/scriptstrings/d.redraw_to_translate.c:4
+msgid "Do not preserve individual regions when redrawing all frames"
+msgstr ""
+
+#: ../locale/scriptstrings/d.slide.show_to_translate.c:1
+#, fuzzy
+msgid "Slide show of GRASS raster/vector maps."
+msgstr "输出的栅格/矢量地图"
+
+#: ../locale/scriptstrings/d.slide.show_to_translate.c:2
+msgid "display, slideshow"
+msgstr ""
+
+#: ../locale/scriptstrings/d.slide.show_to_translate.c:3
+#, fuzzy
+msgid "Show vector maps rather than raster maps"
+msgstr "将 3D 栅格图转化为 2D 栅格图"
+
+#: ../locale/scriptstrings/d.slide.show_to_translate.c:4
+msgid "Map prefix. Specify character(s) to view selected maps only"
+msgstr ""
+
+#: ../locale/scriptstrings/d.slide.show_to_translate.c:5
+msgid "Map number show across the monitor"
+msgstr ""
+
+#: ../locale/scriptstrings/d.slide.show_to_translate.c:6
+msgid "Map number show down the monitor"
+msgstr ""
+
+#: ../locale/scriptstrings/d.slide.show_to_translate.c:7
+msgid "Mapsets to use. Specify multiple mapsets comma separated"
+msgstr ""
+
+#: ../locale/scriptstrings/d.slide.show_to_translate.c:8
+#, fuzzy
+msgid "Number of seconds to pause between slides"
+msgstr "打印的份数"
+
+#: ../locale/scriptstrings/v.in.garmin_to_translate.c:1
+msgid ""
+"Download waypoints, routes, and tracks from a Garmin GPS receiver into a "
+"vector map."
+msgstr ""
+
+#: ../locale/scriptstrings/v.in.garmin_to_translate.c:2
+#: ../locale/scriptstrings/v.in.gpsbabel_to_translate.c:2
+#, fuzzy
+msgid "vector, import, GPS"
+msgstr "矢量导入完成"
+
+#: ../locale/scriptstrings/v.in.garmin_to_translate.c:4
+msgid "Download Waypoints from GPS"
+msgstr ""
+
+#: ../locale/scriptstrings/v.in.garmin_to_translate.c:5
+msgid "Download Routes from GPS"
+msgstr ""
+
+#: ../locale/scriptstrings/v.in.garmin_to_translate.c:6
+msgid "Download Track from GPS"
+msgstr ""
+
+#: ../locale/scriptstrings/v.in.garmin_to_translate.c:7
+msgid "Force import of track or route data as points"
+msgstr ""
+
+#: ../locale/scriptstrings/v.in.garmin_to_translate.c:8
+msgid "Use gardump instead of gpstrans as the download program"
+msgstr ""
+
+#: ../locale/scriptstrings/v.in.garmin_to_translate.c:9
+msgid "Import track in 3D (gardump only)"
+msgstr ""
+
+#: ../locale/scriptstrings/v.in.garmin_to_translate.c:10
+#: ../locale/scriptstrings/v.in.gpsbabel_to_translate.c:8
+msgid "Do not attempt projection transform from WGS84"
+msgstr ""
+
+#: ../locale/scriptstrings/v.in.garmin_to_translate.c:11
+#: ../locale/scriptstrings/v.in.mapgen_to_translate.c:6
+#: ../locale/scriptstrings/v.in.gpsbabel_to_translate.c:10
+#, fuzzy
+msgid "Name for output vector map (omit for display to stdout)"
+msgstr "新的PPM文件的名称。(out=-用于标准输出)"
+
+#: ../locale/scriptstrings/v.in.garmin_to_translate.c:12
+msgid "Port Garmin receiver is connected to"
+msgstr ""
+
+#: ../locale/scriptstrings/d.split.frame_to_translate.c:1
+#, fuzzy
+msgid "Split the display into subframes."
+msgstr "作为背景的栅格图的名称"
+
+#: ../locale/scriptstrings/d.split.frame_to_translate.c:2
+#, fuzzy
+msgid "Number of subframes"
+msgstr "行数"
+
+#: ../locale/scriptstrings/d.split.frame_to_translate.c:3
+msgid "Split horizontally not vertically"
+msgstr ""
+
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:1
+#, fuzzy
+msgid "Displays thematic vector map"
+msgstr "输入的 2D 矢量地图的名称"
+
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:2
+msgid "display, vector, thematic, legend"
+msgstr ""
+
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:3
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:44
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:48
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:51
+msgid "Files"
+msgstr ""
+
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:5
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:7
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:9
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:11
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:13
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:16
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:25
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:46
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:53
+msgid "Theme"
+msgstr ""
+
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:8
+#, fuzzy
+msgid "Name of attribute column to use for thematic display (must be numeric)"
+msgstr "用作缓冲区距离的属性字段"
+
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:10
+#, fuzzy
+msgid "Type of thematic display"
+msgstr "作为背景的栅格图的名称"
+
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:12
+msgid "Thematic divisions of data for display"
+msgstr ""
+
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:14
+msgid "Break points for custom breaks option"
+msgstr ""
+
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:15
+msgid "Separate values by spaces (0 10 20 30 ...)"
+msgstr ""
+
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:19
+#, fuzzy
+msgid "Vector point icon for point data"
+msgstr "截取浮点数"
+
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:21
+#, fuzzy
+msgid "Icon size for point data"
+msgstr "截取浮点数"
+
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:22
+msgid "Minimum icon size/line width for graduated points/lines)"
+msgstr ""
+
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:24
+msgid "Maximum icon size/line width for graduated points and lines"
+msgstr ""
+
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:26
+#, fuzzy
+msgid "Number of classes for interval theme (integer)"
+msgstr "重复过滤的次数"
+
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:28
+#, fuzzy
+msgid "Color scheme for graduated color mapping"
+msgstr "[%s] 的色彩表已更新。"
+
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:29
+#, fuzzy
+msgid "Select 'single_color' for graduated point/line display"
+msgstr "[%s] 的色彩表已更新。"
+
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:31
+#, fuzzy
+msgid "Color for graduated points map"
+msgstr "[%s] 的色彩表已更新。"
+
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:32
+msgid "GRASS named color or R:G:B triplet. Set color scheme to single color"
+msgstr ""
+
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:34
+#, fuzzy
+msgid "Color for graduated lines or point/area outlines"
+msgstr "[%s] 的色彩表已更新。"
+
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:35
+msgid "GRASS named color or R:G:B triplet. Set color scheme to single color."
+msgstr ""
+
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:37
+#, fuzzy
+msgid "Beginning color for custom color gradient"
+msgstr "z 坐标的偏移值"
+
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:38
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:41
+#, fuzzy
+msgid "Must be expressed as R:G:B triplet"
+msgstr "z 坐标的偏移值"
+
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:40
+#, fuzzy
+msgid "Ending color for custom color gradient"
+msgstr "z 坐标的偏移值"
+
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:42
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:59
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:61
+#, fuzzy
+msgid "Misc"
+msgstr "量度"
+
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:43
+msgid "Select x11 display monitor for legend"
+msgstr ""
+
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:45
+msgid "Save thematic map commands to group file for GIS Manager"
+msgstr ""
+
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:49
+msgid "Root for the name of psmap instruction files to be in current directory"
+msgstr ""
+
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:50
+msgid "If not set, no psmap instruction files will be created)"
+msgstr ""
+
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:52
+msgid "Name of group file where thematic map commands will be saved"
+msgstr ""
+
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:54
+msgid "Create graphic legend in x11 display monitor"
+msgstr ""
+
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:56
+msgid "Only draw fills (no outlines) for areas and points"
+msgstr ""
+
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:58
+msgid "Update color values to GRASSRGB column in attribute table"
+msgstr ""
+
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:60
+msgid "Output legend for GIS Manager (for scripting use only)"
+msgstr ""
+
+#: ../locale/scriptstrings/d.vect.thematic_to_translate.c:62
+msgid "Use math notation brackets in legend"
+msgstr ""
+
+#: ../locale/scriptstrings/db.droptable_to_translate.c:1
+#, fuzzy
+msgid "Drops an attribute table."
+msgstr "无法创建属性表"
+
+#: ../locale/scriptstrings/db.droptable_to_translate.c:4
+#, fuzzy
+msgid "Table to drop"
+msgstr "无法创建栅格地图 %s"
+
+#: ../locale/scriptstrings/v.in.gns_to_translate.c:1
+#, fuzzy
+msgid ""
+"Imports US-NGA GEOnet Names Server (GNS) country files into a GRASS vector "
+"points map."
+msgstr "输入的 2D 矢量地图的名称"
+
+#: ../locale/scriptstrings/v.in.gns_to_translate.c:2
+#: ../locale/scriptstrings/v.in.geonames_to_translate.c:2
+#, fuzzy
+msgid "vector, import, gazetteer"
+msgstr "矢量导入完成"
+
+#: ../locale/scriptstrings/v.in.gns_to_translate.c:3
+msgid "Uncompressed GNS file from NGA (with .txt extension)"
+msgstr ""
+
+#: ../locale/scriptstrings/v.rast.stats_to_translate.c:1
+#, fuzzy
+msgid ""
+"Calculates univariate statistics from a raster map based on vector polygons "
+"and uploads statistics to new attribute columns."
+msgstr "计算栅格地图中非空像元的一元统计值"
+
+#: ../locale/scriptstrings/v.rast.stats_to_translate.c:2
+#, fuzzy
+msgid "vector, raster, statistics"
+msgstr "包含结果的栅格图的名称"
+
+#: ../locale/scriptstrings/v.rast.stats_to_translate.c:3
+msgid "Continue if upload column(s) already exist"
+msgstr ""
+
+#: ../locale/scriptstrings/v.rast.stats_to_translate.c:5
+#, fuzzy
+msgid "Name of vector polygon map"
+msgstr "输入的 2D 矢量地图的名称"
+
+#: ../locale/scriptstrings/v.rast.stats_to_translate.c:7
+msgid ""
+"A single vector map can be connected to multiple database tables. This "
+"number determines which table to use"
+msgstr ""
+
+#: ../locale/scriptstrings/v.rast.stats_to_translate.c:8
+#, fuzzy
+msgid "Name of raster map to calculate statistics from"
+msgstr "包含结果的栅格图的名称"
+
+#: ../locale/scriptstrings/v.rast.stats_to_translate.c:9
+#, fuzzy
+msgid "Column prefix for new attribute columns"
+msgstr "属性字段值的比例因子"
+
+#: ../locale/scriptstrings/v.in.geonames_to_translate.c:1
+#, fuzzy
+msgid "Imports geonames.org country files into a GRASS vector points map."
+msgstr "输入的 2D 矢量地图的名称"
+
+#: ../locale/scriptstrings/v.in.geonames_to_translate.c:3
+msgid "Uncompressed geonames file from (with .txt extension)"
+msgstr ""
+
+#: ../locale/scriptstrings/d.m_to_translate.c:1
+msgid "Display manager for GRASS"
+msgstr ""
+
+#: ../locale/scriptstrings/d.m_to_translate.c:2
+#, fuzzy
+msgid "Name of .dmrc settings file"
+msgstr "已有的MAT-File(v4)的名称"
+
+#: ../locale/scriptstrings/gis.m_to_translate.c:1
+msgid "GIS manager for GRASS"
+msgstr ""
+
+#: ../locale/scriptstrings/gis.m_to_translate.c:2
+#, fuzzy
+msgid "Name of GIS manager settings file (.grc)"
+msgstr "已有的MAT-File(v4)的名称"
+
+#: ../locale/scriptstrings/db.dropcol_to_translate.c:1
+#, fuzzy
+msgid "Drops a column from selected attribute table"
+msgstr "无法创建属性表"
+
+#: ../locale/scriptstrings/db.dropcol_to_translate.c:4
+#, fuzzy
+msgid "Table from which to drop attribute column"
+msgstr "需要编辑属性表的输入矢量点地图的名称"
+
+#: ../locale/scriptstrings/db.dropcol_to_translate.c:5
+#: ../locale/scriptstrings/v.db.dropcol_to_translate.c:5
+#, fuzzy
+msgid "Name of the column"
+msgstr "列数"
+
+#: ../locale/scriptstrings/r.out.xyz_to_translate.c:1
+msgid ""
+"Export a raster map to a text file as x,y,z values based on cell centers."
+msgstr ""
+
+#: ../locale/scriptstrings/d.resize_to_translate.c:1
+msgid "Resizes active display monitor"
+msgstr ""
+
+#: ../locale/scriptstrings/d.resize_to_translate.c:3
+msgid "New width for window"
+msgstr ""
+
+#: ../locale/scriptstrings/d.resize_to_translate.c:4
+msgid "New height for window"
+msgstr ""
+
+#: ../locale/scriptstrings/v.in.mapgen_to_translate.c:1
+msgid "Import Mapgen or Matlab-ASCII vector maps into GRASS."
+msgstr ""
+
+#: ../locale/scriptstrings/v.in.mapgen_to_translate.c:3
+#, fuzzy
+msgid "Input map is in Matlab format"
+msgstr "输入文件"
+
+#: ../locale/scriptstrings/v.in.mapgen_to_translate.c:4
+#, fuzzy
+msgid "Create a 3D vector points map from 3 column Matlab data"
+msgstr "从包含坐标的数据库表创建新的矢量 (点)"
+
+#: ../locale/scriptstrings/v.in.mapgen_to_translate.c:5
+#, fuzzy
+msgid "Name of input file in Mapgen/Matlab format"
+msgstr "输入文件"
+
+#: ../locale/scriptstrings/v.build.all_to_translate.c:1
+#, fuzzy
+msgid "Rebuilds topology on all vector maps in the current mapset."
+msgstr "未找到矢量文件 %s"
+
+#: ../locale/scriptstrings/r.univar.sh_to_translate.c:1
+#, fuzzy
+msgid "calculates univariate statistics from a GRASS raster map"
+msgstr "计算栅格地图中非空像元的一元统计值"
+
+#: ../locale/scriptstrings/r.univar.sh_to_translate.c:3
+msgid "extended statistics (quartiles and percentile)"
+msgstr ""
+
+#: ../locale/scriptstrings/r.univar.sh_to_translate.c:5
+#, fuzzy
+msgid "Percentile to calculate (requires -e flag)"
+msgstr "无法关闭输入地图"
+
+#: ../locale/scriptstrings/r.mapcalculator_to_translate.c:1
+msgid "Calculate new raster map from a r.mapcalc expression."
+msgstr ""
+
+#: ../locale/scriptstrings/r.mapcalculator_to_translate.c:2
+msgid "A"
+msgstr ""
+
+#: ../locale/scriptstrings/r.mapcalculator_to_translate.c:3
+msgid "B"
+msgstr ""
+
+#: ../locale/scriptstrings/r.mapcalculator_to_translate.c:4
+msgid "C"
+msgstr ""
+
+#: ../locale/scriptstrings/r.mapcalculator_to_translate.c:5
+msgid "D"
+msgstr ""
+
+#: ../locale/scriptstrings/r.mapcalculator_to_translate.c:6
+msgid "E"
+msgstr ""
+
+#: ../locale/scriptstrings/r.mapcalculator_to_translate.c:7
+msgid "F"
+msgstr ""
+
+#: ../locale/scriptstrings/r.mapcalculator_to_translate.c:8
+#: ../locale/scriptstrings/r3.mapcalculator_to_translate.c:8
+msgid "Formula (e.g. A-B or A*C+B)"
+msgstr ""
+
+#: ../locale/scriptstrings/r.mapcalculator_to_translate.c:10
+#: ../locale/scriptstrings/r3.mapcalculator_to_translate.c:10
+msgid "Show help"
+msgstr ""
+
+#: ../locale/scriptstrings/r.mapcalculator_to_translate.c:11
+msgid "Expert mode (enter a set of r.mapcalc expressions)"
+msgstr ""
+
+#: ../locale/scriptstrings/r.mapcalculator_to_translate.c:12
+#: ../locale/scriptstrings/r3.mapcalculator_to_translate.c:12
+#, fuzzy
+msgid "Do not overwrite existing map"
+msgstr "无法创建栅格地图 %s"
+
+#: ../locale/scriptstrings/i.landsat.rgb_to_translate.c:1
+msgid "Performs auto-balancing of colors for LANDSAT images."
+msgstr ""
+
+#: ../locale/scriptstrings/i.landsat.rgb_to_translate.c:2
+#, fuzzy
+msgid "raster, imagery, colors"
+msgstr "矢量导入完成"
+
+#: ../locale/scriptstrings/i.landsat.rgb_to_translate.c:3
+msgid "LANDSAT red channel"
+msgstr ""
+
+#: ../locale/scriptstrings/i.landsat.rgb_to_translate.c:4
+msgid "LANDSAT green channel"
+msgstr ""
+
+#: ../locale/scriptstrings/i.landsat.rgb_to_translate.c:5
+msgid "LANDSAT blue channel"
+msgstr ""
+
+#: ../locale/scriptstrings/i.landsat.rgb_to_translate.c:6
+msgid "Cropping intensity (upper brightness level)"
+msgstr ""
+
+#: ../locale/scriptstrings/i.landsat.rgb_to_translate.c:7
+msgid "Extend colors to full range of data on each channel"
+msgstr ""
+
+#: ../locale/scriptstrings/i.landsat.rgb_to_translate.c:8
+msgid "Preserve relative colors, adjust brightness only"
+msgstr ""
+
+#: ../locale/scriptstrings/i.landsat.rgb_to_translate.c:9
+#, fuzzy
+msgid "Reset to standard color range"
+msgstr "保留已有的色彩表"
+
+#: ../locale/scriptstrings/d.monsize_to_translate.c:1
+msgid "Selects/starts specified monitor at specified size"
+msgstr ""
+
+#: ../locale/scriptstrings/d.monsize_to_translate.c:3
+#, fuzzy
+msgid "Display monitor to start"
+msgstr "包含结果的栅格图的名称"
+
+#: ../locale/scriptstrings/d.monsize_to_translate.c:4
+msgid "Width in pixels of new display monitor"
+msgstr ""
+
+#: ../locale/scriptstrings/d.monsize_to_translate.c:5
+msgid "Height in pixels of new display monitor"
+msgstr ""
+
+#: ../locale/scriptstrings/d.shadedmap_to_translate.c:1
+msgid "Drapes a color raster over a shaded relief map using d.his"
+msgstr ""
+
+#: ../locale/scriptstrings/d.shadedmap_to_translate.c:2
+#, fuzzy
+msgid "Name of shaded relief or aspect map"
+msgstr "新的栅格文件的名称"
+
+#: ../locale/scriptstrings/d.shadedmap_to_translate.c:3
+#, fuzzy
+msgid "Name of raster to drape over relief map"
+msgstr "栅格图的名称"
+
+#: ../locale/scriptstrings/d.shadedmap_to_translate.c:4
+#, fuzzy
+msgid "Percent to brighten"
+msgstr "完成率："
+
+#: ../locale/scriptstrings/v.in.gpsbabel_to_translate.c:1
+msgid ""
+"Import waypoints, routes, and tracks from a GPS receiver or GPS download "
+"file into a vector map."
+msgstr ""
+
+#: ../locale/scriptstrings/v.in.gpsbabel_to_translate.c:4
+#, fuzzy
+msgid "Import waypoints"
+msgstr "导入地图 %d 的要素..."
+
+#: ../locale/scriptstrings/v.in.gpsbabel_to_translate.c:5
+#, fuzzy
+msgid "Import routes"
+msgstr "导入地图 %d 的要素..."
+
+#: ../locale/scriptstrings/v.in.gpsbabel_to_translate.c:6
+#, fuzzy
+msgid "Import track"
+msgstr "导入地图 %d 的要素..."
+
+#: ../locale/scriptstrings/v.in.gpsbabel_to_translate.c:7
+msgid "Force vertices of track or route data as points"
+msgstr ""
+
+#: ../locale/scriptstrings/v.in.gpsbabel_to_translate.c:9
+#, fuzzy
+msgid "Device or file used to import data"
+msgstr "将要导入的栅格文件"
+
+#: ../locale/scriptstrings/v.in.gpsbabel_to_translate.c:11
+msgid "Format of GPS input data (use gpsbabel supported formats)"
+msgstr ""
+
+#: ../locale/scriptstrings/v.in.gpsbabel_to_translate.c:12
+msgid ""
+"Projection of input data (PROJ.4 style), if not set Lat/Lon WGS84 is assumed"
+msgstr ""
+
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:1
+msgid "Downloads and imports data from WMS servers."
+msgstr ""
+
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:2
+msgid "wms"
+msgstr ""
+
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:4
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:8
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:17
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:21
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:23
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:25
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:27
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:29
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:31
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:33
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:35
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:38
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:49
+#, fuzzy
+msgid "Request"
+msgstr "安静模式"
+
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:5
+msgid "Skip to downloading (to resume downloads faster)"
+msgstr ""
+
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:6
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:10
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:40
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:42
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:44
+msgid "Download"
+msgstr ""
+
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:7
+msgid "Don't request transparent data"
+msgstr ""
+
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:9
+msgid "Clean existing data out of download directory"
+msgstr ""
+
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:12
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:14
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:19
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:46
+#, fuzzy
+msgid "Import"
+msgstr "导入地图 %d 的要素..."
+
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:13
+msgid "Don't reproject the data, just patch it"
+msgstr ""
+
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:15
+msgid "Use GET method instead of POST data method"
+msgstr ""
+
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:16
+msgid "This may be needed to connect to servers which lack POST capability"
+msgstr ""
+
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:20
+#, fuzzy
+msgid "Mapserver to request data from"
+msgstr "无法从表中选取数据"
+
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:22
+#, fuzzy
+msgid "Layers to request from map server"
+msgstr "使用的插值方法"
+
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:24
+#, fuzzy
+msgid "Styles to request from map server"
+msgstr "使用的插值方法"
+
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:26
+#, fuzzy
+msgid "Source projection to request from server"
+msgstr "使用的插值方法"
+
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:28
+#, fuzzy
+msgid "Image format requested from the server"
+msgstr "使用的插值方法"
+
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:30
+msgid "Addition query options for server"
+msgstr ""
+
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:32
+#, fuzzy
+msgid "Maximum columns to request at a time"
+msgstr "点到网络的最小距离"
+
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:34
+#, fuzzy
+msgid "Maximum rows to request at a time"
+msgstr "点到网络的最小距离"
+
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:36
+msgid "Additional options for r.tileset"
+msgstr ""
+
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:37
+#, fuzzy
+msgid "Named region to request data for. Current region used if omitted"
+msgstr "沿着剖面的分辨率(默认为当前区域的分辨率)"
+
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:39
+msgid "Folder to save downloaded data to"
+msgstr ""
+
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:41
+msgid "Additional options for wget"
+msgstr ""
+
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:43
+msgid "Additional options for curl"
+msgstr ""
+
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:45
+#, fuzzy
+msgid "Reprojection method to use"
+msgstr "使用的插值方法"
+
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:47
+msgid "Filename to save capabilities XML file to"
+msgstr ""
+
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:48
+#, fuzzy
+msgid "Requires list available layers flag"
+msgstr "列出可用的格式并退出"
+
+#: ../locale/scriptstrings/r.colors.stddev_to_translate.c:1
+msgid "Set color rules based on stddev from a map's mean value."
+msgstr ""
+
+#: ../locale/scriptstrings/r.colors.stddev_to_translate.c:4
+#, fuzzy
+msgid "Color using standard deviation bands"
+msgstr "标准偏差"
+
+#: ../locale/scriptstrings/r.colors.stddev_to_translate.c:5
+msgid "Force center at zero"
+msgstr ""
+
+#: ../locale/scriptstrings/r.fillnulls_to_translate.c:1
+msgid ""
+"Fills no-data areas in raster maps using v.surf.rst splines interpolation"
+msgstr ""
+
+#: ../locale/scriptstrings/r.fillnulls_to_translate.c:2
+#, fuzzy
+msgid "raster, elevation, interpolation"
+msgstr "插值点的数量"
+
+#: ../locale/scriptstrings/r.fillnulls_to_translate.c:3
+#, fuzzy
+msgid "Raster map in which to fill nulls"
+msgstr "提供色彩表的栅格图名称"
+
+#: ../locale/scriptstrings/r.fillnulls_to_translate.c:4
+msgid ""
+"Output raster map with nulls filled by interpolation from surrounding values"
+msgstr ""
+
+#: ../locale/scriptstrings/r.fillnulls_to_translate.c:5
+#, fuzzy
+msgid "Spline tension parameter"
+msgstr "平滑参数"
+
+#: ../locale/scriptstrings/r.fillnulls_to_translate.c:6
+#, fuzzy
+msgid "Spline smoothing parameter"
+msgstr "平滑参数"
+
+#: ../locale/scriptstrings/v.dissolve_to_translate.c:1
+#, fuzzy
+msgid ""
+"Dissolves boundaries between adjacent areas sharing a common category number "
+"or attribute."
+msgstr "未找到属性表 -> 使用唯一的类别值作为属性"
+
+#: ../locale/scriptstrings/v.dissolve_to_translate.c:2
+#, fuzzy
+msgid "vector, area, dissolve"
+msgstr "矢量导入完成"
+
+#: ../locale/scriptstrings/v.dissolve_to_translate.c:5
+#, fuzzy
+msgid "Layer number. If -1, all layers are extracted."
+msgstr ""
+"OGR 图层名称。如果不给出，那么所有可用的图层都会被导入。\n"
+"\t\tESRI Shapefile：shapefile 名称\n"
+"\t\tMapInfo File：mapinfo 文件名"
+
+#: ../locale/scriptstrings/v.dissolve_to_translate.c:7
+#, fuzzy
+msgid "Name of column used to dissolve common boundaries"
+msgstr "用来创建标签的属性字段的名称"
+
+#: ../locale/scriptstrings/v.centroids_to_translate.c:1
+#, fuzzy
+msgid "Adds missing centroids to closed boundaries."
+msgstr "无法更新边界"
+
+#: ../locale/scriptstrings/v.centroids_to_translate.c:2
+#, fuzzy
+msgid "vector, centroid, area"
+msgstr "打印矢量的属性"
+
+#: ../locale/scriptstrings/v.centroids_to_translate.c:5
+#, fuzzy
+msgid "Action to be taken"
+msgstr "将被重新编码的栅格图"
+
+#: ../locale/scriptstrings/v.centroids_to_translate.c:7
+#, fuzzy
+msgid "Category number starting value"
+msgstr "类别字段的名称"
+
+#: ../locale/scriptstrings/r3.mapcalculator_to_translate.c:1
+msgid "Calculates new grid3D volume from r3.mapcalc expression."
+msgstr ""
+
+#: ../locale/scriptstrings/r3.mapcalculator_to_translate.c:2
+#, fuzzy
+msgid "A (grid3D file)"
+msgstr "输入的 grid3 文件名"
+
+#: ../locale/scriptstrings/r3.mapcalculator_to_translate.c:3
+#, fuzzy
+msgid "B (grid3D file)"
+msgstr "输入的 grid3 文件名"
+
+#: ../locale/scriptstrings/r3.mapcalculator_to_translate.c:4
+#, fuzzy
+msgid "C (grid3D file)"
+msgstr "输入的 grid3 文件名"
+
+#: ../locale/scriptstrings/r3.mapcalculator_to_translate.c:5
+#, fuzzy
+msgid "D (grid3D file)"
+msgstr "输入的 grid3 文件名"
+
+#: ../locale/scriptstrings/r3.mapcalculator_to_translate.c:6
+#, fuzzy
+msgid "E (grid3D file)"
+msgstr "输入的 grid3 文件名"
+
+#: ../locale/scriptstrings/r3.mapcalculator_to_translate.c:7
+#, fuzzy
+msgid "F (grid3D file)"
+msgstr "输入的 grid3 文件名"
+
+#: ../locale/scriptstrings/r3.mapcalculator_to_translate.c:9
+#, fuzzy
+msgid "Name for output grid3D volume"
+msgstr "输出文件的名称"
+
+#: ../locale/scriptstrings/r3.mapcalculator_to_translate.c:11
+msgid "Expert mode (enter a set of r3.mapcalc expressions)"
+msgstr ""
+
+#: ../locale/scriptstrings/v.db.droptable_to_translate.c:1
+#, fuzzy
+msgid "Removes existing attribute table of a vector map."
+msgstr "已有输入栅格文件大的名称"
+
+#: ../locale/scriptstrings/v.db.droptable_to_translate.c:3
+msgid "Force removal (required for actual deletion of table)"
+msgstr ""
+
+#: ../locale/scriptstrings/v.db.droptable_to_translate.c:4
+#, fuzzy
+msgid "Vector map from which to remove attribute table"
+msgstr "需要编辑属性表的输入矢量点地图的名称"
+
+#: ../locale/scriptstrings/v.db.droptable_to_translate.c:5
+#, fuzzy
+msgid "Name of existing attribute table (default: vector map name)"
+msgstr "已有输入栅格文件大的名称"
+
+#: ../locale/scriptstrings/v.db.droptable_to_translate.c:6
+#, fuzzy
+msgid "Layer from which to drop linked attribute table"
+msgstr "需要编辑属性表的输入矢量点地图的名称"
+
+#: ../locale/scriptstrings/v.db.join_to_translate.c:1
+#, fuzzy
+msgid "Allows to join a table to a vector map table."
+msgstr "输入的 2D 矢量地图的名称"
+
+#: ../locale/scriptstrings/v.db.join_to_translate.c:3
+#, fuzzy
+msgid "Vector map to which to join other table"
+msgstr "需要编辑属性表的输入矢量点地图的名称"
+
+#: ../locale/scriptstrings/v.db.join_to_translate.c:4
+#, fuzzy
+msgid "Layer where to join"
+msgstr "无法创建属性表"
+
+#: ../locale/scriptstrings/v.db.join_to_translate.c:5
+#, fuzzy
+msgid "Join column in map table"
+msgstr "未知的类型"
+
+#: ../locale/scriptstrings/v.db.join_to_translate.c:6
+#, fuzzy
+msgid "Other table name"
+msgstr "输出的表名称"
+
+#: ../locale/scriptstrings/v.db.join_to_translate.c:7
+#, fuzzy
+msgid "Join column in other table"
+msgstr "未知的类型"
+
+#: ../locale/scriptstrings/i.tasscap_to_translate.c:1
+#, fuzzy
+msgid "Tasseled Cap (Kauth Thomas) transformation for LANDSAT-TM data"
+msgstr "3D 矢量对象的固定高度"
+
+#: ../locale/scriptstrings/i.tasscap_to_translate.c:2
+#, fuzzy
+msgid "raster, imagery"
+msgstr "矢量导入完成"
+
+#: ../locale/scriptstrings/i.tasscap_to_translate.c:3
+#, fuzzy
+msgid "use transformation rules for LANDSAT-4"
+msgstr "3D 矢量对象的固定高度"
+
+#: ../locale/scriptstrings/i.tasscap_to_translate.c:4
+#, fuzzy
+msgid "use transformation rules for LANDSAT-5"
+msgstr "3D 矢量对象的固定高度"
+
+#: ../locale/scriptstrings/i.tasscap_to_translate.c:5
+#, fuzzy
+msgid "use transformation rules for LANDSAT-7"
+msgstr "3D 矢量对象的固定高度"
+
+#: ../locale/scriptstrings/i.tasscap_to_translate.c:6
+#, fuzzy
+msgid "raster input map (LANDSAT channel 1)"
+msgstr "输入栅格图"
+
+#: ../locale/scriptstrings/i.tasscap_to_translate.c:7
+#, fuzzy
+msgid "raster input map (LANDSAT channel 2)"
+msgstr "输入栅格图"
+
+#: ../locale/scriptstrings/i.tasscap_to_translate.c:8
+#, fuzzy
+msgid "raster input map (LANDSAT channel 3)"
+msgstr "输入栅格图"
+
+#: ../locale/scriptstrings/i.tasscap_to_translate.c:9
+#, fuzzy
+msgid "raster input map (LANDSAT channel 4)"
+msgstr "输入栅格图"
+
+#: ../locale/scriptstrings/i.tasscap_to_translate.c:10
+#, fuzzy
+msgid "raster input map (LANDSAT channel 5)"
+msgstr "输入栅格图"
+
+#: ../locale/scriptstrings/i.tasscap_to_translate.c:11
+#, fuzzy
+msgid "raster input map (LANDSAT channel 7)"
+msgstr "输入栅格图"
+
+#: ../locale/scriptstrings/i.tasscap_to_translate.c:12
+#, fuzzy
+msgid "raster output TC maps prefix"
+msgstr "输出的栅格文件"
+
+#: ../locale/scriptstrings/v.db.addtable_to_translate.c:1
+#, fuzzy
+msgid ""
+"Creates and connects a new attribute table to a given layer of an existing "
+"vector map."
+msgstr "已有输入栅格文件大的名称"
+
+#: ../locale/scriptstrings/v.db.addtable_to_translate.c:3
+#, fuzzy
+msgid "Vector map for which to add new attribute table"
+msgstr "需要编辑属性表的输入矢量点地图的名称"
+
+#: ../locale/scriptstrings/v.db.addtable_to_translate.c:4
+#, fuzzy
+msgid "Name of new attribute table (default: vector map name)"
+msgstr "已有输入栅格文件大的名称"
+
+#: ../locale/scriptstrings/v.db.addtable_to_translate.c:5
+#, fuzzy
+msgid "Layer where to add new attribute table"
+msgstr "无法创建属性表"
+
+#: ../locale/scriptstrings/v.db.addtable_to_translate.c:6
+#: ../locale/scriptstrings/v.db.addcol_to_translate.c:5
+msgid ""
+"Name and type of the new column(s) (types depend on database backend, but "
+"all support VARCHAR(), INT, DOUBLE PRECISION and DATE)"
+msgstr ""
+
+#: ../locale/scriptstrings/v.in.wfs_to_translate.c:1
+msgid "Import GetFeature from WFS"
+msgstr ""
+
+#: ../locale/scriptstrings/v.in.wfs_to_translate.c:2
+msgid "GetFeature URL starting with http"
+msgstr ""
+
+#: ../locale/scriptstrings/v.in.wfs_to_translate.c:3
+#, fuzzy
+msgid "Vector output map"
+msgstr "没有输出地图"
+
+#: ../locale/scriptstrings/r.shaded.relief_to_translate.c:1
+#, fuzzy
+msgid "Creates shaded relief map from an elevation map (DEM)."
+msgstr "从高程地图创建地形索引ln(a/tan(beta))图。"
+
+#: ../locale/scriptstrings/r.shaded.relief_to_translate.c:4
+#, fuzzy
+msgid "Output shaded relief map name"
+msgstr "输出的驱动名称"
+
+#: ../locale/scriptstrings/r.shaded.relief_to_translate.c:5
+#, fuzzy
+msgid "Altitude of the sun in degrees above the horizon"
+msgstr "A：太阳高度，单位：度"
+
+#: ../locale/scriptstrings/r.shaded.relief_to_translate.c:6
+#, fuzzy
+msgid "Azimuth of the sun in degrees to the east of north"
+msgstr "A：太阳方位角(从北计算)，单位：度"
+
+#: ../locale/scriptstrings/r.shaded.relief_to_translate.c:7
+#, fuzzy
+msgid "Factor for exaggerating relief"
+msgstr "表达坡度的格式"
+
+#: ../locale/scriptstrings/r.shaded.relief_to_translate.c:8
+#, fuzzy
+msgid "Scale factor for converting horizontal units to elevation units"
+msgstr "将高程单位转换到米的乘法因子"
+
+#: ../locale/scriptstrings/r.shaded.relief_to_translate.c:9
+msgid ""
+"Set scaling factor (applies to lat./long. locations only, none: scale=1)"
+msgstr ""
+
+#: ../locale/scriptstrings/d.out.png_to_translate.c:1
+msgid "Saves active display monitor to PNG file in home directory"
+msgstr ""
+
+#: ../locale/scriptstrings/d.out.png_to_translate.c:3
+#, fuzzy
+msgid "Name of PNG file"
+msgstr "输出文件的名称"
+
+#: ../locale/scriptstrings/d.out.png_to_translate.c:4
+msgid "Resolution of output file (single=1, double=2, quad=4)"
+msgstr ""
+
+#: ../locale/scriptstrings/i.oif_to_translate.c:1
+msgid "Calculates Optimum-Index-Factor table for LANDSAT TM bands 1-5, & 7"
+msgstr ""
+
+#: ../locale/scriptstrings/i.oif_to_translate.c:2
+#, fuzzy
+msgid "raster, imagery, statistics"
+msgstr "包含结果的栅格图的名称"
+
+#: ../locale/scriptstrings/i.oif_to_translate.c:3
+msgid "LANDSAT TM band 1."
+msgstr ""
+
+#: ../locale/scriptstrings/i.oif_to_translate.c:4
+msgid "LANDSAT TM band 2."
+msgstr ""
+
+#: ../locale/scriptstrings/i.oif_to_translate.c:5
+msgid "LANDSAT TM band 3."
+msgstr ""
+
+#: ../locale/scriptstrings/i.oif_to_translate.c:6
+msgid "LANDSAT TM band 4."
+msgstr ""
+
+#: ../locale/scriptstrings/i.oif_to_translate.c:7
+msgid "LANDSAT TM band 5."
+msgstr ""
+
+#: ../locale/scriptstrings/i.oif_to_translate.c:8
+msgid "LANDSAT TM band 7."
+msgstr ""
+
+#: ../locale/scriptstrings/r.li.setup_to_translate.c:1
+#, fuzzy
+msgid "Configuration editor for r.li.'index'"
+msgstr "非法的输出文件名"
+
+#: ../locale/scriptstrings/r.li.setup_to_translate.c:2
+#, fuzzy
+msgid "raster, landscape structure analysis"
+msgstr "包含结果的栅格图的名称"
+
+#: ../locale/scriptstrings/db.in.ogr_to_translate.c:1
+#, fuzzy
+msgid "Imports attribute tables in various formats."
+msgstr "已有输入栅格文件大的名称"
+
+#: ../locale/scriptstrings/db.in.ogr_to_translate.c:3
+msgid "Table file to be imported or DB connection string"
+msgstr ""
+
+#: ../locale/scriptstrings/db.in.ogr_to_translate.c:4
+msgid "Table name of SQL DB table"
+msgstr ""
+
+#: ../locale/scriptstrings/db.in.ogr_to_translate.c:6
+#, fuzzy
+msgid "Name for auto-generated unique key column"
+msgstr "栅格地图的名称 <%s>"
+
+#: ../locale/scriptstrings/d.rast.edit_to_translate.c:5
+#, fuzzy
+msgid "Name of aspect raster map"
+msgstr "栅格图的名称"
+
+#: ../locale/scriptstrings/d.rast.edit_to_translate.c:6
+msgid "Width of display canvas"
+msgstr ""
+
+#: ../locale/scriptstrings/d.rast.edit_to_translate.c:7
+msgid "Height of display canvas"
+msgstr ""
+
+#: ../locale/scriptstrings/d.rast.edit_to_translate.c:8
+msgid "Minimum size of each cell"
+msgstr ""
+
+#: ../locale/scriptstrings/d.rast.edit_to_translate.c:9
+#, fuzzy
+msgid "Maximum number of rows to load"
+msgstr "列数"
+
+#: ../locale/scriptstrings/d.rast.edit_to_translate.c:10
+#, fuzzy
+msgid "Maximum number of columns to load"
+msgstr "列数"
+
+#: ../locale/scriptstrings/v.db.dropcol_to_translate.c:1
+#, fuzzy
+msgid ""
+"Drops a column from the attribute table connected to a given vector map."
+msgstr "已有输入栅格文件大的名称"
+
+#: ../locale/scriptstrings/v.db.dropcol_to_translate.c:3
+#, fuzzy
+msgid "Vector map for which to drop attribute column"
+msgstr "需要编辑属性表的输入矢量点地图的名称"
+
+#: ../locale/scriptstrings/v.db.dropcol_to_translate.c:4
+#, fuzzy
+msgid "Layer where to drop column"
+msgstr "无法创建属性表"
+
+#: ../locale/scriptstrings/d.polar_to_translate.c:1
+msgid "Draws polar diagram of angle map such as aspect or flow directions"
+msgstr ""
+
+#: ../locale/scriptstrings/d.polar_to_translate.c:3
+#, fuzzy
+msgid "Name of raster angle map"
+msgstr "栅格图的名称"
+
+#: ../locale/scriptstrings/d.polar_to_translate.c:4
+msgid "Pixel value to be interpreted as undefined (different from NULL)"
+msgstr ""
+
+#: ../locale/scriptstrings/d.polar_to_translate.c:5
+#, fuzzy
+msgid "Name of optional EPS output file"
+msgstr "输出的矢量文件的名称"
+
+#: ../locale/scriptstrings/d.polar_to_translate.c:6
+msgid "Plot using Xgraph"
+msgstr ""
+
+#: ../locale/scriptstrings/i.in.spotvgt_to_translate.c:1
+#, fuzzy
+msgid "Import of SPOT VGT NDVI file into a raster map"
+msgstr "将二进制栅格文件导入到GRASS栅格图层中。"
+
+#: ../locale/scriptstrings/i.in.spotvgt_to_translate.c:3
+msgid "also import quality map (SM status map layer) and filter NDVI map"
+msgstr ""
+
+#: ../locale/scriptstrings/i.in.spotvgt_to_translate.c:4
+msgid "existing SPOT VGT NDVI HDF file (0001_NDV.HDF)"
+msgstr ""
+
+#: ../locale/scriptstrings/v.db.addcol_to_translate.c:1
+#, fuzzy
+msgid ""
+"Adds one or more columns to the attribute table connected to a given vector "
+"map."
+msgstr "已有输入栅格文件大的名称"
+
+#: ../locale/scriptstrings/v.db.addcol_to_translate.c:3
+#, fuzzy
+msgid "Vector map for which to edit attribute table"
+msgstr "需要编辑属性表的输入矢量点地图的名称"
+
+#: ../locale/scriptstrings/v.db.addcol_to_translate.c:4
+#, fuzzy
+msgid "Layer where to add column"
+msgstr "无法创建属性表"
+
+#: ../locale/scriptstrings/d.mvmon_to_translate.c:1
+#, fuzzy
+msgid "Moves displayed maps to another monitor"
+msgstr "选择字体，该字体用于图形监视器上文本的显示。"
+
+#: ../locale/scriptstrings/d.mvmon_to_translate.c:3
+msgid "clear target monitor before moving"
+msgstr ""
+
+#: ../locale/scriptstrings/d.mvmon_to_translate.c:4
+#, fuzzy
+msgid "stay with source monitor"
+msgstr "无法获取栅格行\n"
+
+#: ../locale/scriptstrings/d.mvmon_to_translate.c:5
+msgid "kill source monitor after moving"
+msgstr ""
+
+#: ../locale/scriptstrings/d.mvmon_to_translate.c:6
+#, fuzzy
+msgid "Target monitor"
+msgstr "写入 %s ... "
+
+#: ../locale/scriptstrings/d.mvmon_to_translate.c:7
+#, fuzzy
+msgid "Source monitor"
+msgstr "无法获取栅格行\n"
+
 #: ../sites/s.out.ascii/main.c:47 ../sites/s.in.ascii/main.c:50
 msgid "sites"
 msgstr ""
@@ -26761,6 +29067,11 @@ msgstr "无法创建文件 [%s]"
 #: ../imagery/i.smap/shapiro/read_sig.c:27
 #, fuzzy, c-format
 msgid "Signature file <%s> is invalid"
+msgstr "未找到3D视图文件<%s>"
+
+#: ../imagery/i.smap/shapiro/read_sig.c:30
+#, fuzzy, c-format
+msgid "Signature file <%s> is empty"
 msgstr "未找到3D视图文件<%s>"
 
 #: ../imagery/i.smap/shapiro/parse.c:21 ../imagery/i.maxlik/main.c:79
@@ -28694,1063 +31005,54 @@ msgid "Can't mark another point.  Only %d points allowed.  Sorry."
 msgstr ""
 
 #, fuzzy
-#~ msgid "Name of GIS manager settings file (.grc)"
-#~ msgstr "已有的MAT-File(v4)的名称"
+#~ msgid "Failed in attempt to open %s"
+#~ msgstr "输出矢量文件的名称"
 
-#, fuzzy
-#~ msgid "Name of .dmrc settings file"
-#~ msgstr "已有的MAT-File(v4)的名称"
-
-#, fuzzy
-#~ msgid "Configuration editor for r.li.'index'"
-#~ msgstr "非法的输出文件名"
-
-#, fuzzy
-#~ msgid "raster, landscape structure analysis"
-#~ msgstr "包含结果的栅格图的名称"
-
-#, fuzzy
-#~ msgid "raster input map"
-#~ msgstr "输入的栅格图"
-
-#, fuzzy
-#~ msgid "Display monitor to start"
-#~ msgstr "包含结果的栅格图的名称"
-
-#, fuzzy
-#~ msgid "Moves displayed maps to another monitor"
-#~ msgstr "选择字体，该字体用于图形监视器上文本的显示。"
-
-#, fuzzy
-#~ msgid "Target monitor"
-#~ msgstr "写入 %s ... "
-
-#, fuzzy
-#~ msgid "Source monitor"
-#~ msgstr "无法获取栅格行\n"
-
-#, fuzzy
-#~ msgid "display, export, GPS"
-#~ msgstr "矢量导入完成"
-
-#, fuzzy
-#~ msgid "Name of PNG file"
-#~ msgstr "输出文件的名称"
-
-#, fuzzy
-#~ msgid "Saves the contents of the active display monitor to a graphics file."
-#~ msgstr "选择字体，该字体用于图形监视器上文本的显示。"
-
-#, fuzzy
-#~ msgid "Name for output file (do NOT add extension)"
-#~ msgstr "输出报告的名称"
-
-#, fuzzy
-#~ msgid "Images"
-#~ msgstr "输入文件"
-
-#, fuzzy
-#~ msgid "Width and height of output image (overrides resolution setting)"
-#~ msgstr "输出地图的名称"
-
-#, fuzzy
-#~ msgid "Compression for PNG files"
-#~ msgstr "输出文件的名称"
-
-#, fuzzy
-#~ msgid "Paper size for PostScript output"
-#~ msgstr "PostScript 输出文件"
-
-#, fuzzy
-#~ msgid "PostScript"
-#~ msgstr "PostScript 输出文件"
-
-#, fuzzy
-#~ msgid "Set paper orientation to landscape (for PostScript output)"
-#~ msgstr "PostScript 输出文件"
-
-#, fuzzy
-#~ msgid "Do not crop away margins"
-#~ msgstr "无法拷贝表"
-
-#, fuzzy
-#~ msgid "Name of raster angle map"
-#~ msgstr "栅格图的名称"
-
-#, fuzzy
-#~ msgid "Name of optional EPS output file"
-#~ msgstr "输出的矢量文件的名称"
-
-#, fuzzy
-#~ msgid "Name of aspect raster map"
-#~ msgstr "栅格图的名称"
-
-#, fuzzy
-#~ msgid "Maximum number of rows to load"
-#~ msgstr "列数"
-
-#, fuzzy
-#~ msgid "Maximum number of columns to load"
-#~ msgstr "列数"
-
-#, fuzzy
-#~ msgid "Displays a raster map and its legend on a graphics window"
-#~ msgstr "选择字体，该字体用于图形监视器上文本的显示。"
-
-#, fuzzy
-#~ msgid "Number of lines to appear in the legend"
-#~ msgstr "重复过滤的次数"
-
-#, fuzzy
-#~ msgid "Name of raster map to generate legend from"
-#~ msgstr "栅格地图的名称 <%s>"
-
-#, fuzzy
-#~ msgid "Name of raster map to print in legend"
-#~ msgstr "作为背景的栅格图的名称"
-
-#, fuzzy
-#~ msgid "Redraws the current display frame in the GRASS monitor"
-#~ msgstr "错误：没有地图显示在GRASS的监视器上\n"
-
-#, fuzzy
-#~ msgid "Redraw all frames"
-#~ msgstr "打印区域总面积"
-
-#, fuzzy
-#~ msgid "Name of shaded relief or aspect map"
-#~ msgstr "新的栅格文件的名称"
-
-#, fuzzy
-#~ msgid "Name of raster to drape over relief map"
-#~ msgstr "栅格图的名称"
-
-#, fuzzy
-#~ msgid "Percent to brighten"
-#~ msgstr "完成率："
-
-#, fuzzy
-#~ msgid "Slide show of GRASS raster/vector maps."
-#~ msgstr "输出的栅格/矢量地图"
-
-#, fuzzy
-#~ msgid "Show vector maps rather than raster maps"
-#~ msgstr "将 3D 栅格图转化为 2D 栅格图"
-
-#, fuzzy
-#~ msgid "Number of seconds to pause between slides"
-#~ msgstr "打印的份数"
-
-#, fuzzy
-#~ msgid "Enter raster map to display in 1st frame"
-#~ msgstr "作为背景的栅格图的名称"
-
-#, fuzzy
-#~ msgid "Enter command to execute in 1st frame"
-#~ msgstr "作为背景的栅格图的名称"
-
-#, fuzzy
-#~ msgid "Enter raster map to display in 2nd frame"
-#~ msgstr "作为背景的栅格图的名称"
-
-#, fuzzy
-#~ msgid "Enter command to execute in 2nd frame"
-#~ msgstr "作为背景的栅格图的名称"
-
-#, fuzzy
-#~ msgid "How to split display"
-#~ msgstr "无法关闭输入地图"
-
-#, fuzzy
-#~ msgid "Split the display into subframes."
-#~ msgstr "作为背景的栅格图的名称"
-
-#, fuzzy
-#~ msgid "Number of subframes"
-#~ msgstr "行数"
-
-#, fuzzy
-#~ msgid "Displays thematic vector map"
-#~ msgstr "输入的 2D 矢量地图的名称"
-
-#, fuzzy
 #~ msgid ""
-#~ "Name of attribute column to use for thematic display (must be numeric)"
-#~ msgstr "用作缓冲区距离的属性字段"
-
-#, fuzzy
-#~ msgid "Type of thematic display"
-#~ msgstr "作为背景的栅格图的名称"
-
-#, fuzzy
-#~ msgid "Vector point icon for point data"
-#~ msgstr "截取浮点数"
-
-#, fuzzy
-#~ msgid "Icon size for point data"
-#~ msgstr "截取浮点数"
-
-#, fuzzy
-#~ msgid "Number of classes for interval theme (integer)"
-#~ msgstr "重复过滤的次数"
-
-#, fuzzy
-#~ msgid "Color scheme for graduated color mapping"
-#~ msgstr "[%s] 的色彩表已更新。"
-
-#, fuzzy
-#~ msgid "Select 'single_color' for graduated point/line display"
-#~ msgstr "[%s] 的色彩表已更新。"
-
-#, fuzzy
-#~ msgid "Color for graduated points map"
-#~ msgstr "[%s] 的色彩表已更新。"
-
-#, fuzzy
-#~ msgid "Color for graduated lines or point/area outlines"
-#~ msgstr "[%s] 的色彩表已更新。"
-
-#, fuzzy
-#~ msgid "Beginning color for custom color gradient"
-#~ msgstr "z 坐标的偏移值"
-
-#, fuzzy
-#~ msgid "Must be expressed as R:G:B triplet"
-#~ msgstr "z 坐标的偏移值"
-
-#, fuzzy
-#~ msgid "Ending color for custom color gradient"
-#~ msgstr "z 坐标的偏移值"
-
-#, fuzzy
-#~ msgid "Misc"
-#~ msgstr "量度"
-
-#, fuzzy
-#~ msgid "Drops a column from selected attribute table"
-#~ msgstr "无法创建属性表"
-
-#, fuzzy
-#~ msgid "Table from which to drop attribute column"
-#~ msgstr "需要编辑属性表的输入矢量点地图的名称"
-
-#, fuzzy
-#~ msgid "Name of the column"
-#~ msgstr "列数"
-
-#, fuzzy
-#~ msgid "Drops an attribute table."
-#~ msgstr "无法创建属性表"
-
-#, fuzzy
-#~ msgid "Table to drop"
-#~ msgstr "无法创建栅格地图 %s"
-
-#, fuzzy
-#~ msgid "Imports attribute tables in various formats."
-#~ msgstr "已有输入栅格文件大的名称"
-
-#, fuzzy
-#~ msgid "Name for output table"
-#~ msgstr "输出文件的名称"
-
-#, fuzzy
-#~ msgid "Name for auto-generated unique key column"
-#~ msgstr "栅格地图的名称 <%s>"
-
-#, fuzzy
-#~ msgid "Exports attribute tables into various formats."
-#~ msgstr "已有输入栅格文件大的名称"
-
-#, fuzzy
-#~ msgid "GRASS table name"
-#~ msgstr "表名称"
-
-#, fuzzy
-#~ msgid "Table format"
-#~ msgstr "OGR 格式"
-
-#, fuzzy
-#~ msgid "Test name"
-#~ msgstr "表名称"
-
-#, fuzzy
-#~ msgid "general, manual, help"
-#~ msgstr "无法获取栅格行\n"
-
-#, fuzzy
-#~ msgid "Manual entry to be displayed"
-#~ msgstr "作为背景的栅格图的名称"
-
-#, fuzzy
-#~ msgid "imagery, fusion, Brovey"
-#~ msgstr "矢量导入完成"
-
-#, fuzzy
-#~ msgid "Name of input raster map (green: tm2 | qbird_green | spot1)"
-#~ msgstr "输入栅格图的名称"
-
-#, fuzzy
-#~ msgid "Name of input raster map (NIR: tm4 | qbird_nir | spot2)"
-#~ msgstr "输入栅格图的名称"
-
-#, fuzzy
-#~ msgid "Name of input raster map (MIR; tm5 | qbird_red | spot3)"
-#~ msgstr "输入栅格图的名称"
-
-#, fuzzy
-#~ msgid "Name of input raster map (etmpan | qbird_pan | spotpan)"
-#~ msgstr "输入栅格图的名称"
-
-#, fuzzy
-#~ msgid "Name for output raster map prefix (e.g. 'brov')"
-#~ msgstr "输出的栅格文件"
-
-#, fuzzy
-#~ msgid "raster, imagery, mosaicking"
-#~ msgstr "矢量导入完成"
-
-#, fuzzy
-#~ msgid "Import of SPOT VGT NDVI file into a raster map"
-#~ msgstr "将二进制栅格文件导入到GRASS栅格图层中。"
-
-#, fuzzy
-#~ msgid "raster, imagery, import"
-#~ msgstr "矢量导入完成"
-
-#, fuzzy
-#~ msgid "raster, imagery, colors"
-#~ msgstr "矢量导入完成"
-
-#, fuzzy
-#~ msgid "raster, imagery, statistics"
-#~ msgstr "包含结果的栅格图的名称"
-
-#, fuzzy
-#~ msgid "Raster input maps"
-#~ msgstr "输入的栅格图"
-
-#, fuzzy
-#~ msgid "Write output to PNG image"
-#~ msgstr "覆盖已有的输出地图文件"
-
-#, fuzzy
-#~ msgid "Select multiple points"
-#~ msgstr "要素类型"
-
-#, fuzzy
-#~ msgid "Label with coordinates instead of numbering"
-#~ msgstr "使用地图坐标而不是 xyz 坐标"
-
-#, fuzzy
-#~ msgid "raster, imagery"
-#~ msgstr "矢量导入完成"
-
-#, fuzzy
-#~ msgid "use transformation rules for LANDSAT-4"
-#~ msgstr "3D 矢量对象的固定高度"
-
-#, fuzzy
-#~ msgid "use transformation rules for LANDSAT-5"
-#~ msgstr "3D 矢量对象的固定高度"
-
-#, fuzzy
-#~ msgid "use transformation rules for LANDSAT-7"
-#~ msgstr "3D 矢量对象的固定高度"
-
-#, fuzzy
-#~ msgid "raster input map (LANDSAT channel 1)"
-#~ msgstr "输入栅格图"
-
-#, fuzzy
-#~ msgid "raster input map (LANDSAT channel 2)"
-#~ msgstr "输入栅格图"
-
-#, fuzzy
-#~ msgid "raster input map (LANDSAT channel 3)"
-#~ msgstr "输入栅格图"
-
-#, fuzzy
-#~ msgid "raster input map (LANDSAT channel 4)"
-#~ msgstr "输入栅格图"
-
-#, fuzzy
-#~ msgid "raster input map (LANDSAT channel 5)"
-#~ msgstr "输入栅格图"
-
-#, fuzzy
-#~ msgid "raster input map (LANDSAT channel 7)"
-#~ msgstr "输入栅格图"
-
-#, fuzzy
-#~ msgid "raster output TC maps prefix"
-#~ msgstr "输出的栅格文件"
-
-#, fuzzy
-#~ msgid "miscellaneous, projection"
-#~ msgstr "无法获取栅格行\n"
-
-#, fuzzy
-#~ msgid "Input coordinate file (omit to read from stdin)"
-#~ msgstr "导入的ASCII栅格文件"
-
-#, fuzzy
-#~ msgid "Output coordinate file (omit to send to stdout)"
-#~ msgstr "导入的ASCII栅格文件"
-
-#~ msgid "Field separator"
-#~ msgstr "字段分隔符"
-
-#, fuzzy
-#~ msgid "Input projection parameters (PROJ.4 style)"
-#~ msgstr "输出的流向栅格图"
-
-#, fuzzy
-#~ msgid "Output projection parameters (PROJ.4 style)"
-#~ msgstr "输出的流向栅格图"
-
-#, fuzzy
-#~ msgid "Name of first raster map for blending"
-#~ msgstr "需要查询的已有栅格地图的名称"
-
-#, fuzzy
-#~ msgid "Name of second raster map for blending"
-#~ msgstr "需要查询的已有栅格地图的名称"
-
-#, fuzzy
-#~ msgid "Percentage weight of first map for color blending"
-#~ msgstr "需要查询的已有栅格地图的名称"
-
-#, fuzzy
-#~ msgid "Color using standard deviation bands"
-#~ msgstr "标准偏差"
-
-#, fuzzy
-#~ msgid "raster, elevation, interpolation"
-#~ msgstr "插值点的数量"
-
-#, fuzzy
-#~ msgid "Raster map in which to fill nulls"
-#~ msgstr "提供色彩表的栅格图名称"
-
-#, fuzzy
-#~ msgid "Spline tension parameter"
-#~ msgstr "平滑参数"
-
-#, fuzzy
-#~ msgid "Spline smoothing parameter"
-#~ msgstr "平滑参数"
-
-#, fuzzy
-#~ msgid "Output raster map (default: input tile)"
-#~ msgstr "输出栅格文件的标题"
-
-#, fuzzy
-#~ msgid "Request"
-#~ msgstr "安静模式"
-
-#, fuzzy
-#~ msgid "Import"
-#~ msgstr "导入地图 %d 的要素..."
-
-#, fuzzy
-#~ msgid "Mapserver to request data from"
-#~ msgstr "无法从表中选取数据"
-
-#, fuzzy
-#~ msgid "Layers to request from map server"
-#~ msgstr "使用的插值方法"
-
-#, fuzzy
-#~ msgid "Styles to request from map server"
-#~ msgstr "使用的插值方法"
-
-#, fuzzy
-#~ msgid "Source projection to request from server"
-#~ msgstr "使用的插值方法"
-
-#, fuzzy
-#~ msgid "Image format requested from the server"
-#~ msgstr "使用的插值方法"
-
-#, fuzzy
-#~ msgid "Maximum rows to request at a time"
-#~ msgstr "点到网络的最小距离"
-
-#, fuzzy
-#~ msgid "Reprojection method to use"
-#~ msgstr "使用的插值方法"
-
-#, fuzzy
-#~ msgid "Requires list available layers flag"
-#~ msgstr "列出可用的格式并退出"
-
-#, fuzzy
-#~ msgid "Verbosity level"
-#~ msgstr "栅格值"
-
-#, fuzzy
-#~ msgid "Do not overwrite existing map"
-#~ msgstr "无法创建栅格地图 %s"
-
-#, fuzzy
-#~ msgid "raster, mask"
-#~ msgstr "栅格地图 [%s] 未发现"
-
-#, fuzzy
-#~ msgid "Raster map to use as MASK"
-#~ msgstr "需要读取的栅格图"
-
-#, fuzzy
-#~ msgid "Overwrite existing MASK"
-#~ msgstr "无法创建栅格地图 %s"
-
-#, fuzzy
-#~ msgid "Exports GRASS raster into GDAL supported formats."
-#~ msgstr "将GRASS栅格输出为二元数组。"
-
-#, fuzzy
-#~ msgid "Region sensitive output"
-#~ msgstr "读取地图"
-
-#, fuzzy
-#~ msgid ""
-#~ "Creates raster plane map given dip (inclination), aspect (azimuth) and "
-#~ "one point."
-#~ msgstr "创建一格栅格图层和一个包含随机位置点的矢量地图。"
-
-#, fuzzy
-#~ msgid "raster, elevation"
+#~ "Generates raster map layers of slope, aspect, curvatures and partial "
+#~ "derivatives from a raster map layer of true elevation values. Aspect is "
+#~ "calculated counterclockwise from east."
+#~ msgstr ""
+#~ "根据栅格图层的实际高程值，生成坡度、坡向、曲率和偏导数。坡向从东边开始逆时"
+#~ "针计算。"
+
+#~ msgid "Raster elevation file name"
 #~ msgstr "栅格高程文件的名称"
 
-#, fuzzy
-#~ msgid "Name of raster plane to be created"
-#~ msgstr "将要调整的栅格地图的名称"
-
-#, fuzzy
-#~ msgid "Easting coordinate of a point on the plane"
-#~ msgstr "一行一个坐标对。"
-
-#, fuzzy
-#~ msgid "Northing coordinate of a point on the plane"
-#~ msgstr "一行一个坐标对。"
-
-#, fuzzy
-#~ msgid "Elevation coordinate of a point on the plane"
-#~ msgstr "一行一个坐标对。"
-
-#, fuzzy
-#~ msgid "Type of the raster map to be created"
-#~ msgstr "将要调整的栅格地图的名称"
-
-#, fuzzy
-#~ msgid "raster, statistics, aggregation"
-#~ msgstr "包含结果的栅格图的名称"
-
-#, fuzzy
-#~ msgid "Creates shaded relief map from an elevation map (DEM)."
-#~ msgstr "从高程地图创建地形索引ln(a/tan(beta))图。"
-
-#, fuzzy
-#~ msgid "Output shaded relief map name"
-#~ msgstr "输出的驱动名称"
-
-#, fuzzy
-#~ msgid "Altitude of the sun in degrees above the horizon"
-#~ msgstr "A：太阳高度，单位：度"
-
-#, fuzzy
-#~ msgid "Azimuth of the sun in degrees to the east of north"
-#~ msgstr "A：太阳方位角(从北计算)，单位：度"
-
-#, fuzzy
-#~ msgid "Factor for exaggerating relief"
-#~ msgstr "表达坡度的格式"
-
-#, fuzzy
-#~ msgid "Scale factor for converting horizontal units to elevation units"
-#~ msgstr "将高程单位转换到米的乘法因子"
-
-#, fuzzy
-#~ msgid "raster, tiling"
-#~ msgstr "栅格输入文件"
-
-#, fuzzy
-#~ msgid "Produces shell script output"
-#~ msgstr "PostScript 输出文件"
-
-#, fuzzy
-#~ msgid "Produces web map server query string output"
-#~ msgstr "PostScript 输出文件"
-
-#, fuzzy
-#~ msgid ""
-#~ "Name of region to use instead of current region for bounds and resolution"
-#~ msgstr "沿着剖面的分辨率(默认为当前区域的分辨率)"
-
-#, fuzzy
-#~ msgid "Source projection"
-#~ msgstr "无法获取栅格行\n"
-
-#, fuzzy
-#~ msgid "Conversion factor from units to meters in source projection"
-#~ msgstr "用于邻近分析的值的变换因子"
-
-#, fuzzy
-#~ msgid "Destination projection, defaults to this location's projection"
-#~ msgstr "覆盖投影(使用区域的投影)"
-
-#, fuzzy
-#~ msgid "Maximum number of columns for a tile in the source projection"
-#~ msgstr "一个片断最多所能包含的点数"
-
-#, fuzzy
-#~ msgid "Maximum number of rows for a tile in the source projection"
-#~ msgstr "一个片断最多所能包含的点数"
-
-#, fuzzy
-#~ msgid "Number of cells tiles should overlap in each direction"
-#~ msgstr "每部分的等级数"
-
-#, fuzzy
-#~ msgid "calculates univariate statistics from a GRASS raster map"
-#~ msgstr "计算栅格地图中非空像元的一元统计值"
-
-#, fuzzy
-#~ msgid "Percentile to calculate (requires -e flag)"
-#~ msgstr "无法关闭输入地图"
-
-#, fuzzy
-#~ msgid "A (grid3D file)"
-#~ msgstr "输入的 grid3 文件名"
-
-#, fuzzy
-#~ msgid "B (grid3D file)"
-#~ msgstr "输入的 grid3 文件名"
-
-#, fuzzy
-#~ msgid "C (grid3D file)"
-#~ msgstr "输入的 grid3 文件名"
-
-#, fuzzy
-#~ msgid "D (grid3D file)"
-#~ msgstr "输入的 grid3 文件名"
-
-#, fuzzy
-#~ msgid "E (grid3D file)"
-#~ msgstr "输入的 grid3 文件名"
-
-#, fuzzy
-#~ msgid "F (grid3D file)"
-#~ msgstr "输入的 grid3 文件名"
-
-#, fuzzy
-#~ msgid "Name for output grid3D volume"
-#~ msgstr "输出文件的名称"
-
-#, fuzzy
-#~ msgid "Rebuilds topology on all vector maps in the current mapset."
-#~ msgstr "未找到矢量文件 %s"
-
-#, fuzzy
-#~ msgid "Adds missing centroids to closed boundaries."
-#~ msgstr "无法更新边界"
-
-#, fuzzy
-#~ msgid "vector, centroid, area"
-#~ msgstr "打印矢量的属性"
-
-#, fuzzy
-#~ msgid "Name for output vector map"
-#~ msgstr "输出矢量文件的名称"
-
-#, fuzzy
-#~ msgid "Action to be taken"
-#~ msgstr "将被重新编码的栅格图"
-
-#, fuzzy
-#~ msgid "Category number starting value"
-#~ msgstr "类别字段的名称"
-
-#, fuzzy
-#~ msgid "vector, color table"
-#~ msgstr "将要查询的栅格地图"
-
-#, fuzzy
-#~ msgid "Name of column containing numeric data"
-#~ msgstr "用于内插的包含 w 属性的字段名称"
-
-#, fuzzy
-#~ msgid "Layer number of data column"
-#~ msgstr "无法创建属性表"
-
-#, fuzzy
-#~ msgid "Name of color column to populate"
-#~ msgstr "将要创建的新区域的名称"
-
-#, fuzzy
-#~ msgid "Manually set range (min,max)"
-#~ msgstr "整数范围：min,max"
-
-#, fuzzy
-#~ msgid "Path to rules file"
-#~ msgstr "结果矢量文件的名称"
-
-#, fuzzy
-#~ msgid "Save placeholder raster map for use with d.legend"
-#~ msgstr "作为背景的栅格图的名称"
-
-#, fuzzy
-#~ msgid ""
-#~ "Convert all old GRASS < Ver5.7 vector maps in current mapset to current "
-#~ "format"
-#~ msgstr "将栅格图转化为矢量图层。"
-
-#, fuzzy
-#~ msgid ""
-#~ "Adds one or more columns to the attribute table connected to a given "
-#~ "vector map."
-#~ msgstr "已有输入栅格文件大的名称"
-
-#, fuzzy
-#~ msgid "Vector map for which to edit attribute table"
-#~ msgstr "需要编辑属性表的输入矢量点地图的名称"
-
-#, fuzzy
-#~ msgid "Layer where to add column"
-#~ msgstr "无法创建属性表"
-
-#, fuzzy
-#~ msgid ""
-#~ "Creates and connects a new attribute table to a given layer of an "
-#~ "existing vector map."
-#~ msgstr "已有输入栅格文件大的名称"
-
-#, fuzzy
-#~ msgid "Vector map for which to add new attribute table"
-#~ msgstr "需要编辑属性表的输入矢量点地图的名称"
-
-#, fuzzy
-#~ msgid "Name of new attribute table (default: vector map name)"
-#~ msgstr "已有输入栅格文件大的名称"
-
-#, fuzzy
-#~ msgid "Layer where to add new attribute table"
-#~ msgstr "无法创建属性表"
-
-#, fuzzy
-#~ msgid "Allows to join a table to a vector map table."
-#~ msgstr "输入的 2D 矢量地图的名称"
-
-#, fuzzy
-#~ msgid "Vector map to which to join other table"
-#~ msgstr "需要编辑属性表的输入矢量点地图的名称"
-
-#, fuzzy
-#~ msgid "Layer where to join"
-#~ msgstr "无法创建属性表"
-
-#, fuzzy
-#~ msgid "Join column in map table"
-#~ msgstr "未知的类型"
-
-#, fuzzy
-#~ msgid "Other table name"
-#~ msgstr "输出的表名称"
-
-#, fuzzy
-#~ msgid "Join column in other table"
-#~ msgstr "未知的类型"
-
-#, fuzzy
-#~ msgid ""
-#~ "Drops a column from the attribute table connected to a given vector map."
-#~ msgstr "已有输入栅格文件大的名称"
-
-#, fuzzy
-#~ msgid "Vector map for which to drop attribute column"
-#~ msgstr "需要编辑属性表的输入矢量点地图的名称"
+#~ msgid "Output slope filename"
+#~ msgstr "输出坡度的文件名"
 
-#, fuzzy
-#~ msgid "Layer where to drop column"
-#~ msgstr "无法创建属性表"
-
-#, fuzzy
-#~ msgid "Removes existing attribute table of a vector map."
-#~ msgstr "已有输入栅格文件大的名称"
-
-#, fuzzy
-#~ msgid "Vector map from which to remove attribute table"
-#~ msgstr "需要编辑属性表的输入矢量点地图的名称"
-
-#, fuzzy
-#~ msgid "Name of existing attribute table (default: vector map name)"
-#~ msgstr "已有输入栅格文件大的名称"
-
-#, fuzzy
-#~ msgid "Layer from which to drop linked attribute table"
-#~ msgstr "需要编辑属性表的输入矢量点地图的名称"
-
-#, fuzzy
-#~ msgid ""
-#~ "Renames a column in the attribute table connected to a given vector map."
-#~ msgstr "已有输入栅格文件大的名称"
-
-#, fuzzy
-#~ msgid "Vector map for which to rename attribute column"
-#~ msgstr "需要编辑属性表的输入矢量点地图的名称"
-
-#, fuzzy
-#~ msgid "Layer where to rename column"
-#~ msgstr "无法创建属性表"
-
-#, fuzzy
-#~ msgid "Reconnects vectors to a new database."
-#~ msgstr "移除一个数据库"
-
-#, fuzzy
-#~ msgid "Name of old database"
-#~ msgstr "新的栅格文件的名称"
-
-#, fuzzy
-#~ msgid "Name of new database"
-#~ msgstr "新的栅格文件的名称"
-
-#, fuzzy
-#~ msgid "New schema"
-#~ msgstr "数据库模式"
-
-#, fuzzy
-#~ msgid ""
-#~ "Calculates univariate statistics on selected table column for a GRASS "
-#~ "vector map."
-#~ msgstr "计算栅格地图中非空像元的一元统计值"
-
-#, fuzzy
-#~ msgid "Name of data table"
-#~ msgstr "栅格图的名称"
-
-#, fuzzy
-#~ msgid "Column on which to calculate statistics (must be numeric)"
-#~ msgstr "用作缓冲区距离的属性字段"
-
-#, fuzzy
-#~ msgid "Database/directory for table"
-#~ msgstr "类别 %d 没有相关的记录"
-
-#, fuzzy
-#~ msgid "Database driver"
-#~ msgstr "数据库名称"
-
-#, fuzzy
-#~ msgid ""
-#~ "Allows to update a column in the attribute table connected to a vector "
-#~ "map."
-#~ msgstr "已有输入栅格文件大的名称"
-
-#, fuzzy
-#~ msgid "Vector map to edit the attribute table for"
-#~ msgstr "需要编辑属性表的输入矢量点地图的名称"
-
-#, fuzzy
-#~ msgid "Column to update"
-#~ msgstr "列的类型不支持"
-
-#, fuzzy
-#~ msgid "Column to query"
-#~ msgstr "将要查询的栅格地图"
-
-#, fuzzy
-#~ msgid ""
-#~ "Dissolves boundaries between adjacent areas sharing a common category "
-#~ "number or attribute."
-#~ msgstr "未找到属性表 -> 使用唯一的类别值作为属性"
-
-#, fuzzy
-#~ msgid "vector, area, dissolve"
-#~ msgstr "矢量导入完成"
-
-#, fuzzy
-#~ msgid "Layer number. If -1, all layers are extracted."
-#~ msgstr ""
-#~ "OGR 图层名称。如果不给出，那么所有可用的图层都会被导入。\n"
-#~ "\t\tESRI Shapefile：shapefile 名称\n"
-#~ "\t\tMapInfo File：mapinfo 文件名"
-
-#, fuzzy
-#~ msgid "Name of column used to dissolve common boundaries"
-#~ msgstr "用来创建标签的属性字段的名称"
-
-#, fuzzy
-#~ msgid "Import E00 file into a vector map."
-#~ msgstr "输入的 2D 矢量地图的名称"
-
-#, fuzzy
-#~ msgid "Input type point, line or area"
-#~ msgstr "选择类型：线 或 面"
-
-#, fuzzy
-#~ msgid "vector, import, GPS"
-#~ msgstr "矢量导入完成"
-
-#, fuzzy
-#~ msgid "Name for output vector map (omit for display to stdout)"
-#~ msgstr "新的PPM文件的名称。(out=-用于标准输出)"
-
-#, fuzzy
-#~ msgid "Imports geonames.org country files into a GRASS vector points map."
-#~ msgstr "输入的 2D 矢量地图的名称"
-
-#, fuzzy
-#~ msgid "vector, import, gazetteer"
-#~ msgstr "矢量导入完成"
-
-#, fuzzy
-#~ msgid ""
-#~ "Imports US-NGA GEOnet Names Server (GNS) country files into a GRASS "
-#~ "vector points map."
-#~ msgstr "输入的 2D 矢量地图的名称"
-
-#, fuzzy
-#~ msgid "Import waypoints"
-#~ msgstr "导入地图 %d 的要素..."
-
-#, fuzzy
-#~ msgid "Import routes"
-#~ msgstr "导入地图 %d 的要素..."
-
-#, fuzzy
-#~ msgid "Import track"
-#~ msgstr "导入地图 %d 的要素..."
-
-#, fuzzy
-#~ msgid "Device or file used to import data"
-#~ msgstr "将要导入的栅格文件"
-
-#, fuzzy
-#~ msgid "Input map is in Matlab format"
-#~ msgstr "输入文件"
-
-#, fuzzy
-#~ msgid "Create a 3D vector points map from 3 column Matlab data"
-#~ msgstr "从包含坐标的数据库表创建新的矢量 (点)"
-
-#, fuzzy
-#~ msgid "Name of input file in Mapgen/Matlab format"
-#~ msgstr "输入文件"
-
-#, fuzzy
-#~ msgid ""
-#~ "Converts all old GRASS < Ver5.7 sites maps in current mapset to vector "
-#~ "maps."
-#~ msgstr "将栅格图转化为矢量图层。"
-
-#, fuzzy
-#~ msgid "sites, vector, import"
-#~ msgstr "矢量导入完成"
-
-#, fuzzy
-#~ msgid "Vector output map"
-#~ msgstr "没有输出地图"
-
-#, fuzzy
-#~ msgid "vector, export, GPS"
-#~ msgstr "矢量导入完成"
-
-#, fuzzy
-#~ msgid "Export as waypoints"
-#~ msgstr "导入地图 %d 的要素..."
-
-#, fuzzy
-#~ msgid "Export as routes"
-#~ msgstr "导入地图 %d 的要素..."
-
-#, fuzzy
-#~ msgid "Export as tracks"
-#~ msgstr "导入地图 %d 的要素..."
-
-#, fuzzy
-#~ msgid "Feature type(s)"
-#~ msgstr "要素类型"
-
-#, fuzzy
-#~ msgid "Name for output file or GPS device"
-#~ msgstr "输出文件的名称"
-
-#, fuzzy
-#~ msgid "GpsBabel supported output format"
-#~ msgstr "列出支持的格式然后退出"
-
-#, fuzzy
-#~ msgid ""
-#~ "Calculates univariate statistics from a GRASS raster map based on vector "
-#~ "polygons and uploads statistics to new attribute columns."
-#~ msgstr "计算栅格地图中非空像元的一元统计值"
-
-#, fuzzy
-#~ msgid "vector, raster, statistics"
-#~ msgstr "包含结果的栅格图的名称"
-
-#, fuzzy
-#~ msgid "Name of vector polygon map"
-#~ msgstr "输入的 2D 矢量地图的名称"
-
-#, fuzzy
-#~ msgid "Name of raster map to calculate statistics from"
-#~ msgstr "包含结果的栅格图的名称"
+#~ msgid "Output aspect filename"
+#~ msgstr "输出坡向的文件名"
 
-#, fuzzy
-#~ msgid "Column prefix for new attribute columns"
-#~ msgstr "属性字段值的比例因子"
-
-#, fuzzy
-#~ msgid "Reports geometry statistics for vectors."
-#~ msgstr "报告栅格图层的统计数据"
-
-#, fuzzy
-#~ msgid "vector, report, statistics"
-#~ msgstr "类别或面向对象的统计。"
-
-#, fuzzy
-#~ msgid "Reverse sort the result"
-#~ msgstr "反向清扫完成"
+#~ msgid "Output profile curvature filename"
+#~ msgstr "输出剖面曲率的文件名"
 
-#, fuzzy
-#~ msgid "Sort the result"
-#~ msgstr "结果图的名称"
-
-#, fuzzy
-#~ msgid "Value to calculate"
-#~ msgstr "无法计算面的质心"
+#~ msgid "Output tangential curvature filename"
+#~ msgstr "输出切线曲率的文件名"
 
-#, fuzzy
-#~ msgid "mi(les),f(eet),me(ters),k(ilometers),a(cres),h(ectares),p(ercent)"
-#~ msgstr ""
-#~ "mi(英里)，me(米)，k(公里)，a(英亩)，h(公顷)，c(像元的数据)，p(覆盖率)"
+#~ msgid "Output first order partial derivative dx (E-W slope) filename"
+#~ msgstr "输出一阶偏导数dx(东西向坡面)的文件名"
 
-#, fuzzy
-#~ msgid "Vector map to modify"
-#~ msgstr "只打印矢量地图的范围"
+#~ msgid "Output first order partial derivative dy (N-S slope) filename"
+#~ msgstr "输出一阶偏导数dy(南北向坡面)的文件名"
 
-#, fuzzy
-#~ msgid "Layer in the vector to be modified"
-#~ msgstr "需要查询的已有栅格地图的名称"
+#~ msgid "Output second order partial derivative dxx filename"
+#~ msgstr "输出二阶偏导数dxx的文件名"
 
-#, fuzzy
-#~ msgid "Vector map to be queried"
-#~ msgstr "将要查询的栅格地图"
+#~ msgid "Output second order partial derivative dyy filename"
+#~ msgstr "输出二阶偏导数dyy的文件名"
 
-#, fuzzy
-#~ msgid "Layer of the query vector containing data"
-#~ msgstr "输出矢量文件的名称"
+#~ msgid "Output second order partial derivative dxy filename"
+#~ msgstr "输出二阶偏导数dxy的文件名"
 
 #, fuzzy
-#~ msgid "Column to be queried"
-#~ msgstr "将要查询的栅格地图"
+#~ msgid "Creating support files..."
+#~ msgstr "为 %s 创建支持文件"
 
 #, fuzzy
-#~ msgid "Maximum query distance in map units"
-#~ msgstr "缓冲区距离 (地图单位)"
+#~ msgid "Elevation products for mapset [%s] in [%s]"
+#~ msgstr "无法为[%s]打开像元文件"
 
 #, fuzzy
 #~ msgid "raster, terrain analysis"
