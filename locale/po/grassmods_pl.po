@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: grassmodes_pl\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2010-06-02 22:02+0200\n"
-"PO-Revision-Date: 2010-07-17 17:59+0100\n"
+"PO-Revision-Date: 2010-08-22 20:30+0100\n"
 "Last-Translator: Milena Nowotarska <do.milenki * gmail.com>\n"
 "Language-Team: Polish <grass-translations@lists.osgeo.org>\n"
 "MIME-Version: 1.0\n"
@@ -1916,9 +1916,8 @@ msgid "String representing no data cell value"
 msgstr "Ciąg znaków reprezentujący wartości komórek 'no data'"
 
 #: ../raster/r.describe/main.c:80
-#, fuzzy
 msgid "Number of quantization steps"
-msgstr "liczba stopni oceny liczebności"
+msgstr "Liczba stopni oceny liczebności"
 
 #: ../raster/r.describe/main.c:86
 msgid "Print the output one value per line"
@@ -3428,9 +3427,8 @@ msgid "Parsing bytes per cell"
 msgstr ""
 
 #: ../raster/r.in.bin/main.c:244
-#, fuzzy
 msgid "Bad number of bytes per cell"
-msgstr "       Liczba bitów na komórkę rastra"
+msgstr "Nieprawidłowa liczba bitów na komórkę rastra"
 
 #: ../raster/r.in.bin/main.c:250
 msgid "Byte Swapping Turned On."
@@ -9422,9 +9420,9 @@ msgid "Exporting raster map <%s> (band %d)..."
 msgstr "yjściowa mapa rastrowa"
 
 #: ../raster/r.out.gdal/main.c:593
-#, fuzzy, c-format
+#, c-format
 msgid "Unable to export raster map <%s>"
-msgstr "Nie można utworzyć mapy rastrowej <%s>"
+msgstr "Nie można wyeksportować mapy rastrowej <%s>"
 
 #: ../raster/r.out.gdal/main.c:605
 #, fuzzy, c-format
@@ -22498,7 +22496,7 @@ msgstr "Typ obiektów (mapa wektorowa A)"
 
 #: ../vector/v.select/args.c:19 ../vector/v.overlay/main.c:69
 msgid "Layer number (vector map A)"
-msgstr "Liczba warstw (mapa wektorowa A)"
+msgstr "Numer warstwy (mapa wektorowa A)"
 
 #: ../vector/v.select/args.c:24 ../vector/v.overlay/main.c:73
 msgid "Name of input vector map (B)"
@@ -22510,7 +22508,7 @@ msgstr "Typ obiektów (mapa wektorowa B)"
 
 #: ../vector/v.select/args.c:33 ../vector/v.overlay/main.c:83
 msgid "Layer number (vector map B)"
-msgstr "Liczba warstw (mapa wektorowa A)"
+msgstr "Numer warstwy (mapa wektorowa B)"
 
 #: ../vector/v.select/args.c:45
 msgid "Operator defines required relation between features"
@@ -22695,7 +22693,7 @@ msgstr "Dołączanie wysp ..."
 #: ../vector/v.buffer2/main.c:628 ../vector/v.overlay/area_area.c:264
 #: ../vector/v.buffer/main.c:760
 msgid "Attaching centroids..."
-msgstr ""
+msgstr "Dołączanie centroidów..."
 
 #: ../vector/v.voronoi/vo_main.c:119
 msgid ""
