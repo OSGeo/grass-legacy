@@ -1076,14 +1076,14 @@ class GMFrame(wx.Frame):
     def OnMapCalculator(self, event):
         """!Init map calculator for interactive creation of mapcalc statements
         """
-        win = mapcalculator.MapCalcFrame(parent = self, title = _('GRASS GIS Map Calculator'))
+        win = mapcalculator.MapCalcFrame(parent = self, title = _('GRASS GIS Raster Map Calculator'))
         win.CentreOnScreen()
         win.Show()
         
     def OnMapCalculator3D(self, event):
         """!Init map calculator for interactive creation of mapcalc statements
         """
-        win = mapcalculator.MapCalcFrame(parent = self, title = _('GRASS GIS Map Calculator (3D raster)'),
+        win = mapcalculator.MapCalcFrame(parent = self, title = _('GRASS GIS Raster Map Calculator (3D raster)'),
                                          rast3d = True)
         win.CentreOnScreen()
         win.Show()
