@@ -5783,7 +5783,6 @@ msgstr "Powierzchnia"
 
 #: ../gui/wxpython/gui_modules/nviz_tools.py:69
 #: ../gui/wxpython/gui_modules/nviz_tools.py:2703
-#, fuzzy
 msgid "Vector"
 msgstr "Wektor"
 
@@ -7948,7 +7947,7 @@ msgid "Drop all columns"
 msgstr "Usuń wszystkie kolumny"
 
 #: ../gui/wxpython/gui_modules/dbm.py:1666
-#, python-format
+#, fuzzy, python-format
 msgid ""
 "Selected column '%s' will PERMANENTLY removed from table. Do you want to "
 "drop the column?"
@@ -10278,3 +10277,77 @@ msgstr "Zastosuj dla wszystkich powierzchni"
 
 #~ msgid "User GUI settings"
 #~ msgstr "Ustawienia użytkownika GUI"
+
+#~ msgid "Choose DXF file:"
+#~ msgstr "Wybierz plik DXF:"
+
+#~ msgid "GRASS %s Map Calculator"
+#~ msgstr "GRASS %s Kalkulator Map"
+
+#~ msgid "Create & manage ground control points"
+#~ msgstr "Stwórz & zarządzaj terenowymi punktami kontrolnymi GCP"
+
+#~ msgid "3d view tools"
+#~ msgstr "Narzędzia widoku 3d"
+
+#~ msgid "Downloads and imports data from WMS servers."
+#~ msgstr "Ściąga i importuje dane z serwerów WMS."
+
+#~ msgid "Export GRASS raster as non-georeferenced PNG image format."
+#~ msgstr "Eksportuje raster GRASS-a do formatu PNG bez georeferencji."
+
+#~ msgid "E&xit"
+#~ msgstr "&Koniec"
+
+#~ msgid "Config"
+#~ msgstr "Konfiguracja"
+
+#~ msgid "Raster"
+#~ msgstr "Raster"
+
+#~ msgid "Imagery"
+#~ msgstr "Obraz"
+
+#~ msgid "Volumes"
+#~ msgstr "Raster 3d (volumes)"
+
+#~ msgid ""
+#~ "Creates and adds a new attribute table to a given layer of an existing "
+#~ "vector map."
+#~ msgstr ""
+#~ "Tworzy i dodaje nową tabelę atrybutów do zadanej warstwy istniejącej mapy "
+#~ "wektorowej."
+
+#~ msgid "Reconnect vector to database"
+#~ msgstr "Ponownie łączy wektor z bazą danych"
+
+#~ msgid "GRASS GIS help"
+#~ msgstr "Pomoc GRASS GIS"
+
+#, fuzzy
+#~ msgid ""
+#~ "Current name: %s\n"
+#~ "Enter new name:"
+#~ msgstr ""
+#~ "Bieżąca nazwa: %s\n"
+#~ "Wprowadź nową nazwę:"
+
+#~ msgid "Unable to rename mapset"
+#~ msgstr "Nie można zmienić nazwy mapsetu"
+
+#~ msgid "Unable to rename location"
+#~ msgstr "Nie można zmienić nazwy lokacji"
+
+#, fuzzy
+#~ msgid "Command %s could not be run"
+#~ msgstr "Polecenie '%s' nie zostało jeszcze zaimplementowana."
+
+#, fuzzy
+#~ msgid "&Stop"
+#~ msgstr "górę"
+
+#~ msgid "Save current settings?"
+#~ msgstr "Zapisać bieżące ustawienia?"
+
+#~ msgid "List of categories"
+#~ msgstr "Lista kategorii"
