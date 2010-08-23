@@ -19,7 +19,7 @@ msgstr ""
 
 #: ../gui/wxpython/wxgui.py:113
 msgid "GRASS GIS Layer Manager"
-msgstr ""
+msgstr "ലയെർ നടത്തിപ്പുകാരൻ"
 
 #: ../gui/wxpython/wxgui.py:330
 msgid "Map layers for each display"
@@ -131,11 +131,11 @@ msgstr "തെറ്റ്"
 
 #: ../gui/wxpython/wxgui.py:796 ../gui/wxpython/menustrings.py:15
 msgid "Load map layers into layer tree"
-msgstr ""
+msgstr "ലയറുകൾ ലയെർ മാനെജരിലെക്കു വരുത്തുക"
 
 #: ../gui/wxpython/wxgui.py:824
 msgid "Choose GRC file to load"
-msgstr ""
+msgstr "തുറക്കെണ്ട GRC ഫയൽ തിരഞെടുക്കുക"
 
 #: ../gui/wxpython/wxgui.py:863
 msgid "Choose file to save current workspace"
@@ -162,11 +162,11 @@ msgstr "വർക്സ്പേസിലെ രംഗസജ്ജീകരണ�
 
 #: ../gui/wxpython/wxgui.py:1079
 msgid "GRASS GIS Map Calculator"
-msgstr ""
+msgstr "ഗ്രാസ്സ് മാപ്പ് ഗണനയന്ത്രം"
 
 #: ../gui/wxpython/wxgui.py:1086
 msgid "GRASS GIS Map Calculator (3D raster)"
-msgstr ""
+msgstr "ഗ്രാസ്സ് മാപ്പ് ഗണനയന്ത്രം (3D raster)"
 
 #: ../gui/wxpython/wxgui.py:1116
 msgid "Add various raster-based map layers"
@@ -186,9 +186,8 @@ msgid "Import raster data"
 msgstr "തിരഞ്ഞെടുക്കപെട്ട raster ലയെറുകളെ ഇറക്കുമതി ചെയ്യുക"
 
 #: ../gui/wxpython/wxgui.py:1149 ../gui/wxpython/menustrings.py:23
-#, fuzzy
 msgid "Link raster data"
-msgstr "തിരഞ്ഞെടുക്കപെട്ട raster ലയെറുകളെ ഇറക്കുമതി ചെയ്യുക"
+msgstr ""
 
 #: ../gui/wxpython/wxgui.py:1156 ../gui/wxpython/menustrings.py:49
 #: ../gui/wxpython/menustrings.py:50
@@ -196,13 +195,12 @@ msgid "Import vector data"
 msgstr "തിരഞ്ഞെടുക്കപെട്ട vector ലയെറുകളെ ഇറക്കുമതി ചെയ്യുക"
 
 #: ../gui/wxpython/wxgui.py:1162 ../gui/wxpython/menustrings.py:54
-#, fuzzy
 msgid "Link vector data"
-msgstr "തിരഞ്ഞെടുക്കപെട്ട vector ലയെറുകളെ ഇറക്കുമതി ചെയ്യുക"
+msgstr ""
 
 #: ../gui/wxpython/wxgui.py:1188
 msgid "Attribute management is available only for vector maps."
-msgstr ""
+msgstr "ആട്രിബൂട്ട് മാനെജ്മെന്റ് വെക്റ്റർ മാപ്പുകൾക്ക് മാത്രം"
 
 #: ../gui/wxpython/wxgui.py:1190 ../gui/wxpython/wxgui.py:1594
 #: ../gui/wxpython/gui_modules/goutput.py:325
@@ -228,6 +226,9 @@ msgid ""
 "%s\n"
 "from layer tree?"
 msgstr ""
+"മാപ്പ് ലയെറുകൾ \n"
+"%s \n"
+"മാപ്പ് ട്രീയിൽ നിന്നും മാറ്റണമൊ?"
 
 #: ../gui/wxpython/wxgui.py:1526
 msgid "Do you want to remove selected map layer(s) from layer tree?"
@@ -296,7 +297,7 @@ msgstr "മാപ്പ് അവതരിപിച്ചിരിക്കു�
 
 #: ../gui/wxpython/icons/icon.py:144
 msgid "Re-render map"
-msgstr ""
+msgstr "മാപ്പ് വീണ്ടും പ്രദർശിപിക്കുക"
 
 #: ../gui/wxpython/icons/icon.py:145
 msgid "Force re-rendering of all layers"
@@ -336,11 +337,12 @@ msgstr "മറ്റുവാൻ വേണ്ടി മൗസിന്‍റെ 
 
 #: ../gui/wxpython/icons/icon.py:160
 msgid "Query raster/vector map(s)"
-msgstr ""
+msgstr "രസറ്ററൊ വെക്റ്ററൊ മപ്പുകളുടെ വിവരങ്ങള്‍ക്കായി ഒരു ഡേറ്റാബേസില്‍ അന്വേഷണം നടത്തുന്നത് "
 
 #: ../gui/wxpython/icons/icon.py:161
 msgid "Query selected raster/vector map(s)"
 msgstr ""
+"തിരഞ്ഞെടുത്ത രസറ്ററൊ വെക്റ്ററൊ മപ്പുകളുടെ വിവരങ്ങള്‍ക്കായി ഒരു ഡേറ്റാബേസില്‍ അന്വേഷണം നടത്തുന്നത് "
 
 #: ../gui/wxpython/icons/icon.py:163
 msgid "Return to previous zoom"
@@ -348,15 +350,15 @@ msgstr "മുൻപത്തെ അവസ്തയിലെക്കു മട�
 
 #: ../gui/wxpython/icons/icon.py:165
 msgid "Zoom options"
-msgstr ""
+msgstr "മാപ്പ് വലുത്താക്കുന്നതിനു തിരഞ്ഞെടുക്കവുന്ന വഴികൾ"
 
 #: ../gui/wxpython/icons/icon.py:166
 msgid "Display zoom management"
-msgstr ""
+msgstr "മാപ്പ് വലുത്താക്കുന്നതിനള്ള വഴികൾ കാണിക്കുക"
 
 #: ../gui/wxpython/icons/icon.py:168
 msgid "Add map elements"
-msgstr ""
+msgstr "മാപ്പിലെക്ക് കാര്യങൾ ചെർക്കുക"
 
 #: ../gui/wxpython/icons/icon.py:169
 msgid "Overlay elements like scale and legend onto map"
@@ -372,7 +374,7 @@ msgstr "പുരാവ്രിത്തം ചേർക്കുക"
 
 #: ../gui/wxpython/icons/icon.py:175
 msgid "Save display to graphic file"
-msgstr ""
+msgstr "ഡിസ്പ്ലേ ഗ്രഫിക്സ് ഫയലിൽ ശേഖരിച്ച് വയ്ക്കുക"
 
 #: ../gui/wxpython/icons/icon.py:177
 #: ../gui/wxpython/gui_modules/mapdisp.py:3408
@@ -434,64 +436,65 @@ msgstr "പുറത്തു കടക്കുക"
 
 #: ../gui/wxpython/icons/icon.py:205
 msgid "Show attribute table"
-msgstr ""
+msgstr "ആട്രിബൂട്ട് പട്ടിക കാണിക്കുക"
 
 #: ../gui/wxpython/icons/icon.py:207
 msgid "Add RGB layer"
-msgstr ""
+msgstr "RGB ലയെർ ചേർക്കുക"
 
 #: ../gui/wxpython/icons/icon.py:209
 msgid "Add HIS layer"
-msgstr ""
+msgstr "HIS ലയെർ ചേർക്കുക"
 
 #: ../gui/wxpython/icons/icon.py:211
 msgid "Add shaded relief map layer"
-msgstr ""
+msgstr "ഷേഡട് റിലീഫ് മാപ്പ് ലയെർ ചേർക്കുക"
 
 #: ../gui/wxpython/icons/icon.py:213
 msgid "Add raster flow arrows"
-msgstr ""
+msgstr "റസ്റ്റർ ഫ്ലോ ആരൊകൾ ചേർക്കുക"
 
 #: ../gui/wxpython/icons/icon.py:215
 msgid "Add raster cell numbers"
-msgstr ""
+msgstr "റസ്റ്റർ സെലിന്റെ എണം ചേർക്കുക"
 
 #: ../gui/wxpython/icons/icon.py:217
 msgid "Add thematic layer"
-msgstr ""
+msgstr "തീമാറ്റിക് ലയെർ ചേർക്കുക"
 
 #: ../gui/wxpython/icons/icon.py:219
 msgid "Add thematic chart layer"
-msgstr ""
+msgstr "തീമാറ്റിക് ചാർട്ട് ലയെർ ചേർക്കുക"
 
 #: ../gui/wxpython/icons/icon.py:221
 msgid "Add grid layer"
-msgstr ""
+msgstr "ഗ്രിഡ് ലയെർ ചേർക്കുക"
 
 #: ../gui/wxpython/icons/icon.py:223
 msgid "Add geodesic line layer"
-msgstr ""
+msgstr "ജിയൊഡെസിക്ക് ലൈൻ ലയെർ ചേർക്കുക"
 
 #: ../gui/wxpython/icons/icon.py:225
 msgid "Add rhumbline layer"
-msgstr ""
+msgstr "റമ്പ് ലൈൻ ലയെർ ചേർക്കുക"
 
 #: ../gui/wxpython/icons/icon.py:227
 msgid "Add labels"
 msgstr ""
+"ഒരു പ്രവൃത്തിയെയോ ഒരു പ്രസ്താവനയെയോ സൂചിപ്പിക്കാന്‍ ഉപയോഗിക്കുന്ന വാക്കോ ചിഹ്നങ്ങളോ ചേർക്കുക"
 
 #: ../gui/wxpython/icons/icon.py:229
 #: ../gui/wxpython/gui_modules/mapdisp.py:4046
 msgid "Add text layer"
-msgstr ""
+msgstr "റ്റെക്സ്റ്റ് ലയെർ ചേർക്കുക"
 
 #: ../gui/wxpython/icons/icon.py:231
 msgid "Add 3D raster map"
-msgstr ""
+msgstr "3D റസ്റ്റർ മാപ്പ് ചേർക്കുക"
 
 #: ../gui/wxpython/icons/icon.py:234
 msgid "Digitize new point"
-msgstr ""
+msgstr "പുതിയ ബിന്ധു ഡിജിറ്റൈസ് ചെയ്യുക"
 
 #: ../gui/wxpython/icons/icon.py:235 ../gui/wxpython/icons/icon.py:244
 msgid "Left: new point"
@@ -499,20 +502,20 @@ msgstr "എടത്: പുതിയ ബിന്ദു"
 
 #: ../gui/wxpython/icons/icon.py:237
 msgid "Digitize new line"
-msgstr ""
+msgstr "പുതിയ വര ഡിജിറ്റൈസ് ചെയ്യുക"
 
 #: ../gui/wxpython/icons/icon.py:238 ../gui/wxpython/icons/icon.py:241
 #: ../gui/wxpython/icons/icon.py:262
 msgid "Left: new point; Middle: undo last point; Right: close line"
-msgstr ""
+msgstr "എടത്: പുതിയ ബിന്ധു; നടുക്ക്: മുമ്പ് വരച്ച ബിന്ധു മയിച്ചു കളയുക; വലത്: വര നിറുത്തുക"
 
 #: ../gui/wxpython/icons/icon.py:240
 msgid "Digitize new boundary"
-msgstr ""
+msgstr "പുതിയ അതിർത്തി ഡിജിറ്റൈസ് ചെയ്യുക"
 
 #: ../gui/wxpython/icons/icon.py:243
 msgid "Digitize new centroid"
-msgstr ""
+msgstr "പുതിയ നടു ബിന്ധു ഡിജിറ്റൈസ് ചെയ്യുക"
 
 #: ../gui/wxpython/icons/icon.py:246
 msgid "Add new vertex"
@@ -523,20 +526,20 @@ msgstr "പുതിയ അഗ്രം ചേർക്കുക"
 #: ../gui/wxpython/icons/icon.py:268 ../gui/wxpython/icons/icon.py:271
 #: ../gui/wxpython/icons/icon.py:277 ../gui/wxpython/icons/icon.py:283
 msgid "Left: Select; Middle: Unselect; Right: Confirm"
-msgstr ""
+msgstr "എടത്: തിരഞ്ഞെടുക്കുക; നടുക്ക്: തിരഞ്ഞെടുത്തത് മാറ്റുക; വലത്: ഉറപ്പ് വരുത്തുക"
 
 #: ../gui/wxpython/icons/icon.py:249
 #: ../gui/wxpython/gui_modules/toolbars.py:779
 msgid "Copy categories"
-msgstr ""
+msgstr "കാറ്റഗറിയുടെ പതിപ്പ് ഉണ്ടാക്കുക"
 
 #: ../gui/wxpython/icons/icon.py:252
 msgid "Delete feature(s)"
-msgstr ""
+msgstr "ഫീച്ചറുകൾ കളയുക"
 
 #: ../gui/wxpython/icons/icon.py:255
 msgid "Display/update attributes"
-msgstr ""
+msgstr "ഫീച്ചറുകൾ കാണിക്കുകയൊ/മാറ്റം വരുത്തുകയൊ ചെയ്യുക"
 
 #: ../gui/wxpython/icons/icon.py:256 ../gui/wxpython/icons/icon.py:259
 msgid "Left: Select"
@@ -544,15 +547,15 @@ msgstr "എടത്: തിരഞ്ഞെടുക്കുക"
 
 #: ../gui/wxpython/icons/icon.py:258
 msgid "Display/update categories"
-msgstr ""
+msgstr "കാറ്റഗറികൾ കാണിക്കുകയൊ/മാറ്റം വരുത്തുകയൊ ചെയ്യുക"
 
 #: ../gui/wxpython/icons/icon.py:261
 msgid "Edit line/boundary"
-msgstr ""
+msgstr "ലൈനൊ/അതിർത്തിയൊ മാറ്റം വരുത്തുക"
 
 #: ../gui/wxpython/icons/icon.py:264
 msgid "Move feature(s)"
-msgstr ""
+msgstr "ഫീച്ചറുകൾ നീക്കുക"
 
 #: ../gui/wxpython/icons/icon.py:267
 msgid "Move vertex"
@@ -570,35 +573,35 @@ msgstr "സജ്ജീകരണം"
 
 #: ../gui/wxpython/icons/icon.py:274
 msgid "Settings dialog for digitization tool"
-msgstr ""
+msgstr "ഡിജിറ്റൈസേഷനു വേണ്ടിയുള്ള സജ്ജീകരണം"
 
 #: ../gui/wxpython/icons/icon.py:276
 msgid "Split line/boundary"
-msgstr ""
+msgstr "ലൈനൊ/അതിർത്തിയൊ വിഘടിപിക്കുക"
 
 #: ../gui/wxpython/icons/icon.py:279
 msgid "Quit digitizing tool"
-msgstr ""
+msgstr "ഡിജിറ്റൈസേഷനിൽ നിന്നും പുറത്ത് വരിക"
 
 #: ../gui/wxpython/icons/icon.py:281
 msgid "Additional tools (copy, flip, connect, etc.)"
-msgstr ""
+msgstr "കൂടുതൽ ഉള്ള വഴികൾ (പകർത്തുക,ഞൊട്ടുക,യോജിപ്പിക്കുക,മുതലായവ.)"
 
 #: ../gui/wxpython/icons/icon.py:285
 msgid "Undo"
-msgstr ""
+msgstr "പഴയ അവസ്ഥയിലേക്ക് വരിക"
 
 #: ../gui/wxpython/icons/icon.py:286
 msgid "Undo previous changes"
-msgstr ""
+msgstr "മുൻപ് വരുത്തിയ മാറ്റങ്ങൾ ഇല്ലാതാക്കുക"
 
 #: ../gui/wxpython/icons/icon.py:289
 msgid "Analyze map"
-msgstr ""
+msgstr "മാപ്പ് അപഗ്രഥിക്കുക"
 
 #: ../gui/wxpython/icons/icon.py:291
 msgid "Measure distance"
-msgstr ""
+msgstr "ദൂരം അളക്കുക"
 
 #: ../gui/wxpython/icons/icon.py:293
 msgid "Draw transect in map display window to profile"
@@ -606,15 +609,15 @@ msgstr ""
 
 #: ../gui/wxpython/icons/icon.py:295
 msgid "Profile surface map"
-msgstr ""
+msgstr "ഉപരിത്തില മാപ്പ് അപഗ്രഥനം ചെയ്യുക"
 
 #: ../gui/wxpython/icons/icon.py:297
 msgid "Draw/re-draw profile"
-msgstr ""
+msgstr "അപഗ്രഥനം വരക്കുകയൊ/വീണ്ടും വരക്കുകയൊ ചെയ്യുക."
 
 #: ../gui/wxpython/icons/icon.py:299
 msgid "Profile options"
-msgstr ""
+msgstr "അപഗ്രഥനത്തിൻമേലുള്ള വഴികൾ"
 
 #: ../gui/wxpython/icons/icon.py:301
 msgid "Create histogram of image or raster file"
@@ -1487,9 +1490,8 @@ msgid ""
 msgstr ""
 
 #: ../gui/wxpython/menustrings.py:206
-#, fuzzy
 msgid "Projection for current location"
-msgstr "ലൊക്കെഷന്റ്റെ ഉറവിടം തിരഞെടുക്കുക"
+msgstr ""
 
 #: ../gui/wxpython/menustrings.py:207
 msgid "Interactively reset the location's projection settings."
@@ -1690,9 +1692,8 @@ msgid ""
 msgstr ""
 
 #: ../gui/wxpython/menustrings.py:255
-#, fuzzy
 msgid "Query raster maps"
-msgstr "മാപ്പ്സെറ്റ് ഉണ്ടാക്കുക"
+msgstr ""
 
 #: ../gui/wxpython/menustrings.py:256
 msgid "Query values by coordinates"
@@ -2827,9 +2828,8 @@ msgid "Allows projection conversion of vector maps."
 msgstr ""
 
 #: ../gui/wxpython/menustrings.py:515
-#, fuzzy
 msgid "Updates vector map metadata."
-msgstr "തിരഞ്ഞെടുക്കപെട്ട vector ലയെറുകളെ ഇറക്കുമതി ചെയ്യുക"
+msgstr ""
 
 #: ../gui/wxpython/menustrings.py:518
 msgid ""
@@ -3220,9 +3220,8 @@ msgid "Outputs basic information about a user-specified vector map."
 msgstr ""
 
 #: ../gui/wxpython/menustrings.py:612
-#, fuzzy
 msgid "Classify attribute data"
-msgstr "ദയവായി കാത്ത് നിൽക്കുക."
+msgstr ""
 
 #: ../gui/wxpython/menustrings.py:613
 msgid "Classifies attribute data, e.g. for thematic mapping"
@@ -5201,16 +5200,19 @@ msgid "(x)"
 msgstr ""
 
 #: ../gui/wxpython/gui_modules/nviz_tools.py:1155
+#, fuzzy
 msgid "Show lines"
-msgstr ""
+msgstr "സജ്ജീകരണം കാണിക്കുക"
 
 #: ../gui/wxpython/gui_modules/nviz_tools.py:1180
+#, fuzzy
 msgid "Show points"
-msgstr ""
+msgstr "സജ്ജീകരണം കാണിക്കുക"
 
 #: ../gui/wxpython/gui_modules/nviz_tools.py:1189
+#, fuzzy
 msgid "Size:"
-msgstr ""
+msgstr "വലുപ്പം"
 
 #: ../gui/wxpython/gui_modules/nviz_tools.py:1220
 msgid "Marker:"
@@ -7689,11 +7691,11 @@ msgstr "അടയാളത്തിന്റ്റെ സജ്ജീകരണ�
 #: ../gui/wxpython/gui_modules/georect.py:1803
 #, python-format
 msgid "Georectifier settings saved to file '%s'."
-msgstr ""
+msgstr "ജിയൊരെക്റ്റിഫയരിന്റ് സജ്ജീകരണം ഫയലിലേക്ക് ശേഖരിച്ചു '%s'."
 
 #: ../gui/wxpython/gis_set.py:93
 msgid "Choose project location and mapset"
-msgstr ""
+msgstr "പ്രൊജക്റ്റിന്റെ ലൊക്കെഷനും മാപ്പ്സെറ്റും തിരഞ്ഞെടുക്കുക"
 
 #: ../gui/wxpython/gis_set.py:96
 msgid "Manage"
@@ -7705,6 +7707,8 @@ msgid ""
 "Welcome to GRASS GIS %s\n"
 "The world's leading open source GIS"
 msgstr ""
+"ഗ്രാസ്സ് ജിസ്സിലേക്ക് സ്വഗതം %s \n"
+"ലോകത്തിൽ വച്ച് ഏറ്റവും മുന്നിൽ നിൽകുന്ന സ്വതന്ത്ര സോഫ്റ്റവയർ ജിസ്"
 
 #: ../gui/wxpython/gis_set.py:104
 msgid ""
@@ -7725,6 +7729,8 @@ msgid ""
 "Accessible mapsets\n"
 "(directories of GIS files)"
 msgstr ""
+"തുറക്കൻ പറ്റാവുന്ന മപ്സെട്ടുകൾ\n"
+"ജിസ് ഫയലുകൾ"
 
 #: ../gui/wxpython/gis_set.py:116
 msgid ""
@@ -7776,7 +7782,7 @@ msgstr "ഗ്രാസ്സിലെക്കു കയറുക"
 
 #: ../gui/wxpython/gis_set.py:208 ../gui/wxpython/gis_set.py:587
 msgid "Unable to set GRASS database. Check your locale settings."
-msgstr ""
+msgstr "ഗ്രാസ്സ് ഡേറ്റബേസ് നോക്കുന്നതിൽ പിശക്. നിങ്ങളുടെ സജ്ജീകരണം പരിശോഡിക്കുക."
 
 #: ../gui/wxpython/gis_set.py:225
 #, python-format
@@ -7794,6 +7800,9 @@ msgid ""
 "\n"
 "This mapset cannot be renamed."
 msgstr ""
+"മാപ്പ്സെറ്റ് <PERMANENT> ഗ്രാസ്സ് ലൊകേഷനിൽ ഉണ്ടായിരിക്കണം.\n"
+"\n"
+"ഈ മപ്സെറ്റിന്റെ പേർ മാറ്റാനും പറ്റില്ല"
 
 #: ../gui/wxpython/gis_set.py:453 ../gui/wxpython/gis_set.py:488
 #, python-format
@@ -7864,6 +7873,9 @@ msgid ""
 "\n"
 "This mapset cannot be deleted."
 msgstr ""
+"മാപ്പ്സെറ്റ് <PERMANENT> ഗ്രാസ്സ് ലൊകേഷനിൽ ഉണ്ടായിരിക്കണം.\n"
+"\n"
+"ഈ മാപ്പ്സെറ്റ് കളയാൻ പറ്റില്ല"
 
 #: ../gui/wxpython/gis_set.py:530
 #, python-format
@@ -7873,7 +7885,8 @@ msgid ""
 "\n"
 "ALL MAPS included in this mapset will be PERMANENTLY DELETED!"
 msgstr ""
-"നിങ്ങൾ തിരഞ്ഞെടുത്ത മാപ്പ്സെറ്റ് എടുത്തുകളയണമോ <%s>?\n"
+"നിങ്ങൾ തിരഞ്ഞെടുത്ത മാപ്പ്സെറ്റ് <%(mapset)s> ലോക്കേഷനിൽ <%(location)s> നിന്നും "
+"എടുത്തുകളയണമോ ?\n"
 "\n"
 "എല്ലാ മാപ്പുകളും സ്തിരമയി എടുത്തുകളയുന്നതാണ്!!"
 
@@ -7970,7 +7983,7 @@ msgstr "ഗ്രാസ്സിനു ഡാറ്റ ശെഖരിക്ക�
 #~ msgstr "സ്ക്രിപ്റ്റ് ഫയൽ '%s' കണ്മാനില്ല. ആജ്ഞ തിരസ്കരിക്കപെട്ടു."
 
 #~ msgid "Launching script '%s'..."
-#~ msgstr "സ്ക്രിപ്റ്റ് ഫയൽ തുടങ്ങുന്നു"
+#~ msgstr "സ്ക്രിപ്റ്റ് ഫയൽ തുടങ്ങുന്നു '%s'..."
 
 #~ msgid "Unable to switch to mapset <%s>."
 #~ msgstr "മാപ്പ്സെറ്റിലെക്ക് മാറാൻ കഴിയുനില്ല <%s>."
@@ -8011,3 +8024,173 @@ msgstr "ഗ്രാസ്സിനു ഡാറ്റ ശെഖരിക്ക�
 
 #~ msgid "GUI settings"
 #~ msgstr "GUI സജ്ജീകരണം"
+
+#, fuzzy
+#~ msgid "Map layers"
+#~ msgstr "മാപ്പ് ലയെറുകൾ"
+
+#~ msgid "Command console"
+#~ msgstr "ആജ്നയുടെ ഉത്തരം വരുന്ന സ്ഥലം"
+
+#~ msgid "Search module"
+#~ msgstr "മൊട്യൂൾ തിരയുക"
+
+#~ msgid "GRASS Model File (*.gxm)|*.gxm"
+#~ msgstr "ഗ്രാസ്സ് മൊഡൽ ഫയൽ (*.gxm)|*.gxm"
+
+#~ msgid ""
+#~ "Model is not valid. Do you want to run the model anyway?\n"
+#~ "\n"
+#~ "%s"
+#~ msgstr ""
+#~ "മൊഡൽ നല്ലതല്ല. മുന്നൊട്ട് പൊകണമൊ?\n"
+#~ "\n"
+#~ "%s"
+
+#~ msgid "Choose script file"
+#~ msgstr "സ്ക്രിപ്റ്റ് ഫയൽ തിരഞെടുക്കുക"
+
+#~ msgid "Unable to switch to location <%(loc)s> mapset <%(mapset)s>."
+#~ msgstr "ലൊക്കെഷനിലെക്ക് മാറാൻ പറ്റുന്നില്ല <%(loc)s മാപ്പ്സെറ്റ് <%(mapset)s>."
+
+#~ msgid ""
+#~ "Current location is <%(loc)s>.\n"
+#~ "Current mapset is <%(mapset)s>."
+#~ msgstr ""
+#~ "എപ്പൊളത്തെ ലൊക്കെഷൻ <%(loc)s.\n"
+#~ " എപ്പൊളത്തെ മാപ്പ്സെറ്റ് <%(mapset)s>."
+
+#~ msgid ""
+#~ "Reading workspace file <%(file)s> failed.\n"
+#~ "Invalid file, unable to parse XML document.\n"
+#~ "\n"
+#~ "%(err)s"
+#~ msgstr ""
+#~ "ഈ വർക്ക്സ്പെസ് ഫയൽ വായികാൻ സാദിക്കുന്നില്ല <%(file)s>.\n"
+#~ "XML ഫയൽ വയിക്കുന്നത്തിൽ പിശക് <%(file)s. \n"
+#~ "\n"
+#~ "%(err)s"
+
+#~ msgid "Old GRASS Workspace File (*.grc)|*.grc"
+#~ msgstr "പഴയ ഗ്രാസ്സ് വർക്ക്സ്പെസ് ഫയൽ (*.grc)|*.grc"
+
+#~ msgid "Nothing to import. No WMS layer selected."
+#~ msgstr "തുറക്കാൻ ഒന്നുമില്ല. ഒരു WMS പോലും തിരഞ്ഞെടുത്തിട്ടില്ല"
+
+#, fuzzy
+#~ msgid "Re-render modified map layers"
+#~ msgstr "മാപ്പ് ലയെർ കളയുക"
+
+#~ msgid "Force re-rendering all map layers"
+#~ msgstr "മാപ്പുകൾ വീണ്ടും പ്രദർശിപിക്കുന്നത് ബലപ്പെടുത്തുക"
+
+#~ msgid "Load map layers into workspace (Ctrl+L)"
+#~ msgstr "മാപ്പ് ലയെരുകൾ വർക്സ്പേസിലെക്ക് കൊണ്ടു വരിക(Ctrl+L)"
+
+#~ msgid "Open existing workspace file (Ctrl+O)"
+#~ msgstr "നിലവിലുള്ള വർക്സ്പേസ് തുറക്കുക(Ctrl+O)"
+
+#~ msgid "Save current workspace to file (Ctrl+S)"
+#~ msgstr "എപ്പെളത്തെ വർക്സ്പേസ് ശേഖരിച്ച് വയ്ക്കുക(Ctrl+S)"
+
+#~ msgid "Add raster map layer (Ctrl+R)"
+#~ msgstr "രാസ്റ്റെർ മാപ്പ് ലെയെർ ചേർക്കുക"
+
+#~ msgid "Add vector map layer (Ctrl+V)"
+#~ msgstr "വെക്റ്റർ മാപ്പ് ലെയെർ ചേർക്കുക"
+
+#, fuzzy
+#~ msgid "Show GUI settings"
+#~ msgstr "സജ്ജീകരണം കാണിക്കുക"
+
+#, fuzzy
+#~ msgid "Show modeler settings"
+#~ msgstr "സജ്ജീകരണം കാണിക്കുക"
+
+#~ msgid "Close workspace file"
+#~ msgstr "വർക്സ്പേസ് ഫയൽ അടയ്ക്കുക"
+
+#, fuzzy
+#~ msgid "Import raster map"
+#~ msgstr "തിരഞ്ഞെടുക്കപെട്ട raster ലയെറുകളെ ഇറക്കുമതി ചെയ്യുക"
+
+#, fuzzy
+#~ msgid "Import raster data using GDAL"
+#~ msgstr "തിരഞ്ഞെടുക്കപെട്ട raster ലയെറുകളെ ഇറക്കുമതി ചെയ്യുക"
+
+#, fuzzy
+#~ msgid "Import vector map"
+#~ msgstr "തിരഞ്ഞെടുക്കപെട്ട vector ലയെറുകളെ ഇറക്കുമതി ചെയ്യുക"
+
+#, fuzzy
+#~ msgid "Import vector data using OGR"
+#~ msgstr "തിരഞ്ഞെടുക്കപെട്ട vector ലയെറുകളെ ഇറക്കുമതി ചെയ്യുക"
+
+#, fuzzy
+#~ msgid "Quit GRASS GIS"
+#~ msgstr "പുറത്ത് കടക്കുക"
+
+#, fuzzy
+#~ msgid "Please wait, exporting image..."
+#~ msgstr "ദയവായി കാത്ത് നിൽക്കുക. മാത്രിക തുടങ്ങുന്നു..."
+
+#, fuzzy
+#~ msgid "List of extensions"
+#~ msgstr "ലെയറുകളുടെ പട്ടിക"
+
+#, fuzzy
+#~ msgid "remove duplicates"
+#~ msgstr "മാപ്പ് ലയെർ കളയുക"
+
+#, fuzzy
+#~ msgid "remove dangles"
+#~ msgstr "മാപ്പ് ലയെർ കളയുക"
+
+#, fuzzy
+#~ msgid "remove small areas"
+#~ msgstr "മാപ്പ് ലയെർ കളയുക"
+
+#, fuzzy
+#~ msgid "Select input vector map:"
+#~ msgstr "മാപ്പ്സെറ്റിന്റ്റെ ഉറവിടം തിരഞെടുക്കുക"
+
+#, fuzzy
+#~ msgid "Select output vector map:"
+#~ msgstr "മാപ്പ്സെറ്റിന്റ്റെ ഉറവിടം തിരഞെടുക്കുക"
+
+#, fuzzy
+#~ msgid "3D view settings"
+#~ msgstr "സജ്ജീകരണം കാണിക്കുക"
+
+#~ msgid "Error in command execution '%s'"
+#~ msgstr "ആജ്ഞ നടപ്പാക്കുന്നതിൽ തെറ്റ് '%s'"
+
+#, fuzzy
+#~ msgid "Commands"
+#~ msgstr "ആജ്ഞയുടെ ഉത്പന്നം"
+
+#, fuzzy
+#~ msgid "Raster map <%s> not found"
+#~ msgstr "മാപ്പ് <%s> കണ്മനില്ല"
+
+#, fuzzy
+#~ msgid "Vector map <%s> not found"
+#~ msgstr "മാപ്പ് <%s> കണ്മനില്ല"
+
+#, fuzzy
+#~ msgid "3d raster map <%s> not found"
+#~ msgstr "മാപ്പ് <%s> കണ്മനില്ല"
+
+#, fuzzy
+#~ msgid "Add various vector-based map layers"
+#~ msgstr "വെക്റ്റർ മാപ്പ് ലെയെർ ചേർക്കുക"
+
+#~ msgid "Run the command (Ctrl+R)"
+#~ msgstr "ആജ്ന നടപക്കുക(Ctrl+R)"
+
+#, fuzzy
+#~ msgid "Add created map(s) into layer tree"
+#~ msgstr "രാസ്റ്റെർ മാപ്പ് ലെയെർ ചേർക്കുക"
+
+#~ msgid "User settings"
+#~ msgstr "ഉപയോഗിക്കുന്ന ആളുടെ സജ്ജീകരണം"
