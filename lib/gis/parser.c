@@ -1997,7 +1997,7 @@ static void G_gui_wx(void)
 
    Use G_gui_wx() or G_gui_tcltk() to generate GUI dialog.
 
-   G_gui_tcltk() is called by default (if GRASS_GUI is not defined)
+   G_gui_wx() is called by default (if GRASS_GUI is not defined)
 **/
 static void G_gui(void)
 {
@@ -2007,11 +2007,11 @@ static void G_gui(void)
     if (!gui) {
 	gui = G_getenv("GRASS_GUI");
     }
-
-    if (gui && strcmp(gui, "wxpython") == 0)
-	G_gui_wx();
-    else
+    
+    if (gui && (strcmp(gui, "tcltk") == 0 || strcmp(gui, "oldtcltk") == 0))
 	G_gui_tcltk();
+    else
+	G_gui_wx();
 
     return;
 }
