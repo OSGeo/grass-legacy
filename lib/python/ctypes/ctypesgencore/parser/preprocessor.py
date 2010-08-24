@@ -84,7 +84,7 @@ def symbol_to_token(sym):
 
 def create_token(type, value, production=None):
     '''Create a token of type and value, at the position where 'production'
-    was reduced.  Don't specify production if the token is built-in'''
+    was reduced.  Don`t specify production if the token is built-in'''
     t = lex.LexToken()
     t.type = type
     t.value = value
@@ -137,10 +137,13 @@ class PreprocessorParser(object):
             cmd += " -I%s" % path 
         for define in self.defines:
             cmd += ' "-D%s"' % define
-        cmd += " " + filename
+        cmd += " " + filename.replace('\\','/')
 
         self.cparser.handle_status(cmd)
         
+        if sys.platform == 'win32':
+            cmd = ['sh.exe', '-c', cmd]
+
         pp = subprocess.Popen(cmd,
                               shell = True,
                               stdout = subprocess.PIPE,
@@ -158,6 +161,7 @@ class PreprocessorParser(object):
         define_lines = []
         
         for line in ppout.split("\n"):
+            line = line.rstrip('\r')
             line = line + "\n"
             if line.startswith("# "):
                 # Line number information has to go with both groups
