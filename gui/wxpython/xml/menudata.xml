@@ -648,8 +648,15 @@
 	  </items>
 	</menu>
 	<menu>
-	  <label>Manage projections</label>
+	  <label>Map projections</label>
 	  <items>
+	    <menuitem>
+	      <label>Display map projection</label>
+	      <help>Print projection information (in conventional GRASS format).</help>
+	      <keywords>general,projection</keywords>
+	      <handler>RunMenuCmd</handler>
+	      <command>g.proj -p</command>
+	    </menuitem>
 	    <menuitem>
 	      <label>Manage projections</label>
 	      <help>Converts co-ordinate system descriptions (i.e. projection information) between various formats (including GRASS format).</help>
@@ -657,7 +664,7 @@
 	      <command>g.proj</command>
 	    </menuitem>
 	    <menuitem>
-	      <label>Projection for current location</label>
+	      <label>Change projection for current location</label>
 	      <help>Interactively reset the location's projection settings.</help>
 	      <handler>self.OnXTermNoXMon</handler>
 	      <command>g.setproj</command>
