@@ -41,12 +41,12 @@ int main(int argc, char *argv[])
     type->key = "gui";
     type->type = TYPE_STRING;
     type->label = _("GUI type");
-    type->description = _("Default value: GRASS_GUI if defined otherwise wxpython");
-    type->descriptions = _("tcltk;Tcl/Tk based GUI - GIS Manager (gis.m);"
+    type->description = _("Default value: GRASS_GUI if defined, otherwise wxpython");
+    type->descriptions = _("wxpython;wxPython based next generation GUI;"
+			   "tcltk;Tcl/Tk based GUI - GIS Manager (gis.m);"
 			   "oldtcltk;Old Tcl/Tk based GUI - Display Manager (d.m);"
-			   "wxpython;wxPython based next generation GUI;"
 			   "text;command line interface only");
-    type->options = "tcltk,oldtcltk,wxpython,text";
+    type->options = "wxpython,tcltk,oldtcltk,text";
 
     rc_file = G_define_standard_option(G_OPT_F_INPUT);
     rc_file->key = "workspace";
