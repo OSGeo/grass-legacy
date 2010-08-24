@@ -41,7 +41,7 @@ int main(int argc, char *argv[])
     type->key = "gui";
     type->type = TYPE_STRING;
     type->label = _("GUI type");
-    type->description = _("Default value: GRASS_GUI if defined otherwise tcltk");
+    type->description = _("Default value: GRASS_GUI if defined otherwise wxpython");
     type->descriptions = _("tcltk;Tcl/Tk based GUI - GIS Manager (gis.m);"
 			   "oldtcltk;Old Tcl/Tk based GUI - Display Manager (d.m);"
 			   "wxpython;wxPython based next generation GUI;"
@@ -80,7 +80,7 @@ int main(int argc, char *argv[])
 	    type->answer = G_store(gui_type_env);
 	}
 	else {
-	    type->answer = "tcltk";
+	    type->answer = "wxpython";
 	}
     }
 
