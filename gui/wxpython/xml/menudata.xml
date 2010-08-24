@@ -654,7 +654,7 @@
 	      <label>Display map projection</label>
 	      <help>Print projection information (in conventional GRASS format).</help>
 	      <keywords>general,projection</keywords>
-	      <handler>RunMenuCmd</handler>
+	      <handler>self.RunMenuCmd</handler>
 	      <command>g.proj -p</command>
 	    </menuitem>
 	    <menuitem>
