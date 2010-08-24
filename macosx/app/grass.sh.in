@@ -252,8 +252,8 @@ if [ ! "$GRASS_GUI" ] ; then
 	if [ -f "$GRASSRC" ] ; then
 		GRASS_GUI=`awk '/GRASS_GUI/ {print $2}' "$GRASSRC"`
 	fi
-	if [ ! "$GRASS_GUI" ] ; then
-		GRASS_GUI="tcltk"
+	if [ -z "$GRASS_GUI" ] ; then
+		unset GRASS_GUI
 	fi
 fi
 if [ "$GRASS_GUI" = "text" ] && [ "$x11" = "tig" ] ; then
