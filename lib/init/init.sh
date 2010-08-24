@@ -239,7 +239,9 @@ if [ ! "$GRASS_GUI" ] ; then
     fi
 else
     if [ "$GRASS_GUI" = "gui" ] ; then
-    	GRASS_GUI="$DEFAULT_GUI"
+	GRASS_GUI="$DEFAULT_GUI"
+    elif [ "$GRASS_GUI" = "wx" ] ; then
+	GRASS_GUI="wxpython"
     fi
 fi
 
@@ -878,7 +880,7 @@ EOF
      oldtcltk | d.m)
         echo "If required, restart the GUI with:       g.gui oldtcltk"
         ;;
-     wxpython | wx)
+     wxpython)
         echo "If required, restart the GUI with:       g.gui wxpython"
         ;;
      *)
