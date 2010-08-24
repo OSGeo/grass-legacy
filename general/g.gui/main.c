@@ -8,7 +8,7 @@
  *
  * PURPOSE:      Start GRASS GUI from command line.
  *
- * COPYRIGHT:    (C) 2008 by the GRASS Development Team
+ * COPYRIGHT:    (C) 2008, 2010 by the GRASS Development Team
  *
  *               This program is free software under the GNU General Public
  *               License (>=v2). Read the file COPYING that comes with GRASS
@@ -42,7 +42,7 @@ int main(int argc, char *argv[])
     type->type = TYPE_STRING;
     type->label = _("GUI type");
     type->description = _("Default value: GRASS_GUI if defined, otherwise wxpython");
-    type->descriptions = _("wxpython;wxPython based next generation GUI;"
+    type->descriptions = _("wxpython;wxPython based GUI - wxGUI;"
 			   "tcltk;Tcl/Tk based GUI - GIS Manager (gis.m);"
 			   "oldtcltk;Old Tcl/Tk based GUI - Display Manager (d.m);"
 			   "text;command line interface only");

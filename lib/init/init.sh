@@ -108,7 +108,7 @@ for i in "$@" ; do
             echo "  GISDBASE/LOCATION_NAME/MAPSET  fully qualified initial mapset directory"
             echo
             echo "Environment variables relevant for startup:"
-            echo "  GRASS_GUI                      select GUI (text, gui, tcltk, oldtcltk, wxpython)"
+            echo "  GRASS_GUI                      select GUI (text, gui, tcltk, oldtcltk, wxpython, wx)"
             echo "  GRASS_TCLSH                    set tclsh shell name to override 'tclsh'"
             echo "  GRASS_WISH                     set wish shell name to override 'wish'"
             echo "  GRASS_HTML_BROWSER             set html web browser for help pages"
@@ -878,7 +878,7 @@ EOF
      oldtcltk | d.m)
         echo "If required, restart the GUI with:       g.gui oldtcltk"
         ;;
-     wxpython)
+     wxpython | wx)
         echo "If required, restart the GUI with:       g.gui wxpython"
         ;;
      *)
