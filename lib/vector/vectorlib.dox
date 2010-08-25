@@ -221,23 +221,16 @@ This directory contains these files:
 <b>Head</b>
 
 <TABLE border=2>
-<TR><TD>Name</TD><TD>Type</TD><TD>Number</TD><TD>Description</TD></TR>
+<TR><TD><B>Name</B></TD><TD><B>Type</B></TD><TD><B>Number</B></TD><TD><B>Description</B></TD></TR>
 
-<TR><TD>Version_Major </TD><TD>C</TD><TD>1</TD><TD>file version (major)</TD></TR>
-<TR><TD>Version_Minor </TD><TD>C</TD><TD>1</TD><TD>file version (minor)</TD></TR>
-<TR><TD>Back_Major</TD><TD>C</TD><TD>1</TD><TD>supported from GRASS version (major)</TD></TR>
-<TR><TD>Back_Minor</TD><TD>C</TD><TD>1</TD><TD>supported from GRASS version (minor)</TD></TR>
-
-<TR><TD>byte_order</TD><TD>C</TD><TD>1</TD><TD>little or big endian
-                  flag; files are written in machine native order but
-                  files in both little and big endian order may be
-                  read; zero for little endian</TD></TR>
-
-<TR><TD>size</TD><TD>L</TD><TD>1</TD><TD>coor file size</TD></TR>
-
-<TR><TD>with_z</TD><TD>C</TD><TD>1</TD><TD>2D or 3D flag; zero for 2D</TD></TR>
-
-<TR><TD>reserved</TD><TD>C</TD><TD>10</TD><TD>not used</TD></TR>
+<TR><TD>Version_Major</TD> <TD>C</TD> <TD>1</TD> <TD>file version (major)</TD></TR>
+<TR><TD>Version_Minor</TD> <TD>C</TD> <TD>1</TD> <TD>file version (minor)</TD></TR>
+<TR><TD>Back_Major</TD>    <TD>C</TD> <TD>1</TD> <TD>supported from GRASS version (major)</TD></TR>
+<TR><TD>Back_Minor</TD>    <TD>C</TD> <TD>1</TD> <TD>supported from GRASS version (minor)</TD></TR>
+<TR><TD>byte_order</TD>    <TD>C</TD> <TD>1</TD> <TD>little or big endian flag</TD></TR>
+<TR><TD>header_size</TD>   <TD>L</TD> <TD>1</TD> <TD>header size of coor file</TD></TR>
+<TR><TD>with_z</TD>        <TD>C</TD> <TD>1</TD> <TD>2D or 3D flag; zero for 2D</TD></TR>
+<TR><TD>size</TD>          <TD>L</TD> <TD>1</TD> <TD>coor file size</TD></TR>
 
 </TABLE>
 
