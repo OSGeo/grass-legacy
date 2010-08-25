@@ -173,7 +173,7 @@ class MapToolbar(AbstractToolbar):
             log.WriteLog(_('Note that the wxGUI\'s 3D view mode is currently disabled '
                            '(hopefully this will be fixed soon). '
                            'Please keep an eye out for updated versions of GRASS. '
-			   'In the meantime you can use "NVIZ" from the File menu.'), wrap = 60)
+                           'In the meantime you can use "NVIZ" from the File menu.'), wrap = 60)
             
             self.toolId['3d'] = -1
         if haveVDigit:
@@ -189,7 +189,7 @@ class MapToolbar(AbstractToolbar):
             log.WriteLog(_('Note that the wxGUI\'s vector digitizer is currently disabled '
                            '(hopefully this will be fixed soon). '
                            'Please keep an eye out for updated versions of GRASS. '
-			   'In the meantime you can use "v.digit" from the Develop Vector menu.'), wrap = 60)
+                           'In the meantime you can use "v.digit" from the Develop Vector menu.'), wrap = 60)
             
             self.toolId['vdigit'] = -1
         
