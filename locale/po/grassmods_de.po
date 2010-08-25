@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: grassmods_de\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2010-08-22 02:31+0200\n"
-"PO-Revision-Date: 2010-07-18 13:25+0200\n"
+"PO-Revision-Date: 2010-08-25 16:32+0200\n"
 "Last-Translator: Robert Nuske <rnuske gwdg.de>\n"
 "Language-Team: Deutsch <grass-translations@lists.osgeo.org>\n"
 "MIME-Version: 1.0\n"
@@ -9488,7 +9488,7 @@ msgstr ""
 "Parameter %s an."
 
 #: ../raster/r.out.gdal/export_band.c:215
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "The user given nodata value %g is present in rasterband <%s> and would lead "
 "to data loss. Please specify a different nodata value with the %s parameter."
@@ -12826,6 +12826,8 @@ msgstr "Zugang für Andere."
 #: ../general/g.access/main.c:59
 msgid "UNIX filesystem access controls are not supported by MS-Windows"
 msgstr ""
+"Die Rechteverwaltung des UNIX Dateisystems wird von MS-Windows nicht "
+"unterstützt."
 
 #: ../general/g.access/main.c:67
 msgid "Access to the PERMANENT mapset must be open, nothing changed"
@@ -27426,35 +27428,36 @@ msgstr "Präfix für die Ausgabe-Rasterkarten (z.B. 'brov')."
 #: ../locale/scriptstrings/g.extension_to_translate.c:1
 msgid "Tool to maintain GRASS extensions in local GRASS installation."
 msgstr ""
+"Werkzeug um GRASS-Erweiterungen in lokaler GRASS-Installation zu verwalten."
 
 #: ../locale/scriptstrings/g.extension_to_translate.c:2
 msgid ""
 "Downloads, installs extensions from GRASS Addons SVN repository into local "
 "GRASS installation or removes installed extensions."
 msgstr ""
+"Download und Installation von Erweiterungen aus dem 'GRASS Addons SVN "
+"Repository' in der lokalen GRASS Installation oder Entfernt installierte "
+"Erweiterungen. "
 
 #: ../locale/scriptstrings/g.extension_to_translate.c:3
-#, fuzzy
 msgid "general, extensions"
-msgstr "Allgemein, Einstellungen"
+msgstr "Allgemein, Erweiterungen"
 
 #: ../locale/scriptstrings/g.extension_to_translate.c:4
-#, fuzzy
 msgid "Name of extension to install/remove"
-msgstr "Name einer neu zu erstellenden Location"
+msgstr "Name der zu installierenden/entfernenden Erweiterung"
 
 #: ../locale/scriptstrings/g.extension_to_translate.c:6
 msgid "SVN Addons repository URL"
-msgstr ""
+msgstr "URL des SVN Addons Repository"
 
 #: ../locale/scriptstrings/g.extension_to_translate.c:7
 msgid "Prefix where to install extension"
-msgstr ""
+msgstr "Präfix wo Erweiterungen installiert werden"
 
 #: ../locale/scriptstrings/g.extension_to_translate.c:8
-#, fuzzy
 msgid "List available modules in the GRASS Addons SVN repository"
-msgstr "Zeigt die vorhandenen Regelsätze und Schluß."
+msgstr "Zeige die im GRASS Addons Repository vorhandenen Module"
 
 #: ../locale/scriptstrings/d.correlate_to_translate.c:1
 msgid "Prints a graph of the correlation between data layers (in pairs)."
@@ -28283,7 +28286,6 @@ msgid "Uncompressed GNS file from NGA (with .txt extension)"
 msgstr "Unkomprimierte GNS-Datei von NGA (mit der Dateiendung .txt)."
 
 #: ../locale/scriptstrings/v.rast.stats_to_translate.c:1
-#, fuzzy
 msgid ""
 "Calculates univariate statistics from a raster map based on vector polygons "
 "and uploads statistics to new attribute columns."
@@ -28304,7 +28306,6 @@ msgid "Name of vector polygon map"
 msgstr "Name der Vektorkarte (Polygone)."
 
 #: ../locale/scriptstrings/v.rast.stats_to_translate.c:7
-#, fuzzy
 msgid ""
 "A single vector map can be connected to multiple database tables. This "
 "number determines which table to use"
@@ -28375,9 +28376,8 @@ msgid "New height for window"
 msgstr "Neue Fensterhöhe."
 
 #: ../locale/scriptstrings/v.in.mapgen_to_translate.c:1
-#, fuzzy
 msgid "Import Mapgen or Matlab-ASCII vector maps into GRASS."
-msgstr "Importiert Mapgen oder Matlab Vektorkarten nach GRASS."
+msgstr "Importiert Mapgen oder Matlab-ASCII Vektorkarten nach GRASS."
 
 #: ../locale/scriptstrings/v.in.mapgen_to_translate.c:3
 msgid "Input map is in Matlab format"
@@ -29236,9 +29236,9 @@ msgid "Signature file <%s> is invalid"
 msgstr "Signaturdatei <%s> ist ungültig."
 
 #: ../imagery/i.smap/shapiro/read_sig.c:30
-#, fuzzy, c-format
+#, c-format
 msgid "Signature file <%s> is empty"
-msgstr "Signaturdatei <%s> ist ungültig."
+msgstr "Signaturdatei <%s> ist leer."
 
 #: ../imagery/i.smap/shapiro/parse.c:21 ../imagery/i.maxlik/main.c:79
 msgid "Name of file containing signatures"
