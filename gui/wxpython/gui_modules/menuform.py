@@ -102,10 +102,8 @@ import gcmd
 import goutput
 import utils
 from preferences import globalSettings as UserSettings
-try:
-    import subprocess
-except:
-    from compat import subprocess
+
+from grass.script import core as grass
 
 wxUpdateDialog, EVT_DIALOG_UPDATE = NewEvent()
 
@@ -1803,13 +1801,12 @@ def getInterfaceDescription( cmd ):
 
     Note: 'cmd' is given as string
     """
-    cmdout = os.popen(cmd + r' --interface-description', "r").read()
-    if not len(cmdout) > 0 :
-        raise IOError, _("Unable to fetch interface description for command '%s'.") % cmd
-    p = re.compile( '(grass-interface.dtd)')
-    p.search( cmdout )
-    cmdout = p.sub(globalvar.ETCDIR + r'/grass-interface.dtd', cmdout)
-    return cmdout
+    try:
+        cmdout = grass.Popen([cmd, '--interface-description'], stdout = grass.PIPE).communicate()[0]
+    except OSError:
+        raise gcmd.GException, _("Unable to fetch interface description for command '%s'.") % cmd
+    
+    return cmdout.replace('grass-interface.dtd', os.path.join(globalvar.ETCDIR, 'grass-interface.dtd'))
 
 class GrassGUIApp(wx.App):
     """
