@@ -197,7 +197,7 @@ class GMConsole(wx.SplitterWindow):
         
         # search & command prompt
         self.cmd_prompt = prompt.GPromptSTC(parent = self)
-                
+        
         if self.parent.GetName() != 'LayerManager':
             self.search = None
             self.cmd_prompt.Hide()
@@ -704,7 +704,6 @@ class GMConsole(wx.SplitterWindow):
 
         # set focus on prompt
         if self.parent.GetName() == "LayerManager":
-            self.cmd_prompt.SetFocus()
             self.btn_abort.Enable(False)
         else:
             # updated command dialog
