@@ -97,10 +97,19 @@ centroid(OGRGeometryH hGeom, CENTR * Centr, SPATIAL_INDEX * Sindex, int field,
 	    if ((np = OGR_G_GetPointCount(hRing)) > 0) {
 		IPoints[valid_isles] = Vect_new_line_struct();
 		for (j = 0; j < np; j++) {
-		    Vect_append_point(IPoints[valid_isles], OGR_G_GetX(hRing, j),
-				      OGR_G_GetY(hRing, j), OGR_G_GetZ(hRing, j));
+		    Vect_append_point(IPoints[valid_isles],
+				      OGR_G_GetX(hRing, j),
+				      OGR_G_GetY(hRing, j),
+				      OGR_G_GetZ(hRing, j));
 		}
-		valid_isles++;
+		size =
+		    G_area_of_polygon(IPoints[valid_isles]->x,
+				      IPoints[valid_isles]->y,
+				      IPoints[valid_isles]->n_points);
+		if (size < min_area)
+		    Vect_destroy_line_struct(IPoints[valid_isles]);
+		else
+		    valid_isles++;
 	    }
 	}
 
@@ -274,17 +283,23 @@ geom(OGRGeometryH hGeom, struct Map_info *Map, int field, int cat,
 		IPoints[valid_isles] = Vect_new_line_struct();
 
 		for (j = 0; j < np; j++) {
-		    Vect_append_point(IPoints[valid_isles], OGR_G_GetX(hRing, j),
-				      OGR_G_GetY(hRing, j), OGR_G_GetZ(hRing, j));
+		    Vect_append_point(IPoints[valid_isles],
+				      OGR_G_GetX(hRing, j),
+				      OGR_G_GetY(hRing, j),
+				      OGR_G_GetZ(hRing, j));
 		}
 
 		if (IPoints[valid_isles]->n_points < 4)
 		    G_warning(_("Degenerate island ([%d] vertices)"),
 			      IPoints[i - 1]->n_points);
 
-		size = G_area_of_polygon(Points->x, Points->y, Points->n_points);
+		size =
+		    G_area_of_polygon(IPoints[valid_isles]->x,
+				      IPoints[valid_isles]->y,
+				      IPoints[valid_isles]->n_points);
 		if (size < min_area) {
-		    G_warning(_("Island size [%.1e], island not imported"), size);
+		    G_warning(_("Island size [%.1e], island not imported"),
+			      size);
 		}
 		else {
 		    if (type & GV_LINE)
@@ -295,15 +310,15 @@ geom(OGRGeometryH hGeom, struct Map_info *Map, int field, int cat,
 		}
 		valid_isles++;
 	    }
-	}	/* inner rings done */
+	}			/* inner rings done */
 
 	/* Centroid */
 	/* Vect_get_point_in_poly_isl() would fail for degenerate polygon */
 	if (mk_centr) {
 	    if (Points->n_points >= 4) {
 		ret =
-		    Vect_get_point_in_poly_isl(Points, IPoints, valid_isles, &x,
-					       &y);
+		    Vect_get_point_in_poly_isl(Points, IPoints, valid_isles,
+					       &x, &y);
 		if (ret == -1) {
 		    G_warning(_("Cannot calculate centroid"));
 		}
