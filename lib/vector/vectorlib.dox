@@ -228,7 +228,7 @@ This directory contains these files:
 <TR><TD>Back_Major</TD>    <TD>C</TD> <TD>1</TD> <TD>supported from GRASS version (major)</TD></TR>
 <TR><TD>Back_Minor</TD>    <TD>C</TD> <TD>1</TD> <TD>supported from GRASS version (minor)</TD></TR>
 <TR><TD>byte_order</TD>    <TD>C</TD> <TD>1</TD> <TD>little or big endian flag</TD></TR>
-<TR><TD>header_size</TD>   <TD>L</TD> <TD>1</TD> <TD>header size of coor file</TD></TR>
+<TR><TD>head_size</TD>     <TD>L</TD> <TD>1</TD> <TD>header size of coor file</TD></TR>
 <TR><TD>with_z</TD>        <TD>C</TD> <TD>1</TD> <TD>2D or 3D flag; zero for 2D</TD></TR>
 <TR><TD>size</TD>          <TD>L</TD> <TD>1</TD> <TD>coor file size</TD></TR>
 
