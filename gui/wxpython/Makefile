@@ -1,7 +1,7 @@
 MODULE_TOPDIR = ../..
 
 SUBDIRS = docs vdigit scripts
-EXTRA_CLEAN_FILES = menustrings.py
+EXTRA_CLEAN_FILES = menustrings.py build_ext.pyc
 CLEAN_SUBDIRS = vdigit scripts
 
 include $(MODULE_TOPDIR)/include/Make/Dir.make
@@ -15,6 +15,8 @@ DSTFILES := $(patsubst %,$(ETCDIR)/%,$(SRCFILES)) $(patsubst %.py,$(ETCDIR)/%.py
 
 default: install_scripts
 	$(MAKE) parsubdirs
+
+clean: cleansubdirs
 
 install_scripts:
 	-for dir in '' compat gui_modules icons icons/silk images vdigit xml; do \

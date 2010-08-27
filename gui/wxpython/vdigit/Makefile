@@ -15,6 +15,7 @@ SHLIB = $(OBJDIR)/_$(LIB_NAME).so
 
 ETCDIR = $(ETC)/wxpython
 
+EXTRA_CLEAN_FILES = grass6_wxvdigit.py grass6_wxvdigit.i grass6_wxvdigit_wrap.cpp
 default:
 
 ifneq ($(USE_WXWIDGETS),)
