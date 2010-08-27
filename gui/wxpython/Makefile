@@ -14,6 +14,8 @@ DSTFILES := $(patsubst %,$(ETCDIR)/%,$(SRCFILES))
 default: install_scripts
 	$(MAKE) parsubdirs
 
+clean: cleansubdirs
+
 install_scripts:
 	-for dir in '' compat gui_modules icons icons/silk images scripts xml; do \
 	if [ ! -d $(ETCDIR)/$$dir ] ; then $(MKDIR) $(ETCDIR)/$$dir ; fi ; \
