@@ -6594,7 +6594,7 @@ msgstr "ABSCHNITT 4: Bestimme RUSLE LS und/oder den S Faktor."
 
 #: ../raster/r.watershed/ram/do_cum.c:15 ../raster/r.watershed/seg/do_cum.c:17
 msgid "SECTION 3: Accumulating Surface Flow with SFD."
-msgstr "ABSCHNITT 3: Akkumuliere Oberfl‰chenabfluﬂ mit MFD."
+msgstr "ABSCHNITT 3: Akkumuliere Oberfl‰chenabfluﬂ mit SFD."
 
 #: ../raster/r.watershed/ram/do_cum.c:116
 #: ../raster/r.watershed/seg/do_cum.c:121
