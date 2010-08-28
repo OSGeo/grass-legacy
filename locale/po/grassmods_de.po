@@ -181,7 +181,7 @@ msgid ""
 "The 2d and 3d region settings are different. I will use the g3d settings to "
 "adjust the 2d region."
 msgstr ""
-"Die 2D und 3D Regions Parameter sind unterschiedlich. Ich werde die g3d "
+"Die 2D und 3D Regions Parameter sind unterschiedlich. Ich werde die G3D "
 "Parameter verwenden, um die 2D Region anzupassen."
 
 #: ../raster3d/r3.cross.rast/main.c:318 ../raster3d/r3.to.rast/main.c:243
@@ -223,7 +223,7 @@ msgstr "Falscher G3D Datentyp. Kann die Rasterkarte nicht erzeugen."
 #: ../raster3d/r3.cross.rast/main.c:404
 #, c-format
 msgid "Could not close G3D map <%s>"
-msgstr "Konnte g3d Karte <%s> nicht schließen."
+msgstr "Konnte G3D Karte <%s> nicht schließen."
 
 #: ../raster3d/r3.to.rast/main.c:55
 msgid "Unable to close the 3d raster map"
@@ -294,7 +294,7 @@ msgstr "Konvertiert 3D-Rasterkarten in 2D-Rasterkarten."
 #: ../raster3d/r3.to.rast/main.c:225
 #, c-format
 msgid "Open 3d raster map <%s>"
-msgstr "Öffne g3d Rasterkarte <%s>."
+msgstr "Öffne G3D Rasterkarte <%s>."
 
 #: ../raster3d/r3.to.rast/main.c:267
 msgid ""
@@ -363,32 +363,32 @@ msgstr "Untere Rasterkarte <%s> nicht gefunden."
 #: ../raster3d/r3.out.vtk/main.c:143
 #, c-format
 msgid "Requested 3d raster map <%s> not found"
-msgstr "Angeforderte g3d Rasterkarte <%s> nicht gefunden."
+msgstr "Angeforderte G3D Rasterkarte <%s> nicht gefunden."
 
 #: ../raster3d/r3.out.vtk/main.c:153
 #, c-format
 msgid "Requested g3d RGB map <%s> not found"
-msgstr "Angeforderte g3d RGB Karte <%s> nicht gefunden."
+msgstr "Angeforderte G3D RGB Karte <%s> nicht gefunden."
 
 #: ../raster3d/r3.out.vtk/main.c:157
 msgid "Please provide three g3d RGB maps"
-msgstr "Bitte geben Sie drei g3d RGB Karten an."
+msgstr "Bitte geben Sie drei G3D RGB Karten an."
 
 #: ../raster3d/r3.out.vtk/main.c:167
 #, c-format
 msgid "Requested g3d vector map <%s> not found"
-msgstr "Angeforderte g3d Vektorkarte <%s> nicht gefunden."
+msgstr "Angeforderte G3D Vektorkarte <%s> nicht gefunden."
 
 #: ../raster3d/r3.out.vtk/main.c:171
 msgid "Please provide three g3d vector maps [x,y,z]"
-msgstr "Bitte geben sie drei g3d Vektorkarten an [x,y,z]."
+msgstr "Bitte geben Sie drei G3D Vektorkarten an [x,y,z]."
 
 #: ../raster3d/r3.out.vtk/main.c:178
 msgid ""
 "No g3d data, RGB or xyz-vector maps are provided! Will only write the "
 "geometry."
 msgstr ""
-"Keine g3d-Daten, RGB oder xyz-Vektorkarten wurden angegeben! Werde nur die "
+"Keine G3D-Daten, RGB oder xyz-Vektorkarten wurden angegeben! Werde nur die "
 "Geometrien schreiben."
 
 #: ../raster3d/r3.out.vtk/main.c:198
@@ -402,7 +402,7 @@ msgstr "RGB-Daten werden nicht erzeugt."
 
 #: ../raster3d/r3.out.vtk/main.c:254
 msgid "Error closing g3d rgb map."
-msgstr "Fehler beim Schließen der g3d-RGB-Datei."
+msgstr "Fehler beim Schließen der G3D-RGB-Datei."
 
 #: ../raster3d/r3.out.vtk/main.c:295
 msgid "No vector data will be created."
@@ -1029,7 +1029,7 @@ msgstr "makeMask: Fehler beim Öffnen der Karte."
 
 #: ../raster3d/base/r3.mask.main.c:95
 msgid "makeMask: error opening g3d mask file"
-msgstr "makeMask: Fehler beim Öffnen der g3d-Maskendatei."
+msgstr "makeMask: Fehler beim Öffnen der G3D-Maskendatei."
 
 #: ../raster3d/base/r3.mask.main.c:124
 msgid "makeMask: error flushing tiles in cube"
@@ -1041,7 +1041,7 @@ msgstr "makeMask: Fehler beim Spülen der Kacheln."
 
 #: ../raster3d/base/r3.mask.main.c:137
 msgid "makeMask: error closing g3d mask file"
-msgstr "makeMask: Fehler beim Schließen der g3d-Maskendatei."
+msgstr "makeMask: Fehler beim Schließen der G3D-Maskendatei."
 
 #: ../raster3d/base/r3.mask.main.c:139
 msgid "makeMask: error closing map"
@@ -4514,13 +4514,13 @@ msgstr "Error in pj_do_proj"
 #: ../raster/r.out.vtk/main.c:79
 #, c-format
 msgid "RGB raster map <%s> not found"
-msgstr "RGB Rasterkarte <%s> nicht gefunden."
+msgstr "RGB Rasterkarte <%s> nicht gefunden"
 
 #: ../raster/r.out.vtk/main.c:86
 msgid "Cannot create RGB data, please provide three maps [r,g,b]"
 msgstr ""
-"Kann RGB-Daten nicht erzeugen, bitte stellen Sie drei karten zur Verfügung "
-"[r,g,b]."
+"Kann RGB-Daten nicht erzeugen, bitte stellen Sie drei Karten zur Verfügung "
+"[r,g,b]"
 
 #: ../raster/r.out.vtk/main.c:102
 #, c-format
@@ -4530,7 +4530,7 @@ msgstr "Vektor-Zellen-Karte <%s> nicht gefunden."
 #: ../raster/r.out.vtk/main.c:109
 msgid "Cannot create vector data, please provide three maps [x,y,z]"
 msgstr ""
-"Kann Vektor-Daten nicht erzeugen, bitte geben Sie drei Karten an [x,y,z]."
+"Kann Vektor-Daten nicht erzeugen, bitte geben Sie drei Karten an [x,y,z]"
 
 #: ../raster/r.out.vtk/main.c:149
 msgid "Converts raster maps into the VTK-Ascii format"
@@ -21629,15 +21629,15 @@ msgstr "Name der Vektorkarte mit x,y,z,w"
 
 #: ../vector/v.vol.rst/main.c:245
 msgid "Name of the surface raster map for cross-section"
-msgstr "Name der Oberflächen-Rasterkarte für Querschnitte."
+msgstr "Name der Oberflächen-Rasterkarte für Querschnitte"
 
 #: ../vector/v.vol.rst/main.c:252
 msgid "Name of the column containing w attribute to interpolate"
-msgstr "Name der Spalte mit dem zu interpolierenden w-Attribut."
+msgstr "Name der Spalte mit dem zu interpolierenden w-Attribut"
 
 #: ../vector/v.vol.rst/main.c:260 ../vector/v.surf.rst/main.c:300
 msgid "Tension parameter"
-msgstr "Spannung (Tension) Parameter."
+msgstr "Spannung (Tension) Parameter"
 
 #: ../vector/v.vol.rst/main.c:268 ../vector/v.surf.rst/main.c:307
 msgid "Smoothing parameter"
@@ -21645,11 +21645,11 @@ msgstr "Glättungs-(smooth) Parameter"
 
 #: ../vector/v.vol.rst/main.c:276
 msgid "Name of the column with smoothing parameters"
-msgstr "Name der Attributspalte mit den Glättungs-Parametern."
+msgstr "Name der Attributspalte mit den Glättungs-Parametern"
 
 #: ../vector/v.vol.rst/main.c:286 ../vector/v.surf.rst/main.c:257
 msgid "Output deviations vector point file"
-msgstr "Gebe Vektor-Punktkarte mit Abweichungen aus."
+msgstr "Gebe Vektor-Punktkarte mit Abweichungen aus"
 
 #: ../vector/v.vol.rst/main.c:287 ../vector/v.vol.rst/main.c:295
 msgid "Analysis"
@@ -21657,89 +21657,89 @@ msgstr "Analyse"
 
 #: ../vector/v.vol.rst/main.c:294
 msgid "Output cross-validation vector map"
-msgstr "Gebe Vektorkarte mit Kreuzvalidierung aus."
+msgstr "Gebe Vektorkarte mit Kreuzvalidierung aus"
 
 #: ../vector/v.vol.rst/main.c:302 ../vector/v.surf.rst/main.c:284
 msgid "Name of the raster map used as mask"
-msgstr "Name der Rasterkarte, die als Maske benutzt werden soll."
+msgstr "Name der Rasterkarte, die als Maske benutzt werden soll"
 
 #: ../vector/v.vol.rst/main.c:309 ../vector/v.surf.rst/main.c:323
 msgid "Maximum number of points in a segment"
-msgstr "Maximale Anzahl der Punkte auf einem Segment."
+msgstr "Maximale Anzahl der Punkte auf einem Segment"
 
 #: ../vector/v.vol.rst/main.c:318 ../vector/v.surf.rst/main.c:332
 msgid "Minimum number of points for approximation in a segment (>segmax)"
-msgstr "Minimalanzahl der Punkte in einem Segment (>segmax)."
+msgstr "Minimalanzahl der Punkte in einem Segment (>segmax)"
 
 #: ../vector/v.vol.rst/main.c:327 ../vector/v.surf.rst/main.c:341
 msgid "Minimum distance between points (to remove almost identical points)"
 msgstr ""
-"Minimale Distanz zwischen Punkten (um fast identische Punkte zu entfernen)."
+"Minimale Distanz zwischen Punkten (um fast identische Punkte zu entfernen)"
 
 #: ../vector/v.vol.rst/main.c:336
 msgid "Conversion factor for w-values used for interpolation"
-msgstr "Umrechnungsfaktor für die w-Werte verwendet in der Interpolation."
+msgstr "Umrechnungsfaktor für die w-Werte verwendet in der Interpolation"
 
 #: ../vector/v.vol.rst/main.c:344
 msgid "Conversion factor for z-values"
-msgstr "Umrechnungsfaktor für z-Werte."
+msgstr "Umrechnungsfaktor für z-Werte"
 
 #: ../vector/v.vol.rst/main.c:352
 msgid "Output cross-section raster map"
-msgstr "Gebe Rasterkarte mit Querschnitt aus."
+msgstr "Gebe Rasterkarte mit Querschnitt aus"
 
 #: ../vector/v.vol.rst/main.c:361
 msgid "Output elevation g3d-file"
-msgstr "Ausgabe-g3d-Datei mit Höheninformationen."
+msgstr "Ausgabe-g3d-Datei mit Höheninformationen"
 
 #: ../vector/v.vol.rst/main.c:369
 msgid "Output gradient magnitude g3d-file"
-msgstr "Ausgabe-g3d-Datei mit Größenordnungen der Gradienten."
+msgstr "Ausgabe-G3D-Datei mit Größenordnungen der Gradienten"
 
 #: ../vector/v.vol.rst/main.c:379
 msgid "Output gradient horizontal angle g3d-file"
-msgstr "Ausgabe-g3d-Datei mit horizontalen Winkeln der Gradienten."
+msgstr "Ausgabe-G3D-Datei mit horizontalen Winkeln der Gradienten"
 
 #: ../vector/v.vol.rst/main.c:388
 msgid "Output gradient vertical angle g3d-file"
-msgstr "Ausgabe-g3d-Datei mit vertikalen Winkeln der Gradienten."
+msgstr "Ausgabe-G3D-Datei mit vertikalen Winkeln der Gradienten"
 
 #: ../vector/v.vol.rst/main.c:397
 msgid "Output change of gradient g3d-file"
-msgstr "Ausgabe-g3d-Datei mit Änderung der Gradienten."
+msgstr "Ausgabe-G3D-Datei mit Änderung der Gradienten"
 
 #: ../vector/v.vol.rst/main.c:406
 msgid "Output gaussian curvature g3d-file"
-msgstr "Ausgabe-g3d-Datei mit Gauss'scher Krümmung."
+msgstr "Ausgabe-G3D-Datei mit Gauss'scher Krümmung"
 
 #: ../vector/v.vol.rst/main.c:415
 msgid "Output mean curvature g3d-file"
-msgstr "Ausgabe-g3d-Datei mit mittleren Krümmung."
+msgstr "Ausgabe-G3D-Datei mit mittleren Krümmung"
 
 #: ../vector/v.vol.rst/main.c:421
 msgid "Perform a cross-validation procedure without volume interpolation"
-msgstr "Führe eine Kreuzvalidierung ohne Volumen-Interpolation durch."
+msgstr "Führe eine Kreuzvalidierung ohne Volumen-Interpolation durch"
 
 #: ../vector/v.vol.rst/main.c:457
 msgid "Smoothing must be a positive value"
-msgstr "Der Glättungswert muß positiv sein."
+msgstr "Der Glättungswert muß positiv sein"
 
 #: ../vector/v.vol.rst/main.c:463
 msgid "Both crossvalidation options (-c, cvdev) must be specified"
-msgstr "Beide Kreuzvalidierungsoptionen (-c, cvdev) müssen angegeben werden."
+msgstr "Beide Kreuzvalidierungsoptionen (-c, cvdev) müssen angegeben werden"
 
 #: ../vector/v.vol.rst/main.c:465
 msgid "Both crossvalidation and deviations file specified"
-msgstr "Kreuzvalidierungs- und Abweichungsdatei angegeben."
+msgstr "Kreuzvalidierungs- und Abweichungsdatei angegeben"
 
 #: ../vector/v.vol.rst/main.c:548
 msgid "Vector is not 3D"
-msgstr "Vektor ist nicht 3D."
+msgstr "Vektor ist nicht 3D"
 
 #: ../vector/v.vol.rst/main.c:584
 #, c-format
 msgid "Cannot create table: %s"
-msgstr "Kann Tabelle '%s' nicht erzeugen."
+msgstr "Kann Tabelle %s nicht erzeugen"
 
 #: ../vector/v.vol.rst/main.c:600
 #, c-format
@@ -21750,18 +21750,18 @@ msgstr "Kann %s nicht öffnen."
 msgid "Column type of wcolumn is not supported (must be integer or double)"
 msgstr ""
 "Spaltentyp der wcolumn wird nicht unterstützt (muss integer oder double "
-"sein)."
+"sein)"
 
 #: ../vector/v.vol.rst/user1.c:126
 msgid ""
 "Column type of smooth column is not supported (must be integer or double)"
 msgstr ""
 "Spaltentyp der 'smooth'-Spalte wird nicht unterstützt (muss integer oder "
-"double sein)."
+"double sein)"
 
 #: ../vector/v.patch/main.c:69
 msgid "Create a new vector map layer by combining other vector map layers."
-msgstr "Erzeugt eine neue Vektorkarte durch Kombination anderer Vektorkarten."
+msgstr "Erzeugt eine neue Vektorkarte durch Kombination anderer Vektorkarten"
 
 #: ../vector/v.patch/main.c:80
 msgid ""
@@ -21769,22 +21769,22 @@ msgid ""
 "written to"
 msgstr ""
 "Ausgabe-Vektorkarte, in die die Boundig Boxes der Eingabe-Vektorkarten "
-"geschrieben werden."
+"geschrieben werden"
 
 #: ../vector/v.patch/main.c:84
 msgid ""
 "Append files to existing file (overwriting existing files must be activated)"
 msgstr ""
 "Hänge Dateien an eine existierende Datei an. Das Überschreiben von "
-"existierenden Dateien muss aktiviert sein."
+"existierenden Dateien muss aktiviert sein"
 
 #: ../vector/v.patch/main.c:89
 msgid "Copy also attribute table"
-msgstr "Kopiere auch die Attributtabelle."
+msgstr "Kopiere auch die Attributtabelle"
 
 #: ../vector/v.patch/main.c:91
 msgid "Only the table of layer 1 is currently supported"
-msgstr "Nur die Tabelle des Layer 1 wird zur Zeit unterstützt."
+msgstr "Nur die Tabelle des Layer 1 wird zur Zeit unterstützt"
 
 #: ../vector/v.patch/main.c:189
 msgid "Missing table"
@@ -21792,31 +21792,31 @@ msgstr "Fehlende Tabelle."
 
 #: ../vector/v.patch/main.c:193
 msgid "Key columns differ"
-msgstr "Schlüsselspalten (key columns) stimmen nicht überein."
+msgstr "Schlüsselspalten (key columns) stimmen nicht überein"
 
 #: ../vector/v.patch/main.c:199
 msgid "Number of columns differ"
-msgstr "Anzahl der Spalten stimmt nicht überein."
+msgstr "Anzahl der Spalten stimmt nicht überein"
 
 #: ../vector/v.patch/main.c:211
 msgid "Column names differ"
-msgstr "Spaltennamen stimmen nicht überein."
+msgstr "Spaltennamen stimmen nicht überein"
 
 #: ../vector/v.patch/main.c:219
 msgid "Column types differ"
-msgstr "Spaltentypen stimmen nicht überein."
+msgstr "Spaltentypen stimmen nicht überein"
 
 #: ../vector/v.patch/main.c:224
 msgid "Length of string columns differ"
-msgstr "Länge der 'string'-Spalten stimmen nicht überein."
+msgstr "Länge der 'string'-Spalten stimmen nicht überein"
 
 #: ../vector/v.patch/main.c:238
 msgid "Key column not found"
-msgstr "Schlüselspalte (key column) nicht gefunden."
+msgstr "Schlüselspalte (key column) nicht gefunden"
 
 #: ../vector/v.patch/main.c:245
 msgid "The output map is not 3D"
-msgstr "Die Ausgabekarte ist nicht 3D."
+msgstr "Die Ausgabekarte ist nicht 3D"
 
 #: ../vector/v.patch/main.c:298
 #, c-format
@@ -21828,7 +21828,7 @@ msgstr "Kombiniere Vektorkarte <%s@%s>..."
 msgid "Error reading vector map <%s> - some data may not be correct"
 msgstr ""
 "Fehler beim Lesen der Vektorkarte <%s> - Einige Daten könnten nicht korrekt "
-"sein."
+"sein"
 
 #: ../vector/v.patch/main.c:364
 #, c-format
@@ -21837,33 +21837,33 @@ msgstr "Erstelle Topologie für die Vektorkarte <%s>..."
 
 #: ../vector/v.patch/main.c:370
 msgid "Intersections at borders will have to be snapped"
-msgstr "Überschneidungen an den Grenzen müssen ge-snapped werden."
+msgstr "Überschneidungen an den Grenzen müssen ge-snapped werden"
 
 #: ../vector/v.patch/main.c:371
 msgid "Lines common between files will have to be edited"
-msgstr "Linien, die in mehreren Dateien vorkommen, müssen editiert werden. "
+msgstr "Linien, die in mehreren Dateien vorkommen, müssen editiert werden"
 
 #: ../vector/v.patch/main.c:372
 msgid "The header information also may have to be edited"
-msgstr "Die Header-Informationen müssen auch editiert werden."
+msgstr "Die Header-Informationen müssen auch editiert werden"
 
 #: ../vector/v.patch/main.c:374
 #, c-format
 msgid "%d vector maps patched"
-msgstr "%d Vektorkarten kombiniert."
+msgstr "%d Vektorkarten kombiniert"
 
 #: ../vector/v.patch/main.c:397
 #, c-format
 msgid "Cannot open select cursor: '%s'"
-msgstr "Kann den Select-Cursor '%s' nicht öffnen."
+msgstr "Kann den Select-Cursor '%s' nicht öffnen"
 
 #: ../vector/v.patch/main.c:408
 msgid "Cannot fetch row"
-msgstr "Kann die Zeile nicht holen."
+msgstr "Kann die Zeile nicht holen"
 
 #: ../vector/v.patch/main.c:459
 msgid "Unknown column type"
-msgstr "Unbekannter Spalten-Typ."
+msgstr "Unbekannter Spalten-Typ"
 
 #: ../vector/v.patch/main.c:467
 #, c-format
@@ -21872,15 +21872,15 @@ msgstr "Kann neuen Eintrag nicht einfügen: '%s'"
 
 #: ../vector/v.kcv/main.c:78
 msgid "Randomly partition points into test/train sets."
-msgstr "Teile die Punkte zufällig in ein Test- und ein Training-Datensatz."
+msgstr "Teile die Punkte zufällig in ein Test- und ein Training-Datensatz"
 
 #: ../vector/v.kcv/main.c:87
 msgid "Number of partitions"
-msgstr "Anzahl der Datensätze."
+msgstr "Anzahl der Datensätze"
 
 #: ../vector/v.kcv/main.c:97
 msgid "Name for new column to which partition number is written"
-msgstr "Name der neuen Spalte in welche die Datensatznummer geschrieben wird."
+msgstr "Name der neuen Spalte in welche die Datensatznummer geschrieben wird"
 
 #: ../vector/v.kcv/main.c:101
 msgid "Use drand48()"
@@ -21889,17 +21889,17 @@ msgstr "Verwende drand48()"
 #: ../vector/v.kcv/main.c:137 ../vector/v.edit/main.c:125
 #, c-format
 msgid "Unable to open vector map <%s> at topological level %d"
-msgstr "Kann Vektorkarte <%s> auf der topologischen Ebene %d nicht öffnen."
+msgstr "Kann Vektorkarte <%s> auf der topologischen Ebene %d nicht öffnen"
 
 #: ../vector/v.kcv/main.c:174
 #, c-format
 msgid "Unable to get layer info for vector map <%s>"
-msgstr "Kann die Layer-Informationen der Vektorkarte <%s> nicht bekommen."
+msgstr "Kann die Layer-Informationen der Vektorkarte <%s> nicht bekommen"
 
 #: ../vector/v.kcv/main.c:198
 #, c-format
 msgid "Cannot alter table: %s"
-msgstr "Kann die Tabelle '%s' nicht verändern."
+msgstr "Kann die Tabelle '%s' nicht verändern"
 
 #: ../vector/v.support/main.c:40
 msgid "vector, metadata"
@@ -21907,11 +21907,11 @@ msgstr "Vektor, Metadaten"
 
 #: ../vector/v.support/main.c:41
 msgid "Updates vector map metadata."
-msgstr "Aktualisiere die Metadaten einer Vektorkarte."
+msgstr "Aktualisiere die Metadaten einer Vektorkarte"
 
 #: ../vector/v.support/main.c:52
 msgid "Organization where vector map was created"
-msgstr "Organisation in der die Vektorkarte erzeugt wurde."
+msgstr "Organisation in der die Vektorkarte erzeugt wurde"
 
 #: ../vector/v.support/main.c:61
 msgid "Date of vector map digitization (e.g., \"15 Mar 2007\")"
@@ -21920,7 +21920,7 @@ msgstr ""
 
 #: ../vector/v.support/main.c:68
 msgid "Person who created vector map"
-msgstr "Person, die die Vektorkarte erstellt hat."
+msgstr "Person, die die Vektorkarte erstellt hat"
 
 #: ../vector/v.support/main.c:75
 msgid "Vector map title"
@@ -21928,39 +21928,39 @@ msgstr "Titel der Vektorkarte"
 
 #: ../vector/v.support/main.c:83
 msgid "Date when the source map was originally produced"
-msgstr "Datum, an dem die Quelle der Vektorkarte ursprünglich erzeugt wurde."
+msgstr "Datum, an dem die Quelle der Vektorkarte ursprünglich erzeugt wurde"
 
 #: ../vector/v.support/main.c:89
 msgid "Vector map scale number (e.g., 24000)"
-msgstr "Maßstabszahl der Vektorkarte (z.B., 24000)."
+msgstr "Maßstabszahl der Vektorkarte (z.B., 24000)"
 
 #: ../vector/v.support/main.c:95
 msgid "Vector map projection zone"
-msgstr "Projektionzone der Vektorkarte."
+msgstr "Projektionzone der Vektorkarte"
 
 #: ../vector/v.support/main.c:102
 msgid "Vector map digitizing threshold number (e.g., 0.5)"
-msgstr "Schwellwert der Digitalisierung der Vektorkarte (z.B., 0.5)."
+msgstr "Schwellwert der Digitalisierung der Vektorkarte (z.B., 0.5)"
 
 #: ../vector/v.support/main.c:110
 msgid "Text to append to the comment line of the map's metadata file"
-msgstr "Text, der an den Kommentar Metadatendatei der Karte angehängt wird."
+msgstr "Text, der an den Kommentar Metadatendatei der Karte angehängt wird"
 
 #: ../vector/v.support/main.c:118
 msgid ""
 "Command line to store into vector map history file (used for vector scripts)"
 msgstr ""
 "Kommentarzeile die in der History-Datei der Vektorkarte gespeichert wird "
-"(verwendet für Vektor-Skripts)."
+"(verwendet für Vektor-Skripts)"
 
 #: ../vector/v.support/main.c:122
 msgid "Replace comment instead of appending it"
-msgstr "Ersetze den Kommentar statt ihn zu erweitern."
+msgstr "Ersetze den Kommentar statt ihn zu erweitern"
 
 #: ../vector/v.support/main.c:188
 #, c-format
 msgid "Unable to open history file for vector map <%s>"
-msgstr "Kann die History-Datei der Vektorkarte <%s> nicht öffnen."
+msgstr "Kann die History-Datei der Vektorkarte <%s> nicht öffnen"
 
 #: ../vector/v.select/main.c:136
 msgid "vector, query"
@@ -21975,31 +21975,31 @@ msgstr ""
 
 #: ../vector/v.select/main.c:141 ../vector/v.overlay/main.c:59
 msgid "Name of input vector map (A)"
-msgstr "Name der Eingabe-Vektorkarte (A)."
+msgstr "Name der Eingabe-Vektorkarte (A)"
 
 #: ../vector/v.select/main.c:145 ../vector/v.overlay/main.c:63
 msgid "Feature type (vector map A)"
-msgstr "Feature-Typ (Vektorkarte A)."
+msgstr "Feature-Typ (Vektorkarte A)"
 
 #: ../vector/v.select/main.c:150 ../vector/v.overlay/main.c:69
 msgid "Layer number (vector map A)"
-msgstr "Layer-Nummer (Vektorkarte A)."
+msgstr "Layer-Nummer (Vektorkarte A)"
 
 #: ../vector/v.select/main.c:155 ../vector/v.overlay/main.c:73
 msgid "Name of input vector map (B)"
-msgstr "Name der Eingabe-Vektorkarte (B)."
+msgstr "Name der Eingabe-Vektorkarte (B)"
 
 #: ../vector/v.select/main.c:159 ../vector/v.overlay/main.c:77
 msgid "Feature type (vector map B)"
-msgstr "Feature-Typ (Vektorkarte B)."
+msgstr "Feature-Typ (Vektorkarte B)"
 
 #: ../vector/v.select/main.c:164 ../vector/v.overlay/main.c:83
 msgid "Layer number (vector map B)"
-msgstr "Layer-Nummer (Vektorkarte B)."
+msgstr "Layer-Nummer (Vektorkarte B)"
 
 #: ../vector/v.select/main.c:178
 msgid "Operator defines required relation between features"
-msgstr "Operator bestimmt das erforderte Verhältnis zwischen den Featuren."
+msgstr "Operator bestimmt das erforderte Verhältnis zwischen den Features"
 
 #: ../vector/v.select/main.c:180
 msgid ""
@@ -22013,7 +22013,7 @@ msgstr ""
 
 #: ../vector/v.select/main.c:182
 msgid "overlap;features partially or completely overlap"
-msgstr "Überlappung; Feature überlappen sich teilweise oder vollständig."
+msgstr "Überlappung; Feature überlappen sich teilweise oder vollständig"
 
 #: ../vector/v.select/main.c:242 ../vector/v.category/main.c:229
 msgid "Processing features..."
@@ -22035,7 +22035,7 @@ msgstr "Layer %d - keine Tabelle"
 #: ../vector/v.select/main.c:524
 #, c-format
 msgid "Layer %d - unable to copy table"
-msgstr "Layer %d - kann die Tabelle nicht kopieren."
+msgstr "Layer %d - kann die Tabelle nicht kopieren"
 
 #: ../vector/v.buffer2/main.c:146
 msgid "vector, buffer"
@@ -22064,15 +22064,15 @@ msgstr "Bufferdistanz entlang der Nebenachse in Karteneinheiten."
 
 #: ../vector/v.buffer2/main.c:182 ../vector/v.parallel2/main.c:73
 msgid "Angle of major axis in degrees"
-msgstr "Winkel der Hauptache in Grad."
+msgstr "Winkel der Hauptachse in Grad"
 
 #: ../vector/v.buffer2/main.c:188
 msgid "Name of column to use for buffer distances"
-msgstr "Name der Spalte mit den Bufferdistanzen."
+msgstr "Name der Spalte mit den Bufferdistanzen"
 
 #: ../vector/v.buffer2/main.c:196 ../vector/v.buffer/main.c:286
 msgid "Scaling factor for attribute column values"
-msgstr "Skalierfaktor für die Werte der Attributspalte."
+msgstr "Skalierfaktor für die Werte der Attributspalte"
 
 #: ../vector/v.buffer2/main.c:205 ../vector/v.buffer/main.c:296
 msgid ""
@@ -22080,16 +22080,16 @@ msgid ""
 "buffer"
 msgstr ""
 "Maximale Distanz zwischen theoretischen Linien und Polygonsegmenten als "
-"Vielfaches des Buffers."
+"Vielfaches des Buffers"
 
 #: ../vector/v.buffer2/main.c:212 ../vector/v.buffer2/main.c:224
 #: ../vector/v.build.polylines/main.c:128
 msgid "Unused"
-msgstr "nicht genutzt"
+msgstr "Nicht genutzt"
 
 #: ../vector/v.buffer2/main.c:214
 msgid "This does nothing. It is retained for backwards compatibility"
-msgstr "Dies tut nix. Es wurde nur für rückwärts Kompatibilität erhalten."
+msgstr "Dies tut nichts. Es wurde nur für die Rückwärtskompatibilität erhalten"
 
 #: ../vector/v.buffer2/main.c:221
 msgid ""
@@ -22097,25 +22097,25 @@ msgid ""
 "compatibility"
 msgstr ""
 "Dies ist ein Alias für die Distanz-Option. Es wurde nur für rückwärts "
-"Kompatibilität erhalten."
+"Kompatibilität erhalten"
 
 #: ../vector/v.buffer2/main.c:223 ../vector/v.buffer/main.c:271
 msgid "Buffer distance in map units"
-msgstr "Bufferdistanz in Karteneinheiten."
+msgstr "Bufferdistanz in Karteneinheiten"
 
 #: ../vector/v.buffer2/main.c:228
 msgid "Make outside corners straight"
-msgstr "Mache äußere Ecken gerade."
+msgstr "Mache äußere Ecken gerade"
 
 #: ../vector/v.buffer2/main.c:232
 msgid "Don't make caps at the ends of polylines"
-msgstr "Erzeuge keine Kappen an den Enden von Polylinien."
+msgstr "Erzeuge keine Kappen an den Enden von Polylinien"
 
 #: ../vector/v.buffer2/main.c:245
 msgid "Select a buffer distance/minordistance/angle or column, but not both."
 msgstr ""
 "Wählen Sie entweder die Buffer distance/minordistance/angle oder eine "
-"Spalte, aber nicht beides."
+"Spalte, aber nicht beides"
 
 #: ../vector/v.buffer2/main.c:249 ../vector/v.buffer/main.c:319
 msgid ""
@@ -22143,7 +22143,7 @@ msgstr "Verwende die Distanz-Option anstelle der Buffer-Option."
 #: ../vector/v.buffer2/main.c:262
 #, c-format
 msgid "The tolerance was reset to %g"
-msgstr "Die Toleranz wurde auf %g zurückgesetzt."
+msgstr "Die Toleranz wurde auf %g zurückgesetzt"
 
 #: ../vector/v.buffer2/main.c:286
 #, c-format
@@ -22153,7 +22153,7 @@ msgstr "Toleranz in Karteneinheiten = %g"
 #: ../vector/v.buffer2/main.c:331
 #, c-format
 msgid "Unable to select data from table <%s>"
-msgstr "Kann keine Daten der Tabelle <%s> selektieren."
+msgstr "Kann keine Daten der Tabelle <%s> selektieren"
 
 #: ../vector/v.buffer2/main.c:371
 msgid "Buffering lines..."
@@ -22163,7 +22163,7 @@ msgstr "Buffere Linien..."
 #: ../vector/v.buffer/main.c:473 ../vector/v.buffer/main.c:550
 #, c-format
 msgid "Attribute is of invalid size (%.3f) for category %d"
-msgstr "Attribut hat ungültige Größe (%.3f) für Kategorie %d."
+msgstr "Attribut hat ungültige Größe (%.3f) für Kategorie %d"
 
 #: ../vector/v.buffer2/main.c:408 ../vector/v.buffer2/main.c:474
 #: ../vector/v.buffer/main.c:335 ../vector/v.buffer/main.c:485
@@ -22182,7 +22182,7 @@ msgstr "Erstelle Teile der Topologie..."
 
 #: ../vector/v.buffer2/main.c:501 ../vector/v.buffer/main.c:619
 msgid "Snapping boundaries..."
-msgstr "Snap Grenzen..."
+msgstr "Snapping der Grenzen..."
 
 #: ../vector/v.buffer2/main.c:504 ../vector/v.buffer/main.c:622
 msgid "Breaking boundaries..."
@@ -22191,7 +22191,7 @@ msgstr "Breche Grenzen auf..."
 #: ../vector/v.buffer2/main.c:507 ../vector/v.overlay/area_area.c:43
 #: ../vector/v.buffer/main.c:625
 msgid "Removing duplicates..."
-msgstr "Entferne Doppelte ..."
+msgstr "Entferne Duplikate ..."
 
 #: ../vector/v.buffer2/main.c:519 ../vector/v.overlay/area_area.c:55
 #: ../vector/v.buffer/main.c:637
@@ -22217,7 +22217,7 @@ msgstr "Gebe das Mosaik als Graph (Linien) und nicht als Flächen aus."
 
 #: ../vector/v.voronoi/vo_main.c:343
 msgid "Cannot copy table"
-msgstr "Kann die Tabelle nicht kopieren."
+msgstr "Kann die Tabelle nicht kopieren"
 
 #: ../vector/v.voronoi/dt_main.c:47 ../vector/v.delaunay2/main.c:87
 msgid ""
@@ -22248,7 +22248,7 @@ msgstr "Anfangskosten von Knoten %d"
 
 #: ../vector/v.net.steiner/main.c:347
 msgid "Create Steiner tree for the network and given terminals"
-msgstr "Erzeuge 'Steiner Tree' für das Netzwerk und die gegebenen Stationen."
+msgstr "Erzeuge 'Steiner Tree' für das Netzwerk und die gegebenen Stationen"
 
 #: ../vector/v.net.steiner/main.c:349
 msgid ""
@@ -22266,26 +22266,26 @@ msgstr "Layer mit Knoten (verwendet für dir Stationen)."
 #: ../vector/v.net.steiner/main.c:381
 msgid "Categories of points on terminals (layer is specified by nlayer)"
 msgstr ""
-"Kategorien der Punkte auf den Stationen (Layer wird mit nlayer angegebn)."
+"Kategorien der Punkte auf den Stationen (Layer wird mit nlayer angegebn)"
 
 #: ../vector/v.net.steiner/main.c:389
 msgid "Number of steiner points (-1 for all possible)"
-msgstr "Anzahl der Steiner Punkte (-1 für alle Möglichen)."
+msgstr "Anzahl der Steiner Punkte (-1 für alle Möglichen)"
 
 #: ../vector/v.net.steiner/main.c:453
 msgid "Not enough terminals (< 2)"
-msgstr "Nicht genügend Stationen (< 2)."
+msgstr "Nicht genügend Stationen (< 2)"
 
 #: ../vector/v.net.steiner/main.c:459
 msgid "Requested number of Steiner points > than possible"
-msgstr "Es wurden mehr Steiner-Punkte gefordert als möglich sind."
+msgstr "Es wurden mehr Steiner-Punkte angefordert als möglich sind"
 
 #: ../vector/v.net.steiner/main.c:511
 #, c-format
 msgid "Terminal at node [%d] cannot be connected to terminal at node [%d]"
 msgstr ""
 "Station am Knoten [%d] kann nicht mit der Station am Knoten [%d] verbunden "
-"werden."
+"werden"
 
 #: ../vector/v.net.steiner/main.c:527
 #, c-format
@@ -22293,7 +22293,7 @@ msgid ""
 "[%d] (not reachable) nodes removed from list of Steiner point candidates"
 msgstr ""
 "[%d] (nicht erreichbare) Knoten wurden aus der Liste der Steiner-"
-"Punktkandidaten entfernt."
+"Punktkandidaten entfernt"
 
 #: ../vector/v.net.steiner/main.c:532
 #, c-format
@@ -22309,12 +22309,12 @@ msgstr "Suche nach [%d]. Steiner-Punkt"
 #, c-format
 msgid "Steiner point at node [%d] was added to terminals (MST costs = %f)"
 msgstr ""
-"Steiner_Punkt am Knoten [%d] wurde zu den Stationen hinzugefügt (MST Kosten "
+"Steiner-Punkt am Knoten [%d] wurde zu den Stationen hinzugefügt (MST Kosten "
 "= %f)."
 
 #: ../vector/v.net.steiner/main.c:571
 msgid "No Steiner point found -> leaving cycle"
-msgstr "Keine Steiner-Punkte gefunden -> verlasse die Schleife."
+msgstr "Keine Steiner-Punkte gefunden -> verlasse die Schleife"
 
 #: ../vector/v.what/main.c:56
 msgid "vector, querying"
@@ -22326,7 +22326,7 @@ msgstr "Fraget Vektorkarten an gegebenen Positionen ab."
 
 #: ../vector/v.what/main.c:70
 msgid "If not given reads from standard input"
-msgstr "Wenn nicht gegeben, lese von der Standardeingabe."
+msgstr "Wenn nicht gegeben, lese von der Standardeingabe"
 
 #: ../vector/v.what/main.c:77
 msgid "Query threshold distance"
@@ -22334,17 +22334,17 @@ msgstr "Abfrage Distanz-Schwellwert"
 
 #: ../vector/v.what/main.c:85
 msgid "Print attribute information"
-msgstr "Gebe Attribute Informationen aus."
+msgstr "Gebe Attribute Informationen aus"
 
 #: ../vector/v.what/main.c:155
 #, c-format
 msgid "You must build topology on vector map <%s>"
-msgstr "Sie müssen die Topologie für die Vektorkarte <%s> erzeugen."
+msgstr "Sie müssen die Topologie für die Vektorkarte <%s> erzeugen"
 
 #: ../vector/v.what/main.c:174
 #, c-format
 msgid "Unknown input format, skipping: '%s'"
-msgstr "Unbekanntes Eingabeformat, Überspringe: %s."
+msgstr "Unbekanntes Eingabeformat, Überspringe: '%s'"
 
 #: ../vector/v.what/what.c:141
 #, c-format
@@ -22491,7 +22491,7 @@ msgstr ""
 
 #: ../vector/v.transform/main.c:80
 msgid "Suppress display of residuals or other information"
-msgstr "Unterdrücke die Darstellung der Residuen oder anderer Informationen."
+msgstr "Unterdrücke die Darstellung der Residuen oder anderer Informationen"
 
 #: ../vector/v.transform/main.c:84
 msgid "Shift all z values to bottom=0"
@@ -22516,11 +22516,11 @@ msgstr ""
 #: ../vector/v.transform/main.c:179 ../vector/v.transform/main.c:186
 #: ../vector/v.transform/main.c:189
 msgid "Custom"
-msgstr "kundenspezifisch"
+msgstr "Spezifisch"
 
 #: ../vector/v.transform/main.c:106
 msgid "ASCII file holding transform coordinates"
-msgstr "ASCII-Datei mit den Transformationskoordinaten."
+msgstr "ASCII-Datei mit den Transformationskoordinaten"
 
 #: ../vector/v.transform/main.c:107
 msgid ""
@@ -22540,7 +22540,7 @@ msgstr "Verschiebungswert für Y-Koordinaten"
 
 #: ../vector/v.transform/main.c:135 ../vector/v.extrude/main.c:84
 msgid "Shifting value for z coordinates"
-msgstr "Verschiebewert für Z-Koordinate."
+msgstr "Verschiebewert für Z-Koordinaten"
 
 #: ../vector/v.transform/main.c:144
 msgid "Scaling factor for x coordinates"
@@ -22556,15 +22556,15 @@ msgstr "Skalierungsfaktor für Z-Koordinaten"
 
 #: ../vector/v.transform/main.c:172
 msgid "Rotation around z axis in degrees counterclockwise"
-msgstr "Rotation um die Z-Achse in Grad gegen den Uhrzeigersinn."
+msgstr "Rotation um die Z-Achse in Grad gegen den Uhrzeigersinn"
 
 #: ../vector/v.transform/main.c:178
 msgid "Name of table containing transformation parameters"
-msgstr "Name der Tabelle mit den Transformationsparametern."
+msgstr "Name der Tabelle mit den Transformationsparametern"
 
 #: ../vector/v.transform/main.c:183
 msgid "Name of attribute column(s) used as transformation parameters"
-msgstr "Name der Attributspalte(n) mit den Transformationsparametern."
+msgstr "Name der Attributspalte(n) mit den Transformationsparametern"
 
 #: ../vector/v.transform/main.c:185
 msgid "Format: parameter:column, e.g. xshift:xs,yshift:ys,zrot:zr"
@@ -22607,12 +22607,12 @@ msgstr ""
 #: ../vector/v.transform/main.c:231
 #, c-format
 msgid "Unable to open file with coordinates <%s>"
-msgstr "Kann die Datei mit den Koordinaten <%s> nicht öffnen."
+msgstr "Kann die Datei mit den Koordinaten <%s> nicht öffnen"
 
 #: ../vector/v.transform/main.c:311
 #, c-format
 msgid "Unable to tokenize column string: [%s]"
-msgstr "Kann Spalten-Zeichenkette [%s] nicht tokenisieren."
+msgstr "Kann Spalten-Zeichenkette [%s] nicht tokenisieren"
 
 #: ../vector/v.transform/main.c:338
 #, c-format
@@ -22641,7 +22641,7 @@ msgstr " B: %6.3f    T: %6.3f"
 #: ../vector/v.transform/trans_digit.c:96
 #, c-format
 msgid "Unsupported column type of <%s>"
-msgstr "Nicht unterstützter Spaltentypen <%s>."
+msgstr "Nicht unterstützter Spaltentypen <%s>"
 
 #: ../vector/v.transform/trans_digit.c:104
 #, c-format
@@ -22664,20 +22664,20 @@ msgstr "Anzahl der Punkte, die eingegeben wurden: %d\n"
 
 #: ../vector/v.transform/creat_trans.c:102
 msgid "Please answer yes or no"
-msgstr "Bitte antworten Sie mit yes oder no."
+msgstr "Bitte antworten Sie mit yes oder no"
 
 #: ../vector/v.transform/creat_trans.c:118
 msgid "Error reading coordinates file"
-msgstr "Fehler beim Lesen der Koordinaten-Datei."
+msgstr "Fehler beim Lesen der Koordinaten-Datei"
 
 #: ../vector/v.transform/creat_trans.c:123
 #, c-format
 msgid "Number of points that have been entered [%d]"
-msgstr "Anzahl der Punkte, die eingegeben wurden [%d]."
+msgstr "Anzahl der Punkte, die eingegeben wurden [%d]"
 
 #: ../vector/v.transform/creat_trans.c:126
 msgid "Error creating transformation"
-msgstr "Fehler beim Erzeugen der Transformation."
+msgstr "Fehler beim Erzeugen der Transformation"
 
 #: ../vector/v.transform/setup_trans.c:83
 msgid "The points weren't spread out enough."
@@ -22730,12 +22730,12 @@ msgstr "Ausgabe-Layer für neue Kategorien, ainput und binput"
 
 #: ../vector/v.overlay/main.c:115
 msgid "If 0 or not given, the category is not written"
-msgstr "Wenn 0 oder nicht spezifiziert, werden Kategorien nicht geschrieben."
+msgstr "Wenn 0 oder nicht spezifiziert, wird die Kategorie nicht geschrieben"
 
 #: ../vector/v.overlay/main.c:152
 #, c-format
 msgid "Operator '%s' is not supported for type line"
-msgstr "Der Operator '%s' wird nicht für den Typ Linie unterstützt."
+msgstr "Der Operator '%s' wird nicht für den Typ Linie unterstützt"
 
 #: ../vector/v.overlay/main.c:199
 #, c-format
@@ -22749,16 +22749,16 @@ msgstr "Sammle Input-Attribute..."
 #: ../vector/v.overlay/main.c:344
 #, c-format
 msgid "Unknown column type '%s'"
-msgstr "Unbekannter Spalten-Typ '%s'."
+msgstr "Unbekannter Spalten-Typ '%s'"
 
 #: ../vector/v.overlay/main.c:409
 #, c-format
 msgid "Unknown column type '%s' values lost"
-msgstr "Unbekannter Spalten-Typ '%s', Werte verloren."
+msgstr "Unbekannter Spalten-Typ '%s', Werte verloren"
 
 #: ../vector/v.overlay/main.c:474
 msgid "Building partial topology..."
-msgstr "Erzeuge Topologie teilweise..."
+msgstr "Erzeuge partielle Topologie..."
 
 #: ../vector/v.overlay/main.c:486 ../vector/v.buffer/main.c:223
 msgid "Rebuilding topology..."
@@ -22772,7 +22772,7 @@ msgstr "Teile Linien..."
 #: ../vector/v.overlay/area_area.c:103 ../vector/v.overlay/area_area.c:183
 #: ../vector/v.overlay/area_area.c:211
 msgid "Attribute not found"
-msgstr "Attribute nicht gefunden."
+msgstr "Attribute nicht gefunden"
 
 #: ../vector/v.overlay/area_area.c:46
 msgid "Cleaning boundaries at nodes..."
@@ -22781,7 +22781,7 @@ msgstr "Säubere Grenzen an den Knoten..."
 #: ../vector/v.overlay/area_area.c:78
 #, c-format
 msgid "Querying vector map <%s>..."
-msgstr "Frage Vektorkarte <%s> ab."
+msgstr "Frage Vektorkarte <%s> ab..."
 
 #: ../vector/v.overlay/area_area.c:114
 msgid "Writing centroids..."
@@ -22789,7 +22789,7 @@ msgstr "Schreibe Zentroide..."
 
 #: ../vector/v.class/main.c:47
 msgid "Classifies attribute data, e.g. for thematic mapping"
-msgstr "Klassifiziert Attributdaten, z.B. für thematische Karten."
+msgstr "Klassifiziert Attributdaten, z.B. für thematische Karten"
 
 #: ../vector/v.class/main.c:58
 msgid "Column name or expression"
@@ -22797,7 +22797,7 @@ msgstr "Spaltennamen oder Ausdruck"
 
 #: ../vector/v.class/main.c:85
 msgid "Print only class breaks (without min and max)"
-msgstr "Gebe nur die Klassengrenzen aus (ohne Min und Max)."
+msgstr "Gebe nur die Klassengrenzen aus (ohne Min und Max)"
 
 #: ../vector/v.class/main.c:166
 msgid ""
@@ -22849,11 +22849,11 @@ msgstr "Vektor, Geometrie, Topology"
 
 #: ../vector/v.build.polylines/main.c:109
 msgid "Builds polylines from lines or boundaries."
-msgstr "Erstellt Poly-Linien aus Linien und Grenzen."
+msgstr "Erstellt Poly-Linien aus Linien und Grenzen"
 
 #: ../vector/v.build.polylines/main.c:119
 msgid "Category number mode"
-msgstr "Kategorienummer-Modus."
+msgstr "Kategorienummer-Modus"
 
 #: ../vector/v.build.polylines/main.c:121
 msgid ""
