@@ -12902,7 +12902,7 @@ msgstr "Kann auch verwendet werden, um GRASS Locations zu erzeugen."
 #: ../general/g.proj/main.c:65
 msgid "Print projection information (in conventional GRASS format)"
 msgstr ""
-"Gebe die Projetkionsinformationen (im konventionellen GRASS-Format) aus."
+"Gebe die Projektionsinformationen (im konventionellen GRASS-Format) aus."
 
 #: ../general/g.proj/main.c:71
 msgid "Verify datum information and print transformation parameters"
@@ -12911,11 +12911,11 @@ msgstr ""
 
 #: ../general/g.proj/main.c:77
 msgid "Print projection information in PROJ.4 format"
-msgstr "Gebe die Projetkionsinformationen im PROJ.4-Format aus."
+msgstr "Gebe die Projektionsinformationen im PROJ.4-Format aus."
 
 #: ../general/g.proj/main.c:82
 msgid "Print projection information in WKT format"
-msgstr "Gebe die Projetkionsinformationen im WKT-Format aus."
+msgstr "Gebe die Projektionsinformationen im WKT-Format aus."
 
 #: ../general/g.proj/main.c:88
 msgid "Use ESRI-style format (applies to WKT output only)"
