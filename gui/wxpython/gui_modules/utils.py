@@ -78,7 +78,7 @@ def GetLayerNameFromCmd(dcmd, fullyQualified=False, param=None,
     @return '' if no map name found in command
     """
     mapname = ''
-
+    
     if len(dcmd) < 1:
         return mapname
     
@@ -101,12 +101,15 @@ def GetLayerNameFromCmd(dcmd, fullyQualified=False, param=None,
                         'h_map=' in dcmd[idx] or \
                         'reliefmap' in dcmd[idx]:
                     break
-            
+        
         if idx < len(dcmd):
             try:
                 mapname = dcmd[idx].split('=')[1]
             except IndexError:
-                return ''
+                if idx == 1:
+                    mapname = dcmd[idx]
+                else:
+                    return ''
             
             if fullyQualified and '@' not in mapname:
                 if layerType in ('raster', 'vector', '3d-raster'):
@@ -124,8 +127,11 @@ def GetLayerNameFromCmd(dcmd, fullyQualified=False, param=None,
                         mapname += '@' + grassenv.GetGRASSVariable('MAPSET')
                 else:
                     mapname += '@' + grassenv.GetGRASSVariable('MAPSET')
-                dcmd[idx] = dcmd[idx].split('=')[0] + '=' + mapname
-                
+                if '=' in dcmd[idx]:
+                    dcmd[idx] = dcmd[idx].split('=')[0] + '=' + mapname
+                else:
+                    dcmd[idx] = mapname
+    
     return mapname
 
 def GetValidLayerName(name):

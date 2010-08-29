@@ -326,10 +326,21 @@ class GMConsole(wx.Panel):
                                   message=_("Command '%s' not yet implemented in the GUI. "
                                             "Try adding it as a command layer instead.") % cmdlist[0])
                     return None
-
+                
+                # add layer into layer tree
+                if cmdlist[0] == 'd.rast':
+                    lname = utils.GetLayerNameFromCmd(cmdlist, fullyQualified = True,
+                                                      layerType = 'raster')
+                elif cmdlist[0] == 'd.vect':
+                    lname = utils.GetLayerNameFromCmd(cmdlist, fullyQualified = True,
+                                                      layerType = 'vector')
+                else:
+                    lname = None
+                                
                 # add layer into layer tree
                 if self.parent.GetName() == "LayerManager":
                     self.parent.curr_page.maptree.AddLayer(ltype=layertype,
+                                                           lname=lname,
                                                            lcmd=cmdlist)
             else:
                 #
