@@ -6241,3 +6241,17 @@ msgstr ""
 #: ../gui/tcltk/d.m/rgbhis.tcl:118
 msgid "blue (RGB) or saturation (HIS):"
 msgstr ""
+
+#~ msgid "Run (in Xterm)"
+#~ msgstr "运行（在Xterm中"
+
+#, fuzzy
+#~ msgid "Zoom to..."
+#~ msgstr "放大"
+
+#, fuzzy
+#~ msgid "Export display to graphics file"
+#~ msgstr "保存当前显示为图片文件"
+
+#~ msgid "WARNING: Error creating new location"
+#~ msgstr "警告："

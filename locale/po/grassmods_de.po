@@ -9853,7 +9853,7 @@ msgstr ""
 "Parameter %s an."
 
 #: ../raster/r.out.gdal/export_band.c:217
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "The user given nodata value %g is present in rasterband <%s> and would lead "
 "to data loss. Please specify a different nodata value with the %s parameter."
@@ -32752,13 +32752,110 @@ msgid "Can't mark another point.  Only %d points allowed.  Sorry."
 msgstr ""
 "Kann keinen anderen Punkt markieren. Nur %d Punkte sind erlaubt. Sorry."
 
-#~ msgid ""
-#~ "The given nodata value is present in rasterband <%s> and would lead to "
-#~ "data loss. Please specify a different nodata value with the %s parameter."
-#~ msgstr ""
-#~ "Der gewählte NoData-Wert ist im Rasterkanal <%s> vorhanden und würde zu "
-#~ "Datenverlust führen. Bitte geben Sie einen anderen NoData-Wert mit dem "
-#~ "Parameter %s an."
+msgid ""
+"The given nodata value is present in rasterband <%s> and would lead to data "
+"loss. Please specify a different nodata value with the %s parameter."
+msgstr ""
+"Der gewählte NoData-Wert ist im Rasterkanal <%s> vorhanden und würde zu "
+"Datenverlust führen. Bitte geben Sie einen anderen NoData-Wert mit dem "
+"Parameter %s an."
+
+msgid ""
+"Output long/lat in decimal degrees or other projections with many decimal "
+"places"
+msgstr ""
+"Gebe long/lat in Dezimalgrad oder einer anderen Projektion mit vielen "
+"Dezimalstellen aus."
+
+#, fuzzy
+msgid "installation"
+msgstr "Metrische Belegung."
+
+msgid ""
+"Calculates univariate statistics from a GRASS raster map based on vector "
+"polygons and uploads statistics to new attribute columns."
+msgstr ""
+"Berechnet Kennzahlen univariater Statistik einer Rasterkarte für Polygone "
+"und fügt die Ergebnisse als neue Spalte der Attributtabelle an."
+
+#, fuzzy
+msgid "GDAL datatype: %s, range: %f - %f"
+msgstr "Rasterkarte <%s> erzeugt."
+
+#, fuzzy
+msgid "The hight of the river bed in [m]"
+msgstr "Höhe des Flussbetts [m]."
+
+#, fuzzy
+msgid "The hight of the drainage bed in [m]"
+msgstr "Höhe der Drainage [m]."
+
+#, fuzzy
+msgid "Pass %d:"
+msgstr "Durchgang %d..."
+
+#, fuzzy
+msgid "The '-q' flag is superseded and will be removed "
+msgstr ""
+"Der Schalter '-q' wurde überflüssig gemacht und wird in der Zukunft "
+"entfernt-- Bitte verwenden Sie '--quiet' stattdessen ."
+
+#, fuzzy
+msgid "Unable to create table <%s_edge_Interpolation>"
+msgstr "Kann die Datenbank <%s> nicht öffnen."
+
+#, fuzzy
+msgid "Rescale output raster map [0,255]"
+msgstr "Name der Ausgabe-Rasterkarte."
+
+#, fuzzy
+msgid ""
+"Input raster map contains cells with NULL-value (no-data). The value %g was "
+"used to represent no-data values in the input map. You can specify a nodata "
+"value with the %s option."
+msgstr ""
+"Die Eingabe Rasterkarte enthält Zellen mit dem NULL-Wert (no-data). Der Wert "
+"%g wurde verwendet um Nodata-Werte in der Eingabekarte zu kennzeichnen. Sie "
+"können Nodata-Wert mit dem Parameter %s bestimmen."
+
+msgid "Allocation memory for bilinear interpolation"
+msgstr "Allokiere Speicher für die bilineare Interpolation."
+
+msgid "Allocation memory for bicubic interpolation"
+msgstr "Allokiere Speicher für die bikubische Interpolation."
+
+msgid ""
+"Sorry, if any of the following options are set:\n"
+"    basin, stream, half.basin, slope, or lS\n"
+"    you MUST provide a value for the basin threshold parameter."
+msgstr ""
+"Wenn eine der folgenden Optionen gesetzt wurde:\n"
+"    basin, stream, half.basin, slope oder lS\n"
+"    MÜSSEN Sie ein Wert für den Parameter 'basin threshold' angegeben."
+
+msgid "Do not export long colortable"
+msgstr "Exportiere keine langen Farbtabellen."
+
+msgid ""
+"Input raster map contains cells with NULL-value (no-data). The value %d was "
+"used to represent no-data values in the input map. You can specify nodata "
+"value by %s parameter."
+msgstr ""
+"Die Eingabe Rasterkarte enthält Zellen mit dem NULL-Wert (no-data). Der Wert "
+"%d wurde verwendet um Nodata-Werte in der Eingabekarte zu kennzeichnen. Sie "
+"können Nodata-Wert mit dem Parameter %s bestimmen."
+
+msgid "Default value: GRASS_GUI if defined otherwise tcltk"
+msgstr "Standardwert: GRASS_GUI wenn definiert, ansonsten tcltk"
+
+msgid ""
+"tcltk;Tcl/Tk based GUI - GIS Manager (gis.m);oldtcltk;Old Tcl/Tk based GUI - "
+"Display Manager (d.m);wxpython;wxPython based next generation GUI;text;"
+"command line interface only"
+msgstr ""
+"tcltk;Tcl/Tk basiertes GUI - GIS Manager (gis.m);oldtcltk;Altes Tcl/Tk "
+"basiertes GUI - Display Manager (d.m);wxpython;wxPython basiertes GUI der "
+"nächsten Generation;text;Nur Kommandozeile"
 
 #~ msgid "New MAPSET name"
 #~ msgstr "Neuer Mapset Name."
@@ -32864,103 +32961,6 @@ msgstr ""
 
 #~ msgid "DXY [%s] COMPLETE"
 #~ msgstr "DXY [%s] KOMPLETT"
-
-#~ msgid ""
-#~ "Output long/lat in decimal degrees or other projections with many decimal "
-#~ "places"
-#~ msgstr ""
-#~ "Gebe long/lat in Dezimalgrad oder einer anderen Projektion mit vielen "
-#~ "Dezimalstellen aus."
-
-#, fuzzy
-#~ msgid "installation"
-#~ msgstr "Metrische Belegung."
-
-#~ msgid ""
-#~ "Calculates univariate statistics from a GRASS raster map based on vector "
-#~ "polygons and uploads statistics to new attribute columns."
-#~ msgstr ""
-#~ "Berechnet Kennzahlen univariater Statistik einer Rasterkarte für Polygone "
-#~ "und fügt die Ergebnisse als neue Spalte der Attributtabelle an."
-
-#, fuzzy
-#~ msgid "GDAL datatype: %s, range: %f - %f"
-#~ msgstr "Rasterkarte <%s> erzeugt."
-
-#, fuzzy
-#~ msgid "The hight of the river bed in [m]"
-#~ msgstr "Höhe des Flussbetts [m]."
-
-#, fuzzy
-#~ msgid "The hight of the drainage bed in [m]"
-#~ msgstr "Höhe der Drainage [m]."
-
-#, fuzzy
-#~ msgid "Pass %d:"
-#~ msgstr "Durchgang %d..."
-
-#, fuzzy
-#~ msgid "The '-q' flag is superseded and will be removed "
-#~ msgstr ""
-#~ "Der Schalter '-q' wurde überflüssig gemacht und wird in der Zukunft "
-#~ "entfernt-- Bitte verwenden Sie '--quiet' stattdessen ."
-
-#, fuzzy
-#~ msgid "Unable to create table <%s_edge_Interpolation>"
-#~ msgstr "Kann die Datenbank <%s> nicht öffnen."
-
-#, fuzzy
-#~ msgid "Rescale output raster map [0,255]"
-#~ msgstr "Name der Ausgabe-Rasterkarte."
-
-#, fuzzy
-#~ msgid ""
-#~ "Input raster map contains cells with NULL-value (no-data). The value %g "
-#~ "was used to represent no-data values in the input map. You can specify a "
-#~ "nodata value with the %s option."
-#~ msgstr ""
-#~ "Die Eingabe Rasterkarte enthält Zellen mit dem NULL-Wert (no-data). Der "
-#~ "Wert %g wurde verwendet um Nodata-Werte in der Eingabekarte zu "
-#~ "kennzeichnen. Sie können Nodata-Wert mit dem Parameter %s bestimmen."
-
-#~ msgid "Allocation memory for bilinear interpolation"
-#~ msgstr "Allokiere Speicher für die bilineare Interpolation."
-
-#~ msgid "Allocation memory for bicubic interpolation"
-#~ msgstr "Allokiere Speicher für die bikubische Interpolation."
-
-#~ msgid ""
-#~ "Sorry, if any of the following options are set:\n"
-#~ "    basin, stream, half.basin, slope, or lS\n"
-#~ "    you MUST provide a value for the basin threshold parameter."
-#~ msgstr ""
-#~ "Wenn eine der folgenden Optionen gesetzt wurde:\n"
-#~ "    basin, stream, half.basin, slope oder lS\n"
-#~ "    MÜSSEN Sie ein Wert für den Parameter 'basin threshold' angegeben."
-
-#~ msgid "Do not export long colortable"
-#~ msgstr "Exportiere keine langen Farbtabellen."
-
-#~ msgid ""
-#~ "Input raster map contains cells with NULL-value (no-data). The value %d "
-#~ "was used to represent no-data values in the input map. You can specify "
-#~ "nodata value by %s parameter."
-#~ msgstr ""
-#~ "Die Eingabe Rasterkarte enthält Zellen mit dem NULL-Wert (no-data). Der "
-#~ "Wert %d wurde verwendet um Nodata-Werte in der Eingabekarte zu "
-#~ "kennzeichnen. Sie können Nodata-Wert mit dem Parameter %s bestimmen."
-
-#~ msgid "Default value: GRASS_GUI if defined otherwise tcltk"
-#~ msgstr "Standardwert: GRASS_GUI wenn definiert, ansonsten tcltk"
-
-#~ msgid ""
-#~ "tcltk;Tcl/Tk based GUI - GIS Manager (gis.m);oldtcltk;Old Tcl/Tk based "
-#~ "GUI - Display Manager (d.m);wxpython;wxPython based next generation GUI;"
-#~ "text;command line interface only"
-#~ msgstr ""
-#~ "tcltk;Tcl/Tk basiertes GUI - GIS Manager (gis.m);oldtcltk;Altes Tcl/Tk "
-#~ "basiertes GUI - Display Manager (d.m);wxpython;wxPython basiertes GUI der "
-#~ "nächsten Generation;text;Nur Kommandozeile"
 
 #~ msgid "Name of vector input map containing stream(s)"
 #~ msgstr "Vektoreingabekarte mit dem Flussnetz."
@@ -33642,3 +33642,23 @@ msgstr ""
 #~ "tcltk;Tcl/Tk basiertes GUI - GIS Manager (gis.m);oldtcltk;Altes Tcl/Tk "
 #~ "basiertes GUI - Display Manager (d.m);wxpython;wxPython basiertes GUI der "
 #~ "nächsten Generation;text;Nur Kommandozeile"
+
+#~ msgid "New LOCATION name (not location path)"
+#~ msgstr "Neuer LOCATION Name (nicht der Pfad zur Location)."
+
+#~ msgid "New GISDBASE (full path to the directory where the new location is)"
+#~ msgstr ""
+#~ "Neue GISDBASE (vollständiger Pfad zu dem Verzeichnis, in dem sich die "
+#~ "neue L0cation befindet)."
+
+#~ msgid "Width and height of output image"
+#~ msgstr "Breite und Höhe des Ausgabe-Bildes."
+
+#~ msgid "Name of file with sql statement"
+#~ msgstr "Name der Datei, die SQL-Befehle enthält"
+
+#~ msgid "Vector map for which to edit attribute table"
+#~ msgstr "Vektorkarte deren Attributtabelle editiert werden soll."
+
+#~ msgid "Layer where to add column"
+#~ msgstr "Layer, in dem eine Spalte hinzugefügt werden soll."

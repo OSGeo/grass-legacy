@@ -1109,7 +1109,7 @@ msgstr ""
 #: ../gui/wxpython/menustrings.py:25
 #, fuzzy
 msgid "Bulk link of raster data"
-msgstr "Cargando mapa raster."
+msgstr "Metadatos básicos del raster."
 
 #: ../gui/wxpython/menustrings.py:26
 #, fuzzy
@@ -1421,7 +1421,7 @@ msgstr "Exportar mapa raster."
 #: ../gui/wxpython/menustrings.py:89 ../gui/wxpython/menustrings.py:120
 #, fuzzy
 msgid "Common export formats"
-msgstr "Convertir coordenadas"
+msgstr "Convertir coordenadas."
 
 #: ../gui/wxpython/menustrings.py:90
 msgid "Exports GRASS raster maps into GDAL supported formats."
@@ -1996,7 +1996,7 @@ msgid ""
 msgstr ""
 "Convierte descripciones de sistemas de coordenadas (o sea, información de "
 "proyección) entre varios formatos (incluido el formato GRASS). También puede "
-"usarse para crear localizaciones de GRASS."
+"usarse para crear locaciones de GRASS."
 
 #: ../gui/wxpython/menustrings.py:224
 #, fuzzy
@@ -6468,7 +6468,6 @@ msgstr "Superficie."
 #: ../gui/wxpython/gui_modules/nviz_tools.py:276
 #: ../gui/wxpython/gui_modules/nviz_tools.py:3154
 #: ../gui/wxpython/gui_modules/nviz_preferences.py:237
-#, fuzzy
 msgid "Vector"
 msgstr "Vector."
 
@@ -7059,7 +7058,7 @@ msgstr ""
 #: ../gui/wxpython/gui_modules/gselect.py:1077
 #, fuzzy
 msgid "Choose input file"
-msgstr "Seleccione el espacio de trabajo."
+msgstr "Seleccionar directorio de entrada de datos hacia GRASS:"
 
 #: ../gui/wxpython/gui_modules/gselect.py:950
 msgid "Choose input directory"
@@ -8133,9 +8132,9 @@ msgid " row %d:"
 msgstr "Fila %d."
 
 #: ../gui/wxpython/gui_modules/sqlbuilder.py:78
-#, python-format
+#, fuzzy, python-format
 msgid "GRASS SQL Builder (%(type)s): vector map <%(map)s>"
-msgstr ""
+msgstr "Constructor SQL GRASS (%s): mapa vectorial <%s> ."
 
 #: ../gui/wxpython/gui_modules/sqlbuilder.py:85
 msgid "SQL statement not verified"
@@ -8307,15 +8306,14 @@ msgid "3d raster map <%s> not found"
 msgstr "No se ha encontrado el mapa <%s> ."
 
 #: ../gui/wxpython/gui_modules/toolbars.py:188
-#, fuzzy
 msgid "3D view mode not available"
-msgstr "Herramientas de visualización 3D."
+msgstr ""
 
 #: ../gui/wxpython/gui_modules/toolbars.py:189
 #: ../gui/wxpython/gui_modules/toolbars.py:205
-#, fuzzy, python-format
+#, python-format
 msgid "Reason: %s"
-msgstr "Región."
+msgstr ""
 
 #: ../gui/wxpython/gui_modules/toolbars.py:190
 msgid ""
@@ -9180,8 +9178,10 @@ msgid " List of %s layers "
 msgstr "Lista de capas %s ."
 
 #: ../gui/wxpython/gui_modules/gdialogs.py:1104
+#, fuzzy
 msgid "Override projection (use location's projection)"
 msgstr ""
+"Restablece interactivamente la configuración de proyección de la locación."
 
 #: ../gui/wxpython/gui_modules/gdialogs.py:1108
 msgid "Add linked layers into layer tree"
@@ -10846,22 +10846,131 @@ msgstr ""
 "si todavía no lo ha hecho. Una elección común es \"grassdata\", ubicado en "
 "su directorio home."
 
+#, fuzzy
+msgid "GRASS GIS Map Calculator (3D raster)"
+msgstr "Calculadora de mapas GRASS %s."
+
+msgid "Import raster map"
+msgstr "Importar mapa raster."
+
+msgid "Import vector map"
+msgstr "Importar mapa vectorial."
+
+#, fuzzy
+msgid "C&onfig"
+msgstr "Configurar."
+
+#, fuzzy
+msgid ""
+"Calculates cast shadow areas from sun position and DEM. Either A: exact sun "
+"position is specified, or B: date/time to calculate the sun position by r."
+"sunmask it"
+msgstr ""
+"Calcula áreas en las que se produce sombra a partir de la posición del sol "
+"un modelo de elevación digital (DEM). Puede especificarse, A: Cualquier "
+"posición exacta del sol o B: Fecha / hora para calcular la posición del sol "
+"mediante el mismo r.sunmask."
+
+#, fuzzy
+msgid "Removes a table from database."
+msgstr "Generar de la base de datos."
+
+#, fuzzy
+msgid "Show menu tree"
+msgstr "Árbol de Steiner"
+
+#, fuzzy
+msgid "3D Raster map"
+msgstr "Mapa raster:"
+
+#, fuzzy
+msgid "module"
+msgstr "Código."
+
+#, fuzzy
+msgid "Select GRASS module"
+msgstr ""
+"Destina un grupo de imagen a una localización GRASS y un conjunto de mapas"
+
+#, fuzzy
+msgid "Color settings"
+msgstr "Configuración de vector."
+
+#, fuzzy
+msgid "Size settings"
+msgstr "Configuración del texto."
+
+#, fuzzy
+msgid "Unable to get list of available mapsets."
+msgstr "No es posible eliminar el directorio de mapas de usuario (mapset)."
+
+#, fuzzy
+msgid "Unable to get list of accessible mapsets."
+msgstr "No es posible eliminar el directorio de mapas de usuario (mapset)."
+
+#, fuzzy
+msgid "Menu tree window"
+msgstr "Moviendo la ventana"
+
+#, fuzzy
+msgid "label"
+msgstr "Añadir etiquetas"
+
+#, fuzzy
+msgid "help"
+msgstr "Ayuda"
+
+#, fuzzy
+msgid "Run"
+msgstr "Ejecuta&r"
+
+#, fuzzy
+msgid "Saved NVIZ Settings"
+msgstr "Guardar?"
+
+#, fuzzy
+msgid "Load and apply settings from user settings file"
+msgstr ""
+"Cerrar el diálogo y guardar los cambios al archivo de configuraciones de "
+"usuario."
+
+#, fuzzy
+msgid "Creates a lines vector map from an ASCII x,y points file."
+msgstr ""
+"Crea un mapa vectorial a partir de archivo de puntos ASCII o archivo ASCII "
+"vectorial."
+
+#, fuzzy
+msgid "Quit GUI"
+msgstr "Salir de la GUI"
+
+msgid "Interactive input for supervised classification"
+msgstr "Clasificación supervisada de entrada interactiva"
+
+msgid "GRASS SQL Builder (%s): vector map <%s>"
+msgstr "Constructor SQL GRASS (%s): mapa vectorial <%s> ."
+
+msgid "Matlab and MapGen import"
+msgstr "Importar Matlab y MapGen."
+
+msgid ""
+"Converts co-ordinate system descriptions (i.e. projection information) "
+"between various formats (including GRASS format). Can also be used to create "
+"GRASS locations."
+msgstr ""
+"Convierte descripciones de sistemas de coordenadas (o sea, información de "
+"proyección) entre varios formatos (incluido el formato GRASS). También puede "
+"usarse para crear locaciones de GRASS."
+
 #~ msgid "Unable to open workspace file <%s> for writing."
 #~ msgstr ""
 #~ "No se puede abrir el archivo de área de trabajo para su escritura <% s>."
-
-#, fuzzy
-#~ msgid "GRASS GIS Map Calculator (3D raster)"
-#~ msgstr "Calculadora de mapas GRASS %s."
 
 #~ msgid "Add 3D raster map"
 #~ msgstr "Añadir mapa raster 3D."
 
 #~ msgid "Redraw GCP markers in map displays"
 #~ msgstr "Redibujar marcadores de GCP en las visualizaciones de mapas."
-
-#~ msgid "Import raster map"
-#~ msgstr "Importar mapa raster."
 
 #~ msgid "Import raster data using GDAL"
 #~ msgstr "Importar mapa raster utilizando GDAL."
@@ -10874,9 +10983,6 @@ msgstr ""
 
 #~ msgid "Multiple link to GDAL"
 #~ msgstr "Enlaces múltiples a GDAL."
-
-#~ msgid "Import vector map"
-#~ msgstr "Importar mapa vectorial."
 
 #~ msgid "Import vector data using OGR"
 #~ msgstr "Importar datos vectoriales usando OGR."
@@ -10905,21 +11011,6 @@ msgstr ""
 
 #~ msgid "Export grid 3D volume"
 #~ msgstr "Exportar volúmenes grid 3D."
-
-#, fuzzy
-#~ msgid "C&onfig"
-#~ msgstr "Configurar."
-
-#, fuzzy
-#~ msgid ""
-#~ "Calculates cast shadow areas from sun position and DEM. Either A: exact "
-#~ "sun position is specified, or B: date/time to calculate the sun position "
-#~ "by r.sunmask it"
-#~ msgstr ""
-#~ "Calcula áreas en las que se produce sombra a partir de la posición del "
-#~ "sol un modelo de elevación digital (DEM). Puede especificarse, A: "
-#~ "Cualquier posición exacta del sol o B: Fecha / hora para calcular la "
-#~ "posición del sol mediante el mismo r.sunmask."
 
 #~ msgid ""
 #~ "Takes vector stream data, transforms it to raster and subtracts depth "
@@ -10959,14 +11050,6 @@ msgstr ""
 #~ msgid "Map calculator for volumetric map algebra"
 #~ msgstr "Calculadora para álgebra volumétrica de mapas."
 
-#, fuzzy
-#~ msgid "Removes a table from database."
-#~ msgstr "Generar de la base de datos."
-
-#, fuzzy
-#~ msgid "Show menu tree"
-#~ msgstr "Árbol de Steiner"
-
 #~ msgid ""
 #~ "Unable to start vector digitizer.\n"
 #~ "The VDigit python extension was not found or loaded properly.\n"
@@ -10994,10 +11077,6 @@ msgstr ""
 #~ "Detalles: %s"
 
 #, fuzzy
-#~ msgid "3D Raster map"
-#~ msgstr "Mapa raster:"
-
-#, fuzzy
 #~ msgid "Error in command execution '%s'"
 #~ msgstr "Error"
 
@@ -11013,31 +11092,6 @@ msgstr ""
 #~ msgid "Nviz error"
 #~ msgstr "Error de Nviz."
 
-#, fuzzy
-#~ msgid "module"
-#~ msgstr "Código."
-
-#, fuzzy
-#~ msgid "Select GRASS module"
-#~ msgstr ""
-#~ "Destina un grupo de imagen a una localización GRASS y un conjunto de mapas"
-
-#, fuzzy
-#~ msgid "Color settings"
-#~ msgstr "Configuración de vector."
-
-#, fuzzy
-#~ msgid "Size settings"
-#~ msgstr "Configuración del texto."
-
-#, fuzzy
-#~ msgid "Unable to get list of available mapsets."
-#~ msgstr "No es posible eliminar el directorio de mapas de usuario (mapset)."
-
-#, fuzzy
-#~ msgid "Unable to get list of accessible mapsets."
-#~ msgstr "No es posible eliminar el directorio de mapas de usuario (mapset)."
-
 #~ msgid "Input DXF file"
 #~ msgstr "Archivo DXF de entrada."
 
@@ -11050,41 +11104,14 @@ msgstr ""
 #~ msgid "Select file extension:"
 #~ msgstr "Seleccione la extensión del archivo a importar:"
 
-#, fuzzy
-#~ msgid "Menu tree window"
-#~ msgstr "Moviendo la ventana"
-
-#, fuzzy
-#~ msgid "label"
-#~ msgstr "Añadir etiquetas"
-
-#, fuzzy
-#~ msgid "help"
-#~ msgstr "Ayuda"
-
-#, fuzzy
-#~ msgid "Run"
-#~ msgstr "Ejecuta&r"
-
 #~ msgid "Set ground control points (GCPs)"
 #~ msgstr "Establecer puntos de control sobre el terreno (GCP)."
 
-#, fuzzy
-#~ msgid "Saved NVIZ Settings"
-#~ msgstr "Guardar?"
-
-#, fuzzy
 #~ msgid "Load"
 #~ msgstr "Cargar"
 
 #~ msgid "Default"
 #~ msgstr "Preseleccionado."
-
-#, fuzzy
-#~ msgid "Load and apply settings from user settings file"
-#~ msgstr ""
-#~ "Cerrar el diálogo y guardar los cambios al archivo de configuraciones de "
-#~ "usuario."
 
 #~ msgid "Restore default settings"
 #~ msgstr "Restaurar ajustes preseleccionados."
@@ -11118,12 +11145,6 @@ msgstr ""
 #~ "ej. ESRI Shapefile, ESRI ArcSDE, MapInfo (tab and mid/mif), GML, KML, "
 #~ "PostGIS, Oracle Spatial, ..."
 
-#, fuzzy
-#~ msgid "Creates a lines vector map from an ASCII x,y points file."
-#~ msgstr ""
-#~ "Crea un mapa vectorial a partir de archivo de puntos ASCII o archivo "
-#~ "ASCII vectorial."
-
 #~ msgid "Coarse style:"
 #~ msgstr "Estilo de grosor:"
 
@@ -11148,7 +11169,7 @@ msgstr ""
 
 #, fuzzy
 #~ msgid "C&opy"
-#~ msgstr "Copiar"
+#~ msgstr "Copiar."
 
 #~ msgid " (those in bold typeface are required)"
 #~ msgstr "(Se requiere lo que se indica con el tipo de letra negrilla)."
@@ -11158,13 +11179,6 @@ msgstr ""
 
 #~ msgid "AUTHORS file missing"
 #~ msgstr "No se encuentra el archivo del autor."
-
-#, fuzzy
-#~ msgid "Quit GUI"
-#~ msgstr "Salir de la GUI"
-
-#~ msgid "Interactive input for supervised classification"
-#~ msgstr "Clasificación supervisada de entrada interactiva"
 
 #, fuzzy
 #~ msgid "Add overlay"
@@ -11465,23 +11479,8 @@ msgstr ""
 #~ msgid "Run the command"
 #~ msgstr "Ejecutar la orden."
 
-#~ msgid "GRASS SQL Builder (%s): vector map <%s>"
-#~ msgstr "Constructor SQL GRASS (%s): mapa vectorial <%s> ."
-
 #~ msgid "Error in command execution %s"
 #~ msgstr "Error en la ejecución del comando %s ."
-
-#~ msgid "Matlab and MapGen import"
-#~ msgstr "Importar Matlab y MapGen."
-
-#~ msgid ""
-#~ "Converts co-ordinate system descriptions (i.e. projection information) "
-#~ "between various formats (including GRASS format). Can also be used to "
-#~ "create GRASS locations."
-#~ msgstr ""
-#~ "Convierte descripciones de sistemas de coordenadas (o sea, información de "
-#~ "proyección) entre varios formatos (incluido el formato GRASS). También "
-#~ "puede usarse para crear locaciones de GRASS."
 
 #~ msgid "Create a MASK for limiting raster operation"
 #~ msgstr "Crear una MÁSCARA para limitar la operación sobre mapas raster."
@@ -11587,3 +11586,305 @@ msgstr ""
 #, fuzzy
 #~ msgid "Reload EPSG Codes"
 #~ msgstr "Explorar códigos EPSG"
+
+#~ msgid ""
+#~ "Reading workspace file <%s> failed. Invalid file, unable to parse XML "
+#~ "document."
+#~ msgstr ""
+#~ "La lectura del archivo que contiene los parámetros de configuración del "
+#~ "espacio de trabajo (.GRC) <%s> ha fallado. Archivo no válido. No ha sido "
+#~ "posible analizar el documento XML."
+
+#~ msgid "Writing current settings to workspace file failed (%s)."
+#~ msgstr ""
+#~ "La escritura del archivo de configuración del espacio de trabajo actual "
+#~ "(% s) ha fallado."
+
+#, fuzzy
+#~ msgid "GRASS GIS Raster Map Calculator (3D raster)"
+#~ msgstr "Calculadora de mapas GRASS %s."
+
+#~ msgid "Add various vector-based map layer"
+#~ msgstr "Añadir varias capas  de mapas basados en vectores."
+
+#~ msgid "Official GRASS site: http://grass.osgeo.org"
+#~ msgstr "Sitio oficial de GRASS: http://grass.osgeo.org"
+
+#~ msgid "GIS Library"
+#~ msgstr "Librería SIG."
+
+#~ msgid "COPYING file missing"
+#~ msgstr "Falta el código EPSG."
+
+#~ msgid "Force re-rendering of all layers"
+#~ msgstr "Forzar que se vuelvan a renderizar todas las capas."
+
+#~ msgid "Create new workspace file"
+#~ msgstr "Crear nuevo archivo de entorno de trabajo."
+
+#~ msgid "Load map layers into workspace"
+#~ msgstr "Cargar capas de mapa en el entorno de trabajo."
+
+#~ msgid "Open existing workspace file"
+#~ msgstr "Abrir archivo de entorno de trabajo existente."
+
+#~ msgid "Save current workspace to file"
+#~ msgstr "Guardar entorno de trabajo actual a archivo."
+
+#~ msgid "Add raster map layer"
+#~ msgstr "Añadir capa de mapa raster."
+
+#~ msgid "Add layer group"
+#~ msgstr "Añadir grupo de capas"
+
+#~ msgid "Delete selected layer"
+#~ msgstr "Borrar la capa seleccionada."
+
+#~ msgid "Add RGB layer"
+#~ msgstr "Añadir capa de espacio de color Rojo, Verde y Azul (RGB)."
+
+#~ msgid "Add HIS layer"
+#~ msgstr "Añadir capa de espacio de color Tono-Saturación e intensidad (HIS)."
+
+#~ msgid "Reload GCPs from selected POINTS file"
+#~ msgstr "Recargar GCP del archivo de PUNTOS seleccionado."
+
+#~ msgid "Show Nviz settings dialog"
+#~ msgstr "Mostrar diálogo de configuración de NVIZ."
+
+#, fuzzy
+#~ msgid "Link GDAL supported raster data as a pseudo GRASS raster map layer."
+#~ msgstr ""
+#~ "Ligar un archivo raster soportado por GDAL a una capa de mapa raster "
+#~ "binario."
+
+#~ msgid "Downloads and imports data from WMS servers."
+#~ msgstr "Descarga e importa datos de servidores WMS."
+
+#, fuzzy
+#~ msgid "Creates a new pseudo-vector map as a link to an OGR-supported layer."
+#~ msgstr "Crea un vector como un enlace de solo lectura a una capa OGR."
+
+#, fuzzy
+#~ msgid "Matlab-ASCII or Mapgen import"
+#~ msgstr "Importar Matlab y MapGen."
+
+#, fuzzy
+#~ msgid "Import Mapgen or Matlab-ASCII vector maps into GRASS."
+#~ msgstr "Importar mapas vectoriales Mapgen o Matlab a GRASS."
+
+#~ msgid "Export GRASS raster as non-georeferenced PNG image format."
+#~ msgstr ""
+#~ "Exportar raster de GRASS como formato de imágen PNG no georreferenciada."
+
+#~ msgid "Converts a raster map into a vector map layer."
+#~ msgstr "Convierte un mapa raster en una capa de mapa vectorial."
+
+#~ msgid "E&xit"
+#~ msgstr "&Salir."
+
+#~ msgid "Config"
+#~ msgstr "Configurar."
+
+#~ msgid "Raster"
+#~ msgstr "Raster."
+
+#~ msgid ""
+#~ "Calculates cast shadow areas from sun position and DEM. Either A: exact "
+#~ "sun position is specified, or B: date/time to calculate the sun position "
+#~ "by r.sunmask itself."
+#~ msgstr ""
+#~ "Calcula áreas en las que se produce sombra a partir de la posición del "
+#~ "sol un modelo de elevación digital (DEM). Puede especificarse, A: "
+#~ "Cualquier posición exacta del sol o B: Fecha / hora para calcular la "
+#~ "posición del sol mediante el mismo r.sunmask."
+
+#~ msgid ""
+#~ "Generates raster map layers of slope, aspect, curvatures and partial "
+#~ "derivatives from a raster map layer of true elevation values. Aspect is "
+#~ "calculated counterclockwise from east."
+#~ msgstr ""
+#~ "Genera capas de mapa raster de pendiente, orientación, curvaturas y "
+#~ "derivadas parciales a partir de una capa de mapa raster de valores reales "
+#~ "de elevación. El aspecto (orientación) se calcula en sentido horario "
+#~ "desde el Este."
+
+#~ msgid ""
+#~ "Filters and generates a depressionless elevation map and a flow direction "
+#~ "map from a given elevation layer."
+#~ msgstr ""
+#~ "Filtra y genera un mapa de elevación sin depresiones y un mapa de "
+#~ "dirección de flujo a partir de una capa de elevación dada."
+
+#~ msgid "Flow computation for massive grids (Float version)."
+#~ msgstr ""
+#~ "Calculo de flujo para cuadrículas masivas (versión de punto flotante)."
+
+#~ msgid ""
+#~ "Overland flow hydrologic simulation using path sampling method (SIMWE)"
+#~ msgstr ""
+#~ "Simulación de flujo hidrológico superficial, utilizando un método de "
+#~ "muestreo de ruta (SIMWE)."
+
+#~ msgid ""
+#~ "Sediment transport and erosion/deposition simulation using path sampling "
+#~ "method (SIMWE)"
+#~ msgstr ""
+#~ "Simulación del transporte de sedimento y erosión / deposición utilizando "
+#~ "el método de muestreo de rutas (SIMWE)."
+
+#~ msgid "Creates topographic index [ln(a/tan(beta))] map from elevation map."
+#~ msgstr ""
+#~ "Crea mapa de índices topográficos [ln(a/tan(beta))] a partir de mapa de "
+#~ "elevación."
+
+#~ msgid "Watershed basin analysis program."
+#~ msgstr "Programa de análisis de cuencas hidrográficas."
+
+#~ msgid ""
+#~ "Calculates univariate statistics from a GRASS raster map based on vector "
+#~ "polygons and uploads statistics to new attribute columns."
+#~ msgstr ""
+#~ "Calcular estadísticas univariantes a partir de un mapa raster de GRASS "
+#~ "basadas en polígonos vectoriales y carga las estadísticas en nuevas "
+#~ "columnas de atributos."
+
+#~ msgid "Imagery"
+#~ msgstr "Imágenes."
+
+#~ msgid "Volumes"
+#~ msgstr "Volúmenes."
+
+#~ msgid "GRASS GIS help"
+#~ msgstr "Ayuda del SIG GRASS."
+
+#~ msgid "Map calculator"
+#~ msgstr "Calculadora de mapas."
+
+#~ msgid "Nviz properties"
+#~ msgstr "Propiedades de Nviz."
+
+#~ msgid "Map Toolbar"
+#~ msgstr "Barra de herramientas de mapa."
+
+#~ msgid "Nviz toolbar"
+#~ msgstr "Barra de herramientas de Nviz."
+
+#, fuzzy
+#~ msgid "Unable to read EPGS file: '%s'"
+#~ msgstr "No se pueden leer los códigos EPSG: %s ."
+
+#, fuzzy
+#~ msgid "Resolution cannot be 0"
+#~ msgstr "Resolución."
+
+#, fuzzy
+#~ msgid "3D View Tools"
+#~ msgstr "Herramientas de visualización 3D."
+
+#~ msgid "coarse:"
+#~ msgstr "Grosor:"
+
+#~ msgid "fine:"
+#~ msgstr "Fineza:"
+
+#~ msgid "Wire color:"
+#~ msgstr "Color del alambre."
+
+#~ msgid "Icon size:"
+#~ msgstr "Tamaño de ícono:"
+
+#~ msgid "width:"
+#~ msgstr "Anchura de línea:"
+
+#~ msgid "symbol:"
+#~ msgstr "Simbolo:"
+
+#~ msgid "color:"
+#~ msgstr "Color:"
+
+#~ msgid "Layer properties"
+#~ msgstr "Propiedades de capa."
+
+#~ msgid "Vector map <%s> is 3D"
+#~ msgstr "El mapa vectorial <%s> es tridimensional (3D)."
+
+#~ msgid "Vector map <%s> is 2D"
+#~ msgstr "El mapa vectorial <%s> es bidimensional (2D)."
+
+#~ msgid "%(primitives)d primitives (%(points)d points)"
+#~ msgstr "%(primitives)d primitivas (%(points)d puntos)."
+
+#~ msgid ""
+#~ "Unable to initialize display driver of vector digitizer. See 'Command "
+#~ "output' for details.\n"
+#~ "\n"
+#~ "Details:"
+#~ msgstr ""
+#~ "No ha sido posible inicializar el manejador del la ventana de "
+#~ "visualización del digitalizador de vectores. Para mas detalles, vea el "
+#~ "mensaje del comando en la ventana de salida.\n"
+#~ "\n"
+#~ "Detalles:"
+
+#~ msgid "<%(name)s>: layer type <%(type)s> is not supported yet."
+#~ msgstr "<%(name)s>: El tipo de capa <%(type)s> todavía no es soportado."
+
+#~ msgid "Unable to open file"
+#~ msgstr "No ha sido posible abrir el archivo."
+
+#, fuzzy
+#~ msgid "DXF file:"
+#~ msgstr "Seleccionar archivo DXF:"
+
+#~ msgid "Parameter not found: %s"
+#~ msgstr "No se ha encontrado el parámetro: %s ."
+
+#~ msgid "Parameter %(name)s (%(desc)s) is missing.\n"
+#~ msgstr "No se encuentra el parámetro %(name)s (%(desc)s).\n"
+
+#~ msgid "Copy the current command string to the clipboard"
+#~ msgstr "Copiar la cadena del comando actual al portapapeles."
+
+#~ msgid "Valid range"
+#~ msgstr "Intervalo válido."
+
+#~ msgid "Vector point layer not found (id=%d)"
+#~ msgstr "No se ha encontrado la capa de mapa vectorial puntual (id=%d)."
+
+#~ msgid "Unable to set data layer properties (id=%d)"
+#~ msgstr ""
+#~ "No ha sido posible establecer las propiedades de la capa de datos (id=%d)."
+
+#~ msgid "User GUI settings"
+#~ msgstr "Configuración de interfaz gráfica de usuario."
+
+#, fuzzy
+#~ msgid ""
+#~ "Check a mapset to make it accessible, uncheck it to hide it.%sNote: The "
+#~ "current mapset is always accessible."
+#~ msgstr ""
+#~ "Marque el directorio de mapas (mapset) para hacerlo accesible, "
+#~ "desmárquelo para ocultarlo. %s Nota: Los directorios de mapas de usuario "
+#~ "(mapset) PERMANENT, así como el actual serán accesibles siempre."
+
+#~ msgid "Start GRASS"
+#~ msgstr "Iniciar GRASS."
+
+#~ msgid "Create mapset"
+#~ msgstr "Crear un directorio de mapas de usuario (mapset)."
+
+#, fuzzy
+#~ msgid "Command %s could not be run"
+#~ msgstr "El comando '%s' no ha sido implementado."
+
+#, fuzzy
+#~ msgid "&Stop"
+#~ msgstr "Superior."
+
+#, fuzzy
+#~ msgid "Save current settings?"
+#~ msgstr "Guardar?"
+
+#~ msgid "List of categories"
+#~ msgstr "Lista de categorías"

@@ -1,7 +1,7 @@
 # translation of grasswxpy_cs.po to
 # This file is distributed under the same license as the GRASS package.
-# Copyright (C) 2008-2010, GRASS Development Team
-# Martin Landa <landa.martin gmail.com>, 2008, 2010.
+# Copyright (C) 2008, GRASS Development Team
+# Martin Landa <landa.martin gmail.com>, 2008.
 # Jan Trochta <j.trochta seznam.cz>, 2008.
 # Miroslav Hoøej¹í <miroslav.horejsi@fsv.cvut.cz>, 2009/01.
 # Pavel Valenta <pavel.valenta@fsv.cvut.cz>, 2009/01.
@@ -11,13 +11,12 @@ msgstr ""
 "Project-Id-Version: grasswxpy_cs\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2010-08-29 12:20+0200\n"
-"PO-Revision-Date: 2010-05-29 19:36+0200\n"
+"PO-Revision-Date: 2010-03-07 14:25+0100\n"
 "Last-Translator: \n"
 "Language-Team:  <cs@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=ISO-8859-2\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: \n"
 "X-Generator: KBabel 1.11.4\n"
 
 #: ../gui/wxpython/wxgui.py:99
@@ -1060,7 +1059,7 @@ msgstr "Naèíst mapové vrstvy ze souboru GRD do stromu vrstev"
 #: ../gui/wxpython/gui_modules/gdialogs.py:1098
 #, fuzzy
 msgid "Import raster data"
-msgstr "import rastrové mapy"
+msgstr "Import rastrové mapy"
 
 #: ../gui/wxpython/menustrings.py:20
 msgid "Import GDAL supported raster file into a binary raster map layer."
@@ -1069,19 +1068,18 @@ msgstr "Import rastrových souborù podporovaných knihovnou GDAL."
 #: ../gui/wxpython/menustrings.py:21
 #, fuzzy
 msgid "Bulk import of raster data"
-msgstr "Import vektorové mapy"
+msgstr "Import rastrové mapy"
 
 #: ../gui/wxpython/menustrings.py:22
 #, fuzzy
 msgid "Converts multiple GDAL supported layers to GRASS raster maps."
-msgstr ""
-"Konvertuje vybrané Gdal vrstvy do GRASS rastrové mapypou¾itím r.in.gdal."
+msgstr "Pøevede vybrané GDAL vrstvy na GRASS rastrové mapy pou¾itím r.in.gdal."
 
 #: ../gui/wxpython/menustrings.py:23
 #: ../gui/wxpython/gui_modules/gdialogs.py:1096
 #, fuzzy
 msgid "Link raster data"
-msgstr "import rastrové mapy"
+msgstr "Naèítám rastrovou mapu"
 
 #: ../gui/wxpython/menustrings.py:24
 msgid "Link GDAL supported raster file to a binary raster map layer."
@@ -1090,13 +1088,13 @@ msgstr "Pøipojí rastrový soubor podporovaný GDAL k binární rastrové mapì."
 #: ../gui/wxpython/menustrings.py:25
 #, fuzzy
 msgid "Bulk link of raster data"
-msgstr "Nelze naèíst rastrovou mapu"
+msgstr "Základní  výpis metadat rastrové mapy"
 
 #: ../gui/wxpython/menustrings.py:26
 #, fuzzy
 msgid ""
 "Link multiple GDAL supported raster maps as pseudo GRASS raster map layers."
-msgstr "Pøipojí rastrový soubor podporovaná GDAL k binární rastrové mapì"
+msgstr "Pøipojí rastrové soubory podporované GDAL k binární rastrové mapì"
 
 #: ../gui/wxpython/menustrings.py:27
 msgid "Aggregate ASCII xyz import"
@@ -1224,7 +1222,7 @@ msgstr "Pøevede vybrané OGR vrstvy do GRASS vektorové mapy pou¾itím v.in.ogr."
 #: ../gui/wxpython/gui_modules/gdialogs.py:1090
 #, fuzzy
 msgid "Link vector data"
-msgstr "Import vektorové mapy"
+msgstr "Základní metadata vektorové mapy"
 
 #: ../gui/wxpython/menustrings.py:55
 msgid "Creates a new vector as a read-only link to OGR layer."
@@ -1233,7 +1231,7 @@ msgstr "Vytvoøí nový vektor jako vrstvu pouze ke ètení pøipojenou pomocí OGR."
 #: ../gui/wxpython/menustrings.py:56
 #, fuzzy
 msgid "Bulk link of vector data"
-msgstr "Import vektorové mapy"
+msgstr "Základní metadata vektorové mapy"
 
 #: ../gui/wxpython/menustrings.py:57
 #, fuzzy
@@ -1274,14 +1272,14 @@ msgid "Converts files in DXF format to GRASS vector map format."
 msgstr "Pøevede soubory ve formátu DXF do formátu GRASS-vektor"
 
 #: ../gui/wxpython/menustrings.py:66
-#, fuzzy
 msgid "Bulk import of DXF"
-msgstr "Import vektorové mapy"
+msgstr ""
 
 #: ../gui/wxpython/menustrings.py:67
 #, fuzzy
 msgid "Converts multiple DXF layers to GRASS vector maps."
-msgstr "Konvertuje vektorové vrstvy OGR na GRASS vektorové mapy."
+msgstr ""
+"Pøevede vybrané DXF vrstvy do GRASS vektorové mapy (pou¾itím v.in.dxf)."
 
 #: ../gui/wxpython/menustrings.py:68
 msgid "ESRI e00 import"
@@ -1346,7 +1344,7 @@ msgstr "Importuje vektory ve formátu Mapgen nebo Matlab do GRASSu"
 #: ../gui/wxpython/menustrings.py:80
 #, fuzzy
 msgid "Import 3D raster data"
-msgstr "import rastrové mapy"
+msgstr "Import rastrové mapy"
 
 #: ../gui/wxpython/menustrings.py:81
 msgid "ASCII 3D import"
@@ -1388,7 +1386,7 @@ msgstr "Export rastrové mapy"
 #: ../gui/wxpython/menustrings.py:89 ../gui/wxpython/menustrings.py:120
 #, fuzzy
 msgid "Common export formats"
-msgstr "Souøadnice"
+msgstr "Pøevod souøadnic"
 
 #: ../gui/wxpython/menustrings.py:90
 msgid "Exports GRASS raster maps into GDAL supported formats."
@@ -1926,10 +1924,8 @@ msgid "Display map projection"
 msgstr "Zobrazit celý region"
 
 #: ../gui/wxpython/menustrings.py:221
-#, fuzzy
 msgid "Print projection information (in conventional GRASS format)."
 msgstr ""
-"Vytvoøit/modifikovat informace o kartografickém zobrazení aktuální lokace"
 
 #: ../gui/wxpython/menustrings.py:222
 msgid "Manage projections"
@@ -2196,7 +2192,6 @@ msgid "Buffer rasters"
 msgstr "Obalová zóna rastrové mapy"
 
 #: ../gui/wxpython/menustrings.py:281
-#, fuzzy
 msgid ""
 "Creates a raster map layer showing buffer zones surrounding cells that "
 "contain non-NULL category values."
@@ -2428,7 +2423,6 @@ msgid "Distance to features"
 msgstr "Vzdálenost k prvkùm"
 
 #: ../gui/wxpython/menustrings.py:325
-#, fuzzy
 msgid "Generates a raster map layer of distance to features in input layer."
 msgstr "Vytvoøí rastrovou mapu vzdáleností k prvkùm ve vstupní mapì."
 
@@ -3063,7 +3057,6 @@ msgid "Raster contours"
 msgstr "Rastrové vrstevnice"
 
 #: ../gui/wxpython/menustrings.py:458
-#, fuzzy
 msgid "Surface generation program from rasterized contours."
 msgstr "Program pro tvorbu povrchù z vrstevnic ulo¾ených v rastrové vrstvì."
 
@@ -3426,7 +3419,6 @@ msgid "Updates vector map metadata."
 msgstr "Aktualizuje matadata vektorové vrstvy."
 
 #: ../gui/wxpython/menustrings.py:540
-#, fuzzy
 msgid ""
 "Set color rules for features in a vector using a numeric attribute column."
 msgstr ""
@@ -4445,9 +4437,8 @@ msgid "Drop table"
 msgstr "Kopírovat tabulku"
 
 #: ../gui/wxpython/menustrings.py:766
-#, fuzzy
 msgid "Drops an attribute table."
-msgstr "Vyvoøit atributovou tabulku"
+msgstr "Vyjmout atributovou tabulku."
 
 #: ../gui/wxpython/menustrings.py:767
 msgid "Copy table"
@@ -4608,7 +4599,6 @@ msgid "GRASS help"
 msgstr "Nápovìda GRASS GIS"
 
 #: ../gui/wxpython/menustrings.py:799 ../gui/wxpython/menustrings.py:801
-#, fuzzy
 msgid "Display the HTML man pages of GRASS"
 msgstr "Zobrazuje manuálové stránky GRASSu ve formátu HTML"
 
@@ -4861,13 +4851,13 @@ msgid "raster map"
 msgstr "Rastrová mapa"
 
 #: ../gui/wxpython/gui_modules/mcalc_builder.py:121
-#, fuzzy
 msgid "Operators"
-msgstr "Prùhledný"
+msgstr ""
 
 #: ../gui/wxpython/gui_modules/mcalc_builder.py:123
+#, fuzzy
 msgid "Operands"
-msgstr ""
+msgstr "Otevøít"
 
 #: ../gui/wxpython/gui_modules/mcalc_builder.py:125
 #, fuzzy
@@ -4888,8 +4878,9 @@ msgid "add"
 msgstr "Pøidat"
 
 #: ../gui/wxpython/gui_modules/mcalc_builder.py:144
+#, fuzzy
 msgid "subtract"
-msgstr ""
+msgstr "povrch"
 
 #: ../gui/wxpython/gui_modules/mcalc_builder.py:146
 msgid "modulus"
@@ -4988,9 +4979,8 @@ msgid "Insert existing %s"
 msgstr "pøepsat existující soubor"
 
 #: ../gui/wxpython/gui_modules/mcalc_builder.py:207
-#, fuzzy
 msgid "Insert mapcalc function"
-msgstr "Prùøez"
+msgstr ""
 
 #: ../gui/wxpython/gui_modules/mcalc_builder.py:397
 #, fuzzy
@@ -5228,7 +5218,7 @@ msgstr "2D pohled"
 #: ../gui/wxpython/gui_modules/layertree.py:540
 #, fuzzy
 msgid "Vector digitizer failed"
-msgstr "Chyba digitizéru"
+msgstr "Chyba vektorové digitalizace"
 
 #: ../gui/wxpython/gui_modules/mapdisp.py:354
 msgid "Vector digitizer toolbar"
@@ -6274,9 +6264,8 @@ msgstr "Povrch"
 #: ../gui/wxpython/gui_modules/nviz_tools.py:276
 #: ../gui/wxpython/gui_modules/nviz_tools.py:3154
 #: ../gui/wxpython/gui_modules/nviz_preferences.py:237
-#, fuzzy
 msgid "Vector"
-msgstr "Vektorová data"
+msgstr "Vektor"
 
 #: ../gui/wxpython/gui_modules/nviz_tools.py:281
 #, fuzzy
@@ -6867,7 +6856,7 @@ msgstr ""
 #: ../gui/wxpython/gui_modules/gselect.py:1077
 #, fuzzy
 msgid "Choose input file"
-msgstr "Zvolit soubor workspace"
+msgstr "Vyberte vstupní adresáø"
 
 #: ../gui/wxpython/gui_modules/gselect.py:950
 msgid "Choose input directory"
@@ -6895,8 +6884,9 @@ msgid "Database:"
 msgstr "Databáze"
 
 #: ../gui/wxpython/gui_modules/gselect.py:999
+#, fuzzy
 msgid "Protocol:"
-msgstr ""
+msgstr "Kód projekce:"
 
 #: ../gui/wxpython/gui_modules/gselect.py:1020
 msgid "Format:"
@@ -7612,7 +7602,7 @@ msgstr ""
 #: ../gui/wxpython/gui_modules/gmodeler.py:4292
 #: ../gui/wxpython/gui_modules/preferences.py:1347
 msgid "Command"
-msgstr "Pøíkaz"
+msgstr "Pøíkazy"
 
 #: ../gui/wxpython/gui_modules/gmodeler.py:2454
 msgid ""
@@ -8062,9 +8052,8 @@ msgid "3d raster map <%s> not found"
 msgstr "Mapa <%s> nebyla nalezena."
 
 #: ../gui/wxpython/gui_modules/toolbars.py:188
-#, fuzzy
 msgid "3D view mode not available"
-msgstr "Nástroje 3D pohledu"
+msgstr ""
 
 #: ../gui/wxpython/gui_modules/toolbars.py:189
 #: ../gui/wxpython/gui_modules/toolbars.py:205
@@ -8920,8 +8909,9 @@ msgid " List of %s layers "
 msgstr "Seznam  %s vrstev"
 
 #: ../gui/wxpython/gui_modules/gdialogs.py:1104
+#, fuzzy
 msgid "Override projection (use location's projection)"
-msgstr ""
+msgstr "Interaktivnì vyma¾e nastavení projekce location"
 
 #: ../gui/wxpython/gui_modules/gdialogs.py:1108
 msgid "Add linked layers into layer tree"
@@ -10552,21 +10542,781 @@ msgstr ""
 "OBlíbený název je \"grassdata\", umístìn ve va¹m domovském adresáøi."
 
 #, fuzzy
-#~ msgid ""
-#~ "Reading workspace file <%(file)s> failed.\n"
-#~ "Invalid file, unable to parse XML document.\n"
-#~ "\n"
-#~ "%(err)s"
-#~ msgstr ""
-#~ "Ètení souboru workspace <%s> selhalo. Neplatný soubor, nelze parsovat XML "
-#~ "dokument."
+msgid ""
+"Reading workspace file <%(file)s> failed.\n"
+"Invalid file, unable to parse XML document.\n"
+"\n"
+"%(err)s"
+msgstr ""
+"Ètení souboru workspace <%s> selhalo. Neplatný soubor, nelze parsovat XML "
+"dokument."
+
+#, fuzzy
+msgid "GRASS GIS Map Calculator (3D raster)"
+msgstr "GRASS %s mapový kalkulátor"
+
+msgid "Import raster map"
+msgstr "Import rastrové mapy"
+
+msgid "Converts selected GDAL layers to GRASS raster maps using r.in.gdal"
+msgstr "Pøevede vybrané GDAL vrstvy na GRASS rastrové mapy pou¾itím r.in.gdal."
+
+msgid "Link GDAL supported raster files to a binary raster map layers"
+msgstr "Pøipojí rastrové soubory podporované GDAL k binární rastrové mapì"
+
+msgid "Import vector map"
+msgstr "Import vektorové mapy"
+
+msgid "Converts selected DXF layers to GRASS vector maps (using v.in.dxf)"
+msgstr ""
+"Pøevede vybrané DXF vrstvy do GRASS vektorové mapy (pou¾itím v.in.dxf)."
+
+#, fuzzy
+msgid "C&onfig"
+msgstr "Nastavení"
+
+#, fuzzy
+msgid ""
+"Calculates cast shadow areas from sun position and DEM. Either A: exact sun "
+"position is specified, or B: date/time to calculate the sun position by r."
+"sunmask it"
+msgstr ""
+"Poèítá plnì zastínìné oblasti z polohy Slunce a DMT buï A: je-li "
+"specifikována pøesná pozice Slunce nebo B: pozice je spoèítána samostatnì z "
+"hodnoty datum/èas pomocí r.sunmask."
+
+#, fuzzy
+msgid "3D raster map calculator"
+msgstr "3D rastrový kalkulátor"
+
+#, fuzzy
+msgid "Removes a table from database."
+msgstr "Vytvoøit z databáze"
+
+#, fuzzy
+msgid "Show menu tree"
+msgstr "Steinerùv strom"
+
+#, fuzzy
+msgid "Show menu tree in new window"
+msgstr "Pohybující se okno"
+
+#, fuzzy
+msgid "Find extension by"
+msgstr "Správa kartografických zobrazení"
+
+#, fuzzy
+msgid "3D Raster map"
+msgstr "3D rastrová mapa:"
+
+#, fuzzy
+msgid "Error in command execution '%s'"
+msgstr "Chyba pøi vykonání pøíkazu %s"
+
+msgid "Graphical modeler script"
+msgstr "Skript Grafického modeleru"
+
+msgid "module"
+msgstr "modul"
+
+msgid "Select GRASS module"
+msgstr "Vyberte GRASS modul"
+
+#, fuzzy
+msgid "Color settings"
+msgstr "Nastavení modeleru"
+
+#, fuzzy
+msgid "Size settings"
+msgstr "U¾ivatelské nastavení grafického prostøedí"
+
+#, fuzzy
+msgid "Unable to get list of available mapsets."
+msgstr "Nelze odstranit mapset"
+
+#, fuzzy
+msgid "Unable to get list of accessible mapsets."
+msgstr "Nelze odstranit mapset"
+
+#, fuzzy
+msgid "GRASS GIS 3D View Tools"
+msgstr "Nápovìda GRASS GIS"
+
+#, fuzzy
+msgid "Add thematic area (choropleth) map layer"
+msgstr "Pøidat tématickou vrstvu s grafem"
+
+#, fuzzy
+msgid "Open %s dialog"
+msgstr "Zavøít dialog "
+
+#, fuzzy
+msgid "Direct OGR"
+msgstr "Smìr"
+
+#, fuzzy
+msgid "Import raster data into a GRASS map layer using GDAL."
+msgstr "import rastrových dat pomocí GDAL"
+
+#, fuzzy
+msgid "Converts a GRASS ASCII raster file to binary raster map."
+msgstr "Pøevede ASCII rastrový soubor na binární rastrovou mapu."
+
+#, fuzzy
+msgid "ASCII polygons, lines, and point import"
+msgstr "Import ASCII polygony a linie"
+
+#, fuzzy
+msgid "Raw binary array import"
+msgstr "Matlab and MapGen import"
+
+#, fuzzy
+msgid ""
+"Converts an ESRI ARC/INFO ascii raster file (GRID) into a GRASS raster map."
+msgstr "Pøevede ESRI ARC/INFO ascii rastr (GRID) na (binární) rastrovou mapu."
+
+#, fuzzy
+msgid "Imports SPOT VGT NDVI data into a raster map."
+msgstr "Import SPOT VGT NDVI souboru jako rastrové mapy"
+
+#, fuzzy
+msgid "Imports SRTM HGT files into raster map."
+msgstr "Import SPOT VGT NDVI souboru jako rastrové mapy"
+
+#, fuzzy
+msgid ""
+"Georeference, rectify, and import Terra-ASTER imagery and relative DEMs "
+"using gdalwarp."
+msgstr ""
+"Georeferencuje, rektifikuje a importuje snímky ve formátu Terra-ASTER a "
+"pøíbuzných DMT za pou¾ití gdalwarp."
+
+#, fuzzy
+msgid "Download and import data from WMS servers."
+msgstr "Stáhne a importuje data z WMS serverù."
+
+#, fuzzy
+msgid "Converts vector layers into a GRASS vector map using OGR."
+msgstr "Konvertuje vektorové vrstvy OGR na GRASS vektorové mapy."
+
+#, fuzzy
+msgid "Converts multiple OGR supported layers into GRASS vector maps."
+msgstr "Konvertuje vektorové vrstvy OGR na GRASS vektorové mapy."
+
+#, fuzzy
+msgid "ASCII points or GRASS ASCII format"
+msgstr "Import ASCII body/GRASS ASCII vektory"
+
+#, fuzzy
+msgid "Creates a vector map from an ASCII points file or ASCII vector file."
+msgstr "Vytvoøí vektorovou mapu ze souboru ASCII bodù nebo ASCII vektoru"
+
+#, fuzzy
+msgid "Historical GRASS vector import"
+msgstr "Import starého vektorového formátu GRASS"
+
+#, fuzzy
+msgid "GPS data import"
+msgstr "GPSBabel GPS import"
+
+#, fuzzy
+msgid ""
+"Import waypoints, routes, and tracks from a GPS receiver or many common GPS "
+"file formats."
+msgstr ""
+"Stáhne Waypoints, Routes a Tracks z pøístroje GPS nebo ze souboru a ulo¾í je "
+"do vektorové mapy."
+
+#, fuzzy
+msgid "Matlab array or Mapgen format import"
+msgstr "Matlab and MapGen import"
+
+#, fuzzy
+msgid "Converts a 3D ASCII raster text file into a (binary) 3D raster map."
+msgstr ""
+"Pøevede 3D ASCII rastrový textový soubor na (binární) 3D rastrovou mapovou "
+"vrstvu "
+
+#, fuzzy
+msgid "Import 3-dimensional Vis5D files."
+msgstr ""
+"Exportuje 3D rastrový soubor GRASSu do 3-dimenzionálního Vis5D souboru."
+
+#, fuzzy
+msgid "Converts a raster map layer into a GRASS ASCII text file."
+msgstr "Pøevede rastrovou mapu do ASCII souboru."
+
+#, fuzzy
+msgid "ASCII x,y,z points export"
+msgstr "ASCII x,y,z export"
+
+#, fuzzy
+msgid "Exports GRASS raster map to GRIDATB.FOR map file (TOPMODEL)."
+msgstr "Exportuje rastrovou mapu GRASSu do GRIDATB.FOR souboru (TOPMODEL)"
+
+#, fuzzy
+msgid "Raw binary array export"
+msgstr "Matlab and MapGen import"
+
+#, fuzzy
+msgid "Raster file series to MPEG movie conversion program."
+msgstr "Program, vytváøející MPEG ze série rastrových map"
+
+#, fuzzy
+msgid "Export a GRASS raster map as a non-georeferenced PNG image."
+msgstr "Export GRASS rastrové mapy jako nepøipojený PNG obraz."
+
+#, fuzzy
+msgid "Converts a GRASS raster map to a PPM image file."
+msgstr "Pøevede rastrovou mapu na vektorovou."
+
+#, fuzzy
+msgid "Converts 3 GRASS raster layers (R,G,B) to a PPM image file."
+msgstr ""
+"Pøevede 3 GRASSové rastrové mapy (R,G,B) do souboru PPM s rozli¹ením pixelu "
+"podle aktuálnì definovaného regionu."
+
+#, fuzzy
+msgid "Converts a raster map layer into a height-field file for POV-Ray."
+msgstr "Pøevede rastrovou mapu do souboru pro POVRAY."
+
+#, fuzzy
+msgid "Exports a GRASS raster map to a 8/24bit TIFF image file."
+msgstr "Exportuje rastrový soubor GRASSu do binárního souboru MAT."
+
+#, fuzzy
+msgid "Exports a raster map to the Virtual Reality Modeling Language (VRML)."
+msgstr "Export rastrové mapy do Virtual Reality Modeling Language (VRML)"
+
+#, fuzzy
+msgid "Converts raster maps into the VTK-ASCII format."
+msgstr "Pøevede rastrové mapy do formátu VTK-Ascii"
+
+#, fuzzy
+msgid "Converts a vector map to any of the supported OGR vector formats."
+msgstr "Konvertuje mapu do jednoho z podporovaných vektorových formátù OGR."
+
+#, fuzzy
+msgid "ASCII points or GRASS ASCII vector export"
+msgstr "Export ASCII bodù/GRASS ASCII vektorù"
+
+#, fuzzy
+msgid "Exports a vector map to a GRASS ASCII vector representation."
+msgstr "Pøevede GRASS binární vektorovou mapu do formátu GRASS ASCII."
+
+#, fuzzy
+msgid "Exports vector map to DXF file format."
+msgstr "Exportuje GRASS vektory jako soubor DXF."
+
+#, fuzzy
+msgid "Converts GRASS x,y,z points to POV-Ray x,z,y format."
+msgstr "Pøevede do POV-Ray formátu, GRASS x,y,z -> POV-Ray x,y,z"
+
+#, fuzzy
+msgid "Exports a vector map to SVG file."
+msgstr "Exportuje GRASS vektory jako soubor SVG."
+
+#, fuzzy
+msgid "Converts a vector map to VTK ASCII output."
+msgstr "Pøeveï GRASS vektor na formát VTK ASCII."
+
+#, fuzzy
+msgid "Converts a 3D raster map layer into a ASCII text file."
+msgstr "Pøevede 3D rastrovou mapovou vrstvu do ASCII textového souboru"
+
+#, fuzzy
+msgid "Converts a 3D raster map into a 3-dimensional Vis5D file."
+msgstr ""
+"Exportuje 3D rastrový soubor GRASSu do 3-dimenzionálního Vis5D souboru."
+
+#, fuzzy
+msgid "Converts 3D raster maps into the VTK-ASCII format."
+msgstr "Pøevede rastrové mapy do formátu VTK-Ascii"
+
+#, fuzzy
+msgid "Common export formats using OGR"
+msgstr "Export rùzných formátù pomocí OGR"
+
+#, fuzzy
+msgid "Lists available GIS elements of the user-specified data type."
+msgstr ""
+"Seznam dostupných souborù u¾ivatelem zadaného typu dat na standardní výstup"
+
+#, fuzzy
+msgid "Converts a vector map into a raster map."
+msgstr "Pøevede binární GRASS vektorovou mapu do GRASS rastrové mapy."
+
+#, fuzzy
+msgid "Converts a vector map (only points) into a 3D raster map."
+msgstr ""
+"Pøevede binární GRASS vektorovou mapovou vrstvu (pouze body) na 3D GRASS "
+"rastrovou mapovou vrstvu."
+
+#, fuzzy
+msgid "Converts coordinates from one projection to another (cs2cs frontend)."
+msgstr "Pøevede souøadnice z jedné projekce do druhé (rozhraní k cs2cs)"
+
+#, fuzzy
+msgid "Resample using bspline"
+msgstr ""
+"Pøevzorkování (zmìna rozli¹ení) pomocí RST (regularized spline tension)"
+
+#, fuzzy
+msgid "Export color table"
+msgstr "Nastavit tabulku barev"
+
+#, fuzzy
+msgid "Exports the color table associated with a raster map layer."
+msgstr "Vytvoøí/upraví tabulku barev spojenou s rastrovou mapou."
+
+#, fuzzy
+msgid "Neighborhood analysis tool for vector point maps."
+msgstr "Analýza okolí"
+
+#, fuzzy
+msgid ""
+"Calculates category or object oriented statistics (accumulator-based "
+"statistics)."
+msgstr "Poèítá statistky podle kategorií nebo objektovì orientované."
+
+#, fuzzy
+msgid "Quantiles overlay"
+msgstr "Statistický pøekryv"
+
+#, fuzzy
+msgid "Compute category quantiles using two passes."
+msgstr "Vypoèítat quantily pou¾itím dvou prùchodù"
+
+#, fuzzy
+msgid "Generates rate of spread raster map layers."
+msgstr "Vytvoøí statistiku ploch pro rastrové mapy."
+
+#, fuzzy
+msgid "Creates topology for vector map."
+msgstr "Vytváøí topologii pro vektorovou mapu GRASSu."
+
+#, fuzzy
+msgid "Tool for vector based generalization."
+msgstr "Databázové spojení"
+
+#, fuzzy
+msgid "Changes type of vector features."
+msgstr "Vybrat vektorový prvek"
+
+#, fuzzy
+msgid "Extrudes flat vector features to 3D with defined height."
+msgstr "Vytvoøí z plo¹ného vektorového objektu 3D o zadané vý¹ce"
+
+#, fuzzy
+msgid "Queries a vector map at given locations."
+msgstr "Dotazovat vektorovou mapu v daných locations."
+
+#, fuzzy
+msgid "Creates a buffer around vector features of given type."
+msgstr ""
+"Vytvoøí buffer okolo prvkù zadaného typu (plochy musí obsahovat centroid)"
+
+#, fuzzy
+msgid "Creates a new vector map by combining other vector maps."
+msgstr ""
+"Vytvoøí nový binární vektorovou mapu kombinací více vektorových vrstev."
+
+#, fuzzy
+msgid "Attaches, deletes or reports vector categories to map geometry."
+msgstr "Pøilo¾, sma¾ nebo vypi¹ vektorové kategorie do mapové geometrie."
+
+#, fuzzy
+msgid "Creates a vector map of a user-defined grid."
+msgstr "Vytvoøí GRASS vektorovou mapu podle u¾ivatelem definované møí¾ky"
+
+#, fuzzy
+msgid "Creates points along input lines in new vector map with 2 layers."
+msgstr ""
+"Vytvoøí body podél vstupních linií a ulo¾í do nového souboru o dvou vrstvách."
+
+#, fuzzy
+msgid "Generates randomly 2D/3D vector points map."
+msgstr "Náhodnì vytvoøit 2D/3D bodovou vektorovou vrstvu."
+
+#, fuzzy
+msgid "Random location perturbations of vector points."
+msgstr "Náhodná odchylka location vektorových bodù"
+
+#, fuzzy
+msgid "Outputs basic information about a vector map."
+msgstr "Vypí¹e základní informace o u¾ivatelem vybrané rastrové mapì."
+
+#, fuzzy
+msgid "Reports geometry statistics for vector maps."
+msgstr "Vypí¹e údaje o geometrii vektorové mapy."
+
+#, fuzzy
+msgid "Report or upload vector features to DB"
+msgstr "Pøevede 2D vektorovou mapu na mapu 3D"
+
+#, fuzzy
+msgid "Calculates univariate statistics for attribute."
+msgstr "Spoèítá univariantní statistiku z ne-nullových bunìk rastrové mapy."
+
+#, fuzzy
+msgid "Tests for normality for vector points."
+msgstr "Test normality bodù"
+
+#, fuzzy
+msgid "Mosaics several images and extends colormap"
+msgstr ""
+"Vytvoøí mozaiku ze 4 a více snímkù, roztáhne barevnou paletu a vytvoøí mapu "
+"*.mosaic"
+
+#, fuzzy
+msgid "Emissivity"
+msgstr "Emise"
+
+#, fuzzy
+msgid "creates a latitude/longitude map"
+msgstr "Vytvoøit novou vektorovou mapu"
+
+#, fuzzy
+msgid "Vegetation indices"
+msgstr "Hranice regionu"
+
+#, fuzzy
+msgid "Extract quality control parameters from Modis QC layers"
+msgstr "Definujte parametry pro "
+
+#, fuzzy
+msgid "Sunshine hours"
+msgstr "Vytvoøit novou vektorovou mapu"
+
+#, fuzzy
+msgid "creates a sunshine hours map"
+msgstr "Vytvoøit novou vektorovou mapu"
+
+#, fuzzy
+msgid "List databases"
+msgstr "Seznam tabulek"
+
+#, fuzzy
+msgid "List all databases for a given driver and location."
+msgstr "Vypí¹e v¹echny tabulky pro danou databázi."
+
+#, fuzzy
+msgid "Create database"
+msgstr "Vytvoøit tabulku"
+
+#, fuzzy
+msgid "Creates an empty database."
+msgstr "Vytvoøit z databáze"
+
+#, fuzzy
+msgid "Drop database"
+msgstr "Databáze"
+
+#, fuzzy
+msgid "Removes a database."
+msgstr "Vytvoøit z databáze"
+
+#, fuzzy
+msgid "Drops a column from selected attribute table"
+msgstr "Vyjmout atributovou tabulku."
+
+#, fuzzy
+msgid "Native"
+msgstr "Ulo¾it"
+
+#, fuzzy
+msgid "Choose OGR data source"
+msgstr "Vybrat adresáø GRASS dat:"
+
+#, fuzzy
+msgid "label"
+msgstr "Pøidat vrstvu s popisky"
+
+#, fuzzy
+msgid "help"
+msgstr "Nápovìda"
+
+#, fuzzy
+msgid "Run"
+msgstr "&Spustit"
+
+msgid "Create & manage ground control points"
+msgstr "Vytvoøení a správa vlicovacích bodù (GCP)"
+
+#, fuzzy
+msgid "Saved NVIZ Settings"
+msgstr "Obecné nastavení"
+
+#, fuzzy
+msgid "Load and apply settings from user settings file"
+msgstr "Zavøít dialog a ulo¾it u¾ivatelské nastavení"
+
+#, fuzzy
+msgid "Bulk raster map import"
+msgstr "3D rastrová mapa:"
+
+#, fuzzy
+msgid "Link to external raster map"
+msgstr "Nelze naèíst rastrovou mapu"
+
+#, fuzzy
+msgid "Link to external vector map"
+msgstr "Nelze modifikovat vektorovou mapu."
+
+#, fuzzy
+msgid "Bulk DXF layer import"
+msgstr "Import více vrstev DXF"
+
+#, fuzzy
+msgid "Change the type of geometry elements"
+msgstr "Zmìnit typ geometrických prvkù."
+
+msgid " (those in bold typeface are required)"
+msgstr " (tuèný písmem zvýraznìné jsou po¾adovány)"
+
+#, fuzzy
+msgid "C&opy"
+msgstr "Kopírovat"
+
+msgid "Command '%s' not yet implemented."
+msgstr "Pøíkaz '%s' není je¹tì implementován."
+
+msgid "Converts selected OGR layers to GRASS vector maps using v.in.ogr."
+msgstr ""
+"Konvertuje vybrané OGR vrstvy do GRASS vektorové mapy pou¾itím v.in.ogr."
+
+msgid "Converts selected DXF layers to GRASS vector maps (using v.in.dxf)."
+msgstr ""
+"Konvertuje vybrané DXF vrstvy do GRASS vektorové mapy (pou¾itím v.in.dxf)."
+
+msgid "Add overlay"
+msgstr "Pøekrýt dal¹í vrstvou"
+
+msgid "Add graphic overlays to map"
+msgstr "Pøidá grafické pøekrytí mapy jinou vrstvou"
+
+msgid "Click here to show database connection information"
+msgstr "Kliknìte zde pro zobrazení informace databázového nastavení"
+
+msgid "Click here to hide database connection information"
+msgstr "Kliknìte zde pro skrytí informace databázového nastavení"
+
+msgid "Output vector map name"
+msgstr "Jméno výstupní vektorové mapy"
+
+msgid "Vector map <%s> georectified successfully"
+msgstr "Vektorová mapa <%s> byla úspì¹nì georektifikována"
+
+msgid "Copying attributes..."
+msgstr "Kopíruji atributy..."
+
+msgid "GRASS SQL Builder: %s"
+msgstr "GRASS SQL pomocník: %s"
+
+msgid "Encoding"
+msgstr "Kódování"
+
+msgid "Use coordinate system of selected georeferenced file"
+msgstr "Pou¾ít souøadnicový systém zvoleného georeferencované souboru"
+
+msgid "Use coordinate system of selected WKT or PRJ file"
+msgstr "Pou¾ít souøadnicový systém podle vybraného WTK nebo PRJ souboru"
+
+msgid "Create custom PROJ.4 parameters string for coordinate system"
+msgstr "Definovat PROJ.4 parametry pro souøadnicový systém"
+
+msgid "Select ellipsoid"
+msgstr "Vybrat referenèní elipsoid"
+
+msgid "Set zone for UTM projection:"
+msgstr "Nastavit UTM zónu:"
+
+msgid "Zone:"
+msgstr "Zóna:"
+
+msgid "Hemisphere for zone:"
+msgstr "Polokoule:"
+
+msgid "Datum"
+msgstr "Datum"
+
+msgid "Transformation parameters:"
+msgstr "Parametry transformace:"
+
+msgid "Browse EPSG Codes"
+msgstr "Procházet EPSG kódy"
+
+msgid "Datums:"
+msgstr "Datumy:"
+
+msgid "Apply regular expressions and wildcards to g.list"
+msgstr "Pou¾ij regulární výrazy a zástupné znaky na g.list"
+
+msgid "Apply regular expressions and wildcards to g.remove"
+msgstr "Pou¾ij regulární výrazy a zástupné znaky pro g.remove "
+
+msgid "It assumes a cartesian coordinate system"
+msgstr "Pøepokladem je karteziánský souøadný systém"
+
+msgid "Creates explicitly the NULL-value bitmap file."
+msgstr "Vytvoøí mapu s hodnotami NULL."
+
+msgid ""
+"Computes direct (beam), diffuse and reflected solar irradiation raster maps "
+"for given day, latitude, surface and atmospheric conditions. Solar "
+"parameters (e.g. sunrise, sunset times, declination, extraterrestrial "
+"irradiance, daylight length) are saved in the map history file. "
+"Alternatively, a local time can be specified to compute solar incidence "
+"angle and/or irradiance raster maps. The shadowing effect of the topography "
+"is optionally incorporated."
+msgstr ""
+"Poèítá mapu pøímého (paprsek), difùzního a odra¾eného sluneèního záøení pro "
+"zadaný den, zem. ¹íøku, povrch a atmosférické podmínky. Sluneèní parametry "
+"(napø. východ a západ slunce) jsou ulo¾eny do do souboru s historií mapy. "
+"Alternativnì staèí specifikovat èas pro výpoèet sluneèního úhlu a/nebo mapy "
+"ozáøení. Také lze volitelnì zahrnout efekt stínu terénu."
+
+msgid ""
+"Uses a multi-scale approach by taking fitting quadratic parameters to any "
+"size window (via least squares)."
+msgstr ""
+"Pou¾ívá multisklalární pøístup, vypoèítává kvadratické koeficienty pro okno "
+"libovolné velikosti (pomocí metody nejmen¹ích ètvercù)."
+
+msgid ""
+"It optionally produces raster maps to contain backlink UTM coordinates for "
+"tracing spread paths."
+msgstr "Volitelnì produkuje rastrové mapy obsahující "
+
+msgid "Reclassify raster categories interactively by entering reclass rules"
+msgstr "Interaktivnì reklasifikovat kategorie rastru zadáváním pravidel"
+
+msgid ""
+"Recode raster categories interactively by entering recode rules (create new "
+"raster map)"
+msgstr ""
+"Pøekódovat kategorie rastrové mapy interaktivnì zadáváním kódovacích "
+"pravidel (vytvoøí novou rastrovou mapu)"
+
+msgid "Smooth or simplify lines/boundaries (remove vertices)."
+msgstr "Vyhladit nebo zjednodu¹it linie, hranice (odstraní opìrné body)"
+
+msgid ""
+"Centre node must be opened (costs >= 0). Costs of centre node are used in "
+"calculation"
+msgstr ""
+"Støední uzel musí být otevøen (cena >= 0). cena støedního uzlu je pou¾ita ve "
+"výpoètu"
+
+msgid ""
+"Splits net to bands between cost isolines (direction from centre). Centre "
+"node must be opened (costs >= 0). Costs of centre node are used in "
+"calculation."
+msgstr ""
+"Rozdìl sí» do skupin mezi hodnotami izolinií ( smìr ze støedu). Støedový "
+"uzel musí být otevøen ( hodnota >=0). Hodnota støedního bodu bude pou¾ita "
+"pøi výpoètu."
+
+msgid ""
+"Note that 'Minimum Steiner Tree' problem is NP-hard and heuristic algorithm "
+"is used in this module so the result may be sub optimal"
+msgstr ""
+"'Minimální Steinerùv strom' je NP-tì¾ká úloha, v tomto module je pou¾it "
+"heuristický algoritmus, výsledek nemusí být optimální"
+
+msgid ""
+"Note that TSP is NP-hard, heuristic algorithm is used by this module and "
+"created cycle may be sub optimal"
+msgstr ""
+"TSP je NP-tì¾ká úloha, v tomto modulu je pou¾it heuristický algoritmus, "
+"vytvoøení smyèky nemusí být optimální øe¹ení"
+
+msgid "Reclassify vector objects interactively by entering SQL rules"
+msgstr "Reklasifikovat vektorovou mapu na základì SQL pøíkazu"
+
+msgid "Outputs basic information about a user-specified vector map layer."
+msgstr "Vypí¹e základní informace o u¾ivatelem vybrané vektorové mapì."
+
+msgid ""
+"Hue-intensity-saturation (his) to red-green-blue (rgb) raster map color "
+"transformation function."
+msgstr ""
+"Funkce barevné transformace hue-intensity-saturation(his) do red.green-blue"
+"(rgb) mapy "
+
+msgid ""
+"Red-green-blue (rgb) to hue-intensity-saturation (his) raster map color "
+"transformation function"
+msgstr ""
+"Funkce barevné transformace red.green-blue(rgb) do hue-intensity-saturation"
+"(his) mapy "
+
+msgid ""
+"The resulting signature file is used as input for i.maxlik, to generate an "
+"unsupervised image classification."
+msgstr ""
+"Výsledný soubor spektrálních signatur je pou¾íván jako vstup pro modul i."
+"maxlik,který na jeho základì provede neøízenou klasifikaci snímku."
+
+msgid ""
+"Classification is based on the spectral signature information generated by "
+"either i.cluster, i.class, or i.gensig."
+msgstr ""
+"Obrazová funkce pro klasifikaci spektrální odrazivosti v obrazových datech "
+"zalo¾ená na informaci o spektrálních pøíznacích vytvoøených pomocí i."
+"cluster, i.class nebo i.gensig."
+
+msgid ""
+"Copy a table. Either 'from_table' (optionally with 'where') can be used or "
+"'select' option, but not 'from_table' and 'select' at the same time."
+msgstr ""
+"Kopíruj tabulku. Pou¾ita mù¾e být buï volba 'from_table' (volitelnì s "
+"'where') nebo volba 'select', ale nikoliv 'from_table' a 'select' souèasnì."
+
+msgid ""
+"Do you want to close display %(display)d?\n"
+"\n"
+"%(message)s"
+msgstr ""
+"Pøejete si zavøít diplej %(display)d?\n"
+"\n"
+"%(message)s"
+
+msgid ""
+"Unable to start Nviz. The OpenGL package was not found. You can get it at "
+"http://PyOpenGL.sourceforge.net. Switching back to 2D display mode.\n"
+"\n"
+"Details: %s"
+msgstr ""
+"Nelze spustit Nviz. Balíèek OpenGL nebyl nalezen. mù¾ete si ho stáhnout na "
+"http://PyOpenGL.sourceforge.net. Pøepínám zpìt do 2D zobrazení.\n"
+"\n"
+"Detaily: %s"
+
+msgid "Digitize raster map"
+msgstr "Digitalizovat rastrovou mapu"
+
+msgid ""
+"Display shortest route along network between 2 nodes (visualization only, "
+"requires XTerm))"
+msgstr ""
+"Zobrazí nejkrat¹í cestu mezi dvìma uzly (pouze zobrazí, vy¾aduje XTerm)"
+
+msgid "Ortho Photo rectification"
+msgstr "Orto foto rektifikace"
+
+msgid "Interactive input for supervised classification"
+msgstr "Interaktivní vstup pro øízenou klasifikaci"
+
+msgid ""
+"Creates and adds a new attribute table to a given layer of an existing "
+"vector map."
+msgstr ""
+"Vytvoøí a pøidá novou atributovou tabulku k zadané vrstvì existující "
+"vektorové mapy."
 
 #~ msgid "Unable to open workspace file <%s> for writing."
 #~ msgstr "Nelze otevøít soubor workspace <%s> pro zápis."
-
-#, fuzzy
-#~ msgid "GRASS GIS Map Calculator (3D raster)"
-#~ msgstr "GRASS %s mapový kalkulátor"
 
 #~ msgid "Add 3D raster map"
 #~ msgstr "Pøidat 3D rastrovou mapu"
@@ -10574,30 +11324,17 @@ msgstr ""
 #~ msgid "Redraw GCP markers in map displays"
 #~ msgstr "Pøekreslit znaèky vlicovacích bodù "
 
-#~ msgid "Import raster map"
-#~ msgstr "Import rastrové mapy"
-
 #~ msgid "Import raster data using GDAL"
 #~ msgstr "Import rastrových dat pomocí GDAL"
 
 #~ msgid "Multiple raster data import using GDAL"
 #~ msgstr "Hromadný import pomocí GDAL"
 
-#~ msgid "Converts selected GDAL layers to GRASS raster maps using r.in.gdal"
-#~ msgstr ""
-#~ "Pøevede vybrané GDAL vrstvy na GRASS rastrové mapy pou¾itím r.in.gdal."
-
 #~ msgid "Link to GDAL"
 #~ msgstr "Pøipojit k GDAL"
 
 #~ msgid "Multiple link to GDAL"
 #~ msgstr "Hromadné pøipojení map k GDAL"
-
-#~ msgid "Link GDAL supported raster files to a binary raster map layers"
-#~ msgstr "Pøipojí rastrové soubory podporované GDAL k binární rastrové mapì"
-
-#~ msgid "Import vector map"
-#~ msgstr "Import vektorové mapy"
 
 #~ msgid "Import vector data using OGR"
 #~ msgstr "Import vektorové mapy pomocí OGR"
@@ -10619,10 +11356,6 @@ msgstr ""
 #~ msgid "Multiple DXF layers import"
 #~ msgstr "Hromadný import DXF vrstev"
 
-#~ msgid "Converts selected DXF layers to GRASS vector maps (using v.in.dxf)"
-#~ msgstr ""
-#~ "Pøevede vybrané DXF vrstvy do GRASS vektorové mapy (pou¾itím v.in.dxf)."
-
 #~ msgid "Import grid 3D volume"
 #~ msgstr "Import grid3D volume"
 
@@ -10632,22 +11365,8 @@ msgstr ""
 #~ msgid "Export grid 3D volume"
 #~ msgstr "Export grid3D volume"
 
-#, fuzzy
-#~ msgid "C&onfig"
-#~ msgstr "Nastavení"
-
 #~ msgid "Map calculator"
 #~ msgstr "Mapový kalkulátor"
-
-#, fuzzy
-#~ msgid ""
-#~ "Calculates cast shadow areas from sun position and DEM. Either A: exact "
-#~ "sun position is specified, or B: date/time to calculate the sun position "
-#~ "by r.sunmask it"
-#~ msgstr ""
-#~ "Poèítá plnì zastínìné oblasti z polohy Slunce a DMT buï A: je-li "
-#~ "specifikována pøesná pozice Slunce nebo B: pozice je spoèítána samostatnì "
-#~ "z hodnoty datum/èas pomocí r.sunmask."
 
 #~ msgid ""
 #~ "Takes vector stream data, transforms it to raster and subtracts depth "
@@ -10689,24 +11408,8 @@ msgstr ""
 #~ "Spoèítá základní statistiku rastrového souboru na základì vektorových "
 #~ "polygonù a ulo¾í ji do nových sloupeèkù atributové tabulky."
 
-#, fuzzy
-#~ msgid "3D raster map calculator"
-#~ msgstr "3D rastrový kalkulátor"
-
 #~ msgid "Map calculator for volumetric map algebra"
 #~ msgstr "Mapový kalkulátor pro 3D rastrová data"
-
-#, fuzzy
-#~ msgid "Removes a table from database."
-#~ msgstr "Vytvoøit z databáze"
-
-#, fuzzy
-#~ msgid "Show menu tree"
-#~ msgstr "Steinerùv strom"
-
-#, fuzzy
-#~ msgid "Show menu tree in new window"
-#~ msgstr "Pohybující se okno"
 
 #~ msgid ""
 #~ "Unable to start vector digitizer.\n"
@@ -10734,18 +11437,6 @@ msgstr ""
 #~ "\n"
 #~ "Detaily: %s"
 
-#, fuzzy
-#~ msgid "Find extension by"
-#~ msgstr "Správa kartografických zobrazení"
-
-#, fuzzy
-#~ msgid "3D Raster map"
-#~ msgstr "3D rastrová mapa:"
-
-#, fuzzy
-#~ msgid "Error in command execution '%s'"
-#~ msgstr "Chyba pøi vykonání pøíkazu %s"
-
 #~ msgid "Preferences error"
 #~ msgstr "Chyba pøedvolby"
 
@@ -10757,35 +11448,6 @@ msgstr ""
 
 #~ msgid "Nviz error"
 #~ msgstr "Chyba Nviz"
-
-#~ msgid "Graphical modeler script"
-#~ msgstr "Skript Grafického modeleru"
-
-#~ msgid "module"
-#~ msgstr "modul"
-
-#~ msgid "Select GRASS module"
-#~ msgstr "Vyberte GRASS modul"
-
-#, fuzzy
-#~ msgid "Color settings"
-#~ msgstr "Nastavení modeleru"
-
-#, fuzzy
-#~ msgid "Size settings"
-#~ msgstr "U¾ivatelské nastavení grafického prostøedí"
-
-#, fuzzy
-#~ msgid "Unable to get list of available mapsets."
-#~ msgstr "Nelze odstranit mapset"
-
-#, fuzzy
-#~ msgid "Unable to get list of accessible mapsets."
-#~ msgstr "Nelze odstranit mapset"
-
-#, fuzzy
-#~ msgid "GRASS GIS 3D View Tools"
-#~ msgstr "Nápovìda GRASS GIS"
 
 #~ msgid "Default"
 #~ msgstr "Výchozí"
@@ -10800,405 +11462,13 @@ msgstr ""
 #~ msgstr "Seznam mapových vrstev"
 
 #, fuzzy
-#~ msgid "Add thematic area (choropleth) map layer"
-#~ msgstr "Pøidat tématickou vrstvu s grafem"
-
-#, fuzzy
-#~ msgid "Open %s dialog"
-#~ msgstr "Zavøít dialog "
-
-#, fuzzy
-#~ msgid "Direct OGR"
-#~ msgstr "Smìr"
-
-#, fuzzy
-#~ msgid "Import raster data into a GRASS map layer using GDAL."
-#~ msgstr "import rastrových dat pomocí GDAL"
-
-#, fuzzy
 #~ msgid "Link GDAL supported raster data as a pseudo GRASS raster map layer."
-#~ msgstr "Pøipojí rastrový soubor podporovaná GDAL k binární rastrové mapì"
-
-#, fuzzy
-#~ msgid "Converts a GRASS ASCII raster file to binary raster map."
-#~ msgstr "Pøevede ASCII rastrový soubor na binární rastrovou mapu."
-
-#, fuzzy
-#~ msgid "ASCII polygons, lines, and point import"
-#~ msgstr "Import ASCII polygony a linie"
-
-#, fuzzy
-#~ msgid "Raw binary array import"
-#~ msgstr "Matlab and MapGen import"
-
-#, fuzzy
-#~ msgid ""
-#~ "Converts an ESRI ARC/INFO ascii raster file (GRID) into a GRASS raster "
-#~ "map."
-#~ msgstr ""
-#~ "Pøevede ESRI ARC/INFO ascii rastr (GRID) na (binární) rastrovou mapu."
-
-#, fuzzy
-#~ msgid "Imports SPOT VGT NDVI data into a raster map."
-#~ msgstr "Import SPOT VGT NDVI souboru jako rastrové mapy"
-
-#, fuzzy
-#~ msgid "Imports SRTM HGT files into raster map."
-#~ msgstr "Import SPOT VGT NDVI souboru jako rastrové mapy"
-
-#, fuzzy
-#~ msgid ""
-#~ "Georeference, rectify, and import Terra-ASTER imagery and relative DEMs "
-#~ "using gdalwarp."
-#~ msgstr ""
-#~ "Georeferencuje, rektifikuje a importuje snímky ve formátu Terra-ASTER a "
-#~ "pøíbuzných DMT za pou¾ití gdalwarp."
-
-#, fuzzy
-#~ msgid "Download and import data from WMS servers."
-#~ msgstr "Stáhne a importuje data z WMS serverù."
-
-#, fuzzy
-#~ msgid "Converts vector layers into a GRASS vector map using OGR."
-#~ msgstr "Konvertuje vektorové vrstvy OGR na GRASS vektorové mapy."
-
-#, fuzzy
-#~ msgid "Converts multiple OGR supported layers into GRASS vector maps."
-#~ msgstr "Konvertuje vektorové vrstvy OGR na GRASS vektorové mapy."
+#~ msgstr "Pøipojí rastrový soubor podporovaný GDAL k binární rastrové mapì."
 
 #, fuzzy
 #~ msgid "Creates a new pseudo-vector map as a link to an OGR-supported layer."
 #~ msgstr ""
 #~ "Vytvoøí nový vektor jako vrstvu pouze ke ètení pøipojenou pomocí OGR."
-
-#, fuzzy
-#~ msgid "ASCII points or GRASS ASCII format"
-#~ msgstr "Import ASCII body/GRASS ASCII vektory"
-
-#, fuzzy
-#~ msgid "Creates a vector map from an ASCII points file or ASCII vector file."
-#~ msgstr "Vytvoøí vektorovou mapu ze souboru ASCII bodù nebo ASCII vektoru"
-
-#, fuzzy
-#~ msgid "Historical GRASS vector import"
-#~ msgstr "Import starého vektorového formátu GRASS"
-
-#, fuzzy
-#~ msgid "GPS data import"
-#~ msgstr "GPSBabel GPS import"
-
-#, fuzzy
-#~ msgid ""
-#~ "Import waypoints, routes, and tracks from a GPS receiver or many common "
-#~ "GPS file formats."
-#~ msgstr ""
-#~ "Stáhne Waypoints, Routes a Tracks z pøístroje GPS nebo ze souboru a ulo¾í "
-#~ "je do vektorové mapy."
-
-#, fuzzy
-#~ msgid "Matlab array or Mapgen format import"
-#~ msgstr "Matlab and MapGen import"
-
-#, fuzzy
-#~ msgid "Converts a 3D ASCII raster text file into a (binary) 3D raster map."
-#~ msgstr ""
-#~ "Pøevede 3D ASCII rastrový textový soubor na (binární) 3D rastrovou "
-#~ "mapovou vrstvu "
-
-#, fuzzy
-#~ msgid "Import 3-dimensional Vis5D files."
-#~ msgstr ""
-#~ "Exportuje 3D rastrový soubor GRASSu do 3-dimenzionálního Vis5D souboru."
-
-#, fuzzy
-#~ msgid "Converts a raster map layer into a GRASS ASCII text file."
-#~ msgstr "Pøevede rastrovou mapu do ASCII souboru."
-
-#, fuzzy
-#~ msgid "ASCII x,y,z points export"
-#~ msgstr "ASCII x,y,z export"
-
-#, fuzzy
-#~ msgid "Exports GRASS raster map to GRIDATB.FOR map file (TOPMODEL)."
-#~ msgstr "Exportuje rastrovou mapu GRASSu do GRIDATB.FOR souboru (TOPMODEL)"
-
-#, fuzzy
-#~ msgid "Raw binary array export"
-#~ msgstr "Matlab and MapGen import"
-
-#, fuzzy
-#~ msgid "Raster file series to MPEG movie conversion program."
-#~ msgstr "Program, vytváøející MPEG ze série rastrových map"
-
-#, fuzzy
-#~ msgid "Export a GRASS raster map as a non-georeferenced PNG image."
-#~ msgstr "Export GRASS rastrové mapy jako nepøipojený PNG obraz."
-
-#, fuzzy
-#~ msgid "Converts a GRASS raster map to a PPM image file."
-#~ msgstr "Pøevede rastrovou mapu na vektorovou."
-
-#, fuzzy
-#~ msgid "Converts 3 GRASS raster layers (R,G,B) to a PPM image file."
-#~ msgstr ""
-#~ "Pøevede 3 GRASSové rastrové mapy (R,G,B) do souboru PPM s rozli¹ením "
-#~ "pixelu podle aktuálnì definovaného regionu."
-
-#, fuzzy
-#~ msgid "Converts a raster map layer into a height-field file for POV-Ray."
-#~ msgstr "Pøevede rastrovou mapu do souboru pro POVRAY."
-
-#, fuzzy
-#~ msgid "Exports a GRASS raster map to a 8/24bit TIFF image file."
-#~ msgstr "Exportuje rastrový soubor GRASSu do binárního souboru MAT."
-
-#, fuzzy
-#~ msgid ""
-#~ "Exports a raster map to the Virtual Reality Modeling Language (VRML)."
-#~ msgstr "Export rastrové mapy do Virtual Reality Modeling Language (VRML)"
-
-#, fuzzy
-#~ msgid "Converts raster maps into the VTK-ASCII format."
-#~ msgstr "Pøevede rastrové mapy do formátu VTK-Ascii"
-
-#, fuzzy
-#~ msgid "Converts a vector map to any of the supported OGR vector formats."
-#~ msgstr "Konvertuje mapu do jednoho z podporovaných vektorových formátù OGR."
-
-#, fuzzy
-#~ msgid "ASCII points or GRASS ASCII vector export"
-#~ msgstr "Export ASCII bodù/GRASS ASCII vektorù"
-
-#, fuzzy
-#~ msgid "Exports a vector map to a GRASS ASCII vector representation."
-#~ msgstr "Pøevede GRASS binární vektorovou mapu do formátu GRASS ASCII."
-
-#, fuzzy
-#~ msgid "Exports vector map to DXF file format."
-#~ msgstr "Exportuje GRASS vektory jako soubor DXF."
-
-#, fuzzy
-#~ msgid "Converts GRASS x,y,z points to POV-Ray x,z,y format."
-#~ msgstr "Pøevede do POV-Ray formátu, GRASS x,y,z -> POV-Ray x,y,z"
-
-#, fuzzy
-#~ msgid "Exports a vector map to SVG file."
-#~ msgstr "Exportuje GRASS vektory jako soubor SVG."
-
-#, fuzzy
-#~ msgid "Converts a vector map to VTK ASCII output."
-#~ msgstr "Pøeveï GRASS vektor na formát VTK ASCII."
-
-#, fuzzy
-#~ msgid "Converts a 3D raster map layer into a ASCII text file."
-#~ msgstr "Pøevede 3D rastrovou mapovou vrstvu do ASCII textového souboru"
-
-#, fuzzy
-#~ msgid "Converts a 3D raster map into a 3-dimensional Vis5D file."
-#~ msgstr ""
-#~ "Exportuje 3D rastrový soubor GRASSu do 3-dimenzionálního Vis5D souboru."
-
-#, fuzzy
-#~ msgid "Converts 3D raster maps into the VTK-ASCII format."
-#~ msgstr "Pøevede rastrové mapy do formátu VTK-Ascii"
-
-#, fuzzy
-#~ msgid "Common export formats using OGR"
-#~ msgstr "Export rùzných formátù pomocí OGR"
-
-#, fuzzy
-#~ msgid "Lists available GIS elements of the user-specified data type."
-#~ msgstr ""
-#~ "Seznam dostupných souborù u¾ivatelem zadaného typu dat na standardní "
-#~ "výstup"
-
-#, fuzzy
-#~ msgid "Converts a vector map into a raster map."
-#~ msgstr "Pøevede binární GRASS vektorovou mapu do GRASS rastrové mapy."
-
-#, fuzzy
-#~ msgid "Converts a vector map (only points) into a 3D raster map."
-#~ msgstr ""
-#~ "Pøevede binární GRASS vektorovou mapovou vrstvu (pouze body) na 3D GRASS "
-#~ "rastrovou mapovou vrstvu."
-
-#, fuzzy
-#~ msgid ""
-#~ "Converts coordinates from one projection to another (cs2cs frontend)."
-#~ msgstr "Pøevede souøadnice z jedné projekce do druhé (rozhraní k cs2cs)"
-
-#, fuzzy
-#~ msgid "Resample using bspline"
-#~ msgstr ""
-#~ "Pøevzorkování (zmìna rozli¹ení) pomocí RST (regularized spline tension)"
-
-#, fuzzy
-#~ msgid "Export color table"
-#~ msgstr "Nastavit tabulku barev"
-
-#, fuzzy
-#~ msgid "Exports the color table associated with a raster map layer."
-#~ msgstr "Vytvoøí/upraví tabulku barev spojenou s rastrovou mapou."
-
-#, fuzzy
-#~ msgid "Neighborhood analysis tool for vector point maps."
-#~ msgstr "Analýza okolí"
-
-#, fuzzy
-#~ msgid ""
-#~ "Calculates category or object oriented statistics (accumulator-based "
-#~ "statistics)."
-#~ msgstr "Poèítá statistky podle kategorií nebo objektovì orientované."
-
-#, fuzzy
-#~ msgid "Quantiles overlay"
-#~ msgstr "Statistický pøekryv"
-
-#, fuzzy
-#~ msgid "Compute category quantiles using two passes."
-#~ msgstr "Vypoèítat quantily pou¾itím dvou prùchodù"
-
-#, fuzzy
-#~ msgid "Generates rate of spread raster map layers."
-#~ msgstr "Vytvoøí statistiku ploch pro rastrové mapy."
-
-#, fuzzy
-#~ msgid "Creates topology for vector map."
-#~ msgstr "Vytváøí topologii pro vektorovou mapu GRASSu."
-
-#, fuzzy
-#~ msgid "Tool for vector based generalization."
-#~ msgstr "Databázové spojení"
-
-#, fuzzy
-#~ msgid "Changes type of vector features."
-#~ msgstr "Vybrat vektorový prvek"
-
-#, fuzzy
-#~ msgid "Extrudes flat vector features to 3D with defined height."
-#~ msgstr "Vytvoøí z plo¹ného vektorového objektu 3D o zadané vý¹ce"
-
-#, fuzzy
-#~ msgid "Queries a vector map at given locations."
-#~ msgstr "Dotazovat vektorovou mapu v daných locations."
-
-#, fuzzy
-#~ msgid "Creates a buffer around vector features of given type."
-#~ msgstr ""
-#~ "Vytvoøí buffer okolo prvkù zadaného typu (plochy musí obsahovat centroid)"
-
-#, fuzzy
-#~ msgid "Creates a new vector map by combining other vector maps."
-#~ msgstr ""
-#~ "Vytvoøí nový binární vektorovou mapu kombinací více vektorových vrstev."
-
-#, fuzzy
-#~ msgid "Attaches, deletes or reports vector categories to map geometry."
-#~ msgstr "Pøilo¾, sma¾ nebo vypi¹ vektorové kategorie do mapové geometrie."
-
-#, fuzzy
-#~ msgid "Creates a vector map of a user-defined grid."
-#~ msgstr "Vytvoøí GRASS vektorovou mapu podle u¾ivatelem definované møí¾ky"
-
-#, fuzzy
-#~ msgid "Creates points along input lines in new vector map with 2 layers."
-#~ msgstr ""
-#~ "Vytvoøí body podél vstupních linií a ulo¾í do nového souboru o dvou "
-#~ "vrstvách."
-
-#, fuzzy
-#~ msgid "Generates randomly 2D/3D vector points map."
-#~ msgstr "Náhodnì vytvoøit 2D/3D bodovou vektorovou vrstvu."
-
-#, fuzzy
-#~ msgid "Random location perturbations of vector points."
-#~ msgstr "Náhodná odchylka location vektorových bodù"
-
-#, fuzzy
-#~ msgid "Outputs basic information about a vector map."
-#~ msgstr "Vypí¹e základní informace o u¾ivatelem vybrané rastrové mapì."
-
-#, fuzzy
-#~ msgid "Reports geometry statistics for vector maps."
-#~ msgstr "Vypí¹e údaje o geometrii vektorové mapy."
-
-#, fuzzy
-#~ msgid "Report or upload vector features to DB"
-#~ msgstr "Pøevede 2D vektorovou mapu na mapu 3D"
-
-#, fuzzy
-#~ msgid "Calculates univariate statistics for attribute."
-#~ msgstr "Spoèítá univariantní statistiku z ne-nullových bunìk rastrové mapy."
-
-#, fuzzy
-#~ msgid "Tests for normality for vector points."
-#~ msgstr "Test normality bodù"
-
-#, fuzzy
-#~ msgid "Mosaics several images and extends colormap"
-#~ msgstr ""
-#~ "Vytvoøí mozaiku ze 4 a více snímkù, roztáhne barevnou paletu a vytvoøí "
-#~ "mapu *.mosaic"
-
-#, fuzzy
-#~ msgid "Emissivity"
-#~ msgstr "Emise"
-
-#, fuzzy
-#~ msgid "creates a latitude/longitude map"
-#~ msgstr "Vytvoøit novou vektorovou mapu"
-
-#, fuzzy
-#~ msgid "Vegetation indices"
-#~ msgstr "Hranice regionu"
-
-#, fuzzy
-#~ msgid "Extract quality control parameters from Modis QC layers"
-#~ msgstr "Definujte parametry pro "
-
-#, fuzzy
-#~ msgid "Sunshine hours"
-#~ msgstr "Vytvoøit novou vektorovou mapu"
-
-#, fuzzy
-#~ msgid "creates a sunshine hours map"
-#~ msgstr "Vytvoøit novou vektorovou mapu"
-
-#, fuzzy
-#~ msgid "List databases"
-#~ msgstr "Seznam tabulek"
-
-#, fuzzy
-#~ msgid "List all databases for a given driver and location."
-#~ msgstr "Vypí¹e v¹echny tabulky pro danou databázi."
-
-#, fuzzy
-#~ msgid "Create database"
-#~ msgstr "Vytvoøit tabulku"
-
-#, fuzzy
-#~ msgid "Creates an empty database."
-#~ msgstr "Vytvoøit z databáze"
-
-#, fuzzy
-#~ msgid "Drop database"
-#~ msgstr "Databáze"
-
-#, fuzzy
-#~ msgid "Removes a database."
-#~ msgstr "Vytvoøit z databáze"
-
-#, fuzzy
-#~ msgid "Drops a column from selected attribute table"
-#~ msgstr "Vyjmout atributovou tabulku."
-
-#, fuzzy
-#~ msgid "Native"
-#~ msgstr "Ulo¾it"
-
-#, fuzzy
-#~ msgid "Choose OGR data source"
-#~ msgstr "Vybrat adresáø GRASS dat:"
 
 #~ msgid "Input DXF file"
 #~ msgstr "Vstupní DXF soubor"
@@ -11209,57 +11479,14 @@ msgstr ""
 #~ msgid "Choose directory:"
 #~ msgstr "Vyberte adresáø:"
 
-#, fuzzy
-#~ msgid "label"
-#~ msgstr "Pøidat vrstvu s popisky"
-
-#, fuzzy
-#~ msgid "help"
-#~ msgstr "Nápovìda"
-
-#, fuzzy
-#~ msgid "Run"
-#~ msgstr "&Spustit"
-
 #~ msgid "Set ground control points (GCPs)"
 #~ msgstr "Nastavit vlicovací body (GCP)"
-
-#~ msgid "Create & manage ground control points"
-#~ msgstr "Vytvoøení a správa vlicovacích bodù (GCP)"
-
-#, fuzzy
-#~ msgid "Saved NVIZ Settings"
-#~ msgstr "Obecné nastavení"
 
 #~ msgid "Load"
 #~ msgstr "Nahrát"
 
-#, fuzzy
-#~ msgid "Load and apply settings from user settings file"
-#~ msgstr "Zavøít dialog a ulo¾it u¾ivatelské nastavení"
-
 #~ msgid "wxGUI closed."
 #~ msgstr "wxGUI zavøeno."
-
-#, fuzzy
-#~ msgid "Bulk raster map import"
-#~ msgstr "3D rastrová mapa:"
-
-#, fuzzy
-#~ msgid "Link to external raster map"
-#~ msgstr "Nelze naèíst rastrovou mapu"
-
-#, fuzzy
-#~ msgid "Link to external vector map"
-#~ msgstr "Nelze modifikovat vektorovou mapu."
-
-#, fuzzy
-#~ msgid "Bulk DXF layer import"
-#~ msgstr "Import více vrstev DXF"
-
-#, fuzzy
-#~ msgid "Change the type of geometry elements"
-#~ msgstr "Zmìnit typ geometrických prvkù."
 
 #~ msgid "Import GDAL layers"
 #~ msgstr "Import GDAL vrstev"
@@ -11272,244 +11499,6 @@ msgstr ""
 
 #~ msgid "Link OGR layers"
 #~ msgstr "Pøipojení OGR vrstev"
-
-#~ msgid " (those in bold typeface are required)"
-#~ msgstr " (tuèný písmem zvýraznìné jsou po¾adovány)"
-
-#, fuzzy
-#~ msgid "C&opy"
-#~ msgstr "Kopírovat"
-
-#~ msgid "Command '%s' not yet implemented."
-#~ msgstr "Pøíkaz '%s' není je¹tì implementován."
-
-#~ msgid "Converts selected OGR layers to GRASS vector maps using v.in.ogr."
-#~ msgstr ""
-#~ "Konvertuje vybrané OGR vrstvy do GRASS vektorové mapy pou¾itím v.in.ogr."
-
-#~ msgid "Converts selected DXF layers to GRASS vector maps (using v.in.dxf)."
-#~ msgstr ""
-#~ "Konvertuje vybrané DXF vrstvy do GRASS vektorové mapy (pou¾itím v.in.dxf)."
-
-#~ msgid "Add overlay"
-#~ msgstr "Pøekrýt dal¹í vrstvou"
-
-#~ msgid "Add graphic overlays to map"
-#~ msgstr "Pøidá grafické pøekrytí mapy jinou vrstvou"
-
-#~ msgid "Click here to show database connection information"
-#~ msgstr "Kliknìte zde pro zobrazení informace databázového nastavení"
-
-#~ msgid "Click here to hide database connection information"
-#~ msgstr "Kliknìte zde pro skrytí informace databázového nastavení"
-
-#~ msgid "Output vector map name"
-#~ msgstr "Jméno výstupní vektorové mapy"
-
-#~ msgid "Vector map <%s> georectified successfully"
-#~ msgstr "Vektorová mapa <%s> byla úspì¹nì georektifikována"
-
-#~ msgid "Copying attributes..."
-#~ msgstr "Kopíruji atributy..."
-
-#~ msgid "GRASS SQL Builder: %s"
-#~ msgstr "GRASS SQL pomocník: %s"
-
-#~ msgid "Encoding"
-#~ msgstr "Kódování"
-
-#~ msgid "Use coordinate system of selected georeferenced file"
-#~ msgstr "Pou¾ít souøadnicový systém zvoleného georeferencované souboru"
-
-#~ msgid "Use coordinate system of selected WKT or PRJ file"
-#~ msgstr "Pou¾ít souøadnicový systém podle vybraného WTK nebo PRJ souboru"
-
-#~ msgid "Create custom PROJ.4 parameters string for coordinate system"
-#~ msgstr "Definovat PROJ.4 parametry pro souøadnicový systém"
-
-#~ msgid "Select ellipsoid"
-#~ msgstr "Vybrat referenèní elipsoid"
-
-#~ msgid "Set zone for UTM projection:"
-#~ msgstr "Nastavit UTM zónu:"
-
-#~ msgid "Zone:"
-#~ msgstr "Zóna:"
-
-#~ msgid "Hemisphere for zone:"
-#~ msgstr "Polokoule:"
-
-#~ msgid "Datum"
-#~ msgstr "Datum"
-
-#~ msgid "Transformation parameters:"
-#~ msgstr "Parametry transformace:"
-
-#~ msgid "Browse EPSG Codes"
-#~ msgstr "Procházet EPSG kódy"
-
-#~ msgid "Datums:"
-#~ msgstr "Datumy:"
-
-#~ msgid "Apply regular expressions and wildcards to g.list"
-#~ msgstr "Pou¾ij regulární výrazy a zástupné znaky na g.list"
-
-#~ msgid "Apply regular expressions and wildcards to g.remove"
-#~ msgstr "Pou¾ij regulární výrazy a zástupné znaky pro g.remove "
-
-#~ msgid "It assumes a cartesian coordinate system"
-#~ msgstr "Pøepokladem je karteziánský souøadný systém"
-
-#~ msgid "Creates explicitly the NULL-value bitmap file."
-#~ msgstr "Vytvoøí mapu s hodnotami NULL."
-
-#~ msgid ""
-#~ "Computes direct (beam), diffuse and reflected solar irradiation raster "
-#~ "maps for given day, latitude, surface and atmospheric conditions. Solar "
-#~ "parameters (e.g. sunrise, sunset times, declination, extraterrestrial "
-#~ "irradiance, daylight length) are saved in the map history file. "
-#~ "Alternatively, a local time can be specified to compute solar incidence "
-#~ "angle and/or irradiance raster maps. The shadowing effect of the "
-#~ "topography is optionally incorporated."
-#~ msgstr ""
-#~ "Poèítá mapu pøímého (paprsek), difùzního a odra¾eného sluneèního záøení "
-#~ "pro zadaný den, zem. ¹íøku, povrch a atmosférické podmínky. Sluneèní "
-#~ "parametry (napø. východ a západ slunce) jsou ulo¾eny do do souboru s "
-#~ "historií mapy. Alternativnì staèí specifikovat èas pro výpoèet sluneèního "
-#~ "úhlu a/nebo mapy ozáøení. Také lze volitelnì zahrnout efekt stínu terénu."
-
-#~ msgid ""
-#~ "Uses a multi-scale approach by taking fitting quadratic parameters to any "
-#~ "size window (via least squares)."
-#~ msgstr ""
-#~ "Pou¾ívá multisklalární pøístup, vypoèítává kvadratické koeficienty pro "
-#~ "okno libovolné velikosti (pomocí metody nejmen¹ích ètvercù)."
-
-#~ msgid ""
-#~ "It optionally produces raster maps to contain backlink UTM coordinates "
-#~ "for tracing spread paths."
-#~ msgstr "Volitelnì produkuje rastrové mapy obsahující "
-
-#~ msgid "Reclassify raster categories interactively by entering reclass rules"
-#~ msgstr "Interaktivnì reklasifikovat kategorie rastru zadáváním pravidel"
-
-#~ msgid ""
-#~ "Recode raster categories interactively by entering recode rules (create "
-#~ "new raster map)"
-#~ msgstr ""
-#~ "Pøekódovat kategorie rastrové mapy interaktivnì zadáváním kódovacích "
-#~ "pravidel (vytvoøí novou rastrovou mapu)"
-
-#~ msgid "Smooth or simplify lines/boundaries (remove vertices)."
-#~ msgstr "Vyhladit nebo zjednodu¹it linie, hranice (odstraní opìrné body)"
-
-#~ msgid ""
-#~ "Centre node must be opened (costs >= 0). Costs of centre node are used in "
-#~ "calculation"
-#~ msgstr ""
-#~ "Støední uzel musí být otevøen (cena >= 0). cena støedního uzlu je pou¾ita "
-#~ "ve výpoètu"
-
-#~ msgid ""
-#~ "Splits net to bands between cost isolines (direction from centre). Centre "
-#~ "node must be opened (costs >= 0). Costs of centre node are used in "
-#~ "calculation."
-#~ msgstr ""
-#~ "Rozdìl sí» do skupin mezi hodnotami izolinií ( smìr ze støedu). Støedový "
-#~ "uzel musí být otevøen ( hodnota >=0). Hodnota støedního bodu bude pou¾ita "
-#~ "pøi výpoètu."
-
-#~ msgid ""
-#~ "Note that 'Minimum Steiner Tree' problem is NP-hard and heuristic "
-#~ "algorithm is used in this module so the result may be sub optimal"
-#~ msgstr ""
-#~ "'Minimální Steinerùv strom' je NP-tì¾ká úloha, v tomto module je pou¾it "
-#~ "heuristický algoritmus, výsledek nemusí být optimální"
-
-#~ msgid ""
-#~ "Note that TSP is NP-hard, heuristic algorithm is used by this module and "
-#~ "created cycle may be sub optimal"
-#~ msgstr ""
-#~ "TSP je NP-tì¾ká úloha, v tomto modulu je pou¾it heuristický algoritmus, "
-#~ "vytvoøení smyèky nemusí být optimální øe¹ení"
-
-#~ msgid "Reclassify vector objects interactively by entering SQL rules"
-#~ msgstr "Reklasifikovat vektorovou mapu na základì SQL pøíkazu"
-
-#~ msgid "Outputs basic information about a user-specified vector map layer."
-#~ msgstr "Vypí¹e základní informace o u¾ivatelem vybrané vektorové mapì."
-
-#~ msgid ""
-#~ "Hue-intensity-saturation (his) to red-green-blue (rgb) raster map color "
-#~ "transformation function."
-#~ msgstr ""
-#~ "Funkce barevné transformace hue-intensity-saturation(his) do red.green-"
-#~ "blue(rgb) mapy "
-
-#~ msgid ""
-#~ "Red-green-blue (rgb) to hue-intensity-saturation (his) raster map color "
-#~ "transformation function"
-#~ msgstr ""
-#~ "Funkce barevné transformace red.green-blue(rgb) do hue-intensity-"
-#~ "saturation(his) mapy "
-
-#~ msgid ""
-#~ "The resulting signature file is used as input for i.maxlik, to generate "
-#~ "an unsupervised image classification."
-#~ msgstr ""
-#~ "Výsledný soubor spektrálních signatur je pou¾íván jako vstup pro modul i."
-#~ "maxlik,který na jeho základì provede neøízenou klasifikaci snímku."
-
-#~ msgid ""
-#~ "Classification is based on the spectral signature information generated "
-#~ "by either i.cluster, i.class, or i.gensig."
-#~ msgstr ""
-#~ "Obrazová funkce pro klasifikaci spektrální odrazivosti v obrazových "
-#~ "datech zalo¾ená na informaci o spektrálních pøíznacích vytvoøených pomocí "
-#~ "i.cluster, i.class nebo i.gensig."
-
-#~ msgid ""
-#~ "Copy a table. Either 'from_table' (optionally with 'where') can be used "
-#~ "or 'select' option, but not 'from_table' and 'select' at the same time."
-#~ msgstr ""
-#~ "Kopíruj tabulku. Pou¾ita mù¾e být buï volba 'from_table' (volitelnì s "
-#~ "'where') nebo volba 'select', ale nikoliv 'from_table' a 'select' "
-#~ "souèasnì."
-
-#~ msgid ""
-#~ "Do you want to close display %(display)d?\n"
-#~ "\n"
-#~ "%(message)s"
-#~ msgstr ""
-#~ "Pøejete si zavøít diplej %(display)d?\n"
-#~ "\n"
-#~ "%(message)s"
-
-#~ msgid ""
-#~ "Unable to start Nviz. The OpenGL package was not found. You can get it at "
-#~ "http://PyOpenGL.sourceforge.net. Switching back to 2D display mode.\n"
-#~ "\n"
-#~ "Details: %s"
-#~ msgstr ""
-#~ "Nelze spustit Nviz. Balíèek OpenGL nebyl nalezen. mù¾ete si ho stáhnout "
-#~ "na http://PyOpenGL.sourceforge.net. Pøepínám zpìt do 2D zobrazení.\n"
-#~ "\n"
-#~ "Detaily: %s"
-
-#~ msgid "Digitize raster map"
-#~ msgstr "Digitalizovat rastrovou mapu"
-
-#~ msgid ""
-#~ "Display shortest route along network between 2 nodes (visualization only, "
-#~ "requires XTerm))"
-#~ msgstr ""
-#~ "Zobrazí nejkrat¹í cestu mezi dvìma uzly (pouze zobrazí, vy¾aduje XTerm)"
-
-#~ msgid "Ortho Photo rectification"
-#~ msgstr "Orto foto rektifikace"
-
-#~ msgid "Interactive input for supervised classification"
-#~ msgstr "Interaktivní vstup pro øízenou klasifikaci"
 
 #~ msgid "Coarse style:"
 #~ msgstr "hrubý styl:"
@@ -11625,13 +11614,6 @@ msgstr ""
 #~ msgid "Imagery"
 #~ msgstr "Obraz"
 
-#~ msgid ""
-#~ "Creates and adds a new attribute table to a given layer of an existing "
-#~ "vector map."
-#~ msgstr ""
-#~ "Vytvoøí a pøidá novou atributovou tabulku k zadané vrstvì existující "
-#~ "vektorové mapy."
-
 #~ msgid "Add various vector-based map layer"
 #~ msgstr "Pèèidat rùzné vrstvy zalo¾ené na vektoru"
 
@@ -11643,3 +11625,218 @@ msgstr ""
 
 #~ msgid "AUTHORS file missing"
 #~ msgstr "Soubor AUTHORS chybí"
+
+#~ msgid ""
+#~ "Reading workspace file <%s> failed. Invalid file, unable to parse XML "
+#~ "document."
+#~ msgstr ""
+#~ "Ètení souboru workspace <%s> selhalo. Neplatný soubor, nelze parsovat XML "
+#~ "dokument."
+
+#~ msgid "Writing current settings to workspace file failed (%s)."
+#~ msgstr ""
+#~ "Zápis aktuálního nastavení do souboru pracovní oblasti selhalo (%s)."
+
+#, fuzzy
+#~ msgid "GRASS GIS Raster Map Calculator (3D raster)"
+#~ msgstr "GRASS %s mapový kalkulátor"
+
+#~ msgid "Official GRASS site: http://grass.osgeo.org"
+#~ msgstr "Oficiální GRASS stránka: http://grass.osgeo.org"
+
+#~ msgid "GIS Library"
+#~ msgstr "GIS knihovna"
+
+#~ msgid "Force re-rendering of all layers"
+#~ msgstr "Vynutit pøekreslení v¹ech mapových vrstev"
+
+#~ msgid "Add raster map layer"
+#~ msgstr "Pøidat rastrovou vrstvu"
+
+#~ msgid "Add layer group"
+#~ msgstr "Pøidat vrstvu se skupinou"
+
+#~ msgid "Delete selected layer"
+#~ msgstr "Odstranit vybranou vrstvu"
+
+#~ msgid "Add RGB layer"
+#~ msgstr "Pøidat vrstvu RGB"
+
+#~ msgid "Add HIS layer"
+#~ msgstr "Pøidat vrstvu HIS"
+
+#~ msgid "Reload GCPs from selected POINTS file"
+#~ msgstr "Znovu naèíst vlicovací body z vybraného souboru POINTS"
+
+#~ msgid "Show Nviz settings dialog"
+#~ msgstr "Ukázat nastavení Nviz"
+
+#~ msgid "Downloads and imports data from WMS servers."
+#~ msgstr "Stáhne a importuje data z WMS serverù."
+
+#, fuzzy
+#~ msgid "Matlab-ASCII or Mapgen import"
+#~ msgstr "Matlab and MapGen import"
+
+#, fuzzy
+#~ msgid "Import Mapgen or Matlab-ASCII vector maps into GRASS."
+#~ msgstr "Importuje vektory ve formátu Mapgen nebo Matlab do GRASSu"
+
+#~ msgid "Export GRASS raster as non-georeferenced PNG image format."
+#~ msgstr "Export GRASS rastrové mapy jako nepøipojený PNG obraz."
+
+#~ msgid "Converts a raster map into a vector map layer."
+#~ msgstr "Pøevede rastrovou mapu na vektorovou."
+
+#~ msgid "Raster"
+#~ msgstr "Rastr"
+
+#~ msgid ""
+#~ "Calculates cast shadow areas from sun position and DEM. Either A: exact "
+#~ "sun position is specified, or B: date/time to calculate the sun position "
+#~ "by r.sunmask itself."
+#~ msgstr ""
+#~ "Poèítá plnì zastínìné oblasti z polohy Slunce a DMT buï A: je-li "
+#~ "specifikována pøesná pozice Slunce nebo B: pozice je spoèítána samostatnì "
+#~ "z hodnoty datum/èas pomocí r.sunmask."
+
+#~ msgid ""
+#~ "Generates raster map layers of slope, aspect, curvatures and partial "
+#~ "derivatives from a raster map layer of true elevation values. Aspect is "
+#~ "calculated counterclockwise from east."
+#~ msgstr ""
+#~ "Vytvoøí rastrovou mapu sklonu, expozice, køivosti a parciálních derivací "
+#~ "odvozenou z digitálního modelu terénu. Expozice je poèítána proti smìru "
+#~ "hodinových ruèièek s poèátkem na východì."
+
+#~ msgid ""
+#~ "Filters and generates a depressionless elevation map and a flow direction "
+#~ "map from a given elevation layer."
+#~ msgstr ""
+#~ "Z rastrové mapy digitálního modelu terénu odstraní umìle vytvoøené "
+#~ "sní¾eniny a vytvoøí mapu smìru odtoku."
+
+#~ msgid "Flow computation for massive grids (Float version)."
+#~ msgstr "Výpoèet toky v gridu"
+
+#~ msgid ""
+#~ "Overland flow hydrologic simulation using path sampling method (SIMWE)"
+#~ msgstr ""
+#~ "Hydrologický model povrchového odtoku s pou¾itím metody vzorové cesty "
+#~ "(SIMWE)"
+
+#~ msgid ""
+#~ "Sediment transport and erosion/deposition simulation using path sampling "
+#~ "method (SIMWE)"
+#~ msgstr ""
+#~ "Simulace transportu sedimentù a eroze/usazování za pou¾ití vzorové cesty "
+#~ "(SIMWE)"
+
+#~ msgid "Creates topographic index [ln(a/tan(beta))] map from elevation map."
+#~ msgstr ""
+#~ "Vytvoøí mapu topografického indexu, [ln(a/tan(beta))], z rastrové mapy "
+#~ "digitálního modelu terénu."
+
+#~ msgid "Watershed basin analysis program."
+#~ msgstr "Program na analýzu povodí."
+
+#~ msgid "Volumes"
+#~ msgstr "3D rastr"
+
+#~ msgid "GRASS GIS help"
+#~ msgstr "Nápovìda GRASS GIS"
+
+#~ msgid "Nviz properties"
+#~ msgstr "Vlastnosti Nviz"
+
+#~ msgid "Map Toolbar"
+#~ msgstr "Nástrojová li¹ta pro správu mapy"
+
+#~ msgid "Nviz toolbar"
+#~ msgstr "Nástrojová li¹ta pro Nviz"
+
+#, fuzzy
+#~ msgid "Unable to read EPGS file: '%s'"
+#~ msgstr "Nelze naèíst seznam EPSG kódù: %s"
+
+#, fuzzy
+#~ msgid "3D View Tools"
+#~ msgstr "Nástroje 3D pohledu"
+
+#~ msgid "Icon size:"
+#~ msgstr "Velikost ikon:"
+
+#~ msgid "Vector map <%s> is 3D"
+#~ msgstr "Vektorové mapa <%s> je 3D"
+
+#~ msgid "Vector map <%s> is 2D"
+#~ msgstr "Vektorová mapa <%s> je 2D"
+
+#~ msgid "%(primitives)d primitives (%(points)d points)"
+#~ msgstr "%(primitives)d prvkù (%(points)d bodù)"
+
+#~ msgid ""
+#~ "Unable to initialize display driver of vector digitizer. See 'Command "
+#~ "output' for details.\n"
+#~ "\n"
+#~ "Details:"
+#~ msgstr ""
+#~ "Nelze inicializovat ovladaè displeje pro vektorovou digitalizaci. Pro "
+#~ "detaily pøejdìte na výstup pøíkazu.\n"
+#~ "\n"
+#~ "Detaily:"
+
+#~ msgid ""
+#~ "Command '%s' not yet implemented in the GUI. Try adding it as a command "
+#~ "layer instead."
+#~ msgstr ""
+#~ "Pøíkaz '%s' je¹tì nebyl implementován do GUI. Zkuste jej pøidat jako "
+#~ "vrstvu pøíkazù."
+
+#~ msgid "<%(name)s>: layer type <%(type)s> is not supported yet."
+#~ msgstr "<%(name)s>: typ vrstvy <%(type)s> není  je¹tì podporován."
+
+#~ msgid "Unable to open file"
+#~ msgstr "Nelze otevøít soubor"
+
+#, fuzzy
+#~ msgid "DXF file:"
+#~ msgstr "Vyberte soubor DXF:"
+
+#~ msgid "Parameter not found: %s"
+#~ msgstr "Paramentr nebyl nalezen: %s"
+
+#~ msgid "Parameter %(name)s (%(desc)s) is missing.\n"
+#~ msgstr "Parametr %(name)s (%(desc)s) chybí.\n"
+
+#~ msgid "Copy the current command string to the clipboard"
+#~ msgstr "Kopírovat pøíkaz jako øetìzec do schránky"
+
+#~ msgid "Valid range"
+#~ msgstr "Povolený rozsah"
+
+#~ msgid "Vector point layer not found (id=%d)"
+#~ msgstr "Vektorová bodová vrstva nenalezena (id=%d)"
+
+#~ msgid "Unable to set data layer properties (id=%d)"
+#~ msgstr "Nelze nastavit vlastnosti datové vrstvy (id=%d)"
+
+#~ msgid "User GUI settings"
+#~ msgstr "U¾ivatelské nastavení grafického prostøedí"
+
+#, fuzzy
+#~ msgid ""
+#~ "Check a mapset to make it accessible, uncheck it to hide it.%sNote: The "
+#~ "current mapset is always accessible."
+#~ msgstr ""
+#~ "Za¹krtnout mapset pro pøístup, zru¹it pro skrytí.%s Poznámka: Mapset "
+#~ "PERMANENT a aktuální mapset jsou v¾dy pøístupné."
+
+#~ msgid "Start GRASS"
+#~ msgstr "Spustit GRASS"
+
+#~ msgid "Create mapset"
+#~ msgstr "Vytvoøit mapset"
+
+#~ msgid "Select file extension:"
+#~ msgstr "Vyberte pøíponu souboru:"

@@ -800,8 +800,9 @@ msgstr ""
 "správný georeferencovaný soubor"
 
 #: ../visualization/nviz/scripts/panel_animation.tcl:275
+#, fuzzy
 msgid "Test"
-msgstr "Test"
+msgstr "Text"
 
 #: ../gui/tcltk/gis.m/cmd.tcl:75 ../gui/tcltk/gis.m/cmd.tcl:206
 #: ../gui/tcltk/gis.m/rastnums.tcl:79 ../gui/tcltk/gis.m/rastnums.tcl:369
@@ -6342,5 +6343,5 @@ msgstr "zelená (RGB) nebo intenzita (HIS)"
 msgid "blue (RGB) or saturation (HIS):"
 msgstr "modrá (RGB) nebo sytost (HIS):"
 
-#~ msgid "Run (in Xterm)"
-#~ msgstr "Spustit v pøíkazové konzoli (Xterm)"
+msgid "Run (in Xterm)"
+msgstr "Spustit v pøíkazové konzoli (Xterm)"

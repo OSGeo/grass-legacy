@@ -5432,3 +5432,41 @@ msgstr "nhóm phụ <%s> của nhóm <%s> tham chiếu các bản đồ raster s
 #, fuzzy
 #~ msgid "Cannot delete line"
 #~ msgstr "Không thể ghi lại đường"
+
+#~ msgid "G_malloc: unable to allocate %lu bytes at %s:%d"
+#~ msgstr "G_malloc: không thể cấp phát %lu byte tại %s:%d"
+
+#~ msgid "G_calloc: unable to allocate %lu * %lu bytes at %s:%d"
+#~ msgstr "G_malloc: không thể cấp phát %lu* %lu byte tại %s:%d"
+
+#~ msgid "G_realloc: unable to allocate %lu bytes at %s:%d"
+#~ msgstr "G_realloc: không thể cấp phát %lu byte tại %s:%d"
+
+#~ msgid ""
+#~ "taking too long to find points for interpolation--please change the "
+#~ "region to area where your points are. Continuing calculations..."
+#~ msgstr ""
+#~ "mất quá lâu để tìm các điểm dùng cho nội suy--vui lòng thay đổi vùng đến "
+#~ "khu vực có các điểm của bạn. Tiếp tục tính toán..."
+
+#~ msgid "Reading lines from vector map ... "
+#~ msgstr "Đang đọc các đường từ bản đồ vec-tơ..."
+
+#~ msgid "Reading nodes from vector map ... "
+#~ msgstr "Đang đọc các nốt từ bản đồ vec-tơ..."
+
+#~ msgid "strip exists with insufficient data"
+#~ msgstr "việc cắt bỏ xảy ra với dữ liệu không đầy đủ"
+
+#~ msgid "there are points outside specified 2D/3D region--ignored %d points"
+#~ msgstr "có các điểm nằm ngoài vùng 2D/3D đã chỉ định--bỏ qua %d điểm"
+
+#~ msgid "ignoring %d points -- too dense"
+#~ msgstr "bỏ qua %d điểm--quá dày"
+
+#~ msgid "some points outside of region -- will ignore..."
+#~ msgstr "một số điểm nằm ngoài vùng -- sẽ bỏ qua ..."
+
+#, fuzzy
+#~ msgid "Column type not supported"
+#~ msgstr "Kiểu đối tượng OGR %d không được hỗ trợ"

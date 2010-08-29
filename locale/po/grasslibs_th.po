@@ -5196,3 +5196,61 @@ msgstr ""
 
 #~ msgid "Cannot rewrite line"
 #~ msgstr "ไม่สามารถเขียนใหม่"
+
+#~ msgid ""
+#~ "taking too long to find points for interpolation--please change the "
+#~ "region to area where your points are. Continuing calculations..."
+#~ msgstr ""
+#~ "ใช้เวลานานในการหาจุดเพื่อ  interpolation--โปรดเปลี่ยนขอบเขตของพื้นที่ตามจุดที่คุณเลือก "
+#~ "แล้วคำนวนต่อ..."
+
+#~ msgid "Reading lines from vector map ... "
+#~ msgstr "กำลังอ่าน ข้อมูลจาก ข้อมูลเชิงเส้น..."
+
+#~ msgid "Reading nodes from vector map ... "
+#~ msgstr "กำลังอ่าน  nodes จากข้อมูลเชิงเส้น"
+
+#~ msgid "strip exists with insufficient data"
+#~ msgstr "มี strip อยู่แต่ข้อมูลใช้ไม่ได้"
+
+#~ msgid "there are points outside specified 2D/3D region--ignored %d points"
+#~ msgstr "ไม่มีจุดอยู่นอกขอบเขต2 D/3D --ยกเลิก %d จุด"
+
+#~ msgid "ignoring %d points -- too dense"
+#~ msgstr "กำลังยกเลิก %d จุด -- แน่นเกินไป"
+
+#~ msgid "some points outside of region -- will ignore..."
+#~ msgstr "บางจุดอยู่นอกขอบเขต -- ตัดออก..."
+
+#, fuzzy
+#~ msgid "Unable to open vector map <%s> on topology level %d"
+#~ msgstr "ไม่สามารถคัดลอกแผนที่เชิงเส้น  <%s> ไปเป็น <%s>"
+
+#, fuzzy
+#~ msgid "Unable to rewrite line %d"
+#~ msgstr "ไม่สามารถอ่าน ส่วนหัวของไฟล์ได้"
+
+#, fuzzy
+#~ msgid ""
+#~ "Unable to delete line %d, vector map <%s> is not opened on topo level 2"
+#~ msgstr "ไม่สามารถลบ,แผนที่ '%s ไม่ไดถูกเปิด ในระดับ 2"
+
+#, fuzzy
+#~ msgid ""
+#~ "Unable to delete line %d, vector map <%s> is not opened in 'write' mode"
+#~ msgstr "ไม่สามารถลบ,แผนที่ '%s ไม่ไดถูกเปิด เพื่อเขียน"
+
+#, fuzzy
+#~ msgid "Unable to delete line %d from vector map <%s>"
+#~ msgstr "ไม่สามารถลบแผนที่เชิงเส้น  <%s> ได้"
+
+#, fuzzy
+#~ msgid "Cannot get layer info"
+#~ msgstr "ไม่สามารถอ่านรายละเอียด field ได้"
+
+#~ msgid "Column type not supported"
+#~ msgstr "ไม่รองรับ ชนิด Column นี้"
+
+#, fuzzy
+#~ msgid "Cannot delete line"
+#~ msgstr "ไม่สามารถเขียนใหม่"

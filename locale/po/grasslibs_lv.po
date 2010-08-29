@@ -5350,3 +5350,47 @@ msgstr ""
 #, fuzzy
 #~ msgid "WARNING: can not create a new process\n"
 #~ msgstr "Nevar izveidot jaunu procesu!"
+
+#, fuzzy
+#~ msgid "Unable to open vector map <%s> on topology level %d"
+#~ msgstr "neiespējami atvērt rastra karti [%s iekš %s]"
+
+#, fuzzy
+#~ msgid "Attempt to delete dead line"
+#~ msgstr "Nevar atvērt 'temp'/pagaidu failu"
+
+#, fuzzy
+#~ msgid "Unable to rewrite line %d"
+#~ msgstr "Nevar atvērt 'temp'/pagaidu failu"
+
+#, fuzzy
+#~ msgid ""
+#~ "Unable to delete line %d, vector map <%s> is not opened on topo level 2"
+#~ msgstr "Nevar izdzēst līniju, karte '%s' karte nav atvērta līmenī 2"
+
+#, fuzzy
+#~ msgid ""
+#~ "Unable to delete line %d, vector map <%s> is not opened in 'write' mode"
+#~ msgstr ""
+#~ "Nevar izdzēst līniju, karte '%s' karte nav atvērta rakstīšanas 'write' "
+#~ "režijmā"
+
+#, fuzzy
+#~ msgid "Unable to delete line %d from vector map <%s>"
+#~ msgstr "neispējami mainīt direktoriju uz %s"
+
+#, fuzzy
+#~ msgid "G_malloc: out of memory"
+#~ msgstr "Neiespējami piešķirt atmiņu\n"
+
+#, fuzzy
+#~ msgid "G_realloc: out of memory"
+#~ msgstr "Neiespējami piešķirt atmiņu\n"
+
+#, fuzzy
+#~ msgid "Cannot get layer info"
+#~ msgstr "Nevar iegūt slāņa informāciju"
+
+#, fuzzy
+#~ msgid "Cannot delete line"
+#~ msgstr "Nevar pārrakstīt līniju"

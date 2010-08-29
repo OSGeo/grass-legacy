@@ -2821,8 +2821,9 @@ msgid "Request to find area outside nonexistent isle"
 msgstr ""
 
 #: ../lib/vector/Vlib/build_nat.c:514
+#, fuzzy
 msgid "Registering primitives..."
-msgstr ""
+msgstr "का n"
 
 #: ../lib/vector/Vlib/build_nat.c:523
 #, fuzzy
@@ -4445,8 +4446,9 @@ msgid ""
 msgstr ""
 
 #: ../lib/sites/sites.c:397
+#, fuzzy
 msgid "Cannot fetch row"
-msgstr ""
+msgstr "के लिए n"
 
 #: ../lib/sites/sites.c:579
 msgid "G_oldsite_new_struct: invalid # dims or fields"
@@ -5226,3 +5228,47 @@ msgstr ""
 #, fuzzy
 #~ msgid "Unknown attribute type in call to G_readsites_xyz()!\n"
 #~ msgstr "जी n"
+
+#, fuzzy
+#~ msgid ""
+#~ "taking too long to find points for interpolation--please change the "
+#~ "region to area where your points are. Continuing calculations..."
+#~ msgstr "के लिए."
+
+#, fuzzy
+#~ msgid "some points outside of region -- will ignore..."
+#~ msgstr "का."
+
+#, fuzzy
+#~ msgid "Unable to open vector map <%s> on topology level %d"
+#~ msgstr "नक़ल"
+
+#, fuzzy
+#~ msgid "Attempt to delete dead line"
+#~ msgstr "के लिए n"
+
+#, fuzzy
+#~ msgid "Unable to rewrite line %d"
+#~ msgstr "के लिए n"
+
+#, fuzzy
+#~ msgid ""
+#~ "Unable to delete line %d, vector map <%s> is not opened on topo level 2"
+#~ msgstr "है नहीं चालू"
+
+#, fuzzy
+#~ msgid ""
+#~ "Unable to delete line %d, vector map <%s> is not opened in 'write' mode"
+#~ msgstr "है नहीं"
+
+#, fuzzy
+#~ msgid "Unable to delete line %d from vector map <%s>"
+#~ msgstr "के लिए"
+
+#, fuzzy
+#~ msgid "Cannot open database %s"
+#~ msgstr "लिंक ."
+
+#, fuzzy
+#~ msgid "Column type not supported"
+#~ msgstr "विशेषता नहीं"

@@ -5385,3 +5385,45 @@ msgstr ""
 
 #~ msgid "Select type: point, line, boundary, centroid or area"
 #~ msgstr "Izberi tip: toèka, linija, meja, centroid ali obmoèje"
+
+#, fuzzy
+#~ msgid "Unable to open vector map <%s> on topology level %d"
+#~ msgstr "ne morem odpreti rastrskega sloja [%s v %s]"
+
+#, fuzzy
+#~ msgid "Attempt to delete dead line"
+#~ msgstr "Ne morem odpreti temp datoteke"
+
+#, fuzzy
+#~ msgid "Unable to rewrite line %d"
+#~ msgstr "Ne morem odpreti temp datoteke"
+
+#, fuzzy
+#~ msgid ""
+#~ "Unable to delete line %d, vector map <%s> is not opened on topo level 2"
+#~ msgstr "Ne morem izbrisati linije, sloj '%s' ni odprt na nivoju 2"
+
+#, fuzzy
+#~ msgid ""
+#~ "Unable to delete line %d, vector map <%s> is not opened in 'write' mode"
+#~ msgstr "Ne morem izbrisati linije, sloj '%s' ni odprt v zapisovalnem naèinu"
+
+#, fuzzy
+#~ msgid "Unable to delete line %d from vector map <%s>"
+#~ msgstr "ne morem spremeniti direktorija v %s"
+
+#, fuzzy
+#~ msgid "G_malloc: out of memory"
+#~ msgstr "ne morem dodeliti spomina"
+
+#, fuzzy
+#~ msgid "G_realloc: out of memory"
+#~ msgstr "ne morem dodeliti spomina"
+
+#, fuzzy
+#~ msgid "Cannot get layer info"
+#~ msgstr "Ne morem zbrisati linije"
+
+#, fuzzy
+#~ msgid "Cannot delete line"
+#~ msgstr "Ne morem prepisati linije"

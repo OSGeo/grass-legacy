@@ -1105,7 +1105,7 @@ msgstr ""
 #: ../gui/wxpython/menustrings.py:25
 #, fuzzy
 msgid "Bulk link of raster data"
-msgstr "Raster harita yükleniyor"
+msgstr "Temel raster değişim verisi"
 
 #: ../gui/wxpython/menustrings.py:26
 #, fuzzy
@@ -1406,7 +1406,7 @@ msgstr "Raster haritayı dışa aktar"
 #: ../gui/wxpython/menustrings.py:89 ../gui/wxpython/menustrings.py:120
 #, fuzzy
 msgid "Common export formats"
-msgstr "Koordinatlar"
+msgstr "Koordinatları dönüştür"
 
 #: ../gui/wxpython/menustrings.py:90
 #, fuzzy
@@ -1820,7 +1820,6 @@ msgid "Launches script file."
 msgstr ""
 
 #: ../gui/wxpython/menustrings.py:190
-#, fuzzy
 msgid "Exit GUI"
 msgstr "Arayüzden Çık"
 
@@ -4785,18 +4784,16 @@ msgid "raster map"
 msgstr "Raster harita"
 
 #: ../gui/wxpython/gui_modules/mcalc_builder.py:121
-#, fuzzy
 msgid "Operators"
-msgstr "Şeffaf"
+msgstr ""
 
 #: ../gui/wxpython/gui_modules/mcalc_builder.py:123
 msgid "Operands"
 msgstr ""
 
 #: ../gui/wxpython/gui_modules/mcalc_builder.py:125
-#, fuzzy
 msgid "Expression"
-msgstr "Projeksiyon:"
+msgstr ""
 
 #: ../gui/wxpython/gui_modules/mcalc_builder.py:138
 msgid "exponent"
@@ -4912,9 +4909,8 @@ msgid "Insert existing %s"
 msgstr "varolan dosyanın üstüne yaz"
 
 #: ../gui/wxpython/gui_modules/mcalc_builder.py:207
-#, fuzzy
 msgid "Insert mapcalc function"
-msgstr "Yeni kayıt gir"
+msgstr ""
 
 #: ../gui/wxpython/gui_modules/mcalc_builder.py:397
 msgid "You must enter the name of a new map to create"
@@ -6193,7 +6189,6 @@ msgstr "Yüzey"
 #: ../gui/wxpython/gui_modules/nviz_tools.py:276
 #: ../gui/wxpython/gui_modules/nviz_tools.py:3154
 #: ../gui/wxpython/gui_modules/nviz_preferences.py:237
-#, fuzzy
 msgid "Vector"
 msgstr "Vektör"
 
@@ -6594,9 +6589,8 @@ msgstr "Genişlik:"
 
 #: ../gui/wxpython/gui_modules/nviz_tools.py:3230
 #: ../gui/wxpython/gui_modules/nviz_preferences.py:313
-#, fuzzy
 msgid "Marker:"
-msgstr "Katman:"
+msgstr ""
 
 #: ../gui/wxpython/gui_modules/nviz_tools.py:3319
 #: ../gui/wxpython/gui_modules/nviz_tools.py:3450
@@ -6788,7 +6782,7 @@ msgstr ""
 #: ../gui/wxpython/gui_modules/gselect.py:1077
 #, fuzzy
 msgid "Choose input file"
-msgstr "çalışma alanı dosyasını seç"
+msgstr "Girdi dizinini seç"
 
 #: ../gui/wxpython/gui_modules/gselect.py:950
 msgid "Choose input directory"
@@ -7817,9 +7811,9 @@ msgid " row %d:"
 msgstr " satır %d"
 
 #: ../gui/wxpython/gui_modules/sqlbuilder.py:78
-#, python-format
+#, fuzzy, python-format
 msgid "GRASS SQL Builder (%(type)s): vector map <%(map)s>"
-msgstr ""
+msgstr "GRASS SQL Oluşturucu. %s"
 
 #: ../gui/wxpython/gui_modules/sqlbuilder.py:85
 #, fuzzy
@@ -7999,15 +7993,14 @@ msgid "3d raster map <%s> not found"
 msgstr "<%s>haritası bulunamadı."
 
 #: ../gui/wxpython/gui_modules/toolbars.py:188
-#, fuzzy
 msgid "3D view mode not available"
-msgstr "Nviz araçları"
+msgstr ""
 
 #: ../gui/wxpython/gui_modules/toolbars.py:189
 #: ../gui/wxpython/gui_modules/toolbars.py:205
-#, fuzzy, python-format
+#, python-format
 msgid "Reason: %s"
-msgstr "Bölge"
+msgstr ""
 
 #: ../gui/wxpython/gui_modules/toolbars.py:190
 msgid ""
@@ -10454,14 +10447,89 @@ msgid ""
 msgstr ""
 
 #, fuzzy
-#~ msgid "GRASS GIS Map Calculator (3D raster)"
-#~ msgstr "GRASS %s Harita Hesaplayıcı"
+msgid "GRASS GIS Map Calculator (3D raster)"
+msgstr "GRASS %s Harita Hesaplayıcı"
+
+msgid "Import raster map"
+msgstr "Raster haritayı içe aktar"
+
+msgid "Import vector map"
+msgstr "Vektör haritayı içe aktar"
+
+#, fuzzy
+msgid "C&onfig"
+msgstr "Yapılandırma"
+
+#, fuzzy
+msgid "Removes a table from database."
+msgstr "Veritabanından üret"
+
+#, fuzzy
+msgid "3D Raster map"
+msgstr "Raster harita"
+
+#, fuzzy
+msgid "Error in command execution '%s'"
+msgstr "%s komutu çalıştırılmasında hata"
+
+#, fuzzy
+msgid "module"
+msgstr "Kod"
+
+#, fuzzy
+msgid "Select GRASS module"
+msgstr "Proje mevkisi ve harita takımını seç"
+
+#, fuzzy
+msgid "Color settings"
+msgstr "Vektör ayarlar"
+
+#, fuzzy
+msgid "Size settings"
+msgstr "Metin ayarları"
+
+#, fuzzy
+msgid "Unable to get list of available mapsets."
+msgstr "harita takımı silinemiyor"
+
+#, fuzzy
+msgid "Unable to get list of accessible mapsets."
+msgstr "harita takımı silinemiyor"
+
+#, fuzzy
+msgid "Menu tree window"
+msgstr "Kayar pencere"
+
+#, fuzzy
+msgid "label"
+msgstr "Etiket ekle"
+
+#, fuzzy
+msgid "help"
+msgstr "Yardım"
+
+#, fuzzy
+msgid "Run"
+msgstr "Çalıştı&r"
+
+#, fuzzy
+msgid "Saved NVIZ Settings"
+msgstr "Geçerli ayarları kaydet?"
+
+#, fuzzy
+msgid "Load and apply settings from user settings file"
+msgstr "Diyaloğu kapat ve ayarları kullanıcı ayar dosyasına kaydet"
+
+#, fuzzy
+msgid "Creates a lines vector map from an ASCII x,y points file."
+msgstr ""
+"ASCII nokta dosyasından veya ASCII vektör dosyadan vektör harita oluşturur."
+
+msgid "GRASS SQL Builder: %s"
+msgstr "GRASS SQL Oluşturucu. %s"
 
 #~ msgid "Redraw GCP markers in map displays"
 #~ msgstr "Harita görüntüsündeki YKN işaretlerini yeniden çiz"
-
-#~ msgid "Import raster map"
-#~ msgstr "Raster haritayı içe aktar"
 
 #~ msgid "Import raster data using GDAL"
 #~ msgstr "Raster haritayı GDAL kullanarak içe aktar"
@@ -10476,9 +10544,6 @@ msgstr ""
 #, fuzzy
 #~ msgid "Multiple link to GDAL"
 #~ msgstr "OGR'ye bağlantı"
-
-#~ msgid "Import vector map"
-#~ msgstr "Vektör haritayı içe aktar"
 
 #~ msgid "Import vector data using OGR"
 #~ msgstr "Vektör haritayı OGR kullanarak içe aktar"
@@ -10511,28 +10576,12 @@ msgstr ""
 #~ msgid "Export grid 3D volume"
 #~ msgstr "Grid3D hacmi dışa aktar"
 
-#, fuzzy
-#~ msgid "C&onfig"
-#~ msgstr "Yapılandırma"
-
 #~ msgid "Display shortest route (requires XTerm)"
 #~ msgstr "En kısa rotayı göster (XTerm gereklidir)"
 
 #, fuzzy
 #~ msgid "Find shortest path for selected starting and ending node"
 #~ msgstr "Vektör şebekede en kısa yolu bulur."
-
-#, fuzzy
-#~ msgid "Removes a table from database."
-#~ msgstr "Veritabanından üret"
-
-#, fuzzy
-#~ msgid "3D Raster map"
-#~ msgstr "Raster harita"
-
-#, fuzzy
-#~ msgid "Error in command execution '%s'"
-#~ msgstr "%s komutu çalıştırılmasında hata"
 
 #~ msgid "Preferences error"
 #~ msgstr "Tercih hatası"
@@ -10545,30 +10594,6 @@ msgstr ""
 
 #~ msgid "Nviz error"
 #~ msgstr "Nviz hatası"
-
-#, fuzzy
-#~ msgid "module"
-#~ msgstr "Kod"
-
-#, fuzzy
-#~ msgid "Select GRASS module"
-#~ msgstr "Proje mevkisi ve harita takımını seç"
-
-#, fuzzy
-#~ msgid "Color settings"
-#~ msgstr "Vektör ayarlar"
-
-#, fuzzy
-#~ msgid "Size settings"
-#~ msgstr "Metin ayarları"
-
-#, fuzzy
-#~ msgid "Unable to get list of available mapsets."
-#~ msgstr "harita takımı silinemiyor"
-
-#, fuzzy
-#~ msgid "Unable to get list of accessible mapsets."
-#~ msgstr "harita takımı silinemiyor"
 
 #~ msgid "Input DXF file"
 #~ msgstr "Girdi DXF dosya"
@@ -10583,39 +10608,14 @@ msgstr ""
 #~ msgid "Select file extension:"
 #~ msgstr "Dosya uzantısını seç:"
 
-#, fuzzy
-#~ msgid "Menu tree window"
-#~ msgstr "Kayar pencere"
-
-#, fuzzy
-#~ msgid "label"
-#~ msgstr "Etiket ekle"
-
-#, fuzzy
-#~ msgid "help"
-#~ msgstr "Yardım"
-
-#, fuzzy
-#~ msgid "Run"
-#~ msgstr "Çalıştı&r"
-
 #~ msgid "Set ground control points (GCPs)"
 #~ msgstr "Yer kontrol noktalarını (YKN) ayarla"
 
-#, fuzzy
-#~ msgid "Saved NVIZ Settings"
-#~ msgstr "Geçerli ayarları kaydet?"
-
-#, fuzzy
 #~ msgid "Load"
 #~ msgstr "Yükle"
 
 #~ msgid "Default"
 #~ msgstr "Varsayılan"
-
-#, fuzzy
-#~ msgid "Load and apply settings from user settings file"
-#~ msgstr "Diyaloğu kapat ve ayarları kullanıcı ayar dosyasına kaydet"
 
 #~ msgid "Restore default settings"
 #~ msgstr "Varsayılan ayarları onar"
@@ -10636,12 +10636,6 @@ msgstr ""
 #, fuzzy
 #~ msgid "Link OGR layers"
 #~ msgstr "Katman listesi"
-
-#, fuzzy
-#~ msgid "Creates a lines vector map from an ASCII x,y points file."
-#~ msgstr ""
-#~ "ASCII nokta dosyasından veya ASCII vektör dosyadan vektör harita "
-#~ "oluşturur."
 
 #~ msgid "Height"
 #~ msgstr "Yükseklik"
@@ -10719,9 +10713,6 @@ msgstr ""
 
 #~ msgid "Output vector map name"
 #~ msgstr "Çıktı vektör harita adı"
-
-#~ msgid "GRASS SQL Builder: %s"
-#~ msgstr "GRASS SQL Oluşturucu. %s"
 
 #, fuzzy
 #~ msgid "Save workspace to open file"
@@ -10884,3 +10875,218 @@ msgstr ""
 #, fuzzy
 #~ msgid "Witdh:"
 #~ msgstr "Genişlik:"
+
+#~ msgid "Writing current settings to workspace file failed (%s)."
+#~ msgstr "Geçerli ayarların çalışma alanı dosyasına kaydında hata (%s)."
+
+#, fuzzy
+#~ msgid "GRASS GIS Raster Map Calculator (3D raster)"
+#~ msgstr "GRASS %s Harita Hesaplayıcı"
+
+#, fuzzy
+#~ msgid "Add various vector-based map layer"
+#~ msgstr "Vektör harita katmanı ekle"
+
+#, fuzzy
+#~ msgid "COPYING file missing"
+#~ msgstr "EPSG kodu kayıp."
+
+#~ msgid "Create new workspace file"
+#~ msgstr "Yeni çalışma alanı dosyası oluştur"
+
+#~ msgid "Load map layers into workspace"
+#~ msgstr "Harita katmanlarını çalışma alanına yükle"
+
+#~ msgid "Open existing workspace file"
+#~ msgstr "Varolan çalışma alanı dosyasını aç"
+
+#~ msgid "Save current workspace to file"
+#~ msgstr "Geçerli çalışma alanını dosyaya kaydet"
+
+#~ msgid "Add raster map layer"
+#~ msgstr "Raster harita katmanı ekle"
+
+#~ msgid "Add vector map layer"
+#~ msgstr "Vektör harita katmanı ekle"
+
+#~ msgid "Add layer group"
+#~ msgstr "Katman grubu ekle"
+
+#~ msgid "Delete selected layer"
+#~ msgstr "Seçileni katmanı sil"
+
+#~ msgid "Add RGB layer"
+#~ msgstr "KYM katman ekle"
+
+#~ msgid "Add HIS layer"
+#~ msgstr "HIS katman ekle"
+
+#~ msgid "Add 3D raster map"
+#~ msgstr "3B raster harita ekle"
+
+#~ msgid "Reload GCPs from selected POINTS file"
+#~ msgstr "YKN'nı seçilen NOKTA dosyasından yeniden yükle"
+
+#~ msgid "Show Nviz settings dialog"
+#~ msgstr "Nviz ayarları diyaloğunu göster"
+
+#, fuzzy
+#~ msgid "Link GDAL supported raster data as a pseudo GRASS raster map layer."
+#~ msgstr ""
+#~ "GDAL desteğindeki raster dosyayı ikili raster harita katmanı olarak içe "
+#~ "aktar"
+
+#~ msgid "Downloads and imports data from WMS servers."
+#~ msgstr "WMS sunucularından veriyi indirir ve içe aktarır."
+
+#, fuzzy
+#~ msgid "Creates a new pseudo-vector map as a link to an OGR-supported layer."
+#~ msgstr ""
+#~ "Diğer vektör harita katmanlarını birleştirirek yeni vektör harita katmanı "
+#~ "oluştur"
+
+#, fuzzy
+#~ msgid "Matlab-ASCII or Mapgen import"
+#~ msgstr "Matlab and MapGen içe aktar"
+
+#, fuzzy
+#~ msgid "Import Mapgen or Matlab-ASCII vector maps into GRASS."
+#~ msgstr "Matlab and MapGenvektör haritalarını GRASS'a içe aktar"
+
+#~ msgid "Export GRASS raster as non-georeferenced PNG image format."
+#~ msgstr ""
+#~ "GRASS rasterı coğrafi referanssız PNG görüntü biçimi olarak dışa aktar."
+
+#~ msgid "Converts a raster map into a vector map layer."
+#~ msgstr "Raster vektör haritayı vektör harita katmanına dönüştürür."
+
+#~ msgid "E&xit"
+#~ msgstr "Çı&k"
+
+#~ msgid "Config"
+#~ msgstr "Yapılandırma"
+
+#~ msgid "Raster"
+#~ msgstr "Raster"
+
+#~ msgid "Create a MASK for limiting raster operation"
+#~ msgstr "Raster işlemleri sınırlandırmak için MASKE oluştur"
+
+#~ msgid ""
+#~ "Calculates univariate statistics from a GRASS raster map based on vector "
+#~ "polygons and uploads statistics to new attribute columns."
+#~ msgstr ""
+#~ "GRASS raster haritasından vektör poligonlara göre tek değişkenli "
+#~ "istatistikleri hesaplar ve yeni öznitelik sütunlarına yükler."
+
+#~ msgid "Imagery"
+#~ msgstr "Görüntü"
+
+#~ msgid "Volumes"
+#~ msgstr "Hacimler"
+
+#~ msgid "GRASS GIS help"
+#~ msgstr "GRASS CBS Yardım"
+
+#~ msgid "GRASS GIS GUI help"
+#~ msgstr "GRASS CBS Arayüz yardımı"
+
+#~ msgid "Map calculator"
+#~ msgstr "Harita hesaplayıcı"
+
+#~ msgid "Nviz properties"
+#~ msgstr "Nviz özellikleri"
+
+#~ msgid "Map Toolbar"
+#~ msgstr "Harita Araçları"
+
+#~ msgid "Nviz toolbar"
+#~ msgstr "Nviz araç çubuğu"
+
+#, fuzzy
+#~ msgid "Unable to read EPGS file: '%s'"
+#~ msgstr "EPSG Kodları okunamıyor: %s"
+
+#, fuzzy
+#~ msgid "Resolution cannot be 0"
+#~ msgstr "Çözünürlük:"
+
+#, fuzzy
+#~ msgid "3D View Tools"
+#~ msgstr "Nviz araçları"
+
+#~ msgid "fine:"
+#~ msgstr "hassas:"
+
+#~ msgid "Icon size:"
+#~ msgstr "Simge boyutu:"
+
+#~ msgid "width:"
+#~ msgstr "genişlik:"
+
+#~ msgid "symbol:"
+#~ msgstr "sembol:"
+
+#~ msgid "color:"
+#~ msgstr "renk:"
+
+#~ msgid "Layer properties"
+#~ msgstr "Katman özellikleri"
+
+#~ msgid "Vector map <%s> is 3D"
+#~ msgstr "<%s> vektör haritası 3B"
+
+#~ msgid "Vector map <%s> is 2D"
+#~ msgstr "<%s> vektör haritası 2B"
+
+#, fuzzy
+#~ msgid "Error in command execution %s"
+#~ msgstr "%s komutu çalıştırılmasında hata"
+
+#~ msgid "Unable to open file"
+#~ msgstr "Dosya açılamıyor"
+
+#, fuzzy
+#~ msgid "DXF file:"
+#~ msgstr "DXF dosyasını Seç:"
+
+#~ msgid "Parameter not found: %s"
+#~ msgstr "Parametre bulunmadı: %s"
+
+#~ msgid "Close this window without executing the command"
+#~ msgstr "Komutu çalıştırmadan bu pencereyi kapat"
+
+#~ msgid "Show manual page of the command"
+#~ msgstr "Komut kılavuz sayfasını göster"
+
+#~ msgid "Run the command"
+#~ msgstr "Komutu çalıştır"
+
+#~ msgid "Copy the current command string to the clipboard"
+#~ msgstr "Geçerli komut dizesini panoya kopyala"
+
+#~ msgid "Valid range"
+#~ msgstr "Geçerli aralık"
+
+#~ msgid "User GUI settings"
+#~ msgstr "Kullanıcı Arayüz ayarları"
+
+#~ msgid "Start GRASS"
+#~ msgstr "GRASS'ı Başlat"
+
+#~ msgid "Create mapset"
+#~ msgstr "Harita takımı oluştur"
+
+#, fuzzy
+#~ msgid "Command %s could not be run"
+#~ msgstr "'%s' komutu henüz tamamlanmadı."
+
+#, fuzzy
+#~ msgid "&Stop"
+#~ msgstr "üst"
+
+#~ msgid "Save current settings?"
+#~ msgstr "Geçerli ayarları kaydet?"
+
+#~ msgid "List of categories"
+#~ msgstr "Kategori listesi"

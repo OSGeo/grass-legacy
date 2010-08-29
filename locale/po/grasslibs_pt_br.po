@@ -5121,3 +5121,63 @@ msgstr ""
 #, fuzzy
 #~ msgid "Can't open directory %s"
 #~ msgstr "não consegui abrir vetor novo %s"
+
+#~ msgid ""
+#~ "taking too long to find points for interpolation--please change the "
+#~ "region to area where your points are. Continuing calculations..."
+#~ msgstr ""
+#~ "demorando demais para encontrar pontos para interpolação--favor alterar a "
+#~ "região para a área onde estão os pontos. Continuando cálculos..."
+
+#~ msgid "strip exists with insufficient data"
+#~ msgstr "há uma faixa com dados insuficientes"
+
+#~ msgid "there are points outside specified 2D/3D region--ignored %d points"
+#~ msgstr "há pontos fora da região 2D/3D especificada-- ignorei %d pontos"
+
+#~ msgid "ignoring %d points -- too dense"
+#~ msgstr "ignorando %d pontos -- muito denso"
+
+#~ msgid "some points outside of region -- will ignore..."
+#~ msgstr "alguns pontos fora da região -- vou ignorar..."
+
+#, fuzzy
+#~ msgid "Unable to open vector map <%s> on topology level %d"
+#~ msgstr "não foi possível abrir o mapa raster [%s em %s]"
+
+#, fuzzy
+#~ msgid "Attempt to delete dead line"
+#~ msgstr "não consegui abrir arquivo temporário"
+
+#, fuzzy
+#~ msgid "Unable to rewrite line %d"
+#~ msgstr "não consegui abrir arquivo temporário"
+
+#, fuzzy
+#~ msgid ""
+#~ "Unable to delete line %d, vector map <%s> is not opened on topo level 2"
+#~ msgstr ""
+#~ "não é possível apagar a linha, o mapa '%s' não está aberto no nível 2"
+
+#, fuzzy
+#~ msgid ""
+#~ "Unable to delete line %d, vector map <%s> is not opened in 'write' mode"
+#~ msgstr ""
+#~ "não consegui apagar a linha, o mapa '%s' não está aberto em modo de "
+#~ "escrita"
+
+#, fuzzy
+#~ msgid "Unable to delete line %d from vector map <%s>"
+#~ msgstr "Impossível mudar de diretório para %s"
+
+#, fuzzy
+#~ msgid "Cannot get layer info"
+#~ msgstr "não consegui obter informações de camada"
+
+#, fuzzy
+#~ msgid "Column type not supported"
+#~ msgstr "Feição OGR tipo %d não suportada)"
+
+#, fuzzy
+#~ msgid "Cannot delete line"
+#~ msgstr "não consegui reescrever a linha"

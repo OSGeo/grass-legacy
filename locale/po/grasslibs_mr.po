@@ -2486,59 +2486,59 @@ msgid "Topology was built"
 msgstr ""
 
 #: ../lib/vector/Vlib/build.c:153
-#, c-format
+#, fuzzy, c-format
 msgid "Number of nodes: %d"
-msgstr ""
+msgstr "%s उघडता आले नाही"
 
 #: ../lib/vector/Vlib/build.c:154
-#, c-format
+#, fuzzy, c-format
 msgid "Number of primitives: %d"
-msgstr ""
+msgstr "%s उघडता आले नाही"
 
 #: ../lib/vector/Vlib/build.c:155
-#, c-format
+#, fuzzy, c-format
 msgid "Number of points: %d"
-msgstr ""
+msgstr "%s उघडता आले नाही"
 
 #: ../lib/vector/Vlib/build.c:156
-#, c-format
+#, fuzzy, c-format
 msgid "Number of lines: %d"
-msgstr ""
+msgstr "%s उघडता आले नाही"
 
 #: ../lib/vector/Vlib/build.c:157
-#, c-format
+#, fuzzy, c-format
 msgid "Number of boundaries: %d"
-msgstr ""
+msgstr "%s उघडता आले नाही"
 
 #: ../lib/vector/Vlib/build.c:158
-#, c-format
+#, fuzzy, c-format
 msgid "Number of centroids: %d"
-msgstr ""
+msgstr "%s उघडता आले नाही"
 
 #: ../lib/vector/Vlib/build.c:161
-#, c-format
+#, fuzzy, c-format
 msgid "Number of faces: %d"
-msgstr ""
+msgstr "%s उघडता आले नाही"
 
 #: ../lib/vector/Vlib/build.c:164
-#, c-format
+#, fuzzy, c-format
 msgid "Number of kernels: %d"
-msgstr ""
+msgstr "%s उघडता आले नाही"
 
 #: ../lib/vector/Vlib/build.c:205
-#, c-format
+#, fuzzy, c-format
 msgid "Number of areas: %d"
-msgstr ""
+msgstr "%s उघडता आले नाही"
 
 #: ../lib/vector/Vlib/build.c:206
-#, c-format
+#, fuzzy, c-format
 msgid "Number of isles: %d"
-msgstr ""
+msgstr "%s उघडता आले नाही"
 
 #: ../lib/vector/Vlib/build.c:209
-#, c-format
+#, fuzzy, c-format
 msgid "Number of incorrect boundaries: %d"
-msgstr ""
+msgstr "%s उघडता आले नाही"
 
 #: ../lib/vector/Vlib/build.c:213
 #, fuzzy, c-format
@@ -2551,17 +2551,19 @@ msgid "Number of duplicate centroids: %d"
 msgstr "%s उघडता आले नाही"
 
 #: ../lib/vector/Vlib/build.c:221
-#, c-format
+#, fuzzy, c-format
 msgid "Number of areas without centroid: %d"
-msgstr ""
+msgstr "%s उघडता आले नाही"
 
 #: ../lib/vector/Vlib/build.c:226
+#, fuzzy
 msgid "Number of areas: -"
-msgstr ""
+msgstr "%s उघडता आले नाही"
 
 #: ../lib/vector/Vlib/build.c:227
+#, fuzzy
 msgid "Number of isles: -"
-msgstr ""
+msgstr "%s उघडता आले नाही"
 
 #: ../lib/vector/Vlib/build.c:256
 #, fuzzy, c-format
@@ -3072,11 +3074,11 @@ msgstr "%s उघडता आले नाही"
 
 #: ../lib/vector/Vlib/open.c:211 ../lib/vector/Vlib/open.c:279
 #: ../lib/vector/Vlib/open.c:299
-#, c-format
+#, fuzzy, c-format
 msgid ""
 "Unable to open vector map <%s> on level %d. Try to rebuild vector topology "
 "by v.build."
-msgstr ""
+msgstr "%s उघडता आले नाही"
 
 #: ../lib/vector/Vlib/open.c:214
 #, fuzzy
@@ -4909,3 +4911,37 @@ msgstr ""
 #, fuzzy
 #~ msgid "Not able to open cellfile for [%s]"
 #~ msgstr "उघडलेल्या फाइलचे नाव %s\n"
+
+#, fuzzy
+#~ msgid "Attempt to delete dead line"
+#~ msgstr "temp फाइल उघडता आली नाही"
+
+#, fuzzy
+#~ msgid "Unable to rewrite line %d"
+#~ msgstr "temp फाइल उघडता आली नाही"
+
+#, fuzzy
+#~ msgid ""
+#~ "Unable to delete line %d, vector map <%s> is not opened on topo level 2"
+#~ msgstr "%s उघडता आले नाही"
+
+#, fuzzy
+#~ msgid ""
+#~ "Unable to delete line %d, vector map <%s> is not opened in 'write' mode"
+#~ msgstr "%s उघडता आले नाही"
+
+#, fuzzy
+#~ msgid "Unable to delete line %d from vector map <%s>"
+#~ msgstr "%s उघडता आले नाही"
+
+#, fuzzy
+#~ msgid "Cannot get layer info"
+#~ msgstr "temp फाइल उघडता आली नाही"
+
+#, fuzzy
+#~ msgid "Cannot describe table <%s>"
+#~ msgstr "%s उघडता आले नाही"
+
+#, fuzzy
+#~ msgid "Cannot get column info"
+#~ msgstr "temp फाइल उघडता आली नाही"

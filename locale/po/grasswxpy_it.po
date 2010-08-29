@@ -7920,15 +7920,14 @@ msgid "3d raster map <%s> not found"
 msgstr "Mappa <%s> non trovata."
 
 #: ../gui/wxpython/gui_modules/toolbars.py:188
-#, fuzzy
 msgid "3D view mode not available"
-msgstr "Strumenti visualizzazione 3D"
+msgstr ""
 
 #: ../gui/wxpython/gui_modules/toolbars.py:189
 #: ../gui/wxpython/gui_modules/toolbars.py:205
-#, fuzzy, python-format
+#, python-format
 msgid "Reason: %s"
-msgstr "Regione"
+msgstr ""
 
 #: ../gui/wxpython/gui_modules/toolbars.py:190
 msgid ""
@@ -10389,6 +10388,79 @@ msgstr ""
 "non lo hai gi? fatto. Una scelta popolare ? \"grassdata\", situata nella tua "
 "home"
 
+#, fuzzy
+msgid "GRASS GIS Map Calculator (3D raster)"
+msgstr "GRASS %s Map Calculator"
+
+#, fuzzy
+msgid "Find extension by"
+msgstr "Gestisci estensioni"
+
+#, fuzzy
+msgid "3D Raster map"
+msgstr "Mappa Raster"
+
+#, fuzzy
+msgid "module"
+msgstr "Trova modulo:"
+
+#, fuzzy
+msgid "Select GRASS module"
+msgstr "Seleziona location e mapset di GRASS"
+
+#, fuzzy
+msgid "Color settings"
+msgstr "Impostazione del vettore"
+
+#, fuzzy
+msgid "Size settings"
+msgstr "Impostazioni del testo"
+
+#, fuzzy
+msgid "Unable to get list of available mapsets."
+msgstr "Impossibile eliminare il mapset"
+
+#, fuzzy
+msgid "Unable to get list of accessible mapsets."
+msgstr "Impossibile eliminare il mapset"
+
+#, fuzzy
+msgid "Creates a lines vector map from an ASCII x,y points file."
+msgstr "Crea un vettore da file ASCI points o ASCII vector"
+
+msgid ""
+"Georeference, rectify, and import Terra-ASTER imagery and relative DEM's "
+"using gdalwarp."
+msgstr ""
+"Georeferenzia, rettifica e importa immagine Terra-ASTER e relativo DEM "
+"usando gdalwarp"
+
+msgid "Latitude/longitude maps"
+msgstr "Mappa latitudine/longitudine"
+
+msgid "Potential Sunshine Hours"
+msgstr "Ore potenziali di insolazione"
+
+msgid "Actual Evapotranspiration"
+msgstr "Evapotraspirazione attuale"
+
+msgid "Matlab array or Mapgen format import"
+msgstr "Importa array Matlab o formato MapGen"
+
+msgid ""
+"Check mapset to make it accessible, uncheck it to hide it.%sNote: PERMANENT "
+"and current mapset are always accessible."
+msgstr ""
+"Marca mapset per renderlo accessibile, demarca per nasconderlo.%sNote: "
+"PERMANENT e mapset corrente sono sembre accessibili"
+
+msgid "Finds shortest path for selected starting and ending node."
+msgstr ""
+"Trova il percorso più breve per i nodi di partenza ed arrivo selezionati"
+
+msgid "Reconnect vector to database"
+msgstr "Riconnetti mappa vettoriale al database"
+
 #~ msgid ""
 #~ "Reading workspace file <%(file)s> failed.\n"
 #~ "Invalid file, unable to parse XML document.\n"
@@ -10403,10 +10475,6 @@ msgstr ""
 #~ msgid "Unable to open workspace file <%s> for writing."
 #~ msgstr ""
 #~ "Impossibile aprire il file dell'ambiente di lavoro <%s> per scriverci."
-
-#, fuzzy
-#~ msgid "GRASS GIS Map Calculator (3D raster)"
-#~ msgstr "GRASS %s Map Calculator"
 
 #~ msgid "Add 3D raster map"
 #~ msgstr "Aggiungi mappa raster 3D"
@@ -10528,14 +10596,6 @@ msgstr ""
 #~ msgid "Nviz toolbar"
 #~ msgstr "Barra degli strumenti Nviz"
 
-#, fuzzy
-#~ msgid "Find extension by"
-#~ msgstr "Gestisci estensioni"
-
-#, fuzzy
-#~ msgid "3D Raster map"
-#~ msgstr "Mappa Raster"
-
 #~ msgid "Error in command execution '%s'"
 #~ msgstr "Errore nell'esecuzione del comando '%s'"
 
@@ -10550,50 +10610,6 @@ msgstr ""
 
 #~ msgid "Nviz error"
 #~ msgstr "Errore di NVIZ"
-
-#, fuzzy
-#~ msgid "module"
-#~ msgstr "Trova modulo:"
-
-#, fuzzy
-#~ msgid "Select GRASS module"
-#~ msgstr "Seleziona location e mapset di GRASS"
-
-#, fuzzy
-#~ msgid "Color settings"
-#~ msgstr "Impostazione del vettore"
-
-#, fuzzy
-#~ msgid "Size settings"
-#~ msgstr "Impostazioni del testo"
-
-#, fuzzy
-#~ msgid "Unable to get list of available mapsets."
-#~ msgstr "Impossibile eliminare il mapset"
-
-#, fuzzy
-#~ msgid "Unable to get list of accessible mapsets."
-#~ msgstr "Impossibile eliminare il mapset"
-
-#, fuzzy
-#~ msgid "Creates a lines vector map from an ASCII x,y points file."
-#~ msgstr "Crea un vettore da file ASCI points o ASCII vector"
-
-#~ msgid ""
-#~ "Georeference, rectify, and import Terra-ASTER imagery and relative DEM's "
-#~ "using gdalwarp."
-#~ msgstr ""
-#~ "Georeferenzia, rettifica e importa immagine Terra-ASTER e relativo DEM "
-#~ "usando gdalwarp"
-
-#~ msgid "Latitude/longitude maps"
-#~ msgstr "Mappa latitudine/longitudine"
-
-#~ msgid "Potential Sunshine Hours"
-#~ msgstr "Ore potenziali di insolazione"
-
-#~ msgid "Actual Evapotranspiration"
-#~ msgstr "Evapotraspirazione attuale"
 
 #~ msgid "Input DXF file"
 #~ msgstr "File DXF di input"
@@ -10954,9 +10970,6 @@ msgstr ""
 #~ "Scarica punti di interesse, rotte e tracce da un GPS o dai più comuni "
 #~ "formati di file GPS"
 
-#~ msgid "Matlab array or Mapgen format import"
-#~ msgstr "Importa array Matlab o formato MapGen"
-
 #~ msgid "Converts a 3D ASCII raster text file into a (binary) 3D raster map."
 #~ msgstr ""
 #~ "Converte un file testuale raster ASCII 3D in un layer raster 3D (binario)."
@@ -11248,13 +11261,6 @@ msgstr ""
 #~ msgid "User GUI settings"
 #~ msgstr "Impostazione dell'interfaccia grafica"
 
-#~ msgid ""
-#~ "Check mapset to make it accessible, uncheck it to hide it.%sNote: "
-#~ "PERMANENT and current mapset are always accessible."
-#~ msgstr ""
-#~ "Marca mapset per renderlo accessibile, demarca per nasconderlo.%sNote: "
-#~ "PERMANENT e mapset corrente sono sembre accessibili"
-
 #~ msgid "Select file extension:"
 #~ msgstr "Seleziona l'estensione del file:"
 
@@ -11267,15 +11273,8 @@ msgstr ""
 #~ msgid "Raster"
 #~ msgstr "Raster"
 
-#~ msgid "Finds shortest path for selected starting and ending node."
-#~ msgstr ""
-#~ "Trova il percorso più breve per i nodi di partenza ed arrivo selezionati"
-
 #~ msgid "Volumes"
 #~ msgstr "Volumi"
-
-#~ msgid "Reconnect vector to database"
-#~ msgstr "Riconnetti mappa vettoriale al database"
 
 #~ msgid "GRASS GIS help"
 #~ msgstr "Aiuto GRASS GIS"
@@ -11326,3 +11325,113 @@ msgstr ""
 
 #~ msgid "Format"
 #~ msgstr "Formato"
+
+#~ msgid ""
+#~ "Reading workspace file <%s> failed. Invalid file, unable to parse XML "
+#~ "document."
+#~ msgstr ""
+#~ "Lettura file dell'ambiente di lavoro <%s> fallita. File invalido, "
+#~ "impossibile parsare il documento XML."
+
+#~ msgid "Writing current settings to workspace file failed (%s)."
+#~ msgstr ""
+#~ "Scrittura delle impostazioni correnti nel file dell'ambiente di lavoro "
+#~ "fallita (%s)"
+
+#, fuzzy
+#~ msgid "GRASS GIS Raster Map Calculator (3D raster)"
+#~ msgstr "GRASS %s Map Calculator"
+
+#~ msgid "Add raster map layer"
+#~ msgstr "Aggiunge un layer raster"
+
+#~ msgid "Add layer group"
+#~ msgstr "Aggiungi un gruppo di layer"
+
+#~ msgid "Delete selected layer"
+#~ msgstr "Elimina il layer selezionato"
+
+#~ msgid "Add RGB layer"
+#~ msgstr "Aggiungi RGB layer"
+
+#~ msgid "Add HIS layer"
+#~ msgstr "Aggiungi HIS layer"
+
+#~ msgid "Reload GCPs from selected POINTS file"
+#~ msgstr "Ricarica GCP dal file POINTS selezionato"
+
+#, fuzzy
+#~ msgid "Matlab-ASCII or Mapgen import"
+#~ msgstr "Importa array Matlab o formato MapGen"
+
+#, fuzzy
+#~ msgid "Import Mapgen or Matlab-ASCII vector maps into GRASS."
+#~ msgstr "Importa vettori Mapgen o Matlab in GRASS"
+
+#~ msgid "Converts a raster map into a vector map layer."
+#~ msgstr "Converte un raster in un vettore"
+
+#~ msgid ""
+#~ "Generates raster map layers of slope, aspect, curvatures and partial "
+#~ "derivatives from a raster map layer of true elevation values. Aspect is "
+#~ "calculated counterclockwise from east."
+#~ msgstr ""
+#~ "Genera raster della pendenza, esposizione, curvature e le derivate "
+#~ "parziali da un raster con valori dell'elevazione. Esposizione è calcolata "
+#~ "in senso antiorario partendo dall'est."
+
+#~ msgid "Map calculator"
+#~ msgstr "Calcolatore Mappa"
+
+#~ msgid "Map Toolbar"
+#~ msgstr "Barra degli strumenti della mappa"
+
+#~ msgid "Icon size:"
+#~ msgstr "Dimensione dell'icona:"
+
+#~ msgid ""
+#~ "Unable to initialize display driver of vector digitizer. See 'Command "
+#~ "output' for details.\n"
+#~ "\n"
+#~ "Details:"
+#~ msgstr ""
+#~ "Impossibile avviare il monitor per il digitalizzatore di vettori. "
+#~ "Guardare  'Command output' per i dettagli.\n"
+#~ "\n"
+#~ "Dettagli:"
+
+#~ msgid ""
+#~ "Command '%s' not yet implemented in the GUI. Try adding it as a command "
+#~ "layer instead."
+#~ msgstr ""
+#~ "Comando '%s' non è ancora implementato nella GUI. Piuttosto prova "
+#~ "utilizzando la barra dei comandi.  "
+
+#~ msgid "<%(name)s>: layer type <%(type)s> is not supported yet."
+#~ msgstr "<%(name)s>: layer <%(type)s> non è supportato ancora"
+
+#~ msgid "Valid range"
+#~ msgstr "Range valido"
+
+#, fuzzy
+#~ msgid ""
+#~ "Check a mapset to make it accessible, uncheck it to hide it.%sNote: The "
+#~ "current mapset is always accessible."
+#~ msgstr ""
+#~ "Marca mapset per renderlo accessibile, demarca per nasconderlo.%sNote: "
+#~ "PERMANENT e mapset corrente sono sembre accessibili"
+
+#~ msgid "Start GRASS"
+#~ msgstr "Avvia GRASS"
+
+#~ msgid "Create mapset"
+#~ msgstr "Crea mapset"
+
+#~ msgid "3d view tools"
+#~ msgstr "Strumenti visualizzazione 3D"
+
+#~ msgid "Creates convex hull for vector point map."
+#~ msgstr "Crea poligoni convessi da un vettore puntuale"
+
+#~ msgid "Manage extensions"
+#~ msgstr "Gestisci estensioni"

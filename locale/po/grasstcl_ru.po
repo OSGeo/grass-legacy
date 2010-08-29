@@ -6396,3 +6396,12 @@ msgstr "синий (RGB) или насыщенность (HIS):"
 #, fuzzy
 #~ msgid "Create Location From EPSG"
 #~ msgstr "Район"
+
+#~ msgid "Maximum likelyhood classification (MLC)"
+#~ msgstr "Классификация максимального подобия (MLC)"
+
+#~ msgid "   Attribute col for labels"
+#~ msgstr "   Поле атрибутов для подписей"
+
+#~ msgid "polynomial transformation  (rasters only). Requires 7+ GCPs."
+#~ msgstr "полиномиальная трансформация (только растры). Требует 7+ GCP."

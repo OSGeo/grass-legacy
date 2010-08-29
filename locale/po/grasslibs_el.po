@@ -3113,9 +3113,9 @@ msgid "conditions failed"
 msgstr "Οι συνθήκες απέτυχαν"
 
 #: ../lib/vector/Vlib/break_lines.c:115 ../lib/vector/Vlib/break_lines.c:370
-#, c-format
+#, fuzzy, c-format
 msgid "Intersections: %5d"
-msgstr ""
+msgstr "Άλλη προβολή"
 
 #: ../lib/vector/Vlib/remove_areas.c:92
 msgid "Area is composed of dead boundary"
@@ -5160,3 +5160,43 @@ msgstr ""
 
 #~ msgid "Cannot open database %s"
 #~ msgstr "Δεν μπορώ να ανοίξω την βάση δεδομένων %s"
+
+#~ msgid ""
+#~ "taking too long to find points for interpolation--please change the "
+#~ "region to area where your points are. Continuing calculations..."
+#~ msgstr ""
+#~ "Παίρνει πάρα πολύ χρόνο να βρω τα σημεία για παρεμβολή -- παρακαλώ "
+#~ "αλλάξτε την περιοχή σε μία άλλη που να βρίσκονται τα σημεία σας. Συνεχίζω "
+#~ "τους υπολογισμούς..."
+
+#~ msgid "Reading lines from vector map ... "
+#~ msgstr "Διαβάζω γραμμές από τον διανυσματικό χάρτη..."
+
+#~ msgid "Reading nodes from vector map ... "
+#~ msgstr "Διαβάζω τους κόμβους από τον διανυσματικό χάρτη..."
+
+#~ msgid "strip exists with insufficient data"
+#~ msgstr "strip υπάρχει με ανεπαρκή δεδομένα"
+
+#~ msgid "there are points outside specified 2D/3D region--ignored %d points"
+#~ msgstr ""
+#~ "υπάρχουν σημεία έξω από την καθορισμένη 2Δ/3Δ περιοχή --αγνοούνται %d "
+#~ "σημεία"
+
+#~ msgid "ignoring %d points -- too dense"
+#~ msgstr "αγνοούνται %d σημεία -- πολύ πυκνά"
+
+#~ msgid "some points outside of region -- will ignore..."
+#~ msgstr "κάποια σημεία έξω από την περιοχή -- θα αγνοηθούν..."
+
+#, fuzzy
+#~ msgid "All vertices"
+#~ msgstr "Όλα τα σημεία (vertices)"
+
+#, fuzzy
+#~ msgid "Nodes marked to be snapped"
+#~ msgstr "Σημεία \"σημαδεμένα\" για σπάσιμο (break)"
+
+#, fuzzy
+#~ msgid "Removed bridges"
+#~ msgstr "Περιοχές που αφαιρέθηκαν"

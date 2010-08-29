@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: grasswxpy_ru\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2010-08-29 12:20+0200\n"
-"PO-Revision-Date: 2009-01-27 23:34-0600\n"
+"PO-Revision-Date: 2008-10-10 19:44-0600\n"
 "Last-Translator: Maxim Dubinin <sim@gis-lab.info>\n"
 "Language-Team: Russian <grass-translations@lists.osgeo.org>\n"
 "MIME-Version: 1.0\n"
@@ -36,7 +36,7 @@ msgstr ""
 
 #: ../gui/wxpython/wxgui.py:232 ../gui/wxpython/gui_modules/toolbars.py:184
 msgid "3D view"
-msgstr "3D вид"
+msgstr ""
 
 #: ../gui/wxpython/wxgui.py:272
 #, fuzzy
@@ -82,7 +82,7 @@ msgstr "Проект не пуст. Сохранить текущие настр
 #: ../gui/wxpython/wxgui.py:355
 #, fuzzy, python-format
 msgid "Close Map Display %d"
-msgstr "Очистить содержимое дисплея"
+msgstr "GRASS GIS дисплей слоя: "
 
 #: ../gui/wxpython/wxgui.py:431
 #, fuzzy
@@ -274,19 +274,17 @@ msgid "Please wait, loading attribute data..."
 msgstr "Загрузка атрибутивных данных, пожалуйста подождите..."
 
 #: ../gui/wxpython/wxgui.py:1430
-#, python-format
+#, fuzzy, python-format
 msgid ""
 "Do you want to remove map layer(s)\n"
 "%s\n"
 "from layer tree?"
-msgstr ""
-"Удалить слой (слои)\n"
-"%s\n"
-"из списка слоев?"
+msgstr "Удалить слой %s из дерева слоев?"
 
 #: ../gui/wxpython/wxgui.py:1433
+#, fuzzy
 msgid "Do you want to remove selected map layer(s) from layer tree?"
-msgstr "Удалить выбранный слой (слои) из списка слоев?"
+msgstr "Удалить выбранный слой из содержания?"
 
 #: ../gui/wxpython/wxgui.py:1437
 msgid "Remove map layer"
@@ -306,8 +304,9 @@ msgid "No map layer selected. Operation cancelled."
 msgstr "Не выбран слой. Операция прервана."
 
 #: ../gui/wxpython/icons/icon.py:80
+#, fuzzy
 msgid "Unable to load icon theme..."
-msgstr "Невозможно загрузить набор иконок..."
+msgstr "Невозможно загрузить набор иконок, используются стандартный..."
 
 #: ../gui/wxpython/icons/icon.py:139
 msgid "Display map"
@@ -1102,7 +1101,7 @@ msgstr "Импорт растра поддерживаемый GDAL в бина�
 #: ../gui/wxpython/menustrings.py:25
 #, fuzzy
 msgid "Bulk link of raster data"
-msgstr "Загрузка растрового слоя"
+msgstr "Основные метаданные растра"
 
 #: ../gui/wxpython/menustrings.py:26
 #, fuzzy
@@ -1406,7 +1405,7 @@ msgstr "Экспорт растрового слоя"
 #: ../gui/wxpython/menustrings.py:89 ../gui/wxpython/menustrings.py:120
 #, fuzzy
 msgid "Common export formats"
-msgstr "Координаты"
+msgstr "Конвертировать координаты"
 
 #: ../gui/wxpython/menustrings.py:90
 #, fuzzy
@@ -1824,7 +1823,6 @@ msgid "Launches script file."
 msgstr ""
 
 #: ../gui/wxpython/menustrings.py:190
-#, fuzzy
 msgid "Exit GUI"
 msgstr "Выйти из интерфейса"
 
@@ -2208,7 +2206,7 @@ msgstr "Запрашивает значения категорий и подпи
 #: ../gui/wxpython/menustrings.py:278
 #, fuzzy
 msgid "Query colors by value"
-msgstr "Установить цветовую таблицу"
+msgstr "Цветовые таблицы"
 
 #: ../gui/wxpython/menustrings.py:279
 #, fuzzy
@@ -3438,7 +3436,7 @@ msgstr "Создать подписи"
 #: ../gui/wxpython/menustrings.py:529
 #, fuzzy
 msgid "Create optimally placed labels for vector map(s)"
-msgstr "Создать новую таблицу цветов для векторного слоя"
+msgstr "Создать новую таблицу цветов используя цветовые правила"
 
 #: ../gui/wxpython/menustrings.py:530
 #, fuzzy
@@ -4821,45 +4819,51 @@ msgid "Display information about Graphical Modeler"
 msgstr "Основная выходная информация о растровом слое."
 
 #: ../gui/wxpython/gui_modules/colorrules.py:94
+#, fuzzy
 msgid "Create new color table for raster map"
-msgstr "Создать новую таблицу цветов для растрового слоя"
+msgstr "Создать новую таблицу цветов используя цветовые правила"
 
 #: ../gui/wxpython/gui_modules/colorrules.py:96
 #: ../gui/wxpython/gui_modules/colorrules.py:389
 msgid "Enter raster cat values or percents"
-msgstr "Введите значения категорий растра или проценты"
+msgstr ""
 
 #: ../gui/wxpython/gui_modules/colorrules.py:98
+#, fuzzy
 msgid "Create new color table for vector map"
-msgstr "Создать новую таблицу цветов для векторного слоя"
+msgstr "Создать новую таблицу цветов используя цветовые правила"
 
 #: ../gui/wxpython/gui_modules/colorrules.py:100
 msgid "Enter vector attribute values or ranges (n or n1 to n2)"
-msgstr "Введите значения атрибутов вектора или диапазоны (n или n1 до n2)"
+msgstr ""
 
 #: ../gui/wxpython/gui_modules/colorrules.py:111
+#, fuzzy
 msgid "Select raster map:"
-msgstr "Выбрать растровый слой:"
+msgstr "Перекодированная растровый слой:"
 
 #: ../gui/wxpython/gui_modules/colorrules.py:113
+#, fuzzy
 msgid "Select vector map:"
-msgstr "Выбрать векторный слой"
+msgstr "Выберите векторный слой"
 
 #: ../gui/wxpython/gui_modules/colorrules.py:122
 msgid "replace existing color table"
 msgstr "заменить существующую цветовую таблицу"
 
 #: ../gui/wxpython/gui_modules/colorrules.py:128
+#, fuzzy
 msgid "Layer:"
-msgstr "Слой:"
+msgstr "Слой"
 
 #: ../gui/wxpython/gui_modules/colorrules.py:130
+#, fuzzy
 msgid "Attribute column:"
-msgstr "Поле атрибутов:"
+msgstr "Атрибуты"
 
 #: ../gui/wxpython/gui_modules/colorrules.py:132
 msgid "RGB color column:"
-msgstr "Цветовое поле RGB:"
+msgstr ""
 
 #: ../gui/wxpython/gui_modules/colorrules.py:161
 msgid "Preview"
@@ -4869,11 +4873,10 @@ msgstr "Предпросмотр"
 #, python-format
 msgid "Enter raster cat values or percents (range = %(min)d-%(max)d)"
 msgstr ""
-"Введите значения категорий растра или проценты (диапазон = %(min)d-%(max)d)"
 
 #: ../gui/wxpython/gui_modules/colorrules.py:468
 msgid "Please select attribute column and RGB color column first"
-msgstr "Пожалуйста, сначала выберите поле атрибутов и поле цвета RGB"
+msgstr ""
 
 #: ../gui/wxpython/gui_modules/histogram.py:175
 #: ../gui/wxpython/gui_modules/mapdisp_window.py:669
@@ -4933,9 +4936,8 @@ msgid "raster map"
 msgstr "Растровый слой"
 
 #: ../gui/wxpython/gui_modules/mcalc_builder.py:121
-#, fuzzy
 msgid "Operators"
-msgstr "Прозрачный"
+msgstr ""
 
 #: ../gui/wxpython/gui_modules/mcalc_builder.py:123
 msgid "Operands"
@@ -5061,9 +5063,8 @@ msgid "Insert existing %s"
 msgstr "перезаписать существующий файл"
 
 #: ../gui/wxpython/gui_modules/mcalc_builder.py:207
-#, fuzzy
 msgid "Insert mapcalc function"
-msgstr "Сечение"
+msgstr ""
 
 #: ../gui/wxpython/gui_modules/mcalc_builder.py:397
 #, fuzzy
@@ -5297,7 +5298,7 @@ msgstr ""
 #: ../gui/wxpython/gui_modules/toolbars.py:180
 #: ../gui/wxpython/gui_modules/layertree.py:537
 msgid "2D view"
-msgstr "2D вид"
+msgstr ""
 
 #: ../gui/wxpython/gui_modules/mapdisp.py:334
 #: ../gui/wxpython/gui_modules/layertree.py:540
@@ -6361,7 +6362,6 @@ msgstr "Поверхность"
 #: ../gui/wxpython/gui_modules/nviz_tools.py:276
 #: ../gui/wxpython/gui_modules/nviz_tools.py:3154
 #: ../gui/wxpython/gui_modules/nviz_preferences.py:237
-#, fuzzy
 msgid "Vector"
 msgstr "Вектор"
 
@@ -6468,12 +6468,14 @@ msgid "gouraud"
 msgstr "gouraud"
 
 #: ../gui/wxpython/gui_modules/nviz_tools.py:461
+#, fuzzy
 msgid "Set to all"
-msgstr "Установить для всех"
+msgstr "Установить по умолчанию"
 
 #: ../gui/wxpython/gui_modules/nviz_tools.py:462
+#, fuzzy
 msgid "Use draw settings for all loaded surfaces"
-msgstr "Использовать настройки отрисовки для всех загруженных поверхностей"
+msgstr "Использовать для всех загруженных поверхностей"
 
 #: ../gui/wxpython/gui_modules/nviz_tools.py:469
 #, fuzzy
@@ -6567,6 +6569,7 @@ msgstr "на поверхности"
 
 #: ../gui/wxpython/gui_modules/nviz_tools.py:717
 #: ../gui/wxpython/gui_modules/nviz_tools.py:835
+#, fuzzy
 msgid "Height above surface:"
 msgstr "Высота над поверхностью:"
 
@@ -6954,7 +6957,7 @@ msgstr ""
 #: ../gui/wxpython/gui_modules/gselect.py:1077
 #, fuzzy
 msgid "Choose input file"
-msgstr "Выберите файл проекта"
+msgstr "Выберите исходную папку"
 
 #: ../gui/wxpython/gui_modules/gselect.py:950
 msgid "Choose input directory"
@@ -7421,8 +7424,6 @@ msgstr "Слой (Категории)"
 #: ../gui/wxpython/gui_modules/dbm.py:298
 msgid "Unable to decode value. Set encoding in GUI preferences ('Attributes')."
 msgstr ""
-"Невозможно раскодировать значение. Установите кодировку в настройках GUI "
-"('Атрибуты')."
 
 #: ../gui/wxpython/gui_modules/gmodeler.py:89
 #, fuzzy
@@ -7491,8 +7492,9 @@ msgstr "помощь по интерфейсу ГИС GRASS"
 
 #: ../gui/wxpython/gui_modules/gmodeler.py:727
 #: ../gui/wxpython/gui_modules/dbm.py:2088
+#, fuzzy
 msgid "Nothing to delete."
-msgstr "Нечего удалять."
+msgstr "Нечего не выбрано."
 
 #: ../gui/wxpython/gui_modules/gmodeler.py:731
 #, fuzzy, python-format
@@ -7997,9 +7999,9 @@ msgid " row %d:"
 msgstr " строка  %d:"
 
 #: ../gui/wxpython/gui_modules/sqlbuilder.py:78
-#, python-format
+#, fuzzy, python-format
 msgid "GRASS SQL Builder (%(type)s): vector map <%(map)s>"
-msgstr ""
+msgstr "Конструктор SQL GRASS: %s"
 
 #: ../gui/wxpython/gui_modules/sqlbuilder.py:85
 #, fuzzy
@@ -8059,7 +8061,7 @@ msgstr "(значение)"
 #: ../gui/wxpython/gui_modules/sqlbuilder.py:154
 #, fuzzy
 msgid "Close dialog on apply"
-msgstr "Закрыть диалоговое окно после окончания операции"
+msgstr "Закрыть окно после отправки."
 
 #: ../gui/wxpython/gui_modules/sqlbuilder.py:185
 #: ../gui/wxpython/gui_modules/dbm.py:845
@@ -8162,7 +8164,7 @@ msgstr "Операция завершена"
 
 #: ../gui/wxpython/gui_modules/goutput.py:1000
 msgid "Unable to encode text. Please set encoding in GUI preferences."
-msgstr "Невозможно кодировать текст. Установите кодировку в настройках GUI"
+msgstr ""
 
 #: ../gui/wxpython/gui_modules/wxnviz.py:227
 #: ../gui/wxpython/gui_modules/wxnviz.py:238
@@ -8182,15 +8184,14 @@ msgid "3d raster map <%s> not found"
 msgstr "Слой <%s> не найден."
 
 #: ../gui/wxpython/gui_modules/toolbars.py:188
-#, fuzzy
 msgid "3D view mode not available"
-msgstr "Инструменты NVIZ"
+msgstr ""
 
 #: ../gui/wxpython/gui_modules/toolbars.py:189
 #: ../gui/wxpython/gui_modules/toolbars.py:205
-#, fuzzy, python-format
+#, python-format
 msgid "Reason: %s"
-msgstr "Регион"
+msgstr ""
 
 #: ../gui/wxpython/gui_modules/toolbars.py:190
 msgid ""
@@ -8217,12 +8218,14 @@ msgid ""
 msgstr ""
 
 #: ../gui/wxpython/gui_modules/toolbars.py:416
+#, fuzzy
 msgid "Zoom to map"
-msgstr "Масштабировать до слоя"
+msgstr "Масштабировать до выбранного слоя"
 
 #: ../gui/wxpython/gui_modules/toolbars.py:416
+#, fuzzy
 msgid "Zoom to displayed map"
-msgstr "Масштабировать до показанного слоя"
+msgstr "Масштабировать до выбранного слоя"
 
 #: ../gui/wxpython/gui_modules/toolbars.py:786
 msgid "Duplicate attributes"
@@ -8635,21 +8638,25 @@ msgid "Deselect all"
 msgstr "Снять выделение со всего"
 
 #: ../gui/wxpython/gui_modules/dbm.py:1135
+#, fuzzy
 msgid "Highlight selected features"
-msgstr "Подсветить выбранные объекты"
+msgstr "Подсветить (дубликаты)"
 
 #: ../gui/wxpython/gui_modules/dbm.py:1136
+#, fuzzy
 msgid "Highlight selected features and zoom"
-msgstr "Выделить выбранные объекты и масштабировать"
+msgstr "Выделить выбранное и масштабировать"
 
 #: ../gui/wxpython/gui_modules/dbm.py:1140
 #: ../gui/wxpython/gui_modules/dbm.py:2064
+#, fuzzy
 msgid "Extract selected features"
-msgstr "Выделить выбранные объекты"
+msgstr "Выбранный фрагмент"
 
 #: ../gui/wxpython/gui_modules/dbm.py:1141
+#, fuzzy
 msgid "Delete selected features"
-msgstr "Удалить выбранные объекты"
+msgstr "Удалить выбранный слой"
 
 #: ../gui/wxpython/gui_modules/dbm.py:1227
 #, python-format
@@ -8818,11 +8825,11 @@ msgstr "Ключевое поле"
 
 #: ../gui/wxpython/gui_modules/dbm.py:2418
 msgid "Insert record for each category into table"
-msgstr "Вставить запись для каждой категории в таблицу"
+msgstr ""
 
 #: ../gui/wxpython/gui_modules/dbm.py:2433
 msgid "You need to add categories by v.category module."
-msgstr "Нужно добавить категории с помощью модуля v.category."
+msgstr ""
 
 #: ../gui/wxpython/gui_modules/dbm.py:2440
 msgid "Table name"
@@ -8849,8 +8856,9 @@ msgid "Table description"
 msgstr "Описание таблицы"
 
 #: ../gui/wxpython/gui_modules/dbm.py:2571
+#, fuzzy
 msgid "Delete layer"
-msgstr "Удалить слой"
+msgstr "&Удалить слой"
 
 #: ../gui/wxpython/gui_modules/dbm.py:2574
 msgid "Layer to detele"
@@ -8861,8 +8869,9 @@ msgid "&Delete layer"
 msgstr "&Удалить слой"
 
 #: ../gui/wxpython/gui_modules/dbm.py:2639
+#, fuzzy
 msgid "Modify layer"
-msgstr "Изменить слой"
+msgstr "&Изменить слой"
 
 #: ../gui/wxpython/gui_modules/dbm.py:2711
 msgid "&Modify layer"
@@ -8873,8 +8882,6 @@ msgid ""
 "Unable to get list of tables.\n"
 "Please use db.connect to set database parameters."
 msgstr ""
-"Невозможно получить список таблиц.\n"
-"Пожалуйста, используйте db.connect для установки параметров базы данных."
 
 #: ../gui/wxpython/gui_modules/dbm.py:2857
 msgid "Unable to create new table. Table name or key column name is missing."
@@ -9396,8 +9403,9 @@ msgid "Set computational region from selected map(s) (ignore NULLs)"
 msgstr "Установить расчетный регион равный выбранному слою (игнорировать NULL)"
 
 #: ../gui/wxpython/gui_modules/layertree.py:369
+#, fuzzy
 msgid "Set color table"
-msgstr "Установить цветовую таблицу"
+msgstr "Цветовые таблицы"
 
 #: ../gui/wxpython/gui_modules/layertree.py:452
 msgid "Unable to create profile of raster map."
@@ -10403,7 +10411,7 @@ msgstr "Создать новый векторный слой"
 #: ../gui/wxpython/gui_modules/georect.py:1539
 #, fuzzy
 msgid "Select vector map(s) to add to group:"
-msgstr "Выбрать векторный слой"
+msgstr "Выберите векторный слой"
 
 #: ../gui/wxpython/gui_modules/georect.py:1597
 msgid "Ground Control Point"
@@ -10689,27 +10697,131 @@ msgid ""
 msgstr ""
 
 #, fuzzy
-#~ msgid ""
-#~ "Reading workspace file <%(file)s> failed.\n"
-#~ "Invalid file, unable to parse XML document.\n"
-#~ "\n"
-#~ "%(err)s"
-#~ msgstr ""
-#~ "Не удалось прочитать файл <%s>. Поврежденный файл, невозможно обработать "
-#~ "документ XML."
+msgid ""
+"Reading workspace file <%(file)s> failed.\n"
+"Invalid file, unable to parse XML document.\n"
+"\n"
+"%(err)s"
+msgstr ""
+"Не удалось прочитать файл <%s>. Поврежденный файл, невозможно обработать "
+"документ XML."
+
+#, fuzzy
+msgid "GRASS GIS Map Calculator (3D raster)"
+msgstr "GRASS %s Калькулятор слоев"
+
+msgid "Import raster map"
+msgstr "Импортировать растровый слой"
+
+msgid "Import vector map"
+msgstr "Импорт векторного слоя"
+
+#, fuzzy
+msgid "C&onfig"
+msgstr "Конфигурация"
+
+#, fuzzy
+msgid ""
+"Calculates cast shadow areas from sun position and DEM. Either A: exact sun "
+"position is specified, or B: date/time to calculate the sun position by r."
+"sunmask it"
+msgstr ""
+"Рассчитать затененные территории используя расположение солнца и ЦМР. Должны "
+"быть указаны либо А: точное положение солнца, либо Б: дата/время для которых "
+"надо рассчитать положение солнца с помощью r.sunmask."
+
+#, fuzzy
+msgid "Removes a table from database."
+msgstr "Создать из базы данных"
+
+#, fuzzy
+msgid "Show menu tree"
+msgstr "Дерево Штейнера"
+
+#, fuzzy
+msgid "3D Raster map"
+msgstr "Растровый слой"
+
+#, fuzzy
+msgid "Error in command execution '%s'"
+msgstr "Ошибка при выполнении команды %s"
+
+#, fuzzy
+msgid "module"
+msgstr "Код"
+
+#, fuzzy
+msgid "Select GRASS module"
+msgstr "Выбирите область проекта и набор"
+
+#, fuzzy
+msgid "Color settings"
+msgstr "Настройки вектора"
+
+#, fuzzy
+msgid "Size settings"
+msgstr "Настройки текста"
+
+#, fuzzy
+msgid "Unable to get list of available mapsets."
+msgstr "Невозможно удалить набор"
+
+#, fuzzy
+msgid "Unable to get list of accessible mapsets."
+msgstr "Невозможно удалить набор"
+
+#, fuzzy
+msgid "Menu tree window"
+msgstr "Плавающее окно"
+
+#, fuzzy
+msgid "label"
+msgstr "Добавить подписи"
+
+#, fuzzy
+msgid "help"
+msgstr "Помощь"
+
+#, fuzzy
+msgid "Run"
+msgstr "&Выполнить"
+
+#, fuzzy
+msgid "Saved NVIZ Settings"
+msgstr "Сохранить текущие настройки?"
+
+#, fuzzy
+msgid "Load and apply settings from user settings file"
+msgstr "Закрыть диалог и сохранить изменения в файле настроек пользователя"
+
+#, fuzzy
+msgid "Creates a lines vector map from an ASCII x,y points file."
+msgstr ""
+"Создать векторный слои из точечного файла ASCII или векторного файла ASCII."
+
+#, fuzzy
+msgid "codes"
+msgstr "Код"
+
+#, fuzzy
+msgid "Vector map <%s> georectified successfully"
+msgstr "Векторный слой <%(name)s> (%(type)s) успешно выгружен"
+
+#, fuzzy
+msgid "Copying attributes..."
+msgstr "Изменить атрибуты"
+
+msgid "GRASS SQL Builder: %s"
+msgstr "Конструктор SQL GRASS: %s"
+
+msgid "Encoding"
+msgstr "Кодировка"
 
 #~ msgid "Unable to open workspace file <%s> for writing."
 #~ msgstr "Невозможно открыть файл проекта <%s> для записи."
 
-#, fuzzy
-#~ msgid "GRASS GIS Map Calculator (3D raster)"
-#~ msgstr "GRASS %s Калькулятор слоев"
-
 #~ msgid "Redraw GCP markers in map displays"
 #~ msgstr "Перерисовать GCP маркеры в окне карты"
-
-#~ msgid "Import raster map"
-#~ msgstr "Импортировать растровый слой"
 
 #~ msgid "Import raster data using GDAL"
 #~ msgstr "Импорт растровых данных используя GDAL"
@@ -10724,9 +10836,6 @@ msgstr ""
 #, fuzzy
 #~ msgid "Multiple link to GDAL"
 #~ msgstr "Связать с OGR"
-
-#~ msgid "Import vector map"
-#~ msgstr "Импорт векторного слоя"
 
 #~ msgid "Import vector data using OGR"
 #~ msgstr "Импорт векторных данных используя OGR"
@@ -10757,20 +10866,6 @@ msgstr ""
 
 #~ msgid "Export grid 3D volume"
 #~ msgstr "Экспорт 3D грид"
-
-#, fuzzy
-#~ msgid "C&onfig"
-#~ msgstr "Конфигурация"
-
-#, fuzzy
-#~ msgid ""
-#~ "Calculates cast shadow areas from sun position and DEM. Either A: exact "
-#~ "sun position is specified, or B: date/time to calculate the sun position "
-#~ "by r.sunmask it"
-#~ msgstr ""
-#~ "Рассчитать затененные территории используя расположение солнца и ЦМР. "
-#~ "Должны быть указаны либо А: точное положение солнца, либо Б: дата/время "
-#~ "для которых надо рассчитать положение солнца с помощью r.sunmask."
 
 #~ msgid ""
 #~ "Takes vector stream data, transforms it to raster and subtracts depth "
@@ -10808,14 +10903,6 @@ msgstr ""
 #~ msgstr "Калькулятор слоев для объемной алгебры"
 
 #, fuzzy
-#~ msgid "Removes a table from database."
-#~ msgstr "Создать из базы данных"
-
-#, fuzzy
-#~ msgid "Show menu tree"
-#~ msgstr "Дерево Штейнера"
-
-#, fuzzy
 #~ msgid ""
 #~ "Unable to start vector digitizer.\n"
 #~ "The VDigit python extension was not found or loaded properly.\n"
@@ -10841,14 +10928,6 @@ msgstr ""
 #~ "\n"
 #~ "Подробности: %s"
 
-#, fuzzy
-#~ msgid "3D Raster map"
-#~ msgstr "Растровый слой"
-
-#, fuzzy
-#~ msgid "Error in command execution '%s'"
-#~ msgstr "Ошибка при выполнении команды %s"
-
 #~ msgid "Preferences error"
 #~ msgstr "Ошибка настроек"
 
@@ -10860,30 +10939,6 @@ msgstr ""
 
 #~ msgid "Nviz error"
 #~ msgstr "ошибка Nviz"
-
-#, fuzzy
-#~ msgid "module"
-#~ msgstr "Код"
-
-#, fuzzy
-#~ msgid "Select GRASS module"
-#~ msgstr "Выбирите область проекта и набор"
-
-#, fuzzy
-#~ msgid "Color settings"
-#~ msgstr "Настройки вектора"
-
-#, fuzzy
-#~ msgid "Size settings"
-#~ msgstr "Настройки текста"
-
-#, fuzzy
-#~ msgid "Unable to get list of available mapsets."
-#~ msgstr "Невозможно удалить набор"
-
-#, fuzzy
-#~ msgid "Unable to get list of accessible mapsets."
-#~ msgstr "Невозможно удалить набор"
 
 #~ msgid "Input DXF file"
 #~ msgstr "Исходный файл DXF"
@@ -10897,45 +10952,17 @@ msgstr ""
 #~ msgid "Select file extension:"
 #~ msgstr "Выберите расширение файла:"
 
-#, fuzzy
-#~ msgid "Menu tree window"
-#~ msgstr "Плавающее окно"
-
-#, fuzzy
-#~ msgid "label"
-#~ msgstr "Добавить подписи"
-
-#, fuzzy
-#~ msgid "help"
-#~ msgstr "Помощь"
-
-#, fuzzy
-#~ msgid "Run"
-#~ msgstr "&Выполнить"
-
 #~ msgid "Set ground control points (GCPs)"
 #~ msgstr "Установить точки привязки (GCPs)"
 
-#, fuzzy
-#~ msgid "Saved NVIZ Settings"
-#~ msgstr "Сохранить текущие настройки?"
-
-#, fuzzy
 #~ msgid "Load"
 #~ msgstr "Загрузить"
 
 #~ msgid "Default"
 #~ msgstr "По умолчанию"
 
-#, fuzzy
-#~ msgid "Load and apply settings from user settings file"
-#~ msgstr "Закрыть диалог и сохранить изменения в файле настроек пользователя"
-
 #~ msgid "Restore default settings"
 #~ msgstr "Восстановить настройки по умолчанию"
-
-#~ msgid "wxGUI closed."
-#~ msgstr "wxGUI закрыт."
 
 #~ msgid "Map layers for each display"
 #~ msgstr "Слои для каждого дисплея"
@@ -10953,12 +10980,6 @@ msgstr ""
 #, fuzzy
 #~ msgid "Link OGR layers"
 #~ msgstr "Список слоев"
-
-#, fuzzy
-#~ msgid "Creates a lines vector map from an ASCII x,y points file."
-#~ msgstr ""
-#~ "Создать векторный слои из точечного файла ASCII или векторного файла "
-#~ "ASCII."
 
 #~ msgid "Height"
 #~ msgstr "Высота"
@@ -11018,21 +11039,6 @@ msgstr ""
 
 #~ msgid "Transformation parameters:"
 #~ msgstr "Параметры преобразования:"
-
-#, fuzzy
-#~ msgid "codes"
-#~ msgstr "Код"
-
-#, fuzzy
-#~ msgid "Vector map <%s> georectified successfully"
-#~ msgstr "Векторный слой <%(name)s> (%(type)s) успешно выгружен"
-
-#, fuzzy
-#~ msgid "Copying attributes..."
-#~ msgstr "Изменить атрибуты"
-
-#~ msgid "GRASS SQL Builder: %s"
-#~ msgstr "Конструктор SQL GRASS: %s"
 
 #~ msgid "Unable to read workspace file"
 #~ msgstr "Невозможно прочитать файл проекта"
@@ -11213,9 +11219,6 @@ msgstr ""
 #~ msgid "Click here to hide database connection information"
 #~ msgstr "Нажмите здесь, чтобы скрыть информацию о соединении с базой данных"
 
-#~ msgid "Encoding"
-#~ msgstr "Кодировка"
-
 #~ msgid "Note: Requires GUI restart."
 #~ msgstr "Примечание: Нужен перезапуск интерфейса."
 
@@ -11360,3 +11363,324 @@ msgstr ""
 
 #~ msgid "Error in Attribute Table Manager"
 #~ msgstr "Ошибка в Менеджере атрибутивных таблиц"
+
+#~ msgid ""
+#~ "Reading workspace file <%s> failed. Invalid file, unable to parse XML "
+#~ "document."
+#~ msgstr ""
+#~ "Не удалось прочитать файл <%s>. Поврежденный файл, невозможно обработать "
+#~ "документ XML."
+
+#~ msgid "Writing current settings to workspace file failed (%s)."
+#~ msgstr "Сохранение текущих настроек в файл проекта не удалось (%s)."
+
+#, fuzzy
+#~ msgid "GRASS GIS Raster Map Calculator (3D raster)"
+#~ msgstr "GRASS %s Калькулятор слоев"
+
+#, fuzzy
+#~ msgid "Add various vector-based map layer"
+#~ msgstr "Добавить векторный слой"
+
+#, fuzzy
+#~ msgid "COPYING file missing"
+#~ msgstr "Отсутствует код EPSG."
+
+#~ msgid "Force re-rendering of all layers"
+#~ msgstr "Перерисовать все слои"
+
+#~ msgid "Create new workspace file"
+#~ msgstr "Создать файл рабочей области"
+
+#~ msgid "Load map layers into workspace"
+#~ msgstr "Загрузить слои карты в  рабочую область"
+
+#~ msgid "Open existing workspace file"
+#~ msgstr "Открыть  рабочую область"
+
+#~ msgid "Save current workspace to file"
+#~ msgstr "Сохранить текущую рабочую область в файл"
+
+#~ msgid "Add raster map layer"
+#~ msgstr "Добавить растровый слой"
+
+#~ msgid "Add vector map layer"
+#~ msgstr "Добавить векторный слой"
+
+#~ msgid "Add layer group"
+#~ msgstr "Добавить группу слоев"
+
+#~ msgid "Delete selected layer"
+#~ msgstr "Удалить выбранный слой"
+
+#~ msgid "Add RGB layer"
+#~ msgstr "Добавить RGB растр"
+
+#~ msgid "Add HIS layer"
+#~ msgstr "Добавить HIS растр"
+
+#~ msgid "Add 3D raster map"
+#~ msgstr "Добавить 3D растровый слой"
+
+#~ msgid "Reload GCPs from selected POINTS file"
+#~ msgstr "Загрузить GCP из выбранного файла POINTS"
+
+#~ msgid "Show Nviz settings dialog"
+#~ msgstr "Показать диалог настройки Nviz"
+
+#, fuzzy
+#~ msgid "Link GDAL supported raster data as a pseudo GRASS raster map layer."
+#~ msgstr "Импорт растра поддерживаемый GDAL в бинарный растровый слой."
+
+#~ msgid "Downloads and imports data from WMS servers."
+#~ msgstr "Загрузить и импортировать данные с серверов WMS."
+
+#, fuzzy
+#~ msgid "Creates a new pseudo-vector map as a link to an OGR-supported layer."
+#~ msgstr ""
+#~ "Создать новый векторный слой путем комбинирования других векторных слоев."
+
+#, fuzzy
+#~ msgid "Matlab-ASCII or Mapgen import"
+#~ msgstr "Импорт Matlab и MapGen"
+
+#, fuzzy
+#~ msgid "Import Mapgen or Matlab-ASCII vector maps into GRASS."
+#~ msgstr "Импорт векторных слоев Mapgen или Matlab в GRASS."
+
+#~ msgid "Export GRASS raster as non-georeferenced PNG image format."
+#~ msgstr "Экспорт растра GRASS в графический формат PNG без привязки."
+
+#~ msgid "Converts a raster map into a vector map layer."
+#~ msgstr "Конвертировать растровый слой в векторный."
+
+#~ msgid "E&xit"
+#~ msgstr "В&ыход"
+
+#~ msgid "Config"
+#~ msgstr "Конфигурация"
+
+#~ msgid "Raster"
+#~ msgstr "Растр"
+
+#~ msgid "Create a MASK for limiting raster operation"
+#~ msgstr "Создать MASK для ограничения растровых операций"
+
+#~ msgid ""
+#~ "Calculates cast shadow areas from sun position and DEM. Either A: exact "
+#~ "sun position is specified, or B: date/time to calculate the sun position "
+#~ "by r.sunmask itself."
+#~ msgstr ""
+#~ "Рассчитать затененные территории используя расположение солнца и ЦМР. "
+#~ "Должны быть указаны либо А: точное положение солнца, либо Б: дата/время "
+#~ "для которых надо рассчитать положение солнца с помощью r.sunmask."
+
+#~ msgid ""
+#~ "Generates raster map layers of slope, aspect, curvatures and partial "
+#~ "derivatives from a raster map layer of true elevation values. Aspect is "
+#~ "calculated counterclockwise from east."
+#~ msgstr ""
+#~ "Создать растровые слои крутизны, экспозиции, кривизны и частичных "
+#~ "производных склона ипользуя растровый слой высот. Экспозиция вычисляется "
+#~ "простив часовой стрелки начиная с востока."
+
+#~ msgid ""
+#~ "Filters and generates a depressionless elevation map and a flow direction "
+#~ "map from a given elevation layer."
+#~ msgstr ""
+#~ "Отфильтровать и создать слой высот без депрессий и слой направлений "
+#~ "потоков из имеющегося слоя высот."
+
+#~ msgid "Flow computation for massive grids (Float version)."
+#~ msgstr "Расчет потока для массивных гридов (версия с плавающей запятой)"
+
+#~ msgid ""
+#~ "Overland flow hydrologic simulation using path sampling method (SIMWE)"
+#~ msgstr ""
+#~ "Гидрологическая симуляция  поверхностного стока с использованием метода "
+#~ "выбора траекторий (SIMWE)"
+
+#~ msgid ""
+#~ "Sediment transport and erosion/deposition simulation using path sampling "
+#~ "method (SIMWE)"
+#~ msgstr ""
+#~ "Симуляция переноса и эрозии/отложения наносов используя метод линейной "
+#~ "выборки (SIMWE)"
+
+#~ msgid "Creates topographic index [ln(a/tan(beta))] map from elevation map."
+#~ msgstr "Создает слой индекса рельефа [ln(a/tan(beta))] слоя высот"
+
+#~ msgid "Watershed basin analysis program."
+#~ msgstr "Программа анализа водосборного бассейна."
+
+#~ msgid ""
+#~ "r.recode.rules - Use ascii rules file to recode categories in raster map"
+#~ msgstr ""
+#~ "r.recode.rules - используйте ascii-файл правил для того, чтобы "
+#~ "перекодировать категории в растровом слое"
+
+#~ msgid ""
+#~ "Calculates univariate statistics from a GRASS raster map based on vector "
+#~ "polygons and uploads statistics to new attribute columns."
+#~ msgstr ""
+#~ "Рассчитать одномерную статистику из растрового слоя GRASS, используя "
+#~ "векторные полигоны, и загрузить ее в новые поля атрибутов."
+
+#~ msgid "Imagery"
+#~ msgstr "Изображения"
+
+#~ msgid "Volumes"
+#~ msgstr "Объемы"
+
+#~ msgid "GRASS GIS help"
+#~ msgstr "Помощь ГИС GRASS"
+
+#~ msgid "GRASS GIS GUI help"
+#~ msgstr "помощь по интерфейсу ГИС GRASS"
+
+#~ msgid "Map calculator"
+#~ msgstr "Растровый калькулятор"
+
+#~ msgid "Nviz properties"
+#~ msgstr "Настройки NVIZ"
+
+#~ msgid "Map Toolbar"
+#~ msgstr "Панель инструментов карты"
+
+#~ msgid "Nviz toolbar"
+#~ msgstr "Панель инструментов Nviz"
+
+#, fuzzy
+#~ msgid "Unable to read EPGS file: '%s'"
+#~ msgstr "Невозможно прочитать коды EPSG: %s"
+
+#, fuzzy
+#~ msgid "Resolution cannot be 0"
+#~ msgstr "Разрешение:"
+
+#, fuzzy
+#~ msgid "3D View Tools"
+#~ msgstr "Инструменты NVIZ"
+
+#~ msgid "coarse:"
+#~ msgstr "грубо:"
+
+#~ msgid "fine:"
+#~ msgstr "точно:"
+
+#~ msgid "Wire color:"
+#~ msgstr "Цвет каркаса:"
+
+#~ msgid "Icon size:"
+#~ msgstr "Размер иконки:"
+
+#~ msgid "width:"
+#~ msgstr "ширина:"
+
+#~ msgid "symbol:"
+#~ msgstr "символ:"
+
+#~ msgid "color:"
+#~ msgstr "цвет:"
+
+#~ msgid "Layer properties"
+#~ msgstr "Свойства слоя"
+
+#~ msgid "Vector map <%s> is 3D"
+#~ msgstr "Векторный слой <%s> не 3D"
+
+#~ msgid "Vector map <%s> is 2D"
+#~ msgstr "Векторный слой <%s> 2D"
+
+#~ msgid "%(primitives)d primitives (%(points)d points)"
+#~ msgstr "%(primitives)d примитивов (%(points)d точек)"
+
+#, fuzzy
+#~ msgid "Error in command execution %s"
+#~ msgstr "Ошибка при выполнении команды %s"
+
+#, fuzzy
+#~ msgid ""
+#~ "Unable to initialize display driver of vector digitizer. See 'Command "
+#~ "output' for details.\n"
+#~ "\n"
+#~ "Details:"
+#~ msgstr ""
+#~ "Невозможно инициализировать драйвер дисплея, ознакомьтесь с файлом README "
+#~ "если нужно больше информации.\n"
+#~ "\n"
+#~ "Подробности:"
+
+#~ msgid "<%(name)s>: layer type <%(type)s> is not supported yet."
+#~ msgstr "<%(name)s>: тип слоя <%(type)s> пока не поддерживается."
+
+#~ msgid "Unable to open file"
+#~ msgstr "Невозможно открыть файл"
+
+#, fuzzy
+#~ msgid "DXF file:"
+#~ msgstr "Выбрать файл DXF:"
+
+#~ msgid "Parameter not found: %s"
+#~ msgstr "Параметр не найден: %s"
+
+#~ msgid "Parameter %(name)s (%(desc)s) is missing.\n"
+#~ msgstr "Параметр %(name)s (%(desc)s) отсутствует.\n"
+
+#~ msgid "Show manual page of the command"
+#~ msgstr "Показать описание для команды"
+
+#~ msgid "Run the command"
+#~ msgstr "Исполнить команду"
+
+#~ msgid "Copy the current command string to the clipboard"
+#~ msgstr "Копировать текущую командную строку в буфер обмена"
+
+#~ msgid "Valid range"
+#~ msgstr "Правильный диапазон"
+
+#~ msgid "Vector point layer not found (id=%d)"
+#~ msgstr "Точечный векторный слой не найден (id=%d)"
+
+#~ msgid "Unable to set data layer properties (id=%d)"
+#~ msgstr "Невозможно установить свойства слоя данных (id=%d)"
+
+#~ msgid "User GUI settings"
+#~ msgstr "Пользовательские настройки интерфейса"
+
+#, fuzzy
+#~ msgid ""
+#~ "Check a mapset to make it accessible, uncheck it to hide it.%sNote: The "
+#~ "current mapset is always accessible."
+#~ msgstr ""
+#~ "Включить доступность набора, выключить чтобы его скрыть. %sЗамечание: "
+#~ "PERMANENT и текущий набор доступны всегда."
+
+#~ msgid "Start GRASS"
+#~ msgstr "Запустить GRASS"
+
+#~ msgid "Create mapset"
+#~ msgstr "Создать набор"
+
+#, fuzzy
+#~ msgid "Command %s could not be run"
+#~ msgstr "Команда '%s' еще не реализована."
+
+#, fuzzy
+#~ msgid "&Stop"
+#~ msgstr "верх"
+
+#~ msgid "Browse EPSG Codes"
+#~ msgstr "Просмотреть коды EPSG"
+
+#~ msgid "Save current settings?"
+#~ msgstr "Сохранить текущие настройки?"
+
+#~ msgid "Not implemented yet"
+#~ msgstr "Еще не реализовано."
+
+#~ msgid "List of categories"
+#~ msgstr "Список категорий"
+
+#~ msgid "Unable to run the command, another command is running..."
+#~ msgstr "Невозможно запустить команду, выполняется другая команда..."

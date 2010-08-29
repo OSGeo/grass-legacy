@@ -2294,8 +2294,9 @@ msgid "Attempt to delete dead feature"
 msgstr ""
 
 #: ../lib/vector/Vlib/write_nat.c:885
+#, fuzzy
 msgid "Attempt to restore alive feature"
-msgstr ""
+msgstr "%d çizgisi okunamıyor"
 
 #: ../lib/vector/Vlib/legal_vname.c:48
 #, c-format
@@ -4971,3 +4972,77 @@ msgstr ""
 
 #~ msgid "Unknown file extension: %s"
 #~ msgstr "Bilinmeyen dosya uzantısı: %s"
+
+#~ msgid ""
+#~ "taking too long to find points for interpolation--please change the "
+#~ "region to area where your points are. Continuing calculations..."
+#~ msgstr ""
+#~ "enterpolasyon için nokta bulmak çok zaman alacak-- lütfen bölgeyi, "
+#~ "noktalarınızın bulunduğu alana değiştirn. Hesaplamaya devam ediliyor..."
+
+#~ msgid "strip exists with insufficient data"
+#~ msgstr "yetersiz veriye sahip şerit var"
+
+#~ msgid "there are points outside specified 2D/3D region--ignored %d points"
+#~ msgstr ""
+#~ "Belirlenen 2D/3D bölgenin dışında noktalar var -- %d nokta yok sayılıyor"
+
+#~ msgid "ignoring %d points -- too dense"
+#~ msgstr "%d nokta yok sayılıyor -- çok yoğun"
+
+#~ msgid "some points outside of region -- will ignore..."
+#~ msgstr "bazı noktalar bölgenin dışında -- yok sayılacak..."
+
+#, fuzzy
+#~ msgid "Unable to delete layer/category %d/%d line %d"
+#~ msgstr "<%s> vektör haritası silinemiyor"
+
+#, fuzzy
+#~ msgid "Removed dangles:"
+#~ msgstr "Kaldırılan köprüler"
+
+#, fuzzy
+#~ msgid "Unable to open vector map <%s> on topology level %d"
+#~ msgstr "Vektör harita <%s> ten <%s> e kopyalanamıyor"
+
+#, fuzzy
+#~ msgid "Snapped vertices"
+#~ msgstr "Tüm kırıklık noktaları"
+
+#, fuzzy
+#~ msgid "New vertices"
+#~ msgstr "Tüm kırıklık noktaları"
+
+#, fuzzy
+#~ msgid "BUG (add_area_cats_to_cidx): Area %d does not exist"
+#~ msgstr "%s: Alan %d mevcut değil"
+
+#, fuzzy
+#~ msgid "Unable to rewrite line %d"
+#~ msgstr "%d çizgisi okunamıyor"
+
+#, fuzzy
+#~ msgid ""
+#~ "Unable to delete line %d, vector map <%s> is not opened on topo level 2"
+#~ msgstr "Veritabanı bağlantısı eklenemiyor, harita WRITE modunda açılmadı"
+
+#, fuzzy
+#~ msgid ""
+#~ "Unable to delete line %d, vector map <%s> is not opened in 'write' mode"
+#~ msgstr "Veritabanı bağlantısı eklenemiyor, harita WRITE modunda açılmadı"
+
+#, fuzzy
+#~ msgid "Unable to delete line %d from vector map <%s>"
+#~ msgstr "<%s> vektör haritası silinemiyor"
+
+#, fuzzy
+#~ msgid "Cannot get layer info"
+#~ msgstr "Alan bilgisi alınamıyor"
+
+#, fuzzy
+#~ msgid "unable to open raster map [%s in %s]"
+#~ msgstr "<%s@%s> raster haritası açılamıyor"
+
+#, fuzzy
+#~ msgid "Cannot delete line"
+#~ msgstr "Çizgi yeniden yazılamıyor"

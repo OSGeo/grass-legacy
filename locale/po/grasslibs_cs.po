@@ -5013,17 +5013,17 @@ msgstr "Podskupina<%s> skupiny <%s> je prázdná\n"
 msgid "subgroup <%s> of group <%s> references the following raster maps\n"
 msgstr "Podskupina <%s>skupiny <%s> okazuja na následující rastrové mapy\n"
 
+msgid "Unknown Location"
+msgstr "Neznámá Location"
+
+msgid "Too many arguments"
+msgstr "Pøíli¹ mnoho argumentù"
+
+msgid "Incompatible library version for module"
+msgstr "Nekompatibilní verze knihovny pro modul"
+
 #~ msgid "Invalid view position coordinates, using %f,%f"
 #~ msgstr "Neplatné souøadnice bodu rozhledu, pou¾iji %f,%f"
-
-#~ msgid "Unknown Location"
-#~ msgstr "Neznámá Location"
-
-#~ msgid "Too many arguments"
-#~ msgstr "Pøíli¹ mnoho argumentù"
-
-#~ msgid "Incompatible library version for module"
-#~ msgstr "Nekompatibilní verze knihovny pro modul"
 
 #~ msgid "Vector is not 3D"
 #~ msgstr "Vektorová mapa není 3D"

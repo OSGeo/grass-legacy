@@ -1632,8 +1632,9 @@ msgid "Writing raster map..."
 msgstr "'%s'. ड्राइवर चालू होत नाही"
 
 #: ../raster/r.contour/main.c:91
+#, fuzzy
 msgid "raster, DEM, contours, vector"
-msgstr ""
+msgstr "'%s'. ड्राइवर चालू होत नाही"
 
 #: ../raster/r.contour/main.c:92
 msgid "Produces a vector map of specified contours from a raster map."
@@ -1780,9 +1781,9 @@ msgid "Reading data..."
 msgstr "'%s'. ड्राइवर चालू होत नाही"
 
 #: ../raster/r.contour/main.c:270
-#, c-format
+#, fuzzy, c-format
 msgid "Range of data: min=%f, max=%f"
-msgstr ""
+msgstr "'%s'. ड्राइवर चालू होत नाही"
 
 #: ../raster/r.contour/main.c:272
 #, fuzzy
@@ -7307,9 +7308,9 @@ msgid "Preliminary surface calculations..."
 msgstr ""
 
 #: ../raster/r.surf.fractal/spec_syn.c:120
-#, c-format
+#, fuzzy, c-format
 msgid "Calculating surface %d (of %d)..."
-msgstr ""
+msgstr "'%s'. ड्राइवर चालू होत नाही"
 
 #: ../raster/r.covar/main.c:55
 msgid ""
@@ -8015,9 +8016,9 @@ msgid "Title, in quotes"
 msgstr ""
 
 #: ../raster/r.clump/main.c:120
-#, c-format
+#, fuzzy, c-format
 msgid "%d clumps."
-msgstr ""
+msgstr "डेटाबेसची यादी दाखवता येणार नाही"
 
 #: ../raster/r.clump/clump.c:98
 #, c-format
@@ -8566,12 +8567,14 @@ msgid "Color table of raster map <%s> not found"
 msgstr "'%s'. ड्राइवर चालू होत नाही"
 
 #: ../raster/r.colors/main.c:332
+#, fuzzy
 msgid "Color table 'random' is not supported for floating point raster map"
-msgstr ""
+msgstr "डेटाबेसची यादी दाखवता येणार नाही"
 
 #: ../raster/r.colors/main.c:337
+#, fuzzy
 msgid "Color table 'grey.eq' is not supported for floating point raster map"
-msgstr ""
+msgstr "डेटाबेसची यादी दाखवता येणार नाही"
 
 #: ../raster/r.colors/main.c:344
 msgid "Color table 'grey.log' is not supported for floating point raster map"
@@ -9021,8 +9024,9 @@ msgid "List supported output formats"
 msgstr ""
 
 #: ../raster/r.out.gdal/main.c:137
+#, fuzzy
 msgid "Do not write GDAL standard colortable"
-msgstr ""
+msgstr "'%s'. ड्राइवर चालू होत नाही"
 
 #: ../raster/r.out.gdal/main.c:138
 msgid "Only applicable to Byte or UInt16 data types."
@@ -9237,9 +9241,9 @@ msgstr ""
 #: ../raster/r.out.gdal/main.c:632 ../raster/r.out.gdal/main.c:644
 #: ../raster/r.out.gdal/main.c:657 ../raster/r.out.gdal/main.c:670
 #: ../raster/r.out.gdal/main.c:682 ../raster/r.out.gdal/main.c:695
-#, c-format
+#, fuzzy, c-format
 msgid "Range to be exported: %g - %g"
-msgstr ""
+msgstr "'%s'. ड्राइवर चालू होत नाही"
 
 #: ../raster/r.out.gdal/main.c:679 ../raster/r.out.gdal/export_band.c:562
 #, c-format
@@ -9282,9 +9286,9 @@ msgid ""
 msgstr ""
 
 #: ../raster/r.out.gdal/main.c:791
-#, fuzzy, c-format
+#, c-format
 msgid "GDAL datatype: %s, valid range: %g - %g"
-msgstr "'%s'. ड्राइवर चालू होत नाही"
+msgstr ""
 
 #: ../raster/r.out.gdal/export_band.c:67 ../raster/r.out.gdal/export_band.c:73
 #: ../raster/r.out.gdal/export_band.c:380
@@ -9408,9 +9412,9 @@ msgid "<%s> is integer raster map (CELL)"
 msgstr "'%s'. ड्राइवर चालू होत नाही"
 
 #: ../raster/r.null/null.c:145
-#, c-format
+#, fuzzy, c-format
 msgid "<%s> is integer raster map (CELL). Using null=%d."
-msgstr ""
+msgstr "'%s'. ड्राइवर चालू होत नाही"
 
 #: ../raster/r.null/null.c:151
 #, fuzzy, c-format
@@ -9438,9 +9442,9 @@ msgid "Removing null file for raster map <%s>..."
 msgstr "'%s'. ड्राइवर चालू होत नाही"
 
 #: ../raster/r.null/null.c:258
-#, c-format
+#, fuzzy, c-format
 msgid "%s: %s: illegal value spec"
-msgstr ""
+msgstr "तक्त्याचे नाव"
 
 #: ../raster/r.null/null.c:327
 #, fuzzy, c-format
@@ -9850,9 +9854,9 @@ msgid "Print the sun position output in shell script style"
 msgstr ""
 
 #: ../raster/r.sunmask/main.c:259
-#, c-format
+#, fuzzy, c-format
 msgid "Using map center coordinates: %f %f"
-msgstr ""
+msgstr "'%s'. ड्राइवर चालू होत नाही"
 
 #: ../raster/r.sunmask/main.c:266
 msgid "Empty east coordinate specified!"
@@ -10068,7 +10072,7 @@ msgstr "'%s'. ड्राइवर चालू होत नाही"
 #: ../raster/r.random.surface/save.c:219 ../imagery/i.pca/support.c:27
 #, fuzzy, c-format
 msgid "Unable to write color table for raster map <%s>"
-msgstr "'%s'. ड्राइवर चालू होत नाही"
+msgstr "डेटाबेसची यादी दाखवता येणार नाही"
 
 #: ../raster/r.random.surface/init.c:40
 #, fuzzy
@@ -10975,8 +10979,9 @@ msgid "You didn't specify an angle step size. Aborting."
 msgstr ""
 
 #: ../raster/r.horizon/main.c:390
+#, fuzzy
 msgid "Could not read bufferzone size. Aborting."
-msgstr ""
+msgstr "'%s'. ड्राइवर चालू होत नाही"
 
 #: ../raster/r.horizon/main.c:395 ../raster/r.horizon/main.c:401
 #: ../raster/r.horizon/main.c:408 ../raster/r.horizon/main.c:415
@@ -11034,8 +11039,9 @@ msgid ""
 msgstr ""
 
 #: ../raster/r.external/main.c:300
+#, fuzzy
 msgid "Complex types not supported"
-msgstr ""
+msgstr "डेटाबेसची यादी दाखवता येणार नाही"
 
 #: ../raster/r.external/main.c:315
 #, fuzzy, c-format
@@ -11102,8 +11108,9 @@ msgid "Link GDAL supported raster file to a binary raster map layer."
 msgstr ""
 
 #: ../raster/r.external/main.c:511
+#, fuzzy
 msgid "Raster file to be linked"
-msgstr ""
+msgstr "'%s'. ड्राइवर चालू होत नाही"
 
 #: ../raster/r.external/main.c:517
 #, fuzzy
@@ -13665,8 +13672,9 @@ msgid "Removing %s <%s>"
 msgstr "'%s'. ड्राइवर चालू होत नाही"
 
 #: ../general/g.mremove/do_remove.c:42 ../general/g.mremove/do_remove.c:84
+#, fuzzy
 msgid "couldn't be removed"
-msgstr ""
+msgstr "'%s'. ड्राइवर चालू होत नाही"
 
 #: ../general/g.mremove/do_remove.c:55 ../general/g.region/main.c:505
 #, c-format
@@ -14755,9 +14763,9 @@ msgstr ""
 #: ../display/d.geodesic/main.c:95 ../display/d.geodesic/main.c:99
 #: ../display/d.rhumbline/main.c:89 ../display/d.rhumbline/main.c:93
 #: ../display/d.rhumbline/main.c:98 ../display/d.rhumbline/main.c:102
-#, c-format
+#, fuzzy, c-format
 msgid "%s - illegal longitude"
-msgstr ""
+msgstr "तक्त्याचे नाव"
 
 #: ../display/d.menu/main.c:68
 msgid ""
@@ -16992,12 +17000,14 @@ msgid "%d errors in cat option"
 msgstr ""
 
 #: ../display/d.vect/main.c:689
+#, fuzzy
 msgid "Unable to display areas, topology not available"
-msgstr ""
+msgstr "'%s'. ड्राइवर चालू होत नाही"
 
 #: ../display/d.vect/main.c:694
+#, fuzzy
 msgid "Unable to display lines by id, topology not available"
-msgstr ""
+msgstr "'%s'. ड्राइवर चालू होत नाही"
 
 #: ../display/d.vect/main.c:737
 #, fuzzy
@@ -17075,9 +17085,9 @@ msgid ""
 msgstr ""
 
 #: ../display/d.vect/plot1.c:679
-#, c-format
+#, fuzzy, c-format
 msgid "Error in color definition column '%s': %d features affected"
-msgstr ""
+msgstr "'%s'. ड्राइवर चालू होत नाही"
 
 #: ../display/d.vect/attr.c:30
 msgid "attrcol not specified, cannot display attributes"
@@ -17398,9 +17408,9 @@ msgid "Unable to open vector map <%s> at topology level %d"
 msgstr "'%s'. ड्राइवर चालू होत नाही"
 
 #: ../vector/v.net/main.c:190
-#, c-format
+#, fuzzy, c-format
 msgid "%d arcs added to network (nlayer %d)"
-msgstr ""
+msgstr "डेटाबेसची यादी दाखवता येणार नाही"
 
 #: ../vector/v.net/main.c:197 ../vector/v.type/main.c:234
 #: ../vector/v.proj/main.c:278 ../vector/v.kcv/main.c:161
@@ -17591,12 +17601,14 @@ msgid "For coor valid point/centroid, for length valid line/boundary"
 msgstr ""
 
 #: ../vector/v.to.db/parse.c:42
+#, fuzzy
 msgid "Layer number (write to)"
-msgstr ""
+msgstr "डेटाबेसची यादी दाखवता येणार नाही"
 
 #: ../vector/v.to.db/parse.c:46
+#, fuzzy
 msgid "Query layer number (read from)"
-msgstr ""
+msgstr "डेटाबेसची यादी दाखवता येणार नाही"
 
 #: ../vector/v.to.db/parse.c:47 ../vector/v.to.db/parse.c:99
 #: ../db/base/execute.c:114 ../db/base/select.c:197 ../db/base/select.c:202
@@ -17627,8 +17639,9 @@ msgid "Print only"
 msgstr ""
 
 #: ../vector/v.to.db/parse.c:108
+#, fuzzy
 msgid "Only print SQL statements"
-msgstr ""
+msgstr "तक्त्याचे नाव"
 
 #: ../vector/v.to.db/parse.c:114
 msgid "In print mode prints totals for options: length,area,count"
@@ -17716,14 +17729,14 @@ msgid "%d categories read from vector map don't exist in selection from table"
 msgstr "डेटाबेसची यादी दाखवता येणार नाही"
 
 #: ../vector/v.to.db/report.c:199
-#, c-format
+#, fuzzy, c-format
 msgid "%d records updated/inserted (layer %d)"
-msgstr ""
+msgstr "डेटाबेसची यादी दाखवता येणार नाही"
 
 #: ../vector/v.to.db/report.c:202
-#, c-format
+#, fuzzy, c-format
 msgid "%d update/insert errors (layer %d)"
-msgstr ""
+msgstr "डेटाबेसची यादी दाखवता येणार नाही"
 
 #: ../vector/v.to.db/report.c:205
 #, c-format
@@ -19182,7 +19195,7 @@ msgstr ""
 #: ../vector/v.in.db/main.c:173
 #, fuzzy
 msgid "Writing features..."
-msgstr "डेटाबेसची यादी दाखवता येणार नाही"
+msgstr "'%s'. ड्राइवर चालू होत नाही"
 
 #: ../vector/v.in.db/main.c:180
 msgid "Key column must be integer"
@@ -19380,8 +19393,9 @@ msgstr "डेटाबेसची यादी दाखवता येणा
 #: ../vector/v.net.distance/main.c:74 ../vector/v.net.distance/main.c:79
 #: ../vector/v.net.distance/main.c:85 ../vector/v.distance/main.c:122
 #: ../vector/v.distance/main.c:134 ../vector/v.distance/main.c:146
+#, fuzzy
 msgid "From"
-msgstr ""
+msgstr "तक्त्याचे नाव"
 
 #: ../vector/v.net.distance/main.c:78
 #, fuzzy
@@ -19443,16 +19457,19 @@ msgid "Name of existing vector map (to)"
 msgstr "'%s'. ड्राइवर चालू होत नाही"
 
 #: ../vector/v.distance/main.c:133
+#, fuzzy
 msgid "Feature type (from)"
-msgstr ""
+msgstr "'%s'. ड्राइवर चालू होत नाही"
 
 #: ../vector/v.distance/main.c:140
+#, fuzzy
 msgid "Feature type (to)"
-msgstr ""
+msgstr "'%s'. ड्राइवर चालू होत नाही"
 
 #: ../vector/v.distance/main.c:145
+#, fuzzy
 msgid "Layer number (from)"
-msgstr ""
+msgstr "डेटाबेसची यादी दाखवता येणार नाही"
 
 #: ../vector/v.distance/main.c:150
 #, fuzzy
@@ -21400,9 +21417,9 @@ msgid "Use numeric type for attribute \"layer\""
 msgstr ""
 
 #: ../vector/v.in.dwg/main.c:120
-#, c-format
+#, fuzzy, c-format
 msgid "Unable to initialize OpenDWG Toolkit, error: %d: %s."
-msgstr ""
+msgstr "'%s'. ड्राइवर चालू होत नाही"
 
 #: ../vector/v.in.dwg/main.c:123
 #, fuzzy, c-format
@@ -22405,11 +22422,11 @@ msgid "Type: Area\n"
 msgstr ""
 
 #: ../vector/v.what/what.c:303
-#, c-format
+#, fuzzy, c-format
 msgid ""
 "Area: %d\n"
 "Number of isles: %d\n"
-msgstr ""
+msgstr "'%s'. ड्राइवर चालू होत नाही"
 
 #: ../vector/v.what/what.c:313
 #, c-format
@@ -25555,9 +25572,9 @@ msgid "Feature id %d has no category - skipping"
 msgstr "'%s'. ड्राइवर चालू होत नाही"
 
 #: ../vector/v.to.3d/trans3.c:102
-#, c-format
+#, fuzzy, c-format
 msgid "Feature id %d has more categories. Using category %d."
-msgstr ""
+msgstr "'%s'. ड्राइवर चालू होत नाही"
 
 #: ../vector/v.to.3d/trans2.c:98
 #, fuzzy
@@ -27029,18 +27046,20 @@ msgid "Use image list and not group"
 msgstr ""
 
 #: ../locale/scriptstrings/i.spectral_to_translate.c:7
+#, fuzzy
 msgid "Select multiple points"
-msgstr ""
+msgstr "'%s'. ड्राइवर चालू होत नाही"
 
 #: ../locale/scriptstrings/i.spectral_to_translate.c:8
 msgid "Label with coordinates instead of numbering"
 msgstr ""
 
 #: ../locale/scriptstrings/v.convert.all_to_translate.c:1
+#, fuzzy
 msgid ""
 "Convert all old GRASS < Ver5.7 vector maps in current mapset to current "
 "format"
-msgstr ""
+msgstr "'%s'. ड्राइवर चालू होत नाही"
 
 #: ../locale/scriptstrings/v.convert.all_to_translate.c:3
 msgid "run non-interactively"
@@ -27095,8 +27114,9 @@ msgid "E00 file"
 msgstr ""
 
 #: ../locale/scriptstrings/v.in.e00_to_translate.c:5
+#, fuzzy
 msgid "Input type point, line or area"
-msgstr ""
+msgstr "'%s'. ड्राइवर चालू होत नाही"
 
 #: ../locale/scriptstrings/v.in.e00_to_translate.c:6
 #: ../locale/scriptstrings/v.in.lines_to_translate.c:5
@@ -27109,10 +27129,11 @@ msgid "Name for output vector map"
 msgstr "'%s'. ड्राइवर चालू होत नाही"
 
 #: ../locale/scriptstrings/r.plane_to_translate.c:1
+#, fuzzy
 msgid ""
 "Creates raster plane map given dip (inclination), aspect (azimuth) and one "
 "point."
-msgstr ""
+msgstr "'%s'. ड्राइवर चालू होत नाही"
 
 #: ../locale/scriptstrings/r.plane_to_translate.c:2
 #: ../locale/scriptstrings/r.shaded.relief_to_translate.c:2
@@ -27155,12 +27176,14 @@ msgid "Convert coordinates from one projection to another (cs2cs frontend)."
 msgstr ""
 
 #: ../locale/scriptstrings/m.proj_to_translate.c:2
+#, fuzzy
 msgid "miscellaneous, projection"
-msgstr ""
+msgstr "'%s'. ड्राइवर चालू होत नाही"
 
 #: ../locale/scriptstrings/m.proj_to_translate.c:3
+#, fuzzy
 msgid "Input coordinate file (omit to read from stdin)"
-msgstr ""
+msgstr "'%s'. ड्राइवर चालू होत नाही"
 
 #: ../locale/scriptstrings/m.proj_to_translate.c:4
 #: ../locale/scriptstrings/m.proj_to_translate.c:6
@@ -27173,14 +27196,16 @@ msgid "Files & format"
 msgstr "तक्त्याचे नाव"
 
 #: ../locale/scriptstrings/m.proj_to_translate.c:5
+#, fuzzy
 msgid "Output coordinate file (omit to send to stdout)"
-msgstr ""
+msgstr "'%s'. ड्राइवर चालू होत नाही"
 
 #: ../locale/scriptstrings/m.proj_to_translate.c:7
 #: ../locale/scriptstrings/v.in.lines_to_translate.c:6
 #: ../locale/scriptstrings/r.out.xyz_to_translate.c:5
+#, fuzzy
 msgid "Field separator"
-msgstr ""
+msgstr "तक्त्याचे नाव"
 
 #: ../locale/scriptstrings/m.proj_to_translate.c:9
 msgid "Input projection parameters (PROJ.4 style)"
@@ -27232,8 +27257,9 @@ msgstr ""
 
 #: ../locale/scriptstrings/d.out.file_to_translate.c:2
 #: ../locale/scriptstrings/d.out.png_to_translate.c:2
+#, fuzzy
 msgid "display, export"
-msgstr ""
+msgstr "डेटाबेसची यादी दाखवता येणार नाही"
 
 #: ../locale/scriptstrings/d.out.file_to_translate.c:3
 #, fuzzy
@@ -27389,9 +27415,8 @@ msgid "Maximum number of rows for a tile in the source projection"
 msgstr ""
 
 #: ../locale/scriptstrings/r.tileset_to_translate.c:12
-#, fuzzy
 msgid "Number of cells tiles should overlap in each direction"
-msgstr "'%s'. ड्राइवर चालू होत नाही"
+msgstr ""
 
 #: ../locale/scriptstrings/r.tileset_to_translate.c:14
 #: ../locale/scriptstrings/r.in.wms_to_translate.c:50
@@ -27404,8 +27429,9 @@ msgid ""
 msgstr ""
 
 #: ../locale/scriptstrings/i.fusion.brovey_to_translate.c:2
+#, fuzzy
 msgid "imagery, fusion, Brovey"
-msgstr ""
+msgstr "'%s'. ड्राइवर चालू होत नाही"
 
 #: ../locale/scriptstrings/i.fusion.brovey_to_translate.c:3
 msgid "LANDSAT sensor"
@@ -27579,16 +27605,18 @@ msgid "Vector map to modify"
 msgstr "'%s'. ड्राइवर चालू होत नाही"
 
 #: ../locale/scriptstrings/v.what.vect_to_translate.c:4
+#, fuzzy
 msgid "Layer in the vector to be modified"
-msgstr ""
+msgstr "'%s'. ड्राइवर चालू होत नाही"
 
 #: ../locale/scriptstrings/v.what.vect_to_translate.c:5
 msgid "Column to be updated with the query result"
 msgstr ""
 
 #: ../locale/scriptstrings/v.what.vect_to_translate.c:6
+#, fuzzy
 msgid "Vector map to be queried"
-msgstr ""
+msgstr "'%s'. ड्राइवर चालू होत नाही"
 
 #: ../locale/scriptstrings/v.what.vect_to_translate.c:7
 #, fuzzy
@@ -27596,8 +27624,9 @@ msgid "Layer of the query vector containing data"
 msgstr "'%s'. ड्राइवर चालू होत नाही"
 
 #: ../locale/scriptstrings/v.what.vect_to_translate.c:8
+#, fuzzy
 msgid "Column to be queried"
-msgstr ""
+msgstr "'%s'. ड्राइवर चालू होत नाही"
 
 #: ../locale/scriptstrings/v.what.vect_to_translate.c:9
 msgid "Maximum query distance in map units"
@@ -27608,9 +27637,8 @@ msgid "Import SRTM HGT files into GRASS"
 msgstr ""
 
 #: ../locale/scriptstrings/r.in.srtm_to_translate.c:3
-#, fuzzy
 msgid "SRTM input tile (file without .hgt.zip extension)"
-msgstr "तक्त्याचे नाव"
+msgstr ""
 
 #: ../locale/scriptstrings/r.in.srtm_to_translate.c:4
 #, fuzzy
@@ -27627,8 +27655,9 @@ msgid "Reports geometry statistics for vectors."
 msgstr "'%s'. ड्राइवर चालू होत नाही"
 
 #: ../locale/scriptstrings/v.report_to_translate.c:2
+#, fuzzy
 msgid "vector, report, statistics"
-msgstr ""
+msgstr "डेटाबेसची यादी दाखवता येणार नाही"
 
 #: ../locale/scriptstrings/v.report_to_translate.c:3
 msgid "Reverse sort the result"
@@ -27639,17 +27668,19 @@ msgid "Sort the result"
 msgstr ""
 
 #: ../locale/scriptstrings/v.report_to_translate.c:7
+#, fuzzy
 msgid "Value to calculate"
-msgstr ""
+msgstr "'%s'. ड्राइवर चालू होत नाही"
 
 #: ../locale/scriptstrings/v.report_to_translate.c:8
 msgid "mi(les),f(eet),me(ters),k(ilometers),a(cres),h(ectares),p(ercent)"
 msgstr ""
 
 #: ../locale/scriptstrings/v.db.update_to_translate.c:1
+#, fuzzy
 msgid ""
 "Allows to update a column in the attribute table connected to a vector map."
-msgstr ""
+msgstr "'%s'. ड्राइवर चालू होत नाही"
 
 #: ../locale/scriptstrings/v.db.update_to_translate.c:3
 #, fuzzy
@@ -27694,8 +27725,9 @@ msgid "Name of raster map to display"
 msgstr "'%s'. ड्राइवर चालू होत नाही"
 
 #: ../locale/scriptstrings/d.rast.leg_to_translate.c:6
+#, fuzzy
 msgid "Number of lines to appear in the legend"
-msgstr ""
+msgstr "'%s'. ड्राइवर चालू होत नाही"
 
 #: ../locale/scriptstrings/d.rast.leg_to_translate.c:7
 #, fuzzy
@@ -27749,8 +27781,9 @@ msgstr "तक्त्याचे नाव"
 
 #: ../locale/scriptstrings/v.univar.sh_to_translate.c:5
 #: ../locale/scriptstrings/v.db.univar_to_translate.c:5
+#, fuzzy
 msgid "Column on which to calculate statistics (must be numeric)"
-msgstr ""
+msgstr "'%s'. ड्राइवर चालू होत नाही"
 
 #: ../locale/scriptstrings/v.univar.sh_to_translate.c:6
 #: ../locale/scriptstrings/v.db.univar_to_translate.c:6
@@ -27793,22 +27826,25 @@ msgid "Manual entry to be displayed"
 msgstr "'%s'. ड्राइवर चालू होत नाही"
 
 #: ../locale/scriptstrings/v.in.sites.all_to_translate.c:1
+#, fuzzy
 msgid ""
 "Converts all old GRASS < Ver5.7 sites maps in current mapset to vector maps."
-msgstr ""
+msgstr "'%s'. ड्राइवर चालू होत नाही"
 
 #: ../locale/scriptstrings/v.in.sites.all_to_translate.c:2
+#, fuzzy
 msgid "sites, vector, import"
-msgstr ""
+msgstr "डेटाबेसची यादी दाखवता येणार नाही"
 
 #: ../locale/scriptstrings/v.in.sites.all_to_translate.c:3
 msgid "Run non-interactively"
 msgstr ""
 
 #: ../locale/scriptstrings/v.db.renamecol_to_translate.c:1
+#, fuzzy
 msgid ""
 "Renames a column in the attribute table connected to a given vector map."
-msgstr ""
+msgstr "'%s'. ड्राइवर चालू होत नाही"
 
 #: ../locale/scriptstrings/v.db.renamecol_to_translate.c:3
 #, fuzzy
@@ -27847,8 +27883,9 @@ msgid "Create inverse mask from specified 'maskcats' list"
 msgstr ""
 
 #: ../locale/scriptstrings/r.mask_to_translate.c:9
+#, fuzzy
 msgid "Overwrite existing MASK"
-msgstr ""
+msgstr "'%s'. ड्राइवर चालू होत नाही"
 
 #: ../locale/scriptstrings/r.mask_to_translate.c:10
 msgid "Remove existing mask (overrides other options)"
@@ -27869,20 +27906,23 @@ msgid "vector, export, GPS"
 msgstr "डेटाबेसची यादी दाखवता येणार नाही"
 
 #: ../locale/scriptstrings/v.out.gpsbabel_to_translate.c:3
+#, fuzzy
 msgid "Export as waypoints"
-msgstr ""
+msgstr "'%s'. ड्राइवर चालू होत नाही"
 
 #: ../locale/scriptstrings/v.out.gpsbabel_to_translate.c:4
+#, fuzzy
 msgid "Export as routes"
-msgstr ""
+msgstr "'%s'. ड्राइवर चालू होत नाही"
 
 #: ../locale/scriptstrings/v.out.gpsbabel_to_translate.c:5
 msgid "Export as tracks"
 msgstr ""
 
 #: ../locale/scriptstrings/v.out.gpsbabel_to_translate.c:7
+#, fuzzy
 msgid "Feature type(s)"
-msgstr ""
+msgstr "'%s'. ड्राइवर चालू होत नाही"
 
 #: ../locale/scriptstrings/v.out.gpsbabel_to_translate.c:8
 #, fuzzy
@@ -27912,8 +27952,9 @@ msgid "Example: income < 1000 and inhab >= 10000"
 msgstr ""
 
 #: ../locale/scriptstrings/v.db.reconnect.all_to_translate.c:1
+#, fuzzy
 msgid "Reconnects vectors to a new database."
-msgstr ""
+msgstr "डेटाबेसची यादी दाखवता येणार नाही"
 
 #: ../locale/scriptstrings/v.db.reconnect.all_to_translate.c:3
 #, fuzzy
@@ -27927,16 +27968,19 @@ msgid ""
 msgstr ""
 
 #: ../locale/scriptstrings/v.db.reconnect.all_to_translate.c:5
+#, fuzzy
 msgid "Name of new database"
-msgstr ""
+msgstr "तक्त्याचे नाव"
 
 #: ../locale/scriptstrings/v.db.reconnect.all_to_translate.c:6
+#, fuzzy
 msgid "Old schema"
-msgstr ""
+msgstr "डाटाबेसचे नाव:"
 
 #: ../locale/scriptstrings/v.db.reconnect.all_to_translate.c:7
+#, fuzzy
 msgid "New schema"
-msgstr ""
+msgstr "डाटाबेसचे नाव:"
 
 #: ../locale/scriptstrings/r.in.aster_to_translate.c:1
 msgid ""
@@ -27946,8 +27990,9 @@ msgstr ""
 
 #: ../locale/scriptstrings/r.in.aster_to_translate.c:2
 #: ../locale/scriptstrings/i.in.spotvgt_to_translate.c:2
+#, fuzzy
 msgid "raster, imagery, import"
-msgstr ""
+msgstr "'%s'. ड्राइवर चालू होत नाही"
 
 #: ../locale/scriptstrings/r.in.aster_to_translate.c:3
 msgid "Input ASTER image to be georeferenced & rectified"
@@ -27993,12 +28038,14 @@ msgid "Manually set range (min,max)"
 msgstr ""
 
 #: ../locale/scriptstrings/v.colors_to_translate.c:13
+#, fuzzy
 msgid "Path to rules file"
-msgstr ""
+msgstr "'%s'. ड्राइवर चालू होत नाही"
 
 #: ../locale/scriptstrings/v.colors_to_translate.c:15
+#, fuzzy
 msgid "Save placeholder raster map for use with d.legend"
-msgstr ""
+msgstr "'%s'. ड्राइवर चालू होत नाही"
 
 #: ../locale/scriptstrings/db.out.ogr_to_translate.c:1
 msgid "Exports attribute tables into various formats."
@@ -28092,8 +28139,9 @@ msgstr ""
 
 #: ../locale/scriptstrings/v.in.garmin_to_translate.c:2
 #: ../locale/scriptstrings/v.in.gpsbabel_to_translate.c:2
+#, fuzzy
 msgid "vector, import, GPS"
-msgstr ""
+msgstr "डेटाबेसची यादी दाखवता येणार नाही"
 
 #: ../locale/scriptstrings/v.in.garmin_to_translate.c:4
 msgid "Download Waypoints from GPS"
@@ -28271,12 +28319,14 @@ msgid "Separate values by spaces (0 10 20 30 ...)"
 msgstr ""
 
 #: ../locale/scriptstrings/d.vect.thematic_to_translate.c:19
+#, fuzzy
 msgid "Vector point icon for point data"
-msgstr ""
+msgstr "डेटाबेसची यादी दाखवता येणार नाही"
 
 #: ../locale/scriptstrings/d.vect.thematic_to_translate.c:21
+#, fuzzy
 msgid "Icon size for point data"
-msgstr ""
+msgstr "डेटाबेसची यादी दाखवता येणार नाही"
 
 #: ../locale/scriptstrings/d.vect.thematic_to_translate.c:22
 msgid "Minimum icon size/line width for graduated points/lines)"
@@ -28287,8 +28337,9 @@ msgid "Maximum icon size/line width for graduated points and lines"
 msgstr ""
 
 #: ../locale/scriptstrings/d.vect.thematic_to_translate.c:26
+#, fuzzy
 msgid "Number of classes for interval theme (integer)"
-msgstr ""
+msgstr "'%s'. ड्राइवर चालू होत नाही"
 
 #: ../locale/scriptstrings/d.vect.thematic_to_translate.c:28
 msgid "Color scheme for graduated color mapping"
@@ -28433,8 +28484,9 @@ msgid "Name of raster map to calculate statistics from"
 msgstr "'%s'. ड्राइवर चालू होत नाही"
 
 #: ../locale/scriptstrings/v.rast.stats_to_translate.c:9
+#, fuzzy
 msgid "Column prefix for new attribute columns"
-msgstr ""
+msgstr "डेटाबेसची यादी दाखवता येणार नाही"
 
 #: ../locale/scriptstrings/v.in.geonames_to_translate.c:1
 #, fuzzy
@@ -28474,8 +28526,9 @@ msgid "Table from which to drop attribute column"
 msgstr "डेटाबेसची यादी दाखवता येणार नाही"
 
 #: ../locale/scriptstrings/db.dropcol_to_translate.c:5
+#, fuzzy
 msgid "Name of the column"
-msgstr ""
+msgstr "डेटाबेसची यादी दाखवता येणार नाही"
 
 #: ../locale/scriptstrings/r.out.xyz_to_translate.c:1
 msgid ""
@@ -28527,13 +28580,13 @@ msgid "extended statistics (quartiles and percentile)"
 msgstr ""
 
 #: ../locale/scriptstrings/r.univar.sh_to_translate.c:5
+#, fuzzy
 msgid "Percentile to calculate (requires -e flag)"
-msgstr ""
+msgstr "'%s'. ड्राइवर चालू होत नाही"
 
 #: ../locale/scriptstrings/r.mapcalculator_to_translate.c:1
-#, fuzzy
 msgid "Calculate new raster map from a r.mapcalc expression."
-msgstr "'%s'. ड्राइवर चालू होत नाही"
+msgstr ""
 
 #: ../locale/scriptstrings/r.mapcalculator_to_translate.c:2
 msgid "A"
@@ -28584,8 +28637,9 @@ msgid "Performs auto-balancing of colors for LANDSAT images."
 msgstr ""
 
 #: ../locale/scriptstrings/i.landsat.rgb_to_translate.c:2
+#, fuzzy
 msgid "raster, imagery, colors"
-msgstr ""
+msgstr "'%s'. ड्राइवर चालू होत नाही"
 
 #: ../locale/scriptstrings/i.landsat.rgb_to_translate.c:3
 msgid "LANDSAT red channel"
@@ -28612,8 +28666,9 @@ msgid "Preserve relative colors, adjust brightness only"
 msgstr ""
 
 #: ../locale/scriptstrings/i.landsat.rgb_to_translate.c:9
+#, fuzzy
 msgid "Reset to standard color range"
-msgstr ""
+msgstr "'%s'. ड्राइवर चालू होत नाही"
 
 #: ../locale/scriptstrings/d.monsize_to_translate.c:1
 msgid "Selects/starts specified monitor at specified size"
@@ -28656,16 +28711,19 @@ msgid ""
 msgstr ""
 
 #: ../locale/scriptstrings/v.in.gpsbabel_to_translate.c:4
+#, fuzzy
 msgid "Import waypoints"
-msgstr ""
+msgstr "'%s'. ड्राइवर चालू होत नाही"
 
 #: ../locale/scriptstrings/v.in.gpsbabel_to_translate.c:5
+#, fuzzy
 msgid "Import routes"
-msgstr ""
+msgstr "'%s'. ड्राइवर चालू होत नाही"
 
 #: ../locale/scriptstrings/v.in.gpsbabel_to_translate.c:6
+#, fuzzy
 msgid "Import track"
-msgstr ""
+msgstr "'%s'. ड्राइवर चालू होत नाही"
 
 #: ../locale/scriptstrings/v.in.gpsbabel_to_translate.c:7
 msgid "Force vertices of track or route data as points"
@@ -28732,8 +28790,9 @@ msgstr ""
 #: ../locale/scriptstrings/r.in.wms_to_translate.c:14
 #: ../locale/scriptstrings/r.in.wms_to_translate.c:19
 #: ../locale/scriptstrings/r.in.wms_to_translate.c:46
+#, fuzzy
 msgid "Import"
-msgstr ""
+msgstr "'%s'. ड्राइवर चालू होत नाही"
 
 #: ../locale/scriptstrings/r.in.wms_to_translate.c:13
 msgid "Don't reproject the data, just patch it"
@@ -28748,12 +28807,14 @@ msgid "This may be needed to connect to servers which lack POST capability"
 msgstr ""
 
 #: ../locale/scriptstrings/r.in.wms_to_translate.c:20
+#, fuzzy
 msgid "Mapserver to request data from"
-msgstr ""
+msgstr "डेटाबेसची यादी दाखवता येणार नाही"
 
 #: ../locale/scriptstrings/r.in.wms_to_translate.c:22
+#, fuzzy
 msgid "Layers to request from map server"
-msgstr ""
+msgstr "डेटाबेसची यादी दाखवता येणार नाही"
 
 #: ../locale/scriptstrings/r.in.wms_to_translate.c:24
 msgid "Styles to request from map server"
@@ -28772,12 +28833,14 @@ msgid "Addition query options for server"
 msgstr ""
 
 #: ../locale/scriptstrings/r.in.wms_to_translate.c:32
+#, fuzzy
 msgid "Maximum columns to request at a time"
-msgstr ""
+msgstr "डेटाबेसची यादी दाखवता येणार नाही"
 
 #: ../locale/scriptstrings/r.in.wms_to_translate.c:34
+#, fuzzy
 msgid "Maximum rows to request at a time"
-msgstr ""
+msgstr "डेटाबेसची यादी दाखवता येणार नाही"
 
 #: ../locale/scriptstrings/r.in.wms_to_translate.c:36
 msgid "Additional options for r.tileset"
@@ -28933,8 +28996,9 @@ msgid "Expert mode (enter a set of r3.mapcalc expressions)"
 msgstr ""
 
 #: ../locale/scriptstrings/v.db.droptable_to_translate.c:1
+#, fuzzy
 msgid "Removes existing attribute table of a vector map."
-msgstr ""
+msgstr "'%s'. ड्राइवर चालू होत नाही"
 
 #: ../locale/scriptstrings/v.db.droptable_to_translate.c:3
 msgid "Force removal (required for actual deletion of table)"
@@ -28946,8 +29010,9 @@ msgid "Vector map from which to remove attribute table"
 msgstr "डेटाबेसची यादी दाखवता येणार नाही"
 
 #: ../locale/scriptstrings/v.db.droptable_to_translate.c:5
+#, fuzzy
 msgid "Name of existing attribute table (default: vector map name)"
-msgstr ""
+msgstr "'%s'. ड्राइवर चालू होत नाही"
 
 #: ../locale/scriptstrings/v.db.droptable_to_translate.c:6
 #, fuzzy
@@ -29041,10 +29106,11 @@ msgid "raster output TC maps prefix"
 msgstr "तक्त्याचे नाव"
 
 #: ../locale/scriptstrings/v.db.addtable_to_translate.c:1
+#, fuzzy
 msgid ""
 "Creates and connects a new attribute table to a given layer of an existing "
 "vector map."
-msgstr ""
+msgstr "'%s'. ड्राइवर चालू होत नाही"
 
 #: ../locale/scriptstrings/v.db.addtable_to_translate.c:3
 #, fuzzy
@@ -29052,8 +29118,9 @@ msgid "Vector map for which to add new attribute table"
 msgstr "डेटाबेसची यादी दाखवता येणार नाही"
 
 #: ../locale/scriptstrings/v.db.addtable_to_translate.c:4
+#, fuzzy
 msgid "Name of new attribute table (default: vector map name)"
-msgstr ""
+msgstr "'%s'. ड्राइवर चालू होत नाही"
 
 #: ../locale/scriptstrings/v.db.addtable_to_translate.c:5
 #, fuzzy
@@ -29080,9 +29147,8 @@ msgid "Vector output map"
 msgstr "'%s'. ड्राइवर चालू होत नाही"
 
 #: ../locale/scriptstrings/r.shaded.relief_to_translate.c:1
-#, fuzzy
 msgid "Creates shaded relief map from an elevation map (DEM)."
-msgstr "'%s'. ड्राइवर चालू होत नाही"
+msgstr ""
 
 #: ../locale/scriptstrings/r.shaded.relief_to_translate.c:3
 #, fuzzy
@@ -29167,12 +29233,14 @@ msgid "Configuration editor for r.li.'index'"
 msgstr "डेटाबेसची यादी दाखवता येणार नाही"
 
 #: ../locale/scriptstrings/r.li.setup_to_translate.c:2
+#, fuzzy
 msgid "raster, landscape structure analysis"
-msgstr ""
+msgstr "डेटाबेसची यादी दाखवता येणार नाही"
 
 #: ../locale/scriptstrings/db.in.ogr_to_translate.c:1
+#, fuzzy
 msgid "Imports attribute tables in various formats."
-msgstr ""
+msgstr "'%s'. ड्राइवर चालू होत नाही"
 
 #: ../locale/scriptstrings/db.in.ogr_to_translate.c:3
 msgid "Table file to be imported or DB connection string"
@@ -29183,8 +29251,9 @@ msgid "Table name of SQL DB table"
 msgstr ""
 
 #: ../locale/scriptstrings/db.in.ogr_to_translate.c:6
+#, fuzzy
 msgid "Name for auto-generated unique key column"
-msgstr ""
+msgstr "'%s'. ड्राइवर चालू होत नाही"
 
 #: ../locale/scriptstrings/d.rast.edit_to_translate.c:5
 #, fuzzy
@@ -29204,8 +29273,9 @@ msgid "Minimum size of each cell"
 msgstr ""
 
 #: ../locale/scriptstrings/d.rast.edit_to_translate.c:9
+#, fuzzy
 msgid "Maximum number of rows to load"
-msgstr ""
+msgstr "'%s'. ड्राइवर चालू होत नाही"
 
 #: ../locale/scriptstrings/d.rast.edit_to_translate.c:10
 #, fuzzy
@@ -29213,17 +29283,20 @@ msgid "Maximum number of columns to load"
 msgstr "'%s'. ड्राइवर चालू होत नाही"
 
 #: ../locale/scriptstrings/v.db.dropcol_to_translate.c:1
+#, fuzzy
 msgid ""
 "Drops a column from the attribute table connected to a given vector map."
-msgstr ""
+msgstr "डेटाबेसची यादी दाखवता येणार नाही"
 
 #: ../locale/scriptstrings/v.db.dropcol_to_translate.c:3
+#, fuzzy
 msgid "Vector map for which to drop attribute column"
-msgstr ""
+msgstr "डेटाबेसची यादी दाखवता येणार नाही"
 
 #: ../locale/scriptstrings/v.db.dropcol_to_translate.c:4
+#, fuzzy
 msgid "Layer where to drop column"
-msgstr ""
+msgstr "डेटाबेसची यादी दाखवता येणार नाही"
 
 #: ../locale/scriptstrings/v.db.dropcol_to_translate.c:5
 #, fuzzy
@@ -29253,8 +29326,9 @@ msgid "Plot using Xgraph"
 msgstr ""
 
 #: ../locale/scriptstrings/i.in.spotvgt_to_translate.c:1
+#, fuzzy
 msgid "Import of SPOT VGT NDVI file into a raster map"
-msgstr ""
+msgstr "'%s'. ड्राइवर चालू होत नाही"
 
 #: ../locale/scriptstrings/i.in.spotvgt_to_translate.c:3
 msgid "also import quality map (SM status map layer) and filter NDVI map"
@@ -29265,10 +29339,11 @@ msgid "existing SPOT VGT NDVI HDF file (0001_NDV.HDF)"
 msgstr ""
 
 #: ../locale/scriptstrings/v.db.addcol_to_translate.c:1
+#, fuzzy
 msgid ""
 "Adds one or more columns to the attribute table connected to a given vector "
 "map."
-msgstr ""
+msgstr "डेटाबेसची यादी दाखवता येणार नाही"
 
 #: ../locale/scriptstrings/v.db.addcol_to_translate.c:3
 #, fuzzy
@@ -29312,8 +29387,9 @@ msgid "Target monitor"
 msgstr "'%s'. ड्राइवर चालू होत नाही"
 
 #: ../locale/scriptstrings/d.mvmon_to_translate.c:7
+#, fuzzy
 msgid "Source monitor"
-msgstr ""
+msgstr "'%s'. ड्राइवर चालू होत नाही"
 
 #: ../sites/s.out.ascii/main.c:47 ../sites/s.in.ascii/main.c:50
 msgid "sites"
@@ -29349,8 +29425,9 @@ msgid "Nonpositive eigenvalues for class %d subclass %d"
 msgstr ""
 
 #: ../imagery/i.smap/shapiro/main.c:38 ../imagery/i.gensigset/main.c:40
+#, fuzzy
 msgid "imagery, classification, supervised, SMAP"
-msgstr ""
+msgstr "'%s'. ड्राइवर चालू होत नाही"
 
 #: ../imagery/i.smap/shapiro/main.c:40
 msgid ""
@@ -29645,12 +29722,14 @@ msgid "Poorly placed control points."
 msgstr ""
 
 #: ../imagery/i.rectify/cp.c:26
+#, fuzzy
 msgid " Can not generate the transformation equation."
-msgstr ""
+msgstr "'%s'. ड्राइवर चालू होत नाही"
 
 #: ../imagery/i.rectify/cp.c:29
+#, fuzzy
 msgid "Not enough memory to solve for transformation equation"
-msgstr ""
+msgstr "'%s'. ड्राइवर चालू होत नाही"
 
 #: ../imagery/i.rectify/cp.c:32
 #, fuzzy
@@ -29859,9 +29938,9 @@ msgid "Generates statistics for i.smap from raster map."
 msgstr "'%s'. ड्राइवर चालू होत नाही"
 
 #: ../imagery/i.gensigset/main.c:52
-#, c-format
+#, fuzzy, c-format
 msgid "Clustering class %d (%d pixels)..."
-msgstr ""
+msgstr "'%s'. ड्राइवर चालू होत नाही"
 
 #: ../imagery/i.gensigset/main.c:55
 #, fuzzy, c-format
@@ -29913,17 +29992,19 @@ msgid "Training class %d only has one cell - this class will be ignored"
 msgstr ""
 
 #: ../imagery/i.gensigset/get_train.c:62 ../imagery/i.gensig/get_train.c:58
+#, fuzzy
 msgid "Training map has no classes"
-msgstr ""
+msgstr "'%s'. ड्राइवर चालू होत नाही"
 
 #: ../imagery/i.gensigset/get_train.c:78 ../imagery/i.gensig/get_train.c:73
+#, fuzzy
 msgid "1 class found"
-msgstr ""
+msgstr "'%s'. ड्राइवर चालू होत नाही"
 
 #: ../imagery/i.gensigset/get_train.c:80 ../imagery/i.gensig/get_train.c:75
-#, c-format
+#, fuzzy, c-format
 msgid "%d classes found"
-msgstr ""
+msgstr "डेटाबेसची यादी दाखवता येणार नाही"
 
 #: ../imagery/i.gensigset/parse.c:13 ../imagery/i.gensig/parse.c:14
 msgid "Ground truth training map"
@@ -29940,9 +30021,9 @@ msgid "Maximum number of sub-signatures in any class"
 msgstr ""
 
 #: ../imagery/i.gensigset/parse.c:52
-#, c-format
+#, fuzzy, c-format
 msgid "Illegal number of sub-signatures (%s)"
-msgstr ""
+msgstr "तक्त्याचे नाव"
 
 #: ../imagery/i.gensigset/openfiles.c:19 ../imagery/i.gensig/openfiles.c:20
 #, fuzzy, c-format
@@ -29988,16 +30069,18 @@ msgid "Name of input raster map (image fft, imaginary part"
 msgstr "'%s'. ड्राइवर चालू होत नाही"
 
 #: ../imagery/i.ifft/ifftmain.c:101
+#, fuzzy
 msgid ""
 "Unable to open real-image in the 'cell_misc' directory. Raster map probably "
 "wasn't created by i.fft"
-msgstr ""
+msgstr "'%s'. ड्राइवर चालू होत नाही"
 
 #: ../imagery/i.ifft/ifftmain.c:111
+#, fuzzy
 msgid ""
 "Unable to open imaginary-image in the 'cell_misc' directory. Raster map "
 "probably wasn't created by i.fft"
-msgstr ""
+msgstr "'%s'. ड्राइवर चालू होत नाही"
 
 #: ../imagery/i.ifft/ifftmain.c:134
 #, c-format
@@ -30150,9 +30233,9 @@ msgstr "'%s'. ड्राइवर चालू होत नाही"
 
 #: ../imagery/i.ortho.photo/photo.2target/main.c:114
 #: ../imagery/i.ortho.photo/photo.2image/main.c:98
-#, c-format
+#, fuzzy, c-format
 msgid "No camera reference file selected for group [%s]"
-msgstr ""
+msgstr "'%s'. ड्राइवर चालू होत नाही"
 
 #: ../imagery/i.ortho.photo/photo.2target/main.c:118
 #: ../imagery/i.ortho.photo/photo.2image/main.c:102
@@ -30223,9 +30306,9 @@ msgid "No files in this group!"
 msgstr ""
 
 #: ../imagery/i.ortho.photo/photo.rectify/main.c:97
-#, c-format
+#, fuzzy, c-format
 msgid "No target elevation model selected for group <%s>"
-msgstr ""
+msgstr "'%s'. ड्राइवर चालू होत नाही"
 
 #: ../imagery/i.ortho.photo/photo.rectify/main.c:109
 #, fuzzy, c-format
@@ -30281,14 +30364,14 @@ msgid "Please select the file(s) you wish to rectify by naming an output file"
 msgstr ""
 
 #: ../imagery/i.ortho.photo/photo.rectify/rectify.c:245
-#, c-format
+#, fuzzy, c-format
 msgid "%s@%s: projection doesn't match current settings"
-msgstr ""
+msgstr "'%s'. ड्राइवर चालू होत नाही"
 
 #: ../imagery/i.ortho.photo/photo.rectify/rectify.c:251
-#, c-format
+#, fuzzy, c-format
 msgid "%s@%s: zone doesn't match current settings"
-msgstr ""
+msgstr "'%s'. ड्राइवर चालू होत नाही"
 
 #: ../imagery/i.ortho.photo/photo.elev/main.c:64
 msgid "Interactively select or modify the target elevation model."
@@ -30323,9 +30406,9 @@ msgid "Please select a target for group"
 msgstr ""
 
 #: ../imagery/i.ortho.photo/photo.target/main.c:66
-#, c-format
+#, fuzzy, c-format
 msgid "Group [%s] targeted for location [%s], mapset [%s]"
-msgstr ""
+msgstr "'%s'. ड्राइवर चालू होत नाही"
 
 #: ../imagery/i.ortho.photo/photo.2image/main.c:56
 msgid "Interactively mark fiducial or reseau points on an image."
@@ -30353,8 +30436,9 @@ msgid "Name of camera reference file to use"
 msgstr "'%s'. ड्राइवर चालू होत नाही"
 
 #: ../imagery/i.ortho.photo/photo.camera/main.c:83
+#, fuzzy
 msgid "Enter a camera reference file to be used with this imagery group"
-msgstr ""
+msgstr "'%s'. ड्राइवर चालू होत नाही"
 
 #: ../imagery/i.ortho.photo/photo.camera/main.c:100
 #, c-format
@@ -30420,8 +30504,9 @@ msgid "Writing transformed data..."
 msgstr "'%s'. ड्राइवर चालू होत नाही"
 
 #: ../imagery/i.fft/fftmain.c:231
+#, fuzzy
 msgid "Writing viewable versions of transformed data..."
-msgstr ""
+msgstr "'%s'. ड्राइवर चालू होत नाही"
 
 #: ../imagery/i.fft/fftmain.c:274
 msgid " "
@@ -30553,9 +30638,9 @@ msgid "Name for output file containing final report"
 msgstr "'%s'. ड्राइवर चालू होत नाही"
 
 #: ../imagery/i.cluster/main.c:182
-#, c-format
+#, fuzzy, c-format
 msgid "Illegal number of initial classes (%s)"
-msgstr ""
+msgstr "'%s'. ड्राइवर चालू होत नाही"
 
 #: ../imagery/i.cluster/main.c:193
 #, fuzzy, c-format
@@ -30585,7 +30670,7 @@ msgstr "तक्त्याचे नाव"
 #: ../imagery/i.cluster/main.c:234
 #, fuzzy, c-format
 msgid "Unable to create report file <%s>"
-msgstr "डेटाबेसची यादी दाखवता येणार नाही"
+msgstr "'%s'. ड्राइवर चालू होत नाही"
 
 #: ../imagery/i.cluster/main.c:242
 #, c-format
@@ -30831,14 +30916,14 @@ msgid "No raster maps found"
 msgstr "'%s'. ड्राइवर चालू होत नाही"
 
 #: ../imagery/i.cluster/open_files.c:42
-#, c-format
+#, fuzzy, c-format
 msgid "Subgroup <%s> doesn't have any raster maps"
-msgstr ""
+msgstr "'%s'. ड्राइवर चालू होत नाही"
 
 #: ../imagery/i.cluster/open_files.c:45
-#, c-format
+#, fuzzy, c-format
 msgid "Subgroup <%s> only has 1 raster map"
-msgstr ""
+msgstr "'%s'. ड्राइवर चालू होत नाही"
 
 #: ../imagery/i.cluster/open_files.c:46
 #, fuzzy
@@ -31014,8 +31099,9 @@ msgid ""
 msgstr ""
 
 #: ../imagery/i.maxlik/main.c:63
+#, fuzzy
 msgid "imagery, classification, MLC"
-msgstr ""
+msgstr "'%s'. ड्राइवर चालू होत नाही"
 
 #: ../imagery/i.maxlik/main.c:65
 msgid "Classifies the cell spectral reflectances in imagery data."
@@ -31262,6 +31348,26 @@ msgid "Can't mark another point.  Only %d points allowed.  Sorry."
 msgstr ""
 
 #, fuzzy
+msgid "installation"
+msgstr "डेटाबेसचे स्थान"
+
+#, fuzzy
+msgid "GDAL datatype: %s, range: %f - %f"
+msgstr "'%s'. ड्राइवर चालू होत नाही"
+
+#, fuzzy
+msgid "Unable to create table <%s_edge_Interpolation>"
+msgstr "'%s'. ड्राइवर चालू होत नाही"
+
+#, fuzzy
+msgid "Rescale output raster map [0,255]"
+msgstr "'%s'. ड्राइवर चालू होत नाही"
+
+#, fuzzy
+msgid "Cannot select records from database"
+msgstr "डेटाबेसची यादी दाखवता येणार नाही"
+
+#, fuzzy
 #~ msgid "Creating support files..."
 #~ msgstr "'%s'. ड्राइवर चालू होत नाही"
 
@@ -31270,19 +31376,11 @@ msgstr ""
 #~ msgstr "'%s'. ड्राइवर चालू होत नाही"
 
 #, fuzzy
-#~ msgid "installation"
-#~ msgstr "डेटाबेसचे स्थान"
-
-#, fuzzy
 #~ msgid "Name of terrain raster map (DEM)"
 #~ msgstr "'%s'. ड्राइवर चालू होत नाही"
 
 #, fuzzy
 #~ msgid "Name for output raster map with lake"
-#~ msgstr "'%s'. ड्राइवर चालू होत नाही"
-
-#, fuzzy
-#~ msgid "GDAL datatype: %s, range: %f - %f"
 #~ msgstr "'%s'. ड्राइवर चालू होत नाही"
 
 #, fuzzy
@@ -31311,14 +31409,6 @@ msgstr ""
 
 #, fuzzy
 #~ msgid "Unable to open table <%s_edge_Interpolation>"
-#~ msgstr "'%s'. ड्राइवर चालू होत नाही"
-
-#, fuzzy
-#~ msgid "Unable to create table <%s_edge_Interpolation>"
-#~ msgstr "'%s'. ड्राइवर चालू होत नाही"
-
-#, fuzzy
-#~ msgid "Rescale output raster map [0,255]"
 #~ msgstr "'%s'. ड्राइवर चालू होत नाही"
 
 #, fuzzy
@@ -31411,10 +31501,6 @@ msgstr ""
 
 #, fuzzy
 #~ msgid "vector, attribute table"
-#~ msgstr "डेटाबेसची यादी दाखवता येणार नाही"
-
-#, fuzzy
-#~ msgid "Cannot select records from database"
 #~ msgstr "डेटाबेसची यादी दाखवता येणार नाही"
 
 #, fuzzy
@@ -32132,3 +32218,450 @@ msgstr ""
 
 #~ msgid "Connect to the database through DBMI."
 #~ msgstr "डीबीएमआय व्दारा डाटाबेसशी जोडा"
+
+#, fuzzy
+#~ msgid "Name of the longitude input raster map [decimal degrees]"
+#~ msgstr "'%s'. ड्राइवर चालू होत नाही"
+
+#, fuzzy
+#~ msgid "Name of raster map with seed (at least 1 cell > 0)"
+#~ msgstr "'%s'. ड्राइवर चालू होत नाही"
+
+#, fuzzy
+#~ msgid "Name of the elevation raster map [m]"
+#~ msgstr "'%s'. ड्राइवर चालू होत नाही"
+
+#, fuzzy
+#~ msgid "Name of the water depth raster map [m]"
+#~ msgstr "'%s'. ड्राइवर चालू होत नाही"
+
+#, fuzzy
+#~ msgid "Name of the x-derivatives raster map [m/m]"
+#~ msgstr "'%s'. ड्राइवर चालू होत नाही"
+
+#, fuzzy
+#~ msgid "Name of the y-derivatives raster map [m/m]"
+#~ msgstr "'%s'. ड्राइवर चालू होत नाही"
+
+#, fuzzy
+#~ msgid "Name of the detachment capacity coefficient raster map [s/m]"
+#~ msgstr "'%s'. ड्राइवर चालू होत नाही"
+
+#, fuzzy
+#~ msgid "Name of the transport capacity coefficient raster map [s]"
+#~ msgstr "'%s'. ड्राइवर चालू होत नाही"
+
+#, fuzzy
+#~ msgid "Name of the critical shear stress raster map [Pa]"
+#~ msgstr "'%s'. ड्राइवर चालू होत नाही"
+
+#, fuzzy
+#~ msgid "Name of the Mannings n value"
+#~ msgstr "'%s'. ड्राइवर चालू होत नाही"
+
+#, fuzzy
+#~ msgid "Output transport capacity raster map [kg/ms]"
+#~ msgstr "'%s'. ड्राइवर चालू होत नाही"
+
+#, fuzzy
+#~ msgid "Output transp.limited erosion-deposition raster map [kg/m2s]"
+#~ msgstr "'%s'. ड्राइवर चालू होत नाही"
+
+#, fuzzy
+#~ msgid "Output sediment concentration raster map [particle/m3]"
+#~ msgstr "'%s'. ड्राइवर चालू होत नाही"
+
+#, fuzzy
+#~ msgid "Output sediment flux raster map [kg/ms]"
+#~ msgstr "'%s'. ड्राइवर चालू होत नाही"
+
+#, fuzzy
+#~ msgid "Output erosion-deposition raster map [kg/m2s]"
+#~ msgstr "'%s'. ड्राइवर चालू होत नाही"
+
+#, fuzzy
+#~ msgid "Name of the runoff infiltration rate raster map [mm/hr]"
+#~ msgstr "'%s'. ड्राइवर चालू होत नाही"
+
+#, fuzzy
+#~ msgid "Output water discharge raster map [m3/s]"
+#~ msgstr "'%s'. ड्राइवर चालू होत नाही"
+
+#, fuzzy
+#~ msgid "Output simulation error raster map [m]"
+#~ msgstr "'%s'. ड्राइवर चालू होत नाही"
+
+#, fuzzy
+#~ msgid "Cannot make stat of %s configuration file"
+#~ msgstr "डेटाबेसची यादी दाखवता येणार नाही"
+
+#, fuzzy
+#~ msgid "Range to be exported: %f - %f"
+#~ msgstr "'%s'. ड्राइवर चालू होत नाही"
+
+#, fuzzy
+#~ msgid "Calculating map %01d of %01d (angle %lf, raster map <%s>)"
+#~ msgstr "'%s'. ड्राइवर चालू होत नाही"
+
+#, fuzzy
+#~ msgid "Input barrier raster map"
+#~ msgstr "'%s'. ड्राइवर चालू होत नाही"
+
+#, fuzzy
+#~ msgid "Output topographic index map"
+#~ msgstr "'%s'. ड्राइवर चालू होत नाही"
+
+#, fuzzy
+#~ msgid "Unable to read symbol, unable todisplay points"
+#~ msgstr "'%s'. ड्राइवर चालू होत नाही"
+
+#, fuzzy
+#~ msgid "Cannot allocate %d bytes of memory"
+#~ msgstr "'%s'. ड्राइवर चालू होत नाही"
+
+#, fuzzy
+#~ msgid "vector, query"
+#~ msgstr "'%s'. ड्राइवर चालू होत नाही"
+
+#, fuzzy
+#~ msgid "Writing edges..."
+#~ msgstr "'%s'. ड्राइवर चालू होत नाही"
+
+#, fuzzy
+#~ msgid "Name for output file (do not add extension)"
+#~ msgstr "तक्त्याचे नाव"
+
+#, fuzzy
+#~ msgid "Name of file with sql statement"
+#~ msgstr "तक्त्याचे नाव"
+
+#, fuzzy
+#~ msgid "Raster map to use as MASK"
+#~ msgstr "'%s'. ड्राइवर चालू होत नाही"
+
+#, fuzzy
+#~ msgid "Vector map for which to edit attribute table"
+#~ msgstr "डेटाबेसची यादी दाखवता येणार नाही"
+
+#, fuzzy
+#~ msgid "Layer where to add column"
+#~ msgstr "डेटाबेसची यादी दाखवता येणार नाही"
+
+#, fuzzy
+#~ msgid "Computing row %d of covariance matrix..."
+#~ msgstr "'%s'. ड्राइवर चालू होत नाही"
+
+#, fuzzy
+#~ msgid "raster, terrain analysis"
+#~ msgstr "डेटाबेसची यादी दाखवता येणार नाही"
+
+#, fuzzy
+#~ msgid "Vector map to display thematically"
+#~ msgstr "डेटाबेसची यादी दाखवता येणार नाही"
+
+#, fuzzy
+#~ msgid "Layer to use for thematic display"
+#~ msgstr "'%s'. ड्राइवर चालू होत नाही"
+
+#, fuzzy
+#~ msgid "Output separator (default: newline)"
+#~ msgstr "'%s'. ड्राइवर चालू होत नाही"
+
+#, fuzzy
+#~ msgid "3d raster to remove"
+#~ msgstr "'%s'. ड्राइवर चालू होत नाही"
+
+#, fuzzy
+#~ msgid "Vector to remove"
+#~ msgstr "'%s'. ड्राइवर चालू होत नाही"
+
+#, fuzzy
+#~ msgid "Label to remove"
+#~ msgstr "'%s'. ड्राइवर चालू होत नाही"
+
+#, fuzzy
+#~ msgid "3dview to remove"
+#~ msgstr "डेटाबेसची यादी दाखवता येणार नाही"
+
+#, fuzzy
+#~ msgid "raster input maps"
+#~ msgstr "'%s'. ड्राइवर चालू होत नाही"
+
+#, fuzzy
+#~ msgid "Name of fractal surface raster layer"
+#~ msgstr "'%s'. ड्राइवर चालू होत नाही"
+
+#, fuzzy
+#~ msgid "Density of output walkers"
+#~ msgstr "तक्त्याचे नाव"
+
+#, fuzzy
+#~ msgid "You are not outputting any raster or vector points maps"
+#~ msgstr "'%s'. ड्राइवर चालू होत नाही"
+
+#, fuzzy
+#~ msgid "Cannot open database <%s> by driver <%s>"
+#~ msgstr "'%s'. ड्राइवर चालू होत नाही"
+
+#, fuzzy
+#~ msgid "No map specified"
+#~ msgstr "'%s'. ड्राइवर चालू होत नाही"
+
+#, fuzzy
+#~ msgid "%s - unknown color request"
+#~ msgstr "'%s'. ड्राइवर चालू होत नाही"
+
+#, fuzzy
+#~ msgid "Unable to properly write output raster map"
+#~ msgstr "'%s'. ड्राइवर चालू होत नाही"
+
+#, fuzzy
+#~ msgid "Reading data: "
+#~ msgstr "'%s'. ड्राइवर चालू होत नाही"
+
+#, fuzzy
+#~ msgid "Name of raster map layer to be used for <%s>"
+#~ msgstr "'%s'. ड्राइवर चालू होत नाही"
+
+#, fuzzy
+#~ msgid "%d boundaries converted to lines"
+#~ msgstr "'%s'. ड्राइवर चालू होत नाही"
+
+#, fuzzy
+#~ msgid "CrossCorrelation: %d points read in region.\n"
+#~ msgstr "'%s'. ड्राइवर चालू होत नाही"
+
+#, fuzzy
+#~ msgid "CrossCorrelation: Cannot read field info"
+#~ msgstr "डेटाबेसची यादी दाखवता येणार नाही"
+
+#, fuzzy
+#~ msgid "CrossCorrelation: %d records selected from table"
+#~ msgstr "डेटाबेसची यादी दाखवता येणार नाही"
+
+#, fuzzy
+#~ msgid "CrossCorrelation: No record for point (cat = %d)"
+#~ msgstr "डेटाबेसची यादी दाखवता येणार नाही"
+
+#, fuzzy
+#~ msgid "CrossCorrelation: lambda_i = %.3f\n"
+#~ msgstr "डेटाबेसची यादी दाखवता येणार नाही"
+
+#, fuzzy
+#~ msgid "To layer"
+#~ msgstr "तक्त्याचे नाव"
+
+#, fuzzy
+#~ msgid "Cannot open database %s by driver %s"
+#~ msgstr "'%s'. ड्राइवर चालू होत नाही"
+
+#, fuzzy
+#~ msgid "Input vector was not found."
+#~ msgstr "'%s'. ड्राइवर चालू होत नाही"
+
+#, fuzzy
+#~ msgid "Cannot open dig_cats file."
+#~ msgstr "'%s'. ड्राइवर चालू होत नाही"
+
+#, fuzzy
+#~ msgid "Cannot open database %s"
+#~ msgstr "डेटाबेसची यादी दाखवता येणार नाही"
+
+#, fuzzy
+#~ msgid "Cannot insert into table: %s"
+#~ msgstr "'%s'. ड्राइवर चालू होत नाही"
+
+#, fuzzy
+#~ msgid "Removed vertices: %5d"
+#~ msgstr "डेटाबेसची यादी दाखवता येणार नाही"
+
+#, fuzzy
+#~ msgid "Node layer (points)"
+#~ msgstr "'%s'. ड्राइवर चालू होत नाही"
+
+#, fuzzy
+#~ msgid "Type of elements"
+#~ msgstr "'%s'. ड्राइवर चालू होत नाही"
+
+#, fuzzy
+#~ msgid "Processing ainput lines ..."
+#~ msgstr "'%s'. ड्राइवर चालू होत नाही"
+
+#, fuzzy
+#~ msgid "Processing ainput areas ..."
+#~ msgstr "'%s'. ड्राइवर चालू होत नाही"
+
+#, fuzzy
+#~ msgid "Writing attributes ..."
+#~ msgstr "डेटाबेसची यादी दाखवता येणार नाही"
+
+#, fuzzy
+#~ msgid "%s: %s - Unable to find the real-image map."
+#~ msgstr "'%s'. ड्राइवर चालू होत नाही"
+
+#, fuzzy
+#~ msgid "%s: %s - Unable to find the imaginary-image."
+#~ msgstr "'%s'. ड्राइवर चालू होत नाही"
+
+#, fuzzy
+#~ msgid "Insufficent memory for allocation of data structure"
+#~ msgstr "डेटाबेसचे स्थान"
+
+#, fuzzy
+#~ msgid "Reading the raster maps..."
+#~ msgstr "'%s'. ड्राइवर चालू होत नाही"
+
+#, fuzzy
+#~ msgid "Rotating data arrays..."
+#~ msgstr "डेटाबेसची यादी दाखवता येणार नाही"
+
+#, fuzzy
+#~ msgid "Unable to open output file."
+#~ msgstr "'%s'. ड्राइवर चालू होत नाही"
+
+#, fuzzy
+#~ msgid "Transform successful."
+#~ msgstr "'%s'. ड्राइवर चालू होत नाही"
+
+#, fuzzy
+#~ msgid "Output map representing the red"
+#~ msgstr "'%s'. ड्राइवर चालू होत नाही"
+
+#, fuzzy
+#~ msgid "Output hue raster map"
+#~ msgstr "तक्त्याचे नाव"
+
+#, fuzzy
+#~ msgid "Class transition statistics."
+#~ msgstr "डेटाबेसची यादी दाखवता येणार नाही"
+
+#, fuzzy
+#~ msgid "get_img: out of memory."
+#~ msgstr "'%s'. ड्राइवर चालू होत नाही"
+
+#, fuzzy
+#~ msgid "Writing [%s] ..."
+#~ msgstr "'%s'. ड्राइवर चालू होत नाही"
+
+#, fuzzy
+#~ msgid "Subgroup [%s] not found."
+#~ msgstr "'%s'. ड्राइवर चालू होत नाही"
+
+#, fuzzy
+#~ msgid "Signature file [%s] is missing or not readable."
+#~ msgstr "'%s'. ड्राइवर चालू होत नाही"
+
+#, fuzzy
+#~ msgid "Calculating eigenvalues and eigenvectors..."
+#~ msgstr "'%s'. ड्राइवर चालू होत नाही"
+
+#, fuzzy
+#~ msgid "Transposing eigen matrix..."
+#~ msgstr "'%s'. ड्राइवर चालू होत नाही"
+
+#, fuzzy
+#~ msgid "Calculating class covariance matrix..."
+#~ msgstr "'%s'. ड्राइवर चालू होत नाही"
+
+#, fuzzy
+#~ msgid "Subgroup containing image files"
+#~ msgstr "'%s'. ड्राइवर चालू होत नाही"
+
+#, fuzzy
+#~ msgid ""
+#~ "Unable to create signature file [%s] for subgroup [%s] in group [%s]."
+#~ msgstr "'%s'. ड्राइवर चालू होत नाही"
+
+#, fuzzy
+#~ msgid "Reading the raster map..."
+#~ msgstr "'%s'. ड्राइवर चालू होत नाही"
+
+#, fuzzy
+#~ msgid ""
+#~ "\n"
+#~ " group <%s> not found"
+#~ msgstr "'%s'. ड्राइवर चालू होत नाही"
+
+#, fuzzy
+#~ msgid "subgroup <%s> not found"
+#~ msgstr "'%s'. ड्राइवर चालू होत नाही"
+
+#, fuzzy
+#~ msgid "Unable to proceed"
+#~ msgstr "'%s'. ड्राइवर चालू होत नाही"
+
+#, fuzzy
+#~ msgid "** Can't open seed singature file <%s> **"
+#~ msgstr "'%s'. ड्राइवर चालू होत नाही"
+
+#, fuzzy
+#~ msgid "** Can't read signature file <%s> **"
+#~ msgstr "'%s'. ड्राइवर चालू होत नाही"
+
+#, fuzzy
+#~ msgid "File containing initial signatures"
+#~ msgstr "'%s'. ड्राइवर चालू होत नाही"
+
+#, fuzzy
+#~ msgid "Output file to contain final report"
+#~ msgstr "'%s'. ड्राइवर चालू होत नाही"
+
+#, fuzzy
+#~ msgid "Can't creat reportfile: "
+#~ msgstr "डेटाबेसची यादी दाखवता येणार नाही"
+
+#, fuzzy
+#~ msgid "Reading image ... "
+#~ msgstr "'%s'. ड्राइवर चालू होत नाही"
+
+#, fuzzy
+#~ msgid "group=[%s] - not found."
+#~ msgstr "'%s'. ड्राइवर चालू होत नाही"
+
+#, fuzzy
+#~ msgid "subgroup=[%s] (of group [%s]) - not found."
+#~ msgstr "'%s'. ड्राइवर चालू होत नाही"
+
+#, fuzzy
+#~ msgid "Can't read signature file [%s]."
+#~ msgstr "'%s'. ड्राइवर चालू होत नाही"
+
+#, fuzzy
+#~ msgid "Unable to create reject layer [%s]."
+#~ msgstr "डेटाबेसची यादी दाखवता येणार नाही"
+
+#, fuzzy
+#~ msgid "Raster map to hold classification results"
+#~ msgstr "'%s'. ड्राइवर चालू होत नाही"
+
+#, fuzzy
+#~ msgid "Unable to connect line id %d to line %d"
+#~ msgstr "डेटाबेसची यादी दाखवता येणार नाही"
+
+#, fuzzy
+#~ msgid "Input map containing lines"
+#~ msgstr "'%s'. ड्राइवर चालू होत नाही"
+
+#, fuzzy
+#~ msgid "%s in %s -can't open raster map"
+#~ msgstr "'%s'. ड्राइवर चालू होत नाही"
+
+#, fuzzy
+#~ msgid "Could not find input map <%s> in current mapset."
+#~ msgstr "'%s'. ड्राइवर चालू होत नाही"
+
+#, fuzzy
+#~ msgid "name for new vector map"
+#~ msgstr "'%s'. ड्राइवर चालू होत नाही"
+
+#, fuzzy
+#~ msgid "%s: can't open tempfile"
+#~ msgstr "'%s'. ड्राइवर चालू होत नाही"
+
+#, fuzzy
+#~ msgid "Unable to write color table to raster [%s]"
+#~ msgstr "'%s'. ड्राइवर चालू होत नाही"
+
+#, fuzzy
+#~ msgid "Unable to read cats table for %s"
+#~ msgstr "'%s'. ड्राइवर चालू होत नाही"

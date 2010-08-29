@@ -1101,7 +1101,7 @@ msgstr ""
 #: ../gui/wxpython/menustrings.py:25
 #, fuzzy
 msgid "Bulk link of raster data"
-msgstr "Đang nạp bản đồ raster"
+msgstr "Đặc tả dữ liệu raster cơ bản"
 
 #: ../gui/wxpython/menustrings.py:26
 #, fuzzy
@@ -1411,7 +1411,7 @@ msgstr "Xuất bản đồ raster"
 #: ../gui/wxpython/menustrings.py:89 ../gui/wxpython/menustrings.py:120
 #, fuzzy
 msgid "Common export formats"
-msgstr "Tọa độ"
+msgstr "Chuyển đổi tọa độ"
 
 #: ../gui/wxpython/menustrings.py:90
 #, fuzzy
@@ -1841,7 +1841,6 @@ msgid "Launches script file."
 msgstr ""
 
 #: ../gui/wxpython/menustrings.py:190
-#, fuzzy
 msgid "Exit GUI"
 msgstr "Thoát khỏi giao diện đồ họa"
 
@@ -4960,9 +4959,8 @@ msgid "raster map"
 msgstr "Bản đồ raster"
 
 #: ../gui/wxpython/gui_modules/mcalc_builder.py:121
-#, fuzzy
 msgid "Operators"
-msgstr "Trong suốt"
+msgstr ""
 
 #: ../gui/wxpython/gui_modules/mcalc_builder.py:123
 #, fuzzy
@@ -5076,7 +5074,7 @@ msgstr ""
 #: ../gui/wxpython/gui_modules/mcalc_builder.py:188
 #, fuzzy
 msgid "conditional"
-msgstr "Tùy chọn"
+msgstr "Vị trí"
 
 #: ../gui/wxpython/gui_modules/mcalc_builder.py:200
 #, fuzzy, python-format
@@ -5089,9 +5087,8 @@ msgid "Insert existing %s"
 msgstr "ghi đè tập tin hiện có"
 
 #: ../gui/wxpython/gui_modules/mcalc_builder.py:207
-#, fuzzy
 msgid "Insert mapcalc function"
-msgstr "Mặt cắt"
+msgstr ""
 
 #: ../gui/wxpython/gui_modules/mcalc_builder.py:397
 #, fuzzy
@@ -6385,7 +6382,6 @@ msgstr "Bề mặt"
 #: ../gui/wxpython/gui_modules/nviz_tools.py:276
 #: ../gui/wxpython/gui_modules/nviz_tools.py:3154
 #: ../gui/wxpython/gui_modules/nviz_preferences.py:237
-#, fuzzy
 msgid "Vector"
 msgstr "Vec-tơ"
 
@@ -6981,7 +6977,7 @@ msgstr ""
 #: ../gui/wxpython/gui_modules/gselect.py:1077
 #, fuzzy
 msgid "Choose input file"
-msgstr "Chọn tập tin không gian làm việc"
+msgstr "Chọn thư mục đầu vào"
 
 #: ../gui/wxpython/gui_modules/gselect.py:950
 msgid "Choose input directory"
@@ -8039,9 +8035,9 @@ msgid " row %d:"
 msgstr "hàng %d:"
 
 #: ../gui/wxpython/gui_modules/sqlbuilder.py:78
-#, python-format
+#, fuzzy, python-format
 msgid "GRASS SQL Builder (%(type)s): vector map <%(map)s>"
-msgstr ""
+msgstr "Trình xây dựng SQL của GRASS: %s"
 
 #: ../gui/wxpython/gui_modules/sqlbuilder.py:85
 #, fuzzy
@@ -8225,15 +8221,14 @@ msgid "3d raster map <%s> not found"
 msgstr "Không tìm thấy bản đồ <%s>."
 
 #: ../gui/wxpython/gui_modules/toolbars.py:188
-#, fuzzy
 msgid "3D view mode not available"
-msgstr "Các công cụ Nviz"
+msgstr ""
 
 #: ../gui/wxpython/gui_modules/toolbars.py:189
 #: ../gui/wxpython/gui_modules/toolbars.py:205
-#, fuzzy, python-format
+#, python-format
 msgid "Reason: %s"
-msgstr "Vùng"
+msgstr ""
 
 #: ../gui/wxpython/gui_modules/toolbars.py:190
 msgid ""
@@ -10726,27 +10721,117 @@ msgid ""
 msgstr ""
 
 #, fuzzy
-#~ msgid ""
-#~ "Reading workspace file <%(file)s> failed.\n"
-#~ "Invalid file, unable to parse XML document.\n"
-#~ "\n"
-#~ "%(err)s"
-#~ msgstr ""
-#~ "Thất bại khi đọc tập tin không gian làm việc <%s>. Tập tin không hợp lệ, "
-#~ "không thể phân giải tài liệu XML."
+msgid ""
+"Reading workspace file <%(file)s> failed.\n"
+"Invalid file, unable to parse XML document.\n"
+"\n"
+"%(err)s"
+msgstr ""
+"Thất bại khi đọc tập tin không gian làm việc <%s>. Tập tin không hợp lệ, "
+"không thể phân giải tài liệu XML."
+
+#, fuzzy
+msgid "GRASS GIS Map Calculator (3D raster)"
+msgstr "Trình tính toán Bản đồ %s của GRASS"
+
+msgid "Import raster map"
+msgstr "Nhập bản đồ raster"
+
+msgid "Import vector map"
+msgstr "Nhập bản đồ véc tơ"
+
+#, fuzzy
+msgid "C&onfig"
+msgstr "Cấu hình"
+
+#, fuzzy
+msgid ""
+"Calculates cast shadow areas from sun position and DEM. Either A: exact sun "
+"position is specified, or B: date/time to calculate the sun position by r."
+"sunmask it"
+msgstr ""
+"Tính toán các vùng bị đổ bóng dựa theo vị trí mặt trời và DEM. Hoặc là A: vị "
+"trí mặt trời được chỉ định, hoặc là B: ngày/thời gian để tính toán vị trí "
+"mặt trời bằng chính mô-đun r.sunmask."
+
+#, fuzzy
+msgid "Removes a table from database."
+msgstr "Tạo từ CSDL"
+
+#, fuzzy
+msgid "Show menu tree"
+msgstr "Cây Steiner"
+
+#, fuzzy
+msgid "3D Raster map"
+msgstr "Bản đồ raster"
+
+#, fuzzy
+msgid "Error in command execution '%s'"
+msgstr "Lỗi khi thi hành lệnh %s"
+
+#, fuzzy
+msgid "module"
+msgstr "Mã"
+
+#, fuzzy
+msgid "Select GRASS module"
+msgstr "Chọn vị trí dự án và tập bản đồ"
+
+#, fuzzy
+msgid "Color settings"
+msgstr "Thiết lập véc tơ"
+
+#, fuzzy
+msgid "Size settings"
+msgstr "Thiết lập chữ"
+
+#, fuzzy
+msgid "Unable to get list of available mapsets."
+msgstr "Không thể xóa tập bản đồ"
+
+#, fuzzy
+msgid "Unable to get list of accessible mapsets."
+msgstr "Không thể xóa tập bản đồ"
+
+#, fuzzy
+msgid "Menu tree window"
+msgstr "Cửa sổ di chuyển"
+
+#, fuzzy
+msgid "label"
+msgstr "Thêm nhãn"
+
+#, fuzzy
+msgid "help"
+msgstr "Trợ giúp"
+
+#, fuzzy
+msgid "Run"
+msgstr "&Chạy"
+
+#, fuzzy
+msgid "Saved NVIZ Settings"
+msgstr "Các thiết lập tổng quát"
+
+#, fuzzy
+msgid "Load and apply settings from user settings file"
+msgstr "Đóng hộp thoại và lưu thay đổi vào tập tin cấu hình của người dùng"
+
+#, fuzzy
+msgid "Creates a lines vector map from an ASCII x,y points file."
+msgstr ""
+"Tạo một bản đồ vec-tơ từ tập tin điểm kiểu ASCII hoặc tập tin vec-tơ kiểu "
+"ASCII."
+
+msgid "GRASS SQL Builder: %s"
+msgstr "Trình xây dựng SQL của GRASS: %s"
 
 #~ msgid "Unable to open workspace file <%s> for writing."
 #~ msgstr "Không thể mở tập tin không gian làm việc <%s> để ghi."
 
-#, fuzzy
-#~ msgid "GRASS GIS Map Calculator (3D raster)"
-#~ msgstr "Trình tính toán Bản đồ %s của GRASS"
-
 #~ msgid "Redraw GCP markers in map displays"
 #~ msgstr "Vẽ lại các chỉ dấu GCP trong các màn hình bản đồ"
-
-#~ msgid "Import raster map"
-#~ msgstr "Nhập bản đồ raster"
 
 #~ msgid "Import raster data using GDAL"
 #~ msgstr "Dùng GDAL nhập bản đồ raster"
@@ -10760,9 +10845,6 @@ msgstr ""
 #, fuzzy
 #~ msgid "Multiple link to GDAL"
 #~ msgstr "Kết nối với GDAL"
-
-#~ msgid "Import vector map"
-#~ msgstr "Nhập bản đồ véc tơ"
 
 #~ msgid "Import vector data using OGR"
 #~ msgstr "Nhập dữ liệu vec-tơ bằng cách dùng OGR"
@@ -10792,20 +10874,6 @@ msgstr ""
 
 #~ msgid "Export grid 3D volume"
 #~ msgstr "Xuất lưới thể tích 3D"
-
-#, fuzzy
-#~ msgid "C&onfig"
-#~ msgstr "Cấu hình"
-
-#, fuzzy
-#~ msgid ""
-#~ "Calculates cast shadow areas from sun position and DEM. Either A: exact "
-#~ "sun position is specified, or B: date/time to calculate the sun position "
-#~ "by r.sunmask it"
-#~ msgstr ""
-#~ "Tính toán các vùng bị đổ bóng dựa theo vị trí mặt trời và DEM. Hoặc là A: "
-#~ "vị trí mặt trời được chỉ định, hoặc là B: ngày/thời gian để tính toán vị "
-#~ "trí mặt trời bằng chính mô-đun r.sunmask."
 
 #~ msgid ""
 #~ "Takes vector stream data, transforms it to raster and subtracts depth "
@@ -10845,14 +10913,6 @@ msgstr ""
 #~ msgstr "Trình tính toán bản đồ dùng cho đại số bản đồ thể tích"
 
 #, fuzzy
-#~ msgid "Removes a table from database."
-#~ msgstr "Tạo từ CSDL"
-
-#, fuzzy
-#~ msgid "Show menu tree"
-#~ msgstr "Cây Steiner"
-
-#, fuzzy
 #~ msgid ""
 #~ "Unable to start vector digitizer.\n"
 #~ "The VDigit python extension was not found or loaded properly.\n"
@@ -10878,14 +10938,6 @@ msgstr ""
 #~ " \n"
 #~ "Chi tiết: %s"
 
-#, fuzzy
-#~ msgid "3D Raster map"
-#~ msgstr "Bản đồ raster"
-
-#, fuzzy
-#~ msgid "Error in command execution '%s'"
-#~ msgstr "Lỗi khi thi hành lệnh %s"
-
 #~ msgid "Preferences error"
 #~ msgstr "Lỗi thuộc về phần tùy chọn ưa thích"
 
@@ -10898,30 +10950,6 @@ msgstr ""
 #~ msgid "Nviz error"
 #~ msgstr "Lỗi Nviz"
 
-#, fuzzy
-#~ msgid "module"
-#~ msgstr "Mã"
-
-#, fuzzy
-#~ msgid "Select GRASS module"
-#~ msgstr "Chọn vị trí dự án và tập bản đồ"
-
-#, fuzzy
-#~ msgid "Color settings"
-#~ msgstr "Thiết lập véc tơ"
-
-#, fuzzy
-#~ msgid "Size settings"
-#~ msgstr "Thiết lập chữ"
-
-#, fuzzy
-#~ msgid "Unable to get list of available mapsets."
-#~ msgstr "Không thể xóa tập bản đồ"
-
-#, fuzzy
-#~ msgid "Unable to get list of accessible mapsets."
-#~ msgstr "Không thể xóa tập bản đồ"
-
 #~ msgid "Input DXF file"
 #~ msgstr "Tệp DXF đầu vào"
 
@@ -10931,39 +10959,14 @@ msgstr ""
 #~ msgid "Choose directory:"
 #~ msgstr "Chọn thư mục:"
 
-#, fuzzy
-#~ msgid "Menu tree window"
-#~ msgstr "Cửa sổ di chuyển"
-
-#, fuzzy
-#~ msgid "label"
-#~ msgstr "Thêm nhãn"
-
-#, fuzzy
-#~ msgid "help"
-#~ msgstr "Trợ giúp"
-
-#, fuzzy
-#~ msgid "Run"
-#~ msgstr "&Chạy"
-
 #~ msgid "Set ground control points (GCPs)"
 #~ msgstr "Thiết lập các điểm khống chế (GCP)"
 
-#, fuzzy
-#~ msgid "Saved NVIZ Settings"
-#~ msgstr "Các thiết lập tổng quát"
-
-#, fuzzy
 #~ msgid "Load"
 #~ msgstr "Nạp"
 
 #~ msgid "Default"
 #~ msgstr "Mặc định"
-
-#, fuzzy
-#~ msgid "Load and apply settings from user settings file"
-#~ msgstr "Đóng hộp thoại và lưu thay đổi vào tập tin cấu hình của người dùng"
 
 #~ msgid "Restore default settings"
 #~ msgstr "Khôi phục thiết lập mặc định"
@@ -10987,12 +10990,6 @@ msgstr ""
 #, fuzzy
 #~ msgid "Link OGR layers"
 #~ msgstr "Danh sách lớp"
-
-#, fuzzy
-#~ msgid "Creates a lines vector map from an ASCII x,y points file."
-#~ msgstr ""
-#~ "Tạo một bản đồ vec-tơ từ tập tin điểm kiểu ASCII hoặc tập tin vec-tơ kiểu "
-#~ "ASCII."
 
 #~ msgid "Coarse style:"
 #~ msgstr "Kiểu thô:"
@@ -11090,9 +11087,6 @@ msgstr ""
 
 #~ msgid "Group"
 #~ msgstr "Nhóm"
-
-#~ msgid "GRASS SQL Builder: %s"
-#~ msgstr "Trình xây dựng SQL của GRASS: %s"
 
 #~ msgid "Add overlay"
 #~ msgstr "Thêm lớp chồng"
@@ -11268,3 +11262,328 @@ msgstr ""
 
 #~ msgid "Selects data from table."
 #~ msgstr "Chọn dữ liệu từ bảng"
+
+#~ msgid ""
+#~ "Reading workspace file <%s> failed. Invalid file, unable to parse XML "
+#~ "document."
+#~ msgstr ""
+#~ "Thất bại khi đọc tập tin không gian làm việc <%s>. Tập tin không hợp lệ, "
+#~ "không thể phân giải tài liệu XML."
+
+#~ msgid "Writing current settings to workspace file failed (%s)."
+#~ msgstr ""
+#~ "Thất bại khi đang ghi thiết lập hiện tại vào tập tin không gian làm việc "
+#~ "(%s)."
+
+#, fuzzy
+#~ msgid "GRASS GIS Raster Map Calculator (3D raster)"
+#~ msgstr "Trình tính toán Bản đồ %s của GRASS"
+
+#, fuzzy
+#~ msgid "Add various vector-based map layer"
+#~ msgstr "Thêm lớp bản đồ véc tơ"
+
+#, fuzzy
+#~ msgid "COPYING file missing"
+#~ msgstr "Thiếu mã EPSG."
+
+#~ msgid "Force re-rendering of all layers"
+#~ msgstr "Buộc vẽ lại tất cả các lớp"
+
+#~ msgid "Create new workspace file"
+#~ msgstr "Tạo tập tin không gian làm việc mới"
+
+#~ msgid "Load map layers into workspace"
+#~ msgstr "Nạp các lớp của bản đồ vào không gian làm việc"
+
+#~ msgid "Open existing workspace file"
+#~ msgstr "Mở tập tin không gian làm việc đang có"
+
+#~ msgid "Save current workspace to file"
+#~ msgstr "Lưu không gian làm việc hiện tại vào tập tin "
+
+#~ msgid "Add raster map layer"
+#~ msgstr "Thêm lớp bản đồ raster"
+
+#~ msgid "Add vector map layer"
+#~ msgstr "Thêm lớp bản đồ véc tơ"
+
+#~ msgid "Add layer group"
+#~ msgstr "Thêm nhóm lớp"
+
+#~ msgid "Delete selected layer"
+#~ msgstr "Xóa lớp đã chọn"
+
+#~ msgid "Add RGB layer"
+#~ msgstr "Thêm lớp RGB"
+
+#~ msgid "Add HIS layer"
+#~ msgstr "Thêm lớp HIS"
+
+#~ msgid "Add 3D raster map"
+#~ msgstr "Thêm bản đồ raster 3D"
+
+#~ msgid "Reload GCPs from selected POINTS file"
+#~ msgstr "Nạp lại các GCP từ tập tin POINTS đã chọn"
+
+#~ msgid "Show Nviz settings dialog"
+#~ msgstr "Hiện hộp thoại thiết lập Nviz"
+
+#, fuzzy
+#~ msgid "Link GDAL supported raster data as a pseudo GRASS raster map layer."
+#~ msgstr ""
+#~ "Nối tập tin raster được GDAL hỗ trợ với một lớp bản đồ raster nhị phân."
+
+#~ msgid "Downloads and imports data from WMS servers."
+#~ msgstr "Tải xuống và nhập dữ liệu từ các máy chủ WMS."
+
+#, fuzzy
+#~ msgid "Creates a new pseudo-vector map as a link to an OGR-supported layer."
+#~ msgstr "Tạo một bản đồ vec-tơ mới ở dạng chỉ đọc liên kết vào lớp OGR."
+
+#, fuzzy
+#~ msgid "Matlab-ASCII or Mapgen import"
+#~ msgstr "Nhập dữ liệu Matlab và MapGen"
+
+#, fuzzy
+#~ msgid "Import Mapgen or Matlab-ASCII vector maps into GRASS."
+#~ msgstr "Nhập các bản đồ vec-tơ MapGen và Matlab"
+
+#~ msgid "Export GRASS raster as non-georeferenced PNG image format."
+#~ msgstr ""
+#~ "Xuât dữ liệu raster GRASS ra định dạng ảnh PNG không có tham chiếu địa lý."
+
+#~ msgid "Converts a raster map into a vector map layer."
+#~ msgstr "Chuyển đổi một bản đồ raster thành một lớp bản đồ véc tơ."
+
+#~ msgid "E&xit"
+#~ msgstr "Th&oát"
+
+#~ msgid "Config"
+#~ msgstr "Cấu hình"
+
+#, fuzzy
+#~ msgid "Raster"
+#~ msgstr "Raster"
+
+#~ msgid "Create a MASK for limiting raster operation"
+#~ msgstr "Tạo một MẶT NẠ để giới hạn lệnh raster"
+
+#~ msgid ""
+#~ "Calculates cast shadow areas from sun position and DEM. Either A: exact "
+#~ "sun position is specified, or B: date/time to calculate the sun position "
+#~ "by r.sunmask itself."
+#~ msgstr ""
+#~ "Tính toán các vùng bị đổ bóng dựa theo vị trí mặt trời và DEM. Hoặc là A: "
+#~ "vị trí mặt trời được chỉ định, hoặc là B: ngày/thời gian để tính toán vị "
+#~ "trí mặt trời bằng chính mô-đun r.sunmask."
+
+#~ msgid ""
+#~ "Generates raster map layers of slope, aspect, curvatures and partial "
+#~ "derivatives from a raster map layer of true elevation values. Aspect is "
+#~ "calculated counterclockwise from east."
+#~ msgstr ""
+#~ "Tạo các lớp bản đồ raster độ dố, hướng, độ cong và đạo hàm từ một lớp bản "
+#~ "đồ raster có các giá trị độ cao thật. Hướng ngược chiều kim đồng hồ tính "
+#~ "từ hướng đông."
+
+#~ msgid ""
+#~ "Filters and generates a depressionless elevation map and a flow direction "
+#~ "map from a given elevation layer."
+#~ msgstr ""
+#~ "Lọc và tạo ra một bản đồ độ cao không giảm cấp và bản đồ hướng dòng chảy "
+#~ "từ một lớp độ cao cho trước."
+
+#~ msgid "Flow computation for massive grids (Float version)."
+#~ msgstr "Tính toán dòng chảy của các lưới lớn (phiên bản Float)."
+
+#~ msgid ""
+#~ "Overland flow hydrologic simulation using path sampling method (SIMWE)"
+#~ msgstr ""
+#~ "Giả lập thủy văn dòng chảy tràn bằng cách dùng phương pháp lấy mẫu đường "
+#~ "dẫn (SIMWE)"
+
+#~ msgid ""
+#~ "Sediment transport and erosion/deposition simulation using path sampling "
+#~ "method (SIMWE)"
+#~ msgstr ""
+#~ "Giả lập sự chuyển trầm tích và xói mòn/lắng tụ bằng cách dùng phương pháp "
+#~ "lấy mẫu đường dẫn (SIMWE)"
+
+#~ msgid "Creates topographic index [ln(a/tan(beta))] map from elevation map."
+#~ msgstr "Tạo bản đồ chỉ mục địa hình [ln(a/tan(beta))] từ bản đồ độ cao."
+
+#~ msgid "Watershed basin analysis program."
+#~ msgstr "Chương trình phân tích lưu vực đường chia nước."
+
+#~ msgid ""
+#~ "r.recode.rules - Use ascii rules file to recode categories in raster map"
+#~ msgstr ""
+#~ "r.recode.rules - Dùng tập tin quy tắc ASCII để mã hoá lại các phạm trù "
+#~ "trong bản đồ raster"
+
+#~ msgid ""
+#~ "Calculates univariate statistics from a GRASS raster map based on vector "
+#~ "polygons and uploads statistics to new attribute columns."
+#~ msgstr ""
+#~ "Tính toán thống kê một biến từ một bản đồ raster GRASS dựa vào các đa "
+#~ "giác vec-tơ và cập nhật thống kê vào các cột thuộc tính mới."
+
+#~ msgid "Imagery"
+#~ msgstr "Ảnh"
+
+#~ msgid "Volumes"
+#~ msgstr "Thể tích"
+
+#~ msgid "GRASS GIS help"
+#~ msgstr "Trợ giúp GRASS GIS"
+
+#~ msgid "GRASS GIS GUI help"
+#~ msgstr "Trợ giúp về giao diện đồ họa GRASS GIS"
+
+#~ msgid "Map calculator"
+#~ msgstr "Trình toán toán bản đồ"
+
+#~ msgid "Nviz properties"
+#~ msgstr "Các thuộc tính Nviz"
+
+#~ msgid "Map Toolbar"
+#~ msgstr "Thanh công cụ Bản đồ"
+
+#~ msgid "Nviz toolbar"
+#~ msgstr "Thanh công cụ Nviz"
+
+#, fuzzy
+#~ msgid "Unable to read EPGS file: '%s'"
+#~ msgstr "Không thể đọc các mã EPSG: %s"
+
+#, fuzzy
+#~ msgid "Resolution cannot be 0"
+#~ msgstr "Độ phân giải"
+
+#, fuzzy
+#~ msgid "3D View Tools"
+#~ msgstr "Các công cụ Nviz"
+
+#~ msgid "coarse:"
+#~ msgstr "thô:"
+
+#~ msgid "fine:"
+#~ msgstr "mịn:"
+
+#~ msgid "Wire color:"
+#~ msgstr "Màu lưới:"
+
+#~ msgid "Icon size:"
+#~ msgstr "Kích thước biểu tượng:"
+
+#~ msgid "width:"
+#~ msgstr "rộng:"
+
+#~ msgid "symbol:"
+#~ msgstr "ký hiệu:"
+
+#~ msgid "color:"
+#~ msgstr "màu:"
+
+#~ msgid "Layer properties"
+#~ msgstr "Các thuộc tính của lớp"
+
+#~ msgid "Vector map <%s> is 3D"
+#~ msgstr "Bản đồ véc tơ  <%s> là 3D"
+
+#~ msgid "Vector map <%s> is 2D"
+#~ msgstr "Bản đồ véc tơ  <%s> là 2D"
+
+#~ msgid "%(primitives)d primitives (%(points)d points)"
+#~ msgstr "%(primitives)d đối tượng nguyên thủy (%(points)d điểm)"
+
+#~ msgid "Error in command execution %s"
+#~ msgstr "Lỗi khi thi hành lệnh %s"
+
+#, fuzzy
+#~ msgid ""
+#~ "Unable to initialize display driver of vector digitizer. See 'Command "
+#~ "output' for details.\n"
+#~ "\n"
+#~ "Details:"
+#~ msgstr ""
+#~ "Không thể khởi tạo trình điều khiển màn hình, xem tập tin README để có "
+#~ "thêm thông tin.\n"
+#~ " \n"
+#~ "Chi tiết:"
+
+#~ msgid "<%(name)s>: layer type <%(type)s> is not supported yet."
+#~ msgstr "<%(name)s>: kiểu lớp <%(type)s> chưa được hỗ trợ."
+
+#~ msgid "Unable to open file"
+#~ msgstr "Không thể mở tập tin"
+
+#, fuzzy
+#~ msgid "DXF file:"
+#~ msgstr "Chọn tệp DXF:"
+
+#~ msgid "Parameter not found: %s"
+#~ msgstr "Không thấy tham số: %s"
+
+#~ msgid "Parameter %(name)s (%(desc)s) is missing.\n"
+#~ msgstr "Đang thiếu tham số %(name)s (%(desc)s).\n"
+
+#~ msgid "Close this window without executing the command"
+#~ msgstr "Đóng cửa sổ này mà không thi hành lệnh"
+
+#~ msgid "Show manual page of the command"
+#~ msgstr "Hiện trang hướng dẫn về lệnh"
+
+#~ msgid "Run the command"
+#~ msgstr "Chạy lệnh"
+
+#~ msgid "Copy the current command string to the clipboard"
+#~ msgstr "Chép chuỗi lệnh hiện tại vào bộ nhớ"
+
+#~ msgid "Valid range"
+#~ msgstr "Miền hợp lệ"
+
+#~ msgid "Vector point layer not found (id=%d)"
+#~ msgstr "Không tìm thấy lớp điểm véc tơ (id=%d)"
+
+#~ msgid "Unable to set data layer properties (id=%d)"
+#~ msgstr "Không thể đặt các thuộc tính cho lớp dữ liệu (id=%d)"
+
+#~ msgid "User GUI settings"
+#~ msgstr "Thiết lập giao diện đồ họa của người dùng"
+
+#, fuzzy
+#~ msgid ""
+#~ "Check a mapset to make it accessible, uncheck it to hide it.%sNote: The "
+#~ "current mapset is always accessible."
+#~ msgstr ""
+#~ "Đánh dấu vào bộ bản đồ để truy cập được vào nó, tắt đánh dấu để ẩn nó đi. "
+#~ "%sGhi chú: bộ bản đồ PERMANENT và bộ bản đồ hiện tại luôn luôn truy cập "
+#~ "được."
+
+#~ msgid "Start GRASS"
+#~ msgstr "Khởi động GRASS"
+
+#~ msgid "Create mapset"
+#~ msgstr "Tạo tập bản đồ"
+
+#, fuzzy
+#~ msgid "Command %s could not be run"
+#~ msgstr "Lệnh '%s' chưa được cài đặt."
+
+#~ msgid "Select file extension:"
+#~ msgstr "Chọn phần mở rộng của tệp:"
+
+#, fuzzy
+#~ msgid "&Stop"
+#~ msgstr "đỉnh"
+
+#~ msgid ""
+#~ "Do you want to close display %d?\n"
+#~ "\n"
+#~ "%s"
+#~ msgstr ""
+#~ "Bạn có muốn đóng màn hình %d?\n"
+#~ "\n"
+#~ "%s"

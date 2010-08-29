@@ -1110,9 +1110,8 @@ msgstr ""
 "binaire"
 
 #: ../gui/wxpython/menustrings.py:25
-#, fuzzy
 msgid "Bulk link of raster data"
-msgstr "Importer une couche &matricielle"
+msgstr ""
 
 #: ../gui/wxpython/menustrings.py:26
 #, fuzzy
@@ -1259,9 +1258,8 @@ msgid "Creates a new vector as a read-only link to OGR layer."
 msgstr ""
 
 #: ../gui/wxpython/menustrings.py:56
-#, fuzzy
 msgid "Bulk link of vector data"
-msgstr "Créer un nouvelle carte vectorielle"
+msgstr ""
 
 #: ../gui/wxpython/menustrings.py:57
 #, fuzzy
@@ -4775,9 +4773,8 @@ msgid "raster map"
 msgstr "Couche matricielle"
 
 #: ../gui/wxpython/gui_modules/mcalc_builder.py:121
-#, fuzzy
 msgid "Operators"
-msgstr "Transparent"
+msgstr ""
 
 #: ../gui/wxpython/gui_modules/mcalc_builder.py:123
 msgid "Operands"
@@ -4899,9 +4896,8 @@ msgid "Insert existing %s"
 msgstr "écraser le fichier existant"
 
 #: ../gui/wxpython/gui_modules/mcalc_builder.py:207
-#, fuzzy
 msgid "Insert mapcalc function"
-msgstr "Renommer la localisation sélectionnée"
+msgstr ""
 
 #: ../gui/wxpython/gui_modules/mcalc_builder.py:397
 #, fuzzy
@@ -6569,7 +6565,6 @@ msgstr "Afficher les points"
 
 #: ../gui/wxpython/gui_modules/nviz_tools.py:3200
 #: ../gui/wxpython/gui_modules/nviz_preferences.py:283
-#, fuzzy
 msgid "Size:"
 msgstr "Taille:"
 
@@ -6774,7 +6769,7 @@ msgstr ""
 #: ../gui/wxpython/gui_modules/gselect.py:1077
 #, fuzzy
 msgid "Choose input file"
-msgstr "Choisir un fichier d'environnement"
+msgstr "Choisir le répertoire d'entrée"
 
 #: ../gui/wxpython/gui_modules/gselect.py:950
 msgid "Choose input directory"
@@ -7974,15 +7969,14 @@ msgid "3d raster map <%s> not found"
 msgstr "ERREUR : Jeu de cartes <%s> non trouvé"
 
 #: ../gui/wxpython/gui_modules/toolbars.py:188
-#, fuzzy
 msgid "3D view mode not available"
-msgstr "Outils NVIZ"
+msgstr ""
 
 #: ../gui/wxpython/gui_modules/toolbars.py:189
 #: ../gui/wxpython/gui_modules/toolbars.py:205
-#, fuzzy, python-format
+#, python-format
 msgid "Reason: %s"
-msgstr "&Région"
+msgstr ""
 
 #: ../gui/wxpython/gui_modules/toolbars.py:190
 msgid ""
@@ -10424,14 +10418,71 @@ msgid ""
 msgstr ""
 
 #, fuzzy
-#~ msgid ""
-#~ "Reading workspace file <%(file)s> failed.\n"
-#~ "Invalid file, unable to parse XML document.\n"
-#~ "\n"
-#~ "%(err)s"
-#~ msgstr ""
-#~ "Lecture du fichier d'environnement <%s> impossible.  Fichier invalide, "
-#~ "incapable de déchiffrer le document XML"
+msgid ""
+"Reading workspace file <%(file)s> failed.\n"
+"Invalid file, unable to parse XML document.\n"
+"\n"
+"%(err)s"
+msgstr ""
+"Lecture du fichier d'environnement <%s> impossible.  Fichier invalide, "
+"incapable de déchiffrer le document XML"
+
+msgid "Import raster map"
+msgstr "Importer une couche &matricielle"
+
+msgid "Import vector map"
+msgstr "Importer une couche &vectorielle"
+
+#, fuzzy
+msgid "3D Raster map"
+msgstr "Couche matricielle"
+
+#, fuzzy
+msgid "module"
+msgstr "Code"
+
+#, fuzzy
+msgid "Select GRASS module"
+msgstr "Choisir une localisation de projet et un jeu de cartes"
+
+#, fuzzy
+msgid "Color settings"
+msgstr "Paramètres des symbôles"
+
+#, fuzzy
+msgid "Size settings"
+msgstr "Montrer les réglages"
+
+#, fuzzy
+msgid "Unable to get list of available mapsets."
+msgstr "Impossible d'effacer le jeu de cartes"
+
+#, fuzzy
+msgid "Unable to get list of accessible mapsets."
+msgstr "Impossible d'effacer le jeu de cartes"
+
+#, fuzzy
+msgid "label"
+msgstr "Ajouter des étiquettes"
+
+#, fuzzy
+msgid "Run"
+msgstr "&Exécuter"
+
+#, fuzzy
+msgid "Saved NVIZ Settings"
+msgstr "Sauver les paramètres courants ?"
+
+#, fuzzy
+msgid "Creates a lines vector map from an ASCII x,y points file."
+msgstr ""
+"Crée un carte vectorielle depuis un fichier de points ASCII ou un fichier "
+"vecteur ASCII."
+
+msgid "Create new workspace file (erase current workspace settings first)"
+msgstr ""
+"Créer un nouvel espace de travail (efface d'abord les paramètres de l'espace "
+"en cours)"
 
 #~ msgid "Unable to open workspace file <%s> for writing."
 #~ msgstr "Impossible d'ouvrir le fichier d'environnement <%s> en écriture."
@@ -10442,9 +10493,6 @@ msgstr ""
 #~ msgid "Redraw GCP markers in map displays"
 #~ msgstr "Redessiner les points PCS sur la carte"
 
-#~ msgid "Import raster map"
-#~ msgstr "Importer une couche &matricielle"
-
 #~ msgid "Import raster data using GDAL"
 #~ msgstr "Importer des données 'raster' en utilisant GDAL"
 
@@ -10454,9 +10502,6 @@ msgstr ""
 #, fuzzy
 #~ msgid "Multiple link to GDAL"
 #~ msgstr "Importation multiple"
-
-#~ msgid "Import vector map"
-#~ msgstr "Importer une couche &vectorielle"
 
 #~ msgid "Import vector data using OGR"
 #~ msgstr "Importer des données vectorielles en utilisant OGR"
@@ -10510,54 +10555,14 @@ msgstr ""
 #~ "\n"
 #~ "Détails : %s"
 
-#, fuzzy
-#~ msgid "3D Raster map"
-#~ msgstr "Couche matricielle"
-
-#, fuzzy
-#~ msgid "module"
-#~ msgstr "Code"
-
-#, fuzzy
-#~ msgid "Select GRASS module"
-#~ msgstr "Choisir une localisation de projet et un jeu de cartes"
-
-#, fuzzy
-#~ msgid "Color settings"
-#~ msgstr "Paramètres des symbôles"
-
-#, fuzzy
-#~ msgid "Size settings"
-#~ msgstr "Montrer les réglages"
-
-#, fuzzy
-#~ msgid "Unable to get list of available mapsets."
-#~ msgstr "Impossible d'effacer le jeu de cartes"
-
-#, fuzzy
-#~ msgid "Unable to get list of accessible mapsets."
-#~ msgstr "Impossible d'effacer le jeu de cartes"
-
 #~ msgid "Input DXF file"
 #~ msgstr "Fichier DXF en entrée"
 
 #~ msgid "Choose directory:"
 #~ msgstr "Choisir le répertoire : "
 
-#, fuzzy
-#~ msgid "label"
-#~ msgstr "Ajouter des étiquettes"
-
-#, fuzzy
-#~ msgid "Run"
-#~ msgstr "&Exécuter"
-
 #~ msgid "Set ground control points (GCPs)"
 #~ msgstr "Définir les points de contrôle au sol (PCS)"
-
-#, fuzzy
-#~ msgid "Saved NVIZ Settings"
-#~ msgstr "Sauver les paramètres courants ?"
 
 #~ msgid "Load"
 #~ msgstr "Charger"
@@ -10582,12 +10587,6 @@ msgstr ""
 #~ msgid "Link OGR layers"
 #~ msgstr "Importer des couches OGR"
 
-#, fuzzy
-#~ msgid "Creates a lines vector map from an ASCII x,y points file."
-#~ msgstr ""
-#~ "Crée un carte vectorielle depuis un fichier de points ASCII ou un fichier "
-#~ "vecteur ASCII."
-
 #~ msgid "Coarse style:"
 #~ msgstr "Style grossier : "
 
@@ -10609,11 +10608,6 @@ msgstr ""
 #, fuzzy
 #~ msgid "&Close"
 #~ msgstr "Code"
-
-#~ msgid "Create new workspace file (erase current workspace settings first)"
-#~ msgstr ""
-#~ "Créer un nouvel espace de travail (efface d'abord les paramètres de "
-#~ "l'espace en cours)"
 
 #~ msgid " (those in bold typeface are required)"
 #~ msgstr "(ceux qui sont en caractères gras sont obligatoires)"
@@ -10790,3 +10784,159 @@ msgstr ""
 #, fuzzy
 #~ msgid "Close current workspace"
 #~ msgstr "Fermer le fichier d'espace de travail courant"
+
+#~ msgid ""
+#~ "Reading workspace file <%s> failed. Invalid file, unable to parse XML "
+#~ "document."
+#~ msgstr ""
+#~ "Lecture du fichier d'environnement <%s> impossible.  Fichier invalide, "
+#~ "incapable de déchiffrer le document XML"
+
+#~ msgid "Writing current settings to workspace file failed (%s)."
+#~ msgstr ""
+#~ "Ecriture des paramètres courant dans le fichier d'environnement (%s) non "
+#~ "réussie."
+
+#, fuzzy
+#~ msgid "GRASS GIS Raster Map Calculator (3D raster)"
+#~ msgstr "&Calculateur de couche"
+
+#, fuzzy
+#~ msgid "Add various vector-based map layer"
+#~ msgstr "Ajouter une couche vectorielle"
+
+#~ msgid "Force re-rendering of all layers"
+#~ msgstr "Force la regénération de toutes les couches"
+
+#~ msgid "Add raster map layer"
+#~ msgstr "Ajouter une couche 'raster'"
+
+#~ msgid "Add layer group"
+#~ msgstr "Ajouter un groupe"
+
+#~ msgid "Delete selected layer"
+#~ msgstr "Effacer la couche sélectionnée"
+
+#~ msgid "Add RGB layer"
+#~ msgstr "Ajouter une couche RVB"
+
+#~ msgid "Add HIS layer"
+#~ msgstr "Ajouter une couche TIS"
+
+#~ msgid "Reload GCPs from selected POINTS file"
+#~ msgstr "Recharger les PCS depuis un fichier Points"
+
+#~ msgid "Show Nviz settings dialog"
+#~ msgstr "Afficher la boîte de dialogue des paramètres NVIZ"
+
+#, fuzzy
+#~ msgid "Link GDAL supported raster data as a pseudo GRASS raster map layer."
+#~ msgstr ""
+#~ "Importer un fichier 'raster' supporté par GDAL dans une carte 'raster' "
+#~ "binaire"
+
+#, fuzzy
+#~ msgid "Creates a new pseudo-vector map as a link to an OGR-supported layer."
+#~ msgstr ""
+#~ "Crée un carte vectorielle depuis un fichier de points ASCII ou un fichier "
+#~ "vecteur ASCII."
+
+#, fuzzy
+#~ msgid "Matlab-ASCII or Mapgen import"
+#~ msgstr "Importer un grid ASCII"
+
+#, fuzzy
+#~ msgid "Import Mapgen or Matlab-ASCII vector maps into GRASS."
+#~ msgstr "Importer des fichiers SRTM HGT dans GRASS"
+
+#, fuzzy
+#~ msgid "Converts a raster map into a vector map layer."
+#~ msgstr "Convertit un fichier 'raster' ASCII en une carte 'raster' binaire"
+
+#~ msgid "E&xit"
+#~ msgstr "&Quitter"
+
+#, fuzzy
+#~ msgid "Raster"
+#~ msgstr "raster"
+
+#~ msgid "Map calculator"
+#~ msgstr "&Calculateur de couche"
+
+#~ msgid "Map Toolbar"
+#~ msgstr "Barre d'outils pour les cartes"
+
+#~ msgid "Nviz toolbar"
+#~ msgstr "Barre d'outils NVIZ"
+
+#, fuzzy
+#~ msgid "Unable to read EPGS file: '%s'"
+#~ msgstr "Impossible de lire les codes EPSG : %s"
+
+#, fuzzy
+#~ msgid "3D View Tools"
+#~ msgstr "Outils NVIZ"
+
+#~ msgid "coarse:"
+#~ msgstr "grossier :"
+
+#~ msgid "fine:"
+#~ msgstr "fin :"
+
+#~ msgid "Wire color:"
+#~ msgstr "Couleur du treillis :"
+
+#~ msgid "Icon size:"
+#~ msgstr "Taille de l'icône"
+
+#~ msgid "width:"
+#~ msgstr "largeur :"
+
+#~ msgid "symbol:"
+#~ msgstr "symbôle :"
+
+#~ msgid "color:"
+#~ msgstr "couleur :"
+
+#~ msgid "Default"
+#~ msgstr "Défaut"
+
+#~ msgid "Layer properties"
+#~ msgstr " Propriétés de la couche"
+
+#~ msgid "Vector map <%s> is 3D"
+#~ msgstr "La carte vectorielle <%s> est en 3D"
+
+#~ msgid "Vector map <%s> is 2D"
+#~ msgstr "La carte vectorielle <%s> est en 2D"
+
+#~ msgid "%(primitives)d primitives (%(points)d points)"
+#~ msgstr "%(primitives)d primitives (%(points)d points)"
+
+#, fuzzy
+#~ msgid "DXF file:"
+#~ msgstr "Choisir le fichier DXF :"
+
+#~ msgid "Parameter not found: %s"
+#~ msgstr "Paramètre non trouvé : %s"
+
+#~ msgid "Parameter %(name)s (%(desc)s) is missing.\n"
+#~ msgstr "Le paramètre %(name)s (%(desc)s) est manquant.\n"
+
+#~ msgid "Copy the current command string to the clipboard"
+#~ msgstr "Copier la chaîne de commande dans le presse-papier"
+
+#~ msgid "Valid range"
+#~ msgstr "Plage de validité"
+
+#~ msgid "Start GRASS"
+#~ msgstr "Démarrer GRASS"
+
+#~ msgid "Create mapset"
+#~ msgstr "Créer un jeu de cartes"
+
+#~ msgid "Select file extension:"
+#~ msgstr "Choisir l'extension du fichier :"
+
+#~ msgid "Datum"
+#~ msgstr "Données"

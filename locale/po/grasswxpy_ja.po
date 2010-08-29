@@ -1086,7 +1086,7 @@ msgstr "GDALファイルをラスターマップとしてリンク "
 #: ../gui/wxpython/menustrings.py:25
 #, fuzzy
 msgid "Bulk link of raster data"
-msgstr "ラスターマップをロード"
+msgstr "基本的なラスターメタデータ"
 
 #: ../gui/wxpython/menustrings.py:26
 #, fuzzy
@@ -1883,9 +1883,8 @@ msgid "Display map projection"
 msgstr "領域表示"
 
 #: ../gui/wxpython/menustrings.py:221
-#, fuzzy
 msgid "Print projection information (in conventional GRASS format)."
-msgstr "の"
+msgstr ""
 
 #: ../gui/wxpython/menustrings.py:222
 msgid "Manage projections"
@@ -4705,9 +4704,8 @@ msgid "raster map"
 msgstr "ラスターマップ"
 
 #: ../gui/wxpython/gui_modules/mcalc_builder.py:121
-#, fuzzy
 msgid "Operators"
-msgstr "フィーチャの変形"
+msgstr ""
 
 #: ../gui/wxpython/gui_modules/mcalc_builder.py:123
 #, fuzzy
@@ -4834,9 +4832,8 @@ msgid "Insert existing %s"
 msgstr "既存のファイルを上書き"
 
 #: ../gui/wxpython/gui_modules/mcalc_builder.py:207
-#, fuzzy
 msgid "Insert mapcalc function"
-msgstr "名前の変更"
+msgstr ""
 
 #: ../gui/wxpython/gui_modules/mcalc_builder.py:397
 #, fuzzy
@@ -6701,7 +6698,7 @@ msgstr ""
 #: ../gui/wxpython/gui_modules/gselect.py:1077
 #, fuzzy
 msgid "Choose input file"
-msgstr "保存"
+msgstr "入力ディレクトリ選択 "
 
 #: ../gui/wxpython/gui_modules/gselect.py:950
 msgid "Choose input directory"
@@ -7921,15 +7918,14 @@ msgid "3d raster map <%s> not found"
 msgstr "マップ <%s> が見つかりません "
 
 #: ../gui/wxpython/gui_modules/toolbars.py:188
-#, fuzzy
 msgid "3D view mode not available"
-msgstr "3Dビューツール"
+msgstr ""
 
 #: ../gui/wxpython/gui_modules/toolbars.py:189
 #: ../gui/wxpython/gui_modules/toolbars.py:205
-#, fuzzy, python-format
+#, python-format
 msgid "Reason: %s"
-msgstr "領域"
+msgstr ""
 
 #: ../gui/wxpython/gui_modules/toolbars.py:190
 msgid ""
@@ -8774,8 +8770,9 @@ msgid " List of %s layers "
 msgstr "%s レイヤ一覧"
 
 #: ../gui/wxpython/gui_modules/gdialogs.py:1104
+#, fuzzy
 msgid "Override projection (use location's projection)"
-msgstr ""
+msgstr "対話形式での位置を投影法の情報をセット "
 
 #: ../gui/wxpython/gui_modules/gdialogs.py:1108
 msgid "Add linked layers into layer tree"
@@ -10389,21 +10386,142 @@ msgstr ""
 "GRASSをスタートさせるためにはデータを格納するディレクトリが必要ですので、作成"
 "してください。一般には \"grassdata\"が使用されます。"
 
-#~ msgid "Unable to open workspace file <%s> for writing."
-#~ msgstr "ワークスペースファイル <%s> を出力できません "
+#, fuzzy
+msgid "GRASS GIS Map Calculator (3D raster)"
+msgstr "GRASS %s マップカリキュレータ"
+
+msgid "Import raster map"
+msgstr "ラスターマップのインポート "
+
+msgid "Import vector map"
+msgstr "ベクトルマップのインポート "
 
 #, fuzzy
-#~ msgid "GRASS GIS Map Calculator (3D raster)"
-#~ msgstr "GRASS %s マップカリキュレータ"
+msgid "C&onfig"
+msgstr "設定"
+
+#, fuzzy
+msgid ""
+"Calculates cast shadow areas from sun position and DEM. Either A: exact sun "
+"position is specified, or B: date/time to calculate the sun position by r."
+"sunmask it"
+msgstr ""
+"太陽の位置とDEMから陰影を付加する A:太陽の位置は既知 B：r.sunmaskを使用し日時"
+"から太陽の位置を算出 "
+
+#, fuzzy
+msgid "Removes a table from database."
+msgstr "データベースから作成"
+
+#, fuzzy
+msgid "3D Raster map"
+msgstr "ラスターマップ"
+
+msgid "Error in command execution '%s'"
+msgstr "ファイル"
+
+#, fuzzy
+msgid "module"
+msgstr "コード "
+
+#, fuzzy
+msgid "Select GRASS module"
+msgstr "プロジェクトのロケーションとマップセットを選択"
+
+#, fuzzy
+msgid "Color settings"
+msgstr "ベクトル設定"
+
+#, fuzzy
+msgid "Size settings"
+msgstr "テキスト設定"
+
+#, fuzzy
+msgid "Unable to get list of available mapsets."
+msgstr "マップセットを削除できません "
+
+#, fuzzy
+msgid "Unable to get list of accessible mapsets."
+msgstr "マップセットを削除できません "
+
+#, fuzzy
+msgid "Menu tree window"
+msgstr "ズーム"
+
+#, fuzzy
+msgid "label"
+msgstr "テーブル"
+
+#, fuzzy
+msgid "help"
+msgstr "ヘルプ"
+
+#, fuzzy
+msgid "Run"
+msgstr "実行"
+
+#, fuzzy
+msgid "Saved NVIZ Settings"
+msgstr "テキスト"
+
+#, fuzzy
+msgid "Load and apply settings from user settings file"
+msgstr "ユーザー設定ファイルを変更し、ダイアログを閉じる"
+
+#, fuzzy
+msgid "Creates a lines vector map from an ASCII x,y points file."
+msgstr "ベクトル ベクトル."
+
+#, fuzzy
+msgid "Output vector map name"
+msgstr "ベクトル"
+
+#, fuzzy
+msgid "Digitize raster map"
+msgstr "デジタイズ"
+
+#, fuzzy
+msgid "Reclassify vector objects interactively by entering SQL rules"
+msgstr "ベクトル"
+
+#, fuzzy
+msgid ""
+"Hue-intensity-saturation (his) to red-green-blue (rgb) raster map color "
+"transformation function."
+msgstr "色."
+
+#, fuzzy
+msgid ""
+"Red-green-blue (rgb) to hue-intensity-saturation (his) raster map color "
+"transformation function"
+msgstr "色"
+
+#, fuzzy
+msgid "Interactive input for supervised classification"
+msgstr "入力 の"
+
+#, fuzzy
+msgid ""
+"Copy a table. Either 'from_table' (optionally with 'where') can be used or "
+"'select' option, but not 'from_table' and 'select' at the same time."
+msgstr "コピー."
+
+msgid "Matlab and MapGen import"
+msgstr "Matlab とMapGenのインポート "
+
+msgid ""
+"Creates and adds a new attribute table to a given layer of an existing "
+"vector map."
+msgstr "ベクトルマップの指定されたレイヤーに新しい属性テーブルを作成・追加"
+
+#~ msgid "Unable to open workspace file <%s> for writing."
+#~ msgstr "ワークスペースファイル <%s> を出力できません "
 
 #~ msgid "Add 3D raster map"
 #~ msgstr "3Dラスターマップ追加 "
 
 #~ msgid "Redraw GCP markers in map displays"
 #~ msgstr "GCPマーカのを再描画 "
-
-#~ msgid "Import raster map"
-#~ msgstr "ラスターマップのインポート "
 
 #~ msgid "Import raster data using GDAL"
 #~ msgstr "GDALでのラスターデータのインポート "
@@ -10416,9 +10534,6 @@ msgstr ""
 
 #~ msgid "Multiple link to GDAL"
 #~ msgstr "GDALへ複数のリンク "
-
-#~ msgid "Import vector map"
-#~ msgstr "ベクトルマップのインポート "
 
 #~ msgid "Import vector data using OGR"
 #~ msgstr "OGRを使用したベクトルデータのインポート "
@@ -10446,19 +10561,6 @@ msgstr ""
 
 #~ msgid "Export grid 3D volume"
 #~ msgstr "3Dグリッドのエクスポート "
-
-#, fuzzy
-#~ msgid "C&onfig"
-#~ msgstr "設定"
-
-#, fuzzy
-#~ msgid ""
-#~ "Calculates cast shadow areas from sun position and DEM. Either A: exact "
-#~ "sun position is specified, or B: date/time to calculate the sun position "
-#~ "by r.sunmask it"
-#~ msgstr ""
-#~ "太陽の位置とDEMから陰影を付加する A:太陽の位置は既知 B：r.sunmaskを使用し"
-#~ "日時から太陽の位置を算出 "
 
 #~ msgid ""
 #~ "Takes vector stream data, transforms it to raster and subtracts depth "
@@ -10490,10 +10592,6 @@ msgstr ""
 #~ msgid "Map calculator for volumetric map algebra"
 #~ msgstr "ボリューム代数のマップカリキュレータ"
 
-#, fuzzy
-#~ msgid "Removes a table from database."
-#~ msgstr "データベースから作成"
-
 #~ msgid ""
 #~ "Unable to start vector digitizer.\n"
 #~ "The VDigit python extension was not found or loaded properly.\n"
@@ -10520,13 +10618,6 @@ msgstr ""
 #~ "\n"
 #~ "詳細: %s "
 
-#, fuzzy
-#~ msgid "3D Raster map"
-#~ msgstr "ラスターマップ"
-
-#~ msgid "Error in command execution '%s'"
-#~ msgstr "ファイル"
-
 #~ msgid "Preferences error"
 #~ msgstr "設定エラー"
 
@@ -10535,30 +10626,6 @@ msgstr ""
 
 #~ msgid "Nviz error"
 #~ msgstr "Nvizエラー"
-
-#, fuzzy
-#~ msgid "module"
-#~ msgstr "コード "
-
-#, fuzzy
-#~ msgid "Select GRASS module"
-#~ msgstr "プロジェクトのロケーションとマップセットを選択"
-
-#, fuzzy
-#~ msgid "Color settings"
-#~ msgstr "ベクトル設定"
-
-#, fuzzy
-#~ msgid "Size settings"
-#~ msgstr "テキスト設定"
-
-#, fuzzy
-#~ msgid "Unable to get list of available mapsets."
-#~ msgstr "マップセットを削除できません "
-
-#, fuzzy
-#~ msgid "Unable to get list of accessible mapsets."
-#~ msgstr "マップセットを削除できません "
 
 #~ msgid "Input DXF file"
 #~ msgstr "DXFファイルをインポート"
@@ -10569,38 +10636,14 @@ msgstr ""
 #~ msgid "Choose directory:"
 #~ msgstr "ディレクトリ選択："
 
-#, fuzzy
-#~ msgid "Menu tree window"
-#~ msgstr "ズーム"
-
-#, fuzzy
-#~ msgid "label"
-#~ msgstr "テーブル"
-
-#, fuzzy
-#~ msgid "help"
-#~ msgstr "ヘルプ"
-
-#, fuzzy
-#~ msgid "Run"
-#~ msgstr "実行"
-
 #~ msgid "Set ground control points (GCPs)"
 #~ msgstr "GCP（地上基準点）の定義"
-
-#, fuzzy
-#~ msgid "Saved NVIZ Settings"
-#~ msgstr "テキスト"
 
 #~ msgid "Load"
 #~ msgstr "ロード"
 
 #~ msgid "Default"
 #~ msgstr "デフォルト"
-
-#, fuzzy
-#~ msgid "Load and apply settings from user settings file"
-#~ msgstr "ユーザー設定ファイルを変更し、ダイアログを閉じる"
 
 #~ msgid "Restore default settings"
 #~ msgstr "デフォルト設定に戻す"
@@ -10622,44 +10665,6 @@ msgstr ""
 
 #~ msgid "Link OGR layers"
 #~ msgstr "OGRレイヤーのリンク "
-
-#, fuzzy
-#~ msgid "Creates a lines vector map from an ASCII x,y points file."
-#~ msgstr "ベクトル ベクトル."
-
-#, fuzzy
-#~ msgid "Output vector map name"
-#~ msgstr "ベクトル"
-
-#, fuzzy
-#~ msgid "Digitize raster map"
-#~ msgstr "デジタイズ"
-
-#, fuzzy
-#~ msgid "Reclassify vector objects interactively by entering SQL rules"
-#~ msgstr "ベクトル"
-
-#, fuzzy
-#~ msgid ""
-#~ "Hue-intensity-saturation (his) to red-green-blue (rgb) raster map color "
-#~ "transformation function."
-#~ msgstr "色."
-
-#, fuzzy
-#~ msgid ""
-#~ "Red-green-blue (rgb) to hue-intensity-saturation (his) raster map color "
-#~ "transformation function"
-#~ msgstr "色"
-
-#, fuzzy
-#~ msgid "Interactive input for supervised classification"
-#~ msgstr "入力 の"
-
-#, fuzzy
-#~ msgid ""
-#~ "Copy a table. Either 'from_table' (optionally with 'where') can be used "
-#~ "or 'select' option, but not 'from_table' and 'select' at the same time."
-#~ msgstr "コピー."
 
 #~ msgid "Coarse style:"
 #~ msgstr "粗密型："
@@ -10745,9 +10750,6 @@ msgstr ""
 #~ msgid "Downloads and imports data from WMS servers."
 #~ msgstr "WMSサーバーからダウンロード＆インポート "
 
-#~ msgid "Matlab and MapGen import"
-#~ msgstr "Matlab とMapGenのインポート "
-
 #~ msgid "MAT-File (v.4) export"
 #~ msgstr "MAT-ファイル (v.4)のエクスポート "
 
@@ -10799,11 +10801,6 @@ msgstr ""
 #~ msgid "Change the type of geometry elements"
 #~ msgstr "ジオメトリエレメントのタイプ変更"
 
-#~ msgid ""
-#~ "Creates and adds a new attribute table to a given layer of an existing "
-#~ "vector map."
-#~ msgstr "ベクトルマップの指定されたレイヤーに新しい属性テーブルを作成・追加"
-
 #~ msgid "coarse:"
 #~ msgstr "粗さ:"
 
@@ -10821,3 +10818,233 @@ msgstr ""
 
 #~ msgid "color:"
 #~ msgstr "カラー："
+
+#~ msgid ""
+#~ "Reading workspace file <%s> failed. Invalid file, unable to parse XML "
+#~ "document."
+#~ msgstr "ワークスペースファイル読み込みエラー <%s> XMLのパースができません "
+
+#~ msgid "Writing current settings to workspace file failed (%s)."
+#~ msgstr "現在の設定をワークスペースに出力出来ません (%s).  "
+
+#, fuzzy
+#~ msgid "GRASS GIS Raster Map Calculator (3D raster)"
+#~ msgstr "GRASS %s マップカリキュレータ"
+
+#~ msgid "Add various vector-based map layer"
+#~ msgstr "ベクターマップレイヤーの追加 "
+
+#~ msgid "Official GRASS site: http://grass.osgeo.org"
+#~ msgstr "公式 GRASS サイト: http://grass.osgeo.org  "
+
+#~ msgid "GIS Library"
+#~ msgstr "GIS ライブラリ  "
+
+#~ msgid "Force re-rendering of all layers"
+#~ msgstr "全レイヤ－のレンダリング "
+
+#~ msgid "Add raster map layer"
+#~ msgstr "ラスターマップの追加 "
+
+#~ msgid "Add layer group"
+#~ msgstr "レイヤーグループ追加 "
+
+#~ msgid "Delete selected layer"
+#~ msgstr "選択レイヤーの削除 "
+
+#~ msgid "Add RGB layer"
+#~ msgstr "RGBレイヤー追加 "
+
+#~ msgid "Add HIS layer"
+#~ msgstr "HISレイヤー追加 "
+
+#~ msgid "Reload GCPs from selected POINTS file"
+#~ msgstr "POINTSファイルからGCPをリロード "
+
+#~ msgid "Show Nviz settings dialog"
+#~ msgstr "Nviz設定ダイアログの表示 "
+
+#, fuzzy
+#~ msgid "Link GDAL supported raster data as a pseudo GRASS raster map layer."
+#~ msgstr "GDALファイルをラスターマップとしてリンク "
+
+#, fuzzy
+#~ msgid "Creates a new pseudo-vector map as a link to an OGR-supported layer."
+#~ msgstr "OGRレイヤーを読み込み専用リンクとしてベクトル作成 "
+
+#, fuzzy
+#~ msgid "Matlab-ASCII or Mapgen import"
+#~ msgstr "Matlab とMapGenのインポート "
+
+#, fuzzy
+#~ msgid "Import Mapgen or Matlab-ASCII vector maps into GRASS."
+#~ msgstr "Mapgen または Matlab のベクトルマップをGRASSへインポート "
+
+#~ msgid "Export GRASS raster as non-georeferenced PNG image format."
+#~ msgstr "PNG画像フォーマットへエクスポート "
+
+#~ msgid "Converts a raster map into a vector map layer."
+#~ msgstr "ベクトルマップレイヤーにラスターマップを変換"
+
+#~ msgid "E&xit"
+#~ msgstr "終了(&x) "
+
+#~ msgid "Raster"
+#~ msgstr "ラスター "
+
+#~ msgid ""
+#~ "Calculates cast shadow areas from sun position and DEM. Either A: exact "
+#~ "sun position is specified, or B: date/time to calculate the sun position "
+#~ "by r.sunmask itself."
+#~ msgstr ""
+#~ "太陽の位置とDEMから陰影を付加する A:太陽の位置は既知 B：r.sunmaskを使用し"
+#~ "日時から太陽の位置を算出 "
+
+#~ msgid ""
+#~ "Generates raster map layers of slope, aspect, curvatures and partial "
+#~ "derivatives from a raster map layer of true elevation values. Aspect is "
+#~ "calculated counterclockwise from east."
+#~ msgstr ""
+#~ "標高ラスターマップレイヤーから傾斜、方位、曲率と偏微分のラスターマップレイ"
+#~ "ヤーを作成（方位は反時計回りに東から計算） "
+
+#~ msgid ""
+#~ "Filters and generates a depressionless elevation map and a flow direction "
+#~ "map from a given elevation layer."
+#~ msgstr "標高レイヤーから 凹地のない標高マップと流方向マップを作成 "
+
+#~ msgid "Flow computation for massive grids (Float version)."
+#~ msgstr "大規模なグリッドの流量計算(実数バージョン)"
+
+#~ msgid ""
+#~ "Overland flow hydrologic simulation using path sampling method (SIMWE)"
+#~ msgstr "経路サンプリング法(SIMWE)を使用した流水門シミュレーション"
+
+#~ msgid ""
+#~ "Sediment transport and erosion/deposition simulation using path sampling "
+#~ "method (SIMWE)"
+#~ msgstr ""
+#~ "経路サンプリング法(SIMWE)を使用した土砂流送 侵食/沈着 シミュレーション"
+
+#~ msgid "Creates topographic index [ln(a/tan(beta))] map from elevation map."
+#~ msgstr "標高マップから地形的インデックス指標 [ln(a/tan(beta))]マップ作成"
+
+#~ msgid "Watershed basin analysis program."
+#~ msgstr "分水界の解析を行います "
+
+#~ msgid ""
+#~ "Calculates univariate statistics from a GRASS raster map based on vector "
+#~ "polygons and uploads statistics to new attribute columns."
+#~ msgstr ""
+#~ "ベクトルポリゴンを基にしたGRASSのラスターマップから単変量統計を解析し、新"
+#~ "しい属性の列にアップロードする"
+
+#~ msgid "Volumes"
+#~ msgstr "ボリューム"
+
+#~ msgid "GRASS GIS help"
+#~ msgstr "GRASSのヘルプ "
+
+#~ msgid "Map calculator"
+#~ msgstr "マップカリキュレータ"
+
+#~ msgid "Nviz properties"
+#~ msgstr "Nvizプロパティ "
+
+#~ msgid "Map Toolbar"
+#~ msgstr "マップツールバー "
+
+#~ msgid "Nviz toolbar"
+#~ msgstr "Nviz ツールバー "
+
+#, fuzzy
+#~ msgid "Unable to read EPGS file: '%s'"
+#~ msgstr " EPGSコードが読めません: %s"
+
+#, fuzzy
+#~ msgid "3D View Tools"
+#~ msgstr "3Dビューツール"
+
+#~ msgid "Icon size:"
+#~ msgstr "アイコンサイズ："
+
+#~ msgid "Layer properties"
+#~ msgstr "レイヤープロパティ"
+
+#~ msgid "Vector map <%s> is 3D"
+#~ msgstr "ベクトルマップ <%s>は3Dです"
+
+#~ msgid "Vector map <%s> is 2D"
+#~ msgstr "ベクトルマップ <%s> は2Dです"
+
+#~ msgid "%(primitives)d primitives (%(points)d points)"
+#~ msgstr "%(primitives)d プリミティブ (%(points)d points)  "
+
+#~ msgid "Vector digitizer error"
+#~ msgstr "ベクトルデジタイザエラー"
+
+#~ msgid ""
+#~ "Unable to initialize display driver of vector digitizer. See 'Command "
+#~ "output' for details.\n"
+#~ "\n"
+#~ "Details:"
+#~ msgstr ""
+#~ "デジタイザ用のディスプレイドライバを初期化できません 詳細は「コマンド出"
+#~ "力」を見てください\n"
+#~ "\n"
+#~ "詳細：  "
+
+#~ msgid ""
+#~ "Command '%s' not yet implemented in the GUI. Try adding it as a command "
+#~ "layer instead."
+#~ msgstr ""
+#~ "コマンド '%s' はまだGUIで実装されていません. コマンドラインより実行してく"
+#~ "ださい."
+
+#~ msgid "<%(name)s>: layer type <%(type)s> is not supported yet."
+#~ msgstr "<%(name)s>: レイヤータイプ <%(type)s> はまだサポートしていません"
+
+#~ msgid "Unable to open file"
+#~ msgstr "ファイルをオープン出来ません"
+
+#, fuzzy
+#~ msgid "DXF file:"
+#~ msgstr "DXFファイル選択："
+
+#~ msgid "Parameter not found: %s"
+#~ msgstr "パラメータがありません： %s"
+
+#~ msgid "Parameter %(name)s (%(desc)s) is missing.\n"
+#~ msgstr "パラメータ %(name)s (%(desc)s) が有りません\n"
+
+#~ msgid "Copy the current command string to the clipboard"
+#~ msgstr "クリップボードに現在のコマンド文をコピー"
+
+#~ msgid "Valid range"
+#~ msgstr "有効範囲 "
+
+#~ msgid "Vector point layer not found (id=%d)"
+#~ msgstr "ベクトルポイントレイヤーが見つかりません (ID=%d)  "
+
+#~ msgid "Unable to set data layer properties (id=%d)"
+#~ msgstr "データレイヤーの属性をセット出来ません (ID=%d)  "
+
+#~ msgid "User GUI settings"
+#~ msgstr "ユーザーGUI設定"
+
+#, fuzzy
+#~ msgid ""
+#~ "Check a mapset to make it accessible, uncheck it to hide it.%sNote: The "
+#~ "current mapset is always accessible."
+#~ msgstr ""
+#~ "アクセスするマップセットをチェック（アクセスしない場合はチェックをはず"
+#~ "す）%s 備考: PERMANENT と 現在のマップセットは常にアクセスできます "
+
+#~ msgid "Start GRASS"
+#~ msgstr "GRASSの起動"
+
+#~ msgid "Create mapset"
+#~ msgstr "マップセットの作成"
+
+#~ msgid "Select file extension:"
+#~ msgstr "ファイル拡張子選択："

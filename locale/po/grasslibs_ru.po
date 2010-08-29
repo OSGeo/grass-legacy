@@ -2270,8 +2270,9 @@ msgid "Attempt to delete isle %d info from dead area %d"
 msgstr "Попытка удалить информацию об острове %d из уже удаленного полигона %d"
 
 #: ../lib/vector/diglib/file.c:157
+#, fuzzy
 msgid "Writing to file loaded to memory not supported"
-msgstr ""
+msgstr "Невозможно открыть временный файл"
 
 #: ../lib/vector/diglib/file.c:200
 #, fuzzy
@@ -5311,3 +5312,38 @@ msgstr "подгруппа <%s> группы <%s> ссылается на сле
 #, fuzzy
 #~ msgid "ERROR: GISBASE not set\n"
 #~ msgstr "ОШИБКА: GISBASE не установлен\n"
+
+#~ msgid "G_malloc: unable to allocate %lu bytes at %s:%d"
+#~ msgstr "G_malloc: невозможно выделить %lu байт в %s:%d"
+
+#~ msgid "G_calloc: unable to allocate %lu * %lu bytes at %s:%d"
+#~ msgstr "G_calloc: невозможно выделить %lu * %lu байт в %s:%d"
+
+#~ msgid "G_realloc: unable to allocate %lu bytes at %s:%d"
+#~ msgstr "G_realloc: невозможно выделить %lu байт в %s:%d"
+
+#~ msgid ""
+#~ "taking too long to find points for interpolation--please change the "
+#~ "region to area where your points are. Continuing calculations..."
+#~ msgstr ""
+#~ "попытка найти точки для интерполяции заняла слишком много времени -- "
+#~ "попробуйте изменить регион на область где точки есть. Вычисление "
+#~ "продолжается..."
+
+#~ msgid "Reading lines from vector map ... "
+#~ msgstr "Чтение линий из векторного слоя ..."
+
+#~ msgid "Reading nodes from vector map ... "
+#~ msgstr "Чтение узлов из векторного слоя ..."
+
+#~ msgid "there are points outside specified 2D/3D region--ignored %d points"
+#~ msgstr "есть точки вне указанного 2D/3D региона -- игнорируются %d точек"
+
+#~ msgid "ignoring %d points -- too dense"
+#~ msgstr "точки %d игнорируются -- точки стоят слишком часто"
+
+#~ msgid "some points outside of region -- will ignore..."
+#~ msgstr "некоторые точки вне региона -- будут проигнорированы"
+
+#~ msgid "Unable to make mapset element %s (%s)"
+#~ msgstr "Невозможно создать элемент набора %s (%s)"

@@ -5249,3 +5249,45 @@ msgstr ""
 
 #~ msgid "ERROR: GISBASE not set\n"
 #~ msgstr "خطا: GISBASE لم يتم تعريف\n"
+
+#, fuzzy
+#~ msgid "Unable to open vector map <%s> on topology level %d"
+#~ msgstr "'%s'الى '%s'لم يمكن نسخ فيكتور"
+
+#, fuzzy
+#~ msgid "Attempt to delete dead line"
+#~ msgstr "لم يمكن فتح ملف مؤقت"
+
+#, fuzzy
+#~ msgid "Unable to rewrite line %d"
+#~ msgstr "لم يمكن فتح ملف مؤقت"
+
+#, fuzzy
+#~ msgid ""
+#~ "Unable to delete line %d, vector map <%s> is not opened on topo level 2"
+#~ msgstr "لم يمكن محو الخط,الخريطة  غير مفتوحة على المستوى الثانى"
+
+#, fuzzy
+#~ msgid ""
+#~ "Unable to delete line %d, vector map <%s> is not opened in 'write' mode"
+#~ msgstr " لم يمكن محو الخط,الخريطة  غير مفتوحة بوضع مهيأ للكتابة"
+
+#, fuzzy
+#~ msgid "Unable to delete line %d from vector map <%s>"
+#~ msgstr " [%s] غير قادر على أنشاء ملف عنوان رئيسى ل"
+
+#, fuzzy
+#~ msgid "G_malloc: out of memory"
+#~ msgstr "لم يمكن توفير ذاكرة"
+
+#, fuzzy
+#~ msgid "G_realloc: out of memory"
+#~ msgstr "لم يمكن توفير ذاكرة"
+
+#, fuzzy
+#~ msgid "Cannot get layer info"
+#~ msgstr "لم يمكن محو الخط"
+
+#, fuzzy
+#~ msgid "Cannot delete line"
+#~ msgstr "لم يمكن إعادة كتابة الخط"

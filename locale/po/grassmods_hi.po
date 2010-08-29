@@ -1919,9 +1919,9 @@ msgid "This step value is not allowed"
 msgstr "के लिए नहीं"
 
 #: ../raster/r.contour/main.c:327
-#, c-format
+#, fuzzy, c-format
 msgid "Range of levels: min = %f, max = %f"
-msgstr ""
+msgstr "पूर्णांक"
 
 #: ../raster/r.contour/main.c:356
 #, fuzzy
@@ -2874,8 +2874,9 @@ msgid ""
 msgstr "का का कोण"
 
 #: ../raster/r.sun2/main.c:264
+#, fuzzy
 msgid "A single value of the orientation (aspect), 270 is south"
-msgstr ""
+msgstr "एकल का कोण"
 
 #: ../raster/r.sun2/main.c:273 ../raster/r.sun/main.c:227
 #, fuzzy
@@ -8543,9 +8544,9 @@ msgid "Title, in quotes"
 msgstr ""
 
 #: ../raster/r.clump/main.c:120
-#, c-format
+#, fuzzy, c-format
 msgid "%d clumps."
-msgstr ""
+msgstr "नहीं"
 
 #: ../raster/r.clump/clump.c:98
 #, fuzzy, c-format
@@ -9864,9 +9865,9 @@ msgid ""
 msgstr ""
 
 #: ../raster/r.out.gdal/main.c:791
-#, fuzzy, c-format
+#, c-format
 msgid "GDAL datatype: %s, valid range: %g - %g"
-msgstr "नहीं"
+msgstr ""
 
 #: ../raster/r.out.gdal/export_band.c:67 ../raster/r.out.gdal/export_band.c:73
 #: ../raster/r.out.gdal/export_band.c:380
@@ -9991,9 +9992,9 @@ msgid "<%s> is integer raster map (CELL)"
 msgstr "त्रुटि"
 
 #: ../raster/r.null/null.c:145
-#, c-format
+#, fuzzy, c-format
 msgid "<%s> is integer raster map (CELL). Using null=%d."
-msgstr ""
+msgstr "त्रुटि"
 
 #: ../raster/r.null/null.c:151
 #, fuzzy, c-format
@@ -10681,7 +10682,7 @@ msgstr "n"
 #: ../raster/r.random.surface/save.c:219 ../imagery/i.pca/support.c:27
 #, fuzzy, c-format
 msgid "Unable to write color table for raster map <%s>"
-msgstr "के लिए"
+msgstr "के लिए."
 
 #: ../raster/r.random.surface/init.c:40
 #, fuzzy
@@ -11611,8 +11612,9 @@ msgid "You didn't specify a horizon raster name. Aborting."
 msgstr ""
 
 #: ../raster/r.horizon/main.c:377
+#, fuzzy
 msgid "You didn't specify an angle step size. Aborting."
-msgstr ""
+msgstr "नहीं"
 
 #: ../raster/r.horizon/main.c:390
 #, fuzzy
@@ -11642,8 +11644,9 @@ msgid "north"
 msgstr ""
 
 #: ../raster/r.horizon/main.c:421
+#, fuzzy
 msgid "Could not read maximum distance. Aborting."
-msgstr ""
+msgstr "नहीं"
 
 #: ../raster/r.horizon/main.c:617 ../raster/r.in.ascii/main.c:193
 #: ../raster/r.in.arc/main.c:135
@@ -11899,7 +11902,7 @@ msgstr "डाटाटाइप."
 #: ../raster/r.recode/read_rules.c:41
 #, fuzzy, c-format
 msgid "Integer data range of raster map <%s> is empty"
-msgstr "है n"
+msgstr "डाटाटाइप."
 
 #: ../raster/r.recode/read_rules.c:44
 #, fuzzy, c-format
@@ -17921,8 +17924,9 @@ msgid "Display"
 msgstr ""
 
 #: ../display/d.vect/main.c:146
+#, fuzzy
 msgid "Layer number (if -1, all layers are displayed)"
-msgstr ""
+msgstr "नहीं सभी n n फ़ाइल"
 
 #: ../display/d.vect/main.c:165 ../display/d.vect/main.c:175
 #: ../display/d.vect/main.c:278 ../display/d.vect/main.c:288
@@ -18200,9 +18204,9 @@ msgid ""
 msgstr ""
 
 #: ../display/d.vect/plot1.c:679
-#, c-format
+#, fuzzy, c-format
 msgid "Error in color definition column '%s': %d features affected"
-msgstr ""
+msgstr "नहीं."
 
 #: ../display/d.vect/attr.c:30
 msgid "attrcol not specified, cannot display attributes"
@@ -18538,9 +18542,9 @@ msgid "Unable to open vector map <%s> at topology level %d"
 msgstr "के लिए."
 
 #: ../vector/v.net/main.c:190
-#, c-format
+#, fuzzy, c-format
 msgid "%d arcs added to network (nlayer %d)"
-msgstr ""
+msgstr "लोड हो गया"
 
 #: ../vector/v.net/main.c:197 ../vector/v.type/main.c:234
 #: ../vector/v.proj/main.c:278 ../vector/v.kcv/main.c:161
@@ -18735,12 +18739,14 @@ msgid "For coor valid point/centroid, for length valid line/boundary"
 msgstr "का के लिए बिन्दु के लिए"
 
 #: ../vector/v.to.db/parse.c:42
+#, fuzzy
 msgid "Layer number (write to)"
-msgstr ""
+msgstr "नहीं"
 
 #: ../vector/v.to.db/parse.c:46
+#, fuzzy
 msgid "Query layer number (read from)"
-msgstr ""
+msgstr "नहीं"
 
 #: ../vector/v.to.db/parse.c:47 ../vector/v.to.db/parse.c:99
 #: ../db/base/execute.c:114 ../db/base/select.c:197 ../db/base/select.c:202
@@ -18876,9 +18882,9 @@ msgid "%d records updated/inserted (layer %d)"
 msgstr "नहीं"
 
 #: ../vector/v.to.db/report.c:202
-#, c-format
+#, fuzzy, c-format
 msgid "%d update/insert errors (layer %d)"
-msgstr ""
+msgstr "नहीं"
 
 #: ../vector/v.to.db/report.c:205
 #, fuzzy, c-format
@@ -19202,10 +19208,11 @@ msgid "Interpolation: Creating table: It was impossible to create table <%s>."
 msgstr "i n"
 
 #: ../vector/lidar/v.surf.bspline/main.c:392
+#, fuzzy
 msgid ""
 "Cannot allocate memory for auxiliar matrix.Consider changing region "
 "resolution"
-msgstr ""
+msgstr "के लिए"
 
 #: ../vector/lidar/v.surf.bspline/main.c:590
 #, fuzzy, c-format
@@ -19270,9 +19277,9 @@ msgid "Mean = %.5lf"
 msgstr ""
 
 #: ../vector/lidar/v.surf.bspline/crosscorr.c:290
-#, c-format
+#, fuzzy, c-format
 msgid "Root Means Square (RMS) = %.5lf"
-msgstr ""
+msgstr "नहीं"
 
 #: ../vector/lidar/v.surf.bspline/crosscorr.c:306
 msgid ""
@@ -20223,9 +20230,10 @@ msgid "Types to be extracted"
 msgstr "का"
 
 #: ../vector/v.extract/main.c:122
+#, fuzzy
 msgid ""
 "Layer number (if -1, all features in all layers of given type are extracted)"
-msgstr ""
+msgstr "नहीं सभी n n फ़ाइल"
 
 #: ../vector/v.extract/main.c:136
 #, fuzzy
@@ -20404,7 +20412,7 @@ msgstr "ज़ेड"
 #: ../vector/v.in.db/main.c:173
 #, fuzzy
 msgid "Writing features..."
-msgstr "छापें"
+msgstr "n"
 
 #: ../vector/v.in.db/main.c:180
 msgid "Key column must be integer"
@@ -20682,8 +20690,9 @@ msgid "Feature type (to)"
 msgstr "विशेषता"
 
 #: ../vector/v.distance/main.c:145
+#, fuzzy
 msgid "Layer number (from)"
-msgstr ""
+msgstr "नहीं"
 
 #: ../vector/v.distance/main.c:150
 #, fuzzy
@@ -21052,8 +21061,9 @@ msgid "Cannot select attributes for cat = %d"
 msgstr "के लिए"
 
 #: ../vector/v.out.vtk/writeVTK.c:622
+#, fuzzy
 msgid "Cannot export attribute table fields for layer < 1. Skipping export"
-msgstr ""
+msgstr "नहीं"
 
 #: ../vector/v.out.vtk/writeVTK.c:630
 #, fuzzy
@@ -21099,9 +21109,9 @@ msgid "Only export points falling within current 3D region (points mode)"
 msgstr ""
 
 #: ../vector/v.out.ascii/out.c:111
-#, c-format
+#, fuzzy, c-format
 msgid "Parameter '%s' ignored in standard mode"
-msgstr ""
+msgstr "का."
 
 #: ../vector/v.out.ascii/out.c:119
 msgid "Format 'point' is not supported for old version"
@@ -22724,9 +22734,9 @@ msgid "Use numeric type for attribute \"layer\""
 msgstr ""
 
 #: ../vector/v.in.dwg/main.c:120
-#, c-format
+#, fuzzy, c-format
 msgid "Unable to initialize OpenDWG Toolkit, error: %d: %s."
-msgstr ""
+msgstr "के लिए"
 
 #: ../vector/v.in.dwg/main.c:123
 #, fuzzy, c-format
@@ -27045,8 +27055,9 @@ msgid "Vertical extent of vector map <%s>: B: %f T: %f"
 msgstr ""
 
 #: ../vector/v.to.3d/args.c:11
+#, fuzzy
 msgid "Reverse transformation; 3D vector features to 2D"
-msgstr ""
+msgstr "ऊंचाई के लिए"
 
 #: ../vector/v.to.3d/args.c:15
 #, fuzzy
@@ -27084,9 +27095,9 @@ msgid "Feature id %d has no category - skipping"
 msgstr "बिन्दु n"
 
 #: ../vector/v.to.3d/trans3.c:102
-#, c-format
+#, fuzzy, c-format
 msgid "Feature id %d has more categories. Using category %d."
-msgstr ""
+msgstr "बिन्दु n"
 
 #: ../vector/v.to.3d/trans2.c:98
 #, fuzzy
@@ -28709,8 +28720,9 @@ msgid "E00 file"
 msgstr ""
 
 #: ../locale/scriptstrings/v.in.e00_to_translate.c:5
+#, fuzzy
 msgid "Input type point, line or area"
-msgstr ""
+msgstr "का"
 
 #: ../locale/scriptstrings/v.in.e00_to_translate.c:6
 #: ../locale/scriptstrings/v.in.lines_to_translate.c:5
@@ -28723,10 +28735,11 @@ msgid "Name for output vector map"
 msgstr "का"
 
 #: ../locale/scriptstrings/r.plane_to_translate.c:1
+#, fuzzy
 msgid ""
 "Creates raster plane map given dip (inclination), aspect (azimuth) and one "
 "point."
-msgstr ""
+msgstr "a बिन्दु."
 
 #: ../locale/scriptstrings/r.plane_to_translate.c:2
 #: ../locale/scriptstrings/r.shaded.relief_to_translate.c:2
@@ -28772,8 +28785,9 @@ msgid "Convert coordinates from one projection to another (cs2cs frontend)."
 msgstr ""
 
 #: ../locale/scriptstrings/m.proj_to_translate.c:2
+#, fuzzy
 msgid "miscellaneous, projection"
-msgstr ""
+msgstr "नहीं n"
 
 #: ../locale/scriptstrings/m.proj_to_translate.c:3
 #, fuzzy
@@ -28791,8 +28805,9 @@ msgid "Files & format"
 msgstr "के लिए"
 
 #: ../locale/scriptstrings/m.proj_to_translate.c:5
+#, fuzzy
 msgid "Output coordinate file (omit to send to stdout)"
-msgstr ""
+msgstr "उत्तर पूर्व"
 
 #: ../locale/scriptstrings/m.proj_to_translate.c:7
 #: ../locale/scriptstrings/v.in.lines_to_translate.c:6
@@ -28902,8 +28917,9 @@ msgid "(10=smallest/worst, 100=largest/best)"
 msgstr ""
 
 #: ../locale/scriptstrings/d.out.file_to_translate.c:16
+#, fuzzy
 msgid "Paper size for PostScript output"
-msgstr ""
+msgstr "छापें"
 
 #: ../locale/scriptstrings/d.out.file_to_translate.c:17
 #: ../locale/scriptstrings/d.out.file_to_translate.c:19
@@ -28982,8 +28998,9 @@ msgid "Produces shell script output"
 msgstr "छापें"
 
 #: ../locale/scriptstrings/r.tileset_to_translate.c:4
+#, fuzzy
 msgid "Produces web map server query string output"
-msgstr ""
+msgstr "छापें"
 
 #: ../locale/scriptstrings/r.tileset_to_translate.c:5
 msgid ""
@@ -29245,9 +29262,8 @@ msgid "Import SRTM HGT files into GRASS"
 msgstr ""
 
 #: ../locale/scriptstrings/r.in.srtm_to_translate.c:3
-#, fuzzy
 msgid "SRTM input tile (file without .hgt.zip extension)"
-msgstr "का"
+msgstr ""
 
 #: ../locale/scriptstrings/r.in.srtm_to_translate.c:4
 #, fuzzy
@@ -29501,8 +29517,9 @@ msgid "Create inverse mask from specified 'maskcats' list"
 msgstr ""
 
 #: ../locale/scriptstrings/r.mask_to_translate.c:9
+#, fuzzy
 msgid "Overwrite existing MASK"
-msgstr ""
+msgstr "डाटाटाइप."
 
 #: ../locale/scriptstrings/r.mask_to_translate.c:10
 msgid "Remove existing mask (overrides other options)"
@@ -29534,8 +29551,9 @@ msgid "Export as routes"
 msgstr "n"
 
 #: ../locale/scriptstrings/v.out.gpsbabel_to_translate.c:5
+#, fuzzy
 msgid "Export as tracks"
-msgstr ""
+msgstr "n"
 
 #: ../locale/scriptstrings/v.out.gpsbabel_to_translate.c:7
 #, fuzzy
@@ -29570,8 +29588,9 @@ msgid "Example: income < 1000 and inhab >= 10000"
 msgstr ""
 
 #: ../locale/scriptstrings/v.db.reconnect.all_to_translate.c:1
+#, fuzzy
 msgid "Reconnects vectors to a new database."
-msgstr ""
+msgstr "के लिए n"
 
 #: ../locale/scriptstrings/v.db.reconnect.all_to_translate.c:3
 #, fuzzy
@@ -29590,12 +29609,14 @@ msgid "Name of new database"
 msgstr "का"
 
 #: ../locale/scriptstrings/v.db.reconnect.all_to_translate.c:6
+#, fuzzy
 msgid "Old schema"
-msgstr ""
+msgstr "डाटाबेस नाम"
 
 #: ../locale/scriptstrings/v.db.reconnect.all_to_translate.c:7
+#, fuzzy
 msgid "New schema"
-msgstr ""
+msgstr "डाटाबेस नाम"
 
 #: ../locale/scriptstrings/r.in.aster_to_translate.c:1
 msgid ""
@@ -29659,8 +29680,9 @@ msgid "Path to rules file"
 msgstr "का"
 
 #: ../locale/scriptstrings/v.colors_to_translate.c:15
+#, fuzzy
 msgid "Save placeholder raster map for use with d.legend"
-msgstr ""
+msgstr "का"
 
 #: ../locale/scriptstrings/db.out.ogr_to_translate.c:1
 #, fuzzy
@@ -29965,12 +29987,14 @@ msgid "Number of classes for interval theme (integer)"
 msgstr "का फ़िल्टर"
 
 #: ../locale/scriptstrings/d.vect.thematic_to_translate.c:28
+#, fuzzy
 msgid "Color scheme for graduated color mapping"
-msgstr ""
+msgstr "के लिए"
 
 #: ../locale/scriptstrings/d.vect.thematic_to_translate.c:29
+#, fuzzy
 msgid "Select 'single_color' for graduated point/line display"
-msgstr ""
+msgstr "के लिए"
 
 #: ../locale/scriptstrings/d.vect.thematic_to_translate.c:31
 #, fuzzy
@@ -29983,21 +30007,25 @@ msgid "GRASS named color or R:G:B triplet. Set color scheme to single color"
 msgstr "a R जी"
 
 #: ../locale/scriptstrings/d.vect.thematic_to_translate.c:34
+#, fuzzy
 msgid "Color for graduated lines or point/area outlines"
-msgstr ""
+msgstr "के लिए"
 
 #: ../locale/scriptstrings/d.vect.thematic_to_translate.c:35
+#, fuzzy
 msgid "GRASS named color or R:G:B triplet. Set color scheme to single color."
-msgstr ""
+msgstr "a R जी"
 
 #: ../locale/scriptstrings/d.vect.thematic_to_translate.c:37
+#, fuzzy
 msgid "Beginning color for custom color gradient"
-msgstr ""
+msgstr "के लिए ज़ेड"
 
 #: ../locale/scriptstrings/d.vect.thematic_to_translate.c:38
 #: ../locale/scriptstrings/d.vect.thematic_to_translate.c:41
+#, fuzzy
 msgid "Must be expressed as R:G:B triplet"
-msgstr ""
+msgstr "के लिए ज़ेड"
 
 #: ../locale/scriptstrings/d.vect.thematic_to_translate.c:40
 #, fuzzy
@@ -30213,9 +30241,8 @@ msgid "Percentile to calculate (requires -e flag)"
 msgstr "छापें"
 
 #: ../locale/scriptstrings/r.mapcalculator_to_translate.c:1
-#, fuzzy
 msgid "Calculate new raster map from a r.mapcalc expression."
-msgstr "का"
+msgstr ""
 
 #: ../locale/scriptstrings/r.mapcalculator_to_translate.c:2
 msgid "A"
@@ -30295,8 +30322,9 @@ msgid "Preserve relative colors, adjust brightness only"
 msgstr ""
 
 #: ../locale/scriptstrings/i.landsat.rgb_to_translate.c:9
+#, fuzzy
 msgid "Reset to standard color range"
-msgstr ""
+msgstr "रखें"
 
 #: ../locale/scriptstrings/d.monsize_to_translate.c:1
 msgid "Selects/starts specified monitor at specified size"
@@ -30330,8 +30358,9 @@ msgid "Name of raster to drape over relief map"
 msgstr "का"
 
 #: ../locale/scriptstrings/d.shadedmap_to_translate.c:4
+#, fuzzy
 msgid "Percent to brighten"
-msgstr ""
+msgstr "पूर्ण."
 
 #: ../locale/scriptstrings/v.in.gpsbabel_to_translate.c:1
 msgid ""
@@ -30350,8 +30379,9 @@ msgid "Import routes"
 msgstr "n"
 
 #: ../locale/scriptstrings/v.in.gpsbabel_to_translate.c:6
+#, fuzzy
 msgid "Import track"
-msgstr ""
+msgstr "n"
 
 #: ../locale/scriptstrings/v.in.gpsbabel_to_translate.c:7
 msgid "Force vertices of track or route data as points"
@@ -30419,8 +30449,9 @@ msgstr ""
 #: ../locale/scriptstrings/r.in.wms_to_translate.c:14
 #: ../locale/scriptstrings/r.in.wms_to_translate.c:19
 #: ../locale/scriptstrings/r.in.wms_to_translate.c:46
+#, fuzzy
 msgid "Import"
-msgstr ""
+msgstr "n"
 
 #: ../locale/scriptstrings/r.in.wms_to_translate.c:13
 msgid "Don't reproject the data, just patch it"
@@ -30435,16 +30466,19 @@ msgid "This may be needed to connect to servers which lack POST capability"
 msgstr ""
 
 #: ../locale/scriptstrings/r.in.wms_to_translate.c:20
+#, fuzzy
 msgid "Mapserver to request data from"
-msgstr ""
+msgstr "सभी"
 
 #: ../locale/scriptstrings/r.in.wms_to_translate.c:22
+#, fuzzy
 msgid "Layers to request from map server"
-msgstr ""
+msgstr "पद्धति"
 
 #: ../locale/scriptstrings/r.in.wms_to_translate.c:24
+#, fuzzy
 msgid "Styles to request from map server"
-msgstr ""
+msgstr "पद्धति"
 
 #: ../locale/scriptstrings/r.in.wms_to_translate.c:26
 #, fuzzy
@@ -30452,20 +30486,23 @@ msgid "Source projection to request from server"
 msgstr "पद्धति"
 
 #: ../locale/scriptstrings/r.in.wms_to_translate.c:28
+#, fuzzy
 msgid "Image format requested from the server"
-msgstr ""
+msgstr "पद्धति"
 
 #: ../locale/scriptstrings/r.in.wms_to_translate.c:30
 msgid "Addition query options for server"
 msgstr ""
 
 #: ../locale/scriptstrings/r.in.wms_to_translate.c:32
+#, fuzzy
 msgid "Maximum columns to request at a time"
-msgstr ""
+msgstr "बिन्दु"
 
 #: ../locale/scriptstrings/r.in.wms_to_translate.c:34
+#, fuzzy
 msgid "Maximum rows to request at a time"
-msgstr ""
+msgstr "बिन्दु"
 
 #: ../locale/scriptstrings/r.in.wms_to_translate.c:36
 msgid "Additional options for r.tileset"
@@ -30683,8 +30720,9 @@ msgid "Join column in other table"
 msgstr "अज्ञात क़िस्म"
 
 #: ../locale/scriptstrings/i.tasscap_to_translate.c:1
+#, fuzzy
 msgid "Tasseled Cap (Kauth Thomas) transformation for LANDSAT-TM data"
-msgstr ""
+msgstr "ऊंचाई के लिए"
 
 #: ../locale/scriptstrings/i.tasscap_to_translate.c:2
 #, fuzzy
@@ -30692,16 +30730,19 @@ msgid "raster, imagery"
 msgstr "का"
 
 #: ../locale/scriptstrings/i.tasscap_to_translate.c:3
+#, fuzzy
 msgid "use transformation rules for LANDSAT-4"
-msgstr ""
+msgstr "ऊंचाई के लिए"
 
 #: ../locale/scriptstrings/i.tasscap_to_translate.c:4
+#, fuzzy
 msgid "use transformation rules for LANDSAT-5"
-msgstr ""
+msgstr "ऊंचाई के लिए"
 
 #: ../locale/scriptstrings/i.tasscap_to_translate.c:5
+#, fuzzy
 msgid "use transformation rules for LANDSAT-7"
-msgstr ""
+msgstr "ऊंचाई के लिए"
 
 #: ../locale/scriptstrings/i.tasscap_to_translate.c:6
 #, fuzzy
@@ -30890,8 +30931,9 @@ msgid "Table name of SQL DB table"
 msgstr ""
 
 #: ../locale/scriptstrings/db.in.ogr_to_translate.c:6
+#, fuzzy
 msgid "Name for auto-generated unique key column"
-msgstr ""
+msgstr "का के लिए"
 
 #: ../locale/scriptstrings/d.rast.edit_to_translate.c:5
 #, fuzzy
@@ -30933,8 +30975,9 @@ msgid "Vector map for which to drop attribute column"
 msgstr "का के लिए संपादन (_E)"
 
 #: ../locale/scriptstrings/v.db.dropcol_to_translate.c:4
+#, fuzzy
 msgid "Layer where to drop column"
-msgstr ""
+msgstr "नहीं"
 
 #: ../locale/scriptstrings/v.db.dropcol_to_translate.c:5
 #, fuzzy
@@ -31013,8 +31056,9 @@ msgid "clear target monitor before moving"
 msgstr ""
 
 #: ../locale/scriptstrings/d.mvmon_to_translate.c:4
+#, fuzzy
 msgid "stay with source monitor"
-msgstr ""
+msgstr "नहीं n"
 
 #: ../locale/scriptstrings/d.mvmon_to_translate.c:5
 msgid "kill source monitor after moving"
@@ -31064,8 +31108,9 @@ msgid "Nonpositive eigenvalues for class %d subclass %d"
 msgstr "के लिए."
 
 #: ../imagery/i.smap/shapiro/main.c:38 ../imagery/i.gensigset/main.c:40
+#, fuzzy
 msgid "imagery, classification, supervised, SMAP"
-msgstr ""
+msgstr "फ़ाइल का"
 
 #: ../imagery/i.smap/shapiro/main.c:40
 #, fuzzy
@@ -31386,8 +31431,9 @@ msgid " Can not generate the transformation equation."
 msgstr "के लिए"
 
 #: ../imagery/i.rectify/cp.c:29
+#, fuzzy
 msgid "Not enough memory to solve for transformation equation"
-msgstr ""
+msgstr "के लिए"
 
 #: ../imagery/i.rectify/cp.c:32
 #, fuzzy
@@ -31598,9 +31644,9 @@ msgid "Generates statistics for i.smap from raster map."
 msgstr "के लिए i."
 
 #: ../imagery/i.gensigset/main.c:52
-#, c-format
+#, fuzzy, c-format
 msgid "Clustering class %d (%d pixels)..."
-msgstr ""
+msgstr "n"
 
 #: ../imagery/i.gensigset/main.c:55
 #, fuzzy, c-format
@@ -31875,8 +31921,9 @@ msgstr "चिह्नित चालू छवि."
 #: ../imagery/i.ortho.photo/photo.init/main.c:44
 #: ../imagery/i.ortho.photo/photo.camera/main.c:54
 #: ../imagery/i.ortho.photo/menu/menu.c:43
+#, fuzzy
 msgid "imagery, orthorectify"
-msgstr ""
+msgstr "समूह"
 
 #: ../imagery/i.ortho.photo/photo.2target/main.c:54
 #, fuzzy
@@ -31907,9 +31954,9 @@ msgstr "नहीं."
 
 #: ../imagery/i.ortho.photo/photo.2target/main.c:114
 #: ../imagery/i.ortho.photo/photo.2image/main.c:98
-#, c-format
+#, fuzzy, c-format
 msgid "No camera reference file selected for group [%s]"
-msgstr ""
+msgstr "का"
 
 #: ../imagery/i.ortho.photo/photo.2target/main.c:118
 #: ../imagery/i.ortho.photo/photo.2image/main.c:102
@@ -31918,14 +31965,14 @@ msgid "Bad format in camera file for group [%s]"
 msgstr "समूह"
 
 #: ../imagery/i.ortho.photo/photo.2target/main.c:125
-#, c-format
+#, fuzzy, c-format
 msgid "No initial camera exposure station for group [%s]"
-msgstr ""
+msgstr "समूह"
 
 #: ../imagery/i.ortho.photo/photo.2target/main.c:129
-#, c-format
+#, fuzzy, c-format
 msgid "Bad format in initial camera exposure station for group [%s]"
-msgstr ""
+msgstr "समूह"
 
 #: ../imagery/i.ortho.photo/photo.2target/main.c:143
 #, fuzzy, c-format
@@ -31933,9 +31980,9 @@ msgid "No photo points for group [%s]"
 msgstr "n"
 
 #: ../imagery/i.ortho.photo/photo.2target/main.c:145
-#, c-format
+#, fuzzy, c-format
 msgid "Poorly placed photo points for group [%s]"
-msgstr ""
+msgstr "n"
 
 #: ../imagery/i.ortho.photo/photo.2target/main.c:167
 #, fuzzy
@@ -31982,9 +32029,9 @@ msgid "No files in this group!"
 msgstr "समूह."
 
 #: ../imagery/i.ortho.photo/photo.rectify/main.c:97
-#, c-format
+#, fuzzy, c-format
 msgid "No target elevation model selected for group <%s>"
-msgstr ""
+msgstr "का"
 
 #: ../imagery/i.ortho.photo/photo.rectify/main.c:109
 #, fuzzy, c-format
@@ -32042,23 +32089,23 @@ msgid "Please select the file(s) you wish to rectify by naming an output file"
 msgstr ""
 
 #: ../imagery/i.ortho.photo/photo.rectify/rectify.c:245
-#, c-format
+#, fuzzy, c-format
 msgid "%s@%s: projection doesn't match current settings"
-msgstr ""
+msgstr "नहीं"
 
 #: ../imagery/i.ortho.photo/photo.rectify/rectify.c:251
-#, c-format
+#, fuzzy, c-format
 msgid "%s@%s: zone doesn't match current settings"
-msgstr ""
+msgstr "नहीं"
 
 #: ../imagery/i.ortho.photo/photo.elev/main.c:64
 msgid "Interactively select or modify the target elevation model."
 msgstr ""
 
 #: ../imagery/i.ortho.photo/photo.elev/main.c:91
-#, c-format
+#, fuzzy, c-format
 msgid "Target information for group [%s] missing\n"
-msgstr ""
+msgstr "सीमा के लिए नहीं"
 
 #: ../imagery/i.ortho.photo/photo.elev/main.c:98
 #, fuzzy, c-format
@@ -32114,8 +32161,9 @@ msgid "Name of camera reference file to use"
 msgstr "का"
 
 #: ../imagery/i.ortho.photo/photo.camera/main.c:83
+#, fuzzy
 msgid "Enter a camera reference file to be used with this imagery group"
-msgstr ""
+msgstr "का"
 
 #: ../imagery/i.ortho.photo/photo.camera/main.c:100
 #, fuzzy, c-format
@@ -32221,8 +32269,9 @@ msgid "fullname=%s\n"
 msgstr "n"
 
 #: ../imagery/i.gensig/main.c:39
+#, fuzzy
 msgid "imagery, classification, supervised, MLC"
-msgstr ""
+msgstr "के लिए"
 
 #: ../imagery/i.gensig/main.c:41
 #, fuzzy
@@ -32324,7 +32373,7 @@ msgstr "संख्या का पिक्सेल्स a"
 #: ../imagery/i.cluster/main.c:159
 #, fuzzy
 msgid "Name for output file containing final report"
-msgstr "का रखे हुए"
+msgstr "का का त्रुटि माट्रिक्स काप्पा"
 
 #: ../imagery/i.cluster/main.c:182
 #, fuzzy, c-format
@@ -32354,12 +32403,12 @@ msgstr "n का"
 #: ../imagery/i.cluster/main.c:223
 #, fuzzy, c-format
 msgid "Illegal value of min_size (%s)"
-msgstr "n का आकार "
+msgstr "के लिए"
 
 #: ../imagery/i.cluster/main.c:234
 #, fuzzy, c-format
 msgid "Unable to create report file <%s>"
-msgstr "i n"
+msgstr "बनाया जा रहा है."
 
 #: ../imagery/i.cluster/main.c:242
 #, fuzzy, c-format
@@ -32624,7 +32673,7 @@ msgstr "पर"
 #: ../imagery/i.cluster/open_files.c:64
 #, fuzzy, c-format
 msgid "Unable to open seed signature file <%s>"
-msgstr "बनाया जा रहा है."
+msgstr "के लिए"
 
 #: ../imagery/i.cluster/open_files.c:74 ../imagery/i.maxlik/open.c:58
 #, fuzzy, c-format
@@ -33073,6 +33122,30 @@ msgid "Can't mark another point.  Only %d points allowed.  Sorry."
 msgstr "बिन्दु खेद है."
 
 #, fuzzy
+msgid "installation"
+msgstr "है a"
+
+#, fuzzy
+msgid "GDAL datatype: %s, range: %f - %f"
+msgstr "नहीं"
+
+#, fuzzy
+msgid "Pass %d:"
+msgstr "n"
+
+#, fuzzy
+msgid "The '-q' flag is superseded and will be removed "
+msgstr "i n"
+
+#, fuzzy
+msgid "Unable to create table <%s_edge_Interpolation>"
+msgstr "के लिए."
+
+#, fuzzy
+msgid "Rescale output raster map [0,255]"
+msgstr "का"
+
+#, fuzzy
 #~ msgid "Output type"
 #~ msgstr "नहीं"
 
@@ -33144,10 +33217,6 @@ msgstr "बिन्दु खेद है."
 #~ msgstr "प"
 
 #, fuzzy
-#~ msgid "installation"
-#~ msgstr "है a"
-
-#, fuzzy
 #~ msgid "Name of vector input map containing stream(s)"
 #~ msgstr "का"
 
@@ -33166,10 +33235,6 @@ msgstr "बिन्दु खेद है."
 #, fuzzy
 #~ msgid "Name for output raster map with lake"
 #~ msgstr "का"
-
-#, fuzzy
-#~ msgid "GDAL datatype: %s, range: %f - %f"
-#~ msgstr "नहीं"
 
 #, fuzzy
 #~ msgid "Name of the elevation raster map [m]"
@@ -33276,27 +33341,11 @@ msgstr "बिन्दु खेद है."
 #~ msgstr "का"
 
 #, fuzzy
-#~ msgid "Pass %d:"
-#~ msgstr "n"
-
-#, fuzzy
 #~ msgid "<Auxiliar_edge_table> created in database."
 #~ msgstr "सभी के लिए a."
 
 #, fuzzy
 #~ msgid "Unable to open table <%s_edge_Interpolation>"
-#~ msgstr "के लिए."
-
-#, fuzzy
-#~ msgid "The '-q' flag is superseded and will be removed "
-#~ msgstr "i n"
-
-#, fuzzy
-#~ msgid "Unable to create table <%s_edge_Interpolation>"
-#~ msgstr "के लिए."
-
-#, fuzzy
-#~ msgid "Rescale output raster map [0,255]"
 #~ msgstr "का"
 
 #, fuzzy
@@ -37165,3 +37214,792 @@ msgstr "बिन्दु खेद है."
 #, fuzzy
 #~ msgid "Print all, inclusive range"
 #~ msgstr "छापें सभी"
+
+#, fuzzy
+#~ msgid "Converting %s..."
+#~ msgstr "n"
+
+#, fuzzy
+#~ msgid "Name of raster map with seed (at least 1 cell > 0)"
+#~ msgstr "का"
+
+#, fuzzy
+#~ msgid "Name of the water depth raster map [m]"
+#~ msgstr "का"
+
+#, fuzzy
+#~ msgid "Name of the x-derivatives raster map [m/m]"
+#~ msgstr "का"
+
+#, fuzzy
+#~ msgid "Name of the y-derivatives raster map [m/m]"
+#~ msgstr "का"
+
+#, fuzzy
+#~ msgid "Name of the detachment capacity coefficient raster map [s/m]"
+#~ msgstr "का"
+
+#, fuzzy
+#~ msgid "Name of the transport capacity coefficient raster map [s]"
+#~ msgstr "का"
+
+#, fuzzy
+#~ msgid "Name of the critical shear stress raster map [Pa]"
+#~ msgstr "का"
+
+#, fuzzy
+#~ msgid "Name of the Mannings n raster map"
+#~ msgstr "का"
+
+#, fuzzy
+#~ msgid "Name of the Mannings n value"
+#~ msgstr "का"
+
+#, fuzzy
+#~ msgid "Output transport capacity raster map [kg/ms]"
+#~ msgstr "ढाल"
+
+#, fuzzy
+#~ msgid "Output transp.limited erosion-deposition raster map [kg/m2s]"
+#~ msgstr "फ़ाइलनाम "
+
+#, fuzzy
+#~ msgid "Output sediment concentration raster map [particle/m3]"
+#~ msgstr "ढाल"
+
+#, fuzzy
+#~ msgid "Output sediment flux raster map [kg/ms]"
+#~ msgstr "ढाल"
+
+#, fuzzy
+#~ msgid "Output erosion-deposition raster map [kg/m2s]"
+#~ msgstr "फ़ाइलनाम "
+
+#, fuzzy
+#~ msgid "Name of the rainfall excess rate (rain-infilt) raster map [mm/hr]"
+#~ msgstr "का"
+
+#, fuzzy
+#~ msgid "Name of the runoff infiltration rate raster map [mm/hr]"
+#~ msgstr "का"
+
+#, fuzzy
+#~ msgid "Name of the flow controls raster map (permeability ratio 0-1)"
+#~ msgstr "का"
+
+#, fuzzy
+#~ msgid "Output water discharge raster map [m3/s]"
+#~ msgstr "ढाल"
+
+#, fuzzy
+#~ msgid "Output simulation error raster map [m]"
+#~ msgstr "ढाल"
+
+#, fuzzy
+#~ msgid "Watershed basin analysis program."
+#~ msgstr "प्रोग्राम."
+
+#, fuzzy
+#~ msgid "Input map: amount of overland flow per cell"
+#~ msgstr "का"
+
+#, fuzzy
+#~ msgid "Input map: terrain blocking overland surface flow, for USLE"
+#~ msgstr "के लिए"
+
+#, fuzzy
+#~ msgid "Output map: number of cells that drain through each cell"
+#~ msgstr "संख्या का"
+
+#, fuzzy
+#~ msgid "Output map: unique label for each watershed basin"
+#~ msgstr "के लिए"
+
+#, fuzzy
+#~ msgid "Output map: each half-basin is given a unique value"
+#~ msgstr "है a"
+
+#, fuzzy
+#~ msgid "Output map: useful for visual display of results"
+#~ msgstr "के लिए का"
+
+#, fuzzy
+#~ msgid "Output map: slope length and steepness (LS) factor for USLE"
+#~ msgstr "ढाल के लिए"
+
+#, fuzzy
+#~ msgid "Output map: slope steepness (S) factor for USLE"
+#~ msgstr "ढाल के लिए"
+
+#, fuzzy
+#~ msgid "Input value: minimum size of exterior watershed basin"
+#~ msgstr "आकार  का"
+
+#, fuzzy
+#~ msgid "Input value: maximum length of surface flow, for USLE"
+#~ msgstr "का के लिए"
+
+#, fuzzy
+#~ msgid ""
+#~ "Filters and generates a depressionless elevation map and a flow direction "
+#~ "map from a given elevation layer."
+#~ msgstr "a a a"
+
+#, fuzzy
+#~ msgid "Output raster map of problem areas"
+#~ msgstr "का"
+
+#, fuzzy
+#~ msgid "Cannot make stat of %s configuration file"
+#~ msgstr "फ़ाइल"
+
+#, fuzzy
+#~ msgid "Range to be exported: %f - %f"
+#~ msgstr "फ़ाइल"
+
+#, fuzzy
+#~ msgid "(i)   Basin map created by r.water.outlet (MASK)"
+#~ msgstr "i"
+
+#, fuzzy
+#~ msgid "(o)   Direction map for depressionless elevation map"
+#~ msgstr "i आयताकार"
+
+#, fuzzy
+#~ msgid "(i)   Number of topographic index classes"
+#~ msgstr "i का"
+
+#, fuzzy
+#~ msgid "(o/i) Topographic index statistics file"
+#~ msgstr "i"
+
+#, fuzzy
+#~ msgid "(i)   TOPMODEL Parameters file"
+#~ msgstr "i"
+
+#, fuzzy
+#~ msgid "(i)   Rainfall and potential evapotranspiration data file"
+#~ msgstr "i"
+
+#, fuzzy
+#~ msgid ""
+#~ "Calculates cast shadow areas from sun position and DEM. Either A: exact "
+#~ "sun position is specified, or B: date/time to calculate the sun position "
+#~ "by r.sunmask itself."
+#~ msgstr "है."
+
+#, fuzzy
+#~ msgid "Name of elevation raster map"
+#~ msgstr "का"
+
+#, fuzzy
+#~ msgid "A: altitude of the sun above horizon, degrees"
+#~ msgstr "का कोण"
+
+#, fuzzy
+#~ msgid "A: azimuth of the sun from the north, degrees"
+#~ msgstr "का उत्तर कोण"
+
+#, fuzzy
+#~ msgid ""
+#~ "B: timezone (east positive, offset from GMT, also use to adjust daylight "
+#~ "savings)"
+#~ msgstr "पूर्व जीएमटी"
+
+#, fuzzy
+#~ msgid "Percent done:"
+#~ msgstr "पूर्ण."
+
+#, fuzzy
+#~ msgid ""
+#~ "Creates a new map layer whose category values are based upon a "
+#~ "reclassification of the categories in an existing raster map layer."
+#~ msgstr "a किसका का."
+
+#, fuzzy
+#~ msgid "Converts a raster map into a vector map layer."
+#~ msgstr "a a."
+
+#, fuzzy
+#~ msgid "The map E grid coordinates"
+#~ msgstr "का"
+
+#, fuzzy
+#~ msgid "Could not read east bufferzone size. Aborting."
+#~ msgstr "नहीं"
+
+#, fuzzy
+#~ msgid "Could not read west bufferzone size. Aborting."
+#~ msgstr "नहीं"
+
+#, fuzzy
+#~ msgid "Could not read south bufferzone size. Aborting."
+#~ msgstr "नहीं"
+
+#, fuzzy
+#~ msgid "Could not read north bufferzone size. Aborting."
+#~ msgstr "नहीं"
+
+#, fuzzy
+#~ msgid "Calculating map %01d of %01d (angle %lf, raster map <%s>)"
+#~ msgstr "डाटाटाइप."
+
+#, fuzzy
+#~ msgid "Output flowpath length raster map"
+#~ msgstr "ढाल"
+
+#, fuzzy
+#~ msgid "Output flowline density raster map"
+#~ msgstr "घनत्व"
+
+#, fuzzy
+#~ msgid "3-D lengths instead of 2-D"
+#~ msgstr "का"
+
+#, fuzzy
+#~ msgid "Creates topographic index [ln(a/tan(beta))] map from elevation map."
+#~ msgstr "a बीटा."
+
+#, fuzzy
+#~ msgid "Lat/Long location is not supported"
+#~ msgstr "है नहीं"
+
+#, fuzzy
+#~ msgid "Unable to read symbol, unable todisplay points"
+#~ msgstr "के लिए"
+
+#, fuzzy
+#~ msgid "Cannot allocate %d bytes of memory"
+#~ msgstr "के लिए"
+
+#, fuzzy
+#~ msgid "Feature type. Combination of types is not supported by all formats."
+#~ msgstr "का है नहीं."
+
+#, fuzzy
+#~ msgid ""
+#~ "%d faces found, but not requested to be exported. Verify 'type' parameter."
+#~ msgstr "नहीं."
+
+#, fuzzy
+#~ msgid "Exporting %i points/lines..."
+#~ msgstr "n"
+
+#, fuzzy
+#~ msgid "vector, query"
+#~ msgstr "चालू"
+
+#, fuzzy
+#~ msgid "Writing edges..."
+#~ msgstr "छापें"
+
+#, fuzzy
+#~ msgid ""
+#~ "Number of column used as y coordinate (first column is 1) for points mode"
+#~ msgstr "का है के लिए"
+
+#, fuzzy
+#~ msgid ""
+#~ "Number of column used as z coordinate (first column is 1) for points mode"
+#~ msgstr "का है के लिए"
+
+#, fuzzy
+#~ msgid ""
+#~ "Number of column used as category (first column is 1) for points mode"
+#~ msgstr "का है के लिए"
+
+#, fuzzy
+#~ msgid ""
+#~ "If 0, unique category is assigned to each row and written to new column "
+#~ "'cat'"
+#~ msgstr "का है के लिए है."
+
+#, fuzzy
+#~ msgid "Create a new empty vector map and exit. Nothing is read from input"
+#~ msgstr "a है."
+
+#, fuzzy
+#~ msgid "Name for output file (do not add extension)"
+#~ msgstr "का"
+
+#, fuzzy
+#~ msgid "Width and height of output image"
+#~ msgstr "का"
+
+#, fuzzy
+#~ msgid "Volume"
+#~ msgstr "नहीं"
+
+#, fuzzy
+#~ msgid "Name of file with sql statement"
+#~ msgstr "फ़ाइलनाम "
+
+#, fuzzy
+#~ msgid "Raster map to use as MASK"
+#~ msgstr "का"
+
+#, fuzzy
+#~ msgid "Vector map for which to edit attribute table"
+#~ msgstr "का के लिए संपादन (_E)"
+
+#, fuzzy
+#~ msgid "Layer where to add column"
+#~ msgstr "नहीं"
+
+#, fuzzy
+#~ msgid "Computing row %d of covariance matrix..."
+#~ msgstr "माट्रिक्स."
+
+#, fuzzy
+#~ msgid "The output cell map <%s.%d> has values outside the 0-255 range."
+#~ msgstr "n"
+
+#, fuzzy
+#~ msgid "raster, terrain analysis"
+#~ msgstr "वस्तु."
+
+#, fuzzy
+#~ msgid "display, legend"
+#~ msgstr "गामा."
+
+#, fuzzy
+#~ msgid ""
+#~ "Color for graduated lines or point/area outlines (grass named color or R:"
+#~ "G:B triplet). Set color scheme to single color."
+#~ msgstr "a R जी"
+
+#, fuzzy
+#~ msgid "Icon to remove"
+#~ msgstr "चालू"
+
+#, fuzzy
+#~ msgid "raster, imagery, fusion"
+#~ msgstr "का"
+
+#, fuzzy
+#~ msgid "raster input maps"
+#~ msgstr "का"
+
+#, fuzzy
+#~ msgid "Output field seperator"
+#~ msgstr "फील्ड"
+
+#, fuzzy
+#~ msgid ""
+#~ "mi(les),me(ters),k(ilometers),a(cres),h(ectares),c(ell_counts),p"
+#~ "(ercent_cover)"
+#~ msgstr "a h कवर"
+
+#, fuzzy
+#~ msgid "Cannot open database <%s> by driver <%s>"
+#~ msgstr "स्रोत"
+
+#, fuzzy
+#~ msgid "Can't make random color table for floating point map"
+#~ msgstr "है के लिए बिन्दु!"
+
+#, fuzzy
+#~ msgid "Can't make grey.eq color table for floating point map"
+#~ msgstr "है के लिए बिन्दु!"
+
+#, fuzzy
+#~ msgid "%s - unknown color request"
+#~ msgstr "n"
+
+#, fuzzy
+#~ msgid "Could not read range file"
+#~ msgstr "नहीं"
+
+#, fuzzy
+#~ msgid "Reading data: "
+#~ msgstr "n"
+
+#, fuzzy
+#~ msgid "Integer data range of %s is empty"
+#~ msgstr "है n"
+
+#, fuzzy
+#~ msgid "Run verbosly"
+#~ msgstr "सभी"
+
+#, fuzzy
+#~ msgid "%d boundaries converted to lines"
+#~ msgstr "n"
+
+#, fuzzy
+#~ msgid "ID values"
+#~ msgstr "नहीं"
+
+#, fuzzy
+#~ msgid "CrossCorrelation: %d records selected from table"
+#~ msgstr "सभी"
+
+#, fuzzy
+#~ msgid "CrossCorrelation: Mean = %.5lf\n"
+#~ msgstr "फील्ड"
+
+#, fuzzy
+#~ msgid "CrossCorrelation: lambda_i = %.3f\n"
+#~ msgstr "फील्ड"
+
+#, fuzzy
+#~ msgid "From type"
+#~ msgstr "अज्ञात क़िस्म"
+
+#, fuzzy
+#~ msgid "To layer"
+#~ msgstr "फ़ाइलनाम "
+
+#, fuzzy
+#~ msgid "The column must be type integer or string"
+#~ msgstr "ज़ेड"
+
+#, fuzzy
+#~ msgid "Cannot open database %s by driver %s"
+#~ msgstr "स्रोत"
+
+#, fuzzy
+#~ msgid "Cannot open dig_cats file."
+#~ msgstr "के लिए"
+
+#, fuzzy
+#~ msgid "Cannot open database %s"
+#~ msgstr "स्रोत"
+
+#, fuzzy
+#~ msgid "Cannot insert into table: %s"
+#~ msgstr "i n"
+
+#, fuzzy
+#~ msgid "Removed vertices: %5d"
+#~ msgstr "के लिए n"
+
+#, fuzzy
+#~ msgid ""
+#~ "Node[%d]: %d  \n"
+#~ "Number of lines: %d  \n"
+#~ "Coordinates: %.6f, %.6f, %.6f\n"
+#~ msgstr "का n"
+
+#, fuzzy
+#~ msgid ""
+#~ "Line: %5d  \n"
+#~ "Angle: %.8f\n"
+#~ msgstr "n"
+
+#, fuzzy
+#~ msgid ""
+#~ "Area: %d  \n"
+#~ "Number of isles: %d\n"
+#~ msgstr "का n"
+
+#, fuzzy
+#~ msgid "Type of elements"
+#~ msgstr "का"
+
+#, fuzzy
+#~ msgid "Processing ainput lines ..."
+#~ msgstr "का"
+
+#, fuzzy
+#~ msgid "Processing ainput areas ..."
+#~ msgstr "n"
+
+#, fuzzy
+#~ msgid ""
+#~ "Elevation raster map <%s> does not cover the entire area of the input "
+#~ "vector map <%s>. "
+#~ msgstr "नहीं"
+
+#, fuzzy
+#~ msgid "Reading the raster maps..."
+#~ msgstr "n"
+
+#, fuzzy
+#~ msgid "Rotating data arrays..."
+#~ msgstr "नक़ल"
+
+#, fuzzy
+#~ msgid "Unable to open output file."
+#~ msgstr "का"
+
+#, fuzzy
+#~ msgid "Transform successful."
+#~ msgstr "n"
+
+#, fuzzy
+#~ msgid "Output hue raster map"
+#~ msgstr "ढाल"
+
+#, fuzzy
+#~ msgid "Class transition statistics."
+#~ msgstr "वस्तु."
+
+#, fuzzy
+#~ msgid "Subgroup [%s] in group [%s] contains no files."
+#~ msgstr "समूह."
+
+#, fuzzy
+#~ msgid "Writing [%s] ..."
+#~ msgstr "n"
+
+#, fuzzy
+#~ msgid "Calculating eigenvalues and eigenvectors..."
+#~ msgstr "n"
+
+#, fuzzy
+#~ msgid "Transposing eigen matrix..."
+#~ msgstr "n"
+
+#, fuzzy
+#~ msgid "Calculating class mean ..."
+#~ msgstr "n"
+
+#, fuzzy
+#~ msgid "Reading the raster map..."
+#~ msgstr "n"
+
+#, fuzzy
+#~ msgid ""
+#~ "\n"
+#~ " group <%s> not found"
+#~ msgstr ""
+#~ "\n"
+#~ " समूह नहीं"
+
+#, fuzzy
+#~ msgid "Subgroup [%s] doesn't have any files"
+#~ msgstr "समूह."
+
+#, fuzzy
+#~ msgid "The subgroup must have at least 2 files to run %s"
+#~ msgstr "पर."
+
+#, fuzzy
+#~ msgid "Unable to proceed"
+#~ msgstr "के लिए"
+
+#, fuzzy
+#~ msgid "** Can't open seed singature file <%s> **"
+#~ msgstr "बनाया जा रहा है."
+
+#, fuzzy
+#~ msgid "** Can't read signature file <%s> **"
+#~ msgstr "i n"
+
+#, fuzzy
+#~ msgid "File containing initial signatures"
+#~ msgstr "फ़ाइल"
+
+#, fuzzy
+#~ msgid "Output file to contain final report"
+#~ msgstr "का रखे हुए"
+
+#, fuzzy
+#~ msgid ""
+#~ "\n"
+#~ "<%s> -- illegal value of min_size"
+#~ msgstr "n का आकार "
+
+#, fuzzy
+#~ msgid "Can't creat reportfile: "
+#~ msgstr "i n"
+
+#, fuzzy
+#~ msgid "Can't read signature file [%s]."
+#~ msgstr "i n"
+
+#, fuzzy
+#~ msgid "Unable to create reject layer [%s]."
+#~ msgstr "फ़ाइल"
+
+#, fuzzy
+#~ msgid "Raster map to hold classification results"
+#~ msgstr "का"
+
+#, fuzzy
+#~ msgid "Error writing result map file!"
+#~ msgstr "त्रुटि n"
+
+#, fuzzy
+#~ msgid "imagery group"
+#~ msgstr "समूह"
+
+#, fuzzy
+#~ msgid "Name of input raster map(s)"
+#~ msgstr "का"
+
+#, fuzzy
+#~ msgid "Adding files to group [%s]"
+#~ msgstr "n"
+
+#, fuzzy
+#~ msgid "Unable to connect line id %d to line %d"
+#~ msgstr "सभी"
+
+#, fuzzy
+#~ msgid "region <%s> not found"
+#~ msgstr "नहीं"
+
+#, fuzzy
+#~ msgid "elevation file [%s] not found"
+#~ msgstr "नहीं"
+
+#, fuzzy
+#~ msgid "Training map [%s] not found."
+#~ msgstr "नहीं"
+
+#, fuzzy
+#~ msgid "Parameter <%s> not set"
+#~ msgstr "का."
+
+#, fuzzy
+#~ msgid "Input map containing lines"
+#~ msgstr "का"
+
+#, fuzzy
+#~ msgid "Cannot get layer information for vector map"
+#~ msgstr "के लिए"
+
+#, fuzzy
+#~ msgid "Database record for cat %d not found"
+#~ msgstr "नहीं के लिए"
+
+#, fuzzy
+#~ msgid "Cannot open file for <%s>"
+#~ msgstr "फ़ाइल"
+
+#, fuzzy
+#~ msgid "Read coordinates from standard input"
+#~ msgstr "का"
+
+#, fuzzy
+#~ msgid "[%s] is an illegal name"
+#~ msgstr "है"
+
+#, fuzzy
+#~ msgid "Error reading map %s"
+#~ msgstr "त्रुटि."
+
+#, fuzzy
+#~ msgid "Name of the new raster map"
+#~ msgstr "का"
+
+#, fuzzy
+#~ msgid "Input map [%s] in location [%s] in mapset [%s] not found."
+#~ msgstr "सदिश नहीं"
+
+#, fuzzy
+#~ msgid "%s in %s -can't open raster map"
+#~ msgstr ""
+#~ "#-#-#-#-#  grassmods_hi.po (grassmods_hi)  #-#-#-#-#\n"
+#~ "त्रुटि\n"
+#~ "#-#-#-#-#  grassmods_hi.po (grassmods_hi)  #-#-#-#-#\n"
+
+#, fuzzy
+#~ msgid "Could not find input map <%s> in current mapset."
+#~ msgstr "नहीं"
+
+#, fuzzy
+#~ msgid "Could not find input vector map %s"
+#~ msgstr "नहीं"
+
+#, fuzzy
+#~ msgid "Name of output raster map"
+#~ msgstr "का"
+
+#, fuzzy
+#~ msgid "name for new vector map"
+#~ msgstr "का"
+
+#, fuzzy
+#~ msgid "<%s> unable to open raster map"
+#~ msgstr "के लिए"
+
+#, fuzzy
+#~ msgid "File name of classification result"
+#~ msgstr "का"
+
+#, fuzzy
+#~ msgid "Topographic index ln(a/tanB) map"
+#~ msgstr "a"
+
+#, fuzzy
+#~ msgid ""
+#~ "Number of column used as z coordinate (first column is 1) for points "
+#~ "mode. If 0, z coordinate is not used."
+#~ msgstr "का ज़ेड है के लिए ज़ेड है नहीं."
+
+#, fuzzy
+#~ msgid "Unable to write color table to raster [%s]"
+#~ msgstr "के लिए"
+
+#, fuzzy
+#~ msgid "| Break                           |  "
+#~ msgstr "n n"
+
+#, fuzzy
+#~ msgid "Maximum number of iteration"
+#~ msgstr "संख्या का"
+
+#, fuzzy
+#~ msgid "Print the current region (shell script style)"
+#~ msgstr "छापें"
+
+#, fuzzy
+#~ msgid "Name of the column with tree height"
+#~ msgstr "का"
+
+#, fuzzy
+#~ msgid "Name of the column with tree species"
+#~ msgstr "का"
+
+#, fuzzy
+#~ msgid "Right: "
+#~ msgstr "n"
+
+#, fuzzy
+#~ msgid "top raster map not found\n"
+#~ msgstr "नहीं"
+
+#, fuzzy
+#~ msgid "Compute upslope flowlines"
+#~ msgstr "गणना करें"
+
+#, fuzzy
+#~ msgid "Use category data instead of attribute"
+#~ msgstr "का"
+
+#, fuzzy
+#~ msgid ""
+#~ "Allows the user to interactively change the color table of a raster map "
+#~ "layer displayed on the graphics monitor."
+#~ msgstr "चालू a."
+
+#, fuzzy
+#~ msgid "Fill color -- a GRASS named color, an R:G:B triplet, or \"none\""
+#~ msgstr "a R जी"
+
+#, fuzzy
+#~ msgid "Color desired for drawing map"
+#~ msgstr "के लिए पाठ"
+
+#, fuzzy
+#~ msgid "Import non-georeferenced PNG format image."
+#~ msgstr "आयात छवि."
+
+#, fuzzy
+#~ msgid "Name of the output sites map"
+#~ msgstr "का"
+
+#, fuzzy
+#~ msgid "spheroid geographic coordinates to base on. "
+#~ msgstr "ज़ेड"
+
+#, fuzzy
+#~ msgid "Name of spheroid to use"
+#~ msgstr "का"
+
+#, fuzzy
+#~ msgid "name of painter to select"
+#~ msgstr "का"

@@ -2493,59 +2493,59 @@ msgid "Topology was built"
 msgstr ""
 
 #: ../lib/vector/Vlib/build.c:153
-#, c-format
+#, fuzzy, c-format
 msgid "Number of nodes: %d"
-msgstr ""
+msgstr "Datum %s 테이블파일을 열 수 없습니다"
 
 #: ../lib/vector/Vlib/build.c:154
-#, c-format
+#, fuzzy, c-format
 msgid "Number of primitives: %d"
-msgstr ""
+msgstr "Datum %s 테이블파일을 열 수 없습니다"
 
 #: ../lib/vector/Vlib/build.c:155
-#, c-format
+#, fuzzy, c-format
 msgid "Number of points: %d"
-msgstr ""
+msgstr "Datum %s 테이블파일을 열 수 없습니다"
 
 #: ../lib/vector/Vlib/build.c:156
-#, c-format
+#, fuzzy, c-format
 msgid "Number of lines: %d"
-msgstr ""
+msgstr "Datum %s 테이블파일을 열 수 없습니다"
 
 #: ../lib/vector/Vlib/build.c:157
-#, c-format
+#, fuzzy, c-format
 msgid "Number of boundaries: %d"
-msgstr ""
+msgstr "Datum %s 테이블파일을 열 수 없습니다"
 
 #: ../lib/vector/Vlib/build.c:158
-#, c-format
+#, fuzzy, c-format
 msgid "Number of centroids: %d"
-msgstr ""
+msgstr "Datum %s 테이블파일을 열 수 없습니다"
 
 #: ../lib/vector/Vlib/build.c:161
-#, c-format
+#, fuzzy, c-format
 msgid "Number of faces: %d"
-msgstr ""
+msgstr "Datum %s 테이블파일을 열 수 없습니다"
 
 #: ../lib/vector/Vlib/build.c:164
-#, c-format
+#, fuzzy, c-format
 msgid "Number of kernels: %d"
-msgstr ""
+msgstr "Datum %s 테이블파일을 열 수 없습니다"
 
 #: ../lib/vector/Vlib/build.c:205
-#, c-format
+#, fuzzy, c-format
 msgid "Number of areas: %d"
-msgstr ""
+msgstr "Datum %s 테이블파일을 열 수 없습니다"
 
 #: ../lib/vector/Vlib/build.c:206
-#, c-format
+#, fuzzy, c-format
 msgid "Number of isles: %d"
-msgstr ""
+msgstr "Datum %s 테이블파일을 열 수 없습니다"
 
 #: ../lib/vector/Vlib/build.c:209
-#, c-format
+#, fuzzy, c-format
 msgid "Number of incorrect boundaries: %d"
-msgstr ""
+msgstr "Datum %s 테이블파일을 열 수 없습니다"
 
 #: ../lib/vector/Vlib/build.c:213
 #, fuzzy, c-format
@@ -2558,17 +2558,19 @@ msgid "Number of duplicate centroids: %d"
 msgstr "Datum %s 테이블파일을 열 수 없습니다"
 
 #: ../lib/vector/Vlib/build.c:221
-#, c-format
+#, fuzzy, c-format
 msgid "Number of areas without centroid: %d"
-msgstr ""
+msgstr "Datum %s 테이블파일을 열 수 없습니다"
 
 #: ../lib/vector/Vlib/build.c:226
+#, fuzzy
 msgid "Number of areas: -"
-msgstr ""
+msgstr "Datum %s 테이블파일을 열 수 없습니다"
 
 #: ../lib/vector/Vlib/build.c:227
+#, fuzzy
 msgid "Number of isles: -"
-msgstr ""
+msgstr "Datum %s 테이블파일을 열 수 없습니다"
 
 #: ../lib/vector/Vlib/build.c:256
 #, fuzzy, c-format
@@ -3079,11 +3081,11 @@ msgstr "Datum %s 테이블파일을 열 수 없습니다"
 
 #: ../lib/vector/Vlib/open.c:211 ../lib/vector/Vlib/open.c:279
 #: ../lib/vector/Vlib/open.c:299
-#, c-format
+#, fuzzy, c-format
 msgid ""
 "Unable to open vector map <%s> on level %d. Try to rebuild vector topology "
 "by v.build."
-msgstr ""
+msgstr "Datum %s 테이블파일을 열 수 없습니다"
 
 #: ../lib/vector/Vlib/open.c:214
 #, fuzzy
@@ -4330,8 +4332,9 @@ msgid ""
 msgstr ""
 
 #: ../lib/sites/sites.c:397
+#, fuzzy
 msgid "Cannot fetch row"
-msgstr ""
+msgstr "임시파일을 열 수 없습니다"
 
 #: ../lib/sites/sites.c:579
 msgid "G_oldsite_new_struct: invalid # dims or fields"
@@ -4824,4 +4827,34 @@ msgstr ""
 
 #, fuzzy
 #~ msgid "Not able to open cellfile for [%s]"
+#~ msgstr "Datum %s 테이블파일을 열 수 없습니다"
+
+#, fuzzy
+#~ msgid "Attempt to delete dead line"
+#~ msgstr "임시파일을 열 수 없습니다"
+
+#, fuzzy
+#~ msgid "Unable to rewrite line %d"
+#~ msgstr "임시파일을 열 수 없습니다"
+
+#, fuzzy
+#~ msgid ""
+#~ "Unable to delete line %d, vector map <%s> is not opened on topo level 2"
+#~ msgstr "Datum %s 테이블파일을 열 수 없습니다"
+
+#, fuzzy
+#~ msgid ""
+#~ "Unable to delete line %d, vector map <%s> is not opened in 'write' mode"
+#~ msgstr "Datum %s 테이블파일을 열 수 없습니다"
+
+#, fuzzy
+#~ msgid "Unable to delete line %d from vector map <%s>"
+#~ msgstr "Datum %s 테이블파일을 열 수 없습니다"
+
+#, fuzzy
+#~ msgid "Cannot open database %s"
+#~ msgstr "임시파일을 열 수 없습니다"
+
+#, fuzzy
+#~ msgid "Cannot describe table <%s>"
 #~ msgstr "Datum %s 테이블파일을 열 수 없습니다"

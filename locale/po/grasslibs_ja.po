@@ -4962,103 +4962,103 @@ msgstr "グループ <%s> のサブグループ <%s> は空です\n"
 msgid "subgroup <%s> of group <%s> references the following raster maps\n"
 msgstr "グループ <%s> のサブグループ <%s> は次のラスターマップを参照します\n"
 
+#, fuzzy
+msgid "Unable to delete layer/category %d/%d line %d"
+msgstr "����� ���� ���\n"
+
+#, fuzzy
+msgid "Cannot open database %s"
+msgstr "���"
+
+#, fuzzy
+msgid "Cannot read topo for line [%d]"
+msgstr "���"
+
+#, fuzzy
+msgid "Output name '%s' is not valid rast name."
+msgstr "���."
+
+#, fuzzy
+msgid "Cannot get field info"
+msgstr "���"
+
+#, fuzzy
+msgid "Cannot open database"
+msgstr "���"
+
+#, fuzzy
+msgid "Output name '%s' is not valid vector name."
+msgstr "���."
+
+#, fuzzy
+msgid "Cannot open existing vector map <%s>"
+msgstr "���"
+
+#, fuzzy
+msgid "Cannot delete existing vector <%s>"
+msgstr "���"
+
+#, fuzzy
+msgid "Cannot open new vector %s"
+msgstr "���"
+
+#, fuzzy
+msgid "Cannot open history file for vector '%s'"
+msgstr "���"
+
+#, fuzzy
+msgid "Can't open directory %s"
+msgstr "���"
+
+#, fuzzy
+msgid "No such graphics monitor as <%s>.\n"
+msgstr "����������<%s> � �����.\n"
+
+#, fuzzy
+msgid "Please run \"d.mon\" to select a valid graphics monitor.\n"
+msgstr "�����\"d.mon\" ����� �����������\n"
+
+#, fuzzy
+msgid "Error - Monitor <%s> is in use.\n"
+msgstr "��� - ����<%s> ���\n"
+
+#, fuzzy
+msgid "Error - Could not complete locking process for monitor <%s>.\n"
+msgstr "��� - � �� ����������(lock) ������<%s>.\n"
+
+#, fuzzy
+msgid "Error - Can't set up pipe to graphics device.\n"
+msgstr "��� - ����� (pipe) ������� �����.\n"
+
+#, fuzzy
+msgid "Error - Graphics monitor <%s> not running!\n"
+msgstr "��� - ����������<%s> � ����\n"
+
+#, fuzzy
+msgid "Please start graphics monitor <%s>.\n"
+msgstr "���� ����������<%s>.\n"
+
+#, fuzzy
+msgid "Not connected...\n"
+msgstr "�������...\n"
+
+#, fuzzy
+msgid "Couldn't connect to monitor. Will try once more.\n"
+msgstr "����� ����� ���� ���� ����\n"
+
+#, fuzzy
+msgid "ERROR: GISBASE not set\n"
+msgstr "���: GISBASE � �����\n"
+
+#, fuzzy
+msgid "%s/%s' was found in more mapsets (also found in <%s>)"
+msgstr "%s/%s' was found in more mapsets (also found in <%s>) "
+
 #~ msgid "Invalid view position coordinates, using %f,%f"
 #~ msgstr "不正な視点位置座標,用法は %f,%f"
 
 #~ msgid "Unknown Location"
 #~ msgstr "不明なロケーション"
-
-#, fuzzy
-#~ msgid "Unable to delete layer/category %d/%d line %d"
-#~ msgstr "����� ���� ���\n"
-
-#, fuzzy
-#~ msgid "Cannot open database %s"
-#~ msgstr "���"
-
-#, fuzzy
-#~ msgid "Cannot read topo for line [%d]"
-#~ msgstr "���"
-
-#, fuzzy
-#~ msgid "Output name '%s' is not valid rast name."
-#~ msgstr "���."
-
-#, fuzzy
-#~ msgid "Cannot get field info"
-#~ msgstr "���"
-
-#, fuzzy
-#~ msgid "Cannot open database"
-#~ msgstr "���"
-
-#, fuzzy
-#~ msgid "Output name '%s' is not valid vector name."
-#~ msgstr "���."
-
-#, fuzzy
-#~ msgid "Cannot open existing vector map <%s>"
-#~ msgstr "���"
-
-#, fuzzy
-#~ msgid "Cannot delete existing vector <%s>"
-#~ msgstr "���"
-
-#, fuzzy
-#~ msgid "Cannot open new vector %s"
-#~ msgstr "���"
-
-#, fuzzy
-#~ msgid "Cannot open history file for vector '%s'"
-#~ msgstr "���"
-
-#, fuzzy
-#~ msgid "Can't open directory %s"
-#~ msgstr "���"
-
-#, fuzzy
-#~ msgid "No such graphics monitor as <%s>.\n"
-#~ msgstr "����������<%s> � �����.\n"
-
-#, fuzzy
-#~ msgid "Please run \"d.mon\" to select a valid graphics monitor.\n"
-#~ msgstr "�����\"d.mon\" ����� �����������\n"
-
-#, fuzzy
-#~ msgid "Error - Monitor <%s> is in use.\n"
-#~ msgstr "��� - ����<%s> ���\n"
-
-#, fuzzy
-#~ msgid "Error - Could not complete locking process for monitor <%s>.\n"
-#~ msgstr "��� - � �� ����������(lock) ������<%s>.\n"
-
-#, fuzzy
-#~ msgid "Error - Can't set up pipe to graphics device.\n"
-#~ msgstr "��� - ����� (pipe) ������� �����.\n"
-
-#, fuzzy
-#~ msgid "Error - Graphics monitor <%s> not running!\n"
-#~ msgstr "��� - ����������<%s> � ����\n"
-
-#, fuzzy
-#~ msgid "Please start graphics monitor <%s>.\n"
-#~ msgstr "���� ����������<%s>.\n"
-
-#, fuzzy
-#~ msgid "Not connected...\n"
-#~ msgstr "�������...\n"
-
-#, fuzzy
-#~ msgid "Couldn't connect to monitor. Will try once more.\n"
-#~ msgstr "����� ����� ���� ���� ����\n"
-
-#, fuzzy
-#~ msgid "ERROR: GISBASE not set\n"
-#~ msgstr "���: GISBASE � �����\n"
-
-#, fuzzy
-#~ msgid "%s/%s' was found in more mapsets (also found in <%s>)"
-#~ msgstr "%s/%s' was found in more mapsets (also found in <%s>) "
 
 #~ msgid "Too many arguments"
 #~ msgstr "独立変数が多すぎます"

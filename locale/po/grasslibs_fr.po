@@ -5624,3 +5624,44 @@ msgstr ""
 #~ msgstr ""
 #~ "Impossible de supprimer la ligne, la couche '%s' n'est pas ouverte en "
 #~ "niveau 2"
+
+#~ msgid ""
+#~ "taking too long to find points for interpolation--please change the "
+#~ "region to area where your points are. Continuing calculations..."
+#~ msgstr ""
+#~ "la recherche de points pour l'interpolation prend trop de temps -- "
+#~ "veuillez changer la régionpour la zone où se trouvent vos points. Les "
+#~ "calculs se poursuivent..."
+
+#~ msgid "Reading lines from vector map ... "
+#~ msgstr "Lignes de lecture de la carte vectorielle..."
+
+#, fuzzy
+#~ msgid "Reading nodes from vector map ... "
+#~ msgstr "Lignes de lecture de la carte vectorielle..."
+
+#~ msgid "strip exists with insufficient data"
+#~ msgstr "la bande existe avec des données insuffisantes"
+
+#~ msgid "there are points outside specified 2D/3D region--ignored %d points"
+#~ msgstr ""
+#~ "il y a des points en-dehors de la région 2D/3D spécifiée -- %d points "
+#~ "ignorés"
+
+#~ msgid "ignoring %d points -- too dense"
+#~ msgstr "%d points ignorés -- trop dense"
+
+#~ msgid "some points outside of region -- will ignore..."
+#~ msgstr "certains points sont en dehors de la région -- ignorés..."
+
+#~ msgid "G_malloc: out of memory"
+#~ msgstr "G_malloc : dépassement de mémoire"
+
+#~ msgid "Cannot get layer info"
+#~ msgstr "Impossible de récupérer les infos de la couche"
+
+#~ msgid "Column type not supported"
+#~ msgstr "Le type de colonne n'est pas supporté"
+
+#~ msgid "Cannot delete line"
+#~ msgstr "Impossible de supprimer la ligne"

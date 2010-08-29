@@ -11,7 +11,7 @@ msgstr ""
 "POT-Creation-Date: 2010-08-29 12:20+0200\n"
 "PO-Revision-Date: 2008-07-31 23:36+0100\n"
 "Last-Translator: Pascal Obstétar <pascal.obstetar@wanadoo.fr>\n"
-"Language-Team: french <pascal.obstetar@wanadoo.fr>\n"
+"Language-Team: français <grass-translations@lists.osgeo.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -1526,7 +1526,6 @@ msgid "2nd order"
 msgstr "2ème ordre"
 
 #: ../gui/tcltk/gis.m/georect.tcl:1020
-#, fuzzy
 msgid "polynomial transformation  (rasters only). Requires 6+ GCPs."
 msgstr ""
 "Transformation polynomiale (couches matricielles seulement). Requiert au "

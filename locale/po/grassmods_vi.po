@@ -6265,7 +6265,6 @@ msgid "The type of groundwater flow"
 msgstr "Kiểu dòng chảy nước ngầm"
 
 #: ../raster/r.gwflow/main.c:121
-#, fuzzy
 msgid "The height of the river bed in [m]"
 msgstr "Độ cao của lòng sông tính bằng [m]"
 
@@ -6278,7 +6277,6 @@ msgid "The leakage coefficient of the river bed in [1/s]."
 msgstr "Hệ số rò rỉ của lòng sông tính bằng [1/s]."
 
 #: ../raster/r.gwflow/main.c:141
-#, fuzzy
 msgid "The height of the drainage bed in [m]"
 msgstr "Độ cao của lòng tháo nước tính bằng [m]"
 
@@ -9617,9 +9615,9 @@ msgstr ""
 #: ../raster/r.out.gdal/main.c:632 ../raster/r.out.gdal/main.c:644
 #: ../raster/r.out.gdal/main.c:657 ../raster/r.out.gdal/main.c:670
 #: ../raster/r.out.gdal/main.c:682 ../raster/r.out.gdal/main.c:695
-#, c-format
+#, fuzzy, c-format
 msgid "Range to be exported: %g - %g"
-msgstr ""
+msgstr "Tập tin raster cần nhập"
 
 #: ../raster/r.out.gdal/main.c:679 ../raster/r.out.gdal/export_band.c:562
 #, c-format
@@ -9662,9 +9660,9 @@ msgid ""
 msgstr ""
 
 #: ../raster/r.out.gdal/main.c:791
-#, fuzzy, c-format
+#, c-format
 msgid "GDAL datatype: %s, valid range: %g - %g"
-msgstr "Bản đồ raster <%s> được tạo ra."
+msgstr ""
 
 #: ../raster/r.out.gdal/export_band.c:67 ../raster/r.out.gdal/export_band.c:73
 #: ../raster/r.out.gdal/export_band.c:380
@@ -18742,10 +18740,11 @@ msgid "Interpolation: Creating table: It was impossible to create table <%s>."
 msgstr "Nội suy: Đang tạo bảng: Không thể nào tạo được bảng <%s>."
 
 #: ../vector/lidar/v.surf.bspline/main.c:392
+#, fuzzy
 msgid ""
 "Cannot allocate memory for auxiliar matrix.Consider changing region "
 "resolution"
-msgstr ""
+msgstr "Không thể cấp phát bộ nhớ cho chuỗi "
 
 #: ../vector/lidar/v.surf.bspline/main.c:590
 #, c-format
@@ -22176,7 +22175,7 @@ msgstr "Lỗi trong pj_do_transform"
 #: ../vector/v.hull/main.c:141
 #, fuzzy
 msgid "Simple planar hulls not implemented yet"
-msgstr "Lệnh '%s' không được thực hiện"
+msgstr "Không tìm thấy vùng <%s>"
 
 #: ../vector/v.hull/main.c:275
 msgid "Produces a convex hull for a given vector map."
@@ -22908,7 +22907,7 @@ msgstr "Đệm khoảng cách dọc theo trục lớn tính theo đơn vị bả
 #: ../vector/v.buffer2/main.c:197 ../vector/v.buffer2/main.c:206
 #, fuzzy
 msgid "Distance"
-msgstr "(Các) vùng khoảng cách"
+msgstr "Tắt"
 
 #: ../vector/v.buffer2/main.c:174
 msgid "Buffer distance along minor axis in map units"
@@ -28414,7 +28413,6 @@ msgstr ""
 "phép chiếu đích"
 
 #: ../locale/scriptstrings/r.tileset_to_translate.c:2
-#, fuzzy
 msgid "raster, tiling"
 msgstr "raster, xếp chồng"
 
@@ -28484,16 +28482,18 @@ msgstr "Kênh đỏ LANDSAT"
 #: ../locale/scriptstrings/i.fusion.brovey_to_translate.c:4
 #: ../locale/scriptstrings/i.fusion.brovey_to_translate.c:6
 #: ../locale/scriptstrings/i.fusion.brovey_to_translate.c:8
+#, fuzzy
 msgid "Sensor"
-msgstr ""
+msgstr "Kênh đỏ LANDSAT"
 
 #: ../locale/scriptstrings/i.fusion.brovey_to_translate.c:5
 msgid "QuickBird sensor"
 msgstr ""
 
 #: ../locale/scriptstrings/i.fusion.brovey_to_translate.c:7
+#, fuzzy
 msgid "SPOT sensor"
-msgstr ""
+msgstr "Kênh đỏ LANDSAT"
 
 #: ../locale/scriptstrings/i.fusion.brovey_to_translate.c:9
 #, fuzzy
@@ -29125,8 +29125,9 @@ msgid "Path to rules file"
 msgstr "Đường dẫn đến tập tin VTK tạo thành"
 
 #: ../locale/scriptstrings/v.colors_to_translate.c:15
+#, fuzzy
 msgid "Save placeholder raster map for use with d.legend"
-msgstr ""
+msgstr "Tên của bản đồ hướng raster cần trình bày"
 
 #: ../locale/scriptstrings/db.out.ogr_to_translate.c:1
 #, fuzzy
@@ -29453,8 +29454,9 @@ msgid "Number of classes for interval theme (integer)"
 msgstr "Số nhóm giá trị cho chủ đề (số nguyên)"
 
 #: ../locale/scriptstrings/d.vect.thematic_to_translate.c:28
+#, fuzzy
 msgid "Color scheme for graduated color mapping"
-msgstr ""
+msgstr "Màu cho chữ"
 
 #: ../locale/scriptstrings/d.vect.thematic_to_translate.c:29
 #, fuzzy
@@ -29476,8 +29478,9 @@ msgstr ""
 "hoặc kiểu bộ ba R:G:B). Thiết lập chế độ màu thành một màu duy nhất"
 
 #: ../locale/scriptstrings/d.vect.thematic_to_translate.c:34
+#, fuzzy
 msgid "Color for graduated lines or point/area outlines"
-msgstr ""
+msgstr "Màu cho chữ"
 
 #: ../locale/scriptstrings/d.vect.thematic_to_translate.c:35
 #, fuzzy
@@ -29533,8 +29536,12 @@ msgstr ""
 "tạo ra."
 
 #: ../locale/scriptstrings/d.vect.thematic_to_translate.c:50
+#, fuzzy
 msgid "If not set, no psmap instruction files will be created)"
 msgstr ""
+"Thư mục gốc (root) dùng cho tên của các tập tin hướng dẫn psmap ở trong thư "
+"mục hiện tại (nếu không thiết lập, các tập tin hướng dẫn psmap sẽ không được "
+"tạo ra."
 
 #: ../locale/scriptstrings/d.vect.thematic_to_translate.c:52
 msgid "Name of group file where thematic map commands will be saved"
@@ -30179,8 +30186,9 @@ msgid "Removes existing attribute table of a vector map."
 msgstr "loại bỏ bảng thuộc tính hiện tại của một bản đồ vector"
 
 #: ../locale/scriptstrings/v.db.droptable_to_translate.c:3
+#, fuzzy
 msgid "Force removal (required for actual deletion of table)"
-msgstr ""
+msgstr "Buộc loại bỏ (cần thiết để thực sự xóa bỏ các tập tin)"
 
 #: ../locale/scriptstrings/v.db.droptable_to_translate.c:4
 #, fuzzy
@@ -30421,13 +30429,14 @@ msgid "Table name of SQL DB table"
 msgstr ""
 
 #: ../locale/scriptstrings/db.in.ogr_to_translate.c:6
+#, fuzzy
 msgid "Name for auto-generated unique key column"
-msgstr ""
+msgstr "Tên của bản đồ raster cần dùng cho <%s>"
 
 #: ../locale/scriptstrings/d.rast.edit_to_translate.c:5
 #, fuzzy
 msgid "Name of aspect raster map"
-msgstr "Tên của bản đồ raster gốc"
+msgstr "Tên của bản đồ raster"
 
 #: ../locale/scriptstrings/d.rast.edit_to_translate.c:6
 #, fuzzy
@@ -32536,6 +32545,76 @@ msgid "Can't mark another point.  Only %d points allowed.  Sorry."
 msgstr ""
 "Không thể đánh dấu một điểm khác. Chỉ có %d điểm được chấp nhận. Xin lỗi."
 
+#, fuzzy
+msgid "installation"
+msgstr "xem"
+
+#, fuzzy
+msgid "GDAL datatype: %s, range: %f - %f"
+msgstr "Bản đồ raster <%s> được tạo ra."
+
+#, fuzzy
+msgid "Pass %d:"
+msgstr "Số lần chạy qua %d..."
+
+#, fuzzy
+msgid "The '-q' flag is superseded and will be removed "
+msgstr ""
+"Cờ '-q' không còn được dùng nữa và sẽ bị loại bỏ trong tương lai. Thay vào "
+"đó vui lòng dùng '--quiet'"
+
+#, fuzzy
+msgid "Unable to create table <%s_edge_Interpolation>"
+msgstr "Không thể mở CSDL <%s>"
+
+#, fuzzy
+msgid "Rescale output raster map [0,255]"
+msgstr "Tên của bản đồ raster đầu ra"
+
+#, fuzzy
+msgid ""
+"Input raster map contains cells with NULL-value (no-data). The value %g was "
+"used to represent no-data values in the input map. You can specify a nodata "
+"value with the %s option."
+msgstr ""
+"Bản đồ raster đầu vào chứa các ô với giá trị RỖNG (không có dữ liệu). Giá "
+"trị %g được dùng để biểu thị các giá trị không có dữ liệu trong bản đồ đầu "
+"vào. Bạn có thể chỉ định giá trị không dữ liệu bằng tham số %s."
+
+msgid "Traces a flow through an elevation model on a raster map layer."
+msgstr "Truy một dòng chảy thông qua mô hình độ cao trên một lớp bản đồ raster"
+
+msgid "The E and N coordinates of starting point(s)"
+msgstr "Tọa độ Đ và B của (các) điểm bắt đầu"
+
+msgid "Vector map(s) containing starting point(s)"
+msgstr "(Các) bản đồ raster chứa (các) điểm bắt đầu"
+
+msgid ""
+"Outputs a raster map layer showing the cumulative cost of moving between "
+"different geographic locations on an input raster map layer whose cell "
+"category values represent cost."
+msgstr ""
+"Xuất ra một lớp bản đồ raster biểu diễn chi phí tích lũy của việc di chuyển "
+"giữa các vị trí địa lý khác nhau trên một lớp bản đồ raster đầu vào có các "
+"giá trị phạm trù ô biểu thị chi phí."
+
+#, fuzzy
+msgid "%d points written to vector map"
+msgstr "%d điểm được ghi vào dữ liệu vector"
+
+msgid "Converts a binary GRASS vector map layer into a GRASS raster map layer."
+msgstr ""
+"Chuyển đổi lớp bản đồ vector nhị phân GRASS thành một lớp bản đồ raster GRASS"
+
+#, fuzzy
+msgid "Name of existing raster map"
+msgstr ""
+"#-#-#-#-#  grassmods_vi.po (grassmods_vi)  #-#-#-#-#\n"
+"Tên tập tin raster hiện có\n"
+"#-#-#-#-#  grassmods_vi.po (grassmods_vi)  #-#-#-#-#\n"
+"Tên của bản đồ raster hiện có"
+
 #~ msgid "New MAPSET name"
 #~ msgstr "Tên BỘ BẢN ĐỒ mới"
 
@@ -32640,10 +32719,6 @@ msgstr ""
 #~ msgid "DXY [%s] COMPLETE"
 #~ msgstr "DXY [%s] HOÀN TẤT"
 
-#, fuzzy
-#~ msgid "installation"
-#~ msgstr "xem"
-
 #~ msgid "Name of vector input map containing stream(s)"
 #~ msgstr "Tên của bản đồ đầu vào vec-tơ chứa các con suối"
 
@@ -32674,10 +32749,6 @@ msgstr ""
 #~ "Bản đồ raster đầu vào chứa các ô với giá trị RỖNG (không có dữ liệu). Giá "
 #~ "trị %d được dùng để biểu thị các giá trị không có dữ liệu trong bản đồ "
 #~ "đầu vào. Bạn có thể chỉ định giá trị không dữ liệu bằng tham số %s."
-
-#, fuzzy
-#~ msgid "GDAL datatype: %s, range: %f - %f"
-#~ msgstr "Bản đồ raster <%s> được tạo ra."
 
 #~ msgid "Name of the elevation raster map [m]"
 #~ msgstr "Tên của bản đồ raster độ cao [m]"
@@ -32830,10 +32901,6 @@ msgstr ""
 #~ msgstr ""
 #~ "Nội suy: Độ phân giải vùng quá cao: %d ô. Hãy cân nhắc việc thay đổi nó."
 
-#, fuzzy
-#~ msgid "Pass %d:"
-#~ msgstr "Số lần chạy qua %d..."
-
 #~ msgid "Creating auxiliar table for archiving overlapping zones"
 #~ msgstr "Đang tạo bảng phụ để lưu trữ các vùng chồng nhau"
 
@@ -32842,7 +32909,7 @@ msgstr ""
 
 #, fuzzy
 #~ msgid "Unable to open table <%s_edge_Interpolation>"
-#~ msgstr "Không thể mở CSDL <%s>"
+#~ msgstr "Không thể chép bảng <%s>"
 
 #~ msgid "M.Q. solution"
 #~ msgstr "Phép giải M.Q."
@@ -32850,61 +32917,18 @@ msgstr ""
 #~ msgid "3-d data in dxf file. Polyline_flag: %d"
 #~ msgstr "dữ liệu 3-d trong tập tin dxf. Polyline_flag: %d"
 
-#, fuzzy
-#~ msgid "The '-q' flag is superseded and will be removed "
-#~ msgstr ""
-#~ "Cờ '-q' không còn được dùng nữa và sẽ bị loại bỏ trong tương lai. Thay "
-#~ "vào đó vui lòng dùng '--quiet'"
-
-#, fuzzy
-#~ msgid "Unable to create table <%s_edge_Interpolation>"
-#~ msgstr "Không thể mở CSDL <%s>"
-
-#, fuzzy
-#~ msgid "Rescale output raster map [0,255]"
-#~ msgstr "Tên của bản đồ raster đầu ra"
-
-#, fuzzy
-#~ msgid ""
-#~ "Input raster map contains cells with NULL-value (no-data). The value %g "
-#~ "was used to represent no-data values in the input map. You can specify a "
-#~ "nodata value with the %s option."
-#~ msgstr ""
-#~ "Bản đồ raster đầu vào chứa các ô với giá trị RỖNG (không có dữ liệu). Giá "
-#~ "trị %g được dùng để biểu thị các giá trị không có dữ liệu trong bản đồ "
-#~ "đầu vào. Bạn có thể chỉ định giá trị không dữ liệu bằng tham số %s."
-
 #~ msgid "Use db.select for SELECT SQL statements"
 #~ msgstr "Dùng db.select cho các câu lệnh SELECT SQL"
 
 #~ msgid "Selects data from table."
 #~ msgstr "Chọn dữ liệu từ bảng."
 
-#~ msgid "Traces a flow through an elevation model on a raster map layer."
-#~ msgstr ""
-#~ "Truy một dòng chảy thông qua mô hình độ cao trên một lớp bản đồ raster"
-
 #~ msgid "Output drain raster map"
 #~ msgstr "Bản đồ hệ thống thoát nước raster đầu ra"
-
-#~ msgid "The E and N coordinates of starting point(s)"
-#~ msgstr "Tọa độ Đ và B của (các) điểm bắt đầu"
-
-#~ msgid "Vector map(s) containing starting point(s)"
-#~ msgstr "(Các) bản đồ raster chứa (các) điểm bắt đầu"
 
 #, fuzzy
 #~ msgid "Can't find %d,%d:%f"
 #~ msgstr "Không thể tìm thấy %s"
-
-#~ msgid ""
-#~ "Outputs a raster map layer showing the cumulative cost of moving between "
-#~ "different geographic locations on an input raster map layer whose cell "
-#~ "category values represent cost."
-#~ msgstr ""
-#~ "Xuất ra một lớp bản đồ raster biểu diễn chi phí tích lũy của việc di "
-#~ "chuyển giữa các vị trí địa lý khác nhau trên một lớp bản đồ raster đầu "
-#~ "vào có các giá trị phạm trù ô biểu thị chi phí."
 
 #~ msgid "Starting points raster map"
 #~ msgstr "Tập tin raster chứa các điểm bắt đầu"
@@ -32993,16 +33017,6 @@ msgstr ""
 
 #~ msgid "mi(les),f(eet),me(ters),k(ilometers),a(cres),h(ectares)"
 #~ msgstr "mi(les)_dặm,f(eet)_bộ_Anh,me(t),k(ilomet),a(cres)_mẫu_Anh,h(ecta)"
-
-#, fuzzy
-#~ msgid "%d points written to vector map"
-#~ msgstr "%d điểm được ghi vào dữ liệu vector"
-
-#~ msgid ""
-#~ "Converts a binary GRASS vector map layer into a GRASS raster map layer."
-#~ msgstr ""
-#~ "Chuyển đổi lớp bản đồ vector nhị phân GRASS thành một lớp bản đồ raster "
-#~ "GRASS"
 
 #~ msgid ""
 #~ "Subgroup too large.  Maximum number of bands is %d\n"
@@ -34538,14 +34552,6 @@ msgstr ""
 
 #~ msgid "vertical output (instead of horizontal)"
 #~ msgstr "Đầu ra theo chiều đứng (thay vì ngang)"
-
-#, fuzzy
-#~ msgid "Name of existing raster map"
-#~ msgstr ""
-#~ "#-#-#-#-#  grassmods_vi.po (grassmods_vi)  #-#-#-#-#\n"
-#~ "Tên tập tin raster hiện có\n"
-#~ "#-#-#-#-#  grassmods_vi.po (grassmods_vi)  #-#-#-#-#\n"
-#~ "Tên của bản đồ raster hiện có"
 
 #~ msgid "Cannot find mapset for %s"
 #~ msgstr "Không thể tìm ra bộ bản đồ cho %s"
@@ -36343,3 +36349,693 @@ msgstr ""
 
 #~ msgid "Seed [%d] smaller than minimum [%d]"
 #~ msgstr "'Hạt gieo' [%d] nhỏ hơn trị nhỏ nhất [%d]"
+
+#~ msgid ""
+#~ "Calculate the groundwater distance velocity vector field and write the x, "
+#~ "y, and z components to maps named name_[xyz]. Name is basename for the "
+#~ "new raster3d maps"
+#~ msgstr ""
+#~ "Tính toán trường vec-tơ tốc độ khoảng cách nước ngầm và ghi các thành "
+#~ "phần x, y, z vào bản đồ có tên tên_[xyz]. Tên là tên gốc của các bản đồ "
+#~ "raster 3d mới"
+
+#~ msgid "Converting %s..."
+#~ msgstr "Đang chuyển đổi %s ..."
+
+#~ msgid "Name of raster map with seed (at least 1 cell > 0)"
+#~ msgstr "Bản đồ raster với 'hạt gieo' (ít nhất là 1 ô > 0)"
+
+#~ msgid ""
+#~ "Sediment transport and erosion/deposition simulation using path sampling "
+#~ "method (SIMWE)"
+#~ msgstr ""
+#~ "Giả lập sự vận chuyển trầm tích và xói mòn/lắng tụ bằng cách dùng phương "
+#~ "pháp thu mẫu đường dẫn (SIMWE)"
+
+#~ msgid "Name of the water depth raster map [m]"
+#~ msgstr "Tên của bản đồ raster độ sâu nước [m]"
+
+#~ msgid "Name of the x-derivatives raster map [m/m]"
+#~ msgstr "Tên của bản đồ raster đạo hàm x [m/m]"
+
+#~ msgid "Name of the y-derivatives raster map [m/m]"
+#~ msgstr "Tên của bản đồ raster đạo hàm y [m/m]"
+
+#~ msgid "Name of the detachment capacity coefficient raster map [s/m]"
+#~ msgstr "Tên của bản đồ raster chứa hệ số khả năng tách rời [s/m]"
+
+#~ msgid "Name of the transport capacity coefficient raster map [s]"
+#~ msgstr "Tên của bản đồ raster chứa hệ số khả năng vận chuyển [s]"
+
+#~ msgid "Name of the critical shear stress raster map [Pa]"
+#~ msgstr "Tên của bản đồ raster độ nét đứt gãy nghiêm trọng [Pa]"
+
+#~ msgid "Name of the Mannings n raster map"
+#~ msgstr "Tên của bản đồ raster Mannings n"
+
+#~ msgid "Name of the Mannings n value"
+#~ msgstr "Tên giá trị Mannings n"
+
+#~ msgid "Output transport capacity raster map [kg/ms]"
+#~ msgstr "Bản đồ raster khả năng vận chuyển đầu ra [kg/ms]"
+
+#~ msgid "Output transp.limited erosion-deposition raster map [kg/m2s]"
+#~ msgstr "Bản đồ raster xói mòn-lắng tụ bị hạn chế vận chuyển đầu ra [kg/m2s]"
+
+#~ msgid "Output sediment concentration raster map [particle/m3]"
+#~ msgstr "Bản đồ raster mật độ trầm tích đầu ra [phần tử/m3]"
+
+#~ msgid "Output sediment flux raster map [kg/ms]"
+#~ msgstr "Bản đồ raster độ xả trầm tích đầu ra [kg/ms]"
+
+#~ msgid "Output erosion-deposition raster map [kg/m2s]"
+#~ msgstr "Bản đồ raster xói mòn-lắng tụ đầu ra [kg/m2s]"
+
+#~ msgid ""
+#~ "Overland flow hydrologic simulation using path sampling method (SIMWE)"
+#~ msgstr ""
+#~ "Giả lập thuỷ văn dòng chảy trên đất liền bằng phương pháp thu mẫu đường "
+#~ "dẫn (SIMWE)"
+
+#~ msgid "Name of the rainfall excess rate (rain-infilt) raster map [mm/hr]"
+#~ msgstr "Tên của bản đồ raster tốc độ quá mức lượng mưa (mưa thấm) [mm/giờ]"
+
+#~ msgid "Name of the runoff infiltration rate raster map [mm/hr]"
+#~ msgstr "Tên của bản đồ raster tốc độ xâm nhập chảy tràn [mm/giờ]"
+
+#~ msgid "Name of the flow controls raster map (permeability ratio 0-1)"
+#~ msgstr "Tên của bản đồ raster kiểm soát dòng chảy (tỷ lệ thấm 0-1)"
+
+#~ msgid "Output water discharge raster map [m3/s]"
+#~ msgstr "Bản đồ raster độ tháo nước đầu ra [m3/giây]"
+
+#~ msgid "Output simulation error raster map [m]"
+#~ msgstr "Bản đồ raster lỗi giả lập đầu ra [m]"
+
+#~ msgid ""
+#~ "Threshold water depth [m] (diffusion increases after this water depth is "
+#~ "reached)"
+#~ msgstr ""
+#~ "Độ sâu nước ngưỡng [m] (sự khếch tán tăng lên khi đạt được độ sâu nước "
+#~ "này)"
+
+#~ msgid "Calculation of unconfined groundwater flow loop %i\n"
+#~ msgstr "Tính toán vòng lặp dòng chảy ngầm không giới hạn %i\n"
+
+#~ msgid "Watershed basin analysis program."
+#~ msgstr "Chương trình phân tích lưu vực đường chia nước."
+
+#~ msgid "Input map: amount of overland flow per cell"
+#~ msgstr "Bản đồ đầu vào: Lượng chảy tràn trên một ô"
+
+#~ msgid "Input map: terrain blocking overland surface flow, for USLE"
+#~ msgstr ""
+#~ "Bản đồ đầu vào:khối địa hình chặn dòng chảy tràn bề mặt, dùng cho USLE"
+
+#~ msgid "Output map: number of cells that drain through each cell"
+#~ msgstr "Bản đồ đầu ra: Số lượng ô tháo nước qua mỗi ô"
+
+#~ msgid "Output map: unique label for each watershed basin"
+#~ msgstr "Bản đồ đầu ra: nhãn đơn trị cho mỗi lưu vực đường chia nước"
+
+#~ msgid "Output map: each half-basin is given a unique value"
+#~ msgstr ""
+#~ "Bản đồ đầu ra: mỗi nửa lưu vực sẽ được cung cấp một giá trị duy nhất"
+
+#~ msgid "Output map: useful for visual display of results"
+#~ msgstr "Bản đồ đầu ra: có ích cho việc trình bày trực quan các kết quả"
+
+#~ msgid "Output map: slope length and steepness (LS) factor for USLE"
+#~ msgstr ""
+#~ "Bản đồ đầu ra: chiều dài triền dốc và hệ số độ dốc (LS) dùng cho USLE"
+
+#~ msgid "Output map: slope steepness (S) factor for USLE"
+#~ msgstr "Bản đồ đầu ra: hệ số độ dốc của triền dốc (S) dùng cho USLE "
+
+#~ msgid "Input value: minimum size of exterior watershed basin"
+#~ msgstr ""
+#~ "Giá trị đầu vào: kích thước nhỏ nhất của lưu vực đường chia nước phía "
+#~ "ngoài"
+
+#~ msgid "Input value: maximum length of surface flow, for USLE"
+#~ msgstr ""
+#~ "Giá trị đầu vào: Độ dài lớn nhất của các dòng chảy bề mặt, dùng cho USLE"
+
+#~ msgid ""
+#~ "Filters and generates a depressionless elevation map and a flow direction "
+#~ "map from a given elevation layer."
+#~ msgstr ""
+#~ "Lọc và tạo một bản đồ độ cao không giảm cấp và bản đồ hướng dòng chảy từ "
+#~ "lớp độ cao được cung cấp."
+
+#~ msgid "Output elevation raster map after filling"
+#~ msgstr "Bản đồ độ cao raster đầu ra sau khi lấp đầy"
+
+#~ msgid "Output direction raster map"
+#~ msgstr "Bản đồ raster hướng đầu ra"
+
+#~ msgid "Output raster map of problem areas"
+#~ msgstr "Bản đồ raster đầu ra chứa những vùng 'có vấn đề'"
+
+#~ msgid "CHILD[pid = %i]: unable to open %s mask ... continue without!!!"
+#~ msgstr ""
+#~ "CHILD[pid = %i]: không thể mở mặt nạ %s ... tiếp tục mà không có nó!!!"
+
+#~ msgid "r.li.worker (pid %i) exited with abnormal status %i"
+#~ msgstr "r.li.worker (pid %i) đã thoát với trạng thái bất thường %i"
+
+#~ msgid "r.li.worker (pid %i) terminated"
+#~ msgstr "r.li.worker (pid %i) bị ngưng"
+
+#~ msgid "Cannot make stat of %s configuration file"
+#~ msgstr "Không thể tạo thống kê của tập tin cấu hình %s"
+
+#~ msgid "Illegal configuration file"
+#~ msgstr "Tập tin cấu hình không hợp lệ"
+
+#, fuzzy
+#~ msgid "Range to be exported: %f - %f"
+#~ msgstr "Tập tin raster cần nhập"
+
+#~ msgid "(i)   Basin map created by r.water.outlet (MASK)"
+#~ msgstr "(i)   Bản đồ lưu vực được tạo ra bởi r.water.outlet (MẶT NẠ)"
+
+#~ msgid "(o)   Direction map for depressionless elevation map"
+#~ msgstr "(o)   Bản đồ hướng dùng cho bản đồ độ cao không giảm cấp"
+
+#~ msgid "(i)   Number of topographic index classes"
+#~ msgstr "(i)   Số lớp chỉ mục địa hình"
+
+#~ msgid "(o/i) Topographic index statistics file"
+#~ msgstr "(o/i) Tập tin thống kê chỉ mục địa hình"
+
+#~ msgid "(i)   TOPMODEL Parameters file"
+#~ msgstr "(i)   Tập tin các tham số TOPMODEL"
+
+#~ msgid "(i)   Rainfall and potential evapotranspiration data file"
+#~ msgstr "(i)   Tập tin chứa dữ liệu lượng mưa và khả năng bốc hơi tiềm tàng"
+
+#~ msgid ""
+#~ "Calculates cast shadow areas from sun position and DEM. Either A: exact "
+#~ "sun position is specified, or B: date/time to calculate the sun position "
+#~ "by r.sunmask itself."
+#~ msgstr ""
+#~ "Tính toán các diện tích bị bóng từ vị trí mặt trời và DEM. Hoặc là A: Vị "
+#~ "trí chính xác của mặt trời được chỉ định, hoặc B: ngày/giờ để tính toán "
+#~ "vị trí mặt trời bằng chính mô-đun r.sunmask."
+
+#~ msgid "Name of elevation raster map"
+#~ msgstr "Tên của bản đồ raster độ cao"
+
+#~ msgid "A: altitude of the sun above horizon, degrees"
+#~ msgstr "A: Độ cao mặt trời trên đường chân trời, độ"
+
+#~ msgid "A: azimuth of the sun from the north, degrees"
+#~ msgstr "A: góc phương vị của mặt trời tính từ hướng bắc, độ"
+
+#~ msgid "B: minutes (0..60)"
+#~ msgstr "B: phút (0..60)"
+
+#~ msgid "B: seconds (0..60)"
+#~ msgstr "B: giây (0..60)"
+
+#~ msgid ""
+#~ "B: timezone (east positive, offset from GMT, also use to adjust daylight "
+#~ "savings)"
+#~ msgstr ""
+#~ "B: múi giờ (hướng đông dương, độ dịch tính từ GMT, cũng dùng để hiệu "
+#~ "chỉnh sự kéo dài giờ vào mùa hè (daylight-saving))"
+
+#~ msgid ""
+#~ "Creates a new map layer whose category values are based upon a "
+#~ "reclassification of the categories in an existing raster map layer."
+#~ msgstr ""
+#~ "Tạo một lớp bản đồ mới mà các giá trị phạm trù được căn cứ vào phép phân "
+#~ "loại lại các phạm trù trong một lớp bản đồ raster hiện có."
+
+#~ msgid "Converts a raster map into a vector map layer."
+#~ msgstr "Đổi một bản đồ raster thành một lớp bản đồ vec-tơ."
+
+#~ msgid "The map E grid coordinates"
+#~ msgstr "Các tọa độ lưới Đ của bản đồ"
+
+#~ msgid "Calculating map %01d of %01d (angle %lf, raster map <%s>)"
+#~ msgstr "Đang ttính bản đồ %01d trong %01d (góc %lf, bản đồ raster <%s>)"
+
+#~ msgid "Stream width (in meters). Default is raster cell width"
+#~ msgstr "Chiều rộng của suối (theo mét). Mặc định là chiều rộng của ô raster"
+
+#~ msgid "Output flowpath length raster map"
+#~ msgstr "Bản đồ raster chiều dài đường dẫn dòng chảy đầu ra"
+
+#~ msgid "Output flowline density raster map"
+#~ msgstr "Bản đồ raster mật độ đường dòng chảy đầu ra"
+
+#~ msgid "3-D lengths instead of 2-D"
+#~ msgstr "Độ dài 3D thay vì 2D"
+
+#~ msgid "Show the category label in the grid cell(s)"
+#~ msgstr "Hiển thị nhãn phạm trù trong (các) ô lưới"
+
+#~ msgid "Creates topographic index [ln(a/tan(beta))] map from elevation map."
+#~ msgstr "Tạo bản đồ chỉ mục địa hình (ln(a/tan(beta))) từ bản đồ độ cao."
+
+#~ msgid "Lat/Long location is not supported"
+#~ msgstr "Vị trí kiểu Vĩ/Kinh độ không được hỗ trợ"
+
+#~ msgid "New LOCATION name (not location path)"
+#~ msgstr "Tên của VỊ TRÍ mới (không phải đường dẫn vị trí)"
+
+#~ msgid "New GISDBASE (full path to the directory where the new location is)"
+#~ msgstr "GISDBASE mới (đường dẫn đầy đủ đến thư mục chứa vị trí mới)"
+
+#, fuzzy
+#~ msgid ""
+#~ "wxpython;wxPython based GUI - wxGUI;tcltk;Tcl/Tk based GUI - GIS Manager "
+#~ "(gis.m);oldtcltk;Old Tcl/Tk based GUI - Display Manager (d.m);text;"
+#~ "command line interface only"
+#~ msgstr ""
+#~ "tcltk;GUI dựa trên cơ sở Tcl/Tk - Trình Quản lý GIS (gis.m);oldtcltk;GUI "
+#~ "dựa trên Tcl/Tk kiểu cũ -  Bộ Quản lý Trình bày (d.m);wxpython;GUI thế hệ sau này dựa trên wxPython"
+
+#~ msgid "Unable to read symbol, unable todisplay points"
+#~ msgstr "Không thể đọc biểu tượng, không thể trình bày các điểm"
+
+#~ msgid "Cannot allocate %d bytes of memory"
+#~ msgstr "Không thể cấp phát %d byte bộ nhớ"
+
+#~ msgid "Feature type. Combination of types is not supported by all formats."
+#~ msgstr ""
+#~ "Kiểu đối tượng. Sự tổ hợp các kiểu không phải định dạng nào cũng hỗ trợ."
+
+#~ msgid ""
+#~ "%d faces found, but not requested to be exported. Verify 'type' parameter."
+#~ msgstr ""
+#~ "Tìm thấy %d mặt, nhưng không được yêu cầu xuất ra. Kiểm tra lại tham số "
+#~ "'type'."
+
+#~ msgid "Exporting %i points/lines..."
+#~ msgstr "Đang xuất %i điểm/đường..."
+
+#~ msgid "vector, query"
+#~ msgstr "vector, truy vấn"
+
+#, fuzzy
+#~ msgid "Writing edges..."
+#~ msgstr "Đang ghi các đỉnh..."
+
+#~ msgid "point;simple x,y[,z] list;standard;GRASS's vector ASCII format"
+#~ msgstr ""
+#~ "point; kiểu danh sách x,y[,z] đơn giản; standard; định dạng ASCII vec-tơ "
+#~ "của GRASS"
+
+#~ msgid ""
+#~ "Number of column used as y coordinate (first column is 1) for points mode"
+#~ msgstr ""
+#~ "Số hiệu cột được dùng làm tọa độ y (cột đầu tiên là 1) cho chế độ các điểm"
+
+#~ msgid ""
+#~ "Number of column used as z coordinate (first column is 1) for points mode"
+#~ msgstr ""
+#~ "Số hiệu cột được dùng làm tọa độ x (cột đầu tiên là 1) cho chế độ các điểm"
+
+#~ msgid "If 0, z coordinate is not used"
+#~ msgstr "Nếu bằng 0, tọa độ z không được sử dụng"
+
+#~ msgid ""
+#~ "Number of column used as category (first column is 1) for points mode"
+#~ msgstr ""
+#~ "Số hiệu cột được dùng làm phạm trù (cột đầu tiên là 1) cho chế độ các điểm"
+
+#~ msgid ""
+#~ "If 0, unique category is assigned to each row and written to new column "
+#~ "'cat'"
+#~ msgstr ""
+#~ "Nếu là 0, phạm trù đơn trị được gán cho mỗi dòng và được ghi vào cột mới "
+#~ "là 'cat'."
+
+#~ msgid "Create a new empty vector map and exit. Nothing is read from input"
+#~ msgstr "Tạo một bản đồ vec-tơ mới rỗng và thoát. Không đọc gì từ đầu vào"
+
+#~ msgid "Name for output file (do not add extension)"
+#~ msgstr "Tên của tập tin đầu ra (đừng thêm đuôi mở rộng)"
+
+#~ msgid "Width and height of output image"
+#~ msgstr "Chiều rộng và chiều cao của ảnh đầu ra"
+
+#~ msgid "Surface"
+#~ msgstr "Bề mặt"
+
+#~ msgid "Volume"
+#~ msgstr "Thể tích"
+
+#~ msgid "Name of file with sql statement"
+#~ msgstr "Tên tập tin chứa câu lệnh sql"
+
+#~ msgid "Create a MASK for limiting raster operation"
+#~ msgstr "Tạo một MẶT NẠ để giới hạn lệnh raster"
+
+#~ msgid "Raster map to use as MASK"
+#~ msgstr "Bản đồ raster dùng làm MẶT NẠ"
+
+#~ msgid "Category values to use for MASK (format: 1 2 3 thru 7 *)"
+#~ msgstr "Các giá trị phạm trù dùng cho MẶT NẠ (dạng: 1 2 3 thru 7 *)"
+
+#~ msgid "Remove existing MASK (overrides other options)"
+#~ msgstr "Loại bỏ MẶT NẠ hiện có (ghi đè các tùy chọn khác)"
+
+#, fuzzy
+#~ msgid "Import Mapgen or Matlab-ASCII vector maps into GRASS."
+#~ msgstr "Nhập các bản đồ vector Mapgen hoặc Matlab vào GRASS"
+
+#, fuzzy
+#~ msgid "Vector map for which to edit attribute table"
+#~ msgstr "bản đồ vector cần chỉnh sửa bảng thuộc tính"
+
+#~ msgid "Layer where to add column"
+#~ msgstr "Lớp cần thêm cột vào"
+
+#~ msgid "Computing row %d of covariance matrix..."
+#~ msgstr "Đang tính hàng %d của ma trận hiệp phương sai..."
+
+#~ msgid "The output cell map <%s.%d> has values outside the 0-255 range."
+#~ msgstr "Bản đồ cell đầu ra <%s.%d> có giá trị nằm ngoài miền 0-255."
+
+#~ msgid ""
+#~ "Input raster map contains cells with NULL-value (no-data). The value %g "
+#~ "was used to represent no-data values in the input map. You can specify "
+#~ "nodata value by %s parameter."
+#~ msgstr ""
+#~ "Bản đồ raster đầu vào chứa các ô với giá trị RỖNG (không có dữ liệu). Giá "
+#~ "trị %g được dùng để biểu thị các giá trị không có dữ liệu trong bản đồ "
+#~ "đầu vào. Bạn có thể chỉ định giá trị không dữ liệu bằng tham số %s."
+
+#~ msgid "Eigen values:"
+#~ msgstr "Các giá trị Eigen:"
+
+#, fuzzy
+#~ msgid "display, legend"
+#~ msgstr "Lật chú giải"
+
+#, fuzzy
+#~ msgid ""
+#~ "Color for graduated points map (grass named color or R:G:B triplet). Set "
+#~ "color scheme to single color."
+#~ msgstr ""
+#~ "Màu dùng cho các đường hoặc các đường viền của điểm/vùng được phân cấp. "
+#~ "(màu gọi tên theo chuẩn của GRASS hoặc kiểu bộ ba R:G:B). Thiết lập chế "
+#~ "độ màu thành một màu duy nhất"
+
+#, fuzzy
+#~ msgid "Use regular expression instead of wildcard"
+#~ msgstr "dùng biểu thức quy tắc thay vì ký tự bất kỳ"
+
+#, fuzzy
+#~ msgid "Icon to remove"
+#~ msgstr "Bản đồ vector cần loại bỏ"
+
+#, fuzzy
+#~ msgid "raster, imagery, fusion"
+#~ msgstr "raster, ảnh, nhập dữ liệu"
+
+#, fuzzy
+#~ msgid ""
+#~ "mi(les),me(ters),k(ilometers),a(cres),h(ectares),c(ell_counts),p"
+#~ "(ercent_cover)"
+#~ msgstr "mi(les)_dặm,f(eet)_bộ_Anh,me(t),k(ilomet),a(cres)_mẫu_Anh,h(ecta)"
+
+#, fuzzy
+#~ msgid "Can't make random color table for floating point map"
+#~ msgstr "Không thể tạo bảng màu logarit cho bản đồ kiểu dấu chấm động"
+
+#, fuzzy
+#~ msgid "Can't make grey.eq color table for floating point map"
+#~ msgstr "Không thể tạo bảng màu logarit cho bản đồ kiểu dấu chấm động"
+
+#, fuzzy
+#~ msgid "%s - unknown color request"
+#~ msgstr "%s - màu không hiểu\n"
+
+#, fuzzy
+#~ msgid "Could not read range file"
+#~ msgstr "Không thể đọc tập tin miền giá trị"
+
+#, fuzzy
+#~ msgid "Integer data range of %s is empty"
+#~ msgstr "Miền dữ liệu từ %ld đến %ld\n"
+
+#, fuzzy
+#~ msgid "ID values"
+#~ msgstr "Giá trị kiểu bit"
+
+#, fuzzy
+#~ msgid "CrossCorrelation: Mean = %.5lf\n"
+#~ msgstr "Không thể đọc thông tin trường"
+
+#, fuzzy
+#~ msgid "CrossCorrelation: lambda_i = %.3f\n"
+#~ msgstr "Không thể đọc thông tin trường"
+
+#, fuzzy
+#~ msgid "From type"
+#~ msgstr "Đến kiểu"
+
+#, fuzzy
+#~ msgid "From layer"
+#~ msgstr "Đến lớp"
+
+#, fuzzy
+#~ msgid "The column must be type integer or string"
+#~ msgstr "Tên cột (phải là kiểu số)"
+
+#, fuzzy
+#~ msgid ""
+#~ "Line: %d  \n"
+#~ "Type: %s  \n"
+#~ "Left: %d  \n"
+#~ "Right: %d  \n"
+#~ msgstr "Đường: %d  Kiểu: %s  Trái: %d  Phải: %d  "
+
+#, fuzzy
+#~ msgid ""
+#~ "Node[%d]: %d  \n"
+#~ "Number of lines: %d  \n"
+#~ "Coordinates: %.6f, %.6f, %.6f\n"
+#~ msgstr "  Nốt[%d]: %d  Số đường: %d  Tọa_độ: %.6f, %.6f, %.6f\n"
+
+#, fuzzy
+#~ msgid ""
+#~ "Line: %5d  \n"
+#~ "Angle: %.8f\n"
+#~ msgstr "    Đường: %5d  Góc: %.8f\n"
+
+#, fuzzy
+#~ msgid ""
+#~ "Area: %d  \n"
+#~ "Number of isles: %d\n"
+#~ msgstr "Vùng: %d  Số đảo: %d\n"
+
+#, fuzzy
+#~ msgid "Type of elements"
+#~ msgstr "Tên của một yếu tố"
+
+#, fuzzy
+#~ msgid "%d update/insert errors"
+#~ msgstr "%d lỗi chèn"
+
+#, fuzzy
+#~ msgid "Processing ainput areas ..."
+#~ msgstr "Đang xử lý các đường ainput (đầu vào a)..."
+
+#, fuzzy
+#~ msgid ""
+#~ "Elevation raster map <%s> does not cover the entire area of the input "
+#~ "vector map <%s>. "
+#~ msgstr "Không thể tìm thấy bản đồ vector đầu vào <%s>"
+
+#, fuzzy
+#~ msgid "Writing data to file..."
+#~ msgstr "Đang ghi dữ liệu được chuyển đổi vào tập tin..."
+
+#, fuzzy
+#~ msgid "Output hue raster map"
+#~ msgstr "Bản đồ raster đầu ra"
+
+#, fuzzy
+#~ msgid "Subgroup [%s] in group [%s] contains no files."
+#~ msgstr "Nhóm phụ [%s] trong nhóm [%s] không có tập tin nào."
+
+#, fuzzy
+#~ msgid "Ordering eigenvalues in descending order..."
+#~ msgstr "Đang tính giá trị trung bình nhóm ..."
+
+#, fuzzy
+#~ msgid "Transposing eigen matrix..."
+#~ msgstr "Đang quét dữ liệu..."
+
+#, fuzzy
+#~ msgid "1 class."
+#~ msgstr "%d nhóm."
+
+#, fuzzy
+#~ msgid ""
+#~ "\n"
+#~ " group <%s> not found"
+#~ msgstr ""
+#~ "\n"
+#~ " không tìm thấy nhóm <%s>"
+
+#, fuzzy
+#~ msgid "Subgroup [%s] doesn't have any files"
+#~ msgstr "Nhóm phụ [%s] không có tập tin nào."
+
+#, fuzzy
+#~ msgid "The subgroup must have at least 2 files to run %s"
+#~ msgstr "Nhóm phụ phải có tối thiểu 2 tập tin để chạy %s"
+
+#, fuzzy
+#~ msgid "File containing initial signatures"
+#~ msgstr "Tập tin chứa các chữ ký khởi tạo"
+
+#, fuzzy
+#~ msgid "Output file to contain final report"
+#~ msgstr "Tên của tập tin đầu ra chứa báo cáo sau cùng"
+
+#, fuzzy
+#~ msgid ""
+#~ "\n"
+#~ "<%s> -- illegal value of min_size"
+#~ msgstr ""
+#~ "\n"
+#~ "<%s> -- giá trị min_size không hợp lệ"
+
+#, fuzzy
+#~ msgid "Error writing result map file!"
+#~ msgstr "Lỗi khi đang ghi tập tin bản đồ kết quả!"
+
+#, fuzzy
+#~ msgid "imagery group"
+#~ msgstr "nhóm ảnh"
+
+#, fuzzy
+#~ msgid "Name of input raster map(s)"
+#~ msgstr "Tên bản đồ raster đầu vào"
+
+#~ msgid "visualization"
+#~ msgstr "xem"
+
+#, fuzzy
+#~ msgid "Adding files to group [%s]"
+#~ msgstr "Thêm các tập tin vào nhóm ]phụ [%s]"
+
+#, fuzzy
+#~ msgid "Found file <%s@%s> in subgroup."
+#~ msgstr "Tìm thấy tập tin <%s@%s> trong nhóm."
+
+#, fuzzy
+#~ msgid "Unable to connect line id %d to line %d"
+#~ msgstr "Không thể chọn dữ liệu từ bảng"
+
+#, fuzzy
+#~ msgid "region <%s> not found"
+#~ msgstr "Không tìm thấy vùng <%s>"
+
+#, fuzzy
+#~ msgid "can't open vector map <%s> in <%s>"
+#~ msgstr "Không thể mở bản đồ vector [%s]"
+
+#, fuzzy
+#~ msgid "elevation file [%s] not found"
+#~ msgstr "không tìm thấy tập tin cell [%s]"
+
+#, fuzzy
+#~ msgid "Parameter <%s> not set"
+#~ msgstr "Tham số cần thiết <cats> không được thiết lập"
+
+#, fuzzy
+#~ msgid "Cannot get layer information for vector map"
+#~ msgstr "Không thể lấy thông tin lớp của bản đồ vector"
+
+#, fuzzy
+#~ msgid "Database record for cat %d not found"
+#~ msgstr "Không có bản ghi CSDL cho phạm trù %d"
+
+#, fuzzy
+#~ msgid "Cannot open file for <%s>"
+#~ msgstr "Không thể mở tập tin [%s]"
+
+#, fuzzy
+#~ msgid "Read coordinates from standard input"
+#~ msgstr "Tọa độ Đ và B của (các) điểm bắt đầu"
+
+#, fuzzy
+#~ msgid "[%s] is an illegal name"
+#~ msgstr "[%s] là tên không hợp lệ"
+
+#, fuzzy
+#~ msgid "%s - illegal name"
+#~ msgstr "%s - tên không hợp lệ"
+
+#, fuzzy
+#~ msgid "Error reading map %s"
+#~ msgstr "Lỗi khi đang đọc tập tin raster [%s]"
+
+#~ msgid "Name of the new raster map"
+#~ msgstr "Tên tập tin raster mới"
+
+#, fuzzy
+#~ msgid "Input map [%s] in location [%s] in mapset [%s] not found."
+#~ msgstr ""
+#~ "Tập tin vector [%s] trong location [%s] trong bộ bản đồ [%s] không khả "
+#~ "dụng"
+
+#, fuzzy
+#~ msgid "%s in %s -can't open raster map"
+#~ msgstr ""
+#~ "#-#-#-#-#  grassmods_vi.po (grassmods_vi)  #-#-#-#-#\n"
+#~ "%s - không thể mở bản đồ raster\n"
+#~ "#-#-#-#-#  grassmods_vi.po (grassmods_vi)  #-#-#-#-#\n"
+#~ "%s - không thể mở tập tin raster"
+
+#, fuzzy
+#~ msgid "Could not find input map <%s> in current mapset."
+#~ msgstr "Không thể tìm thấy bản đồ đầu vào <%s>."
+
+#~ msgid "Could not find input vector map %s"
+#~ msgstr "Không thể tìm thấy bản đồ vector đầu vào %s"
+
+#~ msgid "Name of output raster map"
+#~ msgstr "Tên của bản đồ raster đầu ra"
+
+#, fuzzy
+#~ msgid "name for new vector map"
+#~ msgstr "Tên của tập tin raster mới"
+
+#, fuzzy
+#~ msgid "File name of classification result"
+#~ msgstr "Bản đồ raster để lưu các kết quả phân loại"
+
+#, fuzzy
+#~ msgid "Cover raster map"
+#~ msgstr "Bản đồ lớp phủ"
+
+#~ msgid "Topographic index ln(a/tanB) map"
+#~ msgstr "Bản đồ chỉ mục địa hình ln(a/tanB)"
+
+#, fuzzy
+#~ msgid "Unable to write color table to raster [%s]"
+#~ msgstr "Không thể đọc bảng màu cho %s"
+
+#, fuzzy
+#~ msgid "Maximum number of iteration"
+#~ msgstr "Số lần chạy lặp tối đa"
+
+#, fuzzy
+#~ msgid "No features found"
+#~ msgstr "%d điểm được ghi vào dữ liệu vector"
+
+#~ msgid "Print the current region (shell script style)"
+#~ msgstr "In vùng địa lý hiện tại (kiểu tập lệnh shell)"
+
+#~ msgid "Column name (will be updated by qvector values)"
+#~ msgstr "Tên cột (sẽ được cập nhật bởi các giá trị qvector (truy vấn vector)"

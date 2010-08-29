@@ -5074,3 +5074,460 @@ msgstr ""
 
 #~ msgid "Too many arguments"
 #~ msgstr "参数太多"
+
+#~ msgid "Null values have not been initialized. "
+#~ msgstr "空值还未被初始化。"
+
+#~ msgid "G_gisinit() must be called first. "
+#~ msgstr "必须先调用 G_gisinit()。 "
+
+#~ msgid "Please advise GRASS developers of this error.\n"
+#~ msgstr "请向 GRASS 开发人员报告这一错误。\n"
+
+#~ msgid "The gauss elimination solver does not work with sparse matrices"
+#~ msgstr "不能使用高斯消元计算稀疏矩阵"
+
+#~ msgid "The linear equation system is not quadratic"
+#~ msgstr "线性方程式系统不是二次方程式"
+
+#~ msgid "The lu solver does not work with sparse matrices"
+#~ msgstr "不能使用逻辑单元解算稀疏矩阵"
+
+#~ msgid "The cholesky solver does not work with sparse matrices"
+#~ msgstr "不能使用cholesky解算稀疏矩阵"
+
+#~ msgid "Matrix is not symmetric!"
+#~ msgstr "该矩阵是非对称的"
+
+#~ msgid ""
+#~ "taking too long to find points for interpolation--please change the "
+#~ "region to area where your points are. Continuing calculations..."
+#~ msgstr ""
+#~ "寻找内插的点花费了太长的时间 -- 请将范围改为点所在的区域。 然后继续计算..."
+
+#~ msgid "Vector is not 3D"
+#~ msgstr "矢量不是3D的"
+
+#~ msgid "Cannot find z column <%s> (please verify name, e.g. with v.info)"
+#~ msgstr "无法找到 z 值字段 <%s> (请验证名称，如使用 v.info)"
+
+#~ msgid "Column type of z column is not supported (must be integer or double)"
+#~ msgstr "z 值字段的类型不支持 (必须为整型或双精度)"
+
+#~ msgid "Cannot read column type of smooth column"
+#~ msgstr "无法读取平滑字段的类型"
+
+#~ msgid "Column type of smooth column (datetime) is not supported"
+#~ msgstr "平滑字段 (日期时间) 的类型不支持"
+
+#~ msgid "Column type of s column is not supported (must be integer or double)"
+#~ msgstr "s 值字段的类型不支持 (必须为整型或双精度)"
+
+#~ msgid "Reading lines from vector map ... "
+#~ msgstr "从矢量地图中读入行 ..."
+
+#~ msgid "Reading nodes from vector map ... "
+#~ msgstr "读取矢量地图上的节点..."
+
+#~ msgid "strip exists with insufficient data"
+#~ msgstr "去掉不合适的数据"
+
+#, fuzzy
+#~ msgid "there are points outside specified 2D/3D region--ignored %d points"
+#~ msgstr "有点在指定的范围之外--忽略 %d 个点"
+
+#~ msgid "ignoring %d points -- too dense"
+#~ msgstr "忽略 %d 个点 -- 过于密集"
+
+#~ msgid "some points outside of region -- will ignore..."
+#~ msgstr "范围之外的点 -- 将被忽略..."
+
+#, fuzzy
+#~ msgid "Unable to delete layer/category %d/%d line %d"
+#~ msgstr "无法将目录改变到%s"
+
+#, fuzzy
+#~ msgid "Unable to open vector map <%s> on topology level %d"
+#~ msgstr "无法打开栅格图[%s在%s中]"
+
+#, fuzzy
+#~ msgid "Registering points"
+#~ msgstr "注册线： "
+
+#, fuzzy
+#~ msgid "All vertices"
+#~ msgstr "允许覆盖"
+
+#, fuzzy
+#~ msgid "Registered points"
+#~ msgstr "注册线： "
+
+#, fuzzy
+#~ msgid "Duplicates"
+#~ msgstr "复制“东”字段"
+
+#, fuzzy
+#~ msgid "Registered points (unique coordinates)"
+#~ msgstr "注册线： "
+
+#, fuzzy
+#~ msgid "Attempt to delete dead line"
+#~ msgstr "无法打开临时文件"
+
+#, fuzzy
+#~ msgid "Unable to rewrite line %d"
+#~ msgstr "无法打开临时文件"
+
+#, fuzzy
+#~ msgid ""
+#~ "Unable to delete line %d, vector map <%s> is not opened on topo level 2"
+#~ msgstr "无法删除线，地图'%s'没有在级别2上打开"
+
+#, fuzzy
+#~ msgid ""
+#~ "Unable to delete line %d, vector map <%s> is not opened in 'write' mode"
+#~ msgstr "无法删除线，地图'%s'没有以写模式打开"
+
+#, fuzzy
+#~ msgid "Unable to delete line %d from vector map <%s>"
+#~ msgstr "无法将目录改变到%s"
+
+#~ msgid "Type"
+#~ msgstr "类型"
+
+#~ msgid "G_malloc: out of memory"
+#~ msgstr "G_malloc：内存溢出"
+
+#, fuzzy
+#~ msgid "G_calloc: out of memory"
+#~ msgstr "无法分配内存"
+
+#~ msgid "G_realloc: out of memory"
+#~ msgstr "G_realloc: 内存溢出"
+
+#, fuzzy
+#~ msgid "Cannot get layer info"
+#~ msgstr "无法获取图层信息"
+
+#~ msgid "Cannot open database %s"
+#~ msgstr "无法打开数据库 %s"
+
+#~ msgid "Cannot describe table <%s>"
+#~ msgstr "无法打开数据库表 <%s>"
+
+#, fuzzy
+#~ msgid "Cannot read topo for line [%d]"
+#~ msgstr "无法读取[ %s 在 %s 中]的直方图"
+
+#~ msgid "Output name '%s' is not valid rast name."
+#~ msgstr "输出的名称'%s'不是有效的栅格名称。"
+
+#~ msgid "Cannot find input map '%s'"
+#~ msgstr "无法找到输入地图'%s'"
+
+#~ msgid "Output map '%s' is used as input"
+#~ msgstr "输出地图'%s'被用作输入"
+
+#~ msgid "unable to open raster map [%s in %s]"
+#~ msgstr "无法打开栅格图[%s在%s中]"
+
+#~ msgid "unable to find [%s] in [%s]"
+#~ msgstr "无法找到[%s]在[%s]中"
+
+#~ msgid "Can't read header file for [%s in %s]\n"
+#~ msgstr "无法读取[%s在%s中]的头文件\n"
+
+#~ msgid "Can't open header file for [%s in %s]"
+#~ msgstr "无法打开[%s在%s中]的头文件"
+
+#, fuzzy
+#~ msgid "Cannot get field info"
+#~ msgstr "无法获取图层信息"
+
+#, fuzzy
+#~ msgid "Cannot open database"
+#~ msgstr "无法打开数据库 %s"
+
+#~ msgid "Building topology ...\n"
+#~ msgstr "建立拓扑...\n"
+
+#~ msgid ""
+#~ "\r%d areas built      \n"
+#~ "%d isles built\n"
+#~ msgstr ""
+#~ "\r建立 %d 个区域      \n"
+#~ "建立 %d 个岛\n"
+
+#, fuzzy
+#~ msgid "Cannot get column info"
+#~ msgstr "无法获取图层信息"
+
+#, fuzzy
+#~ msgid "Column type not supported"
+#~ msgstr "不支持的 OGR 要素类型 %d"
+
+#, fuzzy
+#~ msgid "OGR feature type [%d] not supported"
+#~ msgstr "不支持的 OGR 要素类型 %d"
+
+#~ msgid "Vect_rewrite_line() for this format/level not supported"
+#~ msgstr "这种格式/级别不支持 Vect_rewrite_line()"
+
+#~ msgid "Vect_delete_line() for this format/level not supported"
+#~ msgstr "这种格式/级别不支持 Vect_delete_line()"
+
+#~ msgid "Cannot rewrite line"
+#~ msgstr "无法重写线"
+
+#, fuzzy
+#~ msgid "Cannot delete line"
+#~ msgstr "无法重写线"
+
+#~ msgid "Output name '%s' is not valid vector name."
+#~ msgstr "输出的名称'%s'不是有效的矢量名称。"
+
+#~ msgid "Cannot copy vector '%s' to '%s'"
+#~ msgstr "无法将矢量'%s'拷贝为'%s'"
+
+#, fuzzy
+#~ msgid "Cannot open existing vector map <%s>"
+#~ msgstr "无法删除已有矢量%s"
+
+#, fuzzy
+#~ msgid "Cannot delete existing vector <%s>"
+#~ msgstr "无法删除已有矢量%s"
+
+#~ msgid "Cannot open new vector %s"
+#~ msgstr "无法打开新的矢量%s"
+
+#~ msgid "Cannot open history file for vector '%s'"
+#~ msgstr "无法打开矢量'%s'的历史记录"
+
+#~ msgid "Could not stat file '%s'"
+#~ msgstr "无法统计文件'%s'"
+
+#, fuzzy
+#~ msgid "Can't open directory %s"
+#~ msgstr "无法打开旧的矢量%s"
+
+#~ msgid "%s - ** illegal name **"
+#~ msgstr "%s - ** 非法的名称 **"
+
+#~ msgid "No such graphics monitor as <%s>.\n"
+#~ msgstr "没有名为<%s>的图形监视器。\n"
+
+#~ msgid "Please run \"d.mon\" to select a valid graphics monitor.\n"
+#~ msgstr "请运行\"d.mon\"来选择一个有效的图形监视器。\n"
+
+#~ msgid "Can't stat %s\n"
+#~ msgstr "无法统计%s\n"
+
+#~ msgid "Error - Monitor <%s> is in use.\n"
+#~ msgstr "错误 - 监视器<%s>正在使用。\n"
+
+#~ msgid "Error - Monitor <%s> is in use by %s.\n"
+#~ msgstr "错误 - 监视器<%s>正在被%s使用。\n"
+
+#~ msgid "Error - Could not complete locking process for monitor <%s>.\n"
+#~ msgstr "错误 - 不能为监视器<%s>完全锁定进程。\n"
+
+#~ msgid "Error - Can't set up pipe to graphics device.\n"
+#~ msgstr "错误 - 无法建立到图形设备的管道。\n"
+
+#~ msgid "Error - Graphics monitor <%s> not running!\n"
+#~ msgstr "错误 - 图形监视器<%s>没有运行！\n"
+
+#~ msgid "Please start graphics monitor <%s>.\n"
+#~ msgstr "请启动图形监视器<%s>。\n"
+
+#~ msgid "Not connected...\n"
+#~ msgstr "未连接...\n"
+
+#~ msgid "Couldn't connect to monitor. Will try once more.\n"
+#~ msgstr "不能连接到监视器。请再试一次。\n"
+
+#~ msgid "G_dump: memory allocated to G__"
+#~ msgstr "G_dump：为G__分配了内存"
+
+#~ msgid "Size of cell in fp maps = %d"
+#~ msgstr "fp maps 的象元大小= %d"
+
+#~ msgid "current window = %p"
+#~ msgstr "当前窗口 = %p"
+
+#~ msgid "File descriptor for automatic mask %d"
+#~ msgstr "自动掩模的文件描述符 %d"
+
+#~ msgid "Flag denoting automatic masking %d"
+#~ msgstr "自动掩模的标记 %d"
+
+#~ msgid "CELL mask buffer %p"
+#~ msgstr "像元掩膜的缓冲区%p"
+
+#~ msgid "buffer for reading null rows %p"
+#~ msgstr "读取空行的缓冲区 %p"
+
+#~ msgid "Pre/post compressed data buffer %p"
+#~ msgstr "（预/后）压缩数据的缓冲区 %p"
+
+#~ msgid "sizeof compressed_buf %d"
+#~ msgstr "压缩数据的缓冲区大小 %d"
+
+#~ msgid "work data buffer %p"
+#~ msgstr "工作数据的缓冲区 %p"
+
+#~ msgid "sizeof work_buf %d"
+#~ msgstr "工作数据的缓冲区大小 %d"
+
+#~ msgid "sizeof null_buf %d"
+#~ msgstr "空值缓冲区大小 %d"
+
+#~ msgid "sizeof mask_buf %d"
+#~ msgstr "掩模缓冲区大小 %d"
+
+#~ msgid "Histogram request %d"
+#~ msgstr "直方图需要 %d"
+
+#~ msgid "G_dump: file #%d"
+#~ msgstr "G_dump：文件 #%d"
+
+#~ msgid "open mode = %d"
+#~ msgstr "打开模式 = %d"
+
+#~ msgid "Cell header %p"
+#~ msgstr "像元的头信息 %p"
+
+#~ msgid "Table reclass %p"
+#~ msgstr "表格重分类 %p"
+
+#~ msgid "Cell stats %p"
+#~ msgstr "像元的统计值 %p"
+
+#~ msgid "Range structure %p"
+#~ msgstr "范围构成 %p"
+
+#~ msgid "float Range structure %p"
+#~ msgstr "浮点范围构成 %p"
+
+#~ msgid "want histogram?  %d"
+#~ msgstr "需要直方图？  %d"
+
+#~ msgid "Automatic reclass flag %d"
+#~ msgstr "自动重分类标记 %d"
+
+#~ msgid "File row addresses %p"
+#~ msgstr "文件的行的地址 %p"
+
+#~ msgid "Data to window col mapping %p"
+#~ msgstr "数据到窗口列的映射%p"
+
+#~ msgid "Data to window row constants %f,%f"
+#~ msgstr "数据到窗口行的常量 %f,%f"
+
+#~ msgid "Current data row in memory %d"
+#~ msgstr "当前内存中的数据行 %d"
+
+#~ msgid "Current null row in memory %d"
+#~ msgstr "当前内存中的空行 %d"
+
+#~ msgid "nbytes per cell for current row %d"
+#~ msgstr "当前行中每个像元所占的字节数 %d"
+
+#~ msgid "Decompressed data buffer %s"
+#~ msgstr "解压数据的缓冲区%s"
+
+#~ msgid "bytes per cell %d"
+#~ msgstr "每个像元所占字节数 %d"
+
+#~ msgid "type: int, float or double map %d"
+#~ msgstr "类型：整型、浮点或双精度地图 %d"
+
+#~ msgid "Temporary name for NEW files %s"
+#~ msgstr "新文件的临时名称 %s"
+
+#~ msgid "Temporary name for NEW NULL files %s"
+#~ msgstr "新的空文件的临时名称 %s"
+
+#~ msgid "Mapset of open file %s"
+#~ msgstr "打开文件的地图集 %s"
+
+#~ msgid "io error warning given %d"
+#~ msgstr "IO错误警告 %d"
+
+#~ msgid "xdr stream for reading fp %p"
+#~ msgstr "读取 fp 的 xdr 流 %p"
+
+#~ msgid "data buffer for reading null rows %p"
+#~ msgstr "读取空行的数据缓冲区 %p"
+
+#~ msgid "G_dump: end"
+#~ msgstr "G_dump：结束"
+
+#, fuzzy
+#~ msgid "Current window not settable"
+#~ msgstr "当前窗口 = %p"
+
+#, fuzzy
+#~ msgid "Color file for [%s] not available"
+#~ msgstr "区域  << %s >>  无效"
+
+#, fuzzy
+#~ msgid "Cannot use current window"
+#~ msgstr "当前窗口 = %p"
+
+#, fuzzy
+#~ msgid "Not able to open cellfile for [%s]"
+#~ msgstr "无法打开文件 %s 在 %s 中"
+
+#~ msgid "Too many open raster maps"
+#~ msgstr "打开太多的栅格文件"
+
+#~ msgid "Too many open files"
+#~ msgstr "打开太多文件"
+
+#~ msgid "ERROR: GISBASE not set\n"
+#~ msgstr "错误：GISBASE没有设置\n"
+
+#~ msgid "Error reading datum shift parameters for %s from table"
+#~ msgstr "从表中读取 %s 的基准面偏移参数时发生错误"
+
+#~ msgid "Error reading ellipsoid parameters for %s from table"
+#~ msgstr "从表中读取 %s 的椭球参数时发生错误"
+
+#~ msgid "No ellipsoid field %s in file %s in %s"
+#~ msgstr "没有椭球信息字段 %s 在文件%s (在%s中)"
+
+#~ msgid "invalid value: field %s in file %s in %s"
+#~ msgstr "无效的值：字段%s 文件%s (在%s中)"
+
+#~ msgid "No n-dims in site_list"
+#~ msgstr "在站点列表中没有 n-dims"
+
+#~ msgid "No double attributes in site_list"
+#~ msgstr "在站点列表中没有双精度属性"
+
+#~ msgid "No string attributes in site_list"
+#~ msgstr "在站点列表中没有字符串属性"
+
+#~ msgid "String attribute index out of range"
+#~ msgstr "字符串属性索引越界"
+
+#~ msgid "Unknown attribute type in call to G_readsites_xyz()!\n"
+#~ msgstr "在调用 G_readsites_xyz() 时有未知的属性类型！\n"
+
+#~ msgid "Failed to convert string attribute."
+#~ msgstr "转换字符串属性失败。"
+
+#~ msgid "Reading sites list ...                  "
+#~ msgstr "读取站点列表 ...                  "
+
+#~ msgid "failed to guess format"
+#~ msgstr "无法确定格式"
+
+#~ msgid "decimal field %i not present in sites file"
+#~ msgstr "十进制字段 %i 不在站点文件中"
+
+#~ msgid ""
+#~ "I'm finding records that do not have a floating point attributes (fields "
+#~ "prefixed with '%')."
+#~ msgstr "这些记录没有浮点属性(字段以'%'为前缀)."

@@ -10583,23 +10583,129 @@ msgstr ""
 "Wahl ist \"grassdata\" im eigenen Heimatverzeichnis."
 
 #, fuzzy
-#~ msgid ""
-#~ "Reading workspace file <%(file)s> failed.\n"
-#~ "Invalid file, unable to parse XML document.\n"
-#~ "\n"
-#~ "%(err)s"
-#~ msgstr ""
-#~ "Lesen der Projektdatei <%s> fehlgeschlagen. Ungï¿½ltige Datei; kann das "
-#~ "XML-Dokument nicht parsen."
+msgid ""
+"Reading workspace file <%(file)s> failed.\n"
+"Invalid file, unable to parse XML document.\n"
+"\n"
+"%(err)s"
+msgstr ""
+"Lesen der Projektdatei <%s> fehlgeschlagen. Ungï¿½ltige Datei; kann das XML-"
+"Dokument nicht parsen."
+
+msgid "GRASS GIS Map Calculator"
+msgstr "GRASS GIS Kartenrechner"
+
+msgid "GRASS GIS Map Calculator (3D raster)"
+msgstr "GRASS GIS Kartenrechner (3D Raster)"
+
+msgid "C&onfig"
+msgstr "K&onfiguration"
+
+msgid "Projection for current location"
+msgstr "Projektion der aktuellen Location"
+
+#, fuzzy
+msgid ""
+"Calculates cast shadow areas from sun position and DEM. Either A: exact sun "
+"position is specified, or B: date/time to calculate the sun position by r."
+"sunmask it"
+msgstr ""
+"Berechnet verschattete Bereiche aus der Sonnenposition und einem DGM. Es "
+"wird eintweder eine genaue Sonnenposition oder Datumsinformationen zur "
+"Berechnung (mit r.sunmask) erwartet."
+
+#, fuzzy
+msgid "Removes a table from database."
+msgstr "Erzeuge aus Datenbank"
+
+msgid "Show menu tree"
+msgstr "Zeige Menuebaum "
+
+msgid "Show menu tree in new window"
+msgstr "Zeige Menuebaum in neuem Fenster"
+
+msgid "logical AND (ignores NULLs"
+msgstr "logisches UND (ignoriert NULL"
+
+msgid "logical OR (ignores NULLs"
+msgstr "logisches ODER (ignoriert NULL"
+
+#, fuzzy
+msgid "3D Raster map"
+msgstr "Rasterkarte"
+
+msgid "Error in command execution '%s'"
+msgstr "Fehler bei der Ausfï¿½hrung des Befehls '%s'"
+
+#, fuzzy
+msgid "module"
+msgstr "Suche Modul:"
+
+#, fuzzy
+msgid "Select GRASS module"
+msgstr "Wï¿½hlen Sie eine GRASS Location und Mapset"
+
+#, fuzzy
+msgid "Color settings"
+msgstr "Vektor Einstellungen"
+
+#, fuzzy
+msgid "Size settings"
+msgstr "Texteinstellungen"
+
+#, fuzzy
+msgid "Unable to get list of available mapsets."
+msgstr "Kann Mapset nicht löschen"
+
+#, fuzzy
+msgid "Unable to get list of accessible mapsets."
+msgstr "Kann Mapset nicht löschen"
+
+#, fuzzy
+msgid "Menu tree window"
+msgstr "Fenster ersetzt den standard."
+
+msgid "label"
+msgstr "Label"
+
+msgid "help"
+msgstr "Hilfe"
+
+msgid "Run"
+msgstr "Los"
+
+msgid "Saved NVIZ Settings"
+msgstr "Gespeicherte Nviz-Einstellungen"
+
+#, fuzzy
+msgid "Load and apply settings from user settings file"
+msgstr ""
+"Beende den Dialog und speichere die ï¿½nderungen in Datei mit "
+"Benutzereinstellungen"
+
+msgid "Raster calculator"
+msgstr "Rasterkartenrechner"
+
+msgid ""
+"Note that the 3D view mode is currently not working under MS Windows "
+"(hopefully this will be fixed soon). Please keep an eye out for updated "
+"versions of GRASS."
+msgstr ""
+"Beachten Sie, dass die 3D-Ansicht-Modus derzeit unter MS Windows nicht "
+"funktioniert (dieses wird hoffentlich bald behoben sein). Bitte achten Sie "
+"auf aktualisierte Versionen von GRASS."
+
+msgid ""
+"Note that the vector digitizer is currently not working under MS Windows "
+"(hopefully this will be fixed soon). Please keep an eye out for updated "
+"versions of GRASS."
+msgstr ""
+"Beachten Sie, dass der Vektordigitalisierer derzeit unter MS Windows nicht "
+"funktioniert (dieses wird hoffentlich bald behoben sein). Bitte achten Sie "
+"auf aktualisierte Versionen von GRASS."
 
 #~ msgid "Unable to open workspace file <%s> for writing."
 #~ msgstr "Kann die Projektdatei <%s> nicht zum Schreiben öffnen."
-
-#~ msgid "GRASS GIS Map Calculator"
-#~ msgstr "GRASS GIS Kartenrechner"
-
-#~ msgid "GRASS GIS Map Calculator (3D raster)"
-#~ msgstr "GRASS GIS Kartenrechner (3D Raster)"
 
 #~ msgid "Add 3D raster map"
 #~ msgstr "3D Rasterkarte hinzufügen"
@@ -10665,27 +10771,11 @@ msgstr ""
 #~ msgid "Export grid 3D volume"
 #~ msgstr "Exportiere 3D Volumen"
 
-#~ msgid "C&onfig"
-#~ msgstr "K&onfiguration"
-
-#~ msgid "Projection for current location"
-#~ msgstr "Projektion der aktuellen Location"
-
 #~ msgid "Map calculator"
 #~ msgstr "Kartenrechner"
 
 #~ msgid "Map calculator for raster map algebra"
 #~ msgstr "Kartenrechner für Rasterkarten-Algebra"
-
-#, fuzzy
-#~ msgid ""
-#~ "Calculates cast shadow areas from sun position and DEM. Either A: exact "
-#~ "sun position is specified, or B: date/time to calculate the sun position "
-#~ "by r.sunmask it"
-#~ msgstr ""
-#~ "Berechnet verschattete Bereiche aus der Sonnenposition und einem DGM. Es "
-#~ "wird eintweder eine genaue Sonnenposition oder Datumsinformationen zur "
-#~ "Berechnung (mit r.sunmask) erwartet."
 
 #~ msgid ""
 #~ "Takes vector stream data, transforms it to raster and subtracts depth "
@@ -10727,22 +10817,6 @@ msgstr ""
 #~ msgid "Map calculator for volumetric map algebra"
 #~ msgstr "Kartenrechner für volumetrische Kartenalgebra."
 
-#, fuzzy
-#~ msgid "Removes a table from database."
-#~ msgstr "Erzeuge aus Datenbank"
-
-#~ msgid "Show menu tree"
-#~ msgstr "Zeige Menuebaum "
-
-#~ msgid "Show menu tree in new window"
-#~ msgstr "Zeige Menuebaum in neuem Fenster"
-
-#~ msgid "logical AND (ignores NULLs"
-#~ msgstr "logisches UND (ignoriert NULL"
-
-#~ msgid "logical OR (ignores NULLs"
-#~ msgstr "logisches ODER (ignoriert NULL"
-
 #~ msgid ""
 #~ "Unable to start vector digitizer.\n"
 #~ "The VDigit python extension was not found or loaded properly.\n"
@@ -10774,13 +10848,6 @@ msgstr ""
 #~ msgid "Nviz toolbar"
 #~ msgstr "Werkzeugleiste Nviz"
 
-#, fuzzy
-#~ msgid "3D Raster map"
-#~ msgstr "Rasterkarte"
-
-#~ msgid "Error in command execution '%s'"
-#~ msgstr "Fehler bei der Ausfï¿½hrung des Befehls '%s'"
-
 #~ msgid "Preferences error"
 #~ msgstr "Einstellungs-Fehler"
 
@@ -10792,73 +10859,6 @@ msgstr ""
 
 #~ msgid "Nviz error"
 #~ msgstr "Nviz Fehler"
-
-#, fuzzy
-#~ msgid "module"
-#~ msgstr "Suche Modul:"
-
-#, fuzzy
-#~ msgid "Select GRASS module"
-#~ msgstr "Wï¿½hlen Sie eine GRASS Location und Mapset"
-
-#, fuzzy
-#~ msgid "Color settings"
-#~ msgstr "Vektor Einstellungen"
-
-#, fuzzy
-#~ msgid "Size settings"
-#~ msgstr "Texteinstellungen"
-
-#, fuzzy
-#~ msgid "Unable to get list of available mapsets."
-#~ msgstr "Kann Mapset nicht löschen"
-
-#, fuzzy
-#~ msgid "Unable to get list of accessible mapsets."
-#~ msgstr "Kann Mapset nicht löschen"
-
-#, fuzzy
-#~ msgid "Menu tree window"
-#~ msgstr "Fenster ersetzt den standard."
-
-#~ msgid "label"
-#~ msgstr "Label"
-
-#~ msgid "help"
-#~ msgstr "Hilfe"
-
-#~ msgid "Run"
-#~ msgstr "Los"
-
-#~ msgid "Saved NVIZ Settings"
-#~ msgstr "Gespeicherte Nviz-Einstellungen"
-
-#, fuzzy
-#~ msgid "Load and apply settings from user settings file"
-#~ msgstr ""
-#~ "Beende den Dialog und speichere die ï¿½nderungen in Datei mit "
-#~ "Benutzereinstellungen"
-
-#~ msgid "Raster calculator"
-#~ msgstr "Rasterkartenrechner"
-
-#~ msgid ""
-#~ "Note that the 3D view mode is currently not working under MS Windows "
-#~ "(hopefully this will be fixed soon). Please keep an eye out for updated "
-#~ "versions of GRASS."
-#~ msgstr ""
-#~ "Beachten Sie, dass die 3D-Ansicht-Modus derzeit unter MS Windows nicht "
-#~ "funktioniert (dieses wird hoffentlich bald behoben sein). Bitte achten "
-#~ "Sie auf aktualisierte Versionen von GRASS."
-
-#~ msgid ""
-#~ "Note that the vector digitizer is currently not working under MS Windows "
-#~ "(hopefully this will be fixed soon). Please keep an eye out for updated "
-#~ "versions of GRASS."
-#~ msgstr ""
-#~ "Beachten Sie, dass der Vektordigitalisierer derzeit unter MS Windows "
-#~ "nicht funktioniert (dieses wird hoffentlich bald behoben sein). Bitte "
-#~ "achten Sie auf aktualisierte Versionen von GRASS."
 
 #~ msgid "Input DXF file"
 #~ msgstr "Eingabe DXF-Datei"
@@ -11196,3 +11196,143 @@ msgstr ""
 
 #~ msgid "GRASS GIS Raster Map Calculator (3D raster)"
 #~ msgstr "GRASS GIS Rasterkartenrechner (3D Raster)"
+
+#~ msgid ""
+#~ "Reading workspace file <%s> failed. Invalid file, unable to parse XML "
+#~ "document."
+#~ msgstr ""
+#~ "Lesen der Projektdatei <%s> fehlgeschlagen. Ungültige Datei; kann das XML-"
+#~ "Dokument nicht parsen."
+
+#~ msgid "Writing current settings to workspace file failed (%s)."
+#~ msgstr ""
+#~ "Das Schreiben der aktuellen Einstellungen in die Projektdatei ist "
+#~ "fehlgeschlagen (%s)."
+
+#~ msgid "Add raster map layer"
+#~ msgstr "Rasterkarte hinzufügen"
+
+#~ msgid "Add layer group"
+#~ msgstr "Ebenen-Gruppe hinzufügen"
+
+#~ msgid "Delete selected layer"
+#~ msgstr "Selektierte Ebenen löschen"
+
+#~ msgid "Add RGB layer"
+#~ msgstr "RGB-Ebene hinzufügen"
+
+#~ msgid "Add HIS layer"
+#~ msgstr "HIS-Ebene hinzufügen"
+
+#~ msgid "Reload GCPs from selected POINTS file"
+#~ msgstr "Lade erneut GCPs aus POINTS-Datei"
+
+#~ msgid "Converts a raster map into a vector map layer."
+#~ msgstr "Konvertiert eine Rasterkarte in eine Vektorkarte"
+
+#~ msgid ""
+#~ "Generates raster map layers of slope, aspect, curvatures and partial "
+#~ "derivatives from a raster map layer of true elevation values. Aspect is "
+#~ "calculated counterclockwise from east."
+#~ msgstr ""
+#~ "Erzeugt Hangneigungs-, Hangexpositions-, Wölbungs- und partielle "
+#~ "Ableitungskarten von einer Rasterkarte mit Höheninformationen."
+#~ "Hangexpositionen werden von Osten gegen den Uhrzeigersinn berechnet."
+
+#~ msgid ""
+#~ "Filters and generates a depressionless elevation map and a flow direction "
+#~ "map from a given elevation layer."
+#~ msgstr ""
+#~ "Filtert und generiert ein depressionsloses Höhenmodell und eine "
+#~ "Fliessrichtungskarte auf Basis eines gegebenen Höhenmodells"
+
+#~ msgid "Flow computation for massive grids (Float version)."
+#~ msgstr ""
+#~ "Berechnung von Fließrichtung und -mengen auf sehr großen Rastern (Float-"
+#~ "Version)"
+
+#~ msgid ""
+#~ "Overland flow hydrologic simulation using path sampling method (SIMWE)"
+#~ msgstr ""
+#~ "Overland flow hydrologic simulation using path sampling method (SIMWE)"
+
+#~ msgid ""
+#~ "Sediment transport and erosion/deposition simulation using path sampling "
+#~ "method (SIMWE)"
+#~ msgstr ""
+#~ "Sedimenttransport and Erosions-/Depositionsimulation durch die path "
+#~ "sampling method (SIMWE)"
+
+#~ msgid "Creates topographic index [ln(a/tan(beta))] map from elevation map."
+#~ msgstr ""
+#~ "Erstellt Topographischen Index (ln(a/tan(beta))) auf Basis einer "
+#~ "Höhenkarte (DHM)."
+
+#~ msgid "Watershed basin analysis program."
+#~ msgstr "Programm zur Analyse von Wassereinzugsgebieten."
+
+#~ msgid ""
+#~ "Calculates univariate statistics from a GRASS raster map based on vector "
+#~ "polygons and uploads statistics to new attribute columns."
+#~ msgstr ""
+#~ "Berechnet Kennzahlen univariater Statistik einer Rasterkarte für Polygone "
+#~ "und fügt die Ergebnisse als neue Spalte der Attributtabelle an."
+
+#~ msgid "Map Toolbar"
+#~ msgstr "Werkzeugleiste Karte"
+
+#~ msgid "Icon size:"
+#~ msgstr "Symbolgröße:"
+
+#~ msgid "%(primitives)d primitives (%(points)d points)"
+#~ msgstr "%(primitives)d Primitive (%(points)d Punkte)"
+
+#~ msgid ""
+#~ "Unable to initialize display driver of vector digitizer. See 'Command "
+#~ "output' for details.\n"
+#~ "\n"
+#~ "Details:"
+#~ msgstr ""
+#~ "Kann den Displaytreiber des Vektordigitalisierers nicht initializieren. "
+#~ "Siehe 'Befehlsausgabe' Fenster für Einzelheiten.\n"
+#~ "\n"
+#~ "Details:"
+
+#~ msgid ""
+#~ "Command '%s' not yet implemented in the GUI. Try adding it as a command "
+#~ "layer instead."
+#~ msgstr ""
+#~ "Befehl '%s' wurde noch nicht im GUI implementiert. Versuchen Sie es "
+#~ "stattdessen als Befehlsebene hinzuzufügen."
+
+#~ msgid ""
+#~ "Note that the wxGUI's 3D view mode is currently disabled (hopefully this "
+#~ "will be fixed soon). Please keep an eye out for updated versions of "
+#~ "GRASS. In the meantime you can use \"NVIZ\" from the File menu."
+#~ msgstr ""
+#~ "Beachten Sie, dass die 3D-Ansicht-Modus derzeit unter MS Windows nicht "
+#~ "funktioniert (dieses wird hoffentlich bald behoben sein). Bitte achten "
+#~ "Sie auf aktualisierte Versionen von GRASS. In der Zwischenzeit können Sie "
+#~ "\"nviz\" aus dem Menü \"Datei\" verwenden."
+
+#~ msgid "<%(name)s>: layer type <%(type)s> is not supported yet."
+#~ msgstr "<%(name)s>: Layertyp <%(type)s> wird noch nicht unterstützt."
+
+#~ msgid "Valid range"
+#~ msgstr "Gültiger Wertebereich"
+
+#~ msgid ""
+#~ "Check a mapset to make it accessible, uncheck it to hide it.%sNote: The "
+#~ "current mapset is always accessible."
+#~ msgstr ""
+#~ "Selektiere ein Mapset, um es zugänglich zu machen und deselektiere es, um "
+#~ "es zu verbergen. %sBemerkung: Das aktuelle Mapset ist immer zugänglich."
+
+#~ msgid "Start GRASS"
+#~ msgstr "Starte GRASS"
+
+#~ msgid "Create mapset"
+#~ msgstr "Mapset erstellen"
+
+#~ msgid "3d view tools"
+#~ msgstr "3D Ansichtswerkzeuge"

@@ -6606,3 +6606,15 @@ msgstr "azul (RGB) o saturación (HIS): "
 
 #~ msgid "Generalization"
 #~ msgstr "Generalización"
+
+#~ msgid "Maximum likelyhood classification (MLC)"
+#~ msgstr "Clasificación por probabilidad máxima (MLC)"
+
+#~ msgid "   Attribute col for labels"
+#~ msgstr "   Columna de atributos para las etiquetas"
+
+#, fuzzy
+#~ msgid "polynomial transformation  (rasters only). Requires 7+ GCPs."
+#~ msgstr ""
+#~ "transformación polinomial  (sólo rásters). Requiere 6 o más puntos de "
+#~ "control."

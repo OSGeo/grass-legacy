@@ -6480,5 +6480,5 @@ msgstr "verde (RGB) o intensity (HIS):"
 msgid "blue (RGB) or saturation (HIS):"
 msgstr "blu (RGB) o saturation (HIS):"
 
-#~ msgid "Run (in Xterm)"
-#~ msgstr "Esegui (in Xterm)"
+msgid "Run (in Xterm)"
+msgstr "Esegui (in Xterm)"
