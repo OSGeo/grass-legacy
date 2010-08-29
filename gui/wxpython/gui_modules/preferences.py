@@ -1634,7 +1634,7 @@ class DefaultFontDialog(wx.Dialog):
                 flag=wx.EXPAND, pos=(0, 1))
 
         label = wx.StaticText(parent=panel, id=wx.ID_ANY,
-                              label=("Character encoding:"))
+                              label=_("Character encoding:"))
         gridSizer.Add(item=label,
                       flag=wx.ALIGN_CENTER_VERTICAL,
                       pos=(1, 0))
