@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: grassmods_el\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-08-22 02:31+0200\n"
+"POT-Creation-Date: 2010-08-29 11:42+0200\n"
 "PO-Revision-Date: 2009-02-19 10:29+0200\n"
 "Last-Translator: Vasilios Antoniou <vantoniou@gmail.com>\n"
 "Language-Team: Greek <grass-translations@lists.osgeo.org>\n"
@@ -13187,14 +13187,14 @@ msgstr ""
 
 #: ../general/g.gui/main.c:44
 #, fuzzy
-msgid "Default value: GRASS_GUI if defined otherwise tcltk"
+msgid "Default value: GRASS_GUI if defined, otherwise wxpython"
 msgstr "Προεπιλογή"
 
 #: ../general/g.gui/main.c:45
 msgid ""
-"tcltk;Tcl/Tk based GUI - GIS Manager (gis.m);oldtcltk;Old Tcl/Tk based GUI - "
-"Display Manager (d.m);wxpython;wxPython based next generation GUI;text;"
-"command line interface only"
+"wxpython;wxPython based GUI - wxGUI;tcltk;Tcl/Tk based GUI - GIS Manager "
+"(gis.m);oldtcltk;Old Tcl/Tk based GUI - Display Manager (d.m);text;command "
+"line interface only"
 msgstr ""
 
 #: ../general/g.gui/main.c:54
@@ -17957,44 +17957,44 @@ msgid ""
 "import 3D vector"
 msgstr ""
 
-#: ../vector/v.in.ogr/geom.c:192 ../vector/v.in.ogr/geom.c:205
-#: ../vector/v.in.ogr/geom.c:229 ../vector/v.in.ogr/geom.c:271
+#: ../vector/v.in.ogr/geom.c:201 ../vector/v.in.ogr/geom.c:214
+#: ../vector/v.in.ogr/geom.c:238 ../vector/v.in.ogr/geom.c:280
 msgid "Skipping empty geometry feature"
 msgstr ""
 
-#: ../vector/v.in.ogr/geom.c:245
+#: ../vector/v.in.ogr/geom.c:254
 #, c-format
 msgid "Degenerate polygon ([%d] vertices)"
 msgstr ""
 
-#: ../vector/v.in.ogr/geom.c:250
+#: ../vector/v.in.ogr/geom.c:259
 #, c-format
 msgid "Area size [%.1e], area not imported"
 msgstr ""
 
-#: ../vector/v.in.ogr/geom.c:282
+#: ../vector/v.in.ogr/geom.c:293
 #, c-format
 msgid "Degenerate island ([%d] vertices)"
 msgstr ""
 
-#: ../vector/v.in.ogr/geom.c:287
+#: ../vector/v.in.ogr/geom.c:301
 #, c-format
 msgid "Island size [%.1e], island not imported"
 msgstr ""
 
-#: ../vector/v.in.ogr/geom.c:308
+#: ../vector/v.in.ogr/geom.c:323
 msgid "Cannot calculate centroid"
 msgstr ""
 
-#: ../vector/v.in.ogr/geom.c:339
+#: ../vector/v.in.ogr/geom.c:354
 msgid "No centroid written for polygon with 0 vertices"
 msgstr ""
 
-#: ../vector/v.in.ogr/geom.c:360
+#: ../vector/v.in.ogr/geom.c:375
 msgid "Cannot write part of geometry"
 msgstr ""
 
-#: ../vector/v.in.ogr/geom.c:366
+#: ../vector/v.in.ogr/geom.c:381
 msgid "Unknown geometry type"
 msgstr ""
 
@@ -25370,43 +25370,59 @@ msgid "Input coordinate file (omit to read from stdin)"
 msgstr ""
 
 #: ../locale/scriptstrings/m.proj_to_translate.c:4
+#: ../locale/scriptstrings/m.proj_to_translate.c:6
+#: ../locale/scriptstrings/m.proj_to_translate.c:8
+#: ../locale/scriptstrings/m.proj_to_translate.c:18
+#: ../locale/scriptstrings/m.proj_to_translate.c:20
+#, fuzzy
+msgid "Files & format"
+msgstr "Αδυναμία ανοίγματος βάσης δεδομενων <%s>"
+
+#: ../locale/scriptstrings/m.proj_to_translate.c:5
 #, fuzzy
 msgid "Output coordinate file (omit to send to stdout)"
 msgstr "Όνομα εξαγόμενου διανυσματικού χάρτη"
 
-#: ../locale/scriptstrings/m.proj_to_translate.c:5
+#: ../locale/scriptstrings/m.proj_to_translate.c:7
 #: ../locale/scriptstrings/r.out.xyz_to_translate.c:5
 msgid "Field separator"
 msgstr "Διαχωριστής πεδίων"
 
-#: ../locale/scriptstrings/m.proj_to_translate.c:6
+#: ../locale/scriptstrings/m.proj_to_translate.c:9
 msgid "Input projection parameters (PROJ.4 style)"
 msgstr ""
 
-#: ../locale/scriptstrings/m.proj_to_translate.c:7
-msgid "Output projection parameters (PROJ.4 style)"
-msgstr ""
-
-#: ../locale/scriptstrings/m.proj_to_translate.c:8
-msgid "Use LL WGS84 as input and current location as output projection"
-msgstr ""
-
-#: ../locale/scriptstrings/m.proj_to_translate.c:9
-msgid "Use current location as input and LL WGS84 as output projection"
-msgstr ""
-
 #: ../locale/scriptstrings/m.proj_to_translate.c:10
-msgid ""
-"Output long/lat in decimal degrees or other projections with many decimal "
-"places"
+#: ../locale/scriptstrings/m.proj_to_translate.c:12
+#: ../locale/scriptstrings/m.proj_to_translate.c:14
+#: ../locale/scriptstrings/m.proj_to_translate.c:16
+msgid "Projections"
 msgstr ""
 
 #: ../locale/scriptstrings/m.proj_to_translate.c:11
+msgid "Output projection parameters (PROJ.4 style)"
+msgstr ""
+
+#: ../locale/scriptstrings/m.proj_to_translate.c:13
+msgid "Use LL WGS84 as input and current location as output projection"
+msgstr ""
+
+#: ../locale/scriptstrings/m.proj_to_translate.c:15
+msgid "Use current location as input and LL WGS84 as output projection"
+msgstr ""
+
+#: ../locale/scriptstrings/m.proj_to_translate.c:17
+msgid ""
+"Output long/lat in decimal degrees, or other projections with many decimal "
+"places"
+msgstr ""
+
+#: ../locale/scriptstrings/m.proj_to_translate.c:19
 msgid ""
 "Script style output in CSV format respecting the field separator settings"
 msgstr ""
 
-#: ../locale/scriptstrings/m.proj_to_translate.c:12
+#: ../locale/scriptstrings/m.proj_to_translate.c:21
 msgid "Verbose mode (print projection parameters and filenames to stderr)"
 msgstr ""
 
