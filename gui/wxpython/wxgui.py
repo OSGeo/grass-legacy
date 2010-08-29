@@ -1511,7 +1511,7 @@ class GMFrame(wx.Frame):
         if UserSettings.Get(group='manager', key='askOnRemoveLayer', subkey='enabled'):
             layerName = ''
             for item in self.curr_page.maptree.GetSelections():
-                name = str(self.curr_page.maptree.GetItemText(item))
+                name = self.curr_page.maptree.GetItemText(item)
                 idx = name.find('(opacity')
                 if idx > -1:
                     layerName += '<' + name[:idx].strip(' ') + '>,\n'
