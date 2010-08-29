@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: grassmods_ru\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-06-02 22:02+0200\n"
+"POT-Creation-Date: 2010-08-29 12:20+0200\n"
 "PO-Revision-Date: 2009-05-15 00:23-0600\n"
 "Last-Translator: Maxim Dubinin <sim@gis-lab.info>\n"
 "Language-Team: Russian <grass-translations@lists.osgeo.org>\n"
@@ -272,7 +272,7 @@ msgstr "Невозможно записать растровый ряд"
 #: ../raster/r.flow/io.c:173 ../raster/r.flow/io.c:208
 #: ../raster/r.in.ascii/main.c:206 ../raster/r.resamp.stats/main.c:341
 #: ../raster/r.in.mat/main.c:430 ../raster/r.in.arc/main.c:154
-#: ../raster/r.bitpattern/main.c:125 ../vector/lidar/v.surf.bspline/main.c:319
+#: ../raster/r.bitpattern/main.c:125 ../vector/lidar/v.surf.bspline/main.c:317
 #: ../vector/v.kernel/main.c:268 ../vector/v.to.rast/vect2rast.c:125
 #: ../vector/v.to.rast/vect2rast.c:129 ../vector/v.surf.idw/main.c:259
 #: ../vector/v.neighbors/main.c:96 ../doc/raster/r.example/main.c:141
@@ -328,7 +328,7 @@ msgstr ""
 #: ../vector/v.net.timetable/main.c:353 ../vector/v.net.timetable/main.c:363
 #: ../vector/v.net.connectivity/main.c:165
 #: ../vector/v.net.connectivity/main.c:181 ../vector/v.net.flow/main.c:214
-#: ../vector/v.in.ascii/a2b.c:161 ../vector/v.edit/a2b.c:198
+#: ../vector/v.in.ascii/a2b.c:172 ../vector/v.edit/a2b.c:198
 #: ../vector/v.surf.rst/main.c:887 ../vector/v.mapcalc/list.c:54
 #: ../vector/v.mapcalc/list.c:501 ../vector/v.net.centrality/main.c:265
 #: ../vector/v.net.centrality/main.c:270 ../vector/v.net.centrality/main.c:276
@@ -958,7 +958,6 @@ msgstr ""
 #: ../vector/v.what.rast/main.c:138 ../visualization/xganim/main.c:366
 #: ../visualization/nviz2/cmd/surface.c:54
 #: ../visualization/nviz2/cmd/surface.c:104 ../doc/raster/r.example/main.c:111
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:392
 #: ../ps/ps.map/outl_io.c:68 ../imagery/i.pca/main.c:120
 #: ../imagery/i.zc/main.c:111 ../imagery/i.rgb.his/openfiles.c:14
 #: ../imagery/i.rgb.his/openfiles.c:16 ../imagery/i.rgb.his/openfiles.c:18
@@ -985,7 +984,7 @@ msgstr "Растровый слой <%s> не найден"
 #: ../raster3d/base/r3.info.main.c:285 ../raster3d/base/r3.info.main.c:298
 #: ../raster3d/base/r3.info.main.c:308 ../raster3d/base/r3.info.main.c:313
 #: ../raster3d/base/r3.info.main.c:321 ../raster3d/base/r3.info.main.c:334
-#: ../raster/r.info/main.c:307 ../raster/r.info/main.c:437
+#: ../raster/r.info/main.c:307 ../raster/r.info/main.c:433
 msgid "Cannot allocate memory for string"
 msgstr "Невозможно выделить память для строки"
 
@@ -1134,7 +1133,7 @@ msgstr "Использование координат карты вместо xy
 #: ../raster/r.region/main.c:54 ../raster/r.in.mat/main.c:92
 #: ../raster/r.in.arc/main.c:59 ../raster/r.neighbors/main.c:107
 #: ../raster/r.bitpattern/main.c:62
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:153
+#: ../locale/scriptstrings/r.blend_to_translate.c:2
 msgid "raster"
 msgstr "растр"
 
@@ -1143,6 +1142,11 @@ msgid "Exports a GRASS raster to a binary array."
 msgstr "Экспорт растра GRASS в бинарный массив."
 
 #: ../raster/r.out.bin/main.c:73 ../raster/r.random/main.c:57
+#: ../locale/scriptstrings/r.out.gdal.sh_to_translate.c:5
+#: ../locale/scriptstrings/r.reclass.area_to_translate.c:3
+#: ../locale/scriptstrings/r.out.xyz_to_translate.c:3
+#: ../locale/scriptstrings/r.colors.stddev_to_translate.c:3
+#: ../locale/scriptstrings/d.rast.edit_to_translate.c:3
 #: ../imagery/i.zc/main.c:69
 msgid "Name of input raster map"
 msgstr "Название вводного растрового слоя"
@@ -1187,7 +1191,7 @@ msgstr "Неправильное значение для null (должно бы
 #: ../raster/r.lake/main.c:257 ../raster/r.surf.idw/main.c:135
 #: ../raster/r.out.vtk/main.c:222 ../raster/r.out.vtk/main.c:288
 #: ../raster/r.out.vtk/main.c:317 ../raster/r.out.vtk/main.c:364
-#: ../raster/r.cost/main.c:370 ../raster/r.cost/main.c:657
+#: ../raster/r.cost/main.c:370 ../raster/r.cost/main.c:672
 #: ../raster/r.bilinear/main.c:94 ../raster/r.to.rast3elev/main.c:160
 #: ../raster/r.out.ppm/main.c:120 ../raster/r.out.ppm3/main.c:124
 #: ../raster/r.random/count.c:24 ../raster/r.random/count.c:30
@@ -1400,9 +1404,8 @@ msgstr "Базовый растровый слой <%s> не найден"
 #: ../general/manage/cmd/rename.c:84 ../vector/v.in.ogr/main.c:326
 #: ../vector/v.to.rast3/main.c:69 ../vector/v.kernel/main.c:263
 #: ../vector/v.surf.idw/main.c:132 ../vector/v.edit/main.c:86
-#: ../doc/raster/r.example/main.c:114
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/opennew.c:11
-#: ../imagery/i.zc/main.c:119 ../imagery/i.ifft/ifftmain.c:116
+#: ../doc/raster/r.example/main.c:114 ../imagery/i.zc/main.c:119
+#: ../imagery/i.ifft/ifftmain.c:116
 #: ../imagery/i.ortho.photo/photo.camera/main.c:90
 #: ../imagery/i.fft/fftmain.c:121 ../imagery/i.fft/fftmain.c:124
 #, c-format
@@ -1485,6 +1488,8 @@ msgstr "Ошибка чтения слоя 'saturation'"
 #: ../raster/r.out.mat/main.c:64 ../raster/r.out.ascii/main.c:59
 #: ../raster/r.out.ppm/main.c:54 ../raster/r.out.tiff/r.out.tiff.c:99
 #: ../raster/r.out.gdal/main.c:128
+#: ../locale/scriptstrings/r.out.gdal.sh_to_translate.c:2
+#: ../locale/scriptstrings/r.out.xyz_to_translate.c:2
 msgid "raster, export"
 msgstr "растр, экспорт"
 
@@ -1597,6 +1602,7 @@ msgstr "%ld байтов записано в '%s'"
 
 #: ../raster/r.in.poly/main.c:29 ../raster/r.in.gdal/main.c:79
 #: ../raster/r.in.bin/main.c:122 ../raster/r.external/main.c:506
+#: ../locale/scriptstrings/r.in.srtm_to_translate.c:2
 msgid "raster, import"
 msgstr "растр, импорт"
 
@@ -1623,17 +1629,32 @@ msgstr "Количество строк хранящихся в памяти"
 msgid "Minimum number of rows to hold in memory is 1"
 msgstr "Минимальное количество строк хранимых в памяти - 1 "
 
+#: ../raster/r.in.poly/get_item.c:75
+#, fuzzy, c-format
+msgid "Illegal coordinate <%s, %s>, skipping."
+msgstr "Неверная x координата <%s>"
+
+#: ../raster/r.in.poly/get_item.c:80
+#, fuzzy, c-format
+msgid "Illegal north coordinate <%s>, skipping."
+msgstr "Неверная северная координата <%s>"
+
+#: ../raster/r.in.poly/get_item.c:85
+#, fuzzy, c-format
+msgid "Illegal east coordinate <%s>, skipping."
+msgstr "Неверная восточная координата <%s>"
+
 #: ../raster/r.in.poly/poly2rast.c:36
 #, c-format
 msgid "Can't create raster map <%s>"
 msgstr "Невозможно создать растровый слой <%s>"
 
-#: ../raster/r.in.poly/poly2rast.c:51 ../raster/r.in.xyz/main.c:528
+#: ../raster/r.in.poly/poly2rast.c:56 ../raster/r.in.xyz/main.c:528
 #, c-format
 msgid "Pass #%d (of %d) ..."
 msgstr "Проход #%d (из %d) ..."
 
-#: ../raster/r.in.poly/poly2rast.c:73 ../raster/r.carve/raster.c:32
+#: ../raster/r.in.poly/poly2rast.c:78 ../raster/r.carve/raster.c:32
 #: ../vector/v.to.rast/vect2rast.c:182
 msgid "Writing raster map..."
 msgstr "Запись растрового слоя..."
@@ -1704,9 +1725,9 @@ msgstr "Невозможно прочитать fp диапазон растро
 #: ../display/d.thematic.area/plot1.c:199 ../display/d.vect/area.c:60
 #: ../display/d.vect/plot1.c:208 ../display/d.vect/attr.c:45
 #: ../vector/v.sample/main.c:207 ../vector/v.db.select/main.c:155
-#: ../vector/v.db.select/main.c:286 ../vector/v.out.svg/main.c:148
+#: ../vector/v.db.select/main.c:286 ../vector/v.out.svg/main.c:163
 #: ../vector/v.to.db/update.c:46 ../vector/v.to.db/query.c:89
-#: ../vector/lidar/v.surf.bspline/main.c:334
+#: ../vector/lidar/v.surf.bspline/main.c:335
 #: ../vector/lidar/v.surf.bspline/crosscorr.c:123
 #: ../vector/v.to.rast3/main.c:86 ../vector/v.extract/main.c:291
 #: ../vector/v.in.db/main.c:119 ../vector/v.net.distance/main.c:196
@@ -1954,7 +1975,6 @@ msgstr "Прочесть слой fp как целочисленный"
 #: ../raster/r.distance/parse.c:72 ../raster/r.carve/main.c:127
 #: ../raster/r.neighbors/main.c:291 ../vector/v.qcount/main.c:117
 #: ../vector/v.mkgrid/main.c:141
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:328
 msgid ""
 "The '-q' flag is superseded and will be removed in future. Please use '--"
 "quiet' instead."
@@ -2043,9 +2063,7 @@ msgstr "Название выходного растра"
 #: ../raster/r.kappa/main.c:102 ../raster/r.report/parse.c:95
 #: ../raster/r.bitpattern/main.c:87 ../vector/v.sample/main.c:129
 #: ../vector/v.perturb/main.c:117 ../vector/v.kcv/main.c:106
-#: ../doc/raster/r.example/main.c:96
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:290
-#: ../imagery/i.cluster/main.c:163
+#: ../doc/raster/r.example/main.c:96 ../imagery/i.cluster/main.c:163
 msgid "Quiet"
 msgstr "Молча"
 
@@ -2203,7 +2221,7 @@ msgstr "Используйте параметр -M или -s, но не оба"
 #: ../raster/r.out.ascii/main.c:172 ../raster/r.out.ppm3/main.c:149
 #: ../raster/r.profile/main.c:157 ../raster/r.out.arc/main.c:142
 #: ../raster/r.cats/main.c:177 ../general/g.pnmcomp/main.c:241
-#: ../general/g.pnmcomp/main.c:258 ../general/g.transform/main.c:278
+#: ../general/g.pnmcomp/main.c:258 ../general/g.transform/main.c:281
 #: ../display/d.nviz/main.c:203 ../vector/v.out.vtk/main.c:176
 #: ../vector/v.out.ascii/out.c:161
 #, c-format
@@ -2537,9 +2555,9 @@ msgstr "Чтение %s ..."
 #: ../raster/r.walk/main.c:940 ../raster/r.walk/main.c:1522
 #: ../raster/r.walk/main.c:1557 ../raster/r.walk/main.c:1592
 #: ../raster/r.lake/main.c:276 ../raster/r.lake/main.c:281
-#: ../raster/r.cost/main.c:447 ../raster/r.cost/main.c:673
-#: ../raster/r.cost/main.c:1037 ../raster/r.cost/main.c:1070
-#: ../raster/r.cost/main.c:1103 ../raster/r.patch/main.c:156
+#: ../raster/r.cost/main.c:447 ../raster/r.cost/main.c:688
+#: ../raster/r.cost/main.c:1052 ../raster/r.cost/main.c:1085
+#: ../raster/r.cost/main.c:1118 ../raster/r.patch/main.c:156
 #: ../raster/r.patch/main.c:163 ../raster/r.out.ppm/main.c:188
 #: ../raster/r.los/main.c:264 ../raster/r.los/main.c:272
 #: ../raster/r.profile/read_rast.c:45 ../raster/r.profile/read_rast.c:73
@@ -2567,7 +2585,7 @@ msgstr "Инициализация результата"
 msgid "Unable to allocate memory for segment fbuff == NULL"
 msgstr "Невозможно выделить память для сегмента fbuff == NULL"
 
-#: ../raster/r.walk/main.c:880 ../raster/r.cost/main.c:522
+#: ../raster/r.walk/main.c:880 ../raster/r.cost/main.c:537
 #, fuzzy
 msgid "Initializing directional output "
 msgstr "Инициализация результата"
@@ -2587,7 +2605,7 @@ msgstr "Ошибка выделения памяти на чтение нача�
 msgid "Reading %s... "
 msgstr "Чтение %s ..."
 
-#: ../raster/r.walk/main.c:982 ../raster/r.cost/main.c:717
+#: ../raster/r.walk/main.c:982 ../raster/r.cost/main.c:732
 msgid "Specified starting location outside database window"
 msgstr "Указанная начальная область находится вне окна базы данных"
 
@@ -2599,7 +2617,7 @@ msgstr "Поиск стоимостного пути"
 msgid "End of map!"
 msgstr "Конец слоя!"
 
-#: ../raster/r.walk/main.c:1483 ../raster/r.cost/main.c:1003
+#: ../raster/r.walk/main.c:1483 ../raster/r.cost/main.c:1018
 msgid "Error, ct == pres_cell"
 msgstr "Ошибка, ct == pres_cell"
 
@@ -2636,7 +2654,7 @@ msgstr ""
 "Тип ячеек double.\n"
 "Writing..."
 
-#: ../raster/r.walk/main.c:1621 ../raster/r.cost/main.c:1133
+#: ../raster/r.walk/main.c:1621 ../raster/r.cost/main.c:1148
 #, fuzzy, c-format
 msgid "Writing movement direction file %s..."
 msgstr "Запись трансформированных данных в файл..."
@@ -2646,17 +2664,17 @@ msgstr "Запись трансформированных данных в фай
 msgid "Peak cost value: %f"
 msgstr "Пиковое стоимостное значение: %f"
 
-#: ../raster/r.walk/main.c:1706 ../raster/r.cost/main.c:1208
+#: ../raster/r.walk/main.c:1706 ../raster/r.cost/main.c:1223
 #, c-format
 msgid "Illegal x coordinate <%s>"
 msgstr "Неверная x координата <%s>"
 
-#: ../raster/r.walk/main.c:1708 ../raster/r.cost/main.c:1210
+#: ../raster/r.walk/main.c:1708 ../raster/r.cost/main.c:1225
 #, c-format
 msgid "Illegal y coordinate <%s>"
 msgstr "Неверная y координата <%s>"
 
-#: ../raster/r.walk/main.c:1712 ../raster/r.cost/main.c:1214
+#: ../raster/r.walk/main.c:1712 ../raster/r.cost/main.c:1229
 #, c-format
 msgid "Warning, ignoring point outside window: %.4f,%.4f"
 msgstr "Предупреждение, точка вне окна игнорируется: %.4f,%.4f"
@@ -3080,20 +3098,20 @@ msgstr "Перечислить поддерживаемые форматы и в
 #: ../raster/r.external/main.c:555 ../general/g.proj/main.c:63
 #: ../general/g.proj/main.c:69 ../general/g.proj/main.c:75
 #: ../general/g.proj/main.c:81 ../general/g.proj/main.c:86
-#: ../general/g.proj/main.c:92 ../general/g.region/main.c:89
-#: ../general/g.region/main.c:95 ../general/g.region/main.c:100
-#: ../general/g.region/main.c:106 ../general/g.region/main.c:112
-#: ../general/g.region/main.c:118 ../general/g.region/main.c:124
-#: ../general/g.region/main.c:132 ../general/g.region/main.c:137
-#: ../general/g.region/main.c:143 ../general/g.region/main.c:148
-#: ../vector/v.to.db/parse.c:104 ../vector/v.to.db/parse.c:109
-#: ../vector/v.to.db/parse.c:115 ../vector/v.info/main.c:75
-#: ../vector/v.info/main.c:81 ../vector/v.info/main.c:86
-#: ../vector/v.info/main.c:91 ../vector/v.info/main.c:96
-#: ../vector/v.db.connect/main.c:81 ../vector/v.db.connect/main.c:86
-#: ../vector/v.db.connect/main.c:94 ../vector/v.db.connect/main.c:110
-#: ../db/base/connect.c:52
-#: ../locale/scriptstrings/g.extension_to_translate.c:11
+#: ../general/g.proj/main.c:92 ../general/g.mapset/main.c:87
+#: ../general/g.region/main.c:89 ../general/g.region/main.c:95
+#: ../general/g.region/main.c:100 ../general/g.region/main.c:106
+#: ../general/g.region/main.c:112 ../general/g.region/main.c:118
+#: ../general/g.region/main.c:124 ../general/g.region/main.c:132
+#: ../general/g.region/main.c:137 ../general/g.region/main.c:143
+#: ../general/g.region/main.c:148 ../vector/v.to.db/parse.c:104
+#: ../vector/v.to.db/parse.c:109 ../vector/v.to.db/parse.c:115
+#: ../vector/v.info/main.c:75 ../vector/v.info/main.c:81
+#: ../vector/v.info/main.c:86 ../vector/v.info/main.c:91
+#: ../vector/v.info/main.c:96 ../vector/v.db.connect/main.c:81
+#: ../vector/v.db.connect/main.c:86 ../vector/v.db.connect/main.c:94
+#: ../vector/v.db.connect/main.c:110 ../db/base/connect.c:52
+#: ../locale/scriptstrings/g.extension_to_translate.c:9
 #: ../imagery/i.group/main.c:77 ../imagery/i.group/main.c:83
 msgid "Print"
 msgstr "Вывод"
@@ -3345,7 +3363,8 @@ msgstr "Данные с битом четности (бит 1 означает �
 #: ../raster/r.slope.aspect/main.c:267 ../raster/r.resamp.rst/main.c:231
 #: ../raster/r.resamp.rst/main.c:239 ../raster/r.resamp.rst/main.c:247
 #: ../raster/r.resamp.rst/main.c:255 ../raster/r.resamp.rst/main.c:263
-#: ../vector/lidar/v.surf.bspline/main.c:120
+#: ../general/g.mapset/main.c:58 ../general/g.mapset/main.c:66
+#: ../general/g.mapset/main.c:76 ../vector/lidar/v.surf.bspline/main.c:120
 #: ../vector/lidar/v.surf.bspline/main.c:129
 #: ../vector/lidar/v.surf.bspline/main.c:138
 #: ../vector/lidar/v.surf.bspline/main.c:146
@@ -3363,17 +3382,11 @@ msgstr "Данные с битом четности (бит 1 означает �
 #: ../vector/v.vol.rst/main.c:319 ../vector/v.vol.rst/main.c:328
 #: ../vector/v.vol.rst/main.c:337 ../vector/v.vol.rst/main.c:346
 #: ../vector/v.vol.rst/main.c:354 ../vector/v.db.connect/main.c:60
-#: ../vector/v.db.connect/main.c:65
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:189
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:199
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:276
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:285
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:296
-#: ../db/base/connect.c:62 ../db/base/connect.c:66 ../db/base/connect.c:77
-#: ../db/base/connect.c:87 ../imagery/i.cluster/main.c:105
-#: ../imagery/i.cluster/main.c:121 ../imagery/i.cluster/main.c:129
-#: ../imagery/i.cluster/main.c:138 ../imagery/i.cluster/main.c:146
-#: ../imagery/i.cluster/main.c:154
+#: ../vector/v.db.connect/main.c:65 ../db/base/connect.c:62
+#: ../db/base/connect.c:66 ../db/base/connect.c:77 ../db/base/connect.c:87
+#: ../imagery/i.cluster/main.c:105 ../imagery/i.cluster/main.c:121
+#: ../imagery/i.cluster/main.c:129 ../imagery/i.cluster/main.c:138
+#: ../imagery/i.cluster/main.c:146 ../imagery/i.cluster/main.c:154
 msgid "Settings"
 msgstr "Параметры"
 
@@ -3647,7 +3660,7 @@ msgstr "Выходной векторный слой линий потоков"
 #: ../raster/r.drain/main.c:209 ../raster/r.flow/io.c:176
 #: ../vector/v.net.visibility/main.c:87 ../vector/lidar/v.outlier/main.c:205
 #: ../vector/lidar/v.outlier/main.c:210 ../vector/lidar/v.outlier/main.c:216
-#: ../vector/lidar/v.surf.bspline/main.c:298
+#: ../vector/lidar/v.surf.bspline/main.c:293
 #: ../vector/lidar/v.lidar.edgedetection/main.c:245
 #: ../vector/lidar/v.lidar.correction/main.c:209
 #: ../vector/lidar/v.lidar.correction/main.c:215
@@ -3659,7 +3672,7 @@ msgstr "Выходной векторный слой линий потоков"
 #: ../vector/v.voronoi/vo_main.c:163 ../vector/v.voronoi/dt_main.c:92
 #: ../vector/v.voronoi/dt_main.c:98 ../vector/v.net.flow/main.c:138
 #: ../vector/v.net.flow/main.c:144 ../vector/v.net.path/main.c:139
-#: ../vector/v.delaunay2/main.c:126 ../vector/v.edit/main.c:100
+#: ../vector/v.delaunay2/main.c:126 ../vector/v.edit/main.c:105
 #: ../vector/v.net.centrality/main.c:194 ../vector/v.net.components/main.c:114
 #: ../vector/v.drape/main.c:339 ../vector/v.drape/main.c:380
 #: ../vector/v.to.3d/main.c:88 ../vector/v.net.spanningtree/main.c:87
@@ -3694,10 +3707,10 @@ msgstr "Слишком много начальных точек"
 #: ../display/d.zoom/main.c:245 ../display/d.vect/main.c:490
 #: ../vector/v.sample/main.c:152 ../vector/v.db.select/main.c:132
 #: ../vector/v.net.alloc/main.c:143 ../vector/v.net/main.c:143
-#: ../vector/v.net/main.c:158 ../vector/v.out.svg/main.c:127
+#: ../vector/v.net/main.c:158 ../vector/v.out.svg/main.c:142
 #: ../vector/v.to.db/parse.c:128 ../vector/lidar/v.outlier/main.c:156
 #: ../vector/lidar/v.surf.bspline/main.c:219
-#: ../vector/lidar/v.surf.bspline/main.c:278
+#: ../vector/lidar/v.surf.bspline/main.c:273
 #: ../vector/lidar/v.lidar.edgedetection/main.c:217
 #: ../vector/lidar/v.lidar.growing/main.c:129
 #: ../vector/lidar/v.lidar.correction/main.c:182
@@ -3724,7 +3737,7 @@ msgstr "Слишком много начальных точек"
 #: ../vector/v.label/main.c:270 ../vector/v.delaunay2/main.c:117
 #: ../vector/v.to.rast/vect2rast.c:37 ../vector/v.to.points/main.c:244
 #: ../vector/v.clean/main.c:241 ../vector/v.buffer/main.c:365
-#: ../vector/v.edit/main.c:140 ../vector/v.info/main.c:103
+#: ../vector/v.edit/main.c:145 ../vector/v.info/main.c:103
 #: ../vector/v.extrude/main.c:143 ../vector/v.category/main.c:199
 #: ../vector/v.surf.rst/main.c:565 ../vector/v.db.connect/main.c:140
 #: ../vector/v.out.pov/main.c:96 ../vector/v.drape/main.c:261
@@ -3734,7 +3747,7 @@ msgstr "Слишком много начальных точек"
 msgid "Vector map <%s> not found"
 msgstr "Векторный слой <%s> не найден"
 
-#: ../raster/r.drain/main.c:290 ../raster/r.cost/main.c:563
+#: ../raster/r.drain/main.c:290 ../raster/r.cost/main.c:578
 msgid "Failed to guess site file format"
 msgstr "Не удалось определить формат файла точек"
 
@@ -3752,7 +3765,7 @@ msgid "Calculating flow directions..."
 msgstr "Расчет направления стока..."
 
 #: ../raster/r.drain/main.c:466 ../raster/r.drain/main.c:519
-#: ../raster/r.cost/main.c:1023 ../raster/r.random.surface/save.c:100
+#: ../raster/r.cost/main.c:1038 ../raster/r.random.surface/save.c:100
 #: ../raster/r.composite/main.c:199 ../raster/r.random.cells/indep.c:137
 #: ../imagery/i.smap/shapiro/write_img.c:12
 #, c-format
@@ -4288,7 +4301,7 @@ msgid "Cannot read row"
 msgstr "Невозможно прочесть строку"
 
 #: ../raster/r.surf.idw/main.c:685 ../raster/r.cost/main.c:435
-#: ../raster/r.cost/main.c:669 ../raster/r.series/main.c:214
+#: ../raster/r.cost/main.c:684 ../raster/r.series/main.c:214
 #: ../raster/r.surf.idw2/read_cell.c:38 ../raster/r.colors/stats.c:41
 #: ../raster/r.colors/stats.c:107
 #, c-format
@@ -4308,13 +4321,13 @@ msgid "Generates area statistics for raster map layers."
 msgstr "Генерация статистики по площади для растровых слоев."
 
 #: ../raster/r.stats/main.c:114 ../vector/v.db.select/main.c:84
-#: ../db/base/select.c:238
+#: ../db/base/select.c:238 ../locale/scriptstrings/r.out.xyz_to_translate.c:4
 msgid "Name for output file (if omitted or \"-\" output to stdout)"
 msgstr "Имя выходного файла (если не указано или '-' вывод в stdout)"
 
 #: ../raster/r.stats/main.c:119 ../raster/r.cats/main.c:72
 #: ../raster/r.distance/parse.c:50 ../vector/v.db.select/main.c:64
-#: ../db/base/select.c:219
+#: ../db/base/select.c:219 ../locale/scriptstrings/r.tileset_to_translate.c:13
 msgid "Output field separator"
 msgstr "Выходной разделитель полей"
 
@@ -4912,12 +4925,10 @@ msgid "Name for output aspect raster map"
 msgstr "Имя выходного растрового слоя экспозиции склонов"
 
 #: ../raster/r.slope.aspect/main.c:178
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:188
 msgid "Format for reporting the slope"
 msgstr "Формат для значения крутизны"
 
 #: ../raster/r.slope.aspect/main.c:188
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:198
 msgid "Type of output aspect and slope maps"
 msgstr "Тип выходных слоев экспозиции и крутизны склонов"
 
@@ -4959,19 +4970,16 @@ msgstr ""
 "Имя выходного растрового слоя частичной производной второго порядка dxy"
 
 #: ../raster/r.slope.aspect/main.c:243
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:272
 msgid "Multiplicative factor to convert elevation units to meters"
 msgstr "Коэффициент умножения для перевода единиц измерения высоты в метры"
 
 #: ../raster/r.slope.aspect/main.c:252
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:281
 msgid "Minimum slope val. (in percent) for which aspect is computed"
 msgstr ""
 "Минимальное значение крутизны склона (в процентах) для которой вычисляется "
 "экспозиция"
 
 #: ../raster/r.slope.aspect/main.c:266
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:295
 msgid "Do not align the current region to the elevation layer"
 msgstr "Не совмещать текущий регион со слоем высот"
 
@@ -5015,7 +5023,6 @@ msgid "Elevation products for mapset <%s> in <%s>"
 msgstr "Слои на основе данных о высотах для набора  <%s> в <%s>"
 
 #: ../raster/r.slope.aspect/main.c:1009
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:1042
 #, c-format
 msgid "Min computed aspect %.4f, max computed aspect %.4f"
 msgstr ""
@@ -5027,7 +5034,6 @@ msgid "Aspect raster map <%s> complete"
 msgstr "Растровый слой экспозиции <%s> завершено"
 
 #: ../raster/r.slope.aspect/main.c:1113
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:1146
 #, c-format
 msgid "Min computed slope %.4f, max computed slope %.4f"
 msgstr ""
@@ -5135,8 +5141,8 @@ msgid "Must specify exactly one of start_points, start_rast or coordinate"
 msgstr ""
 "Необходимо указать один из параметров start_points, start_rast или координаты"
 
-#: ../raster/r.cost/main.c:295 ../raster/r.cost/main.c:596
-#: ../raster/r.cost/main.c:702
+#: ../raster/r.cost/main.c:295 ../raster/r.cost/main.c:611
+#: ../raster/r.cost/main.c:717
 msgid "No start points"
 msgstr "Нет начальных точек"
 
@@ -5144,29 +5150,37 @@ msgstr "Нет начальных точек"
 msgid "Assigning negative cost to null cell. Null cells excluded."
 msgstr "Назначение отрицательных значений null-ячейкам. Null-ячейки исключены."
 
-#: ../raster/r.cost/main.c:499
+#: ../raster/r.cost/main.c:460 ../raster/r.cost/main.c:477
+#: ../raster/r.cost/main.c:495
+#, c-format
+msgid ""
+"Negative cell value found at row %d. Setting negative value to null_cost "
+"value"
+msgstr ""
+
+#: ../raster/r.cost/main.c:514
 msgid "Initializing output..."
 msgstr "Инициализация результата..."
 
-#: ../raster/r.cost/main.c:613
+#: ../raster/r.cost/main.c:628
 msgid "Failed to guess site file format\n"
 msgstr "Не удалось определить формат файла точек\n"
 
-#: ../raster/r.cost/main.c:667 ../raster/r.texture/h_measure.c:758
+#: ../raster/r.cost/main.c:682 ../raster/r.texture/h_measure.c:758
 #: ../imagery/i.smap/bouman/interp.c:69
 msgid "Unable to allocate memory"
 msgstr "Ошибка выделения памяти"
 
-#: ../raster/r.cost/main.c:733
+#: ../raster/r.cost/main.c:748
 #, fuzzy
 msgid "Finding cost path..."
 msgstr "Поиск стоимостного пути"
 
-#: ../raster/r.cost/main.c:999
+#: ../raster/r.cost/main.c:1014
 msgid "No data"
 msgstr "Нет данных"
 
-#: ../raster/r.cost/main.c:1186
+#: ../raster/r.cost/main.c:1201
 #, fuzzy, c-format
 msgid "Peak cost value: %f."
 msgstr "Пиковое стоимостное значение: %f"
@@ -5230,8 +5244,12 @@ msgid "Imports GRIDATB.FOR map file (TOPMODEL) into GRASS raster map"
 msgstr "Импорт слоя GRIDATB.FOR (TOPMODEL) в растровый слой GRASS"
 
 #: ../raster/r.in.gridatb/main.c:53
-#: ../locale/scriptstrings/v.krige_to_translate.c:5
+#: ../locale/scriptstrings/r.reclass.area_to_translate.c:4
+#: ../locale/scriptstrings/r.in.aster_to_translate.c:6
+#: ../locale/scriptstrings/v.krige.py_to_translate.c:5
+#: ../locale/scriptstrings/r.mapcalculator_to_translate.c:9
 #: ../locale/scriptstrings/r.in.wms_to_translate.c:18
+#: ../locale/scriptstrings/d.rast.edit_to_translate.c:4
 #: ../locale/scriptstrings/i.in.spotvgt_to_translate.c:5
 #: ../imagery/i.ifft/ifftmain.c:83
 msgid "Name for output raster map"
@@ -5264,7 +5282,6 @@ msgstr "Имя выходного слоя"
 
 #: ../raster/r.resample/main.c:137 ../raster/r.resamp.rst/main.c:527
 #: ../vector/v.surf.rst/main.c:622 ../vector/v.surf.rst/main.c:773
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:600
 msgid "Percent complete: "
 msgstr "Процентов завершено:"
 
@@ -7926,6 +7943,7 @@ msgid "Raster file(s) for View%d"
 msgstr "Растр(ы) для View%d"
 
 #: ../raster/r.out.mpeg/main.c:406 ../raster/r.topmodel/main.c:123
+#: ../locale/scriptstrings/r.out.gdal.sh_to_translate.c:8
 msgid "Name for output file"
 msgstr "Имя выходного файла"
 
@@ -8814,6 +8832,7 @@ msgstr ""
 "большинстве случаев не требуется, будет удалёно)"
 
 #: ../raster/r.colors/main.c:165
+#: ../locale/scriptstrings/r.colors.stddev_to_translate.c:2
 msgid "raster, color table"
 msgstr "растр, цветовая таблица"
 
@@ -9410,6 +9429,7 @@ msgid "Exports GRASS raster maps into GDAL supported formats."
 msgstr "Экспорт растрового слоя GRASS в форматы поддерживаемые GDAL."
 
 #: ../raster/r.out.gdal/main.c:132
+#: ../locale/scriptstrings/r.out.gdal.sh_to_translate.c:3
 msgid "List supported output formats"
 msgstr "Перечислить поддерживаемые выходные форматы"
 
@@ -9435,10 +9455,12 @@ msgid "Name of raster map (or group) to export"
 msgstr "Имя растрового слоя (или группы) для экспорта"
 
 #: ../raster/r.out.gdal/main.c:154
+#: ../locale/scriptstrings/r.out.gdal.sh_to_translate.c:6
 msgid "GIS format to write (case sensitive, see also -l flag)"
 msgstr "GIS формат для записи (регистрозависимый, см. также параметр -l)"
 
 #: ../raster/r.out.gdal/main.c:175
+#: ../locale/scriptstrings/r.out.gdal.sh_to_translate.c:7
 msgid "File type"
 msgstr "Тип файла"
 
@@ -9451,6 +9473,7 @@ msgid "Creation option(s) to pass to the output format driver"
 msgstr "Опции создания для драйвера выходного формата"
 
 #: ../raster/r.out.gdal/main.c:192
+#: ../locale/scriptstrings/d.out.file_to_translate.c:21
 msgid "In the form of \"NAME=VALUE\", separate multiple entries with a comma."
 msgstr "Формат \"NAME=VALUE\", разделитель - запятая."
 
@@ -9712,8 +9735,8 @@ msgstr ""
 #: ../raster/r.out.gdal/export_band.c:217
 #, c-format
 msgid ""
-"The given nodata value is present in rasterband <%s> and would lead to data "
-"loss. Please specify a different nodata value with the %s parameter."
+"The user given nodata value %g is present in rasterband <%s> and would lead "
+"to data loss. Please specify a different nodata value with the %s parameter."
 msgstr ""
 
 #: ../raster/r.out.gdal/export_band.c:261
@@ -9853,7 +9876,7 @@ msgstr "Имя слоя высот"
 msgid "Name of color file"
 msgstr "Имя цветового файла"
 
-#: ../raster/r.out.vrml/main.c:70 ../visualization/nviz2/cmd/args.c:491
+#: ../raster/r.out.vrml/main.c:70 ../visualization/nviz2/cmd/args.c:498
 msgid "Vertical exaggeration"
 msgstr "Вертикальный масштаб"
 
@@ -10164,8 +10187,8 @@ msgstr "A: высота солнца над горизонтом в градус
 
 #: ../raster/r.sunmask/main.c:142 ../raster/r.sunmask/main.c:151
 #: ../raster/r.sunmask/main.c:218 ../raster/r.sunmask/main.c:228
-#: ../visualization/nviz2/cmd/args.c:292 ../visualization/nviz2/cmd/args.c:360
-#: ../visualization/nviz2/cmd/args.c:429
+#: ../visualization/nviz2/cmd/args.c:299 ../visualization/nviz2/cmd/args.c:367
+#: ../visualization/nviz2/cmd/args.c:436
 msgid "Position"
 msgstr "Позиция"
 
@@ -12474,13 +12497,6 @@ msgstr "Размер точечного кэша"
 #: ../display/d.legend/main.c:180 ../display/d.legend/main.c:185
 #: ../vector/v.buffer/main.c:279 ../vector/v.buffer/main.c:287
 #: ../vector/v.buffer/main.c:294 ../vector/v.buffer/main.c:304
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:208
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:217
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:227
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:237
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:247
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:257
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:267
 msgid "Advanced"
 msgstr "Расширенный"
 
@@ -12567,7 +12583,7 @@ msgstr "Запись топографического индексного сл�
 
 #: ../raster/r.univar2/r.univar_main.c:40
 #: ../raster/r.univar2/r3.univar_main.c:39 ../vector/v.univar/main.c:99
-#: ../locale/scriptstrings/v.rast.stats_to_translate.c:9
+#: ../locale/scriptstrings/v.rast.stats_to_translate.c:10
 msgid "Percentile to calculate (requires extended statistics flag)"
 msgstr ""
 "Вычисляемый процентиль (требует установки флага расширенной статистики)"
@@ -13226,13 +13242,64 @@ msgstr "Доступ группы"
 msgid "Access for others"
 msgstr "Доступ остальных"
 
-#: ../general/g.access/main.c:63
+#: ../general/g.access/main.c:59
+msgid "UNIX filesystem access controls are not supported by MS-Windows"
+msgstr ""
+
+#: ../general/g.access/main.c:67
 msgid "Access to the PERMANENT mapset must be open, nothing changed"
 msgstr "Должен быть открыт доступ к набору PERMANENT, ничего не изменено"
 
-#: ../general/g.access/main.c:67
+#: ../general/g.access/main.c:71
 msgid "Unable to determine mapset permissions"
 msgstr "Невозможно определить права доступа к набору"
+
+#: ../general/g.access/set_perms.c:26
+#, fuzzy
+msgid "Unable to change mapset permissions"
+msgstr "Невозможно определить права доступа к набору"
+
+#: ../general/g.access/exp_perms.c:11 ../general/g.access/exp_perms.c:29
+msgid "have"
+msgstr ""
+
+#: ../general/g.access/exp_perms.c:12
+#, fuzzy
+msgid "read "
+msgstr "полигон"
+
+#: ../general/g.access/exp_perms.c:15
+msgid "Everyone"
+msgstr ""
+
+#: ../general/g.access/exp_perms.c:16
+msgid "has"
+msgstr ""
+
+#: ../general/g.access/exp_perms.c:19
+msgid "Only users in your group"
+msgstr ""
+
+#: ../general/g.access/exp_perms.c:22
+msgid "Only users outside your group"
+msgstr ""
+
+#: ../general/g.access/exp_perms.c:25
+msgid "Only you"
+msgstr ""
+
+#: ../general/g.access/exp_perms.c:31
+#, c-format
+msgid "%s %s %s %saccess to mapset %s"
+msgstr ""
+
+#: ../general/g.access/exp_perms.c:32
+msgid "will"
+msgstr ""
+
+#: ../general/g.access/exp_perms.c:32
+msgid "now"
+msgstr ""
 
 #: ../general/g.proj/input.c:82
 msgid "Error reading WKT projection description"
@@ -13843,40 +13910,40 @@ msgstr "Недостаточно точек, требуется %d"
 msgid "Error conducting transform (%d)"
 msgstr "Ошибка создания трансформации"
 
-#: ../general/g.transform/main.c:196
+#: ../general/g.transform/main.c:199
 msgid "Poorly placed control points"
 msgstr "Контрольные точки плохо расставлены"
 
-#: ../general/g.transform/main.c:198
+#: ../general/g.transform/main.c:201
 msgid "Insufficient memory"
 msgstr "Недостаточно памяти"
 
-#: ../general/g.transform/main.c:200
+#: ../general/g.transform/main.c:203
 msgid "Parameter error"
 msgstr "Ошибка параметра"
 
-#: ../general/g.transform/main.c:202
+#: ../general/g.transform/main.c:205
 msgid "No active control points"
 msgstr "Нет активных контрольных точек"
 
-#: ../general/g.transform/main.c:297
+#: ../general/g.transform/main.c:300
 #, fuzzy, c-format
 msgid "Invalid coordinates: [%s]"
 msgstr "Некорректные координаты %s %s"
 
-#: ../general/g.transform/main.c:317
+#: ../general/g.transform/main.c:320
 msgid "general, transformation, GCP"
 msgstr "общее, трансформация, GCP"
 
-#: ../general/g.transform/main.c:319
+#: ../general/g.transform/main.c:322
 msgid "Computes a coordinate transformation based on the control points."
 msgstr "Вычисляет преобразование координат на основе контрольных точек."
 
-#: ../general/g.transform/main.c:328
+#: ../general/g.transform/main.c:331
 msgid "Rectification polynomial order"
 msgstr "Порядок полинома трансформации"
 
-#: ../general/g.transform/main.c:336
+#: ../general/g.transform/main.c:339
 msgid ""
 "idx;point index;src;source coordinates;dst;destination coordinates;fwd;"
 "forward coordinates (destination);rev;reverse coordinates (source);fxy;"
@@ -13888,36 +13955,36 @@ msgstr ""
 "разница прямых координат (назначение);rxy;разница обратных координат "
 "(источник);fd;прямая ошибка (назначение);rd;обратная ошибка (источник)"
 
-#: ../general/g.transform/main.c:346 ../vector/v.out.ascii/out.c:63
+#: ../general/g.transform/main.c:349 ../vector/v.out.ascii/out.c:63
 msgid "Output format"
 msgstr "Формат вывода"
 
-#: ../general/g.transform/main.c:350
+#: ../general/g.transform/main.c:353
 msgid "Display summary information"
 msgstr "Отобразить сводную информацию"
 
-#: ../general/g.transform/main.c:356
+#: ../general/g.transform/main.c:359
 #, fuzzy
 msgid "File containing coordinates to transform (\"-\" to read from stdin)"
 msgstr ""
 "Файл содержащий правила подписей категорий (или \"-\" для чтения из stdin)"
 
-#: ../general/g.transform/main.c:357
+#: ../general/g.transform/main.c:360
 #, fuzzy
 msgid "Local x,y coordinates to target east,north"
 msgstr "Координата центра (восток, север)"
 
-#: ../general/g.transform/main.c:361
+#: ../general/g.transform/main.c:364
 #, fuzzy
 msgid "Reverse transform of coords file or coeff. dump"
 msgstr "Обратная трансформация; векторные 3D объекты в 2D"
 
-#: ../general/g.transform/main.c:362
+#: ../general/g.transform/main.c:365
 #, fuzzy
 msgid "Target east,north coordinates to local x,y"
 msgstr "Нижняя левая восточная и северная координаты слоя"
 
-#: ../general/g.transform/main.c:366
+#: ../general/g.transform/main.c:369
 #, fuzzy
 msgid "Display transform matrix coefficients"
 msgstr "Слой для коэффициента x"
@@ -13930,48 +13997,64 @@ msgstr "общее, настройки"
 msgid "Change current mapset."
 msgstr "Изменить текущий набор."
 
-#: ../general/g.mapset/main.c:56
-msgid "New MAPSET name"
-msgstr "Новое имя НАБОРА"
+#: ../general/g.mapset/main.c:50
+msgid "Optionally create new mapset or list available mapsets."
+msgstr ""
 
-#: ../general/g.mapset/main.c:63
-msgid "New LOCATION name (not location path)"
+#: ../general/g.mapset/main.c:57
+#, fuzzy
+msgid "Name of mapset where to switch"
+msgstr "Имя выходного слоя, в который записаны ошибки"
+
+#: ../general/g.mapset/main.c:65
+#, fuzzy
+msgid "Location name (not location path)"
 msgstr "Новое имя ОБЛАСТИ (не путь к области)"
 
-#: ../general/g.mapset/main.c:71
-msgid "New GISDBASE (full path to the directory where the new location is)"
+#: ../general/g.mapset/main.c:75
+#, fuzzy
+msgid ""
+"GIS data directory (full path to the directory where the new location is)"
 msgstr "Новая GISDBASE (полный путь к каталогу с новой областью)"
 
-#: ../general/g.mapset/main.c:75
+#: ../general/g.mapset/main.c:80
 msgid "Create mapset if it doesn't exist"
 msgstr "Создать набор, если не существует"
 
-#: ../general/g.mapset/main.c:80
+#: ../general/g.mapset/main.c:82
+#: ../locale/scriptstrings/r.mask_to_translate.c:4
+#: ../locale/scriptstrings/r.mask_to_translate.c:6
+#: ../locale/scriptstrings/r.mask_to_translate.c:8
+#, fuzzy
+msgid "Create"
+msgstr "Создание"
+
+#: ../general/g.mapset/main.c:86
 msgid "List available mapsets"
 msgstr "Список доступных наборов"
 
-#: ../general/g.mapset/main.c:86
+#: ../general/g.mapset/main.c:93
 msgid "Either mapset= or -l must be used"
 msgstr "Необходимо использовать mapset= или -l"
 
-#: ../general/g.mapset/main.c:132
+#: ../general/g.mapset/main.c:139
 #, c-format
 msgid "<%s> is already the current mapset"
 msgstr "<%s> уже является текущим набором"
 
-#: ../general/g.mapset/main.c:140
+#: ../general/g.mapset/main.c:147
 msgid "You don't have permission to use this mapset"
 msgstr "У вас недостаточно прав для использования этого набора"
 
-#: ../general/g.mapset/main.c:149
+#: ../general/g.mapset/main.c:156
 msgid "The mapset does not exist. Use -c flag to create it."
 msgstr "Набор не существует. Используйте параметр -c чтобы его создать."
 
-#: ../general/g.mapset/main.c:158
+#: ../general/g.mapset/main.c:165
 msgid "Unable to read GIS_LOCK environment variable"
 msgstr "Невозможно прочесть переменную окружения GIS_LOCK"
 
-#: ../general/g.mapset/main.c:172
+#: ../general/g.mapset/main.c:179
 #, c-format
 msgid ""
 "%s is currently running GRASS in selected mapset or lock file cannot be "
@@ -13979,19 +14062,19 @@ msgid ""
 msgstr ""
 "%s в текущем наборе запущен GRASS или файл блокировки не может быть проверен"
 
-#: ../general/g.mapset/main.c:176
+#: ../general/g.mapset/main.c:183
 msgid "Erasing monitors..."
 msgstr "Очистка мониторов..."
 
-#: ../general/g.mapset/main.c:192
+#: ../general/g.mapset/main.c:199
 msgid "Cleaning up temporary files..."
 msgstr "Очистка временных файлов..."
 
-#: ../general/g.mapset/main.c:206
+#: ../general/g.mapset/main.c:213
 msgid "Your shell continues to use the history for the old mapset"
 msgstr "Оболочка продолжает использовать историю старого набора"
 
-#: ../general/g.mapset/main.c:210
+#: ../general/g.mapset/main.c:217
 #, c-format
 msgid ""
 "You can switch the history by commands:\n"
@@ -14000,7 +14083,7 @@ msgstr ""
 "Вы можете переключать историю командами:\n"
 "history -w; history -r %s/.bash_history; HISTFILE=%s/.bash_history"
 
-#: ../general/g.mapset/main.c:215
+#: ../general/g.mapset/main.c:222
 #, c-format
 msgid ""
 "You can switch the history by commands:\n"
@@ -14298,6 +14381,7 @@ msgstr "Вывести максимальный охват в lat/long WGS84"
 
 #: ../general/g.region/main.c:147
 #: ../locale/scriptstrings/r.regression.line_to_translate.c:3
+#: ../locale/scriptstrings/i.oif_to_translate.c:9
 msgid "Print in shell script style"
 msgstr "Вывести статистику в стиле shell"
 
@@ -14511,6 +14595,11 @@ msgstr "Стандартные установки графического ин�
 msgid "<%s> is now the default GUI"
 msgstr "<%s> теперь стандартный GUI"
 
+#: ../general/g.gui/main.c:103
+#, c-format
+msgid "Launching '%s' GUI in the background, please wait ..."
+msgstr ""
+
 #: ../general/g.gui/main.c:107
 msgid "The old d.m GUI is not available for WinGRASS"
 msgstr ""
@@ -14559,6 +14648,7 @@ msgstr ""
 #: ../display/d.nviz/main.c:68 ../display/d.zoom/main.c:57
 #: ../visualization/ximgview/main.c:270
 #: ../locale/scriptstrings/d.rast.leg_to_translate.c:2
+#: ../locale/scriptstrings/d.redraw_to_translate.c:2
 msgid "display"
 msgstr "показать/дисплей"
 
@@ -15492,6 +15582,10 @@ msgstr ""
 "\n"
 
 #: ../display/d.extend/main.c:31
+#: ../locale/scriptstrings/d.split_to_translate.c:2
+#: ../locale/scriptstrings/d.resize_to_translate.c:2
+#: ../locale/scriptstrings/d.monsize_to_translate.c:2
+#: ../locale/scriptstrings/d.mvmon_to_translate.c:2
 msgid "display, setup"
 msgstr "показ, настройка"
 
@@ -15501,10 +15595,12 @@ msgstr "Не отображается растровый или векторны
 
 #: ../display/d.rast.edit/main.c:59 ../display/d.colortable/main.c:62
 #: ../display/d.rast/main.c:51
+#: ../locale/scriptstrings/d.rast.edit_to_translate.c:2
 msgid "display, raster"
 msgstr "показ, растр"
 
 #: ../display/d.rast.edit/main.c:61
+#: ../locale/scriptstrings/d.rast.edit_to_translate.c:1
 msgid "Interactively edit cell values in a raster map."
 msgstr "Интерактивное редактирование значений ячеек растрового слоя"
 
@@ -16218,7 +16314,7 @@ msgid "Database connection not defined"
 msgstr "Не определено соединение с базой данных"
 
 #: ../display/d.thematic.area/main.c:231 ../display/d.vect/main.c:509
-#: ../vector/v.out.svg/main.c:141 ../vector/v.extract/main.c:286
+#: ../vector/v.out.svg/main.c:156 ../vector/v.extract/main.c:286
 #: ../vector/v.in.sites/main.c:158 ../vector/v.out.vtk/writeVTK.c:634
 #: ../vector/v.out.ascii/b2a.c:44 ../vector/v.out.ogr/main.c:433
 #: ../vector/v.edit/select.c:513 ../vector/v.db.connect/main.c:208
@@ -16909,7 +17005,7 @@ msgstr "Открыть форму в режиме редактирования"
 #: ../vector/v.hull/main.c:307 ../vector/v.net.timetable/main.c:317
 #: ../vector/v.net.bridge/main.c:80 ../vector/v.net.connectivity/main.c:115
 #: ../vector/v.support/main.c:135 ../vector/v.buffer2/main.c:303
-#: ../vector/v.net.flow/main.c:132 ../vector/v.edit/main.c:160
+#: ../vector/v.net.flow/main.c:132 ../vector/v.edit/main.c:165
 #: ../vector/v.info/main.c:113 ../vector/v.surf.rst/main.c:569
 #: ../vector/v.surf.rst/main.c:724 ../vector/v.surf.rst/main.c:813
 #: ../vector/v.net.centrality/main.c:188 ../vector/v.net.components/main.c:108
@@ -17696,6 +17792,7 @@ msgstr "Не найдены атрибуты для cat %d: %s"
 #: ../vector/v.external/main.c:58 ../vector/v.clean/test/topocheck.c:42
 #: ../vector/v.buffer/main.c:254 ../vector/v.info/main.c:265
 #: ../vector/v.surf.rst/main.c:164
+#: ../locale/scriptstrings/v.build.all_to_translate.c:2
 msgid "vector"
 msgstr "вектор"
 
@@ -17748,7 +17845,7 @@ msgstr "Параметры -b и -c нельзя использовать вме
 msgid "Column type <%s> not supported (must be integer or double precision)"
 msgstr "Тип поля <%s> не поддерживается (должен быть целочисленный или double)"
 
-#: ../vector/v.sample/main.c:185 ../vector/lidar/v.surf.bspline/main.c:347
+#: ../vector/v.sample/main.c:185 ../vector/lidar/v.surf.bspline/main.c:348
 #: ../vector/v.to.rast3/main.c:96 ../vector/v.class/main.c:126
 #: ../vector/v.normal/main.c:154 ../vector/v.univar/main.c:276
 #: ../vector/v.surf.idw/read_sites.c:52 ../vector/v.buffer/main.c:397
@@ -17789,7 +17886,7 @@ msgstr "Проверка векторных точек..."
 msgid "No record for category %d in table <%s>"
 msgstr "Нет ни одной записи для категории %d в таблице <%s>"
 
-#: ../vector/v.sample/main.c:266 ../vector/lidar/v.surf.bspline/main.c:344
+#: ../vector/v.sample/main.c:266 ../vector/lidar/v.surf.bspline/main.c:345
 #: ../vector/lidar/v.surf.bspline/crosscorr.c:133
 #: ../vector/v.to.rast3/main.c:100 ../vector/v.buffer2/main.c:337
 #: ../vector/v.class/main.c:123 ../vector/v.univar/main.c:273
@@ -17810,6 +17907,7 @@ msgstr "Невозможно вставить строку: %s"
 #: ../locale/scriptstrings/v.db.renamecol_to_translate.c:2
 #: ../locale/scriptstrings/v.db.reconnect.all_to_translate.c:2
 #: ../locale/scriptstrings/v.db.droptable_to_translate.c:2
+#: ../locale/scriptstrings/v.db.join_to_translate.c:2
 #: ../locale/scriptstrings/v.db.addtable_to_translate.c:2
 #: ../locale/scriptstrings/v.db.dropcol_to_translate.c:2
 #: ../locale/scriptstrings/v.db.addcol_to_translate.c:2
@@ -17948,7 +18046,7 @@ msgid "Required for operation 'connect'"
 msgstr "Необходимо для операции 'connect'"
 
 #: ../vector/v.net/main.c:69
-#: ../locale/scriptstrings/g.extension_to_translate.c:6
+#: ../locale/scriptstrings/g.extension_to_translate.c:5
 msgid "Operation to be performed"
 msgstr "Выполняемая операция"
 
@@ -18036,45 +18134,42 @@ msgstr "Точка не найдена: %.3lf %.3lf %.3lf категория л�
 msgid "%d points found: %.3lf %.3lf %.3lf line category: %d"
 msgstr "найдено %d точек: %.3lf %.3lf %.3lf категория линии: %d"
 
-#: ../vector/v.out.svg/main.c:72
+#: ../vector/v.out.svg/main.c:74
 msgid "Exports a GRASS vector map to SVG."
 msgstr "Экспорт векторного слоя GRASS в SVG."
 
-#: ../vector/v.out.svg/main.c:73 ../vector/v.out.ascii/out.c:45
+#: ../vector/v.out.svg/main.c:75 ../vector/v.out.ascii/out.c:45
 #: ../vector/v.out.ogr/main.c:88 ../vector/v.out.pov/main.c:43
 #: ../vector/v.out.dxf/main.c:48
 msgid "vector, export"
 msgstr "векторный слой, экспорт"
 
-#: ../vector/v.out.svg/main.c:78
+#: ../vector/v.out.svg/main.c:80
 msgid "Name for SVG output file"
 msgstr "Имя выходного файла SVG"
 
-#: ../vector/v.out.svg/main.c:87
-msgid "Output type"
-msgstr "Тип вывода"
-
-#: ../vector/v.out.svg/main.c:88
-msgid "Defines which feature-type will be extracted"
-msgstr "Определяет тип извлекаемых объектов"
-
-#: ../vector/v.out.svg/main.c:96
+#: ../vector/v.out.svg/main.c:90
 msgid "Coordinate precision"
 msgstr "Точность координат"
 
-#: ../vector/v.out.svg/main.c:103
+#: ../vector/v.out.svg/main.c:97
 msgid "Attribute(s) to include in output SVG"
 msgstr "Атрибут(ы) для включения в выходной SVG"
 
-#: ../vector/v.out.svg/main.c:116
+#: ../vector/v.out.svg/main.c:110
 msgid "Precision must not be negative"
 msgstr "Точность не должна быть отрицательной"
 
-#: ../vector/v.out.svg/main.c:119
+#: ../vector/v.out.svg/main.c:113
 msgid "Precision must not be higher than 15"
 msgstr "Точность не должна быть больше 15"
 
-#: ../vector/v.out.svg/main.c:154 ../vector/v.random/main.c:214
+#: ../vector/v.out.svg/main.c:134
+#, fuzzy, c-format
+msgid "Unhandled vector feature type <%s>"
+msgstr "Невозможно создать таблицу: <%s>"
+
+#: ../vector/v.out.svg/main.c:169 ../vector/v.random/main.c:214
 #: ../vector/v.out.vtk/writeVTK.c:643 ../vector/v.out.ogr/main.c:443
 #: ../vector/v.patch/main.c:139 ../vector/v.patch/main.c:177
 #: ../vector/v.in.ascii/in.c:408 ../vector/v.info/main.c:222
@@ -18084,49 +18179,52 @@ msgstr "Точность не должна быть больше 15"
 msgid "Unable to describe table <%s>"
 msgstr "Невозможно описать таблицу <%s>"
 
-#: ../vector/v.out.svg/main.c:190
+#: ../vector/v.out.svg/main.c:205
 #, c-format
 msgid "Unable to open SVG file <%s>"
 msgstr "Невозможно открыть SVG-файл <%s>"
 
-#: ../vector/v.out.svg/main.c:205
-msgid "No areas found, skipping type=poly"
+#: ../vector/v.out.svg/main.c:220
+#, fuzzy
+msgid "No areas found, skipping type=area"
 msgstr "Полигоны не найдены, type=poly пропущено"
 
-#: ../vector/v.out.svg/main.c:215 ../vector/v.extrude/main.c:203
+#: ../vector/v.out.svg/main.c:230 ../vector/v.extrude/main.c:203
 #, c-format
 msgid "Skipping area %d without centroid"
 msgstr "Пропуск полигона %d  без центроида"
 
-#: ../vector/v.out.svg/main.c:242
+#: ../vector/v.out.svg/main.c:257
 #, c-format
 msgid "Extracted %d areas"
 msgstr "Выделено %d полигонов"
 
-#: ../vector/v.out.svg/main.c:248
-msgid "No points found, skipping type=point"
+#: ../vector/v.out.svg/main.c:263
+#, fuzzy, c-format
+msgid "No points found, skipping%s%s"
 msgstr "Точки не найдены, пропуск type=point"
 
-#: ../vector/v.out.svg/main.c:271
+#: ../vector/v.out.svg/main.c:288
 #, c-format
 msgid "Extracted %d points"
 msgstr "Выделено %d точек"
 
-#: ../vector/v.out.svg/main.c:277
-msgid "No lines found, skipping type=line"
+#: ../vector/v.out.svg/main.c:294
+#, fuzzy, c-format
+msgid "No lines found, skipping%s%s"
 msgstr "Линии не найдены, type=line пропущено"
 
-#: ../vector/v.out.svg/main.c:298
+#: ../vector/v.out.svg/main.c:317
 #, c-format
 msgid "Extracted %d lines"
 msgstr "Выделено %d линий"
 
-#: ../vector/v.out.svg/main.c:366
+#: ../vector/v.out.svg/main.c:385
 #, c-format
 msgid "Cannot select attributes for cat=%d"
 msgstr "Невозможно выбрать атрибуты для cat=%d"
 
-#: ../vector/v.out.svg/main.c:370 ../vector/v.out.vtk/writeVTK.c:579
+#: ../vector/v.out.svg/main.c:389 ../vector/v.out.vtk/writeVTK.c:579
 #: ../vector/v.lrs/v.lrs.label/main.c:347 ../vector/v.out.ogr/main.c:972
 #: ../vector/v.overlay/main.c:357
 msgid "Unable to fetch data from table"
@@ -18201,9 +18299,8 @@ msgid "Query layer number (read from)"
 msgstr "Номер слоя выборки (для чтения)"
 
 #: ../vector/v.to.db/parse.c:47 ../vector/v.to.db/parse.c:99
-#: ../db/base/select.c:191 ../db/base/select.c:196 ../db/base/select.c:202
-#: ../db/base/select.c:211 ../db/base/select.c:216 ../db/base/select.c:248
-#: ../db/base/select.c:258
+#: ../db/base/execute.c:114 ../db/base/select.c:197 ../db/base/select.c:202
+#: ../db/base/select.c:248 ../db/base/select.c:258
 msgid "Query"
 msgstr "Запрос"
 
@@ -18441,7 +18538,7 @@ msgstr "Невозможно определить имя драйвера"
 
 #: ../vector/lidar/v.outlier/main.c:171 ../vector/lidar/v.outlier/main.c:237
 #: ../vector/lidar/v.surf.bspline/main.c:210
-#: ../vector/lidar/v.surf.bspline/main.c:361
+#: ../vector/lidar/v.surf.bspline/main.c:362
 #: ../vector/lidar/v.lidar.edgedetection/main.c:193
 #: ../vector/lidar/v.lidar.edgedetection/main.c:205
 #: ../vector/lidar/v.lidar.edgedetection/main.c:255
@@ -18465,7 +18562,7 @@ msgstr "Дополнительная таблица не может быть у�
 
 #: ../vector/lidar/v.outlier/main.c:181
 #: ../vector/lidar/v.surf.bspline/main.c:223
-#: ../vector/lidar/v.surf.bspline/main.c:282
+#: ../vector/lidar/v.surf.bspline/main.c:277
 #, c-format
 msgid "Unable to open vector map <%s> at the topological level"
 msgstr "Невозможно открыть векторный слой <%s> на уровне топологии"
@@ -18491,7 +18588,7 @@ msgid "It was impossible to create <%s> table."
 msgstr "Невозможно создание <%s>."
 
 #: ../vector/lidar/v.outlier/main.c:276
-#: ../vector/lidar/v.surf.bspline/main.c:415
+#: ../vector/lidar/v.surf.bspline/main.c:416
 #: ../vector/lidar/v.lidar.edgedetection/main.c:298
 #: ../vector/lidar/v.lidar.correction/main.c:278
 #, c-format
@@ -18499,7 +18596,7 @@ msgid "adjusted EW splines %d"
 msgstr ""
 
 #: ../vector/lidar/v.outlier/main.c:277
-#: ../vector/lidar/v.surf.bspline/main.c:416
+#: ../vector/lidar/v.surf.bspline/main.c:417
 #: ../vector/lidar/v.lidar.edgedetection/main.c:299
 #: ../vector/lidar/v.lidar.correction/main.c:279
 #, c-format
@@ -18507,7 +18604,7 @@ msgid "adjusted NS splines %d"
 msgstr ""
 
 #: ../vector/lidar/v.outlier/main.c:332
-#: ../vector/lidar/v.surf.bspline/main.c:480
+#: ../vector/lidar/v.surf.bspline/main.c:485
 #: ../vector/lidar/v.lidar.edgedetection/main.c:354
 #: ../vector/lidar/v.lidar.growing/main.c:249
 #: ../vector/lidar/v.lidar.correction/main.c:334
@@ -18527,14 +18624,13 @@ msgid "Outlier detection"
 msgstr "Цвет обводки"
 
 #: ../vector/lidar/v.outlier/main.c:423
-#: ../vector/lidar/v.surf.bspline/main.c:681
 #: ../vector/lidar/v.lidar.edgedetection/main.c:460
 #: ../vector/lidar/v.lidar.correction/main.c:429
 msgid "No data within this subregion. Consider changing the spline step."
 msgstr ""
 
 #: ../vector/lidar/v.outlier/main.c:433
-#: ../vector/lidar/v.surf.bspline/main.c:703
+#: ../vector/lidar/v.surf.bspline/main.c:731
 #: ../vector/lidar/v.lidar.edgedetection/main.c:470
 #: ../vector/lidar/v.lidar.correction/main.c:440
 msgid "Auxiliar table could not be dropped"
@@ -18620,21 +18716,12 @@ msgstr "Кросс-проверка завершилась неудачно"
 msgid "Cross validation finished for sie = %f and sin = %f"
 msgstr ""
 
-#: ../vector/lidar/v.surf.bspline/main.c:268
-#, fuzzy, c-format
-msgid ""
-"No vector map of sparse points to interpolate was specified. Interpolation "
-"will be done with <%s> vector map"
-msgstr ""
-"Не указан векторный слой для интерполяции. Интерполяция будет произведена с <"
-"%s> векторным слоем."
-
-#: ../vector/lidar/v.surf.bspline/main.c:274
+#: ../vector/lidar/v.surf.bspline/main.c:269
 #, fuzzy, c-format
 msgid "Vector map <%s> of sparse points will be interpolated"
 msgstr "<%s> векторный слой будет интерполирован."
 
-#: ../vector/lidar/v.surf.bspline/main.c:290
+#: ../vector/lidar/v.surf.bspline/main.c:285
 #, c-format
 msgid ""
 "Sorry, <%s> driver is not allowed for vector output in this module. Try with "
@@ -18643,33 +18730,47 @@ msgstr ""
 "Извините,  в этом модуле драйвер <%s> не может выводить вектор. Попробуйте "
 "сохранить в растровом формате, или поробуйте другой драйвер."
 
-#: ../vector/lidar/v.surf.bspline/main.c:328
+#: ../vector/lidar/v.surf.bspline/main.c:307
+#, fuzzy, c-format
+msgid "Points in input vector map <%s> will be interpolated"
+msgstr "<%s> векторный слой будет интерполирован."
+
+#: ../vector/lidar/v.surf.bspline/main.c:320
+#, fuzzy, c-format
+msgid "Cells for raster map <%s> will be interpolated"
+msgstr "<%s> векторный слой будет интерполирован."
+
+#: ../vector/lidar/v.surf.bspline/main.c:329
 msgid "Cannot read field info"
 msgstr "Невозможно прочитать информацию о поле"
 
-#: ../vector/lidar/v.surf.bspline/main.c:349
+#: ../vector/lidar/v.surf.bspline/main.c:350
 #, c-format
 msgid "[%d] records selected from table"
 msgstr "[%d] записи выбраны из таблицы"
 
-#: ../vector/lidar/v.surf.bspline/main.c:368
+#: ../vector/lidar/v.surf.bspline/main.c:369
 #, c-format
 msgid "Interpolation: Creating table: It was impossible to create table <%s>."
 msgstr "Интерполяция: Создание таблицы: Невозможно создать таблицу <%s>."
 
-#: ../vector/lidar/v.surf.bspline/main.c:391
+#: ../vector/lidar/v.surf.bspline/main.c:392
 #, fuzzy
 msgid ""
 "Cannot allocate memory for auxiliar matrix.Consider changing region "
 "resolution"
 msgstr "Невозможно выделить память для строки"
 
-#: ../vector/lidar/v.surf.bspline/main.c:568
+#: ../vector/lidar/v.surf.bspline/main.c:590
 #, c-format
 msgid "Interpolation: (%d,%d): No record for point (cat = %d)"
 msgstr "Интерполяция: (%d,%d): Нет записи для точки (cat = %d)"
 
-#: ../vector/lidar/v.surf.bspline/main.c:687
+#: ../vector/lidar/v.surf.bspline/main.c:709
+msgid "No data within this subregion. Consider increasing spline step values."
+msgstr ""
+
+#: ../vector/lidar/v.surf.bspline/main.c:715
 #, fuzzy
 msgid "Writing output..."
 msgstr "Запись слоя..."
@@ -19219,13 +19320,14 @@ msgstr ""
 "пространственный индекс в stdout;cdump;записать индекс категорий в stdout"
 
 #: ../vector/v.build/main.c:84 ../vector/v.support/main.c:129
-#: ../vector/v.edit/main.c:114 ../vector/v.neighbors/main.c:77
+#: ../vector/v.edit/main.c:119 ../vector/v.neighbors/main.c:77
 #, c-format
 msgid "Vector map <%s> not found in the current mapset"
 msgstr "Векторный слой <%s> не найден в текущем наборе"
 
 #: ../vector/v.in.ogr/main.c:101 ../vector/v.in.dxf/main.c:60
 #: ../vector/v.in.dwg/main.c:65 ../vector/v.in.ascii/in.c:48
+#: ../locale/scriptstrings/v.convert.all_to_translate.c:2
 #: ../locale/scriptstrings/v.in.e00_to_translate.c:2
 #: ../locale/scriptstrings/v.in.lines_to_translate.c:2
 #: ../locale/scriptstrings/v.in.mapgen_to_translate.c:2
@@ -19567,44 +19669,44 @@ msgstr ""
 "Исходные данные содержат 3D-объекты. Созданный вектор двухмерный, "
 "используйте параметр -z для того, чтобы импортировать 3D-векторный слой"
 
-#: ../vector/v.in.ogr/geom.c:192 ../vector/v.in.ogr/geom.c:205
-#: ../vector/v.in.ogr/geom.c:229 ../vector/v.in.ogr/geom.c:271
+#: ../vector/v.in.ogr/geom.c:201 ../vector/v.in.ogr/geom.c:214
+#: ../vector/v.in.ogr/geom.c:238 ../vector/v.in.ogr/geom.c:280
 msgid "Skipping empty geometry feature"
 msgstr ""
 
-#: ../vector/v.in.ogr/geom.c:245
+#: ../vector/v.in.ogr/geom.c:254
 #, c-format
 msgid "Degenerate polygon ([%d] vertices)"
 msgstr "Упростить полигон ([%d] узлов)"
 
-#: ../vector/v.in.ogr/geom.c:250
+#: ../vector/v.in.ogr/geom.c:259
 #, c-format
 msgid "Area size [%.1e], area not imported"
 msgstr "Размер полигона [%.1e], полигон не импортирован"
 
-#: ../vector/v.in.ogr/geom.c:282
+#: ../vector/v.in.ogr/geom.c:293
 #, c-format
 msgid "Degenerate island ([%d] vertices)"
 msgstr "Упростить остров ([%d] узлов)"
 
-#: ../vector/v.in.ogr/geom.c:287
+#: ../vector/v.in.ogr/geom.c:301
 #, c-format
 msgid "Island size [%.1e], island not imported"
 msgstr "Размер острова [%.1e], остров не импортирован"
 
-#: ../vector/v.in.ogr/geom.c:308
+#: ../vector/v.in.ogr/geom.c:323
 msgid "Cannot calculate centroid"
 msgstr "Невозможно рассчитать центроид"
 
-#: ../vector/v.in.ogr/geom.c:339
+#: ../vector/v.in.ogr/geom.c:354
 msgid "No centroid written for polygon with 0 vertices"
 msgstr "Ни одного центроида не записано для полигона с 0 узлами"
 
-#: ../vector/v.in.ogr/geom.c:360
+#: ../vector/v.in.ogr/geom.c:375
 msgid "Cannot write part of geometry"
 msgstr "Невозможно записать часть геометрии"
 
-#: ../vector/v.in.ogr/geom.c:366
+#: ../vector/v.in.ogr/geom.c:381
 msgid "Unknown geometry type"
 msgstr "Неизвестный тип геометрии"
 
@@ -19812,6 +19914,8 @@ msgid "Input table name"
 msgstr "Введите имя таблицы"
 
 #: ../vector/v.in.db/main.c:63 ../vector/v.in.db/main.c:67
+#: ../db/base/execute.c:118 ../db/base/execute.c:123 ../db/base/select.c:205
+#: ../db/base/select.c:210 ../db/base/select.c:216
 msgid "Connection"
 msgstr "Связь"
 
@@ -20465,6 +20569,8 @@ msgstr "Путь к выходному файлу VTK"
 #: ../locale/scriptstrings/v.report_to_translate.c:6
 #: ../locale/scriptstrings/v.out.gpsbabel_to_translate.c:10
 #: ../locale/scriptstrings/d.vect.thematic_to_translate.c:17
+#: ../locale/scriptstrings/v.rast.stats_to_translate.c:6
+#: ../locale/scriptstrings/v.centroids_to_translate.c:6
 msgid "Layer number"
 msgstr "Номер слоя"
 
@@ -22100,6 +22206,7 @@ msgstr ""
 #: ../locale/scriptstrings/v.out.gpsbabel_to_translate.c:6
 #: ../locale/scriptstrings/v.colors_to_translate.c:3
 #: ../locale/scriptstrings/v.dissolve_to_translate.c:3
+#: ../locale/scriptstrings/v.centroids_to_translate.c:3
 msgid "Name of input vector map"
 msgstr "Имя исходного векторного слоя"
 
@@ -22599,7 +22706,7 @@ msgstr "Имя нового столбца, в который записывае
 msgid "Use drand48()"
 msgstr "Используется drand48()"
 
-#: ../vector/v.kcv/main.c:137 ../vector/v.edit/main.c:125
+#: ../vector/v.kcv/main.c:137 ../vector/v.edit/main.c:130
 #, c-format
 msgid "Unable to open vector map <%s> at topological level %d"
 msgstr "Невозможно открыть векторный слой <%s> на уровне топологии %d"
@@ -24476,30 +24583,40 @@ msgstr "Пропуск  %d из %d записей, находящихся вне
 msgid "Importing points..."
 msgstr "Импорт точек... "
 
-#: ../vector/v.in.ascii/a2b.c:51
+#: ../vector/v.in.ascii/a2b.c:52
 #, c-format
 msgid "Error reading ASCII file: (bad type) [%s]"
 msgstr "Ошибка чтения файла ASCII: (неверный тип) [%s]"
 
-#: ../vector/v.in.ascii/a2b.c:89
+#: ../vector/v.in.ascii/a2b.c:90
 #, c-format
 msgid "Error reading ASCII file: (unknown type) [%s]"
 msgstr "Ошибка чтения файла ASCII: (неизвестный тип) [%s]"
 
-#: ../vector/v.in.ascii/a2b.c:102 ../vector/v.edit/a2b.c:136
+#: ../vector/v.in.ascii/a2b.c:103 ../vector/v.edit/a2b.c:136
 msgid "End of ASCII file reached before end of coordinates"
 msgstr "Достигнут конец файла ASCII до конца координат"
 
-#: ../vector/v.in.ascii/a2b.c:112
+#: ../vector/v.in.ascii/a2b.c:114
 #, c-format
 msgid "Error reading ASCII file: (bad point) [%s]"
 msgstr "Ошибка чтения файла ASCII: (неверный точка) [%s]"
 
-#: ../vector/v.in.ascii/a2b.c:143
+#: ../vector/v.in.ascii/a2b.c:118
+#, fuzzy, c-format
+msgid "Unparsable longitude value: [%s]"
+msgstr "Ошибка в значении долготы в столбце <%d>: %s"
+
+#: ../vector/v.in.ascii/a2b.c:121
+#, fuzzy, c-format
+msgid "Unparsable latitude value: [%s]"
+msgstr "Ошибка в значении долготы в столбце <%d>: %s"
+
+#: ../vector/v.in.ascii/a2b.c:154
 msgid "End of ASCII file reached before end of categories"
 msgstr "Файл ASCII закончился быстрее, чем категории"
 
-#: ../vector/v.in.ascii/a2b.c:153
+#: ../vector/v.in.ascii/a2b.c:164
 #, c-format
 msgid "Error reading categories: [%s]"
 msgstr "Ошибка чтения категорий: [%s]"
@@ -25153,7 +25270,11 @@ msgstr ""
 msgid "Unable to get category list <%s>"
 msgstr "Невозможно получить список категорий <%s>"
 
-#: ../vector/v.edit/main.c:148
+#: ../vector/v.edit/main.c:98
+msgid "Creating new DB connection based on default mapset settings..."
+msgstr ""
+
+#: ../vector/v.edit/main.c:153
 #, c-format
 msgid ""
 "Unable to open vector map <%s> as the background map. It is given as vector "
@@ -25162,20 +25283,20 @@ msgstr ""
 "Невозможно открыть векторный слой <%s> как фоновый. Векторный слой задан как "
 "редактируемый."
 
-#: ../vector/v.edit/main.c:163
+#: ../vector/v.edit/main.c:168
 #, c-format
 msgid "Background vector map <%s> registered"
 msgstr "Фоновый векторный слой <%s> зарегистрирован"
 
-#: ../vector/v.edit/main.c:203
+#: ../vector/v.edit/main.c:208
 msgid "Selecting features..."
 msgstr "Выделение объектов..."
 
-#: ../vector/v.edit/main.c:215
+#: ../vector/v.edit/main.c:220
 msgid "No features selected, nothing to edit"
 msgstr "Объекты не выделены, нечего редактировать"
 
-#: ../vector/v.edit/main.c:223
+#: ../vector/v.edit/main.c:228
 #, c-format
 msgid ""
 "Vector map <%s> is not 3D. Tool '%s' requires 3D vector map. Please convert "
@@ -25184,69 +25305,69 @@ msgstr ""
 "Векторный слой <%s> не 3D. Инструмент '%s' требует векторный 3D слой. "
 "Сконвертируйте слой в 3D используя например %s."
 
-#: ../vector/v.edit/main.c:261
+#: ../vector/v.edit/main.c:266
 #, c-format
 msgid "%d features added"
 msgstr "Добавлено объектов: %d"
 
-#: ../vector/v.edit/main.c:263 ../vector/v.edit/main.c:284
-#: ../vector/v.edit/main.c:292 ../vector/v.edit/main.c:317
-#: ../vector/v.edit/main.c:354
+#: ../vector/v.edit/main.c:268 ../vector/v.edit/main.c:289
+#: ../vector/v.edit/main.c:297 ../vector/v.edit/main.c:322
+#: ../vector/v.edit/main.c:359
 #, c-format
 msgid "Threshold value for snapping is %.2f"
 msgstr "Пороговое значение для прилипания %.2f"
 
-#: ../vector/v.edit/main.c:272
+#: ../vector/v.edit/main.c:277
 #, c-format
 msgid "%d boundaries closed"
 msgstr "%d границ замкнуто"
 
-#: ../vector/v.edit/main.c:279
+#: ../vector/v.edit/main.c:284
 #, c-format
 msgid "%d features deleted"
 msgstr "удалено %d объектов"
 
-#: ../vector/v.edit/main.c:287
+#: ../vector/v.edit/main.c:292
 #, c-format
 msgid "%d features moved"
 msgstr "%d объектов перемещено"
 
-#: ../vector/v.edit/main.c:296
+#: ../vector/v.edit/main.c:301
 #, c-format
 msgid "%d vertices moved"
 msgstr "%d вершин перемещено"
 
-#: ../vector/v.edit/main.c:300
+#: ../vector/v.edit/main.c:305
 #, c-format
 msgid "%d vertices added"
 msgstr "%d вершин добавлено"
 
-#: ../vector/v.edit/main.c:304
+#: ../vector/v.edit/main.c:309
 #, c-format
 msgid "%d vertices removed"
 msgstr "%d вершин добавлено"
 
-#: ../vector/v.edit/main.c:314
+#: ../vector/v.edit/main.c:319
 #, c-format
 msgid "%d lines broken"
 msgstr "%d линий разорвано"
 
-#: ../vector/v.edit/main.c:320
+#: ../vector/v.edit/main.c:325
 #, c-format
 msgid "%d lines connected"
 msgstr "%d линий соединено"
 
-#: ../vector/v.edit/main.c:324
+#: ../vector/v.edit/main.c:329
 #, c-format
 msgid "%d lines merged"
 msgstr "%d линий слито"
 
-#: ../vector/v.edit/main.c:332 ../vector/v.edit/main.c:336
+#: ../vector/v.edit/main.c:337 ../vector/v.edit/main.c:341
 #, c-format
 msgid "%d features modified"
 msgstr "%d объектов изменено"
 
-#: ../vector/v.edit/main.c:341
+#: ../vector/v.edit/main.c:346
 #, c-format
 msgid ""
 "Multiple background maps were given. Selected features will be copied only "
@@ -25255,31 +25376,31 @@ msgstr ""
 "Было задано несколько фоновых слоев. Выбранные объекты будут скопированы "
 "только из векторного слоя <%s>."
 
-#: ../vector/v.edit/main.c:351
+#: ../vector/v.edit/main.c:356
 #, c-format
 msgid "%d features copied"
 msgstr "%d объектов скопировано"
 
-#: ../vector/v.edit/main.c:360
+#: ../vector/v.edit/main.c:365
 #, c-format
 msgid "%d lines flipped"
 msgstr "%d линий перевернуто"
 
-#: ../vector/v.edit/main.c:380
+#: ../vector/v.edit/main.c:385
 #, c-format
 msgid "%d lines labeled"
 msgstr "%d линий помечено"
 
-#: ../vector/v.edit/main.c:387
+#: ../vector/v.edit/main.c:392
 #, c-format
 msgid "%d features converted"
 msgstr "%d объектов конвертировано"
 
-#: ../vector/v.edit/main.c:390
+#: ../vector/v.edit/main.c:395
 msgid "No feature modified"
 msgstr "Объект не изменен"
 
-#: ../vector/v.edit/main.c:395
+#: ../vector/v.edit/main.c:400
 msgid "Operation not implemented"
 msgstr "Действие не реализовано"
 
@@ -25708,6 +25829,7 @@ msgid "Feature ids (by default all features are processed)"
 msgstr "ID объектов (по умолчанию обрабатываются все)"
 
 #: ../vector/v.category/main.c:114
+#: ../locale/scriptstrings/v.centroids_to_translate.c:8
 msgid "Category increment"
 msgstr "Шаг номера категории"
 
@@ -26104,7 +26226,7 @@ msgstr ""
 "В данном наборе слой <%s> отсутствует. Добавьте параметр -n для того, чтобы "
 "создать новый слой."
 
-#: ../vector/v.digit/centre.c:176
+#: ../vector/v.digit/centre.c:178
 msgid "Region restored to original extent."
 msgstr "Регион возвращен к первоначальным размерам."
 
@@ -26715,277 +26837,329 @@ msgstr "Количество файлов высот не соответству
 msgid "Loading data failed"
 msgstr "Не удалось загрузить данные"
 
-#: ../visualization/nviz2/cmd/main.c:46
+#: ../visualization/nviz2/cmd/main.c:48
 msgid "visualization, raster, vector, raster3d"
 msgstr "визуализация, растр, вектор, 3D растр"
 
-#: ../visualization/nviz2/cmd/main.c:47
+#: ../visualization/nviz2/cmd/main.c:49
 msgid "Allows rendering GIS data is a 3D space."
 msgstr ""
 
-#: ../visualization/nviz2/cmd/main.c:48
+#: ../visualization/nviz2/cmd/main.c:50
 msgid ""
 "Renders surfaces (raster data), 2D/3D vector data, and volumes (3D raster "
 "data) in a 3D space."
 msgstr ""
 
-#: ../visualization/nviz2/cmd/main.c:136
+#: ../visualization/nviz2/cmd/main.c:128
 #, c-format
 msgid "Vertical exaggeration not given, using calculated value %.0f"
 msgstr ""
 "Не задан вертикальный коэффициент масштабирования, используется расчетное "
 "значение %.0f"
 
-#: ../visualization/nviz2/cmd/main.c:146
+#: ../visualization/nviz2/cmd/main.c:140
 #, c-format
 msgid "Viewpoint height not given, using calculated value %.0f"
 msgstr "Высота точки обзора не задана, используется расчетного значение %.0f"
 
-#: ../visualization/nviz2/cmd/main.c:171
+#: ../visualization/nviz2/cmd/main.c:201
 msgid "Unsupported output format"
 msgstr "Неподдерживаемый выходной формат"
 
-#: ../visualization/nviz2/cmd/main.c:173 ../imagery/i.cluster/main.c:346
+#: ../visualization/nviz2/cmd/main.c:203 ../imagery/i.cluster/main.c:346
 #, c-format
 msgid "File <%s> created."
 msgstr "Файл <%s> создан."
 
-#: ../visualization/nviz2/cmd/args.c:47
+#: ../visualization/nviz2/cmd/args.c:49
 msgid "Use draw mode for all loaded surfaces"
 msgstr "Использовать режим отрисовки для всех загруженных поверхностей"
 
-#: ../visualization/nviz2/cmd/args.c:48 ../visualization/nviz2/cmd/args.c:114
-#: ../visualization/nviz2/cmd/args.c:123 ../visualization/nviz2/cmd/args.c:130
-#: ../visualization/nviz2/cmd/args.c:136 ../visualization/nviz2/cmd/args.c:145
-#: ../visualization/nviz2/cmd/args.c:154 ../visualization/nviz2/cmd/args.c:164
-#: ../visualization/nviz2/cmd/args.c:172 ../visualization/nviz2/cmd/args.c:182
-#: ../visualization/nviz2/cmd/args.c:190 ../visualization/nviz2/cmd/args.c:200
+#: ../visualization/nviz2/cmd/args.c:50 ../visualization/nviz2/cmd/args.c:122
+#: ../visualization/nviz2/cmd/args.c:131 ../visualization/nviz2/cmd/args.c:138
+#: ../visualization/nviz2/cmd/args.c:144 ../visualization/nviz2/cmd/args.c:152
+#: ../visualization/nviz2/cmd/args.c:161 ../visualization/nviz2/cmd/args.c:171
+#: ../visualization/nviz2/cmd/args.c:179 ../visualization/nviz2/cmd/args.c:189
+#: ../visualization/nviz2/cmd/args.c:197 ../visualization/nviz2/cmd/args.c:207
 #, fuzzy
 msgid "Surfaces"
 msgstr "Поверхность"
 
-#: ../visualization/nviz2/cmd/args.c:73
+#: ../visualization/nviz2/cmd/args.c:81
 #, fuzzy
-msgid "Name for output file (without extension)"
+msgid "Name for output image file (without extension)"
 msgstr "Название для файла вывода (НЕ указывать расширение)"
 
-#: ../visualization/nviz2/cmd/args.c:74 ../visualization/nviz2/cmd/args.c:88
-#: ../visualization/nviz2/cmd/args.c:98
+#: ../visualization/nviz2/cmd/args.c:82 ../visualization/nviz2/cmd/args.c:96
+#: ../visualization/nviz2/cmd/args.c:106
 msgid "Image"
 msgstr "Изображение"
 
-#: ../visualization/nviz2/cmd/args.c:86
+#: ../visualization/nviz2/cmd/args.c:94
+#: ../locale/scriptstrings/d.out.file_to_translate.c:4
 msgid "Graphics file format"
 msgstr "Формат графического файла"
 
-#: ../visualization/nviz2/cmd/args.c:96
-msgid "Width and height of output image"
+#: ../visualization/nviz2/cmd/args.c:104
+#, fuzzy
+msgid "Size (width, height) of output image"
 msgstr "Ширина и высота выходного изображения"
 
-#: ../visualization/nviz2/cmd/args.c:113
+#: ../visualization/nviz2/cmd/args.c:121
 msgid "Name of raster map(s) for elevation"
 msgstr "Имя растрового слоя (слоев) для высоты"
 
-#: ../visualization/nviz2/cmd/args.c:122
+#: ../visualization/nviz2/cmd/args.c:130
 msgid "Elevation value(s)"
 msgstr "Значение высоты"
 
-#: ../visualization/nviz2/cmd/args.c:129
+#: ../visualization/nviz2/cmd/args.c:137
 msgid "Name of raster map(s) for color"
 msgstr "Имя растрового слоя (слоев) для цвета"
 
-#: ../visualization/nviz2/cmd/args.c:135
+#: ../visualization/nviz2/cmd/args.c:143
 msgid "Color value(s)"
 msgstr "Значения цвета"
 
-#: ../visualization/nviz2/cmd/args.c:144
+#: ../visualization/nviz2/cmd/args.c:151
 msgid "Name of raster map(s) for mask"
 msgstr "Имя растрового слоя (слоев) для маски"
 
-#: ../visualization/nviz2/cmd/args.c:153
+#: ../visualization/nviz2/cmd/args.c:160
 msgid "Name of raster map(s) for transparency"
 msgstr "Имя растрового слоя (слоев) для прозрачности"
 
-#: ../visualization/nviz2/cmd/args.c:163
+#: ../visualization/nviz2/cmd/args.c:170
 msgid "Transparency value(s)"
 msgstr "Значения прозрачности"
 
-#: ../visualization/nviz2/cmd/args.c:171
+#: ../visualization/nviz2/cmd/args.c:178
 msgid "Name of raster map(s) for shininess"
 msgstr "Имя растрового слоя (слоев) для яркости"
 
-#: ../visualization/nviz2/cmd/args.c:181
+#: ../visualization/nviz2/cmd/args.c:188
 msgid "Shininess value(s)"
 msgstr "Значения яркости"
 
-#: ../visualization/nviz2/cmd/args.c:189
+#: ../visualization/nviz2/cmd/args.c:196
 msgid "Name of raster map(s) for emission"
 msgstr "Имя растрового слоя (слоев) для излучения"
 
-#: ../visualization/nviz2/cmd/args.c:199
+#: ../visualization/nviz2/cmd/args.c:206
 msgid "Emission value(s)"
 msgstr "Значения излучения"
 
-#: ../visualization/nviz2/cmd/args.c:213
+#: ../visualization/nviz2/cmd/args.c:220
 msgid "Draw mode"
 msgstr "Режим отрисовки"
 
-#: ../visualization/nviz2/cmd/args.c:216 ../visualization/nviz2/cmd/args.c:227
-#: ../visualization/nviz2/cmd/args.c:238 ../visualization/nviz2/cmd/args.c:250
-#: ../visualization/nviz2/cmd/args.c:262 ../visualization/nviz2/cmd/args.c:271
-#: ../visualization/nviz2/cmd/args.c:283 ../visualization/nviz2/cmd/args.c:293
-#: ../visualization/nviz2/cmd/args.c:513 ../visualization/nviz2/cmd/args.c:525
+#: ../visualization/nviz2/cmd/args.c:223 ../visualization/nviz2/cmd/args.c:234
+#: ../visualization/nviz2/cmd/args.c:245 ../visualization/nviz2/cmd/args.c:257
+#: ../visualization/nviz2/cmd/args.c:269 ../visualization/nviz2/cmd/args.c:278
+#: ../visualization/nviz2/cmd/args.c:290 ../visualization/nviz2/cmd/args.c:300
+#: ../visualization/nviz2/cmd/args.c:520 ../visualization/nviz2/cmd/args.c:532
 msgid "Draw"
 msgstr "Рисовать"
 
-#: ../visualization/nviz2/cmd/args.c:225
+#: ../visualization/nviz2/cmd/args.c:232
 msgid "Fine resolution"
 msgstr "Четкое разрешение"
 
-#: ../visualization/nviz2/cmd/args.c:236
+#: ../visualization/nviz2/cmd/args.c:243
 msgid "Coarse resolution"
 msgstr "Грубое разрешение"
 
-#: ../visualization/nviz2/cmd/args.c:247
+#: ../visualization/nviz2/cmd/args.c:254
 msgid "Draw style"
 msgstr "Стиль отрисовки"
 
-#: ../visualization/nviz2/cmd/args.c:259 ../visualization/nviz2/cmd/args.c:280
+#: ../visualization/nviz2/cmd/args.c:266 ../visualization/nviz2/cmd/args.c:287
 msgid "Shading"
 msgstr "Тени"
 
-#: ../visualization/nviz2/cmd/args.c:268
+#: ../visualization/nviz2/cmd/args.c:275
 msgid "Wire color"
 msgstr "Цвет каркаса"
 
-#: ../visualization/nviz2/cmd/args.c:304
+#: ../visualization/nviz2/cmd/args.c:311
 msgid "Name of line vector overlay map(s)"
 msgstr "Имя векторных линейных слоев"
 
-#: ../visualization/nviz2/cmd/args.c:305 ../visualization/nviz2/cmd/args.c:316
-#: ../visualization/nviz2/cmd/args.c:327 ../visualization/nviz2/cmd/args.c:339
-#: ../visualization/nviz2/cmd/args.c:349 ../visualization/nviz2/cmd/args.c:361
+#: ../visualization/nviz2/cmd/args.c:312 ../visualization/nviz2/cmd/args.c:323
+#: ../visualization/nviz2/cmd/args.c:334 ../visualization/nviz2/cmd/args.c:346
+#: ../visualization/nviz2/cmd/args.c:356 ../visualization/nviz2/cmd/args.c:368
 msgid "Vector lines"
 msgstr "Векторные линии"
 
-#: ../visualization/nviz2/cmd/args.c:315
+#: ../visualization/nviz2/cmd/args.c:322
 msgid "Vector line width"
 msgstr "Ширина векторной линии"
 
-#: ../visualization/nviz2/cmd/args.c:324
+#: ../visualization/nviz2/cmd/args.c:331
 msgid "Vector line color"
 msgstr "Цвет векторной линии"
 
-#: ../visualization/nviz2/cmd/args.c:336
+#: ../visualization/nviz2/cmd/args.c:343
 msgid "Vector line display mode"
 msgstr "Режим отображения векторной линии"
 
-#: ../visualization/nviz2/cmd/args.c:348
+#: ../visualization/nviz2/cmd/args.c:355
 msgid "Vector line height"
 msgstr "Высота векторной линии"
 
-#: ../visualization/nviz2/cmd/args.c:372
+#: ../visualization/nviz2/cmd/args.c:379
 msgid "Name of point vector overlay map(s)"
 msgstr "Имя точечного векторного слоя (слоев)"
 
-#: ../visualization/nviz2/cmd/args.c:373 ../visualization/nviz2/cmd/args.c:384
-#: ../visualization/nviz2/cmd/args.c:396 ../visualization/nviz2/cmd/args.c:407
-#: ../visualization/nviz2/cmd/args.c:420 ../visualization/nviz2/cmd/args.c:430
+#: ../visualization/nviz2/cmd/args.c:380 ../visualization/nviz2/cmd/args.c:391
+#: ../visualization/nviz2/cmd/args.c:403 ../visualization/nviz2/cmd/args.c:414
+#: ../visualization/nviz2/cmd/args.c:427 ../visualization/nviz2/cmd/args.c:437
 msgid "Vector points"
 msgstr "Векторные точки"
 
-#: ../visualization/nviz2/cmd/args.c:383
+#: ../visualization/nviz2/cmd/args.c:390
 msgid "Icon size"
 msgstr "Размер иконки"
 
-#: ../visualization/nviz2/cmd/args.c:395
+#: ../visualization/nviz2/cmd/args.c:402
 msgid "Icon width"
 msgstr "Ширина иконки"
 
-#: ../visualization/nviz2/cmd/args.c:404
+#: ../visualization/nviz2/cmd/args.c:411
 msgid "Icon color"
 msgstr "Цвет иконки"
 
-#: ../visualization/nviz2/cmd/args.c:416
+#: ../visualization/nviz2/cmd/args.c:423
 msgid "Icon marker"
 msgstr "Маркер иконки"
 
-#: ../visualization/nviz2/cmd/args.c:446
+#: ../visualization/nviz2/cmd/args.c:453
 msgid "Viewpoint position (x,y model coordinates)"
 msgstr "Позиция точки обзора (координаты x,y)"
 
-#: ../visualization/nviz2/cmd/args.c:447 ../visualization/nviz2/cmd/args.c:458
-#: ../visualization/nviz2/cmd/args.c:468 ../visualization/nviz2/cmd/args.c:480
+#: ../visualization/nviz2/cmd/args.c:454 ../visualization/nviz2/cmd/args.c:465
+#: ../visualization/nviz2/cmd/args.c:475 ../visualization/nviz2/cmd/args.c:487
 msgid "Viewpoint"
 msgstr "Точка обзора"
 
-#: ../visualization/nviz2/cmd/args.c:457
+#: ../visualization/nviz2/cmd/args.c:464
 msgid "Viewpoint height (in map units)"
 msgstr "Высота точки обзора (в единицах слоя)"
 
-#: ../visualization/nviz2/cmd/args.c:467
+#: ../visualization/nviz2/cmd/args.c:474
 msgid "Viewpoint field of view (in degrees)"
 msgstr "Поле обзора с точки обзора (в градусах)"
 
-#: ../visualization/nviz2/cmd/args.c:479
+#: ../visualization/nviz2/cmd/args.c:486
 msgid "Viewpoint twist angle (in degrees)"
 msgstr "Угол наклона точки обзора (в градусах)"
 
-#: ../visualization/nviz2/cmd/args.c:500 ../visualization/nviz2/cmd/args.c:535
-#: ../visualization/nviz2/cmd/args.c:547 ../visualization/nviz2/cmd/args.c:557
+#: ../visualization/nviz2/cmd/args.c:507 ../visualization/nviz2/cmd/args.c:542
+#: ../visualization/nviz2/cmd/args.c:554 ../visualization/nviz2/cmd/args.c:564
 #, fuzzy
 msgid "Volumes"
 msgstr "Объем"
 
-#: ../visualization/nviz2/cmd/args.c:510
+#: ../visualization/nviz2/cmd/args.c:517
 msgid "Volume draw mode"
 msgstr "Режим отрисовки объема"
 
-#: ../visualization/nviz2/cmd/args.c:522
+#: ../visualization/nviz2/cmd/args.c:529
 msgid "Volume shading"
 msgstr "Тени объема"
 
-#: ../visualization/nviz2/cmd/args.c:534
+#: ../visualization/nviz2/cmd/args.c:541
 msgid "Volume position"
 msgstr "Позиционирование объема"
 
-#: ../visualization/nviz2/cmd/args.c:545
+#: ../visualization/nviz2/cmd/args.c:552
 msgid "Volume resolution"
 msgstr "Разрешение объекма"
 
-#: ../visualization/nviz2/cmd/args.c:556
+#: ../visualization/nviz2/cmd/args.c:563
 msgid "Isosurface level"
 msgstr "Уровень изоповерхности"
 
-#: ../visualization/nviz2/cmd/args.c:602
+#: ../visualization/nviz2/cmd/args.c:578
+#, fuzzy
+msgid "Light position (x,y,z model coordinates)"
+msgstr "Позиция точки обзора (координаты x,y)"
+
+#: ../visualization/nviz2/cmd/args.c:579 ../visualization/nviz2/cmd/args.c:585
+#: ../visualization/nviz2/cmd/args.c:594 ../visualization/nviz2/cmd/args.c:604
+#, fuzzy
+msgid "Lighting"
+msgstr "Существует"
+
+#: ../visualization/nviz2/cmd/args.c:584
+#, fuzzy
+msgid "Light color"
+msgstr "Цвет выделения"
+
+#: ../visualization/nviz2/cmd/args.c:593
+msgid "Light brightness"
+msgstr ""
+
+#: ../visualization/nviz2/cmd/args.c:603
+msgid "Light ambient"
+msgstr ""
+
+#: ../visualization/nviz2/cmd/args.c:615
+msgid ""
+"nw;North-West edge;ne;North-East edge;sw;South-West edge;se;South-East edge"
+msgstr ""
+
+#: ../visualization/nviz2/cmd/args.c:619
+#, fuzzy
+msgid "Fringe edges"
+msgstr "Запись узлов..."
+
+#: ../visualization/nviz2/cmd/args.c:620 ../visualization/nviz2/cmd/args.c:626
+#: ../visualization/nviz2/cmd/args.c:635
+#, fuzzy
+msgid "Fringe"
+msgstr "Форматирование"
+
+#: ../visualization/nviz2/cmd/args.c:625
+#, fuzzy
+msgid "Fringe color"
+msgstr "Цвет линии"
+
+#: ../visualization/nviz2/cmd/args.c:634
+#, fuzzy
+msgid "Fringe elevation"
+msgstr "Трассировать высоту"
+
+#: ../visualization/nviz2/cmd/args.c:679
 #, c-format
 msgid "At least one <%s> or <%s> required"
 msgstr "Необходимо как минимум один <%s> или требуется <%s>"
 
-#: ../visualization/nviz2/cmd/args.c:616 ../visualization/nviz2/cmd/args.c:646
-#: ../visualization/nviz2/cmd/args.c:658 ../visualization/nviz2/cmd/args.c:664
-#: ../visualization/nviz2/cmd/args.c:670 ../visualization/nviz2/cmd/args.c:676
+#: ../visualization/nviz2/cmd/args.c:693 ../visualization/nviz2/cmd/args.c:723
+#: ../visualization/nviz2/cmd/args.c:735 ../visualization/nviz2/cmd/args.c:741
+#: ../visualization/nviz2/cmd/args.c:747 ../visualization/nviz2/cmd/args.c:753
 #, c-format
 msgid "Inconsistent number of attributes (<%s/%s> %d: <%s> %d)"
 msgstr "Несоответствующее число атрибутов (<%s/%s> %d: <%s> %d)"
 
-#: ../visualization/nviz2/cmd/args.c:652
+#: ../visualization/nviz2/cmd/args.c:729
 #, c-format
 msgid "Inconsistent number of attributes (<%s/%s> %d: <%s> %d"
 msgstr "Несоответствующее число атрибутов (<%s/%s> %d: <%s> %d"
 
-#: ../visualization/nviz2/cmd/args.c:689 ../visualization/nviz2/cmd/args.c:703
-#: ../visualization/nviz2/cmd/args.c:710
+#: ../visualization/nviz2/cmd/args.c:766 ../visualization/nviz2/cmd/args.c:780
+#: ../visualization/nviz2/cmd/args.c:787
 #, c-format
 msgid "Inconsistent number of attributes (<%s> %d: <%s> %d)"
 msgstr "Несоответствующее число атрибутов (<%s> %d: <%s> %d)"
 
-#: ../visualization/nviz2/cmd/args.c:696
+#: ../visualization/nviz2/cmd/args.c:773
 #, c-format
 msgid "Inconsistent number of attributes (<%s> %d: <%s> %d"
 msgstr "Несоответствующее число атрибутов (<%s> %d: <%s> %d"
 
-#: ../visualization/nviz2/cmd/args.c:722
+#: ../visualization/nviz2/cmd/args.c:799
 #, c-format
 msgid "Inconsistent number of attributes (<%s/%s> %d: <%s> %d, <%s> %d"
 msgstr "Несоответствующее число атрибутов (<%s/%s> %d: <%s> %d, <%s> %d"
@@ -27111,122 +27285,6 @@ msgstr "Ошибка получения записи из базы данных 
 #, c-format
 msgid "Unable to copy attribute table to vector map <%s>"
 msgstr "Невозможно скопировать атрибутивную таблицу в векторный слой <%s>"
-
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/opennew.c:19
-#, c-format
-msgid "Failed in attempt to open %s"
-msgstr "Ошибка при открытии %s"
-
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:155
-msgid ""
-"Generates raster map layers of slope, aspect, curvatures and partial "
-"derivatives from a raster map layer of true elevation values. Aspect is "
-"calculated counterclockwise from east."
-msgstr ""
-"Создать растровые слои крутизны, экспозиции, кривизны и частичных "
-"производных склона ипользуя растровый слой высот. Экспозиция вычисляется "
-"простив часовой стрелки начиная с востока."
-
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:164
-msgid "Raster elevation file name"
-msgstr "Имя растрового файла высот"
-
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:172
-msgid "Output slope filename"
-msgstr "Имя выходного файла крутизны"
-
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:180
-msgid "Output aspect filename"
-msgstr "Имя выходного файла экспозиции"
-
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:207
-msgid "Output profile curvature filename"
-msgstr "Имя выходного файла профиля кривизны"
-
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:216
-msgid "Output tangential curvature filename"
-msgstr "Имя выходного файла касательной кривизны"
-
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:226
-msgid "Output first order partial derivative dx (E-W slope) filename"
-msgstr ""
-"Имя выходного файла частичной производной первого порядка dx (В-З крутизна)"
-
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:236
-msgid "Output first order partial derivative dy (N-S slope) filename"
-msgstr ""
-"Имя выходного файла частичной производной первого порядка dy (С-Ю крутизна)"
-
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:246
-msgid "Output second order partial derivative dxx filename"
-msgstr "Имя выходного файла частичной производной второго порядка dxx"
-
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:256
-msgid "Output second order partial derivative dyy filename"
-msgstr "Вывести имя файла второй частичной производной dyy"
-
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:266
-msgid "Output second order partial derivative dxy filename"
-msgstr "Вывести имя файла второй частичной производной dxy"
-
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:412
-#, c-format
-msgid "wrong type: %s"
-msgstr "неверный тип: %s"
-
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:1021
-msgid "Creating support files..."
-msgstr "Создание дополнительных файлов..."
-
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:1023
-#, c-format
-msgid "Elevation products for mapset [%s] in [%s]"
-msgstr "Слои на основе данных о высотах для набора  [%s[ в [%s]"
-
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:1104
-#, c-format
-msgid "ASPECT [%s] COMPLETE"
-msgstr "ЭКСПОЗИЦИЯ [%s] ЗАВЕРШЕНО"
-
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:1197
-#, c-format
-msgid "SLOPE [%s] COMPLETE"
-msgstr "КРУТИЗНА [%s] ЗАВЕРШЕНО"
-
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:1268
-#, c-format
-msgid "PROFILE CURVE [%s] COMPLETE"
-msgstr "КРИВИЗНА ПРОФИЛЯ [%s] ЗАВЕРШЕНО"
-
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:1294
-#, c-format
-msgid "TANGENTIAL CURVE [%s] COMPLETE"
-msgstr "КАСАТЕЛЬНАЯ КРИВИЗНА [%s] ЗАВЕРШЕНО"
-
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:1318
-#, c-format
-msgid "E-W SLOPE [%s] COMPLETE"
-msgstr "КРУТИЗНА В-З [%s] ЗАВЕРШЕНО"
-
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:1342
-#, c-format
-msgid "N-S SLOPE [%s] COMPLETE"
-msgstr "КРУТИЗНА С-Ю [%s] ЗАВЕРШЕНО"
-
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:1366
-#, c-format
-msgid "DXX [%s] COMPLETE"
-msgstr "Завершено: DXX [%s]"
-
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:1390
-#, c-format
-msgid "DYY [%s] COMPLETE"
-msgstr "Завершено: DYY [%s]"
-
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:1414
-#, c-format
-msgid "DXY [%s] COMPLETE"
-msgstr "Завершено: DXY [%s]"
 
 #: ../ps/ps.map/ps_vlines.c:55 ../ps/ps.map/ps_vpoints.c:71
 #: ../ps/ps.map/ps_vareas.c:163
@@ -27670,6 +27728,7 @@ msgstr "Невозможно открыть базу данных:"
 #: ../db/base/columns.c:92 ../db/base/drivers.c:74 ../db/base/connect.c:45
 #: ../db/base/describe.c:125 ../db/base/tables.c:95
 #: ../locale/scriptstrings/db.test_to_translate.c:2
+#: ../locale/scriptstrings/db.out.ogr_to_translate.c:2
 #: ../locale/scriptstrings/db.droptable_to_translate.c:2
 #: ../locale/scriptstrings/db.dropcol_to_translate.c:2
 #: ../locale/scriptstrings/db.in.ogr_to_translate.c:2
@@ -27840,7 +27899,7 @@ msgstr "Выполнить SQL-оператор."
 msgid "Name of file containing SQL statements"
 msgstr "Название файла, содержащего SQL-операторы"
 
-#: ../db/base/execute.c:126
+#: ../db/base/execute.c:129
 msgid "Ignore SQL errors and continue"
 msgstr "Пропустить ошибки SQL и продолжить"
 
@@ -27895,16 +27954,17 @@ msgstr "прервано"
 msgid "succeeded"
 msgstr "...сделано."
 
-#: ../db/base/select.c:208
+#: ../db/base/select.c:194
 msgid "SQL select statement"
 msgstr "Оператор выбора SQL"
 
-#: ../db/base/select.c:210
+#: ../db/base/select.c:196
 msgid "For example: 'select * from rybniky where kapri = 'hodne'"
 msgstr "Например: 'select * from rybniky where kapri = 'hodne'"
 
-#: ../db/base/select.c:215
-msgid "Name of file with sql statement"
+#: ../db/base/select.c:201
+#, fuzzy
+msgid "Name of file with SQL select statement(s)"
 msgstr "Название файла, содержащего SQL-оператор"
 
 #: ../db/base/select.c:247
@@ -27967,6 +28027,104 @@ msgstr "Невозможно задать пользователя/пароль"
 msgid "The password was stored in file"
 msgstr "Пароль сохранен в файле"
 
+#: ../locale/scriptstrings/d.split_to_translate.c:1
+msgid ""
+"Divides active display into two frames & displays maps/executes commands in "
+"each frame."
+msgstr ""
+"Разделить активный дисплей на два фрейма и показать слои/выполнить команды в "
+"каждом фрейме "
+
+#: ../locale/scriptstrings/d.split_to_translate.c:3
+msgid "Enter raster map to display in 1st frame"
+msgstr "Введите растровый слой для показа в первом фрейме"
+
+#: ../locale/scriptstrings/d.split_to_translate.c:4
+msgid "Enter command to execute in 1st frame"
+msgstr "Введите команду для исполнения в 1-м фрейме"
+
+#: ../locale/scriptstrings/d.split_to_translate.c:5
+msgid "Enter raster map to display in 2nd frame"
+msgstr "Введите растровый слой для показа в втором фрейме"
+
+#: ../locale/scriptstrings/d.split_to_translate.c:6
+msgid "Enter command to execute in 2nd frame"
+msgstr "Введите команду для исполнения во 2-м фрейме"
+
+#: ../locale/scriptstrings/d.split_to_translate.c:7
+msgid "How to split display"
+msgstr "Как разделить дисплей "
+
+#: ../locale/scriptstrings/i.spectral_to_translate.c:1
+#, fuzzy
+msgid ""
+"Displays spectral response at user specified locations in group or images."
+msgstr ""
+"Показать спектральное отражение для групп или изображений, определенных "
+"пользователем"
+
+#: ../locale/scriptstrings/i.spectral_to_translate.c:2
+msgid "imagery, raster, multispectral"
+msgstr "изображения, растр, мультиспектральные"
+
+#: ../locale/scriptstrings/i.spectral_to_translate.c:3
+#, fuzzy
+msgid "Group input"
+msgstr "исходная группа"
+
+#: ../locale/scriptstrings/i.spectral_to_translate.c:4
+#, fuzzy
+msgid "Raster input maps"
+msgstr "исходные растровые слои"
+
+#: ../locale/scriptstrings/i.spectral_to_translate.c:5
+#, fuzzy
+msgid "Write output to PNG image"
+msgstr "записать результат в изображение PNG"
+
+#: ../locale/scriptstrings/i.spectral_to_translate.c:6
+msgid "Use image list and not group"
+msgstr "Использовать список изображений, но не группу"
+
+#: ../locale/scriptstrings/i.spectral_to_translate.c:7
+msgid "Select multiple points"
+msgstr "Выбор нескольких точек"
+
+#: ../locale/scriptstrings/i.spectral_to_translate.c:8
+#, fuzzy
+msgid "Label with coordinates instead of numbering"
+msgstr "подписать координатами вместо чисел"
+
+#: ../locale/scriptstrings/v.convert.all_to_translate.c:1
+msgid ""
+"Convert all old GRASS < Ver5.7 vector maps in current mapset to current "
+"format"
+msgstr ""
+"Конвертировать все старые слои GRASS < Ver5.7 в текущем наборе в текущий "
+"формат"
+
+#: ../locale/scriptstrings/v.convert.all_to_translate.c:3
+msgid "run non-interactively"
+msgstr "запустить без интерактивности"
+
+#: ../locale/scriptstrings/r.out.gdal.sh_to_translate.c:1
+msgid "Exports GRASS raster into GDAL supported formats."
+msgstr "Экспорт растрового слоя GRASS в форматы поддерживаемые GDAL."
+
+#: ../locale/scriptstrings/r.out.gdal.sh_to_translate.c:4
+msgid "Region sensitive output"
+msgstr "Вывод зависящий от региона"
+
+#: ../locale/scriptstrings/r.out.gdal.sh_to_translate.c:9
+msgid ""
+"Creation option to the output format driver. Multiple options may be listed"
+msgstr ""
+"Опции создания для драйвера выходного формата. Возможно несколько опций"
+
+#: ../locale/scriptstrings/r.out.gdal.sh_to_translate.c:10
+msgid "Metadata key passed on the output dataset if possible"
+msgstr "Метаданные передаваемые если возможно выходному набору данных"
+
 #: ../locale/scriptstrings/r.regression.line_to_translate.c:1
 msgid "Calculates linear regression from two raster maps: y = a + b*x"
 msgstr "Рассчитать линейную регрессию для двух растровых слоев: y = a + b*x"
@@ -28005,7 +28163,10 @@ msgstr "Исходный тип точка, линий или полигон"
 
 #: ../locale/scriptstrings/v.in.e00_to_translate.c:6
 #: ../locale/scriptstrings/v.in.lines_to_translate.c:5
+#: ../locale/scriptstrings/v.in.gns_to_translate.c:4
+#: ../locale/scriptstrings/v.in.geonames_to_translate.c:4
 #: ../locale/scriptstrings/v.dissolve_to_translate.c:4
+#: ../locale/scriptstrings/v.centroids_to_translate.c:4
 msgid "Name for output vector map"
 msgstr "Имя выходного векторного слоя"
 
@@ -28018,6 +28179,7 @@ msgstr ""
 "точку."
 
 #: ../locale/scriptstrings/r.plane_to_translate.c:2
+#: ../locale/scriptstrings/r.shaded.relief_to_translate.c:2
 msgid "raster, elevation"
 msgstr "растр, высота"
 
@@ -28063,127 +28225,182 @@ msgid "Input coordinate file (omit to read from stdin)"
 msgstr "Исходный файл координат (не указывайте для чтения из stdin)"
 
 #: ../locale/scriptstrings/m.proj_to_translate.c:4
+#: ../locale/scriptstrings/m.proj_to_translate.c:6
+#: ../locale/scriptstrings/m.proj_to_translate.c:8
+#: ../locale/scriptstrings/m.proj_to_translate.c:18
+#: ../locale/scriptstrings/m.proj_to_translate.c:20
+#: ../locale/scriptstrings/m.proj_to_translate.c:22
+#, fuzzy
+msgid "Files & format"
+msgstr "Формат таблицы"
+
+#: ../locale/scriptstrings/m.proj_to_translate.c:5
 msgid "Output coordinate file (omit to send to stdout)"
 msgstr "Выходной файл координат (пропустить вывод в stdout)"
 
-#: ../locale/scriptstrings/m.proj_to_translate.c:5
+#: ../locale/scriptstrings/m.proj_to_translate.c:7
 #: ../locale/scriptstrings/v.in.lines_to_translate.c:6
+#: ../locale/scriptstrings/r.out.xyz_to_translate.c:5
 msgid "Field separator"
 msgstr "Разделитель полей"
 
-#: ../locale/scriptstrings/m.proj_to_translate.c:6
+#: ../locale/scriptstrings/m.proj_to_translate.c:9
 msgid "Input projection parameters (PROJ.4 style)"
 msgstr "Исходные параметры проекции (стиль PROJ.4)"
 
-#: ../locale/scriptstrings/m.proj_to_translate.c:7
+#: ../locale/scriptstrings/m.proj_to_translate.c:10
+#: ../locale/scriptstrings/m.proj_to_translate.c:12
+#: ../locale/scriptstrings/m.proj_to_translate.c:14
+#: ../locale/scriptstrings/m.proj_to_translate.c:16
+#, fuzzy
+msgid "Projections"
+msgstr "Проектирование..."
+
+#: ../locale/scriptstrings/m.proj_to_translate.c:11
 msgid "Output projection parameters (PROJ.4 style)"
 msgstr "Выходные параметры проекции (стиль PROJ.4)"
 
-#: ../locale/scriptstrings/m.proj_to_translate.c:8
+#: ../locale/scriptstrings/m.proj_to_translate.c:13
 msgid "Use LL WGS84 as input and current location as output projection"
 msgstr ""
 "Использовать LL WGS84 как исходную и текущую область как выходную проекции"
 
-#: ../locale/scriptstrings/m.proj_to_translate.c:9
+#: ../locale/scriptstrings/m.proj_to_translate.c:15
 msgid "Use current location as input and LL WGS84 as output projection"
 msgstr ""
 "Использовать текущую область как исходную и  LL WGS84 как выходную проекции"
 
-#: ../locale/scriptstrings/m.proj_to_translate.c:10
+#: ../locale/scriptstrings/m.proj_to_translate.c:17
+#, fuzzy
 msgid ""
-"Output long/lat in decimal degrees or other projections with many decimal "
+"Output long/lat in decimal degrees, or other projections with many decimal "
 "places"
 msgstr ""
 "Выходные значения long/lat в десятичных градусах или другой проекции в "
 "формате с многими числами после запятой"
 
-#: ../locale/scriptstrings/m.proj_to_translate.c:11
+#: ../locale/scriptstrings/m.proj_to_translate.c:19
 #, fuzzy
 msgid "Include input coordinates in output file"
 msgstr "Номер столбца содержащего координату y в исходном файле"
 
-#: ../locale/scriptstrings/m.proj_to_translate.c:12
+#: ../locale/scriptstrings/m.proj_to_translate.c:21
 msgid ""
 "Script style output in CSV format respecting the field separator settings"
 msgstr ""
 
-#: ../locale/scriptstrings/m.proj_to_translate.c:13
+#: ../locale/scriptstrings/m.proj_to_translate.c:23
 msgid "Verbose mode (print projection parameters and filenames to stderr)"
 msgstr ""
 "Расширенный режим (выводить параметры проекции и имена файлов в stderr)"
 
-#: ../locale/scriptstrings/v.krige_to_translate.c:1
-msgid "Performs ordinary or block kriging."
-msgstr ""
+#: ../locale/scriptstrings/d.out.file_to_translate.c:1
+msgid "Saves the contents of the active display monitor to a graphics file."
+msgstr "Сохранение содержания активного монитора в графический файл."
 
-#: ../locale/scriptstrings/v.krige_to_translate.c:2
+#: ../locale/scriptstrings/d.out.file_to_translate.c:2
+#: ../locale/scriptstrings/d.out.png_to_translate.c:2
+msgid "display, export"
+msgstr "дисплей, экспорт"
+
+#: ../locale/scriptstrings/d.out.file_to_translate.c:3
+msgid "Name for output file (do NOT add extension)"
+msgstr "Название для файла вывода (НЕ указывать расширение)"
+
+#: ../locale/scriptstrings/d.out.file_to_translate.c:5
+msgid "Dimensions of output file versus current window size"
+msgstr "Размер выходного файла относительно текущего размера окна"
+
+#: ../locale/scriptstrings/d.out.file_to_translate.c:6
+msgid "(same=1, double size=2, quadruple size=4)"
+msgstr "(один к одному=1, двойной размер=2, четырехкратный размер=4)"
+
+#: ../locale/scriptstrings/d.out.file_to_translate.c:7
+#: ../locale/scriptstrings/d.out.file_to_translate.c:9
+#: ../locale/scriptstrings/d.out.file_to_translate.c:12
+#: ../locale/scriptstrings/d.out.file_to_translate.c:15
+#: ../locale/scriptstrings/d.out.file_to_translate.c:28
+#: ../locale/scriptstrings/d.out.file_to_translate.c:30
+msgid "Images"
+msgstr "Изображения"
+
+#: ../locale/scriptstrings/d.out.file_to_translate.c:8
+msgid "Width and height of output image (overrides resolution setting)"
+msgstr "Ширина и высота выходного изображения (отменяют настройки разрешения)"
+
+#: ../locale/scriptstrings/d.out.file_to_translate.c:10
 #, fuzzy
-msgid "vector, interpolation, kriging"
-msgstr "вектор, интерполяция"
+msgid "Compression for PNG files"
+msgstr "Сжатие для PNG файла"
 
-#: ../locale/scriptstrings/v.krige_to_translate.c:3
+#: ../locale/scriptstrings/d.out.file_to_translate.c:11
+msgid "(0=none, 1=fastest, 9=most; lossless, only time vs. filesize)"
+msgstr ""
+"(0=нет, 1=быстро, 9=наибольшее; без потерь, только время vs. размер файла)"
+
+#: ../locale/scriptstrings/d.out.file_to_translate.c:13
+msgid "File size/quality for JPEG files"
+msgstr "Размер/качество файла JPEG"
+
+#: ../locale/scriptstrings/d.out.file_to_translate.c:14
+msgid "(10=smallest/worst, 100=largest/best)"
+msgstr "(10=незначительно/плохо, 100=значительно/хорошо)"
+
+#: ../locale/scriptstrings/d.out.file_to_translate.c:16
+msgid "Paper size for PostScript output"
+msgstr "Размег бумаги для вывода PostScript"
+
+#: ../locale/scriptstrings/d.out.file_to_translate.c:17
+#: ../locale/scriptstrings/d.out.file_to_translate.c:19
+#: ../locale/scriptstrings/d.out.file_to_translate.c:32
+msgid "PostScript"
+msgstr "PostScript"
+
+#: ../locale/scriptstrings/d.out.file_to_translate.c:18
+msgid "PostScript level (only limits functionality!)"
+msgstr "Уровень PostScript (ограниченная функциональность!)"
+
+#: ../locale/scriptstrings/d.out.file_to_translate.c:20
+msgid "GeoTIFF creation option(s)"
+msgstr ""
+
+#: ../locale/scriptstrings/d.out.file_to_translate.c:22
+#: ../locale/scriptstrings/d.out.file_to_translate.c:25
+#: ../locale/scriptstrings/d.out.file_to_translate.c:34
+msgid "GeoTIFF"
+msgstr ""
+
+#: ../locale/scriptstrings/d.out.file_to_translate.c:23
 #, fuzzy
-msgid "Name of point vector map containing sample data"
-msgstr "Название исходного векторного слоя, содержащего линии"
+msgid "GeoTIFF metadata key(s) and value(s) to add"
+msgstr "Ключ(и) метаданных и включаемые значения"
 
-#: ../locale/scriptstrings/v.krige_to_translate.c:4
+#: ../locale/scriptstrings/d.out.file_to_translate.c:24
 #, fuzzy
-msgid "Name of attribute column with numerical value to be interpolated"
-msgstr "Поле атрибутивной таблицы со значениями для интерполяции"
+msgid ""
+"In the form of \"META-TAG=VALUE\", separate multiple entries with a comma."
+msgstr "Формат \"NAME=VALUE\", разделитель - запятая."
 
-#: ../locale/scriptstrings/v.krige_to_translate.c:6
-msgid "If omitted, will be <input name>_kriging"
-msgstr ""
+#: ../locale/scriptstrings/d.out.file_to_translate.c:26
+msgid "Set background color to black (white default)"
+msgstr "Сделать фон черным (по умолчанию - белый)"
 
-#: ../locale/scriptstrings/v.krige_to_translate.c:7
-msgid "R package to use"
-msgstr ""
+#: ../locale/scriptstrings/d.out.file_to_translate.c:27
+msgid "Set transparent background"
+msgstr "Сделать фон прозрачным"
 
-#: ../locale/scriptstrings/v.krige_to_translate.c:8
-msgid "Variogram model(s)"
-msgstr ""
+#: ../locale/scriptstrings/d.out.file_to_translate.c:29
+msgid "Use the Cario driver to render images"
+msgstr "Использовать драйвер Cario для рендеринга изображений"
 
-#: ../locale/scriptstrings/v.krige_to_translate.c:9
-msgid "Leave empty to test all models (requires automap)"
-msgstr ""
+#: ../locale/scriptstrings/d.out.file_to_translate.c:31
+msgid "Set paper orientation to landscape (for PostScript output)"
+msgstr "Альбомная ориентация бумаги (для вывода PostScript)"
 
-#: ../locale/scriptstrings/v.krige_to_translate.c:10
-msgid "Block size (square block)"
-msgstr ""
-
-#: ../locale/scriptstrings/v.krige_to_translate.c:11
-msgid "Block size. Used by block kriging."
-msgstr ""
-
-#: ../locale/scriptstrings/v.krige_to_translate.c:12
+#: ../locale/scriptstrings/d.out.file_to_translate.c:33
 #, fuzzy
-msgid "Range value"
-msgstr "Значение растра"
-
-#: ../locale/scriptstrings/v.krige_to_translate.c:13
-#: ../locale/scriptstrings/v.krige_to_translate.c:15
-#: ../locale/scriptstrings/v.krige_to_translate.c:17
-msgid "Automatically fixed if not set"
-msgstr ""
-
-#: ../locale/scriptstrings/v.krige_to_translate.c:14
-#, fuzzy
-msgid "Nugget value"
-msgstr "Eigen значения:"
-
-#: ../locale/scriptstrings/v.krige_to_translate.c:16
-#, fuzzy
-msgid "Sill value"
-msgstr "Значения ID"
-
-#: ../locale/scriptstrings/v.krige_to_translate.c:18
-#, fuzzy
-msgid "Name for output variance raster map"
-msgstr "Имя выходного растрового слоя экспозиции склонов"
-
-#: ../locale/scriptstrings/v.krige_to_translate.c:19
-msgid "If omitted, will be <input name>_kriging_var"
-msgstr ""
+msgid "Do not crop away margins"
+msgstr "Не копировать таблицу"
 
 #: ../locale/scriptstrings/db.test_to_translate.c:1
 msgid "Test database driver, database must exist and set by db.connect."
@@ -28194,6 +28411,64 @@ msgstr ""
 #: ../locale/scriptstrings/db.test_to_translate.c:3
 msgid "Test name"
 msgstr "Имя теста"
+
+#: ../locale/scriptstrings/r.tileset_to_translate.c:1
+msgid ""
+"Produces tilings of the source projection for use in the destination region "
+"and projection."
+msgstr ""
+"Создать тайлы в исходной проекции для использования с выходным регионом и "
+"проекцией."
+
+#: ../locale/scriptstrings/r.tileset_to_translate.c:2
+#, fuzzy
+msgid "raster, tiling"
+msgstr "растр, плитки"
+
+#: ../locale/scriptstrings/r.tileset_to_translate.c:3
+msgid "Produces shell script output"
+msgstr "Вывести статистику в стиле shell"
+
+#: ../locale/scriptstrings/r.tileset_to_translate.c:4
+msgid "Produces web map server query string output"
+msgstr "Создать строку запроса вывода к картографическому веб серверу"
+
+#: ../locale/scriptstrings/r.tileset_to_translate.c:5
+msgid ""
+"Name of region to use instead of current region for bounds and resolution"
+msgstr ""
+"Название региона для использования вместо текущего для границ и разрешения"
+
+#: ../locale/scriptstrings/r.tileset_to_translate.c:6
+msgid "Source projection"
+msgstr "Исходная проекция"
+
+#: ../locale/scriptstrings/r.tileset_to_translate.c:7
+#: ../locale/scriptstrings/r.tileset_to_translate.c:9
+msgid "Conversion factor from units to meters in source projection"
+msgstr "Коэффициент пересчета из единиц в метры в исходной проекции"
+
+#: ../locale/scriptstrings/r.tileset_to_translate.c:8
+msgid "Destination projection, defaults to this location's projection"
+msgstr "Конечная проекция, по умолчанию проекция области "
+
+#: ../locale/scriptstrings/r.tileset_to_translate.c:10
+msgid "Maximum number of columns for a tile in the source projection"
+msgstr "Максимальное число столбцов для фрагмента в исходной проекции"
+
+#: ../locale/scriptstrings/r.tileset_to_translate.c:11
+msgid "Maximum number of rows for a tile in the source projection"
+msgstr "Максимальное число рядов для фрагмента в исходной проекции"
+
+#: ../locale/scriptstrings/r.tileset_to_translate.c:12
+#, fuzzy
+msgid "Number of cells tiles should overlap in each direction"
+msgstr "Число ячеек должно пересекаться во всех направлениях"
+
+#: ../locale/scriptstrings/r.tileset_to_translate.c:14
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:50
+msgid "Verbosity level"
+msgstr "Уровень вывода информации"
 
 #: ../locale/scriptstrings/i.fusion.brovey_to_translate.c:1
 msgid ""
@@ -28265,34 +28540,122 @@ msgstr ""
 
 #: ../locale/scriptstrings/g.extension_to_translate.c:3
 #, fuzzy
-msgid "installation"
-msgstr "Выделение метрик"
+msgid "general, extensions"
+msgstr "общее, настройки"
 
 #: ../locale/scriptstrings/g.extension_to_translate.c:4
-msgid "extensions"
-msgstr ""
-
-#: ../locale/scriptstrings/g.extension_to_translate.c:5
 #, fuzzy
 msgid "Name of extension to install/remove"
 msgstr "Имя новой создаваемой области"
 
-#: ../locale/scriptstrings/g.extension_to_translate.c:7
+#: ../locale/scriptstrings/g.extension_to_translate.c:6
 msgid "SVN Addons repository URL"
 msgstr ""
 
-#: ../locale/scriptstrings/g.extension_to_translate.c:8
+#: ../locale/scriptstrings/g.extension_to_translate.c:7
 msgid "Prefix where to install extension"
 msgstr ""
 
-#: ../locale/scriptstrings/g.extension_to_translate.c:9
-msgid "Install to $GRASS_ADDON_PATH instead of using prefix option"
-msgstr ""
-
-#: ../locale/scriptstrings/g.extension_to_translate.c:10
+#: ../locale/scriptstrings/g.extension_to_translate.c:8
 #, fuzzy
 msgid "List available modules in the GRASS Addons SVN repository"
 msgstr "Вывести список доступных правил и выйти"
+
+#: ../locale/scriptstrings/d.correlate_to_translate.c:1
+msgid "Prints a graph of the correlation between data layers (in pairs)."
+msgstr "Отображать график корреляции между слоями данных (парами)."
+
+#: ../locale/scriptstrings/d.correlate_to_translate.c:2
+#: ../locale/scriptstrings/d.polar_to_translate.c:2
+msgid "display, diagram"
+msgstr "показ, диаграмма"
+
+#: ../locale/scriptstrings/d.correlate_to_translate.c:3
+#: ../locale/scriptstrings/d.correlate_to_translate.c:4
+#: ../locale/scriptstrings/d.correlate_to_translate.c:5
+#: ../locale/scriptstrings/d.correlate_to_translate.c:6
+msgid "raster input map"
+msgstr "исходный растровый слой"
+
+#: ../locale/scriptstrings/d.correlate_to_translate.c:7
+msgid "Draw a trend line"
+msgstr ""
+
+#: ../locale/scriptstrings/i.image.mosaic_to_translate.c:1
+msgid "Mosaics up to 4 images and extends colormap; creates map *.mosaic"
+msgstr ""
+"Мозаицировать до 4 изображений и расширить цветовую таблицу; создать слой *."
+"mosaic"
+
+#: ../locale/scriptstrings/i.image.mosaic_to_translate.c:2
+msgid "raster, imagery, mosaicking"
+msgstr "растр, изображения, мозаицирование"
+
+#: ../locale/scriptstrings/i.image.mosaic_to_translate.c:3
+msgid "1st map for mosaic (top of image stack)."
+msgstr "первый слой для мозаики (верх стэка изображений)."
+
+#: ../locale/scriptstrings/i.image.mosaic_to_translate.c:4
+msgid "2nd map for mosaic."
+msgstr "Второй слой для мозаики"
+
+#: ../locale/scriptstrings/i.image.mosaic_to_translate.c:5
+msgid "3rd map for mosaic."
+msgstr "Третий слой для мозаики"
+
+#: ../locale/scriptstrings/i.image.mosaic_to_translate.c:6
+msgid "4th map for mosaic."
+msgstr "Четвертый слой для мозаики"
+
+#: ../locale/scriptstrings/r.blend_to_translate.c:1
+msgid "Blends color components of two raster maps by a given ratio."
+msgstr ""
+"Смешать цветовые компоненты двух растровых слоев используя заданное "
+"соотношение."
+
+#: ../locale/scriptstrings/r.blend_to_translate.c:3
+msgid "Name of first raster map for blending"
+msgstr "Имя первого растрового слоя для смешивания"
+
+#: ../locale/scriptstrings/r.blend_to_translate.c:4
+msgid "Name of second raster map for blending"
+msgstr "Имя второго растрового слоя для смешивания"
+
+#: ../locale/scriptstrings/r.blend_to_translate.c:5
+msgid "Base name for red, green and blue output maps containing the blend"
+msgstr ""
+"Базовое имя для слоев содержащих красный, зеленый и синий для смешивания"
+
+#: ../locale/scriptstrings/r.blend_to_translate.c:6
+msgid "Percentage weight of first map for color blending"
+msgstr "Процентный вес первого слоя для цветового смешивания"
+
+#: ../locale/scriptstrings/r.reclass.area_to_translate.c:1
+#, fuzzy
+msgid ""
+"Reclasses a raster map greater or less than user specified area size (in "
+"hectares)."
+msgstr ""
+"Переклассифицировать растровый слой больше или меньше чем площадь заданная "
+"пользователем (в гектарах)"
+
+#: ../locale/scriptstrings/r.reclass.area_to_translate.c:2
+msgid "raster, statistics, aggregation"
+msgstr "растр, статистика, аггрегация"
+
+#: ../locale/scriptstrings/r.reclass.area_to_translate.c:5
+#, fuzzy
+msgid "Lesser value option that sets the <= area size limit [hectares]"
+msgstr ""
+"меньшее значение опции, которая устанавливает <= лимит площади полигона "
+"[гектары]"
+
+#: ../locale/scriptstrings/r.reclass.area_to_translate.c:6
+#, fuzzy
+msgid "Greater value option that sets the >= area size limit [hectares]"
+msgstr ""
+"большее значение опции, которая устанавливает >= лимит площади полигона "
+"[гектары]"
 
 #: ../locale/scriptstrings/v.what.vect_to_translate.c:1
 msgid "Uploads vector values at positions of vector points to the table."
@@ -28327,6 +28690,22 @@ msgstr "Запрашиваемый столбец"
 #: ../locale/scriptstrings/v.what.vect_to_translate.c:9
 msgid "Maximum query distance in map units"
 msgstr "Максимальное расстояние запроса в единицах слоя "
+
+#: ../locale/scriptstrings/r.in.srtm_to_translate.c:1
+msgid "Import SRTM HGT files into GRASS"
+msgstr "Импорт файлов SRTM HGT в GRASS"
+
+#: ../locale/scriptstrings/r.in.srtm_to_translate.c:3
+msgid "SRTM input tile (file without .hgt.zip extension)"
+msgstr "исходный фрагмент SRTM (файл без расширения .hgt.zip)"
+
+#: ../locale/scriptstrings/r.in.srtm_to_translate.c:4
+msgid "Output raster map (default: input tile)"
+msgstr "Имя выходного растрового слоя (по умолчанию: имя исходного)"
+
+#: ../locale/scriptstrings/r.in.srtm_to_translate.c:5
+msgid "Input is a 1-arcsec tile (default: 3-arcsec)"
+msgstr "Исходные данные 1-arcsec (по умолчанию: 3-arcsec)"
 
 #: ../locale/scriptstrings/v.report_to_translate.c:1
 msgid "Reports geometry statistics for vectors."
@@ -28363,7 +28742,6 @@ msgid "Vector map to edit the attribute table for"
 msgstr "Векторный слой для редактирования таблицы"
 
 #: ../locale/scriptstrings/v.db.update_to_translate.c:4
-#: ../locale/scriptstrings/v.rast.stats_to_translate.c:6
 msgid "Layer to which the table to be changed is connected"
 msgstr "Слой с которым соединена изменяемая таблица"
 
@@ -28421,6 +28799,24 @@ msgstr "Имя растрового слоя используемого для �
 msgid "Position of vertical map-legend separator (in percent)"
 msgstr ""
 
+#: ../locale/scriptstrings/d.out.gpsdrive_to_translate.c:1
+msgid "Export display monitor to a GpsDrive compatible backdrop image"
+msgstr ""
+"Экспортировать дисплей монитора в фоновое изображение совместимое с GpsDrive"
+
+#: ../locale/scriptstrings/d.out.gpsdrive_to_translate.c:2
+msgid "display, export, GPS"
+msgstr "дисплей, экспорт, GPS"
+
+#: ../locale/scriptstrings/d.out.gpsdrive_to_translate.c:3
+#, fuzzy
+msgid "name for new map image (lives in ~/.gpsdrive/maps/)"
+msgstr "имя нового образа слоя (находится в  ~/.gpsdrive)"
+
+#: ../locale/scriptstrings/d.out.gpsdrive_to_translate.c:4
+msgid "Make JPEG instead of PNG image"
+msgstr "Создать JPEG на основе PNG"
+
 #: ../locale/scriptstrings/v.univar.sh_to_translate.c:1
 #: ../locale/scriptstrings/v.db.univar_to_translate.c:1
 msgid ""
@@ -28461,6 +28857,26 @@ msgstr "Драйвер базы данных"
 #: ../locale/scriptstrings/v.db.univar_to_translate.c:8
 msgid "WHERE conditions of SQL statement without 'where' keyword"
 msgstr "WHERE условия SQL команды не имеют ключевого слова 'where'"
+
+#: ../locale/scriptstrings/g.manual_to_translate.c:1
+msgid "Display the HTML man pages of GRASS"
+msgstr "Показать HTML страницы руководства GRASS"
+
+#: ../locale/scriptstrings/g.manual_to_translate.c:2
+msgid "general, manual, help"
+msgstr "общее, руководство, помощь"
+
+#: ../locale/scriptstrings/g.manual_to_translate.c:3
+msgid "Display index"
+msgstr "Показать индекс"
+
+#: ../locale/scriptstrings/g.manual_to_translate.c:4
+msgid "Display as MAN text page instead of HTML page in browser"
+msgstr "Показать страницы как текст, вместо HTML в браузере"
+
+#: ../locale/scriptstrings/g.manual_to_translate.c:5
+msgid "Manual entry to be displayed"
+msgstr "Ручной ввод для показа"
 
 #: ../locale/scriptstrings/v.in.sites.all_to_translate.c:1
 msgid ""
@@ -28509,13 +28925,6 @@ msgstr "растр, маска"
 #, fuzzy
 msgid "Raster map to use as mask"
 msgstr "Растровый слой, используемый в качестве MASK"
-
-#: ../locale/scriptstrings/r.mask_to_translate.c:4
-#: ../locale/scriptstrings/r.mask_to_translate.c:6
-#: ../locale/scriptstrings/r.mask_to_translate.c:8
-#, fuzzy
-msgid "Create"
-msgstr "Создание"
 
 #: ../locale/scriptstrings/r.mask_to_translate.c:5
 #, fuzzy
@@ -28583,6 +28992,7 @@ msgstr "Перечислить поддерживаемые выходные ф�
 
 #: ../locale/scriptstrings/v.out.gpsbabel_to_translate.c:11
 #: ../locale/scriptstrings/v.dissolve_to_translate.c:6
+#: ../locale/scriptstrings/v.db.addcol_to_translate.c:5
 msgid ""
 "A single vector map can be connected to multiple database tables. This "
 "number determines which table to use."
@@ -28627,6 +29037,35 @@ msgstr "Старая схема"
 msgid "New schema"
 msgstr "Новая схема"
 
+#: ../locale/scriptstrings/r.in.aster_to_translate.c:1
+msgid ""
+"Georeference, rectify and import Terra-ASTER imagery and relative DEM's "
+"using gdalwarp."
+msgstr ""
+"Привязать, трансформировать и импортировать съемку Terra-ASTER и "
+"относительные ЦМР используя gdalwarp."
+
+#: ../locale/scriptstrings/r.in.aster_to_translate.c:2
+#: ../locale/scriptstrings/i.in.spotvgt_to_translate.c:2
+msgid "raster, imagery, import"
+msgstr "растр, изображения, импорт"
+
+#: ../locale/scriptstrings/r.in.aster_to_translate.c:3
+msgid "Input ASTER image to be georeferenced & rectified"
+msgstr "Исходное изображение ASTER для привязки и трансформации"
+
+#: ../locale/scriptstrings/r.in.aster_to_translate.c:4
+msgid "ASTER imagery processing type (Level 1A, Level 1B, or relative DEM)"
+msgstr "Тип данных ASTER (Level 1A, Level 1B, или относительный DEM)"
+
+#: ../locale/scriptstrings/r.in.aster_to_translate.c:5
+msgid ""
+"L1A or L1B band to translate (1, 2, 3n, 3b, 4-14). Can only translate a "
+"single band"
+msgstr ""
+"канал L1A или L1B для перевода (1, 2, 3n, 3b, 4-14). Можно перевести только "
+"один канал"
+
 #: ../locale/scriptstrings/v.colors_to_translate.c:1
 msgid ""
 "Set color rules for features in a vector using a numeric attribute column."
@@ -28666,6 +29105,27 @@ msgstr "Путь к файлам правил"
 msgid "Save placeholder raster map for use with d.legend"
 msgstr "Имя растрового слоя используемого для создания легенды"
 
+#: ../locale/scriptstrings/db.out.ogr_to_translate.c:1
+msgid "Exports attribute tables into various formats."
+msgstr "Импорт атрибутивных таблиц в различных форматах."
+
+#: ../locale/scriptstrings/db.out.ogr_to_translate.c:3
+msgid "GRASS table name"
+msgstr "Имя таблицы GRASS"
+
+#: ../locale/scriptstrings/db.out.ogr_to_translate.c:4
+msgid "Table file to be exported or DB connection string"
+msgstr "Файл таблицы для экспорта или строка соединения с БД"
+
+#: ../locale/scriptstrings/db.out.ogr_to_translate.c:5
+msgid "Table format"
+msgstr "Формат таблицы"
+
+#: ../locale/scriptstrings/db.out.ogr_to_translate.c:6
+#: ../locale/scriptstrings/db.in.ogr_to_translate.c:5
+msgid "Name for output table"
+msgstr "Имя выходного файла"
+
 #: ../locale/scriptstrings/v.in.lines_to_translate.c:1
 msgid "Import ASCII x,y[,z] coordinates as a series of lines."
 msgstr ""
@@ -28679,6 +29139,52 @@ msgstr "Создать векторный 3D точечный слой из 3 с
 #, fuzzy
 msgid "Name of input file (or \"-\" to read from stdin)"
 msgstr "Имя исходного файла; или \"-\" для чтения правил из stdin"
+
+#: ../locale/scriptstrings/d.redraw_to_translate.c:1
+msgid "Redraws the current display frame in the GRASS monitor"
+msgstr "Перерисовать текущей фрейм дисплея в GRASS мониторе"
+
+#: ../locale/scriptstrings/d.redraw_to_translate.c:3
+msgid "Redraw all frames"
+msgstr "Перерисовать все фреймы"
+
+#: ../locale/scriptstrings/d.redraw_to_translate.c:4
+msgid "Do not preserve individual regions when redrawing all frames"
+msgstr "Не сохранять индивидуальные регионы, при перерисовке всех фреймов"
+
+#: ../locale/scriptstrings/d.slide.show_to_translate.c:1
+msgid "Slide show of GRASS raster/vector maps."
+msgstr "Слайдшоу растровых/векторных слоев GRASS"
+
+#: ../locale/scriptstrings/d.slide.show_to_translate.c:2
+msgid "display, slideshow"
+msgstr "показать, слайдшоу"
+
+#: ../locale/scriptstrings/d.slide.show_to_translate.c:3
+msgid "Show vector maps rather than raster maps"
+msgstr "Показать векторные слои вместо растровых"
+
+#: ../locale/scriptstrings/d.slide.show_to_translate.c:4
+msgid "Map prefix. Specify character(s) to view selected maps only"
+msgstr "Префикс слоя. Укажите символ(ы) для просмотра выбранных слоев"
+
+#: ../locale/scriptstrings/d.slide.show_to_translate.c:5
+#, fuzzy
+msgid "Map number show across the monitor"
+msgstr "Номер слоя показываемый поперек монитора"
+
+#: ../locale/scriptstrings/d.slide.show_to_translate.c:6
+#, fuzzy
+msgid "Map number show down the monitor"
+msgstr "Номер слоя показываемый сверху вниз монитора"
+
+#: ../locale/scriptstrings/d.slide.show_to_translate.c:7
+msgid "Mapsets to use. Specify multiple mapsets comma separated"
+msgstr "Используемые наборы. Укажите несколько наборов через запятую "
+
+#: ../locale/scriptstrings/d.slide.show_to_translate.c:8
+msgid "Number of seconds to pause between slides"
+msgstr "Время в секундах для паузы между слайдами"
 
 #: ../locale/scriptstrings/v.in.garmin_to_translate.c:1
 msgid ""
@@ -28730,6 +29236,93 @@ msgstr "Имя выходного векторного слоя (не задав
 #: ../locale/scriptstrings/v.in.garmin_to_translate.c:12
 msgid "Port Garmin receiver is connected to"
 msgstr "Порт к которому присоединен Garmin "
+
+#: ../locale/scriptstrings/d.split.frame_to_translate.c:1
+#, fuzzy
+msgid "Split the display into subframes."
+msgstr "Введите растровый слой для показа в первом фрейме"
+
+#: ../locale/scriptstrings/d.split.frame_to_translate.c:2
+#, fuzzy
+msgid "Number of subframes"
+msgstr "Число фреймов"
+
+#: ../locale/scriptstrings/d.split.frame_to_translate.c:3
+msgid "Split horizontally not vertically"
+msgstr ""
+
+#: ../locale/scriptstrings/v.krige.py_to_translate.c:1
+msgid "Performs ordinary or block kriging."
+msgstr ""
+
+#: ../locale/scriptstrings/v.krige.py_to_translate.c:2
+#, fuzzy
+msgid "vector, interpolation, kriging"
+msgstr "вектор, интерполяция"
+
+#: ../locale/scriptstrings/v.krige.py_to_translate.c:3
+#, fuzzy
+msgid "Name of point vector map containing sample data"
+msgstr "Название исходного векторного слоя, содержащего линии"
+
+#: ../locale/scriptstrings/v.krige.py_to_translate.c:4
+#, fuzzy
+msgid "Name of attribute column with numerical value to be interpolated"
+msgstr "Поле атрибутивной таблицы со значениями для интерполяции"
+
+#: ../locale/scriptstrings/v.krige.py_to_translate.c:6
+msgid "If omitted, will be <input name>_kriging"
+msgstr ""
+
+#: ../locale/scriptstrings/v.krige.py_to_translate.c:7
+msgid "R package to use"
+msgstr ""
+
+#: ../locale/scriptstrings/v.krige.py_to_translate.c:8
+msgid "Variogram model(s)"
+msgstr ""
+
+#: ../locale/scriptstrings/v.krige.py_to_translate.c:9
+msgid "Leave empty to test all models (requires automap)"
+msgstr ""
+
+#: ../locale/scriptstrings/v.krige.py_to_translate.c:10
+msgid "Block size (square block)"
+msgstr ""
+
+#: ../locale/scriptstrings/v.krige.py_to_translate.c:11
+msgid "Block size. Used by block kriging."
+msgstr ""
+
+#: ../locale/scriptstrings/v.krige.py_to_translate.c:12
+#, fuzzy
+msgid "Range value"
+msgstr "Значение растра"
+
+#: ../locale/scriptstrings/v.krige.py_to_translate.c:13
+#: ../locale/scriptstrings/v.krige.py_to_translate.c:15
+#: ../locale/scriptstrings/v.krige.py_to_translate.c:17
+msgid "Automatically fixed if not set"
+msgstr ""
+
+#: ../locale/scriptstrings/v.krige.py_to_translate.c:14
+#, fuzzy
+msgid "Nugget value"
+msgstr "Eigen значения:"
+
+#: ../locale/scriptstrings/v.krige.py_to_translate.c:16
+#, fuzzy
+msgid "Sill value"
+msgstr "Значения ID"
+
+#: ../locale/scriptstrings/v.krige.py_to_translate.c:18
+#, fuzzy
+msgid "Name for output variance raster map"
+msgstr "Имя выходного растрового слоя экспозиции склонов"
+
+#: ../locale/scriptstrings/v.krige.py_to_translate.c:19
+msgid "If omitted, will be <input name>_kriging_var"
+msgstr ""
 
 #: ../locale/scriptstrings/d.vect.thematic_to_translate.c:1
 #, fuzzy
@@ -28929,10 +29522,28 @@ msgstr "Удалить атрибутивную таблицу"
 msgid "Table to drop"
 msgstr "Удаляемая таблица"
 
-#: ../locale/scriptstrings/v.rast.stats_to_translate.c:1
+#: ../locale/scriptstrings/v.in.gns_to_translate.c:1
 msgid ""
-"Calculates univariate statistics from a GRASS raster map based on vector "
-"polygons and uploads statistics to new attribute columns."
+"Imports US-NGA GEOnet Names Server (GNS) country files into a GRASS vector "
+"points map."
+msgstr ""
+"Импорт файлов стран US-NGA GEOnet Names Server (GNS) в точечный векторный "
+"слой GRASS."
+
+#: ../locale/scriptstrings/v.in.gns_to_translate.c:2
+#: ../locale/scriptstrings/v.in.geonames_to_translate.c:2
+msgid "vector, import, gazetteer"
+msgstr "вектор, импорт, каталог"
+
+#: ../locale/scriptstrings/v.in.gns_to_translate.c:3
+msgid "Uncompressed GNS file from NGA (with .txt extension)"
+msgstr "Несжатый файл GNS из NGA (с расширением .txt)"
+
+#: ../locale/scriptstrings/v.rast.stats_to_translate.c:1
+#, fuzzy
+msgid ""
+"Calculates univariate statistics from a raster map based on vector polygons "
+"and uploads statistics to new attribute columns."
 msgstr ""
 "Вычисление одномерной статистики по растровому слою GRASS, используя "
 "векторные полигоны. Загрузка статистики в новый столбец атрибутов."
@@ -28950,12 +29561,42 @@ msgid "Name of vector polygon map"
 msgstr "Имя векторного полигонального слоя"
 
 #: ../locale/scriptstrings/v.rast.stats_to_translate.c:7
+msgid ""
+"A single vector map can be connected to multiple database tables. This "
+"number determines which table to use"
+msgstr ""
+
+#: ../locale/scriptstrings/v.rast.stats_to_translate.c:8
 msgid "Name of raster map to calculate statistics from"
 msgstr "Имя растрового слоя для вычисления статистики"
 
-#: ../locale/scriptstrings/v.rast.stats_to_translate.c:8
+#: ../locale/scriptstrings/v.rast.stats_to_translate.c:9
 msgid "Column prefix for new attribute columns"
 msgstr "Префикс для нового столбца атрибутов"
+
+#: ../locale/scriptstrings/v.in.geonames_to_translate.c:1
+msgid "Imports geonames.org country files into a GRASS vector points map."
+msgstr "Импорт файлов стран geonames.org в точечный векторный слой GRASS."
+
+#: ../locale/scriptstrings/v.in.geonames_to_translate.c:3
+msgid "Uncompressed geonames file from (with .txt extension)"
+msgstr "Несжатый файл geonames из (с расширением .txt)"
+
+#: ../locale/scriptstrings/d.m_to_translate.c:1
+msgid "Display manager for GRASS"
+msgstr "Показать менеджер GRASS"
+
+#: ../locale/scriptstrings/d.m_to_translate.c:2
+msgid "Name of .dmrc settings file"
+msgstr "Название .dmrc файла настроек"
+
+#: ../locale/scriptstrings/gis.m_to_translate.c:1
+msgid "GIS manager for GRASS"
+msgstr "GIS менеджер для GRASS"
+
+#: ../locale/scriptstrings/gis.m_to_translate.c:2
+msgid "Name of GIS manager settings file (.grc)"
+msgstr "Название файла настроек GIS менеджера (.grc)"
 
 #: ../locale/scriptstrings/db.dropcol_to_translate.c:1
 msgid "Drops a column from selected attribute table"
@@ -28968,6 +29609,24 @@ msgstr "Таблица из которой удалить столбец"
 #: ../locale/scriptstrings/db.dropcol_to_translate.c:5
 msgid "Name of the column"
 msgstr "Имя столбца"
+
+#: ../locale/scriptstrings/r.out.xyz_to_translate.c:1
+msgid ""
+"Export a raster map to a text file as x,y,z values based on cell centers."
+msgstr ""
+"Экспорт растрового слоя в текстовый файл как значения x,y,z центров ячеек."
+
+#: ../locale/scriptstrings/d.resize_to_translate.c:1
+msgid "Resizes active display monitor"
+msgstr "Изменить размер активного монитора"
+
+#: ../locale/scriptstrings/d.resize_to_translate.c:3
+msgid "New width for window"
+msgstr "Новая ширина для окна"
+
+#: ../locale/scriptstrings/d.resize_to_translate.c:4
+msgid "New height for window"
+msgstr "Новая высота для окна"
 
 #: ../locale/scriptstrings/v.in.mapgen_to_translate.c:1
 msgid "Import Mapgen or Matlab vector maps into GRASS."
@@ -28985,6 +29644,10 @@ msgstr "Создать векторный 3D точечный слой из 3 с
 msgid "Name of input file in Mapgen/Matlab format"
 msgstr " Имя исходного файла в формате Mapgen/Matlab"
 
+#: ../locale/scriptstrings/v.build.all_to_translate.c:1
+msgid "Rebuilds topology on all vector maps in the current mapset."
+msgstr "Перестроить топология для всех векторных слоев текущего набора."
+
 #: ../locale/scriptstrings/r.univar.sh_to_translate.c:1
 msgid "calculates univariate statistics from a GRASS raster map"
 msgstr "Рассчитать одномерную статистику растрового слоя GRASS"
@@ -28996,6 +29659,53 @@ msgstr "расширенная статистика (квартили и пер�
 #: ../locale/scriptstrings/r.univar.sh_to_translate.c:5
 msgid "Percentile to calculate (requires -e flag)"
 msgstr "Вычисляемый процентиль (требует параметра -e)"
+
+#: ../locale/scriptstrings/r.mapcalculator_to_translate.c:1
+msgid "Calculate new raster map from a r.mapcalc expression."
+msgstr "Рассчитать новый растровый слой используя выражение r.mapcalc."
+
+#: ../locale/scriptstrings/r.mapcalculator_to_translate.c:2
+msgid "A"
+msgstr "A"
+
+#: ../locale/scriptstrings/r.mapcalculator_to_translate.c:3
+msgid "B"
+msgstr "B"
+
+#: ../locale/scriptstrings/r.mapcalculator_to_translate.c:4
+msgid "C"
+msgstr "C"
+
+#: ../locale/scriptstrings/r.mapcalculator_to_translate.c:5
+msgid "D"
+msgstr "D"
+
+#: ../locale/scriptstrings/r.mapcalculator_to_translate.c:6
+msgid "E"
+msgstr "E"
+
+#: ../locale/scriptstrings/r.mapcalculator_to_translate.c:7
+msgid "F"
+msgstr "F"
+
+#: ../locale/scriptstrings/r.mapcalculator_to_translate.c:8
+#: ../locale/scriptstrings/r3.mapcalculator_to_translate.c:8
+msgid "Formula (e.g. A-B or A*C+B)"
+msgstr "Формула (например A-B или A*C+B)"
+
+#: ../locale/scriptstrings/r.mapcalculator_to_translate.c:10
+#: ../locale/scriptstrings/r3.mapcalculator_to_translate.c:10
+msgid "Show help"
+msgstr "Показать помощь"
+
+#: ../locale/scriptstrings/r.mapcalculator_to_translate.c:11
+msgid "Expert mode (enter a set of r.mapcalc expressions)"
+msgstr "Экспертный режим (ввести набор выражений r.mapcalc)"
+
+#: ../locale/scriptstrings/r.mapcalculator_to_translate.c:12
+#: ../locale/scriptstrings/r3.mapcalculator_to_translate.c:12
+msgid "Do not overwrite existing map"
+msgstr "Не перезаписывать существующие слои "
 
 #: ../locale/scriptstrings/i.landsat.rgb_to_translate.c:1
 #, fuzzy
@@ -29033,6 +29743,39 @@ msgstr "Сохранить относительные цвета, подстро
 #: ../locale/scriptstrings/i.landsat.rgb_to_translate.c:9
 msgid "Reset to standard color range"
 msgstr "Сбросить в стандартный цветовой диапазон"
+
+#: ../locale/scriptstrings/d.monsize_to_translate.c:1
+msgid "Selects/starts specified monitor at specified size"
+msgstr "Выбрать/задать монитор с определенными размерами"
+
+#: ../locale/scriptstrings/d.monsize_to_translate.c:3
+msgid "Display monitor to start"
+msgstr "Отображать монитор при запуске"
+
+#: ../locale/scriptstrings/d.monsize_to_translate.c:4
+msgid "Width in pixels of new display monitor"
+msgstr "Ширина в пикселях для нового монитора"
+
+#: ../locale/scriptstrings/d.monsize_to_translate.c:5
+msgid "Height in pixels of new display monitor"
+msgstr "Высота в пикселях для нового монитора"
+
+#: ../locale/scriptstrings/d.shadedmap_to_translate.c:1
+msgid "Drapes a color raster over a shaded relief map using d.his"
+msgstr ""
+"Драпировать цветной растр поверх слоя теневой отмывки рельефа используя d.his"
+
+#: ../locale/scriptstrings/d.shadedmap_to_translate.c:2
+msgid "Name of shaded relief or aspect map"
+msgstr "Имя слоя теневого рельефа или экспозиций "
+
+#: ../locale/scriptstrings/d.shadedmap_to_translate.c:3
+msgid "Name of raster to drape over relief map"
+msgstr "Имя растра драпируемого по рельефу "
+
+#: ../locale/scriptstrings/d.shadedmap_to_translate.c:4
+msgid "Percent to brighten"
+msgstr "Процент увеличения яркости"
 
 #: ../locale/scriptstrings/v.in.gpsbabel_to_translate.c:1
 msgid ""
@@ -29204,9 +29947,50 @@ msgstr "Имя файла для сохранения файла возможн�
 msgid "Requires list available layers flag"
 msgstr "Требуется флаг вывести список доступных слоев"
 
-#: ../locale/scriptstrings/r.in.wms_to_translate.c:50
-msgid "Verbosity level"
-msgstr "Уровень вывода информации"
+#: ../locale/scriptstrings/r.colors.stddev_to_translate.c:1
+msgid "Set color rules based on stddev from a map's mean value."
+msgstr ""
+
+#: ../locale/scriptstrings/r.colors.stddev_to_translate.c:4
+#, fuzzy
+msgid "Color using standard deviation bands"
+msgstr ""
+"средние и стандартные отклонения для %d band%s\n"
+"\n"
+
+#: ../locale/scriptstrings/r.colors.stddev_to_translate.c:5
+msgid "Force center at zero"
+msgstr ""
+
+#: ../locale/scriptstrings/r.fillnulls_to_translate.c:1
+msgid ""
+"Fills no-data areas in raster maps using v.surf.rst splines interpolation"
+msgstr ""
+"Заполнить no-data значения растровых слоев, используя сплайн-интерполяцию v."
+"surf.rst"
+
+#: ../locale/scriptstrings/r.fillnulls_to_translate.c:2
+msgid "raster, elevation, interpolation"
+msgstr "растр, высота, интерполяция"
+
+#: ../locale/scriptstrings/r.fillnulls_to_translate.c:3
+msgid "Raster map in which to fill nulls"
+msgstr "Растровый слой для заполнения нулей"
+
+#: ../locale/scriptstrings/r.fillnulls_to_translate.c:4
+msgid ""
+"Output raster map with nulls filled by interpolation from surrounding values"
+msgstr ""
+"Выходной растровый слой с нулями заполненными интерполяцией окружающих "
+"значений"
+
+#: ../locale/scriptstrings/r.fillnulls_to_translate.c:5
+msgid "Spline tension parameter"
+msgstr "параметр tenstion сплайн-интерполяции"
+
+#: ../locale/scriptstrings/r.fillnulls_to_translate.c:6
+msgid "Spline smoothing parameter"
+msgstr "Параметр сглаживания сплайна"
 
 #: ../locale/scriptstrings/v.dissolve_to_translate.c:1
 msgid ""
@@ -29229,6 +30013,58 @@ msgstr "Номер слоя. Если -1, получаются все слои"
 msgid "Name of column used to dissolve common boundaries"
 msgstr "Имя поля используемого для растворения общих границ "
 
+#: ../locale/scriptstrings/v.centroids_to_translate.c:1
+msgid "Adds missing centroids to closed boundaries."
+msgstr "Добавить пропущенные центроиды к замкнутым границам."
+
+#: ../locale/scriptstrings/v.centroids_to_translate.c:2
+msgid "vector, centroid, area"
+msgstr "вектор, центроид, полигон"
+
+#: ../locale/scriptstrings/v.centroids_to_translate.c:5
+msgid "Action to be taken"
+msgstr "Выполнить действие"
+
+#: ../locale/scriptstrings/v.centroids_to_translate.c:7
+msgid "Category number starting value"
+msgstr "Начальный номер категории"
+
+#: ../locale/scriptstrings/r3.mapcalculator_to_translate.c:1
+msgid "Calculates new grid3D volume from r3.mapcalc expression."
+msgstr "Рассчитать новый grid3D объем с помощью выражения r3.mapcalc"
+
+#: ../locale/scriptstrings/r3.mapcalculator_to_translate.c:2
+msgid "A (grid3D file)"
+msgstr "A (файл grid3D)"
+
+#: ../locale/scriptstrings/r3.mapcalculator_to_translate.c:3
+msgid "B (grid3D file)"
+msgstr "B (файл grid3D)"
+
+#: ../locale/scriptstrings/r3.mapcalculator_to_translate.c:4
+msgid "C (grid3D file)"
+msgstr "C (файл grid3D)"
+
+#: ../locale/scriptstrings/r3.mapcalculator_to_translate.c:5
+msgid "D (grid3D file)"
+msgstr "D (файл grid3D)"
+
+#: ../locale/scriptstrings/r3.mapcalculator_to_translate.c:6
+msgid "E (grid3D file)"
+msgstr "E (файл grid3D)"
+
+#: ../locale/scriptstrings/r3.mapcalculator_to_translate.c:7
+msgid "F (grid3D file)"
+msgstr "F (файл grid3D)"
+
+#: ../locale/scriptstrings/r3.mapcalculator_to_translate.c:9
+msgid "Name for output grid3D volume"
+msgstr "Имя выходного объема grid3D"
+
+#: ../locale/scriptstrings/r3.mapcalculator_to_translate.c:11
+msgid "Expert mode (enter a set of r3.mapcalc expressions)"
+msgstr "Экспертный режим (введите набор выражений r3.mapcalc)"
+
 #: ../locale/scriptstrings/v.db.droptable_to_translate.c:1
 msgid "Removes existing attribute table of a vector map."
 msgstr "Удалить существующую атрибутивную таблицу из векторного слоя."
@@ -29248,6 +30084,79 @@ msgstr "Имя существующей таблицы атрибутов (по 
 #: ../locale/scriptstrings/v.db.droptable_to_translate.c:6
 msgid "Layer from which to drop linked attribute table"
 msgstr "Слой из которого удаляется связанная атрибутивная таблица"
+
+#: ../locale/scriptstrings/v.db.join_to_translate.c:1
+msgid "Allows to join a table to a vector map table."
+msgstr "Присоединить таблицу векторному слою."
+
+#: ../locale/scriptstrings/v.db.join_to_translate.c:3
+msgid "Vector map to which to join other table"
+msgstr "Векторный слой к которому присоединить другую таблицу"
+
+#: ../locale/scriptstrings/v.db.join_to_translate.c:4
+#, fuzzy
+msgid "Layer where to join"
+msgstr "Слой к которому добавить соединение"
+
+#: ../locale/scriptstrings/v.db.join_to_translate.c:5
+msgid "Join column in map table"
+msgstr "Поле соединения в таблице слоя"
+
+#: ../locale/scriptstrings/v.db.join_to_translate.c:6
+msgid "Other table name"
+msgstr "Имя другой таблицы"
+
+#: ../locale/scriptstrings/v.db.join_to_translate.c:7
+msgid "Join column in other table"
+msgstr "Поле соединения в другой таблице"
+
+#: ../locale/scriptstrings/i.tasscap_to_translate.c:1
+msgid "Tasseled Cap (Kauth Thomas) transformation for LANDSAT-TM data"
+msgstr "Трансформация Tasseled Cap (Kauth Thomas) для данных LANDSAT-TM"
+
+#: ../locale/scriptstrings/i.tasscap_to_translate.c:2
+msgid "raster, imagery"
+msgstr "растр, изображения"
+
+#: ../locale/scriptstrings/i.tasscap_to_translate.c:3
+msgid "use transformation rules for LANDSAT-4"
+msgstr "использовать правила трансформации для LANDSAT-4"
+
+#: ../locale/scriptstrings/i.tasscap_to_translate.c:4
+msgid "use transformation rules for LANDSAT-5"
+msgstr "использовать правила трансформации для LANDSAT-5"
+
+#: ../locale/scriptstrings/i.tasscap_to_translate.c:5
+msgid "use transformation rules for LANDSAT-7"
+msgstr "использовать правила трансформации для LANDSAT-7"
+
+#: ../locale/scriptstrings/i.tasscap_to_translate.c:6
+msgid "raster input map (LANDSAT channel 1)"
+msgstr "исходный растровый слой (1 канал LANDSAT)"
+
+#: ../locale/scriptstrings/i.tasscap_to_translate.c:7
+msgid "raster input map (LANDSAT channel 2)"
+msgstr "исходный растровый слой (2 канал LANDSAT)"
+
+#: ../locale/scriptstrings/i.tasscap_to_translate.c:8
+msgid "raster input map (LANDSAT channel 3)"
+msgstr "исходный растровый слой (3 канал LANDSAT)"
+
+#: ../locale/scriptstrings/i.tasscap_to_translate.c:9
+msgid "raster input map (LANDSAT channel 4)"
+msgstr "исходный растровый слой (4 канал LANDSAT)"
+
+#: ../locale/scriptstrings/i.tasscap_to_translate.c:10
+msgid "raster input map (LANDSAT channel 5)"
+msgstr "исходный растровый слой (5 канал LANDSAT)"
+
+#: ../locale/scriptstrings/i.tasscap_to_translate.c:11
+msgid "raster input map (LANDSAT channel 7)"
+msgstr "исходный растровый слой (7 канал LANDSAT)"
+
+#: ../locale/scriptstrings/i.tasscap_to_translate.c:12
+msgid "raster output TC maps prefix"
+msgstr "префикс выходных растровых слоев TC"
 
 #: ../locale/scriptstrings/v.db.addtable_to_translate.c:1
 #, fuzzy
@@ -29271,7 +30180,6 @@ msgid "Layer where to add new attribute table"
 msgstr "Слой которому добавляется новая атрибутивная таблица"
 
 #: ../locale/scriptstrings/v.db.addtable_to_translate.c:6
-#: ../locale/scriptstrings/v.db.addcol_to_translate.c:5
 msgid ""
 "Name and type of the new column(s) (types depend on database backend, but "
 "all support VARCHAR(), INT, DOUBLE PRECISION and DATE)"
@@ -29292,6 +30200,96 @@ msgstr "GetFeature URL начинающийся с http"
 msgid "Vector output map"
 msgstr "Выходной векторный слой"
 
+#: ../locale/scriptstrings/r.shaded.relief_to_translate.c:1
+msgid "Creates shaded relief map from an elevation map (DEM)."
+msgstr "Создать слой теневого рельефа из слоя рельефа (DEM)."
+
+#: ../locale/scriptstrings/r.shaded.relief_to_translate.c:3
+msgid "Input elevation map"
+msgstr "Исходный слой высот"
+
+#: ../locale/scriptstrings/r.shaded.relief_to_translate.c:4
+msgid "Output shaded relief map name"
+msgstr "Вывести имя слоя теневой отмывки рельефа"
+
+#: ../locale/scriptstrings/r.shaded.relief_to_translate.c:5
+msgid "Altitude of the sun in degrees above the horizon"
+msgstr "Высота солнца над горизонтом в градусах "
+
+#: ../locale/scriptstrings/r.shaded.relief_to_translate.c:6
+msgid "Azimuth of the sun in degrees to the east of north"
+msgstr "Азимут солнца в градусах к востоку от севера"
+
+#: ../locale/scriptstrings/r.shaded.relief_to_translate.c:7
+msgid "Factor for exaggerating relief"
+msgstr "Фактор масштабирования для высот"
+
+#: ../locale/scriptstrings/r.shaded.relief_to_translate.c:8
+msgid "Scale factor for converting horizontal units to elevation units"
+msgstr ""
+"Фактор масштабирования для конвертации горизонтальных единиц в высотные "
+
+#: ../locale/scriptstrings/r.shaded.relief_to_translate.c:9
+msgid ""
+"Set scaling factor (applies to lat./long. locations only, none: scale=1)"
+msgstr ""
+"Задать фактор масштабирования (только для точек в lat./long., если пусто: "
+"scale=1)"
+
+#: ../locale/scriptstrings/d.out.png_to_translate.c:1
+msgid "Saves active display monitor to PNG file in home directory"
+msgstr "Сохранить содержимое монитора в файл PNG в домашней папке"
+
+#: ../locale/scriptstrings/d.out.png_to_translate.c:3
+msgid "Name of PNG file"
+msgstr "Название файла PNG"
+
+#: ../locale/scriptstrings/d.out.png_to_translate.c:4
+msgid "Resolution of output file (single=1, double=2, quad=4)"
+msgstr ""
+"Разрешение для выходного файла (один к одному=1, двойной=2, четырехкратный=4)"
+
+#: ../locale/scriptstrings/i.oif_to_translate.c:1
+msgid "Calculates Optimum-Index-Factor table for LANDSAT TM bands 1-5, & 7"
+msgstr ""
+"Рассчитать таблицу Optimum-Index-Factor для каналов  LANDSAT TM 1-5 и 7"
+
+#: ../locale/scriptstrings/i.oif_to_translate.c:2
+msgid "raster, imagery, statistics"
+msgstr "растр, изображения, статистика"
+
+#: ../locale/scriptstrings/i.oif_to_translate.c:3
+msgid "LANDSAT TM band 1."
+msgstr "LANDSAT TM канал 1."
+
+#: ../locale/scriptstrings/i.oif_to_translate.c:4
+msgid "LANDSAT TM band 2."
+msgstr "LANDSAT TM канал 2."
+
+#: ../locale/scriptstrings/i.oif_to_translate.c:5
+msgid "LANDSAT TM band 3."
+msgstr "LANDSAT TM канал 3."
+
+#: ../locale/scriptstrings/i.oif_to_translate.c:6
+msgid "LANDSAT TM band 4."
+msgstr "LANDSAT TM канал 4."
+
+#: ../locale/scriptstrings/i.oif_to_translate.c:7
+msgid "LANDSAT TM band 5."
+msgstr "LANDSAT TM канал 5."
+
+#: ../locale/scriptstrings/i.oif_to_translate.c:8
+msgid "LANDSAT TM band 7."
+msgstr "LANDSAT TM канал 7."
+
+#: ../locale/scriptstrings/r.li.setup_to_translate.c:1
+msgid "Configuration editor for r.li.'index'"
+msgstr "Редактор конфигурации для r.li.'index'"
+
+#: ../locale/scriptstrings/r.li.setup_to_translate.c:2
+msgid "raster, landscape structure analysis"
+msgstr "растр, структурный анализ ландшафта"
+
 #: ../locale/scriptstrings/db.in.ogr_to_translate.c:1
 msgid "Imports attribute tables in various formats."
 msgstr "Импорт атрибутивных таблиц в различных форматах."
@@ -29304,13 +30302,34 @@ msgstr "Файл таблицы для импорта или строка сое
 msgid "Table name of SQL DB table"
 msgstr "Название таблицы SQL DB"
 
-#: ../locale/scriptstrings/db.in.ogr_to_translate.c:5
-msgid "Name for output table"
-msgstr "Имя выходного файла"
-
 #: ../locale/scriptstrings/db.in.ogr_to_translate.c:6
 msgid "Name for auto-generated unique key column"
 msgstr "Имя автоматически создаваемого столбца уникального ключа"
+
+#: ../locale/scriptstrings/d.rast.edit_to_translate.c:5
+#, fuzzy
+msgid "Name of aspect raster map"
+msgstr "Имя базового растрового слоя"
+
+#: ../locale/scriptstrings/d.rast.edit_to_translate.c:6
+msgid "Width of display canvas"
+msgstr "Ширина полей дисплея"
+
+#: ../locale/scriptstrings/d.rast.edit_to_translate.c:7
+msgid "Height of display canvas"
+msgstr "Высота полей дисплея"
+
+#: ../locale/scriptstrings/d.rast.edit_to_translate.c:8
+msgid "Minimum size of each cell"
+msgstr "Минимальный размер каждой ячейки"
+
+#: ../locale/scriptstrings/d.rast.edit_to_translate.c:9
+msgid "Maximum number of rows to load"
+msgstr "Максимальное количество загружаемых строк"
+
+#: ../locale/scriptstrings/d.rast.edit_to_translate.c:10
+msgid "Maximum number of columns to load"
+msgstr "Максимальное количество загружаемых столбцов "
 
 #: ../locale/scriptstrings/v.db.dropcol_to_translate.c:1
 msgid ""
@@ -29337,10 +30356,6 @@ msgstr ""
 "Создать полярную диаграмму слоя углов, такого как склоны или направления "
 "потока"
 
-#: ../locale/scriptstrings/d.polar_to_translate.c:2
-msgid "display, diagram"
-msgstr "показ, диаграмма"
-
 #: ../locale/scriptstrings/d.polar_to_translate.c:3
 msgid "Name of raster angle map"
 msgstr "Название растрового слоя углов"
@@ -29362,10 +30377,6 @@ msgstr "Печать с использованием Xgraph"
 msgid "Import of SPOT VGT NDVI file into a raster map"
 msgstr "Импорт файла SPOT VGT NDVI в растровый слой"
 
-#: ../locale/scriptstrings/i.in.spotvgt_to_translate.c:2
-msgid "raster, imagery, import"
-msgstr "растр, изображения, импорт"
-
 #: ../locale/scriptstrings/i.in.spotvgt_to_translate.c:3
 msgid "also import quality map (SM status map layer) and filter NDVI map"
 msgstr ""
@@ -29385,12 +30396,51 @@ msgstr ""
 "векторным слоем."
 
 #: ../locale/scriptstrings/v.db.addcol_to_translate.c:3
-msgid "Vector map for which to edit attribute table"
+#, fuzzy
+msgid "Name of vector map for which to edit attribute table"
 msgstr "Векторный слой для которого редактировать атрибутивную таблицу"
 
 #: ../locale/scriptstrings/v.db.addcol_to_translate.c:4
-msgid "Layer where to add column"
+#, fuzzy
+msgid "Layer number where to add column(s)"
 msgstr "Слой к которому добавить столбец"
+
+#: ../locale/scriptstrings/v.db.addcol_to_translate.c:6
+msgid "Name and type of the new column(s) ('name type [,name type, ...]')"
+msgstr ""
+
+#: ../locale/scriptstrings/v.db.addcol_to_translate.c:7
+#, fuzzy
+msgid ""
+"Data types depend on database backend, but all support VARCHAR(), INT, "
+"DOUBLE PRECISION and DATE"
+msgstr ""
+"Имя и тип нового поля (полей) (типы зависят от базы данных, но все "
+"поддерживают VARCHAR(), INT, DOUBLE and DATE)"
+
+#: ../locale/scriptstrings/d.mvmon_to_translate.c:1
+msgid "Moves displayed maps to another monitor"
+msgstr "Переместить просматриваемые слои на другой монитор"
+
+#: ../locale/scriptstrings/d.mvmon_to_translate.c:3
+msgid "clear target monitor before moving"
+msgstr "очистить целевой монитор перед перемещением"
+
+#: ../locale/scriptstrings/d.mvmon_to_translate.c:4
+msgid "stay with source monitor"
+msgstr "оставаться на исходном мониторе"
+
+#: ../locale/scriptstrings/d.mvmon_to_translate.c:5
+msgid "kill source monitor after moving"
+msgstr "удалить исходный монитор после перемещения"
+
+#: ../locale/scriptstrings/d.mvmon_to_translate.c:6
+msgid "Target monitor"
+msgstr "Целевой монитор"
+
+#: ../locale/scriptstrings/d.mvmon_to_translate.c:7
+msgid "Source monitor"
+msgstr "Исходный монитор"
 
 #: ../sites/s.out.ascii/main.c:47 ../sites/s.in.ascii/main.c:50
 msgid "sites"
@@ -29457,6 +30507,11 @@ msgstr "Невозможно прочитать файл эталонов <%s>"
 #: ../imagery/i.smap/shapiro/read_sig.c:27
 #, c-format
 msgid "Signature file <%s> is invalid"
+msgstr "Неверный файл эталонов <%s>"
+
+#: ../imagery/i.smap/shapiro/read_sig.c:30
+#, fuzzy, c-format
+msgid "Signature file <%s> is empty"
 msgstr "Неверный файл эталонов <%s>"
 
 #: ../imagery/i.smap/shapiro/parse.c:21 ../imagery/i.maxlik/main.c:79
@@ -31362,706 +32417,117 @@ msgstr "Ошибка удаления старого слоя MASK."
 msgid "Can't mark another point.  Only %d points allowed.  Sorry."
 msgstr "Нельзя отметить еще одну точку. Разрешено только %d точек."
 
-#~ msgid "GIS manager for GRASS"
-#~ msgstr "GIS менеджер для GRASS"
+#~ msgid "New MAPSET name"
+#~ msgstr "Новое имя НАБОРА"
 
-#~ msgid "Name of GIS manager settings file (.grc)"
-#~ msgstr "Название файла настроек GIS менеджера (.grc)"
+#~ msgid "Output type"
+#~ msgstr "Тип вывода"
 
-#~ msgid "Display manager for GRASS"
-#~ msgstr "Показать менеджер GRASS"
+#~ msgid "Defines which feature-type will be extracted"
+#~ msgstr "Определяет тип извлекаемых объектов"
 
-#~ msgid "Name of .dmrc settings file"
-#~ msgstr "Название .dmrc файла настроек"
+#~ msgid "No areas found, skipping type=poly"
+#~ msgstr "Полигоны не найдены, type=poly пропущено"
 
-#~ msgid "Configuration editor for r.li.'index'"
-#~ msgstr "Редактор конфигурации для r.li.'index'"
+#~ msgid "No points found, skipping type=point"
+#~ msgstr "Точки не найдены, пропуск type=point"
 
-#~ msgid "raster, landscape structure analysis"
-#~ msgstr "растр, структурный анализ ландшафта"
-
-#~ msgid "Prints a graph of the correlation between data layers (in pairs)."
-#~ msgstr "Отображать график корреляции между слоями данных (парами)."
-
-#~ msgid "raster input map"
-#~ msgstr "исходный растровый слой"
-
-#~ msgid "Selects/starts specified monitor at specified size"
-#~ msgstr "Выбрать/задать монитор с определенными размерами"
-
-#~ msgid "Display monitor to start"
-#~ msgstr "Отображать монитор при запуске"
-
-#~ msgid "Width in pixels of new display monitor"
-#~ msgstr "Ширина в пикселях для нового монитора"
-
-#~ msgid "Height in pixels of new display monitor"
-#~ msgstr "Высота в пикселях для нового монитора"
-
-#~ msgid "Moves displayed maps to another monitor"
-#~ msgstr "Переместить просматриваемые слои на другой монитор"
-
-#~ msgid "clear target monitor before moving"
-#~ msgstr "очистить целевой монитор перед перемещением"
-
-#~ msgid "stay with source monitor"
-#~ msgstr "оставаться на исходном мониторе"
-
-#~ msgid "kill source monitor after moving"
-#~ msgstr "удалить исходный монитор после перемещения"
-
-#~ msgid "Target monitor"
-#~ msgstr "Целевой монитор"
-
-#~ msgid "Source monitor"
-#~ msgstr "Исходный монитор"
-
-#~ msgid "Export display monitor to a GpsDrive compatible backdrop image"
-#~ msgstr ""
-#~ "Экспортировать дисплей монитора в фоновое изображение совместимое с "
-#~ "GpsDrive"
-
-#~ msgid "display, export, GPS"
-#~ msgstr "дисплей, экспорт, GPS"
-
-#, fuzzy
-#~ msgid "name for new map image (lives in ~/.gpsdrive/maps/)"
-#~ msgstr "имя нового образа слоя (находится в  ~/.gpsdrive)"
-
-#~ msgid "Make JPEG instead of PNG image"
-#~ msgstr "Создать JPEG на основе PNG"
-
-#~ msgid "Saves active display monitor to PNG file in home directory"
-#~ msgstr "Сохранить содержимое монитора в файл PNG в домашней папке"
-
-#~ msgid "display, export"
-#~ msgstr "дисплей, экспорт"
-
-#~ msgid "Name of PNG file"
-#~ msgstr "Название файла PNG"
-
-#~ msgid "Resolution of output file (single=1, double=2, quad=4)"
-#~ msgstr ""
-#~ "Разрешение для выходного файла (один к одному=1, двойной=2, "
-#~ "четырехкратный=4)"
-
-#~ msgid "Saves the contents of the active display monitor to a graphics file."
-#~ msgstr "Сохранение содержания активного монитора в графический файл."
-
-#~ msgid "Name for output file (do NOT add extension)"
-#~ msgstr "Название для файла вывода (НЕ указывать расширение)"
-
-#~ msgid "Dimensions of output file versus current window size"
-#~ msgstr "Размер выходного файла относительно текущего размера окна"
-
-#~ msgid "(same=1, double size=2, quadruple size=4)"
-#~ msgstr "(один к одному=1, двойной размер=2, четырехкратный размер=4)"
-
-#~ msgid "Images"
-#~ msgstr "Изображения"
-
-#~ msgid "Width and height of output image (overrides resolution setting)"
-#~ msgstr ""
-#~ "Ширина и высота выходного изображения (отменяют настройки разрешения)"
-
-#~ msgid "(0=none, 1=fastest, 9=most; lossless, only time vs. filesize)"
-#~ msgstr ""
-#~ "(0=нет, 1=быстро, 9=наибольшее; без потерь, только время vs. размер файла)"
-
-#~ msgid "File size/quality for JPEG files"
-#~ msgstr "Размер/качество файла JPEG"
-
-#~ msgid "(10=smallest/worst, 100=largest/best)"
-#~ msgstr "(10=незначительно/плохо, 100=значительно/хорошо)"
-
-#~ msgid "Paper size for PostScript output"
-#~ msgstr "Размег бумаги для вывода PostScript"
-
-#~ msgid "PostScript"
-#~ msgstr "PostScript"
-
-#~ msgid "PostScript level (only limits functionality!)"
-#~ msgstr "Уровень PostScript (ограниченная функциональность!)"
-
-#, fuzzy
-#~ msgid "GeoTIFF metadata key(s) and value(s) to add"
-#~ msgstr "Ключ(и) метаданных и включаемые значения"
+#~ msgid "No lines found, skipping type=line"
+#~ msgstr "Линии не найдены, type=line пропущено"
 
 #, fuzzy
 #~ msgid ""
-#~ "In the form of \"META-TAG=VALUE\", separate multiple entries with a comma."
-#~ msgstr "Формат \"NAME=VALUE\", разделитель - запятая."
-
-#~ msgid "Set background color to black (white default)"
-#~ msgstr "Сделать фон черным (по умолчанию - белый)"
-
-#~ msgid "Set transparent background"
-#~ msgstr "Сделать фон прозрачным"
-
-#~ msgid "Use the Cario driver to render images"
-#~ msgstr "Использовать драйвер Cario для рендеринга изображений"
-
-#~ msgid "Set paper orientation to landscape (for PostScript output)"
-#~ msgstr "Альбомная ориентация бумаги (для вывода PostScript)"
-
-#, fuzzy
-#~ msgid "Do not crop away margins"
-#~ msgstr "Не копировать таблицу"
-
-#~ msgid "Width of display canvas"
-#~ msgstr "Ширина полей дисплея"
-
-#~ msgid "Height of display canvas"
-#~ msgstr "Высота полей дисплея"
-
-#~ msgid "Minimum size of each cell"
-#~ msgstr "Минимальный размер каждой ячейки"
-
-#~ msgid "Maximum number of rows to load"
-#~ msgstr "Максимальное количество загружаемых строк"
-
-#~ msgid "Maximum number of columns to load"
-#~ msgstr "Максимальное количество загружаемых столбцов "
-
-#~ msgid "Redraws the current display frame in the GRASS monitor"
-#~ msgstr "Перерисовать текущей фрейм дисплея в GRASS мониторе"
-
-#~ msgid "Redraw all frames"
-#~ msgstr "Перерисовать все фреймы"
-
-#~ msgid "Do not preserve individual regions when redrawing all frames"
-#~ msgstr "Не сохранять индивидуальные регионы, при перерисовке всех фреймов"
-
-#~ msgid "Resizes active display monitor"
-#~ msgstr "Изменить размер активного монитора"
-
-#~ msgid "New width for window"
-#~ msgstr "Новая ширина для окна"
-
-#~ msgid "New height for window"
-#~ msgstr "Новая высота для окна"
-
-#~ msgid "Drapes a color raster over a shaded relief map using d.his"
+#~ "No vector map of sparse points to interpolate was specified. "
+#~ "Interpolation will be done with <%s> vector map"
 #~ msgstr ""
-#~ "Драпировать цветной растр поверх слоя теневой отмывки рельефа используя d."
-#~ "his"
+#~ "Не указан векторный слой для интерполяции. Интерполяция будет произведена "
+#~ "с <%s> векторным слоем."
 
-#~ msgid "Name of shaded relief or aspect map"
-#~ msgstr "Имя слоя теневого рельефа или экспозиций "
-
-#~ msgid "Name of raster to drape over relief map"
-#~ msgstr "Имя растра драпируемого по рельефу "
-
-#~ msgid "Percent to brighten"
-#~ msgstr "Процент увеличения яркости"
-
-#~ msgid "Slide show of GRASS raster/vector maps."
-#~ msgstr "Слайдшоу растровых/векторных слоев GRASS"
-
-#~ msgid "display, slideshow"
-#~ msgstr "показать, слайдшоу"
-
-#~ msgid "Show vector maps rather than raster maps"
-#~ msgstr "Показать векторные слои вместо растровых"
-
-#~ msgid "Map prefix. Specify character(s) to view selected maps only"
-#~ msgstr "Префикс слоя. Укажите символ(ы) для просмотра выбранных слоев"
-
-#, fuzzy
-#~ msgid "Map number show across the monitor"
-#~ msgstr "Номер слоя показываемый поперек монитора"
-
-#, fuzzy
-#~ msgid "Map number show down the monitor"
-#~ msgstr "Номер слоя показываемый сверху вниз монитора"
-
-#~ msgid "Mapsets to use. Specify multiple mapsets comma separated"
-#~ msgstr "Используемые наборы. Укажите несколько наборов через запятую "
-
-#~ msgid "Number of seconds to pause between slides"
-#~ msgstr "Время в секундах для паузы между слайдами"
+#~ msgid "Failed in attempt to open %s"
+#~ msgstr "Ошибка при открытии %s"
 
 #~ msgid ""
-#~ "Divides active display into two frames & displays maps/executes commands "
-#~ "in each frame."
+#~ "Generates raster map layers of slope, aspect, curvatures and partial "
+#~ "derivatives from a raster map layer of true elevation values. Aspect is "
+#~ "calculated counterclockwise from east."
 #~ msgstr ""
-#~ "Разделить активный дисплей на два фрейма и показать слои/выполнить "
-#~ "команды в каждом фрейме "
+#~ "Создать растровые слои крутизны, экспозиции, кривизны и частичных "
+#~ "производных склона ипользуя растровый слой высот. Экспозиция вычисляется "
+#~ "простив часовой стрелки начиная с востока."
 
-#~ msgid "Enter raster map to display in 1st frame"
-#~ msgstr "Введите растровый слой для показа в первом фрейме"
+#~ msgid "Raster elevation file name"
+#~ msgstr "Имя растрового файла высот"
 
-#~ msgid "Enter command to execute in 1st frame"
-#~ msgstr "Введите команду для исполнения в 1-м фрейме"
+#~ msgid "Output slope filename"
+#~ msgstr "Имя выходного файла крутизны"
 
-#~ msgid "Enter raster map to display in 2nd frame"
-#~ msgstr "Введите растровый слой для показа в втором фрейме"
+#~ msgid "Output aspect filename"
+#~ msgstr "Имя выходного файла экспозиции"
 
-#~ msgid "Enter command to execute in 2nd frame"
-#~ msgstr "Введите команду для исполнения во 2-м фрейме"
+#~ msgid "Output profile curvature filename"
+#~ msgstr "Имя выходного файла профиля кривизны"
 
-#~ msgid "How to split display"
-#~ msgstr "Как разделить дисплей "
+#~ msgid "Output tangential curvature filename"
+#~ msgstr "Имя выходного файла касательной кривизны"
+
+#~ msgid "Output first order partial derivative dx (E-W slope) filename"
+#~ msgstr ""
+#~ "Имя выходного файла частичной производной первого порядка dx (В-З "
+#~ "крутизна)"
+
+#~ msgid "Output first order partial derivative dy (N-S slope) filename"
+#~ msgstr ""
+#~ "Имя выходного файла частичной производной первого порядка dy (С-Ю "
+#~ "крутизна)"
+
+#~ msgid "Output second order partial derivative dxx filename"
+#~ msgstr "Имя выходного файла частичной производной второго порядка dxx"
+
+#~ msgid "Output second order partial derivative dyy filename"
+#~ msgstr "Вывести имя файла второй частичной производной dyy"
+
+#~ msgid "Output second order partial derivative dxy filename"
+#~ msgstr "Вывести имя файла второй частичной производной dxy"
+
+#~ msgid "wrong type: %s"
+#~ msgstr "неверный тип: %s"
+
+#~ msgid "Creating support files..."
+#~ msgstr "Создание дополнительных файлов..."
+
+#~ msgid "Elevation products for mapset [%s] in [%s]"
+#~ msgstr "Слои на основе данных о высотах для набора  [%s[ в [%s]"
+
+#~ msgid "ASPECT [%s] COMPLETE"
+#~ msgstr "ЭКСПОЗИЦИЯ [%s] ЗАВЕРШЕНО"
+
+#~ msgid "SLOPE [%s] COMPLETE"
+#~ msgstr "КРУТИЗНА [%s] ЗАВЕРШЕНО"
+
+#~ msgid "PROFILE CURVE [%s] COMPLETE"
+#~ msgstr "КРИВИЗНА ПРОФИЛЯ [%s] ЗАВЕРШЕНО"
+
+#~ msgid "TANGENTIAL CURVE [%s] COMPLETE"
+#~ msgstr "КАСАТЕЛЬНАЯ КРИВИЗНА [%s] ЗАВЕРШЕНО"
+
+#~ msgid "E-W SLOPE [%s] COMPLETE"
+#~ msgstr "КРУТИЗНА В-З [%s] ЗАВЕРШЕНО"
+
+#~ msgid "N-S SLOPE [%s] COMPLETE"
+#~ msgstr "КРУТИЗНА С-Ю [%s] ЗАВЕРШЕНО"
+
+#~ msgid "DXX [%s] COMPLETE"
+#~ msgstr "Завершено: DXX [%s]"
+
+#~ msgid "DYY [%s] COMPLETE"
+#~ msgstr "Завершено: DYY [%s]"
+
+#~ msgid "DXY [%s] COMPLETE"
+#~ msgstr "Завершено: DXY [%s]"
 
 #, fuzzy
-#~ msgid "Split the display into subframes."
-#~ msgstr "Введите растровый слой для показа в первом фрейме"
-
-#, fuzzy
-#~ msgid "Number of subframes"
-#~ msgstr "Число фреймов"
-
-#~ msgid "Exports attribute tables into various formats."
-#~ msgstr "Импорт атрибутивных таблиц в различных форматах."
-
-#~ msgid "GRASS table name"
-#~ msgstr "Имя таблицы GRASS"
-
-#~ msgid "Table file to be exported or DB connection string"
-#~ msgstr "Файл таблицы для экспорта или строка соединения с БД"
-
-#~ msgid "Table format"
-#~ msgstr "Формат таблицы"
-
-#~ msgid "Display the HTML man pages of GRASS"
-#~ msgstr "Показать HTML страницы руководства GRASS"
-
-#~ msgid "general, manual, help"
-#~ msgstr "общее, руководство, помощь"
-
-#~ msgid "Display index"
-#~ msgstr "Показать индекс"
-
-#~ msgid "Display as MAN text page instead of HTML page in browser"
-#~ msgstr "Показать страницы как текст, вместо HTML в браузере"
-
-#~ msgid "Manual entry to be displayed"
-#~ msgstr "Ручной ввод для показа"
-
-#~ msgid "Mosaics up to 4 images and extends colormap; creates map *.mosaic"
-#~ msgstr ""
-#~ "Мозаицировать до 4 изображений и расширить цветовую таблицу; создать слой "
-#~ "*.mosaic"
-
-#~ msgid "raster, imagery, mosaicking"
-#~ msgstr "растр, изображения, мозаицирование"
-
-#~ msgid "1st map for mosaic (top of image stack)."
-#~ msgstr "первый слой для мозаики (верх стэка изображений)."
-
-#~ msgid "2nd map for mosaic."
-#~ msgstr "Второй слой для мозаики"
-
-#~ msgid "3rd map for mosaic."
-#~ msgstr "Третий слой для мозаики"
-
-#~ msgid "4th map for mosaic."
-#~ msgstr "Четвертый слой для мозаики"
-
-#~ msgid "Calculates Optimum-Index-Factor table for LANDSAT TM bands 1-5, & 7"
-#~ msgstr ""
-#~ "Рассчитать таблицу Optimum-Index-Factor для каналов  LANDSAT TM 1-5 и 7"
-
-#~ msgid "raster, imagery, statistics"
-#~ msgstr "растр, изображения, статистика"
-
-#~ msgid "LANDSAT TM band 1."
-#~ msgstr "LANDSAT TM канал 1."
-
-#~ msgid "LANDSAT TM band 2."
-#~ msgstr "LANDSAT TM канал 2."
-
-#~ msgid "LANDSAT TM band 3."
-#~ msgstr "LANDSAT TM канал 3."
-
-#~ msgid "LANDSAT TM band 4."
-#~ msgstr "LANDSAT TM канал 4."
-
-#~ msgid "LANDSAT TM band 5."
-#~ msgstr "LANDSAT TM канал 5."
-
-#~ msgid "LANDSAT TM band 7."
-#~ msgstr "LANDSAT TM канал 7."
-
-#, fuzzy
-#~ msgid ""
-#~ "Displays spectral response at user specified locations in group or images."
-#~ msgstr ""
-#~ "Показать спектральное отражение для групп или изображений, определенных "
-#~ "пользователем"
-
-#~ msgid "imagery, raster, multispectral"
-#~ msgstr "изображения, растр, мультиспектральные"
-
-#, fuzzy
-#~ msgid "Group input"
-#~ msgstr "исходная группа"
-
-#, fuzzy
-#~ msgid "Raster input maps"
-#~ msgstr "исходные растровые слои"
-
-#, fuzzy
-#~ msgid "Write output to PNG image"
-#~ msgstr "записать результат в изображение PNG"
-
-#~ msgid "Use image list and not group"
-#~ msgstr "Использовать список изображений, но не группу"
-
-#~ msgid "Select multiple points"
-#~ msgstr "Выбор нескольких точек"
-
-#, fuzzy
-#~ msgid "Label with coordinates instead of numbering"
-#~ msgstr "подписать координатами вместо чисел"
-
-#~ msgid "Tasseled Cap (Kauth Thomas) transformation for LANDSAT-TM data"
-#~ msgstr "Трансформация Tasseled Cap (Kauth Thomas) для данных LANDSAT-TM"
-
-#~ msgid "raster, imagery"
-#~ msgstr "растр, изображения"
-
-#~ msgid "use transformation rules for LANDSAT-4"
-#~ msgstr "использовать правила трансформации для LANDSAT-4"
-
-#~ msgid "use transformation rules for LANDSAT-5"
-#~ msgstr "использовать правила трансформации для LANDSAT-5"
-
-#~ msgid "use transformation rules for LANDSAT-7"
-#~ msgstr "использовать правила трансформации для LANDSAT-7"
-
-#~ msgid "raster input map (LANDSAT channel 1)"
-#~ msgstr "исходный растровый слой (1 канал LANDSAT)"
-
-#~ msgid "raster input map (LANDSAT channel 2)"
-#~ msgstr "исходный растровый слой (2 канал LANDSAT)"
-
-#~ msgid "raster input map (LANDSAT channel 3)"
-#~ msgstr "исходный растровый слой (3 канал LANDSAT)"
-
-#~ msgid "raster input map (LANDSAT channel 4)"
-#~ msgstr "исходный растровый слой (4 канал LANDSAT)"
-
-#~ msgid "raster input map (LANDSAT channel 5)"
-#~ msgstr "исходный растровый слой (5 канал LANDSAT)"
-
-#~ msgid "raster input map (LANDSAT channel 7)"
-#~ msgstr "исходный растровый слой (7 канал LANDSAT)"
-
-#~ msgid "raster output TC maps prefix"
-#~ msgstr "префикс выходных растровых слоев TC"
-
-#~ msgid "Blends color components of two raster maps by a given ratio."
-#~ msgstr ""
-#~ "Смешать цветовые компоненты двух растровых слоев используя заданное "
-#~ "соотношение."
-
-#~ msgid "Name of first raster map for blending"
-#~ msgstr "Имя первого растрового слоя для смешивания"
-
-#~ msgid "Name of second raster map for blending"
-#~ msgstr "Имя второго растрового слоя для смешивания"
-
-#~ msgid "Base name for red, green and blue output maps containing the blend"
-#~ msgstr ""
-#~ "Базовое имя для слоев содержащих красный, зеленый и синий для смешивания"
-
-#~ msgid "Percentage weight of first map for color blending"
-#~ msgstr "Процентный вес первого слоя для цветового смешивания"
-
-#, fuzzy
-#~ msgid "Color using standard deviation bands"
-#~ msgstr ""
-#~ "средние и стандартные отклонения для %d band%s\n"
-#~ "\n"
-
-#~ msgid ""
-#~ "Fills no-data areas in raster maps using v.surf.rst splines interpolation"
-#~ msgstr ""
-#~ "Заполнить no-data значения растровых слоев, используя сплайн-интерполяцию "
-#~ "v.surf.rst"
-
-#~ msgid "raster, elevation, interpolation"
-#~ msgstr "растр, высота, интерполяция"
-
-#~ msgid "Raster map in which to fill nulls"
-#~ msgstr "Растровый слой для заполнения нулей"
-
-#~ msgid ""
-#~ "Output raster map with nulls filled by interpolation from surrounding "
-#~ "values"
-#~ msgstr ""
-#~ "Выходной растровый слой с нулями заполненными интерполяцией окружающих "
-#~ "значений"
-
-#~ msgid "Spline tension parameter"
-#~ msgstr "параметр tenstion сплайн-интерполяции"
-
-#~ msgid "Spline smoothing parameter"
-#~ msgstr "Параметр сглаживания сплайна"
-
-#~ msgid ""
-#~ "Georeference, rectify and import Terra-ASTER imagery and relative DEM's "
-#~ "using gdalwarp."
-#~ msgstr ""
-#~ "Привязать, трансформировать и импортировать съемку Terra-ASTER и "
-#~ "относительные ЦМР используя gdalwarp."
-
-#~ msgid "Input ASTER image to be georeferenced & rectified"
-#~ msgstr "Исходное изображение ASTER для привязки и трансформации"
-
-#~ msgid "ASTER imagery processing type (Level 1A, Level 1B, or relative DEM)"
-#~ msgstr "Тип данных ASTER (Level 1A, Level 1B, или относительный DEM)"
-
-#~ msgid ""
-#~ "L1A or L1B band to translate (1, 2, 3n, 3b, 4-14). Can only translate a "
-#~ "single band"
-#~ msgstr ""
-#~ "канал L1A или L1B для перевода (1, 2, 3n, 3b, 4-14). Можно перевести "
-#~ "только один канал"
-
-#~ msgid "Import SRTM HGT files into GRASS"
-#~ msgstr "Импорт файлов SRTM HGT в GRASS"
-
-#~ msgid "SRTM input tile (file without .hgt.zip extension)"
-#~ msgstr "исходный фрагмент SRTM (файл без расширения .hgt.zip)"
-
-#~ msgid "Output raster map (default: input tile)"
-#~ msgstr "Имя выходного растрового слоя (по умолчанию: имя исходного)"
-
-#~ msgid "Input is a 1-arcsec tile (default: 3-arcsec)"
-#~ msgstr "Исходные данные 1-arcsec (по умолчанию: 3-arcsec)"
-
-#~ msgid "Calculate new raster map from a r.mapcalc expression."
-#~ msgstr "Рассчитать новый растровый слой используя выражение r.mapcalc."
-
-#~ msgid "A"
-#~ msgstr "A"
-
-#~ msgid "B"
-#~ msgstr "B"
-
-#~ msgid "C"
-#~ msgstr "C"
-
-#~ msgid "D"
-#~ msgstr "D"
-
-#~ msgid "E"
-#~ msgstr "E"
-
-#~ msgid "F"
-#~ msgstr "F"
-
-#~ msgid "Formula (e.g. A-B or A*C+B)"
-#~ msgstr "Формула (например A-B или A*C+B)"
-
-#~ msgid "Show help"
-#~ msgstr "Показать помощь"
-
-#~ msgid "Expert mode (enter a set of r.mapcalc expressions)"
-#~ msgstr "Экспертный режим (ввести набор выражений r.mapcalc)"
-
-#~ msgid "Do not overwrite existing map"
-#~ msgstr "Не перезаписывать существующие слои "
-
-#~ msgid "Exports GRASS raster into GDAL supported formats."
-#~ msgstr "Экспорт растрового слоя GRASS в форматы поддерживаемые GDAL."
-
-#~ msgid "Region sensitive output"
-#~ msgstr "Вывод зависящий от региона"
-
-#~ msgid ""
-#~ "Creation option to the output format driver. Multiple options may be "
-#~ "listed"
-#~ msgstr ""
-#~ "Опции создания для драйвера выходного формата. Возможно несколько опций"
-
-#~ msgid "Metadata key passed on the output dataset if possible"
-#~ msgstr "Метаданные передаваемые если возможно выходному набору данных"
-
-#~ msgid ""
-#~ "Export a raster map to a text file as x,y,z values based on cell centers."
-#~ msgstr ""
-#~ "Экспорт растрового слоя в текстовый файл как значения x,y,z центров ячеек."
-
-#, fuzzy
-#~ msgid ""
-#~ "Reclasses a raster map greater or less than user specified area size (in "
-#~ "hectares)."
-#~ msgstr ""
-#~ "Переклассифицировать растровый слой больше или меньше чем площадь "
-#~ "заданная пользователем (в гектарах)"
-
-#~ msgid "raster, statistics, aggregation"
-#~ msgstr "растр, статистика, аггрегация"
-
-#, fuzzy
-#~ msgid "Lesser value option that sets the <= area size limit [hectares]"
-#~ msgstr ""
-#~ "меньшее значение опции, которая устанавливает <= лимит площади полигона "
-#~ "[гектары]"
-
-#, fuzzy
-#~ msgid "Greater value option that sets the >= area size limit [hectares]"
-#~ msgstr ""
-#~ "большее значение опции, которая устанавливает >= лимит площади полигона "
-#~ "[гектары]"
-
-#~ msgid "Creates shaded relief map from an elevation map (DEM)."
-#~ msgstr "Создать слой теневого рельефа из слоя рельефа (DEM)."
-
-#~ msgid "Input elevation map"
-#~ msgstr "Исходный слой высот"
-
-#~ msgid "Output shaded relief map name"
-#~ msgstr "Вывести имя слоя теневой отмывки рельефа"
-
-#~ msgid "Altitude of the sun in degrees above the horizon"
-#~ msgstr "Высота солнца над горизонтом в градусах "
-
-#~ msgid "Azimuth of the sun in degrees to the east of north"
-#~ msgstr "Азимут солнца в градусах к востоку от севера"
-
-#~ msgid "Factor for exaggerating relief"
-#~ msgstr "Фактор масштабирования для высот"
-
-#~ msgid "Scale factor for converting horizontal units to elevation units"
-#~ msgstr ""
-#~ "Фактор масштабирования для конвертации горизонтальных единиц в высотные "
-
-#~ msgid ""
-#~ "Set scaling factor (applies to lat./long. locations only, none: scale=1)"
-#~ msgstr ""
-#~ "Задать фактор масштабирования (только для точек в lat./long., если пусто: "
-#~ "scale=1)"
-
-#~ msgid ""
-#~ "Produces tilings of the source projection for use in the destination "
-#~ "region and projection."
-#~ msgstr ""
-#~ "Создать тайлы в исходной проекции для использования с выходным регионом и "
-#~ "проекцией."
-
-#~ msgid "Produces shell script output"
-#~ msgstr "Вывести статистику в стиле shell"
-
-#~ msgid "Produces web map server query string output"
-#~ msgstr "Создать строку запроса вывода к картографическому веб серверу"
-
-#~ msgid ""
-#~ "Name of region to use instead of current region for bounds and resolution"
-#~ msgstr ""
-#~ "Название региона для использования вместо текущего для границ и разрешения"
-
-#~ msgid "Source projection"
-#~ msgstr "Исходная проекция"
-
-#~ msgid "Conversion factor from units to meters in source projection"
-#~ msgstr "Коэффициент пересчета из единиц в метры в исходной проекции"
-
-#~ msgid "Destination projection, defaults to this location's projection"
-#~ msgstr "Конечная проекция, по умолчанию проекция области "
-
-#~ msgid "Maximum number of columns for a tile in the source projection"
-#~ msgstr "Максимальное число столбцов для фрагмента в исходной проекции"
-
-#~ msgid "Maximum number of rows for a tile in the source projection"
-#~ msgstr "Максимальное число рядов для фрагмента в исходной проекции"
-
-#, fuzzy
-#~ msgid "Number of cells tiles should overlap in each direction"
-#~ msgstr "Число ячеек должно пересекаться во всех направлениях"
-
-#~ msgid "Calculates new grid3D volume from r3.mapcalc expression."
-#~ msgstr "Рассчитать новый grid3D объем с помощью выражения r3.mapcalc"
-
-#~ msgid "A (grid3D file)"
-#~ msgstr "A (файл grid3D)"
-
-#~ msgid "B (grid3D file)"
-#~ msgstr "B (файл grid3D)"
-
-#~ msgid "C (grid3D file)"
-#~ msgstr "C (файл grid3D)"
-
-#~ msgid "D (grid3D file)"
-#~ msgstr "D (файл grid3D)"
-
-#~ msgid "E (grid3D file)"
-#~ msgstr "E (файл grid3D)"
-
-#~ msgid "F (grid3D file)"
-#~ msgstr "F (файл grid3D)"
-
-#~ msgid "Name for output grid3D volume"
-#~ msgstr "Имя выходного объема grid3D"
-
-#~ msgid "Expert mode (enter a set of r3.mapcalc expressions)"
-#~ msgstr "Экспертный режим (введите набор выражений r3.mapcalc)"
-
-#~ msgid "Rebuilds topology on all vector maps in the current mapset."
-#~ msgstr "Перестроить топология для всех векторных слоев текущего набора."
-
-#~ msgid "Adds missing centroids to closed boundaries."
-#~ msgstr "Добавить пропущенные центроиды к замкнутым границам."
-
-#~ msgid "vector, centroid, area"
-#~ msgstr "вектор, центроид, полигон"
-
-#~ msgid "Action to be taken"
-#~ msgstr "Выполнить действие"
-
-#~ msgid "Category number starting value"
-#~ msgstr "Начальный номер категории"
-
-#~ msgid ""
-#~ "Convert all old GRASS < Ver5.7 vector maps in current mapset to current "
-#~ "format"
-#~ msgstr ""
-#~ "Конвертировать все старые слои GRASS < Ver5.7 в текущем наборе в текущий "
-#~ "формат"
-
-#~ msgid "run non-interactively"
-#~ msgstr "запустить без интерактивности"
-
-#~ msgid "Allows to join a table to a vector map table."
-#~ msgstr "Присоединить таблицу векторному слою."
-
-#~ msgid "Vector map to which to join other table"
-#~ msgstr "Векторный слой к которому присоединить другую таблицу"
-
-#, fuzzy
-#~ msgid "Layer where to join"
-#~ msgstr "Слой к которому добавить соединение"
-
-#~ msgid "Join column in map table"
-#~ msgstr "Поле соединения в таблице слоя"
-
-#~ msgid "Other table name"
-#~ msgstr "Имя другой таблицы"
-
-#~ msgid "Join column in other table"
-#~ msgstr "Поле соединения в другой таблице"
-
-#~ msgid "Imports geonames.org country files into a GRASS vector points map."
-#~ msgstr "Импорт файлов стран geonames.org в точечный векторный слой GRASS."
-
-#~ msgid "vector, import, gazetteer"
-#~ msgstr "вектор, импорт, каталог"
-
-#~ msgid "Uncompressed geonames file from (with .txt extension)"
-#~ msgstr "Несжатый файл geonames из (с расширением .txt)"
-
-#~ msgid ""
-#~ "Imports US-NGA GEOnet Names Server (GNS) country files into a GRASS "
-#~ "vector points map."
-#~ msgstr ""
-#~ "Импорт файлов стран US-NGA GEOnet Names Server (GNS) в точечный векторный "
-#~ "слой GRASS."
-
-#~ msgid "Uncompressed GNS file from NGA (with .txt extension)"
-#~ msgstr "Несжатый файл GNS из NGA (с расширением .txt)"
+#~ msgid "installation"
+#~ msgstr "Выделение метрик"
 
 #~ msgid "Name of vector input map containing stream(s)"
 #~ msgstr "Имя исходного векторного слоя, содержащего поток (потоки)"
@@ -32225,22 +32691,6 @@ msgstr "Нельзя отметить еще одну точку. Разреше
 
 #~ msgid "Band to select"
 #~ msgstr "Выбор канала"
-
-#, fuzzy
-#~ msgid "Unhandled vector feature type <%s>"
-#~ msgstr "Невозможно создать таблицу: <%s>"
-
-#, fuzzy
-#~ msgid "No areas found, skipping type=area"
-#~ msgstr "Полигоны не найдены, type=poly пропущено"
-
-#, fuzzy
-#~ msgid "No points found, skipping%s%s"
-#~ msgstr "Точки не найдены, пропуск type=point"
-
-#, fuzzy
-#~ msgid "No lines found, skipping%s%s"
-#~ msgstr "Линии не найдены, type=line пропущено"
 
 #~ msgid "It was impossible to create <Auxiliar_outlier_table>."
 #~ msgstr "Невозможно создать <Auxiliar_outlier_table>."

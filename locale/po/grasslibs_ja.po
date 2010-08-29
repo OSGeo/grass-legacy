@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: grasslibs_ja\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-06-02 22:02+0200\n"
+"POT-Creation-Date: 2010-08-29 12:20+0200\n"
 "PO-Revision-Date: 2010-03-03 13:31+0900\n"
 "Last-Translator: AkiraTaniguchi <taniguti@apptec.co.jp>\n"
 "Language-Team: Japanese <grass-translations@lists.osgeo.org>\n"
@@ -1161,55 +1161,55 @@ msgstr "バッファーを再確保できません"
 msgid "CreateProcess() failed: error = %d"
 msgstr "CreateProcess()失敗しました: エラー = %d"
 
-#: ../lib/gis/spawn.c:410
+#: ../lib/gis/spawn.c:411
 #, c-format
 msgid "G_spawn: unable to redirect descriptor %d"
 msgstr "G_spawn: 記述子をリダイレクトすることができない%d"
 
-#: ../lib/gis/spawn.c:418 ../lib/gis/spawn.c:603
+#: ../lib/gis/spawn.c:419 ../lib/gis/spawn.c:604
 #, c-format
 msgid "G_spawn: unable to open file %s"
 msgstr "G_spawn: ファイルが開けません %s"
 
-#: ../lib/gis/spawn.c:487 ../lib/gis/spawn.c:673
+#: ../lib/gis/spawn.c:488 ../lib/gis/spawn.c:674
 msgid "Unable to execute command"
 msgstr "コマンドを実行できません"
 
-#: ../lib/gis/spawn.c:512 ../lib/gis/spawn.c:520
+#: ../lib/gis/spawn.c:513 ../lib/gis/spawn.c:521
 #, c-format
 msgid "G_spawn: unable to restore signal %d"
 msgstr "G_spawn: シグナルを修復できません %d"
 
-#: ../lib/gis/spawn.c:551
+#: ../lib/gis/spawn.c:552
 #, c-format
 msgid "G_spawn: unable to reset signal %d"
 msgstr "G_spawn: シグナルをリセットできません %d"
 
-#: ../lib/gis/spawn.c:560
+#: ../lib/gis/spawn.c:561
 #, c-format
 msgid "G_spawn: unable to ignore signal %d"
 msgstr "G_spawn: シグナルを無視できません %d"
 
-#: ../lib/gis/spawn.c:571
+#: ../lib/gis/spawn.c:572
 #, c-format
 msgid "G_spawn: unable to block signal %d"
 msgstr "G_spawn: シグナルをブロックできません %d"
 
-#: ../lib/gis/spawn.c:579
+#: ../lib/gis/spawn.c:580
 #, c-format
 msgid "G_spawn: unable to unblock signal %d"
 msgstr "G_spawn: シグナルをブロックできません %d"
 
-#: ../lib/gis/spawn.c:608 ../lib/gis/spawn.c:617
+#: ../lib/gis/spawn.c:609 ../lib/gis/spawn.c:618
 #, c-format
 msgid "G_spawn: unable to duplicate descriptor %d to %d"
 msgstr "G_spawn: %dにディスクリプター%dをコピーできません "
 
-#: ../lib/gis/spawn.c:650
+#: ../lib/gis/spawn.c:651
 msgid "Unable to create a new process"
 msgstr "新しいプロセスを作成できません"
 
-#: ../lib/gis/spawn.c:665
+#: ../lib/gis/spawn.c:666
 #, c-format
 msgid "Unable to change directory to %s"
 msgstr "ディレクトリを変更できません %s"
@@ -1469,7 +1469,7 @@ msgstr "出力するラスターマップ名 <%s> は無効なマップ名です
 #: ../lib/ogsf/gsd_legend.c:238 ../lib/ogsf/Gs3.c:126 ../lib/ogsf/Gs3.c:201
 #: ../lib/ogsf/Gs3.c:286 ../lib/ogsf/Gs3.c:359 ../lib/ogsf/Gs3.c:475
 #: ../lib/ogsf/Gs3.c:572 ../lib/ogsf/Gs3.c:639 ../lib/ogsf/Gs3.c:696
-#: ../lib/ogsf/Gs3.c:766 ../lib/ogsf/Gs3.c:835 ../lib/ogsf/Gp3.c:54
+#: ../lib/ogsf/Gs3.c:767 ../lib/ogsf/Gs3.c:837 ../lib/ogsf/Gp3.c:54
 #, c-format
 msgid "Raster map <%s> not found"
 msgstr "ラスターマップ <%s> が見つかりません"
@@ -3405,59 +3405,54 @@ msgstr ""
 msgid "Unable to open select cursor: %s"
 msgstr "選択カーソルを開けません: '%s'"
 
-#: ../lib/nviz/render.c:108
+#: ../lib/nviz/render.c:104
 msgid "Bad server connection"
 msgstr "サーバ接続がよくありません"
 
-#: ../lib/nviz/render.c:117
+#: ../lib/nviz/render.c:113
 msgid "Unable to create rendering context"
 msgstr "レンダリングコンテキストを作成できません"
 
-#: ../lib/nviz/lights.c:144
+#: ../lib/nviz/lights.c:174
 msgid "Unable to define new light"
 msgstr "新しいライトを定義できません"
 
-#: ../lib/nviz/position.c:50
+#: ../lib/nviz/position.c:56
 msgid "Unable to set focus"
 msgstr "フォーカスを設置できません"
 
-#: ../lib/nviz/nviz.c:76
+#: ../lib/nviz/nviz.c:103
 #, c-format
 msgid "Invalid color (%s), using \"white\" as default"
 msgstr "不正なカラー (%s), \"白\" をデフォルト値として使用しています"
 
-#: ../lib/nviz/change_view.c:108
-#, c-format
-msgid "Invalid view position coordinates, using %f,%f"
-msgstr "不正な視点位置座標,用法は %f,%f"
-
-#: ../lib/nviz/map_obj.c:65
+#: ../lib/nviz/map_obj.c:59
 msgid "Maximum surfaces loaded!"
 msgstr "これ以上サーフェスをロードできません!"
 
-#: ../lib/nviz/map_obj.c:94
+#: ../lib/nviz/map_obj.c:88
 msgid "Maximum vector line maps loaded!"
 msgstr "これ以上ベクトルラインマップをロードできません!"
 
-#: ../lib/nviz/map_obj.c:103 ../lib/nviz/map_obj.c:134
+#: ../lib/nviz/map_obj.c:97 ../lib/nviz/map_obj.c:128
 #, c-format
 msgid "Error loading vector map <%s>"
 msgstr "ベクトルマップ <%s> をロードできません"
 
-#: ../lib/nviz/map_obj.c:122
+#: ../lib/nviz/map_obj.c:116
 msgid "Maximum vector point maps loaded!"
 msgstr "これ以上ベクトルポイントマップをロードできません!"
 
-#: ../lib/nviz/map_obj.c:149
+#: ../lib/nviz/map_obj.c:143
 msgid "Maximum volumes loaded!"
 msgstr "これ以上ロードできません!"
 
-#: ../lib/nviz/map_obj.c:158
+#: ../lib/nviz/map_obj.c:152
 #, c-format
 msgid "Error loading 3d raster map <%s>"
 msgstr "3D ラスターマップ <%s> をロードできません"
 
-#: ../lib/nviz/map_obj.c:166
+#: ../lib/nviz/map_obj.c:160
 msgid "Nviz_new_map_obj(): unsupported data type"
 msgstr "Nviz_new_map_obj(): サポートされていないデータタイプ"
 
@@ -4230,12 +4225,12 @@ msgstr "ラスターマップ <%s> をロードしています..."
 msgid "Color table range doesn't match data (mincol=%d, maxcol=%d"
 msgstr "カラーテーブルの範囲がデータと一致しません (mincol=%d, maxcol=%d"
 
-#: ../lib/ogsf/Gs3.c:709 ../lib/ogsf/Gs3.c:780
+#: ../lib/ogsf/Gs3.c:709 ../lib/ogsf/Gs3.c:781
 #, c-format
 msgid "Translating colors from raster map <%s>..."
 msgstr "ラスターマップ <%s> からカラーを転換しています..."
 
-#: ../lib/ogsf/Gs3.c:1018
+#: ../lib/ogsf/Gs3.c:1020
 msgid "View not saved by this program,there may be some inconsistancies"
 msgstr ""
 "このプログラムにビューは保存されていません,　不一致がある可能性があります"
@@ -4258,22 +4253,32 @@ msgstr "ベクトルマップ <%s>を読み込みました (%d features)"
 msgid "Bitmap mismatch"
 msgstr "ビットマップは不一致です "
 
-#: ../lib/ogsf/GS2.c:1638
+#: ../lib/ogsf/GS2.c:1193
+#, c-format
+msgid "no category info"
+msgstr ""
+
+#: ../lib/ogsf/GS2.c:1212
+#, c-format
+msgid "no data"
+msgstr ""
+
+#: ../lib/ogsf/GS2.c:1635
 #, c-format
 msgid "Raster map <%s> is outside of current region. Load failed."
 msgstr "ラスターマップ <%s> はこの領域外です. ロードに失敗しました."
 
-#: ../lib/ogsf/GS2.c:1716 ../lib/ogsf/GS2.c:1722 ../lib/ogsf/GS2.c:1730
-#: ../lib/ogsf/GS2.c:1739 ../lib/ogsf/GS2.c:1747 ../lib/ogsf/GS2.c:1757
-#: ../lib/ogsf/GS2.c:1805
+#: ../lib/ogsf/GS2.c:1713 ../lib/ogsf/GS2.c:1719 ../lib/ogsf/GS2.c:1727
+#: ../lib/ogsf/GS2.c:1736 ../lib/ogsf/GS2.c:1744 ../lib/ogsf/GS2.c:1754
+#: ../lib/ogsf/GS2.c:1802
 msgid "GS_load_att_map(): Out of memory. Unable to load map"
 msgstr "GS_load_att_map(): メモリ不足. マップをロードできません"
 
-#: ../lib/ogsf/GS2.c:1833
+#: ../lib/ogsf/GS2.c:1830
 msgid "Loading failed"
 msgstr "読み込みに失敗しました"
 
-#: ../lib/ogsf/GS2.c:1837
+#: ../lib/ogsf/GS2.c:1834
 msgid "Error finding range"
 msgstr "範囲が見つかりません"
 
@@ -4956,6 +4961,9 @@ msgstr "グループ <%s> のサブグループ <%s> は空です\n"
 #, c-format
 msgid "subgroup <%s> of group <%s> references the following raster maps\n"
 msgstr "グループ <%s> のサブグループ <%s> は次のラスターマップを参照します\n"
+
+#~ msgid "Invalid view position coordinates, using %f,%f"
+#~ msgstr "不正な視点位置座標,用法は %f,%f"
 
 #~ msgid "Unknown Location"
 #~ msgstr "不明なロケーション"

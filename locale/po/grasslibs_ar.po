@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: grassmods_ar\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-06-02 22:02+0200\n"
+"POT-Creation-Date: 2010-08-29 12:20+0200\n"
 "PO-Revision-Date: 2005-03-09 12:50+0100\n"
 "Last-Translator: Dr. Alaa Masoud <alaamasoud@hotmail.com>\n"
 "Language-Team: Arabic <grass-translations@lists.osgeo.org>\n"
@@ -1148,57 +1148,57 @@ msgstr "لم يمكن توفير ذاكرة كافية\n"
 msgid "CreateProcess() failed: error = %d"
 msgstr ""
 
-#: ../lib/gis/spawn.c:410
+#: ../lib/gis/spawn.c:411
 #, c-format
 msgid "G_spawn: unable to redirect descriptor %d"
 msgstr ""
 
-#: ../lib/gis/spawn.c:418 ../lib/gis/spawn.c:603
+#: ../lib/gis/spawn.c:419 ../lib/gis/spawn.c:604
 #, c-format
 msgid "G_spawn: unable to open file %s"
 msgstr ""
 
-#: ../lib/gis/spawn.c:487 ../lib/gis/spawn.c:673
+#: ../lib/gis/spawn.c:488 ../lib/gis/spawn.c:674
 #, fuzzy
 msgid "Unable to execute command"
 msgstr "لم يتم تنفيذ الأمر"
 
-#: ../lib/gis/spawn.c:512 ../lib/gis/spawn.c:520
+#: ../lib/gis/spawn.c:513 ../lib/gis/spawn.c:521
 #, c-format
 msgid "G_spawn: unable to restore signal %d"
 msgstr ""
 
-#: ../lib/gis/spawn.c:551
+#: ../lib/gis/spawn.c:552
 #, c-format
 msgid "G_spawn: unable to reset signal %d"
 msgstr ""
 
-#: ../lib/gis/spawn.c:560
+#: ../lib/gis/spawn.c:561
 #, c-format
 msgid "G_spawn: unable to ignore signal %d"
 msgstr ""
 
-#: ../lib/gis/spawn.c:571
+#: ../lib/gis/spawn.c:572
 #, c-format
 msgid "G_spawn: unable to block signal %d"
 msgstr ""
 
-#: ../lib/gis/spawn.c:579
+#: ../lib/gis/spawn.c:580
 #, c-format
 msgid "G_spawn: unable to unblock signal %d"
 msgstr ""
 
-#: ../lib/gis/spawn.c:608 ../lib/gis/spawn.c:617
+#: ../lib/gis/spawn.c:609 ../lib/gis/spawn.c:618
 #, c-format
 msgid "G_spawn: unable to duplicate descriptor %d to %d"
 msgstr ""
 
-#: ../lib/gis/spawn.c:650
+#: ../lib/gis/spawn.c:651
 #, fuzzy
 msgid "Unable to create a new process"
 msgstr "لم يتم انشاء عملية جديدة"
 
-#: ../lib/gis/spawn.c:665
+#: ../lib/gis/spawn.c:666
 #, fuzzy, c-format
 msgid "Unable to change directory to %s"
 msgstr " [%s] غير قادر على أنشاء ملف عنوان رئيسى ل"
@@ -1444,7 +1444,7 @@ msgstr "غير صالح '%s' اسم الملف الفيكتورى المخرج"
 #: ../lib/ogsf/gsd_legend.c:238 ../lib/ogsf/Gs3.c:126 ../lib/ogsf/Gs3.c:201
 #: ../lib/ogsf/Gs3.c:286 ../lib/ogsf/Gs3.c:359 ../lib/ogsf/Gs3.c:475
 #: ../lib/ogsf/Gs3.c:572 ../lib/ogsf/Gs3.c:639 ../lib/ogsf/Gs3.c:696
-#: ../lib/ogsf/Gs3.c:766 ../lib/ogsf/Gs3.c:835 ../lib/ogsf/Gp3.c:54
+#: ../lib/ogsf/Gs3.c:767 ../lib/ogsf/Gs3.c:837 ../lib/ogsf/Gp3.c:54
 #, fuzzy, c-format
 msgid "Raster map <%s> not found"
 msgstr "غير موجود'%s' الفيكتور"
@@ -3381,62 +3381,57 @@ msgstr ""
 msgid "Unable to open select cursor: %s"
 msgstr " [%s] غير قادر على أنشاء ملف عنوان رئيسى ل"
 
-#: ../lib/nviz/render.c:108
+#: ../lib/nviz/render.c:104
 msgid "Bad server connection"
 msgstr ""
 
-#: ../lib/nviz/render.c:117
+#: ../lib/nviz/render.c:113
 #, fuzzy
 msgid "Unable to create rendering context"
 msgstr "لم يتم انشاء عملية جديدة"
 
-#: ../lib/nviz/lights.c:144
+#: ../lib/nviz/lights.c:174
 #, fuzzy
 msgid "Unable to define new light"
 msgstr "لم يمكن فتحه %s فى %s"
 
-#: ../lib/nviz/position.c:50
+#: ../lib/nviz/position.c:56
 #, fuzzy
 msgid "Unable to set focus"
 msgstr " %s لم يمكن فتح"
 
-#: ../lib/nviz/nviz.c:76
+#: ../lib/nviz/nviz.c:103
 #, c-format
 msgid "Invalid color (%s), using \"white\" as default"
 msgstr ""
 
-#: ../lib/nviz/change_view.c:108
-#, c-format
-msgid "Invalid view position coordinates, using %f,%f"
-msgstr ""
-
-#: ../lib/nviz/map_obj.c:65
+#: ../lib/nviz/map_obj.c:59
 msgid "Maximum surfaces loaded!"
 msgstr ""
 
-#: ../lib/nviz/map_obj.c:94
+#: ../lib/nviz/map_obj.c:88
 msgid "Maximum vector line maps loaded!"
 msgstr ""
 
-#: ../lib/nviz/map_obj.c:103 ../lib/nviz/map_obj.c:134
+#: ../lib/nviz/map_obj.c:97 ../lib/nviz/map_obj.c:128
 #, fuzzy, c-format
 msgid "Error loading vector map <%s>"
 msgstr " [%s] غير قادر على أنشاء ملف عنوان رئيسى ل"
 
-#: ../lib/nviz/map_obj.c:122
+#: ../lib/nviz/map_obj.c:116
 msgid "Maximum vector point maps loaded!"
 msgstr ""
 
-#: ../lib/nviz/map_obj.c:149
+#: ../lib/nviz/map_obj.c:143
 msgid "Maximum volumes loaded!"
 msgstr ""
 
-#: ../lib/nviz/map_obj.c:158
+#: ../lib/nviz/map_obj.c:152
 #, fuzzy, c-format
 msgid "Error loading 3d raster map <%s>"
 msgstr "للخرائط الراسترية الموجودة %d\n"
 
-#: ../lib/nviz/map_obj.c:166
+#: ../lib/nviz/map_obj.c:160
 msgid "Nviz_new_map_obj(): unsupported data type"
 msgstr ""
 
@@ -4152,12 +4147,12 @@ msgstr " فارغة %s@%s الخريطة الراسترية"
 msgid "Color table range doesn't match data (mincol=%d, maxcol=%d"
 msgstr ""
 
-#: ../lib/ogsf/Gs3.c:709 ../lib/ogsf/Gs3.c:780
+#: ../lib/ogsf/Gs3.c:709 ../lib/ogsf/Gs3.c:781
 #, fuzzy, c-format
 msgid "Translating colors from raster map <%s>..."
 msgstr "'%s' لم يمكن فتح ملف التاريخ للفيكتور"
 
-#: ../lib/ogsf/Gs3.c:1018
+#: ../lib/ogsf/Gs3.c:1020
 msgid "View not saved by this program,there may be some inconsistancies"
 msgstr ""
 
@@ -4179,23 +4174,33 @@ msgstr "غير موجود'%s' الفيكتور"
 msgid "Bitmap mismatch"
 msgstr ""
 
-#: ../lib/ogsf/GS2.c:1638
+#: ../lib/ogsf/GS2.c:1193
+#, c-format
+msgid "no category info"
+msgstr ""
+
+#: ../lib/ogsf/GS2.c:1212
+#, c-format
+msgid "no data"
+msgstr ""
+
+#: ../lib/ogsf/GS2.c:1635
 #, fuzzy, c-format
 msgid "Raster map <%s> is outside of current region. Load failed."
 msgstr "خطأ: محاولة لتحديث خريطة ليست ضمن مجموعة الخرائط الحالية"
 
-#: ../lib/ogsf/GS2.c:1716 ../lib/ogsf/GS2.c:1722 ../lib/ogsf/GS2.c:1730
-#: ../lib/ogsf/GS2.c:1739 ../lib/ogsf/GS2.c:1747 ../lib/ogsf/GS2.c:1757
-#: ../lib/ogsf/GS2.c:1805
+#: ../lib/ogsf/GS2.c:1713 ../lib/ogsf/GS2.c:1719 ../lib/ogsf/GS2.c:1727
+#: ../lib/ogsf/GS2.c:1736 ../lib/ogsf/GS2.c:1744 ../lib/ogsf/GS2.c:1754
+#: ../lib/ogsf/GS2.c:1802
 msgid "GS_load_att_map(): Out of memory. Unable to load map"
 msgstr ""
 
-#: ../lib/ogsf/GS2.c:1833
+#: ../lib/ogsf/GS2.c:1830
 #, fuzzy
 msgid "Loading failed"
 msgstr "فشل الإتصال\n"
 
-#: ../lib/ogsf/GS2.c:1837
+#: ../lib/ogsf/GS2.c:1834
 msgid "Error finding range"
 msgstr ""
 

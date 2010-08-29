@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: grasslibs_el\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-06-02 22:02+0200\n"
+"POT-Creation-Date: 2010-08-29 12:20+0200\n"
 "PO-Revision-Date: 2008-10-16 11:25+0300\n"
 "Last-Translator: Vasilios Antoniou <antoniou_v@yahoo.gr>\n"
 "Language-Team: Bασίλειος Αντωνίου <grass-translations@lists.osgeo.org>\n"
@@ -1171,55 +1171,55 @@ msgstr "Αδυναμία to realloc buffer"
 msgid "CreateProcess() failed: error = %d"
 msgstr ""
 
-#: ../lib/gis/spawn.c:410
+#: ../lib/gis/spawn.c:411
 #, fuzzy, c-format
 msgid "G_spawn: unable to redirect descriptor %d"
 msgstr "G_spawn: αδυναμία αντιγραφής descriptor %d σε %d"
 
-#: ../lib/gis/spawn.c:418 ../lib/gis/spawn.c:603
+#: ../lib/gis/spawn.c:419 ../lib/gis/spawn.c:604
 #, c-format
 msgid "G_spawn: unable to open file %s"
 msgstr "G_spawn: αδυναμία ανοίγματος αρχείου %s"
 
-#: ../lib/gis/spawn.c:487 ../lib/gis/spawn.c:673
+#: ../lib/gis/spawn.c:488 ../lib/gis/spawn.c:674
 msgid "Unable to execute command"
 msgstr "Αδυναμία εκτέλεσης εντολής"
 
-#: ../lib/gis/spawn.c:512 ../lib/gis/spawn.c:520
+#: ../lib/gis/spawn.c:513 ../lib/gis/spawn.c:521
 #, c-format
 msgid "G_spawn: unable to restore signal %d"
 msgstr "G_spawn: αδυναμία αποκατάστασης σήματοςl %d"
 
-#: ../lib/gis/spawn.c:551
+#: ../lib/gis/spawn.c:552
 #, c-format
 msgid "G_spawn: unable to reset signal %d"
 msgstr "G_spawn: αδυναμία επαναφοράς %d"
 
-#: ../lib/gis/spawn.c:560
+#: ../lib/gis/spawn.c:561
 #, c-format
 msgid "G_spawn: unable to ignore signal %d"
 msgstr "G_spawn: αδυναμία αγνόησης σήματος %d"
 
-#: ../lib/gis/spawn.c:571
+#: ../lib/gis/spawn.c:572
 #, c-format
 msgid "G_spawn: unable to block signal %d"
 msgstr "G_spawn: αδυναμία μπλοκαρίσματος σήματος %d"
 
-#: ../lib/gis/spawn.c:579
+#: ../lib/gis/spawn.c:580
 #, c-format
 msgid "G_spawn: unable to unblock signal %d"
 msgstr "G_spawn: αδυναμία ξεμπλοκαρίσματος σήματος %d"
 
-#: ../lib/gis/spawn.c:608 ../lib/gis/spawn.c:617
+#: ../lib/gis/spawn.c:609 ../lib/gis/spawn.c:618
 #, c-format
 msgid "G_spawn: unable to duplicate descriptor %d to %d"
 msgstr "G_spawn: αδυναμία αντιγραφής descriptor %d σε %d"
 
-#: ../lib/gis/spawn.c:650
+#: ../lib/gis/spawn.c:651
 msgid "Unable to create a new process"
 msgstr "Αδυναμία δημιουργίας νέας επεξεργασίας"
 
-#: ../lib/gis/spawn.c:665
+#: ../lib/gis/spawn.c:666
 #, c-format
 msgid "Unable to change directory to %s"
 msgstr "Αδυναμία αλλαγής φακέλου σε %s"
@@ -1478,7 +1478,7 @@ msgstr "Το εξαγώμενο όνομα του διανυσματικού χάρτη <%s> δεν είναι επιτρεπτό"
 #: ../lib/ogsf/gsd_legend.c:238 ../lib/ogsf/Gs3.c:126 ../lib/ogsf/Gs3.c:201
 #: ../lib/ogsf/Gs3.c:286 ../lib/ogsf/Gs3.c:359 ../lib/ogsf/Gs3.c:475
 #: ../lib/ogsf/Gs3.c:572 ../lib/ogsf/Gs3.c:639 ../lib/ogsf/Gs3.c:696
-#: ../lib/ogsf/Gs3.c:766 ../lib/ogsf/Gs3.c:835 ../lib/ogsf/Gp3.c:54
+#: ../lib/ogsf/Gs3.c:767 ../lib/ogsf/Gs3.c:837 ../lib/ogsf/Gp3.c:54
 #, c-format
 msgid "Raster map <%s> not found"
 msgstr "Ο χάρτης raster  <%s> δεν βρέθηκε"
@@ -3434,59 +3434,54 @@ msgstr ""
 msgid "Unable to open select cursor: %s"
 msgstr "Αδυναμία ανοίγματος κέρσορα '%s'"
 
-#: ../lib/nviz/render.c:108
+#: ../lib/nviz/render.c:104
 msgid "Bad server connection"
 msgstr "Κακή σύνδεση με τον εξυπηρετητή"
 
-#: ../lib/nviz/render.c:117
+#: ../lib/nviz/render.c:113
 msgid "Unable to create rendering context"
 msgstr "Αδυναμία δημιουργίας rendering"
 
-#: ../lib/nviz/lights.c:144
+#: ../lib/nviz/lights.c:174
 msgid "Unable to define new light"
 msgstr "Αδυναμία εύρεσης νέου φωτός"
 
-#: ../lib/nviz/position.c:50
+#: ../lib/nviz/position.c:56
 msgid "Unable to set focus"
 msgstr "Αδυναμία focus"
 
-#: ../lib/nviz/nviz.c:76
+#: ../lib/nviz/nviz.c:103
 #, c-format
 msgid "Invalid color (%s), using \"white\" as default"
 msgstr "Εσφαλμένο χρώμα (%s), χρήση \"white\" ως προεπιλογή"
 
-#: ../lib/nviz/change_view.c:108
-#, c-format
-msgid "Invalid view position coordinates, using %f,%f"
-msgstr "Λάθος συντεταγμένες όψης, χρήση %f,%f"
-
-#: ../lib/nviz/map_obj.c:65
+#: ../lib/nviz/map_obj.c:59
 msgid "Maximum surfaces loaded!"
 msgstr "Φορτώθηκαν οι μέγιστες επιφάνειες!"
 
-#: ../lib/nviz/map_obj.c:94
+#: ../lib/nviz/map_obj.c:88
 msgid "Maximum vector line maps loaded!"
 msgstr "Φορτώθηκαν οι μέγιστοι διανυσματικοί χάρτες!"
 
-#: ../lib/nviz/map_obj.c:103 ../lib/nviz/map_obj.c:134
+#: ../lib/nviz/map_obj.c:97 ../lib/nviz/map_obj.c:128
 #, c-format
 msgid "Error loading vector map <%s>"
 msgstr "Σφάλμα κατά το άνοιγμα του διανυσματικού χάρτη <%s>"
 
-#: ../lib/nviz/map_obj.c:122
+#: ../lib/nviz/map_obj.c:116
 msgid "Maximum vector point maps loaded!"
 msgstr "Φορτώθηκαν ο μέγιστος αριθμός χαρτών σημείων!"
 
-#: ../lib/nviz/map_obj.c:149
+#: ../lib/nviz/map_obj.c:143
 msgid "Maximum volumes loaded!"
 msgstr "Φορτώθηκαν ο μέγιστος αριθμός όγκων!"
 
-#: ../lib/nviz/map_obj.c:158
+#: ../lib/nviz/map_obj.c:152
 #, c-format
 msgid "Error loading 3d raster map <%s>"
 msgstr "Σφάλμα κατά το άνοιγμα του 3Δ ραστερ χάρτη <%s>"
 
-#: ../lib/nviz/map_obj.c:166
+#: ../lib/nviz/map_obj.c:160
 msgid "Nviz_new_map_obj(): unsupported data type"
 msgstr "Nviz_new_map_obj(): ο τύπος δεδομένων δεν υποστηρίζεται"
 
@@ -4271,12 +4266,12 @@ msgstr ""
 "Το εύρος του χρωματικού πίνακα δεν ταιριάζει με τα δεδομένα (mincol=%d, "
 "maxcol=%d"
 
-#: ../lib/ogsf/Gs3.c:709 ../lib/ogsf/Gs3.c:780
+#: ../lib/ogsf/Gs3.c:709 ../lib/ogsf/Gs3.c:781
 #, c-format
 msgid "Translating colors from raster map <%s>..."
 msgstr "Μεταφράζονταις χρώματα για τον ράστερ χάρτη <%s>..."
 
-#: ../lib/ogsf/Gs3.c:1018
+#: ../lib/ogsf/Gs3.c:1020
 msgid "View not saved by this program,there may be some inconsistancies"
 msgstr ""
 "Η όψη δεν έχει σωθεί από το πρόγραμμα, μάλλον υπάρχουν κάποιες ασυνέχειες"
@@ -4301,23 +4296,33 @@ msgstr "Ο διανυσματικός χάρτης <%s> φόρτωσε (%d features)"
 msgid "Bitmap mismatch"
 msgstr "Το bitmap δεν ταιριάζει"
 
-#: ../lib/ogsf/GS2.c:1638
+#: ../lib/ogsf/GS2.c:1193
+#, c-format
+msgid "no category info"
+msgstr ""
+
+#: ../lib/ogsf/GS2.c:1212
+#, c-format
+msgid "no data"
+msgstr ""
+
+#: ../lib/ogsf/GS2.c:1635
 #, c-format
 msgid "Raster map <%s> is outside of current region. Load failed."
 msgstr ""
 "Ο ράστερ χάρτης <%s> είναι έξω από την τρέχουσα περιοχή. Η φόρτωση απέτυχε."
 
-#: ../lib/ogsf/GS2.c:1716 ../lib/ogsf/GS2.c:1722 ../lib/ogsf/GS2.c:1730
-#: ../lib/ogsf/GS2.c:1739 ../lib/ogsf/GS2.c:1747 ../lib/ogsf/GS2.c:1757
-#: ../lib/ogsf/GS2.c:1805
+#: ../lib/ogsf/GS2.c:1713 ../lib/ogsf/GS2.c:1719 ../lib/ogsf/GS2.c:1727
+#: ../lib/ogsf/GS2.c:1736 ../lib/ogsf/GS2.c:1744 ../lib/ogsf/GS2.c:1754
+#: ../lib/ogsf/GS2.c:1802
 msgid "GS_load_att_map(): Out of memory. Unable to load map"
 msgstr "GS_load_att_map(): Εκτός μνήμης. Αδυναμία φόρτωσης χάρτη"
 
-#: ../lib/ogsf/GS2.c:1833
+#: ../lib/ogsf/GS2.c:1830
 msgid "Loading failed"
 msgstr "Η φόρτωση απέτυχε"
 
-#: ../lib/ogsf/GS2.c:1837
+#: ../lib/ogsf/GS2.c:1834
 msgid "Error finding range"
 msgstr "Λάθος στην εύρεση εύρους"
 
@@ -5055,6 +5060,9 @@ msgstr ""
 #, c-format
 msgid "subgroup <%s> of group <%s> references the following raster maps\n"
 msgstr ""
+
+#~ msgid "Invalid view position coordinates, using %f,%f"
+#~ msgstr "Λάθος συντεταγμένες όψης, χρήση %f,%f"
 
 #~ msgid "Unknown Location"
 #~ msgstr "¶γνωστη περιοχή"
