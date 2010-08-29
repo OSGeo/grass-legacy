@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: grassmods_th\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-08-22 02:31+0200\n"
+"POT-Creation-Date: 2010-08-29 11:42+0200\n"
 "PO-Revision-Date: 2008-01-05 15:19+0700\n"
 "Last-Translator: man <mansv68@yahoo.co.th>\n"
 "Language-Team: Thai <grass-translations@lists.osgeo.org>\n"
@@ -13705,14 +13705,14 @@ msgid "GUI type"
 msgstr "To type"
 
 #: ../general/g.gui/main.c:44
-msgid "Default value: GRASS_GUI if defined otherwise tcltk"
+msgid "Default value: GRASS_GUI if defined, otherwise wxpython"
 msgstr ""
 
 #: ../general/g.gui/main.c:45
 msgid ""
-"tcltk;Tcl/Tk based GUI - GIS Manager (gis.m);oldtcltk;Old Tcl/Tk based GUI - "
-"Display Manager (d.m);wxpython;wxPython based next generation GUI;text;"
-"command line interface only"
+"wxpython;wxPython based GUI - wxGUI;tcltk;Tcl/Tk based GUI - GIS Manager "
+"(gis.m);oldtcltk;Old Tcl/Tk based GUI - Display Manager (d.m);text;command "
+"line interface only"
 msgstr ""
 
 #: ../general/g.gui/main.c:54
@@ -18643,44 +18643,44 @@ msgid ""
 msgstr ""
 "ข้อมูลที่นำเข้ามี ข้อมูล 3มิติ. สร้างแผนที่เชิงเส้น  2มิติ เท่านั้น, ใช้ -z เพื่อนำเข้าแผนที่เชิงเส้น 3มิติ"
 
-#: ../vector/v.in.ogr/geom.c:192 ../vector/v.in.ogr/geom.c:205
-#: ../vector/v.in.ogr/geom.c:229 ../vector/v.in.ogr/geom.c:271
+#: ../vector/v.in.ogr/geom.c:201 ../vector/v.in.ogr/geom.c:214
+#: ../vector/v.in.ogr/geom.c:238 ../vector/v.in.ogr/geom.c:280
 msgid "Skipping empty geometry feature"
 msgstr ""
 
-#: ../vector/v.in.ogr/geom.c:245
+#: ../vector/v.in.ogr/geom.c:254
 #, c-format
 msgid "Degenerate polygon ([%d] vertices)"
 msgstr "Degenerate polygon ([%d] จุดหัก)"
 
-#: ../vector/v.in.ogr/geom.c:250
+#: ../vector/v.in.ogr/geom.c:259
 #, c-format
 msgid "Area size [%.1e], area not imported"
 msgstr "ขนาดของ Area [%.1e], area ไม่ถูกนำเข้า"
 
-#: ../vector/v.in.ogr/geom.c:282
+#: ../vector/v.in.ogr/geom.c:293
 #, c-format
 msgid "Degenerate island ([%d] vertices)"
 msgstr "Degenerate island ([%d] จุดหัก)"
 
-#: ../vector/v.in.ogr/geom.c:287
+#: ../vector/v.in.ogr/geom.c:301
 #, c-format
 msgid "Island size [%.1e], island not imported"
 msgstr "ขนาดของ Island [%.1e], Island ไม่ถูกนำเข้า"
 
-#: ../vector/v.in.ogr/geom.c:308
+#: ../vector/v.in.ogr/geom.c:323
 msgid "Cannot calculate centroid"
 msgstr "ไม่สามารถ คำนวน จุดศูนย์ถว่วง ได้"
 
-#: ../vector/v.in.ogr/geom.c:339
+#: ../vector/v.in.ogr/geom.c:354
 msgid "No centroid written for polygon with 0 vertices"
 msgstr "ไม่มี จุดศูนย์ถว่วง สำหรับ รูปปิดที่ไม่มี จุดหัก"
 
-#: ../vector/v.in.ogr/geom.c:360
+#: ../vector/v.in.ogr/geom.c:375
 msgid "Cannot write part of geometry"
 msgstr "ไม่สามารถเขียนส่วนของ geometry"
 
-#: ../vector/v.in.ogr/geom.c:366
+#: ../vector/v.in.ogr/geom.c:381
 msgid "Unknown geometry type"
 msgstr "ไม่ทราบชนิดของ geometry"
 
@@ -26404,42 +26404,60 @@ msgid "Input coordinate file (omit to read from stdin)"
 msgstr "ใส่ไฟล์ ค่าพิกัด (ไม่ต้องรับค่าจาก stdin)"
 
 #: ../locale/scriptstrings/m.proj_to_translate.c:4
+#: ../locale/scriptstrings/m.proj_to_translate.c:6
+#: ../locale/scriptstrings/m.proj_to_translate.c:8
+#: ../locale/scriptstrings/m.proj_to_translate.c:18
+#: ../locale/scriptstrings/m.proj_to_translate.c:20
+#, fuzzy
+msgid "Files & format"
+msgstr "รูปแบบ"
+
+#: ../locale/scriptstrings/m.proj_to_translate.c:5
 msgid "Output coordinate file (omit to send to stdout)"
 msgstr "ไฟล์ค่าพิกัดผลลัพธ์  (ไม่ต้องส่งไปที่ stdout)"
 
-#: ../locale/scriptstrings/m.proj_to_translate.c:5
+#: ../locale/scriptstrings/m.proj_to_translate.c:7
 #: ../locale/scriptstrings/r.out.xyz_to_translate.c:5
 msgid "Field separator"
 msgstr "ตัวคั่น Field"
 
-#: ../locale/scriptstrings/m.proj_to_translate.c:6
+#: ../locale/scriptstrings/m.proj_to_translate.c:9
 msgid "Input projection parameters (PROJ.4 style)"
 msgstr "ใส่ค่าตัวแปร projection  (แบบ PROJ.4)"
 
-#: ../locale/scriptstrings/m.proj_to_translate.c:7
+#: ../locale/scriptstrings/m.proj_to_translate.c:10
+#: ../locale/scriptstrings/m.proj_to_translate.c:12
+#: ../locale/scriptstrings/m.proj_to_translate.c:14
+#: ../locale/scriptstrings/m.proj_to_translate.c:16
+#, fuzzy
+msgid "Projections"
+msgstr "Projecting..."
+
+#: ../locale/scriptstrings/m.proj_to_translate.c:11
 msgid "Output projection parameters (PROJ.4 style)"
 msgstr "ผลลัพธ์ตัวแปร  projection  (แบบ PROJ.4)"
 
-#: ../locale/scriptstrings/m.proj_to_translate.c:8
+#: ../locale/scriptstrings/m.proj_to_translate.c:13
 msgid "Use LL WGS84 as input and current location as output projection"
 msgstr "ใช้ LL WGS84 เป็นตัวนำเข้า และ ตำแหน่งปัจจุบันเป็น projection ผลลัพธ์"
 
-#: ../locale/scriptstrings/m.proj_to_translate.c:9
+#: ../locale/scriptstrings/m.proj_to_translate.c:15
 msgid "Use current location as input and LL WGS84 as output projection"
 msgstr "ใช้  ตำแหน่งปัจจุบันเป็น projection นำเข้า และ  LL WGS84 เป็นผลลัพธ์"
 
-#: ../locale/scriptstrings/m.proj_to_translate.c:10
+#: ../locale/scriptstrings/m.proj_to_translate.c:17
+#, fuzzy
 msgid ""
-"Output long/lat in decimal degrees or other projections with many decimal "
+"Output long/lat in decimal degrees, or other projections with many decimal "
 "places"
 msgstr "ผลลัพธ์ ลอง/แลต ในหน่วยองศาที่ม่ทศนิยม หรือ projection อย่างอื่น ที่มีทศนิยม"
 
-#: ../locale/scriptstrings/m.proj_to_translate.c:11
+#: ../locale/scriptstrings/m.proj_to_translate.c:19
 msgid ""
 "Script style output in CSV format respecting the field separator settings"
 msgstr ""
 
-#: ../locale/scriptstrings/m.proj_to_translate.c:12
+#: ../locale/scriptstrings/m.proj_to_translate.c:21
 msgid "Verbose mode (print projection parameters and filenames to stderr)"
 msgstr "โหมดรายละเอียด (แสดง ตัวแปร projection และ ชื่อไฟล์ ที่ stderr)"
 
