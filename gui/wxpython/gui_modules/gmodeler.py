@@ -157,10 +157,12 @@ class Model(object):
         
     def RemoveItem(self, item):
         """!Remove item from model
-
-        @return list of related items
+        
+        @return list of related items to remove/update
         """
         relList = list()
+        upList = list()
+        
         if not isinstance(item, ModelData):
             self.items.remove(item)
         
@@ -168,8 +170,11 @@ class Model(object):
             for rel in item.GetRelations():
                 relList.append(rel)
                 data = rel.GetData()
-                relList.append(data)
-        
+                if len(data.GetRelations()) < 2:
+                    relList.append(data)
+                else:
+                    upList.append(data)
+            
         elif isinstance(item, ModelData):
             for rel in item.GetRelations():
                 relList.append(rel)
@@ -178,7 +183,7 @@ class Model(object):
                 else:
                     relList.append(rel.GetFrom())
         
-        return relList
+        return relList, upList
     
     def FindAction(self, aId):
         """!Find action by id"""
@@ -418,12 +423,9 @@ class Model(object):
 
     def Update(self):
         """!Update model"""
-        for action in self.actions:
-            action.Update()
+        for item in self.items:
+            item.Update()
         
-        for data in self.data:
-            data.Update()
-
     def IsParameterized(self):
         """!Return True if model is parameterized"""
         if self.Parameterize():
@@ -1639,11 +1641,16 @@ class ModelCanvas(ogl.ShapeCanvas):
         for shape in diagram.GetShapeList():
             if not shape.Selected():
                 continue
-            remList = self.parent.GetModel().RemoveItem(shape)
+            remList, upList = self.parent.GetModel().RemoveItem(shape)
             shape.Select(False)
             diagram.RemoveShape(shape)
+            del shape
             for item in remList:
                 diagram.RemoveShape(item)
+                item.__del__()
+            
+            for item in upList:
+                item.Update()
         
         self.Refresh()
         
@@ -1655,6 +1662,9 @@ class ModelObject:
         self.isEnabled = True
         self.inBlock   = None
         
+    def __del__(self):
+        pass
+    
     def GetId(self):
         """!Get id"""
         return self.id
@@ -1901,9 +1911,10 @@ class ModelAction(ModelObject, ogl.RectangleShape):
     
     def FindData(self, name):
         """!Find data item by name"""
-        for d in self.data:
-            if name in d.GetName():
-                return d
+        for rel in self.GetRelations():
+            data = rel.GetData()
+            if name == rel.GetName() and name in data.GetName():
+                return data
         
         return None
 
@@ -1924,7 +1935,7 @@ class ModelAction(ModelObject, ogl.RectangleShape):
 class ModelData(ModelObject, ogl.EllipseShape):
     def __init__(self, parent, x, y, value = '', prompt = '', width = None, height = None):
         """Data item class
-
+        
         @param parent window parent
         @param x, y   position of the shape
         @param fname, tname list of parameter names from / to
@@ -1953,7 +1964,7 @@ class ModelData(ModelObject, ogl.EllipseShape):
             self.SetPen(wx.BLACK_PEN)
             self._setBrush()
             
-            self.AddText(value)
+            self._setText()
             
     def IsIntermediate(self):
         """!Checks if data item is intermediate"""
@@ -2078,7 +2089,10 @@ class ModelData(ModelObject, ogl.EllipseShape):
         for rel in self.GetRelations():
             name.append(rel.GetName())
         self.AddText('/'.join(name))
-        self.AddText(self.value)
+        if self.value:
+            self.AddText(self.value)
+        else:
+            self.AddText(_('<not defined>'))
         
     def Update(self):
         """!Update action"""
@@ -2497,6 +2511,10 @@ class ModelRelation(ogl.LineShape):
         
         ogl.LineShape.__init__(self)
     
+    def __del__(self):
+        self.fromShape.rels.remove(self)
+        self.toShape.rels.remove(self)
+
     def GetFrom(self):
         """!Get id of 'from' shape"""
         return self.fromShape
@@ -2504,7 +2522,7 @@ class ModelRelation(ogl.LineShape):
     def GetTo(self):
         """!Get id of 'to' shape"""
         return self.toShape
-
+    
     def GetData(self):
         """!Get related ModelData instance
 
