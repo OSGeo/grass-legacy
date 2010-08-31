@@ -320,7 +320,7 @@ msgstr "Pointer"
 
 #: ../gui/wxpython/icons/icon.py:149
 msgid "Zoom in"
-msgstr ""
+msgstr "ขยายเข้า"
 
 #: ../gui/wxpython/icons/icon.py:150
 msgid "Drag or click mouse to zoom"
@@ -328,7 +328,7 @@ msgstr "ลาก หรือ กด เม้าส์ เพิ่อขย�
 
 #: ../gui/wxpython/icons/icon.py:152
 msgid "Zoom out"
-msgstr "ย่อ"
+msgstr "ขยายออก"
 
 #: ../gui/wxpython/icons/icon.py:153
 msgid "Drag or click mouse to unzoom"
@@ -572,7 +572,7 @@ msgstr ""
 
 #: ../gui/wxpython/icons/icon.py:269
 msgid "Move vertex"
-msgstr "ย้าย vertex"
+msgstr "ย้าย จุด"
 
 #: ../gui/wxpython/icons/icon.py:272
 msgid "Remove vertex"
@@ -958,7 +958,7 @@ msgstr ""
 
 #: ../gui/wxpython/menustrings.py:6 ../gui/wxpython/menustrings.py:809
 msgid "Open"
-msgstr ""
+msgstr "เปิด"
 
 #: ../gui/wxpython/menustrings.py:7
 msgid "Load workspace from file"
@@ -1731,7 +1731,7 @@ msgstr ""
 
 #: ../gui/wxpython/menustrings.py:195
 msgid "Region"
-msgstr "ขอบเขต"
+msgstr ""
 
 #: ../gui/wxpython/menustrings.py:196
 msgid "Display region"
@@ -1849,7 +1849,7 @@ msgstr "การกำหนดค่า  location's projection"
 
 #: ../gui/wxpython/menustrings.py:226
 msgid "Convert coordinates"
-msgstr "แปลงพิกัด"
+msgstr ""
 
 #: ../gui/wxpython/menustrings.py:227
 msgid "Convert coordinates from one projection to another (cs2cs frontend)."
@@ -2122,7 +2122,7 @@ msgstr ""
 
 #: ../gui/wxpython/menustrings.py:288
 msgid "Neighborhood analysis"
-msgstr "การวิเคราะห์พื้นที่ข้างเคียง"
+msgstr "การวเคราะหพนทขางเคยง"
 
 #: ../gui/wxpython/menustrings.py:289
 msgid "Moving window"
@@ -2214,7 +2214,7 @@ msgstr ""
 
 #: ../gui/wxpython/menustrings.py:307
 msgid "Terrain analysis"
-msgstr "Terrain analysis"
+msgstr ""
 
 #: ../gui/wxpython/menustrings.py:308
 msgid "Cumulative movement costs"
@@ -2291,7 +2291,7 @@ msgstr "สร้าง ภาพ ด้วยลวดลาย จากแผ
 
 #: ../gui/wxpython/menustrings.py:322
 msgid "Visibility"
-msgstr "การมองเห็น"
+msgstr "สามารถมองเห็น"
 
 #: ../gui/wxpython/menustrings.py:323
 msgid "Line-of-sight raster analysis program."
@@ -2317,7 +2317,7 @@ msgstr ""
 
 #: ../gui/wxpython/menustrings.py:328
 msgid "Transform features"
-msgstr "ข้อมูล Transform"
+msgstr "ขอมล Transform"
 
 #: ../gui/wxpython/menustrings.py:329
 msgid "Clump"
@@ -2677,7 +2677,7 @@ msgstr ""
 
 #: ../gui/wxpython/menustrings.py:407
 msgid "Change category values and labels"
-msgstr "เปลี่ยน ค่า หมวดหมู่ และ แถบข้อความ"
+msgstr "เปลยน คา หมวดหม และ แถบขอความ"
 
 #: ../gui/wxpython/menustrings.py:408
 msgid "Interactively edit category values"
@@ -2749,7 +2749,7 @@ msgstr "Rescales histogram equalized ค่าช่วงของหมวด�
 
 #: ../gui/wxpython/menustrings.py:424
 msgid "Concentric circles"
-msgstr "Concentric circles"
+msgstr ""
 
 #: ../gui/wxpython/menustrings.py:425
 msgid "Creates a raster map containing concentric rings around a given point."
@@ -3389,11 +3389,11 @@ msgstr ""
 
 #: ../gui/wxpython/menustrings.py:569
 msgid "Network analysis"
-msgstr "วิเคราะห์โครงข่าย"
+msgstr "วเคราะหโครงขาย"
 
 #: ../gui/wxpython/menustrings.py:570
 msgid "Network maintenance"
-msgstr "การบำรุงรักษา Network"
+msgstr "การบำรงรกษา Network"
 
 #: ../gui/wxpython/menustrings.py:571
 #, fuzzy
@@ -3581,7 +3581,7 @@ msgstr "สร้างพื้นที่จากจุด"
 
 #: ../gui/wxpython/menustrings.py:617
 msgid "Convex hull"
-msgstr "Convex hull"
+msgstr ""
 
 #: ../gui/wxpython/menustrings.py:618
 msgid "Produces a convex hull for a given vector map."
@@ -3708,7 +3708,7 @@ msgstr "ตัวอย่าง แผนที่เชิงภาพ ที�
 
 #: ../gui/wxpython/menustrings.py:647
 msgid "Reports and statistics"
-msgstr "รายงานและสถิติ"
+msgstr "รายงานและสถต"
 
 #: ../gui/wxpython/menustrings.py:648
 msgid "Basic vector metadata"
@@ -3817,7 +3817,7 @@ msgstr "ต่อภาพตั้งแต่ 4 ภาพ และ ขยา�
 
 #: ../gui/wxpython/menustrings.py:672
 msgid "Manage image colors"
-msgstr "จัดการสีของภาพ"
+msgstr ""
 
 #: ../gui/wxpython/menustrings.py:673
 msgid "Color balance for RGB"
@@ -3872,7 +3872,6 @@ msgstr "Brovey sharpening"
 msgid ""
 "Brovey transform to merge multispectral and high-res panchromatic channels"
 msgstr ""
-"การแปลงแบบ Brovey เพื่อรวม  multispectral และ high-res panchromatic channels"
 
 #: ../gui/wxpython/menustrings.py:685
 msgid "Classify image"
@@ -3961,7 +3960,7 @@ msgstr "Matrix filter ของ แผนที่เชิงภาพ"
 #: ../gui/wxpython/menustrings.py:703
 #: ../gui/wxpython/gui_modules/layertree.py:371
 msgid "Histogram"
-msgstr ""
+msgstr "Histogram"
 
 #: ../gui/wxpython/menustrings.py:704
 msgid "Generate histogram of image"
@@ -3987,7 +3986,7 @@ msgstr "Tasseled Cap (Kauth Thomas) การแปลงสำหรับข�
 
 #: ../gui/wxpython/menustrings.py:709
 msgid "Transform image"
-msgstr "การแปลง  ภาพ"
+msgstr ""
 
 #: ../gui/wxpython/menustrings.py:710
 msgid "Canonical correlation"
@@ -4682,7 +4681,7 @@ msgstr ""
 
 #: ../gui/wxpython/gui_modules/mcalc_builder.py:174
 msgid "NOT"
-msgstr ""
+msgstr "NOT"
 
 #: ../gui/wxpython/gui_modules/mcalc_builder.py:176
 msgid "bitwise AND"
@@ -4805,7 +4804,7 @@ msgstr "ชั้นข้อมูล"
 #: ../gui/wxpython/gui_modules/vdigit.py:2001
 #: ../gui/wxpython/gui_modules/vdigit.py:2427
 msgid "Category"
-msgstr ""
+msgstr "หมวด"
 
 #: ../gui/wxpython/gui_modules/dbm_dialogs.py:531
 msgid "Submit"
@@ -5134,7 +5133,7 @@ msgstr ""
 
 #: ../gui/wxpython/gui_modules/ghelp.py:562
 msgid "Copyright"
-msgstr ""
+msgstr "สำเนาถูกต้อง"
 
 #: ../gui/wxpython/gui_modules/ghelp.py:563
 msgid "License"
@@ -5594,11 +5593,11 @@ msgstr ""
 
 #: ../gui/wxpython/gui_modules/location_wizard.py:2415
 msgid "Top"
-msgstr ""
+msgstr "บน"
 
 #: ../gui/wxpython/gui_modules/location_wizard.py:2423
 msgid "Bottom"
-msgstr ""
+msgstr "ล่าง"
 
 #: ../gui/wxpython/gui_modules/location_wizard.py:2431
 msgid "T-B resolution"
@@ -5610,7 +5609,7 @@ msgstr ""
 
 #: ../gui/wxpython/gui_modules/location_wizard.py:2502
 msgid "West"
-msgstr ""
+msgstr "ตก"
 
 #: ../gui/wxpython/gui_modules/location_wizard.py:2522
 msgid "East"
@@ -5618,15 +5617,15 @@ msgstr ""
 
 #: ../gui/wxpython/gui_modules/location_wizard.py:2531
 msgid "South"
-msgstr ""
+msgstr "ใต้"
 
 #: ../gui/wxpython/gui_modules/location_wizard.py:2535
 msgid "N-S resolution"
-msgstr ""
+msgstr "ความละเอียดแนว เหนือ-ใต้"
 
 #: ../gui/wxpython/gui_modules/location_wizard.py:2543
 msgid "E-W resolution"
-msgstr ""
+msgstr "ความละเอียดแนว ออก-ตก"
 
 #: ../gui/wxpython/gui_modules/location_wizard.py:2621
 #, python-format
@@ -5912,7 +5911,7 @@ msgstr ""
 
 #: ../gui/wxpython/gui_modules/nviz_tools.py:209
 msgid "Reset"
-msgstr "ตั้งค่าใหม่"
+msgstr "ล้างค่า"
 
 #: ../gui/wxpython/gui_modules/nviz_tools.py:210
 msgid "Reset to default view"
@@ -5992,7 +5991,7 @@ msgstr ""
 #: ../gui/wxpython/gui_modules/nviz_tools.py:359
 #: ../gui/wxpython/gui_modules/nviz_tools.py:1037
 msgid "map"
-msgstr ""
+msgstr "แผนที่"
 
 #: ../gui/wxpython/gui_modules/nviz_tools.py:362
 #: ../gui/wxpython/gui_modules/nviz_tools.py:1042
@@ -6012,7 +6011,7 @@ msgstr ""
 #: ../gui/wxpython/gui_modules/nviz_tools.py:434
 #: ../gui/wxpython/gui_modules/nviz_tools.py:921
 msgid "Mode:"
-msgstr ""
+msgstr "วิธี:"
 
 #: ../gui/wxpython/gui_modules/nviz_tools.py:437
 msgid "coarse"
@@ -6092,9 +6091,8 @@ msgid "by color"
 msgstr ""
 
 #: ../gui/wxpython/gui_modules/nviz_tools.py:577
-#, fuzzy
 msgid "Position"
-msgstr "By_position"
+msgstr "ตำแหน่ง"
 
 #: ../gui/wxpython/gui_modules/nviz_tools.py:628
 msgid "Vector map"
@@ -6494,11 +6492,11 @@ msgstr ""
 
 #: ../gui/wxpython/gui_modules/gselect.py:923
 msgid "Protocol"
-msgstr ""
+msgstr "ระเบียบการ"
 
 #: ../gui/wxpython/gui_modules/gselect.py:927
 msgid "Source type"
-msgstr ""
+msgstr "ชนิดของแหล่งข้อมูล"
 
 #: ../gui/wxpython/gui_modules/gselect.py:941
 #: ../gui/wxpython/gui_modules/gselect.py:1077
@@ -6524,7 +6522,7 @@ msgstr ""
 
 #: ../gui/wxpython/gui_modules/gselect.py:996
 msgid "Database:"
-msgstr ""
+msgstr "ฐานข้อมูล:"
 
 #: ../gui/wxpython/gui_modules/gselect.py:999
 msgid "Protocol:"
@@ -6748,11 +6746,11 @@ msgstr ""
 
 #: ../gui/wxpython/gui_modules/vdigit.py:1486
 msgid "Manual entry"
-msgstr ""
+msgstr "กรอก"
 
 #: ../gui/wxpython/gui_modules/vdigit.py:1486
 msgid "No category"
-msgstr ""
+msgstr "ไม่มีหมวด"
 
 #: ../gui/wxpython/gui_modules/vdigit.py:1499
 msgid "Digitize new area"
@@ -6806,7 +6804,7 @@ msgstr "เส้น"
 
 #: ../gui/wxpython/gui_modules/vdigit.py:1640
 msgid "Boundary (no area)"
-msgstr "ขอบเขต (ไม่มีพื้นที่)"
+msgstr "ขอบเขต (ไม่มี พื้นที่)"
 
 #: ../gui/wxpython/gui_modules/vdigit.py:1641
 msgid "Boundary (one area)"
@@ -6818,15 +6816,15 @@ msgstr ""
 
 #: ../gui/wxpython/gui_modules/vdigit.py:1643
 msgid "Centroid (in area)"
-msgstr "จุดกึ่งกลาง (ในพื้นที่)"
+msgstr "จุดกลางรูป (ในรูป)"
 
 #: ../gui/wxpython/gui_modules/vdigit.py:1644
 msgid "Centroid (outside area)"
-msgstr "จุดกึ่งกลาง (นอกพื้นที่)"
+msgstr "จุดกลางรูป (นอกรูป)"
 
 #: ../gui/wxpython/gui_modules/vdigit.py:1645
 msgid "Centroid (duplicate in area)"
-msgstr "จุดกึ่งกลาง (ซ้ำในพื้นที่)"
+msgstr "จุดกลางรูป (ซำ้ในรูป)"
 
 #: ../gui/wxpython/gui_modules/vdigit.py:1646
 msgid "Node (one line)"
@@ -6901,7 +6899,7 @@ msgstr ""
 #: ../gui/wxpython/gui_modules/gmodeler.py:3814
 #: ../gui/wxpython/gui_modules/gmodeler.py:4163
 msgid "Delete all"
-msgstr ""
+msgstr "ลบทั้งหมด"
 
 #: ../gui/wxpython/gui_modules/vdigit.py:2159
 #: ../gui/wxpython/gui_modules/gmodeler.py:3820
@@ -6930,7 +6928,7 @@ msgstr ""
 
 #: ../gui/wxpython/gui_modules/vdigit.py:2483
 msgid "Step"
-msgstr ""
+msgstr "ขั้น"
 
 #: ../gui/wxpython/gui_modules/vdigit.py:2516
 msgid "List of duplicates"
@@ -7957,7 +7955,7 @@ msgstr "ตาราง"
 
 #: ../gui/wxpython/gui_modules/dbm.py:714
 msgid "SQL Query"
-msgstr ""
+msgstr "การค้นหาแบบ SQL"
 
 #: ../gui/wxpython/gui_modules/dbm.py:734
 msgid "Apply SELECT statement and reload data records"
@@ -7996,9 +7994,8 @@ msgid "Add"
 msgstr ""
 
 #: ../gui/wxpython/gui_modules/dbm.py:942
-#, fuzzy
 msgid "To"
-msgstr "เครื่องมือ"
+msgstr "ถึง"
 
 #: ../gui/wxpython/gui_modules/dbm.py:952
 msgid "&Rename"
@@ -8034,7 +8031,7 @@ msgstr ""
 #: ../gui/wxpython/gui_modules/gdialogs.py:863
 #: ../gui/wxpython/gui_modules/gdialogs.py:1304
 msgid "Select all"
-msgstr ""
+msgstr "เลือกทั้งหมด"
 
 #: ../gui/wxpython/gui_modules/dbm.py:1133
 #: ../gui/wxpython/gui_modules/gdialogs.py:865
@@ -8057,7 +8054,7 @@ msgstr ""
 
 #: ../gui/wxpython/gui_modules/dbm.py:1141
 msgid "Delete selected features"
-msgstr ""
+msgstr "ลบข้อมูลที่เลือก"
 
 #: ../gui/wxpython/gui_modules/dbm.py:1227
 #, python-format
@@ -8182,7 +8179,7 @@ msgstr ""
 #: ../gui/wxpython/gui_modules/dbm.py:2397
 #: ../gui/wxpython/gui_modules/dbm.py:2654
 msgid "Driver"
-msgstr ""
+msgstr "รูปแบบ"
 
 #: ../gui/wxpython/gui_modules/dbm.py:2283
 msgid "Key"
@@ -8202,7 +8199,7 @@ msgstr ""
 #: ../gui/wxpython/gui_modules/dbm.py:2445
 #: ../gui/wxpython/gui_modules/dbm.py:2672
 msgid "Key column"
-msgstr ""
+msgstr "ช่องหลัก"
 
 #: ../gui/wxpython/gui_modules/dbm.py:2418
 msgid "Insert record for each category into table"
@@ -8389,11 +8386,11 @@ msgstr ""
 
 #: ../gui/wxpython/gui_modules/gdialogs.py:785
 msgid "Mapset:"
-msgstr ""
+msgstr "ชุดแผนที่:"
 
 #: ../gui/wxpython/gui_modules/gdialogs.py:795
 msgid "Filter:"
-msgstr ""
+msgstr "ตัวกรอง:"
 
 #: ../gui/wxpython/gui_modules/gdialogs.py:807
 msgid "List of maps:"
@@ -8691,7 +8688,7 @@ msgstr "สีเส้นกริด"
 
 #: ../gui/wxpython/gui_modules/profile.py:1344
 msgid "Show grid"
-msgstr ""
+msgstr "แสดง กริด"
 
 #: ../gui/wxpython/gui_modules/profile.py:1350
 msgid "Legend font size"
@@ -8736,7 +8733,7 @@ msgstr ""
 
 #: ../gui/wxpython/gui_modules/layertree.py:309
 msgid "Stop editing"
-msgstr ""
+msgstr "หยุดการแก้ไข"
 
 #: ../gui/wxpython/gui_modules/layertree.py:320
 msgid "Use as background vector map"
@@ -8968,7 +8965,7 @@ msgstr ""
 
 #: ../gui/wxpython/gui_modules/globalvar.py:120
 msgid "Coordinates"
-msgstr ""
+msgstr "ค่าพิกัด"
 
 #: ../gui/wxpython/gui_modules/globalvar.py:121
 msgid "Extent"
@@ -9132,11 +9129,11 @@ msgstr ""
 
 #: ../gui/wxpython/gui_modules/preferences.py:603
 msgid "Collapse all"
-msgstr ""
+msgstr "หุบทั้หมด"
 
 #: ../gui/wxpython/gui_modules/preferences.py:604
 msgid "Expand all"
-msgstr ""
+msgstr "ขยายทั้หมด"
 
 #: ../gui/wxpython/gui_modules/preferences.py:606
 msgid "Display selected"
@@ -9243,7 +9240,7 @@ msgstr ""
 
 #: ../gui/wxpython/gui_modules/preferences.py:1084
 msgid "General settings"
-msgstr ""
+msgstr "สร้างข้อกำหนด"
 
 #: ../gui/wxpython/gui_modules/preferences.py:1095
 msgid "Element list:"
@@ -9473,7 +9470,7 @@ msgstr ""
 
 #: ../gui/wxpython/gui_modules/preferences.py:2285
 msgid "Owner"
-msgstr ""
+msgstr "เจ้าของ"
 
 #: ../gui/wxpython/gui_modules/georect.py:113
 msgid "Setup for georectification"
@@ -9696,11 +9693,11 @@ msgstr ""
 
 #: ../gui/wxpython/gui_modules/georect.py:1611
 msgid "X:"
-msgstr ""
+msgstr "X:"
 
 #: ../gui/wxpython/gui_modules/georect.py:1612
 msgid "Y:"
-msgstr ""
+msgstr "Y:"
 
 #: ../gui/wxpython/gui_modules/georect.py:1613
 msgid "E:"
@@ -9708,7 +9705,7 @@ msgstr ""
 
 #: ../gui/wxpython/gui_modules/georect.py:1614
 msgid "N:"
-msgstr ""
+msgstr "N:"
 
 #: ../gui/wxpython/gui_modules/georect.py:1700
 msgid "Symbol settings"
@@ -9969,9 +9966,6 @@ msgstr ""
 #~ msgid "Raster"
 #~ msgstr "แผนที่เชิงภาพ"
 
-#~ msgid "Create a MASK for limiting raster operation"
-#~ msgstr "สร้าง MASK สำหรับจำกัดการกระทำกับแผนที่เชิงภาพ"
-
 #~ msgid ""
 #~ "Calculates cast shadow areas from sun position and DEM. Either A: exact "
 #~ "sun position is specified, or B: date/time to calculate the sun position "
@@ -10039,9 +10033,6 @@ msgstr ""
 #~ msgid "width:"
 #~ msgstr "กว้าง:"
 
-#~ msgid "Default"
-#~ msgstr "ค่าตั้งต้น"
-
 #, fuzzy
 #~ msgid "Vector map <%s> is 3D"
 #~ msgstr "แผนที่เชิงภาพไม่ใช่ 3มิติ"
@@ -10049,3 +10040,6 @@ msgstr ""
 #, fuzzy
 #~ msgid "Vector map <%s> is 2D"
 #~ msgstr "แผนที่เชิงภาพไม่ใช่ 3มิติ"
+
+#~ msgid "Create mapset"
+#~ msgstr "สร้างชุดแผนที่"
