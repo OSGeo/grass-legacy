@@ -231,7 +231,7 @@ project() {
 
 	message 3 "echo \"$p_x1 $p_y1\" | $CS2CS -f \"%.8f\" $p_source_proj +to $p_dest_proj"
 
-	answer=`echo "$p_x1 $p_y1" | $CS2CS -f "%.8f" $p_source_proj +to $p_dest_proj`
+	answer=`echo "$p_x1 $p_y1" | eval $CS2CS -f "%.8f" $(echo $p_source_proj) +to $(echo $p_dest_proj)`
 
 	if [ $? -ne 0 ] ; then
 	    g.message -e message="Problem running $CS2CS. <$answer>"
