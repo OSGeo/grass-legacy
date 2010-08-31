@@ -456,7 +456,8 @@ if [ $CREATE_POINTS -eq 1 ] ; then
 	cp "${TEMPFILE}.base" "${TEMPFILE}.P_base"
     else
 	g.message "Attempting waypoint projection transform with cs2cs..."
-	cs2cs -f %.7f $IN_PROJ +to $OUT_PROJ < "${TEMPFILE}.base" > "${TEMPFILE}.P_base"
+	eval cs2cs -f %.7f $IN_PROJ +to `echo $OUT_PROJ` \
+	   < "${TEMPFILE}.base" > "${TEMPFILE}.P_base"
 	EXITCODE=$?
 	# check if transform REALLY worked (e.g. grid file not found)
 	BAD_PTS="`grep -c "^\*" "${TEMPFILE}.P_base"`"
@@ -664,7 +665,8 @@ else # CREATE_LINES
 	    $1!="L" { printf(" %.7f %.7f\n", $1, $2) } END {;}' > "${TEMPFILE}.P_base"
     else
 	g.message "Attempting waypoint projection transform with cs2cs..."
-	cs2cs -tL -f %.7f $IN_PROJ +to $OUT_PROJ < "${TEMPFILE}.base" > "${TEMPFILE}.P_mid"
+	eval cs2cs -tL -f %.7f $IN_PROJ +to `echo $OUT_PROJ` \
+	   < "${TEMPFILE}.base" > "${TEMPFILE}.P_mid"
 	EXITCODE=$?
 	# check if transform REALLY worked (e.g. grid file not found)
 	BAD_PTS="`grep -c "^\*" "${TEMPFILE}.P_mid"`"
