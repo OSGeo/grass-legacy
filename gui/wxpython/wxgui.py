@@ -120,6 +120,7 @@ class GMFrame(wx.Frame):
         self.workspaceFile = workspace    # workspace file
         self.workspaceChanged = False     # track changes in workspace
         self.georectifying = None         # reference to GCP class or None
+        self.gcpmanagement = None         # reference to GCP class or None
         # list of open dialogs
         self.dialogs        = dict()
         self.dialogs['preferences'] = None
@@ -251,6 +252,12 @@ class GMFrame(wx.Frame):
         """!Launch georectifier module
         """
         georect.GeorectWizard(self)
+
+    def OnGCPManager(self, event):
+        """!Launch georectifier module
+        """
+        import gui_modules.gcpmanager as gcpmanager
+        gcpmanager.GCPWizard(self)
 
     def OnGModeler(self, event):
         """!Launch Graphical Modeler"""

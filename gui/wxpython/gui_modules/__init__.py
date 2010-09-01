@@ -6,6 +6,8 @@ all = [
     "debug.py",
     "disp_print.py",
     "gcmd.py",
+    "gcpmanager.py",
+    "gcpmapdisp.py",
     "gdialogs.py",
     "georect.py",
     "ghelp.py"

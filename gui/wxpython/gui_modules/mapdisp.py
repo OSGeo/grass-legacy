@@ -143,6 +143,7 @@ class MapFrame(wx.Frame):
         self.toolbars = { 'map' : None,
                           'vdigit' : None,
                           'georect' : None, 
+                          'gcpdisp' : None, 
                           'nviz' : None }
         for toolb in toolbars:
             self.AddToolbar(toolb)
@@ -303,6 +304,7 @@ class MapFrame(wx.Frame):
         Currently known toolbars are:
          - 'map'     - basic map toolbar
          - 'vdigit'  - vector digitizer
+         - 'gcpdisp' - GCP Manager Display
          - 'georect' - georectifier
          - 'nviz'    - 3D view mode
         """
@@ -507,7 +509,7 @@ class MapFrame(wx.Frame):
         """
         if self._layerManager and \
                 self._layerManager.georectifying:
-            # in georectifying session; display used to get get geographic
+            # in georectifying session; display used to get geographic
             # coordinates for GCPs
             self.OnPointer(event)
         else:
