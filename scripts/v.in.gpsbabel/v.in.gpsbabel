@@ -563,7 +563,7 @@ else # CREATE_LINES
     if [ "$IN_PROJ" = "$OUT_PROJ" ] || [ $KEEP_WGS84 -eq 1 ] ; then
 	g.message "No projection transformation performed" 
 	cat "${TEMPFILE}.base" | awk 'BEGIN {;} $1=="L" { print } ; \
-	    $1!="L" { " %s %s\n", $1, $2) } END {;}' > "${TEMPFILE}.P_base"
+	    $1!="L" { printf(" %s %s\n", $1, $2) } END {;}' > "${TEMPFILE}.P_base"
     else
 	g.message "Attempting waypoint projection transform with cs2cs" 
 	cs2cs -tL -f %.7f $IN_PROJ +to $OUT_PROJ < "${TEMPFILE}.base" > "${TEMPFILE}.P_mid"
