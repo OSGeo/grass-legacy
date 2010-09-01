@@ -207,19 +207,21 @@ g.remove MASK > /dev/null
 if test -f $LOCATION/cell/$USERMASK
 then
   g.message "Using user mask while interpolating"
-  RST_CMD="v.surf.rst zcol=value tension=$GIS_OPT_TENSION smooth=$GIS_OPT_SMOOTH maskmap=$USERMASK"
+#  RST_CMD="v.surf.rst zcol=value tension=$GIS_OPT_TENSION smooth=$GIS_OPT_SMOOTH maskmap=$USERMASK"
+  RST_CMD="v.surf.bspline colum=value layer=1 sie=800 sin=800 lambda_i=1 method=bicubic"
 else
-  RST_CMD="v.surf.rst zcol=value tension=$GIS_OPT_TENSION smooth=$GIS_OPT_SMOOTH"
+#  RST_CMD="v.surf.rst zcol=value tension=$GIS_OPT_TENSION smooth=$GIS_OPT_SMOOTH"
+  RST_CMD="v.surf.bspline colum=value layer=1 sie=800 sin=800 lambda_i=1 method=bicubic"
 fi
 
 SEGMAX=600
 if [ $POINTSNUMBER  -ge $SEGMAX ] ; then
   g.message "Using segmentation for interpolation..."
-  $RST_CMD input=${VECTTMP} elev=${TMP1}_filled #2> /dev/null
+  $RST_CMD input=${VECTTMP} raster=${TMP1}_filled #2> /dev/null
 else
   #if less than $SEGMAX points, use no segmentation for speedup:
   g.message "Using no segmentation for interpolation as not needed..."
-  $RST_CMD input=${VECTTMP} elev=${TMP1}_filled segmax=$SEGMAX #2> /dev/null
+  $RST_CMD input=${VECTTMP} raster=${TMP1}_filled #segmax=$SEGMAX #2> /dev/null
 fi
 
 g.message "Note: Above warnings may be ignored."
