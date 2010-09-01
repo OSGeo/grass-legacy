@@ -1,4 +1,4 @@
-#!/bin/sh -x
+#!/bin/sh
 
 ############################################################################
 #
@@ -101,10 +101,7 @@ fi
   
 v.out.ogr --q $GIS_OPT_INPUT dsn="$GIS_OPT_DSN" $OLAYER format=$GIS_OPT_FORMAT type=point
 if [ $? -ne 0 ] ;  then
-   g.message -w "Trying ogr2ogr on table"
-   database="`db.connect -p | grep \"^database\" | cut -d':' -f2`"
-   echo $database
-   ogr2ogr -f "$GIS_OPT_FORMAT" "$GIS_OPT_DSN" "$database" `basename $GIS_OPT_DSN`
+   exit 1
 fi
 
 if [ "$GIS_OPT_FORMAT" = "ESRI_Shapefile" ] ; then
