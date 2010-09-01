@@ -84,6 +84,8 @@ fi
 rm -f "$TMPDIR"
 mkdir "$TMPDIR"
 
+#TODO: combine all these checks into a single for loop
+
 # check if we have the svn client
 if [ ! -x "`which svn`" ] ; then
     g.message -e "svn client required. Please install Subversion first."
@@ -92,7 +94,13 @@ fi
 
 # check if we have the make program
 if [ ! -x "`which make`" ] ; then
-    g.message -e "'make' program required. Please install first."
+    g.message -e "The 'make' program is required. Please install first."
+    exit 1
+fi
+
+# check if we have the "install" program
+if [ ! -x "`which install`" ] ; then
+    g.message -e "The 'install' program is required. Please install first."
     exit 1
 fi
 
