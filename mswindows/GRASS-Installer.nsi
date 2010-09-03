@@ -31,17 +31,17 @@ SetCompressorDictSize 64
 
 ;Version variables
 
-!define RELEASE64_VERSION_NUMBER "6.4.0"
-!define RELEASE64_SVN_REVISION "36599"
-!define RELEASE64_BINARY_REVISION "1"
-!define RELEASE64_GRASS_COMMAND "grass64"
-!define RELEASE64_GRASS_BASE "GRASS-64"
+!define RELEASE_VERSION_NUMBER "6.4.0"
+!define RELEASE_SVN_REVISION "36599"
+!define RELEASE_BINARY_REVISION "1"
+!define RELEASE_GRASS_COMMAND "grass64"
+!define RELEASE_GRASS_BASE "GRASS-64"
 
-!define DEV64_VERSION_NUMBER "6.4.SVN"
-!define DEV64_SVN_REVISION "36599"
-!define DEV64_BINARY_REVISION "1"
-!define DEV64_GRASS_COMMAND "grass64svn"
-!define DEV64_GRASS_BASE "GRASS-64-SVN"
+!define DEVEL_VERSION_NUMBER "6.4.SVN"
+!define DEVEL_SVN_REVISION "36599"
+!define DEVEL_BINARY_REVISION "1"
+!define DEVEL_GRASS_COMMAND "grass64svn"
+!define DEVEL_GRASS_BASE "GRASS-64-SVN"
 
 ;----------------------------------------------------------------------------------------------------------------------------
 
@@ -59,25 +59,25 @@ SetCompressorDictSize 64
 ;Set the installer variables, depending on the selected version to build
 
 !if ${INSTALLER_TYPE} == "Release"
-	!define VERSION_NUMBER "${RELEASE64_VERSION_NUMBER}"
-	!define SVN_REVISION "${RELEASE64_SVN_REVISION}"
-	!define BINARY_REVISION "${RELEASE64_BINARY_REVISION}"
-	!define GRASS_COMMAND "${RELEASE64_GRASS_COMMAND}"
-	!define GRASS_BASE "${RELEASE64_GRASS_BASE}"
+	!define VERSION_NUMBER "${RELEASE_VERSION_NUMBER}"
+	!define SVN_REVISION "${RELEASE_SVN_REVISION}"
+	!define BINARY_REVISION "${RELEASE_BINARY_REVISION}"
+	!define GRASS_COMMAND "${RELEASE_GRASS_COMMAND}"
+	!define GRASS_BASE "${RELEASE_GRASS_BASE}"
 	!define INSTALLER_NAME "WinGRASS-${VERSION_NUMBER}-${BINARY_REVISION}-Setup.exe"
 	!define DISPLAYED_NAME "GRASS ${VERSION_NUMBER}-${BINARY_REVISION}"
 	!define CHECK_INSTALL_NAME "GRASS"
 	!define PACKAGE_FOLDER ".\GRASS-64-Release-Package"
 !else if ${INSTALLER_TYPE} == "Devel"
-	!define VERSION_NUMBER "${DEV64_VERSION_NUMBER}"
-	!define SVN_REVISION "${DEV64_SVN_REVISION}"
-	!define BINARY_REVISION "${DEV64_BINARY_REVISION}"
-	!define GRASS_COMMAND "${DEV64_GRASS_COMMAND}"
-	!define GRASS_BASE "${DEV64_GRASS_BASE}"
+	!define VERSION_NUMBER "${DEVEL_VERSION_NUMBER}"
+	!define SVN_REVISION "${DEVEL_SVN_REVISION}"
+	!define BINARY_REVISION "${DEVEL_BINARY_REVISION}"
+	!define GRASS_COMMAND "${DEVEL_GRASS_COMMAND}"
+	!define GRASS_BASE "${DEVEL_GRASS_BASE}"
 	!define INSTALLER_NAME "WinGRASS-${VERSION_NUMBER}-r${SVN_REVISION}-${BINARY_REVISION}-Setup.exe"
 	!define DISPLAYED_NAME "GRASS ${VERSION_NUMBER}-r${SVN_REVISION}-${BINARY_REVISION}"
 	!define CHECK_INSTALL_NAME "GRASS 64 SVN"
-	!define PACKAGE_FOLDER ".\GRASS-64-Dev-Package"
+	!define PACKAGE_FOLDER ".\GRASS-64-Devel-Package"
 !endif
 
 ;----------------------------------------------------------------------------------------------------------------------------
