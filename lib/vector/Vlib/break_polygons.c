@@ -114,7 +114,10 @@ Vect_break_polygons(struct Map_info *Map, int type, struct Map_info *Err)
     nallpoints = 0;
     XPnts = NULL;
 
+    G_verbose_message(_("Break polygons Pass 1: select break points"));
+
     for (i = 1; i <= nlines; i++) {
+	G_percent(i, nlines, 1);
 	G_debug(3, "i =  %d", i);
 	if (!Vect_line_alive(Map, i))
 	    continue;
@@ -235,9 +238,13 @@ Vect_break_polygons(struct Map_info *Map, int type, struct Map_info *Err)
 
     /* Second loop through lines (existing when loop is started, no need to process lines written again)
      * and break at points marked for break */
+
+    G_verbose_message(_("Break polygons Pass 2: break at selected points"));
+
     for (i = 1; i <= nlines; i++) {
 	int n_orig_points;
 
+	G_percent(i, nlines, 1);
 	G_debug(3, "i =  %d", i);
 	if (!Vect_line_alive(Map, i))
 	    continue;
