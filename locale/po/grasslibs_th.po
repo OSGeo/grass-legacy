@@ -1,11 +1,11 @@
-# translation of grasstcl_th.po to Thai
+# translation of grasslibs_th.po to Thai
 # This file is distributed under the same license as the GRASS package.
 # Copyright (C) 2007, GRASS Development Team
 # Sarawut Ninsawat <sarawut.map@gmail.com>, 2007.
 # man <mansv68@yahoo.co.th>, 2007.
 msgid ""
 msgstr ""
-"Project-Id-Version: grasstcl_th\n"
+"Project-Id-Version: grasslibs_th\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2010-08-29 11:42+0200\n"
 "PO-Revision-Date: 2008-01-05 15:19+0700\n"
