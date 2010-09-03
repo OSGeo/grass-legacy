@@ -16,10 +16,9 @@
 
 !define MSYS_BATCH "C:\OSGeo4W\usr\src\grass6_devel\mswindows\osgeo4w\msys.bat"
 
-;Select if you are building a "Development Version" or a "Release Version" of the GRASS Installer
-;Change the INSTALLER_TYPE variable to Release, Dev6 or Dev7
+;Select if you are building a "Development Version" (Devel) or a "Release Version" (Release) of the GRASS Installer
 
-!define INSTALLER_TYPE "Dev65"
+!define INSTALLER_TYPE "Devel"
 
 ;----------------------------------------------------------------------------------------------------------------------------
 
@@ -32,11 +31,17 @@ SetCompressorDictSize 64
 
 ;Version variables
 
-!define DEV65_VERSION_NUMBER "6.5.SVN"
-!define DEV65_SVN_REVISION "36599"
-!define DEV65_BINARY_REVISION "1"
-!define DEV65_GRASS_COMMAND "grass65svn"
-!define DEV65_GRASS_BASE "GRASS-65-SVN"
+!define RELEASE_VERSION_NUMBER "6.5.0"
+!define RELEASE_SVN_REVISION "365995"
+!define RELEASE_BINARY_REVISION "1"
+!define RELEASE_GRASS_COMMAND "grass65"
+!define RELEASE_GRASS_BASE "GRASS-65"
+
+!define DEVEL_VERSION_NUMBER "6.5.SVN"
+!define DEVEL_SVN_REVISION "36599"
+!define DEVEL_BINARY_REVISION "1"
+!define DEVEL_GRASS_COMMAND "grass65svn"
+!define DEVEL_GRASS_BASE "GRASS-65-SVN"
 
 ;----------------------------------------------------------------------------------------------------------------------------
 
@@ -53,16 +58,26 @@ SetCompressorDictSize 64
 
 ;Set the installer variables, depending on the selected version to build
 
-!if ${INSTALLER_TYPE} == "Dev65"
-        !define VERSION_NUMBER "${DEV65_VERSION_NUMBER}"
-	!define SVN_REVISION "${DEV65_SVN_REVISION}"
-	!define BINARY_REVISION "${DEV65_BINARY_REVISION}"
-	!define GRASS_COMMAND "${DEV65_GRASS_COMMAND}"
-	!define GRASS_BASE "${DEV65_GRASS_BASE}"
+!if ${INSTALLER_TYPE} == "Release"
+	!define VERSION_NUMBER "${RELEASE_VERSION_NUMBER}"
+	!define SVN_REVISION "${RELEASE_SVN_REVISION}"
+	!define BINARY_REVISION "${RELEASE_BINARY_REVISION}"
+	!define GRASS_COMMAND "${RELEASE_GRASS_COMMAND}"
+	!define GRASS_BASE "${RELEASE_GRASS_BASE}"
+	!define INSTALLER_NAME "WinGRASS-${VERSION_NUMBER}-${BINARY_REVISION}-Setup.exe"
+	!define DISPLAYED_NAME "GRASS ${VERSION_NUMBER}-${BINARY_REVISION}"
+	!define CHECK_INSTALL_NAME "GRASS"
+	!define PACKAGE_FOLDER ".\GRASS-65-Release-Package"
+!else if ${INSTALLER_TYPE} == "Devel"
+	!define VERSION_NUMBER "${DEVEL_VERSION_NUMBER}"
+	!define SVN_REVISION "${DEVEL_SVN_REVISION}"
+	!define BINARY_REVISION "${DEVEL_BINARY_REVISION}"
+	!define GRASS_COMMAND "${DEVEL_GRASS_COMMAND}"
+	!define GRASS_BASE "${DEVEL_GRASS_BASE}"
 	!define INSTALLER_NAME "WinGRASS-${VERSION_NUMBER}-r${SVN_REVISION}-${BINARY_REVISION}-Setup.exe"
 	!define DISPLAYED_NAME "GRASS ${VERSION_NUMBER}-r${SVN_REVISION}-${BINARY_REVISION}"
 	!define CHECK_INSTALL_NAME "GRASS 65 SVN"
-	!define PACKAGE_FOLDER ".\GRASS-65-Dev-Package"
+	!define PACKAGE_FOLDER ".\GRASS-65-Devel-Package"
 !endif
 
 ;----------------------------------------------------------------------------------------------------------------------------
@@ -70,7 +85,7 @@ SetCompressorDictSize 64
 ;Publisher variables
 
 !define PUBLISHER "GRASS Development Team"
-!define WEB_SITE "http://grass.osgeo.org/"
+!define WEB_SITE "http://grass.osgeo.org"
 !define WIKI_PAGE "http://grass.osgeo.org/wiki/Main_Page"
 
 ;----------------------------------------------------------------------------------------------------------------------------
@@ -352,7 +367,7 @@ FunctionEnd
 
 !insertmacro MUI_PAGE_WELCOME
 
-;This indented statement modify setting for MUI_PAGE_LICENSE
+;These indented statements modify settings for MUI_PAGE_LICENSE
 ; (with thanks to Ubuntu)
     !define MUI_LICENSEPAGE_TEXT_BOTTOM "GRASS is software libre. You are encouraged and legally \
 	entitled to copy, reinstall, modify, and redistribute this program \
@@ -726,7 +741,7 @@ Section "GRASS" SecGRASS
 	FileWrite $0 '#   	    	requires a source file because the definition of GISBASE$\r$\n'
 	FileWrite $0 '#   	    	is not known until compile time and is substituted from the$\r$\n'
 	FileWrite $0 '#   	    	Makefile. Any command line options are passed to Init.sh.$\r$\n'
-	FileWrite $0 '# COPYRIGHT:  	(C) 2000-2009 by the GRASS Development Team$\r$\n'
+	FileWrite $0 '# COPYRIGHT:  	(C) 2000-2010 by the GRASS Development Team$\r$\n'
 	FileWrite $0 '#$\r$\n'
 	FileWrite $0 '#             	This program is free software under the GNU General Public$\r$\n'
 	FileWrite $0 '#   	    	License (>=v2). Read the file COPYING that comes with GRASS$\r$\n'
@@ -910,7 +925,7 @@ Section "Uninstall"
 	Delete "$INSTDIR\WinGRASS-README.url"
 	Delete "$INSTDIR\REQUIREMENTS.html"
 	Delete "$INSTDIR\README.html"
-	Delete "$INSTDIR\contributors.csv"
+	Delete "$INSTDIR\contributors.csv"	
 	Delete "$INSTDIR\translators.csv"	
 	
 	;remove folders
