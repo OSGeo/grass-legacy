@@ -16,9 +16,9 @@
 
 !define MSYS_BATCH "C:\OSGeo4W\usr\src\grass64_release\mswindows\osgeo4w\msys.bat"
 
-;Select if you are building a "Development Version" or a "Release Version" of the GRASS Installer
+;Select if you are building a "Development Version" (Devel) or a "Release Version" (Release) of the GRASS Installer
 
-!define INSTALLER_TYPE "Dev64"
+!define INSTALLER_TYPE "Devel"
 
 ;----------------------------------------------------------------------------------------------------------------------------
 
@@ -58,7 +58,7 @@ SetCompressorDictSize 64
 
 ;Set the installer variables, depending on the selected version to build
 
-!if ${INSTALLER_TYPE} == "Release64"
+!if ${INSTALLER_TYPE} == "Release"
 	!define VERSION_NUMBER "${RELEASE64_VERSION_NUMBER}"
 	!define SVN_REVISION "${RELEASE64_SVN_REVISION}"
 	!define BINARY_REVISION "${RELEASE64_BINARY_REVISION}"
@@ -68,7 +68,7 @@ SetCompressorDictSize 64
 	!define DISPLAYED_NAME "GRASS ${VERSION_NUMBER}-${BINARY_REVISION}"
 	!define CHECK_INSTALL_NAME "GRASS"
 	!define PACKAGE_FOLDER ".\GRASS-64-Release-Package"
-!else if ${INSTALLER_TYPE} == "Dev64"
+!else if ${INSTALLER_TYPE} == "Devel"
 	!define VERSION_NUMBER "${DEV64_VERSION_NUMBER}"
 	!define SVN_REVISION "${DEV64_SVN_REVISION}"
 	!define BINARY_REVISION "${DEV64_BINARY_REVISION}"
@@ -229,7 +229,7 @@ Function .onInit
 	StrCpy $MESSAGE_0_ "${CHECK_INSTALL_NAME} is already installed on your system.$\r$\n"
 	StrCpy $MESSAGE_0_ "$MESSAGE_0_$\r$\n"
 	
-	!if ${INSTALLER_TYPE} == "Release64"		
+	!if ${INSTALLER_TYPE} == "Release"		
 		${If} $INSTALLED_BINARY_REVISION == ""
 			StrCpy $DISPLAYED_INSTALLED_VERSION "$INSTALLED_VERSION_NUMBER"
 		${Else}
@@ -566,7 +566,7 @@ Section "GRASS" SecGRASS
 	WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${GRASS_BASE}" "DisplayName" "GRASS"
 	WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${GRASS_BASE}" "UninstallString" "$INSTALL_DIR\Uninstall-GRASS.exe"
 	
-	!if ${INSTALLER_TYPE} == "Release64"
+	!if ${INSTALLER_TYPE} == "Release"
 		WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${GRASS_BASE}"\
 		"DisplayVersion" "${VERSION_NUMBER}-${BINARY_REVISION}"
 	!else
@@ -615,7 +615,7 @@ Section "GRASS" SecGRASS
 ; FIXME: ship the WinGrass release notes .html file instead of URL
 ; http://trac.osgeo.org/grass/browser/grass-web/trunk/grass64/binary/mswindows/native/README.html?format=raw
 ; probably ship with devel versions too? ie Release Notes, not the Release Announcement press release.
-	!if ${INSTALLER_TYPE} == "Release64"
+	!if ${INSTALLER_TYPE} == "Release"
 		CreateShortCut "$SMPROGRAMS\${GRASS_BASE}\Release Notes.lnk" "$INSTALL_DIR\WinGRASS-README.url" ""\
 		"$INSTALL_DIR\icons\WinGRASS.ico" "" SW_SHOWNORMAL "" "Visit the WinGRASS Project Web Page"
 	!endif
