@@ -16,8 +16,8 @@ set OSGEO4W_DIR=c:\osgeo4w
 
 rem set PACKAGE_DIR=.\GRASS-64-Release-Package
 set PACKAGE_DIR=.\GRASS-64-Devel-Package
-rem set GRASS_PREFIX=%OSGEO4W_DIR%\apps\grass\grass-6.4.0
-set GRASS_PREFIX=%OSGEO4W_DIR%\apps\grass\grass-6.4.0svn
+rem set GRASS_PREFIX=%OSGEO4W_DIR%\apps\grass\grass-6.4.1
+set GRASS_PREFIX=%OSGEO4W_DIR%\apps\grass\grass-6.4.1svn
 
 @echo.
 @echo -----------------------------------------------------------------------------------------------------------------------

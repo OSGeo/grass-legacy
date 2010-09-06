@@ -31,7 +31,7 @@ SetCompressorDictSize 64
 
 ;Version variables
 
-!define RELEASE_VERSION_NUMBER "6.4.0"
+!define RELEASE_VERSION_NUMBER "6.4.1"
 !define RELEASE_SVN_REVISION "36599"
 !define RELEASE_BINARY_REVISION "1"
 !define RELEASE_GRASS_COMMAND "grass64"
