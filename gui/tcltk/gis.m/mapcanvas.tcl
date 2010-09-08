@@ -709,10 +709,10 @@ proc MapCanvas::composite {mon } {
 		cd $currdir
 	}
 
-	GmTree::cvdisplay "root"
-	set drawprog 100
-
+	# cvdisplay might need new canvas coordinates. Coordconv has to be run first!
 	MapCanvas::coordconv $mon
+	GmTree::cvdisplay "root"
+	
 	set drawprog 0
 	$mapframe($mon) showstatusbar status
 	return

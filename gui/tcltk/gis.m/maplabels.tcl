@@ -28,6 +28,7 @@ namespace eval GmCLabels {
     variable array tree ;# mon    
     variable optlist
     variable array dup ;# layer
+    variable canvasId  ;# List of canvas item ID's for deletion on update
 }
 
 
@@ -36,6 +37,7 @@ proc GmCLabels::create { tree parent } {
     variable count
     variable optlist
 	variable dup
+    variable canvasId
     global mon
     global iconpath
 
@@ -104,7 +106,9 @@ proc GmCLabels::create { tree parent } {
 
     foreach key $optlist {
 		set opt($count,0,$key) $opt($count,1,$key)
-    } 
+    }
+    
+    set canvasId [ list ] ;# CanvasId is an empty list
         
     incr count
     return $node
@@ -298,10 +302,13 @@ proc GmCLabels::display { node } {
     variable tree
     variable dup
     variable count
+    variable canvasId
     
     set tree($mon) $GmTree::tree($mon)
     set id [GmTree::node_id $node]
     
+    # No need to do anything, if we are invisible/unset.
+    if { ! ( $opt($id,1,_check) ) } { return } 
     if {$opt($id,1,labels) == "" } {return}
     
     set can($mon) $MapCanvas::can($mon)
@@ -312,14 +319,16 @@ proc GmCLabels::display { node } {
     } else {
 		set labelpath "$env(GISDBASE)/$env(LOCATION_NAME)/$env(MAPSET)/paint/labels/$opt($id,1,labels)"
     }
-
-    if { ! ( $opt($id,1,_check) ) } { return } 
     
     # open the v.label file for reading
 	if { [catch {set labelfile [open $labelpath r]} err ] } {
 		GmLib::errmsg $err [G_msg "Could not open labels file "]
 		return
 	}
+	
+	# Delete current labels on Canvas and empty ID list
+	$can($mon) delete canvasId
+	set canvasId [ list ] ;# CanvasId is an empty list
 	
 	#loop through coordinates and options for each label
     while { [gets $labelfile in] > -1 } {
@@ -484,68 +493,69 @@ proc GmCLabels::display { node } {
 				} else { set wdth $ropt($id,1,lbwidth) }
 
 				# create box around text
-				
-				switch $ropt($id,1,anchor) {
-					"ne" { 
-						set boxcenter_x [expr {$ropt($id,1,xcoord) - ($wid-4) / 2}] 
-						set boxcenter_y [expr {$ropt($id,1,ycoord) + ($lineh+4) / 2}]
-						}
-					"n" { 
-						set boxcenter_x $ropt($id,1,xcoord)
-						set boxcenter_y [expr {$ropt($id,1,ycoord) - ($lineh+4) / 2}]
-						}
-					"nw" { 
-						set boxcenter_x [expr {$ropt($id,1,xcoord) + ($wid-4) / 2}]
-						set boxcenter_y [expr {$ropt($id,1,ycoord) + ($lineh+4) / 2}]
-						}
-					"e" { 
-						set boxcenter_x [expr {$ropt($id,1,xcoord) - ($wid-4) / 2}]
-						set boxcenter_y $ropt($id,1,ycoord)
-						}
-					"center" { 
-						set boxcenter_x $ropt($id,1,xcoord)
-						set boxcenter_y $ropt($id,1,ycoord)
-						}
-					"w" { 
-						set boxcenter_x [expr {$ropt($id,1,xcoord) + ($wid-4) / 2}]
-						set boxcenter_y $ropt($id,1,ycoord)
-						}
-					"se" { 
-						set boxcenter_x [expr {$ropt($id,1,xcoord) - ($wid-4) / 2}]
-						set boxcenter_y [expr {$ropt($id,1,ycoord) - ($lineh+4) / 2}]
-						}
-					"s" { 
-						set boxcenter_x $ropt($id,1,xcoord)
-						set boxcenter_y [expr {$ropt($id,1,ycoord) - ($lineh+4) / 2}]
-						}
-					"sw" { 
-						set boxcenter_x [expr {$ropt($id,1,xcoord) + ($wid-4) / 2}]
-						set boxcenter_y [expr {$ropt($id,1,ycoord) - ($lineh+4) / 2}]
-						}
-					default { 
-						set boxcenter_x $ropt($id,1,xcoord)
-						set boxcenter_y $ropt($id,1,ycoord)
-						}
+				if {$opt($id,1,lboxenable)} { 
+				  switch $ropt($id,1,anchor) {
+					  "ne" { 
+						  set boxcenter_x [expr {$ropt($id,1,xcoord) - ($wid-4) / 2}] 
+						  set boxcenter_y [expr {$ropt($id,1,ycoord) + ($lineh+4) / 2}]
+						  }
+					  "n" { 
+						  set boxcenter_x $ropt($id,1,xcoord)
+						  set boxcenter_y [expr {$ropt($id,1,ycoord) - ($lineh+4) / 2}]
+						  }
+					  "nw" { 
+						  set boxcenter_x [expr {$ropt($id,1,xcoord) + ($wid-4) / 2}]
+						  set boxcenter_y [expr {$ropt($id,1,ycoord) + ($lineh+4) / 2}]
+						  }
+					  "e" { 
+						  set boxcenter_x [expr {$ropt($id,1,xcoord) - ($wid-4) / 2}]
+						  set boxcenter_y $ropt($id,1,ycoord)
+						  }
+					  "center" { 
+						  set boxcenter_x $ropt($id,1,xcoord)
+						  set boxcenter_y $ropt($id,1,ycoord)
+						  }
+					  "w" { 
+						  set boxcenter_x [expr {$ropt($id,1,xcoord) + ($wid-4) / 2}]
+						  set boxcenter_y $ropt($id,1,ycoord)
+						  }
+					  "se" { 
+						  set boxcenter_x [expr {$ropt($id,1,xcoord) - ($wid-4) / 2}]
+						  set boxcenter_y [expr {$ropt($id,1,ycoord) - ($lineh+4) / 2}]
+						  }
+					  "s" { 
+						  set boxcenter_x $ropt($id,1,xcoord)
+						  set boxcenter_y [expr {$ropt($id,1,ycoord) - ($lineh+4) / 2}]
+						  }
+					  "sw" { 
+						  set boxcenter_x [expr {$ropt($id,1,xcoord) + ($wid-4) / 2}]
+						  set boxcenter_y [expr {$ropt($id,1,ycoord) - ($lineh+4) / 2}]
+						  }
+					  default { 
+						  set boxcenter_x $ropt($id,1,xcoord)
+						  set boxcenter_y $ropt($id,1,ycoord)
+						  }
+				  }
 				}
 
 				if {$opt($id,1,lboxenable)} { 
 					# draw recangle around label
-					$can($mon) create rectangle \
+					lappend canvasId [$can($mon) create rectangle \
 						[expr {$boxcenter_x - $opt($id,1,lhoffset) - $wid / 2}] \
 						[expr {$boxcenter_y -2- $opt($id,1,lvoffset) - $lineh / 2}]\
 						[expr {$boxcenter_x + $opt($id,1,lhoffset) + $wid / 2}] \
 						[expr {$boxcenter_y + $opt($id,1,lvoffset) + $lineh / 2}]\
 						-width  $wdth \
 						-outline $ropt($id,1,lborder) \
-						-fill $lbackground
+						-fill $lbackground]
 				}
-				$can($mon) create text $ropt($id,1,xcoord) $ropt($id,1,ycoord) \
+				lappend canvasId [$can($mon) create text $ropt($id,1,xcoord) $ropt($id,1,ycoord) \
 					-anchor $ropt($id,1,anchor) \
 					-justify $opt($id,1,ljust) \
 					-width $wid \
 					-fill $ropt($id,1,lfill) \
 					-font $ropt($id,1,lfont) \
-					-text $ropt($id,1,ltxt)
+					-text $ropt($id,1,ltxt)]
 			} 
 			default {
 				#for anything else, just move on
