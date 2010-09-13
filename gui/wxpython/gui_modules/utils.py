@@ -204,86 +204,45 @@ def ListOfCatsToRange(cats):
         
     return catstr.strip(',')
 
-def ListOfMapsets(all=False, accessible=False, ordered=False):
-    """Get list of available/accessible mapsets
+def ListOfMapsets(get = 'ordered'):
+    """!Get list of available/accessible mapsets
 
-    @param all if True get list of all mapsets
-
+    @param get method ('all', 'accessible', 'ordered')
+    
     @return list of mapsets
+    @return None on error
     """
     mapsets = []
-
-    ### FIXME
-    # problem using Command here (see preferences.py)
-    # cmd = gcmd.Command(['g.mapsets', '-l'])
-    if all:
-        cmd = subprocess.Popen(['g.mapsets' + globalvar.EXT_BIN, '-l'],
-                               stdout=subprocess.PIPE)
     
-        try:
-            # for mset in cmd.ReadStdOutput()[0].split(' '):
-            for line in cmd.stdout.readlines():
-                for mset in line.strip('%s' % os.linesep).split(' '):
-                    if len(mset) == 0:
-                        continue
-                    mapsets.append(mset)
-        except:
-            raise gcmd.CmdError(_('Unable to get list of available mapsets.'))
-    
-    elif accessible:
+    if get == 'all' or get == 'ordered':
         ret = gcmd.RunCommand('g.mapsets',
                               read = True,
-                              flags = 'p',
-                              fs = ';')
-        if ret:
-            mapsets = ret.rstrip('\n').split(';')
-        else:
-            raise gcmd.CmdError(cmd = 'g.mapsets',
-                                message = _('Unable to get list of accessible mapsets.'))
-
-    elif ordered:
-        ret = gcmd.RunCommand('g.mapsets',
-                              read = True,
+                              quiet = True,
                               flags = 'l',
                               fs = ';')
+        
         if ret:
-            mapsets_available = ret.rstrip('\n').split(';')
+            mapsets = ret.replace('\n', '').strip().split(';')
+            ListSortLower(mapsets)
         else:
-            raise gcmd.CmdError(cmd = 'g.mapsets',
-                                message = _('Unable to get list of available mapsets.'))
- 
+            return None
+        
+    if get == 'accessible' or get == 'ordered':
         ret = gcmd.RunCommand('g.mapsets',
                               read = True,
+                              quiet = True,
                               flags = 'p',
                               fs = ';')
         if ret:
-            mapsets_accessible = ret.rstrip('\n').split(';')
+            if get == 'accessible':
+                mapsets = ret.replace('\n', '').strip().split(';')
+            else:
+                mapsets_accessible = ret.replace('\n', '').strip().split(';')
+                for mapset in mapsets_accessible:
+                    mapsets.remove(mapset)
+                mapsets = mapsets_accessible + mapsets
         else:
-            raise gcmd.CmdError(cmd = 'g.mapsets',
-                                message = _('Unable to get list of accessible mapsets.'))
-
-        for mapset in mapsets_accessible:
-            mapsets_available.remove(mapset)
-        mapsets = mapsets_accessible + mapsets_available
-
-    
-    else:
-        # cmd = gcmd.Command(['g.mapsets', '-p'])
-        cmd = subprocess.Popen(['g.mapsets' + globalvar.EXT_BIN, '-p'],
-                               stdout=subprocess.PIPE)
-        try:
-            # for mset in cmd.ReadStdOutput()[0].split(' '):
-            for line in cmd.stdout.readlines():
-                for mset in line.strip('%s' % os.linesep).split(' '):
-                    if len(mset) == 0:
-                        continue
-                    mapsets.append(mset)
-        except:
-            raise gcmd.CmdError(_('Unable to get list of accessible mapsets.'))
-
-        # This one sorts mapset names, thus prevents the user from modifying their
-        # order in the SEARH_PATH from GUI, unlike the `ordered' above.
-        ListSortLower(mapsets)
+            return None
     
     return mapsets
 
