@@ -1722,8 +1722,8 @@ class MapsetAccess(wx.Dialog):
         
         wx.Dialog.__init__(self, parent, id, title, pos, size, style)
 
-        self.all_mapsets_ordered = utils.ListOfMapsets(ordered=True)
-        self.accessible_mapsets = utils.ListOfMapsets(accessible=True)
+        self.all_mapsets_ordered = utils.ListOfMapsets(get = 'ordered')
+        self.accessible_mapsets = utils.ListOfMapsets(get = 'accessible')
         self.curr_mapset = grassenv.GetGRASSVariable('MAPSET')
 
         # make a checklistbox from available mapsets and check those that are active
