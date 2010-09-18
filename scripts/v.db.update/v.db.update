@@ -128,9 +128,11 @@ else
 fi
 
 if [ -n "$GIS_OPT_WHERE" ] ; then
+    g.message -v message="SQL: \"UPDATE $table SET $GIS_OPT_COLUMN=$value WHERE $GIS_OPT_WHERE\""
     echo "UPDATE $table SET $GIS_OPT_COLUMN=$value WHERE $GIS_OPT_WHERE" |
        db.execute database="${database}" driver=${driver}
 else
+    g.message -v message="SQL: \"UPDATE $table SET $GIS_OPT_COLUMN=$value\""
     echo "UPDATE $table SET $GIS_OPT_COLUMN=$value" | \
        db.execute database="${database}" driver=${driver}
 fi
