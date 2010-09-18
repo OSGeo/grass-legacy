@@ -129,26 +129,12 @@ fi
 # Program locations:
 BC="bc"
 BCARGS="-l"
-SED="sed"
-GREP="grep"
 CS2CS="cs2cs"
 
 
 # check if we have bc
 if [ ! -x "`which $BC`" ] ; then
     g.message -e "$BC is required, please install it first"
-    exit 1
-fi
-
-# check if we have sed
-if [ ! -x "`which $SED`" ] ; then
-    g.message -e "$SED is required, please install it first"
-    exit 1
-fi
-
-# check if we have grep
-if [ ! -x "`which $GREP`" ] ; then
-    g.message -e "$GREP is required, please install it first"
     exit 1
 fi
 
@@ -245,7 +231,7 @@ project() {
 
 	message 3 "echo \"$p_x1 $p_y1\" | $CS2CS -f \"%.8f\" $p_source_proj +to $p_dest_proj"
 
-	answer=`echo "$p_x1 $p_y1" | $CS2CS -f "%.8f" $p_source_proj +to $p_dest_proj`
+	answer=`echo "$p_x1 $p_y1" | eval $CS2CS -f "%.8f" $(echo $p_source_proj) +to $(echo $p_dest_proj)`
 
 	if [ $? -ne 0 ] ; then
 	    g.message -e message="Problem running $CS2CS. <$answer>"
@@ -254,7 +240,7 @@ project() {
 
 	message 3 "$answer"
 	# do not quote $answer in the following line
-	eval `echo $answer | $SED -e "s/^/p_x2=/"  -e "s/ /;p_y2=/"  -e "s/ /;p_z2=/"`
+	eval `echo $answer | sed -e "s/^/p_x2=/"  -e "s/ /;p_y2=/"  -e "s/ /;p_z2=/"`
 
 	calculate p_x2 "$p_x2 / $p_dest_units"
 	calculate p_y2 "$p_y2 / $p_dest_units"
@@ -400,15 +386,22 @@ calculate MAX_ROWS "$GIS_OPT_MAXROWS - $OVERLAP"
 g.message "Getting destination projection"
 
 if [ -z "$GIS_OPT_DESTPROJ" ] ; then
-	DEST_PROJ=`g.proj -j`
+
+    DEST_PROJ=`g.proj -j | (
+        DEST_PROJ=
+        while read line ; do
+            DEST_PROJ="$DEST_PROJ '$line'"
+        done
+        echo "$DEST_PROJ"
+    )`
 else
-	DEST_PROJ=`echo $GIS_OPT_DESTPROJ`
+    DEST_PROJ=`echo $GIS_OPT_DESTPROJ`
 fi
 
 	g.message "Getting projection scale"
 
 if [ -z "$GIS_OPT_DESTSCALE" ] ; then
-	eval `g.proj -p | $GREP '^meters' | $SED -e "s/:/=/" -e "s/ //g"`
+	eval `g.proj -p | grep '^meters' | sed -e "s/:/=/" -e "s/ //g"`
 	DEST_SCALE=$meters;
 else
 	DEST_SCALE=$GIS_OPT_DESTSCALE
