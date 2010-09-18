@@ -6,7 +6,7 @@
 # AUTHOR(S):	Michael Barton, Arizona State University
 #               Markus Neteler
 # PURPOSE:	    Facilitates creation of raster MASK using r.reclass
-# COPYRIGHT:	(C) 2005, 2007 by the GRASS Development Team
+# COPYRIGHT:	(C) 2005, 2007-2009 by the GRASS Development Team
 #
 #		This program is free software under the GNU General Public
 #		License (>=v2). Read the file COPYING that comes with GRASS
@@ -14,37 +14,39 @@
 #
 #############################################################################
 
-
-#%Module
+#%module
 #%  description: Create a MASK for limiting raster operation
 #%  keywords: raster, mask
-#%End
+#%end
 #%option
 #% key: input
 #% type: string
 #% gisprompt: old,cell,raster
 #% description: Raster map to use as MASK
-#% required : no
-#%END
+#% required: no
+#% guisection: Create
+#%end
 #%option
 #% key: maskcats
 #% type: string
 #% description: Category values to use for MASK (format: 1 2 3 thru 7 *)
 #% answer: *
-#%END
+#% guisection: Create
+#%end
 #%flag
 #% key: i
 #% description: Create inverse MASK from specified 'maskcats' list
-#%END
+#% guisection: Create
+#%end
 #%flag
 #% key: o
 #% description: Overwrite existing MASK
-#%END
+#%end
 #%flag
 #% key: r
 #% description: Remove existing MASK (overrides other options)
-#%END
-
+#% guisection: Remove
+#%end
 
 if  [ -z "$GISBASE" ] ; then
  echo "You must be in GRASS GIS to run this program." >&2
