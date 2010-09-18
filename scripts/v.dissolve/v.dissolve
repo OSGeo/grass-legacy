@@ -87,7 +87,7 @@ trap "exitprocedure" 2 3 15
 # does map exist?
 eval `g.findfile element=vector file=$GIS_OPT_INPUT`
 if [ ! "$file" ] ; then
-   g.message -e "Vector map '$GIS_OPT_INPUT' not found in mapset search path"
+   g.message -e "Vector map <$GIS_OPT_INPUT> not found"
    exit 1
 fi
 
@@ -104,7 +104,7 @@ else
 
    table=`v.db.connect $GIS_OPT_INPUT -g fs=";" | grep -w "^$GIS_OPT_LAYER" | awk -F ";" '{print $2}'`
    if [ -z "$table" ] ; then
-      g.message -e 'There is no table connected to this map!'
+      g.message -e "Database connection not defined for layer $GIS_OPT_LAYER"
       exit 1
    fi
    v.reclass input="$GIS_OPT_INPUT" output="$TMPMAP" layer="$GIS_OPT_LAYER" \
