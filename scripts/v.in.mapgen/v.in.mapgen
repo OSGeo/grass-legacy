@@ -148,11 +148,11 @@ fi
 cat << EOF > "${TMPFILE}.dig"
 ORGANIZATION: GRASSroots organization
 DIGIT DATE:   `date +%D`
-DIGIT NAME:   $PROG
+DIGIT NAME:   `echo $USER@$HOSTNAME`
 MAP NAME:     $NAME
 MAP DATE:     `date +%Y`
 MAP SCALE:    1
-OTHER INFO:   Imported by `echo $USER@$HOSTNAME`
+OTHER INFO:   Imported with $PROG
 ZONE:         0
 MAP THRESH:   0
 VERTI:
