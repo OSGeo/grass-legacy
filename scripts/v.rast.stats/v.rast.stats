@@ -174,10 +174,10 @@ g.region save="$TMPNAME" --quiet
 
 #Temporarily setting raster resolution to $RASTER resolution
 #keep boundary settings
-g.region nsres=$NSRES ewres=$EWRES -a
+g.region nsres="$NSRES" ewres="$EWRES" -a
 
 #prepare raster MASK
-v.to.rast in="$VECTOR" out="${VECTOR}_${TMPNAME}" use=cat --quiet
+v.to.rast in="$VECTOR" out="${VECTOR}_$TMPNAME" use=cat --quiet
 if [ $? -ne 0 ] ; then
    g.message -e "An error occurred while converting vector to raster"
    cleanup
@@ -186,7 +186,7 @@ fi
 
 
 #dump cats to file to avoid "too many argument" problem:
-r.category "${VECTOR}_${TMPNAME}" fs=';' --quiet | cut -d';' -f1 > "$TEMPFILE.cats"
+r.category "${VECTOR}_$TMPNAME" fs=';' --quiet | cut -d';' -f1 > "$TEMPFILE.cats"
 #echo "List of categories found: $CATSLIST"
 NUMBER=`cat "$TEMPFILE.cats" | wc -l | awk '{print $1}'`
 if [ $NUMBER -lt 1 ] ; then
@@ -206,9 +206,24 @@ else
    # in case a table is missing, we'll trap a crash later...
    DBFDRIVER=0
 fi
+
+if [ "$DBFDRIVER" -eq 1 ] ; then
+   # `wc -c` reports number of chars + 1 for the newline
+   if [ `echo "$COLPREFIX" | wc -c` -gt 7 ] ; then
+       g.message -e "Cannot create unique names for columns. \
+         Either use a shorter column prefix or switch to another DB \
+	 backend such as SQLite. DBF limits the length to 10 characters"
+       cleanup
+       exit 1
+   fi
+fi
+
 # we need this for non-DBF driver:
 DB_SQLDRIVER=`v.db.connect -g "$VECTOR" fs=";" | cut -d';' -f5`
+g.message -d message="sql driver: [$DB_SQLDRIVER]"
+
 DB_DATABASE="`v.db.connect -g "$VECTOR" fs=";" | cut -d';' -f4`"
+g.message -d message="database: [$DB_DATABASE]"
 
 #Find out which table is linked to the vector map on the given layer
 TABLE=`v.db.connect map="$VECTOR" -g fs=";" | grep -w "^$GIS_OPT_LAYER" | awk -F ";" '{print $2}'`
@@ -216,14 +231,15 @@ if [ -z "$TABLE" ] ; then
    g.message -e 'There is no table connected to this map! Run v.db.connect or v.db.addtable first.'
    exit 1
 fi
+g.message -d message="table: [$TABLE]"
 
 
 BASECOLS="n min max range mean stddev variance cf_var sum"
 
 # do extended stats?
-if [ $GIS_FLAG_E -eq 1 ] ; then
+if [ "$GIS_FLAG_E" -eq 1 ] ; then
    # namespace is limited in DBF but the % value is important
-   if [ $DBFDRIVER -eq 1 ] ; then
+   if [ "$DBFDRIVER" -eq 1 ] ; then
       PERCCOL="per$GIS_OPT_PERCENTILE"
    else
       PERCCOL="percentile_$GIS_OPT_PERCENTILE"
@@ -237,15 +253,16 @@ fi
 unset ADDCOLS
 for i in $BASECOLS $EXTRACOLS ; do
   #check if column already present
-  if [ $DBFDRIVER -eq 1 ] ; then
-     CURRCOLUMN="`echo "${COLPREFIX}_${i}" | cut -b1-10`"
+  if [ "$DBFDRIVER" -eq 1 ] ; then
+     CURRCOLUMN="`echo "${COLPREFIX}_$i" | cut -b1-10`"
   else
-     CURRCOLUMN="${COLPREFIX}_${i}"
+     CURRCOLUMN="${COLPREFIX}_$i"
   fi
-  v.info -c $VECTOR --quiet | sed 's+^+|+g' | sed 's+$+|+g' | \
+  g.message -d message="Looking for <$CURRCOLUMN> in <$VECTOR> ..."
+  v.info -c "$VECTOR" --quiet | sed -e 's+^+|+' -e 's+$+|+' | \
     grep "|$CURRCOLUMN|" -q
   if [ $? -eq 0 ] ; then
-    if [ $GIS_FLAG_C -ne 1 ] ; then
+    if [ "$GIS_FLAG_C" -ne 1 ] ; then
        g.message -e "Cannot create column <$CURRCOLUMN> (already present). \
          Use -c flag to update values in this column."
        cleanup
@@ -307,11 +324,11 @@ for i in `cat "$TEMPFILE.cats"` ; do
       eval value=\${$var}
 
       if [ $DBFDRIVER -eq 1 ] ; then
-	colname="`echo "${COLPREFIX}_${var}" | cut -b1-10`"
+	colname="`echo "${COLPREFIX}_$var" | cut -b1-10`"
       else
-	colname="${COLPREFIX}_${var}"
+	colname="${COLPREFIX}_$var"
       fi
-
+      g.message -d debug=3 message="UPDATE $TABLE SET ${colname}=${value} WHERE cat=$i;"
       echo "UPDATE $TABLE SET ${colname}=${value} WHERE cat=$i;" >> "$SQLTMP"
    done
 
@@ -320,7 +337,7 @@ done
 
 
 g.message "Updating the database ..."
-db.execute input="$SQLTMP" database="${DB_DATABASE}" driver="$DB_SQLDRIVER"
+db.execute input="$SQLTMP" database="$DB_DATABASE" driver="$DB_SQLDRIVER"
 EXITCODE=$?
 
 
