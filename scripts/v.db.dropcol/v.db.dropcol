@@ -137,6 +137,7 @@ INSERT INTO ${table}_backup SELECT ${COLNAMES} FROM ${table};
 DROP TABLE ${table};
 CREATE TABLE ${table}(${COLDEF});
 INSERT INTO ${table} SELECT ${COLNAMES} FROM ${table}_backup;
+CREATE UNIQUE INDEX ${table}_cat ON ${table} ( ${keycol} );
 DROP TABLE ${table}_backup;
 COMMIT;" > "$TEMPFILE"
 	db.execute input="$TEMPFILE"
