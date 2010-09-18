@@ -42,8 +42,8 @@
 #%option
 #% key: column
 #% type: string
-##TODO: #% description: Name of the column(s) to remove
-#% description: Name of the column to remove
+##TODO: #% description: Name of the column(s) to drop
+#% description: Name of the column to drop
 #% required : yes
 ##TODO #% multiple : yes
 #%end
