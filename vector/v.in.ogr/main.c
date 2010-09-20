@@ -966,11 +966,6 @@ int main(int argc, char *argv[])
 	G_message("%s", separator);
 	G_warning(_("Cleaning polygons, result is not guaranteed!"));
 
-	Vect_set_release_support(&Map);
-	Vect_close(&Map);
-	Vect_open_update(&Map, out_opt->answer, G_mapset());
-	Vect_build_partial(&Map, GV_BUILD_BASE);	/* Downgrade topo */
-
 	if (snap >= 0) {
 	    G_message("%s", separator);
 	    G_message(_("Snap boundaries (threshold = %.3e):"), snap);
