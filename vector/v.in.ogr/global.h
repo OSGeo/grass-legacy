@@ -26,10 +26,13 @@
 
 #ifdef MAIN
 int n_polygons = 0;
+int n_polygon_boundaries;
+double split_distance;
 #else
 extern int n_polygons;
+extern int n_polygon_boundaries;
+extern double split_distance;
 #endif
-
 
 /* centroid structure */
 typedef struct
