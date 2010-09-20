@@ -273,10 +273,13 @@ static int load_files(void)
     write_params(mpfilename, yfiles, outfile, cnt, quality, y_rows, y_cols,
 		 0);
 
+/* FIXME: use G_spawn() as mpfilename may contain spaces */
+/* FIXME: redirect stderr to G_DEV_NULL work on wingrass? */
     if (quiet)
-	sprintf(cmd, "%s %s 2> /dev/null > /dev/null", encoder, mpfilename);
+	sprintf(cmd, "%s \"%s\" 2> %s > %s", encoder, mpfilename, G_DEV_NULL
+		G_DEV_NULL);
     else
-	sprintf(cmd, "%s %s", encoder, mpfilename);
+	sprintf(cmd, "%s \"%s\"", encoder, mpfilename);
 
     if (0 != G_system(cmd))
 	G_warning(_("mpeg_encode ERROR"));
@@ -303,10 +306,13 @@ static int use_r_out(void)
     mpfilename = G_tempfile();
     write_params(mpfilename, vfiles[0], outfile, frames, quality, 0, 0, 1);
 
+/* FIXME: use G_spawn() as mpfilename may contain spaces */
+/* FIXME: redirect stderr to G_DEV_NULL work on wingrass? */
     if (quiet)
-	sprintf(cmd, "%s %s 2> /dev/null > /dev/null", encoder, mpfilename);
+	sprintf(cmd, "%s \"%s\" 2> %s > %s", encoder, mpfilename, G_DEV_NULL,
+		G_DEV_NULL);
     else
-	sprintf(cmd, "%s %s", encoder, mpfilename);
+	sprintf(cmd, "%s \"%s\"", encoder, mpfilename);
 
     if (0 != G_system(cmd))
 	G_warning(_("mpeg_encode ERROR"));
@@ -335,6 +341,7 @@ static char **gee_wildfiles(char *wildarg, char *element, int *num)
 	    mapset = G_mapset();
 
 	G__file_name(path, element, "", mapset);
+/* FIXME: rm UNIXisms (see g.[m]list for hints) */
 	if (access(path, 0) == 0) {
 	    sprintf(cmd, "cd %s; \\ls %s >> %s 2> /dev/null",
 		    path, wildarg, tfile);
@@ -361,8 +368,7 @@ static char **gee_wildfiles(char *wildarg, char *element, int *num)
     }
 
     *num = cnt;
-    sprintf(cmd, "\\rm %s", tfile);
-    G_system(cmd);
+    unlink(tfile);
     G_free(tfile);
 
     return (newfiles);
@@ -381,8 +387,8 @@ static void parse_command(int argc, char *argv[],
     int i, j, k, numi, wildnum;
 
     module = G_define_module();
-    module->keywords = _("raster");
-    module->description = _("Raster File Series to MPEG Conversion Program.");
+    module->keywords = _("raster, animation");
+    module->description = _("Raster File Series to MPEG Conversion.");
 
     *numviews = *numframes = 0;
     for (i = 0; i < MAXVIEWS; i++) {
@@ -421,11 +427,12 @@ static void parse_command(int argc, char *argv[],
 
     conv = G_define_flag();
     conv->key = 'c';
-    conv->description =
-	_("Convert on the fly, use less disk space\n\t(requires r.out.ppm with stdout option)");
+    conv->label = _("Convert on the fly, uses less disk space");
+    conv->description =	_("(requires r.out.ppm with stdout option)");
 
     if (G_parser(argc, argv))
 	exit(EXIT_FAILURE);
+
 
     *convert = 0;
     if (qt->answer)
@@ -469,6 +476,3 @@ static void parse_command(int argc, char *argv[],
     }
 }
 
-/*********************************************************************/
-
-/*********************************************************************/
