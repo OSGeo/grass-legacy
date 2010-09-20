@@ -152,7 +152,7 @@ int run(char *pgm, char *name)
 {
     char command[1024];
 
-    sprintf(command, "\"%s/etc/mon.%s\" %s", G_gisbase(), pgm, name);
+    sprintf(command, "\"%s\"/etc/mon.%s %s", G_gisbase(), pgm, name);
 
     G_debug(1, "run: [%s]", command);
 
