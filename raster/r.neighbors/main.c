@@ -302,9 +302,9 @@ int main(int argc, char *argv[])
 		G_set_d_null_value(rp, 1);
 	    else {
 		if (newvalue_w)
-		    newvalue_w(rp, values_w, n);
+		    newvalue_w(rp, values_w, n, NULL);
 		else
-		    newvalue(rp, values, n);
+		    newvalue(rp, values, n, NULL);
 
 		if (half && !G_is_d_null_value(rp))
 		    *rp += 0.5;

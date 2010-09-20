@@ -4,8 +4,8 @@
 
 #include <grass/gis.h>
 
-typedef void stat_func(DCELL *, DCELL *, int);
-typedef void stat_func_w(DCELL *, DCELL(*)[2], int);
+typedef void stat_func(DCELL *, DCELL *, int, const void *);
+typedef void stat_func_w(DCELL *, DCELL(*)[2], int, const void *);
 
 extern stat_func c_ave;
 extern stat_func c_count;
@@ -19,6 +19,7 @@ extern stat_func c_minx;
 extern stat_func c_mode;
 extern stat_func c_stddev;
 extern stat_func c_sum;
+extern stat_func c_thresh;
 extern stat_func c_var;
 extern stat_func c_range;
 extern stat_func c_reg_m;
@@ -27,6 +28,7 @@ extern stat_func c_reg_r2;
 extern stat_func c_quart1;
 extern stat_func c_quart3;
 extern stat_func c_perc90;
+extern stat_func c_quant;
 extern stat_func c_skew;
 extern stat_func c_kurt;
 

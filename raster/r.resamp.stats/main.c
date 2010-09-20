@@ -38,7 +38,7 @@ static const struct menu
     {c_sum,    w_sum,    "sum",      "sum of values"},
     {c_var,    w_var,    "variance", "variance value"},
     {c_stddev, w_stddev, "stddev",   "standard deviation"},
-    {NULL, NULL, NULL}
+    {NULL, NULL, NULL, NULL}
 };
 
 static char *build_method_list(void)
@@ -141,7 +141,7 @@ static void resamp_unweighted(void)
 	    if (null && nulls)
 		G_set_d_null_value(&outbuf[col], 1);
 	    else
-		(*method_fn) (&outbuf[col], values, n);
+		(*method_fn) (&outbuf[col], values, n, NULL);
 	}
 
 	G_set_window(&dst_w);
@@ -227,7 +227,7 @@ static void resamp_weighted(void)
 	    if (null && nulls)
 		G_set_d_null_value(&outbuf[col], 1);
 	    else
-		(*method_fn) (&outbuf[col], values, n);
+		(*method_fn) (&outbuf[col], values, n, NULL);
 	}
 
 	G_set_window(&dst_w);
