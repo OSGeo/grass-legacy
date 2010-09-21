@@ -26,7 +26,7 @@ int make_support(struct rr_state *theState, int percent, double percentage)
 	nulls = theState->nulls;
     }
     if (G_read_raster_cats(inraster, mapset, &cats) >= 0) {
-	sprintf(title, "Random points on [%s in %s]", inraster, mapset);
+	sprintf(title, "Random points sampled from a raster map");
 	G_set_cats_title(title, &cats);
 	if (theState->use_nulls)
 	    G_set_raster_cat(nulls.data.v,
