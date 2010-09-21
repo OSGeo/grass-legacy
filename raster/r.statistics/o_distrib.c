@@ -23,10 +23,10 @@ int o_distrib(char *basemap, char *covermap, char *outputmap, int usecats)
     tempfile1 = G_tempfile();
     tempfile2 = G_tempfile();
 
-    sprintf(command, "%s -cn input=\"%s,%s\" fs=space > \"%s\"", STATS, basemap,
-	    covermap, tempfile1);
+    sprintf(command, "%s -cn input=\"%s,%s\" fs=space output=\"%s\"", STATS,
+	    basemap, covermap, tempfile1);
 
-    if (stat = system(command)) {
+    if (stat = G_system(command)) {
 	unlink(tempfile1);
 	G_fatal_error(_("%s: running %s command"), me, STATS);
     }
