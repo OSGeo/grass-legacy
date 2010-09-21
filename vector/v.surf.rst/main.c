@@ -460,7 +460,7 @@ int main(int argc, char *argv[])
 
     if (field == 0 && zcol)
         G_fatal_error(_("Both z-coordinate and zcol attribute defined, only one is allowed"));
-    if ((!zcoord || !zcol) && scol)
+    if (!zcoord && !zcol && scol)
         G_fatal_error(_("Only smoothing column defined, zcol or -z flag is missing")); 
     if (!zcol && !zcoord && field > 0)
         G_fatal_error("Value to be interpolated needs to be defined by zcol or -z flag");
