@@ -3,7 +3,7 @@
 NODE *addpts_slow(NODE * zero, int r, int c, int rr, int cc, int *node_ct)
 {
     NODE *add_in_slow();
-    CELL value;
+    char value;
 
     if (rr < nrows - 1) {
 	bseg_get(&bseen, &value, rr + 1, cc);
