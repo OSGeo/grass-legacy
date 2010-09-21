@@ -153,6 +153,6 @@ static int comp_array(const void *q1, const void *q2)
 static void IsLegal(char *Name)
 {
     if (G_legal_filename(Name) == -1)
-	G_fatal_error(_("<%s> is an ilegal name"),
+	G_fatal_error(_("<%s> is an illegal name"),
 		      Name);
 }
