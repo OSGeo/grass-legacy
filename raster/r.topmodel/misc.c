@@ -15,7 +15,6 @@ int run(char *cmd)
 	retval = 0;
     }
 
-
     return retval;
 }
 
@@ -37,8 +36,8 @@ void gregion(void)
     }
 
     if (hdmap) {
-	sprintf(buf, "\"%s/bin/g.region\" rast=%s --quiet", gisbase, hdmap);
-	G_message("g.region rast=%s ... ", hdmap);
+	sprintf(buf, "g.region rast=%s --quiet", hdmap);
+	G_message("%s ...", buf);
 
 	if (run(buf))
 	    exit(1);
@@ -48,17 +47,14 @@ void gregion(void)
 
 void depressionless(void)
 {
-    sprintf(buf, "\"%s/bin/r.fill.dir\" "
-	    "input=%s elev=%s dir=%s type=grass --quiet",
-	    gisbase, map.elev, map.fill, map.dir);
-    G_message("r.fill.dir input=%s elev=%s dir=%s type=grass ... ",
-	      map.elev, map.fill, map.dir);
+    sprintf(buf, "r.fill.dir input=%s elev=%s dir=%s type=grass --quiet",
+	    map.elev, map.fill, map.dir);
+    G_message("%s ...", buf);
 
     if (run(buf))
 	exit(1);
 
     map.elev = map.fill;
-
 
     return;
 }
@@ -68,16 +64,13 @@ void basin_elevation(void)
 {
     /* be quiet */
 /*    G_putenv("GRASS_VERBOSE", "0");   how to unset in a cross-platform way afterwards? */
-    sprintf(buf, "\"%s/bin/r.mapcalc\" "
-	    "'%s = if(%s == 0 || isnull(%s), null(), %s)'",
-	    gisbase, map.belev, map.basin, map.basin, map.elev);
+    sprintf(buf, "r.mapcalc \"%s = if(%s == 0 || isnull(%s), null(), %s)\"",
+	    map.belev, map.basin, map.basin, map.elev);
 
-    G_message("r.mapcalc '%s = if(%s == 0 || isnull(%s), null(), %s)'"
-	      " ... ", map.belev, map.basin, map.basin, map.elev);
+    G_message("%s ...", buf);
 
     if (run(buf))
 	exit(1);
-
 
     return;
 }
@@ -86,26 +79,22 @@ void basin_elevation(void)
 void top_index(void)
 {
     if (map.belev) {
-	sprintf(buf, "\"%s/bin/r.topidx\" "
-		"input=%s output=%s --quiet",
-		gisbase, map.belev, map.topidx);
-	G_message("r.topidx input=%s output=%s ... ", map.belev, map.topidx);
+	sprintf(buf, "r.topidx input=%s output=%s --quiet",
+		map.belev, map.topidx);
+	G_message("%s ...", buf);
 
 	if (run(buf))
 	    exit(1);
     }
 
     if (map.topidx) {
-	sprintf(buf, "\"%s/bin/r.stats\" -Anc "
-		"input=%s nsteps=%d > %s",
-		gisbase, map.topidx, misc.nidxclass, file.idxstats);
-	G_message("r.stats -Anc input=%s nsteps=%d > %s ... ",
-		  map.topidx, misc.nidxclass, file.idxstats);
+	sprintf(buf, "r.stats -Anc input=%s nsteps=%d output=\"%s\"",
+		map.topidx, misc.nidxclass, file.idxstats);
+	G_message("%s ...", buf);
 
 	if (run(buf))
 	    exit(1);
     }
-
 
     return;
 }
