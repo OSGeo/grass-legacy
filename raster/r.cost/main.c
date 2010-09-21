@@ -849,113 +849,97 @@ int main(int argc, char *argv[])
 	    case 1:
 		value = &W;
 		segment_get(&in_seg, value, row, col);
-		fcost = (double)((W / 2.0) + (my_cost / 2.0));
+		fcost = (double)(W + my_cost) / 2.0;
 		min_cost = pres_cell->min_cost + fcost * EW_fac;
 		break;
 	    case 2:
 		value = &E;
 		segment_get(&in_seg, value, row, col);
-		fcost = (double)((E / 2.0) + (my_cost / 2.0));
+		fcost = (double)(E + my_cost) / 2.0;
 		min_cost = pres_cell->min_cost + fcost * EW_fac;
 		break;
 	    case 3:
 		value = &N;
 		segment_get(&in_seg, value, row, col);
-		fcost = (double)((N / 2.0) + (my_cost / 2.0));
+		fcost = (double)(N + my_cost) / 2.0;
 		min_cost = pres_cell->min_cost + fcost * NS_fac;
 		break;
 	    case 4:
 		value = &S;
 		segment_get(&in_seg, value, row, col);
-		fcost = (double)((S / 2.0) + (my_cost / 2.0));
+		fcost = (double)(S + my_cost) / 2.0;
 		min_cost = pres_cell->min_cost + fcost * NS_fac;
 		break;
 	    case 5:
 		value = &NW;
 		segment_get(&in_seg, value, row, col);
-		fcost = (double)((NW / 2.0) + (my_cost / 2.0));
+		fcost = (double)(NW + my_cost) / 2.0;
 		min_cost = pres_cell->min_cost + fcost * DIAG_fac;
 		break;
 	    case 6:
 		value = &NE;
 		segment_get(&in_seg, value, row, col);
-		fcost = (double)((NE / 2.0) + (my_cost / 2.0));
+		fcost = (double)(NE + my_cost) / 2.0;
 		min_cost = pres_cell->min_cost + fcost * DIAG_fac;
 		break;
 	    case 7:
 		value = &SE;
 		segment_get(&in_seg, value, row, col);
-		fcost = (double)((SE / 2.0) + (my_cost / 2.0));
+		fcost = (double)(SE + my_cost) / 2.0;
 		min_cost = pres_cell->min_cost + fcost * DIAG_fac;
 		break;
 	    case 8:
 		value = &SW;
 		segment_get(&in_seg, value, row, col);
-		fcost = (double)((SW / 2.0) + (my_cost / 2.0));
+		fcost = (double)(SW + my_cost) / 2.0;
 		min_cost = pres_cell->min_cost + fcost * DIAG_fac;
 		break;
 	    case 9:
 		value = &NNW;
 		segment_get(&in_seg, value, row, col);
-		fcost =
-		    (double)((N / 4.0) + (NW / 4.0) + (NNW / 4.0) +
-			     (my_cost / 4.0));
+		fcost = (double)(N + NW + NNW + my_cost) / 4.0;
 		min_cost = pres_cell->min_cost + fcost * V_DIAG_fac;
 		break;
 	    case 10:
 		value = &NNE;
 		segment_get(&in_seg, value, row, col);
-		fcost =
-		    (double)((N / 4.0) + (NE / 4.0) + (NNE / 4.0) +
-			     (my_cost / 4.0));
+		fcost = (double)(N + NE + NNE + my_cost) / 4.0;
 		min_cost = pres_cell->min_cost + fcost * V_DIAG_fac;
 		break;
 	    case 11:
 		value = &SSE;
 		segment_get(&in_seg, value, row, col);
-		fcost =
-		    (double)((S / 4.0) + (SE / 4.0) + (SSE / 4.0) +
-			     (my_cost / 4.0));
+		fcost = (double)(S + SE + SSE + my_cost) / 4.0;
 		min_cost = pres_cell->min_cost + fcost * V_DIAG_fac;
 		break;
 	    case 12:
 		value = &SSW;
 		segment_get(&in_seg, value, row, col);
-		fcost =
-		    (double)((S / 4.0) + (SW / 4.0) + (SSW / 4.0) +
-			     (my_cost / 4.0));
+		fcost = (double)(S + SW + SSW + my_cost) / 4.0;
 		min_cost = pres_cell->min_cost + fcost * V_DIAG_fac;
 		break;
 	    case 13:
 		value = &WNW;
 		segment_get(&in_seg, value, row, col);
-		fcost =
-		    (double)((W / 4.0) + (NW / 4.0) + (WNW / 4.0) +
-			     (my_cost / 4.0));
+		fcost = (double)(W + NW + WNW + my_cost) / 4.0;
 		min_cost = pres_cell->min_cost + fcost * H_DIAG_fac;
 		break;
 	    case 14:
 		value = &ENE;
 		segment_get(&in_seg, value, row, col);
-		fcost =
-		    (double)((E / 4.0) + (NE / 4.0) + (ENE / 4.0) +
-			     (my_cost / 4.0));
+		fcost = (double)(E + NE + ENE + my_cost) / 4.0;
 		min_cost = pres_cell->min_cost + fcost * H_DIAG_fac;
 		break;
 	    case 15:
 		value = &ESE;
 		segment_get(&in_seg, value, row, col);
-		fcost =
-		    (double)((E / 4.0) + (SE / 4.0) + (ESE / 4.0) +
-			     (my_cost / 4.0));
+		fcost = (double)(E + SE + ESE + my_cost) / 4.0;
 		min_cost = pres_cell->min_cost + fcost * H_DIAG_fac;
 		break;
 	    case 16:
 		value = &WSW;
 		segment_get(&in_seg, value, row, col);
-		fcost =
-		    (double)((W / 4.0) + (SW / 4.0) + (WSW / 4.0) +
-			     (my_cost / 4.0));
+		fcost = (double)(W + SW + WSW + my_cost) / 4.0;
 		min_cost = pres_cell->min_cost + fcost * H_DIAG_fac;
 		break;
 	    }
