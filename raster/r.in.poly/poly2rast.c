@@ -42,7 +42,12 @@ int poly_to_rast(char *input_file, char *raster_map, char *title, int nrows)
     G_init_cats((CELL) 0, title, &labels);
 
     format = getformat(ifd);
+    
+    /* ?? otherwise get complaints about window changes */
+    G_suppress_warnings(TRUE);
     npasses = begin_rasterization(nrows, format);
+    G_suppress_warnings(FALSE);
+
     pass = 0;
 
     do {
