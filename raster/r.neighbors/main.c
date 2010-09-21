@@ -49,6 +49,7 @@ static struct menu menu[] = {
     {c_mode, w_mode, NO_CATS, 1, 0, "mode", "most frequently occuring value"},
     {c_min, NULL, NO_CATS, 1, 0, "minimum", "lowest value"},
     {c_max, NULL, NO_CATS, 1, 0, "maximum", "highest value"},
+    {c_range, NULL, NO_CATS, 1, 0, "range", "range value"},
     {c_stddev, w_stddev, NO_CATS, 0, 1, "stddev", "standard deviation"},
     {c_sum, w_sum, NO_CATS, 1, 0, "sum", "sum of values"},
     {c_var, w_var, NO_CATS, 0, 1, "variance", "statistical variance"},
@@ -89,6 +90,7 @@ int main(int argc, char *argv[])
 	struct Option *method, *size;
 	struct Option *title;
 	struct Option *weight;
+	struct Option *gauss;
     } parm;
     struct
     {
@@ -153,6 +155,12 @@ int main(int argc, char *argv[])
     parm.weight->gisprompt = "old_file,file,input";
     parm.weight->description = _("File containing weights");
 
+    parm.gauss = G_define_option();
+    parm.gauss->key = "gauss";
+    parm.gauss->type = TYPE_DOUBLE;
+    parm.gauss->required = NO;
+    parm.gauss->description = _("Sigma (in cells) for Gaussian filter");
+
     flag.align = G_define_flag();
     flag.align->key = 'a';
     flag.align->description = _("Do not align output with the input");
@@ -189,6 +197,8 @@ int main(int argc, char *argv[])
 	G_fatal_error(_("<%s> is an illegal file name"), p);
     }
     ncb.newcell.mapset = G_mapset();
+    if (parm.weight->answer && parm.gauss->answer)
+	G_fatal_error(_("weight= and gauss= are mutually exclusive"));
 
     if (!flag.align->answer) {
 	if (G_get_cellhd(ncb.oldcell.name, ncb.oldcell.mapset, &cellhd) < 0)
@@ -239,6 +249,11 @@ int main(int argc, char *argv[])
 	read_weights(parm.weight->answer);
 	if (!newvalue_w)
 	    weights_mask();
+    }
+    else if (parm.gauss->answer) {
+	if (!newvalue_w)
+	    G_fatal_error(_("Method %s not compatible with Gaussian filter"), parm.method->answer);
+	gaussian_weights(atof(parm.gauss->answer));
     }
     else
 	newvalue_w = NULL;
