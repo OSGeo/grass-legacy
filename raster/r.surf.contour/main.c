@@ -169,7 +169,7 @@ int main(int argc, char *argv[])
 		find_con(r, c, &d1, &d2, &con1, &con2);
 	    else
 		find_con_slow(r, c, &d1, &d2, &con1, &con2);
-	    if (con2 > 0)
+	    if (!G_is_d_null_value(&con2))
 		alt_row[c] = d2 * con1 / (d1 + d2) +
 			     d1 * con2 / (d1 + d2);
 	    else
