@@ -4,15 +4,15 @@
  * MODULE:       v.info
  * 
  * AUTHOR(S):    CERL, updated to 5.7 by Markus Neteler
+ *               Support for level 1 by Markus Metz (2009)
  *               
- * PURPOSE:      print vector map info
+ * PURPOSE:      Print vector map info
  *               
- * COPYRIGHT:    (C) 2002 by the GRASS Development Team
+ * COPYRIGHT:    (C) 2002-2009 by the GRASS Development Team
  *
- *               This program is free software under the 
- *               GNU General Public License (>=v2). 
- *               Read the file COPYING that comes with GRASS
- *               for details.
+ *               This program is free software under the GNU General
+ *               Public License (>=v2).  Read the file COPYING that
+ *               comes with GRASS for details.
  *
  **************************************************************/
 #include <string.h>
@@ -37,7 +37,7 @@
  */
 
 void format_double(double, char *);
-
+int level_one_info(struct Map_info *);
 
 int main(int argc, char *argv[])
 {
@@ -45,7 +45,6 @@ int main(int argc, char *argv[])
     struct Option *in_opt, *fieldopt;
     struct Flag *histf, *columns, *gflag, *tflag, *mflag;
     struct Map_info Map;
-    struct dig_head v_head;
     BOUND_BOX box;
     char *mapset, line[200], buf[1001];
     int i;
@@ -104,10 +103,19 @@ int main(int argc, char *argv[])
 	G_fatal_error(_("Vector map <%s> not found"), in_opt->answer);
     }
 
-    Vect_set_open_level(2);
-    Vect_open_old_head(&Map, in_opt->answer, mapset);
+     /* try to open head-only on level 2 */
+    if (Vect_open_old_head(&Map, in_opt->answer, "") < 2) {
+	/* force level 1, open fully
+	 * NOTE: number of points, lines, boundaries, centroids, faces, kernels is still available */
+	Vect_close(&Map);
+	Vect_set_open_level(1); /* no topology */
+	if (Vect_open_old(&Map, in_opt->answer, "") < 1)
+	    G_fatal_error(_("Unable to open vector map <%s>"), Vect_get_full_name(&Map));
+	if (!histf->answer && !mflag->answer && ((gflag->answer || tflag->answer) || !columns->answer))
+	    level_one_info(&Map);
+    }
+
     with_z = Vect_is_3d(&Map);
-    v_head = Map.head;
 
     if (histf->answer) {
 	Vect_hist_rewind(&Map);
@@ -258,7 +266,7 @@ int main(int argc, char *argv[])
 
 	    printline(line);
 
-	    if (Vect_level(&Map) > 1) {
+	    if (Vect_level(&Map) > 0) {
 		printline("");
 		sprintf(line,
 			_("  Number of points:       %-9ld       Number of areas:      %-9ld"),
@@ -286,10 +294,6 @@ int main(int argc, char *argv[])
 		printline(line);
 		sprintf(line, _("  Number of dblinks:      %-9ld"),
 			(long)Vect_get_num_dblinks(&Map));
-		printline(line);
-	    }
-	    else {		/* should not be reached */
-		sprintf(line, _("                No topology present"));
 		printline(line);
 	    }
 
@@ -329,7 +333,7 @@ int main(int argc, char *argv[])
 	    printline(line);
 	    sprintf(line, _("  Comments:"));
 	    printline(line);
-	    sprintf(line, "    %s", v_head.line_3);
+	    sprintf(line, "    %s", Vect_get_comment(&Map));
 	    printline(line);
 	    divider('+');
 	    fprintf(stdout, "\n");
@@ -347,4 +351,94 @@ void format_double(double value, char *buf)
 {
     sprintf(buf, "%.8f", value);
     G_trim_decimal(buf);
+}
+
+/* code taken from Vect_build_nat() */
+int level_one_info(struct Map_info *Map)
+{
+    struct Plus_head *plus;
+    int i, type, first = 1;
+    off_t offset;
+    struct line_pnts *Points;
+    struct line_cats *Cats;
+    struct bound_box box;
+
+    int n_primitives, n_points, n_lines, n_boundaries, n_centroids;
+    int n_faces, n_kernels;
+
+    G_debug(1, "Count vector objects for level 1");
+
+    plus = &(Map->plus);
+
+    n_primitives = n_points = n_lines = n_boundaries = n_centroids = 0;
+    n_faces = n_kernels = 0;
+
+    Points = Vect_new_line_struct();
+    Cats = Vect_new_cats_struct();
+    
+    Vect_rewind(Map);
+    /* G_message(_("Registering primitives...")); */
+    i = 1;
+    while (1) {
+	/* register line */
+	type = Vect_read_next_line(Map, Points, Cats);
+
+	/* Note: check for dead lines is not needed, because they are skipped by V1_read_next_line_nat() */
+	if (type == -1) {
+	    G_warning(_("Unable to read vector map"));
+	    return 0;
+	}
+	else if (type == -2) {
+	    break;
+	}
+
+	/* count features */
+	n_primitives++;
+	
+	if (type & GV_POINT)  /* probably most common */
+	    n_points++;
+	else if (type & GV_LINE)
+	    n_lines++;
+	else if (type & GV_BOUNDARY)
+	    n_boundaries++;
+	else if (type & GV_CENTROID)
+	    n_centroids++;
+	else if (type & GV_KERNEL)
+	    n_kernels++;
+	else if (type & GV_FACE)
+	    n_faces++;
+
+	offset = Map->head.last_offset;
+
+	G_debug(3, "Register line: offset = %lu", (unsigned long)offset);
+	dig_line_box(Points, &box);
+	if (first == 1) {
+	    Vect_box_copy(&(plus->box), &box);
+	    first = 0;
+	}
+	else
+	    Vect_box_extend(&(plus->box), &box);
+
+	/* can't print progress, unfortunately */
+/*
+	if (G_verbose() > G_verbose_min() && i % 1000 == 0) {
+	    if (format == G_INFO_FORMAT_PLAIN)
+		fprintf(stderr, "%d..", i);
+	    else
+		fprintf(stderr, "%11d\b\b\b\b\b\b\b\b\b\b\b", i);
+	}
+	i++;
+*/
+    }
+
+    /* save result in plus */
+    plus->n_lines = n_primitives;
+    plus->n_plines = n_points;
+    plus->n_llines = n_lines;
+    plus->n_blines = n_boundaries;
+    plus->n_clines = n_centroids;
+    plus->n_klines = n_kernels;
+    plus->n_flines = n_faces;
+
+    return 1;
 }
