@@ -9,7 +9,7 @@ current PROJ_INFO files, as set with <i><a href="g.setproj.html">g.setproj</a>
 
 <h3>Introduction</h3>
 
-<h4>Map projections</h4>
+<h5>Map projections</h5>
 
 Map projections are a method of representing information from a
 curved surface (usually a spheroid) in two dimensions, typically to allow
@@ -34,7 +34,7 @@ Projections are defined by precise mathematical relations, so the method
 of projecting coordinates from a geographic reference frame
 (latitude-longitude) into a projected cartesian reference frame (eg metres)
 is governed by these equations.  Inverse projections can also be achieved. 
-The public-domain Unix software package <i>PROJ</i> [1] has been designed to
+The public-domain Unix software package <i>PROJ.4</i> [1] has been designed to
 perform these transformations, and the user's manual contains a detailed
 description of over 100 useful projections.  This also includes a
 programmers library of the projection methods to support other software
@@ -69,7 +69,9 @@ prior to import or after export, using software such as <i>PROJ.4</i>'s
 <i><a href="http://proj.maptools.org/">cs2cs</a></i> [1]. This is an easy
 method for converting an ASCII file containing a list of coordinate points,
 since there is no topology to be preserved and <i>cs2cs</i> can be used to
-process simple lists using a one-line command.
+process simple lists using a one-line command. The <em>m.proj</em> module
+provides a handy front end to <tt>cs2cs</tt>.
+
 <p>
 The format of files containing vector maps with <b>lines</b> and <b>arcs</b> is
 generally more complex, as parts of the data stored in the files will describe
@@ -109,7 +111,7 @@ continuous data and cause some smoothing. Both options should not be used
 with categorical data, since the cell values will be altered.
 <p>
 If nearest neighbor assignment is used, the output map has the same raster
-format as the input map. If any of the both interpolations is used, the
+format as the input map. If any of the interpolations is used, the
 output map is written as floating point.
 
 <p>
@@ -129,11 +131,13 @@ are provided.
 <em>PROJ.4</em> co-ordinate system translation library.
 </p>
 
+
 <h2>NOTES</h2>
 
 To avoid excessive time consumption when reprojecting a map the region and 
 resolution of the target location should be set appropriately beforehand.
-A simple way to do this is to generate a vector "box" map of the region in  
+
+A simple way to do this is to generate a vector "box" map of the region in
 the source location using <em><a href="v.in.region.html">v.in.region</a></em>.
 This "box" map is then reprojected into the target location with
 <em><a href="v.proj.html">v.proj</a></em>.
@@ -150,16 +154,45 @@ whole map in memory anyway. Besides that, world "edges" are hard (or
 impossible) to find in projections other than latitude-longitude so results
 may be odd with trimming.
 
+
+<h2>EXAMPLES</h2>
+
+<h3>v.in.region method</h3>
+<div class="code"><pre>
+
+# In the source location, use v.in.region to generate a bounding box around the
+# region of interest:
+
+v.in.region output=bounds type=area
+
+# Now switch to the target location and import the vector bounding box 
+# (you can run v.proj -l to get a list of vector maps in the source location):
+
+v.proj input=bounds location=source_location_name output=bounds_reprojected
+
+# Set the region in the target location with that of the newly-imported vector
+# bounds map, and align the resolution to the desired cell resolution of the 
+# final, reprojected raster map:
+
+g.region vect=bounds_reprojected res=5 -a
+
+# Now reproject the raster into the target location
+
+r.proj input=elevation.dem output=elevation.dem.reproj \
+location=source_location_name mapset=PERMANENT res=5 method=cubic
+</pre></div>
+
+
 <h2>REFERENCES</h2>
 
-[1] Evenden, G.I.  (1990) <a href="http://proj.maptools.org/">Cartographic projection procedures for
+[1] Evenden, G.I.  (1990) <a href="http://proj.osgeo.org">Cartographic projection procedures for
 the UNIX environment - a user's manual.</a>  USGS Open-File Report 90-284 (OF90-284.pdf)
 See also there: Interim Report and 2nd Interim Report on Release 4, Evenden 1994).
 <p>
 Richards, John A. (1993), Remote Sensing Digital Image Analysis,
 Springer-Verlag, Berlin, 2nd edition. 
 <p>
-<a href=http://proj.maptools.org/>PROJ.4</a>: Projection/datum support library.
+<a href="http://proj.osgeo.org">PROJ.4</a>: Projection/datum support library.
 <p>
 <b>Further reading</b>
 <ul>
@@ -169,6 +202,7 @@ Springer-Verlag, Berlin, 2nd edition.
 <li> <a href="http://www.crs-geo.eu">Information and Service System for European Coordinate Reference Systems - CRS</a>
 </ul>
 
+
 <h2>SEE ALSO</h2>
 
 <em>
@@ -176,6 +210,7 @@ Springer-Verlag, Berlin, 2nd edition.
 <a href="g.proj.html">g.proj</a>,
 <a href="g.setproj.html">g.setproj</a>,
 <a href="i.rectify.html">i.rectify</a>,
+<a href="m.proj.html">m.proj</a>,
 <a href="r.support.html">r.support</a>,
 <a href="r.stats.html">r.stats</a>,
 <a href="v.proj.html">v.proj</a>,
@@ -184,6 +219,7 @@ Springer-Verlag, Berlin, 2nd edition.
 <p>
 The 'gdalwarp' and 'gdal_translate' utilities are available from the 
 <a href="http://www.gdal.org">GDAL</a> project.
+
 
 <h2>AUTHORS</h2>
 
@@ -194,4 +230,5 @@ Updated by <a href="mailto:morten@ngb.se">Morten Hulden</a>
 <p>
 Datum tranformation support and cleanup by Paul Kelly
 
-<p><i>Last changed: $Date$</i>
+<p>
+<i>Last changed: $Date$</i>
