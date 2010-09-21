@@ -52,8 +52,8 @@ variables[] = {
     "coor", START_PT}
 };
 
-char cum_cost_layer[64];
-char cost_layer[64];
+char cum_cost_layer[GNAME_MAX];
+char cost_layer[GNAME_MAX];
 struct start_pt *head_start_pt = NULL;
 struct start_pt *head_end_pt = NULL;
 
