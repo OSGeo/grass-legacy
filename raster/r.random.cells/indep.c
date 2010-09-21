@@ -1,12 +1,9 @@
 /* indep.c                                                              */
-
-#undef TRACE
-#undef DEBUG
+#include <grass/gis.h>
+#include <grass/glocale.h>
 
 #undef MAIN
-#include <grass/gis.h>
 #include "ransurf.h"
-
 
 void Indep(void)
 {
@@ -15,14 +12,15 @@ void Indep(void)
     double RowDist, RowDistSq, ColDist;
     struct History history;
 
-    FUNCTION(indep);
+    G_debug(2, "indep()");
+
     Count = 0;
     Found = 0;
 
     while (CellCount > 0) {
-	INT(CellCount);
-	INT(Count);
-	RETURN;
+	G_debug(3, "(CellCount):%d", CellCount);
+	G_debug(3, "(Count):%d", Count);
+
 	DRow = DoNext[Count].R;
 	DCol = DoNext[Count++].C;
 
@@ -38,13 +36,13 @@ void Indep(void)
 		    RowDistSq = RowDist * RowDist;
 		    for (C = DCol; C < Cs; C++) {
 			ColDist = EW * (C - DCol);
-			DOUBLE(RowDistSq);
-			DOUBLE(ColDist);
-			DOUBLE(MaxDistSq);
-			RETURN;
+			G_debug(3, "(RowDistSq):%.12lf", RowDistSq);
+			G_debug(3, "(ColDist):%.12lf", ColDist);
+			G_debug(3, "(MaxDistSq):%.12lf", MaxDistSq);
+			
 			if (MaxDistSq >= RowDistSq + ColDist * ColDist) {
 			    if (0 != FlagGet(Cells, R, C)) {
-				FUNCTION(unset);
+				G_debug(2, "unset()");
 				FLAG_UNSET(Cells, R, C);
 				CellCount--;
 			    }
@@ -56,7 +54,7 @@ void Indep(void)
 		}
 	    }
 
-	    FUNCTION(it1);
+	    G_debug(2, "it1()");
 	    for (R = DRow - 1; R >= 0; R--) {
 		RowDist = NS * (DRow - R);
 		if (RowDist > MaxDistSq) {
@@ -68,7 +66,7 @@ void Indep(void)
 			ColDist = EW * (C - DCol);
 			if (MaxDistSq >= RowDistSq + ColDist * ColDist) {
 			    if (0 != FlagGet(Cells, R, C)) {
-				FUNCTION(unset);
+				G_debug(2, "unset()");
 				FLAG_UNSET(Cells, R, C);
 				CellCount--;
 			    }
@@ -80,7 +78,7 @@ void Indep(void)
 		}
 	    }
 
-	    FUNCTION(it2);
+	    G_debug(2, "it2()");
 	    for (R = DRow; R < Rs; R++) {
 		RowDist = NS * (R - DRow);
 		if (RowDist > MaxDistSq) {
@@ -92,7 +90,7 @@ void Indep(void)
 			ColDist = EW * (DCol - C);
 			if (MaxDistSq >= RowDistSq + ColDist * ColDist) {
 			    if (0 != FlagGet(Cells, R, C)) {
-				FUNCTION(unset);
+				G_debug(2, "unset()");
 				FLAG_UNSET(Cells, R, C);
 				CellCount--;
 			    }
@@ -104,7 +102,7 @@ void Indep(void)
 		}
 	    }
 
-	    FUNCTION(it3);
+	    G_debug(2, "it3()");
 	    for (R = DRow - 1; R >= 0; R--) {
 		RowDist = NS * (DRow - R);
 		if (RowDist > MaxDistSq) {
@@ -116,7 +114,7 @@ void Indep(void)
 			ColDist = EW * (DCol - C);
 			if (MaxDistSq >= RowDistSq + ColDist * ColDist) {
 			    if (0 != FlagGet(Cells, R, C)) {
-				FUNCTION(unset);
+				G_debug(2, "unset()");
 				FLAG_UNSET(Cells, R, C);
 				CellCount--;
 			    }
@@ -130,18 +128,23 @@ void Indep(void)
 	}
     }
 
-    FUNCTION(outputting);
+    G_debug(2, "outputting()");
     OutFD = G_open_cell_new(Output->answer);
     if (OutFD < 0)
-	G_fatal_error("%s: unable to open new raster map [%s]",
-		      G_program_name(), Output->answer);
+	G_fatal_error(_("Unable to open raster map <%s>"),
+		      Output->answer);
 
+    G_message(_("Writing raster map <%s>..."),
+	      Output->answer);
     for (R = 0; R < Rs; R++) {
+	G_percent(R, Rs, 2);
 	for (C = 0; C < Cs; C++) {
 	    CellBuffer[C] = Out[R][C];
 	}
 	G_put_raster_row(OutFD, CellBuffer, CELL_TYPE);
     }
+    G_percent(1, 1, 1);
+    
     G_close_cell(OutFD);
     G_short_history(Output->answer, "raster", &history);
     G_command_history(&history);

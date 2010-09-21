@@ -1,14 +1,9 @@
 /* calcsurf.c                                                           */
-
-#undef TRACE
-#undef DEBUG
-
 #undef MAIN
 #include <stdlib.h>
 #include <grass/gis.h>
 #include "ransurf.h"
 #include "local_proto.h"
-
 
 void CalcSurface(void)
 {
@@ -17,7 +12,7 @@ void CalcSurface(void)
     int owC, oeC, onR, osR, wC, eC, nR, sR;
     double **Randoms;
 
-    FUNCTION(CalcSurface);
+    G_debug(2, "CalcSurface()");
 
     OutRows = BigF.RowPlus;
     OutCols = BigF.ColPlus;
@@ -97,21 +92,20 @@ void CalcSurface(void)
 	for (Row = 0; Row < Rs; Row++) {
 	    if (ODD(Row)) {
 		for (Col = Cs - 1; Col >= 0; Col--) {
+		    G_percent(Count++, MapCount, 1);
 		    Surface[Row][Col] =
 			MakePP(Row, Col, OutRows, OutCols, Randoms, BigF);
-		    if (!Verbose->answer)
-			G_percent(++Count, MapCount, 1);
 		}
 	    }
 	    else {
 		for (Col = 0; Col < Cs; Col++) {
+		    G_percent(Count++, MapCount, 1);
 		    Surface[Row][Col] =
 			MakePP(Row, Col, OutRows, OutCols, Randoms, BigF);
-		    if (!Verbose->answer)
-			G_percent(++Count, MapCount, 1);
 		}
 	    }
 	}
+	G_percent(1, 1, 1);
     }
     else {
 	for (Row = 0; Row < Rs; Row++) {
@@ -121,11 +115,9 @@ void CalcSurface(void)
 		    if (CellBuffer[Col] == 0)
 			Surface[Row][Col] = 0.0;
 		    else {
+			G_percent(Count++, MapCount, 1);
 			Surface[Row][Col] =
 			    MakePP(Row, Col, OutRows, OutCols, Randoms, BigF);
-
-			if (!Verbose->answer)
-			    G_percent(++Count, MapCount, 1);
 		    }
 		}
 	    }
@@ -134,17 +126,15 @@ void CalcSurface(void)
 		    if (CellBuffer[Col] == 0)
 			Surface[Row][Col] = 0.0;
 		    else {
+			G_percent(Count++, MapCount, 1);
 			Surface[Row][Col] =
 			    MakePP(Row, Col, OutRows, OutCols, Randoms, BigF);
-
-			if (!Verbose->answer)
-			    G_percent(++Count, MapCount, 1);
 		    }
 		}
 	    }
 	}
+	G_percent(1, 1, 1);
     }
 
     G_free(Randoms);
-    FUNCTION(end calcsurf);
 }

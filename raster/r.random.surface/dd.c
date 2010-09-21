@@ -1,12 +1,7 @@
 /* dd.c                                                         */
-
-#undef TRACE
-#undef DEBUG
-
 #undef MAIN
 #include <math.h>
 #include "ransurf.h"
-
 
 double DD(double Dist)
 {
