@@ -47,7 +47,7 @@ int main(int argc, char *argv[])
     G_gisinit(argv[0]);
 
     module = G_define_module();
-    module->keywords = _("raster");
+    module->keywords = _("raster, conversion, vectorization");
     module->description = _("Converts a raster map into a vector map layer.");
 
     in_opt = G_define_standard_option(G_OPT_R_INPUT);
@@ -71,12 +71,14 @@ int main(int argc, char *argv[])
     value_flg->key = 'v';
     value_flg->description =
 	_("Use raster values as categories instead of unique sequence (CELL only)");
+    value_flg->guisection = _("Attributes");
 
     z_flg = G_define_flag();
     z_flg->key = 'z';
     z_flg->description =
 	_("Write raster values as z coordinate. Table is not created. "
 	  "Currently supported only for points.");
+    z_flg->guisection = _("Attributes");
 
     no_topol = G_define_flag();
     no_topol->key = 'b';
