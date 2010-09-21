@@ -1146,7 +1146,7 @@ int main(int argc, char *argv[])
 		    fcost_dtm = (double)((double)(W_dtm - my_dtm) * d);
 		else
 		    fcost_dtm = (double)((double)(W_dtm - my_dtm) * c);
-		fcost_cost = (double)((W_cost / 2.0) + (my_cost / 2.0));
+		fcost_cost = ((double)(W_cost + my_cost) / 2.0);
 		min_cost =
 		    pres_cell->min_cost + fcost_dtm + (EW_fac * a) +
 		    lambda * fcost_cost * EW_fac;
@@ -1164,7 +1164,7 @@ int main(int argc, char *argv[])
 		    fcost_dtm = (double)(E_dtm - my_dtm) * d;
 		else
 		    fcost_dtm = (double)(E_dtm - my_dtm) * c;
-		fcost_cost = (double)((E_cost / 2.0) + (my_cost / 2.0));
+		fcost_cost = (double)(E_cost + my_cost) / 2.0;
 		min_cost =
 		    pres_cell->min_cost + fcost_dtm + (EW_fac * a) +
 		    lambda * fcost_cost * EW_fac;
@@ -1182,7 +1182,7 @@ int main(int argc, char *argv[])
 		    fcost_dtm = (double)(N_dtm - my_dtm) * d;
 		else
 		    fcost_dtm = (double)(N_dtm - my_dtm) * c;
-		fcost_cost = (double)((N_cost / 2.0) + (my_cost / 2.0));
+		fcost_cost = (double)(N_cost + my_cost) / 2.0;
 		min_cost =
 		    pres_cell->min_cost + fcost_dtm + (NS_fac * a) +
 		    lambda * fcost_cost * NS_fac;
@@ -1200,7 +1200,7 @@ int main(int argc, char *argv[])
 		    fcost_dtm = (double)(S_dtm - my_dtm) * d;
 		else
 		    fcost_dtm = (double)(S_dtm - my_dtm) * c;
-		fcost_cost = (double)((S_cost / 2.0) + (my_cost / 2.0));
+		fcost_cost = (double)(S_cost + my_cost) / 2.0;
 		min_cost =
 		    pres_cell->min_cost + fcost_dtm + (NS_fac * a) +
 		    lambda * fcost_cost * NS_fac;
@@ -1218,7 +1218,7 @@ int main(int argc, char *argv[])
 		    fcost_dtm = (double)(NW_dtm - my_dtm) * d;
 		else
 		    fcost_dtm = (double)(NW_dtm - my_dtm) * c;
-		fcost_cost = (double)((NW_cost / 2.0) + (my_cost / 2.0));
+		fcost_cost = (double)(NW_cost + my_cost) / 2.0;
 		min_cost =
 		    pres_cell->min_cost + fcost_dtm + (DIAG_fac * a) +
 		    lambda * fcost_cost * DIAG_fac;
@@ -1236,7 +1236,7 @@ int main(int argc, char *argv[])
 		    fcost_dtm = (double)(NE_dtm - my_dtm) * d;
 		else
 		    fcost_dtm = (double)(NE_dtm - my_dtm) * c;
-		fcost_cost = (double)((NE_cost / 2.0) + (my_cost / 2.0));
+		fcost_cost = (double)(NE_cost + my_cost) / 2.0;
 		min_cost =
 		    pres_cell->min_cost + fcost_dtm + (DIAG_fac * a) +
 		    lambda * fcost_cost * DIAG_fac;
@@ -1254,7 +1254,7 @@ int main(int argc, char *argv[])
 		    fcost_dtm = (double)(SE_dtm - my_dtm) * d;
 		else
 		    fcost_dtm = (double)(SE_dtm - my_dtm) * c;
-		fcost_cost = (double)((SE_cost / 2.0) + (my_cost / 2.0));
+		fcost_cost = (double)(SE_cost + my_cost) / 2.0;
 		min_cost =
 		    pres_cell->min_cost + fcost_dtm + (DIAG_fac * a) +
 		    lambda * fcost_cost * DIAG_fac;
@@ -1272,7 +1272,7 @@ int main(int argc, char *argv[])
 		    fcost_dtm = (double)(SW_dtm - my_dtm) * d;
 		else
 		    fcost_dtm = (double)(SW_dtm - my_dtm) * c;
-		fcost_cost = (double)((SW_cost / 2.0) + (my_cost / 2.0));
+		fcost_cost = (double)(SW_cost + my_cost) / 2.0;
 		min_cost =
 		    pres_cell->min_cost + fcost_dtm + (DIAG_fac * a) +
 		    lambda * fcost_cost * DIAG_fac;
@@ -1291,8 +1291,7 @@ int main(int argc, char *argv[])
 		else
 		    fcost_dtm = (double)(NNW_dtm - my_dtm) * c;
 		fcost_cost =
-		    (double)((N_cost / 4.0) + (NW_cost / 4.0) +
-			     (NNW_cost / 4.0) + (my_cost / 4.0));
+		    (double)(N_cost + NW_cost + NNW_cost + my_cost) / 4.0;
 		min_cost =
 		    pres_cell->min_cost + fcost_dtm + (V_DIAG_fac * a) +
 		    lambda * fcost_cost * V_DIAG_fac;
@@ -1311,8 +1310,7 @@ int main(int argc, char *argv[])
 		else
 		    fcost_dtm = (double)(NNE_dtm - my_dtm) * c;
 		fcost_cost =
-		    (double)((N_cost / 4.0) + (NE_cost / 4.0) +
-			     (NNE_cost / 4.0) + (my_cost / 4.0));
+		    (double)(N_cost + NE_cost + NNE_cost + my_cost) / 4.0;
 		min_cost =
 		    pres_cell->min_cost + fcost_dtm + (V_DIAG_fac * a) +
 		    lambda * fcost_cost * V_DIAG_fac;
@@ -1331,8 +1329,7 @@ int main(int argc, char *argv[])
 		else
 		    fcost_dtm = (double)(SSE_dtm - my_dtm) * c;
 		fcost_cost =
-		    (double)((S_cost / 4.0) + (SE_cost / 4.0) +
-			     (SSE_cost / 4.0) + (my_cost / 4.0));
+		    (double)(S_cost + SE_cost + SSE_cost + my_cost) / 4.0;
 		min_cost =
 		    pres_cell->min_cost + fcost_dtm + (V_DIAG_fac * a) +
 		    lambda * fcost_cost * V_DIAG_fac;
@@ -1351,8 +1348,7 @@ int main(int argc, char *argv[])
 		else
 		    fcost_dtm = (double)(SSW_dtm - my_dtm) * c;
 		fcost_cost =
-		    (double)((S_cost / 4.0) + (SW_cost / 4.0) +
-			     (SSW_cost / 4.0) + (my_cost / 4.0));
+		    (double)(S_cost + SW_cost + SSW_cost + my_cost) / 4.0;
 		min_cost =
 		    pres_cell->min_cost + fcost_dtm + (V_DIAG_fac * a) +
 		    lambda * fcost_cost * V_DIAG_fac;
@@ -1371,8 +1367,7 @@ int main(int argc, char *argv[])
 		else
 		    fcost_dtm = (double)(WNW_dtm - my_dtm) * c;
 		fcost_cost =
-		    (double)((W_cost / 4.0) + (NW_cost / 4.0) +
-			     (WNW_cost / 4.0) + (my_cost / 4.0));
+		    (double)(W_cost + NW_cost + WNW_cost + my_cost) / 4.0;
 		min_cost =
 		    pres_cell->min_cost + fcost_dtm + (H_DIAG_fac * a) +
 		    lambda * fcost_cost * H_DIAG_fac;
@@ -1391,8 +1386,7 @@ int main(int argc, char *argv[])
 		else
 		    fcost_dtm = (double)(ENE_dtm - my_dtm) * c;
 		fcost_cost =
-		    (double)((E_cost / 4.0) + (NE_cost / 4.0) +
-			     (ENE_cost / 4.0) + (my_cost / 4.0));
+		    (double)(E_cost + NE_cost + ENE_cost + my_cost) / 4.0;
 		min_cost =
 		    pres_cell->min_cost + fcost_dtm + (H_DIAG_fac * a) +
 		    lambda * fcost_cost * H_DIAG_fac;
@@ -1411,8 +1405,7 @@ int main(int argc, char *argv[])
 		else
 		    fcost_dtm = (double)(ESE_dtm - my_dtm) * c;
 		fcost_cost =
-		    (double)((E_cost / 4.0) + (SE_cost / 4.0) +
-			     (ESE_cost / 4.0) + (my_cost / 4.0));
+		    (double)(E_cost + SE_cost + ESE_cost + my_cost) / 4.0;
 		min_cost =
 		    pres_cell->min_cost + fcost_dtm + (H_DIAG_fac * a) +
 		    lambda * fcost_cost * H_DIAG_fac;
@@ -1431,8 +1424,7 @@ int main(int argc, char *argv[])
 		else
 		    fcost_dtm = (double)(WSW_dtm - my_dtm) * c;
 		fcost_cost =
-		    (double)((W_cost / 4.0) + (SW_cost / 4.0) +
-			     (WSW_cost / 4.0) + (my_cost / 4.0));
+		    (double)(W_cost + SW_cost + WSW_cost + my_cost) / 4.0;
 		min_cost =
 		    pres_cell->min_cost + fcost_dtm + (H_DIAG_fac * a) +
 		    lambda * fcost_cost * H_DIAG_fac;
