@@ -49,7 +49,7 @@ Joint Research Centre of the European Commission, based on bits of the r.sun mod
 #define SMALL    1.e-20
 #define EPS      1.e-4
 #define DIST     "1.0"
-#define DEGREEINMETERS 111120.
+#define DEGREEINMETERS 111120.	/* 1852m/nm * 60nm/degree = 111120 m/deg */
 #define TANMINANGLE 0.008727	/* tan of minimum horizon angle (0.5 deg) */
 
 #define AMAX1(arg1, arg2) ((arg1) >= (arg2) ? (arg1) : (arg2))
@@ -71,7 +71,7 @@ char *latin = NULL;
 char *horizon = NULL;
 char *mapset = NULL;
 char *per;
-char shad_filename[256];
+char shad_filename[GNAME_MAX];
 
 struct Cell_head cellhd;
 struct Key_value *in_proj_info, *in_unit_info;
@@ -108,7 +108,7 @@ void calculate(double xcoord, double ycoord, int buffer_e, int buffer_w,
 
 int ip, jp, ip100, jp100;
 int n, m, m100, n100;
-int degreeOutput = 0;
+int degreeOutput = FALSE;
 float **z, **z100, **horizon_raster;
 double stepx, stepy, stepxhalf, stepyhalf, stepxy, xp, yp, op, dp, xg0, xx0,
     yg0, yy0, deltx, delty;
@@ -139,9 +139,10 @@ void setMode(int val)
     mode = val;
 }
 
-int ll_correction = 0;
+int ll_correction = FALSE;
 double coslatsq;
 
+/* use G_distance() instead ??!?! */
 double distance(double x1, double x2, double y1, double y2)
 {
     if (ll_correction) {
@@ -463,10 +464,9 @@ int main(int argc, char *argv[])
 	deltx = fabs(new_cellhd.east - new_cellhd.west);
 	delty = fabs(new_cellhd.north - new_cellhd.south);
 
-	n /*n_cols */  = new_cellhd.cols;
-	m /*n_rows */  = new_cellhd.rows;
-	/*G_debug(3,"%lf %lf %lf %lf \n",ymax, ymin, xmin,xmax);
-	 */
+	n /* n_cols */ = new_cellhd.cols;
+	m /* n_rows */ = new_cellhd.rows;
+	/* G_debug(3,"%lf %lf %lf %lf \n",ymax, ymin, xmin,xmax); */
 	n100 = ceil(n / 100.);
 	m100 = ceil(m / 100.);
 
@@ -498,8 +498,6 @@ int main(int argc, char *argv[])
 	G_fatal_error(_("Unable to set up lat/long projection parameters"));
 
 
-
-
 /**********end of parser - ******************************/
 
 
@@ -515,7 +513,7 @@ int main(int argc, char *argv[])
 	    exit(EXIT_FAILURE);
     }
 
-    /*sorry, I've moved OUTGR to calculate() - into the loop */
+    /* sorry, I've moved OUTGR() to calculate() - into the loop */
     /*      if(isMode(WHOLE_RASTER))
        {
        OUTGR(cellhd.rows,cellhd.cols);
@@ -528,6 +526,7 @@ int main(int argc, char *argv[])
 }
 
 /**********************end of main.c*****************/
+
 
 int INPUT(void)
 {
@@ -569,7 +568,7 @@ int INPUT(void)
     }
     G_close_cell(fd1);
 
-    /*create low resolution array 100 */
+    /* create low resolution array 100 */
     for (i = 0; i < m100; i++) {
 	lmax = (i + 1) * 100;
 	if (lmax > m)
@@ -591,11 +590,10 @@ int INPUT(void)
     }
 
 
-    /*find max Z */
+    /* find max Z */
     for (i = 0; i < m; i++) {
 	for (j = 0; j < n; j++) {
 	    zmax = amax1(zmax, z[i][j]);
-
 	}
     }
 
@@ -643,12 +641,9 @@ int OUTGR(int numrows, int numcols)
 	    }
 	    G_put_f_raster_row(fd1, cell1);
 	}
-
     }				/* End loop over rows. */
 
     G_close_cell(fd1);
-
-
 
     return 1;
 }
@@ -761,7 +756,6 @@ double horizon_height(void)
 
 double calculate_shadow_onedirection(double shadow_angle)
 {
-
     shadow_angle = horizon_height();
 
     return shadow_angle;
@@ -970,20 +964,20 @@ int test_low_res()
 	    }
 
 	    mindel = min(delx, dely);
-	    /*G_debug(3,"%d %d %d %lf %lf\n",ip, jp, mindel,xg0, yg0);*/
+	    /* G_debug(3,"%d %d %d %lf %lf\n",ip, jp, mindel,xg0, yg0);*/
 
 	    yy0 = yy0 + (mindel * stepsinangle);
 	    xx0 = xx0 + (mindel * stepcosangle);
-	    /*G_debug(3,"  %lf %lf\n",xx0,yy0);*/
+	    /* G_debug(3,"  %lf %lf\n",xx0,yy0);*/
 
 	    return (3);
 	}
 	else {
-	    return (1);		/*change of low res array - new cell is reaching limit for high resolution processing */
+	    return (1);	/* change of low res array - new cell is reaching limit for high resolution processing */
 	}
     }
     else {
-	return (1);		/*no change of low res array */
+	return (1);	/* no change of low res array */
     }
 }
 
@@ -1003,9 +997,8 @@ double searching()
 	if (succes != 1) {
 	    break;
 	}
-	/*
-	   curvature_diff = EARTHRADIUS*(1.-cos(length/EARTHRADIUS));
-	 */
+
+	/* curvature_diff = EARTHRADIUS*(1.-cos(length/EARTHRADIUS)); */
 	curvature_diff = 0.5 * length * length * invEarth;
 
 	z2 = z_orig + curvature_diff + length * tanh0;
@@ -1050,7 +1043,7 @@ void calculate(double xcoord, double ycoord, int buffer_e, int buffer_w,
     double delt_dist;
 
     char formatString[10];
-
+    char msg_buff[256];
 
     int hor_row_start = buffer_s;
     int hor_row_end = m - buffer_n;
@@ -1068,7 +1061,7 @@ void calculate(double xcoord, double ycoord, int buffer_e, int buffer_w,
     yindex = (int)((ycoord - ymin) / stepy);
 
     if ((G_projection() == PROJECTION_LL)) {
-	ll_correction = 1;
+	ll_correction = TRUE;
     }
 
 
@@ -1116,9 +1109,8 @@ void calculate(double xcoord, double ycoord, int buffer_e, int buffer_w,
 		    horizon_raster[j][i] = 0.;
 	    }
 	}
-	/*
-	   definition of horizon angle in loop
-	 */
+
+	/* definition of horizon angle in loop */
 	if (step == 0.0) {
 	    dfr_rad = 0;
 	    arrayNumInt = 1;
@@ -1168,11 +1160,10 @@ void calculate(double xcoord, double ycoord, int buffer_e, int buffer_w,
 
 
 		    if ((G_projection() != PROJECTION_LL)) {
-
-			if (pj_do_proj(&longitude, &latitude, &iproj, &oproj) <	0) {
+			if (pj_do_proj(&longitude, &latitude, &iproj, &oproj) <	0)
 			    G_fatal_error("Error in pj_do_proj");
-			}
 		    }
+
 		    latitude *= deg2rad;
 		    longitude *= deg2rad;
 
@@ -1182,16 +1173,15 @@ void calculate(double xcoord, double ycoord, int buffer_e, int buffer_w,
 			 twopi) ? inputAngle - twopi : inputAngle;
 
 
-		    delt_lat = -0.0001 * cos(inputAngle);	/* Arbitrary small distance in latitude */
+		    delt_lat = -0.0001 * cos(inputAngle);  /* Arbitrary small distance in latitude */
 		    delt_lon = 0.0001 * sin(inputAngle) / cos(latitude);
 
 		    latitude = (latitude + delt_lat) * rad2deg;
 		    longitude = (longitude + delt_lon) * rad2deg;
 
 		    if ((G_projection() != PROJECTION_LL)) {
-			if (pj_do_proj(&longitude, &latitude, &oproj, &iproj) < 0) {
+			if (pj_do_proj(&longitude, &latitude, &oproj, &iproj) < 0)
 			    G_fatal_error("Error in pj_do_proj");
-			}
 		    }
 
 		    delt_east = longitude - xp;
@@ -1227,11 +1217,12 @@ void calculate(double xcoord, double ycoord, int buffer_e, int buffer_w,
 		    maxlength =
 			(maxlength <
 			 fixedMaxLength) ? maxlength : fixedMaxLength;
+
 		    if (z_orig != UNDEFZ) {
 
-			/*G_debug(3,"**************new line %d %d\n", i, j);
-			 */
+			/* G_debug(3,"**************new line %d %d\n", i, j); */
 			shadow_angle = horizon_height();
+
 			if (degreeOutput) {
 			    shadow_angle *= rad2deg;
 			}
@@ -1246,7 +1237,7 @@ void calculate(double xcoord, double ycoord, int buffer_e, int buffer_w,
 			horizon_raster[j - buffer_s][i - buffer_w] =
 			    shadow_angle;
 
-		    }		/* undefs */
+		    }	/* undefs */
 		}
 	    }
 
@@ -1258,19 +1249,38 @@ void calculate(double xcoord, double ycoord, int buffer_e, int buffer_w,
 		    horizon_raster[j][i] = 0.;
 	    }
 
-	    /*return back the buffered region */
+	    /* return back the buffered region */
 	    if (bufferZone > 0.) {
 		if (G_set_window(&new_cellhd) == -1)
 		    exit(0);
 	    }
 
+	    /* write metadata */
 	    G_short_history(shad_filename, "raster", &history);
+
+	    sprintf(msg_buff,
+		    "Angular height of terrain horizon, map %01d of %01d",
+		    (k + 1), arrayNumInt);
+	    G_put_cell_title(shad_filename, msg_buff);
+
+	    if (degreeOutput)
+		G_write_raster_units(shad_filename, "degrees");
+	    else
+		G_write_raster_units(shad_filename, "radians");
+
 	    G_command_history(&history);
+
+	    /* insert a blank line */
+	    history.edhist[history.edlinecnt][0] = '\0';
+	    history.edlinecnt++;
+
+	    sprintf(msg_buff,
+		    "Horizon view from azimuth angle %.2f degrees CCW from East",
+		    angle * rad2deg);
+	    strcpy(history.edhist[history.edlinecnt], msg_buff);
+	    history.edlinecnt++;
+
 	    G_write_history(shad_filename, &history);
-
-
 	}
-
     }
-
 }
