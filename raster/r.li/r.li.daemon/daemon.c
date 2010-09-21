@@ -57,6 +57,7 @@ int calculateIndex(char *file, int f(int, char **, area_des, double *),
     g = (g_areas) G_malloc(sizeof(struct generatore));
     l = (list) G_malloc(sizeof(struct lista));
     mypid = getpid();
+
     /* create report pipe */
     reportChannelName = G_tempfile();
     if (mkfifo(reportChannelName, 0644) == -1)
@@ -96,14 +97,22 @@ int calculateIndex(char *file, int f(int, char **, area_des, double *),
     /*open reportChannel */
     receiveChannel = open(reportChannelName, O_RDONLY, 0755);
 
+
     /*########################################################      
        -----------------create area queue----------------------
        ######################################################### */
 
+    /* strip off leading path if present */
+    char testpath[GPATH_MAX];
+    sprintf(testpath, "%s%s", G_home(), "/.r.li/history/");
+    if(strncmp(file, testpath, strlen(testpath)) == 0)
+	file += strlen(testpath);
+
     /* TODO: check if this path is portable */
-    sprintf(pathSetup, "%s/.r.li/history/%s", getenv("HOME"), file);
-    G_debug(1, "r.li.daemon pathSetup: %s", pathSetup);
+    sprintf(pathSetup, "%s/.r.li/history/%s", G_home(), file);
+    G_debug(1, "r.li.daemon pathSetup: [%s]", pathSetup);
     parsed = parseSetup(pathSetup, l, g, raster);
+
 
     /*########################################################
        -----------------open output file ---------------------
@@ -123,20 +132,20 @@ int calculateIndex(char *file, int f(int, char **, area_des, double *),
 	    G_fatal_error(_("Cannot create random access file"));
     }
     else {
-	/*check if ~/.r.li/output exist */
-	sprintf(out, "%s/.r.li/", getenv("HOME"));
+	/* check if ~/.r.li/output exists */
+	sprintf(out, "%s/.r.li/", G_home());
 
 	doneDir = G_mkdir(out);
 	if (doneDir == -1 && errno != EEXIST)
 	    G_fatal_error(_("Cannot create %s/.r.li/ directory"),
-			  getenv("HOME"));
-	sprintf(out, "%s/.r.li/output", getenv("HOME"));
+			  G_home());
+	sprintf(out, "%s/.r.li/output", G_home());
 	doneDir = G_mkdir(out);
 	if (doneDir == -1 && errno != EEXIST)
 	    G_fatal_error(_("Cannot create %s/.r.li/output/ directory"),
-			  getenv("HOME"));
-	sprintf(out, "%s/.r.li/output/%s", getenv("HOME"), output);
-	res = open(out, O_WRONLY | O_CREAT | O_TRUNC, 0755);
+			  G_home());
+	sprintf(out, "%s/.r.li/output/%s", G_home(), output);
+	res = open(out, O_WRONLY | O_CREAT | O_TRUNC, 0644);
     }
     i = 0;
 
@@ -219,7 +228,9 @@ int calculateIndex(char *file, int f(int, char **, area_des, double *),
 		/*printf("todo2 ");fflush(stdout); *//*TODO scrivere su raster */
 	    }
 	}
+
 	i--;
+
 	while (j < WORKERS && donePid != child[j].pid)
 	    j++;
 
@@ -227,20 +238,24 @@ int calculateIndex(char *file, int f(int, char **, area_des, double *),
 	m.f.f_t.pid = mypid;
 	send(child[j].channel, &m);
 	wait(&status);
-	if (!(WIFEXITED(status)))
-	    G_message(_("r.li.worker (pid %i) exited with abnormal status %i"),
-		      donePid, status);
-	else
-	    G_message(_("r.li.worker (pid %i) terminated"), donePid);
 
-	/*remove pipe */
+	if (!(WIFEXITED(status)))
+	    G_warning(
+		    _("r.li.worker (pid %i) exited with abnormal status: %i"),
+		    donePid, status);
+	else
+	    G_verbose_message(
+		    _("r.li.worker (pid %i) terminated successfully"),
+		    donePid);
+
+	/* remove pipe */
 	if (close(child[j].channel) != 0)
 	    G_message(_("Cannot close %s file (PIPE)"), child[j].pipe);
 	if (unlink(child[j].pipe) != 0)
 	    G_message(_("Cannot delete %s file (PIPE)"), child[j].pipe);
     }
 
-    /*kill childs without Job */
+    /* kill children without Job */
     for (i = withoutJob; i < WORKERS; i++) {
 	int status;
 
@@ -248,21 +263,27 @@ int calculateIndex(char *file, int f(int, char **, area_des, double *),
 	m.f.f_t.pid = mypid;
 	send(child[i].channel, &m);
 	wait(&status);
+
 	if (!(WIFEXITED(status)))
-	    G_message(_("r.li.worker (pid %i) exited with abnormal status %i"),
-		      child[i].pid, status);
+	    G_warning(
+		    _("r.li.worker (pid %i) exited with abnormal status: %i"),
+		    child[i].pid, status);
 	else
-	    G_message(_("r.li.worker (pid %i) terminated"), child[i].pid);
-	/*remove pipe */
+	    G_verbose_message(
+		    _("r.li.worker (pid %i) terminated successfully"),
+		    child[i].pid);
+
+	/* remove pipe */
 	if (close(child[i].channel) != 0)
 	    G_message(_("Cannot close %s file (PIPE2)"), child[i].pipe);
 	if (unlink(child[i].pipe) != 0)
 	    G_message(_("Cannot delete %s file (PIPE2)"), child[i].pipe);
     }
+
+
     /*################################################
        --------------delete tmp files------------------
        ################################################ */
-
 
     if (parsed == MVWIN) {
 	write_raster(mv_fd, random_access, g);
@@ -274,13 +295,15 @@ int calculateIndex(char *file, int f(int, char **, area_des, double *),
 	G_write_history(output, &history);
     }
 
-
     if (close(receiveChannel) != 0)
 	G_message(_("Cannot close receive channel file"));
+
     if (unlink(reportChannelName) != 0)
 	G_message(_("Cannot delete %s file"), child[i].pipe);
+
     return 1;
 }
+
 
 int parseSetup(char *path, list l, g_areas g, char *raster)
 {
@@ -295,42 +318,46 @@ int parseSetup(char *path, list l, g_areas g, char *raster)
     int size;
 
     if (stat(path, &s) != 0)
-	G_fatal_error(_("Cannot make stat of %s configuration file"), path);
+	G_fatal_error(_("Cannot find configuration file <%s>"), path);
+
     size = s.st_size * sizeof(char);
     buf = G_malloc(size);
+
     setup = open(path, O_RDONLY, 0755);
     if (setup == -1)
 	G_fatal_error(_("Cannot read setup file"));
+
     letti = read(setup, buf, s.st_size);
     if (letti < s.st_size)
 	G_fatal_error(_("Cannot read setup file"));
 
-
     token = strtok(buf, " ");
     if (strcmp("SAMPLINGFRAME", token) != 0)
-	G_fatal_error(_("Illegal configuration file"));
+	G_fatal_error(_("Unable to parse configuration file"));
+
     rel_x = atof(strtok(NULL, "|"));
     rel_y = atof(strtok(NULL, "|"));
     rel_rl = atof(strtok(NULL, "|"));
     rel_cl = atof(strtok(NULL, "\n"));
 
-    /*finding raster map */
+    /* find raster map */
     mapset = G_find_cell(raster, "");
     if (G_get_cellhd(raster, mapset, &cellhd) == -1)
 	G_fatal_error(_("Cannot read raster header file"));
-    /*calculating absolute sampling frame definition */
+
+    /* calculate absolute sampling frame definition */
     sf_x = (int)rint(cellhd.cols * rel_x);
     sf_y = (int)rint(cellhd.rows * rel_y);
     sf_rl = (int)rint(cellhd.rows * rel_rl);
     sf_cl = (int)rint(cellhd.cols * rel_cl);
 
-    /*calculating sample frame boundaries */
+    /* calculate sample frame boundaries */
     sf_n = cellhd.north - (cellhd.ns_res * sf_y);
     sf_s = sf_n - (cellhd.ns_res * sf_rl);
     sf_w = cellhd.west + (cellhd.ew_res * sf_x);
     sf_e = sf_w + (cellhd.ew_res * sf_cl);
 
-    /* parsing configuration file */
+    /* parse configuration file */
     token = strtok(NULL, " ");
 
     if (strcmp("SAMPLEAREA", token) == 0) {
@@ -344,7 +371,6 @@ int parseSetup(char *path, list l, g_areas g, char *raster)
 	    rel_sa_cl = atof(strtok(NULL, "\n"));
 
 	    if (rel_sa_x == -1.0 && rel_sa_y == -1.0) {
-
 		/* runtime disposition */
 
 		int sa_rl, sa_cl;
@@ -361,6 +387,7 @@ int parseSetup(char *path, list l, g_areas g, char *raster)
 		g->x = sf_x;
 		g->y = sf_y;
 		g->maskname = NULL;
+
 		return disposeAreas(l, g, strtok(NULL, "\n"));
 	    }
 	    else {
@@ -377,10 +404,12 @@ int parseSetup(char *path, list l, g_areas g, char *raster)
 		aid++;
 		insertNode(l, m);
 	    }
-	}
-	while ((token = strtok(NULL, " ")) != NULL &&
+
+	} while ((token = strtok(NULL, " ")) != NULL &&
 	       strcmp(token, "SAMPLEAREA") == 0);
+
 	close(setup);
+
 	return toReturn;
     }
     else if (strcmp("MASKEDSAMPLEAREA", token) == 0) {
@@ -610,6 +639,7 @@ int disposeAreas(list l, g_areas g, char *def)
     return ERROR;
 }
 
+
 int next_Area(int parsed, list l, g_areas g, msg * m)
 {
     if (parsed == NORMAL) {
@@ -629,6 +659,7 @@ int next_Area(int parsed, list l, g_areas g, msg * m)
     }
 }
 
+
 int print_Output(int out, msg m)
 {
     if (m.type != DONE)
@@ -639,12 +670,14 @@ int print_Output(int out, msg m)
 
 	sprintf(s, "RESULT %i|%f\n", m.f.f_d.aid, m.f.f_d.res);
 	len = strlen(s);
+
 	if (write(out, s, len) == len)
 	    return 1;
 	else
 	    return 0;
     }
 }
+
 
 int error_Output(int out, msg m)
 {
@@ -654,12 +687,14 @@ int error_Output(int out, msg m)
 	char s[100];
 
 	sprintf(s, "ERROR %i", m.f.f_d.aid);
+
 	if (write(out, s, strlen(s)) == strlen(s))
 	    return 1;
 	else
 	    return 0;
     }
 }
+
 
 int raster_Output(int fd, int aid, g_areas g, double res)
 {
@@ -670,11 +705,14 @@ int raster_Output(int fd, int aid, g_areas g, double res)
 	G_message(_("Cannot make lseek"));
 	return -1;
     }
+
     if (write(fd, &toPut, sizeof(double)) == 0)
 	return 1;
     else
 	return 0;
 }
+
+
 int write_raster(int mv_fd, int random_access, g_areas g)
 {
     int i = 0, j = 0, letti = 0;
@@ -686,24 +724,33 @@ int write_raster(int mv_fd, int random_access, g_areas g)
     rows = g->rows;
     center = g->sf_x + ((int)g->cl / 2);
 
-    file_buf = malloc(cols * sizeof(double));
+    file_buf = G_malloc(cols * sizeof(double));
     lseek(random_access, 0, SEEK_SET);
+
     cell_buf = G_allocate_d_raster_buf();
     G_set_d_null_value(cell_buf, G_window_cols() + 1);
+
     for (i = 0; i < g->sf_y + ((int)g->rl / 2); i++) {
 	G_put_raster_row(mv_fd, cell_buf, DCELL_TYPE);
     }
+
     for (i = 0; i < rows; i++) {
 	letti = read(random_access, file_buf, (cols * sizeof(double)));
+
 	if (letti == -1)
 	    G_message("%s", strerror(errno));
+
 	for (j = 0; j < cols; j++) {
 	    cell_buf[j + center] = file_buf[j];
 	}
+
 	G_put_raster_row(mv_fd, cell_buf, DCELL_TYPE);
     }
+
     G_set_d_null_value(cell_buf, G_window_cols() + 1);
+
     for (i = 0; i < G_window_rows() - g->sf_y - g->rows; i++)
 	G_put_raster_row(mv_fd, cell_buf, DCELL_TYPE);
+
     return 1;
 }
