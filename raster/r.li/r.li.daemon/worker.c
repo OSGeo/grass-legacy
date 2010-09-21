@@ -57,7 +57,8 @@ void worker(char *raster, int f(int, char **, area_des, double *),
     fm = G_malloc(sizeof(struct fcell_memory_entry));
     dm = G_malloc(sizeof(struct dcell_memory_entry));
     pid = getpid();
-    ad = malloc(sizeof(struct area_entry));
+    ad = G_malloc(sizeof(struct area_entry));
+
     /* open raster map */
     mapset = G_find_cell(raster, "");
     fd = G_open_cell_old(raster, mapset);
@@ -65,6 +66,7 @@ void worker(char *raster, int f(int, char **, area_des, double *),
 	G_message(_("CHILD[pid = %i] cannot open raster map"), pid);
 	exit(EXIT_FAILURE);
     }
+
     /* read data type to allocate cache */
     data_type = G_raster_map_type(raster, mapset);
     /* calculate rows in cache */
@@ -112,6 +114,7 @@ void worker(char *raster, int f(int, char **, area_des, double *),
 
     /* receive loop */
     receive(rec_ch, &toReceive);
+
     while (toReceive.type != TERM) {
 	if (toReceive.type == AREA) {
 	    aid = toReceive.f.f_ma.aid;
@@ -122,9 +125,7 @@ void worker(char *raster, int f(int, char **, area_des, double *),
 	    ad->raster = raster;
 	    ad->mask = -1;
 	}
-	else {
-	    /* toReceive.type == MASKEDAREA */
-
+	else if (toReceive.type == MASKEDAREA) {
 	    aid = toReceive.f.f_ma.aid;
 	    ad->x = toReceive.f.f_ma.x;
 	    ad->y = toReceive.f.f_ma.y;
@@ -136,7 +137,7 @@ void worker(char *raster, int f(int, char **, area_des, double *),
 	    ad->mask_name = mask_preprocessing(toReceive.f.f_ma.mask,
 					       raster, ad->rl, ad->cl);
 	    if (ad->mask_name == NULL) {
-		G_message(_("CHILD[pid = %i]: unable to open %s mask ... continue without!!!"),
+		G_message(_("CHILD[pid = %i]: unable to open <%s> mask ... continuing without!"),
 			  pid, toReceive.f.f_ma.mask);
 		ad->mask = -1;
 	    }
@@ -146,14 +147,15 @@ void worker(char *raster, int f(int, char **, area_des, double *),
 		    erease_mask = 1;
 		ad->mask = open(ad->mask_name, O_WRONLY, 0755);
 		if (ad->mask == -1) {
-		    G_message(_("CHILD[pid = %i]: unable to open %s mask ... continue without!!!"),
+		    G_message(_("CHILD[pid = %i]: unable to open <%s> mask ... continuing without!"),
 			      pid, toReceive.f.f_ma.mask);
 		}
-
 	    }
-
-
 	}
+	else
+	    G_fatal_error("Program error, worker() toReceive.type=%d",
+			  toReceive.type);
+
 	/* memory menagement */
 	if (ad->rl > used) {
 	    /* allocate cache */
@@ -228,11 +230,16 @@ char *mask_preprocessing(char *mask, char *raster, int rl, int cl)
     CELL *old;
     double add_row, add_col;
 
-    buf = malloc(cl * sizeof(int));
+    buf = G_malloc(cl * sizeof(int));
+
+    G_debug(3, "daemon mask preproc: raster=[%s] mask=[%s]  rl=%d cl=%d",
+	    raster, mask, rl, cl);
+
     mapset = G_find_cell(raster, "");
     /* open raster */
     if (G_get_cellhd(raster, mapset, &cell) == -1)
 	return NULL;
+
     mapset = G_find_cell(mask, "");
     /* open raster */
     if (G_get_cellhd(mask, mapset, &oldcell) == -1)
@@ -240,10 +247,12 @@ char *mask_preprocessing(char *mask, char *raster, int rl, int cl)
 
     add_row = 1.0 * oldcell.rows / rl;
     add_col = 1.0 * oldcell.cols / cl;
+
     tmp_file = G_tempfile();
     mask_fd = open(tmp_file, O_RDWR | O_CREAT, 0755);
     old_fd = G_open_cell_old(mask, mapset);
     old = G_allocate_cell_buf();
+
     for (i = 0; i < rl; i++) {
 	int riga;
 
