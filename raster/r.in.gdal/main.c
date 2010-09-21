@@ -68,7 +68,7 @@ int main(int argc, char *argv[])
     {
 	struct Option *input, *output, *target, *title, *outloc, *band, *memory;
     } parm;
-    struct Flag *flag_o, *flag_e, *flag_k, *flag_f;
+    struct Flag *flag_o, *flag_e, *flag_k, *flag_f, *flag_l;
 
     /* -------------------------------------------------------------------- */
     /*      Initialize.                                                     */
@@ -140,6 +140,11 @@ int main(int argc, char *argv[])
     flag_f->description = _("List supported formats and exit");
     flag_f->guisection = _("Print");
 
+    flag_l = G_define_flag();
+    flag_l->key = 'l';
+    flag_l->description =
+	_("Force Lat/Lon maps to fit into geographic coordinates (90N,S; 180E,W)");
+
     flag_k = G_define_flag();
     flag_k->key = 'k';
     flag_k->description =
@@ -167,6 +172,8 @@ int main(int argc, char *argv[])
 	G_fatal_error(_("You have to specify a target location different from output location"));
     }
 
+    if (flag_l->answer && G_projection() != PROJECTION_LL)
+	G_fatal_error(_("The '-l' flag only works in Lat/Lon locations"));
 
     /* -------------------------------------------------------------------- */
     /*      Fire up the engines.                                            */
@@ -203,13 +210,12 @@ int main(int argc, char *argv[])
 	exit(EXIT_SUCCESS);
     }
 
-    if (!input) {
-	G_fatal_error(_("Required parameter <%s> not set"), parm.input->key);
-    }
 
-    if (!output) {
+    if (!input)
+	G_fatal_error(_("Required parameter <%s> not set"), parm.input->key);
+
+    if (!output)
 	G_fatal_error(_("Name for output raster map not specified"));
-    }
 
     if (G_legal_filename(output) < 0)
 	G_fatal_error(_("<%s> is an illegal file name"), output);
@@ -282,6 +288,23 @@ int main(int argc, char *argv[])
 	cellhd.bottom = 0.;
 	cellhd.tb_res = 1.;
 	cellhd.depths = 1;
+    }
+
+    /* constrain to geographic coords */
+    if (flag_l->answer && G_projection() == PROJECTION_LL) {
+	if (cellhd.north > 90.) cellhd.north = 90.;
+	if (cellhd.south < -90.) cellhd.south = -90.;
+	if (cellhd.east > 360.) cellhd.east = 180.;
+	if (cellhd.west < -180.) cellhd.west = -180.;
+	cellhd.ns_res = (cellhd.north - cellhd.south) / cellhd.rows;
+	cellhd.ew_res = (cellhd.east - cellhd.west) / cellhd.cols;
+	cellhd.ew_res3 = cellhd.ew_res;
+	cellhd.ns_res3 = cellhd.ns_res;
+
+	G_warning(_("Map bounds have been constrained to geographic "
+	    "coordinates. You will almost certainly want to check "
+	    "map bounds and resolution with r.info and reset them "
+	    "with r.region before going any further."));
     }
 
     /* -------------------------------------------------------------------- */
