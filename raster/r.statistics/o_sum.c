@@ -27,10 +27,10 @@ o_sum(char *basemap, char *covermap, char *outputmap, int usecats,
     tempfile1 = G_tempfile();
     tempfile2 = G_tempfile();
 
-    sprintf(command, "%s -cn input=\"%s,%s\" fs=space > \"%s\"", STATS, basemap,
+    sprintf(command, "%s -cn input=\"%s,%s\" fs=space output=\"%s\"", STATS, basemap,
 	    covermap, tempfile1);
 
-    if (stat = system(command)) {
+    if (stat = G_system(command)) {
 	unlink(tempfile1);
 	G_fatal_error(_("%s: running %s command"), me, STATS);
     }
@@ -65,9 +65,9 @@ o_sum(char *basemap, char *covermap, char *outputmap, int usecats,
     sum_out(fd2, basecat, sum1);
     fclose(fd1);
     fclose(fd2);
-    sprintf(command, "%s input=\"%s\" output=\"%s\" < \"%s\"",
+    sprintf(command, "%s input=\"%s\" output=\"%s\" rules=\"%s\"",
 	    RECLASS, basemap, outputmap, tempfile2);
-    stat = system(command);
+    stat = G_system(command);
     unlink(tempfile1);
     unlink(tempfile2);
 
