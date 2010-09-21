@@ -273,11 +273,16 @@ int main(int argc, char **argv)
     if (interactive && (style || rules || cmap))
 	G_fatal_error(_("Interactive mode is incompatible with \"color\", \"rules\", and \"raster\" options"));
 
-    if ((style && (cmap || rules)) || (cmap && rules))
-	G_fatal_error(_("\"color\", \"rules\", and \"raster\" options are mutually exclusive"));
+    if ((style && (cmap || rules)) || (cmap && rules)) {
+	if ((style && rules && !cmap) && strcmp(style, "rules") == 0)
+	    style = NULL;
+	else
+	    G_fatal_error(
+		_("\"color\", \"rules\", and \"raster\" options are mutually exclusive"));
+    }
 
     /* handle rules="-" (from stdin) by translating that to colors=rules */
-    /* this method should not be ported to GRASS 7 where color=rules DNE */
+    /* this method should not be ported to GRASS 7 verbatim, as color=rules DNE */
     if (rules && strcmp(rules, "-") == 0) {
 	style = G_store("rules");
 	rules = NULL;
