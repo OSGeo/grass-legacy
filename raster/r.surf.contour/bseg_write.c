@@ -1,5 +1,5 @@
 #include <grass/gis.h>
-#include "cseg.h"
+#include "seg.h"
 
 static char *me = "bseg_write_cell";
 
@@ -9,7 +9,7 @@ int bseg_write_cellfile(BSEG * bseg, char *map_name)
     int row, nrows;
     int col, ncols;
     CELL *buffer;
-    CELL value;
+    char value;
 
     map_fd = G_open_cell_new(map_name);
     if (map_fd < 0) {

@@ -3,46 +3,46 @@
 #include <sys/stat.h>
 #include <fcntl.h>
 #include <grass/gis.h>
-#include "cseg.h"
+#include "seg.h"
 
-int cseg_open(CSEG * cseg, int srows, int scols, int nsegs_in_memory)
+int dseg_open(DSEG * dseg, int srows, int scols, int nsegs_in_memory)
 {
     char *filename;
     int errflag;
     int fd;
 
-    cseg->filename = NULL;
-    cseg->fd = -1;
-    cseg->name = NULL;
-    cseg->mapset = NULL;
+    dseg->filename = NULL;
+    dseg->fd = -1;
+    dseg->name = NULL;
+    dseg->mapset = NULL;
 
     filename = G_tempfile();
     if (-1 == (fd = creat(filename, 0666))) {
-	G_warning("cseg_open(): unable to create segment file");
+	G_warning("dseg_open(): unable to create segment file");
 	return -2;
     }
     if (0 >
 	(errflag =
 	 segment_format(fd, G_window_rows(), G_window_cols(), srows, scols,
-			sizeof(CELL)))) {
+			sizeof(DCELL)))) {
 	close(fd);
 	unlink(filename);
 	if (errflag == -1) {
-	    G_warning("cseg_open(): could not write segment file");
+	    G_warning("dseg_open(): could not write segment file");
 	    return -1;
 	}
 	else {
-	    G_warning("cseg_open(): illegal configuration parameter(s)");
+	    G_warning("dseg_open(): illegal configuration parameter(s)");
 	    return -3;
 	}
     }
     close(fd);
     if (-1 == (fd = open(filename, 2))) {
 	unlink(filename);
-	G_warning("cseg_open(): unable to re-open segment file");
+	G_warning("dseg_open(): unable to re-open segment file");
 	return -4;
     }
-    if (0 > (errflag = segment_init(&(cseg->seg), fd, nsegs_in_memory))) {
+    if (0 > (errflag = segment_init(&(dseg->seg), fd, nsegs_in_memory))) {
 	close(fd);
 	unlink(filename);
 	if (errflag == -1) {
@@ -54,7 +54,7 @@ int cseg_open(CSEG * cseg, int srows, int scols, int nsegs_in_memory)
 	    return -6;
 	}
     }
-    cseg->filename = filename;
-    cseg->fd = fd;
+    dseg->filename = filename;
+    dseg->fd = fd;
     return 0;
 }
