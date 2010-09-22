@@ -519,8 +519,13 @@ int main(int argc, char *argv[])
 	if (driver) {
 	    G_message(_("Populating table..."));
 	    db_commit_transaction(driver);
+
 	    if(db_close_database_shutdown_driver(driver) == DB_FAILED)
+#ifdef __MINGW32__
+		G_debug(1, "FIXME: db_close_database_shutdown_driver() fails on WinGrass. Ignoring...");
+#else
 		G_fatal_error(_("Could not close attribute table. The DBMI driver did not accept all attributes"));
+#endif
 	}
 	fclose(tmpascii);
     }
