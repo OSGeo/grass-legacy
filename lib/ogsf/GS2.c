@@ -314,7 +314,7 @@ void GS_setlight_position(int num, float xpos, float ypos, float zpos,
 /*!
    \brief Get light position
 
-   \param num light id (starts with 1?)
+   \param num light id (starts at 1)
    \param[out] xpos,ypos,zpos coordinates
    \param[out] local ?
  */
@@ -338,7 +338,7 @@ void GS_getlight_position(int num, float *xpos, float *ypos, float *zpos,
 /*!
    \brief Set light color
 
-   \param num light id (starts with 1?)
+   \param num light id (starts at 1)
    \param red,green,blue color values (from 0.0 to 1.0)
  */
 void GS_setlight_color(int num, float red, float green, float blue)
@@ -360,7 +360,7 @@ void GS_setlight_color(int num, float red, float green, float blue)
 /*!
    \brief Get light color
 
-   \param num light id (starts with 1?)
+   \param num light id (starts at 1)
    \param[out] red,green,blue color values
  */
 void GS_getlight_color(int num, float *red, float *green, float *blue)
@@ -382,7 +382,7 @@ void GS_getlight_color(int num, float *red, float *green, float *blue)
 
    Red, green, blue from 0.0 to 1.0
 
-   \param num light id (starts with 1?)
+   \param num light id (starts at 1)
    \param red,green,blue color values
  */
 void GS_setlight_ambient(int num, float red, float green, float blue)
@@ -404,7 +404,7 @@ void GS_setlight_ambient(int num, float red, float green, float blue)
 /*!
    \brief Get light ambient
 
-   \param num light id (starts with 1?)
+   \param num light id (starts at 1)
    \param[out] red,green,blue color values
  */
 void GS_getlight_ambient(int num, float *red, float *green, float *blue)
@@ -453,7 +453,7 @@ void GS_lights_on(void)
 /*!
    \brief Switch on/off light
 
-   \param num light id (starts with 1?)
+   \param num light id (starts at 1)
    \param on non-zero for 'on' otherwise 'off'
  */
 void GS_switchlight(int num, int on)
@@ -796,17 +796,19 @@ void GS_draw_flowline_at_xy(int id, float x, float y)
 }
 
 /*!
-   \brief Draw fringe around data at selected corners
+   \brief Draw fringe around data (surface) at selected corners
 
    \param id surface id
-   \param clr ?
+   \param clr color
    \param elev elevation value
-   \param where ?
+   \param where nw/ne/sw/se edges - 0 (turn off) 1 (turn on)
  */
 void GS_draw_fringe(int id, unsigned long clr, float elev, int *where)
 {
     geosurf *gs;
 
+    G_debug(3, "GS_draw_fringe(): id: %d clr: %ld elev %f edges: %d %d %d %d",
+	    id, clr, elev, where[0], where[1], where[2], where[3]);
     if ((gs = gs_get_surf(id)))
 	gsd_display_fringe(gs, clr, elev, where);
 
@@ -1144,23 +1146,23 @@ int GS_get_att(int id, int att, int *set, float *constant, char *mapname)
     return (-1);
 }
 
-#define CATSREADY
-#ifdef CATSREADY
 /*!
-   \brief Print categories on given position
+   \brief Get surface category on given position
 
-   prints "no data" or a description (i.e., "coniferous forest") to catstr
-   Usually call after GS_get_selected_point_on_surface
-   att_src must be MAP_ATT
+   Prints "no data" or a description (i.e., "coniferous forest") to
+   <i>catstr</i>. Usually call after GS_get_selected_point_on_surface().
+   Define <i>att</i> as MAP_ATT
 
+   \todo Allocate catstr using G_store()
+   
    \param id surface id
-   \param att
+   \param att attribute id (MAP_ATT)
    \param catstr cat string (must be allocated, dim?)
    \param x,y real coordinates
 
    \return -1 if no category info or point outside of window
    \return 1 on success
- */
+*/
 int GS_get_cat_at_xy(int id, int att, char *catstr, float x, float y)
 {
     int offset, drow, dcol, vrow, vcol;
@@ -1172,7 +1174,7 @@ int GS_get_cat_at_xy(int id, int att, char *catstr, float x, float y)
     gs = gs_get_surf(id);
 
     if (NULL == gs) {
-	return (-1);
+	return -1;
     }
 
     pt[X] = x;
@@ -1180,16 +1182,16 @@ int GS_get_cat_at_xy(int id, int att, char *catstr, float x, float y)
 
     gsd_real2surf(gs, pt);
     if (gs_point_is_masked(gs, pt)) {
-	return (-1);
+	return -1;
     }
 
     if (!in_vregion(gs, pt)) {
-	return (-1);
+	return -1;
     }
 
     if (MAP_ATT != gs_get_att_src(gs, att)) {
-	sprintf(catstr, "no category info");
-	return (-1);
+	sprintf(catstr, _("no category info"));
+	return -1;
     }
 
     buff = gs_get_att_typbuff(gs, att, 0);
@@ -1200,17 +1202,16 @@ int GS_get_cat_at_xy(int id, int att, char *catstr, float x, float y)
     dcol = VCOL2DCOL(gs, vcol);
 
     offset = DRC2OFF(gs, drow, dcol);
-
-
+    
     if (GET_MAPATT(buff, offset, ftmp)) {
 	return
-	    (Gs_get_cat_label
-	     (gsds_get_name(gs->att[att].hdata), drow, dcol, catstr));
+	    (Gs_get_cat_label(gsds_get_name(gs->att[att].hdata),
+			      drow, dcol, catstr));
     }
 
-    sprintf(catstr, "no data");
+    sprintf(catstr, _("no data"));
 
-    return (1);
+    return 1;
 }
 
 /*!
@@ -1274,20 +1275,18 @@ int GS_get_norm_at_xy(int id, float x, float y, float *nv)
 }
 
 /*!
-   \brief Get RGB color  at given point
+   \brief Get RGB color at given point
 
-   Colors are translated to rgb and returned as Rxxx Gxxx Bxxx
-   Usually call after GS_get_selected_point_on_surface()
+   Colors are translated to rgb and returned as Rxxx Gxxx Bxxx Usually
+   call after GS_get_selected_point_on_surface().
 
-   Prints "NULL" or the value (i.e., "921.5") to valstr
-
-   Usually call after GS_get_selected_point_on_surface()
+   Prints NULL or the value (i.e., "921.5") to valstr
 
    \param id surface id
-   \param att
+   \param att attribute id
    \param[out] valstr value string (allocated, dim?)
    \param x,y real coordinates
-
+   
    \return -1 if point outside of window or masked
    \return 1 on success
  */
@@ -1300,9 +1299,9 @@ int GS_get_val_at_xy(int id, int att, char *valstr, float x, float y)
 
     *valstr = '\0';
     gs = gs_get_surf(id);
-
+    
     if (NULL == gs) {
-	return (-1);
+	return -1;
     }
 
     pt[X] = x;
@@ -1311,7 +1310,7 @@ int GS_get_val_at_xy(int id, int att, char *valstr, float x, float y)
     gsd_real2surf(gs, pt);
 
     if (gs_point_is_masked(gs, pt)) {
-	return (-1);
+	return -1;
     }
 
     if (!in_vregion(gs, pt)) {
@@ -1330,10 +1329,10 @@ int GS_get_val_at_xy(int id, int att, char *valstr, float x, float y)
 	    sprintf(valstr, "%f", gs->att[att].constant);
 	}
 
-	return (1);
+	return 1;
     }
     else if (MAP_ATT != gs_get_att_src(gs, att)) {
-	return (-1);
+	return -1;
     }
 
     buff = gs_get_att_typbuff(gs, att, 0);
@@ -1365,8 +1364,6 @@ int GS_get_val_at_xy(int id, int att, char *valstr, float x, float y)
 
     return (1);
 }
-
-#endif
 
 /*!
    \brief Unset attribute
@@ -3189,14 +3186,15 @@ int GS_get_fencecolor(void)
 }
 
 /*!
-   \brief Measure distance "as the ball rolls" between two points on surface
+   \brief Measure distance "as the ball rolls" between two points on
+   surface
 
-   \param hs
-   \param x1,y1,x2,y2 distance line nodes
-   \param dist ?
-   \param use_exag use exag ?
+   \param hs surface id
+   \param x1,y1,x2,y2 two points on surface
+   \param[out] dist measured distance
+   \param use_exag use exag. surface
 
-   \return 0 on error or if one or more points is not in region,
+   \return 0 on error or if one or more points is not in region
    \return distance following terrain
  */
 int GS_get_distance_alongsurf(int hs, float x1, float y1, float x2, float y2,
@@ -3204,11 +3202,12 @@ int GS_get_distance_alongsurf(int hs, float x1, float y1, float x2, float y2,
 {
     geosurf *gs;
     float p1[2], p2[2];
-
-    if (NULL == (gs = gs_get_surf(hs))) {
-	return (0);
+    
+    gs = gs_get_surf(hs);
+    if (gs == NULL) {
+	return 0;
     }
-
+    
     p1[X] = x1;
     p1[Y] = y1;
     p2[X] = x2;
@@ -3216,7 +3215,9 @@ int GS_get_distance_alongsurf(int hs, float x1, float y1, float x2, float y2,
     gsd_real2surf(gs, p1);
     gsd_real2surf(gs, p2);
 
-    return (gs_distance_onsurf(gs, p1, p2, dist, use_exag));
+    G_debug(3, "GS_get_distance_alongsurf(): hs=%d p1=%f,%f p2=%f,%f",
+	    hs, x1, y1, x2, y2);
+    return gs_distance_onsurf(gs, p1, p2, dist, use_exag);
 }
 
 /*!
