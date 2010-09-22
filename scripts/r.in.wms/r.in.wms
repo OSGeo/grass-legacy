@@ -256,10 +256,6 @@ fi
 # Remember the intial field seperator
 defaultIFS="$IFS"
 
-# Remember the previous path
-prevPATH="$PATH"
-PATH="$PATH:${GISBASE}/etc/r.in.wms/"
-export PATH
 
 #####################
 # name:     message
@@ -280,9 +276,6 @@ message () {
 exitprocedure()
 {
 	g.message -e 'User break!'
-	# is this bogus? won't PATH revert on exit anyway?
-	PATH="$prevPATH"
-	export PATH
 	\rm -f "${TEMPFILE}"*
 	exit 1
 }
@@ -396,7 +389,9 @@ listLayers() {
 	if [ -x "`which xml2`" ] ; then
 		cat "$CAPABILITIES_FILE" | xml2 | \
 		  grep "Layer/SRS=\|Layer/Name=\|Layer/Title=\|Style/Name=\|Style/Title=\|Layer/Abstract=" | \
-		  sed -e "s/.*Layer\\/Name=/\n\nLAYER: /" \
+		  sed -e 's/.*Layer\\/Name=/\
+\
+LAYER: /' \
 		      -e "s/.*Layer\\/SRS=/  SRS: /" \
 		      -e "s/.*Layer\\/Title=/  Title: /" \
 		      -e "s/.*Layer\\/Abstract=/  |/" \
@@ -406,13 +401,19 @@ listLayers() {
 
 	else : # xml2 is not available
 		g.message -w "The 'xml2' program was not found. Proceeding with internal XML parsing which may not be as reliable."
-		sed -e "s/<Layer/\n<Layer/g" \
-		    -e "s/<Name>/\n<Name>/g" \
-		    -e "s/<Style>/\n<Style>/g" \
-		    -e "s/<Title>/\n<Title>/g" \
+		sed -e 's/<Layer/\
+<Layer/g' \
+		    -e 's/<Name>/\
+<Name>/g' \
+		    -e 's/<Style>/\
+<Style>/g' \
+		    -e 's/<Title>/\
+<Title>/g' \
 		    "$CAPABILITIES_FILE" | \
 		    grep "Name\|Title\|Style\|Layer" | \
-		    sed -e "s/<Layer .*>/-=-=-=-=-\n\nLAYER:/" \
+		    sed -e 's/<Layer .*>/-=-=-=-=-\
+\
+LAYER:/' \
 		      -e "s/<\/Layer.*>//" \
 		      -e "s/<Name>\s*\([^<]*\)/~\1~/g" \
 		      -e "s/<\/Name>\n\?//g" \
@@ -511,7 +512,7 @@ addargument REQUEST tileoptions "${GIS_OPT_TILEOPTIONS}"
 
 if [ $GIS_FLAG_D -eq 0 ] ; then
 	message 1 "wms.request $REQUEST"
-	eval "wms.request $REQUEST"
+	eval "\"$GISBASE/etc/r.in.wms/wms.request\" $REQUEST"
 	if [ $? -ne 0 ] ; then
 	   g.message -e "wms.request failure" 
 	   exit 1
@@ -524,7 +525,7 @@ addargument DOWNLOAD wgetoptions "${GIS_OPT_WGETOPTIONS}"
 addargument DOWNLOAD curloptions "${GIS_OPT_CURLOPTIONS}"
 
 message 1 "wms.download $DOWNLOAD"
-eval "wms.download $DOWNLOAD"
+eval "\"$GISBASE/etc/r.in.wms/wms.download\" $DOWNLOAD"
 
 # Job 2: make list of files
 
@@ -560,7 +561,7 @@ if [ `file -b "$FILES" | grep -c "^HTML\|^XML"` -eq 1 ] ; then
 fi
 
 message 1 "r.in.gdalwarp $GDALWARP"
-eval "r.in.gdalwarp $GDALWARP"
+eval "\"$GISBASE/etc/r.in.wms/r.in.gdalwarp\" $GDALWARP"
 if [ $? -ne 0 ] ; then
    g.message -e message="r.in.gdalwarp failed"
    exit 1

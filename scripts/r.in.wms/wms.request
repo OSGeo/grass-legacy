@@ -132,19 +132,6 @@ fi
 
 g.message -d "[wms.request]"
 
-SED="sed"
-GREP="grep"
-# check if we have sed
-if [ ! -x "`which $SED`" ] ; then
-    g.message "$SED is required, please install it first"
-    exit 1
-fi
-
-# check if we have grep
-if [ ! -x "`which $GREP`" ] ; then
-    g.message "$GREP is required, please install it first"
-    exit 1
-fi
 
 # Remember the intial field seperator
 defaultIFS="$IFS"
@@ -269,18 +256,27 @@ GetTiles() {
 
 SERVER="${GIS_OPT_MAPSERVER}"
 SRS="${GIS_OPT_SRS}"
+# use `tr '[:upper:]' '[:lower:]'` instead?
 SRS_lower=`echo $SRS | sed "y/ABCDEFGHIJKLMNOPQRSTUVWXYZ/abcdefghijklmnopqrstuvwxyz/"`
 
 
 # If the user asserts that this projection is the same as the source
 # use this projection as the source to get a trivial tiling from r.tileset
 if [ $GIS_FLAG_P -eq 1 ] ; then
-	PROJ4_SRS=`g.proj -j`
-	eval `g.proj -p | $GREP meters | $SED "s/\\s*:\\s*/=/"`
-	SRS_SCALE=$meters;
+
+    PROJ4_SRS=`g.proj -j | (
+	PROJ4_SRS=
+	while read line ; do
+	    PROJ4_SRS="$PROJ4_SRS '$line'"
+	done
+	echo "$PROJ4_SRS"
+    )`
+
+    eval `g.proj -p | grep ^meters | sed "s/\\s*:\\s*/=/"`
+    SRS_SCALE=$meters;
 else
-	PROJ4_SRS="+init=$SRS_lower"
-	SRS_SCALE=1
+    PROJ4_SRS="+init=$SRS_lower"
+    SRS_SCALE=1
 fi
 
 WMS_QUERY="${GIS_OPT_WMSQUERY}"
