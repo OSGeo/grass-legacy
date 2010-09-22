@@ -100,6 +100,9 @@ int main(int argc, char *argv[])
 
 	G_percent(line, nlines, 1);
 
+	if (!Vect_line_alive(&In, line))
+	    continue;
+
 	ltype = Vect_read_line(&In, Points, Cats, line);
 
 	if (ltype & GV_LINES) {
