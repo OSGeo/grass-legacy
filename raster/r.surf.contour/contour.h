@@ -2,7 +2,7 @@
 #include <math.h>
 #include <grass/gis.h>
 #include "flag.h"
-#include "cseg.h"
+#include "seg.h"
 
 #define NODE		struct _n_o_d_e_
 #define INIT_AR		64
@@ -31,11 +31,11 @@ GLOBAL int maxc;
 GLOBAL int maxr;
 GLOBAL int array_size;
 GLOBAL double i_val_l_f;
-GLOBAL CSEG con;
+GLOBAL DSEG con;
 GLOBAL FLAG *seen, *mask;
 GLOBAL BSEG bseen, bmask;
 GLOBAL NODE *zero;
-GLOBAL CELL on, off;
+GLOBAL char on, off;
 
 /* add_in.c */
 NODE *add_in_slow(int, int, int, int, NODE *, int *);
@@ -46,5 +46,5 @@ NODE *addpts_slow(NODE *, int, int, int, int, int *);
 NODE *addpts(NODE *, int, int, int, int, int *);
 
 /* find_con.c */
-int find_con_slow(int, int, double *, double *, CELL *, CELL *);
-int find_con(int, int, double *, double *, CELL *, CELL *);
+int find_con_slow(int, int, double *, double *, DCELL *, DCELL *);
+int find_con(int, int, double *, double *, DCELL *, DCELL *);

@@ -1,14 +1,5 @@
 #include <grass/segment.h>
 
-#define CSEG struct _c_s_e_g_
-CSEG {
-    SEGMENT seg;		/* segment structure */
-    int fd;			/* fd for reading/writing segment file */
-    char *filename;		/* name of segment file */
-    char *name;			/* raster map read into segment file */
-    char *mapset;
-};
-
 #define DSEG struct _d_s_e_g_
 DSEG {
     SEGMENT seg;		/* segment structure */
@@ -31,13 +22,13 @@ BSEG {
 int bseg_close(BSEG *);
 
 /* bseg_get.c */
-int bseg_get(BSEG *, CELL *, int, int);
+int bseg_get(BSEG *, char *, int, int);
 
 /* bseg_open.c */
 int bseg_open(BSEG *, int, int, int);
 
 /* bseg_put.c */
-int bseg_put(BSEG *, CELL *, int, int);
+int bseg_put(BSEG *, char *, int, int);
 
 /* bseg_read.c */
 int bseg_read_cell(BSEG *, char *, char *);
@@ -45,20 +36,20 @@ int bseg_read_cell(BSEG *, char *, char *);
 /* bseg_write.c */
 int bseg_write_cellfile(BSEG *, char *);
 
-/* cseg_close.c */
-int cseg_close(CSEG *);
+/* dseg_close.c */
+int dseg_close(DSEG *);
 
-/* cseg_get.c */
-int cseg_get(CSEG *, int, int, CELL *);
+/* dseg_get.c */
+int dseg_get(DSEG *, int, int, DCELL *);
 
-/* cseg_open.c */
-int cseg_open(CSEG *, int, int, int);
+/* dseg_open.c */
+int dseg_open(DSEG *, int, int, int);
 
-/* cseg_put.c */
-int cseg_put(CSEG *, int, int, CELL);
+/* dseg_put.c */
+int dseg_put(DSEG *, int, int, DCELL);
 
-/* cseg_read.c */
-int cseg_read_cell(CSEG *, char *, char *);
+/* dseg_read.c */
+int dseg_read_cell(DSEG *, char *, char *);
 
-/* cseg_write.c */
-int cseg_write_cellfile(CSEG *, char *);
+/* dseg_write.c */
+int dseg_write_cellfile(DSEG *, char *);

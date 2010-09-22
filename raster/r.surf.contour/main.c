@@ -8,7 +8,7 @@
  *               Brad Douglas <rez touchofmadness.com>, 
  *               Huidae Cho <grass4u gmail.com>, 
  *               Glynn Clements <glynn gclements.plus.com>, 
- *               Hamish Bowman <hamish_nospam yahoo.com>, 
+ *               Hamish Bowman <hamish_b yahoo.com>, 
  *               Jan-Oliver Wagner <jan intevation.de>
  * PURPOSE:      interpolates a raster elevation map from a rasterized
  *               contour map
@@ -32,13 +32,14 @@
 int main(int argc, char *argv[])
 {
     int r, c;
-    CELL con1, con2;
+    DCELL con1, con2;
     double d1, d2;
-    CELL *alt_row;
+    DCELL *alt_row;
     char *con_name, *alt_name, *con_mapset;
     int file_fd;
-    int fast_mode;
-    CELL value;
+    int fast_mode, n_segments, s_size;
+    DCELL value;
+    char mask_value;
     struct History history;
     struct GModule *module;
     struct Flag *flag1, *flag_slow;
@@ -97,33 +98,42 @@ int main(int argc, char *argv[])
     nrows = G_window_rows();
     ncols = G_window_cols();
     i_val_l_f = nrows + ncols;
-    cseg_open(&con, 512, 512, 16);
-    cseg_read_cell(&con, con_name, con_mapset);
-    alt_row = (CELL *) G_malloc(ncols * sizeof(CELL));
+    s_size = 128;
+    n_segments = nrows / s_size + (nrows % s_size > 0) * s_size + 
+                 ncols / s_size + (ncols % s_size > 0) * s_size;
+    /* limit memory consumption to about 100 MB */
+    if (n_segments > 800)
+	n_segments = 800;
+    G_debug(1, "n_segments: %d", n_segments);
+    dseg_open(&con, s_size, s_size, n_segments);
+    dseg_read_cell(&con, con_name, con_mapset);
+    alt_row = (DCELL *) G_malloc(ncols * sizeof(DCELL));
     if (fast_mode) {
 	seen = flag_create(nrows, ncols);
 	mask = flag_create(nrows, ncols);
     }
     else {
-	bseg_open(&bseen, 64, 64, 16);
-	bseg_open(&bmask, 64, 64, 16);
+	bseg_open(&bseen, s_size, s_size, n_segments);
+	bseg_open(&bmask, s_size, s_size, n_segments);
     }
     if (NULL != G_find_file("cell", "MASK", G_mapset())) {
 	if ((file_fd = G_open_cell_old("MASK", G_mapset())) < 0)
 	    G_fatal_error("Unable to open MASK");
 	if (fast_mode) {
 	    for (r = 0; r < nrows; r++) {
-		G_get_map_row_nomask(file_fd, alt_row, r);
+		G_get_d_raster_row_nomask(file_fd, alt_row, r);
 		for (c = 0; c < ncols; c++)
-		    if (!alt_row[c])
+		    if (G_is_d_null_value(&(alt_row[c])) || alt_row[c] == 0)
 			FLAG_SET(mask, r, c);
+		    else
+			FLAG_UNSET(mask, r, c);
 	    }
 	}
 	else {
 	    for (r = 0; r < nrows; r++) {
-		G_get_map_row_nomask(file_fd, alt_row, r);
+		G_get_d_raster_row_nomask(file_fd, alt_row, r);
 		for (c = 0; c < ncols; c++)
-		    if (!alt_row[c])
+		    if (G_is_d_null_value(&(alt_row[c])) || alt_row[c] == 0)
 			bseg_put(&bmask, &off, r, c);
 	    }
 	}
@@ -134,23 +144,24 @@ int main(int argc, char *argv[])
     maxc = ncols - 1;
     maxr = nrows - 1;
     array_size = INIT_AR;
-    file_fd = G_open_cell_new(alt_name);
+    file_fd = G_open_raster_new(alt_name, DCELL_TYPE);
     if (!file_fd)
 	G_fatal_error("Unable to open output map");
     for (r = 0; r < nrows; r++) {
 	G_percent(r, nrows, 1);
+	G_set_d_null_value(alt_row, ncols);
 	for (c = 0; c < ncols; c++) {
 	    if (fast_mode) {
 		if (FLAG_GET(mask, r, c))
 		    continue;
 	    }
 	    else {
-		bseg_get(&bmask, &value, r, c);
-		if (value)
+		bseg_get(&bmask, &mask_value, r, c);
+		if (mask_value)
 		    continue;
 	    }
-	    cseg_get(&con, r, c, &value);
-	    if (value != 0) {
+	    dseg_get(&con, r, c, &value);
+	    if (!G_is_d_null_value(&value)) {
 		alt_row[c] = value;
 		continue;
 	    }
@@ -158,16 +169,16 @@ int main(int argc, char *argv[])
 		find_con(r, c, &d1, &d2, &con1, &con2);
 	    else
 		find_con_slow(r, c, &d1, &d2, &con1, &con2);
-	    if (con2 > 0)
-		alt_row[c] = (CELL) (d2 * con1 / (d1 + d2) +
-				     d1 * con2 / (d1 + d2) + 0.5);
+	    if (!G_is_d_null_value(&con2))
+		alt_row[c] = d2 * con1 / (d1 + d2) +
+			     d1 * con2 / (d1 + d2);
 	    else
 		alt_row[c] = con1;
 	}
-	G_put_raster_row(file_fd, alt_row, CELL_TYPE);
+	G_put_raster_row(file_fd, alt_row, DCELL_TYPE);
     }
     G_percent(r, nrows, 1);
-    cseg_close(&con);
+    dseg_close(&con);
     if (fast_mode) {
 	flag_destroy(seen);
 	flag_destroy(mask);
