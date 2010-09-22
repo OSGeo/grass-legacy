@@ -90,26 +90,12 @@ int main(int argc, char *argv[])
 
     parm.output = G_define_standard_option(G_OPT_R_OUTPUT);
 
-    parm.npoints = G_define_option();
-    parm.npoints->key = "npoints";
-    parm.npoints->key_desc = "count";
-    parm.npoints->type = TYPE_INTEGER;
-    parm.npoints->required = NO;
-    parm.npoints->description = _("Number of interpolation points");
-    parm.npoints->answer = "12";
-
-    parm.power = G_define_option();
-    parm.power->key = "power";
-    parm.power->type = TYPE_DOUBLE;
-    parm.power->answer = "2.0";
-    parm.power->description = 
-    	_("Power parameter; greater values assign greater influence to closer points");
-
     parm.dfield = G_define_standard_option(G_OPT_V_FIELD);
     parm.dfield->description =
 	_("If set to 0, z coordinates are used (3D vector only)");
     parm.dfield->answer = "1";
     parm.dfield->gisprompt = "old_layer,layer,layer_zero"; 
+    parm.dfield->guisection = _("Values");
 
     parm.col = G_define_option();
     parm.col->key = "column";
@@ -117,6 +103,24 @@ int main(int argc, char *argv[])
     parm.col->required = NO;
     parm.col->label = _("Attribute table column with values to interpolate");
     parm.col->description = _("Required if layer > 0");
+    parm.col->guisection = _("Values");
+
+    parm.npoints = G_define_option();
+    parm.npoints->key = "npoints";
+    parm.npoints->key_desc = "count";
+    parm.npoints->type = TYPE_INTEGER;
+    parm.npoints->required = NO;
+    parm.npoints->description = _("Number of interpolation points");
+    parm.npoints->answer = "12";
+    parm.npoints->guisection = _("Settings");
+
+    parm.power = G_define_option();
+    parm.power->key = "power";
+    parm.power->type = TYPE_DOUBLE;
+    parm.power->answer = "2.0";
+    parm.power->description = 
+    	_("Power parameter; greater values assign greater influence to closer points");
+    parm.power->guisection = _("Settings");
 
     noindex = G_define_flag();
     noindex->key = 'n';
@@ -124,6 +128,7 @@ int main(int argc, char *argv[])
     noindex->description = _("Slower but uses"
 			     " less memory and includes points from outside region"
 			     " in the interpolation");
+    noindex->guisection = _("Settings");
 
     if (G_parser(argc, argv))
 	exit(EXIT_FAILURE);
