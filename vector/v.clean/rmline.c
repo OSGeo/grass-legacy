@@ -37,6 +37,8 @@ int remove_zero_line(struct Map_info *Map, int otype, struct Map_info *Err)
     G_debug(1, "nlines =  %d", nlines);
 
     for (line = 1; line <= nlines; line++) {
+	G_percent(line, nlines, 1);
+
 	if (!Vect_line_alive(Map, line))
 	    continue;
 
@@ -56,6 +58,8 @@ int remove_zero_line(struct Map_info *Map, int otype, struct Map_info *Err)
 
 	count++;
     }
+
+    G_verbose_message(_("Lines / boundaries removed: %d"), count);
 
     Vect_destroy_line_struct(Points);
     Vect_destroy_cats_struct(Cats);

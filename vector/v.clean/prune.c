@@ -60,6 +60,8 @@ prune(struct Map_info *Out, int otype, double thresh, struct Map_info *Err)
 
     for (line = 1; line <= nlines; line++) {
 
+	G_percent(line, nlines, 1);
+
 	if (!Vect_line_alive(Out, line))
 	    continue;
 
@@ -160,7 +162,7 @@ prune(struct Map_info *Out, int otype, double thresh, struct Map_info *Err)
 
 	    if (intersect) {
 		G_debug(3,
-			"The pruned boundary instersects another boundary -> not pruned");
+			"The pruned boundary intersects another boundary -> not pruned");
 		not_pruned_lines++;
 		continue;
 	    }
