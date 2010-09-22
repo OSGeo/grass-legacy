@@ -14,3 +14,13 @@ licensed under the GPL. Check the READMEs and source code header
 comments carefully.
 
 
+
+ * bwidget/ (LGPL 2.1)
+   BWidget Tcl/Tk ToolKit 1.2.1
+   Copyright (c) 1998-1999 UNIFIX.
+
+ * shapelib/ (MIT/X)
+   Shapefile read/write functions.
+   Copyright (c) 2007, Frank Warmerdam
+
+
