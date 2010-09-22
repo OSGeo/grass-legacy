@@ -30,7 +30,7 @@ struct Site *nextone(void)
 
     if (siteidx < nsites) {
 	s = &sites[siteidx];
-	siteidx += 1;
+	siteidx++;
 	return (s);
     }
     else
@@ -72,7 +72,7 @@ void removeDuplicates()
 
     if (j != nsites) {
 	nsites = j;
-	sites = (struct Site *)G_realloc(sites, nsites * sizeof(*sites));
+	sites = (struct Site *)G_realloc(sites, nsites * sizeof(struct Site));
     }
 
 }
@@ -80,7 +80,7 @@ void removeDuplicates()
 /* read all sites, sort, and compute xmin, xmax, ymin, ymax */
 int readsites(void)
 {
-    int i, nlines, line;
+    int nlines, line;
     struct line_pnts *Points;
 
     Points = Vect_new_line_struct();
@@ -88,7 +88,7 @@ int readsites(void)
     nlines = Vect_get_num_lines(&In);
 
     nsites = 0;
-    sites = (struct Site *)myalloc(nlines * sizeof(*sites));
+    sites = (struct Site *)G_malloc(nlines * sizeof(struct Site));
 
     for (line = 1; line <= nlines; line++) {
 	int type;
@@ -108,28 +108,37 @@ int readsites(void)
 	    G_debug(3, "Points->z[0]: %f", Points->z[0]);
 	    sites[nsites].coord.z = Points->z[0];
 	}
+	else
+	    sites[nsites].coord.z = 0.0;
 
 	sites[nsites].sitenbr = nsites;
 	sites[nsites].refcnt = 0;
-	nsites += 1;
-	if (nsites % 4000 == 0)
-	    sites =
-		(struct Site *)G_realloc(sites,
-					 (nsites + 4000) * sizeof(*sites));
+
+	if (nsites > 1) {
+	    if (xmin > sites[nsites].coord.x)
+		xmin = sites[nsites].coord.x;
+	    if (xmax < sites[nsites].coord.x)
+		xmax = sites[nsites].coord.x;
+	    if (ymin > sites[nsites].coord.y)
+		ymin = sites[nsites].coord.y;
+	    if (ymax < sites[nsites].coord.y)
+		ymax = sites[nsites].coord.y;
+	}
+	else {
+	    xmin = xmax = sites[nsites].coord.x;
+	    ymin = ymax = sites[nsites].coord.y;
+	}
+	nsites++;
     }
 
-    qsort(sites, nsites, sizeof(*sites), scomp);
+    if (nsites < nlines - 1)
+	sites =
+	    (struct Site *)G_realloc(sites,
+				     (nsites) * sizeof(struct Site));
+
+    qsort(sites, nsites, sizeof(struct Site), scomp);
     removeDuplicates();
-    xmin = sites[0].coord.x;
-    xmax = sites[0].coord.x;
-    for (i = 1; i < nsites; i += 1) {
-	if (sites[i].coord.x < xmin)
-	    xmin = sites[i].coord.x;
-	if (sites[i].coord.x > xmax)
-	    xmax = sites[i].coord.x;
-    }
-    ymin = sites[0].coord.y;
-    ymax = sites[nsites - 1].coord.y;
+
     return 0;
 }
 
@@ -141,7 +150,7 @@ struct Site *readone(void)
     s = (struct Site *)getfree(&sfl);
     s->refcnt = 0;
     s->sitenbr = siteidx;
-    siteidx += 1;
+    siteidx++;
 
     if (scanf("%lf %lf", &(s->coord.x), &(s->coord.y)) == EOF)
 	return ((struct Site *)NULL);
