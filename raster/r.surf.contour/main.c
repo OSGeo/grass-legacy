@@ -104,7 +104,7 @@ int main(int argc, char *argv[])
     /* limit memory consumption to about 100 MB */
     if (n_segments > 800)
 	n_segments = 800;
-    G_debug(0, "n_segments: %d", n_segments);
+    G_debug(1, "n_segments: %d", n_segments);
     dseg_open(&con, s_size, s_size, n_segments);
     dseg_read_cell(&con, con_name, con_mapset);
     alt_row = (DCELL *) G_malloc(ncols * sizeof(DCELL));
