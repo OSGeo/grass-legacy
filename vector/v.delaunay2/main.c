@@ -157,7 +157,7 @@ int main(int argc, char *argv[])
     if (Type == GV_BOUNDARY) {
 	Vect_build_partial(&Out, GV_BUILD_AREAS);
 	nareas = Vect_get_num_areas(&Out);
-	G_debug(1, "nareas = %d", nareas);
+	G_debug(3, "nareas = %d", nareas);
 	/*  assign centroid to each area */
 	G_verbose_message(_("Calculate area centroids..."));
 	for (area = 1; area <= nareas; area++) {
