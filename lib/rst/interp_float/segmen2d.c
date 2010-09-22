@@ -56,7 +56,6 @@ int IL_interp_segments_2d(struct interp_params *params, struct tree_info *info,	
     /* find the size of the smallest segment once */
     if (first_time) {
 	smseg = smallest_segment(info->root, 4);
-	/*      fprintf(stderr, "smseg=%lf, first=%d,\n", smseg, first_time); */
 	first_time = 0;
     }
     ns_res = (((struct quaddata *)(info->root->data))->ymax -
@@ -109,10 +108,9 @@ int IL_interp_segments_2d(struct interp_params *params, struct tree_info *info,	
 
 	while ((npt < MINPTS) || (npt > params->KMAX2)) {
 	    if (i >= 70) {
-		fprintf(stderr, "\n");
-		G_warning(_("taking too long to find points for interpolation--"
-			   "please change the region to area where your points are. "
-			   "Continuing calculations..."));
+		G_warning(_("Taking too long to find points for interpolation - "
+			    "please change the region to area where your points are. "
+			    "Continuing calculations..."));
 		break;
 	    }
 	    i++;
@@ -152,7 +150,7 @@ int IL_interp_segments_2d(struct interp_params *params, struct tree_info *info,	
 	    data->n_points = 0;
 	    npt = MT_region_data(info, info->root, data, params->KMAX2, 4);
 	}
-	/* show before to catch 0% */
+	
 	if (totsegm != 0) {
 	    G_percent(cursegm, totsegm, 1);
 	}
@@ -174,39 +172,49 @@ int IL_interp_segments_2d(struct interp_params *params, struct tree_info *info,	
 	    if (!
 		(matrix =
 		 G_alloc_matrix(params->KMAX2 + 1, params->KMAX2 + 1))) {
-		fprintf(stderr, "Cannot allocate memory for matrix\n");
+		G_warning(_("Out of memory"));
 		return -1;
 	    }
 	}
 	if (!indx) {
 	    if (!(indx = G_alloc_ivector(params->KMAX2 + 1))) {
-		fprintf(stderr, "Cannot allocate memory for indx\n");
+		G_warning(_("Out of memory"));
 		return -1;
 	    }
 	}
 	if (!b) {
 	    if (!(b = G_alloc_vector(params->KMAX2 + 3))) {
-		fprintf(stderr, "Cannot allocate memory for b\n");
+		G_warning(_("Out of memory"));
 		return -1;
 	    }
 	}
-	if (!
-	    (point =
-	     (struct triple *)G_malloc(sizeof(struct triple) *
-				       data->n_points))) {
-	    fprintf(stderr, "Cannot allocate memory for point\n");
-	    return -1;
+	/* allocate memory for CV points only if cv is performed */
+	if (params->cv) {
+	    if (!
+		(point =
+		 (struct triple *)G_malloc(sizeof(struct triple) *
+					   data->n_points))) {
+		G_warning(_("Out of memory"));
+		return -1;
+	    }
 	}
+
 	/*normalize the data so that the side of average segment is about 1m */
+	/* put data_points into point only if CV is performed */
+
 	for (i = 0; i < data->n_points; i++) {
 	    data->points[i].x = (data->points[i].x - data->x_orig) / dnorm;
-	    point[i].x = data->points[i].x;	/*cv stuff */
 	    data->points[i].y = (data->points[i].y - data->y_orig) / dnorm;
-	    point[i].y = data->points[i].y;	/*cv stuff */
-	    point[i].z = data->points[i].z;	/*cv stuff */
+	    if (params->cv) {
+		point[i].x = data->points[i].x;	/*cv stuff */
+		point[i].y = data->points[i].y;	/*cv stuff */
+		point[i].z = data->points[i].z;	/*cv stuff */
+	    }
 
 	    /* commented out by Helena january 1997 as this is not necessary
+	       although it may be useful to put normalization of z back? 
 	       data->points[i].z = data->points[i].z / dnorm;
+	       this made smoothing self-adjusting  based on dnorm
 	       if (params->rsm < 0.) data->points[i].sm = data->points[i].sm / dnorm;
 	     */
 	}
@@ -217,30 +225,38 @@ int IL_interp_segments_2d(struct interp_params *params, struct tree_info *info,	
 	else
 	    m_skip = 1;
 
-	for (skip_index = 0; skip_index < m_skip; skip_index++) {
-	    segtest = 0;
-	    j = 0;
-	    xx = point[skip_index].x * dnorm + data->x_orig + params->x_orig;
-	    yy = point[skip_index].y * dnorm + data->y_orig + params->y_orig;
-	    zz = point[skip_index].z;
-	    if (xx >= data->x_orig + params->x_orig &&
-		xx <= data->xmax + params->x_orig &&
-		yy >= data->y_orig + params->y_orig &&
-		yy <= data->ymax + params->y_orig) {
-		segtest = 1;
-		skip_point.x = point[skip_index].x;
-		skip_point.y = point[skip_index].y;
-		skip_point.z = point[skip_index].z;
-		for (k = 0; k < m_skip; k++) {
-		    if (k != skip_index && params->cv) {
-			data->points[j].x = point[k].x;
-			data->points[j].y = point[k].y;
-			data->points[j].z = point[k].z;
-			j++;
-		    }
-		}
-	    }			/* segment area test */
+	/* remove after cleanup - this is just for testing */
+	skip_point.x = 0.;
+	skip_point.y = 0.;
+	skip_point.z = 0.;
 
+	for (skip_index = 0; skip_index < m_skip; skip_index++) {
+	    if (params->cv) {
+		segtest = 0;
+		j = 0;
+		xx = point[skip_index].x * dnorm + data->x_orig +
+		    params->x_orig;
+		yy = point[skip_index].y * dnorm + data->y_orig +
+		    params->y_orig;
+		zz = point[skip_index].z;
+		if (xx >= data->x_orig + params->x_orig &&
+		    xx <= data->xmax + params->x_orig &&
+		    yy >= data->y_orig + params->y_orig &&
+		    yy <= data->ymax + params->y_orig) {
+		    segtest = 1;
+		    skip_point.x = point[skip_index].x;
+		    skip_point.y = point[skip_index].y;
+		    skip_point.z = point[skip_index].z;
+		    for (k = 0; k < m_skip; k++) {
+			if (k != skip_index && params->cv) {
+			    data->points[j].x = point[k].x;
+			    data->points[j].y = point[k].y;
+			    data->points[j].z = point[k].z;
+			    j++;
+			}
+		    }
+		}		/* segment area test */
+	    }
 	    if (!params->cv) {
 		if (params->
 		    matrix_create(params, data->points, data->n_points,
@@ -253,12 +269,12 @@ int IL_interp_segments_2d(struct interp_params *params, struct tree_info *info,	
 				  matrix, indx) < 0)
 		    return -1;
 	    }
-
 	    if (!params->cv) {
 		for (i = 0; i < data->n_points; i++)
 		    b[i + 1] = data->points[i].z;
 		b[0] = 0.;
 		G_lubksb(matrix, data->n_points + 1, indx, b);
+	/* put here condition to skip ertot if not needed */
 		params->check_points(params, data, b, ertot, zmin, dnorm,
 				     skip_point);
 	    }
@@ -270,8 +286,7 @@ int IL_interp_segments_2d(struct interp_params *params, struct tree_info *info,	
 		params->check_points(params, data, b, ertot, zmin, dnorm,
 				     skip_point);
 	    }
-
-	}			/*cv loop */
+	}			/*end of cv loop */
 
 	if (!params->cv)
 	    if ((params->Tmp_fd_z != NULL) || (params->Tmp_fd_dx != NULL) ||
@@ -288,17 +303,18 @@ int IL_interp_segments_2d(struct interp_params *params, struct tree_info *info,	
 	/* show after to catch 100% */
 	cursegm++;
 	if (totsegm < cursegm)
-	    fprintf(stderr, "%d %d\n", totsegm, cursegm);
+	    G_debug(1, "%d %d", totsegm, cursegm);
+	
 	if (totsegm != 0) {
 	    G_percent(cursegm, totsegm, 1);
 	}
-	/*
+	/* 
 	   G_free_matrix(matrix);
 	   G_free_ivector(indx);
 	   G_free_vector(b);
 	 */
-	free(data->points);
-	free(data);
+	G_free(data->points);
+	G_free(data);
     }
     return 1;
 }
@@ -320,11 +336,9 @@ static double smallest_segment(struct multtree *tree, int n_leafs)
 	    if (first_time) {
 		minside = side;
 		first_time = 0;
-		/*          fprintf(stderr, "FIRST,side=%lf, minside=%lf,\n", side, minside); */
 	    }
 	    if (side < minside)
 		minside = side;
-	    /*        fprintf(stderr, "SEC side=%lf, minside=%lf,\n", side, minside); */
 	}
     }
     else {
@@ -332,6 +346,6 @@ static double smallest_segment(struct multtree *tree, int n_leafs)
 	    ((struct quaddata *)(tree->data))->x_orig;
 	return side;
     }
-    /*    fprintf(stderr, "OUT side=%lf, minside=%lf,\n", side, minside); */
+    
     return minside;
 }
