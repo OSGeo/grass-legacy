@@ -10,6 +10,7 @@ int asc_to_bin(FILE * ascii, struct Map_info *Map)
 {
     char ctype;
     char buff[BUFFSIZE];
+    char east_str[256], north_str[256];
     double *xarray;
     double *yarray;
     double *zarray;
@@ -108,9 +109,19 @@ int asc_to_bin(FILE * ascii, struct Map_info *Map)
 	    }
 
 	    *z = 0;
-	    if (sscanf(buff, "%lf%lf%lf", x, y, z) < 2)
-		G_fatal_error(_("Error reading ASCII file: (bad point) [%s]"),
-			      buff);
+	    if (sscanf(buff, "%lf%lf%lf", x, y, z) < 2) {
+		if (sscanf(buff, " %s %s %lf", east_str, north_str, z) < 2) {
+		    G_fatal_error(_("Error reading ASCII file: (bad point) [%s]"),
+				  buff);
+		} else {
+		    if( ! G_scan_easting(east_str, x, G_projection()) )
+			G_fatal_error(_("Unparsable longitude value: [%s]"),
+				      east_str);
+		    if( ! G_scan_northing(north_str, y, G_projection()) )
+			G_fatal_error(_("Unparsable latitude value: [%s]"),
+				      north_str);
+		}
+	    }
 
 	    G_debug(5, "coor in: %s -> x = %f y = %f z = %f", G_chop(buff),
 		    *x, *y, *z);
