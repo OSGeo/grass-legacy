@@ -703,7 +703,7 @@ int main(int argc, char *argv[])
 				       &tmp_ty, NULL, &tmp_dist, NULL, NULL);
 
 		}
-		if (tmp_dist > max)
+		if (tmp_dist > max || tmp_dist < min)
 		    continue;	/* not in threshold */
 		Vect_get_area_cats(&To, area, TCats);
 		tmp_tcat = -1;
