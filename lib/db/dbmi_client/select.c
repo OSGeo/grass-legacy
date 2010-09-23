@@ -272,7 +272,7 @@ int db_select_CatValArray(dbDriver * driver, const char *tab, const char *key,
     dbValue *value;
     dbTable *table;
 
-    G_debug(3, "db_select_db_select_CatValArray ()");
+    G_debug(3, "db_select_CatValArray ()");
 
     if (key == NULL || strlen(key) == 0) {
 	G_warning(_("Missing key column name"));
