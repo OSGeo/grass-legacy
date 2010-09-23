@@ -42,6 +42,7 @@ int randsurf(char *out,		/* Name of raster maps to be opened.    */
 
 	/****** PASS THROUGH EACH CELL ASSIGNING RANDOM VALUE ******/
     for (row_count = 0; row_count < nrows; row_count++) {
+	G_percent(row_count, nrows, 2);
 	for (col_count = 0; col_count < ncols; col_count++) {
 	    if (int_map)
 		*(row_out_C + col_count) =
@@ -59,7 +60,8 @@ int randsurf(char *out,		/* Name of raster maps to be opened.    */
 	else
 	    G_put_d_raster_row(fd_out, (DCELL *) row_out_D);
     }
-
+    G_percent(1, 1, 1);
+    
     G_close_cell(fd_out);
 
     return 0;
