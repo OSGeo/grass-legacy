@@ -324,8 +324,6 @@ class Model(object):
                                            height = condition['size'][1],
                                            text = condition['text'],
                                            id = condition['id'])
-            # for action in conditionItem.GetItems():
-            #    action.SetCondition(conditionItem)
             self.AddItem(conditionItem)
 
         # define loops & if/else items
@@ -340,6 +338,20 @@ class Model(object):
             
             for action in loopItem.GetItems():
                 action.SetBlock(loopItem)
+        
+        for condition in gxmXml.conditions:
+            conditionItem = self.GetItem(condition['id'])
+            for b in condition['items'].keys():
+                alist = list()
+                for aId in condition['items'][b]:
+                    action = self.GetItem(aId)
+                    alist.append(action)
+                conditionItem.SetItems(alist, branch = b)
+            
+            items = conditionItem.GetItems()
+            for b in items.keys():
+                for action in items[b]:
+                    action.SetBlock(conditionItem)
         
     def AddItem(self, newItem):
         """!Add item to the list"""
@@ -1455,8 +1467,8 @@ if __name__ == "__main__":
         self.SetStatusText(layer.GetLog(), 0)
         
     def AddLine(self, rel):
-        """!Add connection
-
+        """!Add connection between model objects
+        
         @param rel relation
         """
         fromShape = rel.GetFrom()
@@ -1473,9 +1485,10 @@ if __name__ == "__main__":
                 rel.InsertLineControlPoint(point = wx.RealPoint(x, y))
         
         self._addEvent(rel)
-        if isinstance(fromShape, ModelCondition): ### ???
-            fromShape = toShape
-        fromShape.AddLine(rel, toShape)
+        try:
+            fromShape.AddLine(rel, toShape)
+        except TypeError:
+            pass # bug when connecting ModelCondition and ModelLoop - to be fixed
         
         self.canvas.diagram.AddShape(rel)
         rel.Show(True)
@@ -1527,7 +1540,7 @@ if __name__ == "__main__":
             item.Show(True)
             
             # connect items in the condition
-            # self.DefineCondition(item)
+            self.DefineCondition(item)
         
         # load variables
         self.variablePanel.Update()
@@ -1579,14 +1592,14 @@ if __name__ == "__main__":
             self.canvas.GetDiagram().RemoveShape(rel)
         loop.Clear()
         
-        for item in loop.GetItems():
+        for item in items:
             rel = ModelRelation(parent, item)
             dx = item.GetX() - parent.GetX()
             dy = item.GetY() - parent.GetY()
             loop.AddRelation(rel)
             if dx != 0:
                 rel.SetControlPoints(((parent.GetX(), parent.GetY() + dy / 2),
-                                     (parent.GetX() + dx, parent.GetY() + dy / 2)))
+                                      (parent.GetX() + dx, parent.GetY() + dy / 2)))
             self.AddLine(rel)
             parent = item
         
@@ -1608,6 +1621,27 @@ if __name__ == "__main__":
                                                         item.GetY() + dy))
         rel.InsertLineControlPoint(point = wx.RealPoint(item.GetX() - dx,
                                                         loop.GetY()))
+        
+        self.canvas.Refresh()
+
+    def DefineCondition(self, condition):
+        """!Define if-else statement with given list of items"""
+        parent = condition
+        items = condition.GetItems()
+        if not items['if'] and not items['else']:
+            return
+        
+        # remove defined relations first
+        for rel in condition.GetRelations():
+            self.canvas.GetDiagram().RemoveShape(rel)
+        condition.Clear()
+
+        for branch in items.keys():
+            for item in items[branch]:
+                rel = ModelRelation(parent, item)
+                condition.AddRelation(rel)
+                self.AddLine(rel)
+                parent = item
         
         self.canvas.Refresh()
         
@@ -1660,7 +1694,7 @@ class ModelObject:
         self.rels = list() # list of ModelRelations
         
         self.isEnabled = True
-        self.inBlock   = None
+        self.inBlock   = list() # list of related loops/conditions
         
     def __del__(self):
         pass
@@ -1705,31 +1739,42 @@ class ModelObject:
     def Update(self):
         pass
 
-    def SetBlock(self, item = None):
-        """!Register loop
+    def SetBlock(self, item):
+        """!Add object to the block (loop/condition)
 
-        @param item reference to ModelObject which defines block of ModelObject (None to unset)
+        @param item reference to ModelLoop or ModelCondition which
+        defines loops/condition
         """
-        self.inBlock = item
+        if item not in self.inBlock:
+            self.inBlock.append(item)
+        
+    def UnSetBlock(self, item):
+        """!Remove object from the block (loop/consition)
 
+        @param item reference to ModelLoop or ModelCondition which
+        defines loops/codition
+        """
+        if item in self.inBlock:
+            self.inBlock.remove(item)
+        
     def GetBlock(self):
-        """!Get related ModelObject which defines block
+        """!Get list of related ModelObject(s) which defines block
+        (loop/condition)
 
-        @return ModelLoop/ModelCondition instance
-        @return None if no block defined for this item
+        @return list of ModelObjects
         """
         return self.inBlock
     
     def GetBlockId(self):
-        """!Get id of ModelObject which defines block
+        """!Get list of related ids which defines block
 
-        @return item id 
-        @return None if action is not in the block
+        @return list of ids
         """
-        if self.inBlock:
-            return self.inBlock.GetId()
+        ret = list()
+        for mo in self.inBlock:
+            ret.append(mo.GetId())
         
-        return None
+        return ret
     
 class ModelAction(ModelObject, ogl.RectangleShape):
     """!Action class (GRASS module)"""
@@ -2175,6 +2220,7 @@ class ModelEvtHandler(ogl.ShapeEvtHandler):
             elif drel['to'] is None:
                 drel['to'] = shape
                 rel = ModelRelation(drel['from'], drel['to'])
+                drel['from'].AddRelation(rel)
                 self.frame.AddLine(rel)
                 del self.frame.defineRelation
         
@@ -2229,7 +2275,7 @@ class ModelEvtHandler(ogl.ShapeEvtHandler):
                 ids = dlg.GetItems()
                 for aId in ids['unchecked']:
                     action = self.frame.GetModel().GetItem(aId)
-                    action.SetBlock()
+                    action.UnSetBlock(shape)
                 for aId in ids['checked']:
                     action = self.frame.GetModel().GetItem(aId)
                     action.SetBlock(shape)
@@ -2246,6 +2292,20 @@ class ModelEvtHandler(ogl.ShapeEvtHandler):
             dlg.CentreOnParent()
             if dlg.ShowModal() == wx.ID_OK:
                 shape.SetText(dlg.GetCondition())
+                ids = dlg.GetItems()
+                for b in ids.keys():
+                    alist = list()
+                    for aId in ids[b]['unchecked']:
+                        action = self.frame.GetModel().GetItem(aId)
+                        action.UnSetBlock(shape)
+                    for aId in ids[b]['checked']:
+                        action = self.frame.GetModel().GetItem(aId)
+                        action.SetBlock(shape)
+                        if action:
+                            alist.append(action)
+                    shape.SetItems(alist, branch = b)
+                self.frame.DefineCondition(shape)
+            self.frame.GetCanvas().Refresh()
             
             dlg.Destroy()
                    
@@ -2263,9 +2323,14 @@ class ModelEvtHandler(ogl.ShapeEvtHandler):
         shape = self.GetShape()
         if isinstance(shape, ModelLoop):
             self.frame.DefineLoop(shape)
-        loop = shape.GetBlock()
-        if loop:
-            self.frame.DefineLoop(loop)
+        elif isinstance(shape, ModelCondition):
+            self.frame.DefineCondition(shape)
+        
+        for mo in shape.GetBlock():
+            if isinstance(mo, ModelLoop):
+                self.frame.DefineLoop(mo)
+            elif isinstance(mo, ModelCondition):
+                self.frame.DefineCondition(mo)
         
     def OnEndSize(self, x, y):
         """!Resize shape"""
@@ -2795,7 +2860,7 @@ class ProcessModelFile:
             pos, size = self._getDim(node)
             text = self._filterValue(self._getNodeText(node, 'condition')).strip()
             aid = list()
-            for anode in node.findall('loop-item'):
+            for anode in node.findall('item'):
                 try:
                     aid.append(int(anode.text))
                 except ValueError:
@@ -2812,8 +2877,18 @@ class ProcessModelFile:
         for node in self.root.findall('if-else'):
             pos, size = self._getDim(node)
             text = self._filterValue(self._getNodeText(node, 'condition')).strip()
-            aid = list()
-
+            aid = { 'if'   : list(),
+                    'else' : list() }
+            for b in aid.keys():
+                bnode = node.find(b)
+                if bnode is None:
+                    continue
+                for anode in bnode.findall('item'):
+                    try:
+                        aid[b].append(int(anode.text))
+                    except ValueError:
+                        pass
+            
             self.conditions.append({ 'pos'     : pos,
                                      'size'    : size,
                                      'text'    : text,
@@ -3021,7 +3096,7 @@ class WriteModelFile:
             self.fd.write('%s<condition>%s</condition>\n' %
                           (' ' * self.indent, self._filterValue(text)))
         for item in loop.GetItems():
-            self.fd.write('%s<loop-item>%d</loop-item>\n' %
+            self.fd.write('%s<item>%d</item>\n' %
                           (' ' * self.indent, item.GetId()))
         self.indent -= 4
         self.fd.write('%s</loop>\n' % (' ' * self.indent))
@@ -3037,9 +3112,18 @@ class WriteModelFile:
         if text:
             self.fd.write('%s<condition>%s</condition>\n' %
                           (' ' * self.indent, self._filterValue(text)))
-        for item in condition.GetItems():
-            self.fd.write('%s<condition-item>%d</condition-item>\n' %
-                          (' ' * self.indent, item.GetId()))
+        items = condition.GetItems()
+        for b in items.keys():
+            if len(items[b]) < 1:
+                continue
+            self.fd.write('%s<%s>\n' % (' ' * self.indent, b))
+            self.indent += 4
+            for item in items[b]:
+                self.fd.write('%s<item>%d</item>\n' %
+                              (' ' * self.indent, item.GetId()))
+            self.indent -= 4
+            self.fd.write('%s</%s>\n' % (' ' * self.indent, b))
+        
         self.indent -= 4
         self.fd.write('%s</if-else>\n' % (' ' * self.indent))
         
@@ -3860,10 +3944,6 @@ class ModelItem(ModelObject):
         """!Set loop id"""
         self.id = id
 
-    def SetItems(self, items):
-        """!Set items (id)"""
-        self.items = items
-
     def SetText(self, cond):
         """!Set loop text (condition)"""
         self.text = cond
@@ -3916,10 +3996,6 @@ class ModelItemDialog(wx.Dialog):
         """!Do layout (virtual method)"""
         pass
     
-    def GetItems(self):
-        """!Get list of selected actions"""
-        return self.itemList.GetItems()
-    
     def GetCondition(self):
         """!Get loop condition"""
         return self.condText.GetValue()
@@ -3946,10 +4022,14 @@ class ModelLoop(ModelItem, ogl.RectangleShape):
                 self.AddText('(' + str(self.id) + ') ' + text)
             else:
                 self.AddText('(' + str(self.id) + ')')
-
+        
     def GetName(self):
         """!Get name"""
         return _("loop")
+    
+    def SetItems(self, items):
+        """!Set items (id)"""
+        self.items = items
 
 class ModelLoopDialog(ModelItemDialog):
     """!Loop properties dialog"""
@@ -3993,6 +4073,10 @@ class ModelLoopDialog(ModelItemDialog):
         sizer.Fit(self.panel)
         
         self.Layout()
+        
+    def GetItems(self):
+        """!Get list of selected actions"""
+        return self.itemList.GetItems()
 
 class ItemPanel(wx.Panel):
     def __init__(self, parent, id = wx.ID_ANY,
@@ -4061,7 +4145,10 @@ class ItemListCtrl(ModelListCtrl):
                                        action.GetName(),
                                        action.GetLog()]
                 aId = action.GetBlockId()
-                if aId not in self.excludeId:
+                if len(aId) > 0:
+                    if aId[0] not in self.excludeId:
+                        aId = None
+                else:
                     aId = None
                 checked.append(aId)
             else:
@@ -4246,8 +4333,9 @@ class ItemCheckListCtrl(ItemListCtrl, listmix.CheckListCtrlMixin):
                 break
         
 class ModelCondition(ModelItem, ogl.PolygonShape):
-    def __init__(self, parent, x, y, id = -1, width = None, height = None, text = '', items = []):
-        """!Defines a condition"""
+    def __init__(self, parent, x, y, id = -1, width = None, height = None, text = '',
+                 items = { 'if' : [], 'else' : [] }):
+        """!Defines a if-else condition"""
         ModelItem.__init__(self, parent, x, y, id, width, height, text, items)
         
         if not width:
@@ -4272,7 +4360,6 @@ class ModelCondition(ModelItem, ogl.PolygonShape):
             self.SetX(x)
             self.SetY(y)
             self.SetPen(wx.BLACK_PEN)
-            
             if text:
                 self.AddText('(' + str(self.id) + ') ' + text)
             else:
@@ -4290,6 +4377,15 @@ class ModelCondition(ModelItem, ogl.PolygonShape):
         """!Get object height"""
         return self.height
 
+    def SetItems(self, items, branch = 'if'):
+        """!Set items (id)
+
+        @param items list of items
+        @param branch 'if' / 'else'
+        """
+        if branch in ['if', 'else']:
+            self.items[branch] = items
+        
 class ModelConditionDialog(ModelItemDialog):
     """!Condition properties dialog"""
     def __init__(self, parent, shape, id = wx.ID_ANY, title = _("If-else properties"),
@@ -4367,6 +4463,11 @@ class ModelConditionDialog(ModelItemDialog):
         aId = int(self.itemListElse.GetItem(index, 0).GetText())
         if aId in self.itemListIf.GetItems()['checked']:
             self.itemListIf.CheckItemById(aId, False)
+        
+    def GetItems(self):
+        """!Get items"""
+        return { 'if'   : self.itemListIf.GetItems(),
+                 'else' : self.itemListElse.GetItems() }
         
 def main():
     app = wx.PySimpleApp()
