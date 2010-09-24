@@ -26,6 +26,7 @@
 
 #include <string.h>
 #include <stdlib.h>
+#include <float.h>
 
 #ifndef _MYINCLUDE_H
 #define _MYINCLUDE_H
@@ -40,12 +41,16 @@
 
 typedef int FILEDESC;
 
+/* global functions */
+static int write_wld(const char *, const struct Cell_head *);
+
+
 int main(int argc, char *argv[])
 {
     struct GModule *module;
     struct Option *rast, *png_file, *compr; /* , *bgcolor; */
-    struct Flag *bequiet, *alpha;
-    char *cellmap, *map, *p, *basename = NULL, *ofile;
+    struct Flag *bequiet, *alpha, *wld_flag;
+    char *cellmap, *map, *p, *basename = NULL, *outfile = NULL;
     char rastermap[1024];
     unsigned char *set, *ored, *ogrn, *oblu;
     int def_red, def_grn, def_blu;
@@ -56,28 +61,28 @@ int main(int argc, char *argv[])
     int rtype, row, col, do_stdout = 0;
     size_t rsize;
     int png_compr, ret, do_alpha;
-    struct Cell_head w;
+    struct Cell_head win;
     FILEDESC cellfile = 0;
     FILE *fp;
 
     /* now goes from pnmtopng.c* -A.Sh */
     /*
-     * * pnmtopng.c -
-     * * read a portable anymap and produce a Portable Network Graphics file
-     * *
-     * * derived from pnmtorast.c (c) 1990,1991 by Jef Poskanzer and some
-     * * parts derived from ppmtogif.c by Marcel Wijkstra <wijkstra@fwi.uva.nl>
-     * * thanks to Greg Roelofs <newt@pobox.com> for contributions and bug-fixes
-     * *
-     * * Copyright (C) 1995-1998 by Alexander Lehmann <alex@hal.rhein-main.de>
-     * *			and Willem van Schaik <willem@schaik.com>
-     * *
-     * * Permission to use, copy, modify, and distribute this software and its
-     * * documentation for any purpose and without fee is hereby granted, provided
-     * * that the above copyright notice appear in all copies and that both that
-     * * copyright notice and this permission notice appear in supporting
-     * * documentation.  This software is provided "as is" without express or
-     * * implied warranty.
+     * pnmtopng.c -
+     * read a portable anymap and produce a Portable Network Graphics file
+     *
+     * derived from pnmtorast.c (c) 1990,1991 by Jef Poskanzer and some
+     * parts derived from ppmtogif.c by Marcel Wijkstra <wijkstra@fwi.uva.nl>
+     * thanks to Greg Roelofs <newt@pobox.com> for contributions and bug-fixes
+     *
+     * Copyright (C) 1995-1998 by Alexander Lehmann <alex@hal.rhein-main.de>
+     *  		      and Willem van Schaik <willem@schaik.com>
+     *
+     * Permission to use, copy, modify, and distribute this software and its
+     * documentation for any purpose and without fee is hereby granted, provided
+     * that the above copyright notice appear in all copies and that both that
+     * copyright notice and this permission notice appear in supporting
+     * documentation.  This software is provided "as is" without express or
+     * implied warranty.
      */
 
     png_struct *png_ptr;
@@ -134,6 +139,10 @@ int main(int argc, char *argv[])
     alpha->key = 't';
     alpha->description = _("Make NULL cells transparent");
 
+    wld_flag = G_define_flag();
+    wld_flag->key = 'w';
+    wld_flag->description = _("Output world file");
+
     /* see what can be done to convert'em -A.Sh.
      * gscale = G_define_flag ();
      * gscale->key = 'G';
@@ -174,9 +183,8 @@ int main(int argc, char *argv[])
 
     if (basename) {
 	G_basename(basename, "png");
-	ofile = G_malloc(strlen(basename) + 5);
-	sprintf(ofile, "%s.png", basename);
-	G_free(basename);
+	outfile = G_malloc(strlen(basename) + 5);
+	sprintf(outfile, "%s.png", basename);
     }
 
     png_compr = atoi(compr->answer);
@@ -194,10 +202,10 @@ int main(int argc, char *argv[])
     ret = G_str_to_color(DEFAULT_BG_COLOR, &def_red, &def_grn, &def_blu);
 #endif
 
-    /*G_get_set_window (&w); *//* 10/99 MN: check for current region */
-    G_get_window(&w);
+    /*G_get_set_window (&win); *//* 10/99 MN: check for current region */
+    G_get_window(&win);
 
-    G_debug(1, "rows = %d, cols = %d", w.rows, w.cols);
+    G_debug(1, "rows = %d, cols = %d", win.rows, win.cols);
 
     /* open raster map for reading */
     {
@@ -213,20 +221,17 @@ int main(int argc, char *argv[])
     fcell_buf = G_allocate_f_raster_buf();
     dcell_buf = G_allocate_d_raster_buf();
 
-    ored = (unsigned char *)G_malloc(w.cols * sizeof(unsigned char));
-    ogrn = (unsigned char *)G_malloc(w.cols * sizeof(unsigned char));
-    oblu = (unsigned char *)G_malloc(w.cols * sizeof(unsigned char));
-    set = (unsigned char *)G_malloc(w.cols * sizeof(unsigned char));
+    ored = (unsigned char *)G_malloc(win.cols * sizeof(unsigned char));
+    ogrn = (unsigned char *)G_malloc(win.cols * sizeof(unsigned char));
+    oblu = (unsigned char *)G_malloc(win.cols * sizeof(unsigned char));
+    set = (unsigned char *)G_malloc(win.cols * sizeof(unsigned char));
 
     /* open png file for writing */
-    {
-	if (do_stdout)
-	    fp = stdout;
-	else if (NULL == (fp = fopen(ofile, "w")))
-	    G_fatal_error(_("Unable to open output file <%s>"), ofile);
-	else
-	    G_free(ofile);
-    }
+    if (do_stdout)
+    	fp = stdout;
+    else if (NULL == (fp = fopen(outfile, "w")))
+    	G_fatal_error(_("Unable to open output file <%s>"), outfile);
+
 
     png_ptr = png_create_write_struct(PNG_LIBPNG_VER_STRING,
 				      &pnmtopng_jmpbuf_struct,
@@ -256,8 +261,8 @@ int main(int argc, char *argv[])
     png_info_init(info_ptr);
 #endif
     png_init_io(png_ptr, fp);
-    info_ptr->width = w.cols;
-    info_ptr->height = w.rows;
+    info_ptr->width = win.cols;
+    info_ptr->height = win.rows;
     info_ptr->bit_depth = depth;
 
     /* explicit filter-type (or none) required */
@@ -309,21 +314,21 @@ int main(int argc, char *argv[])
 	    png_set_packing(png_ptr);
 
 	    /* max: 3 color channels, one alpha channel, 16-bit */
-	    line = (png_byte *) G_malloc(w.cols * 8 * sizeof(char));
+	    line = (png_byte *) G_malloc(win.cols * 8 * sizeof(char));
 
-	    for (row = 0; row < w.rows; row++) {
+	    for (row = 0; row < win.rows; row++) {
 
-		G_percent(row, w.rows, 5);
+		G_percent(row, win.rows, 5);
 
 		if (G_get_raster_row(cellfile, (void *)voidc, row, rtype) < 0)
 		    G_fatal_error(_("Unable to read raster map row %d"), row);
 
 		G_lookup_raster_colors((void *)voidc, ored, ogrn, oblu, set,
-				       w.cols, &colors, rtype);
+				       win.cols, &colors, rtype);
 
 		pp = line;
 
-		for (col = 0; col < w.cols; col++) {
+		for (col = 0; col < win.cols; col++) {
 
 		    if (set[col]) {
 			*pp++ = ored[col];
@@ -354,7 +359,7 @@ int main(int argc, char *argv[])
 		png_write_row(png_ptr, line);
 
 	    }
-	    G_percent(row, w.rows, 5); /* finish it off */
+	    G_percent(row, win.rows, 5); /* finish it off */
 	}
 	else {			/* GREYSCALE IMAGE */
 
@@ -371,6 +376,7 @@ int main(int argc, char *argv[])
 	G_free_colors(&colors);
 
     }
+
     G_free(cell_buf);
     G_free(fcell_buf);
     G_free(dcell_buf);
@@ -380,18 +386,31 @@ int main(int argc, char *argv[])
     G_free(set);
     G_close_cell(cellfile);
 
-
     png_write_end(png_ptr, info_ptr);
     /* png_write_destroy (png_ptr); this is no longer supported with libpng, al 11/2000 */
     /* flush first because G_free (png_ptr) can segfault due to jmpbuf problems
      * in png_write_destroy */
+
     fflush(stdout);
     /* G_free (png_ptr); */
     /* G_free (info_ptr); */
     png_destroy_write_struct(&png_ptr, &info_ptr);	/* al 11/2000 */
 
-
     fclose(fp);
+
+    if (wld_flag->answer) {
+	if(do_stdout)
+	    outfile = G_store("png_map.wld");
+	else
+	    sprintf(outfile, "%s.wld", basename);
+
+	write_wld(outfile, &win);
+    }
+
+    if(basename)
+	G_free(basename);
+    if(outfile)
+	G_free(outfile);
 
     exit(EXIT_SUCCESS);
 }
@@ -425,4 +444,30 @@ static void pnmtopng_error_handler(png_ptr, msg)
     }
 
     longjmp(jmpbuf_ptr->jmpbuf, 1);
+}
+
+
+static int write_wld(const char *fname, const struct Cell_head *win)
+{
+    int width = DBL_DIG;
+    FILE *ofile;
+
+    G_verbose_message(_("Writing world file"));
+
+    if (fname == NULL)
+	G_fatal_error(_("Got null file name"));
+    if (win == NULL)
+	G_fatal_error(_("Got null region struct"));
+    if ((ofile = fopen(fname, "w")) == NULL)
+	G_fatal_error(_("Unable to open world file for writing"));
+
+    fprintf(ofile, "%36.*f \n", width, win->ew_res);
+    fprintf(ofile, "%36.*f \n", width, 0.0);
+    fprintf(ofile, "%36.*f \n", width, 0.0);
+    fprintf(ofile, "%36.*f \n", width, -1 * win->ns_res);
+    fprintf(ofile, "%36.*f \n", width, win->west + win->ew_res / 2.0);
+    fprintf(ofile, "%36.*f \n", width, win->north - win->ns_res / 2.0);
+
+    fclose(ofile);
+    return 0;
 }
