@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: grasslibs_pl\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2010-08-29 12:20+0200\n"
-"PO-Revision-Date: 2010-07-17 19:05+0100\n"
+"PO-Revision-Date: 2010-09-17 23:56+0100\n"
 "Last-Translator: Milena Nowotarska <do.milenki * gmail.com>\n"
 "Language-Team: GRASS Translation Team\n"
 "MIME-Version: 1.0\n"
@@ -850,15 +850,15 @@ msgstr ""
 #: ../lib/gis/parser.c:1169 ../lib/gis/parser.c:1493 ../lib/gis/parser.c:1653
 #: ../lib/gis/parser.c:1941
 msgid "Allow output files to overwrite existing files"
-msgstr "Pozwól na nadpisanie istniejących plików przez pliki wyjściowe"
+msgstr "Nadpisz pliki"
 
 #: ../lib/gis/parser.c:1171 ../lib/gis/parser.c:1501 ../lib/gis/parser.c:1657
 msgid "Verbose module output"
-msgstr ""
+msgstr "Pokazuj komunikaty modułu"
 
 #: ../lib/gis/parser.c:1172 ../lib/gis/parser.c:1508 ../lib/gis/parser.c:1660
 msgid "Quiet module output"
-msgstr ""
+msgstr "Bez komunikatów modułu"
 
 #: ../lib/gis/parser.c:1177
 #, c-format
