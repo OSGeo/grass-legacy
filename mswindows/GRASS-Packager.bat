@@ -59,7 +59,6 @@ rem copy %OSGEO4W_DIR%\pgsql\lib\libpq.dll %PACKAGE_DIR%\extralib
 mkdir %PACKAGE_DIR%\extrabin
 
 copy %OSGEO4W_DIR%\bin\*.exe %PACKAGE_DIR%\extrabin
-del %PACKAGE_DIR%\extrabin\svn*.exe
 
 @echo.
 @echo -----------------------------------------------------------------------------------------------------------------------
