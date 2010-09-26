@@ -34,6 +34,10 @@ set fp [open $env(GISBASE)/etc/VERSIONNUMBER r]
 set GRASSVERSION [read -nonewline $fp]
 close $fp
 
+# If window height is smaller, then consider it a small window
+# 660px is approximate full welcome screen height
+set small_window 670
+
 #############################################################################
 
 proc searchGISRC { filename } {
@@ -168,6 +172,7 @@ proc gisSetWindow {} {
     global grassrc_list
     global gisrc_name
     global refresh
+    global small_window
     
     set refresh 0
 
@@ -185,22 +190,42 @@ proc gisSetWindow {} {
     	-relief {raised}]
 
     set titlefrm [frame .frame0.intro -borderwidth 2 ]
-    set introimg  [label $titlefrm.img -image [image create photo -file \
-    	"$env(GISBASE)/etc/gui/images/gintro.gif"]]
-    set introtitle [text $titlefrm.msg -height 5 \
-    	-relief flat -fg darkgreen \
-    	-bg #dddddd \
-    	-font introfont \
-    	-width 50 ]
-
     pack $titlefrm -side top
+    
+    # Don't show picture on small screens
+    if { [info exists env(GRASS_HEIGHT)] } {
+	  set screen_height $env(GRASS_HEIGHT)
+    } else {
+	  set screen_height [winfo screenheight .]
+    }
+    
+    if { $screen_height > $small_window } {
+	set introimg  [label $titlefrm.img -image [image create photo -file \
+	    "$env(GISBASE)/etc/gui/images/gintro.gif"]]
 	pack $introimg -side top
+    
+	set introtitle [text $titlefrm.msg -height 5 \
+	    -relief flat -fg darkgreen \
+	    -bg #dddddd \
+	    -font introfont \
+	    -width 50 ]
+    } else {
+	set introtitle [text $titlefrm.msg -height 2 \
+	    -relief flat -fg darkgreen \
+	    -bg #dddddd \
+	    -font introfont \
+	    -width 50 ]
+    }
+
     pack $introtitle -side top
 
     .frame0.intro.msg tag configure all -justify center
-    .frame0.intro.msg insert end [G_msg "Welcome to GRASS GIS Version"]
-    .frame0.intro.msg insert end [G_msg " $GRASSVERSION\n"]
-    .frame0.intro.msg insert end [G_msg "The world's leading open source GIS\n\n"]
+    # Welcome text takes too much space on small screens
+    if { $screen_height > $small_window } { 
+	.frame0.intro.msg insert end [G_msg "Welcome to GRASS GIS Version"]
+	.frame0.intro.msg insert end [G_msg " $GRASSVERSION\n"]
+	.frame0.intro.msg insert end [G_msg "The world's leading open source GIS\n\n"]
+    }
     .frame0.intro.msg insert end [G_msg "Select an existing project location and mapset\n"]
     .frame0.intro.msg insert end [G_msg "or define a new location\n"]
     .frame0.intro.msg tag add all 1.0 end
@@ -697,7 +722,7 @@ A popular choice is \"grassdata\", located in your home directory."] 0 OK
 		exit 2
 	}
   
-	grab .
+	catch { grab . }
 	tkwait window . 
 
 }
