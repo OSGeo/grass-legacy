@@ -819,7 +819,10 @@ case "$GRASS_GUI" in
     
     # Check for tcltk interface
     tcltk | gis.m)
-	"$GISBASE/scripts/gis.m"
+       if [ "$sh" != "bash" ] && [ "$sh" != "msh" ] && [ "$sh" != "cygwin" ]; then
+               # trap is not supported by csh/tcsh and rc
+               "$GISBASE/scripts/gis.m"
+       fi;
 	;;
     oldtcltk | d.m)
 	"$GISBASE/scripts/d.m"
@@ -968,6 +971,11 @@ bash|msh|cygwin)
 
     echo "export PATH=\"$PATH\"" >> "$bashrc"
     echo "export HOME=\"$USERHOME\"" >> "$bashrc" # restore user home path
+    echo 'export GRASS_SHELL_PID=$$' >> "$bashrc" # can be used to terminate GRASS session from GUI
+    if [ "$GRASS_GUI" = tcltk ] || [ "$GRASS_GUI" = gis.m ]; then
+       echo '$GISBASE/scripts/gis.m' >> "$bashrc" # Start gis.m
+    fi;
+    echo 'trap "echo \"GUI issued an exit\"; exit" SIGQUIT' >> "$bashrc"
 
     "$ETC/run" "$SHELL"
     EXIT_VAL=$?
@@ -1016,6 +1024,15 @@ do
     fi
     d.mon stop="$MON"
 done
+
+# Attempt to close any open gis.m instances.
+if [ -n "$TCLTKGRASSBASE" ] && [ `ps -a | grep -c "$GRASS_WISH"` -ge 1 ] ; then
+       echo "Closing open gis.m sessions....."
+       echo 'foreach gwin [lsearch -all -inline [winfo interps] gm_tcl*] {
+               catch {send -async $gwin Gm::remoteExit $env(GIS_LOCK)}
+       }
+       exit' | "$GRASS_WISH" #>/dev/null 2>&1
+fi
 
 echo "Cleaning up temporary files ..."
 
