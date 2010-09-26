@@ -410,10 +410,6 @@ proc GmCLabels::display { node } {
 					set ropt($id,1,lfill) "#000000"
 				}
 			}
-			"fontsize" {
-				if { $opt($id,1,override) == 0 } { set ropt($id,1,lfontsize) $val 
-				} else { set ropt($id,1,lfontsize) $opt($id,1,lfontsize) }
-			}
 			"width" {
 				if { $opt($id,1,override) == 0 } { set ropt($id,1,lbwidth) $val
 				} else { set ropt($id,1,lbwidth) $opt($id,1,lbwidth) }
@@ -456,9 +452,20 @@ proc GmCLabels::display { node } {
 				# not available in TclTk
 				set x ""
 			}
+			"fontsize" {
+				# Fontsize and size are exclusive options.
+				if { $opt($id,1,override) == 0 } { 
+					set ropt($id,1,lfontsize) $val
+				} else { 
+					set ropt($id,1,lfontsize) $opt($id,1,lfontsize)
+				}
+				set ropt($id,1,lwidth) $opt($id,1,lwidth)
+			}
 			"size"   {
-				if { $opt($id,1,override) == 0 } { set ropt($id,1,lwidth) $val
-				} else { set ropt($id,1,lwidth) $opt($id,1,lwidth) }
+				# Size is font size in location units (i.e. meters)
+				# No support for such feature in gis.m unless somebody will open a bug for it.
+				set ropt($id,1,lfontsize) $opt($id,1,lfontsize)
+				set ropt($id,1,lwidth) $opt($id,1,lwidth)
 			}
 			"text" {
 				set ropt($id,1,ltxt) [subst -nocommands -novariables $val]
@@ -480,8 +487,8 @@ proc GmCLabels::display { node } {
 					set lineh [expr $newlines * [font metrics $ropt($id,1,lfont) -linespace]]
 				} else {
 					set wid $opt($id,1,lwidth); # This is too wide as wrapped text lines might be shorter.
-					set lineh [expr $newlines * (ceil($linelen/($ropt($id,1,lwidth)-15.0)))\
-					 * [font metrics $ropt($id,1,lfont) -linespace]]; # Somtimes font measure gives wrong length. -15.0 is a hack.
+					set lineh [expr $newlines * (ceil($linelen/($ropt($id,1,lwidth)-10.0)))\
+					 * [font metrics $ropt($id,1,lfont) -linespace]]; # Somtimes font measure gives wrong length. -10.0 is a hack.
 				}
 				# transparent background
 				if {!$ropt($id,1,lopaque)} {
