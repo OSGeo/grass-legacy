@@ -837,15 +837,13 @@ proc GmThematic::tleg_save { mon id} {
     {{EPS} {.eps}}
 	}
 
-	if { [info exists HOME] } {
-		set dir $env(HOME)
-		set path [tk_getSaveFile -filetypes $types -initialdir $dir \
+	set path [tk_getSaveFile -initialdir $Gm::last_directory -filetypes $types \
 			-defaultextension ".eps"]
-	} else {
-		set path [tk_getSaveFile -filetypes $types -defaultextension ".eps"]
-	}
 	
 	$tlegcan($mon,$id) postscript -file "$path"
+	if { $path != "" } {
+                set Gm::last_directory [file dirname $path]
+        }
 
 	return
 }

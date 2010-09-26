@@ -86,7 +86,7 @@ proc GmLib::OpenFileBox { } {
 		[list [G_msg "All Files"] "*"] \
 	]
 
-	set filename_new [tk_getOpenFile -parent $Gm::mainwindow -filetypes $types \
+	set filename_new [tk_getOpenFile -initialdir $Gm::last_directory -parent $Gm::mainwindow -filetypes $types \
 		-title [G_msg "Open File"] ]
 	if { $filename_new == "" } { return}
 	set filename($mon) $filename_new
@@ -115,7 +115,7 @@ proc GmLib::SaveFileBox { } {
 		    [list [G_msg "DM Resource File"] [list {.dm} {.dmrc}]] \
 		    [list [G_msg "All Files"] "*"] \
 		]
-		set filename($mon) [tk_getSaveFile -parent $Gm::mainwindow -filetypes $types \
+		set filename($mon) [tk_getSaveFile -initialdir $Gm::last_directory -parent $Gm::mainwindow -filetypes $types \
 		    -title [G_msg "Save File"] -defaultextension .grc]
 		    if { $filename($mon) == "" } { return}
 		    GmTree::save $filename($mon)

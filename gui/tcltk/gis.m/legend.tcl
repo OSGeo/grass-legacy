@@ -33,7 +33,6 @@ proc GmLegend::create { tree parent } {
     
 
     set node "legend:$count"
-	set dup($count) 1
 
     set frm [ frame .legendicon$count]
     set check [checkbutton $frm.check \
@@ -455,6 +454,7 @@ proc GmLegend::duplicate { tree parent node id } {
 	variable dup
 
     set node "legend:$count"
+    set dup($count) 1
 
     set frm [ frame .legendicon$count]
     set check [checkbutton $frm.check \
@@ -490,9 +490,6 @@ proc GmLegend::duplicate { tree parent node id } {
 
 	set opt($count,1,opacity) $opt($id,1,opacity)
 
-	set optlist { _check map opacity color lines thin labelnum at height width \
-             mouseset use range nolbl noval skip smooth flip}
-             
     foreach key $optlist {
     	set opt($count,1,$key) $opt($id,1,$key)
 		set opt($count,0,$key) $opt($count,1,$key)

@@ -478,22 +478,21 @@ proc MapCanvas::get_mapunits {} {
 	    while {[gets $input line] >= 0} {
 	    	if { [string equal "XY location (unprojected)" "$line"] } {
 	    	    set mapunits "map units"
-                set prj(proj) "xy"
 	    	    break
 	    	}
 	    	regexp -nocase {^(.*):(.*)$} $line trash key value
 	    	set key [string trim $key]
 	    	set value [string trim $value]
-	    	set prj($key) $value	
+	    	set prj($key) $value
 	    }
 
         # Set for latlon locations
         if { [ info exist prj ] && $prj(proj) == "ll"} {set proj_is_ll 1}
         
         if {[catch {close $input} error]} {
-			GmLib::errmsg $error [G_msg "g.proj or projection error"]
-			return
-	    } 
+		GmLib::errmsg $error [G_msg "g.proj or projection error"]
+		return
+	    }
 	}
 	# Length is calculated from the map canvas arrows
 	#  and so is measured & plotted in map units.
@@ -710,10 +709,10 @@ proc MapCanvas::composite {mon } {
 		cd $currdir
 	}
 
-	GmTree::cvdisplay "root"
-	set drawprog 100
-
+	# cvdisplay might need new canvas coordinates. Coordconv has to be run first!
 	MapCanvas::coordconv $mon
+	GmTree::cvdisplay "root"
+	
 	set drawprog 0
 	$mapframe($mon) showstatusbar status
 	return
