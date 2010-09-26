@@ -195,16 +195,13 @@ proc GmProfile::psave { } {
 	set types {
     {{EPS} {.eps}}
 	}
-
-	if { [info exists HOME] } {
-		set dir $env(HOME)
-		set path [tk_getSaveFile -filetypes $types -initialdir $dir \
+	set path [tk_getSaveFile -initialdir $Gm::last_directory -filetypes $types \
 			-defaultextension ".eps" -parent .profile]
-	} else {
-		set path [tk_getSaveFile -filetypes $types -defaultextension ".eps" -parent .profile]
-	}
 	
 	$pcan postscript -file "$path"
+	if { $path != "" } {
+                 set Gm::last_directory [file dirname $path]
+        }
 
 	return
 }

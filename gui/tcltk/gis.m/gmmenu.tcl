@@ -201,7 +201,7 @@ set descmenu [subst  {
 	}}
 	{command {[G_msg "PostScript plot"]} {} "ps.map: Create cartographic PostScript plot" {} -command { execute ps.map }}
 	{separator}
-	{command {[G_msg "E&xit"]} {} "Exit GIS Manager" {} -accelerator $keyctrl-Q -command { exit } }
+	{command {[G_msg "&Quit GIS Manager"]} {} "Exit GIS Manager" {} -accelerator $keyctrl-Q -command { Gm::quit } }
  }
  {[G_msg "&Config"]} all options $tmenu {
 	{cascad {[G_msg "Region"]} {} "" $tmenu {
@@ -259,6 +259,8 @@ set descmenu [subst  {
 		{command {[G_msg "Blend"]} {} "r.blend: Blend 2 color maps to produce 3 RGB files" {} -command {execute r.blend }}
 		{command {[G_msg "Create RGB"]} {} "r.composite: Create color image from RGB files" {} -command {execute r.composite }}
 		{command {[G_msg "HIS to RGB"]} {} "r.his: Create 3 RGB (red, green, blue) maps from 3 HIS (hue, intensity, saturation) maps" {} -command {execute r.his }}
+		{separator}
+		{command {[G_msg "Query raster color"]} {} "r.what.color: Queries colors for a raster map layer" {} -command {execute r.what.color }}
 	}}
 	{separator}
 	{command {[G_msg "Query by coordinate(s)"]} {} "r.what: Query by coordinate(s)" {} -command { execute r.what }}
@@ -441,6 +443,7 @@ set descmenu [subst  {
 		{separator}
 		{command {[G_msg "Build polylines"]} {} "v.build.polylines: Build polylines from adjacent segments" {} -command {execute v.build.polylines }}
 		{command {[G_msg "Split polylines"]} {} "v.segment: Split polylines into points and segments" {} -command {execute v.segment }}
+		{command {[G_msg "Split lines to segments"]} {} "v.split: Split vector lines into shorter segments using a maximal distance between nodes" {} -command {execute v.split }}
 		{command {[G_msg "Parallel lines"]} {} "v.parallel: Create lines parallel to existing lines" {} -command {execute v.parallel }}
 		{separator}
 		{command {[G_msg "Dissolve boundaries"]} {} "v.dissolve: Dissolve common boundaries of areas" {} -command {execute v.dissolve }}
@@ -451,6 +454,7 @@ set descmenu [subst  {
 		{command {[G_msg "Link to OGR"]} {} "v.external: Create new vector as link to external OGR layer" {} -command {execute v.external }}
 		{separator}
 		{command {[G_msg "Create labels"]} {} "v.label: Create text label file for vector objects" {} -command {execute v.label }}
+		{command {[G_msg "Create optimally placed labels"]} {} "v.label.sa: Create optimally placed labels for vector map" {} -command {execute v.label.sa }}
 		{command {[G_msg "Assign colors"]} {} "v.colors: Set color rules using a numeric attribute column" {} -command {execute v.colors }}
 		{separator}
 		{command {[G_msg "Reposition vector"]} {} "v.transform: Reposition (shift, rotate, skew) vector file in coordinate space" {} -command {execute v.transform }}
@@ -533,6 +537,7 @@ set descmenu [subst  {
 		{command {[G_msg "Upload or report topology"]} {} "v.to.db: Update database fields or create reports from vector topology" {} -command {execute v.to.db }}
  		{separator}
 		{command {[G_msg "Univariate attribute statistics"]} {} "v.univar: Calculate univariate statistics for vector attributes" {} -command {execute v.univar }}
+		{command {[G_msg "Attribute classification"]} {} "v.class: Classifies attribute data" {} -command {execute v.class }}
  		{separator}
 		{command {[G_msg "Quadrat indices"]} {} "v.qcount: Indices of point counts in quadrats" {} -command {execute v.qcount }}
 		{command {[G_msg "Test normality"]} {} "v.normal: Test normality of point distribution" {} -command {execute v.normal }}
@@ -602,6 +607,8 @@ set descmenu [subst  {
 	{command {[G_msg "Interpolate volume from vector points"]} {} "v.vol.rst: Interpolate volume from vector points using splines" {} -command {execute v.vol.rst }}
 	{cascad {[G_msg "Report and Statistics"]} {} "" $tmenu {			
 		{command {[G_msg "Basic information"]} {} "r3.info: Display information about grid3D volume" {} -command {execute r3.info }}
+		{command {[G_msg "General statistics"]} {} "r3.stats: Generates volume statistics for raster3d maps" {} -command {execute r3.stats }}
+		{command {[G_msg "Univariate statistics"]} {} "r3.univar: Calculates univariate statistics of a raster3d map" {} -command {execute r3.univar }}
 	}}
  } 
  {[G_msg "&Databases"]} all options $tmenu {
@@ -637,6 +644,10 @@ set descmenu [subst  {
 		{command {[G_msg "Reconnect vector to database"]} {} "v.db.reconnect.all: Reconnect vector map to attribute database" {} -command {execute v.db.reconnect.all }}
 		{command {[G_msg "Set vector - database connection"]} {} "v.db.connect: Set database connection for vector attributes" {} -command {execute v.db.connect }}
 	}}
+	{separator}
+	{cascad {[G_msg "Report and Statistics"]} {} "" $tmenu {
+                {command {[G_msg "Univariate statistics"]} {} "v.db.univar: Calculates univariate statistics on selected table column" {} -command {execute v.db.univar }}
+        }}
  } 
 {[G_msg "&Help"]} all options $tmenu {
 	{command {[G_msg "GRASS help"]} {} "g.manual" {} -command { exec g.manual -i > $devnull & } }

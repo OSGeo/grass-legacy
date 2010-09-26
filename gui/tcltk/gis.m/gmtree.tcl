@@ -730,7 +730,9 @@ proc GmTree::save { spth } {
 	if {[catch {close $rcfile} error]} {
         GmLib::errmsg $error
 	}
-
+    if { $fpath != "" } {
+        set Gm::last_directory [file dirname $fpath]
+    }
 }
 
 

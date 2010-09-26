@@ -337,7 +337,7 @@ proc psprint::window { cm cv cx cy } {
 		-state $psprint::gsstate 
 	Entry $row.c -width 30 -textvariable psprint::pdffile  -state $gsstate
 	Button $row.d -text [G_msg "Browse"]  -command { set psprint::pdffile \
-		[tk_getSaveFile -title "Output PDF file" -defaultextension ".pdf"]} \
+		[tk_getSaveFile -initialdir $Gm::last_directory -title "Output PDF file" -defaultextension ".pdf"]} \
 		-state $psprint::gsstate
 	pack $row.a $row.b $row.c $row.d -side left;
 	pack $row -side top -fill x -expand no -anchor n
@@ -349,7 +349,7 @@ proc psprint::window { cm cv cx cy } {
 	Label $row.b -anchor w -text [G_msg "Save to EPS file               "] 
 	Entry $row.c -width 30 -textvariable psprint::epsfile 
 	Button $row.d -text [G_msg "Browse"] -command { set psprint::epsfile \
-	       [ tk_getSaveFile -title "Output EPS file" -defaultextension ".eps"] }
+	       [ tk_getSaveFile -initialdir $Gm::last_directory -title "Output EPS file" -defaultextension ".eps"] }
 	pack $row.a $row.b $row.c $row.d -side left;
 	pack $row -side top -fill x -expand no -anchor n
 	
@@ -448,7 +448,7 @@ proc psprint::print { cv } {
 		if {[catch {exec $cmd  $format -sDEVICE#pdfwrite -r$res -sNOPAUSE -sOutputFile#$pdffile -dBATCH -- $tmppsfile} error]} {
 			GmLib::errmsg $error
 		}
-		 
+		set Gm::last_directory [file dirname $pdffile]
 	}
 
 	# output to eps file
@@ -458,6 +458,7 @@ proc psprint::print { cv } {
 		} else {
 			$cv postscript -file "$epsfile" -rotate 1
 		}
+		set Gm::last_directory [file dirname $epsfile]
 	}
 	
 	psprint::clean
