@@ -557,7 +557,7 @@ int Vect_build_nat(struct Map_info *Map, int build)
 		if (format == G_INFO_FORMAT_PLAIN)
 		    fprintf(stderr, "%d..", i);
 		else
-		    fprintf(stderr, "%7d\b\b\b\b\b\b\b", i);
+		    fprintf(stderr, "%9d\b\b\b\b\b\b\b\b\b", i);
 	    }
 	    
 	    i++;

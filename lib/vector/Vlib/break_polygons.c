@@ -91,6 +91,7 @@ Vect_break_polygons(struct Map_info *Map, int type, struct Map_info *Err)
     XPnts = NULL;
 
     for (i = 1; i <= nlines; i++) {
+	G_percent(i, nlines, 1);
 	G_debug(3, "i =  %d", i);
 	if (!Vect_line_alive(Map, i))
 	    continue;
@@ -217,6 +218,7 @@ Vect_break_polygons(struct Map_info *Map, int type, struct Map_info *Err)
     for (i = 1; i <= nlines; i++) {
 	int n_orig_points;
 
+	G_percent(i, nlines, 1);
 	G_debug(3, "i =  %d", i);
 	if (!Vect_line_alive(Map, i))
 	    continue;

@@ -64,6 +64,7 @@ Vect_remove_duplicates(struct Map_info *Map, int type, struct Map_info *Err)
     ndupl = 0;
 
     for (i = 1; i <= nlines; i++) {
+	G_percent(i, nlines, 1);
 	if (!Vect_line_alive(Map, i))
 	    continue;
 
