@@ -168,6 +168,7 @@ static void dangles(struct Map_info *Map, int type, int option,
     G_debug(2, "nnodes =  %d", nnodes);
 
     for (node = 1; node <= nnodes; node++) {
+	G_percent(node, nnodes, 1);
 	G_debug(3, "node =  %d", node);
 	if (!Vect_node_alive(Map, node))
 	    continue;

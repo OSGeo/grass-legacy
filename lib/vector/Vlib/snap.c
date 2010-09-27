@@ -118,6 +118,8 @@ Vect_snap_lines_list(struct Map_info *Map, struct ilist *List_lines,
     for (line_idx = 0; line_idx < List_lines->n_values; line_idx++) {
 	int v;
 
+	G_percent(line_idx, List_lines->n_values, 2);
+
 	line = List_lines->value[line_idx];
 
 	G_debug(3, "line =  %d", line);
@@ -159,6 +161,8 @@ Vect_snap_lines_list(struct Map_info *Map, struct ilist *List_lines,
 	    }
 	}
     }
+    G_percent(line_idx, List_lines->n_values, 2); /* finish it */
+
     npoints = point - 1;
 
     /* Go through all registered points and if not yet marked mark it as anchor and assign this anchor
@@ -166,6 +170,8 @@ Vect_snap_lines_list(struct Map_info *Map, struct ilist *List_lines,
     nanchors = ntosnap = 0;
     for (point = 1; point <= npoints; point++) {
 	int i;
+
+	G_percent(point, npoints, 2);
 
 	G_debug(3, "  point = %d", point);
 
@@ -215,6 +221,8 @@ Vect_snap_lines_list(struct Map_info *Map, struct ilist *List_lines,
     for (line_idx = 0; line_idx < List_lines->n_values; line_idx++) {
 	int v, spoint, anchor;
 	int changed = 0;
+
+	G_percent(line_idx, List_lines->n_values, 2);
 
 	line = List_lines->value[line_idx];
 
@@ -378,6 +386,7 @@ Vect_snap_lines_list(struct Map_info *Map, struct ilist *List_lines,
 	    }
 	}
     }				/* for each line */
+    G_percent(line_idx, List_lines->n_values, 2); /* finish it */
 
     Vect_destroy_line_struct(Points);
     Vect_destroy_line_struct(NPoints);
