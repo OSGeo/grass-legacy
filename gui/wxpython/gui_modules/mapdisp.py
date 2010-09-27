@@ -802,6 +802,15 @@ class BufferedWindow(MapWindow, wx.Window):
         if len(self.polycoords) > 0:
             self.DrawLines(self.pdcTmp)
         
+        if self.parent.gismanager.gcpmanagement:
+            # -> GCP Manager (redraw GCPs)
+            if self.parent.toolbars['gcpdisp']:
+                if self == self.parent.TgtMapWindow:
+                    coordtype = 'target'
+                else:
+                    coordtype = 'source'
+                self.parent.gismanager.gcpmanagement.DrawGCP(coordtype)
+            
         if self.parent.gismanager.georectifying:
             # -> georectifier (redraw GCPs)
             if self.parent.toolbars['georect']:
@@ -809,7 +818,7 @@ class BufferedWindow(MapWindow, wx.Window):
             else:
                 coordtype = 'mapcoord'
             self.parent.gismanager.georectifying.DrawGCP(coordtype)
-            
+
         # 
         # clear measurement
         #
@@ -1110,6 +1119,9 @@ class BufferedWindow(MapWindow, wx.Window):
         # right mouse button released
         elif event.RightUp():
             self.OnRightUp(event)
+
+        elif event.Entering():
+            self.OnMouseEnter(event)
 
         elif event.Moving():
             self.OnMouseMoving(event)
@@ -1485,6 +1497,18 @@ class BufferedWindow(MapWindow, wx.Window):
             self.ClearLines(pdc=self.pdcTmp)
             self.DrawLines(pdc=self.pdcTmp)
         
+        elif self.mouse["use"] == "pointer" and self.parent.gismanager.gcpmanagement:
+            # -> GCP Manager
+            coord = self.Pixel2Cell(self.mouse['end'])
+            if self.parent.toolbars['gcpdisp']:
+                if self.parent.MapWindow == self.parent.SrcMapWindow:
+                    coordtype = 'source'
+                else:
+                    coordtype = 'target'
+
+                self.parent.gismanager.gcpmanagement.SetGCPData(coordtype, coord, self, confirm=True)
+                self.UpdateMap(render = False, renderVector = False)
+
         elif self.mouse["use"] == "pointer" and self.parent.gismanager.georectifying:
             # -> georectifying
             coord = self.Pixel2Cell(self.mouse['end'])
@@ -2056,6 +2080,20 @@ class BufferedWindow(MapWindow, wx.Window):
             
             self.redrawAll = True
             
+    def OnMouseEnter(self, event):
+        """!
+        Mouse entered window and no mouse buttons were pressed
+        """
+        if self.parent.gismanager.gcpmanagement:
+            if self.parent.toolbars['gcpdisp']:
+                if not self.parent.MapWindow == self:
+                    self.parent.MapWindow = self
+                    self.parent.Map = self.Map
+                    self.parent.UpdateActive(self)
+                self.SetFocus()
+        else:
+            event.Skip()
+
     def OnMouseMoving(self, event):
         """
         Motion event and no mouse buttons were pressed
@@ -2239,6 +2277,9 @@ class BufferedWindow(MapWindow, wx.Window):
         elif zoomtype == 0:
             dx = x1 - x2
             dy = y1 - y2
+            if dx == 0 and dy == 0:
+                dx = x1 - self.Map.width / 2
+                dy = y1 - self.Map.height / 2
             newreg['w'], newreg['n'] = self.Pixel2Cell((dx, dy))
             newreg['e'], newreg['s'] = self.Pixel2Cell((self.Map.width  + dx,
                                                         self.Map.height + dy))
@@ -2614,6 +2655,7 @@ class MapFrame(wx.Frame):
         #
         self.toolbars = { 'map' : None,
                           'vdigit' : None,
+                          'gcpdisp' : None, 
                           'georect' : None, 
                           'nviz' : None }
         for toolb in toolbars:

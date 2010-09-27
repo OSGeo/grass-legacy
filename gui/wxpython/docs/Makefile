@@ -4,7 +4,8 @@ FILES = wxGUI \
 	wxGUI.Vector_Digitizing_Tool \
 	wxGUI.Attribute_Table_Manager \
 	wxGUI.Nviz \
-	wxGUI.Icons
+	wxGUI.Icons \
+	wxGUI.GCP_Manager
 
 include $(MODULE_TOPDIR)/include/Make/Platform.make
 include $(MODULE_TOPDIR)/include/Make/Grass.make

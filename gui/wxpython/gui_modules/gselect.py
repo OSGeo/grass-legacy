@@ -37,7 +37,8 @@ from preferences import globalSettings as UserSettings
 
 class Select(wx.combo.ComboCtrl):
     def __init__(self, parent, id = wx.ID_ANY, size = globalvar.DIALOG_GSELECT_SIZE,
-                 type = None, multiple = False, mapsets = None, exceptOf = []):
+                 type = None, multiple = False, mapsets = None, exceptOf = [],
+                 updateOnPopup = True):
         """
         Custom control to create a ComboBox with a tree control
         to display and select GIS elements within acessible mapsets.
@@ -55,7 +56,8 @@ class Select(wx.combo.ComboCtrl):
         if type:
             self.tcp.GetElementList(type, mapsets, exceptOf)
             self.tcp.SetData(type = type, mapsets = mapsets,
-                             exceptOf = exceptOf, multiple = multiple)
+                             exceptOf = exceptOf, multiple = multiple,
+                             updateOnPopup = updateOnPopup)
 
     def SetElementList(self, type, mapsets = None, exceptOf = []):
         self.tcp.seltree.DeleteAllItems()
@@ -101,6 +103,7 @@ class TreeCtrlComboPopup(wx.combo.ComboPopup):
         self.curitem = None
         self.multiple = False
         self.type = None
+        self.updateOnPopup = True
         self.mapsets = []
         self.exceptOf = []
 
@@ -154,6 +157,8 @@ class TreeCtrlComboPopup(wx.combo.ComboPopup):
     def OnPopup(self):
         """Limited only for first selected"""
         # update list
+        if not self.updateOnPopup:
+            return
         self.seltree.DeleteAllItems()
         self.GetElementList(self.type, self.mapsets, self.exceptOf)
 
@@ -361,6 +366,8 @@ class TreeCtrlComboPopup(wx.combo.ComboPopup):
             self.exceptOf = kargs['exceptOf']
         if kargs.has_key('multiple'):
             self.multiple = kargs['multiple']
+        if kargs.has_key('updateOnPopup'):
+            self.updateOnPopup = kargs['updateOnPopup']
         
 class VectorDBInfo:
     """Class providing information about attribute tables

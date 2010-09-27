@@ -134,6 +134,7 @@ class GMFrame(wx.Frame):
         self.workspaceFile = workspace    # workspace file
         self.menucmd       = {}           # menuId / cmd
         self.georectifying = None         # reference to GCP class or None
+        self.gcpmanagement = None         # reference to GCP class or None
         
         # creating widgets
         # -> self.notebook, self.goutput, self.outpage
@@ -373,6 +374,14 @@ class GMFrame(wx.Frame):
 
         # but in this case just call Skip so the default is done
         event.Skip()
+
+    def OnGCPManager(self, event):
+        """
+        Launch GCP Manager module
+        """
+        import gui_modules.gcpmanager as gcpmanager
+
+        gcpmanager.GCPWizard(self)
 
     def OnGeorectify(self, event):
         """
