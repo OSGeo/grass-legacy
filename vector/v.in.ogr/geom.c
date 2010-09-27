@@ -25,6 +25,8 @@
 #include "ogr_api.h"
 #include "global.h"
 
+int split_line(struct Map_info *Map, int otype, struct line_pnts *Points,
+	       struct line_cats *Cats);
 
 /* Add categories to centroids inside polygon */
 int
@@ -166,6 +168,35 @@ centroid(OGRGeometryH hGeom, CENTR * Centr, SPATIAL_INDEX * Sindex, int field,
     return 0;
 }
 
+/* count polygons and isles */
+int poly_count(OGRGeometryH hGeom)
+{
+    int i, nr, ret;
+    OGRwkbGeometryType eType;
+    OGRGeometryH hRing;
+    eType = wkbFlatten(OGR_G_GetGeometryType(hGeom));
+
+    if (eType == wkbPolygon) {
+	G_debug(3, "Polygon");
+	nr = OGR_G_GetGeometryCount(hGeom);
+	n_polygon_boundaries += nr;
+
+    }
+    else if (eType == wkbGeometryCollection || eType == wkbMultiPolygon) {
+	G_debug(3, "GeometryCollection or MultiPolygon");
+	nr = OGR_G_GetGeometryCount(hGeom);
+	for (i = 0; i < nr; i++) {
+	    hRing = OGR_G_GetGeometryRef(hGeom, i);
+
+	    ret = poly_count(hRing);
+	    if (ret == -1) {
+		G_warning(_("Cannot read part of geometry"));
+	    }
+	}
+    }
+    return 0;
+}
+
 /* Write geometry to output map */
 int
 geom(OGRGeometryH hGeom, struct Map_info *Map, int field, int cat,
@@ -223,7 +254,11 @@ geom(OGRGeometryH hGeom, struct Map_info *Map, int field, int cat,
 	    otype = GV_BOUNDARY;
 	else
 	    otype = GV_LINE;
-	Vect_write_line(Map, otype, Points, Cats);
+
+	if (split_distance > 0 && otype == GV_BOUNDARY)
+	    split_line(Map, otype, Points, Cats);
+	else
+	    Vect_write_line(Map, otype, Points, Cats);
     }
 
     else if (eType == wkbPolygon) {
@@ -256,7 +291,7 @@ geom(OGRGeometryH hGeom, struct Map_info *Map, int field, int cat,
 
 	size = G_area_of_polygon(Points->x, Points->y, Points->n_points);
 	if (size < min_area) {
-	    G_warning(_("Area size [%.1e], area not imported"), size);
+	    G_debug(2, "Area size [%.1e], area not imported", size);
 	    return 0;
 	}
 
@@ -264,7 +299,11 @@ geom(OGRGeometryH hGeom, struct Map_info *Map, int field, int cat,
 	    otype = GV_LINE;
 	else
 	    otype = GV_BOUNDARY;
-	Vect_write_line(Map, otype, Points, BCats);
+
+	if (split_distance > 0 && otype == GV_BOUNDARY)
+	    split_line(Map, otype, Points, BCats);
+	else
+	    Vect_write_line(Map, otype, Points, BCats);
 
 	/* Isles */
 	IPoints =
@@ -298,7 +337,7 @@ geom(OGRGeometryH hGeom, struct Map_info *Map, int field, int cat,
 				      IPoints[valid_isles]->y,
 				      IPoints[valid_isles]->n_points);
 		if (size < min_area) {
-		    G_warning(_("Island size [%.1e], island not imported"),
+		    G_debug(2, "Island size [%.1e], island not imported",
 			      size);
 		}
 		else {
@@ -306,7 +345,11 @@ geom(OGRGeometryH hGeom, struct Map_info *Map, int field, int cat,
 			otype = GV_LINE;
 		    else
 			otype = GV_BOUNDARY;
-		    Vect_write_line(Map, otype, IPoints[valid_isles], BCats);
+		    if (split_distance > 0 && otype == GV_BOUNDARY)
+			split_line(Map, otype, IPoints[valid_isles], BCats);
+		    else
+			Vect_write_line(Map, otype, IPoints[valid_isles],
+					BCats);
 		}
 		valid_isles++;
 	    }
@@ -380,6 +423,55 @@ geom(OGRGeometryH hGeom, struct Map_info *Map, int field, int cat,
     else {
 	G_fatal_error(_("Unknown geometry type"));
     }
+
+    return 0;
+}
+
+int split_line(struct Map_info *Map, int otype, struct line_pnts *Points,
+	       struct line_cats *Cats)
+{
+    int i;
+    double dist = 0., seg_dist, dx, dy;
+    struct line_pnts *OutPoints;
+
+    /* don't write zero length boundaries */
+    Vect_line_prune(Points);
+    if (Points->n_points < 2)
+	return 0;
+
+    /* can't split boundaries with only 2 vertices */
+    if (Points->n_points == 2) {
+	Vect_write_line(Map, otype, Points, Cats);
+	return 0;
+    }
+
+    OutPoints = Vect_new_line_struct();
+    Vect_append_point(OutPoints, Points->x[0], Points->y[0], Points->z[0]);
+    Vect_append_point(OutPoints, Points->x[1], Points->y[1], Points->z[1]);
+    dx = Points->x[1] - Points->x[0];
+    dy = Points->y[1] - Points->y[0];
+    dist = sqrt(dx * dx + dy * dy);
+
+    /* trying to keep line length smaller than split_distance
+     * alternative, less code: write line as soon as split_distance is exceeded */
+    for (i = 2; i < Points->n_points; i++) {
+	dx = Points->x[i] - Points->x[i - 1];
+	dy = Points->y[i] - Points->y[i - 1];
+	seg_dist = sqrt(dx * dx + dy * dy);
+	dist += seg_dist;
+	if (dist > split_distance) {
+	    Vect_write_line(Map, otype, OutPoints, Cats);
+	    Vect_reset_line(OutPoints);
+	    dist = seg_dist;
+	    Vect_append_point(OutPoints, Points->x[i - 1], Points->y[i - 1],
+			      Points->z[i - 1]);
+	}
+	Vect_append_point(OutPoints, Points->x[i], Points->y[i],
+			  Points->z[i]);
+    }
+    Vect_write_line(Map, otype, OutPoints, Cats);
+
+    Vect_destroy_line_struct(OutPoints);
 
     return 0;
 }
