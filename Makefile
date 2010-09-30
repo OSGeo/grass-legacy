@@ -290,6 +290,7 @@ endif
 	@ # default to be /usr/local
 	@##### -cd ${GISBASE} ; tar cBf - man | (cd ${INST_DIR} ; tar xBf - ) 2>/dev/null
 	-cd ${GISBASE} ; tar cBf - include | (cd ${INST_DIR} ; tar xBf - ) 2>/dev/null
+	-sed -i -e "s#^\(GRASS_HOME.[^=]*\).*#\1= ${INST_DIR}#" -e "s#^\(RUN_GISBASE.[^=]*\).*#\1= ${INST_DIR}#" ${INST_DIR}/include/Make/Platform.make
 	-cd ${GISBASE} ; tar cBf - lib | (cd ${INST_DIR} ; tar xBf - ) 2>/dev/null
 	-sed 's#'${GISBASE}'#'${INST_DIR}'#g' ${GISBASE}/etc/monitorcap > ${INST_DIR}/etc/monitorcap
 	-sed 's#'${GISBASE}'#'${INST_DIR}'#g' ${GISBASE}/etc/fontcap > ${INST_DIR}/etc/fontcap
