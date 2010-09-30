@@ -277,8 +277,7 @@ else
    g.message message="Installing <$MODULE>..."
 
    # is it a script?
-   grep "default: script" "$TMPDIR/$MODULE/Makefile" 2>&1 > /dev/null
-   if [ $? -eq 0 ] ; then
+   if [ `grep -c 'default: script' "$TMPDIR/$MODULE/Makefile"` -eq 1 ] ; then
       PROGTYPE=scripts
    else
       PROGTYPE=bin
