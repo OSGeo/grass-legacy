@@ -215,6 +215,8 @@ Vect_select_lines_by_polygon(struct Map_info *Map, struct line_pnts *Polygon,
 
     /* Select first all lines by box */
     dig_line_box(Polygon, &box);
+    box.T = PORT_DOUBLE_MAX;
+    box.B = -PORT_DOUBLE_MAX;
     Vect_select_lines_by_box(Map, &box, type, LocList);
     G_debug(3, "  %d lines selected by box", LocList->n_values);
 
