@@ -383,7 +383,7 @@ off_t AMI_STREAM<T>::stream_len(void) {
   }
 
   fseek(fp, posn_save, SEEK_SET);
-
+  return (st_size / sizeof(T));
 #else
   struct stat buf;
   if (stat(path, &buf) == -1) {
@@ -392,20 +392,6 @@ off_t AMI_STREAM<T>::stream_len(void) {
     assert(0);
     exit(1);
   }
-#endif
-
-
-#ifdef __MINGW32__
-  //TEMPORARY DEBUG:
-  fprintf(stderr, "%s: length = %lld   sizeof(T)=%d\n",
-	  path, st_size, sizeof(T));
-
-  return (st_size / sizeof(T));
-#else
-  //TEMPORARY DEBUG:
-  fprintf(stderr, "%s: length = %lld   sizeof(T)=%d\n",
-	  path, buf.st_size, sizeof(T));
-
   return (buf.st_size / sizeof(T));
 #endif
 };
