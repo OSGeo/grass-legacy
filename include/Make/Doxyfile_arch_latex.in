@@ -23,7 +23,7 @@ PROJECT_NAME           = GRASS
 # This could be handy for archiving the generated documentation or 
 # if some version control system is used.
 
-PROJECT_NUMBER         = 6
+PROJECT_NUMBER         = @GRASS_VERSION_MAJOR@.@GRASS_VERSION_MINOR@.@GRASS_VERSION_RELEASE@ (@GRASS_VERSION_DATE@)
 
 # The OUTPUT_DIRECTORY tag is used to specify the (relative or absolute) 
 # base path where the generated documentation will be put. 
@@ -448,7 +448,33 @@ RECURSIVE              = YES
 # excluded from the INPUT source files. This way you can easily exclude a 
 # subdirectory from a directory tree whose root is specified with the INPUT tag.
 
-EXCLUDE                = 
+EXCLUDE                = bin.* \
+		         db \
+			 debian \
+			 demolocation \
+			 display \
+			 dist.* \
+			 doc \
+			 general \
+		         gui/wxpython/vdigit \
+			 gui/wxpython/nviz \
+			 imagery \
+                         lib/python/ctypes \
+			 locale \
+			 macosx \
+			 man \
+			 misc \
+			 mswindows \
+			 ps \
+			 raster \
+			 raster3d \
+			 rpm \
+			 scripts \
+			 sites \
+			 testsuite \
+			 tools \
+			 vector \
+			 visualization
 
 # The EXCLUDE_SYMLINKS tag can be used select whether or not files or directories 
 # that are symbolic links (a Unix filesystem feature) are excluded from the input.
@@ -945,7 +971,7 @@ SEARCH_INCLUDES        = YES
 # contain include files that are not input files but should be processed by 
 # the preprocessor.
 
-INCLUDE_PATH           = ../include ../../include
+INCLUDE_PATH           = include
 
 # You can use the INCLUDE_FILE_PATTERNS tag to specify one or more wildcard 
 # patterns (like *.h and *.hpp) to filter out the header-files in the 
@@ -962,7 +988,7 @@ INCLUDE_FILE_PATTERNS  =
 # undefined via #undef or recursively expanded use the := operator 
 # instead of the = operator.
 
-PREDEFINED             = HAVE_OGR HAVE_TIFFIO_H
+PREDEFINED             = HAVE_OGR HAVE_TIFFIO_H HAVE_GEOS
 
 # If the MACRO_EXPANSION and EXPAND_ONLY_PREDEF tags are set to YES then 
 # this tag can be used to specify a list of macro names that should be expanded. 
