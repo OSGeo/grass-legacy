@@ -1316,6 +1316,7 @@ class GMFrame(wx.Frame):
         self.curr_page.maptree.mapdisplay.Show()
 
     def AddRaster(self, event):
+        """!Add raster to the layer tree"""
         self.notebook.SetSelection(0)
         self.curr_page.maptree.AddLayer('raster')
 
@@ -1565,7 +1566,7 @@ class GMApp(wx.App):
         
     def OnInit(self):
         """!Initialize all available image handlers
-
+        
         @return True
         """
         wx.InitAllImageHandlers()
