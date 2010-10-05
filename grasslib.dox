@@ -100,6 +100,7 @@ from GRASS 5 Programmer's manual) or are simply undocumented.</i>
  - vask:	Cursor management library - \ref vask
  - %vector:	\ref Vector_Library (GRASS Vector and Direct Graph Library)
   - vedit:      \ref Vedit_Library - %vector editing
+  - neta:       \ref netalib
  - nviz:        \ref nvizlib (used by wxGUI Nviz extension and CLI-based Nviz module)
 <!--<li>image3:	extra imagery library (mainly still unused) - \ref image3lib-->
 <!--<li>D:		display library - \ref d_displaylib-->
@@ -111,7 +112,7 @@ from GRASS 5 Programmer's manual) or are simply undocumented.</i>
 
 \section gui GUI
 
- - <a href="http://grass.osgeo.org/programming6/gui/wxpython/">wxGUI</a></li>
+ - \ref wxpythonlib
 
 \section location File structure of GRASS Location
 

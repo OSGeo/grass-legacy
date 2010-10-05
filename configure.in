@@ -1960,7 +1960,7 @@ AC_SUBST(STRIPFLAG)
 GRASS_HOME=${DSTDIR}
 AC_SUBST(GRASS_HOME)
 
-AC_OUTPUT(include/Make/Grass.make include/Make/Platform.make include/version.h include/winname.h grass.pc)
+AC_OUTPUT(include/Make/Grass.make include/Make/Platform.make include/Make/Doxyfile_arch_html include/Make/Doxyfile_arch_latex include/version.h include/winname.h grass.pc)
 
 LOC_MSG([Copying config.status to config.status.${ARCH}])
 cp -f config.status config.status.${ARCH}
