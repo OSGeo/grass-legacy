@@ -24,6 +24,7 @@ below, under FILTERS.
 The <b>repeat</b> parameter defines the number of times the <em>filter</em>
 is to be applied to the <em>input</em> data.
 
+
 <h2>FILTERS</h2>
 
 The <em>filter</em> file is a normal UNIX ASCII file designed by the user.
@@ -47,7 +48,6 @@ This TITLE would be used to construct a TITLE for the resulting raster map
 layer.  It should be a one-line description of the filter.
 </dd>
 
-<dl>
 <dt>MATRIX</dt>
 <dd>The matrix (n x n) follows on the next n lines.  <em>n</em> must be
 an odd integer greater than or equal to 3.
@@ -55,7 +55,6 @@ The matrix itself consists of n rows of n values.
 The values must be separated from each other by at least 1 blank.
 </dd>
 
-<dl>
 <dt>DIVISOR</dt>
 <dd>The filter divisor is <em>d</em>.  If not specified, the default is 1.
 If the divisor is zero (0), then the divisor is dependent on the
@@ -63,7 +62,6 @@ category values in the neighborhood
 (see HOW THE FILTER WORKS below).
 </dd>
 
-<dl>
 <dt>TYPE</dt>
 <dd>The filter type.  <em>S</em> means sequential, while <em>P</em> mean parallel.
 If not specified, the default is S.
@@ -71,15 +69,16 @@ If not specified, the default is S.
 Sequential filtering happens in place.  As the filter is applied to the
 raster map layer, the category values that were changed in neighboring
 cells affect the resulting category value of the current
-cell being filtered.
+cell being filtered.</p>
 <p>
 Parallel filtering happens in such a way that the original raster
-map layer category values are used to produce the new category value.
+map layer category values are used to produce the new category value.</p>
 <p>
 More than one filter may be specified in the filter file.
 The additional filter(s) are described just like the first.
-For example, the following describes two filters:
+For example, the following describes two filters:</p>
 </dd>
+</dl>
 
 
 <h2>EXAMPLE FILTER FILE</h2>
@@ -103,6 +102,7 @@ For example, the following describes two filters:
      TYPE      P
 </pre>
 
+
 <h2>HOW THE FILTER WORKS</h2>
 
 The filter process produces a new category value for each cell
@@ -116,7 +116,6 @@ values where the corresponding input cell is non-null.)
 
 
 <p>
-
 If more than one filter step is specified, either because the
 repeat value was greater than one or because the filter file
 contained more than one matrix, these steps are performed
@@ -126,6 +125,7 @@ then the next filter is applied to the intermediate result to
 produce another intermediate result;  and so on, until the
 final filter is applied.  Then the output cell is written.
 
+
 <h2>NOTES</h2>
 
 If the resolution of the geographic region does not agree with the
@@ -133,12 +133,14 @@ resolution of the raster map layer, unintended resampling of the original
 data may occur.  The user should be sure that the geographic region
 is set properly.
 
+
 <h2>SEE ALSO</h2>
 
 <em><a href="g.region.html">g.region</a></em>,
 <em><a href="r.clump.html">r.clump</a></em>,
 <em><a href="r.neighbors.html">r.neighbors</a></em>
 <em><a href="r.mfilter.html">r.mfilter</a></em>
+
 
 <h2>AUTHOR</h2>
 
