@@ -20,6 +20,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <grass/gis.h>
+#include <grass/spawn.h>
 #include <grass/glocale.h>
 
 /* Changed for truecolor 24bit support by 
@@ -30,7 +31,7 @@
  * example; nlev=8 means 8bit for each R, G, B equal to 24bit truecolor
  */
 
-int run(char *, char *);
+int run(char *, char *, char *);
 
 int main(int argc, char *argv[])
 {
@@ -98,7 +99,7 @@ int main(int argc, char *argv[])
 	exit(EXIT_FAILURE);
 
     if (unlock->answer)
-	run("release -f", unlock->answer);
+	run("release", "-f", unlock->answer);
 
     if (!select->answer && !no_auto_select->answer)
 	select->answer = start->answer;
@@ -108,15 +109,15 @@ int main(int argc, char *argv[])
 
     error = 0;
     if (status->answer)
-	error += run("status", "");
+	error += run("status", "", "");
     else if (list->answer)
-	error += run("list", "");
+	error += run("list", "", "");
     if (release->answer)
-	error += run("release", "");
+	error += run("release", "", "");
     if (stop->answer)
-	error += run("stop", stop->answer);
+	error += run("stop", "", stop->answer);
     if (start->answer) {
-	error += run("start", start->answer);
+	error += run("start", "", start->answer);
 	if (error) {		/* needed procedure failed */
 	    if (mon_name != NULL) {
 		/* restore the previous environ. */
@@ -127,11 +128,12 @@ int main(int argc, char *argv[])
 	}
     }
     if (select->answer) {
-	oops = run("select", select->answer);	/* couldn't select */
-	if (oops && start->answer && strcmp(start->answer, select->answer) == 0) {	/* try once more */
+	oops = run("select", "", select->answer);	/* couldn't select */
+	if (oops && start->answer && strcmp(start->answer, select->answer) == 0) {
+	    /* try once more */
 	    G_message(_("Problem selecting %s. Will try once more"),
 		      select->answer);
-	    oops = run("select", select->answer);	/* couldn't select */
+	    oops = run("select", "", select->answer);	/* couldn't select */
 	}
 	if (oops) {		/* needed procedure failed */
 	    if (mon_name != NULL) {
@@ -144,17 +146,26 @@ int main(int argc, char *argv[])
 	error += oops;
     }
     if (print->answer)
-	error += run("which", "");
+	error += run("which", "", "");
+
     exit(error ? EXIT_FAILURE : EXIT_SUCCESS);
 }
 
-int run(char *pgm, char *name)
+int run(char *pgm, char *flags, char *name)
 {
-    char command[1024];
+    char path[GPATH_MAX];
+    int stat;
 
-    sprintf(command, "\"%s\"/etc/mon.%s %s", G_gisbase(), pgm, name);
+    sprintf(path, "%s/etc/mon.%s", G_gisbase(), pgm);
 
-    G_debug(1, "run: [%s]", command);
+    if (*flags) {
+	if ((stat = G_spawn(path, pgm, flags, name, NULL)))
+	    G_sleep(3);
+    }
+    else {
+	if ((stat = G_spawn(path, pgm, name, NULL)))
+	    G_sleep(3);
+    }
 
-    return G_system(command);
+    return stat;
 }
