@@ -43,7 +43,8 @@
 #% type: string
 #% description: Old and new name of the column (old,new)
 #% required : yes
-#% multiple: yes
+#% key_desc: old_name,new_name
+#% multiple: no
 #%end
 
 if [ -z "$GISBASE" ] ; then
