@@ -319,9 +319,9 @@ class UpdateQThread(Thread):
 class grassTask:
     """!This class holds the structures needed for both filling by the
     parser and use by the interface constructor.
-
+    
     Use as either grassTask() for empty definition or
-    grassTask('grass.command' ) for parsed filling.
+    grassTask('grass.command') for parsed filling.
     """
     def __init__(self, grassModule = None):
         self.name = _('unknown')
@@ -381,8 +381,7 @@ class grassTask:
             return None
         
     def set_param(self, aParam, aValue, element = 'value'):
-        """
-        Set param value/values.
+        """!Set param value/values.
         """
         try:
             param = self.get_param(aParam)
@@ -392,8 +391,7 @@ class grassTask:
         param[element] = aValue
             
     def get_flag(self, aFlag):
-        """
-        Find and return a flag by name.
+        """!Find and return a flag by name.
         """
         for f in self.flags:
             if f['name'] == aFlag:
@@ -401,8 +399,7 @@ class grassTask:
         raise ValueError, _("Flag not found: %s") % aFlag
 
     def set_flag(self, aFlag, aValue, element = 'value'):
-        """
-        Enable / disable flag.
+        """!Enable / disable flag.
         """
         try:
             param = self.get_flag(aFlag)
@@ -432,7 +429,7 @@ class grassTask:
     def getCmd(self, ignoreErrors = False):
         """!Produce an array of command name and arguments for feeding
         into some execve-like command processor.
-
+        
         If ignoreErrors==True then it will return whatever has been
         built so far, even though it would not be a correct command
         for GRASS.
@@ -460,7 +457,7 @@ class grassTask:
             raise ValueError, '\n'.join(errList)
         
         return cmd
-
+    
     def set_options(self, opts):
         """!Set flags and parameters
 
@@ -477,6 +474,14 @@ class grassTask:
         return { 'flags'  : self.flags,
                  'params' : self.params }
     
+    def has_required(self):
+        """!Check if command has at least one required paramater"""
+        for p in self.params:
+            if p.get('required', False) == True:
+                return True
+        
+        return False
+
 class processTask:
     """!A ElementTree handler for the --interface-description output,
     as defined in grass-interface.dtd. Extend or modify this and the
@@ -845,7 +850,7 @@ class mainFrame(wx.Frame):
 
         @param returncode command's return code (0 for success)
         """
-        if self.parent.GetName() != 'LayerTree' or \
+        if self.parent and self.parent.GetName() != 'LayerTree' or \
                 returncode != 0:
             return
         
@@ -881,22 +886,21 @@ class mainFrame(wx.Frame):
         """!Run the command"""
         cmd = self.createCmd()
         
-        if cmd == None or len(cmd) < 2:
+        if not cmd or len(cmd) < 1:
             return
-
+        
         if self.standalone or cmd[0][0:2] != "d.":
             # Send any non-display command to parent window (probably wxgui.py)
-            # put to parents
-            # switch to 'Command output'
+            # put to parents switch to 'Command output'
             if self.notebookpanel.notebook.GetSelection() != self.notebookpanel.goutputId:
                 self.notebookpanel.notebook.SetSelection(self.notebookpanel.goutputId)
             
             try:
+                
                 self.goutput.RunCmd(cmd, onDone = self.OnDone)
             except AttributeError, e:
                 print >> sys.stderr, "%s: Propably not running in wxgui.py session?" % (e)
                 print >> sys.stderr, "parent window is: %s" % (str(self.parent))
-            # Send any other command to the shell.
         else:
             gcmd.Command(cmd)
         
@@ -906,8 +910,7 @@ class mainFrame(wx.Frame):
                     self.btn_clipboard,
                     self.btn_help):
             btn.Enable(False)
-        ### self.btn_abort.Enable(True)
-
+        
     def OnAbort(self, event):
         """!Abort running command"""
         event = goutput.wxCmdAbort(aborted=True)
@@ -1940,7 +1943,7 @@ class GUI:
                         key, value = option.split('=', 1)
                     except:
                         if i == 0: # add key name of first parameter if not given
-                            key = self.grass_task.firstParam
+                            key = self.grass_task.get_options()['params'][0]['name']
                             value = option
                         else:
                             raise ValueError, _("Unable to parse command %s") % ' '.join(cmd)
