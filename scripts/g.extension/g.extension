@@ -216,6 +216,7 @@ if [ "$PREFIX" = '$GRASS_ADDON_PATH' ] ; then
     fi
     PREFIX="$GRASS_ADDON_PATH"
 elif [ "$PREFIX" = '$GISBASE' ] || [ $GIS_FLAG_S -eq 1 ] ; then
+   g.message -w "'-s' flag not implemented yet"
    PREFIX="$GISBASE"
 fi
 
