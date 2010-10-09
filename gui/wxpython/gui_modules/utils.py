@@ -62,8 +62,8 @@ def GetTempfile(pref=None):
     except:
         return None
 
-def GetLayerNameFromCmd(dcmd, fullyQualified=False, param=None,
-                        layerType=None):
+def GetLayerNameFromCmd(dcmd, fullyQualified = False, param = None,
+                        layerType = None):
     """!Get map name from GRASS command
 
     @param dcmd GRASS command (given as list)
@@ -76,7 +76,7 @@ def GetLayerNameFromCmd(dcmd, fullyQualified=False, param=None,
     @return '' if no map name found in command
     """
     mapname = ''
-
+    
     if len(dcmd) < 1:
         return mapname
     
@@ -87,7 +87,7 @@ def GetLayerNameFromCmd(dcmd, fullyQualified=False, param=None,
     elif 'd.rhumbline' in dcmd[0]:
         mapname = 'rhumb'
     elif 'labels=' in dcmd[0]:
-        mapname = dcmd[idx].split('=')[1]+' labels'
+        mapname = dcmd[idx].split('=')[1] + ' labels'
     else:
         params = list()
         for idx in range(len(dcmd)):
@@ -107,8 +107,11 @@ def GetLayerNameFromCmd(dcmd, fullyQualified=False, param=None,
                 params.append((idx, p, v))
         
         if len(params) < 1:
-            return mapname
-            
+            if len(dcmd) > 1 and '=' not in dcmd[1]:
+                params.append((1, None, dcmd[1]))
+            else:
+                return mapname
+        
         mapname = params[0][2]
         mapset = ''
         if fullyQualified and '@' not in mapname:
@@ -130,11 +133,17 @@ def GetLayerNameFromCmd(dcmd, fullyQualified=False, param=None,
             
             # update dcmd
             for i, p, v in params:
-                dcmd[i] = p + '=' + v + '@' + mapset
-    
+                if p:
+                    dcmd[i] = p + '=' + v + '@' + mapset
+                else:
+                    dcmd[i] = v + '@' + mapset
+        
         maps = list()
         for i, p, v in params:
-            maps.append(dcmd[i].split('=', 1)[1])
+            if not p:
+                maps.append(v)
+            else:
+                maps.append(dcmd[i].split('=', 1)[1])
         mapname = '\n'.join(maps)
     
     return mapname
