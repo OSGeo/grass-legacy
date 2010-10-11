@@ -304,6 +304,9 @@ int G__interpolate_color_rule(DCELL, unsigned char *, unsigned char *,
 /* color_org.c */
 int G__organize_colors(struct Colors *);
 
+/* color_print.c */
+int G_print_colors(const char *, const char *, FILE *);
+
 /* color_rand.c */
 int G_make_random_colors(struct Colors *, CELL, CELL);
 
