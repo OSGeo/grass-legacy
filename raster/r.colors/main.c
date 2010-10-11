@@ -190,7 +190,8 @@ int main(int argc, char **argv)
     opt.rast->gisprompt = "old,cell,raster";
     opt.rast->description =
 	_("Raster map name from which to copy color table");
-
+    opt.rast->guisection = _("Colors");
+    
     opt.rules = G_define_standard_option(G_OPT_F_INPUT);
     opt.rules->key = "rules";
     opt.rules->required = NO;
@@ -209,6 +210,7 @@ int main(int argc, char **argv)
     flag.l = G_define_flag();
     flag.l->key = 'l';
     flag.l->description = _("List available rules then exit");
+    flag.l->guisection = _("Print");
 
     flag.n = G_define_flag();
     flag.n->key = 'n';
@@ -233,6 +235,7 @@ int main(int argc, char **argv)
     flag.p = G_define_flag();
     flag.p->key = 'p';
     flag.p->description = _("Print current color table and exit");
+    flag.p->guisection = _("Print");
 
     flag.i = G_define_flag();
     flag.i->key = 'i';
