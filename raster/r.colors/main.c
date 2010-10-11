@@ -181,27 +181,26 @@ int main(int argc, char **argv)
     opt.colr->options = rules_list();
     opt.colr->description = _("Type of color table");
     opt.colr->descriptions = rules_descriptions();
-    opt.colr->guisection = _("Colors");
+    opt.colr->guisection = _("Define");
 
-    opt.rast = G_define_option();
+    opt.rast = G_define_standard_option(G_OPT_R_INPUT);
     opt.rast->key = "raster";
-    opt.rast->type = TYPE_STRING;
     opt.rast->required = NO;
-    opt.rast->gisprompt = "old,cell,raster";
     opt.rast->description =
-	_("Raster map name from which to copy color table");
-    opt.rast->guisection = _("Colors");
+	_("Raster map from which to copy color table");
+    opt.rast->guisection = _("Define");
     
     opt.rules = G_define_standard_option(G_OPT_F_INPUT);
     opt.rules->key = "rules";
     opt.rules->required = NO;
     opt.rules->description = _("Path to rules file (\"-\" to read rules from stdin)");
-    opt.rules->guisection = _("Colors");
+    opt.rules->guisection = _("Define");
 
     flag.r = G_define_flag();
     flag.r->key = 'r';
     flag.r->description = _("Remove existing color table");
-
+    flag.r->guisection = _("Remove");
+    
     flag.w = G_define_flag();
     flag.w->key = 'w';
     flag.w->description =
@@ -215,22 +214,22 @@ int main(int argc, char **argv)
     flag.n = G_define_flag();
     flag.n->key = 'n';
     flag.n->description = _("Invert colors");
-    flag.n->guisection = _("Colors");
+    flag.n->guisection = _("Define");
 
     flag.g = G_define_flag();
     flag.g->key = 'g';
     flag.g->description = _("Logarithmic scaling");
-    flag.g->guisection = _("Colors");
+    flag.g->guisection = _("Define");
 
     flag.a = G_define_flag();
     flag.a->key = 'a';
     flag.a->description = _("Logarithmic-absolute scaling");
-    flag.a->guisection = _("Colors");
+    flag.a->guisection = _("Define");
 
     flag.e = G_define_flag();
     flag.e->key = 'e';
     flag.e->description = _("Histogram equalization");
-    flag.e->guisection = _("Colors");
+    flag.e->guisection = _("Define");
 
     flag.p = G_define_flag();
     flag.p->key = 'p';
@@ -245,8 +244,7 @@ int main(int argc, char **argv)
     flag.q = G_define_flag();
     flag.q->key = 'q';
     flag.q->description = _("Run quietly");
-
-
+    
     if (G_parser(argc, argv))
 	exit(EXIT_FAILURE);
 
