@@ -381,6 +381,10 @@ class GMFrame(wx.Frame):
 
         event.Skip()
 
+    def GetLayerTree(self):
+        """!Get current layer tree"""
+        return self.curr_page.maptree
+    
     def GetLogWindow(self):
         """!Get widget for command output"""
         return self.goutput
