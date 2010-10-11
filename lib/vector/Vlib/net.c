@@ -486,22 +486,22 @@ Vect_net_shortest_path(struct Map_info *Map, int from, int to,
 
     pclip = NULL;
     if (List != NULL) {
-	nRet =
-	    dglShortestPath(&(Map->graph), &pSPReport, (dglInt32_t) from,
-			    (dglInt32_t) to, clipper, pclip, &(Map->spCache));
-	/* comment out above and uncomment below to debug dglib cache */
 	/* nRet =
 	    dglShortestPath(&(Map->graph), &pSPReport, (dglInt32_t) from,
-			    (dglInt32_t) to, clipper, pclip, NULL); */
+			    (dglInt32_t) to, clipper, pclip, &(Map->spCache)); */
+	/* comment out belwo and uncomment above to debug dglib cache */
+	nRet =
+	    dglShortestPath(&(Map->graph), &pSPReport, (dglInt32_t) from,
+			    (dglInt32_t) to, clipper, pclip, NULL);
     }
     else {
-	nRet =
-	    dglShortestDistance(&(Map->graph), &nDistance, (dglInt32_t) from,
-				(dglInt32_t) to, clipper, pclip, &(Map->spCache));
-	/* comment out above and uncomment below to debug dglib cache */
 	/* nRet =
 	    dglShortestDistance(&(Map->graph), &nDistance, (dglInt32_t) from,
-				(dglInt32_t) to, clipper, pclip, NULL); */
+				(dglInt32_t) to, clipper, pclip, &(Map->spCache)); */
+	/* comment out belwo and uncomment above to debug dglib cache */
+	nRet =
+	    dglShortestDistance(&(Map->graph), &nDistance, (dglInt32_t) from,
+				(dglInt32_t) to, clipper, pclip, NULL);
     }
 
     if (nRet == 0) {
