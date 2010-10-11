@@ -4,11 +4,12 @@
  *
  * AUTHOR(S):    Michael Shapiro - CERL
  *               David Johnson
+ *               Print color table by Martin Landa <landa.martin gmail.com>
  *
  * PURPOSE:      Allows creation and/or modification of the color table
  *               for a raster map layer.
  *
- * COPYRIGHT:    (C) 2006-2008 by the GRASS Development Team
+ * COPYRIGHT:    (C) 2006-2008, 2010 by the GRASS Development Team
  *
  *               This program is free software under the GNU General Public
  *               License (>=v2). Read the file COPYING that comes with GRASS
@@ -137,7 +138,7 @@ int main(int argc, char **argv)
 {
     int overwrite;
     int interactive;
-    int remove;
+    int remove, print;
     int have_colors;
     struct Colors colors, colors_tmp;
     struct Cell_stats statf;
@@ -151,7 +152,7 @@ int main(int argc, char **argv)
     struct GModule *module;
     struct
     {
-	struct Flag *r, *w, *l, *g, *a, *e, *i, *q, *n;
+	struct Flag *r, *w, *l, *g, *a, *e, *i, *q, *n, *p;
     } flag;
     struct
     {
@@ -229,6 +230,10 @@ int main(int argc, char **argv)
     flag.e->description = _("Histogram equalization");
     flag.e->guisection = _("Colors");
 
+    flag.p = G_define_flag();
+    flag.p->key = 'p';
+    flag.p->description = _("Print current color table and exit");
+
     flag.i = G_define_flag();
     flag.i->key = 'i';
     flag.i->description = _("Enter rules interactively");
@@ -257,7 +262,8 @@ int main(int argc, char **argv)
     overwrite = !flag.w->answer;
     interactive = flag.i->answer;
     remove = flag.r->answer;
-
+    print = flag.p->answer;
+    
     name = opt.map->answer;
 
     style = opt.colr->answer;
@@ -267,8 +273,8 @@ int main(int argc, char **argv)
     if (!name)
 	G_fatal_error(_("No raster map specified"));
 
-    if (!cmap && !style && !rules && !interactive && !remove)
-	G_fatal_error(_("One of \"-i\" or \"-r\" or options \"color\", \"rast\" or \"rules\" must be specified!"));
+    if (!cmap && !style && !rules && !interactive && !remove && !print)
+	G_fatal_error(_("One of \"-i\", \"-p\" or \"-r\" or options \"color\", \"rast\" or \"rules\" must be specified!"));
 
     if (interactive && (style || rules || cmap))
 	G_fatal_error(_("Interactive mode is incompatible with \"color\", \"rules\", and \"raster\" options"));
@@ -295,6 +301,11 @@ int main(int argc, char **argv)
     if (mapset == NULL)
 	G_fatal_error(_("Raster map <%s> not found"), name);
 
+    if (print) {
+	G_print_colors(name, mapset, stdout);
+	return EXIT_SUCCESS;
+    }
+    
     if (remove) {
 	int stat = G_remove_colors(name, mapset);
 
@@ -307,9 +318,11 @@ int main(int argc, char **argv)
 
     G_suppress_warnings(1);
     have_colors = G_read_colors(name, mapset, &colors);
-    /*if (have_colors >= 0)
-       G_free_colors(&colors); */
-
+    /*
+      if (have_colors >= 0)
+      G_free_colors(&colors);
+    */
+    
     if (have_colors > 0 && !overwrite)
 	exit(EXIT_SUCCESS);
 
