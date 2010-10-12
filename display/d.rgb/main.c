@@ -1,4 +1,3 @@
-
 /****************************************************************************
  *
  * MODULE:       d.rgb
@@ -8,9 +7,9 @@
  *               Hamish Bowman <hamish_nospam yahoo.com>, 
  *               Markus Neteler <neteler itc.it>, 
  *               Radim Blazek <radim.blazek gmail.com>
- * PURPOSE:      combine three rasters to form a colour image using red, green,
+ * PURPOSE:      Combine three rasters to form a colour image using red, green,
  *               and blue display channels
- * COPYRIGHT:    (C) 2001-2007 by the GRASS Development Team
+ * COPYRIGHT:    (C) 2001-2007, 2010 by the GRASS Development Team
  *
  *               This program is free software under the GNU General Public
  *               License (>=v2). Read the file COPYING that comes with GRASS
@@ -52,15 +51,15 @@ int main(int argc, char **argv)
     G_gisinit(argv[0]);
 
     module = G_define_module();
-    module->keywords = _("display");
+    module->keywords = _("display, raster, RGB");
     module->description =
-	_("Displays three user-specified raster map layers "
+	_("Displays three user-specified raster maps "
 	  "as red, green, and blue overlays in the active graphics frame.");
 
     flag_o = G_define_flag();
     flag_o->key = 'o';
     flag_o->description = _("Overlay (non-null values only)");
-
+    
     flag_x = G_define_flag();
     flag_x->key = 'x';
     flag_x->description = _("Don't add to list of commands in monitor");
@@ -68,17 +67,12 @@ int main(int argc, char **argv)
     for (i = 0; i < 3; i++) {
 	char buff[80];
 
-	sprintf(buff, _("Name of raster map to be used for <%s>"),
+	sprintf(buff, _("Name of raster map to be used for '%s'"),
 		color_names[i]);
 
-	B[i].opt = G_define_option();
+	B[i].opt = G_define_standard_option(G_OPT_R_MAP);
 	B[i].opt->key = G_store(color_names[i]);
-	B[i].opt->type = TYPE_STRING;
-	B[i].opt->answer = NULL;
-	B[i].opt->required = YES;
-	B[i].opt->gisprompt = "old,cell,raster";
 	B[i].opt->description = G_store(buff);
-	B[i].opt->key_desc = "name";
     }
 
     if (G_parser(argc, argv))
@@ -87,7 +81,7 @@ int main(int argc, char **argv)
     /* Do screen initializing stuff */
     if (R_open_driver() != 0)
 	G_fatal_error(_("No graphics device selected"));
-
+    
     D_get_screen_window(&t, &b, &l, &r);
     D_set_overlay_mode(flag_o->answer);
     D_cell_draw_setup(t, b, l, r);
