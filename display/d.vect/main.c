@@ -122,10 +122,9 @@ int main(int argc, char **argv)
 
     module = G_define_module();
     module->keywords = _("display, vector");
-    module->description =
-	_("Displays vector data in the active "
-	  "frame on the graphics monitor.");
-
+    module->description = _("Displays user-specified vector map "
+			    "in the active graphics frame.");
+    
     map_opt = G_define_standard_option(G_OPT_V_MAP);
 
     display_opt = G_define_option();
