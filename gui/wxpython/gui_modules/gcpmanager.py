@@ -19,9 +19,9 @@ Classes:
 This program is free software under the GNU General Public License
 (>=v2). Read the file COPYING that comes with GRASS for details.
 
-@author Markus Metz
 @author Michael Barton
 @author Updated by Martin Landa <landa.martin gmail.com>
+@author Markus Metz redesign georectfier -> GCP Manager
 """
 
 import os
@@ -287,27 +287,15 @@ class GCPWizard(object):
             return False
 
         if grc == 'target':
-            os.environ["GISRC"] = str(self.target_gisrc)
+            os.environ['GISRC'] = str(self.target_gisrc)
             gisrcfile = str(self.target_gisrc)
         elif grc == 'source':
-            os.environ["GISRC"] = str(self.source_gisrc)
+            os.environ['GISRC'] = str(self.source_gisrc)
             gisrcfile = str(self.source_gisrc)
 
         # do it the hard way
-        gisrc_dict = {}
-        try:
-            f = open(gisrcfile, 'r')
-            for line in f.readlines():
-                line = line.replace('\n', '').strip()
-                if len(line) < 1:
-                    continue
-                key, value = line.split(':', 1)
-                gisrc_dict[key.strip()] = value.strip()
-        finally:
-            f.close()
-
-        gcmd.RunCommand('g.gisenv', 'set=LOCATION_NAME=%s' % gisrc_dict['LOCATION_NAME'])
-        gcmd.RunCommand('g.gisenv', 'set=MAPSET=%s' % gisrc_dict['MAPSET'])
+        gcmd.RunCommand('g.gisenv', 'set=LOCATION_NAME=%s' % self.newlocation)
+        gcmd.RunCommand('g.gisenv', 'set=MAPSET=%s' % self.newmapset)
 
         return True
     
@@ -476,7 +464,7 @@ class GroupPage(TitledPage):
         self.xygroup = ''
 
         # default extension
-        self.extension = 'georect' + str(os.getpid())
+        self.extension = '.georect' + str(os.getpid())
 
         #
         # layout
@@ -1350,10 +1338,6 @@ class GCP(MapFrame, wx.Frame, ColumnSorterMixin):
         if self.CheckGCPcount():
             # calculate RMS
             self.RMSError(self.xygroup, self.gr_order)
-        else:
-            # draw GCPs (source and target)
-            sourceMapWin.UpdateMap(render=False, renderVector=False)
-            targetMapWin.UpdateMap(render=False, renderVector=False)
 
     def ReloadGCPs(self, event):
         """!Reload data from file"""
@@ -1373,6 +1357,17 @@ class GCP(MapFrame, wx.Frame, ColumnSorterMixin):
 
         self.list.LoadData()
         self.itemDataMap = self.mapcoordlist
+
+        if self._col != -1:
+            self.list.ClearColumnImage(self._col)
+        self._colSortFlag = [1] * self.list.GetColumnCount()
+
+        # draw GCPs (source and target)
+        sourceMapWin = self.SrcMapWindow
+        sourceMapWin.UpdateMap(render=False, renderVector=False)
+        if self.show_target:
+            targetMapWin = self.TgtMapWindow
+            targetMapWin.UpdateMap(render=False, renderVector=False)
     
     def OnFocus(self, event):
         # self.grwiz.SwitchEnv('source')
@@ -1383,6 +1378,12 @@ class GCP(MapFrame, wx.Frame, ColumnSorterMixin):
         RMS button handler
         """
         self.RMSError(self.xygroup,self.gr_order)
+
+        sourceMapWin = self.SrcMapWindow
+        sourceMapWin.UpdateMap(render=False, renderVector=False)
+        if self.show_target:
+            targetMapWin = self.TgtMapWindow
+            targetMapWin.UpdateMap(render=False, renderVector=False)
         
     def CheckGCPcount(self, msg=False):
         """
@@ -1417,16 +1418,28 @@ class GCP(MapFrame, wx.Frame, ColumnSorterMixin):
 
         if maptype == 'cell':
             self.grwiz.SwitchEnv('source')
-            cmdlist = ['i.rectify','-a','group=%s' % self.xygroup,
-                       'extension=%s' % self.extension,'order=%s' % self.gr_order]
-            if self.clip_to_region:
-                cmdlist.append('-c')
-            
-            self.parent.goutput.RunCmd(cmdlist, compReg=False,
-                                       switchPage=True)
-            
-            time.sleep(.1)
 
+            if self.clip_to_region:
+                flags = "ac"
+            else:
+                flags = "a"
+
+            busy = wx.BusyInfo(message=_("Rectifying images, please wait..."),
+                               parent=self)
+            wx.Yield()
+
+            ret = gcmd.RunCommand('i.rectify',
+                                  parent = self,
+                                  read = False,
+                                  group = self.xygroup,
+                                  extension = self.extension,
+                                  order = self.gr_order,
+                                  flags = flags)
+
+            # provide feedback on success/failure ?
+        
+            busy.Destroy()
+                
         elif maptype == 'vector':
             outmsg = ''
             # loop through all vectors in VREF
@@ -1745,12 +1758,6 @@ class GCP(MapFrame, wx.Frame, ColumnSorterMixin):
         self.fwd_rmserror = round((sumsq_fwd_err/GCPcount)**0.5,4)
         self.bkw_rmserror = round((sumsq_bkw_err/GCPcount)**0.5,4)
         self.list.ResizeColumns()
-
-        sourceMapWin = self.SrcMapWindow
-        sourceMapWin.UpdateMap(render=False, renderVector=False)
-        if self.show_target:
-            targetMapWin = self.TgtMapWindow
-            targetMapWin.UpdateMap(render=False, renderVector=False)
 
     def GetNewExtend(self, region, map = None):
 
