@@ -488,7 +488,7 @@ static struct Options define_options(void)
     opts.icnd = G_define_standard_option(G_OPT_F_INPUT);
     opts.icnd->key		= "icnd";
     opts.icnd->required	        = YES;
-    opts.icnd->description	= _("Name of input text file");
+    opts.icnd->description	= _("Name of input text file with 6S parameters");
 
     opts.oimg = G_define_standard_option(G_OPT_R_OUTPUT);
     opts.oimg->key = "oimg";
