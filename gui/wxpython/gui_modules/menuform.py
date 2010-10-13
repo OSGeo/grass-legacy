@@ -1954,7 +1954,9 @@ class GUI:
                     
                     element = self.grass_task.get_param(key, raiseError = False)
                     if not element:
-                        err.append(_("%s: parameter '%s' not available") % (cmd[0], key))
+                        err.append(_("%(cmd)s: parameter '%(key)s' not available") % \
+                                       { 'cmd' : cmd[0],
+                                         'key' : key })
                         continue
                     element = element['element']
                     
