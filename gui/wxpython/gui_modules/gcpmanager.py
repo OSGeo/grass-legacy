@@ -50,7 +50,7 @@ from icon import Icons as Icons
 from location_wizard import TitledPage as TitledPage
 from preferences import globalSettings as UserSettings
 from gcpmapdisp import MapFrame
-from mapdisp import BufferedWindow
+from mapdisp_window import BufferedWindow
 
 try:
     import subprocess # Not needed if GRASS commands could actually be quiet
@@ -288,14 +288,8 @@ class GCPWizard(object):
 
         if grc == 'target':
             os.environ['GISRC'] = str(self.target_gisrc)
-            gisrcfile = str(self.target_gisrc)
         elif grc == 'source':
             os.environ['GISRC'] = str(self.source_gisrc)
-            gisrcfile = str(self.source_gisrc)
-
-        # do it the hard way
-        gcmd.RunCommand('g.gisenv', 'set=LOCATION_NAME=%s' % self.newlocation)
-        gcmd.RunCommand('g.gisenv', 'set=MAPSET=%s' % self.newmapset)
 
         return True
     
@@ -331,20 +325,6 @@ class LocationPage(TitledPage):
         self.xylocation = ''
         self.xymapset = ''
         
-        tmplist = os.listdir(self.grassdatabase)
-        self.locList = []
-        self.mapsetList = []
-        
-        #
-        # create a list of valid locations
-        #
-        for item in tmplist:
-            if os.path.isdir(os.path.join(self.grassdatabase, item)) and \
-                    os.path.exists(os.path.join(self.grassdatabase, item, 'PERMANENT')):
-                self.locList.append(item)
-
-        utils.ListSortLower(self.locList)
-        
         #
         # layout
         #
@@ -362,9 +342,7 @@ class LocationPage(TitledPage):
         self.sizer.Add(item=wx.StaticText(parent=self, id=wx.ID_ANY, label=_('Select source location:')),
                        flag=wx.ALIGN_LEFT | wx.ALIGN_CENTER_VERTICAL | wx.ALL, border=5,
                        pos=(2, 1))
-        self.cb_location = wx.ComboBox(parent=self, id=wx.ID_ANY, 
-                                     choices = self.locList, size=(300, -1),
-                                     style=wx.CB_DROPDOWN | wx.CB_READONLY)
+        self.cb_location = gselect.LocationSelect(parent = self, gisdbase = self.grassdatabase)
         self.sizer.Add(item=self.cb_location,
                        flag=wx.ALIGN_LEFT | wx.ALIGN_CENTER_VERTICAL | wx.ALL, border=5,
                        pos=(2, 2))
@@ -373,9 +351,8 @@ class LocationPage(TitledPage):
         self.sizer.Add(item=wx.StaticText(parent=self, id=wx.ID_ANY, label=_('Select source mapset:')),
                        flag=wx.ALIGN_LEFT | wx.ALIGN_CENTER_VERTICAL | wx.ALL, border=5,
                        pos=(3, 1))
-        self.cb_mapset = wx.ComboBox(parent=self, id=wx.ID_ANY,
-                                     choices = self.mapsetList, size=(300, -1),
-                                     style=wx.CB_DROPDOWN | wx.CB_READONLY)
+        self.cb_mapset = gselect.MapsetSelect(parent = self, gisdbase = self.grassdatabase,
+                                              setItems = False)
         self.sizer.Add(item=self.cb_mapset,
                        flag=wx.ALIGN_LEFT | wx.ALIGN_CENTER_VERTICAL | wx.ALL, border=5,
                        pos=(3,2))
@@ -730,83 +707,13 @@ class DispMapPage(TitledPage):
             return
 
         # filter out all maps not in group
-        # not available in 64
-        #self.srcselection.tcp.GetElementList(elements = self.parent.src_maps)
-        # modified from gselect
-        self.srcselection.tcp.seltree.DeleteAllItems()
-        # get current mapset
-        curr_mapset = grass.gisenv()['MAPSET']
-        mapsets = utils.ListOfMapsets()
-        for i in range(len(mapsets)):
-            if i > 0 and mapsets[i] == curr_mapset:
-                mapsets[i] = mapsets[0]
-                mapsets[0] = curr_mapset
-        
-        elementdict = {'cell':'rast',
-                       'raster':'rast',
-                       'rast':'rast',
-                       'raster files':'rast',
-                       'vector':'vect',
-                       'vect':'vect'
-                       }
-        if globalvar.have_mlist:
-            filesdict = grass.mlist_grouped(elementdict[maptype])
-        else:
-            filesdict = grass.list_grouped(elementdict[maptype])
-        
-        first_dir = None
-        for dir in mapsets:
-            dir_node = self.srcselection.tcp.AddItem('Mapset: ' + dir)
-            if not first_dir:
-                first_dir = dir_node
-            
-            self.srcselection.tcp.seltree.SetItemTextColour(dir_node, wx.Colour(50, 50, 200))
-            try:
-                elem_list = filesdict[dir]
-                elem_list.sort(key=str.lower)
-                for elem in elem_list:
-                    if elem != '':
-                        fullqElem = elem + '@' + dir
-                        if fullqElem in self.parent.src_maps:
-                            self.srcselection.tcp.AddItem(fullqElem, parent=dir_node)
-            except:
-                continue
-
-            if self.srcselection.tcp.seltree.ItemHasChildren(dir_node):
-                sel = UserSettings.Get(group='general', key='elementListExpand',
-                                       subkey='selection')
-                collapse = True
-
-                if sel == 0: # collapse all except PERMANENT and current
-                    if dir in ('PERMANENT', curr_mapset):
-                        collapse = False
-                elif sel == 1: # collapse all except PERMANENT
-                    if dir == 'PERMANENT':
-                        collapse = False
-                elif sel == 2: # collapse all except current
-                    if dir == curr_mapset:
-                        collapse = False
-                elif sel == 3: # collapse all
-                    pass
-                elif sel == 4: # expand all
-                    collapse = False
-                
-                if collapse:
-                    self.srcselection.tcp.seltree.Collapse(dir_node)
-                else:
-                    self.srcselection.tcp.seltree.Expand(dir_node)
-        
-        if first_dir:
-            # select first mapset (MSW hack)
-            self.srcselection.tcp.seltree.SelectItem(first_dir)
-
-        # end copy from gselect
+        self.srcselection.tcp.GetElementList(elements = self.parent.src_maps)
         src_map = self.parent.src_maps[0]
         self.srcselection.SetValue(src_map)
 
         self.parent.SwitchEnv('target')
         self.tgtselection.SetElementList(maptype)
-        #self.tgtselection.GetElementList()
+        self.tgtselection.GetElementList()
         self.parent.SwitchEnv('source')
 
         if src_map == '':
@@ -954,13 +861,12 @@ class GCP(MapFrame, wx.Frame, ColumnSorterMixin):
         #
         # show new display & draw map
         #
+        self.MapWindow = self.TgtMapWindow
+        self.Map = self.TgtMap
+        self.OnZoomToMap(None)
         self.MapWindow = self.SrcMapWindow
         self.Map = self.SrcMap
         self.OnZoomToMap(None)
-        if self.show_target:
-            self.MapWindow = self.TgtMapWindow
-            self.Map = self.TgtMap
-            self.OnZoomToMap(None)
 
         #
         # bindings
@@ -1028,7 +934,7 @@ class GCP(MapFrame, wx.Frame, ColumnSorterMixin):
                                    0.0,                # forward error
                                    0.0 ] )             # backward error
 
-        if self.toggleStatus.GetSelection() == 7: # go to
+        if self.statusbarWin['toggle'].GetSelection() == 7: # go to
             self.StatusbarUpdate()
 
     def DeleteGCP(self, event):
@@ -1069,11 +975,11 @@ class GCP(MapFrame, wx.Frame, ColumnSorterMixin):
 
         self.UpdateColours()
 
-        if self.toggleStatus.GetSelection() == 7: # go to
+        if self.statusbarWin['toggle'].GetSelection() == 7: # go to
             self.StatusbarUpdate()
             if self.list.selectedkey > 0:
-                self.gotogcp.SetValue(self.list.selectedkey)
-            #self.gotogcp.SetValue(0)
+                self.statusbarWin['goto'].SetValue(self.list.selectedkey)
+            #self.statusbarWin['goto'].SetValue(0)
 
     def ClearGCP(self, event):
         """
@@ -1202,11 +1108,15 @@ class GCP(MapFrame, wx.Frame, ColumnSorterMixin):
             else:
                 currloc = _("target")
             ret = wx.MessageBox(parent=self,
-                          caption=_("Set GCP coordinates"),
-                          message=_('Set %s coordinates for GCP No. %s? \n\n'
-                                    'East: %s \n'
-                                    'North: %s') % (currloc, str(key), str(coord0), str(coord1)),
-                          style=wx.ICON_QUESTION | wx.YES_NO | wx.CENTRE)
+                                caption=_("Set GCP coordinates"),
+                                message=_('Set %(coor)s coordinates for GCP No. %(key)s? \n\n'
+                                          'East: %(coor0)s \n'
+                                          'North: %(coor1)s') % \
+                                    { 'coor' : currloc,
+                                      'key' : str(key),
+                                      'coor0' : str(coord0),
+                                      'coor1' : str(coord1) },
+                                style=wx.ICON_QUESTION | wx.YES_NO | wx.CENTRE)
 
             # for wingrass
             if os.name == 'nt':
@@ -1631,6 +1541,7 @@ class GCP(MapFrame, wx.Frame, ColumnSorterMixin):
 
             self.SrcMap.Clean()
             self.TgtMap.Clean()
+
             self.grwiz.Cleanup()
 
             self.Destroy()
@@ -1852,11 +1763,10 @@ class GCP(MapFrame, wx.Frame, ColumnSorterMixin):
 
     def OnHelp(self, event):
         """!Show GCP Manager manual page"""
-
-        cmdlist = ['g.manual','entry=wxGUI.GCP_Manager']
+        cmdlist = ['g.manual', 'entry=wxGUI.GCP_Manager']
         self.parent.goutput.RunCmd(cmdlist, compReg=False,
-                                   switchPage=False)
-        
+                                       switchPage=False)
+
     def OnUpdateActive(self, event):
 
         if self.activemap.GetSelection() == 0:
@@ -1874,8 +1784,7 @@ class GCP(MapFrame, wx.Frame, ColumnSorterMixin):
     def UpdateActive(self, win):
 
         # optionally disable tool zoomback tool
-        self.toolbars['gcpdisp'].toolbar.EnableTool(self.toolbars['gcpdisp'].zoomback,
-                                         enable = (len(self.MapWindow.zoomhistory) > 1))
+        self.toolbars['gcpdisp'].Enable('zoomback', enable = (len(self.MapWindow.zoomhistory) > 1))
 
         if self.activemap.GetSelection() != (win == self.TgtMapWindow):
             self.activemap.SetSelection(win == self.TgtMapWindow)
@@ -1970,7 +1879,6 @@ class GCP(MapFrame, wx.Frame, ColumnSorterMixin):
         """!GCP Map Display resized, adjust Map Windows
         """
         if self.toolbars['gcpdisp']:
-            time.sleep(0.5)
             srcwidth, srcheight = self.SrcMapWindow.GetSize()
             tgtwidth, tgtheight = self.TgtMapWindow.GetSize()
             tgtwidth = (srcwidth + tgtwidth) / 2
@@ -2638,84 +2546,14 @@ class GrSettingsDialog(wx.Dialog):
         self.parent.grwiz.SwitchEnv('source')
         self.srcselection.SetElementList(maptype)
         # filter out all maps not in group
-        # not available in 64
-        #self.srcselection.tcp.GetElementList(elements = self.parent.src_maps)
-        # modified from gselect
-        self.srcselection.tcp.seltree.DeleteAllItems()
-        # get current mapset
-        curr_mapset = grass.gisenv()['MAPSET']
-        mapsets = utils.ListOfMapsets()
-        for i in range(len(mapsets)):
-            if i > 0 and mapsets[i] == curr_mapset:
-                mapsets[i] = mapsets[0]
-                mapsets[0] = curr_mapset
-        
-        elementdict = {'cell':'rast',
-                       'raster':'rast',
-                       'rast':'rast',
-                       'raster files':'rast',
-                       'vector':'vect',
-                       'vect':'vect'
-                       }
-        if globalvar.have_mlist:
-            filesdict = grass.mlist_grouped(elementdict[maptype])
-        else:
-            filesdict = grass.list_grouped(elementdict[maptype])
-        
-        first_dir = None
-        for dir in mapsets:
-            dir_node = self.srcselection.tcp.AddItem('Mapset: ' + dir)
-            if not first_dir:
-                first_dir = dir_node
-            
-            self.srcselection.tcp.seltree.SetItemTextColour(dir_node, wx.Colour(50, 50, 200))
-            try:
-                elem_list = filesdict[dir]
-                elem_list.sort(key=str.lower)
-                for elem in elem_list:
-                    if elem != '':
-                        fullqElem = elem + '@' + dir
-                        if fullqElem in self.parent.src_maps:
-                            self.srcselection.tcp.AddItem(fullqElem, parent=dir_node)
-            except:
-                continue
-
-            if self.srcselection.tcp.seltree.ItemHasChildren(dir_node):
-                sel = UserSettings.Get(group='general', key='elementListExpand',
-                                       subkey='selection')
-                collapse = True
-
-                if sel == 0: # collapse all except PERMANENT and current
-                    if dir in ('PERMANENT', curr_mapset):
-                        collapse = False
-                elif sel == 1: # collapse all except PERMANENT
-                    if dir == 'PERMANENT':
-                        collapse = False
-                elif sel == 2: # collapse all except current
-                    if dir == curr_mapset:
-                        collapse = False
-                elif sel == 3: # collapse all
-                    pass
-                elif sel == 4: # expand all
-                    collapse = False
-                
-                if collapse:
-                    self.srcselection.tcp.seltree.Collapse(dir_node)
-                else:
-                    self.srcselection.tcp.seltree.Expand(dir_node)
-        
-        if first_dir:
-            # select first mapset (MSW hack)
-            self.srcselection.tcp.seltree.SelectItem(first_dir)
-
-        # end copy from gselect
+        self.srcselection.tcp.GetElementList(elements = self.parent.src_maps)
 
         # target map to display
         self.tgtselection = gselect.Select(panel, id=wx.ID_ANY,
                     size=globalvar.DIALOG_GSELECT_SIZE, type='cell', updateOnPopup = False)
         self.parent.grwiz.SwitchEnv('target')
         self.tgtselection.SetElementList(maptype)
-        #self.tgtselection.GetElementList()
+        self.tgtselection.GetElementList()
 
         sizer.Add(item=wx.StaticText(parent=panel, id=wx.ID_ANY, label=_('Select source map to display:')),
                        proportion=0, flag=wx.ALIGN_LEFT | wx.ALIGN_CENTER_VERTICAL | wx.ALL, border=5)
@@ -2896,9 +2734,9 @@ class GrSettingsDialog(wx.Dialog):
                 if self.parent.show_target == False:
                     self.parent.show_target = True
                     self.parent._mgr.GetPane("target").Show()
-                    self.parent.toolbars['gcpdisp'].toolbar.EnableTool(self.parent.toolbars['gcpdisp'].zoommenu, enable = True)
+                    self.parent.toolbars['gcpdisp'].Enable('zoommenu', enable = True)
                     self.parent.activemap.Enable()
-                    self.parent.TgtMapWindow.ZoomToMap(layer = self.parent.TgtMap.GetListOfLayers())
+                    self.parent.TgtMapWindow.ZoomToMap(layers = self.parent.TgtMap.GetListOfLayers())
                     self.parent._mgr.Update()
             else: # tgt_map == ''
                 if self.parent.show_target == True:
@@ -2906,7 +2744,7 @@ class GrSettingsDialog(wx.Dialog):
                     self.parent._mgr.GetPane("target").Hide()
                     self.parent.activemap.SetSelection(0)
                     self.parent.activemap.Enable(False)
-                    self.parent.toolbars['gcpdisp'].toolbar.EnableTool(self.parent.toolbars['gcpdisp'].zoommenu, enable = False)
+                    self.parent.toolbars['gcpdisp'].Enable('zoommenu', enable = False)
                     self.parent._mgr.Update()
 
         self.parent.UpdateColours(srcrender, srcrenderVector, tgtrender, tgtrenderVector)

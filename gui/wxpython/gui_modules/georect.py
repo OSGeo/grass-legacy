@@ -16,7 +16,6 @@ Classes:
  - GrSettingsDialog
 
 (C) 2006-2010 by the GRASS Development Team
-
 This program is free software under the GNU General Public License
 (>=v2). Read the file COPYING that comes with GRASS for details.
 
@@ -80,9 +79,8 @@ class GeorectWizard(object):
         #
         # get environmental variables
         #
-        p = gcmd.Command(['g.gisenv', 'get=GISDBASE'])
-        self.grassdatabase = p.ReadStdOutput()[0]
-
+        self.grassdatabase = grass.gisenv()['GISDBASE']
+        
         #
         # read original environment settings
         #
@@ -189,15 +187,15 @@ class GeorectWizard(object):
             #
             # start map display
             #
-            self.xy_mapdisp = mapdisp.MapFrame(self.gcpmgr, title=_("Set ground control points (GCPs)"),
+            self.xy_mapdisp = mapdisp.MapFrame(self.gcpmgr, name = "GRMapWindow",
                                                size=globalvar.MAP_WINDOW_SIZE,
                                                toolbars=["georect"],
-                                               Map=self.Map, gismgr=self.parent)
+                                               Map=self.Map, lmgr=self.parent)
             self.xy_mapdisp.SetTitle(_("GRASS GIS Map Display: 1" +
                                        " - Location: " + self.newlocation +
                                        " (source location)"))
-            self.xy_mapdisp.SetName("GRMapWindow")
-
+            self.xy_mapdisp.GetWindow().ResetZoomHistory()
+            
             self.gcpmgr.SetMapDisplay(self.xy_mapdisp)
             
             self.mapwin = self.xy_mapdisp.MapWindow
@@ -221,7 +219,7 @@ class GeorectWizard(object):
             self.Cleanup()
                             
     def SetSrcEnv(self, location, mapset):
-        """Create environment to use for location and mapset
+        """!Create environment to use for location and mapset
         that are the source of the file(s) to georectify
 
         @param location source location
@@ -274,18 +272,18 @@ class GeorectWizard(object):
         return True
         
     def OnGLMFocus(self, event):
-        """Layer Manager focus"""
+        """!Layer Manager focus"""
         # self.SwitchEnv('original')
         
         event.Skip()
 
     def Cleanup(self):
-        """Return to current location and mapset"""
+        """!Return to current location and mapset"""
         self.SwitchEnv('original')
-                
         self.parent.georectifying = None
 
-        if hasattr(self, "xy_mapdisp"):
+        if hasattr(self, "xy_mapdisp") and \
+                self.xy_mapdisp:
             self.xy_mapdisp.Close()
             self.xy_mapdisp = None
 
@@ -307,20 +305,6 @@ class LocationPage(TitledPage):
         
         self.xylocation = ''
         self.xymapset = ''
-
-        tmplist = os.listdir(self.grassdatabase)
-        self.locList = []
-        self.mapsetList = []
-        
-        #
-        # create a list of valid locations
-        #
-        for item in tmplist:
-            if os.path.isdir(os.path.join(self.grassdatabase, item)) and \
-                    os.path.exists(os.path.join(self.grassdatabase, item, 'PERMANENT')):
-                self.locList.append(item)
-
-        utils.ListSortLower(self.locList)
         
         #
         # layout
@@ -339,9 +323,7 @@ class LocationPage(TitledPage):
         self.sizer.Add(item=wx.StaticText(parent=self, id=wx.ID_ANY, label=_('Select source location:')),
                        flag=wx.ALIGN_LEFT | wx.ALIGN_CENTER_VERTICAL | wx.ALL, border=5,
                        pos=(2, 1))
-        self.cb_location = wx.ComboBox(parent=self, id=wx.ID_ANY, 
-                                     choices = self.locList, size=(300, -1),
-                                     style=wx.CB_DROPDOWN | wx.CB_READONLY)
+        self.cb_location = gselect.LocationSelect(parent = self, gisdbase = self.grassdatabase)
         self.sizer.Add(item=self.cb_location,
                        flag=wx.ALIGN_LEFT | wx.ALIGN_CENTER_VERTICAL | wx.ALL, border=5,
                        pos=(2, 2))
@@ -350,9 +332,8 @@ class LocationPage(TitledPage):
         self.sizer.Add(item=wx.StaticText(parent=self, id=wx.ID_ANY, label=_('Select source mapset:')),
                        flag=wx.ALIGN_LEFT | wx.ALIGN_CENTER_VERTICAL | wx.ALL, border=5,
                        pos=(3, 1))
-        self.cb_mapset = wx.ComboBox(parent=self, id=wx.ID_ANY,
-                                     choices = self.mapsetList, size=(300, -1),
-                                     style=wx.CB_DROPDOWN | wx.CB_READONLY)
+        self.cb_mapset = gselect.MapsetSelect(parent = self, gisdbase = self.grassdatabase,
+                                              setItems = False)
         self.sizer.Add(item=self.cb_mapset,
                        flag=wx.ALIGN_LEFT | wx.ALIGN_CENTER_VERTICAL | wx.ALL, border=5,
                        pos=(3,2))
@@ -368,7 +349,7 @@ class LocationPage(TitledPage):
         # self.Bind(wx.EVT_CLOSE, self.parent.Cleanup)
 
     def OnMaptype(self,event):
-        """Change map type"""
+        """!Change map type"""
         global maptype
 
         if event.GetInt() == 0:
@@ -377,7 +358,7 @@ class LocationPage(TitledPage):
             maptype = 'vector'
         
     def OnLocation(self, event):
-        """Sets source location for map(s) to georectify"""
+        """!Sets source location for map(s) to georectify"""
         self.xylocation = event.GetString()
         
         #create a list of valid mapsets
@@ -399,7 +380,7 @@ class LocationPage(TitledPage):
             wx.FindWindowById(wx.ID_FORWARD).Enable(True)
 
     def OnMapset(self, event):
-        """Sets source mapset for map(s) to georectify"""
+        """!Sets source mapset for map(s) to georectify"""
         if self.xylocation == '':
             wx.MessageBox(_('You must select a valid location before selecting a mapset'))
             return
@@ -465,7 +446,6 @@ class GroupPage(TitledPage):
         btnSizer = wx.BoxSizer(wx.HORIZONTAL)
         self.btn_mkgroup = wx.Button(parent=self, id=wx.ID_ANY, label=_("Create/edit group..."))
         self.btn_vgroup = wx.Button(parent=self, id=wx.ID_ANY, label=_("Add vector map to group..."))
-        self.btn_vgroup.Hide()
         btnSizer.Add(item=self.btn_mkgroup,
                      flag=wx.RIGHT, border=5)
 
@@ -495,17 +475,20 @@ class GroupPage(TitledPage):
         self.Bind(wiz.EVT_WIZARD_PAGE_CHANGED, self.OnEnterPage)
         self.Bind(wx.EVT_CLOSE, self.parent.Cleanup)
 
+        # hide vector group button by default
+        self.btn_vgroup.Hide()
+
     def OnGroup(self, event):        
         self.xygroup = event.GetString()
         
     def OnMkGroup(self, event):
-        """Create new group in source location/mapset"""
+        """!Create new group in source location/mapset"""
         menuform.GUI().ParseCommand(['i.group'],
                                     completed=(self.GetOptData, None, ''),
                                     parentframe=self.parent.parent, modal=True)
-                                    
+
     def OnVGroup(self, event):
-        """Add vector maps to group"""
+        """!Add vector maps to group"""
         dlg = VectGroup(parent = self,
                         id = wx.ID_ANY,
                         grassdb = self.grassdatabase,
@@ -520,7 +503,7 @@ class GroupPage(TitledPage):
         self.OnEnterPage()
         
     def GetOptData(self, dcmd, layer, params, propwin):
-        """Process i.group"""
+        """!Process i.group"""
         # update the page
         if dcmd:
             gcmd.Command(dcmd)
@@ -613,7 +596,7 @@ class DispMapPage(TitledPage):
                        pos=(1, 1))
         
         self.selection = gselect.Select(self, id=wx.ID_ANY,
-                                        size=globalvar.DIALOG_GSELECT_SIZE)
+                                        size=globalvar.DIALOG_GSELECT_SIZE, type='cell')
         
         self.sizer.Add(item=self.selection,
                        flag=wx.ALIGN_LEFT | wx.ALIGN_CENTER_VERTICAL | wx.ALL, border=5,
@@ -628,7 +611,7 @@ class DispMapPage(TitledPage):
         self.Bind(wx.EVT_CLOSE, self.parent.Cleanup)
 
     def OnSelection(self,event):
-        """Map to display selected"""
+        """!Map to display selected"""
         global xy_map
         global maptype
 
@@ -642,9 +625,13 @@ class DispMapPage(TitledPage):
         try:
         # set computational region to match selected map and zoom display to region
             if maptype == 'cell':
-                p = gcmd.RunCommand('g.region', rast = xy_map)
+                p = gcmd.Command(['g.region', 'rast=xy_map'])
             elif maptype == 'vector':
-                p = gcmd.RunCommand('g.region', vect = xy_map)       
+                p = gcmd.Command(['g.region', 'vect=xy_map'])
+            
+            if p.returncode == 0:
+                print 'returncode = ', str(p.returncode)
+                self.parent.Map.region = self.parent.Map.GetRegion()
         except:
             pass
 
@@ -655,12 +642,13 @@ class DispMapPage(TitledPage):
             wx.MessageBox(_('You must select a valid image/map in order to continue'))
             event.Veto()
             return
+
         self.parent.SwitchEnv('original')
         
     def OnEnterPage(self, event=None):
         global maptype
         global xy_map
-        
+
         self.selection.SetElementList(maptype,
                                       mapsets = [self.parent.newmapset, ])
 
@@ -670,16 +658,15 @@ class DispMapPage(TitledPage):
             wx.FindWindowById(wx.ID_FORWARD).Enable(True)
 
 class GCP(wx.Frame):
-    """
+    """!
     Manages ground control points for georectifying. Calculates RMS statics.
     Calls i.rectify or v.transform to georectify map.
     """
+    def __init__(self, parent, grwiz, mapdisp = None, id = wx.ID_ANY,
+                 title = _("Define/manage ground control points"),
+                 size = (625, 300)):
 
-    def __init__(self, parent, grwiz, mapdisp=None, id=wx.ID_ANY,
-                 title=_("Define/manage ground control points"),
-                 size=wx.DefaultSize):
-
-        wx.Frame.__init__(self, parent, id, title, size=(625, 300))
+        wx.Frame.__init__(self, parent, id, title, size = size, name = "GCPFrame")
 
         self.SetIcon(wx.Icon(os.path.join(globalvar.ETCICONDIR, 'grass_map.ico'), wx.BITMAP_TYPE_ICO))
         
@@ -704,6 +691,7 @@ class GCP(wx.Frame):
         self.xymapset = self.grwiz.gisrc_dict['MAPSET']
         self.xygroup = self.grwiz.grouppage.xygroup
         self.extension = self.grwiz.grouppage.extension
+        self.outname = ''
         self.VectGRList = []
 
         self.file = {
@@ -751,7 +739,7 @@ class GCP(wx.Frame):
         #
         # toolbar and display for xy map
         #
-        self.toolbar = toolbars.GCPToolbar(parent=self, tbframe=self).GetToolbar()
+        self.toolbar = toolbars.GCPToolbar(parent=self)
         self.SetToolBar(self.toolbar)
         
         self.SetMapDisplay(self.mapdisp)
@@ -809,7 +797,7 @@ class GCP(wx.Frame):
         # sizer.Fit(self)
 
     def __del__(self):
-        """Disable georectification mode"""
+        """!Disable georectification mode"""
         self.parent.georectifying = None
         
     def ClipRegion(self, event):
@@ -826,18 +814,18 @@ class GCP(wx.Frame):
         """
         # check to see if we are georectifying map in current working location/mapset
         if self.newlocation == self.currentlocation and self.newmapset == self.currentmapset:
-            cmdlist = ['i.target',
-                       '-c',
-                       'group=%s' % tgroup]
+            gcmd.RunCommand('i.target',
+                            parent = self,
+                            flags = 'c',
+                            group = tgroup)
         else:
             self.grwiz.SwitchEnv('new')
-            cmdlist = ['i.target',
-                       'group=%s' % tgroup,
-                       'location=%s' % tlocation,
-                       'mapset=%s' % tmapset]
-        gcmd.Command(cmd=cmdlist, stderr=None)
-
-        self.grwiz.SwitchEnv('original')
+            gcmd.RunCommand('i.target',
+                            parent = self,
+                            group = tgroup,
+                            location = tlocation,
+                            mapset = tmapset)
+            self.grwiz.SwitchEnv('original')
 
     def AddGCP(self, event):
         """
@@ -1036,13 +1024,13 @@ class GCP(wx.Frame):
         #    self.RMSError(self.xygroup, self.gr_order)
 
     def ReloadGCPs(self, event):
-        """Reload data from file"""
+        """!Reload data from file"""
 
-	# delete all items in mapcoordlist
-	del self.mapcoordlist
-	self.mapcoordlist = []
-
-        self.list.LoadData()
+ 	# delete all items in mapcoordlist
+ 	del self.mapcoordlist
+ 	self.mapcoordlist = []
+ 
+	self.list.LoadData()
     
     def OnFocus(self, event):
         # self.grwiz.SwitchEnv('new')
@@ -1091,30 +1079,11 @@ class GCP(wx.Frame):
                        'extension=%s' % self.extension,'order=%s' % self.gr_order]
             if self.clip_to_region:
                 cmdlist.append('-c')
-                
-            p = gcmd.Command(cmdlist)
             
-            output = p.ReadStdOutput()
-            error = p.ReadErrOutput()
+            self.parent.goutput.RunCmd(cmdlist, compReg=False,
+                                       switchPage=True)
             
-            # printing to console
-            for i in error: 
-                try:
-                    msgtype, msg = i.split(':')
-                    if msgtype != 'GRASS_INFO_PERCENT':
-                        self.parent.goutput.WriteLog(text = _(msg), switchPage = True)
-                except:
-                    continue
-            for i in output: 
-                self.parent.goutput.WriteLog(text = _(msg), switchPage = True)
-            
-            if p.returncode == 0:
-                wx.MessageBox('Maps in group %s georectified successfully' % self.xygroup)
-            else:
-                wx.MessageBox('ERROR...',error)
-
             time.sleep(.1)
-            self.grwiz.SwitchEnv('original')
 
         elif maptype == 'vector':
             outmsg = ''
@@ -1150,32 +1119,26 @@ class GCP(wx.Frame):
                 self.outname = vect + '_' + self.extension
                 self.parent.goutput.WriteLog(text = _('Transforming <%s>...') % vect,
                                              switchPage = True)
-                                             
-                p = gcmd.Command(['v.transform', 
-                                 '--o', 
-                                 'input=%s' % vect, 
-                                 'output=%s' % self.outname,
-                                 'points=%s' % self.file['points']])
+                msg = err = ''
 
-                output = p.ReadStdOutput()
-                error = p.ReadErrOutput()
-                                
-                # printing to console
-                for i in error: 
-                    try:
-                        msgtype, msg = i.split(':')
-                        if msgtype != 'GRASS_INFO_PERCENT':
-                            self.parent.goutput.WriteLog(text = _(msg), switchPage = True)
-                    except:
-                        continue
-                for i in output: 
-                    self.parent.goutput.WriteLog(text = _(i), switchPage = True)
-                        
-                if p.returncode == 0:
+                ret, out, err = gcmd.RunCommand('v.transform',
+                           flags = '-o',
+                           input=vect,
+                           output=self.outname,
+                           pointsfile=self.file['points'],
+                           getErrorMsg=True, read=True) 
+                
+                    
+                if ret == 0:
                     self.VectGRList.append(self.outname)
+                    print err
+                    # note: WriteLog doesn't handle GRASS_INFO_PERCENT well, so using a print here
+#                    self.parent.goutput.WriteLog(text = _(err), switchPage = True)
+                    self.parent.goutput.WriteLog(text = _(out), switchPage = True)
                 else:
                     self.parent.goutput.WriteError(_('Georectification of vector map <%s> failed') %
                                                            self.outname)
+                    self.parent.goutput.WriteError(_(err))
 
                 # FIXME
                 # Copying database information not working. 
@@ -1221,14 +1184,30 @@ class GCP(wx.Frame):
                 else:
                     shutil.move(xyvpath, vpath)
                                                    
-        wx.MessageBox('For all vector maps georectified successfully, ' + '\n' +
-                      'you will need to copy any associated attribute tables' + '\n' +
-                      'and reconnect them to the georectified vectors')
+            wx.MessageBox('For all vector maps georectified successfully, ' + '\n' +
+                          'you will need to copy any attribute tables' + '\n' +
+                          'and reconnect them to the georectified vectors')
             
         self.grwiz.SwitchEnv('original')
+
+    def OnGeorectDone(self, **kargs):
+        """!Print final message"""
+        global maptype
+        if maptype == 'cell':
+            return
         
+        returncode = kargs['returncode']
+        
+        if returncode == 0:
+            self.VectGRList.append(self.outname)
+            print '*****vector list = ' + str(self.VectGRList)
+        else:
+            self.parent.goutput.WriteError(_('Georectification of vector map <%s> failed') %
+                                                   self.outname)
+
+         
     def OnSettings(self, event):
-        """Georectifier settings"""
+        """!Georectifier settings"""
         dlg = GrSettingsDialog(parent=self, id=wx.ID_ANY, title=_('Georectifier settings'))
         
         if dlg.ShowModal() == wx.ID_OK:
@@ -1237,7 +1216,7 @@ class GCP(wx.Frame):
         dlg.Destroy()
 
     def OnQuit(self, event):
-        """Quit georectifier"""
+        """!Quit georectifier"""
         self.grwiz.Cleanup()
 
         self.Destroy()
@@ -1287,13 +1266,17 @@ class GCP(wx.Frame):
         # get list of forward and reverse rms error values for each point
         self.grwiz.SwitchEnv('new')
         
-        p = gcmd.Command(['g.transform',
-                          'group=%s' % xygroup,
-                          'order=%s' % order])
+        ret = gcmd.RunCommand('g.transform',
+                              parent = self,
+                              read = True,
+                              group = xygroup,
+                              order = order)
         
         self.grwiz.SwitchEnv('original')
 
-        errlist = p.ReadStdOutput()
+        if ret:
+            errlist = ret.splitlines()
+        
         if errlist == []:
             return
         
@@ -1362,7 +1345,7 @@ class GCPList(wx.ListCtrl,
             idx_col += 1
         
     def LoadData(self):
-        """Load data into list"""
+        """!Load data into list"""
         self.DeleteAllItems()
 
         if os.path.isfile(self.gcp.file['points']):
@@ -1381,7 +1364,7 @@ class GCPList(wx.ListCtrl,
         self.ResizeColumns()
 
     def OnCheckItem(self, index, flag):
-        """Item is checked/unchecked"""
+        """!Item is checked/unchecked"""
         pass
     
     def AddGCPItem(self):
@@ -1425,7 +1408,7 @@ class GCPList(wx.ListCtrl,
         return self.selected
         
     def ResizeColumns(self):
-        """Resize columns"""
+        """!Resize columns"""
         minWidth = 90
         for i in range(self.GetColumnCount()):
             self.SetColumnWidth(i, wx.LIST_AUTOSIZE)
@@ -1435,7 +1418,7 @@ class GCPList(wx.ListCtrl,
         self.SendSizeEvent()
 
     def GetSelected(self):
-        """Get index of selected item"""
+        """!Get index of selected item"""
         return self.selected
 
     def OnItemSelected(self, event):
@@ -1584,7 +1567,7 @@ class VectGroup(wx.Dialog):
         self.Layout()
         
     def MakeVGroup(self):
-        """Create VREF file"""
+        """!Create VREF file"""
         vgrouplist = []
         for item in range(self.listMap.GetCount()):
             if not self.listMap.IsChecked(item):
@@ -1602,7 +1585,7 @@ class EditGPC(wx.Dialog):
     def __init__(self, parent, data, id=wx.ID_ANY,
                  title=_("Edit GCP"),
                  style=wx.DEFAULT_DIALOG_STYLE):
-        """Dialog for editing GPC and map coordinates in list control"""
+        """!Dialog for editing GPC and map coordinates in list control"""
 
         wx.Dialog.__init__(self, parent, id, title=title, style=style)
 
@@ -1673,7 +1656,7 @@ class EditGPC(wx.Dialog):
         sizer.Fit(self)
 
     def GetValues(self, columns=None):
-        """Return list of values (as strings).
+        """!Return list of values (as strings).
         """
         valuelist = []
         try:
@@ -1709,7 +1692,7 @@ class GrSettingsDialog(wx.Dialog):
         self._do_layout()
         
     def _do_layout(self):
-        """Do layout"""
+        """!Do layout"""
         # dialog layout
         sizer = wx.BoxSizer(wx.VERTICAL)
 
@@ -1794,7 +1777,7 @@ class GrSettingsDialog(wx.Dialog):
                          value=wx.FindWindowById(self.symbol['width']).GetValue())
 
     def OnSave(self, event):
-        """Button 'Save' pressed"""
+        """!Button 'Save' pressed"""
         self.UpdateSettings()
         fileSettings = {}
         UserSettings.ReadSettingsFile(settings=fileSettings)
@@ -1804,10 +1787,10 @@ class GrSettingsDialog(wx.Dialog):
         self.Close()
 
     def OnApply(self, event):
-        """Button 'Apply' pressed"""
+        """!Button 'Apply' pressed"""
         self.UpdateSettings()
         self.Close()
 
     def OnCancel(self, event):
-        """Button 'Cancel' pressed"""
+        """!Button 'Cancel' pressed"""
         self.Close()

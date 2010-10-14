@@ -1,6 +1,7 @@
 """
 New GRASS icon set
 http://robert.szczepanek.pl/icons.php
+https://svn.osgeo.org/osgeo/graphics/toolbar-icons/24x24/
 """
 __author__ = "Robert Szczepanek"
 
@@ -21,10 +22,10 @@ IconsGrass2 = {
     "printmap"   : 'print.png',
     "pan"        : 'pan.png', 
     # zoom (mapdisplay)
-    "zoom_in"    : 'zoom-in.png',
-    "zoom_out"   : 'zoom-out.png',
-    "zoom_back"  : 'zoom-last.png',
-    "zoommenu"   : 'zoom-more.png',
+    "zoom_in"     : 'zoom-in.png',
+    "zoom_out"    : 'zoom-out.png',
+    "zoom_back"   : 'zoom-last.png',
+    "zoommenu"    : 'zoom-more.png',
     "zoom_extent" : 'zoom-extent.png',
     # analyze raster (mapdisplay)
     "analyze"    : 'layer-raster-analyze.png',
@@ -60,14 +61,13 @@ IconsGrass2 = {
     "digDispAttr" : 'attributes-display.png',
     ## general
     "digUndo" : 'undo.png',
-    "digSettings" : 'settings.png',
     "digAdditionalTools" : 'tools.png',
     # layer manager
     "newdisplay" : 'monitor-create.png',
-    "workspaceNew" : 'create.png',
-    "workspaceLoad" : 'layer-open.png',
-    "workspaceOpen" : 'open.png',
-    "workspaceSave" : 'save.png',
+    "fileNew"    : 'create.png',
+    "fileLoad"   : 'layer-open.png',
+    "fileOpen"   : 'open.png',
+    "fileSave"   : 'save.png',
     "addrast"    : 'layer-raster-add.png',
     "addrast3d"  : 'layer-raster3d-add.png',
     "addshaded"  : 'layer-shaded-relief-add.png',
@@ -86,21 +86,38 @@ IconsGrass2 = {
     "addthematic": 'layer-vector-thematic-add.png',
     "addchart"   : 'layer-vector-chart-add.png',
     "layeropts"  : 'options.png',
+    "modeler"    : 'modeler-main.png',
     # profile analysis
     "transect"     : 'layer-raster-profile.png',
     "profiledraw"  : 'show.png',
-    "profileopt"   : 'settings.png',
     # georectify
     "grGcpSet"     : 'gcp-create.png',
     'grGcpClear'   : 'gcp-remove.png',
     'grGeorect'    : 'georectify.png',
     'grGcpRms'     : 'gcp-rms.png',
-    'grGcpRefresh' : 'redraw.png',
     "grGcpSave"    : 'gcp-save.png',
     "grGcpAdd"     : 'gcp-add.png',
     "grGcpDelete"  : 'gcp-delete.png',
     "grGcpReload"  : 'reload.png',
-    "grSettings"   : 'settings.png',
-    # nviz
-    "nvizSettings"   : 'settings.png',
+    # modeler
+    "modelActionAdd" : 'module-add.png',
+    "modelDataAdd"   : 'data-add.png',
+    "modelRelation"  : 'relation-create.png',
+    "modelRun"       : 'execute.png',
+    "modelValidate"  : 'check.png',
+    "imageSave"      : 'image-export.png',
+    "pythonSave"     : 'python-export.png',
+    "modelProperties" : 'options.png',
+    "modelVariables" : 'modeler-variables.png',
+    # 3d view
+    "nvizView"       : '3d-view.png',
+    "nvizSurface"    : '3d-raster.png',
+    "nvizVector"     : '3d-vector.png',
+    "nvizVolume"     : '3d-volume.png',
+    "nvizLight"      : '3d-light.png',
+    "nvizFringe"     : '3d-fringe.png',
+    # various
+    "settings"       : 'settings.png',
+    "redraw"         : 'redraw.png',
+    "help"           : 'help.png',
     }

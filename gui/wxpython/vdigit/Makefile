@@ -15,6 +15,7 @@ SHLIB = $(OBJDIR)/_$(LIB_NAME).so
 
 ETCDIR = $(ETC)/wxpython
 
+EXTRA_CLEAN_FILES = grass6_wxvdigit.py grass6_wxvdigit.i grass6_wxvdigit_wrap.cpp
 default:
 
 ifneq ($(USE_WXWIDGETS),)
@@ -32,8 +33,9 @@ $(LIB_NAME).i: digit.i dig_types.i pseudodc.i driver.h digit.h
 
 $(LIB_NAME).py: $(SHLIB)
 
-$(SHLIB): $(LIB_NAME).i
-	python setup.py build_ext --swig=$(SWIG) --swig-opts=-c++ --build-lib=$(OBJDIR) --build-temp=$(OBJDIR)
+$(SHLIB): $(LIB_NAME).i cats.cpp digit.cpp driver.cpp driver_draw.cpp \
+	driver_select.cpp line.cpp message.cpp select.cpp undo.cpp vertex.cpp
+	$(PYTHON) setup.py build_ext --swig=$(SWIG) --swig-opts=-c++ --build-lib=$(OBJDIR) --build-temp=$(OBJDIR)
 
 .NOTPARALLEL: $(LIB_NAME).py $(LIB_NAME)_wrap.cpp
 

@@ -1,13 +1,7 @@
 """!
 @package vdigit
 
-@brief Vector digitizer extension
-
-Usage:
-
-@code
-  from vdigit import VDigit as VDigit
-@endcode
+@brief wxGUI vector digitizer user interface
 
 Classes:
  - AbstractDigit 
@@ -16,6 +10,7 @@ Classes:
  - CDisplayDriver
  - VDigitSettingsDialog
  - VDigitCategoryDialog
+ - CategoryListCtrl
  - VDigitZBulkDialog
  - VDigitDuplicatesDialog
  - VDigitVBuildDialog
@@ -31,6 +26,7 @@ import os
 import sys
 import string
 import copy
+import textwrap
 import traceback
 
 from threading import Thread
@@ -44,6 +40,7 @@ import dbm
 from debug import Debug as Debug
 import gselect
 import globalvar
+from units import Units
 from preferences import globalSettings as UserSettings
 try:
     digitPath = os.path.join(globalvar.ETCWXDIR, "vdigit")
@@ -60,8 +57,7 @@ except ImportError, err:
     errorMsg = err
     
 class AbstractDigit:
-    """
-    Abstract digitization class
+    """!Abstract digitization class
     """
     def __init__(self, mapwindow):
         """!Initialization
@@ -115,27 +111,25 @@ class AbstractDigit:
         try:
             ret = self.driver.Reset(self.map)
         except StandardError, e:
-            raise gcmd.DigitError(parent=self.mapWindow.parent,
-                                  message="%s %s (%s)" % (_("Unable to initialize display driver of vector "
-                                                            "digitizer. See 'Command output' for details.\n\n"
-                                                            "Details:"), e, errorMsg))
+            raise gcmd.GException(_("Unable to initialize display driver of vector "
+                              "digitizer. See 'Command output' for details.\n\n"
+                              "Details: ") + e)
         
         if map and ret == -1:
-            raise gcmd.DigitError(parent=self.mapWindow.parent,
-                                  message=_('Unable to open vector map <%s> for editing.\n\n'
-                                            'Data are probably corrupted, '
-                                            'try to run v.build to rebuild '
-                                            'the topology (Vector->Develop vector map->'
-                                            'Create/rebuild topology).') % map)
+            raise gcmd.GException(_('Unable to open vector map <%s> for editing.\n\n'
+                                    'Data are probably corrupted, '
+                                    'try to run v.build to rebuild '
+                                    'the topology (Vector->Develop vector map->'
+                                    'Create/rebuild topology).') % map)
         if not map and ret != 0:
-            raise gcmd.DigitError(parent=self.mapWindow.parent,
-                                  message=_('Unable to open vector map <%s> for editing.\n\n'
-                                            'Data are probably corrupted, '
-                                            'try to run v.build to rebuild '
-                                            'the topology (Vector->Develop vector map->'
-                                            'Create/rebuild topology).') % map)
-            
-        self.digit.InitCats()
+            raise gcmd.GException(_('Unable to open vector map <%s> for editing.\n\n'
+                                    'Data are probably corrupted, '
+                                    'try to run v.build to rebuild '
+                                    'the topology (Vector->Develop vector map->'
+                                    'Create/rebuild topology).') % map)
+        
+        if self.digit:
+            self.digit.InitCats()
         
     def SelectLinesByQueryThresh(self):
         """!Generic method used for SelectLinesByQuery()
@@ -182,16 +176,29 @@ class AbstractDigit:
 
         x1, y1 = pos1
         x2, y2 = pos2
+        ret = gcmd.RunCommand('v.edit',
+                              parent = self,
+                              quiet = True,
+                              read = True,
+                              map = bgmap,
+                              tool = 'select',
+                              bbox = '%f,%f,%f,%f' % (x1, y1, x2, y2))
 
-        vEditCmd = gcmd.Command(['v.edit',
-                                 '--q',
-                                 'map=%s' % bgmap,
-                                 'tool=select',
-                                 'bbox=%f,%f,%f,%f' % (pos1[0], pos1[1], pos2[0], pos2[1])])
-                                 #'polygon=%f,%f,%f,%f,%f,%f,%f,%f,%f,%f' % \
-                                 #    (x1, y1, x2, y1, x2, y2, x1, y2, x1, y1)])
-                                             
-        output = vEditCmd.ReadStdOutput()[0] # first line
+        if not ret:
+            x, y = pos1
+            ret = gcmd.RunCommand('v.edit',
+                                  parent = self,
+                                  quiet = True,
+                                  read = True,
+                                  map = bgmap,
+                                  tool = 'select',
+                                  coords = '%f,%f' % (x, y),
+                                  thresh = self.driver.GetThreshold(type='selectThresh'))
+        
+        if not ret:
+            return []
+        
+        output = ret.splitlines()[0] # first line
         ids = output.split(',') 
         ids = map(int, ids) # str -> int
         
@@ -201,14 +208,13 @@ class AbstractDigit:
         return ids
 
 class VDigit(AbstractDigit):
-    """!Prototype of digitization class based on v.digit reimplementation
-    Under development (wxWidgets C/C++ background)
+    """!Prototype of digitization class based on v.digit
+    reimplementation (wxWidgets C/C++)
     """
     def __init__(self, mapwindow):
         """!VDigit constructor
         
         @param mapwindow reference to mapwindow (MapFrame) instance
-        @param settings  initial settings of digitization tool
         """
         AbstractDigit.__init__(self, mapwindow)
         
@@ -222,11 +228,10 @@ class VDigit(AbstractDigit):
         try:
             self.digit = wxvdigit.Digit(self.driver.GetDevice(),
                                         mapwindow)
-        except (ImportError, NameError, TypeError):
+        except (ImportError, NameError, TypeError), e:
             # print traceback
             traceback.print_exc(file = self.log)
             self.digit = None
-        
         self.UpdateSettings()
         
     def __del__(self):
@@ -343,7 +348,7 @@ class VDigit(AbstractDigit):
         @param coords click coordinates
         @param move   X,Y direction
 
-        @return 1 vertex moved
+        @return id of new feature
         @return 0 vertex not moved (not found, line is not selected)
         """
         snap, thresh = self.__getSnapThreshold()
@@ -366,7 +371,7 @@ class VDigit(AbstractDigit):
 
         @param coords coordinates to add vertex
 
-        @return 1 vertex added
+        @return id of new feature
         @return 0 nothing changed
         @return -1 on failure
         """
@@ -383,7 +388,7 @@ class VDigit(AbstractDigit):
 
         @param coords coordinates to remove vertex
 
-        @return 1 vertex removed
+        @return id of new feature
         @return 0 nothing changed
         @return -1 on failure
         """
@@ -594,6 +599,36 @@ class VDigit(AbstractDigit):
         """
         return dict(self.digit.GetLineCats(line))
 
+    def GetLineLength(self, line):
+        """!Get line length
+
+        @param line feature id
+
+        @return line length
+        @return -1 on error
+        """
+        return self.digit.GetLineLength(line)
+
+    def GetAreaSize(self, centroid):
+        """!Get area size
+
+        @param centroid centroid id
+
+        @return area size
+        @return -1 on error
+        """
+        return self.digit.GetAreaSize(centroid)
+        
+    def GetAreaPerimeter(self, centroid):
+        """!Get area perimeter
+
+        @param centroid centroid id
+
+        @return area size
+        @return -1 on error
+        """
+        return self.digit.GetAreaPerimeter(centroid)
+
     def SetLineCats(self, line, layer, cats, add=True):
         """!Set categories for given line and layer
 
@@ -646,7 +681,7 @@ class VDigit(AbstractDigit):
             ret = -2
 
         if ret == -2:
-            raise gcmd.DigitError, _("Undo failed, data corrupted.")
+            raise gcmd.GException(_("Undo failed, data corrupted."))
 
         self.mapWindow.UpdateMap(render=False)
         
@@ -658,14 +693,23 @@ class VDigit(AbstractDigit):
         
         Note: Changesets starts wiht 0
         """
+        if not self.digit:
+            return -1
+        
         return self.digit.GetUndoLevel()
 
     def UpdateSettings(self):
-        """Update digit settigs"""
-        if self.digit:
-            self.digit.UpdateSettings(UserSettings.Get(group='vdigit', key='breakLines',
-                                                       subkey='enabled'))
-
+        """!Update digit settigs"""
+        if not self.digit:
+            return
+        
+        self.digit.UpdateSettings(UserSettings.Get(group='vdigit', key='breakLines',
+                                                   subkey='enabled'),
+                                  UserSettings.Get(group='vdigit', key='addCentroid',
+                                                   subkey='enabled'),
+                                  UserSettings.Get(group='vdigit', key='catBoundary',
+                                                   subkey='enabled'))
+        
     def ZBulkLines(self, pos1, pos2, start, step):
         """!Z-bulk labeling
 
@@ -682,7 +726,7 @@ class VDigit(AbstractDigit):
         
         if ret > 0:
             self.toolbar.EnableUndo()
-
+        
         return ret
     
     def __getSnapThreshold(self):
@@ -702,15 +746,6 @@ class VDigit(AbstractDigit):
 
         return (snap, thresh)
 
-class Digit(VDigit):
-    """Default digit class"""
-    def __init__(self, mapwindow):
-        VDigit.__init__(self, mapwindow)
-        self.type = 'vdigit'
-        
-    def __del__(self):
-        VDigit.__del__(self)
-        
 class AbstractDisplayDriver:
     """!Abstract classs for display driver"""
     def __init__(self, parent, mapwindow):
@@ -770,10 +805,16 @@ class CDisplayDriver(AbstractDisplayDriver):
 
         self.mapWindow = mapwindow
 
+        if not self.mapwindow.parent.IsStandalone():
+            logerr = self.mapwindow.parent.GetLayerManager().goutput.cmd_stderr
+        else:
+            logerr = None
+
         # initialize wx display driver
         try:
             self.__display = wxvdigit.DisplayDriver(mapwindow.pdcVector,
-                                                    mapwindow.pdcTmp)
+                                                    mapwindow.pdcTmp,
+                                                    logerr)
         except:
             self.__display = None
             
@@ -788,7 +829,8 @@ class CDisplayDriver(AbstractDisplayDriver):
 
         @param pdc wx.PseudoDC instance
         """
-        self.__display.SetDevice(pdc)
+        if self.__display:
+            self.__display.SetDevice(pdc)
             
     def Reset(self, map):
         """!Reset map
@@ -826,6 +868,9 @@ class CDisplayDriver(AbstractDisplayDriver):
 
         @return wx.Image instance
         """
+        if not self.__display:
+            return 0
+        
         nlines = self.__display.DrawMap(True) # force
         Debug.msg(3, "CDisplayDriver.DrawMap(): nlines=%d" % nlines)
 
@@ -878,6 +923,9 @@ class CDisplayDriver(AbstractDisplayDriver):
         
         @param grassId if grassId is True returns GRASS ids, otherwise
         internal ids of objects drawn in PseudoDC"""
+        if not self.__display:
+            return list()
+        
         if grassId:
             selected = self.__display.GetSelected(True)
         else:
@@ -964,6 +1012,8 @@ class CDisplayDriver(AbstractDisplayDriver):
         """!Set geographical region
         
         Needed for 'cell2pixel' conversion"""
+        if not self.__display:
+            return
         
         map = self.mapwindow.Map
         reg = map.region
@@ -1139,7 +1189,7 @@ class VDigitSettingsDialog(wx.Dialog):
             textLabel = wx.StaticText(panel, wx.ID_ANY, label)
             color = csel.ColourSelect(panel, id=wx.ID_ANY,
                                       colour=UserSettings.Get(group='vdigit', key='symbol',
-                                                              subkey=[key, 'color']), size=(25, 25))
+                                                              subkey=[key, 'color']), size=globalvar.DIALOG_COLOR_SIZE)
             isEnabled = UserSettings.Get(group='vdigit', key='symbol',
                                          subkey=[key, 'enabled'])
             if isEnabled is not None:
@@ -1220,7 +1270,7 @@ class VDigitSettingsDialog(wx.Dialog):
                                       label=_("Snap also to vertex"))
         self.snapVertex.SetValue(UserSettings.Get(group='vdigit', key="snapToVertex", subkey='enabled'))
         vertexSizer.Add(item=self.snapVertex, proportion=0, flag=wx.EXPAND)
-        self.mapUnits = self.parent.MapWindow.Map.ProjInfo()['units']
+        self.mapUnits = self.parent.MapWindow.Map.GetProjInfo()['units']
         self.snappingInfo = wx.StaticText(parent=panel, id=wx.ID_ANY,
                                           label=_("Snapping threshold is %(value).1f %(units)s") % \
                                               {'value' : self.parent.digit.driver.GetThreshold(),
@@ -1321,7 +1371,7 @@ class VDigitSettingsDialog(wx.Dialog):
         box   = wx.StaticBox (parent=panel, id=wx.ID_ANY, label=" %s " % _("Choose query tool"))
         sizer = wx.StaticBoxSizer(box, wx.VERTICAL)
 
-        LocUnits = self.parent.MapWindow.Map.ProjInfo()['units']
+        LocUnits = self.parent.MapWindow.Map.GetProjInfo()['units']
 
         self.queryBox = wx.CheckBox(parent=panel, id=wx.ID_ANY, label=_("Select by box"))
         self.queryBox.SetValue(UserSettings.Get(group='vdigit', key="query", subkey='box'))
@@ -1444,6 +1494,26 @@ class VDigitSettingsDialog(wx.Dialog):
                    flag=wx.ALL | wx.EXPAND, border=5)
 
         #
+        # digitize new area
+        #
+        box   = wx.StaticBox (parent=panel, id=wx.ID_ANY, label=" %s " % _("Digitize new area"))
+        sizer = wx.StaticBoxSizer(box, wx.VERTICAL)
+        
+        # add centroid
+        self.addCentroid = wx.CheckBox(parent=panel, id=wx.ID_ANY,
+                                       label=_("Add centroid to left/right area"))
+        self.addCentroid.SetValue(UserSettings.Get(group='vdigit', key="addCentroid", subkey='enabled'))
+        sizer.Add(item=self.addCentroid, proportion=0, flag=wx.ALL | wx.EXPAND, border=1)
+        
+        # attach category to boundary
+        self.catBoundary = wx.CheckBox(parent=panel, id=wx.ID_ANY,
+                                       label=_("Do not attach category to boundaries"))
+        self.catBoundary.SetValue(UserSettings.Get(group='vdigit', key="catBoundary", subkey='enabled'))
+        sizer.Add(item=self.catBoundary, proportion=0, flag=wx.ALL | wx.EXPAND, border=1)
+        border.Add(item=sizer, proportion=0,
+                   flag=wx.LEFT | wx.RIGHT | wx.BOTTOM | wx.EXPAND, border=5)
+        
+        #
         # delete existing record
         #
         box   = wx.StaticBox (parent=panel, id=wx.ID_ANY, label=" %s " % _("Delete existing feature(s)"))
@@ -1454,6 +1524,94 @@ class VDigitSettingsDialog(wx.Dialog):
                                         label=_("Delete record from table"))
         self.deleteRecord.SetValue(UserSettings.Get(group='vdigit', key="delRecord", subkey='enabled'))
         sizer.Add(item=self.deleteRecord, proportion=0, flag=wx.ALL | wx.EXPAND, border=1)
+        border.Add(item=sizer, proportion=0,
+                   flag=wx.LEFT | wx.RIGHT | wx.BOTTOM | wx.EXPAND, border=5)
+
+        #
+        # geometry attributes (currently only length and area are supported)
+        #
+        box   = wx.StaticBox (parent = panel, id = wx.ID_ANY,
+                              label = " %s " % _("Geometry attributes"))
+        sizer = wx.StaticBoxSizer(box, wx.VERTICAL)
+        gridSizer = wx.GridBagSizer(hgap=3, vgap=3)
+        gridSizer.AddGrowableCol(0)
+        self.geomAttrb = { 'length' : { 'label' : _('length') },
+                           'area' : { 'label' : _('area') },
+                           'perimeter' : { 'label' : _('perimeter') } }
+
+        digitToolbar = self.parent.toolbars['vdigit']
+        try:
+            vectorName = digitToolbar.GetLayer().GetName()
+        except AttributeError:
+            vectorName = None # no vector selected for editing
+        layer = UserSettings.Get(group='vdigit', key="layer", subkey='value')
+        mapLayer = self.parent.toolbars['vdigit'].GetLayer()
+        tree = self.parent.tree
+        item = tree.FindItemByData('maplayer', mapLayer)
+        row = 0
+        for attrb in ['length', 'area', 'perimeter']:
+            # checkbox
+            check = wx.CheckBox(parent = panel, id = wx.ID_ANY,
+                                label = self.geomAttrb[attrb]['label'])
+            ### self.deleteRecord.SetValue(UserSettings.Get(group='vdigit', key="delRecord", subkey='enabled'))
+            check.Bind(wx.EVT_CHECKBOX, self.OnGeomAttrb)
+            # column (only numeric)
+            column = gselect.ColumnSelect(parent = panel, size=(200, -1))
+            column.InsertColumns(vector = vectorName,
+                                 layer = layer, excludeKey = True,
+                                 type = ['integer', 'double precision'])
+            # units 
+            if attrb == 'area':
+                choices = Units.GetUnitsList('area')
+            else:
+                choices = Units.GetUnitsList('length')
+            win_units = wx.Choice(parent = panel, id = wx.ID_ANY,
+                                  choices = choices, size=(120, -1))
+            
+            # default values
+            check.SetValue(False)
+            if item and tree.GetPyData(item)[0]['vdigit'] and \
+                    tree.GetPyData(item)[0]['vdigit'].has_key('geomAttr') and \
+                    tree.GetPyData(item)[0]['vdigit']['geomAttr'].has_key(attrb):
+                check.SetValue(True)
+                column.SetStringSelection(tree.GetPyData(item)[0]['vdigit']['geomAttr'][attrb]['column'])
+                if attrb == 'area':
+                    type = 'area'
+                else:
+                    type = 'length'
+                unitsIdx = Units.GetUnitsIndex(type, 
+                                                tree.GetPyData(item)[0]['vdigit']['geomAttr'][attrb]['units'])
+                win_units.SetSelection(unitsIdx)
+
+            if not vectorName:
+                check.Enable(False)
+                column.Enable(False)
+            
+            if not check.IsChecked():
+                column.Enable(False)
+            
+            self.geomAttrb[attrb]['check']  = check.GetId()
+            self.geomAttrb[attrb]['column'] = column.GetId()
+            self.geomAttrb[attrb]['units']  = win_units.GetId()
+
+            gridSizer.Add(item = check,
+                          flag = wx.ALIGN_CENTER_VERTICAL,
+                          pos = (row, 0))
+            gridSizer.Add(item = column,
+                          pos = (row, 1))
+            gridSizer.Add(item = win_units,
+                          pos = (row, 2))
+            row += 1
+        
+        note = '\n'.join(textwrap.wrap(_("Note: These settings are stored "
+                                         " in the workspace not in the vector digitizer "
+                                         "preferences."), 55))
+        gridSizer.Add(item = wx.StaticText(parent = panel, id = wx.ID_ANY,
+                                           label = note),
+                      pos = (3, 0), span=(1, 3))
+                      
+        sizer.Add(item=gridSizer, proportion=1,
+                  flag=wx.ALL | wx.EXPAND, border=1)
         border.Add(item=sizer, proportion=0,
                    flag=wx.LEFT | wx.RIGHT | wx.BOTTOM | wx.EXPAND, border=5)
 
@@ -1491,6 +1649,22 @@ class VDigitSettingsDialog(wx.Dialog):
             (_("Area (closed boundary + centroid)"), "area"),
             (_("Direction"), "direction"),)
 
+    def OnGeomAttrb(self, event):
+        """!Register geometry attributes (enable/disable)"""
+        checked = event.IsChecked()
+        id = event.GetId()
+        key = None
+        for attrb, val in self.geomAttrb.iteritems():
+            if val['check'] == id:
+                key = attrb
+                break
+        
+        column = self.FindWindowById(self.geomAttrb[key]['column'])
+        if checked:
+            column.Enable()
+        else:
+            column.Enable(False)
+        
     def OnChangeCategoryMode(self, event):
         """!Change category mode"""
 
@@ -1591,7 +1765,7 @@ class VDigitSettingsDialog(wx.Dialog):
         fileSettings['vdigit'] = UserSettings.Get(group='vdigit')
         
         file = UserSettings.SaveToFile(fileSettings)
-        self.parent.gismanager.goutput.WriteLog(_('Vector digitizer settings saved to file <%s>.') % file)
+        self.parent.GetLayerManager().goutput.WriteLog(_('Vector digitizer settings saved to file <%s>.') % file)
         
         self.Destroy()
 
@@ -1647,10 +1821,40 @@ class VDigitSettingsDialog(wx.Dialog):
         UserSettings.Set(group='vdigit', key="categoryMode", subkey='selection',
                          value=self.categoryMode.GetSelection())
 
+        # digitize new area
+        UserSettings.Set(group='vdigit', key="addCentroid", subkey='enabled',
+                         value=self.addCentroid.IsChecked())
+        UserSettings.Set(group='vdigit', key="catBoundary", subkey='enabled',
+                         value=self.catBoundary.IsChecked())
+        
         # delete existing feature
         UserSettings.Set(group='vdigit', key="delRecord", subkey='enabled',
                          value=self.deleteRecord.IsChecked())
 
+        # geometry attributes (workspace)
+        mapLayer = self.parent.toolbars['vdigit'].GetLayer()
+        tree = self.parent.tree
+        item = tree.FindItemByData('maplayer', mapLayer)
+        for key, val in self.geomAttrb.iteritems():
+            checked = self.FindWindowById(val['check']).IsChecked()
+            column  = self.FindWindowById(val['column']).GetValue()
+            unitsIdx = self.FindWindowById(val['units']).GetSelection()
+            if item and not tree.GetPyData(item)[0]['vdigit']: 
+                tree.GetPyData(item)[0]['vdigit'] = { 'geomAttr' : dict() }
+            
+            if checked: # enable
+                if key == 'area':
+                    type = key
+                else:
+                    type = 'length'
+                unitsKey = Units.GetUnitsKey(type, unitsIdx)
+                tree.GetPyData(item)[0]['vdigit']['geomAttr'][key] = { 'column' : column,
+                                                                       'units' : unitsKey }
+            else:
+                if item and tree.GetPyData(item)[0]['vdigit'] and \
+                        tree.GetPyData(item)[0]['vdigit']['geomAttr'].has_key(key):
+                    del tree.GetPyData(item)[0]['vdigit']['geomAttr'][key]
+        
         # snapping threshold
         self.parent.digit.threshold = self.parent.digit.driver.GetThreshold()
 
@@ -1700,7 +1904,7 @@ class VDigitSettingsDialog(wx.Dialog):
         self.parent.digit.UpdateSettings()
         
         # redraw map if auto-rendering is enabled
-        if self.parent.autoRender.GetValue(): 
+        if self.parent.statusbarWin['render'].GetValue(): 
             self.parent.OnRender(None)
 
 class VDigitCategoryDialog(wx.Dialog, listmix.ColumnSorterMixin):
@@ -2003,17 +2207,18 @@ class VDigitCategoryDialog(wx.Dialog, listmix.ColumnSorterMixin):
 
         Return True line found or False if not found"""
         
-        cmdWhat = gcmd.Command(cmd=['v.what',
-                                   '--q',
-                                   'map=%s' % self.map,
-                                   'east_north=%f,%f' % \
-                                       (float(coords[0]), float(coords[1])),
-                                   'distance=%f' % qdist])
+        ret = gcmd.RunCommand('v.what',
+                              parent = self,
+                              quiet = True,
+                              map = self.map,
+                              east_north = '%f,%f' % \
+                                  (float(coords[0]), float(coords[1])),
+                              distance = qdist)
 
-        if cmdWhat.returncode != 0:
+        if not ret:
             return False
 
-        for item in cmdWhat.ReadStdOutput():
+        for item in ret.splitlines():
             litem = item.lower()
             if "id:" in litem: # get line id
                 self.line = int(item.split(':')[1].strip())

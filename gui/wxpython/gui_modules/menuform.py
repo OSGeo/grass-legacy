@@ -4,7 +4,6 @@
 description.
 
 Classes:
- - testSAXContentHandler
  - grassTask
  - processTask
  - helpPanel
@@ -12,8 +11,9 @@ Classes:
  - cmdPanel
  - GrassGUIApp
  - GUI
+ - FloatValidator
 
- Copyright (C) 2000-2009 by the GRASS Development Team
+ Copyright (C) 2000-2010 by the GRASS Development Team
 
  This program is free software under the GPL (>=v2) Read the file
  COPYING coming with GRASS for details.
@@ -31,9 +31,9 @@ Classes:
  Or you set an alias or wrap the call up in a nice shell script, GUI
  environment ... please contribute your idea.
 
- Updated to wxPython 2.8 syntax and contrib widgets.  Methods added to
- make it callable by gui.  Method added to automatically re-run with
- pythonw on a Mac.
+Copyright (C) 2000-2010 by the GRASS Development Team
+This program is free software under the GPL (>=v2) Read the file
+COPYING coming with GRASS for details.
 
 @author Jan-Oliver Wagner <jan@intevation.de>
 @author Bernhard Reiter <bernhard@intevation.de>
@@ -43,7 +43,6 @@ Classes:
 
 @todo
  - verify option value types
- - use DOM instead of SAX (is it really necessary? ML)
 """
 
 import sys
@@ -54,8 +53,11 @@ import os
 import time
 import copy
 import locale
+import types
 from threading import Thread
 import Queue
+import shlex
+import tempfile
 
 ### i18N
 import gettext
@@ -76,13 +78,13 @@ import wx.lib.filebrowsebutton as filebrowse
 from wx.lib.expando import ExpandoTextCtrl, EVT_ETC_LAYOUT_NEEDED
 from wx.lib.newevent import NewEvent
 
-# Do the python 2.0 standard xml thing and map it on the old names
-import xml.sax
-import xml.sax.handler
-HandlerBase=xml.sax.handler.ContentHandler
-from xml.sax import make_parser
+try:
+    import xml.etree.ElementTree as etree
+except ImportError:
+    import elementtree.ElementTree as etree # Python <= 2.4
 
-import utils
+import gdialogs
+from ghelp import HelpPanel
 
 gisbase = os.getenv("GISBASE")
 if gisbase is None:
@@ -96,14 +98,17 @@ sys.path.append( wxbase)
 imagepath = os.path.join(wxbase, "images")
 sys.path.append(imagepath)
 
-import grassenv
+from grass.script import core as grass
+
 import gselect
 import gcmd
 import goutput
 import utils
 from preferences import globalSettings as UserSettings
-
-from grass.script import core as grass
+try:
+    import subprocess
+except:
+    from compat import subprocess
 
 wxUpdateDialog, EVT_DIALOG_UPDATE = NewEvent()
 
@@ -143,11 +148,6 @@ def color_resolve(color):
             label = _('Select Color')
     return (rgb, label)
 
-
-def normalize_whitespace(text):
-    """Remove redundant whitespace from a string"""
-    return string.join( string.split(text), ' ')
-
 def text_beautify( someString , width=70):
     """
     Make really long texts shorter, clean up whitespace and
@@ -155,17 +155,17 @@ def text_beautify( someString , width=70):
     """
     if width > 0:
         return escape_ampersand( string.strip(
-                os.linesep.join( textwrap.wrap( normalize_whitespace(someString), width ) ),
+                os.linesep.join( textwrap.wrap( utils.normalize_whitespace(someString), width ) ),
                 ".,;:" ) )
     else:
-        return escape_ampersand( string.strip(normalize_whitespace(someString ), ".,;:" ))
+        return escape_ampersand( string.strip(utils.normalize_whitespace(someString ), ".,;:" ))
     
 def escape_ampersand(text):
-    """Escapes ampersands with additional ampersand for GUI"""
+    """!Escapes ampersands with additional ampersand for GUI"""
     return string.replace(text, "&", "&&")
 
 class UpdateThread(Thread):
-    """Update dialog widgets in the thread"""
+    """!Update dialog widgets in the thread"""
     def __init__(self, parent, event, eventId, task):
         Thread.__init__(self)
         
@@ -188,12 +188,11 @@ class UpdateThread(Thread):
                 if prompt == 'vector':
                     name = p.get('name', '')
                     if name in ('map', 'input'):
-                        self.eventId = p['wxId']
+                        self.eventId = p['wxId'][0]
             if self.eventId is None:
                 return
         
         p = self.task.get_param(self.eventId, element='wxId', raiseError=False)
-        
         if not p or \
                 not p.has_key('wxId-bind'):
             return
@@ -283,7 +282,7 @@ def UpdateDialog(parent, event, eventId, task):
     return UpdateThread(parent, event, eventId, task)
 
 class UpdateQThread(Thread):
-    """Update dialog widgets in the thread"""
+    """!Update dialog widgets in the thread"""
     requestId = 0
     def __init__(self, parent, requestQ, resultQ, **kwds):
         Thread.__init__(self, **kwds)
@@ -317,87 +316,126 @@ class UpdateQThread(Thread):
             event = wxUpdateDialog(data = self.request.data)
             wx.PostEvent(self.parent, event)
 
-class testSAXContentHandler(HandlerBase):
-# SAX compliant
-    def characters(self, ch, start, length):
-        pass
-
-def test_for_broken_SAX():
-    ch=testSAXContentHandler()
-    try:
-        xml.sax.parseString("""<?xml version="1.0"?>
-            <child1 name="paul">Text goes here</child1>
-            """,ch)
-    except TypeError:
-        return 1
-    return 0
-
 class grassTask:
-    """
-    This class holds the structures needed for both filling by the parser and
-    use by the interface constructor.
-
-    Use as either grassTask() for empty definition or grassTask( 'grass.command' )
-    for parsed filling.
+    """!This class holds the structures needed for both filling by the
+    parser and use by the interface constructor.
+    
+    Use as either grassTask() for empty definition or
+    grassTask('grass.command') for parsed filling.
     """
     def __init__(self, grassModule = None):
         self.name = _('unknown')
-        self.params = []
+        self.params = list()
         self.description = ''
         self.label = ''
-        self.flags = []
-        self.keywords = []
+        self.flags = list()
+        self.keywords = list()
+        
         if grassModule is not None:
-            xml.sax.parseString( getInterfaceDescription( grassModule ) , processTask( self ) )
-
-    def get_param(self, value, element='name', raiseError=True):
-        """Find and return a param by name."""
+            processTask(tree = etree.fromstring(getInterfaceDescription(grassModule)),
+                        task = self)
+        
+    def get_name(self):
+        """!Get task name"""
+        return self.name
+    
+    def get_list_params(self, element = 'name'):
+        """!Get list of parameters"""
+        params = []
         for p in self.params:
-            if p[element] == value:
-                return p
+            params.append(p['name'])
+        
+        return params
+
+    def get_list_flags(self, element = 'name'):
+        """!Get list of parameters"""
+        flags = []
+        for p in self.flags:
+            flags.append(p['name'])
+        
+        return flags
+    
+    def get_param(self, value, element='name', raiseError=True):
+        """!Find and return a param by name."""
+        try:
+            for p in self.params:
+                val = p[element]
+                if val is None:
+                    continue
+                if type(val) in (types.ListType, types.TupleType):
+                    if value in val:
+                        return p
+                elif type(val) == types.StringType:
+                    if p[element][:len(value)] == value:
+                        return p
+                else:
+                    if p[element] == value:
+                        return p
+        except KeyError:
+            pass
+        
         if raiseError:
-            raise ValueError, _("Parameter not found: %s") % \
-                value
+            raise ValueError, _("Parameter element '%(element)s' not found: '%(value)s'") % \
+                { 'element' : element, 'value' : value }
         else:
             return None
-
-    def set_param(self, aParam, aValue):
+        
+    def set_param(self, aParam, aValue, element = 'value'):
+        """!Set param value/values.
         """
-        Set param value/values.
-        """
-        param = self.get_param(aParam)
-        param['value'] = aValue
+        try:
+            param = self.get_param(aParam)
+        except ValueError:
+            return
+        
+        param[element] = aValue
             
-    def get_flag( self, aFlag ):
-        """
-        Find and return a flag by name.
+    def get_flag(self, aFlag):
+        """!Find and return a flag by name.
         """
         for f in self.flags:
             if f['name'] == aFlag:
                 return f
         raise ValueError, _("Flag not found: %s") % aFlag
 
-    def set_flag(self, aFlag, aValue):
+    def set_flag(self, aFlag, aValue, element = 'value'):
+        """!Enable / disable flag.
         """
-        Enable / disable flag.
-        """
-        param = self.get_flag(aFlag)
-        param['value'] = aValue
-            
+        try:
+            param = self.get_flag(aFlag)
+        except ValueError:
+            return
+        
+        param[element] = aValue
+        
+    def getCmdError(self):
+        """!Get error string produced by getCmd(ignoreErrors = False)
 
+        @return list of errors
+        """
+        errorList = list()
+        
+        for p in self.params:
+            if p.get('value', '') == '' and p.get('required', 'no') != 'no':
+                if p.get('default', '') == '':
+                    desc = p.get('label', '')
+                    if not desc:
+                        desc = p['description']
+                    errorList.append(_("Parameter '%(name)s' (%(desc)s) is missing.") % \
+                                         {'name' : p['name'], 'desc' : desc })
+        
+        return errorList
+    
     def getCmd(self, ignoreErrors = False):
-        """
-        Produce an array of command name and arguments for feeding
+        """!Produce an array of command name and arguments for feeding
         into some execve-like command processor.
-
+        
         If ignoreErrors==True then it will return whatever has been
         built so far, even though it would not be a correct command
         for GRASS.
         """
         cmd = [self.name]
-        errors = 0
-        errStr = ""
-
+        
         for flag in self.flags:
             if 'value' in flag and flag['value']:
                 if len(flag['name']) > 1: # e.g. overwrite
@@ -408,327 +446,170 @@ class grassTask:
             if p.get('value','') == '' and p.get('required','no') != 'no':
                 if p.get('default', '') != '':
                     cmd += [ '%s=%s' % ( p['name'], p['default'] ) ]
-                else:
+                elif ignoreErrors is False:
                     cmd += [ '%s=%s' % ( p['name'], _('<required>') ) ]
-                    errStr += _("Parameter %(name)s (%(desc)s) is missing.\n") % \
-                        {'name' : p['name'], 'desc' : p['description']}
-                    errors += 1
             elif p.get('value','') != '' and p['value'] != p.get('default','') :
                 # Output only values that have been set, and different from defaults
                 cmd += [ '%s=%s' % ( p['name'], p['value'] ) ]
-        if errors and not ignoreErrors:
-            raise ValueError, errStr
-
-        return cmd
-
-class processTask(HandlerBase):
-    """
-    A SAX handler for the --interface-description output, as
-    defined in grass-interface.dtd. Extend or modify this and the
-    DTD if the XML output of GRASS' parser is extended or modified.
-    """
-    def __init__(self, task_description):
-        self.inLabelContent = False
-        self.inDescriptionContent = False
-        self.inDefaultContent = False
-        self.inValueContent = False
-        self.inParameter = False
-        self.inFlag = False
-        self.inGispromptContent = False
-        self.inGuisection = False
-        self.inKeywordsContent = False
-        self.inKeyDesc = False
-        self.addKeyDesc = False
-        self.inFirstParameter = True
-        self.task = task_description
-
-    def startElement(self, name, attrs):
-
-        if name == 'task':
-            self.task.name = attrs.get('name', None)
-
-        if name == 'parameter':
-            self.inParameter = True
-            self.label = '' # tmp variable
-            self.param_label = ''
-            self.param_description = ''
-            self.param_default = ''
-            self.param_values = []
-            self.param_values_description = []
-            self.param_gisprompt = False
-            self.param_age = ''
-            self.param_element = ''
-            self.param_prompt = ''
-            self.param_guisection = ''
-            self.param_key_desc = []
-            # Look for the parameter name, type, requiredness
-            self.param_name = attrs.get('name', None)
-            self.param_type = attrs.get('type', None)
-            self.param_required = attrs.get('required', None)
-            self.param_multiple = attrs.get('multiple', None)
-
-        if name == 'flag':
-            self.inFlag = True
-            self.label = '' # tmp variable
-            self.flag_label = ''
-            self.flag_description = ''
-            self.flag_default = ''
-            self.flag_guisection = ''
-            self.flag_values = []
-            # Look for the flag name
-            self.flag_name = attrs.get('name', None)
-
-        if name == 'label':
-            self.inLabelContent = True
-            self.label = ''
-
-        if name == 'description':
-            self.inDescriptionContent = True
-            self.description = ''
-
-        if name == 'default':
-            self.inDefaultContent = True
-            self.param_default = ''
-
-        if name == 'value':
-            self.inValueContent = True
-            self.value_tmp = ''
-
-        if name == 'gisprompt':
-            self.param_gisprompt = True
-            self.param_age = attrs.get('age', None)
-            self.param_element = attrs.get('element', None)
-            self.param_prompt = attrs.get('prompt', None)
-
-        if name == 'guisection':
-            self.inGuisection = True
-            self.guisection = ''
-
-        if name == 'keywords':
-            self.inKeywordsContent = True
-            self.keyword = ''
-
-        if name == 'keydesc':
-            self.inKeyDesc = True
-            self.key_desc = ''
-            
-        if name == 'item':
-            if self.inKeyDesc:
-                self.addKeyDesc = True
-
-    # works with python 2.0, but is not SAX compliant
-    def characters(self, ch):
-        self.my_characters(ch)
-
-    def my_characters(self, ch):
-        if self.inLabelContent:
-            self.label = self.label + ch
-        if self.inDescriptionContent:
-            self.description = self.description + ch
-        if self.inDefaultContent:
-            self.param_default = self.param_default + ch
-        if self.inValueContent and not self.inDescriptionContent:
-            # Beware: value_tmp will get anything outside of a <description>
-            # so in this snippet:
-            # <values>
-            #   <value>
-            #     <name> a </name>
-            #     <description> a desc </description>
-            #   </value>
-            # </values>
-            # 'a desc' will not be recorded anwhere; this unburdens further
-            # handling of value sets to distinguish between those that do define
-            # descriptions and those that do not.
-            #
-            # TODO: a set of flags to treat this case of a description sub-element
-            self.value_tmp = self.value_tmp + ch
-        if self.inGuisection:
-            self.guisection = self.guisection + ch
-        if self.inKeywordsContent:
-            self.keyword = self.keyword + ch
-        if self.addKeyDesc:
-            self.key_desc = self.key_desc + ch
-
-    def endElement(self, name):
-        # If it's not a parameter element, ignore it
-        if name == 'parameter':
-            self.inParameter = False;
-            # description -> label substitution is delegated to the client;
-            # we deal in the parser only with getting interface-description
-            # verbatim
-            self.task.params.append({
-                "name" : self.param_name,
-                "type" : self.param_type,
-                "required" : self.param_required,
-                "multiple" : self.param_multiple,
-                "label" : self.param_label,
-                "description" : self.param_description,
-                'gisprompt' : self.param_gisprompt,
-                'age' : self.param_age,
-                'element' :self.param_element,
-                'prompt' : self.param_prompt,
-                "guisection" : self.param_guisection,
-                "default" : self.param_default,
-                "values" : self.param_values,
-                "values_desc" : self.param_values_description,
-                "value" : '',
-                "key_desc": self.param_key_desc})
-
-            if self.inFirstParameter:
-                self.task.firstParam = self.param_name # store name of first parameter
-            self.inFirstParameter = False;
-
-        if name == 'flag':
-            self.inFlag = False;
-            self.task.flags.append({
-                "name" : self.flag_name,
-                "label" : self.flag_label,
-                "description" : self.flag_description,
-                "guisection" : self.flag_guisection } )
-
-        if name == 'label':
-            if self.inParameter:
-                self.param_label = normalize_whitespace(self.label)
-            elif self.inFlag:
-                self.flag_label = normalize_whitespace(self.label)
-            else:
-                self.task.label = normalize_whitespace(self.label)
-
-        if name == 'description':
-            if self.inValueContent:
-                self.param_values_description.append(normalize_whitespace(self.description))
-            elif self.inParameter:
-                self.param_description = normalize_whitespace(self.description)
-            elif self.inFlag:
-                self.flag_description = normalize_whitespace(self.description)
-            else:
-                self.task.description = normalize_whitespace(self.description)
-            self.inDescriptionContent = False
-
-        if name == 'default':
-            self.param_default = normalize_whitespace(self.param_default)
-            self.inDefaultContent = False
-
-        if name == 'value':
-            v = normalize_whitespace(self.value_tmp)
-            self.param_values.append(normalize_whitespace(self.value_tmp))
-            self.inValueContent = False
-
-        if name == 'guisection':
-            if self.inParameter:
-                self.param_guisection = normalize_whitespace(self.guisection)
-            elif self.inFlag:
-                self.flag_guisection = normalize_whitespace(self.guisection)
-            self.inGuisection = False
-
-        if name == 'keywords':
-            for keyword in self.keyword.split(','):
-                self.task.keywords.append (normalize_whitespace(keyword))
-            self.inKeywordsContent = False
-
-        if name == 'keydesc':
-            self.inKeyDesc = False
-
-        if name == 'item':
-            if self.inKeyDesc:
-                self.param_key_desc.append(normalize_whitespace(self.key_desc))
-                self.key_desc = ''
-                self.addKeyDesc = False
-
-class helpPanel(wx.html.HtmlWindow):
-    """
-    This panel holds the text from GRASS docs.
-
-    GISBASE must be set in the environment to find the html docs dir.
-    The SYNOPSIS section is skipped, since this Panel is supposed to
-    be integrated into the cmdPanel and options are obvious there.
-    """
-    def __init__(self, grass_command = "index", text = None,
-                 skip_description=False, *args, **kwargs):
-        """ If grass_command is given, the corresponding HTML help file will
-        be presented, with all links pointing to absolute paths of
-        local files.
-
-        If 'skip_description' is True, the HTML corresponding to
-        SYNOPSIS will be skipped, thus only presenting the help file
-        from the DESCRIPTION section onwards.
-
-        If 'text' is given, it must be the HTML text to be presented in the Panel.
-        """
-
-        wx.html.HtmlWindow.__init__(self, *args, **kwargs)
-        self.fspath = gisbase + "/docs/html/"
-
-        self.SetStandardFonts ( size = 10 )
-        self.SetBorders(10)
-        wx.InitAllImageHandlers()
-
-        if text is None:
-            if skip_description:
-                self.fillContentsFromFile ( self.fspath + grass_command + ".html",
-                                            skip_description=skip_description )
-                self.Ok = True
-            else:
-                ### FIXME: calling LoadPage() is strangely time-consuming (only first call)
-                # self.LoadPage(self.fspath + grass_command + ".html")
-                self.Ok = False
-        else:
-            self.SetPage( text )
-            self.Ok = True
-
-    def fillContentsFromFile( self, htmlFile, skip_description=True ):
-        aLink = re.compile( r'(<a href="?)(.+\.html?["\s]*>)', re.IGNORECASE )
-        imgLink = re.compile( r'(<img src="?)(.+\.[png|gif])', re.IGNORECASE )
-        try:
-            # contents = [ '<head><base href="%s"></head>' % self.fspath ]
-            contents = []
-            skip = False
-            for l in file( htmlFile, "rb" ).readlines():
-                if "DESCRIPTION" in l:
-                    skip = False
-                if not skip:
-                    # do skip the options description if requested
-                    if "SYNOPSIS" in l:
-                        skip = skip_description
-                    else:
-                        # FIXME: find only first item
-                        findALink = aLink.search( l )
-                        if findALink is not None: 
-                            contents.append( aLink.sub(findALink.group(1)+
-                                                           self.fspath+findALink.group(2),l) )
-                        findImgLink = imgLink.search( l )
-                        if findImgLink is not None: 
-                            contents.append( imgLink.sub(findImgLink.group(1)+
-                                                         self.fspath+findImgLink.group(2),l) )
         
-                        if findALink is None and findImgLink is None:
-                            contents.append( l )
-            self.SetPage( "".join( contents ) )
-            self.Ok = True
-        except: # The Manual file was not found
-            self.Ok = False
+        errList = self.getCmdError()
+        if ignoreErrors is False and errList:
+            raise ValueError, '\n'.join(errList)
+        
+        return cmd
+    
+    def set_options(self, opts):
+        """!Set flags and parameters
 
-class mainFrame(wx.Frame):
+        @param opts list of flags and parameters"""
+        for opt in opts:
+            if opt[0] == '-': # flag
+                self.set_flag(opt.lstrip('-'), True)
+            else: # parameter
+                key, value = opt.split('=', 1)
+                self.set_param(key, value)
+        
+    def get_options(self):
+        """!Get options"""
+        return { 'flags'  : self.flags,
+                 'params' : self.params }
+    
+    def has_required(self):
+        """!Check if command has at least one required paramater"""
+        for p in self.params:
+            if p.get('required', 'no') == 'yes':
+                return True
+        
+        return False
+
+class processTask:
+    """!A ElementTree handler for the --interface-description output,
+    as defined in grass-interface.dtd. Extend or modify this and the
+    DTD if the XML output of GRASS' parser is extended or modified.
+
+    @param tree root tree node
+    @param task grassTask instance or None
+    @return grassTask instance
     """
-    This is the Frame containing the dialog for options input.
+    def __init__(self, tree, task = None):
+        if task:
+            self.task = task
+        else:
+            self.task = grassTask()
+        
+        self.root = tree
+        
+        self.__processModule()
+        self.__processParams()
+        self.__processFlags()
+
+    def __processModule(self):
+        """!Process module description"""
+        self.task.name = self.root.get('name', default = 'unknown')
+        
+        # keywords
+        for keyword in self.__getNodeText(self.root, 'keywords').split(','):
+            self.task.keywords.append(keyword.strip())
+        
+        self.task.label       = self.__getNodeText(self.root, 'label')
+        self.task.description = self.__getNodeText(self.root, 'description')
+        
+    def __processParams(self):
+        """!Process parameters description"""
+        for p in self.root.findall('parameter'):
+            # gisprompt
+            node_gisprompt = p.find('gisprompt')
+            gisprompt = False
+            age = element = prompt = None
+            if node_gisprompt is not None:
+                gisprompt = True
+                age     = node_gisprompt.get('age', '')
+                element = node_gisprompt.get('element', '')
+                prompt  = node_gisprompt.get('prompt', '')
+            
+            # value(s)
+            values = []
+            values_desc = []
+            node_values = p.find('values')
+            if node_values is not None:
+                for pv in node_values.findall('value'):
+                    values.append(self.__getNodeText(pv, 'name'))
+                    desc = self.__getNodeText(pv, 'description')
+                    if desc:
+                        values_desc.append(desc)
+            
+            # keydesc
+            key_desc = []
+            node_key_desc = p.find('keydesc')
+            if node_key_desc is not None:
+                for ki in node_key_desc.findall('item'):
+                    key_desc.append(ki.text)
+            
+            self.task.params.append( {
+                "name"        : p.get('name'),
+                "type"        : p.get('type'),
+                "required"    : p.get('required'),
+                "multiple"    : p.get('multiple'),
+                "label"       : self.__getNodeText(p, 'label'),
+                "description" : self.__getNodeText(p, 'description'),
+                'gisprompt'   : gisprompt,
+                'age'         : age,
+                'element'     : element,
+                'prompt'      : prompt,
+                "guisection"  : self.__getNodeText(p, 'guisection'),
+                "default"     : self.__getNodeText(p, 'default'),
+                "values"      : values,
+                "values_desc" : values_desc,
+                "value"       : '',
+                "key_desc"    : key_desc } )
+            
+    def __processFlags(self):
+        """!Process flags description"""
+        for p in self.root.findall('flag'):
+            self.task.flags.append( {
+                    "name"        : p.get('name'),
+                    "label"       : self.__getNodeText(p, 'label'),
+                    "description" : self.__getNodeText(p, 'description'),
+                    "guisection"  : self.__getNodeText(p, 'guisection') } )
+        
+    def __getNodeText(self, node, tag, default = ''):
+        """!Get node text"""
+        p = node.find(tag)
+        if p is not None:
+            return utils.normalize_whitespace(p.text)
+        
+        return default
+    
+    def GetTask(self):
+        """!Get grassTask instance"""
+        return self.task
+        
+    
+class mainFrame(wx.Frame):
+    """!This is the Frame containing the dialog for options input.
 
     The dialog is organized in a notebook according to the guisections
     defined by each GRASS command.
 
-    If run with a parent, it may Apply, Ok or Cancel; the latter two close the dialog.
-    The former two trigger a callback.
+    If run with a parent, it may Apply, Ok or Cancel; the latter two
+    close the dialog.  The former two trigger a callback.
 
     If run standalone, it will allow execution of the command.
 
-    The command is checked and sent to the clipboard when clicking 'Copy'.
+    The command is checked and sent to the clipboard when clicking
+    'Copy'.
     """
-    def __init__(self, parent, ID, task_description, get_dcmd=None, layer=None):
-
+    def __init__(self, parent, ID, task_description,
+                 get_dcmd = None, layer = None):
         self.get_dcmd = get_dcmd
-        self.layer = layer
-        self.task = task_description
-        self.parent = parent # LayerTree | None
-
+        self.layer    = layer
+        self.task     = task_description
+        self.parent   = parent            # LayerTree | Modeler | None | ...
+        if parent and parent.GetName() == 'Modeler':
+            self.modeler = self.parent
+        else:
+            self.modeler = None
+        
         # module name + keywords
         if self.task.name.split('.')[-1] in ('py', 'sh'):
             title = str(self.task.name.rsplit('.',1)[0])
@@ -739,9 +620,10 @@ class mainFrame(wx.Frame):
                 title +=  " [" + ', '.join( self.task.keywords ) + "]"
         except ValueError:
             pass
-
+        
         wx.Frame.__init__(self, parent=parent, id=ID, title=title,
-                          pos=wx.DefaultPosition, style=wx.DEFAULT_FRAME_STYLE | wx.TAB_TRAVERSAL)
+                          pos=wx.DefaultPosition, style=wx.DEFAULT_FRAME_STYLE | wx.TAB_TRAVERSAL,
+                          name = "MainFrame")
 
         self.locale = wx.Locale(language = wx.LANGUAGE_DEFAULT)
 
@@ -757,14 +639,10 @@ class mainFrame(wx.Frame):
 
         # set apropriate output window
         if self.parent:
-            self.standalone   = False
+            self.standalone = False
         else:
             self.standalone = True
-            #             try:
-            #                 self.goutput  = self.parent.GetLogWindow()
-            #             except:
-            #                 self.goutput  = None
-
+        
         # logo+description
         topsizer = wx.BoxSizer(wx.HORIZONTAL)
 
@@ -774,7 +652,7 @@ class mainFrame(wx.Frame):
                                                                        'grass_form.png'),
                                                      type=wx.BITMAP_TYPE_PNG))
         topsizer.Add (item=self.logo, proportion=0, border=3,
-                      flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL | wx.EXPAND)
+                      flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL)
 
         #
         # put module description
@@ -783,21 +661,19 @@ class mainFrame(wx.Frame):
             module_desc = self.task.label + ' ' + self.task.description
         else:
             module_desc = self.task.description
-        self.description = StaticWrapText (parent=self.panel,
-                                           label=module_desc)
+        self.description = gdialogs.StaticWrapText(parent=self.panel,
+                                                   label=module_desc)
         topsizer.Add (item=self.description, proportion=1, border=5,
                       flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL | wx.EXPAND)
-
+                      
         guisizer.Add (item=topsizer, proportion=0, flag=wx.EXPAND)
-
+        
         self.panel.SetSizerAndFit(guisizer)
         self.Layout()
 
         # notebooks
-        self.notebookpanel = cmdPanel (parent=self.panel, task=self.task, standalone=self.standalone,
-                                       mainFrame=self)
-        ### add 'command output' tab also for dialog open from menu
-        #         if self.standalone:
+        self.notebookpanel = cmdPanel(parent = self.panel, task = self.task,
+                                      mainFrame = self)
         self.goutput = self.notebookpanel.goutput
         self.notebookpanel.OnUpdateValues = self.updateValuesHook
         guisizer.Add (item=self.notebookpanel, proportion=1, flag=wx.EXPAND)
@@ -814,13 +690,15 @@ class mainFrame(wx.Frame):
         btnsizer = wx.BoxSizer(orient=wx.HORIZONTAL)
         # cancel
         self.btn_cancel = wx.Button(parent=self.panel, id=wx.ID_CLOSE)
-        self.btn_cancel.SetToolTipString(_("Close this window without executing the command"))
+        self.btn_cancel.SetToolTipString(_("Close this window without executing the command (Ctrl+Q)"))
         btnsizer.Add(item=self.btn_cancel, proportion=0, flag=wx.ALL | wx.ALIGN_CENTER, border=10)
         self.btn_cancel.Bind(wx.EVT_BUTTON, self.OnCancel)
         # help
         self.btn_help = wx.Button(parent=self.panel, id=wx.ID_HELP)
-        self.btn_help.SetToolTipString(_("Show manual page of the command"))
+        self.btn_help.SetToolTipString(_("Show manual page of the command (Ctrl+H)"))
         self.btn_help.Bind(wx.EVT_BUTTON, self.OnHelp)
+        if not hasattr(self.notebookpanel, "manual_tab_id"):
+            self.btn_help.Hide()
         if self.get_dcmd is not None: # A callback has been set up
             btn_apply = wx.Button(parent=self.panel, id=wx.ID_APPLY)
             btn_ok = wx.Button(parent=self.panel, id=wx.ID_OK)
@@ -838,19 +716,19 @@ class mainFrame(wx.Frame):
         else: # We're standalone
             # run
             self.btn_run = wx.Button(parent=self.panel, id=wx.ID_OK, label= _("&Run"))
-            self.btn_run.SetToolTipString(_("Run the command"))
+            self.btn_run.SetToolTipString(_("Run the command (Ctrl+R)"))
             self.btn_run.SetDefault()
             # abort
-            self.btn_abort = wx.Button(parent=self.panel, id=wx.ID_STOP)
-            self.btn_abort.SetToolTipString(_("Abort the running command"))
-            self.btn_abort.Enable(False)
+            ### self.btn_abort = wx.Button(parent=self.panel, id=wx.ID_STOP)
+            ### self.btn_abort.SetToolTipString(_("Abort the running command"))
+            ### self.btn_abort.Enable(False)
             # copy
             self.btn_clipboard = wx.Button(parent=self.panel, id=wx.ID_COPY)
-            self.btn_clipboard.SetToolTipString(_("Copy the current command string to the clipboard"))
+            self.btn_clipboard.SetToolTipString(_("Copy the current command string to the clipboard (Ctrl+C)"))
 
-            btnsizer.Add(item=self.btn_abort, proportion=0,
-                         flag=wx.ALL | wx.ALIGN_CENTER,
-                         border=10)
+            ### btnsizer.Add(item=self.btn_abort, proportion=0,
+            ### flag=wx.ALL | wx.ALIGN_CENTER,
+            ### border=10)
 
             btnsizer.Add(item=self.btn_run, proportion=0,
                          flag=wx.ALL | wx.ALIGN_CENTER,
@@ -861,24 +739,26 @@ class mainFrame(wx.Frame):
                          border=10)
 
             self.btn_run.Bind(wx.EVT_BUTTON, self.OnRun)
-            self.btn_abort.Bind(wx.EVT_BUTTON, self.OnAbort)
+            ### self.btn_abort.Bind(wx.EVT_BUTTON, self.OnAbort)
             self.btn_clipboard.Bind(wx.EVT_BUTTON, self.OnCopy)
 
         # add help button
         btnsizer.Add(item=self.btn_help, proportion=0, flag=wx.ALL | wx.ALIGN_CENTER, border=10)
 
-        guisizer.Add(item=btnsizer, proportion=0, flag=wx.ALIGN_CENTER)
+        guisizer.Add(item=btnsizer, proportion=0, flag=wx.ALIGN_CENTER | wx.LEFT | wx.RIGHT,
+                     border = 30)
 
-        if self.parent is not None:
-            self.outputType = None
+        if self.parent and not self.modeler:
+            addLayer = False
             for p in self.task.params:
-                if p.get('name', '') == 'output':
-                    self.outputType = p.get('prompt', None)
-                    break
-            if self.outputType in ('raster', 'vector', '3d-raster'):
+                if p.get('age', 'old') == 'new' and \
+                   p.get('prompt', '') in ('raster', 'vector', '3d-raster'):
+                    addLayer = True
+            
+            if addLayer:
                 # add newly created map into layer tree
                 self.addbox = wx.CheckBox(parent=self.panel,
-                                          label=_('Add created map into layer tree'), style = wx.NO_BORDER)
+                                          label=_('Add created map(s) into layer tree'), style = wx.NO_BORDER)
                 self.addbox.SetValue(UserSettings.Get(group='cmd', key='addNewLayer', subkey='enabled'))
                 guisizer.Add(item=self.addbox, proportion=0,
                              flag=wx.EXPAND | wx.LEFT | wx.RIGHT | wx.BOTTOM,
@@ -893,8 +773,9 @@ class mainFrame(wx.Frame):
                          flag=wx.EXPAND | wx.LEFT | wx.RIGHT | wx.BOTTOM,
                          border=5)
 
-        self.Bind(wx.EVT_CLOSE, self.OnCancel)
-
+        self.Bind(wx.EVT_CLOSE,  self.OnCancel)
+        self.Bind(wx.EVT_KEY_UP, self.OnKeyUp)
+        
         #constrained_size = self.notebookpanel.GetSize()
         # 80 takes the tabbar into account
         #self.notebookpanel.SetSize( (constrained_size[0] + 25, constrained_size[1]) ) 
@@ -923,29 +804,82 @@ class mainFrame(wx.Frame):
         self.Layout()
 
         #keep initial window size limited for small screens
-        width,height = self.GetSizeTuple()
+        width, height = self.GetSizeTuple()
         if width > 640: width = 640
         if height > 480: height = 480
-        self.SetSize((width,height))
+        self.SetSize((width, height))
+        
+        # fix goutput's pane size
+        if self.goutput:
+            self.goutput.SetSashPosition(int(self.GetSize()[1] * .75))
 
-    def updateValuesHook(self):
-        """Update status bar data"""
-        self.SetStatusText(' '.join(self.notebookpanel.createCmd(ignoreErrors = True)) )
+    def updateValuesHook(self, event = None):
+        """!Update status bar data"""
+        self.SetStatusText(' '.join(self.notebookpanel.createCmd(ignoreErrors = True)))
+        if event:
+            event.Skip()
+        
+    def OnKeyUp(self, event):
+        """!Key released (check hot-keys)"""
+        try:
+            kc = chr(event.GetKeyCode())
+        except ValueError:
+            event.Skip()
+            return
+        
+        if not event.ControlDown():
+            event.Skip()
+            return
+        
+        if kc == 'Q':
+            self.OnCancel(None)
+        elif kc == 'S':
+            self.OnAbort(None)
+        elif kc == 'H':
+            self.OnHelp(None)
+        elif kc == 'R':
+            self.OnRun(None)
+        elif kc == 'C':
+            self.OnCopy(None)
+        
+        event.Skip()
 
+    def OnDone(self, cmd, returncode):
+        """!This function is launched from OnRun() when command is
+        finished
+
+        @param returncode command's return code (0 for success)
+        """
+        if self.parent and self.parent.GetName() not in ('LayerTree', 'LayerManager') or \
+                returncode != 0:
+            return
+        
+        if cmd[0] in globalvar.cmdAutoRender:
+            if self.parent.GetName() == 'LayerTree':
+                display = self.parent.GetMapDisplay()
+            else: # Layer Manager
+                display = self.parent.GetLayerTree().GetMapDisplay()
+            
+            if display and display.IsAutoRendered():
+                display.GetWindow().UpdateMap(render = True)
+        
     def OnOK(self, event):
-        """OK button pressed"""
+        """!OK button pressed"""
         cmd = self.OnApply(event)
         if cmd is not None and self.get_dcmd is not None:
             self.OnCancel(event)
 
     def OnApply(self, event):
-        """Apply the command"""
-        cmd = self.createCmd()
-
+        """!Apply the command"""
+        if self.modeler:
+            cmd = self.createCmd(ignoreErrors = True)
+        else:
+            cmd = self.createCmd()
+            
         if cmd is not None and self.get_dcmd is not None:
             # return d.* command to layer tree for rendering
             self.get_dcmd(cmd, self.layer, {"params": self.task.params, 
-                                            "flags" :self.task.flags},
+                                            "flags" : self.task.flags},
                           self)
             # echo d.* command to output console
             # self.parent.writeDCommand(cmd)
@@ -956,22 +890,21 @@ class mainFrame(wx.Frame):
         """!Run the command"""
         cmd = self.createCmd()
         
-        if cmd == None or len(cmd) < 2:
+        if not cmd or len(cmd) < 1:
             return
-
+        
         if self.standalone or cmd[0][0:2] != "d.":
             # Send any non-display command to parent window (probably wxgui.py)
-            # put to parents
-            # switch to 'Command output'
+            # put to parents switch to 'Command output'
             if self.notebookpanel.notebook.GetSelection() != self.notebookpanel.goutputId:
                 self.notebookpanel.notebook.SetSelection(self.notebookpanel.goutputId)
             
             try:
-                self.goutput.RunCmd(cmd)
+                
+                self.goutput.RunCmd(cmd, onDone = self.OnDone)
             except AttributeError, e:
                 print >> sys.stderr, "%s: Propably not running in wxgui.py session?" % (e)
                 print >> sys.stderr, "parent window is: %s" % (str(self.parent))
-            # Send any other command to the shell.
         else:
             gcmd.Command(cmd)
         
@@ -981,15 +914,14 @@ class mainFrame(wx.Frame):
                     self.btn_clipboard,
                     self.btn_help):
             btn.Enable(False)
-        self.btn_abort.Enable(True)
-
+        
     def OnAbort(self, event):
-        """Abort running command"""
+        """!Abort running command"""
         event = goutput.wxCmdAbort(aborted=True)
         wx.PostEvent(self.goutput, event)
 
     def OnCopy(self, event):
-        """Copy the command"""
+        """!Copy the command"""
         cmddata = wx.TextDataObject()
         # list -> string
         cmdstring = ' '.join(self.createCmd(ignoreErrors=True))
@@ -1002,7 +934,7 @@ class mainFrame(wx.Frame):
                                     (cmdstring))
 
     def OnCancel(self, event):
-        """Cancel button pressed"""
+        """!Cancel button pressed"""
         self.MakeModal(False)
         
         if self.get_dcmd and \
@@ -1023,27 +955,30 @@ class mainFrame(wx.Frame):
             self.Destroy()
 
     def OnHelp(self, event):
-        """Show manual page (switch to the 'Manual' notebook page)"""
+        """!Show manual page (switch to the 'Manual' notebook page)"""
         if hasattr(self.notebookpanel, "manual_tab_id"):
             self.notebookpanel.notebook.SetSelection(self.notebookpanel.manual_tab_id)
             self.notebookpanel.OnPageChange(None)
-            
-        event.Skip()
+        
+        if event:    
+            event.Skip()
         
     def createCmd(self, ignoreErrors = False):
-        """Create command string (python list)"""
+        """!Create command string (python list)"""
         return self.notebookpanel.createCmd(ignoreErrors=ignoreErrors)
 
 class cmdPanel(wx.Panel):
+    """!A panel containing a notebook dividing in tabs the different
+    guisections of the GRASS cmd.
     """
-    A panel containing a notebook dividing in tabs the different guisections of the GRASS cmd.
-    """
-    def __init__( self, parent, task, standalone, mainFrame, *args, **kwargs ):
-        wx.Panel.__init__( self, parent, *args, **kwargs )
-
-        self.parent = mainFrame
+    def __init__(self, parent, task, id = wx.ID_ANY, mainFrame = None, *args, **kwargs):
+        if mainFrame:
+            self.parent = mainFrame
+        else:
+            self.parent = parent
         self.task = task
-        fontsize = 10
+        
+        wx.Panel.__init__(self, parent, id = id, *args, **kwargs)
         
         # Determine tab layout
         sections = []
@@ -1097,7 +1032,7 @@ class cmdPanel(wx.Panel):
 
         # are we running from command line?
         ### add 'command output' tab regardless standalone dialog
-        if self.parent.get_dcmd is None:
+        if self.parent.GetName() == "MainFrame" and self.parent.get_dcmd is None:
             self.goutput = goutput.GMConsole(parent=self, margin=False,
                                              pageid=self.notebook.GetPageCount())
             self.goutputId = self.notebook.GetPageCount()
@@ -1105,12 +1040,14 @@ class cmdPanel(wx.Panel):
         else:
             self.goutput = None
             self.goutputId = -1
-            
-        self.manual_tab = helpPanel(parent = self.notebook, grass_command = self.task.name)
-        self.manual_tabsizer = wx.BoxSizer(wx.VERTICAL)
-        self.notebook.AddPage(self.manual_tab, text=_("Manual"))
-        self.manual_tab_id = self.notebook.GetPageCount() - 1
-
+        
+        self.manual_tab = HelpPanel(parent = self, grass_command = self.task.name)
+        if not self.manual_tab.IsFile():
+            self.manual_tab.Hide()
+        else:
+            self.notebook.AddPage(self.manual_tab, text=_("Manual"))
+            self.manual_tab_id = self.notebook.GetPageCount() - 1
+        
         self.notebook.SetSelection(0)
 
         panelsizer.Add(item=self.notebook, proportion=1, flag=wx.EXPAND )
@@ -1137,23 +1074,36 @@ class cmdPanel(wx.Panel):
             self.label_id.append(chk.GetId())
             if tooltip:
                 chk.SetToolTipString(tooltip)
-            if 'value' in f:
-                chk.SetValue( f['value'] )
+            chk.SetValue(f.get('value', False))
             title_sizer.Add(item=chk, proportion=1,
                             flag=wx.EXPAND)
             title_sizer.Add(item=rtitle_txt, proportion=0,
                             flag=wx.ALIGN_RIGHT | wx.ALIGN_CENTER_VERTICAL)
             which_sizer.Add(item=title_sizer, proportion=0,
                             flag=wx.EXPAND | wx.TOP | wx.LEFT | wx.RIGHT, border=5)
-            f['wxId'] = chk.GetId()
+            f['wxId'] = [ chk.GetId(), ]
             chk.Bind(wx.EVT_CHECKBOX, self.OnSetValue)
+            
+            if self.parent.GetName() == 'MainFrame' and self.parent.modeler:
+                parChk = wx.CheckBox(parent = which_panel, id = wx.ID_ANY,
+                                     label = _("Parameterized in model"))
+                parChk.SetName('ModelParam')
+                parChk.SetValue(f.get('parameterized', False))
+                if f.has_key('wxId'):
+                    f['wxId'].append(parChk.GetId())
+                else:
+                    f['wxId'] = [ parChk.GetId() ]
+                parChk.Bind(wx.EVT_CHECKBOX, self.OnSetValue)
+                which_sizer.Add(item = parChk, proportion = 0,
+                                flag = wx.LEFT, border = 20)
+            
             if f['name'] in ('verbose', 'quiet'):
                 chk.Bind(wx.EVT_CHECKBOX, self.OnVerbosity)
                 vq = UserSettings.Get(group='cmd', key='verbosity', subkey='selection')
                 if f['name'] == vq:
                     chk.SetValue(True)
                     f['value'] = True
-            elif f['name'] == 'overwrite':
+            elif f['name'] == 'overwrite' and not f.has_key('value'):
                 chk.SetValue(UserSettings.Get(group='cmd', key='overwrite', subkey='enabled'))
                 f['value'] = UserSettings.Get(group='cmd', key='overwrite', subkey='enabled')
                 
@@ -1218,7 +1168,7 @@ class cmdPanel(wx.Panel):
                 if p.get('multiple', 'no') == 'yes' and \
                         p.get('gisprompt',False) == False and \
                         p.get('type', '') == 'string':
-                    title_txt.SetLabel(" " + title + ": ")
+                    title_txt.SetLabel(" %s: (%s, %s) " % (title, p['name'], p['type']))
                     if len(valuelist) > 6:
                         hSizer=wx.StaticBoxSizer ( box=title_txt, orient=wx.VERTICAL )
                     else:
@@ -1232,7 +1182,7 @@ class cmdPanel(wx.Panel):
                         isEnabled[ defval ] = 'yes'
                         # for multi checkboxes, this is an array of all wx IDs
                         # for each individual checkbox
-                        p[ 'wxId' ] = []
+                        p['wxId'] = list()
                     idx = 0
                     for val in valuelist:
                         try:
@@ -1240,8 +1190,9 @@ class cmdPanel(wx.Panel):
                         except IndexError:
                             label = val
                         
-                        chkbox = wx.CheckBox( parent=which_panel, label = text_beautify(label) )
-                        p[ 'wxId' ].append( chkbox.GetId() )
+                        chkbox = wx.CheckBox( parent=which_panel,
+                                              label = text_beautify(label))
+                        p['wxId'].append( chkbox.GetId() )
                         if isEnabled.has_key(val):
                             chkbox.SetValue( True )
                         hSizer.Add( item=chkbox, proportion=0,
@@ -1254,10 +1205,10 @@ class cmdPanel(wx.Panel):
                                      flag=wx.EXPAND | wx.TOP | wx.RIGHT | wx.LEFT, border=5 )
                 elif p.get('gisprompt', False) == False:
                     if len(valuelist) == 1: # -> textctrl
-                        title_txt.SetLabel("%s. %s %s" % (title, _('Valid range'),
-                                                          str(valuelist[0]) + ':'))
+                        title_txt.SetLabel("%s (%s %s):" % (title, _('valid range'),
+                                                          str(valuelist[0])))
                         
-                        if p.get('type','') == 'integer' and \
+                        if p.get('type', '') == 'integer' and \
                                 p.get('multiple','no') == 'no':
 
                             # for multiple integers use textctrl instead of spinsctrl
@@ -1281,11 +1232,16 @@ class cmdPanel(wx.Panel):
                                 txt2.SetValue(int(p['value']))
                             else:
                                 txt2.SetValue(p['value'])
+                        elif p.get('default', '') != '':
+                            if txt2.GetName() == "SpinCtrl":
+                                txt2.SetValue(int(p['default']))
+                            else:
+                                txt2.SetValue(p['default'])
                         
                         which_sizer.Add(item=txt2, proportion=0,
                                         flag=style, border=5)
 
-                        p['wxId'] = txt2.GetId()
+                        p['wxId'] = [ txt2.GetId(), ]
                         txt2.Bind(wx.EVT_TEXT, self.OnSetValue)
                     else:
                         # list of values (combo)
@@ -1297,7 +1253,7 @@ class cmdPanel(wx.Panel):
                             cb.SetValue(p['value']) # parameter previously set
                         which_sizer.Add( item=cb, proportion=0,
                                          flag=wx.ADJUST_MINSIZE | wx.BOTTOM | wx.LEFT, border=5)
-                        p['wxId'] = cb.GetId()
+                        p['wxId'] = [ cb.GetId(), ]
                         cb.Bind( wx.EVT_COMBOBOX, self.OnSetValue)
                         cb.Bind(wx.EVT_TEXT, self.OnSetValue)
             
@@ -1309,7 +1265,7 @@ class cmdPanel(wx.Panel):
 
                 title_txt.SetLabel(title + ':' )
                 if p.get('multiple','yes') == 'yes' or \
-                        p.get('type', 'string') in ('string', 'float') or \
+                        p.get('type', 'string') == 'string' or \
                         len(p.get('key_desc', [])) > 1:
                     txt3 = wx.TextCtrl(parent=which_panel, value = p.get('default',''))
                     
@@ -1321,19 +1277,31 @@ class cmdPanel(wx.Panel):
                 else:
                     minValue = -1e9
                     maxValue = 1e9
-                    txt3 = wx.SpinCtrl(parent=which_panel, value=p.get('default',''),
-                                       size=globalvar.DIALOG_SPIN_SIZE,
-                                       min=minValue, max=maxValue)
-                    if p.get('value','') != '':
-                        txt3.SetValue(int(p['value'])) # parameter previously set
-
-                    txt3.Bind(wx.EVT_SPINCTRL, self.OnSetValue)
-                    txt3.Bind(wx.EVT_TEXT, self.OnSetValue)
-                    style = wx.BOTTOM | wx.LEFT | wx.RIGHT
+                    if p.get('type', '') == 'integer':
+                        txt3 = wx.SpinCtrl(parent=which_panel, value=p.get('default',''),
+                                           size=globalvar.DIALOG_SPIN_SIZE,
+                                           min=minValue, max=maxValue)
+                        style = wx.BOTTOM | wx.LEFT | wx.RIGHT
+                        
+                        if p.get('value', '') != '':
+                            txt3.SetValue(int(p['value'])) # parameter previously set
+                        elif p.get('default', '') != '':
+                            txt3.SetValue(int(p['default']))
+                        
+                        txt3.Bind(wx.EVT_SPINCTRL, self.OnSetValue)
+                    else:
+                        txt3 = wx.TextCtrl(parent=which_panel, value = p.get('default',''),
+                                           validator = FloatValidator())
+                        style = wx.EXPAND | wx.BOTTOM | wx.LEFT | wx.RIGHT
+                        
+                        if p.get('value', '') != '':
+                            txt3.SetValue(str(p['value'])) # parameter previously set
+                    
+                txt3.Bind(wx.EVT_TEXT, self.OnSetValue)
                 
                 which_sizer.Add(item=txt3, proportion=0,
                                 flag=style, border=5)
-                p['wxId'] = txt3.GetId()
+                p['wxId'] = [ txt3.GetId(), ]
 
             #
             # element selection tree combobox (maps, icons, regions, etc.)
@@ -1357,7 +1325,7 @@ class cmdPanel(wx.Panel):
                     else:
                         multiple = False
                     if p.get('age', '') == 'new':
-                        mapsets = [grassenv.GetGRASSVariable('MAPSET'),]
+                        mapsets = [grass.gisenv()['MAPSET'],]
                     else:
                         mapsets = None
                     selection = gselect.Select(parent=which_panel, id=wx.ID_ANY,
@@ -1372,7 +1340,7 @@ class cmdPanel(wx.Panel):
                     
                     # A select.Select is a combobox with two children: a textctl and a popupwindow;
                     # we target the textctl here
-                    p['wxId'] = selection.GetChildren()[0].GetId()
+                    p['wxId'] = [ selection.GetChildren()[0].GetId(), ]
                     selection.GetChildren()[0].Bind(wx.EVT_TEXT, self.OnSetValue)
                     if p.get('prompt', '') in ('vector', 'group'):
                         selection.Bind(wx.EVT_TEXT, self.OnUpdateSelection)
@@ -1421,15 +1389,21 @@ class cmdPanel(wx.Panel):
                                 win.Bind(wx.EVT_SPINCTRL, self.OnSetValue)
                                 
                         elif p.get('prompt', '') == 'dbdriver':
-                            win = gselect.DriverSelect(parent=which_panel,
-                                                       choices=p['values'],
-                                                       value=p['default'])
+                            value = p.get('value', '')
+                            if not value:
+                                value = p.get('default', '')
+                            win = gselect.DriverSelect(parent = which_panel,
+                                                       choices = p.get('values', []),
+                                                       value = value)
                             p['wxGetValue'] = win.GetStringSelection
                             win.Bind(wx.EVT_COMBOBOX, self.OnUpdateSelection)
                             win.Bind(wx.EVT_COMBOBOX, self.OnSetValue)
                         elif p.get('prompt', '') == 'dbname':
-                            win = gselect.DatabaseSelect(parent=which_panel,
-                                                         value=p['default'])
+                            value = p.get('value', '')
+                            if not value:
+                                value = p.get('default', '')
+                            win = gselect.DatabaseSelect(parent = which_panel,
+                                                         value = value)
                             win.Bind(wx.EVT_TEXT, self.OnUpdateSelection)
                             win.Bind(wx.EVT_TEXT, self.OnSetValue)
                         elif p.get('prompt', '') == 'dbtable':
@@ -1443,14 +1417,17 @@ class cmdPanel(wx.Panel):
                                                   size=globalvar.DIALOG_TEXTCTRL_SIZE)
                                 win.Bind(wx.EVT_TEXT, self.OnSetValue)
                         elif p.get('prompt', '') == 'dbcolumn':
+                            value = p.get('value', '')
+                            if not value:
+                                value = p.get('default', '')
                             win = gselect.ColumnSelect(parent = which_panel,
-                                                       value = p.get('default', ''),
+                                                       value = value,
                                                        param = p)
                             ### p['wxGetValue'] = win.GetStringSelection
                             ### win.Bind(wx.EVT_COMBOBOX, self.OnSetValue)
                             win.Bind(wx.EVT_TEXT, self.OnSetValue)
                             
-                    p['wxId'] = win.GetId()
+                    p['wxId'] = [ win.GetId(), ]
                     
                     which_sizer.Add(item=win, proportion=0,
                                     flag=wx.ADJUST_MINSIZE | wx.BOTTOM | wx.LEFT, border=5)
@@ -1482,7 +1459,6 @@ class cmdPanel(wx.Panel):
                             none_check.SetValue(True)
                         else:
                             none_check.SetValue(False)
-                        # none_check.SetFont( wx.Font( fontsize, wx.FONTFAMILY_DEFAULT, wx.NORMAL, text_style, 0, ''))
                         this_sizer.Add(item=none_check, proportion=0,
                                        flag=wx.ADJUST_MINSIZE | wx.LEFT | wx.RIGHT | wx.TOP, border=5)
                         which_sizer.Add( this_sizer )
@@ -1503,11 +1479,44 @@ class cmdPanel(wx.Panel):
                         fbb.SetValue(p['value']) # parameter previously set
                     which_sizer.Add(item=fbb, proportion=0,
                                     flag=wx.EXPAND | wx.RIGHT, border=5)
+                    
                     # A file browse button is a combobox with two children:
                     # a textctl and a button;
                     # we have to target the button here
-                    p['wxId'] = fbb.GetChildren()[1].GetId()
+                    p['wxId'] = [ fbb.GetChildren()[1].GetId() ]
 
+                    if p.get('age', 'new_file') == 'old_file':
+                        # widget for interactive input
+                        ifbb = wx.TextCtrl(parent = which_panel, id = wx.ID_ANY,
+                                           style = wx.TE_MULTILINE,
+                                           size = (-1, 75))
+                        if p.get('value', '') and os.path.isfile(p['value']):
+                            f = open(p['value'])
+                            ifbb.SetValue(''.join(f.readlines()))
+                            f.close()
+                    
+                        ifbb.Bind(wx.EVT_TEXT, self.OnFileText)
+                        which_sizer.Add(item = wx.StaticText(parent = which_panel, id = wx.ID_ANY,
+                                                             label = _('or enter values interactively')),
+                                        proportion=0,
+                                        flag=wx.EXPAND | wx.RIGHT | wx.LEFT | wx.BOTTOM, border=5)
+                        which_sizer.Add(item=ifbb, proportion=0,
+                                        flag=wx.EXPAND | wx.RIGHT | wx.LEFT, border=5)
+                        p['wxId'].append(ifbb.GetId())
+            
+            if self.parent.GetName() == 'MainFrame' and self.parent.modeler:
+                parChk = wx.CheckBox(parent = which_panel, id = wx.ID_ANY,
+                                     label = _("Parameterized in model"))
+                parChk.SetName('ModelParam')
+                parChk.SetValue(p.get('parameterized', False))
+                if p.has_key('wxId'):
+                    p['wxId'].append(parChk.GetId())
+                else:
+                    p['wxId'] = [ parChk.GetId() ]
+                parChk.Bind(wx.EVT_CHECKBOX, self.OnSetValue)
+                which_sizer.Add(item = parChk, proportion = 0,
+                                flag = wx.LEFT, border = 20)
+                
             if title_txt is not None:
                 # create tooltip if given
                 if len(p['values_desc']) > 0:
@@ -1523,8 +1532,8 @@ class cmdPanel(wx.Panel):
                     title_txt.SetToolTipString(tooltip)
 
             if p == first_param:
-                if type(p['wxId']) == type(1):
-                    self.FindWindowById(p['wxId']).SetFocus()
+                if p.has_key('wxId') and len(p['wxId']) > 0:
+                    self.FindWindowById(p['wxId'][0]).SetFocus()
         
         #
         # set widget relations for OnUpdateSelection
@@ -1564,10 +1573,10 @@ class cmdPanel(wx.Panel):
         
         pColumnIds = []
         for p in pColumn:
-            pColumnIds.append(p['wxId'])
+            pColumnIds += p['wxId']
         pLayerIds = []
         for p in pLayer:
-            pLayerIds.append(p['wxId']) 
+            pLayerIds += p['wxId']
         
         if pMap:
             pMap['wxId-bind'] = copy.copy(pColumnIds)
@@ -1578,10 +1587,10 @@ class cmdPanel(wx.Panel):
                 p['wxId-bind'] = copy.copy(pColumnIds)
         
         if pDriver and pTable:
-            pDriver['wxId-bind'] = [pTable['wxId'], ]
+            pDriver['wxId-bind'] = pTable['wxId']
 
         if pDatabase and pTable:
-            pDatabase['wxId-bind'] = [pTable['wxId'], ]
+            pDatabase['wxId-bind'] = pTable['wxId']
 
         if pTable and pColumnIds:
             pTable['wxId-bind'] = pColumnIds
@@ -1609,17 +1618,38 @@ class cmdPanel(wx.Panel):
             tab[section].SetMinSize( (self.constrained_size[0], self.panelMinHeight) )
             # tab[section].SetMinSize( constrained_size )
 
-        if self.manual_tab.Ok:
+        if self.manual_tab.IsLoaded():
             self.manual_tab.SetMinSize( (self.constrained_size[0], self.panelMinHeight) )
-            # manual_tab.SetMinSize( constrained_size )
-
+        
         self.SetSizer( panelsizer )
         panelsizer.Fit(self.notebook)
 
         self.hasMain = tab.has_key( _('Required') ) # publish, to enclosing Frame for instance
 
         self.Bind(EVT_DIALOG_UPDATE, self.OnUpdateDialog)
-
+        
+    def OnFileText(self, event):
+        """File input interactively entered"""
+        text = event.GetString()
+        p = self.task.get_param(value = event.GetId(), element = 'wxId', raiseError = False)
+        if not p:
+            return # should not happen
+        win = self.FindWindowById(p['wxId'][0])
+        if text:
+            filename = win.GetValue()
+            if not filename:
+                # outFile = tempfile.NamedTemporaryFile(mode='w+b')
+                filename = grass.tempfile()
+                win.SetValue(filename)
+                
+            f = open(filename, "w")
+            try:
+                f.write(text)
+            finally:
+                f.close()
+        else:
+            win.SetValue('')
+        
     def OnUpdateDialog(self, event):
         for fn, kwargs in event.data.iteritems():
             fn(**kwargs)
@@ -1627,7 +1657,7 @@ class cmdPanel(wx.Panel):
         self.parent.updateValuesHook()
         
     def OnVerbosity(self, event):
-        """Verbosity level changed"""
+        """!Verbosity level changed"""
         verbose = self.FindWindowById(self.task.get_flag('verbose')['wxId'])
         quiet = self.FindWindowById(self.task.get_flag('quiet')['wxId'])
         if event.IsChecked():
@@ -1652,17 +1682,16 @@ class cmdPanel(wx.Panel):
                 sel == self.manual_tab_id:
             # calling LoadPage() is strangely time-consuming (only first call)
             # FIXME: move to helpPage.__init__()
-            if not self.manual_tab.Ok:
+            if not self.manual_tab.IsLoaded():
                 wx.Yield()
-                self.manual_tab.LoadPage(self.manual_tab.fspath + self.task.name + ".html")
-                self.manual_tab.Ok = True
+                self.manual_tab.LoadPage()
 
         self.Layout()
 
     def OnColorChange( self, event ):
         myId = event.GetId()
         for p in self.task.params:
-            if 'wxId' in p and type( p['wxId'] ) == type( [] ) and myId in p['wxId']:
+            if 'wxId' in p and myId in p['wxId']:
                 has_button = p['wxId'][1] is not None
                 if has_button and wx.FindWindowById( p['wxId'][1] ).GetValue() == True:
                     p[ 'value' ] = 'none'
@@ -1678,12 +1707,13 @@ class cmdPanel(wx.Panel):
                     p[ 'value' ] = colorchooser.GetLabel()
         self.OnUpdateValues()
 
-    def OnUpdateValues(self):
-        """
-        If we were part of a richer interface, report back the current command being built.
+    def OnUpdateValues(self, event = None):
+        """!If we were part of a richer interface, report back the
+        current command being built.
 
-        This method should be set by the parent of this panel if needed. It's a hook, actually.
-        Beware of what is 'self' in the method def, though. It will be called with no arguments.
+        This method should be set by the parent of this panel if
+        needed. It's a hook, actually.  Beware of what is 'self' in
+        the method def, though. It will be called with no arguments.
         """
         pass
 
@@ -1694,7 +1724,7 @@ class cmdPanel(wx.Panel):
         me = event.GetId()
         theParam = None
         for p in self.task.params:
-            if 'wxId' in p and type( p['wxId'] ) == type( [] ) and me in p['wxId']:
+            if 'wxId' in p and me in p['wxId']:
                 theParam = p
                 myIndex = p['wxId'].index( me )
 
@@ -1721,28 +1751,46 @@ class cmdPanel(wx.Panel):
         self.OnUpdateValues()
 
     def OnSetValue(self, event):
-        """
-        Retrieve the widget value and set the task value field accordingly.
-
-        Use for widgets that have a proper GetValue() method, i.e. not for selectors.
+        """!Retrieve the widget value and set the task value field
+        accordingly.
+        
+        Use for widgets that have a proper GetValue() method, i.e. not
+        for selectors.
         """
         myId = event.GetId()
         me = wx.FindWindowById( myId )
+        name = me.GetName()
         
         for porf in self.task.params + self.task.flags:
-            if 'wxId' in porf and type( porf[ 'wxId' ] ) == type( 1 ) and porf['wxId'] == myId:
-                if porf.has_key('wxGetValue') and porf['wxGetValue']:
-                    porf['value'] = porf['wxGetValue']()
+            if not porf.has_key('wxId'):
+                continue
+            found = False
+            for id in porf['wxId']:
+                if id == myId:
+                    found = True
+                    break
+            
+            if found:
+                if name in ('LayerSelect', 'DriverSelect', 'TableSelect'):
+                    porf['value'] = me.GetStringSelection()
+                elif name == 'GdalSelect':
+                    porf['value'] = event.dsn
+                elif name == 'ModelParam':
+                    porf['parameterized'] = me.IsChecked()
                 else:
                     porf['value'] = me.GetValue()
-        
-        self.OnUpdateValues()
+                
+        self.OnUpdateValues(event)
         
         event.Skip()
         
     def OnUpdateSelection(self, event):
         """!Update dialog (layers, tables, columns, etc.)
         """
+        if not hasattr(self.parent, "updateThread"):
+            if event:
+                event.Skip()
+            return
         if event:
             self.parent.updateThread.Update(UpdateDialog,
                                             self,
@@ -1755,17 +1803,16 @@ class cmdPanel(wx.Panel):
                                             None,
                                             None,
                                             self.task)
-        
-    def createCmd( self, ignoreErrors = False ):
-        """
-        Produce a command line string (list) or feeding into GRASS.
+            
+    def createCmd(self, ignoreErrors = False):
+        """!Produce a command line string (list) or feeding into GRASS.
 
         If ignoreErrors==True then it will return whatever has been
         built so far, even though it would not be a correct command
         for GRASS.
         """
         try:
-            cmd = self.task.getCmd( ignoreErrors=ignoreErrors )
+            cmd = self.task.getCmd(ignoreErrors=ignoreErrors)
         except ValueError, err:
             dlg = wx.MessageDialog(parent=self,
                                    message=unicode(err),
@@ -1774,7 +1821,7 @@ class cmdPanel(wx.Panel):
             dlg.ShowModal()
             dlg.Destroy()
             cmd = None
-
+        
         return cmd
     
     def OnSize(self, event):
@@ -1792,14 +1839,13 @@ class cmdPanel(wx.Panel):
             
         event.Skip()
         
-def getInterfaceDescription( cmd ):
-    """
-    Returns the XML description for the GRASS cmd.
+def getInterfaceDescription(cmd):
+    """!Returns the XML description for the GRASS cmd.
 
     The DTD must be located in $GISBASE/etc/grass-interface.dtd,
     otherwise the parser will not succeed.
 
-    Note: 'cmd' is given as string
+    @param cmd command (name of GRASS module)
     """
     try:
         cmdout = grass.Popen([cmd, '--interface-description'], stdout = grass.PIPE).communicate()[0]
@@ -1809,15 +1855,14 @@ def getInterfaceDescription( cmd ):
     return cmdout.replace('grass-interface.dtd', os.path.join(globalvar.ETCDIR, 'grass-interface.dtd'))
 
 class GrassGUIApp(wx.App):
-    """
-    Stand-alone GRASS command GUI
+    """!Stand-alone GRASS command GUI
     """
     def __init__(self, grass_task):
         self.grass_task = grass_task
         wx.App.__init__(self, False)
-
+        
     def OnInit(self):
-        self.mf = mainFrame(parent=None, ID=wx.ID_ANY, task_description=self.grass_task)
+        self.mf = mainFrame(parent = None, ID = wx.ID_ANY, task_description = self.grass_task)
         self.mf.CentreOnScreen()
         self.mf.Show(True)
         self.SetTopWindow(self.mf)
@@ -1832,17 +1877,34 @@ class GUI:
     def __init__(self, parent=-1):
         self.parent = parent
         self.grass_task = None
+        self.cmd = list()
 
-    def ParseCommand(self, cmd, gmpath=None, completed=None, parentframe=None,
-                     show=True, modal=False):
+    def GetCmd(self):
+        """Get validated command"""
+        return self.cmd
+    
+    def ParseInterface(self, cmd, parser = processTask):
+        """!Parse interface
+
+        @param cmd command to be parsed (given as list)
         """
-        Parse command
-
+        # enc = locale.getdefaultlocale()[1]
+        # if enc and enc.lower() not in ("utf8", "utf-8"):
+        #     tree = etree.fromstring(getInterfaceDescription(cmd[0]).decode(enc).encode("utf-8"))
+        # else:
+        tree = etree.fromstring(getInterfaceDescription(cmd[0]))
+        
+        return processTask(tree).GetTask()
+    
+    def ParseCommand(self, cmd, gmpath = None, completed = None, parentframe = None,
+                     show = True, modal = False, centreOnParent = True, checkError = False):
+        """!Parse command
+        
         Note: cmd is given as list
-
+        
         If command is given with options, return validated cmd list:
-        * add key name for first parameter if not given
-        * change mapname to mapname@mapset
+         - add key name for first parameter if not given
+         - change mapname to mapname@mapset
         """
         start = time.time()
         dcmd_params = {}
@@ -1857,25 +1919,18 @@ class GUI:
                 dcmd_params.update(completed[2])
 
         self.parent = parentframe
-
+        
         # parse the interface decription
-        self.grass_task = grassTask()
-        handler = processTask(self.grass_task)
-        enc = locale.getdefaultlocale()[1]
-        if enc and enc.lower() not in ("utf8", "utf-8"):
-            xml.sax.parseString(getInterfaceDescription(cmd[0]).decode(enc).split('\n',1)[1].replace('', '<?xml version="1.0" encoding="utf-8"?>\n', 1).encode("utf-8"),
-                            handler)
-        else:
-            xml.sax.parseString(getInterfaceDescription(cmd[0]),
-                            handler)
-  
+        self.grass_task = self.ParseInterface(cmd)
+        
         # if layer parameters previously set, re-insert them into dialog
         if completed is not None:
             if 'params' in dcmd_params:
                 self.grass_task.params = dcmd_params['params']
             if 'flags' in dcmd_params:
                 self.grass_task.flags = dcmd_params['flags']
-
+        
+        err = list()
         # update parameters if needed && validate command
         if len(cmd) > 1:
             i = 0
@@ -1892,45 +1947,65 @@ class GUI:
                         key, value = option.split('=', 1)
                     except:
                         if i == 0: # add key name of first parameter if not given
-                            key = self.grass_task.firstParam
+                            key = self.grass_task.get_options()['params'][0]['name']
                             value = option
                         else:
                             raise ValueError, _("Unable to parse command %s") % ' '.join(cmd)
-
-                    if self.grass_task.get_param(key)['element'] in ['cell', 'vector']:
+                    
+                    element = self.grass_task.get_param(key, raiseError = False)
+                    if not element:
+                        err.append(_("%(cmd)s: parameter '%(key)s' not available") % \
+                                       { 'cmd' : cmd[0],
+                                         'key' : key })
+                        continue
+                    element = element['element']
+                    
+                    if element in ['cell', 'vector']:
                         # mapname -> mapname@mapset
                         if '@' not in value:
-                            value = value + '@' + grassenv.GetGRASSVariable('MAPSET')
+                            mapset = grass.find_file(value, element)['mapset']
+                            curr_mapset = grass.gisenv()['MAPSET']
+                            if mapset and mapset != curr_mapset:
+                                value = value + '@' + mapset
+                    
                     self.grass_task.set_param(key, value)
                     cmd_validated.append(key + '=' + value)
                     i = i + 1
-
+            
             # update original command list
             cmd = cmd_validated
-
-        self.mf = mainFrame(parent=self.parent, ID=wx.ID_ANY,
-                            task_description=self.grass_task,
-                            get_dcmd=get_dcmd, layer=layer)
+        
+        if show is not None:
+            self.mf = mainFrame(parent=self.parent, ID=wx.ID_ANY,
+                                task_description=self.grass_task,
+                                get_dcmd=get_dcmd, layer=layer)
+        else:
+            self.mf = None
         
         if get_dcmd is not None:
             # update only propwin reference
             get_dcmd(dcmd=None, layer=layer, params=None,
                      propwin=self.mf)
-
-        self.mf.notebookpanel.OnUpdateSelection(None)
         
-        if show:
-            if self.parent:
-                self.mf.CentreOnParent()
-            self.mf.Show(show)
-            self.mf.MakeModal(modal)
+        if show is not None:
+            self.mf.notebookpanel.OnUpdateSelection(None)
+            if show is True:
+                if self.parent:
+                    self.mf.CentreOnParent()
+                self.mf.Show(show)
+                self.mf.MakeModal(modal)
+            else:
+                self.mf.OnApply(None)
+        
+        self.cmd = cmd
+        
+        if checkError:
+            return self.grass_task, err
         else:
-            self.mf.OnApply(None)
-        
-        return cmd
-
+            return self.grass_task
+    
     def GetCommandInputMapParamKey(self, cmd):
-        """Get parameter key for input raster/vector map
+        """!Get parameter key for input raster/vector map
         
         @param cmd module name
         
@@ -1939,10 +2014,9 @@ class GUI:
         """
         # parse the interface decription
         if not self.grass_task:
-            self.grass_task = grassTask()
-            handler = processTask(self.grass_task)
-            xml.sax.parseString(getInterfaceDescription(cmd), handler)
-
+            tree = etree.fromstring(getInterfaceDescription(cmd))
+            self.grass_task = processTask(tree).GetTask()
+            
             for p in self.grass_task.params:
                 if p.get('name', '') in ('input', 'map'):
                     age = p.get('age', '')
@@ -1954,41 +2028,61 @@ class GUI:
                         return p.get('name', None)
         return None
 
-class StaticWrapText(wx.StaticText):
-    """
-    A Static Text field that wraps its text to fit its width, enlarging its height if necessary.
-    """
-    def __init__(self, parent, id=wx.ID_ANY, label=u'', *args, **kwds):
-        self.originalLabel = label
-        wx.StaticText.__init__(self, parent, id, u'', *args, **kwds)
-        self.SetLabel(label)
-        self.Bind(wx.EVT_SIZE, self.onResize)
-    
-    def SetLabel(self, label):
-        self.originalLabel = label
-        self.wrappedSize = None
-        #self.onResize(None)
+class FloatValidator(wx.PyValidator):
+    """!Validator for floating-point input"""
+    def __init__(self):
+        wx.PyValidator.__init__(self)
         
-    def onResize(self, event):
-        if not getattr(self, "resizing", False):
-            self.resizing = True
-            newSize = self.GetSize()
-            if self.wrappedSize != newSize:
-                wx.StaticText.SetLabel(self, self.originalLabel)
-                self.Wrap(newSize.width)
-                self.wrappedSize = self.GetMinSize()
+        self.Bind(wx.EVT_TEXT, self.OnText) 
+        
+    def Clone(self):
+        """!Clone validator"""
+        return FloatValidator()
 
-                self.SetSize(self.wrappedSize)
-            del self.resizing
+    def Validate(self):
+        """Validate input"""
+        textCtrl = self.GetWindow()
+        text = textCtrl.GetValue()
 
+        if text:
+            try:
+                float(text)
+            except ValueError:
+                textCtrl.SetBackgroundColour("grey")
+                textCtrl.SetFocus()
+                textCtrl.Refresh()
+                return False
+        
+        sysColor = wx.SystemSettings_GetColour(wx.SYS_COLOUR_WINDOW)
+        textCtrl.SetBackgroundColour(sysColor)
+        
+        textCtrl.Refresh()
+        
+        return True
+
+    def OnText(self, event):
+        """!Do validation"""
+        self.Validate()
+        
+        event.Skip()
+        
+    def TransferToWindow(self):
+        return True # Prevent wxDialog from complaining.
+    
+    def TransferFromWindow(self):
+        return True # Prevent wxDialog from complaining.
+     
 if __name__ == "__main__":
 
     if len(sys.argv) == 1:
-        print _("usage: %s <grass command>") % sys.argv[0]
-        sys.exit()
+        sys.exit(_("usage: %s <grass command>") % sys.argv[0])
     if sys.argv[1] != 'test':
-        q=wx.LogNull()
-        GrassGUIApp( grassTask( sys.argv[1] ) ).MainLoop()
+        q = wx.LogNull()
+        cmd = shlex.split(sys.argv[1])
+        task = grassTask(cmd[0])
+        task.set_options(cmd[1:])
+        app = GrassGUIApp(task)
+        app.MainLoop()
     else: #Test
         # Test grassTask from within a GRASS session
         if os.getenv("GISBASE") is not None:
