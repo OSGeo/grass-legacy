@@ -1,8 +1,8 @@
 MODULE_TOPDIR = ../..
 
-SUBDIRS = docs vdigit scripts
+SUBDIRS = docs scripts
 EXTRA_CLEAN_FILES = menustrings.py build_ext.pyc
-CLEAN_SUBDIRS = vdigit scripts
+CLEAN_SUBDIRS = scripts
 
 include $(MODULE_TOPDIR)/include/Make/Dir.make
 include $(MODULE_TOPDIR)/include/Make/Doxygen.make
@@ -19,7 +19,7 @@ default: install_scripts
 clean: cleansubdirs
 
 install_scripts:
-	-for dir in '' compat gui_modules icons icons/silk images vdigit xml; do \
+	-for dir in '' compat gui_modules icons icons/silk images xml; do \
 	if [ ! -d $(ETCDIR)/$$dir ] ; then $(MKDIR) $(ETCDIR)/$$dir ; fi ; \
 	done
 	$(MAKE) $(DSTFILES)
