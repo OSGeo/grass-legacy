@@ -1,4 +1,4 @@
-"""
+"""!
 @package icon
 
 @brief Icon themes
@@ -10,7 +10,7 @@ from icons import Icons as Icons
 Classes:
  - MetaIcon
 
-(C) 2007-2008 by the GRASS Development Team
+(C) 2007-2008, 2010 by the GRASS Development Team
 This program is free software under the GNU General Public
 License (>=v2). Read the file COPYING that comes with GRASS
 for details.
@@ -21,10 +21,8 @@ for details.
 import os
 import sys
 
-gmPath = os.path.join(os.getenv("GISBASE"), "etc", "wxpython", "gui_modules")
-sys.path.append(gmPath)
+sys.path.append(os.path.join(os.getenv("GISBASE"), "etc", "wxpython", "gui_modules"))
 
-import grassenv
 import globalvar
 if not os.getenv("GRASS_WXBUNDLED"):
     globalvar.CheckForWx()
@@ -83,10 +81,9 @@ except:
     sys.exit(1)
 
 class MetaIcon:
+    """!Handle icon metadata (image path, tooltip, ...)
     """
-    Handle icon metadata (image path, tooltip, ...)
-    """
-    def __init__(self, img, label, desc=None):
+    def __init__(self, img, label, desc = None):
         self.imagepath = img
         if not self.imagepath:
             self.type = 'unknown'
@@ -95,41 +92,41 @@ class MetaIcon:
                 self.type = 'wx'
             else:
                 self.type = 'img'
-
+        
         self.label = label
-
+        
         if desc:
             self.description = desc
         else:
             self.description = ''
-
+        
     def __str__(self):
-        """Debugging"""
+        """!Debugging"""
         return "label=%s, img=%s, type=%s" % (self.label, self.imagepath, self.type)
 
-    def GetBitmap(self, size=None):
-        """Get bitmap"""
+    def GetBitmap(self, size = None):
+        """!Get bitmap"""
         bmp = None
-
+        
         if self.type == 'wx':
-            bmp = wx.ArtProvider.GetBitmap(id=self.imagepath, client=wx.ART_TOOLBAR, size=size)
+            bmp = wx.ArtProvider.GetBitmap(id = self.imagepath, client = wx.ART_TOOLBAR, size = size)
         elif self.type == 'img':
             if os.path.isfile(self.imagepath) and os.path.getsize(self.imagepath):
                 if size and len(size) == 2:
-                    image = wx.Image (name=self.imagepath)
-                    image.Rescale (size[0], size[1])
+                    image = wx.Image(name = self.imagepath)
+                    image.Rescale(size[0], size[1])
                     bmp = image.ConvertToBitmap()
                 elif self.imagepath:
-                    bmp = wx.Bitmap (name=self.imagepath)
-
+                    bmp = wx.Bitmap(name = self.imagepath)
+        
         return bmp
-
+    
     def GetLabel(self):
         return self.label
-
+    
     def GetDesc(self):
         return self.description
-
+    
     def GetImageName(self):
         return os.path.basename(self.imagepath)
 
@@ -139,10 +136,11 @@ class MetaIcon:
 Icons = {
     # map display
     "displaymap" : MetaIcon (img=Icons["displaymap"],
-                             label=_("Display map")),
+                             label=_("Display map"),
+                             desc = _("Re-render modified map layers")),
     "rendermap"  : MetaIcon (img=Icons["rendermap"],
                              label=_("Re-render map"),
-                             desc=_("Force re-rendering of all layers")),
+                             desc=_("Force re-rendering all map layers")),
     "erase"      : MetaIcon (img=Icons["erase"],
                              label=_("Erase display")),
     "pointer"    : MetaIcon (img=Icons["pointer"],
@@ -177,38 +175,37 @@ Icons = {
                              label=_("Save display to graphic file")),
     "printmap"   : MetaIcon (img=Icons["printmap"],
                              label=_("Print display")),
-    # gis manager
+    # layer manager
     "newdisplay" : MetaIcon (img=Icons["newdisplay"],
                              label=_("Start new display")),
-    "workspaceNew" : MetaIcon (img=Icons["workspaceNew"],
-                               label=_("Create new workspace file")),
-    "workspaceLoad" : MetaIcon (img=Icons["workspaceLoad"],
-                                label=_("Load map layers into workspace")),
-    "workspaceOpen" : MetaIcon (img=Icons["workspaceOpen"],
-                                label=_("Open existing workspace file")),
-    "workspaceSave" : MetaIcon (img=Icons["workspaceSave"],
-                                label=_("Save current workspace to file")),
-    # TODO: "layer" is not conformant with GRASS vocabulary (vector layer: 1..x) ! 
+    "workspaceNew" : MetaIcon (img=Icons["fileNew"],
+                               label=_("Create new workspace file (Ctrl+N)")),
+    "workspaceLoad" : MetaIcon (img=Icons["fileLoad"],
+                                label=_("Load map layers into workspace (Ctrl+L)")),
+    "workspaceOpen" : MetaIcon (img=Icons["fileOpen"],
+                                label=_("Open existing workspace file (Ctrl+O)")),
+    "workspaceSave" : MetaIcon (img=Icons["fileSave"],
+                                label=_("Save current workspace to file (Ctrl+S)")),
     "addrast"    : MetaIcon (img=Icons["addrast"],
-                             label=_("Add raster map layer")),
+                             label=_("Add raster map layer (Ctrl+R)")),
     "addvect"    : MetaIcon (img=Icons["addvect"],
-                             label=_("Add vector map layer")),
+                             label=_("Add vector map layer (Ctrl+V)")),
     "addcmd"     : MetaIcon (img=Icons["addcmd"],
                              label=_("Add command layer")),
     "addgrp"     : MetaIcon (img=Icons["addgrp"],
-                             label=_("Add layer group")),
+                             label=_("Add group")),
     "addovl"     : MetaIcon (img=Icons["addovl"],
                              label=_("Add grid or vector labels overlay")),
     "delcmd"     : MetaIcon (img=Icons["delcmd"],
-                             label=_("Delete selected layer")),
+                             label=_("Delete selected map layer")),
     "quit"       : MetaIcon (img=Icons["quit"],
                              label=_("Quit")),
     "attrtable"  : MetaIcon (img=Icons["attrtable"],
                              label=_("Show attribute table")),
     "addrgb"     : MetaIcon (img=Icons["addrgb"],
-                             label=_("Add RGB layer")),
+                             label=_("Add RGB map layer")),
     "addhis"     : MetaIcon (img=Icons["addhis"],
-                             label=_("Add HIS layer")),
+                             label=_("Add HIS map layer")),
     "addshaded"  : MetaIcon (img=Icons["addshaded"],
                              label=_("Add shaded relief map layer")),
     "addrarrow"  : MetaIcon (img=Icons["addrarrow"],
@@ -230,7 +227,10 @@ Icons = {
     "addtext"    : MetaIcon (img=Icons["addtext"],
                              label=_("Add text layer")),
     "addrast3d"  : MetaIcon (img=Icons["addrast3d"],
-                             label=_("Add 3D raster map")),
+                             label=_("Add 3D raster map layer"),
+                             desc = _("Note that 3D raster data are rendered only in 3D view mode")),
+    "settings"   : MetaIcon (img=Icons["settings"],
+                             label=_("Show GUI settings")),
     # digit
     "digAddPoint": MetaIcon (img=Icons["digAddPoint"],
                              label=_("Digitize new point"),
@@ -271,7 +271,7 @@ Icons = {
     "digRemoveVertex": MetaIcon (img=Icons["digRemoveVertex"],
                                  label=_("Remove vertex"),
                                  desc=_("Left: Select; Middle: Unselect; Right: Confirm")),
-    "digSettings": MetaIcon (img=Icons["digSettings"],
+    "digSettings": MetaIcon (img=Icons["settings"],
                              label=_("Settings"),
                              desc=_("Settings dialog for digitization tool")),
     "digSplitLine": MetaIcon (img=Icons["digSplitLine"],
@@ -297,8 +297,10 @@ Icons = {
                              label=_("Profile surface map")),
     "profiledraw": MetaIcon (img=Icons["profiledraw"],
                              label=_("Draw/re-draw profile")),
-    "profileopt" : MetaIcon (img=Icons["profileopt"],
+    "profileopt" : MetaIcon (img=Icons["settings"],
                              label=_("Profile options")),
+    "datasave"   : MetaIcon (img=Icons["fileSave"],
+                             label=_("Save profile data to csv file")),
     "histogram"  : MetaIcon (img=Icons["histogram"],
                              label=_("Create histogram of image or raster file")),
     "font"       : MetaIcon (img=Icons["font"],
@@ -317,8 +319,6 @@ Icons = {
                              label=_("Georectify")),
     'grGcpRms'        : MetaIcon (img=Icons["grGcpRms"],
                                   label=_("Recalculate RMS error")),
-    'grGcpRefresh' : MetaIcon (img=Icons["grGcpRefresh"],
-                               label=_("Redraw GCP markers in map displays")),
     'grGcpSave' : MetaIcon (img=Icons["grGcpSave"],
                             label=_("Save GCPs to POINTS file")),
     'grGcpAdd' : MetaIcon (img=Icons["grGcpAdd"],
@@ -328,20 +328,77 @@ Icons = {
     'grGcpClear' : MetaIcon (img=Icons["grGcpClear"],
                              label=_("Clear selected GCP")),
     'grGcpReload' : MetaIcon (img=Icons["grGcpReload"],
-                              label=_("Reload GCPs from selected POINTS file")),
+                              label=_("Reload GCPs from POINTS file")),
     'grGcpQuit' : MetaIcon (img=Icons["quit"],
                             label=_("Quit georectification module")),
-    "grSettings": MetaIcon (img=Icons["grSettings"],
+    "grSettings": MetaIcon (img=Icons["settings"],
                             label=_("Settings"),
                             desc=_("Settings dialog for georectification tool")),
     # nviz
-    "nvizSettings": MetaIcon (img=Icons["nvizSettings"],
-                              label=_("Settings"),
-                              desc=_("Show Nviz settings dialog")),
+    "nvizView": MetaIcon (img=Icons["nvizView"],
+                          label=_("Switch to view control page"),
+                          desc=_("Change view settings")),
+    "nvizSurface": MetaIcon (img=Icons["nvizSurface"],
+                             label=_("Switch to surface (raster) control page"),
+                             desc=_("Change surface (loaded raster maps) settings")),
+    "nvizVector": MetaIcon (img=Icons["nvizVector"],
+                            label=_("Switch to vector (2D/3D) control page"),
+                            desc=_("Change 2D/3D vector settings")),
+    "nvizVolume": MetaIcon (img=Icons["nvizVolume"],
+                            label=_("Switch to volume (3D raster) control page"),
+                            desc=_("Change volume (loaded 3D raster maps) settings")),
+    "nvizLight": MetaIcon (img=Icons["nvizLight"],
+                           label=_("Switch to lighting control page"),
+                           desc=_("Change lighting settings")),
+    "nvizFringe": MetaIcon (img=Icons["nvizFringe"],
+                            label=_("Switch to fringe control page"),
+                            desc=_("Switch on/off fringes")),
+    "nvizSettings": MetaIcon (img=Icons["settings"],
+                              label=_("3D view mode tools"),
+                              desc=_("Show/hide 3D view mode settings dialog")),
+    "nvizHelp"   : MetaIcon (img=Icons["help"],
+                             label=_("Show help"),
+                             desc = _("Display 3D view mode manual page")),
+    "nvizQuit": MetaIcon (img=Icons["quit"],
+                          label=_("Quit 3D view mode"),
+                          desc=_("Switch back to 2D view mode")),
+    # modeler
+    "modeler" : MetaIcon (img=Icons["modeler"],
+                          label=_("Start Graphical Modeler")),
+    "modelNew" : MetaIcon (img=Icons["fileNew"],
+                           label=_("Create new model (Ctrl+N)")),
+    "modelOpen" : MetaIcon (img=Icons["fileOpen"],
+                                label=_("Load model from file (Ctrl+O)")),
+    "modelSave" : MetaIcon (img=Icons["fileSave"],
+                                label=_("Save current model to file (Ctrl+S)")),
+    "modelToImage" : MetaIcon (img=Icons["imageSave"],
+                                label=_("Export model to image")),
+    "modelToPython" : MetaIcon (img=Icons["pythonSave"],
+                                label=_("Export model to Python script")),
+    "modelActionAdd" : MetaIcon (img=Icons["modelActionAdd"],
+                                 label=_("Add action (GRASS module) to model")),
+    "modelDataAdd" : MetaIcon (img=Icons["modelDataAdd"],
+                                 label=_("Add data item to model")),
+    "modelRelation" : MetaIcon (img=Icons["modelRelation"],
+                                label=_("Define relation between data and action items")),
+    "modelRun" : MetaIcon (img=Icons["modelRun"],
+                           label=_("Run model")),
+    "modelValidate" : MetaIcon (img=Icons["modelValidate"],
+                                label=_("Validate model")),
+    "modelSettings" : MetaIcon (img=Icons["settings"],
+                                label=_("Show modeler settings")),
+    "modelProperties" : MetaIcon (img=Icons["modelProperties"],
+                                  label=_("Show model properties")),
+    "modelVariables" : MetaIcon (img=Icons["modelVariables"],
+                                 label=_("Manage model variables")),
+    "modelRedraw" : MetaIcon (img=Icons["redraw"],
+                              label=_("Redraw model canvas")),
+    "modelHelp"   : MetaIcon (img=Icons["help"],
+                             label=_("Show help"),
+                             desc = _("Display Graphical Modeler manual page")),
     }
 
 # testing ...
 if __name__ == "__main__":
     for k, v in Icons.iteritems():
         print v.GetImageName()
-

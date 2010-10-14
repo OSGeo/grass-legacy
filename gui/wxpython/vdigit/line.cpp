@@ -33,6 +33,7 @@ extern "C" {
    \param thresh threshold value for snapping
 
    \return fid on success
+   \return 0 for boundary if no centroid is added
    \return -1 on failure
 */
 int Digit::AddLine(int type, std::vector<double> coords, int layer, int cat,
@@ -43,6 +44,8 @@ int Digit::AddLine(int type, std::vector<double> coords, int layer, int cat,
 
     int newline;
     int changeset;
+
+    int left, right;         /* left, right area */
 
     struct line_pnts *Points;
     struct line_cats *Cats;
@@ -55,6 +58,8 @@ int Digit::AddLine(int type, std::vector<double> coords, int layer, int cat,
 	return -1;
     }
 
+    left = right = -1;
+    
     npoints = coords.size() / (Vect_is_3d(display->mapInfo) ? 3 : 2);
     if (coords.size() != npoints * (Vect_is_3d(display->mapInfo) ? 3 : 2)) {
 	wxString msg;
@@ -90,7 +95,9 @@ int Digit::AddLine(int type, std::vector<double> coords, int layer, int cat,
     Points = Vect_new_line_struct();
     Cats = Vect_new_cats_struct();
 
-    if (layer > 0) {
+    if (layer > 0 &&
+	(type != GV_BOUNDARY ||
+	 (type == GV_BOUNDARY && settings.catBoundary))) {
 	Vect_cat_set(Cats, layer, cat);
 	
 	if (cat > GetCategory(layer)) {
@@ -110,7 +117,8 @@ int Digit::AddLine(int type, std::vector<double> coords, int layer, int cat,
 	}
     }
 
-    if (type & GV_BOUNDARY) { /* close boundary */
+    if (type & GV_BOUNDARY) {
+	/* close boundary */
 	int last = Points->n_points-1;
 	if (Vect_points_distance(Points->x[0], Points->x[0], Points->z[0],
 				 Points->x[last], Points->x[last], Points->z[last],
@@ -134,6 +142,54 @@ int Digit::AddLine(int type, std::vector<double> coords, int layer, int cat,
 	return -1;
     }
 
+    if (type & GV_BOUNDARY && settings.addCentroid) {
+	double x, y;
+	struct line_pnts *bpoints;
+	
+	bpoints = Vect_new_line_struct();
+	
+	/* add centroid for left/right area */
+	Vect_get_line_areas(display->mapInfo, newline,
+			    &left, &right);
+	/* check if area exists and has no centroid inside */
+	if (layer > 0 && (left > 0 || right > 0)) {
+	    Vect_cat_set(Cats, layer, cat);
+	
+	    if (cat > GetCategory(layer)) {
+		SetCategory(layer, cat); /* set up max category for layer */
+	    }
+	}
+	
+	if (left > 0 &&
+	    Vect_get_area_centroid(display->mapInfo, left) == 0) {
+	    if (Vect_get_area_points(display->mapInfo, left, bpoints) > 0 &&
+		Vect_find_poly_centroid(bpoints, &x, &y) == 0) {
+		Vect_reset_line(bpoints);
+		Vect_append_point(bpoints, x, y, 0.0);
+		if (Vect_write_line(display->mapInfo, GV_CENTROID,
+				    bpoints, Cats) < 0) {
+		    display->WriteLineMsg();
+		    return -1;
+		}
+	    }
+	}
+	if (right > 0 &&
+	    Vect_get_area_centroid(display->mapInfo, right) == 0) {
+	    if (Vect_get_area_points(display->mapInfo, right, bpoints) > 0 &&
+		Vect_find_poly_centroid(bpoints, &x, &y) == 0) {
+		Vect_reset_line(bpoints);
+		Vect_append_point(bpoints, x, y, 0.0);
+		if (Vect_write_line(display->mapInfo, GV_CENTROID,
+				    bpoints, Cats) < 0) {
+		    display->WriteLineMsg();
+		    return -1;
+		}
+	    }
+	}
+	
+	Vect_destroy_line_struct(bpoints);
+    }
+
     /* register changeset */
     changeset = changesets.size();
     AddActionToChangeset(changeset, ADD, newline);
@@ -150,6 +206,12 @@ int Digit::AddLine(int type, std::vector<double> coords, int layer, int cat,
 	Vect_close(BgMap[0]);
     }
 
+    if (type & GV_BOUNDARY &&
+	!settings.catBoundary &&
+	left < 1 && right < 1) {
+	newline = 0;
+    }
+    
     return newline;
 }
 
@@ -977,4 +1039,95 @@ int Digit::BreakLineAtIntersection(int line, struct line_pnts* points_line,
     Vect_destroy_list(listRef);
 
     return ret;
+}
+
+/*!
+  \brief Get line length
+  
+  \todo LL locations
+
+  \param line feature id
+
+  \return line length
+  \return -1 for non-linear features
+*/
+double Digit::GetLineLength(int line)
+{
+    int type;
+    double length;
+    
+    struct line_pnts *points;
+    
+    if (!Vect_line_alive(display->mapInfo, line))
+	return -1;
+    
+    points = Vect_new_line_struct();
+    
+    type = Vect_read_line(display->mapInfo, points, NULL, line);
+    
+    length = -1;
+    if (type & GV_LINES)
+	length = Vect_line_length(points);
+
+    Vect_destroy_line_struct(points);
+
+    return length;
+}
+
+/*!
+  \brief Get area size
+
+  \param centroid centroid id
+
+  \return area in map units
+  \return -1 on error
+*/
+double Digit::GetAreaSize(int centroid)
+{
+    int area;
+    double size;
+    
+    area = Vect_get_centroid_area(display->mapInfo, centroid);
+    size = -1;
+    if (area > 0) {
+	if (!Vect_area_alive(display->mapInfo, area))
+	    return -1;
+	
+	size = Vect_get_area_area(display->mapInfo, area);
+    }
+    
+    return size;
+}
+
+/*!
+  \brief Get area perimeter
+
+  \param centroid centroid id
+
+  \return perimeter in map units
+  \return -1 on error
+*/
+double Digit::GetAreaPerimeter(int centroid)
+{
+    int area;
+    double perimeter;
+    struct line_pnts *points = NULL;
+    
+    area = Vect_get_centroid_area(display->mapInfo, centroid);
+    perimeter = -1;
+    if (area > 0) {
+
+	if (!Vect_area_alive(display->mapInfo, area))
+	return -1;
+    
+	points = Vect_new_line_struct();
+    
+	Vect_get_area_points(display->mapInfo, area, points);
+	perimeter = Vect_area_perimeter(points);
+    }
+    
+    if (points)
+	Vect_destroy_line_struct(points);
+    
+    return perimeter;
 }

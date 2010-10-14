@@ -1,4 +1,4 @@
-"""
+"""!
 @package preferences
 
 @brief User preferences dialog
@@ -6,23 +6,27 @@
 Sets default display font, etc.
 
 Classes:
+ - Settings
+ - PreferencesBaseDialog
  - PreferencesDialog
  - DefaultFontDialog
  - MapsetAccess
+ - NvizPreferencesDialog
 
-(C) 2007-2009 by the GRASS Development Team
+(C) 2007-2010 by the GRASS Development Team
 This program is free software under the GNU General Public
 License (>=v2). Read the file COPYING that comes with GRASS
 for details.
 
 @author Michael Barton (Arizona State University)
-Martin Landa <landa.martin gmail.com>
+@author Martin Landa <landa.martin gmail.com>
 """
 
 import os
 import sys
 import copy
 import stat
+import types
 try:
     import pwd
     havePwd = True
@@ -37,16 +41,16 @@ import wx
 import wx.lib.filebrowsebutton as filebrowse
 import wx.lib.colourselect as csel
 import wx.lib.mixins.listctrl as listmix
-from wx.lib.wordwrap import wordwrap
+
+from grass.script import core as grass
 
 import gcmd
-import grassenv
 import utils
 import globalvar
 from debug import Debug as Debug
 
 class Settings:
-    """Generic class where to store settings"""
+    """!Generic class where to store settings"""
     def __init__(self):
         #
         # settings filename
@@ -59,6 +63,11 @@ class Settings:
         #
         self.sep = ';'
 
+        try:
+            projFile = utils.PathJoin(os.environ["GRASS_PROJSHARE"], 'epsg')
+        except KeyError:
+            projFile = ''
+        
         #
         # default settings
         #
@@ -99,6 +108,10 @@ class Settings:
                     'type' : '',
                     'encoding': 'ISO-8859-1',
                     },
+                'outputfont' : {
+                    'type' : 'Courier New',
+                    'size': '10',
+                    },
                 'driver': {
                     'type': 'default'
                     },
@@ -108,12 +121,29 @@ class Settings:
                 'autoRendering': {
                     'enabled' : True
                     },
+                'autoZooming' : {
+                    'enabled' : False
+                    },
                 'statusbarMode': {
                     'selection' : 0
                     },
                 'bgcolor': {
                     'color' : (255, 255, 255, 255),
-                    }
+                    },
+                },
+            #
+            # projection
+            #
+            'projection' : {
+                'statusbar' : {
+                    'proj4'    : '',
+                    'epsg'     : '',
+                    'projFile' : projFile,
+                    },
+                'format' : {
+                    'll'  : 'DMS',
+                    'precision' : 2,
+                    },
                 },
             #
             # advanced
@@ -164,6 +194,10 @@ class Settings:
                 'rasterOverlay' : {
                     'enabled' : True
                     },
+                'rasterColorTable' : {
+                    'enabled'   : False,
+                    'selection' : 'rainbow',
+                    },
                 # d.vect
                 'showType': {
                     'point' : {
@@ -186,7 +220,7 @@ class Settings:
                         },
                     },
                 'addNewLayer' : {
-                    'enabled' : False
+                    'enabled' : True,
                     },
                 },
             #
@@ -296,6 +330,14 @@ class Settings:
                 # delete existing feature(s)
                 'delRecord' : {
                     'enabled' : True
+                    },
+                # add centroid to left/right area
+                'addCentroid' : {
+                    'enabled' : False
+                    },
+                # do not attach category to boundary
+                'catBoundary' : {
+                    'enabled' : False
                     },
                 # query tool
                 'query' : {
@@ -416,12 +458,12 @@ class Settings:
             'nviz' : {
                 'view' : {
                     'persp' : {
-                        'value' : 40,
+                        'value' : 20,
                         'step' : 5,
                         },
-                    'pos' : {
-                        'x' : 0.85,
-                        'y' : 0.85,
+                    'position' : {
+                        'x' : 0.84,
+                        'y' : 0.16,
                         },
                     'height' : {
                         'step' : 100,
@@ -431,8 +473,10 @@ class Settings:
                         'step' : 5,
                         },
                     'z-exag' : {
-                        'value': 1,
                         'step' : 1,
+                        },
+                    'background' : {
+                        'color' : (255, 255, 255, 255), # white
                         },
                     },
                 'surface' : {
@@ -481,18 +525,68 @@ class Settings:
                         'value' : (0, 0, 0, 255), # constant: black
                         },
                     'draw' : {
-                        'mode' : 0, # isosurfaces
-                        'shading' : 1, # gouraud
+                        'mode'       : 0, # isosurfaces
+                        'shading'    : 1, # gouraud
                         'resolution' : 3, # polygon resolution
                         },
                     'shine': {
                         'map' : False,
-                        'value' : 60.0,
+                        'value' : 60,
                         },
                     },
-                'settings': {
-                    'general' : {
-                        'bgcolor' : (255, 255, 255, 255), # white
+                'light' : {
+                    'position' : {
+                        'x' : 0.68,
+                        'y' : 0.68,
+                        'z' : 80,
+                        },
+                    'bright'  : 80,
+                    'color'   : (255, 255, 255, 255), # white
+                    'ambient' : 20,
+                    },
+                'fringe' : {
+                    'elev'   : 55,
+                    'color'  : (128, 128, 128, 255), # grey
+                    },
+                },
+            'modeler' : {
+                'action' : {
+                    'color' : {
+                        'valid'   :  (180, 234, 154, 255), # light green
+                        'invalid' :  (255, 255, 255, 255), # white
+                        'running' :  (255, 0, 0, 255),     # red
+                        'disabled' : (211, 211, 211, 255), # light grey
+                        },
+                    'size' : {
+                        'width'  : 100,
+                        'height' : 50,
+                        },
+                    'width': {
+                        'parameterized' : 2,
+                        'default'       : 1,
+                        },
+                    },
+                'data' : { 
+                    'color': {
+                        'raster'   : (215, 215, 248, 255), # light blue
+                        'raster3d' : (215, 248, 215, 255), # light green
+                        'vector'   : (248, 215, 215, 255), # light red
+                        },
+                    'size' : {
+                        'width' : 175,
+                        'height' : 50,
+                        },
+                    },
+                'loop' : {
+                    'size' : {
+                        'width' : 175,
+                        'height' : 40,
+                        },
+                    },
+                'if-else' : {
+                    'size' : {
+                        'width' : 150,
+                        'height' : 40,
                         },
                     },
                 },
@@ -504,8 +598,8 @@ class Settings:
         self.userSettings = copy.deepcopy(self.defaultSettings)
         try:
             self.ReadSettingsFile()
-        except gcmd.SettingsError, e:
-            print >> sys.stderr, e.message
+        except gcmd.GException, e:
+            print >> sys.stderr, e.value
 
         #
         # internal settings (based on user settings)
@@ -563,18 +657,16 @@ class Settings:
         self.internalSettings['vdigit']['bgmap']['value'] = ''
         
     def ReadSettingsFile(self, settings=None):
-        """Reads settings file (mapset, location, gisdbase)"""
+        """!Reads settings file (mapset, location, gisdbase)"""
         if settings is None:
             settings = self.userSettings
 
         # look for settings file
-        # -> mapser
-        #  -> location
-        #   -> gisdbase
-        gisdbase = grassenv.GetGRASSVariable("GISDBASE")
-        location_name = grassenv.GetGRASSVariable("LOCATION_NAME")
-        mapset_name = grassenv.GetGRASSVariable("MAPSET")
-
+        gisenv = grass.gisenv()
+        gisdbase = gisenv['GISDBASE']
+        location_name = gisenv['LOCATION_NAME']
+        mapset_name = gisenv['MAPSET']
+        
         mapset_file = os.path.join(gisdbase, location_name, mapset_name, self.fileName)
         location_file = os.path.join(gisdbase, location_name, self.fileName)
         gisdbase_file = os.path.join(gisdbase, self.fileName)
@@ -599,7 +691,7 @@ class Settings:
                                                 key='font', subkey='encoding')
         
     def __ReadFile(self, filename, settings=None):
-        """Read settings from file to dict"""
+        """!Read settings from file to dict"""
         if settings is None:
             settings = self.userSettings
 
@@ -635,15 +727,17 @@ class Settings:
         file.close()
 
     def SaveToFile(self, settings=None):
-        """Save settings to the file"""
+        """!Save settings to the file"""
         if settings is None:
             settings = self.userSettings
         
         loc = self.Get(group='advanced', key='settingsFile', subkey='type')
         home = os.path.expanduser("~") # MS Windows fix ?
-        gisdbase = grassenv.GetGRASSVariable("GISDBASE")
-        location_name = grassenv.GetGRASSVariable("LOCATION_NAME")
-        mapset_name = grassenv.GetGRASSVariable("MAPSET")
+        
+        gisenv = grass.gisenv()
+        gisdbase = gisenv['GISDBASE']
+        location_name = gisenv['LOCATION_NAME']
+        mapset_name = gisenv['MAPSET']
         filePath = None
         if loc == 'home':
             filePath = os.path.join(home, self.fileName)
@@ -665,7 +759,7 @@ class Settings:
                     subkeys = settings[group][key].keys()
                     for idx in range(len(subkeys)):
                         value = settings[group][key][subkeys[idx]]
-                        if type(value) == type({}):
+                        if type(value) == types.DictType:
                             if idx > 0:
                                 file.write('%s%s%s%s%s' % (os.linesep, group, self.sep, key, self.sep))
                             file.write('%s%s' % (subkeys[idx], self.sep))
@@ -677,25 +771,28 @@ class Settings:
                                                        svalue))
                                 if sidx < len(kvalues) - 1:
                                     file.write('%s' % self.sep)
+                            if idx < len(subkeys) - 1:
+                                file.write('%s%s%s%s%s' % (os.linesep, group, self.sep, key, self.sep))
                         else:
                             value = self.__parseValue(settings[group][key][subkeys[idx]])
                             file.write('%s%s%s' % (subkeys[idx], self.sep, value))
-                            if idx < len(subkeys) - 1:
+                            if idx < len(subkeys) - 1 and \
+                                    type(settings[group][key][subkeys[idx + 1]]) != types.DictType:
                                 file.write('%s' % self.sep)
-                    file.write('%s' % os.linesep)
+                    file.write(os.linesep)
         except IOError, e:
-            raise gcmd.SettingsError(message=e)
+            raise gcmd.GException(e)
         except StandardError, e:
-            raise gcmd.SettingsError(message=_('Writing settings to file <%(file)s> failed.'
-                                               '\n\nDetails: %(detail)s') % { 'file' : filePath,
-                                                                              'detail' : e })
+            raise gcmd.GException(_('Writing settings to file <%(file)s> failed.'
+                                    '\n\nDetails: %(detail)s') % { 'file' : filePath,
+                                                                   'detail' : e })
         
         file.close()
         
         return filePath
 
     def __parseValue(self, value, read=False):
-        """Parse value to be store in settings file"""
+        """!Parse value to be store in settings file"""
         if read: # -> read settings (cast values)
             if value == 'True':
                 value = True
@@ -725,7 +822,7 @@ class Settings:
         return value
 
     def Get(self, group, key=None, subkey=None, internal=False):
-        """Get value by key/subkey
+        """!Get value by key/subkey
 
         Raise KeyError if key is not found
         
@@ -748,21 +845,19 @@ class Settings:
                 else:
                     return settings[group][key]
             else:
-                if type(subkey) == type([]) or \
-                        type(subkey) == type(()):
+                if type(subkey) == type(tuple()) or \
+                        type(subkey) == type(list()):
                     return settings[group][key][subkey[0]][subkey[1]]
                 else:
                     return settings[group][key][subkey]  
 
         except KeyError:
-            #raise gcmd.SettingsError("%s %s:%s:%s." % (_("Unable to get value"),
-            #                                           group, key, subkey))
             print >> sys.stderr, "Settings: unable to get value '%s:%s:%s'\n" % \
                 (group, key, subkey)
         
-    def Set(self, group, value, key=None, subkey=None, internal=False):
-        """Set value of key/subkey
-
+    def Set(self, group, value, key = None, subkey = None, internal = False):
+        """!Set value of key/subkey
+        
         Raise KeyError if group/key is not found
         
         @param group settings group
@@ -775,7 +870,7 @@ class Settings:
             settings = self.internalSettings
         else:
             settings = self.userSettings
-
+        
         try:
             if subkey is None:
                 if key is None:
@@ -783,15 +878,16 @@ class Settings:
                 else:
                     settings[group][key] = value
             else:
-                if type(subkey) == type([]):
+                if type(subkey) == type(tuple()) or \
+                        type(subkey) == type(list()):
                     settings[group][key][subkey[0]][subkey[1]] = value
                 else:
                     settings[group][key][subkey] = value
         except KeyError:
-            raise gcmd.SettingsError("%s '%s:%s:%s'" % (_("Unable to set "), group, key, subkey))
-
+            raise gcmd.GException("%s '%s:%s:%s'" % (_("Unable to set "), group, key, subkey))
+        
     def Append(self, dict, group, key, subkey, value):
-        """Set value of key/subkey
+        """!Set value of key/subkey
 
         Create group/key/subkey if not exists
         
@@ -803,92 +899,199 @@ class Settings:
         """
         if not dict.has_key(group):
             dict[group] = {}
-
+        
         if not dict[group].has_key(key):
             dict[group][key] = {}
-
-        if type(subkey) == type([]):
+        
+        if type(subkey) == types.ListType:
             # TODO: len(subkey) > 2
             if not dict[group][key].has_key(subkey[0]):
                 dict[group][key][subkey[0]] = {}
-            dict[group][key][subkey[0]][subkey[1]] = value
+            try:
+                dict[group][key][subkey[0]][subkey[1]] = value
+            except TypeError:
+                print >> sys.stderr, _("Unable to parse settings '%s'") % value + \
+                    ' (' + group + ':' + key + ':' + subkey[0] + ':' + subkey[1] + ')'
         else:
-            dict[group][key][subkey] = value
-
+            try:
+                dict[group][key][subkey] = value
+            except TypeError:
+                print >> sys.stderr, _("Unable to parse settings '%s'") % value + \
+                    ' (' + group + ':' + key + ':' + subkey + ')'
+        
     def GetDefaultSettings(self):
-        """Get default user settings"""
+        """!Get default user settings"""
         return self.defaultSettings
 
 globalSettings = Settings()
 
-class PreferencesDialog(wx.Dialog):
-    """User preferences dialog"""
-    def __init__(self, parent, title=_("User GUI settings"),
-                 settings=globalSettings,
-                 style=wx.DEFAULT_DIALOG_STYLE | wx.RESIZE_BORDER):
-        self.parent = parent # GMFrame
-        self.title = title
-        wx.Dialog.__init__(self, parent=parent, id=wx.ID_ANY, title=title,
-                           style=style, size=(-1, -1))
-
+class PreferencesBaseDialog(wx.Dialog):
+    """!Base preferences dialog"""
+    def __init__(self, parent, settings, title = _("User settings"),
+                 size = (500, 375),
+                 style = wx.DEFAULT_DIALOG_STYLE | wx.RESIZE_BORDER):
+        self.parent = parent # ModelerFrame
+        self.title  = title
+        self.size   = size
         self.settings = settings
+        
+        wx.Dialog.__init__(self, parent = parent, id = wx.ID_ANY, title = title,
+                           style = style)
+        
         # notebook
-        notebook = wx.Notebook(parent=self, id=wx.ID_ANY, style=wx.BK_DEFAULT)
-
+        self.notebook = wx.Notebook(parent=self, id=wx.ID_ANY, style=wx.BK_DEFAULT)
+        
         # dict for window ids
         self.winId = {}
-
+        
         # create notebook pages
-        self.__CreateGeneralPage(notebook)
-        self.__CreateDisplayPage(notebook)
-        self.__CreateCmdPage(notebook)
-        self.__CreateAttributeManagerPage(notebook)
-        self.__CreateWorkspacePage(notebook)
-        self.__CreateAdvancedPage(notebook)
-
+        
         # buttons
-        btnDefault = wx.Button(self, wx.ID_ANY, _("Set to default"))
-        btnSave = wx.Button(self, wx.ID_SAVE)
-        btnApply = wx.Button(self, wx.ID_APPLY)
-        btnCancel = wx.Button(self, wx.ID_CANCEL)
-        btnSave.SetDefault()
-
+        self.btnDefault = wx.Button(self, wx.ID_ANY, _("Set to default"))
+        self.btnSave = wx.Button(self, wx.ID_SAVE)
+        self.btnApply = wx.Button(self, wx.ID_APPLY)
+        self.btnCancel = wx.Button(self, wx.ID_CANCEL)
+        self.btnSave.SetDefault()
+        
         # bindigs
-        btnDefault.Bind(wx.EVT_BUTTON, self.OnDefault)
-        btnDefault.SetToolTipString(_("Revert settings to default and apply changes"))
-        btnApply.Bind(wx.EVT_BUTTON, self.OnApply)
-        btnApply.SetToolTipString(_("Apply changes for the current session"))
-        btnSave.Bind(wx.EVT_BUTTON, self.OnSave)
-        btnSave.SetToolTipString(_("Apply and save changes to user settings file (default for next sessions)"))
-        btnSave.SetDefault()
-        btnCancel.Bind(wx.EVT_BUTTON, self.OnCancel)
-        btnCancel.SetToolTipString(_("Close dialog and ignore changes"))
+        self.btnDefault.Bind(wx.EVT_BUTTON, self.OnDefault)
+        self.btnDefault.SetToolTipString(_("Revert settings to default and apply changes"))
+        self.btnApply.Bind(wx.EVT_BUTTON, self.OnApply)
+        self.btnApply.SetToolTipString(_("Apply changes for the current session"))
+        self.btnSave.Bind(wx.EVT_BUTTON, self.OnSave)
+        self.btnSave.SetToolTipString(_("Apply and save changes to user settings file (default for next sessions)"))
+        self.btnSave.SetDefault()
+        self.btnCancel.Bind(wx.EVT_BUTTON, self.OnCancel)
+        self.btnCancel.SetToolTipString(_("Close dialog and ignore changes"))
 
+        self.Bind(wx.EVT_CLOSE, self.OnCloseWindow)
+
+        self._layout()
+        
+    def _layout(self):
+        """!Layout window"""
         # sizers
         btnSizer = wx.BoxSizer(wx.HORIZONTAL)
-        btnSizer.Add(item=btnDefault, proportion=1,
+        btnSizer.Add(item=self.btnDefault, proportion=1,
                      flag=wx.ALL, border=5)
         btnStdSizer = wx.StdDialogButtonSizer()
-        btnStdSizer.AddButton(btnCancel)
-        btnStdSizer.AddButton(btnSave)
-        btnStdSizer.AddButton(btnApply)
+        btnStdSizer.AddButton(self.btnCancel)
+        btnStdSizer.AddButton(self.btnSave)
+        btnStdSizer.AddButton(self.btnApply)
         btnStdSizer.Realize()
         
         mainSizer = wx.BoxSizer(wx.VERTICAL)
-        mainSizer.Add(item=notebook, proportion=1, flag=wx.EXPAND | wx.ALL, border=5)
+        mainSizer.Add(item=self.notebook, proportion=1, flag=wx.EXPAND | wx.ALL, border=5)
         mainSizer.Add(item=btnSizer, proportion=0,
                       flag=wx.EXPAND, border=0)
         mainSizer.Add(item=btnStdSizer, proportion=0,
                       flag=wx.EXPAND | wx.ALL | wx.ALIGN_RIGHT, border=5)
-
+        
         self.SetSizer(mainSizer)
         mainSizer.Fit(self)
+        
+    def OnDefault(self, event):
+        """!Button 'Set to default' pressed"""
+        self.settings.userSettings = copy.deepcopy(self.settings.defaultSettings)
+        
+        # update widgets
+        for gks in self.winId.keys():
+            try:
+                group, key, subkey = gks.split(':')
+                value = self.settings.Get(group, key, subkey)
+            except ValueError:
+                group, key, subkey, subkey1 = gks.split(':')
+                value = self.settings.Get(group, key, [subkey, subkey1])
+            win = self.FindWindowById(self.winId[gks])
+            if win.GetName() in ('GetValue', 'IsChecked'):
+                value = win.SetValue(value)
+            elif win.GetName() == 'GetSelection':
+                value = win.SetSelection(value)
+            elif win.GetName() == 'GetStringSelection':
+                value = win.SetStringSelection(value)
+            else:
+                value = win.SetValue(value)
+        
+    def OnApply(self, event):
+        """!Button 'Apply' pressed"""
+        if self._updateSettings():
+            self.parent.goutput.WriteLog(_('Settings applied to current session but not saved'))
+            self.Close()
 
+    def OnCloseWindow(self, event):
+        self.Hide()
+        
+    def OnCancel(self, event):
+        """!Button 'Cancel' pressed"""
+        self.Close()
+        
+    def OnSave(self, event):
+        """!Button 'Save' pressed"""
+        if self._updateSettings():
+            file = self.settings.SaveToFile()
+            self.parent.goutput.WriteLog(_('Settings saved to file \'%s\'.') % file)
+            self.Close()
+
+    def _updateSettings(self):
+        """!Update user settings"""
+        for item in self.winId.keys():
+            try:
+                group, key, subkey = item.split(':')
+                subkey1 = None
+            except ValueError:
+                group, key, subkey, subkey1 = item.split(':')
+            
+            id = self.winId[item]
+            win = self.FindWindowById(id)
+            if win.GetName() == 'GetValue':
+                value = win.GetValue()
+            elif win.GetName() == 'GetSelection':
+                value = win.GetSelection()
+            elif win.GetName() == 'IsChecked':
+                value = win.IsChecked()
+            elif win.GetName() == 'GetStringSelection':
+                value = win.GetStringSelection()
+            elif win.GetName() == 'GetColour':
+                value = tuple(win.GetValue())
+            else:
+                value = win.GetValue()
+
+            if key == 'keycolumn' and value == '':
+                wx.MessageBox(parent=self,
+                              message=_("Key column cannot be empty string."),
+                              caption=_("Error"), style=wx.OK | wx.ICON_ERROR)
+                win.SetValue(self.settings.Get(group='atm', key='keycolumn', subkey='value'))
+                return False
+
+            if subkey1:
+                self.settings.Set(group, value, key, [subkey, subkey1])
+            else:
+                self.settings.Set(group, value, key, subkey)
+        
+        return True
+
+class PreferencesDialog(PreferencesBaseDialog):
+    """!User preferences dialog"""
+    def __init__(self, parent, title = _("GUI settings"),
+                 settings = globalSettings):
+        
+        PreferencesBaseDialog.__init__(self, parent = parent, title = title,
+                                       settings = settings)
+        
+        # create notebook pages
+        self._CreateGeneralPage(self.notebook)
+        self._CreateDisplayPage(self.notebook)
+        self._CreateCmdPage(self.notebook)
+        self._CreateAttributeManagerPage(self.notebook)
+        self._CreateProjectionPage(self.notebook)
+        self._CreateWorkspacePage(self.notebook)
+        self._CreateAdvancedPage(self.notebook)
+        
         self.SetMinSize(self.GetBestSize())
-        self.SetSize((500, 375))
-
-    def __CreateGeneralPage(self, notebook):
-        """Create notebook page for general settings"""
+        self.SetSize(self.size)
+        
+    def _CreateGeneralPage(self, notebook):
+        """!Create notebook page for general settings"""
         panel = wx.Panel(parent=notebook, id=wx.ID_ANY)
         notebook.AddPage(page=panel, text=_("General"))
 
@@ -979,8 +1182,9 @@ class PreferencesDialog(wx.Dialog):
         
         return panel
 
-    def __CreateDisplayPage(self, notebook):
-        """Create notebook page for display settings"""
+    def _CreateDisplayPage(self, notebook):
+        """!Create notebook page for display settings"""
+   
         panel = wx.Panel(parent=notebook, id=wx.ID_ANY)
         notebook.AddPage(page=panel, text=_("Display"))
 
@@ -1011,6 +1215,22 @@ class PreferencesDialog(wx.Dialog):
         sizer.Add(item=gridSizer, proportion=1, flag=wx.ALL | wx.EXPAND, border=5)
         border.Add(item=sizer, proportion=0, flag=wx.ALL | wx.EXPAND, border=3)
 
+        row = 1
+        gridSizer.Add(item=wx.StaticText(parent=panel, id=wx.ID_ANY,
+                                         label=_("Font for command output:")),
+                      flag=wx.ALIGN_LEFT |
+                      wx.ALIGN_CENTER_VERTICAL,
+                      pos=(row, 0))
+        outfontButton = wx.Button(parent=panel, id=wx.ID_ANY,
+                               label=_("Set font"), size=(100, -1))
+        gridSizer.Add(item=outfontButton,
+                      flag=wx.ALIGN_RIGHT |
+                      wx.ALIGN_CENTER_VERTICAL,
+                      pos=(row, 1))
+
+        #
+        # display settings
+        #
         box   = wx.StaticBox (parent=panel, id=wx.ID_ANY, label=" %s " % _("Default display settings"))
         sizer = wx.StaticBoxSizer(box, wx.VERTICAL)
 
@@ -1029,10 +1249,13 @@ class PreferencesDialog(wx.Dialog):
         listOfDrivers = self.settings.Get(group='display', key='driver', subkey='choices', internal=True)
         # check if cairo is available
         if 'cairo' not in listOfDrivers:
-            for line in gcmd.Command(['d.mon', '-l']).ReadStdOutput():
+            for line in gcmd.RunCommand('d.mon',
+                                        flags = 'l',
+                                        read = True).splitlines():
                 if 'cairo' in line:
                     listOfDrivers.append('cairo')
                     break
+        
         driver = wx.Choice(parent=panel, id=wx.ID_ANY, size=(150, -1),
                            choices=listOfDrivers,
                            name="GetStringSelection")
@@ -1075,7 +1298,7 @@ class PreferencesDialog(wx.Dialog):
                       pos=(row, 0))
         bgColor = csel.ColourSelect(parent=panel, id=wx.ID_ANY,
                                     colour=self.settings.Get(group='display', key='bgcolor', subkey='color'),
-                                    size=(35, 35))
+                                    size=globalvar.DIALOG_COLOR_SIZE)
         bgColor.SetName('GetColour')
         self.winId['display:bgcolor:color'] = bgColor.GetId()
         
@@ -1108,19 +1331,33 @@ class PreferencesDialog(wx.Dialog):
 
         gridSizer.Add(item=autoRendering,
                       pos=(row, 0), span=(1, 2))
+        
+        #
+        # auto-zoom
+        #
+        row += 1
+        autoZooming = wx.CheckBox(parent=panel, id=wx.ID_ANY,
+                                  label=_("Enable auto-zooming to selected map layer"),
+                                  name="IsChecked")
+        autoZooming.SetValue(self.settings.Get(group='display', key='autoZooming', subkey='enabled'))
+        self.winId['display:autoZooming:enabled'] = autoZooming.GetId()
+
+        gridSizer.Add(item=autoZooming,
+                      pos=(row, 0), span=(1, 2))
 
         sizer.Add(item=gridSizer, proportion=1, flag=wx.ALL | wx.EXPAND, border=5)
         border.Add(item=sizer, proportion=0, flag=wx.LEFT | wx.RIGHT | wx.BOTTOM | wx.EXPAND, border=3)
-
-        panel.SetSizer(border)
         
+        panel.SetSizer(border)
+                
         # bindings
         fontButton.Bind(wx.EVT_BUTTON, self.OnSetFont)
+        outfontButton.Bind(wx.EVT_BUTTON, self.OnSetOutputFont)
         
         return panel
 
-    def __CreateCmdPage(self, notebook):
-        """Create notebook page for commad dialog settings"""
+    def _CreateCmdPage(self, notebook):
+        """!Create notebook page for commad dialog settings"""
         panel = wx.Panel(parent=notebook, id=wx.ID_ANY)
         notebook.AddPage(page=panel, text=_("Command"))
         
@@ -1204,6 +1441,29 @@ class PreferencesDialog(wx.Dialog):
         
         gridSizer.Add(item=rasterOverlay,
                       pos=(row, 0), span=(1, 2))
+
+        # default color table
+        row += 1
+        rasterCTCheck = wx.CheckBox(parent=panel, id=wx.ID_ANY,
+                                    label=_("Default color table"),
+                                    name='IsChecked')
+        rasterCTCheck.SetValue(self.settings.Get(group='cmd', key='rasterColorTable', subkey='enabled'))
+        self.winId['cmd:rasterColorTable:enabled'] = rasterCTCheck.GetId()
+        rasterCTCheck.Bind(wx.EVT_CHECKBOX, self.OnCheckColorTable)
+        
+        gridSizer.Add(item=rasterCTCheck,
+                      pos=(row, 0))
+        
+        rasterCTName = wx.Choice(parent=panel, id=wx.ID_ANY, size=(200, -1),
+                               choices=utils.GetColorTables(),
+                               name="GetStringSelection")
+        rasterCTName.SetStringSelection(self.settings.Get(group='cmd', key='rasterColorTable', subkey='selection'))
+        self.winId['cmd:rasterColorTable:selection'] = rasterCTName.GetId()
+        if not rasterCTCheck.IsChecked():
+            rasterCTName.Enable(False)
+        
+        gridSizer.Add(item=rasterCTName,
+                      pos=(row, 1))
         
         sizer.Add(item=gridSizer, proportion=1, flag=wx.ALL | wx.EXPAND, border=5)
         border.Add(item=sizer, proportion=0, flag=wx.LEFT | wx.RIGHT | wx.BOTTOM | wx.EXPAND, border=3)
@@ -1236,8 +1496,8 @@ class PreferencesDialog(wx.Dialog):
         
         return panel
 
-    def __CreateAttributeManagerPage(self, notebook):
-        """Create notebook page for 'Attribute Table Manager' settings"""
+    def _CreateAttributeManagerPage(self, notebook):
+        """!Create notebook page for 'Attribute Table Manager' settings"""
         panel = wx.Panel(parent=notebook, id=wx.ID_ANY)
         notebook.AddPage(page=panel, text=_("Attributes"))
 
@@ -1256,7 +1516,7 @@ class PreferencesDialog(wx.Dialog):
         label = wx.StaticText(parent=panel, id=wx.ID_ANY, label=_("Color:"))
         hlColor = csel.ColourSelect(parent=panel, id=wx.ID_ANY,
                                     colour=self.settings.Get(group='atm', key='highlight', subkey='color'),
-                                    size=(35, 35))
+                                    size=globalvar.DIALOG_COLOR_SIZE)
         hlColor.SetName('GetColour')
         self.winId['atm:highlight:color'] = hlColor.GetId()
 
@@ -1365,8 +1625,143 @@ class PreferencesDialog(wx.Dialog):
 
         return panel
 
-    def __CreateWorkspacePage(self, notebook):
-        """Create notebook page for workspace settings"""
+    def _CreateProjectionPage(self, notebook):
+        """!Create notebook page for workspace settings"""
+        panel = wx.Panel(parent=notebook, id=wx.ID_ANY)
+        notebook.AddPage(page=panel, text=_("Projection"))
+        
+        border = wx.BoxSizer(wx.VERTICAL)
+        
+        #
+        # projections statusbar settings
+        #
+        box   = wx.StaticBox (parent=panel, id=wx.ID_ANY, label=" %s " % _("Projection statusbar settings"))
+        sizer = wx.StaticBoxSizer(box, wx.VERTICAL)
+
+        gridSizer = wx.GridBagSizer (hgap=3, vgap=3)
+        gridSizer.AddGrowableCol(1)
+
+        # epsg
+        row = 0
+        label = wx.StaticText(parent=panel, id=wx.ID_ANY,
+                              label=_("EPSG code:"))
+        epsgCode = wx.ComboBox(parent=panel, id=wx.ID_ANY,
+                               name="GetValue",
+                               size = (150, -1))
+        self.epsgCodeDict = dict()
+        epsgCode.SetValue(str(self.settings.Get(group='projection', key='statusbar', subkey='epsg')))
+        self.winId['projection:statusbar:epsg'] = epsgCode.GetId()
+        
+        gridSizer.Add(item=label,
+                      pos=(row, 0),
+                      flag = wx.ALIGN_CENTER_VERTICAL)
+        gridSizer.Add(item=epsgCode,
+                      pos=(row, 1), span=(1, 2))
+        
+        # proj
+        row += 1
+        label = wx.StaticText(parent=panel, id=wx.ID_ANY,
+                              label=_("Proj.4 string (required):"))
+        projString = wx.TextCtrl(parent=panel, id=wx.ID_ANY,
+                                 value=self.settings.Get(group='projection', key='statusbar', subkey='proj4'),
+                                 name="GetValue", size=(400, -1))
+        self.winId['projection:statusbar:proj4'] = projString.GetId()
+
+        gridSizer.Add(item=label,
+                      pos=(row, 0),
+                      flag = wx.ALIGN_CENTER_VERTICAL)
+        gridSizer.Add(item=projString,
+                      pos=(row, 1), span=(1, 2),
+                      flag = wx.ALIGN_CENTER_VERTICAL)
+        
+        # epsg file
+        row += 1
+        label = wx.StaticText(parent=panel, id=wx.ID_ANY,
+                              label=_("EPSG file:"))
+        projFile = wx.TextCtrl(parent=panel, id=wx.ID_ANY,
+                               value = self.settings.Get(group='projection', key='statusbar', subkey='projFile'),
+                               name="GetValue", size=(400, -1))
+        self.winId['projection:statusbar:projFile'] = projFile.GetId()
+        gridSizer.Add(item=label,
+                      pos=(row, 0),
+                      flag = wx.ALIGN_CENTER_VERTICAL)
+        gridSizer.Add(item=projFile,
+                      pos=(row, 1),
+                      flag = wx.ALIGN_CENTER_VERTICAL)
+        
+        # note + button
+        row += 1
+        note = wx.StaticText(parent = panel, id = wx.ID_ANY,
+                             label = _("Load EPSG codes (be patient), enter EPSG code or "
+                                       "insert Proj.4 string directly."))
+        gridSizer.Add(item=note,
+                      span = (1, 2),
+                      pos=(row, 0))
+
+        row += 1
+        epsgLoad = wx.Button(parent=panel, id=wx.ID_ANY,
+                             label=_("&Load EPSG codes"))
+        gridSizer.Add(item=epsgLoad,
+                      flag = wx.ALIGN_RIGHT,
+                      pos=(row, 1))
+        
+        sizer.Add(item=gridSizer, proportion=1, flag=wx.ALL | wx.EXPAND, border=5)
+        border.Add(item=sizer, proportion=0, flag=wx.ALL | wx.EXPAND, border=3)
+
+        #
+        # format
+        #
+        box   = wx.StaticBox (parent=panel, id=wx.ID_ANY, label=" %s " % _("Coordinates format"))
+        sizer = wx.StaticBoxSizer(box, wx.VERTICAL)
+        
+        gridSizer = wx.GridBagSizer (hgap=3, vgap=3)
+        gridSizer.AddGrowableCol(2)
+
+        row = 0
+        # ll format
+        ll = wx.RadioBox(parent = panel, id = wx.ID_ANY,
+                         label = " %s " % _("LL projections"),
+                         choices = ["DMS", "DEG"],
+                         name = "GetStringSelection")
+        self.winId['projection:format:ll'] = ll.GetId()
+        if self.settings.Get(group = 'projection', key = 'format', subkey = 'll') == 'DMS':
+            ll.SetSelection(0)
+        else:
+            ll.SetSelection(1)
+        
+        # precision
+        precision =  wx.SpinCtrl(parent = panel, id = wx.ID_ANY,
+                                 min = 0, max = 12,
+                                 name = "GetValue")
+        precision.SetValue(int(self.settings.Get(group = 'projection', key = 'format', subkey = 'precision')))
+        self.winId['projection:format:precision'] = precision.GetId()
+                
+        gridSizer.Add(item=ll,
+                      pos=(row, 0))
+        gridSizer.Add(item=wx.StaticText(parent = panel, id = wx.ID_ANY,
+                                         label = _("Precision:")),
+                      flag = wx.ALIGN_CENTER_VERTICAL | wx.ALIGN_RIGHT | wx.LEFT,
+                      border = 20,
+                      pos=(row, 1))
+        gridSizer.Add(item=precision,
+                      flag = wx.ALIGN_CENTER_VERTICAL,
+                      pos=(row, 2))
+        
+        
+        sizer.Add(item=gridSizer, proportion=1, flag=wx.ALL | wx.EXPAND, border=5)
+        border.Add(item=sizer, proportion=0, flag=wx.LEFT | wx.RIGHT | wx.BOTTOM | wx.EXPAND, border=3)
+        
+        panel.SetSizer(border)
+
+        # bindings
+        epsgLoad.Bind(wx.EVT_BUTTON, self.OnLoadEpsgCodes)
+        epsgCode.Bind(wx.EVT_COMBOBOX, self.OnSetEpsgCode)
+        epsgCode.Bind(wx.EVT_TEXT_ENTER, self.OnSetEpsgCode)
+        
+        return panel
+
+    def _CreateWorkspacePage(self, notebook):
+        """!Create notebook page for workspace settings"""
         panel = wx.Panel(parent=notebook, id=wx.ID_ANY)
         notebook.AddPage(page=panel, text=_("Workspace"))
 
@@ -1409,8 +1804,8 @@ class PreferencesDialog(wx.Dialog):
         
         return panel
 
-    def __CreateAdvancedPage(self, notebook):
-        """Create notebook page for advanced settings"""
+    def _CreateAdvancedPage(self, notebook):
+        """!Create notebook page for advanced settings"""
         panel = wx.Panel(parent=notebook, id=wx.ID_ANY)
         notebook.AddPage(page=panel, text=_("Advanced"))
 
@@ -1478,11 +1873,82 @@ class PreferencesDialog(wx.Dialog):
         
         return panel
 
+    def OnCheckColorTable(self, event):
+        """!Set/unset default color table"""
+        win = self.FindWindowById(self.winId['cmd:rasterColorTable:selection'])
+        if event.IsChecked():
+            win.Enable()
+        else:
+            win.Enable(False)
+        
+    def OnLoadEpsgCodes(self, event):
+        """!Load EPSG codes from the file"""
+        win = self.FindWindowById(self.winId['projection:statusbar:projFile'])
+        path = win.GetValue()
+
+        self.epsgCodeDict = utils.ReadEpsgCodes(path)
+        list = self.FindWindowById(self.winId['projection:statusbar:epsg'])
+        if type(self.epsgCodeDict) == type(''):
+            wx.MessageBox(parent=self,
+                          message=_("Unable to read EPSG codes: %s") % self.epsgCodeDict,
+                          caption=_("Error"),  style=wx.OK | wx.ICON_ERROR | wx.CENTRE)
+            self.epsgCodeDict = dict()
+            list.SetItems([])
+            list.SetValue('')
+            self.FindWindowById(self.winId['projection:statusbar:proj4']).SetValue('')
+            return
+        
+        choices = map(str, self.epsgCodeDict.keys())
+
+        list.SetItems(choices)
+        try:
+            code = int(list.GetValue())
+        except ValueError:
+            code = -1
+        win = self.FindWindowById(self.winId['projection:statusbar:proj4'])
+        if self.epsgCodeDict.has_key(code):
+            win.SetValue(self.epsgCodeDict[code][1])
+        else:
+            list.SetSelection(0)
+            code = int(list.GetStringSelection())
+            win.SetValue(self.epsgCodeDict[code][1])
+    
+    def OnSetEpsgCode(self, event):
+        """!EPSG code selected"""
+        winCode = self.FindWindowById(event.GetId())
+        win = self.FindWindowById(self.winId['projection:statusbar:proj4'])
+        if not self.epsgCodeDict:
+            wx.MessageBox(parent=self,
+                          message=_("EPSG code %s not found") % event.GetString(),
+                          caption=_("Error"),  style=wx.OK | wx.ICON_ERROR | wx.CENTRE)
+            winCode.SetValue('')
+            win.SetValue('')
+        
+        try:
+            code = int(event.GetString())
+        except ValueError:
+            wx.MessageBox(parent=self,
+                          message=_("EPSG code %s not found") % str(code),
+                          caption=_("Error"),  style=wx.OK | wx.ICON_ERROR | wx.CENTRE)
+            winCode.SetValue('')
+            win.SetValue('')
+        
+        
+        try:
+            win.SetValue(self.epsgCodeDict[code][1].replace('<>', '').strip())
+        except KeyError:
+            wx.MessageBox(parent=self,
+                          message=_("EPSG code %s not found") % str(code),
+                          caption=_("Error"),  style=wx.OK | wx.ICON_ERROR | wx.CENTRE)
+            winCode.SetValue('')
+            win.SetValue('')
+        
     def OnSetFont(self, event):
         """'Set font' button pressed"""
         dlg = DefaultFontDialog(parent=self, id=wx.ID_ANY,
                                 title=_('Select default display font'),
-                                style=wx.DEFAULT_DIALOG_STYLE)
+                                style=wx.DEFAULT_DIALOG_STYLE,
+                                type='font')
         
         if dlg.ShowModal() == wx.ID_OK:
             # set default font and encoding environmental variables
@@ -1500,81 +1966,54 @@ class PreferencesDialog(wx.Dialog):
         dlg.Destroy()
         
         event.Skip()
+
+    def OnSetOutputFont(self, event):
+        """'Set output font' button pressed"""
         
-    def OnSave(self, event):
-        """Button 'Save' pressed"""
-        if self.__UpdateSettings():
-            file = self.settings.SaveToFile()
-            self.parent.goutput.WriteLog(_('Settings saved to file \'%s\'.') % file)
-            self.Close()
-
-    def OnApply(self, event):
-        """Button 'Apply' pressed"""
-        if self.__UpdateSettings():
-            self.Close()
-
-    def OnCancel(self, event):
-        """Button 'Cancel' pressed"""
-        self.Close()
-
-    def OnDefault(self, event):
-        """Button 'Set to default' pressed"""
-        self.settings.userSettings = copy.deepcopy(self.settings.defaultSettings)
+        dlg = DefaultFontDialog(parent=self, id=wx.ID_ANY,
+                                title=_('Select output font'),
+                                style=wx.DEFAULT_DIALOG_STYLE,
+                                type='outputfont')
         
-        # update widgets
-        for gks in self.winId.keys():
-            try:
-                group, key, subkey = gks.split(':')
-                value = self.settings.Get(group, key, subkey)
-            except ValueError:
-                group, key, subkey, subkey1 = gks.split(':')
-                value = self.settings.Get(group, key, [subkey, subkey1])
-            win = self.FindWindowById(self.winId[gks])
-            if win.GetName() in ('GetValue', 'IsChecked'):
-                value = win.SetValue(value)
-            elif win.GetName() == 'GetSelection':
-                value = win.SetSelection(value)
-            elif win.GetName() == 'GetStringSelection':
-                value = win.SetStringSelection(value)
-            else:
-                value = win.SetValue(value)
+        if dlg.ShowModal() == wx.ID_OK:
+            # set output font and font size variables
+            if dlg.font:
+                self.settings.Set(group='display', value=dlg.font,
+                                  key='outputfont', subkey='type')
 
-    def __UpdateSettings(self):
-        """Update user settings"""
-        for item in self.winId.keys():
-            try:
-                group, key, subkey = item.split(':')
-                subkey1 = None
-            except ValueError:
-                group, key, subkey, subkey1 = item.split(':')
-            
-            id = self.winId[item]
-            win = self.FindWindowById(id)
-            if win.GetName() == 'GetValue':
-                value = win.GetValue()
-            elif win.GetName() == 'GetSelection':
-                value = win.GetSelection()
-            elif win.GetName() == 'IsChecked':
-                value = win.IsChecked()
-            elif win.GetName() == 'GetStringSelection':
-                value = win.GetStringSelection()
-            elif win.GetName() == 'GetColour':
-                value = tuple(win.GetValue())
-            else:
-                value = win.GetValue()
+                self.settings.Set(group='display', value=dlg.fontsize,
+                                  key='outputfont', subkey='size')
 
-            if key == 'keycolumn' and value == '':
-                wx.MessageBox(parent=self,
-                              message=_("Key column cannot be empty string."),
-                              caption=_("Error"), style=wx.OK | wx.ICON_ERROR)
-                win.SetValue(self.settings.Get(group='atm', key='keycolumn', subkey='value'))
-                return False
+# Standard font dialog broken for Mac in OS X 10.6
+#        type = self.settings.Get(group='display', key='outputfont', subkey='type')   
+                           
+#        size = self.settings.Get(group='display', key='outputfont', subkey='size')
+#        if size == None or size == 0: size = 10
+#        size = float(size)
+        
+#        data = wx.FontData()
+#        data.EnableEffects(True)
+#        data.SetInitialFont(wx.Font(pointSize=size, family=wx.FONTFAMILY_MODERN, faceName=type, style=wx.NORMAL, weight=0))
 
-            if subkey1:
-                self.settings.Set(group, value, key, [subkey, subkey1])
-            else:
-                self.settings.Set(group, value, key, subkey)
-            
+#        dlg = wx.FontDialog(self, data)
+
+#        if dlg.ShowModal() == wx.ID_OK:
+#            data = dlg.GetFontData()
+#            font = data.GetChosenFont()
+
+#            self.settings.Set(group='display', value=font.GetFaceName(),
+#                                  key='outputfont', subkey='type')
+#            self.settings.Set(group='display', value=font.GetPointSize(),
+#                                  key='outputfont', subkey='size')
+                
+        dlg.Destroy()
+
+        event.Skip()
+        
+    def _updateSettings(self):
+        """!Update user settings"""
+        PreferencesBaseDialog._updateSettings(self)
+        
         #
         # update default window dimension
         #
@@ -1604,25 +2043,19 @@ class DefaultFontDialog(wx.Dialog):
     """
     def __init__(self, parent, id, title,
                  pos=wx.DefaultPosition, size=wx.DefaultSize,
-                 style=wx.DEFAULT_DIALOG_STYLE,
-                 settings=globalSettings):
+                 style=wx.DEFAULT_DIALOG_STYLE |
+                 wx.RESIZE_BORDER,
+                 settings=globalSettings,
+                 type='font'):
         
         self.settings = settings
+        self.type = type
         
         wx.Dialog.__init__(self, parent, id, title, pos, size, style)
 
         panel = wx.Panel(parent=self, id=wx.ID_ANY)
         
-        if "GRASS_FONT" in os.environ:
-            self.font = os.environ["GRASS_FONT"]
-        else:
-            self.font = self.settings.Get(group='display',
-                                          key='font', subkey='type')
-
         self.fontlist = self.GetFonts()
-
-        self.encoding = self.settings.Get(group='display',
-                                          key='font', subkey='encoding')
         
         border = wx.BoxSizer(wx.VERTICAL)
         box   = wx.StaticBox (parent=panel, id=wx.ID_ANY, label=" %s " % _("Font settings"))
@@ -1642,24 +2075,57 @@ class DefaultFontDialog(wx.Dialog):
                                  style=wx.LB_SINGLE|wx.LB_SORT)
         self.Bind(wx.EVT_LISTBOX, self.EvtListBox, self.fontlb)
         self.Bind(wx.EVT_LISTBOX_DCLICK, self.EvtListBoxDClick, self.fontlb)
-        if self.font:
-            self.fontlb.SetStringSelection(self.font, True)
 
         gridSizer.Add(item=self.fontlb,
-                flag=wx.EXPAND, pos=(0, 1))
+                flag=wx.EXPAND, pos=(1, 0))
 
-        label = wx.StaticText(parent=panel, id=wx.ID_ANY,
-                              label=_("Character encoding:"))
-        gridSizer.Add(item=label,
+        if self.type == 'font':
+            if "GRASS_FONT" in os.environ:
+                self.font = os.environ["GRASS_FONT"]
+            else:
+                self.font = self.settings.Get(group='display',
+                                              key='font', subkey='type')
+            self.encoding = self.settings.Get(group='display',
+                                          key='font', subkey='encoding')
+
+            label = wx.StaticText(parent=panel, id=wx.ID_ANY,
+                                  label=_("Character encoding:"))
+            gridSizer.Add(item=label,
+                          flag=wx.ALIGN_CENTER_VERTICAL,
+                          pos=(2, 0))
+
+            self.textentry = wx.TextCtrl(parent=panel, id=wx.ID_ANY,
+                                         value=self.encoding)
+            gridSizer.Add(item=self.textentry,
+                    flag=wx.EXPAND, pos=(3, 0))
+
+            self.textentry.Bind(wx.EVT_TEXT, self.OnEncoding)
+
+        elif self.type == 'outputfont':
+            self.font = self.settings.Get(group='display',
+                                              key='outputfont', subkey='type')
+            self.fontsize = self.settings.Get(group='display',
+                                          key='outputfont', subkey='size')
+            label = wx.StaticText(parent=panel, id=wx.ID_ANY,
+                              label=_("Font size:"))
+            gridSizer.Add(item=label,
                       flag=wx.ALIGN_CENTER_VERTICAL,
-                      pos=(1, 0))
+                      pos=(2, 0))
+                      
+            self.spin = wx.SpinCtrl(parent=panel, id=wx.ID_ANY)
+            if self.fontsize:
+                self.spin.SetValue(self.fontsize)
+            self.spin.Bind(wx.EVT_SPINCTRL, self.OnSizeSpin)
+            self.spin.Bind(wx.EVT_TEXT, self.OnSizeSpin)
+            gridSizer.Add(item=self.spin,
+                      flag=wx.ALIGN_CENTER_VERTICAL,
+                      pos=(3, 0))
 
-        self.textentry = wx.TextCtrl(parent=panel, id=wx.ID_ANY,
-                                     value=self.encoding)
-        gridSizer.Add(item=self.textentry,
-                flag=wx.EXPAND, pos=(1, 1))
+        else: 
+            return
 
-        self.textentry.Bind(wx.EVT_TEXT, self.OnEncoding)
+        if self.font:
+            self.fontlb.SetStringSelection(self.font, True)
 
         sizer.Add(item=gridSizer, proportion=1,
                   flag=wx.EXPAND | wx.ALL,
@@ -1706,7 +2172,11 @@ class DefaultFontDialog(wx.Dialog):
     def EvtListBoxDClick(self, event):
         self.font = event.GetString()
         event.Skip()
-
+        
+    def OnSizeSpin(self, event):
+        self.fontsize = self.spin.GetValue()
+        event.Skip()
+    
     def GetFonts(self):
         """
         parses fonts directory or fretypecap file to get a list of fonts for the listbox
@@ -1715,9 +2185,14 @@ class DefaultFontDialog(wx.Dialog):
 
         cmd = ["d.font", "-l"]
 
-        p = gcmd.Command(cmd, stderr=None)
+        ret = gcmd.RunCommand('d.font',
+                              read = True,
+                              flags = 'l')
 
-        dfonts = p.ReadStdOutput()
+        if not ret:
+            return fontlist
+
+        dfonts = ret.splitlines()
         dfonts.sort(lambda x,y: cmp(x.lower(), y.lower()))
         for item in range(len(dfonts)):
            # ignore duplicate fonts and those starting with #
@@ -1728,30 +2203,35 @@ class DefaultFontDialog(wx.Dialog):
         return fontlist
 
 class MapsetAccess(wx.Dialog):
+    """!Controls setting options and displaying/hiding map overlay
+    decorations
     """
-    Controls setting options and displaying/hiding map overlay decorations
-    """
-    def __init__(self, parent, id, title=_('Set/unset access to mapsets in current location'),
-                 pos=wx.DefaultPosition, size=(350, 400),
-                 style=wx.DEFAULT_DIALOG_STYLE|wx.RESIZE_BORDER):
+    def __init__(self, parent, id = wx.ID_ANY,
+                 title=_('Set/unset access to mapsets in current location'),
+                 size = (350, 400),
+                 style = wx.DEFAULT_DIALOG_STYLE | wx.RESIZE_BORDER, **kwargs):
         
-        wx.Dialog.__init__(self, parent, id, title, pos, size, style)
+        wx.Dialog.__init__(self, parent, id, title, size = size, style = style, **kwargs)
 
         self.all_mapsets_ordered = utils.ListOfMapsets(get = 'ordered')
-        self.accessible_mapsets = utils.ListOfMapsets(get = 'accessible')
-        self.curr_mapset = grassenv.GetGRASSVariable('MAPSET')
+        self.accessible_mapsets  = utils.ListOfMapsets(get = 'accessible')
+        self.curr_mapset = grass.gisenv()['MAPSET']
 
         # make a checklistbox from available mapsets and check those that are active
         sizer = wx.BoxSizer(wx.VERTICAL)
 
         label = wx.StaticText(parent=self, id=wx.ID_ANY,
-                              label=_("Check a mapset to make it accessible, uncheck it to hide it.%s"
-                                      "Note: The current mapset is always accessible.") % os.linesep)
+                              label=_("Check a mapset to make it accessible, uncheck it to hide it.\n"
+                                      "  Notes:\n"
+                                      "    - The current mapset is always accessible.\n"
+                                      "    - You may only write to the current mapset.\n"
+                                      "    - You may only write to mapsets which you own."))
+        
         sizer.Add(item=label, proportion=0,
                   flag=wx.ALL, border=5)
 
         self.mapsetlb = CheckListMapset(parent=self)
-        self.mapsetlb.LoadData(self.all_mapsets_ordered)
+        self.mapsetlb.LoadData()
         
         sizer.Add(item=self.mapsetlb, proportion=1,
                   flag=wx.ALL | wx.EXPAND, border=5)
@@ -1759,6 +2239,9 @@ class MapsetAccess(wx.Dialog):
         # check all accessible mapsets
         for mset in self.accessible_mapsets:
             self.mapsetlb.CheckItem(self.all_mapsets_ordered.index(mset), True)
+
+        # FIXME (howto?): grey-out current mapset
+        #self.mapsetlb.Enable(0, False)
 
         # dialog buttons
         line = wx.StaticLine(parent=self, id=wx.ID_ANY,
@@ -1786,7 +2269,7 @@ class MapsetAccess(wx.Dialog):
         self.SetMinSize(size)
         
     def GetMapsets(self):
-        """Get list of checked mapsets"""
+        """!Get list of checked mapsets"""
         ms = []
         i = 0
         for mset in self.all_mapsets_ordered:
@@ -1797,7 +2280,7 @@ class MapsetAccess(wx.Dialog):
         return ms
 
 class CheckListMapset(wx.ListCtrl, listmix.ListCtrlAutoWidthMixin, listmix.CheckListCtrlMixin):
-    """List of mapset/owner/group"""
+    """!List of mapset/owner/group"""
     def __init__(self, parent, pos=wx.DefaultPosition,
                  log=None):
         self.parent = parent
@@ -1810,15 +2293,14 @@ class CheckListMapset(wx.ListCtrl, listmix.ListCtrlAutoWidthMixin, listmix.Check
         # setup mixins
         listmix.ListCtrlAutoWidthMixin.__init__(self)
 
-    def LoadData(self, mapsets):
-        """Load data into list"""
+    def LoadData(self):
+        """!Load data into list"""
         self.InsertColumn(0, _('Mapset'))
         self.InsertColumn(1, _('Owner'))
         ### self.InsertColumn(2, _('Group'))
+        gisenv = grass.gisenv()
+        locationPath = os.path.join(gisenv['GISDBASE'], gisenv['LOCATION_NAME'])
 
-        locationPath = os.path.join(grassenv.GetGRASSVariable('GISDBASE'),
-                                    grassenv.GetGRASSVariable('LOCATION_NAME'))
-        
         for mapset in self.parent.all_mapsets_ordered:
             index = self.InsertStringItem(sys.maxint, mapset)
             mapsetPath = os.path.join(locationPath,
@@ -1837,7 +2319,7 @@ class CheckListMapset(wx.ListCtrl, listmix.ListCtrlAutoWidthMixin, listmix.Check
         ### self.SetColumnWidth(col=1, width=wx.LIST_AUTOSIZE)
         
     def OnCheckItem(self, index, flag):
-        """Mapset checked/unchecked"""
+        """!Mapset checked/unchecked"""
         mapset = self.parent.all_mapsets_ordered[index]
         if mapset == self.parent.curr_mapset:
             self.CheckItem(index, True)

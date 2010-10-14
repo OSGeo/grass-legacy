@@ -8,7 +8,7 @@ If wxGUI is not your default GUI, you can define it as default by
 typing at GRASS command line prompt
 
 <div class="code"><pre>
-   g.gui -u wxpython& 
+   g.gui -u wxpython 
 </pre></div>
 
 or define in your <tt>.grassrc6</tt> file 'GRASS_GUI' variable
@@ -35,7 +35,7 @@ You can also start GRASS from the shell command line with wxGUI
 defined by the <tt>-wxpython</tt> switch:
 
 <div class="code"><pre>
-    grass64 -wxpython
+    grass65 -wxpython
 </pre></div>
 
 <p>
@@ -51,6 +51,10 @@ The GUI is composed by <em>two</em> main components:
   displays during a session. The map layers for each display are grouped
   under different tabs in the Layer Manager.</li>
 </ul>
+
+<p>
+wxGUI comes with more <em>icon themes</em>, for detailed information
+see this <a href="wxGUI.Icons.html">page</a>.
 
 <h3>Layer Manager</h3>
 
@@ -252,6 +256,48 @@ d.text text=Population\ density
   <em>Show <a href="wxGUI.Attribute_Table_Manager.html">Attribute Table Manager</a> for selected vector map</em></dt>
 <dd>Displays attribute data of selected vector map.</dd>
 
+</dl>
+
+<h4>Key shortcuts</h4>
+
+<b>Menu</b>
+<dl>
+  <dt>Ctrl+N</dt>
+  <dd>Create new workspace</dd>
+  <dt>Ctrl+O</dt>
+  <dd>Load workspace from file</dd>
+  <dt>Ctrl+S</dt>
+  <dd>Close workspace</dd>
+  <dt>Ctrl+L</dt>
+  <dd>Load map layers</dd>
+  <dt>Ctrl+W</dt>
+  <dd>Exit GUI</dd>
+  <dt>Ctrl+Q</dt>
+  <dd>Quit GRASS</dd>
+</dl>
+
+<b>Global</b>
+<dl>
+  <dt>Ctrl+Tab</dt>
+  <dd>Switch 'Map layers' and 'Command output' tab</dd>
+  <dt>Ctrl+R</dt>
+  <dd>Add raster map layer</dd>
+  <dt>Ctrl+V</dt>
+  <dd>Add vector map layer</dd>
+</dl>
+
+<b>Command line prompt</b>
+<dl>
+  <dt>Tab</dt>
+  <dd>Show command tooltips</dd>
+  <dt>Esc</dt>
+  <dd>Hide command tooltips</dd>
+  <dt>Ctrl+Space</dt>
+  <dd>Map entries without arguments (as in <tt>r.info [mapname]</tt>)</dd>
+  <dt>Up/Down</dt>
+  <dd>List command history</dd>
+  <dt>Enter</dt>
+  <dd>Run command</dd>
 </dl>
 
 <h3>Map Display Window</h3>
@@ -466,27 +512,19 @@ or EPS file.</dd>
   </ul>
 </dl>
 
-<h2>CONFIGURATION</h2>
-
-<em>User GIS settings</em> dialog ('Config->Preferences') enables
-configuration of various options.
-
-<p>
-For information about available <em>icon themes</em> see
-this <a href="wxGUI.Icons.html">page</a>.
-
 <h2>SEE ALSO</h2>
 
 <em>
   <a href="wxGUI.Vector_Digitizing_Tool.html">Vector Digitizer</a><br>
   <a href="wxGUI.Attribute_Table_Manager.html">Attribute Table Manager</a><br>
   <a href="wxGUI.Nviz.html">3D Viewer</a><br>
+  <a href="wxGUI.Modeler.html">Graphical Modeler</a><br>
   <a href="wxGUI.GCP_Manager.html">Manage Ground Control Points</a><br>
   <a href="wxGUI.Icons.html">Icon themes</a>
 </em>
 
 <p>
-See also <a href="http://grass.osgeo.org/wiki/WxGUI">Wiki</a> page.
+See also <a href="http://grass.osgeo.org/wiki/WxGUI">wiki</a> page.
 
 <p>
 <em>

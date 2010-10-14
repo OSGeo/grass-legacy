@@ -8,6 +8,8 @@ __version__ = "1.3"
 
 import os
 
+import wx
+
 import globalvar
 
 iconpath = os.path.join(globalvar.ETCDIR, "gui", "icons", "silk")
@@ -62,14 +64,13 @@ IconsSilk = {
     "digDispAttr" : 'table.png',
     ## general
     "digUndo" : 'arrow_undo.png',
-    "digSettings" : 'color_swatch.png',
     "digAdditionalTools" : 'plugin.png',
     # layer manager
     "newdisplay" : 'application_add.png',
-    "workspaceNew" : 'page_white.png',
-    "workspaceLoad" : 'page_white_get.png',
-    "workspaceOpen" : 'folder.png',
-    "workspaceSave" : 'page_save.png',
+    "fileNew"    : 'page_white.png',
+    "fileLoad"   : 'page_white_get.png',
+    "fileOpen"   : 'folder.png',
+    "fileSave"   : 'page_save.png',
     "addrast"    : 'image_add.png',
     "addrast3d"  : 'bricks.png',
     "addshaded"  : 'picture_empty.png',
@@ -88,6 +89,7 @@ IconsSilk = {
     "addthematic": 'thematic.png',
     "addchart"   : 'chart_bar.png',
     "layeropts"  : 'map_edit.png',
+    "modeler"    : wx.ART_ERROR,
     # profile analysis
     "transect"   : 'image_edit.png',
     "profiledraw"  : 'arrow_refresh.png',
@@ -97,12 +99,29 @@ IconsSilk = {
     'grGcpClear'   : 'cross.png',
     'grGeorect'    : 'application_lightning.png',
     'grGcpRms'     : 'error.png',
-    'grGcpRefresh' : 'arrow_refresh.png',
     "grGcpSave"    : 'picture_save.png',
     "grGcpAdd"     : 'bullet_add.png', 
     "grGcpDelete"  : 'bullet_delete.png',
     "grGcpReload"  : 'arrow_refresh.png',
-    "grSettings"   : 'color_swatch.png',
-    # nviz
-    "nvizSettings"   : 'color_swatch.png',
+    # modeler
+    "modelActionAdd" : wx.ART_ERROR,
+    "modelDataAdd"   : wx.ART_ERROR,
+    "modelRelation"  : wx.ART_ERROR,
+    "modelRun"       : wx.ART_ERROR,
+    "modelValidate"  : wx.ART_ERROR,
+    "imageSave"      : wx.ART_ERROR,
+    "pythonSave"     : wx.ART_ERROR,
+    "modelProperties" : wx.ART_ERROR,
+    "modelVariables" : wx.ART_ERROR,
+    # 3d view
+    "nvizView"       : wx.ART_ERROR,
+    "nvizSurface"    : wx.ART_ERROR,
+    "nvizVector"     : wx.ART_ERROR,
+    "nvizVolume"     : wx.ART_ERROR,
+    "nvizLight"      : wx.ART_ERROR,
+    "nvizFringe"     : wx.ART_ERROR,
+    # various
+    "settings"       : 'color_swatch.png',
+    "redraw"         : 'arrow_refresh.png',
+    "help"           : wx.ART_ERROR,
     }

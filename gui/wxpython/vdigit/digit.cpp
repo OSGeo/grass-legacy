@@ -34,8 +34,9 @@ extern "C" {
 Digit::Digit(DisplayDriver *ddriver, wxWindow *window)
 {
     display = ddriver;
-    display->parentWin = window;
-
+    if (!display)
+	return;
+    
     if (display->mapInfo) {
 	InitCats();
     }
@@ -64,11 +65,16 @@ Digit::~Digit()
    \brief Update digit settings
 
    \param breakLines break lines on intersection
+   \param addCentroid add centroid to left/right area
+   \param catBoundary attach category to boundary
 */
-void Digit::UpdateSettings(bool breakLines)
+void Digit::UpdateSettings(bool breakLines,
+			   bool addCentroid, bool catBoundary)
 {
     settings.breakLines = breakLines;
-
+    settings.addCentroid = addCentroid;
+    settings.catBoundary = !catBoundary; /* do not attach */
+    
     return;
 }
 

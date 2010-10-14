@@ -5,6 +5,7 @@ FILES = wxGUI \
 	wxGUI.Attribute_Table_Manager \
 	wxGUI.Nviz \
 	wxGUI.Icons \
+	wxGUI.Modeler \
 	wxGUI.GCP_Manager
 
 include $(MODULE_TOPDIR)/include/Make/Platform.make

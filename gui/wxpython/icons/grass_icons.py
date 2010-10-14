@@ -49,14 +49,13 @@ IconsGrass = {
     "digDispAttr" : 'display.attributes.gif',
     ## general
     "digUndo" : wx.ART_ERROR, # FIXME
-    "digSettings" : 'settings.gif',
     "digAdditionalTools" : wx.ART_ERROR, # FIXME
     # layer manager
     "newdisplay" : 'gui-startmon.gif',
-    "workspaceNew" : 'file-new.gif',
-    "workspaceLoad" : 'file-new.gif', # change the icon if possible
-    "workspaceOpen" : 'file-open.gif',
-    "workspaceSave" : 'file-save.gif',
+    "fileNew"    : 'file-new.gif',
+    "fileLoad"   : 'file-new.gif', # change the icon if possible
+    "fileOpen"   : 'file-open.gif',
+    "fileSave"   : 'file-save.gif',
     "addrast"    : 'element-cell.gif',
     "addrast3d"  : 'element-grid3.gif',
     "addvect"    : 'element-vector.gif',
@@ -80,6 +79,7 @@ IconsGrass = {
     "addbarscale": 'module-d.barscale.gif',
     "addlegend"  : 'module-d.legend.gif',
     "quit"       : 'gui-exit.gif',
+    "modeler"    : wx.ART_ERROR,
     # analyze raster
     "analyze"    : 'gui-rastanalyze.gif',
     "measure"    : 'gui-measure.gif',
@@ -90,7 +90,6 @@ IconsGrass = {
     # profile 
     "profile"    : 'gui-profile.gif',
     "transect"   : 'gui-profiledefine.gif',
-    # "profiledraw": 'gui-profiledraw.gif',
     "profiledraw" : 'gui-display.gif',
     "profileopt" : 'gui-profileopt.gif',
     # georectify
@@ -98,12 +97,29 @@ IconsGrass = {
     'grGcpSet'     : 'gui-gcpset.gif',
     'grGeorect'    : 'gui-georect.gif',
     'grGcpRms'     : 'gui-rms.gif',
-    'grGcpRefresh' : 'gui-display.gif',
     "grGcpSave"    : 'file-save.gif', 
     "grGcpAdd"     : wx.ART_NEW, # FIXME
     "grGcpDelete"  : wx.ART_DELETE, # FIXME
     "grGcpReload"  : 'gui-redraw.gif',
-    "grSettings"   : 'edit-color.gif', 
-    # nviz 
-    "nvizSettings" : 'edit-color.gif',   
+    # modeler
+    "modelActionAdd" : wx.ART_ERROR,
+    "modelDataAdd"   : wx.ART_ERROR,
+    "modelRelation"  : wx.ART_ERROR,
+    "modelRun"       : wx.ART_ERROR,
+    "modelValidate"  : wx.ART_ERROR,
+    "imageSave"      : wx.ART_ERROR,
+    "pythonSave"     : wx.ART_ERROR,
+    "modelProperties" : wx.ART_ERROR,
+    "modelVariables" : wx.ART_ERROR,
+    # 3d view
+    "nvizView"       : wx.ART_ERROR,
+    "nvizSurface"    : wx.ART_ERROR,
+    "nvizVector"     : wx.ART_ERROR,
+    "nvizVolume"     : wx.ART_ERROR,
+    "nvizLight"      : wx.ART_ERROR,
+    "nvizFringe"     : wx.ART_ERROR,
+    # various
+    "settings"       : 'edit-color.gif',
+    "redraw"         : 'gui-display.gif',
+    "help"           : wx.ART_ERROR,
     }

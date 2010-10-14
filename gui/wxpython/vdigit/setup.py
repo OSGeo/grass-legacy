@@ -32,6 +32,7 @@ extras = []
 
 for flag in ('GDALCFLAGS',
              'GDALLIBS',
+             'GEOSCFLAGS',
              'WXWIDGETSLIB',
              'WXWIDGETSCXXFLAGS'):
     update_opts(flag, macros, inc_dirs, lib_dirs, libs, extras)

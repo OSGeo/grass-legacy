@@ -1,21 +1,21 @@
-"""
+"""!
 @package gcmd
 
-@brief GRASS command interface
+@brief wxGUI command interface
 
 Classes:
+ - GError
+ - GWarning
+ - GMessage
  - GException
- - GStdError
- - CmdError
- - SettingsError
- - DigitError
- - DBMError
- - NvizError
  - Popen (from http://aspn.activestate.com/ASPN/Cookbook/Python/Recipe/440554)
  - Command
  - CommandThread
 
-(C) 2007-2009 by the GRASS Development Team
+Functions:
+ - RunCommand
+
+(C) 2007-2008, 2010 by the GRASS Development Team
 This program is free software under the GNU General Public
 License (>=v2). Read the file COPYING that comes with GRASS
 for details.
@@ -30,6 +30,7 @@ import time
 import errno
 import signal
 import locale
+import traceback
 
 import wx
 
@@ -56,79 +57,58 @@ from grass.script import core as grass
 import utils
 from debug import Debug as Debug
 
-class GException(Exception):
-    """Generic exception"""
-    def __init__(self, message, title=_("Error"), parent=None):
-        self.msg = message
-        self.parent = parent
-        self.title = title
+class GError:
+    def __init__(self, message, parent = None):
+        caption = _('Error')
+        style = wx.OK | wx.ICON_ERROR | wx.CENTRE
+        exc_type, exc_value, exc_traceback = sys.exc_info()
+        if exc_traceback:
+            exception = traceback.format_exc()
+            reason = exception.splitlines()[-1].split(':', 1)[-1].strip()
         
-    def Show(self):
-        dlg = wx.MessageDialog(parent=self.parent,
-                               caption=self.title,
-                               message=self.msg,
-                               style=wx.ICON_ERROR | wx.CENTRE)
-        dlg.SetIcon(wx.Icon(os.path.join(globalvar.ETCICONDIR, 'grass_error.ico'), wx.BITMAP_TYPE_ICO))
-        if self.parent:
-            dlg.CentreOnParent()
+        if Debug.get_level() > 0 and exc_traceback:
+            sys.stderr.write(exception)
+        
+        if exc_traceback:
+            wx.MessageBox(parent = parent,
+                          message = message + '\n\n%s: %s\n\n%s' % \
+                              (_('Reason'),
+                               reason, exception),
+                          caption = caption,
+                          style = style)
         else:
-            dlg.CentreOnScreen()
+            wx.MessageBox(parent = parent,
+                          message = message,
+                          caption = caption,
+                          style = style)
 
-        dlg.ShowModal()
+class GWarning:
+    def __init__(self, message, parent = None):
+        caption = _('Warning')
+        style = wx.OK | wx.ICON_WARNING | wx.CENTRE
+        wx.MessageBox(parent = parent,
+                      message = message,
+                      caption = caption,
+                      style = style)
         
+class GMessage:
+    def __init__(self, message, parent = None):
+        caption = _('Message')
+        style = wx.OK | wx.ICON_INFORMATION | wx.CENTRE
+        wx.MessageBox(parent = parent,
+                      message = message,
+                      caption = caption,
+                      style = style)
+
+class GException(Exception):
+    def __init__(self, value):
+        self.value = value
+
     def __str__(self):
-        self.Show()
-        
-        return ''
-    
-class GStdError(GException):
-    """Generic exception"""
-
-    def __init__(self, message, title=_("Error"), parent=None):
-        GException.__init__(self, message, title=title, parent=parent)
-
-class CmdError(GException):
-    """Exception used for GRASS commands.
-
-    See Command class (command exits with EXIT_FAILURE,
-    G_fatal_error() is called)."""
-    def __init__(self, cmd, message, parent=None):
-        self.cmd = cmd
-        GException.__init__(self, message,
-                            title=_("Error in command execution %s" % self.cmd[0]),
-                            parent=parent)
-
-class SettingsError(GException):
-    """Exception used for GRASS settings, see
-    gui_modules/preferences.py."""
-    def __init__(self, message, parent=None):
-        GException.__init__(self, message,
-                            title=_("Preferences error"),
-                            parent=parent)
-
-class DigitError(GException):
-    """Exception raised during digitization session"""
-    def __init__(self, message, parent=None):
-        GException.__init__(self, message,
-                            title=_("Vector digitizer error"),
-                            parent=parent)
-
-class DBMError(GException):
-    """Attribute Table Manager exception class"""
-    def __init__(self, message, parent=None):
-        GException.__init__(self, message,
-                            title=_("Attribute table manager error"),
-                            parent=parent)
-
-class NvizError(GException):
-    """Nviz exception class"""
-    def __init__(self, message, parent=None):
-        GException.__init__(self, message,
-                            title=_("Nviz error"),
-                            parent=parent)
+        return str(self.value)
 
 class Popen(subprocess.Popen):
-    """Subclass subprocess.Popen"""
+    """!Subclass subprocess.Popen"""
     def __init__(self, *args, **kwargs):
         if subprocess.mswindows:
             try:
@@ -162,7 +142,7 @@ class Popen(subprocess.Popen):
         setattr(self, which, None)
 
     def kill(self):
-        """Try to kill running process"""
+        """!Try to kill running process"""
         if subprocess.mswindows:
             import win32api
             handle = win32api.OpenProcess(1, 0, self.pid)
@@ -287,9 +267,9 @@ def send_all(p, data):
         data = buffer(data, sent)
 
 class Command:
-    """
-    Run GRASS command in separate thread
-
+    """!Run command in separate thread. Used for commands launched
+    on the background.
+    
     If stdout/err is redirected, write() method is required for the
     given classes.
 
@@ -359,18 +339,17 @@ class Command:
                            (' '.join(cmd), wait, self.returncode, self.cmdThread.isAlive()))
             if rerr is not None and self.returncode != 0:
                 if rerr is False: # GUI dialog
-                    raise CmdError(cmd=self.cmd,
-                                   message="%s '%s'%s%s%s %s%s" %
-                                   (_("Execution failed:"),
-                                    ' '.join(self.cmd),
-                                    os.linesep, os.linesep,
-                                    _("Details:"),
-                                    os.linesep,
-                                    _("Error: ") + self.GetError()))
+                    raise GException("%s '%s'%s%s%s %s%s" % \
+                                         (_("Execution failed:"),
+                                          ' '.join(self.cmd),
+                                          os.linesep, os.linesep,
+                                          _("Details:"),
+                                          os.linesep,
+                                          _("Error: ") + self.__GetError()))
                 elif rerr == sys.stderr: # redirect message to sys
                     stderr.write("Execution failed: '%s'" % (' '.join(self.cmd)))
                     stderr.write("%sDetails:%s%s" % (os.linesep,
-                                                     _("Error: ") + self.GetError(),
+                                                     _("Error: ") + self.__GetError(),
                                                      os.linesep))
             else:
                 pass # nop
@@ -384,7 +363,7 @@ class Command:
             del os.environ["GRASS_VERBOSE"]
             
     def __ReadOutput(self, stream):
-        """Read stream and return list of lines
+        """!Read stream and return list of lines
 
         @param stream stream to be read
         """
@@ -402,18 +381,8 @@ class Command:
 
         return lineList
                     
-    def ReadStdOutput(self):
-        """Read standard output and return list of lines"""
-        if self.cmdThread.stdout:
-            stream = self.cmdThread.stdout # use redirected stream instead
-            stream.seek(0)
-        else:
-            stream = self.cmdThread.module.stdout
-
-        return self.__ReadOutput(stream)
-    
-    def ReadErrOutput(self):
-        """Read standard error output and return list of lines"""
+    def __ReadErrOutput(self):
+        """!Read standard error output and return list of lines"""
         return self.__ReadOutput(self.cmdThread.module.stderr)
 
     def __ProcessStdErr(self):
@@ -423,7 +392,7 @@ class Command:
         @return list of (type, message)
         """
         if self.stderr is None:
-            lines = self.ReadErrOutput()
+            lines = self.__ReadErrOutput()
         else:
             lines = self.cmdThread.error.strip('%s' % os.linesep). \
                 split('%s' % os.linesep)
@@ -452,8 +421,8 @@ class Command:
 
         return msg
 
-    def GetError(self):
-        """Get error message or ''"""
+    def __GetError(self):
+        """!Get error message or ''"""
         if not self.cmdThread.module:
             return _("Unable to exectute command: '%s'") % ' '.join(self.cmd)
 
@@ -467,31 +436,9 @@ class Command:
         
         return ''
     
-    def PrintModuleOutput(self, error=True, warning=False, message=False):
-        """Print module errors, warnings, messages to output
-
-        @param error print errors
-        @param warning print warnings
-        @param message print messages
-
-        @return string
-        """
-
-        msgString = ""
-        for type, msg in self.__ProcessStdErr():
-            if type:
-                if (type == 'ERROR' and error) or \
-                        (type == 'WARNING' and warning) or \
-                        (type == 'MESSAGE' and message):
-                    msgString += " " + type + ": " + msg + "%s" % os.linesep
-            else:
-                msgString += " " + msg + "%s" % os.linesep
-
-        return msgString
-
 class CommandThread(Thread):
-    """!Create separate thread for command
-    """
+    """!Create separate thread for command. Used for commands launched
+    on the background."""
     def __init__ (self, cmd, stdin=None,
                   stdout=sys.stdout, stderr=sys.stderr):
         """
@@ -526,6 +473,7 @@ class CommandThread(Thread):
             del os.environ["GRASS_MESSAGE_FORMAT"]
         
     def run(self):
+        """!Run command"""
         if len(self.cmd) == 0:
             return
 
@@ -549,7 +497,7 @@ class CommandThread(Thread):
             self.__redirect_stream()
 
     def __redirect_stream(self):
-        """Redirect stream"""
+        """!Redirect stream"""
         if self.stdout:
             # make module stdout/stderr non-blocking
             out_fileno = self.module.stdout.fileno()
@@ -590,12 +538,12 @@ class CommandThread(Thread):
                 self.error = line
             
     def abort(self):
-        """Abort running process, used by main thread to signal an abort"""
+        """!Abort running process, used by main thread to signal an abort"""
         self._want_abort = True
     
 def RunCommand(prog, flags = "", overwrite = False, quiet = False, verbose = False,
-               parent = None, read = False, stdin = None, **kwargs):
-    """Run GRASS command"""
+               parent = None, read = False, stdin = None, getErrorMsg = False, **kwargs):
+    """!Run GRASS command"""
     Debug.msg(1, "gcmd.RunCommand(): %s" % ' '.join(grass.make_command(prog, flags, overwrite,
                                                                        quiet, verbose, **kwargs)))
     
@@ -615,16 +563,23 @@ def RunCommand(prog, flags = "", overwrite = False, quiet = False, verbose = Fal
         ps.stdin = None
     
     stdout, stderr = ps.communicate()
-
+    
     ret = ps.returncode
         
-    if ret != 0 and parent:
-        e = CmdError(cmd = prog,
-                     message = stderr,
-                     parent = parent)
-        e.Show()
-
+    if ret != 0 and parent: 
+        GError(parent = parent,
+               message = stderr)
+    
     if not read:
-        return ret
+        if not getErrorMsg:
+            return ret
+        else:
+            return ret, stderr
 
-    return stdout
+    if not getErrorMsg:
+        return stdout
+    
+    if read and getErrorMsg:
+        return ret, stdout, stderr
+    
+    return stdout, stderr

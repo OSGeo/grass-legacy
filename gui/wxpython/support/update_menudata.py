@@ -1,9 +1,9 @@
-"""
+"""!
 @brief Support script for wxGUI - only for developers needs. Updates
 menudata.xml file.
 
 Parse all GRASS modules in the search path ('bin' & 'script') and
-updates: - description (i.e. help)
+updates: - description (i.e. help) - keywords
 
 Prints warning for missing modules.
 
@@ -21,33 +21,17 @@ Usage: python support/update_menudata.py [-d]
 
 import os
 import sys
-import locale
 import tempfile
-
-import xml.sax
-import xml.sax.handler
-HandlerBase=xml.sax.handler.ContentHandler
-from xml.sax import make_parser
+try:
+    import xml.etree.ElementTree as etree
+except ImportError:
+    import elementtree.ElementTree as etree # Python <= 2.4
 
 from grass.script import core as grass
 
-def ParseInterface(cmd):
-    """!Parse interface
-    
-    @param cmd command to be parsed (given as list)
-    """
-    grass_task = menuform.grassTask()
-    handler = menuform.processTask(grass_task)
-    enc = locale.getdefaultlocale()[1]
-    if enc and enc.lower() not in ("utf8", "utf-8"):
-        xml.sax.parseString(menuform.getInterfaceDescription(cmd[0]).decode(enc).split('\n',1)[1].replace('', '<?xml version="1.0" encoding="utf-8"?>\n', 1).encode("utf-8"),
-                            handler)
-    else:
-        xml.sax.parseString(menuform.getInterfaceDescription(cmd[0]),
-                            handler)
-        
-    return grass_task
-    
+sys.path.append('gui_modules')
+import menudata
+
 def parseModules():
     """!Parse modules' interface"""
     modules = dict()
@@ -68,22 +52,23 @@ def parseModules():
         if module in ignore:
             continue
         try:
-            interface = ParseInterface(cmd = [module])
+            interface = menuform.GUI().ParseInterface(cmd = [module])
         except IOError, e:
             grass.error(e)
             continue
         modules[interface.name] = { 'label'   : interface.label,
-                                    'desc'    : interface.description }
+                                    'desc'    : interface.description,
+                                    'keywords': interface.keywords }
         
     return modules
 
 def updateData(data, modules):
     """!Update menu data tree"""
     # list of modules to be ignored
-    ignore =  [ 'v.type_wrapper.py',
-                'vcolors' ]
+    ignore = ['v.type_wrapper.py',
+              'vcolors']
     
-
+    menu_modules = list()    
     for node in data.tree.getiterator():
         if node.tag != 'menuitem':
             continue
@@ -94,7 +79,7 @@ def updateData(data, modules):
         
         if not item.has_key('command'):
             continue
-
+        
         if item['command'] in ignore:
             continue
         
@@ -108,6 +93,20 @@ def updateData(data, modules):
         else:
             desc = modules[module]['desc']
         node.find('help').text = desc
+        
+        if not modules[module].has_key('keywords'):
+            grass.warning('%s: keywords missing' % module)
+        else:
+            if node.find('keywords') is None:
+                node.insert(2, etree.Element('keywords'))
+                grass.warning("Adding tag 'keywords' to '%s'" % module)
+            node.find('keywords').text = ','.join(modules[module]['keywords'])
+        
+        menu_modules.append(item['command'])
+    
+    for module in modules.keys():
+        if module not in menu_modules:
+            grass.warning("'%s' not available from the menu" % module)
     
 def writeData(data, file = None):
     """!Write updated menudata.xml"""
@@ -132,12 +131,12 @@ def writeData(data, file = None):
 def main(argv = None):
     if argv is None:
         argv = sys.argv
-    
+
     if len(argv) > 1 and argv[1] == '-d':
         printDiff = True
     else:
         printDiff = False
-    
+
     if len(argv) > 1 and argv[1] == '-h':
         print >> sys.stderr, __doc__
         return 1
@@ -149,7 +148,7 @@ def main(argv = None):
     modules = dict()
     modules = parseModules()
     grass.info("Step 3: reading menu data...")
-    data = menudata.Data()
+    data = menudata.ManagerData()
     grass.info("Step 4: updating menu data...")
     updateData(data, modules)
     
@@ -164,13 +163,12 @@ def main(argv = None):
     else:
         grass.info("Step 5: writing menu data (menudata.xml)...")
         writeData(data)
-    
+        
     return 0
 
 if __name__ == '__main__':
     if os.getenv("GISBASE") is None:
-        print >> sys.stderr, "You must be in GRASS GIS to run this program."
-        sys.exit(1)
+        sys.exit("You must be in GRASS GIS to run this program.")
     
     sys.path.append(os.path.join(os.getenv("GISBASE"), 'etc', 'wxpython', 'gui_modules'))
     import menudata

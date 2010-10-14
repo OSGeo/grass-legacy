@@ -24,6 +24,8 @@ private:
     /* settings */
     struct _settings {
 	bool breakLines;
+	bool addCentroid;
+	bool catBoundary;
     } settings;
 
     /* undo/redo */
@@ -80,6 +82,10 @@ public:
 					double, double, double, bool,
 					int, int, double);
 
+    double GetLineLength(int);
+    double GetAreaSize(int);
+    double GetAreaPerimeter(int);
+
     int CopyCats(std::vector<int>, std::vector<int>, bool);
     int GetCategory(int);
     std::map<int, std::vector<int> > GetLineCats(int);
@@ -89,7 +95,8 @@ public:
     int Undo(int);
     int GetUndoLevel();
 
-    void UpdateSettings(bool);
+    void UpdateSettings(bool, 
+			bool, bool);
 };
 
 #endif /* WXVDIGIT_DIGIT_H */

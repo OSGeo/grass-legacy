@@ -30,12 +30,19 @@
 
         render, mode and showCompExtent (added 2004/08)
 -->
-<!ELEMENT display ((group|layer)*)>
+<!ELEMENT display (projection?, (group|layer)*)>
 <!ATTLIST display  render	   (0 | 1) #IMPLIED>
 <!ATTLIST display  mode            (0 | 1 | 2 | 3 | 4 | 5 | 6) #IMPLIED>
 <!ATTLIST display  showCompExtent  (0 | 1) #IMPLIED>
+<!ATTLIST display  constrainRes    (0 | 1) #IMPLIED>
 <!-- window dimenstion (x, y (ur), width, heigth -->
 <!ATTLIST display  dim             CDATA   #IMPLIED>
+<!ATTLIST display  extent          CDATA   #IMPLIED>
+
+<!-- projection (statusbar coordinates)
+-->
+<!ELEMENT projection   (value?)>
+<!ATTLIST projection   epsg	CDATA   #IMPLIED>
 
 <!--    group of map layers
 -->
@@ -74,6 +81,19 @@
 -->
 <!ELEMENT flag          EMPTY>
 <!ATTLIST flag          name            CDATA #REQUIRED>
+
+<!-- *********************** Vector digitizer *********************** -->
+
+<!--    vdigit layer properties
+-->
+<!ELEMENT vdigit	    (geometryAttribute?)>
+
+<!--    geometry attribute parameter
+-->
+<!ELEMENT geometryAttribute EMPTY>
+<!ATTLIST parameter	type	(length | area | perimeter) #REQUIRED>
+<!ATTLIST parameter	column	CDATA                       #REQUIRED>
+<!ATTLIST parameter	units	CDATA                       #IMPLIED>
 
 <!-- *********************** Nviz *********************** -->
 
