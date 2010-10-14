@@ -39,7 +39,10 @@ $(SHLIB): $(LIB_NAME).i cats.cpp digit.cpp driver.cpp driver_draw.cpp \
 
 .NOTPARALLEL: $(LIB_NAME).py $(LIB_NAME)_wrap.cpp
 
-install_vdigit: $(ETCDIR)/vdigit/_$(LIB_NAME).so $(ETCDIR)/vdigit/$(LIB_NAME).py
+install_vdigit: $(ETCDIR)/vdigit $(ETCDIR)/vdigit/_$(LIB_NAME).so $(ETCDIR)/vdigit/$(LIB_NAME).py
+
+$(ETCDIR)/vdigit:
+	$(MKDIR) $@
 
 $(ETCDIR)/vdigit/_$(LIB_NAME).so: $(SHLIB)
 	$(INSTALL) $< $@
