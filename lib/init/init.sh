@@ -828,7 +828,7 @@ case "$GRASS_GUI" in
 	"$GISBASE/scripts/d.m"
 	;;
     wxpython)
-        "$GISBASE/etc/wxpython/scripts/wxgui"
+        "$GRASS_PYTHON" "$GISBASE/etc/wxpython/wxgui.py" &
 	;;
 
     # Ignore others
