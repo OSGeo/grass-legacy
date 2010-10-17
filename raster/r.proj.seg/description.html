@@ -137,8 +137,19 @@ are provided.
 To avoid excessive time consumption when reprojecting a map the region and 
 resolution of the target location should be set appropriately beforehand.
 
-A simple way to do this is to generate a vector "box" map of the region in
-the source location using <em><a href="v.in.region.html">v.in.region</a></em>.
+<p>
+A simple way to do this is to check the projected bounds of the input map
+in the current location's projection using the <b>-p</b> flag. The <b>-g</b>
+flag reports the same thing, but in a form which can be directly cut and
+pasted into a <em>g.region</em> command. After setting the region in that
+way you might check the cell resolution with "<em>g.region -p</em>" then
+snap it to a regular grid with <em>g.region</em>'s -a flag. E.g.
+<tt>g.region&nbsp;-a&nbsp;res=5 -p</tt>. Note that this is just a rough guide.
+
+<p>
+A more involved, but more accurate, way to do this is to generate a vector
+"box" map of the region in the source location using
+ <em><a href="v.in.region.html">v.in.region</a></em>.
 This "box" map is then reprojected into the target location with
 <em><a href="v.proj.html">v.proj</a></em>.
 Next the region in the target location is set to the extent of the new vector
@@ -157,7 +168,64 @@ may be odd with trimming.
 
 <h2>EXAMPLES</h2>
 
-<h3>v.in.region method</h3>
+<h4>Inline method</h4>
+With GRASS running in the destination location use the <b>-g</b> flag to
+show the input map's bounds once reprojected into the current map projection,
+then use that to set the region bounds before performing the reprojection:
+
+<div class="code"><pre>
+# calculate where output map will be
+GRASS> r.proj input=elevation location=ll_wgs84 mapset=user1 -p
+Source cols: 8162
+Source rows: 12277
+Local north: -4265502.30382993
+Local south: -4473453.15255565
+Local west: 14271663.19157564
+Local east: 14409956.2693866
+
+# same calculation, but in a form which can be cut and pasted into a g.region call
+GRASS> r.proj input=elevation location=ll_wgs84 mapset=user1 -g
+n=-4265502.30382993 s=-4473453.15255565 w=14271663.19157564 e=14409956.2693866 rows=12277 col
+s=8162
+
+GRASS> g.region n=-4265502.30382993 s=-4473453.15255565 \
+  w=14271663.19157564 e=14409956.2693866 rows=12277 cols=8162 -p
+projection: 99 (Mercator)
+zone:       0
+datum:      wgs84
+ellipsoid:  wgs84
+north:      -4265502.30382993
+south:      -4473453.15255565
+west:       14271663.19157564
+east:       14409956.2693866
+nsres:      16.93824621
+ewres:      16.94352828
+rows:       12277
+cols:       8162
+cells:      100204874
+
+# round resolution to something cleaner
+GRASS> g.region res=17 -a -p
+projection: 99 (Mercator)
+zone:       0
+datum:      wgs84
+ellipsoid:  wgs84
+north:      -4265487
+south:      -4473465
+west:       14271653
+east:       14409965
+nsres:      17
+ewres:      17
+rows:       12234
+cols:       8136
+cells:      99535824
+
+# finally, perform the reprojection
+GRASS> r.proj input=elevation location=ll_wgs84 mapset=user1 memory=800
+</pre></div>
+
+
+<h4>v.in.region method</h4>
 <div class="code"><pre>
 
 # In the source location, use v.in.region to generate a bounding box around the
