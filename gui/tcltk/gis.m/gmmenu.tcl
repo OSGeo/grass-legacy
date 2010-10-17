@@ -112,6 +112,7 @@ set descmenu [subst  {
 		{command {[G_msg "Multiple formats using OGR"]} {} "v.in.ogr: Import multiple formats using OGR" {} -command { execute v.in.ogr }}
 		{separator}
 		{command {[G_msg "ASCII points or GRASS ASCII vector"]} {} "v.in.ascii: Import ASCII points file or GRASS ASCII vector file" {} -command { execute v.in.ascii }}
+		{command {[G_msg "ASCII points as vector lines"]} {} "v.in.lines: Creates a lines vector map from an ASCII x,y points file." {} -command { execute v.in.lines }}
 		{command {[G_msg "Old GRASS vector"]} {} "v.convert: Import old GRASS vector format" {} -command { execute v.convert }}
 		{separator}
 		{command {[G_msg "DXF"]} {} "v.in.dxf: Import DXF file" {} -command { execute v.in.dxf }}
