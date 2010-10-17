@@ -290,7 +290,7 @@ int Vect_topo_dump(struct Map_info *Map, FILE * out)
     struct Plus_head *plus;
 
     plus = &(Map->plus);
-
+    
     fprintf(out, "---------- TOPOLOGY DUMP ----------\n");
 
     /* box */
@@ -305,8 +305,8 @@ int Vect_topo_dump(struct Map_info *Map, FILE * out)
 	    continue;
 	}
 	Node = plus->Node[i];
-	fprintf(out, "node = %d, n_lines = %d, xy = %f, %f\n", i,
-		Node->n_lines, Node->x, Node->y);
+	fprintf(out, "node = %d, n_lines = %d, xyz = %f, %f, %f\n", i,
+		Node->n_lines, Node->x, Node->y, Node->z);
 	for (j = 0; j < Node->n_lines; j++) {
 	    line = Node->lines[j];
 	    Line = plus->Line[abs(line)];
