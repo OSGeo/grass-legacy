@@ -2207,7 +2207,7 @@ class MapsetAccess(wx.Dialog):
     decorations
     """
     def __init__(self, parent, id = wx.ID_ANY,
-                 title=_('Set/unset access to mapsets in current location'),
+                 title=_('Manage access to mapsets'),
                  size = (350, 400),
                  style = wx.DEFAULT_DIALOG_STYLE | wx.RESIZE_BORDER, **kwargs):
         
