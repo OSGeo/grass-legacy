@@ -24,6 +24,8 @@ if not os.getenv("GRASS_WXBUNDLED"):
     globalvar.CheckForWx()
 import wx
 
+import grass.script as grass
+
 import gcmd
 import gselect
 try:
@@ -210,6 +212,12 @@ class MapCalcFrame(wx.Frame):
                                     style = wx.CB_DROPDOWN |
                                     wx.CB_READONLY | wx.TE_PROCESS_ENTER)
         
+        self.addbox = wx.CheckBox(parent=self.panel,
+                                  label=_('Add created raster map into layer tree'), style = wx.NO_BORDER)
+        self.addbox.SetValue(UserSettings.Get(group='cmd', key='addNewLayer', subkey='enabled'))
+        if not self.parent or self.parent.GetName() != 'LayerManager':
+            self.addbox.Hide()
+        
         #
         # Bindings
         #
@@ -313,15 +321,17 @@ class MapCalcFrame(wx.Frame):
         sizer.Add(item = expressSizer, proportion = 1,
                   flag = wx.EXPAND | wx.LEFT | wx.RIGHT,
                   border = 5)
-        
+        if self.addbox.IsShown():
+            sizer.Add(item = self.addbox, proportion = 0,
+                      flag = wx.EXPAND | wx.LEFT | wx.TOP | wx.RIGHT,
+                      border = 5)
         sizer.Add(item = buttonSizer4, proportion = 0,
                   flag = wx.ALIGN_RIGHT | wx.ALL, border = 1)
         
-        self.panel.SetAutoLayout(True)        
+        self.panel.SetAutoLayout(True)
         self.panel.SetSizer(sizer)
         sizer.Fit(self.panel)
         
-        self.Fit()
         self.Layout()
         
     def AddMark(self,event):
@@ -404,14 +414,27 @@ class MapCalcFrame(wx.Frame):
         
         mctxt = self.text_mcalc.GetValue().strip().replace("\n"," ")
         mctxt = mctxt.replace(" " , "")
-
+        
         if self.log:
             cmd = [self.cmd, str('%s = %s' % (name, mctxt))]
-            self.log.RunCmd(cmd)
+            self.log.RunCmd(cmd, onDone = self.OnDone)
             self.parent.Raise()
         else:
             gcmd.RunCommand(self.cmd,
                             "%s=%s" % (name, mctxt))
+        
+    def OnDone(self, cmd, returncode):
+        """!Add create map to the layer tree"""
+        if not self.addbox.IsChecked():
+            return
+        name = self.newmaptxt.GetValue().strip() + '@' + grass.gisenv()['MAPSET']
+        self.parent.GetLayerTree().AddLayer(ltype = 'vector',
+                                            lname = name,
+                                            lcmd = ['d.rast', 'map=%s' % name],
+                                            multiple = False)
+        display = self.parent.GetLayerTree().GetMapDisplay()
+        if display and display.IsAutoRendered():
+            display.GetWindow().UpdateMap(render = True)
         
     def OnClear(self, event):
         """!Clears text area
