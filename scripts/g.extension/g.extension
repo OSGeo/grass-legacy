@@ -78,6 +78,7 @@ fi
 SVNURL_ADDONS="$GIS_OPT_SVNURL"
 MODULE="$GIS_OPT_EXTENSION"
 PREFIX="$GIS_OPT_PREFIX"
+SYSADMIN=0
 
 #make a temporary directory
 TMPDIR="`g.tempfile pid=$$`"
@@ -216,7 +217,7 @@ if [ "$PREFIX" = '$GRASS_ADDON_PATH' ] ; then
     fi
     PREFIX="$GRASS_ADDON_PATH"
 elif [ "$PREFIX" = '$GISBASE' ] || [ $GIS_FLAG_S -eq 1 ] ; then
-   g.message -w "'-s' flag not implemented yet"
+   SYSADMIN=1
    PREFIX="$GISBASE"
 fi
 
@@ -228,7 +229,7 @@ else
     exit 1
 fi
 
-if [ ! -w "$PREFIX" ] ; then
+if [ ! -w "$PREFIX" -a $SYSADMIN -ne 1 ] ; then
     g.message -e "'$PREFIX' is not writable (are you logged in as the system administator?)"
     exit 1
 fi
@@ -298,19 +299,20 @@ else
       mkdir -p "${MYINST_DIR}/man/man1"
    fi
 
-   # use `test -w` instead of touch?
-   touch "${MYINST_DIR}/`basename $0`.$$"
-   if [ $? -ne 0 ] ; then
-      g.message -e message="Cannot write to <$MYINST_DIR>, installation failed"
-      exit 1
+   if [ $SYSADMIN -eq 1 ] ; then
+      if test -f "${MYINST_DIR}/$PROGTYPE/${MODULE}" ; then
+         g.message "You need to enter the root password next:"
+         su -c "rm -f \"${MYINST_DIR}/$PROGTYPE/${MODULE}\""
+      fi
+      g.message "You need to enter the root password next:"
+      su -c "make MODULE_TOPDIR="$GISBASE" INST_DIR="$MYINST_DIR" install"
+   else
+      if test -f "${MYINST_DIR}/$PROGTYPE/${MODULE}" ; then
+         rm -f "${MYINST_DIR}/$PROGTYPE/${MODULE}"
+      fi
+      make MODULE_TOPDIR="$GISBASE" INST_DIR="$MYINST_DIR" install
    fi
-   rm -f "${MYINST_DIR}/`basename $0`.$$"
 
-   if test -f "${MYINST_DIR}/$PROGTYPE/${MODULE}" ; then
-      rm -f "${MYINST_DIR}/$PROGTYPE/${MODULE}"
-   fi
-
-   make MODULE_TOPDIR="$GISBASE" INST_DIR="$MYINST_DIR" install
    if [ $? -ne 0 ] ; then
       g.message -e message="Installation failed, sorry. Please check above error messages."
       cleanup
@@ -328,8 +330,6 @@ else
       ln -s "$MYINST_DIR/$PROGTYPE/$MODULE" "$MYINST_DIR/"
    fi
 fi
-
-#TODO: implement the $GIS_FLAG_S flag using sudo.
 
 cleanup
 
