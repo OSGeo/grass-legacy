@@ -301,10 +301,10 @@ else
 
    if [ $SYSADMIN -eq 1 ] ; then
       if test -f "${MYINST_DIR}/$PROGTYPE/${MODULE}" ; then
-         g.message "You need to enter the root password next:"
+         g.message "You need to enter the root password to remove the previous version of ${MODULE}:"
          su -c "rm -f \"${MYINST_DIR}/$PROGTYPE/${MODULE}\""
       fi
-      g.message "You need to enter the root password next:"
+      g.message "You need to enter the root password next to install ${MODULE}:"
       su -c "make MODULE_TOPDIR="$GISBASE" INST_DIR="$MYINST_DIR" install"
    else
       if test -f "${MYINST_DIR}/$PROGTYPE/${MODULE}" ; then
