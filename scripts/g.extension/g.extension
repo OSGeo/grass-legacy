@@ -43,7 +43,7 @@
 #% key_desc: url
 #% description: SVN Addons repository URL
 #% required: yes
-#% answer: https://svn.osgeo.org/grass/grass-addons/
+#% answer: https://svn.osgeo.org/grass/grass-addons
 #%end
 #%option
 #% key: prefix
@@ -51,12 +51,16 @@
 #% key_desc: path
 #% description: Prefix where to install extension
 #% answer: $GISBASE
-#% required: yes
+#% required: no
 #%end
 #%flag
 #% key: l
 #% description: List available modules in the GRASS Addons SVN repository
 #% guisection: Print
+#%end
+#%flag
+#% key: s
+#% description: Install system-wide (may need system administrator rights)
 #%end
 
 
@@ -74,6 +78,7 @@ fi
 SVNURL_ADDONS="$GIS_OPT_SVNURL"
 MODULE="$GIS_OPT_EXTENSION"
 PREFIX="$GIS_OPT_PREFIX"
+SYSADMIN=0
 
 #make a temporary directory
 TMPDIR="`g.tempfile pid=$$`"
@@ -168,7 +173,7 @@ list_available_modules()
      cd "$TMPDIR"
      rm -f index.html
      if [ "$USE_WGET" ] ; then
-        wget --quiet -nv "$SVNURL_ADDONS/$MODCLASS"
+        wget --quiet -nv "$SVNURL_ADDONS/$MODCLASS" -O index.html
      else
         curl -silent --location "$SVNURL_ADDONS/$MODCLASS" -o index.html
      fi
@@ -176,7 +181,7 @@ list_available_modules()
         cut -d'"' -f2 | sed 's+/$++g' >> list_$$.txt
      rm -f index.html
  done
- cat list_$$.txt
+ grep -v 'Makefile' list_$$.txt
  rm -f list_$$.txt
  # so why save to a file at all instead of cat'ing directly?
 }
@@ -199,9 +204,23 @@ if [ -z "$GIS_OPT_EXTENSION" -a $GIS_FLAG_L -eq 0 ] ; then
    exit 1
 fi
 
-if [ "$PREFIX" = '$GISBASE' ] ; then
+
+if [ "$PREFIX" = '$GRASS_ADDON_PATH' ] ; then 
+    if [ -z "$GRASS_ADDON_PATH" ] ; then 
+	g.message -w message="GRASS_ADDON_PATH is not defined, installing to ~/.grass6/addons/"
+	ADDON_PATH_EMPTY=true
+	#g.message message="Suggest you set GRASS_ADDON_PATH and GRASS_ADDON_ETC to ..."
+	## will GRASS_ADDON_ETC help for man/ and docs/ ?
+	## maybe have g.manual search in GRASS_ADDON_ETC/../ ?  :-/
+	mkdir -p ~/.grass6/addons
+	GRASS_ADDON_PATH=~/.grass6/addons
+    fi
+    PREFIX="$GRASS_ADDON_PATH"
+elif [ "$PREFIX" = '$GISBASE' ] || [ $GIS_FLAG_S -eq 1 ] ; then
+   SYSADMIN=1
    PREFIX="$GISBASE"
 fi
+
 
 if [ -d "$PREFIX" ] ; then
     MYINST_DIR="$PREFIX"
@@ -210,14 +229,27 @@ else
     exit 1
 fi
 
+if [ ! -w "$PREFIX" -a $SYSADMIN -ne 1 ] ; then
+    g.message -e "'$PREFIX' is not writable (are you logged in as the system administator?)"
+    exit 1
+fi
+
+
 if [ "$GIS_OPT_OPERATION" = "remove" ] ; then
    g.message message="Removing <$MODULE>..."
 
    if test -f "${MYINST_DIR}/bin/${MODULE}" ; then
        rm -f "${MYINST_DIR}/bin/${MODULE}"
    fi
+   if test -f "$MYINST_DIR/scripts/$MODULE" ; then
+       rm -f "$MYINST_DIR/scripts/$MODULE"
+   fi
+   if test -h "$MYINST_DIR/$MODULE" ; then
+       rm -f "$MYINST_DIR/$MODULE"
+   fi
    if test -f "${MYINST_DIR}/docs/html/${MODULE}.html" ; then
        rm -f "${MYINST_DIR}/docs/html/${MODULE}.html"
+       #also html/$MODULE*.jpg, html/$MODULE*.png
    fi
    if test -f "${MYINST_DIR}/man/man1/${MODULE}.1" ; then
        rm -f "${MYINST_DIR}/man/man1/${MODULE}.1"
@@ -233,23 +265,22 @@ g.message message="Fetching <$MODULE> from GRASS-Addons SVN (be patient)..."
 svn co "${SVNURL_ADDONS}/${MODULECLASS}/${MODULE}"
 
 if [ $? -ne 0 ] ; then
-   g.message -e message="GRASS Addon ${MODULE} not found in repository or no network connection or another problem"
+   g.message -e message="GRASS Add-on $MODULE not found in repository or no network connection or another problem"
    exit 1
 fi
 
 cd "$TMPDIR/$MODULE"
-g.message message="Compiling <${MODULE}>..."
+g.message message="Compiling <$MODULE>..."
 make MODULE_TOPDIR="$GISBASE"
 if [ $? -ne 0 ] ; then
    g.message -e message="Compilation failed, sorry. Please check above error messages."
    cleanup
    exit 1
 else
-   g.message message="Installing ${MODULE}..."
+   g.message message="Installing <$MODULE>..."
 
    # is it a script?
-   grep "default: script" "$TMPDIR/$MODULE/Makefile" 2>&1 >/dev/null
-   if [ $? -eq 0 ] ; then
+   if [ `grep -c 'default: script' "$TMPDIR/$MODULE/Makefile"` -eq 1 ] ; then
       PROGTYPE=scripts
    else
       PROGTYPE=bin
@@ -267,26 +298,36 @@ else
    if test ! -d "${MYINST_DIR}/man/man1" ; then
       mkdir -p "${MYINST_DIR}/man/man1"
    fi
-   touch "${MYINST_DIR}/`basename $0`.$$"
-   if [ $? -ne 0 ] ; then
-      g.message -e message="Cannot write to <$MYINST_DIR>, installation failed"
-      exit 1
+
+   if [ $SYSADMIN -eq 1 ] ; then
+      if test -f "${MYINST_DIR}/$PROGTYPE/${MODULE}" ; then
+         g.message "You need to enter the root password to remove the previous version of ${MODULE}:"
+         su -c "rm -f \"${MYINST_DIR}/$PROGTYPE/${MODULE}\""
+      fi
+      g.message "You need to enter the root password next to install ${MODULE}:"
+      su -c "make MODULE_TOPDIR="$GISBASE" INST_DIR="$MYINST_DIR" install"
    else
-      rm -f "${MYINST_DIR}/`basename $0`.$$"
       if test -f "${MYINST_DIR}/$PROGTYPE/${MODULE}" ; then
          rm -f "${MYINST_DIR}/$PROGTYPE/${MODULE}"
       fi
       make MODULE_TOPDIR="$GISBASE" INST_DIR="$MYINST_DIR" install
-      if [ $? -ne 0 ] ; then
-         g.message -e message="Installation failed, sorry. Please check above error messages."
-         cleanup
-         exit 1
-      fi
-      if [ ! -x "${MYINST_DIR}/$PROGTYPE/${MODULE}" ] ; then
-	g.message -e "Module did not install properly"
-	cleanup
-	exit 1
-      fi
+   fi
+
+   if [ $? -ne 0 ] ; then
+      g.message -e message="Installation failed, sorry. Please check above error messages."
+      cleanup
+      exit 1
+   fi
+
+   if [ ! -x "${MYINST_DIR}/$PROGTYPE/${MODULE}" ] ; then
+     g.message -e "Module did not install properly"
+     cleanup
+     exit 1
+   fi
+
+   if [ "$MYINST_DIR" = "$GRASS_ADDON_PATH" ] ; then
+      # symlink into path which is actually in the $PATH
+      ln -s "$MYINST_DIR/$PROGTYPE/$MODULE" "$MYINST_DIR/"
    fi
 fi
 
@@ -294,5 +335,9 @@ cleanup
 
 g.message message=""
 g.message message="Installation of <$MODULE> in <$MYINST_DIR> successfully finished."
+
+if [ -n "$ADDON_PATH_EMPTY" ] && [ "$GIS_FLAG_S" -eq 0 ] ; then
+   g.message -w message='This add-on module will not function until you set the GRASS_ADDON_PATH environment variable (see "g.manual variables")'
+fi
 
 exit 0
