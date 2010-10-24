@@ -86,7 +86,9 @@ int main(int argc, char *argv[])
 	_("Name(s) of existing mapset(s) to remove from search list");
     
     opt.fs = G_define_standard_option(G_OPT_F_SEP);
-    opt.fs->answer = " ";
+    opt.fs->label = _("Field separator");
+    opt.fs->description = _("Special characters: newline, space, comma, tab");
+    opt.fs->answer = "space";
     
     opt.list = G_define_flag();
     opt.list->key = 'l';
