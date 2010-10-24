@@ -25,6 +25,10 @@ for details.
 
 from core import *
 
+# i18N
+import gettext
+gettext.install('grasslibs', os.path.join(os.getenv("GISBASE"), 'locale'), unicode=True)
+
 def db_describe(table, **args):
     """!Return the list of columns for a database table
     (interface to `db.describe -c'). Example:

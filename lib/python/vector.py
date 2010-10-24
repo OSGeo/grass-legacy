@@ -27,6 +27,10 @@ import os
 
 from core import *
 
+# i18N
+import gettext
+gettext.install('grasslibs', os.path.join(os.getenv("GISBASE"), 'locale'), unicode=True)
+
 # run "v.db.connect -g ..." and parse output
 
 def vector_db(map, **args):
@@ -83,7 +87,7 @@ def vector_layer_db(map, layer):
     try:
         f = vector_db(map)[int(layer)]
     except KeyError:
-	fatal("Database connection not defined for layer %s" % layer)
+	fatal(_("Database connection not defined for layer %s") % layer)
 
     return f
 
@@ -180,7 +184,8 @@ def vector_db_select(map, layer = 1, **kwargs):
     try:
         key = vector_db(map = map)[layer]['key']
     except KeyError:
-        error('Missing layer %d in vector map <%s>' % (layer, map))
+        error(_('Missing layer %(layer)d in vector map <%(map)s>') % \
+                  { 'layer' : layer, 'map' : map })
         return { 'columns' : [], 'values' : {} }
         
     if kwargs.has_key('columns'):
@@ -195,7 +200,7 @@ def vector_db_select(map, layer = 1, **kwargs):
                        fs = '|', **kwargs)
     
     if not ret:
-        error('vector_select() failed')
+        error(_('vector_select() failed'))
         return { 'columns' : [], 'values' : {} }
     
     columns = []
