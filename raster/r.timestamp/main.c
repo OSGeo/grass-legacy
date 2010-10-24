@@ -7,7 +7,7 @@
  *               Glynn Clements <glynn gclements.plus.com>,
  *               Hamish Bowman <hamish_nospam yahoo.com>, Jan-Oliver Wagner <jan intevation.de>
  * PURPOSE:      
- * COPYRIGHT:    (C) 1999-2006 by the GRASS Development Team
+ * COPYRIGHT:    (C) 1999-2006, 2010 by the GRASS Development Team
  *
  *               This program is free software under the GNU General Public
  *               License (>=v2). Read the file COPYING that comes with GRASS
@@ -32,7 +32,8 @@ int main(int argc, char *argv[])
     G_gisinit(argv[0]);
 
     module = G_define_module();
-    module->keywords = _("raster");
+    module->keywords = _("raster, metadata, timestamp");
+    module->label = _("Modifies a timestamp for a raster map.");
     module->description = _("Print/add/remove a timestamp for a raster map.");
 
     map = G_define_standard_option(G_OPT_R_MAP);
@@ -42,8 +43,9 @@ int main(int argc, char *argv[])
     date->key_desc = "timestamp";
     date->required = NO;
     date->type = TYPE_STRING;
-    date->description = _("Datetime, datetime1/datetime2, or none");
-
+    date->label = _("Datetime, datetime1/datetime2, or 'none' to remove");
+    date->description = _("Format: '15 jan 1994' (absolute) or '2 years' (relative)");
+    
     if (G_parser(argc, argv))
 	exit(EXIT_FAILURE);
 
