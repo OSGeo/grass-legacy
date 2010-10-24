@@ -57,7 +57,6 @@ int main(int argc, char *argv[])
 
     module = G_define_module();
     module->keywords = _("general, settings");
-    G_add_keyword(_("search path"));
     module->label = _("Modifies the user's current mapset search path.");
     module->description = _("Affects the user's access to data existing "
 			    "under the other mapsets in the current location.");
