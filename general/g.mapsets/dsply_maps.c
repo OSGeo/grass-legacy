@@ -41,6 +41,20 @@ static int display2(const char *fs)
     int nleft, len, n;
     char *name;
 
+    if (strcmp(fs, "space") == 0)
+	fs = " ";
+    else if (strcmp(fs, "comma") == 0)
+	fs = ",";
+    else if (strcmp(fs, "tab") == 0)
+	fs = "\t";
+    else if (strcmp(fs, "newline") == 0) {
+	for (n = 0; n < nmapsets; n++) {
+	    fprintf(stdout, "%s\n", mapset_name[n]);
+	}
+	
+	return 0;
+    }
+    
     nleft = 78;
     for (n = 0; n < nmapsets; n++) {
 	len = strlen(name = mapset_name[n]);
