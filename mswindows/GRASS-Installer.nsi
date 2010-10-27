@@ -671,10 +671,13 @@ Section "GRASS" SecGRASS
 	FileWrite $0 'set GRASS_PROJSHARE=%GRASSDIR%\proj$\r$\n'
 	FileWrite $0 '$\r$\n'
 	FileWrite $0 'rem Set GDAL_DATA$\r$\n'	
-	FileWrite $0 'set GDAL_DATA=%GRASSDIR%\etc\ogr_csv$\r$\n'
+	FileWrite $0 'set GDAL_DATA=%GRASSDIR%\share\gdal$\r$\n'
 	FileWrite $0 '$\r$\n'
 	FileWrite $0 'rem Set PROJ_LIB$\r$\n'	
 	FileWrite $0 'set PROJ_LIB=%GRASSDIR%\proj$\r$\n'
+	FileWrite $0 '$\r$\n'
+	FileWrite $0 'rem Set GEOTIFF_CSV$\r$\n'	
+	FileWrite $0 'set GEOTIFF_CSV=%GRASSDIR%\share\epsg_csv$\r$\n'
 	FileWrite $0 '$\r$\n'
 	FileWrite $0 'rem Path to the python directory$\r$\n'
 	FileWrite $0 'set PYTHONHOME=%GRASSDIR%\Python25$\r$\n'
@@ -792,11 +795,14 @@ Section "GRASS" SecGRASS
 	FileWrite $0 'export GRASS_PROJSHARE$\r$\n'
 	FileWrite $0 '$\r$\n'
 	FileWrite $0 '# Set the GDAL_DATA variable$\r$\n'
-	FileWrite $0 'GDAL_DATA="$INSTALL_DIR\etc\ogr_csv"$\r$\n'
+	FileWrite $0 'GDAL_DATA="$INSTALL_DIR\share\gdal"$\r$\n'
 	FileWrite $0 'export GDAL_DATA$\r$\n'
 	FileWrite $0 '# Set the PROJ_LIB variable$\r$\n'
 	FileWrite $0 'PROJ_LIB="$INSTALL_DIR\proj"$\r$\n'
 	FileWrite $0 'export PROJ_LIB $\r$\n'
+	FileWrite $0 '# Set the GEOTIFF_CSV variable$\r$\n'
+	FileWrite $0 'GEOTIFF_CSV="$INSTALL_DIR\share\epsg_csv"$\r$\n'
+	FileWrite $0 'export GEOTIFF_CSV $\r$\n'
 	FileWrite $0 '$\r$\n'
 	FileWrite $0 'exec "$$GISBASE/etc/Init.sh" "$$@"'
 	FileClose $0
@@ -961,11 +967,12 @@ Section "Uninstall"
 	RMDir /r "$INSTDIR\locale"
 	RMDir /r "$INSTDIR\msys"
 	RMDir /r "$INSTDIR\proj"
+	RMDir /r "$INSTDIR\share"
 	RMDir /r "$INSTDIR\Python25"
 	RMDir /r "$INSTDIR\scripts"
 	RMDir /r "$INSTDIR\sqlite"
 	RMDir /r "$INSTDIR\tcl-tk"
-	RMDir /r "$INSTDIR\tools"	
+	RMDir /r "$INSTDIR\tools"
 	
 	;if empty, remove the install folder
 	RMDir "$INSTDIR"
