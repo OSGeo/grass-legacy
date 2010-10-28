@@ -264,8 +264,8 @@ AC_ARG_WITH(gdal,
 
 AC_ARG_WITH(python,
 [  --with-python[=path/python-config]
-                          enable support for Python SWIG bindings and wxGUI
-                          Python extensions (python-config with path, e.g.
+                          enable support for wxGUI Python extensions
+                          (python-config with path, e.g.
                           '--with-python=/usr/bin/python2.5-config',
                           default: no)],, with_python="no")
 
@@ -1835,7 +1835,6 @@ AC_MSG_CHECKING(whether to use Python)
 PYTHONINC=
 PYTHONCFLAGS=
 PYTHONLDFLAGS=
-SWIG=
 USE_PYTHON=
 MACOSX_ARCHS_PYTHON=
 
@@ -1890,7 +1889,6 @@ fi # Done checking Python
 AC_SUBST(PYTHONINC)
 AC_SUBST(PYTHONCFLAGS)
 AC_SUBST(PYTHONLDFLAGS)
-AC_SUBST(SWIG)
 AC_SUBST(USE_PYTHON)
 AC_SUBST(MACOSX_ARCHS_PYTHON)
 
