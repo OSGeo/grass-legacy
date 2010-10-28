@@ -36,16 +36,24 @@ int main(int argc, char *argv[])
 
     module = G_define_module();
     module->keywords = _("vector, raster, conversion");
-    module->description = _("Converts a binary GRASS vector map "
-			    "into a GRASS raster map .");
+    module->description = _("Converts (rasterize) a vector map into a raster map.");
 
     input = G_define_standard_option(G_OPT_V_INPUT);
+
+    field_opt = G_define_standard_option(G_OPT_V_FIELD);
+    field_opt->guisection = _("Selection");
+
+    type_opt = G_define_standard_option(G_OPT_V_TYPE);
+    type_opt->options = "point,line,area";
+    type_opt->answer = "point,line,area";
+    type_opt->guisection = _("Selection");
+
     output = G_define_standard_option(G_OPT_R_OUTPUT);
 
     use_opt = G_define_option();
     use_opt->key = "use";
     use_opt->type = TYPE_STRING;
-    use_opt->required = NO;
+    use_opt->required = YES;
     use_opt->multiple = NO;
     use_opt->options = "attr,cat,val,z,dir";
     use_opt->answer = "attr";
@@ -55,34 +63,12 @@ int main(int argc, char *argv[])
 			      "val;use value specified by value option;"
 			      "z;use z coordinate (points or contours only);"
 			      "dir;output as flow direction (lines only)");
-
-    type_opt = G_define_standard_option(G_OPT_V_TYPE);
-    type_opt->options = "point,line,area";
-    type_opt->answer = "point,line,area";
-
-    field_opt = G_define_standard_option(G_OPT_V_FIELD);
-
+    
     /* for GRASS 7, IMHO this should be changed to "attrcolumn" */
     col = G_define_standard_option(G_OPT_COLUMN);
     col->description =
-	_("Name of column for attr parameter (data type must be numeric)");
+	_("Name of column for 'attr' parameter (data type must be numeric)");
     col->guisection = _("Attributes");
-
-    val_opt = G_define_option();
-    val_opt->key = "value";
-    val_opt->type = TYPE_DOUBLE;
-    val_opt->required = NO;
-    val_opt->multiple = NO;
-    val_opt->answer = "1";
-    val_opt->description = _("Raster value");
-
-    rows = G_define_option();
-    rows->key = "rows";
-    rows->type = TYPE_INTEGER;
-    rows->required = NO;
-    rows->multiple = NO;
-    rows->answer = "4096";
-    rows->description = _("Number of rows to hold in memory");
 
     rgbcol_opt = G_define_standard_option(G_OPT_COLUMN);
     rgbcol_opt->key = "rgbcolumn";
@@ -95,6 +81,22 @@ int main(int argc, char *argv[])
     label_opt->description =
 	_("Name of column used as raster category labels");
     label_opt->guisection = _("Attributes");
+
+    val_opt = G_define_option();
+    val_opt->key = "value";
+    val_opt->type = TYPE_DOUBLE;
+    val_opt->required = NO;
+    val_opt->multiple = NO;
+    val_opt->answer = "1";
+    val_opt->description = _("Raster value (for use=val)");
+
+    rows = G_define_option();
+    rows->key = "rows";
+    rows->type = TYPE_INTEGER;
+    rows->required = NO;
+    rows->multiple = NO;
+    rows->answer = "4096";
+    rows->description = _("Number of rows to hold in memory");
 
     if (G_parser(argc, argv))
 	exit(EXIT_FAILURE);
