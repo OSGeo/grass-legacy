@@ -1870,13 +1870,6 @@ else
     done
   fi
 
-  # look for the swig program
-  AC_PATH_PROG(SWIG, swig, no)
-
-  if test "$SWIG" = "no" ; then
-    AC_MSG_ERROR([*** couldn't find swig])
-  fi
-
   # check for available OSX archs in Python, assume framework
   if test -n "$MACOSX_ARCHS" ; then
     pylib=`"$PY_CONFIG" --prefix`/Python
