@@ -82,8 +82,8 @@ ac_help="$ac_help
                           e.g. '--with-gdal=/usr/local/bin/gdal-config')"
 ac_help="$ac_help
   --with-python[=path/python-config]
-                          enable support for Python SWIG bindings and wxGUI
-                          Python extensions (python-config with path, e.g.
+                          enable support for wxGUI Python extensions
+                          (python-config with path, e.g.
                           '--with-python=/usr/bin/python2.5-config',
                           default: no)"
 ac_help="$ac_help
@@ -1266,8 +1266,8 @@ ac_configure=$ac_aux_dir/configure # This should be Cygnus configure.
 
 # Set GISBASE and GRASS_BIN
 
-GISBASE=${WINDSTDIR}/dist.${ARCH}
-GRASS_BIN=${DSTDIR}/bin.${ARCH}
+GISBASE="${WINDSTDIR}/dist.${ARCH}"
+GRASS_BIN="${DSTDIR}/bin.${ARCH}"
 
 
 
@@ -1275,10 +1275,10 @@ GRASS_BIN=${DSTDIR}/bin.${ARCH}
 # Set GRASS_VERSION_*
 
 GRASS_VERSION_FILE=include/VERSION
-GRASS_VERSION_MAJOR=`sed -n 1p ${GRASS_VERSION_FILE}`
-GRASS_VERSION_MINOR=`sed -n 2p ${GRASS_VERSION_FILE}`
-GRASS_VERSION_RELEASE=`sed -n 3p ${GRASS_VERSION_FILE}`
-GRASS_VERSION_DATE=`sed -n 4p ${GRASS_VERSION_FILE}`
+GRASS_VERSION_MAJOR=`sed -n 1p "${GRASS_VERSION_FILE}"`
+GRASS_VERSION_MINOR=`sed -n 2p "${GRASS_VERSION_FILE}"`
+GRASS_VERSION_RELEASE=`sed -n 3p "${GRASS_VERSION_FILE}"`
+GRASS_VERSION_DATE=`sed -n 4p "${GRASS_VERSION_FILE}"`
 GRASS_VERSION_NUMBER=`echo ${GRASS_VERSION_MAJOR}.${GRASS_VERSION_MINOR}.${GRASS_VERSION_RELEASE}`
 NAME_VER=`echo ${GRASS_VERSION_NUMBER} | sed 's/\..*//'`
 
@@ -6051,8 +6051,8 @@ if test "$ac_cv_search_cuserid" != "no"; then
 else :
   
 fi
-DBMIEXTRALIB=$LIBS
-LIBS=$ac_save_libs
+DBMIEXTRALIB="$LIBS"
+LIBS="$ac_save_libs"
 
 
 # Note: -lxdr -liberty -lws2_32 is for MinGW
@@ -9201,7 +9201,7 @@ fi
 
 fi
 
-LDFLAGS=${ac_save_ldflags}
+LDFLAGS="${ac_save_ldflags}"
 
 fi # $USE_POSTGRES
 
@@ -11063,7 +11063,7 @@ else
   echo "$ac_t""no" 1>&6
 fi
 
-LDFLAGS=${ac_save_ldflags}
+LDFLAGS="${ac_save_ldflags}"
 
 cat >> confdefs.h <<\EOF
 #define OPENGL_X11 1
@@ -11246,7 +11246,7 @@ else
 { echo "configure: error: *** Unable to locate OpenGL library." 1>&2; exit 1; }
 fi
 
-LDFLAGS=${ac_save_ldflags}
+LDFLAGS="${ac_save_ldflags}"
 
 cat >> confdefs.h <<\EOF
 #define OPENGL_AQUA 1
@@ -11420,7 +11420,7 @@ rm -f conftest*
 LIBS=${ac_save_libs}
 LDFLAGS=${ac_save_ldflags}
 
-CFLAGS=${ac_save_cflags}
+CFLAGS="${ac_save_cflags}"
 
 OPENGLLIB="$OPENGL_LIB_PATH $OPENGLLIB"
 OPENGLULIB="$OPENGL_LIB_PATH $OPENGLULIB"
@@ -11656,7 +11656,7 @@ CPPFLAGS=$ac_save_cppflags
 
 
 if test "$tcl_ver" = "$tk_ver" ; then
-    tcltk_ver=$tcl_ver
+    tcltk_ver="$tcl_ver"
 else
     { echo "configure: error: *** Tcl/Tk version mismatch." 1>&2; exit 1; }
 fi
@@ -11664,7 +11664,7 @@ fi
 TCL_VERSION="$tcl_ver"
 
 # FreeBSD and CygWin don't have a "dot" between major/minor version number
-tcltk_ver2=`echo $tcltk_ver | sed 's/\.//g'`
+tcltk_ver2=`echo "$tcltk_ver" | sed 's/\.//g'`
 
 # With Tcl/Tk library directory
 
@@ -12598,7 +12598,7 @@ rm -f conftest*
 LIBS=${ac_save_libs}
 LDFLAGS=${ac_save_ldflags}
 
-CFLAGS=${ac_save_cflags}
+CFLAGS="${ac_save_cflags}"
 
 
 fi
@@ -13081,7 +13081,7 @@ else
 fi
 done
 
-CPPFLAGS=$save_CPPFLAGS
+CPPFLAGS="$save_CPPFLAGS"
 
 
 ac_save_ldflags="$LDFLAGS"
@@ -13696,7 +13696,7 @@ else
 fi
 done
 
-CPPFLAGS=$save_CPPFLAGS
+CPPFLAGS="$save_CPPFLAGS"
 
 # LAPACK linked to by default?
 if test lapack_ok=no; then
@@ -14105,7 +14105,7 @@ if test -n "$USE_X11"; then
 fi
 
 # With Cairo includes directory
-
+#FIXME: somehow quote dirs with spaces in $cairo ?
 CAIROINC=`pkg-config --cflags $cairo`
 
 
@@ -15554,9 +15554,9 @@ fi
 #LOC_CHECK_LIBS(ad?.a,adSeekLayer,openDWG,$OPENDWGLIBPATH,OPENDWGLIB,,)
 #
 #for now hack (but working):
-TRUEOPENDWGLIBPATH=`echo $OPENDWGLIBPATH | cut -b3-`
-adlib=`ls -1 $TRUEOPENDWGLIBPATH/ad?.a | tail -1`
-OPENDWGLIB=$adlib
+TRUEOPENDWGLIBPATH=`echo "$OPENDWGLIBPATH" | cut -b3-`
+adlib=`ls -1 "$TRUEOPENDWGLIBPATH"/ad?.a | tail -1`
+OPENDWGLIB="$adlib"
 
 fi # $USE_OPENDWG
 
@@ -15891,7 +15891,6 @@ echo "configure:15890: checking whether to use Python" >&5
 PYTHONINC=
 PYTHONCFLAGS=
 PYTHONLDFLAGS=
-SWIG=
 USE_PYTHON=
 MACOSX_ARCHS_PYTHON=
 
@@ -15907,7 +15906,7 @@ else
   # Extract the first word of "python-config", so it can be a program name with args.
 set dummy python-config; ac_word=$2
 echo $ac_n "checking for $ac_word""... $ac_c" 1>&6
-echo "configure:15911: checking for $ac_word" >&5
+echo "configure:15910: checking for $ac_word" >&5
 
 case "$PY_CONFIG" in
   /*)
@@ -15949,15 +15948,15 @@ for ac_hdr in Python.h
 do
 ac_safe=`echo "$ac_hdr" | sed 'y%./+-%__p_%'`
 echo $ac_n "checking for $ac_hdr""... $ac_c" 1>&6
-echo "configure:15953: checking for $ac_hdr" >&5
+echo "configure:15952: checking for $ac_hdr" >&5
 
 cat > conftest.$ac_ext <<EOF
-#line 15956 "configure"
+#line 15955 "configure"
 #include "confdefs.h"
 #include <$ac_hdr>
 EOF
 ac_try="$ac_cpp conftest.$ac_ext >/dev/null 2>conftest.out"
-{ (eval echo configure:15961: \"$ac_try\") 1>&5; (eval $ac_try) 2>&5; }
+{ (eval echo configure:15960: \"$ac_try\") 1>&5; (eval $ac_try) 2>&5; }
 ac_err=`grep -v '^ *+' conftest.out | grep -v "^conftest.${ac_ext}\$"`
 if test -z "$ac_err"; then
   rm -rf conftest*
@@ -16001,45 +16000,6 @@ CPPFLAGS=$ac_save_cppflags
     done
   fi
 
-  # look for the swig program
-  # Extract the first word of "swig", so it can be a program name with args.
-set dummy swig; ac_word=$2
-echo $ac_n "checking for $ac_word""... $ac_c" 1>&6
-echo "configure:16009: checking for $ac_word" >&5
-
-case "$SWIG" in
-  /*)
-  ac_cv_path_SWIG="$SWIG" # Let the user override the test with a path.
-  ;;
-  ?:/*)			 
-  ac_cv_path_SWIG="$SWIG" # Let the user override the test with a dos path.
-  ;;
-  *)
-  IFS="${IFS= 	}"; ac_save_ifs="$IFS"; IFS=":"
-  ac_dummy="$PATH"
-  for ac_dir in $ac_dummy; do 
-    test -z "$ac_dir" && ac_dir=.
-    if test -f $ac_dir/$ac_word; then
-      ac_cv_path_SWIG="$ac_dir/$ac_word"
-      break
-    fi
-  done
-  IFS="$ac_save_ifs"
-  test -z "$ac_cv_path_SWIG" && ac_cv_path_SWIG="no"
-  ;;
-esac
-SWIG="$ac_cv_path_SWIG"
-if test -n "$SWIG"; then
-  echo "$ac_t""$SWIG" 1>&6
-else
-  echo "$ac_t""no" 1>&6
-fi
-
-
-  if test "$SWIG" = "no" ; then
-    { echo "configure: error: *** couldn't find swig" 1>&2; exit 1; }
-  fi
-
   # check for available OSX archs in Python, assume framework
   if test -n "$MACOSX_ARCHS" ; then
     pylib=`"$PY_CONFIG" --prefix`/Python
@@ -16063,11 +16023,10 @@ fi # Done checking Python
 
 
 
-
 # Enable wxWidgets support (for wxGUI)
 
 echo $ac_n "checking whether to use wxWidgets""... $ac_c" 1>&6
-echo "configure:16071: checking whether to use wxWidgets" >&5
+echo "configure:16030: checking whether to use wxWidgets" >&5
 
 WXVERSION=
 WXWIDGETSCXXFLAGS= 
@@ -16088,7 +16047,7 @@ else
   # Extract the first word of "wx-config", so it can be a program name with args.
 set dummy wx-config; ac_word=$2
 echo $ac_n "checking for $ac_word""... $ac_c" 1>&6
-echo "configure:16092: checking for $ac_word" >&5
+echo "configure:16051: checking for $ac_word" >&5
 
 case "$WX_CONFIG" in
   /*)
@@ -16136,7 +16095,7 @@ fi
  REQWX="2.8.1"
 
  echo $ac_n "checking wxWidgets version""... $ac_c" 1>&6
-echo "configure:16140: checking wxWidgets version" >&5
+echo "configure:16099: checking wxWidgets version" >&5
  if WXVERSION=`"$WX_CONFIG" --version`; then
    echo "$ac_t""$WXVERSION" 1>&6
  else
@@ -16159,15 +16118,15 @@ for ac_hdr in wx/wxprec.h
 do
 ac_safe=`echo "$ac_hdr" | sed 'y%./+-%__p_%'`
 echo $ac_n "checking for $ac_hdr""... $ac_c" 1>&6
-echo "configure:16163: checking for $ac_hdr" >&5
+echo "configure:16122: checking for $ac_hdr" >&5
 
 cat > conftest.$ac_ext <<EOF
-#line 16166 "configure"
+#line 16125 "configure"
 #include "confdefs.h"
 #include <$ac_hdr>
 EOF
 ac_try="$ac_cpp conftest.$ac_ext >/dev/null 2>conftest.out"
-{ (eval echo configure:16171: \"$ac_try\") 1>&5; (eval $ac_try) 2>&5; }
+{ (eval echo configure:16130: \"$ac_try\") 1>&5; (eval $ac_try) 2>&5; }
 ac_err=`grep -v '^ *+' conftest.out | grep -v "^conftest.${ac_ext}\$"`
 if test -z "$ac_err"; then
   rm -rf conftest*
@@ -16241,7 +16200,7 @@ USE_TERMIO=
 STRIPFLAG=
 
 
-GRASS_HOME=${DSTDIR}
+GRASS_HOME="${DSTDIR}"
 
 
 trap '' 1 2 15
@@ -16504,7 +16463,6 @@ s%@OPENDWGLIB@%$OPENDWGLIB%g
 s%@USE_OPENDWG@%$USE_OPENDWG%g
 s%@USE_LARGEFILES@%$USE_LARGEFILES%g
 s%@PY_CONFIG@%$PY_CONFIG%g
-s%@SWIG@%$SWIG%g
 s%@PYTHONINC@%$PYTHONINC%g
 s%@PYTHONCFLAGS@%$PYTHONCFLAGS%g
 s%@PYTHONLDFLAGS@%$PYTHONLDFLAGS%g
