@@ -613,7 +613,7 @@ class GPrompt(object):
         if cmdString[:2] == 'd.' and not self.parent.curr_page:
             self.parent.NewDisplay(show=True)
         
-        cmd = shlex.split(str(cmdString))
+        cmd = utils.split(cmdString)
         if len(cmd) > 1:
             self.parent.RunCmd(cmd, switchPage = True)
         else:
@@ -888,9 +888,9 @@ class GPromptSTC(GPrompt, wx.stc.StyledTextCtrl):
             
             # parse command into list
             try:
-                cmd = shlex.split(str(line))
+                cmd = utils.split(str(line))
             except UnicodeError:
-                cmd = shlex.split(utils.EncodeString((line)))
+                cmd = utils.split(utils.EncodeString((line)))
             
             #  send the command list to the processor 
             self.parent.RunCmd(cmd)
