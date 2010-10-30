@@ -700,7 +700,8 @@ class GMConsole(wx.SplitterWindow):
         self.cmd_output_timer.Stop()
 
         # set focus on prompt
-        if self.parent.GetName() == "LayerManager":
+        if self.parent.GetName() == "LayerManager" and \
+                event.cmd[0] in globalvar.grassCmd['all']:
             self.btn_abort.Enable(False)
             display = self.parent.GetLayerTree().GetMapDisplay()
             if display and display.IsAutoRendered():
