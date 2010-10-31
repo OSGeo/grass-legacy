@@ -500,6 +500,7 @@ class ColorTable(wx.Frame):
         
     def OnLoadTable(self, event):
         """!Load current color table (using `r.colors -p`)"""
+        return # TODO backport r.colors -p or r.colors.out
         ctable = gcmd.RunCommand('r.colors',
                                  parent = self,
                                  read = True,
