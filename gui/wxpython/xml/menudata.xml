@@ -356,8 +356,8 @@
 	    <separator />
 	    <menuitem>
 	      <label>MPEG-1 export</label>
-	      <help>Raster File Series to MPEG Conversion Program.</help>
-	      <keywords>raster</keywords>
+	      <help>Raster File Series to MPEG Conversion.</help>
+	      <keywords>raster,animation</keywords>
 	      <handler>OnMenuCmd</handler>
 	      <command>r.out.mpeg</command>
 	    </menuitem>
@@ -583,7 +583,7 @@
 	    <separator />
 	    <menuitem>
 	      <label>Vector to raster</label>
-	      <help>Converts a binary GRASS vector map into a GRASS raster map .</help>
+	      <help>Converts (rasterize) a vector map into a raster map.</help>
 	      <keywords>vector,raster,conversion</keywords>
 	      <handler>OnMenuCmd</handler>
 	      <command>v.to.rast</command>
@@ -651,7 +651,7 @@
 	</menuitem>
 	<menuitem>
 	  <label>NVIZ (non-interactive)</label>
-	  <help>Experimental NVIZ CLI prototype.</help>
+	  <help>Allows rendering GIS data is a 3D space.</help>
 	  <keywords>visualization,raster,vector,raster3d</keywords>
 	  <handler>OnMenuCmd</handler>
 	  <command>nviz_cmd</command>
@@ -727,7 +727,7 @@
 	    <separator />
 	    <menuitem>
 	      <label>Change working environment</label>
-	      <help>Change current mapset.</help>
+	      <help>Changes current mapset.</help>
 	      <keywords>general,settings</keywords>
               <handler>OnMenuCmd</handler>
 	      <command>g.mapset</command>
@@ -869,8 +869,8 @@
 	    </menuitem>
 	    <menuitem>
 	      <label>Timestamp</label>
-	      <help>Print/add/remove a timestamp for a raster map.</help>
-	      <keywords>raster</keywords>
+	      <help>Modifies a timestamp for a raster map.</help>
+	      <keywords>raster,metadata,timestamp</keywords>
 	      <handler>OnMenuCmd</handler>
 	      <command>r.timestamp</command>
 	    </menuitem>
@@ -954,7 +954,7 @@
 	    </menuitem>
 	    <menuitem>
 	      <label>Color rules</label>
-	      <help>Creates/modifies the color table associated with a raster map layer.</help>
+	      <help>Interactive management of raster color tables.</help>
 	      <keywords>raster,color table</keywords>
 	      <handler>RulesCmd</handler>
 	      <command>r.colors</command>
@@ -1496,33 +1496,19 @@
 	      <command>r.reclass.area</command>
 	    </menuitem>
 	    <menuitem>
-	      <label>Reclassify interactively</label>
-	      <help>Creates a new map layer whose category values are based upon a reclassification of the categories in an existing raster map layer.</help>
-	      <keywords>raster</keywords>
-	      <handler>RulesCmd</handler>
-	      <command>r.reclass</command>
-	    </menuitem>
-	    <menuitem>
-	      <label>Reclassify using rules file</label>
-	      <help>Creates a new map layer whose category values are based upon a reclassification of the categories in an existing raster map layer.</help>
-	      <keywords>raster</keywords>
+	      <label>Reclassify</label>
+	      <help>Reclassify raster map based on category values.</help>
+	      <keywords>raster,reclassification</keywords>
 	      <handler>OnMenuCmd</handler>
 	      <command>r.reclass</command>
 	    </menuitem>
 	    <separator />
 	    <menuitem>
-	      <label>Recode interactively</label>
+	      <label>Recode</label>
 	      <help>Recodes categorical raster maps.</help>
 	      <keywords>raster,recode category</keywords>
-	      <handler>RulesCmd</handler>
-	      <command>r.recode</command>
-	    </menuitem>
-	    <menuitem>
-	      <label>Recode using rules file</label>
-	      <help>r.recode.file - Use ascii rules file to recode categories in raster map</help>
-	      <keywords>raster,recode</keywords>
 	      <handler>OnMenuCmd</handler>
-	      <command>r.recode.file</command>
+	      <command>r.recode</command>
 	    </menuitem>
 	    <separator />
 	    <menuitem>
@@ -1604,8 +1590,8 @@
 	    <separator />
 	    <menuitem>
 	      <label>Random deviates surface</label>
-	      <help>Produces a raster map layer of uniform random deviates whose range can be expressed by the user.</help>
-	      <keywords>raster</keywords>
+	      <help>Produces a raster map of uniform random deviates whose range can be expressed by the user.</help>
+	      <keywords>raster,random</keywords>
 	      <handler>OnMenuCmd</handler>
 	      <command>r.surf.random</command>
 	    </menuitem>
@@ -1690,7 +1676,7 @@
 	    <separator />
 	    <menuitem>
 	      <label>Fill NULL cells</label>
-	      <help>Fills no-data areas in raster maps using v.surf.rst splines interpolation</help>
+	      <help>Fills no-data areas in raster maps using splines interpolation.</help>
 	      <keywords>raster,elevation,interpolation</keywords>
 	      <handler>OnMenuCmd</handler>
 	      <command>r.fillnulls</command>
@@ -1848,8 +1834,8 @@
 	    </menuitem>
 	    <menuitem>
 	      <label>Rebuild topology on all vector maps</label>
-	      <help>Rebuilds topology on all vector maps in the current mapset..</help>
-	      <keywords>vector,topology</keywords>
+	      <help>Rebuilds topology on all vector maps in the current mapset.</help>
+	      <keywords>vector</keywords>
 	      <handler>OnMenuCmd</handler>
 	      <command>v.build.all</command>
 	    </menuitem>
@@ -1987,10 +1973,10 @@
 	    </menuitem>
 	    <menuitem>
 	      <label>Color rules</label>
-	      <help>Set colors interactively by entering color rules</help>
+	      <help>Interacrive management of vector color tables.</help>
 	      <handler>RulesCmd</handler>
-	      <keywords>vector, colors</keywords>
-	      <command>vcolors</command>
+	      <keywords>vector,color table</keywords>
+	      <command>v.colors</command>
 	    </menuitem>
 	  </items>
 	</menu>
@@ -2242,14 +2228,7 @@
 	      <command>v.category</command>
 	    </menuitem>
 	    <menuitem>
-	      <label>Reclassify objects interactively</label>
-	      <help>Changes vector category values for an existing vector map according to results of SQL queries or a value in attribute table column.</help>
-	      <keywords>vector,reclass,attributes</keywords>
-	      <handler>RulesCmd</handler>
-	      <command>v.reclass</command>
-	    </menuitem>
-	    <menuitem>
-	      <label>Reclassify objects using rules file</label>
+	      <label>Reclassify</label>
 	      <help>Changes vector category values for an existing vector map according to results of SQL queries or a value in attribute table column.</help>
 	      <keywords>vector,reclass,attributes</keywords>
 	      <handler>OnMenuCmd</handler>
