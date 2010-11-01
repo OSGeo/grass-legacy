@@ -1237,10 +1237,12 @@ class Map(object):
 
     def Clean(self):
         """!Clean layer stack - go trough all layers and remove them
-        from layer list Removes also l_mapfile and l_maskfile
+        from layer list.
+
+        Removes also l_mapfile and l_maskfile
         
-        @return 1 on faulure
-        @return None on success
+        @return False on failure
+        @return True on success
         """
         try:
             dir = os.path.dirname(self.mapfile)
@@ -1265,11 +1267,11 @@ class Map(object):
                     for f in glob.glob(removepath):
                         os.remove(f)
                 self.overlays.remove(overlay)
-            return None
         except:
-            return 1
-        self.layers = []
-
+            return False
+        
+        return True
+    
     def ReverseListOfLayers(self):
         """!Reverse list of layers"""
         return self.layers.reverse()
