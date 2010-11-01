@@ -959,6 +959,13 @@
 	      <handler>RulesCmd</handler>
 	      <command>r.colors</command>
 	    </menuitem>
+	    <menuitem>
+	      <label>Export color table</label>
+	      <help>Exports the color table associated with a raster map layer.</help>
+	      <keywords>raster,color table</keywords>
+              <handler>OnMenuCmd</handler>
+	      <command>r.colors.out</command>
+	    </menuitem>
 	    <separator />
 	    <menuitem>
 	      <label>Blend 2 color rasters</label>
