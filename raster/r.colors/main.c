@@ -32,6 +32,14 @@
 static char **rules;
 static int nrules;
 
+static int cmp(const void *aa, const void *bb)
+{
+    char *const *a = (char *const *)aa;
+    char *const *b = (char *const *)bb;
+    
+    return strcmp(*a, *b);
+}
+
 static void scan_rules(void)
 {
     char path[GPATH_MAX];
@@ -46,6 +54,8 @@ static void scan_rules(void)
     rules[nrules++] = G_store("grey.eq");
     rules[nrules++] = G_store("grey.log");
     rules[nrules++] = G_store("rules");
+
+    qsort(rules, nrules, sizeof(char *), cmp);
 }
 
 static char *rules_list(void)
