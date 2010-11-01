@@ -41,14 +41,15 @@
 
 #define MAIN
 
-#include "global.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <math.h>
 #include <grass/gis.h>
-#include "solpos00.h"
 #include <grass/glocale.h>
+
+#include "global.h"
+#include "solpos00.h"
 
 /* to be displayed in r.sunmask */
 static char *SOLPOSVERSION = "11 April 2001";
@@ -58,12 +59,6 @@ extern struct posdata pd, *pdat;	/* declare a posdata struct and a pointer for
 					   allocated dynamically with G_malloc) */
 struct Cell_head window;
 
-
-/*
-   #define      RASTER_VALUE_FUNC
- */
-
-
 union RASTER_PTR
 {
     void *v;
@@ -72,15 +67,10 @@ union RASTER_PTR
     DCELL *d;
 };
 
-
 #ifdef	RASTER_VALUE_FUNC
-
 double raster_value(union RASTER_PTR buf, int data_type, int col);
-
 #else
-
 #define	raster_value(buf, data_type, col)	((double)(data_type == CELL_TYPE ? buf.c[col] : (data_type == FCELL_TYPE ? buf.f[col] : buf.d[col])))
-
 #endif
 
 int main(int argc, char *argv[])
@@ -257,16 +247,16 @@ int main(int argc, char *argv[])
     if (!parm.north->answer || !parm.east->answer) {
 	north = (window.north - window.south) / 2. + window.south;
 	east = (window.west - window.east) / 2. + window.east;
-	G_message(_("Using map center coordinates: %f %f"), east, north);
+	G_verbose_message(_("Using map center coordinates: %f %f"), east, north);
     }
     else {			/* user defined east, north: */
 
 	sscanf(parm.north->answer, "%lf", &north);
 	sscanf(parm.east->answer, "%lf", &east);
 	if (strlen(parm.east->answer) == 0)
-	    G_fatal_error(_("Empty east coordinate specified!"));
+	    G_fatal_error(_("Empty east coordinate specified"));
 	if (strlen(parm.north->answer) == 0)
-	    G_fatal_error(_("Empty north coordinate specified!"));
+	    G_fatal_error(_("Empty north coordinate specified"));
     }
 
     /* check which method to use for sun position:
@@ -285,19 +275,19 @@ int main(int argc, char *argv[])
 	locparms = 0;
 
     if (solparms && locparms)	/* both defined */
-	G_fatal_error(_("Either define sun position or location/date/time parameters."));
+	G_fatal_error(_("Either define sun position or location/date/time parameters"));
 
     if (!solparms && !locparms)	/* nothing defined */
-	G_fatal_error(_("Neither sun position nor east/north, date/time/timezone definition are complete."));
+	G_fatal_error(_("Neither sun position nor east/north, date/time/timezone definition are complete"));
 
     /* if here, one definition was complete */
     if (locparms) {
-	G_message(_("Calculating sun position... (using solpos (V. %s) from NREL)\n"),
+	G_message(_("Calculating sun position... (using solpos (V. %s) from NREL)"),
 		  SOLPOSVERSION);
 	use_solpos = 1;
     }
     else {
-	G_message(_("Using user defined sun azimuth, altitude settings (ignoring eventual other values)\n"));
+	G_message(_("Using user defined sun azimuth, altitude settings (ignoring eventual other values)"));
 	use_solpos = 0;
     }
 
@@ -333,8 +323,8 @@ int main(int argc, char *argv[])
     if (use_solpos) {
 	G_debug(3, "\nlat:%f  long:%f", north, east);
 	retval =
-	    G_calc_solar_position(east, north, timezone, year, month, day,
-				  hour, minutes, seconds);
+	    calc_solar_position(east, north, timezone, year, month, day,
+				hour, minutes, seconds);
 
 	/* Remove +0.5 above if you want round-down instead of round-to-nearest */
 	sretr = (int)floor(pdat->sretr);	/* sunrise */
@@ -376,23 +366,23 @@ int main(int argc, char *argv[])
 		    }
 		}
 		else {
-		    G_message(_(" %d.%02d.%02d, daynum %d, time: %02i:%02i:%02i (decimal time: %f)\n"),
+		    G_message(_("%d.%02d.%02d, daynum %d, time: %02i:%02i:%02i (decimal time: %f)"),
 			      pdat->year, pdat->month, pdat->day,
 			      pdat->daynum, pdat->hour, pdat->minute,
 			      pdat->second,
 			      pdat->hour + (pdat->minute * 100.0 / 60.0 +
 					    pdat->second * 100.0 / 3600.0) /
 			      100.);
-		    G_message(_(" long: %f, lat: %f, timezone: %f\n"),
+		    G_message(_("long: %f, lat: %f, timezone: %f"),
 			      pdat->longitude, pdat->latitude,
 			      pdat->timezone);
-		    G_message(_(" Solar position: sun azimuth: %f,\n   sun angle above horz.(refraction corrected): %f\n"),
+		    G_message(_("Solar position: sun azimuth: %f, sun angle above horz.(refraction corrected): %f"),
 			      pdat->azim, pdat->elevref);
 
 		    if (sretr / 60 <= 24.0) {
-			G_message(_(" Sunrise time (without refraction): %02d:%02d:%02d\n"),
+			G_message(_("Sunrise time (without refraction): %02d:%02d:%02d\n"),
 				  sretr / 60, sretr % 60, sretr_sec);
-			G_message(_(" Sunset time  (without refraction): %02d:%02d:%02d\n"),
+			G_message(_("Sunset time  (without refraction): %02d:%02d:%02d\n"),
 				  ssetr / 60, ssetr % 60, ssetr_sec);
 		    }
 		}
@@ -417,34 +407,34 @@ int main(int argc, char *argv[])
 	G_debug(3, "current_time:%f sunrise:%f", current_time, sunrise);
 	if ((current_time < sunrise)) {
 	    if (sretr / 60 <= 24.0)
-		G_message(_("Time (%02i:%02i:%02i) is before sunrise (%02d:%02d:%02d)!\n"),
+		G_message(_("Time (%02i:%02i:%02i) is before sunrise (%02d:%02d:%02d)"),
 			  pdat->hour, pdat->minute, pdat->second, sretr / 60,
 			  sretr % 60, sretr_sec);
 	    else
-		G_message(_("Time (%02i:%02i:%02i) is before sunrise!\n"),
+		G_message(_("Time (%02i:%02i:%02i) is before sunrise"),
 			  pdat->hour, pdat->minute, pdat->second);
 
 	    G_warning(_("Nothing to calculate. Please verify settings."));
 	}
 	if ((current_time > sunset)) {
 	    if (sretr / 60 <= 24.0)
-		G_message(_("Time (%02i:%02i:%02i) is after sunset (%02d:%02d:%02d)!\n"),
+		G_message(_("Time (%02i:%02i:%02i) is after sunset (%02d:%02d:%02d)"),
 			  pdat->hour, pdat->minute, pdat->second, ssetr / 60,
 			  ssetr % 60, ssetr_sec);
 	    else
-		G_message(_("Time (%02i:%02i:%02i) is after sunset!\n"),
+		G_message(_("Time (%02i:%02i:%02i) is after sunset"),
 			  pdat->hour, pdat->minute, pdat->second);
 	    G_warning(_("Nothing to calculate. Please verify settings."));
 	}
     }
 
     if (flag3->answer && (use_solpos == 1)) {	/* we only want the sun position */
-	G_message(_("No map calculation requested. Finished.\n"));
+	G_message(_("No map calculation requested. Finished."));
 	exit(EXIT_SUCCESS);
     }
     else if (flag3->answer && (use_solpos == 0)) {
 	/* are you joking ? */
-	G_message(_("You already know the sun position.\n"));
+	G_message(_("You already know the sun position"));
 	exit(EXIT_SUCCESS);
     }
 
@@ -463,7 +453,7 @@ int main(int argc, char *argv[])
 
     if (data_type == CELL_TYPE) {
 	if ((G_read_range(name, mapset, &range)) < 0)
-	    G_fatal_error(_("Can't open range file for %s"), name);
+	    G_fatal_error(_("Unable to open range file for raster map <%s>"), name);
 	G_get_range_min_max(&range, &min, &max);
 	dmin = (double)min;
 	dmax = (double)max;
@@ -486,7 +476,8 @@ int main(int argc, char *argv[])
 	col1 = 0;
 	drow = -1;
 	if (G_get_raster_row(elev_fd, elevbuf.v, row1, data_type) < 0)
-	    G_fatal_error(_("Can't read row in input elevation map"));
+	    G_fatal_error(_("Unable to read raster map <%s> row %d"),
+			  name, row1);
 
 	while (col1 < window.cols) {
 	    dvalue = raster_value(elevbuf, data_type, col1);
@@ -546,7 +537,6 @@ int main(int argc, char *argv[])
     hist.edlinecnt = 3;
     G_write_history(outname, &hist);
 
-    G_done_msg(" ");
     exit(EXIT_SUCCESS);
 }
 
