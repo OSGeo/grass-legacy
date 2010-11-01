@@ -12,6 +12,7 @@ SUBDIRS = \
 	r.clump \
 	r.coin \
 	r.colors \
+	r.colors.out \
 	r.composite \
 	r.compress \
 	r.contour \
