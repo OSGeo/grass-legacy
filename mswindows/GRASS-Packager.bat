@@ -45,10 +45,19 @@ xcopy %GRASS_PREFIX% %PACKAGE_DIR% /S/V/F
 mkdir %PACKAGE_DIR%\extralib
 
 copy %OSGEO4W_DIR%\bin\*.dll %PACKAGE_DIR%\extralib
+del %PACKAGE_DIR%\extralib\libgrass_*6.4.0*.dll
 del %PACKAGE_DIR%\extralib\libgrass_*6.5*.dll
 del %PACKAGE_DIR%\extralib\libgrass_*7.0*.dll
 del %PACKAGE_DIR%\extralib\Qt*4.dll
 rem copy %OSGEO4W_DIR%\pgsql\lib\libpq.dll %PACKAGE_DIR%\extralib
+
+@echo.
+@echo -----------------------------------------------------------------------------------------------------------------------
+@echo Move GRASS libs from extralib to lib
+@echo -----------------------------------------------------------------------------------------------------------------------
+@echo.
+
+move %PACKAGE_DIR%\extralib\libgrass_*.dll %PACKAGE_DIR%\lib
 
 @echo.
 @echo -----------------------------------------------------------------------------------------------------------------------
