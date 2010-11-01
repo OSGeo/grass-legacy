@@ -2,8 +2,8 @@ MODULE_TOPDIR = ../..
 
 PGM = r.colors.out
 
-LIBES = $(RASTERLIB) $(GISLIB)
-DEPENDENCIES = $(RASTERDEP) $(GISDEP)
+LIBES = $(GISLIB)
+DEPENDENCIES = $(GISDEP)
 
 include $(MODULE_TOPDIR)/include/Make/Module.make
 
