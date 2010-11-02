@@ -1677,8 +1677,8 @@ class cmdPanel(wx.Panel):
         
     def OnVerbosity(self, event):
         """!Verbosity level changed"""
-        verbose = self.FindWindowById(self.task.get_flag('verbose')['wxId'])
-        quiet = self.FindWindowById(self.task.get_flag('quiet')['wxId'])
+        verbose = self.FindWindowById(self.task.get_flag('verbose')['wxId'][0])
+        quiet = self.FindWindowById(self.task.get_flag('quiet')['wxId'][0])
         if event.IsChecked():
             if event.GetId() == verbose.GetId():
                 if quiet.IsChecked():
