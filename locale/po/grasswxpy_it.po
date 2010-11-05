@@ -4679,7 +4679,7 @@ msgid ""
 "\n"
 "Mapset <%s> already exists in location."
 msgstr ""
-"Impossibile creare nuova tabella. La tabella <%s> esiste gi? nel database"
+"Impossibile creare nuova tabella. La tabella <%s> esiste già nel database"
 
 #: ../gui/wxpython/gis_set.py:469
 #, fuzzy, python-format
@@ -4700,7 +4700,7 @@ msgid ""
 "\n"
 "Location <%s> already exists in GRASS database."
 msgstr ""
-"Impossibile creare nuova tabella. La tabella <%s> esiste gi? nel database"
+"Impossibile creare nuova tabella. La tabella <%s> esiste già nel database"
 
 #: ../gui/wxpython/gis_set.py:505
 #, fuzzy, python-format
@@ -4792,12 +4792,12 @@ msgid ""
 "home directory."
 msgstr ""
 "GRASS necessita di una cartella dove immagazzinare i dati. Creane una ora se "
-"non lo hai gi? fatto. Una scelta popolare ? \"grassdata\", situata nella tua "
+"non lo hai già fatto. Una scelta popolare è \"grassdata\", situata nella tua "
 "home"
 
 #: ../gui/wxpython/gui_modules/dbm_dialogs.py:71
 msgid "Database connection is not defined in DB file."
-msgstr "La connessione al database non ? definito nel DB file"
+msgstr "La connessione al database non è definito nel DB file"
 
 #: ../gui/wxpython/gui_modules/dbm_dialogs.py:75
 #, python-format
@@ -6201,7 +6201,7 @@ msgid ""
 "Database connection for vector map <%s> is not defined in DB file. You can "
 "define new connection in 'Manage layers' tab."
 msgstr ""
-"La connessione al databse per la mappa vettoriale <%s> non ? definito nel DB "
+"La connessione al databse per la mappa vettoriale <%s> non è definito nel DB "
 "file. Puoi definire una nuova connessione nel tab 'Gestisci layers'"
 
 #: ../gui/wxpython/gui_modules/dbm.py:594
@@ -6387,7 +6387,7 @@ msgstr ""
 #: ../gui/wxpython/gui_modules/dbm.py:1373
 #, python-format
 msgid "Record with category number %d already exists in the table."
-msgstr "Record con numero di categoria %d esiste gi? nella tabella"
+msgstr "Record con numero di categoria %d esiste già nella tabella"
 
 #: ../gui/wxpython/gui_modules/dbm.py:1383
 #, python-format
@@ -6423,7 +6423,7 @@ msgid ""
 "exists in the table <%(table)s>."
 msgstr ""
 "Impossibile rinominare colonna <%(column)s> in <%(columnTo)s>. La colonna "
-"esiste gi? nella tabella <%(table)s>."
+"esiste già nella tabella <%(table)s>."
 
 #: ../gui/wxpython/gui_modules/dbm.py:1629
 #, python-format
@@ -6477,7 +6477,7 @@ msgstr ""
 #: ../gui/wxpython/gui_modules/dbm.py:1772
 #, python-format
 msgid "Column <%(column)s> already exists in table <%(table)s>."
-msgstr "La colonna <%(column)s> esiste gi? nella tabella <%(table)s>."
+msgstr "La colonna <%(column)s> esiste già nella tabella <%(table)s>."
 
 #: ../gui/wxpython/gui_modules/dbm.py:1932
 #: ../gui/wxpython/gui_modules/dbm.py:1956
@@ -6625,7 +6625,7 @@ msgstr ""
 #, python-format
 msgid "Unable to create new table. Table <%s> already exists in the database."
 msgstr ""
-"Impossibile creare nuova tabella. La tabella <%s> esiste gi? nel database"
+"Impossibile creare nuova tabella. La tabella <%s> esiste già nel database"
 
 #: ../gui/wxpython/gui_modules/dbm.py:2902
 #, python-format
@@ -7297,7 +7297,7 @@ msgstr ""
 #, fuzzy, python-format
 msgid "Variable <%s> already exists in the model. Adding variable failed."
 msgstr ""
-"Impossibile creare nuova tabella. La tabella <%s> esiste gi? nel database"
+"Impossibile creare nuova tabella. La tabella <%s> esiste già nel database"
 
 #: ../gui/wxpython/gui_modules/gmodeler.py:3760
 #, fuzzy
