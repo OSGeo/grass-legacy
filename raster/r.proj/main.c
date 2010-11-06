@@ -127,38 +127,48 @@ int main(int argc, char **argv)
     G_gisinit(argv[0]);
 
     module = G_define_module();
-    module->keywords = _("raster, projection");
+    module->keywords = _("raster, projection, transformation");
     module->description =
 	_("Re-projects a raster map from one location to the current location.");
 
     inmap = G_define_standard_option(G_OPT_R_INPUT);
     inmap->description = _("Name of input raster map to re-project");
     inmap->required = NO;
+    inmap->guisection = _("Source");
 
     inlocation = G_define_option();
     inlocation->key = "location";
     inlocation->type = TYPE_STRING;
     inlocation->required = YES;
-    inlocation->description = _("Location of input raster map");
+    inlocation->description = _("Location containing input raster map");
+    inlocation->gisprompt = "old,location,location";
+    inlocation->key_desc = "name";
 
     imapset = G_define_option();
     imapset->key = "mapset";
     imapset->type = TYPE_STRING;
     imapset->required = NO;
-    imapset->description = _("Mapset of input raster map");
+    imapset->description = _("Mapset containing input raster map");
+    imapset->gisprompt = "old,mapset,mapset";
+    imapset->key_desc = "name";
+    imapset->guisection = _("Source");
 
     indbase = G_define_option();
     indbase->key = "dbase";
     indbase->type = TYPE_STRING;
     indbase->required = NO;
     indbase->description = _("Path to GRASS database of input location");
+    indbase->gisprompt = "old,dbase,dbase";
+    indbase->key_desc = "path";
+    indbase->guisection = _("Source");
 
     outmap = G_define_standard_option(G_OPT_R_OUTPUT);
     outmap->required = NO;
     outmap->description = _("Name for output raster map (default: input)");
+    outmap->guisection = _("Target");
 
     ipolname = make_ipol_list();
-
+    
     interpol = G_define_option();
     interpol->key = "method";
     interpol->type = TYPE_STRING;
@@ -166,12 +176,14 @@ int main(int argc, char **argv)
     interpol->answer = "nearest";
     interpol->options = ipolname;
     interpol->description = _("Interpolation method to use");
+    interpol->guisection = _("Target");
 
     res = G_define_option();
     res->key = "resolution";
     res->type = TYPE_DOUBLE;
     res->required = NO;
     res->description = _("Resolution of output map");
+    res->guisection = _("Target");
 
     list = G_define_flag();
     list->key = 'l';
@@ -180,7 +192,7 @@ int main(int argc, char **argv)
     nocrop = G_define_flag();
     nocrop->key = 'n';
     nocrop->description = _("Do not perform region cropping optimization");
-
+    
     /* The parser checks if the map already exists in current mapset,
        we switch out the check and do it
        * in the module after the parser */
@@ -235,11 +247,17 @@ int main(int argc, char **argv)
 
     /* if requested, list the raster maps in source location - MN 5/2001 */
     if (list->answer) {
-	if (isatty(0))		/* check if on command line */
-	    G_message(_("Checking location <%s>, mapset <%s>..."),
-		      inlocation->answer, setname);
-	G_list_element("cell", "raster", setname, 0);
-	exit(EXIT_SUCCESS);	/* leave r.proj after listing */
+	int i;
+	char **list;
+	G_verbose_message(_("Checking location <%s> mapset <%s>"),
+			  inlocation->answer, imapset->answer);
+	list = G_list(G_ELEMENT_RASTER, G__getenv("GISDBASE"),
+		      G__getenv("LOCATION_NAME"), imapset->answer);
+	for (i = 0; list[i]; i++) {
+	    fprintf(stdout, "%s\n", list[i]);
+	}
+	fflush(stdout);
+	exit(EXIT_SUCCESS);	/* leave v.proj after listing */
     }
 
     if (!inmap->answer)
@@ -357,7 +375,7 @@ int main(int argc, char **argv)
     G_message(_("East: %f (%f)"), incellhd.east, ieast);
     G_message(_("EW-res: %f"), incellhd.ew_res);
     G_message(_("NS-res: %f"), incellhd.ns_res);
-
+    
     G_message(NULL);
     G_message(_("Output:"));
     G_message(_("Cols: %d (%d)"), outcellhd.cols, ocols);
@@ -369,7 +387,7 @@ int main(int argc, char **argv)
     G_message(_("EW-res: %f"), outcellhd.ew_res);
     G_message(_("NS-res: %f"), outcellhd.ns_res);
     G_message(NULL);
-
+    
     /* open and read the relevant parts of the input map and close it */
     G__switch_env();
     G_set_window(&incellhd);
