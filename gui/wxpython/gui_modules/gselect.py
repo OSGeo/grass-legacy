@@ -12,11 +12,13 @@ Classes:
  - DriverSelect
  - DatabaseSelect
  - ColumnSelect
+ - DbaseSelect
  - LocationSelect
  - MapsetSelect
  - SubGroupSelect
  - FormatSelect
  - GdalSelect
+ - ProjSelect
  
 (C) 2007-2010 by the GRASS Development Team This program is free
 software under the GNU General Public License (>=v2). Read the file
@@ -92,7 +94,7 @@ class VectorSelect(Select):
         """!Custom to create a ComboBox with a tree control to display and
         select vector maps. Control allows to filter vector maps. If you
         don't need this feature use Select class instead
-
+        
         @ftype filter vector maps based on feature type
         """
         Select.__init__(self, parent = parent, id = wx.ID_ANY,
@@ -722,6 +724,16 @@ class ColumnSelect(wx.ComboBox):
         
         if self.param:
             self.param['value'] = ''
+
+class DbaseSelect(wx.lib.filebrowsebutton.DirBrowseButton):
+    """!Widget for selecting GRASS Database"""
+    def __init__(self, parent, **kwargs):
+        super(DbaseSelect, self).__init__(parent, id = wx.ID_ANY,
+                                          size = globalvar.DIALOG_GSELECT_SIZE, labelText = '',
+                                          dialogTitle = _('Choose GIS Data Directory'),
+                                          buttonText = _('Browse'),
+                                          startDirectory = grass.gisenv()['GISDBASE'],
+                                          **kwargs)
         
 class LocationSelect(wx.ComboBox):
     """!Widget for selecting GRASS location"""
@@ -729,16 +741,26 @@ class LocationSelect(wx.ComboBox):
                  gisdbase = None, **kwargs):
         super(LocationSelect, self).__init__(parent, id, size = size, 
                                              style = wx.CB_READONLY, **kwargs)
-
         self.SetName("LocationSelect")
         
         if not gisdbase:
             self.gisdbase = grass.gisenv()['GISDBASE']
         else:
             self.gisdbase = gisdbase
-
+        
         self.SetItems(utils.GetListOfLocations(self.gisdbase))
 
+    def UpdateItems(self, dbase):
+        """!Update list of locations
+
+        @param dbase path to GIS database
+        """
+        self.gisdbase = dbase
+        if dbase:
+            self.SetItems(utils.GetListOfLocations(self.gisdbase))
+        else:
+            self.SetItems([])
+        
 class MapsetSelect(wx.ComboBox):
     """!Widget for selecting GRASS mapset"""
     def __init__(self, parent, id = wx.ID_ANY, size = globalvar.DIALOG_COMBOBOX_SIZE, 
@@ -747,7 +769,6 @@ class MapsetSelect(wx.ComboBox):
                                            style = wx.CB_READONLY, **kwargs)
         
         self.SetName("MapsetSelect")
-        
         if not gisdbase:
             self.gisdbase = grass.gisenv()['GISDBASE']
         else:
@@ -761,6 +782,20 @@ class MapsetSelect(wx.ComboBox):
         if setItems:
             self.SetItems(utils.GetListOfMapsets(self.gisdbase, self.location, selectable = True)) # selectable
 
+    def UpdateItems(self, location, dbase = None):
+        """!Update list of mapsets for given location
+
+        @param dbase path to GIS database (None to use currently selected)
+        @param location name of location
+        """
+        if dbase:
+            self.gisdbase = dbase
+        self.location = location
+        if location:
+            self.SetItems(utils.GetListOfMapsets(self.gisdbase, self.location, selectable = True))
+        else:
+            self.SetItems([])
+        
 class SubGroupSelect(wx.ComboBox):
     """!Widget for selecting subgroups"""
     def __init__(self, parent, id = wx.ID_ANY, size = globalvar.DIALOG_GSELECT_SIZE, 
@@ -937,7 +972,7 @@ class GdalSelect(wx.Panel):
             filemask = 'ESRI Shapefile (*.shp)|*.shp'
         
         dsnFile = filebrowse.FileBrowseButton(parent=self, id=wx.ID_ANY, 
-                                              size=globalvar.DIALOG_GSELECT_SIZE, labelText='',
+                                              size=globalvar.DIALOG_GSELECT_SIZE, labelText = '',
                                               dialogTitle=_('Choose input file'),
                                               buttonText=_('Browse'),
                                               startDirectory=os.getcwd(),
@@ -956,7 +991,7 @@ class GdalSelect(wx.Panel):
         
         dsnDbFile = filebrowse.FileBrowseButton(parent=self, id=wx.ID_ANY, 
                                                 size=globalvar.DIALOG_GSELECT_SIZE, labelText='',
-                                                  dialogTitle=_('Choose file'),
+                                                dialogTitle=_('Choose file'),
                                                 buttonText=_('Browse'),
                                                 startDirectory=os.getcwd(),
                                                 changeCallback=self.OnSetDsn)
@@ -1261,3 +1296,45 @@ class GdalSelect(wx.Panel):
         """!Get format extension"""
         return self.format.GetExtension(self.format.GetStringSelection())
     
+class ProjSelect(wx.ComboBox):
+    """!Widget for selecting input raster/vector map used by
+    r.proj/v.proj modules."""
+    def __init__(self, parent, isRaster, id = wx.ID_ANY, size = globalvar.DIALOG_COMBOBOX_SIZE,
+                 **kwargs):
+        super(ProjSelect, self).__init__(parent, id, size = size, 
+                                         style = wx.CB_READONLY, **kwargs)
+        self.SetName("ProjSelect")
+        self.isRaster = isRaster
+        
+    def UpdateItems(self, dbase, location, mapset):
+        """!Update list of maps
+        
+        """
+        if not dbase:
+            dbase = grass.gisenv()['GISDBASE']
+        if not mapset:
+            mapset = grass.gisenv()['MAPSET']
+        if self.isRaster:
+            ret = gcmd.RunCommand('r.proj',
+                                  quiet = True,
+                                  read = True,
+                                  flags = 'l',
+                                  dbase = dbase,
+                                  location = location,
+                                  mapset = mapset)
+        else:
+            ret = gcmd.RunCommand('v.proj',
+                                  quiet = True,
+                                  read = True,
+                                  flags = 'l',
+                                  dbase = dbase,
+                                  location = location,
+                                  mapset = mapset)
+        listMaps = list()
+        if ret:
+            for line in ret.splitlines():
+                listMaps.append(line.strip())
+        utils.ListSortLower(listMaps)
+        
+        self.SetItems(listMaps)
+        self.SetValue('')
