@@ -6,7 +6,7 @@
 # AUTHOR(S):	Markus Neteler. neteler itc it
 #               Hamish Bowman (fixes)
 # PURPOSE:	WFS support
-# COPYRIGHT:	(C) 2006-2008 Markus Neteler and GRASS Development Team
+# COPYRIGHT:	(C) 2006-2008, 2010 Markus Neteler and GRASS Development Team
 #
 #		This program is free software under the GNU General Public
 #		License (>=v2). Read the file COPYING that comes with GRASS
@@ -18,19 +18,20 @@
 
 #%Module
 #% description: Import GetFeature from WFS
-#%End
+#% keywords: vector, import, wfs
+#%end
 #%option
 #% key: wfs
 #% type: string
-#% description: GetFeature URL starting with http
-#%End
+#% description: GetFeature URL starting with 'http'
+#%end
 #%option
 #% key: output
 #% type: string
 #% gisprompt: new,vector,vector
-#% description: Vector output map
+#% description: Name for output vector map
 #% required : yes
-#%End
+#%end
 
 if  [ -z "$GISBASE" ] ; then
     echo "You must be in GRASS GIS to run this program." 1>&2
