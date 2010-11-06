@@ -196,7 +196,7 @@
 	    </menuitem>
 	    <menuitem>
 	      <label>ASCII points as a vector lines</label>
-	      <help>Creates a lines vector map from an ASCII x,y points file.</help>
+	      <help>Import ASCII x,y[,z] coordinates as a series of lines.</help>
 	      <keywords>vector,import</keywords>
 	      <handler>OnMenuCmd</handler>
 	      <command>v.in.lines</command>
@@ -259,7 +259,7 @@
 	    </menuitem>
 	    <menuitem>
 	      <label>Matlab array and MapGen import</label>
-	      <help>Import Mapgen or Matlab vector maps into GRASS.</help>
+	      <help>Import Mapgen or Matlab-ASCII vector maps into GRASS.</help>
 	      <keywords>vector,import</keywords>
 	      <handler>OnMenuCmd</handler>
 	      <command>v.in.mapgen</command>
@@ -356,8 +356,8 @@
 	    <separator />
 	    <menuitem>
 	      <label>MPEG-1 export</label>
-	      <help>Raster File Series to MPEG Conversion.</help>
-	      <keywords>raster,animation</keywords>
+	      <help>Raster File Series to MPEG Conversion Program.</help>
+	      <keywords>raster</keywords>
 	      <handler>OnMenuCmd</handler>
 	      <command>r.out.mpeg</command>
 	    </menuitem>
@@ -561,7 +561,7 @@
 	  <items>
 	    <menuitem>
 	      <label>Raster to vector</label>
-	      <help>Converts a raster map into a vector map.</help>
+	      <help>Converts a raster map into a vector map layer.</help>
 	      <keywords>raster,conversion,vectorization</keywords>
 	      <handler>OnMenuCmd</handler>
 	      <command>r.to.vect</command>
@@ -646,7 +646,7 @@
 	</menuitem>
 	<menuitem>
 	  <label>NVIZ (non-interactive)</label>
-	  <help>Allows rendering GIS data is a 3D space.</help>
+	  <help>Experimental NVIZ CLI prototype.</help>
 	  <keywords>visualization,raster,vector,raster3d</keywords>
 	  <handler>OnMenuCmd</handler>
 	  <command>nviz_cmd</command>
@@ -915,9 +915,9 @@
 	    </menuitem>
 	    <separator />
 	    <menuitem>
-	      <label>Reproject raster</label>
+	      <label>Reproject raster map</label>
 	      <help>Re-projects a raster map from one location to the current location.</help>
-	      <keywords>raster,projection</keywords>
+	      <keywords>raster,projection,transformation</keywords>
 	      <handler>OnMenuCmd</handler>
 	      <command>r.proj</command>
 	    </menuitem>
@@ -957,7 +957,7 @@
 	    <menuitem>
 	      <label>Export color table</label>
 	      <help>Exports the color table associated with a raster map layer.</help>
-	      <keywords>raster,color table</keywords>
+	      <keywords>raster,export,color table</keywords>
               <handler>OnMenuCmd</handler>
 	      <command>r.colors.out</command>
 	    </menuitem>
@@ -1021,7 +1021,7 @@
 	</menuitem>
 	<menuitem>
 	  <label>Mask</label>
-	  <help>Creates a mask for limiting raster operation.</help>
+	  <help>Create a MASK for limiting raster operation</help>
 	  <keywords>raster,mask</keywords>
 	  <handler>OnMenuCmd</handler>
 	  <command>r.mask</command>
@@ -1098,7 +1098,7 @@
 	    </menuitem>
 	    <menuitem>
 	      <label>Shadows map</label>
-	      <help>Calculates cast shadow areas from sun position and elevation raster map.</help>
+	      <help>Calculates cast shadow areas from sun position and DEM. Either A: exact sun position is specified, or B: date/time to calculate the sun position by r.sunmask itself.</help>
 	      <keywords>raster</keywords>
 	      <handler>OnMenuCmd</handler>
 	      <command>r.sunmask</command>
@@ -1216,23 +1216,23 @@
 	  <items>
 	    <menuitem>
 	      <label>Carve stream channels</label>
-	      <help>Generates stream channels.</help>
-	      <keywords>raster,hydrology</keywords>
+	      <help>Takes vector stream data, transforms it to raster and subtracts depth from the output DEM.</help>
+	      <keywords>raster</keywords>
 	      <handler>OnMenuCmd</handler>
 	      <command>r.carve</command>
 	    </menuitem>
 	    <menuitem>
 	      <label>Fill lake</label>
 	      <help>Fills lake from seed at given level.</help>
-	      <keywords>raster,hydrology</keywords>
+	      <keywords>raster</keywords>
 	      <handler>OnMenuCmd</handler>
 	      <command>r.lake</command>
 	    </menuitem>
 	    <separator />
 	    <menuitem>
 	      <label>Depressionless map and flowlines</label>
-	      <help>Filters and generates a depressionless elevation map and a flow direction map from a given elevation raster map.</help>
-	      <keywords>raster,hydrology</keywords>
+	      <help>Filters and generates a depressionless elevation map and a flow direction map from a given elevation layer.</help>
+	      <keywords>raster</keywords>
 	      <handler>OnMenuCmd</handler>
 	      <command>r.fill.dir</command>
 	    </menuitem>
@@ -1245,22 +1245,22 @@
 	    </menuitem>
 	    <menuitem>
 	      <label>Flow lines</label>
-	      <help>Constructs flow lines.</help>
-	      <keywords>raster,hydrology</keywords>
+	      <help>Construction of slope curves (flowlines), flowpath lengths, and flowline densities (upslope areas) from a raster digital elevation model (DEM)</help>
+	      <keywords>raster</keywords>
 	      <handler>OnMenuCmd</handler>
 	      <command>r.flow</command>
 	    </menuitem>
 	    <separator />
 	    <menuitem>
 	      <label>SIMWE Overland flow modeling</label>
-	      <help>Overland flow hydrologic simulation using path sampling method (SIMWE).</help>
+	      <help>Overland flow hydrologic simulation using path sampling method (SIMWE)</help>
 	      <keywords>raster,flow,hydrology</keywords>
 	      <handler>OnMenuCmd</handler>
 	      <command>r.sim.water</command>
 	    </menuitem>
 	    <menuitem>
 	      <label>SIMWE Sediment flux modeling</label>
-	      <help>Sediment transport and erosion/deposition simulation using path sampling method (SIMWE).</help>
+	      <help>Sediment transport and erosion/deposition simulation using path sampling method (SIMWE)</help>
 	      <keywords>raster,sediment flow,erosion,deposition</keywords>
 	      <handler>OnMenuCmd</handler>
 	      <command>r.sim.sediment</command>
@@ -1268,15 +1268,15 @@
 	    <separator />
 	    <menuitem>
 	      <label>Topographic index map</label>
-	      <help>Creates topographic index map from elevation raster map.</help>
-	      <keywords>raster,hydrology</keywords>
+	      <help>Creates topographic index [ln(a/tan(beta))] map from elevation map.</help>
+	      <keywords>raster</keywords>
 	      <handler>OnMenuCmd</handler>
 	      <command>r.topidx</command>
 	    </menuitem>
 	    <menuitem>
 	      <label>TOPMODEL simulation</label>
 	      <help>Simulates TOPMODEL which is a physically based hydrologic model.</help>
-	      <keywords>raster,hydrology</keywords>
+	      <keywords>raster</keywords>
 	      <handler>OnMenuCmd</handler>
 	      <command>r.topmodel</command>
 	    </menuitem>
@@ -1290,15 +1290,15 @@
 	    </menuitem>
 	    <menuitem>
 	      <label>Watershed analysis</label>
-	      <help>Watershed basin analysis program</help>
-	      <keywords>raster,hydrology</keywords>
+	      <help>Watershed basin analysis program.</help>
+	      <keywords>raster</keywords>
 	      <handler>OnMenuCmd</handler>
 	      <command>r.watershed</command>
 	    </menuitem>
 	    <menuitem>
 	      <label>Watershed basin creation</label>
-	      <help>Creates watershed basins.</help>
-	      <keywords>raster,hydrology</keywords>
+	      <help>Watershed basin creation program.</help>
+	      <keywords>raster</keywords>
 	      <handler>OnMenuCmd</handler>
 	      <command>r.water.outlet</command>
 	    </menuitem>
@@ -1499,8 +1499,8 @@
 	    </menuitem>
 	    <menuitem>
 	      <label>Reclassify</label>
-	      <help>Reclassify raster map based on category values.</help>
-	      <keywords>raster,reclassification</keywords>
+	      <help>Creates a new map layer whose category values are based upon a reclassification of the categories in an existing raster map layer.</help>
+	      <keywords>raster</keywords>
 	      <handler>OnMenuCmd</handler>
 	      <command>r.reclass</command>
 	    </menuitem>
@@ -1678,7 +1678,7 @@
 	    <separator />
 	    <menuitem>
 	      <label>Fill NULL cells</label>
-	      <help>Fills no-data areas in raster maps using splines interpolation.</help>
+	      <help>Fills no-data areas in raster maps using v.surf.rst splines interpolation</help>
 	      <keywords>raster,elevation,interpolation</keywords>
 	      <handler>OnMenuCmd</handler>
 	      <command>r.fillnulls</command>
@@ -1948,8 +1948,8 @@
 	    </menuitem>
 	    <menuitem>
 	      <label>Reproject vector map</label>
-	      <help>Allows projection conversion of vector maps.</help>
-	      <keywords>vector,projection</keywords>
+	      <help>Re-projects a vector map from one location to the current location.</help>
+	      <keywords>vector,projection,transformation</keywords>
 	      <handler>OnMenuCmd</handler>
 	      <command>v.proj</command>
 	    </menuitem>
@@ -2000,7 +2000,7 @@
 	<menuitem>
 	  <label>Query with another vector map</label>
 	  <help>Selects features from vector map (A) by features from other vector map (B).</help>
-	  <keywords>vector,spatial query</keywords>
+	  <keywords>vector,query</keywords>
 	  <handler>OnMenuCmd</handler>
 	  <command>v.select</command>
 	</menuitem>
@@ -2833,7 +2833,7 @@
 	  <items>
 	    <menuitem>
 	      <label>Query any table</label>
-	      <help>Selects data from attribute table (performs SQL query statement(s)).</help>
+	      <help>Selects data from table.</help>
 	      <keywords>database,attribute table,SQL</keywords>
 	      <handler>OnMenuCmd</handler>
 	      <command>db.select</command>
