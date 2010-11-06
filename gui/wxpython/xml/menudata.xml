@@ -202,11 +202,18 @@
 	      <command>v.in.lines</command>
 	    </menuitem>
 	    <menuitem>
-	      <label>Old GRASS vector import</label>
+	      <label>Historical GRASS vector import</label>
 	      <help>Imports older versions of GRASS vector maps.</help>
 	      <keywords>vector,import,conversion</keywords>
 	      <handler>OnMenuCmd</handler>
 	      <command>v.convert</command>
+	    </menuitem>
+	    <menuitem>
+	      <label>Historical GRASS vector import (all maps)</label>
+	      <help>Convert all old GRASS &lt; Ver5.7 vector maps in current mapset to current format</help>
+	      <keywords>vector,import</keywords>
+	      <handler>OnMenuCmd</handler>
+	      <command>v.convert.all</command>
 	    </menuitem>
 	    <separator />
 	    <menuitem>
@@ -220,6 +227,14 @@
 	      <label>Bulk import of DXF</label>
 	      <help>Converts multiple DXF layers to GRASS vector maps.</help>
 	      <handler>OnImportDxfFile</handler>
+	    </menuitem>
+	    <separator />
+	    <menuitem>
+	      <label>WFS</label>
+	      <help>Import GetFeature from WFS</help>
+	      <keywords>vector,import,wfs</keywords>
+	      <handler>OnMenuCmd</handler>
+	      <command>v.in.wfs</command>
 	    </menuitem>
 	    <separator />
 	    <menuitem>
@@ -710,7 +725,9 @@
 	    <menuitem>
 	      <label>Mapset access</label>
 	      <help>Set/unset access to other mapsets in current location</help>
+	      <keywords>general,settings,search path</keywords>
 	      <handler>OnMapsets</handler>
+	      <command>g.mapsets</command>
 	    </menuitem>
 	    <menuitem>
 	      <label>User access</label>
