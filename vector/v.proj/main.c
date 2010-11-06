@@ -60,35 +60,45 @@ int main(int argc, char *argv[])
     G_gisinit(argv[0]);
 
     module = G_define_module();
-    module->keywords = _("vector, projection");
-    module->description = _("Allows projection conversion of vector maps.");
+    module->keywords = _("vector, projection, transformation");
+    module->description = _("Re-projects a vector map from one location to the current location.");
 
     /* set up the options and flags for the command line parser */
 
     mapopt = G_define_standard_option(G_OPT_V_INPUT);
-    mapopt->gisprompt = NULL;
     mapopt->required = NO;
-
+    mapopt->guisection = _("Source");
+    
     ilocopt = G_define_option();
     ilocopt->key = "location";
     ilocopt->type = TYPE_STRING;
     ilocopt->required = YES;
     ilocopt->description = _("Location containing input vector map");
-
+    ilocopt->gisprompt = "old,location,location";
+    ilocopt->key_desc = "name";
+    
     isetopt = G_define_option();
     isetopt->key = "mapset";
     isetopt->type = TYPE_STRING;
     isetopt->required = NO;
     isetopt->description = _("Mapset containing input vector map");
+    isetopt->gisprompt = "old,mapset,mapset";
+    isetopt->key_desc = "name";
+    isetopt->guisection = _("Source");
 
     ibaseopt = G_define_option();
     ibaseopt->key = "dbase";
     ibaseopt->type = TYPE_STRING;
     ibaseopt->required = NO;
     ibaseopt->description = _("Path to GRASS database of input location");
+    ibaseopt->gisprompt = "old,dbase,dbase";
+    ibaseopt->key_desc = "path";
+    ibaseopt->guisection = _("Source");
 
     omapopt = G_define_standard_option(G_OPT_V_OUTPUT);
     omapopt->required = NO;
+    omapopt->description = _("Name for output vector map (default: input)");
+    omapopt->guisection = _("Target");
 
     flag.list = G_define_flag();
     flag.list->key = 'l';
@@ -100,6 +110,7 @@ int main(int argc, char *argv[])
     flag.transformz->label =
 	_("Assume z co-ordinate is ellipsoidal height and "
 	  "transform if possible");
+    flag.transformz->guisection = _("Target");
 
     /* The parser checks if the map already exists in current mapset,
        we switch out the check and do it
@@ -153,9 +164,16 @@ int main(int argc, char *argv[])
     if (stat >= 0) {		/* yes, we can access the mapset */
 	/* if requested, list the vector maps in source location - MN 5/2001 */
 	if (flag.list->answer) {
+	    int i;
+	    char **list;
 	    G_verbose_message(_("Checking location <%s> mapset <%s>"),
 			      iloc_name, iset_name);
-	    G_list_element("vector", "vector", iset_name, 0);
+	    list = G_list(G_ELEMENT_VECTOR, G__getenv("GISDBASE"),
+			  G__getenv("LOCATION_NAME"), iset_name);
+	    for (i = 0; list[i]; i++) {
+		fprintf(stdout, "%s\n", list[i]);
+	    }
+	    fflush(stdout);
 	    exit(EXIT_SUCCESS);	/* leave v.proj after listing */
 	}
 
