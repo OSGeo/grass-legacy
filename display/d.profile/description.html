@@ -92,18 +92,18 @@ and the northing in decimal format.
 The number of values will vary depending on the length of the profile, cell 
 resolution and the slope angle of the profile line.  Below is an example
 of a plotfile:
-<P>
-<TT>
-# Profile A of elev.ft@snows<BR>
-# From (702879.29679757, 4287317.55920185) to (702722.40973589, 4287061.72632285)<BR>
-# Stats: Count = 644, Min = 2424.658936, Max = 2513.246094<BR>
-# dist value east north<BR>
-0.000000 2513.246094 702879.102364 4287317.516912<BR>
-0.000000 2513.246094 702878.713496 4287317.118970<BR>
-0.556395 2513.246094 702878.324629 4287316.721029<BR>
-1.112790 2513.246094 702878.324629 4287316.323088<BR>
-...<P>
-</TT>
+
+<div class="code"><pre>
+# Profile A of elev.ft@snows
+# From (702879.29679757, 4287317.55920185) to (702722.40973589, 4287061.72632285)
+# Stats: Count = 644, Min = 2424.658936, Max = 2513.246094
+# dist value east north
+0.000000 2513.246094 702879.102364 4287317.516912
+0.000000 2513.246094 702878.713496 4287317.118970
+0.556395 2513.246094 702878.324629 4287316.721029
+1.112790 2513.246094 702878.324629 4287316.323088
+...
+</pre></div>
 
 <H2>NOTES</H2>
 
@@ -132,7 +132,7 @@ This may not always be the case, but it is at the time of this writing.
 
 Useful enhancements to <EM>d.profile</EM> would include: 
 
-<OL>
+<UL>
 
 <LI>Adding an option to display profiles using category
 colors, like a bar-chart.
@@ -146,7 +146,7 @@ viewing by GRASS.
 <LI>Allowing the user to enter profile line points by
 typing coordinates.
 
-</OL>
+</UL>
 
 <H3>Perl Script to convert output to a site_list</H3>
 
@@ -158,9 +158,9 @@ It probably won't work 100% for lat/lon datasets.
 <TT>
 <B>#! /usr/bin/perl -w</B><BR>
 # prof2sites.pl: converts the output of d.profile to a site_list
-<P>
+<BR><BR>
 <B>my</B> (<EM>$dist</EM>, <EM>$elev</EM>, <EM>$east</EM>, <EM>$north</EM>);
-<P>
+<BR><BR>
 <B>while</B> (&lt;<B>STDIN</B>&gt;)<BR>
 {<BR>
 &nbsp;&nbsp;<B>if</B> (m/^#/)<BR>
