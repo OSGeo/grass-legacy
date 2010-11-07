@@ -61,7 +61,7 @@ int load_vectors(const struct Option *elev_map,
     int nvects;
 
     char *mapset;
-
+    
     double x, y, z;
     
     if ((!elev_map->answer || elev_const->answer) && GS_num_surfs() == 0) {	/* load base surface if no loaded */
@@ -177,9 +177,11 @@ int vpoints_set_attrb(const struct GParams *params)
 	    marker = ST_HISTOGRAM;
 	else
 	    G_fatal_error(_("Unknown icon marker"));
-
+	
 	GP_set_sitemode(site_list[i], ST_ATT_NONE,
 			color, width, size, marker);
+	
+	/* GP_set_style(site_list[i], color, width, size, marker); */
     }
 
     return 1;
