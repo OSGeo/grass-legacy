@@ -1,22 +1,18 @@
 /*!
-   \file map_obj.c
+   \file lib/nviz/map_obj.c
 
    \brief Nviz library -- Define creation and interface functions for map objects.
 
-   Map objects are considered to be surfaces, vector plots,
-   or site files.
-
-   COPYRIGHT: (C) 2008 by the GRASS Development Team
-
-   This program is free software under the GNU General Public
-   License (>=v2). Read the file COPYING that comes with GRASS
-   for details.
+   Map objects are considered to be surfaces, vector plots, or site
+   files.
 
    Based on visualization/nviz/src/map_obj.c
+   
+   (C) 2008, 2010 by the GRASS Development Team
+   This program is free software under the GNU General Public License
+   (>=v2). Read the file COPYING that comes with GRASS for details.
 
-   \author Updated/modified by Martin Landa <landa.martin gmail.com> (Google SoC 2008)
-
-   \date 2008
+   \author Updated/modified by Martin Landa <landa.martin gmail.com> (Google SoC 2008/2010)
  */
 
 #include <stdlib.h>
@@ -45,12 +41,10 @@
    \return map object id
    \return -1 on error
  */
-int Nviz_new_map_obj(int type, const char *name, float value, nv_data * data)
+int Nviz_new_map_obj(int type, const char *name, double value, nv_data * data)
 {
     int new_id, i;
     int num_surfs, *surf_list;
-
-    nv_clientdata *client_data;
 
     /*
      * For each type of map obj do the following --
@@ -166,36 +160,7 @@ int Nviz_new_map_obj(int type, const char *name, float value, nv_data * data)
 	G_warning(_("Nviz_new_map_obj(): unsupported data type"));
 	return -1;
     }
-
-    /* initialize the client data filled for the new map object */
-    client_data = (nv_clientdata *) G_malloc(sizeof(nv_clientdata));
-
-    if (name) {
-	client_data->logical_name = G_store(name);
-    }
-    else {
-	char temp_space[80];
-	time_t tp;
-
-	/* Need to generate a random id */
-	time(&tp);
-	switch (type) {
-	case MAP_OBJ_SURF:{
-		sprintf(temp_space, "%s*%ld", "surface", tp);
-		break;
-	    }
-	default:{
-		sprintf(temp_space, "%s*%ld", "unknown", tp);
-		break;
-	    }
-	}
-	client_data->logical_name = G_store(temp_space);
-    }
-
-    G_debug(3, "new_map_obj(): logical name=%s", client_data->logical_name);
-
-    GS_Set_ClientData(new_id, (void *)client_data);
-
+    
     return new_id;
 }
 
@@ -207,16 +172,16 @@ int Nviz_new_map_obj(int type, const char *name, float value, nv_data * data)
    \param desc attribute descriptor
    \param src attribute source
    \param str_value attribute value as string (if NULL, check for <i>num_value</i>)
-   \param num_value attribute value as float 
+   \param num_value attribute value as double 
 
    \return 1 on success
    \return 0 on failure
  */
 int Nviz_set_attr(int id, int type, int desc, int src,
-		  const char *str_value, float num_value, nv_data * data)
+		  const char *str_value, double num_value, nv_data * data)
 {
     int ret;
-    float value;
+    double value;
 
     switch (type) {
     case (MAP_OBJ_SURF):{
@@ -229,7 +194,7 @@ int Nviz_set_attr(int id, int type, int desc, int src,
 		 * Note that we require the constant to be an integer
 		 */
 		if (str_value)
-		    value = (float)atof(str_value);
+		    value = (double)atof(str_value);
 		else
 		    value = num_value;
 

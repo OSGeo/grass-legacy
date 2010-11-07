@@ -1,19 +1,15 @@
 /*!
-   \file exag.c
+   \file lib/nviz/exag.c
 
    \brief Nviz library -- Exaggeration functions
 
-   COPYRIGHT: (C) 2008 by the GRASS Development Team
-
-   This program is free software under the GNU General Public
-   License (>=v2). Read the file COPYING that comes with GRASS
-   for details.
-
    Based on visualization/nviz/src/exag.c
 
-   \author Updated/modified by Martin Landa <landa.martin gmail.com> (Google SoC 2008)
+   (C) 2008, 2010 by the GRASS Development Team
+   This program is free software under the GNU General Public License
+   (>=v2). Read the file COPYING that comes with GRASS for details.
 
-   \date 2008
+   \author Updated/modified by Martin Landa <landa.martin gmail.com> (Google SoC 2008/2010)
  */
 
 #include <grass/nviz.h>
@@ -29,7 +25,7 @@
 
    \return 1
  */
-int Nviz_get_exag_height(float *val, float *min, float *max)
+int Nviz_get_exag_height(double *val, double *min, double *max)
 {
     float longdim, exag, texag, hmin, hmax, fmin, fmax;
     int nsurfs, i, *surf_list;
@@ -64,6 +60,9 @@ int Nviz_get_exag_height(float *val, float *min, float *max)
     if (max)
 	*max = fmax;
 
+    G_debug(1, "Nviz_get_exag_height(): value = %f min = %f max = %f",
+	    *val, min ? *min : 0.0 , max ? *max : 0.0);
+    
     return 1;
 }
 
@@ -74,7 +73,7 @@ int Nviz_get_exag_height(float *val, float *min, float *max)
 
    \return value
  */
-float Nviz_get_exag()
+double Nviz_get_exag()
 {
     float exag, texag;
     int nsurfs, i, *surf_list;
@@ -95,5 +94,6 @@ float Nviz_get_exag()
     if (nsurfs > 0)
 	G_free(surf_list);
 
+    G_debug(1, "Nviz_get_exag(): value = %f", exag);
     return exag;
 }

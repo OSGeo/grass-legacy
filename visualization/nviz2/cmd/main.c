@@ -3,15 +3,15 @@
  *
  * MODULE:       nviz_cmd
  *               
- * AUTHOR(S):    Martin Landa <landa.martin gmail.com> (Google SoC 2008)
+ * AUTHOR(S):    Martin Landa <landa.martin gmail.com> (Google SoC 2008/2010)
  *               
- * PURPOSE:      Experimental NVIZ CLI prototype
+ * PURPOSE:      Renders GIS data in 3D space.
  *               
- * COPYRIGHT:    (C) 2008 by the GRASS Development Team
+ * COPYRIGHT:    (C) 2008,2010 by the GRASS Development Team
  *
- *               This program is free software under the GNU General Public
- *               License (>=v2). Read the file COPYING that comes with GRASS
- *               for details.
+ *               This program is free software under the GNU General
+ *               Public License (>=v2). Read the file COPYING that
+ *               comes with GRASS for details.
  *
  *****************************************************************************/
 
@@ -19,6 +19,7 @@
 #include <string.h>
 
 #include <grass/gis.h>
+#include <grass/colors.h>
 #include <grass/glocale.h>
 #include <grass/nviz.h>
 
@@ -31,11 +32,12 @@ int main(int argc, char *argv[])
     struct GModule *module;
     struct GParams *params;
 
-    int ret;
-    float vp_height, z_exag;	/* calculated viewpoint height, z-exag */
+    int i, ret;
+    int red, grn, blu;
+    double vp_height, z_exag;	/* calculated viewpoint height, z-exag */
     int width, height;		/* output image size */
     char *output_name;
-
+    
     nv_data data;
     struct render_window *offscreen;
 
@@ -44,7 +46,10 @@ int main(int argc, char *argv[])
 
     module = G_define_module();
     module->keywords = _("visualization, raster, vector, raster3d");
-    module->description = _("Experimental NVIZ CLI prototype.");
+    module->label = _("Allows rendering GIS data is a 3D space.");
+    module->description = _("Renders surfaces (raster data), "
+			    "2D/3D vector data, and "
+			    "volumes (3D raster data) in a 3D space.");
 
     params = (struct GParams *)G_malloc(sizeof(struct GParams));
 
@@ -79,18 +84,8 @@ int main(int argc, char *argv[])
     /* set background color */
     Nviz_set_bgcolor(&data, Nviz_color_from_str(params->bgcolor->answer));
 
-    /* init view */
-    Nviz_init_view();
-    /* set lights */
-    /* TODO: add options */
-    Nviz_set_light_position(&data, 0, 0.68, -0.68, 0.80, 0.0);
-    Nviz_set_light_bright(&data, 0, 0.8);
-    Nviz_set_light_color(&data, 0, 1.0, 1.0, 1.0);
-    Nviz_set_light_ambient(&data, 0, 0.2, 0.2, 0.2);
-    Nviz_set_light_position(&data, 1, 0.0, 0.0, 1.0, 0.0);
-    Nviz_set_light_bright(&data, 1, 0.5);
-    Nviz_set_light_color(&data, 1, 1.0, 1.0, 1.0);
-    Nviz_set_light_ambient(&data, 1, 0.3, 0.3, 0.3);
+    /* init view, lights */
+    Nviz_init_view(&data);
 
     /* load raster maps (surface topography) & set attributes (map/constant) */
     load_rasters(params, &data);
@@ -130,8 +125,9 @@ int main(int argc, char *argv[])
     }
     else {
 	z_exag = Nviz_get_exag();
-	G_message(_("Vertical exaggeration not given, using calculated value %.0f"),
-		  z_exag);
+	G_verbose_message(_("Vertical exaggeration not given, using calculated "
+			    "value %.0f"),
+			  z_exag);
     }
     Nviz_change_exag(&data, z_exag);
 
@@ -139,18 +135,55 @@ int main(int argc, char *argv[])
 	vp_height = atof(params->height->answer);
     }
     else {
-	Nviz_get_exag_height(&vp_height, NULL, NULL);
-	G_message(_("Viewpoint height not given, using calculated value %.0f"),
-		  vp_height);
+	double min, max;
+	Nviz_get_exag_height(&vp_height, &min, &max);
+	G_verbose_message(_("Viewpoint height not given, using calculated "
+			    "value %.0f"),
+			  vp_height);
     }
-    Nviz_set_viewpoint_height(&data, vp_height);
+    Nviz_set_viewpoint_height(vp_height);
 
-    Nviz_set_viewpoint_position(&data,
-				atof(params->pos->answers[0]),
+    Nviz_set_viewpoint_position(atof(params->pos->answers[0]),
 				atof(params->pos->answers[1]));
-    Nviz_set_viewpoint_twist(&data, atoi(params->twist->answer));
-    Nviz_set_viewpoint_persp(&data, atoi(params->persp->answer));
+    Nviz_set_viewpoint_twist(atoi(params->twist->answer));
+    Nviz_set_viewpoint_persp(atoi(params->persp->answer));
 
+    /* set lights */
+    Nviz_set_light_position(&data, 1,
+			    atof(params->light_pos->answers[0]),
+			    atof(params->light_pos->answers[1]),
+			    atof(params->light_pos->answers[2]),
+			    0.0);
+    Nviz_set_light_bright(&data, 1,
+			  atoi(params->light_bright->answer) / 100.0);
+    if(G_str_to_color(params->light_color->answer, &red, &grn, &blu) != 1) {
+	red = grn = blu = 255;
+    }
+    Nviz_set_light_color(&data, 1, red, grn, blu);
+    Nviz_set_light_ambient(&data, 1,
+			   atof(params->light_ambient->answer) / 100.0);
+
+    /* define fringes */
+    if (params->fringe->answer) {
+	int nw, ne, sw, se;
+	
+	i = 0;
+	nw = ne = sw = se = 0;
+	while(params->fringe->answers[i]) {
+	    const char *edge = params->fringe->answers[i++];
+	    if (strcmp(edge, "nw") == 0)
+		nw = 1;
+	    else if (strcmp(edge, "ne") == 0)
+		ne = 1;
+	    else if (strcmp(edge, "sw") == 0)
+		sw = 1;
+	    else if (strcmp(edge, "se") == 0)
+		se = 1;
+	}
+	Nviz_new_fringe(&data, -1, Nviz_color_from_str(params->fringe_color->answer),
+			atof(params->fringe_elev->answer), nw, ne, sw, se);
+    }
+    
     GS_clear(data.bgcolor);
 
     /* draw */

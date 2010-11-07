@@ -1,34 +1,40 @@
 /*!
-   \file position.c
-
+   \file lib/nviz/position.c
+   
    \brief Nviz library -- Position, focus settings
-
-   COPYRIGHT: (C) 2008 by the GRASS Development Team
-
-   This program is free software under the GNU General Public
-   License (>=v2). Read the file COPYING that comes with GRASS
-   for details.
-
+   
    Based on visualization/nviz/src/position.c
+   
+   (C) 2008, 2010 by the GRASS Development Team
+   This program is free software under the GNU General Public License
+   (>=v2). Read the file COPYING that comes with GRASS for details.
 
-   \author Updated/modified by Martin Landa <landa.martin gmail.com> (Google SoC)
-
-   \date 2008
+   \author Updated/modified by Martin Landa <landa.martin gmail.com> (Google SoC 2008/2010)
  */
 
 #include <grass/glocale.h>
 #include <grass/nviz.h>
 
 /*!
-   Initialize view and position settings (focus)
+   Initialize view, position, lighting settings (focus)
 
    Set position to center of view
  */
-void Nviz_init_view()
+void Nviz_init_view(nv_data *data)
 {
     GS_init_view();
     Nviz_set_focus_state(1);	/* center of view */
-
+    
+    /* set default lights (1 & 2) */
+    Nviz_set_light_position(data, 1, 0.68, -0.68, 0.80, 0.0);
+    Nviz_set_light_bright(data,   1, 0.8);
+    Nviz_set_light_color(data,    1, 255, 255, 255);
+    Nviz_set_light_ambient(data,  1, 0.2);
+    Nviz_set_light_position(data, 2, 0.0, 0.0, 1.0, 0.0);
+    Nviz_set_light_bright(data,   2, 0.5);
+    Nviz_set_light_color(data,    2, 255, 255, 255);
+    Nviz_set_light_ambient(data,  2, 0.3);
+    
     return;
 }
 

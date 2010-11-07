@@ -76,6 +76,14 @@ typedef struct
     float x, y, z, w;		/* position */
 } light_data;
 
+struct fringe_data
+{
+    int           id;
+    unsigned long color;
+    float         elev;
+    int           where[4];
+};
+
 typedef struct
 {
     /* ranges */
@@ -89,36 +97,15 @@ typedef struct
 
     /* light */
     light_data light[MAX_LIGHTS];
-
+    
+    /* fringe */
+    int num_fringes;
+    struct fringe_data **fringe;
+    
     /* background color */
     int bgcolor;
 
 } nv_data;
-
-/* The following structure is used to associate client data with surfaces.
- * We do this so that we don't have to rely on the surface ID (which is libal to change
- * between subsequent executions of nviz) when saving set-up info to files.
- */
-
-typedef struct
-{
-    /* We use logical names to assign textual names to map objects.
-       When Nviz needs to refer to a map object it uses the logical name
-       rather than the map ID.  By setting appropriate logical names, we
-       can reuse names inbetween executions of Nviz.  The Nviz library
-       also provides a mechanism for aliasing between logical names.
-       Thus several logical names may refer to the same map object.
-       Aliases are meant to support the case in which two logical names
-       happen to be the same.  The Nviz library automatically assigns
-       logical names uniquely if they are not specified in the creation
-       of a map object.  When loading a saved file containing several map
-       objects, it is expected that the map 0bjects will be aliased to
-       their previous names.  This ensures that old scripts will work.
-     */
-
-    char *logical_name;
-
-} nv_clientdata;
 
 struct render_window
 {
@@ -141,11 +128,11 @@ struct render_window
 /* change_view.c */
 int Nviz_resize_window(int, int);
 int Nviz_update_ranges(nv_data *);
-int Nviz_set_viewpoint_position(nv_data *, float, float);
-int Nviz_set_viewpoint_height(nv_data *, float);
-int Nviz_set_viewpoint_persp(nv_data *, int);
-int Nviz_set_viewpoint_twist(nv_data *, int);
-int Nviz_change_exag(nv_data *, float);
+int Nviz_set_viewpoint_position(double, double);
+int Nviz_set_viewpoint_height(double);
+int Nviz_set_viewpoint_persp(int);
+int Nviz_set_viewpoint_twist(int);
+int Nviz_change_exag(nv_data *, double);
 
 /* cplanes_obj.c */
 int Nviz_new_cplane(nv_data *, int);
@@ -154,27 +141,27 @@ int Nviz_draw_cplane(nv_data *, int, int);
 
 /* draw.c */
 int Nviz_draw_all_surf(nv_data *);
-int Nviz_draw_all_vect(nv_data *);
-int Nviz_draw_all_site(nv_data *);
-int Nviz_draw_all_vol(nv_data *);
+int Nviz_draw_all_vect();
+int Nviz_draw_all_site();
+int Nviz_draw_all_vol();
 int Nviz_draw_all(nv_data *);
 int Nviz_draw_quick(nv_data *, int);
 
 /* exag.c */
-int Nviz_get_exag_height(float *, float *, float *);
-float Nviz_get_exag();
+int Nviz_get_exag_height(double *, double *, double *);
+double Nviz_get_exag();
 
 /* lights.c */
-int Nviz_set_light_position(nv_data *, int, float, float, float, float);
-int Nviz_set_light_bright(nv_data *, int, float);
-int Nviz_set_light_color(nv_data *, int, float, float, float);
-int Nviz_set_light_ambient(nv_data *, int, float, float, float);
+int Nviz_set_light_position(nv_data *, int, double, double, double, double);
+int Nviz_set_light_bright(nv_data *, int, double);
+int Nviz_set_light_color(nv_data *, int, int, int, int);
+int Nviz_set_light_ambient(nv_data *, int, double);
 int Nviz_init_light(nv_data *, int);
 int Nviz_new_light(nv_data *);
 
 /* map_obj.c */
-int Nviz_new_map_obj(int, const char *, float, nv_data *);
-int Nviz_set_attr(int, int, int, int, const char *, float, nv_data *);
+int Nviz_new_map_obj(int, const char *, double, nv_data *);
+int Nviz_set_attr(int, int, int, int, const char *, double, nv_data *);
 void Nviz_set_surface_attr_default();
 int Nviz_set_vpoint_attr_default();
 int Nviz_set_volume_attr_default();
@@ -182,11 +169,17 @@ int Nviz_unset_attr(int, int, int);
 
 /* nviz.c */
 void Nviz_init_data(nv_data *);
+void Nviz_destroy_data(nv_data *);
 void Nviz_set_bgcolor(nv_data *, int);
+int Nviz_get_bgcolor(nv_data *);
 int Nviz_color_from_str(const char *);
+struct fringe_data *Nviz_new_fringe(nv_data *, int, unsigned long,
+				    double, int, int, int, int);
+struct fringe_data *Nviz_set_fringe(nv_data *, int, unsigned long,
+				    double, int, int, int, int);
 
 /* position.c */
-void Nviz_init_view();
+void Nviz_init_view(nv_data *);
 int Nviz_set_focus_state(int);
 int Nviz_set_focus_map(int, int);
 
