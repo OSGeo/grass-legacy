@@ -47,6 +47,7 @@ void parse_options(struct GParm *parm, struct GFlag *flag)
 	_("A feature is written to output if the result of operation 'ainput operator binput' is true. "
 	  "An input feature is considered to be true, if category of given layer is defined.");
     parm->operator->answer = "overlap";
+    parm->operator->guisection = _("Required");
 #ifndef HAVE_GEOS
     parm->operator->options = "overlap";
     parm->operator->descriptions = _("overlap;features partially or completely overlap");
