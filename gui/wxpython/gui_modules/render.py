@@ -72,11 +72,11 @@ class Layer(object):
         @param hidden layer is hidden, won't be listed in Layer Manager if True
         @param opacity layer opacity <0;1>
         """
-        self.type = type
-        self.name = name
+        self.type  = type
+        self.name  = name
         
         if self.type == 'command':
-            self.cmd = []
+            self.cmd = list()
             for c in cmd:
                 self.cmd.append(utils.CmdToTuple(c))
         else:
@@ -215,8 +215,7 @@ class Layer(object):
         return self.mapfile
     
     def GetCmd(self, string=False):
-        """
-        Get GRASS command as list of string.
+        """!Get GRASS command as list of string.
         
         @param string get command as string if True otherwise as list
         
