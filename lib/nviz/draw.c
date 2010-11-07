@@ -1,20 +1,16 @@
 /*!
-   \file draw.c
+   \file lib/nviz/draw.c
 
    \brief Nviz library -- Draw map objects to GLX context
 
-   COPYRIGHT: (C) 2008 by the GRASS Development Team
-
-   This program is free software under the GNU General Public
-   License (>=v2). Read the file COPYING that comes with GRASS
-   for details.
-
    Based on visualization/nviz/src/draw.c and
    visualization/nviz/src/togl_flythrough.c
+   
+   (C) 2008, 2010 by the GRASS Development Team
+   This program is free software under the GNU General Public License
+   (>=v2). Read the file COPYING that comes with GRASS for details.
 
-   \author Updated/modified by Martin Landa <landa.martin gmail.com> (Google SoC 2008)
-
-   \date 2008
+   \author Updated/modified by Martin Landa <landa.martin gmail.com> (Google SoC 2008/2010)
  */
 
 #include <grass/nviz.h>
@@ -115,11 +111,9 @@ int sort_surfs_max(int *surf, int *id_sort, int *indices, int num)
 /*!
    \brief Draw all loaded vector sets (lines)
 
-   \param dc nviz data
-
    \return 1
  */
-int Nviz_draw_all_vect(nv_data * dc)
+int Nviz_draw_all_vect()
 {
     // GS_set_cancel(0);
 
@@ -142,11 +136,9 @@ int Nviz_draw_all_vect(nv_data * dc)
 /*!
    \brief Draw all loaded vector point sets
 
-   \param dc nviz data
-
    \return 1
  */
-int Nviz_draw_all_site(nv_data * dc)
+int Nviz_draw_all_site()
 {
     int i;
     int *site_list, nsites;
@@ -172,12 +164,10 @@ int Nviz_draw_all_site(nv_data * dc)
 
 /*!
    \brief Draw all loaded volume sets
-   
-   \param dc nviz data
 
    \return 1
  */
-int Nviz_draw_all_vol(nv_data * dc)
+int Nviz_draw_all_vol()
 {
     int *vol_list, nvols, i;
 
@@ -208,10 +198,9 @@ int Nviz_draw_all_vol(nv_data * dc)
  */
 int Nviz_draw_all(nv_data * data)
 {
+    int i;
     int draw_surf, draw_vect, draw_site, draw_vol;
-    int draw_north_arrow, arrow_x, draw_label, draw_legend;
-    int draw_fringe, draw_scalebar, draw_bar_x;
-
+    
     draw_surf = 1;
     draw_vect = 1;
     draw_site = 1;
@@ -244,6 +233,11 @@ int Nviz_draw_all(nv_data * data)
     if (draw_vol)
 	Nviz_draw_all_vol(data);
 
+    for(i = 0; i < data->num_fringes; i++) {
+	struct fringe_data * f = data->fringe[i];
+	GS_draw_fringe(f->id, f->color, f->elev, f->where);
+    }
+    
     GS_done_draw();
     GS_set_draw(GSD_BACK);
 

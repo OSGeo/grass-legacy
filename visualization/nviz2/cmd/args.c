@@ -1,18 +1,16 @@
 /*!
-   \file args.c
-
-   \brief Parse command
-
-   (C) 2008 by the GRASS Development Team
-
-   This program is free software under the GNU General Public
-   License (>=v2). Read the file COPYING that comes with GRASS
-   for details.
-
-   \author Martin Landa <landa.martin gmail.com> (Google SoC 2008)
-
-   \date 2008
- */
+  \file args.c
+  
+  \brief Parse command
+  
+  (C) 2008, 2010 by the GRASS Development Team
+  
+  This program is free software under the GNU General Public
+  License (>=v2). Read the file COPYING that comes with GRASS
+  for details.
+  
+  \author Martin Landa <landa.martin gmail.com> (Google SoC 2008/2010)
+*/
 
 #include <stdlib.h>
 #include <string.h>
@@ -31,23 +29,26 @@ static void args_vline(struct GParams *);
 static void args_vpoint(struct GParams *);
 static void args_viewpoint(struct GParams *);
 static void args_volume(struct GParams *);
+static void args_lighting(struct GParams *);
+static void args_fringe(struct GParams *);
 
 /*!
-   \brief Parse command
-
-   \param argc number of arguments
-   \param argv arguments array
-   \param params GRASS parameters
-
-   \return 1
- */
+  \brief Parse command
+  
+  \param argc number of arguments
+  \param argv arguments array
+  \param params GRASS parameters
+  
+  \return 1
+*/
 void parse_command(int argc, char *argv[], struct GParams *params)
 {
     params->mode_all = G_define_flag();
     params->mode_all->key = 'a';
     params->mode_all->description =
 	_("Use draw mode for all loaded surfaces");
-
+    params->mode_all->guisection = _("Surfaces");
+    
     /*** surface attributes ***/
     args_surface(params);
 
@@ -67,11 +68,17 @@ void parse_command(int argc, char *argv[], struct GParams *params)
     /*** viewpoint ***/
     args_viewpoint(params);
 
+    /*** lighting ***/
+    args_lighting(params);
+
+    /*** fringe ***/
+    args_fringe(params);
+    
     /*** output image ***/
     /* output */
     params->output = G_define_standard_option(G_OPT_F_OUTPUT);
     params->output->description =
-	_("Name for output file (do not add extension)");
+	_("Name for output image file (without extension)");
     params->output->guisection = _("Image");
 
     /* format */
@@ -94,7 +101,7 @@ void parse_command(int argc, char *argv[], struct GParams *params)
     params->size->type = TYPE_INTEGER;
     params->size->key_desc = "width,height";
     params->size->answer = "640,480";
-    params->size->description = _("Width and height of output image");
+    params->size->description = _("Size (width, height) of output image");
     params->size->required = YES;
     params->size->guisection = _("Image");
 
@@ -112,7 +119,7 @@ void args_surface(struct GParams *params)
     params->elev_map->required = NO;
     params->elev_map->multiple = YES;
     params->elev_map->description = _("Name of raster map(s) for elevation");
-    params->elev_map->guisection = _("Surface");
+    params->elev_map->guisection = _("Surfaces");
 
     params->elev_const = G_define_option();
     params->elev_const->key = "elevation_value";
@@ -121,29 +128,28 @@ void args_surface(struct GParams *params)
     params->elev_const->required = NO;
     params->elev_const->multiple = YES;
     params->elev_const->description = _("Elevation value(s)");
-    params->elev_const->guisection = _("Surface");
+    params->elev_const->guisection = _("Surfaces");
 
     /* color */
     params->color_map = G_define_standard_option(G_OPT_R_MAP);
     params->color_map->multiple = YES;
     params->color_map->required = NO;
     params->color_map->description = _("Name of raster map(s) for color");
-    params->color_map->guisection = _("Surface");
+    params->color_map->guisection = _("Surfaces");
     params->color_map->key = "color_map";
 
     params->color_const = G_define_standard_option(G_OPT_C_FG);
     params->color_const->multiple = YES;
     params->color_const->label = _("Color value(s)");
-    params->color_const->guisection = _("Surface");
-    params->color_const->key = "color_value";
+    params->color_const->guisection = _("Surfaces");
     params->color_const->answer = NULL;
-
+    
     /* mask */
     params->mask_map = G_define_standard_option(G_OPT_R_MAP);
     params->mask_map->multiple = YES;
     params->mask_map->required = NO;
     params->mask_map->description = _("Name of raster map(s) for mask");
-    params->mask_map->guisection = _("Surface");
+    params->mask_map->guisection = _("Surfaces");
     params->mask_map->key = "mask_map";
 
     /* transparency */
@@ -152,7 +158,7 @@ void args_surface(struct GParams *params)
     params->transp_map->required = NO;
     params->transp_map->description =
 	_("Name of raster map(s) for transparency");
-    params->transp_map->guisection = _("Surface");
+    params->transp_map->guisection = _("Surfaces");
     params->transp_map->key = "transparency_map";
 
     params->transp_const = G_define_option();
@@ -162,7 +168,7 @@ void args_surface(struct GParams *params)
     params->transp_const->required = NO;
     params->transp_const->multiple = YES;
     params->transp_const->description = _("Transparency value(s)");
-    params->transp_const->guisection = _("Surface");
+    params->transp_const->guisection = _("Surfaces");
     params->transp_const->options = "0-255";
 
     /* shininess */
@@ -170,7 +176,7 @@ void args_surface(struct GParams *params)
     params->shine_map->multiple = YES;
     params->shine_map->required = NO;
     params->shine_map->description = _("Name of raster map(s) for shininess");
-    params->shine_map->guisection = _("Surface");
+    params->shine_map->guisection = _("Surfaces");
     params->shine_map->key = "shininess_map";
 
     params->shine_const = G_define_option();
@@ -180,7 +186,7 @@ void args_surface(struct GParams *params)
     params->shine_const->required = NO;
     params->shine_const->multiple = YES;
     params->shine_const->description = _("Shininess value(s)");
-    params->shine_const->guisection = _("Surface");
+    params->shine_const->guisection = _("Surfaces");
     params->shine_const->options = "0-255";
 
     /* emission */
@@ -188,7 +194,7 @@ void args_surface(struct GParams *params)
     params->emit_map->multiple = YES;
     params->emit_map->required = NO;
     params->emit_map->description = _("Name of raster map(s) for emission");
-    params->emit_map->guisection = _("Surface");
+    params->emit_map->guisection = _("Surfaces");
     params->emit_map->key = "emission_map";
 
     params->emit_const = G_define_option();
@@ -198,7 +204,7 @@ void args_surface(struct GParams *params)
     params->emit_const->required = NO;
     params->emit_const->multiple = YES;
     params->emit_const->description = _("Emission value(s)");
-    params->emit_const->guisection = _("Surface");
+    params->emit_const->guisection = _("Surfaces");
     params->emit_const->options = "0-255";
 
     /*
@@ -209,7 +215,7 @@ void args_surface(struct GParams *params)
     params->mode->key = "mode";
     params->mode->key_desc = "string";
     params->mode->type = TYPE_STRING;
-    params->mode->required = YES;
+    params->mode->required = NO;
     params->mode->multiple = YES;
     params->mode->description = _("Draw mode");
     params->mode->options = "coarse,fine,both";
@@ -221,7 +227,7 @@ void args_surface(struct GParams *params)
     params->res_fine->key = "resolution_fine";
     params->res_fine->key_desc = "value";
     params->res_fine->type = TYPE_INTEGER;
-    params->res_fine->required = YES;
+    params->res_fine->required = NO;
     params->res_fine->multiple = YES;
     params->res_fine->description = _("Fine resolution");
     params->res_fine->answer = "6";
@@ -232,7 +238,7 @@ void args_surface(struct GParams *params)
     params->res_coarse->key = "resolution_coarse";
     params->res_coarse->key_desc = "value";
     params->res_coarse->type = TYPE_INTEGER;
-    params->res_coarse->required = YES;
+    params->res_coarse->required = NO;
     params->res_coarse->multiple = YES;
     params->res_coarse->description = _("Coarse resolution");
     params->res_coarse->answer = "9";
@@ -243,7 +249,7 @@ void args_surface(struct GParams *params)
     params->style->key = "style";
     params->style->key_desc = "string";
     params->style->type = TYPE_STRING;
-    params->style->required = YES;
+    params->style->required = NO;
     params->style->multiple = YES;
     params->style->description = _("Draw style");
     params->style->options = "wire,surface";
@@ -255,7 +261,7 @@ void args_surface(struct GParams *params)
     params->shade->key = "shading";
     params->shade->key_desc = "string";
     params->shade->type = TYPE_STRING;
-    params->shade->required = YES;
+    params->shade->required = NO;
     params->shade->multiple = YES;
     params->shade->description = _("Shading");
     params->shade->options = "flat,gouraud";
@@ -265,7 +271,7 @@ void args_surface(struct GParams *params)
     /* wire color */
     params->wire_color = G_define_standard_option(G_OPT_C_FG);
     params->wire_color->multiple = YES;
-    params->wire_color->required = YES;
+    params->wire_color->required = NO;
     params->wire_color->label = _("Wire color");
     params->wire_color->key = "wire_color";
     params->wire_color->answer = "136:136:136";
@@ -276,7 +282,7 @@ void args_surface(struct GParams *params)
     params->shade->key = "shading";
     params->shade->key_desc = "string";
     params->shade->type = TYPE_STRING;
-    params->shade->required = YES;
+    params->shade->required = NO;
     params->shade->multiple = YES;
     params->shade->description = _("Shading");
     params->shade->options = "flat,gouraud";
@@ -285,10 +291,10 @@ void args_surface(struct GParams *params)
 
     /* position */
     params->surface_pos = G_define_option();
-    params->surface_pos->key = "position";
+    params->surface_pos->key = "surface_position";
     params->surface_pos->key_desc = "x,y,z";
     params->surface_pos->type = TYPE_INTEGER;
-    params->surface_pos->required = YES;
+    params->surface_pos->required = NO;
     params->surface_pos->multiple = YES;
     params->surface_pos->description = _("Position");
     params->surface_pos->guisection = _("Draw");
@@ -332,7 +338,7 @@ void args_vline(struct GParams *params)
     params->vline_mode->key = "vline_mode";
     params->vline_mode->key_desc = "string";
     params->vline_mode->type = TYPE_STRING;
-    params->vline_mode->required = YES;
+    params->vline_mode->required = NO;
     params->vline_mode->multiple = YES;
     params->vline_mode->description = _("Vector line display mode");
     params->vline_mode->options = "surface,flat";
@@ -356,7 +362,7 @@ void args_vline(struct GParams *params)
     params->vline_pos->key = "vline_position";
     params->vline_pos->key_desc = "x,y,z";
     params->vline_pos->type = TYPE_INTEGER;
-    params->vline_pos->required = YES;
+    params->vline_pos->required = NO;
     params->vline_pos->multiple = YES;
     params->vline_pos->description = _("Position");
     params->vline_pos->guisection = _("Vector lines");
@@ -412,7 +418,7 @@ void args_vpoint(struct GParams *params)
     params->vpoint_marker->key = "vpoint_marker";
     params->vpoint_marker->key_desc = "string";
     params->vpoint_marker->type = TYPE_STRING;
-    params->vpoint_marker->required = YES;
+    params->vpoint_marker->required = NO;
     params->vpoint_marker->multiple = YES;
     params->vpoint_marker->description = _("Icon marker");
     params->vpoint_marker->options =
@@ -425,7 +431,7 @@ void args_vpoint(struct GParams *params)
     params->vpoint_pos->key = "vpoint_position";
     params->vpoint_pos->key_desc = "x,y,z";
     params->vpoint_pos->type = TYPE_INTEGER;
-    params->vpoint_pos->required = YES;
+    params->vpoint_pos->required = NO;
     params->vpoint_pos->multiple = YES;
     params->vpoint_pos->description = _("Position");
     params->vpoint_pos->guisection = _("Vector points");
@@ -446,7 +452,7 @@ void args_viewpoint(struct GParams *params)
     params->pos->description =
 	_("Viewpoint position (x,y model coordinates)");
     params->pos->guisection = _("Viewpoint");
-    params->pos->answer = "0.85,0.85";
+    params->pos->answer = "0.84,0.16";
 
     /* height */
     params->height = G_define_option();
@@ -498,7 +504,7 @@ void args_volume(struct GParams *params)
 {
     params->volume = G_define_standard_option(G_OPT_R3_MAPS);
     params->volume->required = NO;
-    params->volume->guisection = _("Volume");
+    params->volume->guisection = _("Volumes");
     params->volume->key = "volume";
 
     /* mode */
@@ -506,7 +512,7 @@ void args_volume(struct GParams *params)
     params->volume_mode->key = "volume_mode";
     params->volume_mode->key_desc = "string";
     params->volume_mode->type = TYPE_STRING;
-    params->volume_mode->required = YES;
+    params->volume_mode->required = NO;
     params->volume_mode->multiple = YES;
     params->volume_mode->description = _("Volume draw mode");
     params->volume_mode->options = "isosurface,slice";
@@ -518,7 +524,7 @@ void args_volume(struct GParams *params)
     params->volume_shade->key = "volume_shading";
     params->volume_shade->key_desc = "string";
     params->volume_shade->type = TYPE_STRING;
-    params->volume_shade->required = YES;
+    params->volume_shade->required = NO;
     params->volume_shade->multiple = YES;
     params->volume_shade->description = _("Volume shading");
     params->volume_shade->options = "flat,gouraud";
@@ -530,10 +536,10 @@ void args_volume(struct GParams *params)
     params->volume_pos->key = "volume_position";
     params->volume_pos->key_desc = "x,y,z";
     params->volume_pos->type = TYPE_INTEGER;
-    params->volume_pos->required = YES;
+    params->volume_pos->required = NO;
     params->volume_pos->multiple = YES;
     params->volume_pos->description = _("Volume position");
-    params->volume_pos->guisection = _("Volume");
+    params->volume_pos->guisection = _("Volumes");
     params->volume_pos->answer = "0,0,0";
     
     /* resolution  */
@@ -541,11 +547,11 @@ void args_volume(struct GParams *params)
     params->volume_res->key = "volume_resolution";
     params->volume_res->key_desc = "value";
     params->volume_res->type = TYPE_INTEGER;
-    params->volume_res->required = YES;
+    params->volume_res->required = NO;
     params->volume_res->multiple = YES;
     params->volume_res->description = _("Volume resolution");
     params->volume_res->answer = "3";
-    params->volume_res->guisection = _("Volume");
+    params->volume_res->guisection = _("Volumes");
 
     /* isosurface level */
     params->isosurf_level = G_define_option();
@@ -555,9 +561,79 @@ void args_volume(struct GParams *params)
     params->isosurf_level->required = NO;
     params->isosurf_level->multiple = YES;
     params->isosurf_level->description = _("Isosurface level");
-    params->isosurf_level->guisection = _("Volume");
+    params->isosurf_level->guisection = _("Volumes");
 
     return;
+}
+
+void args_lighting(struct GParams *params)
+{
+    params->light_pos = G_define_option();
+    params->light_pos->key = "light_position";
+    params->light_pos->key_desc = "x,y,z";
+    params->light_pos->type = TYPE_DOUBLE;
+    params->light_pos->required = NO;
+    params->light_pos->multiple = NO;
+    params->light_pos->description =
+	_("Light position (x,y,z model coordinates)");
+    params->light_pos->guisection = _("Lighting");
+    params->light_pos->answer = "0.68,-0.68,0.80";
+
+    params->light_color = G_define_standard_option(G_OPT_C_FG);
+    params->light_color->key = "light_color";
+    params->light_color->label = _("Light color");
+    params->light_color->guisection = _("Lighting");
+    params->light_color->answer = "white";
+    
+    params->light_bright = G_define_option();
+    params->light_bright->key = "light_brightness";
+    params->light_bright->type = TYPE_INTEGER;
+    params->light_bright->required = NO;
+    params->light_bright->multiple = NO;
+    params->light_bright->description =	_("Light brightness");
+    params->light_bright->guisection = _("Lighting");
+    params->light_bright->answer = "80";
+    params->light_bright->options="0-100";
+
+    params->light_ambient = G_define_option();
+    params->light_ambient->key = "light_ambient";
+    params->light_ambient->type = TYPE_INTEGER;
+    params->light_ambient->required = NO;
+    params->light_ambient->multiple = NO;
+    params->light_ambient->description = _("Light ambient");
+    params->light_ambient->guisection = _("Lighting");
+    params->light_ambient->answer = "20";
+    params->light_ambient->options="0-100";
+}
+
+void args_fringe(struct GParams *params)
+{
+    params->fringe = G_define_option();
+    params->fringe->key = "fringe";
+    params->fringe->type = TYPE_STRING;
+    params->fringe->options = "nw,ne,sw,se";
+    params->fringe->descriptions = _("nw;North-West edge;"
+				     "ne;North-East edge;"
+				     "sw;South-West edge;"
+				     "se;South-East edge");
+    params->fringe->description = _("Fringe edges");
+    params->fringe->guisection = _("Fringe");
+    params->fringe->multiple = YES;
+    
+    params->fringe_color = G_define_standard_option(G_OPT_C_FG);
+    params->fringe_color->key = "fringe_color";
+    params->fringe_color->label = _("Fringe color");
+    params->fringe_color->guisection = _("Fringe");
+    params->fringe_color->answer = "grey";
+    
+    params->fringe_elev = G_define_option();
+    params->fringe_elev->key = "fringe_elevation";
+    params->fringe_elev->type = TYPE_INTEGER;
+    params->fringe_elev->required = NO;
+    params->fringe_elev->multiple = NO;
+    params->fringe_elev->description = _("Fringe elevation");
+    params->fringe_elev->guisection = _("Fringe");
+    params->fringe_elev->answer = "55";
 }
 
 /*!
@@ -583,9 +659,9 @@ int opt_get_num_answers(const struct Option *opt)
 }
 
 /*!
-   \brief Check parameters consistency
-
-   \param params module parameters
+  \brief Check parameters consistency
+  
+  \param params module parameters
  */
 void check_parameters(const struct GParams *params)
 {
