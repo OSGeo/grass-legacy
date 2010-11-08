@@ -434,7 +434,7 @@ class GMFrame(wx.Frame):
         # open dialog and choose script file
         dlg = wx.FileDialog(parent = self, message = _("Choose script file to run"),
                             defaultDir = os.getcwd(),
-                            wildcard = _("Bash script (*.sh)|*.sh|Python script (*.py)|*.py"))
+                            wildcard = _("Python script (*.py)|*.py|Bash script (*.sh)|*.sh"))
         
         filename = None
         if dlg.ShowModal() == wx.ID_OK:
