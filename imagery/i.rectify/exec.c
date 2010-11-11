@@ -16,7 +16,7 @@
 #include <grass/glocale.h>
 #include "global.h"
 
-int exec_rectify(int order, char *extension)
+int exec_rectify(int order, char *extension, char *interp_method)
 /* ADDED WITH CRS MODIFICATIONS */
 {
     char *name;
@@ -29,15 +29,6 @@ int exec_rectify(int order, char *extension)
     struct History hist;
     int colr_ok, cats_ok;
     long start_time, rectify_time, compress_time;
-
-
-    /* allocate the output cell matrix */
-    cell_buf = (void **)G_calloc(NROWS, sizeof(void *));
-    n = NCOLS * G_raster_size(map_type);
-    for (i = 0; i < NROWS; i++) {
-	cell_buf[i] = (void *)G_malloc(n);
-	G_set_null_value(cell_buf[i], NCOLS, map_type);
-    }
 
     /* rectify each file */
     for (n = 0; n < ref.nfiles; n++) {
@@ -65,7 +56,7 @@ int exec_rectify(int order, char *extension)
 
 	    time(&start_time);
 
-	    if (rectify(name, mapset, result, order)) {
+	    if (rectify(name, mapset, result, order, interp_method)) {
 		select_target_env();
 
 	    /***
@@ -99,10 +90,12 @@ int exec_rectify(int order, char *extension)
 	    }
 	    else
 		report(name, mapset, result, (long)0, (long)0, 0);
+
+	    G_free(result);
 	}
     }
 
-    G_done_msg("");
+    G_done_msg(" ");
 
     return 0;
 }
