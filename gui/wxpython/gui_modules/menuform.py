@@ -1278,7 +1278,7 @@ class cmdPanel(wx.Panel):
                         # parameter previously set
                         if value:
                             if txt2.GetName() == "SpinCtrl":
-                                txt2.SetValue(value)
+                                txt2.SetValue(int(value))
                             else:
                                 txt2.SetValue(value)
                         
