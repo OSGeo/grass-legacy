@@ -8,7 +8,7 @@ int dots(char *, int);
 /* ask_files2.c */
 int ask_file_from_list(char *, char *);
 
-/* ask_wind.c */
+/* ask_method.c */
 int ask_method(void);
 
 /* ask_wind.c */
