@@ -27,6 +27,15 @@ int ask_files(char *groupname)
     repeat = 0;
     for (i = 0; i < NFILES; i++)
 	err[i] = "";
+    for (i = 0; i < group.group_ref.nfiles && i < NFILES; i++) {
+	if (strlen(group.group_ref.file[i].name) < 15)
+	    sprintf(result[i], group.group_ref.file[i].name);
+	else
+	    sprintf(result[i], "%14s", group.group_ref.file[i].name);
+    }
+    for (; i < NFILES; i++)
+	result[i][0] = 0;
+
     f1 = 0;
     for (f2 = f1; f1 < group.group_ref.nfiles; f1 = f2) {
 	any = 0;
@@ -34,9 +43,6 @@ int ask_files(char *groupname)
 	V_clear();
 	V_line(0,
 	       _("Please select the file(s) you wish to rectify by naming an output file"));
-	if (!repeat)
-	    for (i = 0; i < NFILES; i++)
-		result[i][0] = 0;
 	repeat = 0;
 	for (i = 0; f2 < group.group_ref.nfiles && i < NFILES; i++, f2++) {
 	    name = group.group_ref.file[f2].name;

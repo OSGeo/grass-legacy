@@ -1,7 +1,6 @@
 #include <curses.h>
-#include "orthophoto.h"
 #include <grass/rowio.h>
-#include "rowcol.h"
+#include "orthophoto.h"
 
 /* this is a curses structure */
 typedef struct
@@ -34,14 +33,6 @@ typedef struct
     int *status;		/* MENU,OPTION status */
     int top, bottom, left, right;
 } Objects;
-
-typedef struct
-{
-    double XT, YT, ZT;		/* object space */
-    int rowT, colT;
-    double xt, yt;		/* image space */
-    int rowt, colt;
-} Tie_Point;
 
 typedef struct
 {

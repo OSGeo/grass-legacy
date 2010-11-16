@@ -9,13 +9,13 @@ int dots(char *, int);
 int ask_file_from_list(char *, char *);
 
 /* ask_wind.c */
+int ask_method(void);
+
+/* ask_wind.c */
 int ask_window(struct Cell_head *);
 
 /* aver_z.c */
 int get_aver_elev(struct Ortho_Control_Points *, double *);
-
-/* compress.c */
-int compress(char *);
 
 /* conv.c */
 int view_to_col(View *, int);
@@ -50,17 +50,17 @@ int exec_rectify(void);
 int get_target_window(void);
 int georef_window(struct Cell_head *, struct Cell_head *);
 
-/* matrix.c */
-int compute_georef_matrix(struct Cell_head *, struct Cell_head *);
-
-/* perform.c */
-int perform_georef(int, void *rast);
-
-/* ps_cp.c */
-int get_psuedo_control_pt(int, int);
-
 /* rectify.c */
-int rectify(char *, char *, char *);
+int rectify(char *, char *, struct cache *, double, char *);
+
+/* readcell.c */
+struct cache *readcell(int, int, int);
+block *get_block(struct cache *, int);
+
+#define BKIDX(c,y,x) ((y) * (c)->stride + (x))
+#define BKPTR(c,y,x) ((c)->grid[BKIDX((c),(y),(x))])
+#define BLOCK(c,y,x) (BKPTR((c),(y),(x)) ? BKPTR((c),(y),(x)) : get_block((c),BKIDX((c),(y),(x))))
+#define CPTR(c,y,x) (&(*BLOCK((c),HI((y)),HI((x))))[LO((y))][LO((x))])
 
 /* report.c */
 int report(char *, char *, char *, long, long, int);
@@ -68,6 +68,19 @@ int report(char *, char *, char *, long, long, int);
 /* target.c */
 int get_target(char *);
 
-/* write.c */
-int write_map(char *);
-int write_matrix(int, int);
+/* declare resampling methods */
+/* bilinear.c */
+extern void p_bilinear(struct cache *, void *, int, double *, double *,
+		       struct Cell_head *);
+/* cubic.c */
+extern void p_cubic(struct cache *, void *, int, double *, double *,
+		    struct Cell_head *);
+/* nearest.c */
+extern void p_nearest(struct cache *, void *, int, double *, double *,
+		      struct Cell_head *);
+/* bilinear_f.c */
+extern void p_bilinear_f(struct cache *, void *, int, double *, double *,
+		       struct Cell_head *);
+/* cubic_f.c */
+extern void p_cubic_f(struct cache *, void *, int, double *, double *,
+		    struct Cell_head *);

@@ -3,7 +3,7 @@
 #include <grass/gis.h>
 #include <grass/vask.h>
 
-static int round(double *);
+static int rnd(double *);
 static int visually_equal(double, double);
 
 int ask_window(struct Cell_head *window)
@@ -13,14 +13,12 @@ int ask_window(struct Cell_head *window)
     short ok;
     struct Cell_head minimal;
 
-
-
-    round(&window->north);
-    round(&window->south);
-    round(&window->west);
-    round(&window->east);
-    round(&window->ew_res);
-    round(&window->ns_res);
+    rnd(&window->north);
+    rnd(&window->south);
+    rnd(&window->west);
+    rnd(&window->east);
+    rnd(&window->ew_res);
+    rnd(&window->ns_res);
     G_copy(&minimal, window, sizeof(minimal));
 
     window->rows = 0;
@@ -88,12 +86,12 @@ int ask_window(struct Cell_head *window)
 	if (!V_call())
 	    exit(1);
 
-	round(&window->north);
-	round(&window->south);
-	round(&window->east);
-	round(&window->west);
-	round(&window->ew_res);
-	round(&window->ns_res);
+	rnd(&window->north);
+	rnd(&window->south);
+	rnd(&window->east);
+	rnd(&window->west);
+	rnd(&window->ew_res);
+	rnd(&window->ns_res);
 
 	if ((window->ns_res <= 0) || (window->ew_res <= 0)) {
 	    fprintf(stderr, "Illegal resolution value(s)\n");
@@ -194,7 +192,7 @@ static int visually_equal(double x, double y)
     return strcmp(xs, ys) == 0;
 }
 
-static int round(double *x)
+static int rnd(double *x)
 {
     char xs[40];
 

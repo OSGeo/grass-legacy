@@ -3,6 +3,7 @@
 int get_aver_elev(struct Ortho_Control_Points *cpz, double *aver_z)
 {
     double meanz;
+    double *cp = cpz->z2;
     int i, n;
 
     /*  Need 1 control points */
@@ -18,20 +19,13 @@ int get_aver_elev(struct Ortho_Control_Points *cpz, double *aver_z)
 	    continue;
 
 	n++;
-	meanz += *((cpz->z2)++);
+	meanz += *(cp++);
 	G_debug(3, "In ortho meanz = %f", meanz);
     }
 
     *aver_z = meanz / n;
 
     G_debug(1, "In ortho aver_z = %f", *aver_z);
-
-    /* reset pointers */
-    for (i = 0; i < cpz->count; i++) {
-	if (cpz->status[i] <= 0)
-	    continue;
-	(cpz->z2)--;
-    }
 
     return 0;
 }
