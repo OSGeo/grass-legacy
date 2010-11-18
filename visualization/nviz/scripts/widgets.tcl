@@ -593,7 +593,7 @@ proc mkMapList { P type {cmd null}} {
 	set name [Nget_current $type]
 
 	if {[llength $list] == 0} {
-		set name "None Loaded   "
+		set name [G_msg "None Loaded"]
 	} else {
 		set n [lsearch $list $name]
 		set list [lreplace $list $n $n]

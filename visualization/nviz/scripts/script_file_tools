@@ -33,29 +33,29 @@ set Nv_(APP) "."
 wm resizable . true false
 
 # Titlebar
-label .title -text "Map Object File Sequencing" -relief raised
+label .title -text [G_msg "Map Object File Sequencing"] -relief raised
 pack .title -side top -fill x -expand yes
 frame .controls 
 
 # Create buttons for adding fields
 frame .controls.fields -relief groove -bd 2
 set rname .controls.fields
-label $rname.title -text "Fields:"
-button $rname.add -text "Add" -command "add_field"
-button $rname.delete -text "Delete" -command "delete_field"
-button $rname.state -text "State File: None" -command "change_state_file"
+label $rname.title -text [G_msg "Fields:"]
+button $rname.add -text [G_msg "Add"] -command "add_field"
+button $rname.delete -text [G_msg "Delete"] -command "delete_field"
+button $rname.state -text [G_msg "State File: None"] -command "change_state_file"
 pack $rname.title $rname.add $rname.delete $rname.state \
     -fill x -expand no -padx 2 -pady 2 
 
 # Create buttons for cancelling or accepting
 frame .controls.options -relief groove -bd 2
 set rname .controls.options
-label $rname.title -text "Options:"
-button $rname.cancel -text "Done" -command "done_script"
-button $rname.accept -text "Add To Script" -command "build_script"
-button $rname.build -text "Build Script..." -command "build_standalone_script"
-button $rname.load -text "Load Fields..." -command "load_fields"
-button $rname.save -text "Save Fields..." -command "save_fields"
+label $rname.title -text [G_msg "Options:"]
+button $rname.cancel -text [G_msg "Done"] -command "done_script"
+button $rname.accept -text [G_msg "Add To Script"] -command "build_script"
+button $rname.build -text [G_msg "Build Script..."] -command "build_standalone_script"
+button $rname.load -text [G_msg "Load Fields..."] -command "load_fields"
+button $rname.save -text [G_msg "Save Fields..."] -command "save_fields"
 
 pack $rname.title $rname.cancel $rname.accept \
     $rname.build $rname.load $rname.save\
@@ -72,7 +72,7 @@ canvas .fields.display_area -width 10c -height 6c \
 # This frame created to display frame numbers next to the list of 
 # files in fields
 frame .fields.display_area.frames -relief groove -bd 2 -width 2c -height 6c
-label .fields.display_area.frames.l1 -text "Frame"
+label .fields.display_area.frames.l1 -text [G_msg "Frame"]
 label .fields.display_area.frames.l2 -text "     "
 listbox .fields.display_area.frames.frame_list \
     -yscrollcommand ".fields.scrolly set" -height 9
@@ -108,9 +108,9 @@ proc load_fields {} {
 
     # First make sure we're not overwriting something...
     if {$FieldsChanged} then {
-	if {[tk_dialog .verify "Verify" "Current fields have not been saved, really load new fields?" \
+	if {[tk_dialog .verify [G_msg "Verify"] [G_msg "Current fields have not been saved, really load new fields?"] \
 		 @/usr/local/lib/tk/bitmaps/warning \
-		 1 "Ok" "Cance'"] == 1} then {
+		 1 [G_msg "Ok"] [G_msg "Cancel"]] == 1} then {
 	    # Cancel the exit
 	    return
 	}
@@ -123,7 +123,7 @@ proc load_fields {} {
     # Read in each of the file fields one at a time, and create
     # Field_Data as appropriate
     if {[catch {set file_hook [open $new_file r]} error_code] != 0} then {
-	display_error "While opening file: $error_code"
+	display_error [G_msg "Error while opening file: %s", $error_code]
 	return
     }
 
@@ -132,14 +132,14 @@ proc load_fields {} {
 
     # Read in state file
     if {[catch {gets $file_hook state_file} error_code] != 0} then {
-	display_error "While reading state_file: $error_code"
+	display_error [G_msg "While reading state_file: %s", $error_code]
 	return
     }
     set_new_state_file $state_file
 
     # Get number of fields
     if {[catch {gets $file_hook num_fields} error_code] != 0} then {
-	display_error "While reading number of fields: $error_code"
+	display_error [G_msg "While reading number of fields: %s", $error_code]
 	return
     }
 
@@ -148,13 +148,13 @@ proc load_fields {} {
     for {set i 0} {$i < $num_fields} {incr i} {
 	# Input field type
 	if {[catch {gets $file_hook field_type} error_code] != 0} then {
-	    display_error "While reading field type: $error_code"
+	    display_error [G_msg "While reading field type: %s", $error_code]
 	    return
 	}
 
 	# Input field attribute
 	if {[catch {gets $file_hook field_att} error_code] != 0} then {
-	    display_error "While reading field attribute: $error_code"
+	    display_error [G_msg "While reading field attribute: %s", $error_code]
 	    return
 	}
 
