@@ -737,10 +737,14 @@ class GPromptSTC(GPrompt, wx.stc.StyledTextCtrl):
         
         cmd = text.split()[0]
         if not self.cmdDesc or cmd != self.cmdDesc.get_name():
-            try:
-                self.cmdDesc = menuform.GUI().ParseInterface(cmd = [cmd])
-            except IOError:
-                self.cmdDesc = None
+            if cmd in ('r.mapcalc', 'r3.mapcalc'):
+                self.parent.parent.OnMapCalculator(event = None, cmd = [cmd])
+                self.OnCmdErase(None)
+            else:
+                try:
+                    self.cmdDesc = menuform.GUI().ParseInterface(cmd = [cmd])
+                except IOError:
+                    self.cmdDesc = None
         
     def OnKeyPressed(self, event):
         """!Key press capture for autocompletion, calltips, and command history
