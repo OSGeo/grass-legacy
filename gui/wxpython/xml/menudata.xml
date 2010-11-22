@@ -160,7 +160,7 @@
 	    <menuitem>
 	      <label>Link vector data</label>
 	      <help>Creates a new pseudo-vector map as a link to an OGR-supported layer.</help>
-	      <keywords>vector,external,ogr</keywords>
+	      <keywords>vector</keywords>
               <handler>OnLinkOgrLayers</handler>
 	      <command>v.external</command>
 	    </menuitem>
@@ -197,7 +197,7 @@
 	    <menuitem>
 	      <label>DXF import</label>
 	      <help>Converts files in DXF format to GRASS vector map format.</help>
-	      <keywords>vector,import,dxf</keywords>
+	      <keywords>vector,import</keywords>
 	      <handler>OnImportDxfFile</handler>
 	      <command>v.in.dxf</command>
 	    </menuitem>
@@ -634,7 +634,7 @@
 	</menuitem>
 	<menuitem>
 	  <label>NVIZ (non-interactive)</label>
-	  <help>Experimental NVIZ CLI prototype.</help>
+	  <help>Allows rendering GIS data is a 3D space.</help>
 	  <keywords>visualization,raster,vector,raster3d</keywords>
 	  <handler>OnMenuCmd</handler>
 	  <command>nviz_cmd</command>
@@ -1088,8 +1088,8 @@
 	    </menuitem>
 	    <menuitem>
 	      <label>Shadows map</label>
-	      <help>Calculates cast shadow areas from sun position and DEM. Either A: exact sun position is specified, or B: date/time to calculate the sun position by r.sunmask itself.</help>
-	      <keywords>raster</keywords>
+	      <help>Calculates cast shadow areas from sun position and elevation raster map.</help>
+	      <keywords>raster,sun position</keywords>
 	      <handler>OnMenuCmd</handler>
 	      <command>r.sunmask</command>
 	    </menuitem>
@@ -1193,8 +1193,8 @@
 	    </menuitem>
 	    <menuitem>
 	      <label>Thin</label>
-	      <help>Thins non-zero cells that denote linear features in a raster map layer.</help>
-	      <keywords>raster</keywords>
+	      <help>Thins non-zero cells that denote linear features in a raster map.</help>
+	      <keywords>raster,thin</keywords>
 	      <handler>OnMenuCmd</handler>
 	      <command>r.thin</command>
 	    </menuitem>
@@ -1990,7 +1990,7 @@
 	<menuitem>
 	  <label>Query with another vector map</label>
 	  <help>Selects features from vector map (A) by features from other vector map (B).</help>
-	  <keywords>vector,query</keywords>
+	  <keywords>vector,spatial query</keywords>
 	  <handler>OnMenuCmd</handler>
 	  <command>v.select</command>
 	</menuitem>
@@ -2557,7 +2557,7 @@
 	    </menuitem>
 	    <menuitem>
 	      <label>Matrix/convolving filter</label>
-	      <help>Raster map matrix filter.</help>
+	      <help>Performs raster map matrix filter.</help>
 	      <keywords>raster,map algebra</keywords>
 	      <handler>OnMenuCmd</handler>
 	      <command>r.mfilter</command>
