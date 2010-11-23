@@ -451,10 +451,13 @@ class MapCalcFrame(wx.Frame):
         if not self.addbox.IsChecked():
             return
         name = self.newmaptxt.GetValue().strip() + '@' + grass.gisenv()['MAPSET']
-        self.parent.GetLayerTree().AddLayer(ltype = 'raster',
-                                            lname = name,
-                                            lcmd = ['d.rast', 'map=%s' % name],
-                                            multiple = False)
+        mapTree = self.parent.GetLayerTree()
+        if not mapTree.GetMap().GetListOfLayers(l_name = name):
+            mapTree.AddLayer(ltype = 'raster',
+                             lname = name,
+                             lcmd = ['d.rast', 'map=%s' % name],
+                             multiple = False)
+        
         display = self.parent.GetLayerTree().GetMapDisplay()
         if display and display.IsAutoRendered():
             display.GetWindow().UpdateMap(render = True)
