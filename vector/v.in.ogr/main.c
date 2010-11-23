@@ -1066,7 +1066,7 @@ int main(int argc, char *argv[])
 	/* Go through all layers and find centroids for each polygon */
 	for (layer = 0; layer < nlayers; layer++) {
 	    G_message("%s", separator);
-	    G_message(_("Layer: %s"), layer_names[layer]);
+	    G_message(_("Find centroids for layer: %s"), layer_names[layer]);
 	    layer_id = layers[layer];
 	    Ogr_layer = OGR_DS_GetLayer(Ogr_ds, layer_id);
 	    OGR_L_ResetReading(Ogr_layer);
