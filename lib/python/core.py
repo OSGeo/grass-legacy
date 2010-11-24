@@ -1,6 +1,6 @@
 """!@package grass.script.core
 
-@brief GRASS Python scripting module
+@brief GRASS Python scripting module (core functions)
 
 Core functions to be used in Python scripts.
 
@@ -30,7 +30,6 @@ import re
 import atexit
 import subprocess
 import shutil
-import tempfile as tmpfile
 
 # i18N
 import gettext
@@ -1001,22 +1000,6 @@ def _create_location_xy(location):
         return 1
     
     return 0
-
-def init(gisbase, dbase, location, mapset):
-    os.environ['PATH'] += ':' + os.path.join(gisbase, 'bin') + ':' + \
-        os.path.join(gisbase, 'scripts')
-    os.environ['LD_LIBRARY_PATH'] = os.path.join(gisbase, 'lib')
-    
-    os.environ['GIS_LOCK'] = str(os.getpid())
-    
-    fd, gisrc = tmpfile.mkstemp()
-    os.environ['GISRC'] = gisrc
-    fd.write("GISDBASE: %s\n" % dbase)
-    fd.write("LOCATION_NAME: %s\n" % location)
-    fd.write("MAPSET: %s\n" % mapset)
-    fd.close()
-    
-    return gisrc
 
 # get debug_level
 if find_program('g.gisenv', ['--help']):
