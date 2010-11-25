@@ -445,8 +445,8 @@ class grassTask:
         errorList = list()
         
         for p in self.params:
-            if p.get('value', '') == '' and p.get('required', 'no') != 'no':
-                if p.get('default', '') == '':
+            if not p.get('value', '') and p.get('required', False):
+                if not p.get('default', ''):
                     desc = p.get('label', '')
                     if not desc:
                         desc = p['description']
@@ -472,7 +472,7 @@ class grassTask:
                 else:
                     cmd += [ '-' + flag['name'] ]
         for p in self.params:
-            if p.get('value','') == '' and p.get('required','no') != 'no':
+            if p.get('value','') == '' and p.get('required', False):
                 if p.get('default', '') != '':
                     cmd += [ '%s=%s' % ( p['name'], p['default'] ) ]
                 elif ignoreErrors is False:
@@ -506,7 +506,7 @@ class grassTask:
     def has_required(self):
         """!Check if command has at least one required paramater"""
         for p in self.params:
-            if p.get('required', 'no') == 'yes':
+            if p.get('required', False):
                 return True
         
         return False
@@ -537,11 +537,11 @@ class processTask:
         self.task.name = self.root.get('name', default = 'unknown')
         
         # keywords
-        for keyword in self.__getNodeText(self.root, 'keywords').split(','):
+        for keyword in self._getNodeText(self.root, 'keywords').split(','):
             self.task.keywords.append(keyword.strip())
         
-        self.task.label       = self.__getNodeText(self.root, 'label')
-        self.task.description = self.__getNodeText(self.root, 'description')
+        self.task.label       = self._getNodeText(self.root, 'label')
+        self.task.description = self._getNodeText(self.root, 'description')
         
     def __processParams(self):
         """!Process parameters description"""
@@ -562,8 +562,8 @@ class processTask:
             node_values = p.find('values')
             if node_values is not None:
                 for pv in node_values.findall('value'):
-                    values.append(self.__getNodeText(pv, 'name'))
-                    desc = self.__getNodeText(pv, 'description')
+                    values.append(self._getNodeText(pv, 'name'))
+                    desc = self._getNodeText(pv, 'description')
                     if desc:
                         values_desc.append(desc)
             
@@ -574,34 +574,43 @@ class processTask:
                 for ki in node_key_desc.findall('item'):
                     key_desc.append(ki.text)
             
+            if p.get('multiple', 'no') == 'yes':
+                multiple = True
+            else:
+                multiple = False
+            if p.get('required', 'no') == 'yes':
+                required = True
+            else:
+                required = False
+            
             self.task.params.append( {
-                "name"        : p.get('name'),
-                "type"        : p.get('type'),
-                "required"    : p.get('required'),
-                "multiple"    : p.get('multiple'),
-                "label"       : self.__getNodeText(p, 'label'),
-                "description" : self.__getNodeText(p, 'description'),
-                'gisprompt'   : gisprompt,
-                'age'         : age,
-                'element'     : element,
-                'prompt'      : prompt,
-                "guisection"  : self.__getNodeText(p, 'guisection'),
-                "default"     : self.__getNodeText(p, 'default'),
-                "values"      : values,
-                "values_desc" : values_desc,
-                "value"       : '',
-                "key_desc"    : key_desc } )
+                "name"           : p.get('name'),
+                "type"           : p.get('type'),
+                "required"       : required,
+                "multiple"       : multiple,
+                "label"          : self._getNodeText(p, 'label'),
+                "description"    : self._getNodeText(p, 'description'),
+                'gisprompt'      : gisprompt,
+                'age'            : age,
+                'element'        : element,
+                'prompt'         : prompt,
+                "guisection"     : self._getNodeText(p, 'guisection'),
+                "default"        : self._getNodeText(p, 'default'),
+                "values"         : values,
+                "values_desc"    : values_desc,
+                "value"          : '',
+                "key_desc"       : key_desc } )
             
     def __processFlags(self):
         """!Process flags description"""
         for p in self.root.findall('flag'):
             self.task.flags.append( {
                     "name"        : p.get('name'),
-                    "label"       : self.__getNodeText(p, 'label'),
-                    "description" : self.__getNodeText(p, 'description'),
-                    "guisection"  : self.__getNodeText(p, 'guisection') } )
+                    "label"       : self._getNodeText(p, 'label'),
+                    "description" : self._getNodeText(p, 'description'),
+                    "guisection"  : self._getNodeText(p, 'guisection') } )
         
-    def __getNodeText(self, node, tag, default = ''):
+    def _getNodeText(self, node, tag, default = ''):
         """!Get node text"""
         p = node.find(tag)
         if p is not None:
@@ -1034,7 +1043,7 @@ class cmdPanel(wx.Panel):
         self.Bind(wx.EVT_SIZE, self.OnSize)
         
         for task in not_hidden:
-            if task.get( 'required','no' ) == 'yes':
+            if task.get( 'required', False):
                 # All required go into Main, even if they had defined another guisection
                 task['guisection'] = _( 'Required' )
             if task.get( 'guisection','' ) == '':
@@ -1175,14 +1184,14 @@ class cmdPanel(wx.Panel):
             txt = None
 
             # text style (required -> bold)
-            if p.get('required','no') == 'no':
+            if not p.get('required', False):
                 text_style = wx.FONTWEIGHT_NORMAL
             else:
                 text_style = wx.FONTWEIGHT_BOLD
 
             # title sizer (description, name, type)
             if (len(p.get('values', []) ) > 0) and \
-                    p.get('multiple', 'no') == 'yes' and \
+                    p.get('multiple', False) and \
                     p.get('gisprompt',False) == False and \
                     p.get('type', '') == 'string':
                 title_txt = wx.StaticBox (parent=which_panel, id=wx.ID_ANY)
@@ -1204,7 +1213,7 @@ class cmdPanel(wx.Panel):
             self.label_id.append(title_txt.GetId())
 
             # title expansion
-            if p.get('multiple','no') == 'yes' and len( p.get('values','') ) == 0:
+            if p.get('multiple', False) and len( p.get('values','') ) == 0:
                 title = _("[multiple]") + " " + title
                 if p.get('value','') ==  '' :
                     p['value'] = p.get('default','')
@@ -1213,7 +1222,7 @@ class cmdPanel(wx.Panel):
                 valuelist      = map(str, p.get('values',[]))
                 valuelist_desc = map(unicode, p.get('values_desc',[]))
 
-                if p.get('multiple', 'no') == 'yes' and \
+                if p.get('multiple', False) and \
                         p.get('gisprompt',False) == False and \
                         p.get('type', '') == 'string':
                     title_txt.SetLabel(" %s: (%s, %s) " % (title, p['name'], p['type']))
@@ -1257,7 +1266,7 @@ class cmdPanel(wx.Panel):
                                                           str(valuelist[0])))
                         
                         if p.get('type', '') == 'integer' and \
-                                p.get('multiple','no') == 'no':
+                                not p.get('multiple', False):
 
                             # for multiple integers use textctrl instead of spinsctrl
                             try:
@@ -1309,7 +1318,7 @@ class cmdPanel(wx.Panel):
                 and p.get('prompt','') != 'color'):
 
                 title_txt.SetLabel(title + ':' )
-                if p.get('multiple','yes') == 'yes' or \
+                if p.get('multiple', False) or \
                         p.get('type', 'string') == 'string' or \
                         len(p.get('key_desc', [])) > 1:
                     txt3 = wx.TextCtrl(parent=which_panel, value = p.get('default',''))
@@ -2236,7 +2245,7 @@ if __name__ == "__main__":
             },{
             "name" : "plain_color",
             "description" : "This is a plain color, and it is a compulsory parameter",
-            "required" : "yes",
+            "required" : False,
             "gisprompt" : True,
             "prompt" : "color"
             },{
@@ -2278,7 +2287,7 @@ if __name__ == "__main__":
             {
             "name" : "a",
             "description" : "Some flag, will appear in Main since it is required",
-            "required" : "yes"
+            "required" : True
             },{
             "name" : "b",
             "description" : "pre-filled flag, will appear in options since it is not required",
