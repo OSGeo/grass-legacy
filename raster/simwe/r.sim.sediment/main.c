@@ -80,7 +80,7 @@
 /* Specific stuff               */
 
 /********************************/
-#define MAIN
+
 #include <grass/waterglobs.h>
 
 char fncdsm[32];
