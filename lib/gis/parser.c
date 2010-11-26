@@ -857,7 +857,7 @@ int G_parser(int argc, char **argv)
 	}
     }
     else if (argc < 2 && isatty(0)) {
-	G_usage();
+      	G_usage();
 	return -1;
     }
     else if (argc >= 2) {
@@ -987,7 +987,7 @@ int G_parser(int argc, char **argv)
     error += check_required();
     
     if (error) {
-	if (G_verbose() > G_verbose_min())
+	if (G_verbose() > G_verbose_std())
 	    G_usage();
 	return -1;
     }
@@ -2430,7 +2430,7 @@ static int check_required(void)
     while (opt != NULL) {
 	if (opt->required && opt->answer == NULL) {
 	    fprintf(stderr,
-		    _("\nERROR: Required parameter <%s> not set:\n    (%s).\n"),
+		    _("ERROR: Required parameter <%s> not set:\n\t(%s)\n"),
 		    opt->key, (opt->label ? opt->label : opt->description) );
 	    err++;
 	}
