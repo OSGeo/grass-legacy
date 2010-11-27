@@ -82,7 +82,7 @@ r.mapcalc "$GIS_OPT_OUTPUT.g = g#$GIS_OPT_FIRST * .$GIS_OPT_PERCENT + (1.0 - .$G
 r.mapcalc "$GIS_OPT_OUTPUT.b = b#$GIS_OPT_FIRST * .$GIS_OPT_PERCENT + (1.0 - .$GIS_OPT_PERCENT) * b#$GIS_OPT_SECOND"
 
 g.message "Setting color tables to grey..."
-# should this be "0 black \n 255 white"?
+# this must be "0 black \n 255 white"
 for MAP in r g b ; do
    r.colors map=${GIS_OPT_OUTPUT}.$MAP col=grey255
    r.support map=${GIS_OPT_OUTPUT}.$MAP title="Color blend of $GIS_OPT_FIRST and $GIS_OPT_SECOND" \
