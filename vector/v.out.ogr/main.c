@@ -2,16 +2,16 @@
  ***************************************************************
  *
  * MODULE:       v.out.ogr
- * 
+ *
  * AUTHOR(S):    Radim Blazek
- *               Some extensions: Markus Neteler
+ *               Some extensions: Markus Neteler, Benjamin Ducke
  *
  * PURPOSE:      Category manipulations
- *               
- * COPYRIGHT:    (C) 2001 by the GRASS Development Team
  *
- *               This program is free software under the 
- *               GNU General Public License (>=v2). 
+ * COPYRIGHT:    (C) 2001-2009 by the GRASS Development Team
+ *
+ *               This program is free software under the
+ *               GNU General Public License (>=v2).
  *               Read the file COPYING that comes with GRASS
  *               for details.
  *
@@ -30,8 +30,8 @@
 int fout, fskip;		/* features written/ skip */
 int nocat, noatt, nocatskip;	/* number of features without cats/atts written/skip */
 
-int mk_att(int cat, struct field_info *Fi, dbDriver *Driver,
-	   int ncol, int doatt, OGRFeatureH Ogr_feature);
+int mk_att(int cat, struct field_info *Fi, dbDriver * Driver,
+	   int ncol, int doatt, int nocat, OGRFeatureH Ogr_feature);
 
 char *OGR_list_write_drivers();
 char OGRdrivers[2000];
@@ -39,12 +39,13 @@ char OGRdrivers[2000];
 int main(int argc, char *argv[])
 {
     int i, j, k, centroid, otype, donocat;
+    int num_to_export;
     char *mapset;
     int field;
     struct GModule *module;
     struct Option *in_opt, *dsn_opt, *layer_opt, *type_opt, *frmt_opt,
 	*field_opt, *dsco, *lco;
-    struct Flag *cat_flag, *esristyle, *poly_flag;
+    struct Flag *cat_flag, *esristyle, *poly_flag, *update_flag, *nocat_flag;
     char buf[2000];
     char key1[200], key2[200];
     struct Key_Value *projinfo, *projunits;
@@ -78,6 +79,7 @@ int main(int argc, char *argv[])
     unsigned int wkbtype = wkbUnknown;	/* ?? */
     OGRSpatialReferenceH Ogr_projection;
     char **papszDSCO = NULL, **papszLCO = NULL;
+    int num_types;
 
     G_gisinit(argv[0]);
 
@@ -89,8 +91,8 @@ int main(int argc, char *argv[])
 
     in_opt = G_define_standard_option(G_OPT_V_INPUT);
 
-    type_opt = G_define_standard_option(G_OPT_V_TYPE);
-    type_opt->options = "point,kernel,centroid,line,boundary,area,face";
+    type_opt = G_define_standard_option(G_OPT_V3_TYPE);
+    type_opt->options = "point,line,boundary,centroid,area,face,kernel,auto";
     type_opt->answer = "line,boundary";
     type_opt->description =
 	_("Feature type. Combination of types is not supported "
@@ -147,6 +149,15 @@ int main(int argc, char *argv[])
 	_("OGR layer creation option (format specific, NAME=VALUE)");
     lco->guisection = _("Creation");
 
+    update_flag = G_define_flag();
+    update_flag->key = 'u';
+    update_flag->description = _("Open an existing datasource for update");
+
+    nocat_flag = G_define_flag();
+    nocat_flag->key = 's';
+    nocat_flag->description =
+	_("Skip export of GRASS category ID ('cat') attribute");
+
     cat_flag = G_define_flag();
     cat_flag->key = 'c';
     cat_flag->description = _("Export features with category (labeled) only. "
@@ -164,16 +175,73 @@ int main(int argc, char *argv[])
     if (G_parser(argc, argv))
 	exit(EXIT_FAILURE);
 
-
     /* read options */
     field = atoi(field_opt->answer);
+
+    /* open input vector */
+    if ((mapset = G_find_vector2(in_opt->answer, "")) == NULL) {
+	G_fatal_error(_("Vector map <%s> not found"), in_opt->answer);
+    }
+
+    Vect_set_open_level(2);
+    Vect_open_old(&In, in_opt->answer, "");
+
+    /*
+       If no output type specified: determine one automatically.
+       Centroids, Boundaries and Kernels always have to be
+       exported explicitely, using the "type=" option.
+     */
+    if (!strcmp(type_opt->answer, "auto")) {
+	G_debug(2, "Automatic type determination.");
+
+	type_opt->answers = G_malloc(sizeof(char *) * 100);	/* should be big enough forever ;) */
+	for (i = 0; i < 100; i++) {
+	    type_opt->answers[i] = NULL;
+	}
+	num_types = 0;
+
+	if (Vect_get_num_primitives(&In, GV_POINT) > 0) {
+	    type_opt->answers[num_types] = strdup("point");
+	    G_debug(3, "Adding points to export list.");
+	    num_types++;
+	}
+
+	if (Vect_get_num_primitives(&In, GV_LINE) > 0) {
+	    type_opt->answers[num_types] = strdup("line");
+	    G_debug(3, "Adding lines to export list.");
+	    num_types++;
+	}
+
+	if (Vect_get_num_primitives(&In, GV_BOUNDARY) !=
+	    Vect_get_num_areas(&In)) {
+	    G_warning(_("Skipping all boundaries that are not part of an area."));
+	}
+
+	if (Vect_get_num_areas(&In) > 0) {
+	    type_opt->answers[num_types] = strdup("area");
+	    G_debug(3, "Adding areas to export list.");
+	    num_types++;
+	}
+
+	/*  Faces and volumes:
+	   For now, volumes will just be exported as sets of faces.
+	 */
+	if (Vect_get_num_primitives(&In, GV_FACE) > 0) {
+	    type_opt->answers[num_types] = strdup("face");
+	    G_debug(3, "Adding faces to export list.");
+	    num_types++;
+	}
+
+	if (num_types == 0)
+	    G_fatal_error(_("Could not determine input map's feature type(s)."));
+    }
 
     /* Check output type */
     otype = Vect_option_to_types(type_opt);
 
     if (!layer_opt->answer) {
-	char xname[GNAME_MAX],	xmapset[GMAPSET_MAX];
-	
+	char xname[GNAME_MAX], xmapset[GMAPSET_MAX];
+
 	if (G__name_is_fully_qualified(in_opt->answer, xname, xmapset))
 	    layer_opt->answer = G_store(xname);
 	else
@@ -188,6 +256,8 @@ int main(int argc, char *argv[])
 	wkbtype = wkbPolygon;
     else if (otype & GV_FACE)
 	wkbtype = wkbPolygon25D;
+    else if (otype & GV_VOLUME)
+	wkbtype = wkbPolygon25D;
 
     if (poly_flag->answer)
 	wkbtype = wkbPolygon;
@@ -195,14 +265,22 @@ int main(int argc, char *argv[])
     if (((GV_POINTS & otype) && (GV_LINES & otype)) ||
 	((GV_POINTS & otype) && (GV_AREA & otype)) ||
 	((GV_POINTS & otype) && (GV_FACE & otype)) ||
+	((GV_POINTS & otype) && (GV_KERNEL & otype)) ||
+	((GV_POINTS & otype) && (GV_VOLUME & otype)) ||
 	((GV_LINES & otype) && (GV_AREA & otype)) ||
-	((GV_LINES & otype) && (GV_FACE & otype))
+	((GV_LINES & otype) && (GV_FACE & otype)) ||
+	((GV_LINES & otype) && (GV_KERNEL & otype)) ||
+	((GV_LINES & otype) && (GV_VOLUME & otype)) ||
+	((GV_KERNEL & otype) && (GV_POINTS & otype)) ||
+	((GV_KERNEL & otype) && (GV_LINES & otype)) ||
+	((GV_KERNEL & otype) && (GV_AREA & otype)) ||
+	((GV_KERNEL & otype) && (GV_FACE & otype)) ||
+	((GV_KERNEL & otype) && (GV_VOLUME & otype))
 	) {
 	G_warning(_("The combination of types is not supported"
 		    " by all formats."));
 	wkbtype = wkbUnknown;
     }
-
 
     if (cat_flag->answer)
 	donocat = 0;
@@ -211,14 +289,6 @@ int main(int argc, char *argv[])
 
     Points = Vect_new_line_struct();
     Cats = Vect_new_cats_struct();
-
-    /* open input vector */
-    if ((mapset = G_find_vector2(in_opt->answer, "")) == NULL) {
-	G_fatal_error(_("Vector map <%s> not found"), in_opt->answer);
-    }
-
-    Vect_set_open_level(2);
-    Vect_open_old(&In, in_opt->answer, mapset);
 
     if (Vect_get_num_islands(&In) > 0 && !cat_flag->answer)
 	G_warning(_("The map contains islands. To preserve them in the output map, use the -c flag"));
@@ -237,7 +307,6 @@ int main(int argc, char *argv[])
     }
 
     /* Open OGR DSN */
-    /* OGRRegisterAll(); */  /* drivers are already registered */
     G_debug(2, "driver count = %d", OGRGetDriverCount());
     drn = -1;
     for (i = 0; i < OGRGetDriverCount(); i++) {
@@ -265,8 +334,16 @@ int main(int argc, char *argv[])
 	i++;
     }
 
-    G_debug(1, "Create OGR data source");
-    Ogr_ds = OGR_Dr_CreateDataSource(Ogr_driver, dsn_opt->answer, papszDSCO);
+    if (update_flag->answer) {
+	G_debug(1, "Update OGR data source");
+	Ogr_ds = OGR_Dr_Open(Ogr_driver, dsn_opt->answer, TRUE);
+    }
+    else {
+	G_debug(1, "Create OGR data source");
+	Ogr_ds =
+	    OGR_Dr_CreateDataSource(Ogr_driver, dsn_opt->answer, papszDSCO);
+    }
+
     CSLDestroy(papszDSCO);
     if (Ogr_ds == NULL)
 	G_fatal_error(_("Unable to open OGR data source '%s'"),
@@ -321,7 +398,12 @@ int main(int argc, char *argv[])
 	Fi = Vect_get_field(&In, field);
 	if (Fi == NULL) {
 	    G_warning(_("No attribute table found -> using only category numbers as attributes"));
-
+	    /* if we have no more than a 'cat' column, then that has to
+	       be exported in any case */
+	    if (nocat_flag->answer) {
+		G_warning(_("Exporting 'cat' anyway, as it is the only attribute table field"));
+		nocat_flag->answer = 0;
+	    }
 	    Ogr_field = OGR_Fld_Create("cat", OFTInteger);
 	    OGR_L_CreateField(Ogr_layer, Ogr_field, 0);
 	    OGR_Fld_Destroy(Ogr_field);
@@ -378,19 +460,29 @@ int main(int argc, char *argv[])
 		G_debug(2, "%s x %s -> %s x %s -> keycol = %d", Fi->key,
 			db_get_column_name(Column), key1, key2, keycol);
 
-		Ogr_field =
-		    OGR_Fld_Create(db_get_column_name(Column), ogr_ftype);
-		OGR_L_CreateField(Ogr_layer, Ogr_field, 0);
-		OGR_Fld_Destroy(Ogr_field);
+		if (!nocat_flag->answer) {
+		    Ogr_field =
+			OGR_Fld_Create(db_get_column_name(Column), ogr_ftype);
+		    OGR_L_CreateField(Ogr_layer, Ogr_field, 0);
+		    OGR_Fld_Destroy(Ogr_field);
+		}
+		else {
+		    /* skip export of 'cat' field */
+		    if (strcmp(Fi->key, db_get_column_name(Column)) != 0) {
+			Ogr_field =
+			    OGR_Fld_Create(db_get_column_name(Column),
+					   ogr_ftype);
+			OGR_L_CreateField(Ogr_layer, Ogr_field, 0);
+			OGR_Fld_Destroy(Ogr_field);
+		    }
+		}
 	    }
 	    if (keycol == -1)
 		G_fatal_error(_("Key column '%s' not found"), Fi->key);
 	}
-
     }
 
     Ogr_featuredefn = OGR_L_GetLayerDefn(Ogr_layer);
-    Ogr_feature = OGR_F_Create(Ogr_featuredefn);
 
     fout = fskip = nocat = noatt = nocatskip = 0;
 
@@ -414,20 +506,103 @@ int main(int argc, char *argv[])
     if (Vect_get_num_primitives(&In, GV_CENTROID) > 0 &&
 	!(otype & GV_CENTROID) && !(otype & GV_AREA))
 	G_warning(_("%d centroid(s) found, but not requested to be exported. "
-		   "Verify 'type' parameter."), Vect_get_num_primitives(&In,
-									GV_CENTROID));
-
-    if (Vect_get_num_primitives(&In, GV_AREA) > 0 && !(otype & GV_AREA))
-	G_warning(_("%d areas found, but not requested to be exported. "
 		    "Verify 'type' parameter."), Vect_get_num_primitives(&In,
-									 GV_AREA));
+									 GV_CENTROID));
+
+    if (Vect_get_num_areas(&In) > 0 && !(otype & GV_AREA))
+	G_warning(_("%d areas found, but not requested to be exported. "
+		    "Verify 'type' parameter."), Vect_get_num_areas(&In));
 
     if (Vect_get_num_primitives(&In, GV_FACE) > 0 && !(otype & GV_FACE))
 	G_warning(_("%d faces found, but not requested to be exported. "
 		    "Verify 'type' parameter."), Vect_get_num_primitives(&In,
 									 GV_FACE));
 
-    /* add? GV_KERNEL */
+    if (Vect_get_num_primitives(&In, GV_KERNEL) > 0 &&
+	!(otype & GV_KERNEL) && !(otype & GV_VOLUME))
+	G_warning(_("%d kernel(s) found, but not requested to be exported. "
+		    "Verify 'type' parameter."), Vect_get_num_primitives(&In,
+									 GV_KERNEL));
+
+    /* warn and eventually abort if there is nothing to be exported */
+    num_to_export = 0;
+    if (Vect_get_num_primitives(&In, GV_POINT) < 1 && (otype & GV_POINTS)) {
+	G_warning(_("No points found, but requested to be exported. "
+		    "Will skip this geometry type."));
+    }
+    else {
+	if (otype & GV_POINT)
+	    num_to_export =
+		num_to_export + Vect_get_num_primitives(&In, GV_POINT);
+    }
+
+    if (Vect_get_num_primitives(&In, GV_LINE) < 1 && (otype & GV_LINE)) {
+	G_warning(_("No lines found, but requested to be exported. "
+		    "Will skip this geometry type."));
+    }
+    else {
+	if (otype & GV_LINE)
+	    num_to_export =
+		num_to_export + Vect_get_num_primitives(&In, GV_LINE);
+    }
+
+    if (Vect_get_num_primitives(&In, GV_BOUNDARY) < 1 &&
+	(otype & GV_BOUNDARY)) {
+	G_warning(_("No boundaries found, but requested to be exported. "
+		   "Will skip this geometry type."));
+    }
+    else {
+	if (otype & GV_BOUNDARY)
+	    num_to_export =
+		num_to_export + Vect_get_num_primitives(&In, GV_BOUNDARY);
+    }
+
+    if (Vect_get_num_areas(&In) < 1 && (otype & GV_AREA)) {
+	G_warning(_("No areas found, but requested to be exported. "
+		    "Will skip this geometry type."));
+    }
+    else {
+	if (otype & GV_AREA)
+	    num_to_export = num_to_export + Vect_get_num_areas(&In);
+    }
+
+    if (Vect_get_num_primitives(&In, GV_CENTROID) < 1 &&
+	(otype & GV_CENTROID)) {
+	G_warning(_("No centroids found, but requested to be exported. "
+		   "Will skip this geometry type."));
+    }
+    else {
+	if (otype & GV_CENTROID)
+	    num_to_export =
+		num_to_export + Vect_get_num_primitives(&In, GV_CENTROID);
+    }
+
+    if (Vect_get_num_primitives(&In, GV_FACE) < 1 && (otype & GV_FACE)) {
+	G_warning(_("No faces found, but requested to be exported. "
+		    "Will skip this geometry type."));
+    }
+    else {
+	if (otype & GV_FACE)
+	    num_to_export =
+		num_to_export + Vect_get_num_primitives(&In, GV_FACE);
+    }
+
+    if (Vect_get_num_primitives(&In, GV_KERNEL) < 1 && (otype & GV_KERNEL)) {
+	G_warning(_("No kernels found, but requested to be exported. "
+		    "Will skip this geometry type."));
+    }
+    else {
+	if (otype & GV_KERNEL)
+	    num_to_export =
+		num_to_export + Vect_get_num_primitives(&In, GV_KERNEL);
+    }
+
+    G_debug(1, "Requested to export %d geometries", num_to_export);
+
+    if (num_to_export < 1) {
+	G_warning(_("Nothing to export"));
+	exit(EXIT_SUCCESS);
+    }
 
     /* Lines (run always to count features of different type) */
     if ((otype & GV_POINTS) || (otype & GV_LINES)) {
@@ -450,7 +625,6 @@ int main(int argc, char *argv[])
 		continue;
 	    }
 
-
 	    /* Geometry */
 	    if (type == GV_LINE && poly_flag->answer) {
 		OGRGeometryH ring;
@@ -472,7 +646,8 @@ int main(int argc, char *argv[])
 
 		OGR_G_AddGeometryDirectly(Ogr_geometry, ring);
 	    }
-	    else if (type & GV_POINTS) {  /* GV_POINT or GV_CENTROID */
+	    else if ((type == GV_POINT) ||
+		     ((type == GV_CENTROID) && (otype & GV_CENTROID))) {
 		Ogr_geometry = OGR_G_CreateGeometry(wkbPoint);
 		OGR_G_AddPoint(Ogr_geometry, Points->x[0], Points->y[0],
 			       Points->z[0]);
@@ -485,6 +660,8 @@ int main(int argc, char *argv[])
 				   Points->z[j]);
 		}
 	    }
+	    Ogr_feature = OGR_F_Create(Ogr_featuredefn);
+
 	    OGR_F_SetGeometry(Ogr_feature, Ogr_geometry);
 
 	    /* Output one feature for each category */
@@ -500,10 +677,12 @@ int main(int argc, char *argv[])
 			continue;
 		}
 
-		mk_att(cat, Fi, Driver, ncol, doatt, Ogr_feature);
+		mk_att(cat, Fi, Driver, ncol, doatt, nocat_flag->answer,
+		       Ogr_feature);
 		OGR_L_CreateFeature(Ogr_layer, Ogr_feature);
 	    }
 	    OGR_G_DestroyGeometry(Ogr_geometry);
+	    OGR_F_Destroy(Ogr_feature);
 	}
     }
 
@@ -557,6 +736,7 @@ int main(int argc, char *argv[])
 		OGR_G_AddGeometryDirectly(Ogr_geometry, ring);
 	    }
 
+	    Ogr_feature = OGR_F_Create(Ogr_featuredefn);
 	    OGR_F_SetGeometry(Ogr_feature, Ogr_geometry);
 
 	    /* Output one feature for each category */
@@ -572,10 +752,12 @@ int main(int argc, char *argv[])
 			continue;
 		}
 
-		mk_att(cat, Fi, Driver, ncol, doatt, Ogr_feature);
+		mk_att(cat, Fi, Driver, ncol, doatt, nocat_flag->answer,
+		       Ogr_feature);
 		OGR_L_CreateFeature(Ogr_layer, Ogr_feature);
 	    }
 	    OGR_G_DestroyGeometry(Ogr_geometry);
+	    OGR_F_Destroy(Ogr_feature);
 	}
     }
 
@@ -601,6 +783,8 @@ int main(int argc, char *argv[])
 	    }
 
 	    if (type & GV_FACE) {
+
+		Ogr_feature = OGR_F_Create(Ogr_featuredefn);
 
 		/* Geometry */
 		Ogr_geometry = OGR_G_CreateGeometry(wkbPolygon25D);
@@ -629,18 +813,79 @@ int main(int argc, char *argv[])
 			    continue;
 		    }
 
-		    mk_att(cat, Fi, Driver, ncol, doatt, Ogr_feature);
+		    mk_att(cat, Fi, Driver, ncol, doatt, nocat_flag->answer,
+			   Ogr_feature);
 		    OGR_L_CreateFeature(Ogr_layer, Ogr_feature);
 		}
 
 		OGR_G_DestroyGeometry(Ogr_geometry);
+		OGR_F_Destroy(Ogr_feature);
 	    }			/* if type & GV_FACE */
-
 	}			/* for */
     }
 
+    /* Kernels */
+    if (otype & GV_KERNEL) {
+	G_message(_("Exporting %i kernels..."),
+		  Vect_get_num_primitives(&In, GV_KERNEL));
+	for (i = 1; i <= Vect_get_num_lines(&In); i++) {
 
-    OGR_F_Destroy(Ogr_feature);
+	    G_percent(i, Vect_get_num_lines(&In), 1);
+
+	    type = Vect_read_line(&In, Points, Cats, i);
+	    G_debug(2, "line = %d type = %d", i, type);
+	    if (!(otype & type)) {
+		G_debug(2, "type %d not specified -> skipping", type);
+		fskip++;
+		continue;
+	    }
+
+	    Vect_cat_get(Cats, field, &cat);
+	    if (cat < 0 && !donocat) {	/* Do not export not labeled */
+		nocatskip++;
+		continue;
+	    }
+
+	    /* Geometry */
+	    if (type == GV_KERNEL) {
+		Ogr_geometry = OGR_G_CreateGeometry(wkbPoint);
+		OGR_G_AddPoint(Ogr_geometry, Points->x[0], Points->y[0],
+			       Points->z[0]);
+
+		Ogr_feature = OGR_F_Create(Ogr_featuredefn);
+
+		OGR_F_SetGeometry(Ogr_feature, Ogr_geometry);
+
+		/* Output one feature for each category */
+		for (j = -1; j < Cats->n_cats; j++) {
+		    if (j == -1) {
+			if (cat >= 0)
+			    continue;	/* cat(s) exists */
+		    }
+		    else {
+			if (Cats->field[j] == field)
+			    cat = Cats->cat[j];
+			else
+			    continue;
+		    }
+
+		    mk_att(cat, Fi, Driver, ncol, doatt, nocat_flag->answer,
+			   Ogr_feature);
+		    OGR_L_CreateFeature(Ogr_layer, Ogr_feature);
+		}
+		OGR_G_DestroyGeometry(Ogr_geometry);
+		OGR_F_Destroy(Ogr_feature);
+	    }
+	}
+    }
+
+    /*
+       TODO:   Volumes. Do not export kernels here, that's already done.
+       We do need to worry about holes, though.
+       NOTE: We can probably just merge this with faces export function.
+       Except for GRASS, which output format would know the difference?
+     */
+
     OGR_DS_Destroy(Ogr_ds);
 
     Vect_close(&In);
@@ -658,22 +903,22 @@ int main(int argc, char *argv[])
 	G_warning(_("%d features without attributes were written"), noatt);
     if (nocatskip > 0)
 	G_warning(_("%d features found without category were skipped"),
-		nocatskip);
+		  nocatskip);
 
     /* Enable this? May be confusing that for area type are not reported
      *    all boundaries/centroids.
      *  OTOH why should be reported? */
     /*
-       if ( ((otype & GV_POINTS) || (otype & GV_LINES)) && fskip > 0 ) 
-       G_warning ( "%d features of different type skip", fskip);
+       if (((otype & GV_POINTS) || (otype & GV_LINES)) && fskip > 0)
+       G_warning ("%d features of different type skip", fskip);
      */
 
     exit(EXIT_SUCCESS);
 }
 
 
-int mk_att(int cat, struct field_info *Fi, dbDriver *Driver, int ncol,
-       int doatt, OGRFeatureH Ogr_feature)
+int mk_att(int cat, struct field_info *Fi, dbDriver * Driver, int ncol,
+	   int doatt, int nocat, OGRFeatureH Ogr_feature)
 {
     int j, ogrfieldnum;
     char buf[2000];
@@ -692,8 +937,8 @@ int mk_att(int cat, struct field_info *Fi, dbDriver *Driver, int ncol,
     if (!doatt) {
 	ogrfieldnum = OGR_F_GetFieldIndex(Ogr_feature, "cat");
 	OGR_F_UnsetField(Ogr_feature, ogrfieldnum);
-    /* doatt reset moved into have cat loop as the table needs to be
-	open to know the OGR field ID. Hopefully this has no ill consequences */
+	/* doatt reset moved into have cat loop as the table needs to be
+	   open to know the OGR field ID. Hopefully this has no ill consequences */
     }
 
     /* Read & set attributes */
@@ -714,9 +959,16 @@ int mk_att(int cat, struct field_info *Fi, dbDriver *Driver, int ncol,
 		if (!more) {
 		    /* G_warning ("No database record for cat = %d", cat); */
 		    /* Set at least key column to category */
-		    ogrfieldnum = OGR_F_GetFieldIndex(Ogr_feature, Fi->key);
-		    OGR_F_SetFieldInteger(Ogr_feature, ogrfieldnum, cat);
-		    noatt++;
+		    if (!nocat) {
+			ogrfieldnum =
+			    OGR_F_GetFieldIndex(Ogr_feature, Fi->key);
+			OGR_F_SetFieldInteger(Ogr_feature, ogrfieldnum, cat);
+			noatt++;
+		    }
+		    else {
+			G_fatal_error(_("No database record for cat = %d and export of 'cat' disabled"),
+				      cat);
+		    }
 		}
 		else {
 		    Table = db_get_cursor_table(&cursor);
@@ -732,38 +984,44 @@ int mk_att(int cat, struct field_info *Fi, dbDriver *Driver, int ncol,
 			G_debug(2, "  colctype = %d", colctype);
 
 			ogrfieldnum = OGR_F_GetFieldIndex(Ogr_feature,
-							  db_get_column_name(Column));
+							  db_get_column_name
+							  (Column));
 
 			/* Reset */
 			OGR_F_UnsetField(Ogr_feature, ogrfieldnum);
 
 			/* prevent writing NULL values */
 			if (!db_test_value_isnull(Value)) {
-				switch (colctype) {
-				case DB_C_TYPE_INT:
-					OGR_F_SetFieldInteger(Ogr_feature, ogrfieldnum,
-							db_get_value_int(Value));
-					break;
-				case DB_C_TYPE_DOUBLE:
-					OGR_F_SetFieldDouble(Ogr_feature, ogrfieldnum,
-							db_get_value_double(Value));
-					break;
-				case DB_C_TYPE_STRING:
-					OGR_F_SetFieldString(Ogr_feature, ogrfieldnum,
-							db_get_value_string(Value));
-					break;
-				case DB_C_TYPE_DATETIME:
-					db_convert_column_value_to_string(Column,
-									&dbstring);
-					OGR_F_SetFieldString(Ogr_feature, ogrfieldnum,
-							db_get_string(&dbstring));
-					break;
-				}
+			    switch (colctype) {
+			    case DB_C_TYPE_INT:
+				OGR_F_SetFieldInteger(Ogr_feature,
+						      ogrfieldnum,
+						      db_get_value_int
+						      (Value));
+				break;
+			    case DB_C_TYPE_DOUBLE:
+				OGR_F_SetFieldDouble(Ogr_feature, ogrfieldnum,
+						     db_get_value_double
+						     (Value));
+				break;
+			    case DB_C_TYPE_STRING:
+				OGR_F_SetFieldString(Ogr_feature, ogrfieldnum,
+						     db_get_value_string
+						     (Value));
+				break;
+			    case DB_C_TYPE_DATETIME:
+				db_convert_column_value_to_string(Column,
+								  &dbstring);
+				OGR_F_SetFieldString(Ogr_feature, ogrfieldnum,
+						     db_get_string
+						     (&dbstring));
+				break;
+			    }
 			}
 		    }
 		}
+		db_close_cursor(&cursor);
 	    }
-
 	}
 	else {			/* Use cat only */
 	    ogrfieldnum = OGR_F_GetFieldIndex(Ogr_feature, "cat");
@@ -775,6 +1033,8 @@ int mk_att(int cat, struct field_info *Fi, dbDriver *Driver, int ncol,
 	nocat++;
     }
     fout++;
+
+    db_free_string(&dbstring);
 
     return 1;
 }
