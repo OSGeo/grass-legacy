@@ -110,7 +110,7 @@ int list_mapsets(void)
 		fprintf(stderr, "\n");
 		tot_len = len;
 	    }
-	    if (ok = (G__mapset_permissions(buf) == 1))
+	    if ((ok = (G__mapset_permissions(buf)) == 1))
 		any_ok = 1;
 	    fprintf(stderr, "%s%-*s", ok ? "(+)" : "   ", len, buf);
 	}
