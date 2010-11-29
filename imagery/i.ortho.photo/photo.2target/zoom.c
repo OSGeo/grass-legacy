@@ -43,8 +43,7 @@ void source_to_target(double srx, double sry, double *trx, double *try)
     for (i = 0; i < 3; i++) {
 	I_inverse_ortho_ref(spx, spy, spz, trx, try, &trz,
 			    &group.camera_ref,
-			    group.XC, group.YC, group.ZC,
-			    group.omega, group.phi, group.kappa);
+			    group.XC, group.YC, group.ZC, group.MI);
 
 	G_debug(2, "target raster: %.0f %.0f", *trx, *try);
 	get_z_from_cell2(*try, *trx, &spz);
