@@ -74,8 +74,7 @@ int georef_window(struct Cell_head *w1, struct Cell_head *w2)
 
     I_georef(w1->west, w1->north, &e0, &n0, group.E12, group.N12);
     I_inverse_ortho_ref(e0, n0, aver_z, &e, &n, &z1, &group.camera_ref,
-			group.XC, group.YC, group.ZC, group.omega, group.phi,
-			group.kappa);
+			group.XC, group.YC, group.ZC, group.MI);
 
     G_debug(1, "NORTH WEST CORNER");
     G_debug(1, "group.E12 = %f %f %f,", group.E12[0], group.E12[1],
@@ -93,8 +92,7 @@ int georef_window(struct Cell_head *w1, struct Cell_head *w2)
 
     I_georef(w1->east, w1->north, &e0, &n0, group.E12, group.N12);
     I_inverse_ortho_ref(e0, n0, aver_z, &e, &n, &z1, &group.camera_ref,
-			group.XC, group.YC, group.ZC, group.omega, group.phi,
-			group.kappa);
+			group.XC, group.YC, group.ZC, group.MI);
 
     G_debug(1, "NORTH EAST CORNER");
     G_debug(1, "image  x = %f y = %f, photo x = %f y = %f", w1->east,
@@ -115,8 +113,7 @@ int georef_window(struct Cell_head *w1, struct Cell_head *w2)
 
     I_georef(w1->west, w1->south, &e0, &n0, group.E12, group.N12);
     I_inverse_ortho_ref(e0, n0, aver_z, &e, &n, &z1, &group.camera_ref,
-			group.XC, group.YC, group.ZC, group.omega, group.phi,
-			group.kappa);
+			group.XC, group.YC, group.ZC, group.MI);
 
     G_debug(1, "SOUTH WEST CORNER");
     G_debug(1, "image  x = %f y = %f, photo x = %f y = %f", w1->west,
@@ -136,8 +133,7 @@ int georef_window(struct Cell_head *w1, struct Cell_head *w2)
 
     I_georef(w1->east, w1->south, &e0, &n0, group.E12, N12);
     I_inverse_ortho_ref(e0, n0, aver_z, &e, &n, &z1, &group.camera_ref,
-			group.XC, group.YC, group.ZC, group.omega, group.phi,
-			group.kappa);
+			group.XC, group.YC, group.ZC, group.MI);
 
     G_debug(1, "SOUTH EAST CORNER");
     G_debug(1, "image  x = %f y = %f, photo x = %f y = %f", w1->east,

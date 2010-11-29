@@ -88,8 +88,7 @@ int rectify(char *name, char *mapset, struct cache *ebuffer,
 
 	    /* target coordinates e1, n1 to photo coordinates ex1, nx1 */
 	    I_ortho_ref(e1, n1, z1, &ex1, &nx1, &zx1, &group.camera_ref,
-			group.XC, group.YC, group.ZC, group.omega, group.phi,
-			group.kappa);
+			group.XC, group.YC, group.ZC, group.M);
 
 	    G_debug(5, "\t\tAfter ortho ref (photo cords): ex = %f \t nx =  %f",
 		    ex1, nx1);
