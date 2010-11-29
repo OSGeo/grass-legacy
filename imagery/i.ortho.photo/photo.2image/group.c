@@ -57,9 +57,9 @@ static int cmp(const void *aa, const void *bb)
     const int *a = aa, *b = bb;
     int n;
 
-    if (n =
+    if ((n =
 	strcmp(group.group_ref.file[*a].mapset,
-	       group.group_ref.file[*b].mapset))
+	       group.group_ref.file[*b].mapset)) != 0)
 	return n;
     return strcmp(group.group_ref.file[*a].name,
 		  group.group_ref.file[*b].name);
