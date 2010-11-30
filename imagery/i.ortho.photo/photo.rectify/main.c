@@ -40,7 +40,6 @@ int main(int argc, char *argv[])
     struct GModule *module;
     struct Option *group_opt;
 
-
     /* must run in a term window */
     G_putenv("GRASS_UI_TERM", "1");
 
@@ -63,7 +62,7 @@ int main(int argc, char *argv[])
 
     strcpy(name, group_opt->answer);
 
-    camera = (char *)G_malloc(40 * sizeof(char));
+    camera = (char *)G_malloc(GNAME_MAX * sizeof(char));
     elev_layer = (char *)G_malloc(GNAME_MAX * sizeof(char));
     mapset_elev = (char *)G_malloc(GMAPSET_MAX * sizeof(char));
 
@@ -73,7 +72,8 @@ int main(int argc, char *argv[])
 	G_fatal_error(_("Group [%s] not found"), group.name);
 
     /* get the group ref */
-    I_get_group_ref(group.name, (struct Ref *)&group.group_ref);
+    if (!I_get_group_ref(group.name, (struct Ref *)&group.group_ref))
+	G_fatal_error(_("Could not read REF file for group [%s]"), group.name);
     nfiles = group.group_ref.nfiles;
     if (nfiles <= 0)
 	G_fatal_error(_("No files in this group!"));
@@ -133,7 +133,7 @@ int main(int argc, char *argv[])
     /* ask for interpolation method and amount of memory to be used */
     ask_method();
 
-    /*  go do it */
+    /* go do it */
     exec_rectify();
 
     exit(EXIT_SUCCESS);

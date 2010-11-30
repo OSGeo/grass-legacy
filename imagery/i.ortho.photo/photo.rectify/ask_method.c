@@ -13,6 +13,7 @@ int ask_method(void)
     while (1) {
 	char buf[100];
 
+	G_clear_screen();
 	fprintf(stderr, _("Please select one of the following interpolation methods\n"));
 	fprintf(stderr, _(" 1. nearest neighbor\n"));
 	fprintf(stderr, _(" 2. bilinear\n"));

@@ -16,12 +16,12 @@
 #include <math.h>
 #include "global.h"
 
-void p_cubic(struct cache *ibuffer,	/* input buffer                  */
-	     void *obufptr,	/* ptr in output buffer          */
-	     int cell_type,	/* raster map type of obufptr    */
-	     double *row_idx,	/* row index (decimal)           */
-	     double *col_idx,	/* column index (decimal)        */
-	     struct Cell_head *cellhd	/* information of output map     */
+void p_cubic(struct cache *ibuffer,    /* input buffer                */
+	     void *obufptr,	       /* ptr in output buffer        */
+	     int cell_type,	       /* raster map type of obufptr  */
+	     double *row_idx,	       /* row index (decimal)         */
+	     double *col_idx,	       /* column index (decimal)      */
+	     struct Cell_head *cellhd  /* information of output map   */
     )
 {
     int row;			/* row indices for interp        */

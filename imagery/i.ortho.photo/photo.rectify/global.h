@@ -1,13 +1,7 @@
-/* These next defines determine the size of the sub-window that will
- * be held in memory.  Larger values will require
- * more memory (but less i/o) If you increase these values, keep  in
- * mind that although you think the i/o will decrease, system paging
- * (which goes on behind the scenes) may actual increase the i/o.
- */
-
 #include <grass/imagery.h>
 #include <grass/ortholib.h>
 #include <grass/glocale.h>
+#include "orthophoto.h"
 #include "defs.h"
 
 #ifndef GLOBAL
@@ -19,34 +13,16 @@
 GLOBAL FILE *Bugsr;
 #endif
 
-#define L2BDIM 6
-#define BDIM (1<<(L2BDIM))
-#define L2BSIZE (2*(L2BDIM))
-#define BSIZE (1<<(L2BSIZE))
-#define HI(i) ((i)>>(L2BDIM))
-#define LO(i) ((i)&((BDIM)-1))
-
-typedef DCELL block[BDIM][BDIM];
-
-struct cache
-{
-    int fd;
-    int stride;
-    int nblocks;
-    block **grid;
-    block *blocks;
-    int *refs;
-};
-
-typedef void (*func) (struct cache *, void *, int, double *, double *, struct Cell_head *);
-
-GLOBAL func interpolate;		/* interpolation routine        */
+GLOBAL func interpolate;	/* interpolation routine */
 
 GLOBAL int seg_mb_img, seg_mb_elev;
 GLOBAL char *method;
 GLOBAL int temp_fd;
 GLOBAL CELL **cell_buf;
 GLOBAL char *temp_name;
+
+GLOBAL char *extension;
+GLOBAL double target_res;
 
 GLOBAL int *ref_list;
 GLOBAL char **new_name;

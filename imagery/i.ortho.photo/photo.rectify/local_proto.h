@@ -1,31 +1,11 @@
-/* ask_elev.c */
-int ask_elev_data(void);
-
 /* ask_files.c */
 int ask_files(char *);
-int dots(char *, int);
-
-/* ask_files2.c */
-int ask_file_from_list(char *, char *);
 
 /* ask_method.c */
 int ask_method(void);
 
-/* ask_wind.c */
-int ask_window(struct Cell_head *);
-
 /* aver_z.c */
 int get_aver_elev(struct Ortho_Control_Points *, double *);
-
-/* conv.c */
-int view_to_col(View *, int);
-int view_to_row(View *, int);
-int col_to_view(View *, int);
-int row_to_view(View *, int);
-double row_to_northing(struct Cell_head *, int, double);
-double col_to_easting(struct Cell_head *, int, double);
-double northing_to_row(struct Cell_head *, double);
-double easting_to_col(struct Cell_head *, double);
 
 /* cp.c */
 int get_conz_points(void);
@@ -48,7 +28,7 @@ int exec_rectify(void);
 
 /* get_wind.c */
 int get_target_window(void);
-int georef_window(struct Cell_head *, struct Cell_head *);
+int georef_window(struct Cell_head *, struct Cell_head *, double);
 
 /* rectify.c */
 int rectify(char *, char *, struct cache *, double, char *);
@@ -56,11 +36,6 @@ int rectify(char *, char *, struct cache *, double, char *);
 /* readcell.c */
 struct cache *readcell(int, int, int);
 block *get_block(struct cache *, int);
-
-#define BKIDX(c,y,x) ((y) * (c)->stride + (x))
-#define BKPTR(c,y,x) ((c)->grid[BKIDX((c),(y),(x))])
-#define BLOCK(c,y,x) (BKPTR((c),(y),(x)) ? BKPTR((c),(y),(x)) : get_block((c),BKIDX((c),(y),(x))))
-#define CPTR(c,y,x) (&(*BLOCK((c),HI((y)),HI((x))))[LO((y))][LO((x))])
 
 /* report.c */
 int report(char *, char *, char *, long, long, int);
