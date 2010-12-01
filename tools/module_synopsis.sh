@@ -173,13 +173,13 @@ cat << EOF >> "$TMP"
 g.parser: Full parser support for GRASS scripts.
 r.mapcalc: Performs arithmetic on raster map layers.
 r3.mapcalc: Performs arithmetic on 3D grid volume data.
-photo.2image: Marks fiducial or reseau points on an image to be ortho-rectified and then computes the image-to-photo coordinate transformation parameters.
-photo.2target: Create control points on an image to be ortho-rectified.
-photo.camera: Creates or modifies entries in a camera reference file.
-photo.elev: Selects target elevation model for ortho-rectification.
-photo.init: Creates or modifies entries in a camera initial exposure station file for imagery group referenced by a sub-block.
-photo.rectify: Rectifies an image by using the image to photo coordinate transformation matrix created by photo.2image and the rectification parameters created by photo.2target.
-photo.target: Selects target location and mapset for ortho-rectification.
+i.photo.2image: Marks fiducial or reseau points on an image to be ortho-rectified and then computes the image-to-photo coordinate transformation parameters.
+i.photo.2target: Create control points on an image to be ortho-rectified.
+i.photo.camera: Creates or modifies entries in a camera reference file.
+i.photo.elev: Selects target elevation model for ortho-rectification.
+i.photo.init: Creates or modifies entries in a camera initial exposure station file for imagery group referenced by a sub-block.
+i.photo.rectify: Rectifies an image by using the image to photo coordinate transformation matrix created by i.photo.2image and the rectification parameters created by i.photo.2target.
+i.photo.target: Selects target location and mapset for ortho-rectification.
 EOF
 
 ## with --dictionary-order db.* ends up in the middle of the d.* cmds
@@ -302,12 +302,12 @@ EOF
 	cat << EOF >> "${TMP}.html"
 </ul>
 
-<h4>Imagery photo.* commands:</h4>
+<h4>Imagery i.photo.* commands:</h4>
 
 <ul>
 EOF
 
-	grep "^photo\." "${TMP}.txt" | \
+	grep "^i.photo\." "${TMP}.txt" | \
 	  sed -e 's/: /| /' -e 's/^.*|/<li> <a href="&.html">&<\/a>:/' \
 	      -e 's/|.html">/.html">/' -e 's+|</a>:+</a>:+' \
 	      -e 's/&/\&amp;/g' \
@@ -445,16 +445,16 @@ EOF
 	       /^\\/ {print}' >> "${TMP}.tex"
 
     if [ "$SECTION" = "i" ] ; then
-	# include imagery photo subsection
+	# include imagery i.photo subsection
 	cat << EOF >> "${TMP}.tex"
 \end{lyxlist}
 
-\subsubsection*{Imagery photo.{*} commands:}
+\subsubsection*{Imagery i.photo.{*} commands:}
 
 \begin{lyxlist}{00.00.0000}
 EOF
 
-	grep "^photo\." "${TMP}.txt" | \
+	grep "^i.photo\." "${TMP}.txt" | \
 	  sed -e 's/^/\\item [/' -e 's/: /]/' >> "${TMP}.tex"
     fi
 
