@@ -1,7 +1,7 @@
 
 /****************************************************************************
  *
- * MODULE:       photo.2image
+ * MODULE:       i.photo.2image
  * AUTHOR(S):    Mike Baba,  DBA Systems, Inc. (original contributor)
  *               Markus Neteler <neteler itc.it>, 
  *               Roberto Flor <flor itc.it>, 

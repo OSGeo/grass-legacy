@@ -1,7 +1,7 @@
 
 /****************************************************************************
  *
- * MODULE:       photo.camera
+ * MODULE:       i.photo.camera
  * AUTHOR(S):    Mike Baba,  DBA Systems, Inc. (original contributor)
  *               Markus Neteler <neteler itc.it>,
  *               Roberto Flor <flor itc.it>, 

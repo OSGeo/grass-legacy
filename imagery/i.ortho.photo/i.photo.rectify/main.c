@@ -1,7 +1,7 @@
 
 /****************************************************************************
  *
- * MODULE:       photo.rectify
+ * MODULE:       i.photo.rectify
  * AUTHOR(S):    Mike Baba,  DBA Systems, Inc. (original contributor)
  *               Markus Neteler <neteler itc.it>, 
  *               Bernhard Reiter <bernhard intevation.de>, 
