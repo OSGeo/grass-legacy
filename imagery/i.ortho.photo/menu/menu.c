@@ -128,7 +128,12 @@ int main(int argc, char **argv)
 	    run_etc_imagery("i.photo.init", group.name);
 	if (strcmp(buf, "7") == 0)
 	    run_etc_imagery("i.photo.2target", group.name);
-	if (strcmp(buf, "8") == 0)
-	    run_etc_imagery("i.photo.rectify", group.name);
+	if (strcmp(buf, "8") == 0) {
+	    rectify(group.name);
+	    /*
+	    sprintf(buf, "i.photo.rectify group=%s", group.name);
+	    run_system(buf);
+	    */
+	}
     }
 }
