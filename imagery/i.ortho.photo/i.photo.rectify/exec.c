@@ -112,7 +112,7 @@ int exec_rectify(char *extension, char *interp_method)
 	G_free(result);
     }
     close(ebuffer->fd);
-    G_free(ebuffer);
+    release_cache(ebuffer);
 
     G_done_msg(" ");
 

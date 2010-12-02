@@ -108,7 +108,7 @@ int main(int argc, char *argv[])
     mem->type = TYPE_DOUBLE;
     mem->key_desc = "memory in MB";
     mem->required = NO;
-    mem->answer = "300";
+    mem->answer = "100";
     mem->description = _("Amount of memory to use in MB");
 
     ipolname = make_ipol_list();
@@ -238,7 +238,7 @@ int main(int argc, char *argv[])
     get_target(group.name);
     
     /* Check the GRASS_OVERWRITE environment variable */
-    if ((overstr = getenv("GRASS_OVERWRITE")))
+    if ((overstr = getenv("GRASS_OVERWRITE")))  /* OK ? */
 	target_overwrite = atoi(overstr);
 
     if (!target_overwrite) {
@@ -302,7 +302,7 @@ int main(int argc, char *argv[])
     
     /* determine memory for elevation and imagery */
     seg_mb_img = seg_mb_elev = -1;
-    if (!seg_mb) {
+    if (seg_mb) {
 	int max_rows, max_cols;
 	int nx, ny;
 	double max_mb_img, max_mb_elev;
@@ -310,7 +310,7 @@ int main(int argc, char *argv[])
 
 	max_rows = max_cols = 0;
 	for (i = 0; i < group.group_ref.nfiles; i++) {
-	    if (!ref_list[i]) {
+	    if (ref_list[i]) {
 		G_get_cellhd(group.group_ref.file[i].name,
 			     group.group_ref.file[i].mapset, &cellhd);
 		if (max_rows < cellhd.rows)
@@ -331,8 +331,8 @@ int main(int argc, char *argv[])
 	max_mb_elev = ((double)nx * ny * sizeof(block)) / (1<<20);
 
 	if ((seg_mb_total = atoi(seg_mb)) > 0) {
-	    seg_mb_elev = seg_mb_total * max_mb_elev / (max_mb_img + max_mb_elev);
-	    seg_mb_img = seg_mb_total * max_mb_img / (max_mb_img + max_mb_elev);
+	    seg_mb_elev = max_mb_elev * (seg_mb_total / (max_mb_img + max_mb_elev)) + 0.5;
+	    seg_mb_img = max_mb_img * (seg_mb_total / (max_mb_img + max_mb_elev)) + 0.5;
 	}
     }
 

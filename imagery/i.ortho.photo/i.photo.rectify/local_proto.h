@@ -30,6 +30,7 @@ int rectify(char *, char *, struct cache *, double, char *, char *);
 /* readcell.c */
 struct cache *readcell(int, int, int);
 block *get_block(struct cache *, int);
+void release_cache(struct cache *);
 
 /* report.c */
 int report(long, int);

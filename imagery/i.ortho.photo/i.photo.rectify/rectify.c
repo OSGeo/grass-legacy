@@ -116,7 +116,7 @@ int rectify(char *name, char *mapset, struct cache *ebuffer,
     G_free(trast);
 
     close(ibuffer->fd);
-    G_free(ibuffer);
+    release_cache(ibuffer);
 
     if (G_get_cellhd(result, G_mapset(), &cellhd) < 0)
 	return 0;
