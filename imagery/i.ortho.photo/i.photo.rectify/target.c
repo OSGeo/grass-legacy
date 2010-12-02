@@ -10,13 +10,13 @@ int get_target(char *name)
     int stat;
 
     if (!I_get_target(name, location, mapset)) {
-	sprintf(buf, "Target information for group [%s] missing.\n", name);
+	sprintf(buf, _("Target information for group <%s> missing.\n"), name);
 	goto error;
     }
 
     sprintf(buf, "%s/%s", G_gisdbase(), location);
     if (access(buf, 0) != 0) {
-	sprintf(buf, "Target location [%s] not found\n", location);
+	sprintf(buf, _("Target location <%s> not found\n"), location);
 	goto error;
     }
     select_target_env();
@@ -28,8 +28,8 @@ int get_target(char *name)
 	select_current_env();
 	return 1;
     }
-    sprintf(buf, "Mapset [%s] in target location [%s] - ", mapset, location);
-    strcat(buf, stat == 0 ? "permission denied\n" : "not found\n");
+    sprintf(buf, _("Mapset <%s> in target location <%s> - "), mapset, location);
+    strcat(buf, stat == 0 ? _("permission denied\n") : _("not found\n"));
   error:
     G_fatal_error(buf);
 }

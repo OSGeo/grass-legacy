@@ -5,38 +5,37 @@
 
 int get_ref_window(struct Cell_head *cellhd)
 {
-    int k, f1, f2;
+    int i;
     int count;
     struct Cell_head win;
 
     /* from all the files in the group, get max extends and min resolutions */
     count = 0;
-    for (f1 = 0; f1 < group.group_ref.nfiles; f1++) {
-	if (ref_list[f1] >= 0) {
-	    if (count++ == 0) {
-		f2 = ref_list[f1];
-		G_get_cellhd(group.group_ref.file[f2].name,
-			     group.group_ref.file[f2].mapset, cellhd);
-	    }
-	    else {
-		k = ref_list[f1];
-		G_get_cellhd(group.group_ref.file[k].name,
-			     group.group_ref.file[k].mapset, &win);
-		/* extends */
-		if (cellhd->north < win.north)
-		    cellhd->north = win.north;
-		if (cellhd->south > win.south)
-		    cellhd->south = win.south;
-		if (cellhd->west > win.west)
-		    cellhd->west = win.west;
-		if (cellhd->east < win.east)
-		    cellhd->east = win.east;
-		/* resolution */
-		if (cellhd->ns_res > win.ns_res)
-		    cellhd->ns_res = win.ns_res;
-		if (cellhd->ew_res > win.ew_res)
-		    cellhd->ew_res = win.ew_res;
-	    }
+    for (i = 0; i < group.group_ref.nfiles; i++) {
+	if (!ref_list[i])
+	    continue;
+
+	if (count++ == 0) {
+	    G_get_cellhd(group.group_ref.file[i].name,
+			 group.group_ref.file[i].mapset, cellhd);
+	}
+	else {
+	    G_get_cellhd(group.group_ref.file[i].name,
+			 group.group_ref.file[i].mapset, &win);
+	    /* max extends */
+	    if (cellhd->north < win.north)
+		cellhd->north = win.north;
+	    if (cellhd->south > win.south)
+		cellhd->south = win.south;
+	    if (cellhd->west > win.west)
+		cellhd->west = win.west;
+	    if (cellhd->east < win.east)
+		cellhd->east = win.east;
+	    /* min resolution */
+	    if (cellhd->ns_res > win.ns_res)
+		cellhd->ns_res = win.ns_res;
+	    if (cellhd->ew_res > win.ew_res)
+		cellhd->ew_res = win.ew_res;
 	}
     }
 
@@ -51,75 +50,6 @@ int get_ref_window(struct Cell_head *cellhd)
     cellhd->west = cellhd->east - cellhd->cols * cellhd->ew_res;
 
     return 1;
-}
-
-int get_target_window(void)
-{
-    struct Cell_head cellhd;
-    double res;
-
-    fprintf(stderr, "\n\n");
-    while (1) {
-	char buf[100];
-
-	fprintf(stderr, "Please select one of the following options\n");
-	fprintf(stderr,
-		" 1. Use the current window in the target location\n");
-	fprintf(stderr,
-		" 2. Determine the smallest window which covers the image\n");
-	fprintf(stderr, "> ");
-	if (!G_gets(buf))
-	    continue;
-	G_strip(buf);
-
-	if (strcmp(buf, "1") == 0) {
-	    return 1;
-	}
-	if (strcmp(buf, "2") == 0)
-	    break;
-    }
-    
-    /* ask for target resolution */
-    while (1) {
-	char buf[100];
-
-	fprintf(stderr, "Desired target resolution\n");
-	fprintf(stderr,
-		" RETURN   determine automatically\n");
-	fprintf(stderr, "> ");
-	if (!G_gets(buf))
-	    continue;
-
-	if (*buf == 0) {  /* determine automatically */
-	    res = -1;
-	    break;
-	}
-
-	G_strip(buf);
-
-	if ((res = atof(buf)) <= 0) {
-	    fprintf(stderr, "Resolution must be larger than zero!");
-	    G_clear_screen();
-	}
-	else
-	    break;
-    }
-
-    /* get reference window: max extend, min resolution */
-    get_ref_window(&cellhd);
-
-    G_debug(1, "current window: n s = %f %f,", cellhd.north,
-	    cellhd.south);
-    G_debug(1, "current window: w e = %f %f,", cellhd.west,
-	    cellhd.east);
-
-    georef_window(&cellhd, &target_window, res);
-    
-    select_target_env();
-    if (G_put_window(&target_window) >= 0)
-	fprintf(stderr, "Window Saved!\n");
-    select_current_env();
-    return 0;
 }
 
 int georef_window(struct Cell_head *w1, struct Cell_head *w2, double res)
@@ -196,7 +126,7 @@ int georef_window(struct Cell_head *w1, struct Cell_head *w2, double res)
     if (e < w2->west)
 	w2->west = e;
 
-    I_georef(w1->east, w1->south, &e0, &n0, group.E12, N12);
+    I_georef(w1->east, w1->south, &e0, &n0, group.E12, group.N12);
     I_inverse_ortho_ref(e0, n0, aver_z, &e, &n, &z1, &group.camera_ref,
 			group.XC, group.YC, group.ZC, group.MI);
 

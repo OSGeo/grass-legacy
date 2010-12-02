@@ -10,8 +10,6 @@
 #include <sys/stat.h>
 #include <fcntl.h>
 #include <unistd.h>
-#include <grass/gis.h>
-#include <grass/glocale.h>
 #include "global.h"
 
 struct cache *readcell(int fdi, int size, int target_env)
@@ -48,11 +46,11 @@ struct cache *readcell(int fdi, int size, int target_env)
     c->refs = (int *)G_malloc(nblocks * sizeof(int));
 
     if (nblocks < nx * ny) {
-	/* Temporary file must be created in output location */
-	select_target_env();
+	/* Temporary file must be created in input location/mapset */
+	select_current_env();
 	filename = G_tempfile();
-	if (!target_env)
-	    select_current_env();
+	if (target_env)
+	    select_target_env();
 	c->fd = open(filename, O_RDWR | O_CREAT | O_EXCL, 0600);
 	if (c->fd < 0)
 	    G_fatal_error(_("Unable to open temporary file"));
@@ -102,6 +100,9 @@ struct cache *readcell(int fdi, int size, int target_env)
 	    c->grid[i] = &c->blocks[i];
 	    c->refs[i] = i;
 	}
+
+    if (target_env)
+	select_current_env();
 
     return c;
 }

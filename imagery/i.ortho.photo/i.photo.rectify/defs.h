@@ -26,3 +26,10 @@ typedef void (*func) (struct cache *, void *, int, double *, double *, struct Ce
 #define BLOCK(c,y,x) (BKPTR((c),(y),(x)) ? BKPTR((c),(y),(x)) : get_block((c),BKIDX((c),(y),(x))))
 #define CPTR(c,y,x) (&(*BLOCK((c),HI((y)),HI((x))))[LO((y))][LO((x))])
 
+struct menu
+{
+    func method;		/* routine to interpolate new value      */
+    char *name;			/* method name                           */
+    char *text;			/* menu display - full description       */
+};
+
