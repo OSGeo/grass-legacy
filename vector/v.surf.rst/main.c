@@ -24,7 +24,9 @@
  * modified by Mitasova in August 1995
  * modified by Mitasova in November 1999 (dmax, timestamp update)
  * dnorm independent tension - -t flag
- * cross-validation -v flag by Jaro Hofierka 2004
+ * cross-validation -v flag (changed to -c)  by Jaro Hofierka 2004
+ * use z-coordinates flag -z July 2009, Helena
+ * 
  */
 
 #include <stdio.h>
@@ -54,6 +56,7 @@
 double /* pargr */ ns_res, ew_res;
 double dmin, dmax, ertre;
 int KMAX2, KMIN, KMAX, totsegm, deriv, dtens, cv;
+int zcoord;
 struct Map_info Map;
 struct Map_info TreeMap, OverMap;
 struct Categories cats;
@@ -151,7 +154,7 @@ int main(int argc, char *argv[])
     } parm;
     struct
     {
-	struct Flag *deriv, *cprght, *cv;
+	struct Flag *deriv, *cprght, *cv, *zcoord;
     } flag;
 
 
@@ -183,6 +186,11 @@ int main(int argc, char *argv[])
     sprintf(dmaxchar, "%f", dmin * 5);
     sprintf(dminchar, "%f", dmin);
 
+    flag.zcoord = G_define_flag();
+    flag.zcoord->key = 'z';
+    flag.zcoord->description =
+        _("Use z-coordinates (3D vector only)");
+    flag.zcoord->guisection = _("Selection");
 
     flag.cv = G_define_flag();
     flag.cv->key = 'c';
@@ -374,10 +382,8 @@ int main(int argc, char *argv[])
     parm.scalex->description = _("Anisotropy scaling factor");
     parm.scalex->guisection = _("Parameters");
 
-
     if (G_parser(argc, argv))
 	exit(EXIT_FAILURE);
-
 
     per = 1;
     input = parm.input->answer;
@@ -429,21 +435,35 @@ int main(int argc, char *argv[])
 	&& (cvdev == NULL))
 	G_warning(_("You are not outputting any raster or vector maps"));
 
+    deriv = flag.deriv->answer;
+    dtens = flag.cprght->answer;
+    cv = flag.cv->answer;
+    zcoord = flag.zcoord->answer;
+
+    if (zcoord) {
+        field = 0;
+        G_message("Using z-coordinate for interpolation");
+    }
+
     if (parm.wheresql->answer != NULL) {
 	if (field < 1)
 	    G_fatal_error(_("'layer' must be > 0 for 'where'."));
     }
     cond2 = ((pcurv != NULL) || (tcurv != NULL) || (mcurv != NULL));
     cond1 = ((slope != NULL) || (aspect != NULL) || cond2);
-    deriv = flag.deriv->answer;
-    dtens = flag.cprght->answer;
-    cv = flag.cv->answer;
 
     if ((cv && cvdev == NULL) || (!(cv) && cvdev != NULL))
 	G_fatal_error(_("Both cross-validation options (-c flag and cvdev vector output) must be specified"));
 
     if ((elev != NULL || cond1 || cond2 || devi != NULL) && cv)
 	G_fatal_error(_("The cross-validation cannot be computed simultaneously with output raster or devi file"));
+
+    if (field == 0 && zcol)
+        G_fatal_error(_("Both z-coordinate and zcol attribute defined, only one is allowed"));
+    if (!zcoord && !zcol && scol)
+        G_fatal_error(_("Only smoothing column defined, zcol or -z flag is missing")); 
+    if (!zcol && !zcoord && field > 0)
+        G_fatal_error("Value to be interpolated needs to be defined by zcol or -z flag");
 
     ertre = 0.1;
     sscanf(parm.dmax->answer, "%lf", &dmax);
