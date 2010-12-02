@@ -42,7 +42,29 @@ proc create_screen {} {
     toplevel .screen
     canvas .screen.canvas -background white -width 640 -height 480
     pack .screen.canvas -fill both -expand yes
-    bind .screen.canvas <ButtonPress> { c_update_tool %x %y %b }
+    
+    if {[tk windowingsystem] eq "aqua"} {
+		
+#		# option + left-click for Mac equals middle-click
+		bind .screen.canvas <Option-Button-1> { c_update_tool %x %y 2 }
+#		# control + left-click for Mac equals right-click
+		bind .screen.canvas <Control-Button-1> { c_update_tool %x %y 3 }
+
+		# right-click is acting like a middle-click...
+		bind .screen.canvas <ButtonPress> {
+            puts "button: %b"
+			if { %b == 3 } {
+				c_update_tool %x %y 2
+			} elseif { %b == 2 } {
+				c_update_tool %x %y 3
+			} else {
+				c_update_tool %x %y %b
+			}
+		}
+	} else {
+		bind .screen.canvas <ButtonPress> { c_update_tool %x %y %b }
+	}
+    
     bind .screen.canvas <Motion> { c_update_tool %x %y -1 }
     wm title .screen "v.digit - $map_name@$map_mapset"
     wm withdraw .screen
