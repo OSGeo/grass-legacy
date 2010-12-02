@@ -398,22 +398,21 @@ def importR():
     # rpy2
     global robjects
     global rinterface
-    grass.message(_('Loading packages, please wait...'))
+    grass.message(_('Loading dependencies, please wait...'))
     try:
         import rpy2.robjects as robjects
         import rpy2.rinterface as rinterface #to speed up kriging? for plots.
-        haveRpy2 = True
     except ImportError:
-        print >> sys.stderr, _("Python module 'Rpy2' not found. Please install it and re-run v.krige.") # ok for other OSes?
-        haveRpy2 = False
-        if not haveRpy2:
-            sys.exit(1)
+        grass.fatal(_("Python module 'Rpy2' not found. Please install it and re-run v.krige.")) # ok for other OSes?
         
-    # R packages check.
-    # @FIXME: it leaves a Rtmpxxxx folder into the make tempfolder and causes make complain. [markus]
+    # R packages check. Will create one error message after check of all packages.
+    missingPackagesList = []
     for each in ["gstat", "spgrass6", "maptools"]:
         if not robjects.r.require(each, quietly = True)[0]:
-            sys.exit(_("R package '%s' is missing. Install it and re-run v.krige.") % each)
+            missingPackagesList.append(each)
+    if missingPackagesList:
+        errorString = _("R package(s) ") + ", ".join(map(str, missingPackagesList)) +  _(" missing. Install it/them and re-run v.krige.")
+        grass.fatal(errorString)
     
 if __name__ == '__main__':
     if len(sys.argv) > 1:
