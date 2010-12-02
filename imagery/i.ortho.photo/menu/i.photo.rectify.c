@@ -1,6 +1,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
+#include <math.h>
 #include <grass/gis.h>
 #include <grass/vask.h>
 #include <grass/imagery.h>
@@ -28,7 +29,7 @@ int rectify(char *groupname)
     struct Cell_head win, target_window;
     double max_mb_img, max_mb_elev, max_mb;
     struct Ortho_Image_Group group;
-    int do_all, ok, repeat;
+    int do_all, ok, repeat, use_target_window;
     char extension[GNAME_MAX];
     char result[GNAME_MAX];
 
@@ -124,7 +125,7 @@ int rectify(char *groupname)
     }
 
     /* use current region settings in target location (def.=calculate smallest area) ? */
-    ok = 0;
+    use_target_window = 0;
     while (1) {
 	char buf[100];
 
@@ -139,14 +140,14 @@ int rectify(char *groupname)
 	G_strip(buf);
 
 	if (strcmp(buf, "1") == 0) {
-	    ok = 1;
+	    use_target_window = 1;
 	    break;
 	}
 	if (strcmp(buf, "2") == 0)
 	    break;
     }
 
-    if (ok) {
+    if (use_target_window) {
 	sprintf(pgm, "%s -c", pgm);
     }
     else {
@@ -179,7 +180,6 @@ int rectify(char *groupname)
 	if (res > 0)
 	    sprintf(pgm, "%s res=%f", pgm, res);
     }
-
 
     /* interpolation method */
     while (1) {
@@ -221,36 +221,45 @@ int rectify(char *groupname)
     }
 
     /* amount of memory to use */
-    max_rows = max_cols = 0;
-    for (i = 0; i < group.group_ref.nfiles; i++) {
-	G_get_cellhd(group.group_ref.file[i].name,
-		     group.group_ref.file[i].mapset, &win);
-	if (max_rows < win.rows)
-	    max_rows = win.rows;
-	if (max_cols < win.cols)
-	    max_cols = win.cols;
+    if (use_target_window) {
+	max_rows = max_cols = 0;
+	for (i = 0; i < group.group_ref.nfiles; i++) {
+	    G_get_cellhd(group.group_ref.file[i].name,
+			 group.group_ref.file[i].mapset, &win);
+	    if (max_rows < win.rows)
+		max_rows = win.rows;
+	    if (max_cols < win.cols)
+		max_cols = win.cols;
+	}
+
+	ny = (max_rows + BDIM - 1) / BDIM;
+	nx = (max_cols + BDIM - 1) / BDIM;
+
+	max_mb_img = ((double)nx * ny * sizeof(block)) / (1<<20);
+
+	ny = (target_window.rows + BDIM - 1) / BDIM;
+	nx = (target_window.cols + BDIM - 1) / BDIM;
+
+	max_mb_elev = ((double)nx * ny * sizeof(block)) / (1<<20);
+	max_mb = ceil(max_mb_img + max_mb_elev);
+	if (max_mb < 1)
+	    max_mb = 1;
     }
-
-    ny = (max_rows + BDIM - 1) / BDIM;
-    nx = (max_cols + BDIM - 1) / BDIM;
-
-    max_mb_img = ((double)nx * ny * sizeof(block)) / (1<<20);
-
-    ny = (target_window.rows + BDIM - 1) / BDIM;
-    nx = (target_window.cols + BDIM - 1) / BDIM;
-
-    max_mb_elev = ((double)nx * ny * sizeof(block)) / (1<<20);
-    max_mb = max_mb_img + max_mb_elev + 0.5; /* + 0.5 for rounding */
-    if (max_mb < 1)
-	max_mb = 1;
+    else
+	/* skip calculating mimimum window, use default */
+	max_mb = 100;
 
     fprintf(stderr, "\n\n");
     while (1) {
 	char buf[100];
-	int seg_mb = max_mb;;
+	int seg_mb = max_mb + 0.5;
 
 	fprintf(stderr, _("Amount of memory to use in MB\n"));
-	fprintf(stderr, _("RETURN   use %d MB to keep all data in RAM\n"), (int)(max_mb));
+	if (use_target_window)
+	    fprintf(stderr, _("RETURN   use %d MB to keep all data in RAM\n"), seg_mb);
+	else {
+	    fprintf(stderr, _("RETURN   use %d MB\n"), seg_mb);
+	}
 	fprintf(stderr, "> ");
 	if (!G_gets(buf))
 	    continue;
