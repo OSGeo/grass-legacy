@@ -7,7 +7,7 @@
  * AUTHOR(S):    L. Mitas,  H. Mitasova, J. Hofierka
  * PURPOSE:      Sediment transport simulation (SIMWE)
  *
- * COPYRIGHT:    (C) 2002 by the GRASS Development Team
+ * COPYRIGHT:    (C) 2002, 2010 by the GRASS Development Team
  *
  *               This program is free software under the GNU General Public
  *               License (>=v2). Read the file COPYING that comes with GRASS
@@ -80,7 +80,7 @@
 /* Specific stuff               */
 
 /********************************/
-#define MAIN
+
 #include <grass/waterglobs.h>
 
 char fncdsm[32];
@@ -99,7 +99,7 @@ char msg[1024];
 /****************************************/
 int main(int argc, char *argv[])
 {
-    int i, ii, j, l;
+    int i, j, l, ii;
     int ret_val;
     double x_orig, y_orig;
     static int rand1 = 12345;
