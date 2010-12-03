@@ -86,7 +86,7 @@ int main(int argc, char **argv)
     flag_o = G_define_flag();
     flag_o->key = 'o';
     flag_o->description = _("Overlay (non-null values only)");
-    flag_n->guisection = _("Null cells");
+    flag_o->guisection = _("Null cells");
 
     flag_i = G_define_flag();
     flag_i->key = 'i';
