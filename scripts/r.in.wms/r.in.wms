@@ -335,8 +335,8 @@ listLayers() {
 
 	if [ "$GIS_FLAG_G" -eq 0 ] ; then
 	    if [ "$USE_WGET" ] ; then
-		wget $GIS_OPT_WGETOPTIONS --post-data="${STRING}" \
-		  "$GIS_OPT_MAPSERVER" -O "$CAPABILITIES_FILE";
+		wget --quiet $GIS_OPT_WGETOPTIONS --post-data="${STRING}" \
+		  "$GIS_OPT_MAPSERVER" -O "$CAPABILITIES_FILE"
 		message 1 "wget $GIS_OPT_WGETOPTIONS --post-data=\"${STRING}\" \"$GIS_OPT_MAPSERVER\" -O \"$CAPABILITIES_FILE\";"
 	    else
 		curl $GIS_OPT_CURLOPTIONS -o "$CAPABILITIES_FILE" \
