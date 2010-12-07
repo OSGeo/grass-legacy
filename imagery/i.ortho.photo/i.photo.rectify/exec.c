@@ -13,7 +13,7 @@
 #include <fcntl.h>
 #include "global.h"
 
-int exec_rectify(char *extension, char *interp_method)
+int exec_rectify(char *extension, char *interp_method, char *angle_map)
 {
     char *name;
     char *mapset;
@@ -111,6 +111,11 @@ int exec_rectify(char *extension, char *interp_method)
 
 	G_free(result);
     }
+    
+    if (angle_map) {
+	camera_angle(ebuffer, angle_map);
+    }
+    
     close(ebuffer->fd);
     release_cache(ebuffer);
 
