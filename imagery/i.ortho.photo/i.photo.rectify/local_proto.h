@@ -1,5 +1,5 @@
 /* angle.c */
-int camera_angle(struct cache *, char *);
+int camera_angle(char *);
 
 /* aver_z.c */
 int get_aver_elev(struct Ortho_Control_Points *, double *);

@@ -112,13 +112,13 @@ int exec_rectify(char *extension, char *interp_method, char *angle_map)
 	G_free(result);
     }
     
-    if (angle_map) {
-	camera_angle(ebuffer, angle_map);
-    }
-    
     close(ebuffer->fd);
     release_cache(ebuffer);
 
+    if (angle_map) {
+	camera_angle(angle_map);
+    }
+    
     G_done_msg(" ");
 
     return 0;
