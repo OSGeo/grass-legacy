@@ -1165,6 +1165,8 @@ class GdalImportDialog(ImportDialog):
             else: # gdal
                 if self.dsnInput.GetType() == 'dir':
                     idsn = os.path.join(dsn, layer)
+                else:
+                    idsn = dsn
                 
                 if self.link:
                     cmd = ['r.external',
@@ -1321,7 +1323,7 @@ class LayersList(wx.ListCtrl, listmix.ListCtrlAutoWidthMixin,
             self.SetStringItem(index, 1, "%s" % str(name))
             self.SetStringItem(index, 2, "%s" % str(grassName))
             # check by default
-            ### self.CheckItem(index, True)
+            self.CheckItem(index, True)
         
         self.SetColumnWidth(col=0, width=wx.LIST_AUTOSIZE_USEHEADER)
 
