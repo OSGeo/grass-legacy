@@ -100,7 +100,7 @@ int main(int argc, char *argv[])
     ext->description = _("Output raster map(s) suffix");
 
     tres = G_define_option();
-    tres->key = "res";
+    tres->key = "resolution";
     tres->type = TYPE_DOUBLE;
     tres->required = NO;
     tres->description = _("Target resolution (ignored if -c flag used)");

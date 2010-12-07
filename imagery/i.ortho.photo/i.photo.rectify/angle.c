@@ -188,6 +188,7 @@ int camera_angle(char *name)
 
     type = "raster";
     G_short_history(name, type, &hist);
+    G_command_history(&hist);
     G_write_history(name, &hist);
     
     G_init_colors(&colr);

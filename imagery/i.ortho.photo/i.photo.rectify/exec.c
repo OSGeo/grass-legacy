@@ -100,6 +100,7 @@ int exec_rectify(char *extension, char *interp_method, char *angle_map)
 	    /* Initialze History */
 	    type = "raster";
 	    G_short_history(name, type, &hist);
+	    G_command_history(&hist);
 	    G_write_history(result, &hist);
 
 	    select_current_env();
