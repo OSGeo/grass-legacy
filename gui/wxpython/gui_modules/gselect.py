@@ -1111,7 +1111,6 @@ class GdalSelect(wx.Panel):
                 if not ext:
                     raise KeyError
                 format += ' (*.%s)|*.%s' % (ext, self._getExtPattern(ext))
-                print format
             except KeyError:
                 format += ' (*.*)|*.*'
             
