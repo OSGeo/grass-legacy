@@ -22,7 +22,6 @@
 #include <grass/display.h>
 #include <grass/Vect.h>
 #include <grass/colors.h>
-#include <grass/symbol.h>
 #include <grass/dbmi.h>
 #include <grass/glocale.h>
 #include "plot.h"
@@ -84,7 +83,7 @@ int main(int argc, char **argv)
     int r, g, b;
     int has_color, has_fcolor;
     struct color_rgb color, fcolor;
-    int size;
+    double size;
     int default_width;
     double width_scale;
     int verbose = FALSE;
@@ -94,7 +93,7 @@ int main(int argc, char **argv)
     struct Option *map_opt;
     struct Option *color_opt, *fcolor_opt, *rgbcol_opt, *zcol_opt;
     struct Option *type_opt, *display_opt;
-    struct Option *icon_opt, *size_opt;
+    struct Option *icon_opt, *size_opt, *sizecolumn_opt, *rotcolumn_opt;
     struct Option *where_opt;
     struct Option *field_opt, *cat_opt, *lfield_opt;
     struct Option *lcolor_opt, *bgcolor_opt, *bcolor_opt;
@@ -115,7 +114,6 @@ int main(int argc, char **argv)
     struct Cell_head window;
     BOUND_BOX box;
     double overlap;
-    SYMBOL *Symb;
 
     /* Initialize the GIS calls */
     G_gisinit(argv[0]);
@@ -225,10 +223,26 @@ int main(int argc, char **argv)
 
     size_opt = G_define_option();
     size_opt->key = "size";
-    size_opt->type = TYPE_INTEGER;
+    size_opt->type = TYPE_DOUBLE;
     size_opt->answer = "5";
     size_opt->guisection = _("Symbols");
-    size_opt->description = _("Symbol size");
+    size_opt->label = _("Symbol size");
+    size_opt->description =
+	_("When used with the size_column option this becomes the scale factor");
+
+    sizecolumn_opt = G_define_standard_option(G_OPT_COLUMN);
+    sizecolumn_opt->key = "size_column";
+    sizecolumn_opt->guisection = _("Symbols");
+    sizecolumn_opt->description =
+	_("Name of numeric column containing symbol size");
+
+    rotcolumn_opt = G_define_standard_option(G_OPT_COLUMN);
+    rotcolumn_opt->key = "rot_column";
+    rotcolumn_opt->guisection = _("Symbols");
+    rotcolumn_opt->label =
+	_("Name of numeric column containing symbol rotation angle");
+    rotcolumn_opt->description =
+	_("Measured in degrees CCW from east");
 
     /* Labels */
     lfield_opt = G_define_standard_option(G_OPT_V_FIELD);
@@ -466,12 +480,7 @@ int main(int argc, char **argv)
 	G_fatal_error(_("Unknown color: '%s'"), fcolor_opt->answer);
     }
 
-    size = atoi(size_opt->answer);
-    Symb = S_read(icon_opt->answer);
-    if (Symb == NULL)
-	G_warning(_("Unable to read symbol, unable todisplay points"));
-    else
-	S_stroke(Symb, size, 0.0, 0);
+    size = atof(size_opt->answer);
 
     /* Make sure map is available */
     mapset = G_find_vector2(map_name, "");
@@ -686,7 +695,8 @@ int main(int argc, char **argv)
 	    else {
 		stat = plot1(&Map, type, area, Clist,
 			     has_color ? &color : NULL,
-			     has_fcolor ? &fcolor : NULL, chcat, Symb, size,
+			     has_fcolor ? &fcolor : NULL, chcat, icon_opt->answer,
+			     size, sizecolumn_opt->answer, rotcolumn_opt->answer,
 			     (int)id_flag->answer, table_acolors_flag->answer,
 			     cats_acolors_flag->answer, rgbcol_opt->answer,
 			     default_width, wcolumn_opt->answer, width_scale,
