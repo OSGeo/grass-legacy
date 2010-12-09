@@ -191,9 +191,9 @@ int rectify(char *groupname)
 	while (1) {
 	    char buf[100];
 
-	    fprintf(stderr, "Desired target resolution\n");
+	    fprintf(stderr, "Enter desired target resolution, or\n");
 	    fprintf(stderr,
-		    " RETURN   determine automatically\n");
+		    " RETURN   to determine it automatically:\n");
 	    fprintf(stderr, "> ");
 	    if (!G_gets(buf))
 		continue;
@@ -288,7 +288,7 @@ int rectify(char *groupname)
 	char buf[100];
 	int seg_mb = max_mb + 0.5;
 
-	fprintf(stderr, _("Amount of memory to use in MB\n"));
+	fprintf(stderr, _("Enter amount of memory to use in MB, or\n"));
 	if (use_target_window)
 	    fprintf(stderr, _("RETURN   use %d MB to keep all data in RAM\n"), seg_mb);
 	else {
