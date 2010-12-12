@@ -38,7 +38,7 @@ set Nv_(what_xyzdiff)            0
 set Nv_(what_surfdist)           1
 set Nv_(what_exagsurfdist)       1
 set Nv_(what_pipe)               0
-set Nv_(what_pipe_text)          "Send results to: (no file selected)"
+set Nv_(what_pipe_text)          [G_msg "Send results to: (no file selected)"]
 
 proc mkqueryPanel { BASE } {
     
@@ -49,23 +49,23 @@ proc mkqueryPanel { BASE } {
     
     # Initialize panel info
     if [catch {set Nv_($BASE)}] {
-	set panel [St_create {window name size priority} $BASE "Raster Query" 1 5]
+	set panel [St_create {window name size priority} $BASE [G_msg "Raster Query"] 1 5]
     } else {
 	set panel $Nv_($BASE)
     }
     
     frame $BASE  -relief flat -borderwidth 0
-    Nv_mkPanelname $BASE "Raster Query Panel"
+    Nv_mkPanelname $BASE [G_msg "Raster Query Panel"]
     
     # Create frame, buttons, and attributes menu
     frame $BASE.bf -relief flat -borderwidth 0
-    checkbutton $BASE.bf.what -text "query on/off" \
+    checkbutton $BASE.bf.what -text [G_msg "query on/off"] \
 		-command whats_here -variable WhatsHere(on)
-    Button $BASE.bf.separate -text Reset -command do_separate \
-    	-bd 1 -width 6 -helptext "Reset most recent query"
-    Button $BASE.bf.clear -text Clear -command clear_text \
-    	-bd 1 -width 6 -helptext "Clear all queries"
-    menubutton $BASE.bf.atts -text Attributes \
+    Button $BASE.bf.separate -text [G_msg "Reset"] -command do_separate \
+    	-bd 1 -width 6 -helptext [G_msg "Reset most recent query"]
+    Button $BASE.bf.clear -text [G_msg "Clear"] -command clear_text \
+    	-bd 1 -width 6 -helptext [G_msg "Clear all queries"]
+    menubutton $BASE.bf.atts -text [G_msg "Attributes"] \
     	-menu $BASE.bf.atts.m -relief raised \
     	-indicatoron 1 -bd 1
     menu $BASE.bf.atts.m
@@ -75,11 +75,7 @@ proc mkqueryPanel { BASE } {
     
     # Add menu entries for menu
     set theMenu $BASE.bf.atts.m
-    foreach i {{"Map name" "mapname" 0} {"Easting" "easting" 0} {"Northing" "northing" 0} \
-		   {"Elevation" "elevation" 1} {"Category of color map" "colorcat" 0} \
-		   {"XY dist from prev" "xydiff" 0} \
-		   {"XYZ dist from prev" "xyzdiff" 2} {"Dist along surface" "surfdist" 0} \
-		   {"Dist along exag surface" "exagsurfdist" 5}} {
+    foreach i [list [list [G_msg "Map name"] "mapname" 0] [list [G_msg "Easting"] "easting" 0] [list [G_msg "Northing"] "northing" 0] [list [G_msg "Elevation"] "elevation" 1] [list [G_msg "Category of color map"] "colorcat" 0] [list [G_msg "XY dist from prev"] "xydiff" 0] [list [G_msg "XYZ dist from prev"] "xyzdiff" 2] [list [G_msg "Dist along surface"] "surfdist" 0] [list [G_msg "Dist along exag surface"] "exagsurfdist" 5]] {
 
 		$theMenu add checkbutton -label [lindex $i 0] -underline [lindex $i 2] \
 			-offvalue 0 -onvalue 1 -variable Nv_(what_[lindex $i 1])
@@ -89,12 +85,12 @@ proc mkqueryPanel { BASE } {
     
     # frrame for close button and saving output to a file
     frame $BASE.cf
-    Button $BASE.cf.close -text Close -command "Nv_closePanel $BASE" \
+    Button $BASE.cf.close -text [G_msg "Close"] -command "Nv_closePanel $BASE" \
     	-bd 1 -width 6
     
     Button $BASE.cf.output -textvariable Nv_(what_pipe_text) \
 		-command "whats_pipe_bind $BASE" -bd 1 \
-		-helptext "Select file to receive all future query results"
+		-helptext [G_msg "Select file to receive all future query results"]
 
     pack $BASE.cf.close $BASE.cf.output -side right -expand 0 -fill none
     pack $BASE.cf.output -side left
@@ -127,7 +123,7 @@ proc whats_pipe_bind {BASE} {
     if {$new_file == -1} then return
 
     set Nv_(what_pipe) $new_file
-    set Nv_(what_pipe_text) "Send results to: $new_file"
+    set Nv_(what_pipe_text) [format [G_msg "Send results to: %s"] $new_file]
 }
 
 proc whats_here {} {
@@ -153,8 +149,8 @@ proc whats_here_info {x y} {
 
     set list [Nget_point_on_surf $x $y]
     if {[llength $list] < 4} {
-	$text insert end "Point not on surface\n"
-	append tot_out "Point not on surface\n"
+	$text insert end [G_msg "Point not on surface\n"]
+	append tot_out [G_msg "Point not on surface\n"]
 	$text yview -pickplace end
 	return
     }
@@ -165,21 +161,21 @@ proc whats_here_info {x y} {
     set id [lindex $list 3]
     
     if {$Nv_(what_easting)} then {
-	set str [format "Easting: %15.4f\n" $x]
+	set str [format [G_msg "Easting: %15.4f\n"] $x]
 	$text insert end "$str"
 	append tot_out "$str"
 	$text yview -pickplace end
     }
 
     if {$Nv_(what_northing)} then {
-	set str [format "Northing: %15.4f\n" $y]
+	set str [format [G_msg "Northing: %15.4f\n"] $y]
 	$text insert end "$str"
 	append tot_out "$str"
 	$text yview -pickplace end
     }
 
     if {$Nv_(what_elevation)} then {
-	set str [format "Elevation: %15.4f\n" $z]
+	set str [format [G_msg "Elevation: %15.4f\n"] $z]
 	$text insert end "$str"
 	append tot_out "$str"
 	$text yview -pickplace end
@@ -187,8 +183,8 @@ proc whats_here_info {x y} {
     
     if {$Nv_(what_mapname)} then {
 	set str [Nget_map_name [string range $id 5 end] surf]
-	$text insert end "Surf map: $str"
-	append tot_out "Surf map: $str"
+	$text insert end [format [G_msg "Surf map: %s"] $str]
+	append tot_out [format [G_msg "Surf map: %s"] $str]
 	set str [Nget_cat_at_xy $id topo $x $y]
 	$text insert end "\t$str\n"
 	append tot_out "\t$str\n"
@@ -203,10 +199,10 @@ proc whats_here_info {x y} {
 	if {[lindex $map_name 0] == "map"} then {
 	    set str [lindex $map_name 1]
 	} else {
-	    set str "constant"
+	    set str [G_msg "constant"]
 	}
-	$text insert end "Color map: $str"
-	append tot_out "Color map: $str"
+	$text insert end [format [G_msg "Color map: %s"] $str]
+	append tot_out [format [G_msg "Color map: %s"] $str]
 	set str [Nget_cat_at_xy $id color $x $y]
 	$text insert end "\t$str\n"
 	append tot_out "\t$str\n"
@@ -225,7 +221,7 @@ proc whats_here_info {x y} {
 	
 	if {$Nv_(what_xydiff)} then {
 	    set val [expr sqrt(($px-$x)*($px-$x)+($py-$y)*($py-$y))]
-	    set str [format "XY distance from previous: \t%15.4f\n" $val]
+	    set str [format [G_msg "XY distance from previous: \t%15.4f\n"] $val]
 	    $text insert end "$str"
 	    append tot_out "$str"
 	    $text yview -pickplace end
@@ -233,7 +229,7 @@ proc whats_here_info {x y} {
 
 	if {$Nv_(what_xyzdiff)} then {
 	    set val [expr sqrt(($px-$x)*($px-$x)+($py-$y)*($py-$y)+($pz-$z)*($pz-$z))]
-	    set str [format "XYZ distance from previous: \t%15.4f\n" $val]
+	    set str [format [G_msg "XYZ distance from previous: \t%15.4f\n"] $val]
 	    $text insert end "$str"
 	    append tot_out "$str"
 	    $text yview -pickplace end
@@ -242,7 +238,7 @@ proc whats_here_info {x y} {
 	if {$WhatsHere(pid) == $id} {
 	    if {$Nv_(what_surfdist)} then {
 		set dist [Nget_dist_along_surf $id $x $y $px $py 0]
-		set str [format "Distance along surface: \t%15.4f\n" $dist]
+		set str [format [G_msg "Distance along surface: \t%15.4f\n"] $dist]
 		$text insert end "$str"
 		append tot_out "$str"
 		$text yview -pickplace end
@@ -253,7 +249,7 @@ proc whats_here_info {x y} {
 
 	    if {$Nv_(what_exagsurfdist)} then {
 		set dist [Nget_dist_along_surf $id $x $y $px $py 1]
-		set str [format "Distance along exag. surface:%15.4f\n" $dist]
+		set str [format [G_msg "Distance along exag. surface:%15.4f\n"] $dist]
 		$text insert end "$str"
 		append tot_out "$str"
 		$text yview -pickplace end

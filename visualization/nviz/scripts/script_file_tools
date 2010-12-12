@@ -123,7 +123,7 @@ proc load_fields {} {
     # Read in each of the file fields one at a time, and create
     # Field_Data as appropriate
     if {[catch {set file_hook [open $new_file r]} error_code] != 0} then {
-	display_error [G_msg "Error while opening file: %s", $error_code]
+	display_error [format [G_msg "Error while opening file: %s"] $error_code]
 	return
     }
 
@@ -132,14 +132,14 @@ proc load_fields {} {
 
     # Read in state file
     if {[catch {gets $file_hook state_file} error_code] != 0} then {
-	display_error [G_msg "While reading state_file: %s", $error_code]
+	display_error [format [G_msg "While reading state_file: %s"] $error_code]
 	return
     }
     set_new_state_file $state_file
 
     # Get number of fields
     if {[catch {gets $file_hook num_fields} error_code] != 0} then {
-	display_error [G_msg "While reading number of fields: %s", $error_code]
+	display_error [format [G_msg "While reading number of fields: %s"] $error_code]
 	return
     }
 
@@ -148,13 +148,13 @@ proc load_fields {} {
     for {set i 0} {$i < $num_fields} {incr i} {
 	# Input field type
 	if {[catch {gets $file_hook field_type} error_code] != 0} then {
-	    display_error [G_msg "While reading field type: %s", $error_code]
+	    display_error [format [G_msg "While reading field type: %s"] $error_code]
 	    return
 	}
 
 	# Input field attribute
 	if {[catch {gets $file_hook field_att} error_code] != 0} then {
-	    display_error [G_msg "While reading field attribute: %s", $error_code]
+	    display_error [format [G_msg "While reading field attribute: %s"] $error_code]
 	    return
 	}
 

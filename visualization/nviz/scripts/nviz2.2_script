@@ -36,15 +36,6 @@ set BGColor #FFFFFF
 global DEBUG
 set DEBUG 0
 
-#Initialize ProcessName variable
-set env(NV_processname) NVIZ
-
-source $src_boot/etc/nviz2.2/scripts/config.tcl
-
-#append bwidget for tooltip stuff
-lappend auto_path $env(GISBASE)/bwidget
-package require -exact BWidget 1.2.1
-
 # Overloading internationalization procedures
 # gui.tcl is not used to have separate translation file for NVIZ
 if [catch {package require msgcat}] {
@@ -57,6 +48,15 @@ if [catch {package require msgcat}] {
 		return [::msgcat::mc $message]
 	}
 }
+
+#Initialize ProcessName variable
+set env(NV_processname) NVIZ
+
+source $src_boot/etc/nviz2.2/scripts/config.tcl
+
+#append bwidget for tooltip stuff
+lappend auto_path $env(GISBASE)/bwidget
+package require -exact BWidget 1.2.1
 
 global Nv_ ScriptState ScriptFile ScriptPlaying NvizLoadState
 
@@ -881,7 +881,7 @@ proc load_state_aux { new_file} {
 	global Nv_
 
 	if {[catch {set file_hook [open $new_file r]} error_code] != 0} then {
-        display_error [G_msg "Error while opening file: %s" $error_code]
+        display_error [format [G_msg "Error while opening file: %s"] $error_code]
         return
 	}
 
@@ -1035,7 +1035,7 @@ proc save_state { dummy } {
 	}
 
 	if {[catch {set file_hook [open $new_file w]} error_code] != 0} then {
-		display_error [G_msg "Error while opening file: %s", $error_code]
+		display_error [format [G_msg "Error while opening file: %s"] $error_code]
 		return
 	}
 

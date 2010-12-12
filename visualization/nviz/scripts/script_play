@@ -28,7 +28,7 @@ if {[catch {set NvizPlayScript}] == 0} then {
 		set new_file "$NvizPlayScript"
 	} else {
 		tk_dialog .file_error [G_msg "File Error"] \
-		[G_msg "Script file %s does not exist", $NvizPlayScript] \
+		[format [G_msg "Script file %s does not exist"] $NvizPlayScript] \
 		error 0 [G_msg "Dismiss"]
 		exit
 	}

@@ -425,7 +425,7 @@ proc site_attr_create_win {_idx} {
 			generate a color table."]
 		}
 		default {
-			puts [G_msg "WARNING: No thematic mapping preferences set for %s!", $site_attr($_idx.ATTR)]
+			puts [format [G_msg "WARNING: No thematic mapping preferences set for %s!"] $site_attr($_idx.ATTR)]
 		}
 	}
 
@@ -444,11 +444,11 @@ proc site_attr_create_win {_idx} {
 	set site_attr($_idx.WIN_CMD) $w
 
 # Attribute
-		label $w.attr -text [G_msg "Vary point %s", $site_attr($_idx.ATTR)]
+		label $w.attr -text [format [G_msg "Vary point %s"] $site_attr($_idx.ATTR)]
 		pack $w.attr -pady 1 -padx 0 -fill x -side top
 
 # Field
-		label $w.field -text [G_msg "GIS attribute: %s", $site_attr($_idx.NAME)]
+		label $w.field -text [format [G_msg "GIS attribute: %s"] $site_attr($_idx.NAME)]
 		pack $w.field -padx 0 -fill x -side top
 
 # Type
@@ -457,7 +457,7 @@ proc site_attr_create_win {_idx} {
 		} else { 
 			set type "numeric"
 		}
-		label $w.type -text [G_msg "Attribute type: %s", $type]
+		label $w.type -text [format [G_msg "Attribute type: %s"] $type]
 		pack $w.type -padx 0 -fill x -side top
 
 # Instructions
@@ -1405,7 +1405,7 @@ proc site_attr_lut_create_win {_lut_id} {
 			set row_val "label \$w.l\$row -bg \$val -width 3 -borderwidth 1 -relief raised"
 		}
 		default {
-			puts [G_msg "WARNING: No attribute behaviour for %s!", $site_attr($_lut_id.ATTR)]
+			puts [format [G_msg "WARNING: No attribute behaviour for %s!"] $site_attr($_lut_id.ATTR)]
 			return
 		}
 	}
@@ -1415,11 +1415,11 @@ proc site_attr_lut_create_win {_lut_id} {
 	catch {destroy $win}
 	toplevel $win
 	wm resizable $win true true
-	wm title $win [G_msg "Thematic prefs file %s", $_lut_id]
+	wm title $win [format [G_msg "Thematic prefs file %s"] $_lut_id]
 	bind $win <Destroy> "site_attr_lut_destroy_win $_lut_id $win %W"
 
 	set w [frame $win.left]
-		label $w.name -text [G_msg "Name: %s", $site_attr($_lut_id.NAME)] -pady 2
+		label $w.name -text [format [G_msg "Name: %s"] $site_attr($_lut_id.NAME)] -pady 2
 		pack $w.name -pady 1 -fill x -side top
 
 		if {$site_attr($_lut_id.TYPE) == "s"} {
@@ -1579,7 +1579,7 @@ proc site_attr_lut_save {_lut_id} {
 	if {$filename != ""} {
 		if {[file exists $filename]} {
 			file delete -force -- $filename
-			puts [G_msg "Old LUT \"%s\" deleted", $filename]
+			puts [format [G_msg "Old LUT \"%s\" deleted"] $filename]
 		}
 		# file is new
 		site_attr_lut_write $_lut_id [site_attr_lut_file_from_name $filename]
@@ -1604,7 +1604,7 @@ proc site_attr_lut_write {_lut_id _filename} {
 	close $fileId
 
 	set site_attr($_lut_id.NAME) [site_attr_lut_name_from_file $_filename]
-	puts [G_msg "Thematic preferences file \"%s\" saved", $name]
+	puts [format [G_msg "Thematic preferences file \"%s\" saved"] $name]
 }
 
 
@@ -1619,12 +1619,12 @@ proc site_attr_lut_load {{filename ""}} {
 	if {$filename == ""} {return}
 
 	if {![file exists $filename]} {
-		puts [G_msg "*** WARNING *** File \"%s\" is unavailable", $filename]
+		puts [format [G_msg "*** WARNING *** File \"%s\" is unavailable"] $filename]
 		return ""
 	}
 
 	if {[site_attr_lut_read $filename] < 5} {
-		puts [G_msg "*** ERROR *** Some thematic pref component are missing in file \"%s\"", $filename]
+		puts [format [G_msg "*** ERROR *** Some thematic pref component are missing in file \"%s\""] $filename]
 		return ""
 	}
 
@@ -1697,7 +1697,7 @@ proc site_attr_lut_read {_filename} {
 				}
 			}
 			default {
-				puts [G_msg "WARNING: Unknown Tag \"%s\" in file \"%s\"", $tag_name, $_filename]
+				puts [format [G_msg "WARNING: Unknown Tag \"%s\" in file \"%s\""] $tag_name, $_filename]
 			}
 		}
 #		foreach elt $tag_list {puts "*** $elt ***"}
@@ -1767,7 +1767,7 @@ proc site_attr_set_link_attr {_curr_site _attr _which _field _lut_name} {
 		"size" {set st_att [Nsite_attr_get_value "ST_ATT_SIZE"]}
 		"color" {set st_att [Nsite_attr_get_value "ST_ATT_COLOR"]}
 		"marker" {set st_att [Nsite_attr_get_value "ST_ATT_MARKER"]}
-		default {puts [G_msg "WARNING: Unknown attribute %s!", $_attr]; return $ret_list}
+		default {puts [format [G_msg "WARNING: Unknown attribute %s!"] $_attr]; return $ret_list}
 	}
 
 	set max [Nsite_attr_get_value "GPT_MAX_ATTR"]
@@ -1788,14 +1788,14 @@ proc site_attr_set_link_attr {_curr_site _attr _which _field _lut_name} {
 			incr index
 		}
 	}
-	if {$not_found} {puts [G_msg "WARNING: field %s NOT FOUND", $_field]; return}
+	if {$not_found} {puts [format [G_msg "WARNING: field %s NOT FOUND"] $_field]; return}
 
 	# verify if lut with this name is already loaded
 	set lut_id [site_attr_lut_id_from_name [site_attr_lut_name_from_file $_lut_name]]
 	if {$lut_id == "NO_LUT"} {
 		# if not, load it!
 		set lut_id [site_attr_lut_load [file join $site_attr(LUT_DIR) [site_attr_lut_file_from_name $_lut_name]]]
-		if {$lut_id == ""} {puts [G_msg "WARNING: lut file %s NOT FOUND", [site_attr_lut_file_from_name $_lut_name]]; return}
+		if {$lut_id == ""} {puts [format [G_msg "WARNING: lut file %s NOT FOUND"] [site_attr_lut_file_from_name $_lut_name]]; return}
 	}
 
 	# FROM HERE ON EVERITHING SHOULD BE OK

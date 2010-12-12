@@ -407,7 +407,7 @@ proc pick_draw_win {_map _cat} {
 
 	toplevel $win
 	wm resizable $win true true
-	wm title $win "Map: [$_map get_att map]"
+	wm title $win [format [G_msg "Map: %s"] [$_map get_att map]]
 
 	wm geometry $win "820x200+10+250"
 	wm minsize $win 150 100
@@ -609,8 +609,9 @@ proc pick_multimedia {_field} {
 
 proc highlight_set_marker_button {_w} {
 	global highlight
+	global Nv_
 
-	set highlight(MARKERS_NAME) [list {x} [G_msg "sphere"] [G_msg "diamond"] [G_msg "cube"] [G_msg "box"] [G_msg "gyro"] [G_msg "aster"]]
+	set highlight(MARKERS_NAME) $Nv_(siteshape_names)
 	set highlight(MARKERS_INDEX) {"1"  "3"        "5"     "4"    "2"  "9"    "8"}
 
 	set m $_w

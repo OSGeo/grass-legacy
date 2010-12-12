@@ -106,3 +106,6 @@ option add *menubutton.indicatoron 1
 option add *menubutton.borderwidth 1
 option add *button.borderWidth 1
 
+# All supported point types
+set Nv_(siteshapes) [list {x} {sphere} {diamond} {cube} {box} {gyro} {aster} {histogram} ]
+set Nv_(siteshape_names) [list [G_msg "x"] [G_msg "sphere"] [G_msg "diamond"] [G_msg "cube"] [G_msg "box"] [G_msg "gyro"] [G_msg "aster"] [G_msg "histogram"]]
