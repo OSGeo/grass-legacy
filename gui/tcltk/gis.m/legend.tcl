@@ -63,7 +63,8 @@ proc GmLegend::create { tree parent } {
 
     set opt($count,1,map) "" 
 	set opt($count,1,opacity) 1.0
-    set opt($count,1,color) "black" 
+    set opt($count,1,color) "black"
+    set opt($count,1,colorlv) ""
     set opt($count,1,lines) 0 
     set opt($count,1,thin) 1 
     set opt($count,1,font) "" 
@@ -257,7 +258,8 @@ proc GmLegend::options { id frm } {
     Label $row.a -text [G_msg "Legend appearance: text color"] 
     ComboBox $row.b -padx 0 -width 10 -textvariable GmLegend::opt($id,1,color) \
 		-values {"white" "grey" "gray" "black" "brown" "red" "orange" \
-		"yellow" "green" "aqua" "cyan" "indigo" "blue" "purple" "violet" "magenta"}
+		"yellow" "green" "aqua" "cyan" "indigo" "blue" "purple" "violet" "magenta"} \
+		-labels [list [G_msg "white"] [G_msg "grey"] [G_msg "gray"] [G_msg "black"] [G_msg "brown"] [G_msg "red"] [G_msg "orange"] [G_msg "yellow"] [G_msg "green"] [G_msg "aqua"] [G_msg "cyan"] [G_msg "indigo"] [G_msg "blue"] [G_msg "purple"] [G_msg "violet"] [G_msg "magenta"]] -labelsvariable GmLegend::opt($id,1,colorlv)
     Label $row.c -text [G_msg "  legend text font "]
     Button $row.d -highlightthickness 0 -takefocus 0 -relief raised -borderwidth 1  \
         -helptext [G_msg "select font for text"] \
