@@ -2074,7 +2074,7 @@ class GUI:
                             key = self.grass_task.get_options()['params'][0]['name']
                             value = option
                         else:
-                            raise ValueError, _("Unable to parse command %s") % ' '.join(cmd)
+                            raise gcmd.GException, _("Unable to parse command %s") % ' '.join(cmd)
                     
                     element = self.grass_task.get_param(key, raiseError = False)
                     if not element:
