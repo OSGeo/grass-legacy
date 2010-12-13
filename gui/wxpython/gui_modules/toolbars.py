@@ -1311,8 +1311,12 @@ class VDigitToolbar(AbstractToolbar):
             gcmd.GError(parent = self.parent,
                         message = str(e))
             return False
-        
-        self.parent.digit.SetMapName(mapLayer.GetName())
+
+        try:
+            self.parent.digit.SetMapName(mapLayer.GetName())
+        except gcmd.GException, e:
+            gcmd.GError(str(e))
+            return
         
         # update toolbar
         self.combo.SetValue(mapLayer.GetName())
