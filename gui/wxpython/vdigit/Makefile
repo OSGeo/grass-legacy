@@ -35,7 +35,7 @@ $(LIB_NAME).py: $(SHLIB)
 
 $(SHLIB): $(LIB_NAME).i cats.cpp digit.cpp driver.cpp driver_draw.cpp \
 	driver_select.cpp line.cpp message.cpp select.cpp undo.cpp vertex.cpp
-	$(PYTHON) setup.py build_ext --swig=$(SWIG) --swig-opts=-c++ --build-lib=$(OBJDIR) --build-temp=$(OBJDIR)
+	$(PYTHON) setup.py build_ext --swig=swig --swig-opts=-c++ --build-lib=$(OBJDIR) --build-temp=$(OBJDIR)
 
 .NOTPARALLEL: $(LIB_NAME).py $(LIB_NAME)_wrap.cpp
 

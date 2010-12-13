@@ -1312,8 +1312,6 @@ class VDigitToolbar(AbstractToolbar):
                         message = str(e))
             return False
         
-        self.parent.digit.SetMapName(mapLayer.GetName())
-        
         # update toolbar
         self.combo.SetValue(mapLayer.GetName())
         self.parent.toolbars['map'].combo.SetValue (_('Digitize'))
