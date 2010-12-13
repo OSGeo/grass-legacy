@@ -1,21 +1,21 @@
 # translation of grasslibs_tr.po to Türkçe
-# Copyright (C) 2006, 2007 GRASS Development Team
+# Copyright (C) 2006, 2007, 2010 GRASS Development Team
 # This file is distributed under the same license as the GRASS package.
 #
-# oyy <yilmazy@istanbul.edu.tr>, 2006.
-# Osman Yalçın YILMAZ <yilmazy@istanbul.edu.tr>, 2008.
+# oyy <yilmazy@istanbul.edu.tr>, 2006
+# Osman Yalçın YILMAZ <yilmazy@istanbul.edu.tr>, 2008
+# Saban Safak <ssafak@cvm.com.tr>, 2010.
 msgid ""
 msgstr ""
 "Project-Id-Version: grasslibs_tr\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2010-11-23 11:27+0100\n"
-"PO-Revision-Date: 2008-11-16 02:32+0200\n"
-"Last-Translator: Osman Yalçın YILMAZ <yilmazy@istanbul.edu.tr>\n"
-"Language-Team: Türkçe <tr@li.org>\n"
+"PO-Revision-Date: 2010-11-08 15:14+0200\n"
+"Last-Translator: Saban Safak <ssafak@cvm.com.tr>\n"
+"Language-Team: Türkçe <grass-translations@lists.osgeo.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: \n"
 "X-Generator: KBabel 1.11.4\n"
 
 #: ../lib/raster/rem_io.c:40
@@ -4720,184 +4720,180 @@ msgstr ""
 msgid "subgroup <%s> of group <%s> references the following raster maps\n"
 msgstr ""
 
-#~ msgid "Vector is not 3D"
-#~ msgstr "Vektör 3B değil"
+msgid "Vector is not 3D"
+msgstr "Vektör 3B değil"
 
-#~ msgid "Cannot find z column <%s> (please verify name, e.g. with v.info)"
-#~ msgstr ""
-#~ "<%s> z sütunu bulunamadı (lütfen adı kontrol edin, örneğin v.info ile)"
+msgid "Cannot find z column <%s> (please verify name, e.g. with v.info)"
+msgstr "<%s> z sütunu bulunamadı (lütfen adı kontrol edin, örneğin v.info ile)"
 
-#~ msgid "Column type of z column is not supported (must be integer or double)"
-#~ msgstr "z sütunu sütun tipi desteklenmiyor ( tamsayı veya ondalık olmalı)"
+msgid "Column type of z column is not supported (must be integer or double)"
+msgstr "z sütunu sütun tipi desteklenmiyor ( tamsayı veya ondalık olmalı)"
 
-#~ msgid "Cannot read column type of smooth column"
-#~ msgstr "Tarih sütun tipi okunamıyor"
+msgid "Cannot read column type of smooth column"
+msgstr "Tarih sütun tipi okunamıyor"
 
-#~ msgid "Column type of smooth column (datetime) is not supported"
-#~ msgstr "Tarih sütun tipi desteklenmiyor"
+msgid "Column type of smooth column (datetime) is not supported"
+msgstr "Tarih sütun tipi desteklenmiyor"
 
-#~ msgid "Column type of s column is not supported (must be integer or double)"
-#~ msgstr ""
-#~ "s sütunu sütun tipi desteklenmiyor (tamsayı veya ondalık sayı olmalı)"
+msgid "Column type of s column is not supported (must be integer or double)"
+msgstr "s sütunu sütun tipi desteklenmiyor (tamsayı veya ondalık sayı olmalı)"
 
-#~ msgid "Unknown Location"
-#~ msgstr "Bilinmeyen Mevki"
+msgid "Unknown Location"
+msgstr "Bilinmeyen Mevki"
 
-#~ msgid "Too many arguments"
-#~ msgstr "Çok fazla parametre"
+msgid "Too many arguments"
+msgstr "Çok fazla parametre"
 
 #, fuzzy
-#~ msgid "Unable to delete layer/category %d/%d line %d"
-#~ msgstr "<%s> vektör haritası silinemiyor"
+msgid "Unable to delete layer/category %d/%d line %d"
+msgstr "<%s> vektör haritası silinemiyor"
 
 #, fuzzy
-#~ msgid "Removed dangles:"
-#~ msgstr "Kaldırılan köprüler"
+msgid "Removed dangles:"
+msgstr "Kaldırılan köprüler"
 
 #, fuzzy
-#~ msgid "Unable to open vector map <%s> on topology level %d"
-#~ msgstr "Vektör harita <%s> ten <%s> e kopyalanamıyor"
+msgid "Unable to open vector map <%s> on topology level %d"
+msgstr "Vektör harita <%s> ten <%s> e kopyalanamıyor"
 
-#~ msgid "Registering points"
-#~ msgstr "Noktalar kaydediliyor"
+msgid "Registering points"
+msgstr "Noktalar kaydediliyor"
 
-#~ msgid "All vertices"
-#~ msgstr "Tüm kırıklık noktaları"
+msgid "All vertices"
+msgstr "Tüm kırıklık noktaları"
 
-#~ msgid "Registered points"
-#~ msgstr "Kaydedilen noktalar"
+msgid "Registered points"
+msgstr "Kaydedilen noktalar"
 
-#~ msgid "Snaps"
-#~ msgstr "Yapışma"
-
-#, fuzzy
-#~ msgid "Snapped vertices"
-#~ msgstr "Tüm kırıklık noktaları"
+msgid "Snaps"
+msgstr "Yapışma"
 
 #, fuzzy
-#~ msgid "New vertices"
-#~ msgstr "Tüm kırıklık noktaları"
-
-#~ msgid "Modifications"
-#~ msgstr "Değişiklikler"
-
-#~ msgid "Removed bridges"
-#~ msgstr "Kaldırılan köprüler"
-
-#~ msgid "Duplicates"
-#~ msgstr "Tekrarlar"
-
-#~ msgid "%s %5d"
-#~ msgstr "%s %5d"
-
-#~ msgid "All points (vertices)"
-#~ msgstr "Tüm noktalar (Kırıklık noktaları)"
-
-#~ msgid "Registered points (unique coordinates)"
-#~ msgstr "Kaydedilen noktalar (benzersiz koordinatlar)"
+msgid "Snapped vertices"
+msgstr "Tüm kırıklık noktaları"
 
 #, fuzzy
-#~ msgid "BUG (delete_area_cats_from_cidx): Area %d does not exist"
-#~ msgstr "%s: Alan %d mevcut değil"
+msgid "New vertices"
+msgstr "Tüm kırıklık noktaları"
+
+msgid "Modifications"
+msgstr "Değişiklikler"
+
+msgid "Removed bridges"
+msgstr "Kaldırılan köprüler"
+
+msgid "Duplicates"
+msgstr "Tekrarlar"
+
+msgid "%s %5d"
+msgstr "%s %5d"
+
+msgid "All points (vertices)"
+msgstr "Tüm noktalar (Kırıklık noktaları)"
+
+msgid "Registered points (unique coordinates)"
+msgstr "Kaydedilen noktalar (benzersiz koordinatlar)"
 
 #, fuzzy
-#~ msgid "BUG (add_area_cats_to_cidx): Area %d does not exist"
-#~ msgstr "%s: Alan %d mevcut değil"
-
-#~ msgid "Removed areas"
-#~ msgstr "Kaldırılan alanlar"
+msgid "BUG (delete_area_cats_from_cidx): Area %d does not exist"
+msgstr "%s: Alan %d mevcut değil"
 
 #, fuzzy
-#~ msgid "Unable to rewrite line %d"
-#~ msgstr "%d çizgisi okunamıyor"
+msgid "BUG (add_area_cats_to_cidx): Area %d does not exist"
+msgstr "%s: Alan %d mevcut değil"
+
+msgid "Removed areas"
+msgstr "Kaldırılan alanlar"
 
 #, fuzzy
-#~ msgid ""
-#~ "Unable to delete line %d, vector map <%s> is not opened on topo level 2"
-#~ msgstr "Veritabanı bağlantısı eklenemiyor, harita WRITE modunda açılmadı"
+msgid "Unable to rewrite line %d"
+msgstr "%d çizgisi okunamıyor"
 
 #, fuzzy
-#~ msgid ""
-#~ "Unable to delete line %d, vector map <%s> is not opened in 'write' mode"
-#~ msgstr "Veritabanı bağlantısı eklenemiyor, harita WRITE modunda açılmadı"
+msgid "Unable to delete line %d, vector map <%s> is not opened on topo level 2"
+msgstr "Veritabanı bağlantısı eklenemiyor, harita WRITE modunda açılmadı"
 
 #, fuzzy
-#~ msgid "Unable to delete line %d from vector map <%s>"
-#~ msgstr "<%s> vektör haritası silinemiyor"
-
-#~ msgid "Type"
-#~ msgstr "Tip"
-
-#~ msgid "G_malloc: out of memory"
-#~ msgstr "G_malloc: hafıza yetersiz"
-
-#~ msgid "G_calloc: out of memory"
-#~ msgstr "G_calloc:  hafıza yetersiz"
-
-#~ msgid "G_realloc: out of memory"
-#~ msgstr "G_realloc:  hafıza yetersiz"
+msgid "Unable to delete line %d, vector map <%s> is not opened in 'write' mode"
+msgstr "Veritabanı bağlantısı eklenemiyor, harita WRITE modunda açılmadı"
 
 #, fuzzy
-#~ msgid "Cannot get layer info"
-#~ msgstr "Alan bilgisi alınamıyor"
+msgid "Unable to delete line %d from vector map <%s>"
+msgstr "<%s> vektör haritası silinemiyor"
 
-#~ msgid "Cannot open database %s"
-#~ msgstr "%s veritabanı açılamıyor"
+msgid "Type"
+msgstr "Tip"
 
-#~ msgid "Cannot describe table <%s>"
-#~ msgstr "<%s> tablosu tanımlanamıyor"
+msgid "G_malloc: out of memory"
+msgstr "G_malloc: hafıza yetersiz"
 
-#~ msgid "Cannot read topo for line [%d]"
-#~ msgstr "[%d] çizgisinin topolojisi okunamıyor"
+msgid "G_calloc: out of memory"
+msgstr "G_calloc:  hafıza yetersiz"
 
-#~ msgid "Output name '%s' is not valid rast name."
-#~ msgstr "'%s' çıktı adı geçerli bir raster adı değildir."
-
-#, fuzzy
-#~ msgid "Cannot find input map '%s'"
-#~ msgstr "Sembol bulunamıyor/açılamıyor: '%s'"
-
-#~ msgid "Output map '%s' is used as input"
-#~ msgstr "'%s' çıktı haritası girdi olarak kullanılıyor"
+msgid "G_realloc: out of memory"
+msgstr "G_realloc:  hafıza yetersiz"
 
 #, fuzzy
-#~ msgid "unable to open raster map [%s in %s]"
-#~ msgstr "<%s@%s> raster haritası açılamıyor"
+msgid "Cannot get layer info"
+msgstr "Alan bilgisi alınamıyor"
+
+msgid "Cannot open database %s"
+msgstr "%s veritabanı açılamıyor"
+
+msgid "Cannot describe table <%s>"
+msgstr "<%s> tablosu tanımlanamıyor"
+
+msgid "Cannot read topo for line [%d]"
+msgstr "[%d] çizgisinin topolojisi okunamıyor"
+
+msgid "Output name '%s' is not valid rast name."
+msgstr "'%s' çıktı adı geçerli bir raster adı değildir."
 
 #, fuzzy
-#~ msgid "unable to find [%s] in [%s]"
-#~ msgstr "'%s' '%s' içinde bulunamadı"
+msgid "Cannot find input map '%s'"
+msgstr "Sembol bulunamıyor/açılamıyor: '%s'"
 
-#~ msgid "Can't read header file for [%s in %s]\n"
-#~ msgstr "[%s deki %s] için üstbilgi dosyası okunamıyor\n"
-
-#~ msgid "Can't open header file for [%s in %s]"
-#~ msgstr "[%s deki %s] için üstbilgi dosyası açılamıyo"
-
-#~ msgid "Cannot rewrite line"
-#~ msgstr "Çizgi yeniden yazılamıyor"
+msgid "Output map '%s' is used as input"
+msgstr "'%s' çıktı haritası girdi olarak kullanılıyor"
 
 #, fuzzy
-#~ msgid "Cannot delete line"
-#~ msgstr "Çizgi yeniden yazılamıyor"
+msgid "unable to open raster map [%s in %s]"
+msgstr "<%s@%s> raster haritası açılamıyor"
 
-#~ msgid "Building topology ...\n"
-#~ msgstr "Topoloji oluşturuluyor...\n"
+#, fuzzy
+msgid "unable to find [%s] in [%s]"
+msgstr "'%s' '%s' içinde bulunamadı"
 
-#~ msgid "Cannot get field info"
-#~ msgstr "Alan bilgisi alınamıyor"
+msgid "Can't read header file for [%s in %s]\n"
+msgstr "[%s deki %s] için üstbilgi dosyası okunamıyor\n"
 
-#~ msgid "Cannot open database"
-#~ msgstr "Veritabanı açılamıyor"
+msgid "Can't open header file for [%s in %s]"
+msgstr "[%s deki %s] için üstbilgi dosyası açılamıyo"
 
-#~ msgid "Could not select from table/column"
-#~ msgstr "Tablo veya sütundan seçilemiyor"
+msgid "Cannot rewrite line"
+msgstr "Çizgi yeniden yazılamıyor"
 
-#~ msgid "Cannot get column info"
-#~ msgstr "Sütun bilgisi alınamıyor"
+#, fuzzy
+msgid "Cannot delete line"
+msgstr "Çizgi yeniden yazılamıyor"
 
-#~ msgid "OGR feature type [%d] not supported"
-#~ msgstr "[%d] OGR obje tipi desteklenmiyor"
+msgid "Building topology ...\n"
+msgstr "Topoloji oluşturuluyor...\n"
+
+msgid "Cannot get field info"
+msgstr "Alan bilgisi alınamıyor"
+
+msgid "Cannot open database"
+msgstr "Veritabanı açılamıyor"
+
+msgid "Could not select from table/column"
+msgstr "Tablo veya sütundan seçilemiyor"
+
+msgid "Cannot get column info"
+msgstr "Sütun bilgisi alınamıyor"
+
+msgid "OGR feature type [%d] not supported"
+msgstr "[%d] OGR obje tipi desteklenmiyor"
 
 #~ msgid "Error reading range file for [%s in %s]"
 #~ msgstr "[%s deki %s] in aralık dosyası okunamıyor"
@@ -4910,3 +4906,800 @@ msgstr ""
 
 #~ msgid "Unknown file extension: %s"
 #~ msgstr "Bilinmeyen dosya uzantısı: %s"
+
+#, fuzzy
+#~ msgid "Unable to read fp range for raster map <%s>"
+#~ msgstr "<%s> raster haritasının kayar nokta aralığı okunamıyor"
+
+#~ msgid "Raster map <%s> is empty"
+#~ msgstr "<%s> raster haritası boş"
+
+#, fuzzy
+#~ msgid "Unable to write quant rules: raster map <%s> is integer"
+#~ msgstr "<%s> raster haritası oluşturulamıyor"
+
+#, fuzzy
+#~ msgid "Unable to write quant rules for raster map <%s>"
+#~ msgstr "<%s> raster haritası oluşturulamıyor"
+
+#, fuzzy
+#~ msgid "Floating data range for raster map <%s> is empty"
+#~ msgstr " %s@%s için kayar nokta veri aralığı boş"
+
+#, fuzzy
+#~ msgid "Integer data range for raster map <%s> is empty"
+#~ msgstr " %s@%s için tamsayı veri aralığı boş"
+
+#, fuzzy
+#~ msgid "Attempt to open quantization table for CELL raster map <%s>"
+#~ msgstr "<%s> raster haritası oluşturulamıyor"
+
+#, fuzzy
+#~ msgid "Quantization file for raster map <%s> is missing"
+#~ msgstr "<%s@%s> raster haritası açılamıyor"
+
+#, fuzzy
+#~ msgid "Quantization file for raster map <%s> is empty"
+#~ msgstr "<%s@%s> raster haritası açılamıyor"
+
+#, fuzzy
+#~ msgid "Error writing uncompressed FP data for row %d of <%s>"
+#~ msgstr "<%s@%s> sıkıştırılmış haritasını okumada hata, satır %d"
+
+#, fuzzy
+#~ msgid "Error writing compressed FP data for row %d of <%s>"
+#~ msgstr "<%s@%s> sıkıştırılmış haritasını okumada hata, satır %d"
+
+#, fuzzy
+#~ msgid "Error writing compressed data for row %d of <%s>"
+#~ msgstr "<%s@%s> sıkıştırılmış haritasını okumada hata, satır %d"
+
+#, fuzzy
+#~ msgid "Error writing uncompressed data for row %d of <%s>"
+#~ msgstr "<%s@%s> sıkıştırılmış haritasını okumada hata, satır %d"
+
+#, fuzzy
+#~ msgid "Error writing data via GDAL for row %d of <%s>"
+#~ msgstr "Kategori indeks dosyasını yazmada hata <%s>"
+
+#, fuzzy
+#~ msgid "No null file for <%s>"
+#~ msgstr "<%s> için aralık dosyası açılamıyor"
+
+#, fuzzy
+#~ msgid "Unable to find a temporary null file <%s>"
+#~ msgstr "%s geçici boş dosyası bulunamadı"
+
+#, fuzzy
+#~ msgid "Unable to open null file <%s>"
+#~ msgstr "datum tablo dosyası açılamıyor <%s>"
+
+#, fuzzy
+#~ msgid "Error writing null row %d"
+#~ msgstr "%d boş satırları yazmada hata"
+
+#, fuzzy
+#~ msgid "put_raster_row: raster map <%s> not open for write - request ignored"
+#~ msgstr "%s: [%s] haritası yazmak için açılamıyor - istek yok sayıldı"
+
+#, fuzzy
+#~ msgid "put_raster_row: unopened file descriptor - request ignored"
+#~ msgstr "%s: açılamayan dosya tanımlatıcı - istek yok sayıldı"
+
+#, fuzzy
+#~ msgid "Category support for <%s@%s> missing"
+#~ msgstr "[%s] %s harita takımındaki [%s] in kategori desteği"
+
+#, fuzzy
+#~ msgid "Category support for <%s@%s> invalid"
+#~ msgstr "[%s] deki [%s] in kategori bilgisi geçersiz"
+
+#, fuzzy
+#~ msgid "Category support for vector map <%s@%s> missing"
+#~ msgstr "[%s] %s harita takımındaki [%s] in kategori desteği"
+
+#, fuzzy
+#~ msgid "Category support for vector map <%s@%s> invalid"
+#~ msgstr "[%s] %s harita takımındaki [%s] in kategori desteği"
+
+#, fuzzy
+#~ msgid "Unable to open %s file for map <%s>"
+#~ msgstr "<%s> için aralık dosyası açılamıyor"
+
+#~ msgid "missing"
+#~ msgstr "kaybolmus"
+
+#, fuzzy
+#~ msgid "invalid"
+#~ msgstr ""
+#~ "geçersizdir\n"
+#~ "%s"
+
+#, fuzzy
+#~ msgid "Color support for <%s@%s> %s"
+#~ msgstr "[%s] %s harita takımındaki [%s] için renk desteği"
+
+#, fuzzy
+#~ msgid "Error reading raster data"
+#~ msgstr "[%s deki %s] in aralık dosyası okunamıyor"
+
+#, fuzzy
+#~ msgid "Error reading raster data via GDAL"
+#~ msgstr "[%s deki %s] in aralık dosyası okunamıyor"
+
+#, fuzzy
+#~ msgid "Unable to create header file for <%s>"
+#~ msgstr "[%s] için üstbilgi dosyası oluşturulamıyor"
+
+#, fuzzy
+#~ msgid "Unable to read <%s> for raster map <%s@%s>"
+#~ msgstr "<%s@%s> raster haritası açılamıyor"
+
+#, fuzzy
+#~ msgid "Error closing <%s> metadata file for raster map <%s@%s>"
+#~ msgstr "<%s> raster haritasının kategori dosyası okunamıyor"
+
+#, fuzzy
+#~ msgid "Unable to create <%s> metadata file for raster map <%s@%s>"
+#~ msgstr "<%s> raster haritasının kategori dosyası okunamıyor"
+
+#, fuzzy
+#~ msgid "Unable to create histogram file for <%s>"
+#~ msgstr "[%s] için üstbilgi dosyası oluşturulamıyor"
+
+#, fuzzy
+#~ msgid "Unable to create <%s> file for map <%s>"
+#~ msgstr "<%s> raster haritası oluşturulamıyor"
+
+#, fuzzy
+#~ msgid "Too many reclass categories for <%s@%s>"
+#~ msgstr "[%s in %s] için çok fazla yeniden sınıflandırma kategorisi"
+
+#, fuzzy
+#~ msgid "Illegal reclass format in header file for <%s@%s>"
+#~ msgstr "[%s deki %s] için üst bilgi dosyası oluşturulamıyor"
+
+#, fuzzy
+#~ msgid "Unable to create header file for <%s@%s>"
+#~ msgstr "[%s] için üstbilgi dosyası oluşturulamıyor"
+
+#, fuzzy
+#~ msgid "Unable to create dependency file in <%s@%s>"
+#~ msgstr "[%s deki %s] için bağımlılık dosyası oluşturulamıyor"
+
+#, fuzzy
+#~ msgid "Unable to open GDAL file"
+#~ msgstr "Geçici dosya açılamıyor"
+
+#, fuzzy
+#~ msgid "Unable to get <%s> driver"
+#~ msgstr "<%s> açılamıyor"
+
+#, fuzzy
+#~ msgid "Unable to create <%s> dataset using <%s> driver"
+#~ msgstr "<%s> tablosu oluşturulamıyor"
+
+#, fuzzy
+#~ msgid "Unable to get in-memory raster driver"
+#~ msgstr "%i raster satırı yazılamıyor"
+
+#, fuzzy
+#~ msgid "Unable to create <%s> dataset using memory driver"
+#~ msgstr "<%s>  veritabanı <%s> sürücüsüyle açılamıyor"
+
+#, fuzzy
+#~ msgid "Unable to set geo transform"
+#~ msgstr "Vektör harita okunamıyor"
+
+#, fuzzy
+#~ msgid "Unable to set projection"
+#~ msgstr "<%s> vektörü kapatılamıyor"
+
+#, fuzzy
+#~ msgid "Unable to create cell_misc/%s/gdal file"
+#~ msgstr "Üstbilgi dosyası okunamıyor"
+
+#, fuzzy
+#~ msgid "Error writing cell_misc/%s/gdal file"
+#~ msgstr "Konumsal indek dosyasını yazmada hata"
+
+#, fuzzy
+#~ msgid "Unable to create output file <%s> using driver <%s>"
+#~ msgstr "%s içindeki <%s> dosyası açılamadı"
+
+#, fuzzy
+#~ msgid "Unable to rename null file '%s'"
+#~ msgstr "datum tablo dosyası açılamıyor <%s>"
+
+#, fuzzy
+#~ msgid "Unable to rename cell file '%s'"
+#~ msgstr "'%s' dosyası silinemiyor"
+
+#, fuzzy
+#~ msgid "Error reading reclass file for raster map <%s>"
+#~ msgstr "[%s deki %s] in aralık dosyası okunamıyor"
+
+#, fuzzy
+#~ msgid "Error reading map type for raster map <%s>"
+#~ msgstr "<%s> raster haritasının kayar nokta aralığı okunamıyor"
+
+#, fuzzy
+#~ msgid "Unable to open %s file for raster map <%s@%s>"
+#~ msgstr "<%s@%s> raster haritası açılamıyor"
+
+#, fuzzy
+#~ msgid "Error reading format for <%s@%s>"
+#~ msgstr "<%s@%s> haritasını okumada hata, satır %d"
+
+#, fuzzy
+#~ msgid "Unable to open null device"
+#~ msgstr "Geçici dosya açılamıyor"
+
+#, fuzzy
+#~ msgid "Unable to create GDAL link"
+#~ msgstr "Geçici dosya açılamıyor"
+
+#, fuzzy
+#~ msgid "No temp files available"
+#~ msgstr "<%s> harita takımında hiç %s dosyası yok\n"
+
+#, fuzzy
+#~ msgid "no temp files available"
+#~ msgstr "<%s> harita takımında hiç %s dosyası yok\n"
+
+#, fuzzy
+#~ msgid "Missing type: field in file '%s'"
+#~ msgstr "geçersiz tip: '%s' alanı '%s' dosyasındaki"
+
+#, fuzzy
+#~ msgid "Unable to read fp range file for <%s>"
+#~ msgstr "<%s> için aralık dosyası açılamıyor"
+
+#, fuzzy
+#~ msgid "Unable to read quant rules for raster map <%s>"
+#~ msgstr "<%s> raster haritasının kategori dosyası okunamıyor"
+
+#, fuzzy
+#~ msgid "Unable to read range file for <%s>"
+#~ msgstr "<%s> için aralık dosyası açılamıyor"
+
+#, fuzzy
+#~ msgid "Unable to write range file for <%s>"
+#~ msgstr "<%s> için aralık dosyası açılamıyor"
+
+#, fuzzy
+#~ msgid ""
+#~ "Unable to read header file for raster map <%s@%s>.It is a reclass of "
+#~ "raster map <%s@%s> %s"
+#~ msgstr "<%s> raster haritasının kategori dosyası okunamıyor"
+
+#, fuzzy
+#~ msgid "Unable to get history information for <%s@%s>"
+#~ msgstr "[%s] in geçmiş bilgisi yazılamıyor"
+
+#, fuzzy
+#~ msgid "Unable to write history information for <%s>"
+#~ msgstr "[%s] in geçmiş bilgisi yazılamıyor"
+
+#, fuzzy
+#~ msgid "Unable to access table <%s>"
+#~ msgstr "<%s> tablosu oluşturulamıyor"
+
+#, fuzzy
+#~ msgid "<%s> created in database."
+#~ msgstr "<%s> tablosu <%s> veritabanında zaten var"
+
+#, fuzzy
+#~ msgid "Copy %s <%s> to current mapset as <%s>"
+#~ msgstr "%s dosyası geçerli harita takımında değil (%s)"
+
+#, fuzzy
+#~ msgid "%s: missing"
+#~ msgstr "kayıp olan"
+
+#, fuzzy
+#~ msgid "Cannot rename <%s> to <%s>"
+#~ msgstr "<%s> veritabanı <%s>  sürücüsüyle açılamıyor"
+
+#, fuzzy
+#~ msgid "Removing %s <%s>"
+#~ msgstr "<%s@%s> kullanılıyor"
+
+#, fuzzy
+#~ msgid "Cairo: unable to open output file <%s>"
+#~ msgstr "datum tablo dosyası açılamıyor <%s>"
+
+#, fuzzy
+#~ msgid "Cairo: unable to open mask file <%s>"
+#~ msgstr "<%s> katmanı açılamıyor"
+
+#, fuzzy
+#~ msgid "Cairo: unable to open input file <%s>"
+#~ msgstr "datum tablo dosyası açılamıyor <%s>"
+
+#, fuzzy
+#~ msgid "Cairo: invalid input file <%s>"
+#~ msgstr "Sembol bulunamıyor/açılamıyor: '%s'"
+
+#, fuzzy
+#~ msgid "Unable to open input file <%s>"
+#~ msgstr "datum tablo dosyası açılamıyor <%s>"
+
+#, fuzzy
+#~ msgid "Unable to read input file <%s>"
+#~ msgstr "datum tablo dosyası açılamıyor <%s>"
+
+#, fuzzy
+#~ msgid "Unable to parse input file <%s>"
+#~ msgstr "datum tablo dosyası açılamıyor <%s>"
+
+#, fuzzy
+#~ msgid "Unable to open output file <%s>"
+#~ msgstr "datum tablo dosyası açılamıyor <%s>"
+
+#, fuzzy
+#~ msgid "Unable to write output file <%s>"
+#~ msgstr "datum tablo dosyası açılamıyor <%s>"
+
+#, fuzzy
+#~ msgid "Unable to convert from <%s> to UTF-8"
+#~ msgstr "Vektör harita <%s> ten <%s> e kopyalanamıyor"
+
+#, fuzzy
+#~ msgid "Unable to obtain visual"
+#~ msgstr "Görüntü açılamıyor"
+
+#, fuzzy
+#~ msgid "Unknown Cairo surface type"
+#~ msgstr "bilinmeyen enterpolasyon tipi"
+
+#, fuzzy
+#~ msgid "Cairo: unable to open input mask file <%s>"
+#~ msgstr "datum tablo dosyası açılamıyor <%s>"
+
+#, fuzzy
+#~ msgid "Cairo: invalid input mask file <%s>"
+#~ msgstr "Sembol bulunamıyor/açılamıyor: '%s'"
+
+#, fuzzy
+#~ msgid ""
+#~ "\n"
+#~ "ERROR: value <%s> ambiguous for parameter <%s>\n"
+#~ msgstr ""
+#~ "\n"
+#~ "Hata: <%s> parametresi için <%s> değeri aralık dışında\n"
+
+#, fuzzy
+#~ msgid "       valid options: %s\n"
+#~ msgstr "       geçerli seçenekler: %s\n"
+
+#, fuzzy
+#~ msgid "Unable to create timestamp file for %s map <%s@%s>"
+#~ msgstr ""
+#~ "%s harita takımındaki %s haritası %s için zaman damgası dosyası "
+#~ "oluşturulamıyor"
+
+#, fuzzy
+#~ msgid "Invalid timestamp specified for %s map <%s@%s>"
+#~ msgstr ""
+#~ " %s harita takımındaki %s haritası %s için geçersiz zaman damgası dosyası "
+#~ "belirlendi"
+
+#, fuzzy
+#~ msgid "Unable to open timestamp file for %s map <%s@%s>"
+#~ msgstr "<%s> vektör haritasının geçmiş dosyası açılamıyor"
+
+#, fuzzy
+#~ msgid "Invalid timestamp file for %s map <%s@%s>"
+#~ msgstr ""
+#~ " %s harita takımındaki %s haritası %s için geçersiz zaman damgası dosyası"
+
+#, fuzzy
+#~ msgid "Unable to determine user's home directory"
+#~ msgstr "kullanıcı ev dizini belirlenemiyor"
+
+#, fuzzy
+#~ msgid "Failed to create directory [%s]"
+#~ msgstr "'%s' dizini kaldırılamıyor "
+
+#, fuzzy
+#~ msgid "Unable to open element file <%s> for <%s@%s>"
+#~ msgstr "<%s> için aralık dosyası açılamıyor"
+
+#, fuzzy
+#~ msgid "Database schema"
+#~ msgstr "Veritabanı adı"
+
+#, fuzzy
+#~ msgid "Name of raster map"
+#~ msgstr "Raster temel haritanın adı"
+
+#, fuzzy
+#~ msgid "Name of raster map(s)"
+#~ msgstr "Girdi raster harita(lar) adı"
+
+#, fuzzy
+#~ msgid "Name of input elevation raster map"
+#~ msgstr "Yükselti raster haritası adı"
+
+#, fuzzy
+#~ msgid "Name of input elevation raster map(s)"
+#~ msgstr "Yükselti raster haritası adı"
+
+#, fuzzy
+#~ msgid "Name of input 3D raster map"
+#~ msgstr "Girdi raster haritası adı"
+
+#, fuzzy
+#~ msgid "Name of input 3D raster map(s)"
+#~ msgstr "Girdi raster harita(lar) adı"
+
+#, fuzzy
+#~ msgid "Name for output 3D raster map"
+#~ msgstr "Çıktı raster haritasının adı"
+
+#, fuzzy
+#~ msgid "Layer number or name"
+#~ msgstr "Katman numarası"
+
+#, fuzzy
+#~ msgid "Layer number or name ('-1' for all layers)"
+#~ msgstr "Katman numarası"
+
+#~ msgid "Name of input file"
+#~ msgstr "Girdi dosyasının adı"
+
+#~ msgid "Name for output file"
+#~ msgstr "Çıktı dosya adı"
+
+#, fuzzy
+#~ msgid "Illegal filename <%s>. Cannot be '.' or 'NULL'."
+#~ msgstr "Uygun olmayan dosya adı. '.' veya 'NULL' olmamalı\n"
+
+#, fuzzy
+#~ msgid "Illegal filename <%s>. Character <%c> not allowed.\n"
+#~ msgstr "Uygun olmayan dosya adı. <%c> karakteri kullanılamaz.\n"
+
+#, fuzzy
+#~ msgid "Error writing file <%s>"
+#~ msgstr "Topoloji dosyasını yazmada hata"
+
+#, fuzzy
+#~ msgid "Error closing output file <%s>"
+#~ msgstr "g3b dosyasını kapatmada hata"
+
+#, fuzzy
+#~ msgid "Error reading file <%s>"
+#~ msgstr "[%s deki %s] in aralık dosyası okunamıyor"
+
+#, fuzzy
+#~ msgid "Error closing input file <%s>"
+#~ msgstr "g3b dosyasını kapatmada hata"
+
+#, fuzzy
+#~ msgid "Unable to seek"
+#~ msgstr "<%s> vektörü kapatılamıyor"
+
+#, fuzzy
+#~ msgid "Seek offset out of range"
+#~ msgstr "İndeks aralık dışında"
+
+#, fuzzy
+#~ msgid "Description:"
+#~ msgstr ""
+#~ "\n"
+#~ "Tanım:\n"
+
+#, fuzzy
+#~ msgid "Keywords:"
+#~ msgstr ""
+#~ "\n"
+#~ "Anahtar kelimeler:\n"
+
+#, fuzzy
+#~ msgid "Usage:"
+#~ msgstr ""
+#~ "\n"
+#~ "Kullanım:\n"
+#~ " "
+
+#, fuzzy
+#~ msgid "Flags:"
+#~ msgstr "Flamalar"
+
+#, fuzzy
+#~ msgid "Parameters:"
+#~ msgstr "Parametreler"
+
+#, fuzzy
+#~ msgid "square meters"
+#~ msgstr "Parametreler"
+
+#, fuzzy
+#~ msgid "square meter"
+#~ msgstr "Parametreler"
+
+#, fuzzy
+#~ msgid "meters"
+#~ msgstr "Parametreler"
+
+#, fuzzy
+#~ msgid "meter"
+#~ msgstr "Parametreler"
+
+#, fuzzy
+#~ msgid "kilometers"
+#~ msgstr "Parametreler"
+
+#, fuzzy
+#~ msgid "Syntax error"
+#~ msgstr "Girdi yazım hatası"
+
+#, fuzzy
+#~ msgid "Unable to open test.tmp file"
+#~ msgstr "Geçici dosya açılamıyor"
+
+#, fuzzy
+#~ msgid "Unable to find '%x' in %s"
+#~ msgstr "'%s' bulunamadı"
+
+#, fuzzy
+#~ msgid "Snapped vertices: %d"
+#~ msgstr "Tüm kırıklık noktaları"
+
+#, fuzzy
+#~ msgid "New vertices: %d"
+#~ msgstr "Tüm kırıklık noktaları"
+
+#, fuzzy
+#~ msgid "Unable to open fidx file for write <%s>"
+#~ msgstr "Topoloji dosyası yazmak için açılamıyor <%s>"
+
+#, fuzzy
+#~ msgid "Unknown Simple Features type (%d)"
+#~ msgstr "Bilinmeyen dosya uzantısı: %s"
+
+#, fuzzy
+#~ msgid ""
+#~ "Unable to build spatial index from topology, vector map is not opened at "
+#~ "topology level 2"
+#~ msgstr "Veritabanı bağlantısı eklenemiyor, harita WRITE modunda açılmadı"
+
+#, fuzzy
+#~ msgid "Unable to add attribute link, vector map is not opened in WRITE mode"
+#~ msgstr "Veritabanı bağlantısı eklenemiyor, harita WRITE modunda açılmadı"
+
+#, fuzzy
+#~ msgid "Unable to add attribute link"
+#~ msgstr "Veritabanı bağlantısı eklenemiyor"
+
+#, fuzzy
+#~ msgid "Unable to write attribute links"
+#~ msgstr "Veritanı bağlantısı yazılamıyor"
+
+#, fuzzy
+#~ msgid "Unable to open OGR layer <%s>"
+#~ msgstr "<%s> katmanı açılamıyor"
+
+#, fuzzy
+#~ msgid "Error in rule on row %d in <%s>"
+#~ msgstr "[%s deki %s] in aralık dosyası okunamıyor"
+
+#, fuzzy
+#~ msgid "Unable to open coor file for vector map <%s>"
+#~ msgstr "<%s> vektör haritasının geçmiş dosyası açılamıyor"
+
+#~ msgid "Intersections: %d"
+#~ msgstr "Kesişimler: %d"
+
+#, fuzzy
+#~ msgid "Unable to delete feature id %d from vector map <%s>"
+#~ msgstr "<%s> vektör haritası silinemiyor"
+
+#, fuzzy
+#~ msgid "Unable to read header file of vector map <%s>"
+#~ msgstr "<%s> raster haritasının kategori dosyası okunamıyor"
+
+#, fuzzy
+#~ msgid "Unable to open spatial index file for vector map <%s>"
+#~ msgstr "<%s> vektör haritasının geçmiş dosyası açılamıyor"
+
+#, fuzzy
+#~ msgid "Building topology for OGR layer <%s> from datasource '%s'..."
+#~ msgstr "<%s> vektör haritası için topoloji kuruluyor   \n"
+
+#, fuzzy
+#~ msgid "Unable to open vector map <%s> on level %d"
+#~ msgstr "<%s> vektör haritası açılamıyor"
+
+#, fuzzy
+#~ msgid "Unable to open history file of vector map <%s>"
+#~ msgstr "<%s> vektör haritasının geçmiş dosyası açılamıyor"
+
+#, fuzzy
+#~ msgid "OGR datasource not defined"
+#~ msgstr "ID'si olmayan OGR objesi görmezden gelindi"
+
+#, fuzzy
+#~ msgid "OGR layer <%s> not found"
+#~ msgstr "<%s> raster haritası bulunamadı"
+
+#, fuzzy
+#~ msgid "Error reading ASCII file: (bad type) [%s]"
+#~ msgstr "[%s deki %s] in aralık dosyası okunamıyor"
+
+#, fuzzy
+#~ msgid "Error reading ASCII file: (unknown type) [%s]"
+#~ msgstr "[%s deki %s] in aralık dosyası okunamıyor"
+
+#, fuzzy
+#~ msgid "Error reading ASCII file: (bad point) [%s]"
+#~ msgstr "[%s deki %s] in aralık dosyası okunamıyor"
+
+#, fuzzy
+#~ msgid "Error reading categories: [%s]"
+#~ msgstr "[%s deki %s] in aralık dosyası okunamıyor"
+
+#, fuzzy
+#~ msgid "Uknown feature type %d"
+#~ msgstr "bilinmeyen enterpolasyon tipi"
+
+#, fuzzy
+#~ msgid "Unable to select record from table <%s> (key %s, column %s)"
+#~ msgstr "<%s> tablosundan veri seçilemiyor"
+
+#, fuzzy
+#~ msgid "Column <%s>: unsupported data type"
+#~ msgstr "<%s> sütunu bulunamıyor"
+
+#, fuzzy
+#~ msgid "Unknown format"
+#~ msgstr "bilinmeyen işletmen"
+
+#, fuzzy
+#~ msgid "Unable to get boundary of area id %d"
+#~ msgstr "<%s> raster haritasının kategori dosyası okunamıyor"
+
+#, fuzzy
+#~ msgid "Unable to get boundary of isle id %d (area id %d)"
+#~ msgstr "<%s> raster haritasının kategori dosyası okunamıyor"
+
+#, fuzzy
+#~ msgid "OGR feature %d without ID ignored"
+#~ msgstr "ID'si olmayan OGR objesi görmezden gelindi"
+
+#, fuzzy
+#~ msgid "Unsupported feature type"
+#~ msgstr "Obje tip(ler)i"
+
+#, fuzzy
+#~ msgid "Unable to rewrite feature (incompatible feature types)"
+#~ msgstr "%i raster satırı yazılamıyor"
+
+#, fuzzy
+#~ msgid "Unable to select attributes for category %d"
+#~ msgstr "<%s> vektör haritası silinemiyor"
+
+#, fuzzy
+#~ msgid "No database record for category %d - export of 'cat' disabled"
+#~ msgstr "%d kategorisinin veritabanı kaydı bulunamıyor"
+
+#, fuzzy
+#~ msgid "Uknown column <%s>"
+#~ msgstr "Bilinmeyen sütun tipi (sütun <%s>)"
+
+#, fuzzy
+#~ msgid "Unable to load data from database"
+#~ msgstr "<%s> tablosundan veri alınamadı"
+
+#, fuzzy
+#~ msgid "Problem loading category values"
+#~ msgstr "Kategori değerleri"
+
+#, fuzzy
+#~ msgid "Unable to open select cursor: %s"
+#~ msgstr "Seçme imleci açılamıyor: '%s'"
+
+#, fuzzy
+#~ msgid "Usage"
+#~ msgstr ""
+#~ "\n"
+#~ "Kullanım:\n"
+#~ " "
+
+#~ msgid "print this help message"
+#~ msgstr "yardım mesajını yazdır"
+
+#, fuzzy
+#~ msgid "and set as default"
+#~ msgstr "varsayılanı kabul et"
+
+#, fuzzy
+#~ msgid "initial location"
+#~ msgstr ""
+#~ "\n"
+#~ "geçersiz projeksiyon\n"
+
+#, fuzzy
+#~ msgid "Unable to create temporary directory! Exiting."
+#~ msgstr "'%s' dizini kaldırılamıyor "
+
+#, fuzzy
+#~ msgid "Hit RETURN to continue"
+#~ msgstr "Devam etmek için ENTER'a basın -->"
+
+#, fuzzy
+#~ msgid "<%s> is not a valid GRASS location"
+#~ msgstr "Üzgünüm <%s> geçerli bir seçenek değil\n"
+
+#, fuzzy
+#~ msgid "Building user fontcap..."
+#~ msgstr "Grafik oluşturuluyor..."
+
+#, fuzzy
+#~ msgid "The SHELL variable is not set"
+#~ msgstr "GISRC - değişken ayarlanmadı"
+
+#, fuzzy
+#~ msgid "Help is available with the command:"
+#~ msgstr "[%s] komutu için yardım yoktur\n"
+
+#, fuzzy
+#~ msgid "Failed to start shell '%s'"
+#~ msgstr "<%s> Sürücüsü başlatılamıyor"
+
+#, fuzzy
+#~ msgid "Done."
+#~ msgstr "hiçbiri"
+
+#, fuzzy
+#~ msgid "Cleaning up temporary files..."
+#~ msgstr "Geçici dosya açılamıyor"
+
+#, fuzzy
+#~ msgid "Cannot write files"
+#~ msgstr "Çizgi yeniden yazılamıyor"
+
+#, fuzzy
+#~ msgid "Unable to open range file for [%s in %s]"
+#~ msgstr "<%s> için aralık dosyası açılamıyor"
+
+#, fuzzy
+#~ msgid "map <%s> is not in the current mapset"
+#~ msgstr "%s dosyası geçerli harita takımında değil (%s)"
+
+#, fuzzy
+#~ msgid "mapset <%s> is not the current mapset"
+#~ msgstr "%s dosyası geçerli harita takımında değil (%s)"
+
+#, fuzzy
+#~ msgid "Fetching data from table <%s> failed"
+#~ msgstr "<%s> tablosundan veri alınamadı"
+
+#, fuzzy
+#~ msgid "Key column type is not integer"
+#~ msgstr "<%s> sütunu tamsayı değil"
+
+#, fuzzy
+#~ msgid ""
+#~ "\n"
+#~ "++ Running blas level 1 unit tests ++"
+#~ msgstr "Tüm birim testlerini çalıştır"
+
+#, fuzzy
+#~ msgid ""
+#~ "\n"
+#~ "++ Running blas level 3 unit tests ++"
+#~ msgstr "Tüm birim testlerini çalıştır"
+
+#, fuzzy
+#~ msgid ""
+#~ "\n"
+#~ "++ Running matrix conversion unit tests ++"
+#~ msgstr "Tüm birim testlerini çalıştır"
+
+#, fuzzy
+#~ msgid ""
+#~ "\n"
+#~ "++ Running blas level 2 unit tests ++"
+#~ msgstr "Tüm birim testlerini çalıştır"
