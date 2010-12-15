@@ -30,8 +30,9 @@
 #include <signal.h>
 #include <stdio.h>
 #include <math.h>
-#include "orthophoto.h"
 #include <grass/imagery.h>
+#include <grass/glocale.h>
+#include "orthophoto.h"
 #include "matrixdefs.h"
 #include "local_proto.h"
 
@@ -54,9 +55,6 @@ int I_compute_ortho_equations(struct Ortho_Control_Points *cpz,
 			      MATRIX *MO, MATRIX *MT)
 {
     MATRIX delta, epsilon, B, BT, C, E, N, CC, NN, UVW, XYZ, M, WT1;
-    double meanx, meany;
-    double X1 = 0, X2 = 0, x1 = 0, x2 = 0, Z1 = 0, Y1 = 0, Y2 = 0, y1 =
-	0, y2 = 0, dist_grnd = 0, dist_photo = 0;
     double x, y, z, X, Y, Z, Xp, Yp, CFL;
     double lam, mu, nu, U, V, W;
     double xbar, ybar;
@@ -187,14 +185,13 @@ int I_compute_ortho_equations(struct Ortho_Control_Points *cpz,
 	WT1.x[5][5] = (Q1 / (init_info->kappa_var * init_info->kappa_var));
     }
     else {  /* set from mean values of active control points */
-	double meanX, meanY, meanZ;
-	int nz;
-    
+	double dist_grnd, dist_photo;
+	double meanx, meany, meanX, meanY, meanZ;
+	
 	/* set intial XC and YC from mean values of control points */
-	meanx = meany = 0;
-	meanX = meanY = meanZ = 0;
-	*ZC = 0;
-	n = nz = 0;
+	meanx = meany = meanX = meanY = meanZ = 0;
+	x = y = X = Y = 0;
+	n = 0;
 	first = 1;
 	for (i = 0; i < cpz->count; i++) {
 	    if (cpz->status[i] <= 0)
@@ -202,49 +199,29 @@ int I_compute_ortho_equations(struct Ortho_Control_Points *cpz,
 
 	    /* set initial XC, YC */
 	    if (first) {
-		X1 = *(cpz->e2);
-		x1 = *(cpz->e1);
-		Y1 = *(cpz->n2);
-		y1 = *(cpz->n1);
-		Z1 = *(cpz->z2);
+		X = *((cpz->e2)++);
+		x = *((cpz->e1)++);
+		Y = *((cpz->n2)++);
+		y = *((cpz->n1)++);
+		(cpz->z2)++;
 		first = 0;
 	    }
-	    if (!first) {
-		X2 = *(cpz->e2);
-		x2 = *(cpz->e1);
-		Y2 = *(cpz->n2);
-		y2 = *(cpz->n1);
-		Z1 = *(cpz->z2);
-		dist_photo =
-		    sqrt(((x1 - x2) * (x1 - x2)) + ((y1 - y2) * (y1 - y2)));
-		dist_grnd =
-		    sqrt(((X1 - X2) * (X1 - X2)) + ((Y1 - Y2) * (Y1 - Y2)));
-
-		/* set initial ZC from:                                  */
-		/*    scale ~= dist_photo/dist_grnd  ~= (CFL)/(Z1 - Zc)  */
-		/*       Zc ~= Z1 + CFL(dist_grnd)/(dist_photo)          */
-
-		if (dist_grnd != 0 && dist_photo != 0) {
-		    meanZ += Z1 + (CFL * (dist_grnd) / (dist_photo));
-		    nz++;
-		}
+	    else {
+		n++;
+		meanx += *((cpz->e1)++);
+		meany += *((cpz->n1)++);
+		meanX += *((cpz->e2)++);
+		meanY += *((cpz->n2)++);
+		meanZ += *((cpz->z2)++);
 	    }
-
-	    n++;
-	    meanx += *((cpz->e1)++);
-	    meany += *((cpz->n1)++);
-	    meanX += *((cpz->e2)++);
-	    meanY += *((cpz->n2)++);
-	    (cpz->z2)++;
 	}
-	*XC = meanX / n;
-	*YC = meanY / n;
-	*ZC = meanZ / (nz - 1);
-	G_debug(2, "XC: %.2f, YC: %.2f, ZC: %.2f", *XC, *YC, *ZC);
-	meanx = (meanx - x1) / (n - 1);
-	meany = (meany - y1) / (n - 1);
-	meanX = (meanX - X1) / (n - 1);
-	meanY = (meany - Y1) / (n - 1);
+	meanx /= n;
+	meany /= n;
+	meanX /= n;
+	meanY /= n;
+	meanZ /= n;
+	*XC = meanX;
+	*YC = meanY;
 
 	/* reset pointers */
 	for (i = 0; i < cpz->count; i++) {
@@ -256,17 +233,28 @@ int I_compute_ortho_equations(struct Ortho_Control_Points *cpz,
 	    (cpz->n2)--;
 	    (cpz->z2)--;
 	}
+	
+	/* initial ZC and Kappa must be derived from the same two distinct points
+	 * first control point: x1, y1, X1, Y1
+	 * mean values (or last control point: x2, y2, X2, Y2)
+	 */
+
+	/* set initial ZC from:                                     */
+	/*    scale ~= dist_photo/dist_grnd  ~= (CFL)/(meanZ - ZC)  */
+	/*       ZC ~= meanZ + CFL(dist_grnd)/(dist_photo)          */
+	dist_photo =
+	    sqrt(((meanx - x) * (meanx - x)) + ((meany - y) * (meany - y)));
+	dist_grnd =
+	    sqrt(((meanX - X) * (meanX - X)) + ((meanY - Y) * (meanY - Y)));
+
+	*ZC = meanZ + (CFL * (dist_grnd) / (dist_photo));
 
 	/* set initial rotations to zero (radians) */
 	*Omega = *Phi = 0.0;
 
 	/* find an initial kappa */
-	/*
-	kappa1 = atan2((y2 - y1), (x2 - x1));
-	kappa2 = atan2((Y2 - Y1), (X2 - X1));
-	*/
-	kappa1 = atan2((meany - y1), (meanx - x1));
-	kappa2 = atan2((meanY - Y1), (meanX - X1));
+	kappa1 = atan2((meany - y), (meanx - x));
+	kappa2 = atan2((meanY - Y), (meanX - X));
 	*Kappa = (kappa2 - kappa1);
 
 	/* set initial weights */
@@ -284,6 +272,8 @@ int I_compute_ortho_equations(struct Ortho_Control_Points *cpz,
 	WT1.x[4][4] = (Q1 / (phi_var * phi_var));
 	WT1.x[5][5] = (Q1 / (kappa_var * kappa_var));
     }
+    G_debug(1, "Initial XC: %.2f, YC: %.2f, ZC: %.2f", *XC, *YC, *ZC);
+    G_debug(1, "Initial Omega %.2f, Phi %.2f, Kappa: %.2f", *Omega, *Phi, *Kappa);
 
 #ifdef DEBUG
     fprintf(debug, "\nINITIAL CAMERA POSITION:\n");
@@ -521,6 +511,11 @@ int I_compute_ortho_equations(struct Ortho_Control_Points *cpz,
     *Omega = epsilon.x[3][0];
     *Phi = epsilon.x[4][0];
     *Kappa = epsilon.x[5][0];
+
+    G_debug(1, "Final XC: %.2f, YC: %.2f, ZC: %.2f", *XC, *YC, *ZC);
+    G_debug(1, "Final Omega %.2f, Phi %.2f, Kappa: %.2f", *Omega, *Phi, *Kappa);
+    if (*ZC < 0)
+	G_warning(_("Potential BUG in ortholib: camera altitude < 0"));
 
     /*  Compute Orientation Matrix M from (Omega, Phi, Kappa); */
     sw = sin(*Omega);
