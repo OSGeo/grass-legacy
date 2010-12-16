@@ -22,12 +22,12 @@ proc mklightsPanel { BASE } {
     catch {destroy $BASE}
     #  Initialize panel info
     if [catch {set Nv_($BASE)}] {
-        set panel [St_create {window name size priority} $BASE "Lighting" 2 5]
+        set panel [St_create {window name size priority} $BASE [G_msg "Lighting"] 2 5]
     } else {
 	set panel $Nv_($BASE)
     }
     frame $BASE  -relief flat -borderwidth 0
-    Nv_mkPanelname $BASE "Lighting Panel"
+    Nv_mkPanelname $BASE [G_msg "Lighting Panel"]
     
     frame $BASE.top
     frame $BASE.bottom
@@ -40,7 +40,7 @@ proc mklightsPanel { BASE } {
     # Set up a binding so we do ShowModel correctly
     bind $BASE <Map> {if {$Nv_(FollowView) == 0} { do_light_draw } }
     
-    Label $BASE.top.left.label -text " Light source position" -fg black
+    Label $BASE.top.left.label -text [G_msg " Light source position"] -fg black
     pack $BASE.top.left.label -side top -fill none -expand 0 -anchor w
 
     # create lighting height slider
@@ -55,19 +55,19 @@ proc mklightsPanel { BASE } {
 	pack $BASE.top.left.1 -side top -pady 2
 
 	# create checkbuttons
-    checkbutton $BASE.top.left.follow -text "Follow surface viewpoint" \
+    checkbutton $BASE.top.left.follow -text [G_msg "Follow surface viewpoint"] \
 		-variable Nv_(FollowView) -command follow -onvalue 1 -offvalue 0
-    checkbutton $BASE.top.left.show -text "Show lighting model" \
+    checkbutton $BASE.top.left.show -text [G_msg "Show lighting model"] \
 		-variable Nv_(ShowModel)
     pack $BASE.top.left.follow $BASE.top.left.show \
 		-side top -fill none -expand 0 -anchor w -pady 2
     
     #create lighting color, ambient, and brightness sliders
-	Label $BASE.top.right.1.lbl -text "Light color" -fg black
+	Label $BASE.top.right.1.lbl -text [G_msg "Light color"] -fg black
     Nv_mkScale $BASE.top.right.1.red h Red 0 100 100 set_red 2   
     Nv_mkScale $BASE.top.right.1.green h Green 0 100 100 set_green 2
     Nv_mkScale $BASE.top.right.1.blue h Blue 0 100 100 set_blue 2
-    Label $BASE.top.right.2.lbl -text "Light intensity" -fg black
+    Label $BASE.top.right.2.lbl -text [G_msg "Light intensity"] -fg black
     Nv_mkScale $BASE.top.right.2.bright h Brightness 0 100 80 set_brt 2 
     Nv_mkScale $BASE.top.right.2.ambient h Ambient 0 100 20 set_amb 2
     pack $BASE.top.right.1.lbl $BASE.top.right.1.red \
@@ -78,9 +78,9 @@ proc mklightsPanel { BASE } {
     	$BASE.top.right.2.ambient -side top -expand 1 -pady 2
 	pack $BASE.top.right.2 -side top -expand 1 -pady 4
 
-    button $BASE.bottom.reset -text "Reset" -command "Nviz_lights_reset" -bd 1
+    button $BASE.bottom.reset -text [G_msg "Reset"] -command "Nviz_lights_reset" -bd 1
     pack $BASE.bottom.reset -side left
-    button $BASE.bottom.close -text "Close" -command "Nv_closePanel $BASE" -bd 1
+    button $BASE.bottom.close -text [G_msg "Close"] -command "Nv_closePanel $BASE" -bd 1
     pack $BASE.bottom.close -side right
 
 

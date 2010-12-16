@@ -63,10 +63,10 @@ proc mkvolPanel { BASE } {
     menubutton $tmp.list -menu $tmp.list.m -text [G_msg "Visualization type..."] -relief raised \
     	-indicator 1 -bd 1
     set pname [menu $tmp.list.m]
-    $pname add radiobutton -label "isosurfaces" \
+    $pname add radiobutton -label [G_msg "isosurfaces"] \
     	-command "shuffle_vistype $BASE isosurf" \
-    	-variable viztype -value "isosurf"
-    $pname add radiobutton -label "slices" \
+    	-variable viztype -value isosurf
+    $pname add radiobutton -label [G_msg "slices"] \
     	-command "shuffle_vistype $BASE slice" \
     	-variable viztype -value "slice"
     

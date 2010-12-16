@@ -42,8 +42,8 @@ proc mkAttPopup {w att {mode 0}} {
     
     wm positionfrom $w program
     wm sizefrom $w program
-    wm title $w "Attribute"
-    wm iconname $w "Attribute"
+    wm title $w [G_msg "Attribute"]
+    wm iconname $w [G_msg "Attribute"]
     wm geometry $w ""
     wm maxsize $w 400 400
     wm minsize $w 150 100
@@ -85,17 +85,17 @@ proc mkAttPopup {w att {mode 0}} {
     frame $w.f4
     
     # popup label
-    label $w.f1.name -text "Change attribute: $att" 
+    label $w.f1.name -text [format [G_msg "Change attribute: %s"] $att] 
     pack $w.f1.name -side top -fill both -expand yes -padx 4 -pady 3
     
     # left button
-    button $w.f2.map -text "New map" -command "$cb1" -bd 1 -width 10
+    button $w.f2.map -text [G_msg "New map"] -command "$cb1" -bd 1 -width 10
     pack $w.f2.map -side left -fill x -expand yes
     
     # right button
     if {"$att" == "mask"} then {
-		button $w.f2.const -text "Remove mask" -command "$cb2" -bd 1 -width 10
-		checkbutton $w.f2.invert -text "invert mask" -onvalue 1 \
+		button $w.f2.const -text [G_msg "Remove mask"] -command "$cb2" -bd 1 -width 10
+		checkbutton $w.f2.invert -text [G_msg "invert mask"] -onvalue 1 \
 			-offvalue 0 -variable attPopup_InvertMask
 		set curr [Nget_current surf]
 		set attPopup_InvertMask [Nsurf$curr get_mask_mode]
@@ -103,34 +103,34 @@ proc mkAttPopup {w att {mode 0}} {
 			-pady 2 -before $w.f2.map
 
     } elseif {"$att" == "topography" } then {
-		button $w.f2.const -text "New constant"	-command "$cb2" -bd 1 -width 10
-		checkbutton $w.f2.use_color -text "use as color" -onvalue 1 \
+		button $w.f2.const -text [G_msg "New constant"]	-command "$cb2" -bd 1 -width 10
+		checkbutton $w.f2.use_color -text [G_msg "use as color"] -onvalue 1 \
 			-offvalue 0 -variable attPopup_UseColor
 		set attPopup_UseColor 1
 		pack $w.f2.use_color -side bottom -expand yes -fill both \
 			-pady 2 -before $w.f2.map
     } elseif {"$att" == "emission" } then {
-        label $w.f2.const -text "Constant not supported" 
+        label $w.f2.const -text [G_msg "Constant not supported"] 
     } else {
-		button $w.f2.const -text "New constant"	-command "$cb2" -bd 1 -width 10
+		button $w.f2.const -text [G_msg "New constant"]	-command "$cb2" -bd 1 -width 10
     }
     
     pack $w.f2.map $w.f2.const -side left -fill x -expand yes
     pack $w.f2 -side top -padx 3 -pady 3 -fill both -expand yes
     
     
-    label $w.f3.status -text "Curr. value: " -fg black
+    label $w.f3.status -text [G_msg "Curr. value: "] -fg black
     set attPopup_Status [get_curr_status $att]
     label $w.f3.info -textvariable attPopup_Status -fg black -font $nviztxtfont
     pack $w.f3.status $w.f3.info -side left -fill x -expand yes -padx 4 -pady 3
     pack $w.f3 -side top
     
-    button $w.f4.accept -text "Accept"  -bd 1  -width 5 -default active\
+    button $w.f4.accept -text [G_msg "Accept"]  -bd 1  -width 5 -default active\
 		-command "ap_check_invert $att
 			if {$Nauto_draw == 1} {Ndraw_all}
 			destroy $w
 			"
-    button $w.f4.cancel -text "Cancel"  -bd 1  -width 5\
+    button $w.f4.cancel -text [G_msg "Cancel"]  -bd 1  -width 5\
 		-command "set attPopup_Status \"no_change\" ; destroy $w"
     pack $w.f4.accept $w.f4.cancel -side left -fill none -expand yes
     pack $w.f4 -side top  -padx 3 -pady 4 -expand 1 -fill both
@@ -263,7 +263,7 @@ proc ap_get_topofile {} {
     set new [create_map_browser .browse_topo_file surf 1]
     if { $new == "" } then { return }
     
-    puts "returned from create_map_browser"
+    #puts "returned from create_map_browser"
     set attPopup_Type non_constant
     set attPopup_Status $new
 }
@@ -316,7 +316,7 @@ proc ap_get_colorconst {} {
 	set curr_color "#000000"
     }
 	
-    set new_color [mkColorPopup .color_browse "Surface Color" $curr_color 1]
+    set new_color [mkColorPopup .color_browse [G_msg "Surface Color"] $curr_color 1]
     
     # Finally pass the constant on to change the surface
     set new_color [expr [tcl_to_rgb $new_color] + 0]
@@ -459,20 +459,20 @@ proc create_constant_popup {{w .enter_constant} {mode 0}} {
     set return_val ''
     
     toplevel $w
-    wm title $w "Constant"
+    wm title $w [G_msg "Constant"]
 #    tkwait visibility $w
 #    focus $w
     
     set row2 [frame $w.constentry]
 #    puts "CONSTANT: $w MODE: $mode"
-    label $row2.title -text "Enter value:"
+    label $row2.title -text [G_msg "Enter value:"]
     Entry $row2.const -bd 2 -relief sunken
     
     bind $w <Return> "set cp_done 1"
 
     set row3 [frame $w.buttons]
-    button $row3.ok -bd 1 -width 5 -text "Accept" -command "set cp_done 1" -default active
-    button $row3.cancel -bd 1 -width 5 -text "Cancel" -command "destroy $w"
+    button $row3.ok -bd 1 -width 5 -text [G_msg "Accept"] -command "set cp_done 1" -default active
+    button $row3.cancel -bd 1 -width 5 -text [G_msg "Cancel"] -command "destroy $w"
 
     pack $row2.title $row2.const -side top -fill both -expand 1 \
     	-padx 4 -pady 4
@@ -509,18 +509,18 @@ proc create_slideconstant_popup {{w .enter_constant} {mode 0}} {
     set cp_done 0
     
     toplevel $w
-    wm title $w "Constant"
+    wm title $w [G_msg "Constant"]
     tkwait visibility $w
     focus -force $w
     
-    label $w.title -text "Use slider to set value" -width 25
+    label $w.title -text [G_msg "Use slider to set value"] -width 25
     scale $w.constant -from 0 -to 255 -showvalue yes \
 		-orient horizontal -activebackground gray80 \
 		-background gray90
 
     set row3 [frame $w.buttons]
-    button $row3.ok -bd 1 -width 5 -text "Accept" -command "set cp_done 1" -default active
-    button $row3.cancel -bd 1 -width 5 -text "Cancel" -command "destroy $w"
+    button $row3.ok -bd 1 -width 5 -text [G_msg "Accept"] -command "set cp_done 1" -default active
+    button $row3.cancel -bd 1 -width 5 -text [G_msg "Cancel"] -command "destroy $w"
 
     pack $w.title -side top -fill both -expand 1 \
     	-padx 4 -pady 4

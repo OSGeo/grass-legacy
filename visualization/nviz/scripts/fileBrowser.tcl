@@ -79,7 +79,7 @@ proc create_file_browser {{w .file_browser} {mode 0} {no_top 0}} {
     bind $w.filename <Return> "set_selection_from_file_browser_filename $w"
     frame $w.main
     frame     $w.main.directories
-    label     $w.main.directories.label -text DIRECTORIES
+    label     $w.main.directories.label -text [G_msg "DIRECTORIES"]
     frame     $w.main.directories.f
     listbox   $w.main.directories.f.list -bd 2 -relief sunken \
 		-exportselection no -selectbackground LightYellow1 -bg white \
@@ -96,7 +96,7 @@ proc create_file_browser {{w .file_browser} {mode 0} {no_top 0}} {
 		"file_browser_select_directories  %W %y $w"
     
     frame     $w.main.files
-    label     $w.main.files.label -text FILES
+    label     $w.main.files.label -text [G_msg "FILES"]
     frame     $w.main.files.f
     listbox   $w.main.files.f.list -bd 2 -relief sunken -exportselection no \
 		-selectbackground LightYellow1 -bg white\
@@ -110,13 +110,13 @@ proc create_file_browser {{w .file_browser} {mode 0} {no_top 0}} {
 
     bind $w.main.files.f.list <ButtonRelease-1> "file_browser_select_file %W %y $w"
     
-    button $w.accept -text Accept -command "catch {fileBrowser_accept_cmd $w}" -bd 1 \
+    button $w.accept -text [G_msg "Accept"] -command "catch {fileBrowser_accept_cmd $w}" -bd 1 \
     	-width 6 -default active
-    button $w.cancel -text Cancel -command "fileBrowser_cancel_cmd $w" -bd 1 \
+    button $w.cancel -text [G_msg "Cancel"] -command "fileBrowser_cancel_cmd $w" -bd 1 \
     	-width 6
     
     frame $w.cur_directory
-    label $w.cur_directory.label -text "Current:"
+    label $w.cur_directory.label -text [G_msg "Current:"]
     label $w.cur_directory.entry -relief flat -justify left -anchor w -bg grey90\
     	-textvariable file_browser($w,cur_dir) -font $nviztxtfont -fg black
     
@@ -151,7 +151,7 @@ proc create_file_browser {{w .file_browser} {mode 0} {no_top 0}} {
 #   set_file_browser_directories $w {} 
     set_file_browser_directories $w $last_dir
     if {$no_top == 0} {
-		wm title $w "File Browser"
+		wm title $w [G_msg "File Browser"]
 		wm protocol $w WM_DELETE_WINDOW "destroy $w"
     }
     

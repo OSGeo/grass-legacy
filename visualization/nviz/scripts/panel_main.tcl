@@ -101,15 +101,15 @@ proc mkmainPanel { BASE } {
 	pack [frame $BASE.redrawf.f11 -relief flat -bd 0] -side top -fill x -expand 1
 
 	#Execute buttons
-	set drawbtn [button $BASE.redrawf.f2.exec -text DRAW -bd 1 -fg "darkgreen"]
+	set drawbtn [button $BASE.redrawf.f2.exec -text [G_msg "DRAW"] -bd 1 -fg "darkgreen"]
 	bind $drawbtn <1> "Nset_cancel 0"
 	bind $drawbtn <B1-ButtonRelease> {Ndraw_all}
 	help $drawbtn balloon [G_msg "Draw selected features"]
 
-	set clearbtn [button $BASE.redrawf.f2.clear -text Clear	 -bd 1 -command {do_clear}]
+	set clearbtn [button $BASE.redrawf.f2.clear -text [G_msg "Clear"]	 -bd 1 -command {do_clear}]
 	help $clearbtn balloon [G_msg "Clear NVIZ display"]
 
-	set cancelbtn [button $BASE.redrawf.f2.cancel -text Cancel -bd 1 -command {Nset_cancel 1}]
+	set cancelbtn [button $BASE.redrawf.f2.cancel -text [G_msg "Cancel"] -bd 1 -command {Nset_cancel 1}]
 	help $cancelbtn balloon [G_msg "Cancel current draw"]
 
 	pack $drawbtn  $clearbtn $cancelbtn \

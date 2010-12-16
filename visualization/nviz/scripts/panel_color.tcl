@@ -35,22 +35,22 @@ proc mkcolorPanel { BASE } {
 
     #  Initialize panel info
     if [catch {set Nv_($BASE)}] {
-        set panel [St_create {window name size priority} $BASE "Background Color" 1 5]
+        set panel [St_create {window name size priority} $BASE [G_msg "Background Color"] 1 5]
     } else {
 	set panel $Nv_($BASE)
     }
 
     frame $BASE  -relief flat -borderwidth 0
-    Nv_mkPanelname $BASE "Background Color Panel"
+    Nv_mkPanelname $BASE [G_msg "Background Color Panel"]
     
-    button $BASE.background -text Background -bg white -fg grey \
+    button $BASE.background -text [G_msg "Background"] -bg white -fg grey \
 		-activebackground gray20 -activebackground white\
 		-command "set_background_color $BASE.background"\
 		-height 3 -width 12
     # place $BASE.background -rely .33 -relx .33 -relheight .20 -relwidth .40
     pack $BASE.background -padx 5 -pady 5
     frame $BASE.closef
-    button $BASE.closef.close -text "Close" -command "Nv_closePanel $BASE" \
+    button $BASE.closef.close -text [G_msg "Close"] -command "Nv_closePanel $BASE" \
 		-anchor se -bd 1
     pack $BASE.closef.close -side right -padx 3
     pack $BASE.closef -side bottom -fill x

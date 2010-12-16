@@ -80,7 +80,7 @@ proc mkWireColorPopup {w name {color "#000000"} {mode 0}} {
     button $w.bot.buttonframe.ok -text [G_msg "Ok"] -width 6 \
     	-command "destroy $w" -bd 1
     button $w.bot.buttonframe.cancel  -bd 1 -width 6\
-	 -text Cancel  -command "set CurrWireColor $tmp; destroy $w"
+	 -text [G_msg "Cancel"]  -command "set CurrWireColor $tmp; destroy $w"
     pack $w.bot.buttonframe.cancel -side right -expand 0
     pack $w.bot.buttonframe.ok -side left -expand 0
     pack $w.bot.buttonframe -side bottom -fill x \

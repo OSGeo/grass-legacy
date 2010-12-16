@@ -57,20 +57,20 @@ global clr
 proc mklabelPanel { BASE } {
     global Nv_ 
 
-    set panel [St_create {window name size priority} $BASE "Labels" 2 5]
+    set panel [St_create {window name size priority} $BASE [G_msg "Labels"] 2 5]
     frame $BASE -relief flat -borderwidth 0
-    Nv_mkPanelname $BASE "Labels Panel"
+    Nv_mkPanelname $BASE [G_msg "Labels Panel"]
     
     # This section contains widgets for setting font type, size and color
 
     set rbase1 [frame $BASE.font_type]
-    Button $rbase1.font -text "Font" \
+    Button $rbase1.font -text [G_msg "Font"] \
 		-width 8 -command "select_font $rbase1.font" -bd 1 \
-		-helptext "Select font family, size, and style"
-    Button $rbase1.color -text "Color" \
+		-helptext [G_msg "Select font family, size, and style"]
+    Button $rbase1.color -text [G_msg "Color"] \
 		-bg $Nv_(labelFontColor) -width 8 -fg "white" -bd 1 \
 		-command "change_label_color $rbase1.color" \
-		-helptext "Choose font color"
+		-helptext [G_msg "Choose font color"]
     pack $rbase1.font -side left 
     pack $rbase1.color -side right 
     pack $rbase1 -side top -expand yes -fill x -padx 3 -pady 4
@@ -80,20 +80,20 @@ proc mklabelPanel { BASE } {
     
     set rbase2 [frame $BASE.text]
     
-    Label $rbase2.label -text "Label text: "
+    Label $rbase2.label -text [G_msg "Label text: "]
     entry $rbase2.text -relief sunken -width 38 -textvariable Nv_(label_text) 
     pack  $rbase2.label $rbase2.text -side left -expand no -fill none -anchor w
 	pack $rbase2 -side top -expand 1 -fill both -padx 3 -pady 4 
 	
 	set rbase3 [frame $BASE.buttons]
 
-    Button $rbase3.place -text "Place label" -command "place_label" \
-    	-width 8 -bd 1 -helptext "Click with mouse to place label"
-    Button $rbase3.erase -text "Erase last" -command "label_delete_list label 1" \
-    	-width 8 -bd 1 -helptext "Erase most recent label placed"
-    Button $rbase3.erase_all -text "Erase all" -command "label_delete_list label 0" \
-    	-width 8 -bd 1 -helptext "Erase all labels"
-    button $rbase3.close -text "Close" -command "Nv_closePanel $BASE" \
+    Button $rbase3.place -text [G_msg "Place label"] -command "place_label" \
+    	-width 8 -bd 1 -helptext [G_msg "Click with mouse to place label"]
+    Button $rbase3.erase -text [G_msg "Erase last"] -command "label_delete_list label 1" \
+    	-width 8 -bd 1 -helptext [G_msg "Erase most recent label placed"]
+    Button $rbase3.erase_all -text [G_msg "Erase all"] -command "label_delete_list label 0" \
+    	-width 8 -bd 1 -helptext [G_msg "Erase all labels"]
+    button $rbase3.close -text [G_msg "Close"] -command "Nv_closePanel $BASE" \
 		-anchor se -bd 1
     pack $rbase3.place -side left -expand no -fill none
 	pack $rbase3.erase -side left -expand no -fill none -padx 3
@@ -174,7 +174,7 @@ proc place_label { } {
 proc select_font {fbutton} {
 	global Nv_
 	
-    set fon [SelectFont $fbutton.fontset -type dialog -sampletext 1 -title "Select font"]
+    set fon [SelectFont $fbutton.fontset -type dialog -sampletext [G_msg "The quick brown fox jumps over the lazy dog"] -title [G_msg "Select font"] -font Nv_(font)]
 	if { $fon != "" } {set Nv_(font) $fon}
 }
 

@@ -97,7 +97,7 @@ proc mkpickPanel { BASE } {
 		-width 5 -entrybg white \
 		-helptext [G_msg "Set threshold distance for selecting objects"]]
 
-	label $query.row2.l -text "threshold dist" -fg black -font $nviztxtfont
+	label $query.row2.l -text [G_msg "threshold dist"] -fg black -font $nviztxtfont
 
 	rc_load_res "hyperlink.display.maxNumber" maxnumber 20	
 	set Nv_(PICK_SHOW_HL) 0

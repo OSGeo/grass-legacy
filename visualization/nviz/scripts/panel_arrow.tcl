@@ -44,21 +44,21 @@ proc mkarrowPanel { BASE } {
     #This doesn't do anything currently
     set arw_text_size "not funct." 
 
-    set panel [St_create {window name size priority} $BASE "North arrow" 2 5]
+    set panel [St_create {window name size priority} $BASE [G_msg "North arrow"] 2 5]
     frame $BASE -relief flat -borderwidth 0
-    Nv_mkPanelname $BASE "North Arrow Panel"
+    Nv_mkPanelname $BASE [G_msg "North Arrow Panel"]
 
     # This section contains widgets for placing the north arrow
     set rbase1 [frame $BASE.arrow]
-    Label $rbase1.arrow_lbl -text "Arrow: " -fg black
+    Label $rbase1.arrow_lbl -text [G_msg "Arrow: "] -fg black
     LabelEntry $rbase1.arrow_size -relief sunken -entrybg white \
         -textvariable n_arrow_size -width 8 -justify right\
-        -label "size (in map units) " -fg black -labelfont $nviztxtfont
+        -label [G_msg "size (in map units) "] -fg black -labelfont $nviztxtfont
     pack $rbase1.arrow_lbl $rbase1.arrow_size -side left -expand no -fill none
     
     $rbase1.arrow_size bind <Key> {if {$Nauto_draw == 1} {Ndraw_all}} 
 
-    Button $rbase1.color -text "Color" \
+    Button $rbase1.color -text [G_msg "Color"] \
 		-bg $arw_clr -width 8 -bd 1 \
 		-command "change_arrow_color $rbase1.color arrow" \
 		-fg "#ffffff"
@@ -69,13 +69,13 @@ proc mkarrowPanel { BASE } {
 
     # This section contains widgets for north text
     set rbase2 [frame $BASE.txt]
-    Label $rbase2.txt_lbl -text "North text: " -fg black
-    Button $rbase2.font -text "Font" \
+    Label $rbase2.txt_lbl -text [G_msg "North text: "] -fg black
+    Button $rbase2.font -text [G_msg "Font"] \
 		-width 8 -command "select_arw_font $rbase2.font" -bd 1 \
-		-helptext "Select font family, size, and style"
+		-helptext [G_msg "Select font family, size, and style"]
     pack $rbase2.txt_lbl $rbase2.font -side left -expand no -fill none
     
-    Button $rbase2.color -text "Color" \
+    Button $rbase2.color -text [G_msg "Color"] \
 		-bg $arw_text_clr -width 8 -bd 1 \
 		-command "change_arrow_color $rbase2.color text" \
 		-fg "#ffffff"
@@ -86,11 +86,11 @@ proc mkarrowPanel { BASE } {
 
     # close panel section
     set rbase3 [frame $BASE.button]
-    Button $rbase3.place -text "Place arrow" -bd 1 \
+    Button $rbase3.place -text [G_msg "Place arrow"] -bd 1 \
 	 -command "bind_mouse $Nv_(TOP).canvas; $Nv_(TOP) configure -cursor plus"
     pack $rbase3.place -expand yes -side left -expand no -fill none
 
-    button $rbase3.close -text "Close" -command "Nv_closePanel $BASE" \
+    button $rbase3.close -text [G_msg "Close"] -command "Nv_closePanel $BASE" \
 		-anchor se -bd 1
 	pack $rbase3.close -side right -fill none -expand no
 	pack $rbase3 -side top -fill both -expand yes -padx 3 -pady 4
@@ -116,7 +116,7 @@ proc bind_mouse { W } {
 proc select_arw_font {fbutton} {
 	global Nv_
 	
-    set fon [SelectFont $fbutton.fontset -type dialog -sampletext 1 -title "Select font"]
+    set fon [SelectFont $fbutton.fontset -type dialog -sampletext [G_msg "The quick brown fox jumps over the lazy dog"] -title [G_msg "Select font"] -font Nv_(arw_font)]
 	if { $fon != "" } {set Nv_(arw_font) $fon}
 }
 

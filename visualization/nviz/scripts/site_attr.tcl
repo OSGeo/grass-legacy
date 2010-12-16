@@ -1135,7 +1135,7 @@ proc site_attr_lut_unlink_external {_idx} {
 	trace vdelete site_attr($site_attr($_idx.EXTERNAL_LUT)) w "site_attr_lut_update_external $_idx"
 	trace vdelete site_attr($site_attr($_idx.EXTERNAL_LUT)) u "site_attr_lut_local $_idx"
 
-	catch {$site_attr($_idx.EXTERNAL_LUT_BUTTON) configure -text "No prefs" -command ""}
+	catch {$site_attr($_idx.EXTERNAL_LUT_BUTTON) configure -text [G_msg "No prefs"] -command ""}
 	trace vdelete site_attr($site_attr($_idx.EXTERNAL_LUT).NAME) w "site_attr_update_win $_idx"
 }
 
@@ -1427,7 +1427,7 @@ proc site_attr_lut_create_win {_lut_id} {
 		} else {
 			set type "numeric"
 		}
-		label $w.type -text "Type: $type" -pady 2
+		label $w.type -text [format [G_msg "Type: %s"] $type] -pady 2
 		pack $w.type -pady 1 -padx 0 -fill x -side top
 
 		frame $w.buttons

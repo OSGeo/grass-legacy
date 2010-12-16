@@ -77,7 +77,7 @@ proc mkvectPanel { BASE } {
     
     # create bottom frame
     set tmp [frame $BASE.f]
-    button $tmp.close -text Close -command "Nv_closePanel $BASE" -anchor s -bd 1
+    button $tmp.close -text [G_msg "Close"] -command "Nv_closePanel $BASE" -anchor s -bd 1
     pack $tmp.close -side right
     button $tmp.draw_current -text [G_msg "DRAW CURRENT"] -bd 1 -fg darkgreen \
 		-command {Nvect_draw_one [Nget_current vect]}
