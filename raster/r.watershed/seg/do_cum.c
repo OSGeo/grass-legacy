@@ -163,6 +163,7 @@ int do_cum_mfd(void)
 	first_cum = point.nxt;
 	r = point.r;
 	c = point.c;
+	bseg_put(&worked, &one, r, c);
 	cseg_get(&asp, &asp_val, r, c);
 	if (asp_val) {
 	    dr = r + asp_r[ABS(asp_val)];
@@ -377,7 +378,6 @@ int do_cum_mfd(void)
 		if (er_flag && !is_swale)
 		    slope_length(r, c, r_max, c_max);
 	    }
-	    bseg_put(&worked, &one, r, c);
 	}
     }
     G_percent(count, do_points, 1);	/* finish it */
