@@ -45,7 +45,7 @@ import grass.script as grass
 import gcmd
 import utils
 from preferences import globalSettings as UserSettings
-from debug import Debug
+from debug       import Debug
 
 wxGdalSelect, EVT_GDALSELECT = NewEvent()
 
@@ -71,7 +71,7 @@ class Select(wx.combo.ComboCtrl):
         
         self.tcp = TreeCtrlComboPopup()
         self.SetPopupControl(self.tcp)
-        self.SetPopupExtents(0,100)
+        self.SetPopupExtents(0, 100)
         if type:
             self.tcp.SetData(type = type, mapsets = mapsets,
                              multiple = multiple,
