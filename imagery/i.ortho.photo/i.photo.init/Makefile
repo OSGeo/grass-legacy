@@ -1,15 +1,16 @@
 MODULE_TOPDIR = ../../..
 
-PGM = photo.2target
+PGM = i.photo.init
 
 EXTRA_CFLAGS = -I../libes
 
-LIBES     = $(IMAGERYLIB) $(DISPLAYLIB) $(RASTERLIB) $(GISLIB) $(IORTHOLIB) $(VASKLIB) $(CURSES) $(GMATHLIB)
+LIBES     = $(IORTHOLIB) $(IMAGERYLIB) $(DISPLAYLIB) $(RASTERLIB) $(GISLIB) $(VASKLIB) $(CURSES) $(GMATHLIB)
 DEPENDENCIES= $(IMAGERYDEP) $(DISPLAYDEP) $(RASTERDEP) $(IORTHODEP) $(GISDEP) $(VASKDEP) $(GMATHDEP)
 
 include $(MODULE_TOPDIR)/include/Make/Module.make
 
 default: etc
 
-$(PGM).tmp.html: $(ETC)/$(PGM)$(EXE)
-	$(call htmldesc,$(ETC)/$(PGM)$(EXE))
+$(PGM).tmp.html: description.html
+	$(INSTALL_DATA) $< $@
+

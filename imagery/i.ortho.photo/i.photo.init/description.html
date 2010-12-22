@@ -8,19 +8,19 @@ refer to the term <i>vertical photograph</i> up to a tilt of 3 degree.
 Oblique aerial photographs are purposely taken with an
 angle between 3 and 90 degree from the nadir direction.
 <P>
-<b>The use of <EM>photo.init</EM> (menu 6) is only required when rectifying a
+<b>The use of <EM>i.photo.init</EM> (menu 6) is only required when rectifying a
 tilted or oblique aerial photo.</b>
 <P>
-<EM>photo.init</EM> creates or modifies entries in a camera initial exposure
+<EM>i.photo.init</EM> creates or modifies entries in a camera initial exposure
 station file for imagery group referenced by a sub-block.  These entries
 include: the (XC,YC,ZC) standard (e.g. UTM) approximate coordinates of the camera exposure
 station; initial roll, pitch, and yaw angles (in degrees) of the cameras
 attitude; and the <EM>a priori</EM> standard deviations for these
-parameters. During the imagery program, photo.rectify, the initial camera
+parameters. During the imagery program, <EM>i.photo.rectify</EM>, the initial camera
 exposure station file is used for computation of the ortho-rectification
 parameters.  If no initial camera exposure station file exist, the default
 values are computed from the control points file created in <EM><A
-HREF="photo.2target.html">photo.2target</A></EM>.
+HREF="i.photo.2target.html">i.photo.2target</A></EM>.
 
 
 <P>
@@ -94,10 +94,10 @@ values in this menu are not used.
 
 <EM>
 <A HREF="i.ortho.photo.html">i.ortho.photo</A>,
-<A HREF="photo.camera.html">photo.camera</A>,
-<A HREF="photo.2image.html">photo.2image</A>,
-<A HREF="photo.2target.html">photo.2target</A>,
-<A HREF="photo.rectify.html">photo.rectify</A>
+<A HREF="i.photo.camera.html">i.photo.camera</A>,
+<A HREF="i.photo.2image.html">i.photo.2image</A>,
+<A HREF="i.photo.2target.html">i.photo.2target</A>,
+<A HREF="i.photo.rectify.html">i.photo.rectify</A>
 </EM>
 
 

@@ -1,7 +1,7 @@
 
 /****************************************************************************
  *
- * MODULE:       photo.elev
+ * MODULE:       i.photo.elev
  * AUTHOR(S):    Mike Baba (original contributor)
  *               Markus Neteler <neteler itc.it>, 
  *               Roberto Flor <flor itc.it>, 

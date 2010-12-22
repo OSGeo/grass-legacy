@@ -117,18 +117,18 @@ int main(int argc, char **argv)
 	if (strcmp(buf, "1") == 0)
 	    run_system("i.group");
 	if (strcmp(buf, "2") == 0)
-	    run_etc_imagery("photo.target", group.name);
+	    run_etc_imagery("i.photo.target", group.name);
 	if (strcmp(buf, "3") == 0)
-	    run_etc_imagery("photo.elev", group.name);
+	    run_etc_imagery("i.photo.elev", group.name);
 	if (strcmp(buf, "4") == 0)
-	    run_etc_imagery("photo.camera", group.name);
+	    run_etc_imagery("i.photo.camera", group.name);
 	if (strcmp(buf, "5") == 0)
-	    run_etc_imagery("photo.2image", group.name);
+	    run_etc_imagery("i.photo.2image", group.name);
 	if (strcmp(buf, "6") == 0)
-	    run_etc_imagery("photo.init", group.name);
+	    run_etc_imagery("i.photo.init", group.name);
 	if (strcmp(buf, "7") == 0)
-	    run_etc_imagery("photo.2target", group.name);
+	    run_etc_imagery("i.photo.2target", group.name);
 	if (strcmp(buf, "8") == 0)
-	    run_etc_imagery("photo.rectify", group.name);
+	    run_etc_imagery("i.photo.rectify", group.name);
     }
 }

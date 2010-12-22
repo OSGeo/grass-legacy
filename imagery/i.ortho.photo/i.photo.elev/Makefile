@@ -1,6 +1,6 @@
 MODULE_TOPDIR = ../../..
 
-PGM = photo.target
+PGM = i.photo.elev
 
 EXTRA_CFLAGS = -I../libes
 
@@ -12,4 +12,4 @@ include $(MODULE_TOPDIR)/include/Make/Module.make
 default: etc
 
 htmletc:
-	@echo No docs needed for $(PGM)
+	@echo no docs needed for $(PGM)
