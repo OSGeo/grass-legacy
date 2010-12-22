@@ -137,7 +137,7 @@ int main(int argc, char **argv)
 				  "cat;Display category numbers of features;"
 				  "topo;Display topology information (nodes, edges);"
 				  "dir;Display direction of linear features;"
-				  "attr;Display selected attribute based on 'attrcolumn';"
+				  "attr;Display selected attribute based on 'attrcol';"
 				  "zcoor;Display z-coordinate of features (only for 3D vector maps)");
     
     /* Query */
