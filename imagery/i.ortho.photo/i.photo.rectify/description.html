@@ -27,6 +27,17 @@ of the selected window.
 The rectified image will be located in the target LOCATION when the program
 is completed. The original unrectified files are not modified or removed.
 <P>
+The optional <em>angle</em> output holds the camera angle in degrees to
+the local surface, considering local slope and aspect. A value of 90 
+degrees indicates that the camera angle was orthogonal to the local 
+surface, a value of 0 degrees indicates that the camera angle was 
+parallel to the local surface and negative values indicate that the 
+surface was invisible to the camera. As a rule of thumb, values below 30
+degrees indicate problem areas where the orthorectified output will 
+appear blurred. Because terrain shadowing effects are not considered, 
+areas with high camera angles may also appear blurred if they are located
+(viewed from the camera position) behind mountain ridges or peaks.
+<P>
 <EM>i.photo.rectify</EM> can be run directly, specifying options in the 
 command line or the GUI, or it can be invoked as OPTION 8 through 
 <A HREF="i.ortho.photo.html">i.ortho.photo</A>. If invoked though 
@@ -38,9 +49,12 @@ is used to determine the options.
 be rectified. If this option is not chosen, you are asked to specify for 
 each image within the imagery group whether it should be rectified or not.
 <P>
-More than one file may be rectified at a time.  Each file
+More than one file may be rectified at a time. Each file
 should have a unique output file name. The next prompt asks you for an 
 extension to be appended to the rectified images.
+<P>
+The next prompt will ask you whether a camera angle map should be 
+produced and if yes, what should be its name.
 <P>
 After that you are asked if overwriting existing maps in the target 
 location and mapset should be allowed.

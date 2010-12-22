@@ -13,7 +13,7 @@
 #include <fcntl.h>
 #include "global.h"
 
-int exec_rectify(char *extension, char *interp_method)
+int exec_rectify(char *extension, char *interp_method, char *angle_map)
 {
     char *name;
     char *mapset;
@@ -100,6 +100,7 @@ int exec_rectify(char *extension, char *interp_method)
 	    /* Initialze History */
 	    type = "raster";
 	    G_short_history(name, type, &hist);
+	    G_command_history(&hist);
 	    G_write_history(result, &hist);
 
 	    select_current_env();
@@ -111,9 +112,14 @@ int exec_rectify(char *extension, char *interp_method)
 
 	G_free(result);
     }
+    
     close(ebuffer->fd);
     release_cache(ebuffer);
 
+    if (angle_map) {
+	camera_angle(angle_map);
+    }
+    
     G_done_msg(" ");
 
     return 0;

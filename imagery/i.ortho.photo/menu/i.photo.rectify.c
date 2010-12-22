@@ -117,6 +117,40 @@ int rectify(char *groupname)
     }
     sprintf(pgm, "%s extension=%s", pgm, extension);
     
+    /* compute local camera angle */
+    G_clear_screen();
+    ok = G_yes(_("\nCompute local camera angle? "), 0);
+    if (ok) {
+	char angle_name[GNAME_MAX];
+
+	sprintf(angle_name, "%s.camera_angle", groupname);
+	
+	repeat = 1;
+	while (repeat) {
+	    repeat = 0;
+	    V_clear();
+	    V_line(1, _("Enter a name for the camera angle map:"));
+	    V_ques(angle_name, 's', 3, 0, 30);
+	    V_intrpt_ok();
+	    if (!V_call())
+		return 0;
+
+	    /* test for legal file name */
+	    if (G_legal_filename(angle_name) < 0) {
+		G_clear_screen();
+		fprintf(stderr, _("Map name <%s> is illegal"), angle_name);
+		repeat = G_yes(_("\nChoose another name? "), 1);
+		if (!repeat) {
+		    fprintf(stderr,_("Orthorectification cancelled."));
+		    G_sleep(3);
+		    return 0;
+		}
+	    }
+	    else 
+		sprintf(pgm, "%s angle=%s", pgm, angle_name);
+	}
+    }
+
     /* overwrite maps in target location/mapset */
     G_clear_screen();
     ok = G_yes(_("\nOverwrite maps in target location/mapset? "), 0);
@@ -157,9 +191,9 @@ int rectify(char *groupname)
 	while (1) {
 	    char buf[100];
 
-	    fprintf(stderr, "Desired target resolution\n");
+	    fprintf(stderr, "Enter desired target resolution, or\n");
 	    fprintf(stderr,
-		    " RETURN   determine automatically\n");
+		    " RETURN   to determine it automatically:\n");
 	    fprintf(stderr, "> ");
 	    if (!G_gets(buf))
 		continue;
@@ -254,7 +288,7 @@ int rectify(char *groupname)
 	char buf[100];
 	int seg_mb = max_mb + 0.5;
 
-	fprintf(stderr, _("Amount of memory to use in MB\n"));
+	fprintf(stderr, _("Enter amount of memory to use in MB, or\n"));
 	if (use_target_window)
 	    fprintf(stderr, _("RETURN   use %d MB to keep all data in RAM\n"), seg_mb);
 	else {

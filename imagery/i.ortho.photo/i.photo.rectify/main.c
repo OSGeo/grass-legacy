@@ -73,8 +73,10 @@ int main(int argc, char *argv[])
      *ext,			/* extension */
      *tres,			/* target resolution */
      *mem,			/* amount of memory for cache */
-     *interpol;			/* interpolation method:
+     *interpol,			/* interpolation method:
 				   nearest neighbor, bilinear, cubic */
+     *angle;			/* camera angle relative to ground surface */
+
     struct Flag *c, *a;
     struct GModule *module;
 
@@ -98,7 +100,7 @@ int main(int argc, char *argv[])
     ext->description = _("Output raster map(s) suffix");
 
     tres = G_define_option();
-    tres->key = "res";
+    tres->key = "resolution";
     tres->type = TYPE_DOUBLE;
     tres->required = NO;
     tres->description = _("Target resolution (ignored if -c flag used)");
@@ -120,6 +122,11 @@ int main(int argc, char *argv[])
     interpol->answer = "nearest";
     interpol->options = ipolname;
     interpol->description = _("Interpolation method to use");
+    
+    angle = G_define_standard_option(G_OPT_R_OUTPUT);
+    angle->key = "angle";
+    angle->required = NO;
+    angle->description = _("Raster map with camera angle relative to ground surface");
 
     c = G_define_flag();
     c->key = 'c';
@@ -187,24 +194,38 @@ int main(int argc, char *argv[])
 	}
     }
     else {
-	char xname[GNAME_MAX], xmapset[GMAPSET_MAX], *name;
+	char xname[GNAME_MAX], xmapset[GMAPSET_MAX], *name, *mapset;
 
 	for (n = 0; n < group.group_ref.nfiles; n++)
 		ref_list[n] = 0;
 
 	for (m = 0; m < k; m++) {
 	    got_file = 0;
-	    if (G__name_is_fully_qualified(ifile->answers[m], xname, xmapset))
+	    if (G__name_is_fully_qualified(ifile->answers[m], xname, xmapset)) {
 		name = xname;
-	    else
+		mapset = xmapset;
+	    }
+	    else {
 		name = ifile->answers[m];
+		mapset = NULL;
+	    }
 
 	    got_file = 0;
 	    for (n = 0; n < group.group_ref.nfiles; n++) {
-		if (strcmp(name, group.group_ref.file[n].name) == 0) {
-		    got_file = 1;
-		    ref_list[n] = 1;
-		    break;
+		if (mapset) {
+		    if (strcmp(name, group.group_ref.file[n].name) == 0 &&
+		        strcmp(mapset, group.group_ref.file[n].mapset) == 0) {
+			got_file = 1;
+			ref_list[n] = 1;
+			break;
+		    }
+		}
+		else {
+		    if (strcmp(name, group.group_ref.file[n].name) == 0) {
+			got_file = 1;
+			ref_list[n] = 1;
+			break;
+		    }
 		}
 	    }
 	    if (got_file == 0)
@@ -264,6 +285,16 @@ int main(int argc, char *argv[])
 		G_fatal_error(_("Orthorectification cancelled."));
 	    }
 	}
+	if (angle->answer) {
+	    if (G_find_cell(angle->answer, G_mapset())) {
+		G_warning(_("The following raster map already exists in"));
+		G_warning(_("target LOCATION %s, MAPSET %s:"),
+			  G_location(), G_mapset());
+		G_warning("<%s>", angle->answer);
+		G_fatal_error(_("Orthorectification cancelled."));
+	    }
+	}
+	
 	select_current_env();
     }
     else
@@ -337,7 +368,7 @@ int main(int argc, char *argv[])
     }
 
     /* go do it */
-    exec_rectify(extension, interpol->answer);
+    exec_rectify(extension, interpol->answer, angle->answer);
 
     exit(EXIT_SUCCESS);
 }

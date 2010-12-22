@@ -62,6 +62,9 @@ int georef_window(struct Cell_head *w1, struct Cell_head *w2, double res)
     } nw, ne, se, sw;
 
     /* get an average elevation from the active control points */
+    /* for mountainous areas this is a very rough approximation
+     * which would become more accurate only if actual elevation 
+     * values are used */
     get_aver_elev(&group.control_points, &aver_z);
     G_debug(1, "Aver elev = %f", aver_z);
 
@@ -93,7 +96,6 @@ int georef_window(struct Cell_head *w1, struct Cell_head *w2, double res)
     G_debug(1, "image  x = %f y = %f, photo x = %f y = %f", w1->east,
 	    w1->north, e0, n0);
     G_debug(1, "target x = %f y = %f", e, n);
-
 
     ne.n = n;
     ne.e = e;

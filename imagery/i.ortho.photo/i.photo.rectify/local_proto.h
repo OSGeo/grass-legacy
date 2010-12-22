@@ -1,3 +1,6 @@
+/* angle.c */
+int camera_angle(char *);
+
 /* aver_z.c */
 int get_aver_elev(struct Ortho_Control_Points *, double *);
 
@@ -18,7 +21,7 @@ int Compute_ortho_equation(void);
 int Compute_ref_equation(void);
 
 /* exec.c */
-int exec_rectify(char *, char *);
+int exec_rectify(char *, char *, char *);
 
 /* get_wind.c */
 int get_ref_window(struct Cell_head *);
