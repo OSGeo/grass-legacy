@@ -1,6 +1,6 @@
 MODULE_TOPDIR = ../../..
 
-PGM = photo.2image
+PGM = i.photo.2image
 
 EXTRA_CFLAGS = -I../libes
 

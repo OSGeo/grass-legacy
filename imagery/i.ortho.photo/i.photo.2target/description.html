@@ -1,6 +1,6 @@
 <H2>DESCRIPTION</H2>
 
-<EM>photo.2target</EM>
+<EM>i.photo.2target</EM>
 is an imagery function that enables you to
 mark control points on an image to be ortho-rectified
 and then input the coordinates of each point for calculation
@@ -21,23 +21,23 @@ phases. The first phase computes a transformation matrix between image
 (row,col) coordinates and photo (x,y) coordinates relative to the
 perspective center. The transformation matrix is computed
 explicitly in the option <EM>
-<A HREF="photo.2image.html">photo.2image</A>
+<A HREF="i.photo.2image.html">i.photo.2image</A>
 </EM>.
  
-The second phase, <EM>photo.2target</EM>, enables you 
+The second phase, <EM>i.photo.2target</EM>, enables you 
 to mark control points on the image 
 and then input the standard coordinates
 (Easting,Northing, and elevation) to determine the
 parameters for a three dimensional projective transformation.
  
 <EM>
-<A HREF="photo.init.html">photo.init</A>
+<A HREF="i.photo.init.html">i.photo.init</A>
 </EM> may be run before 
-running <EM>photo.2target</EM>
+running <EM>i.photo.2target</EM>
 to modify the initial camera exposure station parameters, and/or 
 modify the standard deviation of these parameters.
 <EM>
-<A HREF="photo.init.html">photo.init</A>
+<A HREF="i.photo.init.html">i.photo.init</A>
 </EM> is not required but generally is helpful.
 
 
@@ -45,14 +45,14 @@ modify the standard deviation of these parameters.
 
 During the process of marking control points and entering standard
 coordinates, you may compute the RMS (root mean square)
-error for each control point entered.  photo.2target does this by
+error for each control point entered.  <EM>i.photo.2target</EM> does this by
 calculating the transformation equation, and then
 plugging these results into an equation for RMS error.
 
 
 <P>
 
-<EM>photo.2target</EM> offers a zoom option to locate precisely the point
+<EM>i.photo.2target</EM> offers a zoom option to locate precisely the point
 to be marked on an image. This program also offers you the option
 of acquiring standard coordinates for a marked point from a map
 layer in the target database, or from a digitizer.
@@ -60,7 +60,7 @@ layer in the target database, or from a digitizer.
 
 <P>
 
-To run <EM>photo.2target</EM>, a graphics monitor is required.
+To run <EM>i.photo.2target</EM>, a graphics monitor is required.
 
 
 <P>
@@ -125,7 +125,7 @@ points, and you can mark points on more than one file
 in the imagery group to accumulate the 12 points suggested minimum.
 Any file in the imagery group can be rectified (using 
 <EM>
-<A HREF="photo.rectify.html">photo.rectify</A>
+<A HREF="i.photo.rectify.html">i.photo.rectify</A>
 </EM>) based on the rectification parameters 
 computed from these control points.
 <P>
@@ -333,12 +333,12 @@ point is absent) or excluded (if the point is displayed) and
 pressing the left button on the mouse twice.
 When a point is excluded, it is not afterwards included in the calculation
 of the RMS error, or included in the final rectification parameters. 
-However, it can be retrieved within <EM>photo.2target</EM> at any time
+However, it can be retrieved within <EM>i.photo.2target</EM> at any time
 by double clicking with the mouse as described above.
 
 <H2>QUIT</H2>
 
-To end the <EM>photo.2target</EM> program place the mouse cross hairs
+To end the <EM>i.photo.2target</EM> program place the mouse cross hairs
 on the word QUIT;  the marked control points (including coordinates)
 will be saved.
 
@@ -351,7 +351,7 @@ When this situation
 arises, the status of all previously selected control points are modified,
 the control points are excluded.  Running 
 <EM>
-<A HREF="photo.init.html">photo.init</A>
+<A HREF="i.photo.init.html">i.photo.init</A>
 </EM> for the selected imagery group with accurate 
 camera exposure station parameters should remedy the situation.
 The excluded control points may again be included as described in the section
@@ -371,10 +371,10 @@ acceptable.
 <H2>SEE ALSO</H2>
 
 <EM><A HREF="i.ortho.photo.html">i.ortho.photo</A></EM>,
-<EM><A HREF="photo.camera.html">photo.camera</A></EM>,
-<EM><A HREF="photo.2image.html">photo.2image</A></EM>,
-<EM><A HREF="photo.init.html">photo.init</A></EM>,
-<EM><A HREF="photo.rectify.html">photo.rectify</A></EM>
+<EM><A HREF="i.photo.camera.html">i.photo.camera</A></EM>,
+<EM><A HREF="i.photo.2image.html">i.photo.2image</A></EM>,
+<EM><A HREF="i.photo.init.html">i.photo.init</A></EM>,
+<EM><A HREF="i.photo.rectify.html">i.photo.rectify</A></EM>
 
 <H2>AUTHOR</H2>
 

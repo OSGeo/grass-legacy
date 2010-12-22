@@ -1,7 +1,7 @@
 
 /****************************************************************************
  *
- * MODULE:       photo.2target
+ * MODULE:       i.photo.2target
  * AUTHOR(S):    Mike Baba,  DBA Systems, Inc. (original contributor)
  *               Markus Neteler <neteler itc.it>, 
  *               Bernhard Reiter <bernhard intevation.de>, 
