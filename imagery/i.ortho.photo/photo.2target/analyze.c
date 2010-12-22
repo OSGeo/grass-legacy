@@ -410,8 +410,7 @@ static int compute_transformation(void)
 			    temp_points.z2[n],
 			    &e1, &n1, &z1,
 			    &group.camera_ref,
-			    group.XC, group.YC, group.ZC,
-			    group.omega, group.phi, group.kappa);
+			    group.XC, group.YC, group.ZC, group.MI);
 
 /*****
 	I_inverse_ortho_ref    (group.control_points.e1[n], 

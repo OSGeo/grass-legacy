@@ -23,15 +23,32 @@ int exec_rectify(void)
     struct History hist;
     int colr_ok, hist_ok, cats_ok;
     long start_time, rectify_time, compress_time;
+    double aver_z;
+    int elevfd;
+    struct cache *ebuffer;
 
+    G_debug(1, "Open elevation raster: ");
 
-    /* allocate the output cell matrix */
-    cell_buf = (CELL **) G_calloc(NROWS, sizeof(void *));
-    n = NCOLS * G_raster_size(map_type);
-    for (i = 0; i < NROWS; i++) {
-	cell_buf[i] = (void *)G_malloc(n);
-	G_set_null_value(cell_buf[i], NCOLS, map_type);
+    /* open elevation raster */
+    select_target_env();
+    G_set_window(&target_window);
+    G_debug(1, "target window: rs=%d cs=%d n=%f s=%f w=%f e=%f\n",
+	    target_window.rows, target_window.cols, target_window.north,
+	    target_window.south, target_window.west, target_window.east);
+
+    elevfd = G_open_cell_old(elev_layer, mapset_elev);
+    if (elevfd < 0) {
+	G_fatal_error(_("Could not open elevation raster"));
+	return 1;
     }
+    G_debug(1, "elev layer = %s  mapset elev = %s elevfd = %d",
+	    elev_layer, mapset_elev, elevfd);
+    ebuffer = readcell(elevfd, seg_mb_elev, 1);
+    G_close_cell(elevfd);
+
+    /* get an average elevation of the control points */
+    /* this is used only if target cells have no elevation */
+    get_aver_elev(&group.control_points, &aver_z);
 
     /* rectify each file */
     for (n = 0; n < group.group_ref.nfiles; n++) {
@@ -60,7 +77,7 @@ int exec_rectify(void)
 
 	G_debug(2, "Starting the rectification...");
 
-	if (rectify(name, mapset, result)) {
+	if (rectify(name, mapset, ebuffer, aver_z, result)) {
 	    G_debug(2, "Done. Writing results...");
 	    select_target_env();
 	    if (cats_ok) {
@@ -75,10 +92,7 @@ int exec_rectify(void)
 		G_write_history(result, &hist);
 	    select_current_env();
 	    time(&rectify_time);
-	    if (compress(result))
-		time(&compress_time);
-	    else
-		compress_time = rectify_time;
+	    compress_time = rectify_time;
 	    report(name, mapset, result, rectify_time - start_time,
 		   compress_time - rectify_time, 1);
 	}
@@ -87,6 +101,8 @@ int exec_rectify(void)
 	    report(name, mapset, result, (long)0, (long)0, 0);
 	}
     }
+    close(ebuffer->fd);
+    G_free(ebuffer);
 
     G_done_msg(" ");
     return 0;

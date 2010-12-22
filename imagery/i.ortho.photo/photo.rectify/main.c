@@ -6,11 +6,12 @@
  *               Markus Neteler <neteler itc.it>, 
  *               Bernhard Reiter <bernhard intevation.de>, 
  *               Glynn Clements <glynn gclements.plus.com>, 
- *               Hamish Bowman <hamish_b yahoo.com>
+ *               Hamish Bowman <hamish_b yahoo.com>,
+ *               Markus Metz
  *
  * PURPOSE:      Rectifies an image by using the image to photo coordinate 
  *                 transformation matrix
- * COPYRIGHT:    (C) 1999-2008 by the GRASS Development Team
+ * COPYRIGHT:    (C) 1999-2010 by the GRASS Development Team
  *
  *               This program is free software under the GNU General Public
  *               License (>=v2). Read the file COPYING that comes with GRASS
@@ -39,7 +40,6 @@ int main(int argc, char *argv[])
     struct GModule *module;
     struct Option *group_opt;
 
-
     /* must run in a term window */
     G_putenv("GRASS_UI_TERM", "1");
 
@@ -62,17 +62,18 @@ int main(int argc, char *argv[])
 
     strcpy(name, group_opt->answer);
 
-    camera = (char *)G_malloc(40 * sizeof(char));
+    camera = (char *)G_malloc(GNAME_MAX * sizeof(char));
     elev_layer = (char *)G_malloc(GNAME_MAX * sizeof(char));
     mapset_elev = (char *)G_malloc(GMAPSET_MAX * sizeof(char));
 
-    /* get group ref */
+    /* find group */
     strcpy(group.name, name);
     if (!I_find_group(group.name))
 	G_fatal_error(_("Group [%s] not found"), group.name);
 
     /* get the group ref */
-    I_get_group_ref(group.name, (struct Ref *)&group.group_ref);
+    if (!I_get_group_ref(group.name, (struct Ref *)&group.group_ref))
+	G_fatal_error(_("Could not read REF file for group [%s]"), group.name);
     nfiles = group.group_ref.nfiles;
     if (nfiles <= 0)
 	G_fatal_error(_("No files in this group!"));
@@ -88,10 +89,9 @@ int main(int argc, char *argv[])
     /* ask for files to be rectified */
     ask_files(group.name);
 
-
     G_debug(1, "Looking for elevation file in group: <%s>", group.name);
 
-    /* get the block elevation layer raster map  in target location */
+    /* get the block elevation layer raster map in target location */
     if (!I_get_group_elev(group.name, elev_layer, mapset_elev, tl,
 			 math_exp, units, nd))
 	G_fatal_error(_("No target elevation model selected for group <%s>"),
@@ -104,7 +104,7 @@ int main(int argc, char *argv[])
     G_get_cellhd(elev_layer, mapset_elev, &elevhd);
     select_current_env();
 
-    /** look for camera info  for this block **/
+    /** look for camera info for this block **/
     if (!I_get_group_camera(group.name, camera))
 	G_fatal_error(_("No camera reference file selected for group <%s>"),
 		      group.name);
@@ -116,7 +116,7 @@ int main(int argc, char *argv[])
     /* get initial camera exposure station, if any */
     if (I_find_initial(group.name)) {
 	if (!I_get_init_info(group.name, &group.camera_exp))
-	    G_warning(_("Bad format in initial exposusre station file for group <%s>"),
+	    G_warning(_("Bad format in initial exposure station file for group <%s>"),
 		      group.name);
     }
 
@@ -130,15 +130,10 @@ int main(int argc, char *argv[])
     select_current_env();
     get_target_window();
 
-    /* modify elevation values if needed */
+    /* ask for interpolation method and amount of memory to be used */
+    ask_method();
 
-    /***
-    select_target_env();
-    ask_elev_data();
-    select_current_env();
-    ***/
-
-    /*  go do it */
+    /* go do it */
     exec_rectify();
 
     exit(EXIT_SUCCESS);

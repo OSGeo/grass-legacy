@@ -32,6 +32,7 @@
 #include <grass/glocale.h>
 #include "orthophoto.h"
 #include "globals.h"
+
 int main(int argc, char *argv[])
 {
     struct GModule *module;
@@ -77,7 +78,7 @@ int main(int argc, char *argv[])
 
     strcpy(group, group_opt->answer);
 
-    if( !camera_opt->answer ) {
+    if (!camera_opt->answer) {
 	/* select the camera to use */
 	if (!I_ask_camera_any(
 	    _("Enter a camera reference file to be used with this imagery group"),

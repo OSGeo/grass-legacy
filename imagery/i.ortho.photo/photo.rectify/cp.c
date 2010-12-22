@@ -12,24 +12,23 @@ int get_conz_points(void)
     /* compute photo coordinates of image control points  */
     /* I_convert_con_points (group.name, &group.control_points, &group.photo_points,  group.E12, group.N12); */
 
-
-    sprintf(msg, "Control Z Point file for group [%s] in [%s] \n \n",
+    sprintf(msg, _("Control Z Point file for group [%s] in [%s] \n \n"),
 	    group.name, G_mapset());
 
-    fprintf(stderr, "Computing equations...\n\n");
+    G_verbose_message(_("Computing equations..."));
 
     Compute_ortho_equation();
 
     switch (group.con_equation_stat) {
     case -1:
-	strcat(msg, "Poorly placed Control Points!\n");
-	strcat(msg, "Can not generate the transformation equation.\n");
-	strcat(msg, "Run OPTION 7 again!\n");
+	strcat(msg, _("Poorly placed Control Points!\n"));
+	strcat(msg, _("Can not generate the transformation equation.\n"));
+	strcat(msg, _("Run OPTION 7 again!\n"));
 	break;
     case 0:
-	strcat(msg, "No active Control Points!\n");
-	strcat(msg, "Can not generate the transformation equation.\n");
-	strcat(msg, "Run OPTION 7 !\n");
+	strcat(msg, _("No active Control Points!\n"));
+	strcat(msg, _("Can not generate the transformation equation.\n"));
+	strcat(msg, _("Run OPTION 7 !\n"));
 	break;
     default:
 	return 1;
@@ -46,21 +45,21 @@ int get_ref_points(void)
     if (!I_get_ref_points(group.name, &group.photo_points))
 	exit(0);
 
-    sprintf(msg, "Reference Point file for group [%s] in [%s] \n \n",
+    sprintf(msg, _("Reference Point file for group [%s] in [%s] \n \n"),
 	    group.name, G_mapset());
 
     Compute_ref_equation();
     switch (group.ref_equation_stat) {
     case -1:
-	strcat(msg, "Poorly placed Reference Points!\n");
-	strcat(msg, "Can not generate the transformation equation.\n");
-	strcat(msg, "Run OPTION 5 again!\n");
+	strcat(msg, _("Poorly placed Reference Points!\n"));
+	strcat(msg, _("Can not generate the transformation equation.\n"));
+	strcat(msg, _("Run OPTION 5 again!\n"));
 	break;
 
     case 0:
-	strcat(msg, "No active Reference Points!\n");
-	strcat(msg, "Can not generate the transformation equation.\n");
-	strcat(msg, "Run OPTION 5!\n");
+	strcat(msg, _("No active Reference Points!\n"));
+	strcat(msg, _("Can not generate the transformation equation.\n"));
+	strcat(msg, _("Run OPTION 5!\n"));
 	break;
     default:
 	E12a = E12[0];
