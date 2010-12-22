@@ -187,7 +187,7 @@ int ask_gis_files(char *type, char *file,
 	    if (fgets(buf, sizeof buf, fd) == NULL
 		|| sscanf(buf, "%s %s", name, mapset) != 2)
 		break;
-	    if (new_mapset = (strcmp(cur_mapset, mapset) != 0)) {
+	    if ((new_mapset = (strcmp(cur_mapset, mapset)) != 0)) {
 		if (line)
 		    line++;
 		if (col)

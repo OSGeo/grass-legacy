@@ -33,7 +33,7 @@ int I_list_elev(int full)
     G__file_name(buf + strlen(buf), element, " ", " ");
     strcat(buf, ";ls");
     strcat(buf, " -C");
-    if (ls = popen(buf, "r")) {
+    if ((ls = popen(buf, "r"))) {
 	while (G_getl(buf, sizeof buf, ls)) {
 	    any = 1;
 	    fprintf(temp, "%s", buf);

@@ -36,7 +36,7 @@ int I_list_cameras(int full)
     strcat(buf, ";ls");
     if (!full)
 	strcat(buf, " -C");
-    if (ls = popen(buf, "r")) {
+    if ((ls = popen(buf, "r"))) {
 	while (G_getl(buf, sizeof buf, ls)) {
 	    any = 1;
 	    fprintf(temp, "%s", buf);

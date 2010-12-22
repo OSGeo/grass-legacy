@@ -38,7 +38,9 @@ int Compute_ortho_equation(void)
 							&group.ZC,
 							&group.omega,
 							&group.phi,
-							&group.kappa);
+							&group.kappa,
+							&group.M,
+							&group.MI);
 
     return 0;
 }

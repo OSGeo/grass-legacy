@@ -1,31 +1,11 @@
-/* ask_elev.c */
-int ask_elev_data(void);
-
 /* ask_files.c */
 int ask_files(char *);
-int dots(char *, int);
 
-/* ask_files2.c */
-int ask_file_from_list(char *, char *);
-
-/* ask_wind.c */
-int ask_window(struct Cell_head *);
+/* ask_method.c */
+int ask_method(void);
 
 /* aver_z.c */
 int get_aver_elev(struct Ortho_Control_Points *, double *);
-
-/* compress.c */
-int compress(char *);
-
-/* conv.c */
-int view_to_col(View *, int);
-int view_to_row(View *, int);
-int col_to_view(View *, int);
-int row_to_view(View *, int);
-double row_to_northing(struct Cell_head *, int, double);
-double col_to_easting(struct Cell_head *, int, double);
-double northing_to_row(struct Cell_head *, double);
-double easting_to_col(struct Cell_head *, double);
 
 /* cp.c */
 int get_conz_points(void);
@@ -48,19 +28,14 @@ int exec_rectify(void);
 
 /* get_wind.c */
 int get_target_window(void);
-int georef_window(struct Cell_head *, struct Cell_head *);
-
-/* matrix.c */
-int compute_georef_matrix(struct Cell_head *, struct Cell_head *);
-
-/* perform.c */
-int perform_georef(int, void *rast);
-
-/* ps_cp.c */
-int get_psuedo_control_pt(int, int);
+int georef_window(struct Cell_head *, struct Cell_head *, double);
 
 /* rectify.c */
-int rectify(char *, char *, char *);
+int rectify(char *, char *, struct cache *, double, char *);
+
+/* readcell.c */
+struct cache *readcell(int, int, int);
+block *get_block(struct cache *, int);
 
 /* report.c */
 int report(char *, char *, char *, long, long, int);
@@ -68,6 +43,19 @@ int report(char *, char *, char *, long, long, int);
 /* target.c */
 int get_target(char *);
 
-/* write.c */
-int write_map(char *);
-int write_matrix(int, int);
+/* declare resampling methods */
+/* bilinear.c */
+extern void p_bilinear(struct cache *, void *, int, double *, double *,
+		       struct Cell_head *);
+/* cubic.c */
+extern void p_cubic(struct cache *, void *, int, double *, double *,
+		    struct Cell_head *);
+/* nearest.c */
+extern void p_nearest(struct cache *, void *, int, double *, double *,
+		      struct Cell_head *);
+/* bilinear_f.c */
+extern void p_bilinear_f(struct cache *, void *, int, double *, double *,
+		       struct Cell_head *);
+/* cubic_f.c */
+extern void p_cubic_f(struct cache *, void *, int, double *, double *,
+		    struct Cell_head *);
