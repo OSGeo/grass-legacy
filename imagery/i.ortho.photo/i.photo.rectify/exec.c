@@ -5,6 +5,7 @@
    Handles things like support files.
  */
 
+#include <string.h>
 #include <unistd.h>
 #include <time.h>
 #include <sys/types.h>
@@ -12,17 +13,18 @@
 #include <fcntl.h>
 #include "global.h"
 
-int exec_rectify(void)
+int exec_rectify(char *extension, char *interp_method)
 {
     char *name;
     char *mapset;
     char *result;
-    int i, n;
+    char *type;
+    int n;
     struct Colors colr;
     struct Categories cats;
     struct History hist;
     int colr_ok, hist_ok, cats_ok;
-    long start_time, rectify_time, compress_time;
+    long start_time, rectify_time;
     double aver_z;
     int elevfd;
     struct cache *ebuffer;
@@ -36,14 +38,13 @@ int exec_rectify(void)
 	    target_window.rows, target_window.cols, target_window.north,
 	    target_window.south, target_window.west, target_window.east);
 
-    elevfd = G_open_cell_old(elev_layer, mapset_elev);
+    elevfd = G_open_cell_old(elev_name, elev_mapset);
     if (elevfd < 0) {
 	G_fatal_error(_("Could not open elevation raster"));
 	return 1;
     }
-    G_debug(1, "elev layer = %s  mapset elev = %s elevfd = %d",
-	    elev_layer, mapset_elev, elevfd);
     ebuffer = readcell(elevfd, seg_mb_elev, 1);
+    select_target_env();
     G_close_cell(elevfd);
 
     /* get an average elevation of the control points */
@@ -52,19 +53,24 @@ int exec_rectify(void)
 
     /* rectify each file */
     for (n = 0; n < group.group_ref.nfiles; n++) {
-	G_debug(2, "I look for files to ortho rectify");
-
-	if ((i = ref_list[n]) < 0)
+	if (!ref_list[n])
 	    continue;
-	name = group.group_ref.file[i].name;
-	mapset = group.group_ref.file[i].mapset;
-	result = new_name[n];
+
+	name = group.group_ref.file[n].name;
+	mapset = group.group_ref.file[n].mapset;
+	result =
+	    G_malloc(strlen(group.group_ref.file[n].name) + strlen(extension) + 1);
+	strcpy(result, group.group_ref.file[n].name);
+	strcat(result, extension);
 
 	G_debug(2, "ORTHO RECTIFYING:");
 	G_debug(2, "NAME %s", name);
 	G_debug(2, "MAPSET %s", mapset);
 	G_debug(2, "RESULT %s", result);
 	G_debug(2, "select_current_env...");
+
+	G_message(_("Rectified input raster map <%s> will be saved as <%s>"),
+		  name, result);
 
 	select_current_env();
 
@@ -77,7 +83,7 @@ int exec_rectify(void)
 
 	G_debug(2, "Starting the rectification...");
 
-	if (rectify(name, mapset, ebuffer, aver_z, result)) {
+	if (rectify(name, mapset, ebuffer, aver_z, result, interp_method)) {
 	    G_debug(2, "Done. Writing results...");
 	    select_target_env();
 	    if (cats_ok) {
@@ -90,20 +96,25 @@ int exec_rectify(void)
 	    }
 	    if (hist_ok)
 		G_write_history(result, &hist);
+
+	    /* Initialze History */
+	    type = "raster";
+	    G_short_history(name, type, &hist);
+	    G_write_history(result, &hist);
+
 	    select_current_env();
 	    time(&rectify_time);
-	    compress_time = rectify_time;
-	    report(name, mapset, result, rectify_time - start_time,
-		   compress_time - rectify_time, 1);
+	    report(rectify_time - start_time, 1);
 	}
-	else {
-	    G_debug(2, "Could not rectify. Mhhh.");
-	    report(name, mapset, result, (long)0, (long)0, 0);
-	}
+	else
+	    report((long)0, 0);
+
+	G_free(result);
     }
     close(ebuffer->fd);
-    G_free(ebuffer);
+    release_cache(ebuffer);
 
     G_done_msg(" ");
+
     return 0;
 }

@@ -11,7 +11,6 @@
  */
 
 #include <math.h>
-#include <grass/gis.h>
 #include "global.h"
 
 void p_bilinear(struct cache *ibuffer,	  /* input buffer                */
@@ -25,7 +24,7 @@ void p_bilinear(struct cache *ibuffer,	  /* input buffer                */
     int row;			/* row indices for interp        */
     int col;			/* column indices for interp     */
     int i, j;
-    DCELL t, u;			/* intermediate slope            */
+    double t, u;		/* intermediate slope            */
     DCELL result;		/* result of interpolation       */
     DCELL c[2][2];
 

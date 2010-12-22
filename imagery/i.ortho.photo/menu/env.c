@@ -1,5 +1,7 @@
+#include <stdlib.h>
 #include <unistd.h>
-#include "global.h"
+#include <grass/gis.h>
+#include "local_proto.h"
 
 static int which_env = -1;	/* 0 = cur, 1 = target */
 

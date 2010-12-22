@@ -12,9 +12,9 @@ int run_etc_imagery(char *pgm, char *group)
     /* but for now they live in etc/  */
     sprintf(buf, "%s/etc/%s  %s", G_gisbase(), pgm, group);
 
-    if (stat = G_system(buf))
+    if ((stat = G_system(buf)))
 	G_sleep(3);
-    return 0;
+    return stat;
 }
 
 int run_system(char *pgm)
@@ -23,7 +23,7 @@ int run_system(char *pgm)
     int stat;
 
     sprintf(buf, "%s", pgm);
-    if (stat = G_system(buf))
+    if ((stat = G_system(buf)))
 	G_sleep(3);
-    return ((int)stat);
+    return stat;
 }

@@ -4,14 +4,10 @@
  - have changed elev reading from CELL to raster_type to support
    also FP elevations
 
- 
-Bugs:
- - somewhere the map_type is undefined in an underlying function (can't 
-   identify), so I added G_suppress_warnings(1) at top of rectify.c
-   -> the module works well
+12/2010: Markus Metz
 
- - when DEBUG3 is activated, the module silently stops in exec.c at
-   select_current_env() (line 87). Why???
-   However, not a real bug. Seems to be a problem of exit status or
-   whatever.
+ - sync'ed to i.rectify as far as possible
+ - the module is now non-interactive and stand-alone: 
+   typing i.photo.rectify on the commandline pops up a gui if GRASS is started with a gui
+ - i.ortho.photo has a new interactive part to set the options for i.photo.rectify 
 

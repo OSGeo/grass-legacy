@@ -12,7 +12,6 @@
  *  NULL they where filled with their neighbor
  */
 
-#include <grass/gis.h>
 #include <math.h>
 #include "global.h"
 
@@ -27,7 +26,7 @@ void p_cubic(struct cache *ibuffer,    /* input buffer                */
     int row;			/* row indices for interp        */
     int col;			/* column indices for interp     */
     int i, j;
-    DCELL t, u;			/* intermediate slope            */
+    double t, u;		/* intermediate slope            */
     DCELL result;		/* result of interpolation       */
     DCELL val[4];		/* buffer for temporary values   */
     DCELL cell[4][4];
