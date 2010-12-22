@@ -199,22 +199,37 @@ int I_compute_ortho_equations(struct Ortho_Control_Points *cpz,
 
 	    /* set initial XC, YC */
 	    if (first) {
-		X = *((cpz->e2)++);
-		x = *((cpz->e1)++);
-		Y = *((cpz->n2)++);
-		y = *((cpz->n1)++);
-		(cpz->z2)++;
+		X = cpz->e2[i];
+		x = cpz->e1[i];
+		Y = cpz->n2[i];
+		y = cpz->n1[i];
 		first = 0;
 	    }
 	    else {
-		n++;
-		meanx += *((cpz->e1)++);
-		meany += *((cpz->n1)++);
-		meanX += *((cpz->e2)++);
-		meanY += *((cpz->n2)++);
-		meanZ += *((cpz->z2)++);
+		/* set initial ZC from:                              */
+		/* scale ~= dist_photo/dist_grnd  ~= (CFL)/(Z - ZC)  */
+		/* ZC ~= Z + CFL(dist_grnd)/(dist_photo)             */
+		dx = cpz->e1[i] - x;
+		dy = cpz->n1[i] - y;
+		dist_photo = sqrt(dx * dx + dy * dy);
+		dx = cpz->e2[i] - X;
+		dy = cpz->n2[i] - Y;
+		dist_grnd = sqrt(dx * dx + dy * dy);
+		    
+		if (dist_photo != 0 && dist_grnd != 0) {
+		    meanZ += cpz->z2[i] + (CFL * (dist_grnd) / (dist_photo));
+		    meanx += cpz->e1[i];
+		    meany += cpz->n1[i];
+		    meanX += cpz->e2[i];
+		    meanY += cpz->n2[i];
+
+		    n++;
+		}
 	    }
 	}
+	if (!n) /* Poorly placed Control Points */
+	    return -1;
+
 	meanx /= n;
 	meany /= n;
 	meanX /= n;
@@ -222,32 +237,7 @@ int I_compute_ortho_equations(struct Ortho_Control_Points *cpz,
 	meanZ /= n;
 	*XC = meanX;
 	*YC = meanY;
-
-	/* reset pointers */
-	for (i = 0; i < cpz->count; i++) {
-	    if (cpz->status[i] <= 0)
-		continue;
-	    (cpz->e1)--;
-	    (cpz->e2)--;
-	    (cpz->n1)--;
-	    (cpz->n2)--;
-	    (cpz->z2)--;
-	}
-	
-	/* initial ZC and Kappa must be derived from the same two distinct points
-	 * first control point: x1, y1, X1, Y1
-	 * mean values (or last control point: x2, y2, X2, Y2)
-	 */
-
-	/* set initial ZC from:                                     */
-	/*    scale ~= dist_photo/dist_grnd  ~= (CFL)/(meanZ - ZC)  */
-	/*       ZC ~= meanZ + CFL(dist_grnd)/(dist_photo)          */
-	dist_photo =
-	    sqrt(((meanx - x) * (meanx - x)) + ((meany - y) * (meany - y)));
-	dist_grnd =
-	    sqrt(((meanX - X) * (meanX - X)) + ((meanY - Y) * (meanY - Y)));
-
-	*ZC = meanZ + (CFL * (dist_grnd) / (dist_photo));
+	*ZC = meanZ;
 
 	/* set initial rotations to zero (radians) */
 	*Omega = *Phi = 0.0;
@@ -272,8 +262,9 @@ int I_compute_ortho_equations(struct Ortho_Control_Points *cpz,
 	WT1.x[4][4] = (Q1 / (phi_var * phi_var));
 	WT1.x[5][5] = (Q1 / (kappa_var * kappa_var));
     }
-    G_debug(1, "Initial XC: %.2f, YC: %.2f, ZC: %.2f", *XC, *YC, *ZC);
-    G_debug(1, "Initial Omega %.2f, Phi %.2f, Kappa: %.2f", *Omega, *Phi, *Kappa);
+    G_debug(1, "INITIAL CAMERA POSITION:");
+    G_debug(1, "XC: %.2f, YC: %.2f, ZC: %.2f", *XC, *YC, *ZC);
+    G_debug(1, "Omega %.2f, Phi %.2f, Kappa: %.2f", *Omega, *Phi, *Kappa);
 
 #ifdef DEBUG
     fprintf(debug, "\nINITIAL CAMERA POSITION:\n");
@@ -363,15 +354,15 @@ int I_compute_ortho_equations(struct Ortho_Control_Points *cpz,
 	    fprintf(debug, "\n\t\t\tIn Summation count = %d \n", i);
 #endif
 
-	    x = *((cpz->e1)++);
-	    y = *((cpz->n1)++);
-	    z = *((cpz->z1)++);
-	    X = *((cpz->e2)++);
-	    Y = *((cpz->n2)++);
-	    Z = *((cpz->z2)++);
-
 	    if (cpz->status[i] <= 0)
 		continue;
+
+	    x = cpz->e1[i];
+	    y = cpz->n1[i];
+	    z = cpz->z1[i];
+	    X = cpz->e2[i];
+	    Y = cpz->n2[i];
+	    Z = cpz->z2[i];
 
 #ifdef DEBUG
 	    fprintf(debug,
@@ -379,13 +370,12 @@ int I_compute_ortho_equations(struct Ortho_Control_Points *cpz,
 		    x, y, z, X, Y, Z);
 #endif
 
-
 	    /* Compute Obj. Space coordinates */
 	    XYZ.x[0][0] = X - *XC;
 	    XYZ.x[1][0] = Y - *YC;
 	    XYZ.x[2][0] = Z - *ZC;
 
-	    /* just an abbreviations */
+	    /* just an abbreviation */
 	    lam = XYZ.x[0][0];
 	    mu = XYZ.x[1][0];
 	    nu = XYZ.x[2][0];
@@ -456,16 +446,6 @@ int I_compute_ortho_equations(struct Ortho_Control_Points *cpz,
 	    m_add(&CC, &C, &CC);
 	}  /* end summation loop over all active control points */
 
-	/* reset pointers */
-	for (i = 0; i < cpz->count; i++) {
-	    (cpz->e1)--;
-	    (cpz->n1)--;
-	    (cpz->z1)--;
-	    (cpz->e2)--;
-	    (cpz->n2)--;
-	    (cpz->z2)--;
-	}
-
 #ifdef DEBUG
 	fprintf(debug, "\n\tN: \n");
 	for (i = 0; i < 6; i++)
@@ -512,12 +492,13 @@ int I_compute_ortho_equations(struct Ortho_Control_Points *cpz,
     *Phi = epsilon.x[4][0];
     *Kappa = epsilon.x[5][0];
 
-    G_debug(1, "Final XC: %.2f, YC: %.2f, ZC: %.2f", *XC, *YC, *ZC);
-    G_debug(1, "Final Omega %.2f, Phi %.2f, Kappa: %.2f", *Omega, *Phi, *Kappa);
+    G_debug(1, "FINAL CAMERA POSITION:");
+    G_debug(1, "XC: %.2f, YC: %.2f, ZC: %.2f", *XC, *YC, *ZC);
+    G_debug(1, "Omega %.2f, Phi %.2f, Kappa: %.2f", *Omega, *Phi, *Kappa);
     if (*ZC < 0)
 	G_warning(_("Potential BUG in ortholib: camera altitude < 0"));
 
-    /*  Compute Orientation Matrix M from (Omega, Phi, Kappa); */
+    /*  Compute Orientation Matrix from Omega, Phi, Kappa */
     sw = sin(*Omega);
     cw = cos(*Omega);
     sp = sin(*Phi);
@@ -539,13 +520,13 @@ int I_compute_ortho_equations(struct Ortho_Control_Points *cpz,
     MO->x[2][1] = -(sw * cp);
     MO->x[2][2] = cw * cp;
 
-    /* Compute Transposed Orientation Matrix (Omega, Phi, Kappa); */
+    /* Compute Transposed Orientation Matrix from Omega, Phi, Kappa */
 
     MT->nrows = 3;
     MT->ncols = 3;
     zero(MT);
 
-    /* M Transposed */
+    /* Transposed Matrix */
     MT->x[0][0] = cp * ck;
     MT->x[1][0] = cw * sk + (sw * sp * ck);
     MT->x[2][0] = sw * sk - (cw * sp * ck);
@@ -585,12 +566,12 @@ int I_ortho_ref(double e1, double n1, double z1,
     zero(&UVW);
 
     /************************ Start the work ******************************/
-    /* set Xp, Yp, and CFL from cam_info */
+    /* Set Xp, Yp, and CFL from cam_info */
     Xp = cam_info->Xp;
     Yp = cam_info->Yp;
     CFL = cam_info->CFL;
 
-    /* ObjSpace (&XYZ, XC,YC,ZC, X,Y,Z); */
+    /* Object Space (&XYZ, XC,YC,ZC, X,Y,Z); */
     XYZ.x[0][0] = e1 - XC;
     XYZ.x[1][0] = n1 - YC;
     XYZ.x[2][0] = z1 - ZC;
@@ -631,19 +612,19 @@ int I_inverse_ortho_ref(double e1, double n1, double z1,
     zero(&UVW);
 
     /********************** Start the work ********************************/
-    /* set Xp, Yp, and CFL from cam_info */
+    /* Set Xp, Yp, and CFL from cam_info */
     Xp = cam_info->Xp;
     Yp = cam_info->Yp;
     CFL = cam_info->CFL;
 
-    /* ImageSpace */
+    /* Image Space */
     UVW.x[0][0] = e1 - Xp;
     UVW.x[1][0] = n1 - Yp;
     UVW.x[2][0] = -CFL;
 
     m_mult(&M, &UVW, &XYZ);
 
-    /* Image Space */
+    /* Object Space */
     lam = XYZ.x[0][0];
     mu = XYZ.x[1][0];
     nu = XYZ.x[2][0];
