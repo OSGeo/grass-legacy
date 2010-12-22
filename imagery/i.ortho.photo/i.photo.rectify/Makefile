@@ -11,8 +11,5 @@ DEPENDENCIES= $(IMAGERYDEP) $(IORTHODEP) $(GISDEP) $(VASKDEP) $(GMATHDEP)
 
 include $(MODULE_TOPDIR)/include/Make/Module.make
 
-default: etc
-
-$(PGM).tmp.html: description.html
-	$(INSTALL_DATA) $< $@
+default: cmd
 

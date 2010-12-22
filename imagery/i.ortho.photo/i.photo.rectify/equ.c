@@ -1,11 +1,13 @@
 #include "global.h"
 
+/* compute target to photo equation */
 int Compute_ortho_equation(void)
 {
 
     /* struct Ortho_Control_Points  temp_points; */
     double e0, e1, e2, n0, n1, n2, z1, z2;
     int status, i;
+    struct Ortho_Control_Points temp_points;
 
     /* alloc and fill temp control points */
     temp_points.count = 0;
@@ -27,6 +29,7 @@ int Compute_ortho_equation(void)
 	n2 = group.control_points.n2[i];
 	z2 = group.control_points.z2[i];
 
+	/* image to photo transformation */
 	I_georef(e1, n1, &e0, &n0, group.E12, group.N12);
 	I_new_con_point(&temp_points, e0, n0, z1, e2, n2, z2, status);
     }
@@ -46,6 +49,7 @@ int Compute_ortho_equation(void)
     return 0;
 }
 
+/* compute photo to image equation */
 int Compute_ref_equation(void)
 {
     group.ref_equation_stat = I_compute_ref_equations(&group.photo_points,

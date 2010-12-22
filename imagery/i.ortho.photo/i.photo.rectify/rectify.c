@@ -7,23 +7,21 @@
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
-#include <grass/glocale.h>
 #include "global.h"
-#include "local_proto.h"
 
 int rectify(char *name, char *mapset, struct cache *ebuffer,
-            double aver_z, char *result)
+            double aver_z, char *result, char *interp_method)
 {
     struct Cell_head cellhd;
     int ncols, nrows;
     int row, col;
+    double row_idx, col_idx;
     int infd, outfd;
     RASTER_MAP_TYPE map_type;
     int cell_size;
     void *trast, *tptr;
     double n1, e1, z1;
     double nx, ex, nx1, ex1, zx1;
-    double row_idx, col_idx;
     struct cache *ibuffer;
 
     select_current_env();
@@ -34,20 +32,12 @@ int rectify(char *name, char *mapset, struct cache *ebuffer,
      * set window to cellhd first to be able to read file exactly
      */
     G_set_window(&cellhd);
-    G_debug(2, "cellhd: rs=%d cs=%d n=%f s=%f w=%f e=%f\n",
-	    cellhd.rows, cellhd.cols, cellhd.north,
-	    cellhd.south, cellhd.west, cellhd.east);
-
     infd = G_open_cell_old(name, mapset);
     if (infd < 0) {
 	return 0;
     }
     map_type = G_get_raster_map_type(infd);
     cell_size = G_raster_size(map_type);
-    if (strcmp(method, "nearest") != 0) {
-	map_type = DCELL_TYPE;
-	cell_size = G_raster_size(map_type);
-    }
 
     ibuffer = readcell(infd, seg_mb_img, 0);
 
@@ -56,12 +46,23 @@ int rectify(char *name, char *mapset, struct cache *ebuffer,
     G_message(_("Rectify <%s@%s> (location <%s>)"),
 	      name, mapset, G_location());
     select_target_env();
+    G_set_window(&target_window);
     G_message(_("into  <%s@%s> (location <%s>) ..."),
 	      result, G_mapset(), G_location());
 
-    G_set_window(&target_window);
     nrows = target_window.rows;
     ncols = target_window.cols;
+
+    if (strcmp(interp_method, "nearest") != 0) {
+	map_type = DCELL_TYPE;
+	cell_size = G_raster_size(map_type);
+    }
+
+    /* open the result file into target window
+     * this open must be first since we change the window later
+     * raster maps open for writing are not affected by window changes
+     * but those open for reading are
+     */
 
     outfd = G_open_raster_new(result, map_type);
     trast = G_allocate_raster_buf(map_type);
@@ -111,11 +112,11 @@ int rectify(char *name, char *mapset, struct cache *ebuffer,
     }
     G_percent(1, 1, 1);
 
+    G_close_cell(outfd);
     G_free(trast);
 
-    G_close_cell(outfd);
     close(ibuffer->fd);
-    G_free(ibuffer);
+    release_cache(ibuffer);
 
     if (G_get_cellhd(result, G_mapset(), &cellhd) < 0)
 	return 0;
@@ -127,14 +128,14 @@ int rectify(char *name, char *mapset, struct cache *ebuffer,
 
     if (target_window.proj != cellhd.proj) {
 	cellhd.proj = target_window.proj;
-	G_warning(_("%s@%s: projection doesn't match current settings"),
-		name, mapset);
+	G_warning(_("Raster map <%s@%s>: projection don't match current settings"),
+		  name, mapset);
     }
 
     if (target_window.zone != cellhd.zone) {
 	cellhd.zone = target_window.zone;
-	 G_warning(_("%s@%s: zone doesn't match current settings"),
-		name, mapset);
+	G_warning(_("Raster map <%s@%s>: zone don't match current settings"),
+		  name, mapset);
     }
 
     select_current_env();

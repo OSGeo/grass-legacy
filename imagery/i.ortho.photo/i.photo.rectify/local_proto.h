@@ -1,9 +1,3 @@
-/* ask_files.c */
-int ask_files(char *);
-
-/* ask_method.c */
-int ask_method(void);
-
 /* aver_z.c */
 int get_aver_elev(struct Ortho_Control_Points *, double *);
 
@@ -24,21 +18,22 @@ int Compute_ortho_equation(void);
 int Compute_ref_equation(void);
 
 /* exec.c */
-int exec_rectify(void);
+int exec_rectify(char *, char *);
 
 /* get_wind.c */
-int get_target_window(void);
+int get_ref_window(struct Cell_head *);
 int georef_window(struct Cell_head *, struct Cell_head *, double);
 
 /* rectify.c */
-int rectify(char *, char *, struct cache *, double, char *);
+int rectify(char *, char *, struct cache *, double, char *, char *);
 
 /* readcell.c */
 struct cache *readcell(int, int, int);
 block *get_block(struct cache *, int);
+void release_cache(struct cache *);
 
 /* report.c */
-int report(char *, char *, char *, long, long, int);
+int report(long, int);
 
 /* target.c */
 int get_target(char *);

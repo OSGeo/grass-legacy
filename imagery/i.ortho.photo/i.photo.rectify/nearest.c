@@ -4,7 +4,6 @@
  */
 
 #include <math.h>
-#include <grass/gis.h>
 #include "global.h"
 
 void p_nearest(struct cache *ibuffer,	 /* input buffer                  */

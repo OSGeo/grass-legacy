@@ -10,8 +10,6 @@
 #include <sys/stat.h>
 #include <fcntl.h>
 #include <unistd.h>
-#include <grass/gis.h>
-#include <grass/glocale.h>
 #include "global.h"
 
 struct cache *readcell(int fdi, int size, int target_env)
@@ -26,8 +24,18 @@ struct cache *readcell(int fdi, int size, int target_env)
     int nblocks;
     int i;
 
+    if (target_env)
+	select_target_env();
+    else
+	select_current_env();
+
     nrows = G_window_rows();
     ncols = G_window_cols();
+
+    /* Temporary file must be created in the same location/mapset 
+     * where the module was called */
+    if (target_env)
+	select_current_env();
 
     ny = (nrows + BDIM - 1) / BDIM;
     nx = (ncols + BDIM - 1) / BDIM;
@@ -48,11 +56,7 @@ struct cache *readcell(int fdi, int size, int target_env)
     c->refs = (int *)G_malloc(nblocks * sizeof(int));
 
     if (nblocks < nx * ny) {
-	/* Temporary file must be created in output location */
-	select_target_env();
 	filename = G_tempfile();
-	if (!target_env)
-	    select_current_env();
 	c->fd = open(filename, O_RDWR | O_CREAT | O_EXCL, 0600);
 	if (c->fd < 0)
 	    G_fatal_error(_("Unable to open temporary file"));
@@ -60,6 +64,8 @@ struct cache *readcell(int fdi, int size, int target_env)
     }
     else
 	c->fd = -1;
+	
+    G_debug(1, "%d of %d blocks in memory", nblocks, nx * ny);
 
     G_important_message(_("Allocating memory and reading input map..."));
     G_percent(0, nrows, 5);
@@ -69,6 +75,8 @@ struct cache *readcell(int fdi, int size, int target_env)
 
     tmpbuf = (DCELL *) G_malloc(nx * sizeof(block));
 
+    if (target_env)
+	select_target_env();
     for (row = 0; row < nrows; row += BDIM) {
 	int x, y;
 
@@ -103,6 +111,9 @@ struct cache *readcell(int fdi, int size, int target_env)
 	    c->refs[i] = i;
 	}
 
+    if (target_env)
+	select_current_env();
+
     return c;
 }
 
@@ -126,7 +137,17 @@ block *get_block(struct cache * c, int idx)
 	G_fatal_error(_("Error seeking on segment file"));
 
     if (read(c->fd, p, sizeof(block)) < 0)
-	G_fatal_error(_("Error writing segment file"));
+	G_fatal_error(_("Error reading segment file"));
 
     return p;
+}
+
+void release_cache(struct cache *c)
+{
+    G_free(c->refs);
+    G_free(c->blocks);
+    G_free(c->grid);
+    
+    G_free(c);
+    c = NULL;
 }

@@ -9,7 +9,6 @@
  *  it falls back to nearest neighbor.
  */
 
-#include <grass/gis.h>
 #include <math.h>
 #include "global.h"
 
