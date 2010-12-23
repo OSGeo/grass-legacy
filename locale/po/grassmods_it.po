@@ -2455,7 +2455,7 @@ msgstr "Pendenza"
 
 #: ../raster/r.walk/main.c:299 ../raster/r.cost/main.c:203
 msgid "Use the 'Knight's move'; slower, but more accurate"
-msgstr "Usa la 'Mossa del cavallo'; pi lenta ma di maggior accuratezza"
+msgstr "Usa la 'Mossa del cavallo'; più lenta ma di maggior accuratezza"
 
 #: ../raster/r.walk/main.c:303
 msgid "Keep null values in output map"
@@ -7460,7 +7460,7 @@ msgstr "Raggio del buffer"
 
 #: ../raster/r.grow2/main.c:148 ../raster/r.grow.distance/main.c:150
 msgid "Metric"
-msgstr "Metrico"
+msgstr "Misura"
 
 #: ../raster/r.grow2/main.c:157
 msgid "Value to write for input cells which are non-NULL (-1 => NULL)"
