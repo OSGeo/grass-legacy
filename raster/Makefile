@@ -72,6 +72,7 @@ SUBDIRS = \
 	r.reclass \
 	r.recode \
 	r.region \
+	r.regression.line \
 	r.report \
 	r.resample \
 	r.resamp.interp \
