@@ -108,8 +108,8 @@ int main(int argc, char *argv[])
     input1->key = "qcname";
     input1->type = TYPE_STRING;
     input1->required = YES;
-    input1->description = _("Name of QC type to extract");
-    input1->descriptions =_("adjcorr;mod09: Adjacency Correction;"
+    input1->description = _("Name of QC type to extract:"
+                            "adjcorr;mod09: Adjacency Correction;"
                             "atcorr;mod09: Atmospheric Correction;"
                             "cloud;mod09: Cloud State;"
                             "data_quality;mod09: Band-Wise Data Quality Flag;"
