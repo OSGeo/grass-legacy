@@ -229,6 +229,8 @@ int main(int argc, char *argv[])
 
     /* Create New raster files */ 
     outfd = G_open_cell_new(result);
+    if (outfd < 0)
+        G_fatal_error(_("Unable to create raster map <%s>"), result);
 
     /* Process pixels */ 
     for (row = 0; row < nrows; row++)
