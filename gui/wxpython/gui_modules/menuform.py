@@ -252,8 +252,11 @@ class UpdateThread(Thread):
                     layer = 1
                 
                 if map:
-                    if not cparams[map]['dbInfo']:
-                        cparams[map]['dbInfo'] = gselect.VectorDBInfo(map)
+                    try:
+                        if not cparams[map]['dbInfo']:
+                            cparams[map]['dbInfo'] = gselect.VectorDBInfo(map)
+                    except KeyError:
+                        pass
                     self.data[win.InsertColumns] = { 'vector' : map, 'layer' : layer,
                                                      'dbInfo' : cparams[map]['dbInfo'] }
                 else: # table
