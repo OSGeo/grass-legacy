@@ -2933,7 +2933,7 @@
 	  <help>Display the HTML man pages of GRASS</help>
 	  <keywords>general,manual,help</keywords>
 	  <handler>RunMenuCmd</handler>
-	  <command>g.manual wxGUI</command>
+	  <command>g.manual entry=wxGUI</command>
 	</menuitem>
 	<separator />
 	<menuitem>

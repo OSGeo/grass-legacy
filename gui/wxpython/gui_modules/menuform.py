@@ -356,13 +356,21 @@ class grassTask:
         self.flags = list()
         self.keywords = list()
         self.errorMsg = ''
-
+        self.firstParam = None
+        
         if grassModule is not None:
             try:
                 processTask(tree = etree.fromstring(getInterfaceDescription(grassModule)),
                             task = self)
             except gcmd.GException, e:
                 self.errorMsg = str(e)
+                
+            self.define_first()
+        
+    def define_first(self):
+        """!Define first parameter"""
+        if len(self.params) > 0:
+            self.firstParam = self.params[0]['name']
         
     def get_error_msg(self):
         """!Get error message ('' for no error)"""
@@ -535,7 +543,8 @@ class processTask:
         self.__processModule()
         self.__processParams()
         self.__processFlags()
-
+        self.task.define_first()
+        
     def __processModule(self):
         """!Process module description"""
         self.task.name = self.root.get('name', default = 'unknown')
@@ -2058,11 +2067,11 @@ class GUI:
                     try:
                         key, value = option.split('=', 1)
                     except:
-                        if i ==  0: # add key name of first parameter if not given
+                        if i == 0: # add key name of first parameter if not given
                             key = self.grass_task.get_options()['params'][0]['name']
                             value = option
                         else:
-                            raise gcmd.GException, _("Unable to parse command %s") % ' '.join(cmd)
+                            raise gcmd.GException, _("Unable to parse command '%s'") % ' '.join(cmd)
                     
                     element = self.grass_task.get_param(key, raiseError = False)
                     if not element:
