@@ -267,9 +267,7 @@ def vector_what(name, coord, distance = 0.0):
         name_list = [name]
     else:
         name_list = name
-    
-    layer_list = ['-1'] * len(name_list)
-    
+        
     coord_list = list()
     if type(coord) is types.TupleType:
         coord_list.append('%f,%f' % (coord[0], coord[1]))
@@ -281,7 +279,6 @@ def vector_what(name, coord, distance = 0.0):
                        quiet      = True,
                        flags      = 'ag',
                        map        = ','.join(name_list),
-                       layer      = ','.join(layer_list),
                        east_north = ','.join(coord_list),
                        distance   = float(distance))
     
