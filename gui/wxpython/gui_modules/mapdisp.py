@@ -1191,8 +1191,9 @@ class MapFrame(wx.Frame):
 
     def _OnQuery(self):
         """!Internal method used by OnQuery*() methods"""
-        # switch GIS Manager to output console to show query results
-        self._layerManager.notebook.SetSelection(1)
+        if self.toolbars['map'].GetAction() == 'displayAttrb':
+            # switch to output console to show query results
+            self._layerManager.notebook.SetSelection(1)
         
         self.MapWindow.mouse['box'] = "point"
         self.MapWindow.zoomtype = 0
@@ -1471,7 +1472,6 @@ class MapFrame(wx.Frame):
                     numLayers += 1
             if numLayers < 1:
                 display.Enable(False)
-            
             if action == "displayAttrb":
                 display.Check(True)
             
@@ -1481,14 +1481,17 @@ class MapFrame(wx.Frame):
             toolsmenu.AppendItem(modify)
             self.Bind(wx.EVT_MENU, self.OnQueryModify, modify)
             modify.Enable(False)
+            if action == "modifyAttrb":
+                modify.Check(True)
             
             digitToolbar = self.toolbars['vdigit']
             if self.tree.layer_selected:
-                layer_selected = self.tree.GetPyData(self.tree.layer_selected)[0]['maplayer']
-                if layer_selected.GetType() != 'vector' or \
-                        (digitToolbar and \
-                             digitToolbar.GetLayer() == layer_selected):
-                    modify.Enable(False)
+                mapLayer = self.tree.GetPyData(self.tree.layer_selected)[0]['maplayer']
+                if mapLayer.GetType() == 'vector' and \
+                        mapLayer.GetMapset() == grass.gisenv()['MAPSET'] and \
+                        (not digitToolbar or (digitToolbar and \
+                             digitToolbar.GetLayer() != mapLayer)):
+                    modify.Enable(True)
             else:
                 if action == "modifyAttrb":
                     modify.Check(True)
