@@ -54,18 +54,11 @@
 	  <label>Import raster data</label>
 	  <items>
 	    <menuitem>
-	      <label>Import raster data</label>
+	      <label>Common import formats</label>
 	      <help>Import raster data into a GRASS map layer using GDAL.</help>
 	      <keywords>raster,import</keywords>
 	      <handler>OnImportGdalLayers</handler>
 	      <command>r.in.gdal</command>
-	    </menuitem>
-	    <menuitem>
-	      <label>Link external raster data</label>
-	      <help>Link GDAL supported raster data as a pseudo GRASS raster map layer.</help>
-	      <keywords>raster,import</keywords>
-              <handler>OnLinkGdalLayers</handler>
-	      <command>r.external</command>
 	    </menuitem>
 	    <separator />
 	    <menuitem>
@@ -151,18 +144,11 @@
 	  <label>Import vector data</label>
 	  <items>
 	    <menuitem>
-	      <label>Import vector data</label>
+	      <label>Common import formats</label>
 	      <help>Converts vector layers into a GRASS vector map using OGR.</help>
 	      <keywords>vector,import</keywords>
 	      <handler>OnImportOgrLayers</handler>
 	      <command>v.in.ogr</command>
-	    </menuitem>
-	    <menuitem>
-	      <label>Link external vector data</label>
-	      <help>Creates a new pseudo-vector map as a link to an OGR-supported layer.</help>
-	      <keywords>vector</keywords>
-              <handler>OnLinkOgrLayers</handler>
-	      <command>v.external</command>
 	    </menuitem>
 	    <separator />
 	    <menuitem>
@@ -490,6 +476,26 @@
 	      <keywords>database,attribute table</keywords>
 	      <handler>OnMenuCmd</handler>
 	      <command>db.out.ogr</command>
+	    </menuitem>
+	  </items>
+	</menu>
+	<separator />
+	<menu>
+	  <label>Link external formats</label>
+	  <items>
+	    <menuitem>
+	      <label>Link external raster data</label>
+	      <help>Link GDAL supported raster data as a pseudo GRASS raster map layer.</help>
+	      <keywords>raster,import</keywords>
+              <handler>OnLinkGdalLayers</handler>
+	      <command>r.external</command>
+	    </menuitem>
+	    <menuitem>
+	      <label>Link external vector data</label>
+	      <help>Creates a new pseudo-vector map as a link to an OGR-supported layer.</help>
+	      <keywords>vector</keywords>
+              <handler>OnLinkOgrLayers</handler>
+	      <command>v.external</command>
 	    </menuitem>
 	  </items>
 	</menu>
@@ -1775,7 +1781,7 @@
 	    </menuitem>
 	    <menuitem>
 	      <label>Linear regression</label>
-	      <help>Calculates linear regression from two raster maps: y = a + b*x</help>
+	      <help>Calculates linear regression from two raster maps: y = a + b*x.</help>
 	      <keywords>raster,statistics</keywords>
 	      <handler>OnMenuCmd</handler>
 	      <command>r.regression.line</command>
@@ -2595,7 +2601,7 @@
 	    </menuitem>
 	    <menuitem>
 	      <label>Principal components</label>
-	      <help>Principal components analysis (pca) program for image processing.</help>
+	      <help>Principal components analysis (PCA) for image processing.</help>
 	      <keywords>imagery,image transformation,PCA</keywords>
 	      <handler>OnMenuCmd</handler>
 	      <command>i.pca</command>
