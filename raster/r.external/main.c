@@ -479,7 +479,7 @@ static void create_map(const char *input, int band, const char *output,
     if (title)
 	G_put_cell_title(output, title);
 
-    G_message(_("<%s> created"), output);
+    G_message(_("Link to raster map <%s> created"), output);
 }
 
 int main(int argc, char *argv[])
@@ -657,8 +657,6 @@ int main(int argc, char *argv[])
 	I_put_group(output);
 	G_message(_("Imagery group <%s> created"), output);
     }
-
-    G_done_msg(" ");
 
     exit(EXIT_SUCCESS);
 }
