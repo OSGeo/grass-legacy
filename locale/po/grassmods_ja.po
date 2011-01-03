@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: grassmods_ja\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-11-23 11:27+0100\n"
+"POT-Creation-Date: 2011-01-03 15:32+0100\n"
 "PO-Revision-Date: 2010-03-03 14:00+0900\n"
 "Last-Translator: AkiraTaniguchi <taniguti@apptec.co.jp>\n"
 "Language-Team: Japanese <grass-translations@lists.osgeo.org>\n"
@@ -280,7 +280,7 @@ msgstr "ラスター行を書き込めません"
 #: ../vector/v.to.rast/vect2rast.c:125 ../vector/v.to.rast/vect2rast.c:129
 #: ../vector/v.surf.idw/main.c:264 ../vector/v.neighbors/main.c:96
 #: ../doc/raster/r.example/main.c:141 ../imagery/i.smap/shapiro/opencell.c:30
-#: ../imagery/i.pca/main.c:399 ../imagery/i.rectify/write.c:49
+#: ../imagery/i.pca/main.c:406 ../imagery/i.rectify/write.c:49
 #: ../imagery/i.rgb.his/openfiles.c:29 ../imagery/i.rgb.his/openfiles.c:31
 #: ../imagery/i.rgb.his/openfiles.c:33 ../imagery/i.his.rgb/openfiles.c:15
 #: ../imagery/i.his.rgb/openfiles.c:17 ../imagery/i.his.rgb/openfiles.c:19
@@ -327,7 +327,7 @@ msgstr ""
 #: ../vector/v.generalize/simplification.c:341
 #: ../vector/v.generalize/matrix.c:144 ../vector/v.generalize/point.c:120
 #: ../vector/v.mkgrid/write_grid.c:131 ../vector/v.in.ascii/a2b.c:172
-#: ../vector/v.edit/a2b.c:198 ../vector/v.surf.rst/main.c:867
+#: ../vector/v.edit/a2b.c:198 ../vector/v.surf.rst/main.c:887
 #: ../vector/v.mapcalc/list.c:54 ../vector/v.mapcalc/list.c:501
 #: ../imagery/i.smap/bouman/multialloc.c:115 ../imagery/i.ask/popup.c:174
 msgid "Out of memory"
@@ -940,21 +940,21 @@ msgstr "3Dラスターマップ日時 (日,月,年 時:分:秒) の出力のみ 
 #: ../display/d.his/main.c:199 ../display/d.what.rast/main.c:155
 #: ../display/d.what.rast/opencell.c:13 ../display/d.colortable/main.c:95
 #: ../display/d.histogram/main.c:162 ../display/d.title/main.c:105
-#: ../display/d.rast/main.c:109 ../display/d.rast.num/number.c:149
+#: ../display/d.rast/main.c:111 ../display/d.rast.num/number.c:149
 #: ../display/d.nviz/main.c:184 ../display/d.zoom/main.c:208
 #: ../vector/v.sample/main.c:158 ../vector/v.vol.rst/main.c:606
 #: ../vector/v.extrude/main.c:179 ../vector/v.drape/main.c:245
 #: ../vector/v.what.rast/main.c:138 ../visualization/xganim/main.c:366
 #: ../visualization/nviz2/cmd/surface.c:54
 #: ../visualization/nviz2/cmd/surface.c:104 ../doc/raster/r.example/main.c:111
-#: ../ps/ps.map/outl_io.c:68 ../imagery/i.pca/main.c:129
+#: ../ps/ps.map/outl_io.c:68 ../imagery/i.pca/main.c:136
 #: ../imagery/i.zc/main.c:111 ../imagery/i.rgb.his/openfiles.c:14
 #: ../imagery/i.rgb.his/openfiles.c:16 ../imagery/i.rgb.his/openfiles.c:18
 #: ../imagery/i.his.rgb/openfiles.c:31 ../imagery/i.his.rgb/openfiles.c:36
 #: ../imagery/i.his.rgb/openfiles.c:41 ../imagery/i.gensigset/parse.c:42
 #: ../imagery/i.ifft/ifftmain.c:95 ../imagery/i.ifft/ifftmain.c:105
-#: ../imagery/i.ortho.photo/photo.2target/main.c:197
-#: ../imagery/i.ortho.photo/photo.2target/main.c:227
+#: ../imagery/i.ortho.photo/i.photo.2target/main.c:197
+#: ../imagery/i.ortho.photo/i.photo.2target/main.c:227
 #: ../imagery/i.fft/fftmain.c:108 ../imagery/i.gensig/parse.c:36
 #: ../imagery/i.group/main.c:201 ../imagery/i.group/main.c:240
 #: ../imagery/i.class/main.c:127
@@ -1227,7 +1227,7 @@ msgstr "NULL値が無効 (整数のみ) "
 #: ../vector/v.extrude/main.c:183 ../vector/v.drape/main.c:250
 #: ../vector/v.what.rast/main.c:141 ../visualization/xganim/main.c:370
 #: ../doc/raster/r.example/main.c:122 ../imagery/i.smap/shapiro/opencell.c:16
-#: ../imagery/i.pca/main.c:132 ../imagery/i.rgb.his/openfiles.c:21
+#: ../imagery/i.pca/main.c:139 ../imagery/i.rgb.his/openfiles.c:21
 #: ../imagery/i.rgb.his/openfiles.c:23 ../imagery/i.rgb.his/openfiles.c:25
 #: ../imagery/i.his.rgb/openfiles.c:33 ../imagery/i.his.rgb/openfiles.c:38
 #: ../imagery/i.his.rgb/openfiles.c:43 ../imagery/i.gensigset/opencell.c:13
@@ -1392,7 +1392,7 @@ msgstr "基本ラスターマップ <%s> が見つかりません"
 #: ../vector/v.surf.idw/main.c:137 ../vector/v.edit/main.c:86
 #: ../doc/raster/r.example/main.c:114 ../imagery/i.zc/main.c:119
 #: ../imagery/i.ifft/ifftmain.c:116
-#: ../imagery/i.ortho.photo/photo.camera/main.c:90
+#: ../imagery/i.ortho.photo/i.photo.camera/main.c:91
 #: ../imagery/i.fft/fftmain.c:121 ../imagery/i.fft/fftmain.c:124
 #, c-format
 msgid "<%s> is an illegal file name"
@@ -1496,7 +1496,7 @@ msgstr "説明付き表示"
 #: ../raster/r.out.mat/main.c:90 ../raster/r.cost/main.c:226
 #: ../raster/wildfire/r.spread/main.c:255 ../raster/wildfire/r.ros/main.c:314
 #: ../raster/r.out.tiff/r.out.tiff.c:144 ../raster/r.in.mat/main.c:125
-#: ../display/d.mon/pgms/release.c:36 ../display/d.vect/main.c:391
+#: ../display/d.mon/pgms/release.c:36 ../display/d.vect/main.c:411
 #: ../vector/v.kernel/main.c:191 ../visualization/nviz/src/nviz_init.c:157
 msgid ""
 "The '-v' flag is superseded and will be removed in future. Please use '--"
@@ -1707,7 +1707,7 @@ msgstr "ラスターマップ <%s> から浮動小数点レンジが読み取れ
 #: ../raster/r.contour/main.c:185 ../raster/r.random/random.c:74
 #: ../raster/r.to.vect/main.c:158 ../display/d.vect.chart/plot.c:44
 #: ../display/d.thematic.area/plot1.c:199 ../display/d.vect/area.c:60
-#: ../display/d.vect/plot1.c:203 ../display/d.vect/attr.c:45
+#: ../display/d.vect/plot1.c:208 ../display/d.vect/attr.c:45
 #: ../vector/v.sample/main.c:207 ../vector/v.db.select/main.c:155
 #: ../vector/v.db.select/main.c:286 ../vector/v.out.svg/main.c:148
 #: ../vector/v.to.db/update.c:46 ../vector/v.to.db/query.c:89
@@ -1721,7 +1721,7 @@ msgstr "ラスターマップ <%s> から浮動小数点レンジが読み取れ
 #: ../vector/v.in.dxf/write_vect.c:198 ../vector/v.mkgrid/main.c:237
 #: ../vector/v.lrs/v.lrs.create/main.c:286
 #: ../vector/v.lrs/v.lrs.create/main.c:294 ../vector/v.reclass/main.c:126
-#: ../vector/v.out.ogr/main.c:339 ../vector/v.in.dwg/main.c:194
+#: ../vector/v.out.ogr/main.c:421 ../vector/v.in.dwg/main.c:194
 #: ../vector/v.vol.rst/main.c:590 ../vector/v.vol.rst/user1.c:97
 #: ../vector/v.patch/main.c:132 ../vector/v.patch/main.c:162
 #: ../vector/v.patch/main.c:274 ../vector/v.patch/main.c:332
@@ -1734,7 +1734,7 @@ msgstr "ラスターマップ <%s> から浮動小数点レンジが読み取れ
 #: ../vector/v.in.ascii/in.c:317 ../vector/v.surf.idw/read_sites.c:39
 #: ../vector/v.buffer/main.c:387 ../vector/v.edit/select.c:520
 #: ../vector/v.info/main.c:217 ../vector/v.extrude/main.c:167
-#: ../vector/v.surf.rst/main.c:587 ../vector/v.db.connect/main.c:214
+#: ../vector/v.surf.rst/main.c:607 ../vector/v.db.connect/main.c:214
 #: ../vector/v.db.connect/main.c:322 ../vector/v.drape/main.c:293
 #: ../vector/v.what.rast/main.c:132 ../vector/v.to.3d/trans3.c:53
 #: ../vector/v.to.3d/trans2.c:52 ../doc/vector/v.example/main.c:128
@@ -1748,7 +1748,7 @@ msgstr "ドライバー <%s>ではデータベース <%s> が開けません"
 #: ../vector/v.distance/main.c:818 ../vector/v.in.dwg/main.c:219
 #: ../vector/v.overlay/main.c:456 ../vector/v.convert/att.c:80
 #: ../vector/v.net.path/path.c:109 ../vector/v.to.points/main.c:295
-#: ../vector/v.surf.rst/main.c:593
+#: ../vector/v.surf.rst/main.c:613
 #, c-format
 msgid "Unable to create table: '%s'"
 msgstr "テーブル %s を作成できません"
@@ -2282,9 +2282,9 @@ msgstr "ラスター <%s> タイプは一致しません"
 
 #: ../raster/r.out.png/r.out.png.c:324 ../raster/r.surf.idw/main.c:690
 #: ../raster/r.proj/readcell.c:27 ../raster/r.mapcalc/map.c:234
-#: ../imagery/i.smap/bouman/read_block.c:16 ../imagery/i.pca/main.c:258
-#: ../imagery/i.pca/main.c:308 ../imagery/i.pca/main.c:320
-#: ../imagery/i.pca/main.c:434 ../imagery/i.gensigset/read_data.c:27
+#: ../imagery/i.smap/bouman/read_block.c:16 ../imagery/i.pca/main.c:265
+#: ../imagery/i.pca/main.c:315 ../imagery/i.pca/main.c:327
+#: ../imagery/i.pca/main.c:441 ../imagery/i.gensigset/read_data.c:27
 #: ../imagery/i.gensigset/read_train.c:10 ../imagery/i.gensig/covariance.c:34
 #: ../imagery/i.gensig/read_train.c:10 ../imagery/i.cluster/main.c:290
 #: ../imagery/i.maxlik/main.c:117
@@ -3225,6 +3225,7 @@ msgid "Unable to get projection key values of target location"
 msgstr "ロケーションの投影キー値を取得出来ません"
 
 #: ../raster/r.in.gdal/main.c:662 ../imagery/i.rectify/target.c:32
+#: ../imagery/i.ortho.photo/i.photo.rectify/target.c:31
 #, c-format
 msgid "Mapset <%s> in target location <%s> - "
 msgstr "マップセット <%s> （ターゲットロケーション <%s> ）- "
@@ -3549,7 +3550,7 @@ msgstr "多すぎる始点の数 "
 #: ../display/d.path/main.c:193 ../display/d.extend/main.c:97
 #: ../display/d.vect.chart/main.c:246 ../display/d.thematic.area/main.c:212
 #: ../display/d.extract/main.c:98 ../display/d.what.vect/main.c:148
-#: ../display/d.zoom/main.c:245 ../display/d.vect/main.c:480
+#: ../display/d.zoom/main.c:245 ../display/d.vect/main.c:495
 #: ../vector/v.sample/main.c:152 ../vector/v.db.select/main.c:132
 #: ../vector/v.net.alloc/main.c:143 ../vector/v.net/main.c:143
 #: ../vector/v.net/main.c:158 ../vector/v.out.svg/main.c:127
@@ -3569,7 +3570,7 @@ msgstr "多すぎる始点の数 "
 #: ../vector/v.lrs/v.lrs.create/main.c:256
 #: ../vector/v.lrs/v.lrs.label/main.c:286
 #: ../vector/v.lrs/v.lrs.segment/main.c:138 ../vector/v.reclass/main.c:107
-#: ../vector/v.kernel/main.c:214 ../vector/v.out.ogr/main.c:217
+#: ../vector/v.kernel/main.c:214 ../vector/v.out.ogr/main.c:183
 #: ../vector/v.hull/main.c:300 ../vector/v.kcv/main.c:132
 #: ../vector/v.select/main.c:103 ../vector/v.buffer2/main.c:298
 #: ../vector/v.voronoi/vo_main.c:156 ../vector/v.voronoi/dt_main.c:77
@@ -3584,7 +3585,7 @@ msgstr "多すぎる始点の数 "
 #: ../vector/v.clean/main.c:241 ../vector/v.buffer/main.c:365
 #: ../vector/v.edit/main.c:145 ../vector/v.info/main.c:103
 #: ../vector/v.extrude/main.c:143 ../vector/v.category/main.c:197
-#: ../vector/v.surf.rst/main.c:545 ../vector/v.db.connect/main.c:140
+#: ../vector/v.surf.rst/main.c:565 ../vector/v.db.connect/main.c:140
 #: ../vector/v.out.pov/main.c:96 ../vector/v.drape/main.c:261
 #: ../vector/v.what.rast/main.c:119 ../vector/v.out.dxf/main.c:69
 #: ../visualization/nviz2/cmd/vector.c:81 ../doc/vector/v.example/main.c:73
@@ -4743,12 +4744,12 @@ msgstr "出力する傾斜ラスターマップ名"
 #: ../raster/r.slope.aspect/main.c:196 ../raster/r.slope.aspect/main.c:203
 #: ../raster/r.slope.aspect/main.c:210 ../raster/r.slope.aspect/main.c:217
 #: ../raster/r.slope.aspect/main.c:224 ../raster/r.slope.aspect/main.c:231
-#: ../raster/r.slope.aspect/main.c:238 ../vector/v.surf.rst/main.c:202
-#: ../vector/v.surf.rst/main.c:220 ../vector/v.surf.rst/main.c:226
-#: ../vector/v.surf.rst/main.c:232 ../vector/v.surf.rst/main.c:238
-#: ../vector/v.surf.rst/main.c:244 ../vector/v.surf.rst/main.c:250
-#: ../vector/v.surf.rst/main.c:258 ../vector/v.surf.rst/main.c:265
-#: ../vector/v.surf.rst/main.c:272 ../vector/v.surf.rst/main.c:279
+#: ../raster/r.slope.aspect/main.c:238 ../vector/v.surf.rst/main.c:210
+#: ../vector/v.surf.rst/main.c:228 ../vector/v.surf.rst/main.c:234
+#: ../vector/v.surf.rst/main.c:240 ../vector/v.surf.rst/main.c:246
+#: ../vector/v.surf.rst/main.c:252 ../vector/v.surf.rst/main.c:258
+#: ../vector/v.surf.rst/main.c:266 ../vector/v.surf.rst/main.c:273
+#: ../vector/v.surf.rst/main.c:280 ../vector/v.surf.rst/main.c:287
 msgid "Outputs"
 msgstr "出力"
 
@@ -4831,6 +4832,7 @@ msgid "Wrong raster type: %s"
 msgstr "不正なラスター型: %s"
 
 #: ../raster/r.slope.aspect/main.c:408
+#: ../imagery/i.ortho.photo/i.photo.rectify/angle.c:67
 #, c-format
 msgid "Converting units to meters, factor=%.6f"
 msgstr "単位をメートルに変換します　ファクター=%.6f  "
@@ -4948,7 +4950,7 @@ msgid "Keep null values in output raster map"
 msgstr "NULL値も出力 "
 
 #: ../raster/r.cost/main.c:217 ../raster/wildfire/r.spreadpath/main.c:110
-#: ../raster/wildfire/r.ros/main.c:301 ../display/d.vect/main.c:338
+#: ../raster/wildfire/r.ros/main.c:301 ../display/d.vect/main.c:358
 #: ../vector/v.kernel/main.c:176
 msgid "Run verbosely"
 msgstr "説明つき表示 "
@@ -5103,7 +5105,7 @@ msgid "Name of an output layer"
 msgstr "出力レイヤー名"
 
 #: ../raster/r.resample/main.c:137 ../raster/r.resamp.rst/main.c:527
-#: ../vector/v.surf.rst/main.c:602 ../vector/v.surf.rst/main.c:753
+#: ../vector/v.surf.rst/main.c:622 ../vector/v.surf.rst/main.c:773
 msgid "Percent complete: "
 msgstr "完了（％）"
 
@@ -5183,8 +5185,8 @@ msgstr "標高ラスターマップ名 [m]"
 #: ../raster/r.in.xyz/main.c:197 ../raster/r.in.xyz/main.c:205
 #: ../raster/r.in.xyz/main.c:213 ../general/g.proj/main.c:102
 #: ../general/g.proj/main.c:111 ../general/g.proj/main.c:120
-#: ../general/g.proj/main.c:128 ../vector/v.out.ogr/main.c:98
-#: ../vector/v.out.ogr/main.c:118 ../vector/v.edit/args.c:103
+#: ../general/g.proj/main.c:128 ../vector/v.out.ogr/main.c:100
+#: ../vector/v.out.ogr/main.c:120 ../vector/v.edit/args.c:103
 #: ../vector/v.edit/args.c:212
 msgid "Input"
 msgstr "入力 "
@@ -5270,14 +5272,14 @@ msgstr "ウォーカーの数"
 #: ../raster/simwe/r.sim.water/main.c:268
 #: ../raster/simwe/r.sim.water/main.c:277
 #: ../raster/simwe/r.sim.water/main.c:285
-#: ../raster/simwe/r.sim.water/main.c:294 ../vector/v.surf.rst/main.c:191
-#: ../vector/v.surf.rst/main.c:196 ../vector/v.surf.rst/main.c:285
-#: ../vector/v.surf.rst/main.c:293 ../vector/v.surf.rst/main.c:301
-#: ../vector/v.surf.rst/main.c:308 ../vector/v.surf.rst/main.c:316
-#: ../vector/v.surf.rst/main.c:324 ../vector/v.surf.rst/main.c:333
-#: ../vector/v.surf.rst/main.c:342 ../vector/v.surf.rst/main.c:351
-#: ../vector/v.surf.rst/main.c:360 ../vector/v.surf.rst/main.c:368
-#: ../vector/v.surf.rst/main.c:375
+#: ../raster/simwe/r.sim.water/main.c:294 ../vector/v.surf.rst/main.c:199
+#: ../vector/v.surf.rst/main.c:204 ../vector/v.surf.rst/main.c:293
+#: ../vector/v.surf.rst/main.c:301 ../vector/v.surf.rst/main.c:309
+#: ../vector/v.surf.rst/main.c:316 ../vector/v.surf.rst/main.c:324
+#: ../vector/v.surf.rst/main.c:332 ../vector/v.surf.rst/main.c:341
+#: ../vector/v.surf.rst/main.c:350 ../vector/v.surf.rst/main.c:359
+#: ../vector/v.surf.rst/main.c:368 ../vector/v.surf.rst/main.c:376
+#: ../vector/v.surf.rst/main.c:383
 msgid "Parameters"
 msgstr "パラメータ"
 
@@ -5318,8 +5320,8 @@ msgid "You are not outputting any raster or site files"
 msgstr "ラスターやサイトファイルは何も出力されません  "
 
 #: ../raster/simwe/r.sim.sediment/main.c:358
-#: ../raster/simwe/r.sim.water/main.c:480 ../vector/v.surf.rst/main.c:697
-#: ../vector/v.surf.rst/main.c:749
+#: ../raster/simwe/r.sim.water/main.c:480 ../vector/v.surf.rst/main.c:717
+#: ../vector/v.surf.rst/main.c:769
 msgid "Input failed"
 msgstr "入力に失敗しました"
 
@@ -5467,12 +5469,12 @@ msgstr "使用されたタイムスタンプ \t= %.2f s\n"
 msgid "Unable to write et file"
 msgstr "et ファイルを書き込めません"
 
-#: ../raster/simwe/simlib/hydro.c:119
+#: ../raster/simwe/simlib/hydro.c:211
 #, c-format
 msgid "nwalk (%d) > maxw (%d)!"
 msgstr "nwalk (%d) が maxw (%d) より大きい！  "
 
-#: ../raster/simwe/simlib/hydro.c:339
+#: ../raster/simwe/simlib/hydro.c:431
 msgid "Unable to write raster maps"
 msgstr "ラスターマップを書出しできません"
 
@@ -6585,8 +6587,8 @@ msgstr "セクション 3: 表層流の累計"
 msgid "SECTION 3: Accumulating Surface Flow with MFD."
 msgstr "セクション 3: 表層流の累計"
 
-#: ../raster/r.watershed/ram/do_cum.c:310
-#: ../raster/r.watershed/seg/do_cum.c:325
+#: ../raster/r.watershed/ram/do_cum.c:311
+#: ../raster/r.watershed/seg/do_cum.c:326
 #, c-format
 msgid "MFD: cumulative proportion of flow distribution not 1.0 but %f"
 msgstr ""
@@ -7387,6 +7389,7 @@ msgid "Target"
 msgstr "エリア"
 
 #: ../raster/r.proj/main.c:178 ../raster/r.proj.seg/main.c:187
+#: ../imagery/i.ortho.photo/i.photo.rectify/main.c:124
 msgid "Interpolation method to use"
 msgstr "補間方法 "
 
@@ -7404,6 +7407,7 @@ msgstr "領域のトリミング最適化を行わない"
 
 #: ../raster/r.proj/main.c:210 ../raster/r.statistics/main.c:100
 #: ../raster/r.proj.seg/main.c:238 ../raster/r.neighbors/main.c:226
+#: ../imagery/i.ortho.photo/i.photo.rectify/main.c:149
 #, c-format
 msgid "<%s=%s> unknown %s"
 msgstr "<%s=%s> 不明な %s  "
@@ -7529,6 +7533,7 @@ msgid "Input raster map is outside current region"
 msgstr "入力したラスターマップは現在の領域外です"
 
 #: ../raster/r.proj/readcell.c:22 ../raster/r.proj.seg/readcell.c:62
+#: ../imagery/i.ortho.photo/i.photo.rectify/readcell.c:70
 msgid "Allocating memory and reading input map..."
 msgstr "メモリを割り当ててマップを読込中..."
 
@@ -7803,7 +7808,7 @@ msgstr "異方性の角度 "
 msgid "Anisotropy"
 msgstr "異方性 "
 
-#: ../raster/r.resamp.rst/main.c:276 ../vector/v.surf.rst/main.c:374
+#: ../raster/r.resamp.rst/main.c:276 ../vector/v.surf.rst/main.c:382
 msgid "Anisotropy scaling factor"
 msgstr "異方性のスケールファクター "
 
@@ -7811,7 +7816,7 @@ msgstr "異方性のスケールファクター "
 msgid "Use dnorm independent tension"
 msgstr "独立したテンション (dnorm) を使用"
 
-#: ../raster/r.resamp.rst/main.c:286 ../vector/v.surf.rst/main.c:201
+#: ../raster/r.resamp.rst/main.c:286 ../vector/v.surf.rst/main.c:209
 msgid "Output partial derivatives instead of topographic parameters"
 msgstr "傾斜値、傾斜方位、曲率の代わりに偏導関数を出力 "
 
@@ -7851,27 +7856,27 @@ msgstr "scalex の不正な値"
 msgid "When using anisotropy both theta and scalex must be specified"
 msgstr "異方性を使用するときは角度と scalex を指定する必要があります"
 
-#: ../raster/r.resamp.rst/main.c:366 ../vector/v.surf.rst/main.c:500
+#: ../raster/r.resamp.rst/main.c:366 ../vector/v.surf.rst/main.c:520
 msgid "Not enough memory for az"
 msgstr "az に 割り当てるメモリが足りません "
 
-#: ../raster/r.resamp.rst/main.c:371 ../vector/v.surf.rst/main.c:505
+#: ../raster/r.resamp.rst/main.c:371 ../vector/v.surf.rst/main.c:525
 msgid "Not enough memory for adx"
 msgstr "adx  に 割り当てるメモリが足りません"
 
-#: ../raster/r.resamp.rst/main.c:375 ../vector/v.surf.rst/main.c:509
+#: ../raster/r.resamp.rst/main.c:375 ../vector/v.surf.rst/main.c:529
 msgid "Not enough memory for ady"
 msgstr "ady  に 割り当てるメモリが足りません"
 
-#: ../raster/r.resamp.rst/main.c:380 ../vector/v.surf.rst/main.c:514
+#: ../raster/r.resamp.rst/main.c:380 ../vector/v.surf.rst/main.c:534
 msgid "Not enough memory for adxx"
 msgstr "adxx  に 割り当てるメモリが足りません"
 
-#: ../raster/r.resamp.rst/main.c:384 ../vector/v.surf.rst/main.c:518
+#: ../raster/r.resamp.rst/main.c:384 ../vector/v.surf.rst/main.c:538
 msgid "Not enough memory for adyy"
 msgstr "adyy  に 割り当てるメモリが足りません"
 
-#: ../raster/r.resamp.rst/main.c:388 ../vector/v.surf.rst/main.c:522
+#: ../raster/r.resamp.rst/main.c:388 ../vector/v.surf.rst/main.c:542
 msgid "Not enough memory for adxy"
 msgstr "adxy  に 割り当てるメモリが足りません"
 
@@ -7928,7 +7933,7 @@ msgstr "グリッドの後，out1= %f 前の mainc 中の dnorm "
 msgid "dnorm in mainc after grid before out2= %f"
 msgstr "グリッドの後，out2= %f 前の mainc 中の dnorm "
 
-#: ../raster/r.resamp.rst/main.c:607 ../vector/v.surf.rst/main.c:618
+#: ../raster/r.resamp.rst/main.c:607 ../vector/v.surf.rst/main.c:638
 msgid "Not enough memory for zero_array_cell"
 msgstr "zero_array_cell のためのメモリーが足りません"
 
@@ -7940,10 +7945,10 @@ msgstr "zero_array_cell のためのメモリーが足りません"
 #: ../general/g.setproj/get_stp.c:165 ../general/g.setproj/get_stp.c:282
 #: ../general/g.setproj/get_stp.c:286 ../display/d.text.new/main.c:417
 #: ../display/d.title/main.c:119 ../display/d.text/main.c:193
-#: ../vector/v.in.ascii/in.c:248 ../vector/v.surf.rst/main.c:626
-#: ../vector/v.surf.rst/main.c:635 ../vector/v.surf.rst/main.c:644
-#: ../vector/v.surf.rst/main.c:654 ../vector/v.surf.rst/main.c:663
-#: ../vector/v.surf.rst/main.c:672
+#: ../vector/v.in.ascii/in.c:248 ../vector/v.surf.rst/main.c:646
+#: ../vector/v.surf.rst/main.c:655 ../vector/v.surf.rst/main.c:664
+#: ../vector/v.surf.rst/main.c:674 ../vector/v.surf.rst/main.c:683
+#: ../vector/v.surf.rst/main.c:692
 #, c-format
 msgid "Unable to open temporary file <%s>"
 msgstr "一時ファイル <%s> を開けません"
@@ -7951,9 +7956,9 @@ msgstr "一時ファイル <%s> を開けません"
 #: ../raster/r.resamp.rst/main.c:622 ../raster/r.resamp.rst/main.c:635
 #: ../raster/r.resamp.rst/main.c:648 ../raster/r.resamp.rst/main.c:662
 #: ../raster/r.resamp.rst/main.c:675 ../raster/r.resamp.rst/main.c:688
-#: ../vector/v.surf.rst/main.c:630 ../vector/v.surf.rst/main.c:639
-#: ../vector/v.surf.rst/main.c:648 ../vector/v.surf.rst/main.c:658
-#: ../vector/v.surf.rst/main.c:667 ../vector/v.surf.rst/main.c:676
+#: ../vector/v.surf.rst/main.c:650 ../vector/v.surf.rst/main.c:659
+#: ../vector/v.surf.rst/main.c:668 ../vector/v.surf.rst/main.c:678
+#: ../vector/v.surf.rst/main.c:687 ../vector/v.surf.rst/main.c:696
 msgid "Not enough disk space -- cannot write files"
 msgstr "ディスクスペース不足です -- ファイルを書き込めません"
 
@@ -8439,10 +8444,10 @@ msgstr "カラーテーブルのタイプ"
 #: ../raster/r.colors/main.c:193 ../raster/r.colors/main.c:207
 #: ../raster/r.colors/main.c:225 ../raster/r.colors/main.c:230
 #: ../raster/r.colors/main.c:235 ../raster/r.colors/main.c:240
-#: ../display/d.vect/main.c:163 ../display/d.vect/main.c:173
-#: ../display/d.vect/main.c:180 ../display/d.vect/main.c:191
-#: ../display/d.vect/main.c:343 ../display/d.vect/main.c:349
-#: ../display/d.vect/main.c:369 ../vector/v.label.sa/main.c:149
+#: ../display/d.vect/main.c:167 ../display/d.vect/main.c:177
+#: ../display/d.vect/main.c:184 ../display/d.vect/main.c:195
+#: ../display/d.vect/main.c:363 ../display/d.vect/main.c:369
+#: ../display/d.vect/main.c:389 ../vector/v.label.sa/main.c:149
 #: ../vector/v.label.sa/main.c:159 ../vector/v.label.sa/main.c:166
 #: ../vector/v.label.sa/main.c:176 ../vector/v.label.sa/main.c:186
 #: ../vector/v.label.sa/main.c:196 ../vector/v.label.sa/main.c:203
@@ -8713,6 +8718,7 @@ msgstr "ラスター， 地形構造解析，パッチインデックス "
 
 #: ../raster/r.li/r.li.padcv/padcv.c:44 ../raster/r.li/r.li.mpa/mpa.c:47
 #: ../raster/r.li/r.li.patchnum/main.c:43 ../raster/r.li/r.li.mps/mps.c:48
+#: ../raster/r.li/r.li.pielou/pielou.c:67
 #: ../raster/r.li/r.li.edgedensity/edgedensity.c:47
 #: ../raster/r.li/r.li.cwed/cwed.c:55 ../raster/r.li/r.li.padsd/padsd.c:44
 #: ../raster/r.li/r.li.richness/richness.c:49
@@ -8722,6 +8728,7 @@ msgstr "ラスター， 地形構造解析，パッチインデックス "
 #: ../raster/r.li/r.li.simpson/simpson.c:49
 #: ../raster/r.li/r.li.padrange/padrange.c:46
 #: ../raster/r.li/r.li.shannon/shannon.c:48
+#: ../raster/r.li/r.li.renyi/renyi.c:54
 msgid "Configuration file"
 msgstr "設定ファイル"
 
@@ -8739,6 +8746,19 @@ msgid ""
 "Calculates mean patch size index on a raster map, using a 4 neighbour "
 "algorithm"
 msgstr "四近傍法を用いて，ラスターマップ上の，パッチサイズ インデックスを計算"
+
+#: ../raster/r.li/r.li.pielou/pielou.c:57
+#, fuzzy
+msgid "Calculates Pielou's diversity index on a raster map"
+msgstr "ラスターマップ上の Simpson 密度インデックスを計算"
+
+#: ../raster/r.li/r.li.pielou/pielou.c:59
+#: ../raster/r.li/r.li.dominance/dominance.c:43
+#: ../raster/r.li/r.li.simpson/simpson.c:41
+#: ../raster/r.li/r.li.shannon/shannon.c:40
+#: ../raster/r.li/r.li.renyi/renyi.c:46
+msgid "raster, landscape structure analysis, diversity index"
+msgstr "ラスター，地形構造解析， 多様性インデックス"
 
 #: ../raster/r.li/r.li.edgedensity/edgedensity.c:38
 msgid ""
@@ -8765,12 +8785,6 @@ msgstr "ラスター，地形構造解析，優先度インデックス"
 #: ../raster/r.li/r.li.shape/main.c:33
 msgid "Calculates shape index on a raster map"
 msgstr "ラスターマップ上のシェープインデックスを計算"
-
-#: ../raster/r.li/r.li.dominance/dominance.c:43
-#: ../raster/r.li/r.li.simpson/simpson.c:41
-#: ../raster/r.li/r.li.shannon/shannon.c:40
-msgid "raster, landscape structure analysis, diversity index"
-msgstr "ラスター，地形構造解析， 多様性インデックス"
 
 #: ../raster/r.li/r.li.patchdensity/main.c:33
 msgid ""
@@ -8996,6 +9010,15 @@ msgstr "ラスターマップ上の，パッチエリアサイズのレンジを
 #: ../raster/r.li/r.li.shannon/shannon.c:38
 msgid "Calculates Shannon's diversity index on a raster map"
 msgstr "ラスターマップ上の，Shannon 多様性インデックスを計算"
+
+#: ../raster/r.li/r.li.renyi/renyi.c:44
+#, fuzzy
+msgid "Calculates Renyi's diversity index on a raster map"
+msgstr "ラスターマップ上の Simpson 密度インデックスを計算"
+
+#: ../raster/r.li/r.li.renyi/renyi.c:62
+msgid "Alpha value is the order of the generalized entropy"
+msgstr ""
 
 #: ../raster/r.out.gdal/main.c:49
 #, c-format
@@ -11133,9 +11156,9 @@ msgid "Creating support files for %s"
 msgstr "%s のサポートファイルを作成しています"
 
 #: ../raster/r.external/main.c:482
-#, c-format
-msgid "<%s> created"
-msgstr "<%s> 作成されました"
+#, fuzzy, c-format
+msgid "Link to raster map <%s> created"
+msgstr "ラスターマップ <%s> が作成されました"
 
 #: ../raster/r.external/main.c:508
 msgid "Link GDAL supported raster file to a binary raster map layer."
@@ -11203,6 +11226,7 @@ msgid "Input map <%s@%s> in location <%s>:"
 msgstr "へ  <%s@%s> (ロケーション <%s>) ... %s"
 
 #: ../raster/r.proj.seg/readcell.c:56
+#: ../imagery/i.ortho.photo/i.photo.rectify/readcell.c:62
 msgid "Unable to open temporary file"
 msgstr "一時ファイルを開けません"
 
@@ -11211,14 +11235,17 @@ msgid "Error reading input"
 msgstr "入力読み込みのエラー"
 
 #: ../raster/r.proj.seg/readcell.c:89 ../raster/r.proj.seg/readcell.c:128
+#: ../imagery/i.ortho.photo/i.photo.rectify/readcell.c:98
 msgid "Error writing segment file"
 msgstr "セグメントファイル書き込みのエラー"
 
 #: ../raster/r.proj.seg/readcell.c:116
+#: ../imagery/i.ortho.photo/i.photo.rectify/readcell.c:128
 msgid "Internal error: cache miss on fully-cached map"
 msgstr "内蔵エラー: キャッシュは完全にキャッシュされているマップを見逃します"
 
 #: ../raster/r.proj.seg/readcell.c:125
+#: ../imagery/i.ortho.photo/i.photo.rectify/readcell.c:137
 msgid "Error seeking on segment file"
 msgstr "セグメントファイルの検索におけるエラー"
 
@@ -13717,11 +13744,13 @@ msgid "Special characters: newline, space, comma, tab"
 msgstr "一文字 出力セパレーター, 改行, カンマ, スペース, or タブ"
 
 #: ../general/g.mapsets/main.c:97
-msgid "List all available mapsets"
+#, fuzzy
+msgid "List all available mapsets in alphabetical order"
 msgstr "使用可能なマップセットの一覧を表示 "
 
 #: ../general/g.mapsets/main.c:102
-msgid "Print current mapset search path"
+#, fuzzy
+msgid "Print mapsets in current search path"
 msgstr "現在のマップセットを表示 "
 
 #: ../general/g.mapsets/main.c:107
@@ -14289,13 +14318,13 @@ msgstr ""
 #: ../display/d.extract/main.c:79 ../display/d.histogram/main.c:181
 #: ../display/d.linegraph/linegraph.c:251 ../display/d.graph/main.c:96
 #: ../display/d.paint.labels/main.c:90 ../display/d.what.vect/main.c:160
-#: ../display/d.text/main.c:132 ../display/d.rast/main.c:112
+#: ../display/d.text/main.c:132 ../display/d.rast/main.c:114
 #: ../display/d.rast.num/number.c:128 ../display/d.nviz/main.c:249
 #: ../display/d.zoom/main.c:158 ../display/d.zoom/main.c:293
-#: ../display/d.zoom/redraw.c:39 ../display/d.vect/main.c:401
+#: ../display/d.zoom/redraw.c:39 ../display/d.vect/main.c:421
 #: ../vector/v.label/main.c:234 ../imagery/i.points/main.c:123
-#: ../imagery/i.ortho.photo/photo.2target/main.c:97
-#: ../imagery/i.ortho.photo/photo.2image/main.c:81
+#: ../imagery/i.ortho.photo/i.photo.2image/main.c:81
+#: ../imagery/i.ortho.photo/i.photo.2target/main.c:97
 #: ../imagery/i.class/main.c:90
 msgid "No graphics device selected"
 msgstr "グラフィックデバイスは選択されていません"
@@ -14558,7 +14587,7 @@ msgid "Line spacing"
 msgstr "ラインスペース  "
 
 #: ../display/d.text.new/main.c:221 ../display/d.text.freetype/main.c:168
-#: ../display/d.vect/main.c:286 ../vector/v.label/main.c:123
+#: ../display/d.vect/main.c:306 ../vector/v.label/main.c:123
 msgid "Font name"
 msgstr "フォント名"
 
@@ -14903,7 +14932,7 @@ msgid "Starting and ending coordinates"
 msgstr "座標を開始そして終了"
 
 #: ../display/d.geodesic/main.c:62 ../display/d.rhumbline/main.c:61
-#: ../display/d.vect/main.c:162
+#: ../display/d.vect/main.c:166
 msgid "Line color"
 msgstr "ラインの色 "
 
@@ -15404,7 +15433,7 @@ msgid "Create legend information and send to stdout"
 msgstr "legend情報を作成し標準出力に送ります"
 
 #: ../display/d.vect.chart/plot.c:38 ../display/d.thematic.area/plot1.c:193
-#: ../display/d.vect/area.c:54 ../display/d.vect/plot1.c:197
+#: ../display/d.vect/area.c:54 ../display/d.vect/plot1.c:202
 #: ../vector/v.sample/main.c:167 ../vector/v.db.select/main.c:149
 #: ../vector/lidar/v.surf.bspline/crosscorr.c:114
 #: ../vector/v.generalize/misc.c:160 ../vector/v.extract/main.c:278
@@ -15442,7 +15471,7 @@ msgstr ""
 "ユーザー指定された３つのラスターマップレイヤーを、赤、緑、青のオーバーレイと"
 "して動作中のグラフィックフレームに表示します."
 
-#: ../display/d.rgb/main.c:61 ../display/d.rast/main.c:87
+#: ../display/d.rgb/main.c:61 ../display/d.rast/main.c:88
 msgid "Overlay (non-null values only)"
 msgstr "オーバーレイ(NULL値を除く)"
 
@@ -15806,9 +15835,9 @@ msgstr "レイヤー数. -1の場合, 全てのレイヤーは表示されてい
 
 #: ../display/d.thematic.area/main.c:131 ../display/d.thematic.area/main.c:134
 #: ../display/d.rast/main.c:66 ../display/d.rast/main.c:75
-#: ../display/d.rast/main.c:92 ../display/d.vect/main.c:143
-#: ../display/d.vect/main.c:149 ../display/d.vect/main.c:152
-#: ../display/d.vect/main.c:155 ../display/d.vect/main.c:357
+#: ../display/d.rast/main.c:94 ../display/d.vect/main.c:147
+#: ../display/d.vect/main.c:153 ../display/d.vect/main.c:156
+#: ../display/d.vect/main.c:159 ../display/d.vect/main.c:377
 #: ../vector/v.in.ogr/main.c:132 ../vector/v.in.ogr/main.c:146
 #: ../vector/v.in.ogr/main.c:168 ../vector/v.extract/main.c:107
 #: ../vector/v.extract/main.c:117 ../vector/v.extract/main.c:123
@@ -15827,7 +15856,8 @@ msgstr "レイヤー数. -1の場合, 全てのレイヤーは表示されてい
 #: ../vector/v.edit/args.c:159 ../vector/v.edit/args.c:173
 #: ../vector/v.edit/args.c:202 ../vector/v.category/main.c:92
 #: ../vector/v.category/main.c:97 ../vector/v.category/main.c:101
-#: ../vector/v.surf.rst/main.c:211 ../vector/v.surf.rst/main.c:214
+#: ../vector/v.surf.rst/main.c:193 ../vector/v.surf.rst/main.c:219
+#: ../vector/v.surf.rst/main.c:222
 msgid "Selection"
 msgstr "選択"
 
@@ -15843,7 +15873,7 @@ msgstr "境界幅"
 msgid "Boundary color"
 msgstr "境界色"
 
-#: ../display/d.thematic.area/main.c:158 ../display/d.vect/main.c:327
+#: ../display/d.thematic.area/main.c:158 ../display/d.vect/main.c:347
 msgid "Rendering method for filled polygons"
 msgstr "塗りつぶされたポリゴンのためのレンダリングメソッド"
 
@@ -15888,15 +15918,15 @@ msgid "'layer' must be > 0"
 msgstr "'レイヤー' は > 0 でなければなりません"
 
 #: ../display/d.thematic.area/main.c:227 ../display/d.what.vect/what.c:446
-#: ../display/d.vect/main.c:495 ../vector/v.db.connect/main.c:171
+#: ../display/d.vect/main.c:510 ../vector/v.db.connect/main.c:171
 #, c-format
 msgid "Database connection not defined"
 msgstr "データベース接続は定義されていません"
 
-#: ../display/d.thematic.area/main.c:231 ../display/d.vect/main.c:499
+#: ../display/d.thematic.area/main.c:231 ../display/d.vect/main.c:514
 #: ../vector/v.out.svg/main.c:141 ../vector/v.extract/main.c:286
 #: ../vector/v.in.sites/main.c:158 ../vector/v.out.vtk/writeVTK.c:634
-#: ../vector/v.out.ascii/b2a.c:44 ../vector/v.out.ogr/main.c:334
+#: ../vector/v.out.ascii/b2a.c:44 ../vector/v.out.ogr/main.c:416
 #: ../vector/v.edit/select.c:513 ../vector/v.db.connect/main.c:208
 #: ../vector/v.db.connect/main.c:274 ../vector/v.drape/main.c:288
 #: ../doc/vector/v.example/main.c:123 ../db/base/columns.c:45
@@ -15907,7 +15937,7 @@ msgstr "データベース接続は定義されていません"
 msgid "Unable to start driver <%s>"
 msgstr "ドライバー <%s> をスタートできません"
 
-#: ../display/d.thematic.area/main.c:236 ../display/d.vect/main.c:504
+#: ../display/d.thematic.area/main.c:236 ../display/d.vect/main.c:519
 #: ../vector/v.convert/att.c:73 ../db/base/describe.c:57
 #: ../db/base/execute.c:68 ../db/base/tables.c:51 ../db/base/select.c:68
 #, c-format
@@ -15922,13 +15952,14 @@ msgstr "データ (%s) は数字ではありません. 列は数字でなけれ�
 #: ../display/d.thematic.area/main.c:255
 #: ../display/d.thematic.area/plot1.c:222
 #: ../display/d.thematic.area/plot1.c:250 ../display/d.vect/area.c:85
-#: ../display/d.vect/area.c:113 ../display/d.vect/plot1.c:226
-#: ../display/d.vect/plot1.c:254
+#: ../display/d.vect/area.c:113 ../display/d.vect/plot1.c:231
+#: ../display/d.vect/plot1.c:259 ../display/d.vect/plot1.c:290
+#: ../display/d.vect/plot1.c:321
 #, c-format
 msgid "Cannot select data (%s) from table"
 msgstr "表からデータ (%s) を選択できません"
 
-#: ../display/d.thematic.area/main.c:318 ../display/d.vect/main.c:451
+#: ../display/d.thematic.area/main.c:318 ../display/d.vect/main.c:471
 #, c-format
 msgid "Unknown color: [%s]"
 msgstr "不明な色: [%s]"
@@ -15959,11 +15990,11 @@ msgstr ""
 msgid "Error interpreting color %s"
 msgstr "色 %s の解釈におけるエラー"
 
-#: ../display/d.thematic.area/main.c:402 ../display/d.vect/main.c:637
+#: ../display/d.thematic.area/main.c:402 ../display/d.vect/main.c:652
 msgid "Plotting ..."
 msgstr "出力しています ..."
 
-#: ../display/d.thematic.area/main.c:409 ../display/d.vect/main.c:645
+#: ../display/d.thematic.area/main.c:409 ../display/d.vect/main.c:660
 msgid ""
 "The bounding box of the map is outside the current region, nothing drawn."
 msgstr "マップの境界線は現在の領域外です、何も描かれません"
@@ -16002,12 +16033,12 @@ msgstr "最後の chi2 = %f\n"
 msgid "Stdev multiplied by %.4f to define step\n"
 msgstr "ステップの定義のため標準偏差に %.4f を掛けています\n"
 
-#: ../display/d.thematic.area/plot1.c:207 ../display/d.vect/plot1.c:211
+#: ../display/d.thematic.area/plot1.c:207 ../display/d.vect/plot1.c:216
 msgid "Color definition column not specified"
 msgstr "カラー定義ファイル列は指定されていません"
 
 #: ../display/d.thematic.area/plot1.c:217 ../display/d.vect/area.c:79
-#: ../display/d.vect/plot1.c:221
+#: ../display/d.vect/plot1.c:226
 #, c-format
 msgid ""
 "Color definition column (%s) not a string. Column must be of form RRR:GGG:"
@@ -16017,12 +16048,11 @@ msgstr ""
 "RRR:GGG:BBBからでなければなりません."
 
 #: ../display/d.thematic.area/plot1.c:235 ../display/d.vect/area.c:98
-#: ../display/d.vect/plot1.c:239
+#: ../display/d.vect/plot1.c:244
 msgid "Line width column not specified."
 msgstr "ライン幅列は指定されていません."
 
 #: ../display/d.thematic.area/plot1.c:246 ../display/d.vect/area.c:109
-#: ../display/d.vect/plot1.c:250
 #, c-format
 msgid "Line width column (%s) not a number."
 msgstr "数ではなくライン幅列 (%s) .  "
@@ -16050,7 +16080,7 @@ msgid "Error in color definition column (%s), element %d with cat %d"
 msgstr "カラー定義列におけるエラー(%s), cat %d をもつ要素 %d "
 
 #: ../display/d.thematic.area/plot1.c:441 ../display/d.vect/area.c:345
-#: ../display/d.vect/plot1.c:463
+#: ../display/d.vect/plot1.c:537
 #, c-format
 msgid ""
 "Error in line width column (%s), element %d with cat %d: line width [%d]"
@@ -16513,11 +16543,11 @@ msgstr "ラベルが表示されているときの最大領域サイズ (対角�
 msgid "Label file <%s> not found"
 msgstr "ラベルファイル <%s> は見つかりません"
 
-#: ../display/d.paint.labels/main.c:102 ../display/d.vect/main.c:411
+#: ../display/d.paint.labels/main.c:102 ../display/d.vect/main.c:431
 msgid "Region size is lower than minreg, nothing displayed."
 msgstr "領域サイズは最小領域より小さいです, 何も表示されていません.  "
 
-#: ../display/d.paint.labels/main.c:111 ../display/d.vect/main.c:420
+#: ../display/d.paint.labels/main.c:111 ../display/d.vect/main.c:440
 msgid "Region size is greater than maxreg, nothing displayed."
 msgstr "領域サイズは最大領域より大きいです, 何も表示されませんでした.  "
 
@@ -16568,8 +16598,8 @@ msgstr "フォームを編集モードで開きます  "
 #: ../vector/v.generalize/main.c:305 ../vector/v.out.ascii/out.c:146
 #: ../vector/v.hull/main.c:307 ../vector/v.support/main.c:135
 #: ../vector/v.buffer2/main.c:303 ../vector/v.edit/main.c:165
-#: ../vector/v.info/main.c:113 ../vector/v.surf.rst/main.c:549
-#: ../vector/v.surf.rst/main.c:704 ../vector/v.surf.rst/main.c:793
+#: ../vector/v.info/main.c:113 ../vector/v.surf.rst/main.c:569
+#: ../vector/v.surf.rst/main.c:724 ../vector/v.surf.rst/main.c:813
 #: ../vector/v.to.3d/main.c:72 ../doc/vector/v.example/main.c:85
 #, c-format
 msgid "Unable to open vector map <%s>"
@@ -16737,9 +16767,9 @@ msgstr ""
 "ユーザー指定された３つのラスターマップレイヤーを、赤、緑、青のオーバーレイと"
 "して動作中のグラフィックフレームに表示します."
 
-#: ../display/d.rast/main.c:57
-msgid "Raster map to be displayed"
-msgstr "表示するラスターマップ"
+#: ../display/d.rast/main.c:57 ../imagery/i.class/main.c:62
+msgid "Name of raster map to be displayed"
+msgstr "ラスターマップ名が表示されています"
 
 #: ../display/d.rast/main.c:65
 msgid "List of categories to be displayed (INT maps)"
@@ -16753,21 +16783,25 @@ msgstr "表示する値のリスト (FP マップ)"
 msgid "Background color (for null)"
 msgstr "背景色(NULLの) "
 
-#: ../display/d.rast/main.c:91
+#: ../display/d.rast/main.c:84 ../display/d.rast/main.c:89
+msgid "Null cells"
+msgstr ""
+
+#: ../display/d.rast/main.c:93
 msgid "Invert catlist"
 msgstr "catlistを反転します"
 
-#: ../display/d.rast/main.c:97
+#: ../display/d.rast/main.c:99
 msgid "Don't add to list of rasters and commands in monitor"
 msgstr "モニターにおけるラスターとコマンドのリストを追加しないでください"
 
-#: ../display/d.rast/main.c:117
+#: ../display/d.rast/main.c:119
 msgid "Ignoring catlist: map is floating point (please use 'val=')"
 msgstr ""
 "catlist を無視しています: マップは浮動小数点です ('val=' を使用してくださ"
 "い)  "
 
-#: ../display/d.rast/main.c:123
+#: ../display/d.rast/main.c:125
 msgid "Ignoring vallist: map is integer (please use 'cat=')"
 msgstr "vallistを無視しています: マップは整数です ('cat='を使用してください)  "
 
@@ -17038,126 +17072,153 @@ msgstr "右:  終了\n"
 msgid "Can't read vector map"
 msgstr "ベクトルマップを読み込めません"
 
-#: ../display/d.vect/main.c:124
+#: ../display/d.vect/main.c:122
 msgid "display, vector"
 msgstr "表示、ベクトル"
 
-#: ../display/d.vect/main.c:125
+#: ../display/d.vect/main.c:123
 #, fuzzy
 msgid "Displays user-specified vector map in the active graphics frame."
 msgstr ""
 "ユーザー指定された３つのラスターマップレイヤーを、赤、緑、青のオーバーレイと"
 "して動作中のグラフィックフレームに表示します."
 
-#: ../display/d.vect/main.c:137
+#: ../display/d.vect/main.c:135
 msgid "Display"
 msgstr "表示 "
 
-#: ../display/d.vect/main.c:147
+#: ../display/d.vect/main.c:136
+msgid ""
+"shape;Display geometry of features;cat;Display category numbers of features;"
+"topo;Display topology information (nodes, edges);dir;Display direction of "
+"linear features;attr;Display selected attribute based on 'attrcol';zcoor;"
+"Display z-coordinate of features (only for 3D vector maps)"
+msgstr ""
+
+#: ../display/d.vect/main.c:151
 msgid "Layer number (if -1, all layers are displayed)"
 msgstr "レイヤー数 (-1であれば, すべてのレイヤーは表示されます)  "
 
-#: ../display/d.vect/main.c:166 ../display/d.vect/main.c:176
-#: ../display/d.vect/main.c:263 ../display/d.vect/main.c:273
+#: ../display/d.vect/main.c:170 ../display/d.vect/main.c:180
+#: ../display/d.vect/main.c:283 ../display/d.vect/main.c:293
 msgid "Either a standard GRASS color, R:G:B triplet, or \"none\""
 msgstr "標準GRASS色, R:G:B triplet, または \"none\" のいずれか"
 
-#: ../display/d.vect/main.c:172
+#: ../display/d.vect/main.c:176
 msgid "Area fill color"
 msgstr "エリアの塗りつぶし色"
 
-#: ../display/d.vect/main.c:181
+#: ../display/d.vect/main.c:185
 msgid "Name of color definition column (for use with -a flag)"
 msgstr "カラー定義列の名前 ( -a フラッグとの使用)  "
 
-#: ../display/d.vect/main.c:189
+#: ../display/d.vect/main.c:193
 msgid "Type of color table (for use with -z flag)"
 msgstr "色表のタイプ (-z フラッグとの使用のため)"
 
-#: ../display/d.vect/main.c:198 ../display/d.vect/main.c:203
-#: ../display/d.vect/main.c:211
+#: ../display/d.vect/main.c:202 ../display/d.vect/main.c:207
+#: ../display/d.vect/main.c:215
 msgid "Lines"
 msgstr "ライン"
 
-#: ../display/d.vect/main.c:199
+#: ../display/d.vect/main.c:203
 msgid "Line width"
 msgstr "線幅"
 
-#: ../display/d.vect/main.c:205
+#: ../display/d.vect/main.c:209
 msgid "Name of column for line widths (these values will be scaled by wscale)"
 msgstr "線幅の列名 (これらの値はwscaleによって調整されます)  "
 
-#: ../display/d.vect/main.c:212
+#: ../display/d.vect/main.c:216
 msgid "Scale factor for wcolumn"
 msgstr "wcolumnの目盛り倍率"
 
-#: ../display/d.vect/main.c:220 ../display/d.vect/main.c:230
+#: ../display/d.vect/main.c:224 ../display/d.vect/main.c:234
+#: ../display/d.vect/main.c:241 ../display/d.vect/main.c:247
 msgid "Symbols"
 msgstr "記号サイズ  "
 
-#: ../display/d.vect/main.c:224
+#: ../display/d.vect/main.c:228
 msgid "Point and centroid symbol"
 msgstr "ポイントとセントロイド記号"
 
-#: ../display/d.vect/main.c:231
+#: ../display/d.vect/main.c:235
 msgid "Symbol size"
 msgstr "記号サイズ"
 
-#: ../display/d.vect/main.c:236 ../display/d.vect/main.c:243
-#: ../display/d.vect/main.c:251 ../display/d.vect/main.c:259
-#: ../display/d.vect/main.c:269 ../display/d.vect/main.c:279
-#: ../display/d.vect/main.c:285 ../display/d.vect/main.c:291
-#: ../display/d.vect/main.c:299
+#: ../display/d.vect/main.c:237
+msgid "When used with the size_column option this becomes the scale factor"
+msgstr ""
+
+#: ../display/d.vect/main.c:243
+#, fuzzy
+msgid "Name of numeric column containing symbol size"
+msgstr "y座標を含む列名"
+
+#: ../display/d.vect/main.c:249
+#, fuzzy
+msgid "Name of numeric column containing symbol rotation angle"
+msgstr "y座標を含む列名"
+
+#: ../display/d.vect/main.c:251
+msgid "Measured in degrees CCW from east"
+msgstr ""
+
+#: ../display/d.vect/main.c:256 ../display/d.vect/main.c:263
+#: ../display/d.vect/main.c:271 ../display/d.vect/main.c:279
+#: ../display/d.vect/main.c:289 ../display/d.vect/main.c:299
+#: ../display/d.vect/main.c:305 ../display/d.vect/main.c:311
+#: ../display/d.vect/main.c:319
 msgid "Labels"
 msgstr "ラベル "
 
-#: ../display/d.vect/main.c:238
+#: ../display/d.vect/main.c:258
 msgid "Layer number for labels (default: the given layer number)"
 msgstr "ラベルのレイヤー数 (デフォルト: 与えられたレイヤー数)  "
 
-#: ../display/d.vect/main.c:244
+#: ../display/d.vect/main.c:264
 msgid "Name of column to be displayed"
 msgstr "表示する列名"
 
-#: ../display/d.vect/main.c:250
+#: ../display/d.vect/main.c:270
 msgid "Label color"
 msgstr "ラベル色"
 
-#: ../display/d.vect/main.c:253
+#: ../display/d.vect/main.c:273
 msgid "Either a standard color name or R:G:B triplet"
 msgstr "標準色名またはR:G:B tripletのいずれか"
 
-#: ../display/d.vect/main.c:260
+#: ../display/d.vect/main.c:280
 msgid "Label background color"
 msgstr "背景色をラベルしてください "
 
-#: ../display/d.vect/main.c:270
+#: ../display/d.vect/main.c:290
 msgid "Label border color"
 msgstr "ラベル枠色"
 
-#: ../display/d.vect/main.c:280
+#: ../display/d.vect/main.c:300
 msgid "Label size (pixels)"
 msgstr "ラベルサイズ (ピクセル)"
 
-#: ../display/d.vect/main.c:294
+#: ../display/d.vect/main.c:314
 msgid "Label horizontal justification"
 msgstr "ラベル横方向の行揃え  "
 
-#: ../display/d.vect/main.c:302
+#: ../display/d.vect/main.c:322
 msgid "Label vertical justification"
 msgstr "ラベル縦方向の行揃え  "
 
-#: ../display/d.vect/main.c:309
+#: ../display/d.vect/main.c:329
 msgid ""
 "Minimum region size (average from height and width) when map is displayed"
 msgstr "マップ表示時の最小領域サイズ(高さと幅の平均)"
 
-#: ../display/d.vect/main.c:317
+#: ../display/d.vect/main.c:337
 msgid ""
 "Maximum region size (average from height and width) when map is displayed"
 msgstr "マップ表示時の最大領域サイズ(高さと幅の平均)"
 
-#: ../display/d.vect/main.c:329
+#: ../display/d.vect/main.c:349
 msgid ""
 "g;use the libgis render functions (features: clipping);r;use the raster "
 "graphics library functions (features: polylines);d;use the display library "
@@ -17170,11 +17231,11 @@ msgstr ""
 "(フィーチャ: ポリライン);c;表示ライブラリクリップ機能を使用 (フィーチャ: ク"
 "リップ);l;表示ライブラリカリング機能を使用 (フィーチャ: カリング, ポリライン)"
 
-#: ../display/d.vect/main.c:345
+#: ../display/d.vect/main.c:365
 msgid "Get colors from map table column (of form RRR:GGG:BBB)"
 msgstr "マップテーブル列から色を取得します (RRR:GGG:BBBの形で)  "
 
-#: ../display/d.vect/main.c:351
+#: ../display/d.vect/main.c:371
 msgid ""
 "Random colors according to category number (or layer number if 'layer=-1' is "
 "given)"
@@ -17182,11 +17243,11 @@ msgstr ""
 "分類数によるランダム色 (またはレイヤー数  'レイヤー=-1' が与えられている場"
 "合)  "
 
-#: ../display/d.vect/main.c:358
+#: ../display/d.vect/main.c:378
 msgid "Use values from 'cats' option as feature id"
 msgstr "フィーチャー id として 'cats' オプションから値を使用してください"
 
-#: ../display/d.vect/main.c:363
+#: ../display/d.vect/main.c:383
 msgid ""
 "Don't add to list of vectors and commands in monitor (it won't be drawn if "
 "the monitor is refreshed)"
@@ -17194,49 +17255,45 @@ msgstr ""
 "モニターのベクトルとコマンドのリストに追加しないでください (モニターがリフ"
 "レッシュされた場合描かれない場合があります)  "
 
-#: ../display/d.vect/main.c:368
+#: ../display/d.vect/main.c:388
 msgid "Colorize polygons according to z height"
 msgstr "z高度に準じてポリゴンをカラー化してください  "
 
-#: ../display/d.vect/main.c:435
+#: ../display/d.vect/main.c:455
 msgid ""
 "The '-c' and '-a' flags cannot be used together, the '-c' flag will be "
 "ignored!"
 msgstr ""
 "'-c' と '-a' フラッグは一緒に使用できません, '-c' フラッグ は無視されます!  "
 
-#: ../display/d.vect/main.c:466
+#: ../display/d.vect/main.c:486
 #, c-format
 msgid "Unknown color: '%s'"
 msgstr "不明な色: '%s'"
 
-#: ../display/d.vect/main.c:472
-msgid "Unable to read symbol, unable todisplay points"
-msgstr "記号を読み込めません、ポイントを表示できません"
-
-#: ../display/d.vect/main.c:492 ../vector/v.extract/main.c:274
-#: ../vector/v.univar/main.c:172 ../vector/v.surf.rst/main.c:434
+#: ../display/d.vect/main.c:507 ../vector/v.extract/main.c:274
+#: ../vector/v.univar/main.c:172 ../vector/v.surf.rst/main.c:450
 msgid "'layer' must be > 0 for 'where'."
 msgstr "'場所' には 'レイヤー' は > 0 でなければなりません."
 
-#: ../display/d.vect/main.c:519
+#: ../display/d.vect/main.c:534
 msgid "'layer' must be > 0 for 'cats'."
 msgstr "'cats' には 'レイヤー' は > 0 でなければなりません."
 
-#: ../display/d.vect/main.c:523
+#: ../display/d.vect/main.c:538
 #, c-format
 msgid "%d errors in cat option"
 msgstr " cat オプションにおけるエラー %d "
 
-#: ../display/d.vect/main.c:679
+#: ../display/d.vect/main.c:694
 msgid "Unable to display areas, topology not available"
 msgstr "エリアを表示できません、トポロジーは利用不可です"
 
-#: ../display/d.vect/main.c:684
+#: ../display/d.vect/main.c:699
 msgid "Unable to display lines by id, topology not available"
 msgstr "idでラインを表示できません, トポロジーは利用不可です"
 
-#: ../display/d.vect/main.c:726
+#: ../display/d.vect/main.c:742
 msgid "Unable to display topology, not available"
 msgstr "トポロジーを表示できません、利用不可です"
 
@@ -17257,13 +17314,43 @@ msgstr ""
 msgid "Error in color definition column (%s), area %d with cat %d"
 msgstr "カラー定義列におけるエラー (%s), cat %d を含むエリア %d  "
 
-#: ../display/d.vect/plot1.c:294 ../vector/v.label.sa/labels.c:146
+#: ../display/d.vect/plot1.c:255
+#, fuzzy, c-format
+msgid "Line width column (%s) is not numeric."
+msgstr "数ではなくライン幅列 (%s) .  "
+
+#: ../display/d.vect/plot1.c:275
+#, fuzzy
+msgid "Symbol size column not specified."
+msgstr "ライン幅列は指定されていません."
+
+#: ../display/d.vect/plot1.c:286
+#, fuzzy, c-format
+msgid "Symbol size column (%s) is not numeric."
+msgstr "数ではなくライン幅列 (%s) .  "
+
+#: ../display/d.vect/plot1.c:306
+#, fuzzy
+msgid "Symbol rotation column not specified."
+msgstr "色定義列は指定されていません.  "
+
+#: ../display/d.vect/plot1.c:317
+#, fuzzy, c-format
+msgid "Symbol rotation column (%s) is not numeric."
+msgstr "回転の列型は数字でなくてはいけません"
+
+#: ../display/d.vect/plot1.c:338 ../display/d.vect/plot1.c:639
+#, fuzzy
+msgid "Unable to read symbol, unable to display points"
+msgstr "記号を読み込めません、ポイントを表示できません"
+
+#: ../display/d.vect/plot1.c:369 ../vector/v.label.sa/labels.c:146
 #: ../vector/v.label/main.c:297 ../vector/v.info/main.c:388
 #: ../vector/v.to.3d/trans3.c:81 ../vector/v.to.3d/trans2.c:81
 msgid "Unable to read vector map"
 msgstr "ベクトルマップを読み込めません"
 
-#: ../display/d.vect/plot1.c:386
+#: ../display/d.vect/plot1.c:461
 #, c-format
 msgid ""
 "Error in color definition column '%s', feature id %d with cat %d: "
@@ -17272,12 +17359,18 @@ msgstr ""
 "カラー定義列におけるエラー '%s', cat %d をもつフィーチャー id %d : カラースト"
 "リング '%s'"
 
-#: ../display/d.vect/plot1.c:394
+#: ../display/d.vect/plot1.c:469
 #, c-format
 msgid "Error in color definition column '%s', feature id %d with cat %d"
 msgstr "カラー定義列 '%s' におけるエラー, cat %d を含むフィーチャー id %d "
 
-#: ../display/d.vect/plot1.c:528
+#: ../display/d.vect/plot1.c:591
+#, fuzzy, c-format
+msgid ""
+"Error in symbol size column (%s), element %d with cat %d: symbol size [%f]"
+msgstr "ライン幅列におけるエラー (%s), cat %d を含む要素 %d: ライン幅 [%d]"
+
+#: ../display/d.vect/plot1.c:679
 #, c-format
 msgid "Error in color definition column '%s': %d features affected"
 msgstr "カラー定義列 '%s におけるエラー': %d フィーチャーは影響されています"
@@ -17298,7 +17391,7 @@ msgstr "cat %d に属性を見つけられませんでした: %s"
 #: ../vector/v.voronoi/dt_main.c:46 ../vector/v.delaunay2/main.c:86
 #: ../vector/v.external/main.c:58 ../vector/v.clean/test/topocheck.c:42
 #: ../vector/v.buffer/main.c:254 ../vector/v.info/main.c:265
-#: ../vector/v.surf.rst/main.c:161
+#: ../vector/v.surf.rst/main.c:164
 #: ../locale/scriptstrings/v.build.all_to_translate.c:2
 msgid "vector"
 msgstr "ベクトル"
@@ -17638,7 +17731,7 @@ msgid "Exports a GRASS vector map to SVG."
 msgstr "ベクトルマップをSVGにエクスポートします."
 
 #: ../vector/v.out.svg/main.c:73 ../vector/v.out.ascii/out.c:45
-#: ../vector/v.out.ogr/main.c:86 ../vector/v.out.pov/main.c:43
+#: ../vector/v.out.ogr/main.c:88 ../vector/v.out.pov/main.c:43
 #: ../vector/v.out.dxf/main.c:48
 msgid "vector, export"
 msgstr "ベクトル、エクスポート "
@@ -17672,7 +17765,7 @@ msgid "Precision must not be higher than 15"
 msgstr "精度は15以上でなければなりません  "
 
 #: ../vector/v.out.svg/main.c:154 ../vector/v.random/main.c:214
-#: ../vector/v.out.vtk/writeVTK.c:643 ../vector/v.out.ogr/main.c:344
+#: ../vector/v.out.vtk/writeVTK.c:643 ../vector/v.out.ogr/main.c:426
 #: ../vector/v.patch/main.c:139 ../vector/v.patch/main.c:177
 #: ../vector/v.in.ascii/in.c:408 ../vector/v.info/main.c:222
 #: ../vector/v.db.connect/main.c:219 ../vector/v.drape/main.c:299
@@ -17724,7 +17817,7 @@ msgid "Cannot select attributes for cat=%d"
 msgstr "cat=%d の属性を選択できません"
 
 #: ../vector/v.out.svg/main.c:370 ../vector/v.out.vtk/writeVTK.c:579
-#: ../vector/v.lrs/v.lrs.label/main.c:347 ../vector/v.out.ogr/main.c:713
+#: ../vector/v.lrs/v.lrs.label/main.c:347 ../vector/v.out.ogr/main.c:958
 #: ../vector/v.overlay/main.c:357
 msgid "Unable to fetch data from table"
 msgstr "表からデータを取得できません"
@@ -18163,7 +18256,7 @@ msgstr "スプライン補間アルゴリズム"
 msgid "Tykhonov regularization parameter (affects smoothing)"
 msgstr "Tykhonov 正規化パラメーター (スムージングに影響します)  "
 
-#: ../vector/lidar/v.surf.bspline/main.c:150 ../vector/v.surf.rst/main.c:208
+#: ../vector/lidar/v.surf.bspline/main.c:150 ../vector/v.surf.rst/main.c:216
 msgid "If set to 0, z coordinates are used. (3D vector only)"
 msgstr "0に設定されている場合, z座標は使用されます. (3D ベクトルのみ)  "
 
@@ -20024,7 +20117,7 @@ msgid ""
 msgstr ""
 "出力を作成する座標がありません! 空のベクトルタイプが選択されていませんか?  "
 
-#: ../vector/v.out.vtk/writeVTK.c:575 ../vector/v.out.ogr/main.c:708
+#: ../vector/v.out.vtk/writeVTK.c:575 ../vector/v.out.ogr/main.c:953
 #, c-format
 msgid "Cannot select attributes for cat = %d"
 msgstr " cat = %d の属性を選択できません"
@@ -21191,48 +21284,57 @@ msgstr "MASKを読み込めません"
 msgid "Maximum value in output: %e."
 msgstr "出力値中の最大値：%e"
 
-#: ../vector/v.out.ogr/main.c:88
+#: ../vector/v.out.ogr/main.c:90
 msgid "Converts to one of the supported OGR vector formats."
 msgstr "サポートするOGRベクトルフォーマットのひとつに変換"
 
-#: ../vector/v.out.ogr/main.c:96
+#: ../vector/v.out.ogr/main.c:98
 msgid "Feature type. Combination of types is not supported by all formats."
 msgstr "地物の型． 複合型は全てのフォーマットでサポートされる訳ではありません"
 
-#: ../vector/v.out.ogr/main.c:104
+#: ../vector/v.out.ogr/main.c:106
 msgid "OGR output datasource name"
 msgstr "OGR出力のデータソース名"
 
-#: ../vector/v.out.ogr/main.c:106
+#: ../vector/v.out.ogr/main.c:108
 msgid "For example: ESRI Shapefile: filename or directory for storage"
 msgstr "例： ESRI シェープファイル： ファイル名またはディレクトリ（保管場所）"
 
-#: ../vector/v.out.ogr/main.c:113
+#: ../vector/v.out.ogr/main.c:115
 msgid "OGR layer name. If not specified, input name is used."
 msgstr "OGRレイヤー名．指定しない場合は入力ファイル名"
 
-#: ../vector/v.out.ogr/main.c:114
+#: ../vector/v.out.ogr/main.c:116
 msgid "For example: ESRI Shapefile: shapefile name"
 msgstr "例： ESRIシェープファイル： シェープファイル名"
 
-#: ../vector/v.out.ogr/main.c:115 ../vector/v.out.ogr/main.c:128
-#: ../vector/v.out.ogr/main.c:138 ../vector/v.out.ogr/main.c:148
+#: ../vector/v.out.ogr/main.c:117 ../vector/v.out.ogr/main.c:130
+#: ../vector/v.out.ogr/main.c:140 ../vector/v.out.ogr/main.c:150
 msgid "Creation"
 msgstr "作成"
 
-#: ../vector/v.out.ogr/main.c:127
+#: ../vector/v.out.ogr/main.c:129
 msgid "OGR format"
 msgstr "OGR フォーマット"
 
-#: ../vector/v.out.ogr/main.c:137
+#: ../vector/v.out.ogr/main.c:139
 msgid "OGR dataset creation option (format specific, NAME=VALUE)"
 msgstr "OGRデータセット作成オプション （フォーマット，使用，名前 = VALUE）"
 
-#: ../vector/v.out.ogr/main.c:147
+#: ../vector/v.out.ogr/main.c:149
 msgid "OGR layer creation option (format specific, NAME=VALUE)"
 msgstr "OGRレイヤー作成オプション（フォーマット，仕様，名前 = VALUE ）"
 
-#: ../vector/v.out.ogr/main.c:152
+#: ../vector/v.out.ogr/main.c:154
+#, fuzzy
+msgid "Open an existing datasource for update"
+msgstr "ダウンロードディレクトリから既存のデータを削除"
+
+#: ../vector/v.out.ogr/main.c:159
+msgid "Skip export of GRASS category ID ('cat') attribute"
+msgstr ""
+
+#: ../vector/v.out.ogr/main.c:163
 msgid ""
 "Export features with category (labeled) only. Otherwise all features are "
 "exported"
@@ -21240,37 +21342,45 @@ msgstr ""
 "地物をカテゴリー（ラベル付）だけを付けてエクスポート チェックしないと全ての地"
 "物をエクスポート"
 
-#: ../vector/v.out.ogr/main.c:157
+#: ../vector/v.out.ogr/main.c:168
 msgid "Use ESRI-style .prj file format (applies to Shapefile output only)"
 msgstr ""
 "ESRIスタイルの .prj フォーマットを使用 (シェープファイルの出力のみを要求)  "
 
-#: ../vector/v.out.ogr/main.c:162
+#: ../vector/v.out.ogr/main.c:173
 msgid "Export lines as polygons"
 msgstr "ラインをポリゴンとしてエクスポート"
 
-#: ../vector/v.out.ogr/main.c:201
+#: ../vector/v.out.ogr/main.c:217
+msgid "Skipping all boundaries that are not part of an area."
+msgstr ""
+
+#: ../vector/v.out.ogr/main.c:236
+msgid "Could not determine input map's feature type(s)."
+msgstr ""
+
+#: ../vector/v.out.ogr/main.c:280
 msgid "The combination of types is not supported by all formats."
 msgstr "複合型は全てのフォーマットでサポートされていません"
 
-#: ../vector/v.out.ogr/main.c:224
+#: ../vector/v.out.ogr/main.c:294
 msgid ""
 "The map contains islands. To preserve them in the output map, use the -c flag"
 msgstr ""
 "マップ中に島があります．これらを出力マップに保存するために -c フラッグを使用"
 "してください"
 
-#: ../vector/v.out.ogr/main.c:255
+#: ../vector/v.out.ogr/main.c:324
 #, c-format
 msgid "OGR driver <%s> not found"
 msgstr "OGRドライバー <%s> がありません"
 
-#: ../vector/v.out.ogr/main.c:272
+#: ../vector/v.out.ogr/main.c:349
 #, c-format
 msgid "Unable to open OGR data source '%s'"
 msgstr "OGRデータソースを開けません '%s'"
 
-#: ../vector/v.out.ogr/main.c:293 ../vector/v.out.ogr/main.c:300
+#: ../vector/v.out.ogr/main.c:370 ../vector/v.out.ogr/main.c:377
 #, c-format
 msgid ""
 "Vector map <%s> is 3D. Use format specific layer creation options (parameter "
@@ -21279,20 +21389,24 @@ msgstr ""
 "ベクトルマップ <%s> は3D．エクスポートするために2Dではなく3Dでフォーマット指"
 "定レイヤー作成オプション (パラメーター 'lco') を使用して下さい (標準設定)"
 
-#: ../vector/v.out.ogr/main.c:313
+#: ../vector/v.out.ogr/main.c:390
 msgid "Unable to create OGR layer"
 msgstr "OGRレイヤーを作成できません"
 
-#: ../vector/v.out.ogr/main.c:323
+#: ../vector/v.out.ogr/main.c:400
 msgid "No attribute table found -> using only category numbers as attributes"
 msgstr "属性表がありません -> カテゴリー番号だけを属性として使用"
 
-#: ../vector/v.out.ogr/main.c:387
+#: ../vector/v.out.ogr/main.c:404
+msgid "Exporting 'cat' anyway, as it is the only attribute table field"
+msgstr ""
+
+#: ../vector/v.out.ogr/main.c:481
 #, c-format
 msgid "Key column '%s' not found"
 msgstr "キー列 '%s' がありません"
 
-#: ../vector/v.out.ogr/main.c:399
+#: ../vector/v.out.ogr/main.c:491
 #, c-format
 msgid ""
 "%d point(s) found, but not requested to be exported. Verify 'type' parameter."
@@ -21300,7 +21414,7 @@ msgstr ""
 "%d のポイントがありますがエクスポートの指定がありません．'type' パラメーター"
 "を確認して下さい"
 
-#: ../vector/v.out.ogr/main.c:404
+#: ../vector/v.out.ogr/main.c:496
 #, c-format
 msgid ""
 "%d line(s) found, but not requested to be exported. Verify 'type' parameter."
@@ -21308,7 +21422,7 @@ msgstr ""
 "%d のラインがありますがエクスポートの指定がありません．'type' パラメーターを"
 "確認して下さい"
 
-#: ../vector/v.out.ogr/main.c:410
+#: ../vector/v.out.ogr/main.c:502
 #, c-format
 msgid ""
 "%d boundary(ies) found, but not requested to be exported. Verify 'type' "
@@ -21317,7 +21431,7 @@ msgstr ""
 "%d の境界がありますがエクスポートの指定がありません．'type' パラメーターを確"
 "認して下さい"
 
-#: ../vector/v.out.ogr/main.c:416
+#: ../vector/v.out.ogr/main.c:508
 #, c-format
 msgid ""
 "%d centroid(s) found, but not requested to be exported. Verify 'type' "
@@ -21326,7 +21440,7 @@ msgstr ""
 "%d のセントロイドがありますがエクスポートの指定がありません．'type' パラメー"
 "ターを確認して下さい"
 
-#: ../vector/v.out.ogr/main.c:421
+#: ../vector/v.out.ogr/main.c:513
 #, c-format
 msgid ""
 "%d areas found, but not requested to be exported. Verify 'type' parameter."
@@ -21334,7 +21448,7 @@ msgstr ""
 "%d のエリアがありますがエクスポートの指定がありません．'type' パラメーターを"
 "確認して下さい"
 
-#: ../vector/v.out.ogr/main.c:426
+#: ../vector/v.out.ogr/main.c:517
 #, c-format
 msgid ""
 "%d faces found, but not requested to be exported. Verify 'type' parameter."
@@ -21342,40 +21456,122 @@ msgstr ""
 "%d の面がありますがエクスポートの指定がありません．'type' パラメーターを確認"
 "して下さい"
 
-#: ../vector/v.out.ogr/main.c:434
+#: ../vector/v.out.ogr/main.c:523
+#, fuzzy, c-format
+msgid ""
+"%d kernel(s) found, but not requested to be exported. Verify 'type' "
+"parameter."
+msgstr ""
+"%d のラインがありますがエクスポートの指定がありません．'type' パラメーターを"
+"確認して下さい"
+
+#: ../vector/v.out.ogr/main.c:530
+#, fuzzy
+msgid ""
+"No points found, but requested to be exported. Will skip this geometry type."
+msgstr ""
+"%d のポイントがありますがエクスポートの指定がありません．'type' パラメーター"
+"を確認して下さい"
+
+#: ../vector/v.out.ogr/main.c:540
+#, fuzzy
+msgid ""
+"No lines found, but requested to be exported. Will skip this geometry type."
+msgstr ""
+"%d のラインがありますがエクスポートの指定がありません．'type' パラメーターを"
+"確認して下さい"
+
+#: ../vector/v.out.ogr/main.c:551
+#, fuzzy
+msgid ""
+"No boundaries found, but requested to be exported. Will skip this geometry "
+"type."
+msgstr ""
+"%d の境界がありますがエクスポートの指定がありません．'type' パラメーターを確"
+"認して下さい"
+
+#: ../vector/v.out.ogr/main.c:561
+#, fuzzy
+msgid ""
+"No areas found, but requested to be exported. Will skip this geometry type."
+msgstr ""
+"%d のエリアがありますがエクスポートの指定がありません．'type' パラメーターを"
+"確認して下さい"
+
+#: ../vector/v.out.ogr/main.c:571
+#, fuzzy
+msgid ""
+"No centroids found, but requested to be exported. Will skip this geometry "
+"type."
+msgstr ""
+"%d のセントロイドがありますがエクスポートの指定がありません．'type' パラメー"
+"ターを確認して下さい"
+
+#: ../vector/v.out.ogr/main.c:581
+#, fuzzy
+msgid ""
+"No faces found, but requested to be exported. Will skip this geometry type."
+msgstr ""
+"%d の面がありますがエクスポートの指定がありません．'type' パラメーターを確認"
+"して下さい"
+
+#: ../vector/v.out.ogr/main.c:591
+#, fuzzy
+msgid ""
+"No kernels found, but requested to be exported. Will skip this geometry type."
+msgstr ""
+"%d のエリアがありますがエクスポートの指定がありません．'type' パラメーターを"
+"確認して下さい"
+
+#: ../vector/v.out.ogr/main.c:603
+#, fuzzy
+msgid "Nothing to export"
+msgstr "することがありません"
+
+#: ../vector/v.out.ogr/main.c:609
 #, c-format
 msgid "Exporting %i points/lines..."
 msgstr "%i のポイント/ラインをエクスポート中、、、"
 
-#: ../vector/v.out.ogr/main.c:512
+#: ../vector/v.out.ogr/main.c:691
 #, c-format
 msgid "Exporting %i areas (may take some time)..."
 msgstr "%i のエリアをエクスポート中 (少し時間がかかります)、、、"
 
-#: ../vector/v.out.ogr/main.c:584
+#: ../vector/v.out.ogr/main.c:766
 #, c-format
 msgid "Exporting %i faces (may take some time) ..."
 msgstr "%i の面をエクスポート中（少し時間がかかります）、、、"
 
-#: ../vector/v.out.ogr/main.c:654 ../vector/v.out.pov/main.c:207
+#: ../vector/v.out.ogr/main.c:829
+#, fuzzy, c-format
+msgid "Exporting %i kernels..."
+msgstr "%i のポイント/ラインをエクスポート中、、、"
+
+#: ../vector/v.out.ogr/main.c:899 ../vector/v.out.pov/main.c:207
 #, c-format
 msgid "%d features written"
 msgstr "%d 個の地物が書き込まれました"
 
-#: ../vector/v.out.ogr/main.c:656
+#: ../vector/v.out.ogr/main.c:901
 #, c-format
 msgid "%d features without category were written"
 msgstr "%d 個の地物（カテゴリー無し）が書き込まれました"
 
-#: ../vector/v.out.ogr/main.c:658
+#: ../vector/v.out.ogr/main.c:903
 #, c-format
 msgid "%d features without attributes were written"
 msgstr "%d 個の地物（属性無し）が書き込まれました"
 
-#: ../vector/v.out.ogr/main.c:660
+#: ../vector/v.out.ogr/main.c:905
 #, c-format
 msgid "%d features found without category were skipped"
 msgstr "%d 個の地物（カテゴリー無し）がスキップされました"
+
+#: ../vector/v.out.ogr/main.c:969
+#, c-format
+msgid "No database record for cat = %d and export of 'cat' disabled"
+msgstr ""
 
 #: ../vector/v.proj/main.c:63
 #, fuzzy
@@ -21551,11 +21747,11 @@ msgstr "断面の曲面ラスターマップ名"
 msgid "Name of the column containing w attribute to interpolate"
 msgstr "補間するための w 属性を含む列名"
 
-#: ../vector/v.vol.rst/main.c:260 ../vector/v.surf.rst/main.c:300
+#: ../vector/v.vol.rst/main.c:260 ../vector/v.surf.rst/main.c:308
 msgid "Tension parameter"
 msgstr "テンションパラメーター"
 
-#: ../vector/v.vol.rst/main.c:268 ../vector/v.surf.rst/main.c:307
+#: ../vector/v.vol.rst/main.c:268 ../vector/v.surf.rst/main.c:315
 msgid "Smoothing parameter"
 msgstr "パラメータ を平滑化"
 
@@ -21563,7 +21759,7 @@ msgstr "パラメータ を平滑化"
 msgid "Name of the column with smoothing parameters"
 msgstr "平滑化パラメーターを含む列名"
 
-#: ../vector/v.vol.rst/main.c:286 ../vector/v.surf.rst/main.c:257
+#: ../vector/v.vol.rst/main.c:286 ../vector/v.surf.rst/main.c:265
 msgid "Output deviations vector point file"
 msgstr "偏差ベクトルポイントファイルを出力"
 
@@ -21575,15 +21771,15 @@ msgstr "解析"
 msgid "Output cross-validation vector map"
 msgstr "相互検証ベクトルマップを出力"
 
-#: ../vector/v.vol.rst/main.c:302 ../vector/v.surf.rst/main.c:284
+#: ../vector/v.vol.rst/main.c:302 ../vector/v.surf.rst/main.c:292
 msgid "Name of the raster map used as mask"
 msgstr "マスクに使用するラスターマップ名"
 
-#: ../vector/v.vol.rst/main.c:309 ../vector/v.surf.rst/main.c:323
+#: ../vector/v.vol.rst/main.c:309 ../vector/v.surf.rst/main.c:331
 msgid "Maximum number of points in a segment"
 msgstr "単位セグメントあたりのデータポイント数の最大値 "
 
-#: ../vector/v.vol.rst/main.c:318 ../vector/v.surf.rst/main.c:332
+#: ../vector/v.vol.rst/main.c:318 ../vector/v.surf.rst/main.c:340
 msgid "Minimum number of points for approximation in a segment (>segmax)"
 msgstr "近似に用いる単位セグメントあたりのデータポイント数の最小値 (>segmax)"
 
@@ -21592,7 +21788,7 @@ msgstr "近似に用いる単位セグメントあたりのデータポイント
 msgid "Maximum number of points for approximation in a segment (>npmin)"
 msgstr "近似に用いる単位セグメントあたりのデータポイント数の最小値 (>segmax)"
 
-#: ../vector/v.vol.rst/main.c:336 ../vector/v.surf.rst/main.c:341
+#: ../vector/v.vol.rst/main.c:336 ../vector/v.surf.rst/main.c:349
 msgid "Minimum distance between points (to remove almost identical points)"
 msgstr "2点間の最小距離（一致するポイントを除外するため）"
 
@@ -24891,7 +25087,7 @@ msgstr "属性テーブルをコピー中、、、"
 msgid "%d features modified."
 msgstr "%d のフィーチャーが修正されました"
 
-#: ../vector/v.surf.rst/main.c:163
+#: ../vector/v.surf.rst/main.c:166
 msgid ""
 "Spatial approximation and topographic analysis from given point or isoline "
 "data in vector format to floating point raster format using regularized "
@@ -24900,84 +25096,89 @@ msgstr ""
 "ベクトルフォーマット内の指定されたポイントまたは等値線データを，テンション法"
 "正規化スプラインにより，浮動小数点ラスターフォーマットに，空間近似と地形解析"
 
-#: ../vector/v.surf.rst/main.c:190
+#: ../vector/v.surf.rst/main.c:192
+#, fuzzy
+msgid "Use z-coordinates (3D vector only)"
+msgstr "0に設定すると，z 座標が使用されます (3D ベクトルのみ)  "
+
+#: ../vector/v.surf.rst/main.c:198
 msgid "Perform cross-validation procedure without raster approximation"
 msgstr "ラスタ近似なしで，相互検証を行う"
 
-#: ../vector/v.surf.rst/main.c:195
+#: ../vector/v.surf.rst/main.c:203
 msgid "Use scale dependent tension"
 msgstr "縮尺依存テンションを使用"
 
-#: ../vector/v.surf.rst/main.c:219
+#: ../vector/v.surf.rst/main.c:227
 msgid "Output surface raster map (elevation)"
 msgstr "曲面ラスターマップ（標高）を出力"
 
-#: ../vector/v.surf.rst/main.c:225
+#: ../vector/v.surf.rst/main.c:233
 msgid "Output slope raster map"
 msgstr "傾斜ラスターマップを出力"
 
-#: ../vector/v.surf.rst/main.c:231
+#: ../vector/v.surf.rst/main.c:239
 msgid "Output aspect raster map"
 msgstr "方位ラスタマップを出力"
 
-#: ../vector/v.surf.rst/main.c:237
+#: ../vector/v.surf.rst/main.c:245
 msgid "Output profile curvature raster map"
 msgstr "断面曲率ラスターマップを出力"
 
-#: ../vector/v.surf.rst/main.c:243
+#: ../vector/v.surf.rst/main.c:251
 msgid "Output tangential curvature raster map"
 msgstr "正接曲率ラスターマップを出力"
 
-#: ../vector/v.surf.rst/main.c:249
+#: ../vector/v.surf.rst/main.c:257
 msgid "Output mean curvature raster map"
 msgstr "平均断面曲率ラスターマップを出力"
 
-#: ../vector/v.surf.rst/main.c:264
+#: ../vector/v.surf.rst/main.c:272
 msgid "Output cross-validation errors vector point file"
 msgstr "相互検証誤差ベクトルポイントファイルを出力"
 
-#: ../vector/v.surf.rst/main.c:271
+#: ../vector/v.surf.rst/main.c:279
 msgid "Output vector map showing quadtree segmentation"
 msgstr "四分木分割を示すベクトルマップを出力"
 
-#: ../vector/v.surf.rst/main.c:278
+#: ../vector/v.surf.rst/main.c:286
 msgid "Output vector map showing overlapping windows"
 msgstr "重複するウィンドウを示すベクトルマップを出力"
 
-#: ../vector/v.surf.rst/main.c:292
+#: ../vector/v.surf.rst/main.c:300
 msgid ""
 "Name of the attribute column with values to be used for approximation (if "
 "layer>0)"
 msgstr "近似（layer > 0 の時）に使用される値を含む属性列名"
 
-#: ../vector/v.surf.rst/main.c:315
+#: ../vector/v.surf.rst/main.c:323
 msgid "Name of the attribute column with smoothing parameters"
 msgstr "平滑化パラメーターを含む属性列名"
 
-#: ../vector/v.surf.rst/main.c:350
+#: ../vector/v.surf.rst/main.c:358
 msgid ""
 "Maximum distance between points on isoline (to insert additional points)"
 msgstr "等値線上の2点間の最大距離（ポイントを追加挿入するため）"
 
-#: ../vector/v.surf.rst/main.c:359
+#: ../vector/v.surf.rst/main.c:367
 msgid "Conversion factor for values used for approximation"
 msgstr "近似に使用する変換係数値"
 
-#: ../vector/v.surf.rst/main.c:367
+#: ../vector/v.surf.rst/main.c:375
 msgid "Anisotropy angle (in degrees counterclockwise from East)"
 msgstr "異方性の角度（[度]，東からの反時計回り）"
 
-#: ../vector/v.surf.rst/main.c:402 ../vector/v.surf.rst/main.c:407
-#: ../vector/v.surf.rst/main.c:412 ../vector/v.surf.rst/main.c:417
+#: ../vector/v.surf.rst/main.c:408 ../vector/v.surf.rst/main.c:413
+#: ../vector/v.surf.rst/main.c:418 ../vector/v.surf.rst/main.c:423
 #, c-format
 msgid "Output vector map name <%s> is not valid map name"
 msgstr "出力するベクトルマップ名 <%s> は有効なマップ名ではありません"
 
-#: ../vector/v.surf.rst/main.c:430
+#: ../vector/v.surf.rst/main.c:436
 msgid "You are not outputting any raster or vector maps"
 msgstr "ラスターマップまたはベクトルマップを指定していません"
 
-#: ../vector/v.surf.rst/main.c:443
+#: ../vector/v.surf.rst/main.c:456
 msgid ""
 "Both cross-validation options (-c flag and cvdev vector output) must be "
 "specified"
@@ -24985,42 +25186,50 @@ msgstr ""
 "相互検証オプション (-c フラッグ と cvdev ベクトル出力) の両方を指定する必要が"
 "あります"
 
-#: ../vector/v.surf.rst/main.c:446
+#: ../vector/v.surf.rst/main.c:459
 msgid ""
 "The cross-validation cannot be computed simultaneously with output raster or "
 "devi file"
 msgstr ""
 "相互検証計算はラスタファイルや devi ファイルの出力と同時に計算できません"
 
+#: ../vector/v.surf.rst/main.c:462
+msgid "Both z-coordinate and zcol attribute defined, only one is allowed"
+msgstr ""
+
 #: ../vector/v.surf.rst/main.c:464
+msgid "Only smoothing column defined, zcol or -z flag is missing"
+msgstr ""
+
+#: ../vector/v.surf.rst/main.c:484
 msgid "Using anisotropy - both theta and scalex have to be specified"
 msgstr "異方性を使用 - theta と scalex の両方を指定する必要があります"
 
-#: ../vector/v.surf.rst/main.c:472
+#: ../vector/v.surf.rst/main.c:492
 msgid "Both smatt and smooth options specified - using constant"
 msgstr "smatt と smooth オプションの両方を指定 - 定数を使用"
 
-#: ../vector/v.surf.rst/main.c:482
+#: ../vector/v.surf.rst/main.c:502
 msgid "The computation will last too long - lower npmin is suggested"
 msgstr "計算時間が長すぎます - npmin を小さくしたらよいかもしれません"
 
-#: ../vector/v.surf.rst/main.c:529
+#: ../vector/v.surf.rst/main.c:549
 msgid "Cannot create quaddata"
 msgstr "quaddata を作成できません"
 
-#: ../vector/v.surf.rst/main.c:535
+#: ../vector/v.surf.rst/main.c:555
 msgid "Cannot create quadfunc"
 msgstr "quadfunc を作成できません"
 
-#: ../vector/v.surf.rst/main.c:538
+#: ../vector/v.surf.rst/main.c:558
 msgid "Cannot create tree"
 msgstr "ツリーを作成できません"
 
-#: ../vector/v.surf.rst/main.c:542
+#: ../vector/v.surf.rst/main.c:562
 msgid "Cannot create tree info"
 msgstr "ツリー情報を作成できません"
 
-#: ../vector/v.surf.rst/main.c:735
+#: ../vector/v.surf.rst/main.c:755
 #, c-format
 msgid ""
 "Processing all selected output files\n"
@@ -25029,11 +25238,11 @@ msgstr ""
 "全ての出力ファイルを処理中です\n"
 "%d バイトのディスクスペースとtempファイルが必要です"
 
-#: ../vector/v.surf.rst/main.c:759
+#: ../vector/v.surf.rst/main.c:779
 msgid "Interp_segmets failed"
 msgstr "Interp_segmets に失敗しました"
 
-#: ../vector/v.surf.rst/main.c:776
+#: ../vector/v.surf.rst/main.c:796
 msgid "Cannot write raster maps -- try to increase resolution"
 msgstr "ラスターマップを書き込めません -- 解像度を上げてみて下さい"
 
@@ -26770,6 +26979,7 @@ msgid "Test %s."
 msgstr "テスト %s.  "
 
 #: ../db/base/select.c:88 ../imagery/i.rectify/report.c:16
+#: ../imagery/i.ortho.photo/i.photo.rectify/report.c:10
 msgid "failed"
 msgstr "失敗しました"
 
@@ -29131,6 +29341,7 @@ msgid "Use maximum likelihood estimation (instead of smap)"
 msgstr "最大尤度推定を使用（smapの代わり）"
 
 #: ../imagery/i.smap/shapiro/parse.c:58 ../imagery/i.gensigset/parse.c:45
+#: ../imagery/i.ortho.photo/i.photo.rectify/main.c:177
 #: ../imagery/i.gensig/parse.c:39 ../imagery/i.cluster/open_files.c:17
 #: ../imagery/i.maxlik/open.c:16
 #, c-format
@@ -29148,7 +29359,8 @@ msgid "imagery, image transformation, PCA"
 msgstr "画像、画像変換、PCA"
 
 #: ../imagery/i.pca/main.c:64
-msgid "Principal components analysis (pca) program for image processing."
+#, fuzzy
+msgid "Principal components analysis (PCA) for image processing."
 msgstr "画像処理の主成分分析（pca）プログラム"
 
 #: ../imagery/i.pca/main.c:69
@@ -29163,52 +29375,62 @@ msgstr "出力ラスターマップの基底名"
 msgid "A numerical suffix will be added for each component map"
 msgstr "数値サフィックスは各成分マップに加えられます"
 
-#: ../imagery/i.pca/main.c:83
-msgid "Rescaling range for output maps (for no rescaling use 0,0)"
+#: ../imagery/i.pca/main.c:87
+#, fuzzy
+msgid "Rescaling range for output maps"
 msgstr "出力マップの範囲を再計測 (0,0を使う再計測はありません)"
 
-#: ../imagery/i.pca/main.c:93
+#: ../imagery/i.pca/main.c:89
+msgid "For no rescaling use 0,0"
+msgstr ""
+
+#: ../imagery/i.pca/main.c:90
+#, fuzzy
+msgid "Rescale"
+msgstr "行の変更"
+
+#: ../imagery/i.pca/main.c:100
 msgid "Sorry, at least 2 input bands must be provided"
 msgstr "2つ以上の入力バンドが作成されなければなりません"
 
-#: ../imagery/i.pca/main.c:136
+#: ../imagery/i.pca/main.c:143
 msgid "Calculating covariance matrix..."
 msgstr "共分散マトリックスを計算中"
 
-#: ../imagery/i.pca/main.c:212
+#: ../imagery/i.pca/main.c:219
 msgid "Scale range length should be > 0. Using default values: 0,255."
 msgstr ""
 "計った領域の長さは > 0でなければなりません。デフォルト値を使用: 0,255.  "
 
-#: ../imagery/i.pca/main.c:249 ../imagery/i.pca/main.c:298
-#: ../imagery/i.pca/main.c:431
+#: ../imagery/i.pca/main.c:256 ../imagery/i.pca/main.c:305
+#: ../imagery/i.pca/main.c:438
 msgid "Unable allocate memory for row buffer"
 msgstr "行バッファーのメモリを確保できません"
 
-#: ../imagery/i.pca/main.c:251
+#: ../imagery/i.pca/main.c:258
 #, c-format
 msgid "Computing means for band %d..."
 msgstr "バンドの演算手段 %d..."
 
-#: ../imagery/i.pca/main.c:300
+#: ../imagery/i.pca/main.c:307
 #, fuzzy, c-format
 msgid "Computing row %d (of %d) of covariance matrix..."
 msgstr "共分散マトリックスの計算をしている行 %d..."
 
-#: ../imagery/i.pca/main.c:317
+#: ../imagery/i.pca/main.c:324
 msgid "Unable to allocate memory for row buffer"
 msgstr "行バッファーのメモリを確保できません"
 
-#: ../imagery/i.pca/main.c:379
+#: ../imagery/i.pca/main.c:386
 msgid "Unable to allocate memory for raster row"
 msgstr "ラスター行のメモリを確保できません"
 
-#: ../imagery/i.pca/main.c:388
+#: ../imagery/i.pca/main.c:395
 #, c-format
 msgid "Transforming <%s>..."
 msgstr "変換中 <%s>..."
 
-#: ../imagery/i.pca/main.c:407
+#: ../imagery/i.pca/main.c:414
 #, c-format
 msgid "Rescaling <%s> to range %d,%d..."
 msgstr "範囲に再計測 <%s>  %d,%d..."
@@ -29290,6 +29512,7 @@ msgstr ""
 "正する"
 
 #: ../imagery/i.rectify/main.c:100
+#: ../imagery/i.ortho.photo/i.photo.rectify/main.c:100
 msgid "Output raster map(s) suffix"
 msgstr "出力するラスターマップサフィックス"
 
@@ -29298,11 +29521,13 @@ msgid "Rectification polynom order (1-3)"
 msgstr "多項式次数の修正 (1-3)  "
 
 #: ../imagery/i.rectify/main.c:111
+#: ../imagery/i.ortho.photo/i.photo.rectify/main.c:134
 msgid ""
 "Use current region settings in target location (def.=calculate smallest area)"
 msgstr "ターゲットロケーションに現在の領域設定を使用 (def.=最小エリアを計算)"
 
 #: ../imagery/i.rectify/main.c:115
+#: ../imagery/i.ortho.photo/i.photo.rectify/main.c:138
 msgid "Rectify all raster maps in group"
 msgstr "グループの全ラスターマップを修正する"
 
@@ -29317,11 +29542,13 @@ msgid "Group <%s> does not exist"
 msgstr "グループ <%s> は存在しません"
 
 #: ../imagery/i.rectify/main.c:146
+#: ../imagery/i.ortho.photo/i.photo.rectify/main.c:184
 #, c-format
 msgid "Group <%s> contains no raster maps; run i.group"
 msgstr "グループ <%s>にラスターマップはありません; i.groupを実行"
 
 #: ../imagery/i.rectify/main.c:205
+#: ../imagery/i.ortho.photo/i.photo.rectify/main.c:316
 #, c-format
 msgid "Using region: N=%f S=%f, E=%f W=%f"
 msgstr "領域の使用: 北=%f 南=%f, 東=%f 西=%f  "
@@ -29336,6 +29563,7 @@ msgstr ""
 " 再試行:\n"
 
 #: ../imagery/i.rectify/main.c:225
+#: ../imagery/i.ortho.photo/i.photo.rectify/main.c:388
 msgid "Exit!"
 msgstr "終了!"
 
@@ -29392,6 +29620,7 @@ msgid "Please run i.target for group."
 msgstr "グループに i.targetを実行してください"
 
 #: ../imagery/i.rectify/report.c:12
+#: ../imagery/i.ortho.photo/i.photo.rectify/rectify.c:46
 #, c-format
 msgid "Rectify <%s@%s> (location <%s>)"
 msgstr "修正 <%s@%s> (ロケーション <%s>)"
@@ -29402,6 +29631,7 @@ msgid "into  <%s@%s> (location <%s>) ... %s"
 msgstr "へ  <%s@%s> (ロケーション <%s>) ... %s"
 
 #: ../imagery/i.rectify/report.c:16
+#: ../imagery/i.ortho.photo/i.photo.rectify/report.c:10
 msgid "complete"
 msgstr "完了"
 
@@ -29429,16 +29659,19 @@ msgid "Error writing row %d"
 msgstr "行の書き込みエラー %d"
 
 #: ../imagery/i.rectify/exec.c:54
+#: ../imagery/i.ortho.photo/i.photo.rectify/exec.c:72
 #, c-format
 msgid "Rectified input raster map <%s> will be saved as <%s>"
 msgstr "修正されたラスターマップ <%s>は <%s>として保存されます"
 
 #: ../imagery/i.rectify/rectify.c:94
+#: ../imagery/i.ortho.photo/i.photo.rectify/rectify.c:131
 #, c-format
 msgid "Raster map <%s@%s>: projection don't match current settings"
 msgstr "ラスターマップ <%s@%s>: 投影は現在の設定と一致しません"
 
 #: ../imagery/i.rectify/rectify.c:100
+#: ../imagery/i.ortho.photo/i.photo.rectify/rectify.c:137
 #, c-format
 msgid "Raster map <%s@%s>: zone don't match current settings"
 msgstr "ラスターマップ <%s@%s>: ゾーンは現在の設定と一致しません"
@@ -29466,15 +29699,15 @@ msgid "Group [%s] contains no maps, run i.group"
 msgstr "グループ [%s] にマップは含んでいません。 i.groupを実行してください。"
 
 #: ../imagery/i.vpoints/main.c:254 ../imagery/i.points/main.c:248
-#: ../imagery/i.ortho.photo/photo.2target/main.c:302
-#: ../imagery/i.ortho.photo/photo.2image/main.c:195
+#: ../imagery/i.ortho.photo/i.photo.2image/main.c:195
+#: ../imagery/i.ortho.photo/i.photo.2target/main.c:302
 #, c-format
 msgid "ERROR: %s"
 msgstr "エラー: %s  "
 
 #: ../imagery/i.vpoints/main.c:256 ../imagery/i.points/main.c:250
-#: ../imagery/i.ortho.photo/photo.2target/main.c:304
-#: ../imagery/i.ortho.photo/photo.2image/main.c:197
+#: ../imagery/i.ortho.photo/i.photo.2image/main.c:197
+#: ../imagery/i.ortho.photo/i.photo.2target/main.c:304
 #, c-format
 msgid "WARNING: %s (click mouse to continue)"
 msgstr "警告: %s (続行のためにマウスをクリック) "
@@ -29820,230 +30053,18 @@ msgstr "変換が完了しました.\n"
 msgid "Mark ground control points on image to be rectified."
 msgstr "修正された画像上の土地ポイントを示す"
 
-#: ../imagery/i.ortho.photo/photo.2target/main.c:53
-#: ../imagery/i.ortho.photo/photo.rectify/main.c:49
-#: ../imagery/i.ortho.photo/photo.elev/main.c:62
-#: ../imagery/i.ortho.photo/photo.target/main.c:46
-#: ../imagery/i.ortho.photo/photo.2image/main.c:54
-#: ../imagery/i.ortho.photo/photo.init/main.c:44
-#: ../imagery/i.ortho.photo/photo.camera/main.c:54
+#: ../imagery/i.ortho.photo/i.photo.init/main.c:44
+#: ../imagery/i.ortho.photo/i.photo.camera/main.c:55
+#: ../imagery/i.ortho.photo/i.photo.2image/main.c:54
+#: ../imagery/i.ortho.photo/i.photo.rectify/main.c:86
+#: ../imagery/i.ortho.photo/i.photo.elev/main.c:62
+#: ../imagery/i.ortho.photo/i.photo.2target/main.c:53
+#: ../imagery/i.ortho.photo/i.photo.target/main.c:46
 #: ../imagery/i.ortho.photo/menu/menu.c:43
 msgid "imagery, orthorectify"
 msgstr "画像、オルソ修正"
 
-#: ../imagery/i.ortho.photo/photo.2target/main.c:54
-msgid "Creates control points on an image to be ortho-rectified."
-msgstr "オルソ修正された画像上にコントロールポイントを作成する"
-
-#: ../imagery/i.ortho.photo/photo.2target/main.c:62
-#: ../imagery/i.group/main.c:58
-msgid "Name of imagery group"
-msgstr "画像グループ名"
-
-#: ../imagery/i.ortho.photo/photo.2target/main.c:66
-msgid "Name of image to be rectified which will be initially drawn on screen"
-msgstr "最初にスクリーンに描画される修正された画像名"
-
-#: ../imagery/i.ortho.photo/photo.2target/main.c:72
-msgid ""
-"Name of a map from target mapset which will be initially drawn on screen"
-msgstr "最初にスクリーンに表示されるターゲットマップセットからのマップ名"
-
-#: ../imagery/i.ortho.photo/photo.2target/main.c:102
-#: ../imagery/i.ortho.photo/photo.rectify/main.c:72
-#: ../imagery/i.ortho.photo/photo.init/main.c:64
-#, c-format
-msgid "Group [%s] not found"
-msgstr "グループ [%s] が見つかりません"
-
-#: ../imagery/i.ortho.photo/photo.2target/main.c:114
-#: ../imagery/i.ortho.photo/photo.2image/main.c:98
-#, c-format
-msgid "No camera reference file selected for group [%s]"
-msgstr "グループの選択されたカメラ参照ファイルがありません [%s]"
-
-#: ../imagery/i.ortho.photo/photo.2target/main.c:118
-#: ../imagery/i.ortho.photo/photo.2image/main.c:102
-#, c-format
-msgid "Bad format in camera file for group [%s]"
-msgstr "グループ[%s]のカメラファイルにある不正なフォーマット"
-
-#: ../imagery/i.ortho.photo/photo.2target/main.c:125
-#, c-format
-msgid "No initial camera exposure station for group [%s]"
-msgstr "グループの初期カメラ暴露場がありません[%s]"
-
-#: ../imagery/i.ortho.photo/photo.2target/main.c:129
-#, c-format
-msgid "Bad format in initial camera exposure station for group [%s]"
-msgstr "グループ[%s]の初期カメラ露出暴露場の不正なフォーマット"
-
-#: ../imagery/i.ortho.photo/photo.2target/main.c:143
-#, c-format
-msgid "No photo points for group [%s]"
-msgstr "グループに写真ポイントがありません [%s]"
-
-#: ../imagery/i.ortho.photo/photo.2target/main.c:145
-#, c-format
-msgid "Poorly placed photo points for group [%s]"
-msgstr "グループ[%s]の不十分な場所写真ポイント"
-
-#: ../imagery/i.ortho.photo/photo.2target/main.c:167
-msgid "Computing equations ..."
-msgstr "方程式を計算中..."
-
-#: ../imagery/i.ortho.photo/photo.2target/main.c:202
-#: ../imagery/i.ortho.photo/photo.2target/main.c:233
-#, c-format
-msgid "Unable to read raster header of <%s>"
-msgstr "<%s>のラスターヘッダーが読み取れません"
-
-#: ../imagery/i.ortho.photo/photo.2target/curses.c:22
-#: ../imagery/i.class/curses.c:22
-#, c-format
-msgid "make_window(%d,%d,%d,%d): illegal screen values."
-msgstr "make_window(%d,%d,%d,%d): 無効なスクリーン値"
-
-#: ../imagery/i.ortho.photo/photo.2target/curses.c:148
-#: ../imagery/i.class/curses.c:153
-#, c-format
-msgid "%s"
-msgstr "%s"
-
-#: ../imagery/i.ortho.photo/photo.rectify/main.c:51
-#: ../imagery/i.ortho.photo/photo.target/main.c:48
-msgid "Interactively select or modify the imagery group target."
-msgstr "画像グループターゲットを対話形式で選択あるいは修正する"
-
-#: ../imagery/i.ortho.photo/photo.rectify/main.c:55
-#: ../imagery/i.ortho.photo/photo.elev/main.c:68
-#: ../imagery/i.ortho.photo/photo.target/main.c:52
-#: ../imagery/i.ortho.photo/photo.2image/main.c:60
-#: ../imagery/i.ortho.photo/photo.init/main.c:52
-#: ../imagery/i.ortho.photo/photo.camera/main.c:60
-#: ../imagery/i.ortho.photo/menu/menu.c:48
-msgid "Name of imagery group for ortho-rectification"
-msgstr "オルソ修正の画像グループ名"
-
-#: ../imagery/i.ortho.photo/photo.rectify/main.c:78
-msgid "No files in this group!"
-msgstr "このグループ内にファイルがありません!"
-
-#: ../imagery/i.ortho.photo/photo.rectify/main.c:97
-#, c-format
-msgid "No target elevation model selected for group <%s>"
-msgstr "グループを選択するために指定された標高モデルが存在しません [%s]"
-
-#: ../imagery/i.ortho.photo/photo.rectify/main.c:109
-#, c-format
-msgid "No camera reference file selected for group <%s>"
-msgstr "グループの選択されたカメラ参照ファイルがありません [%s]"
-
-#: ../imagery/i.ortho.photo/photo.rectify/main.c:113
-#, c-format
-msgid "Bad format in camera file for group <%s>"
-msgstr "グループ[%s]のカメラファイルにある不正なフォーマット"
-
-#: ../imagery/i.ortho.photo/photo.rectify/main.c:119
-#, c-format
-msgid "Bad format in initial exposusre station file for group <%s>"
-msgstr "グループ [%s]の初期風雨ステーションファイルの不正なフォーマット"
-
-#: ../imagery/i.ortho.photo/photo.rectify/ps_cp.c:53
-msgid "Poorly placed psuedo control points. "
-msgstr "不完全に設置された疑似コントロールポイント"
-
-#: ../imagery/i.ortho.photo/photo.rectify/ps_cp.c:54
-msgid "Cannot generate the transformation equation."
-msgstr "変換方程式が作成できません"
-
-#: ../imagery/i.ortho.photo/photo.rectify/ps_cp.c:58
-msgid "No active psuedo control points"
-msgstr "アクティブな疑似コントロールマップはありません"
-
-#: ../imagery/i.ortho.photo/photo.rectify/write.c:34
-#, c-format
-msgid "Unable to write temp file: %s"
-msgstr "一時ファイルに書き込みできません: %s"
-
-#: ../imagery/i.ortho.photo/photo.rectify/write.c:58
-#, c-format
-msgid "Unable to open map %s"
-msgstr "マップが開けません %s"
-
-#: ../imagery/i.ortho.photo/photo.rectify/write.c:63
-#, c-format
-msgid "Unable to write row %d"
-msgstr "行に書き込みできません %d"
-
-#: ../imagery/i.ortho.photo/photo.rectify/write.c:66
-msgid ""
-"Unable to write raster map. You might want to check available disk space and "
-"write permissions."
-msgstr ""
-"ラスターマップを書き込めません。利用できるディスクを確認し、許可を書き込んで"
-"ください。"
-
-#: ../imagery/i.ortho.photo/photo.rectify/ask_files.c:36
-msgid "Please select the file(s) you wish to rectify by naming an output file"
-msgstr "出力ファイルに名づけて修正したいファイルを選択してください"
-
-#: ../imagery/i.ortho.photo/photo.rectify/rectify.c:245
-#, c-format
-msgid "%s@%s: projection doesn't match current settings"
-msgstr "%s@%s: 投影は現在の設定と一致していません"
-
-#: ../imagery/i.ortho.photo/photo.rectify/rectify.c:251
-#, c-format
-msgid "%s@%s: zone doesn't match current settings"
-msgstr "%s@%s: ゾーンは現在の設定と一致していません"
-
-#: ../imagery/i.ortho.photo/photo.elev/main.c:64
-msgid "Interactively select or modify the target elevation model."
-msgstr "ターゲット標高モデルを対話形式で選択あるいは修正してください"
-
-#: ../imagery/i.ortho.photo/photo.elev/main.c:91
-#, c-format
-msgid "Target information for group [%s] missing\n"
-msgstr "グループの [%s]ターゲット情報が見つかりません\n"
-
-#: ../imagery/i.ortho.photo/photo.elev/main.c:98
-#, c-format
-msgid "Target location [%s] not found\n"
-msgstr "ターゲットロケーション [%s] が見つかりません\n"
-
-#: ../imagery/i.ortho.photo/photo.elev/main.c:127
-#, c-format
-msgid "Mapset [%s] in target location [%s] - "
-msgstr "ターゲットロケーション [%s]のマップセット [%s]  - "
-
-#: ../imagery/i.ortho.photo/photo.elev/main.c:128
-msgid "permission denied\n"
-msgstr "許可されませんでした\n"
-
-#: ../imagery/i.ortho.photo/photo.elev/main.c:128
-msgid "not found\n"
-msgstr "見つかりません\n"
-
-#: ../imagery/i.ortho.photo/photo.elev/main.c:131
-msgid "Please select a target for group"
-msgstr "グループのターゲットを選択してください"
-
-#: ../imagery/i.ortho.photo/photo.target/main.c:66
-#, c-format
-msgid "Group [%s] targeted for location [%s], mapset [%s]"
-msgstr " ロケーション [%s]の対象になったグループ [%s], マップセット [%s]"
-
-#: ../imagery/i.ortho.photo/photo.2image/main.c:56
-msgid "Interactively mark fiducial or reseau points on an image."
-msgstr "画像の標準あるいは網状ポイントを対話形式にマークする"
-
-#: ../imagery/i.ortho.photo/photo.2image/main.c:86
-#, c-format
-msgid "Image Group [%s] not found"
-msgstr "画像グループ [%s] が見つかりません"
-
-#: ../imagery/i.ortho.photo/photo.init/main.c:46
+#: ../imagery/i.ortho.photo/i.photo.init/main.c:46
 msgid ""
 "Interactively creates or modifies entries in a camera initial exposure "
 "station file for imagery group referenced by a sub-block."
@@ -30051,25 +30072,356 @@ msgstr ""
 "サブブロックによって参照された画像グループのためにカメラ初期暴露場ファイルの"
 "項目を対話形式に作成あるいは修正する"
 
-#: ../imagery/i.ortho.photo/photo.camera/main.c:56
+#: ../imagery/i.ortho.photo/i.photo.init/main.c:52
+#: ../imagery/i.ortho.photo/i.photo.camera/main.c:61
+#: ../imagery/i.ortho.photo/i.photo.2image/main.c:60
+#: ../imagery/i.ortho.photo/i.photo.elev/main.c:68
+#: ../imagery/i.ortho.photo/i.photo.target/main.c:52
+#: ../imagery/i.ortho.photo/menu/menu.c:48
+msgid "Name of imagery group for ortho-rectification"
+msgstr "オルソ修正の画像グループ名"
+
+#: ../imagery/i.ortho.photo/i.photo.init/main.c:64
+#: ../imagery/i.ortho.photo/i.photo.2target/main.c:102
+#, c-format
+msgid "Group [%s] not found"
+msgstr "グループ [%s] が見つかりません"
+
+#: ../imagery/i.ortho.photo/i.photo.camera/main.c:57
 msgid ""
 "Interactively select and modify the imagery group camera reference file."
 msgstr "画像グループカメラ参照ファイルを対話形式に選択、修正する"
 
-#: ../imagery/i.ortho.photo/photo.camera/main.c:67
+#: ../imagery/i.ortho.photo/i.photo.camera/main.c:68
 msgid "Name of camera reference file to use"
 msgstr "使用するカメラ参照ファイル名"
 
-#: ../imagery/i.ortho.photo/photo.camera/main.c:83
+#: ../imagery/i.ortho.photo/i.photo.camera/main.c:84
 msgid "Enter a camera reference file to be used with this imagery group"
 msgstr "この画像グループとともに使用されるカメラ参照グループファイルを入力"
 
-#: ../imagery/i.ortho.photo/photo.camera/main.c:100
+#: ../imagery/i.ortho.photo/i.photo.camera/main.c:101
 #, c-format
 msgid "Group [%s] in location [%s] mapset [%s] now has camera file [%s]"
 msgstr ""
 "ロケーション [%s] マップセット [%s] のグループ [%s] に現在カメラファイル [%s]"
 "はあります  "
+
+#: ../imagery/i.ortho.photo/i.photo.2image/main.c:56
+msgid "Interactively mark fiducial or reseau points on an image."
+msgstr "画像の標準あるいは網状ポイントを対話形式にマークする"
+
+#: ../imagery/i.ortho.photo/i.photo.2image/main.c:86
+#, c-format
+msgid "Image Group [%s] not found"
+msgstr "画像グループ [%s] が見つかりません"
+
+#: ../imagery/i.ortho.photo/i.photo.2image/main.c:98
+#: ../imagery/i.ortho.photo/i.photo.2target/main.c:114
+#, c-format
+msgid "No camera reference file selected for group [%s]"
+msgstr "グループの選択されたカメラ参照ファイルがありません [%s]"
+
+#: ../imagery/i.ortho.photo/i.photo.2image/main.c:102
+#: ../imagery/i.ortho.photo/i.photo.2target/main.c:118
+#, c-format
+msgid "Bad format in camera file for group [%s]"
+msgstr "グループ[%s]のカメラファイルにある不正なフォーマット"
+
+#: ../imagery/i.ortho.photo/i.photo.rectify/angle.c:36
+#, fuzzy
+msgid "Calculating camera angle to local surface..."
+msgstr "centrality measures を計算しています..."
+
+#: ../imagery/i.ortho.photo/i.photo.rectify/angle.c:51
+#: ../imagery/i.ortho.photo/i.photo.rectify/exec.c:43
+#, fuzzy
+msgid "Could not open elevation raster"
+msgstr "標高マップレイヤーが開けません"
+
+#: ../imagery/i.ortho.photo/i.photo.rectify/main.c:88
+msgid ""
+"Orthorectifies an image by using the image to photo coordinate "
+"transformation matrix."
+msgstr ""
+
+#: ../imagery/i.ortho.photo/i.photo.rectify/main.c:106
+msgid "Target resolution (ignored if -c flag used)"
+msgstr ""
+
+#: ../imagery/i.ortho.photo/i.photo.rectify/main.c:114
+msgid "Amount of memory to use in MB"
+msgstr ""
+
+#: ../imagery/i.ortho.photo/i.photo.rectify/main.c:129
+msgid "Raster map with camera angle relative to ground surface"
+msgstr ""
+
+#: ../imagery/i.ortho.photo/i.photo.rectify/main.c:181
+#, fuzzy, c-format
+msgid "Could not read REF file for group <%s>"
+msgstr " <%s>から読み込むことができません"
+
+#: ../imagery/i.ortho.photo/i.photo.rectify/main.c:238
+#, c-format
+msgid "No camera reference file selected for group <%s>"
+msgstr "グループの選択されたカメラ参照ファイルがありません [%s]"
+
+#: ../imagery/i.ortho.photo/i.photo.rectify/main.c:242
+#, c-format
+msgid "Bad format in camera file for group <%s>"
+msgstr "グループ[%s]のカメラファイルにある不正なフォーマット"
+
+#: ../imagery/i.ortho.photo/i.photo.rectify/main.c:248
+#, fuzzy, c-format
+msgid "Bad format in initial exposure station file for group <%s>"
+msgstr "グループ [%s]の初期風雨ステーションファイルの不正なフォーマット"
+
+#: ../imagery/i.ortho.photo/i.photo.rectify/main.c:278
+#: ../imagery/i.ortho.photo/menu/i.photo.rectify.c:109
+#, fuzzy, c-format
+msgid "Extension <%s> is illegal"
+msgstr "<%s> は不正なファイル名です"
+
+#: ../imagery/i.ortho.photo/i.photo.rectify/main.c:281
+#: ../imagery/i.ortho.photo/i.photo.rectify/main.c:290
+#, fuzzy
+msgid "The following raster map already exists in"
+msgstr "ラスターマップ <%s> は既に存在します"
+
+#: ../imagery/i.ortho.photo/i.photo.rectify/main.c:282
+#: ../imagery/i.ortho.photo/i.photo.rectify/main.c:291
+#, c-format
+msgid "target LOCATION %s, MAPSET %s:"
+msgstr ""
+
+#: ../imagery/i.ortho.photo/i.photo.rectify/main.c:285
+#: ../imagery/i.ortho.photo/i.photo.rectify/main.c:294
+#: ../imagery/i.ortho.photo/menu/i.photo.rectify.c:112
+#: ../imagery/i.ortho.photo/menu/i.photo.rectify.c:144
+#, c-format
+msgid "Orthorectification cancelled."
+msgstr ""
+
+#: ../imagery/i.ortho.photo/i.photo.rectify/main.c:309
+msgid "Target resolution must be > 0, ignored"
+msgstr ""
+
+#: ../imagery/i.ortho.photo/i.photo.rectify/main.c:324
+#, c-format
+msgid "No target elevation model selected for group <%s>"
+msgstr "グループを選択するために指定された標高モデルが存在しません [%s]"
+
+#: ../imagery/i.ortho.photo/i.photo.rectify/main.c:381
+#, fuzzy, c-format
+msgid "Input raster map <%s> does not exist in group <%s>."
+msgstr ""
+"入力するラスターマップ <%s> はグループ <%s>にありません\n"
+" 再試行:\n"
+
+#: ../imagery/i.ortho.photo/i.photo.rectify/main.c:383
+msgid "Try:"
+msgstr ""
+
+#: ../imagery/i.ortho.photo/i.photo.rectify/readcell.c:140
+#, fuzzy
+msgid "Error reading segment file"
+msgstr "セグメントファイル書き込みのエラー"
+
+#: ../imagery/i.ortho.photo/i.photo.rectify/cp.c:13
+#, fuzzy, c-format
+msgid ""
+"Control Z Point file for group [%s] in [%s] \n"
+" \n"
+msgstr "グループのコントロールポイントファイル <%s@%s> - "
+
+#: ../imagery/i.ortho.photo/i.photo.rectify/cp.c:16
+#, fuzzy
+msgid "Computing equations..."
+msgstr "方程式を計算中..."
+
+#: ../imagery/i.ortho.photo/i.photo.rectify/cp.c:22
+#, fuzzy
+msgid "Poorly placed Control Points!\n"
+msgstr "不十分な制御ポイントの設置  "
+
+#: ../imagery/i.ortho.photo/i.photo.rectify/cp.c:23
+#: ../imagery/i.ortho.photo/i.photo.rectify/cp.c:28
+#: ../imagery/i.ortho.photo/i.photo.rectify/cp.c:52
+#: ../imagery/i.ortho.photo/i.photo.rectify/cp.c:58
+#, fuzzy
+msgid "Can not generate the transformation equation.\n"
+msgstr "変換方程式を作成できません"
+
+#: ../imagery/i.ortho.photo/i.photo.rectify/cp.c:24
+msgid "Run OPTION 7 of i.ortho.photo again!\n"
+msgstr ""
+
+#: ../imagery/i.ortho.photo/i.photo.rectify/cp.c:27
+#, fuzzy
+msgid "No active Control Points!\n"
+msgstr "作動しているコントロールポイントはありません"
+
+#: ../imagery/i.ortho.photo/i.photo.rectify/cp.c:29
+msgid "Run OPTION 7 of i.ortho.photo!\n"
+msgstr ""
+
+#: ../imagery/i.ortho.photo/i.photo.rectify/cp.c:45
+#, fuzzy, c-format
+msgid ""
+"Reference Point file for group [%s] in [%s] \n"
+" \n"
+msgstr "グループのコントロールポイントファイル <%s@%s> - "
+
+#: ../imagery/i.ortho.photo/i.photo.rectify/cp.c:51
+#, fuzzy
+msgid "Poorly placed Reference Points!\n"
+msgstr "不十分な制御ポイントの設置  "
+
+#: ../imagery/i.ortho.photo/i.photo.rectify/cp.c:53
+msgid "Run OPTION 5 of i.ortho.photo again!\n"
+msgstr ""
+
+#: ../imagery/i.ortho.photo/i.photo.rectify/cp.c:57
+#, fuzzy
+msgid "No active Reference Points!\n"
+msgstr "作動しているコントロールポイントはありません"
+
+#: ../imagery/i.ortho.photo/i.photo.rectify/cp.c:59
+msgid "Run OPTION 5 of i.ortho.photo!\n"
+msgstr ""
+
+#: ../imagery/i.ortho.photo/i.photo.rectify/target.c:13
+#, fuzzy, c-format
+msgid "Target information for group <%s> missing.\n"
+msgstr "グループのターゲット情報 <%s>が見つかりません"
+
+#: ../imagery/i.ortho.photo/i.photo.rectify/target.c:19
+#, fuzzy, c-format
+msgid "Target location <%s> not found\n"
+msgstr "ターゲットロケーション <%s> は見つかりません"
+
+#: ../imagery/i.ortho.photo/i.photo.rectify/target.c:32
+#: ../imagery/i.ortho.photo/i.photo.elev/main.c:128
+msgid "permission denied\n"
+msgstr "許可されませんでした\n"
+
+#: ../imagery/i.ortho.photo/i.photo.rectify/target.c:32
+#: ../imagery/i.ortho.photo/i.photo.elev/main.c:128
+msgid "not found\n"
+msgstr "見つかりません\n"
+
+#: ../imagery/i.ortho.photo/i.photo.rectify/report.c:21
+#, fuzzy, c-format
+msgid " %d rows, %d cols (%ld cells) completed in "
+msgstr "%d 行, %d 列 (%ld セル) は完成しました "
+
+#: ../imagery/i.ortho.photo/i.photo.rectify/report.c:28
+#, fuzzy, c-format
+msgid " %.1f cells per minute\n"
+msgstr "1分ごとの%.1f セル"
+
+#: ../imagery/i.ortho.photo/i.photo.rectify/rectify.c:50
+#, fuzzy, c-format
+msgid "into  <%s@%s> (location <%s>) ..."
+msgstr "へ  <%s@%s> (ロケーション <%s>) ... %s"
+
+#: ../imagery/i.ortho.photo/i.photo.rectify/rectify.c:84
+#, fuzzy, c-format
+msgid "No elevation available at row = %d, col = %d"
+msgstr "データ変換は行 %d, 列 %d で失敗しました  "
+
+#: ../imagery/i.ortho.photo/i.photo.elev/main.c:64
+msgid "Interactively select or modify the target elevation model."
+msgstr "ターゲット標高モデルを対話形式で選択あるいは修正してください"
+
+#: ../imagery/i.ortho.photo/i.photo.elev/main.c:91
+#, c-format
+msgid "Target information for group [%s] missing\n"
+msgstr "グループの [%s]ターゲット情報が見つかりません\n"
+
+#: ../imagery/i.ortho.photo/i.photo.elev/main.c:98
+#, c-format
+msgid "Target location [%s] not found\n"
+msgstr "ターゲットロケーション [%s] が見つかりません\n"
+
+#: ../imagery/i.ortho.photo/i.photo.elev/main.c:127
+#, c-format
+msgid "Mapset [%s] in target location [%s] - "
+msgstr "ターゲットロケーション [%s]のマップセット [%s]  - "
+
+#: ../imagery/i.ortho.photo/i.photo.elev/main.c:131
+msgid "Please select a target for group"
+msgstr "グループのターゲットを選択してください"
+
+#: ../imagery/i.ortho.photo/i.photo.2target/main.c:54
+msgid "Creates control points on an image to be ortho-rectified."
+msgstr "オルソ修正された画像上にコントロールポイントを作成する"
+
+#: ../imagery/i.ortho.photo/i.photo.2target/main.c:62
+#: ../imagery/i.group/main.c:58
+msgid "Name of imagery group"
+msgstr "画像グループ名"
+
+#: ../imagery/i.ortho.photo/i.photo.2target/main.c:66
+msgid "Name of image to be rectified which will be initially drawn on screen"
+msgstr "最初にスクリーンに描画される修正された画像名"
+
+#: ../imagery/i.ortho.photo/i.photo.2target/main.c:72
+msgid ""
+"Name of a map from target mapset which will be initially drawn on screen"
+msgstr "最初にスクリーンに表示されるターゲットマップセットからのマップ名"
+
+#: ../imagery/i.ortho.photo/i.photo.2target/main.c:125
+#, c-format
+msgid "No initial camera exposure station for group [%s]"
+msgstr "グループの初期カメラ暴露場がありません[%s]"
+
+#: ../imagery/i.ortho.photo/i.photo.2target/main.c:129
+#, c-format
+msgid "Bad format in initial camera exposure station for group [%s]"
+msgstr "グループ[%s]の初期カメラ露出暴露場の不正なフォーマット"
+
+#: ../imagery/i.ortho.photo/i.photo.2target/main.c:143
+#, c-format
+msgid "No photo points for group [%s]"
+msgstr "グループに写真ポイントがありません [%s]"
+
+#: ../imagery/i.ortho.photo/i.photo.2target/main.c:145
+#, c-format
+msgid "Poorly placed photo points for group [%s]"
+msgstr "グループ[%s]の不十分な場所写真ポイント"
+
+#: ../imagery/i.ortho.photo/i.photo.2target/main.c:167
+msgid "Computing equations ..."
+msgstr "方程式を計算中..."
+
+#: ../imagery/i.ortho.photo/i.photo.2target/main.c:202
+#: ../imagery/i.ortho.photo/i.photo.2target/main.c:233
+#, c-format
+msgid "Unable to read raster header of <%s>"
+msgstr "<%s>のラスターヘッダーが読み取れません"
+
+#: ../imagery/i.ortho.photo/i.photo.2target/curses.c:22
+#: ../imagery/i.class/curses.c:22
+#, c-format
+msgid "make_window(%d,%d,%d,%d): illegal screen values."
+msgstr "make_window(%d,%d,%d,%d): 無効なスクリーン値"
+
+#: ../imagery/i.ortho.photo/i.photo.2target/curses.c:148
+#: ../imagery/i.class/curses.c:153
+#, c-format
+msgid "%s"
+msgstr "%s"
+
+#: ../imagery/i.ortho.photo/i.photo.target/main.c:48
+msgid "Interactively select or modify the imagery group target."
+msgstr "画像グループターゲットを対話形式で選択あるいは修正する"
+
+#: ../imagery/i.ortho.photo/i.photo.target/main.c:66
+#, c-format
+msgid "Group [%s] targeted for location [%s], mapset [%s]"
+msgstr " ロケーション [%s]の対象になったグループ [%s], マップセット [%s]"
 
 #: ../imagery/i.ortho.photo/menu/menu.c:44
 msgid "Menu driver for the photo imagery programs."
@@ -30088,6 +30440,128 @@ msgstr "オルソ修正の画像グループを入力"
 #, c-format
 msgid "Group [%s] contains no files"
 msgstr "グループ [%s] にファイルはありません。"
+
+#: ../imagery/i.ortho.photo/menu/i.photo.rectify.c:44
+#, fuzzy, c-format
+msgid "Could not read REF file for group [%s]"
+msgstr "グループ[%s]のカメラファイルにある不正なフォーマット"
+
+#: ../imagery/i.ortho.photo/menu/i.photo.rectify.c:45
+#: ../imagery/i.ortho.photo/menu/i.photo.rectify.c:50
+#, c-format
+msgid "Orthorectification cancelled"
+msgstr ""
+
+#: ../imagery/i.ortho.photo/menu/i.photo.rectify.c:49
+#, c-format
+msgid "No files in this group!"
+msgstr "このグループ内にファイルがありません!"
+
+#: ../imagery/i.ortho.photo/menu/i.photo.rectify.c:61
+#, fuzzy
+msgid ""
+"\n"
+"Rectify all images in the group? "
+msgstr "グループの全ラスターマップを修正する"
+
+#: ../imagery/i.ortho.photo/menu/i.photo.rectify.c:71
+#, c-format
+msgid ""
+"\n"
+"Rectify image <%s>? "
+msgstr ""
+
+#: ../imagery/i.ortho.photo/menu/i.photo.rectify.c:84
+#, c-format
+msgid ""
+"\n"
+"No images selected, orthorectification cancelled."
+msgstr ""
+
+#: ../imagery/i.ortho.photo/menu/i.photo.rectify.c:99
+msgid "Enter an extension to be appended to rectified maps:"
+msgstr ""
+
+#: ../imagery/i.ortho.photo/menu/i.photo.rectify.c:110
+#, fuzzy
+msgid ""
+"\n"
+"Choose another extension? "
+msgstr "一般的な, 設定"
+
+#: ../imagery/i.ortho.photo/menu/i.photo.rectify.c:122
+msgid ""
+"\n"
+"Compute local camera angle? "
+msgstr ""
+
+#: ../imagery/i.ortho.photo/menu/i.photo.rectify.c:132
+#, fuzzy
+msgid "Enter a name for the camera angle map:"
+msgstr "ラスターアングルマップ名"
+
+#: ../imagery/i.ortho.photo/menu/i.photo.rectify.c:141
+#, fuzzy, c-format
+msgid "Map name <%s> is illegal"
+msgstr "<%s> は不正なファイル名です"
+
+#: ../imagery/i.ortho.photo/menu/i.photo.rectify.c:142
+msgid ""
+"\n"
+"Choose another name? "
+msgstr ""
+
+#: ../imagery/i.ortho.photo/menu/i.photo.rectify.c:156
+#, fuzzy
+msgid ""
+"\n"
+"Overwrite maps in target location/mapset? "
+msgstr "マップセット <%s> （ターゲットロケーション <%s> ）- "
+
+#: ../imagery/i.ortho.photo/menu/i.photo.rectify.c:224
+#, fuzzy, c-format
+msgid "Please select one of the following interpolation methods\n"
+msgstr "[%s] のための情報を順次入力してください "
+
+#: ../imagery/i.ortho.photo/menu/i.photo.rectify.c:225
+#, c-format
+msgid " 1. nearest neighbor\n"
+msgstr ""
+
+#: ../imagery/i.ortho.photo/menu/i.photo.rectify.c:226
+#, c-format
+msgid " 2. bilinear\n"
+msgstr ""
+
+#: ../imagery/i.ortho.photo/menu/i.photo.rectify.c:227
+#, c-format
+msgid " 3. bicubic\n"
+msgstr ""
+
+#: ../imagery/i.ortho.photo/menu/i.photo.rectify.c:228
+#, c-format
+msgid " 4. bilinear with fallback\n"
+msgstr ""
+
+#: ../imagery/i.ortho.photo/menu/i.photo.rectify.c:229
+#, c-format
+msgid " 5. bicubic with fallback\n"
+msgstr ""
+
+#: ../imagery/i.ortho.photo/menu/i.photo.rectify.c:291
+#, c-format
+msgid "Enter amount of memory to use in MB, or\n"
+msgstr ""
+
+#: ../imagery/i.ortho.photo/menu/i.photo.rectify.c:293
+#, c-format
+msgid "RETURN   use %d MB to keep all data in RAM\n"
+msgstr ""
+
+#: ../imagery/i.ortho.photo/menu/i.photo.rectify.c:295
+#, c-format
+msgid "RETURN   use %d MB\n"
+msgstr ""
 
 #: ../imagery/i.fft/fftmain.c:76
 msgid "Fast Fourier Transform (FFT) for image processing."
@@ -30823,10 +31297,6 @@ msgstr ""
 "結果シグネチャファイルはi.maxlik および i.clusterのシードシグネチャファイルと"
 "して使用されます"
 
-#: ../imagery/i.class/main.c:62
-msgid "Name of raster map to be displayed"
-msgstr "ラスターマップ名が表示されています"
-
 #: ../imagery/i.class/main.c:77
 msgid "File to contain result signatures"
 msgstr "シグネチャの結果を含むファイル"
@@ -31005,6 +31475,47 @@ msgstr "古いMASKセルマップの削除中のエラー"
 #, c-format
 msgid "Can't mark another point.  Only %d points allowed.  Sorry."
 msgstr "他のポイントを示すことができません。 %d ポイントのみ可能です。"
+
+#~ msgid "<%s> created"
+#~ msgstr "<%s> 作成されました"
+
+#~ msgid "Raster map to be displayed"
+#~ msgstr "表示するラスターマップ"
+
+#~ msgid "Poorly placed psuedo control points. "
+#~ msgstr "不完全に設置された疑似コントロールポイント"
+
+#~ msgid "Cannot generate the transformation equation."
+#~ msgstr "変換方程式が作成できません"
+
+#~ msgid "No active psuedo control points"
+#~ msgstr "アクティブな疑似コントロールマップはありません"
+
+#~ msgid "Unable to write temp file: %s"
+#~ msgstr "一時ファイルに書き込みできません: %s"
+
+#~ msgid "Unable to open map %s"
+#~ msgstr "マップが開けません %s"
+
+#~ msgid "Unable to write row %d"
+#~ msgstr "行に書き込みできません %d"
+
+#~ msgid ""
+#~ "Unable to write raster map. You might want to check available disk space "
+#~ "and write permissions."
+#~ msgstr ""
+#~ "ラスターマップを書き込めません。利用できるディスクを確認し、許可を書き込ん"
+#~ "でください。"
+
+#~ msgid ""
+#~ "Please select the file(s) you wish to rectify by naming an output file"
+#~ msgstr "出力ファイルに名づけて修正したいファイルを選択してください"
+
+#~ msgid "%s@%s: projection doesn't match current settings"
+#~ msgstr "%s@%s: 投影は現在の設定と一致していません"
+
+#~ msgid "%s@%s: zone doesn't match current settings"
+#~ msgstr "%s@%s: ゾーンは現在の設定と一致していません"
 
 #~ msgid "vector, projection"
 #~ msgstr "ベクトル，投影"

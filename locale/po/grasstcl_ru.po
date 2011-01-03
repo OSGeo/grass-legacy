@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: grasstcl_ru\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-11-23 11:27+0100\n"
+"POT-Creation-Date: 2011-01-03 15:32+0100\n"
 "PO-Revision-Date: 2009-01-28 23:05-0600\n"
 "Last-Translator: Maxim Dubinin <sim@gis-lab.info>\n"
 "Language-Team: Russian <grass-translations@lists.osgeo.org>\n"
@@ -60,112 +60,112 @@ msgstr "Средняя клавиша"
 msgid "Right button"
 msgstr "Правая клавиша"
 
-#: ../vector/v.digit/toolbox.tcl:76
+#: ../vector/v.digit/toolbox.tcl:98
 msgid "  Layer"
 msgstr " Слой"
 
-#: ../vector/v.digit/toolbox.tcl:80
+#: ../vector/v.digit/toolbox.tcl:102
 msgid "  Category"
 msgstr " Категория"
 
-#: ../vector/v.digit/toolbox.tcl:84
+#: ../vector/v.digit/toolbox.tcl:106
 msgid "  Mode "
 msgstr " Режим"
 
-#: ../vector/v.digit/toolbox.tcl:96
+#: ../vector/v.digit/toolbox.tcl:118
 msgid "Insert new record into table"
 msgstr "Вставить новую запись в таблицу"
 
-#: ../vector/v.digit/toolbox.tcl:113
+#: ../vector/v.digit/toolbox.tcl:135
 msgid "Digitize new point"
 msgstr "Создать новую точку"
 
-#: ../vector/v.digit/toolbox.tcl:118
+#: ../vector/v.digit/toolbox.tcl:140
 msgid "Digitize new line"
 msgstr "Создать новую линию"
 
-#: ../vector/v.digit/toolbox.tcl:123
+#: ../vector/v.digit/toolbox.tcl:145
 msgid "Digitize new boundary"
 msgstr "Создать новый контур"
 
-#: ../vector/v.digit/toolbox.tcl:128
+#: ../vector/v.digit/toolbox.tcl:150
 msgid "Digitize new centroid"
 msgstr "Создать новый центроид"
 
-#: ../vector/v.digit/toolbox.tcl:134
+#: ../vector/v.digit/toolbox.tcl:156
 msgid "Move vertex"
 msgstr "Переместить вершину"
 
-#: ../vector/v.digit/toolbox.tcl:139
+#: ../vector/v.digit/toolbox.tcl:161
 msgid "Add vertex"
 msgstr "Добавить вершину"
 
-#: ../vector/v.digit/toolbox.tcl:144
+#: ../vector/v.digit/toolbox.tcl:166
 msgid "Remove vertex"
 msgstr "Удалить вершину"
 
-#: ../vector/v.digit/toolbox.tcl:149
+#: ../vector/v.digit/toolbox.tcl:171
 msgid "Split line"
 msgstr "Разделить линию"
 
-#: ../vector/v.digit/toolbox.tcl:154
+#: ../vector/v.digit/toolbox.tcl:176
 msgid "Edit line/boundary"
 msgstr "Редактировать линию/контур"
 
-#: ../vector/v.digit/toolbox.tcl:159
+#: ../vector/v.digit/toolbox.tcl:181
 msgid "Move point, line, boundary, or centroid"
 msgstr "Переместить точку, линию, границу или центроид"
 
-#: ../vector/v.digit/toolbox.tcl:164
+#: ../vector/v.digit/toolbox.tcl:186
 msgid "Delete point, line, boundary, or centroid"
 msgstr "Удалить точку, линию, границу или центроид"
 
-#: ../vector/v.digit/toolbox.tcl:175
+#: ../vector/v.digit/toolbox.tcl:197
 msgid "Redraw"
 msgstr "Перерисовать"
 
-#: ../vector/v.digit/toolbox.tcl:180
+#: ../vector/v.digit/toolbox.tcl:202
 msgid "Zoom in by window"
 msgstr "Увеличить окном"
 
-#: ../vector/v.digit/toolbox.tcl:185
+#: ../vector/v.digit/toolbox.tcl:207
 msgid "Zoom out"
 msgstr "Уменьшить"
 
-#: ../vector/v.digit/toolbox.tcl:190 ../gui/tcltk/gis.m/georecttool.tcl:130
+#: ../vector/v.digit/toolbox.tcl:212 ../gui/tcltk/gis.m/georecttool.tcl:130
 #: ../gui/tcltk/gis.m/maptool.tcl:151
 msgid "Pan"
 msgstr "Сдвиг"
 
-#: ../vector/v.digit/toolbox.tcl:195
+#: ../vector/v.digit/toolbox.tcl:217
 msgid "Zoom to default region"
 msgstr "Вернуться к региону по умолчанию"
 
-#: ../vector/v.digit/toolbox.tcl:208
+#: ../vector/v.digit/toolbox.tcl:230
 msgid "Zoom to saved region"
 msgstr "Вернуться к сохраненному региону"
 
-#: ../vector/v.digit/toolbox.tcl:214
+#: ../vector/v.digit/toolbox.tcl:236
 msgid "Display categories"
 msgstr "Показать категории"
 
-#: ../vector/v.digit/toolbox.tcl:219
+#: ../vector/v.digit/toolbox.tcl:241
 msgid "Copy categories"
 msgstr "Скопировать категории"
 
-#: ../vector/v.digit/toolbox.tcl:224
+#: ../vector/v.digit/toolbox.tcl:246
 msgid "Display attributes"
 msgstr "Отобразить атрибуты"
 
-#: ../vector/v.digit/toolbox.tcl:236
+#: ../vector/v.digit/toolbox.tcl:258
 msgid "Open settings"
 msgstr "Открыть настройки"
 
-#: ../vector/v.digit/toolbox.tcl:242
+#: ../vector/v.digit/toolbox.tcl:264
 msgid "Save and exit"
 msgstr "Сохранить и выйти"
 
-#: ../vector/v.digit/toolbox.tcl:253
+#: ../vector/v.digit/toolbox.tcl:275
 msgid "mouse button actions (left, middle, right)"
 msgstr "действия для кнопок мыши (левая, средняя, правая)"
 

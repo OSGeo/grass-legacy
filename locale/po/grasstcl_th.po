@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: grasstcl_th\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-11-23 11:27+0100\n"
+"POT-Creation-Date: 2011-01-03 15:32+0100\n"
 "PO-Revision-Date: 2008-01-05 15:05+0700\n"
 "Last-Translator: man <mansv68@yahoo.co.th>\n"
 "Language-Team: Thai <grass-translations@lists.osgeo.org>\n"
@@ -63,112 +63,112 @@ msgstr "ปุ่มกลาง"
 msgid "Right button"
 msgstr "ปุ่มขวา"
 
-#: ../vector/v.digit/toolbox.tcl:76
+#: ../vector/v.digit/toolbox.tcl:98
 msgid "  Layer"
 msgstr "ชั้นข้อมูล"
 
-#: ../vector/v.digit/toolbox.tcl:80
+#: ../vector/v.digit/toolbox.tcl:102
 msgid "  Category"
 msgstr "หมวด"
 
-#: ../vector/v.digit/toolbox.tcl:84
+#: ../vector/v.digit/toolbox.tcl:106
 msgid "  Mode "
 msgstr "โหมด "
 
-#: ../vector/v.digit/toolbox.tcl:96
+#: ../vector/v.digit/toolbox.tcl:118
 msgid "Insert new record into table"
 msgstr "แทรกเรคคอร์ดใหม่เข้าสู่ตาราง"
 
-#: ../vector/v.digit/toolbox.tcl:113
+#: ../vector/v.digit/toolbox.tcl:135
 msgid "Digitize new point"
 msgstr "ดิจิไทซ์จุดใหม่"
 
-#: ../vector/v.digit/toolbox.tcl:118
+#: ../vector/v.digit/toolbox.tcl:140
 msgid "Digitize new line"
 msgstr "ดิจิไทซ์เส้นใหม่"
 
-#: ../vector/v.digit/toolbox.tcl:123
+#: ../vector/v.digit/toolbox.tcl:145
 msgid "Digitize new boundary"
 msgstr "ดิจิไทซ์ขอบเขตใหม่"
 
-#: ../vector/v.digit/toolbox.tcl:128
+#: ../vector/v.digit/toolbox.tcl:150
 msgid "Digitize new centroid"
 msgstr "ดิจิไทซ์จุดกึ่งกลางใหม่"
 
-#: ../vector/v.digit/toolbox.tcl:134
+#: ../vector/v.digit/toolbox.tcl:156
 msgid "Move vertex"
 msgstr "ย้าย vertex"
 
-#: ../vector/v.digit/toolbox.tcl:139
+#: ../vector/v.digit/toolbox.tcl:161
 msgid "Add vertex"
 msgstr "เพิ่ม vertex"
 
-#: ../vector/v.digit/toolbox.tcl:144
+#: ../vector/v.digit/toolbox.tcl:166
 msgid "Remove vertex"
 msgstr "ลบ vertex"
 
-#: ../vector/v.digit/toolbox.tcl:149
+#: ../vector/v.digit/toolbox.tcl:171
 msgid "Split line"
 msgstr "แบ่งเส้น"
 
-#: ../vector/v.digit/toolbox.tcl:154
+#: ../vector/v.digit/toolbox.tcl:176
 msgid "Edit line/boundary"
 msgstr "แก้ไข เส้น/ขอบเขต"
 
-#: ../vector/v.digit/toolbox.tcl:159
+#: ../vector/v.digit/toolbox.tcl:181
 msgid "Move point, line, boundary, or centroid"
 msgstr "ย้าย จุด, เส้น, ขอบเขต หรือจุดกึ่งกลาง"
 
-#: ../vector/v.digit/toolbox.tcl:164
+#: ../vector/v.digit/toolbox.tcl:186
 msgid "Delete point, line, boundary, or centroid"
 msgstr "ลบ จุด, เส้น, ขอบเขต หรือจุดกึ่งกลาง"
 
-#: ../vector/v.digit/toolbox.tcl:175
+#: ../vector/v.digit/toolbox.tcl:197
 msgid "Redraw"
 msgstr "วาดใหม่"
 
-#: ../vector/v.digit/toolbox.tcl:180
+#: ../vector/v.digit/toolbox.tcl:202
 msgid "Zoom in by window"
 msgstr "ขยายเข้า โดยกำหนด หน้าต่าง"
 
-#: ../vector/v.digit/toolbox.tcl:185
+#: ../vector/v.digit/toolbox.tcl:207
 msgid "Zoom out"
 msgstr "ย่อ"
 
-#: ../vector/v.digit/toolbox.tcl:190 ../gui/tcltk/gis.m/georecttool.tcl:130
+#: ../vector/v.digit/toolbox.tcl:212 ../gui/tcltk/gis.m/georecttool.tcl:130
 #: ../gui/tcltk/gis.m/maptool.tcl:151
 msgid "Pan"
 msgstr "เลื่อน"
 
-#: ../vector/v.digit/toolbox.tcl:195
+#: ../vector/v.digit/toolbox.tcl:217
 msgid "Zoom to default region"
 msgstr "ย่อ/ขยาย ไปที่ขอบเขตหลัก"
 
-#: ../vector/v.digit/toolbox.tcl:208
+#: ../vector/v.digit/toolbox.tcl:230
 msgid "Zoom to saved region"
 msgstr "ย่อ/ขยาย ไปที่ขอบเขตที่บันทึกไว้"
 
-#: ../vector/v.digit/toolbox.tcl:214
+#: ../vector/v.digit/toolbox.tcl:236
 msgid "Display categories"
 msgstr "แสดงหมวดหมู่"
 
-#: ../vector/v.digit/toolbox.tcl:219
+#: ../vector/v.digit/toolbox.tcl:241
 msgid "Copy categories"
 msgstr "คัดลอกหมวดหมู่"
 
-#: ../vector/v.digit/toolbox.tcl:224
+#: ../vector/v.digit/toolbox.tcl:246
 msgid "Display attributes"
 msgstr "แสดงข้อมูลลักษณะ"
 
-#: ../vector/v.digit/toolbox.tcl:236
+#: ../vector/v.digit/toolbox.tcl:258
 msgid "Open settings"
 msgstr "เปิดการตั้งค่า"
 
-#: ../vector/v.digit/toolbox.tcl:242
+#: ../vector/v.digit/toolbox.tcl:264
 msgid "Save and exit"
 msgstr "บันทึก และออก"
 
-#: ../vector/v.digit/toolbox.tcl:253
+#: ../vector/v.digit/toolbox.tcl:275
 msgid "mouse button actions (left, middle, right)"
 msgstr "การทำงานของปุ่มเม้าส์ (ซ้าย, กลาง, ขวา)"
 

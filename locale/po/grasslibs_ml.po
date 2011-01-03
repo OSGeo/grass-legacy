@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: grasslibs_ml\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-11-23 11:27+0100\n"
+"POT-Creation-Date: 2011-01-03 15:32+0100\n"
 "PO-Revision-Date: 2010-08-24 11:31+0530\n"
 "Last-Translator: Mohammed Rashad <rashadkm@gmail.com>\n"
 "Language-Team: GRASS Malayalam Translation Team <rashadkm@gmail.com>\n"
@@ -120,6 +120,10 @@ msgstr "ചിഹ്ന ഫയൽ കാണാനോ/തുറക്കാനോ
 #, c-format
 msgid "Incorrect symbol color: '%s', using default."
 msgstr "തെറ്റായ ചിഹ്ന നിറം: '%s'"
+
+#: ../lib/cairodriver/Draw_bitmap.c:47
+msgid "Cairo_draw_bitmap: Failed to create source"
+msgstr ""
 
 #: ../lib/proj/get_proj.c:150
 #, c-format
@@ -956,9 +960,8 @@ msgstr ""
 #: ../lib/gis/parser.c:2433
 #, c-format
 msgid ""
-"\n"
 "ERROR: Required parameter <%s> not set:\n"
-"    (%s).\n"
+"\t(%s)\n"
 msgstr ""
 
 #: ../lib/gis/parser.c:2528

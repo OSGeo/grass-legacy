@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: grasslibs_hi\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-11-23 11:27+0100\n"
+"POT-Creation-Date: 2011-01-03 15:32+0100\n"
 "PO-Revision-Date: 2005-12-22 14:34+0100\n"
 "Last-Translator: Markus Neteler <neteler@itc.it>\n"
 "Language-Team: Hindi <grass-translations@lists.osgeo.org>\n"
@@ -125,6 +125,10 @@ msgstr ""
 #: ../lib/symbol/read.c:424
 #, c-format
 msgid "Incorrect symbol color: '%s', using default."
+msgstr ""
+
+#: ../lib/cairodriver/Draw_bitmap.c:47
+msgid "Cairo_draw_bitmap: Failed to create source"
 msgstr ""
 
 #: ../lib/proj/get_proj.c:150
@@ -997,9 +1001,8 @@ msgstr "गुमा के लिए n"
 #: ../lib/gis/parser.c:2433
 #, fuzzy, c-format
 msgid ""
-"\n"
 "ERROR: Required parameter <%s> not set:\n"
-"    (%s).\n"
+"\t(%s)\n"
 msgstr ""
 "नहीं सेट\n"
 " n"

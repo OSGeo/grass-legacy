@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: grasstcl_vi\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-11-23 11:27+0100\n"
+"POT-Creation-Date: 2011-01-03 15:32+0100\n"
 "PO-Revision-Date: 2010-08-27 14:37+0700\n"
 "Last-Translator: \n"
 "Language-Team: American English <kde-i18n-doc@kde.org>\n"
@@ -63,112 +63,112 @@ msgstr "Nút chuột giữa"
 msgid "Right button"
 msgstr "Nút chuột phải"
 
-#: ../vector/v.digit/toolbox.tcl:76
+#: ../vector/v.digit/toolbox.tcl:98
 msgid "  Layer"
 msgstr "  Lớp"
 
-#: ../vector/v.digit/toolbox.tcl:80
+#: ../vector/v.digit/toolbox.tcl:102
 msgid "  Category"
 msgstr "  Phạm trù"
 
-#: ../vector/v.digit/toolbox.tcl:84
+#: ../vector/v.digit/toolbox.tcl:106
 msgid "  Mode "
 msgstr " Chế độ"
 
-#: ../vector/v.digit/toolbox.tcl:96
+#: ../vector/v.digit/toolbox.tcl:118
 msgid "Insert new record into table"
 msgstr "Chèn bản ghi mới vào bảng"
 
-#: ../vector/v.digit/toolbox.tcl:113
+#: ../vector/v.digit/toolbox.tcl:135
 msgid "Digitize new point"
 msgstr "Số hóa điểm mới"
 
-#: ../vector/v.digit/toolbox.tcl:118
+#: ../vector/v.digit/toolbox.tcl:140
 msgid "Digitize new line"
 msgstr "Số hóa đường mới"
 
-#: ../vector/v.digit/toolbox.tcl:123
+#: ../vector/v.digit/toolbox.tcl:145
 msgid "Digitize new boundary"
 msgstr "Số hóa ranh giới mới"
 
-#: ../vector/v.digit/toolbox.tcl:128
+#: ../vector/v.digit/toolbox.tcl:150
 msgid "Digitize new centroid"
 msgstr "Số hóa trọng tâm mới"
 
-#: ../vector/v.digit/toolbox.tcl:134
+#: ../vector/v.digit/toolbox.tcl:156
 msgid "Move vertex"
 msgstr "Di chuyển đỉnh"
 
-#: ../vector/v.digit/toolbox.tcl:139
+#: ../vector/v.digit/toolbox.tcl:161
 msgid "Add vertex"
 msgstr "Thêm đỉnh"
 
-#: ../vector/v.digit/toolbox.tcl:144
+#: ../vector/v.digit/toolbox.tcl:166
 msgid "Remove vertex"
 msgstr "Loại bỏ đỉnh"
 
-#: ../vector/v.digit/toolbox.tcl:149
+#: ../vector/v.digit/toolbox.tcl:171
 msgid "Split line"
 msgstr "Ngắt đường"
 
-#: ../vector/v.digit/toolbox.tcl:154
+#: ../vector/v.digit/toolbox.tcl:176
 msgid "Edit line/boundary"
 msgstr "Chỉnh sửa đường/r.giới"
 
-#: ../vector/v.digit/toolbox.tcl:159
+#: ../vector/v.digit/toolbox.tcl:181
 msgid "Move point, line, boundary, or centroid"
 msgstr "Di chuyển điểm, đường, r.giới hoặc trọng tâm"
 
-#: ../vector/v.digit/toolbox.tcl:164
+#: ../vector/v.digit/toolbox.tcl:186
 msgid "Delete point, line, boundary, or centroid"
 msgstr "Xóa điểm, đường, r.giới hoặc trọng tâm"
 
-#: ../vector/v.digit/toolbox.tcl:175
+#: ../vector/v.digit/toolbox.tcl:197
 msgid "Redraw"
 msgstr "Vẽ lại"
 
-#: ../vector/v.digit/toolbox.tcl:180
+#: ../vector/v.digit/toolbox.tcl:202
 msgid "Zoom in by window"
 msgstr "Phóng theo cửa sổ"
 
-#: ../vector/v.digit/toolbox.tcl:185
+#: ../vector/v.digit/toolbox.tcl:207
 msgid "Zoom out"
 msgstr "Thu nhỏ"
 
-#: ../vector/v.digit/toolbox.tcl:190 ../gui/tcltk/gis.m/georecttool.tcl:130
+#: ../vector/v.digit/toolbox.tcl:212 ../gui/tcltk/gis.m/georecttool.tcl:130
 #: ../gui/tcltk/gis.m/maptool.tcl:151
 msgid "Pan"
 msgstr "Di chuyển"
 
-#: ../vector/v.digit/toolbox.tcl:195
+#: ../vector/v.digit/toolbox.tcl:217
 msgid "Zoom to default region"
 msgstr "Phóng đến vùng mặc định"
 
-#: ../vector/v.digit/toolbox.tcl:208
+#: ../vector/v.digit/toolbox.tcl:230
 msgid "Zoom to saved region"
 msgstr "Phóng đến vùng đã lưu"
 
-#: ../vector/v.digit/toolbox.tcl:214
+#: ../vector/v.digit/toolbox.tcl:236
 msgid "Display categories"
 msgstr "Trình bày các phạm trù"
 
-#: ../vector/v.digit/toolbox.tcl:219
+#: ../vector/v.digit/toolbox.tcl:241
 msgid "Copy categories"
 msgstr "Sao chép các phạm trù"
 
-#: ../vector/v.digit/toolbox.tcl:224
+#: ../vector/v.digit/toolbox.tcl:246
 msgid "Display attributes"
 msgstr "Trình bày các thuộc tính"
 
-#: ../vector/v.digit/toolbox.tcl:236
+#: ../vector/v.digit/toolbox.tcl:258
 msgid "Open settings"
 msgstr "Mở các thiết lập"
 
-#: ../vector/v.digit/toolbox.tcl:242
+#: ../vector/v.digit/toolbox.tcl:264
 msgid "Save and exit"
 msgstr "Lưu và thoát"
 
-#: ../vector/v.digit/toolbox.tcl:253
+#: ../vector/v.digit/toolbox.tcl:275
 msgid "mouse button actions (left, middle, right)"
 msgstr "lệnh cho các phím của chuột (trái, giữa, phải)"
 

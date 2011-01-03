@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: grasslibs_vi\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-11-23 11:27+0100\n"
+"POT-Creation-Date: 2011-01-03 15:32+0100\n"
 "PO-Revision-Date: 2010-08-27 11:18+0700\n"
 "Last-Translator: \n"
 "Language-Team: American English <kde-i18n-doc@kde.org>\n"
@@ -122,6 +122,10 @@ msgstr "Không thể tìm/mở biểu tượng: '%s' "
 #, c-format
 msgid "Incorrect symbol color: '%s', using default."
 msgstr "Màu biểu tượng không đúng: '%s', dùng mặc định."
+
+#: ../lib/cairodriver/Draw_bitmap.c:47
+msgid "Cairo_draw_bitmap: Failed to create source"
+msgstr ""
 
 #: ../lib/proj/get_proj.c:150
 #, c-format
@@ -997,11 +1001,10 @@ msgstr ""
 "LỖI: Giá trị cho tham số <%s> bị thiếu\n"
 
 #: ../lib/gis/parser.c:2433
-#, c-format
+#, fuzzy, c-format
 msgid ""
-"\n"
 "ERROR: Required parameter <%s> not set:\n"
-"    (%s).\n"
+"\t(%s)\n"
 msgstr ""
 "\n"
 "LỖI: Tham số yêu cầu <%s> không được thiết lập:\n"

@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: grasslibs_es\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-11-23 11:27+0100\n"
+"POT-Creation-Date: 2011-01-03 15:32+0100\n"
 "PO-Revision-Date: 2010-02-19 19:11-0600\n"
 "Last-Translator: Javier García Prieto <fjgarciaprieto@hotmail.com>\n"
 "Language-Team: Español <grass-translations@lists.osgeo.org>\n"
@@ -133,6 +133,10 @@ msgstr "No se puede encontrar / abrir el símbolo: '%s'."
 #, c-format
 msgid "Incorrect symbol color: '%s', using default."
 msgstr "Color de símbolo incorrecto: '%s', utilizando el predeterminado."
+
+#: ../lib/cairodriver/Draw_bitmap.c:47
+msgid "Cairo_draw_bitmap: Failed to create source"
+msgstr ""
 
 #: ../lib/proj/get_proj.c:150
 #, c-format
@@ -1057,11 +1061,10 @@ msgstr ""
 "ERROR: Valor faltante para el parámetro <%s>\n"
 
 #: ../lib/gis/parser.c:2433
-#, c-format
+#, fuzzy, c-format
 msgid ""
-"\n"
 "ERROR: Required parameter <%s> not set:\n"
-"    (%s).\n"
+"\t(%s)\n"
 msgstr ""
 "\n"
 "ERROR: No se ha establecido el parámetro requerido <%s> :\n"

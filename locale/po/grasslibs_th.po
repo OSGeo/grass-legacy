@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: grasslibs_th\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-11-23 11:27+0100\n"
+"POT-Creation-Date: 2011-01-03 15:32+0100\n"
 "PO-Revision-Date: 2008-01-05 15:19+0700\n"
 "Last-Translator: man <mansv68@yahoo.co.th>\n"
 "Language-Team: Thai <grass-translations@lists.osgeo.org>\n"
@@ -121,6 +121,10 @@ msgstr "ไม่สามารถ หา/เปิด สัญลักษณ
 #, c-format
 msgid "Incorrect symbol color: '%s', using default."
 msgstr "สีสัญลักษณ์ผิด: '%s', ใช้ค่าตั้งต้น"
+
+#: ../lib/cairodriver/Draw_bitmap.c:47
+msgid "Cairo_draw_bitmap: Failed to create source"
+msgstr ""
 
 #: ../lib/proj/get_proj.c:150
 #, c-format
@@ -995,11 +999,10 @@ msgstr ""
 "ข้อผิดพลาด:ขาดค่าตัวแปร <%s>\n"
 
 #: ../lib/gis/parser.c:2433
-#, c-format
+#, fuzzy, c-format
 msgid ""
-"\n"
 "ERROR: Required parameter <%s> not set:\n"
-"    (%s).\n"
+"\t(%s)\n"
 msgstr ""
 "\n"
 "ข้อผิดพลาด: ต้องการค่าตัวแปร <%s> ไม่ได้กำหนด:\n"

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: grassmods_ar\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-11-23 11:27+0100\n"
+"POT-Creation-Date: 2011-01-03 15:32+0100\n"
 "PO-Revision-Date: 2005-03-09 12:50+0100\n"
 "Last-Translator: Dr. Alaa Masoud <alaamasoud@hotmail.com>\n"
 "Language-Team: Arabic <grass-translations@lists.osgeo.org>\n"
@@ -125,6 +125,10 @@ msgstr "'%s' لم يتم العثور على الخريطة المدخلة"
 #: ../lib/symbol/read.c:424
 #, c-format
 msgid "Incorrect symbol color: '%s', using default."
+msgstr ""
+
+#: ../lib/cairodriver/Draw_bitmap.c:47
+msgid "Cairo_draw_bitmap: Failed to create source"
 msgstr ""
 
 #: ../lib/proj/get_proj.c:150
@@ -995,9 +999,8 @@ msgstr ""
 #: ../lib/gis/parser.c:2433
 #, c-format
 msgid ""
-"\n"
 "ERROR: Required parameter <%s> not set:\n"
-"    (%s).\n"
+"\t(%s)\n"
 msgstr ""
 
 #: ../lib/gis/parser.c:2528

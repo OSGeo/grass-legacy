@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: grassmods_it\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-11-23 11:27+0100\n"
+"POT-Creation-Date: 2011-01-03 15:32+0100\n"
 "PO-Revision-Date: 2008-03-26 17:32+0100\n"
 "Last-Translator: Luca Delucchi <lucadeluge@gmail.com>\n"
 "Language-Team: Italian <grass-translations@lists.osgeo.org>\n"
@@ -293,7 +293,7 @@ msgstr "Nome del raster"
 #: ../vector/v.to.rast/vect2rast.c:125 ../vector/v.to.rast/vect2rast.c:129
 #: ../vector/v.surf.idw/main.c:264 ../vector/v.neighbors/main.c:96
 #: ../doc/raster/r.example/main.c:141 ../imagery/i.smap/shapiro/opencell.c:30
-#: ../imagery/i.pca/main.c:399 ../imagery/i.rectify/write.c:49
+#: ../imagery/i.pca/main.c:406 ../imagery/i.rectify/write.c:49
 #: ../imagery/i.rgb.his/openfiles.c:29 ../imagery/i.rgb.his/openfiles.c:31
 #: ../imagery/i.rgb.his/openfiles.c:33 ../imagery/i.his.rgb/openfiles.c:15
 #: ../imagery/i.his.rgb/openfiles.c:17 ../imagery/i.his.rgb/openfiles.c:19
@@ -338,7 +338,7 @@ msgstr ""
 #: ../vector/v.generalize/simplification.c:341
 #: ../vector/v.generalize/matrix.c:144 ../vector/v.generalize/point.c:120
 #: ../vector/v.mkgrid/write_grid.c:131 ../vector/v.in.ascii/a2b.c:172
-#: ../vector/v.edit/a2b.c:198 ../vector/v.surf.rst/main.c:867
+#: ../vector/v.edit/a2b.c:198 ../vector/v.surf.rst/main.c:887
 #: ../vector/v.mapcalc/list.c:54 ../vector/v.mapcalc/list.c:501
 #: ../imagery/i.smap/bouman/multialloc.c:115 ../imagery/i.ask/popup.c:174
 msgid "Out of memory"
@@ -970,21 +970,21 @@ msgstr ""
 #: ../display/d.his/main.c:199 ../display/d.what.rast/main.c:155
 #: ../display/d.what.rast/opencell.c:13 ../display/d.colortable/main.c:95
 #: ../display/d.histogram/main.c:162 ../display/d.title/main.c:105
-#: ../display/d.rast/main.c:109 ../display/d.rast.num/number.c:149
+#: ../display/d.rast/main.c:111 ../display/d.rast.num/number.c:149
 #: ../display/d.nviz/main.c:184 ../display/d.zoom/main.c:208
 #: ../vector/v.sample/main.c:158 ../vector/v.vol.rst/main.c:606
 #: ../vector/v.extrude/main.c:179 ../vector/v.drape/main.c:245
 #: ../vector/v.what.rast/main.c:138 ../visualization/xganim/main.c:366
 #: ../visualization/nviz2/cmd/surface.c:54
 #: ../visualization/nviz2/cmd/surface.c:104 ../doc/raster/r.example/main.c:111
-#: ../ps/ps.map/outl_io.c:68 ../imagery/i.pca/main.c:129
+#: ../ps/ps.map/outl_io.c:68 ../imagery/i.pca/main.c:136
 #: ../imagery/i.zc/main.c:111 ../imagery/i.rgb.his/openfiles.c:14
 #: ../imagery/i.rgb.his/openfiles.c:16 ../imagery/i.rgb.his/openfiles.c:18
 #: ../imagery/i.his.rgb/openfiles.c:31 ../imagery/i.his.rgb/openfiles.c:36
 #: ../imagery/i.his.rgb/openfiles.c:41 ../imagery/i.gensigset/parse.c:42
 #: ../imagery/i.ifft/ifftmain.c:95 ../imagery/i.ifft/ifftmain.c:105
-#: ../imagery/i.ortho.photo/photo.2target/main.c:197
-#: ../imagery/i.ortho.photo/photo.2target/main.c:227
+#: ../imagery/i.ortho.photo/i.photo.2target/main.c:197
+#: ../imagery/i.ortho.photo/i.photo.2target/main.c:227
 #: ../imagery/i.fft/fftmain.c:108 ../imagery/i.gensig/parse.c:36
 #: ../imagery/i.group/main.c:201 ../imagery/i.group/main.c:240
 #: ../imagery/i.class/main.c:127
@@ -1266,7 +1266,7 @@ msgstr ""
 #: ../vector/v.extrude/main.c:183 ../vector/v.drape/main.c:250
 #: ../vector/v.what.rast/main.c:141 ../visualization/xganim/main.c:370
 #: ../doc/raster/r.example/main.c:122 ../imagery/i.smap/shapiro/opencell.c:16
-#: ../imagery/i.pca/main.c:132 ../imagery/i.rgb.his/openfiles.c:21
+#: ../imagery/i.pca/main.c:139 ../imagery/i.rgb.his/openfiles.c:21
 #: ../imagery/i.rgb.his/openfiles.c:23 ../imagery/i.rgb.his/openfiles.c:25
 #: ../imagery/i.his.rgb/openfiles.c:33 ../imagery/i.his.rgb/openfiles.c:38
 #: ../imagery/i.his.rgb/openfiles.c:43 ../imagery/i.gensigset/opencell.c:13
@@ -1436,7 +1436,7 @@ msgstr "raster <%s> non trovato"
 #: ../vector/v.surf.idw/main.c:137 ../vector/v.edit/main.c:86
 #: ../doc/raster/r.example/main.c:114 ../imagery/i.zc/main.c:119
 #: ../imagery/i.ifft/ifftmain.c:116
-#: ../imagery/i.ortho.photo/photo.camera/main.c:90
+#: ../imagery/i.ortho.photo/i.photo.camera/main.c:91
 #: ../imagery/i.fft/fftmain.c:121 ../imagery/i.fft/fftmain.c:124
 #, fuzzy, c-format
 msgid "<%s> is an illegal file name"
@@ -1544,7 +1544,7 @@ msgstr ""
 #: ../raster/r.out.mat/main.c:90 ../raster/r.cost/main.c:226
 #: ../raster/wildfire/r.spread/main.c:255 ../raster/wildfire/r.ros/main.c:314
 #: ../raster/r.out.tiff/r.out.tiff.c:144 ../raster/r.in.mat/main.c:125
-#: ../display/d.mon/pgms/release.c:36 ../display/d.vect/main.c:391
+#: ../display/d.mon/pgms/release.c:36 ../display/d.vect/main.c:411
 #: ../vector/v.kernel/main.c:191 ../visualization/nviz/src/nviz_init.c:157
 msgid ""
 "The '-v' flag is superseded and will be removed in future. Please use '--"
@@ -1763,7 +1763,7 @@ msgstr "Non riesco a trovare il file raster %s"
 #: ../raster/r.contour/main.c:185 ../raster/r.random/random.c:74
 #: ../raster/r.to.vect/main.c:158 ../display/d.vect.chart/plot.c:44
 #: ../display/d.thematic.area/plot1.c:199 ../display/d.vect/area.c:60
-#: ../display/d.vect/plot1.c:203 ../display/d.vect/attr.c:45
+#: ../display/d.vect/plot1.c:208 ../display/d.vect/attr.c:45
 #: ../vector/v.sample/main.c:207 ../vector/v.db.select/main.c:155
 #: ../vector/v.db.select/main.c:286 ../vector/v.out.svg/main.c:148
 #: ../vector/v.to.db/update.c:46 ../vector/v.to.db/query.c:89
@@ -1777,7 +1777,7 @@ msgstr "Non riesco a trovare il file raster %s"
 #: ../vector/v.in.dxf/write_vect.c:198 ../vector/v.mkgrid/main.c:237
 #: ../vector/v.lrs/v.lrs.create/main.c:286
 #: ../vector/v.lrs/v.lrs.create/main.c:294 ../vector/v.reclass/main.c:126
-#: ../vector/v.out.ogr/main.c:339 ../vector/v.in.dwg/main.c:194
+#: ../vector/v.out.ogr/main.c:421 ../vector/v.in.dwg/main.c:194
 #: ../vector/v.vol.rst/main.c:590 ../vector/v.vol.rst/user1.c:97
 #: ../vector/v.patch/main.c:132 ../vector/v.patch/main.c:162
 #: ../vector/v.patch/main.c:274 ../vector/v.patch/main.c:332
@@ -1790,7 +1790,7 @@ msgstr "Non riesco a trovare il file raster %s"
 #: ../vector/v.in.ascii/in.c:317 ../vector/v.surf.idw/read_sites.c:39
 #: ../vector/v.buffer/main.c:387 ../vector/v.edit/select.c:520
 #: ../vector/v.info/main.c:217 ../vector/v.extrude/main.c:167
-#: ../vector/v.surf.rst/main.c:587 ../vector/v.db.connect/main.c:214
+#: ../vector/v.surf.rst/main.c:607 ../vector/v.db.connect/main.c:214
 #: ../vector/v.db.connect/main.c:322 ../vector/v.drape/main.c:293
 #: ../vector/v.what.rast/main.c:132 ../vector/v.to.3d/trans3.c:53
 #: ../vector/v.to.3d/trans2.c:52 ../doc/vector/v.example/main.c:128
@@ -1804,7 +1804,7 @@ msgstr "Non riesco ad aprire il database %s col driver %s"
 #: ../vector/v.distance/main.c:818 ../vector/v.in.dwg/main.c:219
 #: ../vector/v.overlay/main.c:456 ../vector/v.convert/att.c:80
 #: ../vector/v.net.path/path.c:109 ../vector/v.to.points/main.c:295
-#: ../vector/v.surf.rst/main.c:593
+#: ../vector/v.surf.rst/main.c:613
 #, fuzzy, c-format
 msgid "Unable to create table: '%s'"
 msgstr "Non riesco ad aprire il cellfile per [%s]"
@@ -2354,9 +2354,9 @@ msgstr "ERRORE: <%s> esiste già\n"
 
 #: ../raster/r.out.png/r.out.png.c:324 ../raster/r.surf.idw/main.c:690
 #: ../raster/r.proj/readcell.c:27 ../raster/r.mapcalc/map.c:234
-#: ../imagery/i.smap/bouman/read_block.c:16 ../imagery/i.pca/main.c:258
-#: ../imagery/i.pca/main.c:308 ../imagery/i.pca/main.c:320
-#: ../imagery/i.pca/main.c:434 ../imagery/i.gensigset/read_data.c:27
+#: ../imagery/i.smap/bouman/read_block.c:16 ../imagery/i.pca/main.c:265
+#: ../imagery/i.pca/main.c:315 ../imagery/i.pca/main.c:327
+#: ../imagery/i.pca/main.c:441 ../imagery/i.gensigset/read_data.c:27
 #: ../imagery/i.gensigset/read_train.c:10 ../imagery/i.gensig/covariance.c:34
 #: ../imagery/i.gensig/read_train.c:10 ../imagery/i.cluster/main.c:290
 #: ../imagery/i.maxlik/main.c:117
@@ -3290,6 +3290,7 @@ msgid "Unable to get projection key values of target location"
 msgstr "Nome della mappa di output"
 
 #: ../raster/r.in.gdal/main.c:662 ../imagery/i.rectify/target.c:32
+#: ../imagery/i.ortho.photo/i.photo.rectify/target.c:31
 #, fuzzy, c-format
 msgid "Mapset <%s> in target location <%s> - "
 msgstr "raster <%s> non trovato"
@@ -3620,7 +3621,7 @@ msgstr "nome tabella"
 #: ../display/d.path/main.c:193 ../display/d.extend/main.c:97
 #: ../display/d.vect.chart/main.c:246 ../display/d.thematic.area/main.c:212
 #: ../display/d.extract/main.c:98 ../display/d.what.vect/main.c:148
-#: ../display/d.zoom/main.c:245 ../display/d.vect/main.c:480
+#: ../display/d.zoom/main.c:245 ../display/d.vect/main.c:495
 #: ../vector/v.sample/main.c:152 ../vector/v.db.select/main.c:132
 #: ../vector/v.net.alloc/main.c:143 ../vector/v.net/main.c:143
 #: ../vector/v.net/main.c:158 ../vector/v.out.svg/main.c:127
@@ -3640,7 +3641,7 @@ msgstr "nome tabella"
 #: ../vector/v.lrs/v.lrs.create/main.c:256
 #: ../vector/v.lrs/v.lrs.label/main.c:286
 #: ../vector/v.lrs/v.lrs.segment/main.c:138 ../vector/v.reclass/main.c:107
-#: ../vector/v.kernel/main.c:214 ../vector/v.out.ogr/main.c:217
+#: ../vector/v.kernel/main.c:214 ../vector/v.out.ogr/main.c:183
 #: ../vector/v.hull/main.c:300 ../vector/v.kcv/main.c:132
 #: ../vector/v.select/main.c:103 ../vector/v.buffer2/main.c:298
 #: ../vector/v.voronoi/vo_main.c:156 ../vector/v.voronoi/dt_main.c:77
@@ -3655,7 +3656,7 @@ msgstr "nome tabella"
 #: ../vector/v.clean/main.c:241 ../vector/v.buffer/main.c:365
 #: ../vector/v.edit/main.c:145 ../vector/v.info/main.c:103
 #: ../vector/v.extrude/main.c:143 ../vector/v.category/main.c:197
-#: ../vector/v.surf.rst/main.c:545 ../vector/v.db.connect/main.c:140
+#: ../vector/v.surf.rst/main.c:565 ../vector/v.db.connect/main.c:140
 #: ../vector/v.out.pov/main.c:96 ../vector/v.drape/main.c:261
 #: ../vector/v.what.rast/main.c:119 ../vector/v.out.dxf/main.c:69
 #: ../visualization/nviz2/cmd/vector.c:81 ../doc/vector/v.example/main.c:73
@@ -4808,12 +4809,12 @@ msgstr "Nome di un file vettoriale in output"
 #: ../raster/r.slope.aspect/main.c:196 ../raster/r.slope.aspect/main.c:203
 #: ../raster/r.slope.aspect/main.c:210 ../raster/r.slope.aspect/main.c:217
 #: ../raster/r.slope.aspect/main.c:224 ../raster/r.slope.aspect/main.c:231
-#: ../raster/r.slope.aspect/main.c:238 ../vector/v.surf.rst/main.c:202
-#: ../vector/v.surf.rst/main.c:220 ../vector/v.surf.rst/main.c:226
-#: ../vector/v.surf.rst/main.c:232 ../vector/v.surf.rst/main.c:238
-#: ../vector/v.surf.rst/main.c:244 ../vector/v.surf.rst/main.c:250
-#: ../vector/v.surf.rst/main.c:258 ../vector/v.surf.rst/main.c:265
-#: ../vector/v.surf.rst/main.c:272 ../vector/v.surf.rst/main.c:279
+#: ../raster/r.slope.aspect/main.c:238 ../vector/v.surf.rst/main.c:210
+#: ../vector/v.surf.rst/main.c:228 ../vector/v.surf.rst/main.c:234
+#: ../vector/v.surf.rst/main.c:240 ../vector/v.surf.rst/main.c:246
+#: ../vector/v.surf.rst/main.c:252 ../vector/v.surf.rst/main.c:258
+#: ../vector/v.surf.rst/main.c:266 ../vector/v.surf.rst/main.c:273
+#: ../vector/v.surf.rst/main.c:280 ../vector/v.surf.rst/main.c:287
 #, fuzzy
 msgid "Outputs"
 msgstr "Mappa in output"
@@ -4902,6 +4903,7 @@ msgid "Wrong raster type: %s"
 msgstr "Nome del driver in input"
 
 #: ../raster/r.slope.aspect/main.c:408
+#: ../imagery/i.ortho.photo/i.photo.rectify/angle.c:67
 #, c-format
 msgid "Converting units to meters, factor=%.6f"
 msgstr ""
@@ -5031,7 +5033,7 @@ msgid "Keep null values in output raster map"
 msgstr "Tieni i valori nulli nella mappa in output"
 
 #: ../raster/r.cost/main.c:217 ../raster/wildfire/r.spreadpath/main.c:110
-#: ../raster/wildfire/r.ros/main.c:301 ../display/d.vect/main.c:338
+#: ../raster/wildfire/r.ros/main.c:301 ../display/d.vect/main.c:358
 #: ../vector/v.kernel/main.c:176
 msgid "Run verbosely"
 msgstr "Esegui in  modalità verbosa"
@@ -5198,7 +5200,7 @@ msgid "Name of an output layer"
 msgstr ""
 
 #: ../raster/r.resample/main.c:137 ../raster/r.resamp.rst/main.c:527
-#: ../vector/v.surf.rst/main.c:602 ../vector/v.surf.rst/main.c:753
+#: ../vector/v.surf.rst/main.c:622 ../vector/v.surf.rst/main.c:773
 msgid "Percent complete: "
 msgstr "Percentuale completa:"
 
@@ -5279,8 +5281,8 @@ msgstr "Nome del file raster in input"
 #: ../raster/r.in.xyz/main.c:197 ../raster/r.in.xyz/main.c:205
 #: ../raster/r.in.xyz/main.c:213 ../general/g.proj/main.c:102
 #: ../general/g.proj/main.c:111 ../general/g.proj/main.c:120
-#: ../general/g.proj/main.c:128 ../vector/v.out.ogr/main.c:98
-#: ../vector/v.out.ogr/main.c:118 ../vector/v.edit/args.c:103
+#: ../general/g.proj/main.c:128 ../vector/v.out.ogr/main.c:100
+#: ../vector/v.out.ogr/main.c:120 ../vector/v.edit/args.c:103
 #: ../vector/v.edit/args.c:212
 #, fuzzy
 msgid "Input"
@@ -5381,14 +5383,14 @@ msgstr "Numero di righe"
 #: ../raster/simwe/r.sim.water/main.c:268
 #: ../raster/simwe/r.sim.water/main.c:277
 #: ../raster/simwe/r.sim.water/main.c:285
-#: ../raster/simwe/r.sim.water/main.c:294 ../vector/v.surf.rst/main.c:191
-#: ../vector/v.surf.rst/main.c:196 ../vector/v.surf.rst/main.c:285
-#: ../vector/v.surf.rst/main.c:293 ../vector/v.surf.rst/main.c:301
-#: ../vector/v.surf.rst/main.c:308 ../vector/v.surf.rst/main.c:316
-#: ../vector/v.surf.rst/main.c:324 ../vector/v.surf.rst/main.c:333
-#: ../vector/v.surf.rst/main.c:342 ../vector/v.surf.rst/main.c:351
-#: ../vector/v.surf.rst/main.c:360 ../vector/v.surf.rst/main.c:368
-#: ../vector/v.surf.rst/main.c:375
+#: ../raster/simwe/r.sim.water/main.c:294 ../vector/v.surf.rst/main.c:199
+#: ../vector/v.surf.rst/main.c:204 ../vector/v.surf.rst/main.c:293
+#: ../vector/v.surf.rst/main.c:301 ../vector/v.surf.rst/main.c:309
+#: ../vector/v.surf.rst/main.c:316 ../vector/v.surf.rst/main.c:324
+#: ../vector/v.surf.rst/main.c:332 ../vector/v.surf.rst/main.c:341
+#: ../vector/v.surf.rst/main.c:350 ../vector/v.surf.rst/main.c:359
+#: ../vector/v.surf.rst/main.c:368 ../vector/v.surf.rst/main.c:376
+#: ../vector/v.surf.rst/main.c:383
 msgid "Parameters"
 msgstr "Parametri"
 
@@ -5430,8 +5432,8 @@ msgid "You are not outputting any raster or site files"
 msgstr "Nome di un file vettoriale in output"
 
 #: ../raster/simwe/r.sim.sediment/main.c:358
-#: ../raster/simwe/r.sim.water/main.c:480 ../vector/v.surf.rst/main.c:697
-#: ../vector/v.surf.rst/main.c:749
+#: ../raster/simwe/r.sim.water/main.c:480 ../vector/v.surf.rst/main.c:717
+#: ../vector/v.surf.rst/main.c:769
 #, fuzzy
 msgid "Input failed"
 msgstr "File di input"
@@ -5587,12 +5589,12 @@ msgstr ""
 msgid "Unable to write et file"
 msgstr "Valore da scrivere per null"
 
-#: ../raster/simwe/simlib/hydro.c:119
+#: ../raster/simwe/simlib/hydro.c:211
 #, c-format
 msgid "nwalk (%d) > maxw (%d)!"
 msgstr ""
 
-#: ../raster/simwe/simlib/hydro.c:339
+#: ../raster/simwe/simlib/hydro.c:431
 #, fuzzy
 msgid "Unable to write raster maps"
 msgstr "Nome della mappa raster risultante"
@@ -6726,8 +6728,8 @@ msgstr ""
 msgid "SECTION 3: Accumulating Surface Flow with MFD."
 msgstr ""
 
-#: ../raster/r.watershed/ram/do_cum.c:310
-#: ../raster/r.watershed/seg/do_cum.c:325
+#: ../raster/r.watershed/ram/do_cum.c:311
+#: ../raster/r.watershed/seg/do_cum.c:326
 #, c-format
 msgid "MFD: cumulative proportion of flow distribution not 1.0 but %f"
 msgstr ""
@@ -7543,6 +7545,7 @@ msgid "Target"
 msgstr "area"
 
 #: ../raster/r.proj/main.c:178 ../raster/r.proj.seg/main.c:187
+#: ../imagery/i.ortho.photo/i.photo.rectify/main.c:124
 msgid "Interpolation method to use"
 msgstr "Metodo di interpolazione da usare"
 
@@ -7560,6 +7563,7 @@ msgstr ""
 
 #: ../raster/r.proj/main.c:210 ../raster/r.statistics/main.c:100
 #: ../raster/r.proj.seg/main.c:238 ../raster/r.neighbors/main.c:226
+#: ../imagery/i.ortho.photo/i.photo.rectify/main.c:149
 #, c-format
 msgid "<%s=%s> unknown %s"
 msgstr ""
@@ -7694,6 +7698,7 @@ msgid "Input raster map is outside current region"
 msgstr "Utilizza la regione corrente"
 
 #: ../raster/r.proj/readcell.c:22 ../raster/r.proj.seg/readcell.c:62
+#: ../imagery/i.ortho.photo/i.photo.rectify/readcell.c:70
 msgid "Allocating memory and reading input map..."
 msgstr ""
 
@@ -7974,7 +7979,7 @@ msgstr ""
 msgid "Anisotropy"
 msgstr ""
 
-#: ../raster/r.resamp.rst/main.c:276 ../vector/v.surf.rst/main.c:374
+#: ../raster/r.resamp.rst/main.c:276 ../vector/v.surf.rst/main.c:382
 msgid "Anisotropy scaling factor"
 msgstr ""
 
@@ -7982,7 +7987,7 @@ msgstr ""
 msgid "Use dnorm independent tension"
 msgstr ""
 
-#: ../raster/r.resamp.rst/main.c:286 ../vector/v.surf.rst/main.c:201
+#: ../raster/r.resamp.rst/main.c:286 ../vector/v.surf.rst/main.c:209
 msgid "Output partial derivatives instead of topographic parameters"
 msgstr ""
 
@@ -8024,27 +8029,27 @@ msgstr ""
 msgid "When using anisotropy both theta and scalex must be specified"
 msgstr ""
 
-#: ../raster/r.resamp.rst/main.c:366 ../vector/v.surf.rst/main.c:500
+#: ../raster/r.resamp.rst/main.c:366 ../vector/v.surf.rst/main.c:520
 msgid "Not enough memory for az"
 msgstr ""
 
-#: ../raster/r.resamp.rst/main.c:371 ../vector/v.surf.rst/main.c:505
+#: ../raster/r.resamp.rst/main.c:371 ../vector/v.surf.rst/main.c:525
 msgid "Not enough memory for adx"
 msgstr ""
 
-#: ../raster/r.resamp.rst/main.c:375 ../vector/v.surf.rst/main.c:509
+#: ../raster/r.resamp.rst/main.c:375 ../vector/v.surf.rst/main.c:529
 msgid "Not enough memory for ady"
 msgstr ""
 
-#: ../raster/r.resamp.rst/main.c:380 ../vector/v.surf.rst/main.c:514
+#: ../raster/r.resamp.rst/main.c:380 ../vector/v.surf.rst/main.c:534
 msgid "Not enough memory for adxx"
 msgstr ""
 
-#: ../raster/r.resamp.rst/main.c:384 ../vector/v.surf.rst/main.c:518
+#: ../raster/r.resamp.rst/main.c:384 ../vector/v.surf.rst/main.c:538
 msgid "Not enough memory for adyy"
 msgstr ""
 
-#: ../raster/r.resamp.rst/main.c:388 ../vector/v.surf.rst/main.c:522
+#: ../raster/r.resamp.rst/main.c:388 ../vector/v.surf.rst/main.c:542
 msgid "Not enough memory for adxy"
 msgstr ""
 
@@ -8101,7 +8106,7 @@ msgstr ""
 msgid "dnorm in mainc after grid before out2= %f"
 msgstr ""
 
-#: ../raster/r.resamp.rst/main.c:607 ../vector/v.surf.rst/main.c:618
+#: ../raster/r.resamp.rst/main.c:607 ../vector/v.surf.rst/main.c:638
 msgid "Not enough memory for zero_array_cell"
 msgstr ""
 
@@ -8113,10 +8118,10 @@ msgstr ""
 #: ../general/g.setproj/get_stp.c:165 ../general/g.setproj/get_stp.c:282
 #: ../general/g.setproj/get_stp.c:286 ../display/d.text.new/main.c:417
 #: ../display/d.title/main.c:119 ../display/d.text/main.c:193
-#: ../vector/v.in.ascii/in.c:248 ../vector/v.surf.rst/main.c:626
-#: ../vector/v.surf.rst/main.c:635 ../vector/v.surf.rst/main.c:644
-#: ../vector/v.surf.rst/main.c:654 ../vector/v.surf.rst/main.c:663
-#: ../vector/v.surf.rst/main.c:672
+#: ../vector/v.in.ascii/in.c:248 ../vector/v.surf.rst/main.c:646
+#: ../vector/v.surf.rst/main.c:655 ../vector/v.surf.rst/main.c:664
+#: ../vector/v.surf.rst/main.c:674 ../vector/v.surf.rst/main.c:683
+#: ../vector/v.surf.rst/main.c:692
 #, fuzzy, c-format
 msgid "Unable to open temporary file <%s>"
 msgstr "Valore da scrivere per null"
@@ -8124,9 +8129,9 @@ msgstr "Valore da scrivere per null"
 #: ../raster/r.resamp.rst/main.c:622 ../raster/r.resamp.rst/main.c:635
 #: ../raster/r.resamp.rst/main.c:648 ../raster/r.resamp.rst/main.c:662
 #: ../raster/r.resamp.rst/main.c:675 ../raster/r.resamp.rst/main.c:688
-#: ../vector/v.surf.rst/main.c:630 ../vector/v.surf.rst/main.c:639
-#: ../vector/v.surf.rst/main.c:648 ../vector/v.surf.rst/main.c:658
-#: ../vector/v.surf.rst/main.c:667 ../vector/v.surf.rst/main.c:676
+#: ../vector/v.surf.rst/main.c:650 ../vector/v.surf.rst/main.c:659
+#: ../vector/v.surf.rst/main.c:668 ../vector/v.surf.rst/main.c:678
+#: ../vector/v.surf.rst/main.c:687 ../vector/v.surf.rst/main.c:696
 msgid "Not enough disk space -- cannot write files"
 msgstr ""
 
@@ -8622,10 +8627,10 @@ msgstr "Tipo di tabella colore"
 #: ../raster/r.colors/main.c:193 ../raster/r.colors/main.c:207
 #: ../raster/r.colors/main.c:225 ../raster/r.colors/main.c:230
 #: ../raster/r.colors/main.c:235 ../raster/r.colors/main.c:240
-#: ../display/d.vect/main.c:163 ../display/d.vect/main.c:173
-#: ../display/d.vect/main.c:180 ../display/d.vect/main.c:191
-#: ../display/d.vect/main.c:343 ../display/d.vect/main.c:349
-#: ../display/d.vect/main.c:369 ../vector/v.label.sa/main.c:149
+#: ../display/d.vect/main.c:167 ../display/d.vect/main.c:177
+#: ../display/d.vect/main.c:184 ../display/d.vect/main.c:195
+#: ../display/d.vect/main.c:363 ../display/d.vect/main.c:369
+#: ../display/d.vect/main.c:389 ../vector/v.label.sa/main.c:149
 #: ../vector/v.label.sa/main.c:159 ../vector/v.label.sa/main.c:166
 #: ../vector/v.label.sa/main.c:176 ../vector/v.label.sa/main.c:186
 #: ../vector/v.label.sa/main.c:196 ../vector/v.label.sa/main.c:203
@@ -8893,6 +8898,7 @@ msgstr ""
 
 #: ../raster/r.li/r.li.padcv/padcv.c:44 ../raster/r.li/r.li.mpa/mpa.c:47
 #: ../raster/r.li/r.li.patchnum/main.c:43 ../raster/r.li/r.li.mps/mps.c:48
+#: ../raster/r.li/r.li.pielou/pielou.c:67
 #: ../raster/r.li/r.li.edgedensity/edgedensity.c:47
 #: ../raster/r.li/r.li.cwed/cwed.c:55 ../raster/r.li/r.li.padsd/padsd.c:44
 #: ../raster/r.li/r.li.richness/richness.c:49
@@ -8902,6 +8908,7 @@ msgstr ""
 #: ../raster/r.li/r.li.simpson/simpson.c:49
 #: ../raster/r.li/r.li.padrange/padrange.c:46
 #: ../raster/r.li/r.li.shannon/shannon.c:48
+#: ../raster/r.li/r.li.renyi/renyi.c:54
 #, fuzzy
 msgid "Configuration file"
 msgstr "Nome del file di output"
@@ -8920,6 +8927,19 @@ msgstr ""
 msgid ""
 "Calculates mean patch size index on a raster map, using a 4 neighbour "
 "algorithm"
+msgstr ""
+
+#: ../raster/r.li/r.li.pielou/pielou.c:57
+#, fuzzy
+msgid "Calculates Pielou's diversity index on a raster map"
+msgstr "Calcola l'indice di diversità di Simpson su un raster"
+
+#: ../raster/r.li/r.li.pielou/pielou.c:59
+#: ../raster/r.li/r.li.dominance/dominance.c:43
+#: ../raster/r.li/r.li.simpson/simpson.c:41
+#: ../raster/r.li/r.li.shannon/shannon.c:40
+#: ../raster/r.li/r.li.renyi/renyi.c:46
+msgid "raster, landscape structure analysis, diversity index"
 msgstr ""
 
 #: ../raster/r.li/r.li.edgedensity/edgedensity.c:38
@@ -8946,12 +8966,6 @@ msgstr ""
 
 #: ../raster/r.li/r.li.shape/main.c:33
 msgid "Calculates shape index on a raster map"
-msgstr ""
-
-#: ../raster/r.li/r.li.dominance/dominance.c:43
-#: ../raster/r.li/r.li.simpson/simpson.c:41
-#: ../raster/r.li/r.li.shannon/shannon.c:40
-msgid "raster, landscape structure analysis, diversity index"
 msgstr ""
 
 #: ../raster/r.li/r.li.patchdensity/main.c:33
@@ -9160,6 +9174,15 @@ msgstr ""
 #: ../raster/r.li/r.li.shannon/shannon.c:38
 msgid "Calculates Shannon's diversity index on a raster map"
 msgstr "Calcola l'indice di diversità di Shannon su un raster"
+
+#: ../raster/r.li/r.li.renyi/renyi.c:44
+#, fuzzy
+msgid "Calculates Renyi's diversity index on a raster map"
+msgstr "Calcola l'indice di diversità di Simpson su un raster"
+
+#: ../raster/r.li/r.li.renyi/renyi.c:62
+msgid "Alpha value is the order of the generalized entropy"
+msgstr ""
 
 #: ../raster/r.out.gdal/main.c:49
 #, fuzzy, c-format
@@ -11305,8 +11328,8 @@ msgstr "Errore nella lettura del file dbmscap\n"
 
 #: ../raster/r.external/main.c:482
 #, fuzzy, c-format
-msgid "<%s> created"
-msgstr "Location %s creata!"
+msgid "Link to raster map <%s> created"
+msgstr "ERRORE: <%s> esiste già\n"
 
 #: ../raster/r.external/main.c:508
 msgid "Link GDAL supported raster file to a binary raster map layer."
@@ -11376,6 +11399,7 @@ msgid "Input map <%s@%s> in location <%s>:"
 msgstr "raster <%s> non trovato"
 
 #: ../raster/r.proj.seg/readcell.c:56
+#: ../imagery/i.ortho.photo/i.photo.rectify/readcell.c:62
 #, fuzzy
 msgid "Unable to open temporary file"
 msgstr "Valore da scrivere per null"
@@ -11386,15 +11410,18 @@ msgid "Error reading input"
 msgstr "Non riesco a trovare il file raster %s"
 
 #: ../raster/r.proj.seg/readcell.c:89 ../raster/r.proj.seg/readcell.c:128
+#: ../imagery/i.ortho.photo/i.photo.rectify/readcell.c:98
 #, fuzzy
 msgid "Error writing segment file"
 msgstr "Errore nella lettura del file dbmscap\n"
 
 #: ../raster/r.proj.seg/readcell.c:116
+#: ../imagery/i.ortho.photo/i.photo.rectify/readcell.c:128
 msgid "Internal error: cache miss on fully-cached map"
 msgstr ""
 
 #: ../raster/r.proj.seg/readcell.c:125
+#: ../imagery/i.ortho.photo/i.photo.rectify/readcell.c:137
 #, fuzzy
 msgid "Error seeking on segment file"
 msgstr "Errore nell'apertura del file g3d"
@@ -13967,12 +13994,12 @@ msgstr ""
 
 #: ../general/g.mapsets/main.c:97
 #, fuzzy
-msgid "List all available mapsets"
+msgid "List all available mapsets in alphabetical order"
 msgstr "Visualizza i formati supportati ed esci"
 
 #: ../general/g.mapsets/main.c:102
 #, fuzzy
-msgid "Print current mapset search path"
+msgid "Print mapsets in current search path"
 msgstr "mostra i parametri della connessione in uso ed esce"
 
 #: ../general/g.mapsets/main.c:107
@@ -14554,13 +14581,13 @@ msgstr ""
 #: ../display/d.extract/main.c:79 ../display/d.histogram/main.c:181
 #: ../display/d.linegraph/linegraph.c:251 ../display/d.graph/main.c:96
 #: ../display/d.paint.labels/main.c:90 ../display/d.what.vect/main.c:160
-#: ../display/d.text/main.c:132 ../display/d.rast/main.c:112
+#: ../display/d.text/main.c:132 ../display/d.rast/main.c:114
 #: ../display/d.rast.num/number.c:128 ../display/d.nviz/main.c:249
 #: ../display/d.zoom/main.c:158 ../display/d.zoom/main.c:293
-#: ../display/d.zoom/redraw.c:39 ../display/d.vect/main.c:401
+#: ../display/d.zoom/redraw.c:39 ../display/d.vect/main.c:421
 #: ../vector/v.label/main.c:234 ../imagery/i.points/main.c:123
-#: ../imagery/i.ortho.photo/photo.2target/main.c:97
-#: ../imagery/i.ortho.photo/photo.2image/main.c:81
+#: ../imagery/i.ortho.photo/i.photo.2image/main.c:81
+#: ../imagery/i.ortho.photo/i.photo.2target/main.c:97
 #: ../imagery/i.class/main.c:90
 msgid "No graphics device selected"
 msgstr "Nessun device grafico selezionato"
@@ -14828,7 +14855,7 @@ msgid "Line spacing"
 msgstr ""
 
 #: ../display/d.text.new/main.c:221 ../display/d.text.freetype/main.c:168
-#: ../display/d.vect/main.c:286 ../vector/v.label/main.c:123
+#: ../display/d.vect/main.c:306 ../vector/v.label/main.c:123
 #, fuzzy
 msgid "Font name"
 msgstr "nome tabella"
@@ -15182,7 +15209,7 @@ msgid "Starting and ending coordinates"
 msgstr "Utilizzando le coordinate del centro della mappa\n"
 
 #: ../display/d.geodesic/main.c:62 ../display/d.rhumbline/main.c:61
-#: ../display/d.vect/main.c:162
+#: ../display/d.vect/main.c:166
 msgid "Line color"
 msgstr "Colore della linea"
 
@@ -15695,7 +15722,7 @@ msgid "Create legend information and send to stdout"
 msgstr ""
 
 #: ../display/d.vect.chart/plot.c:38 ../display/d.thematic.area/plot1.c:193
-#: ../display/d.vect/area.c:54 ../display/d.vect/plot1.c:197
+#: ../display/d.vect/area.c:54 ../display/d.vect/plot1.c:202
 #: ../vector/v.sample/main.c:167 ../vector/v.db.select/main.c:149
 #: ../vector/lidar/v.surf.bspline/crosscorr.c:114
 #: ../vector/v.generalize/misc.c:160 ../vector/v.extract/main.c:278
@@ -15730,7 +15757,7 @@ msgid ""
 "in the active graphics frame."
 msgstr ""
 
-#: ../display/d.rgb/main.c:61 ../display/d.rast/main.c:87
+#: ../display/d.rgb/main.c:61 ../display/d.rast/main.c:88
 msgid "Overlay (non-null values only)"
 msgstr ""
 
@@ -16104,9 +16131,9 @@ msgstr ""
 
 #: ../display/d.thematic.area/main.c:131 ../display/d.thematic.area/main.c:134
 #: ../display/d.rast/main.c:66 ../display/d.rast/main.c:75
-#: ../display/d.rast/main.c:92 ../display/d.vect/main.c:143
-#: ../display/d.vect/main.c:149 ../display/d.vect/main.c:152
-#: ../display/d.vect/main.c:155 ../display/d.vect/main.c:357
+#: ../display/d.rast/main.c:94 ../display/d.vect/main.c:147
+#: ../display/d.vect/main.c:153 ../display/d.vect/main.c:156
+#: ../display/d.vect/main.c:159 ../display/d.vect/main.c:377
 #: ../vector/v.in.ogr/main.c:132 ../vector/v.in.ogr/main.c:146
 #: ../vector/v.in.ogr/main.c:168 ../vector/v.extract/main.c:107
 #: ../vector/v.extract/main.c:117 ../vector/v.extract/main.c:123
@@ -16125,7 +16152,8 @@ msgstr ""
 #: ../vector/v.edit/args.c:159 ../vector/v.edit/args.c:173
 #: ../vector/v.edit/args.c:202 ../vector/v.category/main.c:92
 #: ../vector/v.category/main.c:97 ../vector/v.category/main.c:101
-#: ../vector/v.surf.rst/main.c:211 ../vector/v.surf.rst/main.c:214
+#: ../vector/v.surf.rst/main.c:193 ../vector/v.surf.rst/main.c:219
+#: ../vector/v.surf.rst/main.c:222
 #, fuzzy
 msgid "Selection"
 msgstr "Risoluzione"
@@ -16143,7 +16171,7 @@ msgstr ""
 msgid "Boundary color"
 msgstr "Colore del bordo"
 
-#: ../display/d.thematic.area/main.c:158 ../display/d.vect/main.c:327
+#: ../display/d.thematic.area/main.c:158 ../display/d.vect/main.c:347
 msgid "Rendering method for filled polygons"
 msgstr ""
 
@@ -16185,15 +16213,15 @@ msgid "'layer' must be > 0"
 msgstr "'%s' dev'essere > 0 per '%s'"
 
 #: ../display/d.thematic.area/main.c:227 ../display/d.what.vect/what.c:446
-#: ../display/d.vect/main.c:495 ../vector/v.db.connect/main.c:171
+#: ../display/d.vect/main.c:510 ../vector/v.db.connect/main.c:171
 #, fuzzy, c-format
 msgid "Database connection not defined"
 msgstr "Connessione al database non definita\n"
 
-#: ../display/d.thematic.area/main.c:231 ../display/d.vect/main.c:499
+#: ../display/d.thematic.area/main.c:231 ../display/d.vect/main.c:514
 #: ../vector/v.out.svg/main.c:141 ../vector/v.extract/main.c:286
 #: ../vector/v.in.sites/main.c:158 ../vector/v.out.vtk/writeVTK.c:634
-#: ../vector/v.out.ascii/b2a.c:44 ../vector/v.out.ogr/main.c:334
+#: ../vector/v.out.ascii/b2a.c:44 ../vector/v.out.ogr/main.c:416
 #: ../vector/v.edit/select.c:513 ../vector/v.db.connect/main.c:208
 #: ../vector/v.db.connect/main.c:274 ../vector/v.drape/main.c:288
 #: ../doc/vector/v.example/main.c:123 ../db/base/columns.c:45
@@ -16204,7 +16232,7 @@ msgstr "Connessione al database non definita\n"
 msgid "Unable to start driver <%s>"
 msgstr "Impossibile avviare il driver '%s'"
 
-#: ../display/d.thematic.area/main.c:236 ../display/d.vect/main.c:504
+#: ../display/d.thematic.area/main.c:236 ../display/d.vect/main.c:519
 #: ../vector/v.convert/att.c:73 ../db/base/describe.c:57
 #: ../db/base/execute.c:68 ../db/base/tables.c:51 ../db/base/select.c:68
 #, c-format
@@ -16219,13 +16247,14 @@ msgstr "Nessuna mappa in input specificata"
 #: ../display/d.thematic.area/main.c:255
 #: ../display/d.thematic.area/plot1.c:222
 #: ../display/d.thematic.area/plot1.c:250 ../display/d.vect/area.c:85
-#: ../display/d.vect/area.c:113 ../display/d.vect/plot1.c:226
-#: ../display/d.vect/plot1.c:254
+#: ../display/d.vect/area.c:113 ../display/d.vect/plot1.c:231
+#: ../display/d.vect/plot1.c:259 ../display/d.vect/plot1.c:290
+#: ../display/d.vect/plot1.c:321
 #, fuzzy, c-format
 msgid "Cannot select data (%s) from table"
 msgstr "Non riesco a mostrare i database"
 
-#: ../display/d.thematic.area/main.c:318 ../display/d.vect/main.c:451
+#: ../display/d.thematic.area/main.c:318 ../display/d.vect/main.c:471
 #, fuzzy, c-format
 msgid "Unknown color: [%s]"
 msgstr "%s - colore sconosciuto\n"
@@ -16252,12 +16281,12 @@ msgstr ""
 msgid "Error interpreting color %s"
 msgstr "Errore nella lettura del file dbmscap\n"
 
-#: ../display/d.thematic.area/main.c:402 ../display/d.vect/main.c:637
+#: ../display/d.thematic.area/main.c:402 ../display/d.vect/main.c:652
 #, fuzzy
 msgid "Plotting ..."
 msgstr "Sto disegnando ..."
 
-#: ../display/d.thematic.area/main.c:409 ../display/d.vect/main.c:645
+#: ../display/d.thematic.area/main.c:409 ../display/d.vect/main.c:660
 #, fuzzy
 msgid ""
 "The bounding box of the map is outside the current region, nothing drawn."
@@ -16297,13 +16326,13 @@ msgstr ""
 msgid "Stdev multiplied by %.4f to define step\n"
 msgstr ""
 
-#: ../display/d.thematic.area/plot1.c:207 ../display/d.vect/plot1.c:211
+#: ../display/d.thematic.area/plot1.c:207 ../display/d.vect/plot1.c:216
 #, fuzzy
 msgid "Color definition column not specified"
 msgstr "Nessuna mappa in input specificata"
 
 #: ../display/d.thematic.area/plot1.c:217 ../display/d.vect/area.c:79
-#: ../display/d.vect/plot1.c:221
+#: ../display/d.vect/plot1.c:226
 #, c-format
 msgid ""
 "Color definition column (%s) not a string. Column must be of form RRR:GGG:"
@@ -16311,13 +16340,12 @@ msgid ""
 msgstr ""
 
 #: ../display/d.thematic.area/plot1.c:235 ../display/d.vect/area.c:98
-#: ../display/d.vect/plot1.c:239
+#: ../display/d.vect/plot1.c:244
 #, fuzzy
 msgid "Line width column not specified."
 msgstr "Nessuna mappa in input specificata"
 
 #: ../display/d.thematic.area/plot1.c:246 ../display/d.vect/area.c:109
-#: ../display/d.vect/plot1.c:250
 #, c-format
 msgid "Line width column (%s) not a number."
 msgstr ""
@@ -16344,7 +16372,7 @@ msgid "Error in color definition column (%s), element %d with cat %d"
 msgstr ""
 
 #: ../display/d.thematic.area/plot1.c:441 ../display/d.vect/area.c:345
-#: ../display/d.vect/plot1.c:463
+#: ../display/d.vect/plot1.c:537
 #, c-format
 msgid ""
 "Error in line width column (%s), element %d with cat %d: line width [%d]"
@@ -16816,13 +16844,13 @@ msgstr ""
 msgid "Label file <%s> not found"
 msgstr "raster <%s> non trovato"
 
-#: ../display/d.paint.labels/main.c:102 ../display/d.vect/main.c:411
+#: ../display/d.paint.labels/main.c:102 ../display/d.vect/main.c:431
 msgid "Region size is lower than minreg, nothing displayed."
 msgstr ""
 "La dimensione della regione è inferiore rispetto al valore di minreg, non "
 "verrà visualizzato nulla."
 
-#: ../display/d.paint.labels/main.c:111 ../display/d.vect/main.c:420
+#: ../display/d.paint.labels/main.c:111 ../display/d.vect/main.c:440
 msgid "Region size is greater than maxreg, nothing displayed."
 msgstr ""
 "La dimensione della regione è superiore rispetto al valore di maxreg, non "
@@ -16874,8 +16902,8 @@ msgstr ""
 #: ../vector/v.generalize/main.c:305 ../vector/v.out.ascii/out.c:146
 #: ../vector/v.hull/main.c:307 ../vector/v.support/main.c:135
 #: ../vector/v.buffer2/main.c:303 ../vector/v.edit/main.c:165
-#: ../vector/v.info/main.c:113 ../vector/v.surf.rst/main.c:549
-#: ../vector/v.surf.rst/main.c:704 ../vector/v.surf.rst/main.c:793
+#: ../vector/v.info/main.c:113 ../vector/v.surf.rst/main.c:569
+#: ../vector/v.surf.rst/main.c:724 ../vector/v.surf.rst/main.c:813
 #: ../vector/v.to.3d/main.c:72 ../doc/vector/v.example/main.c:85
 #, fuzzy, c-format
 msgid "Unable to open vector map <%s>"
@@ -17044,10 +17072,9 @@ msgstr ""
 "Seleziona il tipo di carattere con cui il testo deve essere rappresentato "
 "nel monitor grafico dell'utente."
 
-#: ../display/d.rast/main.c:57
-#, fuzzy
-msgid "Raster map to be displayed"
-msgstr "Mappa(e) raster da leggere"
+#: ../display/d.rast/main.c:57 ../imagery/i.class/main.c:62
+msgid "Name of raster map to be displayed"
+msgstr "Nome della mappa raster da mostrare"
 
 #: ../display/d.rast/main.c:65
 msgid "List of categories to be displayed (INT maps)"
@@ -17062,19 +17089,23 @@ msgstr "Nome del raster map in output"
 msgid "Background color (for null)"
 msgstr ""
 
-#: ../display/d.rast/main.c:91
+#: ../display/d.rast/main.c:84 ../display/d.rast/main.c:89
+msgid "Null cells"
+msgstr ""
+
+#: ../display/d.rast/main.c:93
 msgid "Invert catlist"
 msgstr ""
 
-#: ../display/d.rast/main.c:97
+#: ../display/d.rast/main.c:99
 msgid "Don't add to list of rasters and commands in monitor"
 msgstr ""
 
-#: ../display/d.rast/main.c:117
+#: ../display/d.rast/main.c:119
 msgid "Ignoring catlist: map is floating point (please use 'val=')"
 msgstr ""
 
-#: ../display/d.rast/main.c:123
+#: ../display/d.rast/main.c:125
 msgid "Ignoring vallist: map is integer (please use 'cat=')"
 msgstr ""
 
@@ -17351,136 +17382,163 @@ msgstr "Destro: Esce\n"
 msgid "Can't read vector map"
 msgstr "Non riesco ad impostare user/password"
 
-#: ../display/d.vect/main.c:124
+#: ../display/d.vect/main.c:122
 #, fuzzy
 msgid "display, vector"
 msgstr "mostra"
 
-#: ../display/d.vect/main.c:125
+#: ../display/d.vect/main.c:123
 #, fuzzy
 msgid "Displays user-specified vector map in the active graphics frame."
 msgstr ""
 "Seleziona il tipo di carattere con cui il testo deve essere rappresentato "
 "nel monitor grafico dell'utente."
 
-#: ../display/d.vect/main.c:137
+#: ../display/d.vect/main.c:135
 msgid "Display"
 msgstr "Visualizza"
 
-#: ../display/d.vect/main.c:147
+#: ../display/d.vect/main.c:136
+msgid ""
+"shape;Display geometry of features;cat;Display category numbers of features;"
+"topo;Display topology information (nodes, edges);dir;Display direction of "
+"linear features;attr;Display selected attribute based on 'attrcol';zcoor;"
+"Display z-coordinate of features (only for 3D vector maps)"
+msgstr ""
+
+#: ../display/d.vect/main.c:151
 #, fuzzy
 msgid "Layer number (if -1, all layers are displayed)"
 msgstr "Numero di layer. Se -1, tutti i layer sono estratti"
 
-#: ../display/d.vect/main.c:166 ../display/d.vect/main.c:176
-#: ../display/d.vect/main.c:263 ../display/d.vect/main.c:273
+#: ../display/d.vect/main.c:170 ../display/d.vect/main.c:180
+#: ../display/d.vect/main.c:283 ../display/d.vect/main.c:293
 #, fuzzy
 msgid "Either a standard GRASS color, R:G:B triplet, or \"none\""
 msgstr "nessuno"
 
-#: ../display/d.vect/main.c:172
+#: ../display/d.vect/main.c:176
 #, fuzzy
 msgid "Area fill color"
 msgstr " val colore\n"
 
-#: ../display/d.vect/main.c:181
+#: ../display/d.vect/main.c:185
 msgid "Name of color definition column (for use with -a flag)"
 msgstr ""
 
-#: ../display/d.vect/main.c:189
+#: ../display/d.vect/main.c:193
 #, fuzzy
 msgid "Type of color table (for use with -z flag)"
 msgstr "Tipo di tabella colore"
 
-#: ../display/d.vect/main.c:198 ../display/d.vect/main.c:203
-#: ../display/d.vect/main.c:211
+#: ../display/d.vect/main.c:202 ../display/d.vect/main.c:207
+#: ../display/d.vect/main.c:215
 msgid "Lines"
 msgstr ""
 
-#: ../display/d.vect/main.c:199
+#: ../display/d.vect/main.c:203
 #, fuzzy
 msgid "Line width"
 msgstr "Grandezza Linea"
 
-#: ../display/d.vect/main.c:205
+#: ../display/d.vect/main.c:209
 msgid "Name of column for line widths (these values will be scaled by wscale)"
 msgstr ""
 
-#: ../display/d.vect/main.c:212
+#: ../display/d.vect/main.c:216
 #, fuzzy
 msgid "Scale factor for wcolumn"
 msgstr "Utilizzando le coordinate del centro della mappa\n"
 
-#: ../display/d.vect/main.c:220 ../display/d.vect/main.c:230
+#: ../display/d.vect/main.c:224 ../display/d.vect/main.c:234
+#: ../display/d.vect/main.c:241 ../display/d.vect/main.c:247
 msgid "Symbols"
 msgstr ""
 
-#: ../display/d.vect/main.c:224
+#: ../display/d.vect/main.c:228
 msgid "Point and centroid symbol"
 msgstr ""
 
-#: ../display/d.vect/main.c:231
+#: ../display/d.vect/main.c:235
 msgid "Symbol size"
 msgstr ""
 
-#: ../display/d.vect/main.c:236 ../display/d.vect/main.c:243
-#: ../display/d.vect/main.c:251 ../display/d.vect/main.c:259
-#: ../display/d.vect/main.c:269 ../display/d.vect/main.c:279
-#: ../display/d.vect/main.c:285 ../display/d.vect/main.c:291
-#: ../display/d.vect/main.c:299
+#: ../display/d.vect/main.c:237
+msgid "When used with the size_column option this becomes the scale factor"
+msgstr ""
+
+#: ../display/d.vect/main.c:243
+#, fuzzy
+msgid "Name of numeric column containing symbol size"
+msgstr "Nome della colonna contenente le coordinate y"
+
+#: ../display/d.vect/main.c:249
+#, fuzzy
+msgid "Name of numeric column containing symbol rotation angle"
+msgstr "Nome della colonna contenente le coordinate y"
+
+#: ../display/d.vect/main.c:251
+msgid "Measured in degrees CCW from east"
+msgstr ""
+
+#: ../display/d.vect/main.c:256 ../display/d.vect/main.c:263
+#: ../display/d.vect/main.c:271 ../display/d.vect/main.c:279
+#: ../display/d.vect/main.c:289 ../display/d.vect/main.c:299
+#: ../display/d.vect/main.c:305 ../display/d.vect/main.c:311
+#: ../display/d.vect/main.c:319
 msgid "Labels"
 msgstr ""
 
-#: ../display/d.vect/main.c:238
+#: ../display/d.vect/main.c:258
 msgid "Layer number for labels (default: the given layer number)"
 msgstr ""
 
-#: ../display/d.vect/main.c:244
+#: ../display/d.vect/main.c:264
 #, fuzzy
 msgid "Name of column to be displayed"
 msgstr "Nome del raster map in output"
 
-#: ../display/d.vect/main.c:250
+#: ../display/d.vect/main.c:270
 #, fuzzy
 msgid "Label color"
 msgstr " val colore\n"
 
-#: ../display/d.vect/main.c:253
+#: ../display/d.vect/main.c:273
 #, fuzzy
 msgid "Either a standard color name or R:G:B triplet"
 msgstr "nessuno"
 
-#: ../display/d.vect/main.c:260
+#: ../display/d.vect/main.c:280
 msgid "Label background color"
 msgstr ""
 
-#: ../display/d.vect/main.c:270
+#: ../display/d.vect/main.c:290
 msgid "Label border color"
 msgstr ""
 
-#: ../display/d.vect/main.c:280
+#: ../display/d.vect/main.c:300
 msgid "Label size (pixels)"
 msgstr ""
 
-#: ../display/d.vect/main.c:294
+#: ../display/d.vect/main.c:314
 msgid "Label horizontal justification"
 msgstr ""
 
-#: ../display/d.vect/main.c:302
+#: ../display/d.vect/main.c:322
 msgid "Label vertical justification"
 msgstr ""
 
-#: ../display/d.vect/main.c:309
+#: ../display/d.vect/main.c:329
 msgid ""
 "Minimum region size (average from height and width) when map is displayed"
 msgstr ""
 
-#: ../display/d.vect/main.c:317
+#: ../display/d.vect/main.c:337
 msgid ""
 "Maximum region size (average from height and width) when map is displayed"
 msgstr ""
 
-#: ../display/d.vect/main.c:329
+#: ../display/d.vect/main.c:349
 msgid ""
 "g;use the libgis render functions (features: clipping);r;use the raster "
 "graphics library functions (features: polylines);d;use the display library "
@@ -17489,71 +17547,66 @@ msgid ""
 "(features: culling, polylines)"
 msgstr ""
 
-#: ../display/d.vect/main.c:345
+#: ../display/d.vect/main.c:365
 msgid "Get colors from map table column (of form RRR:GGG:BBB)"
 msgstr ""
 
-#: ../display/d.vect/main.c:351
+#: ../display/d.vect/main.c:371
 msgid ""
 "Random colors according to category number (or layer number if 'layer=-1' is "
 "given)"
 msgstr ""
 
-#: ../display/d.vect/main.c:358
+#: ../display/d.vect/main.c:378
 msgid "Use values from 'cats' option as feature id"
 msgstr ""
 
-#: ../display/d.vect/main.c:363
+#: ../display/d.vect/main.c:383
 msgid ""
 "Don't add to list of vectors and commands in monitor (it won't be drawn if "
 "the monitor is refreshed)"
 msgstr ""
 
-#: ../display/d.vect/main.c:368
+#: ../display/d.vect/main.c:388
 msgid "Colorize polygons according to z height"
 msgstr ""
 
-#: ../display/d.vect/main.c:435
+#: ../display/d.vect/main.c:455
 msgid ""
 "The '-c' and '-a' flags cannot be used together, the '-c' flag will be "
 "ignored!"
 msgstr ""
 
-#: ../display/d.vect/main.c:466
+#: ../display/d.vect/main.c:486
 #, fuzzy, c-format
 msgid "Unknown color: '%s'"
 msgstr "%s - colore sconosciuto\n"
 
-#: ../display/d.vect/main.c:472
-#, fuzzy
-msgid "Unable to read symbol, unable todisplay points"
-msgstr "impossibile aprire <%s>"
-
-#: ../display/d.vect/main.c:492 ../vector/v.extract/main.c:274
-#: ../vector/v.univar/main.c:172 ../vector/v.surf.rst/main.c:434
+#: ../display/d.vect/main.c:507 ../vector/v.extract/main.c:274
+#: ../vector/v.univar/main.c:172 ../vector/v.surf.rst/main.c:450
 msgid "'layer' must be > 0 for 'where'."
 msgstr ""
 
-#: ../display/d.vect/main.c:519
+#: ../display/d.vect/main.c:534
 msgid "'layer' must be > 0 for 'cats'."
 msgstr ""
 
-#: ../display/d.vect/main.c:523
+#: ../display/d.vect/main.c:538
 #, c-format
 msgid "%d errors in cat option"
 msgstr ""
 
-#: ../display/d.vect/main.c:679
+#: ../display/d.vect/main.c:694
 #, fuzzy
 msgid "Unable to display areas, topology not available"
 msgstr "Non posso mostrare le aree, topologia non disponibile"
 
-#: ../display/d.vect/main.c:684
+#: ../display/d.vect/main.c:699
 #, fuzzy
 msgid "Unable to display lines by id, topology not available"
 msgstr "Non posso mostrare le linee, topologia non disponibile"
 
-#: ../display/d.vect/main.c:726
+#: ../display/d.vect/main.c:742
 #, fuzzy
 msgid "Unable to display topology, not available"
 msgstr "Non posso mostrare la topologia, non è disponibile"
@@ -17573,26 +17626,62 @@ msgstr ""
 msgid "Error in color definition column (%s), area %d with cat %d"
 msgstr ""
 
-#: ../display/d.vect/plot1.c:294 ../vector/v.label.sa/labels.c:146
+#: ../display/d.vect/plot1.c:255
+#, fuzzy, c-format
+msgid "Line width column (%s) is not numeric."
+msgstr "Nessuna mappa in input specificata"
+
+#: ../display/d.vect/plot1.c:275
+#, fuzzy
+msgid "Symbol size column not specified."
+msgstr "Nessuna mappa in input specificata"
+
+#: ../display/d.vect/plot1.c:286
+#, fuzzy, c-format
+msgid "Symbol size column (%s) is not numeric."
+msgstr "Nessuna mappa in input specificata"
+
+#: ../display/d.vect/plot1.c:306
+#, fuzzy
+msgid "Symbol rotation column not specified."
+msgstr "Nessuna mappa in input specificata"
+
+#: ../display/d.vect/plot1.c:317
+#, fuzzy, c-format
+msgid "Symbol rotation column (%s) is not numeric."
+msgstr "Nessuna mappa in input specificata"
+
+#: ../display/d.vect/plot1.c:338 ../display/d.vect/plot1.c:639
+#, fuzzy
+msgid "Unable to read symbol, unable to display points"
+msgstr "impossibile aprire <%s>"
+
+#: ../display/d.vect/plot1.c:369 ../vector/v.label.sa/labels.c:146
 #: ../vector/v.label/main.c:297 ../vector/v.info/main.c:388
 #: ../vector/v.to.3d/trans3.c:81 ../vector/v.to.3d/trans2.c:81
 #, fuzzy
 msgid "Unable to read vector map"
 msgstr "Nome della mappa raster risultante"
 
-#: ../display/d.vect/plot1.c:386
+#: ../display/d.vect/plot1.c:461
 #, c-format
 msgid ""
 "Error in color definition column '%s', feature id %d with cat %d: "
 "colorstring '%s'"
 msgstr ""
 
-#: ../display/d.vect/plot1.c:394
+#: ../display/d.vect/plot1.c:469
 #, c-format
 msgid "Error in color definition column '%s', feature id %d with cat %d"
 msgstr ""
 
-#: ../display/d.vect/plot1.c:528
+#: ../display/d.vect/plot1.c:591
+#, c-format
+msgid ""
+"Error in symbol size column (%s), element %d with cat %d: symbol size [%f]"
+msgstr ""
+
+#: ../display/d.vect/plot1.c:679
 #, fuzzy, c-format
 msgid "Error in color definition column '%s': %d features affected"
 msgstr "Nessuna mappa in input specificata"
@@ -17613,7 +17702,7 @@ msgstr "Nessun record per la cat = %d"
 #: ../vector/v.voronoi/dt_main.c:46 ../vector/v.delaunay2/main.c:86
 #: ../vector/v.external/main.c:58 ../vector/v.clean/test/topocheck.c:42
 #: ../vector/v.buffer/main.c:254 ../vector/v.info/main.c:265
-#: ../vector/v.surf.rst/main.c:161
+#: ../vector/v.surf.rst/main.c:164
 #: ../locale/scriptstrings/v.build.all_to_translate.c:2
 msgid "vector"
 msgstr "vettoriale"
@@ -17956,7 +18045,7 @@ msgid "Exports a GRASS vector map to SVG."
 msgstr "Esporta vettore GRASS in un SVG"
 
 #: ../vector/v.out.svg/main.c:73 ../vector/v.out.ascii/out.c:45
-#: ../vector/v.out.ogr/main.c:86 ../vector/v.out.pov/main.c:43
+#: ../vector/v.out.ogr/main.c:88 ../vector/v.out.pov/main.c:43
 #: ../vector/v.out.dxf/main.c:48
 msgid "vector, export"
 msgstr ""
@@ -17992,7 +18081,7 @@ msgid "Precision must not be higher than 15"
 msgstr ""
 
 #: ../vector/v.out.svg/main.c:154 ../vector/v.random/main.c:214
-#: ../vector/v.out.vtk/writeVTK.c:643 ../vector/v.out.ogr/main.c:344
+#: ../vector/v.out.vtk/writeVTK.c:643 ../vector/v.out.ogr/main.c:426
 #: ../vector/v.patch/main.c:139 ../vector/v.patch/main.c:177
 #: ../vector/v.in.ascii/in.c:408 ../vector/v.info/main.c:222
 #: ../vector/v.db.connect/main.c:219 ../vector/v.drape/main.c:299
@@ -18046,7 +18135,7 @@ msgid "Cannot select attributes for cat=%d"
 msgstr "Non posso selezionare gli attributi per cat=%d"
 
 #: ../vector/v.out.svg/main.c:370 ../vector/v.out.vtk/writeVTK.c:579
-#: ../vector/v.lrs/v.lrs.label/main.c:347 ../vector/v.out.ogr/main.c:713
+#: ../vector/v.lrs/v.lrs.label/main.c:347 ../vector/v.out.ogr/main.c:958
 #: ../vector/v.overlay/main.c:357
 #, fuzzy
 msgid "Unable to fetch data from table"
@@ -18497,7 +18586,7 @@ msgstr "Numero di punti per l'interpolazione"
 msgid "Tykhonov regularization parameter (affects smoothing)"
 msgstr ""
 
-#: ../vector/lidar/v.surf.bspline/main.c:150 ../vector/v.surf.rst/main.c:208
+#: ../vector/lidar/v.surf.bspline/main.c:150 ../vector/v.surf.rst/main.c:216
 msgid "If set to 0, z coordinates are used. (3D vector only)"
 msgstr ""
 
@@ -20343,7 +20432,7 @@ msgid ""
 "No coordinates to generate the output! Maybe an empty vector type chosen?"
 msgstr ""
 
-#: ../vector/v.out.vtk/writeVTK.c:575 ../vector/v.out.ogr/main.c:708
+#: ../vector/v.out.vtk/writeVTK.c:575 ../vector/v.out.ogr/main.c:953
 #, c-format
 msgid "Cannot select attributes for cat = %d"
 msgstr ""
@@ -21564,176 +21653,255 @@ msgstr "Impossibile leggere MASK"
 msgid "Maximum value in output: %e."
 msgstr "Tieni i valori nulli nella mappa in output"
 
-#: ../vector/v.out.ogr/main.c:88
+#: ../vector/v.out.ogr/main.c:90
 msgid "Converts to one of the supported OGR vector formats."
 msgstr "Converte in uno dei formati vettoriali supportati da OGR"
 
-#: ../vector/v.out.ogr/main.c:96
+#: ../vector/v.out.ogr/main.c:98
 msgid "Feature type. Combination of types is not supported by all formats."
 msgstr ""
 
-#: ../vector/v.out.ogr/main.c:104
+#: ../vector/v.out.ogr/main.c:106
 #, fuzzy
 msgid "OGR output datasource name"
 msgstr "nome database"
 
-#: ../vector/v.out.ogr/main.c:106
+#: ../vector/v.out.ogr/main.c:108
 msgid "For example: ESRI Shapefile: filename or directory for storage"
 msgstr ""
 
-#: ../vector/v.out.ogr/main.c:113
+#: ../vector/v.out.ogr/main.c:115
 msgid "OGR layer name. If not specified, input name is used."
 msgstr ""
 
-#: ../vector/v.out.ogr/main.c:114
+#: ../vector/v.out.ogr/main.c:116
 msgid "For example: ESRI Shapefile: shapefile name"
 msgstr ""
 
-#: ../vector/v.out.ogr/main.c:115 ../vector/v.out.ogr/main.c:128
-#: ../vector/v.out.ogr/main.c:138 ../vector/v.out.ogr/main.c:148
+#: ../vector/v.out.ogr/main.c:117 ../vector/v.out.ogr/main.c:130
+#: ../vector/v.out.ogr/main.c:140 ../vector/v.out.ogr/main.c:150
 #, fuzzy
 msgid "Creation"
 msgstr "Campo separatore in output"
 
-#: ../vector/v.out.ogr/main.c:127
+#: ../vector/v.out.ogr/main.c:129
 msgid "OGR format"
 msgstr "Formato OGR"
 
-#: ../vector/v.out.ogr/main.c:137
+#: ../vector/v.out.ogr/main.c:139
 msgid "OGR dataset creation option (format specific, NAME=VALUE)"
 msgstr ""
 
-#: ../vector/v.out.ogr/main.c:147
+#: ../vector/v.out.ogr/main.c:149
 msgid "OGR layer creation option (format specific, NAME=VALUE)"
 msgstr ""
 
-#: ../vector/v.out.ogr/main.c:152
+#: ../vector/v.out.ogr/main.c:154
+msgid "Open an existing datasource for update"
+msgstr ""
+
+#: ../vector/v.out.ogr/main.c:159
+msgid "Skip export of GRASS category ID ('cat') attribute"
+msgstr ""
+
+#: ../vector/v.out.ogr/main.c:163
 msgid ""
 "Export features with category (labeled) only. Otherwise all features are "
 "exported"
 msgstr ""
 
-#: ../vector/v.out.ogr/main.c:157
+#: ../vector/v.out.ogr/main.c:168
 msgid "Use ESRI-style .prj file format (applies to Shapefile output only)"
 msgstr ""
 "Usa il file .prj in formato ESRI-style  (applicato solo all'output Shapefile)"
 
-#: ../vector/v.out.ogr/main.c:162
+#: ../vector/v.out.ogr/main.c:173
 msgid "Export lines as polygons"
 msgstr ""
 
-#: ../vector/v.out.ogr/main.c:201
+#: ../vector/v.out.ogr/main.c:217
+msgid "Skipping all boundaries that are not part of an area."
+msgstr ""
+
+#: ../vector/v.out.ogr/main.c:236
+msgid "Could not determine input map's feature type(s)."
+msgstr ""
+
+#: ../vector/v.out.ogr/main.c:280
 msgid "The combination of types is not supported by all formats."
 msgstr ""
 
-#: ../vector/v.out.ogr/main.c:224
+#: ../vector/v.out.ogr/main.c:294
 msgid ""
 "The map contains islands. To preserve them in the output map, use the -c flag"
 msgstr ""
 
-#: ../vector/v.out.ogr/main.c:255
+#: ../vector/v.out.ogr/main.c:324
 #, fuzzy, c-format
 msgid "OGR driver <%s> not found"
 msgstr "raster <%s> non trovato"
 
-#: ../vector/v.out.ogr/main.c:272
+#: ../vector/v.out.ogr/main.c:349
 #, fuzzy, c-format
 msgid "Unable to open OGR data source '%s'"
 msgstr "impossibile aprire <%s>"
 
-#: ../vector/v.out.ogr/main.c:293 ../vector/v.out.ogr/main.c:300
+#: ../vector/v.out.ogr/main.c:370 ../vector/v.out.ogr/main.c:377
 #, c-format
 msgid ""
 "Vector map <%s> is 3D. Use format specific layer creation options (parameter "
 "'lco') to export in 3D rather than 2D (default)"
 msgstr ""
 
-#: ../vector/v.out.ogr/main.c:313
+#: ../vector/v.out.ogr/main.c:390
 #, fuzzy
 msgid "Unable to create OGR layer"
 msgstr "impossibile aprire <%s>"
 
-#: ../vector/v.out.ogr/main.c:323
+#: ../vector/v.out.ogr/main.c:400
 msgid "No attribute table found -> using only category numbers as attributes"
 msgstr ""
 
-#: ../vector/v.out.ogr/main.c:387
+#: ../vector/v.out.ogr/main.c:404
+msgid "Exporting 'cat' anyway, as it is the only attribute table field"
+msgstr ""
+
+#: ../vector/v.out.ogr/main.c:481
 #, fuzzy, c-format
 msgid "Key column '%s' not found"
 msgstr "raster <%s> non trovato"
 
-#: ../vector/v.out.ogr/main.c:399
+#: ../vector/v.out.ogr/main.c:491
 #, c-format
 msgid ""
 "%d point(s) found, but not requested to be exported. Verify 'type' parameter."
 msgstr ""
 
-#: ../vector/v.out.ogr/main.c:404
+#: ../vector/v.out.ogr/main.c:496
 #, c-format
 msgid ""
 "%d line(s) found, but not requested to be exported. Verify 'type' parameter."
 msgstr ""
 
-#: ../vector/v.out.ogr/main.c:410
+#: ../vector/v.out.ogr/main.c:502
 #, c-format
 msgid ""
 "%d boundary(ies) found, but not requested to be exported. Verify 'type' "
 "parameter."
 msgstr ""
 
-#: ../vector/v.out.ogr/main.c:416
+#: ../vector/v.out.ogr/main.c:508
 #, c-format
 msgid ""
 "%d centroid(s) found, but not requested to be exported. Verify 'type' "
 "parameter."
 msgstr ""
 
-#: ../vector/v.out.ogr/main.c:421
+#: ../vector/v.out.ogr/main.c:513
 #, c-format
 msgid ""
 "%d areas found, but not requested to be exported. Verify 'type' parameter."
 msgstr ""
 
-#: ../vector/v.out.ogr/main.c:426
+#: ../vector/v.out.ogr/main.c:517
 #, c-format
 msgid ""
 "%d faces found, but not requested to be exported. Verify 'type' parameter."
 msgstr ""
 
-#: ../vector/v.out.ogr/main.c:434
+#: ../vector/v.out.ogr/main.c:523
+#, c-format
+msgid ""
+"%d kernel(s) found, but not requested to be exported. Verify 'type' "
+"parameter."
+msgstr ""
+
+#: ../vector/v.out.ogr/main.c:530
+msgid ""
+"No points found, but requested to be exported. Will skip this geometry type."
+msgstr ""
+
+#: ../vector/v.out.ogr/main.c:540
+msgid ""
+"No lines found, but requested to be exported. Will skip this geometry type."
+msgstr ""
+
+#: ../vector/v.out.ogr/main.c:551
+msgid ""
+"No boundaries found, but requested to be exported. Will skip this geometry "
+"type."
+msgstr ""
+
+#: ../vector/v.out.ogr/main.c:561
+msgid ""
+"No areas found, but requested to be exported. Will skip this geometry type."
+msgstr ""
+
+#: ../vector/v.out.ogr/main.c:571
+msgid ""
+"No centroids found, but requested to be exported. Will skip this geometry "
+"type."
+msgstr ""
+
+#: ../vector/v.out.ogr/main.c:581
+msgid ""
+"No faces found, but requested to be exported. Will skip this geometry type."
+msgstr ""
+
+#: ../vector/v.out.ogr/main.c:591
+msgid ""
+"No kernels found, but requested to be exported. Will skip this geometry type."
+msgstr ""
+
+#: ../vector/v.out.ogr/main.c:603
+#, fuzzy
+msgid "Nothing to export"
+msgstr "Non ho trovato nulla.\n"
+
+#: ../vector/v.out.ogr/main.c:609
 #, c-format
 msgid "Exporting %i points/lines..."
 msgstr "Esportando %i punti/linee..."
 
-#: ../vector/v.out.ogr/main.c:512
+#: ../vector/v.out.ogr/main.c:691
 #, c-format
 msgid "Exporting %i areas (may take some time)..."
 msgstr ""
 
-#: ../vector/v.out.ogr/main.c:584
+#: ../vector/v.out.ogr/main.c:766
 #, c-format
 msgid "Exporting %i faces (may take some time) ..."
 msgstr ""
 
-#: ../vector/v.out.ogr/main.c:654 ../vector/v.out.pov/main.c:207
+#: ../vector/v.out.ogr/main.c:829
+#, fuzzy, c-format
+msgid "Exporting %i kernels..."
+msgstr "Esportando %i punti/linee..."
+
+#: ../vector/v.out.ogr/main.c:899 ../vector/v.out.pov/main.c:207
 #, c-format
 msgid "%d features written"
 msgstr ""
 
-#: ../vector/v.out.ogr/main.c:656
+#: ../vector/v.out.ogr/main.c:901
 #, fuzzy, c-format
 msgid "%d features without category were written"
 msgstr "%d punti senza categoria non considerati"
 
-#: ../vector/v.out.ogr/main.c:658
+#: ../vector/v.out.ogr/main.c:903
 #, fuzzy, c-format
 msgid "%d features without attributes were written"
 msgstr "%d punti senza categoria non considerati"
 
-#: ../vector/v.out.ogr/main.c:660
+#: ../vector/v.out.ogr/main.c:905
 #, fuzzy, c-format
 msgid "%d features found without category were skipped"
 msgstr "%d punti senza categoria non considerati"
+
+#: ../vector/v.out.ogr/main.c:969
+#, c-format
+msgid "No database record for cat = %d and export of 'cat' disabled"
+msgstr ""
 
 #: ../vector/v.proj/main.c:63
 #, fuzzy
@@ -21914,11 +22082,11 @@ msgid "Name of the column containing w attribute to interpolate"
 msgstr ""
 "Nome della mappa raster che contiene la griglia con le informazioni del costo"
 
-#: ../vector/v.vol.rst/main.c:260 ../vector/v.surf.rst/main.c:300
+#: ../vector/v.vol.rst/main.c:260 ../vector/v.surf.rst/main.c:308
 msgid "Tension parameter"
 msgstr ""
 
-#: ../vector/v.vol.rst/main.c:268 ../vector/v.surf.rst/main.c:307
+#: ../vector/v.vol.rst/main.c:268 ../vector/v.surf.rst/main.c:315
 msgid "Smoothing parameter"
 msgstr ""
 
@@ -21927,7 +22095,7 @@ msgstr ""
 msgid "Name of the column with smoothing parameters"
 msgstr "Nome del file raster in input"
 
-#: ../vector/v.vol.rst/main.c:286 ../vector/v.surf.rst/main.c:257
+#: ../vector/v.vol.rst/main.c:286 ../vector/v.surf.rst/main.c:265
 #, fuzzy
 msgid "Output deviations vector point file"
 msgstr "Visualizza il raster delle altezze dopo il riempimento"
@@ -21940,16 +22108,16 @@ msgstr ""
 msgid "Output cross-validation vector map"
 msgstr ""
 
-#: ../vector/v.vol.rst/main.c:302 ../vector/v.surf.rst/main.c:284
+#: ../vector/v.vol.rst/main.c:302 ../vector/v.surf.rst/main.c:292
 msgid "Name of the raster map used as mask"
 msgstr ""
 
-#: ../vector/v.vol.rst/main.c:309 ../vector/v.surf.rst/main.c:323
+#: ../vector/v.vol.rst/main.c:309 ../vector/v.surf.rst/main.c:331
 #, fuzzy
 msgid "Maximum number of points in a segment"
 msgstr "Numero di passi attraverso il dataset"
 
-#: ../vector/v.vol.rst/main.c:318 ../vector/v.surf.rst/main.c:332
+#: ../vector/v.vol.rst/main.c:318 ../vector/v.surf.rst/main.c:340
 #, fuzzy
 msgid "Minimum number of points for approximation in a segment (>segmax)"
 msgstr "Numero minimo di punto per una linea di contorno (0 > nessun limite)"
@@ -21959,7 +22127,7 @@ msgstr "Numero minimo di punto per una linea di contorno (0 > nessun limite)"
 msgid "Maximum number of points for approximation in a segment (>npmin)"
 msgstr "Numero minimo di punto per una linea di contorno (0 > nessun limite)"
 
-#: ../vector/v.vol.rst/main.c:336 ../vector/v.surf.rst/main.c:341
+#: ../vector/v.vol.rst/main.c:336 ../vector/v.surf.rst/main.c:349
 msgid "Minimum distance between points (to remove almost identical points)"
 msgstr ""
 
@@ -25274,154 +25442,166 @@ msgstr "Non riesco a descrivere la tabella"
 msgid "%d features modified."
 msgstr "%d categorie duplicate nel vettoriale"
 
-#: ../vector/v.surf.rst/main.c:163
+#: ../vector/v.surf.rst/main.c:166
 msgid ""
 "Spatial approximation and topographic analysis from given point or isoline "
 "data in vector format to floating point raster format using regularized "
 "spline with tension."
 msgstr ""
 
-#: ../vector/v.surf.rst/main.c:190
+#: ../vector/v.surf.rst/main.c:192
+msgid "Use z-coordinates (3D vector only)"
+msgstr ""
+
+#: ../vector/v.surf.rst/main.c:198
 msgid "Perform cross-validation procedure without raster approximation"
 msgstr ""
 
-#: ../vector/v.surf.rst/main.c:195
+#: ../vector/v.surf.rst/main.c:203
 msgid "Use scale dependent tension"
 msgstr ""
 
-#: ../vector/v.surf.rst/main.c:219
+#: ../vector/v.surf.rst/main.c:227
 #, fuzzy
 msgid "Output surface raster map (elevation)"
 msgstr "Mostra il titolo del file raster"
 
-#: ../vector/v.surf.rst/main.c:225
+#: ../vector/v.surf.rst/main.c:233
 msgid "Output slope raster map"
 msgstr "Nome della mappa raster della pendenza"
 
-#: ../vector/v.surf.rst/main.c:231
+#: ../vector/v.surf.rst/main.c:239
 #, fuzzy
 msgid "Output aspect raster map"
 msgstr "Nome della tabella in output"
 
-#: ../vector/v.surf.rst/main.c:237
+#: ../vector/v.surf.rst/main.c:245
 #, fuzzy
 msgid "Output profile curvature raster map"
 msgstr "Nome del driver in output"
 
-#: ../vector/v.surf.rst/main.c:243
+#: ../vector/v.surf.rst/main.c:251
 #, fuzzy
 msgid "Output tangential curvature raster map"
 msgstr "Nome del database in output"
 
-#: ../vector/v.surf.rst/main.c:249
+#: ../vector/v.surf.rst/main.c:257
 #, fuzzy
 msgid "Output mean curvature raster map"
 msgstr "Nome del driver in output"
 
-#: ../vector/v.surf.rst/main.c:264
+#: ../vector/v.surf.rst/main.c:272
 msgid "Output cross-validation errors vector point file"
 msgstr ""
 
-#: ../vector/v.surf.rst/main.c:271
+#: ../vector/v.surf.rst/main.c:279
 msgid "Output vector map showing quadtree segmentation"
 msgstr ""
 
-#: ../vector/v.surf.rst/main.c:278
+#: ../vector/v.surf.rst/main.c:286
 msgid "Output vector map showing overlapping windows"
 msgstr ""
 
-#: ../vector/v.surf.rst/main.c:292
+#: ../vector/v.surf.rst/main.c:300
 #, fuzzy
 msgid ""
 "Name of the attribute column with values to be used for approximation (if "
 "layer>0)"
 msgstr "Nome della mappa raster da utilizzare per <%s>"
 
-#: ../vector/v.surf.rst/main.c:315
+#: ../vector/v.surf.rst/main.c:323
 #, fuzzy
 msgid "Name of the attribute column with smoothing parameters"
 msgstr "Nome della mappa raster da utilizzare per <%s>"
 
-#: ../vector/v.surf.rst/main.c:350
+#: ../vector/v.surf.rst/main.c:358
 msgid ""
 "Maximum distance between points on isoline (to insert additional points)"
 msgstr ""
 
-#: ../vector/v.surf.rst/main.c:359
+#: ../vector/v.surf.rst/main.c:367
 msgid "Conversion factor for values used for approximation"
 msgstr ""
 
-#: ../vector/v.surf.rst/main.c:367
+#: ../vector/v.surf.rst/main.c:375
 msgid "Anisotropy angle (in degrees counterclockwise from East)"
 msgstr ""
 
-#: ../vector/v.surf.rst/main.c:402 ../vector/v.surf.rst/main.c:407
-#: ../vector/v.surf.rst/main.c:412 ../vector/v.surf.rst/main.c:417
+#: ../vector/v.surf.rst/main.c:408 ../vector/v.surf.rst/main.c:413
+#: ../vector/v.surf.rst/main.c:418 ../vector/v.surf.rst/main.c:423
 #, fuzzy, c-format
 msgid "Output vector map name <%s> is not valid map name"
 msgstr "file vettoriale da creare"
 
-#: ../vector/v.surf.rst/main.c:430
+#: ../vector/v.surf.rst/main.c:436
 #, fuzzy
 msgid "You are not outputting any raster or vector maps"
 msgstr "Nome di un file vettoriale in output"
 
-#: ../vector/v.surf.rst/main.c:443
+#: ../vector/v.surf.rst/main.c:456
 msgid ""
 "Both cross-validation options (-c flag and cvdev vector output) must be "
 "specified"
 msgstr ""
 
-#: ../vector/v.surf.rst/main.c:446
+#: ../vector/v.surf.rst/main.c:459
 msgid ""
 "The cross-validation cannot be computed simultaneously with output raster or "
 "devi file"
 msgstr ""
 
+#: ../vector/v.surf.rst/main.c:462
+msgid "Both z-coordinate and zcol attribute defined, only one is allowed"
+msgstr ""
+
 #: ../vector/v.surf.rst/main.c:464
+msgid "Only smoothing column defined, zcol or -z flag is missing"
+msgstr ""
+
+#: ../vector/v.surf.rst/main.c:484
 msgid "Using anisotropy - both theta and scalex have to be specified"
 msgstr ""
 
-#: ../vector/v.surf.rst/main.c:472
+#: ../vector/v.surf.rst/main.c:492
 msgid "Both smatt and smooth options specified - using constant"
 msgstr ""
 
-#: ../vector/v.surf.rst/main.c:482
+#: ../vector/v.surf.rst/main.c:502
 msgid "The computation will last too long - lower npmin is suggested"
 msgstr ""
 
-#: ../vector/v.surf.rst/main.c:529
+#: ../vector/v.surf.rst/main.c:549
 #, fuzzy
 msgid "Cannot create quaddata"
 msgstr "Non riesco a descrivere la tabella"
 
-#: ../vector/v.surf.rst/main.c:535
+#: ../vector/v.surf.rst/main.c:555
 #, fuzzy
 msgid "Cannot create quadfunc"
 msgstr "Non riesco a descrivere la tabella"
 
-#: ../vector/v.surf.rst/main.c:538
+#: ../vector/v.surf.rst/main.c:558
 #, fuzzy
 msgid "Cannot create tree"
 msgstr "Non riesco a descrivere la tabella"
 
-#: ../vector/v.surf.rst/main.c:542
+#: ../vector/v.surf.rst/main.c:562
 #, fuzzy
 msgid "Cannot create tree info"
 msgstr "Non riesco a descrivere la tabella"
 
-#: ../vector/v.surf.rst/main.c:735
+#: ../vector/v.surf.rst/main.c:755
 #, c-format
 msgid ""
 "Processing all selected output files\n"
 "will require %d bytes of disk space for temp files"
 msgstr ""
 
-#: ../vector/v.surf.rst/main.c:759
+#: ../vector/v.surf.rst/main.c:779
 msgid "Interp_segmets failed"
 msgstr ""
 
-#: ../vector/v.surf.rst/main.c:776
+#: ../vector/v.surf.rst/main.c:796
 msgid "Cannot write raster maps -- try to increase resolution"
 msgstr ""
 
@@ -27267,6 +27447,7 @@ msgstr ""
 "categoria: %d\n"
 
 #: ../db/base/select.c:88 ../imagery/i.rectify/report.c:16
+#: ../imagery/i.ortho.photo/i.photo.rectify/report.c:10
 msgid "failed"
 msgstr "fallito"
 
@@ -29846,6 +30027,7 @@ msgid "Use maximum likelihood estimation (instead of smap)"
 msgstr ""
 
 #: ../imagery/i.smap/shapiro/parse.c:58 ../imagery/i.gensigset/parse.c:45
+#: ../imagery/i.ortho.photo/i.photo.rectify/main.c:177
 #: ../imagery/i.gensig/parse.c:39 ../imagery/i.cluster/open_files.c:17
 #: ../imagery/i.maxlik/open.c:16
 #, c-format
@@ -29864,7 +30046,7 @@ msgid "imagery, image transformation, PCA"
 msgstr "Nome del raster"
 
 #: ../imagery/i.pca/main.c:64
-msgid "Principal components analysis (pca) program for image processing."
+msgid "Principal components analysis (PCA) for image processing."
 msgstr ""
 
 #: ../imagery/i.pca/main.c:69
@@ -29882,56 +30064,65 @@ msgstr "Nome di un file vettoriale in output"
 msgid "A numerical suffix will be added for each component map"
 msgstr "Numero di livelli da utilizzare per ogni componente"
 
-#: ../imagery/i.pca/main.c:83
-msgid "Rescaling range for output maps (for no rescaling use 0,0)"
+#: ../imagery/i.pca/main.c:87
+#, fuzzy
+msgid "Rescaling range for output maps"
+msgstr "Risoluzione della mappa di output"
+
+#: ../imagery/i.pca/main.c:89
+msgid "For no rescaling use 0,0"
 msgstr ""
 
-#: ../imagery/i.pca/main.c:93
+#: ../imagery/i.pca/main.c:90
+msgid "Rescale"
+msgstr ""
+
+#: ../imagery/i.pca/main.c:100
 #, fuzzy
 msgid "Sorry, at least 2 input bands must be provided"
 msgstr "Nome del file in output"
 
-#: ../imagery/i.pca/main.c:136
+#: ../imagery/i.pca/main.c:143
 #, fuzzy
 msgid "Calculating covariance matrix..."
 msgstr "Non riesco a trovare il file raster %s"
 
-#: ../imagery/i.pca/main.c:212
+#: ../imagery/i.pca/main.c:219
 msgid "Scale range length should be > 0. Using default values: 0,255."
 msgstr ""
 
-#: ../imagery/i.pca/main.c:249 ../imagery/i.pca/main.c:298
-#: ../imagery/i.pca/main.c:431
+#: ../imagery/i.pca/main.c:256 ../imagery/i.pca/main.c:305
+#: ../imagery/i.pca/main.c:438
 #, fuzzy
 msgid "Unable allocate memory for row buffer"
 msgstr "impossibile aprire <%s>"
 
-#: ../imagery/i.pca/main.c:251
+#: ../imagery/i.pca/main.c:258
 #, fuzzy, c-format
 msgid "Computing means for band %d..."
 msgstr "Sto copiando le tabelle..."
 
-#: ../imagery/i.pca/main.c:300
+#: ../imagery/i.pca/main.c:307
 #, fuzzy, c-format
 msgid "Computing row %d (of %d) of covariance matrix..."
 msgstr "Non riesco a trovare il file raster %s"
 
-#: ../imagery/i.pca/main.c:317
+#: ../imagery/i.pca/main.c:324
 #, fuzzy
 msgid "Unable to allocate memory for row buffer"
 msgstr "impossibile aprire <%s>"
 
-#: ../imagery/i.pca/main.c:379
+#: ../imagery/i.pca/main.c:386
 #, fuzzy
 msgid "Unable to allocate memory for raster row"
 msgstr "impossibile aprire <%s>"
 
-#: ../imagery/i.pca/main.c:388
+#: ../imagery/i.pca/main.c:395
 #, c-format
 msgid "Transforming <%s>..."
 msgstr "Sto trasformando <%s>..."
 
-#: ../imagery/i.pca/main.c:407
+#: ../imagery/i.pca/main.c:414
 #, fuzzy, c-format
 msgid "Rescaling <%s> to range %d,%d..."
 msgstr "Mappa raster risultante"
@@ -30014,6 +30205,7 @@ msgid ""
 msgstr ""
 
 #: ../imagery/i.rectify/main.c:100
+#: ../imagery/i.ortho.photo/i.photo.rectify/main.c:100
 #, fuzzy
 msgid "Output raster map(s) suffix"
 msgstr "Nome del driver in output"
@@ -30023,12 +30215,14 @@ msgid "Rectification polynom order (1-3)"
 msgstr ""
 
 #: ../imagery/i.rectify/main.c:111
+#: ../imagery/i.ortho.photo/i.photo.rectify/main.c:134
 #, fuzzy
 msgid ""
 "Use current region settings in target location (def.=calculate smallest area)"
 msgstr "Imposta la region corrente alla region salvata"
 
 #: ../imagery/i.rectify/main.c:115
+#: ../imagery/i.ortho.photo/i.photo.rectify/main.c:138
 #, fuzzy
 msgid "Rectify all raster maps in group"
 msgstr "Nome del driver in input"
@@ -30044,11 +30238,13 @@ msgid "Group <%s> does not exist"
 msgstr "Gruppo <%s> non esiste"
 
 #: ../imagery/i.rectify/main.c:146
+#: ../imagery/i.ortho.photo/i.photo.rectify/main.c:184
 #, fuzzy, c-format
 msgid "Group <%s> contains no raster maps; run i.group"
 msgstr "Gruppo [%s] non contiene mappe, avvia i.group"
 
 #: ../imagery/i.rectify/main.c:205
+#: ../imagery/i.ortho.photo/i.photo.rectify/main.c:316
 #, fuzzy, c-format
 msgid "Using region: N=%f S=%f, E=%f W=%f"
 msgstr "Usa N=%f S=%f E=%f O=%f"
@@ -30061,6 +30257,7 @@ msgid ""
 msgstr "Mappa raster <%s> non esiste nel sottogruppo <%s>"
 
 #: ../imagery/i.rectify/main.c:225
+#: ../imagery/i.ortho.photo/i.photo.rectify/main.c:388
 #, fuzzy
 msgid "Exit!"
 msgstr "Esistente"
@@ -30119,6 +30316,7 @@ msgid "Please run i.target for group."
 msgstr ""
 
 #: ../imagery/i.rectify/report.c:12
+#: ../imagery/i.ortho.photo/i.photo.rectify/rectify.c:46
 #, fuzzy, c-format
 msgid "Rectify <%s@%s> (location <%s>)"
 msgstr "Mappa raster risultante"
@@ -30129,6 +30327,7 @@ msgid "into  <%s@%s> (location <%s>) ... %s"
 msgstr "raster <%s> non trovato"
 
 #: ../imagery/i.rectify/report.c:16
+#: ../imagery/i.ortho.photo/i.photo.rectify/report.c:10
 #, fuzzy
 msgid "complete"
 msgstr "Tipo sconosciuto"
@@ -30158,16 +30357,19 @@ msgid "Error writing row %d"
 msgstr "Non riesco a trovare il file raster %s"
 
 #: ../imagery/i.rectify/exec.c:54
+#: ../imagery/i.ortho.photo/i.photo.rectify/exec.c:72
 #, fuzzy, c-format
 msgid "Rectified input raster map <%s> will be saved as <%s>"
 msgstr "impossibile aprire <%s>"
 
 #: ../imagery/i.rectify/rectify.c:94
+#: ../imagery/i.ortho.photo/i.photo.rectify/rectify.c:131
 #, fuzzy, c-format
 msgid "Raster map <%s@%s>: projection don't match current settings"
 msgstr "raster <%s> non trovato"
 
 #: ../imagery/i.rectify/rectify.c:100
+#: ../imagery/i.ortho.photo/i.photo.rectify/rectify.c:137
 #, fuzzy, c-format
 msgid "Raster map <%s@%s>: zone don't match current settings"
 msgstr "raster <%s> non trovato"
@@ -30195,15 +30397,15 @@ msgid "Group [%s] contains no maps, run i.group"
 msgstr "Gruppo [%s] non contiene mappe, avvia i.group"
 
 #: ../imagery/i.vpoints/main.c:254 ../imagery/i.points/main.c:248
-#: ../imagery/i.ortho.photo/photo.2target/main.c:302
-#: ../imagery/i.ortho.photo/photo.2image/main.c:195
+#: ../imagery/i.ortho.photo/i.photo.2image/main.c:195
+#: ../imagery/i.ortho.photo/i.photo.2target/main.c:302
 #, c-format
 msgid "ERROR: %s"
 msgstr "ERRORE: %s"
 
 #: ../imagery/i.vpoints/main.c:256 ../imagery/i.points/main.c:250
-#: ../imagery/i.ortho.photo/photo.2target/main.c:304
-#: ../imagery/i.ortho.photo/photo.2image/main.c:197
+#: ../imagery/i.ortho.photo/i.photo.2image/main.c:197
+#: ../imagery/i.ortho.photo/i.photo.2target/main.c:304
 #, c-format
 msgid "WARNING: %s (click mouse to continue)"
 msgstr "ATTENZIONE: %s (clicca il mouse per continuare)"
@@ -30571,257 +30773,372 @@ msgstr "Trasformazione completata.\n"
 msgid "Mark ground control points on image to be rectified."
 msgstr ""
 
-#: ../imagery/i.ortho.photo/photo.2target/main.c:53
-#: ../imagery/i.ortho.photo/photo.rectify/main.c:49
-#: ../imagery/i.ortho.photo/photo.elev/main.c:62
-#: ../imagery/i.ortho.photo/photo.target/main.c:46
-#: ../imagery/i.ortho.photo/photo.2image/main.c:54
-#: ../imagery/i.ortho.photo/photo.init/main.c:44
-#: ../imagery/i.ortho.photo/photo.camera/main.c:54
+#: ../imagery/i.ortho.photo/i.photo.init/main.c:44
+#: ../imagery/i.ortho.photo/i.photo.camera/main.c:55
+#: ../imagery/i.ortho.photo/i.photo.2image/main.c:54
+#: ../imagery/i.ortho.photo/i.photo.rectify/main.c:86
+#: ../imagery/i.ortho.photo/i.photo.elev/main.c:62
+#: ../imagery/i.ortho.photo/i.photo.2target/main.c:53
+#: ../imagery/i.ortho.photo/i.photo.target/main.c:46
 #: ../imagery/i.ortho.photo/menu/menu.c:43
 msgid "imagery, orthorectify"
 msgstr ""
 
-#: ../imagery/i.ortho.photo/photo.2target/main.c:54
-msgid "Creates control points on an image to be ortho-rectified."
-msgstr ""
-
-#: ../imagery/i.ortho.photo/photo.2target/main.c:62
-#: ../imagery/i.group/main.c:58
-#, fuzzy
-msgid "Name of imagery group"
-msgstr "Nome della mappa raster"
-
-#: ../imagery/i.ortho.photo/photo.2target/main.c:66
-msgid "Name of image to be rectified which will be initially drawn on screen"
-msgstr ""
-
-#: ../imagery/i.ortho.photo/photo.2target/main.c:72
-msgid ""
-"Name of a map from target mapset which will be initially drawn on screen"
-msgstr ""
-
-#: ../imagery/i.ortho.photo/photo.2target/main.c:102
-#: ../imagery/i.ortho.photo/photo.rectify/main.c:72
-#: ../imagery/i.ortho.photo/photo.init/main.c:64
-#, fuzzy, c-format
-msgid "Group [%s] not found"
-msgstr "Gruppo <%s> non trovato"
-
-#: ../imagery/i.ortho.photo/photo.2target/main.c:114
-#: ../imagery/i.ortho.photo/photo.2image/main.c:98
-#, fuzzy, c-format
-msgid "No camera reference file selected for group [%s]"
-msgstr "Nome di un nuovo file raster"
-
-#: ../imagery/i.ortho.photo/photo.2target/main.c:118
-#: ../imagery/i.ortho.photo/photo.2image/main.c:102
-#, fuzzy, c-format
-msgid "Bad format in camera file for group [%s]"
-msgstr "Errore nella lettura del file dbmscap\n"
-
-#: ../imagery/i.ortho.photo/photo.2target/main.c:125
-#, fuzzy, c-format
-msgid "No initial camera exposure station for group [%s]"
-msgstr "Errore nella lettura del file dbmscap\n"
-
-#: ../imagery/i.ortho.photo/photo.2target/main.c:129
-#, fuzzy, c-format
-msgid "Bad format in initial camera exposure station for group [%s]"
-msgstr "Errore nella lettura del file dbmscap\n"
-
-#: ../imagery/i.ortho.photo/photo.2target/main.c:143
-#, fuzzy, c-format
-msgid "No photo points for group [%s]"
-msgstr "raster <%s> non trovato"
-
-#: ../imagery/i.ortho.photo/photo.2target/main.c:145
-#, fuzzy, c-format
-msgid "Poorly placed photo points for group [%s]"
-msgstr "raster <%s> non trovato"
-
-#: ../imagery/i.ortho.photo/photo.2target/main.c:167
-#, fuzzy
-msgid "Computing equations ..."
-msgstr "Sto copiando le tabelle..."
-
-#: ../imagery/i.ortho.photo/photo.2target/main.c:202
-#: ../imagery/i.ortho.photo/photo.2target/main.c:233
-#, fuzzy, c-format
-msgid "Unable to read raster header of <%s>"
-msgstr "Non riesco ad aprire il file header di [%s]"
-
-#: ../imagery/i.ortho.photo/photo.2target/curses.c:22
-#: ../imagery/i.class/curses.c:22
-#, c-format
-msgid "make_window(%d,%d,%d,%d): illegal screen values."
-msgstr ""
-
-#: ../imagery/i.ortho.photo/photo.2target/curses.c:148
-#: ../imagery/i.class/curses.c:153
-#, c-format
-msgid "%s"
-msgstr "%s"
-
-#: ../imagery/i.ortho.photo/photo.rectify/main.c:51
-#: ../imagery/i.ortho.photo/photo.target/main.c:48
-msgid "Interactively select or modify the imagery group target."
-msgstr ""
-
-#: ../imagery/i.ortho.photo/photo.rectify/main.c:55
-#: ../imagery/i.ortho.photo/photo.elev/main.c:68
-#: ../imagery/i.ortho.photo/photo.target/main.c:52
-#: ../imagery/i.ortho.photo/photo.2image/main.c:60
-#: ../imagery/i.ortho.photo/photo.init/main.c:52
-#: ../imagery/i.ortho.photo/photo.camera/main.c:60
-#: ../imagery/i.ortho.photo/menu/menu.c:48
-#, fuzzy
-msgid "Name of imagery group for ortho-rectification"
-msgstr "Nome della mappa raster"
-
-#: ../imagery/i.ortho.photo/photo.rectify/main.c:78
-msgid "No files in this group!"
-msgstr ""
-
-#: ../imagery/i.ortho.photo/photo.rectify/main.c:97
-#, fuzzy, c-format
-msgid "No target elevation model selected for group <%s>"
-msgstr "Nome di un nuovo file raster"
-
-#: ../imagery/i.ortho.photo/photo.rectify/main.c:109
-#, fuzzy, c-format
-msgid "No camera reference file selected for group <%s>"
-msgstr "Nome di un nuovo file raster"
-
-#: ../imagery/i.ortho.photo/photo.rectify/main.c:113
-#, fuzzy, c-format
-msgid "Bad format in camera file for group <%s>"
-msgstr "Errore nella lettura del file dbmscap\n"
-
-#: ../imagery/i.ortho.photo/photo.rectify/main.c:119
-#, fuzzy, c-format
-msgid "Bad format in initial exposusre station file for group <%s>"
-msgstr "Errore nella lettura del file dbmscap\n"
-
-#: ../imagery/i.ortho.photo/photo.rectify/ps_cp.c:53
-msgid "Poorly placed psuedo control points. "
-msgstr ""
-
-#: ../imagery/i.ortho.photo/photo.rectify/ps_cp.c:54
-#, fuzzy
-msgid "Cannot generate the transformation equation."
-msgstr "Stampa matrice di correlazione"
-
-#: ../imagery/i.ortho.photo/photo.rectify/ps_cp.c:58
-msgid "No active psuedo control points"
-msgstr ""
-
-#: ../imagery/i.ortho.photo/photo.rectify/write.c:34
-#, c-format
-msgid "Unable to write temp file: %s"
-msgstr "Impossibile scrivere il file temp: %s"
-
-#: ../imagery/i.ortho.photo/photo.rectify/write.c:58
-#, c-format
-msgid "Unable to open map %s"
-msgstr "Impossibile aprire la mappa %s"
-
-#: ../imagery/i.ortho.photo/photo.rectify/write.c:63
-#, c-format
-msgid "Unable to write row %d"
-msgstr "Impossibile scrivere la riga %d"
-
-#: ../imagery/i.ortho.photo/photo.rectify/write.c:66
-msgid ""
-"Unable to write raster map. You might want to check available disk space and "
-"write permissions."
-msgstr ""
-
-#: ../imagery/i.ortho.photo/photo.rectify/ask_files.c:36
-msgid "Please select the file(s) you wish to rectify by naming an output file"
-msgstr ""
-
-#: ../imagery/i.ortho.photo/photo.rectify/rectify.c:245
-#, fuzzy, c-format
-msgid "%s@%s: projection doesn't match current settings"
-msgstr "Sto uscendo. Senza cambiare le impostazioni correnti"
-
-#: ../imagery/i.ortho.photo/photo.rectify/rectify.c:251
-#, fuzzy, c-format
-msgid "%s@%s: zone doesn't match current settings"
-msgstr "Sto uscendo. Senza cambiare le impostazioni correnti"
-
-#: ../imagery/i.ortho.photo/photo.elev/main.c:64
-msgid "Interactively select or modify the target elevation model."
-msgstr ""
-
-#: ../imagery/i.ortho.photo/photo.elev/main.c:91
-#, fuzzy, c-format
-msgid "Target information for group [%s] missing\n"
-msgstr "Informazioni sul range non disponibile (esegui r.support)."
-
-#: ../imagery/i.ortho.photo/photo.elev/main.c:98
-#, fuzzy, c-format
-msgid "Target location [%s] not found\n"
-msgstr "raster <%s> non trovato"
-
-#: ../imagery/i.ortho.photo/photo.elev/main.c:127
-#, fuzzy, c-format
-msgid "Mapset [%s] in target location [%s] - "
-msgstr "raster <%s> non trovato"
-
-#: ../imagery/i.ortho.photo/photo.elev/main.c:128
-#, fuzzy
-msgid "permission denied\n"
-msgstr "permesso negato"
-
-#: ../imagery/i.ortho.photo/photo.elev/main.c:128
-#, fuzzy
-msgid "not found\n"
-msgstr "raster <%s> non trovato"
-
-#: ../imagery/i.ortho.photo/photo.elev/main.c:131
-msgid "Please select a target for group"
-msgstr ""
-
-#: ../imagery/i.ortho.photo/photo.target/main.c:66
-#, fuzzy, c-format
-msgid "Group [%s] targeted for location [%s], mapset [%s]"
-msgstr "raster <%s> non trovato"
-
-#: ../imagery/i.ortho.photo/photo.2image/main.c:56
-msgid "Interactively mark fiducial or reseau points on an image."
-msgstr ""
-
-#: ../imagery/i.ortho.photo/photo.2image/main.c:86
-#, fuzzy, c-format
-msgid "Image Group [%s] not found"
-msgstr "Gruppo <%s> non trovato"
-
-#: ../imagery/i.ortho.photo/photo.init/main.c:46
+#: ../imagery/i.ortho.photo/i.photo.init/main.c:46
 msgid ""
 "Interactively creates or modifies entries in a camera initial exposure "
 "station file for imagery group referenced by a sub-block."
 msgstr ""
 
-#: ../imagery/i.ortho.photo/photo.camera/main.c:56
+#: ../imagery/i.ortho.photo/i.photo.init/main.c:52
+#: ../imagery/i.ortho.photo/i.photo.camera/main.c:61
+#: ../imagery/i.ortho.photo/i.photo.2image/main.c:60
+#: ../imagery/i.ortho.photo/i.photo.elev/main.c:68
+#: ../imagery/i.ortho.photo/i.photo.target/main.c:52
+#: ../imagery/i.ortho.photo/menu/menu.c:48
+#, fuzzy
+msgid "Name of imagery group for ortho-rectification"
+msgstr "Nome della mappa raster"
+
+#: ../imagery/i.ortho.photo/i.photo.init/main.c:64
+#: ../imagery/i.ortho.photo/i.photo.2target/main.c:102
+#, fuzzy, c-format
+msgid "Group [%s] not found"
+msgstr "Gruppo <%s> non trovato"
+
+#: ../imagery/i.ortho.photo/i.photo.camera/main.c:57
 msgid ""
 "Interactively select and modify the imagery group camera reference file."
 msgstr ""
 
-#: ../imagery/i.ortho.photo/photo.camera/main.c:67
+#: ../imagery/i.ortho.photo/i.photo.camera/main.c:68
 #, fuzzy
 msgid "Name of camera reference file to use"
 msgstr "Nome di un nuovo file raster"
 
-#: ../imagery/i.ortho.photo/photo.camera/main.c:83
+#: ../imagery/i.ortho.photo/i.photo.camera/main.c:84
 #, fuzzy
 msgid "Enter a camera reference file to be used with this imagery group"
 msgstr "Nome di un nuovo file raster"
 
-#: ../imagery/i.ortho.photo/photo.camera/main.c:100
+#: ../imagery/i.ortho.photo/i.photo.camera/main.c:101
 #, fuzzy, c-format
 msgid "Group [%s] in location [%s] mapset [%s] now has camera file [%s]"
+msgstr "raster <%s> non trovato"
+
+#: ../imagery/i.ortho.photo/i.photo.2image/main.c:56
+msgid "Interactively mark fiducial or reseau points on an image."
+msgstr ""
+
+#: ../imagery/i.ortho.photo/i.photo.2image/main.c:86
+#, fuzzy, c-format
+msgid "Image Group [%s] not found"
+msgstr "Gruppo <%s> non trovato"
+
+#: ../imagery/i.ortho.photo/i.photo.2image/main.c:98
+#: ../imagery/i.ortho.photo/i.photo.2target/main.c:114
+#, fuzzy, c-format
+msgid "No camera reference file selected for group [%s]"
+msgstr "Nome di un nuovo file raster"
+
+#: ../imagery/i.ortho.photo/i.photo.2image/main.c:102
+#: ../imagery/i.ortho.photo/i.photo.2target/main.c:118
+#, fuzzy, c-format
+msgid "Bad format in camera file for group [%s]"
+msgstr "Errore nella lettura del file dbmscap\n"
+
+#: ../imagery/i.ortho.photo/i.photo.rectify/angle.c:36
+#, fuzzy
+msgid "Calculating camera angle to local surface..."
+msgstr "Non riesco a trovare il file raster %s"
+
+#: ../imagery/i.ortho.photo/i.photo.rectify/angle.c:51
+#: ../imagery/i.ortho.photo/i.photo.rectify/exec.c:43
+#, fuzzy
+msgid "Could not open elevation raster"
+msgstr "impossibile aprire <%s>"
+
+#: ../imagery/i.ortho.photo/i.photo.rectify/main.c:88
+msgid ""
+"Orthorectifies an image by using the image to photo coordinate "
+"transformation matrix."
+msgstr ""
+
+#: ../imagery/i.ortho.photo/i.photo.rectify/main.c:106
+msgid "Target resolution (ignored if -c flag used)"
+msgstr ""
+
+#: ../imagery/i.ortho.photo/i.photo.rectify/main.c:114
+msgid "Amount of memory to use in MB"
+msgstr ""
+
+#: ../imagery/i.ortho.photo/i.photo.rectify/main.c:129
+msgid "Raster map with camera angle relative to ground surface"
+msgstr ""
+
+#: ../imagery/i.ortho.photo/i.photo.rectify/main.c:181
+#, fuzzy, c-format
+msgid "Could not read REF file for group <%s>"
+msgstr "Non riesco a leggere da <%s>"
+
+#: ../imagery/i.ortho.photo/i.photo.rectify/main.c:238
+#, fuzzy, c-format
+msgid "No camera reference file selected for group <%s>"
+msgstr "Nome di un nuovo file raster"
+
+#: ../imagery/i.ortho.photo/i.photo.rectify/main.c:242
+#, fuzzy, c-format
+msgid "Bad format in camera file for group <%s>"
+msgstr "Errore nella lettura del file dbmscap\n"
+
+#: ../imagery/i.ortho.photo/i.photo.rectify/main.c:248
+#, fuzzy, c-format
+msgid "Bad format in initial exposure station file for group <%s>"
+msgstr "Errore nella lettura del file dbmscap\n"
+
+#: ../imagery/i.ortho.photo/i.photo.rectify/main.c:278
+#: ../imagery/i.ortho.photo/menu/i.photo.rectify.c:109
+#, fuzzy, c-format
+msgid "Extension <%s> is illegal"
+msgstr "[%s] è un nome illegale"
+
+#: ../imagery/i.ortho.photo/i.photo.rectify/main.c:281
+#: ../imagery/i.ortho.photo/i.photo.rectify/main.c:290
+#, fuzzy
+msgid "The following raster map already exists in"
+msgstr "ERRORE: <%s> esiste già\n"
+
+#: ../imagery/i.ortho.photo/i.photo.rectify/main.c:282
+#: ../imagery/i.ortho.photo/i.photo.rectify/main.c:291
+#, c-format
+msgid "target LOCATION %s, MAPSET %s:"
+msgstr ""
+
+#: ../imagery/i.ortho.photo/i.photo.rectify/main.c:285
+#: ../imagery/i.ortho.photo/i.photo.rectify/main.c:294
+#: ../imagery/i.ortho.photo/menu/i.photo.rectify.c:112
+#: ../imagery/i.ortho.photo/menu/i.photo.rectify.c:144
+#, c-format
+msgid "Orthorectification cancelled."
+msgstr ""
+
+#: ../imagery/i.ortho.photo/i.photo.rectify/main.c:309
+msgid "Target resolution must be > 0, ignored"
+msgstr ""
+
+#: ../imagery/i.ortho.photo/i.photo.rectify/main.c:324
+#, fuzzy, c-format
+msgid "No target elevation model selected for group <%s>"
+msgstr "Nome di un nuovo file raster"
+
+#: ../imagery/i.ortho.photo/i.photo.rectify/main.c:381
+#, fuzzy, c-format
+msgid "Input raster map <%s> does not exist in group <%s>."
+msgstr "Mappa raster <%s> non esiste nel sottogruppo <%s>"
+
+#: ../imagery/i.ortho.photo/i.photo.rectify/main.c:383
+msgid "Try:"
+msgstr ""
+
+#: ../imagery/i.ortho.photo/i.photo.rectify/readcell.c:140
+#, fuzzy
+msgid "Error reading segment file"
+msgstr "Errore nella lettura del file dbmscap\n"
+
+#: ../imagery/i.ortho.photo/i.photo.rectify/cp.c:13
+#, fuzzy, c-format
+msgid ""
+"Control Z Point file for group [%s] in [%s] \n"
+" \n"
+msgstr "raster <%s> non trovato"
+
+#: ../imagery/i.ortho.photo/i.photo.rectify/cp.c:16
+#, fuzzy
+msgid "Computing equations..."
+msgstr "Sto copiando le tabelle..."
+
+#: ../imagery/i.ortho.photo/i.photo.rectify/cp.c:22
+#, fuzzy
+msgid "Poorly placed Control Points!\n"
+msgstr "raster <%s> non trovato"
+
+#: ../imagery/i.ortho.photo/i.photo.rectify/cp.c:23
+#: ../imagery/i.ortho.photo/i.photo.rectify/cp.c:28
+#: ../imagery/i.ortho.photo/i.photo.rectify/cp.c:52
+#: ../imagery/i.ortho.photo/i.photo.rectify/cp.c:58
+#, fuzzy
+msgid "Can not generate the transformation equation.\n"
+msgstr "Stampa matrice di correlazione"
+
+#: ../imagery/i.ortho.photo/i.photo.rectify/cp.c:24
+msgid "Run OPTION 7 of i.ortho.photo again!\n"
+msgstr ""
+
+#: ../imagery/i.ortho.photo/i.photo.rectify/cp.c:27
+msgid "No active Control Points!\n"
+msgstr ""
+
+#: ../imagery/i.ortho.photo/i.photo.rectify/cp.c:29
+msgid "Run OPTION 7 of i.ortho.photo!\n"
+msgstr ""
+
+#: ../imagery/i.ortho.photo/i.photo.rectify/cp.c:45
+#, fuzzy, c-format
+msgid ""
+"Reference Point file for group [%s] in [%s] \n"
+" \n"
+msgstr "raster <%s> non trovato"
+
+#: ../imagery/i.ortho.photo/i.photo.rectify/cp.c:51
+msgid "Poorly placed Reference Points!\n"
+msgstr ""
+
+#: ../imagery/i.ortho.photo/i.photo.rectify/cp.c:53
+msgid "Run OPTION 5 of i.ortho.photo again!\n"
+msgstr ""
+
+#: ../imagery/i.ortho.photo/i.photo.rectify/cp.c:57
+msgid "No active Reference Points!\n"
+msgstr ""
+
+#: ../imagery/i.ortho.photo/i.photo.rectify/cp.c:59
+msgid "Run OPTION 5 of i.ortho.photo!\n"
+msgstr ""
+
+#: ../imagery/i.ortho.photo/i.photo.rectify/target.c:13
+#, fuzzy, c-format
+msgid "Target information for group <%s> missing.\n"
+msgstr "Informazioni sul range non disponibile (esegui r.support)."
+
+#: ../imagery/i.ortho.photo/i.photo.rectify/target.c:19
+#, fuzzy, c-format
+msgid "Target location <%s> not found\n"
+msgstr "raster <%s> non trovato"
+
+#: ../imagery/i.ortho.photo/i.photo.rectify/target.c:32
+#: ../imagery/i.ortho.photo/i.photo.elev/main.c:128
+#, fuzzy
+msgid "permission denied\n"
+msgstr "permesso negato"
+
+#: ../imagery/i.ortho.photo/i.photo.rectify/target.c:32
+#: ../imagery/i.ortho.photo/i.photo.elev/main.c:128
+#, fuzzy
+msgid "not found\n"
+msgstr "raster <%s> non trovato"
+
+#: ../imagery/i.ortho.photo/i.photo.rectify/report.c:21
+#, c-format
+msgid " %d rows, %d cols (%ld cells) completed in "
+msgstr ""
+
+#: ../imagery/i.ortho.photo/i.photo.rectify/report.c:28
+#, c-format
+msgid " %.1f cells per minute\n"
+msgstr ""
+
+#: ../imagery/i.ortho.photo/i.photo.rectify/rectify.c:50
+#, fuzzy, c-format
+msgid "into  <%s@%s> (location <%s>) ..."
+msgstr "raster <%s> non trovato"
+
+#: ../imagery/i.ortho.photo/i.photo.rectify/rectify.c:84
+#, c-format
+msgid "No elevation available at row = %d, col = %d"
+msgstr ""
+
+#: ../imagery/i.ortho.photo/i.photo.elev/main.c:64
+msgid "Interactively select or modify the target elevation model."
+msgstr ""
+
+#: ../imagery/i.ortho.photo/i.photo.elev/main.c:91
+#, fuzzy, c-format
+msgid "Target information for group [%s] missing\n"
+msgstr "Informazioni sul range non disponibile (esegui r.support)."
+
+#: ../imagery/i.ortho.photo/i.photo.elev/main.c:98
+#, fuzzy, c-format
+msgid "Target location [%s] not found\n"
+msgstr "raster <%s> non trovato"
+
+#: ../imagery/i.ortho.photo/i.photo.elev/main.c:127
+#, fuzzy, c-format
+msgid "Mapset [%s] in target location [%s] - "
+msgstr "raster <%s> non trovato"
+
+#: ../imagery/i.ortho.photo/i.photo.elev/main.c:131
+msgid "Please select a target for group"
+msgstr ""
+
+#: ../imagery/i.ortho.photo/i.photo.2target/main.c:54
+msgid "Creates control points on an image to be ortho-rectified."
+msgstr ""
+
+#: ../imagery/i.ortho.photo/i.photo.2target/main.c:62
+#: ../imagery/i.group/main.c:58
+#, fuzzy
+msgid "Name of imagery group"
+msgstr "Nome della mappa raster"
+
+#: ../imagery/i.ortho.photo/i.photo.2target/main.c:66
+msgid "Name of image to be rectified which will be initially drawn on screen"
+msgstr ""
+
+#: ../imagery/i.ortho.photo/i.photo.2target/main.c:72
+msgid ""
+"Name of a map from target mapset which will be initially drawn on screen"
+msgstr ""
+
+#: ../imagery/i.ortho.photo/i.photo.2target/main.c:125
+#, fuzzy, c-format
+msgid "No initial camera exposure station for group [%s]"
+msgstr "Errore nella lettura del file dbmscap\n"
+
+#: ../imagery/i.ortho.photo/i.photo.2target/main.c:129
+#, fuzzy, c-format
+msgid "Bad format in initial camera exposure station for group [%s]"
+msgstr "Errore nella lettura del file dbmscap\n"
+
+#: ../imagery/i.ortho.photo/i.photo.2target/main.c:143
+#, fuzzy, c-format
+msgid "No photo points for group [%s]"
+msgstr "raster <%s> non trovato"
+
+#: ../imagery/i.ortho.photo/i.photo.2target/main.c:145
+#, fuzzy, c-format
+msgid "Poorly placed photo points for group [%s]"
+msgstr "raster <%s> non trovato"
+
+#: ../imagery/i.ortho.photo/i.photo.2target/main.c:167
+#, fuzzy
+msgid "Computing equations ..."
+msgstr "Sto copiando le tabelle..."
+
+#: ../imagery/i.ortho.photo/i.photo.2target/main.c:202
+#: ../imagery/i.ortho.photo/i.photo.2target/main.c:233
+#, fuzzy, c-format
+msgid "Unable to read raster header of <%s>"
+msgstr "Non riesco ad aprire il file header di [%s]"
+
+#: ../imagery/i.ortho.photo/i.photo.2target/curses.c:22
+#: ../imagery/i.class/curses.c:22
+#, c-format
+msgid "make_window(%d,%d,%d,%d): illegal screen values."
+msgstr ""
+
+#: ../imagery/i.ortho.photo/i.photo.2target/curses.c:148
+#: ../imagery/i.class/curses.c:153
+#, c-format
+msgid "%s"
+msgstr "%s"
+
+#: ../imagery/i.ortho.photo/i.photo.target/main.c:48
+msgid "Interactively select or modify the imagery group target."
+msgstr ""
+
+#: ../imagery/i.ortho.photo/i.photo.target/main.c:66
+#, fuzzy, c-format
+msgid "Group [%s] targeted for location [%s], mapset [%s]"
 msgstr "raster <%s> non trovato"
 
 #: ../imagery/i.ortho.photo/menu/menu.c:44
@@ -30844,6 +31161,128 @@ msgstr "Nome della mappa raster"
 #, fuzzy, c-format
 msgid "Group [%s] contains no files"
 msgstr "Gruppo [%s] non contiene mappe, avvia i.group"
+
+#: ../imagery/i.ortho.photo/menu/i.photo.rectify.c:44
+#, fuzzy, c-format
+msgid "Could not read REF file for group [%s]"
+msgstr "Errore nella lettura del file dbmscap\n"
+
+#: ../imagery/i.ortho.photo/menu/i.photo.rectify.c:45
+#: ../imagery/i.ortho.photo/menu/i.photo.rectify.c:50
+#, c-format
+msgid "Orthorectification cancelled"
+msgstr ""
+
+#: ../imagery/i.ortho.photo/menu/i.photo.rectify.c:49
+#, c-format
+msgid "No files in this group!"
+msgstr ""
+
+#: ../imagery/i.ortho.photo/menu/i.photo.rectify.c:61
+#, fuzzy
+msgid ""
+"\n"
+"Rectify all images in the group? "
+msgstr "Nome del driver in input"
+
+#: ../imagery/i.ortho.photo/menu/i.photo.rectify.c:71
+#, c-format
+msgid ""
+"\n"
+"Rectify image <%s>? "
+msgstr ""
+
+#: ../imagery/i.ortho.photo/menu/i.photo.rectify.c:84
+#, c-format
+msgid ""
+"\n"
+"No images selected, orthorectification cancelled."
+msgstr ""
+
+#: ../imagery/i.ortho.photo/menu/i.photo.rectify.c:99
+msgid "Enter an extension to be appended to rectified maps:"
+msgstr ""
+
+#: ../imagery/i.ortho.photo/menu/i.photo.rectify.c:110
+#, fuzzy
+msgid ""
+"\n"
+"Choose another extension? "
+msgstr "Nome del raster"
+
+#: ../imagery/i.ortho.photo/menu/i.photo.rectify.c:122
+msgid ""
+"\n"
+"Compute local camera angle? "
+msgstr ""
+
+#: ../imagery/i.ortho.photo/menu/i.photo.rectify.c:132
+#, fuzzy
+msgid "Enter a name for the camera angle map:"
+msgstr "Nome della mappa raster"
+
+#: ../imagery/i.ortho.photo/menu/i.photo.rectify.c:141
+#, fuzzy, c-format
+msgid "Map name <%s> is illegal"
+msgstr "[%s] è un nome illegale"
+
+#: ../imagery/i.ortho.photo/menu/i.photo.rectify.c:142
+msgid ""
+"\n"
+"Choose another name? "
+msgstr ""
+
+#: ../imagery/i.ortho.photo/menu/i.photo.rectify.c:156
+#, fuzzy
+msgid ""
+"\n"
+"Overwrite maps in target location/mapset? "
+msgstr "raster <%s> non trovato"
+
+#: ../imagery/i.ortho.photo/menu/i.photo.rectify.c:224
+#, fuzzy, c-format
+msgid "Please select one of the following interpolation methods\n"
+msgstr "Per favore scegli uno dei seguenti\n"
+
+#: ../imagery/i.ortho.photo/menu/i.photo.rectify.c:225
+#, c-format
+msgid " 1. nearest neighbor\n"
+msgstr ""
+
+#: ../imagery/i.ortho.photo/menu/i.photo.rectify.c:226
+#, c-format
+msgid " 2. bilinear\n"
+msgstr ""
+
+#: ../imagery/i.ortho.photo/menu/i.photo.rectify.c:227
+#, c-format
+msgid " 3. bicubic\n"
+msgstr ""
+
+#: ../imagery/i.ortho.photo/menu/i.photo.rectify.c:228
+#, c-format
+msgid " 4. bilinear with fallback\n"
+msgstr ""
+
+#: ../imagery/i.ortho.photo/menu/i.photo.rectify.c:229
+#, c-format
+msgid " 5. bicubic with fallback\n"
+msgstr ""
+
+#: ../imagery/i.ortho.photo/menu/i.photo.rectify.c:291
+#, c-format
+msgid "Enter amount of memory to use in MB, or\n"
+msgstr ""
+
+#: ../imagery/i.ortho.photo/menu/i.photo.rectify.c:293
+#, c-format
+msgid "RETURN   use %d MB to keep all data in RAM\n"
+msgstr ""
+
+#: ../imagery/i.ortho.photo/menu/i.photo.rectify.c:295
+#, c-format
+msgid "RETURN   use %d MB\n"
+msgstr ""
 
 #: ../imagery/i.fft/fftmain.c:76
 msgid "Fast Fourier Transform (FFT) for image processing."
@@ -31555,10 +31994,6 @@ msgid ""
 "signature file for i.cluster."
 msgstr ""
 
-#: ../imagery/i.class/main.c:62
-msgid "Name of raster map to be displayed"
-msgstr "Nome della mappa raster da mostrare"
-
 #: ../imagery/i.class/main.c:77
 #, fuzzy
 msgid "File to contain result signatures"
@@ -31733,6 +32168,35 @@ msgstr ""
 #, c-format
 msgid "Can't mark another point.  Only %d points allowed.  Sorry."
 msgstr ""
+
+#, fuzzy
+#~ msgid "<%s> created"
+#~ msgstr "Location %s creata!"
+
+#, fuzzy
+#~ msgid "Raster map to be displayed"
+#~ msgstr "Mappa(e) raster da leggere"
+
+#, fuzzy
+#~ msgid "Cannot generate the transformation equation."
+#~ msgstr "Stampa matrice di correlazione"
+
+#~ msgid "Unable to write temp file: %s"
+#~ msgstr "Impossibile scrivere il file temp: %s"
+
+#~ msgid "Unable to open map %s"
+#~ msgstr "Impossibile aprire la mappa %s"
+
+#~ msgid "Unable to write row %d"
+#~ msgstr "Impossibile scrivere la riga %d"
+
+#, fuzzy
+#~ msgid "%s@%s: projection doesn't match current settings"
+#~ msgstr "Sto uscendo. Senza cambiare le impostazioni correnti"
+
+#, fuzzy
+#~ msgid "%s@%s: zone doesn't match current settings"
+#~ msgstr "Sto uscendo. Senza cambiare le impostazioni correnti"
 
 #, fuzzy
 #~ msgid "vector, projection"

@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: grasslibs_ja\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-11-23 11:27+0100\n"
+"POT-Creation-Date: 2011-01-03 15:32+0100\n"
 "PO-Revision-Date: 2010-09-08 17:33+0100\n"
 "Last-Translator: Akira Taniguchi <taniguti@apptec.co.jp>\n"
 "Language-Team: Japanese <grass-translations@lists.osgeo.org>\n"
@@ -126,6 +126,10 @@ msgstr "シンボルを見つける/開くことができません '%s'"
 #, c-format
 msgid "Incorrect symbol color: '%s', using default."
 msgstr "不適当なシンボルカラーです: '%s', デフォルト値を使用してください."
+
+#: ../lib/cairodriver/Draw_bitmap.c:47
+msgid "Cairo_draw_bitmap: Failed to create source"
+msgstr ""
 
 #: ../lib/proj/get_proj.c:150
 #, c-format
@@ -998,11 +1002,10 @@ msgstr ""
 "エラー: パラメータ値が見つかりません <%s>\n"
 
 #: ../lib/gis/parser.c:2433
-#, c-format
+#, fuzzy, c-format
 msgid ""
-"\n"
 "ERROR: Required parameter <%s> not set:\n"
-"    (%s).\n"
+"\t(%s)\n"
 msgstr ""
 "\n"
 "エラー: 必要なパラメータ <%s> が設定されていません:\n"
