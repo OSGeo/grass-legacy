@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: grasslibs_ja\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-08-29 12:20+0200\n"
+"POT-Creation-Date: 2011-01-03 15:46+0100\n"
 "PO-Revision-Date: 2010-03-03 13:31+0900\n"
 "Last-Translator: AkiraTaniguchi <taniguti@apptec.co.jp>\n"
 "Language-Team: Japanese <grass-translations@lists.osgeo.org>\n"
@@ -125,6 +125,10 @@ msgstr "シンボルを見つける/開くことができません '%s'"
 #, c-format
 msgid "Incorrect symbol color: '%s', using default."
 msgstr "不適当なシンボルカラーです: '%s', デフォルト値を使用してください."
+
+#: ../lib/cairodriver/Draw_bitmap.c:47
+msgid "Cairo_draw_bitmap: Failed to create source"
+msgstr ""
 
 #: ../lib/proj/get_proj.c:150
 #, c-format
@@ -767,11 +771,13 @@ msgid "Feature ids"
 msgstr "フィーチャ ids"
 
 #: ../lib/gis/parser.c:637
-msgid "Name of input file"
+#, fuzzy
+msgid "Path to input file"
 msgstr "入力するファイル名"
 
 #: ../lib/gis/parser.c:645
-msgid "Name for output file"
+#, fuzzy
+msgid "Path for output file"
 msgstr "出力するファイル名"
 
 #: ../lib/gis/parser.c:653
@@ -983,11 +989,10 @@ msgstr ""
 "エラー: パラメータ値が見つかりません <%s>\n"
 
 #: ../lib/gis/parser.c:2433
-#, c-format
+#, fuzzy, c-format
 msgid ""
-"\n"
 "ERROR: Required parameter <%s> not set:\n"
-"    (%s).\n"
+"\t(%s)\n"
 msgstr ""
 "\n"
 "エラー: 必要なパラメータ <%s> が設定されていません:\n"
@@ -2431,6 +2436,14 @@ msgstr "バグ (Vect_build_sidx_from_topo): エリアは存在しません"
 msgid "BUG (Vect_build_sidx_from_topo): isle does not exist"
 msgstr "バグ (Vect_build_sidx_from_topo): 島は存在しません"
 
+#: ../lib/vector/Vlib/break_polygons.c:117
+msgid "Break polygons Pass 1: select break points"
+msgstr ""
+
+#: ../lib/vector/Vlib/break_polygons.c:242
+msgid "Break polygons Pass 2: break at selected points"
+msgstr ""
+
 #: ../lib/vector/Vlib/intersect.c:127
 msgid "3D not supported by Vect_segment_intersection()"
 msgstr "3D は Vect_segment_intersection()にサポートされていません"
@@ -2542,6 +2555,28 @@ msgstr "���"
 msgid "Unable to read feature id %d"
 msgstr "���"
 
+#: ../lib/vector/Vlib/snap.c:118
+msgid "Snap vertices Pass 1: select points"
+msgstr ""
+
+#: ../lib/vector/Vlib/snap.c:172
+msgid "Snap vertices Pass 2: assign anchor vertices"
+msgstr ""
+
+#: ../lib/vector/Vlib/snap.c:225
+msgid "Snap vertices Pass 3: snap to assigned points"
+msgstr ""
+
+#: ../lib/vector/Vlib/snap.c:405
+#, c-format
+msgid "Snapped vertices: %d"
+msgstr ""
+
+#: ../lib/vector/Vlib/snap.c:406
+#, fuzzy, c-format
+msgid "New vertices: %d"
+msgstr "プリミティブの数: %d"
+
 #: ../lib/vector/Vlib/rewind.c:35 ../lib/vector/Vlib/build.c:31
 #: ../lib/vector/Vlib/read.c:30 ../lib/vector/Vlib/write.c:53
 #: ../lib/vector/Vlib/write.c:59 ../lib/vector/Vlib/close.c:38
@@ -2558,7 +2593,7 @@ msgstr "GngFlattenエラー"
 msgid "Unable to add network arc"
 msgstr "ネットワークアークを追加できません"
 
-#: ../lib/vector/Vlib/graph.c:231 ../lib/vector/Vlib/net.c:514
+#: ../lib/vector/Vlib/graph.c:231 ../lib/vector/Vlib/net.c:521
 #, c-format
 msgid "dglShortestPath error: %s"
 msgstr "dgl最短パスエラー: %s"
@@ -2847,6 +2882,16 @@ msgstr "島を接続しています..."
 msgid "Attaching centroids..."
 msgstr "セントロイドを接続しています..."
 
+#: ../lib/vector/Vlib/merge_lines.c:192
+#, c-format
+msgid "%d boundaries merged"
+msgstr ""
+
+#: ../lib/vector/Vlib/merge_lines.c:193
+#, c-format
+msgid "%d new boundaries"
+msgstr ""
+
 #: ../lib/vector/Vlib/buffer2.c:376
 msgid "Line is not looped"
 msgstr "ラインはループされていません"
@@ -3054,7 +3099,7 @@ msgstr "グラフを平らにしています..."
 msgid "Graph was built"
 msgstr "グラフは作成されています"
 
-#: ../lib/vector/Vlib/net.c:595
+#: ../lib/vector/Vlib/net.c:602
 msgid "Wrong line direction in Vect_net_get_line_cost()"
 msgstr "Vect_net_get_line_cost() におけるラインの方向は正しくありません"
 
@@ -3080,12 +3125,12 @@ msgstr "ポリゴンにポイントを見つけられません"
 msgid "conditions failed"
 msgstr "条件は失敗しました"
 
-#: ../lib/vector/Vlib/break_lines.c:115 ../lib/vector/Vlib/break_lines.c:370
+#: ../lib/vector/Vlib/break_lines.c:370
 #, c-format
 msgid "Intersections: %5d"
 msgstr "交差: %5d"
 
-#: ../lib/vector/Vlib/remove_areas.c:92
+#: ../lib/vector/Vlib/remove_areas.c:94
 msgid "Area is composed of dead boundary"
 msgstr "エリアは不要な境界で構成されています"
 
@@ -4963,96 +5008,96 @@ msgid "subgroup <%s> of group <%s> references the following raster maps\n"
 msgstr "グループ <%s> のサブグループ <%s> は次のラスターマップを参照します\n"
 
 #, fuzzy
-msgid "Unable to delete layer/category %d/%d line %d"
-msgstr "����� ���� ���\n"
+#~ msgid "Unable to delete layer/category %d/%d line %d"
+#~ msgstr "����� ���� ���\n"
 
 #, fuzzy
-msgid "Cannot open database %s"
-msgstr "���"
+#~ msgid "Cannot open database %s"
+#~ msgstr "���"
 
 #, fuzzy
-msgid "Cannot read topo for line [%d]"
-msgstr "���"
+#~ msgid "Cannot read topo for line [%d]"
+#~ msgstr "���"
 
 #, fuzzy
-msgid "Output name '%s' is not valid rast name."
-msgstr "���."
+#~ msgid "Output name '%s' is not valid rast name."
+#~ msgstr "���."
 
 #, fuzzy
-msgid "Cannot get field info"
-msgstr "���"
+#~ msgid "Cannot get field info"
+#~ msgstr "���"
 
 #, fuzzy
-msgid "Cannot open database"
-msgstr "���"
+#~ msgid "Cannot open database"
+#~ msgstr "���"
 
 #, fuzzy
-msgid "Output name '%s' is not valid vector name."
-msgstr "���."
+#~ msgid "Output name '%s' is not valid vector name."
+#~ msgstr "���."
 
 #, fuzzy
-msgid "Cannot open existing vector map <%s>"
-msgstr "���"
+#~ msgid "Cannot open existing vector map <%s>"
+#~ msgstr "���"
 
 #, fuzzy
-msgid "Cannot delete existing vector <%s>"
-msgstr "���"
+#~ msgid "Cannot delete existing vector <%s>"
+#~ msgstr "���"
 
 #, fuzzy
-msgid "Cannot open new vector %s"
-msgstr "���"
+#~ msgid "Cannot open new vector %s"
+#~ msgstr "���"
 
 #, fuzzy
-msgid "Cannot open history file for vector '%s'"
-msgstr "���"
+#~ msgid "Cannot open history file for vector '%s'"
+#~ msgstr "���"
 
 #, fuzzy
-msgid "Can't open directory %s"
-msgstr "���"
+#~ msgid "Can't open directory %s"
+#~ msgstr "���"
 
 #, fuzzy
-msgid "No such graphics monitor as <%s>.\n"
-msgstr "����������<%s> � �����.\n"
+#~ msgid "No such graphics monitor as <%s>.\n"
+#~ msgstr "����������<%s> � �����.\n"
 
 #, fuzzy
-msgid "Please run \"d.mon\" to select a valid graphics monitor.\n"
-msgstr "�����\"d.mon\" ����� �����������\n"
+#~ msgid "Please run \"d.mon\" to select a valid graphics monitor.\n"
+#~ msgstr "�����\"d.mon\" ����� �����������\n"
 
 #, fuzzy
-msgid "Error - Monitor <%s> is in use.\n"
-msgstr "��� - ����<%s> ���\n"
+#~ msgid "Error - Monitor <%s> is in use.\n"
+#~ msgstr "��� - ����<%s> ���\n"
 
 #, fuzzy
-msgid "Error - Could not complete locking process for monitor <%s>.\n"
-msgstr "��� - � �� ����������(lock) ������<%s>.\n"
+#~ msgid "Error - Could not complete locking process for monitor <%s>.\n"
+#~ msgstr "��� - � �� ����������(lock) ������<%s>.\n"
 
 #, fuzzy
-msgid "Error - Can't set up pipe to graphics device.\n"
-msgstr "��� - ����� (pipe) ������� �����.\n"
+#~ msgid "Error - Can't set up pipe to graphics device.\n"
+#~ msgstr "��� - ����� (pipe) ������� �����.\n"
 
 #, fuzzy
-msgid "Error - Graphics monitor <%s> not running!\n"
-msgstr "��� - ����������<%s> � ����\n"
+#~ msgid "Error - Graphics monitor <%s> not running!\n"
+#~ msgstr "��� - ����������<%s> � ����\n"
 
 #, fuzzy
-msgid "Please start graphics monitor <%s>.\n"
-msgstr "���� ����������<%s>.\n"
+#~ msgid "Please start graphics monitor <%s>.\n"
+#~ msgstr "���� ����������<%s>.\n"
 
 #, fuzzy
-msgid "Not connected...\n"
-msgstr "�������...\n"
+#~ msgid "Not connected...\n"
+#~ msgstr "�������...\n"
 
 #, fuzzy
-msgid "Couldn't connect to monitor. Will try once more.\n"
-msgstr "����� ����� ���� ���� ����\n"
+#~ msgid "Couldn't connect to monitor. Will try once more.\n"
+#~ msgstr "����� ����� ���� ���� ����\n"
 
 #, fuzzy
-msgid "ERROR: GISBASE not set\n"
-msgstr "���: GISBASE � �����\n"
+#~ msgid "ERROR: GISBASE not set\n"
+#~ msgstr "���: GISBASE � �����\n"
 
 #, fuzzy
-msgid "%s/%s' was found in more mapsets (also found in <%s>)"
-msgstr "%s/%s' was found in more mapsets (also found in <%s>) "
+#~ msgid "%s/%s' was found in more mapsets (also found in <%s>)"
+#~ msgstr "%s/%s' was found in more mapsets (also found in <%s>) "
 
 #~ msgid "Invalid view position coordinates, using %f,%f"
 #~ msgstr "不正な視点位置座標,用法は %f,%f"

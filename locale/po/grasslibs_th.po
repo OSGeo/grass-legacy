@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: grasstcl_th\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-08-29 12:20+0200\n"
+"POT-Creation-Date: 2011-01-03 15:46+0100\n"
 "PO-Revision-Date: 2008-01-05 15:19+0700\n"
 "Last-Translator: man <mansv68@yahoo.co.th>\n"
 "Language-Team: Thai <grass-translations@lists.osgeo.org>\n"
@@ -120,6 +120,10 @@ msgstr "ไม่สามารถ หา/เปิด สัญลักษณ
 #, c-format
 msgid "Incorrect symbol color: '%s', using default."
 msgstr "สีสัญลักษณ์ผิด: '%s', ใช้ค่าตั้งต้น"
+
+#: ../lib/cairodriver/Draw_bitmap.c:47
+msgid "Cairo_draw_bitmap: Failed to create source"
+msgstr ""
 
 #: ../lib/proj/get_proj.c:150
 #, c-format
@@ -762,11 +766,13 @@ msgid "Feature ids"
 msgstr "ลักษณะข้อมูล"
 
 #: ../lib/gis/parser.c:637
-msgid "Name of input file"
+#, fuzzy
+msgid "Path to input file"
 msgstr "ชื่อไฟล์ที่จะนำเข้า"
 
 #: ../lib/gis/parser.c:645
-msgid "Name for output file"
+#, fuzzy
+msgid "Path for output file"
 msgstr "ชื่อไฟล์ผลลัพธ์"
 
 #: ../lib/gis/parser.c:653
@@ -980,11 +986,10 @@ msgstr ""
 "ข้อผิดพลาด:ขาดค่าตัวแปร <%s>\n"
 
 #: ../lib/gis/parser.c:2433
-#, c-format
+#, fuzzy, c-format
 msgid ""
-"\n"
 "ERROR: Required parameter <%s> not set:\n"
-"    (%s).\n"
+"\t(%s)\n"
 msgstr ""
 "\n"
 "ข้อผิดพลาด: ต้องการค่าตัวแปร <%s> ไม่ได้กำหนด:\n"
@@ -2422,6 +2427,14 @@ msgstr ""
 msgid "BUG (Vect_build_sidx_from_topo): isle does not exist"
 msgstr ""
 
+#: ../lib/vector/Vlib/break_polygons.c:117
+msgid "Break polygons Pass 1: select break points"
+msgstr ""
+
+#: ../lib/vector/Vlib/break_polygons.c:242
+msgid "Break polygons Pass 2: break at selected points"
+msgstr ""
+
 #: ../lib/vector/Vlib/intersect.c:127
 msgid "3D not supported by Vect_segment_intersection()"
 msgstr "3D ไม่รองรับด้วยคำสั่ง Vect_segment_intersection()"
@@ -2539,6 +2552,28 @@ msgstr "ตั้งใจที่จะลบ  isle จากพื้นท�
 msgid "Unable to read feature id %d"
 msgstr "ไม่สามารถลบไฟล์  '%s'"
 
+#: ../lib/vector/Vlib/snap.c:118
+msgid "Snap vertices Pass 1: select points"
+msgstr ""
+
+#: ../lib/vector/Vlib/snap.c:172
+msgid "Snap vertices Pass 2: assign anchor vertices"
+msgstr ""
+
+#: ../lib/vector/Vlib/snap.c:225
+msgid "Snap vertices Pass 3: snap to assigned points"
+msgstr ""
+
+#: ../lib/vector/Vlib/snap.c:405
+#, fuzzy, c-format
+msgid "Snapped vertices: %d"
+msgstr "ดูดเข้าหา จุดหัก"
+
+#: ../lib/vector/Vlib/snap.c:406
+#, fuzzy, c-format
+msgid "New vertices: %d"
+msgstr "เพิ่ม จุดหัก"
+
 #: ../lib/vector/Vlib/rewind.c:35 ../lib/vector/Vlib/build.c:31
 #: ../lib/vector/Vlib/read.c:30 ../lib/vector/Vlib/write.c:53
 #: ../lib/vector/Vlib/write.c:59 ../lib/vector/Vlib/close.c:38
@@ -2556,7 +2591,7 @@ msgstr "GngFlatten ผิดพลาด"
 msgid "Unable to add network arc"
 msgstr "ไม่สามารถเพิ่ม network arc"
 
-#: ../lib/vector/Vlib/graph.c:231 ../lib/vector/Vlib/net.c:514
+#: ../lib/vector/Vlib/graph.c:231 ../lib/vector/Vlib/net.c:521
 #, c-format
 msgid "dglShortestPath error: %s"
 msgstr ""
@@ -2857,6 +2892,16 @@ msgstr "การแนบรูปเกาะ : "
 msgid "Attaching centroids..."
 msgstr "การแนบ จุดศูนย์ถ่วง: "
 
+#: ../lib/vector/Vlib/merge_lines.c:192
+#, c-format
+msgid "%d boundaries merged"
+msgstr ""
+
+#: ../lib/vector/Vlib/merge_lines.c:193
+#, c-format
+msgid "%d new boundaries"
+msgstr ""
+
 #: ../lib/vector/Vlib/buffer2.c:376
 #, fuzzy
 msgid "Line is not looped"
@@ -3062,7 +3107,7 @@ msgstr "Flattening the graph ..."
 msgid "Graph was built"
 msgstr "Graph ถูกสร้าง"
 
-#: ../lib/vector/Vlib/net.c:595
+#: ../lib/vector/Vlib/net.c:602
 msgid "Wrong line direction in Vect_net_get_line_cost()"
 msgstr "ทิศทางผิดใน  Vect_net_get_line_cost()"
 
@@ -3089,12 +3134,12 @@ msgstr "ไม่สามารถค้นหา [%s] ใน [%s]"
 msgid "conditions failed"
 msgstr "การเชื่อมต่อล้มเหลว"
 
-#: ../lib/vector/Vlib/break_lines.c:115 ../lib/vector/Vlib/break_lines.c:370
+#: ../lib/vector/Vlib/break_lines.c:370
 #, fuzzy, c-format
 msgid "Intersections: %5d"
 msgstr "การฉายแบบอื่น"
 
-#: ../lib/vector/Vlib/remove_areas.c:92
+#: ../lib/vector/Vlib/remove_areas.c:94
 msgid "Area is composed of dead boundary"
 msgstr ""
 
@@ -5091,12 +5136,6 @@ msgstr ""
 
 #~ msgid "Snaps"
 #~ msgstr "ดูดเข้าหา"
-
-#~ msgid "Snapped vertices"
-#~ msgstr "ดูดเข้าหา จุดหัก"
-
-#~ msgid "New vertices"
-#~ msgstr "เพิ่ม จุดหัก"
 
 #, fuzzy
 #~ msgid "Duplicates"

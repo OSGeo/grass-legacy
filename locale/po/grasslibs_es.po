@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: grasslibs_es\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-08-29 12:20+0200\n"
+"POT-Creation-Date: 2011-01-03 15:46+0100\n"
 "PO-Revision-Date: 2010-02-19 19:11-0600\n"
 "Last-Translator: Javier García Prieto <fjgarciaprieto@hotmail.com>\n"
 "Language-Team: Español <grass-translations@lists.osgeo.org>\n"
@@ -132,6 +132,10 @@ msgstr "No se puede encontrar / abrir el símbolo: '%s'."
 #, c-format
 msgid "Incorrect symbol color: '%s', using default."
 msgstr "Color de símbolo incorrecto: '%s', utilizando el predeterminado."
+
+#: ../lib/cairodriver/Draw_bitmap.c:47
+msgid "Cairo_draw_bitmap: Failed to create source"
+msgstr ""
 
 #: ../lib/proj/get_proj.c:150
 #, c-format
@@ -816,12 +820,14 @@ msgstr "Identificadores de objetos espaciales: "
 
 #
 #: ../lib/gis/parser.c:637
-msgid "Name of input file"
+#, fuzzy
+msgid "Path to input file"
 msgstr "Nombre del archivo de entrada."
 
 #
 #: ../lib/gis/parser.c:645
-msgid "Name for output file"
+#, fuzzy
+msgid "Path for output file"
 msgstr "Nombre del archivo de salida."
 
 #: ../lib/gis/parser.c:653
@@ -1041,11 +1047,10 @@ msgstr ""
 "ERROR: Valor faltante para el parámetro <%s>\n"
 
 #: ../lib/gis/parser.c:2433
-#, c-format
+#, fuzzy, c-format
 msgid ""
-"\n"
 "ERROR: Required parameter <%s> not set:\n"
-"    (%s).\n"
+"\t(%s)\n"
 msgstr ""
 "\n"
 "ERROR: No se ha establecido el parámetro requerido <%s> :\n"
@@ -2555,6 +2560,14 @@ msgstr "Error de programación (Vect_build_sidx_from_topo): El área no existe."
 msgid "BUG (Vect_build_sidx_from_topo): isle does not exist"
 msgstr "Error de programación (Vect_build_sidx_from_topo): La isla no existe."
 
+#: ../lib/vector/Vlib/break_polygons.c:117
+msgid "Break polygons Pass 1: select break points"
+msgstr ""
+
+#: ../lib/vector/Vlib/break_polygons.c:242
+msgid "Break polygons Pass 2: break at selected points"
+msgstr ""
+
 #: ../lib/vector/Vlib/intersect.c:127
 msgid "3D not supported by Vect_segment_intersection()"
 msgstr "Visualización 3D no soportada por Vect_segment_intersection()."
@@ -2675,6 +2688,28 @@ msgstr "Intento de leer puntos de un área inexistente."
 msgid "Unable to read feature id %d"
 msgstr "No se puede reescribir el razgo. %d"
 
+#: ../lib/vector/Vlib/snap.c:118
+msgid "Snap vertices Pass 1: select points"
+msgstr ""
+
+#: ../lib/vector/Vlib/snap.c:172
+msgid "Snap vertices Pass 2: assign anchor vertices"
+msgstr ""
+
+#: ../lib/vector/Vlib/snap.c:225
+msgid "Snap vertices Pass 3: snap to assigned points"
+msgstr ""
+
+#: ../lib/vector/Vlib/snap.c:405
+#, fuzzy, c-format
+msgid "Snapped vertices: %d"
+msgstr "Vértices eliminados"
+
+#: ../lib/vector/Vlib/snap.c:406
+#, fuzzy, c-format
+msgid "New vertices: %d"
+msgstr "Nuevos vértices"
+
 #: ../lib/vector/Vlib/rewind.c:35 ../lib/vector/Vlib/build.c:31
 #: ../lib/vector/Vlib/read.c:30 ../lib/vector/Vlib/write.c:53
 #: ../lib/vector/Vlib/write.c:59 ../lib/vector/Vlib/close.c:38
@@ -2692,7 +2727,7 @@ msgstr "Error 'GngFlatten'"
 msgid "Unable to add network arc"
 msgstr "No ha sido posible añadir un arco a la red."
 
-#: ../lib/vector/Vlib/graph.c:231 ../lib/vector/Vlib/net.c:514
+#: ../lib/vector/Vlib/graph.c:231 ../lib/vector/Vlib/net.c:521
 #, c-format
 msgid "dglShortestPath error: %s"
 msgstr "Error de dglShortestPath: %s"
@@ -2989,6 +3024,16 @@ msgstr "Adjuntando islas..."
 msgid "Attaching centroids..."
 msgstr "Adjuntando centróides..."
 
+#: ../lib/vector/Vlib/merge_lines.c:192
+#, c-format
+msgid "%d boundaries merged"
+msgstr ""
+
+#: ../lib/vector/Vlib/merge_lines.c:193
+#, c-format
+msgid "%d new boundaries"
+msgstr ""
+
 #: ../lib/vector/Vlib/buffer2.c:376
 msgid "Line is not looped"
 msgstr "La línea no ha sido utilizada en un ciclo."
@@ -3207,7 +3252,7 @@ msgstr "Achatamiento de la gráfica ..."
 msgid "Graph was built"
 msgstr "El grafico fue construido."
 
-#: ../lib/vector/Vlib/net.c:595
+#: ../lib/vector/Vlib/net.c:602
 msgid "Wrong line direction in Vect_net_get_line_cost()"
 msgstr "Dirección de la línea incorrecta en Vect_net_get_line_cost()."
 
@@ -3235,12 +3280,12 @@ msgstr "No ha sido posible encontrar el punto en el polígono."
 msgid "conditions failed"
 msgstr "Fallaron las condiciones."
 
-#: ../lib/vector/Vlib/break_lines.c:115 ../lib/vector/Vlib/break_lines.c:370
+#: ../lib/vector/Vlib/break_lines.c:370
 #, c-format
 msgid "Intersections: %5d"
 msgstr "Intersecciones: %5d."
 
-#: ../lib/vector/Vlib/remove_areas.c:92
+#: ../lib/vector/Vlib/remove_areas.c:94
 msgid "Area is composed of dead boundary"
 msgstr "El área está compuesta por una frontera inexistente."
 
@@ -5386,12 +5431,6 @@ msgstr ""
 
 #~ msgid "Nodes marked to be snapped"
 #~ msgstr "Nodos marcados para eliminar"
-
-#~ msgid "Snapped vertices"
-#~ msgstr "Vértices eliminados"
-
-#~ msgid "New vertices"
-#~ msgstr "Nuevos vértices"
 
 #~ msgid "Modifications"
 #~ msgstr "Modificaciones"

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: grassmods_ar\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-08-29 12:20+0200\n"
+"POT-Creation-Date: 2011-01-03 15:46+0100\n"
 "PO-Revision-Date: 2005-03-09 12:50+0100\n"
 "Last-Translator: Dr. Alaa Masoud <alaamasoud@hotmail.com>\n"
 "Language-Team: Arabic <grass-translations@lists.osgeo.org>\n"
@@ -124,6 +124,10 @@ msgstr "'%s' لم يتم العثور على الخريطة المدخلة"
 #: ../lib/symbol/read.c:434
 #, c-format
 msgid "Incorrect symbol color: '%s', using default."
+msgstr ""
+
+#: ../lib/cairodriver/Draw_bitmap.c:47
+msgid "Cairo_draw_bitmap: Failed to create source"
 msgstr ""
 
 #: ../lib/proj/get_proj.c:150
@@ -763,12 +767,12 @@ msgstr ""
 
 #: ../lib/gis/parser.c:637
 #, fuzzy
-msgid "Name of input file"
+msgid "Path to input file"
 msgstr "اسم الملف المفتوح %s\n"
 
 #: ../lib/gis/parser.c:645
 #, fuzzy
-msgid "Name for output file"
+msgid "Path for output file"
 msgstr "إسم الراستر المخرجة"
 
 #: ../lib/gis/parser.c:653
@@ -982,9 +986,8 @@ msgstr ""
 #: ../lib/gis/parser.c:2433
 #, c-format
 msgid ""
-"\n"
 "ERROR: Required parameter <%s> not set:\n"
-"    (%s).\n"
+"\t(%s)\n"
 msgstr ""
 
 #: ../lib/gis/parser.c:2528
@@ -2403,6 +2406,14 @@ msgstr ""
 msgid "BUG (Vect_build_sidx_from_topo): isle does not exist"
 msgstr ""
 
+#: ../lib/vector/Vlib/break_polygons.c:117
+msgid "Break polygons Pass 1: select break points"
+msgstr ""
+
+#: ../lib/vector/Vlib/break_polygons.c:242
+msgid "Break polygons Pass 2: break at selected points"
+msgstr ""
+
 #: ../lib/vector/Vlib/intersect.c:127
 msgid "3D not supported by Vect_segment_intersection()"
 msgstr ""
@@ -2516,6 +2527,28 @@ msgstr "%s: لم يمكن فتح ملف  الطبوغرافية للكتابة\n
 msgid "Unable to read feature id %d"
 msgstr "لم يمكن فتحه %s فى %s"
 
+#: ../lib/vector/Vlib/snap.c:118
+msgid "Snap vertices Pass 1: select points"
+msgstr ""
+
+#: ../lib/vector/Vlib/snap.c:172
+msgid "Snap vertices Pass 2: assign anchor vertices"
+msgstr ""
+
+#: ../lib/vector/Vlib/snap.c:225
+msgid "Snap vertices Pass 3: snap to assigned points"
+msgstr ""
+
+#: ../lib/vector/Vlib/snap.c:405
+#, c-format
+msgid "Snapped vertices: %d"
+msgstr ""
+
+#: ../lib/vector/Vlib/snap.c:406
+#, fuzzy, c-format
+msgid "New vertices: %d"
+msgstr "عدد النقاط    :   %d\n"
+
 #: ../lib/vector/Vlib/rewind.c:35 ../lib/vector/Vlib/build.c:31
 #: ../lib/vector/Vlib/read.c:30 ../lib/vector/Vlib/write.c:53
 #: ../lib/vector/Vlib/write.c:59 ../lib/vector/Vlib/close.c:38
@@ -2533,7 +2566,7 @@ msgstr ""
 msgid "Unable to add network arc"
 msgstr "%s: لم يمكن فتح ملف  الطبوغرافية للكتابة\n"
 
-#: ../lib/vector/Vlib/graph.c:231 ../lib/vector/Vlib/net.c:514
+#: ../lib/vector/Vlib/graph.c:231 ../lib/vector/Vlib/net.c:521
 #, c-format
 msgid "dglShortestPath error: %s"
 msgstr ""
@@ -2832,6 +2865,16 @@ msgstr ": توصيل الجزر"
 msgid "Attaching centroids..."
 msgstr " : توصيل اشباه المراكز"
 
+#: ../lib/vector/Vlib/merge_lines.c:192
+#, c-format
+msgid "%d boundaries merged"
+msgstr ""
+
+#: ../lib/vector/Vlib/merge_lines.c:193
+#, c-format
+msgid "%d new boundaries"
+msgstr ""
+
 #: ../lib/vector/Vlib/buffer2.c:376
 #, fuzzy
 msgid "Line is not looped"
@@ -3036,7 +3079,7 @@ msgstr "يتم الان بناء الطبولوجى ...\n"
 msgid "Graph was built"
 msgstr "تم بناء الطبولوجى\n"
 
-#: ../lib/vector/Vlib/net.c:595
+#: ../lib/vector/Vlib/net.c:602
 msgid "Wrong line direction in Vect_net_get_line_cost()"
 msgstr ""
 
@@ -3063,12 +3106,12 @@ msgstr "[%s] لم يتم ايجاد [%s] فى"
 msgid "conditions failed"
 msgstr "فشل الإتصال\n"
 
-#: ../lib/vector/Vlib/break_lines.c:115 ../lib/vector/Vlib/break_lines.c:370
+#: ../lib/vector/Vlib/break_lines.c:370
 #, fuzzy, c-format
 msgid "Intersections: %5d"
 msgstr "مساقط أخرى"
 
-#: ../lib/vector/Vlib/remove_areas.c:92
+#: ../lib/vector/Vlib/remove_areas.c:94
 msgid "Area is composed of dead boundary"
 msgstr ""
 

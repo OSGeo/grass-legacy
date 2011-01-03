@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: grasslibs_vi\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-08-29 12:20+0200\n"
+"POT-Creation-Date: 2011-01-03 15:46+0100\n"
 "PO-Revision-Date: 2010-08-27 11:18+0700\n"
 "Last-Translator: \n"
 "Language-Team: American English <kde-i18n-doc@kde.org>\n"
@@ -121,6 +121,10 @@ msgstr "Không thể tìm/mở biểu tượng: '%s' "
 #, c-format
 msgid "Incorrect symbol color: '%s', using default."
 msgstr "Màu biểu tượng không đúng: '%s', dùng mặc định."
+
+#: ../lib/cairodriver/Draw_bitmap.c:47
+msgid "Cairo_draw_bitmap: Failed to create source"
+msgstr ""
 
 #: ../lib/proj/get_proj.c:150
 #, c-format
@@ -762,11 +766,13 @@ msgid "Feature ids"
 msgstr "Các id đối tượng"
 
 #: ../lib/gis/parser.c:637
-msgid "Name of input file"
+#, fuzzy
+msgid "Path to input file"
 msgstr "Tên của tập tin đầu vào"
 
 #: ../lib/gis/parser.c:645
-msgid "Name for output file"
+#, fuzzy
+msgid "Path for output file"
 msgstr "Tên của tập tin đầu ra"
 
 #: ../lib/gis/parser.c:653
@@ -982,11 +988,10 @@ msgstr ""
 "LỖI: Giá trị cho tham số <%s> bị thiếu\n"
 
 #: ../lib/gis/parser.c:2433
-#, c-format
+#, fuzzy, c-format
 msgid ""
-"\n"
 "ERROR: Required parameter <%s> not set:\n"
-"    (%s).\n"
+"\t(%s)\n"
 msgstr ""
 "\n"
 "LỖI: Tham số yêu cầu <%s> không được thiết lập:\n"
@@ -2431,6 +2436,14 @@ msgstr "LỖI CHƯƠNG TRÌNH(Vect_build_sidx_from_topo): vùng không tồn t�
 msgid "BUG (Vect_build_sidx_from_topo): isle does not exist"
 msgstr "LỖI CHƯƠNG TRÌNH (Vect_build_sidx_from_topo): đảo không tồn tại"
 
+#: ../lib/vector/Vlib/break_polygons.c:117
+msgid "Break polygons Pass 1: select break points"
+msgstr ""
+
+#: ../lib/vector/Vlib/break_polygons.c:242
+msgid "Break polygons Pass 2: break at selected points"
+msgstr ""
+
 #: ../lib/vector/Vlib/intersect.c:127
 msgid "3D not supported by Vect_segment_intersection()"
 msgstr "3D chưa được Vect_segment_intersection() hỗ trợ"
@@ -2545,6 +2558,28 @@ msgstr "Cố gắng đọc các điểm của một vùng không tồn tại"
 msgid "Unable to read feature id %d"
 msgstr "Không thể ghi lại đối tượng %d"
 
+#: ../lib/vector/Vlib/snap.c:118
+msgid "Snap vertices Pass 1: select points"
+msgstr ""
+
+#: ../lib/vector/Vlib/snap.c:172
+msgid "Snap vertices Pass 2: assign anchor vertices"
+msgstr ""
+
+#: ../lib/vector/Vlib/snap.c:225
+msgid "Snap vertices Pass 3: snap to assigned points"
+msgstr ""
+
+#: ../lib/vector/Vlib/snap.c:405
+#, c-format
+msgid "Snapped vertices: %d"
+msgstr ""
+
+#: ../lib/vector/Vlib/snap.c:406
+#, fuzzy, c-format
+msgid "New vertices: %d"
+msgstr "Số đối tượng nguyên thủy: %d"
+
 #: ../lib/vector/Vlib/rewind.c:35 ../lib/vector/Vlib/build.c:31
 #: ../lib/vector/Vlib/read.c:30 ../lib/vector/Vlib/write.c:53
 #: ../lib/vector/Vlib/write.c:59 ../lib/vector/Vlib/close.c:38
@@ -2561,7 +2596,7 @@ msgstr "Lỗi GngFlattern"
 msgid "Unable to add network arc"
 msgstr "Không thể thêm cung mạng lưới"
 
-#: ../lib/vector/Vlib/graph.c:231 ../lib/vector/Vlib/net.c:514
+#: ../lib/vector/Vlib/graph.c:231 ../lib/vector/Vlib/net.c:521
 #, c-format
 msgid "dglShortestPath error: %s"
 msgstr "Lỗi dglShortestPath: %s"
@@ -2847,6 +2882,16 @@ msgstr "Đang gắn các đảo..."
 msgid "Attaching centroids..."
 msgstr "Đang gắn các trọng tâm..."
 
+#: ../lib/vector/Vlib/merge_lines.c:192
+#, c-format
+msgid "%d boundaries merged"
+msgstr ""
+
+#: ../lib/vector/Vlib/merge_lines.c:193
+#, c-format
+msgid "%d new boundaries"
+msgstr ""
+
 #: ../lib/vector/Vlib/buffer2.c:376
 msgid "Line is not looped"
 msgstr "Đường không bị thắt nút"
@@ -3051,7 +3096,7 @@ msgstr "Đang làm phẳng biểu đồ..."
 msgid "Graph was built"
 msgstr "Biểu đồ đã được xây dựng"
 
-#: ../lib/vector/Vlib/net.c:595
+#: ../lib/vector/Vlib/net.c:602
 msgid "Wrong line direction in Vect_net_get_line_cost()"
 msgstr "Hướng của đường bị sai trong Vect_net_get_line_cost()"
 
@@ -3075,12 +3120,12 @@ msgstr "Không thể tìm thấy điểm trong vùng"
 msgid "conditions failed"
 msgstr "các điều kiện thất bại"
 
-#: ../lib/vector/Vlib/break_lines.c:115 ../lib/vector/Vlib/break_lines.c:370
+#: ../lib/vector/Vlib/break_lines.c:370
 #, c-format
 msgid "Intersections: %5d"
 msgstr "Các giao điểm: %5d"
 
-#: ../lib/vector/Vlib/remove_areas.c:92
+#: ../lib/vector/Vlib/remove_areas.c:94
 msgid "Area is composed of dead boundary"
 msgstr "Vùng tạo thành từ ranh giới chết"
 
