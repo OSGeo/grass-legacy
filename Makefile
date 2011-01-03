@@ -58,7 +58,7 @@ else
 	LOCALE=0
 endif
 
-FILES = AUTHORS COPYING CHANGES REQUIREMENTS.html GPL.TXT
+FILES = AUTHORS COPYING CHANGES REQUIREMENTS.html contributors.csv  contributors_extra.csv  translators.csv GPL.TXT
 
 BIN_DIST_FILES = $(FILES) \
 	grass${GRASS_VERSION_MAJOR}${GRASS_VERSION_MINOR}.tmp \
