@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: grasslibs_zh\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-11-23 11:27+0100\n"
+"POT-Creation-Date: 2011-01-03 15:32+0100\n"
 "PO-Revision-Date: 2007-12-13 16:42+0100\n"
 "Last-Translator: Su Yongheng <night2008@gmail.com>\n"
 "Language-Team: Simplified Chinese <translations@grass.itc.it>\n"
@@ -133,6 +133,10 @@ msgstr "无法找到/打开符号：'%s'"
 #, c-format
 msgid "Incorrect symbol color: '%s', using default."
 msgstr "不正确的符号颜色：'%s'，使用默认值。"
+
+#: ../lib/cairodriver/Draw_bitmap.c:47
+msgid "Cairo_draw_bitmap: Failed to create source"
+msgstr ""
 
 #: ../lib/proj/get_proj.c:150
 #, fuzzy, c-format
@@ -1024,11 +1028,10 @@ msgstr ""
 "错误：参数<%s>缺少值\n"
 
 #: ../lib/gis/parser.c:2433
-#, c-format
+#, fuzzy, c-format
 msgid ""
-"\n"
 "ERROR: Required parameter <%s> not set:\n"
-"    (%s).\n"
+"\t(%s)\n"
 msgstr ""
 "\n"
 "错误：必须的参数<%s>未设置：\n"

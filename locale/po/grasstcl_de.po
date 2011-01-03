@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: grasstcl_de\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-11-23 11:27+0100\n"
+"POT-Creation-Date: 2011-01-03 15:32+0100\n"
 "PO-Revision-Date: 2010-07-24 22:41+0200\n"
 "Last-Translator: Robert Nuske <rnuske gwdg.de>\n"
 "Language-Team: Deutsch <grass-translations@lists.osgeo.org>\n"
@@ -65,112 +65,112 @@ msgstr "Mittlerer Mausknopf"
 msgid "Right button"
 msgstr "Rechter Mausknopf"
 
-#: ../vector/v.digit/toolbox.tcl:76
+#: ../vector/v.digit/toolbox.tcl:98
 msgid "  Layer"
 msgstr "  Ebene"
 
-#: ../vector/v.digit/toolbox.tcl:80
+#: ../vector/v.digit/toolbox.tcl:102
 msgid "  Category"
 msgstr "  Kategorie"
 
-#: ../vector/v.digit/toolbox.tcl:84
+#: ../vector/v.digit/toolbox.tcl:106
 msgid "  Mode "
 msgstr "  Modus"
 
-#: ../vector/v.digit/toolbox.tcl:96
+#: ../vector/v.digit/toolbox.tcl:118
 msgid "Insert new record into table"
 msgstr "Neuen Eintrag in Tabelle einfügen"
 
-#: ../vector/v.digit/toolbox.tcl:113
+#: ../vector/v.digit/toolbox.tcl:135
 msgid "Digitize new point"
 msgstr "Neuen Punkt digitalisieren"
 
-#: ../vector/v.digit/toolbox.tcl:118
+#: ../vector/v.digit/toolbox.tcl:140
 msgid "Digitize new line"
 msgstr "Neue Linie digitalisieren"
 
-#: ../vector/v.digit/toolbox.tcl:123
+#: ../vector/v.digit/toolbox.tcl:145
 msgid "Digitize new boundary"
 msgstr "Neue Grenze digitalisieren"
 
-#: ../vector/v.digit/toolbox.tcl:128
+#: ../vector/v.digit/toolbox.tcl:150
 msgid "Digitize new centroid"
 msgstr "neues Zentroid digitalisieren"
 
-#: ../vector/v.digit/toolbox.tcl:134
+#: ../vector/v.digit/toolbox.tcl:156
 msgid "Move vertex"
 msgstr "Verschiebe Vertex"
 
-#: ../vector/v.digit/toolbox.tcl:139
+#: ../vector/v.digit/toolbox.tcl:161
 msgid "Add vertex"
 msgstr "Füge Vertex hinzu"
 
-#: ../vector/v.digit/toolbox.tcl:144
+#: ../vector/v.digit/toolbox.tcl:166
 msgid "Remove vertex"
 msgstr "Entferne Vertex"
 
-#: ../vector/v.digit/toolbox.tcl:149
+#: ../vector/v.digit/toolbox.tcl:171
 msgid "Split line"
 msgstr "Teile Linie"
 
-#: ../vector/v.digit/toolbox.tcl:154
+#: ../vector/v.digit/toolbox.tcl:176
 msgid "Edit line/boundary"
 msgstr "Editiere Linie/Grenze"
 
-#: ../vector/v.digit/toolbox.tcl:159
+#: ../vector/v.digit/toolbox.tcl:181
 msgid "Move point, line, boundary, or centroid"
 msgstr "Verschiebe Punkt, Linie, Grenze oder Zentroid."
 
-#: ../vector/v.digit/toolbox.tcl:164
+#: ../vector/v.digit/toolbox.tcl:186
 msgid "Delete point, line, boundary, or centroid"
 msgstr "Lösche Punkt, Linie, Grenze oder Zentroid."
 
-#: ../vector/v.digit/toolbox.tcl:175
+#: ../vector/v.digit/toolbox.tcl:197
 msgid "Redraw"
 msgstr "Neu zeichnen"
 
-#: ../vector/v.digit/toolbox.tcl:180
+#: ../vector/v.digit/toolbox.tcl:202
 msgid "Zoom in by window"
 msgstr "Hereinzoomen"
 
-#: ../vector/v.digit/toolbox.tcl:185
+#: ../vector/v.digit/toolbox.tcl:207
 msgid "Zoom out"
 msgstr "Herauszoomen"
 
-#: ../vector/v.digit/toolbox.tcl:190 ../gui/tcltk/gis.m/georecttool.tcl:130
+#: ../vector/v.digit/toolbox.tcl:212 ../gui/tcltk/gis.m/georecttool.tcl:130
 #: ../gui/tcltk/gis.m/maptool.tcl:151
 msgid "Pan"
 msgstr "Verschieben"
 
-#: ../vector/v.digit/toolbox.tcl:195
+#: ../vector/v.digit/toolbox.tcl:217
 msgid "Zoom to default region"
 msgstr "Auf die Standardregion zoomen"
 
-#: ../vector/v.digit/toolbox.tcl:208
+#: ../vector/v.digit/toolbox.tcl:230
 msgid "Zoom to saved region"
 msgstr "Auf die gespeicherte Region zoomen"
 
-#: ../vector/v.digit/toolbox.tcl:214
+#: ../vector/v.digit/toolbox.tcl:236
 msgid "Display categories"
 msgstr "Zeige Kategorien"
 
-#: ../vector/v.digit/toolbox.tcl:219
+#: ../vector/v.digit/toolbox.tcl:241
 msgid "Copy categories"
 msgstr "Kategorien kopieren"
 
-#: ../vector/v.digit/toolbox.tcl:224
+#: ../vector/v.digit/toolbox.tcl:246
 msgid "Display attributes"
 msgstr "Attribute anzeigen"
 
-#: ../vector/v.digit/toolbox.tcl:236
+#: ../vector/v.digit/toolbox.tcl:258
 msgid "Open settings"
 msgstr "öffnen Einstellungen"
 
-#: ../vector/v.digit/toolbox.tcl:242
+#: ../vector/v.digit/toolbox.tcl:264
 msgid "Save and exit"
 msgstr "Speichern und beenden"
 
-#: ../vector/v.digit/toolbox.tcl:253
+#: ../vector/v.digit/toolbox.tcl:275
 msgid "mouse button actions (left, middle, right)"
 msgstr "Mausknopfbelegung (links, mitte, rechts)"
 

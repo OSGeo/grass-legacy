@@ -14,7 +14,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: grasslibs_cs\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-11-23 11:27+0100\n"
+"POT-Creation-Date: 2011-01-03 15:32+0100\n"
 "PO-Revision-Date: 2010-03-07 15:47+0100\n"
 "Last-Translator: \n"
 "Language-Team:  <cs@li.org>\n"
@@ -128,6 +128,10 @@ msgstr "Nemohu nalézt/otevøít symbol: '%s'"
 #, c-format
 msgid "Incorrect symbol color: '%s', using default."
 msgstr "Nesprávná barva pro symbol: '%s', pou¾ívám výchozí"
+
+#: ../lib/cairodriver/Draw_bitmap.c:47
+msgid "Cairo_draw_bitmap: Failed to create source"
+msgstr ""
 
 #: ../lib/proj/get_proj.c:150
 #, c-format
@@ -1002,11 +1006,10 @@ msgstr ""
 "CHYBA: Chybí hodnota pro parametr <%s>\n"
 
 #: ../lib/gis/parser.c:2433
-#, c-format
+#, fuzzy, c-format
 msgid ""
-"\n"
 "ERROR: Required parameter <%s> not set:\n"
-"    (%s).\n"
+"\t(%s)\n"
 msgstr ""
 "\n"
 "CHYBA: Povinný parametr <%s> nebyl zadán:\n"
