@@ -54,6 +54,9 @@ typedef struct
 {
     double a1, a2;		/* angles */
     char cross;			/* 0 - do not break, 1 - break */
+    char used;			/* 0 - was not used to break line, 1 - was used to break line
+				 *   this is stored because points are automaticaly marked as cross, even if not used 
+				 *   later to break lines */
 } XPNT;
 
 static int fpoint;
@@ -214,6 +217,7 @@ Vect_break_polygons(struct Map_info *Map, int type, struct Map_info *Err)
 			(XPNT *) G_realloc(XPnts,
 					   (apoints + 1) * sizeof(XPNT));
 		}
+		XPnts[npoints].used = 0;
 		if (j == 0 || j == (Points->n_points - 1) ||
 		    Points->n_points < 3) {
 		    XPnts[npoints].a1 = 0;
@@ -306,11 +310,12 @@ Vect_break_polygons(struct Map_info *Map, int type, struct Map_info *Err)
 
 		/* Write points on breaks */
 		if (Err) {
-		    if (j < (Points->n_points - 1)) {
+		    if (XPnts[fpoint].cross && !XPnts[fpoint].used) {
 			Vect_reset_line(BPoints);
 			Vect_append_point(BPoints, Points->x[j], Points->y[j], 0);
 			Vect_write_line(Err, GV_POINT, BPoints, ErrCats);
 		    }
+		    XPnts[fpoint].used = 1;
 		}
 
 		last = j;
