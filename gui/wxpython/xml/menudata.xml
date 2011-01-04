@@ -1665,14 +1665,6 @@
 	    </menuitem>
 	    <separator />
 	    <menuitem>
-	      <label>Ordinary or block kriging</label>
-	      <help>Performs ordinary or block kriging.</help>
-	      <keywords>vector,interpolation,kriging</keywords>
-              <handler>RunMenuCmd</handler>
-	      <command>v.krige.py</command>
-	    </menuitem>
-	    <separator />
-	    <menuitem>
 	      <label>Fill NULL cells</label>
 	      <help>Fills no-data areas in raster maps using v.surf.rst splines interpolation</help>
 	      <keywords>raster,elevation,interpolation</keywords>
