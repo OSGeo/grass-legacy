@@ -2107,27 +2107,6 @@
 	      <handler>OnMenuCmd</handler>
 	      <command>v.net.path</command>
 	    </menuitem>
-	    <menuitem>
-	      <label>Shortest path for sets of features</label>
-	      <help>Computes shortest distance via the network between the given sets of features.</help>
-	      <keywords>vector,network,shortest path</keywords>
-	      <handler>OnMenuCmd</handler>
-	      <command>v.net.distance</command>
-	    </menuitem>
-	    <menuitem>
-	      <label>Shortest path using timetables</label>
-	      <help>Finds shortest path using timetables.</help>
-	      <keywords>vector,network,shortest path</keywords>
-	      <handler>OnMenuCmd</handler>
-	      <command>v.net.timetable</command>
-	    </menuitem>
-	    <menuitem>
-	      <label>Shortest path for all pairs</label>
-	      <help>Computes the shortest path between all pairs of nodes in the network.</help>
-	      <keywords>vector,network,shortest path</keywords>
-	      <handler>OnMenuCmd</handler>
-	      <command>v.net.allpairs</command>
-	    </menuitem>
 	    <separator />
 	    <menuitem>
 	      <label>Visibility network</label>
@@ -2136,41 +2115,6 @@
 	      <handler>OnMenuCmd</handler>
 	      <command>v.net.visibility</command>
 	    </menuitem>
-	    <menuitem>
-	      <label>Bridges and articulation points</label>
-	      <help>Computes bridges and articulation points in the network.</help>
-	      <keywords>vector,network,articulation points</keywords>
-	      <handler>OnMenuCmd</handler>
-	      <command>v.net.bridge</command>
-	    </menuitem>
-	    <menuitem>
-	      <label>Maximum flow</label>
-	      <help>Computes the maximum flow between two sets of nodes in the network.</help>
-	      <keywords>vector,network,flow</keywords>
-	      <handler>OnMenuCmd</handler>
-	      <command>v.net.flow</command>
-	    </menuitem>
-	    <menuitem>
-	      <label>Vertex connectivity</label>
-	      <help>Computes vertex connectivity between two sets of nodes in the network.</help>
-	      <keywords>vector,network,connectivity</keywords>
-	      <handler>OnMenuCmd</handler>
-	      <command>v.net.connectivity</command>
-	    </menuitem>
-	    <menuitem>
-	      <label>Components</label>
-	      <help>Computes strongly and weakly connected components in the network.</help>
-	      <keywords>vector,network,components</keywords>
-	      <handler>OnMenuCmd</handler>
-	      <command>v.net.components</command>
-	    </menuitem>
-	    <menuitem>
-	      <label>Centrality</label>
-	      <help>Computes degree, centrality, betweeness, closeness and eigenvector centrality measures in the network.</help>
-	      <keywords>vector,network,centrality measures</keywords>
-	      <handler>OnMenuCmd</handler>
-	      <command>v.net.centrality</command>
-	    </menuitem>
 	    <separator />
 	    <menuitem>
 	      <label>Steiner tree</label>
@@ -2178,13 +2122,6 @@
 	      <keywords>vector,networking</keywords>
 	      <handler>OnMenuCmd</handler>
 	      <command>v.net.steiner</command>
-	    </menuitem>
-	    <menuitem>
-	      <label>Minimum spanning tree</label>
-	      <help>Computes minimum spanning tree for the network.</help>
-	      <keywords>vector,network,spanning tree</keywords>
-	      <handler>OnMenuCmd</handler>
-	      <command>v.net.spanningtree</command>
 	    </menuitem>
 	    <menuitem>
 	      <label>Traveling salesman analysis</label>
