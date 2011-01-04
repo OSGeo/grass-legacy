@@ -345,18 +345,19 @@ class GMConsole(wx.SplitterWindow):
         return self.panelOutput
     
     def Redirect(self):
-        """!Redirect stderr
-
+        """!Redirect stdout/stderr
+        
         @return True redirected
         @return False failed
         """
-        if Debug.get_level() == 0 and int(grass.gisenv().get('DEBUG', 0)) == 0:
+        if Debug.GetLevel() == 0 and int(grass.gisenv().get('DEBUG', 0)) == 0:
             # don't redirect when debugging is enabled
             sys.stdout = self.cmd_stdout
             sys.stderr = self.cmd_stderr
-            
             return True
-
+        else:
+            sys.stdout = sys.__stdout__
+            sys.stderr = sys.__stderr__
         return False
 
     def WriteLog(self, text, style = None, wrap = None,
@@ -544,8 +545,6 @@ class GMConsole(wx.SplitterWindow):
                     task = menuform.GUI().ParseInterface(command)
                 except:
                     task = None
-                # if not task.has_required():
-                # task = None # run command
             else:
                 task = None
                 
@@ -711,7 +710,7 @@ class GMConsole(wx.SplitterWindow):
             except KeyError:
                 # stopped deamon
                 pass
-            
+
             self.btn_abort.Enable(False)
         
         if event.onDone:
@@ -721,11 +720,16 @@ class GMConsole(wx.SplitterWindow):
 
         self.cmd_output_timer.Stop()
 
+        if event.cmd[0] == 'g.gisenv':
+            Debug.SetLevel()
+            self.Redirect()
+        
         if self.parent.GetName() == "LayerManager":
             self.btn_abort.Enable(False)
             if event.cmd[0] not in globalvar.grassCmd['all'] or \
                     event.cmd[0] == 'r.mapcalc':
                 return
+            
             display = self.parent.GetLayerTree().GetMapDisplay()
             if not display or not display.IsAutoRendered():
                 return
