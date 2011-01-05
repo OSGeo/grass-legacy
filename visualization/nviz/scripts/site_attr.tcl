@@ -74,7 +74,7 @@ proc site_attr_init {} {
 		{{All files}   *   }
 	}
 
-	set site_attr(MARKERS_NAME) {"histogram" "x"  "sphere" "cube" "box" "diamond" "gyro" "aster"}
+	set site_attr(MARKERS_NAME) [list [G_msg "histogram"] {x}  [G_msg "sphere"] [G_msg "cube"] [G_msg "box"] [G_msg "diamond"] [G_msg "gyro"] [G_msg "aster"]]
 	set site_attr(MARKERS_INDEX) {"10"       "1"     "3"      "4"   "2"    "5"      "9"    "8"}
 
 	set site_attr(FIRST_ROW) 1
@@ -408,24 +408,24 @@ proc site_attr_create_win {_idx} {
 		"size" {
 			set which "entries"
 			set apply_msg \
-			"Fill 2 or more entry fields with \
+			[G_msg "Fill 2 or more entry fields with \
 			desired min and max values,\
 			then press \[Apply\]. \
 			Or press \[Auto\] to automatically \
-			generate a range of symbol sizes."
+			generate a range of symbol sizes."]
 
 
 		}
 		"color" {
 			set which "colors"
 			set apply_msg \
-			"Fill 2 or more entry fields with desired\
+			[G_msg "Fill 2 or more entry fields with desired\
 			colors, then press \[Apply\].\
 			Or press \[Auto\] to automatically\
-			generate a color table."
+			generate a color table."]
 		}
 		default {
-			puts "WARNING: No thematic mapping preferences set for $site_attr($_idx.ATTR)!"
+			puts [format [G_msg "WARNING: No thematic mapping preferences set for %s!"] $site_attr($_idx.ATTR)]
 		}
 	}
 
@@ -444,11 +444,11 @@ proc site_attr_create_win {_idx} {
 	set site_attr($_idx.WIN_CMD) $w
 
 # Attribute
-		label $w.attr -text "Vary point $site_attr($_idx.ATTR)"
+		label $w.attr -text [format [G_msg "Vary point %s"] $site_attr($_idx.ATTR)]
 		pack $w.attr -pady 1 -padx 0 -fill x -side top
 
 # Field
-		label $w.field -text "GIS attribute: $site_attr($_idx.NAME)"
+		label $w.field -text [format [G_msg "GIS attribute: %s"] $site_attr($_idx.NAME)]
 		pack $w.field -padx 0 -fill x -side top
 
 # Type
@@ -457,7 +457,7 @@ proc site_attr_create_win {_idx} {
 		} else { 
 			set type "numeric"
 		}
-		label $w.type -text "Attribute type: $type"
+		label $w.type -text [format [G_msg "Attribute type: %s"] $type]
 		pack $w.type -padx 0 -fill x -side top
 
 # Instructions
@@ -469,20 +469,20 @@ proc site_attr_create_win {_idx} {
 		frame $w.buttons -borderwidth 0 -relief flat
 
 # Apply
-		Button $w.buttons.apply -text "Apply" -bd 1 -width 6 \
+		Button $w.buttons.apply -text [G_msg "Apply"] -bd 1 -width 6 \
 			-command "site_attr_set_$which $_idx" \
-			-helptext "Apply current thematic preferences to point display"
+			-helptext [G_msg "Apply current thematic preferences to point display"]
 
 # Auto
-		Button $w.buttons.auto -text "Auto" -bd 1 -width 6\
+		Button $w.buttons.auto -text [G_msg "Auto"] -bd 1 -width 6\
 			-command "site_attr_set_auto_$which $_idx" \
-			-helptext "Automatically generate a color \
-			table distributed across range of attribute values"
+			-helptext [G_msg "Automatically generate a color \
+			table distributed across range of attribute values"]
 
 # Clear
-		Button $w.buttons.reset -text "Reset" -bd 1 -width 6\
+		Button $w.buttons.reset -text [G_msg "Reset"] -bd 1 -width 6\
 			-command "site_attr_clear_lut_win $_idx" \
-			-helptext "Clear all thematic settings"
+			-helptext [G_msg "Clear all thematic settings"]
 			#pack $w.reset.set -side top -pady 5
 
 		pack $w.buttons.apply $w.buttons.auto $w.buttons.reset \
@@ -492,7 +492,7 @@ proc site_attr_create_win {_idx} {
 # Theme prefs management
 		set site_attr($_idx.EXTERNAL_LUT_PANEL) 0
 		frame $w.external_lut -borderwidth 0 -relief flat
-		checkbutton $w.external_lut.set -text "Load/save theme preferences" \
+		checkbutton $w.external_lut.set -text [G_msg "Load/save theme preferences"] \
 			-variable site_attr($_idx.EXTERNAL_LUT_PANEL) -command "site_attr_external_lut $_idx $w.external_lut"
 		pack $w.external_lut.set -side top
 		pack $w.external_lut -padx 0 -fill x -side top
@@ -525,21 +525,21 @@ proc site_attr_external_lut {_idx _win} {
 # External LUT manipulation
 	frame $w.lut_choice  -borderwidth 0
 	frame $w.lut_choice.a  -borderwidth 0
-	label $w.lut_choice.a.title -text "Select thematic prefs to use"
+	label $w.lut_choice.a.title -text [G_msg "Select thematic prefs to use"]
 	pack $w.lut_choice.a.title -side top -pady 1
 
-	radiobutton $w.lut_choice.a.local -relief flat -text "current prefs" \
+	radiobutton $w.lut_choice.a.local -relief flat -text [G_msg "current prefs"] \
 		-value 0 -anchor nw -variable site_attr($_idx.USE_EXTERNAL_VALUES) \
 		-command "site_attr_lut_local $_idx"
 	pack $w.lut_choice.a.local -fill x -expand 1 -side top
 
-	radiobutton $w.lut_choice.a.external -relief flat -text "prefs. from file" \
+	radiobutton $w.lut_choice.a.external -relief flat -text [G_msg "prefs. from file"] \
 		-value 1 -anchor nw -variable site_attr($_idx.USE_EXTERNAL_VALUES)
 		bind $w.lut_choice.a.external <ButtonRelease> "site_attr_lut_external $_idx %X %Y"
 	pack $w.lut_choice.a.external -fill x -expand 1 -side top
 
 	label $w.lut_choice.a.external_lab -fg black -font $nviztxtfont \
-		-text "(preserves current prefs.)"
+		-text [G_msg "(preserves current prefs.)"]
 	pack $w.lut_choice.a.external_lab -side top
 	pack $w.lut_choice.a -side top -pady 3 -fill x
 
@@ -550,12 +550,12 @@ proc site_attr_external_lut {_idx _win} {
 		set lut_label $site_attr($lut_id.NAME)
 		set lut_command "site_attr_lut_open_win $lut_id"
 	} else {
-		set lut_label "no prefs loaded"
+		set lut_label [G_msg "no prefs loaded"]
 		set lut_command ""
 	}
 
 	frame $w.lut_choice.b  -borderwidth 0
-	label $w.lut_choice.b.ext_lab -text "View loaded thematic prefs"
+	label $w.lut_choice.b.ext_lab -text [G_msg "View loaded thematic prefs"]
 	pack $w.lut_choice.b.ext_lab -side top
 
 	set site_attr($_idx.EXTERNAL_LUT_BUTTON) \
@@ -567,19 +567,19 @@ proc site_attr_external_lut {_idx _win} {
 
 	frame $w.io  -borderwidth 0
 	frame $w.io.import_lut  -borderwidth 0
-	label $w.io.import_lut.a -text "Load and save prefs."
+	label $w.io.import_lut.a -text [G_msg "Load and save prefs."]
 	pack $w.io.import_lut.a -side top
-	Button $w.io.import_lut.b -text "Load prefs" -width 15 -bd 1 \
+	Button $w.io.import_lut.b -text [G_msg "Load prefs"] -width 15 -bd 1 \
 		-command "site_attr_lut_import $_idx" \
-		-helptext "Replace current themes with prefs loaded from file"
+		-helptext [G_msg "Replace current themes with prefs loaded from file"]
 	pack $w.io.import_lut.b -side top
 	bind $w.io.import_lut.b <ButtonPress> "site_attr_pick_mouse_XY %X %Y"
 	pack $w.io.import_lut -pady 3 -padx 0 -side top -fill x
 
 	frame $w.io.export_lut  -borderwidth 0
-	Button $w.io.export_lut.b -text "Save prefs" -width 15 -bd 1 \
+	Button $w.io.export_lut.b -text [G_msg "Save prefs"] -width 15 -bd 1 \
 		-command "site_attr_lut_export $_idx" \
-		-helptext "Copy current themes to prefs loaded from file"
+		-helptext [G_msg "Copy current themes to prefs loaded from file"]
 	pack $w.io.export_lut.b -side top
 	bind $w.io.export_lut.b <ButtonPress> "site_attr_pick_mouse_XY %X %Y"
 	pack $w.io.export_lut -pady 3 -padx 0 -side top -fill x
@@ -857,7 +857,7 @@ proc site_attr_set_entries {_idx} {
 
 	set len [llength $site_attr($_idx.YLIST)]
 	if {$len < 2} {
-		tk_messageBox -icon warning -message "Too few values: at least 2!" -type ok -parent $site_attr($_idx.WIN_CMD)
+		tk_messageBox -icon warning -message [G_msg "Too few values: at least 2!"] -type ok -parent $site_attr($_idx.WIN_CMD)
 	} else {
 		site_attr_update_entries $_idx
 	}
@@ -912,7 +912,7 @@ proc site_attr_set_colors {_idx} {
 	global site_attr
 
 	if {[site_attr_read_gui_colors $_idx] < 2} {
-		tk_messageBox -icon warning -message "Too few values: at least 2!" -type ok -parent $site_attr($_idx.WIN_CMD)
+		tk_messageBox -icon warning -message [G_msg "Too few values: at least 2!"] -type ok -parent $site_attr($_idx.WIN_CMD)
 	} else {
 		site_attr_update_colors $_idx
 		site_attr_update_gui_colors $_idx
@@ -1104,7 +1104,7 @@ proc site_attr_lut_external {_idx _x _y} {
 
 	switch [llength $site_attr(LUT_LIST)] {
 		0 		{
-			tk_messageBox -icon warning -message "No prefs file loaded" -type ok -parent $site_attr($_idx.WIN_CMD)
+			tk_messageBox -icon warning -message [G_msg "No prefs file loaded"] -type ok -parent $site_attr($_idx.WIN_CMD)
 			set site_attr($_idx.USE_EXTERNAL_VALUES) 0
 		}
 		1 		{site_attr_lut_set_external $_idx [lindex $site_attr(LUT_LIST) 0]}
@@ -1135,7 +1135,7 @@ proc site_attr_lut_unlink_external {_idx} {
 	trace vdelete site_attr($site_attr($_idx.EXTERNAL_LUT)) w "site_attr_lut_update_external $_idx"
 	trace vdelete site_attr($site_attr($_idx.EXTERNAL_LUT)) u "site_attr_lut_local $_idx"
 
-	catch {$site_attr($_idx.EXTERNAL_LUT_BUTTON) configure -text "No prefs" -command ""}
+	catch {$site_attr($_idx.EXTERNAL_LUT_BUTTON) configure -text [G_msg "No prefs"] -command ""}
 	trace vdelete site_attr($site_attr($_idx.EXTERNAL_LUT).NAME) w "site_attr_update_win $_idx"
 }
 
@@ -1143,7 +1143,7 @@ proc site_attr_lut_set_external {_idx _lut_id} {
 	global site_attr
 
 	if {$site_attr($_idx.TYPE) != $site_attr($_lut_id.TYPE)} {
-		tk_messageBox -icon warning -message "Thematic prefs and attribute have different types" -type ok -parent $site_attr($_idx.WIN_CMD)
+		tk_messageBox -icon warning -message [G_msg "Thematic prefs and attribute have different types"] -type ok -parent $site_attr($_idx.WIN_CMD)
 		set site_attr($_idx.USE_EXTERNAL_VALUES) $site_attr($_idx.USING_EXTERNAL_VALUES)
 		return
 	}
@@ -1194,7 +1194,7 @@ proc site_attr_lut_import {_idx} {
 	global site_attr
 
 	switch [llength $site_attr(LUT_LIST)] {
-		0		{tk_messageBox -icon warning -message "No prefs file loaded" -type ok -parent $site_attr($_idx.WIN_CMD)}
+		0		{tk_messageBox -icon warning -message [G_msg "No prefs file loaded"] -type ok -parent $site_attr($_idx.WIN_CMD)}
 		1		{site_attr_lut_import_attr $_idx [lindex $site_attr(LUT_LIST) 0]}
 		default	{site_attr_lut_popup $_idx site_attr_lut_import_attr}
 	}
@@ -1204,7 +1204,7 @@ proc site_attr_lut_import_attr {_idx _lut_id} {
 	global site_attr
 
 	if {$site_attr($_idx.TYPE) != $site_attr($_lut_id.TYPE)} {
-		tk_messageBox -icon warning -message "Thematic prefs and attributes have different types" -type ok -parent $site_attr($_idx.WIN_CMD)
+		tk_messageBox -icon warning -message [G_msg "Thematic prefs and attributes have different types"] -type ok -parent $site_attr($_idx.WIN_CMD)
 		return
 	}
 
@@ -1268,7 +1268,7 @@ proc site_attr_lut_popup {_idx _command {_new "no"}} {
 	catch {destroy $m}
 	menu $m -tearoff 0
 
-	if {$_new != "no" } {$m add command -label "New" -command "$_command $_idx $_new"}
+	if {$_new != "no" } {$m add command -label [G_msg "New"] -command "$_command $_idx $_new"}
 
 	foreach lut_id $site_attr(LUT_LIST) {
 		$m add command -label "$site_attr($lut_id.NAME)" -command "$_command $_idx $lut_id"
@@ -1405,7 +1405,7 @@ proc site_attr_lut_create_win {_lut_id} {
 			set row_val "label \$w.l\$row -bg \$val -width 3 -borderwidth 1 -relief raised"
 		}
 		default {
-			puts "WARNING: No attribute behaviour for $site_attr($_lut_id.ATTR)!"
+			puts [format [G_msg "WARNING: No attribute behaviour for %s!"] $site_attr($_lut_id.ATTR)]
 			return
 		}
 	}
@@ -1415,11 +1415,11 @@ proc site_attr_lut_create_win {_lut_id} {
 	catch {destroy $win}
 	toplevel $win
 	wm resizable $win true true
-	wm title $win "Thematic prefs file $_lut_id"
+	wm title $win [format [G_msg "Thematic prefs file %s"] $_lut_id]
 	bind $win <Destroy> "site_attr_lut_destroy_win $_lut_id $win %W"
 
 	set w [frame $win.left]
-		label $w.name -text "Name: $site_attr($_lut_id.NAME)" -pady 2
+		label $w.name -text [format [G_msg "Name: %s"] $site_attr($_lut_id.NAME)] -pady 2
 		pack $w.name -pady 1 -fill x -side top
 
 		if {$site_attr($_lut_id.TYPE) == "s"} {
@@ -1427,16 +1427,16 @@ proc site_attr_lut_create_win {_lut_id} {
 		} else {
 			set type "numeric"
 		}
-		label $w.type -text "Type: $type" -pady 2
+		label $w.type -text [format [G_msg "Type: %s"] $type] -pady 2
 		pack $w.type -pady 1 -padx 0 -fill x -side top
 
 		frame $w.buttons
-		Button $w.buttons.save -text "Save" -bd 1 -width 6 \
+		Button $w.buttons.save -text [G_msg "Save"] -bd 1 -width 6 \
 				-command "site_attr_lut_save $_lut_id" \
-				-helptext "Save thematic prefs in file"
-		Button $w.buttons.delete -text "Clear" -bd 1 -width 6 \
+				-helptext [G_msg "Save thematic prefs in file"]
+		Button $w.buttons.delete -text [G_msg "Clear"] -bd 1 -width 6 \
 				-command "site_attr_lut_destroy $_lut_id" \
-				-helptext "Clear current thematic prefs"
+				-helptext [G_msg "Clear current thematic prefs"]
 		
 		pack $w.buttons.save -side left -expand 0 -fill x
 		pack $w.buttons.delete -side right -expand 0 -fill x
@@ -1490,11 +1490,11 @@ proc site_attr_lut_menu {_win} {
 
 	set m $_win.lut_menu
 	catch {destroy $m}
-	menubutton $m -menu $m.m -relief raised -indicatoron 1 -bd 1 -text "Load Thematic Prefs"
+	menubutton $m -menu $m.m -relief raised -indicatoron 1 -bd 1 -text [G_msg "Load Thematic Prefs"]
 	bind $m <Destroy> "site_attr_lut_menu_destroy %W"
 
 	menu $m.m -tearoff 0
-	$m.m add command -label "Load file" -command "site_attr_lut_create_win \[site_attr_lut_load\]"
+	$m.m add command -label [G_msg "Load file"] -command "site_attr_lut_create_win \[site_attr_lut_load\]"
 
 	foreach lut_id $site_attr(LUT_LIST) {
 		site_attr_lut_menu_add $lut_id
@@ -1574,12 +1574,12 @@ proc site_attr_lut_menu_index {_lut_id} {
 proc site_attr_lut_save {_lut_id} {
 	global site_attr
 
-	set filename [tk_getSaveFile -initialdir $site_attr(LUT_DIR) -initialfile $site_attr($_lut_id.NAME) -filetypes $site_attr(LUT_FILETYPES) -title "Save thematic prefs"]
+	set filename [tk_getSaveFile -initialdir $site_attr(LUT_DIR) -initialfile $site_attr($_lut_id.NAME) -filetypes $site_attr(LUT_FILETYPES) -title [G_msg "Save thematic prefs"]]
 
 	if {$filename != ""} {
 		if {[file exists $filename]} {
 			file delete -force -- $filename
-			puts "Old LUT \"$filename\" deleted"
+			puts [format [G_msg "Old LUT \"%s\" deleted"] $filename]
 		}
 		# file is new
 		site_attr_lut_write $_lut_id [site_attr_lut_file_from_name $filename]
@@ -1604,7 +1604,7 @@ proc site_attr_lut_write {_lut_id _filename} {
 	close $fileId
 
 	set site_attr($_lut_id.NAME) [site_attr_lut_name_from_file $_filename]
-	puts "Thematic preferences file \"$name\" saved"
+	puts [format [G_msg "Thematic preferences file \"%s\" saved"] $name]
 }
 
 
@@ -1613,18 +1613,18 @@ proc site_attr_lut_load {{filename ""}} {
 	global site_attr
 
 	if {$filename == ""} {
-		set filename [tk_getOpenFile -initialdir $site_attr(LUT_DIR) -filetypes $site_attr(LUT_FILETYPES) -title "Load thematic prefs"]
+		set filename [tk_getOpenFile -initialdir $site_attr(LUT_DIR) -filetypes $site_attr(LUT_FILETYPES) -title [G_msg "Load thematic prefs"]]
 	}
 
 	if {$filename == ""} {return}
 
 	if {![file exists $filename]} {
-		puts "*** WARNING *** File $filename is unavailable"
+		puts [format [G_msg "*** WARNING *** File \"%s\" is unavailable"] $filename]
 		return ""
 	}
 
 	if {[site_attr_lut_read $filename] < 5} {
-		puts "*** ERROR *** Some thematic pref component are missing in file \"$filename\""
+		puts [format [G_msg "*** ERROR *** Some thematic pref component are missing in file \"%s\""] $filename]
 		return ""
 	}
 
@@ -1697,7 +1697,7 @@ proc site_attr_lut_read {_filename} {
 				}
 			}
 			default {
-				puts "WARNING: Unknown Tag \"$tag_name\" in file \"$_filename\""
+				puts [format [G_msg "WARNING: Unknown Tag \"%s\" in file \"%s\""] $tag_name, $_filename]
 			}
 		}
 #		foreach elt $tag_list {puts "*** $elt ***"}
@@ -1767,7 +1767,7 @@ proc site_attr_set_link_attr {_curr_site _attr _which _field _lut_name} {
 		"size" {set st_att [Nsite_attr_get_value "ST_ATT_SIZE"]}
 		"color" {set st_att [Nsite_attr_get_value "ST_ATT_COLOR"]}
 		"marker" {set st_att [Nsite_attr_get_value "ST_ATT_MARKER"]}
-		default {puts "WARNING: Unknown attribute $_attr!"; return $ret_list}
+		default {puts [format [G_msg "WARNING: Unknown attribute %s!"] $_attr]; return $ret_list}
 	}
 
 	set max [Nsite_attr_get_value "GPT_MAX_ATTR"]
@@ -1788,14 +1788,14 @@ proc site_attr_set_link_attr {_curr_site _attr _which _field _lut_name} {
 			incr index
 		}
 	}
-	if {$not_found} {puts "WARNING: field $_field NOT FOUND"; return}
+	if {$not_found} {puts [format [G_msg "WARNING: field %s NOT FOUND"] $_field]; return}
 
 	# verify if lut with this name is already loaded
 	set lut_id [site_attr_lut_id_from_name [site_attr_lut_name_from_file $_lut_name]]
 	if {$lut_id == "NO_LUT"} {
 		# if not, load it!
 		set lut_id [site_attr_lut_load [file join $site_attr(LUT_DIR) [site_attr_lut_file_from_name $_lut_name]]]
-		if {$lut_id == ""} {puts "WARNING: lut file [site_attr_lut_file_from_name $_lut_name] NOT FOUND"; return}
+		if {$lut_id == ""} {puts [format [G_msg "WARNING: lut file %s NOT FOUND"] [site_attr_lut_file_from_name $_lut_name]]; return}
 	}
 
 	# FROM HERE ON EVERITHING SHOULD BE OK
@@ -1849,7 +1849,7 @@ proc site_attr_get_link_attr {_curr_site _attr} {
 		"size" {set st_att [Nsite_attr_get_value "ST_ATT_SIZE"]}
 		"color" {set st_att [Nsite_attr_get_value "ST_ATT_COLOR"]}
 		"marker" {set st_att [Nsite_attr_get_value "ST_ATT_MARKER"]}
-		default {puts "WARNING: Unknown attribute $_attr!"; return $ret_list}
+		default {puts [format [G_msg "WARNING: Unknown attribute %s!"] $_attr]; return $ret_list}
 	}
 
 	for {set nattr 0} {$nattr < $max} {incr nattr} {

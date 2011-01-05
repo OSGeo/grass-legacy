@@ -25,13 +25,13 @@ proc mkposPanel { BASE } {
     
     #  Initialize panel info
     if [catch {set Nv_($BASE)}] {
-	set panel [St_create {window name size priority} $BASE "Position" 1 5]
+	set panel [St_create {window name size priority} $BASE [G_msg "Position"] 1 5]
     } else {
 	set panel $Nv_($BASE)
     }
     
     frame $BASE -relief flat -borderwidth 0
-    Nv_mkPanelname $BASE "Position Panel"
+    Nv_mkPanelname $BASE [G_msg "Position Panel"]
 
 #################################
 # Positioning menus    
@@ -42,34 +42,34 @@ proc mkposPanel { BASE } {
     set col4 [frame $BASE.top1.col4]
     
     set c1r1 [label $col1.1 -text "          "]  
-    set c1r2 [label $col1.2 -text "From (eye):"]  
-	set c1r3 [label $col1.3 -text "To (surface):"]
+    set c1r2 [label $col1.2 -text [G_msg "From (eye):"]]  
+	set c1r3 [label $col1.3 -text [G_msg "To (surface):"]]
 	set c1r4 [label $col1.4 -text "          "]
 	set c1r5 [label $col1.5 -text "          "]
-	set c1r6 [label $col1.6 -text "Range/bearing:"]
+	set c1r6 [label $col1.6 -text [G_msg "Range/bearing:"]]
 	pack $c1r1 $c1r2 $c1r3 $c1r4 $c1r5 $c1r6 -side top -anchor e
 	
-	set c2r1 [label $col2.1 -text "East" -fg black -font $nviztxtfont]
+	set c2r1 [label $col2.1 -text [G_msg "East"] -fg black -font $nviztxtfont]
 	set c2r2 [entry $col2.2 -width 10 -textvariable Nv_(east1) -bg white]
 	set c2r3 [entry $col2.3 -width 10 -textvariable Nv_(east2) -bg white]
 	set c2r4 [label $col2.4 -text "     "]
-	set c2r5 [label $col2.5 -text "Range" -fg black -font $nviztxtfont]
+	set c2r5 [label $col2.5 -text [G_msg "Range"] -fg black -font $nviztxtfont]
 	set c2r6 [entry $col2.6 -width 10 -textvariable Nv_(range) -bg white]
 	pack $c2r1 $c2r2 $c2r3 $c2r4 $c2r5 $c2r6 -side top
 	
-	set c3r1 [label $col3.1 -text "North" -fg black -font $nviztxtfont]
+	set c3r1 [label $col3.1 -text [G_msg "North"] -fg black -font $nviztxtfont]
 	set c3r2 [entry $col3.2 -width 10 -textvariable Nv_(north1) -bg white]
 	set c3r3 [entry $col3.3 -width 10 -textvariable Nv_(north2) -bg white]
 	set c3r4 [label $col3.4 -text "     "]
-	set c3r5 [label $col3.5 -text "Bearing" -fg black -font $nviztxtfont]
+	set c3r5 [label $col3.5 -text [G_msg "Bearing"] -fg black -font $nviztxtfont]
 	set c3r6 [entry $col3.6 -width 10 -textvariable Nv_(bearing) -bg white]
 	pack $c3r1 $c3r2 $c3r3 $c3r4 $c3r5 $c3r6 -side top
 	
-	set c4r1 [label $col4.1 -text "Height" -fg black -font $nviztxtfont]
+	set c4r1 [label $col4.1 -text [G_msg "Height"] -fg black -font $nviztxtfont]
 	set c4r2 [entry $col4.2 -width 8 -textvariable Nv_(ht1) -bg white] 
 	set c4r3 [entry $col4.3 -width 8 -textvariable Nv_(ht2) -bg white]
 	set c4r4 [label $col4.4 -text "     "]
-	set c4r5 [label $col4.5 -text "Elev" -fg black -font $nviztxtfont]
+	set c4r5 [label $col4.5 -text [G_msg "Elev"] -fg black -font $nviztxtfont]
 	set c4r6 [entry $col4.6 -width 8 -textvariable Nv_(elev) -bg white]
 	pack $c4r1 $c4r2 $c4r3 $c4r4 $c4r5 $c4r6 -side top
 
@@ -80,9 +80,9 @@ proc mkposPanel { BASE } {
    
   # Mode setting radiobuttons
     set tmp3 [frame $BASE.top3]
-    radiobutton $tmp3.r1 -text "Eye to surface" -variable "bearing_calc" -value "1" -command "catch {show_bearing}"
-    radiobutton $tmp3.r2 -text "Surface to eye" -variable "bearing_calc" -value "2" -command "catch {show_bearing}"
-    button $tmp3.b1 -text "Calculate" -command "catch {calc_position $bearing_calc};catch {show_bearing}" -bd 1
+    radiobutton $tmp3.r1 -text [G_msg "Eye to surface"] -variable "bearing_calc" -value "1" -command "catch {show_bearing}"
+    radiobutton $tmp3.r2 -text [G_msg "Surface to eye"] -variable "bearing_calc" -value "2" -command "catch {show_bearing}"
+    button $tmp3.b1 -text [G_msg "Calculate"] -command "catch {calc_position $bearing_calc};catch {show_bearing}" -bd 1
     pack $tmp3.r1 $tmp3.r2 $tmp3.b1 -side left -padx 3 -expand 1 -fill x
     
     pack $tmp3 -side top -fill x -expand 1 -pady 4
@@ -92,7 +92,7 @@ proc mkposPanel { BASE } {
 # Buttons menu       
     set tmp4 [frame $BASE.top4]
     
-    button $tmp4.b1 -text "Refresh" -bd 1 \
+    button $tmp4.b1 -text [G_msg "Refresh"] -bd 1 \
     	-command {set from_loc [Nget_real_position 1]
 			set to_loc [Nget_real_position 2]
 			set Nv_(east1) [format_number [lindex $from_loc 0]]
@@ -106,7 +106,7 @@ proc mkposPanel { BASE } {
 			show_bearing
 			}
     
-    button $tmp4.b2 -text "Apply" -bd 1 \
+    button $tmp4.b2 -text [G_msg "Apply"] -bd 1 \
     	-command {
 			#Set To coords
 			Nset_focus_real $Nv_(east2) $Nv_(north2) $Nv_(ht2)		
@@ -122,7 +122,7 @@ proc mkposPanel { BASE } {
 			Ndraw_all
 			}
     
-    button $tmp4.b3 -text "Close" -command "Nv_closePanel $BASE" -bd 1
+    button $tmp4.b3 -text [G_msg "Close"] -command "Nv_closePanel $BASE" -bd 1
     	
     pack $tmp4.b1 $tmp4.b2 -side left 
     pack $tmp4.b3 -side right

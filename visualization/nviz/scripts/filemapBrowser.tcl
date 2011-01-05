@@ -95,13 +95,13 @@ proc create_filemap_browser {{w .filemap_browser} {type all} {mode 0} {curfiles 
     scrollbar $w.list.l.scroll \
 	-command "$w.list.l.list yview"
 
-    button $w.list.remove -text "Remove" -bd 1 \
+    button $w.list.remove -text [G_msg "Remove"] -bd 1 \
 		-command "multimap_remove_cmd $w"
     pack $w.list.l.list $w.list.l.scroll -side left -fill y -expand yes
     pack $w.list.l $w.list.remove -side top -fill x -expand yes
     
     frame     $w.main.mapsets
-    label     $w.main.mapsets.label -text MAPSETS
+    label     $w.main.mapsets.label -text [G_msg "MAPSETS"]
     frame     $w.main.mapsets.f
     listbox   $w.main.mapsets.f.list -bd 2 -relief sunken \
 	-exportselection no                     \
@@ -115,7 +115,7 @@ proc create_filemap_browser {{w .filemap_browser} {type all} {mode 0} {curfiles 
 	"filemap_browser_select_mapset  %W %y $w"
     
     frame     $w.main.files
-    label     $w.main.files.label -text FILES
+    label     $w.main.files.label -text [G_msg "FILES"]
     frame     $w.main.files.f
     listbox   $w.main.files.f.list -bd 2 -relief sunken \
 	-exportselection no                   \
@@ -145,32 +145,32 @@ proc create_filemap_browser {{w .filemap_browser} {type all} {mode 0} {curfiles 
     }
     
     if [string compare $type all] {
-	label $w.element.menu -text "Map Type:" -relief raised
+	label $w.element.menu -text [G_msg "Map Type:"] -relief raised
     } else {
 	set name ""
-	menubutton $w.element.menu -text {Map Type} -menu $w.element.menu.m -relief raised -bd 1
+	menubutton $w.element.menu -text [G_msg "Map Type"] -menu $w.element.menu.m -relief raised -bd 1
 	menu $w.element.menu.m
 	$w.element.menu.m add command \
-	    -label {Raster} -command "set_filemap_browser_element  $w Raster"
+	    -label [G_msg "Raster"] -command "set_filemap_browser_element  $w Raster"
 	$w.element.menu.m add command \
-	    -label {Vector} -command "set_filemap_browser_element  $w Vector"
+	    -label [G_msg "Vector"] -command "set_filemap_browser_element  $w Vector"
 	$w.element.menu.m add command \
-	    -label {Site} -command "set_filemap_browser_element  $w Site"
+	    -label [G_msg "Site"] -command "set_filemap_browser_element  $w Site"
 	$w.element.menu.m add command \
-	    -label {Surf} -command "set_filemap_browser_element $w Surf"
+	    -label [G_msg "Surf"] -command "set_filemap_browser_element $w Surf"
 	$w.element.menu.m add command \
-	    -label {Regions} -command "set_filemap_browser_element  $w windows"
+	    -label [G_msg "Regions"] -command "set_filemap_browser_element  $w windows"
 	$w.element.menu.m add command \
-	    -label {Labels} -command "set_filemap_browser_element  $w\
+	    -label [G_msg "Labels"] -command "set_filemap_browser_element  $w\
 		    paint/labels"
 	    $w.element.menu.m add command \
-	    -label {Icons} -command "set_filemap_browser_element  $w icons"
+	    -label [G_msg "Icons"] -command "set_filemap_browser_element  $w icons"
     }
 
-    button $w.blank -text Blank -command "multimap_blank_cmd $w" -bd 1
-    button $w.previous -text Previous -command "multimap_previous_cmd $w" -bd 1
-    button $w.done -text Done -command "multimap_done_cmd $w" -bd 1
-    button $w.cancel -text Cancel -command "multimap_cancel_cmd $w" -bd 1
+    button $w.blank -text [G_msg "Blank"] -command "multimap_blank_cmd $w" -bd 1
+    button $w.previous -text [G_msg "Previous"] -command "multimap_previous_cmd $w" -bd 1
+    button $w.done -text [G_msg "Done"] -command "multimap_done_cmd $w" -bd 1
+    button $w.cancel -text [G_msg "Cancel"] -command "multimap_cancel_cmd $w" -bd 1
     
     pack $w.filename -side top -expand yes -fill x
     pack $w.main -side top
@@ -198,7 +198,7 @@ proc create_filemap_browser {{w .filemap_browser} {type all} {mode 0} {curfiles 
     }
     set_filemap_browser_element $w $name
     set_filemap_browser_mapset $w {}
-    wm title $w "Map Browser"
+    wm title $w [G_msg "Map Browser"]
     wm protocol $w WM_DELETE_WINDOW "destroy $w"
 
     

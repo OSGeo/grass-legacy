@@ -33,29 +33,29 @@ set Nv_(APP) "."
 wm resizable . true false
 
 # Titlebar
-label .title -text "Map Object File Sequencing" -relief raised
+label .title -text [G_msg "Map Object File Sequencing"] -relief raised
 pack .title -side top -fill x -expand yes
 frame .controls 
 
 # Create buttons for adding fields
 frame .controls.fields -relief groove -bd 2
 set rname .controls.fields
-label $rname.title -text "Fields:"
-button $rname.add -text "Add" -command "add_field"
-button $rname.delete -text "Delete" -command "delete_field"
-button $rname.state -text "State File: None" -command "change_state_file"
+label $rname.title -text [G_msg "Fields:"]
+button $rname.add -text [G_msg "Add"] -command "add_field"
+button $rname.delete -text [G_msg "Delete"] -command "delete_field"
+button $rname.state -text [G_msg "State File: None"] -command "change_state_file"
 pack $rname.title $rname.add $rname.delete $rname.state \
     -fill x -expand no -padx 2 -pady 2 
 
 # Create buttons for cancelling or accepting
 frame .controls.options -relief groove -bd 2
 set rname .controls.options
-label $rname.title -text "Options:"
-button $rname.cancel -text "Done" -command "done_script"
-button $rname.accept -text "Add To Script" -command "build_script"
-button $rname.build -text "Build Script..." -command "build_standalone_script"
-button $rname.load -text "Load Fields..." -command "load_fields"
-button $rname.save -text "Save Fields..." -command "save_fields"
+label $rname.title -text [G_msg "Options:"]
+button $rname.cancel -text [G_msg "Done"] -command "done_script"
+button $rname.accept -text [G_msg "Add To Script"] -command "build_script"
+button $rname.build -text [G_msg "Build Script..."] -command "build_standalone_script"
+button $rname.load -text [G_msg "Load Fields..."] -command "load_fields"
+button $rname.save -text [G_msg "Save Fields..."] -command "save_fields"
 
 pack $rname.title $rname.cancel $rname.accept \
     $rname.build $rname.load $rname.save\
@@ -72,7 +72,7 @@ canvas .fields.display_area -width 10c -height 6c \
 # This frame created to display frame numbers next to the list of 
 # files in fields
 frame .fields.display_area.frames -relief groove -bd 2 -width 2c -height 6c
-label .fields.display_area.frames.l1 -text "Frame"
+label .fields.display_area.frames.l1 -text [G_msg "Frame"]
 label .fields.display_area.frames.l2 -text "     "
 listbox .fields.display_area.frames.frame_list \
     -yscrollcommand ".fields.scrolly set" -height 9
@@ -108,9 +108,9 @@ proc load_fields {} {
 
     # First make sure we're not overwriting something...
     if {$FieldsChanged} then {
-	if {[tk_dialog .verify "Verify" "Current fields have not been saved, really load new fields?" \
+	if {[tk_dialog .verify [G_msg "Verify"] [G_msg "Current fields have not been saved, really load new fields?"] \
 		 @/usr/local/lib/tk/bitmaps/warning \
-		 1 "Ok" "Cance'"] == 1} then {
+		 1 [G_msg "Ok"] [G_msg "Cancel"]] == 1} then {
 	    # Cancel the exit
 	    return
 	}
@@ -123,7 +123,7 @@ proc load_fields {} {
     # Read in each of the file fields one at a time, and create
     # Field_Data as appropriate
     if {[catch {set file_hook [open $new_file r]} error_code] != 0} then {
-	display_error "While opening file: $error_code"
+	display_error [format [G_msg "Error while opening file: %s"] $error_code]
 	return
     }
 
@@ -132,14 +132,14 @@ proc load_fields {} {
 
     # Read in state file
     if {[catch {gets $file_hook state_file} error_code] != 0} then {
-	display_error "While reading state_file: $error_code"
+	display_error [format [G_msg "While reading state_file: %s"] $error_code]
 	return
     }
     set_new_state_file $state_file
 
     # Get number of fields
     if {[catch {gets $file_hook num_fields} error_code] != 0} then {
-	display_error "While reading number of fields: $error_code"
+	display_error [format [G_msg "While reading number of fields: %s"] $error_code]
 	return
     }
 
@@ -148,13 +148,13 @@ proc load_fields {} {
     for {set i 0} {$i < $num_fields} {incr i} {
 	# Input field type
 	if {[catch {gets $file_hook field_type} error_code] != 0} then {
-	    display_error "While reading field type: $error_code"
+	    display_error [format [G_msg "While reading field type: %s"] $error_code]
 	    return
 	}
 
 	# Input field attribute
 	if {[catch {gets $file_hook field_att} error_code] != 0} then {
-	    display_error "While reading field attribute: $error_code"
+	    display_error [format [G_msg "While reading field attribute: %s"] $error_code]
 	    return
 	}
 
@@ -539,8 +539,8 @@ proc add_field {} {
     # Field type frame
     set rname .add_field.field_type
     frame $rname
-    label $rname.lbl -text "Field Type: " 
-    menubutton $rname.mb -text "Surface" -menu $rname.mb.m -relief raised
+    label $rname.lbl -text [G_msg "Field Type: "] 
+    menubutton $rname.mb -text [G_msg "Surface"] -menu $rname.mb.m -relief raised
     menu $rname.mb.m
     foreach i {Surface Vector Site} {
 	$rname.mb.m add command -label "$i" -command "set_field_type $i"
@@ -551,8 +551,8 @@ proc add_field {} {
     # Field attribute frame
     set rname .add_field.field_att
     frame $rname
-    label $rname.lbl -text "Field Attribute: "
-    menubutton $rname.mb -text "Topography" -menu $rname.mb.m -relief raised
+    label $rname.lbl -text [G_msg "Field Attribute: "]
+    menubutton $rname.mb -text [G_msg "Topography"] -menu $rname.mb.m -relief raised
     menu $rname.mb.m
     foreach i {Topography Color Mask Transparency Shininess Emission} {
 	$rname.mb.m add command -label "$i" -command "set_field_att $i"
@@ -563,16 +563,16 @@ proc add_field {} {
     # Field source frame
     set rname .add_field.source
     frame $rname
-    label $rname.lbl -text "Use Nviz Map: "
-    menubutton $rname.mb -text "None" -menu $rname.mb.m -relief raised
+    label $rname.lbl -text [G_msg "Use Nviz Map: "]
+    menubutton $rname.mb -text [G_msg "None"] -menu $rname.mb.m -relief raised
     menu $rname.mb.m 
     set_sources Surface
     pack $rname.lbl -side left -anchor w
     pack $rname.mb -side right -anchor e
 
     # Accept and Cancel buttons
-    button .add_field.accept -text "Accept" -command "create_new_field"
-    button .add_field.cancel -text "Cancel" -command "destroy .add_field"
+    button .add_field.accept -text [G_msg "Accept"] -command "create_new_field"
+    button .add_field.cancel -text [G_msg "Cancel"] -command "destroy .add_field"
     
     # Pack everything in
     pack .add_field.field_type .add_field.field_att .add_field.source \
@@ -673,7 +673,7 @@ proc set_sources {type} {
 
     $rname.mb.m delete 0 last
     if {[llength $source_list] == 0} then {
-	$rname.mb.m add command -label "None" -command "set_source_file None 0"
+	$rname.mb.m add command -label [G_msg "None"] -command "set_source_file None 0"
 	set_source_file "None" 0
     } else {
 	set j 0
@@ -850,7 +850,7 @@ proc set_new_state_file { name } {
 	set name None
     }
 
-    .controls.fields.state configure -text "State File: $name"
+    .controls.fields.state configure -text [format [G_msg "State File: %s"] $name]
 }
 
 ###################################################
@@ -882,10 +882,10 @@ proc build_standalone_script {} {
     # Get a name for frames
     set R .build_frame_name
     toplevel $R
-    label $R.l -text "Enter an image root name" -relief raised
+    label $R.l -text [G_msg "Enter an image root name"] -relief raised
     entry $R.e -width 20 -relief sunken
-    button $R.accept -text "accept" -command "set Build_Image_Name \[$R.e get\] ; destroy $R"
-    button $R.cancel -text "cancel" -command "set Build_Image_Name -1 ; destroy $R"
+    button $R.accept -text [G_msg "Accept"] -command "set Build_Image_Name \[$R.e get\] ; destroy $R"
+    button $R.cancel -text [G_msg "Cancel"] -command "set Build_Image_Name -1 ; destroy $R"
     pack $R.l $R.e $R.accept $R.cancel -padx 1 -pady 1 -fill x -expand yes
     grab $R
     tkwait window $R

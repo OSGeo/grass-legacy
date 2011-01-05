@@ -309,7 +309,7 @@ proc dialog_safeguard {win} {
 }
 
 # Fill controls (OK/CANCEL) section
-proc dialog_fill_controls {win varName focus {ok "OK"} {cancel "Cancel"}} {
+proc dialog_fill_controls [list win varName focus [list ok [G_msg "OK"]] [list cancel [G_msg "Cancel"]]] {
 	set cntls [dialog_controls $win]
 
 	button $cntls.ok -text $ok -command "dialog_setvar $varName 1"
@@ -328,7 +328,7 @@ option add *Confirm*icon.msg.wrapLength 4i widgetDefault
 option add *Warning*icon.bitmap "error" widgetDefault
 option add *Warning*icon.msg.wrapLength 4i widgetDefault
 ##########################################################################################
-proc warning_ask {msg {ok "dismiss"}} {
+proc warning_ask [list msg [list [G_msg "ok"] [G_msg "dismiss"]]] {
 	global confirmStatus
 
 	set top [dialog_create Warning]
@@ -351,7 +351,7 @@ proc warning_ask {msg {ok "dismiss"}} {
 	return $confirmStatus
 }
 
-proc confirm_ask {msg {ok "OK"} {cancel "Cancel"}} {
+proc confirm_ask [list msg [list ok [G_msg "OK"]] [list cancel [G_msg "Cancel"]]] {
 	global confirmStatus
 
 	set top [dialog_create Confirm]
@@ -372,7 +372,7 @@ proc confirm_ask {msg {ok "OK"} {cancel "Cancel"}} {
 #
 # lists "label" and "entries" are passed by name and the procedure access them via upvar
 #
-proc modal_edit_list {msg labels entries images commands {ok "OK"} {cancel "Cancel"}} {
+proc modal_edit_list [list msg labels entries images commands [list ok [G_msg "OK"]] [list cancel [G_msg "Cancel"]]] {
 	global confirmStatus
 
 	# Pay attention!
@@ -427,7 +427,7 @@ proc modal_edit_list {msg labels entries images commands {ok "OK"} {cancel "Canc
 	return $confirmStatus
 }
 
-proc modal_edit_list_old {msg labels entries {type "NO_MAP"} {ok "OK"} {cancel "Cancel"}} {
+proc modal_edit_list_old [list msg labels entries {type "NO_MAP"} [list ok [G_msg "OK"]] [list cancel [G_msg "Cancel"]]] {
 	global confirmStatus
 
 	# Pay attention!
@@ -472,7 +472,7 @@ proc modal_edit_list_old {msg labels entries {type "NO_MAP"} {ok "OK"} {cancel "
 #
 # lists "label" and "entries" are passed by name and the procedure access them via upvar
 #
-proc modal_edit_list_plain {msg labels entries {ok "OK"} {cancel "Cancel"}} {
+proc modal_edit_list_plain [list msg labels entries [list ok [G_msg "OK"]] [list cancel [G_msg "Cancel"]]] {
 	global confirmStatus
 
 	# Pay attention!
@@ -566,7 +566,7 @@ proc add_to_list {elt lst} {
 # addremove_list_create2 / addremove_list_move2
 # use a double list for names and another for id's (not shown)
 ##################################################################################
-proc addremove_list_create2 {title left_msg right_msg left_entries right_entries left_ids right_ids {ok "OK"} {cancel "Cancel"}} {
+proc addremove_list_create2 [list title left_msg right_msg left_entries right_entries left_ids right_ids [list ok [G_msg "OK"]] [list cancel [G_msg "Cancel"]]] {
 	global confirmStatus
 
 	# Pay attention!
@@ -638,7 +638,7 @@ proc addremove_list_move2 {_src _dst _src_id _dst_id} {
 	}
 }
 
-proc addremove_list_create {title left_msg right_msg left_entries right_entries {ok "OK"} {cancel "Cancel"}} {
+proc addremove_list_create [list title left_msg right_msg left_entries right_entries [list ok [G_msg "OK"]] [list cancel [G_msg "Cancel"]]] {
 	global confirmStatus
 
 	# Pay attention!

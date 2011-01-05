@@ -42,22 +42,22 @@ proc mkscalePanel { BASE } {
     set bar_text_clr "#DDDDDD"
     set bar_text_size "non funct."
 
-    set panel [St_create {window name size priority} $BASE "Scale bar" 2 5]
+    set panel [St_create {window name size priority} $BASE [G_msg "Scale bar"] 2 5]
     frame $BASE -relief flat -borderwidth 0
-    Nv_mkPanelname $BASE "Scale Bar Panel"
+    Nv_mkPanelname $BASE [G_msg "Scale Bar Panel"]
 
     # This section contains widgets for placing the scale bar
     set rbase1 [frame $BASE.scale]
-    Label $rbase1.scalebar_lbl -text "Scale bar: " -fg black
+    Label $rbase1.scalebar_lbl -text [G_msg "Scale bar: "] -fg black
     LabelEntry $rbase1.scalebar_size -relief sunken -entrybg white \
         -textvariable scalebar_size -width 8 \
-        -label "length (in map units) " -fg black -font $nviztxtfont
+        -label [G_msg "length (in map units) "] -fg black -font $nviztxtfont
     pack $rbase1.scalebar_lbl $rbase1.scalebar_size -side left -expand no -fill none
     
     $rbase1.scalebar_size bind <Key> {if {$Nauto_draw == 1} {Ndraw_all}} 
 
 
-    Button $rbase1.color -text "Color" \
+    Button $rbase1.color -text [G_msg "Color"] \
 		-bg $bar_clr -width 8 -bd 1 \
 		-command "change_scale_color $rbase1.color scale" \
 		-fg "#ffffff"
@@ -68,15 +68,15 @@ proc mkscalePanel { BASE } {
 
     # This section contains widgets for scale text
     set rbase2 [frame $BASE.txt]
-    Label $rbase2.txt_lbl -text "Scale text: " -fg black
+    Label $rbase2.txt_lbl -text [G_msg "Scale text: "] -fg black
     LabelEntry $rbase2.txt_size -relief sunken -entrybg grey \
         -textvariable bar_text_size -width 8 -justify right\
-        -label "size " -fg black -labelfont $nviztxtfont
+        -label [G_msg "size "] -fg black -labelfont $nviztxtfont
     pack $rbase2.txt_lbl $rbase2.txt_size -side left -expand no -fill none
     
     $rbase2.txt_size bind <Key> {if {$Nauto_draw == 1} {Ndraw_all}} 
 
-    Button $rbase2.color -text "Color" \
+    Button $rbase2.color -text [G_msg "Color"] \
 		-bg $bar_text_clr -width 8 -bd 1 \
 		-command "change_scale_color $rbase2.color text" \
 		-fg "#ffffff"
@@ -87,11 +87,11 @@ proc mkscalePanel { BASE } {
 
     # close panel section
     set rbase3 [frame $BASE.button]
-    Button $rbase3.place -text "Place scale" -bd 1 \
+    Button $rbase3.place -text [G_msg "Place scale"] -bd 1 \
 	 -command "sb_bind_mouse $Nv_(TOP).canvas; $Nv_(TOP) configure -cursor plus"
     pack $rbase3.place -expand yes -side left -expand no -fill none
 
-    button $rbase3.close -text "Close" -command "Nv_closePanel $BASE" \
+    button $rbase3.close -text [G_msg "Close"] -command "Nv_closePanel $BASE" \
 		-anchor se -bd 1
 	pack $rbase3.close -side right -fill none -expand no
 	pack $rbase3 -side top -fill both -expand yes -padx 3 -pady 4

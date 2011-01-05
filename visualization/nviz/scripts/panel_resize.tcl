@@ -24,23 +24,23 @@ proc mkresizePanel {BASE} {
     #  Initialize panel info
     if [catch {set Nv_($BASE)}] {
 	set panel [St_create {window name size priority} \
-		       $BASE "Resize Draw Area" 1 5]
+		       $BASE [G_msg "Resize Draw Area"] 1 5]
     } else {
 	set panel $Nv_($BASE)
     }
 
     frame $BASE  -relief groove -borderwidth 2
-    Nv_mkPanelname $BASE "Resize Panel"
+    Nv_mkPanelname $BASE [G_msg "Resize Panel"]
 
     frame $BASE.top
     frame $BASE.bottom -bd 2 -relief groove
     frame $BASE.top2
 
-    label $BASE.top.label -text "Resize:                     "
+    label $BASE.top.label -text [G_msg "Resize: "]
     pack $BASE.top.label -side left -fill y -pady 4
 
-	label $BASE.top.lwidth -text width
-	label $BASE.top.lheight -text height
+	label $BASE.top.lwidth -text [G_msg "width"]
+	label $BASE.top.lheight -text [G_msg "height"]
 	entry $BASE.top.width -width 6 -borderwidth 2 -relief sunken
 	entry $BASE.top.height -width 6 -borderwidth 2 -relief sunken
 
@@ -49,13 +49,13 @@ proc mkresizePanel {BASE} {
 
 	pack $BASE.top.lwidth $BASE.top.width $BASE.top.lheight $BASE.top.height -side left
 
-    button $BASE.bottom.resize -text Resize -command "resize_togl $BASE.top"
+    button $BASE.bottom.resize -text [G_msg "Resize"] -command "resize_togl $BASE.top"
     pack $BASE.bottom.resize -side left
 
-    button $BASE.bottom.refresh -text Refresh -command "resize_panel_refresh $BASE.top"
+    button $BASE.bottom.refresh -text [G_msg "Refresh"] -command "resize_panel_refresh $BASE.top"
     pack $BASE.bottom.refresh -side left
 
-	button $BASE.bottom.close -text Close -command "Nv_closePanel $BASE"
+	button $BASE.bottom.close -text [G_msg "Close"] -command "Nv_closePanel $BASE"
     pack $BASE.bottom.close -side right
 
     pack $BASE.top $BASE.top2 $BASE.bottom \

@@ -83,7 +83,7 @@ proc mkmainPanel { BASE } {
 
 	#  Initialize panel info
 	if [catch {set Nv_($BASE)}] {
-		set panel [St_create {window name size priority} $BASE "Main" 1 10]
+		set panel [St_create {window name size priority} $BASE [G_msg "Main"] 1 10]
 	} else {
 		set panel $Nv_($BASE)
 	}
@@ -101,67 +101,67 @@ proc mkmainPanel { BASE } {
 	pack [frame $BASE.redrawf.f11 -relief flat -bd 0] -side top -fill x -expand 1
 
 	#Execute buttons
-	set drawbtn [button $BASE.redrawf.f2.exec -text DRAW -bd 1 -fg "darkgreen"]
+	set drawbtn [button $BASE.redrawf.f2.exec -text [G_msg "DRAW"] -bd 1 -fg "darkgreen"]
 	bind $drawbtn <1> "Nset_cancel 0"
 	bind $drawbtn <B1-ButtonRelease> {Ndraw_all}
-	help $drawbtn balloon "Draw selected features"
+	help $drawbtn balloon [G_msg "Draw selected features"]
 
-	set clearbtn [button $BASE.redrawf.f2.clear -text Clear	 -bd 1 -command {do_clear}]
-	help $clearbtn balloon "Clear NVIZ display"
+	set clearbtn [button $BASE.redrawf.f2.clear -text [G_msg "Clear"]	 -bd 1 -command {do_clear}]
+	help $clearbtn balloon [G_msg "Clear NVIZ display"]
 
-	set cancelbtn [button $BASE.redrawf.f2.cancel -text Cancel -bd 1 -command {Nset_cancel 1}]
-	help $cancelbtn balloon "Cancel current draw"
+	set cancelbtn [button $BASE.redrawf.f2.cancel -text [G_msg "Cancel"] -bd 1 -command {Nset_cancel 1}]
+	help $cancelbtn balloon [G_msg "Cancel current draw"]
 
 	pack $drawbtn  $clearbtn $cancelbtn \
 		-side left -expand 1 -fill x
 
 	# Auto check boxes
-	set labl1 [label $BASE.redrawf.f1.label1 -text "Automatically render display:" -anchor w]
+	set labl1 [label $BASE.redrawf.f1.label1 -text [G_msg "Automatically render display:"] -anchor w]
 	set auto_d [checkbutton $BASE.redrawf.f1.autodraw \
 		-onvalue 1 -offvalue 0 -variable Nauto_draw \
 		-justify left  -anchor center -padx 5]
-	help $BASE.redrawf.f1.autodraw balloon "Automatically render display after changing parameters"
+	help $BASE.redrawf.f1.autodraw balloon [G_msg "Automatically render display after changing parameters"]
 	$auto_d select
 	pack $labl1 $auto_d -side left -expand 0 -fill x -pady 3
 	
 	#checkbuttons for features to draw
-	set labl2 [label $BASE.redrawf.f11.label1 -text "Show features:" -anchor w]
+	set labl2 [label $BASE.redrawf.f11.label1 -text [G_msg "Show features:"] -anchor w]
 
 	menubutton $BASE.redrawf.f11.m1 -menu $BASE.redrawf.f11.m1.m \
-		-text "Main features..." -underline 0 -justify left \
+		-text [G_msg "Main features..."] -underline 0 -justify left \
 		-indicator on -anchor center -relief raised -bd 1
 	#help $BASE.redrawf.f11.m1 balloon "Select main draw features"
 
 	menubutton $BASE.redrawf.f11.m2 -menu $BASE.redrawf.f11.m2.m \
-		-text "Decorations..." -underline 0	 -justify left \
+		-text [G_msg "Decorations..."] -underline 0	 -justify left \
 		-indicator on -anchor center -relief raised -bd 1
 	#help $BASE.redrawf.f11.m2 balloon "Select misc. draw features"
 
 	menu $BASE.redrawf.f11.m1.m
 
-	$BASE.redrawf.f11.m1.m add checkbutton -label "Surface" \
+	$BASE.redrawf.f11.m1.m add checkbutton -label [G_msg "Surface"] \
 		 -onvalue 1 -offvalue 0 -variable surface
 
-	$BASE.redrawf.f11.m1.m add checkbutton -label "Vectors" \
+	$BASE.redrawf.f11.m1.m add checkbutton -label [G_msg "Vectors"] \
 		 -onvalue 1 -offvalue 0 -variable vector
 
-	$BASE.redrawf.f11.m1.m add checkbutton -label "Sites" \
+	$BASE.redrawf.f11.m1.m add checkbutton -label [G_msg "Sites"] \
 		 -onvalue 1 -offvalue 0 -variable sites
 
-	$BASE.redrawf.f11.m1.m add checkbutton -label "Volumes" \
+	$BASE.redrawf.f11.m1.m add checkbutton -label [G_msg "Volumes"] \
 		 -onvalue 1 -offvalue 0 -variable volume
 
 	menu $BASE.redrawf.f11.m2.m
 
-	$BASE.redrawf.f11.m2.m add checkbutton -label "Legend" \
+	$BASE.redrawf.f11.m2.m add checkbutton -label [G_msg "Legend"] \
 		 -onvalue 1 -offvalue 0 -variable legend
-	$BASE.redrawf.f11.m2.m add checkbutton -label "Labels" \
+	$BASE.redrawf.f11.m2.m add checkbutton -label [G_msg "Labels"] \
 		 -onvalue 1 -offvalue 0 -variable labels
-	$BASE.redrawf.f11.m2.m add checkbutton -label "North Arrow" \
+	$BASE.redrawf.f11.m2.m add checkbutton -label [G_msg "North Arrow"] \
 		 -onvalue 1 -offvalue 0 -variable n_arrow
-	$BASE.redrawf.f11.m2.m add checkbutton -label "Scale Bar" \
+	$BASE.redrawf.f11.m2.m add checkbutton -label [G_msg "Scale Bar"] \
 		 -onvalue 1 -offvalue 0 -variable scalebar
-	$BASE.redrawf.f11.m2.m add checkbutton -label "Fringe" \
+	$BASE.redrawf.f11.m2.m add checkbutton -label [G_msg "Fringe"] \
 		 -onvalue 1 -offvalue 0 -variable fringe
 
 	pack $labl2	 $BASE.redrawf.f11.m1 $BASE.redrawf.f11.m2 -side left \
@@ -172,19 +172,19 @@ proc mkmainPanel { BASE } {
 	pack [frame $BASE.midf -relief flat -bd 0] -side left -expand 1 -padx 5
 
 	# set view method radiobuttons
-	set draw_lab [label $BASE.midt.lablev1 -text "View method:" -anchor w]
+	set draw_lab [label $BASE.midt.lablev1 -text [G_msg "View method:"] -anchor w]
 
-	set draw_var1 [radiobutton $BASE.midt.b1 -text "eye" \
+	set draw_var1 [radiobutton $BASE.midt.b1 -text [G_msg "eye"] \
 		-variable draw_option -value 0 -width 8 \
 		-command "change_display 1" ]
 
-	set draw_var2 [radiobutton $BASE.midt.b2 -text "center" \
+	set draw_var2 [radiobutton $BASE.midt.b2 -text [G_msg "center"] \
 		-variable draw_option -value 1 -width 8 \
 		-command "change_display 0" ]
 	$draw_var1 select
 
-	help $BASE.midt.b1 balloon "Change view by moving eye position"
-	help $BASE.midt.b2 balloon "Change view by moving scene center position"
+	help $BASE.midt.b1 balloon [G_msg "Change view by moving eye position"]
+	help $BASE.midt.b2 balloon [G_msg "Change view by moving scene center position"]
 
 
 	if {$Nv_(FlyThrough)} {
@@ -193,7 +193,7 @@ proc mkmainPanel { BASE } {
 		# original code
 		pack $draw_lab $draw_var1 $draw_var2 -side left -expand 0
 	}
-	help $BASE.midt.b3 balloon "Change view using mouse to control fly-through"
+	help $BASE.midt.b3 balloon [G_msg "Change view using mouse to control fly-through"]
 
 	# make	position "widget"
 	set XY [Nv_mkXYScale $BASE.midf.pos puck XY_POS 125 125 105 105 update_eye_position]
@@ -202,28 +202,28 @@ proc mkmainPanel { BASE } {
 	set H [mk_hgt_slider $BASE.midf]
 	set E [mk_exag_slider $BASE.midf]
 	
-	help $E.scale balloon "Set vertical exaggeration"
-	help $E.entry balloon "Set vertical exaggeration"
-	help $H.scale balloon "Set eye height"
-	help $H.entry balloon "Set eye height"
+	help $E.scale balloon [G_msg "Set vertical exaggeration"]
+	help $E.entry balloon [G_msg "Set vertical exaggeration"]
+	help $H.scale balloon [G_msg "Set eye height"]
+	help $H.entry balloon [G_msg "Set eye height"]
 	
 	# make lookat buttons
 	frame $BASE.midf.lookat -relief flat -borderwidth 0
 
-	Label $BASE.midf.lookat.l -text "Look"
-	Button $BASE.midf.lookat.here -text "here" -bd 1 \
-		-helptext "Center view at point marked with mouse click" \
+	Label $BASE.midf.lookat.l -text [G_msg "Look"]
+	Button $BASE.midf.lookat.here -text [G_msg "here"] -bd 1 \
+		-helptext [G_msg "Center view at point marked with mouse click"] \
 		-command {bind $Nv_(TOP).canvas <Button> {look_here %W %x %y
 		if {$Nauto_draw == 1} {Ndraw_all}
 		}}
 		
-	Button $BASE.midf.lookat.center -text "center" -bd 1 \
-		-helptext "Center view at center of displayed surface" \
+	Button $BASE.midf.lookat.center -text [G_msg "center"] -bd 1 \
+		-helptext [G_msg "Center view at center of displayed surface"] \
 		-command { look_center
 			if {$Nauto_draw == 1} {Ndraw_all} 
 			}
-	Button $BASE.midf.lookat.top -text "top" -bd 1 \
-		-helptext "View directly from above" \
+	Button $BASE.midf.lookat.top -text [G_msg "top"] -bd 1 \
+		-helptext [G_msg "View directly from above"] \
 		-command {
 			# Nv_itemDrag $Nv_(main_BASE).midf.pos $Nv_(XY_POS) 62.5 62.5
 			# note: below value is somewhat strange, but with 0.5 0.5 the map rotates:
@@ -246,13 +246,13 @@ proc mkmainPanel { BASE } {
 	set P [Nv_mkScale $BASE.bframe.cframe.pers h perspective 120 3 40 Nchange_persp 0]
 	set T [Nv_mkScale $BASE.bframe.cframe.tw h twist -180 180 0 Nchange_twist 0]
 
-	help $BASE.bframe.cframe.pers balloon "Set field of view size (degrees)"
-	help $BASE.bframe.cframe.tw balloon "Set twist angle (degrees)"
+	help $BASE.bframe.cframe.pers balloon [G_msg "Set field of view size (degrees)"]
+	help $BASE.bframe.cframe.tw balloon [G_msg "Set twist angle (degrees)"]
 
 	# reset button goes here so it can reference P
-	Button $BASE.midf.lookat.reset -text "reset" \
+	Button $BASE.midf.lookat.reset -text [G_msg "reset"] \
 		-bd 1 -command "do_reset $XY $H $E $P $T" \
-		-helptext "Reset view to default"
+		-helptext [G_msg "Reset view to default"]
 
 	pack $BASE.midf.lookat.l $BASE.midf.lookat.here \
 		$BASE.midf.lookat.center $BASE.midf.lookat.top \
@@ -514,12 +514,12 @@ proc change_display {flag} {
 	
 	if {$flag == 1} {
 		#draw eye position
-		inform "Set eye position"
+		inform [G_msg "Set eye position"]
 		set XY [Nv_mkXYScale $NAME puck XY_POS 125 125 105 105 update_eye_position]
 		
 	} elseif {$flag == 0} {
 		#draw center position
-		inform "Set center of view position"
+		inform [G_msg "Set center of view position"]
 		set XY [Nv_mkXYScale $NAME cross XY_POS 125 125 109 109 update_center_position]
 	}
 		

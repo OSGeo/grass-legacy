@@ -57,19 +57,19 @@ proc mkFlyButtons {BASE frame draw_lab draw_var1 draw_var2} {
 	set fly(CENTER_RADIOBUTTON) $draw_var2
 
 	set fly(FLY_RADIOBUTTON) [radiobutton $BASE.$frame.b3 \
-                 -variable draw_option -value 3 -text "fly"\
+                 -variable draw_option -value 3 -text [G_msg "fly"]\
 				 -command "set Nv_(FlyThrough) 1; fly_change_mode 0" ]
 
 
     set fly(FLY_MENUBUTTON) $BASE.$frame.flymenu
 	set m $fly(FLY_MENUBUTTON).m
 
-	menubutton $fly(FLY_MENUBUTTON) -menu $m -text "none" -relief flat -indicatoron 1 -bd -5
+	menubutton $fly(FLY_MENUBUTTON) -menu $m -text [G_msg "none"] -relief flat -indicatoron 1 -bd -5
 
 	menu $m -tearoff 0
-	$m add radiobutton -label "basic" -command "fly_change_mode 0" -variable fly(FLY_MODE) -value "basic"
-    $m add radiobutton -label "simple" -command "fly_change_mode 2" -variable fly(FLY_MODE) -value "simple"
-    $m add radiobutton -label "orbit" -command "fly_change_mode 1" -variable fly(FLY_MODE) -value "orbit"
+	$m add radiobutton -label [G_msg "basic"] -command "fly_change_mode 0" -variable fly(FLY_MODE) -value "basic"
+    $m add radiobutton -label [G_msg "simple"] -command "fly_change_mode 2" -variable fly(FLY_MODE) -value "simple"
+    $m add radiobutton -label [G_msg "orbit"] -command "fly_change_mode 1" -variable fly(FLY_MODE) -value "orbit"
 
 	fly_deselect
 
@@ -80,10 +80,10 @@ proc mkFlyButtons {BASE frame draw_lab draw_var1 draw_var2} {
 	set fly(BUTTONS) [frame $BASE.f -borderwidth 0 -relief flat]
 
 		frame $fly(BUTTONS).buttons -border 0 -relief flat
-			set fly(COARSE_DRAW_B) [checkbutton $fly(BUTTONS).buttons.coarse -text "Coarse Draw" \
+			set fly(COARSE_DRAW_B) [checkbutton $fly(BUTTONS).buttons.coarse -text [G_msg "Coarse Draw"] \
 						-onvalue 1 -offvalue 0 -variable coarse_draw]
 			$fly(COARSE_DRAW_B) select
-			set fly(FLY_HELP_PANEL) [button $fly(BUTTONS).buttons.fly_help_panel -text "fly help" -command "fly_create_help_panel"]
+			set fly(FLY_HELP_PANEL) [button $fly(BUTTONS).buttons.fly_help_panel -text [G_msg "fly help"] -command "fly_create_help_panel"]
 		pack $fly(COARSE_DRAW_B) $fly(FLY_HELP_PANEL) -side top -pady 20 -padx 2
 
 		set scales [Nget_fly_scale]
@@ -111,7 +111,7 @@ proc fly_change_mode {flag} {
     global XY Nv_ fly
 
 	set Nv_(FlyThrough) 1
-	inform "Interactively set view position"
+	inform [G_msg "Interactively set view position"]
 	pack forget $XY $Nv_(HEIGHT_SLIDER) $Nv_(TWIST_SLIDER)
 	Nset_fly_mode $flag
 	pack $fly(BUTTONS) -side left -before $Nv_(EXAG_SLIDER) -expand y
@@ -132,13 +132,13 @@ proc fly_create_help_panel {} {
 	toplevel $W
 
     wm resizable $W false false
-    wm title $W "flythrough help"
+    wm title $W [G_msg "flythrough help"]
 
 	frame $W.lab
 		set row 0
 
 		set lab $W.lab.fly
-		label $lab -text "fly" -relief flat -borderwidth 0 -background grey90
+		label $lab -text [G_msg "fly"] -relief flat -borderwidth 0 -background grey90
 		grid $lab -row $row -column 1 -columnspan 1 -sticky nse
 
 		set lab $W.lab.sep3
@@ -146,7 +146,7 @@ proc fly_create_help_panel {} {
 		grid $lab -row $row -column 2 -sticky nsew
 
 		set lab $W.lab.basic
-		label $lab -text "basic" -relief flat -borderwidth 1 -background grey80
+		label $lab -text [G_msg "basic"] -relief flat -borderwidth 1 -background grey80
 		grid $lab -row $row -column 3 -columnspan 2 -sticky nsew
 
 		set lab $W.lab.sep1
@@ -154,7 +154,7 @@ proc fly_create_help_panel {} {
 		grid $lab -row $row -column 5 -sticky nsew
 
 		set lab $W.lab.simple
-		label $lab -text "simple" -relief flat -borderwidth 1 -background grey80
+		label $lab -text [G_msg "simple"] -relief flat -borderwidth 1 -background grey80
 		grid $lab -row $row -column 6 -columnspan 2 -sticky nsew
 
 		set lab $W.lab.sep2
@@ -162,7 +162,7 @@ proc fly_create_help_panel {} {
 		grid $lab -row $row -column 8 -sticky nsew
 
 		set lab $W.lab.orbit
-		label $lab -text "orbit" -relief flat -borderwidth 1 -background grey80
+		label $lab -text [G_msg "orbit"] -relief flat -borderwidth 1 -background grey80
 		grid $lab -row $row -column 9 -columnspan 2 -sticky nsew
 
 		incr row
@@ -171,7 +171,7 @@ proc fly_create_help_panel {} {
 		incr row
 
 		set lab $W.lab.move
-		label $lab -text "move" -relief flat -borderwidth 1 -background grey80
+		label $lab -text [G_msg "move"] -relief flat -borderwidth 1 -background grey80
 		grid $lab -row $row -column 0 -sticky nsew
 
 		fly_label_row $W.lab $row "fwd/bkw" [list $fly(B_CL) $fly(B_L) $fly(B_CL)] [list $fly(B_CR) $fly(M_UD) $fly(B_CR)]
@@ -193,7 +193,7 @@ proc fly_create_help_panel {} {
 		incr row
 
 		set lab $W.lab.turn
-		label $lab -text "turn" -relief flat -borderwidth 1 -background grey80
+		label $lab -text [G_msg "turn"] -relief flat -borderwidth 1 -background grey80
 		grid $lab -row $row -column 0 -sticky nsew
 
 		fly_label_row $W.lab $row "heading" [list $fly(B_C) $fly(B_L) $fly(B_C)] [list $fly(M_LR) $fly(M_LR) $fly(M_LR)]
@@ -267,8 +267,8 @@ proc fly_update_scale {_sc _val} {
 proc fly_deselect {} {
 	global fly;
 	$fly(FLY_RADIOBUTTON) deselect
-	$fly(FLY_MENUBUTTON) configure -text "none"
-	set fly(FLY_MODE) "basic"
+	$fly(FLY_MENUBUTTON) configure -text [G_msg "none"]
+	set fly(FLY_MODE) [G_msg "basic"]
 }
 proc fly_select {} {
 	global fly;

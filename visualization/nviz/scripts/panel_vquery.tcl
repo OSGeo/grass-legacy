@@ -48,13 +48,13 @@ proc mkpickPanel { BASE } {
     #  Initialize panel info
     if [catch {set Nv_($BASE)}] {
 	set panel [St_create {window name size priority} \
-		       $BASE "Vector Query" 1 5]
+		       $BASE [G_msg "Vector Query"] 1 5]
     } else {
 	set panel $Nv_($BASE)
     }
 
     frame $BASE  -relief flat -bd 0
-    Nv_mkPanelname $BASE "Vector Query Panel"
+    Nv_mkPanelname $BASE [G_msg "Vector Query Panel"]
 
 	# set highlight defaults
 	set highlight(COLOR) 1
@@ -80,12 +80,12 @@ proc mkpickPanel { BASE } {
     frame $query.row1
 	set Nv_(PICK) 0
 	checkbutton $query.row1.on -variable Nv_(PICK) \
-		-text "query on/off" \
+		-text [G_msg "query on/off"] \
 		-command "pick_set Nv_(PICK) $Nv_(TOP).canvas"
 
-	Button $query.row1.addremovemap -text "Choose map(s)" \
+	Button $query.row1.addremovemap -text [G_msg "Choose map(s)"] \
 		-command "pick_GUI_addremovemap" -bd 1 \
-		-helptext "Select/unselect vector map(s) to query"
+		-helptext [G_msg "Select/unselect vector map(s) to query"]
 	pack $query.row1.on $query.row1.addremovemap -side left -padx 3
 	pack $query.row1 -side top -expand 1 -fill both -pady 3 -padx 3
 
@@ -95,13 +95,13 @@ proc mkpickPanel { BASE } {
 		-editable 1 \
 		-textvariable maxdist \
 		-width 5 -entrybg white \
-		-helptext "Set threshold distance for selecting objects"]
+		-helptext [G_msg "Set threshold distance for selecting objects"]]
 
-	label $query.row2.l -text "threshold dist" -fg black -font $nviztxtfont
+	label $query.row2.l -text [G_msg "threshold dist"] -fg black -font $nviztxtfont
 
 	rc_load_res "hyperlink.display.maxNumber" maxnumber 20	
 	set Nv_(PICK_SHOW_HL) 0
-	checkbutton $query.row2.hl -text "show hyperlink" \
+	checkbutton $query.row2.hl -text [G_msg "show hyperlink"] \
 		-variable Nv_(PICK_SHOW_HL) \
 		-command "pick_highlight_hyperlinks Nv_(PICK_SHOW_HL) $Nv_(TOP).canvas [expr $maxnumber - 1]"
 
@@ -110,38 +110,38 @@ proc mkpickPanel { BASE } {
 
 	# make frame and widgets for highlighting vector points
 	frame $ptsel.row1
-	label $ptsel.row1.l -text "Highlight queried vector points with..."
+	label $ptsel.row1.l -text [G_msg "Highlight queried vector points with..."]
 	pack $ptsel.row1.l -side left -expand 0
 	pack $ptsel.row1 -side top -fill both -pady 3 -padx 3
 	
 	frame $ptsel.row2
-	checkbutton $ptsel.row2.color -text "color  " -variable highlight(COLOR) \
+	checkbutton $ptsel.row2.color -text [G_msg "color"] -variable highlight(COLOR) \
 		-command {Nsite_highlight_set_default color $highlight(COLOR)}
 	Button $ptsel.row2.color_value -command "highlight_set_color $ptsel.row2.color_value" \
 		-bg $highlight(COLOR_VALUE) -width 0 -height 0 \
-		-bd 1 -helptext "Choose color to indicate point queried"
+		-bd 1 -helptext [G_msg "Choose color to indicate point queried"]
 				
-	checkbutton $ptsel.row2.size -text "icon size  X" -variable highlight(SIZE) \
+	checkbutton $ptsel.row2.size -text [G_msg "icon size  X"] -variable highlight(SIZE) \
 		-command {Nsite_highlight_set_default size $highlight(SIZE)}
 	set ptsize [SpinBox $ptsel.row2.size_value \
 		-range {.5 5 .1} \
 		-textvariable highlight(SIZE_VALUE) \
 		-modifycmd {Nsite_highlight_set_default_value size $highlight(SIZE_VALUE)} \
-		-width 4 -helptext "Choose size in multiples of default to indicate point queried"]
+		-width 4 -helptext [G_msg "Choose size in multiples of default to indicate point queried"]]
 
 	pack $ptsel.row2.color $ptsel.row2.color_value -side left -expand 0
 	pack $ptsel.row2.size_value $ptsel.row2.size -side right -expand 0
 	pack $ptsel.row2 -side top -expand 1 -fill both -pady 3 -padx 3
 
 	frame $ptsel.row3
-	checkbutton $ptsel.row3.marker -text "specific icon  " -variable highlight(MARKER) \
+	checkbutton $ptsel.row3.marker -text [G_msg "specific icon"] -variable highlight(MARKER) \
 		-command {Nsite_highlight_set_default marker $highlight(MARKER)}
 	highlight_set_marker_button $ptsel.row3.marker_value
 	pack $ptsel.row3.marker $ptsel.row3.marker_value -side left -expand 0
 	pack $ptsel.row3 -side top -expand 1 -fill both -pady 3 -padx 3
 	
     # make frame and widgets for panel bottom
-	button $bottom.close -text Close \
+	button $bottom.close -text [G_msg "Close"] \
 		-command "Nv_closePanel $BASE" -bd 1
     pack $bottom.close -side right
 
@@ -205,8 +205,8 @@ proc pick_GUI_addremovemap {} {
 	set rname [list]
 	foreach ele $r {lappend rname [$ele get_att map]}
 
-	if {[addremove_list_create2 "Select vectors to query" \
-								"vectors displayed" "vectors to query" lname rname l r]} {
+	if {[addremove_list_create2 [G_msg "Select vectors to query"] \
+								[G_msg "vectors displayed"] [G_msg "vectors to query"] lname rname l r]} {
 		# now r is modified and we have to set the differences from pick(MAP_LIST)
 
 		# add new pickable elements
@@ -407,7 +407,7 @@ proc pick_draw_win {_map _cat} {
 
 	toplevel $win
 	wm resizable $win true true
-	wm title $win "Map: [$_map get_att map]"
+	wm title $win [format [G_msg "Map: %s"] [$_map get_att map]]
 
 	wm geometry $win "820x200+10+250"
 	wm minsize $win 150 100
@@ -423,7 +423,7 @@ proc pick_draw_win {_map _cat} {
 
 	set pick($sf.ROW) 0
 
-	button $w.b -text "clear" -command "pick_clear_window $win $sf $_map" -bd 1
+	button $w.b -text [G_msg "clear"] -command "pick_clear_window $win $sf $_map" -bd 1
 	grid $w.b	-row $pick($sf.ROW) -column 0 -columnspan 2 -sticky nsw
 	incr pick($sf.ROW)
 
@@ -493,7 +493,7 @@ proc pick_seek {sf which} {
 }
 
 proc pick_clear_window {w sf _map} {
-	if {![confirm_ask "Clear Window?" "Yes" "No"]} {return}
+	if {![confirm_ask [G_msg "Clear Window?"] [G_msg "Yes"] [G_msg "No"]]} {return}
 #	catch {destroy $w}
 	pick_erase_records $sf
 	pick_delete_records $sf
@@ -609,13 +609,14 @@ proc pick_multimedia {_field} {
 
 proc highlight_set_marker_button {_w} {
 	global highlight
+	global Nv_
 
-	set highlight(MARKERS_NAME) {"x" "sphere" "diamond" "cube" "box" "gyro" "aster"}
+	set highlight(MARKERS_NAME) $Nv_(siteshape_names)
 	set highlight(MARKERS_INDEX) {"1"  "3"        "5"     "4"    "2"  "9"    "8"}
 
 	set m $_w
 	menubutton $m -menu $m.m -relief raised -indicatoron 1 \
-		-bd 1 -text "set icon" -width 10
+		-bd 1 -text [G_msg "set icon"] -width 10
 	#pack $m -side left -fill y -padx 3 -pady 3
 
 	menu $m.m -tearoff 0

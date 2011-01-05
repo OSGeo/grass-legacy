@@ -18,7 +18,7 @@ proc mktstPanel { BASE } {
     catch {destroy $BASE}
 #  Initialize panel info
     if [catch {set Nv_($BASE)}] {
-        set panel [St_create {window name size priority} $BASE "Test" 1 5]
+        set panel [St_create {window name size priority} $BASE [G_msg "Test"] 1 5]
     } else {
 	set panel $Nv_($BASE)
     }
@@ -28,7 +28,7 @@ proc mktstPanel { BASE } {
 #    source test_procs.tcl
 
     frame $BASE  -relief groove -borderwidth 2
-    Nv_mkPanelname $BASE "Test Panel"
+    Nv_mkPanelname $BASE [G_msg "Test Panel"]
     
     #button $BASE.test1 -text Test1 -bg black -fg white\
 	#-activebackground gray20 -activeforeground white\
@@ -50,7 +50,7 @@ proc mktstPanel { BASE } {
 
 
     frame $BASE.closef
-    button $BASE.closef.close -text Close -command "Nv_closePanel $BASE" \
+    button $BASE.closef.close -text [G_msg "Close"] -command "Nv_closePanel $BASE" \
 	-anchor se
     pack $BASE.closef.close -side right
     pack $BASE.closef -side bottom -fill x

@@ -60,38 +60,38 @@ global clr
 proc mklegendPanel { BASE } {
     global Nv_ 
 
-    set panel [St_create {window name size priority} $BASE "Legend" 2 5]
+    set panel [St_create {window name size priority} $BASE [G_msg "Legend"] 2 5]
     frame $BASE -relief flat -borderwidth 0
-    Nv_mkPanelname $BASE "Legends Panel"
+    Nv_mkPanelname $BASE [G_msg "Legends Panel"]
     
     ##########################################################################
     # This section contains widgets for specifying a legend
 
     set rbase1 [frame $BASE.options]
-    checkbutton $rbase1.invert -text "reverse legend" -anchor w \
+    checkbutton $rbase1.invert -text [G_msg "reverse legend"] -anchor w \
 		-variable Nv_(leg_invert) -onvalue 1 -offvalue 0
-    checkbutton $rbase1.values -text "show values" \
+    checkbutton $rbase1.values -text [G_msg "show values"] \
 		-anchor w -variable Nv_(catval) -onvalue 1 -offvalue 0
-    checkbutton $rbase1.labels -text "show labels" \
+    checkbutton $rbase1.labels -text [G_msg "show labels"] \
 		-anchor w -variable Nv_(catlabel) -onvalue 1 -offvalue 0
-    Button $rbase1.font -text "Font" \
+    Button $rbase1.font -text [G_msg "Font"] \
 		-command "select_font $rbase1.font" -bd 1 \
-		-helptext "Select font family, size, and style for legend text"
+		-helptext [G_msg "Select font family, size, and style for legend text"]
     pack $rbase1.invert $rbase1.values $rbase1.labels $rbase1.font\
 		-fill none -side left -expand yes -anchor w
 	pack $rbase1 -side top -expand yes -fill both -padx 3 -pady 4
 
     # Use-range portion of panel
 	set rbase2 [frame $BASE.range]
-    checkbutton $rbase2.useranges -text "set value range  " -anchor w \
+    checkbutton $rbase2.useranges -text [G_msg "set value range "] -anchor w \
 		-variable Nv_(leg_userange) -onvalue 1 -offvalue 0
 
     LabelEntry $rbase2.entry_low -relief sunken -width 8 \
         -textvariable Nv_(leg_lorange) \
-        -entrybg white -label "min "
+        -entrybg white -label [G_msg "min "]
     LabelEntry $rbase2.entry_hi  -relief sunken -width 8 \
          -textvariable Nv_(leg_hirange) \
-         -entrybg white -label "   max "
+         -entrybg white -label [G_msg " max "]
 
     pack $rbase2.useranges $rbase2.entry_low $rbase2.entry_hi \
         	-side left -fill x -expand yes -anchor w
@@ -104,7 +104,7 @@ proc mklegendPanel { BASE } {
 
 	set rbase3 [frame $BASE.cats]
     # Discrete categories and use-list portion
-    checkbutton $rbase3.disc_cat -text "discrete categories" \
+    checkbutton $rbase3.disc_cat -text [G_msg "discrete categories"] \
 		-anchor w -width 18 -variable Nv_(leg_discat) \
 		-onvalue 1 -offvalue 0
     
@@ -128,14 +128,14 @@ proc mklegendPanel { BASE } {
 
     # Legend button, invert checkbutton and category checkbuttons   
 	set rbase4 [frame $BASE.buttons]
-	Button $rbase4.place -text "Place legend" \
+	Button $rbase4.place -text [G_msg "Place legend"] \
 		-command "place_legend" -width 10 -bd 1 \
-		-helptext "Use mouse to place legend; left button defines first corner, \
-			right button defines opposite corner."
-	Button $rbase4.erase -text "Erase legend" \
+		-helptext [G_msg "Use mouse to place legend; left button defines first corner, \
+			right button defines opposite corner."]
+	Button $rbase4.erase -text [G_msg "Erase legend"] \
 		-command "delete_list legend 0" -width 10 -bd 1 \
-		-helptext "Erase all legends"
-    button $rbase4.close -text "Close" -command "Nv_closePanel $BASE" \
+		-helptext [G_msg "Erase all legends"]
+    button $rbase4.close -text [G_msg "Close"] -command "Nv_closePanel $BASE" \
 		-anchor se -bd 1
 	pack $rbase4.place -fill none -side left -expand no
 	pack $rbase4.erase -fill none -side left -expand no -padx 3
@@ -163,12 +163,12 @@ proc make_cat_list {MENU} {
     set pname $BASE
     toplevel $pname -relief raised -bd 3
     list_type1 $pname.list 3c 3c
-    $pname.list.t configure -text "Category Values"
+    $pname.list.t configure -text [G_msg "Category Values"]
     entry $pname.level -relief sunken -width 10
     bind $pname.level <Return> "make_cat_list_add $BASE"
-    button $pname.addb -text "Add"    -command "make_cat_list_add $BASE"
-    button $pname.delb -text "Delete" -command "make_cat_list_delete $BASE"
-    button $pname.done -text "Done"   -command "set Nv_(cat_list_select) 1"
+    button $pname.addb -text [G_msg "Add"]    -command "make_cat_list_add $BASE"
+    button $pname.delb -text [G_msg "Delete"] -command "make_cat_list_delete $BASE"
+    button $pname.done -text [G_msg "Done"]   -command "set Nv_(cat_list_select) 1"
     pack $pname.list $pname.level $pname.addb $pname.delb $pname.done\
 		-fill x -padx 2 -pady 2
 
@@ -180,7 +180,7 @@ proc make_cat_list {MENU} {
     }
 
     if {[llength $Nv_(cat_list)]==0} {
-		$MENU add command -label None -state disabled
+		$MENU add command -label [G_msg "None"] -state disabled
     }
 
     destroy $BASE
@@ -217,7 +217,7 @@ proc make_cat_list_delete { BASE } {
 proc select_font {fbutton} {
 	global Nv_
 	
-    set fon [SelectFont $fbutton.fontset -type dialog -sampletext 1 -title "Select font"]
+    set fon [SelectFont $fbutton.fontset -type dialog -sampletext [G_msg "The quick brown fox jumps over the lazy dog"] -title [G_msg "Select font"] -font Nv_(font)]
 	if { $fon != "" } {set Nv_(font) $fon}
 }
 
