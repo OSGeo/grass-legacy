@@ -67,10 +67,10 @@ proc Nv_mkXYScale {C {type puck} {name null} {height 100} {width 100} {x 50} {y 
 	set y2 [expr $y + 5]
 	if {[string compare $type puck] == 0} {
 		#Draw North Arrow
-		$C create text [expr $width - 2] [expr $height/2] -text E -fill black
-		$C create text 3 [expr $height/2] -text W -fill black -anchor w
-		$C create text [expr $width/2] 2 -text N -fill black -anchor n
-		$C create text [expr $width/2] $height -text S -fill black -anchor s
+		$C create text [expr $width - 2] [expr $height/2] -text [G_msg "E"] -fill black
+		$C create text 3 [expr $height/2] -text [G_msg "W"] -fill black -anchor w
+		$C create text [expr $width/2] 2 -text [G_msg "N"] -fill black -anchor n
+		$C create text [expr $width/2] $height -text [G_msg "S"] -fill black -anchor s
 		$C create line $x $y [expr $width/2] [expr $height/2] -tags line \
 		   -fill gray70 -arrow last
 		$C create oval $x1 $y1 $x2 $y2 -width 1 -outline gray70 -fill LightGoldenrod \
@@ -593,7 +593,7 @@ proc mkMapList { P type {cmd null}} {
 	set name [Nget_current $type]
 
 	if {[llength $list] == 0} {
-		set name "None Loaded   "
+		set name [G_msg "None Loaded"]
 	} else {
 		set n [lsearch $list $name]
 		set list [lreplace $list $n $n]

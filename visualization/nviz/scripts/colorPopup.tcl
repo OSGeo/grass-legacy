@@ -14,7 +14,7 @@
 
 global CurrColor
 
-proc mkColorPopup {w {name "Choose color"} {color "#000000"} {mode 0}} {
+proc mkColorPopup [list w [list name [G_msg "Choose color"]] {color "#000000"} {mode 0}] {
     global CurrColor
     
     set CurrColor [tk_chooseColor -initialcolor $color -title $name]

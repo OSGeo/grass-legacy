@@ -12,11 +12,11 @@ source $src_boot/etc/nviz2.2/scripts/config.tcl
 
 # Create a simple label and entry widget
 set done -1
-label .l -text "Add Script Line"
+label .l -text [G_msg "Add Script Line"]
 entry .e -width 80 -relief sunken
 frame .f
-button .f.bok -text "Ok" -command {set done 1}
-button .f.bcancel -text "Cancel" -command {set done 0}
+button .f.bok -text [G_msg "Ok"] -command {set done 1}
+button .f.bcancel -text [G_msg "Cancel"] -command {set done 0}
 pack .f.bok .f.bcancel -side left -fill both -expand yes
 pack .l .e .f -fill x
 tkwait variable done

@@ -45,9 +45,9 @@ proc mkcutplanePanel { BASE } {
     global nviztxtfont
 
     #  Initialize panel info
-    set panel [St_create {window name size priority} $BASE "Cutting Planes" 1 5]
+    set panel [St_create {window name size priority} $BASE [G_msg "Cutting Planes"] 1 5]
     frame $BASE  -relief flat -borderwidth 0
-    Nv_mkPanelname $BASE "Cutting Planes Panel"
+    Nv_mkPanelname $BASE [G_msg "Cutting Planes Panel"]
     set Nv_(CutPlaneBase) $BASE
 
     set update_routine xyupdate
@@ -57,20 +57,20 @@ proc mkcutplanePanel { BASE } {
 
     # Create the active plane pulldown
     frame $BASE.current
-    label $BASE.current.lbl -text "Active cutting plane: "
-    label $BASE.current.cpl -text "None" -relief raised -bd 1 \
+    label $BASE.current.lbl -text [G_msg "Active cutting plane: "]
+    label $BASE.current.cpl -text [G_msg "None"] -relief raised -bd 1 \
     	-width 8 -fg black -font $nviztxtfont
     pack $BASE.current.lbl $BASE.current.cpl -side left -fill none
     
     menu $BASE.cut_plane_menu
     set rname $BASE.cut_plane_menu
-    $rname add command -label "None"    -command "cutplaneSetPlane $BASE -1"
-    $rname add command -label "Plane 0" -command "cutplaneSetPlane $BASE 0"
-    $rname add command -label "Plane 1" -command "cutplaneSetPlane $BASE 1"
-    $rname add command -label "Plane 2" -command "cutplaneSetPlane $BASE 2"
-    $rname add command -label "Plane 3" -command "cutplaneSetPlane $BASE 3"
-    $rname add command -label "Plane 4" -command "cutplaneSetPlane $BASE 4"
-    $rname add command -label "Plane 5" -command "cutplaneSetPlane $BASE 5"
+    $rname add command -label [G_msg "None"]    -command "cutplaneSetPlane $BASE -1"
+    $rname add command -label [G_msg "Plane 0"] -command "cutplaneSetPlane $BASE 0"
+    $rname add command -label [G_msg "Plane 1"] -command "cutplaneSetPlane $BASE 1"
+    $rname add command -label [G_msg "Plane 2"] -command "cutplaneSetPlane $BASE 2"
+    $rname add command -label [G_msg "Plane 3"] -command "cutplaneSetPlane $BASE 3"
+    $rname add command -label [G_msg "Plane 4"] -command "cutplaneSetPlane $BASE 4"
+    $rname add command -label [G_msg "Plane 5"] -command "cutplaneSetPlane $BASE 5"
 
     if {$Nv_(CutPlanesMade) == 0} then {
 	for {set i 0} {$i < 6} {incr i} {
@@ -84,18 +84,18 @@ proc mkcutplanePanel { BASE } {
 
     # Create radio buttons for cut plane shading
     menubutton $BASE.current.shading -menu $BASE.current.shading.m \
-    	-relief raised -indicatoron 1 -bd 1 -width 10 -text "set shading"
+    	-relief raised -indicatoron 1 -bd 1 -width 10 -text [G_msg "set shading"]
     
     set shademenu [menu $BASE.current.shading.m -tearoff 0]
-    $shademenu add radiobutton -label "top color" \
+    $shademenu add radiobutton -label [G_msg "top color"] \
 		-command "Nset_fence_color ABOVE" -variable Nv_(CutPlaneFence) -value "TOP"
-    $shademenu add radiobutton -label "bottom color" \
+    $shademenu add radiobutton -label [G_msg "bottom color"] \
 		-command "Nset_fence_color BELOW" -variable Nv_(CutPlaneFence) -value "BELOW"
-    $shademenu add radiobutton -label "blend" \
+    $shademenu add radiobutton -label [G_msg "blend"] \
 		-command "Nset_fence_color BLEND" -variable Nv_(CutPlaneFence) -value "BLEND"
-   	$shademenu add radiobutton -label "shaded" \
+   	$shademenu add radiobutton -label [G_msg "shaded"] \
 		-command "Nset_fence_color GREY" -variable Nv_(CutPlaneFence) -value "GREY"
-    $shademenu add radiobutton -label "clear" \
+    $shademenu add radiobutton -label [G_msg "clear"] \
 		-command "Nset_fence_color OFF" -variable Nv_(CutPlaneFence) -value "OFF"
 
     pack  $BASE.current.shading -side right -anchor e
@@ -111,8 +111,8 @@ proc mkcutplanePanel { BASE } {
     # Create X,Y, and Z entry widgets along with
     # Reset, all off and close buttons
     frame $BASE.coords
-    label $BASE.coords.x_lbl -text "X:"
-    label $BASE.coords.y_lbl -text "Y:"
+    label $BASE.coords.x_lbl -text [G_msg "X:"]
+    label $BASE.coords.y_lbl -text [G_msg "Y:"]
     entry $BASE.coords.x_ent -width 7 -relief sunken -bg white
     entry $BASE.coords.y_ent -width 7 -relief sunken -bg white
     bind $BASE.coords.x_ent <Return> "cutplaneSetTransFromEntry $BASE x"
@@ -136,7 +136,7 @@ proc mkcutplanePanel { BASE } {
     scale $BASE.zcoord.scl -orient vertical -to [expr int([lindex $range 0])] \
 		-from [expr int([lindex $range 1])] -showvalue false -width 13 \
 		-activebackground gray80 -background gray90 -command $update_routine
-    label $BASE.zcoord.lbl -text "Z coord"
+    label $BASE.zcoord.lbl -text [G_msg "Z coord"]
     entry $BASE.zcoord.val -width 5 -relief sunken -bg white
     pack $BASE.zcoord.scl $BASE.zcoord.lbl $BASE.zcoord.val
     bind $BASE.zcoord.val <KeyPress-Return> "cutplaneSetTransFromEntry $BASE z"
@@ -148,7 +148,7 @@ proc mkcutplanePanel { BASE } {
     frame $BASE.rotate
     scale $BASE.rotate.scl -orient vertical -from 360 -to 0 -showvalue false  -width 13\
 		-activebackground gray80 -background gray90 -command $update_routine
-    label $BASE.rotate.lbl -text "Rotate"
+    label $BASE.rotate.lbl -text [G_msg "Rotate"]
     entry $BASE.rotate.val -width 5 -relief sunken -bg white
     pack $BASE.rotate.scl $BASE.rotate.lbl $BASE.rotate.val
     bind $BASE.rotate.val <KeyPress-Return> "cutplaneUpdateRotation2 $BASE"
@@ -160,7 +160,7 @@ proc mkcutplanePanel { BASE } {
     frame $BASE.tilt
     scale $BASE.tilt.scl -orient vertical -from 360 -to 0 -showvalue false  -width 13\
 		-activebackground gray80 -background gray90 -command $update_routine
-    label $BASE.tilt.lbl -text "Tilt"
+    label $BASE.tilt.lbl -text [G_msg "Tilt"]
     entry $BASE.tilt.val -width 5 -relief sunken -bg white
     pack $BASE.tilt.scl $BASE.tilt.lbl $BASE.tilt.val
     bind $BASE.tilt.val <KeyPress-Return> "cutplaneUpdateTilt2 $BASE"
@@ -179,11 +179,11 @@ proc mkcutplanePanel { BASE } {
 	# panel control buttons at bottom
     frame $BASE.bottom  
     
-	button $BASE.bottom.reset -text "Reset" -width 7 -bd 1 \
+	button $BASE.bottom.reset -text [G_msg "Reset"] -width 7 -bd 1 \
     	-command "cutplaneReset $BASE"
-    button $BASE.bottom.all_off -text "All Off" -width 7 -bd 1 \
+    button $BASE.bottom.all_off -text [G_msg "All Off"] -width 7 -bd 1 \
 		-command "cutplaneAllOff; cutplaneSetPlane $BASE -1"
-    button $BASE.bottom.close -text "Close" -width 7 -bd 1 \
+    button $BASE.bottom.close -text [G_msg "Close"] -width 7 -bd 1 \
     	-command "Nv_closePanel $BASE" 
     pack $BASE.bottom.reset $BASE.bottom.all_off $BASE.bottom.close \
 		-side left -fill none -expand 1
@@ -287,9 +287,9 @@ proc cutplaneSetPlane { BASE plane } {
 
     $BASE.cut_plane_menu unpost
     if {$plane == -1} then {
-	$BASE.current.cpl configure -text "None"
+	$BASE.current.cpl configure -text [G_msg "None"]
     } else {
-	$BASE.current.cpl configure -text "Plane $plane"
+	$BASE.current.cpl configure -text [format [G_msg "Plane %s"] $plane]
     }
     for {set i 0} {$i < [Nnum_cutplane_obj]} {incr i} {
 	if {$plane == $i} then {
@@ -302,7 +302,7 @@ proc cutplaneSetPlane { BASE plane } {
     set Nv_(CurrCutPlane) $plane
     
     set curr [Nget_current_cutplane]
-    if {$curr != "None"} then {
+    if {$curr != "None"} then { 
 	$curr draw
     }
     

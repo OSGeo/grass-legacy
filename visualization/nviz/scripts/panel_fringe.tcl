@@ -40,24 +40,24 @@ proc mkfringePanel { BASE } {
 	global fringe_nw fringe_ne fringe_sw fringe_se
 	global fringe_color fringe_elev
 
-    set panel [St_create {window name size priority} $BASE "Fringe" 2 5]
+    set panel [St_create {window name size priority} $BASE [G_msg "Fringe"] 2 5]
     frame $BASE -relief flat -borderwidth 0
-    Nv_mkPanelname $BASE "Fringe Panel"
+    Nv_mkPanelname $BASE [G_msg "Fringe Panel"]
 
     set rbase1 [frame $BASE.edges]
-    Label $rbase1.lbl -text "Edges with fringe: " -fg black
+    Label $rbase1.lbl -text [G_msg "Edges with fringe: "] -fg black
     checkbutton $rbase1.nwc -width 0 \
         -variable fringe_nw -onvalue 1 -offvalue 0 \
-        -text "N&W"
+        -text [G_msg "N&W"]
     checkbutton $rbase1.nec -width 0 \
         -variable fringe_ne -onvalue 1 -offvalue 0 \
-        -text "N&E"
+        -text [G_msg "N&E"]
     checkbutton $rbase1.swc -width 0 \
         -variable fringe_sw -onvalue 1 -offvalue 0 \
-        -text "S&W"
+        -text [G_msg "S&W"]
     checkbutton $rbase1.sec -width 0 \
         -variable fringe_se -onvalue 1 -offvalue 0 \
-        -text "S&E"
+        -text [G_msg "S&E"]
     pack $rbase1.lbl $rbase1.nwc $rbase1.nec $rbase1.swc \
     	$rbase1.sec -side left -expand yes -fill none -anchor w
     pack $rbase1 -side top -expand yes -fill both -padx 3 -pady 4
@@ -65,8 +65,8 @@ proc mkfringePanel { BASE } {
     set rbase2 [frame $BASE.color_elev]
     LabelEntry $rbase2.entry -width 8 -relief sunken \
 		-entrybg white -textvariable fringe_elev \
-		-label "Elevation of fringe bottom: "
-    Button $rbase2.color -text "Color" \
+		-label [G_msg "Elevation of fringe bottom: "]
+    Button $rbase2.color -text [G_msg "Color"] \
 		-bg "#aaaaaa" -width 8 -bd 1 \
 		-command "change_fringe_color $rbase2.color" \
 		-fg "#000000"
@@ -77,9 +77,9 @@ proc mkfringePanel { BASE } {
 	pack $rbase2 -side top -expand yes -fill both -padx 3 -pady 4
 
     set rbase3 [frame $BASE.button]
-    Button $rbase3.draw -text "Draw Fringe" -command "draw_fringe" -bd 1
+    Button $rbase3.draw -text [G_msg "Draw Fringe"] -command "draw_fringe" -bd 1
     # close panel section
-    button $rbase3.close -text "Close" -command "Nv_closePanel $BASE" \
+    button $rbase3.close -text [G_msg "Close"] -command "Nv_closePanel $BASE" \
 		-anchor se -bd 1
     pack $rbase3.draw -side left -expand yes -fill none -anchor w
     pack $rbase3.close -side right -fill none -expand yes -anchor e

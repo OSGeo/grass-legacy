@@ -52,22 +52,22 @@ proc mkvectPanel { BASE } {
     
     #  Initialize panel info
     if [catch {set Nv_($BASE)}] {
-		set panel [St_create {window name size priority} $BASE "Vector Lines/3D Polygons" 2 5]
+		set panel [St_create {window name size priority} $BASE [G_msg "Vector Lines/3D Polygons"] 2 5]
     } else {
 		set panel $Nv_($BASE)
     }
     frame $BASE -relief flat -borderwidth 0
-    Nv_mkPanelname $BASE "Vector Lines Panel"
+    Nv_mkPanelname $BASE [G_msg "Vector Lines Panel"]
     
   	#create top frame
 	###### make widgets that control which is current surface (menu, new delete)###
     set tmp [frame $BASE.top]
-	Label $tmp.current -text "Current:" -anchor w
+	Label $tmp.current -text [G_msg "Current:"] -anchor w
 	
     mkMapList $tmp.list vect
     
-	button $tmp.new -text New -anchor center -command "add_map vect" -bd 1
-	button $tmp.delete -text Delete -anchor center -command "delete_map vect" -bd 1
+	button $tmp.new -text [G_msg "New"] -anchor center -command "add_map vect" -bd 1
+	button $tmp.delete -text [G_msg "Delete"] -anchor center -command "delete_map vect" -bd 1
 
 	pack $tmp.current $tmp.list -side left
     pack $tmp.list -side left 
@@ -77,9 +77,9 @@ proc mkvectPanel { BASE } {
     
     # create bottom frame
     set tmp [frame $BASE.f]
-    button $tmp.close -text Close -command "Nv_closePanel $BASE" -anchor s -bd 1
+    button $tmp.close -text [G_msg "Close"] -command "Nv_closePanel $BASE" -anchor s -bd 1
     pack $tmp.close -side right
-    button $tmp.draw_current -text "DRAW CURRENT" -bd 1 -fg darkgreen \
+    button $tmp.draw_current -text [G_msg "DRAW CURRENT"] -bd 1 -fg darkgreen \
 		-command {Nvect_draw_one [Nget_current vect]}
     pack $tmp.draw_current -side left
     pack $tmp -side bottom -fill x -expand 1 -padx 3
@@ -92,7 +92,7 @@ proc mkvectPanel { BASE } {
     set row4 [frame $tmp.row4]
     set tmp1a [frame $row1.b]
     
-    set wlabel [label $row1.wlabel -text "line width" \
+    set wlabel [label $row1.wlabel -text [G_msg "line width"] \
     	-font $nviztxtfont -fg black]
     
     set vlinewidth [SpinBox $row1.linewidth -range {1 50 1}\
@@ -103,18 +103,18 @@ proc mkvectPanel { BASE } {
 		-entrybg white]
 
 #	checkbutton $tmp.load -relief flat -text "Load to memory"
-    set vcolor [button $row1.color -text Color -bd 1\
+    set vcolor [button $row1.color -text [G_msg "Color"] -bd 1\
 		-command "change_color vect $row1.color"]
     bind $row1.color <Expose> "$row1.color configure -bg \[get_curr_sv_color vect\]"
     
-    set rb1 [radiobutton $row2.label2 -text "display flat" \
+    set rb1 [radiobutton $row2.label2 -text [G_msg "display flat"] \
 		-variable flat_state -value 1 -command "check_list $row3.list"]
 
-    set rb2 [radiobutton $row2.label1 -text "display on surface(s):" \
+    set rb2 [radiobutton $row2.label1 -text [G_msg "display on surface(s):"] \
 		-variable flat_state -value 0 \
         -command "check_list $row3.list"]
 
-    set htscale [Nv_mkScale $row4.scale h "vector height\nabove surface" 0 10000 $height set_ht 1]
+    set htscale [Nv_mkScale $row4.scale h [G_msg "vector height\nabove surface"] 0 10000 $height set_ht 1]
 
 
     pack $wlabel $vlinewidth -side left

@@ -27,7 +27,7 @@ proc mkWireColorPopup {w name {color "#000000"} {mode 0}} {
 
     catch {destroy $w}
     toplevel $w -class Dialog
-    wm title $w "Select Wire Color"
+    wm title $w [G_msg "Select Wire Color"]
     wm iconname $w "Color"
     wm geometry $w 300x450
     wm minsize $w 50 100
@@ -54,7 +54,7 @@ proc mkWireColorPopup {w name {color "#000000"} {mode 0}} {
 
     frame $w.top -relief raised -border 1
     frame $w.bot -relief raised -border 1
-    checkbutton $w.usemap -text "use surface color" -onvalue UseMap \
+    checkbutton $w.usemap -text [G_msg "use surface color"] -onvalue UseMap \
 		-offvalue 0 -variable CurrWireColor
     frame $w.top.left
     Nv_mkWireColorScale $w.top.left Red $r red  $w.top.color
@@ -77,10 +77,10 @@ proc mkWireColorPopup {w name {color "#000000"} {mode 0}} {
     tkwait visibility $w
     
     frame $w.bot.buttonframe
-    button $w.bot.buttonframe.ok -text OK -width 6 \
+    button $w.bot.buttonframe.ok -text [G_msg "Ok"] -width 6 \
     	-command "destroy $w" -bd 1
     button $w.bot.buttonframe.cancel  -bd 1 -width 6\
-	 -text Cancel  -command "set CurrWireColor $tmp; destroy $w"
+	 -text [G_msg "Cancel"]  -command "set CurrWireColor $tmp; destroy $w"
     pack $w.bot.buttonframe.cancel -side right -expand 0
     pack $w.bot.buttonframe.ok -side left -expand 0
     pack $w.bot.buttonframe -side bottom -fill x \

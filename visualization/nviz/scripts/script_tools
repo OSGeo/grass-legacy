@@ -29,22 +29,22 @@ set floop_stack 0
 set floop_names [list]
 
 # Tools for vanilla looping
-button .loop_start -text "Open Loop"  -command open_loop   -bg aquamarine
-button .loop_end   -text "Close Loop" -command close_loop  -bg aquamarine
+button .loop_start -text [G_msg "Open Loop"]  -command open_loop   -bg aquamarine
+button .loop_end   -text [G_msg "Close Loop"] -command close_loop  -bg aquamarine
 pack .loop_start .loop_end -side top -fill both -expand 1
 
 # Tools for file sequence looping
-button .floop_start -text "Open File Seq. Loop"  -command fopen_loop  -bg burlywood
-button .floop_end   -text "Close File Seq. Loop" -command fclose_loop -bg burlywood
+button .floop_start -text [G_msg "Open File Seq. Loop"]  -command fopen_loop  -bg burlywood
+button .floop_end   -text [G_msg "Close File Seq. Loop"] -command fclose_loop -bg burlywood
 pack .floop_start .floop_end -side top -fill both -expand 1
 
 # Tools for more general file sequence looping
-button .file_sequence_tools -text "File Sequence Tool" \
+button .file_sequence_tools -text [G_msg "File Sequence Tool"] \
     -command fopen_tools -bg cornflowerblue
 pack .file_sequence_tools -side top -fill both -expand 1
 
 # Quit button
-button .quit -text "Close" -command "exit"
+button .quit -text [G_msg "Close"] -command "exit"
 pack .quit -side top -fill both -expand 1
 
 # File Sequence Tools open function
@@ -101,14 +101,14 @@ proc open_loop {} {
     # Determine how many iterations the loop should go through
     set loop_flag 0
     toplevel .loop_data
-    label .loop_data.start_val_l -text "Loop Start Value"
+    label .loop_data.start_val_l -text [G_msg "Loop Start Value"]
     entry .loop_data.start_val -relief sunken
-    label .loop_data.end_val_l   -text "Loop End Value"
+    label .loop_data.end_val_l   -text [G_msg "Loop End Value"]
     entry .loop_data.end_val -relief sunken
-    label .loop_data.incr_val_l  -text "Loop Increment Value"
+    label .loop_data.incr_val_l  -text [G_msg "Loop Increment Value"]
     entry .loop_data.incr_val -relief sunken
-    button .loop_data.ok         -text "Accept" -command "set loop_flag 1"
-    button .loop_data.cancel     -text "Cancel" -command "set loop_flag -1"
+    button .loop_data.ok         -text [G_msg "Accept"] -command "set loop_flag 1"
+    button .loop_data.cancel     -text [G_msg "Cancel"] -command "set loop_flag -1"
     pack .loop_data.start_val_l .loop_data.start_val \
 	.loop_data.end_val_l .loop_data.end_val \
 	.loop_data.incr_val_l .loop_data.incr_val \

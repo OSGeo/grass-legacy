@@ -76,8 +76,8 @@ proc mkkanimatorPanel { BASE } {
     global bit_map_path
 
     frame $BASE  -relief groove -borderwidth 2
-    set panel [St_create {window name size priority} $BASE "Keyframe Animation" 2 5]
-    Nv_mkPanelname $BASE "Keyframe Animation Panel"
+    set panel [St_create {window name size priority} $BASE [G_msg "Keyframe Animation"] 2 5]
+    Nv_mkPanelname $BASE [G_msg "Keyframe Animation Panel"]
 
     # Create the top section containing play control, framerate, and Add and Delete buttons
     frame $BASE.playcontrol -relief groove -borderwidth 2
@@ -93,7 +93,7 @@ proc mkkanimatorPanel { BASE } {
 	-command "keyanimOneForward $BASE"
     button $rname.forward -height 20 -width 20 -bitmap @$bit_map_path/right \
 	-command "keyanimPlayForward $BASE"
-    button $rname.label -text "Framerate :" -command "keyanimChangeFramerate $BASE"
+    button $rname.label -text [G_msg "Framerate :"] -command "keyanimChangeFramerate $BASE"
     label  $rname.val   -textvariable keyanimFrameRate
     pack $rname.back $rname.slow_back $rname.stop $rname.slow_forward \
 	$rname.forward -side left -padx 4 -pady 2 -fill y -expand no
@@ -102,13 +102,13 @@ proc mkkanimatorPanel { BASE } {
 
     frame $BASE.commands -relief groove -borderwidth 2
     set rname $BASE.commands
-    label $rname.label -text "File: "
-    button $rname.save          -text "Save"    -command "keyanimSaveAnim $BASE"
-    button $rname.load          -text "Load"    -command "keyanimLoadAnim $BASE"
+    label $rname.label -text [G_msg "File: "]
+    button $rname.save -text [G_msg "Save"]    -command "keyanimSaveAnim $BASE"
+    button $rname.load -text [G_msg "Load"]    -command "keyanimLoadAnim $BASE"
 
-    label $rname.label2 -text "Animation: "
-    button $rname.rands -text "Run and Save" -command "keyanimRunAndSave $BASE"
-    button $rname.close -text "Close" -command "Nv_closePanel $BASE"
+    label $rname.label2 -text [G_msg "Animation: "]
+    button $rname.rands -text [G_msg "Run and Save"] -command "keyanimRunAndSave $BASE"
+    button $rname.close -text [G_msg "Close"] -command "Nv_closePanel $BASE"
 
     pack $rname.label2 $rname.rands $rname.label $rname.save $rname.load \
         -side left -padx 2 -pady 2 -padx 2 -fill y -expand no
@@ -127,9 +127,9 @@ proc mkkanimatorPanel { BASE } {
     # Create bottom section containing current keytime
     frame $BASE.keytime -relief groove -borderwidth 2
     set rname $BASE.keytime
-    button $rname.add           -text "Add"     -command "keyanimAddKey $BASE"
-    button $rname.delete        -text "Delete"  -command "keyanimDeleteKeys $BASE"
-    button $rname.change -text "New Key Time:" -command "keyanimChangeKeytime $BASE"
+    button $rname.add           -text [G_msg "Add"]     -command "keyanimAddKey $BASE"
+    button $rname.delete        -text [G_msg "Delete"]  -command "keyanimDeleteKeys $BASE"
+    button $rname.change -text [G_msg "New Key Time:"] -command "keyanimChangeKeytime $BASE"
     label $rname.current -textvariable keyanimCurrentKeyTime
     pack $rname.add $rname.delete -side left -padx 2 -pady 2 -fill y -expand no
     pack $rname.current $rname.change -side right -padx 2 -fill y -expand no
@@ -140,32 +140,32 @@ proc mkkanimatorPanel { BASE } {
     frame $BASE.other_commands -relief groove -borderwidth 2
     set rname $BASE.other_commands
     menubutton $rname.menu1 -menu $rname.menu1.m1 \
-        -indicatoron 1 -text "Show Feature" -relief raised
+        -indicatoron 1 -text [G_msg "Show Feature"] -relief raised
 
     menu $rname.menu1.m1
-    $rname.menu1.m1 add checkbutton -label "Path" -variable keyanimPathState \
+    $rname.menu1.m1 add checkbutton -label [G_msg "Path"] -variable keyanimPathState \
         -command {Nshow_path $keyanimPathState} -onvalue on -offvalue off
-    $rname.menu1.m1 add checkbutton -label "Vect Lines/Polygons" -variable keyanimVectState \
+    $rname.menu1.m1 add checkbutton -label [G_msg "Vect Lines/Polygons"] -variable keyanimVectState \
         -command {Nshow_vect $keyanimVectState} -onvalue on -offvalue off
-    $rname.menu1.m1 add checkbutton -label "Vect Points" -variable keyanimSiteState \
+    $rname.menu1.m1 add checkbutton -label [G_msg "Vect Points"] -variable keyanimSiteState \
         -command {Nshow_site $keyanimSiteState} -onvalue on -offvalue off
-    $rname.menu1.m1 add checkbutton -label "Volume" -variable keyanimVolState \
+    $rname.menu1.m1 add checkbutton -label [G_msg "Volume"] -variable keyanimVolState \
         -command {Nshow_vol $keyanimVolState} -onvalue on -offvalue off
-    $rname.menu1.m1 add checkbutton -label "Labels/Legend" \
+    $rname.menu1.m1 add checkbutton -label [G_msg "Labels/Legend"] \
 	-variable keyanimLabState \
 	-command {Nshow_lab $keyanimLabState} -onvalue on -offvalue off
 
     menubutton $rname.menu2 -menu $rname.menu2.m1 \
-        -indicatoron 1 -text "Interp." -relief raised
+        -indicatoron 1 -text [G_msg "Interp."] -relief raised
 
     menu $rname.menu2.m1
-    $rname.menu2.m1 add radiobutton -label "linear" \
+    $rname.menu2.m1 add radiobutton -label [G_msg "linear"] \
         -variable keyanimInterpType -value linear \
         -command "Nset_interp_mode linear ; Nupdate_frames ; $rname.tension configure -state disabled -background gray80"
-    $rname.menu2.m1 add radiobutton -label "spline" \
+    $rname.menu2.m1 add radiobutton -label [G_msg "spline"] \
         -variable keyanimInterpType -value spline \
         -command "Nset_interp_mode spline ; Nupdate_frames ; $rname.tension configure -state normal -background gray90"
-    scale $rname.tension -label "tension" -orient h \
+    scale $rname.tension -label [G_msg "tension"] -orient h \
         -showvalue f -from 0 -to 1000 -command keyanimChangeTension \
         -activebackground gray80 -background gray90
 
@@ -227,7 +227,7 @@ proc keyanimAddChannel { BASE element {entry_list null} {get_entries null} {set_
 
     frame $rname
     label $rname.label -relief raised -text [lindex $element 0] -width 10
-    checkbutton $rname.active -text "On" -variable $channel_iname
+    checkbutton $rname.active -text [G_msg "On"] -variable $channel_iname
     global $channel_iname
     set $channel_iname 1
 
@@ -444,13 +444,13 @@ proc keyanimChangeKeytime { BASE } {
     append name [keyanimGenTag]
 
     toplevel $name
-    label $name.label -text "New Key Time"
+    label $name.label -text [G_msg "New Key Time"]
     pack $name.label
 
     frame $name.lgroup -relief groove
-    label $name.lgroup.mlabel -text "Minute:" -relief raised
-    label $name.lgroup.slabel -text "Second:" -relief raised
-    label $name.lgroup.flabel -text "Frame:" -relief raised
+    label $name.lgroup.mlabel -text [G_msg "Minute:"] -relief raised
+    label $name.lgroup.slabel -text [G_msg "Second:"] -relief raised
+    label $name.lgroup.flabel -text [G_msg "Frame:"] -relief raised
     pack $name.lgroup.mlabel $name.lgroup.slabel \
 	$name.lgroup.flabel -fill both -padx 2 -pady 2
     pack $name.lgroup -side left -fill both
@@ -463,7 +463,7 @@ proc keyanimChangeKeytime { BASE } {
 	$name.egroup.fentry -fill both -padx 2 -pady 2
     pack $name.egroup -side right -fill both
 
-    button $name.ok -text "Ok" -command "set button 1"
+    button $name.ok -text [G_msg "Ok"] -command "set button 1"
     pack $name.ok -side bottom -fill both -before $name.label
 
     # Grab the focus
@@ -493,17 +493,16 @@ proc keyanimChangeKeytime { BASE } {
     if { [string length $frames] == 0 } then { set frames 0 }
 
     if { ($minutes < 0) || ($seconds < 0) || ($frames < 0) } then {
-	tk_dialog .kt_error "KeyTime Error" "Error - All values must be at least zero." \
-	    {} 0 Dismiss
+	tk_dialog .kt_error [G_msg "KeyTime Error"] [G_msg "Error - All values must be at least zero."] \
+	    {} 0 [G_msg "Dismiss"
 	destroy $name
 	focus $oldFocus
 	return
     }
 
     if { $frames >= $keyanimFrameRate } then {
-	tk_dialog .kt_error "KeyTime Error" \
-	    "Error - Frame number must be less than frame rate." \
-	    {} 0 Dismiss
+	tk_dialog .kt_error [G_msg "KeyTime Error"] [G_msg "Error - Frame number must be less than frame rate."] \
+	    {} 0 [G_msg "Dismiss"]
 	destroy $name
 	focus $oldFocus
 	return
@@ -538,11 +537,11 @@ proc keyanimChangeFramerate { BASE } {
     append name [keyanimGenTag]
 
     toplevel $name
-    label $name.label -text "New Frame Rate"
+    label $name.label -text [G_msg "New Frame Rate"]
     pack $name.label
 
     frame $name.lgroup -relief groove
-    label $name.lgroup.flabel -text "Framerate:" -relief raised
+    label $name.lgroup.flabel -text [G_msg "Framerate:"] -relief raised
     pack $name.lgroup.flabel -fill both -padx 2 -pady 2
     pack $name.lgroup -side left -fill both
 
@@ -551,7 +550,7 @@ proc keyanimChangeFramerate { BASE } {
     pack $name.egroup.fentry -fill both -padx 2 -pady 2
     pack $name.egroup -side right -fill both
 
-    button $name.ok -text "Ok" -command "set button 1"
+    button $name.ok -text [G_msg "Ok"] -command "set button 1"
     pack $name.ok -side bottom -fill both -before $name.label
 
     # Grab the focus
@@ -574,8 +573,8 @@ proc keyanimChangeFramerate { BASE } {
     }
 
     if {$framerate < 1} then {
-	tk_dialog .fr_error "Frame Rate Error" "Error - Frame rate must be at least 1." \
-	    {} 0 Dismiss
+	tk_dialog .fr_error [G_msg "Frame Rate Error"] [G_msg "Error - Frame rate must be at least 1."] \
+	    {} 0 [G_msg "Dismiss"]
 	destroy $name
 	focus $oldFocus
 	return
@@ -674,9 +673,9 @@ proc keyanimDrawKeys { BASE {old_tags {} } } {
 		}
 	    }
 	    if {$tag_name == ""} then {
-		tk_dialog .ierror "Internal Error" \
-		    "Internal Error - Can't find channel $cname for keyframe $i" \
-		    {} 0 Dismiss
+		tk_dialog .ierror [G_msg "Internal Error"] \
+		    [format [G_msg "Internal Error - Can't find channel %s for keyframe %s"] $cname $i] \
+		    {} 0 [G_msg "Dismiss"]
 		return
 	    }
 
@@ -854,9 +853,9 @@ proc keyanimDeleteKeys { BASE } {
     }
 
     # Popup a dialog to verify the delete
-    set ans [tk_dialog .delete_keys "Delete Keys" \
-		 "Delete the selected keys?" \
-		 {} 1 Ok Dismiss]
+    set ans [tk_dialog .delete_keys [G_msg "Delete Keys"] \
+		 [G_msg "Delete the selected keys?"] \
+		 {} 1 [G_msg "Ok"] [G_msg "Dismiss"]]
     if {$ans == 1} then { return }
 
     # Delete each key in turn
@@ -869,9 +868,9 @@ proc keyanimDeleteKeys { BASE } {
 	# Deleted the specified key internally
 	set internal_time [lindex [lindex $keyanimKeyList $where] 0]
 	if {[Ndelete_key $internal_time 0 1] == 0} then {
-	    tk_dialog .ierror "Internal Error" \
-		"Internal Error - Failed to delete keyframe in GK key list" \
-		{} 0 Dismiss
+	    tk_dialog .ierror [G_msg "Internal Error"] \
+		[G_msg "Internal Error - Failed to delete keyframe in GK key list"] \
+		{} 0 [G_msg "Dismiss"]
 	}
 	Nupdate_frames
 
@@ -1003,9 +1002,9 @@ proc keyanimMoveKeyRelease { BASE x tag } {
 
     # Move the key internally
     if {[Nmove_key $old_time 0 $new_time] == 0} then {
-	tk_dialog .ierror "Internal Error" \
-	    "Internal Error - Failed to move keyframe in GK key list" \
-	    {} 0 Dismiss
+	tk_dialog .ierror [G_msg "Internal Error"] \
+	    [G_msg "Internal Error - Failed to move keyframe in GK key list"] \
+	    {} 0 [G_msg "Dismiss"]
     }
 
     # After everything's said and done, redraw the keyframes
@@ -1122,9 +1121,9 @@ proc keyanimAddKey { BASE } {
     if { $extract_where != -1} then {
 
 	# Found the new key, do a popup for the replace
-	set ans [tk_dialog .replace "Replace Key" \
-		     "There is already a keyframe at this time, replace it?" \
-		     {} 1 Ok Dismiss]
+	set ans [tk_dialog .replace [G_msg "Replace Key"] \
+		     [G_msg "There is already a keyframe at this time, replace it?"] \
+		     {} 1 [G_msg "Ok"] [G_msg "Dismiss"]]
 	if {$ans == 1} then { return }
 
 	# Otherwise do the replace
@@ -1219,7 +1218,7 @@ proc mkkeyframeArea { BASE } {
     append BASE .keycontrol
 
     # Create canvas to hold channels for keyframes
-    label $BASE.title -text "Keyframe Attributes"
+    label $BASE.title -text [G_msg "Keyframe Attributes"]
     canvas $BASE.key_channels -width 10c -height 2c -yscrollcommand "$BASE.scrolly set" \
 	-xscrollcommand "$BASE.scrollx set" -confine true -xscrollincrement 1 \
 	-yscrollincrement 1
@@ -1247,7 +1246,7 @@ proc mkkeyframeArea { BASE } {
     frame $BASE.key_times.hold_times -width 10c -height 10c
     label $BASE.key_times.hold_times.spacer1 -width 10 -text ""
     checkbutton $BASE.key_times.hold_times.spacer2 \
-	-text "On" -state disabled -relief flat -bd 0 -padx 3
+	-text [G_msg "On"] -state disabled -relief flat -bd 0 -padx 3
     $BASE.key_times.hold_times.spacer2 configure \
 	-disabledforeground [lindex [$BASE.key_times.hold_times.spacer2 \
 					 configure -background] 4]
@@ -1697,26 +1696,26 @@ proc keyanimRunAndSave { BASE } {
     frame .ras_fname.frame3
     frame .ras_fname.frame4
     frame .ras_fname.frame5
-    label .ras_fname.title -text "Enter a base name:"
+    label .ras_fname.title -text [G_msg "Enter a base name:"]
     entry .ras_fname.enter -relief sunken
 
-    label .ras_fname.label -text "Render:"
-    radiobutton .ras_fname.norm -text "Wireframe" \
+    label .ras_fname.label -text [G_msg "Render:"]
+    radiobutton .ras_fname.norm -text [G_msg "Wireframe"] \
 	-variable keyanimSaveRenderStyle -value 0
-    radiobutton .ras_fname.fancy -text "Full Rendering" \
+    radiobutton .ras_fname.fancy -text [G_msg "Full Rendering"] \
 	-variable keyanimSaveRenderStyle -value 1
 
-    button .ras_fname.ok -text "Ok" -command "set keyanimWaitPress true"
+    button .ras_fname.ok -text [G_msg "Ok"] -command "set keyanimWaitPress true"
 
-    label .ras_fname.label1 -text "Image:"
+    label .ras_fname.label1 -text [G_msg "Image:"]
     # Start at value 2. 1 used to be SGI .rgb support
-    radiobutton .ras_fname.img2 -text "PPM" -variable IMG -value 2
-    radiobutton .ras_fname.img3 -text "TIFF" -variable IMG -value 3
-    radiobutton .ras_fname.img4 -text "MPEG-1" -variable IMG -value 4
+    radiobutton .ras_fname.img2 -text [G_msg "PPM"] -variable IMG -value 2
+    radiobutton .ras_fname.img3 -text [G_msg "TIFF"] -variable IMG -value 3
+    radiobutton .ras_fname.img4 -text [G_msg "MPEG-1"] -variable IMG -value 4
 
-    label .ras_fname.label2 -text "Start Frame:"
+    label .ras_fname.label2 -text [G_msg "Start Frame:"]
     entry .ras_fname.enter2 -relief sunken -width 6
-    checkbutton .ras_fname.check1 -text "Off-Screen" \
+    checkbutton .ras_fname.check1 -text [G_msg "Off-Screen"] \
     -variable "keyanimOff"
 
 #Pack Menu
@@ -1870,7 +1869,7 @@ proc keyanimSaveAnim { base } {
     if {[llength $keyanimKeyList] == 0} then {
 	tk_dialog .na_error "No Anim Error" \
 	    "There are no keys in the current animation to save" \
-	    {} 0 Dismiss
+	    {} 0 [G_msg "Dismiss"]
 	return
     }
 
@@ -1906,9 +1905,9 @@ proc keyanimLoadAnim { base } {
     global keyanimKeyList keyanimFrameRate keyanimSaved keyanimUniqueTag
 
     if {($keyanimSaved == 0) && ([llength $keyanimKeyList] != 0)} then {
-	set status [tk_dialog .ka_check "Verify" \
-			"Warning - Current animation has not been saved, continue?" \
-			{} 1 Ok Cancel]
+	set status [tk_dialog .ka_check [G_msg "Verify"] \
+			[G_msg "Warning - Current animation has not been saved, continue?"] \
+			{} 1 [G_msg "Ok"] [G_msg "Cancel"]]
 	if {$status == 1} return
     }
 
@@ -1921,9 +1920,9 @@ proc keyanimLoadAnim { base } {
 
     set file_handle ""
     if {[catch "open $file_name r" file_handle] != 0} then {
-	tk_dialog .ka_error "File Error" \
-	    "Error - Could not open file $file_name for reading" \
-	    {} 0 Dismiss
+	tk_dialog .ka_error [G_msg "File Error"] \
+	    [format [G_msg "Error - Could not open file %s for reading"] $file_name] \
+	    {} 0 [G_msg "Dismiss"]
 	return
     }
 

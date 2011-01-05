@@ -48,14 +48,14 @@ proc mksurfPanel { BASE } {
 
 	#  Initialize panel info
 	if [catch {set Nv_($BASE)}] {
-		set panel [St_create {window name size priority} $BASE "Raster Surfaces" 2 5]
+		set panel [St_create {window name size priority} $BASE [G_msg "Raster Surfaces"] 2 5]
 	} else {
 		set panel $Nv_($BASE)
 	}
 
 	# surface panel frame
 	frame $BASE	 -relief flat -bd 0
-	Nv_mkPanelname $BASE "Surface Panel"
+	Nv_mkPanelname $BASE [G_msg "Surface Panel"]
 
 	# resolution panel frame
 	frame $BASE.bottom -relief flat -bd 0
@@ -65,10 +65,10 @@ proc mksurfPanel { BASE } {
 
 	###### make widgets that control which is current surface (menu, new delete)###
 	set tmp [frame $BASE.top.top]
-	Label $tmp.current -text "Current:" -anchor w
+	Label $tmp.current -text [G_msg "Current:"] -anchor w
 	mkMapList $tmp.list surf set_display_from_curr
-	button $tmp.new -text New -anchor center -bd 1 -command new_surf
-	button $tmp.delete -text Delete -anchor center -bd 1 -command delete_surf
+	button $tmp.new -text [G_msg "New"] -anchor center -bd 1 -command new_surf
+	button $tmp.delete -text [G_msg "Delete"] -anchor center -bd 1 -command delete_surf
 
 	pack $tmp.current $tmp.list -side left
 	pack $tmp.delete $tmp.new -side right -expand 0
@@ -76,7 +76,7 @@ proc mksurfPanel { BASE } {
 	####### make buttons that control attributes for current surface ########
 	set tmp [frame $BASE.top.bottom -bd 0 -relief flat]
 	set tmp2 [frame $BASE.top.bottom2 -bd 0 -relief flat]
-	menubutton $tmp.menu1 -menu $tmp.menu1.m -text "Surface attributes..." -relief raised \
+	menubutton $tmp.menu1 -menu $tmp.menu1.m -text [G_msg "Surface attributes..."] -relief raised \
 		-indicatoron 1 -bd 1
 
 	menu $tmp.menu1.m
@@ -85,18 +85,18 @@ proc mksurfPanel { BASE } {
 		-command "mkAttPopup .pop $i 1"
 	}
 
-	button $tmp.wireclr -text "Wire Color" \
+	button $tmp.wireclr -text [G_msg "Wire Color"] \
 		-command "change_wirecolor $tmp.wireclr" \
 		-bg [get_curr_wire_color] -bd 1
 
-	button $tmp.position -text "Position" -bd 1 -command "mkPositionPanel .pos_surf"
+	button $tmp.position -text [G_msg "Position"] -bd 1 -command "mkPositionPanel .pos_surf"
 
 	pack $tmp.menu1 $tmp.wireclr $tmp.position -side left -fill x -expand 1 -ipadx 3
 
-	Label $tmp2.l1 -text "Mask zeros:" -relief flat
-	checkbutton $tmp2.nozeros1 -text "by elevation" \
+	Label $tmp2.l1 -text [G_msg "Mask zeros:"] -relief flat
+	checkbutton $tmp2.nozeros1 -text [G_msg "by elevation"] \
 		-variable Nv_(TopNoZeros) -command no_zeros
-	checkbutton $tmp2.nozeros2 -text "by color" \
+	checkbutton $tmp2.nozeros2 -text [G_msg "by color"] \
 		-variable Nv_(ColNoZeros) -command no_zeros
 
 	pack $tmp2.l1 $tmp2.nozeros1 $tmp2.nozeros2 \
@@ -106,41 +106,41 @@ proc mksurfPanel { BASE } {
 	set tmp [frame $BASE.bottom.t1]
 
 	menubutton $tmp.style -menu $tmp.style.m -relief raised \
-		-text "Draw mode..." -underline 0 -indicatoron 1 \
+		-text [G_msg "Draw mode..."] -underline 0 -indicatoron 1 \
 		-justify center -bd 1
 	menu $tmp.style.m
-	$tmp.style.m add radiobutton -label Coarse -value wire \
+	$tmp.style.m add radiobutton -label [G_msg "Coarse"] -value wire \
 		-variable Nv_(SurfStyle) -command set_drawmode
-	$tmp.style.m add radiobutton -label Fine -value poly \
+	$tmp.style.m add radiobutton -label [G_msg "Fine"] -value poly \
 		-variable Nv_(SurfStyle) -command set_drawmode
-	$tmp.style.m add radiobutton -label Both -value wire_poly \
+	$tmp.style.m add radiobutton -label [G_msg "Both"] -value wire_poly \
 		-variable Nv_(SurfStyle) -command set_drawmode
 
 	menubutton $tmp.gstyle -menu $tmp.gstyle.m -relief raised \
-		-text "Coarse style..." -underline 0 -indicatoron 1 \
+		-text [G_msg "Coarse style..."] -underline 0 -indicatoron 1 \
 		-justify center -bd 1
 	menu $tmp.gstyle.m
-	$tmp.gstyle.m add radiobutton -label Wire -value grid_wire \
+	$tmp.gstyle.m add radiobutton -label [G_msg "Wire"] -value grid_wire \
 		-variable Nv_(GridStyle) -command set_drawmode
-	$tmp.gstyle.m add radiobutton -label "Surface" -value grid_surf \
+	$tmp.gstyle.m add radiobutton -label [G_msg "Surface"] -value grid_surf \
 		-variable Nv_(GridStyle) -command set_drawmode
 
-	menubutton $tmp.shading -text "Shading..." -menu $tmp.shading.m \
+	menubutton $tmp.shading -text [G_msg "Shading..."] -menu $tmp.shading.m \
 		-relief raised -underline 0 -indicatoron 1 \
 		-justify center -bd 1
 	menu $tmp.shading.m
-	$tmp.shading.m add radiobutton -label Flat -value flat \
+	$tmp.shading.m add radiobutton -label [G_msg "Flat"] -value flat \
 		-variable Nv_(ShadeStyle) -command set_drawmode
-	$tmp.shading.m add radiobutton -label Gouraud -value gouraud \
+	$tmp.shading.m add radiobutton -label [G_msg "Gouraud"] -value gouraud \
 		-variable Nv_(ShadeStyle) -command set_drawmode
 
 	 pack $tmp.style $tmp.gstyle $tmp.shading -side left -fill x -expand 1 -pady 3
 
 	########### make controls for setting resolution  ##################
 	set tmp [frame $BASE.bottom.t2]
-	set reslabel [Label $tmp.subsampling -text "Resolution:" -justify left -anchor w]
+	set reslabel [Label $tmp.subsampling -text [G_msg "Resolution:"] -justify left -anchor w]
 
-	set sblabel1 [label $tmp.sblabel1 -text coarse -font $nviztxtfont \
+	set sblabel1 [label $tmp.sblabel1 -text [G_msg "coarse"] -font $nviztxtfont \
 		-fg black -anchor e -justify right]
 	set sbwire [SpinBox $tmp.gridarrows2 -range {1 100 1}\
 		-textvariable wireres \
@@ -150,7 +150,7 @@ proc mksurfPanel { BASE } {
 		-entrybg white]
 
 	set sblabel2 [label $tmp.sblabel2 -font $nviztxtfont \
-		-fg black -anchor e -justify right -text "fine" ]
+		-fg black -anchor e -justify right -text [G_msg "fine"] ]
 	set sbpoly [SpinBox $tmp.gridarrows1 -range {1 100 1}\
 		-textvariable polyres \
 		-modifycmd {update_spinres "poly" $polyres} \
@@ -163,10 +163,10 @@ proc mksurfPanel { BASE } {
 
 	########### make radiobuttons that control scope of changes made ##################
 	set tmp [frame $BASE.bottom.t3]
-	set rblabel1 [Label $tmp.rblabel1 -anchor w -text "Set resolution for:"]
-	set rbcurrent [radiobutton $tmp.current -text "current surface"\
+	set rblabel1 [Label $tmp.rblabel1 -anchor w -text [G_msg "Set resolution for:"]]
+	set rbcurrent [radiobutton $tmp.current -text [G_msg "current surface"]\
 		-anchor w -value 1 -variable Nv_(CurrOnly)]
-	set rball [radiobutton $tmp.all -text "all surfaces" -justify right \
+	set rball [radiobutton $tmp.all -text [G_msg "all surfaces"] -justify right \
 		-anchor e -value 0 -variable Nv_(CurrOnly) -command set_drawmode]
 
 	pack $rblabel1 $rbcurrent $rball -side left -fill x -ipadx 2
@@ -181,8 +181,8 @@ proc mksurfPanel { BASE } {
 	pack $BASE.bottom.t3 -side top -fill both -pady 5 -expand 1
 
 	########## make button to close panel ########################################
-	button $BASE.close -text Close -bd 1 -command "Nv_closePanel $BASE"
-	button $BASE.draw_current -text "DRAW CURRENT" -bd 1 -fg darkgreen \
+	button $BASE.close -text [G_msg "Close"] -bd 1 -command "Nv_closePanel $BASE"
+	button $BASE.draw_current -text [G_msg "DRAW CURRENT"] -bd 1 -fg darkgreen \
 	-command {Nsurf_draw_one [Nget_current surf]}
 	pack $BASE.close -side right -fill y
 	pack $BASE.draw_current -side left -fill y -padx 3
@@ -667,8 +667,8 @@ proc mkPositionPanel { w } {
 
 	# Create toplevel widget to hold everything
 	toplevel $w -class Dialog
-	wm title $w "Position Surface"
-	wm iconname $w "Attribute"
+	wm title $w [G_msg "Position Surface"]
+	wm iconname $w [G_msg "Attribute"]
 
 	# Get current surface attributes
 	set curr_surf [Nget_current surf]
@@ -698,9 +698,9 @@ proc mkPositionPanel { w } {
 
 	# Create X, Y, and Z entry widgets along with Reset and Close buttons
 	frame $w.coords
-	label $w.coords.z_lbl -text "Z:"
-	label $w.coords.x_lbl -text "X:"
-	label $w.coords.y_lbl -text "Y:"
+	label $w.coords.z_lbl -text [G_msg "Z:"]
+	label $w.coords.x_lbl -text [G_msg "X:"]
+	label $w.coords.y_lbl -text [G_msg "Y:"]
 	entry $w.coords.z_ent -width 5 -relief sunken -bg white
 	entry $w.coords.x_ent -width 5 -relief sunken -bg white
 	entry $w.coords.y_ent -width 5 -relief sunken -bg white
@@ -722,8 +722,8 @@ proc mkPositionPanel { w } {
 	pack $w.coords -side top -in $w.bottom -fill both
 
 	frame $w.commands
-	button $w.commands.reset	-text "Reset"	-command "$w.zslide set 0; Nv_itemDrag $w.pos $Nv_(SURF_POS) 63 63; Nv_xyCallback $update_routine 126 126 63 63"
-	button $w.commands.close	-text "Close"	-command "destroy $w"
+	button $w.commands.reset	-text [G_msg "Reset"]	-command "$w.zslide set 0; Nv_itemDrag $w.pos $Nv_(SURF_POS) 63 63; Nv_xyCallback $update_routine 126 126 63 63"
+	button $w.commands.close	-text [G_msg "Close"]	-command "destroy $w"
 	pack $w.commands.reset $w.commands.close \
 	-side left -fill both -padx 3 -pady 3 -expand yes
 	pack $w.commands -in $w.bottom -fill both

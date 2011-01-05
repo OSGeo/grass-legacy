@@ -97,29 +97,29 @@ proc mkanimationPanel { BASE } {
     global nviztxtfont
 
     catch {destroy $BASE}
-    set panel [St_create {window name size priority} $BASE "Simple Animation" 2 5]
+    set panel [St_create {window name size priority} $BASE [G_msg "Simple Animation"] 2 5]
     set animPanelBASE $BASE
 
     frame $BASE  -relief flat -borderwidth 0
-    Nv_mkPanelname $BASE "Simple Keyframe Animation Panel"
+    Nv_mkPanelname $BASE [G_msg "Simple Keyframe Animation Panel"]
 
 	#animation playback control buttons
     set rname $BASE.buttons
     frame $rname -relief flat -borderwidth 0
     Button $rname.slow_back -bitmap @$bit_map_path/slow_left \
 		-command "animStepBackward $BASE" -bd 1 \
-		-helptext "Step backward frame by frame"
+		-helptext [G_msg "Step backward frame by frame"]
     Button $rname.stop -bitmap @$bit_map_path/stop \
 		-command {set animRunState stop; move_position} -bd 1\
-		-helptext "Pause playback"
+		-helptext [G_msg "Pause playback"]
     Button $rname.slow_forward -bitmap @$bit_map_path/slow_right \
 		-command "animStepForward $BASE" -bd 1 \
-		-helptext "Step forward frame by frame"
+		-helptext [G_msg "Step forward frame by frame"]
     Button $rname.forward -bitmap @$bit_map_path/right \
 		-command "animRunAnimation $BASE" -bd 1 \
-		-helptext "Run animation from beginning"
+		-helptext [G_msg "Run animation from beginning"]
 
-    label $rname.title -text "  set max frames:" -font $nviztxtfont -fg black
+    label $rname.title -text [G_msg " set max frames:"] -font $nviztxtfont -fg black
     entry $rname.set_tot_frames -width 4 -relief sunken -justify r
     $rname.set_tot_frames insert 0 $animNumFrames
     bind $rname.set_tot_frames <Key-Return> "animChangeNumFrames $BASE"
@@ -133,7 +133,7 @@ proc mkanimationPanel { BASE } {
     # Create mid section containing keyframe control panel
     frame $BASE.keycontrol 
     set rname $BASE.keycontrol
-    label $rname.l -text "Key Frames"
+    label $rname.l -text [G_msg "Key Frames"]
     pack  $rname.l -fill x -expand yes -anchor n
     mkkeyframeSlider $BASE
     
@@ -142,10 +142,10 @@ proc mkanimationPanel { BASE } {
     
     # Section for displaying current frame info.
     set rname [frame $BASE.keycontrol.info]
-    label $rname.cf_label -text "Current frame:" -font $nviztxtfont -fg black
+    label $rname.cf_label -text [G_msg "Current frame:"] -font $nviztxtfont -fg black
     label $rname.cur_frame -text "0" -width 4 -fg black -bg white \
     	-font $nviztxtfont -anchor e
-    label $rname.kf_label -text "Selected key frame:" \
+    label $rname.kf_label -text [G_msg "Selected key frame:"] \
     	-font $nviztxtfont -fg black
     label $rname.cur_kframe -text "0" -width 4 -fg black \
     	-bg white -font $nviztxtfont -anchor e
@@ -156,9 +156,9 @@ proc mkanimationPanel { BASE } {
 
     # Create bottom section containing command buttons
     set rname [frame $BASE.keycontrol.commands]
-    Button $rname.add -text "Add frame" -command "animAddKey $BASE" \
+    Button $rname.add -text [G_msg "Add frame"] -command "animAddKey $BASE" \
     	-bd 1 -width 10
-    Button $rname.clear -text "Clear all" -command "animClearAllKeys $BASE" \
+    Button $rname.clear -text [G_msg "Clear all"] -command "animClearAllKeys $BASE" \
     	-bd 1 -width 10
     pack $rname.add  -fill x -expand no -side left
     pack $rname.clear -fill x -expand no -side right
@@ -167,26 +167,26 @@ proc mkanimationPanel { BASE } {
     set rname $BASE.options
     frame $rname -relief groove -bd 2
     frame $rname.row1
-    label $rname.row1.lab -text "Show: " -fg black
-    checkbutton $rname.row1.spath -text "path" -variable animPathState \
+    label $rname.row1.lab -text [G_msg "Show: "] -fg black
+    checkbutton $rname.row1.spath -text [G_msg "path"] -variable animPathState \
 		-command {Nshow_path $animPathState} -onvalue 1 -offvalue 0
-    checkbutton $rname.row1.svect -text "lines" -variable animVectState \
+    checkbutton $rname.row1.svect -text [G_msg "lines"] -variable animVectState \
 		-command {Nshow_vect $animVectState} -onvalue 1 -offvalue 0
-    checkbutton $rname.row1.ssite -text "points" -variable animSiteState \
+    checkbutton $rname.row1.ssite -text [G_msg "points"] -variable animSiteState \
 		-command {Nshow_site $animSiteState} -onvalue 1 -offvalue 0
-	checkbutton $rname.row1.svol -text "volumes" -variable animVolState \
+	checkbutton $rname.row1.svol -text [G_msg "volumes"] -variable animVolState \
 		-command {Nshow_vol $animVolState} -onvalue 1 -offvalue 0
     pack $rname.row1.lab $rname.row1.spath $rname.row1.svect $rname.row1.ssite $rname.row1.svol\
     	-fill y -side left -padx 2 -pady 2
     pack $rname.row1 -side top -anchor w
 
     frame $rname.row2
-    label $rname.row2.lab -text "Interpolation: " -fg black
-    radiobutton $rname.row2.linear -text "linear" -variable animInterpType \
+    label $rname.row2.lab -text [G_msg "Interpolation: "] -fg black
+    radiobutton $rname.row2.linear -text [G_msg "linear"] -variable animInterpType \
 		-value linear -command "Nset_interp_mode linear
 			Nupdate_frames
 			mkTensionScale linear $rname.row2"
-    radiobutton $rname.row2.spline -text "spline" -variable animInterpType \
+    radiobutton $rname.row2.spline -text [G_msg "spline"] -variable animInterpType \
 		-value spline -command "Nset_interp_mode spline
 			Nupdate_frames
 			mkTensionScale spline $rname.row2"
@@ -197,10 +197,10 @@ proc mkanimationPanel { BASE } {
 
     set rname $BASE.bottom
     frame $rname -relief groove
-    Button $rname.rands -text "Run and save" -bd 1 \
+    Button $rname.rands -text [G_msg "Run and save"] -bd 1 \
     	-command "animRunAndSave $BASE" \
-    	-helptext "Run animation and save frames"
-    Button $rname.close -text Close -bd 1 \
+    	-helptext [G_msg "Run animation and save frames"]
+    Button $rname.close -text [G_msg "Close"] -bd 1 \
     	-command "Nv_closePanel $BASE"
     pack $rname.rands -side left -fill y
     pack $rname.close -side right -fill y
@@ -219,7 +219,7 @@ proc mkTensionScale {type BASE} {
 	catch {destroy $BASE.tension}
 
 	if {$type == "spline"} {
-		set tscale [scale $BASE.tension -label "spline tension" -orient h -showvalue f \
+		set tscale [scale $BASE.tension -label [G_msg "spline tension"] -orient h -showvalue f \
 			-from 0 -to 1000 -command animChangeTension \
 			-activebackground gray80 -background gray90 -showvalue 1 -width 14]
 	
@@ -573,8 +573,8 @@ proc kfKeyPointerMoveBot { BASE tag } {
 
     # Check if the keyframe pointer is over the trash can
     if {$x > $animEndX} then {
-		set ans [tk_dialog .verify "Verify" "Do you really want to delete this keyframe?" \
-				 {} 1 Ok Dismiss]
+		set ans [tk_dialog .verify [G_msg "Verify"] [G_msg "Do you really want to delete this keyframe?"] \
+				 {} 1 [G_msg "Ok"] [G_msg "Dismiss"]]
 		if {$ans == 1} then {
 	
 			# Cancel the delete so move top pointer back to original position
@@ -598,9 +598,9 @@ proc kfKeyPointerMoveBot { BASE tag } {
 			set key_time [lindex [lindex $animKeyList $i] 0]
 			puts "Deleting key at $key_time"
 			if {[Ndelete_key $key_time 0 1] == 0} then {
-			tk_dialog .ierror "Internal Error" \
-				"Internal Error - Failed to delete keyframe in GK key list" \
-				{} 0 Dismiss
+			tk_dialog .ierror [G_msg "Internal Error"] \
+				[G_msg "Internal Error - Failed to delete keyframe in GK key list"] \
+				{} 0 [G_msg "Dismiss"]
 			}
 			Nupdate_frames
 	
@@ -639,9 +639,9 @@ proc kfKeyPointerMoveBot { BASE tag } {
 
     # Also, move the key in the GK keyframe list
     if {[Nmove_key $old_time 0 $new_time] == 0} then {
-	tk_dialog .ierror "Internal Error" \
-	    "Internal Error - Failed to move keyframe in GK key list" \
-	    {} 0 Dismiss
+	tk_dialog .ierror [G_msg "Internal Error"] \
+	    [G_msg "Internal Error - Failed to move keyframe in GK key list"] \
+	    {} 0 [G_msg "Dismiss"]
     }
     
     set new_time_int [expr round($new_time * 100)]
@@ -750,9 +750,9 @@ proc animAddKey { BASE } {
     if { $extract_where != -1} then {
 
 	# Found the new key, do a popup for the replace
-	set ans [tk_dialog .replace "Replace Key" \
-		     "There is already a keyframe at this time, do you wish to replace it?" \
-		     {} 1 Ok Dismiss]
+	set ans [tk_dialog .replace [G_msg "Replace Key"] \
+		     [G_msg "There is already a keyframe at this time, do you wish to replace it?"] \
+		     {} 1 [G_msg "Ok"] [G_msg "Dismiss"]]
 	if {$ans == 1} then { return }
 
 	# Otherwise do the replace
@@ -797,8 +797,8 @@ proc animClearAllKeys { BASE } {
     global animKeyList
 
     # First make sure they really want to do this
-    if {[tk_dialog .verify "Verify" "Do you really want to delete all keyframes?" \
-	     {} 1 Ok Dismiss] == 1} then {
+    if {[tk_dialog .verify [G_msg "Verify"] [G_msg "Do you really want to delete all keyframes?"] \
+	     {} 1 [G_msg "Ok"] [G_msg "Dismiss"]] == 1} then {
 	return
     } else {
 	foreach i $animKeyList {
@@ -925,34 +925,34 @@ proc animRunAndSave { BASE } {
     set animWaitPress false
     set IMG 2
     toplevel .ras_fname
-    wm title .ras_fname "Save Animation Frames"
+    wm title .ras_fname [G_msg "Save Animation Frames"]
     set row1 [frame .ras_fname.frame1]
     set row2 [frame .ras_fname.frame2]
     set row3 [frame .ras_fname.frame3]
     set row4 [frame .ras_fname.frame4]
     
-    Label $row1.label -text "Prefix for images: " \
-    	-helptext "Enter a prefix name for images to be created from animation frames"
+    Label $row1.label -text [G_msg "Prefix for images: "] \
+    	-helptext [G_msg "Enter a prefix name for images to be created from animation frames"]
     entry $row1.enter -relief sunken
     pack $row1.label $row1.enter -side left -fill x -expand 0 -anchor w
     pack $row1 -side top -padx 3 -pady 4 -expand 1 -fill both
     
-    Label $row2.formatlabel -text "Output format: "
-    radiobutton $row2.img2 -text "PPM" -variable IMG -value 2
-    radiobutton $row2.img3 -text "TIFF" -variable IMG -value 3
-    radiobutton $row2.img4 -text "MPEG-1" -variable IMG -value 4
+    Label $row2.formatlabel -text [G_msg "Output format: "]
+    radiobutton $row2.img2 -text [G_msg "PPM"] -variable IMG -value 2
+    radiobutton $row2.img3 -text [G_msg "TIFF"] -variable IMG -value 3
+    radiobutton $row2.img4 -text [G_msg "MPEG-1"] -variable IMG -value 4
     pack $row2.formatlabel $row2.img2 $row2.img3 $row2.img4 -side left \
     	-anchor w -fill x -expand 0
     pack $row2 -side top -padx 3 -expand 1 -fill both
     
-    Label $row3.rendlabel -text "Rendering mode: "
-    radiobutton $row3.norm -text "coarse" -variable animSaveRenderStyle -value 0
-    radiobutton $row3.fancy -text "fine" -variable animSaveRenderStyle -value 1
+    Label $row3.rendlabel -text [G_msg "Rendering mode: "]
+    radiobutton $row3.norm -text [G_msg "coarse"] -variable animSaveRenderStyle -value 0
+    radiobutton $row3.fancy -text [G_msg "fine"] -variable animSaveRenderStyle -value 1
     pack $row3.rendlabel $row3.norm $row3.fancy -side left -anchor w \
     	 -fill x -expand 0
     pack $row3 -side top -padx 3 -pady 4 -expand 1 -fill both
 
-    button $row4.ok -text "OK" -width 4 -bd 1 -command "set animWaitPress true"
+    button $row4.ok -text [G_msg "OK"] -width 4 -bd 1 -command "set animWaitPress true"
     pack $row4.ok
     pack $row4 -side top -pady 3 -expand 1 -fill both
 

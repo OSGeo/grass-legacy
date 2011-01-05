@@ -41,22 +41,22 @@ proc mksitePanel { BASE } {
     
     #  Initialize panel info
     if [catch {set Nv_($BASE)}] {
-		set panel [St_create {window name size priority} $BASE "Vector Points" 1 5]
+		set panel [St_create {window name size priority} $BASE [G_msg "Vector Points"] 1 5]
     } else {
 		set panel $Nv_($BASE)
     }
 
 	########## create panel heading 
     frame $BASE  -relief flat -borderwidth 0
-    Nv_mkPanelname $BASE "Vector Points Panel"
+    Nv_mkPanelname $BASE [G_msg "Vector Points Panel"]
 
   	########## create top frame
     set top [frame $BASE.top]
-	Label $top.current -text "Current:" -anchor w
+	Label $top.current -text [G_msg "Current:"] -anchor w
     mkMapList $top.list site
     
-	button $top.new -text New -anchor center -command "add_map site" -bd 1
-	button $top.delete -text Delete -anchor center -command "delete_map site" -bd 1
+	button $top.new -text [G_msg "New"] -anchor center -command "add_map site" -bd 1
+	button $top.delete -text [G_msg "Delete"] -anchor center -command "delete_map site" -bd 1
     
 	pack $top.current $top.list -side left
 	pack $top.delete $top.new -side right -expand 0
@@ -65,6 +65,7 @@ proc mksitePanel { BASE } {
     # initialize variables and map list   
     set curr [Nget_current site]
     set Nv_(siteshape) sphere
+    set Nv_(siteshapelv) ""
     change_marker
 
     if {0 != $curr}  {
@@ -110,11 +111,11 @@ proc mksitePanel { BASE } {
 
   	########## create bottom frame
     set bottom [frame $BASE.bottom] 
-    button $bottom.close -text Close \
+    button $bottom.close -text [G_msg "Close"] \
 		-command "Nv_closePanel $BASE" -anchor s -bd 1
     pack $bottom.close -side right
 
-    button $bottom.draw_current -text "DRAW CURRENT" -fg darkgreen -anchor s \
+    button $bottom.draw_current -text [G_msg "DRAW CURRENT"] -fg darkgreen -anchor s \
 		-command {Nsite_draw_one [Nget_current site]} -bd 1
 
     pack $bottom.draw_current -side left
@@ -129,7 +130,7 @@ proc mksitePanel { BASE } {
     set row4 [frame $mid1.row4]
     set row5 [frame $mid1.row5]
     
-    set szlabel [label $row1.szlabel -text "icon size" \
+    set szlabel [label $row1.szlabel -text [G_msg "icon size"] \
     	-font $nviztxtfont -fg black]
     
     
@@ -145,23 +146,24 @@ proc mksitePanel { BASE } {
 		
 	$ptsize setvalue @$startindex
 
-    set ptcolor [button $row1.color -text Color \
+    set ptcolor [button $row1.color -text [G_msg "Color"] \
 		-command "change_color site $row1.color"]
     bind $ptcolor <Expose> "$row1.color configure -bg \[get_curr_sv_color site\]"
    
-   	set markerlbl [label $row1.markerlbl -text "  icon type " -fg black -font $nviztxtfont]
+   	set markerlbl [label $row1.markerlbl -text [G_msg "icon type"] -fg black -font $nviztxtfont]
     set markertype [ComboBox $row1.marker -width 8 \
     	-textvariable Nv_(siteshape) -modifycmd change_marker \
-    	-values {"x" "sphere" "diamond" "cube" "box" "gyro" "aster" "histogram"}]
+    	-values $Nv_(siteshapes) -labels $Nv_(siteshape_names) -labelsvariable Nv_(siteshapelv)] 
+    
 
     pack $szlabel $ptsize $markerlbl $markertype -side left 
     pack $ptcolor -side left -padx 10
 
-    set rb1 [radiobutton  $row2.disp3d -text "3D points" \
+    set rb1 [radiobutton  $row2.disp3d -text [G_msg "3D points"] \
 		-anchor nw -variable Nv_(sitedisplay) -value 3d \
 		-command change_site_mode]
 
-    set rb2 [radiobutton  $row3.dispsurf -text "display on surface(s):" \
+    set rb2 [radiobutton  $row3.dispsurf -text [G_msg "display on surface(s):"] \
 		-anchor nw -variable Nv_(sitedisplay) -value surfdisp \
 		-command change_site_mode]
 
@@ -177,7 +179,7 @@ proc mksitePanel { BASE } {
 	
 	set site_attr(FIELD_ATTR_PANEL) 0
     
-	checkbutton $row4.themechk -text "thematic mapping for vector points" \
+	checkbutton $row4.themechk -text [G_msg "thematic mapping for vector points"] \
 		-variable site_attr(FIELD_ATTR_PANEL) -command "if {$curr!=0} {site_attr_gui $row5 $bottom $curr}" \
 		-offvalue 0 -onvalue 1
 	pack $row4.themechk -side left -anchor nw
@@ -363,10 +365,3 @@ proc change_site_size {size} {
 		if {$Nauto_draw == 1} {Ndraw_all}
     }
 }
-
-
-
-
-
-
-

@@ -36,13 +36,13 @@ proc mksdiffPanel { BASE } {
     #  Initialize panel info
     if [catch {set Nv_($BASE)}] {
 		set panel [St_create {window name size priority} \
-		       $BASE "Scaled Difference" 1 5]
+		       $BASE [G_msg "Scaled Difference"] 1 5]
     } else {
 		set panel $Nv_($BASE)
     }
 
     frame $BASE  -relief flat -borderwidth 0
-    Nv_mkPanelname $BASE "Scaled Difference Panel"
+    Nv_mkPanelname $BASE [G_msg "Scaled Difference Panel"]
 
     frame $BASE.top 
     frame $BASE.bottom 
@@ -51,22 +51,22 @@ proc mksdiffPanel { BASE } {
     
     set maplist [Nget_map_list surf]
 
-    Label $BASE.top.label -text "Reference surface:"
+    Label $BASE.top.label -text [G_msg "Reference surface:"]
     Nv_mksdiffSurfacelist $BASE.top.list 
     pack $BASE.top.label $BASE.top.list -side left -fill y -pady 4
     
-    Label $BASE.top1.lbl -text "Set difference between reference surface and others"
+    Label $BASE.top1.lbl -text [G_msg "Set difference between reference surface and others"]
     pack $BASE.top1.lbl -side left -pady 4
     Nv_mkScale $BASE.top2.sdscale h "z-exag" 0 2500 100 set_sdexag 2 
     pack $BASE.top2.sdscale -side bottom
     
 
-    Button $BASE.bottom.none -text "Clear" \
+    Button $BASE.bottom.none -text [G_msg "Clear"] \
     	-command "unset_sdsurf" -bd 1 -width 5 \
-    	-helptext "unselect reference surface"
+    	-helptext [G_msg "unselect reference surface"]
     pack $BASE.bottom.none -side left
     
-    button $BASE.bottom.close -text "Close" \
+    button $BASE.bottom.close -text [G_msg "Close"] \
     	-command "Nv_closePanel $BASE" -bd 1 -width 5
     pack $BASE.bottom.close -side right
     
@@ -121,7 +121,7 @@ proc Nv_mksdiffSurfacelist { P } {
     set name [Nget_current sdiff]
 
     if {$name == 0} {
-	set name "None selected   "
+	set name [G_msg "None selected"]
     } else {
 	set n [lsearch $list $name]
 	set list [lreplace $list $n $n]

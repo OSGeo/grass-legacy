@@ -138,7 +138,7 @@ proc create_map_browser {{w .map_browser} {type all} {mode 0}} {
     global nviztxtfont
 
     toplevel $w
-    wm title $w "Map Browser"
+    wm title $w [G_msg "Map Browser"]
     tkwait visibility $w
 
     #puts "BROWSER: $w TYPE: $type MODE: $mode"
@@ -147,7 +147,7 @@ proc create_map_browser {{w .map_browser} {type all} {mode 0}} {
     bind $w.filename <Return> "set_selection_from_map_browser_filename $w"
     frame $w.main
     frame     $w.main.mapsets
-    label     $w.main.mapsets.label -text "MAPSETS"
+    label     $w.main.mapsets.label -text [G_msg "MAPSETS"]
     frame     $w.main.mapsets.f
     listbox   $w.main.mapsets.f.list -bd 2 -relief sunken -bg white \
 		-exportselection no \
@@ -165,7 +165,7 @@ proc create_map_browser {{w .map_browser} {type all} {mode 0}} {
 		"map_browser_select_mapset  %W %y $w"
 
     frame     $w.main.files
-    label     $w.main.files.label -text FILES
+    label     $w.main.files.label -text [G_msg "FILES"]
     frame     $w.main.files.f
     listbox   $w.main.files.f.list -bd 2 -relief sunken -bg white \
 		-exportselection no                   \
@@ -201,32 +201,32 @@ proc create_map_browser {{w .map_browser} {type all} {mode 0}} {
     }
 
     if [string compare $type all] {
-		Label $w.element.menu -text "Map type:" -fg black -font $nviztxtfont
+		Label $w.element.menu -text [G_msg "Map type:"] -fg black -font $nviztxtfont
     } else {
 		set name ""
-		menubutton $w.element.menu -text {Map Type} -menu $w.element.menu.m -relief raised -bd 1
+		menubutton $w.element.menu -text [G_msg "Map Type"] -menu $w.element.menu.m -relief raised -bd 1
 		menu $w.element.menu.m
 		$w.element.menu.m add command \
-			-label {Raster} -command "set_map_browser_element  $w Raster"
+			-label [G_msg "Raster"] -command "set_map_browser_element  $w Raster"
 		$w.element.menu.m add command \
-			-label {Vector} -command "set_map_browser_element  $w Vector"
+			-label [G_msg "Vector"] -command "set_map_browser_element  $w Vector"
 		$w.element.menu.m add command \
-			-label {Site} -command "set_map_browser_element  $w Site"
+			-label [G_msg "Site"] -command "set_map_browser_element  $w Site"
 		$w.element.menu.m add command \
-			-label {Surf} -command "set_map_browser_element $w Surf"
+			-label [G_msg "Surf"] -command "set_map_browser_element $w Surf"
 		$w.element.menu.m add command \
-			-label {3d.view} -command "set_map_browser_element $w 3d.view"
+			-label [G_msg "3d.view"] -command "set_map_browser_element $w 3d.view"
 		$w.element.menu.m add command \
-			-label {Regions} -command "set_map_browser_element  $w windows"
+			-label [G_msg "Regions"] -command "set_map_browser_element  $w windows"
 		$w.element.menu.m add command \
-			-label {Labels} -command "set_map_browser_element  $w\
+			-label [G_msg "Labels"] -command "set_map_browser_element  $w\
 				paint/labels"
 	    $w.element.menu.m add command \
-	    	-label {Icons} -command "set_map_browser_element  $w icons"
+	    	-label [G_msg "Icons"] -command "set_map_browser_element  $w icons"
     }
-    button $w.accept -text "Accept" -command "mapBrowser_accept_cmd $w" -bd 1 \
+    button $w.accept -text [G_msg "Accept"] -command "mapBrowser_accept_cmd $w" -bd 1 \
     	-default active
-    button $w.cancel -text "Cancel" -command "mapBrowser_cancel_cmd $w" -bd 1
+    button $w.cancel -text [G_msg "Cancel"] -command "mapBrowser_cancel_cmd $w" -bd 1
 	
 	bind $w <Return> "mapBrowser_accept_cmd $w"
 
