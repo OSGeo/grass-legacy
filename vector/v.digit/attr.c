@@ -10,6 +10,7 @@
 #include <grass/display.h>
 #include <grass/colors.h>
 #include <grass/form.h>
+#include <grass/glocale.h>
 #include "global.h"
 #include "proto.h"
 
@@ -90,7 +91,7 @@ int add_cat(int field, int cat, int newrec)
 	    G_debug(2, "Record already existed.");
 	}
 	else if (ret == -1) {
-	    G_warning("Cannot create new record.");
+	    G_warning("%s", _("Cannot create new record."));
 	}
     }
 
@@ -123,7 +124,7 @@ int new_record(int field, int cat)
     Fi = Vect_get_field(&Map, field);
     if (Fi == NULL) {
 	i_message(MSG_OK, MSGI_ERROR,
-		  "Database table for this layer is not defined");
+		  _("Database table for this layer is not defined"));
 	return -1;
     }
 
@@ -133,7 +134,7 @@ int new_record(int field, int cat)
     /* First check if already exists */
     driver = db_start_driver_open_database(Fi->driver, Fi->database);
     if (driver == NULL) {
-	sprintf(buf, "Cannot open database %s by driver %s", Fi->database,
+	sprintf(buf, _("Cannot open database %s by driver %s"), Fi->database,
 		Fi->driver);
 	i_message(MSG_OK, MSGI_ERROR, buf);
 	return -1;
@@ -141,7 +142,7 @@ int new_record(int field, int cat)
     ret = db_select_value(driver, Fi->table, Fi->key, cat, Fi->key, &value);
     if (ret == -1) {
 	db_close_database_shutdown_driver(driver);
-	sprintf(buf, "Cannot select record from table %s", Fi->table);
+	sprintf(buf, _("Cannot select record from table %s"), Fi->table);
 	i_message(MSG_OK, MSGI_ERROR, buf);
 	return -1;
     }
@@ -149,11 +150,11 @@ int new_record(int field, int cat)
 	sprintf(buf, "insert into %s (%s) values (%d)", Fi->table, Fi->key,
 		cat);
 	db_set_string(&sql, buf);
-	G_debug(2, db_get_string(&sql));
+	G_debug(2, "%s", db_get_string(&sql));
 	ret = db_execute_immediate(driver, &sql);
 	if (ret != DB_OK) {
 	    db_close_database_shutdown_driver(driver);
-	    sprintf(buf, "Cannot insert new record: %s", db_get_string(&sql));
+	    sprintf(buf, _("Cannot insert new record: %s"), db_get_string(&sql));
 	    i_message(MSG_OK, MSGI_ERROR, buf);
 	    return -1;
 	}
@@ -187,8 +188,8 @@ int display_cats_begin(void *closure)
     dc->Points = Vect_new_line_struct();
     dc->Cats = Vect_new_cats_struct();
 
-    i_prompt("Display categories:");
-    i_prompt_buttons("Select line", "", "Quit tool");
+    i_prompt(_("Display categories:"));
+    i_prompt_buttons(_("Select line"), "", _("Quit tool"));
 
     dc->thresh = get_thresh();
     G_debug(2, "thresh = %f", dc->thresh);
@@ -297,8 +298,8 @@ int copy_cats_begin(void *closure)
     cc->Src_Cats = Vect_new_cats_struct();
     cc->Dest_Cats = Vect_new_cats_struct();
 
-    i_prompt("Copy attributes:");
-    i_prompt_buttons("Select source object", "", "Quit tool");
+    i_prompt(_("Copy attributes:"));
+    i_prompt_buttons(_("Select source object"), "", _("Quit tool"));
 
     cc->thresh = get_thresh();
     G_debug(2, "thresh = %f", cc->thresh);
@@ -392,18 +393,18 @@ int copy_cats_update(void *closure, int sxn, int syn, int button)
     if (cc->dest_line > 0) {
 	display_line(cc->dest_line, SYMB_HIGHLIGHT, 1);
 	display_line(cc->src_line, SYMB_HIGHLIGHT, 1);
-	i_prompt("Select the target object");
-	i_prompt_buttons("Conform and select next", "Deselect Target",
-			 "Quit tool");
+	i_prompt(_("Select the target object"));
+	i_prompt_buttons(_("Conform and select next"), _("Deselect Target"),
+			 _("Quit tool"));
     }
     else if (cc->src_line > 0) {
 	display_line(cc->src_line, SYMB_HIGHLIGHT, 1);
-	i_prompt("Select the target object");
-	i_prompt_buttons("Select", "Deselect Source", "Quit tool");
+	i_prompt(_("Select the target object"));
+	i_prompt_buttons(_("Select"), _("Deselect Source"), _("Quit tool"));
     }
     else {
-	i_prompt("Copy attributes:");
-	i_prompt_buttons("Select source object", "", "Quit tool");
+	i_prompt(_("Copy attributes:"));
+	i_prompt_buttons(_("Select source object"), "", _("Quit tool"));
     }
 
     return 0;
@@ -458,8 +459,8 @@ int display_attributes_begin(void *closure)
     da->Points = Vect_new_line_struct();
     da->Cats = Vect_new_cats_struct();
 
-    i_prompt("Display attributes:");
-    i_prompt_buttons("Select line", "", "Quit tool");
+    i_prompt(_("Display attributes:"));
+    i_prompt_buttons(_("Select line"), "", _("Quit tool"));
 
     da->thresh = get_thresh();
     G_debug(2, "thresh = %f", da->thresh);
@@ -532,23 +533,24 @@ int display_attributes_update(void *closure, int sxn, int syn, int button)
 		    G_debug(3, "field = %d category = %d", da->Cats->field[j],
 			    da->Cats->cat[j]);
 
-		    sprintf(title, "Layer %d", da->Cats->field[j]);
+		    sprintf(title, _("Layer %d"), da->Cats->field[j]);
 		    db_set_string(&da->html, "");
-		    db_append_string(&da->html,
-				     "<HTML><HEAD><TITLE>Attributes</TITLE><BODY>");
+		    db_append_string(&da->html, "<HTML><HEAD><TITLE>");
+		    db_append_string(&da->html, _("Attributes"));
+		    db_append_string(&da->html, "</TITLE><BODY>");
 
-		    sprintf(buf, "layer: %d<BR>category: %d<BR>",
+		    sprintf(buf, _("layer: %d<BR>category: %d<BR>"),
 			    da->Cats->field[j], da->Cats->cat[j]);
 		    db_append_string(&da->html, buf);
 
 		    Fi = Vect_get_field(&Map, da->Cats->field[j]);
 		    if (Fi == NULL) {
 			db_append_string(&da->html,
-					 "Database connection not defined<BR>");
+					 _("Database connection not defined<BR>"));
 		    }
 		    else {
 			sprintf(buf,
-				"driver: %s<BR>database: %s<BR>table: %s<BR>key column: %s<BR>",
+				_("driver: %s<BR>database: %s<BR>table: %s<BR>key column: %s<BR>"),
 				Fi->driver, Fi->database, Fi->table, Fi->key);
 			db_append_string(&da->html, buf);
 
@@ -561,19 +563,20 @@ int display_attributes_update(void *closure, int sxn, int syn, int button)
 			G_free(Fi);
 		    }
 		    db_append_string(&da->html, "</BODY></HTML>");
-		    G_debug(3, db_get_string(&da->html));
+		    G_debug(3, "%s", db_get_string(&da->html));
 		    F_open(title, db_get_string(&da->html));
 		}
 	    }
 	    else {
-		sprintf(title, "Line %d", line);
+		sprintf(title, _("Line %d"), line);
 		db_init_string(&da->html);
 		db_set_string(&da->html, "");
-		db_append_string(&da->html,
-				 "<HTML><HEAD><TITLE>Attributes</TITLE><BODY>");
-		db_append_string(&da->html, "No categories");
+		db_append_string(&da->html, "<HTML><HEAD><TITLE>");
+		db_append_string(&da->html, _("Attributes"));
+		db_append_string(&da->html, "</TITLE><BODY>");
+		db_append_string(&da->html, _("No categories"));
 		db_append_string(&da->html, "</BODY></HTML>");
-		G_debug(3, db_get_string(&da->html));
+		G_debug(3, "%s", db_get_string(&da->html));
 		F_open(title, db_get_string(&da->html));
 	    }
 	}
@@ -644,7 +647,7 @@ int check_record(int field, int cat)
     /* Does record exist ? */
     driver = db_start_driver_open_database(Fi->driver, Fi->database);
     if (driver == NULL) {
-	sprintf(buf, "Cannot open database %s by driver %s", Fi->database,
+	sprintf(buf, _("Cannot open database %s by driver %s"), Fi->database,
 		Fi->driver);
 	i_message(MSG_OK, MSGI_ERROR, buf);
 	return -1;
@@ -653,7 +656,7 @@ int check_record(int field, int cat)
     G_debug(3, "n records = %d", ret);
     if (ret == -1) {
 	db_close_database_shutdown_driver(driver);
-	sprintf(buf, "Cannot select record from table %s", Fi->table);
+	sprintf(buf, _("Cannot select record from table %s"), Fi->table);
 	i_message(MSG_OK, MSGI_ERROR, buf);
 	return -1;
     }
@@ -662,8 +665,7 @@ int check_record(int field, int cat)
 	return 0;
 
     sprintf(buf,
-	    "There are no more features with category %d (layer %d) in the map, but there is "
-	    "record in the table. Delete this record?", cat, field);
+	    _("There are no more features with category %d (layer %d) in the map, but there is record in the table. Delete this record?"), cat, field);
     ret = i_message(MSG_YESNO, MSGI_QUESTION, buf);
 
     if (ret == 1)
@@ -671,11 +673,11 @@ int check_record(int field, int cat)
 
     sprintf(buf, "delete from %s where %s = %d", Fi->table, Fi->key, cat);
     db_set_string(&sql, buf);
-    G_debug(2, db_get_string(&sql));
+    G_debug(2, "%s", db_get_string(&sql));
     ret = db_execute_immediate(driver, &sql);
     if (ret != DB_OK) {
 	db_close_database_shutdown_driver(driver);
-	sprintf(buf, "Cannot delete record: %s", db_get_string(&sql));
+	sprintf(buf, _("Cannot delete record: %s"), db_get_string(&sql));
 	i_message(MSG_OK, MSGI_ERROR, buf);
 	return -1;
     }

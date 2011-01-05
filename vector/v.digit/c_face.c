@@ -8,6 +8,7 @@
 #include <grass/Vect.h>
 #include <grass/dbmi.h>
 #include <grass/raster.h>
+#include <grass/glocale.h>
 #include "global.h"
 #include "proto.h"
 
@@ -179,13 +180,13 @@ c_table_definition(ClientData cdata, Tcl_Interp * interp, int argc,
 
 	driver = db_start_driver(Fi->driver);
 	if (driver == NULL) {
-	    G_warning("Cannot open driver %s", Fi->driver);
+	    G_warning(_("Cannot open driver %s"), Fi->driver);
 	    return TCL_OK;
 	}
 	db_init_handle(&handle);
 	db_set_handle(&handle, Vect_subst_var(Fi->database, &Map), NULL);
 	if (db_open_database(driver, &handle) != DB_OK) {
-	    G_warning("Cannot open database %s", Fi->database);
+	    G_warning(_("Cannot open database %s"), Fi->database);
 	    db_shutdown_driver(driver);
 	    return TCL_OK;
 	}
@@ -222,6 +223,7 @@ c_create_table(ClientData cdata, Tcl_Interp * interp, int argc, char *argv[])
     dbString sql, err;
     dbDriver *driver;
     dbHandle handle;
+    char buf[1000];
 
     G_debug(2, "c_create_table() field = %s key = %s cols = %s", argv[1],
 	    argv[3], argv[4]);
@@ -236,8 +238,8 @@ c_create_table(ClientData cdata, Tcl_Interp * interp, int argc, char *argv[])
 
     driver = db_start_driver(Fi->driver);
     if (driver == NULL) {
-	G_warning("Cannot open driver %s", Fi->driver);
-	db_set_string(&err, "Cannot open driver ");
+	G_warning(_("Cannot open driver %s"), Fi->driver);
+	db_set_string(&err, _("Cannot open driver "));
 	db_append_string(&err, Fi->driver);
 	Tcl_SetVar(Toolbox, "create_table_msg", db_get_string(&err),
 		   TCL_GLOBAL_ONLY);
@@ -246,11 +248,9 @@ c_create_table(ClientData cdata, Tcl_Interp * interp, int argc, char *argv[])
     db_init_handle(&handle);
     db_set_handle(&handle, Vect_subst_var(Fi->database, &Map), NULL);
     if (db_open_database(driver, &handle) != DB_OK) {
-	G_warning("Cannot open database %s", Fi->database);
-	db_set_string(&err, "Cannot open database ");
-	db_append_string(&err, Fi->database);
-	db_append_string(&err, " by driver ");
-	db_append_string(&err, Fi->driver);
+	G_warning(_("Cannot open database %s"), Fi->database);
+	sprintf(buf, _("Cannot open database %s by driver %s"), Fi->database, Fi->driver);
+	db_set_string(&err, buf);
 	db_append_string(&err, db_get_error_msg());
 	db_shutdown_driver(driver);
 	Tcl_SetVar(Toolbox, "create_table_msg", db_get_string(&err),
@@ -263,11 +263,11 @@ c_create_table(ClientData cdata, Tcl_Interp * interp, int argc, char *argv[])
     db_append_string(&sql, " ( ");
     db_append_string(&sql, argv[4]);
     db_append_string(&sql, " ) ");
-    G_debug(2, db_get_string(&sql));
+    G_debug(2, "%s", db_get_string(&sql));
 
     if (db_execute_immediate(driver, &sql) != DB_OK) {
-	G_warning("Cannot create table: %s", db_get_string(&sql));
-	db_set_string(&err, "Cannot create table: ");
+	G_warning(_("Cannot create table: %s"), db_get_string(&sql));
+	db_set_string(&err, _("Cannot create table: "));
 	db_append_string(&err, db_get_string(&sql));
 	db_append_string(&err, "\n");
 	db_append_string(&err, db_get_error_msg());
@@ -279,8 +279,8 @@ c_create_table(ClientData cdata, Tcl_Interp * interp, int argc, char *argv[])
     }
 
     if (db_create_index2(driver, Fi->table, argv[3]) != DB_OK) {
-	G_warning("Cannot create index");
-	db_set_string(&err, "Cannot create index:\n");
+	G_warning("%s", _("Cannot create index"));
+	db_set_string(&err, _("Cannot create index:\n"));
 	db_append_string(&err, db_get_error_msg());
 	db_close_database(driver);
 	db_shutdown_driver(driver);
@@ -291,8 +291,8 @@ c_create_table(ClientData cdata, Tcl_Interp * interp, int argc, char *argv[])
 
     if (db_grant_on_table
 	(driver, Fi->table, DB_PRIV_SELECT, DB_GROUP | DB_PUBLIC) != DB_OK) {
-	G_warning("Cannot grant privileges on table %s", Fi->table);
-	db_set_string(&err, "Cannot grant privileges on table:\n");
+	G_warning(_("Cannot grant privileges on table %s"), Fi->table);
+	db_set_string(&err, _("Cannot grant privileges on table:\n"));
 	db_append_string(&err, db_get_error_msg());
 	db_close_database(driver);
 	db_shutdown_driver(driver);
@@ -309,8 +309,7 @@ c_create_table(ClientData cdata, Tcl_Interp * interp, int argc, char *argv[])
 			    Fi->database, Fi->driver);
     if (ret == -1) {
 	db_set_string(&err,
-		      "Cannot add database link to vector, link for given field probably "
-		      "already exists.");
+		      _("Cannot add database link to vector, link for given field probably already exists."));
 	Tcl_SetVar(Toolbox, "create_table_msg", db_get_string(&err),
 		   TCL_GLOBAL_ONLY);
 	return TCL_OK;

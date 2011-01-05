@@ -21,6 +21,7 @@
 #include <grass/colors.h>
 #include <grass/raster.h>
 #include <grass/display.h>
+#include <grass/glocale.h>
 #include "global.h"
 #include "proto.h"
 
@@ -76,7 +77,7 @@ int var_seti(int code, int iv)
 	}
 	i++;
     }
-    G_warning("Cannot set variable code = %d", code);
+    G_warning(_("Cannot set variable code = %d"), code);
     return -1;
 }
 
@@ -97,7 +98,7 @@ int var_setd(int code, double d)
 	}
 	i++;
     }
-    G_warning("Cannot set variable code = %d", code);
+    G_warning(_("Cannot set variable code = %d"), code);
     return -1;
 }
 
@@ -118,7 +119,7 @@ int var_setc(int code, char *c)
 	}
 	i++;
     }
-    G_warning("Cannot set variable code = %d", code);
+    G_warning(_("Cannot set variable code = %d"), code);
     return -1;
 }
 
@@ -139,7 +140,7 @@ int var_get_type_by_name(char *name)
 	}
 	i++;
     }
-    G_warning("Cannot get type of variable %s", name);
+    G_warning(_("Cannot get type of variable %s"), name);
     return -1;
 }
 
@@ -160,7 +161,7 @@ int var_get_code_by_name(char *name)
 	}
 	i++;
     }
-    G_warning("Cannot get code of variable %s", name);
+    G_warning(_("Cannot get code of variable %s"), name);
     return -1;
 }
 
@@ -180,7 +181,7 @@ char *var_get_name_by_code(int code)
 	}
 	i++;
     }
-    G_warning("Cannot get name of variable %d", code);
+    G_warning(_("Cannot get name of variable %d"), code);
     return NULL;
 }
 
@@ -195,7 +196,7 @@ int var_geti(int code)
 	}
 	i++;
     }
-    G_warning("Cannot get value of variable code = %d", code);
+    G_warning(_("Cannot get value of variable code = %d"), code);
     return 0;
 }
 
@@ -211,7 +212,7 @@ double var_getd(int code)
 	i++;
     }
 
-    G_warning("Cannot get value of variable code = %d", code);
+    G_warning(_("Cannot get value of variable code = %d"), code);
     return 0;
 }
 
@@ -227,6 +228,6 @@ char *var_getc(int code)
 	i++;
     }
 
-    G_warning("Cannot get value of variable code = %d", code);
+    G_warning(_("Cannot get value of variable code = %d"), code);
     return NULL;
 }

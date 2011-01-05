@@ -147,7 +147,7 @@ int main(int argc, char *argv[])
     mapset = G_find_vector2(map_opt->answer, G_mapset());
     if (mapset == NULL) {
 	if (new_f->answer) {
-	    G_message(_("New empty map created."));
+	    G_message("%s", _("New empty map created."));
 	    Vect_open_new(&Map, map_opt->answer, 0);
 	    Vect_build(&Map);
 	    Vect_close(&Map);

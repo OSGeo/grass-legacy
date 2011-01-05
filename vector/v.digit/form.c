@@ -14,6 +14,7 @@
 #include <grass/dbmi.h>
 #include <grass/form.h>
 #include <grass/Vect.h>
+#include <grass/glocale.h>
 #include "proto.h"
 
 /* Structure to store column names and values */
@@ -93,7 +94,7 @@ int submit(ClientData cdata, Tcl_Interp * interp, int argc, char *argv[])
 
     /* Check if all internal values are set */
     if (Drvname == NULL || Dbname == NULL || Tblname == NULL || Key == NULL) {
-	G_warning("db connection was not set by form\n");
+	G_warning("%s", _("db connection was not set by form\n"));
 	sprintf(buf, "set submit_msg \"db connection was not set by form.\"");
 	Tcl_Eval(interp, buf);
 	Tcl_Eval(interp, "set submit_result 0");
@@ -104,7 +105,7 @@ int submit(ClientData cdata, Tcl_Interp * interp, int argc, char *argv[])
     G_debug(2, "Open driver");
     driver = db_start_driver(Drvname);
     if (driver == NULL) {
-	G_warning("Cannot open driver\n");
+	G_warning("%s", _("Cannot open driver\n"));
 	sprintf(buf, "set submit_msg \"Cannot open driver '%s'\"", Drvname);
 	Tcl_Eval(interp, buf);
 	Tcl_Eval(interp, "set submit_result 0");
@@ -116,7 +117,7 @@ int submit(ClientData cdata, Tcl_Interp * interp, int argc, char *argv[])
     db_set_handle(&handle, Dbname, NULL);
     G_debug(2, "Open database");
     if (db_open_database(driver, &handle) != DB_OK) {
-	G_warning("Cannot open database\n");
+	G_warning("%s", _("Cannot open database\n"));
 	db_shutdown_driver(driver);
 	sprintf(buf,
 		"set submit_msg \"Cannot open database '%s' by driver '%s'\"",
@@ -129,7 +130,7 @@ int submit(ClientData cdata, Tcl_Interp * interp, int argc, char *argv[])
 
     db_set_string(&table_name, Tblname);
     if (db_describe_table(driver, &table_name, &table) != DB_OK) {
-	G_warning("Cannot describe table\n");
+	G_warning("%s", _("Cannot describe table\n"));
 	db_shutdown_driver(driver);
 	db_close_database(driver);
 	sprintf(buf, "set submit_msg \"Cannot describe table '%s'\"",
@@ -158,7 +159,7 @@ int submit(ClientData cdata, Tcl_Interp * interp, int argc, char *argv[])
 	    }
 	}
 	if (!found && (G_strcasecmp(Columns[i].name, F_ENCODING) != 0)) {
-	    G_warning("Cannot find column type");
+	    G_warning("%s", _("Cannot find column type"));
 	    db_close_database(driver);
 	    db_shutdown_driver(driver);
 	    sprintf(buf, "set submit_msg \"Cannot find column type\"");
@@ -195,7 +196,7 @@ int submit(ClientData cdata, Tcl_Interp * interp, int argc, char *argv[])
 		if (Tcl_SetSystemEncoding(interp, Columns[i].value) ==
 		    TCL_ERROR) {
 		    G_warning
-			("Could not set Tcl system encoding to '%s' (%s)",
+			(_("Could not set Tcl system encoding to '%s' (%s)"),
 			 Columns[i].value, Tcl_GetStringResult(interp));
 		}
 	    }
@@ -224,7 +225,7 @@ int submit(ClientData cdata, Tcl_Interp * interp, int argc, char *argv[])
 					buf, 2000, NULL, NULL, NULL);
 
 		if (ret != TCL_OK) {
-		    G_warning("Could not convert UTF to external.");
+		    G_warning("%s", _("Could not convert UTF to external."));
 		    db_set_string(&strval, Columns[i].value);
 		}
 		else {
@@ -252,7 +253,7 @@ int submit(ClientData cdata, Tcl_Interp * interp, int argc, char *argv[])
     db_shutdown_driver(driver);
 
     if (ret != DB_OK) {
-	G_warning("Cannot update table");
+	G_warning("%s", _("Cannot update table"));
 	Tcl_VarEval(interp, "set submit_msg \"Cannot update table:\n",
 		    db_get_error_msg(), "\"", NULL);
 	Tcl_Eval(interp, "set submit_result 0");

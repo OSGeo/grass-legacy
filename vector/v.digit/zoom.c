@@ -5,6 +5,7 @@
 #include <grass/raster.h>
 #include <grass/display.h>
 #include <grass/colors.h>
+#include <grass/glocale.h>
 #include "global.h"
 #include "proto.h"
 
@@ -22,8 +23,8 @@ int zoom_window_begin(void *closure)
 
     G_debug(2, "zoom_window()");
 
-    i_prompt("Zoom by window");
-    i_prompt_buttons("1. corner", "1. corner", "Quit");
+    i_prompt(_("Zoom by window"));
+    i_prompt_buttons(_("1. corner"), _("1. corner"), _("Quit"));
 
     zw->mode = 1;
     zw->next_mode = 1;
@@ -40,7 +41,7 @@ int zoom_window_update(void *closure, int sxn, int syn, int button)
     struct zoom_window *zw = closure;
 
     if (zw->mode == 1) {
-	i_prompt_buttons("1. corner", "2. corner", "Quit");
+	i_prompt_buttons(_("1. corner"), _("2. corner"), _("Quit"));
 	zw->next_mode = 2;
     }
 
@@ -71,7 +72,7 @@ int zoom_window_update(void *closure, int sxn, int syn, int button)
 
 	display_redraw();
 
-	i_prompt_buttons("1. corner", "1. corner", "Quit");
+	i_prompt_buttons(_("1. corner"), _("1. corner"), _("Quit"));
 	zw->next_mode = 1;
     }
 
@@ -153,8 +154,8 @@ int zoom_pan_begin(void *closure)
 {
     G_debug(2, "zoom_pan()");
 
-    i_prompt("Pan");
-    i_prompt_buttons("New center", "", "Quit");
+    i_prompt(_("Pan"));
+    i_prompt_buttons(_("New center"), "", _("Quit"));
 
     set_mode(MOUSE_POINT);
 
@@ -243,7 +244,7 @@ int zoom_region(void)
 
     mapset = G_find_file2("windows", var_getc(VAR_ZOOM_REGION), NULL);
     if (mapset == NULL) {
-	G_warning("Cannot find window '%s'", var_getc(VAR_ZOOM_REGION));
+	G_warning(_("Cannot find window '%s'"), var_getc(VAR_ZOOM_REGION));
 	return 0;
     }
     G__get_window(&win, "windows", var_getc(VAR_ZOOM_REGION), mapset);
