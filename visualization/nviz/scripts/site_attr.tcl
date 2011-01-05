@@ -1849,7 +1849,7 @@ proc site_attr_get_link_attr {_curr_site _attr} {
 		"size" {set st_att [Nsite_attr_get_value "ST_ATT_SIZE"]}
 		"color" {set st_att [Nsite_attr_get_value "ST_ATT_COLOR"]}
 		"marker" {set st_att [Nsite_attr_get_value "ST_ATT_MARKER"]}
-		default {puts "WARNING: Unknown attribute %s!", $_attr]; return $ret_list}
+		default {puts [format [G_msg "WARNING: Unknown attribute %s!"] $_attr]; return $ret_list}
 	}
 
 	for {set nattr 0} {$nattr < $max} {incr nattr} {
