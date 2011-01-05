@@ -15,6 +15,9 @@
 #     - ComboBox::_select
 #     - ComboBox::_modify_value
 # ------------------------------------------------------------------------------
+# -labels is a list of value labels. Such ComboBoxes are not editable
+# -labelsvariable will contain a label for selected value
+# If You use -labels, You also have to specify -labelsvariable!
 
 namespace eval ComboBox {
     ArrowButton::use
@@ -34,6 +37,8 @@ namespace eval ComboBox {
     Widget::declare ComboBox {
         {-height      TkResource 0  0 listbox}
         {-values      String     "" 0}
+        {-labels      String     "" 0}
+        {-labelsvariable String  "" 0}
         {-modifycmd   String     "" 0}
         {-postcommand String     "" 0}
     }
@@ -58,7 +63,17 @@ namespace eval ComboBox {
 # ------------------------------------------------------------------------------
 proc ComboBox::create { path args } {
     Widget::init ComboBox $path $args
-
+	
+	if { [Widget::getoption $path -labels] != "" && [Widget::getoption $path -labelsvariable] != "" } {
+		Widget::setoption $path -editable 0
+		# Set initial label if it's not set
+		if { [GlobalVar::getvar [Widget::getoption $path -labelsvariable]] == "" } {
+			GlobalVar::setvar [Widget::getoption $path -labelsvariable] [lindex [Widget::getoption $path -labels] [lsearch [Widget::getoption $path -values] [GlobalVar::getvar [Widget::getoption $path -textvariable]]]]
+		} 
+	}
+	if { [Widget::getoption $path -labels] == "" || [Widget::getoption $path -labelsvariable] == "" } {
+		Widget::setoption $path -labelsvariable [Widget::getoption $path -textvariable]
+	}
     frame $path -background [Widget::getoption $path -background] \
         -highlightthickness 0 -bd 0 -relief flat -takefocus 0
 
@@ -67,7 +82,7 @@ proc ComboBox::create { path args } {
     set labf  [eval LabelFrame::create $path.labf [Widget::subcget $path .labf] \
                    -focus $path.e]
     set entry [eval Entry::create $path.e [Widget::subcget $path .e] \
-                   -relief flat -borderwidth 0]
+                   -relief flat -borderwidth 0 -textvariable [Widget::getoption $path -labelsvariable]]
 
     set width  11
     set height [winfo reqheight $entry]
@@ -140,8 +155,12 @@ proc ComboBox::cget { path option } {
 #  Command ComboBox::setvalue
 # ------------------------------------------------------------------------------
 proc ComboBox::setvalue { path index } {
-    set values [Widget::getoption $path -values]
-    set value  [Entry::cget $path.e -text]
+    if { [Widget::getoption $path -labels] == "" } {
+		set values [Widget::getoption $path -values]
+	} else {
+		set values [Widget::getoption $path -labels]
+	}
+    set value [Entry::cget $path.e -text]
     switch -- $index {
         next {
             if { [set idx [lsearch $values $value]] != -1 } {
@@ -177,8 +196,13 @@ proc ComboBox::setvalue { path index } {
     if { $idx >= 0 && $idx < [llength $values] } {
         set newval [lindex $values $idx]
         Widget::setoption $path -text $newval
-        if { [set varname [Entry::cget $path.e -textvariable]] != "" } {
-            GlobalVar::setvar $varname $newval
+        if { [set varname [Widget::getoption $path -textvariable]] != "" } {
+            if { [Widget::getoption $path -labels] == "" } {
+				GlobalVar::setvar $varname $newval
+			} else {
+				GlobalVar::setvar $varname [lindex [Widget::getoption $path -values] $idx]
+				GlobalVar::setvar [Widget::getoption $path.e -textvariable] $newval
+			}
         } else {
             Entry::configure $path.e -text $newval
         }
@@ -192,10 +216,11 @@ proc ComboBox::setvalue { path index } {
 #  Command ComboBox::getvalue
 # ------------------------------------------------------------------------------
 proc ComboBox::getvalue { path } {
-    set values [Widget::getoption $path -values]
-    set value  [Entry::cget $path.e -text]
-
-    return [lsearch $values $value]
+    if { [Widget::getoption $path -labels] == "" } {
+		return [lsearch [Widget::getoption $path -values] [Entry::cget $path.e -text]]
+	} else {
+		return [lsearch [Widget::getoption $path -labels] [Entry::cget $path.e -text]]
+	}
 }
 
 
@@ -216,7 +241,11 @@ proc ComboBox::_create_popup { path } {
     wm withdraw $shell
     wm transient $shell [winfo toplevel $path]
     wm group $shell [winfo toplevel $path]
-    set lval [Widget::getoption $path -values]
+    if { [Widget::getoption $path -labels] == "" } {
+		set lval [Widget::getoption $path -values]
+	} else {
+		set lval [Widget::getoption $path -labels]
+	}
     set h    [Widget::getoption $path -height] 
     set sb   0
     if { $h <= 0 } {
@@ -264,7 +293,7 @@ proc ComboBox::_create_popup { path } {
 proc ComboBox::_mapliste { path } {
     set listb $path.shell.listb
     if { [winfo exists $path.shell] } {
-	_unmapliste $path
+        _unmapliste $path
         return
     }
 
