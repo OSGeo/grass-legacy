@@ -68,8 +68,10 @@ proc GmDtext::create { tree parent } {
     set opt($count,1,text) "" 
     set opt($count,1,at) "10,10" 
     set opt($count,1,coordinates) "percent" 
+    set opt($count,1,coordinateslv) ""
     set opt($count,1,mouseset) 0
     set opt($count,1,align) "lower_left" 
+    set opt($count,1,alignlv) ""
     set opt($count,1,line)  10
     set opt($count,1,rotate) 0
 	set opt($count,1,font) "" 
@@ -193,7 +195,9 @@ proc GmDtext::options { id frm } {
     set row [ frame $frm.textcoord2 ]
     Label $row.a -text [G_msg "     coordinate type for text placement "] 
     ComboBox $row.b -padx 2 -width 10 -textvariable GmDtext::opt($id,1,coordinates) \
-    	-values {"pixels" "percent" "geographic" } -modifycmd "GmDtext::mouseset $id"
+    	-values {"pixels" "percent" "geographic" } -modifycmd "GmDtext::mouseset $id" \
+	-labels [list [G_msg "pixels"] [G_msg "percent"] [G_msg "geographic"]] \
+	-labelsvariable GmDtext::opt($id,1,coordinateslv)
     checkbutton $row.c -text [G_msg "place with mouse"] \
     	-variable GmDtext::opt($id,1,mouseset) \
     	-command "GmDtext::mouseset $id"
@@ -205,7 +209,9 @@ proc GmDtext::options { id frm } {
     Label $row.a -text [G_msg "     align text with coordinate point  "] 
     ComboBox $row.b -padx 2 -width 12 -textvariable GmDtext::opt($id,1,align) \
 		-values {"lower_left" "bottom_center" "lower_right" "center_left" "center" 
-		"center_right" "upper_left" "top_center" "upper_right" } 
+		"center_right" "upper_left" "top_center" "upper_right" } \
+		-labels [list [G_msg "lower left"] [G_msg "bottom center"] [G_msg "lower right"] [G_msg "center left"] [G_msg "center"] [G_msg "center right"] [G_msg "upper left"] [G_msg "top center"] [G_msg "upper right"]] \
+		-labelsvariable GmDtext::opt($id,1,alignlv)
     pack $row.a $row.b -side left
     pack $row -side top -fill both -expand yes
 

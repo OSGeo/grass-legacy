@@ -165,7 +165,9 @@ proc GmVector::create { tree parent } {
 
     set opt($count,1,attribute) "" 
     set opt($count,1,xref) "left"
+    set opt($count,1,xreflv) ""
     set opt($count,1,yref) "center"
+    set opt($count,1,yreflv) ""
     set opt($count,1,lsize) 8
 
     set opt($count,1,minreg) "" 
@@ -464,16 +466,17 @@ proc GmVector::options { id frm } {
 
     # label alignment
     set row [ frame $frm.label2 ]
-    Label $row.a -text "     " 
-    ComboBox $row.b -label [G_msg "Label part to align with vector point"] \
-		-width 6  -textvariable GmVector::opt($id,1,xref) \
+    ComboBox $row.b -label [G_msg "Label part to align with vector point "] \
+		-width 10  -textvariable GmVector::opt($id,1,xref) \
 		-values {"left" "center" "right"} \
-		-modifycmd "GmVector::legend $id"
+		-labels [list [G_msg "left"] [G_msg "center"] [G_msg "right"]] -labelsvariable GmVector::opt($id,1,xreflv) \
+		-modifycmd "GmVector::legend $id" -editable 0
     ComboBox $row.c -label [G_msg "   Justification"] \
-    	-width 6  -textvariable GmVector::opt($id,1,yref) \
+    	-width 10  -textvariable GmVector::opt($id,1,yref) \
 		-values {"top" "center" "bottom"} \
-		-modifycmd "GmVector::legend $id"
-    pack $row.a $row.b $row.c -side left
+		-labels [list [G_msg "top"] [G_msg "center"] [G_msg "bottom"]] -labelsvariable GmVector::opt($id,1,yreflv) \
+		-modifycmd "GmVector::legend $id" -editable 0
+    pack $row.b $row.c -side left
     pack $row -side top -fill both -expand yes
 
     # labels layer and attribute column

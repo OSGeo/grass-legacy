@@ -61,6 +61,7 @@ proc GmGridline::create { tree parent } {
     
 	set opt($count,1,opacity) 1.0
     set opt($count,1,gridline) "gridline" 
+    set opt($count,1,gridlinelv) ""
     set opt($count,1,gridcolor) \#AAAAAA
     set opt($count,1,gridborder) \#000000 
     set opt($count,1,gridsize) 1000
@@ -76,11 +77,14 @@ proc GmGridline::create { tree parent } {
     set opt($count,1,rhumbdraw) 0 
     set opt($count,1,rhumbcoor) "" 
     set opt($count,1,rhumbcolor) "black" 
+    set opt($count,1,rhumbcolorlv) ""
     
     set opt($count,1,geoddraw) 0 
     set opt($count,1,geodcoor) "" 
     set opt($count,1,geodcolor) "black" 
+    set opt($count,1,geodcolorlv) "" 
     set opt($count,1,geodtxtcolor) "none" 
+    set opt($count,1,geodtxtcolorlv) ""
 
     set first 1
     set opt($count,1,mod) 1
@@ -219,11 +223,15 @@ proc GmGridline::options { id frm } {
     Label $row.d -text [G_msg " line color"]
     ComboBox $row.e -padx 2 -width 7 -textvariable GmGridline::opt($id,1,geodcolor) \
                     -values {"white" "grey" "gray" "black" "brown" "red" "orange" \
-                    "yellow" "green" "aqua" "cyan" "indigo" "blue" "purple" "violet" "magenta"}
+                    "yellow" "green" "aqua" "cyan" "indigo" "blue" "purple" "violet" "magenta"} \
+		    -labels [list [G_msg "white"] [G_msg "grey"] [G_msg "gray"] [G_msg "black"] [G_msg "brown"] [G_msg "red"] [G_msg "orange"] [G_msg "yellow"] [G_msg "green"] [G_msg "aqua"] [G_msg "cyan"] [G_msg "indigo"] [G_msg "blue"] [G_msg "purple"] [G_msg "violet"] [G_msg "magenta"] ] \
+		    -labelsvariable GmGridline::opt($id,1,geodcolorlv)
     Label $row.f -text [G_msg " text color"]
     ComboBox $row.g -padx 2 -width 7 -textvariable GmGridline::opt($id,1,geodtxtcolor) \
                     -values {"white" "grey" "gray" "black" "brown" "red" "orange" \
-                    "yellow" "green" "aqua" "cyan" "indigo" "blue" "purple" "violet" "magenta"}
+                    "yellow" "green" "aqua" "cyan" "indigo" "blue" "purple" "violet" "magenta"} \
+		    -labels [list [G_msg "white"] [G_msg "grey"] [G_msg "gray"] [G_msg "black"] [G_msg "brown"] [G_msg "red"] [G_msg "orange"] [G_msg "yellow"] [G_msg "green"] [G_msg "aqua"] [G_msg "cyan"] [G_msg "indigo"] [G_msg "blue"] [G_msg "purple"] [G_msg "violet"] [G_msg "magenta"] ] \
+		    -labelsvariable GmGridline::opt($id,1,geodtxtcolorlv)
     pack $row.a $row.b $row.c $row.d $row.e $row.f $row.g -side left
     pack $row -side top -fill both -expand yes
     
@@ -246,7 +254,9 @@ proc GmGridline::options { id frm } {
     Label $row.d -text [G_msg " line color"]
     ComboBox $row.e -padx 2 -width 7 -textvariable GmGridline::opt($id,1,rhumbcolor) \
                     -values {"white" "grey" "gray" "black" "brown" "red" "orange" \
-                    "yellow" "green" "aqua" "cyan" "indigo" "blue" "purple" "violet" "magenta"}
+                    "yellow" "green" "aqua" "cyan" "indigo" "blue" "purple" "violet" "magenta"} \
+		    -labels [list [G_msg "white"] [G_msg "grey"] [G_msg "gray"] [G_msg "black"] [G_msg "brown"] [G_msg "red"] [G_msg "orange"] [G_msg "yellow"] [G_msg "green"] [G_msg "aqua"] [G_msg "cyan"] [G_msg "indigo"] [G_msg "blue"] [G_msg "purple"] [G_msg "violet"] [G_msg "magenta"] ] \
+		    -labelsvariable GmGridline::opt($id,1,rhumbcolorlv)
     pack $row.a $row.b $row.c $row.d $row.e -side left
     pack $row -side top -fill both -expand yes
     

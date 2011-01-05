@@ -70,6 +70,7 @@ proc GmRaster::create { tree parent } {
     set opt($count,1,rastquery) ""
     set opt($count,1,rasttype) ""
     set opt($count,1,bkcolor) ""
+    set opt($count,1,bkcolorlv) ""
     set opt($count,1,overlay) 1
     set opt($count,1,mod) 1
 
@@ -268,8 +269,8 @@ proc GmRaster::options { id frm } {
     set row [ frame $frm.bg ]
     Label $row.a -text [G_msg " Set background color (colored null value cells)"]
     ComboBox $row.b -padx 2 -width 10 -textvariable GmRaster::opt($id,1,bkcolor) \
-                    -values {"white" "grey" "gray" "black" "brown" "red" "orange" \
-                    "yellow" "green" "aqua" "cyan" "indigo" "blue" "purple" "violet" "magenta"}
+                    -values {"white" "grey" "gray" "black" "brown" "red" "orange" "yellow" "green" "aqua" "cyan" "indigo" "blue" "purple" "violet" "magenta"} \
+                    -labels [list [G_msg "white"] [G_msg "grey"] [G_msg "gray"] [G_msg "black"] [G_msg "brown"] [G_msg "red"] [G_msg "orange"] [G_msg "yellow"] [G_msg "green"] [G_msg "aqua"] [G_msg "cyan"] [G_msg "indigo"] [G_msg "blue"] [G_msg "purple"] [G_msg "violet"] [G_msg "magenta"]] -labelsvariable GmRaster::opt($id,1,bkcolorlv)
     pack $row.a $row.b -side left
     pack $row -side top -fill both -expand yes
 }

@@ -85,8 +85,10 @@ proc GmCLabels::create { tree parent } {
     set opt($count,1,lfontoverstrike) 0
     set opt($count,1,lfill) \#000000 
     set opt($count,1,lwidth)  100
-    set opt($count,1,lanchor) "center_left" 
+    set opt($count,1,lanchor) "center left"
+    set opt($count,1,lanchorlv) ""
     set opt($count,1,ljust) "left" 
+    set opt($count,1,ljustlv) ""
     set opt($count,1,ltxt) ""
     set opt($count,1,lhoffset) 2 ;# space between label and enclosing box
     set opt($count,1,lvoffset) 2 ;# space between label and enclosing box
@@ -194,7 +196,8 @@ proc GmCLabels::options { id frm } {
     Label $row.a -text [G_msg "Align label with vector object: "] 
     ComboBox $row.b -padx 2 -width 12 -textvariable GmCLabels::opt($id,1,lanchor) \
                     -values {"lower left" "lower center" "lower right" "center left" "center" 
-                    "center right" "upper left" "upper center" "upper right" }
+                    "center right" "upper left" "upper center" "upper right" } \
+                    -labels [list [G_msg "lower left"] [G_msg "lower center"] [G_msg "lower right"] [G_msg "center left"] [G_msg "center"] [G_msg "center right"] [G_msg "upper left"] [G_msg "upper center"] [G_msg "upper right"]] -labelsvariable GmCLabels::opt($id,1,lanchorlv)
     pack $row.a $row.b -side left
     pack $row -side top -fill both -expand yes
 
@@ -214,7 +217,8 @@ proc GmCLabels::options { id frm } {
     set row [ frame $frm.lbltopt2 ]
     Label $row.a -text [G_msg "Justification: "] 
     ComboBox $row.b -padx 2 -width 7 -textvariable GmCLabels::opt($id,1,ljust) \
-                    -values {"left" "center" "right"}
+                    -values {"left" "center" "right"} \
+                    -labels [list [G_msg "left"] [G_msg "center"] [G_msg "right"]] -labelsvariable GmCLabels::opt($id,1,ljustlv)
     Label $row.c -text [G_msg " Label line max length: "]
     LabelEntry $row.d -textvariable GmCLabels::opt($id,1,lwidth) -width 5 
     pack $row.a $row.b $row.c $row.d -side left
