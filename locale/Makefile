@@ -21,6 +21,7 @@ all:
 
 # Directory for installing tcl .msg files:
 MSG_DIR = $(ARCH_DISTDIR)/etc/msgs
+NVIZ_DIR = $(ARCH_DISTDIR)/etc/nviz2.2/msgs
 MO_DIR = $(ARCH_DISTDIR)/locale
 PO_DIR = po
 
@@ -28,12 +29,14 @@ PO_DIR = po
 LIBDOMAIN = grasslibs
 MODDOMAIN = grassmods
 TCLDOMAIN = grasstcl
+NVIZDOMAIN = grassnviz
 WXPYDOMAIN = grasswxpy
 DOMAINS = $(LIBDOMAIN) $(MODDOMAIN) $(TCLDOMAIN) $(WXPYDOMAIN)
 
 LIB_POTFILES = find ../lib -name '*.c' | xargs grep -l "_(\""
 MOD_POTFILES = find ../ -name '*.c' | grep -v '../lib' | xargs grep -l "_(\""
-TCL_POTFILES = find ../ -name '*.tcl' | grep -v '../dist' | xargs grep -l "\\[_ \|\\[G_msg"
+TCL_POTFILES = find ../ -name '*.tcl' ! -path '../dist*' ! -path '../visualization/nviz/*' | xargs grep -l "\\[_ \|\\[G_msg"
+NVIZTCL_POTFILES = find ../visualization/nviz/scripts \( ! -regex '.*/\..*' \) | xargs grep -l "\\[_ \|\\[G_msg"
 WXPY_POTFILES = find ../gui/wxpython -name '*.py' | xargs grep -l "_(\""
 
 #The xgettext utility is used to automate the creation of
@@ -49,6 +52,8 @@ pot:
 	xgettext -k_ -o ./templates/$(MODDOMAIN).pot `$(MOD_POTFILES)`
 	@echo "Generating $(TCLDOMAIN)..."
 	xgettext -k_ --keyword=G_msg -o ./templates/$(TCLDOMAIN).pot `$(TCL_POTFILES)`
+	@echo "Generating $(NVIZDOMAIN)..."
+	xgettext -k_ --keyword=G_msg -L Tcl -o ./templates/$(NVIZDOMAIN).pot `$(NVIZTCL_POTFILES)`
 	@echo "Generating $(WXPYDOMAIN)..."
 	xgettext -k_ -o ./templates/$(WXPYDOMAIN).pot `$(WXPY_POTFILES)` 
 
@@ -89,7 +94,13 @@ $(MSG_DIR)/%.msg: po/grasstcl_%.po
 
 MSGFILES := $(patsubst po/grasstcl_%.po,$(MSG_DIR)/%.msg,$(wildcard po/grasstcl_*.po))
 
+$(NVIZ_DIR)/%.msg: po/grassnviz_%.po
+	@ [ -d $(NVIZ_DIR) ] || $(MKDIR) $(NVIZ_DIR)
+	msgfmt --statistics --tcl -l $* -d $(NVIZ_DIR)/ $<
+
+NVIZFILES := $(patsubst po/grassnviz_%.po,$(NVIZ_DIR)/%.msg,$(wildcard po/grassnviz_*.po))
+
 #create binary messages files
-mo: $(libs_FILES) $(mods_FILES) $(wxpy_FILES) $(MSGFILES)
+mo: $(libs_FILES) $(mods_FILES) $(wxpy_FILES) $(MSGFILES) $(NVIZFILES)
 
 .PHONY: mo
