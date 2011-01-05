@@ -28,6 +28,7 @@ namespace eval psprint {
 	variable orient
 	variable paper
 	variable paper_preset
+	variable paper_presetlv
 	variable pdffile
 	variable pght
 	variable pgwd
@@ -54,6 +55,7 @@ proc psprint::init { } {
 	variable docht
 	variable paper
 	variable paper_preset
+	variable paper_presetlv
 	variable printmode
 	variable printer
 	variable gsexists
@@ -75,6 +77,7 @@ proc psprint::init { } {
 	set psprint::docht 10
 	set psprint::paper "preset"
 	set psprint::paper_preset "letter"
+	set psprint::paper_presetlv ""
 	set psprint::printer ""
 	set psprint::gsexists 1
 	set psprint::orient "landscape"
@@ -218,6 +221,7 @@ proc psprint::window { cm cv cx cy } {
 	variable pght
 	variable paper
 	variable paper_preset
+	variable paper_presetlv
 	variable printmode
 	variable printer
 	variable gsexists
@@ -264,7 +268,9 @@ proc psprint::window { cm cv cx cy } {
 	Label $row.b -anchor w -text [G_msg "Preset paper type"]
 	ComboBox $row.c -label "" -width 20  -textvariable psprint::paper_preset \
 		-values {"letter" "a4" "legal" "11x17" "a3" "ledger" "a0" "a1" "a2" } \
-		-modifycmd psprint::paper
+		-modifycmd psprint::paper \
+		-labels [list [G_msg "letter"] [G_msg "A4"] [G_msg "legal"] [G_msg "11x17"] [G_msg "A3"] [G_msg "ledger"] [G_msg "A0"] [G_msg "A1"] [G_msg "A2"]] \
+		-labelsvariable psprint::paper_presetlv
 	pack $row.a $row.b $row.c -side left;
 	pack $row -side top -fill x -expand no -anchor n
 	

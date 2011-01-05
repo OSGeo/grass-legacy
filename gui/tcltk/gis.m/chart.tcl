@@ -68,11 +68,13 @@ proc GmChart::create { tree parent } {
     set opt($count,1,type_area) 0
     set opt($count,1,layer) 1 
     set opt($count,1,ctype) "pie" 
+    set opt($count,1,ctypelv) ""
     set opt($count,1,columns) "" 
     set opt($count,1,sizecol) "" 
     set opt($count,1,csize) 40 
     set opt($count,1,cscale) 1 
     set opt($count,1,ocolor) "black" 
+    set opt($count,1,ocolorlv) ""
     set opt($count,1,fcolors) "" 
     set opt($count,1,mod) 1
     
@@ -275,7 +277,7 @@ proc GmChart::options { id frm } {
     set row [ frame $frm.chopt1 ]
     Label $row.a -text [G_msg "Chart type:"] 
     ComboBox $row.b -padx 2 -width 4 -textvariable GmChart::opt($id,1,ctype) \
-                    -values {"pie" "bar"} 
+                    -values {"pie" "bar"} -labels [list [G_msg "pie"] [G_msg "bar"]] -labelsvariable GmChart::opt($id,1,ctypelv)
     Label $row.c -text [G_msg "\tfixed chart size (if size column not used)"]
     LabelEntry $row.d -textvariable GmChart::opt($id,1,csize) -width 4 
     pack $row.a $row.b $row.c $row.d -side left
@@ -286,7 +288,8 @@ proc GmChart::options { id frm } {
     Label $row.a -text [G_msg "\tchart outline color:"] 
     ComboBox $row.b -padx 0 -width 10 -textvariable GmChart::opt($id,1,ocolor) \
                     -values {"none" "white" "grey" "gray" "black" "brown" "red" "orange" \
-                    "yellow" "green" "aqua" "cyan" "indigo" "blue" "purple" "violet" "magenta"} 
+                    "yellow" "green" "aqua" "cyan" "indigo" "blue" "purple" "violet" "magenta"} \
+                    -labels [list [G_msg "none"] [G_msg "white"] [G_msg "grey"] [G_msg "gray"] [G_msg "black"] [G_msg "brown"] [G_msg "red"] [G_msg "orange"] [G_msg "yellow"] [G_msg "green"] [G_msg "aqua"] [G_msg "cyan"] [G_msg "indigo"] [G_msg "blue"] [G_msg "purple"] [G_msg "violet"] [G_msg "magenta"]] -labelsvariable GmChart::opt($id,1,ocolorlv)
     pack $row.a $row.b -side left
     pack $row -side top -fill both -expand yes
 }

@@ -65,9 +65,12 @@ proc GmThematic::create { tree parent } {
     set opt($count,1,map) "" 
 	set opt($count,1,opacity) 1.0
     set opt($count,1,type) "area"
+    set opt($count,1,typelv) ""
     set opt($count,1,column) "" 
     set opt($count,1,themetype) "graduated_colors" 
+    set opt($count,1,themetypelv) ""
     set opt($count,1,themecalc) "interval" 
+    set opt($count,1,themecalclv) ""
     set opt($count,1,breakpoints) "" 
     set opt($count,1,where) "" 
     set opt($count,1,layer) 1 
@@ -76,6 +79,7 @@ proc GmThematic::create { tree parent } {
     set opt($count,1,maxsize) 20 
     set opt($count,1,nint) 4 
     set opt($count,1,colorscheme) "blue-red" 
+    set opt($count,1,colorschemelv) ""
     set opt($count,1,pointcolor) \#FF0000 
     set opt($count,1,linecolor) \#000000 
     set opt($count,1,startcolor) \#FF0000 
@@ -138,20 +142,20 @@ proc GmThematic::select_map { id } {
 proc GmThematic::select_tfont { id frm} {
 	variable opt
     
-    set fon [SelectFont $frm.font -type dialog -sampletext [G_msg "This is font sample text."] -title [G_msg "Select font"]]
+    set fon [SelectFont $frm.font -type dialog -sampletext [G_msg "This is font sample text."] -title [G_msg "Select font"] -font $opt($id,1,titlefont)]
 	if { $fon != "" } {set opt($id,1,titlefont) $fon}
 }
 
 proc GmThematic::select_stfont { id frm} {
 	variable opt
     
-    set fon [SelectFont $frm.font -type dialog -sampletext [G_msg "This is font sample text."] -title [G_msg "Select font"]]
+    set fon [SelectFont $frm.font -type dialog -sampletext [G_msg "This is font sample text."] -title [G_msg "Select font"] -font $opt($id,1,subtitlefont)]
 	if { $fon != "" } {set opt($id,1,subtitlefont) $fon}
 }
 proc GmThematic::select_lfont { id frm} {
 	variable opt
     
-    set fon [SelectFont $frm.font -type dialog -sampletext [G_msg "This is font sample text."] -title [G_msg "Select font"]]
+    set fon [SelectFont $frm.font -type dialog -sampletext [G_msg "This is font sample text."] -title [G_msg "Select font"] -font $opt($id,1,labelfont)]
 	if { $fon != "" } {set opt($id,1,labelfont) $fon}
 }
 
@@ -274,7 +278,9 @@ proc GmThematic::options { id frm } {
     set row [ frame $frm.vtype ]
     Label $row.a -text [G_msg "    vector type"] 
     ComboBox $row.b -padx 2 -width 10 -textvariable GmThematic::opt($id,1,type) \
-                    -values {"area" "point" "centroid" "line" "boundary"}
+                    -values {"area" "point" "centroid" "line" "boundary"} \
+		    -labels [list [G_msg "area"] [G_msg "point"] [G_msg "centroid"] [G_msg "line"] [G_msg "boundary"]] \
+		    -labelsvariable GmThematic::opt($id,1,typelv)
     Label $row.c -text [G_msg " attribute layer"]
     LabelEntry $row.d -textvariable GmThematic::opt($id,1,layer) -width 3 
     pack $row.a $row.b $row.c $row.d -side left
@@ -308,11 +314,14 @@ proc GmThematic::options { id frm } {
     set row [ frame $frm.ttype ]
     Label $row.a -text [G_msg "Thematic map: type"] 
     ComboBox $row.b -padx 2 -width 16 -textvariable GmThematic::opt($id,1,themetype) \
-		-values {"graduated_colors" "graduated_points" "graduated_lines"} 
+		-values {"graduated_colors" "graduated_points" "graduated_lines"} \
+		-labels [list [G_msg "graduated colors"] [G_msg "graduated points"] [G_msg "graduated lines"]] \
+		-labelsvariable GmThematic::opt($id,1,themetypelv)
     Label $row.c -text [G_msg " map by"] 
     ComboBox $row.d -padx 2 -width 15 -textvariable GmThematic::opt($id,1,themecalc) \
-		-values {"interval" "std_deviation" "quartiles" \
-		"custom_breaks"} 
+		-values {"interval" "std_deviation" "quartiles" "custom_breaks"} \
+		-labels [list [G_msg "interval"] [G_msg "std deviation"] [G_msg "quartiles"] [G_msg "custom breaks"]] \
+		-labelsvariable GmThematic::opt($id,1,themecalclv)
     pack $row.a $row.b $row.c $row.d -side left
     pack $row -side top -fill both -expand yes
 
@@ -367,9 +376,9 @@ proc GmThematic::options { id frm } {
     set row [ frame $frm.color1 ]
     Label $row.a -text [G_msg "Graduated colors: preset color schemes"] 
     ComboBox $row.b -padx 2 -width 18 -textvariable GmThematic::opt($id,1,colorscheme) \
-        -values {"blue-red" "red-blue" "green-red" "red-green" \
-        "blue-green" "green-blue" "cyan-yellow" "yellow-cyan" "custom_gradient" \
-        "single_color" } 
+        -values {"blue-red" "red-blue" "green-red" "red-green" "blue-green" "green-blue" "cyan-yellow" "yellow-cyan" "custom_gradient" "single_color" } \
+	-labels [list [G_msg "blue red"] [G_msg "red blue"] [G_msg "green red"] [G_msg "red green"] [G_msg "blue green"] [G_msg "green blue"] [G_msg "cyan yellow"] [G_msg "yellow cyan"] [G_msg "custom gradient"] [G_msg "single color"]] \
+	-labelsvariable GmThematic::opt($id,1,colorschemelv)
     pack $row.a $row.b -side left
     pack $row -side top -fill both -expand yes
 

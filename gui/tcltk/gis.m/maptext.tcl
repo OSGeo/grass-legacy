@@ -10,8 +10,8 @@
 ##########################################################################
 
 namespace eval GmCtext {
-    variable array opt # ctext options
-    variable placement #entry widget for x,y coordinates
+    variable array opt ;# ctext options
+    variable placement ;#entry widget for x,y coordinates
     variable count 1
     variable optlist
 }
@@ -80,7 +80,7 @@ proc GmCtext::select_font { id frm } {
 	global mon
 	variable opt
     
-    set fon [SelectFont $frm.fontset -type dialog -sampletext [G_msg "This is font sample text."] -title [G_msg "Select label font"]]
+    set fon [SelectFont $frm.fontset -type dialog -sampletext [G_msg "This is font sample text."] -title [G_msg "Select label font"] -font $opt($id,1,font) ]
 	if { $fon != "" } {set opt($id,1,font) $fon}
 }
 
