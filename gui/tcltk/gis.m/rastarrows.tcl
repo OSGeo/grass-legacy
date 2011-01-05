@@ -61,10 +61,15 @@ proc GmArrows::create { tree parent } {
  	set opt($count,1,map) "" 
 	set opt($count,1,opacity) 1.0
     set opt($count,1,type) "grass" 
+    set opt($count,1,typelv) ""
     set opt($count,1,arrow_color) "green" 
+    set opt($count,1,arrow_colorlv) ""
     set opt($count,1,grid_color) "grey" 
+    set opt($count,1,grid_colorlv) ""
     set opt($count,1,x_color) "black" 
+    set opt($count,1,x_colorlv) ""
 	set opt($count,1,unknown_color) "red" 
+    set opt($count,1,unknown_colorlv) ""
     set opt($count,1,skip) 1
     set opt($count,1,magnitude_map) "" 
     set opt($count,1,scale) 1.0 
@@ -172,7 +177,9 @@ proc GmArrows::options { id frm } {
     set row [ frame $frm.type ]
     Label $row.a -text [G_msg "    aspect value type"]
     ComboBox $row.b -padx 2 -width 8 -textvariable GmArrows::opt($id,1,type) \
-		-values {"grass" "compass" "agnps" "answers"} 
+		-values {"grass" "compass" "agnps" "answers"} \
+		-labels [list [G_msg "grass"] [G_msg "compass"] [G_msg "agnps"] [G_msg "answers"]] \
+		-labelsvariable GmArrows::opt($id,1,typelv)
     pack $row.a $row.b -side left
     pack $row -side top -fill both -expand yes
 		
@@ -190,12 +197,16 @@ proc GmArrows::options { id frm } {
     ComboBox $row.b -padx 2 -width 10 -textvariable GmArrows::opt($id,1,arrow_color) \
 		-values {"white" "grey" "gray" "black" "brown" "red" "orange" \
 		"yellow" "green" "aqua" "cyan" "indigo" "blue" "purple" "violet" \
-		"magenta"} 
+		"magenta"} \
+		-labels [list [G_msg "white"] [G_msg "grey"] [G_msg "gray"] [G_msg "black"] [G_msg "brown"] [G_msg "red"] [G_msg "orange"] [G_msg "yellow"] [G_msg "green"] [G_msg "aqua"] [G_msg "cyan"] [G_msg "indigo"] [G_msg "blue"] [G_msg "purple"] [G_msg "violet"] [G_msg "magenta"]] \
+		-labelsvariable GmArrows::opt($id,1,arrow_colorlv)
     Label $row.c -text [G_msg "     cell grid color"]
     ComboBox $row.d -padx 2 -width 10 -textvariable GmArrows::opt($id,1,grid_color) \
 		-values {"none" "white" "grey" "gray" "black" "brown" "red" "orange" \
 		"yellow" "green" "aqua" "cyan" "indigo" "blue" "purple" "violet" \
-		"magenta"} 
+		"magenta"} \
+		-labels [list [G_msg "white"] [G_msg "grey"] [G_msg "gray"] [G_msg "black"] [G_msg "brown"] [G_msg "red"] [G_msg "orange"] [G_msg "yellow"] [G_msg "green"] [G_msg "aqua"] [G_msg "cyan"] [G_msg "indigo"] [G_msg "blue"] [G_msg "purple"] [G_msg "violet"] [G_msg "magenta"]] \
+		-labelsvariable GmArrows::opt($id,1,grid_colorlv)
     pack $row.a $row.b $row.c $row.d -side left
     pack $row -side top -fill both -expand yes
     
@@ -205,12 +216,16 @@ proc GmArrows::options { id frm } {
     ComboBox $row.b -padx 2 -width 10 -textvariable GmArrows::opt($id,1,x_color) \
 		-values {"white" "grey" "gray" "black" "brown" "red" "orange" \
 		"yellow" "green" "aqua" "cyan" "indigo" "blue" "purple" "violet" \
-		"magenta"} 
+		"magenta"} \
+		-labels [list [G_msg "white"] [G_msg "grey"] [G_msg "gray"] [G_msg "black"] [G_msg "brown"] [G_msg "red"] [G_msg "orange"] [G_msg "yellow"] [G_msg "green"] [G_msg "aqua"] [G_msg "cyan"] [G_msg "indigo"] [G_msg "blue"] [G_msg "purple"] [G_msg "violet"] [G_msg "magenta"]] \
+		-labelsvariable GmArrows::opt($id,1,x_colorlv) 
     Label $row.c -text { 'unknowns' color}
     ComboBox $row.d -padx 2 -width 10 -textvariable GmArrows::opt($id,1,unknown_color) \
 		-values {"none" "white" "grey" "gray" "black" "brown" "red" "orange" \
 		"yellow" "green" "aqua" "cyan" "indigo" "blue" "purple" "violet" \
-		"magenta"} 
+		"magenta"} \
+		-labels [list [G_msg "white"] [G_msg "grey"] [G_msg "gray"] [G_msg "black"] [G_msg "brown"] [G_msg "red"] [G_msg "orange"] [G_msg "yellow"] [G_msg "green"] [G_msg "aqua"] [G_msg "cyan"] [G_msg "indigo"] [G_msg "blue"] [G_msg "purple"] [G_msg "violet"] [G_msg "magenta"]] \
+		-labelsvariable GmArrows::opt($id,1,unknown_colorlv)
     pack $row.a $row.b $row.c $row.d -side left
     pack $row -side top -fill both -expand yes
 

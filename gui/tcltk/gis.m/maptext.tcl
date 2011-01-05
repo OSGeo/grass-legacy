@@ -10,8 +10,8 @@
 ##########################################################################
 
 namespace eval GmCtext {
-    variable array opt # ctext options
-    variable placement #entry widget for x,y coordinates
+    variable array opt ;# ctext options
+    variable placement ;#entry widget for x,y coordinates
     variable count 1
     variable optlist
 }
@@ -58,8 +58,11 @@ proc GmCtext::create { tree parent } {
     set opt($count,1,fill) \#000000 
     set opt($count,1,width)  100
     set opt($count,1,anchor) "center_left" 
-    set opt($count,1,justify) "left" 
-    set opt($count,1,coordinates) "pixels" 
+    set opt($count,1,anchorlv) ""
+    set opt($count,1,justify) "left"
+    set opt($count,1,justifylv) ""
+    set opt($count,1,coordinates) "pixels"
+    set opt($count,1,coordinateslv) ""
     set opt($count,1,mouseset) 0
     
     set optlist { _check opacity text at font fill width anchor justify coordinates mouseset}
@@ -77,7 +80,7 @@ proc GmCtext::select_font { id frm } {
 	global mon
 	variable opt
     
-    set fon [SelectFont $frm.fontset -type dialog -sampletext [G_msg "This is font sample text."] -title [G_msg "Select label font"]]
+    set fon [SelectFont $frm.fontset -type dialog -sampletext [G_msg "This is font sample text."] -title [G_msg "Select label font"] -font $opt($id,1,font) ]
 	if { $fon != "" } {set opt($id,1,font) $fon}
 }
 
@@ -146,7 +149,8 @@ proc GmCtext::options { id frm } {
     set row [ frame $frm.textcoord2 ]
     Label $row.a -text [G_msg "     coordinate type for text placement "] 
     ComboBox $row.b -padx 2 -width 10 -textvariable GmCtext::opt($id,1,coordinates) \
-    	-values {"pixels" "percent" "geographic" } -modifycmd "GmCtext::mouseset $id"
+    	-values {"pixels" "percent" "geographic" } -modifycmd "GmCtext::mouseset $id" \
+    	-labels [list [G_msg "pixels"] [G_msg "percent"] [G_msg "geographic"]] -labelsvariable GmCtext::opt($id,1,coordinateslv)
     checkbutton $row.c -text [G_msg "place with mouse"] \
     	-variable GmCtext::opt($id,1,mouseset) \
     	-command "GmCtext::mouseset $id"
@@ -156,17 +160,19 @@ proc GmCtext::options { id frm } {
     # text options1
     set row [ frame $frm.textopt1 ]
     Label $row.a -text [G_msg "     align text with coordinate point  "] 
-    ComboBox $row.b -padx 2 -width 12 -textvariable GmCtext::opt($id,1,anchor) \
+    ComboBox $row.b -padx 2 -width 16 -textvariable GmCtext::opt($id,1,anchor) \
 		-values {"lower_left" "bottom_center" "lower_right" "center_left" "center" 
-		"center_right" "upper_left" "top_center" "upper_right" } 
+		"center_right" "upper_left" "top_center" "upper_right" } \
+		-labels [list [G_msg "lower left"] [G_msg "bottom center"] [G_msg "lower right"] [G_msg "center left"] [G_msg "center"] [G_msg "center right"] [G_msg "upper left"] [G_msg "top center"] [G_msg "upper right"]] -labelsvariable GmCtext::opt($id,1,anchorlv)
     pack $row.a $row.b -side left
     pack $row -side top -fill both -expand yes
 
     # text options2
     set row [ frame $frm.textopt2 ]
     Label $row.a -text [G_msg "     justification"] 
-    ComboBox $row.b -padx 2 -width 7 -textvariable GmCtext::opt($id,1,justify) \
-		-values {"left" "center" "right"} 
+    ComboBox $row.b -padx 2 -width 10 -textvariable GmCtext::opt($id,1,justify) \
+		-values {"left" "center" "right"} \
+		-labels [list [G_msg "left"] [G_msg "center"] [G_msg "right"]] -labelsvariable GmCtext::opt($id,1,justifylv)
     Label $row.c -text [G_msg "  line width"]
     LabelEntry $row.d -textvariable GmCtext::opt($id,1,width) -width 5 
     pack $row.a $row.b $row.c $row.d -side left

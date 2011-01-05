@@ -62,7 +62,9 @@ proc GmRnums::create { tree parent } {
     set opt($count,1,map) "" 
 	set opt($count,1,opacity) 1.0
     set opt($count,1,grid_color) "grey" 
+    set opt($count,1,grid_colorlv) ""
     set opt($count,1,text_color) "black" 
+    set opt($count,1,text_colorlv) ""
     set opt($count,1,cellcolor) 0 
     set opt($count,1,font) "" 
     set opt($count,1,mod) 1
@@ -173,7 +175,9 @@ proc GmRnums::options { id frm } {
     ComboBox $row.b -padx 2 -width 10 -textvariable GmRnums::opt($id,1,grid_color) \
 		-values {"white" "grey" "gray" "black" "brown" "red" "orange" \
 		"yellow" "green" "aqua" "cyan" "indigo" "blue" "purple" "violet" \
-		"magenta"}
+		"magenta"} \
+		-labels [list [G_msg "white"] [G_msg "grey"] [G_msg "gray"] [G_msg "black"] [G_msg "brown"] [G_msg "red"] [G_msg "orange"] [G_msg "yellow"] [G_msg "green"] [G_msg "aqua"] [G_msg "cyan"] [G_msg "indigo"] [G_msg "blue"] [G_msg "purple"] [G_msg "violet"] [G_msg "magenta"] ] \
+		-labelsvariable GmRnums::opt($id,1,grid_colorlv)
     Label $row.c -text [G_msg "  cell values font "]
     Button $row.d -image [image create photo -file "$iconpath/gui-font.gif"] \
         -highlightthickness 0 -takefocus 0 -relief raised -borderwidth 1  \
@@ -188,7 +192,9 @@ proc GmRnums::options { id frm } {
     ComboBox $row.b -padx 2 -width 10 -textvariable GmRnums::opt($id,1,text_color) \
 		-values {"white" "grey" "gray" "black" "brown" "red" "orange" \
 		"yellow" "green" "aqua" "cyan" "indigo" "blue" "purple" "violet" \
-		"magenta"}
+		"magenta"} \
+		-labels [list [G_msg "white"] [G_msg "grey"] [G_msg "gray"] [G_msg "black"] [G_msg "brown"] [G_msg "red"] [G_msg "orange"] [G_msg "yellow"] [G_msg "green"] [G_msg "aqua"] [G_msg "cyan"] [G_msg "indigo"] [G_msg "blue"] [G_msg "purple"] [G_msg "violet"] [G_msg "magenta"] ] \
+		-labelsvariable GmRnums::opt($id,1,text_colorlv)
     checkbutton $row.c -text [G_msg "use raster colors for cell values"] \
         -variable GmRnums::opt($id,1,cellcolor) 
     pack $row.a $row.b $row.c -side left

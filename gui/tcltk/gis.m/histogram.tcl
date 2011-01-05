@@ -64,7 +64,8 @@ proc GmHist::create { tree parent } {
     set opt($count,1,color) #000000
     set opt($count,1,bgcolor) #ffffff
     set opt($count,1,bgcolor_none) 0
-    set opt($count,1,style) "bar" 
+    set opt($count,1,style) "bar"
+    set opt($count,1,stylelv) ""
     set opt($count,1,font) "" 
     set opt($count,1,nsteps) 255 
     set opt($count,1,nulls) 0 
@@ -169,8 +170,9 @@ proc GmHist::options { id frm } {
     # graph style
     set row [ frame $frm.style ]
     Label $row.a -text [G_msg "Graph style"]
-    ComboBox $row.b -padx 2 -width 4 -textvariable GmHist::opt($id,1,style) \
-		-values {"bar" "pie"} 
+    ComboBox $row.b -padx 2 -width 6 -textvariable GmHist::opt($id,1,style) \
+		-values {"bar" "pie"} \
+		-labels [list [G_msg "bar"] [G_msg "pie"]] -labelsvariable GmHist::opt($id,1,stylelv)
     Label $row.c -text [G_msg "\ttext font "]
     Button $row.d -image [image create photo -file "$iconpath/gui-font.gif"] \
         -highlightthickness 0 -takefocus 0 -relief raised -borderwidth 1  \
