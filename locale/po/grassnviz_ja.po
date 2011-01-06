@@ -1,0 +1,7322 @@
+# translation of grassnviz_ja.po to Japanese
+# This file is distributed under the same license as the GRASS package.
+# Copyright (C) 2011, GRASS Development Team
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: grassnviz_ja\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2011-01-06 22:57+0100\n"
+"PO-Revision-Date: 2011-01-06 23:39+0100\n"
+"Last-Translator: Markus Neteler <neteler osgeo.org>\n"
+"Language-Team: Japanese <grass-translations@lists.osgeo.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: ja\n"
+"X-Generator: KBabel 1.10.2\n"
+
+#: ../visualization/nviz/scripts/panel_vect.tcl:55
+msgid "Vector Lines/3D Polygons"
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_vect.tcl:60
+msgid "Vector Lines Panel"
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_vect.tcl:65
+#: ../visualization/nviz/scripts/fileBrowser.tcl:119
+#: ../visualization/nviz/scripts/panel_surf.tcl:68
+#: ../visualization/nviz/scripts/panel_vol.tcl:51
+#: ../visualization/nviz/scripts/panel_site.tcl:55
+msgid "Current:"
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_vect.tcl:69
+#: ../visualization/nviz/scripts/panel_surf.tcl:70
+#: ../visualization/nviz/scripts/panel_site.tcl:58
+#: ../visualization/nviz/scripts/site_attr.tcl:1271
+msgid "New"
+msgstr "新規 "
+
+#: ../visualization/nviz/scripts/panel_vect.tcl:70
+#: ../visualization/nviz/scripts/panel_kanimator.tcl:131
+#: ../visualization/nviz/scripts/script_file_tools:45
+#: ../visualization/nviz/scripts/panel_legend.tcl:170
+#: ../visualization/nviz/scripts/panel_surf.tcl:71
+#: ../visualization/nviz/scripts/panel_vol.tcl:494
+#: ../visualization/nviz/scripts/panel_vol.tcl:862
+#: ../visualization/nviz/scripts/panel_site.tcl:59
+msgid "Delete"
+msgstr "削除"
+
+#: ../visualization/nviz/scripts/panel_vect.tcl:80
+#: ../visualization/nviz/scripts/panel_rquery.tcl:88
+#: ../visualization/nviz/scripts/panel_arrow.tcl:93
+#: ../visualization/nviz/scripts/panel_kanimator.tcl:111
+#: ../visualization/nviz/scripts/script_tools:47
+#: ../visualization/nviz/scripts/panel_vquery.tcl:144
+#: ../visualization/nviz/scripts/panel_legend.tcl:138
+#: ../visualization/nviz/scripts/panel_surf.tcl:184
+#: ../visualization/nviz/scripts/panel_surf.tcl:726
+#: ../visualization/nviz/scripts/panel_resize.tcl:58
+#: ../visualization/nviz/scripts/panel_color.tcl:53
+#: ../visualization/nviz/scripts/panel_vol.tcl:1170
+#: ../visualization/nviz/scripts/panel_animation.tcl:203
+#: ../visualization/nviz/scripts/panel_tst.tcl:53
+#: ../visualization/nviz/scripts/panel_pos.tcl:125
+#: ../visualization/nviz/scripts/panel_scale.tcl:94
+#: ../visualization/nviz/scripts/nviz2.2_script:832
+#: ../visualization/nviz/scripts/panel_site.tcl:114
+#: ../visualization/nviz/scripts/panel_lights.tcl:83
+#: ../visualization/nviz/scripts/panel_label.tcl:96
+#: ../visualization/nviz/scripts/panel_cutplane.tcl:186
+#: ../visualization/nviz/scripts/panel_sdiff.tcl:69
+#: ../visualization/nviz/scripts/panel_fringe.tcl:82
+msgid "Close"
+msgstr "閉じる"
+
+#: ../visualization/nviz/scripts/panel_vect.tcl:82
+#: ../visualization/nviz/scripts/panel_surf.tcl:185
+#: ../visualization/nviz/scripts/panel_vol.tcl:115
+#: ../visualization/nviz/scripts/panel_site.tcl:118
+msgid "DRAW CURRENT"
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_vect.tcl:95
+msgid "line width"
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_vect.tcl:106
+#: ../visualization/nviz/scripts/panel_arrow.tcl:61
+#: ../visualization/nviz/scripts/panel_arrow.tcl:78
+#: ../visualization/nviz/scripts/panel_scale.tcl:60
+#: ../visualization/nviz/scripts/panel_scale.tcl:79
+#: ../visualization/nviz/scripts/panel_site.tcl:149
+#: ../visualization/nviz/scripts/panel_label.tcl:70
+#: ../visualization/nviz/scripts/panel_fringe.tcl:69
+msgid "Color"
+msgstr "カラー"
+
+#: ../visualization/nviz/scripts/panel_vect.tcl:110
+msgid "display flat"
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_vect.tcl:113
+#: ../visualization/nviz/scripts/panel_site.tcl:166
+msgid "display on surface(s):"
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_vect.tcl:117
+msgid ""
+"vector height\n"
+"above surface"
+msgstr ""
+
+#: ../visualization/nviz/scripts/filemapBrowser.tcl:98
+#: ../visualization/nviz/scripts/multimapBrowser.tcl:99
+msgid "Remove"
+msgstr ""
+
+#: ../visualization/nviz/scripts/filemapBrowser.tcl:104
+#: ../visualization/nviz/scripts/multimapBrowser.tcl:105
+#: ../visualization/nviz/scripts/mapBrowser.tcl:150
+msgid "MAPSETS"
+msgstr ""
+
+#: ../visualization/nviz/scripts/filemapBrowser.tcl:118
+#: ../visualization/nviz/scripts/fileBrowser.tcl:99
+#: ../visualization/nviz/scripts/multimapBrowser.tcl:119
+#: ../visualization/nviz/scripts/mapBrowser.tcl:168
+msgid "FILES"
+msgstr ""
+
+#: ../visualization/nviz/scripts/filemapBrowser.tcl:148
+#: ../visualization/nviz/scripts/multimapBrowser.tcl:149
+msgid "Map Type:"
+msgstr ""
+
+#: ../visualization/nviz/scripts/filemapBrowser.tcl:151
+#: ../visualization/nviz/scripts/multimapBrowser.tcl:152
+#: ../visualization/nviz/scripts/mapBrowser.tcl:207
+msgid "Map Type"
+msgstr ""
+
+#: ../visualization/nviz/scripts/filemapBrowser.tcl:154
+#: ../visualization/nviz/scripts/multimapBrowser.tcl:155
+#: ../visualization/nviz/scripts/mapBrowser.tcl:210
+msgid "Raster"
+msgstr ""
+
+#: ../visualization/nviz/scripts/filemapBrowser.tcl:156
+#: ../visualization/nviz/scripts/multimapBrowser.tcl:157
+#: ../visualization/nviz/scripts/mapBrowser.tcl:212
+msgid "Vector"
+msgstr ""
+
+#: ../visualization/nviz/scripts/filemapBrowser.tcl:158
+#: ../visualization/nviz/scripts/multimapBrowser.tcl:159
+#: ../visualization/nviz/scripts/mapBrowser.tcl:214
+msgid "Site"
+msgstr ""
+
+#: ../visualization/nviz/scripts/filemapBrowser.tcl:160
+#: ../visualization/nviz/scripts/multimapBrowser.tcl:161
+#: ../visualization/nviz/scripts/mapBrowser.tcl:216
+msgid "Surf"
+msgstr ""
+
+#: ../visualization/nviz/scripts/filemapBrowser.tcl:162
+#: ../visualization/nviz/scripts/multimapBrowser.tcl:163
+#: ../visualization/nviz/scripts/mapBrowser.tcl:220
+msgid "Regions"
+msgstr ""
+
+#: ../visualization/nviz/scripts/filemapBrowser.tcl:164
+#: ../visualization/nviz/scripts/panel_main.tcl:158
+#: ../visualization/nviz/scripts/multimapBrowser.tcl:165
+#: ../visualization/nviz/scripts/mapBrowser.tcl:222
+#: ../visualization/nviz/scripts/panel_label.tcl:60
+msgid "Labels"
+msgstr ""
+
+#: ../visualization/nviz/scripts/filemapBrowser.tcl:167
+#: ../visualization/nviz/scripts/multimapBrowser.tcl:168
+#: ../visualization/nviz/scripts/mapBrowser.tcl:225
+msgid "Icons"
+msgstr ""
+
+#: ../visualization/nviz/scripts/filemapBrowser.tcl:170
+msgid "Blank"
+msgstr ""
+
+#: ../visualization/nviz/scripts/filemapBrowser.tcl:171
+msgid "Previous"
+msgstr ""
+
+#: ../visualization/nviz/scripts/filemapBrowser.tcl:172
+#: ../visualization/nviz/scripts/script_file_tools:54
+#: ../visualization/nviz/scripts/panel_legend.tcl:171
+#: ../visualization/nviz/scripts/multimapBrowser.tcl:171
+msgid "Done"
+msgstr "完了"
+
+#: ../visualization/nviz/scripts/filemapBrowser.tcl:173
+#: ../visualization/nviz/scripts/fileBrowser.tcl:115
+#: ../visualization/nviz/scripts/ACS_utils.tcl:312
+#: ../visualization/nviz/scripts/ACS_utils.tcl:354
+#: ../visualization/nviz/scripts/ACS_utils.tcl:375
+#: ../visualization/nviz/scripts/ACS_utils.tcl:430
+#: ../visualization/nviz/scripts/ACS_utils.tcl:475
+#: ../visualization/nviz/scripts/ACS_utils.tcl:569
+#: ../visualization/nviz/scripts/ACS_utils.tcl:641
+#: ../visualization/nviz/scripts/panel_kanimator.tcl:1910
+#: ../visualization/nviz/scripts/script_file_tools:113
+#: ../visualization/nviz/scripts/script_file_tools:575
+#: ../visualization/nviz/scripts/script_file_tools:888
+#: ../visualization/nviz/scripts/panel_main.tcl:112
+#: ../visualization/nviz/scripts/script_tools:111
+#: ../visualization/nviz/scripts/attPopup.tcl:133
+#: ../visualization/nviz/scripts/attPopup.tcl:475
+#: ../visualization/nviz/scripts/attPopup.tcl:523
+#: ../visualization/nviz/scripts/multimapBrowser.tcl:172
+#: ../visualization/nviz/scripts/attIsosurfPopup.tcl:125
+#: ../visualization/nviz/scripts/attIsosurfPopup.tcl:410
+#: ../visualization/nviz/scripts/attIsosurfPopup.tcl:456
+#: ../visualization/nviz/scripts/wirecolorPopup.tcl:83
+#: ../visualization/nviz/scripts/nviz2.2_script:937
+#: ../visualization/nviz/scripts/mapBrowser.tcl:229
+#: ../visualization/nviz/scripts/script_get_line:19
+msgid "Cancel"
+msgstr "キャンセル"
+
+#: ../visualization/nviz/scripts/filemapBrowser.tcl:201
+#: ../visualization/nviz/scripts/multimapBrowser.tcl:200
+#: ../visualization/nviz/scripts/mapBrowser.tcl:141
+msgid "Map Browser"
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_rquery.tcl:41
+msgid "Send results to: (no file selected)"
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_rquery.tcl:52
+msgid "Raster Query"
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_rquery.tcl:58
+msgid "Raster Query Panel"
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_rquery.tcl:62
+#: ../visualization/nviz/scripts/panel_vquery.tcl:83
+msgid "query on/off"
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_rquery.tcl:64
+#: ../visualization/nviz/scripts/panel_surf.tcl:725
+#: ../visualization/nviz/scripts/panel_vol.tcl:1169
+#: ../visualization/nviz/scripts/nviz2.2_script:390
+#: ../visualization/nviz/scripts/nviz2.2_script:936
+#: ../visualization/nviz/scripts/panel_lights.tcl:81
+#: ../visualization/nviz/scripts/site_attr.tcl:483
+#: ../visualization/nviz/scripts/panel_cutplane.tcl:182
+msgid "Reset"
+msgstr "リセット"
+
+#: ../visualization/nviz/scripts/panel_rquery.tcl:65
+msgid "Reset most recent query"
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_rquery.tcl:66
+#: ../visualization/nviz/scripts/panel_main.tcl:109
+#: ../visualization/nviz/scripts/site_attr.tcl:1437
+#: ../visualization/nviz/scripts/panel_sdiff.tcl:64
+msgid "Clear"
+msgstr "クリア"
+
+#: ../visualization/nviz/scripts/panel_rquery.tcl:67
+msgid "Clear all queries"
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_rquery.tcl:68
+msgid "Attributes"
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_rquery.tcl:78
+msgid "Map name"
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_rquery.tcl:78
+msgid "Easting"
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_rquery.tcl:78
+msgid "Northing"
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_rquery.tcl:78
+msgid "Elevation"
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_rquery.tcl:78
+msgid "Category of color map"
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_rquery.tcl:78
+msgid "XY dist from prev"
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_rquery.tcl:78
+msgid "XYZ dist from prev"
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_rquery.tcl:78
+msgid "Dist along surface"
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_rquery.tcl:78
+msgid "Dist along exag surface"
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_rquery.tcl:93
+msgid "Select file to receive all future query results"
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_rquery.tcl:126
+#, tcl-format
+msgid "Send results to: %s"
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_rquery.tcl:152
+#: ../visualization/nviz/scripts/panel_rquery.tcl:153
+msgid "Point not on surface\n"
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_rquery.tcl:164
+#, tcl-format
+msgid "Easting: %15.4f\n"
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_rquery.tcl:171
+#, tcl-format
+msgid "Northing: %15.4f\n"
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_rquery.tcl:178
+#, tcl-format
+msgid "Elevation: %15.4f\n"
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_rquery.tcl:186
+#: ../visualization/nviz/scripts/panel_rquery.tcl:187
+#, tcl-format
+msgid "Surf map: %s"
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_rquery.tcl:202
+msgid "constant"
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_rquery.tcl:204
+#: ../visualization/nviz/scripts/panel_rquery.tcl:205
+#, tcl-format
+msgid "Color map: %s"
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_rquery.tcl:224
+#, tcl-format
+msgid "XY distance from previous: \t%15.4f\n"
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_rquery.tcl:232
+#, tcl-format
+msgid "XYZ distance from previous: \t%15.4f\n"
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_rquery.tcl:241
+#, tcl-format
+msgid "Distance along surface: \t%15.4f\n"
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_rquery.tcl:252
+#, tcl-format
+msgid "Distance along exag. surface:%15.4f\n"
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_arrow.tcl:47
+msgid "North arrow"
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_arrow.tcl:49
+msgid "North Arrow Panel"
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_arrow.tcl:53
+msgid "Arrow: "
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_arrow.tcl:56
+msgid "size (in map units) "
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_arrow.tcl:72
+msgid "North text: "
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_arrow.tcl:73
+#: ../visualization/nviz/scripts/panel_legend.tcl:77
+#: ../visualization/nviz/scripts/panel_label.tcl:67
+msgid "Font"
+msgstr "フォント "
+
+#: ../visualization/nviz/scripts/panel_arrow.tcl:75
+#: ../visualization/nviz/scripts/panel_label.tcl:69
+msgid "Select font family, size, and style"
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_arrow.tcl:89
+msgid "Place arrow"
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_arrow.tcl:119
+#: ../visualization/nviz/scripts/panel_legend.tcl:220
+#: ../visualization/nviz/scripts/panel_label.tcl:177
+msgid "The quick brown fox jumps over the lazy dog"
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_arrow.tcl:119
+#: ../visualization/nviz/scripts/panel_legend.tcl:220
+#: ../visualization/nviz/scripts/panel_label.tcl:177
+msgid "Select font"
+msgstr "フォントの選択"
+
+#: ../visualization/nviz/scripts/fileBrowser.tcl:82
+msgid "DIRECTORIES"
+msgstr ""
+
+#: ../visualization/nviz/scripts/fileBrowser.tcl:113
+#: ../visualization/nviz/scripts/script_file_tools:574
+#: ../visualization/nviz/scripts/script_file_tools:887
+#: ../visualization/nviz/scripts/script_tools:110
+#: ../visualization/nviz/scripts/attPopup.tcl:128
+#: ../visualization/nviz/scripts/attPopup.tcl:474
+#: ../visualization/nviz/scripts/attPopup.tcl:522
+#: ../visualization/nviz/scripts/attIsosurfPopup.tcl:123
+#: ../visualization/nviz/scripts/attIsosurfPopup.tcl:409
+#: ../visualization/nviz/scripts/attIsosurfPopup.tcl:455
+#: ../visualization/nviz/scripts/mapBrowser.tcl:227
+msgid "Accept"
+msgstr ""
+
+#: ../visualization/nviz/scripts/fileBrowser.tcl:154
+msgid "File Browser"
+msgstr ""
+
+#: ../visualization/nviz/scripts/ACS_utils.tcl:312
+#: ../visualization/nviz/scripts/ACS_utils.tcl:354
+#: ../visualization/nviz/scripts/ACS_utils.tcl:375
+#: ../visualization/nviz/scripts/ACS_utils.tcl:430
+#: ../visualization/nviz/scripts/ACS_utils.tcl:475
+#: ../visualization/nviz/scripts/ACS_utils.tcl:569
+#: ../visualization/nviz/scripts/ACS_utils.tcl:641
+#: ../visualization/nviz/scripts/panel_animation.tcl:955
+msgid "OK"
+msgstr "OK"
+
+#: ../visualization/nviz/scripts/ACS_utils.tcl:331
+msgid "ok"
+msgstr ""
+
+#: ../visualization/nviz/scripts/ACS_utils.tcl:331
+msgid "dismiss"
+msgstr ""
+
+#: ../visualization/nviz/scripts/flythrough.tcl:60
+#: ../visualization/nviz/scripts/flythrough.tcl:141
+msgid "fly"
+msgstr ""
+
+#: ../visualization/nviz/scripts/flythrough.tcl:67
+#: ../visualization/nviz/scripts/flythrough.tcl:270
+#, fuzzy
+msgid "none"
+msgstr "完了"
+
+#: ../visualization/nviz/scripts/flythrough.tcl:70
+#: ../visualization/nviz/scripts/flythrough.tcl:149
+#: ../visualization/nviz/scripts/flythrough.tcl:271
+msgid "basic"
+msgstr ""
+
+#: ../visualization/nviz/scripts/flythrough.tcl:71
+#: ../visualization/nviz/scripts/flythrough.tcl:157
+msgid "simple"
+msgstr ""
+
+#: ../visualization/nviz/scripts/flythrough.tcl:72
+#: ../visualization/nviz/scripts/flythrough.tcl:165
+msgid "orbit"
+msgstr ""
+
+#: ../visualization/nviz/scripts/flythrough.tcl:83
+msgid "Coarse Draw"
+msgstr ""
+
+#: ../visualization/nviz/scripts/flythrough.tcl:86
+msgid "fly help"
+msgstr ""
+
+#: ../visualization/nviz/scripts/flythrough.tcl:114
+msgid "Interactively set view position"
+msgstr ""
+
+#: ../visualization/nviz/scripts/flythrough.tcl:135
+msgid "flythrough help"
+msgstr ""
+
+#: ../visualization/nviz/scripts/flythrough.tcl:174
+msgid "move"
+msgstr ""
+
+#: ../visualization/nviz/scripts/flythrough.tcl:196
+msgid "turn"
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_kanimator.tcl:79
+msgid "Keyframe Animation"
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_kanimator.tcl:80
+msgid "Keyframe Animation Panel"
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_kanimator.tcl:96
+msgid "Framerate :"
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_kanimator.tcl:105
+msgid "File: "
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_kanimator.tcl:106
+#: ../visualization/nviz/scripts/site_attr.tcl:1434
+msgid "Save"
+msgstr "保存"
+
+#: ../visualization/nviz/scripts/panel_kanimator.tcl:107
+msgid "Load"
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_kanimator.tcl:109
+msgid "Animation: "
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_kanimator.tcl:110
+msgid "Run and Save"
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_kanimator.tcl:130
+#: ../visualization/nviz/scripts/script_file_tools:44
+#: ../visualization/nviz/scripts/panel_legend.tcl:169
+#: ../visualization/nviz/scripts/panel_vol.tcl:492
+#: ../visualization/nviz/scripts/panel_vol.tcl:860
+msgid "Add"
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_kanimator.tcl:132
+msgid "New Key Time:"
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_kanimator.tcl:143
+msgid "Show Feature"
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_kanimator.tcl:146
+msgid "Path"
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_kanimator.tcl:148
+msgid "Vect Lines/Polygons"
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_kanimator.tcl:150
+msgid "Vect Points"
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_kanimator.tcl:152
+msgid "Volume"
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_kanimator.tcl:154
+msgid "Labels/Legend"
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_kanimator.tcl:159
+msgid "Interp."
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_kanimator.tcl:162
+#: ../visualization/nviz/scripts/panel_animation.tcl:185
+msgid "linear"
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_kanimator.tcl:165
+#: ../visualization/nviz/scripts/panel_animation.tcl:189
+msgid "spline"
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_kanimator.tcl:168
+msgid "tension"
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_kanimator.tcl:230
+#: ../visualization/nviz/scripts/panel_kanimator.tcl:1249
+#: ../visualization/nviz/scripts/nviz2.2_script:427
+msgid "On"
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_kanimator.tcl:447
+msgid "New Key Time"
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_kanimator.tcl:451
+msgid "Minute:"
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_kanimator.tcl:452
+msgid "Second:"
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_kanimator.tcl:453
+msgid "Frame:"
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_kanimator.tcl:466
+#: ../visualization/nviz/scripts/panel_kanimator.tcl:553
+#: ../visualization/nviz/scripts/panel_kanimator.tcl:858
+#: ../visualization/nviz/scripts/panel_kanimator.tcl:1126
+#: ../visualization/nviz/scripts/panel_kanimator.tcl:1708
+#: ../visualization/nviz/scripts/panel_kanimator.tcl:1910
+#: ../visualization/nviz/scripts/script_file_tools:113
+#: ../visualization/nviz/scripts/wirecolorPopup.tcl:80
+#: ../visualization/nviz/scripts/panel_animation.tcl:577
+#: ../visualization/nviz/scripts/panel_animation.tcl:755
+#: ../visualization/nviz/scripts/panel_animation.tcl:801
+#: ../visualization/nviz/scripts/nviz2.2_script:937
+#: ../visualization/nviz/scripts/script_get_line:18
+msgid "Ok"
+msgstr "OK"
+
+#: ../visualization/nviz/scripts/panel_kanimator.tcl:496
+#: ../visualization/nviz/scripts/panel_kanimator.tcl:504
+msgid "KeyTime Error"
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_kanimator.tcl:496
+msgid "Error - All values must be at least zero."
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_kanimator.tcl:497
+#: ../visualization/nviz/scripts/panel_kanimator.tcl:505
+#: ../visualization/nviz/scripts/panel_kanimator.tcl:577
+#: ../visualization/nviz/scripts/panel_kanimator.tcl:678
+#: ../visualization/nviz/scripts/panel_kanimator.tcl:858
+#: ../visualization/nviz/scripts/panel_kanimator.tcl:873
+#: ../visualization/nviz/scripts/panel_kanimator.tcl:1007
+#: ../visualization/nviz/scripts/panel_kanimator.tcl:1126
+#: ../visualization/nviz/scripts/panel_kanimator.tcl:1872
+#: ../visualization/nviz/scripts/panel_kanimator.tcl:1925
+#: ../visualization/nviz/scripts/panel_animation.tcl:577
+#: ../visualization/nviz/scripts/panel_animation.tcl:603
+#: ../visualization/nviz/scripts/panel_animation.tcl:644
+#: ../visualization/nviz/scripts/panel_animation.tcl:755
+#: ../visualization/nviz/scripts/panel_animation.tcl:801
+#: ../visualization/nviz/scripts/nviz2.2_script:1067
+#: ../visualization/nviz/scripts/script_play:32
+msgid "Dismiss"
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_kanimator.tcl:504
+msgid "Error - Frame number must be less than frame rate."
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_kanimator.tcl:540
+msgid "New Frame Rate"
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_kanimator.tcl:544
+msgid "Framerate:"
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_kanimator.tcl:576
+msgid "Frame Rate Error"
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_kanimator.tcl:576
+msgid "Error - Frame rate must be at least 1."
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_kanimator.tcl:676
+#: ../visualization/nviz/scripts/panel_kanimator.tcl:871
+#: ../visualization/nviz/scripts/panel_kanimator.tcl:1005
+#: ../visualization/nviz/scripts/panel_animation.tcl:601
+#: ../visualization/nviz/scripts/panel_animation.tcl:642
+msgid "Internal Error"
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_kanimator.tcl:677
+#, tcl-format
+msgid "Internal Error - Can't find channel %s for keyframe %s"
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_kanimator.tcl:856
+msgid "Delete Keys"
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_kanimator.tcl:857
+msgid "Delete the selected keys?"
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_kanimator.tcl:872
+#: ../visualization/nviz/scripts/panel_animation.tcl:602
+msgid "Internal Error - Failed to delete keyframe in GK key list"
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_kanimator.tcl:1006
+#: ../visualization/nviz/scripts/panel_animation.tcl:643
+msgid "Internal Error - Failed to move keyframe in GK key list"
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_kanimator.tcl:1124
+#: ../visualization/nviz/scripts/panel_animation.tcl:753
+msgid "Replace Key"
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_kanimator.tcl:1125
+msgid "There is already a keyframe at this time, replace it?"
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_kanimator.tcl:1221
+msgid "Keyframe Attributes"
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_kanimator.tcl:1699
+msgid "Enter a base name:"
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_kanimator.tcl:1702
+msgid "Render:"
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_kanimator.tcl:1703
+msgid "Wireframe"
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_kanimator.tcl:1705
+msgid "Full Rendering"
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_kanimator.tcl:1710
+msgid "Image:"
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_kanimator.tcl:1712
+#: ../visualization/nviz/scripts/panel_animation.tcl:941
+msgid "PPM"
+msgstr "PPM画像"
+
+#: ../visualization/nviz/scripts/panel_kanimator.tcl:1713
+#: ../visualization/nviz/scripts/panel_animation.tcl:942
+msgid "TIFF"
+msgstr "TIFF画像"
+
+#: ../visualization/nviz/scripts/panel_kanimator.tcl:1714
+#: ../visualization/nviz/scripts/panel_animation.tcl:943
+msgid "MPEG-1"
+msgstr "MPEG-1"
+
+#: ../visualization/nviz/scripts/panel_kanimator.tcl:1716
+msgid "Start Frame:"
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_kanimator.tcl:1718
+msgid "Off-Screen"
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_kanimator.tcl:1908
+#: ../visualization/nviz/scripts/script_file_tools:111
+#: ../visualization/nviz/scripts/panel_animation.tcl:576
+#: ../visualization/nviz/scripts/panel_animation.tcl:800
+msgid "Verify"
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_kanimator.tcl:1909
+msgid "Warning - Current animation has not been saved, continue?"
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_kanimator.tcl:1923
+#: ../visualization/nviz/scripts/nviz2.2_script:1066
+#: ../visualization/nviz/scripts/script_play:30
+msgid "File Error"
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_kanimator.tcl:1924
+#, tcl-format
+msgid "Error - Could not open file %s for reading"
+msgstr ""
+
+#: ../visualization/nviz/scripts/script_file_tools:36
+msgid "Map Object File Sequencing"
+msgstr ""
+
+#: ../visualization/nviz/scripts/script_file_tools:43
+msgid "Fields:"
+msgstr ""
+
+#: ../visualization/nviz/scripts/script_file_tools:46
+msgid "State File: None"
+msgstr ""
+
+#: ../visualization/nviz/scripts/script_file_tools:53
+msgid "Options:"
+msgstr ""
+
+#: ../visualization/nviz/scripts/script_file_tools:55
+msgid "Add To Script"
+msgstr ""
+
+#: ../visualization/nviz/scripts/script_file_tools:56
+msgid "Build Script..."
+msgstr ""
+
+#: ../visualization/nviz/scripts/script_file_tools:57
+msgid "Load Fields..."
+msgstr ""
+
+#: ../visualization/nviz/scripts/script_file_tools:58
+msgid "Save Fields..."
+msgstr ""
+
+#: ../visualization/nviz/scripts/script_file_tools:75
+msgid "Frame"
+msgstr ""
+
+#: ../visualization/nviz/scripts/script_file_tools:111
+msgid "Current fields have not been saved, really load new fields?"
+msgstr ""
+
+#: ../visualization/nviz/scripts/script_file_tools:126
+#: ../visualization/nviz/scripts/nviz2.2_script:884
+#: ../visualization/nviz/scripts/nviz2.2_script:1038
+#, tcl-format
+msgid "Error while opening file: %s"
+msgstr ""
+
+#: ../visualization/nviz/scripts/script_file_tools:135
+#, tcl-format
+msgid "While reading state_file: %s"
+msgstr ""
+
+#: ../visualization/nviz/scripts/script_file_tools:142
+#, tcl-format
+msgid "While reading number of fields: %s"
+msgstr ""
+
+#: ../visualization/nviz/scripts/script_file_tools:151
+#, tcl-format
+msgid "While reading field type: %s"
+msgstr ""
+
+#: ../visualization/nviz/scripts/script_file_tools:157
+#, tcl-format
+msgid "While reading field attribute: %s"
+msgstr ""
+
+#: ../visualization/nviz/scripts/script_file_tools:542
+msgid "Field Type: "
+msgstr ""
+
+#: ../visualization/nviz/scripts/script_file_tools:543
+#: ../visualization/nviz/scripts/panel_main.tcl:142
+#: ../visualization/nviz/scripts/panel_surf.tcl:125
+msgid "Surface"
+msgstr ""
+
+#: ../visualization/nviz/scripts/script_file_tools:554
+msgid "Field Attribute: "
+msgstr ""
+
+#: ../visualization/nviz/scripts/script_file_tools:555
+msgid "Topography"
+msgstr ""
+
+#: ../visualization/nviz/scripts/script_file_tools:566
+msgid "Use Nviz Map: "
+msgstr ""
+
+#: ../visualization/nviz/scripts/script_file_tools:567
+#: ../visualization/nviz/scripts/script_file_tools:676
+#: ../visualization/nviz/scripts/panel_legend.tcl:183
+#: ../visualization/nviz/scripts/panel_cutplane.tcl:61
+#: ../visualization/nviz/scripts/panel_cutplane.tcl:67
+#: ../visualization/nviz/scripts/panel_cutplane.tcl:290
+msgid "None"
+msgstr ""
+
+#: ../visualization/nviz/scripts/script_file_tools:853
+#, tcl-format
+msgid "State File: %s"
+msgstr ""
+
+#: ../visualization/nviz/scripts/script_file_tools:885
+msgid "Enter an image root name"
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_main.tcl:86
+msgid "Main"
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_main.tcl:104
+msgid "DRAW"
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_main.tcl:107
+msgid "Draw selected features"
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_main.tcl:110
+msgid "Clear NVIZ display"
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_main.tcl:113
+msgid "Cancel current draw"
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_main.tcl:119
+msgid "Automatically render display:"
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_main.tcl:123
+msgid "Automatically render display after changing parameters"
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_main.tcl:128
+msgid "Show features:"
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_main.tcl:131
+msgid "Main features..."
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_main.tcl:136
+msgid "Decorations..."
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_main.tcl:145
+msgid "Vectors"
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_main.tcl:148
+msgid "Sites"
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_main.tcl:151
+#: ../visualization/nviz/scripts/panel_vol.tcl:40
+msgid "Volumes"
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_main.tcl:156
+#: ../visualization/nviz/scripts/panel_legend.tcl:63
+msgid "Legend"
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_main.tcl:160
+msgid "North Arrow"
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_main.tcl:162
+msgid "Scale Bar"
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_main.tcl:164
+#: ../visualization/nviz/scripts/panel_fringe.tcl:43
+msgid "Fringe"
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_main.tcl:175
+msgid "View method:"
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_main.tcl:177
+msgid "eye"
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_main.tcl:181
+#: ../visualization/nviz/scripts/panel_main.tcl:220
+#, fuzzy
+msgid "center"
+msgstr "セントロイド"
+
+#: ../visualization/nviz/scripts/panel_main.tcl:186
+msgid "Change view by moving eye position"
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_main.tcl:187
+msgid "Change view by moving scene center position"
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_main.tcl:196
+msgid "Change view using mouse to control fly-through"
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_main.tcl:205
+#: ../visualization/nviz/scripts/panel_main.tcl:206
+msgid "Set vertical exaggeration"
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_main.tcl:207
+#: ../visualization/nviz/scripts/panel_main.tcl:208
+msgid "Set eye height"
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_main.tcl:213
+msgid "Look"
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_main.tcl:214
+msgid "here"
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_main.tcl:215
+msgid "Center view at point marked with mouse click"
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_main.tcl:221
+msgid "Center view at center of displayed surface"
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_main.tcl:225
+#, fuzzy
+msgid "top"
+msgstr "上："
+
+#: ../visualization/nviz/scripts/panel_main.tcl:226
+msgid "View directly from above"
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_main.tcl:249
+msgid "Set field of view size (degrees)"
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_main.tcl:250
+msgid "Set twist angle (degrees)"
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_main.tcl:253
+msgid "reset"
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_main.tcl:255
+msgid "Reset view to default"
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_main.tcl:517
+msgid "Set eye position"
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_main.tcl:522
+msgid "Set center of view position"
+msgstr ""
+
+#: ../visualization/nviz/scripts/script_tools:32
+msgid "Open Loop"
+msgstr ""
+
+#: ../visualization/nviz/scripts/script_tools:33
+msgid "Close Loop"
+msgstr ""
+
+#: ../visualization/nviz/scripts/script_tools:37
+msgid "Open File Seq. Loop"
+msgstr ""
+
+#: ../visualization/nviz/scripts/script_tools:38
+msgid "Close File Seq. Loop"
+msgstr ""
+
+#: ../visualization/nviz/scripts/script_tools:42
+msgid "File Sequence Tool"
+msgstr ""
+
+#: ../visualization/nviz/scripts/script_tools:104
+msgid "Loop Start Value"
+msgstr ""
+
+#: ../visualization/nviz/scripts/script_tools:106
+msgid "Loop End Value"
+msgstr ""
+
+#: ../visualization/nviz/scripts/script_tools:108
+msgid "Loop Increment Value"
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_vquery.tcl:51
+msgid "Vector Query"
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_vquery.tcl:57
+msgid "Vector Query Panel"
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_vquery.tcl:86
+msgid "Choose map(s)"
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_vquery.tcl:88
+msgid "Select/unselect vector map(s) to query"
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_vquery.tcl:98
+msgid "Set threshold distance for selecting objects"
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_vquery.tcl:100
+msgid "threshold dist"
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_vquery.tcl:104
+msgid "show hyperlink"
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_vquery.tcl:113
+msgid "Highlight queried vector points with..."
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_vquery.tcl:118
+msgid "color"
+msgstr "カラー"
+
+#: ../visualization/nviz/scripts/panel_vquery.tcl:122
+msgid "Choose color to indicate point queried"
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_vquery.tcl:124
+msgid "icon size  X"
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_vquery.tcl:130
+msgid "Choose size in multiples of default to indicate point queried"
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_vquery.tcl:137
+msgid "specific icon"
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_vquery.tcl:208
+msgid "Select vectors to query"
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_vquery.tcl:209
+msgid "vectors displayed"
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_vquery.tcl:209
+msgid "vectors to query"
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_vquery.tcl:410
+#, tcl-format
+msgid "Map: %s"
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_vquery.tcl:426
+#: ../visualization/nviz/scripts/panel_cutplane.tcl:98
+msgid "clear"
+msgstr "クリア"
+
+#: ../visualization/nviz/scripts/panel_vquery.tcl:496
+msgid "Clear Window?"
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_vquery.tcl:496
+msgid "Yes"
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_vquery.tcl:496
+msgid "No"
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_vquery.tcl:619
+msgid "set icon"
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_legend.tcl:65
+msgid "Legends Panel"
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_legend.tcl:71
+msgid "reverse legend"
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_legend.tcl:73
+msgid "show values"
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_legend.tcl:75
+msgid "show labels"
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_legend.tcl:79
+msgid "Select font family, size, and style for legend text"
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_legend.tcl:86
+msgid "set value range "
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_legend.tcl:91
+msgid "min "
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_legend.tcl:94
+msgid " max "
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_legend.tcl:107
+msgid "discrete categories"
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_legend.tcl:131
+msgid "Place legend"
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_legend.tcl:133
+msgid ""
+"Use mouse to place legend; left button defines first corner,  right button "
+"defines opposite corner."
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_legend.tcl:135
+msgid "Erase legend"
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_legend.tcl:137
+msgid "Erase all legends"
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_legend.tcl:166
+msgid "Category Values"
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_surf.tcl:51
+msgid "Raster Surfaces"
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_surf.tcl:58
+msgid "Surface Panel"
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_surf.tcl:79
+msgid "Surface attributes..."
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_surf.tcl:88
+msgid "Wire Color"
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_surf.tcl:92
+#: ../visualization/nviz/scripts/panel_vol.tcl:82
+#: ../visualization/nviz/scripts/panel_pos.tcl:28
+msgid "Position"
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_surf.tcl:96
+msgid "Mask zeros:"
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_surf.tcl:97
+msgid "by elevation"
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_surf.tcl:99
+msgid "by color"
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_surf.tcl:109
+msgid "Draw mode..."
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_surf.tcl:112
+msgid "Coarse"
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_surf.tcl:114
+msgid "Fine"
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_surf.tcl:116
+msgid "Both"
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_surf.tcl:120
+msgid "Coarse style..."
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_surf.tcl:123
+msgid "Wire"
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_surf.tcl:128
+#: ../visualization/nviz/scripts/panel_vol.tcl:73
+msgid "Shading..."
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_surf.tcl:132
+#: ../visualization/nviz/scripts/panel_vol.tcl:76
+msgid "Flat"
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_surf.tcl:134
+#: ../visualization/nviz/scripts/panel_vol.tcl:78
+msgid "Gouraud"
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_surf.tcl:141
+msgid "Resolution:"
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_surf.tcl:143
+#: ../visualization/nviz/scripts/panel_animation.tcl:949
+msgid "coarse"
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_surf.tcl:153
+#: ../visualization/nviz/scripts/panel_animation.tcl:950
+msgid "fine"
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_surf.tcl:166
+msgid "Set resolution for:"
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_surf.tcl:167
+msgid "current surface"
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_surf.tcl:169
+msgid "all surfaces"
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_surf.tcl:670
+msgid "Position Surface"
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_surf.tcl:671
+#: ../visualization/nviz/scripts/attPopup.tcl:45
+#: ../visualization/nviz/scripts/attPopup.tcl:46
+#: ../visualization/nviz/scripts/panel_vol.tcl:1115
+#: ../visualization/nviz/scripts/attIsosurfPopup.tcl:36
+#: ../visualization/nviz/scripts/attIsosurfPopup.tcl:37
+msgid "Attribute"
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_surf.tcl:701
+#: ../visualization/nviz/scripts/panel_vol.tcl:1145
+msgid "Z:"
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_surf.tcl:702
+#: ../visualization/nviz/scripts/panel_vol.tcl:1146
+#: ../visualization/nviz/scripts/panel_cutplane.tcl:114
+msgid "X:"
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_surf.tcl:703
+#: ../visualization/nviz/scripts/panel_vol.tcl:1147
+#: ../visualization/nviz/scripts/panel_cutplane.tcl:115
+msgid "Y:"
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_resize.tcl:27
+msgid "Resize Draw Area"
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_resize.tcl:33
+msgid "Resize Panel"
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_resize.tcl:39
+msgid "Resize: "
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_resize.tcl:42
+msgid "width"
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_resize.tcl:43
+#: ../visualization/nviz/scripts/panel_vol.tcl:457
+#: ../visualization/nviz/scripts/panel_vol.tcl:460
+#: ../visualization/nviz/scripts/panel_vol.tcl:735
+#: ../visualization/nviz/scripts/panel_vol.tcl:738
+msgid "height"
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_resize.tcl:52
+msgid "Resize"
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_resize.tcl:55
+#: ../visualization/nviz/scripts/panel_pos.tcl:95
+msgid "Refresh"
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_color.tcl:38
+msgid "Background Color"
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_color.tcl:44
+msgid "Background Color Panel"
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_color.tcl:46
+msgid "Background"
+msgstr "背景"
+
+#: ../visualization/nviz/scripts/attPopup.tcl:88
+#: ../visualization/nviz/scripts/attIsosurfPopup.tcl:80
+#, tcl-format
+msgid "Change attribute: %s"
+msgstr ""
+
+#: ../visualization/nviz/scripts/attPopup.tcl:92
+#: ../visualization/nviz/scripts/attIsosurfPopup.tcl:85
+msgid "New map"
+msgstr ""
+
+#: ../visualization/nviz/scripts/attPopup.tcl:97
+#: ../visualization/nviz/scripts/attIsosurfPopup.tcl:89
+msgid "Remove mask"
+msgstr ""
+
+#: ../visualization/nviz/scripts/attPopup.tcl:98
+#: ../visualization/nviz/scripts/attIsosurfPopup.tcl:90
+msgid "invert mask"
+msgstr ""
+
+#: ../visualization/nviz/scripts/attPopup.tcl:106
+#: ../visualization/nviz/scripts/attPopup.tcl:115
+#: ../visualization/nviz/scripts/attIsosurfPopup.tcl:98
+#: ../visualization/nviz/scripts/attIsosurfPopup.tcl:107
+msgid "New constant"
+msgstr ""
+
+#: ../visualization/nviz/scripts/attPopup.tcl:107
+msgid "use as color"
+msgstr ""
+
+#: ../visualization/nviz/scripts/attPopup.tcl:113
+msgid "Constant not supported"
+msgstr ""
+
+#: ../visualization/nviz/scripts/attPopup.tcl:122
+#: ../visualization/nviz/scripts/attIsosurfPopup.tcl:114
+msgid "Curr. value: "
+msgstr ""
+
+#: ../visualization/nviz/scripts/attPopup.tcl:319
+msgid "Surface Color"
+msgstr ""
+
+#: ../visualization/nviz/scripts/attPopup.tcl:462
+#: ../visualization/nviz/scripts/attPopup.tcl:512
+#: ../visualization/nviz/scripts/attIsosurfPopup.tcl:399
+#: ../visualization/nviz/scripts/attIsosurfPopup.tcl:445
+msgid "Constant"
+msgstr ""
+
+#: ../visualization/nviz/scripts/attPopup.tcl:468
+msgid "Enter value:"
+msgstr ""
+
+#: ../visualization/nviz/scripts/attPopup.tcl:516
+msgid "Use slider to set value"
+msgstr ""
+
+#: ../visualization/nviz/scripts/colorPopup.tcl:17
+msgid "Choose color"
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_vol.tcl:46
+msgid "Volume Panel"
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_vol.tcl:63
+msgid "Visualization type..."
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_vol.tcl:66
+msgid "isosurfaces"
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_vol.tcl:69
+msgid "slices"
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_vol.tcl:88
+msgid "Polygon resolution: "
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_vol.tcl:441
+msgid "X-axis"
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_vol.tcl:443
+msgid "Y-axis"
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_vol.tcl:445
+msgid "Z-axis"
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_vol.tcl:449
+msgid "Transparency"
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_vol.tcl:455
+#: ../visualization/nviz/scripts/panel_vol.tcl:733
+msgid "azimuth"
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_vol.tcl:456
+#: ../visualization/nviz/scripts/panel_vol.tcl:461
+#: ../visualization/nviz/scripts/panel_vol.tcl:734
+#: ../visualization/nviz/scripts/panel_vol.tcl:739
+msgid "length"
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_vol.tcl:459
+#: ../visualization/nviz/scripts/panel_vol.tcl:737
+msgid "tilt"
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_vol.tcl:493
+msgid "Add new slice"
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_vol.tcl:495
+msgid "Delete selected slice"
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_vol.tcl:497
+#: ../visualization/nviz/scripts/panel_vol.tcl:865
+msgid "Move Up"
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_vol.tcl:498
+msgid "Move slice up in list"
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_vol.tcl:499
+#: ../visualization/nviz/scripts/panel_vol.tcl:867
+msgid "Move Down"
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_vol.tcl:500
+msgid "Move slice down in list"
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_vol.tcl:830
+msgid "Isosurface attributes..."
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_vol.tcl:839
+msgid "toggle normal direction"
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_vol.tcl:861
+msgid "Add new isosurface"
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_vol.tcl:863
+msgid "Delete selected isosurface"
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_vol.tcl:866
+msgid "Move isosurface up in list"
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_vol.tcl:868
+msgid "Move isosurface own in list"
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_vol.tcl:1114
+msgid "Position Volume"
+msgstr ""
+
+#: ../visualization/nviz/scripts/config.tcl:111
+msgid "x"
+msgstr ""
+
+#: ../visualization/nviz/scripts/config.tcl:111
+#: ../visualization/nviz/scripts/site_attr.tcl:77
+msgid "sphere"
+msgstr ""
+
+#: ../visualization/nviz/scripts/config.tcl:111
+#: ../visualization/nviz/scripts/site_attr.tcl:77
+msgid "diamond"
+msgstr ""
+
+#: ../visualization/nviz/scripts/config.tcl:111
+#: ../visualization/nviz/scripts/site_attr.tcl:77
+msgid "cube"
+msgstr ""
+
+#: ../visualization/nviz/scripts/config.tcl:111
+#: ../visualization/nviz/scripts/site_attr.tcl:77
+msgid "box"
+msgstr ""
+
+#: ../visualization/nviz/scripts/config.tcl:111
+#: ../visualization/nviz/scripts/site_attr.tcl:77
+msgid "gyro"
+msgstr ""
+
+#: ../visualization/nviz/scripts/config.tcl:111
+#: ../visualization/nviz/scripts/site_attr.tcl:77
+msgid "aster"
+msgstr ""
+
+#: ../visualization/nviz/scripts/config.tcl:111
+#: ../visualization/nviz/scripts/site_attr.tcl:77
+msgid "histogram"
+msgstr ""
+
+#: ../visualization/nviz/scripts/attIsosurfPopup.tcl:99
+msgid "use volume as color"
+msgstr ""
+
+#: ../visualization/nviz/scripts/attIsosurfPopup.tcl:275
+msgid "remove mask"
+msgstr ""
+
+#: ../visualization/nviz/scripts/attIsosurfPopup.tcl:403
+msgid "Enter value: "
+msgstr ""
+
+#: ../visualization/nviz/scripts/attIsosurfPopup.tcl:449
+msgid "Use slider to select constant value :"
+msgstr ""
+
+#: ../visualization/nviz/scripts/wirecolorPopup.tcl:30
+msgid "Select Wire Color"
+msgstr ""
+
+#: ../visualization/nviz/scripts/wirecolorPopup.tcl:57
+msgid "use surface color"
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_animation.tcl:100
+msgid "Simple Animation"
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_animation.tcl:104
+msgid "Simple Keyframe Animation Panel"
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_animation.tcl:111
+msgid "Step backward frame by frame"
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_animation.tcl:114
+msgid "Pause playback"
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_animation.tcl:117
+msgid "Step forward frame by frame"
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_animation.tcl:120
+msgid "Run animation from beginning"
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_animation.tcl:122
+msgid " set max frames:"
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_animation.tcl:136
+msgid "Key Frames"
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_animation.tcl:145
+msgid "Current frame:"
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_animation.tcl:148
+msgid "Selected key frame:"
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_animation.tcl:159
+msgid "Add frame"
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_animation.tcl:161
+msgid "Clear all"
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_animation.tcl:170
+msgid "Show: "
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_animation.tcl:171
+msgid "path"
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_animation.tcl:173
+msgid "lines"
+msgstr "ライン"
+
+#: ../visualization/nviz/scripts/panel_animation.tcl:175
+msgid "points"
+msgstr "ポイント"
+
+#: ../visualization/nviz/scripts/panel_animation.tcl:177
+msgid "volumes"
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_animation.tcl:184
+msgid "Interpolation: "
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_animation.tcl:200
+msgid "Run and save"
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_animation.tcl:202
+msgid "Run animation and save frames"
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_animation.tcl:222
+msgid "spline tension"
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_animation.tcl:275
+#: ../visualization/nviz/scripts/panel_tst.tcl:21
+msgid "Test"
+msgstr "テストモード"
+
+#: ../visualization/nviz/scripts/panel_animation.tcl:576
+msgid "Do you really want to delete this keyframe?"
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_animation.tcl:754
+msgid "There is already a keyframe at this time, do you wish to replace it?"
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_animation.tcl:800
+msgid "Do you really want to delete all keyframes?"
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_animation.tcl:928
+msgid "Save Animation Frames"
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_animation.tcl:934
+msgid "Prefix for images: "
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_animation.tcl:935
+msgid "Enter a prefix name for images to be created from animation frames"
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_animation.tcl:940
+msgid "Output format: "
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_animation.tcl:948
+msgid "Rendering mode: "
+msgstr ""
+
+#: ../visualization/nviz/scripts/widgets.tcl:70
+msgid "E"
+msgstr ""
+
+#: ../visualization/nviz/scripts/widgets.tcl:71
+msgid "W"
+msgstr ""
+
+#: ../visualization/nviz/scripts/widgets.tcl:72
+msgid "N"
+msgstr ""
+
+#: ../visualization/nviz/scripts/widgets.tcl:73
+msgid "S"
+msgstr ""
+
+#: ../visualization/nviz/scripts/widgets.tcl:596
+msgid "None Loaded"
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_tst.tcl:31
+msgid "Test Panel"
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_pos.tcl:34
+msgid "Position Panel"
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_pos.tcl:45
+msgid "From (eye):"
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_pos.tcl:46
+msgid "To (surface):"
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_pos.tcl:49
+msgid "Range/bearing:"
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_pos.tcl:52
+msgid "East"
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_pos.tcl:56
+msgid "Range"
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_pos.tcl:60
+msgid "North"
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_pos.tcl:64
+msgid "Bearing"
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_pos.tcl:68
+#: ../visualization/nviz/scripts/nviz2.2_script:816
+msgid "Height"
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_pos.tcl:72
+msgid "Elev"
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_pos.tcl:83
+msgid "Eye to surface"
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_pos.tcl:84
+msgid "Surface to eye"
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_pos.tcl:85
+msgid "Calculate"
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_pos.tcl:109
+#: ../visualization/nviz/scripts/site_attr.tcl:472
+msgid "Apply"
+msgstr "適用"
+
+#: ../visualization/nviz/scripts/panel_scale.tcl:45
+msgid "Scale bar"
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_scale.tcl:47
+msgid "Scale Bar Panel"
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_scale.tcl:51
+msgid "Scale bar: "
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_scale.tcl:54
+msgid "length (in map units) "
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_scale.tcl:71
+msgid "Scale text: "
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_scale.tcl:74
+msgid "size "
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_scale.tcl:90
+msgid "Place scale"
+msgstr ""
+
+#: ../visualization/nviz/scripts/nviz2.2_script:210
+msgid "Show Panels"
+msgstr ""
+
+#: ../visualization/nviz/scripts/nviz2.2_script:217
+#: ../visualization/nviz/scripts/nviz2.2_script:340
+#: ../visualization/nviz/scripts/nviz2.2_script:699
+msgid "Hide Panels"
+msgstr ""
+
+#: ../visualization/nviz/scripts/nviz2.2_script:259
+msgid "Start"
+msgstr ""
+
+#: ../visualization/nviz/scripts/nviz2.2_script:280
+#: ../visualization/nviz/scripts/nviz2.2_script:287
+#: ../visualization/nviz/scripts/nviz2.2_script:294
+#: ../visualization/nviz/scripts/nviz2.2_script:302
+msgid "Togl canvas initialization failed. Is Your OpenGL working fine?"
+msgstr ""
+
+#: ../visualization/nviz/scripts/nviz2.2_script:362
+msgid "Please Wait..."
+msgstr ""
+
+#: ../visualization/nviz/scripts/nviz2.2_script:368
+msgid "Help"
+msgstr "ヘルプ"
+
+#: ../visualization/nviz/scripts/nviz2.2_script:369
+msgid "NVIZ Help"
+msgstr ""
+
+#: ../visualization/nviz/scripts/nviz2.2_script:369
+msgid "About NVIZ"
+msgstr ""
+
+#: ../visualization/nviz/scripts/nviz2.2_script:369
+msgid "NVIZ - Bugs / ToDo"
+msgstr ""
+
+#: ../visualization/nviz/scripts/nviz2.2_script:381
+msgid "File"
+msgstr ""
+
+#: ../visualization/nviz/scripts/nviz2.2_script:382
+msgid "Load State"
+msgstr ""
+
+#: ../visualization/nviz/scripts/nviz2.2_script:382
+msgid "Save State"
+msgstr ""
+
+#: ../visualization/nviz/scripts/nviz2.2_script:384
+msgid "Set Canvas Size"
+msgstr ""
+
+#: ../visualization/nviz/scripts/nviz2.2_script:386
+msgid "Load 3d Settings"
+msgstr ""
+
+#: ../visualization/nviz/scripts/nviz2.2_script:386
+msgid "Save 3d Settings"
+msgstr ""
+
+#: ../visualization/nviz/scripts/nviz2.2_script:388
+msgid "Save image as..."
+msgstr ""
+
+#: ../visualization/nviz/scripts/nviz2.2_script:390
+msgid "Quit"
+msgstr "終了"
+
+#: ../visualization/nviz/scripts/nviz2.2_script:423
+msgid "Scripting"
+msgstr ""
+
+#: ../visualization/nviz/scripts/nviz2.2_script:433
+msgid "Create New Scriptfile"
+msgstr ""
+
+#: ../visualization/nviz/scripts/nviz2.2_script:436
+msgid "Open and Play Script"
+msgstr ""
+
+#: ../visualization/nviz/scripts/nviz2.2_script:439
+msgid "Close Script"
+msgstr ""
+
+#: ../visualization/nviz/scripts/nviz2.2_script:444
+#: ../visualization/nviz/scripts/script_get_line:15
+msgid "Add Script Line"
+msgstr ""
+
+#: ../visualization/nviz/scripts/nviz2.2_script:447
+msgid "Add Script Command"
+msgstr ""
+
+#: ../visualization/nviz/scripts/nviz2.2_script:452
+msgid "Script Tools"
+msgstr ""
+
+#: ../visualization/nviz/scripts/nviz2.2_script:497
+msgid "PPM Image"
+msgstr ""
+
+#: ../visualization/nviz/scripts/nviz2.2_script:499
+msgid "TIFF Image"
+msgstr ""
+
+#: ../visualization/nviz/scripts/nviz2.2_script:513
+msgid "Maximum Resolution PPM"
+msgstr ""
+
+#: ../visualization/nviz/scripts/nviz2.2_script:811
+msgid "Set Size of Display Canvas"
+msgstr ""
+
+#: ../visualization/nviz/scripts/nviz2.2_script:814
+msgid "Width"
+msgstr ""
+
+#: ../visualization/nviz/scripts/nviz2.2_script:822
+msgid "Unconstrained"
+msgstr ""
+
+#: ../visualization/nviz/scripts/nviz2.2_script:937
+msgid "Really reset Nviz?"
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_site.tcl:44
+msgid "Vector Points"
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_site.tcl:51
+msgid "Vector Points Panel"
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_site.tcl:133
+msgid "icon size"
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_site.tcl:153
+msgid "icon type"
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_site.tcl:162
+msgid "3D points"
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_site.tcl:182
+msgid "thematic mapping for vector points"
+msgstr ""
+
+#: ../visualization/nviz/scripts/mapBrowser.tcl:204
+msgid "Map type:"
+msgstr ""
+
+#: ../visualization/nviz/scripts/mapBrowser.tcl:218
+msgid "3d.view"
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_lights.tcl:25
+msgid "Lighting"
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_lights.tcl:30
+msgid "Lighting Panel"
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_lights.tcl:43
+msgid " Light source position"
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_lights.tcl:58
+msgid "Follow surface viewpoint"
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_lights.tcl:60
+msgid "Show lighting model"
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_lights.tcl:66
+msgid "Light color"
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_lights.tcl:70
+msgid "Light intensity"
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_label.tcl:62
+msgid "Labels Panel"
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_label.tcl:73
+msgid "Choose font color"
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_label.tcl:83
+msgid "Label text: "
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_label.tcl:90
+msgid "Place label"
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_label.tcl:91
+msgid "Click with mouse to place label"
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_label.tcl:92
+msgid "Erase last"
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_label.tcl:93
+msgid "Erase most recent label placed"
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_label.tcl:94
+msgid "Erase all"
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_label.tcl:95
+msgid "Erase all labels"
+msgstr ""
+
+#: ../visualization/nviz/scripts/site_attr.tcl:411
+msgid ""
+"Fill 2 or more entry fields with  desired min and max values, then press "
+"[Apply].  Or press [Auto] to automatically  generate a range of symbol sizes."
+msgstr ""
+
+#: ../visualization/nviz/scripts/site_attr.tcl:422
+msgid ""
+"Fill 2 or more entry fields with desired colors, then press [Apply]. Or "
+"press [Auto] to automatically generate a color table."
+msgstr ""
+
+#: ../visualization/nviz/scripts/site_attr.tcl:428
+#, tcl-format
+msgid "WARNING: No thematic mapping preferences set for %s!"
+msgstr ""
+
+#: ../visualization/nviz/scripts/site_attr.tcl:447
+#, tcl-format
+msgid "Vary point %s"
+msgstr ""
+
+#: ../visualization/nviz/scripts/site_attr.tcl:451
+#, tcl-format
+msgid "GIS attribute: %s"
+msgstr ""
+
+#: ../visualization/nviz/scripts/site_attr.tcl:460
+#, tcl-format
+msgid "Attribute type: %s"
+msgstr ""
+
+#: ../visualization/nviz/scripts/site_attr.tcl:474
+msgid "Apply current thematic preferences to point display"
+msgstr ""
+
+#: ../visualization/nviz/scripts/site_attr.tcl:477
+msgid "Auto"
+msgstr ""
+
+#: ../visualization/nviz/scripts/site_attr.tcl:479
+msgid ""
+"Automatically generate a color  table distributed across range of attribute "
+"values"
+msgstr ""
+
+#: ../visualization/nviz/scripts/site_attr.tcl:485
+msgid "Clear all thematic settings"
+msgstr ""
+
+#: ../visualization/nviz/scripts/site_attr.tcl:495
+msgid "Load/save theme preferences"
+msgstr ""
+
+#: ../visualization/nviz/scripts/site_attr.tcl:528
+msgid "Select thematic prefs to use"
+msgstr ""
+
+#: ../visualization/nviz/scripts/site_attr.tcl:531
+msgid "current prefs"
+msgstr ""
+
+#: ../visualization/nviz/scripts/site_attr.tcl:536
+msgid "prefs. from file"
+msgstr ""
+
+#: ../visualization/nviz/scripts/site_attr.tcl:542
+msgid "(preserves current prefs.)"
+msgstr ""
+
+#: ../visualization/nviz/scripts/site_attr.tcl:553
+msgid "no prefs loaded"
+msgstr ""
+
+#: ../visualization/nviz/scripts/site_attr.tcl:558
+msgid "View loaded thematic prefs"
+msgstr ""
+
+#: ../visualization/nviz/scripts/site_attr.tcl:570
+msgid "Load and save prefs."
+msgstr ""
+
+#: ../visualization/nviz/scripts/site_attr.tcl:572
+msgid "Load prefs"
+msgstr ""
+
+#: ../visualization/nviz/scripts/site_attr.tcl:574
+msgid "Replace current themes with prefs loaded from file"
+msgstr ""
+
+#: ../visualization/nviz/scripts/site_attr.tcl:580
+msgid "Save prefs"
+msgstr ""
+
+#: ../visualization/nviz/scripts/site_attr.tcl:582
+msgid "Copy current themes to prefs loaded from file"
+msgstr ""
+
+#: ../visualization/nviz/scripts/site_attr.tcl:860
+#: ../visualization/nviz/scripts/site_attr.tcl:915
+msgid "Too few values: at least 2!"
+msgstr ""
+
+#: ../visualization/nviz/scripts/site_attr.tcl:1107
+#: ../visualization/nviz/scripts/site_attr.tcl:1197
+msgid "No prefs file loaded"
+msgstr ""
+
+#: ../visualization/nviz/scripts/site_attr.tcl:1138
+msgid "No prefs"
+msgstr ""
+
+#: ../visualization/nviz/scripts/site_attr.tcl:1146
+msgid "Thematic prefs and attribute have different types"
+msgstr ""
+
+#: ../visualization/nviz/scripts/site_attr.tcl:1207
+msgid "Thematic prefs and attributes have different types"
+msgstr ""
+
+#: ../visualization/nviz/scripts/site_attr.tcl:1408
+#, tcl-format
+msgid "WARNING: No attribute behaviour for %s!"
+msgstr ""
+
+#: ../visualization/nviz/scripts/site_attr.tcl:1418
+#, tcl-format
+msgid "Thematic prefs file %s"
+msgstr ""
+
+#: ../visualization/nviz/scripts/site_attr.tcl:1422
+#, tcl-format
+msgid "Name: %s"
+msgstr ""
+
+#: ../visualization/nviz/scripts/site_attr.tcl:1430
+#, tcl-format
+msgid "Type: %s"
+msgstr ""
+
+#: ../visualization/nviz/scripts/site_attr.tcl:1436
+msgid "Save thematic prefs in file"
+msgstr ""
+
+#: ../visualization/nviz/scripts/site_attr.tcl:1439
+msgid "Clear current thematic prefs"
+msgstr ""
+
+#: ../visualization/nviz/scripts/site_attr.tcl:1493
+msgid "Load Thematic Prefs"
+msgstr ""
+
+#: ../visualization/nviz/scripts/site_attr.tcl:1497
+msgid "Load file"
+msgstr ""
+
+#: ../visualization/nviz/scripts/site_attr.tcl:1577
+msgid "Save thematic prefs"
+msgstr ""
+
+#: ../visualization/nviz/scripts/site_attr.tcl:1582
+#, tcl-format
+msgid "Old LUT \"%s\" deleted"
+msgstr ""
+
+#: ../visualization/nviz/scripts/site_attr.tcl:1607
+#, tcl-format
+msgid "Thematic preferences file \"%s\" saved"
+msgstr ""
+
+#: ../visualization/nviz/scripts/site_attr.tcl:1616
+msgid "Load thematic prefs"
+msgstr ""
+
+#: ../visualization/nviz/scripts/site_attr.tcl:1622
+#, tcl-format
+msgid "*** WARNING *** File \"%s\" is unavailable"
+msgstr ""
+
+#: ../visualization/nviz/scripts/site_attr.tcl:1627
+#, tcl-format
+msgid "*** ERROR *** Some thematic pref component are missing in file \"%s\""
+msgstr ""
+
+#: ../visualization/nviz/scripts/site_attr.tcl:1700
+#, tcl-format
+msgid "WARNING: Unknown Tag \"%s\" in file \"%s\""
+msgstr ""
+
+#: ../visualization/nviz/scripts/site_attr.tcl:1770
+#: ../visualization/nviz/scripts/site_attr.tcl:1852
+#, tcl-format
+msgid "WARNING: Unknown attribute %s!"
+msgstr ""
+
+#: ../visualization/nviz/scripts/site_attr.tcl:1791
+#, tcl-format
+msgid "WARNING: field %s NOT FOUND"
+msgstr ""
+
+#: ../visualization/nviz/scripts/site_attr.tcl:1798
+#, tcl-format
+msgid "WARNING: lut file %s NOT FOUND"
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_cutplane.tcl:48
+msgid "Cutting Planes"
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_cutplane.tcl:50
+msgid "Cutting Planes Panel"
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_cutplane.tcl:60
+msgid "Active cutting plane: "
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_cutplane.tcl:68
+msgid "Plane 0"
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_cutplane.tcl:69
+msgid "Plane 1"
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_cutplane.tcl:70
+msgid "Plane 2"
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_cutplane.tcl:71
+msgid "Plane 3"
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_cutplane.tcl:72
+msgid "Plane 4"
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_cutplane.tcl:73
+msgid "Plane 5"
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_cutplane.tcl:87
+msgid "set shading"
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_cutplane.tcl:90
+msgid "top color"
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_cutplane.tcl:92
+msgid "bottom color"
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_cutplane.tcl:94
+msgid "blend"
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_cutplane.tcl:96
+msgid "shaded"
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_cutplane.tcl:139
+msgid "Z coord"
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_cutplane.tcl:151
+msgid "Rotate"
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_cutplane.tcl:163
+msgid "Tilt"
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_cutplane.tcl:184
+msgid "All Off"
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_cutplane.tcl:292
+#, tcl-format
+msgid "Plane %s"
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_sdiff.tcl:39
+msgid "Scaled Difference"
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_sdiff.tcl:45
+msgid "Scaled Difference Panel"
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_sdiff.tcl:54
+msgid "Reference surface:"
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_sdiff.tcl:58
+msgid "Set difference between reference surface and others"
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_sdiff.tcl:66
+msgid "unselect reference surface"
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_sdiff.tcl:124
+msgid "None selected"
+msgstr ""
+
+#: ../visualization/nviz/scripts/script_play:31
+#, tcl-format
+msgid "Script file %s does not exist"
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_fringe.tcl:45
+msgid "Fringe Panel"
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_fringe.tcl:48
+msgid "Edges with fringe: "
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_fringe.tcl:51
+msgid "N&W"
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_fringe.tcl:54
+msgid "N&E"
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_fringe.tcl:57
+msgid "S&W"
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_fringe.tcl:60
+msgid "S&E"
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_fringe.tcl:68
+msgid "Elevation of fringe bottom: "
+msgstr ""
+
+#: ../visualization/nviz/scripts/panel_fringe.tcl:80
+msgid "Draw Fringe"
+msgstr ""
+
+#~ msgid "Categories already opened"
+#~ msgstr "カテゴリーは既にオープンされています"
+
+#~ msgid "Categories"
+#~ msgstr "カテゴリー"
+
+#~ msgid "Layer:"
+#~ msgstr "レイヤー："
+
+#~ msgid "   Category:"
+#~ msgstr "   カテゴリー:："
+
+#~ msgid "Insert new record to table"
+#~ msgstr "テーブルに新しいレコードを追加"
+
+#~ msgid "Add new"
+#~ msgstr "新規作成"
+
+#~ msgid "Welcome to v.digit"
+#~ msgstr "v.digitにようこそ"
+
+#~ msgid "Left button"
+#~ msgstr "左ボタン"
+
+#~ msgid "Middle button"
+#~ msgstr "中央ボタン"
+
+#~ msgid "Right button"
+#~ msgstr "右ボタン"
+
+#~ msgid "  Layer"
+#~ msgstr "  レイヤー"
+
+#~ msgid "  Category"
+#~ msgstr "  カテゴリー"
+
+#~ msgid "  Mode "
+#~ msgstr "  モード"
+
+#~ msgid "Insert new record into table"
+#~ msgstr "テーブルに新しいレコードを挿入"
+
+#~ msgid "Digitize new point"
+#~ msgstr "ポイントをデジタイズ"
+
+#~ msgid "Digitize new line"
+#~ msgstr "ラインをデジタイズ"
+
+#~ msgid "Digitize new boundary"
+#~ msgstr "境界をデジタイズ"
+
+#~ msgid "Digitize new centroid"
+#~ msgstr "セントロイドをデジタイズ"
+
+#~ msgid "Move vertex"
+#~ msgstr "頂点の移動"
+
+#~ msgid "Add vertex"
+#~ msgstr "頂点を追加"
+
+#~ msgid "Remove vertex"
+#~ msgstr "頂点の削除"
+
+#~ msgid "Split line"
+#~ msgstr "ラインを分割"
+
+#~ msgid "Edit line/boundary"
+#~ msgstr "ライン/境界の修正"
+
+#~ msgid "Move point, line, boundary, or centroid"
+#~ msgstr "ポイント、ライン、境界、セントロイドの移動"
+
+#~ msgid "Delete point, line, boundary, or centroid"
+#~ msgstr "ポイント、ライン、境界、セントロイドの削除"
+
+#~ msgid "Redraw"
+#~ msgstr "再描画"
+
+#~ msgid "Zoom in by window"
+#~ msgstr "ズームイン"
+
+#~ msgid "Zoom out"
+#~ msgstr "ズームアウト"
+
+#~ msgid "Pan"
+#~ msgstr "パン"
+
+#~ msgid "Zoom to default region"
+#~ msgstr "デフォルト領域にズーム"
+
+#~ msgid "Zoom to saved region"
+#~ msgstr "セーブド領域でズーム"
+
+#~ msgid "Display categories"
+#~ msgstr "カテゴリーを表示"
+
+#~ msgid "Copy categories"
+#~ msgstr "カテゴリーコピー"
+
+#~ msgid "Display attributes"
+#~ msgstr "属性表示"
+
+#~ msgid "Open settings"
+#~ msgstr "設定を開く"
+
+#~ msgid "Save and exit"
+#~ msgstr "保存 終了"
+
+#~ msgid "mouse button actions (left, middle, right)"
+#~ msgstr "マウスボタン操作 (左、中央、右) "
+
+#~ msgid "Add new column"
+#~ msgstr "列追加"
+
+#~ msgid "Create table"
+#~ msgstr "テーブル作成"
+
+#~ msgid "Add command"
+#~ msgstr "コマンド追加 "
+
+#~ msgid "Table successfully created"
+#~ msgstr "テーブルは正常に作成されました"
+
+#~ msgid "Settings already opened"
+#~ msgstr "設定は既にオープンしています"
+
+#~ msgid "Symbology"
+#~ msgstr "シンボロジー"
+
+#~ msgid "Highlight"
+#~ msgstr "強調"
+
+#~ msgid "Point"
+#~ msgstr "ポイント"
+
+#~ msgid "Line"
+#~ msgstr "ライン"
+
+#~ msgid "Boundary (no area)"
+#~ msgstr "境界（エリアなし）"
+
+#~ msgid "Boundary (1 area)"
+#~ msgstr "境界(1エリア)"
+
+#~ msgid "Boundary (2 areas)"
+#~ msgstr "境界(2エリア)"
+
+#~ msgid "Centroid (in area)"
+#~ msgstr "セントロイド（エリア内）"
+
+#~ msgid "Centroid (outside area)"
+#~ msgstr "セントロイド（エリア外）"
+
+#~ msgid "Centroid (duplicate in area)"
+#~ msgstr "セントロイド(重複エリア) "
+
+#~ msgid "Node (1 line)"
+#~ msgstr "ノード(1ライン) "
+
+#~ msgid "Node (2 lines)"
+#~ msgstr "ノード(2ライン) "
+
+#~ msgid "Settings"
+#~ msgstr "設定"
+
+#~ msgid "Snapping threshold in screen pixels"
+#~ msgstr "スナップするしきい値(ピクセル) "
+
+#~ msgid "Snapping threshold in map units"
+#~ msgstr "スナップするしきい値(マップで使用する単位) "
+
+#~ msgid "Line width in screen pixels"
+#~ msgstr " ピクセルでのライン幅"
+
+#~ msgid "Set line width in pixels"
+#~ msgstr "ピクセルでライン幅を設定"
+
+#~ msgid "Table"
+#~ msgstr "テーブル"
+
+#~ msgid "Select item"
+#~ msgstr "マップの選択"
+
+#~ msgid "Error"
+#~ msgstr "エラー"
+
+#~ msgid "Save File"
+#~ msgstr "上書き保存"
+
+#~ msgid "Load File"
+#~ msgstr "ファイル読込み"
+
+#~ msgid "Output"
+#~ msgstr "出力"
+
+#~ msgid "Options"
+#~ msgstr "オプション"
+
+#~ msgid "Required"
+#~ msgstr "必須"
+
+#~ msgid "Copy"
+#~ msgstr "コピー"
+
+#~ msgid "Run"
+#~ msgstr "実行"
+
+#~ msgid "required"
+#~ msgstr "必須"
+
+#~ msgid "optional"
+#~ msgstr "オプション"
+
+#~ msgid "multiple"
+#~ msgstr "重複"
+
+#~ msgid "WARNING: cant get enviromental variable"
+#~ msgstr "警告： 環境変数を取得出来ません"
+
+#~ msgid ""
+#~ "Warning: Unable to get enviromental variable GRASS_PROJSHARE. \n"
+#~ "This is a GRASS installation error. \n"
+#~ "Set enviromental variable GRASS_PROJSHARE to point to directory with "
+#~ "Proj4 EPSG file. "
+#~ msgstr ""
+#~ "警告：環境変数GRASS_PROJSHAREを取得することができません \n"
+#~ "これは、GRASSのインストール時のエラーです \n"
+#~ "GRASS_PROJSHAREの環境変数に Proj4 EPSGの設定をしてください"
+
+#~ msgid "Define location using EPSG projection codes"
+#~ msgstr "EPSF投影コードを利用してロケーションを定義"
+
+#~ msgid "Name of new location"
+#~ msgstr "新規ロケーション名"
+
+#~ msgid "Enter name for location to be created"
+#~ msgstr "作成するロケーション名を入力"
+
+#~ msgid "Path to the EPSG-codes file"
+#~ msgstr "EPSGコードファイルのファイルパス"
+
+#~ msgid "Browse..."
+#~ msgstr "参照..."
+
+#~ msgid "Browse to locate EPSG file"
+#~ msgstr "EPSGコードファイルの参照"
+
+#~ msgid "EPSG code number of projection"
+#~ msgstr "投影するEPSGコード番号"
+
+#~ msgid "Enter EPSG code for selected projection"
+#~ msgstr "選択された投影法のEPSGコード入力"
+
+#~ msgid "View EPSG codes and projection information."
+#~ msgstr "EPSGコードおよび投影情報の表示"
+
+#~ msgid "WARNING: epsg-codes file not found"
+#~ msgstr "警告： EPSGコードファイルが見つかりません"
+
+#~ msgid "WARNING: The epsg-codes file was not found!"
+#~ msgstr "警告： EPSGコードファイルが見つかりません"
+
+#~ msgid "Define location"
+#~ msgstr "ロケーション定義"
+
+#~ msgid "Invalid EPSG Code!"
+#~ msgstr "EPSGコードが間違っています"
+
+#~ msgid "ERROR: Invalid EPSG code %s: should be an integer."
+#~ msgstr "エラー： EPSGコード %s ：は整数でなければなりません"
+
+#~ msgid "Location Exists!"
+#~ msgstr "ロケーションは存在します"
+
+#~ msgid "WARNING: Location '%s' already exists: please try another name."
+#~ msgstr ""
+#~ "警告: 場所, ロケーション '%s' は既に存在します：別名を指定してください"
+
+#~ msgid "Error creating location!"
+#~ msgstr "ロケーション作成エラー！"
+
+#~ msgid ""
+#~ "g.proj returned the following message:\n"
+#~ "%s"
+#~ msgstr ""
+#~ "g.proj は下記のようなメッセージを出しています:\n"
+#~ "%s "
+
+#~ msgid "Informational output from g.proj"
+#~ msgstr "g.proj からの情報出力 "
+
+#~ msgid ""
+#~ "g.proj returned the following informational message:\n"
+#~ "%s"
+#~ msgstr ""
+#~ "g.proj は下記のようなメッセージを出しています:\n"
+#~ "%s "
+
+#~ msgid "Select datum transformation parameters:"
+#~ msgstr "データム変換パラメータ選択："
+
+#~ msgid ""
+#~ "Continue without specifying parameters - if used when creating a "
+#~ "location, other GRASS modules will use the \"default\" (likely non-"
+#~ "optimum) parameters for this datum if necessary in the future."
+#~ msgstr ""
+#~ "パラメータを指定せずに続行 - ロケーションを作成した場合、他のGRASSのデータ"
+#~ "ムを使用する場合は、\"デフォルト\"（最適化されていない可能性があります）が"
+#~ "適用されます"
+
+#~ msgid "You can select EPSG code (in <braces>) and copy it for later use."
+#~ msgstr "EPSGコードを選択してコピーしてください (<括弧>内) "
+
+#~ msgid "GUESS THAT IS NOT THE EPSG FILE"
+#~ msgstr "EPSGファイルではない可能性が高い"
+
+#~ msgid "Search"
+#~ msgstr "検索"
+
+#~ msgid "Grab code"
+#~ msgstr "グラブコード"
+
+#~ msgid "Search text: "
+#~ msgstr "テキスト検索: "
+
+#~ msgid "Search for entered text in EPSG file"
+#~ msgstr "EPSG ファイル 中のテキストを検索"
+
+#~ msgid "forward search"
+#~ msgstr "下候補"
+
+#~ msgid "backward search"
+#~ msgstr "上候補"
+
+#~ msgid "WARNING: can not save"
+#~ msgstr "警告: 保存されません"
+
+#~ msgid ""
+#~ "Warning: unable to save data to <%s> file.\n"
+#~ "Error message: %s"
+#~ msgstr ""
+#~ "警告: データを  <%s> に保存出来ません.\n"
+#~ "エラーメッセージ： %s "
+
+#~ msgid "WARNING: invalid location"
+#~ msgstr "警告: i間違った ロケーション "
+
+#~ msgid ""
+#~ "Warning: location <%s> at GISDBASE <%s> is not a directory or does not "
+#~ "exist."
+#~ msgstr ""
+#~ "警告:  ロケーション <%s>  （GISデータベース <%s>） はディレクトリでないか"
+#~ "またはディレクトリが存在しません"
+
+#~ msgid "GRASS %s Startup"
+#~ msgstr "GRASS %s スタート"
+
+#~ msgid "Welcome to GRASS GIS Version"
+#~ msgstr " GRASS GIS へようこそ"
+
+#~ msgid ""
+#~ "The world's leading open source GIS\n"
+#~ "\n"
+#~ msgstr ""
+#~ "世界をリードするオープンソースGIS\n"
+#~ "\n"
+
+#~ msgid "Select an existing project location and mapset\n"
+#~ msgstr "プロジェクトロケーションとマップセットを選択\n"
+
+#~ msgid "or define a new location\n"
+#~ msgstr "または新規ロケーションを作成してください\n"
+
+#~ msgid "GIS Data Directory: "
+#~ msgstr "GISデータディレクトリ："
+
+#~ msgid "New GIS data directory"
+#~ msgstr "新しいGISデータディレクトリ"
+
+#~ msgid "Project Location (projection/coordinate system)"
+#~ msgstr "プロジェクトのロケーション(投影法/座標系)"
+
+#~ msgid "Accessible Mapsets (directories of GIS files)"
+#~ msgstr "利用可能なマップセット(GISファイルのディレクトリ)"
+
+#~ msgid "Create new mapset in selected location"
+#~ msgstr "選択されたロケーション内に新しいマップセット作成"
+
+#~ msgid "Create new mapset"
+#~ msgstr "新しいマップセットの作成"
+
+#~ msgid "WARNING: invalid mapset name"
+#~ msgstr "警告:正しくないマップセット名"
+
+#~ msgid ""
+#~ "Warning: Mapset with name <%s> already exists. \n"
+#~ "New mapset is NOT created. \n"
+#~ "Choose different mapset name and try again."
+#~ msgstr ""
+#~ "警告: マップセット名 <%s> は既に存在します\n"
+#~ "新しいマップセットは作成出来ませんでした \n"
+#~ "マップセット名を作成しなおしてください"
+
+#~ msgid ""
+#~ "Warning: selected location <%s> is not valid. \n"
+#~ " New mapset is NOT created. \n"
+#~ " Select valid location and try again."
+#~ msgstr ""
+#~ "警告:選択したロケーション <%s> は正しくありません \n"
+#~ "マップセットは作成出来ませんでした. \n"
+#~ "正しいロケーションを選択しなおしてください"
+
+#~ msgid "WARNING: unable to mkdir"
+#~ msgstr "警告: ディレクトリ作成出来ません"
+
+#~ msgid ""
+#~ "Warning: Unable to create directory for new mapset. \n"
+#~ "Error message: %s"
+#~ msgstr ""
+#~ "警告：マップセットのための新しいディレクトリが作成出来ません. \n"
+#~ "エラーメッセージ： %s "
+
+#~ msgid "Define new location with..."
+#~ msgstr "新しいロケーション定義... "
+
+#~ msgid "Georeferenced file"
+#~ msgstr "地理参照ファイル"
+
+#~ msgid "EPSG codes"
+#~ msgstr "EPSGコード"
+
+#~ msgid "Projection values"
+#~ msgstr "投影法値"
+
+#~ msgid "Enter GRASS"
+#~ msgstr "GRASSの起動"
+
+#~ msgid ""
+#~ "Warning: selected location <%s> is not valid. \n"
+#~ " Select valid location and try again."
+#~ msgstr ""
+#~ "警告:選択したロケーション <%s> は正しくありません \n"
+#~ "正しいロケーションを選択しなおしてください"
+
+#~ msgid "WARNING: invalid mapset"
+#~ msgstr "警告:正しくないマップセット"
+
+#~ msgid "Warning: <%s> is not a valid mapset"
+#~ msgstr "警告: <%s> は正しいマップセットではありません"
+
+#~ msgid "Help already opened"
+#~ msgstr "ヘルプは既にオープンしています"
+
+#~ msgid "Exit"
+#~ msgstr "終了"
+
+#~ msgid "Starting GRASS for the first time"
+#~ msgstr "GRASSの初回実行"
+
+#~ msgid ""
+#~ "GRASS needs a directory in which to store its data.  Create one now if "
+#~ "you have not already done so.  A popular choice is \"grassdata\", located "
+#~ "in your home directory."
+#~ msgstr ""
+#~ "GRASSをスタートさせるためにはデータを格納するディレクトリが必要ですので、"
+#~ "作成してください。一般には \"grassdata\"が使用されます。"
+
+#~ msgid "Select GIS data directory"
+#~ msgstr "GISデータディレクトリの選択"
+
+#~ msgid "WARNING: Invalid Database"
+#~ msgstr "警告: データベースが無効です "
+
+#~ msgid ""
+#~ "WARNING: Invalid database. Finding first valid directory in parent tree"
+#~ msgstr "警告: データベースが正しくありません DBツリーのが異常です"
+
+#~ msgid ""
+#~ "Warning: selected location <%%s> is not valid. \n"
+#~ " Select valid location and try again."
+#~ msgstr ""
+#~ "警告: 選択されたロケーション <%%s> が正しくおありません\n"
+#~ "正しいロケーションを選択しなおしてください"
+
+#~ msgid "Warning: <%%s> is not a valid mapset"
+#~ msgstr "警告: <%%s> は正しくないマップセットです"
+
+#~ msgid "WARNING: change directory failed"
+#~ msgstr "警告: ディレクトリ変更に失敗しました"
+
+#~ msgid ""
+#~ "Warning: could not change directory to <%s>.\n"
+#~ "Check directory permissions."
+#~ msgstr ""
+#~ "警告: ディレクトリの変更ができません <%s>.\n"
+#~ "ディレクトリの権限をチェックしてください"
+
+#~ msgid "Define location using projection information in georeferenced file"
+#~ msgstr "地理参照ファイルの投影法情報を使用したロケーションの定義"
+
+#~ msgid "Enter name of location to be created"
+#~ msgstr "作成するロケーション名を入力"
+
+#~ msgid "Path to georeferenced file"
+#~ msgstr "地理参照ファイルのパス"
+
+#~ msgid "Path to georeferenced file (format must be readable by GDAL/OGR)"
+#~ msgstr "地理参照ファイルのパス (GDAL/OGRによって読み込めるフォーマット) "
+
+#~ msgid "Browse to locate georeferenced file"
+#~ msgstr "地理参照ファイルの参照"
+
+#~ msgid "Choose georeferenced file"
+#~ msgstr "地理参照ファイルの選択"
+
+#~ msgid ""
+#~ "WARNING: Please supply a\n"
+#~ "valid georeferenced file"
+#~ msgstr ""
+#~ "警告: 正しい地理参照 a\n"
+#~ "ファイルを指定してください"
+
+#~ msgid "Error creating tempfile"
+#~ msgstr "テンポラリファイル作成エラー"
+
+#~ msgid "Opaque "
+#~ msgstr "不透明"
+
+#~ msgid " Transparent"
+#~ msgstr " 透過"
+
+#~ msgid "Command:"
+#~ msgstr "コマンド："
+
+#~ msgid "Raster map"
+#~ msgstr "ラスターマップ"
+
+#~ msgid "cell values for %s"
+#~ msgstr "セル値 %s "
+
+#~ msgid "Display cell values from raster map or image"
+#~ msgstr "ラスターマップまたは画像のセル値を表示"
+
+#~ msgid "  (resolution must be 100x100 or less)"
+#~ msgstr "  (解像度は100x100以下で無ければなりません) "
+
+#~ msgid "Raster to display: "
+#~ msgstr "表示するラスター："
+
+#~ msgid "Color for cell grid:       "
+#~ msgstr "セルグリッド色:       "
+
+#, fuzzy
+#~ msgid "brown"
+#~ msgstr "増加"
+
+#, fuzzy
+#~ msgid "orange"
+#~ msgstr "完了"
+
+#, fuzzy
+#~ msgid "aqua"
+#~ msgstr "不透明"
+
+#, fuzzy
+#~ msgid "blue"
+#~ msgstr "テーブル"
+
+#~ msgid "  cell values font "
+#~ msgstr "  セル値のフォント "
+
+#~ msgid "select font for text"
+#~ msgstr "テキストのフォント選択"
+
+#~ msgid "Color for cell values:   "
+#~ msgstr "セル値の色："
+
+#~ msgid "use raster colors for cell values"
+#~ msgstr "セル値にラスターカラーを使用"
+
+#~ msgid ""
+#~ "Cell values can only be displayed\n"
+#~ "for regions of < 10,000 cells"
+#~ msgstr ""
+#~ "セル値を表示できるのは\n"
+#~ "領域内で最大10,000までです"
+
+#~ msgid "Constrain map to region geometry?"
+#~ msgstr "ジオメトリをマップに割り当てますか？"
+
+#~ msgid ""
+#~ "Cell values can only be displayed for \n"
+#~ "regions of < 10,000 cells. Map in explore mode may contain more than "
+#~ "10,000 cells.\n"
+#~ "\n"
+#~ " It's suggested to constrain map to region geometry to display cell "
+#~ "values."
+#~ msgstr ""
+#~ "セル値を表示できるのは最大10,000の領域までです\n"
+#~ "エクスプローラーモードでは10,000セル以上を表示することができます\n"
+#~ "\n"
+#~ "セルの値を表示するため領域のジオメトリを制約することを提案します"
+
+#~ msgid "Constrain map to region geometry"
+#~ msgstr "ジオメトリをマップに割り当てます"
+
+#~ msgid "Leave in explore mode"
+#~ msgstr "エクスプローラーモードを終わる"
+
+#~ msgid "Raster drape map"
+#~ msgstr "ラスター ドレープ マップ"
+
+#~ msgid "This action requires map name to be set"
+#~ msgstr "このアクションを設定するマップ名が必要です"
+
+#~ msgid "Display raster maps"
+#~ msgstr "ラスターマップの表示 "
+
+#~ msgid "Base map:\t"
+#~ msgstr "ベースマップ:\t"
+
+#~ msgid "base raster map to display"
+#~ msgstr "表示ベースラスターマップ"
+
+#~ msgid "base map info"
+#~ msgstr "ベースマップ情報"
+
+#~ msgid "\tvalues to display"
+#~ msgstr "\t 表示する値"
+
+#~ msgid "\tOptional color draping. Use base map for shading,"
+#~ msgstr "\t オプションの色のドレーピング 陰影付ベースマップ使用"
+
+#~ msgid "\tdrape map for color in color relief map or data fusion"
+#~ msgstr "\t　カラーレリーフマップやデータ融合色のドレープマップ"
+
+#~ msgid "\tdrape map:  "
+#~ msgstr "\t ドレープ マップ："
+
+#~ msgid "raster map to drape over base map"
+#~ msgstr "ベースマップの上にドレープするラスターマップ"
+
+#~ msgid "drape map info"
+#~ msgstr "ドレープマップ情報"
+
+#~ msgid "\tdrape map brightness adjustment\t "
+#~ msgstr "\tドレープマップの明るさ調節\t  "
+
+#~ msgid "Adjust brightness of drape map"
+#~ msgstr "ドレープマップの明るさ調節"
+
+#~ msgid "overlay maps from other layers (transparent null value cells)"
+#~ msgstr "別のレイヤーからマップを重ね合せ (NULL値のセルを透過) "
+
+#~ msgid " Set background color (colored null value cells)"
+#~ msgstr " 背景色設定 (NULL値セルの色設定) "
+
+#~ msgid "Run (background)"
+#~ msgstr "実行（バックグランド）"
+
+#~ msgid "Run (GUI)"
+#~ msgstr "実行(GUI)"
+
+#~ msgid " Save "
+#~ msgstr " 保存"
+
+#~ msgid " Clear "
+#~ msgstr " クリア"
+
+#~ msgid "Output - GIS.m"
+#~ msgstr "出力 - GIS.m "
+
+#~ msgid "X Windows not available"
+#~ msgstr "X-Windowsが利用出来ません"
+
+#~ msgid "Functions that require X Windows are not available in Windows"
+#~ msgstr "X-Windowsが必要な機能はWindowsでは使えません"
+
+#~ msgid "This module requires X11 support, but no xmons were found"
+#~ msgstr "X11をサポートする必要があります X-モニターが見つかりません"
+
+#~ msgid "Raster map for histogram"
+#~ msgstr "ヒストグラムのラスターマップ"
+
+#~ msgid "histogram of %s"
+#~ msgstr "ヒストグラム %s "
+
+#~ msgid "Draw histogram of values from raster map or image"
+#~ msgstr "ラスターマップまたは画像からヒストグラムを表示"
+
+#~ msgid "Raster to histogram: "
+#~ msgstr "ラスターのヒストグラム："
+
+#~ msgid "Graph style"
+#~ msgstr "グラフスタイル"
+
+#~ msgid "\ttext font "
+#~ msgstr "\t テキストフォント"
+
+#~ msgid "Histogram color: text & frame"
+#~ msgstr "ヒストグラムカラー: テキスト & フレーム"
+
+#~ msgid "  background"
+#~ msgstr "  背景 "
+
+#~ msgid "transparent background"
+#~ msgstr "透明 背景"
+
+#~ msgid "Steps/bins for values (fp maps only)"
+#~ msgstr "値のステップ/ビン (実数マップのみ) "
+
+#~ msgid "include null values"
+#~ msgstr "NULL値を含む"
+
+#~ msgid "r.info error"
+#~ msgstr "r.info エラー "
+
+#~ msgid "Display scale and north arrow"
+#~ msgstr "スケールと方位表示"
+
+#~ msgid "Scale placement: 0-100% from top left of display"
+#~ msgstr "縮尺パーセント: 0-100% でディスプレイの左上から指定"
+
+#~ msgid "\t enter x,y of scale/arrow upper left corner"
+#~ msgstr "\t スケール/方位の左上端のXY入力"
+
+#~ msgid "    "
+#~ msgstr "      "
+
+#~ msgid "\t "
+#~ msgstr "\t "
+
+#~ msgid "place with mouse"
+#~ msgstr "マウスを使って位置指定"
+
+#~ msgid "Scale appearance:  text color"
+#~ msgstr "スケール外観：テキストの色"
+
+#~ msgid "  font "
+#~ msgstr "  フォント"
+
+#~ msgid "\tbackground color "
+#~ msgstr "\t 背景色"
+
+#~ msgid "display N. arrow only"
+#~ msgstr "磁北のみ表示"
+
+#~ msgid "display scale only"
+#~ msgstr "スケールのみ表示"
+
+#~ msgid "text on top of scale, instead of to right"
+#~ msgstr "右側の変わりにスケールのトップにテキスト"
+
+#~ msgid "line scale instead of bar"
+#~ msgstr "バーの代わりにラインスケール"
+
+#~ msgid "use feet/miles instead of meters"
+#~ msgstr "メーターの代わりにフィート/マイルを使用 "
+
+#~ msgid "Display active layers"
+#~ msgstr "アクティブなレイヤーを表示"
+
+#~ msgid "Erase to white"
+#~ msgstr "白色で消す"
+
+#~ msgid "Set ground control points"
+#~ msgstr "GCP（地上基準点）の定義"
+
+#~ msgid "Zoom In"
+#~ msgstr "ズーム "
+
+#~ msgid "Zoom Out"
+#~ msgstr "ズームアウト "
+
+#~ msgid "Return to previous zoom"
+#~ msgstr "ズームを戻す "
+
+#~ msgid "Zoom to map"
+#~ msgstr "マップにズーム"
+
+#~ msgid "Select input map"
+#~ msgstr "マップの選択"
+
+#~ msgid "Interactive rules entry"
+#~ msgstr "対話形式ルール入力"
+
+#~ msgid "Overwrite existing file"
+#~ msgstr "既存のファイルを上書き"
+
+#~ msgid "You must select an input map"
+#~ msgstr "入力するマップを選択しなければなりません"
+
+#~ msgid "No input map selected"
+#~ msgstr "マップが選択されていません"
+
+#~ msgid "You must specify an output map"
+#~ msgstr "出力マップを指定する必要があります"
+
+#~ msgid "No output map specified"
+#~ msgstr "出力マップが定義されていません"
+
+#~ msgid "Error creating rules file"
+#~ msgstr "ルールファイル作成エラー"
+
+#~ msgid "Start new map display monitor"
+#~ msgstr "マップディスプレイモニター開始"
+
+#~ msgid "Add raster layer"
+#~ msgstr "ラスターレイヤー追加"
+
+#~ msgid "Add RGB or HIS layer"
+#~ msgstr "RGB または HIS レイヤー追加"
+
+#~ msgid "Add histogram layer"
+#~ msgstr "ヒストグラムレイヤー追加"
+
+#~ msgid "Add cell values layer"
+#~ msgstr "セル値レイヤー追加"
+
+#~ msgid "Add directional arrows layer"
+#~ msgstr "流方向レイヤー追加"
+
+#~ msgid "Add raster legend layer"
+#~ msgstr "ラスター凡例レイヤー追加"
+
+#~ msgid "Add vector layer"
+#~ msgstr "ベクトルレイヤー追加"
+
+#~ msgid "Add thematic map layer"
+#~ msgstr "主題図 レイヤー追加"
+
+#~ msgid "Add thematic charts layer"
+#~ msgstr "主題図チャートレイヤー追加"
+
+#~ msgid "Add raster labels layer (using v.labels file)"
+#~ msgstr "ラスターラベルレイヤー追加（v.labelsファイル使用）"
+
+#~ msgid "Add text layer"
+#~ msgstr "テキストレイヤー追加"
+
+#~ msgid "Add postscript labels layer (using v.labels file)"
+#~ msgstr "ポストスクリプトラベルレイヤー追加（v.labelsファイル使用）"
+
+#~ msgid "Add postscript text layer"
+#~ msgstr "ポストスクリプトテキストレイヤー追加"
+
+#~ msgid "Redraw all layers"
+#~ msgstr "全レイヤー再描画"
+
+#~ msgid "Start NVIZ using active layers in current region"
+#~ msgstr "現在の領域のレイヤーにNVIZを使用"
+
+#~ msgid "Create flythough path for NVIZ"
+#~ msgstr "NVIZのフライスルー行路を作成"
+
+#~ msgid "Pointer"
+#~ msgstr "ポインタ"
+
+#~ msgid "Zoom display to selected map"
+#~ msgstr "選択したマップをズーム表示"
+
+#~ msgid "Zoom display to saved region"
+#~ msgstr "セーブド領域でズーム"
+
+#~ msgid "Save display extents to named region"
+#~ msgstr "表示範囲を領域ファイルに保存"
+
+#~ msgid "Zoom display to computational region (set with g.region)"
+#~ msgstr "計算領域でズーム (g.regionで設定)"
+
+#~ msgid "Zoom display to default region"
+#~ msgstr "デフォルト領域でズーム"
+
+#~ msgid "Set computational region extents to match display"
+#~ msgstr "画面を計算領域として設定"
+
+#~ msgid "Query"
+#~ msgstr "クエリ"
+
+#~ msgid "Measure"
+#~ msgstr "計測"
+
+#~ msgid "Create profile of raster map"
+#~ msgstr "ラスタファイルのプロファイルを作成"
+
+#~ msgid "Print raster & vector maps to eps file"
+#~ msgstr "ラスターとベクトルマップをEPSファイルに出力"
+
+#~ msgid "low quality (50)"
+#~ msgstr "低品質 (50) "
+
+#~ msgid "mid quality (75)"
+#~ msgstr "中品質 (75) "
+
+#~ msgid "high quality (95)"
+#~ msgstr "高品質 (95) "
+
+#~ msgid "very high resolution (300% your current resolution)"
+#~ msgstr "超高解像度 (300% の解像度) "
+
+#~ msgid "(* requires gdal)"
+#~ msgstr "(*GDALが必要) "
+
+#~ msgid "Map fills display window"
+#~ msgstr "ディスプレイ画面全面にマップを展開"
+
+#~ msgid "Could not create BMP"
+#~ msgstr "BMP を作成できません"
+
+#~ msgid "Could not create JPG"
+#~ msgstr "JPGを作成できません"
+
+#~ msgid "Could not create PNG"
+#~ msgstr "PNGを作成できません"
+
+#~ msgid "Could not create TIF"
+#~ msgstr "TIFを作成できません"
+
+#~ msgid ""
+#~ "There is no raster group file (REF). You must select the 'create/edit "
+#~ "group' option to create a group file."
+#~ msgstr ""
+#~ "ラスターグループファイル(REF)がありません グループ 作成/編集オプションを使"
+#~ "用してグループファイルを作成してください"
+
+#~ msgid ""
+#~ "There is no vector group file (VREF). You must select the 'create/edit "
+#~ "group' option to create a group file."
+#~ msgstr ""
+#~ "ベクトルグループファイル(VREF)がありません グループ 作成/編集オプションを"
+#~ "使用してグループファイルを作成してください"
+
+#~ msgid "Select mapset of raster to georectify"
+#~ msgstr " 幾何補正処理を行うマップセットの選択"
+
+#~ msgid "Create a group REF file and directory for vectors"
+#~ msgstr "ベクトルのグループREFファイルとディレクトリ作成"
+
+#~ msgid "Create/replace vector group"
+#~ msgstr "ベクトルループの作成/置換え"
+
+#~ msgid "group name"
+#~ msgstr "グループ名"
+
+#~ msgid "Select existing vector group or name new group"
+#~ msgstr "既存ベクトルグループ名または新しいグループ名選択"
+
+#~ msgid "vector"
+#~ msgstr "ベクトル"
+
+#~ msgid "Select xy vector(s) for group"
+#~ msgstr "グループのXYベクトル選択"
+
+#~ msgid "Vector group"
+#~ msgstr "ベクトルグループ"
+
+#~ msgid "GRASS Georectifier"
+#~ msgstr "GRASS 幾何補正処理"
+
+#~ msgid "Set up environment for georectifying rasters or vectors"
+#~ msgstr "ラスターまたはベクトルの幾何補正処理環境の設定"
+
+#~ msgid "Georeference raster"
+#~ msgstr "地理参照ラスター"
+
+#~ msgid "Georeference vector"
+#~ msgstr "地理参照ベクトル"
+
+#~ msgid "1. Select mapset"
+#~ msgstr "1. マップセット選択"
+
+#~ msgid "Mapset of xy raster group"
+#~ msgstr "XYラスターグループのマップセット"
+
+#~ msgid "2. Create/edit group"
+#~ msgstr "２．グループ作成/編集"
+
+#~ msgid "Create/edit group (rasters or vectors to georectify)"
+#~ msgstr "グループ作成/編集（幾何補正するラスターまたはベクトル）"
+
+#~ msgid "3. Select group"
+#~ msgstr "３．グループ選択"
+
+#~ msgid "Select existing group to georectify"
+#~ msgstr "幾何補正するグループ選択"
+
+#~ msgid "4. Select map"
+#~ msgstr "４．マップ選択"
+
+#~ msgid ""
+#~ "Select non-georectified raster or vector to display for marking ground "
+#~ "control points"
+#~ msgstr "地上基準点を作成するため非幾何補正ラスターまたはベクトルを選択"
+
+#~ msgid "5. Start georectifying"
+#~ msgstr "５．幾何補正開始"
+
+#~ msgid "Start georectifying"
+#~ msgstr "幾何補正を開始"
+
+#~ msgid "Cancel georectification"
+#~ msgstr "幾何補正キャンセル"
+
+#~ msgid "Displaying xy map to be georectified"
+#~ msgstr "幾何補正のためXYマップを表示"
+
+#~ msgid "Select rectification method for rasters"
+#~ msgstr "ラスターの多項式変換方法の選択"
+
+#~ msgid "1st order"
+#~ msgstr "第１選択"
+
+#~ msgid "affine transformation  (rasters & vectors). Requires 3+ GCPs."
+#~ msgstr "アフィン変換  (ラスターまたはベクトル). ３以上のGCPが必要"
+
+#~ msgid "2nd order"
+#~ msgstr "第２選択"
+
+#~ msgid "polynomial transformation  (rasters only). Requires 6+ GCPs."
+#~ msgstr "多項式変換  (ラスターのみ). ６以上の GCPが必要"
+
+#~ msgid "3rd order"
+#~ msgstr "第３選択"
+
+#~ msgid "polynomial transformation  (rasters only). Requires 10+ GCPs."
+#~ msgstr "多項式変換  (ラスターのみ)10以上の GCPが必要"
+
+#~ msgid "Clip map/image to target region"
+#~ msgstr "対象領域のマップ/画像をクリップ"
+
+#~ msgid "Use"
+#~ msgstr "用法"
+
+#~ msgid "xy coordinates"
+#~ msgstr " XY座標"
+
+#~ msgid "geographic coordinates"
+#~ msgstr "地理座標"
+
+#~ msgid "forward error"
+#~ msgstr "上位のエラー"
+
+#~ msgid "backward error"
+#~ msgstr "下位のエラー"
+
+#~ msgid "Manage ground control points (GCPs)"
+#~ msgstr "地上基準点 (GCP) 管理"
+
+#~ msgid "Save GCPs to POINTS file"
+#~ msgstr "ポイントファイルとしてGCPを保存"
+
+#~ msgid "Clear all unchecked GCP entries"
+#~ msgstr "すべての未チェックGCPクリア"
+
+#~ msgid "Calculate RMS error"
+#~ msgstr "RMS誤差計算"
+
+#~ msgid "Rectify maps in group"
+#~ msgstr "グループ内マップの位置補正"
+
+#~ msgid "Exit georectifier"
+#~ msgstr "幾何補正"
+
+#~ msgid ""
+#~ "There is no POINTS file of ground control points for group. You must "
+#~ "create ground control points before georectifying map."
+#~ msgstr ""
+#~ "グループの地理基準点がポイントファイルに存在しません 幾何補正の前に作成す"
+#~ "る必要があります"
+
+#~ msgid ""
+#~ "Insufficient ground control points for georectification method. You need "
+#~ "at least 3 points for 1st order, 6 points for 2nd order and 10 points for "
+#~ "3rd order."
+#~ msgstr ""
+#~ "マップ幾何補正のための地上基準点が不足しています 第１選択では最低３点、第"
+#~ "２では６点、第３では１０点以上必要です"
+
+#~ msgid ""
+#~ "No valid ground control points in GCP file. You must create valid ground "
+#~ "control points before georectifying map."
+#~ msgstr ""
+#~ "GCPファイルのポイントに値が定義されていません 幾何補正の前にGCPを作成する"
+#~ "必要があります"
+
+#~ msgid "Error setting region"
+#~ msgstr "領域設定エラー"
+
+#~ msgid "Please wait..."
+#~ msgstr "しばらくお待ちください... "
+
+#~ msgid "Drag or click mouse to zoom"
+#~ msgstr "マウスのドラッグで拡大表示"
+
+#~ msgid "Drag or click mouse to unzoom"
+#~ msgstr "マウスのドラッグで縮小表示"
+
+#~ msgid "Drag with mouse to pan"
+#~ msgstr "マウスのドラッグでパン"
+
+#~ msgid "Loading GIS Manager"
+#~ msgstr "GISマネージャーロード"
+
+#~ msgid "Creating MainFrame..."
+#~ msgstr "メインフレーム作成中...."
+
+#~ msgid "Welcome to GRASS GIS"
+#~ msgstr "GRASS GIS へようこそ"
+
+#~ msgid "Map Display %d"
+#~ msgstr "マップ表示 %d"
+
+#~ msgid "GRASS%s GIS Manager - %s"
+#~ msgstr "GRASS%s GISマネージャー%s"
+
+#~ msgid "Select GRASS display font"
+#~ msgstr "表示フォント選択"
+
+#~ msgid "Font: "
+#~ msgstr "フォント："
+
+#~ msgid "Character encoding: "
+#~ msgstr "文字エンコード："
+
+#~ msgid "GRASS%s GIS Manager - %s %s"
+#~ msgstr "GRASS%s GIS マネージャー %s %s"
+
+#~ msgid "NVIZ flythrough path"
+#~ msgstr "NVIZフライスルー行路"
+
+#~ msgid "Create flythough path for NVIZ display"
+#~ msgstr "NVIZのフライスルー行路を作成"
+
+#~ msgid "Raster surface map "
+#~ msgstr "ラスター地曲面マップ"
+
+#~ msgid "Output script file "
+#~ msgstr "スクリプト ファイル出力"
+
+#~ msgid "Flythrough path "
+#~ msgstr "フライスルー行路"
+
+#~ msgid "Create path with mouse in map display"
+#~ msgstr "マップにマウスで行路を作成"
+
+#~ msgid "Coordinate pairs for flythrough path (x1,y1,x2,y2,...)"
+#~ msgstr "フライスルー行路の座標 (x1,y1,x2,y2,...) "
+
+#~ msgid "Flythrough images prefix "
+#~ msgstr "フライスルー画像拡張子"
+
+#~ msgid "Prefix for image series created by flythough"
+#~ msgstr "フライスルーで作成された画像の接頭語"
+
+#~ msgid "Camera layback "
+#~ msgstr "カメラ レイバック"
+
+#~ msgid "Camera layback distance (in map units)"
+#~ msgstr "カメラ レイバック 距離 (マップユニット内) "
+
+#~ msgid "Camera height "
+#~ msgstr "カメラ 高さ"
+
+#~ msgid "Camera height above terrain"
+#~ msgstr "地表からの高さ"
+
+#~ msgid "Number of frames "
+#~ msgstr "フレーム数"
+
+#~ msgid "Number of frames to create for flythrough"
+#~ msgstr "フライスルーで作成するフレーム数"
+
+#~ msgid "Start frame "
+#~ msgstr "スタートフレーム"
+
+#~ msgid "Starting frame number..."
+#~ msgstr "スタートフレーム番号... "
+
+#~ msgid "Enable vector rendering"
+#~ msgstr "ベクトルレンダリング可能"
+
+#~ msgid "Full render (save images)"
+#~ msgstr "完全レンダリング（画像保存）"
+
+#~ msgid "Render images offscreen"
+#~ msgstr "レンダリング画像をオフスクリーン"
+
+#~ msgid "Height value is elevation"
+#~ msgstr "高さデータは標高 "
+
+#~ msgid "Output keyframe file"
+#~ msgstr "キーフレームファイル出力"
+
+#~ msgid "Clear all path coordinates"
+#~ msgstr " 全通過座標をクリア"
+
+#~ msgid "You must specify an output file"
+#~ msgstr "出力ファイルを指定しなければなりません"
+
+#~ msgid "No output file specified"
+#~ msgstr "出力ファイルが定義されていません"
+
+#~ msgid "You must specify at least 4 points (x,y coordinate pairs)"
+#~ msgstr "４点以上指定する必要があります (x,y 座標のセット) "
+
+#~ msgid "Insufficient coordinates specified"
+#~ msgstr "指定された座標が不足しています"
+
+#~ msgid "This is font sample text."
+#~ msgstr "フォントのサンプルテキスト"
+
+#~ msgid "Select label font"
+#~ msgstr "ラベルフォント選択"
+
+#~ msgid ""
+#~ "Create postscript text object (for postscript eps, pdf, and print output "
+#~ "only)"
+#~ msgstr ""
+#~ "ポストスクリプトテキストオブジェクト作成 (ポストスクリプト eps, pdf, プリ"
+#~ "ント出力のみ) "
+
+#~ msgid "Text to display:"
+#~ msgstr "表示テキスト："
+
+#~ msgid "Text placement: x,y coordinates (from upper left) "
+#~ msgstr "テキスト位置: XY座標値 (左上から)  "
+
+#~ msgid "     coordinate type for text placement "
+#~ msgstr "     テキスト表示位置の座標タイプ"
+
+#, fuzzy
+#~ msgid "pixels"
+#~ msgstr "(ピクセル)  "
+
+#, fuzzy
+#~ msgid "percent"
+#~ msgstr "印刷"
+
+#, fuzzy
+#~ msgid "geographic"
+#~ msgstr "地理座標"
+
+#~ msgid "     align text with coordinate point  "
+#~ msgstr "     テキスト座標値位置調整"
+
+#, fuzzy
+#~ msgid "lower left"
+#~ msgstr "流線"
+
+#, fuzzy
+#~ msgid "bottom center"
+#~ msgstr "下："
+
+#, fuzzy
+#~ msgid "lower right"
+#~ msgstr " 右："
+
+#, fuzzy
+#~ msgid "center right"
+#~ msgstr " 右："
+
+#, fuzzy
+#~ msgid "upper right"
+#~ msgstr " 右："
+
+#~ msgid "     justification"
+#~ msgstr "    行揃え "
+
+#, fuzzy
+#~ msgid "left"
+#~ msgstr "左："
+
+#, fuzzy
+#~ msgid "right"
+#~ msgstr "右："
+
+#~ msgid "  line width"
+#~ msgstr "  線幅"
+
+#~ msgid "Font:"
+#~ msgstr "フォント:"
+
+#~ msgid "  color"
+#~ msgstr "  カラー"
+
+#~ msgid "Display text"
+#~ msgstr "テキスト表示"
+
+#~ msgid "Text to display: "
+#~ msgstr "表示テキスト："
+
+#~ msgid "     text rotation (degrees)"
+#~ msgstr "     テキスト回転 (度) "
+
+#~ msgid "Text options: font "
+#~ msgstr "テキストオプション：フォント"
+
+#~ msgid "bold text"
+#~ msgstr "太字 "
+
+#~ msgid "     text height in pixels "
+#~ msgstr "     ピクセルでのテキスト高さ"
+
+#~ msgid "  line spacing"
+#~ msgstr "  線間隔"
+
+#~ msgid "Vector map"
+#~ msgstr "ベクトルマップ"
+
+#~ msgid "thematic map for %s"
+#~ msgstr "%s の主題図"
+
+#~ msgid "You must provide valid vector layer number"
+#~ msgstr "有効なベクトルレイヤー番号を定義する必要があります"
+
+#~ msgid "Vector point symbol"
+#~ msgstr "ベクトルポイントシンボル"
+
+#~ msgid "Display vector maps thematically by graduate colors (all types)"
+#~ msgstr "階調色でベクトルの主題表示 (全タイプ) "
+
+#~ msgid "  or by graduated sizes (points and lines)"
+#~ msgstr "  または サイズの目盛 (ポイントとライン) による"
+
+#~ msgid "Vector map:"
+#~ msgstr "ベクトルマップ："
+
+#~ msgid "vector for thematic mapping"
+#~ msgstr "主題図のベクトル"
+
+#~ msgid "    vector type"
+#~ msgstr "    ベクトルタイプ"
+
+#, fuzzy
+#~ msgid "area"
+#~ msgstr "エリア"
+
+#, fuzzy
+#~ msgid "point"
+#~ msgstr "ポイント"
+
+#, fuzzy
+#~ msgid "centroid"
+#~ msgstr "セントロイド"
+
+#, fuzzy
+#~ msgid "line"
+#~ msgstr "ライン"
+
+#, fuzzy
+#~ msgid "boundary"
+#~ msgstr "境界"
+
+#~ msgid " attribute layer"
+#~ msgstr " 属性レイヤー"
+
+#~ msgid "    NUMERIC attribute column to use for thematic map"
+#~ msgstr "    主題図で使用する数値属性の列"
+
+#~ msgid "    show attribute columns"
+#~ msgstr "    属性列表示"
+
+#~ msgid "columns"
+#~ msgstr "列"
+
+#~ msgid "Show columns"
+#~ msgstr "列表示"
+
+#~ msgid "   show data"
+#~ msgstr "   データ表示"
+
+#~ msgid "data"
+#~ msgstr "データ"
+
+#~ msgid "Show data"
+#~ msgstr "データ表示"
+
+#~ msgid "Thematic map: type"
+#~ msgstr "主題図：タイプ"
+
+#, fuzzy
+#~ msgid "graduated colors"
+#~ msgstr "ランダムカラー"
+
+#, fuzzy
+#~ msgid "graduated points"
+#~ msgstr "ポイントとラインの目盛："
+
+#, fuzzy
+#~ msgid "graduated lines"
+#~ msgstr "ポイントとラインの目盛："
+
+#~ msgid " map by"
+#~ msgstr " マップ－"
+
+#, fuzzy
+#~ msgid "interval"
+#~ msgstr "ポインタ"
+
+#, fuzzy
+#~ msgid "std deviation"
+#~ msgstr "早送り"
+
+#, fuzzy
+#~ msgid "quartiles"
+#~ msgstr "境界"
+
+#~ msgid "    number of intervals to map (interval themes):"
+#~ msgstr "    マップの間隔数(インターバルテーマ)："
+
+#~ msgid "    custom breakpoints (val val ...)  "
+#~ msgstr "    独自分割点 (val val ...)   "
+
+#~ msgid "    query with SQL where clause   "
+#~ msgstr "    SQL where句でクエリ"
+
+#~ msgid "Graduated points & lines: "
+#~ msgstr "ポイントとラインの目盛："
+
+#~ msgid "icon"
+#~ msgstr "アイコン"
+
+#~ msgid "point color"
+#~ msgstr "ポイントカラー"
+
+#~ msgid "line color"
+#~ msgstr "ラインカラー"
+
+#~ msgid "    size/min size (graduated pts/lines)"
+#~ msgstr "   サイズ/最小値 (ポイント/ラインで階調) "
+
+#~ msgid "icon size/min size (graduated pts/lines)"
+#~ msgstr "アイコンサイズ/最小値 (ポイント/ラインで階調) "
+
+#~ msgid "max size (graduated pts)"
+#~ msgstr "最大値 (ポイントで階調) "
+
+#~ msgid " max size (graduated pts/lines)"
+#~ msgstr "最大値 (ポイント/ラインで階調) "
+
+#~ msgid "Graduated colors: preset color schemes"
+#~ msgstr "階調色：カラースキーマでプリセット"
+
+#, fuzzy
+#~ msgid "red blue"
+#~ msgstr "テーブル作成"
+
+#, fuzzy
+#~ msgid "green blue"
+#~ msgstr "テーブル作成"
+
+#, fuzzy
+#~ msgid "custom gradient"
+#~ msgstr "スムーズグラデーション描画"
+
+#, fuzzy
+#~ msgid "single color"
+#~ msgstr "ラインカラー"
+
+#~ msgid "    custom color scheme - start color"
+#~ msgstr "    カスタムカラースキーマ - スタートカラー"
+
+#~ msgid " end color"
+#~ msgstr "エンドカラー"
+
+#~ msgid "draw border"
+#~ msgstr "境界描画"
+
+#~ msgid "save thematic colors to GRASSRGB column of vector file"
+#~ msgstr "ベクトルファイルのGRASS RGB列に主題色を保存"
+
+#~ msgid "Legend: title font "
+#~ msgstr "凡例：タイトルフォント"
+
+#~ msgid "title font for legend"
+#~ msgstr "凡例タイトルのフォント"
+
+#~ msgid " font color"
+#~ msgstr "フォントカラー"
+
+#~ msgid "    subtitle font    "
+#~ msgstr "   サブタイトルフォント"
+
+#~ msgid "subtitle font for legend"
+#~ msgstr "凡例のサブタイトルフォント"
+
+#~ msgid "    label font       "
+#~ msgstr "    ラベルフォント"
+
+#~ msgid "label font for legend"
+#~ msgstr "凡例のラベルフォント"
+
+#~ msgid "use math notation in legend"
+#~ msgstr "凡例で使用する数学の表記法"
+
+#~ msgid "Name for ps.map instruction files"
+#~ msgstr "ps.map命令ファイル名"
+
+#~ msgid "Legend for Map %d, %s"
+#~ msgstr "マップの凡例 %d, %s "
+
+#~ msgid "Clear legend"
+#~ msgstr "凡例クリア"
+
+#~ msgid "save"
+#~ msgstr "保存"
+
+#~ msgid "Save legend to EPS file"
+#~ msgstr "EPSファイルに凡例保存"
+
+#~ msgid "Scalebar and north arrow"
+#~ msgstr "縮尺と方位"
+
+#~ msgid "Overlay grids and lines"
+#~ msgstr "グリッドとラインを重ね合わせ"
+
+#~ msgid "Add command layer"
+#~ msgstr "コマンドレイヤー追加"
+
+#~ msgid "Add group"
+#~ msgstr "グループ追加"
+
+#~ msgid "Duplicate Layer"
+#~ msgstr "レイヤを複製"
+
+#~ msgid "Delete layer"
+#~ msgstr "レイヤー削除"
+
+#~ msgid "Create new workspace file (erase current workspace settings first)"
+#~ msgstr "ワークスペースの新規作成(まず現在のワークスペース設定を消去) "
+
+#~ msgid "Open existing workspace file"
+#~ msgstr "ワークスペースを開く"
+
+#~ msgid "Save workspace file"
+#~ msgstr "ワークスペースを保存"
+
+#~ msgid "Animate raster map series"
+#~ msgstr "ラスターマップのアニメーション"
+
+#~ msgid "Digitize map (select or create new map first)"
+#~ msgstr "マップのデジタイズ(マップを選択または新規マップを作成) "
+
+#~ msgid "Raster map for legend"
+#~ msgstr "凡例(ラスター)の表示"
+
+#~ msgid "legend for %s"
+#~ msgstr " %s の凡例"
+
+#~ msgid "Display legend for raster map using cat values and labels"
+#~ msgstr "カテゴリー値とラベルを使用してラスターマップの凡例を表示"
+
+#~ msgid "Raster map: "
+#~ msgstr "ラスターマップ："
+
+#~ msgid "Legend placement and size as 0-100% of display"
+#~ msgstr "ディスプレイを0-100 % として凡例の配置とサイズを設定"
+
+#~ msgid "    x,y of lower left corner (in % from display top left)"
+#~ msgstr "    左下端のXY (ディスプレイの左上端から %  ) "
+
+#~ msgid "    legend height "
+#~ msgstr "    凡例 高さ  "
+
+#~ msgid "Legend height (% of display)"
+#~ msgstr "凡例 高さ (ディスプレイの%  ) "
+
+#~ msgid "%  width"
+#~ msgstr "%   幅"
+
+#~ msgid "Legend width (% of display)"
+#~ msgstr "凡例の幅 (ディスプレイの%  ) "
+
+#~ msgid "Legend appearance: text color"
+#~ msgstr "凡例の外観：テキストカラー"
+
+#~ msgid "  legend text font "
+#~ msgstr "  凡例テキストフォント"
+
+#~ msgid "do not display labels"
+#~ msgstr "ラベルを表示出来ません"
+
+#~ msgid "do not display values"
+#~ msgstr "値を表示出来ません"
+
+#~ msgid "    number of lines (0=display all):"
+#~ msgstr "    ライン数 (0=全表示): "
+
+#~ msgid "Lines to display"
+#~ msgstr "表示するライン数"
+
+#~ msgid "invert legend"
+#~ msgstr "凡例 反転"
+
+#~ msgid "    interval between categories (integer maps)"
+#~ msgstr "   カテゴリー内で反転 (整数マップ) "
+
+#~ msgid "Thinning interval"
+#~ msgstr "細線化間隔"
+
+#~ msgid "draw smooth gradient (fp maps)"
+#~ msgstr "スムーズ階調表示 (実数マップ) "
+
+#~ msgid "with maximum of"
+#~ msgstr "最大値"
+
+#~ msgid "Maximum lines to display for gradient"
+#~ msgstr "階調表示を行う区分の最大値"
+
+#~ msgid "Display legend for subset of raster values"
+#~ msgstr "ラスター値のサブセットで凡例を表示"
+
+#~ msgid "skip categories with no labels"
+#~ msgstr "ラベルのないカテゴリーをスキップ"
+
+#~ msgid "    legend for only these categories     "
+#~ msgstr "    カテゴリー値のみの凡例"
+
+#~ msgid "    legend for only this range of values"
+#~ msgstr "    値の範囲を区切った凡例"
+
+#~ msgid "Map Resource File"
+#~ msgstr "マップリソースファイル"
+
+#~ msgid "All Files"
+#~ msgstr "全てのファイル"
+
+#~ msgid "Open File"
+#~ msgstr "ファイルを開く"
+
+#~ msgid "DM Resource File"
+#~ msgstr "DMリソースファイル"
+
+#~ msgid "Ghostscript not available"
+#~ msgstr "ゴーストスクリプトは利用出来ません"
+
+#~ msgid "Postscript and LPR printing of map display"
+#~ msgstr "マップのポストスクリプトとLPR出力"
+
+#~ msgid "Preset paper type"
+#~ msgstr "プリセットの用紙の種類"
+
+#, fuzzy
+#~ msgid "letter"
+#~ msgstr "削除"
+
+#, fuzzy
+#~ msgid "legal"
+#~ msgstr "クリア"
+
+#~ msgid "Custom paper size"
+#~ msgstr "独自用紙サイズ"
+
+#~ msgid "width:"
+#~ msgstr "幅："
+
+#~ msgid "  height:"
+#~ msgstr "  高さ："
+
+#~ msgid "Margins  left:"
+#~ msgstr "左マージン: "
+
+#~ msgid " right:"
+#~ msgstr " 右："
+
+#~ msgid " top:"
+#~ msgstr " 上："
+
+#~ msgid " bottom:"
+#~ msgstr " 下："
+
+#~ msgid "Resolution (dpi) for printing and PDF "
+#~ msgstr "プリントとPDFの解像度(dpi)"
+
+#~ msgid "Print on LPR printer"
+#~ msgstr "LPRプリンタで出力"
+
+#~ msgid "Print on postscript device* "
+#~ msgstr "ポストスクリプトデバイス*で出力"
+
+#~ msgid "Save to PDF file*              "
+#~ msgstr "PDFファイル*で保存"
+
+#~ msgid "Browse"
+#~ msgstr "参照"
+
+#~ msgid "Save to EPS file               "
+#~ msgstr "EPSファイルに保存"
+
+#~ msgid "*requires ghostscript to be installed and in path"
+#~ msgstr "*ゴーストスクリプトをインストールする必要があります"
+
+#~ msgid "Print"
+#~ msgstr "プリント"
+
+#~ msgid "Raster map for profile"
+#~ msgstr "断面のラスターマップ"
+
+#~ msgid "Profile Window"
+#~ msgstr "プロファイルウィンドウ"
+
+#~ msgid ""
+#~ "Select raster map to profile.\n"
+#~ "Currently selected raster is default."
+#~ msgstr ""
+#~ "だんめんを作成するラスターマップを選択.\n"
+#~ "現在はデフォルトが選択されています"
+
+#~ msgid "Draw profile transect in map display"
+#~ msgstr "マップの横断面を表示 "
+
+#~ msgid "Draw profile"
+#~ msgstr "断面図表示"
+
+#~ msgid "Clear profile"
+#~ msgstr "断面図クリア"
+
+#~ msgid "Save profile to EPS file"
+#~ msgstr "EPSファイルで断面図を保存"
+
+#~ msgid "r.univar error"
+#~ msgstr "r.univar エラー "
+
+#~ msgid "g.proj or projection error"
+#~ msgstr "g.proj または投影 エラー "
+
+#~ msgid "You must select a raster to profile"
+#~ msgstr "断面図用ラスターマップを選択する必要があります"
+
+#~ msgid "No raster map selected"
+#~ msgstr "ラスターマップが指定されていません"
+
+#~ msgid "You must draw a transect to profile"
+#~ msgstr "断面を定義する必要があります"
+
+#~ msgid "No transect drawn"
+#~ msgstr "断面が定義されていません"
+
+#~ msgid "Please wait while profile elevations are calculated"
+#~ msgstr "断面の標高を計算する間しばらくお待ちください"
+
+#~ msgid ""
+#~ "Elevation range for selected raster is zero.\n"
+#~ "No profile can be created."
+#~ msgstr ""
+#~ "指定された標高の幅が０です\n"
+#~ "断面は作成出来ません"
+
+#~ msgid "Zero elevation range"
+#~ msgstr "標高差０"
+
+#~ msgid "Error reading region values"
+#~ msgstr "領域値読み込みエラー"
+
+#~ msgid "r.profile error"
+#~ msgstr "r.profile エラー"
+
+#~ msgid "Display grid lines, and geodesic lines or rhumblines"
+#~ msgstr "グリッド線と測地線や航程線を表示"
+
+#~ msgid "Grid options: "
+#~ msgstr "グリッドオプション："
+
+#~ msgid "draw grid"
+#~ msgstr "グリッド表示"
+
+#~ msgid "geodetic grid  "
+#~ msgstr "測地系グリッド"
+
+#~ msgid "grid color "
+#~ msgstr "グリッドカラー"
+
+#~ msgid "Help for grids"
+#~ msgstr "グリッドのヘルプ"
+
+#~ msgid "    grid size (map units)"
+#~ msgstr "    グリッドサイズ (マップユニット) "
+
+#~ msgid " grid origin (east, north)"
+#~ msgstr " グリッド原点 (東、北) "
+
+#~ msgid "draw border text "
+#~ msgstr "境界テキスト描画"
+
+#~ msgid "text color "
+#~ msgstr "テキストカラー"
+
+#~ msgid "text font "
+#~ msgstr "テキストフォント"
+
+#~ msgid "  text size"
+#~ msgstr "  テキストサイズ"
+
+#~ msgid "Grid text size in points"
+#~ msgstr "ポイントによるグリッドテキストサイズ"
+
+#~ msgid "draw grid border "
+#~ msgstr "グリッド境界描画"
+
+#~ msgid "border color "
+#~ msgstr "境界色"
+
+#~ msgid "Geodesic and rhumblines for latlong locations only"
+#~ msgstr "緯経度地点による測地線と航程線"
+
+#~ msgid "draw geodesic line"
+#~ msgstr "測地線描画"
+
+#~ msgid "Help for geodesic lines"
+#~ msgstr "測地線のヘルプ"
+
+#~ msgid " line color"
+#~ msgstr " ラインカラー"
+
+#~ msgid " text color"
+#~ msgstr "テキストカラー"
+
+#~ msgid "     line endpoints (x1,y1,x2,y2)"
+#~ msgstr "     ライン始終点 (x1,y1,x2,y2) "
+
+#~ msgid "draw rhumbline"
+#~ msgstr "航程線描画"
+
+#~ msgid "Help for rhumblines"
+#~ msgstr "航程線のヘルプ"
+
+#~ msgid "Divide map display into frames for displaying multiple maps"
+#~ msgstr "複数のマップを表示するためマップをフレームに分割する"
+
+#~ msgid "create and select frame"
+#~ msgstr "フレームの作成と選択"
+
+#~ msgid "select frame"
+#~ msgstr "フレーム選択"
+
+#~ msgid "remove all frames   "
+#~ msgstr "全てのフレーム削除"
+
+#~ msgid "Frame name (optional): "
+#~ msgstr "フレーム名 (オプション)："
+
+#~ msgid "Set frame borders at 0-100% from lower left corner of display "
+#~ msgstr "フレームの境界をディスプレイの左下端から0-100% で指定"
+
+#~ msgid "     set borders (bottom,top,left,right): "
+#~ msgstr "     境界指定 (下,上,左,右)："
+
+#~ msgid "&File"
+#~ msgstr "ファイル(&F) "
+
+#~ msgid "Workspace"
+#~ msgstr "ワークスペース"
+
+#~ msgid "Open..."
+#~ msgstr "開く... "
+
+#~ msgid "Save as..."
+#~ msgstr "名前を付けて保存"
+
+#~ msgid "Import raster map"
+#~ msgstr "ラスターマップのインポート"
+
+#~ msgid "Multiple formats using GDAL"
+#~ msgstr "GDALの利用 "
+
+#~ msgid "Multiple formats using GDAL (link into instead of import)"
+#~ msgstr "GDALの利用  (インポートする代わりにリンク設定) "
+
+#~ msgid "Aggregate ASCII xyz"
+#~ msgstr "ASCII xyz集計"
+
+#~ msgid "ASCII grid"
+#~ msgstr "ASCIIグリッド"
+
+#~ msgid "ASCII polygons and lines"
+#~ msgstr "ASCIIポリゴンおよびライン"
+
+#~ msgid "Binary"
+#~ msgstr "バイナリ"
+
+#~ msgid "ESRI grid"
+#~ msgstr "ESRIグリッド"
+
+#~ msgid "GRIDATB.FOR"
+#~ msgstr "GRIDATB.FOR "
+
+#~ msgid "MAT-File (v.4)"
+#~ msgstr "MAT-ファイル (v.4) "
+
+#~ msgid "SPOT NDVI"
+#~ msgstr "SPOT NDVI "
+
+#~ msgid "SRTM hgt"
+#~ msgstr "SRTM hgt"
+
+#~ msgid "Terra ASTER"
+#~ msgstr "Terra ASTER"
+
+#~ msgid "Web Mapping Server"
+#~ msgstr "Web マッピングサーバー"
+
+#~ msgid "Import vector map"
+#~ msgstr "ベクトルマップのインポート"
+
+#~ msgid "Multiple formats using OGR"
+#~ msgstr "OGRを使用した複数フォーマット"
+
+#~ msgid "ASCII points or GRASS ASCII vector"
+#~ msgstr "ASCIIポイントまたはGRASS ASCIIベクトル"
+
+#, fuzzy
+#~ msgid "ASCII points as vector lines"
+#~ msgstr "ASCIIポリゴンおよびライン"
+
+#~ msgid "Old GRASS vector"
+#~ msgstr "旧GRASSベクトル"
+
+#~ msgid "DXF"
+#~ msgstr "DXF"
+
+#~ msgid "ESRI e00"
+#~ msgstr "ESRI e00 "
+
+#~ msgid "Garmin GPS"
+#~ msgstr "ガーミンGPS "
+
+#~ msgid "GPSBabel GPS"
+#~ msgstr "GPSバベルGPS "
+
+#~ msgid "Geonames"
+#~ msgstr "GeoNames"
+
+#~ msgid "GEOnet"
+#~ msgstr "ジオネット "
+
+#~ msgid "Matlab and MapGen"
+#~ msgstr "MatlabとMapGen "
+
+#~ msgid "Import grid 3D volume"
+#~ msgstr "3Dグリッド値のインポート"
+
+#~ msgid "ASCII 3D"
+#~ msgstr "ASCII 3D"
+
+#~ msgid "Vis5D"
+#~ msgstr "Vis５D"
+
+#~ msgid "Import data table"
+#~ msgstr "データテーブルインポート"
+
+#~ msgid "Export raster map"
+#~ msgstr "ラスターマップのエクスポート"
+
+#~ msgid "ASCII x,y,z"
+#~ msgstr "ASCII x,y,z "
+
+#~ msgid "ESRI ASCII grid"
+#~ msgstr "ESRI ASCIIグリッド"
+
+#~ msgid "PNG"
+#~ msgstr "PNG"
+
+#~ msgid "PPM from RGB"
+#~ msgstr "RGBからPPM"
+
+#~ msgid "POV-Ray"
+#~ msgstr "POV-レイ"
+
+#~ msgid "VRML"
+#~ msgstr "VRML"
+
+#~ msgid "VTK"
+#~ msgstr "VTK"
+
+#~ msgid "Export vector map"
+#~ msgstr "ベクトルマップのエクスポート"
+
+#~ msgid "Multiple GPS formats using GPSBabel"
+#~ msgstr "GPSバベルを使用した複数GPSフォーマット"
+
+#~ msgid "SVG"
+#~ msgstr "SVG"
+
+#~ msgid "Export grid 3D volume"
+#~ msgstr "3Dグリッド値 エクスポート"
+
+#~ msgid "Export data table"
+#~ msgstr "データテーブルのエクスポート"
+
+#~ msgid "Manage maps and volumes"
+#~ msgstr "マップと値の管理"
+
+#~ msgid "List"
+#~ msgstr "リスト"
+
+#~ msgid "List filtered"
+#~ msgstr "フィルター"
+
+#~ msgid "Rename"
+#~ msgstr "名前変更"
+
+#~ msgid "Delete filtered"
+#~ msgstr "フィルターを削除"
+
+#~ msgid "Map type conversions"
+#~ msgstr "マップタイプの変換"
+
+#~ msgid "Raster to vector"
+#~ msgstr "ラスタ → ベクトル"
+
+#~ msgid "Raster series to volume"
+#~ msgstr "ラスターシリーズの値"
+
+#~ msgid "Raster 2.5D to volume"
+#~ msgstr "ラスター 2.5Dの値"
+
+#~ msgid "Vector to raster"
+#~ msgstr "ベクトル → ラスター"
+
+#~ msgid "Vector to volume"
+#~ msgstr "ベクトル → ボリューム"
+
+#~ msgid "Sites to vector"
+#~ msgstr "サイト → ベクトル"
+
+#~ msgid "Volume to raster series"
+#~ msgstr "ボリューム → ラスターシリーズ"
+
+#~ msgid "Georectify"
+#~ msgstr " 幾何補正処理"
+
+#~ msgid "Animate raster maps"
+#~ msgstr "ラスターマップのアニメーション"
+
+#~ msgid "Bearing/distance to coordinates"
+#~ msgstr "座標の角度/距離"
+
+#~ msgid "3D rendering"
+#~ msgstr "3Dレンダリング"
+
+#~ msgid "NVIZ"
+#~ msgstr "NVIZ"
+
+#~ msgid "NVIZ fly through path"
+#~ msgstr "NVIZフライスルーパス"
+
+#~ msgid "PostScript plot"
+#~ msgstr "ポストスクリプトプロット"
+
+#, fuzzy
+#~ msgid "&Quit GIS Manager"
+#~ msgstr "GISマネージャーロード"
+
+#~ msgid "&Config"
+#~ msgstr "設定(&C)"
+
+#~ msgid "Region"
+#~ msgstr "領域"
+
+#~ msgid "Display region settings"
+#~ msgstr "ディスプレイ領域設定"
+
+#~ msgid "Change region settings"
+#~ msgstr "領域設定の変更"
+
+#~ msgid "GRASS working environment"
+#~ msgstr "GRASS作業環境"
+
+#~ msgid "Mapset access"
+#~ msgstr "マップセット作成"
+
+#~ msgid "Change working environment"
+#~ msgstr "作業環境を変更する"
+
+#~ msgid "User access"
+#~ msgstr "ユーザーアクセス"
+
+#~ msgid "Show settings"
+#~ msgstr "設定情報"
+
+#~ msgid "Change settings"
+#~ msgstr "設定変更"
+
+#~ msgid "Change default GUI"
+#~ msgstr "デフォルトGUI変更"
+
+#~ msgid "Show current GRASS version"
+#~ msgstr "GRASSのバージョン表示"
+
+#~ msgid "Manage projections"
+#~ msgstr "投影法の管理"
+
+#~ msgid "Projection for current location"
+#~ msgstr "現在のロケーションの投影法"
+
+#~ msgid "Convert coordinates"
+#~ msgstr "座標変換"
+
+#~ msgid "Display font"
+#~ msgstr "表示フォント"
+
+#~ msgid "&Raster"
+#~ msgstr "ラスター(&R)"
+
+#~ msgid "Develop map"
+#~ msgstr "マップの作成"
+
+#~ msgid "Digitize raster"
+#~ msgstr "ラスターのデジタイズ"
+
+#~ msgid "Compress/decompress"
+#~ msgstr "圧縮/解凍"
+
+#~ msgid "Boundaries"
+#~ msgstr "境界"
+
+#~ msgid "Null values"
+#~ msgstr "NULL値"
+
+#~ msgid "Quantization"
+#~ msgstr "量子化 "
+
+#~ msgid "Timestamps"
+#~ msgstr "タイムスタンプ "
+
+#~ msgid "Resample using aggregate statistics"
+#~ msgstr "総量統計を使用した再サンプリング"
+
+#~ msgid "Resample using multiple methods"
+#~ msgstr "複数手法による再サンプリング"
+
+#~ msgid "Resample using nearest neighbor"
+#~ msgstr "近接情報を利用した再サンプリング"
+
+#~ msgid "Resample using spline tension"
+#~ msgstr " スプラインテンションによる再サンプリング"
+
+#~ msgid "Support file maintenance"
+#~ msgstr "サポートファイルの保守"
+
+#~ msgid "Update map statistics"
+#~ msgstr "マップ統計の更新"
+
+#~ msgid "Reproject"
+#~ msgstr "投影変換"
+
+#~ msgid "Tiling"
+#~ msgstr "タイル"
+
+#~ msgid "Manage map colors"
+#~ msgstr "カラーの管理"
+
+#~ msgid "Color tables"
+#~ msgstr "カラーテーブル"
+
+#~ msgid "Color tables (stddev)"
+#~ msgstr "カラーテーブル (標準偏差) "
+
+#~ msgid "Color rules"
+#~ msgstr "カラールール "
+
+#~ msgid "Blend"
+#~ msgstr "ブレンド"
+
+#~ msgid "Create RGB"
+#~ msgstr "RGB 作成"
+
+#~ msgid "HIS to RGB"
+#~ msgstr "HIS → RGB"
+
+#, fuzzy
+#~ msgid "Query raster color"
+#~ msgstr "テキストカラー"
+
+#~ msgid "Query by coordinate(s)"
+#~ msgstr "座標値からの検索"
+
+#~ msgid "Buffers"
+#~ msgstr "バッファー"
+
+#~ msgid "Closest points"
+#~ msgstr "最寄のポイント"
+
+#~ msgid "MASK"
+#~ msgstr "マスク"
+
+#~ msgid "Map calculator"
+#~ msgstr "マップカリキュレーター"
+
+#~ msgid "Neighborhood analysis"
+#~ msgstr "近接性分析"
+
+#~ msgid "Moving window"
+#~ msgstr "ウィンドウを移動"
+
+#~ msgid "Neighborhood points"
+#~ msgstr "近接点"
+
+#~ msgid "Overlay maps"
+#~ msgstr "オーバーレイ(重ね合わせ) "
+
+#~ msgid "Cross product"
+#~ msgstr "カテゴリー値の掛け合わせ"
+
+#~ msgid "Map series"
+#~ msgstr "マップシリーズ "
+
+#~ msgid "Patch maps"
+#~ msgstr "パッチ(貼り合わせ) "
+
+#~ msgid "Statistical overlay"
+#~ msgstr "統計オーバーレイ"
+
+#~ msgid "Solar radiance and shadows"
+#~ msgstr "太陽輝度と影"
+
+#~ msgid "Solar irradiance irradiation"
+#~ msgstr "太陽放射照度"
+
+#~ msgid "Shadows map"
+#~ msgstr "陰影図"
+
+#~ msgid "Terrain analysis"
+#~ msgstr "地形解析"
+
+#~ msgid "Cumulative movement costs"
+#~ msgstr "移動コスト積算"
+
+#~ msgid "Cost surface"
+#~ msgstr "表層断面図"
+
+#~ msgid "Least cost route or flow"
+#~ msgstr "最小コストルートあるいはフロー"
+
+#~ msgid "Shaded relief"
+#~ msgstr "陰影"
+
+#~ msgid "Slope and aspect"
+#~ msgstr "傾斜と方位"
+
+#~ msgid "Terrain parameters"
+#~ msgstr "地形パラメータ"
+
+#~ msgid "Textural features"
+#~ msgstr "テキストフューチャ"
+
+#~ msgid "Visibility"
+#~ msgstr "可視"
+
+#~ msgid "Distance to features"
+#~ msgstr "フューチャの距離"
+
+#~ msgid "Horizon"
+#~ msgstr "水平線"
+
+#~ msgid "Transform features"
+#~ msgstr "フューチャの変形"
+
+#~ msgid "Clump"
+#~ msgstr "クランプ"
+
+#~ msgid "Grow"
+#~ msgstr "増加"
+
+#~ msgid "Thin"
+#~ msgstr "減少"
+
+#~ msgid "Hydrologic modeling"
+#~ msgstr "水文モデリング"
+
+#~ msgid "Carve stream channels"
+#~ msgstr "河川水路の作成"
+
+#~ msgid "Fill lake"
+#~ msgstr "湖沼塗潰し"
+
+#~ msgid "Depressionless map and flowlines"
+#~ msgstr "凹地の無いマップとフローライン"
+
+#~ msgid "Flow accumulation"
+#~ msgstr "フローアキュミュレーション"
+
+#~ msgid "Flow lines"
+#~ msgstr "流線"
+
+#~ msgid "Groundwater flow model"
+#~ msgstr "地下水流モデル "
+
+#~ msgid "SIMWE overland flow modeling"
+#~ msgstr "SIMWE 地表流モデル"
+
+#~ msgid "SIMWE sediment flux modeling"
+#~ msgstr "SIMWE 透過流束モデリング"
+
+#~ msgid "Topographic index map"
+#~ msgstr "地形図インデックスマップ"
+
+#~ msgid "TOPMODEL simulation"
+#~ msgstr "TOPMODELシミュレーション"
+
+#~ msgid "Watershed subbasins"
+#~ msgstr "集水域(流域)小盆地"
+
+#~ msgid "Watershed analysis"
+#~ msgstr "集水域(流域)解析"
+
+#~ msgid "Watershed basin creation"
+#~ msgstr "集水域(流域)作成"
+
+#~ msgid "Landscape structure modeling"
+#~ msgstr "景観構造モデリング"
+
+#~ msgid "Set up"
+#~ msgstr "設定"
+
+#~ msgid "Analyze landscape"
+#~ msgstr "景観分析"
+
+#~ msgid "Analyze patches"
+#~ msgstr "パッチ分析"
+
+#~ msgid "Landscape patch analysis"
+#~ msgstr "景観パッチ分析"
+
+#~ msgid "Set up sampling and analysis framework"
+#~ msgstr "サンプリングと解析フレームワークのための設定"
+
+#~ msgid "Edge density"
+#~ msgstr "周辺密度"
+
+#~ msgid "Contrast weighted edge density"
+#~ msgstr "対照的加重周辺密度"
+
+#~ msgid "Patch size mean"
+#~ msgstr "パッチサイズ平均値"
+
+#~ msgid "Patch area range"
+#~ msgstr "パッチ領域の範囲"
+
+#~ msgid "Patch area Std Dev"
+#~ msgstr "パッチ領域標準偏差"
+
+#~ msgid "Patch area Coeff Var"
+#~ msgstr "パッチ領域COEFF演算子"
+
+#~ msgid "Patch density"
+#~ msgstr "パッチ密度"
+
+#~ msgid "Patch number"
+#~ msgstr "パッチ番号"
+
+#~ msgid "Dominance's diversity"
+#~ msgstr "順位多様性"
+
+#~ msgid "Shannon's diversity"
+#~ msgstr "シャノン 多様性  "
+
+#~ msgid "Simpson's diversity"
+#~ msgstr "シンプソン多様性"
+
+#~ msgid "Ricness"
+#~ msgstr "濃厚"
+
+#~ msgid "Shape index"
+#~ msgstr "形状係数"
+
+#~ msgid "Wildfire modeling"
+#~ msgstr "森林火災モデリング"
+
+#~ msgid "Rate of spread"
+#~ msgstr "拡散比率"
+
+#~ msgid "Least-cost spread paths"
+#~ msgstr "最小コストの拡散経路"
+
+#~ msgid "Anisotropic spread simulation"
+#~ msgstr "非等方性拡散シミュレーション"
+
+#~ msgid "Change category values and labels"
+#~ msgstr "カテゴリー値・ラベルの変更"
+
+#~ msgid "Interactively edit category values"
+#~ msgstr "対話形式でカテゴリー値を編集"
+
+#~ msgid "Reclassify by size"
+#~ msgstr "サイズで再分類"
+
+#~ msgid "Reclassify interactively"
+#~ msgstr "対話形式による再分類"
+
+#~ msgid "Reclassify using rules file"
+#~ msgstr "定義ファイルを利用した再分類"
+
+#~ msgid "Recode interactively"
+#~ msgstr "対話情報記録"
+
+#~ msgid "Recode using rules file"
+#~ msgstr "定義ファイルを利用した記録"
+
+#~ msgid "Rescale"
+#~ msgstr "再スケール"
+
+#~ msgid "Rescale with histogram"
+#~ msgstr "ヒストグラムの再スケール"
+
+#~ msgid "Concentric circles"
+#~ msgstr "同心円"
+
+#~ msgid "Generate random cells"
+#~ msgstr "ランダムセルの作成"
+
+#~ msgid "Random cells"
+#~ msgstr "ランダムセル"
+
+#~ msgid "Random cells and vector points"
+#~ msgstr "ランダムセルとベクトルポイント"
+
+#~ msgid "Generate surfaces"
+#~ msgstr "面の作成"
+
+#~ msgid "Fractal surface"
+#~ msgstr "フラクタル面"
+
+#~ msgid "Gausian kernal density surface"
+#~ msgstr "ガウスカーネル等密度面"
+
+#~ msgid "Gaussian deviates surface"
+#~ msgstr "ガウス偏差面"
+
+#~ msgid "Plane"
+#~ msgstr "平面 "
+
+#~ msgid "Random deviates surface"
+#~ msgstr "ランダム逸脱曲面"
+
+#~ msgid "Random surface with spatial dependence"
+#~ msgstr "空間依存性ランダム曲面"
+
+#~ msgid "Contour lines"
+#~ msgstr "等高線"
+
+#~ msgid "Interpolate surfaces"
+#~ msgstr "曲面補間 "
+
+#~ msgid "Bilinear from raster points"
+#~ msgstr "ラスターポイントからの共一次"
+
+#~ msgid "Bilinear and bicubic from vector points"
+#~ msgstr "ベクトルポイントからの共一次と三次補間"
+
+#~ msgid "IDW from raster points"
+#~ msgstr "ラスターポイントから加重平均補間"
+
+#~ msgid "IDW from vector points"
+#~ msgstr "ベクトルポイントでの加重平均補間"
+
+#~ msgid "Raster contours"
+#~ msgstr "ラスターコンター"
+
+#~ msgid "Regularized spline tension"
+#~ msgstr "正則化スプライン張力"
+
+#~ msgid "Fill NULL cells"
+#~ msgstr "nullセルの穴埋め "
+
+#~ msgid "Reports and statistics"
+#~ msgstr "レポートと統計"
+
+#~ msgid "Report basic file information"
+#~ msgstr "基本ファイル情報のレポート "
+
+#~ msgid "Manage category information"
+#~ msgstr "カテゴリー情報の管理"
+
+#~ msgid "General statistics"
+#~ msgstr "一般設定 "
+
+#~ msgid "Quantiles for large data sets"
+#~ msgstr "大規模データセットの分位数 "
+
+#~ msgid "Range of category values"
+#~ msgstr "カテゴリー値の範囲"
+
+#~ msgid "Sum cell category values"
+#~ msgstr "セルカテゴリー値の合計"
+
+#~ msgid "Sum area by map and category"
+#~ msgstr "マップとカテゴリー別総面積"
+
+#~ msgid "Statistics for clumped cells (works with r.clump)"
+#~ msgstr "塊状セルによる統計解析 (r.clumpでの処理)"
+
+#~ msgid "Total surface area corrected for topography"
+#~ msgstr "地形補正された曲面積"
+
+#~ msgid "Univariate statistics"
+#~ msgstr "一変量統計"
+
+#~ msgid "Sample transects"
+#~ msgstr "サンプル横断面"
+
+#~ msgid "Sample transects (bearing/distance)"
+#~ msgstr "サンプル横断面（角度/距離） "
+
+#~ msgid "Covariance/correlation"
+#~ msgstr "共分散/相関"
+
+#~ msgid "Linear regression"
+#~ msgstr "線形回帰"
+
+#~ msgid "Mutual category occurences"
+#~ msgstr "カテゴリーの相互関係表"
+
+#~ msgid "&Vector"
+#~ msgstr "ベクトル(&V) "
+
+#~ msgid "Digitize"
+#~ msgstr "デジタイズ"
+
+#~ msgid "Edit features"
+#~ msgstr "フューチャ編集"
+
+#~ msgid "Create/rebuild topology"
+#~ msgstr "トポロジーの作成/編集 "
+
+#~ msgid "Clean vector"
+#~ msgstr "ベクトル消去"
+
+#~ msgid "Smooth or simplify"
+#~ msgstr "円滑化または単純化"
+
+#~ msgid "Convert object types"
+#~ msgstr "オブジェクトタイプの変換"
+
+#~ msgid "Add centroids"
+#~ msgstr "セントロイド追加"
+
+#~ msgid "Build polylines"
+#~ msgstr "ポリラインの作成"
+
+#~ msgid "Split polylines"
+#~ msgstr "ポリラインの分割"
+
+#, fuzzy
+#~ msgid "Split lines to segments"
+#~ msgstr "ポリゴンをセグメントに分割 "
+
+#~ msgid "Parallel lines"
+#~ msgstr "平行線"
+
+#~ msgid "Dissolve boundaries"
+#~ msgstr "境界の融合"
+
+#~ msgid "Create 3D vector over raster"
+#~ msgstr "3Dベクトルまたはラスターの作成"
+
+#~ msgid "Extrude 3D vector"
+#~ msgstr "3Dベクトルの立上げ"
+
+#~ msgid "Link to OGR"
+#~ msgstr "OGRのリンク "
+
+#~ msgid "Create labels"
+#~ msgstr "ラベル作成"
+
+#, fuzzy
+#~ msgid "Create optimally placed labels"
+#~ msgstr "ラベル作成"
+
+#~ msgid "Assign colors"
+#~ msgstr "色の割当て "
+
+#~ msgid "Reposition vector"
+#~ msgstr "ベクトルの再配置"
+
+#~ msgid "Reproject vector"
+#~ msgstr "ベクトルの投影変換"
+
+#~ msgid "Metadata support"
+#~ msgstr "メタデータサポート"
+
+#~ msgid "Query with attributes"
+#~ msgstr "属性で検索"
+
+#~ msgid "Query with coordinate(s)"
+#~ msgstr "座標で検索"
+
+#~ msgid "Query with another map"
+#~ msgstr "別のマップと共に検索"
+
+#~ msgid "Buffer vectors"
+#~ msgstr "バッファーベクトル"
+
+#~ msgid "Lidar analysis"
+#~ msgstr "ライダー分析"
+
+#~ msgid "Detect edges"
+#~ msgstr "エッジ検出"
+
+#~ msgid "Detect interiors"
+#~ msgstr "内面検出"
+
+#~ msgid "Correct and reclassify objects"
+#~ msgstr "オブジェクトの修正と再分類"
+
+#~ msgid "Linear referencing"
+#~ msgstr "線形参照"
+
+#~ msgid "Create LRS"
+#~ msgstr "線形参照システム作成"
+
+#~ msgid "Create stationing"
+#~ msgstr "配置測点作成"
+
+#~ msgid "Create points/segments"
+#~ msgstr "ポイント/セグメントの作成 "
+
+#~ msgid "Find ID and offset"
+#~ msgstr "IDとオフセットを表示"
+
+#~ msgid "Nearest features"
+#~ msgstr "最寄のフューチャ"
+
+#~ msgid "Network analysis"
+#~ msgstr "ネットワーク解析 "
+
+#~ msgid "Allocate subnets"
+#~ msgstr "サブネットの設定 "
+
+#~ msgid "Network maintenance"
+#~ msgstr "ネットワークメンテナンス "
+
+#~ msgid "Visibility network"
+#~ msgstr "ネットワーク可視化"
+
+#~ msgid "Shortest route"
+#~ msgstr "最短ルート "
+
+#~ msgid "Display shortest route"
+#~ msgstr "最短ルート表示"
+
+#~ msgid "Split net"
+#~ msgstr "ネットの分割"
+
+#~ msgid "Steiner tree"
+#~ msgstr "シュタイナーツリー"
+
+#~ msgid "Traveling salesman analysis"
+#~ msgstr "巡回セールスマン問題 "
+
+#~ msgid "Overlay"
+#~ msgstr "重ね合わせ"
+
+#~ msgid "Patch (combine)"
+#~ msgstr "パッチ (結合) "
+
+#~ msgid "Change attributes"
+#~ msgstr "属性の変更"
+
+#~ msgid "Manage or report categories"
+#~ msgstr "カテゴリーの管理と出力"
+
+#~ msgid "Reclassify objects interactively"
+#~ msgstr "対話形式でオブジェクトを再分類"
+
+#~ msgid "Generate area for current region"
+#~ msgstr "現在の領域からエリアを作成"
+
+#~ msgid "Generate areas from points"
+#~ msgstr "複数のポイントからエリアを作成"
+
+#~ msgid "Convex hull"
+#~ msgstr "凸包 "
+
+#~ msgid "Delaunay triangles"
+#~ msgstr "ドローネ三角形"
+
+#~ msgid "Voronoi diagram/Thiessen polygons"
+#~ msgstr "ボロノイ図/ティーセンポリゴン"
+
+#~ msgid "Generate grid"
+#~ msgstr "グリッドの作成"
+
+#~ msgid "Generate points"
+#~ msgstr "ポイントの作成"
+
+#~ msgid "Generate points from database"
+#~ msgstr "データベースからポイント作成"
+
+#~ msgid "Generate points along lines"
+#~ msgstr "ラインに沿ったポイントを作成"
+
+#~ msgid "Generate random points"
+#~ msgstr "ランダムなポイントを作成"
+
+#~ msgid "Perturb points"
+#~ msgstr "摂動点"
+
+#~ msgid "Remove outliers in point sets"
+#~ msgstr "ポイント群から異常値を削除"
+
+#~ msgid "Test/training sets"
+#~ msgstr "テスト/トレーニング 設定"
+
+#~ msgid "Update area attributes from raster"
+#~ msgstr "ラスターからエリア属性を更新"
+
+#~ msgid "Update point attributes from areas"
+#~ msgstr "エリアからポイントの属性を更新"
+
+#~ msgid "Update point attributes from raster"
+#~ msgstr "ラスターからポイントの属性を更新"
+
+#~ msgid "Sample raster map at point locations"
+#~ msgstr "ポイント地点でのラスターマップのサンプリング "
+
+#~ msgid "Sample raster neighborhood around points"
+#~ msgstr "ポイント近傍でのラスターマップのサンプリング"
+
+#~ msgid "Basic information"
+#~ msgstr "基礎情報 "
+
+#~ msgid "Report topology by category"
+#~ msgstr "カテゴリー別トポロジーのレポート作成"
+
+#~ msgid "Upload or report topology"
+#~ msgstr "トポロジーをアップロードまたはレポート作成"
+
+#~ msgid "Univariate attribute statistics"
+#~ msgstr "単変量ラスタ統計"
+
+#~ msgid "Quadrat indices"
+#~ msgstr "２次補間インデックス"
+
+#~ msgid "Test normality"
+#~ msgstr "正規性検定"
+
+#~ msgid "&Imagery"
+#~ msgstr "画像(&I)"
+
+#~ msgid "Develop images and groups"
+#~ msgstr "画像とグループの作成 "
+
+#~ msgid "Create/edit group"
+#~ msgstr "グループの作成/修正"
+
+#~ msgid "Target group"
+#~ msgstr "対象グループ"
+
+#~ msgid "Mosaic images"
+#~ msgstr "モザイク画像"
+
+#~ msgid "Manage image colors"
+#~ msgstr "カラーの管理 "
+
+#~ msgid "Color balance for RGB"
+#~ msgstr "RGBのカラーバランス"
+
+#~ msgid "RGB to HIS"
+#~ msgstr "RGB → HIS "
+
+#~ msgid "Ortho photo rectification"
+#~ msgstr "オルソフォト補正 "
+
+#~ msgid "Brovey sharpening"
+#~ msgstr "ブロービーシャープニング"
+
+#~ msgid "Classify image"
+#~ msgstr "画像分類 "
+
+#~ msgid "Clustering input for unsupervised classification"
+#~ msgstr "非監視下分類用クラスタリング入力"
+
+#~ msgid "Maximum likelihood classification (MLC)"
+#~ msgstr "最尤法による分類(MLC) "
+
+#~ msgid "Sequential maximum a posteriory classification (SMAP)"
+#~ msgstr "逐次最大事後確率推定法による分類(SMAP) "
+
+#~ msgid "Interactive input for supervised classification"
+#~ msgstr "対話型入力による監視下分類"
+
+#~ msgid "Input for supervised MLC"
+#~ msgstr "最尤法による分類法監視下の入力"
+
+#~ msgid "Input for supervised SMAP"
+#~ msgstr "逐次最大事後確率推定法監視下の入力"
+
+#~ msgid "Filter image"
+#~ msgstr "画像フィルター "
+
+#~ msgid "Edge detection"
+#~ msgstr "縁辺検出"
+
+#~ msgid "Matrix/convolving filter"
+#~ msgstr "行列/畳み込みフィルタ"
+
+#~ msgid "Spectral response"
+#~ msgstr "スペクトル応答 "
+
+#~ msgid "Tassled cap vegetation index"
+#~ msgstr "Tasseled cap植生指標 "
+
+#~ msgid "Transform image"
+#~ msgstr "画像変換 "
+
+#~ msgid "Canonical correlation"
+#~ msgstr "正準相関"
+
+#~ msgid "Principal components"
+#~ msgstr "主成分"
+
+#~ msgid "Fast Fourier"
+#~ msgstr "高速フーリエ変換"
+
+#~ msgid "Inverse Fast Fourier"
+#~ msgstr "高速フーリエ逆変換 "
+
+#~ msgid "Bit pattern comparison"
+#~ msgstr "ビットパタ-ン比較"
+
+#~ msgid "Kappa analysis"
+#~ msgstr "カッパ分析"
+
+#~ msgid "OIF for LandSat TM"
+#~ msgstr "ランドサットのバンド選定指標"
+
+#~ msgid "&Volumes"
+#~ msgstr "ボリューム(&V)"
+
+#~ msgid "Develop grid3D volumes"
+#~ msgstr "3Dグリッドボリュームの作成 "
+
+#~ msgid "Manage nulls for grid3D volume"
+#~ msgstr "3Dグリッドボリューム用NULLの管理 "
+
+#~ msgid "Manage timestamp for grid3D volume"
+#~ msgstr "3Dグリッドボリューム用タイムスタンプの管理 "
+
+#~ msgid "3D MASK"
+#~ msgstr "3D マスク"
+
+#~ msgid "3D Map calculator"
+#~ msgstr "3D マップカリキュレータ"
+
+#~ msgid "Cross section from volume"
+#~ msgstr "立体からの断面図"
+
+#~ msgid "Interpolate volume from vector points"
+#~ msgstr "ペクトルポイントからの立体補間"
+
+#~ msgid "Report and Statistics"
+#~ msgstr "レポートと統計"
+
+#~ msgid "&Databases"
+#~ msgstr "データベース(&D) "
+
+#~ msgid "Database information"
+#~ msgstr "データベース情報"
+
+#~ msgid "Describe table"
+#~ msgstr "テーブル定義"
+
+#~ msgid "List columns"
+#~ msgstr "列一覧"
+
+#~ msgid "List drivers"
+#~ msgstr "ドライバー一覧"
+
+#~ msgid "List tables"
+#~ msgstr "テーブル一覧"
+
+#~ msgid "Manage database"
+#~ msgstr "データベースの管理 "
+
+#~ msgid "Connect to database"
+#~ msgstr "データベース接続 "
+
+#~ msgid "Login to database"
+#~ msgstr "データベースへログイン"
+
+#~ msgid "Copy table"
+#~ msgstr "テーブルコピー"
+
+#~ msgid "New table"
+#~ msgstr "新規テーブル"
+
+#~ msgid "Remove table"
+#~ msgstr "テーブル削除"
+
+#~ msgid "Add columns"
+#~ msgstr "列追加"
+
+#~ msgid "Change values"
+#~ msgstr "値の変更"
+
+#~ msgid "Drop column"
+#~ msgstr "列削除"
+
+#~ msgid "Rename a column"
+#~ msgstr "列名の変更 "
+
+#~ msgid "Test database"
+#~ msgstr "テストデータベース "
+
+#~ msgid "Query any table"
+#~ msgstr "テーブルの検索"
+
+#~ msgid "Query vector attribute table"
+#~ msgstr "ベクトル属性テーブル検索"
+
+#~ msgid "SQL statement"
+#~ msgstr "SQL文"
+
+#~ msgid "Vector<->database connections"
+#~ msgstr "ベクトル<->データベース接続 "
+
+#~ msgid "Reconnect vector to database"
+#~ msgstr "ベクトルとデータベースの再接続"
+
+#~ msgid "Set vector - database connection"
+#~ msgstr "ベクトル - データベース接続設定"
+
+#~ msgid "&Help"
+#~ msgstr "ヘルプ(&H)"
+
+#~ msgid "GRASS help"
+#~ msgstr "GRASSのヘルプ "
+
+#~ msgid "GIS Manager &help"
+#~ msgstr "GIS管理者 &help "
+
+#~ msgid "GIS Manager help"
+#~ msgstr "GIS管理者 ヘルプ"
+
+#~ msgid "About &GRASS"
+#~ msgstr "GRASSについて(&G) "
+
+#~ msgid "About GRASS"
+#~ msgstr "GRASSについて "
+
+#~ msgid "About &System"
+#~ msgstr "システムについて(&S) "
+
+#~ msgid "About System"
+#~ msgstr "システム情報 "
+
+#~ msgid "&Xtns"
+#~ msgstr "&Xtns "
+
+#~ msgid "Vector map for chart"
+#~ msgstr "主題図のためのベクトルマップ"
+
+#~ msgid "chart for %s"
+#~ msgstr " %s のグラフ"
+
+#~ msgid ""
+#~ "Display pie and bar charts of attribute values at vector object locations"
+#~ msgstr "ベクトルオブジェクトの位置に属性の円グラフと棒グラフを表示"
+
+#~ msgid "Vector map to chart:"
+#~ msgstr "グラフにするベクトルマップ："
+
+#~ msgid "vector map to chart"
+#~ msgstr "グラフにするベクトルマップ"
+
+#~ msgid "Vector type:"
+#~ msgstr "ベクトル タイプ："
+
+#~ msgid "boundaries"
+#~ msgstr "境界"
+
+#~ msgid "centroids"
+#~ msgstr "セントロイド"
+
+#~ msgid "areas"
+#~ msgstr "エリア"
+
+#~ msgid "Attributes to chart: attribute layer"
+#~ msgstr "グラフにする属性：属性レイヤー"
+
+#~ msgid "     show attribute columns"
+#~ msgstr "     属性列表示"
+
+#~ msgid "   show attribute data"
+#~ msgstr "   属性データ表示 "
+
+#~ msgid "\tcolumns to chart (col1,col2,...)  "
+#~ msgstr "\tグラフにする列 (列1,列2,...)"
+
+#~ msgid "\tcolors for columns (clr1,clr2,...)"
+#~ msgstr "\t列の色 (色1,色2,...)"
+
+#~ msgid "\tcolumn for variable chart size"
+#~ msgstr "\t可変グラフサイズの列"
+
+#~ msgid "  scale factor"
+#~ msgstr "  縮尺要素"
+
+#~ msgid "Chart type:"
+#~ msgstr "グラフタイプ："
+
+#~ msgid "\tfixed chart size (if size column not used)"
+#~ msgstr "\t固定グラフサイズ (iサイズ用の列は使用しない)"
+
+#~ msgid "\tchart outline color:"
+#~ msgstr "\tグラフ外枠線の色："
+
+#~ msgid "Labels for vectors"
+#~ msgstr "ベクトルのラベル"
+
+#~ msgid "Display labels for vector objects (created with v.label)"
+#~ msgstr "ベクトルオブジェクトのラベル表示 (v.labelのよる作成) "
+
+#~ msgid "Labels file:"
+#~ msgstr "ラベルファイル："
+
+#~ msgid "labels file to display"
+#~ msgstr "表示するラベルファイル"
+
+#~ msgid "Display constraints:"
+#~ msgstr " ディスプレイ 制約："
+
+#~ msgid "min"
+#~ msgstr "最小値 "
+
+#~ msgid "max"
+#~ msgstr "最大値"
+
+#~ msgid "region size"
+#~ msgstr "領域サイズ"
+
+#~ msgid " ignore rotation setting and draw horizontally"
+#~ msgstr " 回転の設定を無視して水平方向に描画"
+
+#~ msgid "Launch v.label to create labels file"
+#~ msgstr "ラベルファイル作成のため v.label を起動"
+
+#~ msgid "v.label"
+#~ msgstr "v.label"
+
+#~ msgid "Vector output map"
+#~ msgstr "出力するベクトルマップ"
+
+#~ msgid "Display vector maps"
+#~ msgstr "ベクトルマップの表示 "
+
+#~ msgid "Transparent"
+#~ msgstr "透過 "
+
+#~ msgid "vector map to display"
+#~ msgstr "表示するベクトルマップ"
+
+#~ msgid "Vector Info"
+#~ msgstr "ベクトル情報"
+
+#~ msgid "Display: "
+#~ msgstr "表示："
+
+#~ msgid "Shapes "
+#~ msgstr "図形"
+
+#~ msgid "Categories "
+#~ msgstr "カテゴリー"
+
+#~ msgid "Topology "
+#~ msgstr "トポロジ"
+
+#~ msgid "Line directions "
+#~ msgstr "ラインの方向"
+
+#~ msgid "Points "
+#~ msgstr "ポイント"
+
+#~ msgid "Lines "
+#~ msgstr "ライン"
+
+#~ msgid "Boundaries "
+#~ msgstr "境界"
+
+#~ msgid "Areas "
+#~ msgstr "エリア"
+
+#~ msgid "Centroids "
+#~ msgstr "セントロイド"
+
+#~ msgid "Faces "
+#~ msgstr "面"
+
+#~ msgid "Point symbols:"
+#~ msgstr "ポイントシンボル："
+
+#~ msgid "Icon"
+#~ msgstr "アイコン "
+
+#~ msgid "   Size"
+#~ msgstr "   サイズ"
+
+#~ msgid "Icon size"
+#~ msgstr "アイコンサイズ"
+
+#~ msgid "Draw lines:"
+#~ msgstr "ライン描画: "
+
+#~ msgid "   Width"
+#~ msgstr "   幅"
+
+#~ msgid "Line width"
+#~ msgstr "線幅"
+
+#~ msgid "(pixels) "
+#~ msgstr "(ピクセル) "
+
+#~ msgid "Fill areas:"
+#~ msgstr "塗りつぶし："
+
+#~ msgid "Random colors "
+#~ msgstr "ランダムカラー"
+
+#~ msgid "GRASSRGB column colors"
+#~ msgstr "GRASS RGB列カラー"
+
+#~ msgid "Label vectors:"
+#~ msgstr "ラベルベクトル："
+
+#~ msgid "label"
+#~ msgstr "ラベル "
+
+#~ msgid " Text color"
+#~ msgstr " テキストカラー"
+
+#~ msgid "   Text size"
+#~ msgstr "   テキストサイズ"
+
+#~ msgid "text size"
+#~ msgstr "テキストサイズ"
+
+#, fuzzy
+#~ msgid "Label part to align with vector point "
+#~ msgstr "ベクトルポイントにラベルの部分を合わせる"
+
+#~ msgid "   Justification"
+#~ msgstr "   行揃え "
+
+#, fuzzy
+#~ msgid "bottom"
+#~ msgstr "下："
+
+#~ msgid "     Layer for labels"
+#~ msgstr "     ラベルのレイヤー"
+
+#~ msgid "   Attribute column for labels"
+#~ msgstr "   ラベルにする属性列"
+
+#~ msgid "Query vectors for display: "
+#~ msgstr "表示するベクトルの検索："
+
+#~ msgid "layer for query"
+#~ msgstr "検索するレイヤー"
+
+#~ msgid "Query cat values"
+#~ msgstr "検索するカテゴリー値"
+
+#~ msgid "Use SQL query"
+#~ msgstr "SQLクエリ使用"
+
+#~ msgid "    Show attribute columns"
+#~ msgstr "    属性列表示"
+
+#~ msgid "      Show attribute data"
+#~ msgstr "      属性データを表示"
+
+#~ msgid "Save displayed objects to new vector file "
+#~ msgstr "新しいベクトルファイルに表示オブジェクトを保存"
+
+#~ msgid "Overwrite existing"
+#~ msgstr "既存ファイルの上書き"
+
+#~ msgid "     New vector"
+#~ msgstr "     新しいベクトル"
+
+#~ msgid "Select existing vector for saving queried objects"
+#~ msgstr "検索されたオブジェクトを保存するため既存のベクトルを選択"
+
+#~ msgid "Display when avg. region dimension is"
+#~ msgstr "表示時の平均領域寸法"
+
+#~ msgid " or <"
+#~ msgstr " または < "
+
+#~ msgid "Select maps to animate"
+#~ msgstr "アニメーションするマップを選択"
+
+#~ msgid "Rewind animation"
+#~ msgstr "アニメーションを戻す"
+
+#~ msgid "Replay animation"
+#~ msgstr "アニメーション再生"
+
+#~ msgid "Step backwards through animation"
+#~ msgstr "アニメーションのコマ巻き戻し"
+
+#~ msgid "Stop animation"
+#~ msgstr "アニメーション停止"
+
+#~ msgid "Step forwards through animation"
+#~ msgstr "アニメーションのコマ送り"
+
+#~ msgid "Play animation"
+#~ msgstr "アニメーション表示"
+
+#~ msgid "Slower animation"
+#~ msgstr "スロー再生"
+
+#~ msgid "Faster animation"
+#~ msgstr "早送り"
+
+#~ msgid "Continuously loop through animation"
+#~ msgstr "アニメーションの連続再生"
+
+#~ msgid "Run animation alternately forward and backward"
+#~ msgstr "アニメーションを再生と逆再生を交互に実行"
+
+#~ msgid "Show map names in animation window"
+#~ msgstr "アニメーション内にマップ名を表示"
+
+#~ msgid "Quit animation"
+#~ msgstr "アニメーション終了"
+
+#~ msgid "Select maps"
+#~ msgstr "マップ選択"
+
+#~ msgid "Maps for Animation"
+#~ msgstr "アニメーションのマップ"
+
+#~ msgid "Select maps to animate in one or more frames (1 frame required)"
+#~ msgstr ""
+#~ "1つまたは複数のフレームでアニメーション化するマップ選択(1 フレーム必要) "
+
+#~ msgid "Maps for frame 1 (required): "
+#~ msgstr " フレーム１のマップ (必須)："
+
+#~ msgid "Maps for frame 2 (optional): "
+#~ msgstr " フレーム２のマップ  (オプション)："
+
+#~ msgid "Maps for frame 3 (optional): "
+#~ msgstr " フレーム３のマップ  (オプション)："
+
+#~ msgid "Maps for frame 4 (optional): "
+#~ msgstr " フレーム４のマップ  (オプション)："
+
+#~ msgid "You must select maps to animate for frame 1"
+#~ msgstr "フレーム１でアニメーションするマップを選択する必要があります"
+
+#~ msgid "No maps selected"
+#~ msgstr "マップが選択されていません"
+
+#~ msgid "Animation Window"
+#~ msgstr "アニメーションウィンドウ"
+
+#, fuzzy
+#~ msgid "Label file"
+#~ msgstr "ラベルファイル："
+
+#~ msgid "Create postscript labels for vector objects from v.labels file"
+#~ msgstr " v.labelsからベクトルオブジェクトのポストスクリプトラベルを作成"
+
+#~ msgid "  (for postscript eps, pdf, and print output only)"
+#~ msgstr "  (ポストスクリプト eps, pdf, プリント出力のみ) "
+
+#~ msgid "Override offset, alignment, and color settings in v.labels file: "
+#~ msgstr "v.labelsファイルにオフセット,配置,および色の設定を上書き："
+
+#~ msgid "Align label with vector object: "
+#~ msgstr "ベクトルオブジェクトのラベル整列："
+
+#~ msgid "Offset label from vector object: "
+#~ msgstr "オブジェクトのラベルオフセット："
+
+#~ msgid "x offset"
+#~ msgstr "Xオフセット"
+
+#~ msgid "y offset"
+#~ msgstr "Yオフセット"
+
+#~ msgid "Justification: "
+#~ msgstr "行揃え："
+
+#~ msgid " Label line max length: "
+#~ msgstr " ラベル線最大長："
+
+#~ msgid "Enclose label in box: "
+#~ msgstr "ラベルをボックスで囲む："
+
+#~ msgid "Draw label background: "
+#~ msgstr "背景にラベルを描画："
+
+#~ msgid "Background color:"
+#~ msgstr "背景色："
+
+#~ msgid "Draw box outline: "
+#~ msgstr "ボックス外枠描画："
+
+#~ msgid "Border width:"
+#~ msgstr "境界幅："
+
+#~ msgid "Border color:"
+#~ msgstr "境界色："
+
+#~ msgid "Distance between label and enclosing box. Horizontal: "
+#~ msgstr "ラベルとボックスの水平間隔距離："
+
+#~ msgid " Vertical: "
+#~ msgstr " 鉛直："
+
+#~ msgid "select font for label"
+#~ msgstr "フォントのラベル選択"
+
+#~ msgid "family:"
+#~ msgstr "種類："
+
+#~ msgid "size:"
+#~ msgstr "サイズ："
+
+#~ msgid "Could not open labels file "
+#~ msgstr "ラベルファイルをオープン出来ません"
+
+#~ msgid "Aspect map"
+#~ msgstr "方位マップ"
+
+#~ msgid "arrows for %s"
+#~ msgstr " %s の矢印"
+
+#~ msgid "Slope/intensity map"
+#~ msgstr "傾斜/照度マップ"
+
+#~ msgid "Display arrows whose orientations are based on raster aspect map"
+#~ msgstr "ラスター方位マップに基づいて矢印を表示"
+
+#~ msgid "  (optionally, arrow lengths are based on slope or intensity map)"
+#~ msgstr "  (オプション 矢印の長さは傾斜または照度に比例) "
+
+#~ msgid "Aspect map: "
+#~ msgstr "方位図："
+
+#~ msgid "    aspect value type"
+#~ msgstr "    方位値のタイプ"
+
+#, fuzzy
+#~ msgid "grass"
+#~ msgstr "エリア"
+
+#~ msgid "    draw arrows every Nth grid cell"
+#~ msgstr "    N番のグリッド毎に矢印を描画"
+
+#~ msgid "    arrow color      "
+#~ msgstr "    矢印の色"
+
+#~ msgid "     cell grid color"
+#~ msgstr "     セルのグリッドの色"
+
+#~ msgid "    null value color"
+#~ msgstr "    NULL値の色"
+
+#~ msgid "Slope/intensity map: "
+#~ msgstr "傾斜/照度マップ："
+
+#~ msgid "    scale factor for computing arrow length"
+#~ msgstr "    矢印の長さを計算する要素"
+
+#~ msgid "Raster map for red or hue channel"
+#~ msgstr "赤または色相チャンネルのラスターマップ"
+
+#~ msgid "RGB-HIS %s"
+#~ msgstr "RGB-HIS %s "
+
+#~ msgid "Raster map for green or intensity channel"
+#~ msgstr "緑または照度チャンネルのラスターマップ"
+
+#~ msgid "Raster map for blue or saturation channel"
+#~ msgstr "青または彩度チャンネルのラスターマップ"
+
+#~ msgid ""
+#~ "Display 3 raster maps as Red/Green/Blue or Hue/Intensity/Saturation "
+#~ "channels"
+#~ msgstr "R，G，Bまたは色相/照度/彩度チャンネルとして３つのラスターを表示"
+
+#~ msgid "display maps as RGB"
+#~ msgstr "RGBとしてマップを表示"
+
+#~ msgid "Help for RGB"
+#~ msgstr "RGBのヘルプ"
+
+#~ msgid "display maps as HIS"
+#~ msgstr "HISとしてマップを表示"
+
+#~ msgid "Help for HIS"
+#~ msgstr "HISのヘルプ"
+
+#~ msgid "red (RGB) or hue (HIS): "
+#~ msgstr "赤 (RGB)又は 色相 (HIS)："
+
+#~ msgid "raster map for red or hue channel (HIS drape)"
+#~ msgstr "赤または色相のラスターマップ（HISドレープ）"
+
+#~ msgid "green (RGB) or intensity (HIS): "
+#~ msgstr "緑 (RGB) または照度 (HIS)："
+
+#~ msgid "raster map for green or intensity channel (HIS relief)"
+#~ msgstr "緑または照度チャンネルのラスターマップ（HIS陰影図)"
+
+#~ msgid "blue (RGB) or saturation (HIS): "
+#~ msgstr "青 (RGB) または 彩度 (HIS)："
+
+#~ msgid "raster map for blue or saturation channel"
+#~ msgstr "青または彩度のラスターマップ"
+
+#~ msgid "HIS brightness adjustment\t "
+#~ msgstr "HIS輝度調整\t "
+
+#~ msgid "Adjusts the HIS intensity channel brightness"
+#~ msgstr "HIS照度チャンネルの輝度調整"
+
+#~ msgid "Map Layers for Display %s"
+#~ msgstr "表示するマップレイヤー %s"
+
+#~ msgid "You must open a display before adding map layers"
+#~ msgstr ""
+#~ "マップレイヤーを追加する前にディスプレイをオープンしなければなりません"
+
+#~ msgid "No layer selected"
+#~ msgstr "レイヤーが選択されていません"
+
+#~ msgid "Loading layers..."
+#~ msgstr "レイヤーロード中... "
+
+#~ msgid "Layers loaded"
+#~ msgstr "レイヤーがロードされました"
+
+#~ msgid "Selected raster layer is empty"
+#~ msgstr "選択されたラスターレイヤーは空です"
+
+#~ msgid "Selected vector layer is empty"
+#~ msgstr "選択されたベクトルレイヤーは空です"
+
+#~ msgid "You can digitize raster or vector maps only"
+#~ msgstr "デジタイズできるのはラスターまたはベクトルマップのみです"
+
+#~ msgid ""
+#~ "\n"
+#~ "***** Please wait *****"
+#~ msgstr ""
+#~ "\n"
+#~ "* しばらくお待ちください ** "
+
+#~ msgid "Gathering information about your system"
+#~ msgstr "システムに関する情報を収集"
+
+#~ msgid "***** Done *****"
+#~ msgstr "***** 実行 ***** "
+
+#~ msgid "Maximum zoom-in reached"
+#~ msgstr "最大ズームに達しました"
+
+#~ msgid "Error setting region 1"
+#~ msgstr "領域１設定エラー"
+
+#~ msgid "please wait..."
+#~ msgstr "しばらくお待ちください... "
+
+#~ msgid "You have to select map layer first"
+#~ msgstr "マップレイヤーをはじめに選択してください"
+
+#~ msgid "No map layer selected"
+#~ msgstr "マップレイヤーが選択されていません "
+
+#~ msgid "Save Region"
+#~ msgstr "領域の保存"
+
+#~ msgid "Save current display geometry to named region"
+#~ msgstr "表示中のジオメトリを領域名を付けて保存"
+
+#~ msgid "Enter region name"
+#~ msgstr "領域名入力"
+
+#~ msgid ""
+#~ "Region file %s already exists. \n"
+#~ "Do you want to overwrite it?"
+#~ msgstr ""
+#~ "領域ファイル %s は既に存在します\n"
+#~ "上書きしますか？"
+
+#~ msgid "Display: rows=%d  cols=%d  N-S res=%s  E-W res=%s"
+#~ msgstr "表示: 行=%d  列=%d  N-S解像度=%s  E-W解像度=%s "
+
+#~ msgid "Display: rows=%d  cols=%d  N-S res=%g  E-W res=%g"
+#~ msgstr "表示: 行=%d  列=%d  N-S解像度=%g  E-W解像度=%g "
+
+#~ msgid "Error setting region (Problem with g.region?)"
+#~ msgstr "領域設定エラー (g.regionの問題かも？) "
+
+#~ msgid "Error reading current resolution with g.region"
+#~ msgstr "g.regionで現在の解像度の読み込みエラー"
+
+#~ msgid "Error setting region 2"
+#~ msgstr "領域２設定エラー"
+
+#~ msgid "Measurement"
+#~ msgstr "計測"
+
+#~ msgid "Draw measure line with mouse"
+#~ msgstr "マウスで計測線描画"
+
+#~ msgid "Click to query feature"
+#~ msgstr "クリックしてフューチャ問合せ"
+
+#~ msgid "This layer type does not support queries"
+#~ msgstr "このレイヤータイプはクエリに対応していません"
+
+#~ msgid "Query not supported"
+#~ msgstr "クエリはサポートしていません"
+
+#~ msgid "You must select a map to query\n"
+#~ msgstr "クエリするためにマップを選択してください\n"
+
+#~ msgid "Welcome to the GRASS GIS manager"
+#~ msgstr "GRASS GISマネージャーへようこそ"
+
+#~ msgid "Raster name:"
+#~ msgstr "ラスター名："
+
+#~ msgid "show legend in selected display monitor"
+#~ msgstr "選択されたディスプレイに凡例を表示"
+
+#~ msgid " thin legend by "
+#~ msgstr " 小さい凡例"
+
+#~ msgid "Raster to drape over 1st map:"
+#~ msgstr "最初のマップにドレープするラスター："
+
+#~ msgid "show legend for drape map in monitor"
+#~ msgstr "モニターにドレープマップの凡例を表示"
+
+#~ msgid "Display active layers in current region"
+#~ msgstr "現在の領域のアクティブレイヤーを表示"
+
+#~ msgid "Display active layers in default region"
+#~ msgstr "デフォルト領域のアクティブレイヤーを表示"
+
+#~ msgid "Display active layers in saved region setting"
+#~ msgstr "領域設定に保存されたアクティブレイヤーを表示"
+
+#~ msgid "NVIZ - n dimensional visualization"
+#~ msgstr "NVIZ - N 次元視覚化 "
+
+#~ msgid "Fly through path for NVIZ"
+#~ msgstr "NVIZのフライスルーパス"
+
+#~ msgid "Zoom"
+#~ msgstr "ズーム"
+
+#~ msgid "Pan and recenter"
+#~ msgstr "パン(中心の再設定) "
+
+#~ msgid "Query map (select map first)"
+#~ msgstr "マップ検索（最初にマップ選択）"
+
+#~ msgid "Measure lengths and areas"
+#~ msgstr "距離と面積の測定 "
+
+#~ msgid "Geographical position"
+#~ msgstr "指定位置の座標値"
+
+#~ msgid "Print raster & vector maps using ps.map"
+#~ msgstr "ps.mapを使用したマップ出力"
+
+#~ msgid "Add legend"
+#~ msgstr "凡例追加 "
+
+#~ msgid "Add paint labels layer (from directory paint/labels)"
+#~ msgstr "ペイントラベルレイヤー追加(ディレクトリ ペイント/ラベル)"
+
+#~ msgid "Add freetype text layer"
+#~ msgstr "フリータイプテキストレイヤー追加"
+
+#~ msgid "Create or select display frame"
+#~ msgstr "表示フレーム 作成/選択"
+
+#~ msgid "Text color: "
+#~ msgstr "テキストカラー："
+
+#~ msgid " Background color: "
+#~ msgstr "背景色："
+
+#~ msgid "no background color"
+#~ msgstr "背景色なし"
+
+#~ msgid " "
+#~ msgstr "   "
+
+#~ msgid "display N. arrow only "
+#~ msgstr "北方位のみ表示"
+
+#~ msgid "line scale instead of bar scale "
+#~ msgstr "バーの代わりにラインスケール"
+
+#~ msgid "place with mouse (cannot save placement with group)"
+#~ msgstr "マウスで位置指定(グループでの配置を保存することはできません)"
+
+#~ msgid "Text options: color"
+#~ msgstr "テキストオプション：カラー"
+
+#~ msgid "     show data"
+#~ msgstr "     データ表示"
+
+#~ msgid "Graduate colors: preset color schemes"
+#~ msgstr "カラーグラデーション：カラースキーマプリセット"
+
+#~ msgid "create graphic legend"
+#~ msgstr "表示用凡例 作成"
+
+#~ msgid "    select monitor for legend"
+#~ msgstr "    凡例用のモニタ選択"
+
+#~ msgid "Raster map for legend:"
+#~ msgstr "凡例用のラスターマップ："
+
+#~ msgid "Display legend in monitor: "
+#~ msgstr "モニタ内に凡例表示："
+
+#~ msgid " erase monitor before drawing legend"
+#~ msgstr " 凡例描画前にモニタ内をクリア"
+
+#~ msgid "do not show cat labels"
+#~ msgstr "カタログラベルが表示出来ません"
+
+#~ msgid "do not show cat numbers"
+#~ msgstr "カタログ番号が表示出来ません"
+
+#~ msgid "skip cats with no labels"
+#~ msgstr "ラベルが無いカタログはスキップ"
+
+#~ msgid "draw smooth gradient"
+#~ msgstr "スムーズグラデーション描画"
+
+#~ msgid "flip legend"
+#~ msgstr "凡例の反転"
+
+#~ msgid "x0"
+#~ msgstr "x0 "
+
+#~ msgid "Start/select display monitor x0"
+#~ msgstr "ディスプレイモニタ x0 開始/選択"
+
+#~ msgid "x1"
+#~ msgstr "x1"
+
+#~ msgid "Start/select display monitor x1"
+#~ msgstr "ディスプレイモニタ x1 開始/選択"
+
+#~ msgid "x2"
+#~ msgstr "x2"
+
+#~ msgid "Start/select display monitor x2"
+#~ msgstr "ディスプレイモニタ x2 開始/選択"
+
+#~ msgid "x3"
+#~ msgstr "x3"
+
+#~ msgid "Start/select display monitor x3"
+#~ msgstr "ディスプレイモニタ x3 開始/選択"
+
+#~ msgid "x4"
+#~ msgstr "x4"
+
+#~ msgid "Start/select display monitor x4"
+#~ msgstr "ディスプレイモニタ x4 開始/選択"
+
+#~ msgid "x5"
+#~ msgstr "x5"
+
+#~ msgid "Start/select display monitor x5"
+#~ msgstr "ディスプレイモニタ x5 開始/選択"
+
+#~ msgid "x6"
+#~ msgstr "x6"
+
+#~ msgid "Start/select display monitor x6"
+#~ msgstr "ディスプレイモニタ x6 開始/選択"
+
+#~ msgid "Paper format"
+#~ msgstr "紙の種類"
+
+#~ msgid "Custom"
+#~ msgstr "カスタム"
+
+#~ msgid "height:"
+#~ msgstr "高さ："
+
+#~ msgid "left:"
+#~ msgstr "左："
+
+#~ msgid "right:"
+#~ msgstr "右："
+
+#~ msgid "top:"
+#~ msgstr "上："
+
+#~ msgid "bottom:"
+#~ msgstr "下："
+
+#~ msgid "PS file:"
+#~ msgstr "PSファイル："
+
+#~ msgid "PDF file:"
+#~ msgstr "PDFファイル："
+
+#~ msgid "PNG file:"
+#~ msgstr "PNG ファイル："
+
+#~ msgid "PNG file resolution (points/inch):"
+#~ msgstr "PNGファイルの解像度 (points/inch)："
+
+#~ msgid "Printer:"
+#~ msgstr "プリンタ："
+
+#~ msgid "Script file:"
+#~ msgstr "スクリプトファイル："
+
+#~ msgid "Preview"
+#~ msgstr "プレビュー"
+
+#~ msgid "geodetic grid"
+#~ msgstr "測地グリッド"
+
+#~ msgid " grid color "
+#~ msgstr "グリッドカラー"
+
+#~ msgid " grid color"
+#~ msgstr "グリッドカラー"
+
+#~ msgid "     "
+#~ msgstr "     "
+
+#~ msgid "draw grid border"
+#~ msgstr "グリッド境界描画"
+
+#~ msgid "draw border text"
+#~ msgstr "境界テキスト描画"
+
+#~ msgid " border & text color"
+#~ msgstr " 境界＆テキストカラー"
+
+#~ msgid "remove all frames"
+#~ msgstr "全フレーム削除"
+
+#~ msgid "  show attribute columns"
+#~ msgstr "  属性列表示"
+
+#~ msgid "    chart outline color:"
+#~ msgstr "    グラフ外郭線色："
+
+#~ msgid "Labels name:"
+#~ msgstr "ラベル名："
+
+#~ msgid "Vector name:"
+#~ msgstr "ベクトル名："
+
+#~ msgid "Display:"
+#~ msgstr "ディスプレイ："
+
+#~ msgid "shapes"
+#~ msgstr "図形"
+
+#~ msgid "categories"
+#~ msgstr "カテゴリー "
+
+#~ msgid "topology"
+#~ msgstr "トポロジ "
+
+#~ msgid "line directions"
+#~ msgstr "ラインの方向"
+
+#~ msgid "            "
+#~ msgstr "            "
+
+#~ msgid "faces"
+#~ msgstr "面"
+
+#~ msgid "  "
+#~ msgstr "  "
+
+#~ msgid "random colors"
+#~ msgstr "ランダムカラー"
+
+#~ msgid " size"
+#~ msgstr " サイズ"
+
+#~ msgid " align with pt"
+#~ msgstr " ｐｔで調整"
+
+#~ msgid "     layer for labels"
+#~ msgstr "     ラベルのレイヤ"
+
+#~ msgid " attribute col for labels"
+#~ msgstr "ラベルの属性列"
+
+#~ msgid "Query vectors: "
+#~ msgstr "ベクトル検索："
+
+#~ msgid " query cat values"
+#~ msgstr "検索するカテゴリー値"
+
+#~ msgid "SQL query"
+#~ msgstr "SQL検索"
+
+#~ msgid "     SQL where statement"
+#~ msgstr "     SQL where句"
+
+#~ msgid "Mouse query setup:"
+#~ msgstr "マウス検索設定："
+
+#~ msgid "edit attributes (form mode)"
+#~ msgstr "属性編集 (モードから) "
+
+#~ msgid "results as text in terminal"
+#~ msgstr "ターミナル内のテキストの検索結果"
+
+#~ msgid "Line width for ps.map print output:"
+#~ msgstr "ps.map印刷出力時の線幅："
+
+#~ msgid "Line width used for printing"
+#~ msgstr "出力時の線幅"
+
+#~ msgid "Import"
+#~ msgstr "インポート"
+
+#~ msgid "Aggregate ASCII xyz data into raster grid"
+#~ msgstr "ラスターグリッド内のASCII XYZデータを集計"
+
+#~ msgid "ASCII GRID (includes GRASS ASCII)"
+#~ msgstr "ASCIIグリッド(GRASSを含む) "
+
+#~ msgid "Polygons and lines from ASCII file"
+#~ msgstr "ASCIIファイルからのポリゴンとライン"
+
+#~ msgid "Binary file (includes GTOPO30 format)"
+#~ msgstr "バイナリーファイル(GTOPO30を含む) "
+
+#~ msgid "ESRI Arc/Info ASCII grid"
+#~ msgstr " Arc/Info(ESRI) ASCIIグリッド "
+
+#~ msgid "GRIDATB.FOR map file (TOPMODEL)"
+#~ msgstr " GRIDATB.FORマップファイル(TOPMODEL) "
+
+#~ msgid "MAT-File (v.4) array (Matlab or Octave)"
+#~ msgstr "MAT-ファイル (v.4) 配列 (MatlabやOctave)"
+
+#~ msgid "SPOT vegetation NDVI data sets"
+#~ msgstr "SPOT 植生 NDVI データセット"
+
+#~ msgid "SRTM hgt files"
+#~ msgstr " SRTM(hgt)ファイル "
+
+#~ msgid "Terra ASTER HDF files"
+#~ msgstr "テラ ASTER HDFファイル"
+
+#~ msgid "Various formats using OGR"
+#~ msgstr "OGRの利用 "
+
+#~ msgid "ASCII points file or GRASS ASCII vector file"
+#~ msgstr "ASCIIポイントファイル あるいは GRASS ASCIIベクトルファイル "
+
+#~ msgid "Import old GRASS vector format"
+#~ msgstr "旧GRASSのベクトルのインポート "
+
+#~ msgid "DXF file"
+#~ msgstr "DXFファイル"
+
+#~ msgid "ESRI e00 format"
+#~ msgstr "e00(ESRI)フォーマット "
+
+#~ msgid "Garmin GPS Waypoints/Routes/Tracks"
+#~ msgstr "ガーミンGPS用通過点/ルート/軌跡"
+
+#~ msgid "GPS Waypoints/Routes/Tracks  from many formats using GPSBabel"
+#~ msgstr "GPSバベルのフォーマットに対応したGPSの通過点/ルート/軌跡"
+
+#~ msgid "GEOnet Name server country files (US-NGA GNS)"
+#~ msgstr "ジオネットネームサーバカントリーファイル (US-NGA GNS) "
+
+#~ msgid "Matlab and MapGen files"
+#~ msgstr "MatlabとMapGenファイル"
+
+#~ msgid "Grid 3D"
+#~ msgstr "グリッド 3D "
+
+#~ msgid "ASCII 3D file"
+#~ msgstr "ASCII 3D ファイル "
+
+#~ msgid "Vis5D file"
+#~ msgstr "Vis5D ファイル "
+
+#~ msgid "Export"
+#~ msgstr "エクスポート "
+
+#~ msgid "ASCII grid (for GRASS, Surfer, Modflow, etc)"
+#~ msgstr "ASCII グリッド (GRASS, Surfer, Modflow など用) "
+
+#~ msgid "ASCII x,y,z values of cell centers"
+#~ msgstr "セル中心のASCII x,y,z値"
+
+#~ msgid "ESRI ARC/INFO ASCII grid"
+#~ msgstr " Arc/Info(ESRI) ASCIIグリッド "
+
+#~ msgid "Binary file"
+#~ msgstr "バイナリーファイル"
+
+#~ msgid "MPEG-1 animations"
+#~ msgstr "MPEG-1アニメーション "
+
+#~ msgid "PNG image (not georeferenced)"
+#~ msgstr "PNG画像(地理情報非参照) "
+
+#~ msgid "PPM image (24bit)"
+#~ msgstr "PPM 画像(24bit) "
+
+#~ msgid "PPM image from red, green, blue raster maps"
+#~ msgstr "赤，緑，青のラスターからのPPM 画像(24bit) "
+
+#~ msgid "POVray height-field"
+#~ msgstr "POVrayの高さフィールド "
+
+#~ msgid "TIFF image (8/24bit)"
+#~ msgstr "TIFF画像(8/24bit) "
+
+#~ msgid "VRML file"
+#~ msgstr "VRMLファイル "
+
+#~ msgid "VTK ASCII file"
+#~ msgstr "VTK ASCIIファイル "
+
+#~ msgid "Various formats using OGR (SHAPE, MapInfo etc)"
+#~ msgstr "OGRの利用(SHAPE, MapInfo など) "
+
+#~ msgid "DXF file (ASCII)"
+#~ msgstr "DXFファイル(ASCII) "
+
+#~ msgid "ASCII vector or point file/old GRASS ASCII vector file"
+#~ msgstr ""
+#~ "GRASS ASCIIベクトルファイル(旧フォーマットも可)あるいはASCIIポイントファイ"
+#~ "ル "
+
+#~ msgid "POV-Ray format"
+#~ msgstr "POV-Rayフォーマット "
+
+#~ msgid "Copy maps"
+#~ msgstr "マップコピー"
+
+#~ msgid "List maps"
+#~ msgstr "マップ一覧 "
+
+#~ msgid "List maps using expressions and 'wildcards'"
+#~ msgstr "一覧(拡張子・ワイルドカードを利用) "
+
+#~ msgid "Rename maps"
+#~ msgstr "名前の変更 "
+
+#~ msgid "Remove maps"
+#~ msgstr "マップ削除 "
+
+#~ msgid "Remove maps using expressions and 'wildcards'"
+#~ msgstr "削除(拡張子・ワイルドカードを利用) "
+
+#~ msgid "Raster to vector map"
+#~ msgstr "ラスター→ベクトル "
+
+#~ msgid "Raster map series to volume"
+#~ msgstr "ラスターマップシリーズ → 立体"
+
+#~ msgid "Raster 2.5D map to volume"
+#~ msgstr "ラスター2.5Dマップ → 立体"
+
+#~ msgid "Vector to vector"
+#~ msgstr "ベクトル → ベクトル"
+
+#~ msgid "Vector lines to points"
+#~ msgstr "ベクトルライン → ポイント"
+
+#~ msgid "Vector 3D points to volume voxels"
+#~ msgstr "ベクトル3Dポイント → ボクセル"
+
+#~ msgid "Sites (GRASS 5.x) to vector"
+#~ msgstr "サイト (GRASS 5.x) → ベクトル"
+
+#~ msgid "Volumes to raster map series"
+#~ msgstr "立体 → ラスターマップシリーズ"
+
+#~ msgid "Groups"
+#~ msgstr "グループ"
+
+#~ msgid "Create new group file"
+#~ msgstr "新規グループ ファイル作成"
+
+#~ msgid "Open group file"
+#~ msgstr "グループ ファイル オープン"
+
+#~ msgid "Save group file"
+#~ msgstr "グループファイル保存"
+
+#~ msgid "Save group file as name"
+#~ msgstr "グループファイルに名前を付けて保存"
+
+#~ msgid "Close group"
+#~ msgstr "グループを閉じる"
+
+#~ msgid "Save display to image file"
+#~ msgstr "表示画像のファイル保存 "
+
+#~ msgid ""
+#~ "XWD (Save display, selected with mouse, to map.xwd in home directory )"
+#~ msgstr "XWD (マウスで選択した画面をhomeディレクトリのmap.xwdに保存) "
+
+#~ msgid "Save displays to multiple graphic file formats"
+#~ msgstr "表示画像を複数の画像フォーマットで保存"
+
+#~ msgid "Save map to Postscript file"
+#~ msgstr "Postscriptファイルに保存"
+
+#~ msgid "Print to default printer"
+#~ msgstr "デフォルトのプリンタで印刷"
+
+#~ msgid "print"
+#~ msgstr "印刷"
+
+#~ msgid "E&xit"
+#~ msgstr "終了(E&)"
+
+#~ msgid "Exit Display Manager"
+#~ msgstr "ディスプレイマネージャー終了"
+
+#~ msgid "Zoom to maximum extent of all displayed maps"
+#~ msgstr "全てのマップを表示できる領域を選択"
+
+#~ msgid "Access other mapsets in current location"
+#~ msgstr "現在の場所の別のマップセットにアクセス"
+
+#~ msgid "Change current working session to new mapset, location, or GISDBASE"
+#~ msgstr "現在の作業を新しいマップセット，ロケーションあるいはGISDBASEに変更 "
+
+#~ msgid "Modify access by other users to current mapset"
+#~ msgstr "他ユーザによる現在のマップセットに対するアクセスの変更"
+
+#~ msgid "Show current GRASS environment settings"
+#~ msgstr "環境設定の表示 "
+
+#~ msgid "Set GRASS environment settings"
+#~ msgstr "GRASS環境設定"
+
+#~ msgid "Create/edit projection information for current location"
+#~ msgstr "現在の場所の投影情報を作成/編集 "
+
+#~ msgid "Show projection information and create projection files"
+#~ msgstr "投影情報の表示と投影ファイルの作成 "
+
+#~ msgid "Convert coordinates from one projection to another"
+#~ msgstr "座標を別の投影法で変換"
+
+#~ msgid "Text"
+#~ msgstr "テキスト "
+
+#~ msgid "Select default text font"
+#~ msgstr "デフォルトテキストフォント選択"
+
+#~ msgid "Select default freetype text font"
+#~ msgstr "デフォルトフリータイプテキストフォント選択"
+
+#~ msgid "X-monitor displays"
+#~ msgstr "X-モニター"
+
+#~ msgid "Configure xmonitor displays"
+#~ msgstr "X-モニターの構成"
+
+#~ msgid "Configure frames for xmonitors"
+#~ msgstr "X-モニターのフレーム構成"
+
+#~ msgid "Start/restart xmonitor at specified window size"
+#~ msgstr "定義されたウィンドウサイズでX-モニターを表示/再表示"
+
+#~ msgid "Set active xmonitor to specified size"
+#~ msgstr "指定されたサイズでX-モニターをアクティブにする"
+
+#~ msgid "Display information about active xmonitor"
+#~ msgstr "アクティブモニターについての情報表示"
+
+#~ msgid "Compress/decompress raster file"
+#~ msgstr "ラスターファイルの圧縮/解凍 "
+
+#~ msgid "Manage boundary definitions"
+#~ msgstr "境界設定の管理 "
+
+#~ msgid "Manage null values"
+#~ msgstr "NULL値の管理 "
+
+#~ msgid "Manage timestamps for files"
+#~ msgstr "ファイルのタイムスタンプ管理 "
+
+#~ msgid "Quantization for floating-point maps"
+#~ msgstr "実数マップの量子化 "
+
+#~ msgid "Resample (change resolution)"
+#~ msgstr "リサンプリング(解像度の変更) "
+
+#~ msgid "Resample using nearest neighbor method"
+#~ msgstr "最も最近の手法を使用してリサンプリング"
+
+#~ msgid "Resample using various interpolation methods"
+#~ msgstr "様々な補間方法を利用してリサンプリング"
+
+#~ msgid "Resample using regularized spline with tension method"
+#~ msgstr "テンション補間によるスプライン正規化手法を使用したリサンプリング "
+
+#~ msgid "Support file creation and maintenance"
+#~ msgstr "サポートファイルの作成と保守"
+
+#~ msgid "Reproject raster from other location"
+#~ msgstr "他のロケーションからラスターの投影変換 "
+
+#~ msgid "Generate tiling for other projection"
+#~ msgstr "他の投影方法によるタイルの作成"
+
+#~ msgid "Set colors to predefined color tables"
+#~ msgstr "定義済みのカラーテーブルに指定 "
+
+#~ msgid "Set colors based on standard deviations"
+#~ msgstr "標準偏差に基づいてカラーを設定"
+
+#~ msgid "Set colors using color rules"
+#~ msgstr "ルールを用いたカラーの指定"
+
+#~ msgid "Blend 2 color maps to produce 3 RGB files"
+#~ msgstr "RGBのファイル作成のために2つのカラーマップを合成 "
+
+#~ msgid "Create color image from RGB files"
+#~ msgstr "RGBファイルからカラー画像作成 "
+
+#~ msgid ""
+#~ "Create 3 RGB (red, green, blue) maps from 3 HIS (hue, intensity, "
+#~ "saturation) maps"
+#~ msgstr "３HIS(色相/明度/彩度)マップから３RGB（赤/緑/青)マップを作成"
+
+#~ msgid "Create raster buffers"
+#~ msgstr "ラスターバッファーの作成"
+
+#~ msgid "Create raster MASK"
+#~ msgstr "ラスターマスクの作成"
+
+#~ msgid "Locate closest points between areas in 2 raster maps"
+#~ msgstr "2つのラスターマップの2つのエリア間の最近接点 "
+
+#~ msgid "Moving window analysis of raster cells"
+#~ msgstr "ラスターセルから移動窓解析 "
+
+#~ msgid "Analyze vector points in neighborhood of raster cells"
+#~ msgstr "近傍点におけるベクトルポイントの解析 "
+
+#~ msgid "Function of map series (time series)"
+#~ msgstr "マップ(時間)シリーズ機能 "
+
+#~ msgid "Statistical calculations for cover map over base map"
+#~ msgstr "カバーマップのための統計処理 "
+
+#~ msgid "Solar irradiance and daily irradiation"
+#~ msgstr "太陽照射と日射量 "
+
+#~ msgid "Shadows map for sun position or date/time"
+#~ msgstr "太陽の位置あるいは日時に対する陰影図 "
+
+#~ msgid "Calculate cumulative movement costs between locales"
+#~ msgstr "地域間の移動コスト積算 "
+
+#~ msgid "Profile analysis"
+#~ msgstr "断面図解析"
+
+#~ msgid "Shaded relief map"
+#~ msgstr "陰影図 "
+
+#~ msgid "Visibility/line of sight"
+#~ msgstr "可視性/視線 "
+
+#~ msgid "Clump small areas (statistics calculated by r.volume)"
+#~ msgstr "微小エリアをクランプ (r.volumeによる統計計算) "
+
+#~ msgid "Grow areas"
+#~ msgstr "エリアの拡大 "
+
+#~ msgid "Thin linear features"
+#~ msgstr "リニアフィーチャの細線化 "
+
+#~ msgid "Carve stream channels into elevation map using vector streams map"
+#~ msgstr "ベクトル河川マップを使用して標高マップ中に河川チャンネルを作成"
+
+#~ msgid "Depressionless elevation map and flowline map"
+#~ msgstr "くぼ地無しのDEMと流水線図 "
+
+#~ msgid "Fill lake from seed point to specified level"
+#~ msgstr "指定された水準の面識別点から水面を満たす"
+
+#~ msgid "Flow accumulation for massive grids"
+#~ msgstr "大きな格子の累積流量の算出 "
+
+#~ msgid "Generate flow lines for raster map"
+#~ msgstr "流水線図作成 "
+
+#~ msgid "SIMWE sediment erosion, transport, & deposition modeling"
+#~ msgstr "SIMWE堆積物の浸食、運搬、沈着モデリング"
+
+#~ msgid "Analyze landscape characteristics"
+#~ msgstr "景観特性解析 "
+
+#~ msgid "Analyze landscape patch characteristics"
+#~ msgstr "景観パッチ特性解析 "
+
+#~ msgid "Output landscape patch information"
+#~ msgstr "景観パッチ情報出力"
+
+#~ msgid "Generate rate of spread (ROS) maps"
+#~ msgstr "拡散率(ROS)図の作成 "
+
+#~ msgid "Generate least-cost spread paths"
+#~ msgstr "最小コスト拡大パスの作成 "
+
+#~ msgid "Simulate anisotropic spread phenomena"
+#~ msgstr "異方的拡散現象のシミュレーション "
+
+#~ msgid "Edit category values of individual cells for displayed raster map"
+#~ msgstr "表示されたラスター図の個々のセルのカテゴリー値の編集 "
+
+#~ msgid "Reclassify categories for areas of specified sizes"
+#~ msgstr "指定サイズのエリアのカテゴリー再分類 "
+
+#~ msgid "Reclassify categories using rules"
+#~ msgstr "ルールを用いたカテゴリー再分類 "
+
+#~ msgid "Reclassify categories using rules file"
+#~ msgstr "ルールファイルを用いたカテゴリー再分類 "
+
+#~ msgid "Recode categories using rules (create new map)"
+#~ msgstr "ルールを用いたカテゴリーの記録(新規作成) "
+
+#~ msgid "Recode categories using rules file (create new map)"
+#~ msgstr "ルールファイルを用いたカテゴリーの記録(新規作成) "
+
+#~ msgid "Rescale categories (create new map)"
+#~ msgstr "カテゴリーのリスケール(新規作成) "
+
+#~ msgid "Rescale categories with equalized histogram (create new map)"
+#~ msgstr "ヒストグラム平滑化によるカテゴリーのリスケール(新規作成) "
+
+#~ msgid "Generate concentric circles around points"
+#~ msgstr "同心円の作成 "
+
+#~ msgid "Generate random raster cells"
+#~ msgstr "ランダムラスターセルの作成 "
+
+#~ msgid "Generate random cells and vector points from raster map"
+#~ msgstr "ランダムセルとベクトルポイントの作成 "
+
+#~ msgid "Generate density surface using moving Gausian kernal"
+#~ msgstr "移動Gaussian kernalを用いた密度曲面の作成 "
+
+#~ msgid "Generate fractal surface"
+#~ msgstr "フラクタル曲面の作成 "
+
+#~ msgid "Generate gaussian deviates surface"
+#~ msgstr "Gaussian deviate曲面の作成 "
+
+#~ msgid "Generate plane"
+#~ msgstr "平面の作成 "
+
+#~ msgid "Generate random deviates surface"
+#~ msgstr "ランダム逸脱曲面作成"
+
+#~ msgid "Generate random surface with spatial dependence"
+#~ msgstr "空間依存したランダム曲面の作成 "
+
+#~ msgid "Generate vector contour lines"
+#~ msgstr "ベクトル等高線の作成 "
+
+#~ msgid "Bilinear interpolation from raster points"
+#~ msgstr "ラスターポイントデータを用いた双線形補間 "
+
+#~ msgid "Inverse distance weighted interpolation from raster points"
+#~ msgstr "ラスターポイントデータを用いた距離逆関数重み付補間 "
+
+#~ msgid "Interpolation from raster contours"
+#~ msgstr "ラスター等高線を用いた補間 "
+
+#~ msgid "Inverse distance weighted interpolation from vector points"
+#~ msgstr "ベクトルポイントデータを用いた距離逆関数重み付補間 "
+
+#~ msgid ""
+#~ "Regularized spline tension interpolation from vector points or contours"
+#~ msgstr ""
+#~ "ベクトルポイントまたは等高線を用いたレギュラースプライン・テンション補間 "
+
+#~ msgid "Fill NULL cells by interpolation using regularized spline tension"
+#~ msgstr "レギュラースプライン・テンション補間によるNULLセルの穴埋め "
+
+#~ msgid "Manage category labels and values"
+#~ msgstr "カテゴリーラベルと値の管理"
+
+#~ msgid "Range of all category values"
+#~ msgstr "全カテゴリー値の範囲 "
+
+#~ msgid "Sum all cell category values"
+#~ msgstr "全セルカテゴリー値の総和 "
+
+#~ msgid "Summary statistics for clumped cells (works with r.clump)"
+#~ msgstr "クランプセルの要約統計 (r.clumpによる処理)"
+
+#~ msgid "Univariate statistics (script version)"
+#~ msgstr "一変量統計(スクリプト版) "
+
+#~ msgid "Sample values along transects"
+#~ msgstr "横断線に沿ったサンプリング "
+
+#~ msgid "Sample values along transects (use azimuth, distance)"
+#~ msgstr "横断線に沿ったサンプリング(方位・距離利用) "
+
+#~ msgid "Linear regression between 2 maps"
+#~ msgstr "2つのマップ間の線形回帰分析 "
+
+#~ msgid "Mutual category occurences (coincidence)"
+#~ msgstr "カテゴリーの相互関係表(一致)"
+
+#~ msgid "Clean vector files"
+#~ msgstr "ベクトルファイルの削除"
+
+#~ msgid "Add missing centroids"
+#~ msgstr "欠けているセントロイドを追加"
+
+#~ msgid "Build polylines from adjacent segments"
+#~ msgstr "近傍のセグメントからポリゴンの作成 "
+
+#~ msgid "Split polylines into segments"
+#~ msgstr "ポリゴンをセグメントに分割 "
+
+#~ msgid "Create lines parallel to existing lines"
+#~ msgstr "既存のラインから平行線を作成"
+
+#~ msgid "Dissolve common boundaries"
+#~ msgstr "共通境界の融合"
+
+#~ msgid "Convert vector feature types"
+#~ msgstr "ベクトルフィーチャタイプの変換 "
+
+#~ msgid "Convert 2D vector to 3D by sampling raster"
+#~ msgstr "ラスターをサンプリングして2Dベクトルを3D化"
+
+#~ msgid "Extrude 2D vector into 3D vector"
+#~ msgstr "2Dベクトルを3Dベクトルに立上げ"
+
+#~ msgid "Create text label file for vector features"
+#~ msgstr "ベクトルフィーチャのためのテキストラベルファイルの作成 "
+
+#~ msgid "Assign colors from a numeric attribute column"
+#~ msgstr "数値属性列を色に割り当て"
+
+#~ msgid "Reproject vector from other location"
+#~ msgstr "他のロケーションからベクトルの投影変換 "
+
+#~ msgid "Create new vector as link to external OGR layer"
+#~ msgstr "外部OGRレイヤーとリンクする新しいベクトルの作成 "
+
+#~ msgid "Set database connection for vector attributes"
+#~ msgstr "ベクトル属性のためのデータベース接続設定 "
+
+#~ msgid "Rectify and georeference vector map"
+#~ msgstr "ベクトルマップの位置補正 "
+
+#~ msgid "Query by attributes"
+#~ msgstr "属性による検索 "
+
+#~ msgid "Query by map features"
+#~ msgstr "フィーチャによる検索 "
+
+#~ msgid "Create vector buffers"
+#~ msgstr "ベクトルバッファーの作成 "
+
+#~ msgid "Linear referencing for vectors"
+#~ msgstr "ベクトルの線形参照"
+
+#~ msgid "Create linear reference system"
+#~ msgstr "線型参照システム作成"
+
+#~ msgid "Create stationing from imput lines, and linear reference system"
+#~ msgstr "入力ラインから配置測点と線型参照システム作成"
+
+#~ msgid ""
+#~ "Create points/segments from input lines, linear reference system and "
+#~ "positions read from stdin"
+#~ msgstr ""
+#~ "入力ラインからポイント/セグメントを作成と標準入力からの位置による線型参照"
+#~ "システム"
+
+#~ msgid ""
+#~ "Find line id and real km+offset for given points in vector map using "
+#~ "linear reference system"
+#~ msgstr ""
+#~ "線形参照システムを利用し、ベクトルマップのポイントからラインIDと実距離"
+#~ "（Km)オフセットを表示"
+
+#~ msgid "Locate nearest features to points or centroids"
+#~ msgstr "ポイントまたはセントロイドへの近接するフィーチャ "
+
+#~ msgid "Generate Thiessen polygons around points (Voronoi diagram)"
+#~ msgstr "ポイントの周りにティーセンポリゴンを作成 (ボロノイ図) "
+
+#~ msgid "Connect points to create Delaunay triangles"
+#~ msgstr "ドローネ三角形を作成するためポイントを接続"
+
+#~ msgid "Shortest route (visualization only)"
+#~ msgstr "最短ルート(表示のみ) "
+
+#~ msgid "Split net to bands between cost isolines"
+#~ msgstr "コスト等値線間のネットのバンドへの分割 "
+
+#~ msgid "Overlay/combine 2 vector maps"
+#~ msgstr "2つのベクトルマップのオーバーレイ/結合 "
+
+#~ msgid "Patch multiple maps (combine)"
+#~ msgstr "複数のマップのパッチ(結合) "
+
+#~ msgid "Generate area feature for extent of current region"
+#~ msgstr "現在の領域の拡大のためのエリアフィーチャーの作成 "
+
+#~ msgid "Generate rectangular vector grid"
+#~ msgstr "長方形のベクトルグリッドの作成 "
+
+#~ msgid "Attach, delete, or report categories"
+#~ msgstr "カテゴリーの追加・削除あるいはレポート "
+
+#~ msgid "Reclassify features using rules file"
+#~ msgstr "ルールファイルを用いたフィーチャーの再分類 "
+
+#~ msgid "Work with vector points"
+#~ msgstr "ベクトルポイントを用いた作業 "
+
+#~ msgid "Generate points from database with x/y coordinates"
+#~ msgstr "X/Y座標でのデータベースからポイントの作成 "
+
+#~ msgid "Random location perturbations of points"
+#~ msgstr "ポイントのランダムな移動 "
+
+#~ msgid "Generate convex hull for point set"
+#~ msgstr "ポイントセットに対する凸包(convex hull)作成 "
+
+#~ msgid "Generate Delaunay triangles for point set"
+#~ msgstr "ポイントセットにたいするドローネ三角形(Delaunay triangles)の作成 "
+
+#~ msgid "Generate Voronoi diagram/Thiessen polygons for point set"
+#~ msgstr "ポイントセットによるボロノイ図/ティーセンポリゴンの作成 "
+
+#~ msgid "Sample raster maps"
+#~ msgstr "ラスターマップのサンプリング "
+
+#~ msgid "Calculate statistics for raster map overlain by vector map"
+#~ msgstr "ベクトルマップに覆われたラスターマップの統計計算"
+
+#~ msgid ""
+#~ "Partition points into test/training sets for k-fold cross validatation"
+#~ msgstr "k-分割交差検定に向けたポイントのテスト/トレーニングへの分割 "
+
+#~ msgid "Transfer attribute data from queried vector map to points"
+#~ msgstr "検索されたベクトルマップから属性データをポイントに転送"
+
+#~ msgid "Load vector attributes to database or create reports"
+#~ msgstr "データベースあるいはレポート作成のためのベクトル属性の読み込み "
+
+#~ msgid "Report areas for vector attribute categories"
+#~ msgstr "ベクトル属性カテゴリーの分類をレポート"
+
+#~ msgid "Test normality of point distribution"
+#~ msgstr "代表点の正規性検定 "
+
+#~ msgid "Calculate stats for raster map underlying vector objects"
+#~ msgstr "ベクトルオブジェクトの下部にあるラスターマップの統計計算"
+
+#~ msgid "Indices of point counts in quadrats"
+#~ msgstr "区画内でのポイントカウントの指標 "
+
+#~ msgid "Create/edit imagery group"
+#~ msgstr "画像グループの作成/編集 "
+
+#~ msgid "Target imagery group"
+#~ msgstr "ターゲットの画像グループ "
+
+#~ msgid "Mosaic up to 4 adjacent images"
+#~ msgstr "4つの隣り合う画像までのモザイク "
+
+#~ msgid ""
+#~ "Color balance and enhance color tables of multiband imagery for rgb "
+#~ "display"
+#~ msgstr "RGB表示するマルチバンド画像のカラーバランスと拡張カラーテーブル"
+
+#~ msgid ""
+#~ "Transform HIS (Hue/Intensity/Saturation) color image to RGB (Red/Green/"
+#~ "Blue)"
+#~ msgstr "HIS(色相/明度/彩度)カラーからRGB（赤/緑/青)カラーへ変換"
+
+#~ msgid ""
+#~ "Transform RGB (Red/Green/Blue) color image to HIS (Hue/Intensity/"
+#~ "Saturation)"
+#~ msgstr "RGB（赤/緑/青)カラーからHIS(色相/明度/彩度)カラーへ変換"
+
+#~ msgid "Rectify and georeference image group"
+#~ msgstr "画像の位置補正 "
+
+#~ msgid "Set ground control points (GCP's) from raster map or keyboard entry"
+#~ msgstr ""
+#~ "ラスターあるいはキーボードからのグラウンドコントロールポイント(GCP)の設定 "
+
+#~ msgid "Set ground control points (GCP's) from vector map or keyboard entry"
+#~ msgstr ""
+#~ "ベクトルあるいはキーボードからのグラウンドコントロールポイント(GCP)の設定 "
+
+#~ msgid "Affine and Polynomial rectification (rubber sheet)"
+#~ msgstr "アフィン 多項式変換(ラバーシート)"
+
+#~ msgid "Brovey transformation and pan sharpening"
+#~ msgstr "Brovey変換とパンシャープニング "
+
+#~ msgid "Non-interactive input for supervised classification (MLC)"
+#~ msgstr "監視下分類(MLC)のための非対話型入力 "
+
+#~ msgid "Non-interactive input for supervised classification (SMAP)"
+#~ msgstr "監視下分類(SMAP)のための非対話型入力 "
+
+#~ msgid "Zero edge crossing detection"
+#~ msgstr "ゼロエッジ交差検出"
+
+#~ msgid "User defined matrix/convolving filter"
+#~ msgstr "ユーザー定義のマトリックス/コンボリューションフィルター "
+
+#~ msgid "Canonical component"
+#~ msgstr "正準分析 "
+
+#~ msgid "Principal component"
+#~ msgstr "主成分分析 "
+
+#~ msgid "Fast Fourier Transform"
+#~ msgstr "高速フーリエ変換(FFT) "
+
+#~ msgid "Inverse Fast Fourier Transform"
+#~ msgstr "高速フーリエ逆変換 "
+
+#~ msgid "Range of image values"
+#~ msgstr "画像の値の範囲 "
+
+#~ msgid "Bit pattern comparison for ID of low quality pixels"
+#~ msgstr "低品質ピクセルのIDをビットパターン比較"
+
+#~ msgid "Kappa classification accuracy assessment"
+#~ msgstr "Kappa係数を用いた分類精度評価 "
+
+#~ msgid "Optimum index factor for LandSat TM"
+#~ msgstr "ランドサット TMの最適インデックスファクター "
+
+#~ msgid "&Grid3D"
+#~ msgstr "3Dグリッド(&G) "
+
+#~ msgid "Create 3D mask for grid3D operations"
+#~ msgstr "3Dグリッド処理用3Dマスクの作成 "
+
+#~ msgid "Create 2D raster cross section from grid3d volume"
+#~ msgstr "3Dグリッド立体から2Dラスター断面図を作成"
+
+#~ msgid "Map calculator for grid3D operations"
+#~ msgstr "3Dグリッド処理用のマップカリキュレータ "
+
+#~ msgid "Interpolate volume from vector points using splines"
+#~ msgstr "スプラインによるポイントから立体への補間 "
+
+#~ msgid "Display information about grid3D volume"
+#~ msgstr "3Dグリッド立体の情報表示 "
+
+#~ msgid "Add columns to table"
+#~ msgstr "テーブルに列を追加"
+
+#~ msgid "Change values in a column"
+#~ msgstr "列の値を変更"
+
+#~ msgid "Query data (SQL select)"
+#~ msgstr "データ検索(SQL選択) "
+
+#~ msgid "Execute SQL statement"
+#~ msgstr "SQL文の実行 "
+
+#~ msgid "     (leave blank to place with mouse; position will not save)"
+#~ msgstr "     (マウスをブランクのところで放す、位置が保存されません) "
+
+#~ msgid "     coordinate type"
+#~ msgstr "     座標タイプ"
+
+#~ msgid "  align text with coordinate point"
+#~ msgstr "   座標を指定しテキストの位置を補正"
+
+#~ msgid ""
+#~ "     (for coordinates, % is from bottom left of display, pixels from top "
+#~ "left)"
+#~ msgstr "     (座標は, % は画面の左下から定義,ピクセルは左上)"
+
+#~ msgid "     text rotation (degrees counterclockwise)"
+#~ msgstr "     テキスト回転 (角度 反時計回り) "
+
+#~ msgid "rotation in radians"
+#~ msgstr "ラジアンでの回転"
+
+#~ msgid "height in pixels instead of %"
+#~ msgstr "ピクセル単位の高さの代わりに % "
+
+#~ msgid "red (RGB) or hue (HIS):"
+#~ msgstr "赤 (RGB)または 色相 (HIS)："
+
+#~ msgid "green (RGB) or intensity (HIS):"
+#~ msgstr "緑 (RGB) または照度 (HIS):  "
+
+#~ msgid "blue (RGB) or saturation (HIS):"
+#~ msgstr "青 (RGB) または 彩度 (HIS)："
+
+#~ msgid ""
+#~ "GRASS needs a directory in which to store its data.  Create one now if "
+#~ "youhave not already done so.  A popular choice is \"grassdata\", located "
+#~ "inyour home directory."
+#~ msgstr ""
+#~ "GRASSをスタートさせるためにはデータを格納するディレクトリが必要ですので、"
+#~ "作成してください。一般には \"grassdata\"が使用されます。"
+
+#~ msgid "  cell values font"
+#~ msgstr "セル値のフォント"
+
+#~ msgid "Color for cell values:  "
+#~ msgstr "セル値の色："
+
+#~ msgid ""
+#~ "Cell values can only be displayed for \n"
+#~ "regions of < 10,000 cells. Map in explore mode may contain more than "
+#~ "10,000cells.\n"
+#~ "\n"
+#~ " It's suggested to constrain map to region geometry to display cell "
+#~ "values."
+#~ msgstr ""
+#~ "セル値を表示できるのは最大10,000の領域までです\n"
+#~ "エクスプローラーモードでは10,000セル以上を表示することができます\n"
+#~ "\n"
+#~ "セルの値を表示するため領域のジオメトリを制約することを提案します"
+
+#~ msgid "\tdrape map: "
+#~ msgstr "\t ドレープ マップ："
+
+#~ msgid "\tdrape map brightness adjustment\t"
+#~ msgstr "\t ドレープマップの明るさ調節\t  "
+
+#~ msgid "Raster to histogram:"
+#~ msgstr "ラスターのヒストグラム："
+
+#~ msgid "\t"
+#~ msgstr "\t "
+
+#~ msgid "  font"
+#~ msgstr "フォント"
+
+#~ msgid "\tbackground color"
+#~ msgstr "\t 背景色"
+
+#~ msgid ""
+#~ "There is no raster group file (REF). You must select the 'create/edit "
+#~ "group'option to create a group file."
+#~ msgstr ""
+#~ "ラスターグループファイル(REF)がありません グループ 作成/編集オプションを使"
+#~ "用してグループファイルを作成してください"
+
+#~ msgid ""
+#~ "There is no vector group file (VREF). You must select the 'create/"
+#~ "editgroup' option to create a group file."
+#~ msgstr ""
+#~ "ベクトルグループファイル(VREF)がありません グループ 作成/編集オプションを"
+#~ "使用してグループファイルを作成してください"
+
+#~ msgid ""
+#~ "Select non-georectified raster or vector to display for marking "
+#~ "groundcontrol points"
+#~ msgstr "地上基準点を作成するため非幾何補正ラスターまたはベクトルを選択"
+
+#~ msgid ""
+#~ "There is no POINTS file of ground control points for group. You must "
+#~ "createground control points before georectifying map."
+#~ msgstr ""
+#~ "グループの地理基準点がポイントファイルに存在しません 幾何補正の前に作成す"
+#~ "る必要があります"
+
+#~ msgid ""
+#~ "Insufficient ground control points for georectification method. You need "
+#~ "atleast 3 points for 1st order, 6 points for 2nd order and 10 points for "
+#~ "3rdorder."
+#~ msgstr ""
+#~ "マップ幾何補正のための地上基準点が不足しています 第１選択では最低３点、第"
+#~ "２では６点、第３では１０点以上必要です"
+
+#~ msgid ""
+#~ "No valid ground control points in GCP file. You must create valid "
+#~ "groundcontrol points before georectifying map."
+#~ msgstr ""
+#~ "GCPファイルのポイントに値が定義されていません 幾何補正の前にGCPを作成する"
+#~ "必要があります"
+
+#~ msgid "Flythrough images prefix"
+#~ msgstr "フライスルー画像接頭語"
+
+#~ msgid "Camera layback"
+#~ msgstr "カメラ レイバック"
+
+#~ msgid "Camera height"
+#~ msgstr "カメラ 高さ  "
+
+#~ msgid "Number of frames"
+#~ msgstr "フレーム数"
+
+#~ msgid "Start frame"
+#~ msgstr "フレームスタート"
+
+#~ msgid ""
+#~ "Create postscript text object (for postscript eps, pdf, and print "
+#~ "outputonly)"
+#~ msgstr ""
+#~ "ポストスクリプトテキストオブジェクト作成 (ポストスクリプト eps, pdf, プリ"
+#~ "ント出力のみ) "
+
+#~ msgid "Text placement: x,y coordinates (from upper left)"
+#~ msgstr "テキスト位置: XY座標値 (左上から)  "
+
+#~ msgid "     align text with coordinate point "
+#~ msgstr "     テキスト座標値位置調整"
+
+#~ msgid "     text height in pixels"
+#~ msgstr "     ピクセルでのテキスト高さ"
+
+#~ msgid "    custom breakpoints (val val ...) "
+#~ msgstr "    独自分割点 (val val ...)   "
+
+#~ msgid "    query with SQL where clause  "
+#~ msgstr "    SQL where句でクエリ"
+
+#~ msgid "    legend for only these categories    "
+#~ msgstr "    カテゴリー値のみの凡例"
+
+#~ msgid "remove all frames  "
+#~ msgstr "全てのフレーム削除"
+
+#~ msgid "Frame name (optional):"
+#~ msgstr "フレーム名 (オプション)："
+
+#, fuzzy
+#~ msgid "Set frame borders at 0-100% from lower left corner of display"
+#~ msgstr "フレームの境界をディスプレイの左下端から0-100% で指定"
+
+#~ msgid "     set borders (bottom,top,left,right):"
+#~ msgstr "     境界指定 (下,上,左,右)："
+
+#~ msgid "\tcolumns to chart (col1,col2,...) "
+#~ msgstr "\tグラフにする列 (列1,列2,...)   "
+
+#~ msgid "Points"
+#~ msgstr "ポイント "
+
+#~ msgid "Areas"
+#~ msgstr "エリア"
+
+#~ msgid "Faces"
+#~ msgstr "面"
+
+#~ msgid "Query vectors for display:"
+#~ msgstr "表示するベクトルの検索："
+
+#~ msgid "Save displayed objects to new vector file"
+#~ msgstr "新しいベクトルファイルに表示オブジェクトを保存"
+
+#~ msgid "Maps for frame 1 (required):"
+#~ msgstr " フレーム１のマップ (必須)："
+
+#~ msgid "Maps for frame 2 (optional):"
+#~ msgstr " フレーム２のマップ  (オプション)："
+
+#~ msgid "Maps for frame 3 (optional):"
+#~ msgstr " フレーム３のマップ  (オプション)："
+
+#~ msgid "Maps for frame 4 (optional):"
+#~ msgstr " フレーム４のマップ  (オプション)："
+
+#~ msgid "Override offset, alignment, and color settings in v.labels file:"
+#~ msgstr "v.labelsファイルにオフセット,配置,および色の設定を上書き："
+
+#~ msgid "Align label with vector object:"
+#~ msgstr "ベクトルオブジェクトのラベル整列："
+
+#~ msgid "Offset label from vector object:"
+#~ msgstr "ベクトルオブジェクトのラベルオフセット："
+
+#~ msgid "Justification:"
+#~ msgstr "行揃え："
+
+#~ msgid " Label line max length:"
+#~ msgstr " ラベル線最大長： "
+
+#~ msgid "Enclose label in box:"
+#~ msgstr "ラベルをボックスで囲む："
+
+#~ msgid "Draw label background:"
+#~ msgstr "背景にラベルを描画："
+
+#~ msgid "Draw box outline:"
+#~ msgstr "ボックス外枠描画："
+
+#~ msgid "Distance between label and enclosing box. Horizontal:"
+#~ msgstr "ラベルとボックスの水平間隔距離："
+
+#~ msgid " Vertical:"
+#~ msgstr "鉛直："
+
+#~ msgid "Aspect map:"
+#~ msgstr "方位マップ："
+
+#~ msgid "Slope/intensity map:"
+#~ msgstr "傾斜/照度マップ:  "
+
+#~ msgid "HIS brightness adjustment\t"
+#~ msgstr "HIS輝度調整\t  "
+
+#~ msgid " thin legend by"
+#~ msgstr "小さい凡例"
+
+#~ msgid "line scale instead of bar scale"
+#~ msgstr "バー縮尺の変わりに線縮尺"
+
+#~ msgid ""
+#~ "Create 3 RGB (red, green, blue) maps from 3 HIS (hue, intensity, "
+#~ "saturation)maps"
+#~ msgstr "３HIS(色相/明度/彩度)マップから３RGB（赤/緑/青)マップを作成"
+
+#~ msgid ""
+#~ "Create points/segments from input lines, linear reference system "
+#~ "andpositions read from stdin"
+#~ msgstr ""
+#~ "入力ラインからポイント/セグメントを作成と標準入力からの位置による線型参照"
+#~ "システム"
+
+#~ msgid ""
+#~ "Find line id and real km+offset for given points in vector map using "
+#~ "linearreference system"
+#~ msgstr ""
+#~ "線形参照システムを利用し、ベクトルマップのポイントからラインIDと実距離"
+#~ "（Km)オフセットを表示"
