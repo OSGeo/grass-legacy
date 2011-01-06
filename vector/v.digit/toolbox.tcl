@@ -52,7 +52,6 @@ proc create_screen {} {
 
 		# right-click is acting like a middle-click...
 		bind .screen.canvas <ButtonPress> {
-            puts "button: %b"
 			if { %b == 3 } {
 				c_update_tool %x %y 2
 			} elseif { %b == 2 } {
