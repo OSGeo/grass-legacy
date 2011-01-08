@@ -12,12 +12,13 @@ msgstr ""
 "Project-Id-Version: grasslibs_de\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2011-01-03 15:46+0100\n"
-"PO-Revision-Date: 2010-07-17 13:25+0200\n"
-"Last-Translator: Robert Nuske <rnuske gwdg.de>\n"
+"PO-Revision-Date: 2011-01-07 21:12+0100\n"
+"Last-Translator: Helmut Kudrnovsky <hellik@web.de>\n"
 "Language-Team: Deutsch <grass-translations@lists.osgeo.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=ISO-8859-15\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Language: \n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: ../lib/raster/rem_io.c:40
@@ -2548,12 +2549,14 @@ msgstr "Vektorkarte ist nicht geöffnet."
 msgid ""
 "Vect_read_line_geos(): feature id %d is not reasonable (max features in "
 "vector map <%s>: %d)"
-msgstr "Vektor Karte"
+msgstr ""
+"Vect_read_line(): Objekt ID %d ist nicht sinnvoll (Max. Objekte in "
+"Vektorkarte <%s>: %d)."
 
 #: ../lib/vector/Vlib/geos.c:61
 #, fuzzy
 msgid "only native format supported"
-msgstr "Vect_write_line() wird für dieses Format/Level nicht unterstützt."
+msgstr "für dieses Format/Level nicht unterstützt."
 
 #: ../lib/vector/Vlib/geos.c:66 ../lib/vector/Vlib/geos.c:256
 #: ../lib/vector/Vlib/read_nat.c:136
@@ -2563,27 +2566,29 @@ msgstr "Versuche tote Linie zu lesen."
 #: ../lib/vector/Vlib/geos.c:91
 #, c-format
 msgid "Vect_read_area_geos(): unable to read area id %d"
-msgstr ""
+msgstr "Vect_read_area_geos(): Fläche mit ID %d kann nicht gelesen werden."
 
 #: ../lib/vector/Vlib/geos.c:105
 #, c-format
 msgid "Vect_read_area_geos(): unable to read isle id %d of area id %d"
 msgstr ""
+"Vect_read_area_geos(): Insel mit ID %d der Fläche mit ID %d kann nicht "
+"gelesen werden."
 
 #: ../lib/vector/Vlib/geos.c:203
 #, fuzzy, c-format
 msgid "Unable to read line offset %ld"
-msgstr "Kann Datei head nicht lesen"
+msgstr "Kann Linie %d nicht lesen"
 
 #: ../lib/vector/Vlib/geos.c:410
 #, fuzzy, c-format
 msgid "Attempt to read points of nonexistent area id %d"
-msgstr "Versuch eine tote Insel von einer toten Fläche zu löschen"
+msgstr "Versuche Punkte nicht existenter Fläche zu lesen."
 
 #: ../lib/vector/Vlib/geos.c:470
-#, fuzzy, c-format
+#, c-format
 msgid "Unable to read feature id %d"
-msgstr "Kann Datei %s nicht öffnen."
+msgstr "Kann Objekt %d nicht lesen."
 
 #: ../lib/vector/Vlib/snap.c:118
 msgid "Snap vertices Pass 1: select points"
@@ -2915,12 +2920,12 @@ msgstr "Füge Zentroide hinzu..."
 #: ../lib/vector/Vlib/merge_lines.c:192
 #, c-format
 msgid "%d boundaries merged"
-msgstr ""
+msgstr "%d Flächengrenzen zusammengefasst"
 
 #: ../lib/vector/Vlib/merge_lines.c:193
 #, c-format
 msgid "%d new boundaries"
-msgstr ""
+msgstr "%d neue Flächengrenzen"
 
 #: ../lib/vector/Vlib/buffer2.c:376
 msgid "Line is not looped"
@@ -3940,15 +3945,17 @@ msgid ""
 "to area where your points are. Continuing calculations..."
 msgstr ""
 "Es dauert zu lange, um Punkte für die Interpolation zu finden -- bitte "
-"ändern Sie die Region auf den Bereich, wo die Punkte sind. Fahre mit der "
-"Berechnung fort..."
+"ändern Sie die Region auf den Bereich, in dem ihre Punkte sind. Fahre mit "
+"der Berechnung fort..."
 
 #: ../lib/rst/interp_float/interp2d.c:212
-#, c-format
+#, fuzzy, c-format
 msgid ""
 "Overshoot - increase in tension suggested. Overshoot occures at (%d,%d) "
 "cell. Z-value %f, zmin %f, zmax %f."
 msgstr ""
+"Overshoot - Erhöhung der Spannung empfohlen. Overshoot bei Zelle (%d,%d). Z-"
+"value %f, zmin %f, zmax %f."
 
 #: ../lib/rst/interp_float/input2d.c:47
 #, c-format
@@ -3960,9 +3967,9 @@ msgid "Bitmap mask created"
 msgstr "Bitmap Maske angelegt."
 
 #: ../lib/rst/interp_float/vinput2d.c:73
-#, fuzzy, c-format
+#, c-format
 msgid "Vector map <%s> is not 3D"
-msgstr "Eingabevektorkarte <%s> nicht gefunden."
+msgstr "Vektorkarte <%s> ist nicht 3D"
 
 #: ../lib/rst/interp_float/vinput2d.c:76
 msgid "Loading data from attribute table ..."
@@ -3976,16 +3983,13 @@ msgstr "Spalte <%s> nicht gefunden."
 
 #: ../lib/rst/interp_float/vinput2d.c:97
 #: ../lib/rst/interp_float/vinput2d.c:110
-#, fuzzy, c-format
+#, c-format
 msgid "Data type of column <%s> must be numeric"
-msgstr ""
-"Spaltentype der Spalte z wird nicht unterstützt (muss integer oder double "
-"sein)."
+msgstr "Spaltentyp der Spalte <%s> muss numerisch sein."
 
 #: ../lib/rst/interp_float/vinput2d.c:121
-#, fuzzy
 msgid "Reading features from vector map ..."
-msgstr "Vektor Karte "
+msgstr "Lese Objekte der Vektorkarte ... "
 
 #: ../lib/rst/interp_float/vinput2d.c:153
 #: ../lib/rst/interp_float/vinput2d.c:270
@@ -3996,23 +4000,23 @@ msgstr "Datenbank-Eintrag für die Kategorie (cat) %d  nicht gefunden."
 #: ../lib/rst/interp_float/vinput2d.c:171
 #: ../lib/rst/interp_float/vinput2d.c:288
 msgid "Negative value of smoothing detected: sm must be >= 0"
-msgstr ""
+msgstr "Negativer Wert der Glättung gefunden: sm muss >=0 sein"
 
 #: ../lib/rst/interp_float/vinput2d.c:233
 #, fuzzy
 msgid "Reading nodes from vector map ..."
-msgstr "Vektor Karte "
+msgstr "Lese Knoten der Vektorkarte ... "
 
 #: ../lib/rst/interp_float/vinput2d.c:314
 #, fuzzy
 msgid "Strip exists with insufficient data"
-msgstr "Strip existiert mit unzureichenden Daten."
+msgstr "Es gibt einen Streifen mit unzureichend Daten."
 
 #: ../lib/rst/interp_float/vinput2d.c:328
 #, fuzzy, c-format
 msgid "There are points outside specified 2D/3D region - %d points ignored"
 msgstr ""
-"Es sind Punkte außerhalb der angegebenen 2d/3D-Region gefunden worden - "
+"Es sind Punkte außerhalb der angegebenen 2D/3D-Region gefunden worden - "
 "ignoriere %d Punkte."
 
 #: ../lib/rst/interp_float/vinput2d.c:331
@@ -4031,14 +4035,16 @@ msgstr ""
 
 #: ../lib/rst/interp_float/vinput2d.c:340
 msgid "Zero points in the given region"
-msgstr ""
+msgstr "Keine Punkte in der Gebietsausdehnung"
 
 #: ../lib/rst/interp_float/vinput2d.c:345
-#, c-format
+#, fuzzy, c-format
 msgid ""
 "Segmentation parameters set to invalid values: npmin= %d, segmax= %d for "
 "smooth connection of segments, npmin > segmax (see manual)"
 msgstr ""
+"Segmentation-Parameter mit ungültigen Werten: npmin= %d, segmax= %d for "
+"smooth connection of segments, npmin > segmax (siehe Manual)"
 
 #: ../lib/rst/interp_float/vinput2d.c:351
 #, c-format
@@ -4051,34 +4057,32 @@ msgstr ""
 "Sie segmax = %d (vgl. Bedienungsanleitung)."
 
 #: ../lib/rst/interp_float/vinput2d.c:355
-#, fuzzy, c-format
+#, c-format
 msgid "Number of points from vector map %d"
-msgstr "Name der Vektoreingabekarte."
+msgstr "Anzahl der Punkte der Vektorkarte %d"
 
 #: ../lib/rst/interp_float/vinput2d.c:356
-#, fuzzy, c-format
+#, c-format
 msgid "Number of points outside of 2D/3D region %d"
-msgstr "Anzahl von Zentroiden außerhalb von Flächen :   %d\n"
+msgstr "Anzahl der Punkte außerhalb der 2D/3D Gebietsausdehnung: %d"
 
 #: ../lib/rst/interp_float/vinput2d.c:358
 #, fuzzy, c-format
 msgid "Number of points being used %d"
-msgstr "Anzahl von Punkten    :   %d\n"
+msgstr "Anzahl der Punkte: %d"
 
 #: ../lib/rst/interp_float/vinput2d.c:391
-#, fuzzy
 msgid "Some points outside of region (ignored)"
-msgstr "einige Punkte sind außerhalb der Region -- ignoriere dies..."
+msgstr "Einige Punkte sind außerhalb der Region -- ignoriere dies..."
 
 #: ../lib/rst/interp_float/vinput2d.c:397
-#, fuzzy
 msgid "Unable to allocate memory"
-msgstr "Kann keinen Speicher belegen.\n"
+msgstr "Kann keinen Speicher belegen."
 
 #: ../lib/rst/interp_float/vinput2d.c:405
-#, fuzzy, c-format
+#, c-format
 msgid "Unable to insert %f,%f,%f a = %d"
-msgstr "Kann Datei %s nicht öffnen."
+msgstr "Kann %f,%f,%f a = %d nicht einfügen"
 
 #: ../lib/g3d/g3dparam.c:52
 msgid "Data type used in the output file"
@@ -4356,12 +4360,12 @@ msgstr "Bitmap mismatch"
 #: ../lib/ogsf/GS2.c:1193
 #, c-format
 msgid "no category info"
-msgstr ""
+msgstr "Keine Information über Kategorie"
 
 #: ../lib/ogsf/GS2.c:1212
 #, c-format
 msgid "no data"
-msgstr ""
+msgstr "keine Daten"
 
 #: ../lib/ogsf/GS2.c:1635
 #, c-format
@@ -5123,6 +5127,34 @@ msgid "subgroup <%s> of group <%s> references the following raster maps\n"
 msgstr ""
 "Untergruppe <%s> der Gruppe <%s> referenziert die folgenden Rasterkarten\n"
 
+msgid ""
+"taking too long to find points for interpolation--please change the region "
+"to area where your points are. Continuing calculations..."
+msgstr ""
+"Es dauert zu lange, um Punkte für die Interpolation zu finden -- bitte "
+"ändern Sie die Region auf den Bereich, in dem ihre Punkte sind. Fahre mit "
+"der Berechnung fort..."
+
+msgid "Reading lines from vector map ... "
+msgstr "Lese Linien der Vektorkarte ... "
+
+msgid "Reading nodes from vector map ... "
+msgstr "Lese Knoten der Vektorkarte ... "
+
+msgid "strip exists with insufficient data"
+msgstr "Es gibt einen Streifen mit unzureichend Daten."
+
+msgid "there are points outside specified 2D/3D region--ignored %d points"
+msgstr ""
+"Es sind Punkte außerhalb der angegebenen 2D/3D-Region gefunden worden - "
+"ignoriere %d Punkte."
+
+msgid "ignoring %d points -- too dense"
+msgstr "Ignoriere %d Punkte -- sie liegen zu dicht beieinander."
+
+msgid "some points outside of region -- will ignore..."
+msgstr "einige Punkte sind außerhalb der Region -- ignoriere dies..."
+
 #~ msgid "Invalid view position coordinates, using %f,%f"
 #~ msgstr "Ungültige Koordinaten für den Betrachtungspunkt, verwende %f,%f"
 
@@ -5175,34 +5207,6 @@ msgstr ""
 
 #~ msgid "The cholesky solver does not work with sparse matrices"
 #~ msgstr "Der Cholesky-Löser kann keine dünnbesetzten Matrizen verarbeiten"
-
-#~ msgid ""
-#~ "taking too long to find points for interpolation--please change the "
-#~ "region to area where your points are. Continuing calculations..."
-#~ msgstr ""
-#~ "Es dauert zu lange, um Punkte für die Interpolation zu finden -- bitte "
-#~ "ändern Sie die Region auf den Bereich, in dem ihre Punkte sind. Fahre mit "
-#~ "der Berechnung fort..."
-
-#~ msgid "Reading lines from vector map ... "
-#~ msgstr "Lese Linien der Vektorkarte ... "
-
-#~ msgid "Reading nodes from vector map ... "
-#~ msgstr "Lese Knoten der Vektorkarte ... "
-
-#~ msgid "strip exists with insufficient data"
-#~ msgstr "Es gibt einen Streifen mit unzureichend Daten."
-
-#~ msgid "there are points outside specified 2D/3D region--ignored %d points"
-#~ msgstr ""
-#~ "Es sind Punkte außerhalb der angegebenen 2D/3D-Region gefunden worden - "
-#~ "ignoriere %d Punkte."
-
-#~ msgid "ignoring %d points -- too dense"
-#~ msgstr "Ignoriere %d Punkte -- sie liegen zu dicht beieinander."
-
-#~ msgid "some points outside of region -- will ignore..."
-#~ msgstr "einige Punkte sind außerhalb der Region -- ignoriere dies..."
 
 #~ msgid "Null values have not been initialized. "
 #~ msgstr "NULL-Werte wurden nicht initialisiert. "

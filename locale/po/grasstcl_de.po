@@ -12,13 +12,14 @@ msgstr ""
 "Project-Id-Version: grasstcl_de\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2011-01-03 15:46+0100\n"
-"PO-Revision-Date: 2010-07-24 22:41+0200\n"
-"Last-Translator: Robert Nuske <rnuske gwdg.de>\n"
+"PO-Revision-Date: 2011-01-08 10:36+0100\n"
+"Last-Translator: Markus Neteler <neteler osgeo.org>\n"
 "Language-Team: Deutsch <grass-translations@lists.osgeo.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=ISO-8859-15\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms:  nplurals=2; plural=(n != 1);\n"
+"Language: \n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: ../vector/v.digit/cats.tcl:20 ../gui/tcltk/gis.m/gmmenu.tcl:178
 msgid "Delete"
@@ -1003,70 +1004,67 @@ msgstr " Bestimme die Hintergrundfarbe (NULL-Werte sind eingefärbt)"
 
 #: ../gui/tcltk/gis.m/raster.tcl:273 ../gui/tcltk/gis.m/legend.tcl:262
 msgid "white"
-msgstr ""
+msgstr "weiß"
 
 #: ../gui/tcltk/gis.m/raster.tcl:273 ../gui/tcltk/gis.m/legend.tcl:262
 msgid "grey"
-msgstr ""
+msgstr "grau"
 
 #: ../gui/tcltk/gis.m/raster.tcl:273 ../gui/tcltk/gis.m/legend.tcl:262
 msgid "gray"
-msgstr ""
+msgstr "grau"
 
 #: ../gui/tcltk/gis.m/raster.tcl:273 ../gui/tcltk/gis.m/legend.tcl:262
 msgid "black"
-msgstr ""
+msgstr "schwarz"
 
 #: ../gui/tcltk/gis.m/raster.tcl:273 ../gui/tcltk/gis.m/legend.tcl:262
-#, fuzzy
 msgid "brown"
-msgstr "Wachsen"
+msgstr "braun"
 
 #: ../gui/tcltk/gis.m/raster.tcl:273 ../gui/tcltk/gis.m/legend.tcl:262
 msgid "red"
-msgstr ""
+msgstr "rot"
 
 #: ../gui/tcltk/gis.m/raster.tcl:273 ../gui/tcltk/gis.m/legend.tcl:262
-#, fuzzy
 msgid "orange"
-msgstr "Fertig"
+msgstr "orange"
 
 #: ../gui/tcltk/gis.m/raster.tcl:273 ../gui/tcltk/gis.m/legend.tcl:262
 msgid "yellow"
-msgstr ""
+msgstr "gelb"
 
 #: ../gui/tcltk/gis.m/raster.tcl:273 ../gui/tcltk/gis.m/legend.tcl:262
 msgid "green"
-msgstr ""
+msgstr "grün"
 
 #: ../gui/tcltk/gis.m/raster.tcl:273 ../gui/tcltk/gis.m/legend.tcl:262
 msgid "aqua"
-msgstr ""
+msgstr "aquamarin"
 
 #: ../gui/tcltk/gis.m/raster.tcl:273 ../gui/tcltk/gis.m/legend.tcl:262
 msgid "cyan"
-msgstr ""
+msgstr "blaugrün"
 
 #: ../gui/tcltk/gis.m/raster.tcl:273 ../gui/tcltk/gis.m/legend.tcl:262
 msgid "indigo"
-msgstr ""
+msgstr "indigo"
 
 #: ../gui/tcltk/gis.m/raster.tcl:273 ../gui/tcltk/gis.m/legend.tcl:262
-#, fuzzy
 msgid "blue"
-msgstr "Tabelle"
+msgstr "blau"
 
 #: ../gui/tcltk/gis.m/raster.tcl:273 ../gui/tcltk/gis.m/legend.tcl:262
 msgid "purple"
-msgstr ""
+msgstr "purpur"
 
 #: ../gui/tcltk/gis.m/raster.tcl:273 ../gui/tcltk/gis.m/legend.tcl:262
 msgid "violet"
-msgstr ""
+msgstr "violett"
 
 #: ../gui/tcltk/gis.m/raster.tcl:273 ../gui/tcltk/gis.m/legend.tcl:262
 msgid "magenta"
-msgstr ""
+msgstr "purpurrot"
 
 #: ../gui/tcltk/gis.m/runandoutput.tcl:121
 msgid "Run (background)"
@@ -1124,11 +1122,11 @@ msgstr "Grafikstil"
 
 #: ../gui/tcltk/gis.m/histogram.tcl:175
 msgid "bar"
-msgstr ""
+msgstr "Balkendiagramm"
 
 #: ../gui/tcltk/gis.m/histogram.tcl:175
 msgid "pie"
-msgstr ""
+msgstr "Kuchendiagramm"
 
 #: ../gui/tcltk/gis.m/histogram.tcl:176
 msgid "\ttext font "
@@ -1163,7 +1161,7 @@ msgid "Display scale and north arrow"
 msgstr "Zeige Maßstab und Nordenpfeil"
 
 #: ../gui/tcltk/gis.m/barscale.tcl:170
-#, tcl-format
+#, fuzzy, tcl-format
 msgid "Scale placement: 0-100% from top left of display"
 msgstr "Platzierung des Maßstabs: 0-100% von links oben"
 
@@ -1895,67 +1893,58 @@ msgid "     coordinate type for text placement "
 msgstr "     Koordinatentyp für Textplatzierung "
 
 #: ../gui/tcltk/gis.m/maptext.tcl:153
-#, fuzzy
 msgid "pixels"
-msgstr "(Pixel) "
+msgstr "Pixel"
 
 #: ../gui/tcltk/gis.m/maptext.tcl:153
-#, fuzzy
 msgid "percent"
-msgstr "drucken"
+msgstr "Prozent"
 
 #: ../gui/tcltk/gis.m/maptext.tcl:153
-#, fuzzy
 msgid "geographic"
-msgstr "geographische Koordinaten"
+msgstr "geographisch"
 
 #: ../gui/tcltk/gis.m/maptext.tcl:162 ../gui/tcltk/gis.m/dtext.tcl:205
 msgid "     align text with coordinate point  "
 msgstr "     richte Text mit Koordinatenpunkt aus  "
 
 #: ../gui/tcltk/gis.m/maptext.tcl:166 ../gui/tcltk/gis.m/maplabels.tcl:200
-#, fuzzy
 msgid "lower left"
-msgstr "Flußlinien"
+msgstr "unten links"
 
 #: ../gui/tcltk/gis.m/maptext.tcl:166
-#, fuzzy
 msgid "bottom center"
-msgstr "unten:"
+msgstr "in der Mitte unten"
 
 #: ../gui/tcltk/gis.m/maptext.tcl:166 ../gui/tcltk/gis.m/maplabels.tcl:200
-#, fuzzy
 msgid "lower right"
-msgstr " rechts:"
+msgstr "rechts unten"
 
 #: ../gui/tcltk/gis.m/maptext.tcl:166 ../gui/tcltk/gis.m/maplabels.tcl:200
 msgid "center left"
-msgstr ""
+msgstr "in der Mitte links"
 
 #: ../gui/tcltk/gis.m/maptext.tcl:166 ../gui/tcltk/gis.m/maptext.tcl:175
 #: ../gui/tcltk/gis.m/vector.tcl:483 ../gui/tcltk/gis.m/vector.tcl:488
 #: ../gui/tcltk/gis.m/maplabels.tcl:200 ../gui/tcltk/gis.m/maplabels.tcl:221
-#, fuzzy
 msgid "center"
-msgstr "Zentroide"
+msgstr "in der Mitte"
 
 #: ../gui/tcltk/gis.m/maptext.tcl:166 ../gui/tcltk/gis.m/maplabels.tcl:200
-#, fuzzy
 msgid "center right"
-msgstr " rechts:"
+msgstr "in der Mitte rechts"
 
 #: ../gui/tcltk/gis.m/maptext.tcl:166 ../gui/tcltk/gis.m/maplabels.tcl:200
 msgid "upper left"
-msgstr ""
+msgstr "oben links"
 
 #: ../gui/tcltk/gis.m/maptext.tcl:166
 msgid "top center"
-msgstr ""
+msgstr "in der Mitte oben"
 
 #: ../gui/tcltk/gis.m/maptext.tcl:166 ../gui/tcltk/gis.m/maplabels.tcl:200
-#, fuzzy
 msgid "upper right"
-msgstr " rechts:"
+msgstr "oben rechts"
 
 #: ../gui/tcltk/gis.m/maptext.tcl:172
 msgid "     justification"
@@ -1963,15 +1952,13 @@ msgstr "     Ausrichtung"
 
 #: ../gui/tcltk/gis.m/maptext.tcl:175 ../gui/tcltk/gis.m/vector.tcl:483
 #: ../gui/tcltk/gis.m/maplabels.tcl:221
-#, fuzzy
 msgid "left"
-msgstr "links:"
+msgstr "links"
 
 #: ../gui/tcltk/gis.m/maptext.tcl:175 ../gui/tcltk/gis.m/vector.tcl:483
 #: ../gui/tcltk/gis.m/maplabels.tcl:221
-#, fuzzy
 msgid "right"
-msgstr "rechts:"
+msgstr "rechts"
 
 #: ../gui/tcltk/gis.m/maptext.tcl:176
 msgid "  line width"
@@ -2296,12 +2283,12 @@ msgid "Raster map: "
 msgstr "Rasterkarte: "
 
 #: ../gui/tcltk/gis.m/legend.tcl:229
-#, tcl-format
+#, fuzzy, tcl-format
 msgid "Legend placement and size as 0-100% of display"
-msgstr "Platzierung und Größe der Legende in Prozent vom Grafikfenster"
+msgstr "Platzierung und Größe der Legende in 0-100% vom Grafikfenster"
 
 #: ../gui/tcltk/gis.m/legend.tcl:235
-#, tcl-format
+#, fuzzy, tcl-format
 msgid "    x,y of lower left corner (in % from display top left)"
 msgstr ""
 "    x,y der unteren linken Ecke (in % von links oben des Grafukfensters)"
@@ -2311,16 +2298,16 @@ msgid "    legend height "
 msgstr "    Höhe der Legende "
 
 #: ../gui/tcltk/gis.m/legend.tcl:248
-#, tcl-format
+#, fuzzy, tcl-format
 msgid "Legend height (% of display)"
 msgstr "Höhe der Legende (% des Grafikfensters)"
 
 #: ../gui/tcltk/gis.m/legend.tcl:249
 msgid "%  width"
-msgstr "% Breite"
+msgstr "%  Breite"
 
 #: ../gui/tcltk/gis.m/legend.tcl:251
-#, tcl-format
+#, fuzzy, tcl-format
 msgid "Legend width (% of display)"
 msgstr "Legendenbreite (% des Fensters)"
 
@@ -2678,7 +2665,7 @@ msgid "Frame name (optional): "
 msgstr "Name für Unterfenster (optional): "
 
 #: ../gui/tcltk/gis.m/frames.tcl:135
-#, tcl-format
+#, fuzzy, tcl-format
 msgid "Set frame borders at 0-100% from lower left corner of display "
 msgstr ""
 "Lege den Rand des Unterfensters auf 0-100% vom unterer linker Ecke des "
@@ -2779,9 +2766,8 @@ msgid "ASCII points or GRASS ASCII vector"
 msgstr "ASCII Punkte oder GRASS ASCII Vektoren"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:115
-#, fuzzy
 msgid "ASCII points as vector lines"
-msgstr "ASCII Polygone und Linien"
+msgstr "ASCII Punkte als Linien"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:116
 msgid "Old GRASS vector"
@@ -2982,9 +2968,8 @@ msgid "Exit &GRASS"
 msgstr "GRASS starten"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:206
-#, fuzzy
 msgid "&Quit GIS Manager"
-msgstr "Lade GIS Manager"
+msgstr "&Quit Beende den GIS Manager"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:208 ../gui/tcltk/d.m/menu.tcl:188
 msgid "&Config"
@@ -3145,9 +3130,8 @@ msgid "HIS to RGB"
 msgstr "HIS zu RGB"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:265
-#, fuzzy
 msgid "Query raster color"
-msgstr "Textfarbe"
+msgstr "Abfrage der Farbe der Rasterkarte"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:268 ../gui/tcltk/d.m/menu.tcl:253
 #: ../gui/tcltk/d.m/menu.tcl:409
@@ -3651,7 +3635,6 @@ msgid "Split polylines"
 msgstr "Teile Polylinien"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:448
-#, fuzzy
 msgid "Split lines to segments"
 msgstr "Polylinien in Segmente teilen"
 
@@ -3680,9 +3663,8 @@ msgid "Create labels"
 msgstr "Erzeuge Beschriftungen"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:459
-#, fuzzy
 msgid "Create optimally placed labels"
-msgstr "Erzeuge Tabelle"
+msgstr "Erzeuge optimal platzierte Beschriftungen"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:460
 msgid "Assign colors"
@@ -3902,9 +3884,8 @@ msgid "Univariate attribute statistics"
 msgstr "Univariate Statistik der Attribute"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:542
-#, fuzzy
 msgid "Attribute classification"
-msgstr "Attributspalte für die Labels"
+msgstr "Attributklassification"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:544
 msgid "Quadrat indices"
@@ -4474,23 +4455,20 @@ msgid "text size"
 msgstr "Textgröße"
 
 #: ../gui/tcltk/gis.m/vector.tcl:480
-#, fuzzy
 msgid "Label part to align with vector point "
-msgstr "Teil der Beschriftung der an dem Vektorpunkt ausgerichtet wird"
+msgstr "Teil der Beschriftung, ausgerichtet am Vektorpunkt"
 
 #: ../gui/tcltk/gis.m/vector.tcl:485
 msgid "   Justification"
 msgstr "   Ausrichtung"
 
 #: ../gui/tcltk/gis.m/vector.tcl:488
-#, fuzzy
 msgid "top"
-msgstr "oben:"
+msgstr "oben"
 
 #: ../gui/tcltk/gis.m/vector.tcl:488
-#, fuzzy
 msgid "bottom"
-msgstr "unten:"
+msgstr "unten"
 
 #: ../gui/tcltk/gis.m/vector.tcl:495
 msgid "     Layer for labels"
@@ -4642,9 +4620,8 @@ msgid "Animation Window"
 msgstr "Animations-Fenster"
 
 #: ../gui/tcltk/gis.m/maplabels.tcl:127
-#, fuzzy
 msgid "Label file"
-msgstr "Beschriftungen:"
+msgstr "Beschriftungsdatei"
 
 #: ../gui/tcltk/gis.m/maplabels.tcl:163
 msgid "Create postscript labels for vector objects from v.labels file"
@@ -4665,11 +4642,11 @@ msgstr "Beschriftung am Vektorobjekt ausrichten: "
 
 #: ../gui/tcltk/gis.m/maplabels.tcl:200
 msgid "lower center"
-msgstr ""
+msgstr "in der Mitte unten"
 
 #: ../gui/tcltk/gis.m/maplabels.tcl:200
 msgid "upper center"
-msgstr ""
+msgstr "in der Mitte oben"
 
 #: ../gui/tcltk/gis.m/maplabels.tcl:206
 msgid "Offset label from vector object: "
@@ -6465,7 +6442,7 @@ msgid "  align text with coordinate point"
 msgstr "  Text an Koordinatenpunkt ausrichten"
 
 #: ../gui/tcltk/d.m/fttext.tcl:120
-#, tcl-format
+#, fuzzy, tcl-format
 msgid ""
 "     (for coordinates, % is from bottom left of display, pixels from top "
 "left)"
@@ -6498,3 +6475,111 @@ msgstr "Blau (RGB) oder Sättigung (HIS):"
 
 #~ msgid "Test"
 #~ msgstr "Test"
+
+#~ msgid "area"
+#~ msgstr "Fläche"
+
+#~ msgid "point"
+#~ msgstr "Punkt"
+
+#~ msgid "centroid"
+#~ msgstr "Zentroid"
+
+#~ msgid "line"
+#~ msgstr "Linie"
+
+#~ msgid "boundary"
+#~ msgstr "Grenze"
+
+#~ msgid "graduated colors"
+#~ msgstr "abgestufte Farben"
+
+#~ msgid "graduated points"
+#~ msgstr "abgestufte Punkte"
+
+#~ msgid "graduated lines"
+#~ msgstr "abgestufte Linien"
+
+#~ msgid "interval"
+#~ msgstr "Intervall"
+
+#~ msgid "std deviation"
+#~ msgstr "Standardabweichung"
+
+#~ msgid "quartiles"
+#~ msgstr "Quartile"
+
+#~ msgid "custom breaks"
+#~ msgstr "benutzerdefinierte Einteilung"
+
+#~ msgid "blue red"
+#~ msgstr "blau rot"
+
+#~ msgid "red blue"
+#~ msgstr "rot blau"
+
+#~ msgid "green red"
+#~ msgstr "grün rot"
+
+#~ msgid "red green"
+#~ msgstr "rot grün"
+
+#~ msgid "blue green"
+#~ msgstr "blau grün"
+
+#~ msgid "green blue"
+#~ msgstr "grün blau"
+
+#~ msgid "cyan yellow"
+#~ msgstr "blaugrün gelb"
+
+#~ msgid "yellow cyan"
+#~ msgstr "gelb blaugrün"
+
+#~ msgid "custom gradient"
+#~ msgstr "benutzerdefinierter Gradient"
+
+#~ msgid "single color"
+#~ msgstr "einzelne Farbe"
+
+#~ msgid "letter"
+#~ msgstr "Letter"
+
+#~ msgid "A4"
+#~ msgstr "A4"
+
+#~ msgid "legal"
+#~ msgstr "legal"
+
+#~ msgid "11x17"
+#~ msgstr "11x17"
+
+#~ msgid "A3"
+#~ msgstr "A3"
+
+#~ msgid "ledger"
+#~ msgstr "Fixpunkt"
+
+#~ msgid "A0"
+#~ msgstr "A0"
+
+#~ msgid "A1"
+#~ msgstr "A1"
+
+#~ msgid "A2"
+#~ msgstr "A2"
+
+#~ msgid "none"
+#~ msgstr "keines"
+
+#~ msgid "grass"
+#~ msgstr "GRASS"
+
+#~ msgid "compass"
+#~ msgstr "Kompass"
+
+#~ msgid "agnps"
+#~ msgstr "agnps"
+
+#~ msgid "answers"
+#~ msgstr "answers"
