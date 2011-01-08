@@ -7,8 +7,8 @@ msgstr ""
 "Project-Id-Version: grassnviz_de\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2011-01-06 22:57+0100\n"
-"PO-Revision-Date: 2011-01-06 23:38+0100\n"
-"Last-Translator: Markus Neteler <neteler osgeo.org>\n"
+"PO-Revision-Date: 2011-01-08 00:46+0100\n"
+"Last-Translator: Helmut Kudrnovsky <hellik@web.de>\n"
 "Language-Team: Deutsch <grass-translations@lists.osgeo.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=ISO-8859-15\n"
@@ -892,7 +892,7 @@ msgstr "Überschreibe Ausgabedatei."
 
 #: ../visualization/nviz/scripts/script_file_tools:43
 msgid "Fields:"
-msgstr ""
+msgstr "Felder:"
 
 #: ../visualization/nviz/scripts/script_file_tools:46
 #, fuzzy
@@ -1540,7 +1540,7 @@ msgstr " Attributs-Kartenlayer"
 #: ../visualization/nviz/scripts/panel_surf.tcl:701
 #: ../visualization/nviz/scripts/panel_vol.tcl:1145
 msgid "Z:"
-msgstr ""
+msgstr "Z:"
 
 #: ../visualization/nviz/scripts/panel_surf.tcl:702
 #: ../visualization/nviz/scripts/panel_vol.tcl:1146
@@ -1708,19 +1708,16 @@ msgid "Polygon resolution: "
 msgstr "Ungültige Auflösung! [%g]"
 
 #: ../visualization/nviz/scripts/panel_vol.tcl:441
-#, fuzzy
 msgid "X-axis"
 msgstr "X-Achse"
 
 #: ../visualization/nviz/scripts/panel_vol.tcl:443
-#, fuzzy
 msgid "Y-axis"
 msgstr "X-Achse"
 
 #: ../visualization/nviz/scripts/panel_vol.tcl:445
-#, fuzzy
 msgid "Z-axis"
-msgstr "X-Achse"
+msgstr "Z-Achse"
 
 #: ../visualization/nviz/scripts/panel_vol.tcl:449
 #, fuzzy
@@ -1730,7 +1727,7 @@ msgstr "Transparenz"
 #: ../visualization/nviz/scripts/panel_vol.tcl:455
 #: ../visualization/nviz/scripts/panel_vol.tcl:733
 msgid "azimuth"
-msgstr ""
+msgstr "Azimuth"
 
 #: ../visualization/nviz/scripts/panel_vol.tcl:456
 #: ../visualization/nviz/scripts/panel_vol.tcl:461
@@ -1810,7 +1807,7 @@ msgstr "Volumen Position"
 
 #: ../visualization/nviz/scripts/config.tcl:111
 msgid "x"
-msgstr ""
+msgstr "x"
 
 #: ../visualization/nviz/scripts/config.tcl:111
 #: ../visualization/nviz/scripts/site_attr.tcl:77
@@ -2717,8 +2714,9 @@ msgid "Z coord"
 msgstr "Y Koordinate"
 
 #: ../visualization/nviz/scripts/panel_cutplane.tcl:151
+#, fuzzy
 msgid "Rotate"
-msgstr ""
+msgstr "Rotiere"
 
 #: ../visualization/nviz/scripts/panel_cutplane.tcl:163
 msgid "Tilt"
@@ -2780,19 +2778,19 @@ msgstr "Fahre mit dem Import fort..."
 
 #: ../visualization/nviz/scripts/panel_fringe.tcl:51
 msgid "N&W"
-msgstr ""
+msgstr "N&W"
 
 #: ../visualization/nviz/scripts/panel_fringe.tcl:54
 msgid "N&E"
-msgstr ""
+msgstr "N&E"
 
 #: ../visualization/nviz/scripts/panel_fringe.tcl:57
 msgid "S&W"
-msgstr ""
+msgstr "S&W"
 
 #: ../visualization/nviz/scripts/panel_fringe.tcl:60
 msgid "S&E"
-msgstr ""
+msgstr "S&E"
 
 #: ../visualization/nviz/scripts/panel_fringe.tcl:68
 #, fuzzy
