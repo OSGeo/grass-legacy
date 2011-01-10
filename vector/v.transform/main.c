@@ -82,12 +82,13 @@ int main(int argc, char *argv[])
     tozero_flag = G_define_flag();
     tozero_flag->key = 't';
     tozero_flag->description = _("Shift all z values to bottom=0");
+    tozero_flag->guisection = _("Custom");
 
     print_mat_flag = G_define_flag();
     print_mat_flag->key = 'm';
     print_mat_flag->description =
 	_("Print the transformation matrix to stdout");
-
+    
     /* remove in GRASS7 */
     shift_flag = G_define_flag();
     shift_flag->key = 's';
@@ -95,9 +96,11 @@ int main(int argc, char *argv[])
 	_("Instead of points use transformation parameters "
 	  "(xshift, yshift, zshift, xscale, yscale, zscale, zrot)");
     shift_flag->guisection = _("Custom");
-
+	
     vold = G_define_standard_option(G_OPT_V_INPUT);
 
+    field = G_define_standard_option(G_OPT_V_FIELD);
+    
     vnew = G_define_standard_option(G_OPT_V_OUTPUT);
 
     pointsfile = G_define_standard_option(G_OPT_F_INPUT);
@@ -108,7 +111,8 @@ int main(int argc, char *argv[])
 				"(xshift, yshift, zshift, xscale, yscale, zscale, zrot) are used instead");
 
     pointsfile->gisprompt = "old_file,file,points";
-
+    pointsfile->guisection = _("Points");
+    
     xshift = G_define_option();
     xshift->key = "xshift";
     xshift->type = TYPE_DOUBLE;
@@ -176,17 +180,18 @@ int main(int argc, char *argv[])
     table = G_define_standard_option(G_OPT_TABLE);
     table->description =
 	_("Name of table containing transformation parameters");
-    table->guisection = _("Custom");
+    table->guisection = _("Attributes");
 
-    columns = G_define_standard_option(G_OPT_COLUMNS);
+    columns = G_define_option();
+    columns->key = "columns";
+    columns->type = TYPE_STRING;
+    columns->required = NO;
+    columns->multiple = NO;
     columns->label =
 	_("Name of attribute column(s) used as transformation parameters");
     columns->description =
 	_("Format: parameter:column, e.g. xshift:xs,yshift:ys,zrot:zr");
-    columns->guisection = _("Custom");
-
-    field = G_define_standard_option(G_OPT_V_FIELD);
-    field->guisection = _("Custom");
+    columns->guisection = _("Attributes");
 
     if (G_parser(argc, argv))
 	exit(EXIT_FAILURE);
