@@ -255,10 +255,10 @@ class UpdateThread(Thread):
                     try:
                         if not cparams[map]['dbInfo']:
                             cparams[map]['dbInfo'] = gselect.VectorDBInfo(map)
+                        self.data[win.InsertColumns] = { 'vector' : map, 'layer' : layer,
+                                                         'dbInfo' : cparams[map]['dbInfo'] }
                     except KeyError:
                         pass
-                    self.data[win.InsertColumns] = { 'vector' : map, 'layer' : layer,
-                                                     'dbInfo' : cparams[map]['dbInfo'] }
                 else: # table
                     driver = db = None
                     pDriver = self.task.get_param('dbdriver', element='prompt', raiseError=False)
