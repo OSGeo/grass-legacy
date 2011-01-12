@@ -162,7 +162,7 @@ int new_line_update(void *closure, int sxn, int syn, int button)
 	return 1;
     }
 
-    if (nl->type & GV_POINTS && (button == 2 ||  button == 3)) {
+    if (nl->type & GV_POINTS && (button == 1 ||  button == 2)) {
 	snap(&x, &y);
 	Vect_append_point(nl->Points, x, y, 0);
 
