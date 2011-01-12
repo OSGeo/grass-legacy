@@ -9,6 +9,8 @@
 #% required : no
 #%End
 
+
+# fixme: $HOSTTYPE is a bashism
 if [ $# -eq 0 ] ; then
 	if [ "$HOSTTYPE" = "macintosh" -o "$HOSTTYPE" = "powermac" -o "$HOSTTYPE" = "powerpc" -o "$HOSTTYPE" = "intel-pc" ] ; then
 		exec "$GRASS_WISH" $GISBASE/etc/dm/d.m.tcl -name d_m_tcl
