@@ -16,7 +16,7 @@ PATHGRASS50="$1"
 FILE=$PATHGRASS50/html/html/$2.html
 
 CUTLINE="`grep -ni '<H2>DESCRIPTION' $FILE | cut -d':' -f1`"
-if [ "$CUTLINE" == "" ] ; then
+if [ -z "$CUTLINE" ] ; then
   echo "ERROR: no <H2>DESCRIPTION</H2> present in html file"
   exit
 fi
