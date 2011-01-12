@@ -79,6 +79,7 @@ void i_new_line_options(int create)
 {
     int i;
     char val[1000];
+    char temp[1000];
 
     G_debug(4, "i_new_line_options(), create = %d", create);
 
@@ -88,9 +89,10 @@ void i_new_line_options(int create)
 	/* Set cat mode */
 	sprintf(val, "$GWidget(cat_mode) configure -values [list");
 	for (i = 0; i < CAT_MODE_COUNT; i++) {
-	    sprintf(val, "%s \"%s\"", val, CatModeLab[i]);
+	    sprintf(temp, " \"%s\"", CatModeLab[i]);
+	    strcat(val, temp);
 	}
-	sprintf(val, "%s]", val);
+	strcat(val, "]");
 
 	G_debug(2, "Cat modes: %s", val);
 	Tcl_Eval(Toolbox, val);
