@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 #fetch the description stuff from HTML pages for 5.7
 
