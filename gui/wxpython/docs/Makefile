@@ -1,7 +1,7 @@
 MODULE_TOPDIR = ../../..
 
 FILES = wxGUI \
-	wxGUI.Vector_Digitizing_Tool \
+	wxGUI.Vector_Digitizer \
 	wxGUI.Attribute_Table_Manager \
 	wxGUI.Nviz \
 	wxGUI.Icons \
