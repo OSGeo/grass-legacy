@@ -35,13 +35,13 @@ SetCompressorDictSize 64
 !define RELEASE_SVN_REVISION "365995"
 !define RELEASE_BINARY_REVISION "1"
 !define RELEASE_GRASS_COMMAND "grass65"
-!define RELEASE_GRASS_BASE "GRASS-65"
+!define RELEASE_GRASS_BASE "GRASS 6.5"
 
 !define DEVEL_VERSION_NUMBER "6.5.SVN"
 !define DEVEL_SVN_REVISION "36599"
 !define DEVEL_BINARY_REVISION "1"
 !define DEVEL_GRASS_COMMAND "grass65svn"
-!define DEVEL_GRASS_BASE "GRASS-65-SVN"
+!define DEVEL_GRASS_BASE "GRASS 6.5.SVN"
 
 ;----------------------------------------------------------------------------------------------------------------------------
 
@@ -86,7 +86,7 @@ SetCompressorDictSize 64
 
 !define PUBLISHER "GRASS Development Team"
 !define WEB_SITE "http://grass.osgeo.org"
-!define WIKI_PAGE "http://grass.osgeo.org/wiki/Main_Page"
+!define WIKI_PAGE "http://grass.osgeo.org/wiki"
 
 ;----------------------------------------------------------------------------------------------------------------------------
 
