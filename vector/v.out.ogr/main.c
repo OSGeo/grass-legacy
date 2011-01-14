@@ -27,14 +27,20 @@
 #include "ogr_api.h"
 #include "cpl_string.h"
 
+
+/* some hard limits */
+#define SQL_BUFFER_SIZE 2000
+#define MAX_OGR_DRIVERS 2000
+
+
 int fout, fskip;		/* features written/ skip */
 int nocat, noatt, nocatskip;	/* number of features without cats/atts written/skip */
 
 int mk_att(int cat, struct field_info *Fi, dbDriver *Driver,
-	   int ncol, int doatt, int nocat, OGRFeatureH Ogr_feature);
+	   int ncol, int doatt, int nocat, OGRFeatureH Ogr_feature, dbCursor cursor);
 
 char *OGR_list_write_drivers();
-char OGRdrivers[2000];
+char OGRdrivers[MAX_OGR_DRIVERS];
 
 int main(int argc, char *argv[])
 {
@@ -45,9 +51,9 @@ int main(int argc, char *argv[])
     struct GModule *module;
     struct Option *in_opt, *dsn_opt, *layer_opt, *type_opt, *frmt_opt,
 	*field_opt, *dsco, *lco;
-    struct Flag *cat_flag, *esristyle, *poly_flag, *update_flag, *nocat_flag;
-    char buf[2000];
-    char key1[200], key2[200];
+    struct Flag *cat_flag, *esristyle, *poly_flag, *update_flag, *nocat_flag, *shapez_flag;
+    char buf[SQL_BUFFER_SIZE];
+    char key1[SQL_BUFFER_SIZE], key2[SQL_BUFFER_SIZE];
     struct Key_Value *projinfo, *projunits;
     struct Cell_head cellhd;
     char **tokens;
@@ -66,6 +72,7 @@ int main(int argc, char *argv[])
     dbTable *Table;
     dbString dbstring;
     dbColumn *Column;
+    dbCursor cursor;
 
     /* OGR */
     int drn, ogr_ftype = OFTInteger;
@@ -167,6 +174,11 @@ int main(int argc, char *argv[])
     esristyle->key = 'e';
     esristyle->description = _("Use ESRI-style .prj file format "
 			       "(applies to Shapefile output only)");
+
+    shapez_flag = G_define_flag();
+    shapez_flag->key = 'z';
+    shapez_flag->description = _("Create 3D output if input is 3D "
+        			       "(applies to Shapefile output only)");
 
     poly_flag = G_define_flag();
     poly_flag->key = 'p';
@@ -312,198 +324,6 @@ int main(int argc, char *argv[])
     if (Vect_get_num_islands(&In) > 0 && !cat_flag->answer)
 	G_warning(_("The map contains islands. To preserve them in the output map, use the -c flag"));
 
-    /* fetch PROJ info */
-    G_get_default_window(&cellhd);
-    if (cellhd.proj == PROJECTION_XY)
-	Ogr_projection = NULL;
-    else {
-	projinfo = G_get_projinfo();
-	projunits = G_get_projunits();
-	Ogr_projection = GPJ_grass_to_osr(projinfo, projunits);
-	if (esristyle->answer &&
-	    (strcmp(frmt_opt->answer, "ESRI_Shapefile") == 0))
-	    OSRMorphToESRI(Ogr_projection);
-    }
-
-    /* Open OGR DSN */
-    G_debug(2, "driver count = %d", OGRGetDriverCount());
-    drn = -1;
-    for (i = 0; i < OGRGetDriverCount(); i++) {
-	Ogr_driver = OGRGetDriver(i);
-	G_debug(2, "driver %d : %s", i, OGR_Dr_GetName(Ogr_driver));
-	/* chg white space to underscore in OGR driver names */
-	sprintf(buf, "%s", OGR_Dr_GetName(Ogr_driver));
-	G_strchg(buf, ' ', '_');
-	if (strcmp(buf, frmt_opt->answer) == 0) {
-	    drn = i;
-	    G_debug(2, " -> driver = %d", drn);
-	}
-    }
-    if (drn == -1)
-	G_fatal_error(_("OGR driver <%s> not found"), frmt_opt->answer);
-    Ogr_driver = OGRGetDriver(drn);
-
-    /* parse dataset creation options */
-    i = 0;
-    while (dsco->answers[i]) {
-	tokens = G_tokenize(dsco->answers[i], "=");
-	if (G_number_of_tokens(tokens))
-	    papszDSCO = CSLSetNameValue(papszDSCO, tokens[0], tokens[1]);
-	G_free_tokens(tokens);
-	i++;
-    }
-
-    if (update_flag->answer) {
-	G_debug(1, "Update OGR data source");
-	Ogr_ds = OGR_Dr_Open(Ogr_driver, dsn_opt->answer, TRUE);
-    }
-    else {
-	G_debug(1, "Create OGR data source");
-	Ogr_ds =
-	    OGR_Dr_CreateDataSource(Ogr_driver, dsn_opt->answer, papszDSCO);
-    }
-
-    CSLDestroy(papszDSCO);
-    if (Ogr_ds == NULL)
-	G_fatal_error(_("Unable to open OGR data source '%s'"),
-		      dsn_opt->answer);
-
-    /* parse layer creation options */
-    i = 0;
-    while (lco->answers[i]) {
-	tokens = G_tokenize(lco->answers[i], "=");
-	if (G_number_of_tokens(tokens))
-	    papszLCO = CSLSetNameValue(papszLCO, tokens[0], tokens[1]);
-	G_free_tokens(tokens);
-	i++;
-    }
-
-    /* check if the map is 3d */
-    if (Vect_is_3d(&In)) {
-	/* specific check for shp */
-	if (strcmp(frmt_opt->answer, "ESRI_Shapefile") == 0) {
-	    const char *shpt;
-
-	    shpt = CSLFetchNameValue(papszLCO, "SHPT");
-	    if (!shpt || shpt[strlen(shpt) - 1] != 'Z') {
-		G_warning(_("Vector map <%s> is 3D. "
-			    "Use format specific layer creation options (parameter 'lco') "
-			    "to export in 3D rather than 2D (default)"),
-			  in_opt->answer);
-	    }
-	}
-	else {
-	    G_warning(_("Vector map <%s> is 3D. "
-			"Use format specific layer creation options (parameter 'lco') "
-			"to export in 3D rather than 2D (default)"),
-		      in_opt->answer);
-	}
-    }
-
-    G_debug(1, "Create OGR layer");
-    Ogr_layer =
-	OGR_DS_CreateLayer(Ogr_ds, layer_opt->answer, Ogr_projection, wkbtype,
-			   papszLCO);
-    CSLDestroy(papszLCO);
-    if (Ogr_layer == NULL)
-	G_fatal_error(_("Unable to create OGR layer"));
-
-    db_init_string(&dbstring);
-
-    /* Vector attributes -> OGR fields */
-    if (field > 0) {
-	G_debug(1, "Create attribute table");
-	doatt = 1;		/* do attributes */
-	Fi = Vect_get_field(&In, field);
-	if (Fi == NULL) {
-	    G_warning(_("No attribute table found -> using only category numbers as attributes"));
-	    /* if we have no more than a 'cat' column, then that has to
-	       be exported in any case */
-	    if (nocat_flag->answer) {
-		G_warning(_("Exporting 'cat' anyway, as it is the only attribute table field"));
-		nocat_flag->answer = 0;
-	    }
-	    Ogr_field = OGR_Fld_Create("cat", OFTInteger);
-	    OGR_L_CreateField(Ogr_layer, Ogr_field, 0);
-	    OGR_Fld_Destroy(Ogr_field);
-
-	    doatt = 0;
-	}
-	else {
-	    Driver = db_start_driver(Fi->driver);
-	    if (Driver == NULL)
-		G_fatal_error(_("Unable to start driver <%s>"), Fi->driver);
-
-	    db_init_handle(&handle);
-	    db_set_handle(&handle, Fi->database, NULL);
-	    if (db_open_database(Driver, &handle) != DB_OK)
-		G_fatal_error(_("Unable to open database <%s> by driver <%s>"),
-			      Fi->database, Fi->driver);
-
-	    db_set_string(&dbstring, Fi->table);
-	    if (db_describe_table(Driver, &dbstring, &Table) != DB_OK)
-		G_fatal_error(_("Unable to describe table <%s>"), Fi->table);
-
-	    ncol = db_get_table_number_of_columns(Table);
-	    G_debug(2, "ncol = %d", ncol);
-	    keycol = -1;
-	    for (i = 0; i < ncol; i++) {
-		Column = db_get_table_column(Table, i);
-		colsqltype = db_get_column_sqltype(Column);
-		G_debug(2, "col %d: %s (%s)", i, db_get_column_name(Column),
-			db_sqltype_name(colsqltype));
-		colctype = db_sqltype_to_Ctype(colsqltype);
-
-		switch (colctype) {
-		case DB_C_TYPE_INT:
-		    ogr_ftype = OFTInteger;
-		    break;
-		case DB_C_TYPE_DOUBLE:
-		    ogr_ftype = OFTReal;
-		    break;
-		case DB_C_TYPE_STRING:
-		    ogr_ftype = OFTString;
-		    break;
-		case DB_C_TYPE_DATETIME:
-		    ogr_ftype = OFTString;
-		    break;
-		}
-		G_debug(2, "ogr_ftype = %d", ogr_ftype);
-
-		strcpy(key1, Fi->key);
-		G_tolcase(key1);
-		strcpy(key2, db_get_column_name(Column));
-		G_tolcase(key2);
-		if (strcmp(key1, key2) == 0)
-		    keycol = i;
-		G_debug(2, "%s x %s -> %s x %s -> keycol = %d", Fi->key,
-			db_get_column_name(Column), key1, key2, keycol);
-
-		if (!nocat_flag->answer) {
-		    Ogr_field =
-			OGR_Fld_Create(db_get_column_name(Column), ogr_ftype);
-		    OGR_L_CreateField(Ogr_layer, Ogr_field, 0);
-		    OGR_Fld_Destroy(Ogr_field);
-		}
-		else {
-		    /* skip export of 'cat' field */
-		    if (strcmp(Fi->key, db_get_column_name(Column)) != 0) {
-			Ogr_field =
-			    OGR_Fld_Create(db_get_column_name(Column),
-					   ogr_ftype);
-			OGR_L_CreateField(Ogr_layer, Ogr_field, 0);
-			OGR_Fld_Destroy(Ogr_field);
-		    }
-		}
-	    }
-	    if (keycol == -1)
-		G_fatal_error(_("Key column '%s' not found"), Fi->key);
-	}
-    }
-
-    Ogr_featuredefn = OGR_L_GetLayerDefn(Ogr_layer);
-
-    fout = fskip = nocat = noatt = nocatskip = 0;
 
     /* check what users wants to export and what's present in the map */
     if (Vect_get_num_primitives(&In, GV_POINT) > 0 && !(otype & GV_POINTS))
@@ -636,6 +456,244 @@ int main(int argc, char *argv[])
 	exit(EXIT_SUCCESS);
     }
 
+
+    /* fetch PROJ info */
+    G_get_default_window(&cellhd);
+    if (cellhd.proj == PROJECTION_XY)
+	Ogr_projection = NULL;
+    else {
+	projinfo = G_get_projinfo();
+	projunits = G_get_projunits();
+	Ogr_projection = GPJ_grass_to_osr(projinfo, projunits);
+	if (esristyle->answer &&
+	    (strcmp(frmt_opt->answer, "ESRI_Shapefile") == 0))
+	    OSRMorphToESRI(Ogr_projection);
+    }
+
+    /* Open OGR DSN */
+    G_debug(2, "driver count = %d", OGRGetDriverCount());
+    drn = -1;
+    for (i = 0; i < OGRGetDriverCount(); i++) {
+	Ogr_driver = OGRGetDriver(i);
+	G_debug(2, "driver %d : %s", i, OGR_Dr_GetName(Ogr_driver));
+	/* chg white space to underscore in OGR driver names */
+	sprintf(buf, "%s", OGR_Dr_GetName(Ogr_driver));
+	G_strchg(buf, ' ', '_');
+	if (strcmp(buf, frmt_opt->answer) == 0) {
+	    drn = i;
+	    G_debug(2, " -> driver = %d", drn);
+	}
+    }
+    if (drn == -1)
+	G_fatal_error(_("OGR driver <%s> not found"), frmt_opt->answer);
+    Ogr_driver = OGRGetDriver(drn);
+
+    /* parse dataset creation options */
+    i = 0;
+    while (dsco->answers[i]) {
+	tokens = G_tokenize(dsco->answers[i], "=");
+	if (G_number_of_tokens(tokens))
+	    papszDSCO = CSLSetNameValue(papszDSCO, tokens[0], tokens[1]);
+	G_free_tokens(tokens);
+	i++;
+    }
+
+    if (update_flag->answer) {
+	G_debug(1, "Update OGR data source");
+	Ogr_ds = OGR_Dr_Open(Ogr_driver, dsn_opt->answer, TRUE);
+    }
+    else {
+	G_debug(1, "Create OGR data source");
+	Ogr_ds =
+	    OGR_Dr_CreateDataSource(Ogr_driver, dsn_opt->answer, papszDSCO);
+    }
+
+    CSLDestroy(papszDSCO);
+    if (Ogr_ds == NULL)
+	G_fatal_error(_("Unable to open OGR data source '%s'"),
+		      dsn_opt->answer);
+
+    /* parse layer creation options */
+    i = 0;
+    while (lco->answers[i]) {
+	tokens = G_tokenize(lco->answers[i], "=");
+	if (G_number_of_tokens(tokens))
+	    papszLCO = CSLSetNameValue(papszLCO, tokens[0], tokens[1]);
+	G_free_tokens(tokens);
+	i++;
+    }
+
+    /* Automatically append driver options for 3D output to
+		layer creation options if 'z' is given.*/
+	if ( (shapez_flag->answer) && (Vect_is_3d(&In)) &&
+        (strcmp(frmt_opt->answer, "ESRI_Shapefile") == 0) )
+	{
+		/* find right option */
+    	char shape_geom[20];
+    	if ( (otype & GV_POINTS) || (otype & GV_KERNEL))
+    		sprintf (shape_geom, "POINTZ" );
+    	if ( (otype & GV_LINES) )
+    		sprintf (shape_geom, "ARCZ" );
+    	if ( (otype & GV_AREA) || (otype & GV_FACE) || (otype & GV_VOLUME) )
+    		sprintf (shape_geom, "POLYGONZ" );
+    	/* check if the right LCO is already present */
+    	const char *shpt;
+    	shpt = CSLFetchNameValue(papszLCO, "SHPT");
+    	if ( (!shpt) ) {
+    		/* Not set at all? Good! */
+    	papszLCO = CSLSetNameValue(papszLCO, "SHPT", shape_geom);
+    	} else {
+    		if (strcmp(shpt,shape_geom)!= 0) {
+    			/* Set but to a different value? Override! */
+    			G_warning(_("Overriding existing user-defined 'SHPT=' LCO."));
+    		}
+    		/* Set correct LCO for this geometry type */
+    		papszLCO = CSLSetNameValue(papszLCO, "SHPT", shape_geom);
+    	}
+    }
+
+
+    /* check if the map is 3d */
+    if (Vect_is_3d(&In)) {
+	/* specific check for shp */
+	if (strcmp(frmt_opt->answer, "ESRI_Shapefile") == 0) {
+	    const char *shpt;
+
+	    shpt = CSLFetchNameValue(papszLCO, "SHPT");
+	    if (!shpt || shpt[strlen(shpt) - 1] != 'Z') {
+		G_warning(_("Vector map <%s> is 3D. "
+			    "Use format specific layer creation options (parameter 'lco') "
+			    "or '-z' flag to export in 3D rather than 2D (default)"),
+			  in_opt->answer);
+	    }
+	}
+	else {
+	    G_warning(_("Vector map <%s> is 3D. "
+			"Use format specific layer creation options (parameter 'lco') "
+			"to export in 3D rather than 2D (default)"),
+		      in_opt->answer);
+	}
+    }
+
+    G_debug(1, "Create OGR layer");
+    Ogr_layer =
+	OGR_DS_CreateLayer(Ogr_ds, layer_opt->answer, Ogr_projection, wkbtype,
+			   papszLCO);
+    CSLDestroy(papszLCO);
+    if (Ogr_layer == NULL)
+	G_fatal_error(_("Unable to create OGR layer"));
+
+    db_init_string(&dbstring);
+
+    /* Vector attributes -> OGR fields */
+    if (field > 0) {
+	G_debug(1, "Create attribute table");
+	doatt = 1;		/* do attributes */
+	Fi = Vect_get_field(&In, field);
+	if (Fi == NULL) {
+	    G_warning(_("No attribute table found -> using only category numbers as attributes"));
+	    /* if we have no more than a 'cat' column, then that has to
+	       be exported in any case */
+	    if (nocat_flag->answer) {
+		G_warning(_("Exporting 'cat' anyway, as it is the only attribute table field"));
+		nocat_flag->answer = 0;
+	    }
+	    Ogr_field = OGR_Fld_Create("cat", OFTInteger);
+	    OGR_L_CreateField(Ogr_layer, Ogr_field, 0);
+	    OGR_Fld_Destroy(Ogr_field);
+
+	    doatt = 0;
+	}
+	else {
+	    Driver = db_start_driver(Fi->driver);
+	    if (Driver == NULL)
+		G_fatal_error(_("Unable to start driver <%s>"), Fi->driver);
+
+	    db_init_handle(&handle);
+	    db_set_handle(&handle, Fi->database, NULL);
+	    if (db_open_database(Driver, &handle) != DB_OK)
+		G_fatal_error(_("Unable to open database <%s> by driver <%s>"),
+			      Fi->database, Fi->driver);
+
+	    db_set_string(&dbstring, Fi->table);
+	    if (db_describe_table(Driver, &dbstring, &Table) != DB_OK)
+		G_fatal_error(_("Unable to describe table <%s>"), Fi->table);
+
+	    ncol = db_get_table_number_of_columns(Table);
+	    G_debug(2, "ncol = %d", ncol);
+	    keycol = -1;
+	    for (i = 0; i < ncol; i++) {
+		Column = db_get_table_column(Table, i);
+		colsqltype = db_get_column_sqltype(Column);
+		G_debug(2, "col %d: %s (%s)", i, db_get_column_name(Column),
+			db_sqltype_name(colsqltype));
+		colctype = db_sqltype_to_Ctype(colsqltype);
+
+		switch (colctype) {
+		case DB_C_TYPE_INT:
+		    ogr_ftype = OFTInteger;
+		    break;
+		case DB_C_TYPE_DOUBLE:
+		    ogr_ftype = OFTReal;
+		    break;
+		case DB_C_TYPE_STRING:
+		    ogr_ftype = OFTString;
+		    break;
+		case DB_C_TYPE_DATETIME:
+		    ogr_ftype = OFTString;
+		    break;
+		}
+		G_debug(2, "ogr_ftype = %d", ogr_ftype);
+
+		strcpy(key1, Fi->key);
+		G_tolcase(key1);
+		strcpy(key2, db_get_column_name(Column));
+		G_tolcase(key2);
+		if (strcmp(key1, key2) == 0)
+		    keycol = i;
+		G_debug(2, "%s x %s -> %s x %s -> keycol = %d", Fi->key,
+			db_get_column_name(Column), key1, key2, keycol);
+
+		if (!nocat_flag->answer) {
+		    Ogr_field =
+			OGR_Fld_Create(db_get_column_name(Column), ogr_ftype);
+		    OGR_L_CreateField(Ogr_layer, Ogr_field, 0);
+		    OGR_Fld_Destroy(Ogr_field);
+		}
+		else {
+		    /* skip export of 'cat' field */
+		    if (strcmp(Fi->key, db_get_column_name(Column)) != 0) {
+			Ogr_field =
+			    OGR_Fld_Create(db_get_column_name(Column),
+					   ogr_ftype);
+			OGR_L_CreateField(Ogr_layer, Ogr_field, 0);
+			OGR_Fld_Destroy(Ogr_field);
+		    }
+		}
+	    }
+	    if (keycol == -1)
+		G_fatal_error(_("Key column '%s' not found"), Fi->key);
+	}
+    }
+
+    Ogr_featuredefn = OGR_L_GetLayerDefn(Ogr_layer);
+
+    fout = fskip = nocat = noatt = nocatskip = 0;
+
+
+    /* Fetch all attribute records */
+    if (doatt) {
+    	sprintf(buf, "SELECT * FROM %s", Fi->table);
+    	G_debug(2, "SQL: %s", buf);
+    	db_set_string(&dbstring, buf);
+    	if (db_open_select_cursor
+    			(Driver, &dbstring, &cursor, DB_SEQUENTIAL) != DB_OK) {
+    		G_fatal_error(_("Cannot select attributes for cat = %d"),
+    	      cat);
+    	}
+    }
+
+
     /* Lines (run always to count features of different type) */
     if ((otype & GV_POINTS) || (otype & GV_LINES)) {
 	G_message(_("Exporting %i geometries..."), Vect_get_num_lines(&In));
@@ -710,7 +768,7 @@ int main(int argc, char *argv[])
 		}
 
 		mk_att(cat, Fi, Driver, ncol, doatt, nocat_flag->answer,
-		       Ogr_feature);
+		       Ogr_feature, cursor);
 		OGR_L_CreateFeature(Ogr_layer, Ogr_feature);
 	    }
 	    OGR_G_DestroyGeometry(Ogr_geometry);
@@ -785,7 +843,7 @@ int main(int argc, char *argv[])
 		}
 
 		mk_att(cat, Fi, Driver, ncol, doatt, nocat_flag->answer,
-		       Ogr_feature);
+		       Ogr_feature, cursor);
 		OGR_L_CreateFeature(Ogr_layer, Ogr_feature);
 	    }
 	    OGR_G_DestroyGeometry(Ogr_geometry);
@@ -846,7 +904,7 @@ int main(int argc, char *argv[])
 		    }
 
 		    mk_att(cat, Fi, Driver, ncol, doatt, nocat_flag->answer,
-			   Ogr_feature);
+			   Ogr_feature, cursor);
 		    OGR_L_CreateFeature(Ogr_layer, Ogr_feature);
 		}
 
@@ -901,7 +959,7 @@ int main(int argc, char *argv[])
 		    }
 
 		    mk_att(cat, Fi, Driver, ncol, doatt, nocat_flag->answer,
-			   Ogr_feature);
+			   Ogr_feature, cursor);
 		    OGR_L_CreateFeature(Ogr_layer, Ogr_feature);
 		}
 		OGR_G_DestroyGeometry(Ogr_geometry);
@@ -926,6 +984,7 @@ int main(int argc, char *argv[])
     Vect_close(&In);
 
     if (doatt) {
+    db_close_cursor(&cursor);
 	db_close_database(Driver);
 	db_shutdown_driver(Driver);
     }
@@ -953,15 +1012,13 @@ int main(int argc, char *argv[])
 
 
 int mk_att(int cat, struct field_info *Fi, dbDriver *Driver, int ncol,
-	   int doatt, int nocat, OGRFeatureH Ogr_feature)
+	   int doatt, int nocat, OGRFeatureH Ogr_feature, dbCursor cursor)
 {
     int j, ogrfieldnum;
-    char buf[2000];
     int colsqltype, colctype, more;
     dbTable *Table;
     dbString dbstring;
     dbColumn *Column;
-    dbCursor cursor;
     dbValue *Value;
 
     G_debug(2, "mk_att() cat = %d, doatt = %d", cat, doatt);
@@ -979,16 +1036,6 @@ int mk_att(int cat, struct field_info *Fi, dbDriver *Driver, int ncol,
     /* Read & set attributes */
     if (cat >= 0) {		/* Line with category */
 	if (doatt) {
-	    sprintf(buf, "SELECT * FROM %s WHERE %s = %d", Fi->table, Fi->key,
-		    cat);
-	    G_debug(2, "SQL: %s", buf);
-	    db_set_string(&dbstring, buf);
-	    if (db_open_select_cursor
-		(Driver, &dbstring, &cursor, DB_SEQUENTIAL) != DB_OK) {
-		G_fatal_error(_("Cannot select attributes for cat = %d"),
-			      cat);
-	    }
-	    else {
 		if (db_fetch(&cursor, DB_NEXT, &more) != DB_OK)
 		    G_fatal_error(_("Unable to fetch data from table"));
 		if (!more) {
@@ -1023,11 +1070,16 @@ int mk_att(int cat, struct field_info *Fi, dbDriver *Driver, int ncol,
 							  (Column));
 
 			/* Reset */
-			OGR_F_UnsetField(Ogr_feature, ogrfieldnum);
+			if ( ( ( nocat ) && (strcmp(Fi->key, db_get_column_name(Column)) == 0) ) == 0 ) {
+				/* if this is 'cat', then execute the following only if the '-s' flag was NOT given*/
+				OGR_F_UnsetField(Ogr_feature, ogrfieldnum);
+			}
 
 			/* prevent writing NULL values */
 			if (!db_test_value_isnull(Value)) {
-			    switch (colctype) {
+				if ( ( (nocat) && (strcmp(Fi->key, db_get_column_name(Column)) == 0) ) == 0 ) {
+				/* if this is 'cat', then execute the following only if the '-s' flag was NOT given*/
+				switch (colctype) {
 			    case DB_C_TYPE_INT:
 				OGR_F_SetFieldInteger(Ogr_feature,
 						      ogrfieldnum,
@@ -1053,10 +1105,9 @@ int mk_att(int cat, struct field_info *Fi, dbDriver *Driver, int ncol,
 				break;
 			    }
 			}
+			}
 		    }
 		}
-		db_close_cursor(&cursor);
-	    }
 	}
 	else {			/* Use cat only */
 	    ogrfieldnum = OGR_F_GetFieldIndex(Ogr_feature, "cat");
