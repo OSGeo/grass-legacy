@@ -29,12 +29,11 @@ BINDIR=			${UNIX_BIN}
 # Shell commands
 MAKE_DIR_CMD=		mkdir -p -m 755
 
-DIRS = \
+SUBDIRS = \
 	lib \
 	db \
 	display \
 	doc \
-	gem \
 	general \
 	gui \
 	imagery \
@@ -50,7 +49,9 @@ DIRS = \
 	man \
 	macosx
 
-SUBDIRS = $(DIRS)
+ifeq ($(strip $(MINGW)),)
+	SUBDIRS += gem
+endif
 
 ifneq ($(strip $(HAVE_NLS)),)
 	LOCALE=1
@@ -293,9 +294,11 @@ endif
 	-sed 's#'${GISBASE}'#'${INST_DIR}'#g' ${GISBASE}/etc/fontcap > ${INST_DIR}/etc/fontcap
 	@##### -chmod -R 1777 ${INST_DIR}/locks 2>/dev/null
 	-chmod -R a+rX ${INST_DIR} 2>/dev/null
+ifeq ($(strip $(MINGW)),)
 	@#GEM installation
 	-tar cBf - gem/skeleton | (cd ${INST_DIR}/etc ; tar xBf - ) 2>/dev/null
 	-${INSTALL} gem/gem$(GRASS_VERSION_MAJOR)$(GRASS_VERSION_MINOR) ${BINDIR} 2>/dev/null
+endif
 	@# enable OSX Help Viewer
 	@if [ "`cat include/Make/Platform.make | grep -i '^ARCH.*darwin'`" ] ; then /bin/ln -sfh "${INST_DIR}/docs/html" /Library/Documentation/Help/GRASS-${GRASS_VERSION_MAJOR}.${GRASS_VERSION_MINOR} ; fi
 
