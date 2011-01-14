@@ -988,10 +988,15 @@ int mk_att(int cat, struct field_info *Fi, dbDriver * Driver, int ncol,
 							  (Column));
 
 			/* Reset */
-			OGR_F_UnsetField(Ogr_feature, ogrfieldnum);
+			if ( ( ( nocat ) && (strcmp(Fi->key, db_get_column_name(Column)) == 0) ) == 0 ) {
+				/* if this is 'cat', then execute the following only if the '-s' flag was NOT given*/
+				OGR_F_UnsetField(Ogr_feature, ogrfieldnum);
+			}
 
 			/* prevent writing NULL values */
 			if (!db_test_value_isnull(Value)) {
+				if ( ( (nocat) && (strcmp(Fi->key, db_get_column_name(Column)) == 0) ) == 0 ) {
+				/* if this is 'cat', then execute the following only if the '-s' flag was NOT given*/
 			    switch (colctype) {
 			    case DB_C_TYPE_INT:
 				OGR_F_SetFieldInteger(Ogr_feature,
@@ -1017,6 +1022,7 @@ int mk_att(int cat, struct field_info *Fi, dbDriver * Driver, int ncol,
 						     (&dbstring));
 				break;
 			    }
+			}
 			}
 		    }
 		}
