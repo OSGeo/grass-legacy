@@ -138,12 +138,22 @@ class Layer(object):
         # start monitor
         #
         if UserSettings.Get(group='display', key='driver', subkey='type') == 'cairo':
-            os.environ["GRASS_CAIROFILE"] = self.mapfile
-            if 'cairo' not in gcmd.RunCommand('d.mon',
-                                              flags='p',
-                                              read = True):
-                gcmd.RunCommand('d.mon',
-                                start = 'cairo')
+#            os.environ["GRASS_CAIROFILE"] = self.mapfile
+#            if 'cairo' not in gcmd.RunCommand('d.mon',
+#                                              flags='p',
+#                                              read = True):
+#                gcmd.RunCommand('d.mon',
+#                                start = 'cairo')
+            if not self.mapfile:
+                self.gtemp = tempfile.mkstemp()[1]
+                self.maskfile = self.gtemp + ".pgm"
+                if self.type == 'overlay':
+                    self.mapfile  = self.gtemp + ".png"
+                else:
+                    self.mapfile  = self.gtemp + ".ppm"
+
+            if self.mapfile:
+                os.environ["GRASS_CAIROFILE"] = self.mapfile
         else:
             if not self.mapfile:
                 self.gtemp = tempfile.mkstemp()[1]
@@ -204,8 +214,8 @@ class Layer(object):
         # stop monitor
         #
         if UserSettings.Get(group='display', key='driver', subkey='type') == 'cairo':
-            gcmd.RunCommand('d.mon',
-                            stop = 'cairo')
+#            gcmd.RunCommand('d.mon',
+#                            stop = 'cairo')
             del os.environ["GRASS_CAIROFILE"]
         elif os.environ.has_key("GRASS_PNGFILE"):
             del os.environ["GRASS_PNGFILE"]
@@ -870,6 +880,7 @@ class Map(object):
             os.environ["GRASS_AUTO_WRITE"] = "TRUE"
             if os.environ.has_key("GRASS_RENDER_IMMEDIATE"):
                 del os.environ["GRASS_RENDER_IMMEDIATE"]
+            os.environ["GRASS_RENDER_IMMEDIATE"] = "TRUE"
         else:
             os.environ["GRASS_PNG_AUTO_WRITE"] = "TRUE"
             os.environ["GRASS_PNG_READ"] = "FALSE"
