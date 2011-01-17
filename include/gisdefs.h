@@ -813,6 +813,7 @@ void G_newlines_to_spaces(char *);
 int G__name_in_mapset(const char *, char *, char *);
 int G__name_is_fully_qualified(const char *, char *, char *);
 char *G_fully_qualified_name(const char *, const char *);
+int G_unqualified_name(const char *, const char *, char *, char *);
 
 /* null_val.c */
 void G__set_null_value(void *, int, int, RASTER_MAP_TYPE);

@@ -126,3 +126,37 @@ char *G_fully_qualified_name(const char *name, const char *mapset)
 
     return G_store(fullname);
 }
+
+/*!
+  \brief Returns unqualified map name (without @ mapset)
+
+  Returns an unqualified name for the file <i>name</i> in
+  <i>mapset</i>.
+
+  Note:
+   - <i>name, xname</i> are char array of size GNAME_MAX
+   - <i>mapset, xmapset</i> are char array of size GMAPSET_MAX
+
+  \param fullname map name
+  \param fullname map mapset
+  \param[out] name map name
+  \param[out] mapset mapset name
+
+  \return  1 if input map name is fully qualified
+  \return  0 if ...
+  \return -1 if input mapset invalid
+ */
+int G_unqualified_name(const char *name, const char *mapset,
+		       char *xname, char *xmapset)
+{
+    if (G__name_is_fully_qualified(name, xname, xmapset)) {
+	if (mapset && *mapset && strcmp(mapset, xmapset) != 0)
+	    return -1;
+	return 1;
+    }
+
+    strcpy(xname, name);
+    strcpy(xmapset, mapset);
+
+    return 0;
+}
