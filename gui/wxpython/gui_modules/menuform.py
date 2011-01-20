@@ -136,7 +136,7 @@ for (s,r) in str2rgb.items():
     rgb2str[ r ] = s
 
 def color_resolve(color):
-    if len(color)>0 and color[0] in "0123456789":
+    if len(color) > 0 and color[0] in "0123456789":
         rgb = tuple(map(int, color.split(':')))
         label = color
     else:
@@ -1282,7 +1282,7 @@ class cmdPanel(wx.Panel):
                             txt2.SetName("TextCtrl")
                             style = wx.EXPAND | wx.BOTTOM | wx.LEFT
                         
-                        value = self._GetValue(p)
+                        value = self._getValue(p)
                         # parameter previously set
                         if value:
                             if txt2.GetName() ==  "SpinCtrl":
@@ -1301,7 +1301,7 @@ class cmdPanel(wx.Panel):
                         cb = wx.ComboBox(parent = which_panel, id = wx.ID_ANY, value = p.get('default',''),
                                          size = globalvar.DIALOG_COMBOBOX_SIZE,
                                          choices = valuelist, style = wx.CB_DROPDOWN)
-                        value = self._GetValue(p)
+                        value = self._getValue(p)
                         if value:
                             cb.SetValue(value) # parameter previously set
                         which_sizer.Add( item=cb, proportion=0,
@@ -1322,7 +1322,7 @@ class cmdPanel(wx.Panel):
                         len(p.get('key_desc', [])) > 1:
                     txt3 = wx.TextCtrl(parent = which_panel, value = p.get('default',''))
                     
-                    value = self._GetValue(p)
+                    value = self._getValue(p)
                     if value:
                         # parameter previously set
                         txt3.SetValue(str(value))
@@ -1338,7 +1338,7 @@ class cmdPanel(wx.Panel):
                                            min = minValue, max = maxValue)
                         style = wx.BOTTOM | wx.LEFT | wx.RIGHT
                         
-                        value = self._GetValue(p)
+                        value = self._getValue(p)
                         if value:
                             txt3.SetValue(int(value)) # parameter previously set
                         
@@ -1348,7 +1348,7 @@ class cmdPanel(wx.Panel):
                                            validator = FloatValidator())
                         style = wx.EXPAND | wx.BOTTOM | wx.LEFT | wx.RIGHT
                         
-                        value = self._GetValue(p)
+                        value = self._getValue(p)
                         if value:
                             txt3.SetValue(str(value)) # parameter previously set
                     
@@ -1393,20 +1393,20 @@ class cmdPanel(wx.Panel):
                                                        isRaster = isRaster)
                         p['wxId'] = [ selection.GetId(), ]
                         selection.Bind(wx.EVT_COMBOBOX, self.OnSetValue)
-                        formatSelector = False
                         selection.Bind(wx.EVT_TEXT, self.OnUpdateSelection)
                     else:
                         selection = gselect.Select(parent = which_panel, id = wx.ID_ANY,
                                                    size = globalvar.DIALOG_GSELECT_SIZE,
                                                    type = p.get('element', ''),
                                                    multiple = multiple, mapsets = mapsets)
-                        formatSelector = True
+                        
                         # A select.Select is a combobox with two children: a textctl and a popupwindow;
                         # we target the textctl here
-                        p['wxId'] = [selection.GetChildren()[0].GetId(), ]
-                        selection.GetChildren()[0].Bind(wx.EVT_TEXT, self.OnSetValue)
+                        textWin = selection.GetTextCtrl()
+                        p['wxId'] = [ textWin.GetId(), ]
+                        textWin.Bind(wx.EVT_TEXT, self.OnSetValue)
                     
-                    value = self._GetValue(p)
+                    value = self._getValue(p)
                     if value:
                         selection.SetValue(value) # parameter previously set
 
@@ -1415,7 +1415,6 @@ class cmdPanel(wx.Panel):
                     
                     if p.get('prompt', '') in ('vector', 'group'):
                         selection.Bind(wx.EVT_TEXT, self.OnUpdateSelection)
-                
                 # subgroup
                 elif p.get('prompt', '') ==  'subgroup':
                     selection = gselect.SubGroupSelect(parent = which_panel)
@@ -1567,7 +1566,7 @@ class cmdPanel(wx.Panel):
                                                       buttonText = _('Browse'),
                                                       startDirectory = os.getcwd(), fileMode = 0,
                                                       changeCallback = self.OnSetValue)
-                    value = self._GetValue(p)
+                    value = self._getValue(p)
                     if value:
                         fbb.SetValue(value) # parameter previously set
                     which_sizer.Add(item = fbb, proportion = 0,
@@ -1626,7 +1625,8 @@ class cmdPanel(wx.Panel):
 
             if p ==  first_param:
                 if p.has_key('wxId') and len(p['wxId']) > 0:
-                    self.FindWindowById(p['wxId'][0]).SetFocus()
+                    win = self.FindWindowById(p['wxId'][0])
+                    win.SetFocus()
         
         #
         # set widget relations for OnUpdateSelection
@@ -1734,7 +1734,7 @@ class cmdPanel(wx.Panel):
         
         self.Bind(EVT_DIALOG_UPDATE, self.OnUpdateDialog)
 
-    def _GetValue(self, p):
+    def _getValue(self, p):
         """!Get value or default value of given parameter
 
         @param p parameter directory
