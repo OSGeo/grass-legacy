@@ -242,9 +242,11 @@ int main(int argc, char *argv[])
 	G_fatal_error(_("Vector map <%s> not found"), vold->answer);
 
     Vect_open_old(&Old, vold->answer, mapset);
-
-    Vect_open_new(&New, vnew->answer, Vect_is_3d(&Old) || zshift->answer);
-
+    
+    Vect_open_new(&New, vnew->answer, Vect_is_3d(&Old) || tozero_flag->answer ||
+		  strcmp(zshift->answer, "0.0") || strcmp(zscale->answer, "1.0") ||
+		  strcmp(zrot->answer, "0.0") ? WITH_Z : WITHOUT_Z);
+    
     /* copy and set header */
     Vect_copy_head_data(&Old, &New);
 
