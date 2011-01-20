@@ -25,8 +25,8 @@
 
 #include <stdlib.h>
 #include <string.h>
-#include <grass/glocale.h>
 #include "global.h"
+#include <grass/glocale.h>
 #include "crs.h"
 
 char *seg_mb;
@@ -76,6 +76,7 @@ int main(int argc, char *argv[])
     int method;
     int n, i, m, k = 0;
     int got_file = 0;
+    struct Cell_head cellhd;
 
     struct Option *grp,         /* imagery group */
      *val,                      /* transformation order */
@@ -87,8 +88,6 @@ int main(int argc, char *argv[])
 				   nearest neighbor, bilinear, cubic */
     struct Flag *c, *a;
     struct GModule *module;
-
-    struct Cell_head cellhd;
 
     setbuf(stdout, NULL);
     setbuf(stderr, NULL);
@@ -153,7 +152,6 @@ int main(int argc, char *argv[])
     a->key = 'a';
     a->description = _("Rectify all raster maps in group");
 
-
     if (G_parser(argc, argv))
 	exit(EXIT_FAILURE);
 
@@ -178,11 +176,10 @@ int main(int argc, char *argv[])
 	    seg_mb = mem->answer;
     }
 
-
     if (!ifile->answers)
 	a->answer = 1;		/* force all */
 
-    /* Find out how files on command line */
+    /* Find out how many files on command line */
     if (!a->answer) {
 	for (m = 0; ifile->answers[m]; m++) {
 	    k = m;
@@ -217,6 +214,10 @@ int main(int argc, char *argv[])
     }
     else {
 	char xname[GNAME_MAX], xmapset[GMAPSET_MAX], *name;
+
+	for (n = 0; n < ref.nfiles; n++)
+		ref_list[n] = 0;
+
 	for (m = 0; m < k; m++) {
 	    got_file = 0;
 	    if (G__name_is_fully_qualified(ifile->answers[m], xname, xmapset))
