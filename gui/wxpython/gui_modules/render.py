@@ -173,9 +173,10 @@ class Layer(object):
             if self.type == 'command':
                 read = False
                 for c in self.cmd:
-                    ret = gcmd.RunCommand(c[0],
-                                          quiet = True,
-                                          **c[1])
+                    ret, msg = gcmd.RunCommand(c[0],
+                                               getErrorMsg = True,
+                                               quiet = True,
+                                               **c[1])
                     if ret != 0:
                         break
                     if not read:
@@ -183,9 +184,10 @@ class Layer(object):
                 
                 os.environ["GRASS_PNG_READ"] = "FALSE"
             else:
-                ret = gcmd.RunCommand(self.cmd[0],
-                                      quiet = True,
-                                      **self.cmd[1])
+                ret, msg = gcmd.RunCommand(self.cmd[0],
+                                           getErrorMsg = True,
+                                           quiet = True,
+                                           **self.cmd[1])
                 
             if len(msg):
                 sys.stderr.write(_("Running") + " '" + utils.GetCmdString(self.cmd) + "'")
