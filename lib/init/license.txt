@@ -1,5 +1,5 @@
 Geographic Resources Analysis Support System (GRASS) is Copyright,
-1999-2008 by the GRASS Development Team, and licensed under terms of the
+1999-GRASS_VERSION_DATE by the GRASS Development Team, and licensed under terms of the
 GNU General Public License (GPL) version >=2.
  
 This GRASS GRASS_VERSION_NUMBER release is coordinated and produced by the
