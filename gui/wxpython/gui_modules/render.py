@@ -121,9 +121,7 @@ class Layer(object):
         Debug.msg (3, "Layer.Render(): type=%s, name=%s" % \
                        (self.type, self.name))
         
-        #
         # prepare command for each layer
-        #
         layertypes = ('raster', 'rgb', 'his', 'shaded', 'rastarrow', 'rastnum',
                       'vector','thememap','themechart',
                       'grid', 'geodesic', 'rhumb', 'labels',
@@ -134,9 +132,7 @@ class Layer(object):
             raise gcmd.GException(_("<%(name)s>: layer type <%(type)s> is not supported") % \
                                       {'type' : self.type, 'name' : self.name})
         
-        #
         # start monitor
-        #
         if UserSettings.Get(group='display', key='driver', subkey='type') == 'cairo':
 #            os.environ["GRASS_CAIROFILE"] = self.mapfile
 #            if 'cairo' not in gcmd.RunCommand('d.mon',
@@ -166,9 +162,7 @@ class Layer(object):
             if self.mapfile:
                 os.environ["GRASS_PNGFILE"] = self.mapfile
         
-        #
         # execute command
-        #
         try:
             if self.type == 'command':
                 read = False
@@ -188,10 +182,10 @@ class Layer(object):
                                            getErrorMsg = True,
                                            quiet = True,
                                            **self.cmd[1])
-                
-            if len(msg):
-                sys.stderr.write(_("Running") + " '" + utils.GetCmdString(self.cmd) + "'")
-                sys.stderr.write(msg)
+            
+            # if len(msg):
+            # sys.stderr.write(_("Running") + " '" + utils.GetCmdString(self.cmd) + "'")
+            # sys.stderr.write(msg)
             
             if ret != 0:
                 # clean up after problem
@@ -205,7 +199,7 @@ class Layer(object):
                 self.maskfile = None
         
         except gcmd.GException, e:
-            print >> sys.stderr, e
+            sys.stderr.write(e)
             # clean up after problems
             try:
                 os.remove(self.mapfile)
@@ -216,9 +210,7 @@ class Layer(object):
             self.mapfile = None
             self.maskfile = None
         
-        #
         # stop monitor
-        #
         if UserSettings.Get(group='display', key='driver', subkey='type') == 'cairo':
 #            gcmd.RunCommand('d.mon',
 #                            stop = 'cairo')
@@ -895,7 +887,7 @@ class Map(object):
             os.environ["GRASS_RENDER_IMMEDIATE"] = "TRUE"
         
         self._renderLayers(force, mapWindow, maps, masks, opacities)
-            
+        
         # ugly hack for MSYS
         if not subprocess.mswindows:
             mapstr = ",".join(maps)
