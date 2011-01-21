@@ -110,7 +110,7 @@ int main(int argc, char *argv[])
     mem->type = TYPE_DOUBLE;
     mem->key_desc = "memory in MB";
     mem->required = NO;
-    mem->answer = "100";
+    mem->answer = "300";
     mem->description = _("Amount of memory to use in MB");
 
     ipolname = make_ipol_list();
@@ -369,6 +369,8 @@ int main(int argc, char *argv[])
 
     /* go do it */
     exec_rectify(extension, interpol->answer, angle->answer);
+
+    G_done_msg(" ");
 
     exit(EXIT_SUCCESS);
 }

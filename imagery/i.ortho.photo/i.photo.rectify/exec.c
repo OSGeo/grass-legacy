@@ -18,7 +18,7 @@ int exec_rectify(char *extension, char *interp_method, char *angle_map)
     char *name;
     char *mapset;
     char *result;
-    char *type;
+    char *type = "raster";
     int n;
     struct Colors colr;
     struct Categories cats;
@@ -51,6 +51,8 @@ int exec_rectify(char *extension, char *interp_method, char *angle_map)
     /* this is used only if target cells have no elevation */
     get_aver_elev(&group.control_points, &aver_z);
 
+    G_message("-----------------------------------------------");
+
     /* rectify each file */
     for (n = 0; n < group.group_ref.nfiles; n++) {
 	if (!ref_list[n])
@@ -68,9 +70,6 @@ int exec_rectify(char *extension, char *interp_method, char *angle_map)
 	G_debug(2, "MAPSET %s", mapset);
 	G_debug(2, "RESULT %s", result);
 	G_debug(2, "select_current_env...");
-
-	G_message(_("Rectified input raster map <%s> will be saved as <%s>"),
-		  name, result);
 
 	select_current_env();
 
@@ -98,7 +97,6 @@ int exec_rectify(char *extension, char *interp_method, char *angle_map)
 		G_write_history(result, &hist);
 
 	    /* Initialze History */
-	    type = "raster";
 	    G_short_history(name, type, &hist);
 	    G_command_history(&hist);
 	    G_write_history(result, &hist);
@@ -120,7 +118,5 @@ int exec_rectify(char *extension, char *interp_method, char *angle_map)
 	camera_angle(angle_map);
     }
     
-    G_done_msg(" ");
-
     return 0;
 }
