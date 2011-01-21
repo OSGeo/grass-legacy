@@ -250,14 +250,14 @@ int main(int argc, char **argv)
 	int i;
 	char **list;
 	G_verbose_message(_("Checking location <%s> mapset <%s>"),
-			  inlocation->answer, imapset->answer);
+			  inlocation->answer, setname);
 	list = G_list(G_ELEMENT_RASTER, G__getenv("GISDBASE"),
-		      G__getenv("LOCATION_NAME"), imapset->answer);
+		      G__getenv("LOCATION_NAME"), setname);
 	for (i = 0; list[i]; i++) {
 	    fprintf(stdout, "%s\n", list[i]);
 	}
 	fflush(stdout);
-	exit(EXIT_SUCCESS);	/* leave v.proj after listing */
+	exit(EXIT_SUCCESS);	/* leave r.proj after listing */
     }
 
     if (!inmap->answer)
@@ -284,7 +284,8 @@ int main(int argc, char **argv)
     G_free_key_value(in_unit_info);
     G_free_key_value(out_proj_info);
     G_free_key_value(out_unit_info);
-    pj_print_proj_params(&iproj, &oproj);
+    if (G_verbose() > G_verbose_std())
+	pj_print_proj_params(&iproj, &oproj);
 
     /* this call causes r.proj to read the entire map into memeory */
     G_get_cellhd(inmap->answer, setname, &incellhd);
