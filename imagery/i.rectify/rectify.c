@@ -40,8 +40,12 @@ int rectify(char *name, char *mapset, char *result, int order, char *interp_meth
 
     G_close_cell(infd);		/* (pmx) 17 april 2000 */
 
+    G_message(_("Rectify <%s@%s> (location <%s>)"),
+	      name, mapset, G_location());
     select_target_env();
     G_set_window(&target_window);
+    G_message(_("into  <%s@%s> (location <%s>) ..."),
+	      result, G_mapset(), G_location());
 
     nrows = target_window.rows;
     ncols = target_window.cols;

@@ -22,18 +22,19 @@ int exec_rectify(int order, char *extension, char *interp_method)
     char *name;
     char *mapset;
     char *result;
-    char *type;
-    int i, n;
+    char *type = "raster";
+    int n;
     struct Colors colr;
     struct Categories cats;
     struct History hist;
     int colr_ok, cats_ok;
-    long start_time, rectify_time, compress_time;
+    long start_time, rectify_time;
+
+    G_message("-----------------------------------------------");
 
     /* rectify each file */
     for (n = 0; n < ref.nfiles; n++) {
-	if ((i = ref_list[n]) < 0) {
-	    /* continue; */
+	if (ref_list[n]) {
 	    name = ref.file[n].name;
 	    mapset = ref.file[n].mapset;
 
@@ -42,8 +43,6 @@ int exec_rectify(int order, char *extension, char *interp_method)
 		G_malloc(strlen(ref.file[n].name) + strlen(extension) + 1);
 	    strcpy(result, ref.file[n].name);
 	    strcat(result, extension);
-	    G_message(_("Rectified input raster map <%s> will be saved as <%s>"),
-		      name, result);
 
 	    select_current_env();
 
@@ -51,7 +50,6 @@ int exec_rectify(int order, char *extension, char *interp_method)
 	    colr_ok = G_read_colors(name, mapset, &colr) > 0;
 
 	    /* Initialze History */
-	    type = "raster";
 	    G_short_history(name, type, &hist);
 
 	    time(&start_time);
@@ -59,12 +57,6 @@ int exec_rectify(int order, char *extension, char *interp_method)
 	    if (rectify(name, mapset, result, order, interp_method)) {
 		select_target_env();
 
-	    /***
-	     * This clobbers (with wrong values) head
-	     * written by gislib.  99% sure it should
-	     * be removed.  EGM 2002/01/03
-            G_put_cellhd (result,&target_window);
-	     */
 		if (cats_ok) {
 		    G_write_cats(result, &cats);
 		    G_free_cats(&cats);
@@ -84,18 +76,14 @@ int exec_rectify(int order, char *extension, char *interp_method)
 
 		select_current_env();
 		time(&rectify_time);
-		compress_time = rectify_time;
-		report(name, mapset, result, rectify_time - start_time,
-		       compress_time - rectify_time, 1);
+		report(rectify_time - start_time, 1);
 	    }
 	    else
-		report(name, mapset, result, (long)0, (long)0, 0);
+		report((long)0, 0);
 
 	    G_free(result);
 	}
     }
-
-    G_done_msg(" ");
 
     return 0;
 }

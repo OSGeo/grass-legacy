@@ -15,7 +15,7 @@
  * PURPOSE:      calculate a transformation matrix and then convert x,y cell 
  *               coordinates to standard map coordinates for each pixel in the 
  *               image (control points can come from i.points or i.vpoints)
- * COPYRIGHT:    (C) 2002-2006 by the GRASS Development Team
+ * COPYRIGHT:    (C) 2002-2011 by the GRASS Development Team
  *
  *               This program is free software under the GNU General Public
  *               License (>=v2). Read the file COPYING that comes with GRASS
@@ -75,7 +75,8 @@ int main(int argc, char *argv[])
     char *ipolname;		/* name of interpolation method */
     int method;
     int n, i, m, k = 0;
-    int got_file = 0;
+    int got_file = 0, target_overwrite = 0;
+    char *overstr;
     struct Cell_head cellhd;
 
     struct Option *grp,         /* imagery group */
@@ -209,28 +210,42 @@ int main(int argc, char *argv[])
 
     if (a->answer) {
 	for (n = 0; n < ref.nfiles; n++) {
-	    ref_list[n] = -1;
+	    ref_list[n] = 1;
 	}
     }
     else {
-	char xname[GNAME_MAX], xmapset[GMAPSET_MAX], *name;
+	char xname[GNAME_MAX], xmapset[GMAPSET_MAX], *name, *mapset;
 
 	for (n = 0; n < ref.nfiles; n++)
 		ref_list[n] = 0;
 
 	for (m = 0; m < k; m++) {
 	    got_file = 0;
-	    if (G__name_is_fully_qualified(ifile->answers[m], xname, xmapset))
+	    if (G__name_is_fully_qualified(ifile->answers[m], xname, xmapset)) {
 		name = xname;
-	    else
+		mapset = xmapset;
+	    }
+	    else {
 		name = ifile->answers[m];
+		mapset = 0;
+	    }
 
 	    got_file = 0;
 	    for (n = 0; n < ref.nfiles; n++) {
-		if (strcmp(name, ref.file[n].name) == 0) {
-		    got_file = 1;
-		    ref_list[n] = -1;
-		    break;
+		if (mapset) {
+		    if (strcmp(name, ref.file[n].name) == 0 &&
+		        strcmp(mapset, ref.file[n].mapset) == 0) {
+			got_file = 1;
+			ref_list[n] = 1;
+			break;
+		    }
+		}
+		else {
+		    if (strcmp(name, ref.file[n].name) == 0) {
+			got_file = 1;
+			ref_list[n] = 1;
+			break;
+		    }
 		}
 	    }
 	    if (got_file == 0)
@@ -243,6 +258,39 @@ int main(int argc, char *argv[])
 
     /* get the target */
     get_target(group);
+
+    /* Check the GRASS_OVERWRITE environment variable */
+    if ((overstr = getenv("GRASS_OVERWRITE")))  /* OK ? */
+	target_overwrite = atoi(overstr);
+
+    if (!target_overwrite) {
+	/* check if output exists in target location/mapset */
+	char result[GNAME_MAX];
+	
+	select_target_env();
+	for (i = 0; i < ref.nfiles; i++) {
+	    if (!ref_list[i])
+		continue;
+
+	    strcpy(result, ref.file[i].name);
+	    strcat(result, extension);
+	    
+	    if (G_legal_filename(result) < 0)
+		G_fatal_error(_("Extension <%s> is illegal"), extension);
+		
+	    if (G_find_cell(result, G_mapset())) {
+		G_warning(_("The following raster map already exists in"));
+		G_warning(_("target LOCATION %s, MAPSET %s:"),
+			  G_location(), G_mapset());
+		G_warning("<%s>", result);
+		G_fatal_error(_("Orthorectification cancelled."));
+	    }
+	}
+	
+	select_current_env();
+    }
+    else
+	G_debug(1, "Overwriting OK");
 
     /* do not use current region in target location */
     if (!c->answer) {
@@ -272,6 +320,8 @@ int main(int argc, char *argv[])
 	      target_window.south, target_window.east, target_window.west);
 
     exec_rectify(order, extension, interpol->answer);
+
+    G_done_msg(" ");
 
     exit(EXIT_SUCCESS);
 }
