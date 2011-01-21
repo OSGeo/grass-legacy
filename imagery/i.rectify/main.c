@@ -51,8 +51,6 @@ double E21[10], N21[10];
  */
 struct Cell_head target_window;
 
-#define NFILES 15
-
 void err_exit(char *, char *);
 
 /* modify this table to add new methods */
@@ -70,7 +68,6 @@ static char *make_ipol_list(void);
 int main(int argc, char *argv[])
 {
     char group[INAME_LEN], extension[INAME_LEN];
-    char result[NFILES][15];
     int order;			/* ADDED WITH CRS MODIFICATIONS */
     char *ipolname;		/* name of interpolation method */
     int method;
@@ -89,9 +86,6 @@ int main(int argc, char *argv[])
 				   nearest neighbor, bilinear, cubic */
     struct Flag *c, *a;
     struct GModule *module;
-
-    setbuf(stdout, NULL);
-    setbuf(stderr, NULL);
 
     G_gisinit(argv[0]);
 
@@ -201,9 +195,6 @@ int main(int argc, char *argv[])
 			    grp->answer);
 	exit(EXIT_SUCCESS);
     }
-
-    for (i = 0; i < NFILES; i++)
-	result[i][0] = 0;
 
     ref_list = (int *)G_malloc(ref.nfiles * sizeof(int));
     new_name = (char **)G_malloc(ref.nfiles * sizeof(char *));
