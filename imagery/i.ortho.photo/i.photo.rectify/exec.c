@@ -23,7 +23,7 @@ int exec_rectify(char *extension, char *interp_method, char *angle_map)
     struct Colors colr;
     struct Categories cats;
     struct History hist;
-    int colr_ok, hist_ok, cats_ok;
+    int colr_ok, cats_ok;
     long start_time, rectify_time;
     double aver_z;
     int elevfd;
@@ -75,7 +75,10 @@ int exec_rectify(char *extension, char *interp_method, char *angle_map)
 
 	cats_ok = G_read_cats(name, mapset, &cats) >= 0;
 	colr_ok = G_read_colors(name, mapset, &colr) > 0;
-	hist_ok = G_read_history(name, mapset, &hist) >= 0;
+
+	/* Initialze History */
+	if (G_read_history(name, mapset, &hist) < 0)
+	    G_short_history(result, type, &hist);
 	G_debug(2, "reading was fine...");
 
 	time(&start_time);
@@ -93,11 +96,7 @@ int exec_rectify(char *extension, char *interp_method, char *angle_map)
 		G_write_colors(result, G_mapset(), &colr);
 		G_free_colors(&colr);
 	    }
-	    if (hist_ok)
-		G_write_history(result, &hist);
-
-	    /* Initialze History */
-	    G_short_history(name, type, &hist);
+	    /* Write out History */
 	    G_command_history(&hist);
 	    G_write_history(result, &hist);
 
