@@ -50,7 +50,8 @@ int exec_rectify(int order, char *extension, char *interp_method)
 	    colr_ok = G_read_colors(name, mapset, &colr) > 0;
 
 	    /* Initialze History */
-	    G_short_history(name, type, &hist);
+	    if (G_read_history(name, mapset, &hist) < 0)
+		G_short_history(result, type, &hist);
 
 	    time(&start_time);
 
@@ -66,12 +67,8 @@ int exec_rectify(int order, char *extension, char *interp_method)
 		    G_free_colors(&colr);
 		}
 
-		/* Write out History Structure History */
-		sprintf(hist.title, "%s", result);
-		sprintf(hist.datsrc_1, "%s", name);
-		sprintf(hist.edhist[0], "Created from: i.rectify");
-		sprintf(hist.edhist[1], "Transformation order = %d", order);
-		hist.edlinecnt = 2;
+		/* Write out History */
+		G_command_history(&hist);
 		G_write_history(result, &hist);
 
 		select_current_env();
