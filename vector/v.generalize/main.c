@@ -4,15 +4,15 @@
  * MODULE:     v.generalize
  *
  * AUTHOR(S):  Daniel Bundala
+ *             Markus Metz: preserve areas and area attributes
  *
  * PURPOSE:    Module for line simplification and smoothing
  *
- * COPYRIGHT:  (C) 2002-2005 by the GRASS Development Team
+ * COPYRIGHT:  (C) 2007-2010 by the GRASS Development Team
  *
- *             This program is free software under the
- *             GNU General Public License (>=v2).
- *             Read the file COPYING that comes with GRASS
- *             for details.
+ *             This program is free software under the GNU General
+ *             Public License (>=v2).  Read the file COPYING that
+ *             comes with GRASS for details.
  *
  ****************************************************************/
 
@@ -35,14 +35,13 @@
 #define SNAKES 8
 #define DOUGLAS_REDUCTION 9
 #define SLIDING_AVERAGING 10
-#define REMOVE_SMALL 11
 #define NETWORK 100
 #define DISPLACEMENT 101
 
 int main(int argc, char *argv[])
 {
     struct Map_info In, Out;
-    static struct line_pnts *Points;
+    struct line_pnts *Points;
     struct line_cats *Cats;
     int i, type, iter;
     char *mapset;
@@ -54,7 +53,7 @@ int main(int argc, char *argv[])
     struct Option *angle_thresh_opt, *degree_thresh_opt,
 	*closeness_thresh_opt;
     struct Option *betweeness_thresh_opt;
-    struct Flag *ca_flag, *rs_flag;
+    struct Flag *ca_flag;
     int with_z;
     int total_input, total_output;	/* Number of points in the input/output map respectively */
     double thresh, alpha, beta, reduction, slide, angle_thresh;
@@ -62,13 +61,11 @@ int main(int argc, char *argv[])
     int method;
     int look_ahead, iterations;
     int chcat;
-    int ret, layer;
-    int n_areas, n_orig_areas, n_lines;
-    double x, y;
+    int layer;
+    int n_lines;
     int simplification, mask_type;
     VARRAY *varray;
     char *s;
-    int left, right;
 
     /* initialize GIS environment */
     G_gisinit(argv[0]);		/* reads grass env, stores program name to G_program_name() */
@@ -93,14 +90,13 @@ int main(int argc, char *argv[])
     method_opt->required = YES;
     method_opt->multiple = NO;
     method_opt->options =
-	"douglas,douglas_reduction,lang,reduction,reumann,remove_small,boyle,sliding_averaging,distance_weighting,chaiken,hermite,snakes,network,displacement";
+	"douglas,douglas_reduction,lang,reduction,reumann,boyle,sliding_averaging,distance_weighting,chaiken,hermite,snakes,network,displacement";
     method_opt->answer = "douglas";
     method_opt->descriptions = _("douglas;Douglas-Peucker Algorithm;"
 				 "douglas_reduction;Douglas-Peucker Algorithm with reduction parameter;"
 				 "lang;Lang Simplification Algorithm;"
 				 "reduction;Vertex Reduction Algorithm eliminates points close to each other;"
 				 "reumann;Reumann-Witkam Algorithm;"
-				 "remove_small;Removes lines shorter than threshold and areas of area less than threshold;"
 				 "boyle;Boyle's Forward-Looking Algorithm;"
 				 "sliding_averaging;McMaster's Sliding Averaging Algorithm;"
 				 "distance_weighting;McMaster's Distance-Weighting Algorithm;"
@@ -204,14 +200,9 @@ int main(int argc, char *argv[])
     cat_opt = G_define_standard_option(G_OPT_V_CATS);
     where_opt = G_define_standard_option(G_OPT_WHERE);
 
-
     ca_flag = G_define_flag();
     ca_flag->key = 'c';
     ca_flag->description = _("Copy attributes");
-
-    rs_flag = G_define_flag();
-    rs_flag->key = 'r';
-    rs_flag->description = _("Remove lines and areas smaller than threshold");
 
     /* options and flags parser */
     if (G_parser(argc, argv))
@@ -263,11 +254,6 @@ int main(int argc, char *argv[])
 	/* we can displace only the lines */
 	mask_type = GV_LINE;
     }
-    else if (strcmp(s, "remove_small") == 0) {
-	method = REMOVE_SMALL;
-	/* switch -r flag on */
-	rs_flag->answer = 1;
-    }
     else {
 	G_fatal_error(_("Unknown method"));
 	exit(EXIT_FAILURE);
@@ -281,7 +267,6 @@ int main(int argc, char *argv[])
     case LANG:
     case VERTEX_REDUCTION:
     case REUMANN:
-    case REMOVE_SMALL:
 	simplification = 1;
 	break;
     default:
@@ -313,70 +298,120 @@ int main(int argc, char *argv[])
     }
 
 
-    /* parse filter option and select appropriate lines */
-    layer = atoi(field_opt->answer);
-    if (where_opt->answer) {
-	if (layer < 1)
-	    G_fatal_error(_("'%s' must be > 0 for '%s'"), "layer", "where");
-	if (cat_opt->answer)
-	    G_warning(_("'where' and 'cats' parameters were supplied, cat will be ignored"));
-	chcat = 1;
-	varray = Vect_new_varray(Vect_get_num_lines(&In));
-	if (Vect_set_varray_from_db
-	    (&In, layer, where_opt->answer, mask_type, 1, varray) == -1) {
-	    G_warning(_("Unable to load data from database"));
-	}
-    }
-    else if (cat_opt->answer) {
-	if (layer < 1)
-	    G_fatal_error(_("'%s' must be > 0 for '%s'"), "layer", "cat");
-	varray = Vect_new_varray(Vect_get_num_lines(&In));
-	chcat = 1;
-	if (Vect_set_varray_from_cat_string
-	    (&In, layer, cat_opt->answer, mask_type, 1, varray) == -1) {
-	    G_warning(_("Problem loading category values"));
-	}
-    }
-    else {
-	chcat = 0;
-	varray = NULL;
-    }
-
     Vect_copy_head_data(&In, &Out);
     Vect_hist_copy(&In, &Out);
     Vect_hist_command(&Out);
 
     total_input = total_output = 0;
 
+    chcat = 0;
+    varray = NULL;
+    layer = atoi(field_opt->answer);
+    /* parse filter option and select appropriate lines */
+    if (method == DISPLACEMENT)
+	varray = parse_filter_options(&In, layer, mask_type,
+			      where_opt->answer, cat_opt->answer, &chcat);
+
     if (method == DISPLACEMENT) {
+	/* modifies only lines, all other features including boundaries are preserved */
+	/* options where, cats, and layer are respected */
+	G_message(_("Displacement..."));
 	snakes_displacement(&In, &Out, thresh, alpha, beta, 1.0, 10.0,
 			    iterations, varray);
     }
 
     /* TODO: rearrange code below. It's really messy */
     if (method == NETWORK) {
+	/* extracts lines of selected type, all other features are discarded */
+	/* options where, cats, and layer are ignored */
+	G_message(_("Network generalization..."));
 	total_output =
-	    graph_generalization(&In, &Out, degree_thresh, closeness_thresh,
-				 betweeness_thresh);
+	    graph_generalization(&In, &Out, mask_type, degree_thresh, 
+	                         closeness_thresh, betweeness_thresh);
     }
-    else {
+
+    /* copy tables here because method == NETWORK is complete and 
+     * tables for Out may be needed for parse_filter_options() below */
+    if (ca_flag->answer) {
+	if (method == NETWORK)
+	    copy_tables_by_cats(&In, &Out);
+	else
+	    Vect_copy_tables(&In, &Out, -1);
+    }
+    else if (where_opt->answer && method < NETWORK) {
+	G_warning(_("Attributes are needed for 'where' option, copying table"));
+	Vect_copy_tables(&In, &Out, -1);
+    }
+
+    /* smoothing/simplification */
+    if (method < NETWORK) {
+	/* modifies only lines of selected type, all other features are preserved */
+	int not_modified_boundaries = 0, n_oversimplified = 0;
+	struct line_pnts *APoints;  /* original Points */
+
+	Vect_copy_map_lines(&In, &Out);
+	Vect_build_partial(&Out, GV_BUILD_CENTROIDS);
+	/* varray needs to be retrieved from Out vector and not from In vector
+	 * because identical lines can have different ids
+	 * if dead lines are still registered in topo of In */
+	varray = parse_filter_options(&Out, layer, mask_type,
+			      where_opt->answer, cat_opt->answer, &chcat);
+
+	if ((mask_type & GV_AREA) && !(mask_type & GV_BOUNDARY))
+	    mask_type |= GV_BOUNDARY;
+
+	G_message("-----------------------------------------------------");
 	G_message(_("Generalization (%s)..."), method_opt->answer);
 	G_percent_reset();
-    }
-    i = 0;
-    n_lines = Vect_get_num_lines(&In);
-    while (method < NETWORK &&
-	   (type = Vect_read_next_line(&In, Points, Cats)) > 0) {
-	i++;
-	G_percent(i, n_lines, 1);
-	if (type == GV_CENTROID && (mask_type & GV_BOUNDARY))
-	    continue;		/* skip old centroids,
-				 * we calculate new if we generalize boundarie */
-	total_input += Points->n_points;
 
-	if ((type & mask_type) && (!chcat || varray->c[i])) {
+	APoints = Vect_new_line_struct();
+
+	n_lines = Vect_get_num_lines(&Out);
+	for (i = 1; i <= n_lines; i++) {
 	    int after = 0;
 
+	    G_percent(i, n_lines, 1);
+
+	    type = Vect_read_line(&Out, APoints, Cats, i);
+
+	    if (!(type & GV_LINES) || !(mask_type & type))
+		continue;
+		
+	    if ((type & GV_LINE) && chcat && !varray->c[i])
+		continue;
+	    else if ((type & GV_BOUNDARY) && chcat) {
+		int do_line = varray->c[i];
+
+		if ((mask_type & GV_AREA) && !do_line) {
+		    int left, right;
+		    
+		    /* check if any of the centroids is selected */
+		    Vect_get_line_areas(&Out, i, &left, &right);
+		    if (left > 0) {
+			left = Vect_get_area_centroid(&Out, left);
+			do_line = varray->c[left];
+		    }
+		    if (!do_line && right > 0) {
+			right = Vect_get_area_centroid(&Out, right);
+			do_line = varray->c[right];
+		    }
+		}
+		if (!do_line)
+		    continue;
+	    }
+
+	    Vect_line_prune(APoints);
+
+	    if (APoints->n_points < 2)
+		/* Line of length zero, delete if boundary ? */
+		continue;
+
+	    total_input += APoints->n_points;
+
+	    /* copy points */
+	    Vect_reset_line(Points);
+	    Vect_append_points(Points, APoints, GV_FORWARD);
+		
 	    for (iter = 0; iter < iterations; iter++) {
 		switch (method) {
 		case DOUGLAS:
@@ -415,78 +450,49 @@ int main(int argc, char *argv[])
 		    break;
 		}
 	    }
+	    
+	    /* safety check, BUG in method if not passed */
+	    if (APoints->x[0] != Points->x[0] || 
+		APoints->y[0] != Points->y[0] ||
+		APoints->z[0] != Points->z[0])
+		G_fatal_error(_("Method '%s' did not preserve first point"), method_opt->answer);
+		
+	    if (APoints->x[APoints->n_points - 1] != Points->x[Points->n_points - 1] || 
+		APoints->y[APoints->n_points - 1] != Points->y[Points->n_points - 1] ||
+		APoints->z[APoints->n_points - 1] != Points->z[Points->n_points - 1])
+		G_fatal_error(_("Method '%s' did not preserve last point"), method_opt->answer);
 
+	    Vect_line_prune(Points);
 
-	    /* remove "oversimplified" lines */
-	    if (rs_flag->answer && simplification && type == GV_LINE &&
-		Vect_line_length(Points) < thresh)
-		continue;
+	    /* oversimplified line */
+	    if (Points->n_points < 2) {
+		after = APoints->n_points;
+		n_oversimplified++;
+	    }
+	    /* check for topology corruption */
+	    else if (type == GV_BOUNDARY) {
+		if (!check_topo(&Out, i, APoints, Points, Cats)) {
+		    after = APoints->n_points;
+		    not_modified_boundaries++;
+		}
+		else
+		    after = Points->n_points;
+	    }
+	    else {
+		/* type == GV_LINE */
+		Vect_rewrite_line(&Out, i, type, Points, Cats);
+		after = Points->n_points;
+	    }
 
-	    after = Points->n_points;
 	    total_output += after;
-	    Vect_write_line(&Out, type, Points, Cats);
 	}
-	else {
-	    total_output += Points->n_points;
-	    Vect_write_line(&Out, type, Points, Cats);
-	}
-    }
-
-    /* remove incorrect boundaries
-     * they may occur only if they were generalized */
-    if (mask_type & GV_BOUNDARY) {
-	int n_del = 0;
-	Vect_build_partial(&Out, GV_BUILD_ATTACH_ISLES);
-	n_lines = Vect_get_num_lines(&Out);
-	for (i = 1; i <= n_lines; i++) {
-	    type = Vect_read_line(&Out, Points, Cats, i);
-	    if (type != GV_BOUNDARY)
-		continue;
-	    Vect_get_line_areas(&Out, i, &left, &right);
-	    if (left == 0 || right == 0) {
-		Vect_delete_line(&Out, i);
-		total_output -= Points->n_points;
-		n_del++;
-	    }
-	}
-	if (n_del)
-	    G_warning(_("%d boundaries were deleted, input areas are not preserved"), n_del);
-
-	/* make sure that clean topo is built at the end */
-	Vect_build_partial(&Out, GV_BUILD_NONE);
-    }
-
-
-    /* calculate new centroids 
-     * We need to calculate them only if the boundaries
-     * were generalized
-     */
-    if ((mask_type & GV_BOUNDARY) && method != DISPLACEMENT) {
-	Vect_build_partial(&Out, GV_BUILD_ATTACH_ISLES);
-	n_areas = Vect_get_num_areas(&Out);
-	for (i = 1; i <= n_areas; i++) {
-	    /* skip dead area */
-	    if (!Vect_area_alive(&Out, i))
-		continue;
-
-	    /* area i in Out is not necessarily equal to area i in In! */
-	    Vect_get_area_cats(&In, i, Cats);
-	    ret = Vect_get_point_in_area(&Out, i, &x, &y);
-	    if (ret < 0) {
-		G_warning(_("Unable to calculate centroid for area %d"), i);
-		continue;
-	    }
-	    Vect_reset_line(Points);
-	    Vect_append_point(Points, x, y, 0.0);
-	    Vect_write_line(&Out, GV_CENTROID, Points, Cats);
-	}
-	G_warning(_("New centroids were calculated, attribute attachment may be changed"));
-    }
-
-    /* remove small areas */
-    if (rs_flag->answer && simplification && (mask_type & GV_AREA)) {
-	Vect_build_partial(&Out, GV_BUILD_CENTROIDS);
-	Vect_remove_small_areas(&Out, thresh, NULL, &slide);
+	if (not_modified_boundaries > 0)
+	    G_message(_("%d boundaries were not modified because modification would damage topology"),
+		      not_modified_boundaries);
+	if (n_oversimplified > 0)
+	    G_message(_("%d lines/boundaries were not modified due to over-simplification"),
+		      n_oversimplified);
+	G_message("-----------------------------------------------------");
 
 	/* make sure that clean topo is built at the end */
 	Vect_build_partial(&Out, GV_BUILD_NONE);
@@ -494,23 +500,17 @@ int main(int argc, char *argv[])
 
     Vect_build(&Out);
 
-    /* finally copy tables */
-    if (ca_flag->answer)
-	copy_tables_by_cats(&In, &Out);
+    Vect_close(&In);
+    Vect_close(&Out);
 
-    if (total_input != 0)
-	G_message(_("Number of vertices was reduced from %d to %d [%d%%]"),
+    G_message("-----------------------------------------------------");
+    if (total_input != 0 && total_input != total_output)
+	G_message(_("Number of vertices for selected lines %s from %d to %d (%d%%)."),
+		  simplification ? _("reduced") : _("changed"), 
 		  total_input, total_output,
 		  (total_output * 100) / total_input);
 
-    /* warning about area corruption */
-    if (mask_type & GV_BOUNDARY && (n_orig_areas = Vect_get_num_areas(&In)) > 0) {
-	G_warning(_("Areas may have disappeared and/or area attribute attachment may have changed"));
-	G_warning(_("Try v.clean tool=prune thresh=%f"), thresh);
-    }
-
-    Vect_close(&In);
-    Vect_close(&Out);
+    G_done_msg(" ");
 
     exit(EXIT_SUCCESS);
 }
