@@ -434,7 +434,7 @@ int main(int argc, char **argv)
     G_adjust_Cell_head(&outcellhd, 0, 0);
     G_set_window(&outcellhd);
 
-    G_message(NULL);
+    G_message(" ");
     G_message(_("Input:"));
     G_message(_("Cols: %d (%d)"), incellhd.cols, icols);
     G_message(_("Rows: %d (%d)"), incellhd.rows, irows);
@@ -445,7 +445,7 @@ int main(int argc, char **argv)
     G_message(_("EW-res: %f"), incellhd.ew_res);
     G_message(_("NS-res: %f"), incellhd.ns_res);
 
-    G_message(NULL);
+    G_message(" ");
     G_message(_("Output:"));
     G_message(_("Cols: %d (%d)"), outcellhd.cols, ocols);
     G_message(_("Rows: %d (%d)"), outcellhd.rows, orows);
@@ -455,7 +455,7 @@ int main(int argc, char **argv)
     G_message(_("East: %f (%f)"), outcellhd.east, oeast);
     G_message(_("EW-res: %f"), outcellhd.ew_res);
     G_message(_("NS-res: %f"), outcellhd.ns_res);
-    G_message(NULL);
+    G_message(" ");
 
     /* open and read the relevant parts of the input map and close it */
     G__switch_env();
