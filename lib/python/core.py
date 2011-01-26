@@ -13,7 +13,7 @@ grass.parser()
 ...
 @endcode
 
-(C) 2008-2010 by the GRASS Development Team
+(C) 2008-2011 by the GRASS Development Team
 This program is free software under the GNU General Public
 License (>=v2). Read the file COPYING that comes with GRASS
 for details.
@@ -1065,7 +1065,22 @@ def _create_location_xy(database, location):
         os.chdir(cur_dir)
     except OSError, e:
         raise ScriptException(repr(e))
-    
+
+# interface to g.version
+
+def version():
+    """!Get GRASS version as dictionary
+
+    @code
+    version()
+
+    {'date': '2010', 'gis_revision': 'Revision: 38990', 'version': '6.5.svn',
+     'gis_date': 'Date: 2009-09-05 19:01:13 +0200 (Sat, 05 Sep 2009)'}
+    @endcode
+    """
+    return parse_command('g.version',
+                         flags = 'rg')
+
 # get debug_level
 if find_program('g.gisenv', ['--help']):
     debug_level = int(gisenv().get('DEBUG', 0))
