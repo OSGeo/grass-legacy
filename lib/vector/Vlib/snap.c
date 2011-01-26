@@ -205,9 +205,25 @@ Vect_snap_lines_list(struct Map_info *Map, struct ilist *List_lines,
 	    dy = XPnts[pointb].y - XPnts[point].y;
 	    dist2 = dx * dx + dy * dy;
 
-	    if (dist2 <= thresh2) {
+	    if (dist2 > thresh2) /* outside threshold */
+		continue;
+		
+	    /* doesn't have an anchor yet */
+	    if (XPnts[pointb].anchor == -1) {
 		XPnts[pointb].anchor = point;
 		ntosnap++;
+	    }
+	    else if (XPnts[pointb].anchor > 0) {   /* check distance to previously assigned anchor */
+		double dist2_a;
+
+		dx = XPnts[XPnts[pointb].anchor].x - XPnts[pointb].x;
+		dy = XPnts[XPnts[pointb].anchor].y - XPnts[pointb].y;
+		dist2_a = dx * dx + dy * dy;
+
+		/* replace old anchor */
+		if (dist2 < dist2_a) {
+		    XPnts[pointb].anchor = point;
+		}
 	    }
 	}
     }
@@ -445,7 +461,8 @@ Vect_snap_lines(struct Map_info *Map, int type, double thresh,
 	if (!(ltype & type))
 	    continue;
 
-	Vect_list_append(List, line);
+	/* Vect_list_append(List, line); */
+	dig_list_add(List, line);
     }
 
     Vect_snap_lines_list(Map, List, thresh, Err);

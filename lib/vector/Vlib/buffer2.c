@@ -57,6 +57,7 @@ static void norm_vector(double x1, double y1, double x2, double y2, double *x,
     l = LENGTH(dx, dy);
     *x = dx / l;
     *y = dy / l;
+
     return;
 }
 
@@ -65,6 +66,7 @@ static void rotate_vector(double x, double y, double cosa, double sina,
 {
     *nx = x * cosa - y * sina;
     *ny = x * sina + y * cosa;
+
     return;
 }
 
@@ -76,7 +78,6 @@ static void elliptic_transform(double x, double y, double da, double db,
 			       double dalpha, double *nx, double *ny)
 {
     double cosa = cos(dalpha);
-
     double sina = sin(dalpha);
 
     /*    double cc = cosa*cosa;
@@ -93,6 +94,7 @@ static void elliptic_transform(double x, double y, double da, double db,
     vb = (x * (-sina) + y * cosa) * db;
     *nx = va * cosa + vb * (-sina);
     *ny = va * sina + vb * cosa;
+
     return;
 }
 
@@ -106,9 +108,7 @@ static void elliptic_tangent(double x, double y, double da, double db,
 			     double dalpha, double *px, double *py)
 {
     double cosa = cos(dalpha);
-
     double sina = sin(dalpha);
-
     double u, v, len;
 
     /* rotate (x,y) -dalpha radians */
@@ -121,6 +121,7 @@ static void elliptic_tangent(double x, double y, double da, double db,
     u *= len;
     v *= len;
     rotate_vector(u, v, cosa, sina, px, py);
+
     return;
 }
 
@@ -134,6 +135,7 @@ static void line_coefficients(double x1, double y1, double x2, double y2,
     *a = y2 - y1;
     *b = x1 - x2;
     *c = x2 * y1 - x1 * y2;
+
     return;
 }
 
@@ -167,6 +169,7 @@ static double angular_tolerance(double tol, double da, double db)
 
     if (tol > a)
 	tol = a;
+
     return 2 * acos(1 - tol / a);
 }
 
@@ -187,19 +190,12 @@ static void parallel_line(struct line_pnts *Points, double da, double db,
 			  double tol, struct line_pnts *nPoints)
 {
     int i, j, res, np;
-
     double *x, *y;
-
     double tx, ty, vx, vy, wx, wy, nx, ny, mx, my, rx, ry;
-
     double vx1, vy1, wx1, wy1;
-
     double a0, b0, c0, a1, b1, c1;
-
     double phi1, phi2, delta_phi;
-
     double nsegments, angular_tol, angular_step;
-
     int inner_corner, turns360;
 
     G_debug(3, "parallel_line()");
@@ -348,21 +344,13 @@ static void convolution_line(struct line_pnts *Points, double da, double db,
 			     double tol, struct line_pnts *nPoints)
 {
     int i, j, res, np;
-
     double *x, *y;
-
     double tx, ty, vx, vy, wx, wy, nx, ny, mx, my, rx, ry;
-
     double vx1, vy1, wx1, wy1;
-
     double a0, b0, c0, a1, b1, c1;
-
     double phi1, phi2, delta_phi;
-
     double nsegments, angular_tol, angular_step;
-
     double angle0, angle1;
-
     int inner_corner, turns360;
 
     G_debug(3, "convolution_line() side = %d", side);
@@ -510,25 +498,17 @@ static void extract_contour(struct planar_graph *pg, struct pg_edge *first,
 			    struct line_pnts *nPoints)
 {
     int j;
-
     int v;			/* current vertex number */
-
     int v0;
-
     int eside;			/* side of the current edge */
-
     double eangle;		/* current edge angle with Ox (according to the current direction) */
-
     struct pg_vertex *vert;	/* current vertex */
-
     struct pg_vertex *vert0;	/* last vertex */
-
     struct pg_edge *edge;	/* current edge; must be edge of vert */
 
     /*    int cs; *//* on which side are we turning along the contour */
     /* we will always turn right and dont need that one */
     double opt_angle, tangle;
-
     int opt_j, opt_side, opt_flag;
 
     G_debug(3,
@@ -657,15 +637,10 @@ static void extract_outer_contour(struct planar_graph *pg, int side,
 				  struct line_pnts *nPoints)
 {
     int i;
-
     int flag;
-
     int v;
-
     struct pg_vertex *vert;
-
     struct pg_edge *edge;
-
     double min_x, min_angle;
 
     G_debug(3, "extract_outer_contour()");
@@ -713,7 +688,6 @@ static int extract_inner_contour(struct planar_graph *pg, int *winding,
 				 struct line_pnts *nPoints)
 {
     int i, w;
-
     struct pg_edge *edge;
 
     G_debug(3, "extract_inner_contour()");
@@ -750,13 +724,9 @@ static int point_in_buf(struct line_pnts *Points, double px, double py, double d
 			double db, double dalpha)
 {
     int i, np;
-
     double cx, cy;
-
     double delta, delta_k, k;
-
     double vx, vy, wx, wy, mx, my, nx, ny;
-
     double len, tx, ty, d, da2;
 
     G_debug(3, "point_in_buf()");
@@ -817,6 +787,7 @@ static int point_in_buf(struct line_pnts *Points, double px, double py, double d
 	    }
 	}
     }
+
     return 0;
 }
 
@@ -825,7 +796,6 @@ static int point_in_buf(struct line_pnts *Points, double px, double py, double d
 static int get_polygon_orientation(const double *x, const double *y, int n)
 {
     double x1, y1, x2, y2;
-
     double area;
 
     x2 = x[n - 1];
@@ -841,6 +811,7 @@ static int get_polygon_orientation(const double *x, const double *y, int n)
 
 	area += (y2 + y1) * (x2 - x1);
     }
+
     return (area > 0);
 }
 
@@ -856,6 +827,7 @@ static void add_line_to_array(struct line_pnts *Points,
     }
     (*arrPoints)[*count] = Points;
     (*count)++;
+
     return;
 }
 
@@ -878,21 +850,13 @@ static void buffer_lines(struct line_pnts *area_outer, struct line_pnts **area_i
 			 int *inner_count)
 {
     struct planar_graph *pg2;
-
     struct line_pnts *sPoints, *cPoints;
-
     struct line_pnts **arrPoints;
-
     int i, count = 0;
-
     int res, winding;
-
     int auto_side;
-
     int more = 8;
-
     int allocated = 0;
-
     double px, py;
 
     G_debug(3, "buffer_lines()");
@@ -1002,17 +966,11 @@ void Vect_line_buffer2(struct line_pnts *Points, double da, double db,
 		       struct line_pnts ***iPoints, int *inner_count)
 {
     struct planar_graph *pg;
-
     struct line_pnts *tPoints, *outer;
-
     struct line_pnts **isles;
-
     int isles_count = 0;
-
     int res, winding;
-
     int more = 8;
-
     int isles_allocated = 0;
 
     G_debug(2, "Vect_line_buffer()");
@@ -1067,15 +1025,10 @@ void Vect_area_buffer2(struct Map_info *Map, int area, double da, double db,
 		       struct line_pnts ***iPoints, int *inner_count)
 {
     struct line_pnts *tPoints, *outer;
-
     struct line_pnts **isles;
-
     int isles_count = 0, n_isles;
-
     int i, isle;
-
     int more = 8;
-
     int isles_allocated = 0;
 
     G_debug(2, "Vect_area_buffer()");
@@ -1089,7 +1042,8 @@ void Vect_area_buffer2(struct Map_info *Map, int area, double da, double db,
     /* outer contour */
     outer = Vect_new_line_struct();
     Vect_get_area_points(Map, area, outer);
-    Vect_append_point(outer, outer->x[0], outer->y[0], outer->z[0]);
+    /* does not work with zero length line segments */
+    Vect_line_prune(outer);
 
     /* inner contours */
     for (i = 0; i < n_isles; i++) {
@@ -1101,8 +1055,8 @@ void Vect_area_buffer2(struct Map_info *Map, int area, double da, double db,
 	   if (Vect_line_length(tPoints) < 2*PI*max)
 	   continue;
 	 */
-	Vect_append_point(tPoints, tPoints->x[0], tPoints->y[0],
-			  tPoints->z[0]);
+	/* does not work with zero length line segments */
+	Vect_line_prune(tPoints);
 	add_line_to_array(tPoints, &isles, &isles_count, &isles_allocated,
 			  more);
 	tPoints = Vect_new_line_struct();
@@ -1135,9 +1089,7 @@ void Vect_point_buffer2(double px, double py, double da, double db,
 			struct line_pnts **oPoints)
 {
     double tx, ty;
-
     double angular_tol, angular_step, phi1;
-
     int j, nsegments;
 
     G_debug(2, "Vect_point_buffer()");
