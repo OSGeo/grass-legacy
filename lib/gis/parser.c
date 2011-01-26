@@ -993,7 +993,7 @@ int G_parser(int argc, char **argv)
     error += check_required();
     
     if (error) {
-	if (G_verbose() > G_verbose_std())
+	if (G_verbose() > G_verbose_min())
 	    G_usage();
 	return -1;
     }
