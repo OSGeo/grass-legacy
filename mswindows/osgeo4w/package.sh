@@ -19,8 +19,13 @@ version() {
 	) <include/VERSION
 }
 
-export VERSION=$(version)
-export PACKAGE=3
+VERSION=$(version)
+PACKAGE=3
+export VERSION PACKAGE
+
+GRASS_PYTHON=/c/OSGeo4W/apps/Python25
+PYTHONHOME=/c/OSGeo4W/apps/Python25
+export GRASS_PYTHON PYTHONHOME
 
 LOG=mswindows/osgeo4w/package.log
 
