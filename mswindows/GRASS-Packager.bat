@@ -19,6 +19,8 @@ set PACKAGE_DIR=.\GRASS-64-Devel-Package
 rem set GRASS_PREFIX=%OSGEO4W_DIR%\apps\grass\grass-6.4.1
 set GRASS_PREFIX=%OSGEO4W_DIR%\apps\grass\grass-6.4.1svn
 
+set SVN_PATH=c:\Subversion
+
 @echo.
 @echo -----------------------------------------------------------------------------------------------------------------------
 @echo Remove the previous Selected Package and create a new PACKAGE_DIR
@@ -204,6 +206,15 @@ xcopy %OSGEO4W_DIR%\apps\Python25\include %PACKAGE_DIR%\Python25\include /S/V/F/
 xcopy %OSGEO4W_DIR%\apps\Python25\Lib %PACKAGE_DIR%\Python25\Lib /S/V/F/I
 xcopy %OSGEO4W_DIR%\apps\Python25\libs %PACKAGE_DIR%\Python25\libs /S/V/F/I
 xcopy %OSGEO4W_DIR%\apps\Python25\Scripts %PACKAGE_DIR%\Python25\Scripts /S/V/F/I
+
+@echo.
+@echo -----------------------------------------------------------------------------------------------------------------------
+@echo Copy Subversion content to PACKAGE_DIR\extrabin & PACKAGE_DIR\extralib
+@echo -----------------------------------------------------------------------------------------------------------------------
+@echo.
+
+copy %SVN_PATH%\svn.exe %PACKAGE_DIR%\extrabin
+copy %SVN_PATH%\*.dll %PACKAGE_DIR%\extralib
 
 @echo.
 @echo -----------------------------------------------------------------------------------------------------------------------
