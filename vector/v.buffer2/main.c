@@ -22,7 +22,6 @@
 #include <grass/Vect.h>
 #include <grass/dbmi.h>
 #include <grass/glocale.h>
-#include "local_proto.h"
 
 #define PI M_PI
 #ifndef MIN
@@ -33,19 +32,10 @@
 #endif
 
 
-void stop(struct Map_info *In, struct Map_info *Out)
-{
-    Vect_close(In);
-
-    Vect_build_partial(Out, GV_BUILD_NONE);
-    Vect_build(Out);
-    Vect_close(Out);
-}
-
 /* returns 1 if unit_tolerance is adjusted, 0 otherwise */
 int adjust_tolerance(double *tolerance)
 {
-    double t = 0.999 * (1 - cos(2 * PI / 8 / 2));
+    double t = 0.999 * (1 - cos(PI / 8));
 
     G_debug(2, "Maximum tolerance = %f", t);
     if (*tolerance > t) {
@@ -58,9 +48,7 @@ int adjust_tolerance(double *tolerance)
 int db_CatValArray_get_value_di(dbCatValArray * cvarr, int cat, double *value)
 {
     int t;
-
     int ctype = cvarr->ctype;
-
     int ret;
 
     if (ctype == DB_C_TYPE_INT) {
@@ -236,9 +224,7 @@ int main(int argc, char *argv[])
     if (G_parser(argc, argv))
 	exit(EXIT_FAILURE);
 
-
     type = Vect_option_to_types(type_opt);
-    field = atoi(field_opt->answer);
 
     if (((dista_opt->answer || buffer_opt->answer) && bufcol_opt->answer) ||
 	(!(dista_opt->answer || buffer_opt->answer || bufcol_opt->answer)))
@@ -251,6 +237,14 @@ int main(int argc, char *argv[])
 		    "option or clean manually with v.clean tool=break; "
 		    "v.category step=0; v.extract -d type=area"));
 
+    if (field_opt->answer)
+        field = atoi(field_opt->answer);
+    else
+	field = -1;
+
+    if (bufcol_opt->answer && field == -1)
+	G_fatal_error(_("The bufcol option requires a valid layer."));
+    
     if (buffer_opt->answer)
 	G_warning(_("The buffer option has been replaced by the distance "
 		    "option and will be removed in future."));
@@ -258,6 +252,9 @@ int main(int argc, char *argv[])
 	G_fatal_error(_("Use the distance option instead of the buffer option."));
 
     tolerance = atof(tol_opt->answer);
+    if (tolerance <= 0)
+	G_fatal_error(_("The tolerance must be > 0."));
+
     if (adjust_tolerance(&tolerance))
 	G_warning(_("The tolerance was reset to %g"), tolerance);
 
@@ -265,7 +262,7 @@ int main(int argc, char *argv[])
     if (scale <= 0.0)
 	G_fatal_error("Illegal scale value");
 
-
+	da = db = dalpha = 0;
     if (dista_opt->answer || buffer_opt->answer) {
 	if(buffer_opt->answer)
 	    da = atof(buffer_opt->answer);
@@ -374,12 +371,15 @@ int main(int argc, char *argv[])
 
 	    G_debug(2, "line = %d", line);
 	    G_percent(line, nlines, 2);
+	    
+	    if (!Vect_line_alive(&In, line))
+		continue;
 
 	    ltype = Vect_read_line(&In, Points, Cats, line);
 	    if (!(ltype & type))
 		continue;
 
-	    if (!Vect_cat_get(Cats, field, &cat))
+	    if (field > 0 && !Vect_cat_get(Cats, field, &cat))
 		continue;
 
 	    if (bufcol_opt->answer) {
@@ -409,7 +409,7 @@ int main(int argc, char *argv[])
 			unit_tolerance);
 	    }
 
-	    if (ltype & GV_POINTS) {
+	    if (ltype & GV_POINTS || Points->n_points == 1) {
 		Vect_point_buffer2(Points->x[0], Points->y[0], da, db, dalpha,
 				   !(straight_flag->answer), unit_tolerance,
 				   &(arr_bc[buffers_count].oPoints));
@@ -436,16 +436,21 @@ int main(int argc, char *argv[])
 
 	if (nareas > 0) 
 	    G_message(_("Buffering areas..."));
+
 	for (area = 1; area <= nareas; area++) {
 	    int cat;
 
 	    G_percent(area, nareas, 2);
+	    
+	    if (!Vect_area_alive(&In, area))
+		continue;
+	    
 	    centroid = Vect_get_area_centroid(&In, area);
 	    if (centroid == 0)
 		continue;
 
 	    Vect_read_line(&In, NULL, Cats, centroid);
-	    if (!Vect_cat_get(Cats, field, &cat))
+	    if (field > 0 && !Vect_cat_get(Cats, field, &cat))
 		continue;
 
 	    if (bufcol_opt->answer) {
@@ -487,10 +492,12 @@ int main(int argc, char *argv[])
 
     /* write all buffer contours */
     for (i = 0; i < buffers_count; i++) {
+	G_percent(i, buffers_count, 2);
 	Vect_write_line(&Out, GV_BOUNDARY, arr_bc[i].oPoints, BCats);
 	for (j = 0; j < arr_bc[i].inner_count; j++)
 	    Vect_write_line(&Out, GV_BOUNDARY, arr_bc[i].iPoints[j], BCats);
     }
+    G_percent(1, 1, 1);
 
     /* Create areas */
 
@@ -500,6 +507,12 @@ int main(int argc, char *argv[])
 
     G_message(_("Snapping boundaries..."));
     Vect_snap_lines(&Out, GV_BOUNDARY, 1e-7, NULL);
+
+    G_message(_("Breaking polygons..."));
+    Vect_break_polygons(&Out, GV_BOUNDARY, NULL);
+
+    G_message(_("Removing duplicates..."));
+    Vect_remove_duplicates(&Out, GV_BOUNDARY, NULL);
 
     G_message(_("Breaking boundaries..."));
     Vect_break_lines(&Out, GV_BOUNDARY, NULL);
@@ -522,8 +535,11 @@ int main(int argc, char *argv[])
     /* Calculate new centroids for all areas */
     nareas = Vect_get_num_areas(&Out);
     Areas = (char *)G_calloc(nareas + 1, sizeof(char));
+    G_percent(0, nareas, 2);
     for (area = 1; area <= nareas; area++) {
 	double x, y;
+
+	G_percent(area, nareas, 2);
 
 	G_debug(3, "area = %d", area);
 
@@ -551,6 +567,8 @@ int main(int argc, char *argv[])
 
     for (line = 1; line <= nlines; line++) {
 	int j, side[2], areas[2];
+
+	G_percent(line, nlines, 2);
 
 	G_debug(3, "line = %d", line);
 
@@ -580,6 +598,7 @@ int main(int argc, char *argv[])
 
     /* Delete boundaries */
     for (line = 1; line <= nlines; line++) {
+	G_percent(line, nlines, 2);
 	if (Lines[line]) {
 	    G_debug(3, " delete line %d", line);
 	    Vect_delete_line(&Out, line);
@@ -595,6 +614,8 @@ int main(int argc, char *argv[])
 
     for (area = 1; area <= nareas; area++) {
 	double x, y;
+
+	G_percent(area, nareas, 2);
 
 	G_debug(3, "area = %d", area);
 
@@ -625,9 +646,11 @@ int main(int argc, char *argv[])
        G_free(arr_bc[i].iPoints);
        } */
 
-    G_message(_("Attaching centroids..."));
-    Vect_build_partial(&Out, GV_BUILD_CENTROIDS);
+    Vect_close(&In);
 
-    stop(&In, &Out);
+    Vect_build_partial(&Out, GV_BUILD_NONE);
+    Vect_build(&Out);
+    Vect_close(&Out);
+
     exit(EXIT_SUCCESS);
 }
