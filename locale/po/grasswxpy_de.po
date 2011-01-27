@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: grasswxpy_de\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2011-01-03 15:46+0100\n"
-"PO-Revision-Date: 2011-01-25 00:35+0100\n"
+"PO-Revision-Date: 2011-01-27 16:08+0100\n"
 "Last-Translator: Helmut Kudrnovsky <hellik@web.de>\n"
 "Language-Team: Deutsch <grass-translations@lists.osgeo.org>\n"
 "MIME-Version: 1.0\n"
@@ -742,48 +742,55 @@ msgid "Settings dialog for georectification tool"
 msgstr "Einstellungsdialog für Georektifikationswerkzeug"
 
 #: ../gui/wxpython/icons/icon.py:347
+#, fuzzy
 msgid "Switch to view control page"
-msgstr ""
+msgstr "Wechsle zu Einstellungen für Ansicht"
 
 #: ../gui/wxpython/icons/icon.py:348
 msgid "Change view settings"
 msgstr "Ändere Einstellungen für Darstellung"
 
 #: ../gui/wxpython/icons/icon.py:350
+#, fuzzy
 msgid "Switch to surface (raster) control page"
-msgstr ""
+msgstr "Wechsle zu Einstellungen für Oberflächen (Raster)"
 
 #: ../gui/wxpython/icons/icon.py:351
 msgid "Change surface (loaded raster maps) settings"
 msgstr "Ändere Oberflächen-Eigenschaften (geladene Rasterkarte)"
 
 #: ../gui/wxpython/icons/icon.py:353
+#, fuzzy
 msgid "Switch to vector (2D/3D) control page"
-msgstr ""
+msgstr "Wechsle zu Einstellungen für Vektoren (2D/3D) "
 
 #: ../gui/wxpython/icons/icon.py:354
 msgid "Change 2D/3D vector settings"
 msgstr "Ändere 2D/3D Vektoreinstellungen"
 
 #: ../gui/wxpython/icons/icon.py:356
+#, fuzzy
 msgid "Switch to volume (3D raster) control page"
-msgstr ""
+msgstr "Wechsle zu Einstellungen für Volumen (3D-Raster)"
 
 #: ../gui/wxpython/icons/icon.py:357
+#, fuzzy
 msgid "Change volume (loaded 3D raster maps) settings"
-msgstr ""
+msgstr "Ändere Volumen-Einstellungen (geladene 3D-Rasterkarte) "
 
 #: ../gui/wxpython/icons/icon.py:359
+#, fuzzy
 msgid "Switch to lighting control page"
-msgstr ""
+msgstr "Wechsle zu Einstellungen für die Lichtverhältnisse"
 
 #: ../gui/wxpython/icons/icon.py:360
 msgid "Change lighting settings"
 msgstr "Ändere Beleuchtungseinstellung"
 
 #: ../gui/wxpython/icons/icon.py:362
+#, fuzzy
 msgid "Switch to fringe control page"
-msgstr ""
+msgstr "Wechsle zu Einstellungen der Randzone"
 
 #: ../gui/wxpython/icons/icon.py:363
 msgid "Switch on/off fringes"
@@ -815,7 +822,7 @@ msgstr "Wechsle zu 2D-Ansicht zurück"
 
 #: ../gui/wxpython/icons/icon.py:375
 msgid "Start Graphical Modeler"
-msgstr ""
+msgstr "Starte Graphical Modeler"
 
 #: ../gui/wxpython/icons/icon.py:377
 msgid "Create new model (Ctrl+N)"
@@ -835,19 +842,19 @@ msgstr "Exportiere Modell als Bild"
 
 #: ../gui/wxpython/icons/icon.py:385 ../gui/wxpython/menustrings.py:811
 msgid "Export model to Python script"
-msgstr ""
+msgstr "Exportiere Modell als Python-Skript"
 
 #: ../gui/wxpython/icons/icon.py:387 ../gui/wxpython/menustrings.py:819
 msgid "Add action (GRASS module) to model"
-msgstr ""
+msgstr "Füge Aktion (GRASS Modul) zu Modell hinzu"
 
 #: ../gui/wxpython/icons/icon.py:389 ../gui/wxpython/menustrings.py:821
 msgid "Add data item to model"
-msgstr ""
+msgstr "Füge Daten-Objekt zu Modell hinzu"
 
 #: ../gui/wxpython/icons/icon.py:391 ../gui/wxpython/menustrings.py:823
 msgid "Define relation between data and action items"
-msgstr ""
+msgstr "Definiere Beziehung zwischen Daten und Aktionen"
 
 #: ../gui/wxpython/icons/icon.py:393 ../gui/wxpython/menustrings.py:173
 #: ../gui/wxpython/menustrings.py:834
@@ -871,8 +878,9 @@ msgid "Manage model variables"
 msgstr "Verwalte Modell-Variablen"
 
 #: ../gui/wxpython/icons/icon.py:403
+#, fuzzy
 msgid "Redraw model canvas"
-msgstr ""
+msgstr "Neuzeichnen des Modell-Grafikfensters"
 
 #: ../gui/wxpython/icons/icon.py:406
 msgid "Display Graphical Modeler manual page"
@@ -881,7 +889,7 @@ msgstr "Zeige Graphical Modeler-Handbuch an "
 #: ../gui/wxpython/scripts/p.cmd.py:53 ../gui/wxpython/scripts/p.rast.py:99
 #: ../gui/wxpython/scripts/p.vect.py:356
 msgid "GRASS_PYCMDFILE - File not found. Run p.mon."
-msgstr ""
+msgstr "GRASS_PYCMDFILE - Datei nicht gefunden. Starte p.mon."
 
 #: ../gui/wxpython/scripts/vkrige.py:33
 msgid "No GRASS-python library found."
@@ -952,7 +960,7 @@ msgstr "Variogram fitting"
 
 #: ../gui/wxpython/scripts/vkrige.py:308
 msgid "Plot/refresh variogram"
-msgstr ""
+msgstr "Stelle Variogram dar"
 
 #: ../gui/wxpython/scripts/vkrige.py:319
 #, fuzzy
@@ -977,7 +985,7 @@ msgstr "Modell:"
 
 #: ../gui/wxpython/scripts/vkrige.py:499
 msgid "Work in progress! No functionality provided."
-msgstr ""
+msgstr "Work in progress! Keine Funktionalität vorhanden."
 
 #: ../gui/wxpython/menustrings.py:2 ../gui/wxpython/menustrings.py:797
 msgid "&File"
@@ -1163,7 +1171,7 @@ msgstr "ASCII-Punkte als Vektorlinie"
 
 #: ../gui/wxpython/menustrings.py:49
 msgid "Import ASCII x,y[,z] coordinates as a series of lines."
-msgstr ""
+msgstr "Importiere ASCII x,y[,z]-Koordinaten in eine Folge von Linien."
 
 #: ../gui/wxpython/menustrings.py:50
 msgid "Historical GRASS vector import"
@@ -1182,6 +1190,8 @@ msgid ""
 "Convert all old GRASS < Ver5.7 vector maps in current mapset to current "
 "format"
 msgstr ""
+"Konvertieren aller alten GRASS < Ver5.7 Vektorkarten des aktuellen Mapsets "
+"in aktuelles Format"
 
 #: ../gui/wxpython/menustrings.py:54
 msgid "DXF import"
@@ -1693,7 +1703,7 @@ msgstr "Starte Graphical-Modeler"
 
 #: ../gui/wxpython/menustrings.py:174
 msgid "Run model prepared by Graphical modeler"
-msgstr ""
+msgstr "Starte Modell, vorbereitet im Graphical modeler"
 
 #: ../gui/wxpython/menustrings.py:175
 msgid "NVIZ (requires Tcl/Tk)"
@@ -1709,7 +1719,7 @@ msgstr "NVIZ (nicht interaktiv)"
 
 #: ../gui/wxpython/menustrings.py:178
 msgid "Allows rendering GIS data is a 3D space."
-msgstr ""
+msgstr "Erlaubt Rendern von GIS data im 3D-Raum."
 
 #: ../gui/wxpython/menustrings.py:179
 msgid "Bearing/distance to coordinates"
@@ -1737,7 +1747,7 @@ msgstr "Starte Skript"
 
 #: ../gui/wxpython/menustrings.py:184
 msgid "Launches script file."
-msgstr ""
+msgstr "Starte Skript-Datei."
 
 #: ../gui/wxpython/menustrings.py:185
 msgid "Exit GUI"
@@ -1891,6 +1901,8 @@ msgstr "Verwalte Add-ons-Erweiterungen"
 #: ../gui/wxpython/menustrings.py:222
 msgid "Tool to maintain GRASS extensions in local GRASS installation."
 msgstr ""
+"Werkzeug zur Verwaltung von GRASS-Erweiterungen in der lokalen GRASS-"
+"Installation."
 
 #: ../gui/wxpython/menustrings.py:223 ../gui/wxpython/menustrings.py:815
 msgid "Preferences"
@@ -3376,7 +3388,7 @@ msgstr ""
 
 #: ../gui/wxpython/menustrings.py:535
 msgid "Interacrive management of vector color tables."
-msgstr ""
+msgstr "Interaktives Verwalten der Vektorfarbtabelle"
 
 #: ../gui/wxpython/menustrings.py:536
 msgid "Query with attributes"
@@ -3713,7 +3725,7 @@ msgstr "Konvexe Hülle"
 
 #: ../gui/wxpython/menustrings.py:609
 msgid "Produces a convex hull for a given vector map."
-msgstr ""
+msgstr "Erzeugt eine konvexe Hülle für eine Vektorkarte."
 
 #: ../gui/wxpython/menustrings.py:610
 msgid "Delaunay triangles"
@@ -4608,7 +4620,7 @@ msgstr "Loop hinzufügen"
 
 #: ../gui/wxpython/menustrings.py:825
 msgid "Adds loop (for) to model"
-msgstr ""
+msgstr "Füge Loop (for) zu Modell hinzu"
 
 #: ../gui/wxpython/menustrings.py:826
 msgid "Add condition"
@@ -4616,7 +4628,7 @@ msgstr "Bedingung hinzufügen"
 
 #: ../gui/wxpython/menustrings.py:827
 msgid "Adds condition (if/else) to model"
-msgstr ""
+msgstr "Füge Bedingung (if/else) zu Modell hinzu"
 
 #: ../gui/wxpython/menustrings.py:828
 msgid "Remove item"
@@ -4624,7 +4636,7 @@ msgstr "Entferne Objekt"
 
 #: ../gui/wxpython/menustrings.py:829
 msgid "Remove action/data from model"
-msgstr ""
+msgstr "Entferne Aktion/Daten aus Modell"
 
 #: ../gui/wxpython/menustrings.py:830
 #: ../gui/wxpython/gui_modules/gmodeler.py:3303
@@ -4633,7 +4645,7 @@ msgstr "Modell-Eigenschaften"
 
 #: ../gui/wxpython/menustrings.py:831
 msgid "Model properties (name, purpose, etc.)"
-msgstr ""
+msgstr "Modell-Eigenschaften (Name, Verwendungszweck, etc.)"
 
 #: ../gui/wxpython/menustrings.py:832
 msgid "Delete intermediate data"
@@ -4747,7 +4759,7 @@ msgstr "Nichts zu speichern."
 #: ../gui/wxpython/gui_modules/colorrules.py:669
 #, python-format
 msgid "Invalid rule value '%s'. Unable to apply color table."
-msgstr ""
+msgstr "Ungültiger Wert der Regel '%s'. Kann Farbtabelle nicht anwenden."
 
 #: ../gui/wxpython/gui_modules/colorrules.py:701
 #, fuzzy
@@ -4777,6 +4789,8 @@ msgstr "Wähle Font für Text im Histogramm"
 #: ../gui/wxpython/gui_modules/gmodeler.py:1046
 msgid "Choose a file name to save the image (no need to add extension)"
 msgstr ""
+"Wähle einen Dateinamen, um Bild zu speichern (Anfügen einer Extension nicht "
+"erforderlich)"
 
 #: ../gui/wxpython/gui_modules/histogram.py:426
 #: ../gui/wxpython/gui_modules/mapdisp.py:1142
@@ -4824,8 +4838,9 @@ msgid "Expression"
 msgstr "Ausdruck"
 
 #: ../gui/wxpython/gui_modules/mcalc_builder.py:134
+#, fuzzy
 msgid "Cl&ear"
-msgstr ""
+msgstr "&Säubere"
 
 #: ../gui/wxpython/gui_modules/mcalc_builder.py:140
 #, fuzzy
@@ -5175,6 +5190,8 @@ msgid ""
 "No maps in selected group <%s>. \n"
 "Please edit group or select another group."
 msgstr ""
+"Keine Karten in ausgewählter Gruppe <%s>. \n"
+"Bitte bearbeiten sie die Gruppe oder wählen sie eine andere aus."
 
 #: ../gui/wxpython/gui_modules/gcpmanager.py:730
 #: ../gui/wxpython/gui_modules/gcpmapdisp.py:79
@@ -5192,7 +5209,7 @@ msgstr "Löschen GCP"
 
 #: ../gui/wxpython/gui_modules/gcpmanager.py:1037
 msgid "mapwin not defined for "
-msgstr ""
+msgstr "Fenster nicht definiert für"
 
 #: ../gui/wxpython/gui_modules/gcpmanager.py:1108
 #: ../gui/wxpython/gui_modules/toolbars.py:412
@@ -5216,6 +5233,10 @@ msgid ""
 "East: %(coor0)s \n"
 "North: %(coor1)s"
 msgstr ""
+"Lge %(coor)s Koordinaten für GCP Nr. %(key)s fest? \n"
+"\n"
+"Ost: %(coor0)s \n"
+"Nord: %(coor1)s"
 
 #: ../gui/wxpython/gui_modules/gcpmanager.py:1177
 msgid "Writing POINTS file failed"
@@ -5227,12 +5248,14 @@ msgid "POINTS file saved for group <%s>"
 msgstr "POINTS-Datei gespeichert für Gruppe <%s>"
 
 #: ../gui/wxpython/gui_modules/gcpmanager.py:1203
+#, fuzzy
 msgid "source mapwin not defined"
-msgstr ""
+msgstr "Quell-Fenster nicht definiert"
 
 #: ../gui/wxpython/gui_modules/gcpmanager.py:1209
+#, fuzzy
 msgid "target mapwin not defined"
-msgstr ""
+msgstr "Ziel-Fenster nicht definiert"
 
 #: ../gui/wxpython/gui_modules/gcpmanager.py:1238
 msgid "Reading POINTS file failed"
@@ -5297,24 +5320,29 @@ msgid ""
 "Could not calculate RMS Error. \n"
 "Possible error with g.transform."
 msgstr ""
+"Could not calculate RMS Error. \n"
+"Possible error with g.transform."
 
 #: ../gui/wxpython/gui_modules/gcpmanager.py:1735
+#, fuzzy
 msgid "Adjust GCP Displays "
-msgstr ""
+msgstr "Passe GCP Anzeige an"
 
 #: ../gui/wxpython/gui_modules/gcpmanager.py:1736
 msgid ""
 "Could not calculate new extends. \n"
 "Possible error with g.transform."
 msgstr ""
+"Konnte neue Ausdehnung nicht berechnen. \n"
+"Möglicher Fehler bei g.transform."
 
 #: ../gui/wxpython/gui_modules/gcpmanager.py:1866
 msgid "Adjust source display to target display"
-msgstr ""
+msgstr "Passe Quell- an Ziel-Anzeige an"
 
 #: ../gui/wxpython/gui_modules/gcpmanager.py:1870
 msgid "Adjust target display to source display"
-msgstr ""
+msgstr "Passe Ziel- an Quell-Anzeige an"
 
 #: ../gui/wxpython/gui_modules/gcpmanager.py:1931
 #: ../gui/wxpython/gui_modules/gcpmanager.py:1948
@@ -5418,11 +5446,11 @@ msgstr "Symbologie"
 
 #: ../gui/wxpython/gui_modules/gcpmanager.py:2404
 msgid "Highlight highest RMS error only"
-msgstr ""
+msgstr "Hebe nur den höchsten RMS-Fehler hervor"
 
 #: ../gui/wxpython/gui_modules/gcpmanager.py:2410
 msgid "Highlight RMS error > M + SD * factor:"
-msgstr ""
+msgstr "Hebe RMS-Fehler > M + SD * factor hervor:"
 
 #: ../gui/wxpython/gui_modules/gcpmanager.py:2411
 msgid ""
@@ -5430,6 +5458,9 @@ msgid ""
 "mean + standard deviation * given factor. \n"
 "Recommended values for this factor are between 1 and 2."
 msgstr ""
+"Hebe GCPs mit einem RMS-Fehler größer als \n"
+"mean + standard deviation * factor hervor. \n"
+"Empfohlene Werte für diesen Faktor liegen zwischen 1 und 2."
 
 #: ../gui/wxpython/gui_modules/gcpmanager.py:2427
 msgid "Symbol settings"
@@ -5506,6 +5537,8 @@ msgid ""
 "RMS threshold factor is < 1\n"
 "Too many points might be highlighted"
 msgstr ""
+"RMS Schwellenwertfaktor ist < 1\n"
+"Zuviele Punkte könnten hervorgehoben werden"
 
 #: ../gui/wxpython/gui_modules/gcpmanager.py:2760
 #, python-format
@@ -5524,7 +5557,7 @@ msgstr "Projektion nicht definiert (überprüfe Einstellungen)"
 #: ../gui/wxpython/gui_modules/mapdisp.py:889
 #: ../gui/wxpython/gui_modules/mapdisp.py:1015
 msgid "Error in projection (check the settings)"
-msgstr ""
+msgstr "Fehler in der Projektion (überprüfen sie die Einstellungen)"
 
 #: ../gui/wxpython/gui_modules/mapdisp_window.py:905
 msgid "MASK"
@@ -5630,10 +5663,13 @@ msgstr "Verwende definierte Projektion"
 
 #: ../gui/wxpython/gui_modules/mapdisp.py:222
 #: ../gui/wxpython/gui_modules/gcpmapdisp.py:228
+#, fuzzy
 msgid ""
 "Reproject coordinates displayed in the statusbar. Projection can be defined "
 "in GUI preferences dialog (tab 'Display')"
 msgstr ""
+"Neu-Projektion der Koordinaten in der Statusleiste. Projektion kann im GUI "
+"Preferences Dialog (Tab 'Display') definiert werden."
 
 #: ../gui/wxpython/gui_modules/mapdisp.py:317
 msgid "Map toolbar"
@@ -5824,11 +5860,11 @@ msgstr "Befehl"
 #: ../gui/wxpython/gui_modules/ghelp.py:71
 #: ../gui/wxpython/gui_modules/ghelp.py:78
 msgid "keywords"
-msgstr ""
+msgstr "Schlüsselworte"
 
 #: ../gui/wxpython/gui_modules/ghelp.py:74
 msgid "Find module(s)"
-msgstr ""
+msgstr "Finde Module"
 
 #: ../gui/wxpython/gui_modules/ghelp.py:146
 #: ../gui/wxpython/gui_modules/ghelp.py:179
@@ -5838,7 +5874,7 @@ msgstr "%d Module gefunden"
 
 #: ../gui/wxpython/gui_modules/ghelp.py:212
 msgid "Menu tree (double-click to run command)"
-msgstr ""
+msgstr "Menue-Baumstruktir (Doppelklick, um einen Befehl auszuführen)"
 
 #: ../gui/wxpython/gui_modules/ghelp.py:222
 msgid "Run selected command"
@@ -5847,12 +5883,13 @@ msgstr "Führe den ausgewählten Befehl aus"
 #: ../gui/wxpython/gui_modules/ghelp.py:283
 msgid "You must run this command from the menu or command line"
 msgstr ""
+"Sie müssen diesen Befehl aus dem Menue oder aus der Kommandozeile starten"
 
 #: ../gui/wxpython/gui_modules/ghelp.py:338
 #: ../gui/wxpython/gui_modules/goutput.py:606
-#, python-format
+#, fuzzy, python-format
 msgid "%d modules match"
-msgstr ""
+msgstr "%d Module stimmen überein"
 
 #: ../gui/wxpython/gui_modules/ghelp.py:353
 #: ../gui/wxpython/gui_modules/ghelp.py:968
@@ -5925,7 +5962,7 @@ msgstr "Sprache"
 
 #: ../gui/wxpython/gui_modules/ghelp.py:762
 msgid "Fetch & install new extension from GRASS Addons"
-msgstr ""
+msgstr "Abruf und Installation neuer Erweiterungen der GRASS Addons"
 
 #: ../gui/wxpython/gui_modules/ghelp.py:770
 msgid "Repository"
@@ -5938,6 +5975,8 @@ msgstr "Liste der Erweiterungen"
 #: ../gui/wxpython/gui_modules/ghelp.py:777
 msgid "Fetch full info including description and keywords (takes time)"
 msgstr ""
+"Abruf der gesamten Information inklusive Beschreibung und Schlüsselworte "
+"(etwas Geduld)"
 
 #: ../gui/wxpython/gui_modules/ghelp.py:788
 #, fuzzy
@@ -5946,7 +5985,7 @@ msgstr "&Abrufen"
 
 #: ../gui/wxpython/gui_modules/ghelp.py:789
 msgid "Fetch list of available modules from GRASS Addons SVN repository"
-msgstr ""
+msgstr "Abruf der Modulliste vom GRASS-Addons SVN-Repository"
 
 #: ../gui/wxpython/gui_modules/ghelp.py:792
 msgid "&Install"
@@ -5954,11 +5993,11 @@ msgstr "&Installiere"
 
 #: ../gui/wxpython/gui_modules/ghelp.py:793
 msgid "Install selected add-ons GRASS module"
-msgstr ""
+msgstr "Installiere ausgewählte Add-on-GRASS-Module"
 
 #: ../gui/wxpython/gui_modules/ghelp.py:857
 msgid "Fetch list of available extensions by clicking on 'Fetch' button"
-msgstr ""
+msgstr "Rufe Liste vorhandener Erweiterungen bei Klick auf  'Fetch' button ab"
 
 #: ../gui/wxpython/gui_modules/ghelp.py:865
 #, fuzzy, python-format
@@ -5967,7 +6006,7 @@ msgstr "%d Objekte sind in Ordnung"
 
 #: ../gui/wxpython/gui_modules/ghelp.py:877
 msgid "Fetching list of modules from GRASS-Addons SVN (be patient)..."
-msgstr ""
+msgstr "Rufe Modulliste von GRASS-Addons SVN ab (etwas Geduld)..."
 
 #: ../gui/wxpython/gui_modules/ghelp.py:1119
 msgid "&Next"
@@ -6029,6 +6068,8 @@ msgid ""
 "Title of the location is limited only to one line and 256 characters. The "
 "rest of the text will be ignored."
 msgstr ""
+"Der Titel der Location ist auf eine Zeile und 256 Zeichen beschränkt. Der "
+"Rest des Textes wird ignoriert."
 
 #: ../gui/wxpython/gui_modules/location_wizard.py:235
 msgid "Choose method for creating a new location"
@@ -6208,7 +6249,7 @@ msgstr "Geben Sie den PROJ.4-Zeichenkette ein:"
 #: ../gui/wxpython/gui_modules/location_wizard.py:1541
 #: ../gui/wxpython/gui_modules/location_wizard.py:1545
 msgid "Datum transform is required."
-msgstr ""
+msgstr "Datum-Transformation ist erforderlich."
 
 #: ../gui/wxpython/gui_modules/location_wizard.py:1567
 msgid "Summary"
@@ -6409,7 +6450,7 @@ msgstr "Wählen Sie von der Liste der Datumstransformationen"
 
 #: ../gui/wxpython/gui_modules/vclean.py:36
 msgid "set up vector cleaning tools"
-msgstr ""
+msgstr "Einstellung der Vektor-Cleaning-Werkzeuge"
 
 #: ../gui/wxpython/gui_modules/vclean.py:75
 msgid "break lines/boundaries"
@@ -6424,28 +6465,32 @@ msgid "remove dangles"
 msgstr "entferne Überstände (dangles)"
 
 #: ../gui/wxpython/gui_modules/vclean.py:78
+#, fuzzy
 msgid "change boundary dangles to lines"
-msgstr ""
+msgstr "ändere Überstände von Flächengrenzen in Linien"
 
 #: ../gui/wxpython/gui_modules/vclean.py:79
 msgid "remove bridges"
 msgstr "Entferne Brücken"
 
 #: ../gui/wxpython/gui_modules/vclean.py:80
+#, fuzzy
 msgid "change bridges to lines"
-msgstr ""
+msgstr "ändere Brücken in Linien"
 
 #: ../gui/wxpython/gui_modules/vclean.py:81
 msgid "snap lines/boundaries"
 msgstr "raste Linie/Flächengrenzen ein"
 
 #: ../gui/wxpython/gui_modules/vclean.py:82
+#, fuzzy
 msgid "remove duplicate area centroids"
-msgstr ""
+msgstr "entferne doppelte Flächenzentroide"
 
 #: ../gui/wxpython/gui_modules/vclean.py:83
+#, fuzzy
 msgid "break polygons"
-msgstr ""
+msgstr "breche Polygone"
 
 #: ../gui/wxpython/gui_modules/vclean.py:84
 msgid "prune lines/boundaries"
@@ -6460,8 +6505,9 @@ msgid "remove lines/boundaries of zero length"
 msgstr "Entferne Linie/Flächengrenze mit einer Länge von 0"
 
 #: ../gui/wxpython/gui_modules/vclean.py:87
+#, fuzzy
 msgid "remove small angles at nodes"
-msgstr ""
+msgstr "entferne kleine Winkel an Knotenpunkten"
 
 #: ../gui/wxpython/gui_modules/vclean.py:120
 #: ../gui/wxpython/gui_modules/vclean.py:121
@@ -6469,8 +6515,9 @@ msgid "Set up vector cleaning tools"
 msgstr "Einstellen der Vektor-Cleaning-Tools"
 
 #: ../gui/wxpython/gui_modules/vclean.py:123
+#, fuzzy
 msgid "Choose cleaning tools and set thresholds"
-msgstr ""
+msgstr "Wähle Cleaning-Werkzeuge und bestimme Schwellenwerte"
 
 #: ../gui/wxpython/gui_modules/vclean.py:127
 msgid "Select input vector map:"
@@ -6516,13 +6563,14 @@ msgid "face"
 msgstr "Oberfläche"
 
 #: ../gui/wxpython/gui_modules/vclean.py:362
-#, python-format
+#, fuzzy, python-format
 msgid "%s. cleaning tool removed, will be ignored"
-msgstr ""
+msgstr "%s. Cleaning Werkzeug entfernt, wird ignoriert"
 
 #: ../gui/wxpython/gui_modules/vclean.py:364
+#, fuzzy
 msgid "Please select a cleaning tool to remove"
-msgstr ""
+msgstr "Wählen sie ein Cleaning-Werkzeug zum Entfernen"
 
 #: ../gui/wxpython/gui_modules/vclean.py:385
 #, python-format
@@ -6530,8 +6578,9 @@ msgid "%s. cleaning tool moved up"
 msgstr "%s. Vektor-Cleaning-Tool nach oben gereiht"
 
 #: ../gui/wxpython/gui_modules/vclean.py:387
+#, fuzzy
 msgid "1. cleaning tool can not be moved up "
-msgstr ""
+msgstr "1. Cleaning kann nicht nach oben bewegt werden"
 
 #: ../gui/wxpython/gui_modules/vclean.py:389
 msgid "Please select a cleaning tool to move up"
@@ -6539,17 +6588,20 @@ msgstr ""
 "Wählen sie ein Vektor-Cleaning-Tool aus, um es weiter nach oben zu reihen"
 
 #: ../gui/wxpython/gui_modules/vclean.py:412
-#, python-format
+#, fuzzy, python-format
 msgid "%s. cleaning tool moved down"
-msgstr ""
+msgstr "%s. Cleaning-Werkzeug abwärts bewegt"
 
 #: ../gui/wxpython/gui_modules/vclean.py:414
+#, fuzzy
 msgid "Last cleaning tool can not be moved down "
-msgstr ""
+msgstr "Letztes Cleaning-Werkzeug nach nicht nach unten verschoben werden"
 
 #: ../gui/wxpython/gui_modules/vclean.py:416
+#, fuzzy
 msgid "Please select a cleaning tool to move down"
 msgstr ""
+"Bitte wählen sie ein Cleaning-Werkzeug aus, um es nach unten zu verschieben"
 
 #: ../gui/wxpython/gui_modules/vclean.py:427
 #, python-format
@@ -6557,13 +6609,14 @@ msgid "cleaning tool: '%s'"
 msgstr "Cleaning tool: '%s'"
 
 #: ../gui/wxpython/gui_modules/vclean.py:435
-#, python-format
+#, fuzzy, python-format
 msgid "Threshold for %(num)s. tool '%(tool)s': %(thresh)s"
-msgstr ""
+msgstr "Schwellenwert für %(num)s. Werkzeug '%(tool)s': %(thresh)s"
 
 #: ../gui/wxpython/gui_modules/vclean.py:456
+#, fuzzy
 msgid "Executing selected cleaning operations..."
-msgstr ""
+msgstr "Führe ausgewählte Cleaning-Bearbeitungen aus..."
 
 #: ../gui/wxpython/gui_modules/vclean.py:510
 msgid "Vector cleaning command copied to clipboard"
@@ -6588,8 +6641,9 @@ msgid "Appearance"
 msgstr "Erscheinung"
 
 #: ../gui/wxpython/gui_modules/nviz_tools.py:111
+#, fuzzy
 msgid "Control View"
-msgstr ""
+msgstr "Kontrolle des View"
 
 #: ../gui/wxpython/gui_modules/nviz_tools.py:119
 #: ../gui/wxpython/gui_modules/nviz_tools.py:1145
@@ -6690,8 +6744,9 @@ msgstr "Zurücksetzen auf Standardansicht"
 #: ../gui/wxpython/gui_modules/nviz_tools.py:232
 #: ../gui/wxpython/gui_modules/nviz_tools.py:3122
 #: ../gui/wxpython/gui_modules/nviz_preferences.py:205
+#, fuzzy
 msgid "Image Appearance"
-msgstr ""
+msgstr "Image Appearance"
 
 #: ../gui/wxpython/gui_modules/nviz_tools.py:239
 #: ../gui/wxpython/gui_modules/nviz_tools.py:3129
@@ -7855,9 +7910,9 @@ msgid "Choose model file"
 msgstr "Auswahl der Modell-Datei"
 
 #: ../gui/wxpython/gui_modules/gmodeler.py:822
-#, python-format
+#, fuzzy, python-format
 msgid "%(items)d items (%(actions)d actions) loaded into model"
-msgstr ""
+msgstr "%(items)d items (%(actions)d actions) in Modell geladen"
 
 #: ../gui/wxpython/gui_modules/gmodeler.py:829
 #: ../gui/wxpython/gui_modules/gmodeler.py:866
