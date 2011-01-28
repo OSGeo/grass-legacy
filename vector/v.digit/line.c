@@ -161,6 +161,9 @@ int new_line_update(void *closure, int sxn, int syn, int button)
 	Tool_next = TOOL_NOTHING;
 	return 1;
     }
+    
+    if (button > 3) /* Do nothing on mouse scroll */ 
+        return 0; 
 
     if (nl->type & GV_POINTS && (button == 1 ||  button == 2)) {
 	snap(&x, &y);
