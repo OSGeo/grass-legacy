@@ -289,7 +289,7 @@ def CreateNewVector(parent, cmd, title=_('Create new vector map'),
                             **cmd[1])
         except gcmd.GException, e:
             gcmd.GError(parent = self,
-                        message = e)
+                        message = e.value)
             return (None, None)
         
         #

@@ -361,7 +361,7 @@ class grassTask:
                 processTask(tree = etree.fromstring(getInterfaceDescription(grassModule)),
                             task = self)
             except gcmd.GException, e:
-                self.errorMsg = str(e)
+                self.errorMsg = e.value
                 
             self.define_first()
         
@@ -1967,7 +1967,7 @@ def getInterfaceDescription(cmd):
                                      stderr = grass.PIPE).communicate()
     except OSError, e:
         raise gcmd.GException, _("Unable to fetch interface description for command '%s'. "
-                                 "Details: %s") % (cmd, repr(e))
+                                 "Details: %s") % (cmd, e.value)
     if cmderr and cmderr[:7] != 'WARNING':
         raise gcmd.GException, _("Unable to fetch interface description for command '%s'. "
                                  "Details: %s") % (cmd, cmderr)

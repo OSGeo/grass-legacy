@@ -442,7 +442,7 @@ class GLWindow(MapWindow, glcanvas.GLCanvas):
                         self.LoadVector(item, points = False)
             except gcmd.GException, e:
                 GError(parent = self,
-                       message = e)
+                       message = e.value)
             self.init = False
         
         stop = time.time()
@@ -481,7 +481,7 @@ class GLWindow(MapWindow, glcanvas.GLCanvas):
                     self.UpdateView(None)
                 except gcmd.GException, e:
                     gcmd.GError(parent = self,
-                                message = e)
+                                message = e.value)
                 
                 self.lmgr.nviz.UpdateSettings()        
         
