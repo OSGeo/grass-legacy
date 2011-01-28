@@ -22,6 +22,7 @@ set prompt_left [G_msg "Left button"]
 set prompt_middle [G_msg "Middle button"]
 set prompt_right [G_msg "Right button"]
 set coor ""
+set bind_scroll_list {}
 
 wm title . "v.digit toolbox - $map_name@$map_mapset"
 
