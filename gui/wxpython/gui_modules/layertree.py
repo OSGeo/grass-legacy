@@ -431,7 +431,8 @@ class LayerTree(treemixin.DragAndDrop, CT.CustomTreeCtrl):
         self.lmgr.goutput.RunCmd(cmd)
          
     def OnSetCompRegFromMap(self, event):
-        """!Set computational region from selected raster/vector map"""
+        """!Set computational region from selected raster/vector map
+        """
         rast = []
         vect = []
         rast3d = []
