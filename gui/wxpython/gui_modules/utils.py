@@ -42,8 +42,7 @@ def split(s):
         return shlex.split(s)
 
 def GetTempfile(pref=None):
-    """
-    Creates GRASS temporary file using defined prefix.
+    """!Creates GRASS temporary file using defined prefix.
 
     @todo Fix path on MS Windows/MSYS
 
@@ -78,17 +77,16 @@ def GetLayerNameFromCmd(dcmd, fullyQualified = False, param = None,
     
     @param dcmd GRASS command (given as list)
     @param fullyQualified change map name to be fully qualified
-    @param force parameter otherwise 'input'/'map'
-    @param update change map name in command
+    @param param params directory
     @param layerType check also layer type ('raster', 'vector', '3d-raster', ...)
     
-    @return map name
-    @return '' if no map name found in command
+    @return tuple (name, found)
     """
     mapname = ''
+    found   = True
     
     if len(dcmd) < 1:
-        return mapname
+        return mapname, False
     
     if 'd.grid' == dcmd[0]:
         mapname = 'grid'
@@ -120,7 +118,7 @@ def GetLayerNameFromCmd(dcmd, fullyQualified = False, param = None,
             if len(dcmd) > 1 and '=' not in dcmd[1]:
                 params.append((1, None, dcmd[1]))
             else:
-                return mapname
+                return mapname, False
         
         mapname = params[0][2]
         mapset = ''
@@ -131,20 +129,22 @@ def GetLayerNameFromCmd(dcmd, fullyQualified = False, param = None,
                         findType = 'cell'
                     else:
                         findType = layerType
-                    mapset = grass.find_file(mapname, element=findType)['mapset']
+                    mapset = grass.find_file(mapname, element = findType)['mapset']
                 except AttributeError, e: # not found
-                    return ''
+                    return '', False
                 if not mapset:
-                    mapset = grass.gisenv()['MAPSET']
+                    found = False
             else:
                 mapset = grass.gisenv()['MAPSET']
             
             # update dcmd
             for i, p, v in params:
                 if p:
-                    dcmd[i] = p + '=' + v + '@' + mapset
+                    dcmd[i] = p + '=' + v
                 else:
-                    dcmd[i] = v + '@' + mapset
+                    dcmd[i] = v
+                if mapset:
+                    dcmd[i] += '@' + mapset
         
         maps = list()
         for i, p, v in params:
@@ -154,7 +154,7 @@ def GetLayerNameFromCmd(dcmd, fullyQualified = False, param = None,
                 maps.append(dcmd[i].split('=', 1)[1])
         mapname = '\n'.join(maps)
     
-    return mapname
+    return mapname, found
 
 def GetValidLayerName(name):
     """!Make layer name SQL compliant, based on G_str_to_sql()
