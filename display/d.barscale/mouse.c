@@ -4,7 +4,7 @@
 #include <grass/display.h>
 #include "options.h"
 
-int mouse_query(int toptext)
+int mouse_query(int toptext, int fontsize)
 {
     int t, b, l, r;
     char *panel = G_tempfile();
@@ -23,7 +23,7 @@ int mouse_query(int toptext)
 	east = (x_pos * 100.0) / (r - l);
 	north = (y_pos * 100.0) / (b - t);
 
-	draw_scale(panel, toptext);
+	draw_scale(panel, toptext, fontsize);
 
 	fprintf(stderr,
 		"\n"
