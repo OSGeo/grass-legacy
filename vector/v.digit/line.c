@@ -158,9 +158,11 @@ int new_line_update(void *closure, int sxn, int syn, int button)
 	Tool_next = TOOL_NOTHING;
 	return 1;
     }
+    
+    if (button > 3) /* Do nothing on mouse scroll */
+	return 0;
 
-    if (nl->type & GV_POINTS) {
-	/* We can get here with button = 1 or 2 -> the same write point */
+    if (nl->type & GV_POINTS && (button == 1 ||  button == 2)) {
 	snap(&x, &y);
 	Vect_append_point(nl->Points, x, y, 0);
 
@@ -221,7 +223,7 @@ int new_line_update(void *closure, int sxn, int syn, int button)
 		set_mode(MOUSE_POINT);
 	    }
 	}
-	else {			/* button = 3 -> write the line and quit */
+	else if (button == 3) {		/* write the line and quit */
 	    if (nl->Points->n_points > 1) {
 		/* Before the line is written, we must check if connected to existing nodes, if yes,
 		 * such nodes must be add to update list before! the line is written (areas/isles */
