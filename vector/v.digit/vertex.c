@@ -243,14 +243,23 @@ int rm_vertex_update(void *closure, int sxn, int syn, int button)
 
 	    type = Vect_read_line(&Map, rv->Points, rv->Cats, rv->last_line);
 	    np = rv->Points->n_points;
-	    for (i = rv->last_seg; i < np - 1; i++) {
-		rv->Points->x[i] = rv->Points->x[i + 1];
-		rv->Points->y[i] = rv->Points->y[i + 1];
-		rv->Points->z[i] = rv->Points->z[i + 1];
-	    }
-	    rv->Points->n_points--;
-	    Vect_rewrite_line(&Map, rv->last_line, type, rv->Points,
+	    
+	    /* Lines should have at least two vertices (start and end node). */
+	    if (np < 3 && Vect_line_alive(&Map, rv->last_line)) {
+		Vect_delete_line(&Map, rv->last_line);
+		for (i = 0; i < rv->Cats->n_cats; i++) {
+		    check_record(rv->Cats->field[i], rv->Cats->cat[i]);
+		}
+	    } else {
+		for (i = rv->last_seg; i < np - 1; i++) {
+		    rv->Points->x[i] = rv->Points->x[i + 1];
+		    rv->Points->y[i] = rv->Points->y[i + 1];
+		    rv->Points->z[i] = rv->Points->z[i + 1];
+		}
+		rv->Points->n_points--;
+		Vect_rewrite_line(&Map, rv->last_line, type, rv->Points,
 			      rv->Cats);
+	    }
 	    updated_lines_and_nodes_erase_refresh_display();
 	    rv->last_line = 0;
 	}
