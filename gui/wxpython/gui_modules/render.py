@@ -125,7 +125,7 @@ class Layer(object):
         layertypes = ('raster', 'rgb', 'his', 'shaded', 'rastarrow', 'rastnum',
                       'vector','thememap','themechart',
                       'grid', 'geodesic', 'rhumb', 'labels',
-                      'command',
+                      'command', 'rastleg',
                       'overlay')
         
         if self.type not in layertypes:
@@ -199,7 +199,7 @@ class Layer(object):
                 self.maskfile = None
         
         except gcmd.GException, e:
-            sys.stderr.write(e)
+            sys.stderr.write(e.value)
             # clean up after problems
             try:
                 os.remove(self.mapfile)
@@ -294,7 +294,7 @@ class Layer(object):
                         'shaded', 'rgb', 'his', 'rastarrow', 'rastnum',
                         'thememap', 'themechart', 'grid', 'labels',
                         'geodesic','rhumb'):
-            raise gcmd.GException(_("Unsupported map layer type '%s'") % str(type))
+            raise gcmd.GException(_("Unsupported map layer type '%s'") % type)
         
         self.type = type
 
@@ -983,7 +983,7 @@ class Map(object):
         Debug.msg (3, "Map.AddLayer(): layer=%s" % layer.name)
         if l_render:
             if not layer.Render():
-                raise gcmd.GException(_("Unable to render map layer <%s>.") % (name))
+                raise gcmd.GException(_("Unable to render map layer <%s>.") % name)
         
         return layer
 
@@ -1066,7 +1066,7 @@ class Map(object):
         
         if render and not layer.Render():
             raise gcmd.GException(_("Unable to render map layer <%s>.") % 
-                                  (name))
+                                  name)
         
         return layer
 
@@ -1175,7 +1175,7 @@ class Map(object):
         
         if l_render and command != '' and not overlay.Render():
             raise gcmd.GException(_("Unable render overlay <%s>.") % 
-                                  (name))
+                                  name)
         
         return self.overlays[-1]
 
@@ -1214,7 +1214,7 @@ class Map(object):
         
         if render and command != [] and not overlay.Render():
             raise gcmd.GException(_("Unable render overlay <%s>") % 
-                                  (name))
+                                  name)
         
         return overlay
 
