@@ -150,6 +150,7 @@ int new_line_update(void *closure, int sxn, int syn, int button)
     struct new_line *nl = closure;
     double x = D_d_to_u_col(sxn);
     double y = D_d_to_u_row(syn);
+    double dist;
 
     G_debug(3, "button = %d x = %d = %f y = %d = %f", button, sxn, x, syn, y);
 
@@ -170,8 +171,21 @@ int new_line_update(void *closure, int sxn, int syn, int button)
     else {			/* GV_LINES */
 	/* Button may be 1,2,3 */
 	if (button == 1) {	/* New point */
-	    snap(&x, &y);
-	    Vect_append_point(nl->Points, x, y, 0);
+	    if (snap(&x, &y) == 0) {
+		/* If not snapping to other features, try to snap to lines start.
+		 * Allows to create area of single boundary. */
+		if (nl->Points->n_points > 2) {
+		    dist = Vect_points_distance(nl->Points->x[0], nl->Points->y[0], 0, x, y, 0, WITHOUT_Z);
+		    if (dist < get_thresh()) {
+			x = nl->Points->x[0];
+			y = nl->Points->y[0];
+		    }
+		}
+	    }
+	    if (Vect_append_point(nl->Points, x, y, 0) == -1) {
+		G_warning("Out of memory! Point not added.");
+		return 0;
+	    }
 
 	    if (nl->type == GV_LINE)
 		symb_set_driver_color(SYMB_LINE);
