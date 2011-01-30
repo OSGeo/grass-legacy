@@ -157,7 +157,7 @@ v.in.ascii cat=0 x=6 y=5 fs="|" in="${TMPFILE}.csv" out="$GIS_OPT_OUTPUT" \
 
 if [ $? -eq 0 ] ; then
    # write cmd history:
-   v.support $GIS_OPT_OUTPUT cmdhist="${CMDLINE}"
+   v.support "$GIS_OPT_OUTPUT" cmdhist="${CMDLINE}"
    rm -f "${TMPFILE}.csv"
    exit 0
 fi
