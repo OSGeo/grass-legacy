@@ -24237,7 +24237,7 @@ msgstr ""
 #, fuzzy
 msgid "point;simple x,y[,z] list;standard;GRASS vector ASCII format"
 msgstr ""
-"point; kiểu danh sách x,y[,z] đơn giản; standard; định dạng ASCII vec-tơ của "
+"point;kiểu danh sách x,y[,z] đơn giản; standard;định dạng ASCII vec-tơ của "
 "GRASS"
 
 #: ../vector/v.in.ascii/in.c:70

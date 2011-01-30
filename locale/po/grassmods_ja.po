@@ -23846,7 +23846,7 @@ msgstr "標準入力がない場合，ASCIIファイルがインポートされ�
 #: ../vector/v.in.ascii/in.c:67
 #, fuzzy
 msgid "point;simple x,y[,z] list;standard;GRASS vector ASCII format"
-msgstr "ポイント；単に x,y [,z] リスト；標準；GRASSのベクトルASCIIフォーマット"
+msgstr "point；単に x,y [,z] リスト；standard；GRASSのベクトルASCIIフォーマット"
 
 #: ../vector/v.in.ascii/in.c:70
 msgid "Input file format"
