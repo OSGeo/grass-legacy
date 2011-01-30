@@ -24523,7 +24523,7 @@ msgstr ""
 
 #: ../vector/v.in.ascii/in.c:67
 msgid "point;simple x,y[,z] list;standard;GRASS vector ASCII format"
-msgstr "Punkt; einfache x,y[,z] Liste;Standard;GRASS Vektor-ASCII-Format"
+msgstr "point;einfache x,y[,z] Liste;standard;GRASS Vektor-ASCII-Format"
 
 #: ../vector/v.in.ascii/in.c:70
 msgid "Input file format"
