@@ -62,7 +62,7 @@ if [ "$1" != "@ARGS_PARSED@" ] ; then
   exec g.parser "$0" "$@"
 fi
 
-PROG="`basename $0`"
+PROG=`basename "$0"`
 
 # setting environment, so that awk works properly in all languages
 unset LC_ALL
@@ -88,7 +88,7 @@ if [ "$GIS_OPT_FORMAT" = "DBF" -o  "$GIS_OPT_FORMAT" = "dbf" ] ; then
 fi
 
 if [ "$GIS_OPT_FORMAT" = "CSV" ] ; then
-  OLAYER="olayer=`basename $GIS_OPT_DSN .csv`"
+  OLAYER="olayer=`basename "$GIS_OPT_DSN" .csv`"
 fi
 
 #is there a simpler way of testing for --overwrite?
@@ -107,7 +107,7 @@ fi
 if [ "$GIS_OPT_FORMAT" = "ESRI_Shapefile" ] ; then
   echo "$GIS_OPT_DSN" | grep '\.dbf$' > /dev/null
   if [ $? -eq 0 ] ; then
-    OUTNAME="`basename $GIS_OPT_DSN .dbf`"
+    OUTNAME="`basename "$GIS_OPT_DSN" .dbf`"
     rm -f "$OUTNAME.shp" "$OUTNAME.shx" "$OUTNAME.prj"
     OUTNAME="$OUTNAME.dbf"
   else
