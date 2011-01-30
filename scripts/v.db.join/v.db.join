@@ -75,7 +75,7 @@ if [ "$1" != "@ARGS_PARSED@" ] ; then
     exec g.parser "$0" "$@"
 fi
 
-PROG=`basename $0`
+PROG="`basename $0`"
 
 database=`v.db.connect -gl map="$GIS_OPT_MAP" fs="|" layer="$GIS_OPT_LAYER" | cut -d'|' -f4`
 driver=`v.db.connect -gl map="$GIS_OPT_MAP" fs="|" layer="$GIS_OPT_LAYER" | cut -d'|' -f5`

@@ -42,7 +42,7 @@ then
 	exec g.parser "$0" "$@"
 fi
 
-PROG=`basename $0`
+PROG="`basename $0`"
 
 #### check if we have awk
 if [ ! -x "`which awk`" ] ; then
