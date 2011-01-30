@@ -66,7 +66,7 @@ fi
 g.message -w "This module is superseded and will be removed in future \
   versions of GRASS. Use the v.univar instead."
 
-PROG=`basename $0`
+PROG="`basename $0`"
 
 #### check if we have awk
 if [ ! -x "`which awk`" ] ; then

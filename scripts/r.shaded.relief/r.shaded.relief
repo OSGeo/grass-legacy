@@ -122,7 +122,7 @@ fi
 #nsres=`g.region -g | grep 'nsres=' | sed s/nsres=//`
 #ewres=`g.region -g | grep 'ewres=' | sed s/ewres=//`
 
-PROG=`basename $0`
+PROG="`basename $0`"
 
 # setting environment, so that awk works properly in all languages
 unset LC_ALL

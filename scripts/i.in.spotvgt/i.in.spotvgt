@@ -171,7 +171,7 @@ create_VRT_file(){
 
 if [ -n "$GIS_OPT_FILE" ] ; then
     SPOTDIR="`dirname $GIS_OPT_FILE`"
-    SPOTNAME=`basename $GIS_OPT_FILE .HDF`
+    SPOTNAME=`basename "$GIS_OPT_FILE" .HDF`
 fi
 
 if [ -n "$GIS_OPT_RAST" ] ; then
