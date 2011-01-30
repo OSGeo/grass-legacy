@@ -54,7 +54,7 @@ if [ -z "$GISBASE" ] ; then
 fi
 
 if [ "$1" != "@ARGS_PARSED@" ] ; then
-    CMDLINE="`basename $0`"
+    CMDLINE=`basename "$0"`
     for arg in "$@" ; do
         CMDLINE="$CMDLINE \"$arg\""
     done
@@ -62,7 +62,7 @@ if [ "$1" != "@ARGS_PARSED@" ] ; then
     exec g.parser "$0" "$@"
 fi
 
-PROG="`basename $0`"
+PROG=`basename "$0"`
 
 #### check if we have awk
 if [ ! -x "`which awk`" ] ; then

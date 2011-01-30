@@ -96,7 +96,7 @@ fi
 
 if [ "$1" != "@ARGS_PARSED@" ] ; then
     # save command line
-    CMDLINE="`basename $0`"
+    CMDLINE=`basename "$0"`
     for arg in "$@" ; do
 	CMDLINE="$CMDLINE \"$arg\""
     done
@@ -113,7 +113,7 @@ eval `g.gisenv`
 : ${GISBASE?} ${GISDBASE?} ${LOCATION_NAME?} ${MAPSET?}
 LOCATION="$GISDBASE"/"$LOCATION_NAME"/"$MAPSET"
 
-PROG="`basename $0`"
+PROG=`basename "$0"`
 
 #### check for gpsbabel 
  if [ ! -x "`which gpsbabel`" ] ; then
