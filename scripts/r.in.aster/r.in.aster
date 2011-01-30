@@ -57,7 +57,7 @@ fi
 
 # save command line
 if [ "$1" != "@ARGS_PARSED@" ] ; then
-    CMDLINE="`basename $0`"
+    CMDLINE=`basename "$0"`
     for arg in "$@" ; do
         CMDLINE="$CMDLINE \"$arg\""
     done

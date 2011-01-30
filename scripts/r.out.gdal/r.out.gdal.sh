@@ -74,7 +74,7 @@ if [ "$1" != "@ARGS_PARSED@" ] ; then
   exec g.parser "$0" "$@"
 fi
 
-PROG="`basename $0`"
+PROG=`basename "$0"`
 
 g.message -w "This module is superseded and will be removed in future \
 versions of GRASS. Use the much faster r.out.gdal instead."
