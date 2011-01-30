@@ -101,7 +101,7 @@ eval `g.gisenv`
 : ${GISBASE?} ${GISDBASE?} ${LOCATION_NAME?} ${MAPSET?}
 LOCATION=$GISDBASE/$LOCATION_NAME/$MAPSET
 
-program=`basename $0`
+PROG="`basename $0`"
 
 g.message "Collecting map names for current mapset <$MAPSET>..."
 

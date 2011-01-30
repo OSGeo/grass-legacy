@@ -109,7 +109,7 @@ eval `g.gisenv`
 : ${GISBASE?} ${GISDBASE?} ${LOCATION_NAME?} ${MAPSET?}
 LOCATION="$GISDBASE"/"$LOCATION_NAME"/"$MAPSET"
 
-PROG=`basename $0`
+PROG="`basename $0`"
 
 if [ $GIS_FLAG_U -eq 0 ] ; then
     #### check for gpstrans

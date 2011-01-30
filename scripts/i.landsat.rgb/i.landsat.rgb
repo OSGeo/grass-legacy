@@ -92,7 +92,7 @@ unset LC_ALL
 LC_NUMERIC=C
 export LC_NUMERIC
 
-PROG=`basename $0`
+PROG="`basename $0`"
 
 BLUE="$GIS_OPT_BLUE"
 GREEN="$GIS_OPT_GREEN"
