@@ -266,7 +266,7 @@ fi
 
 # don't v.db.connect directly as source table will be removed with
 # temporary map in that case. So we make a temp copy of it to work with.
-DB_PARAMS=`v.db.connect -g "$INMAP" fs='|' 2> /dev/null | grep "^$GIS_OPT_LAYER "`
+DB_PARAMS=`v.db.connect -gl map="$INMAP" fs='|' layer="$GIS_OPT_LAYER" 2> /dev/null`
 if [ -n "$DB_PARAMS" ] ; then
    DB_TABLE=`echo "$DB_PARAMS" | cut -f2 -d'|'`
    DB_KEY=`echo "$DB_PARAMS" | cut -f3 -d'|'`

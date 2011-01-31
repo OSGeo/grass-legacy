@@ -361,15 +361,14 @@ if [ "$GIS_FLAG_S" -eq 1 ] ; then
     export GRASS_PNG_AUTO_WRITE
 fi
 
-table=`v.db.connect $GIS_OPT_MAP -g fs=";" | grep -w "^$GIS_OPT_LAYER" | awk -F ";" '{print $2}'`
-database=`v.db.connect $GIS_OPT_MAP -g fs=";" | grep -w "^$GIS_OPT_LAYER" | awk -F ";" '{print $4}'`
-driver=`v.db.connect $GIS_OPT_MAP -g fs=";" | grep -w "^$GIS_OPT_LAYER" | awk -F ";" '{print $5}'`
+table=`v.db.connect "$GIS_OPT_MAP" -gl layer="$GIS_OPT_LAYER" fs="|" | cut -f2 -d'|'`
+database=`v.db.connect "$GIS_OPT_MAP" -gl layer="$GIS_OPT_LAYER" fs="|" | cut -f4 -d'|'`
+driver=`v.db.connect "$GIS_OPT_MAP" -gl layer="$GIS_OPT_LAYER" fs="|" | cut -f5 -d'|'`
 
-if [ -z "$table" ]
-    then
+if [ -z "$table" ] ; then
     g.message -e message="No table connected or layer <$GIS_OPT_LAYER> does not exist."
     exit 1
- fi
+fi
 
 # update color values to the table?
 if [ "$GIS_FLAG_U" -eq 1 ] ; then
