@@ -5255,7 +5255,7 @@ msgstr "tworzenie plików wsparcia (support files) dla mapy rastrowej %s"
 #: ../raster/simwe/r.sim.sediment/main.c:111
 #, fuzzy
 msgid "raster, sediment flow, erosion, deposition"
-msgstr "wekor, interpolacja"
+msgstr "wektor, interpolacja"
 
 #: ../raster/simwe/r.sim.sediment/main.c:113
 msgid ""
@@ -10553,7 +10553,7 @@ msgstr "Zapiywanie %s ..."
 #: ../raster/r.to.vect/main.c:50
 #, fuzzy
 msgid "raster, conversion, vectorization"
-msgstr "raster, wekor, wizualizacja"
+msgstr "raster, wektor, wizualizacja"
 
 #: ../raster/r.to.vect/main.c:51
 msgid "Converts a raster map into a vector map layer."
@@ -13691,7 +13691,7 @@ msgstr "Niewłaściwe współrzędne %s %s"
 #: ../general/g.transform/main.c:320
 #, fuzzy
 msgid "general, transformation, GCP"
-msgstr "wekor, interpolacja"
+msgstr "wektor, interpolacja"
 
 #: ../general/g.transform/main.c:322
 #, fuzzy
@@ -15345,12 +15345,12 @@ msgstr ""
 #: ../display/d.path/select.c:36
 #, c-format
 msgid "Left:   Select From\n"
-msgstr "Lewy:   Wybierz z\n"
+msgstr "Lewy:   Wybierz Z\n"
 
 #: ../display/d.path/select.c:37
 #, c-format
 msgid "Middle: Select To\n"
-msgstr ""
+msgstr "Środkowy: Wybierz Do\n"
 
 #: ../display/d.path/select.c:38
 #, c-format
@@ -15370,7 +15370,7 @@ msgstr "Node %d: %f %f\n"
 #: ../display/d.path/select.c:149 ../display/d.path/select.c:280
 #, c-format
 msgid "Destination unreachable\n"
-msgstr "Cel (przeznaczenie) nieosiągalne\n"
+msgstr "Cel nieosiągalny\n"
 
 #: ../display/d.path/select.c:153 ../display/d.path/select.c:283
 #, c-format
@@ -16380,11 +16380,11 @@ msgstr "Zakres rozpiętości danych wynosi %ld do %ld\n"
 
 #: ../display/d.extract/main.c:52
 msgid "Selects and extracts vectors with mouse into new vector map."
-msgstr "Wybierz i wydobądź myszką wektory do nowej mapy wktorowej."
+msgstr "Wybierz myszką obiekty do nowej mapy wektorowej."
 
 #: ../display/d.extract/main.c:117
 msgid "Copying tables..."
-msgstr "Kopiowanie tabel ..."
+msgstr "Kopiowanie tabel..."
 
 #: ../display/d.extract/main.c:125
 msgid "Cannot get db link info -> cannot copy table."
@@ -18925,7 +18925,7 @@ msgstr ""
 #: ../vector/v.generalize/main.c:80
 #, fuzzy
 msgid "Vector based generalization."
-msgstr "wekor, interpolacja"
+msgstr "wektor, interpolacja"
 
 #: ../vector/v.generalize/main.c:98
 msgid ""
@@ -21759,7 +21759,7 @@ msgstr ""
 #: ../vector/v.proj/main.c:63
 #, fuzzy
 msgid "vector, projection, transformation"
-msgstr "wekor, interpolacja"
+msgstr "wektor, interpolacja"
 
 #: ../vector/v.proj/main.c:64
 #, fuzzy
@@ -22855,7 +22855,7 @@ msgstr ""
 #: ../vector/v.transform/main.c:72
 #, fuzzy
 msgid "vector, transformation"
-msgstr "wekor, interpolacja"
+msgstr "wektor, interpolacja"
 
 #: ../vector/v.transform/main.c:74
 msgid ""
@@ -23722,7 +23722,7 @@ msgstr ""
 
 #: ../vector/v.to.rast/main.c:38
 msgid "vector, raster, conversion"
-msgstr "wekor, raster, konwersja"
+msgstr "wektor, raster, konwersja"
 
 #: ../vector/v.to.rast/main.c:39
 #, fuzzy
@@ -25764,7 +25764,7 @@ msgstr "%d zdublowanych kategorii w wektorze"
 #: ../vector/v.to.3d/main.c:37
 #, fuzzy
 msgid "vector, transformation, 3D"
-msgstr "wekor, interpolacja"
+msgstr "wektor, interpolacja"
 
 #: ../vector/v.to.3d/main.c:39
 msgid "Performs transformation of 2D vector features to 3D."
@@ -25991,7 +25991,7 @@ msgstr ""
 
 #: ../visualization/nviz/src/nviz_init.c:53
 msgid "raster, vector, visualization"
-msgstr "raster, wekor, wizualizacja"
+msgstr "raster, wektor, wizualizacja"
 
 #: ../visualization/nviz/src/nviz_init.c:55
 msgid "nviz - Visualization and animation tool for GRASS data."
@@ -32000,7 +32000,7 @@ msgstr "Nie można zaznaczyć innego punktu. Dozwolone jest tylko %d punktów."
 #~ msgstr "Nie można zapisać rzędu %d"
 
 #~ msgid "vector, projection"
-#~ msgstr "wekor, projekcja"
+#~ msgstr "wektor, projekcja"
 
 #~ msgid "Allows projection conversion of vector maps."
 #~ msgstr "Umożliwia zmianę projekcji map wektorowych."
