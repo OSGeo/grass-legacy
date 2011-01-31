@@ -77,15 +77,15 @@ fi
 
 PROG=`basename "$0"`
 
-driver=`v.db.connect -g map="$GIS_OPT_MAP" fs=";" | grep "^$GIS_OPT_LAYER" | cut -d';' -f5`
-database=`v.db.connect -g map="$GIS_OPT_MAP" fs=";" | grep "^$GIS_OPT_LAYER" | cut -d';' -f4`
+database=`v.db.connect -gl map="$GIS_OPT_MAP" fs="|" layer="$GIS_OPT_LAYER" | cut -d'|' -f4`
+driver=`v.db.connect -gl map="$GIS_OPT_MAP" fs="|" layer="$GIS_OPT_LAYER" | cut -d'|' -f5`
 
 if [ "$driver" = "dbf" ] ; then
    g.message -e "JOIN is not supported for tables stored in DBF format."
    exit 1
 fi
 
-maptable=`v.db.connect -g map="$GIS_OPT_MAP" fs=";" | grep "^$GIS_OPT_LAYER" | cut -d';' -f2`
+maptable=`v.db.connect -gl map="$GIS_OPT_MAP" fs="|" layer="$GIS_OPT_LAYER" | cut -d'|' -f2`
 
 if [ -z "$maptable" ] ; then
    g.message 'There is no table connected to this map! Cannot join any column.'
