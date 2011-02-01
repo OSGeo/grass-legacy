@@ -4016,7 +4016,7 @@ msgstr "Odwrotna szybka transformata Fouriera   (i.ifft)"
 
 #: ../gui/wxpython/menustrings.py:708
 msgid "Inverse Fast Fourier Transform (IFFT) for image processing."
-msgstr "Odwrotna szybka transformata Fouriera (IFFT) do analiz obrazu."
+msgstr "Odwrotna szybka transformata Fouriera (IFFT) do przetwarzania obrazu."
 
 #: ../gui/wxpython/menustrings.py:709
 msgid "Atmospheric correction"
