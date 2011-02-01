@@ -1011,7 +1011,8 @@ msgstr ""
 msgid ""
 "\n"
 "ERROR: option <%s> must be provided in multiples of %d\n"
-msgstr "BŁĄD: opcja <%s> musi być wielokrotnością %d\n"
+msgstr "\n"
+"BŁĄD: opcja <%s> musi być wielokrotnością %d\n"
 
 #: ../lib/gis/parser.c:2530
 #, c-format
