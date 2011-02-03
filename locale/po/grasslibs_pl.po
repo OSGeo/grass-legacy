@@ -685,11 +685,11 @@ msgstr "Nazwa(y) kolumny atrybutów"
 
 #: ../lib/gis/parser.c:396
 msgid "Name of input imagery group"
-msgstr "Nazwa wejściowej grupy zobrazowań"
+msgstr "Nazwa wejściowej grupy map rastrowych"
 
 #: ../lib/gis/parser.c:404
 msgid "Name of input imagery subgroup"
-msgstr "Nazwa wejściowej podgrupy zobrazowań"
+msgstr "Nazwa wejściowej podgrupy map rastrowych"
 
 #: ../lib/gis/parser.c:414 ../lib/gis/parser.c:439
 msgid "Name of input raster map"
