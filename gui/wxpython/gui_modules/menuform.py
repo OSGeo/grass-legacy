@@ -2115,8 +2115,10 @@ class GUI:
         if show is not None:
             self.mf.notebookpanel.OnUpdateSelection(None)
             if show is True:
-                if self.parent:
+                if self.parent and centreOnParent:
                     self.mf.CentreOnParent()
+                else:
+                    self.mf.CenterOnScreen()
                 self.mf.Show(show)
                 self.mf.MakeModal(modal)
             else:

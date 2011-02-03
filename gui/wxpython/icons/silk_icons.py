@@ -48,6 +48,7 @@ IconsSilk = {
     "digAddLine" : 'vector_add.png',
     "digAddBoundary": 'shape_handles.png',
     "digAddCentroid": 'shape_square_add.png',
+    "digAddArea": wx.ART_ERROR,
     ## vertex
     "digAddVertex" : 'chart_line_add.png',
     "digMoveVertex" : 'chart_line.png',
@@ -87,6 +88,7 @@ IconsSilk = {
     "addlabels"  : 'tag_blue_add.png',
     "delcmd"     : 'bin_closed.png',
     "attrtable"  : 'application_view_columns.png',
+    "vdigit"     : wx.ART_ERROR,
     "addrgb"     : 'rgb.png',
     "addhis"     : 'his.png',
     "addthematic": 'thematic.png',

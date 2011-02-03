@@ -14,7 +14,7 @@ Classes:
 Usage:
 python mapdisp.py monitor-identifier /path/to/command/file
 
-(C) 2006-2010 by the GRASS Development Team
+(C) 2006-2011 by the GRASS Development Team
 This program is free software under the GNU General Public
 License (>=v2). Read the file COPYING that comes with GRASS
 for details.
@@ -330,8 +330,8 @@ class MapFrame(wx.Frame):
                         "TCL/TK digitizer (v.digit) instead?\n\n"
                         "Details: %s" % errorMsg)
                 
-                self.mapdisplay.toolbars['map'].combo.SetValue (_("2D view"))
-                dlg = wx.MessageDialog(parent = self.mapdisplay,
+                self.toolbars['map'].combo.SetValue(_("2D view"))
+                dlg = wx.MessageDialog(parent = self,
                                        message = msg,
                                        caption=_("Vector digitizer failed"),
                                        style = wx.YES_NO | wx.CENTRE)
@@ -542,7 +542,7 @@ class MapFrame(wx.Frame):
         
         # deselect features in vdigit
         if self.toolbars['vdigit'] and self.digit:
-            self.digit.driver.SetSelected([])
+            self.digit.GetDisplay().SetSelected([])
             self.MapWindow.UpdateMap(render = True, renderVector = True)
         else:
             self.MapWindow.UpdateMap(render = True)
@@ -1168,8 +1168,7 @@ class MapFrame(wx.Frame):
             maplayer = self.toolbars['vdigit'].GetLayer()
             if maplayer:
                 self.toolbars['vdigit'].OnExit()
-                self.imgVectorMap = None
-
+        
         if self.toolbars['nviz']:
             self.toolbars['nviz'].OnExit()
         

@@ -10,7 +10,7 @@ from icons import Icons as Icons
 Classes:
  - MetaIcon
 
-(C) 2007-2008, 2010 by the GRASS Development Team
+(C) 2007-2008, 2010-2011 by the GRASS Development Team
 This program is free software under the GNU General Public
 License (>=v2). Read the file COPYING that comes with GRASS
 for details.
@@ -177,9 +177,9 @@ Icons = {
                              label=_("Print display")),
     # layer manager
     "newdisplay" : MetaIcon (img=Icons["newdisplay"],
-                             label=_("Start new display")),
+                             label=_("Start new map display")),
     "workspaceNew" : MetaIcon (img=Icons["fileNew"],
-                               label=_("Create new workspace file (Ctrl+N)")),
+                               label=_("Create new workspace (Ctrl+N)")),
     "workspaceLoad" : MetaIcon (img=Icons["fileLoad"],
                                 label=_("Load map layers into workspace (Ctrl+L)")),
     "workspaceOpen" : MetaIcon (img=Icons["fileOpen"],
@@ -210,6 +210,8 @@ Icons = {
                              label=_("Quit")),
     "attrtable"  : MetaIcon (img=Icons["attrtable"],
                              label=_("Show attribute table")),
+    "vdigit"     : MetaIcon (img=Icons["vdigit"],
+                             label=_("Edit vector maps")),
     "addrgb"     : MetaIcon (img=Icons["addrgb"],
                              label=_("Add RGB map layer")),
     "addhis"     : MetaIcon (img=Icons["addhis"],
@@ -251,6 +253,9 @@ Icons = {
                                 desc=_("Left: new point; Middle: undo last point; Right: close line")),
     "digAddCentroid": MetaIcon (img=Icons["digAddCentroid"],
                                 label=_("Digitize new centroid"),
+                             desc=_("Left: new point")),
+    "digAddArea": MetaIcon (img=Icons["digAddArea"],
+                                label=_("Digitize new area (composition of bondaries without category and one centroid with category)"),
                              desc=_("Left: new point")),
     "digAddVertex": MetaIcon (img=Icons["digAddVertex"],
                               label=_("Add new vertex"),

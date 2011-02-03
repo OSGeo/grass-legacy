@@ -15,7 +15,7 @@ Classes:
  - HistogramToolbar
  - LayerManagerToolbar
 
-(C) 2007-2010 by the GRASS Development Team
+(C) 2007-2011 by the GRASS Development Team
 This program is free software under the GNU General Public License
 (>=v2). Read the file COPYING that comes with GRASS for details.
 
@@ -35,8 +35,7 @@ import wx
 import globalvar
 import gcmd
 import gdialogs
-import vdigit
-from vdigit import VDigitSettingsDialog, haveVDigit
+from vdigit import VDigitSettingsDialog, haveVDigit, VDigit
 from debug import Debug
 from preferences import globalSettings as UserSettings
 from nviz import haveNviz
@@ -51,7 +50,7 @@ class AbstractToolbar(wx.ToolBar):
     def __init__(self, parent):
         self.parent = parent
         wx.ToolBar.__init__(self, parent = self.parent, id = wx.ID_ANY)
-    
+        
         self.action = dict()
         
         self.Bind(wx.EVT_TOOL, self.OnTool)
@@ -66,7 +65,7 @@ class AbstractToolbar(wx.ToolBar):
         
         self._data = toolData
         
-    def ToolbarData(self):
+    def _toolbarData(self):
         """!Toolbar data (virtual)"""
         return None
     
@@ -79,8 +78,8 @@ class AbstractToolbar(wx.ToolBar):
         bmpDisabled = wx.NullBitmap
         
         if label:
-            Debug.msg(3, "CreateTool(): tool=%d, label=%s bitmap=%s" % \
-                  (tool, label, bitmap))
+            Debug.msg(3, "CreateTool(): tool=%d, label=%s bitmap=%d" % \
+                  (tool, label, bitmap.GetWidth()))
             toolWin = self.AddLabelTool(tool, label, bitmap,
                                         bmpDisabled, kind,
                                         shortHelp, longHelp)
@@ -105,7 +104,8 @@ class AbstractToolbar(wx.ToolBar):
                 self.SetToolLongHelp(tool[0], "")
         
     def OnTool(self, event):
-        """!Tool selected"""
+        """!Tool selected
+        """
         if self.parent.GetName() == "GCPFrame":
             return
         
@@ -175,7 +175,7 @@ class MapToolbar(AbstractToolbar):
         self.mapcontent = mapcontent # render.Map
         AbstractToolbar.__init__(self, parent = parent) # MapFrame
         
-        self.InitToolbar(self.ToolbarData())
+        self.InitToolbar(self._toolbarData())
         
         # optional tools
         choices = [ _('2D view'), ]
@@ -194,6 +194,7 @@ class MapToolbar(AbstractToolbar):
                            'In the meantime you can use "NVIZ" from the File menu.'), wrap = 60)
             
             self.toolId['3d'] = -1
+
         if haveVDigit:
             choices.append(_('Digitize'))
             if self.toolId['3d'] > -1:
@@ -236,7 +237,7 @@ class MapToolbar(AbstractToolbar):
         
         self.FixSize(width = 90)
         
-    def ToolbarData(self):
+    def _toolbarData(self):
         """!Toolbar data"""
         self.displaymap = wx.NewId()
         self.rendermap = wx.NewId()
@@ -355,12 +356,12 @@ class GCPManToolbar(AbstractToolbar):
     def __init__(self, parent):
         AbstractToolbar.__init__(self, parent)
         
-        self.InitToolbar(self.ToolbarData())
+        self.InitToolbar(self._toolbarData())
         
         # realize the toolbar
         self.Realize()
 
-    def ToolbarData(self):
+    def _toolbarData(self):
         self.gcpSave = wx.NewId()
         self.gcpReload = wx.NewId()
         self.gcpAdd = wx.NewId()
@@ -405,7 +406,7 @@ class GCPDisplayToolbar(AbstractToolbar):
         """
         AbstractToolbar.__init__(self, parent)
         
-        self.InitToolbar(self.ToolbarData())
+        self.InitToolbar(self._toolbarData())
         
         # add tool to toggle active map window
         self.togglemapid = wx.NewId()
@@ -430,7 +431,7 @@ class GCPDisplayToolbar(AbstractToolbar):
         
         self.EnableTool(self.zoomback, False)
         
-    def ToolbarData(self):
+    def _toolbarData(self):
         """!Toolbar data"""
         self.displaymap = wx.NewId()
         self.rendermap = wx.NewId()
@@ -507,7 +508,7 @@ class GRToolbar(AbstractToolbar):
         self.mapcontent = mapcontent
         AbstractToolbar.__init__(self, parent)
         
-        self.InitToolbar(self.ToolbarData())
+        self.InitToolbar(self._toolbarData())
         
         # realize the toolbar
         self.Realize()
@@ -520,7 +521,7 @@ class GRToolbar(AbstractToolbar):
         
         self.EnableTool(self.zoomback, False)
         
-    def ToolbarData(self):
+    def _toolbarData(self):
         """!Toolbar data"""
         self.displaymap = wx.NewId()
         self.rendermap = wx.NewId()
@@ -579,12 +580,12 @@ class GCPToolbar(AbstractToolbar):
     def __init__(self, parent):
         AbstractToolbar.__init__(self, parent)
         
-        self.InitToolbar(self.ToolbarData())
+        self.InitToolbar(self._toolbarData())
         
         # realize the toolbar
         self.Realize()
 
-    def ToolbarData(self):
+    def _toolbarData(self):
         self.gcpSave = wx.NewId()
         self.gcpAdd = wx.NewId()
         self.gcpDelete = wx.NewId()
@@ -629,8 +630,7 @@ class GCPToolbar(AbstractToolbar):
             )
     
 class VDigitToolbar(AbstractToolbar):
-    """
-    Toolbar for digitization
+    """!Toolbar for digitization
     """
     def __init__(self, parent, mapcontent, layerTree = None, log = None):
         self.mapcontent    = mapcontent # Map class instance
@@ -649,7 +649,7 @@ class VDigitToolbar(AbstractToolbar):
         self.settingsDialog   = None
         
         # create toolbars (two rows optionally)
-        self.InitToolbar(self.ToolbarData())
+        self.InitToolbar(self._toolbarData())
         self.Bind(wx.EVT_TOOL, self.OnTool)
         
         # default action (digitize new point, line, etc.)
@@ -674,9 +674,8 @@ class VDigitToolbar(AbstractToolbar):
         
         self.FixSize(width = 105)
         
-    def ToolbarData(self):
-        """!
-        Toolbar data
+    def _toolbarData(self):
+        """!Toolbar data
         """
         data = []
         
@@ -684,6 +683,7 @@ class VDigitToolbar(AbstractToolbar):
         self.addLine = wx.NewId()
         self.addBoundary = wx.NewId()
         self.addCentroid = wx.NewId()
+        self.addArea = wx.NewId()
         self.moveVertex = wx.NewId()
         self.addVertex = wx.NewId()
         self.removeVertex = wx.NewId()
@@ -712,6 +712,9 @@ class VDigitToolbar(AbstractToolbar):
                 (self.addCentroid, "digAddCentroid", Icons["digAddCentroid"].GetBitmap(),
                  wx.ITEM_CHECK, Icons["digAddCentroid"].GetLabel(), Icons["digAddCentroid"].GetDesc(),
                  self.OnAddCentroid),
+                (self.addArea, "digAddArea", Icons["digAddArea"].GetBitmap(),
+                 wx.ITEM_CHECK, Icons["digAddArea"].GetLabel(), Icons["digAddArea"].GetDesc(),
+                 self.OnAddArea),
                 (self.moveVertex, "digMoveVertex", Icons["digMoveVertex"].GetBitmap(),
                  wx.ITEM_CHECK, Icons["digMoveVertex"].GetLabel(), Icons["digMoveVertex"].GetDesc(),
                  self.OnMoveVertex),
@@ -792,7 +795,7 @@ class VDigitToolbar(AbstractToolbar):
         if self.action['id'] != id:
             self.parent.MapWindow.ClearLines(pdc = self.parent.MapWindow.pdcTmp)
             if self.parent.digit and \
-                    len(self.parent.digit.driver.GetSelected()) > 0:
+                    len(self.parent.digit.GetDisplay().GetSelected()) > 0:
                 # cancel action
                 self.parent.MapWindow.OnMiddleDown(None)
         
@@ -834,6 +837,14 @@ class VDigitToolbar(AbstractToolbar):
                         'type' : "centroid",
                         'id'   : self.addCentroid }
         self.parent.MapWindow.mouse['box'] = 'point'
+
+    def OnAddArea(self, event):
+        """!Add area to the vector map layer"""
+        Debug.msg (2, "VDigitToolbar.OnAddCentroid()")
+        self.action = { 'desc' : "addLine",
+                        'type' : "area",
+                        'id'   : self.addArea }
+        self.parent.MapWindow.mouse['box'] = 'line'
 
     def OnExit (self, event=None):
         """!Quit digitization tool"""
@@ -991,10 +1002,8 @@ class VDigitToolbar(AbstractToolbar):
     def OnSettings(self, event):
         """!Show settings dialog"""
         if self.parent.digit is None:
-            reload(vdigit)
-            from vdigit import VDigit as VDigit
             try:
-                self.parent.digit = VDigit(mapwindow=self.parent.MapWindow)
+                self.parent.digit = VDigit(mapwindow = self.parent.MapWindow)
             except SystemExit:
                 self.parent.digit = None
         
@@ -1182,10 +1191,9 @@ class VDigitToolbar(AbstractToolbar):
 
     def OnZBulk(self, event):
         """!Z bulk-labeling selected lines/boundaries"""
-        if not self.parent.digit.driver.Is3D():
-            wx.MessageBox(parent = self.parent,
-                          message = _("Vector map is not 3D. Operation canceled."),
-                          caption = _("Error"), style = wx.OK | wx.ICON_ERROR | wx.CENTRE)
+        if not self.parent.digit.IsVector3D():
+            gcmd.GError(parent = self.parent,
+                        message = _("Vector map is not 3D. Operation canceled."))
             return
         
         if self.action['desc'] == 'zbulkLine': # select previous action
@@ -1273,10 +1281,13 @@ class VDigitToolbar(AbstractToolbar):
     def StartEditing (self, mapLayer):
         """!Start editing selected vector map layer.
         
-        @param mapLayer reference to MapLayer instance
+        @param mapLayer MapLayer to be edited
         """
         # deactive layer
         self.mapcontent.ChangeLayerActive(mapLayer, False)
+        
+        # clean map canvas
+        self.parent.MapWindow.EraseMap()
         
         # unset background map if needed
         if mapLayer:
@@ -1286,45 +1297,32 @@ class VDigitToolbar(AbstractToolbar):
                                  subkey = 'value', value = '', internal = True)
             
             self.parent.statusbar.SetStatusText(_("Please wait, "
-                                                  "opening vector map <%s> for editing...") % \
-                                                    mapLayer.GetName(),
+                                                  "opening vector map <%s> for editing...") % mapLayer.GetName(),
                                                 0)
         
-        # reload vdigit module
-        reload(vdigit)
-        from vdigit import VDigit as VDigit
-        # use vdigit's PseudoDC
-        self.parent.MapWindow.DefinePseudoDC(vdigit = True)
+        self.parent.MapWindow.pdcVector = wx.PseudoDC()
         self.parent.digit = VDigit(mapwindow = self.parent.MapWindow)
         
         self.mapLayer = mapLayer
         
         # open vector map
-        try:
-            if not self.parent.MapWindow.CheckPseudoDC():
-                raise gcmd.GException(_("Unable to initialize display driver of vector "
-                                        "digitizer. See 'Command output' for details."))
-            self.parent.digit.SetMapName(mapLayer.GetName())
-        except gcmd.GException, e:
+        if self.parent.digit.OpenMap(mapLayer.GetName()) is None:
             self.mapLayer = None
             self.StopEditing()
-            gcmd.GError(parent = self.parent,
-                        message = str(e))
             return False
         
         # update toolbar
         self.combo.SetValue(mapLayer.GetName())
         self.parent.toolbars['map'].combo.SetValue (_('Digitize'))
+        lmgr = self.parent.GetLayerManager()
+        if lmgr:
+            lmgr.toolbar.Enable('vdigit', enable = False)
         
         Debug.msg (4, "VDigitToolbar.StartEditing(): layer=%s" % mapLayer.GetName())
         
         # change cursor
         if self.parent.MapWindow.mouse['use'] == 'pointer':
             self.parent.MapWindow.SetCursor(self.parent.cursors["cross"])
-        
-        # create pseudoDC for drawing the map
-        self.parent.MapWindow.pdcVector = vdigit.PseudoDC()
-        self.parent.digit.driver.SetDevice(self.parent.MapWindow.pdcVector)
         
         if not self.parent.MapWindow.resize:
             self.parent.MapWindow.UpdateMap(render = True)
@@ -1342,9 +1340,6 @@ class VDigitToolbar(AbstractToolbar):
         @return True on success
         @return False on failure
         """
-        # use wx's PseudoDC
-        self.parent.MapWindow.DefinePseudoDC(vdigit = False)
-        
         self.combo.SetValue (_('Select vector map'))
         
         # save changes
@@ -1366,9 +1361,15 @@ class VDigitToolbar(AbstractToolbar):
                                                   "closing and rebuilding topology of "
                                                   "vector map <%s>...") % self.mapLayer.GetName(),
                                                 0)
-        
-            self.parent.digit.SetMapName(None) # -> close map
-        
+            lmgr = self.parent.GetLayerManager()
+            if lmgr:
+                lmgr.toolbar.Enable('vdigit', enable = True)
+                lmgr.notebook.SetSelection(1)
+            self.parent.digit.CloseMap()
+            if lmgr:
+                lmgr.GetLogWindow().GetProgressBar().SetValue(0)
+                lmgr.GetLogWindow().WriteCmdLog(_("Editing of vector map <%s> successfully finished") % \
+                                                    self.mapLayer.GetName())
             # re-active layer 
             item = self.parent.tree.FindItemByData('maplayer', self.mapLayer)
             if item and self.parent.tree.IsItemChecked(item):
@@ -1376,10 +1377,7 @@ class VDigitToolbar(AbstractToolbar):
         
         # change cursor
         self.parent.MapWindow.SetCursor(self.parent.cursors["default"])
-        
-        # disable pseudodc for vector map layer
         self.parent.MapWindow.pdcVector = None
-        self.parent.digit.driver.SetDevice(None)
         
         # close dialogs
         for dialog in ('attributes', 'category'):
@@ -1448,12 +1446,12 @@ class ProfileToolbar(AbstractToolbar):
     def __init__(self, parent):
         AbstractToolbar.__init__(self, parent)
         
-        self.InitToolbar(self.ToolbarData())
+        self.InitToolbar(self._toolbarData())
         
         # realize the toolbar
         self.Realize()
         
-    def ToolbarData(self):
+    def _toolbarData(self):
         """!Toolbar data"""
         self.transect = wx.NewId()
         self.addraster = wx.NewId()
@@ -1523,12 +1521,12 @@ class NvizToolbar(AbstractToolbar):
         # only one dialog can be open
         self.settingsDialog   = None
         
-        self.InitToolbar(self.ToolbarData())
+        self.InitToolbar(self._toolbarData())
         
         # realize the toolbar
         self.Realize()
         
-    def ToolbarData(self):
+    def _toolbarData(self):
         """!Toolbar data"""
         self.view = wx.NewId()
         self.surface = wx.NewId()
@@ -1635,12 +1633,12 @@ class ModelToolbar(AbstractToolbar):
     def __init__(self, parent):
         AbstractToolbar.__init__(self, parent)
         
-        self.InitToolbar(self.ToolbarData())
+        self.InitToolbar(self._toolbarData())
         
         # realize the toolbar
         self.Realize()
         
-    def ToolbarData(self):
+    def _toolbarData(self):
         """!Toolbar data"""
         self.new = wx.NewId()
         self.open = wx.NewId()
@@ -1717,12 +1715,12 @@ class HistogramToolbar(AbstractToolbar):
     def __init__(self, parent):
         AbstractToolbar.__init__(self, parent)
         
-        self.InitToolbar(self.ToolbarData())
+        self.InitToolbar(self._toolbarData())
         
         # realize the toolbar
         self.Realize()
         
-    def ToolbarData(self):
+    def _toolbarData(self):
         """!Toolbar data"""
         self.histogram = wx.NewId()
         self.rendermap = wx.NewId()
@@ -1765,13 +1763,14 @@ class LayerManagerToolbar(AbstractToolbar):
     def __init__(self, parent):
         AbstractToolbar.__init__(self, parent)
         
-        self.InitToolbar(self.ToolbarData())
+        self.InitToolbar(self._toolbarData())
         
         # realize the toolbar
         self.Realize()
 
-    def ToolbarData(self):
-        """!Toolbar data"""
+    def _toolbarData(self):
+        """!Toolbar data
+        """
         self.newdisplay = wx.NewId()
         self.workspaceLoad = wx.NewId()
         self.workspaceOpen = wx.NewId()
@@ -1784,18 +1783,19 @@ class LayerManagerToolbar(AbstractToolbar):
         self.addovl = wx.NewId()
         self.delcmd = wx.NewId()
         self.attribute = wx.NewId()
+        self.vdigit = wx.NewId()
         self.preferences = wx.NewId()
         self.modeler = wx.NewId() 
         
         # tool, label, bitmap, kind, shortHelp, longHelp, handler
         return (
             (self.newdisplay, 'newdisplay', Icons["newdisplay"].GetBitmap(),
-             wx.ITEM_NORMAL, Icons["newdisplay"].GetLabel(), Icons["newdisplay"].GetDesc(),
-             self.parent.OnNewDisplay),
+             wx.ITEM_NORMAL, _("Start new display / create new workspace"), '',
+             self.parent.OnNewMenu),
             ('', '', '', '', '', '', ''),
             (self.workspaceLoad, 'workspaceLoad', Icons["workspaceLoad"].GetBitmap(),
-             wx.ITEM_NORMAL, Icons["workspaceLoad"].GetLabel(), Icons["workspaceLoad"].GetDesc(),
-             self.parent.OnWorkspace),
+             wx.ITEM_NORMAL, _("Load / import map layers into workspace"), '',
+             self.parent.OnLoadMenu),
             (self.workspaceOpen, 'workspaceOpen', Icons["workspaceOpen"].GetBitmap(),
              wx.ITEM_NORMAL, Icons["workspaceOpen"].GetLabel(), Icons["workspaceOpen"].GetDesc(),
              self.parent.OnWorkspaceOpen),
@@ -1825,6 +1825,9 @@ class LayerManagerToolbar(AbstractToolbar):
              wx.ITEM_NORMAL, Icons["delcmd"].GetLabel(), Icons["delcmd"].GetDesc(),
              self.parent.OnDeleteLayer),
             ('', '', '', '', '', '', ''),
+            (self.vdigit, 'vdigit', Icons["vdigit"].GetBitmap(),
+             wx.ITEM_NORMAL, Icons["vdigit"].GetLabel(), Icons["vdigit"].GetDesc(),
+             self.parent.OnVDigit),
             (self.attribute, 'attrtable', Icons["attrtable"].GetBitmap(),
              wx.ITEM_NORMAL, Icons["attrtable"].GetLabel(), Icons["attrtable"].GetDesc(),
              self.parent.OnShowAttributeTable),
@@ -1836,4 +1839,3 @@ class LayerManagerToolbar(AbstractToolbar):
              wx.ITEM_NORMAL, Icons["settings"].GetLabel(), Icons["settings"].GetDesc(),
              self.parent.OnPreferences)
             )
-    

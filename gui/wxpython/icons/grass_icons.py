@@ -33,6 +33,7 @@ IconsGrass = {
     "digAddLine" : 'new.line.gif',
     "digAddBoundary": 'new.boundary.gif',
     "digAddCentroid": 'new.centroid.gif',
+    "digAddArea": wx.ART_ERROR,
     ## vertex
     "digAddVertex" : 'add.vertex.gif',
     "digMoveVertex" : 'move.vertex.gif',
@@ -67,6 +68,7 @@ IconsGrass = {
     "addovl"     : 'module-d.grid.gif',
     "delcmd"     : 'edit-cut.gif',
     "attrtable"  : 'db-values.gif',
+    "vdigit"     :  wx.ART_ERROR,
     "addrgb"     : 'module-d.rgb.gif',
     "addhis"     : 'channel-his.gif',
     "addshaded"  : 'module-d.shadedmap.gif',

@@ -339,14 +339,6 @@ class Settings:
                 'delRecord' : {
                     'enabled' : True
                     },
-                # add centroid to left/right area
-                'addCentroid' : {
-                    'enabled' : False
-                    },
-                # do not attach category to boundary
-                'catBoundary' : {
-                    'enabled' : False
-                    },
                 # query tool
                 'query' : {
                     'selection' : 0,

@@ -43,8 +43,9 @@ IconsGrass2 = {
     ## add feature
     "digAddPoint": 'point-create.png',
     "digAddLine" : 'line-create.png',
-    "digAddBoundary": 'polygon-create.png',
+    "digAddBoundary": 'boundary-create.png',
     "digAddCentroid": 'centroid-create.png',
+    "digAddArea": 'polygon-create.png',
     ## vertex
     "digAddVertex" : 'vertex-create.png',
     "digMoveVertex" : 'vertex-move.png',
@@ -84,6 +85,7 @@ IconsGrass2 = {
     "addlabels"  : 'layer-label-add.png',
     "delcmd"     : 'layer-remove.png',
     "attrtable"  : 'table.png',
+    "vdigit"     : 'edit.png',
     "addrgb"     : 'layer-rgb-add.png',
     "addhis"     : 'layer-his-add.png',
     "addthematic": 'layer-vector-thematic-add.png',
