@@ -44,7 +44,7 @@ msgstr "Ostrzeżenie - brak odpowiedzi od monitora graficznego <%s>.\n"
 #: ../lib/raster/rem_io.c:239
 #, c-format
 msgid "Check to see if the mouse is still active.\n"
-msgstr "Wybierz aby sprawdić czy mysz jest nadal aktywna.\n"
+msgstr "Zaznacz aby sprawdzić czy mysz jest nadal aktywna.\n"
 
 #: ../lib/raster/rem_io.c:244
 #, c-format
@@ -656,7 +656,7 @@ msgstr "Wartość górnej granicy musi być większa od dolnej"
 
 #: ../lib/gis/parser.c:340
 msgid "WHERE conditions of SQL statement without 'where' keyword"
-msgstr "Warunki WHERE polecenia SQL nie posiadają słowa kluczowego 'where'"
+msgstr "Warunki WHERE polecenia SQL - bez 'where'"
 
 #: ../lib/gis/parser.c:341
 #, fuzzy
@@ -693,7 +693,7 @@ msgstr "Nazwa wejściowej podgrupy zobrazowań"
 
 #: ../lib/gis/parser.c:414 ../lib/gis/parser.c:439
 msgid "Name of input raster map"
-msgstr "Nazwa źródłowej mapy rastrowej"
+msgstr "Nazwa wejściowej mapy rastrowej"
 
 #: ../lib/gis/parser.c:423 ../lib/gis/parser.c:448
 msgid "Name of input raster map(s)"
@@ -733,7 +733,7 @@ msgstr "Nazwa wyjściowej mapy rastrowej 3D"
 
 #: ../lib/gis/parser.c:535 ../lib/gis/parser.c:560
 msgid "Name of input vector map"
-msgstr "Nazwa źródłowej mapy wektorowej"
+msgstr "Nazwa wejściowej mapy wektorowej"
 
 #: ../lib/gis/parser.c:544 ../lib/gis/parser.c:569
 msgid "Name of input vector map(s)"
@@ -1545,7 +1545,7 @@ msgstr "MAPSET %s nie został znaleziony"
 
 #: ../lib/gis/error.c:257
 msgid "WARNING: "
-msgstr "UWAGA:"
+msgstr "UWAGA: "
 
 #: ../lib/gis/error.c:258
 msgid "ERROR: "
@@ -2820,12 +2820,12 @@ msgstr "Nie można odczytać mapy wektorowej"
 #: ../lib/vector/Vlib/build_nat.c:569
 #, c-format
 msgid "%d primitives registered"
-msgstr "%d prymitywów zarejestrowano"
+msgstr "zarejestrowano %d prymitywów"
 
 #: ../lib/vector/Vlib/build_nat.c:570
 #, c-format
 msgid "%d vertices registered"
-msgstr "%d wierzchołków zarejestrowano"
+msgstr "zarejestrowano %d wierzchołków"
 
 #: ../lib/vector/Vlib/build_nat.c:581
 msgid "Building areas..."
@@ -2834,12 +2834,12 @@ msgstr "Budowanie obszarów..."
 #: ../lib/vector/Vlib/build_nat.c:604
 #, c-format
 msgid "%d areas built"
-msgstr "%d obszarów zbudowano"
+msgstr "zbudowano %d obszarów"
 
 #: ../lib/vector/Vlib/build_nat.c:605
 #, c-format
 msgid "%d isles built"
-msgstr "%d wysp zbudowano"
+msgstr "zbudowano %d wysp"
 
 #: ../lib/vector/Vlib/build_nat.c:614
 msgid "Attaching islands..."
@@ -4846,7 +4846,7 @@ msgid "subgroup <%s> of group <%s> references the following raster maps\n"
 msgstr "podgrupa <%s> grupy <%s> odwołuje się do następujących map rastrowych\n"
 
 #~ msgid "Vector is not 3D"
-#~ msgstr "Wektor nie jest trójwymiarowy"
+#~ msgstr "Wektor nie jest 3D"
 
 #~ msgid "Cannot find z column <%s> (please verify name, e.g. with v.info)"
 #~ msgstr "Nie można odnaleźć kolumny 'z' <%s> (sprawdź nazwę np. v.info)"
@@ -4855,10 +4855,10 @@ msgstr "podgrupa <%s> grupy <%s> odwołuje się do następujących map rastrowyc
 #~ msgstr "Nieznany typ kolumny 'z' (musi być liczbowa)"
 
 #~ msgid "Cannot read column type of smooth column"
-#~ msgstr "Nie można odczytać typu kolumny z danymi dla 'smooth'"
+#~ msgstr "Nie można odczytać typu kolumny z danymi dla opcji 'smooth'"
 
 #~ msgid "Column type of s column is not supported (must be integer or double)"
 #~ msgstr "Typ kolumny 's' nie jest obsługiwany (musi być liczbowy)"
 
 #~ msgid "Unknown Location"
-#~ msgstr "Nieznana Lokacja"
+#~ msgstr "Nieznana lokacja"
