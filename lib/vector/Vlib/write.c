@@ -236,7 +236,7 @@ int Vect_delete_line(struct Map_info *Map, int line)
     ret = (*Vect_delete_line_array[Map->format][Map->level]) (Map, line);
 
     if (ret == -1)
-	G_fatal_error(_("Unable to feature %d from vector map <%s>"),
+	G_fatal_error(_("Unable to delete feature %d from vector map <%s>"),
 		      line, Map->name);
 
     return ret;
