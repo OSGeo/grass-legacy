@@ -3971,7 +3971,7 @@ msgstr "Mapa wektorowa <%s> nie jest 3D"
 
 #: ../lib/rst/interp_float/vinput2d.c:76
 msgid "Loading data from attribute table ..."
-msgstr "Odczyt danych z tabeli atrybutów ..."
+msgstr "Odczyt danych z tabeli atrybutów..."
 
 #: ../lib/rst/interp_float/vinput2d.c:94
 #: ../lib/rst/interp_float/vinput2d.c:108 ../lib/db/dbmi_client/copy_tab.c:248
@@ -3988,7 +3988,7 @@ msgstr "Typ danych kolumny <%s> musi być liczbowy"
 #: ../lib/rst/interp_float/vinput2d.c:121
 #, fuzzy
 msgid "Reading features from vector map ..."
-msgstr "Odczyt obiektów z mapy wektorowej ..."
+msgstr "Odczyt obiektów z mapy wektorowej..."
 
 #: ../lib/rst/interp_float/vinput2d.c:153
 #: ../lib/rst/interp_float/vinput2d.c:270
@@ -4004,7 +4004,7 @@ msgstr "Wartość parametru wygładzania musi być >= 0"
 #: ../lib/rst/interp_float/vinput2d.c:233
 #, fuzzy
 msgid "Reading nodes from vector map ..."
-msgstr "Odczyt węzłów z mapy wektorowej ..."
+msgstr "Odczyt węzłów z mapy wektorowej..."
 
 #: ../lib/rst/interp_float/vinput2d.c:314
 msgid "Strip exists with insufficient data"
