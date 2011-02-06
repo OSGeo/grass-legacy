@@ -191,7 +191,11 @@ int PS_colortable(void)
 		if (center_cols)
 		    fprintf(PS.fp, "mvx ");
 		fprintf(PS.fp, "%.1f ", y + fontsize);
-		fprintf(PS.fp, "B F BW stroke\n");
+/* no border	fprintf(PS.fp, "B CF stroke\n"); */
+/* grey border	fprintf(PS.fp, "B F .247 .247 .247 C 1 W stroke\n"); */
+		fprintf(PS.fp, "B F ");
+		set_ps_color(&ct.color);
+		fprintf(PS.fp, "1 W stroke\n");
 	    }
 	    else
 		/* split the rectangle into NSTEPS horizontal strips and
