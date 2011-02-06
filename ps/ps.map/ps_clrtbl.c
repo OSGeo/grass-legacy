@@ -4,12 +4,12 @@
  */
 
 #include <grass/glocale.h>
-
 #include "ps_info.h"
 #include "colortable.h"
+#include "local_proto.h"
 
-#define NSTEPS 5		/* number of steps to divide color box when showing color for
-				   category data range */
+#define NSTEPS 5	/* number of steps to divide color box when showing color for
+			   category data range */
 
 int PS_colortable(void)
 {
@@ -79,8 +79,8 @@ int PS_colortable(void)
     r = l + 72.0 * ct.width;
     col_width = ct.width / (double)ct.cols;
 
-    G_debug(3, "clrtbl: adjusted ct.x=[%.3f]  ct.y=[%.3f]  ct.width=[%.3f]",
-	    ct.x, ct.y, ct.width);
+    G_debug(3, "clrtbl: adjusted ct.x=[%.3f] ct.y=[%.3f] ct.width=[%.3f] "
+	    "col_width=[%.3f]", ct.x, ct.y, ct.width, col_width);
 
     /* read cats into PostScript array "a" */
     fprintf(PS.fp, "/a [\n");
@@ -107,6 +107,7 @@ int PS_colortable(void)
 	tl = 72.0 * col_width - 2.0 * fontsize;
     else
 	tl = 72.0 * col_width - 4.0 * fontsize;
+    G_debug(5, "clrtbl: adjusted fontsize = %.1f", tl);
     fprintf(PS.fp, "/s %.1f def\n", fontsize);
     fprintf(PS.fp, "mw %.1f gt {/s s %.1f mul mw div def } if\n", tl, tl);
     fprintf(PS.fp, "(%s) FN s SF\n", ct.font);
@@ -127,7 +128,7 @@ int PS_colortable(void)
     k = 0;
     for (i = 0; i <= num_cats;) {
 	if (!i && !ct.nodata)
-	    i++;		/* step over 'no data' */
+	    i++;  /* step over 'no data' */
 
 	/* test for bottom of page */
 	y -= dy;
@@ -193,7 +194,7 @@ int PS_colortable(void)
 		fprintf(PS.fp, "B F BW stroke\n");
 	    }
 	    else
-		/* split the rectangle into NSTEPS horisontal strips and
+		/* split the rectangle into NSTEPS horizontal strips and
 		   draw each with the corresponding value's color */
 	    {
 		for (jj = 0; jj < NSTEPS; jj++) {
@@ -227,9 +228,10 @@ int PS_colortable(void)
 		    fprintf(PS.fp, "mvx ");
 		fprintf(PS.fp, "%.1f ", y + fontsize);
 		fprintf(PS.fp, "B BW stroke\n");
-	    }			/* done drawing the box */
+	    }	/* done drawing the box */
 
 	    /* do the text */
+	    set_ps_color(&ct.color);
 	    fprintf(PS.fp, "a %d get %.1f ", k++, x1 + 2.0 * fontsize);
 	    if (center_cols)
 		fprintf(PS.fp, "mvx ");
