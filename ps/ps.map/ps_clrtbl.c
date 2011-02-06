@@ -8,8 +8,12 @@
 #include "colortable.h"
 #include "local_proto.h"
 
-#define NSTEPS 5	/* number of steps to divide color box when showing color for
-			   category data range */
+#define NSTEPS 5		/* number of steps to divide color box when
+				    showing color for category data range */
+#define FONTFIT_FACT 4.0	/* how agressive to be with shrinking the font size
+				    to get it to fit in the column (normal range: 2-4) */
+#define PRETEXT_MULT 2.0	/* space between box and text (this*fontsize) */
+
 
 int PS_colortable(void)
 {
@@ -106,7 +110,7 @@ int PS_colortable(void)
     if (ct.cols == 1)
 	tl = 72.0 * col_width - 2.0 * fontsize;
     else
-	tl = 72.0 * col_width - 4.0 * fontsize;
+	tl = 72.0 * col_width - FONTFIT_FACT * fontsize;
     G_debug(5, "clrtbl: fontsize=%.1f  adjusted tl=%.1f", fontsize, tl);
     fprintf(PS.fp, "/s %.1f def\n", fontsize);
     fprintf(PS.fp, "mw %.1f gt {/s s %.1f mul mw div def } if\n", tl, tl);
@@ -236,7 +240,7 @@ int PS_colortable(void)
 
 	    /* do the text */
 	    set_ps_color(&ct.color);
-	    fprintf(PS.fp, "a %d get %.1f ", k++, x1 + 2.0 * fontsize);
+	    fprintf(PS.fp, "a %d get %.1f ", k++, x1 + PRETEXT_MULT * fontsize);
 	    if (center_cols)
 		fprintf(PS.fp, "mvx ");
 	    fprintf(PS.fp, "%.1f MS\n", y);
