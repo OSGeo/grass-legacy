@@ -107,7 +107,7 @@ int PS_colortable(void)
 	tl = 72.0 * col_width - 2.0 * fontsize;
     else
 	tl = 72.0 * col_width - 4.0 * fontsize;
-    G_debug(5, "clrtbl: adjusted fontsize = %.1f", tl);
+    G_debug(5, "clrtbl: fontsize=%.1f  adjusted tl=%.1f", fontsize, tl);
     fprintf(PS.fp, "/s %.1f def\n", fontsize);
     fprintf(PS.fp, "mw %.1f gt {/s s %.1f mul mw div def } if\n", tl, tl);
     fprintf(PS.fp, "(%s) FN s SF\n", ct.font);
@@ -236,8 +236,9 @@ int PS_colortable(void)
 	    if (center_cols)
 		fprintf(PS.fp, "mvx ");
 	    fprintf(PS.fp, "%.1f MS\n", y);
+
 	    i++;
-	    if (i >= num_cats)
+	    if (i > num_cats)
 		j = ct.cols + 1;
 	}
     }
