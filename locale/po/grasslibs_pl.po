@@ -3503,7 +3503,7 @@ msgstr "Rozpoczęto rozwiązywanie metodą eliminacji Gaussa"
 #: ../lib/gpde/N_solvers.c:88
 #, fuzzy
 msgid "The lu solver does not work with sparse matrices"
-msgstr "Metoda LU można nie działa dla macierzy rozrzedzonych"
+msgstr "Metoda LU nie działa dla macierzy rozrzedzonych"
 
 #: ../lib/gpde/N_solvers.c:98
 #, fuzzy

@@ -32,7 +32,7 @@ msgstr "Błąd podczas zamykania mapy rastrowej 3D"
 
 #: ../raster3d/r3.out.ascii/main.c:76
 msgid "3d raster map to be converted to ASCII"
-msgstr "Mapa rastrowa 3D do przekonwertowania na ASCII"
+msgstr "Mapa rastrowa 3D do wyeksportowania do ASCII"
 
 #: ../raster3d/r3.out.ascii/main.c:83
 msgid "Name for ASCII output file"
@@ -50,7 +50,7 @@ msgstr "Znak reprezentujący komórki, w których brak danych"
 #: ../raster3d/r3.out.ascii/main.c:103 ../raster/r.out.ascii/main.c:104
 #: ../raster/r.out.arc/main.c:89
 msgid "Suppress printing of header information"
-msgstr "Nie wyświetlaj informacji nagłówkowych"
+msgstr "Nie zapisuj nagłówka mapy"
 
 #: ../raster3d/r3.out.ascii/main.c:107 ../raster3d/r3.to.rast/main.c:90
 #: ../raster/r.to.rast3elev/main.c:232
@@ -63,7 +63,7 @@ msgstr "raster3d, voxel, eksport"
 
 #: ../raster3d/r3.out.ascii/main.c:246
 msgid "Converts a 3D raster map layer into an ASCII text file"
-msgstr "Konwertuje warstwę mapy rastrowej 3D na plik tekstowy ASCII"
+msgstr "Eksport mapy rastrowej 3D do pliku ASCII"
 
 #: ../raster3d/r3.out.ascii/main.c:259 ../raster3d/base/r3.null.main.c:106
 #: ../raster3d/base/r3.mask.main.c:78 ../raster3d/r3.out.v5d/main.c:310
@@ -82,7 +82,7 @@ msgstr "Błąd podczas zamykania nowego pliku ASCII"
 
 #: ../raster3d/r3.in.ascii/main.c:79
 msgid "Ascii raster map to be imported"
-msgstr "Plik rastrowy ASCII do zaimportowania"
+msgstr "Plik rastrowy ASCII 3D do zaimportowania"
 
 #: ../raster3d/r3.in.ascii/main.c:90
 msgid "String representing NULL value data cell (use 'none' if no such value)"
@@ -110,7 +110,7 @@ msgstr "raster3d, voxel, import"
 
 #: ../raster3d/r3.in.ascii/main.c:242
 msgid "Convert a 3D ASCII raster text file into a (binary) 3D raster map layer"
-msgstr "Konwertuje rastrowy plik ASCII 3D na mapę rastrową 3D"
+msgstr "Import rastrowego pliku ASCII 3D do mapy rastrowej 3D"
 
 #: ../raster3d/r3.in.ascii/main.c:274
 msgid "Error closing new 3d raster map"
@@ -423,7 +423,7 @@ msgstr "Błąd podczas zamykania mapy wektorowej 3D"
 
 #: ../raster3d/r3.out.vtk/main.c:378
 msgid "Converts 3D raster maps (G3D) into the VTK-Ascii format"
-msgstr "Konwertuje mapy rastrowe 3D do formatu VTK ASCII"
+msgstr "Eksport map rastrowych 3D do formatu VTK ASCII"
 
 #: ../raster3d/r3.out.vtk/main.c:389
 msgid "failed to interpret dp as an integer"
@@ -586,42 +586,43 @@ msgstr "write_vtk_vector_data: zapis danych wektorowych"
 
 #: ../raster3d/r3.gwflow/main.c:55 ../raster/r.gwflow/main.c:55
 msgid "The initial piezometric head in [m]"
-msgstr ""
+msgstr "Początkowa wysokość piezometryczna w [m]"
 
 #: ../raster3d/r3.gwflow/main.c:63
 msgid "The status for each cell, = 0 - inactive, 1 - active, 2 - dirichlet"
-msgstr ""
+msgstr "Status każdej komórki: 0=nieaktywna, 1=aktywna, 2=Dirichlet"
 
 #: ../raster3d/r3.gwflow/main.c:71
 msgid "The x-part of the hydraulic conductivity tensor in [m/s]"
-msgstr ""
+msgstr "Część X tensora współczynnika filtracji w [m/s]"
 
 #: ../raster3d/r3.gwflow/main.c:79
 msgid "The y-part of the hydraulic conductivity tensor in [m/s]"
-msgstr ""
+msgstr "Część Y tensora współczynnika filtracji w [m/s]"
 
 #: ../raster3d/r3.gwflow/main.c:87
 msgid "The z-part of the hydraulic conductivity tensor in [m/s]"
-msgstr ""
+msgstr "Część Z tensora współczynnika filtracji w [m/s]"
 
 #: ../raster3d/r3.gwflow/main.c:94
 msgid "Sources and sinks in [m^3/s]"
-msgstr ""
+msgstr "Źródła i ujścia w [m^3/s]"
 
 #: ../raster3d/r3.gwflow/main.c:101
 msgid "Specific yield in 1/m"
-msgstr ""
+msgstr "Odsączalność w [1/m]"
 
 #: ../raster3d/r3.gwflow/main.c:108
 #, fuzzy
 msgid "Recharge raster map in m^3/s"
-msgstr "Przekodowanie mapy rastrowej."
+msgstr "Mapa rastrowa zasilania w [m^3/s]"
 
 #: ../raster3d/r3.gwflow/main.c:116
 msgid ""
 "The piezometric head result of the numerical calculation will be written to "
 "this map"
 msgstr ""
+"Wynikowa wysokość piezometryczna zostanie zapisana do tej mapy rastrowej"
 
 #: ../raster3d/r3.gwflow/main.c:124
 msgid ""
@@ -632,56 +633,60 @@ msgstr ""
 
 #: ../raster3d/r3.gwflow/main.c:135
 msgid "Use G3D mask (if exists)"
-msgstr "Użyj maski G3D (jeśli istnieje)"
+msgstr "Użyj maski 3D (jeżeli istnieje)"
 
 #: ../raster3d/r3.gwflow/main.c:140
 msgid ""
 "Use a sparse linear equation system, only available with iterative solvers"
 msgstr ""
+"Użyj rozrzedzonego układu równań liniowych - możliwe tylko dla metod iteracyjnych"
 
 #: ../raster3d/r3.gwflow/main.c:170
 msgid ""
 "Numerical calculation program for transient, confined groundwater flow in "
 "three dimensions"
 msgstr ""
+"Oblicza chwilowy przepływ wód podziemnych w reżimie ciśnieniowym w trzech wymiarach"
 
 #: ../raster3d/r3.gwflow/main.c:188 ../raster/r.gwflow/main.c:240
 msgid "The direct LU solver do not work with sparse matrices"
-msgstr ""
+msgstr "Metoda LU nie działa dla macierzy rozrzedzonych"
 
 #: ../raster3d/r3.gwflow/main.c:190 ../raster/r.gwflow/main.c:242
 msgid "The direct Gauss solver do not work with sparse matrices"
-msgstr ""
+msgstr "Metoda eliminacji Gaussa nie działa dla macierzy rozrzedzonych"
 
 #: ../raster3d/r3.gwflow/main.c:192 ../raster/r.gwflow/main.c:244
 msgid "The direct cholesky solver do not work with sparse matrices"
-msgstr ""
+msgstr "Metoda Choleskiego nie działa dla macierzy rozrzedzonych"
 
 #: ../raster3d/r3.gwflow/main.c:294 ../raster/r.gwflow/main.c:529
 #, fuzzy
 msgid "Unable to create and solve the linear equation system"
-msgstr "Nie można utworzyć mapy rastrowej %s"
+msgstr "Nie można utworzyć i rozwiązać układu równań liniowych"
 
 #: ../raster3d/r3.gwflow/main.c:371 ../raster3d/r3.stats/main.c:618
 #: ../raster/r.univar2/r3.univar_main.c:112
 #, c-format
 msgid "Error opening g3d map <%s>"
-msgstr "Błąd podczas otwierania mapy g3d <%s>"
+msgstr "Błąd podczas otwierania mapy rastrowej 3D <%s>"
 
 #: ../raster3d/r3.gwflow/main.c:373
 #, fuzzy, c-format
 msgid "Write the result to g3d map <%s>"
-msgstr "Tytuł dla wynikowej mapy rastrowej"
+msgstr "Zapisz wynik do mapy rastrowej 3D <%s>"
 
 #: ../raster3d/r3.gwflow/main.c:417
 msgid "Error closing g3d file"
-msgstr "Błąd podczas zamykania pliku g3d"
+msgstr "Błąd podczas zamykania mapy rastrowej 3D"
 
 #: ../raster3d/r3.mkdspf/main.c:77
 msgid ""
 "Creates a display file from an existing grid3 file according to specified "
 "threshold levels."
 msgstr ""
+"Tworzy plik do wyświetlania z istniejącej mapy rastrowej 3D zgodnie z podanymi "
+"poziomami progowymi"
 
 #: ../raster3d/r3.mkdspf/main.c:85
 msgid "Name of an existing 3d raster map"
@@ -689,61 +694,61 @@ msgstr "Nazwa istniejącej mapy rastrowej 3D"
 
 #: ../raster3d/r3.mkdspf/main.c:91
 msgid "Name of output display file"
-msgstr ""
+msgstr "Nazwa wyjściowego pliku do wyświetlania"
 
 #: ../raster3d/r3.mkdspf/main.c:98
 msgid "List of thresholds for isosurfaces"
-msgstr ""
+msgstr "Lista progów dla izopowierzchni"
 
 #: ../raster3d/r3.mkdspf/main.c:104
 msgid "Minimum isosurface level"
-msgstr ""
+msgstr "Minimalny poziom izopowierzchni"
 
 #: ../raster3d/r3.mkdspf/main.c:110
 msgid "Maximum isosurface level"
-msgstr ""
+msgstr "Maksymalny poziom izopowierzchni"
 
 #: ../raster3d/r3.mkdspf/main.c:116
 msgid "Positive increment between isosurface levels"
-msgstr ""
+msgstr "Przyrost pomiędzy poziomami izopowierzchni"
 
 #: ../raster3d/r3.mkdspf/main.c:123
 msgid "Number of isosurface threshold levels"
-msgstr ""
+msgstr "Ilość poziomów progowych izopowierzchni"
 
 #: ../raster3d/r3.mkdspf/main.c:127
 msgid "Suppress progress report & min/max information"
-msgstr "Ukryj raport postępu oraz informacje o min/max"
+msgstr "Nie wyświetlaj miernika postępu oraz informacji o min/max"
 
 #: ../raster3d/r3.mkdspf/main.c:131
 msgid "Use flat shading rather than gradient"
-msgstr ""
+msgstr "Użyj płaskiego cieniowania zamiast gradientu"
 
 #: ../raster3d/r3.mkdspf/main.c:139
 #, c-format
 msgid "Region from getWindow: %d %d %d"
-msgstr ""
+msgstr "Region otrzymany od getWindow: %d %d %d"
 
 #: ../raster3d/r3.mkdspf/main.c:151
 #, c-format
 msgid "Not able to find grid3 file for [%s]"
-msgstr "Nie można odnaleźć pliku grid3 dla [%s]"
+msgstr "Nie można odnaleźć mapy rastrowej 3D <%s>"
 
 #: ../raster3d/r3.mkdspf/main.c:163 ../raster3d/base/r3.info.main.c:128
 #, c-format
 msgid "Error opening grid3 file [%s]"
-msgstr ""
+msgstr "Błąd podczas owtierania mapy rastrowej 3D <%s>"
 
 #: ../raster3d/r3.mkdspf/main.c:166 ../raster3d/base/r3.info.main.c:287
 #: ../raster3d/base/r3.info.main.c:349
 #, c-format
 msgid "Error reading range for [%s]"
-msgstr ""
+msgstr "Błąd podczas odczytu zakresu wartości <%s>"
 
 #: ../raster3d/r3.mkdspf/main.c:195
 #, c-format
 msgid "Error opening display file [%s]"
-msgstr ""
+msgstr "Błąd podczas otwierania pliku do wyświetlania <%s>"
 
 #: ../raster3d/r3.mkdspf/main.c:216
 #, c-format
@@ -757,81 +762,80 @@ msgstr "raster3d, statystyki"
 #: ../raster3d/r3.stats/main.c:569
 #, fuzzy
 msgid "Generates volume statistics for raster3d maps."
-msgstr "Tworzy statystyki obszarów warstw map rastrowych."
+msgstr "Obliczenia statystyk dla map rastrowych 3D"
 
 #: ../raster3d/r3.stats/main.c:580
 #, fuzzy
 msgid "Number of sub-ranges to collect stats from"
-msgstr ""
-"Liczba (fp subranges - podzakresów?) z których mają być zebrane statystyki"
+msgstr "Liczba podzakresów, z których mają być zebrane statystyki"
 
 #: ../raster3d/r3.stats/main.c:586
 msgid "Calculate statistics based on equal value groups"
-msgstr ""
+msgstr "Oblicz statystyki w oparciu o grupy o równej wartości"
 
 #: ../raster3d/r3.stats/main.c:606
 msgid "The number of subranges has to be equal or greater than 1"
-msgstr ""
+msgstr "Liczba podzakresu musi być >= 1"
 
 #: ../raster3d/r3.stats/main.c:611 ../raster/r.univar2/r3.univar_main.c:104
 #, c-format
 msgid "Requested g3d map <%s> not found"
-msgstr "Żądana mapa g3d <%s> nie została znaleziona"
+msgstr "Żądana mapa rastrowa 3D <%s> nie została znaleziona"
 
 #: ../raster3d/r3.stats/main.c:664
 #, fuzzy
 msgid "Sort non-null values"
-msgstr "Nakładaj (tylko wartości bez null)"
+msgstr "Sortuj wartości różne od NULL"
 
 #: ../raster3d/base/r3.null.main.c:58
 #, fuzzy
 msgid "3d raster map for which to modify null values"
-msgstr "Mapa rastrowa w której mają być wypełnione zera"
+msgstr "Mapa rastrowa 3D, dla której mają być zmodyfikowane wartości NULL"
 
 #: ../raster3d/base/r3.null.main.c:66 ../raster/r.null/null.c:70
 msgid "List of cell values to be set to NULL"
-msgstr ""
+msgstr "Lista wartości do ustawienia jako NULL"
 
 #: ../raster3d/base/r3.null.main.c:73 ../raster/r.null/null.c:77
 msgid "The value to replace the null value by"
-msgstr ""
+msgstr "Wartość która ma zastąpić NULL"
 
 #: ../raster3d/base/r3.null.main.c:88
 #, fuzzy
 msgid "Illegal value for null"
-msgstr "Niedozwolona wartość dla współczynnika skalowego."
+msgstr "Niepoprawna wartość dla NULL"
 
 #: ../raster3d/base/r3.null.main.c:113
 msgid "modifyNull: error opening map"
-msgstr ""
+msgstr "modifyNull: błąd podczas otwierania mapy"
 
 #: ../raster3d/base/r3.null.main.c:125
 msgid "modifyNull: error opening tmp file"
-msgstr ""
+msgstr "modifyNull: błąd podczas otwierania pliku tymczasowego"
 
 #: ../raster3d/base/r3.null.main.c:174
 msgid "modifyNull: error flushing tiles in cube"
-msgstr ""
+msgstr "modifyNull: błąd podczas flush kafelków w bryle"
 
 #: ../raster3d/base/r3.null.main.c:180
 msgid "modifyNull: error flushing all tiles"
-msgstr ""
+msgstr "modifyNull: błąd podczas flush wszystkich kafelków"
 
 #: ../raster3d/base/r3.null.main.c:188
 msgid "modifyNull: error closing map"
-msgstr ""
+msgstr "modifyNull: błąd podczas zamykania mapy"
 
 #: ../raster3d/base/r3.null.main.c:190
 msgid "modifyNull: error closing tmp file"
-msgstr ""
+msgstr "modifyNull: błąd podczas zamykania pliku tymczasowego"
 
 #: ../raster3d/base/r3.null.main.c:207
 msgid "Explicitly create the 3D NULL-value bitmap file."
-msgstr ""
+msgstr "Utwórz plik bitmapy wartości NULL 3D"
 
 #: ../raster3d/base/r3.info.main.c:80
 msgid "Outputs basic information about a user-specified 3D raster map layer."
-msgstr ""
+msgstr "Wyświetla podstawowe informacje na temat mapy rastrowej 3D"
 
 #: ../raster3d/base/r3.info.main.c:87
 msgid "Name of input 3D raster map"
@@ -839,11 +843,11 @@ msgstr "Nazwa wejściowej mapy rastrowej 3D"
 
 #: ../raster3d/base/r3.info.main.c:91 ../raster/r.info/main.c:77
 msgid "Print range only"
-msgstr "Wyświetl tylko zakres rozpiętości danych"
+msgstr "Wyświetl tylko zakres wartości danych"
 
 #: ../raster3d/base/r3.info.main.c:96
 msgid "Print 3D raster map resolution (NS-res, EW-res, TB-res) only"
-msgstr "Wyswietl tylko rozdzielczość rastra 3D (NS-res, EW-res)"
+msgstr "Wyswietl tylko rozdzielczość rastra 3D (NS-res, EW-res, TB-res)"
 
 #: ../raster3d/base/r3.info.main.c:100
 msgid "Print 3D raster map type (float/double) only"
@@ -855,11 +859,11 @@ msgstr "Wyświetl tylko region mapy rastrowej 3D"
 
 #: ../raster3d/base/r3.info.main.c:108
 msgid "Print 3D raster history instead of info"
-msgstr "Wyświetl historię rastra 3D zamiast informacji"
+msgstr "Wyświetl historię mapy rastrowej 3D"
 
 #: ../raster3d/base/r3.info.main.c:113
 msgid "Print 3D raster map timestamp (day.month.year hour:minute:seconds) only"
-msgstr ""
+msgstr "Wyświetl tylko znacznik czasu mapy rastrowej 3D (dzień.miesiąc.rok godzina:minuty:sekundy)"
 
 #: ../raster3d/base/r3.info.main.c:121 ../raster/r.out.bin/main.c:129
 #: ../raster/r.out.gridatb/check_ready.c:12 ../raster/r.median/main.c:75
@@ -977,7 +981,7 @@ msgstr "Mapy rastrowa <%s> nie została znaleziona"
 #: ../raster3d/base/r3.info.main.c:321 ../raster3d/base/r3.info.main.c:334
 #: ../raster/r.info/main.c:307 ../raster/r.info/main.c:433
 msgid "Cannot allocate memory for string"
-msgstr "Nie można ulakować pamięci dla ciągu"
+msgstr "Nie można przydzielić pamięci dla ciągu"
 
 #: ../raster3d/base/r3.info.main.c:404
 msgid "Error while reading history file"
@@ -989,39 +993,39 @@ msgstr "Odświerz/dodaj/usuń znacznik czasu dla mapy rastrowej 3D"
 
 #: ../raster3d/base/r3.timestamp.main.c:52
 msgid "Input grid3 filename"
-msgstr "Wprowadź nazwę grid3"
+msgstr "Wejściowa mapa rastrowa 3D"
 
 #: ../raster3d/base/r3.timestamp.main.c:59
 msgid "Datetime, datetime1/datetime2, or none"
-msgstr ""
+msgstr "Data, data1/data2 lub nic"
 
 #: ../raster3d/base/r3.timestamp.main.c:74
 #, c-format
 msgid "Grid3 <%s> not found %s"
-msgstr "nie znaleziono grid3 <%s> %s"
+msgstr "Mapa rastrowa 3D <%s> nie została znaleziona w %s"
 
 #: ../raster3d/base/mask_functions.c:82
 #, c-format
 msgid "Adding rule: %lf - %lf"
-msgstr ""
+msgstr "Dodawanie reguły: %lf - %lf"
 
 #: ../raster3d/base/mask_functions.c:100 ../raster/r.null/null.c:260
 #, fuzzy, c-format
 msgid "%s: illegal value spec"
-msgstr "%s: %s - niewłaściwa nazwa"
+msgstr "%s: niewłaściwa wartość"
 
 #: ../raster3d/base/r3.mask.main.c:44
 #, fuzzy
 msgid "3d raster map with reference values"
-msgstr "Wyjściowa mapa rastrowa"
+msgstr "Mapa rastrowa 3D z wartościami referencyjnymi"
 
 #: ../raster3d/base/r3.mask.main.c:52
 msgid "List of cell values to be masked out"
-msgstr ""
+msgstr "Lista wartości do wymaskowania"
 
 #: ../raster3d/base/r3.mask.main.c:84
 msgid "makeMask: error opening map."
-msgstr ""
+msgstr "makeMask: błąd podczas otwierania mapy"
 
 #: ../raster3d/base/r3.mask.main.c:95
 msgid "makeMask: error opening g3d mask file"
@@ -1059,7 +1063,7 @@ msgstr ""
 
 #: ../raster3d/r3.out.v5d/main.c:79
 msgid "Name for v5d output file"
-msgstr "Nazwa dla pliku wyjściowego v5d"
+msgstr "Nazwa wyjściowego pliku v5d"
 
 #: ../raster3d/r3.out.v5d/main.c:149
 #, c-format
