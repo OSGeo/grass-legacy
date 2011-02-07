@@ -7,6 +7,7 @@ cvs_id,name,email,country,osgeo_id,rfc2_agreed
 -,Marco Pasetti,<marco.pasetti alice.it>,Italy,marcopx,yes
 -,Yann Chemin,<yann.chemin gmail.com>,Philippines,ychemin,yes
 -,Colin Nielsen,<colin.nielsen gmail.com>,USA,cnielsen,yes
+-,Anne Ghisla,<a.ghisla gmail.com>,Italy,aghisla,yes
 -,Helmut Kudrnovsky,<hellik web.de>,Austria,hellik,yes
 alex,Alex Shevlakov,<sixote yahoo.com>,Russia,-,-
 andreas,Andreas Lange,<andreas.c.lange gmx.de>,Germany,-,-
@@ -30,7 +31,7 @@ jan,Jan-Oliver Wagner,<jan intevation.de>,Germany,-,-
 john,John Huddleston,<jhudd.lamar colostate.edu>,USA,-,-
 justin,Justin Hickey,<jhickey hpcc.nectec.or.th>,Thailand,-,-
 markus,Markus Neteler,<neteler cealp.it>,Italy,neteler,yes
-martin,Martin Wegmann,<wegmann biozentrum.uni-wuerzburg.de>,Germany,wegmann,-
+martin,Martin Wegmann,<wegmann biozentrum.uni-wuerzburg.de>,Germany,wegmann,yes
 martinl,Martin Landa,<landa.martin gmail.com>,Czech Republic,martinl,yes
 massimo,Massimo Cuomo,<m.cuomo acsys.it>,Switzerland,-,-
 michael,Michael Barton,<michael.barton asu.edu>,USA,cmbarton,yes
