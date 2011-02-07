@@ -556,7 +556,7 @@ msgstr "Niedozwolona wartość rozdzielczości n-s"
 
 #: ../lib/gis/adj_cellhd.c:51 ../lib/gis/adj_cellhd.c:205
 msgid "Illegal row value"
-msgstr "Niedozwolona wartość rzędu"
+msgstr "Niedozwolona wartość wiersza"
 
 #: ../lib/gis/adj_cellhd.c:55 ../lib/gis/adj_cellhd.c:211
 msgid "Illegal e-w resolution value"
@@ -3505,7 +3505,7 @@ msgstr "Wczytywanie mapy rastrowej <%s> do pamięci"
 
 #: ../lib/gpde/N_arrays_io.c:103
 msgid "Could not get raster row"
-msgstr "Nie można pobrać rzędu rastra"
+msgstr "Nie można pobrać wiersza rastra"
 
 #: ../lib/gpde/N_arrays_io.c:161 ../lib/gpde/N_arrays_io.c:243
 msgid "Unable to close input map"
