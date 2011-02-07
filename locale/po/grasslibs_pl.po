@@ -1615,7 +1615,7 @@ msgid ""
 "G_distance_point_to_line_segment: shouldn't happen: code=%d P=(%f,%f) S=(%f,%"
 "f)(%f,%f)"
 msgstr ""
-_distance_point_to_line_segment: to nie powinno się zdarzyć: code=%d P=(%f,%f) S=(%f,%"
+"G_distance_point_to_line_segment: to nie powinno się zdarzyć: code=%d P=(%f,%f) S=(%f,%"
 "f)(%f,%f)"
 
 #: ../lib/gis/alloc.c:43
