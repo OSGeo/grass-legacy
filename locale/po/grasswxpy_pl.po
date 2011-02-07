@@ -49,7 +49,7 @@ msgstr "Wybierz model do uruchomienia"
 #: ../gui/wxpython/wxgui.py:274 ../gui/wxpython/gui_modules/gmodeler.py:806
 #: ../gui/wxpython/gui_modules/gmodeler.py:850
 msgid "GRASS Model File (*.gxm)|*.gxm"
-msgstr "Plik modelu GRASS  (*.gxm)|*.gxm"
+msgstr "Plik modelu GRASS   (*.gxm)|*.gxm"
 
 #: ../gui/wxpython/wxgui.py:283 ../gui/wxpython/gui_modules/gmodeler.py:1121
 msgid "Validating model..."
@@ -418,7 +418,7 @@ msgstr "Wczytaj warstwy mapy do projektu (Ctrl+L)"
 
 #: ../gui/wxpython/icons/icon.py:186
 msgid "Open existing workspace file (Ctrl+O)"
-msgstr "Otwórz projekt  (Ctrl+O)"
+msgstr "Otwórz projekt   (Ctrl+O)"
 
 #: ../gui/wxpython/icons/icon.py:188
 msgid "Save current workspace to file (Ctrl+S)"
@@ -739,7 +739,7 @@ msgstr "Przełącz do ustawień widoku"
 
 #: ../gui/wxpython/icons/icon.py:348
 msgid "Change view settings"
-msgstr "Zmień ustawienia  (g.gisenv)"
+msgstr "Zmień ustawienia   (g.gisenv)"
 
 #: ../gui/wxpython/icons/icon.py:350
 msgid "Switch to surface (raster) control page"
@@ -755,7 +755,7 @@ msgstr "Przełącz do ustawień wektorów (2D/3D)"
 
 #: ../gui/wxpython/icons/icon.py:354
 msgid "Change 2D/3D vector settings"
-msgstr "Zmień ustawienia wektorów 2D/3D  (g.gisenv)"
+msgstr "Zmień ustawienia wektorów 2D/3D   (g.gisenv)"
 
 #: ../gui/wxpython/icons/icon.py:356
 msgid "Switch to volume (3D raster) control page"
@@ -771,7 +771,7 @@ msgstr "Przełącz do ustawień oświetlenia"
 
 #: ../gui/wxpython/icons/icon.py:360
 msgid "Change lighting settings"
-msgstr "Zmień ustawienia oświetlenia  (g.gisenv)"
+msgstr "Zmień ustawienia oświetlenia   (g.gisenv)"
 
 #: ../gui/wxpython/icons/icon.py:362
 msgid "Switch to fringe control page"
@@ -1734,7 +1734,7 @@ msgstr "Region"
 
 #: ../gui/wxpython/menustrings.py:189
 msgid "Display region"
-msgstr "Wyświetl ustawienia  (g.region -p)"
+msgstr "Wyświetl ustawienia   (g.region -p)"
 
 #: ../gui/wxpython/menustrings.py:190 ../gui/wxpython/menustrings.py:192
 msgid "Manages the boundary definitions for the geographic region."
@@ -1758,7 +1758,7 @@ msgstr "Ustawianie dostępów do mapsetów w bieżącej lokacji."
 
 #: ../gui/wxpython/menustrings.py:196
 msgid "User access"
-msgstr "Dostęp innych użytkowników  (g.access)"
+msgstr "Dostęp innych użytkowników   (g.access)"
 
 #: ../gui/wxpython/menustrings.py:197
 msgid "Controls access to the current mapset for other users on the system."
@@ -1766,7 +1766,7 @@ msgstr "Kontrola dostępu innych użytkowników do bieżącego mapsetu."
 
 #: ../gui/wxpython/menustrings.py:198
 msgid "Change working environment"
-msgstr "Zmień mapset  (g.mapset)"
+msgstr "Zmień mapset   (g.mapset)"
 
 #: ../gui/wxpython/menustrings.py:199
 msgid "Changes current mapset."
@@ -1790,7 +1790,7 @@ msgstr "Zmienia bieżący mapset."
 
 #: ../gui/wxpython/menustrings.py:204
 msgid "Show settings"
-msgstr "Pokaż ustawienia  (g.gisenv --v)"
+msgstr "Pokaż ustawienia   (g.gisenv --v)"
 
 #: ../gui/wxpython/menustrings.py:205 ../gui/wxpython/menustrings.py:207
 msgid "Outputs and modifies the user's current GRASS variable settings."
@@ -1800,11 +1800,11 @@ msgstr ""
 
 #: ../gui/wxpython/menustrings.py:206
 msgid "Change settings"
-msgstr "Zmień ustawienia  (g.gisenv)"
+msgstr "Zmień ustawienia   (g.gisenv)"
 
 #: ../gui/wxpython/menustrings.py:208
 msgid "Change default GUI"
-msgstr "Zmień interfejs użytkownika  (g.change.gui.sh)"
+msgstr "Zmień interfejs użytkownika   (g.change.gui.sh)"
 
 #: ../gui/wxpython/menustrings.py:209
 msgid "Changes the default GRASS graphical user interface (GUI) setting."
@@ -1812,7 +1812,7 @@ msgstr "Zmienia domyślny interfejs użytkownika (GUI)."
 
 #: ../gui/wxpython/menustrings.py:210
 msgid "Version"
-msgstr "Wersja GRASS  (g.version)"
+msgstr "Wersja GRASS   (g.version)"
 
 #: ../gui/wxpython/menustrings.py:211
 msgid "Displays version and copyright information."
@@ -1895,7 +1895,7 @@ msgstr ""
 
 #: ../gui/wxpython/menustrings.py:229
 msgid "Compress/decompress"
-msgstr "Kompresja/dekompresja (r.compress)"
+msgstr "Kompresja/dekompresja   (r.compress)"
 
 #: ../gui/wxpython/menustrings.py:230
 msgid "Compresses and decompresses raster maps."
@@ -1903,7 +1903,7 @@ msgstr "Kompresuj i dekompresuj mapy rastrowe"
 
 #: ../gui/wxpython/menustrings.py:231
 msgid "Region boundaries"
-msgstr "Ustawianie granic rastra  (r.region)"
+msgstr "Ustawianie granic rastra   (r.region)"
 
 #: ../gui/wxpython/menustrings.py:232
 msgid "Sets the boundary definitions for a raster map."
@@ -1911,7 +1911,7 @@ msgstr "Definuj granice mapy rastrowej."
 
 #: ../gui/wxpython/menustrings.py:233
 msgid "Manage NULL values"
-msgstr "Wstawianie wartości NULL  (r.null)"
+msgstr "Wstawianie wartości NULL   (r.null)"
 
 #: ../gui/wxpython/menustrings.py:234
 msgid "Manages NULL-values of given raster map."
@@ -1919,7 +1919,7 @@ msgstr ""
 
 #: ../gui/wxpython/menustrings.py:235
 msgid "Quantization"
-msgstr "Kwantyzacja  (r.quant)"
+msgstr "Kwantyzacja   (r.quant)"
 
 #: ../gui/wxpython/menustrings.py:236
 msgid "Produces the quantization file for a floating-point map."
@@ -1927,7 +1927,7 @@ msgstr "Tworzy plik kwantyzacji dla mapy zmiennoprzecinkowej."
 
 #: ../gui/wxpython/menustrings.py:237
 msgid "Timestamp"
-msgstr "Znacznik czasu  (r.timestamp)"
+msgstr "Znacznik czasu   (r.timestamp)"
 
 #: ../gui/wxpython/menustrings.py:238
 msgid "Modifies a timestamp for a raster map."
@@ -1935,7 +1935,7 @@ msgstr "Modyfikuje znacznik czasu mapy rastrowej."
 
 #: ../gui/wxpython/menustrings.py:239
 msgid "Resample using aggregate statistics"
-msgstr "Próbkowanie agregacyjne  (r.resamp.stats)"
+msgstr "Próbkowanie agregacyjne   (r.resamp.stats)"
 
 #: ../gui/wxpython/menustrings.py:240
 msgid "Resamples raster map layers to a coarser grid using aggregation."
@@ -1943,7 +1943,7 @@ msgstr "Próbkuje warstwę mapy rastrowej z użyciem agregacji."
 
 #: ../gui/wxpython/menustrings.py:241
 msgid "Resample using multiple methods"
-msgstr "Próbkowanie interpolacyjne  (r.resamp.interp)"
+msgstr "Próbkowanie interpolacyjne   (r.resamp.interp)"
 
 #: ../gui/wxpython/menustrings.py:242
 msgid "Resamples raster map layers to a finer grid using interpolation."
@@ -1951,7 +1951,7 @@ msgstr "Zwiększenie rozdzielczości rastra z użyciem interpolacji. "
 
 #: ../gui/wxpython/menustrings.py:243
 msgid "Resample using nearest neighbor"
-msgstr "Próbkowanie z użyciem najbliższego sąsiedztwa  (r.resample)"
+msgstr "Próbkowanie z użyciem najbliższego sąsiedztwa   (r.resample)"
 
 #: ../gui/wxpython/menustrings.py:244
 msgid "GRASS raster map layer data resampling capability."
@@ -1959,7 +1959,7 @@ msgstr "Próbkuje warstwę mapy rastrowej z użyciem najbliższego sąsiedztwa."
 
 #: ../gui/wxpython/menustrings.py:245
 msgid "Resample using spline tension"
-msgstr "Próbkowanie z użyciem funkcji sklejalnych  (r.resamp.rst)"
+msgstr "Próbkowanie z użyciem funkcji sklejalnych   (r.resamp.rst)"
 
 #: ../gui/wxpython/menustrings.py:246
 msgid ""
@@ -1979,7 +1979,7 @@ msgstr ""
 
 #: ../gui/wxpython/menustrings.py:249
 msgid "Update map statistics"
-msgstr "Aktualizacja statystyk  (r.support.ststs)"
+msgstr "Aktualizacja statystyk   (r.support.ststs)"
 
 #: ../gui/wxpython/menustrings.py:250
 msgid "Update raster map statistics"
@@ -1987,7 +1987,7 @@ msgstr "Aktualizuj statystyki mapy rastrowej"
 
 #: ../gui/wxpython/menustrings.py:251
 msgid "Reproject raster map"
-msgstr "Pobranie rastra z innej lokacji  (r.proj)"
+msgstr "Pobranie rastra z innej lokacji   (r.proj)"
 
 #: ../gui/wxpython/menustrings.py:252
 msgid "Re-projects a raster map from one location to the current location."
@@ -1997,7 +1997,7 @@ msgstr ""
 
 #: ../gui/wxpython/menustrings.py:253
 msgid "Tiling"
-msgstr "Kafelki  (r.tileset)"
+msgstr "Kafelki   (r.tileset)"
 
 #: ../gui/wxpython/menustrings.py:254
 msgid ""
@@ -2103,7 +2103,7 @@ msgstr ""
 
 #: ../gui/wxpython/menustrings.py:277
 msgid "Closest points"
-msgstr "Najbliższe punkty (r.distance)"
+msgstr "Najbliższe punkty   (r.distance)"
 
 #: ../gui/wxpython/menustrings.py:278
 msgid "Locates the closest points between objects in two raster maps."
@@ -2115,7 +2115,7 @@ msgstr ""
 #: ../gui/wxpython/gui_modules/nviz_tools.py:548
 #: ../gui/wxpython/gui_modules/nviz_tools.py:1026
 msgid "Mask"
-msgstr "Maska (r.mask)"
+msgstr "Maska   (r.mask)"
 
 #: ../gui/wxpython/menustrings.py:280
 msgid "Create a MASK for limiting raster operation"
@@ -2135,7 +2135,7 @@ msgstr "Analizy sąsiedztwa"
 
 #: ../gui/wxpython/menustrings.py:284
 msgid "Moving window"
-msgstr "Pływające okno (r.neighbors)"
+msgstr "Pływające okno   (r.neighbors)"
 
 #: ../gui/wxpython/menustrings.py:285
 msgid ""
@@ -2149,7 +2149,7 @@ msgstr ""
 
 #: ../gui/wxpython/menustrings.py:286
 msgid "Neighborhood points"
-msgstr "Punkty sąsiedztwa (v.neighbors)"
+msgstr "Punkty sąsiedztwa   (v.neighbors)"
 
 #: ../gui/wxpython/menustrings.py:287
 msgid ""
@@ -2284,7 +2284,7 @@ msgstr "Tworzy mapę cieniowanego reliefu z mapy wysokości (DEM)."
 
 #: ../gui/wxpython/menustrings.py:311
 msgid "Slope and aspect"
-msgstr "Nachylenie i ekspozycja  (r.slope.aspect)"
+msgstr "Nachylenie i ekspozycja   (r.slope.aspect)"
 
 #: ../gui/wxpython/menustrings.py:312
 #, fuzzy
@@ -3249,7 +3249,7 @@ msgstr ""
 
 #: ../gui/wxpython/menustrings.py:525
 msgid "Reproject vector map"
-msgstr "Pobranie wektora z innej lokacji  (v.proj)"
+msgstr "Pobranie wektora z innej lokacji   (v.proj)"
 
 #: ../gui/wxpython/menustrings.py:526
 msgid "Re-projects a vector map from one location to the current location."
@@ -3320,7 +3320,7 @@ msgstr "Wykrywa granice obiektów z danych LIDAR."
 
 #: ../gui/wxpython/menustrings.py:545
 msgid "Detect interiors"
-msgstr "Wykryj obszary wewnętrzne      (v.lidar.growing)"
+msgstr "Wykryj obszary wewnętrzne   (v.lidar.growing)"
 
 #: ../gui/wxpython/menustrings.py:546
 msgid ""
@@ -3706,7 +3706,7 @@ msgstr "Tworzenie zobrazowań i grup obrazów"
 
 #: ../gui/wxpython/menustrings.py:637
 msgid "Create/edit group"
-msgstr "Utwórz/edytuj grupę  (i.grup)"
+msgstr "Utwórz/edytuj grupę   (i.grup)"
 
 #: ../gui/wxpython/menustrings.py:638
 msgid "Creates, edits, and lists groups and subgroups of imagery files."
@@ -3714,7 +3714,7 @@ msgstr ""
 
 #: ../gui/wxpython/menustrings.py:639
 msgid "Target group"
-msgstr "Grupa docelowa  (i.target)"
+msgstr "Grupa docelowa   (i.target)"
 
 #: ../gui/wxpython/menustrings.py:640
 msgid "Targets an imagery group to a GRASS location and mapset."
@@ -3722,7 +3722,7 @@ msgstr "Ładuje grupę obrazów do lokacji i mapsetu GRASS-a."
 
 #: ../gui/wxpython/menustrings.py:641
 msgid "Mosaic images"
-msgstr "Mozaikowanie obrazów  (i.image.mosaic)"
+msgstr "Mozaikowanie obrazów   (i.image.mosaic)"
 
 #: ../gui/wxpython/menustrings.py:642
 msgid "Mosaics up to 4 images and extends colormap; creates map *.mosaic"
@@ -3734,7 +3734,7 @@ msgstr "Zarządzanie kolorami obrazu"
 
 #: ../gui/wxpython/menustrings.py:644
 msgid "Color balance for RGB"
-msgstr "Balans kolorów dla RGB  (i.landsat.rgb)"
+msgstr "Balans kolorów dla RGB   (i.landsat.rgb)"
 
 #: ../gui/wxpython/menustrings.py:645
 msgid "Performs auto-balancing of colors for LANDSAT images."
@@ -3878,7 +3878,7 @@ msgstr "Tworzy histogram obrazu."
 
 #: ../gui/wxpython/menustrings.py:676
 msgid "Spectral response"
-msgstr "Pasma spektralne  (i.spectral)"
+msgstr "Pasma spektralne   (i.spectral)"
 
 #: ../gui/wxpython/menustrings.py:677
 msgid ""
@@ -3887,7 +3887,7 @@ msgstr ""
 
 #: ../gui/wxpython/menustrings.py:678
 msgid "Tasseled cap vegetation index"
-msgstr "Wskaźnik wegetacji  (i.tasscap)"
+msgstr "Wskaźnik wegetacji   (i.tasscap)"
 
 #: ../gui/wxpython/menustrings.py:679
 msgid "Tasseled Cap (Kauth Thomas) transformation for LANDSAT-TM data"
@@ -3939,7 +3939,7 @@ msgstr ""
 
 #: ../gui/wxpython/menustrings.py:692
 msgid "Bit pattern comparison "
-msgstr "Porównanie wypełnień bitowych    (r.bitpattern)"
+msgstr "Porównanie wypełnień bitowych   (r.bitpattern)"
 
 #: ../gui/wxpython/menustrings.py:693
 msgid "Compares bit patterns with a raster map."

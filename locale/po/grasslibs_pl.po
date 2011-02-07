@@ -262,8 +262,8 @@ msgid ""
 "Datum <%s> apparently recognised by GRASS but no parameters found. You may "
 "want to look into this."
 msgstr ""
-"Datum <%s> najwyraźniej zostało rozpoznane przez GRASS, ale nie znaleziono parametrów."
-"Należy to sprawdzić."
+"Datum <%s> najwyraźniej zostało rozpoznane przez GRASS, ale nie znaleziono "
+"parametrów. Należy to sprawdzić."
 
 #: ../lib/proj/convert.c:446
 #, c-format
@@ -568,7 +568,7 @@ msgstr "Niedozwolona wartość rozdzielczości n-s"
 
 #: ../lib/gis/adj_cellhd.c:51 ../lib/gis/adj_cellhd.c:205
 msgid "Illegal row value"
-msgstr "Niedozwolona wartość rzędu"
+msgstr "Niedozwolona wartość wiersza"
 
 #: ../lib/gis/adj_cellhd.c:55 ../lib/gis/adj_cellhd.c:211
 msgid "Illegal e-w resolution value"
@@ -581,8 +581,8 @@ msgstr "Niedozwolona wartość kolumny"
 #: ../lib/gis/adj_cellhd.c:79 ../lib/gis/adj_cellhd.c:247
 #, c-format
 msgid "Fixing subtle input data rounding error of north boundary (%g>%g)"
-msgstr "Korekta niewielkiego błędu zaokrąglenia danych wejściowych dla granicy"
-"północnej (%g>%g)"
+msgstr "Korekta niewielkiego błędu zaokrąglenia danych wejściowych dla "
+"granicy północnej (%g>%g)"
 
 #: ../lib/gis/adj_cellhd.c:84 ../lib/gis/adj_cellhd.c:252
 msgid "Illegal latitude for North"
@@ -591,8 +591,8 @@ msgstr "Niedozwolona szerokość geograficzna dla granicy północnej"
 #: ../lib/gis/adj_cellhd.c:90 ../lib/gis/adj_cellhd.c:258
 #, c-format
 msgid "Fixing subtle input data rounding error of south boundary (%g>%g)"
-msgstr "Korekta niewielkiego błędu zaokrąglenia danych wejściowych dla granicy"
-"południowej (%g>%g)"
+msgstr "Korekta niewielkiego błędu zaokrąglenia danych wejściowych dla "
+"granicy południowej (%g>%g)"
 
 #: ../lib/gis/adj_cellhd.c:95 ../lib/gis/adj_cellhd.c:263
 msgid "Illegal latitude for South"
@@ -601,14 +601,14 @@ msgstr "Niedozwolona szerokość geograficzna dla granicy południowej"
 #: ../lib/gis/adj_cellhd.c:107 ../lib/gis/adj_cellhd.c:275
 #, c-format
 msgid "Fixing subtle input data rounding error of west boundary (%g>%g)"
-msgstr "Korekta niewielkiego błędu zaokrąglenia danych wejściowych dla granicy"
-"zachodniej (%g>%g)"
+msgstr "Korekta niewielkiego błędu zaokrąglenia danych wejściowych dla "
+"granicy zachodniej (%g>%g)"
 
 #: ../lib/gis/adj_cellhd.c:118 ../lib/gis/adj_cellhd.c:286
 #, c-format
 msgid "Fixing subtle input data rounding error of east boundary (%g>%g)"
-msgstr "Korekta niewielkiego błędu zaokrąglenia danych wejściowych dla granicy"
-"wschodniej (%g>%g)"
+msgstr "Korekta niewielkiego błędu zaokrąglenia danych wejściowych dla "
+"granicy wschodniej (%g>%g)"
 
 #: ../lib/gis/adj_cellhd.c:131 ../lib/gis/adj_cellhd.c:299
 msgid "North must be north of South"
@@ -1615,7 +1615,7 @@ msgid ""
 "G_distance_point_to_line_segment: shouldn't happen: code=%d P=(%f,%f) S=(%f,%"
 "f)(%f,%f)"
 msgstr ""
-"G_distance_point_to_line_segment: to nie powinno się zdarzyć: code=%d P=(%f,%f) S=(%f,%"
+_distance_point_to_line_segment: to nie powinno się zdarzyć: code=%d P=(%f,%f) S=(%f,%"
 "f)(%f,%f)"
 
 #: ../lib/gis/alloc.c:43
@@ -1649,8 +1649,8 @@ msgid ""
 "Unable to open raster map <%s@%s> since it is a reclass of raster map <%s@%"
 "s> which does not exist"
 msgstr ""
-"Nie można otworzyć mapy rastrowej <%s@%s> ponieważ jest ona reklasyfikacją mapy rastrowej <%s@%"
-"s>, która nie istnieje"
+"Nie można otworzyć mapy rastrowej <%s@%s> ponieważ jest ona reklasyfikacją "
+"mapy rastrowej <%s@%s>, która nie istnieje"
 
 #: ../lib/gis/opencell.c:212
 #, c-format
@@ -1663,8 +1663,8 @@ msgid ""
 "Raster map <%s@%s> is in different projection than current region. Found "
 "raster map <%s@%s>, should be <%s>."
 msgstr ""
-"Mapa rastrowa <%s@%s> jest w innym odwzorowaniu niż bieżący region. Znaleziona "
-"mapę rastrowa <%s@%s>, powinno być <%s>."
+"Mapa rastrowa <%s@%s> jest w innym odwzorowaniu niż bieżący region. "
+"Znaleziona mapa rastrowa <%s@%s>, powinno być <%s>."
 
 #: ../lib/gis/opencell.c:226
 #, c-format
@@ -1679,7 +1679,8 @@ msgstr "Mapa rastrowa <%s@%s>: ilość bajtów na komórkę (%d) za duża"
 #: ../lib/gis/opencell.c:262
 #, c-format
 msgid "map <%s@%s> is a GDAL link but GRASS is compiled without GDAL support"
-msgstr "mapa <%s@%s> jest łączem do danych GDAL, ale GRASS został skompilowany bez obsługi GDAL"
+msgstr "mapa <%s@%s> jest łączem do danych GDAL, ale GRASS został skompilowany bez "
+"obsługi GDAL"
 
 #: ../lib/gis/opencell.c:642
 #, c-format
@@ -1704,7 +1705,8 @@ msgstr "G__open_raster_new(): pliki tymczasowe są niedostępne"
 msgid ""
 "Unable to write embedded null values for raster map open for random access"
 msgstr ""
-"Nie można zapisać wbudowanych wartości null mapy rastrowej przy losowym dostępie"
+"Nie można zapisać wbudowanych wartości null mapy rastrowej przy losowym "
+"dostępie"
 
 #: ../lib/gis/opencell.c:941
 msgid "G_set_fp_type(): can only be called with FCELL_TYPE or DCELL_TYPE"
@@ -1744,7 +1746,8 @@ msgstr "Mapa rastrowa <%s> nie jest xdr: byte_order: %s"
 msgid ""
 "G_set_quant_rules() can be called only for raster maps opened for reading"
 msgstr ""
-"G_set_quant_rules() może być użyte tylko dla map rastrowych otwartych do odczytu"
+"G_set_quant_rules() może być użyte tylko dla map rastrowych otwartych do "
+"odczytu"
 
 #: ../lib/gis/mask_info.c:40
 #, c-format
@@ -2109,7 +2112,8 @@ msgstr "Nie można odczytać pliku nagłówkowego mapy rastrowej <%s@%s>"
 #: ../lib/gis/get_cellhd.c:105
 #, fuzzy, c-format
 msgid " It is a reclass of raster map <%s@%s> whose header file is invalid."
-msgstr " To jest reklasyfikacja mapy rastrowej <%s@%s>, której plik nagłówkowy jest niepoprawny."
+msgstr " To jest reklasyfikacja mapy rastrowej <%s@%s>, której plik nagłówkowy jest "
+"niepoprawny."
 
 #: ../lib/gis/get_cellhd.c:109
 #, c-format
@@ -2186,8 +2190,7 @@ msgid ""
 "Attempt to read line angle for the line which is not connected to the node: "
 "node %d, line %d"
 msgstr ""
-"Próba odczytu kąta linii nie połączonej z węzłem: "
-"węzeł %d, linia %d"
+"Próba odczytu kąta linii nie połączonej z węzłem: węzeł %d, linia %d"
 
 #: ../lib/vector/diglib/plus.c:288
 msgid "Unable read topology for nodes"
@@ -2354,7 +2357,8 @@ msgstr "Niedozwolona nazwa mapy wektorowej <%s>. Znak '%c' nie jest dozwolony."
 msgid ""
 "Illegal vector map name <%s>. SQL keyword cannot be used as vector map name."
 msgstr ""
-"Niedozwolona nazwa mapy wektorowej <%s>. Słowo kluczowe SQL nie może być użyte jako nazwa mapy wektorowej."
+"Niedozwolona nazwa mapy wektorowej <%s>. Słowo kluczowe SQL nie może być "
+"użyte jako nazwa mapy wektorowej."
 
 #: ../lib/vector/Vlib/legal_vname.c:101 ../lib/vector/Vlib/legal_vname.c:105
 #, c-format
@@ -2510,8 +2514,8 @@ msgid ""
 "Vect_read_line_geos(): feature id %d is not reasonable (max features in "
 "vector map <%s>: %d)"
 msgstr ""
-"Vect_read_line_geos(): id %d obiektu nie ma sensu (max obiektów w "
-"mapie wektorowej <%s>: %d)"
+"Vect_read_line_geos(): id %d obiektu nie ma sensu (max obiektów w mapie "
+"wektorowej <%s>: %d)"
 
 #: ../lib/vector/Vlib/geos.c:61
 msgid "only native format supported"
@@ -2678,7 +2682,8 @@ msgstr "Numer warstwy musi mieć wartość 1 lub większą. "
 
 #: ../lib/vector/Vlib/field.c:98
 msgid "Unable to add database link, map is not opened in WRITE mode"
-msgstr "Nie można dodać połączenia do bazy danych, mapa nie jest otwarta w trybie do zapisu"
+msgstr "Nie można dodać połączenia do bazy danych. Mapa nie jest otwarta w trybie do "
+"zapisu"
 
 #: ../lib/vector/Vlib/field.c:104
 msgid "Unable to add database link"
@@ -2726,8 +2731,8 @@ msgid ""
 "All FID tests failed. Neither 'FID' nor 'ogc_fid' nor 'ogr_fid' nor 'gid' "
 "available in OGR DB table"
 msgstr ""
-"Wszystkie testy FID zawiodły. Żadne z 'FID', 'ogc_fid', 'ogr_fid', 'gid' "
-"nie jest dostępne w tabeli bazy danych OGR"
+"Wszystkie testy FID zawiodły. Żadne z 'FID', 'ogc_fid', 'ogr_fid', 'gid' nie "
+"jest dostępne w tabeli bazy danych OGR"
 
 #: ../lib/vector/Vlib/field.c:606
 #, c-format
@@ -2981,8 +2986,8 @@ msgid ""
 "Coor files of vector map <%s@%s> is larger than it should be (%ld bytes "
 "excess)"
 msgstr ""
-"Plik coor mapy wektorowej <%s@%s> jest większy niż powinien (%ld bajtów "
-"za dużo)"
+"Plik coor mapy wektorowej <%s@%s> jest większy niż powinien (%ld bajtów za "
+"dużo)"
 
 #: ../lib/vector/Vlib/open_nat.c:149
 #, c-format
@@ -2990,8 +2995,8 @@ msgid ""
 "Coor files of vector <%s@%s> is shorter than it should be (%ld bytes "
 "missing)."
 msgstr ""
-"Plik coor mapy wektorowej <%s@%s> jest mniejszy niż powinien (%ld bajtów "
-"za mało)"
+"Plik coor mapy wektorowej <%s@%s> jest mniejszy niż powinien (%ld bajtów za "
+"mało)"
 
 #: ../lib/vector/Vlib/net.c:121
 msgid "Building graph..."
@@ -3031,8 +3036,9 @@ msgid ""
 "Database record for line %d (cat = %d, forward/both direction(s)) not found "
 "(forward/both direction(s) of line skipped)"
 msgstr ""
-"Nie znaleziono wpisu bazy danych dla linii %d (cat = %d, kierunek(ki) do przodu/w obie strony), "
-"pominięto kierunek(ki) do przodu/w obie strony tej linii"
+"Nie znaleziono wpisu bazy danych dla linii %d (cat = %d, kierunek(ki) do "
+"przodu/w obie strony), pominięto kierunek(ki) do przodu/w obie strony tej "
+"linii"
 
 #: ../lib/vector/Vlib/net.c:273
 #, c-format
@@ -3125,15 +3131,16 @@ msgstr "Nie można ponownie zapisać obiektu %d"
 msgid ""
 "Unable to delete feature %d, vector map <%s> is not opened on topology level"
 msgstr ""
-"Nie można usunąć obiektu %d, mapa wektorowa <%s> nie jest otwarta na poziomie topologicznym"
+"Nie można usunąć obiektu %d, mapa wektorowa <%s> nie jest otwarta na "
+"poziomie topologicznym"
 
 #: ../lib/vector/Vlib/write.c:225
 #, c-format
 msgid ""
 "Unable to delete feature %d, vector map <%s> is not opened in 'write' mode"
 msgstr ""
-"Nie można usunąć obiektu %d, mapa wektorowa <%s> nie jest otwarta w trybie do "
-"zapisu"
+"Nie można usunąć obiektu %d, mapa wektorowa <%s> nie jest otwarta w trybie "
+"do zapisu"
 
 #: ../lib/vector/Vlib/write.c:239
 #, c-format
@@ -3145,14 +3152,16 @@ msgstr "Nie można usunąć obiektu %d z mapy wektorowej <%s>"
 msgid ""
 "Unable to restore feature %d, vector map <%s> is not opened on topology level"
 msgstr ""
-"Nie można przywrócić obiektu %d, mapa wektorowa <%s> nie jest otwarta na poziomie topologicznym"
+"Nie można przywrócić obiektu %d, mapa wektorowa <%s> nie jest otwarta na "
+"poziomie topologicznym"
 
 #: ../lib/vector/Vlib/write.c:271
 #, c-format
 msgid ""
 "Unable to restore feature %d, vector map <%s> is not opened in 'write' mode"
 msgstr ""
-"Nie można przywrócić obiektu %d, mapa wektorowa <%s> nie jest otwarta w trybie do zapisu"
+"Nie można przywrócić obiektu %d, mapa wektorowa <%s> nie jest otwarta w "
+"trybie do zapisu"
 
 #: ../lib/vector/Vlib/write.c:285
 #, c-format
@@ -3432,7 +3441,7 @@ msgstr "Wczytywanie mapy rastrowej <%s> do pamięci"
 
 #: ../lib/gpde/N_arrays_io.c:103
 msgid "Could not get raster row"
-msgstr "Nie można pobrać rzędu rastra"
+msgstr "Nie można pobrać wiersza rastra"
 
 #: ../lib/gpde/N_arrays_io.c:161 ../lib/gpde/N_arrays_io.c:243
 msgid "Unable to close input map"
@@ -3547,7 +3556,8 @@ msgstr "Maksymalna ilość powtórzeń rozwiązania układu równań liniowych"
 msgid ""
 "Error break criteria for iterative solvers (jacobi, sor, cg or bicgstab)"
 msgstr ""
-"Kryteria zatrzymania wskutek błędu dla metod iteracyjnych (jacobi, sor, cg lub bicgstab)"
+"Kryteria zatrzymania wskutek błędu dla metod iteracyjnych (jacobi, sor, cg "
+"lub bicgstab)"
 
 #: ../lib/gpde/N_parse_options.c:98
 msgid ""
@@ -3943,8 +3953,8 @@ msgid ""
 "Taking too long to find points for interpolation - please change the region "
 "to area where your points are. Continuing calculations..."
 msgstr ""
-"Odnajdowanie punktów do interpolacji trwa zbyt długo - ustaw region na obszar, "
-"gdzie znajdują się punkty. Obliczenia są kontynuowane..."
+"Odnajdowanie punktów do interpolacji trwa zbyt długo - ustaw region na "
+"obszar, gdzie znajdują się punkty. Obliczenia są kontynuowane..."
 
 #: ../lib/rst/interp_float/interp2d.c:212
 #, c-format
@@ -4026,8 +4036,8 @@ msgid ""
 "%d points given for interpolation (after thinning) is less than given NPMIN=%"
 "d"
 msgstr ""
-"%d punktów podanych (po odchudzeniu danych) do interpolacji to mniej niż podany "
-"NPMIN=%d"
+"%d punktów podanych (po odchudzeniu danych) do interpolacji to mniej niż "
+"podany NPMIN=%d"
 
 #: ../lib/rst/interp_float/vinput2d.c:340
 msgid "Zero points in the given region"
@@ -4290,8 +4300,8 @@ msgid ""
 "gsd_rot(): %c is an invalid axis specification. Rotation ignored. Please "
 "advise GRASS developers of this error"
 msgstr ""
-"gsd_rot(): błędna definicja osi %c. Pominięto rotację. Poinformuj o tym błędzie "
-"programistów GRASSa"
+"gsd_rot(): błędna definicja osi %c. Pominięto rotację. Poinformuj o tym "
+"błędzie programistów GRASSa"
 
 #: ../lib/ogsf/gsd_img_tif.c:64 ../lib/ogsf/gsd_img_ppm.c:53
 #: ../lib/ogsf/gsd_img_ppm.c:96 ../lib/ogsf/GK2.c:219
@@ -4318,8 +4328,8 @@ msgstr "Odczyt mapy rastrowej <%s>..."
 #: ../lib/ogsf/Gs3.c:647
 #, c-format
 msgid "Color table range doesn't match data (mincol=%d, maxcol=%d"
-msgstr "Zakres palety kolorów nie zgadza się z zakresem wartości danych "
-" (kolor min. =%d, kolor maks. =%d)"
+msgstr "Zakres palety kolorów nie zgadza się z zakresem wartości danych  (kolor min. "
+"=%d, kolor maks. =%d)"
 
 #: ../lib/ogsf/Gs3.c:709 ../lib/ogsf/Gs3.c:781
 #, c-format
@@ -4430,7 +4440,8 @@ msgstr "Otwieranie strumienia MPEG <%s>..."
 
 #: ../lib/ogsf/gsd_img_mpeg.c:306
 msgid "Unable to deduce output format from file extension: using MPEG"
-msgstr "Nie można odgadnąć formatu wyjściowego na podstawie rozszerzenia pliku. Użyto MPEG"
+msgstr "Nie można odgadnąć formatu wyjściowego na podstawie rozszerzenia pliku. "
+"Użyto MPEG"
 
 #: ../lib/ogsf/gsd_img_mpeg.c:310
 msgid "Unable to find suitable output format"
@@ -4578,8 +4589,9 @@ msgid ""
 "Dev note: Adapted sites library used for vector points. (module should be "
 "updated to GRASS 6 vector library)"
 msgstr ""
-"Uwaga programistyczna: Punkty wektorowe obsłużone przez zadaptowaną bibliotekę "
-"site'ów. Moduł powinien zostać zaktualizowany do biblioteki wektorowej GRASS 6."
+"Uwaga programistyczna: Punkty wektorowe obsłużone przez zadaptowaną "
+"bibliotekę site'ów. Moduł powinien zostać zaktualizowany do biblioteki "
+"wektorowej GRASS 6."
 
 #: ../lib/sites/sites.c:397
 msgid "Cannot fetch row"
