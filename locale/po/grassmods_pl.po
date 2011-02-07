@@ -981,7 +981,7 @@ msgstr "Mapy rastrowa <%s> nie została znaleziona"
 #: ../raster3d/base/r3.info.main.c:321 ../raster3d/base/r3.info.main.c:334
 #: ../raster/r.info/main.c:307 ../raster/r.info/main.c:433
 msgid "Cannot allocate memory for string"
-msgstr "Nie można przydzielić pamięci dla ciągu"
+msgstr "Nie można przydzielić pamięci dla ciągu znaków"
 
 #: ../raster3d/base/r3.info.main.c:404
 msgid "Error while reading history file"
