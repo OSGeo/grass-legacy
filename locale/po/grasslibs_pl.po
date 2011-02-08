@@ -1000,7 +1000,7 @@ msgstr ""
 msgid ""
 "\n"
 "ERROR: option <%s> must be provided in multiples of %d\n"
-msgstr "
+msgstr ""
 "\n"
 "BŁĄD: opcja <%s> musi być wielokrotnością %d\n"
 
@@ -5012,81 +5012,3 @@ msgstr "podgrupa <%s> grupy <%s> jest pusta\n"
 msgid "subgroup <%s> of group <%s> references the following raster maps\n"
 msgstr "podgrupa <%s> grupy <%s> odwołuje się do następujących map rastrowych\n"
 
-msgid ""
-"taking too long to find points for interpolation--please change the region "
-"to area where your points are. Continuing calculations..."
-msgstr ""
-"Odnajdowanie punktów do interpolacji trwa zbyt długo - ustaw region na "
-"obszar, gdzie znajdują się punkty. Obliczenia są kontynuowane..."
-
-msgid "Reading lines from vector map ... "
-msgstr "Odczyt linii z mapy wektorowej..."
-
-msgid "Reading nodes from vector map ... "
-msgstr "Odczyt węzłów z mapy wektorowej..."
-
-msgid "there are points outside specified 2D/3D region--ignored %d points"
-msgstr "Istnieją punkty poza ustawionym regionem - pominięto %d punktów"
-
-msgid "ignoring %d points -- too dense"
-msgstr "pominięto %d punktów -- zbyt gęsto"
-
-msgid "some points outside of region -- will ignore..."
-msgstr "pewne punkty poza regionem -- będą zignorowane..."
-
-#~ msgid "Unknown Location"
-#~ msgstr "Nieznana lokacja"
-
-#~ msgid "Null values have not been initialized. "
-#~ msgstr "Wartości NULL nie zostały zainicjalizowane."
-
-#~ msgid "G_gisinit() must be called first. "
-#~ msgstr "Najpierw należy użyć G_gisinit()."
-
-#~ msgid "Please advise GRASS developers of this error.\n"
-#~ msgstr "Powiadom programistów GRASS o tym błędzie.\n"
-
-#~ msgid "G_malloc: unable to allocate %lu bytes at %s:%d"
-#~ msgstr "G_malloc: nie można przydzielić %lu bajtów w %s:%d"
-
-#~ msgid "G_calloc: unable to allocate %lu * %lu bytes at %s:%d"
-#~ msgstr "G_calloc: nie można przydzielić %lu * %lu bajtów w %s:%d"
-
-#~ msgid "G_realloc: unable to allocate %lu bytes at %s:%d"
-#~ msgstr "G_realloc: nie można przydzielić %lu bajtów w %s:%d"
-
-#, fuzzy
-#~ msgid "The gauss elimination solver does not work with sparse matrices"
-#~ msgstr "Metoda eliminacji Gaussa nie działa dla macierzy rozrzedzonych"
-
-#, fuzzy
-#~ msgid "The lu solver does not work with sparse matrices"
-#~ msgstr "Metoda LU nie działa dla macierzy rozrzedzonych"
-
-#, fuzzy
-#~ msgid "The cholesky solver does not work with sparse matrices"
-#~ msgstr "Metoda Choleskiego nie działa dla macierzy rozrzedzonych"
-
-#~ msgid "Matrix is not symmetric!"
-#~ msgstr "Macierz nie jest symetryczna!"
-
-#~ msgid "Vector is not 3D"
-#~ msgstr "Wektor nie jest 3D"
-
-#~ msgid "Cannot find z column <%s> (please verify name, e.g. with v.info)"
-#~ msgstr "Nie można odnaleźć kolumny 'z' <%s> (sprawdź nazwę np. v.info)"
-
-#~ msgid "Column type of z column is not supported (must be integer or double)"
-#~ msgstr "Nieznany typ kolumny 'z' (musi być liczbowa)"
-
-#~ msgid "Cannot read column type of smooth column"
-#~ msgstr "Nie można odczytać typu kolumny z danymi dla opcji 'smooth'"
-
-#~ msgid "Column type of s column is not supported (must be integer or double)"
-#~ msgstr "Typ kolumny 's' nie jest obsługiwany (musi być liczbowy)"
-
-#~ msgid "Unable to delete feature %d from vector map <%s>"
-#~ msgstr "Nie można usunąć obiektu %d z mapy wektorowej <%s>"
-
-#~ msgid "The linear equation system is not quadratic"
-#~ msgstr "Układ równań liniowych nie jest kwadratowy"
