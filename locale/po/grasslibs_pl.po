@@ -472,8 +472,8 @@ msgstr " Region zapisany w \"%s\" jest całkowicie poza bieżącym regionem GRAS
 
 #: ../lib/gis/view.c:550
 #, c-format
-msgid "Only %d%% of window saved in \"%s\" overlaps with current GRASS window."
-msgstr "Tylko %d%% regionu zapisanego w \"%s\" pokrywa się z obecnym regionem GRASS."
+msgid " Only %d%% of window saved in \"%s\" overlaps with current GRASS window."
+msgstr " Tylko %d%% regionu zapisanego w \"%s\" pokrywa się z obecnym regionem GRASS."
 
 #: ../lib/gis/get_projname.c:31
 #, c-format
@@ -4696,21 +4696,3 @@ msgstr "podgrupa <%s> grupy <%s> jest pusta\n"
 #, c-format
 msgid "subgroup <%s> of group <%s> references the following raster maps\n"
 msgstr "podgrupa <%s> grupy <%s> odwołuje się do następujących map rastrowych\n"
-
-#~ msgid "Vector is not 3D"
-#~ msgstr "Wektor nie jest 3D"
-
-#~ msgid "Cannot find z column <%s> (please verify name, e.g. with v.info)"
-#~ msgstr "Nie można odnaleźć kolumny 'z' <%s> (sprawdź nazwę np. v.info)"
-
-#~ msgid "Column type of z column is not supported (must be integer or double)"
-#~ msgstr "Nieznany typ kolumny 'z' (musi być liczbowa)"
-
-#~ msgid "Cannot read column type of smooth column"
-#~ msgstr "Nie można odczytać typu kolumny z danymi dla opcji 'smooth'"
-
-#~ msgid "Column type of s column is not supported (must be integer or double)"
-#~ msgstr "Typ kolumny 's' nie jest obsługiwany (musi być liczbowy)"
-
-#~ msgid "Unknown Location"
-#~ msgstr "Nieznana lokacja"
