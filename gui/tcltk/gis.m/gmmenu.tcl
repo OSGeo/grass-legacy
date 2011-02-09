@@ -355,7 +355,7 @@ set descmenu [subst  {
  		{command {[G_msg "Shannon's diversity"]} {} "r.li.shannon: Calculate Shannon's diversity index" {} -command {execute r.li.shannon }}
  		{command {[G_msg "Simpson's diversity"]} {} "r.li.simpson: Calculate Simpson's diversity index" {} -command {execute r.li.simpson }}
 		{separator}
-		{command {[G_msg "Ricness"]} {} "r.li.richness: Calculate ricness index" {} -command {execute r.li.richness }}
+		{command {[G_msg "Richness"]} {} "r.li.richness: Calculate richness index" {} -command {execute r.li.richness }}
  		{command {[G_msg "Shape index"]} {} "r.li.shape: Calculate shape index" {} -command {execute r.li.shape }}
 	}}
 	{cascad {[G_msg "Wildfire modeling"]} {} "" $tmenu {			
