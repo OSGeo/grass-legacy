@@ -843,7 +843,7 @@ msgstr "Nazwa wejściowej mapy rastrowej 3D"
 
 #: ../raster3d/base/r3.info.main.c:91 ../raster/r.info/main.c:77
 msgid "Print range only"
-msgstr "Wyświetl tylko zakres wartości danych"
+msgstr "Wyświetl zakres wartości danych mapy"
 
 #: ../raster3d/base/r3.info.main.c:96
 msgid "Print 3D raster map resolution (NS-res, EW-res, TB-res) only"
@@ -7321,48 +7321,45 @@ msgstr ""
 #: ../raster/r.info/main.c:71
 #, fuzzy
 msgid "Output basic information about a raster map layer."
-msgstr ""
-"Wyświetla podstawowe informacje o określonej przez użytkowika mapie rastrowej"
+msgstr "Wyświetla podstawowe informacje o mapie rastrowej"
 
 #: ../raster/r.info/main.c:82
 msgid "Print raster map resolution (NS-res, EW-res) only"
-msgstr "Wyświetl tylko rozdzielczość (NS-res, EW-res)"
+msgstr "Wyświetl rozdzielczość mapy (NS-res, EW-res)"
 
 #: ../raster/r.info/main.c:86
 msgid "Print raster map type only"
-msgstr "Wyświetl tylko typ mapy rastrowej"
+msgstr "Wyświetl typ mapy"
 
 #: ../raster/r.info/main.c:90 ../vector/v.info/main.c:85
 msgid "Print map region only"
-msgstr "Wyświetl tylko region mapy"
+msgstr "Wyświetl region mapy"
 
 #: ../raster/r.info/main.c:94
 msgid "Print raster history instead of info"
-msgstr "Wyświetl historię rastra zamiast informacji"
+msgstr "Wyświetl historię mapy"
 
 #: ../raster/r.info/main.c:98
 msgid "Print raster map data units only"
-msgstr "Wyświetl tylko jednostki mapy rastrowej"
+msgstr "Wyświetl jednostki mapy rastrowej"
 
 #: ../raster/r.info/main.c:102
 #, fuzzy
 msgid "Print raster map vertical datum only"
-msgstr "Wyświetl tylko region mapy rastrowej"
+msgstr "Wyświetl region mapy rastrowej"
 
 #: ../raster/r.info/main.c:106 ../vector/v.info/main.c:90
 msgid "Print map title only"
-msgstr "Wyświetl tylko tytuł mapy"
+msgstr "Wyświetl tytuł mapy"
 
 #: ../raster/r.info/main.c:111
 msgid "Print raster map timestamp (day.month.year hour:minute:seconds) only"
-msgstr ""
-"Wyświetl tylko przedziały czasowe mapy rastrowej dzień.miesiąc.rok godzina:"
-"minuty:sekundy)"
+msgstr "Wyświetl przedziały czasowe mapy (dzień.miesiąc.rok godzina:minuty:sekundy)"
 
 #: ../raster/r.info/main.c:142
 #, fuzzy
 msgid "Unable to read range file"
-msgstr "Nie możn odczytać pliku zakresu"
+msgstr "Nie można odczytać pliku zakresu"
 
 #: ../raster/r.surf.area/main.c:89
 msgid "Surface area estimation for rasters."
