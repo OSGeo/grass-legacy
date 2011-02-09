@@ -194,7 +194,7 @@ int main(int argc, char *argv[])
 
     /* Copy lines to output */
     for (input = 0; input < 2; input++) {
-	int ncats, index;
+	int ncats, index, nlines_out;
 
 	G_message(_("Copying vector objects from vector map <%s>..."),
 		  in_opt[input]->answer);
@@ -210,6 +210,7 @@ int main(int argc, char *argv[])
 
 	nlines = Vect_get_num_lines(&(In[input]));
 
+	nlines_out = 0;
 	for (line = 1; line <= nlines; line++) {
 	    int ltype;
 
@@ -227,8 +228,15 @@ int main(int argc, char *argv[])
 	    }
 
 	    Vect_write_line(&Out, ltype, Points, Cats);
+	    nlines_out++;
 	}
-
+	if (nlines_out == 0) {
+	    Vect_delete(out_opt->answer);
+	    G_fatal_error(_("No %s features found in vector map <%s>. Verify '%s' parameter."),
+		      type_opt[input]->answer, Vect_get_full_name(&(In[input])),
+		      type_opt[input]->key);
+	}
+	
 	/* Allocate attributes */
 	attr[input].n = 0;
 	/* this may be more than necessary */
