@@ -4411,7 +4411,8 @@ msgstr ""
 msgid ""
 "\n"
 "-- ccmath wrapper unit tests finished successfully --"
-msgstr "-- Testy jednostkowe wrappera ccmath powiodły się --"
+msgstr "\n"
+"-- Testy jednostkowe wrappera ccmath powiodły się --"
 
 #: ../lib/gmath/test/test_blas1.c:40
 #, fuzzy
