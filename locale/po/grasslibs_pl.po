@@ -181,7 +181,7 @@ msgid "Unable to open datum table file <%s>"
 msgstr "Nie można otworzyć pliku tabeli datum <%s>"
 
 #: ../lib/proj/datum.c:432 ../lib/proj/datum.c:498
-#, fuzzy, c-format
+#, c-format
 msgid "Error in datum table file <%s>, line %d"
 msgstr "Błąd w pliku <%s> tabeli datum, linia %d"
 
@@ -227,7 +227,6 @@ msgid "Unable parse GRASS PROJ_INFO file"
 msgstr "Nie można przetworzyć pliku GRASS PROJ_INFO"
 
 #: ../lib/proj/convert.c:115
-#, fuzzy
 msgid "Unable get PROJ.4-style parameter string"
 msgstr "Nie można uzyskać parametrów w stylu PROJ.4"
 
@@ -256,7 +255,7 @@ msgid "Datum <%s> apparently recognised by GRASS but no parameters found. You ma
 msgstr "Datum <%s> najwyraźniej zostało rozpoznane przez GRASS, ale nie znaleziono parametrów. Należy to sprawdzić."
 
 #: ../lib/proj/convert.c:446
-#, c-format
+#, fuzzy, c-format
 msgid "Invalid transformation number %d; valid range is 1 to %d. Leaving datum transform parameters unspecified."
 msgstr ""
 
@@ -386,7 +385,7 @@ msgid "The integer data range for %s@%s is empty"
 msgstr "Całkowitoliczbowy zakres wartości danych %s@%s jest pusty"
 
 #: ../lib/gis/quant_io.c:168
-#, fuzzy, c-format
+#, c-format
 msgid "quantization file [%s] in mapset [%s] %s"
 msgstr "plik kwantyzacji [%s] w mapsecie [%s] %s"
 
@@ -396,7 +395,7 @@ msgid "G_put_map_row: %s is not integer! Use G_put_[f/d]_raster_row()!"
 msgstr "G_put_map_row: %s nie jest całkowitoliczbowa! Użyj G_put_[f/d]_raster_row()!"
 
 #: ../lib/gis/put_row.c:251
-#, fuzzy, c-format
+#, c-format
 msgid "%s: map [%s] not open for write - request ignored"
 msgstr "%s: mapa [%s] nie jest otwarta do zapisu - żądanie zignorowane"
 
@@ -638,7 +637,6 @@ msgid "WHERE conditions of SQL statement without 'where' keyword"
 msgstr "Warunki WHERE polecenia SQL - bez 'where'"
 
 #: ../lib/gis/parser.c:341
-#, fuzzy
 msgid "Example: income < 1000 and inhab >= 10000"
 msgstr "Przykład: dochód < 1000 i inhab >= 10000"
 
@@ -755,12 +753,10 @@ msgid "Feature ids"
 msgstr "ID obiektów"
 
 #: ../lib/gis/parser.c:637
-#, fuzzy
 msgid "Path to input file"
 msgstr "Ścieżka do pliku wejściowego"
 
 #: ../lib/gis/parser.c:645
-#, fuzzy
 msgid "Path for output file"
 msgstr "Ścieżka do pliku wyjściowego"
 
@@ -785,7 +781,7 @@ msgid "Either a standard GRASS color, R:G:B triplet, or \"none\""
 msgstr "Standardowa nazwa koloru GRASS, R:G:B lub \"none\""
 
 #: ../lib/gis/parser.c:817
-#, fuzzy, c-format
+#, c-format
 msgid "BUG in descriptions, option '%s' in <%s> does not exist"
 msgstr "BUG (błąd) w opisach, opcja '%s' w <%s> nie istnieje"
 
@@ -936,7 +932,7 @@ msgid "Sorry, <%s> is not a valid parameter\n"
 msgstr "<%s> nie jest poprawnym parametrem\n"
 
 #: ../lib/gis/parser.c:2275
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "\n"
 "ERROR: illegal range syntax for parameter <%s>\n"
@@ -964,7 +960,7 @@ msgid "       Legal range: %s\n"
 msgstr "       Dopuszczalny zakres: %s\n"
 
 #: ../lib/gis/parser.c:2285
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "\n"
 "ERROR: Missing value for parameter <%s>\n"
@@ -973,12 +969,11 @@ msgstr ""
 "BŁĄD: Brakująca wartość dla parametru <%s>\n"
 
 #: ../lib/gis/parser.c:2433
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "ERROR: Required parameter <%s> not set:\n"
 "\t(%s)\n"
 msgstr ""
-"\n"
 "BŁĄD: Wymagany parametr <%s> nie został podany:\n"
 "\t(%s)\n"
 
@@ -989,7 +984,7 @@ msgid ""
 "ERROR: option <%s> must be provided in multiples of %d\n"
 msgstr ""
 "\n"
-"BŁĄD: opcja <%s> musi być wielokrotnością %d\n"
+"BŁĄD: opcja <%s> musi być podana jako wielokrotność %d\n"
 
 #: ../lib/gis/parser.c:2530
 #, c-format
@@ -1434,7 +1429,6 @@ msgstr ""
 "** %s - istnieje, wybierz inną nazwę **\n"
 
 #: ../lib/gis/ask.c:561
-#, fuzzy
 msgid "ask: can't happen"
 msgstr "ask: to nie może się zdarzyć"
 
@@ -1626,7 +1620,7 @@ msgid "Raster map <%s@%s>: format field in header file invalid"
 msgstr "Mapa rastrowa <%s@%s>: nieprawidłowe pole formatu w pliku nagłówkowym"
 
 #: ../lib/gis/opencell.c:219
-#, fuzzy, c-format
+#, c-format
 msgid "Raster map <%s@%s> is in different projection than current region. Found raster map <%s@%s>, should be <%s>."
 msgstr "Mapa rastrowa <%s@%s> jest w innym odwzorowaniu niż bieżący region. Znaleziona mapa rastrowa <%s@%s>, powinno być <%s>."
 
@@ -1729,7 +1723,7 @@ msgstr ""
 "Podaj nazwę datum\n"
 
 #: ../lib/gis/get_datum_name.c:55
-#, fuzzy, c-format
+#, c-format
 msgid "Enter 'list' for the list of available datums\n"
 msgstr "Wpisz 'list' aby uzyskać listę dostępnych datum\n"
 
@@ -1812,7 +1806,7 @@ msgid "Unable to open file %s in <%s>"
 msgstr "Nie można otworzyć pliku %s w <%s>"
 
 #: ../lib/gis/get_ellipse.c:358 ../lib/gis/get_ellipse.c:384
-#, fuzzy, c-format
+#, c-format
 msgid "Invalid a: field '%s' in file %s in <%s>"
 msgstr "Błędne a: pole '%s' w pliku %s w <%s>"
 
@@ -1822,7 +1816,7 @@ msgid "Invalid ellipsoid '%s' in file %s in <%s>"
 msgstr "Błędna elipsoida '%s' w pliku %s w <%s>"
 
 #: ../lib/gis/get_ellipse.c:388
-#, fuzzy, c-format
+#, c-format
 msgid "Invalid es: field '%s' in file %s in <%s>"
 msgstr "Błędne es: pole '%s' w pliku %s w <%s>"
 
@@ -2062,12 +2056,12 @@ msgid "whose header file can't be opened."
 msgstr ", której pliku nagłówkowego nie można otworzyć."
 
 #: ../lib/gis/get_cellhd.c:88
-#, fuzzy, c-format
+#, c-format
 msgid "Unable to open header file for raster map <%s@%s>"
 msgstr "Nie można odczytać pliku nagłówkowego mapy rastrowej <%s@%s>"
 
 #: ../lib/gis/get_cellhd.c:105
-#, fuzzy, c-format
+#, c-format
 msgid " It is a reclass of raster map <%s@%s> whose header file is invalid."
 msgstr " To jest reklasyfikacja mapy rastrowej <%s@%s>, której plik nagłówkowy jest niepoprawny."
 
@@ -2113,7 +2107,7 @@ msgid "Graphics driver [%s] started"
 msgstr "Sterownik graficzny [%s] uruchomiony"
 
 #: ../lib/driver/command.c:508
-#, fuzzy, c-format
+#, c-format
 msgid "Unknown command: %d last: %d"
 msgstr "Nieznane polecenie: %d ostatnie: %d"
 
@@ -2241,7 +2235,6 @@ msgid "Writing to file loaded to memory not supported"
 msgstr "Zapis do pliku załadowanego do pamięci nie jest obsługiwany"
 
 #: ../lib/vector/diglib/file.c:200
-#, fuzzy
 msgid "Unable to load file to memory, file not open"
 msgstr "Nie można wczytać pliku do pamięci; plik nie został otwarty"
 
@@ -2475,7 +2468,7 @@ msgid "Vect_read_area_geos(): unable to read isle id %d of area id %d"
 msgstr "Vect_read_area_geos(): nie można odczytać wyspy id %d obszaru id %d"
 
 #: ../lib/vector/Vlib/geos.c:203
-#, fuzzy, c-format
+#, c-format
 msgid "Unable to read line offset %ld"
 msgstr "Nie mozna odczytać przesunięcia linii %ld"
 
@@ -2485,7 +2478,7 @@ msgid "Attempt to read points of nonexistent area id %d"
 msgstr "Próba odczytu punktów z nieistniejącego obszaru id %d"
 
 #: ../lib/vector/Vlib/geos.c:470
-#, fuzzy, c-format
+#, c-format
 msgid "Unable to read feature id %d"
 msgstr "Nie można odczytać obiektu id %d"
 
@@ -2549,7 +2542,7 @@ msgid "Number of centroids: %d"
 msgstr "Liczba centroidów: %d"
 
 #: ../lib/vector/Vlib/build.c:161
-#, fuzzy, c-format
+#, c-format
 msgid "Number of faces: %d"
 msgstr "Liczba ścian: %d"
 
@@ -2743,7 +2736,6 @@ msgid "Request to find area outside nonexistent isle"
 msgstr "Zażądano odszukania obszaru poza nieistniejącą wyspą"
 
 #: ../lib/vector/Vlib/build_nat.c:516
-#, fuzzy
 msgid "Registering primitives..."
 msgstr "Rejestrowanie prymitywów..."
 
@@ -2802,9 +2794,8 @@ msgid "Next edge was visited but it is not the first one !!! breaking loop"
 msgstr "Następna krawędź została przetworzona ale nie jest pierwsza! Pętla przerwana"
 
 #: ../lib/vector/Vlib/buffer2.c:674
-#, fuzzy
 msgid "side != 0 feature not implemented"
-msgstr "strona !=0 jeszcze nie zaimplementowano"
+msgstr "jeszcze nie zaimplementowano obsługi strony !=0"
 
 #: ../lib/vector/Vlib/buffer2.c:924 ../lib/vector/Vlib/buffer2.c:957
 msgid "Vect_get_point_in_poly() failed"
@@ -3025,7 +3016,6 @@ msgid "Unable to write feature, vector map is not opened"
 msgstr "Nie można zapisać obiektu, mapa wektorowa nie jest otwarta"
 
 #: ../lib/vector/Vlib/write.c:148
-#, fuzzy
 msgid "Unable to write feature (negative offset)"
 msgstr "Nie można zapisać obiektu (ujemne przesunięcie)"
 
@@ -3094,7 +3084,6 @@ msgid "Unable to open vector map <%s> on level %d. Try to rebuild vector topolog
 msgstr "Nie znaleziono mapy wektorowej <%s> na poziomie %d. Spróbuj przebudować topologię za pomocą v.build."
 
 #: ../lib/vector/Vlib/open.c:214
-#, fuzzy
 msgid "Unable to read head file"
 msgstr "Nie można odczytać pliku nagłówkowego"
 
@@ -3124,7 +3113,7 @@ msgid "Unable to create vector map <%s>"
 msgstr "Nie można utworzyć mapy wektorowej <%s>"
 
 #: ../lib/vector/Vlib/open.c:622
-#, fuzzy, c-format
+#, c-format
 msgid "Unable to stat file <%s>"
 msgstr "Nie można ustalić stanu pliku <%s>"
 
@@ -3376,7 +3365,6 @@ msgid "Write 3d array to g3d map <%s>"
 msgstr "Zapisz tablicę 3d do mapy rastrowej 3D <%s>"
 
 #: ../lib/gpde/N_solvers.c:50
-#, fuzzy
 msgid "The gauss elimination solver does not work with sparse matrices"
 msgstr "Metoda eliminacji Gaussa nie działa dla macierzy rozrzedzonych"
 
@@ -3389,22 +3377,18 @@ msgid "The linear equation system is not quadratic"
 msgstr "Układ równań liniowych nie jest kwadratowy"
 
 #: ../lib/gpde/N_solvers.c:60
-#, fuzzy
 msgid "Starting direct gauss elimination solver"
 msgstr "Rozpoczęto rozwiązywanie metodą eliminacji Gaussa"
 
 #: ../lib/gpde/N_solvers.c:88
-#, fuzzy
 msgid "The lu solver does not work with sparse matrices"
 msgstr "Metoda LU nie działa dla macierzy rozrzedzonych"
 
 #: ../lib/gpde/N_solvers.c:98
-#, fuzzy
 msgid "Starting direct lu decomposition solver"
 msgstr "Rozpoczęto rozwiązywanie metodą LU"
 
 #: ../lib/gpde/N_solvers.c:155
-#, fuzzy
 msgid "The cholesky solver does not work with sparse matrices"
 msgstr "Metoda Choleskiego nie działa dla macierzy rozrzedzonych"
 
@@ -3824,7 +3808,6 @@ msgid "First change your cols number to nsizc %d %d"
 msgstr "Najpierw ustaw liczbę kolumn zgodnie z 'nsizc'"
 
 #: ../lib/rst/interp_float/segmen2d.c:111
-#, fuzzy
 msgid "Taking too long to find points for interpolation - please change the region to area where your points are. Continuing calculations..."
 msgstr "Odnajdowanie punktów do interpolacji trwa zbyt długo - ustaw region na obszar, gdzie znajdują się punkty. Obliczenia są kontynuowane..."
 
@@ -3843,7 +3826,7 @@ msgid "Bitmap mask created"
 msgstr "Utworzono maskę bitmapową"
 
 #: ../lib/rst/interp_float/vinput2d.c:73
-#, fuzzy, c-format
+#, c-format
 msgid "Vector map <%s> is not 3D"
 msgstr "Mapa wektorowa <%s> nie jest 3D"
 
@@ -3859,12 +3842,11 @@ msgstr "Kolumna <%s> nie została znaleziona"
 
 #: ../lib/rst/interp_float/vinput2d.c:97
 #: ../lib/rst/interp_float/vinput2d.c:110
-#, fuzzy, c-format
+#, c-format
 msgid "Data type of column <%s> must be numeric"
 msgstr "Typ danych kolumny <%s> musi być liczbowy"
 
 #: ../lib/rst/interp_float/vinput2d.c:121
-#, fuzzy
 msgid "Reading features from vector map ..."
 msgstr "Odczyt obiektów z mapy wektorowej..."
 
@@ -3880,7 +3862,6 @@ msgid "Negative value of smoothing detected: sm must be >= 0"
 msgstr "Wartość parametru wygładzania musi być >= 0"
 
 #: ../lib/rst/interp_float/vinput2d.c:233
-#, fuzzy
 msgid "Reading nodes from vector map ..."
 msgstr "Odczyt węzłów z mapy wektorowej..."
 
@@ -3889,12 +3870,12 @@ msgid "Strip exists with insufficient data"
 msgstr "Istnieje pas z niewystarczającymi danymi"
 
 #: ../lib/rst/interp_float/vinput2d.c:328
-#, fuzzy, c-format
+#, c-format
 msgid "There are points outside specified 2D/3D region - %d points ignored"
 msgstr "Istnieją punkty poza ustawionym regionem - pominięto %d punktów"
 
 #: ../lib/rst/interp_float/vinput2d.c:331
-#, fuzzy, c-format
+#, c-format
 msgid "Ignoring %d points (too dense)"
 msgstr "Pominięto %d punktów (zbyt gęsto)"
 
@@ -3918,32 +3899,30 @@ msgid "There are less than %d points for interpolation. No segmentation is neces
 msgstr "Mniej niż %d punktów do interpolacji. Segmentacja nie jest potrzebna - aby przyśpieszyć interpolację ustaw segmax=%d (patrz podręcznik)"
 
 #: ../lib/rst/interp_float/vinput2d.c:355
-#, fuzzy, c-format
+#, c-format
 msgid "Number of points from vector map %d"
 msgstr "Ilość punktów z mapy wektorowej: %d"
 
 #: ../lib/rst/interp_float/vinput2d.c:356
-#, fuzzy, c-format
+#, c-format
 msgid "Number of points outside of 2D/3D region %d"
 msgstr "Liczba punktów położonych poza bieżącym regionem: %d"
 
 #: ../lib/rst/interp_float/vinput2d.c:358
-#, fuzzy, c-format
+#, c-format
 msgid "Number of points being used %d"
 msgstr "Liczba użytych punktów: %d"
 
 #: ../lib/rst/interp_float/vinput2d.c:391
-#, fuzzy
 msgid "Some points outside of region (ignored)"
 msgstr "Część punktów poza bieżącym regionem (pominięte)"
 
 #: ../lib/rst/interp_float/vinput2d.c:397
-#, fuzzy
 msgid "Unable to allocate memory"
 msgstr "Nie można przydzielić pamięci"
 
 #: ../lib/rst/interp_float/vinput2d.c:405
-#, fuzzy, c-format
+#, c-format
 msgid "Unable to insert %f,%f,%f a = %d"
 msgstr "Nie można umieścić %f,%f,%f a = %d"
 
@@ -3972,7 +3951,6 @@ msgid "G3d_getStandard3dParams: tile dimension value invalid"
 msgstr "G3d_getStandard3dParams: błędny wymiar kafli"
 
 #: ../lib/g3d/g3dparam.c:173
-#, fuzzy
 msgid "Window replacing the default"
 msgstr "Region zastępujący ustawienie domyślne"
 
@@ -4113,6 +4091,7 @@ msgid "Try using smaller font!"
 msgstr "Spróbuj użyć mniejszej czcionki!"
 
 #: ../lib/ogsf/gsd_surf.c:1742
+#, fuzzy
 msgid "Cut-plane points mis-match between surfaces. Check resolution(s)."
 msgstr ""
 
@@ -4162,9 +4141,8 @@ msgstr "Sprawdź ilość żądanych klatek i zaznaczone ramki kluczowe"
 
 #: ../lib/ogsf/Gs3.c:133 ../lib/ogsf/Gs3.c:208 ../lib/ogsf/Gs3.c:366
 #: ../lib/ogsf/Gs3.c:482 ../lib/ogsf/Gs3.c:587
-#, fuzzy
 msgid "Unable to allocate memory for a null buffer"
-msgstr "Nie można przydzielić miejsca dla bufora null"
+msgstr "Nie można przydzielić miejsca dla bufora NULL"
 
 #: ../lib/ogsf/Gs3.c:140 ../lib/ogsf/Gs3.c:215 ../lib/ogsf/Gs3.c:378
 #: ../lib/ogsf/Gs3.c:494 ../lib/ogsf/Gs3.c:590
@@ -4628,17 +4606,17 @@ msgid "Input format error"
 msgstr "Błędny format wejściowy"
 
 #: ../lib/imagery/points.c:124
-#, fuzzy, c-format
+#, c-format
 msgid "Unable to open control point file for group [%s in %s]"
 msgstr "Nie można otworzyć pliku punktów kontrolnych grupy [%s w %s]"
 
 #: ../lib/imagery/points.c:132
-#, fuzzy, c-format
+#, c-format
 msgid "Bad format in control point file for group [%s in %s]"
 msgstr "Błędny format w pliku punktów kontrolnych grupy [%s w %s]"
 
 #: ../lib/imagery/points.c:159
-#, fuzzy, c-format
+#, c-format
 msgid "Unable to create control point file for group [%s in %s]"
 msgstr "Nie można utworzyć pliku punktów kontrolnych grupy [%s w %s]"
 
