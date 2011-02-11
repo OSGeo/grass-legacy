@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: grassnviz_de\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2011-01-06 22:57+0100\n"
-"PO-Revision-Date: 2011-01-22 22:24+0100\n"
+"PO-Revision-Date: 2011-02-09 21:25+0100\n"
 "Last-Translator: Helmut Kudrnovsky <hellik@web.de>\n"
 "Language-Team: Deutsch <grass-translations@lists.osgeo.org>\n"
 "MIME-Version: 1.0\n"
@@ -2531,7 +2531,7 @@ msgstr "Eingabe der skalierten Unterschiede"
 
 #: ../visualization/nviz/scripts/panel_sdiff.tcl:54
 msgid "Reference surface:"
-msgstr "Referenz-Oberfläche"
+msgstr "Referenz-Oberfläche:"
 
 #: ../visualization/nviz/scripts/panel_sdiff.tcl:58
 msgid "Set difference between reference surface and others"
