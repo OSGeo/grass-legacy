@@ -195,7 +195,7 @@ msgid "Illegal output file name"
 msgstr "Niepoprawna nazwa pliku wyjściowego"
 
 #: ../raster3d/r3.cross.rast/main.c:352
-#, fuzzy
+
 msgid "Output map already exists. Will be overwritten!"
 msgstr "Mapa wyjściowa istnieje i zostanie nadpisana"
 
@@ -204,12 +204,10 @@ msgid "Unable to create raster map"
 msgstr "Nie można utworzyć mapy rastrowej"
 
 #: ../raster3d/r3.cross.rast/main.c:394
-#, fuzzy
 msgid "Unable to close elevation map"
 msgstr "Nie można zamknąć mapy wysokości"
 
 #: ../raster3d/r3.cross.rast/main.c:399
-#, fuzzy
 msgid "Wrong G3D Datatype! Cannot create raster map."
 msgstr "Błędny typ danych w mapie rastrowej 3D. Nie można utworzyć mapy rastrowej"
 
@@ -341,12 +339,12 @@ msgid "You have to specify top and bottom map"
 msgstr "Musisz podać górną i dolną mapę"
 
 #: ../raster3d/r3.out.vtk/main.c:125
-#, fuzzy, c-format
+#, c-format
 msgid "Top cell map <%s> not found"
 msgstr "Nie znaleziono górnej mapy rastrowej <%s>"
 
 #: ../raster3d/r3.out.vtk/main.c:134
-#, fuzzy, c-format
+#, c-format
 msgid "Bottom cell map <%s> not found"
 msgstr "Nie znaleziono dolnej mapy rastrowej <%s>"
 
@@ -459,7 +457,6 @@ msgid "Name for VTK-ASCII output file"
 msgstr "Nazwa wyjściowego pliku VTK ASCII"
 
 #: ../raster3d/r3.out.vtk/parameters.c:41
-#, fuzzy
 msgid "Float value to represent no data cell/points"
 msgstr "Liczba zmiennoprzecinkowa reprezentująca komórki/punkty, w których brak danych"
 
@@ -468,14 +465,12 @@ msgid "Create VTK pointdata instead of VTK celldata (celldata is default)"
 msgstr "Utwórz punktowe dane VTK zamiast komórkowych (domyślnie komórkowe)"
 
 #: ../raster3d/r3.out.vtk/parameters.c:56
-#, fuzzy
 msgid "top surface 2D raster map"
-msgstr "Górna mapa rastrowa 2D"
+msgstr "Mapa rastrowa 2D powierzchni górnej"
 
 #: ../raster3d/r3.out.vtk/parameters.c:65
-#, fuzzy
 msgid "bottom surface 2D raster map"
-msgstr "Dolna mapa rastrowa 2D"
+msgstr "Mapa rastrowa 2D powierzchni dolnej"
 
 #: ../raster3d/r3.out.vtk/parameters.c:71
 msgid "Create 3d elevation output with a top and a bottom surface, both raster maps are required."
@@ -576,7 +571,6 @@ msgid "Specific yield in 1/m"
 msgstr "Odsączalność w [1/m]"
 
 #: ../raster3d/r3.gwflow/main.c:108
-#, fuzzy
 msgid "Recharge raster map in m^3/s"
 msgstr "Mapa rastrowa zasilania w [m^3/s]"
 
@@ -613,7 +607,6 @@ msgid "The direct cholesky solver do not work with sparse matrices"
 msgstr "Metoda Choleskiego nie działa dla macierzy rozrzedzonych"
 
 #: ../raster3d/r3.gwflow/main.c:294 ../raster/r.gwflow/main.c:529
-#, fuzzy
 msgid "Unable to create and solve the linear equation system"
 msgstr "Nie można utworzyć i rozwiązać układu równań liniowych"
 
@@ -624,7 +617,7 @@ msgid "Error opening g3d map <%s>"
 msgstr "Błąd podczas otwierania mapy rastrowej 3D <%s>"
 
 #: ../raster3d/r3.gwflow/main.c:373
-#, fuzzy, c-format
+#, c-format
 msgid "Write the result to g3d map <%s>"
 msgstr "Zapisz wynik do mapy rastrowej 3D <%s>"
 
@@ -708,12 +701,10 @@ msgid "raster3d, statistics"
 msgstr "raster3d, statystyki"
 
 #: ../raster3d/r3.stats/main.c:569
-#, fuzzy
 msgid "Generates volume statistics for raster3d maps."
 msgstr "Obliczenia statystyk dla map rastrowych 3D"
 
 #: ../raster3d/r3.stats/main.c:580
-#, fuzzy
 msgid "Number of sub-ranges to collect stats from"
 msgstr "Liczba podzakresów, z których mają być zebrane statystyki"
 
@@ -731,12 +722,10 @@ msgid "Requested g3d map <%s> not found"
 msgstr "Żądana mapa rastrowa 3D <%s> nie została znaleziona"
 
 #: ../raster3d/r3.stats/main.c:664
-#, fuzzy
 msgid "Sort non-null values"
 msgstr "Sortuj wartości różne od NULL"
 
 #: ../raster3d/base/r3.null.main.c:58
-#, fuzzy
 msgid "3d raster map for which to modify null values"
 msgstr "Mapa rastrowa 3D, dla której mają być zmodyfikowane wartości NULL"
 
@@ -749,7 +738,6 @@ msgid "The value to replace the null value by"
 msgstr "Wartość która ma zastąpić NULL"
 
 #: ../raster3d/base/r3.null.main.c:88
-#, fuzzy
 msgid "Illegal value for null"
 msgstr "Niepoprawna wartość dla NULL"
 
@@ -958,12 +946,11 @@ msgid "Adding rule: %lf - %lf"
 msgstr "Dodawanie reguły: %lf - %lf"
 
 #: ../raster3d/base/mask_functions.c:100 ../raster/r.null/null.c:260
-#, fuzzy, c-format
+#, c-format
 msgid "%s: illegal value spec"
 msgstr "%s: niewłaściwa wartość"
 
 #: ../raster3d/base/r3.mask.main.c:44
-#, fuzzy
 msgid "3d raster map with reference values"
 msgstr "Mapa rastrowa 3D z wartościami referencyjnymi"
 
@@ -1110,7 +1097,6 @@ msgid "Output integer category values, not cell values"
 msgstr "Zapis numerów kategorii komórek zamiast ich wartości"
 
 #: ../raster/r.out.bin/main.c:96
-#, fuzzy
 msgid "Export array with GMT compatible header"
 msgstr "Ekportuj do pliku kompatybilnego z GMT"
 
@@ -1196,7 +1182,7 @@ msgstr "Nie można otworzyć mapy rastrowej <%s>"
 
 #: ../raster/r.out.bin/main.c:145 ../raster/r.out.bin/main.c:231
 #: ../raster/r.out.bin/main.c:235
-#, fuzzy, c-format
+#, c-format
 msgid "Unable to create file <%s>"
 msgstr "Nie można utworzyć pliku <%s>"
 
@@ -1205,12 +1191,11 @@ msgid "Swapping header data"
 msgstr "Zamiana miejscami bajtów w nagłówku"
 
 #: ../raster/r.out.bin/main.c:238
-#, fuzzy
 msgid "Creating BIL support files..."
 msgstr "Tworzenie pliku nagłówkowego i \"world file\" dla formatu BIL..."
 
 #: ../raster/r.out.bin/main.c:239
-#, fuzzy, c-format
+#, c-format
 msgid "Header File = %s"
 msgstr "Plik nagłówkowy = %s"
 
@@ -1243,7 +1228,6 @@ msgid "Exporting raster as double values (bytes=%d)"
 msgstr "Eksport wartości zmiennoprzecinkowych o zwiększonej precyzji (double) (%d bajtów)"
 
 #: ../raster/r.out.bin/main.c:331
-#, fuzzy
 msgid "Using the current region settings..."
 msgstr "Zastosowano ustawienia bieżącego regionu..."
 
@@ -1319,12 +1303,11 @@ msgid "Name of base raster map"
 msgstr "Nazwa bazowej mapy rastrowej"
 
 #: ../raster/r.median/main.c:58 ../raster/r.random/main.c:62
-#, fuzzy
 msgid "Name of cover raster map"
 msgstr "Nazwa wejściowej mapy rastrowej"
 
 #: ../raster/r.median/main.c:71
-#, fuzzy, c-format
+#, c-format
 msgid "Base raster map <%s> not found"
 msgstr "Nie znaleziono bazowej mapy rastrowej <%s>"
 
@@ -1357,7 +1340,7 @@ msgid "<%s> is an illegal file name"
 msgstr "<%s> jest niedozwoloną nazwą pliku"
 
 #: ../raster/r.median/main.c:79
-#, fuzzy, c-format
+#, c-format
 msgid "Base map and output map <%s> must be different"
 msgstr "Nazwy mapy bazowej i wyjściowej <%s> muszą się różnić"
 
@@ -1367,12 +1350,10 @@ msgid "Unable to read category labels of raster map <%s>"
 msgstr "Nie można odczytać etykiet kategorii mapy rastrowej <%s>"
 
 #: ../raster/r.median/read_stats.c:14 ../raster/r.statistics/read_stats.c:20
-#, fuzzy
 msgid "Reading r.stats output"
 msgstr "Odczyt wyników r.stats"
 
 #: ../raster/r.his/main.c:65
-#, fuzzy
 msgid "Generates red, green and blue raster map layers combining hue, intensity and saturation (HIS) values from user-specified input raster map layers."
 msgstr "Tworzy 3 mapy rastrowe R, G, B (red - czerwień, green - zieleń, blue - niebieskość) z map rastrowych H, I, S (hue - barwa, intensity - intensywność, saturation - nasycenie)"
 
@@ -1476,12 +1457,12 @@ msgid "Using the Current Region settings:"
 msgstr "Użyto bieżących ustawień regionu:"
 
 #: ../raster/r.out.mat/main.c:198 ../raster/r.in.mat/main.c:415
-#, fuzzy, c-format
+#, c-format
 msgid "northern edge=%f"
 msgstr "północna krawędź=%f"
 
 #: ../raster/r.out.mat/main.c:199 ../raster/r.in.mat/main.c:416
-#, fuzzy, c-format
+#, c-format
 msgid "southern edge=%f"
 msgstr "południowa krawędź=%f"
 
@@ -1516,7 +1497,6 @@ msgid "cols=%d"
 msgstr "kolumny=%d"
 
 #: ../raster/r.out.mat/main.c:272
-#, fuzzy
 msgid "Exporting raster as integer values"
 msgstr "Eksport wartości całkowitoliczbowych"
 
@@ -1525,7 +1505,6 @@ msgid "Exporting raster as floating point values"
 msgstr "Eksport wartości zmiennoprzecinkowych"
 
 #: ../raster/r.out.mat/main.c:282
-#, fuzzy
 msgid "Exporting raster as double FP values"
 msgstr "Eksport wartości zmiennoprzecinkowych o zwiększonej precyzji (double)"
 
@@ -1553,7 +1532,6 @@ msgid "Creates raster maps from ASCII polygon/line/point data files."
 msgstr "Import pliku ASCII z wielobokami, liniami lub punktami do mapy rastrowej"
 
 #: ../raster/r.in.poly/main.c:35
-#, fuzzy
 msgid "Name of input file; or \"-\" to read from stdin"
 msgstr "Wejściowy plik ASCII"
 
@@ -1568,32 +1546,31 @@ msgid "Number of rows to hold in memory"
 msgstr "Liczba wierszy trzymanych w pamięci"
 
 #: ../raster/r.in.poly/main.c:59
-#, fuzzy
 msgid "Minimum number of rows to hold in memory is 1"
 msgstr "Liczba wierszy trzymanych w pamięci wynosi 1"
 
 #: ../raster/r.in.poly/get_item.c:75
-#, fuzzy, c-format
+#, c-format
 msgid "Illegal coordinate <%s, %s>, skipping."
 msgstr "Pominięto niedozwolone współrzędne <%s, %s>"
 
 #: ../raster/r.in.poly/get_item.c:80
-#, fuzzy, c-format
+#, c-format
 msgid "Illegal north coordinate <%s>, skipping."
-msgstr "Pominięto niedozwoloną współrzędną północy <%s>"
+msgstr "Pominięto niedozwoloną współrzędną północną <%s>"
 
 #: ../raster/r.in.poly/get_item.c:85
-#, fuzzy, c-format
+#, c-format
 msgid "Illegal east coordinate <%s>, skipping."
-msgstr "Pominięto niedozwoloną współrzędną wschodu <%s>"
+msgstr "Pominięto niedozwoloną współrzędną wschodnią <%s>"
 
 #: ../raster/r.in.poly/poly2rast.c:36
-#, fuzzy, c-format
+#, c-format
 msgid "Can't create raster map <%s>"
 msgstr "Nie można utworzyć mapy rastrowej <%s>"
 
 #: ../raster/r.in.poly/poly2rast.c:56 ../raster/r.in.xyz/main.c:528
-#, fuzzy, c-format
+#, c-format
 msgid "Pass #%d (of %d) ..."
 msgstr "Przebieg #%d (z %d)..."
 
@@ -1656,9 +1633,9 @@ msgstr "Nie podano parametru \"levels\" ani \"step\""
 
 #: ../raster/r.contour/main.c:165 ../raster/r.stats/main.c:315
 #: ../raster/r.recode/read_rules.c:19
-#, fuzzy, c-format
+#, c-format
 msgid "Unable to read fp range of raster map <%s>"
-msgstr "Nie można odczytać zakresu danych zmiennoprzecinkowych mapy rastrowej <%s>"
+msgstr "Nie można odczytać zakresu wartości zmiennoprzecinkowych mapy rastrowej <%s>"
 
 #: ../raster/r.contour/main.c:185 ../raster/r.random/random.c:74
 #: ../raster/r.to.vect/main.c:158 ../display/d.vect.chart/plot.c:44
@@ -1742,37 +1719,34 @@ msgid "Reading data..."
 msgstr "Odczyt danych..."
 
 #: ../raster/r.contour/main.c:270
-#, fuzzy, c-format
+#, c-format
 msgid "Range of data: min=%f, max=%f"
 msgstr "Zakres danych: min. =%f, maks. =%f"
 
 #: ../raster/r.contour/main.c:272
-#, fuzzy
 msgid "Range of data: empty"
 msgstr "Zakres danych: brak"
 
 #: ../raster/r.contour/main.c:299 ../raster/r.contour/main.c:303
-#, fuzzy
 msgid "This step value is not allowed"
 msgstr "Podano niedozwoloną wartość cięcia (interwału)"
 
 #: ../raster/r.contour/main.c:327
-#, fuzzy, c-format
+#, c-format
 msgid "Range of levels: min = %f, max = %f"
 msgstr "Zakres poziomów: min. =%f, maks. =%f"
 
 #: ../raster/r.contour/main.c:356
-#, fuzzy
 msgid "Displacing data..."
 msgstr "Rozmieszczanie danych..."
 
 #: ../raster/r.contour/cont.c:81
-#, fuzzy, c-format
+#, c-format
 msgid "Writing vector contours (total levels %d)..."
 msgstr "Zapis izolinii do mapy wektorowej (liczba poziomów: %d)..."
 
 #: ../raster/r.contour/cont.c:211
-#, fuzzy, c-format
+#, c-format
 msgid "%d crossings founds"
 msgstr "znaleziono %d przecięć"
 
@@ -1820,27 +1794,22 @@ msgid "Raster map is too big! Exceeds %d columns or %d rows"
 msgstr "Mapa rastrowa jest zbyt duża! Przekroczona ilość %d kolumn lub %d wierszy"
 
 #: ../raster/r.out.pov/main.c:214
-#, fuzzy
 msgid "Negative elevation values in input"
 msgstr "Ujemne wartości w mapie wejściowej"
 
 #: ../raster/r.basins.fill/main.c:53
-#, fuzzy
 msgid "raster, hydrology"
 msgstr "raster, hydrologia"
 
 #: ../raster/r.basins.fill/main.c:55
-#, fuzzy
 msgid "Generates watershed subbasins raster map."
-msgstr "Tworzenie mapy rastrowej podzlewni"
+msgstr "Tworzy mapę rastrową podzlewni."
 
 #: ../raster/r.basins.fill/main.c:59
-#, fuzzy
 msgid "Name of input coded stream network raster map"
 msgstr "Wejściowa mapa rastrowa zakodowanej sieci rzecznej"
 
 #: ../raster/r.basins.fill/main.c:63
-#, fuzzy
 msgid "Name of input thinned ridge network raster map"
 msgstr "Wejściowa mapa rastrowa sieci grzbietów"
 
@@ -1865,7 +1834,7 @@ msgstr ""
 
 #: ../raster/r.basins.fill/main.c:155 ../raster/r.resample/main.c:152
 #: ../raster/r.cross/main.c:194
-#, fuzzy, c-format
+#, c-format
 msgid "Creating support files for <%s>..."
 msgstr "Tworzenie plików dla <%s>..."
 
@@ -1956,7 +1925,6 @@ msgid "Contains a set of measures for attributes, diversity, texture, juxtaposit
 msgstr ""
 
 #: ../raster/r.mfilter.fp/main.c:58 ../raster/r.mfilter/main.c:51
-#, fuzzy
 msgid "raster, map algebra"
 msgstr "raster, algebra map"
 
@@ -2001,12 +1969,11 @@ msgid "Raster map too small for the size of the filter"
 msgstr "Mapa rastrowa za mała w stosunku do rozmiaru filtra"
 
 #: ../raster/r.mfilter.fp/getfilt.c:27 ../raster/r.mfilter/getfilt.c:26
-#, fuzzy, c-format
+#, c-format
 msgid "Cannot open filter file '%s'"
 msgstr "Nie można otworzyć pliku filtra '%s'"
 
 #: ../raster/r.mfilter.fp/getfilt.c:47 ../raster/r.mfilter/getfilt.c:46
-#, fuzzy
 msgid "Illegal filter matrix size specified"
 msgstr "Podano niedozwolony rozmiar macierzy filtra"
 
@@ -2022,7 +1989,6 @@ msgstr "Błędna macierz filtra"
 #: ../raster/r.mfilter.fp/getfilt.c:80 ../raster/r.mfilter.fp/getfilt.c:107
 #: ../raster/r.mfilter.fp/getfilt.c:124 ../raster/r.mfilter/getfilt.c:79
 #: ../raster/r.mfilter/getfilt.c:105 ../raster/r.mfilter/getfilt.c:122
-#, fuzzy
 msgid "Filter file format error"
 msgstr "Błąd formatu pliku filtra"
 
@@ -2039,7 +2005,6 @@ msgid "Duplicate filter type specified"
 msgstr "Zduplikowany typ filtra"
 
 #: ../raster/r.mfilter.fp/getfilt.c:117 ../raster/r.mfilter/getfilt.c:115
-#, fuzzy
 msgid "Illegal filter type specified"
 msgstr "Błędny typ filtra"
 
@@ -2053,7 +2018,6 @@ msgid "Filter start %s ignored, using UL"
 msgstr "Zignorowano początek %s filtra. Użyto górnego lewego rogu"
 
 #: ../raster/r.mfilter.fp/getfilt.c:157 ../raster/r.mfilter/getfilt.c:155
-#, fuzzy
 msgid "Illegal filter file format"
 msgstr "Błędny format pliku filtra"
 
@@ -2132,9 +2096,8 @@ msgid "Both -s and -h doesn't make sense"
 msgstr "Nie można użyć jednocześnie flag -h i -s"
 
 #: ../raster/r.out.ascii/main.c:140
-#, fuzzy
 msgid "Use -M or -s, not both"
-msgstr "Użyj flagi -n lub -s - nie obu"
+msgstr "Użyj flagi '-m' lub '-s' - nie obu"
 
 #: ../raster/r.out.ascii/main.c:172 ../raster/r.out.ppm3/main.c:149
 #: ../raster/r.profile/main.c:157 ../raster/r.out.arc/main.c:142
@@ -2173,22 +2136,18 @@ msgid "Standard deviation"
 msgstr "Odchylenie standardowe"
 
 #: ../raster/r.out.png/r.out.png.c:110
-#, fuzzy
 msgid "raster, png"
 msgstr "raster, png"
 
 #: ../raster/r.out.png/r.out.png.c:112
-#, fuzzy
 msgid "Export GRASS raster as non-georeferenced PNG image."
 msgstr "Eksport mapy rastrowej do pliku PNG"
 
 #: ../raster/r.out.png/r.out.png.c:119
-#, fuzzy
 msgid "Name for new PNG file (use out=- for stdout)"
 msgstr "Nazwa pliku wyjściowego"
 
 #: ../raster/r.out.png/r.out.png.c:127
-#, fuzzy
 msgid "Compression level of PNG file"
 msgstr "Metoda kompresji wyjściowego pliku PNG"
 
@@ -2201,7 +2160,6 @@ msgid "Make NULL cells transparent"
 msgstr "Zastosuj przezroczystość dla komórek NULL"
 
 #: ../raster/r.out.png/r.out.png.c:144
-#, fuzzy
 msgid "Output world file"
 msgstr "\"world file\" dla pliku wyjściowego"
 
@@ -2215,7 +2173,7 @@ msgid "[%s]: No such color"
 msgstr "[%s]: Nie ma takiego koloru"
 
 #: ../raster/r.out.png/r.out.png.c:283
-#, fuzzy, c-format
+#, c-format
 msgid "Converting <%s>..."
 msgstr "Konwersja <%s>..."
 
@@ -2237,7 +2195,6 @@ msgid "Unable to read raster map row %d"
 msgstr "Nie można odczytać wiersza %d mapy rastrowej"
 
 #: ../raster/r.out.png/r.out.png.c:455
-#, fuzzy
 msgid "Writing world file"
 msgstr "Zapis \"world file\""
 
@@ -2250,21 +2207,18 @@ msgid "Got null region struct"
 msgstr ""
 
 #: ../raster/r.out.png/r.out.png.c:462
-#, fuzzy
 msgid "Unable to open world file for writing"
 msgstr "Nie można otworzyć \"world file\" do zapisu"
 
 #: ../raster/r.walk/main.c:176
-#, fuzzy
 msgid "Outputs a raster map layer showing the anisotropic cumulative cost of moving between different geographic locations on an input elevation raster map layer whose cell category values represent elevation combined with an input raster map layer whose cell values represent friction cost."
-msgstr "Tworzy mapę rastrową, ukazującą anizotropowy, skumulowany koszt przemieszczania się pomiędzy położeniami na wejściowej warstwie rastrowej wysokości oraz mapie rastrowej, której wartości reprezentują koszt tarcia"
+msgstr "Tworzy mapę rastrową, ukazującą anizotropowy, skumulowany koszt przemieszczania się pomiędzy położeniami na wejściowej warstwie rastrowej wysokości oraz mapie rastrowej, której wartości reprezentują koszt tarcia."
 
 #: ../raster/r.walk/main.c:188
 msgid "Name of elevation input raster map"
 msgstr "Wejściowa mapa rastrowa wysokości"
 
 #: ../raster/r.walk/main.c:196
-#, fuzzy
 msgid "Name of input raster map containing friction costs"
 msgstr "Wejściowa mapa rastrowa kosztów tarcia"
 
@@ -2331,7 +2285,6 @@ msgstr "Zacznij od wartości w mapie rastrowej"
 
 #: ../raster/r.walk/main.c:322 ../raster/r.cost/main.c:238
 #: ../raster/wildfire/r.spread/main.c:338 ../raster/r.water.outlet/main.c:85
-#, fuzzy
 msgid "Unable to read current window parameters"
 msgstr "Nie można odczytać parametrów bieżącego regionu"
 
@@ -2385,12 +2338,12 @@ msgid "Input null cell will be retained into output map"
 msgstr "Komórki NULL będą zachowane w mapie wyjściowej"
 
 #: ../raster/r.walk/main.c:409
-#, fuzzy, c-format
+#, c-format
 msgid "Unable to find starting vector <%s> "
 msgstr "Nie można znaleźć początkowej mapy wektorowej <%s>"
 
 #: ../raster/r.walk/main.c:456
-#, fuzzy, c-format
+#, c-format
 msgid "Unable to find stop vector <%s>"
 msgstr "Nie można znaleźć końcowej mapy wektorowej <%s>"
 
@@ -2404,7 +2357,6 @@ msgid "Unable to read %s"
 msgstr "Nie można odczytać %s"
 
 #: ../raster/r.walk/main.c:563
-#, fuzzy
 msgid "Map with different projection"
 msgstr "Mapa ma inne odwzorowanie"
 
@@ -2462,7 +2414,6 @@ msgid " NS resolution %s (%lf)"
 msgstr " Rozdzielczość NS %s (%lf)"
 
 #: ../raster/r.walk/main.c:654 ../raster/r.cost/main.c:372
-#, fuzzy
 msgid "Creating some temporary files..."
 msgstr "Torzenie plików tymczasowych..."
 
@@ -2500,22 +2451,20 @@ msgid "Unable to read raster map <%s> row %d"
 msgstr "Z mapy rastrowej <%s> nie można przeczytać wiersza %d"
 
 #: ../raster/r.walk/main.c:812
-#, fuzzy
 msgid "Initializing output "
 msgstr "Inicjalizacja wyjścia"
 
 #: ../raster/r.walk/main.c:820
-#, fuzzy
 msgid "Unable to allocate memory for segment fbuff == NULL"
 msgstr "Nie można przydzielić pamięci, segment fbuff == NULL"
 
 #: ../raster/r.walk/main.c:849
-#, fuzzy, c-format
+#, c-format
 msgid "Raster output map <%s> not found (no start_points given)"
 msgstr "Nie znaleziono wyjściowej mapy rastrowej <%s> (nie podano punktów początkowych)"
 
 #: ../raster/r.walk/main.c:864
-#, fuzzy, c-format
+#, c-format
 msgid "Memory allocation error on reading start points from raster map %s"
 msgstr "Błąd przydzielenia pamięci podczas odczytu punktów początkowych z mapy rastrowej %s"
 
@@ -2541,7 +2490,7 @@ msgid "Error, ct == pres_cell"
 msgstr "BŁĄD: ct == pres_cell"
 
 #: ../raster/r.walk/main.c:1396
-#, fuzzy, c-format
+#, c-format
 msgid "Writing output raster map %s... "
 msgstr "Zapis wyjściowej mapy rastrowej %s..."
 
@@ -2595,11 +2544,11 @@ msgstr "UWAGA: zignorowano punkty poza regionem: %.4f,%.4f"
 
 #: ../raster/r.sun2/main.c:227 ../raster/r.sun/main.c:176
 msgid "Solar irradiance and irradiation model."
-msgstr ""
+msgstr "Model napromienienia i napromieniowania słonecznego."
 
 #: ../raster/r.sun2/main.c:229 ../raster/r.sun/main.c:178
 msgid "Computes direct (beam), diffuse and reflected solar irradiation raster maps for given day, latitude, surface and atmospheric conditions. Solar parameters (e.g. sunrise, sunset times, declination, extraterrestrial irradiance, daylight length) are saved in the map history file. Alternatively, a local time can be specified to compute solar incidence angle and/or irradiance raster maps. The shadowing effect of the topography is optionally incorporated."
-msgstr "Oblicza mapy rastrowe bezpośredniego, rozproszonego i odbitego napromienienia słonecznego dla danego dnia, szerokości geogr., powierzchni i warunków atmosferycznych.Parametry słoneczne (np. czas wschodu i zachodu, deklinacja, napromieniowanie pozaziemskie, długość dnia) są zapisane w pliku historii mapy. Alternatywnie do obliczenia kąta padania promieni słonecznych i/lub napromieniowania może być użyty czas lokalny. Opcjonalnie włączony jest efekt cieniowania topografii."
+msgstr "Oblicza mapy rastrowe bezpośredniego, rozproszonego i odbitego napromienienia słonecznego dla danego dnia, szerokości geogr., powierzchni i warunków atmosferycznych. Parametry słoneczne (np. czas wschodu i zachodu, deklinacja, napromieniowanie pozaziemskie, długość dnia) są zapisane w pliku historii mapy. Do obliczenia kąta padania promieni słonecznych i/lub napromieniowania może być użyty także czas lokalny. Może być uwzględniony  wpływ ukształtowania terenu na zacienienie."
 
 #: ../raster/r.sun2/main.c:243 ../raster/r.sun/main.c:208
 #: ../raster/r.horizon/main.c:227
@@ -2629,25 +2578,23 @@ msgstr "Nazwa wejściowej rastrowej mapy wysokości [metry]"
 #: ../raster/r.horizon/main.c:269 ../raster/r.horizon/main.c:277
 #: ../raster/r.horizon/main.c:285 ../raster/r.horizon/main.c:293
 msgid "Input_options"
-msgstr ""
+msgstr "Dane wejściowe"
 
 #: ../raster/r.sun2/main.c:252 ../raster/r.sun/main.c:217
 msgid "Name of the input aspect map (terrain aspect or azimuth of the solar panel) [decimal degrees]"
-msgstr "Nazwa wejściowej mapy ekspozycji (ekspozycja terenu lub azymut tarczy słonecznej)"
+msgstr "Nazwa wejściowej mapy ekspozycji (ekspozycja terenu lub azymut tarczy słonecznej) [stopnie dziesiętne]"
 
 #: ../raster/r.sun2/main.c:261
-#, fuzzy
 msgid "A single value of the orientation (aspect), 270 is south"
-msgstr "Pojedyncza wartość szerokości geogr. [stopnie dziesiętne]"
+msgstr "Pojedyncza wartość ekspozycji. Południe = 270°"
 
 #: ../raster/r.sun2/main.c:270 ../raster/r.sun/main.c:227
 msgid "Name of the input slope raster map (terrain slope or solar panel inclination) [decimal degrees]"
-msgstr "Nazwa wejściowej mapy spadków (spadki terenu lub inklinacja tarczy słonecznej) [stopnie dziesiętne]"
+msgstr "Nazwa wejściowej mapy nachylenia (spadki terenu lub inklinacja tarczy słonecznej) [stopnie dziesiętne]"
 
 #: ../raster/r.sun2/main.c:278
-#, fuzzy
 msgid "A single value of inclination (slope)"
-msgstr "Pojedyncza wartość szerokości geogr. [stopnie dziesiętne]"
+msgstr "Pojedyncza wartość inklinacji (nachylenie)"
 
 #: ../raster/r.sun2/main.c:287 ../raster/r.sun/main.c:236
 msgid "Name of the Linke atmospheric turbidity coefficient input raster map [-]"
@@ -2674,9 +2621,8 @@ msgid "A single value of latitude [decimal degrees]"
 msgstr "Pojedyncza wartość szerokości geogr. [stopnie dziesiętne]"
 
 #: ../raster/r.sun2/main.c:346
-#, fuzzy
 msgid "Name of the longitude input raster map [decimal degrees]"
-msgstr "Nazwa wejściowej mapy rastrowej szerokości geogr. [stopnie dziesiętne]"
+msgstr "Nazwa wejściowej mapy rastrowej długości geogr. [stopnie dziesiętne]"
 
 #: ../raster/r.sun2/main.c:355
 #, fuzzy
@@ -2723,7 +2669,7 @@ msgstr "Wyjściowa mapa rastrowa kąta padania promieni słonecznych (tylko tryb
 #: ../vector/v.vol.rst/main.c:398 ../vector/v.vol.rst/main.c:407
 #: ../vector/v.vol.rst/main.c:416 ../vector/v.vol.rst/main.c:425
 msgid "Output_options"
-msgstr ""
+msgstr "Opcje wyjściowe"
 
 #: ../raster/r.sun2/main.c:398 ../raster/r.sun/main.c:322
 #, fuzzy
@@ -2777,7 +2723,7 @@ msgstr ""
 
 #: ../raster/r.sun2/main.c:510 ../raster/r.sun/main.c:384
 msgid "Incorporate the shadowing effect of terrain"
-msgstr "Włączenie efekt cieniowana terenu"
+msgstr "Uwzględnij efekt cieniowana terenu"
 
 #: ../raster/r.sun2/main.c:515
 msgid "Use the low-memory version of the program"
@@ -6029,7 +5975,7 @@ msgstr ""
 
 #: ../raster/r.profile/main.c:183
 msgid " [RGB Color]"
-msgstr " [Kolor RGB ]"
+msgstr " [Kolor RGB]"
 
 #: ../raster/r.profile/main.c:193
 #, c-format
@@ -15875,9 +15821,9 @@ msgid "Usage: %s [-f] monitor_name"
 msgstr ""
 
 #: ../display/d.mon/pgms/stop.c:70
-#, fuzzy, c-format
+#, c-format
 msgid "Monitor '%s' terminated"
-msgstr "Żaden monitor nie został wybrany"
+msgstr "Monitor '%s' został zamknięty"
 
 #: ../display/d.mon/pgms/stop.c:73
 #, c-format
