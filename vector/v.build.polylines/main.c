@@ -178,6 +178,12 @@ int main(int argc, char **argv)
 
 	if (type & GV_LINES)
 	    nlines++;
+	else {
+	    /* copy points to output as they are, with cats */
+	    Vect_read_line(&map, points, Cats, line);
+	    Vect_write_line(&Out, type, points, Cats);
+	    continue;
+	}
 
 	/* Skip line if already visited from another */
 	if (lines_visited[line])
