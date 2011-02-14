@@ -31,7 +31,7 @@ Classes:
  Or you set an alias or wrap the call up in a nice shell script, GUI
  environment ... please contribute your idea.
 
-Copyright(C) 2000-2010 by the GRASS Development Team
+Copyright(C) 2000-2011 by the GRASS Development Team
 This program is free software under the GPL(>=v2) Read the file
 COPYING coming with GRASS for details.
 
@@ -335,10 +335,11 @@ class UpdateQThread(Thread):
             self.request = callable(*args, **kwds)
 
             self.resultQ.put((requestId, self.request.run()))
-                        
-            event = wxUpdateDialog(data = self.request.data)
-            wx.PostEvent(self.parent, event)
-
+           
+            if self.request:
+                event = wxUpdateDialog(data = self.request.data)
+                wx.PostEvent(self.parent, event)
+        
 class grassTask:
     """!This class holds the structures needed for both filling by the
     parser and use by the interface constructor.
