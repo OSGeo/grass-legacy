@@ -56,10 +56,6 @@ static int write_history(int bands, char *outname, double **eigmat, double *eigv
 	    if (j < (bands - 1) ){
 		sprintf(tmpa, ",");
 		G_strcat(tmpeigen, tmpa);
-		if (j%6 == 0 && j != bands) {
-		    sprintf(tmpa, "\n%15s", " ");
-		    G_strcat(tmpeigen, tmpa);
-		}
 	    }
 	}
 	G_strcat(tmpeigen, ") ");
