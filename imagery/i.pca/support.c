@@ -47,7 +47,7 @@ static int write_history(int bands, char *outname, double **eigmat, double *eigv
 	eigval_total += eigval[i];
 
     for (i = 0; i < bands; i++) {
-	char tmpeigen[256], tmpa[80];
+	char tmpeigen[2048], tmpa[80];  /* (bands*8)+30 instead of 2048? */
 
 	sprintf(tmpeigen, "PC%d %9.2f (", i+1, eigval[i]);
 	for (j = 0; j < bands; j++) {
@@ -56,6 +56,10 @@ static int write_history(int bands, char *outname, double **eigmat, double *eigv
 	    if (j < (bands - 1) ){
 		sprintf(tmpa, ",");
 		G_strcat(tmpeigen, tmpa);
+		if (j%6 == 0 && j != bands) {
+		    sprintf(tmpa, "\n%15s", " ");
+		    G_strcat(tmpeigen, tmpa);
+		}
 	    }
 	}
 	G_strcat(tmpeigen, ") ");
