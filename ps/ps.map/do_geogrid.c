@@ -170,8 +170,8 @@ int do_geogrid_numbers(void)
     set_rgb_color(PS.geogrid_numbers_color);
     first = 1;
 
-    /* horizontal grid numbers
-     * these numbers only appear on the left edge of the first panel.
+    /* vertical grid numbers
+     * these numbers only appear on the right edge
      * center the numbers on each grid line.
      * suppress number if it falls off the map or would overlay the previous
      *  label
@@ -216,7 +216,7 @@ int do_geogrid_numbers(void)
 	}
     }
 
-    /* vertical grid numbers 
+    /* horizontal grid numbers along the bottom
      * center the numbers on each grid line.
      * suppress number if it falls of the map or would overlay the previous
      *  label
@@ -409,6 +409,7 @@ void check_coords(double e, double n, double *lon, double *lat, int par)
 	    G_fatal_error(_("Error in pj_do_proj"));
 
 	if (par == 1) {
+/* FIXME: something isn't quite right here- stuck at NE corner's longitude */
 	    /* lines of latitude -- const. northing */
 	    /* convert correct UTM to ll */
 	    if (pj_do_proj(&x, &y, &info_out, &info_in) < 0)
