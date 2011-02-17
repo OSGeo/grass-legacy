@@ -993,7 +993,7 @@ int G_parser(int argc, char **argv)
     error += check_required();
     
     if (error) {
-	G_important_message(_("Error in usage. Call `%s --help` to get usage info."),
+	G_important_message(_("Error in usage. Call `%s --help` for assistance."),
 			    pgm_name);
 	return -1;
     }
