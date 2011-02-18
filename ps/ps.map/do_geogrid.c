@@ -412,6 +412,7 @@ void check_coords(double e, double n, double *lon, double *lat, int par)
 	    G_fatal_error(_("Error in pj_do_proj"));
 
 	if (par == 1) {
+	    /* lines of latitude -- const. northing */
 	    /* convert correct UTM to ll */
 	    if (pj_do_proj(&x, &y, &info_out, &info_in) < 0)
 		G_fatal_error(_("Error in pj_do_proj"));
