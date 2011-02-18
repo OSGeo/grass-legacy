@@ -14,12 +14,12 @@ endif
 default: install_scripts
 
 install_scripts:
-	$(MAKE) $(SCRIPTDIR) $(PYFILES)
+	$(MAKE) $(PYFILES)
 
-$(SCRIPTDIR)/%: %.py
+$(SCRIPTDIR)/%: %.py | $(SCRIPTDIR)
 	$(INSTALL) $< $@
 
-$(SCRIPTDIR)/%.py: %.py
+$(SCRIPTDIR)/%.py: %.py | $(SCRIPTDIR)
 	$(INSTALL) $< $@
 
 $(SCRIPTDIR):
