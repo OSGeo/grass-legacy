@@ -373,10 +373,13 @@ void get_ll_bounds(double *w, double *e, double *s, double *n)
 }
 
 
-/******************************************************
+/********************************************************************
  * check projected coords to make sure they do not 
- * go outside region -- if so re-project 
-********************************************************/
+ *   go outside region -- if so re-project 
+ * This gets a bit wobbly if the projection does not reverse-project
+ *   cleanly, e.g. if the eastern edge of a UTM region is many
+ *   degrees east of the end of the zone where things get distorted.
+ *******************************************************************/
 void check_coords(double e, double n, double *lon, double *lat, int par)
 {
     double x, y;
@@ -409,8 +412,6 @@ void check_coords(double e, double n, double *lon, double *lat, int par)
 	    G_fatal_error(_("Error in pj_do_proj"));
 
 	if (par == 1) {
-/* FIXME: something isn't quite right here- stuck at NE corner's longitude */
-	    /* lines of latitude -- const. northing */
 	    /* convert correct UTM to ll */
 	    if (pj_do_proj(&x, &y, &info_out, &info_in) < 0)
 		G_fatal_error(_("Error in pj_do_proj"));
