@@ -2,6 +2,8 @@
 
 set -e
 
+PWD="$(pwd)"
+
 if ! [ -d mswindows ]; then
 	echo Start from GRASS toplevel dir
 	exit 1
@@ -18,7 +20,7 @@ fi
 export PACKAGE=${1:-1} 
 export POSTFIX=$2 
 export OSGEO4W_ROOT_MSYS=/c/OSGeo4W
-export PATH=.:/c/mingw/bin:/usr/local/bin:/bin:$OSGEO4W_ROOT_MSYS/bin:/c/WINDOWS/system32:/c/WINDOWS:/c/WINDOWS/System32/Wbem:/c/Subversion
+export PATH=.:/c/mingw/bin:/usr/local/bin:/bin:$OSGEO4W_ROOT_MSYS/bin:/c/WINDOWS/system32:/c/WINDOWS:/c/WINDOWS/System32/Wbem:/c/Subversion:$PWD/mswindows/osgeo4w
 
 T0=$(date +%s) 
 LT=$T0 
@@ -87,7 +89,7 @@ if ! [ -f mswindows/osgeo4w/configure-stamp ]; then
 
 	if [ -e include/Make/Grass.make ] ; then
 	    log make distclean
-	    make distclean >>$LOG 2>&1
+	    make distclean
 	fi
 
 	log configure
@@ -115,7 +117,7 @@ if ! [ -f mswindows/osgeo4w/configure-stamp ]; then
 		--with-regex \
 		--with-nls \
 		--with-freetype-includes=$OSGEO4W_ROOT_MSYS/include/freetype2 \
-		--with-odbc >>$LOG 2>&1
+		--with-odbc
 
 	touch mswindows/osgeo4w/configure-stamp
 fi
@@ -124,7 +126,7 @@ log make
 make -k || make || ( cat error.log >&3 && false ) 
 
 log make install
-make install >>$LOG 2>&1
+make install
 
 log cleanup
 mv $OSGEO4W_ROOT_MSYS/apps/grass/grass-$VERSION/lib/*.dll $OSGEO4W_ROOT_MSYS/apps/grass/grass-$VERSION/bin
