@@ -19,7 +19,7 @@
 trap "echo 'User break!' ; exit" 2 3 9 15
 
 # Set the GISBASE variable
-GISBASE=@osgeo4w_msys@
+GISBASE=@osgeo4w_msys@/apps/grass/grass-@VERSION@
 export GISBASE
 
 exec "$GISBASE/etc/Init.sh" "$@"

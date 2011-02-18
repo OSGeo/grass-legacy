@@ -79,11 +79,9 @@ run_grass = \
 clean:
 	-rm -rf $(OBJDIR) $(EXTRA_CLEAN_DIRS)
 	-rm -f $(EXTRA_CLEAN_FILES) *.tmp.html
-	-if [ "$(CLEAN_SUBDIRS)" != "" ] ; then \
-		for dir in $(CLEAN_SUBDIRS) ; do \
-			$(MAKE) -C $$dir clean ; \
-		done ; \
-	fi
+        for dir in "" $(CLEAN_SUBDIRS); do \ 
+	        [ -n "$$dir" ] && $(MAKE) -C "$$dir" clean; \ 
+        done
 
 # default install rules
 install:

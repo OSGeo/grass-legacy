@@ -31,6 +31,7 @@ OBJS =	at_exit_funcs.o \
 	actions.o \
 	main.o
 
+ifneq ($(MSYSTEM),MINGW32)
 default: gem
 
 gem: $(SRCS) $(HDRS) $(OBJS)
@@ -61,4 +62,9 @@ install: gem
 
 clean:
 	-rm -f *.o *.bak core *~ gem$(GRASS_VERSION_MAJOR)$(GRASS_VERSION_MINOR)
+else
+default:
+install:
+clean:
+endif
 

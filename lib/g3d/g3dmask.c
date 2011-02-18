@@ -309,12 +309,12 @@ void G3d_maskTile(G3D_Map * map, int tileIndex, void *tile, int type)
 	for (dy = y; dy < rows; dy++) {
 	    for (dx = x; dx < cols; dx++) {
 		G3D_MASKNUM(map, dx, dy, dz, tile, type);
-		tile += length;
+		(unsigned char *)tile += length;
 	    }
 
-	    tile += xLength;
+	    (unsigned char *)tile += xLength;
 	}
-	tile += yLength;
+	(unsigned char *)tile += yLength;
     }
 }
 
