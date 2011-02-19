@@ -233,13 +233,14 @@ int main(int argc, char *argv[])
     struct line_cats *Cats, *BCats;
     char *mapset;
     struct GModule *module;
-    struct Option *in_opt, *out_opt, *type_opt, *buffer_opt, *tolerance_opt,
-	*bufcol_opt, *scale_opt, *debug_opt, *field_opt;
+    struct Option *in_opt, *out_opt, *type_opt, *buffer_opt, *dist_opt,
+	*tolerance_opt, *bufcol_opt, *scale_opt, *debug_opt, *field_opt;
     double buffer, tolerance, dtmp;
     int type, debug;
     int ret, nareas, area, nlines, line;
     char *Areas, *Lines;
     int field;
+    int dist_answer;
 
     /* Attributes if sizecol is used */
     int i, nrec, ctype;
@@ -268,7 +269,13 @@ int main(int argc, char *argv[])
     buffer_opt->key = "buffer";
     buffer_opt->type = TYPE_DOUBLE;
     buffer_opt->required = NO;
-    buffer_opt->description = _("Buffer distance in map units");
+    buffer_opt->description = _("DEPRECATED Buffer distance in map units");
+
+    dist = G_define_option();
+    dist_opt->key = "distance";
+    dist_opt->type = TYPE_DOUBLE;
+    dist_opt->required = NO;
+    dist_opt->description = _("Buffer distance in map units");
 
     bufcol_opt = G_define_option();
     bufcol_opt->key = "bufcol";
@@ -311,8 +318,10 @@ int main(int argc, char *argv[])
     type = Vect_option_to_types(type_opt);
     field = atoi(field_opt->answer);
 
-    if ((buffer_opt->answer && bufcol_opt->answer) ||
-	(!(buffer_opt->answer || bufcol_opt->answer)))
+    dist_answer = (buffer_opt->answer != NULL || dist_opt->answer != NULL);
+
+    if ((dist_answer && bufcol_opt->answer) ||
+	(!(dist_answer->answer || bufcol_opt->answer)))
 	G_fatal_error("Select a buffer distance or column, but not both.");
 
     if (bufcol_opt->answer)
@@ -328,8 +337,13 @@ int main(int argc, char *argv[])
     if (scale <= 0.0)
 	G_fatal_error("Illegal scale value");
 
-    if (buffer_opt->answer) {
-	buffer = fabs(atof(buffer_opt->answer));
+    if (dist_opt->answer)
+	buffer = fabs(atof(dist_opt->answer));
+    else if (buffer_opt->answer)
+	buffer = fabs(atof(dist_opt->answer));
+	
+
+    if (dist_answer) {
 
 	tolerance *= buffer;
 	G_message(_("The tolerance in map units: %g"), tolerance);
@@ -440,7 +454,7 @@ int main(int argc, char *argv[])
 	    if (!(ltype & type))
 		continue;
 
-	    if (!Vect_cat_get(Cats, field, &cat))
+	    if (field > 0 && !Vect_cat_get(Cats, field, &cat))
 		continue;
 
 	    if (bufcol_opt->answer) {
@@ -494,9 +508,22 @@ int main(int argc, char *argv[])
 		}
 	    }
 
-
-	    Vect_line_buffer(Points, buffer, tolerance, BPoints);
-	    Vect_write_line(&Out, GV_BOUNDARY, BPoints, BCats);
+	    Vect_line_prune(Points);
+	    /* looped line ? */
+	    if (Points->n_points > 1 && Points->x[0] == Points->x[Points->n_points - 1] &&
+	        Points->y[0] == Points->y[Points->n_points - 1]) {
+		G_debug(0, "looped line");
+		Vect_line_parallel(Points, buffer, tolerance, 1, BPoints);
+		if (BPoints->n_points > 1)
+		    Vect_write_line(&Out, GV_BOUNDARY, BPoints, BCats);
+		Vect_line_parallel(Points, -buffer, tolerance, 1, BPoints);
+		if (BPoints->n_points > 1)
+		    Vect_write_line(&Out, GV_BOUNDARY, BPoints, BCats);
+	    }
+	    else {
+		Vect_line_buffer(Points, buffer, tolerance, BPoints);
+		Vect_write_line(&Out, GV_BOUNDARY, BPoints, BCats);
+	    }
 	}
     }
 
@@ -574,7 +601,7 @@ int main(int argc, char *argv[])
 
 	    /* outer ring */
 	    Vect_get_area_points(&In, area, Points);
-	    Vect_line_buffer(Points, buffer, tolerance, BPoints);
+	    Vect_line_parallel(Points, -buffer, tolerance, 1, BPoints);
 	    Vect_write_line(&Out, GV_BOUNDARY, BPoints, BCats);
 
 	    /* islands */
@@ -590,8 +617,9 @@ int main(int argc, char *argv[])
 		if (l / 2 < 2 * buffer)
 		    continue;
 
-		Vect_line_buffer(Points, buffer, tolerance, BPoints);
-		Vect_write_line(&Out, GV_BOUNDARY, BPoints, BCats);
+		Vect_line_parallel(Points, -buffer, tolerance, 1, BPoints);
+		if (BPoints->n_points > 1)
+		    Vect_write_line(&Out, GV_BOUNDARY, BPoints, BCats);
 	    }
 	}
     }
@@ -618,6 +646,12 @@ int main(int argc, char *argv[])
      * calculate different threshold for each map, depending on map's bounding box */
     G_message(_("Snapping boundaries..."));
     Vect_snap_lines(&Out, GV_BOUNDARY, 1e-7, NULL);
+
+    G_message(_("Breaking polygons..."));
+    Vect_break_polygons(&Out, GV_BOUNDARY, NULL);
+
+    G_message(_("Removing duplicates..."));
+    Vect_remove_duplicates(&Out, GV_BOUNDARY, NULL);
 
     G_message(_("Breaking boundaries..."));
     Vect_break_lines(&Out, GV_BOUNDARY, NULL);
@@ -647,6 +681,8 @@ int main(int argc, char *argv[])
 	G_debug(3, "area = %d", area);
 
 /*** BUG *** if dynamic bufcol was used, "buffer" will only hold last value ***/
+/* TODO: use method of v.buffer2, improve it by using a custom spatial index
+ * and storing original, not cleaned buffers in a temp vector */
 	ret = area_in_buffer(&In, &Out, area, type, buffer, tolerance);
 
 	if (ret) {
@@ -742,6 +778,7 @@ int main(int argc, char *argv[])
 	    continue;
 
 /*** BUG *** if dynamic bufcol was used, "buffer" will only hold last value ***/
+/* TODO: see above */
 	ret = area_in_buffer(&In, &Out, area, type, buffer, tolerance);
 
 	if (ret) {
