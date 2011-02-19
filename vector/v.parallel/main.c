@@ -23,14 +23,18 @@
 #include <grass/Vect.h>
 #include <grass/glocale.h>
 
+#define LEFT      0x01
+#define RIGHT	  0x02
+#define BOTH      (LEFT | RIGHT)
+
 int main(int argc, char *argv[])
 {
     struct GModule *module;
-    struct Option *in_opt, *out_opt, *distance_opt;
+    struct Option *in_opt, *out_opt, *distance_opt, *tolerance_opt, *side_opt;
     struct Map_info In, Out;
     struct line_pnts *Points, *Points2;
     struct line_cats *Cats;
-    int line, nlines;
+    int line, nlines, side;
     double distance, tolerance;
 
     G_gisinit(argv[0]);
@@ -49,15 +53,51 @@ int main(int argc, char *argv[])
     distance_opt->required = YES;
     distance_opt->multiple = NO;
     distance_opt->description =
-	_("Offset in map units, positive for right side, "
-	  "negative for left side.");
+	_("Offset in map units.");
+
+    tolerance_opt = G_define_option();
+    tolerance_opt->key = "tolerance";
+    tolerance_opt->type = TYPE_DOUBLE;
+    tolerance_opt->required = NO;
+    tolerance_opt->answer = "0.01";
+    tolerance_opt->description =
+	_("Maximum distance between theoretical arc and polygon segments "
+	  "as multiple of buffer");
+
+    side_opt = G_define_option();
+    side_opt->key = "side";
+    side_opt->type = TYPE_STRING;
+    side_opt->required = YES;
+    side_opt->answer = "right";
+    side_opt->multiple = NO;
+    side_opt->options = "left,right,both";
+    side_opt->description = _("Side");
+    side_opt->descriptions =
+	_("left;Parallel line is on the left;"
+	  "right;Parallel line is on the right;"
+	  "both;Parallel lines on both sides");
 
     if (G_parser(argc, argv))
 	exit(EXIT_FAILURE);
 
     /* layer = atoi ( layer_opt->answer ); */
-    distance = atof(distance_opt->answer);
-    tolerance = distance / 10.;
+    distance = fabs(atof(distance_opt->answer));
+    tolerance = atof(tolerance_opt->answer);
+    tolerance *= distance;
+    
+    side = 0;
+    G_debug(0, "side: %s", side_opt->answer);
+    switch (side_opt->answer[0]) {
+    case 'r':
+	side = RIGHT;
+	break;
+    case 'l':
+	side = LEFT;
+	break;
+    case 'b':
+	side = BOTH;
+	break;
+    }
 
     Vect_set_open_level(2);
     Vect_open_old(&In, in_opt->answer, "");
@@ -78,10 +118,17 @@ int main(int argc, char *argv[])
 	G_percent(line, nlines, 1);
 
 	ltype = Vect_read_line(&In, Points, Cats, line);
+	Vect_line_prune(Points);
 
-	if (ltype & GV_LINES) {
-	    Vect_line_parallel(Points, distance, tolerance, 1, Points2);
-	    Vect_write_line(&Out, ltype, Points2, Cats);
+	if (ltype & GV_LINES && Points->n_points > 1) {
+	    if (side & RIGHT) {
+		Vect_line_parallel(Points, -distance, tolerance, 1, Points2);
+		Vect_write_line(&Out, ltype, Points2, Cats);
+	    }
+	    if (side & LEFT) {
+		Vect_line_parallel(Points, distance, tolerance, 1, Points2);
+		Vect_write_line(&Out, ltype, Points2, Cats);
+	    }
 	}
 	else {
 	    Vect_write_line(&Out, ltype, Points, Cats);
