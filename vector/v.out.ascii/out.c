@@ -32,7 +32,7 @@ int main(int argc, char *argv[])
     FILE *ascii, *att;
     struct Option *input, *output, *format_opt, *dp_opt, *delim_opt,
 	*field_opt, *column_opt, *where_opt;
-    struct Flag *verf, *region_flag;
+    struct Flag *verf, *header, *region_flag;
     int format, dp, field;
     char *fs;
     struct Map_info Map;
@@ -89,6 +89,11 @@ int main(int argc, char *argv[])
     verf = G_define_flag();
     verf->key = 'o';
     verf->description = _("Create old (version 4) ASCII file");
+
+    header = G_define_flag();
+    header->key = 'c';
+    header->description = _("Include column names in output (points mode)");
+    header->guisection = _("Points");
 
     region_flag = G_define_flag();
     region_flag->key = 'r';
@@ -183,7 +188,7 @@ int main(int argc, char *argv[])
 
     bin_to_asc(ascii, att, &Map, ver, format, dp, fs,
 	       region_flag->answer, field, where_opt->answer,
-	       column_opt->answers);
+	       column_opt->answers, header->answer);
     
     if (ascii != NULL)
 	fclose(ascii);
