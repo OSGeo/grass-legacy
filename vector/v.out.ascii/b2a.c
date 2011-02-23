@@ -212,8 +212,6 @@ int bin_to_asc(FILE * ascii,
 		fprintf(ascii, "%s%s%s", xstring, fs, ystring);
 	    }
 
-	    Vect_field_cat_get(Cats, field, fcats);
-	    
 	    if (fcats->n_values > 0) {
 		if (fcats->n_values > 1) {
 		    G_warning(_("Feature has more categories. Only first category (%d) "
