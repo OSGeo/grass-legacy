@@ -94,9 +94,9 @@ if ! [ -f mswindows/osgeo4w/configure-stamp ]; then
 
 	log configure
 	./configure \
-	        --with-libs="$OSGEO4W_ROOT_MSYS/lib $PWD/mswindows/osgeo4w/lib" \ 
- 	        --with-includes="$OSGEO4W_ROOT_MSYS/include" \ 
-	        --exec-prefix=$OSGEO4W_ROOT_MSYS/bin \
+		--with-libs="$OSGEO4W_ROOT_MSYS/lib $PWD/mswindows/osgeo4w/lib" \
+		--with-includes=$OSGEO4W_ROOT_MSYS/include \
+		--exec-prefix=$OSGEO4W_ROOT_MSYS/bin \
 		--libexecdir=$OSGEO4W_ROOT_MSYS/bin \
 		--prefix=$OSGEO4W_ROOT_MSYS/apps/grass \
 		--includedir=$OSGEO4W_ROOT_MSYS/include \
@@ -108,8 +108,8 @@ if ! [ -f mswindows/osgeo4w/configure-stamp ]; then
 		--with-fftw \
 		--with-freetype \
 		--with-proj-share=$OSGEO4W_ROOT_MSYS/share/proj \
-		--with-gdal=$PWD/mswindows/osgeo4w/gdal-config \ 
- 		--with-geos=$PWD/mswindows/osgeo4w/geos-config \ 
+		--with-gdal=$PWD/mswindows/osgeo4w/gdal-config \
+		--with-geos=$PWD/mswindows/osgeo4w/geos-config \
 		--with-tcltk \
 		--with-sqlite \
 		--with-postgres \
