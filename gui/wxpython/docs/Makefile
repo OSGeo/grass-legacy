@@ -1,12 +1,8 @@
 MODULE_TOPDIR = ../../..
 
-FILES = wxGUI \
-	wxGUI.Vector_Digitizer \
-	wxGUI.Attribute_Table_Manager \
-	wxGUI.Nviz \
-	wxGUI.Icons \
-	wxGUI.Modeler \
-	wxGUI.GCP_Manager
+HTML_SOURCES := $(wildcard *.html)
+HTML_FILES := $(filter-out $(wildcard *.tmp.html),$(HTML_SOURCES))
+FILES := $(subst .html,,$(HTML_FILES))
 
 include $(MODULE_TOPDIR)/include/Make/Platform.make
 include $(MODULE_TOPDIR)/include/Make/Grass.make
