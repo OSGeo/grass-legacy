@@ -930,5 +930,12 @@ if { [info exists env(GISRC)] } {
 
 if { [searchGISRC $gisrc_name] } {
    gisSetWindow
+} else {
+    # Something has gone terribly wrong
+    # GISRC file is missing or corrupted
+    DialogGen .wrnDlg [G_msg "ERROR: unable to read GISRC"] warning \
+          [format [G_msg "Something went wrong while processing GISRC file named \"%s\".\nIt's a fatal error. GRASS will not start till issue with GISRC file is fixed."] $env(GISRC) ]\
+          0 OK;
+    exit 2
 }
 
