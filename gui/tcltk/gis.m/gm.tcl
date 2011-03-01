@@ -70,6 +70,12 @@ if {[catch {set mapset [exec g.gisenv get=MAPSET]} error]} {
 	exit 1
 }
 
+# if any of those is empty, there's no reason to continue. it's a failure.
+if { $gisdbase=={} || $location_name=={} || $mapset=={} } {
+	GmLib::errmsg [G_msg "GISDBASE or LOCATION_NAME or MAPSET is empty. \
+	This is a fatal error. gis.m can not work without proper settings."]
+	exit 1
+}
 
 # path to icons for GIS Manager
 set iconpath [file join "$env(GISBASE)" "etc" "gui" "icons" "grass"]
