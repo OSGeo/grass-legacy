@@ -11,6 +11,10 @@ EXTRA_INC = $(PROJINC)
 
 LIB_OBJS = get_proj.o do_proj.o convert.o datum.o ellipse.o
 
+ifeq ($(MSYSTEM),MINGW32)
+LIB_OBJS += ftol.o
+endif
+
 NAD_TABLES = FL.lla MD.lla TN.lla WI.lla WO.lla alaska.lla conus.lla \
              hawaii.lla prvi.lla stgeorge.lla stlrnc.lla stpaul.lla
 

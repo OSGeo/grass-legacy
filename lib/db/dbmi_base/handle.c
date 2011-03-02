@@ -77,7 +77,7 @@ void db_free_handle_array(dbHandle * handle, int count)
     if (handle) {
 	for (i = 0; i < count; i++)
 	    db_free_handle(&handle[i]);
-	free(handle);
+	db_free(handle);
     }
 }
 
