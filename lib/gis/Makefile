@@ -45,7 +45,11 @@ endif
 
 endif
 
+ifneq ($(MSYSTEM),MINGW32)
 default: lib $(FMODE_OBJ) $(DATAFILES) $(COLORFILES) $(ETC)/colors.desc $(ETC)/element_list
+else
+default: lib $(DATAFILES) $(COLORFILES) $(ETC)/colors.desc $(ETC)/element_list
+endif
 
 $(ETC)/colors:
 	$(MKDIR) $@

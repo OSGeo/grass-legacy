@@ -142,7 +142,7 @@ char *db_get_string(dbString * x)
 void db_free_string(dbString * x)
 {
     if (x->nalloc > 0)
-	free(x->string);
+	db_free(x->string);
     db_init_string(x);
 }
 
@@ -159,7 +159,7 @@ void db_free_string_array(dbString * a, int n)
     if (a) {
 	for (i = 0; i < n; i++)
 	    db_free_string(&a[i]);
-	free(a);
+	db_free(a);
     }
 }
 

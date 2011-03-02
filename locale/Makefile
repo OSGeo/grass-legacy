@@ -80,13 +80,20 @@ update-po:
 		done
 	@echo "Be careful with SVN commits as .po file updates must be syncronized with the individual translators."
 
-define dom_rule
-$(1)_FILES := $$(patsubst po/grass$(1)_%.po,$$(MO_DIR)/%/LC_MESSAGES/grass$(1).mo,$$(wildcard po/grass$(1)_*.po))
-$$(MO_DIR)/%/LC_MESSAGES/grass$(1).mo: po/grass$(1)_%.po
-	@ [ -d $$(MO_DIR)/$$*/LC_MESSAGES ] || $(MKDIR) $$(MO_DIR)/$$*/LC_MESSAGES
-	msgfmt --statistics -o $$@ $$<
-endef
-$(foreach domain,libs mods wxpy,$(eval $(call dom_rule,$(domain))))
+libs_FILES := $(patsubst po/grasslibs_%.po,$(MO_DIR)/%/LC_MESSAGES/grasslibs.mo,$(wildcard po/grasslibs_*.po)) 
+$(MO_DIR)/%/LC_MESSAGES/grasslibs.mo: po/grasslibs_%.po 
+	@ [ -d $(MO_DIR)/$*/LC_MESSAGES ] || $(MKDIR) $(MO_DIR)/$*/LC_MESSAGES 
+	msgfmt --statistics -o $@ $< 
+
+mods_FILES := $(patsubst po/grassmods_%.po,$(MO_DIR)/%/LC_MESSAGES/grassmods.mo,$(wildcard po/grassmods_*.po)) 
+$(MO_DIR)/%/LC_MESSAGES/grassmods.mo: po/grassmods_%.po 
+	@ [ -d $(MO_DIR)/$*/LC_MESSAGES ] || $(MKDIR) $(MO_DIR)/$*/LC_MESSAGES 
+	msgfmt --statistics -o $@ $< 
+
+wxpy_FILES := $(patsubst po/grasswxpy_%.po,$(MO_DIR)/%/LC_MESSAGES/grasswxpy.mo,$(wildcard po/grasswxpy_*.po)) 
+$(MO_DIR)/%/LC_MESSAGES/grasswxpy.mo: po/grasswxpy_%.po 
+	@ [ -d $(MO_DIR)/$*/LC_MESSAGES ] || $(MKDIR) $(MO_DIR)/$*/LC_MESSAGES 
+	msgfmt --statistics -o $@ $< 
 
 $(MSG_DIR)/%.msg: po/grasstcl_%.po
 	@ [ -d $(MSG_DIR) ] || $(MKDIR) $(MSG_DIR)
