@@ -181,6 +181,10 @@ Returns the name of a temporary file, created with g.tempfile.
 
  - verbosity()
 
+<b>Create new GRASS location</b>
+
+ - python::core::create_location()
+
 <b>Various utilities, not specific to GRASS</b>
  
  - basename()
