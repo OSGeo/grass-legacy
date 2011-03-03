@@ -746,8 +746,15 @@ char *Vect_subst_var(const char *in, struct Map_info *Map)
     G_debug(3, "Vect_subst_var(): in = %s, map = %s, mapset = %s", in,
 	    Map->name, Map->mapset);
 
+#ifdef __MINGW32__
+    char *cin;
+    cin = G_str_replace((char *)in, "/", "\\");
+    strcpy(str, cin);
+    G_free(cin);
+#else
     strcpy(str, in);
-
+#endif
+    
     strcpy(buf, str);
     c = (char *)strstr(buf, "$GISDBASE");
     if (c != NULL) {
