@@ -1,4 +1,5 @@
 @echo off
-call @osgeo4w@\bin\o4w_env.bat
-call @osgeo4w@\bin\grass@POSTFIX@-env.bat
+call @OSGEO4W_ROOT@\bin\o4w_env.bat
+call @OSGEO4W_ROOT@\bin\gdal17.bat
+call @OSGEO4W_ROOT@\apps\grass\grass-@VERSION@\etc\env.bat
 "%WINGISBASE%"\etc\init.bat %*
