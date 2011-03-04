@@ -125,7 +125,7 @@ class CmdThread(threading.Thread):
                     except KeyError:
                         pass
                 else:
-                    moduleInterface = menuform.GUI().ParseCommand(args[0], show = None)
+                    moduleInterface = menuform.GUI(show = None).ParseCommand(args[0])
                     outputParam = moduleInterface.get_param(value = 'output', raiseError = False)
                     if outputParam and outputParam['prompt'] == 'raster':
                         mapName = outputParam['value']
@@ -526,7 +526,7 @@ class GMConsole(wx.SplitterWindow):
                 
                 if task and command[0] not in ('v.krige.py'):
                     # process GRASS command without argument
-                    menuform.GUI().ParseCommand(command, parentframe = self)
+                    menuform.GUI(parent = self).ParseCommand(command)
                 else:
                     # process GRASS command with argument
                     self.cmdThread.RunCmd(GrassCmd,
@@ -554,7 +554,7 @@ class GMConsole(wx.SplitterWindow):
                 
             if task:
                 # process GRASS command without argument
-                menuform.GUI().ParseCommand(command, parentframe = self)
+                menuform.GUI(parent = self).ParseCommand(command)
             else:
                 self.cmdThread.RunCmd(GrassCmd,
                                       onDone,
@@ -756,7 +756,7 @@ class GMConsole(wx.SplitterWindow):
                             display.GetRender().GetListOfLayers(l_type = 'vector'))
             
             try:
-                task = menuform.GUI().ParseCommand(event.cmd, show = None)
+                task = menuform.GUI(show = None).ParseCommand(event.cmd)
             except gcmd.GException:
                 task = None
                 return
