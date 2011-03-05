@@ -543,30 +543,12 @@ class LayerTree(treemixin.DragAndDrop, CT.CustomTreeCtrl):
             event.Skip()
             return
         
-        if not haveVDigit:
-            from vdigit import errorMsg
-            msg = _("Unable to start wxGUI vector digitizer.\nDo you want to start "
-                    "TCL/TK digitizer (v.digit) instead?\n\n"
-                    "Details: %s" % errorMsg)
-            
-            self.mapdisplay.toolbars['map'].combo.SetValue (_("2D view"))
-            dlg = wx.MessageDialog(parent = self.mapdisplay,
-                                   message = msg,
-                                   caption=_("Vector digitizer failed"),
-                                   style = wx.YES_NO | wx.CENTRE)
-            if dlg.ShowModal() == wx.ID_YES:
-                self.lmgr.goutput.RunCmd(['v.digit', 'map=%s' % maplayer.GetName()],
-                                         switchPage = False)
-            
-            dlg.Destroy()
-            return
-        
         if not self.mapdisplay.toolbars['vdigit']: # enable tool
             self.mapdisplay.AddToolbar('vdigit')
-        else: # tool already enabled
-            pass
         
-        # mark layer as 'edited'
+        if not self.mapdisplay.toolbars['vdigit']:
+            return
+        
         self.mapdisplay.toolbars['vdigit'].StartEditing(maplayer)
         
         self._setGradient('vdigit')
