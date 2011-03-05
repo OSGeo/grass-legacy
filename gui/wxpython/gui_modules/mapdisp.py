@@ -330,14 +330,15 @@ class MapFrame(wx.Frame):
                         "TCL/TK digitizer (v.digit) instead?\n\n"
                         "Details: %s" % errorMsg)
                 
-                self.mapdisplay.toolbars['map'].combo.SetValue (_("2D view"))
-                dlg = wx.MessageDialog(parent = self.mapdisplay,
+                self.toolbars['map'].combo.SetValue (_("2D view"))
+                dlg = wx.MessageDialog(parent = self,
                                        message = msg,
                                        caption=_("Vector digitizer failed"),
                                        style = wx.YES_NO | wx.CENTRE)
                 if dlg.ShowModal() == wx.ID_YES:
-                    self.lmgr.goutput.RunCmd(['v.digit', 'map=%s' % maplayer.GetName()],
-                                             switchPage=False)
+                    mapName = self.tree.GetPyData(self.tree.layer_selected)[0]['maplayer'].GetName()
+                    self._layerManager.goutput.RunCmd(['v.digit', 'map=%s' % mapName],
+                                                      switchPage=False)
                 dlg.Destroy()
                 
                 self.toolbars['map'].combo.SetValue (_("2D view"))
