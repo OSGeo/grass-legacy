@@ -67,7 +67,7 @@ class LayerTree(treemixin.DragAndDrop, CT.CustomTreeCtrl):
                  id = wx.ID_ANY, style = wx.SUNKEN_BORDER,
                  ctstyle = CT.TR_HAS_BUTTONS | CT.TR_HAS_VARIABLE_ROW_HEIGHT |
                  CT.TR_HIDE_ROOT | CT.TR_ROW_LINES | CT.TR_FULL_ROW_HIGHLIGHT |
-                 CT.TR_MULTIPLE, **kwargs):
+                 CT.TR_MULTIPLE | CT.TR_ALIGN_WINDOWS, **kwargs):
         
         if 'style' in kwargs:
             ctstyle |= kwargs['style']
