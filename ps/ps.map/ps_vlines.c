@@ -10,7 +10,6 @@
 #include <grass/Vect.h>
 #include <grass/dbmi.h>
 
-#include "ps_info.h"
 #include "clr.h"
 #include "local_proto.h"
 #include "vector.h"

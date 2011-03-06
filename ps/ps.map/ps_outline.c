@@ -8,7 +8,6 @@
 #include <string.h>
 #include <grass/gis.h>
 #include <grass/glocale.h>
-#include "ps_info.h"
 #include "local_proto.h"
 
 static int k, col, row, top, bottom;

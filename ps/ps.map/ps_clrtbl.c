@@ -4,7 +4,6 @@
  */
 
 #include <grass/glocale.h>
-#include "ps_info.h"
 #include "colortable.h"
 #include "local_proto.h"
 

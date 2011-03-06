@@ -1,5 +1,4 @@
 /* parse the "region" instruction */
-#include "ps_info.h"
 #include <string.h>
 #include "local_proto.h"
 

@@ -5,8 +5,6 @@
  */
 
 #include <string.h>
-#include "ps_info.h"
-#include "group.h"
 #include "local_proto.h"
 
 int read_rgb(char *key, char *data)

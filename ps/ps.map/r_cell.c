@@ -5,7 +5,6 @@
  */
 
 #include <string.h>
-#include "ps_info.h"
 #include "local_proto.h"
 
 int read_cell(char *name, char *mapset)

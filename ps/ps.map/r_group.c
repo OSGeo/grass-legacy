@@ -6,8 +6,6 @@
 #include <string.h>
 #include <grass/gis.h>
 #include <grass/glocale.h>
-#include "ps_info.h"
-#include "group.h"
 #include "local_proto.h"
 
 int read_group(void)

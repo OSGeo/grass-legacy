@@ -1,3 +1,7 @@
+#include "group.h"
+#include "ps_info.h"
+#include "decorate.h"
+
 /* box.c */
 int box_path(double, double, double, double);
 int box_clip(double, double, double, double);
@@ -188,9 +192,14 @@ int construct_path(struct line_pnts *, double, int);
 int read_cell(char *, char *);
 
 /* read_cfg.c */
-int set_paper(char *pname);
+int set_paper(char *);
 void reset_map_location(void);
 void print_papers(void);
+
+/* r_instructions.c */
+void read_instructions(FILE *, struct PS_data *, int, int, int,
+		       struct scalebar *, int *, int *,
+		       struct PS_group *);
 
 /* r_border.c */
 int read_border(void);

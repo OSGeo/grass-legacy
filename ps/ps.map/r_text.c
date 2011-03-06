@@ -8,7 +8,6 @@
 #include <string.h>
 #include "clr.h"
 #include "labels.h"
-#include "ps_info.h"
 #include "local_proto.h"
 
 #define EQ(x,y) (strcmp(x,y)==0)

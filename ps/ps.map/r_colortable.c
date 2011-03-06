@@ -7,7 +7,6 @@
 #include <string.h>
 #include <grass/glocale.h>
 #include "colortable.h"
-#include "ps_info.h"
 #include "clr.h"
 #include "local_proto.h"
 
