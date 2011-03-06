@@ -201,7 +201,7 @@ proc gisSetWindow {} {
     
     if { $screen_height > $small_window } {
 	set introimg  [label $titlefrm.img -image [image create photo -file \
-	    "$env(GISBASE)/etc/gui/images/gintro.gif"]]
+	    "$env(GISBASE)/etc/gui/images/startup_banner.gif"]]
 	pack $introimg -side top
     
 	set introtitle [text $titlefrm.msg -height 5 \

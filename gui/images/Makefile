@@ -1,9 +1,21 @@
 MODULE_TOPDIR = ../..
 
-include $(MODULE_TOPDIR)/include/Make/Dir.make
+include $(MODULE_TOPDIR)/include/Make/Platform.make
+include $(MODULE_TOPDIR)/include/Make/Grass.make
+include $(MODULE_TOPDIR)/include/Make/Rules.make
 
-default:
-	if [ ! -d $(ETC)/gui ] ; then $(MKDIR) $(ETC)/gui ; fi
-	if [ ! -d $(ETC)/gui/images ] ; then $(MKDIR) $(ETC)/gui/images ; fi
-	$(INSTALL_DATA) gintro.gif $(ETC)/gui/images/gintro.gif
+ETCDIR = $(ETC)/gui/images
 
+FILES := $(wildcard *.png)
+FILES += $(wildcard *.gif)
+
+default: $(patsubst %,$(ETCDIR)/%,$(FILES))
+
+$(ETCDIR)/%.png: %.png | $(ETCDIR)
+	$(INSTALL_DATA) $< $@
+
+$(ETCDIR)/%.gif: %.gif | $(ETCDIR)
+	$(INSTALL_DATA) $< $@
+
+$(ETCDIR):
+	$(MKDIR) $@
