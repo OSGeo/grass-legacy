@@ -190,7 +190,7 @@ class Settings:
                     'enabled' : False
                     },
                 'closeDlg' : {
-                    'enabled' : True
+                    'enabled' : False
                     },
                 'verbosity' : {
                     'selection' : 'grassenv'
