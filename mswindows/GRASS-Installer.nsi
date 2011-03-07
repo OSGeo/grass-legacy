@@ -631,7 +631,6 @@ Section "GRASS" SecGRASS
 	FileWrite $0 'rem #########################################################################$\r$\n'
 	FileWrite $0 'rem #$\r$\n'
 	FileWrite $0 'rem # File dynamically created by NSIS installer script;$\r$\n'
-	FileWrite $0 'rem # Written by Marco Pasetti;$\r$\n'
 	FileWrite $0 'rem #$\r$\n'
 	FileWrite $0 'rem #########################################################################$\r$\n'
 	FileWrite $0 'rem #$\r$\n'
@@ -639,51 +638,19 @@ Section "GRASS" SecGRASS
 	FileWrite $0 'rem #$\r$\n'
 	FileWrite $0 'rem #########################################################################$\r$\n'
 	FileWrite $0 '$\r$\n'
-	FileWrite $0 'rem *******Environment variables***********$\r$\n'
-	FileWrite $0 '$\r$\n'
 	FileWrite $0 'rem Set GRASS Installation Directory Variable$\r$\n'
-	FileWrite $0 'set GRASSDIR=$INSTALL_DIR$\r$\n'
+	FileWrite $0 'set GISBASE=$INSTALL_DIR$\r$\n'
 	FileWrite $0 '$\r$\n'
-	FileWrite $0 'rem Directory where your .grassrc6 file will be stored$\r$\n'
-	FileWrite $0 'set HOME=%USERPROFILE%$\r$\n'
-	FileWrite $0 '$\r$\n'
-	FileWrite $0 'rem Name of the wish (Tk) executable$\r$\n'	
-	FileWrite $0 'set GRASS_WISH=wish.exe$\r$\n'
-	FileWrite $0 '$\r$\n'
-	FileWrite $0 'rem Path to the shell command$\r$\n'	 
-	FileWrite $0 'set GRASS_SH=%GRASSDIR%\msys\bin\sh.exe$\r$\n'
-	FileWrite $0 '$\r$\n'
-	FileWrite $0 'rem Set Path to utilities (libraries and bynaries) used by GRASS$\r$\n'
-	FileWrite $0 'set PATH=%GRASSDIR%\msys\bin;%PATH%$\r$\n'
-	FileWrite $0 'set PATH=%GRASSDIR%\extrabin;%GRASSDIR%\extralib;%PATH%$\r$\n'
-	FileWrite $0 'set PATH=%GRASSDIR%\tcl-tk\bin;%GRASSDIR%\sqlite\bin;%GRASSDIR%\gpsbabel;%PATH%$\r$\n'
 	${If} $R_HKLM_INSTALL_PATH != ""
 	FileWrite $0 'set PATH=$R_HKLM_INSTALL_PATH\bin;%PATH%$\r$\n'
+	FileWrite $0 '$\r$\n'
 	${EndIf}
 	${If} $R_HKCU_INSTALL_PATH != ""
 	FileWrite $0 'set PATH=$R_HKCU_INSTALL_PATH\bin;%PATH%$\r$\n'
+	FileWrite $0 '$\r$\n'
 	${EndIf}
+	FileWrite $0 'call "%GISBASE%\etc\env.bat"$\r$\n'
 	FileWrite $0 '$\r$\n'
-	FileWrite $0 'rem Set Path to default web browser$\r$\n'	
-	FileWrite $0 'set GRASS_HTML_BROWSER=explorer$\r$\n'
-	FileWrite $0 '$\r$\n'
-	FileWrite $0 'rem Path to the proj files (notably the epsg projection list)$\r$\n'	
-	FileWrite $0 'set GRASS_PROJSHARE=%GRASSDIR%\proj$\r$\n'
-	FileWrite $0 '$\r$\n'
-	FileWrite $0 'rem Set GDAL_DATA$\r$\n'	
-	FileWrite $0 'set GDAL_DATA=%GRASSDIR%\share\gdal$\r$\n'
-	FileWrite $0 '$\r$\n'
-	FileWrite $0 'rem Set PROJ_LIB$\r$\n'	
-	FileWrite $0 'set PROJ_LIB=%GRASSDIR%\proj$\r$\n'
-	FileWrite $0 '$\r$\n'
-	FileWrite $0 'rem Set GEOTIFF_CSV$\r$\n'	
-	FileWrite $0 'set GEOTIFF_CSV=%GRASSDIR%\share\epsg_csv$\r$\n'
-	FileWrite $0 '$\r$\n'
-	FileWrite $0 'rem Path to the python directory$\r$\n'
-	FileWrite $0 'set PYTHONHOME=%GRASSDIR%\Python25$\r$\n'
-	FileWrite $0 'if "x%GRASS_PYTHON%" == "x" set GRASS_PYTHON=python$\r$\n'
-	FileWrite $0 '$\r$\n'
-	FileWrite $0 'set WINGISBASE=%GRASSDIR%$\r$\n'
 	FileWrite $0 '"%WINGISBASE%\etc\Init.bat" %*'
 	FileClose $0
 	done_create_grass_command.bat:
@@ -949,6 +916,7 @@ Section "Uninstall"
 	Delete "$INSTDIR\REQUIREMENTS.html"
 	Delete "$INSTDIR\README.html"
 	Delete "$INSTDIR\contributors.csv"	
+	Delete "$INSTDIR\contributors_extra.csv"
 	Delete "$INSTDIR\translators.csv"	
 	
 	;remove folders

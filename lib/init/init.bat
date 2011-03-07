@@ -93,8 +93,8 @@ if "%GRASS_GUI%" == "" (
   g.gisenv "set=GRASS_GUI=%GRASS_GUI%"
 )
 
-rem Set tcltk as default if not specified elsewhere
-if "%GRASS_GUI%"=="" set GRASS_GUI=tcltk
+rem Set wxGUI as default if not specified elsewhere
+if "%GRASS_GUI%"=="" set GRASS_GUI=wxpython
 
 rem Clean out old .tmp files from the mapset
 if "%HAVE_GISRC%"=="true" (
