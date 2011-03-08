@@ -81,6 +81,8 @@ IconsGrass2 = {
     "addgrp"     : 'layer-group-add.png',
     "addovl"     : 'layer-more.png',
     "addgrid"    : 'layer-grid-add.png',
+    "addgeodesic": 'shortest-distance.png',
+    "addrhumb"   : 'shortest-distance.png',
     "addlabels"  : 'layer-label-add.png',
     "delcmd"     : 'layer-remove.png',
     "attrtable"  : 'table.png',
