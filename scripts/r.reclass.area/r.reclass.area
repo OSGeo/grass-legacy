@@ -74,7 +74,7 @@ unset LC_ALL
 LC_NUMERIC=C
 export LC_NUMERIC
 
-infile=`echo $GIS_OPT_INPUT | cut -f1 -d'@'`
+infile=`echo "$GIS_OPT_INPUT" | cut -f1 -d'@'`
 outfile="$GIS_OPT_OUTPUT"
 
 g.region -p | head -n 1 |grep 0 > /dev/null
@@ -86,11 +86,11 @@ fi
 
 if [ -n "$GIS_OPT_LESSER" ] ; then
   op=0
-  limit=$GIS_OPT_LESSER
+  limit="$GIS_OPT_LESSER"
 fi
 if [ -n "$GIS_OPT_GREATER" ] ; then
   op=1
-  limit=$GIS_OPT_GREATER
+  limit="$GIS_OPT_GREATER"
 fi
 if [ -z "$GIS_OPT_GREATER" -a -z "$GIS_OPT_LESSER" ] ; then
   g.message -e "You have to specify either lesser= or greater="
@@ -99,19 +99,19 @@ fi
 
 file2="$infile.clump.$outfile"
 
-eval `g.findfile element=cell file=$infile`
-filename="${fullname}"
-BASE="${name}"
-if [ "$filename" = "" ] ; then
+eval `g.findfile element=cell file="$infile"`
+filename="$fullname"
+BASE="$name"
+if [ -z "$filename" ] ; then
   g.message -e "Raster map <$infile> not found"
   exit 1
 else
   infile="$filename"
 fi
 
-eval `g.findfile element=cell file=$file2`
+eval `g.findfile element=cell file="$file2"`
 filename2="${fullname}"
-BASE="${name}"
+BASE="$name"
 if test "$filename2" ; then
   g.message -e "Temporal raster map <$filename2> exists"
   exit 1
@@ -148,12 +148,18 @@ fi
 # else
 if test $op = 0; then
    g.message "Generating a reclass rules file with area size less than or equal to $limit hectares..."
-   r.stats -aln in=$file2,$infile fs='|' | awk -F'|' '{limit='$limit'; hectares=$5 * 0.0001; 
-     {if (hectares <= limit) printf("%d = %d %s\n",$1,$3,$4)}}' > "$infile.rules"
+   r.stats -aln in="$file2","$infile" fs='|' | \
+      awk -F'|' -v LIM="$limit" \
+        '{hectares=$5 * 0.0001; 
+          {if (hectares <= LIM)
+	     printf("%d = %d %s\n",$1,$3,$4) } }' > "$infile.rules"
   else
    g.message  "Generating a reclass rules file with area size greater than or equal to $limit hectares..."
-   r.stats -aln in=$file2,$infile fs='|' | awk -F'|' '{limit='$limit'; hectares=$5 * 0.0001; 
-     {if (hectares >= limit) printf("%d = %d %s\n",$1,$3,$4)}}' > "$infile.rules"
+   r.stats -aln in="$file2","$infile" fs='|' | \
+      awk -F'|' -v LIM="$limit" \
+        '{hectares=$5 * 0.0001;
+          {if (hectares >= LIM)
+	     printf("%d = %d %s\n",$1,$3,$4) } }' > "$infile.rules"
 fi
 #fi
 
@@ -162,7 +168,7 @@ if test "$outfile" = ""; then
 fi
 g.message "Generating output raster map <$outfile>..."
 cat "$infile.rules" | r.reclass i="$file2" o="$outfile.recl"
-r.mapcalc "$outfile=$outfile.recl"
+r.mapcalc "$outfile = $outfile.recl"
 g.remove rast="$outfile.recl","$file2" --quiet
 
 #####cleanup

@@ -99,7 +99,7 @@ if [ -e "$GIS_OPT_INPUT.dbf" ] ; then
    fi
 fi
   
-v.out.ogr --q $GIS_OPT_INPUT dsn="$GIS_OPT_DSN" $OLAYER format=$GIS_OPT_FORMAT type=point
+v.out.ogr --q "$GIS_OPT_INPUT" dsn="$GIS_OPT_DSN" "$OLAYER" format="$GIS_OPT_FORMAT" type=point
 if [ $? -ne 0 ] ;  then
    exit 1
 fi
