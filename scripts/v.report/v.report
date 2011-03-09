@@ -72,7 +72,7 @@ fi
 ### setup enviro vars ###
 eval `g.gisenv`
 : ${GISBASE?} ${GISDBASE?} ${LOCATION_NAME?} ${MAPSET?}
-LOCATION=$GISDBASE/$LOCATION_NAME/$MAPSET
+LOCATION="$GISDBASE/$LOCATION_NAME/$MAPSET"
 
 ### trap <ctrl>-<c> so that we can clean up tmp and exit
 trap 'rm -f "$TMP1" "$TMP2" "$TMP3" "$TMP4"; exit 1' 2 3 15

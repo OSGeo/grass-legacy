@@ -34,19 +34,19 @@ fi
 
 eval `g.gisenv`
 : ${GISBASE?} ${GISDBASE?} ${LOCATION_NAME?} ${MAPSET?}
-LOCATION=$GISDBASE/$LOCATION_NAME/$MAPSET
+LOCATION="$GISDBASE/$LOCATION_NAME/$MAPSET"
 
 CONVERTEDMAPS=0
 for i in `g.mlist type=sites mapset=.`
 do
 
   # polish map names to be SQL compliant
-  INPUT=$i
-  OUTPUT=`echo $INPUT | sed 's+\.+_+g'`_points
+  INPUT="$i"
+  OUTPUT=`echo "$INPUT" | sed 's+\.+_+g'`_points
 
   #do it:
   g.message "Processing $INPUT -> $OUTPUT" 
-  v.in.sites in=$INPUT out=$OUTPUT
+  v.in.sites in="$INPUT" out="$OUTPUT"
   if [ $? -ne 0 ] ; then
     g.message -w "Error converting map $INPUT to $OUTPUT" 
   else
@@ -54,7 +54,7 @@ do
   fi
 done
 
-if [ $CONVERTEDMAPS -lt 1 ] ; then
+if [ "$CONVERTEDMAPS" -lt 1 ] ; then
   g.message -e "No sites maps converted as no old sites maps present in current mapset <$MAPSET>." 
 else
   g.message "Total $CONVERTEDMAPS number of sites maps in current mapset converted to vector" 

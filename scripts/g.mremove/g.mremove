@@ -99,7 +99,7 @@ fi
      
 eval `g.gisenv`
 : ${GISBASE?} ${GISDBASE?} ${LOCATION_NAME?} ${MAPSET?}
-LOCATION=$GISDBASE/$LOCATION_NAME/$MAPSET
+LOCATION="$GISDBASE/$LOCATION_NAME/$MAPSET"
 
 PROG=`basename "$0"`
 
@@ -111,20 +111,20 @@ else
    regex=""
 fi
 
-force=$GIS_FLAG_F
+force="$GIS_FLAG_F"
 
 if [ $force -eq 1 ] ; then
    g.message "Forcing ..."
 fi
 
-r=$GIS_OPT_RAST
-r3=$GIS_OPT_RAST3D
-v=$GIS_OPT_VECT
-i=$GIS_OPT_ICON
-l=$GIS_OPT_LABEL
-rg=$GIS_OPT_REGION
-g=$GIS_OPT_GROUP
-d=$GIS_OPT_DVIEW
+r="$GIS_OPT_RAST"
+r3="$GIS_OPT_RAST3D"
+v="$GIS_OPT_VECT"
+i="$GIS_OPT_ICON"
+l="$GIS_OPT_LABEL"
+rg="$GIS_OPT_REGION"
+g="$GIS_OPT_GROUP"
+d="$GIS_OPT_DVIEW"
 
 if [ -n "$r" ] ; then
     rast=`g.mlist $regex type=rast sep=, mapset=$MAPSET pattern="$r"`

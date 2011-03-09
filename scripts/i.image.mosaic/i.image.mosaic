@@ -84,7 +84,7 @@ export LC_NUMERIC
    
 eval `g.gisenv`
 : ${GISBASE?} ${GISDBASE?} ${LOCATION_NAME?} ${MAPSET?}
-CURRLOCATION=$GISDBASE/$LOCATION_NAME/$MAPSET
+CURRLOCATION="$GISDBASE/$LOCATION_NAME/$MAPSET"
 
 g.message -w message='Do not forget to set region properly to cover all images!'
 
