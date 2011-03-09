@@ -112,7 +112,6 @@ fi
 # we import faking a map which generates only the attribute table:
 ### check-me: is the quoting ok?
 WARNING="`v.in.ogr --q dsn=\"$GIS_OPT_DSN\" $LAYER out=$GIS_OPT_OUTPUT -o --o 2>&1 | grep -i 'ERROR\|cat' | grep -v 'truncated'`"
-`
 if [ -n "$WARNING" ] ; then
    echo "$WARNING"
    if [ -n "$GIS_OPT_DB_TABLE" ] ; then
