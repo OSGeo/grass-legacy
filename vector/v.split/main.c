@@ -51,14 +51,14 @@ int main(int argc, char *argv[])
     length_opt->type = TYPE_DOUBLE;
     length_opt->required = NO;
     length_opt->multiple = NO;
-    length_opt->description = "Maximum segment length.";
+    length_opt->description = "Maximum segment length";
 
     vertices_opt = G_define_option();
     vertices_opt->key = "vertices";
     vertices_opt->type = TYPE_INTEGER;
     vertices_opt->required = NO;
     vertices_opt->multiple = NO;
-    vertices_opt->description = "Maximum number of vertices in segment.";
+    vertices_opt->description = "Maximum number of vertices in segment";
 
     if (G_parser(argc, argv))
 	exit(EXIT_FAILURE);
