@@ -672,7 +672,7 @@
 	  <label>Exit GUI</label>
 	  <help>Quit wxGUI session</help>
 	  <handler>OnCloseWindow</handler>
-	  <shortcut>Ctrl+W</shortcut>
+	  <shortcut>Ctrl+Q</shortcut>
 	</menuitem>
       </items>
     </menu>
