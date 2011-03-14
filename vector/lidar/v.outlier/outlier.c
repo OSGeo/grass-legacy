@@ -123,7 +123,7 @@ void P_Outlier(struct Map_info *Out, struct Map_info *Outlier,
 			else {
 			    Vect_write_line(Outlier, GV_POINT, point,
 					    categories);
-			    G_message("here we are");
+			    G_debug(4, "P_Outlier(): here we are");
 			}
 		    }
 		    else if ((*point->y < Overlap.S) && (*point->y > General.S)) {	/*(2) */
