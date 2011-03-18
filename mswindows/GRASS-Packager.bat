@@ -147,6 +147,7 @@ mkdir %PACKAGE_DIR%\tcl-tk\include
 mkdir %PACKAGE_DIR%\tcl-tk\lib
 mkdir %PACKAGE_DIR%\tcl-tk\lib\tcl8.5
 mkdir %PACKAGE_DIR%\tcl-tk\lib\tk8.5
+mkdir %PACKAGE_DIR%\tcl-tk\lib\tcl8.5\encoding
 
 xcopy %OSGEO4W_DIR%\bin\tclpip85.dll %PACKAGE_DIR%\tcl-tk\bin /S/V/F/I
 xcopy %OSGEO4W_DIR%\bin\tcl85.dll %PACKAGE_DIR%\tcl-tk\bin /S/V/F/I
@@ -164,6 +165,7 @@ copy %OSGEO4W_DIR%\include\ttkDecls.h %PACKAGE_DIR%\tcl-tk\include
 
 copy %OSGEO4W_DIR%\lib\tcl8.5\*.tcl %PACKAGE_DIR%\tcl-tk\lib\tcl8.5
 copy %OSGEO4W_DIR%\lib\tcl8.5\tclIndex %PACKAGE_DIR%\tcl-tk\lib\tcl8.5
+copy %OSGEO4W_DIR%\lib\tcl8.5\encoding\*.enc %PACKAGE_DIR%\tcl-tk\lib\tcl8.5\encoding
 
 copy %OSGEO4W_DIR%\lib\tk8.5\*.tcl %PACKAGE_DIR%\tcl-tk\lib\tk8.5
 copy %OSGEO4W_DIR%\lib\tk8.5\tclIndex %PACKAGE_DIR%\tcl-tk\lib\tk8.5
