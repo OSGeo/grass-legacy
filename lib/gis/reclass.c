@@ -109,6 +109,8 @@ int G_is_reclassed_to(const char *name, const char *mapset, int *nrmaps,
 	(*rmaps)[i - 1] = NULL;
     }
 
+    fclose(fd);
+
     return i;
 }
 
@@ -226,8 +228,9 @@ int G_put_reclass(const char *name, const struct Reclass *reclass)
 {
     FILE *fd;
     long min, max;
-    int i;
-    char buf1[GPATH_MAX], buf2[GNAME_MAX], buf3[GNAME_MAX], *p;
+    int found;
+    char buf1[GPATH_MAX], buf2[GNAME_MAX], *p;
+    char *xname;
 
     switch (reclass->type) {
     case RECLASS_TABLE:
@@ -299,18 +302,22 @@ int G_put_reclass(const char *name, const struct Reclass *reclass)
 
     fseek(fd, 0L, SEEK_SET);
 
-    sprintf(buf2, "%s@%s\n", name, G_mapset());
-    for (i = 0; !feof(fd) && fgets(buf3, 255, fd);) {
-	if (!(strcmp(buf2, buf3))) {
-	    i = 1;
+    xname = G_fully_qualified_name(name, G_mapset());
+    found = 0;
+    for (;;) {
+	char buf[GNAME_MAX + GMAPSET_MAX];
+	if (!G_getl2(buf, sizeof(buf), fd))
+	    break;
+	if (strcmp(xname, buf) == 0) {
+	    found = 1;
 	    break;
 	}
     }
 
-    if (!i) {
-	fprintf(fd, "%s@%s\n", name, G_mapset());
-    }
+    if (!found)
+	fprintf(fd, "%s\n", xname);
 
+    G_free(xname);
     fclose(fd);
 
     return 1;
