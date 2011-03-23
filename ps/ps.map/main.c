@@ -12,7 +12,7 @@
  *               Alessandro Frigeri <afrigeri unipg.it>
  *               Martin Landa <landa.martin gmail.com>
  * PURPOSE:      Hardcopy PostScript map output utility (based on p.map program)
- * COPYRIGHT:    (C) 2003-2008, 2011 by the GRASS Development Team
+ * COPYRIGHT:    (C) 2003-2011 by the GRASS Development Team
  *
  *               This program is free software under the GNU General
  *               Public License (>=v2). Read the file COPYING that
@@ -86,7 +86,7 @@ int main(int argc, char *argv[])
     pflag->key = 'p';
     pflag->description =
 	_("List paper formats (name width height left right top bottom(margin))");
-    pflag->guisection = _("Print");
+    pflag->guisection = _("Utility");
 
     eflag = G_define_flag();
     eflag->key = 'e';
@@ -97,8 +97,8 @@ int main(int argc, char *argv[])
     bflag = G_define_flag();
     bflag->key = 'b';
     bflag->description =
-	_("Print map-box's position on the page and exit (inches from top-left of paper)");
-    bflag->guisection = _("Print");
+	_("Describe map-box's position on the page and exit (inches from top-left of paper)");
+    bflag->guisection = _("Utility");
     
     input_file = G_define_standard_option(G_OPT_F_INPUT);
     input_file->label = _("File containing mapping instructions");
@@ -117,6 +117,7 @@ int main(int argc, char *argv[])
     map_scale->type = TYPE_STRING;
     map_scale->description =
 	_("Scale of the output map, e.g. 1:25000 (default: Auto-sized to fit page)");
+    map_scale->guisection = _("Output settings");
 
     copies = G_define_option();
     copies->key = "copies";
@@ -133,7 +134,7 @@ int main(int argc, char *argv[])
     
     G_zero(&PS, sizeof(struct PS_data));
     
-    /* Print papers */
+    /* Print paper sizes to stdout */
     if (pflag->answer) {
 	print_papers();
 	exit(EXIT_SUCCESS);
