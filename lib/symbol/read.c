@@ -216,7 +216,7 @@ SYMBOL *err(FILE * fp, SYMBOL * s, char *msg)
 {
     fclose(fp);
     G_free(s);			/* TODO: free all */
-    G_warning(msg);
+    G_warning("%s", msg);
     return NULL;
 }
 
@@ -231,7 +231,7 @@ SYMBOL *S_read(char *sname)
 {
     int i, j, k, l;
     FILE *fp;
-    char group[500], name[500], buf[2001];
+    char group[500], name[500], buf[2001], temp_buf[2001];
     char *ms, *c;
     double x, y, x2, y2, rad, ang1, ang2;
     int r, g, b;
@@ -342,8 +342,8 @@ SYMBOL *S_read(char *sname)
 		sscanf(data, "%lf %lf %lf %lf %lf %c", &x, &y, &rad, &ang1,
 		       &ang2, &clock);
 	    if (ret < 5) {
-		sprintf(buf, "Incorrect arc definition: '%s'", buf);
-		return (err(fp, symb, buf));
+		sprintf(temp_buf, "Incorrect arc definition: '%s'", buf);
+		return (err(fp, symb, temp_buf));
 	    }
 	    if (ret == 6 && (clock == 'c' || clock == 'C'))
 		i = 1;
@@ -426,8 +426,8 @@ SYMBOL *S_read(char *sname)
 	    }
 	}
 	else {
-	    sprintf(buf, "Unknown keyword in symbol: '%s'", buf);
-	    return (err(fp, symb, buf));
+	    sprintf(temp_buf, "Unknown keyword in symbol: '%s'", buf);
+	    return (err(fp, symb, temp_buf));
 	    break;
 	}
     }

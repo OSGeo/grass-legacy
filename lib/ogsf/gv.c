@@ -181,11 +181,11 @@ int gv_set_defaults(geovect * gv)
 {
     int i;
 
-    G_debug(5, "gv_set_defaults() id=%d", gv->gvect_id);
-
     if (!gv) {
 	return (-1);
     }
+    
+    G_debug(5, "gv_set_defaults() id=%d", gv->gvect_id);
 
     gv->filename = NULL;
     gv->n_lines = gv->n_surfs = gv->use_mem = 0;
