@@ -871,7 +871,7 @@ class InstallExtensionWindow(wx.Frame):
         if not name:
             return
         log = self.parent.GetLogWindow()
-        log.RunCmd(['g.extension', 'extension=' + name,
+        log.RunCmd(['g.extension.py', 'extension=' + name,
                     'svnurl=' + self.repo.GetValue().strip()])
         self.OnCloseWindow(None)
         
@@ -997,7 +997,7 @@ class ExtensionTree(ItemTree):
             flags = 'g'
         else:
             flags = 'l'
-        ret = gcmd.RunCommand('g.extension', read = True,
+        ret = gcmd.RunCommand('g.extension.py', read = True,
                               svnurl = url,
                               flags = flags, quiet = True)
         if not ret:

@@ -89,6 +89,7 @@ import gui_modules.nviz_tools as nviz_tools
 from   gui_modules.debug import Debug
 from   gui_modules.ghelp import MenuTreeWindow
 from   gui_modules.ghelp import AboutWindow
+from   gui_modules.ghelp import InstallExtensionWindow
 from   gui_modules.toolbars import LayerManagerToolbar
 from   icons.icon import Icons
 
@@ -1038,6 +1039,12 @@ class GMFrame(wx.Frame):
         # reset display mode
         os.environ['GRASS_RENDER_IMMEDIATE'] = 'TRUE'
         
+    def OnInstallExtension(self, event):
+        """!Install extension from GRASS Addons SVN repository"""
+        win = InstallExtensionWindow(self, size = (550, 400))
+        win.CentreOnScreen()
+        win.Show()
+
     def OnPreferences(self, event):
         """!General GUI preferences/settings"""
         if not self.dialogs['preferences']:
