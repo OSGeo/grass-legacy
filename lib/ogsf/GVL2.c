@@ -297,10 +297,10 @@ void GVL_get_dims(int id, int *rows, int *cols, int *depths)
 	*rows = gvl->rows;
 	*cols = gvl->cols;
 	*depths = gvl->depths;
-    }
 
-    G_debug(3, "GVL_get_dims() id=%d, rows=%d, cols=%d, depths=%d",
+	G_debug(3, "GVL_get_dims() id=%d, rows=%d, cols=%d, depths=%d",
 	    gvl->gvol_id, gvl->rows, gvl->cols, gvl->depths);
+    }
     
     return;
 }
