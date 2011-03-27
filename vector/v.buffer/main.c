@@ -271,7 +271,7 @@ int main(int argc, char *argv[])
     buffer_opt->required = NO;
     buffer_opt->description = _("DEPRECATED Buffer distance in map units");
 
-    dist = G_define_option();
+    dist_opt = G_define_option();
     dist_opt->key = "distance";
     dist_opt->type = TYPE_DOUBLE;
     dist_opt->required = NO;
@@ -321,7 +321,7 @@ int main(int argc, char *argv[])
     dist_answer = (buffer_opt->answer != NULL || dist_opt->answer != NULL);
 
     if ((dist_answer && bufcol_opt->answer) ||
-	(!(dist_answer->answer || bufcol_opt->answer)))
+	(!(dist_opt->answer || bufcol_opt->answer)))
 	G_fatal_error("Select a buffer distance or column, but not both.");
 
     if (bufcol_opt->answer)
