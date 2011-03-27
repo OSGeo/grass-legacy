@@ -149,7 +149,7 @@ def GetGRASSCmds(bin = True, scripts = True, gui_scripts = True):
         
         # add special call for setting vector colors
         cmd.append('vcolors')
-    if scripts:
+    if scripts and sys.platform != "win32":
         cmd = cmd + os.listdir(os.path.join(gisbase, 'scripts')) 
     if gui_scripts:
         os.environ["PATH"] = os.getenv("PATH") + os.pathsep + os.path.join(gisbase, 'etc', 'gui', 'scripts')
@@ -161,7 +161,7 @@ def GetGRASSCmds(bin = True, scripts = True, gui_scripts = True):
             name, ext = os.path.splitext(cmd[idx])
             if ext in (EXT_BIN, EXT_SCT):
                 cmd[idx] = name
-    
+
     return cmd
 
 """@brief Collected GRASS-relared binaries/scripts"""
