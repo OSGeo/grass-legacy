@@ -15,7 +15,6 @@ import globalvar
 iconPath = os.path.join(globalvar.ETCDIR, "gui", "icons", "silk")
 
 iconSet = {
-    # map display
     "show" : 'map_go.png',
     "layer-redraw"  : 'arrow_refresh.png',
     "erase"      : 'cross.png',
@@ -24,49 +23,37 @@ iconSet = {
     "map-export"   : 'picture_save.png',
     "print"   : 'printer.png',
     "pan"        : 'arrow_out.png', 
-    # zoom (mapdisplay)
     "zoom-in"    : 'zoom_in.png',
     "zoom-out"   : 'zoom_out.png',
     "zoom-last"  : 'zoom_back.png',
     "zoom-more"   : 'zoom.png',
     "zoom-extent" : 'zoom_extent.png',
-    # layer-raster-analyze raster (mapdisplay)
     "layer-raster-analyze"    : 'application_lightning.png',
     "measure-length"    : 'sum.png',
     "layer-raster-profile"    : 'wand.png',
     "layer-raster-histogram"  : 'chart_bar.png',
     "font"       : 'font.png',
-    # overlay-add (mapdisplay)
     "overlay-add"    : 'overlays.png',
     "text-add"    : 'textfield_add.png',
     "scalebar-add": 'page_white_picture.png',
     "legend-add"  : 'page_green.png',
     "quit"       : 'door_in.png',
-    # digit
-    ## add feature
     "point-create": 'bullet_add.png',
     "line-create" : 'vector_add.png',
     "boundary-create": 'shape_handles.png',
     "centroid-create": 'shape_square_add.png',
-    "polygon-create": wx.ART_ERROR,
-    ## vertex
     "vertex-create" : 'chart_line_add.png',
     "vertex-move" : 'chart_line.png',
     "vertex-delete" : 'chart_line_delete.png',
     "line-split" : 'chart_line_link.png',
-    ## edit feature
     "line-edit" : 'chart_line_edit.png',
     "line-move" : 'bullet_go.png',
     "line-delete" : 'vector_delete.png',
-    ## cats
     "cats-display" : 'chart_organisation.png',
     "cats-copy" : 'chart_organisation_add.png',
-    ## attributes
     "attributes-display" : 'table.png',
-    ## general
     "undo" : 'arrow_undo.png',
     "tools" : 'plugin.png',
-    # layer manager
     "monitor-create" : 'application_add.png',
     "create"    : 'page_white.png',
     "layer-open"   : 'page_white_get.png',
@@ -88,18 +75,14 @@ iconSet = {
     "layer-label-add"  : 'tag_blue_add.png',
     "layer-remove"     : 'bin_closed.png',
     "table"  : 'application_view_columns.png',
-    "edit"     : wx.ART_ERROR,
     "layer-rgb-add"     : 'rgb.png',
     "layer-his-add"     : 'his.png',
     "layer-vector-thematic-add": 'thematic.png',
     "layer-vector-chart-add"   : 'chart_bar.png',
     "options"  : 'map_edit.png',
-    "modeler-main"    : wx.ART_ERROR,
-    # layer-raster-profile analysis
     "layer-raster-profile"   : 'image_edit.png',
     "layer-raster-show"  : 'arrow_refresh.png',
     "layer-raster-profileopt"   : 'color_swatch.png',
-    # georectify
     "gcp-create"     : 'bullet_add.png',
     'gcp-remove'   : 'cross.png',
     'georectify'    : 'application_lightning.png',
@@ -108,27 +91,6 @@ iconSet = {
     "gcp-add"     : 'bullet_add.png', 
     "gcp-delete"  : 'bullet_delete.png',
     "reload"  : 'arrow_refresh.png',
-    # modeler-main
-    "module-add" : wx.ART_ERROR,
-    "data-add"   : wx.ART_ERROR,
-    "relation-create"  : wx.ART_ERROR,
-    "execute"       : wx.ART_ERROR,
-    "check"  : wx.ART_ERROR,
-    "image-export"      : wx.ART_ERROR,
-    "python-export"     : wx.ART_ERROR,
-    "options" : wx.ART_ERROR,
-    "modeler-variables" : wx.ART_ERROR,
-    # 3d view
-    "3d-view"       : wx.ART_ERROR,
-    "3d-raster"    : wx.ART_ERROR,
-    "3d-vector"     : wx.ART_ERROR,
-    "3d-volume"     : wx.ART_ERROR,
-    "3d-light"      : wx.ART_ERROR,
-    "3d-fringe"     : wx.ART_ERROR,
-    # various
     "settings"       : 'color_swatch.png',
     "redraw"         : 'arrow_refresh.png',
-    "help"           : wx.ART_ERROR,
-    "ps-script"       : wx.ART_ERROR,
-    "ps-export"       : wx.ART_ERROR,
     }
