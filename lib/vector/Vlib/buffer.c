@@ -281,7 +281,7 @@ static void clean_parallel(struct line_pnts *Points,
     while (first < np - 2) {
 	/* find first loop which doesn't contain any other loop */
 	current = first;
-	G_debug(0, "current: %d", current);
+	G_debug(5, "current: %d", current);
 	last = Points->n_points - 2;
 	lcount = 0;
 	sa = current;
@@ -294,7 +294,7 @@ static void clean_parallel(struct line_pnts *Points,
 	    current = sa + 1;
 	    last = sb;
 	    lcount++;
-	    G_debug(0, "  current = %d, last = %d, lcount = %d", current,
+	    G_debug(5, "  current = %d, last = %d, lcount = %d", current,
 		    last, lcount);
 	}
 	if (lcount == 0) {
@@ -308,7 +308,7 @@ static void clean_parallel(struct line_pnts *Points,
 	if (sa < sa_max)
 	    break;
 	*/
-	G_debug(0, "sa: %d", sa);
+	G_debug(4, "sa: %d", sa);
 
 	/* remove loop if in buffer */
 	if ((sb - sa) == 1) {	/* neighbouring lines overlap */
