@@ -40,7 +40,7 @@ int main(int argc, char **argv)
     struct GModule *module;
     struct Option *opt1, *opt2, *opt3, *opt4, *fsize, *tcolor, *lwidth;
     struct Flag *noborder, *notext, *geogrid, *nogrid, *wgs84, *cross,
-	*fiducial;
+	*fiducial, *dot;
     struct pj_info info_in;	/* Proj structures */
     struct pj_info info_out;	/* Proj structures */
 
@@ -114,6 +114,10 @@ int main(int argc, char **argv)
     cross->key = 'c';
     cross->description = _("Draw '+' marks instead of grid lines");
 
+    dot = G_define_flag();
+    dot->key = 'd';
+    dot->description = _("Draw '.' marks instead of grid lines");
+
     fiducial = G_define_flag();
     fiducial->key = 'f';
     fiducial->description = _("Draw fiducial marks instead of grid lines");
@@ -164,12 +168,14 @@ int main(int argc, char **argv)
     fontsize = atoi(fsize->answer);
 
     mark_type = MARK_GRID;
-    if (cross->answer && fiducial->answer)
+    if (cross->answer + fiducial->answer + dot->answer > 1)
 	G_fatal_error(_("Choose a single mark style"));
     if (cross->answer)
 	mark_type = MARK_CROSS;
     if (fiducial->answer)
 	mark_type = MARK_FIDUCIAL;
+    if (dot->answer)
+	mark_type = MARK_DOT;
 
     /* get grid size */
     if (geogrid->answer) {
