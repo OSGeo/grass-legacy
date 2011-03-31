@@ -60,14 +60,14 @@ proc searchGISRC { filename } {
 
             lappend grassrc_list "$thisline"
 
-	    if { [regexp -- {^GISDBASE: *(.*)$} $thisline dummy env_database] } {
-                set database $env_database
+	    if { [regexp -- {^GISDBASE.*:(.*)$} $thisline dummy env_database] } {
+                set database [string trim $env_database]
             }
-            if { [regexp -- {^LOCATION_NAME: *(.*)$} $thisline dummy env_location] } {
-                set location $env_location
+            if { [regexp -- {^LOCATION_NAME.*:(.*)$} $thisline dummy env_location] } {
+                set location [string trim $env_location]
             }
-            if { [regexp -- {^MAPSET: *(.*)$} $thisline dummy env_mapset] } {
-                set mapset $env_mapset
+            if { [regexp -- {^MAPSET.*:(.*)$} $thisline dummy env_mapset] } {
+                set mapset [string trim $env_mapset]
             }
             set thisline [gets $ifp]
       }
@@ -96,11 +96,11 @@ proc putGRASSRC { filename } {
 	set ofp [open $filename "w"]
 
 	foreach i $grassrc_list {
-		if { [regexp {^GISDBASE:} $i] } {
+		if { [regexp {^GISDBASE.*:} $i] } {
 			puts $ofp "GISDBASE: $database"
-		} elseif { [regexp {^LOCATION_NAME:} $i] } {
+		} elseif { [regexp {^LOCATION_NAME.*:} $i] } {
 			puts $ofp "LOCATION_NAME: $location"
-		} elseif { [regexp {^MAPSET:} $i] } {
+		} elseif { [regexp {^MAPSET.*:} $i] } {
 			puts $ofp "MAPSET: $mapset"
 		} else {
 			puts $ofp $i
