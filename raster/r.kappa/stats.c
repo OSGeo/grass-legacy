@@ -38,9 +38,9 @@ int stats(void)
     strcpy(buf, "r.stats -cin");
     strcat(buf, " fs=:");
     strcat(buf, " input=");
-    strcat(buf, G_fully_qualified_name(maps[0], mmapset));
+    strcat(buf, G_fully_qualified_name(maps[1], mmapset));
     strcat(buf, ",");
-    strcat(buf, G_fully_qualified_name(maps[1], rmapset));
+    strcat(buf, G_fully_qualified_name(maps[0], rmapset));
     strcat(buf, " > ");
     strcat(buf, stats_file);
 
