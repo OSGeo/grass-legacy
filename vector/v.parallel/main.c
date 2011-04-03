@@ -86,7 +86,7 @@ int main(int argc, char *argv[])
     tolerance *= distance;
     
     side = 0;
-    G_debug(0, "side: %s", side_opt->answer);
+    G_debug(1, "side: %s", side_opt->answer);
     switch (side_opt->answer[0]) {
     case 'r':
 	side = RIGHT;
