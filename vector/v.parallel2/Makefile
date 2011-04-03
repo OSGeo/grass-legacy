@@ -1,6 +1,6 @@
 MODULE_TOPDIR = ../..
 
-PGM = v.parallel
+PGM = v.parallel2
 
 LIBES = $(VECTLIB) $(GISLIB)
 DEPENDENCIES= $(VECTDEP) $(GISDEP)
