@@ -5,7 +5,7 @@
 
    Higher level functions for reading/writing/manipulating vectors.
 
-   (C) 2001-2008 by the GRASS Development Team
+   (C) 2001-2011 by the GRASS Development Team
 
    This program is free software under the 
    GNU General Public License (>=v2). 
@@ -94,7 +94,7 @@ static int find_cross(struct line_pnts *Points, int s1, int s2, int s3,
 }
 
 /* find_cross2 find first crossing between segments from s1 to s2 and from s3 to s4
- ** proceed from s1 to s2 and from s4 to s3
+ ** proceed from s1 to s2 and from s4 to s3, i.e. forward/backward
  ** s5 is set to first segment and s6 to second
  ** neighbours are taken as crossing each other only if overlap
  ** returns: 1 found
@@ -143,6 +143,106 @@ static int find_cross2(struct line_pnts *Points, int s1, int s2, int s3,
     return 0;
 }
 
+/* find_cross3 find first crossing of segment s1 to s1 + 1 with all
+ ** segments from s1 + 1 to Points->n_points - 2
+ ** ix is set to East crossing and iy to North crossing
+ ** s2 is set to the intersecting segment
+ ** neighbours are taken as crossing each other only if overlap
+ ** returns: 1 found
+ **          0 not found
+ */
+static int find_cross3(struct line_pnts *Points, int s1, int *s2, double *ix, double *iy)
+{
+    int i, np, ret, found = 0;
+    double *x, *y, min_dist, new_dist, new_x, new_y, dx, dy;
+
+    G_debug(5,
+	    "find_cross3(): npoints = %d, s1 = %d", Points->n_points, s1);
+
+    x = Points->x;
+    y = Points->y;
+    np = Points->n_points;
+    
+    min_dist = PORT_DOUBLE_MAX;
+
+    for (i = np - 2; i > s1; i--) {
+	ret =
+	    dig_test_for_intersection(x[s1], y[s1], x[s1 + 1], y[s1 + 1],
+				      x[i], y[i], x[i + 1], y[i + 1]);
+				      
+	if (ret) {
+	    dig_find_intersection(x[s1], y[s1], x[s1 + 1], y[s1 + 1], x[i],
+				  y[i], x[i + 1], y[i + 1], &new_x, &new_y);
+	    if ((new_x != x[s1] || new_y != y[s1]) && 
+	        (new_x != x[s1 + 1] || new_y != y[s1 + 1])) {
+		found = 1;
+		dx = x[s1] - new_x;
+		dy = y[s1] - new_y;
+		new_dist = LENGTH(dx, dy);
+		if (min_dist > new_dist) {
+		    min_dist = new_dist;
+		    *ix = new_x;
+		    *iy = new_y;
+		    *s2 = i;
+		}
+	    }
+	}
+    }
+
+    G_debug(5, "find_cross3(): intersection %s", found ? "found" : "not found");
+    return found;
+}
+
+/* find_cross4 find first crossing of segment s1 to s1 + 1 with all
+ ** segments from 0 to s1 - 1
+ ** ix is set to East crossing and iy to North crossing
+ ** s2 is set to the intersecting segment
+ ** neighbours are taken as crossing each other only if overlap
+ ** returns: 1 found
+ **          0 not found
+ */
+static int find_cross4(struct line_pnts *Points, int s1, int *s2, double *ix, double *iy)
+{
+    int i, np, ret, found = 0;
+    double *x, *y, min_dist, new_dist, new_x, new_y, dx, dy;
+
+    G_debug(5,
+	    "find_cross4(): npoints = %d, s1 = %d", Points->n_points, s1);
+
+    x = Points->x;
+    y = Points->y;
+    np = Points->n_points;
+    
+    min_dist = PORT_DOUBLE_MAX;
+
+    for (i = 0; i < s1; i++) {
+	ret =
+	    dig_test_for_intersection(x[s1], y[s1], x[s1 + 1], y[s1 + 1],
+				      x[i], y[i], x[i + 1], y[i + 1]);
+				      
+	if (ret) {
+	    dig_find_intersection(x[s1], y[s1], x[s1 + 1], y[s1 + 1], x[i],
+				  y[i], x[i + 1], y[i + 1], &new_x, &new_y);
+	    if ((new_x != x[s1] || new_y != y[s1]) && 
+	        (new_x != x[s1 + 1] || new_y != y[s1 + 1])) {
+		found = 1;
+		dx = x[s1 + 1] - new_x;
+		dy = y[s1 + 1] - new_y;
+		new_dist = LENGTH(dx, dy);
+		if (min_dist > new_dist) {
+		    min_dist = new_dist;
+		    *ix = new_x;
+		    *iy = new_y;
+		    *s2 = i;
+		}
+	    }
+	}
+    }
+
+    G_debug(5, "find_cross4(): intersection %s", found ? "found" : "not found");
+    return found;
+}
+
 /* point_in_buf - test if point px,py is in d buffer of Points
  ** returns:  1 in buffer
  **           0 not  in buffer
@@ -185,9 +285,9 @@ static int point_in_buf(struct line_pnts *Points, double px, double py,
  */
 static void clean_parallel(struct line_pnts *Points,
 			   struct line_pnts *origPoints,
-			   double d, double tol, int rm_end)
+			   double d, double tol, int rm_end, int close_loop)
 {
-    int i, j, np, npn, sa, sb, ret;
+    int i, j, np, npn, sa, sb, ret, side;
     int sa_max = 0;
     int first = 0, current, last, lcount;
     double *x, *y, px, py, ix, iy;
@@ -196,6 +296,7 @@ static void clean_parallel(struct line_pnts *Points,
     G_debug(4, "clean_parallel(): npoints = %d, d = %f, rm_end = %d",
 	    Points->n_points, d, rm_end);
 
+    Vect_line_prune(Points);
     x = Points->x;
     y = Points->y;
     np = Points->n_points;
@@ -204,14 +305,51 @@ static void clean_parallel(struct line_pnts *Points,
 	return;
 
     if (rm_end) {
+	int inserted;
+
 	/* remove points from start in buffer */
-	j = 0;
+	j = inserted = 0;
 	for (i = 0; i < Points->n_points - 1; i++) {
 	    px = (x[i] + x[i + 1]) / 2;
 	    py = (y[i] + y[i + 1]) / 2;
-	    if (point_in_buf(origPoints, x[i], y[i], d * 0.99999999)
-		&& point_in_buf(origPoints, px, py, d * 0.99999999)) {
-		j++;
+	    if (point_in_buf(origPoints, x[i], y[i], d * 0.99999999)) {
+		
+		/* check for intersection of this segment */
+		/* most not be the first or last point of this segment */
+		current = i;
+		if (find_cross3(Points, current, &sa, &ix, &iy) != 0) {
+		    /* insert intersection point into this segment */
+		    /* and adjust i and Points->n_points */
+		    int k = 0;
+		    
+		    Vect_append_point(Points, Points->x[Points->n_points - 1],
+		                      Points->y[Points->n_points - 1], 0);
+		    Vect_append_point(Points, Points->x[Points->n_points - 1],
+		                      Points->y[Points->n_points - 1], 0);
+		    
+		    for (k = Points->n_points - 2; k > sa + 2; k--) {
+			Points->x[k] = Points->x[k - 2];
+			Points->y[k] = Points->y[k - 2];
+		    }
+		    Points->x[sa + 2] = ix;
+		    Points->y[sa + 2] = iy;
+		    for (k = sa + 1; k > current + 1; k--) {
+			Points->x[k] = Points->x[k - 1];
+			Points->y[k] = Points->y[k - 1];
+		    }
+		    Points->x[current + 1] = ix;
+		    Points->y[current + 1] = iy;
+		    i--;
+		    inserted++;
+		}
+		else if (point_in_buf(origPoints, px, py, d * 0.99999999)) {
+		    j++;
+		    if (inserted)
+			close_loop = 0;
+		}
+		else {
+		    break;
+		}
 	    }
 	    else {
 		break;
@@ -227,13 +365,55 @@ static void clean_parallel(struct line_pnts *Points,
 	    Points->n_points = npn;
 	}
 	/* remove points from end in buffer */
-	j = 0;
+	j = inserted = 0;
 	for (i = Points->n_points - 1; i >= 1; i--) {
-	    px = (x[i] + x[i - 1]) / 2;
-	    py = (y[i] + y[i - 1]) / 2;
-	    if (point_in_buf(origPoints, x[i], y[i], d * 0.99999999)
-		&& point_in_buf(origPoints, px, py, d * 0.99999999)) {
-		j++;
+	    if (rm_end < 2) {
+		px = (x[i] + x[i - 1]) / 2;
+		py = (y[i] + y[i - 1]) / 2;
+	    }
+	    else {
+		/* this is for the last arc created by Vect_line_buffer() */
+		px = x[i - 1];
+		py = y[i - 1];
+	    }
+	    if (point_in_buf(origPoints, x[i], y[i], d * 0.99999999)) {
+		
+		/* check for intersection of this segment */
+		/* most not be the first or last point of this segment */
+		current = i - 1;
+		if (find_cross4(Points, current, &sa, &ix, &iy) != 0) {
+		    /* insert intersection point into this segment */
+		    /* and adjust i and Points->n_points */
+		    int k = 0;
+		    
+		    Vect_append_point(Points, Points->x[Points->n_points - 1],
+		                      Points->y[Points->n_points - 1], 0);
+		    Vect_append_point(Points, Points->x[Points->n_points - 1],
+		                      Points->y[Points->n_points - 1], 0);
+		    
+		    for (k = Points->n_points - 2; k > current + 2; k--) {
+			Points->x[k] = Points->x[k - 2];
+			Points->y[k] = Points->y[k - 2];
+		    }
+		    Points->x[current + 2] = ix;
+		    Points->y[current + 2] = iy;
+		    for (k = current + 1; k > sa + 1; k--) {
+			Points->x[k] = Points->x[k - 1];
+			Points->y[k] = Points->y[k - 1];
+		    }
+		    Points->x[sa + 1] = ix;
+		    Points->y[sa + 1] = iy;
+		    i += 3;
+		    inserted++;
+		}
+		else if (point_in_buf(origPoints, px, py, d * 0.99999999)) {
+		    j++;
+		    if (inserted)
+			close_loop = 0;
+		}
+		else {
+		    break;
+		}
 	    }
 	    else {
 		break;
@@ -242,29 +422,31 @@ static void clean_parallel(struct line_pnts *Points,
 	if (j > 0) {
 	    Points->n_points -= j;
 	}
-	
+
 	/* test for intersection of end segments */
 	/* need to do this here, otherwise remove loops below will
 	 * remove everything but the end dangles */
 	np = Points->n_points;
-	i = 0;
-	j = np - 2;
-	ret =
-	    dig_test_for_intersection(x[i], y[i], x[i + 1], y[i + 1],
-				      x[j], y[j], x[j + 1], y[j + 1]);
-				      
-	if (ret == -1) {
-	    /* overlap */
-	    x[np - 1] = x[0];
-	    y[np - 1] = y[0];
-	}
-	else if (ret == 1) {
-	    dig_find_intersection(x[i], y[i], x[i + 1], y[i + 1], x[j],
-				  y[j], x[j + 1], y[j + 1], &ix, &iy);
-	    x[0] = ix;
-	    x[np - 1] = ix;
-	    y[0] = iy;
-	    y[np - 1] = iy;
+	if (np > 3 && (x[0] != x[np - 1] || y[0] != y[np - 1])) {
+	    i = 0;
+	    j = np - 2;
+	    ret =
+		dig_test_for_intersection(x[i], y[i], x[i + 1], y[i + 1],
+					  x[j], y[j], x[j + 1], y[j + 1]);
+					  
+	    if (ret == -1) {
+		/* overlap */
+		x[np - 1] = x[0];
+		y[np - 1] = y[0];
+	    }
+	    else if (ret == 1) {
+		dig_find_intersection(x[i], y[i], x[i + 1], y[i + 1], x[j],
+				      y[j], x[j + 1], y[j + 1], &ix, &iy);
+		x[0] = ix;
+		y[0] = iy;
+		x[np - 1] = ix;
+		y[np - 1] = iy;
+	    }
 	}
 	Vect_line_prune(Points);
     }
@@ -277,8 +459,10 @@ static void clean_parallel(struct line_pnts *Points,
     np = Points->n_points;
     npn = 1;
 
+    side = (int)(d / fabs(d));
+    
     /* remove loops */
-    while (first < np - 2) {
+    while (np > 3 && first < np - 2) {
 	/* find first loop which doesn't contain any other loop */
 	current = first;
 	G_debug(5, "current: %d", current);
@@ -317,15 +501,25 @@ static void clean_parallel(struct line_pnts *Points,
 	    /* first = sa; */
 	}
 	else {
+	    double area_size;
+
 	    Vect_reset_line(sPoints);
 	    dig_find_intersection(x[sa], y[sa], x[sa + 1], y[sa + 1], x[sb],
 				  y[sb], x[sb + 1], y[sb + 1], &ix, &iy);
+				  
+	    if (ix == x[0] && iy == y[0] && ix == x[np - 1] && iy == y[np - 1])
+		break;
 	    Vect_append_point(sPoints, ix, iy, 0);
 	    for (i = sa + 1; i < sb + 1; i++) {	/* create loop polygon */
 		Vect_append_point(sPoints, x[i], y[i], 0);
 	    }
-	    Vect_find_poly_centroid(sPoints, &px, &py);
-	    if (point_in_buf(origPoints, px, py, d)) {	/* is loop in buffer ? */
+
+	    Vect_append_point(sPoints, ix, iy, 0);
+	    dig_find_area_poly(sPoints, &area_size);
+
+	    /*Vect_find_poly_centroid(sPoints, &px, &py);
+	    if (point_in_buf(origPoints, px, py, d)) { */	/* is loop in buffer ? */
+	    if (area_size * side < 0) {
 		npn = sa + 1;
 		x[npn] = ix;
 		y[npn] = iy;
@@ -355,7 +549,8 @@ static void clean_parallel(struct line_pnts *Points,
 
     /* looped input line ? */
     if (origPoints->x[0] == origPoints->x[origPoints->n_points - 1] &&
-        origPoints->y[0] == origPoints->y[origPoints->n_points - 1]) {
+        origPoints->y[0] == origPoints->y[origPoints->n_points - 1] &&
+	close_loop) {
 	double tx, ty, vx, vy, ux, uy, wx, wy, a, aw, av;
 	int sa, sb, side;
 	double atol, atol2;
@@ -410,7 +605,7 @@ static void clean_parallel(struct line_pnts *Points,
 		int na;
 		double nx, ny;
 
-		/* close parallel line */
+		/* OK to close parallel line ? */
 		na = (int)(a / atol);
 		atol2 = a / (na + 1) * side;
 		for (j = 0; j < na; j++) {
@@ -447,7 +642,6 @@ static void parallel_line(struct line_pnts *Points, double d, double tol,
 
     Vect_reset_line(nPoints);
 
-    Vect_line_prune(Points);
     np = Points->n_points;
     x = Points->x;
     y = Points->y;
@@ -529,7 +723,7 @@ Vect_line_parallel(struct line_pnts *InPoints, double distance,
     parallel_line(InPoints, distance, tolerance, OutPoints);
     G_debug(4, "%d outpoints", OutPoints->n_points);
 
-    clean_parallel(OutPoints, InPoints, distance, tolerance, rm_end);
+    clean_parallel(OutPoints, InPoints, distance, tolerance, rm_end, 1);
     G_debug(4, "%d outpoints after cleaning", OutPoints->n_points);
 
     return;
@@ -565,10 +759,9 @@ Vect_line_buffer(struct line_pnts *InPoints, double distance,
     if (PPoints == NULL)
 	PPoints = Vect_new_line_struct();
 
-    /* Copy and prune input */
+    /* Copy input */
     Vect_reset_line(Points);
     Vect_append_points(Points, InPoints, GV_FORWARD);
-    Vect_line_prune(Points);
 
     Vect_reset_line(OutPoints);
 
@@ -595,16 +788,25 @@ Vect_line_buffer(struct line_pnts *InPoints, double distance,
 
 	    /* Parallel on one side */
 	    if (side == 0) {
-		Vect_line_parallel(Points, distance, tolerance, 0, PPoints);
+		/* Vect_line_parallel(Points, distance, tolerance, 0, PPoints); */
+
+		/* just create parallel line, clean later */
+		parallel_line(InPoints, distance, tolerance, PPoints);
+		G_debug(4, "%d outpoints", PPoints->n_points);
+
 		Vect_append_points(OutPoints, PPoints, GV_FORWARD);
 	    }
 	    else {
-		Vect_line_parallel(Points, -distance, tolerance, 0, PPoints);
+		/* Vect_line_parallel(Points, -distance, tolerance, 0, PPoints); */
+
+		parallel_line(InPoints, -distance, tolerance, PPoints);
+		G_debug(4, "%d outpoints", PPoints->n_points);
+
 		Vect_append_points(OutPoints, PPoints, GV_BACKWARD);
 	    }
 
 	    /* Arc at the end */
-	    /* 2 points at theend of original line */
+	    /* 2 points at the end of original line */
 	    if (side == 0) {
 		lx1 = Points->x[npoints - 2];
 		ly1 = Points->y[npoints - 2];
@@ -643,10 +845,31 @@ Vect_line_buffer(struct line_pnts *InPoints, double distance,
 	    Vect_append_point(OutPoints, ex, ey, 0);
 	}
 
+	/* clean up arcs at the end of input lines */
+	Vect_line_prune(OutPoints);
+	if (OutPoints->x[0] == OutPoints->x[OutPoints->n_points - 1] &&
+	    OutPoints->y[0] == OutPoints->y[OutPoints->n_points - 1])
+	    OutPoints->n_points--;
+
+	clean_parallel(OutPoints, InPoints, distance, tolerance, 2, 0);
+
 	/* Close polygon */
-	Vect_append_point(OutPoints, OutPoints->x[0], OutPoints->y[0], 0);
+	if (OutPoints->x[0] != OutPoints->x[OutPoints->n_points - 1] ||
+	    OutPoints->y[0] != OutPoints->y[OutPoints->n_points - 1]) {
+
+	    if (point_in_buf(InPoints, OutPoints->x[0], OutPoints->y[0], distance * 0.99999999)) {
+		OutPoints->x[0] = OutPoints->x[OutPoints->n_points - 1];
+		OutPoints->y[0] = OutPoints->y[OutPoints->n_points - 1];
+	    }
+	    else if (point_in_buf(InPoints, OutPoints->x[OutPoints->n_points - 1],
+				  OutPoints->y[OutPoints->n_points - 1], distance * 0.99999999)) {
+		OutPoints->x[OutPoints->n_points - 1] = OutPoints->x[0];
+		OutPoints->y[OutPoints->n_points - 1] = OutPoints->y[0];
+	    }
+	    else
+		Vect_append_point(OutPoints, OutPoints->x[0], OutPoints->y[0], 0);
+	}
     }
-    Vect_line_prune(OutPoints);
 
     return;
 }
