@@ -4,10 +4,11 @@
  * MODULE:       v.buffer
  * 
  * AUTHOR(S):    Radim Blazek
+ *               Markus Metz
  *               
- * PURPOSE:      Vector buffer
+ * PURPOSE:      Vector buffering
  *               
- * COPYRIGHT:    (C) 2001 by the GRASS Development Team
+ * COPYRIGHT:    (C) 2001-2011 by the GRASS Development Team
  *
  *               This program is free software under the 
  *               GNU General Public License (>=v2). 
@@ -31,193 +32,81 @@
 /* TODO: look at RET value and use, is it OK? */
 #define RET 0.000000001		/* Representation error tolerance */
 
-/* returns shortest distance to nearest input feature within the buffer 
- * or a number greater than buffer (2*buffer) if not found */
-double input_distance(struct Map_info *In, int type, double buffer, double x,
-		      double y)
+struct buf_contours
 {
-    int i;
-    static struct ilist *List = NULL;
-    static struct line_pnts *Points = NULL;
-    double current_distance;
-
-    BOUND_BOX box;
-
-    if (List == NULL)
-	List = Vect_new_list();
-    else
-	Vect_reset_list(List);
-
-    if (Points == NULL)
-	Points = Vect_new_line_struct();
-
-
-    /* Inside area ? */
-    if (type & GV_AREA) {
-	int area, centroid;
-
-	/* inside */
-	area = Vect_find_area(In, x, y);
-	centroid = 0;
-	if (area)
-	    centroid = Vect_get_area_centroid(In, area);
-
-	G_debug(3, "    area = %d centroid = %d", area, centroid);
-	if (centroid)
-	    return 0.0;
-    }
-
-    /* ouside area, within buffer? */
-    /* The centroid is in buffer if at least one point/line/boundary is in buffer distance */
-    box.E = x + buffer;
-    box.W = x - buffer;
-    box.N = y + buffer;
-    box.S = y - buffer;
-    box.T = PORT_DOUBLE_MAX;
-    box.B = -PORT_DOUBLE_MAX;
-
-    Vect_select_lines_by_box(In, &box, GV_POINTS | GV_LINES, List);
-    G_debug(3, "  %d lines selected by box", List->n_values);
-
-    current_distance = 2 * buffer;
-    for (i = 0; i < List->n_values; i++) {
-	int line, ltype;
-	double dist;
-
-	line = List->value[i];
-
-	G_debug(3, "    line[%d] = %d", i, line);
-
-	ltype = Vect_read_line(In, Points, NULL, line);
-
-	Vect_line_distance(Points, x, y, 0., 0, NULL, NULL, NULL, &dist, NULL,
-			   NULL);
-	G_debug(3, "    dist = %f", dist);
-	if (dist > buffer)
-	    continue;
-
-	/* lines */
-	if (type & ltype) {
-	    if (dist < current_distance)
-		current_distance = dist;
-	}
-
-	/* Areas */
-	if ((type & GV_AREA) && ltype == GV_BOUNDARY) {
-	    int j, side[2], centr[2], area_in;
-
-	    Vect_get_line_areas(In, line, &side[0], &side[1]);
-
-	    for (j = 0; j < 2; j++) {
-		centr[j] = 0;
-
-		if (side[j] > 0)
-		    area_in = side[j];
-		else		/* island */
-		    area_in = Vect_get_isle_area(In, abs(side[j]));
-
-		if (area_in > 0)
-		    centr[j] = Vect_get_area_centroid(In, area_in);
-	    }
-
-	    if (centr[0] || centr[1]) {
-		if (dist < current_distance)
-		    current_distance = dist;
-	    }
-	}
-    }
-    return current_distance;
-}
+    int inner_count;
+    int outer;
+    int *inner;
+};
 
 /* 
- * Test if area in Out is in buffer.
+ * Test if area in Out is in buffer, using the x,y coords of the area centroid.
  * Return: 1 in buffer
  *         0 outside buffer
  */
-int area_in_buffer(struct Map_info *In, struct Map_info *Out,
-		   int area, int type, double buffer, double tolerance)
+int point_in_buffer(struct buf_contours *arr_bc, SPATIAL_INDEX *si,
+                    struct Map_info *Buf, double x, double y)
 {
-    double dist;
-    int ret, i;
+    int i, j, ret, flag = 0;
+    BOUND_BOX bbox;
     static struct ilist *List = NULL;
     static struct line_pnts *Points = NULL;
-    double x, y;
-
-    G_debug(3, "  area_in_buffer(): area = %d", area);
-
+    
     if (List == NULL)
 	List = Vect_new_list();
-
     if (Points == NULL)
 	Points = Vect_new_line_struct();
 
-    /* Warning: because of tolerance, centroid in area calculated by Vect_get_point_in_area()
-     * may fall into buffer (arc interpolated by polygon) even if area is outside!!! */
+    /* select outer contours overlapping with centroid (x, y) */
+    bbox.W = bbox.E = x;
+    bbox.N = bbox.S = y;
+    bbox.T = PORT_DOUBLE_MAX;
+    bbox.B = -PORT_DOUBLE_MAX;
 
-    /* Because of finite number of decimal places in double representation, RET is used. */
-
-    /* Test1: Centroid (the only reliable, I think).
-     * There are 3 possible cases for the distance of centroid to nearest input feature:
-     * 1) < (buffer - tolerance) => area inside the buffer 
-     * 2) > buffer => area outside the buffer
-     * 3) > (buffer - tolerance) and < buffer (that means within the tolerance) => uncertain */
-    ret = Vect_get_point_in_area(Out, area, &x, &y);
-    if (ret == 0) {		/* centroid OK */
-	/* test the distance to nearest input feature */
-	dist = input_distance(In, type, buffer, x, y);
-	G_debug(3, "  centroid %f, %f  dist = %f", x, y, dist);
-
-	if (dist < (buffer - tolerance - RET)) {
-	    G_debug(3, "    centroid in buffer -> area in buffer");
-	    return 1;
-	}
-	else if (dist > (buffer + RET)) {
-	    G_debug(3, "    centroid outside buffer -> area outside buffer");
-	    return 0;
-	}
-    }
-
-    /* Test2: counterclockwise (ccw) boundary
-     * Boundaries around features are written in ccw order, that means area inside buffer is on the
-     * left side. Area bundaries are listed in cw order (ccw boundaries as negative). 
-     * So if any boundary in area list is negative, i.e. in cww order, i.e. buffer inside area,
-     * whole area _must_ be in buffer. But, also areas without such boundary may be in buffer, 
-     * see below. */
-    /* TODO: The problem!!!: unfortunately it is not true. After snap, break and remove duplicate
-     * it may happen that ccw line appeareas in the area outside the buffer!!! */
-    Vect_get_area_boundaries(Out, area, List);
+    Vect_spatial_index_select(si, &bbox, List);
 
     for (i = 0; i < List->n_values; i++) {
-	if (List->value[i] < 0) {
-	    G_debug(3, "    negative boundary -> area in buffer");
+	Vect_read_line(Buf, Points, NULL, arr_bc[List->value[i]].outer);
+	ret = Vect_point_in_poly(x, y, Points);
+	if (ret == 0)
+	    continue;
+
+	flag = 1;	/* inside outer contour */
+	for (j = 0; j < arr_bc[List->value[i]].inner_count; j++) {
+	    if (arr_bc[List->value[i]].inner[j] < 1)
+		continue;
+
+	    Vect_read_line(Buf, Points, NULL, arr_bc[List->value[i]].inner[j]);
+	    ret = Vect_point_in_poly(x, y, Points);
+	    if (ret != 0) {	/* inside inner contour */
+		flag = 0;
+		break;
+	    }
+	}
+
+	if (flag) {
+	    /* (x,y) is inside outer contour and outside inner contours of arr_bc[List->value[i]] */
 	    return 1;
 	}
     }
 
-    /* Test3: Input feature within area.
-     * I believe, that if no negative boundary was found and area is in buffer, 
-     * the distance of the nearest input feature for at least one area vertex must be < (buffer-tolerance) 
-     * This test is left as last because it is slow (check each vertex). */
-    Vect_get_area_points(Out, area, Points);
-    for (i = 0; i < Points->n_points - 1; i++) {
-	dist = input_distance(In, type, buffer, Points->x[i], Points->y[i]);
-	G_debug(3, "  vertex dist = %f", dist);
-
-	if (dist < (buffer - tolerance - RET)) {
-	    G_debug(3, "    vertex in buffer -> area in buffer");
-	    return 1;
-	}
-    }
-
-    /* Test4?: It may be that that Test3 does not cover all possible cases. If so, somebody must
-     * find such example and send it to me */
-
-    G_debug(3, "    -> area outside buffer");
     return 0;
 }
 
-void stop(struct Map_info *In, struct Map_info *Out)
+void stop(struct Map_info *In, struct Map_info *Out, struct Map_info *Buf,
+          char *bufname, SPATIAL_INDEX *si, int debug)
 {
+    Vect_spatial_index_destroy(si);
+
+    if (debug != DEBUG_NONE) {
+	Vect_build(Buf);
+	Vect_close(Buf);
+    }
+    else {
+	Vect_close(Buf);
+	Vect_delete(bufname);
+    }
+    
     Vect_close(In);
 
     G_message(_("Rebuilding topology..."));
@@ -228,10 +117,10 @@ void stop(struct Map_info *In, struct Map_info *Out)
 
 int main(int argc, char *argv[])
 {
-    struct Map_info In, Out;
+    struct Map_info In, Out, Buf;
     struct line_pnts *Points, *BPoints;
     struct line_cats *Cats, *BCats;
-    char *mapset;
+    char *mapset, bufname[GNAME_MAX];
     struct GModule *module;
     struct Option *in_opt, *out_opt, *type_opt, *buffer_opt, *dist_opt,
 	*tolerance_opt, *bufcol_opt, *scale_opt, *debug_opt, *field_opt;
@@ -241,8 +130,12 @@ int main(int argc, char *argv[])
     char *Areas, *Lines;
     int field;
     int dist_answer;
+    struct buf_contours *arr_bc;
+    int buffers_count = 0, line_id;
+    SPATIAL_INDEX si;
+    BOUND_BOX bbox;
 
-    /* Attributes if sizecol is used */
+    /* Attributes if bufcol is used */
     int i, nrec, ctype;
     struct field_info *Fi;
     dbDriver *Driver;
@@ -264,6 +157,7 @@ int main(int argc, char *argv[])
     type_opt->answer = "point,line,area";
 
     field_opt = G_define_standard_option(G_OPT_V_FIELD);
+    field_opt->answer = "-1";
 
     buffer_opt = G_define_option();
     buffer_opt->key = "buffer";
@@ -321,14 +215,16 @@ int main(int argc, char *argv[])
     dist_answer = (buffer_opt->answer != NULL || dist_opt->answer != NULL);
 
     if ((dist_answer && bufcol_opt->answer) ||
-	(!(dist_opt->answer || bufcol_opt->answer)))
+	(!(dist_answer || bufcol_opt->answer)))
 	G_fatal_error("Select a buffer distance or column, but not both.");
 
+    /* fixed
     if (bufcol_opt->answer)
 	G_warning(_("The bufcol option may contain bugs during the cleaning "
 		    "step. If you encounter problems, use the debug "
 		    "option or clean manually with v.clean tool=break; "
 		    "v.category step=0; v.extract -d type=area"));
+    */
 
     orig_tolerance = atof(tolerance_opt->answer);
     tolerance = orig_tolerance;
@@ -340,13 +236,13 @@ int main(int argc, char *argv[])
     if (dist_opt->answer)
 	buffer = fabs(atof(dist_opt->answer));
     else if (buffer_opt->answer)
-	buffer = fabs(atof(dist_opt->answer));
+	buffer = fabs(atof(buffer_opt->answer));
 	
 
     if (dist_answer) {
 
 	tolerance *= buffer;
-	G_message(_("The tolerance in map units: %g"), tolerance);
+	G_verbose_message(_("The tolerance in map units: %g"), tolerance);
 
 	/* At least 8 points for circle. */
 	dtmp = 0.999 * buffer * (1 - cos(2 * PI / 8 / 2));
@@ -382,11 +278,39 @@ int main(int argc, char *argv[])
     Vect_set_open_level(2);
     Vect_open_old(&In, in_opt->answer, mapset);
 
+    /* allocate space for buffer ids */
+    nlines = nareas = 0;
+    if ((type & GV_POINTS) || (type & GV_LINES))
+	nlines += Vect_get_num_primitives(&In, type);
+    if (type & GV_AREA)
+	nareas = Vect_get_num_areas(&In);
+    
+    if (nlines + nareas == 0) {
+	G_warning(_("No features available for buffering. "
+	            "Check type option and features available in the input vector."));
+	exit(EXIT_SUCCESS);
+    }
+	
+    buffers_count = 1;
+    arr_bc = G_malloc((nlines + nareas + 1) * sizeof(struct buf_contours));
+
+    Vect_spatial_index_init(&si);
+
     Vect_set_fatal_error(GV_FATAL_PRINT);
     if (0 > Vect_open_new(&Out, out_opt->answer, 0)) {
 	Vect_close(&In);
 	exit(EXIT_FAILURE);
     }
+    
+    /* open tmp vector for buffers, needed for cleaning */
+    sprintf(bufname, "%s_buffers", out_opt->answer);
+    if (0 > Vect_open_new(&Buf, bufname, 0)) {
+	Vect_close(&In);
+	Vect_close(&Out);
+	Vect_delete(out_opt->answer);
+	exit(EXIT_FAILURE);
+    }
+    Vect_build_partial(&Buf, GV_BUILD_BASE);
 
     /* check and load attribute column data */
     if (bufcol_opt->answer) {
@@ -439,13 +363,13 @@ int main(int argc, char *argv[])
 
     /* Lines (and Points) */
     if ((type & GV_POINTS) || (type & GV_LINES)) {
-	int nlines, line, ltype;
+	int line, ltype, looped;
+	double pbuffer;
 
-	nlines = Vect_get_num_lines(&In);
-
-	G_message(_("Lines buffers... "));
+	G_message(_("Line buffers... "));
 	for (line = 1; line <= nlines; line++) {
 	    int cat;
+	    double area_size = 0, inner_size = 0;
 
 	    G_debug(3, "line = %d", line);
 	    G_percent(line, nlines, 2);
@@ -510,41 +434,114 @@ int main(int argc, char *argv[])
 
 	    Vect_line_prune(Points);
 	    /* looped line ? */
-	    if (Points->n_points > 1 && Points->x[0] == Points->x[Points->n_points - 1] &&
-	        Points->y[0] == Points->y[Points->n_points - 1]) {
-		G_debug(0, "looped line");
-		Vect_line_parallel(Points, buffer, tolerance, 1, BPoints);
-		if (BPoints->n_points > 1)
+	    looped = 0;
+	    if (Points->n_points > 3) {
+		if (Points->x[0] == Points->x[Points->n_points - 1] &&
+		    Points->y[0] == Points->y[Points->n_points - 1]) {
+
+		    G_debug(2, "looped line");
+
+		    /* determine correct sides for outer and inner contours */
+		    dig_find_area_poly(Points, &area_size);
+		    if (area_size == 0) {
+			G_warning("zero area size");
+			looped = 0;
+		    }
+		    else if (area_size > 0)
+			pbuffer = -buffer;
+		    else
+			pbuffer = buffer;
+
+		    looped = 1;
+		}
+		if (!looped) {
+		    double dx = Points->x[0] - Points->x[Points->n_points - 1];
+		    double dy = Points->y[0] - Points->y[Points->n_points - 1];
+		    double dist = sqrt(dx * dx + dy * dy);
+		    
+		    /* if the distance between endpoints is < 2 * buffer
+		     * and at least one point is > 2 * buffer away from the endpoints, 
+		     * problems may occur
+		     * break up the line if possible
+		     * find point farthest away from end point
+		     * if this point is > 2 * buffer away from end point, break
+		     * first line from start point to this point
+		     * second line from this point to end point */
+
+		    looped = 0;
+		}
+	    }
+
+	    if (looped) {
+		Vect_line_parallel(Points, pbuffer, tolerance, 1, BPoints);
+		if (BPoints->n_points > 3) {
+		    if (BPoints->x[0] != BPoints->x[BPoints->n_points - 1] ||
+			BPoints->x[0] != BPoints->x[BPoints->n_points - 1]) {
+			Vect_append_point(BPoints, BPoints->x[0], BPoints->y[0], 0);
+		    }
 		    Vect_write_line(&Out, GV_BOUNDARY, BPoints, BCats);
-		Vect_line_parallel(Points, -buffer, tolerance, 1, BPoints);
-		if (BPoints->n_points > 1)
-		    Vect_write_line(&Out, GV_BOUNDARY, BPoints, BCats);
+		    line_id = Vect_write_line(&Buf, GV_BOUNDARY, BPoints, Cats);
+		    /* add buffer to spatial index */
+		    Vect_get_line_box(&Buf, line_id, &bbox);
+		    Vect_spatial_index_add_item(&si, buffers_count, &bbox);
+		    arr_bc[buffers_count].outer = line_id;
+		    arr_bc[buffers_count].inner_count = 0;
+		}
+		else
+		    G_fatal_error(_("Could not get outside buffer for line id %d"), line);
+
+		Vect_line_parallel(Points, -pbuffer, tolerance, 1, BPoints);
+		if (BPoints->n_points > 3) {
+		    if (BPoints->x[0] != BPoints->x[BPoints->n_points - 1] ||
+			BPoints->x[0] != BPoints->x[BPoints->n_points - 1]) {
+			Vect_append_point(BPoints, BPoints->x[0], BPoints->y[0], 0);
+		    }
+		    dig_find_area_poly(BPoints, &inner_size);
+		    /* area size of inner contour must be smaller than area size of original points */
+		    if (fabs(inner_size) < fabs(area_size)) {
+			Vect_write_line(&Out, GV_BOUNDARY, BPoints, BCats);
+			line_id = Vect_write_line(&Buf, GV_BOUNDARY, BPoints, Cats);
+			arr_bc[buffers_count].inner = G_malloc(sizeof(int));
+			arr_bc[buffers_count].inner_count = 1;
+			arr_bc[buffers_count].inner[0] = line_id;
+		    }
+		}
+		buffers_count++;
 	    }
 	    else {
 		Vect_line_buffer(Points, buffer, tolerance, BPoints);
 		Vect_write_line(&Out, GV_BOUNDARY, BPoints, BCats);
+		line_id = Vect_write_line(&Buf, GV_BOUNDARY, BPoints, Cats);
+
+		/* add buffer to spatial index */
+		Vect_get_line_box(&Buf, line_id, &bbox);
+		Vect_spatial_index_add_item(&si, buffers_count, &bbox);
+		arr_bc[buffers_count].outer = line_id;
+		arr_bc[buffers_count].inner_count = 0;
+		buffers_count++;
 	    }
 	}
     }
 
     /* Areas */
     if (type & GV_AREA) {
-	int i, nareas, area, centroid, nisles, isle;
+	int i, area, centroid, nisles, isle, line_id;
 
-	nareas = Vect_get_num_areas(&In);
-
-	G_message(_("Areas buffers... "));
+	G_message(_("Area buffers... "));
 	for (area = 1; area <= nareas; area++) {
 	    int cat;
 
 	    G_percent(area, nareas, 2);
+	    
+	    if (!(Vect_area_alive(&In, area)))
+		continue;
 
 	    centroid = Vect_get_area_centroid(&In, area);
 	    if (centroid == 0)
 		continue;
 
 	    Vect_read_line(&In, NULL, Cats, centroid);
-	    if (!Vect_cat_get(Cats, field, &cat))
+	    if (field > 0 && !Vect_cat_get(Cats, field, &cat))
 		continue;
 
 	    if (bufcol_opt->answer) {
@@ -601,16 +598,26 @@ int main(int argc, char *argv[])
 
 	    /* outer ring */
 	    Vect_get_area_points(&In, area, Points);
+	    Vect_line_prune(Points);
 	    Vect_line_parallel(Points, -buffer, tolerance, 1, BPoints);
 	    Vect_write_line(&Out, GV_BOUNDARY, BPoints, BCats);
+	    line_id = Vect_write_line(&Buf, GV_BOUNDARY, BPoints, Cats);
+
+	    /* add outer ring to spatial index */
+	    Vect_get_line_box(&Buf, line_id, &bbox);
+	    Vect_spatial_index_add_item(&si, buffers_count, &bbox);
+	    arr_bc[buffers_count].outer = line_id;
 
 	    /* islands */
 	    nisles = Vect_get_area_num_isles(&In, area);
+	    arr_bc[buffers_count].inner = G_malloc(nisles * sizeof(int));
+	    arr_bc[buffers_count].inner_count = nisles;
 	    for (i = 0; i < nisles; i++) {
-		double l;
+		double l, isle_size, inner_size;
 
 		isle = Vect_get_area_isle(&In, area, i);
 		Vect_get_isle_points(&In, isle, Points);
+		Vect_line_prune(Points);
 
 		/* Check if the isle is big enough */
 		l = Vect_line_length(Points);
@@ -618,14 +625,29 @@ int main(int argc, char *argv[])
 		    continue;
 
 		Vect_line_parallel(Points, -buffer, tolerance, 1, BPoints);
-		if (BPoints->n_points > 1)
-		    Vect_write_line(&Out, GV_BOUNDARY, BPoints, BCats);
+		if (BPoints->n_points > 3) {
+		    dig_find_area_poly(Points, &isle_size);
+		    dig_find_area_poly(BPoints, &inner_size);
+		    /* area size of inner contour must be smaller than isle size */
+		    if (fabs(inner_size) < fabs(isle_size)) {
+			Vect_write_line(&Out, GV_BOUNDARY, BPoints, BCats);
+			line_id = Vect_write_line(&Buf, GV_BOUNDARY, BPoints, Cats);
+			arr_bc[buffers_count].inner[i] = line_id;
+		    }
+		    else {
+			arr_bc[buffers_count].inner[i] = -1;
+		    }
+		}
+		else {
+		    arr_bc[buffers_count].inner[i] = -1;
+		}
 	    }
+	    buffers_count++;
 	}
     }
 
     if (debug == DEBUG_BUFFER) {
-	stop(&In, &Out);
+	stop(&In, &Out, &Buf, bufname, &si, debug);
 	exit(EXIT_SUCCESS);
     }
 
@@ -675,30 +697,36 @@ int main(int argc, char *argv[])
     nareas = Vect_get_num_areas(&Out);
     Areas = (char *)G_calloc(nareas + 1, sizeof(char));
 
-    G_message(_("Calculating centroids for areas..."));
+    G_message(_("Selecting areas..."));
     for (area = 1; area <= nareas; area++) {
+	double x, y;
+
 	G_percent(area, nareas, 2);
+	Areas[area] = 0;
+
 	G_debug(3, "area = %d", area);
 
-/*** BUG *** if dynamic bufcol was used, "buffer" will only hold last value ***/
-/* TODO: use method of v.buffer2, improve it by using a custom spatial index
- * and storing original, not cleaned buffers in a temp vector */
-	ret = area_in_buffer(&In, &Out, area, type, buffer, tolerance);
+	if (!Vect_area_alive(&Out, area))
+	    continue;
+
+	ret = Vect_get_point_in_area(&Out, area, &x, &y);
+	if (ret < 0) {
+	    G_warning(_("Cannot calculate area centroid"));
+	    continue;
+	}
+
+	ret = point_in_buffer(arr_bc, &si, &Buf, x, y);
 
 	if (ret) {
 	    G_debug(3, "  -> in buffer");
 	    Areas[area] = 1;
 	}
+	else
+	    G_debug(3, "  -> not in buffer");
 
-	/* Write out centroid (before check if correct, so that it isd visible for debug) */
+	/* Write out centroid (all centroids, so that it is visible for debug) */
 	if (debug == DEBUG_CLEAN) {
-	    double x, y;
 
-	    ret = Vect_get_point_in_area(&Out, area, &x, &y);
-	    if (ret < 0) {
-		G_warning(_("Cannot calculate area centroid"));
-		continue;
-	    }
 	    Vect_reset_cats(Cats);
 	    if (Areas[area])
 		Vect_cat_set(Cats, 1, 1);
@@ -710,7 +738,7 @@ int main(int argc, char *argv[])
     }
 
     if (debug == DEBUG_CLEAN) {
-	stop(&In, &Out);
+	stop(&In, &Out, &Buf, bufname, &si, debug);
 	exit(EXIT_SUCCESS);
     }
 
@@ -721,8 +749,10 @@ int main(int argc, char *argv[])
 
     G_message(_("Generating list of boundaries to be deleted..."));
     for (line = 1; line <= nlines; line++) {
-	G_percent(line, nlines, 2);
 	int j, side[2], areas[2];
+
+	G_percent(line, nlines, 2);
+	Lines[line] = 0;
 
 	G_debug(3, "line = %d", line);
 
@@ -769,25 +799,23 @@ int main(int argc, char *argv[])
 
     G_message(_("Calculating centroids for areas..."));    
     for (area = 1; area <= nareas; area++) {
-	G_percent(area, nareas, 2);
 	double x, y;
 
+	G_percent(area, nareas, 2);
 	G_debug(3, "area = %d", area);
 
 	if (!Vect_area_alive(&Out, area))
 	    continue;
 
-/*** BUG *** if dynamic bufcol was used, "buffer" will only hold last value ***/
-/* TODO: see above */
-	ret = area_in_buffer(&In, &Out, area, type, buffer, tolerance);
+	ret = Vect_get_point_in_area(&Out, area, &x, &y);
+	if (ret < 0) {
+	    G_warning(_("Cannot calculate area centroid"));
+	    continue;
+	}
+
+	ret = point_in_buffer(arr_bc, &si, &Buf, x, y);
 
 	if (ret) {
-	    ret = Vect_get_point_in_area(&Out, area, &x, &y);
-	    if (ret < 0) {
-		G_warning(_("Cannot calculate area centroid"));
-		continue;
-	    }
-
 	    Vect_reset_line(Points);
 	    Vect_append_point(Points, x, y, 0.);
 	    Vect_write_line(&Out, GV_CENTROID, Points, Cats);
@@ -797,6 +825,6 @@ int main(int argc, char *argv[])
     G_message(_("Attaching centroids..."));
     Vect_build_partial(&Out, GV_BUILD_CENTROIDS);
 
-    stop(&In, &Out);
+    stop(&In, &Out, &Buf, bufname, &si, debug);
     exit(EXIT_SUCCESS);
 }
