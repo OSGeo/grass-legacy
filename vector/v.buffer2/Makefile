@@ -1,6 +1,6 @@
 MODULE_TOPDIR = ../..
 
-PGM = v.buffer
+PGM = v.buffer2
 
 LIBES = $(VECTLIB) $(DBMILIB) $(GISLIB)
 DEPENDENCIES= $(VECTDEP) $(DBMIDEP) $(GISDEP)
