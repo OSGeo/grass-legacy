@@ -2,6 +2,7 @@
 MODULE_TOPDIR = ..
 
 SUBDIRS = \
+	v.buffer \
 	v.buffer2 \
 	v.build \
 	v.build.polylines \
@@ -55,6 +56,7 @@ SUBDIRS = \
 	v.out.svg \
 	v.out.vtk \
 	v.overlay \
+	v.parallel \
 	v.parallel2 \
 	v.patch \
 	v.perturb \
