@@ -485,7 +485,7 @@ static void convolution_line(struct line_pnts *Points, double da, double db,
 
     /* close the output line */
     Vect_append_point(nPoints, nPoints->x[0], nPoints->y[0], nPoints->z[0]);
-    /*    Vect_line_prune ( nPoints ); */
+    Vect_line_prune ( nPoints );
 }
 
 /*
@@ -533,7 +533,11 @@ static void extract_contour(struct planar_graph *pg, struct pg_edge *first,
     eangle = atan2(vert->y - vert0->y, vert->x - vert0->x);
 
     while (1) {
-	Vect_append_point(nPoints, vert0->x, vert0->y, 0);
+	if (nPoints->n_points > 0 && (nPoints->x[nPoints->n_points - 1] != vert0->x ||
+	    nPoints->y[nPoints->n_points - 1] != vert0->y))
+	    Vect_append_point(nPoints, vert0->x, vert0->y, 0);
+	else
+	    Vect_append_point(nPoints, vert0->x, vert0->y, 0);
 	G_debug(4, "ec: v0=%d, v=%d, eside=%d, edge->v1=%d, edge->v2=%d", v0,
 		v, eside, edge->v1, edge->v2);
 	G_debug(4, "ec: append point x=%.18f y=%.18f", vert0->x, vert0->y);

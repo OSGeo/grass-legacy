@@ -164,8 +164,8 @@ static int compare(const void *a, const void *b)
 {
     struct intersection_point *aa, *bb;
 
-    aa = *((struct intersection_point **)a);
-    bb = *((struct intersection_point **)b);
+    aa = *(struct intersection_point **)a;
+    bb = *(struct intersection_point **)b;
 
     if (aa->x < bb->x)
 	return -1;
