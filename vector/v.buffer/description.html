@@ -9,6 +9,13 @@ vector segments are generated).
 
 Attributes are not transferred due to potential buffer overlap, which
 cannot be resolved automatically.
+<P>
+The input vector must be reasonably clean: lines must not intersect
+themselves. It is recommended to clean the input vector first with
+<em>v.clean tool=snap,break,rmdupl</em> and then create buffers. The 
+snapping threshold depends on the digitization threshold and the desired 
+buffering distance. As a rule of thumb, the snapping distance can be 
+up to 1% of the buffering distance.
 
 <h2>EXAMPLES</h2>
 
@@ -45,11 +52,7 @@ For some data <em>v.buffer</em> can produce strange results, especially if
 the buffer size is bigger than input features. Usually you can solve the
 problem if you run <em>v.buffer</em> more times with smaller buffer.
 <P>
-The <b>bufcol</b> dynamic buffer distance parameter has problems cleaning
-complex features (holes left filled, etc.). If you experience problems, try
-running <em>v.buffer</em> multiple times with a single buffer distance, patch
-the results with <em>v.patch</em> and remove any overlaps with 
-<em>v.extract -d</em>.
+
 
 <h2>SEE ALSO</h2>
 
@@ -63,7 +66,8 @@ the results with <em>v.patch</em> and remove any overlaps with
 
 <h2>AUTHOR</h2>
 
-Radim Blazek
+Radim Blazek<br>
+Markus Metz
 
 <p>
 <i>Last changed: $Date$</i>

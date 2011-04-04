@@ -41,6 +41,9 @@ struct buf_contours
 
 /* 
  * Test if area in Out is in buffer, using the x,y coords of the area centroid.
+ * requires that buffers as returned by the library functions are clean:
+ *  - no self-intersections
+ *  - inner buffers must be inside corresponding outer buffer
  * Return: 1 in buffer
  *         0 outside buffer
  */
@@ -362,7 +365,7 @@ int main(int argc, char *argv[])
     /* Create buffers' boundaries */
 
     /* Lines (and Points) */
-    if ((type & GV_POINTS) || (type & GV_LINES)) {
+    if (((type & GV_POINTS) || (type & GV_LINES)) && nlines) {
 	int line, ltype, looped;
 	double pbuffer;
 
@@ -444,7 +447,7 @@ int main(int argc, char *argv[])
 		    /* determine correct sides for outer and inner contours */
 		    dig_find_area_poly(Points, &area_size);
 		    if (area_size == 0) {
-			G_warning("zero area size");
+			G_warning(_("Zero area size, please clean input vector first."));
 			looped = 0;
 		    }
 		    else if (area_size > 0)
@@ -454,25 +457,10 @@ int main(int argc, char *argv[])
 
 		    looped = 1;
 		}
-		if (!looped) {
-		    double dx = Points->x[0] - Points->x[Points->n_points - 1];
-		    double dy = Points->y[0] - Points->y[Points->n_points - 1];
-		    double dist = sqrt(dx * dx + dy * dy);
-		    
-		    /* if the distance between endpoints is < 2 * buffer
-		     * and at least one point is > 2 * buffer away from the endpoints, 
-		     * problems may occur
-		     * break up the line if possible
-		     * find point farthest away from end point
-		     * if this point is > 2 * buffer away from end point, break
-		     * first line from start point to this point
-		     * second line from this point to end point */
-
-		    looped = 0;
-		}
 	    }
 
 	    if (looped) {
+		/* get parallel lines */
 		Vect_line_parallel(Points, pbuffer, tolerance, 1, BPoints);
 		if (BPoints->n_points > 3) {
 		    if (BPoints->x[0] != BPoints->x[BPoints->n_points - 1] ||
@@ -509,6 +497,8 @@ int main(int argc, char *argv[])
 		buffers_count++;
 	    }
 	    else {
+		/* TODO: should return outer buffer and one or more
+		 * inner buffers in some cases */
 		Vect_line_buffer(Points, buffer, tolerance, BPoints);
 		Vect_write_line(&Out, GV_BOUNDARY, BPoints, BCats);
 		line_id = Vect_write_line(&Buf, GV_BOUNDARY, BPoints, Cats);
@@ -524,7 +514,7 @@ int main(int argc, char *argv[])
     }
 
     /* Areas */
-    if (type & GV_AREA) {
+    if ((type & GV_AREA) && nareas) {
 	int i, area, centroid, nisles, isle, line_id;
 
 	G_message(_("Area buffers... "));
@@ -629,6 +619,8 @@ int main(int argc, char *argv[])
 		    dig_find_area_poly(Points, &isle_size);
 		    dig_find_area_poly(BPoints, &inner_size);
 		    /* area size of inner contour must be smaller than isle size */
+		    /* TODO: should return more than one buffer for certain
+		     * island shapes and buffer distances */
 		    if (fabs(inner_size) < fabs(isle_size)) {
 			Vect_write_line(&Out, GV_BOUNDARY, BPoints, BCats);
 			line_id = Vect_write_line(&Buf, GV_BOUNDARY, BPoints, Cats);
