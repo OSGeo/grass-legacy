@@ -57,7 +57,7 @@ try:
     if iconTheme != 'grass':
         # use default icons if no icon is available
         for key, img in iconSet.iteritems():
-            if not iconSet.has_key(key) or \
+            if key not in iconSet or \
                     iconSet[key] is None: # add key
                 iconSet[key] = img
             

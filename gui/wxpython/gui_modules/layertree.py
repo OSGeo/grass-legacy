@@ -874,7 +874,7 @@ class LayerTree(treemixin.DragAndDrop, CT.CustomTreeCtrl):
 
     def PropertiesDialog (self, layer, show = True):
         """!Launch the properties dialog"""
-        if self.GetPyData(layer)[0].has_key('propwin') and \
+        if 'propwin' in self.GetPyData(layer)[0] and \
                 self.GetPyData(layer)[0]['propwin'] is not None:
             # recycle GUI dialogs
             win = self.GetPyData(layer)[0]['propwin']
