@@ -124,14 +124,16 @@ if [ $GIS_FLAG_F -eq 1 ] ; then
   #    $1~/   .*/ { printf(" %lf %lf\n", $2, $1) ; ++R }
   #    $1~/END/   { }' | tac > "$TMPFILE"
 
-  ## matlab format. Cleanse with NaN->nan and spaces to tabs
-  tac "$FILE" | awk '{print $1 "\t" $2 "\t" $3}
+  ## matlab format. Cleanse with NaN->nan and spaces to tabs,
+  ##   and skip blank and comment lines
+  grep -v '^#\|^$' "$FILE" | tac | awk '
+    {print $1 "\t" $2 "\t" $3}
     END {if ($3~/[0-9Nna]/) print "NaN\tNaN\tNaN"
          else print "NaN\tNaN"}' | \
    tr 'N' 'n' | awk '
     BEGIN { FS="\t" ; R=0 }
-    $1~/nan.*/ { printf("L %d\n", R) ; R=0 }
-    $1~/\d*\.\d*/ { printf(" %.8f %.8f %.8f\n", $1, $2, $3) ; ++R }
+    $1~/nan.*/ { printf("L %d\n", R) ; R=0 ; next }
+    $1~/\d*\d*/ { printf(" %.15g %.15g %.15g\n", $1, $2, $3) ; ++R }
     END {;}' | \
    grep -v "^L 0$" | tac > "$TMPFILE"
 
