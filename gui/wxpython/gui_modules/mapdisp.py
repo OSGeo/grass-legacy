@@ -1647,32 +1647,33 @@ class MapFrame(wx.Frame):
         """
         if self._layerManager.notebook.GetSelection() != 1:
             self._layerManager.notebook.SetSelection(1)
-
+        
         dist, (north, east) = self.MapWindow.Distance(beginpt, endpt)
-
+        
         dist = round(dist, 3)
         d, dunits = self.FormatDist(dist)
-
+        
         self.totaldist += dist
         td, tdunits = self.FormatDist(self.totaldist)
-
+        
         strdist = str(d)
         strtotdist = str(td)
-
+        
         if self.Map.projinfo['proj'] == 'xy' or 'degree' not in self.Map.projinfo['unit']:
             angle = int(math.degrees(math.atan2(north,east)) + 0.5)
             angle = 180 - angle
             if angle < 0:
                 angle = 360+angle
-
-            mstring = 'segment = %s %s\ttotal distance = %s %s\tbearing = %d deg' \
-                % (strdist,dunits,strtotdist,tdunits,angle)
+            
+            mstring = '%s = %s %s\t%s = %s %s\tbearing = %d %s' \
+                % (_('segment'), strdist, dunits, _('total distance'), strtotdist, tdunits,
+                   angle, _('deg'))
         else:
-            mstring = 'segment = %s %s\ttotal distance = %s %s' \
-                % (strdist,dunits,strtotdist,tdunits)
-
+            mstring = '%s = %s %s\t%s = %s %s' \
+                % (_('segment'), strdist, dunits, _('total distance'), strtotdist, tdunits)
+        
         self._layerManager.goutput.WriteLog(mstring)
-
+        
         return dist
 
     def Profile(self, event):
@@ -1695,13 +1696,13 @@ class MapFrame(wx.Frame):
         """!Format length numbers and units in a nice way,
         as a function of length. From code by Hamish Bowman
         Grass Development Team 2006"""
-
+        
         mapunits = self.Map.projinfo['units']
         if mapunits == 'metres': mapunits = 'meters'
         outunits = mapunits
         dist = float(dist)
         divisor = 1.0
-
+        
         # figure out which units to use
         if mapunits == 'meters':
             if dist > 2500.0:
@@ -1724,7 +1725,7 @@ class MapFrame(wx.Frame):
                 divisor = (1/60.0)
             else:
                 outunits = 'deg'
-
+        
         # format numbers in a nice way
         if (dist/divisor) >= 2500.0:
             outdist = round(dist/divisor)
@@ -1734,9 +1735,8 @@ class MapFrame(wx.Frame):
             outdist = round(dist/divisor,int(math.ceil(3-math.log10(dist/divisor))))
         else:
             outdist = float(dist/divisor)
-
+        
         return (outdist, outunits)
-
 
     def Histogram(self, event):
         """!Init histogram display canvas and tools
