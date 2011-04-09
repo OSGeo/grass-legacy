@@ -1665,12 +1665,16 @@ class MapFrame(wx.Frame):
             if angle < 0:
                 angle = 360+angle
             
-            mstring = '%s = %s %s\t%s = %s %s\tbearing = %d %s' \
-                % (_('segment'), strdist, dunits, _('total distance'), strtotdist, tdunits,
-                   angle, _('deg'))
+            mstring = '%s = %s %s\n%s = %s %s\n%s = %d %s\n%s' \
+                % (_('segment'), strdist, dunits,
+                   _('total distance'), strtotdist, tdunits,
+                   _('bearing'), angle, _('deg'),
+                   '-' * 60)
         else:
-            mstring = '%s = %s %s\t%s = %s %s' \
-                % (_('segment'), strdist, dunits, _('total distance'), strtotdist, tdunits)
+            mstring = '%s = %s %s\n%s = %s %s\n%s' \
+                % (_('segment'), strdist, dunits,
+                   _('total distance'), strtotdist, tdunits,
+                   '-' * 60)
         
         self._layerManager.goutput.WriteLog(mstring)
         
@@ -1698,7 +1702,8 @@ class MapFrame(wx.Frame):
         Grass Development Team 2006"""
         
         mapunits = self.Map.projinfo['units']
-        if mapunits == 'metres': mapunits = 'meters'
+        if mapunits == 'metres':
+            mapunits = 'meters'
         outunits = mapunits
         dist = float(dist)
         divisor = 1.0
@@ -1737,7 +1742,7 @@ class MapFrame(wx.Frame):
             outdist = float(dist/divisor)
         
         return (outdist, outunits)
-
+    
     def Histogram(self, event):
         """!Init histogram display canvas and tools
         """
