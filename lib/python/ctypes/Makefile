@@ -10,11 +10,11 @@ include $(MODULE_TOPDIR)/include/Make/Doxygen.make
 DOXNAME=
 DOXINPUT=grasspython.dox
 
-MODULES = date grass gmath proj imagery vector display stats \
+MODULES = date gis gmath proj imagery vector display stats \
 	dbmi g3d arraystats cluster trans vedit ogsf nviz
 
 date_LIBS       = $(DATETIMELIB)
-grass_LIBS      = $(GISLIB)
+gis_LIBS      = $(GISLIB)
 gmath_LIBS      = $(GMATHLIB)
 proj_LIBS       = -l$(GPROJ_LIBNAME) $(GISLIB)
 imagery_LIBS    = $(IMAGERYLIB)
@@ -31,7 +31,7 @@ ogsf_LIBS       = $(OGSFLIB)
 nviz_LIBS       = $(NVIZLIB)
 
 date_HDRS       = datetime.h P_datetime.h
-grass_HDRS      = gis.h gisdefs.h
+gis_HDRS        = gis.h gisdefs.h
 gmath_HDRS      = gmath.h
 proj_HDRS       = gprojects.h
 imagery_HDRS    = imagery.h imagedefs.h
