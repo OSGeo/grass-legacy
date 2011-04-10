@@ -1614,7 +1614,11 @@ class MapFrame(wx.Frame):
         else:
             self._layerManager.goutput.WriteLog(_('Measuring distance:'),
                                                 style)
-
+        if self.Map.projinfo['proj'] == 'll':
+            self._layerManager.goutput.WriteWarning(_('Geodesic distance is not yet '
+                                                      'supported by this tool.\n'
+                                                      'Check future versions of GRASS.'))
+        
     def MeasureDist(self, beginpt, endpt):
         """!Calculate map distance from screen distance
         and print to output window
