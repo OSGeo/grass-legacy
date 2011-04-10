@@ -8114,7 +8114,7 @@ msgstr "Ausgabe:"
 #: ../raster/r.proj/main.c:416
 #: ../raster/r.proj.seg/main.c:485
 msgid "Projecting..."
-msgstr "Projeziere... "
+msgstr "Projiziere... "
 
 #: ../raster/r.proj/bordwalk.c:182
 #: ../raster/r.proj.seg/bordwalk.c:182
