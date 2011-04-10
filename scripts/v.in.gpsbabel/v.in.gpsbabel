@@ -26,7 +26,7 @@
 # REQUIREMENTS:
 #      -  gpsbabel from:
 #	     http://gpsbabel.sourceforge.net
-#      -  unix tools: grep, cat, tac, cut, paste, awk/nawk/gawk, sed
+#      -  unix tools: grep, cat, cut, paste, awk/nawk/gawk, sed
 #      -  cs2cs from PROJ.4    http://proj.maptools.org/
 #
 #      - report supported formats:
