@@ -72,6 +72,20 @@ unset LC_ALL
 LC_NUMERIC=C
 export LC_NUMERIC
 
+#### check if we have tac
+# perhaps try `type -t` instead of `which`, as it is more POSIXy
+if [ -x "`which tac`" ] ; then
+   TAC=tac
+else
+   TAC=awk_tac
+fi
+
+awk_tac()
+{
+   awk '1 { last = NR; line[last] = $0; }
+          END { for (i = last; i > 0; i--) { print line[i]; } }'
+}
+
 eval `g.gisenv`
 : ${GISBASE?} ${GISDBASE?} ${LOCATION_NAME?} ${MAPSET?}
 LOCATION="$GISDBASE/$LOCATION_NAME/$MAPSET"
@@ -126,7 +140,7 @@ if [ $GIS_FLAG_F -eq 1 ] ; then
 
   ## matlab format. Cleanse with NaN->nan and spaces to tabs,
   ##   and skip blank and comment lines
-  grep -v '^#\|^$' "$FILE" | tac | awk '
+  grep -v '^#\|^$' "$FILE" | "$TAC" | awk '
     {print $1 "\t" $2 "\t" $3}
     END {if ($3~/[0-9Nna]/) print "NaN\tNaN\tNaN"
          else print "NaN\tNaN"}' | \
@@ -135,15 +149,15 @@ if [ $GIS_FLAG_F -eq 1 ] ; then
     $1~/nan.*/ { printf("L %d\n", R) ; R=0 ; next }
     $1~/\d*\d*/ { printf(" %.15g %.15g %.15g\n", $1, $2, $3) ; ++R }
     END {;}' | \
-   grep -v "^L 0$" | tac > "$TMPFILE"
+   grep -v "^L 0$" | "$TAC" > "$TMPFILE"
 
 else
   ## mapgen format.
-  tac "$FILE" | awk '
+  "$TAC" "$FILE" | awk '
     BEGIN { FS="\t" ; R=0 }
     $1~/#.*/ { printf("L %d\n", R) ; R=0 }
     $1~/\d*\.\d*/ { printf(" %.8f %.8f\n", $1, $2) ; ++R }
-    END {;}' | tac > "$TMPFILE"
+    END {;}' | "$TAC" > "$TMPFILE"
 fi
 
 #### create digit header
