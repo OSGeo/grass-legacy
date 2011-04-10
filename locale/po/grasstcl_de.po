@@ -682,7 +682,7 @@ msgstr "Neues GIS-Daten Verzeichnis"
 
 #: ../lib/init/gis_set.tcl:292
 msgid "Project Location (projection/coordinate system)"
-msgstr "Projeziere Location (Projektion/Koordinatensys.)"
+msgstr "Projiziere Location (Projektion/Koordinatensys.)"
 
 #: ../lib/init/gis_set.tcl:325
 msgid "Accessible Mapsets (directories of GIS files)"
