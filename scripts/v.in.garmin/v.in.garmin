@@ -140,6 +140,19 @@ if [ ! -x "`which awk`" ] ; then
     exit 1
 fi
 
+#### check if we have tac
+# perhaps try `type -t` instead of `which`, as it is more POSIXy
+if [ -x "`which tac`" ] ; then
+   TAC=tac
+else
+   TAC=awk_tac
+fi
+
+awk_tac()
+{
+   awk '1 { last = NR; line[last] = $0; }
+          END { for (i = last; i > 0; i--) { print line[i]; } }'
+}
 
 #### setup temporary file
 TEMPFILE="`g.tempfile pid=$$`"
@@ -515,9 +528,9 @@ else # CREATE_LINES
 	#### prepare line components
 	if [ $RTE -eq 1 ] ; then
 	    # add vertex counts
-	    cat "${TEMPFILE}.gpst" | sed -e '1d' | tac | awk 'BEGIN { FS="\t" ; R=0 } \
+	    cat "${TEMPFILE}.gpst" | sed -e '1d' | "$TAC" | awk 'BEGIN { FS="\t" ; R=0 } \
 		$1=="W" { printf(" %.7f %.7f\n", $6, $5) ; ++R } ; \
-		$1=="R" { printf("L %d 1\n", R) ; R=0 } END {;}' | tac > "${TEMPFILE}.base"
+		$1=="R" { printf("L %d 1\n", R) ; R=0 } END {;}' | "$TAC" > "${TEMPFILE}.base"
 
 	    # create attr table: cat(int), id number(int 0-19), name varchar(16+), starting_wpt(varchar 10)
 	    cat "${TEMPFILE}.gpst" | grep '^R' | cut -f2,3 | grep -n '^' | \
@@ -529,9 +542,9 @@ else # CREATE_LINES
 
 	elif [ $TRK -eq 1 ] ; then
 	    # add vertex counts
-	    cat "${TEMPFILE}.gpst" | sed -e '1d' | tac | awk 'BEGIN { FS="\t" ; R=0 } \
+	    cat "${TEMPFILE}.gpst" | sed -e '1d' | "$TAC" | awk 'BEGIN { FS="\t" ; R=0 } \
 		$1=="T" { printf(" %.7f %.7f\n", $4, $3) ; ++R } ; \
-		$1=="" { printf("L %d 1\n", R) ; R=0 } END {;}' | tac > "${TEMPFILE}.base"
+		$1=="" { printf("L %d 1\n", R) ; R=0 } END {;}' | "$TAC" > "${TEMPFILE}.base"
 
 	    # create attr table: cat(int), start_time varchar(40), start_lat(double precision), start_lon(double precision), \
 	    #			    end_time varchar(40), end_lat(double precision), end_lon(double precision)
@@ -548,9 +561,9 @@ else # CREATE_LINES
 	# gardump
 	if [ $RTE -eq 1 ] ; then
 	    # add vertex counts
-	    grep -v '^\[\|^#' "${TEMPFILE}.gard" | tac | awk 'BEGIN { R=0 } \
+	    grep -v '^\[\|^#' "${TEMPFILE}.gard" | "$TAC" | awk 'BEGIN { R=0 } \
 		/^[-0-9]/ { printf(" %.7f %.7f\n", $2, $1) ; ++R } ; \
-		/^\*\*/ { printf("L %d 1\n", R) ; R=0 } END {;}' | tac > "${TEMPFILE}.base"
+		/^\*\*/ { printf("L %d 1\n", R) ; R=0 } END {;}' | "$TAC" > "${TEMPFILE}.base"
 
 	    # create attr table: cat(int), id number(int 0-19), name varchar(40), starting_wpt(varchar 15)
 	    # grep -n is to insert cat number, starting from 1. (route numbers start from 0)
@@ -568,7 +581,7 @@ else # CREATE_LINES
 	elif [ $TRK -eq 1 ] ; then
 	    # add vertex counts
 	    # some tracks don't have time/date, so we have to decide on the fly
-	    grep -v '^\[\|^#\|^Track:' "${TEMPFILE}.gard" | tac | awk 'BEGIN { R=0 } \
+	    grep -v '^\[\|^#\|^Track:' "${TEMPFILE}.gard" | "$TAC" | awk 'BEGIN { R=0 } \
 	    ! /start/ {
 	      if($0 ~ /..:..:../ ) { printf(" %.7f %.7f\n", $4, $3) }
 	      else { printf(" %.7f %.7f\n", $2, $1) }
@@ -580,7 +593,7 @@ else # CREATE_LINES
 	      else { printf(" %.7f %.7f\nL %d 1\n", $2, $1, R+1) }
 	      R=0
 	    }
-	    END {;}' | tac > "${TEMPFILE}.base"
+	    END {;}' | "$TAC" > "${TEMPFILE}.base"
 
 	    # create attr table: cat(int), \
 	    #  start_time varchar(40), start_lat(double precision), start_lon(double precision), \
@@ -699,13 +712,13 @@ else # CREATE_LINES
 
     if [ "$HAVE_ALT" = "TRUE" ] ; then
 	# cut out altitude data and add blank lines between track lines
-	grep -v '^\[\|^#\|^Track:' "${TEMPFILE}.gard" | tac | \
+	grep -v '^\[\|^#\|^Track:' "${TEMPFILE}.gard" | "$TAC" | \
 	  awk '{ if($0 ~ /..:..:../ ) {
 		   print $5 " " $6
 		 } else {
 		   print $3 " " $4
 		 }
-	       }' | sed -e 's/ start/\n/' -e 's/ $//' | tac > "${TEMPFILE}.alt"
+	       }' | sed -e 's/ start/\n/' -e 's/ $//' | "$TAC" > "${TEMPFILE}.alt"
 
 	paste -d' ' "${TEMPFILE}.P_base" "${TEMPFILE}.alt" > "${TEMPFILE}.P_baseZ"
     else
