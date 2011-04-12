@@ -48,6 +48,7 @@ int main(int argc, char *argv[])
     int num_to_export;
     char *mapset;
     int field;
+    int overwrite, found;
     struct GModule *module;
     struct Option *in_opt, *dsn_opt, *layer_opt, *type_opt, *frmt_opt,
 	*field_opt, *dsco, *lco;
@@ -506,7 +507,29 @@ int main(int argc, char *argv[])
     if (Ogr_ds == NULL)
 	G_fatal_error(_("Unable to open OGR data source '%s'"),
 		      dsn_opt->answer);
-
+    
+    /* check if OGR layer exists */
+    overwrite = G_check_overwrite(argc, argv);
+    found = FALSE;
+    for (i = 0; i < OGR_DS_GetLayerCount(Ogr_ds); i++) {
+	Ogr_layer = OGR_DS_GetLayer(Ogr_ds, i);
+	Ogr_field = OGR_L_GetLayerDefn(Ogr_layer);
+	if (strcmp(OGR_FD_GetName(Ogr_field), layer_opt->answer))
+	    continue;
+	
+	found = TRUE;
+	if (!overwrite) {
+	    G_fatal_error(_("Layer <%s> already exists in OGR data source '%s'"),
+			  layer_opt->answer, dsn_opt->answer);
+	}
+	else if (overwrite) {
+	    G_warning(_("OGR layer <%s> already exists and will be overwritten"),
+		      layer_opt->answer);
+	    OGR_DS_DeleteLayer(Ogr_ds, i);
+	    break;
+	}
+    }
+    
     /* parse layer creation options */
     i = 0;
     while (lco->answers[i]) {
@@ -988,7 +1011,6 @@ int main(int argc, char *argv[])
     }
 
     /* Summary */
-    G_message(_("%d features written"), fout);
     if (nocat > 0)
 	G_warning(_("%d features without category were written"), nocat);
     if (noatt > 0)
@@ -1004,6 +1026,9 @@ int main(int argc, char *argv[])
        if (((otype & GV_POINTS) || (otype & GV_LINES)) && fskip > 0)
        G_warning ("%d features of different type skip", fskip);
      */
+    
+    G_done_msg(_("%d features written to <%s> (%s)."), fout,
+	       layer_opt->answer, frmt_opt->answer);
 
     exit(EXIT_SUCCESS);
 }
