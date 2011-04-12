@@ -375,8 +375,7 @@ int main(int argc, char *argv[])
     }
     else {
 	if (otype & GV_POINT)
-	    num_to_export =
-		num_to_export + Vect_get_num_primitives(&In, GV_POINT);
+	    num_to_export += Vect_get_num_primitives(&In, GV_POINT);
     }
 
     if (Vect_get_num_primitives(&In, GV_LINE) < 1 && (otype & GV_LINE)) {
@@ -385,8 +384,7 @@ int main(int argc, char *argv[])
     }
     else {
 	if (otype & GV_LINE)
-	    num_to_export =
-		num_to_export + Vect_get_num_primitives(&In, GV_LINE);
+	    num_to_export += Vect_get_num_primitives(&In, GV_LINE);
     }
 
     if (Vect_get_num_primitives(&In, GV_BOUNDARY) < 1 &&
@@ -396,8 +394,7 @@ int main(int argc, char *argv[])
     }
     else {
 	if (otype & GV_BOUNDARY)
-	    num_to_export =
-		num_to_export + Vect_get_num_primitives(&In, GV_BOUNDARY);
+	    num_to_export += Vect_get_num_primitives(&In, GV_BOUNDARY);
     }
 
     if (Vect_get_num_areas(&In) < 1 && (otype & GV_AREA)) {
@@ -406,7 +403,7 @@ int main(int argc, char *argv[])
     }
     else {
 	if (otype & GV_AREA)
-	    num_to_export = num_to_export + Vect_get_num_areas(&In);
+	    num_to_export += Vect_get_num_areas(&In);
     }
 
     if (Vect_get_num_primitives(&In, GV_CENTROID) < 1 &&
@@ -416,8 +413,7 @@ int main(int argc, char *argv[])
     }
     else {
 	if (otype & GV_CENTROID)
-	    num_to_export =
-		num_to_export + Vect_get_num_primitives(&In, GV_CENTROID);
+	    num_to_export += Vect_get_num_primitives(&In, GV_CENTROID);
     }
 
     if (Vect_get_num_primitives(&In, GV_FACE) < 1 && (otype & GV_FACE)) {
@@ -426,8 +422,7 @@ int main(int argc, char *argv[])
     }
     else {
 	if (otype & GV_FACE)
-	    num_to_export =
-		num_to_export + Vect_get_num_primitives(&In, GV_FACE);
+	    num_to_export += Vect_get_num_primitives(&In, GV_FACE);
     }
 
     if (Vect_get_num_primitives(&In, GV_KERNEL) < 1 && (otype & GV_KERNEL)) {
@@ -436,8 +431,7 @@ int main(int argc, char *argv[])
     }
     else {
 	if (otype & GV_KERNEL)
-	    num_to_export =
-		num_to_export + Vect_get_num_primitives(&In, GV_KERNEL);
+	    num_to_export += Vect_get_num_primitives(&In, GV_KERNEL);
     }
 
     if (Vect_get_num_volumes(&In) < 1 && (otype & GV_VOLUME)) {
@@ -446,7 +440,7 @@ int main(int argc, char *argv[])
     }
     else {
 	if (otype & GV_VOLUME)
-	    num_to_export = num_to_export + Vect_get_num_volumes(&In);
+	    num_to_export += Vect_get_num_volumes(&In);
     }
 
     G_debug(1, "Requested to export %d geometries", num_to_export);
@@ -582,7 +576,7 @@ int main(int argc, char *argv[])
     CSLDestroy(papszLCO);
     if (Ogr_layer == NULL)
 	G_fatal_error(_("Unable to create OGR layer"));
-
+    
     db_init_string(&dbstring);
 
     /* Vector attributes -> OGR fields */
@@ -680,7 +674,6 @@ int main(int argc, char *argv[])
 
     fout = fskip = nocat = noatt = nocatskip = 0;
 
-
     /* Fetch all attribute records */
     if (doatt) {
     	sprintf(buf, "SELECT * FROM %s", Fi->table);
@@ -692,8 +685,10 @@ int main(int argc, char *argv[])
     	      cat);
     	}
     }
-
-
+    
+    if (OGR_L_TestCapability(Ogr_layer, OLCTransactions))
+	OGR_L_StartTransaction(Ogr_layer);
+    
     /* Lines (run always to count features of different type) */
     if ((otype & GV_POINTS) || (otype & GV_LINES)) {
 	G_message(_("Exporting %i geometries..."), Vect_get_num_lines(&In));
@@ -978,6 +973,9 @@ int main(int argc, char *argv[])
 	G_message(_("Exporting %i volumes..."), Vect_get_num_volumes(&In));
 	G_warning(_("Export of volumes not implemented yet. Skipping."));
     }
+
+    if (OGR_L_TestCapability(Ogr_layer, OLCTransactions))
+	OGR_L_CommitTransaction(Ogr_layer);
 
     OGR_DS_Destroy(Ogr_ds);
 
