@@ -8,13 +8,13 @@ msgstr ""
 "Project-Id-Version: grasswxpy_pl\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2011-01-06 22:57+0100\n"
-"PO-Revision-Date: 2011-02-05 01:15+0100\n"
+"PO-Revision-Date: 2011-04-12 09:15+0100\n"
 "Last-Translator: Milena Nowotarska <do.milenki * gmail.com>\n"
 "Language-Team: Polish <grass-translations@lists.osgeo.org>\n"
-"Language: pl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Language: pl\n"
 "Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 "X-Generator: Lokalize 1.0\n"
 "X-Poedit-Language: Polish\n"
@@ -1930,7 +1930,7 @@ msgstr "Zarządzaj kolorami"
 
 #: ../gui/wxpython/menustrings.py:256 ../gui/wxpython/menustrings.py:530
 msgid "Color tables"
-msgstr "Tabele kolorów   (v.colors)"
+msgstr "Tabele kolorów"
 
 #: ../gui/wxpython/menustrings.py:257
 msgid "Creates/modifies the color table associated with a raster map layer."
@@ -1938,7 +1938,7 @@ msgstr "Tworzy/modyfikuje paletę kolorów związaną z warstwą mapy rastrowej.
 
 #: ../gui/wxpython/menustrings.py:258
 msgid "Color tables (stddev)"
-msgstr "Tabele kolorów (stddev)"
+msgstr "Tabele kolorów   (r.colors.stddev)"
 
 #: ../gui/wxpython/menustrings.py:259
 msgid "Set color rules based on stddev from a map's mean value."
@@ -1955,7 +1955,7 @@ msgstr "Edytuj interaktywnie wartości kategorii"
 
 #: ../gui/wxpython/menustrings.py:262
 msgid "Export color table"
-msgstr "Eksportuj tabelę kolorów"
+msgstr "Eksportuj tabelę kolorów   (r.colors.out)"
 
 #: ../gui/wxpython/menustrings.py:263
 msgid "Exports the color table associated with a raster map layer."
@@ -1971,7 +1971,7 @@ msgstr ""
 
 #: ../gui/wxpython/menustrings.py:266
 msgid "Create RGB"
-msgstr "Utwórz RGB"
+msgstr "Utwórz RGB   (r.composite)"
 
 #: ../gui/wxpython/menustrings.py:267
 msgid "Combines red, green and blue raster maps into a single composite raster map."
@@ -1979,7 +1979,7 @@ msgstr ""
 
 #: ../gui/wxpython/menustrings.py:268 ../gui/wxpython/menustrings.py:648
 msgid "RGB to HIS"
-msgstr "RGB na HIS   (i.rgb.his)"
+msgstr "RGB na HIS"
 
 #: ../gui/wxpython/menustrings.py:269
 msgid "Generates red, green and blue raster map layers combining hue, intensity and saturation (HIS) values from user-specified input raster map layers."
@@ -1991,7 +1991,7 @@ msgstr "Odpytaj mapy rastrowe"
 
 #: ../gui/wxpython/menustrings.py:271
 msgid "Query values by coordinates"
-msgstr "Odpytaj wartości według współrzędnych"
+msgstr "Odpytaj wartości według współrzędnych   (r.what)"
 
 #: ../gui/wxpython/menustrings.py:272
 msgid "Queries raster map layers on their category values and category labels."
@@ -1999,7 +1999,7 @@ msgstr ""
 
 #: ../gui/wxpython/menustrings.py:273
 msgid "Query colors by value"
-msgstr "Odpytaj kolory według wartości"
+msgstr "Odpytaj kolory według wartości   (r.what.color)"
 
 #: ../gui/wxpython/menustrings.py:274
 msgid "Queries colors for a raster map layer."
@@ -2026,7 +2026,7 @@ msgstr "Lokalizuje najbliższe punkty pomiędzy obiektami na dwóch mapach rastr
 #: ../gui/wxpython/gui_modules/nviz_tools.py:548
 #: ../gui/wxpython/gui_modules/nviz_tools.py:1026
 msgid "Mask"
-msgstr "Maska   (r.mask)"
+msgstr "Maska"
 
 #: ../gui/wxpython/menustrings.py:280
 msgid "Create a MASK for limiting raster operation"
@@ -2209,7 +2209,7 @@ msgstr "Transformacje obiektów"
 
 #: ../gui/wxpython/menustrings.py:324
 msgid "Clump"
-msgstr "Obszary ciągłe"
+msgstr "Obszary ciągłe   (r.clump)"
 
 #: ../gui/wxpython/menustrings.py:325
 msgid "Recategorizes data in a raster map by grouping cells that form physically discrete areas into unique categories."
@@ -2217,7 +2217,7 @@ msgstr "Zmienia kategorie danych w mapie rastrowej poprzez grupowanie komórek r
 
 #: ../gui/wxpython/menustrings.py:326
 msgid "Grow"
-msgstr "Spuchnij"
+msgstr "Powiększ   (r.grow)"
 
 #: ../gui/wxpython/menustrings.py:327
 msgid "Generates a raster map layer with contiguous areas grown by one cell."
@@ -2225,7 +2225,7 @@ msgstr "Generuje warstwę mapy rastrowej z ciągłymi obszarami powiększonymi o
 
 #: ../gui/wxpython/menustrings.py:328
 msgid "Thin"
-msgstr "Zrób cieńsze"
+msgstr "Zrób cieńsze   (r.thin)"
 
 #: ../gui/wxpython/menustrings.py:329
 #, fuzzy
@@ -3349,7 +3349,7 @@ msgstr ""
 
 #: ../gui/wxpython/menustrings.py:616
 msgid "Sample raster neighborhood around points"
-msgstr "Próbkój sąsiedztwo rastra wokół punktów   (v.sample)"
+msgstr "Próbkuj sąsiedztwo rastra wokół punktów   (v.sample)"
 
 #: ../gui/wxpython/menustrings.py:617
 msgid "Samples a raster map at vector point locations."
