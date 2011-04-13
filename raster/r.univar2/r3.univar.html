@@ -3,12 +3,16 @@
 <em>r3.univar</em> calculates the univariate statistics for raster3d maps.
 This includes the number of cells counted, minimum and maximum cell values,
 range, arithmetic mean, population variance, standard deviation, and 
-coefficient of variation.
+coefficient of variation. Statistics are calculated separately for every
+category/zone found in the <b>zones</b> input map if given.
 If the <b>-e</b> extended statistics flag is given the 1st quartile, median,
 3rd quartile, and given <b>percentile</b> are calculated.
 If the <b>-g</b> flag is given the results are presented in a format suitable
 for use in a shell script.
-
+If the <b>-t</b> flag is given the results are presented in tabular format
+with the given field separator. The table can immediately be converted to a
+vector attribute table which can then be linked to a vector, e.g. the vector
+that was rasterized to create the <b>zones</b> input raster.
 
 <h2>NOTES</h2>
 
@@ -20,6 +24,7 @@ This module can use large amounts of system memory when the <b>-e</b>
 extended statistics flag is used with a very large region setting. If the
 region is too large the module should exit gracefully with a memory allocation
 error. Basic statistics can be calculated using any size input region.
+
 <!-- no rast3D support?
 <p>
 The <em>r.quantile</em> module will be significantly more efficient for
@@ -30,6 +35,7 @@ calculating percentiles with large maps.
 <h2>TODO</h2>
 
 <i>mode, skewness, kurtosis</i>
+
 
 
 <h2>SEE ALSO</h2>
@@ -56,7 +62,8 @@ calculating percentiles with large maps.
 Soeren Gebbert<br>
 Code is based on r.univar from<br>
 Hamish Bowman, Otago University, New Zealand<br>
-and Martin Landa
+and Martin Landa<br>
+Zonal loop by Markus Metz
 
 
 <p>
