@@ -9,7 +9,6 @@ Usage:
 @code
 from grass.script import vector as grass
 
-grass.parser()
 grass.vector_db(map)
 ...
 @endcode
