@@ -865,10 +865,10 @@ class GPromptSTC(GPrompt, wx.stc.StyledTextCtrl):
             ignoredDelimiter = ''
         
         for char in set(' .,-=') - set(ignoredDelimiter):
-             if not withDelimiter:
-                 delimiter = ''
-             else:
-                 delimiter = char
+            if not withDelimiter:
+                delimiter = ''
+            else:
+                delimiter = char
             parts.append(delimiter + textLeft.rpartition(char)[2])
         return min(parts, key=lambda x: len(x))
          
