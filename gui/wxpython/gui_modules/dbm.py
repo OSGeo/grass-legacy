@@ -826,7 +826,7 @@ class AttributeManager(wx.Frame):
             if onlyLayer > 0 and layer != onlyLayer:
                 continue
             
-            if not self.layerPage.has_key(layer):
+            if not layer in self.layerPage:
                 continue
             
             panel = wx.Panel(parent=self.manageTablePage, id=wx.ID_ANY)
@@ -1887,8 +1887,7 @@ class AttributeManager(wx.Frame):
             sqlFile = tempfile.NamedTemporaryFile(mode="wt")
             for sql in self.listOfSQLStatements:
                 enc = UserSettings.Get(group='atm', key='encoding', subkey='value')
-                if not enc and \
-                        os.environ.has_key('GRASS_DB_ENCODING'):
+                if not enc and 'GRASS_DB_ENCODING' in os.environ:
                     enc = os.environ['GRASS_DB_ENCODING']
                 if enc:
                     sqlFile.file.write(sql.encode(enc) + ';')
@@ -2568,10 +2567,10 @@ class LayerBook(wx.Notebook):
     def __createDeletePage(self):
         """!Delete layer"""
         self.deletePanel = wx.Panel(parent=self, id=wx.ID_ANY)
-        self.AddPage(page=self.deletePanel, text=_("Delete layer"))
+        self.AddPage(page=self.deletePanel, text=_("Remove layer"))
 
         label = wx.StaticText(parent=self.deletePanel, id=wx.ID_ANY,
-                              label='%s:' % _("Layer to detele"))
+                              label='%s:' % _("Layer to remove"))
 
         self.deleteLayer = wx.ComboBox(parent=self.deletePanel, id=wx.ID_ANY, size=(100, -1),
                                        style=wx.CB_SIMPLE | wx.CB_READONLY,
@@ -2592,7 +2591,7 @@ class LayerBook(wx.Notebook):
             self.deleteLayer.Enable(False)
             self.deleteTable.Enable(False)
             
-        btnDelete   = wx.Button(self.deletePanel, wx.ID_DELETE, _("&Delete layer"),
+        btnDelete   = wx.Button(self.deletePanel, wx.ID_DELETE, _("&Remove layer"),
                                 size=(125,-1))
         btnDelete.Bind(wx.EVT_BUTTON, self.OnDeleteLayer)
 

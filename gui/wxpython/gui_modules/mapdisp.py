@@ -14,7 +14,7 @@ Classes:
 Usage:
 python mapdisp.py monitor-identifier /path/to/command/file
 
-(C) 2006-2010 by the GRASS Development Team
+(C) 2006-2011 by the GRASS Development Team
 This program is free software under the GNU General Public
 License (>=v2). Read the file COPYING that comes with GRASS
 for details.
@@ -71,15 +71,10 @@ from preferences import globalSettings as UserSettings
 from mapdisp_command import Command
 from mapdisp_window import BufferedWindow
 
-import images
-imagepath = images.__path__[0]
-sys.path.append(imagepath)
-
-###
-### global variables
-###
 # for standalone app
 cmdfilename = None
+
+haveCtypes = False
 
 class MapFrame(wx.Frame):
     """!Main frame for map display window. Drawing takes place in
@@ -108,7 +103,7 @@ class MapFrame(wx.Frame):
         self.layerbook  = notebook  # Layer Manager layer tree notebook
         self.parent     = parent
         
-        if not kwargs.has_key('name'):
+        if 'name' not in kwargs:
             kwargs['name'] = 'MapWindow'
         wx.Frame.__init__(self, parent, id, title, style = style, **kwargs)
         
@@ -245,13 +240,15 @@ class MapFrame(wx.Frame):
         # default is 2D display mode
         self.MapWindow = self.MapWindow2D
         self.MapWindow.SetCursor(self.cursors["default"])
+        # used by vector digitizer
+        self.MapWindowVDigit = None
         # used by Nviz (3D display mode)
         self.MapWindow3D = None 
 
         #
         # initialize region values
         #
-        self.__InitDisplay() 
+        self._initDisplay() 
 
         #
         # Bind various events
@@ -275,11 +272,6 @@ class MapFrame(wx.Frame):
         self.printopt = disp_print.PrintOptions(self, self.MapWindow)
         
         #
-        # Initialization of digitization tool
-        #
-        self.digit = None
-
-        #
         # Init zoom history
         #
         self.MapWindow.ZoomHistory(self.Map.region['n'],
@@ -298,6 +290,136 @@ class MapFrame(wx.Frame):
 
         self.decorationDialog = None # decoration/overlays
 
+    def _addToolbarVDigit(self):
+        """!Add vector digitizer toolbar
+        """
+        from vdigit import haveVDigit
+        
+        if not haveVDigit:
+            from vdigit import errorMsg
+            msg = _("Unable to start wxGUI vector digitizer.\nDo you want to start "
+                    "TCL/TK digitizer (v.digit) instead?\n\n"
+                    "Details: %s" % errorMsg)
+            
+            self.toolbars['map'].combo.SetValue(_("2D view"))
+            dlg = wx.MessageDialog(parent = self,
+                                   message = msg,
+                                   caption=_("Vector digitizer failed"),
+                                   style = wx.YES_NO | wx.CENTRE)
+            if dlg.ShowModal() == wx.ID_YES:
+                mapName = self.tree.GetPyData(self.tree.layer_selected)[0]['maplayer'].GetName()
+                self._layerManager.goutput.RunCmd(['v.digit', 'map=%s' % mapName],
+                                                  switchPage = False)
+            dlg.Destroy()
+            
+            self.toolbars['map'].combo.SetValue(_("2D view"))
+            return
+        
+        if self._layerManager:
+            log = self._layerManager.goutput
+        else:
+            log = None
+        
+        if not self.MapWindowVDigit:
+            from mapdisp_vdigit import VDigitWindow
+            self.MapWindowVDigit = VDigitWindow(self, id = wx.ID_ANY,
+                                                Map = self.Map, tree = self.tree,
+                                                lmgr = self._layerManager)
+            self.MapWindowVDigit.Show()
+        
+        self.MapWindow = self.MapWindowVDigit
+        
+        self._mgr.DetachPane(self.MapWindow2D)
+        self.MapWindow2D.Hide()
+        
+        self.toolbars['vdigit'] = toolbars.VDigitToolbar(parent = self, mapcontent = self.Map,
+                                                         layerTree = self.tree,
+                                                         log = log)
+        self.MapWindowVDigit.SetToolbar(self.toolbars['vdigit'])
+        
+        self._mgr.AddPane(self.MapWindowVDigit, wx.aui.AuiPaneInfo().CentrePane().
+                          Dockable(False).BestSize((-1,-1)).
+                          CloseButton(False).DestroyOnClose(True).
+                          Layer(0))
+        self._mgr.AddPane(self.toolbars['vdigit'],
+                          wx.aui.AuiPaneInfo().
+                          Name("vdigittoolbar").Caption(_("Vector digitizer toolbar")).
+                          ToolbarPane().Top().Row(1).
+                          LeftDockable(False).RightDockable(False).
+                          BottomDockable(False).TopDockable(True).
+                          CloseButton(False).Layer(2).
+                          BestSize((self.toolbars['vdigit'].GetSize())))
+        # change mouse to draw digitized line
+        self.MapWindow.mouse['box'] = "point"
+        self.MapWindow.zoomtype     = 0
+        self.MapWindow.pen          = wx.Pen(colour = 'red',   width = 2, style = wx.SOLID)
+        self.MapWindow.polypen      = wx.Pen(colour = 'green', width = 2, style = wx.SOLID)
+
+    def _addToolbarNviz(self):
+        """!Add 3D view mode toolbar
+        """
+        import nviz
+        
+        # check for GLCanvas and OpenGL
+        if not nviz.haveNviz:
+            self.toolbars['map'].combo.SetValue (_("2D view"))
+            wx.MessageBox(parent = self,
+                          message = _("Unable to switch to 3D display mode.\nThe Nviz python extension "
+                                      "was not found or loaded properly.\n"
+                                      "Switching back to 2D display mode.\n\nDetails: %s" % nviz.errorMsg),
+                          caption = _("Error"),
+                          style = wx.OK | wx.ICON_ERROR | wx.CENTRE)
+            return
+        
+        # add Nviz toolbar and disable 2D display mode tools
+        self.toolbars['nviz'] = toolbars.NvizToolbar(self, self.Map)
+        self.toolbars['map'].Enable2D(False)
+        
+        # update status bar
+        self.statusbarWin['toggle'].Enable(False)
+        
+        # erase map window
+        self.MapWindow.EraseMap()
+        
+        self._layerManager.goutput.WriteCmdLog(_("Starting 3D view mode..."))
+        self.statusbar.SetStatusText(_("Please wait, loading data..."), 0)
+        
+        # create GL window & NVIZ toolbar
+        if not self.MapWindow3D:
+            self.MapWindow3D = nviz.GLWindow(self, id = wx.ID_ANY,
+                                             Map = self.Map, tree = self.tree, lmgr = self._layerManager)
+            self.MapWindow = self.MapWindow3D
+            self.MapWindow.SetCursor(self.cursors["default"])
+            
+                # add Nviz notebookpage
+            self._layerManager.AddNviz()
+            
+            self.MapWindow3D.OnPaint(None) # -> LoadData
+            self.MapWindow3D.Show()
+            self.MapWindow3D.UpdateView(None)
+        else:
+            self.MapWindow = self.MapWindow3D
+            # add Nviz notebookpage
+            self._layerManager.AddNviz()
+        
+        # switch from MapWindow to MapWindowGL
+        # add nviz toolbar
+        self._mgr.DetachPane(self.MapWindow2D)
+        self.MapWindow2D.Hide()
+        self._mgr.AddPane(self.MapWindow3D, wx.aui.AuiPaneInfo().CentrePane().
+                          Dockable(False).BestSize((-1,-1)).
+                          CloseButton(False).DestroyOnClose(True).
+                          Layer(0))
+        self._mgr.AddPane(self.toolbars['nviz'],
+                              wx.aui.AuiPaneInfo().
+                          Name("nviztoolbar").Caption(_("3D view toolbar")).
+                          ToolbarPane().Top().Row(1).
+                          LeftDockable(False).RightDockable(False).
+                          BottomDockable(False).TopDockable(True).
+                          CloseButton(False).Layer(2))
+        
+        self.SetStatusText("", 0)
+        
     def AddToolbar(self, name):
         """!Add defined toolbar to the window
         
@@ -311,7 +433,7 @@ class MapFrame(wx.Frame):
         # default toolbar
         if name == "map":
             self.toolbars['map'] = toolbars.MapToolbar(self, self.Map)
-
+            
             self._mgr.AddPane(self.toolbars['map'],
                               wx.aui.AuiPaneInfo().
                               Name("maptoolbar").Caption(_("Map toolbar")).
@@ -323,53 +445,11 @@ class MapFrame(wx.Frame):
 	
         # vector digitizer
         elif name == "vdigit":
-            from vdigit import haveVDigit
-            if not haveVDigit:
-                from vdigit import errorMsg
-                msg = _("Unable to start wxGUI vector digitizer.\nDo you want to start "
-                        "TCL/TK digitizer (v.digit) instead?\n\n"
-                        "Details: %s" % errorMsg)
-                
-                self.toolbars['map'].combo.SetValue (_("2D view"))
-                dlg = wx.MessageDialog(parent = self,
-                                       message = msg,
-                                       caption=_("Vector digitizer failed"),
-                                       style = wx.YES_NO | wx.CENTRE)
-                if dlg.ShowModal() == wx.ID_YES:
-                    mapName = self.tree.GetPyData(self.tree.layer_selected)[0]['maplayer'].GetName()
-                    self._layerManager.goutput.RunCmd(['v.digit', 'map=%s' % mapName],
-                                                      switchPage=False)
-                dlg.Destroy()
-                
-                self.toolbars['map'].combo.SetValue (_("2D view"))
-                return
-            
-            if self._layerManager:
-                log = self._layerManager.goutput
-            else:
-                log = None
-            self.toolbars['vdigit'] = toolbars.VDigitToolbar(parent = self, mapcontent = self.Map,
-                                                             layerTree = self.tree,
-                                                             log = log)
-            
-            self._mgr.AddPane(self.toolbars['vdigit'],
-                              wx.aui.AuiPaneInfo().
-                              Name("vdigittoolbar").Caption(_("Vector digitizer toolbar")).
-                              ToolbarPane().Top().Row(1).
-                              LeftDockable(False).RightDockable(False).
-                              BottomDockable(False).TopDockable(True).
-                              CloseButton(False).Layer(2).
-                              BestSize((self.toolbars['vdigit'].GetSize())))
-            
-            # change mouse to draw digitized line
-            self.MapWindow.mouse['box'] = "point"
-            self.MapWindow.zoomtype = 0
-            self.MapWindow.pen     = wx.Pen(colour = 'red',   width = 2, style = wx.SOLID)
-            self.MapWindow.polypen = wx.Pen(colour = 'green', width = 2, style = wx.SOLID)
+            self._addToolbarVDigit()
         # georectifier
         elif name == "georect":
             self.toolbars['georect'] = toolbars.GRToolbar(self, self.Map)
-
+            
             self._mgr.AddPane(self.toolbars['georect'],
                               wx.aui.AuiPaneInfo().
                               Name("georecttoolbar").Caption(_("Georectification toolbar")).
@@ -379,91 +459,36 @@ class MapFrame(wx.Frame):
                               CloseButton(False).Layer(2))
         # nviz
         elif name == "nviz":
-            import nviz
-            
-            # check for GLCanvas and OpenGL
-            if not nviz.haveNviz:
-                self.toolbars['map'].combo.SetValue (_("2D view"))
-                wx.MessageBox(parent = self,
-                              message = _("Unable to switch to 3D display mode.\nThe Nviz python extension "
-                                          "was not found or loaded properly.\n"
-                                          "Switching back to 2D display mode.\n\nDetails: %s" % nviz.errorMsg),
-                              caption = _("Error"),
-                              style = wx.OK | wx.ICON_ERROR | wx.CENTRE)
-                return
-            
-            # add Nviz toolbar and disable 2D display mode tools
-            self.toolbars['nviz'] = toolbars.NvizToolbar(self, self.Map)
-            self.toolbars['map'].Enable2D(False)
-            
-            # update status bar
-            self.statusbarWin['toggle'].Enable(False)
-
-            # erase map window
-            self.MapWindow.EraseMap()
-            
-            self._layerManager.goutput.WriteCmdLog(_("Starting 3D view mode..."))
-            self.statusbar.SetStatusText(_("Please wait, loading data..."), 0)
-            
-            # create GL window & NVIZ toolbar
-            if not self.MapWindow3D:
-                self.MapWindow3D = nviz.GLWindow(self, id = wx.ID_ANY,
-                                                 Map = self.Map, tree = self.tree, lmgr = self._layerManager)
-                self.MapWindow = self.MapWindow3D
-                self.MapWindow.SetCursor(self.cursors["default"])
-                
-                # add Nviz notebookpage
-                self._layerManager.AddNviz()
-                
-                self.MapWindow3D.OnPaint(None) # -> LoadData
-                self.MapWindow3D.Show()
-                self.MapWindow3D.UpdateView(None)
-            else:
-                self.MapWindow = self.MapWindow3D
-                # add Nviz notebookpage
-                self._layerManager.AddNviz()
-            
-            # switch from MapWindow to MapWindowGL
-            # add nviz toolbar
-            self._mgr.DetachPane(self.MapWindow2D)
-            self.MapWindow2D.Hide()
-            self._mgr.AddPane(self.MapWindow3D, wx.aui.AuiPaneInfo().CentrePane().
-                              Dockable(False).BestSize((-1,-1)).
-                              CloseButton(False).DestroyOnClose(True).
-                              Layer(0))
-            self._mgr.AddPane(self.toolbars['nviz'],
-                              wx.aui.AuiPaneInfo().
-                              Name("nviztoolbar").Caption(_("3D view toolbar")).
-                              ToolbarPane().Top().Row(1).
-                              LeftDockable(False).RightDockable(False).
-                              BottomDockable(False).TopDockable(True).
-                              CloseButton(False).Layer(2))
-            
-            self.SetStatusText("", 0)
-            
+            self._addToolbarNviz()
+        
         self._mgr.Update()
-
+        
     def RemoveToolbar (self, name):
-        """!Removes toolbar from the window
+        """!Removes defined toolbar from the window
 
         @todo Only hide, activate by calling AddToolbar()
         """
         # cannot hide main toolbar
         if name == "map":
             return
-        elif name == "vdigit":
-            # TODO: not destroy only hide
-            self._mgr.DetachPane(self.toolbars['vdigit'])
-            self.toolbars['vdigit'].Destroy()
-        else:
-            self._mgr.DetachPane (self.toolbars[name])
-            self.toolbars[name].Destroy()
-
+        
+        self._mgr.DetachPane(self.toolbars[name])
+        self.toolbars[name].Destroy()
         self.toolbars[name] = None
-
-        if name == 'nviz':
+        
+        if name == 'vdigit':
+            self._mgr.DetachPane(self.MapWindowVDigit)
+            self.MapWindowVDigit.Hide()
+            self.MapWindow2D.Show()
+            self._mgr.AddPane(self.MapWindow2D, wx.aui.AuiPaneInfo().CentrePane().
+                              Dockable(False).BestSize((-1,-1)).
+                              CloseButton(False).DestroyOnClose(True).
+                              Layer(0))
+            self.MapWindow = self.MapWindow2D
+        
+        elif name == 'nviz':
             # unload data
-            #            self.MapWindow3D.Reset()
+            # self.MapWindow3D.Reset()
             # switch from MapWindowGL to MapWindow
             self._mgr.DetachPane(self.MapWindow3D)
             self.MapWindow3D.Hide()
@@ -477,27 +502,29 @@ class MapFrame(wx.Frame):
             self._layerManager.RemoveNviz()
             
             self.MapWindow.UpdateMap()
-            
-        self.toolbars['map'].combo.SetValue (_("2D view"))
+        
+        self.toolbars['map'].combo.SetValue(_("2D view"))
         self.toolbars['map'].Enable2D(True)
         self.statusbarWin['toggle'].Enable(True)
-
+        
         self._mgr.Update()
 
-    def __InitDisplay(self):
+    def _initDisplay(self):
+        """!Initialize map display, set dimensions and map region
         """
-        Initialize map display, set dimensions and map region
-        """
+        if not grass.find_program('g.region', ['--help']):
+            sys.exit(_("GRASS module '%s' not found. Unable to start map "
+                       "display window.") % 'g.region')
+        
         self.width, self.height = self.GetClientSize()
-
-        Debug.msg(2, "MapFrame.__InitDisplay():")
+        
+        Debug.msg(2, "MapFrame._initDisplay():")
         self.Map.ChangeMapSize(self.GetClientSize())
         self.Map.region = self.Map.GetRegion() # g.region -upgc
         # self.Map.SetRegion() # adjust region to match display window
 
     def OnUpdateProgress(self, event):
-        """
-        Update progress bar info
+        """!Update progress bar info
         """
         self.statusbarWin['progress'].SetValue(event.value)
         
@@ -542,8 +569,8 @@ class MapFrame(wx.Frame):
             self.MapWindow.ClearLines()
         
         # deselect features in vdigit
-        if self.toolbars['vdigit'] and self.digit:
-            self.digit.driver.SetSelected([])
+        if self.toolbars['vdigit']:
+            self.MapWindow.display.SetSelected([])
             self.MapWindow.UpdateMap(render = True, renderVector = True)
         else:
             self.MapWindow.UpdateMap(render = True)
@@ -1169,8 +1196,7 @@ class MapFrame(wx.Frame):
             maplayer = self.toolbars['vdigit'].GetLayer()
             if maplayer:
                 self.toolbars['vdigit'].OnExit()
-                self.imgVectorMap = None
-
+        
         if self.toolbars['nviz']:
             self.toolbars['nviz'].OnExit()
         
@@ -1349,9 +1375,9 @@ class MapFrame(wx.Frame):
         if hasattr(self, "tmpreg"):
             if self.tmpreg:
                 os.environ["GRASS_REGION"] = self.tmpreg
-            elif os.environ.has_key('GRASS_REGION'):
+            elif 'GRASS_REGION' in os.environ:
                 del os.environ["GRASS_REGION"]
-        elif os.environ.has_key('GRASS_REGION'):
+        elif 'GRASS_REGION' in os.environ:
             del os.environ["GRASS_REGION"]
         
         if hasattr(self, "tmpreg"):
@@ -1559,19 +1585,21 @@ class MapFrame(wx.Frame):
         """
         point = wx.GetMousePosition()
         toolsmenu = wx.Menu()
+        icons = Icons['displayWindow']
+        
         # Add items to the menu
-        measure = wx.MenuItem(toolsmenu, wx.ID_ANY, Icons["measure"].GetLabel())
-        measure.SetBitmap(Icons["measure"].GetBitmap(self.iconsize))
+        measure = wx.MenuItem(toolsmenu, wx.ID_ANY, icons["measure"].GetLabel())
+        measure.SetBitmap(icons["measure"].GetBitmap(self.iconsize))
         toolsmenu.AppendItem(measure)
         self.Bind(wx.EVT_MENU, self.OnMeasure, measure)
-
-        profile = wx.MenuItem(toolsmenu, wx.ID_ANY, Icons["profile"].GetLabel())
-        profile.SetBitmap(Icons["profile"].GetBitmap(self.iconsize))
+        
+        profile = wx.MenuItem(toolsmenu, wx.ID_ANY, icons["profile"].GetLabel())
+        profile.SetBitmap(icons["profile"].GetBitmap(self.iconsize))
         toolsmenu.AppendItem(profile)
         self.Bind(wx.EVT_MENU, self.Profile, profile)
 
-        histogram = wx.MenuItem(toolsmenu, wx.ID_ANY, Icons["histogram"].GetLabel())
-        histogram.SetBitmap(Icons["histogram"].GetBitmap(self.iconsize))
+        histogram = wx.MenuItem(toolsmenu, wx.ID_ANY, icons["histogram"].GetLabel())
+        histogram.SetBitmap(icons["histogram"].GetBitmap(self.iconsize))
         toolsmenu.AppendItem(histogram)
         self.Bind(wx.EVT_MENU, self.Histogram, histogram)
 
@@ -1585,20 +1613,20 @@ class MapFrame(wx.Frame):
         along transect drawn on map display
         """
         self.totaldist = 0.0 # total measured distance
-
-        # switch GIS Manager to output console to show measure results
+        
+        # switch Layer Manager to output console to show measure results
         self._layerManager.notebook.SetSelection(1)
-
+        
         # change mouse to draw line for measurement
         self.MapWindow.mouse['use'] = "measure"
         self.MapWindow.mouse['box'] = "line"
         self.MapWindow.zoomtype = 0
         self.MapWindow.pen     = wx.Pen(colour = 'red', width = 2, style = wx.SHORT_DASH)
         self.MapWindow.polypen = wx.Pen(colour = 'green', width = 2, style = wx.SHORT_DASH)
-
+        
         # change the cursor
         self.MapWindow.SetCursor(self.cursors["pencil"])
-
+        
         # initiating output
         style = self._layerManager.goutput.cmd_output.StyleWarning
         self._layerManager.goutput.WriteLog(_('Click and drag with left mouse button '
@@ -1607,17 +1635,22 @@ class MapFrame(wx.Frame):
                                                 (os.linesep), style)
         if self.Map.projinfo['proj'] != 'xy':
             units = self.Map.projinfo['units']
-            style = self._layerManager.goutput.cmd_output.StyleCommand
-            self._layerManager.goutput.WriteLog(_('Measuring distance') + ' ('
-                                                + units + '):',
-                                                style)
+            self._layerManager.goutput.WriteCmdLog(_('Measuring distance') + ' ('
+                                                   + units + '):')
         else:
-            self._layerManager.goutput.WriteLog(_('Measuring distance:'),
-                                                style)
+            self._layerManager.goutput.WriteCmdLog(_('Measuring distance:'))
+        
         if self.Map.projinfo['proj'] == 'll':
-            self._layerManager.goutput.WriteWarning(_('Geodesic distance is not yet '
-                                                      'supported by this tool.\n'
-                                                      'Check future versions of GRASS.'))
+            try:
+                import grass.lib.gis as gislib
+                global haveCtypes
+                haveCtypes = True
+
+                gislib.G_begin_distance_calculations()
+            except ImportError, e:
+                self._layerManager.goutput.WriteWarning(_('Geodesic distance is not yet '
+                                                          'supported by this tool.\n'
+                                                          'Reason: %s' % e))
         
     def MeasureDist(self, beginpt, endpt):
         """!Calculate map distance from screen distance
@@ -1641,7 +1674,7 @@ class MapFrame(wx.Frame):
             angle = int(math.degrees(math.atan2(north,east)) + 0.5)
             angle = 180 - angle
             if angle < 0:
-                angle = 360+angle
+                angle = 360 + angle
             
             mstring = '%s = %s %s\n%s = %s %s\n%s = %d %s\n%s' \
                 % (_('segment'), strdist, dunits,
@@ -1702,12 +1735,15 @@ class MapFrame(wx.Frame):
                 divisor = 5280.0
             else:
                 outunits = 'ft'
-        elif 'degree' in mapunits:
+        elif 'degree' in mapunits and \
+                not haveCtypes:
             if dist < 1:
                 outunits = 'min'
                 divisor = (1/60.0)
             else:
                 outunits = 'deg'
+        else:
+            outunits = 'meters'
         
         # format numbers in a nice way
         if (dist/divisor) >= 2500.0:
@@ -1739,27 +1775,29 @@ class MapFrame(wx.Frame):
         """
         point = wx.GetMousePosition()
         decmenu = wx.Menu()
+        icons = Icons['displayWindow']
+        
         # Add items to the menu
-        AddScale = wx.MenuItem(decmenu, wx.ID_ANY, Icons["addbarscale"].GetLabel())
-        AddScale.SetBitmap(Icons["addbarscale"].GetBitmap(self.iconsize))
+        AddScale = wx.MenuItem(decmenu, wx.ID_ANY, icons["addBarscale"].GetLabel())
+        AddScale.SetBitmap(icons["addBarscale"].GetBitmap(self.iconsize))
         decmenu.AppendItem(AddScale)
         self.Bind(wx.EVT_MENU, self.OnAddBarscale, AddScale)
-
-        AddLegend = wx.MenuItem(decmenu, wx.ID_ANY, Icons["addlegend"].GetLabel())
-        AddLegend.SetBitmap(Icons["addlegend"].GetBitmap(self.iconsize))
+        
+        AddLegend = wx.MenuItem(decmenu, wx.ID_ANY, icons["addLegend"].GetLabel())
+        AddLegend.SetBitmap(icons["addLegend"].GetBitmap(self.iconsize))
         decmenu.AppendItem(AddLegend)
         self.Bind(wx.EVT_MENU, self.OnAddLegend, AddLegend)
-
-        AddText = wx.MenuItem(decmenu, wx.ID_ANY, Icons["addtext"].GetLabel())
-        AddText.SetBitmap(Icons["addtext"].GetBitmap(self.iconsize))
+        
+        AddText = wx.MenuItem(decmenu, wx.ID_ANY, icons["addText"].GetLabel())
+        AddText.SetBitmap(icons["addText"].GetBitmap(self.iconsize))
         decmenu.AppendItem(AddText)
         self.Bind(wx.EVT_MENU, self.OnAddText, AddText)
-
+        
         # Popup the menu.  If an item is selected then its handler
         # will be called before PopupMenu returns.
         self.PopupMenu(decmenu)
         decmenu.Destroy()
-
+        
     def OnAddBarscale(self, event):
         """!Handler for scale/arrow map decoration menu selection.
         """
@@ -1923,7 +1961,7 @@ class MapFrame(wx.Frame):
         zoommenu = wx.Menu()
         # Add items to the menu
 
-        zoomwind = wx.MenuItem(zoommenu, wx.ID_ANY, _('Zoom to computational region'))
+        zoomwind = wx.MenuItem(zoommenu, wx.ID_ANY, _('Zoom to computational region (set with g.region)'))
         zoommenu.AppendItem(zoomwind)
         self.Bind(wx.EVT_MENU, self.OnZoomToWind, zoomwind)
 

@@ -41,7 +41,6 @@ This program is free software under the GNU General Public License
 
 import os
 import sys
-import shlex
 import time
 import traceback
 import getpass
@@ -379,10 +378,9 @@ class Model(object):
         error string"""
         errList = list()
         for action in self.GetItems(objType = ModelAction):
-            task = menuform.GUI().ParseCommand(cmd = action.GetLog(string = False),
-                                               show = None)
+            task = menuform.GUI(show = None).ParseCommand(cmd = action.GetLog(string = False))
             errList += task.getCmdError()
-
+        
         return errList
 
     def Run(self, log, onDone):
@@ -498,14 +496,14 @@ class Model(object):
             params = action.GetParams()
             for f in params['flags']:
                 if f.get('parameterized', False):
-                    if not result.has_key(name):
+                    if name not in result:
                         result[name] = { 'flags' : list(),
                                          'params': list(),
                                          'idx'   : idx }
                     result[name]['flags'].append(f)
             for p in params['params']:
                 if p.get('parameterized', False):
-                    if not result.has_key(name):
+                    if name not in result:
                         result[name] = { 'flags' : list(),
                                          'params': list(),
                                          'idx'   : idx }
@@ -981,7 +979,7 @@ class ModelFrame(wx.Frame):
     def _runAction(self, item, params):
         """!Run given action"""
         name = item.GetName()
-        if params.has_key(name):
+        if name in params:
             paramsOrig = item.GetParams(dcopy = True)
             item.MergeParams(params[name])
             
@@ -989,7 +987,7 @@ class ModelFrame(wx.Frame):
         self.goutput.RunCmd(command = item.GetLog(string = False),
                             onDone = self.OnDone)
             
-        if params.has_key(name):
+        if name in params:
             item.SetParams(paramsOrig)
         
     def OnDone(self, cmd, returncode):
@@ -1206,9 +1204,8 @@ class ModelFrame(wx.Frame):
         # show properties dialog
         win = action.GetPropDialog()
         if not win and action.GetLog(string = False):
-            module = menuform.GUI().ParseCommand(action.GetLog(string = False),
-                                                 completed = (self.GetOptData, action, action.GetParams()),
-                                                 parentframe = self, show = True)
+            module = menuform.GUI(parent = self, show = True).ParseCommand(action.GetLog(string = False),
+                                                                           completed = (self.GetOptData, action, action.GetParams()))
         elif win and not win.IsShown():
             win.Show()
         
@@ -1673,8 +1670,7 @@ class ModelAction(ModelObject, ogl.RectangleShape):
             height = UserSettings.Get(group='modeler', key='action', subkey=('size', 'height'))
         
         if cmd:
-            self.task = menuform.GUI().ParseCommand(cmd = cmd,
-                                                    show = None)
+            self.task = menuform.GUI(show = None).ParseCommand(cmd = cmd)
         else:
             if task:
                 self.task = task
@@ -1814,11 +1810,11 @@ class ModelAction(ModelObject, ogl.RectangleShape):
         
     def MergeParams(self, params):
         """!Merge dictionary of parameters"""
-        if params.has_key('flags'):
+        if 'flags' in params:
             for f in params['flags']:
                 self.task.set_flag(f['name'],
                                    f.get('value', False))
-        if params.has_key('params'):
+        if 'params' in params:
             for p in params['params']:
                 self.task.set_param(p['name'],
                                     p.get('value', ''))
@@ -1950,8 +1946,7 @@ class ModelData(ModelObject, ogl.EllipseShape):
                 else:
                     action = rel.GetFrom()
                 
-                task = menuform.GUI().ParseCommand(cmd = action.GetLog(string = False),
-                                                   show = None)
+                task = menuform.GUI(show = None).ParseCommand(cmd = action.GetLog(string = False))
                 task.set_param(rel.GetName(), self.value)
                 action.SetParams(params = task.get_options())
         
@@ -2139,9 +2134,8 @@ class ModelEvtHandler(ogl.ShapeEvtHandler):
         self.frame.ModelChanged()
         shape = self.GetShape()
         if isinstance(shape, ModelAction):
-            module = menuform.GUI().ParseCommand(shape.GetLog(string = False),
-                                                 completed = (self.frame.GetOptData, shape, shape.GetParams()),
-                                                 parentframe = self.frame, show = True)
+            module = menuform.GUI(parent = self.frame, show = True).ParseCommand(shape.GetLog(string = False),
+                                                                                 completed = (self.frame.GetOptData, shape, shape.GetParams()))
         
         elif isinstance(shape, ModelData):
             dlg = ModelDataDialog(parent = self.frame, shape = shape)
@@ -2401,9 +2395,9 @@ class ModelSearchDialog(wx.Dialog):
             list()
         
         try:
-            cmd = shlex.split(str(line))
+            cmd = utils.split(str(line))
         except UnicodeError:
-            cmd = shlex.split(utils.EncodeString((line)))
+            cmd = utils.split(utils.EncodeString((line)))
             
         return cmd
     
@@ -2726,8 +2720,7 @@ class ProcessModelFile:
             cmd.append('%s=%s' % (name,
                                   self._filterValue(self._getNodeText(p, 'value'))))
         
-        task, err = menuform.GUI().ParseCommand(cmd = cmd,
-                                                show = None, checkError = True)
+        task, err = menuform.GUI(show = None, checkError = True).ParseCommand(cmd = cmd)
         if err:
             GWarning(os.linesep.join(err))
         
@@ -2849,7 +2842,7 @@ class WriteModelFile:
         if self.properties['author']:
             self.fd.write('%s<author>%s</author>\n' % (' ' * self.indent, self.properties['author']))
         
-        if self.properties.has_key('overwrite') and \
+        if 'overwrite' in self.properties and \
                 self.properties['overwrite']:
             self.fd.write('%s<flag name="overwrite" />\n' % (' ' * self.indent))
         self.indent -= 4
@@ -2865,10 +2858,10 @@ class WriteModelFile:
             self.fd.write('%s<variable name="%s" type="%s">\n' % \
                               (' ' * self.indent, name, values['type']))
             self.indent += 4
-            if values.has_key('value'):
+            if 'value' in values:
                 self.fd.write('%s<value>%s</value>\n' % \
                                   (' ' * self.indent, values['value']))
-            if values.has_key('description'):
+            if 'description' in values:
                 self.fd.write('%s<description>%s</description>\n' % \
                                   (' ' * self.indent, values['description']))
             self.indent -= 4
@@ -3406,7 +3399,7 @@ class PropertiesDialog(wx.Dialog):
         self.name.SetValue(prop['name'])
         self.desc.SetValue(prop['description'])
         self.author.SetValue(prop['author'])
-        if prop.has_key('overwrite'):
+        if 'overwrite' in prop:
             self.overwrite.SetValue(prop['overwrite'])
 
 class ModelParamDialog(wx.Dialog):
@@ -4482,8 +4475,7 @@ if __name__ == "__main__":
         
     def _writePythonAction(self, item):
         """!Write model action to Python file"""
-        task = menuform.GUI().ParseCommand(cmd = item.GetLog(string = False),
-                                           show = None)
+        task = menuform.GUI(show = None).ParseCommand(cmd = item.GetLog(string = False))
         opts = task.get_options()
         flags = ''
         params = list()

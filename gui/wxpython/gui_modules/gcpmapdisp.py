@@ -63,13 +63,6 @@ from preferences import globalSettings as UserSettings
 from mapdisp_command import Command
 from mapdisp_window import BufferedWindow
 
-import images
-imagepath = images.__path__[0]
-sys.path.append(imagepath)
-
-###
-### global variables
-###
 # for standalone app
 cmdfilename = None
 
@@ -77,7 +70,7 @@ class MapFrame(wx.Frame):
     """!Main frame for map display window. Drawing takes place in
     child double buffered drawing window.
     """
-    def __init__(self, parent=None, id=wx.ID_ANY, title=_("Manage Ground Control Points"),
+    def __init__(self, parent=None, id=wx.ID_ANY, title=_("GRASS GIS Manage Ground Control Points"),
                  style=wx.DEFAULT_FRAME_STYLE, toolbars=["gcpdisp"],
                  tree=None, notebook=None, lmgr=None, page=None,
                  Map=None, auimgr=None, **kwargs):
@@ -100,7 +93,7 @@ class MapFrame(wx.Frame):
         self.layerbook  = notebook  # Layer Manager layer tree notebook
         self.parent     = parent
         
-        if not kwargs.has_key('name'):
+        if 'name' not in kwargs:
             kwargs['name'] = 'GCPMapWindow'
         wx.Frame.__init__(self, parent, id, title, style = style, **kwargs)
         

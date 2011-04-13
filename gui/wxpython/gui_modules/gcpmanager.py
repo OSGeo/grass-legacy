@@ -59,10 +59,7 @@ except:
     sys.path.append(CompatPath)
     from compat import subprocess
 
-gmpath = os.path.join(globalvar.ETCWXDIR, "icons")
-sys.path.append(gmpath)
-
-imgpath = os.path.join(globalvar.ETCWXDIR, "images")
+sys.path.append(os.path.join(globalvar.ETCWXDIR, "icons"))
 
 #
 # global variables
@@ -76,7 +73,7 @@ tgt_map = ''
 maptype = 'cell'
 
 def getSmallUpArrowImage():
-    stream = open(os.path.join(imgpath, 'small_up_arrow.png'), 'rb')
+    stream = open(os.path.join(globalvar.ETCIMGDIR, 'small_up_arrow.png'), 'rb')
     try:
         img = wx.ImageFromStream(stream)
     finally:
@@ -84,7 +81,7 @@ def getSmallUpArrowImage():
     return img
 
 def getSmallDnArrowImage():
-    stream = open(os.path.join(imgpath, 'small_down_arrow.png'), 'rb')
+    stream = open(os.path.join(globalvar.ETCIMGDIR, 'small_down_arrow.png'), 'rb')
     try:
         img = wx.ImageFromStream(stream)
     finally:
@@ -502,10 +499,9 @@ class GroupPage(TitledPage):
         
     def OnMkGroup(self, event):
         """!Create new group in source location/mapset"""
-        menuform.GUI().ParseCommand(['i.group'],
-                                    completed=(self.GetOptData, None, ''),
-                                    parentframe=self.parent.parent, modal=True)
-
+        menuform.GUI(parent = self.parent.parent, modal = True).ParseCommand(['i.group'],
+                                                                             completed = (self.GetOptData, None, ''))
+        
     def OnVGroup(self, event):
         """!Add vector maps to group"""
         dlg = VectGroup(parent = self,
@@ -802,6 +798,8 @@ class GCP(MapFrame, wx.Frame, ColumnSorterMixin):
 
         # polynomial order transformation for georectification
         self.gr_order = 1 
+        # interpolation method for georectification
+        self.gr_method = 'nearest'
         # region clipping for georectified map
         self.clip_to_region = False
         # number of GCPs selected to be used for georectification (checked)
@@ -1348,6 +1346,7 @@ class GCP(MapFrame, wx.Frame, ColumnSorterMixin):
                                   group = self.xygroup,
                                   extension = self.extension,
                                   order = self.gr_order,
+                                  method=self.gr_method,
                                   flags = flags)
 
             busy.Destroy()
@@ -1393,47 +1392,45 @@ class GCP(MapFrame, wx.Frame, ColumnSorterMixin):
                 msg = err = ''
 
                 ret, out, err = gcmd.RunCommand('v.transform',
-                           flags = '-o',
-                           input=vect,
-                           output=self.outname,
-                           pointsfile=self.file['points'],
-                           getErrorMsg=True, read=True) 
-                
-                    
+                                                flags = 'o',
+                                                input = vect,
+                                                output = self.outname,
+                                                pointsfile = self.file['points'],
+                                                getErrorMsg = True, read = True) 
+                                    
                 if ret == 0:
                     self.VectGRList.append(self.outname)
-                    print err
                     # note: WriteLog doesn't handle GRASS_INFO_PERCENT well, so using a print here
-#                    self.parent.goutput.WriteLog(text = _(err), switchPage = True)
-                    self.parent.goutput.WriteLog(text = _(out), switchPage = True)
+                    # self.parent.goutput.WriteLog(text = _(err), switchPage = True)
+                    self.parent.goutput.WriteLog(text = out, switchPage = True)
                 else:
                     self.parent.goutput.WriteError(_('Georectification of vector map <%s> failed') %
-                                                           self.outname)
-                    self.parent.goutput.WriteError(_(err))
-
+                                                   self.outname)
+                    self.parent.goutput.WriteError(err)
+                    
                 # FIXME
                 # Copying database information not working. 
                 # Does not copy from xy location to current location
                 # TODO: replace $GISDBASE etc with real paths
-#                xyLayer = []
-#                for layer in grass.vector_db(map = vect).itervalues():
-#                    xyLayer.append((layer['driver'],
-#                                    layer['database'],
-#                                    layer['table']))
-
-                        
-#                dbConnect = grass.db_connection()
-#                print 'db connection =', dbConnect
-#                for layer in xyLayer:     
-#                    self.parent.goutput.RunCmd(['db.copy',
-#                                                '--q',
-#                                                '--o',
-#                                                'from_driver=%s' % layer[0],
-#                                                'from_database=%s' % layer[1],
-#                                                'from_table=%s' % layer[2],
-#                                                'to_driver=%s' % dbConnect['driver'],
-#                                                'to_database=%s' % dbConnect['database'],
-#                                                'to_table=%s' % layer[2] + '_' + self.extension])
+                #                xyLayer = []
+                #                for layer in grass.vector_db(map = vect).itervalues():
+                #                    xyLayer.append((layer['driver'],
+                #                                    layer['database'],
+                #                                    layer['table']))
+                    
+                    
+                    #                dbConnect = grass.db_connection()
+                    #                print 'db connection =', dbConnect
+                    #                for layer in xyLayer:     
+                    #                    self.parent.goutput.RunCmd(['db.copy',
+                    #                                                '--q',
+                    #                                                '--o',
+                    #                                                'from_driver=%s' % layer[0],
+                    #                                                'from_database=%s' % layer[1],
+                    #                                                'from_table=%s' % layer[2],
+                    #                                                'to_driver=%s' % dbConnect['driver'],
+                    #                                                'to_database=%s' % dbConnect['database'],
+                    #                                                'to_table=%s' % layer[2] + '_' + self.extension])
 
             # copy all georectified vectors from source location to current location
             for name in self.VectGRList:
@@ -2358,6 +2355,12 @@ class GrSettingsDialog(wx.Dialog):
         self.sdfactor = 0
 
         self.symbol = {}
+        
+        self.methods = ["nearest",
+                        "bilinear",
+                        "bilinear_f",
+                        "cubic", 
+                        "cubic_f"]
 
         # notebook
         notebook = wx.Notebook(parent=self, id=wx.ID_ANY, style=wx.BK_DEFAULT)
@@ -2592,13 +2595,25 @@ class GrSettingsDialog(wx.Dialog):
         sizer = wx.BoxSizer(wx.VERTICAL)
 
         # transformation order
-        self.rb_grmethod = wx.RadioBox(parent=panel, id=wx.ID_ANY,
-                                       label=" %s " % _("Select rectification method for rasters"),
+        self.rb_grorder = wx.RadioBox(parent=panel, id=wx.ID_ANY,
+                                       label=" %s " % _("Select rectification order"),
                                        choices=[_('1st order'), _('2nd order'), _('3rd order')],
                                        majorDimension=wx.RA_SPECIFY_COLS)
-        sizer.Add(item=self.rb_grmethod, proportion=0,
+        sizer.Add(item=self.rb_grorder, proportion=0,
                        flag=wx.EXPAND | wx.ALL, border=5)
-        self.rb_grmethod.SetSelection(self.parent.gr_order - 1)
+        self.rb_grorder.SetSelection(self.parent.gr_order - 1)
+
+        # interpolation method
+        gridSizer = wx.GridBagSizer(vgap=5, hgap=5)
+        gridSizer.AddGrowableCol(1)
+        gridSizer.Add(item=wx.StaticText(parent=panel, id=wx.ID_ANY, label=_('Select interpolation method:')),
+                       pos=(0,0), flag=wx.ALIGN_LEFT | wx.ALIGN_CENTER_VERTICAL | wx.ALL, border=5)
+        self.grmethod = wx.Choice(parent=panel, id=wx.ID_ANY,
+                                  choices = self.methods)
+        gridSizer.Add(item=self.grmethod, pos=(0,1),
+                       flag=wx.ALIGN_RIGHT, border=5)
+        self.grmethod.SetStringSelection(self.parent.gr_method)
+        sizer.Add(item=gridSizer, flag=wx.EXPAND | wx.ALL, border=5)
 
         # clip to region
         self.check = wx.CheckBox(parent=panel, id=wx.ID_ANY,
@@ -2617,7 +2632,8 @@ class GrSettingsDialog(wx.Dialog):
 
         # bindings
         self.ext_txt.Bind(wx.EVT_TEXT, self.OnExtension)
-        self.Bind(wx.EVT_RADIOBOX, self.parent.OnGROrder, self.rb_grmethod)
+        self.Bind(wx.EVT_RADIOBOX, self.parent.OnGROrder, self.rb_grorder)
+        self.Bind(wx.EVT_CHOICE, self.OnMethod, self.grmethod)
         self.Bind(wx.EVT_CHECKBOX, self.OnClipRegion, self.check)
 
         panel.SetSizer(sizer)
@@ -2667,6 +2683,9 @@ class GrSettingsDialog(wx.Dialog):
 
         if not tmp_map == tgt_map:
             self.new_tgt_map = tmp_map
+
+    def OnMethod(self, event):
+        self.parent.gr_method = self.methods[event.GetSelection()]
 
     def OnClipRegion(self, event):
         self.parent.clip_to_region = event.IsChecked()

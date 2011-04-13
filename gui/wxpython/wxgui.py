@@ -9,7 +9,7 @@ Classes:
  - GMFrame
  - GMApp
 
-(C) 2006-2010 by the GRASS Development Team
+(C) 2006-2011 by the GRASS Development Team
 This program is free software under the GNU General Public
 License (>=v2). Read the file COPYING that comes with GRASS
 for details.
@@ -57,6 +57,11 @@ except ImportError:
     import wx.lib.customtreectrl as CT
     import wx.lib.flatnotebook   as FN
 
+try:
+    import wx.lib.agw.advancedsplash as SC
+except ImportError:
+    SC = None
+
 sys.path.append(os.path.join(globalvar.ETCDIR, "python"))
 from grass.script import core as grass
 
@@ -84,6 +89,7 @@ import gui_modules.nviz_tools as nviz_tools
 from   gui_modules.debug import Debug
 from   gui_modules.ghelp import MenuTreeWindow
 from   gui_modules.ghelp import AboutWindow
+from   gui_modules.ghelp import InstallExtensionWindow
 from   gui_modules.toolbars import LayerManagerToolbar
 from   icons.icon import Icons
 
@@ -113,8 +119,8 @@ class GMFrame(wx.Frame):
 
         # initialize variables
         self.disp_idx      = 0            # index value for map displays and layer trees
-        self.curr_page     = ''           # currently selected page for layer tree notebook
-        self.curr_pagenum  = ''           # currently selected page number for layer tree notebook
+        self.curr_page     = None         # currently selected page for layer tree notebook
+        self.curr_pagenum  = None         # currently selected page number for layer tree notebook
         self.workspaceFile = workspace    # workspace file
         self.workspaceChanged = False     # track changes in workspace
         self.georectifying = None         # reference to GCP class or None
@@ -255,6 +261,22 @@ class GMFrame(wx.Frame):
     def OnGModeler(self, event):
         """!Launch Graphical Modeler"""
         win = gmodeler.ModelFrame(parent = self)
+        win.CentreOnScreen()
+        
+        win.Show()
+        
+    def OnPsMap(self, event):
+        """!Launch Hardcopy Map Output Utility
+        """
+        try:
+            import psmap
+        except:
+            gcmd.GError(parent = self.parent,
+                        message = _("Hardcopy Map Output Utility is not available. You can install it by "
+                                    "'g.extension -s svnurl=https://svn.osgeo.org/grass/grass-addons extension=psmap'"))
+            return
+        
+        win = psmap.PsMapFrame(parent = self)
         win.CentreOnScreen()
         
         win.Show()
@@ -417,18 +439,57 @@ class GMFrame(wx.Frame):
         
         return cmdlist
 
-    def RunMenuCmd(self, event, cmd = ''):
+    def RunMenuCmd(self, event = None, cmd = []):
         """!Run command selected from menu"""
         if event:
             cmd = self.GetMenuCmd(event)
         self.goutput.RunCmd(cmd, switchPage = False)
 
-    def OnMenuCmd(self, event, cmd = ''):
+    def OnMenuCmd(self, event = None, cmd = []):
         """!Parse command selected from menu"""
         if event:
             cmd = self.GetMenuCmd(event)
-        menuform.GUI().ParseCommand(cmd, parentframe = self)
-
+        menuform.GUI(parent = self).ParseCommand(cmd)
+        
+    def OnVDigit(self, event):
+        """!Start vector digitizer
+        """
+        if not self.curr_page:
+            self.MsgNoLayerSelected()
+            return
+        
+        tree = self.GetLayerTree()
+        layer = tree.layer_selected
+        # no map layer selected
+        if not layer:
+            self.MsgNoLayerSelected()
+            return
+        
+        # available only for vector map layers
+        try:
+            mapLayer = tree.GetPyData(layer)[0]['maplayer']
+        except:
+            mapLayer = None
+        
+        if not mapLayer or mapLayer.GetType() != 'vector':
+            gcmd.GMessage(parent = self,
+                          message = _("Selected map layer is not vector."))
+            return
+        
+        if mapLayer.GetMapset() != grass.gisenv()['MAPSET']:
+            gcmd.GMessage(parent = self,
+                          message = _("Editing is allowed only for vector maps from the "
+                                      "current mapset."))
+            return
+        
+        if not tree.GetPyData(layer)[0]:
+            return
+        dcmd = tree.GetPyData(layer)[0]['cmd']
+        if not dcmd:
+            return
+        
+        tree.OnStartEditing(None)
+        
     def OnRunScript(self, event):
         """!Run script"""
         # open dialog and choose script file
@@ -514,21 +575,18 @@ class GMFrame(wx.Frame):
         win.CentreOnScreen()
         win.Show(True)  
         
-    def OnWorkspace(self, event):
-        """!Workspace menu (new, load, import)"""
+    def _popupMenu(self, data):
+        """!Create popup menu
+        """
         point = wx.GetMousePosition()
         menu = wx.Menu()
-
-        for key, handler in (('workspaceNew',  self.OnWorkspaceNew),
-                             ('workspaceLoad', self.OnWorkspaceLoad),
-                             (None, None),
-                             ('rastImport',    self.OnImportGdalLayers),
-                             ('vectImport',    self.OnImportOgrLayers)):
+        
+        for key, handler in data:
             if key is None:
                 menu.AppendSeparator()
                 continue
-            item = wx.MenuItem(menu, wx.ID_ANY, Icons[key].GetLabel())
-            item.SetBitmap(Icons[key].GetBitmap(self.iconsize))
+            item = wx.MenuItem(menu, wx.ID_ANY, Icons['layerManager'][key].GetLabel())
+            item.SetBitmap(Icons['layerManager'][key].GetBitmap(self.iconsize))
             menu.AppendItem(item)
             self.Bind(wx.EVT_MENU, handler, item)
         
@@ -536,6 +594,23 @@ class GMFrame(wx.Frame):
         self.PopupMenu(menu)
         menu.Destroy()
 
+    def OnNewMenu(self, event):
+        """!New display/workspace menu
+        """
+        self._popupMenu((('newdisplay', self.OnNewDisplay),
+                         ('workspaceNew',  self.OnWorkspaceNew)))
+
+    def OnLoadMenu(self, event):
+        """!Load maps menu (new, load, import, link)
+        """
+        self._popupMenu((('workspaceLoad', self.OnWorkspaceLoad),
+                         (None, None),
+                         ('rastImport',    self.OnImportGdalLayers),
+                         ('rastLink',      self.OnLinkGdalLayers),
+                         (None, None),
+                         ('vectImport',    self.OnImportOgrLayers),
+                         ('vectLink',      self.OnLinkOgrLayers)))
+        
     def OnWorkspaceNew(self, event = None):
         """!Create new workspace file
 
@@ -869,18 +944,28 @@ class GMFrame(wx.Frame):
         """
         Debug.msg(4, "GMFrame.OnWorkspaceClose(): file=%s" % self.workspaceFile)
         
+        self.OnDisplayCloseAll()
+        self.workspaceFile = None
+        self.workspaceChanged = False
+        self.SetTitle(self.baseTitle)
+        self.disp_idx = 0
+        self.curr_page = None
+        
+    def OnDisplayClose(self, event = None):
+        """!Close current map display window
+        """
+        if self.curr_page and self.curr_page.maptree.mapdisplay:
+            self.curr_page.maptree.mapdisplay.OnCloseWindow(event)
+        
+    def OnDisplayCloseAll(self, event = None):
+        """!Close all open map display windows
+        """
         displays = list()
         for page in range(0, self.gm_cb.GetPageCount()):
             displays.append(self.gm_cb.GetPage(page).maptree.mapdisplay)
         
         for display in displays:
             display.OnCloseWindow(event)
-        
-        self.workspaceFile = None
-        self.workspaceChanged = False
-        self.SetTitle(self.baseTitle)
-        self.disp_idx = 0
-        self.curr_page = None
         
     def RulesCmd(self, event):
         """!Launches dialog for commands that need rules input and
@@ -954,6 +1039,12 @@ class GMFrame(wx.Frame):
         # reset display mode
         os.environ['GRASS_RENDER_IMMEDIATE'] = 'TRUE'
         
+    def OnInstallExtension(self, event):
+        """!Install extension from GRASS Addons SVN repository"""
+        win = InstallExtensionWindow(self, size = (650, 550))
+        win.CentreOnScreen()
+        win.Show()
+
     def OnPreferences(self, event):
         """!General GUI preferences/settings"""
         if not self.dialogs['preferences']:
@@ -1077,7 +1168,8 @@ class GMFrame(wx.Frame):
             self.MsgNoLayerSelected()
             return
         
-        layer = self.curr_page.maptree.layer_selected
+        tree = self.GetLayerTree()
+        layer = tree.layer_selected
         # no map layer selected
         if not layer:
             self.MsgNoLayerSelected()
@@ -1085,21 +1177,18 @@ class GMFrame(wx.Frame):
         
         # available only for vector map layers
         try:
-            maptype = self.curr_page.maptree.GetPyData(layer)[0]['maplayer'].type
+            maptype = tree.GetPyData(layer)[0]['maplayer'].type
         except:
             maptype = None
         
         if not maptype or maptype != 'vector':
-            wx.MessageBox(parent = self,
-                          message = _("Attribute management is available only "
-                                    "for vector maps."),
-                          caption = _("Message"),
-                          style = wx.OK | wx.ICON_INFORMATION | wx.CENTRE)
+            gcmd.GMessage(parent = self,
+                          message = _("Selected map layer is not vector."))
             return
         
-        if not self.curr_page.maptree.GetPyData(layer)[0]:
+        if not tree.GetPyData(layer)[0]:
             return
-        dcmd = self.curr_page.maptree.GetPyData(layer)[0]['cmd']
+        dcmd = tree.GetPyData(layer)[0]['cmd']
         if not dcmd:
             return
         
@@ -1193,31 +1282,15 @@ class GMFrame(wx.Frame):
         if not self.curr_page:
             self.NewDisplay(show = True)
         
-        point = wx.GetMousePosition()
-        rastmenu = wx.Menu()
-        
-        for key, handler in (('addrast3d', self.OnAddRaster3D),
-                             (None, None),
-                             ('addrgb',    self.OnAddRasterRGB),
-                             ('addhis',    self.OnAddRasterHIS),
-                             (None, None),
-                             ('addshaded', self.OnAddRasterShaded),
-                             (None, None),
-                             ('addrarrow', self.OnAddRasterArrow),
-                             ('addrnum',   self.OnAddRasterNum)):
-            if key is None:
-                rastmenu.AppendSeparator()
-                continue
-            
-            item = wx.MenuItem(rastmenu, wx.ID_ANY, Icons[key].GetLabel())
-            item.SetBitmap(Icons[key].GetBitmap(self.iconsize))
-            rastmenu.AppendItem(item)
-            self.Bind(wx.EVT_MENU, handler, item)
-            
-        # Popup the menu. If an item is selected then its handler
-        # will be called before PopupMenu returns.
-        self.PopupMenu(rastmenu)
-        rastmenu.Destroy()
+        self._popupMenu((('addRast3d', self.OnAddRaster3D),
+                         (None, None),
+                         ('addRgb',    self.OnAddRasterRGB),
+                         ('addHis',    self.OnAddRasterHIS),
+                         (None, None),
+                         ('addShaded', self.OnAddRasterShaded),
+                         (None, None),
+                         ('addRArrow', self.OnAddRasterArrow),
+                         ('addRNum',   self.OnAddRasterNum)))
         
         # show map display
         self.curr_page.maptree.mapdisplay.Show()
@@ -1237,25 +1310,9 @@ class GMFrame(wx.Frame):
         if not self.curr_page:
             self.NewDisplay(show = True)
 
-        point = wx.GetMousePosition()
-        vectmenu = wx.Menu()
+        self._popupMenu((('addThematic', self.OnAddVectorTheme),
+                         ('addChart',    self.OnAddVectorChart)))
         
-        for key, handler in (('addthematic', self.OnAddVectorTheme),
-                             ('addchart',    self.OnAddVectorChart)):
-            if key is None:
-                rastmenu.AppendSeparator()
-                continue
-            
-            item = wx.MenuItem(vectmenu, wx.ID_ANY, Icons[key].GetLabel())
-            item.SetBitmap(Icons[key].GetBitmap(self.iconsize))
-            vectmenu.AppendItem(item)
-            self.Bind(wx.EVT_MENU, handler, item)
-        
-        # Popup the menu.  If an item is selected then its handler
-        # will be called before PopupMenu returns.
-        self.PopupMenu(vectmenu)
-        vectmenu.Destroy()
-
         # show map display
         self.curr_page.maptree.mapdisplay.Show()
 
@@ -1275,29 +1332,13 @@ class GMFrame(wx.Frame):
         if not self.curr_page:
             self.NewDisplay(show = True)
 
-        point = wx.GetMousePosition()
-        ovlmenu = wx.Menu()
-
-        for key, handler in (('addgrid',     self.OnAddGrid),
-                             ('addlabels',   self.OnAddLabels),
-                             ('addgeodesic', self.OnAddGeodesic),
-                             ('addrhumb',    self.OnAddRhumb),
-                             (None, None),
-                             ('addcmd',      self.OnAddCommand)):
-            if key is None:
-                ovlmenu.AppendSeparator()
-                continue
-            
-            item = wx.MenuItem(ovlmenu, wx.ID_ANY, Icons[key].GetLabel())
-            item.SetBitmap(Icons[key].GetBitmap(self.iconsize))
-            ovlmenu.AppendItem(item)
-            self.Bind(wx.EVT_MENU, handler, item)
+        self._popupMenu((('addGrid',     self.OnAddGrid),
+                         ('addLabels',   self.OnAddLabels),
+                         ('addGeodesic', self.OnAddGeodesic),
+                         ('addRhumb',    self.OnAddRhumb),
+                         (None, None),
+                         ('addCmd',      self.OnAddCommand)))
         
-        # Popup the menu.  If an item is selected then its handler
-        # will be called before PopupMenu returns.
-        self.PopupMenu(ovlmenu)
-        ovlmenu.Destroy()
-
         # show map display
         self.curr_page.maptree.mapdisplay.Show()
         
@@ -1486,10 +1527,9 @@ class GMFrame(wx.Frame):
         # don't ask any more...
         UserSettings.Set(group = 'manager', key = 'askOnQuit', subkey = 'enabled',
                          value = False)
-
-        for page in range(self.gm_cb.GetPageCount()):
-            self.gm_cb.GetPage(0).maptree.mapdisplay.OnCloseWindow(event)
-
+        
+        self.OnDisplayCloseAll()
+        
         self.gm_cb.DeleteAllPages()
         
         self._auimgr.UnInit()
@@ -1523,11 +1563,21 @@ class GMApp(wx.App):
         wx.InitAllImageHandlers()
 
         # create splash screen
-        introImagePath = os.path.join(globalvar.ETCWXDIR, "images", "grass_splash.png")
+        introImagePath = os.path.join(globalvar.ETCIMGDIR, "silesia_splash.png")
         introImage     = wx.Image(introImagePath, wx.BITMAP_TYPE_PNG)
         introBmp       = introImage.ConvertToBitmap()
-        wx.SplashScreen (bitmap = introBmp, splashStyle = wx.SPLASH_CENTRE_ON_SCREEN | wx.SPLASH_TIMEOUT,
-                         milliseconds = 2000, parent = None, id = wx.ID_ANY)
+        if SC:
+            splash = SC.AdvancedSplash(bitmap = introBmp, 
+                                       timeout = 2000, parent = None, id = wx.ID_ANY)
+            splash.SetText(_('Starting GRASS GUI...'))
+            splash.SetTextColour(wx.Colour(45, 52, 27))
+            splash.SetTextFont(wx.Font(pointSize = 15, family = wx.DEFAULT, style = wx.NORMAL,
+                                       weight = wx.BOLD))
+            splash.SetTextPosition((150, 430))
+        else:
+            wx.SplashScreen (bitmap = introBmp, splashStyle = wx.SPLASH_CENTRE_ON_SCREEN | wx.SPLASH_TIMEOUT,
+                             milliseconds = 2000, parent = None, id = wx.ID_ANY)
+        
         wx.Yield()
         
         w, h = wx.GetDisplaySize()

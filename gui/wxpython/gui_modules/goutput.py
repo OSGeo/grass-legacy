@@ -24,6 +24,7 @@ import textwrap
 import time
 import threading
 import Queue
+import codecs
 
 import wx
 import wx.stc
@@ -48,10 +49,10 @@ wxCmdRun,      EVT_CMD_RUN      = NewEvent()
 wxCmdDone,     EVT_CMD_DONE     = NewEvent()
 wxCmdAbort,    EVT_CMD_ABORT    = NewEvent()
 
-def GrassCmd(cmd, stdout, stderr):
+def GrassCmd(cmd, stdout = None, stderr = None):
     """!Return GRASS command thread"""
     return gcmd.CommandThread(cmd,
-                              stdout=stdout, stderr=stderr)
+                              stdout = stdout, stderr = stderr)
 
 class CmdThread(threading.Thread):
     """!Thread for GRASS commands"""
@@ -69,11 +70,11 @@ class CmdThread(threading.Thread):
 
         self.start()
 
-    def RunCmd(self, callable, onDone, *args, **kwds):
+    def RunCmd(self, *args, **kwds):
         CmdThread.requestId += 1
 
         self.requestCmd = None
-        self.requestQ.put((CmdThread.requestId, callable, onDone, args, kwds))
+        self.requestQ.put((CmdThread.requestId, args, kwds))
         
         return CmdThread.requestId
 
@@ -84,23 +85,31 @@ class CmdThread(threading.Thread):
     def run(self):
         os.environ['GRASS_MESSAGE_FORMAT'] = 'gui'
         while True:
-            requestId, callable, onDone, args, kwds = self.requestQ.get()
+            requestId, args, kwds = self.requestQ.get()
+            for key in ('callable', 'onDone', 'userData'):
+                if key in kwds:
+                    vars()[key] = kwds[key]
+                    del kwds[key]
+                else:
+                    vars()[key] = None
+            
+            if not vars()['callable']:
+                vars()['callable'] = GrassCmd
             
             requestTime = time.time()
-            event = wxCmdRun(cmd=args[0],
-                             pid=requestId)
+            event = wxCmdRun(cmd = args[0],
+                             pid = requestId)
             wx.PostEvent(self.parent, event)
             
             time.sleep(.1)
-            
-            self.requestCmd = callable(*args, **kwds)
+            self.requestCmd = vars()['callable'](*args, **kwds)
             if self._want_abort_all:
                 self.requestCmd.abort()
                 if self.requestQ.empty():
                     self._want_abort_all = False
             
             self.resultQ.put((requestId, self.requestCmd.run()))
-
+            
             try:
                 returncode = self.requestCmd.module.returncode
             except AttributeError:
@@ -124,7 +133,7 @@ class CmdThread(threading.Thread):
                     except KeyError:
                         pass
                 else:
-                    moduleInterface = menuform.GUI().ParseCommand(args[0], show = None)
+                    moduleInterface = menuform.GUI(show = None).ParseCommand(args[0])
                     outputParam = moduleInterface.get_param(value = 'output', raiseError = False)
                     if outputParam and outputParam['prompt'] == 'raster':
                         mapName = outputParam['value']
@@ -134,7 +143,7 @@ class CmdThread(threading.Thread):
                     argsColor[0] = [ 'r.colors',
                                      'map=%s' % mapName,
                                      'color=%s' % colorTable ]
-                    self.requestCmdColor = callable(*argsColor, **kwds)
+                    self.requestCmdColor = vars()['callable'](*argsColor, **kwds)
                     self.resultQ.put((requestId, self.requestCmdColor.run()))
             
             event = wxCmdDone(cmd = args[0],
@@ -142,7 +151,8 @@ class CmdThread(threading.Thread):
                               returncode = returncode,
                               time = requestTime,
                               pid = requestId,
-                              onDone = onDone)
+                              onDone = vars()['onDone'],
+                              userData = vars()['userData'])
             
             # send event
             wx.PostEvent(self.parent, event)
@@ -345,18 +355,19 @@ class GMConsole(wx.SplitterWindow):
         return self.panelOutput
     
     def Redirect(self):
-        """!Redirect stderr
-
+        """!Redirect stdout/stderr
+        
         @return True redirected
         @return False failed
         """
-        if Debug.get_level() == 0 and int(grass.gisenv().get('DEBUG', 0)) == 0:
+        if Debug.GetLevel() == 0 and int(grass.gisenv().get('DEBUG', 0)) == 0:
             # don't redirect when debugging is enabled
             sys.stdout = self.cmd_stdout
             sys.stderr = self.cmd_stderr
-            
             return True
-
+        else:
+            sys.stdout = sys.__stdout__
+            sys.stderr = sys.__stderr__
         return False
 
     def WriteLog(self, text, style = None, wrap = None,
@@ -410,7 +421,7 @@ class GMConsole(wx.SplitterWindow):
 
     def WriteError(self, line):
         """!Write message in error style"""
-        self.WriteLog(line, style=self.cmd_output.StyleError, switchPage = True)
+        self.WriteLog(line, style = self.cmd_output.StyleError, switchPage = True)
 
     def RunCmd(self, command, compReg = True, switchPage = False,
                onDone = None):
@@ -421,7 +432,7 @@ class GMConsole(wx.SplitterWindow):
         display widget that currently has the focus (as indicted by
         mdidx).
         
-        @param command command given as a list (produced e.g. by shlex.split())
+        @param command command given as a list (produced e.g. by utils.split())
         @param compReg True use computation region
         @param switchPage switch to output page
         @param onDone function to be called when command is finished
@@ -433,10 +444,13 @@ class GMConsole(wx.SplitterWindow):
         # update history file
         env = grass.gisenv()
         try:
-            fileHistory = open(os.path.join(env['GISDBASE'], env['LOCATION_NAME'], env['MAPSET'],
-                                            '.bash_history'), 'a')
+            fileHistory = codecs.open(os.path.join(env['GISDBASE'],
+                                                   env['LOCATION_NAME'],
+                                                   env['MAPSET'],
+                                                   '.bash_history'),
+                                      encoding = 'utf-8', mode = 'a')
         except IOError, e:
-            self.WriteError(str(e))
+            self.WriteError(e)
             fileHistory = None
         
         if fileHistory:
@@ -508,7 +522,7 @@ class GMConsole(wx.SplitterWindow):
                 # for all non-display commands.
                 if compReg:
                     tmpreg = os.getenv("GRASS_REGION")
-                    if os.environ.has_key("GRASS_REGION"):
+                    if "GRASS_REGION" in os.environ:
                         del os.environ["GRASS_REGION"]
                 
                 if len(command) == 1:
@@ -521,13 +535,11 @@ class GMConsole(wx.SplitterWindow):
                 
                 if task and command[0] not in ('v.krige.py'):
                     # process GRASS command without argument
-                    menuform.GUI().ParseCommand(command, parentframe = self)
+                    menuform.GUI(parent = self).ParseCommand(command)
                 else:
                     # process GRASS command with argument
-                    self.cmdThread.RunCmd(GrassCmd,
-                                          onDone,
-                                          command,
-                                          self.cmd_stdout, self.cmd_stderr)                                          
+                    self.cmdThread.RunCmd(command, stdout = self.cmd_stdout, stderr = self.cmd_stderr,
+                                          onDone = onDone)
                     self.cmd_output_timer.Start(50)
                     
                     return None
@@ -544,19 +556,15 @@ class GMConsole(wx.SplitterWindow):
                     task = menuform.GUI().ParseInterface(command)
                 except:
                     task = None
-                # if not task.has_required():
-                # task = None # run command
             else:
                 task = None
                 
             if task:
                 # process GRASS command without argument
-                menuform.GUI().ParseCommand(command, parentframe = self)
+                menuform.GUI(parent = self).ParseCommand(command)
             else:
-                self.cmdThread.RunCmd(GrassCmd,
-                                      onDone,
-                                      command,
-                                      self.cmd_stdout, self.cmd_stderr)                                         
+                self.cmdThread.RunCmd(command, stdout = self.cmd_stdout, stderr = self.cmd_stderr,
+                                      onDone = onDone)
             self.cmd_output_timer.Start(50)
         
         return None
@@ -568,6 +576,20 @@ class GMConsole(wx.SplitterWindow):
         self.cmd_output.SetReadOnly(True)
         self.console_progressbar.SetValue(0)
 
+    def GetProgressBar(self):
+        """!Return progress bar widget"""
+        return self.console_progressbar
+    
+    def GetLog(self, err = False):
+        """!Get widget used for logging
+
+        @param err True to get stderr widget
+        """
+        if err:
+            return self.cmd_stderr
+        
+        return self.cmd_stdout
+    
     def SaveHistory(self, event):
         """!Save history of commands"""
         self.history = self.cmd_output.GetSelectedText()
@@ -711,7 +733,7 @@ class GMConsole(wx.SplitterWindow):
             except KeyError:
                 # stopped deamon
                 pass
-            
+
             self.btn_abort.Enable(False)
         
         if event.onDone:
@@ -721,11 +743,16 @@ class GMConsole(wx.SplitterWindow):
 
         self.cmd_output_timer.Stop()
 
+        if event.cmd[0] == 'g.gisenv':
+            Debug.SetLevel()
+            self.Redirect()
+        
         if self.parent.GetName() == "LayerManager":
             self.btn_abort.Enable(False)
             if event.cmd[0] not in globalvar.grassCmd['all'] or \
                     event.cmd[0] == 'r.mapcalc':
                 return
+            
             display = self.parent.GetLayerTree().GetMapDisplay()
             if not display or not display.IsAutoRendered():
                 return
@@ -734,7 +761,7 @@ class GMConsole(wx.SplitterWindow):
                             display.GetRender().GetListOfLayers(l_type = 'vector'))
             
             try:
-                task = menuform.GUI().ParseCommand(event.cmd, show = None)
+                task = menuform.GUI(show = None).ParseCommand(event.cmd)
             except gcmd.GException:
                 task = None
                 return
@@ -1046,11 +1073,11 @@ class GMStc(wx.stc.StyledTextCtrl):
                 enc = UserSettings.Get(group='atm', key='encoding', subkey='value')
                 if enc:
                     txt = unicode(txt, enc)
-                elif os.environ.has_key('GRASS_DB_ENCODING'):
+                elif 'GRASS_DB_ENCODING' in os.environ:
                     txt = unicode(txt, os.environ['GRASS_DB_ENCODING'])
                 else:
-                    txt = _('Unable to encode text. Please set encoding in GUI preferences.') + '\n'
-                    
+                    txt = utils.EncodeString(txt)
+                
                 self.AddText(txt)
         
         # reset output window to read only

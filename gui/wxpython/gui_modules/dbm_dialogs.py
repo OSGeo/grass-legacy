@@ -1,4 +1,4 @@
-"""
+"""!
 @package dbm_dialogs.py
 
 @brief DBM-related dialogs
@@ -7,7 +7,7 @@ List of classes:
  - DisplayAttributesDialog
  - ModifyTableRecord
 
-(C) 2007-2010 by the GRASS Development Team
+(C) 2007-2011 by the GRASS Development Team
 
 This program is free software under the GNU General Public
 License (>=v2). Read the file COPYING that comes with GRASS
@@ -31,27 +31,26 @@ from preferences import globalSettings as UserSettings
 from dbm_base    import VectorDBInfo
 
 class DisplayAttributesDialog(wx.Dialog):
-    """
-    Standard dialog used to add/update/display attributes linked
-    to the vector map.
-
-    Attribute data can be selected based on layer and category number
-    or coordinates.
-
-    @param parent
-    @param map vector map
-    @param query query coordinates and distance (used for v.edit)
-    @param cats {layer: cats}
-    @param line feature id (requested for cats)
-    @param style
-    @param pos
-    @param action (add, update, display)
-    """
     def __init__(self, parent, map,
                  query=None, cats=None, line=None,
                  style=wx.DEFAULT_DIALOG_STYLE | wx.RESIZE_BORDER,
                  pos=wx.DefaultPosition,
                  action="add"):
+        """!Standard dialog used to add/update/display attributes linked
+        to the vector map.
+        
+        Attribute data can be selected based on layer and category number
+        or coordinates.
+        
+        @param parent
+        @param map vector map
+        @param query query coordinates and distance (used for v.edit)
+        @param cats {layer: cats}
+        @param line feature id (requested for cats)
+        @param style
+        @param pos
+        @param action (add, update, display)
+        """
         self.parent = parent # mapdisplay.BufferedWindow
         self.map    = map
         self.action = action
@@ -109,7 +108,7 @@ class DisplayAttributesDialog(wx.Dialog):
         if self.action == "update":
             self.SetTitle(_("Update attributes"))
         elif self.action == "add":
-            self.SetTitle(_("Add attributes"))
+            self.SetTitle(_("Define attributes"))
         else:
             self.SetTitle(_("Display attributes"))
 
@@ -268,22 +267,22 @@ class DisplayAttributesDialog(wx.Dialog):
                         self.FindWindowById(id).SetValue(str(value))
 
     def OnCancel(self, event):
-        """!Cancel button pressed"""
+        """!Cancel button pressed
+        """
         self.parent.parent.dialogs['attributes'] = None
-        if self.parent.parent.digit:
-            self.parent.parent.digit.driver.SetSelected([])
-            self.parent.UpdateMap(render=False)
+        if self.parent.digit:
+            self.parent.digit.GetDisplay().SetSelected([])
+            self.parent.UpdateMap(render = False)
         else:
             self.parent.parent.OnRender(None)
-
+        
         self.Close()
 
     def OnSubmit(self, event):
         """!Submit records"""
         for sql in self.GetSQLString(updateValues=True):
             enc = UserSettings.Get(group='atm', key='encoding', subkey='value')
-            if not enc and \
-                    os.environ.has_key('GRASS_DB_ENCODING'):
+            if not enc and 'GRASS_DB_ENCODING' in os.environ:
                 enc = os.environ['GRASS_DB_ENCODING']
             if enc:
                 sql = sql.encode(enc)
@@ -335,17 +334,17 @@ class DisplayAttributesDialog(wx.Dialog):
             data = self.mapDBInfo.SelectByPoint(query[0],
                                                 query[1])
             self.cats = {}
-            if data and data.has_key('Layer'):
+            if data and 'Layer' in data:
                 idx = 0
                 for layer in data['Layer']:
                     layer = int(layer)
-                    if data.has_key('Id'):
+                    if 'Id' in data:
                         tfid = int(data['Id'][idx])
                     else:
                         tfid = 0 # Area / Volume
-                    if not self.cats.has_key(tfid):
+                    if not tfid in self.cats:
                         self.cats[tfid] = {}
-                    if not self.cats[tfid].has_key(layer):
+                    if not layer in self.cats[tfid]:
                         self.cats[tfid][layer] = []
                     cat = int(data['Category'][idx])
                     self.cats[tfid][layer].append(cat)
@@ -381,7 +380,7 @@ class DisplayAttributesDialog(wx.Dialog):
 
         for layer in layers: # for each layer
             if not query: # select by layer/cat
-                if self.fid > 0 and self.cats[self.fid].has_key(layer): 
+                if self.fid > 0 and layer in self.cats[self.fid]:
                     for cat in self.cats[self.fid][layer]:
                         nselected = self.mapDBInfo.SelectFromTable(layer,
                                                                    where="%s=%d" % \
@@ -395,7 +394,7 @@ class DisplayAttributesDialog(wx.Dialog):
 
             if self.action == "add":
                 if nselected <= 0:
-                    if self.cats[self.fid].has_key(layer):
+                    if layer in self.cats[self.fid]:
                         table = self.mapDBInfo.layers[layer]["table"]
                         key = self.mapDBInfo.layers[layer]["key"]
                         columns = self.mapDBInfo.tables[table]
@@ -501,15 +500,16 @@ class DisplayAttributesDialog(wx.Dialog):
                 break
         
 class ModifyTableRecord(wx.Dialog):
-    """!Dialog for inserting/updating table record"""
     def __init__(self, parent, id, title, data, keyEditable=(-1, True),
                 style=wx.DEFAULT_DIALOG_STYLE | wx.RESIZE_BORDER):
-        """
+        """!Dialog for inserting/updating table record
+
         Notes:
-         'Data' is a list: [(column, value)]
-         'KeyEditable' (id, editable?) indicates if textarea for key column
-          is editable(True) or not.
+        'Data' is a list: [(column, value)]
+        'KeyEditable' (id, editable?) indicates if textarea for key column
+        is editable(True) or not.
         """
+        # parent -> VDigitWindow
         wx.Dialog.__init__(self, parent, id, title, style=style)
         
         self.CenterOnParent()

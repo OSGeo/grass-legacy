@@ -15,7 +15,7 @@ Classes:
 Functions:
  - RunCommand
 
-(C) 2007-2008, 2010 by the GRASS Development Team
+(C) 2007-2008, 2010-2011 by the GRASS Development Team
 This program is free software under the GNU General Public
 License (>=v2). Read the file COPYING that comes with GRASS
 for details.
@@ -31,6 +31,7 @@ import errno
 import signal
 import locale
 import traceback
+import types
 
 import wx
 
@@ -58,18 +59,19 @@ import utils
 from debug import Debug as Debug
 
 class GError:
-    def __init__(self, message, parent = None):
-        caption = _('Error')
+    def __init__(self, message, parent = None, caption = None, showTraceback = True):
+        if not caption:
+            caption = _('Error')
         style = wx.OK | wx.ICON_ERROR | wx.CENTRE
         exc_type, exc_value, exc_traceback = sys.exc_info()
         if exc_traceback:
             exception = traceback.format_exc()
             reason = exception.splitlines()[-1].split(':', 1)[-1].strip()
         
-        if Debug.get_level() > 0 and exc_traceback:
+        if Debug.GetLevel() > 0 and exc_traceback:
             sys.stderr.write(exception)
         
-        if exc_traceback:
+        if showTraceback and exc_traceback:
             wx.MessageBox(parent = parent,
                           message = message + '\n\n%s: %s\n\n%s' % \
                               (_('Reason'),
@@ -121,13 +123,13 @@ class Popen(subprocess.Popen):
         
         subprocess.Popen.__init__(self, *args, **kwargs)
         
-    def recv(self, maxsize=None):
+    def recv(self, maxsize = None):
         return self._recv('stdout', maxsize)
     
-    def recv_err(self, maxsize=None):
+    def recv_err(self, maxsize = None):
         return self._recv('stderr', maxsize)
 
-    def send_recv(self, input='', maxsize=None):
+    def send_recv(self, input = '', maxsize = None):
         return self.send(input), self.recv(maxsize), self.recv_err(maxsize)
 
     def get_conn_maxsize(self, which, maxsize):
@@ -237,7 +239,7 @@ class Popen(subprocess.Popen):
 
 message = "Other end disconnected!"
 
-def recv_some(p, t=.1, e=1, tr=5, stderr=0):
+def recv_some(p, t = .1, e = 1, tr = 5, stderr = 0):
     if tr < 1:
         tr = 1
     x = time.time()+t
@@ -294,9 +296,9 @@ class Command:
     @param stdout  redirect standard output or None
     @param stderr  redirect standard error output or None
     """
-    def __init__ (self, cmd, stdin=None,
-                  verbose=None, wait=True, rerr=False,
-                  stdout=None, stderr=None):
+    def __init__ (self, cmd, stdin = None,
+                  verbose = None, wait = True, rerr = False,
+                  stdout = None, stderr = None):
         Debug.msg(1, "gcmd.Command(): %s" % ' '.join(cmd))
         self.cmd = cmd
         self.stderr = stderr
@@ -359,7 +361,7 @@ class Command:
 
         if verbose_orig:
             os.environ["GRASS_VERBOSE"] = verbose_orig
-        elif os.environ.has_key("GRASS_VERBOSE"):
+        elif "GRASS_VERBOSE" in os.environ:
             del os.environ["GRASS_VERBOSE"]
             
     def __ReadOutput(self, stream):
@@ -439,8 +441,8 @@ class Command:
 class CommandThread(Thread):
     """!Create separate thread for command. Used for commands launched
     on the background."""
-    def __init__ (self, cmd, stdin=None,
-                  stdout=sys.stdout, stderr=sys.stderr):
+    def __init__ (self, cmd, stdin = None,
+                  stdout = sys.stdout, stderr = sys.stderr):
         """
         @param cmd command (given as list)
         @param stdin standard input stream 
@@ -448,7 +450,7 @@ class CommandThread(Thread):
         @param stderr redirect standard error output or None
         """
         Thread.__init__(self)
-
+        
         self.cmd    = cmd
         self.stdin  = stdin
         self.stdout = stdout
@@ -477,13 +479,15 @@ class CommandThread(Thread):
         if len(self.cmd) == 0:
             return
 
+        Debug.msg(1, "gcmd.CommandThread(): %s" % ' '.join(self.cmd))
+
         self.startTime = time.time()
         try:
             self.module = Popen(self.cmd,
-                                stdin=subprocess.PIPE,
-                                stdout=subprocess.PIPE,
-                                stderr=subprocess.PIPE,
-                                shell=sys.platform=="win32")
+                                stdin = subprocess.PIPE,
+                                stdout = subprocess.PIPE,
+                                stderr = subprocess.PIPE,
+                                shell = sys.platform == "win32")
         except OSError, e:
             self.error = str(e)
             return 1
@@ -493,10 +497,9 @@ class CommandThread(Thread):
             self.module.stdin.close()
             
         # redirect standard outputs...
-        if self.stdout or self.stderr:
-            self.__redirect_stream()
-
-    def __redirect_stream(self):
+        self._redirect_stream()
+        
+    def _redirect_stream(self):
         """!Redirect stream"""
         if self.stdout:
             # make module stdout/stderr non-blocking
@@ -519,20 +522,20 @@ class CommandThread(Thread):
                 self.aborted = True
                 return 
             if self.stdout:
-                line = recv_some(self.module, e=0, stderr=0)
+                line = recv_some(self.module, e = 0, stderr = 0)
                 self.stdout.write(line)
             if self.stderr:
-                line = recv_some(self.module, e=0, stderr=1)
+                line = recv_some(self.module, e = 0, stderr = 1)
                 self.stderr.write(line)
                 if len(line) > 0:
                     self.error = line
 
         # get the last output
         if self.stdout:
-            line = recv_some(self.module, e=0, stderr=0)
+            line = recv_some(self.module, e = 0, stderr = 0)
             self.stdout.write(line)
         if self.stderr:
-            line = recv_some(self.module, e=0, stderr=1)
+            line = recv_some(self.module, e = 0, stderr = 1)
             self.stderr.write(line)
             if len(line) > 0:
                 self.error = line
@@ -541,9 +544,45 @@ class CommandThread(Thread):
         """!Abort running process, used by main thread to signal an abort"""
         self._want_abort = True
     
+def _formatMsg(text):
+    """!Format error messages for dialogs
+    """
+    message = ''
+    for line in text.splitlines():
+        if len(line) == 0:
+            continue
+        elif 'GRASS_INFO_MESSAGE' in line:
+            message += line.split(':', 1)[1].strip() + '\n'
+        elif 'GRASS_INFO_WARNING' in line:
+            message += line.split(':', 1)[1].strip() + '\n'
+        elif 'GRASS_INFO_ERROR' in line:
+            message += line.split(':', 1)[1].strip() + '\n'
+        elif 'GRASS_INFO_END' in line:
+            return message
+        else:
+            message += line.strip() + '\n'
+    
+    return message
+
 def RunCommand(prog, flags = "", overwrite = False, quiet = False, verbose = False,
                parent = None, read = False, stdin = None, getErrorMsg = False, **kwargs):
-    """!Run GRASS command"""
+    """!Run GRASS command
+
+    @param prog program to run
+    @param flags flags given as a string
+    @param overwrite, quiet, verbose flags
+    @param parent parent window for error messages
+    @param read fetch stdout
+    @param stdin stdin or None
+    @param getErrorMsg get error messages on failure
+    @param kwargs program parameters
+    
+    @return returncode (read == False and getErrorMsg == False)
+    @return returncode, messages (read == False and getErrorMsg == True)
+    @return stdout (read == True and getErrorMsg == False)
+    @return returncode, stdout, messages (read == True and getErrorMsg == True)
+    @return stdout, stderr
+    """
     Debug.msg(1, "gcmd.RunCommand(): %s" % ' '.join(grass.make_command(prog, flags, overwrite,
                                                                        quiet, verbose, **kwargs)))
     
@@ -562,7 +601,7 @@ def RunCommand(prog, flags = "", overwrite = False, quiet = False, verbose = Fal
         ps.stdin.close()
         ps.stdin = None
     
-    stdout, stderr = ps.communicate()
+    stdout, stderr = map(lambda x: utils.DecodeString(x) if type(x) is types.StringType else x, ps.communicate())
     
     ret = ps.returncode
         
@@ -574,12 +613,12 @@ def RunCommand(prog, flags = "", overwrite = False, quiet = False, verbose = Fal
         if not getErrorMsg:
             return ret
         else:
-            return ret, stderr
+            return ret, _formatMsg(stderr)
 
     if not getErrorMsg:
         return stdout
     
     if read and getErrorMsg:
-        return ret, stdout, stderr
+        return ret, stdout, _formatMsg(stderr)
     
-    return stdout, stderr
+    return stdout, _formatMsg(stderr)

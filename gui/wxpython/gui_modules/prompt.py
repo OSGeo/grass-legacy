@@ -21,9 +21,9 @@ for details.
 
 import os
 import sys
-import shlex
 import copy
 import difflib
+import codecs
 
 import wx
 import wx.stc
@@ -56,7 +56,7 @@ class TextCtrlAutoComplete(wx.ComboBox, listmix.ColumnSorterMixin):
         """
         self.statusbar = statusbar
         
-        if kwargs.has_key('style'):
+        if 'style' in kwargs:
             kwargs['style'] = wx.TE_PROCESS_ENTER | kwargs['style']
         else:
             kwargs['style'] = wx.TE_PROCESS_ENTER
@@ -213,7 +213,7 @@ class TextCtrlAutoComplete(wx.ComboBox, listmix.ColumnSorterMixin):
              col = self._colSearch
          itemtext = self.dropdownlistbox.GetItem(sel, col).GetText()
          
-         cmd = shlex.split(str(self.GetValue()))
+         cmd = utils.split(str(self.GetValue()))
          if len(cmd) > 0 and cmd[0] in self._choicesCmd:
              # -> append text (skip last item)
              if self._choiceType == 'param':
@@ -338,7 +338,7 @@ class TextCtrlAutoComplete(wx.ComboBox, listmix.ColumnSorterMixin):
             return
         
         try:
-            cmd = shlex.split(str(text))
+            cmd = utils.split(str(text))
         except ValueError, e:
             self.statusbar.SetStatusText(str(e))
             cmd = text.split(' ')
@@ -505,10 +505,11 @@ class GPrompt(object):
         hist = list()
         env = grass.gisenv()
         try:
-            fileHistory = open(os.path.join(env['GISDBASE'],
-                                            env['LOCATION_NAME'],
-                                            env['MAPSET'],
-                                            '.bash_history'), 'r')
+            fileHistory = codecs.open(os.path.join(env['GISDBASE'],
+                                                   env['LOCATION_NAME'],
+                                                   env['MAPSET'],
+                                                   '.bash_history'),
+                                      encoding = 'utf-8', mode = 'r')
         except IOError:
             return hist
         
@@ -522,7 +523,7 @@ class GPrompt(object):
 
     def GetCommandDesc(self, cmd):
         """!Get description for given command"""
-        if self.moduleDesc.has_key(cmd):
+        if cmd in self.moduleDesc:
             return self.moduleDesc[cmd]['desc']
         
         return ''
@@ -560,7 +561,7 @@ class GPrompt(object):
             except ValueError:
                 continue # TODO
             
-            if not result.has_key(group):
+            if group not in result:
                 result[group] = list()
             result[group].append(name)
             
@@ -569,7 +570,7 @@ class GPrompt(object):
             for i in range(len(name.split('.'))-1):
                 group = '.'.join([group,name.split('.',1)[0]])
                 name = name.split('.',1)[1]
-                if not result.has_key(group):
+                if group not in result:
                     result[group] = list()
                 result[group].append(name)
       
@@ -1059,6 +1060,7 @@ class GPromptSTC(GPrompt, wx.stc.StyledTextCtrl):
                 cmd = utils.split(str(line))
             except UnicodeError:
                 cmd = utils.split(utils.EncodeString((line)))
+            cmd = map(utils.DecodeString, cmd)
             
             #  send the command list to the processor 
             if cmd[0] in ('r.mapcalc', 'r3.mapcalc') and len(cmd) == 1:

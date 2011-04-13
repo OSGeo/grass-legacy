@@ -10,7 +10,7 @@ include $(MODULE_TOPDIR)/include/Make/Python.make
 
 ETCDIR = $(ETC)/wxpython
 
-SRCFILES := $(wildcard compat/* gui_modules/* icons/*.* icons/silk/* images/* xml/*) gis_set.py wxgui.py README
+SRCFILES := $(wildcard compat/* gui_modules/* icons/*.* icons/silk/* xml/*) gis_set.py wxgui.py README
 DSTFILES := $(patsubst %,$(ETCDIR)/%,$(SRCFILES)) $(patsubst %.py,$(ETCDIR)/%.pyc,$(filter %.py,$(SRCFILES)))
 
 default: install_scripts
@@ -19,7 +19,7 @@ default: install_scripts
 clean: cleansubdirs
 
 install_scripts:
-	-for dir in '' compat gui_modules icons icons/silk images xml; do \
+	-for dir in '' compat gui_modules icons icons/silk xml; do \
 	if [ ! -d $(ETCDIR)/$$dir ] ; then $(MKDIR) $(ETCDIR)/$$dir ; fi ; \
 	done
 	$(MAKE) $(DSTFILES)

@@ -13,25 +13,20 @@ Classes:
  - GUI
  - FloatValidator
 
- Copyright (C) 2000-2010 by the GRASS Development Team
+This program is just a coarse approach to automatically build a GUI
+from a xml-based GRASS user interface description.
 
- This program is free software under the GPL (>=v2) Read the file
- COPYING coming with GRASS for details.
+You need to have Python 2.4, wxPython 2.8 and python-xml.
 
- This program is just a coarse approach to automatically build a GUI
- from a xml-based GRASS user interface description.
+The XML stream is read from executing the command given in the
+command line, thus you may call it for instance this way:
 
- You need to have Python 2.4, wxPython 2.8 and python-xml.
+python <this file.py> r.basins.fill
 
- The XML stream is read from executing the command given in the
- command line, thus you may call it for instance this way:
+Or you set an alias or wrap the call up in a nice shell script, GUI
+environment ... please contribute your idea.
 
- python <this file.py> r.basins.fill
-
- Or you set an alias or wrap the call up in a nice shell script, GUI
- environment ... please contribute your idea.
-
-Copyright(C) 2000-2010 by the GRASS Development Team
+Copyright(C) 2000-2011 by the GRASS Development Team
 This program is free software under the GPL(>=v2) Read the file
 COPYING coming with GRASS for details.
 
@@ -56,7 +51,6 @@ import locale
 import types
 from threading import Thread
 import Queue
-import shlex
 import tempfile
 
 ### i18N
@@ -96,8 +90,6 @@ else:
     wxbase = os.path.join(globalvar.ETCWXDIR)
 
 sys.path.append(wxbase)
-imagepath = os.path.join(wxbase, "images")
-sys.path.append(imagepath)
 
 from grass.script import core as grass
 
@@ -135,8 +127,15 @@ rgb2str = {}
 for (s,r) in str2rgb.items():
     rgb2str[ r ] = s
 
+"""!Hide some options in the GUI"""
+_blackList = {
+    'd.legend' : { 'flags' : ['m'],
+                   'params' : [] }
+}
+_ignoreBlackList = True
+
 def color_resolve(color):
-    if len(color)>0 and color[0] in "0123456789":
+    if len(color) > 0 and color[0] in "0123456789":
         rgb = tuple(map(int, color.split(':')))
         label = color
     else:
@@ -194,8 +193,7 @@ class UpdateThread(Thread):
                 return
         
         p = self.task.get_param(self.eventId, element = 'wxId', raiseError = False)
-        if not p or \
-                not p.has_key('wxId-bind'):
+        if not p or 'wxId-bind' not in p:
             return
         
         # get widget prompt
@@ -225,7 +223,7 @@ class UpdateThread(Thread):
             name = win.GetName()
             
             if name == 'LayerSelect':
-                if cparams.has_key(map) and not cparams[map]['layers']:
+                if map in cparams and not cparams[map]['layers']:
                     win.InsertLayers(vector = map)
                     cparams[map]['layers'] = win.GetItems()
             
@@ -252,7 +250,7 @@ class UpdateThread(Thread):
                     layer = 1
                 
                 if map:
-                    if cparams.has_key(map):
+                    if map in cparams:
                         if not cparams[map]['dbInfo']:
                             cparams[map]['dbInfo'] = gselect.VectorDBInfo(map)
                         self.data[win.InsertColumns] = { 'vector' : map, 'layer' : layer,
@@ -335,10 +333,11 @@ class UpdateQThread(Thread):
             self.request = callable(*args, **kwds)
 
             self.resultQ.put((requestId, self.request.run()))
-                        
-            event = wxUpdateDialog(data = self.request.data)
-            wx.PostEvent(self.parent, event)
-
+           
+            if self.request:
+                event = wxUpdateDialog(data = self.request.data)
+                wx.PostEvent(self.parent, event)
+        
 class grassTask:
     """!This class holds the structures needed for both filling by the
     parser and use by the interface constructor.
@@ -593,8 +592,15 @@ class processTask:
                 required = True
             else:
                 required = False
+
+            if not _ignoreBlackList and \
+                    self.task.name in _blackList and \
+                    p.get('name') in _blackList[self.task.name]['params']:
+                hidden = True
+            else:
+                hidden = False
             
-            self.task.params.append({
+            self.task.params.append( {
                 "name"           : p.get('name'),
                 "type"           : p.get('type'),
                 "required"       : required,
@@ -610,17 +616,29 @@ class processTask:
                 "values"         : values,
                 "values_desc"    : values_desc,
                 "value"          : '',
-                "key_desc"       : key_desc })
+                "key_desc"       : key_desc,
+                "hidden"         : hidden
+                })
             
     def __processFlags(self):
         """!Process flags description"""
+        global _ignoreBlackList
         for p in self.root.findall('flag'):
-            self.task.flags.append({
+            if not _ignoreBlackList and \
+                    self.task.name in _blackList and \
+                    p.get('name') in _blackList[self.task.name]['flags']:
+                hidden = True
+            else:
+                hidden = False
+            
+            self.task.flags.append( {
                     "name"              : p.get('name'),
                     "label"             : self._getNodeText(p, 'label'),
                     "description"       : self._getNodeText(p, 'description'),
                     "guisection"        : self._getNodeText(p, 'guisection'),
-                    "value"             : False })
+                    "value"             : False,
+                    "hidden"            : hidden
+                    } )
             
     def _getNodeText(self, node, tag, default = ''):
         """!Get node text"""
@@ -698,8 +716,8 @@ class mainFrame(wx.Frame):
         
         # GRASS logo
         self.logo = wx.StaticBitmap(parent = self.panel,
-                                    bitmap = wx.Bitmap(name = os.path.join(imagepath,
-                                                                       'grass_form.png'),
+                                    bitmap = wx.Bitmap(name = os.path.join(globalvar.ETCIMGDIR,
+                                                                           'grass_form.png'),
                                                      type = wx.BITMAP_TYPE_PNG))
         topsizer.Add(item = self.logo, proportion = 0, border = 3,
                      flag = wx.ALL | wx.ALIGN_CENTER_VERTICAL)
@@ -904,7 +922,7 @@ class mainFrame(wx.Frame):
                         display.GetRender().GetListOfLayers(l_type = 'raster') +
                         display.GetRender().GetListOfLayers(l_type = 'vector'))
         
-        task = GUI().ParseCommand(cmd, show = None)
+        task = GUI(show = None).ParseCommand(cmd)
         for p in task.get_options()['params']:
             if p.get('prompt', '') not in ('raster', 'vector'):
                 continue
@@ -1035,7 +1053,7 @@ class cmdPanel(wx.Panel):
         # Determine tab layout
         sections = []
         is_section = {}
-        not_hidden = [ p for p in self.task.params + self.task.flags if not p.get('hidden','no') ==  'yes' ]
+        not_hidden = [ p for p in self.task.params + self.task.flags if not p.get('hidden', False) ==  True ]
 
         self.label_id = [] # wrap titles on resize
 
@@ -1048,7 +1066,7 @@ class cmdPanel(wx.Panel):
             if task.get('guisection','') ==  '':
                 # Undefined guisections end up into Options
                 task['guisection'] = _('Optional')
-            if not is_section.has_key(task['guisection']):
+            if task['guisection'] not in is_section:
                 # We do it like this to keep the original order, except for Main which goes first
                 is_section[task['guisection']] = 1
                 sections.append(task['guisection'])
@@ -1108,7 +1126,7 @@ class cmdPanel(wx.Panel):
         # flags
         #
         text_style = wx.FONTWEIGHT_NORMAL
-        visible_flags = [ f for f in self.task.flags if not f.get('hidden', 'no') ==  'yes' ]
+        visible_flags = [ f for f in self.task.flags if not f.get('hidden', False) ==  True ]
         for f in visible_flags:
             which_sizer = tabsizer[ f['guisection'] ]
             which_panel = tab[ f['guisection'] ]
@@ -1141,7 +1159,7 @@ class cmdPanel(wx.Panel):
                                      label = _("Parameterized in model"))
                 parChk.SetName('ModelParam')
                 parChk.SetValue(f.get('parameterized', False))
-                if f.has_key('wxId'):
+                if 'wxId' in f:
                     f['wxId'].append(parChk.GetId())
                 else:
                     f['wxId'] = [ parChk.GetId() ]
@@ -1155,14 +1173,14 @@ class cmdPanel(wx.Panel):
                 if f['name'] ==  vq:
                     chk.SetValue(True)
                     f['value'] = True
-            elif f['name'] ==  'overwrite' and not f.has_key('value'):
+            elif f['name'] ==  'overwrite' and 'value' not in f:
                 chk.SetValue(UserSettings.Get(group = 'cmd', key = 'overwrite', subkey = 'enabled'))
                 f['value'] = UserSettings.Get(group = 'cmd', key = 'overwrite', subkey = 'enabled')
                 
         #
         # parameters
         #
-        visible_params = [ p for p in self.task.params if not p.get('hidden', 'no') ==  'yes' ]
+        visible_params = [ p for p in self.task.params if not p.get('hidden', False) ==  True ]
         
         try:
             first_param = visible_params[0]
@@ -1249,8 +1267,7 @@ class cmdPanel(wx.Panel):
                         chkbox = wx.CheckBox(parent = which_panel,
                                              label = text_beautify(label))
                         p[ 'wxId' ].append(chkbox.GetId())
-                        
-                        if isEnabled.has_key(val):
+                        if val in isEnabled:
                             chkbox.SetValue(True)
                         hSizer.Add(item = chkbox, proportion = 0,
                                     flag = wx.ADJUST_MINSIZE | wx.ALL, border = 1)
@@ -1282,7 +1299,7 @@ class cmdPanel(wx.Panel):
                             txt2.SetName("TextCtrl")
                             style = wx.EXPAND | wx.BOTTOM | wx.LEFT
                         
-                        value = self._GetValue(p)
+                        value = self._getValue(p)
                         # parameter previously set
                         if value:
                             if txt2.GetName() ==  "SpinCtrl":
@@ -1301,7 +1318,7 @@ class cmdPanel(wx.Panel):
                         cb = wx.ComboBox(parent = which_panel, id = wx.ID_ANY, value = p.get('default',''),
                                          size = globalvar.DIALOG_COMBOBOX_SIZE,
                                          choices = valuelist, style = wx.CB_DROPDOWN)
-                        value = self._GetValue(p)
+                        value = self._getValue(p)
                         if value:
                             cb.SetValue(value) # parameter previously set
                         which_sizer.Add( item=cb, proportion=0,
@@ -1322,7 +1339,7 @@ class cmdPanel(wx.Panel):
                         len(p.get('key_desc', [])) > 1:
                     txt3 = wx.TextCtrl(parent = which_panel, value = p.get('default',''))
                     
-                    value = self._GetValue(p)
+                    value = self._getValue(p)
                     if value:
                         # parameter previously set
                         txt3.SetValue(str(value))
@@ -1338,7 +1355,7 @@ class cmdPanel(wx.Panel):
                                            min = minValue, max = maxValue)
                         style = wx.BOTTOM | wx.LEFT | wx.RIGHT
                         
-                        value = self._GetValue(p)
+                        value = self._getValue(p)
                         if value:
                             txt3.SetValue(int(value)) # parameter previously set
                         
@@ -1348,7 +1365,7 @@ class cmdPanel(wx.Panel):
                                            validator = FloatValidator())
                         style = wx.EXPAND | wx.BOTTOM | wx.LEFT | wx.RIGHT
                         
-                        value = self._GetValue(p)
+                        value = self._getValue(p)
                         if value:
                             txt3.SetValue(str(value)) # parameter previously set
                     
@@ -1393,20 +1410,20 @@ class cmdPanel(wx.Panel):
                                                        isRaster = isRaster)
                         p['wxId'] = [ selection.GetId(), ]
                         selection.Bind(wx.EVT_COMBOBOX, self.OnSetValue)
-                        formatSelector = False
                         selection.Bind(wx.EVT_TEXT, self.OnUpdateSelection)
                     else:
                         selection = gselect.Select(parent = which_panel, id = wx.ID_ANY,
                                                    size = globalvar.DIALOG_GSELECT_SIZE,
                                                    type = p.get('element', ''),
                                                    multiple = multiple, mapsets = mapsets)
-                        formatSelector = True
+                        
                         # A select.Select is a combobox with two children: a textctl and a popupwindow;
                         # we target the textctl here
-                        p['wxId'] = [selection.GetChildren()[0].GetId(), ]
-                        selection.GetChildren()[0].Bind(wx.EVT_TEXT, self.OnSetValue)
+                        textWin = selection.GetTextCtrl()
+                        p['wxId'] = [ textWin.GetId(), ]
+                        textWin.Bind(wx.EVT_TEXT, self.OnSetValue)
                     
-                    value = self._GetValue(p)
+                    value = self._getValue(p)
                     if value:
                         selection.SetValue(value) # parameter previously set
 
@@ -1415,7 +1432,6 @@ class cmdPanel(wx.Panel):
                     
                     if p.get('prompt', '') in ('vector', 'group'):
                         selection.Bind(wx.EVT_TEXT, self.OnUpdateSelection)
-                
                 # subgroup
                 elif p.get('prompt', '') ==  'subgroup':
                     selection = gselect.SubGroupSelect(parent = which_panel)
@@ -1515,7 +1531,7 @@ class cmdPanel(wx.Panel):
                             win.Bind(wx.EVT_TEXT, self.OnUpdateSelection)
                             p['wxId'] = [ win.GetChildren()[1].GetId() ]
                             
-                    if not p.has_key('wxId'):
+                    if 'wxId' not in p:
                         try:
                             p['wxId'] = [ win.GetId(), ]
                         except AttributeError:
@@ -1567,7 +1583,7 @@ class cmdPanel(wx.Panel):
                                                       buttonText = _('Browse'),
                                                       startDirectory = os.getcwd(), fileMode = 0,
                                                       changeCallback = self.OnSetValue)
-                    value = self._GetValue(p)
+                    value = self._getValue(p)
                     if value:
                         fbb.SetValue(value) # parameter previously set
                     which_sizer.Add(item = fbb, proportion = 0,
@@ -1602,7 +1618,7 @@ class cmdPanel(wx.Panel):
                                      label = _("Parameterized in model"))
                 parChk.SetName('ModelParam')
                 parChk.SetValue(p.get('parameterized', False))
-                if p.has_key('wxId'):
+                if 'wxId' in p:
                     p['wxId'].append(parChk.GetId())
                 else:
                     p['wxId'] = [ parChk.GetId() ]
@@ -1625,8 +1641,9 @@ class cmdPanel(wx.Panel):
                     title_txt.SetToolTipString(tooltip)
 
             if p ==  first_param:
-                if p.has_key('wxId') and len(p['wxId']) > 0:
-                    self.FindWindowById(p['wxId'][0]).SetFocus()
+                if 'wxId' in p and len(p['wxId']) > 0:
+                    win = self.FindWindowById(p['wxId'][0])
+                    win.SetFocus()
         
         #
         # set widget relations for OnUpdateSelection
@@ -1734,7 +1751,7 @@ class cmdPanel(wx.Panel):
         
         self.Bind(EVT_DIALOG_UPDATE, self.OnUpdateDialog)
 
-    def _GetValue(self, p):
+    def _getValue(self, p):
         """!Get value or default value of given parameter
 
         @param p parameter directory
@@ -1857,7 +1874,7 @@ class cmdPanel(wx.Panel):
         # Keep the original order, so that some defaults may be recovered
         currentValueList = [] 
         for v in theParam['values']:
-            if currentValues.has_key(v):
+            if v in currentValues:
                 currentValueList.append(v)
 
         # Pack it back
@@ -1878,7 +1895,7 @@ class cmdPanel(wx.Panel):
 
         found = False
         for porf in self.task.params + self.task.flags:
-            if not porf.has_key('wxId'):
+            if 'wxId' not in porf:
                 continue
             if myId in porf['wxId']:
                 found = True
@@ -1967,7 +1984,7 @@ def getInterfaceDescription(cmd):
                                      stderr = grass.PIPE).communicate()
     except OSError, e:
         raise gcmd.GException, _("Unable to fetch interface description for command '%s'. "
-                                 "Details: %s") % (cmd, e.value)
+                                 "Details: %s") % (cmd, e)
     if cmderr and cmderr[:7] != 'WARNING':
         raise gcmd.GException, _("Unable to fetch interface description for command '%s'. "
                                  "Details: %s") % (cmd, cmderr)
@@ -1995,17 +2012,25 @@ class GrassGUIApp(wx.App):
         return True
 
 class GUI:
-    """
-    Parses GRASS commands when module is imported and used
-    from Layer Manager.
-    """
-    def __init__(self, parent = -1):
+    def __init__(self, parent = None, show = True, modal = False,
+                 centreOnParent = False, checkError = False):
+        """!Parses GRASS commands when module is imported and used from
+        Layer Manager.
+        """
         self.parent = parent
+        self.show   = show
+        self.modal  = modal
+        self.centreOnParent = centreOnParent
+        self.checkError     = checkError
+        
         self.grass_task = None
         self.cmd = list()
-
+        
+        global _ignoreBlackList
+        _ignoreBlackList = False if self.parent else True
+        
     def GetCmd(self):
-        """Get validated command"""
+        """!Get validated command"""
         return self.cmd
     
     def ParseInterface(self, cmd, parser = processTask):
@@ -2021,8 +2046,7 @@ class GUI:
         
         return processTask(tree).GetTask()
     
-    def ParseCommand(self, cmd, gmpath = None, completed = None, parentframe = None,
-                     show = True, modal = False, centreOnParent = False, checkError = False):
+    def ParseCommand(self, cmd, gmpath = None, completed = None):
         """!Parse command
         
         Note: cmd is given as list
@@ -2042,8 +2066,6 @@ class GUI:
             layer = completed[1]
             if completed[2]:
                 dcmd_params.update(completed[2])
-
-        self.parent = parentframe
         
         # parse the interface decription
         self.grass_task = self.ParseInterface(cmd)
@@ -2100,7 +2122,7 @@ class GUI:
             # update original command list
             cmd = cmd_validated
         
-        if show is not None:
+        if self.show is not None:
             self.mf = mainFrame(parent = self.parent, ID = wx.ID_ANY,
                                 task_description = self.grass_task,
                                 get_dcmd = get_dcmd, layer = layer)
@@ -2112,19 +2134,21 @@ class GUI:
             get_dcmd(dcmd = None, layer = layer, params = None,
                      propwin = self.mf)
         
-        if show is not None:
+        if self.show is not None:
             self.mf.notebookpanel.OnUpdateSelection(None)
-            if show is True:
-                if self.parent:
+            if self.show is True:
+                if self.parent and self.centreOnParent:
                     self.mf.CentreOnParent()
-                self.mf.Show(show)
-                self.mf.MakeModal(modal)
+                else:
+                    self.mf.CenterOnScreen()
+                self.mf.Show(self.show)
+                self.mf.MakeModal(self.modal)
             else:
                 self.mf.OnApply(None)
         
         self.cmd = cmd
         
-        if checkError:
+        if self.checkError:
             return self.grass_task, err
         else:
             return self.grass_task
@@ -2203,7 +2227,7 @@ if __name__ ==  "__main__":
         sys.exit(_("usage: %s <grass command>") % sys.argv[0])
     if sys.argv[1] !=  'test':
         q = wx.LogNull()
-        cmd = shlex.split(sys.argv[1])
+        cmd = utils.split(sys.argv[1])
         task = grassTask(cmd[0])
         task.set_options(cmd[1:])
         app = GrassGUIApp(task)
@@ -2231,7 +2255,7 @@ if __name__ ==  "__main__":
             },{
             "name" : "hidden_text",
             "description" : "This text should not appear in the form",
-            "hidden" : "yes"
+            "hidden" : True
             },{
             "name" : "text_default",
             "description" : "Enter text to override the default",
