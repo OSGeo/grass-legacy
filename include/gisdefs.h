@@ -1082,6 +1082,10 @@ double G_rhumbline_lat_from_lon(double);
 void G_rotate_around_point(double, double, double *, double *, double);
 void G_rotate_around_point_int(int, int, int *, int *, double);
 
+/* seek.c */
+off_t G_ftell(FILE *);
+void G_fseek(FILE *, off_t, int);
+
 /* sample.c */
 DCELL G_get_raster_sample_nearest(
     int, const struct Cell_head *, struct Categories *, double, double, int);
