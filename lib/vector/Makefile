@@ -5,7 +5,8 @@ SUBDIRS = rtree \
 	diglib \
 	Vlib \
 	transform \
-	vedit
+	vedit \
+	neta
 
 #doxygen:
 DOXNAME=vector
@@ -22,3 +23,5 @@ diglib: rtree
 Vlib: rtree dglib diglib
 
 vedit: Vlib
+
+neta: Vlib
