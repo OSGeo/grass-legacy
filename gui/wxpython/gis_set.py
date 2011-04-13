@@ -26,6 +26,7 @@ import glob
 import shutil
 import copy
 import platform
+import codecs
 
 ### i18N
 import gettext
@@ -46,6 +47,8 @@ import wx.lib.filebrowsebutton as filebrowse
 import wx.lib.mixins.listctrl as listmix
 import wx.lib.scrolledpanel as scrolled
 
+sys.stderr = codecs.getwriter('utf8')(sys.stderr)
+
 class GRASSStartup(wx.Frame):
     """!GRASS start-up screen"""
     def __init__(self, parent = None, id = wx.ID_ANY, style = wx.DEFAULT_FRAME_STYLE):
@@ -54,7 +57,7 @@ class GRASSStartup(wx.Frame):
         # GRASS variables
         #
         self.gisbase  = os.getenv("GISBASE")
-        self.grassrc  = self._read_grassrc()
+        self.grassrc  = self._readGisRC()
         self.gisdbase = self.GetRCValue("GISDBASE")
 
         #
@@ -79,7 +82,7 @@ class GRASSStartup(wx.Frame):
         #
         # image
         try:
-            name = os.path.join(globalvar.ETCDIR, "gui", "images", "gintro.gif")
+            name = os.path.join(globalvar.ETCIMGDIR, "startup_banner.gif")
             self.hbitmap = wx.StaticBitmap(self.panel, wx.ID_ANY,
                                            wx.Bitmap(name = name,
                                                      type = wx.BITMAP_TYPE_GIF))
@@ -376,34 +379,34 @@ class GRASSStartup(wx.Frame):
 
         self.Layout()
 
-    def _read_grassrc(self):
+    def _readGisRC(self):
         """
         Read variables from $HOME/.grassrc6 file
         """
 
         grassrc = {}
-
+        
         gisrc = os.getenv("GISRC")
-
+        
         if gisrc and os.path.isfile(gisrc):
             try:
                 rc = open(gisrc, "r")
                 for line in rc.readlines():
                     key, val = line.split(":", 1)
-                    grassrc[key.strip()] = val.strip()
+                    grassrc[key.strip()] = utils.DecodeString(val.strip())
             finally:
                 rc.close()
         
         return grassrc
 
     def GetRCValue(self, value):
-        "Return GRASS variable (read from GISRC)"""
-
+        """!Return GRASS variable (read from GISRC)
+        """
         if self.grassrc.has_key(value):
             return self.grassrc[value]
         else:
             return None
-
+        
     def OnWizard(self, event):
         """!Location wizard started"""
         from gui_modules import location_wizard
@@ -585,10 +588,10 @@ class GRASSStartup(wx.Frame):
     def UpdateMapsets(self, location):
         """!Update list of mapsets"""
         self.FormerMapsetSelection = wx.NOT_FOUND # for non-selectable item
-
+        
         self.listOfMapsetsSelectable = list()
         self.listOfMapsets = utils.GetListOfMapsets(self.gisdbase, location)
-         
+        
         self.lbmapsets.Clear()
 
         # disable mapset with denied permission
@@ -602,10 +605,10 @@ class GRASSStartup(wx.Frame):
                                   gisdbase = self.gisdbase)
             
             if not ret:
-                raise gcmd.CmdError("")
+                raise gcmd.GError(_("No mapsets available in location <%s>") % locationName)
             
             for line in ret.splitlines():
-                self.listOfMapsetsSelectable +=  line.split(' ')
+                self.listOfMapsetsSelectable += line.split(' ')
         except:
             gcmd.RunCommand("g.gisenv",
                             set = "GISDBASE=%s" % self.gisdbase)
@@ -619,7 +622,6 @@ class GRASSStartup(wx.Frame):
         disabled = []
         idx = 0
         for mapset in self.listOfMapsets:
-            mapset = utils.UnicodeString(mapset)
             if mapset not in self.listOfMapsetsSelectable or \
                     os.path.isfile(os.path.join(self.gisdbase,
                                                 locationName,
@@ -641,7 +643,7 @@ class GRASSStartup(wx.Frame):
                                             self.listOfLocations[self.lblocations.GetSelection()]))
         else:
             self.listOfMapsets = []
-
+        
         disabled = []
         idx = 0
         try:

@@ -49,6 +49,40 @@
 	    </menuitem>
 	  </items>
 	</menu>
+	<menu>
+	  <label>Map display</label>
+	  <items>
+	    <menuitem>
+	      <label>New</label>
+	      <help>Open new map display window</help>
+	      <handler>OnNewDisplay</handler>
+	    </menuitem>
+	    <menuitem>
+	      <label>Close current</label>
+	      <help>Close current map display window</help>
+	      <handler>OnDisplayClose</handler>
+	      <shortcut>Ctrl+W</shortcut>
+	    </menuitem>
+	    <menuitem>
+	      <label>Close all</label>
+	      <help>Close all open map display windows</help>
+	      <handler>OnDisplayCloseAll</handler>
+	    </menuitem>
+	    <separator />
+	    <menuitem>
+	      <label>Add raster</label>
+	      <help>Add raster map layer to current display</help>
+	      <handler>OnAddRaster</handler>
+	      <shortcut>Ctrl+R</shortcut>
+	    </menuitem>
+	    <menuitem>
+	      <label>Add vector</label>
+	      <help>Add vector map layer to current display</help>
+	      <handler>OnAddVector</handler>
+	      <shortcut>Ctrl+V</shortcut>
+	    </menuitem>
+	  </items>
+	</menu>
 	<separator />
 	<menu>
 	  <label>Import raster data</label>
@@ -85,7 +119,7 @@
 	    <separator />
 	    <menuitem>
 	      <label>Binary file import</label>
-	      <help>Import a binary raster file into a GRASS raster map layer.</help>
+	      <help>Import a binary raster file into a GRASS raster map.</help>
 	      <keywords>raster,import</keywords>
 	      <handler>OnMenuCmd</handler>
 	      <command>r.in.bin</command>
@@ -233,7 +267,7 @@
 	    </menuitem>
 	    <menuitem>
 	      <label>Matlab array and MapGen import</label>
-	      <help>Import Mapgen or Matlab-ASCII vector maps into GRASS.</help>
+	      <help>Import Mapgen or Matlab vector maps into GRASS.</help>
 	      <keywords>vector,import</keywords>
 	      <handler>OnMenuCmd</handler>
 	      <command>v.in.mapgen</command>
@@ -322,16 +356,16 @@
 	    <separator />
 	    <menuitem>
 	      <label>Binary export</label>
-	      <help>Exports a GRASS raster to a binary array.</help>
-	      <keywords>raster</keywords>
+	      <help>Exports a GRASS raster map to a binary array.</help>
+	      <keywords>raster,export</keywords>
 	      <handler>OnMenuCmd</handler>
 	      <command>r.out.bin</command>
 	    </menuitem>
 	    <separator />
 	    <menuitem>
 	      <label>MPEG-1 export</label>
-	      <help>Raster File Series to MPEG Conversion Program.</help>
-	      <keywords>raster</keywords>
+	      <help>Raster File Series to MPEG Conversion.</help>
+	      <keywords>raster,animation</keywords>
 	      <handler>OnMenuCmd</handler>
 	      <command>r.out.mpeg</command>
 	    </menuitem>
@@ -555,7 +589,7 @@
 	  <items>
 	    <menuitem>
 	      <label>Raster to vector</label>
-	      <help>Converts a raster map into a vector map layer.</help>
+	      <help>Converts a raster map into a vector map.</help>
 	      <keywords>raster,conversion,vectorization</keywords>
 	      <handler>OnMenuCmd</handler>
 	      <command>r.to.vect</command>
@@ -655,8 +689,15 @@
 	</menuitem>
 	<separator />
 	<menuitem>
+	  <label>Hardcopy Map Output Utility</label>
+	  <help>Launch Hardcopy Map Output Utility</help>
+	  <keywords>postscript,map,printing</keywords>
+	  <handler>OnPsMap</handler>
+	  <command>ps.map</command>
+	</menuitem>
+	<menuitem>
 	  <label>Postscript plot</label>
-	  <help>Hardcopy PostScript map output utility.</help>
+	  <help>Produces hardcopy PostScript map output.</help>
 	  <keywords>postscript,map,printing</keywords>
 	  <handler>OnMenuCmd</handler>
 	  <command>ps.map</command>
@@ -737,14 +778,14 @@
 	    <menuitem>
 	      <label>Show settings</label>
 	      <help>Outputs and modifies the user's current GRASS variable settings.</help>
-	      <keywords>general</keywords>
+	      <keywords>general,settings</keywords>
               <handler>RunMenuCmd</handler>
 	      <command>g.gisenv -n</command>
 	    </menuitem>
 	    <menuitem>
 	      <label>Change settings</label>
 	      <help>Outputs and modifies the user's current GRASS variable settings.</help>
-	      <keywords>general</keywords>
+	      <keywords>general,settings</keywords>
               <handler>OnMenuCmd</handler>
 	      <command>g.gisenv</command>
 	    </menuitem>
@@ -759,7 +800,7 @@
 	    <menuitem>
 	      <label>Version</label>
 	      <help>Displays version and copyright information.</help>
-	      <keywords>general</keywords>
+	      <keywords>general,version</keywords>
               <handler>RunMenuCmd</handler>
 	      <command>g.version -c</command>
 	    </menuitem>
@@ -800,6 +841,11 @@
 	  </items>
 	</menu>
 	<separator />
+	    <menuitem>
+	      <label>Install extension from add-ons</label>
+	      <help>Install new extension from GRASS AddOns SVN repository.</help>
+	      <handler>OnInstallExtension</handler>
+	    </menuitem>
 	    <menuitem>
 	      <label>Manage add-ons extensions</label>
 	      <help>Tool to maintain GRASS extensions in local GRASS installation.</help>
@@ -1017,7 +1063,7 @@
 	</menuitem>
 	<menuitem>
 	  <label>Mask</label>
-	  <help>Create a MASK for limiting raster operation</help>
+	  <help>Creates a mask for limiting raster operation.</help>
 	  <keywords>raster,mask</keywords>
 	  <handler>OnMenuCmd</handler>
 	  <command>r.mask</command>
@@ -1212,23 +1258,23 @@
 	  <items>
 	    <menuitem>
 	      <label>Carve stream channels</label>
-	      <help>Takes vector stream data, transforms it to raster and subtracts depth from the output DEM.</help>
-	      <keywords>raster</keywords>
+	      <help>Generates stream channels.</help>
+	      <keywords>raster,hydrology</keywords>
 	      <handler>OnMenuCmd</handler>
 	      <command>r.carve</command>
 	    </menuitem>
 	    <menuitem>
 	      <label>Fill lake</label>
 	      <help>Fills lake from seed at given level.</help>
-	      <keywords>raster</keywords>
+	      <keywords>raster,hydrology</keywords>
 	      <handler>OnMenuCmd</handler>
 	      <command>r.lake</command>
 	    </menuitem>
 	    <separator />
 	    <menuitem>
 	      <label>Depressionless map and flowlines</label>
-	      <help>Filters and generates a depressionless elevation map and a flow direction map from a given elevation layer.</help>
-	      <keywords>raster</keywords>
+	      <help>Filters and generates a depressionless elevation map and a flow direction map from a given elevation raster map.</help>
+	      <keywords>raster,hydrology</keywords>
 	      <handler>OnMenuCmd</handler>
 	      <command>r.fill.dir</command>
 	    </menuitem>
@@ -1241,22 +1287,22 @@
 	    </menuitem>
 	    <menuitem>
 	      <label>Flow lines</label>
-	      <help>Construction of slope curves (flowlines), flowpath lengths, and flowline densities (upslope areas) from a raster digital elevation model (DEM)</help>
-	      <keywords>raster</keywords>
+	      <help>Constructs flow lines.</help>
+	      <keywords>raster,hydrology</keywords>
 	      <handler>OnMenuCmd</handler>
 	      <command>r.flow</command>
 	    </menuitem>
 	    <separator />
 	    <menuitem>
 	      <label>SIMWE Overland flow modeling</label>
-	      <help>Overland flow hydrologic simulation using path sampling method (SIMWE)</help>
+	      <help>Overland flow hydrologic simulation using path sampling method (SIMWE).</help>
 	      <keywords>raster,flow,hydrology</keywords>
 	      <handler>OnMenuCmd</handler>
 	      <command>r.sim.water</command>
 	    </menuitem>
 	    <menuitem>
 	      <label>SIMWE Sediment flux modeling</label>
-	      <help>Sediment transport and erosion/deposition simulation using path sampling method (SIMWE)</help>
+	      <help>Sediment transport and erosion/deposition simulation using path sampling method (SIMWE).</help>
 	      <keywords>raster,sediment flow,erosion,deposition</keywords>
 	      <handler>OnMenuCmd</handler>
 	      <command>r.sim.sediment</command>
@@ -1264,15 +1310,15 @@
 	    <separator />
 	    <menuitem>
 	      <label>Topographic index map</label>
-	      <help>Creates topographic index [ln(a/tan(beta))] map from elevation map.</help>
-	      <keywords>raster</keywords>
+	      <help>Creates topographic index map from elevation raster map.</help>
+	      <keywords>raster,hydrology</keywords>
 	      <handler>OnMenuCmd</handler>
 	      <command>r.topidx</command>
 	    </menuitem>
 	    <menuitem>
 	      <label>TOPMODEL simulation</label>
 	      <help>Simulates TOPMODEL which is a physically based hydrologic model.</help>
-	      <keywords>raster</keywords>
+	      <keywords>raster,hydrology</keywords>
 	      <handler>OnMenuCmd</handler>
 	      <command>r.topmodel</command>
 	    </menuitem>
@@ -1286,15 +1332,15 @@
 	    </menuitem>
 	    <menuitem>
 	      <label>Watershed analysis</label>
-	      <help>Watershed basin analysis program.</help>
-	      <keywords>raster</keywords>
+	      <help>Watershed basin analysis program</help>
+	      <keywords>raster,hydrology</keywords>
 	      <handler>OnMenuCmd</handler>
 	      <command>r.watershed</command>
 	    </menuitem>
 	    <menuitem>
 	      <label>Watershed basin creation</label>
-	      <help>Watershed basin creation program.</help>
-	      <keywords>raster</keywords>
+	      <help>Creates watershed basins.</help>
+	      <keywords>raster,hydrology</keywords>
 	      <handler>OnMenuCmd</handler>
 	      <command>r.water.outlet</command>
 	    </menuitem>
@@ -1495,8 +1541,8 @@
 	    </menuitem>
 	    <menuitem>
 	      <label>Reclassify</label>
-	      <help>Creates a new map layer whose category values are based upon a reclassification of the categories in an existing raster map layer.</help>
-	      <keywords>raster</keywords>
+	      <help>Reclassify raster map based on category values.</help>
+	      <keywords>raster,reclassification</keywords>
 	      <handler>OnMenuCmd</handler>
 	      <command>r.reclass</command>
 	    </menuitem>
@@ -1565,7 +1611,7 @@
 	    <separator />
 	    <menuitem>
 	      <label>Gaussian kernel density surface</label>
-	      <help>Generates a raster density map from vector points data using a moving 2D isotropic Gaussian kernel or optionally generates a vector density map on vector network with a 1D kernel.</help>
+	      <help>Generates a raster density map from vector point data using a moving kernel or optionally generates a vector density map on a vector network.</help>
 	      <keywords>vector,kernel density</keywords>
 	      <handler>OnMenuCmd</handler>
 	      <command>v.kernel</command>
@@ -1662,6 +1708,14 @@
 	      <keywords>vector</keywords>
 	      <handler>OnMenuCmd</handler>
 	      <command>v.surf.rst</command>
+	    </menuitem>
+	    <separator />
+	    <menuitem>
+	      <label>Ordinary or block kriging</label>
+	      <help>Performs ordinary or block kriging.</help>
+	      <keywords>vector,interpolation,kriging</keywords>
+              <handler>RunMenuCmd</handler>
+	      <command>v.krige.py</command>
 	    </menuitem>
 	    <separator />
 	    <menuitem>
@@ -2099,6 +2153,27 @@
 	      <handler>OnMenuCmd</handler>
 	      <command>v.net.path</command>
 	    </menuitem>
+	    <menuitem>
+	      <label>Shortest path for sets of features</label>
+	      <help>Computes shortest distance via the network between the given sets of features.</help>
+	      <keywords>vector,network,shortest path</keywords>
+	      <handler>OnMenuCmd</handler>
+	      <command>v.net.distance</command>
+	    </menuitem>
+	    <menuitem>
+	      <label>Shortest path using timetables</label>
+	      <help>Finds shortest path using timetables.</help>
+	      <keywords>vector,network,shortest path</keywords>
+	      <handler>OnMenuCmd</handler>
+	      <command>v.net.timetable</command>
+	    </menuitem>
+	    <menuitem>
+	      <label>Shortest path for all pairs</label>
+	      <help>Computes the shortest path between all pairs of nodes in the network.</help>
+	      <keywords>vector,network,shortest path</keywords>
+	      <handler>OnMenuCmd</handler>
+	      <command>v.net.allpairs</command>
+	    </menuitem>
 	    <separator />
 	    <menuitem>
 	      <label>Visibility network</label>
@@ -2107,6 +2182,41 @@
 	      <handler>OnMenuCmd</handler>
 	      <command>v.net.visibility</command>
 	    </menuitem>
+	    <menuitem>
+	      <label>Bridges and articulation points</label>
+	      <help>Computes bridges and articulation points in the network.</help>
+	      <keywords>vector,network,articulation points</keywords>
+	      <handler>OnMenuCmd</handler>
+	      <command>v.net.bridge</command>
+	    </menuitem>
+	    <menuitem>
+	      <label>Maximum flow</label>
+	      <help>Computes the maximum flow between two sets of nodes in the network.</help>
+	      <keywords>vector,network,flow</keywords>
+	      <handler>OnMenuCmd</handler>
+	      <command>v.net.flow</command>
+	    </menuitem>
+	    <menuitem>
+	      <label>Vertex connectivity</label>
+	      <help>Computes vertex connectivity between two sets of nodes in the network.</help>
+	      <keywords>vector,network,connectivity</keywords>
+	      <handler>OnMenuCmd</handler>
+	      <command>v.net.connectivity</command>
+	    </menuitem>
+	    <menuitem>
+	      <label>Components</label>
+	      <help>Computes strongly and weakly connected components in the network.</help>
+	      <keywords>vector,network,components</keywords>
+	      <handler>OnMenuCmd</handler>
+	      <command>v.net.components</command>
+	    </menuitem>
+	    <menuitem>
+	      <label>Centrality</label>
+	      <help>Computes degree, centrality, betweeness, closeness and eigenvector centrality measures in the network.</help>
+	      <keywords>vector,network,centrality measures</keywords>
+	      <handler>OnMenuCmd</handler>
+	      <command>v.net.centrality</command>
+	    </menuitem>
 	    <separator />
 	    <menuitem>
 	      <label>Steiner tree</label>
@@ -2114,6 +2224,13 @@
 	      <keywords>vector,networking</keywords>
 	      <handler>OnMenuCmd</handler>
 	      <command>v.net.steiner</command>
+	    </menuitem>
+	    <menuitem>
+	      <label>Minimum spanning tree</label>
+	      <help>Computes minimum spanning tree for the network.</help>
+	      <keywords>vector,network,spanning tree</keywords>
+	      <handler>OnMenuCmd</handler>
+	      <command>v.net.spanningtree</command>
 	    </menuitem>
 	    <menuitem>
 	      <label>Traveling salesman analysis</label>
@@ -2758,7 +2875,7 @@
 	  <items>
 	    <menuitem>
 	      <label>Query any table</label>
-	      <help>Selects data from table.</help>
+	      <help>Selects data from attribute table (performs SQL query statement(s)).</help>
 	      <keywords>database,attribute table,SQL</keywords>
 	      <handler>OnMenuCmd</handler>
 	      <command>db.select</command>

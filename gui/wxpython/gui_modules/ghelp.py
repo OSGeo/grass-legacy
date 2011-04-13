@@ -39,6 +39,7 @@ import gcmd
 import globalvar
 import gdialogs
 import utils
+import menuform
 
 class HelpFrame(wx.Frame):
     """!GRASS Quickstart help window"""
@@ -170,7 +171,7 @@ class SearchModuleWindow(wx.Panel):
                 except ValueError:
                     continue # TODO
                 
-                if not modules.has_key(group):
+                if group not in modules:
                     modules[group] = list()
                 modules[group].append(name)
                 
@@ -304,7 +305,7 @@ class MenuTreeWindow(wx.Panel):
             return
         
         data = self.tree.GetPyData(item)
-        if not data or not data.has_key('command'):
+        if not data or 'command' not in data:
             return
         
         self.tree.itemSelected = item
@@ -318,7 +319,7 @@ class MenuTreeWindow(wx.Panel):
             return
         
         data = self.tree.GetPyData(item)
-        if not data or not data.has_key('command'):
+        if not data or 'command' not in data:
             return
         
         if data['command']:
@@ -387,7 +388,7 @@ class ItemTree(CT.CustomTreeCtrl):
                 self._processItem(subItem, element, value, listOfItems)
             data = self.GetPyData(item)
             
-            if data and data.has_key(element) and \
+            if data and element in data and \
                     value.lower() in data[element].lower():
                 listOfItems.append(item)
             
@@ -665,7 +666,7 @@ class AboutWindow(wx.Frame):
         contribfile = os.path.join(os.getenv("GISBASE"), "contributors.csv")
         if os.path.exists(contribfile):
             contribFile = open(contribfile, 'r')
-            contribs = list()
+            contribs = dict()
             errLines = list()
             for line in contribFile.readlines():
                 line = line.rstrip('\n')
@@ -674,8 +675,7 @@ class AboutWindow(wx.Frame):
                 except ValueError:
                     errLines.append(line)
                     continue
-                contribs.append((name, email, country, osgeo_id))
-            contribs[0] = (_('Name'), _('E-mail'), _('Country'), _('OSGeo_ID'))
+                contribs[osgeo_id] = [name, email, country]
             contribFile.close()
             
             if errLines:
@@ -698,8 +698,11 @@ class AboutWindow(wx.Frame):
                                  flag = wx.EXPAND | wx.ALL, border = 3)
         else:
             contribBox = wx.FlexGridSizer(cols = 4, vgap = 5, hgap = 5)
-            for developer in contribs:
-                for item in developer:
+            for item in (_('Name'), _('E-mail'), _('Country'), _('OSGeo_ID')):
+                contribBox.Add(item = wx.StaticText(parent = contribwin, id = wx.ID_ANY,
+                                                    label = item))
+            for osgeo_id in sorted(contribs.keys()):
+                for item in contribs[osgeo_id] + [osgeo_id]:
                     contribBox.Add(item = wx.StaticText(parent = contribwin, id = wx.ID_ANY,
                                                         label = item))
             contribwin.sizer.Add(item = contribBox, proportion = 1,
@@ -725,7 +728,7 @@ class AboutWindow(wx.Frame):
                     errLines.append(line)
                     continue
                 for language in languages.split(' '):
-                    if not translators.has_key(language):
+                    if language not in translators:
                         translators[language] = list()
                     translators[language].append((name, email))
             translatorsFile.close()
@@ -782,8 +785,9 @@ class AboutWindow(wx.Frame):
 
 class InstallExtensionWindow(wx.Frame):
     def __init__(self, parent, id = wx.ID_ANY,
-                 title = _("Fetch & install new extension from GRASS Addons"), **kwargs):
+                 title = _("Fetch & install extension from GRASS Addons"), **kwargs):
         self.parent = parent
+        self.options = dict() # list of options
         
         wx.Frame.__init__(self, parent = parent, id = id, title = title, **kwargs)
         
@@ -804,6 +808,21 @@ class InstallExtensionWindow(wx.Frame):
         self.search.SetSelection(2) 
         
         self.tree   = ExtensionTree(parent = self.panel, log = parent.GetLogWindow())
+        
+        self.optionBox = wx.StaticBox(parent = self.panel, id = wx.ID_ANY,
+                                      label = " %s " % _("Options"))
+        task = menuform.GUI().ParseInterface(cmd = ['g.extension.py'])
+        for f in task.get_options()['flags']:
+            name = f.get('name', '')
+            desc = f.get('label', '')
+            if not desc:
+                desc = f.get('description', '')
+            if not name and not desc:
+                continue
+            if name in ('l', 'f', 'g'):
+                continue
+            self.options[name] = wx.CheckBox(parent = self.panel, id = wx.ID_ANY,
+                                             label = desc)
         
         self.statusbar = self.CreateStatusBar(0)
         
@@ -845,6 +864,11 @@ class InstallExtensionWindow(wx.Frame):
         treeSizer = wx.StaticBoxSizer(self.treeBox, wx.HORIZONTAL)
         treeSizer.Add(item = self.tree, proportion = 1,
                       flag = wx.ALL | wx.EXPAND, border = 1)
+
+        # options
+        optionSizer = wx.StaticBoxSizer(self.optionBox, wx.VERTICAL)
+        for key in self.options.keys():
+            optionSizer.Add(item = self.options[key], proportion = 0)
         
         btnSizer = wx.BoxSizer(wx.HORIZONTAL)
         btnSizer.Add(item = self.btnClose, proportion = 0,
@@ -857,6 +881,8 @@ class InstallExtensionWindow(wx.Frame):
                   flag = wx.LEFT | wx.RIGHT | wx.BOTTOM | wx.EXPAND, border = 3)
         sizer.Add(item = treeSizer, proportion = 1,
                   flag = wx.LEFT | wx.RIGHT | wx.BOTTOM | wx.EXPAND, border = 3)
+        sizer.Add(item = optionSizer, proportion = 0,
+                        flag = wx.LEFT | wx.RIGHT | wx.BOTTOM | wx.EXPAND, border = 3)
         sizer.Add(item = btnSizer, proportion = 0,
                   flag = wx.ALIGN_RIGHT | wx.ALL, border = 5)
         
@@ -869,8 +895,13 @@ class InstallExtensionWindow(wx.Frame):
         if not name:
             return
         log = self.parent.GetLogWindow()
-        log.RunCmd(['g.extension', 'extension=' + name,
-                    'svnurl=' + self.repo.GetValue().strip()])
+        flags = list()
+        for key in self.options.keys():
+            if self.options[key].IsChecked():
+                flags.append('-%s' % key)
+        
+        log.RunCmd(['g.extension.py'] + flags + ['extension=' + name,
+                                                 'svnurl=' + self.repo.GetValue().strip()])
         self.OnCloseWindow(None)
         
     def OnUpdateStatusBar(self, event):
@@ -904,7 +935,7 @@ class InstallExtensionWindow(wx.Frame):
     def OnItemActivated(self, event):
         item = event.GetItem()
         data = self.tree.GetPyData(item)
-        if data and data.has_key('command'):
+        if data and 'command' in data:
             self._install(data['command'])
             
     def OnInstall(self, event):
@@ -951,7 +982,7 @@ class ExtensionTree(ItemTree):
         for prefix in ('display', 'database',
                        'general', 'imagery',
                        'misc', 'postscript', 'paint',
-                       'raster', 'raster3D', 'sites', 'vector'):
+                       'raster', 'raster3D', 'sites', 'vector', 'wxGUI'):
             self.AppendItem(parentId = self.root,
                             text = prefix)
         self._loaded = False
@@ -967,9 +998,10 @@ class ExtensionTree(ItemTree):
                  'r'  : 'raster',
                  'r3' : 'raster3D',
                  's'  : 'sites',
-                 'v'  : 'vector' }
+                 'v'  : 'vector',
+                 'wx' : 'wxGUI' }
         
-        if name.has_key(c):
+        if c in name:
             return name[c]
         
         return c
@@ -995,7 +1027,7 @@ class ExtensionTree(ItemTree):
             flags = 'g'
         else:
             flags = 'l'
-        ret = gcmd.RunCommand('g.extension', read = True,
+        ret = gcmd.RunCommand('g.extension.py', read = True,
                               svnurl = url,
                               flags = flags, quiet = True)
         if not ret:
@@ -1007,16 +1039,24 @@ class ExtensionTree(ItemTree):
                 key, value = line.split('=', 1)
                 if key == 'name':
                     prefix, name = value.split('.', 1)
-                    if not mdict.has_key(prefix):
+                    if prefix not in mdict:
                         mdict[prefix] = dict()
                     mdict[prefix][name] = dict()
                 else:
                     mdict[prefix][name][key] = value
             else:
-                prefix, name = line.strip().split('.', 1)
-                if not mdict.has_key(prefix):
-                    mdict[prefix] = dict()
+                try:
+                    prefix, name = line.strip().split('.', 1)
+                except:
+                    prefix = 'unknown'
+                    name = line.strip()
                 
+                if self._expandPrefix(prefix) == prefix:
+                    prefix = 'unknown'
+                    
+                if prefix not in mdict:
+                    mdict[prefix] = dict()
+                    
                 mdict[prefix][name] = { 'command' : prefix + '.' + name }
         
         for prefix in mdict.keys():

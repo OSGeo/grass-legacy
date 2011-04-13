@@ -6,8 +6,8 @@
 Classes:
  - AbstractToolbar
  - MapToolbar
- - GRToolbar
- - GCPToolbar
+ - GCPMapToolbar
+ - GCPDisplayToolbar
  - VDigitToolbar
  - ProfileToolbar
  - NvizToolbar
@@ -15,7 +15,7 @@ Classes:
  - HistogramToolbar
  - LayerManagerToolbar
 
-(C) 2007-2010 by the GRASS Development Team
+(C) 2007-2011 by the GRASS Development Team
 This program is free software under the GNU General Public License
 (>=v2). Read the file COPYING that comes with GRASS for details.
 
@@ -35,23 +35,21 @@ import wx
 import globalvar
 import gcmd
 import gdialogs
-import vdigit
-from vdigit import VDigitSettingsDialog, haveVDigit
+from vdigit import VDigitSettingsDialog, haveVDigit, VDigit
 from debug import Debug
 from preferences import globalSettings as UserSettings
 from nviz import haveNviz
 from nviz_preferences import NvizPreferencesDialog
 
-gmpath = os.path.join(globalvar.ETCWXDIR, "icons")
-sys.path.append(gmpath)
-from icon import Icons as Icons
+sys.path.append(os.path.join(globalvar.ETCWXDIR, "icons"))
+from icon import Icons
 
 class AbstractToolbar(wx.ToolBar):
     """!Abstract toolbar class"""
     def __init__(self, parent):
         self.parent = parent
         wx.ToolBar.__init__(self, parent = self.parent, id = wx.ID_ANY)
-    
+        
         self.action = dict()
         
         self.Bind(wx.EVT_TOOL, self.OnTool)
@@ -66,7 +64,7 @@ class AbstractToolbar(wx.ToolBar):
         
         self._data = toolData
         
-    def ToolbarData(self):
+    def _toolbarData(self):
         """!Toolbar data (virtual)"""
         return None
     
@@ -78,9 +76,10 @@ class AbstractToolbar(wx.ToolBar):
         """
         bmpDisabled = wx.NullBitmap
         
-        if label:
+        if label: 
             Debug.msg(3, "CreateTool(): tool=%d, label=%s bitmap=%s" % \
-                  (tool, label, bitmap))
+                          (tool, label, bitmap))
+            
             toolWin = self.AddLabelTool(tool, label, bitmap,
                                         bmpDisabled, kind,
                                         shortHelp, longHelp)
@@ -105,14 +104,16 @@ class AbstractToolbar(wx.ToolBar):
                 self.SetToolLongHelp(tool[0], "")
         
     def OnTool(self, event):
-        """!Tool selected"""
+        """!Tool selected
+        """
         if self.parent.GetName() == "GCPFrame":
             return
         
-        if self.parent.toolbars['vdigit']:
-            # update vdigit toolbar (unselect currently selected tool)
-            id = self.parent.toolbars['vdigit'].GetAction(type = 'id')
-            self.parent.toolbars['vdigit'].ToggleTool(id, False)
+        if hasattr(self.parent, 'toolbars'):
+            if self.parent.toolbars['vdigit']:
+                # update vdigit toolbar (unselect currently selected tool)
+                id = self.parent.toolbars['vdigit'].GetAction(type = 'id')
+                self.parent.toolbars['vdigit'].ToggleTool(id, False)
         
         if event:
             # deselect previously selected tool
@@ -162,6 +163,24 @@ class AbstractToolbar(wx.ToolBar):
         
         self.EnableTool(id, enable)
         
+    def _getToolbarData(self, data):
+        """!Define tool
+        """
+        retData = list()
+        for args in data:
+            retData.append(self._defineTool(*args))
+        
+        return retData
+
+    def _defineTool(self, key, name = None, icon = None, handler = None, item = wx.ITEM_NORMAL):
+        """!Define tool
+        """
+        if key:
+            return (key, name, icon.GetBitmap(),
+                    item, icon.GetLabel(), icon.GetDesc(),
+                    handler)
+        return ("", "", "", "", "", "", "") # separator
+    
 class MapToolbar(AbstractToolbar):
     """!Map Display toolbar
     """
@@ -174,12 +193,14 @@ class MapToolbar(AbstractToolbar):
         self.mapcontent = mapcontent # render.Map
         AbstractToolbar.__init__(self, parent = parent) # MapFrame
         
-        self.InitToolbar(self.ToolbarData())
+        self.InitToolbar(self._toolbarData())
         
         # optional tools
         choices = [ _('2D view'), ]
         self.toolId = { '2d' : 0 }
-        log = self.parent.GetLayerManager().GetLogWindow()
+        if self.parent.GetLayerManager():
+            log = self.parent.GetLayerManager().GetLogWindow()
+        
         if haveNviz:
             choices.append(_('3D view'))
             self.toolId['3d'] = 1
@@ -193,6 +214,7 @@ class MapToolbar(AbstractToolbar):
                            'In the meantime you can use "NVIZ" from the File menu.'), wrap = 60)
             
             self.toolId['3d'] = -1
+
         if haveVDigit:
             choices.append(_('Digitize'))
             if self.toolId['3d'] > -1:
@@ -235,7 +257,7 @@ class MapToolbar(AbstractToolbar):
         
         self.FixSize(width = 90)
         
-    def ToolbarData(self):
+    def _toolbarData(self):
         """!Toolbar data"""
         self.displaymap = wx.NewId()
         self.rendermap = wx.NewId()
@@ -253,59 +275,48 @@ class MapToolbar(AbstractToolbar):
         self.savefile = wx.NewId()
         self.printmap = wx.NewId()
         
-        # tool, label, bitmap, kind, shortHelp, longHelp, handler
-        return (
-            (self.displaymap, "displaymap", Icons["displaymap"].GetBitmap(),
-             wx.ITEM_NORMAL, Icons["displaymap"].GetLabel(), Icons["displaymap"].GetDesc(),
-             self.parent.OnDraw),
-            (self.rendermap, "rendermap", Icons["rendermap"].GetBitmap(),
-             wx.ITEM_NORMAL, Icons["rendermap"].GetLabel(), Icons["rendermap"].GetDesc(),
-             self.parent.OnRender),
-            (self.erase, "erase", Icons["erase"].GetBitmap(),
-             wx.ITEM_NORMAL, Icons["erase"].GetLabel(), Icons["erase"].GetDesc(),
-             self.parent.OnErase),
-            ("", "", "", "", "", "", ""),
-            (self.pointer, "pointer", Icons["pointer"].GetBitmap(),
-             wx.ITEM_CHECK, Icons["pointer"].GetLabel(), Icons["pointer"].GetDesc(),
-             self.parent.OnPointer),
-            (self.query, "query", Icons["query"].GetBitmap(),
-             wx.ITEM_CHECK, Icons["query"].GetLabel(), Icons["query"].GetDesc(),
-             self.parent.OnQuery),
-            (self.pan, "pan", Icons["pan"].GetBitmap(),
-             wx.ITEM_CHECK, Icons["pan"].GetLabel(), Icons["pan"].GetDesc(),
-             self.parent.OnPan),
-            (self.zoomin, "zoom_in", Icons["zoom_in"].GetBitmap(),
-             wx.ITEM_CHECK, Icons["zoom_in"].GetLabel(), Icons["zoom_in"].GetDesc(),
-             self.parent.OnZoomIn),
-            (self.zoomout, "zoom_out", Icons["zoom_out"].GetBitmap(),
-             wx.ITEM_CHECK, Icons["zoom_out"].GetLabel(), Icons["zoom_out"].GetDesc(),
-             self.parent.OnZoomOut),
-            (self.zoomextent, "zoom_extent", Icons["zoom_extent"].GetBitmap(),
-             wx.ITEM_NORMAL, Icons["zoom_extent"].GetLabel(), Icons["zoom_extent"].GetDesc(),
-             self.parent.OnZoomToMap),
-            (self.zoomback, "zoom_back", Icons["zoom_back"].GetBitmap(),
-             wx.ITEM_NORMAL, Icons["zoom_back"].GetLabel(), Icons["zoom_back"].GetDesc(),
-             self.parent.OnZoomBack),
-            (self.zoommenu, "zoommenu", Icons["zoommenu"].GetBitmap(),
-             wx.ITEM_NORMAL, Icons["zoommenu"].GetLabel(), Icons["zoommenu"].GetDesc(),
-             self.parent.OnZoomMenu),
-            ("", "", "", "", "", "", ""),
-            (self.analyze, "analyze", Icons["analyze"].GetBitmap(),
-             wx.ITEM_NORMAL, Icons["analyze"].GetLabel(), Icons["analyze"].GetDesc(),
-             self.parent.OnAnalyze),
-            ("", "", "", "", "", "", ""),
-            (self.dec, "overlay", Icons["overlay"].GetBitmap(),
-             wx.ITEM_NORMAL, Icons["overlay"].GetLabel(), Icons["overlay"].GetDesc(),
-             self.parent.OnDecoration),
-            ("", "", "", "", "", "", ""),
-            (self.savefile, "savefile", Icons["savefile"].GetBitmap(),
-             wx.ITEM_NORMAL, Icons["savefile"].GetLabel(), Icons["savefile"].GetDesc(),
-             self.parent.SaveToFile),
-            (self.printmap, "printmap", Icons["printmap"].GetBitmap(),
-             wx.ITEM_NORMAL, Icons["printmap"].GetLabel(), Icons["printmap"].GetDesc(),
-             self.parent.PrintMenu),
-            ("", "", "", "", "", "", "")
-            )
+        icons = Icons['displayWindow']
+        return self._getToolbarData(((self.displaymap, 'display', icons['display'],
+                                      self.parent.OnDraw),
+                                     (self.rendermap, 'render', icons['render'],
+                                      self.parent.OnRender),
+                                     (self.erase, 'erase', icons['erase'],
+                                      self.parent.OnErase),
+                                     (None, ),
+                                     (self.pointer, 'pointer', icons['pointer'],
+                                      self.parent.OnPointer,
+                                      wx.ITEM_CHECK),
+                                     (self.query, 'query', icons['query'],
+                                      self.parent.OnQuery,
+                                      wx.ITEM_CHECK),
+                                     (self.pan, 'pan', icons['pan'],
+                                      self.parent.OnPan,
+                                      wx.ITEM_CHECK),
+                                     (self.zoomin, 'zoomIn', icons['zoomIn'],
+                                      self.parent.OnZoomIn,
+                                      wx.ITEM_CHECK),
+                                     (self.zoomout, 'zoomOut', icons['zoomOut'],
+                                      self.parent.OnZoomOut,
+                                      wx.ITEM_CHECK),
+                                     (self.zoomextent, 'zoomExtent', icons['zoomExtent'],
+                                      self.parent.OnZoomToMap),
+                                     (self.zoomback, 'zoomBack', icons['zoomBack'],
+                                      self.parent.OnZoomBack),
+                                     (self.zoommenu, 'zoomMenu', icons['zoomMenu'],
+                                      self.parent.OnZoomMenu),
+                                     (None, ),
+                                     (self.analyze, 'analyze', icons['analyze'],
+                                      self.parent.OnAnalyze),
+                                     (None, ),
+                                     (self.dec, 'overlay', icons['overlay'],
+                                      self.parent.OnDecoration),
+                                     (None, ),
+                                     (self.savefile, 'saveFile', icons['saveFile'],
+                                      self.parent.SaveToFile),
+                                     (self.printmap, 'print', icons['print'],
+                                      self.parent.PrintMenu),
+                                     (None, ))
+                                    )
     
     def OnSelectTool(self, event):
         """!Select / enable tool available in tools list
@@ -354,12 +365,12 @@ class GCPManToolbar(AbstractToolbar):
     def __init__(self, parent):
         AbstractToolbar.__init__(self, parent)
         
-        self.InitToolbar(self.ToolbarData())
+        self.InitToolbar(self._toolbarData())
         
         # realize the toolbar
         self.Realize()
 
-    def ToolbarData(self):
+    def _toolbarData(self):
         self.gcpSave = wx.NewId()
         self.gcpReload = wx.NewId()
         self.gcpAdd = wx.NewId()
@@ -368,31 +379,24 @@ class GCPManToolbar(AbstractToolbar):
         self.rms = wx.NewId()
         self.georect = wx.NewId()
 
-        return (
-            (self.gcpSave, 'grGcpSave', Icons["grGcpSave"].GetBitmap(),
-             wx.ITEM_NORMAL, Icons["grGcpSave"].GetLabel(), Icons["grGcpSave"].GetDesc(),
-             self.parent.SaveGCPs),
-            (self.gcpReload, 'grGcpReload', Icons["grGcpReload"].GetBitmap(),
-             wx.ITEM_NORMAL, Icons["grGcpReload"].GetLabel(), Icons["grGcpReload"].GetDesc(), 
-             self.parent.ReloadGCPs),
-            ("", "", "", "", "", "", ""),
-            (self.gcpAdd, 'grGrGcpAdd', Icons["grGcpAdd"].GetBitmap(),
-             wx.ITEM_NORMAL, Icons["grGcpAdd"].GetLabel(), Icons["grGcpAdd"].GetDesc(),
-             self.parent.AddGCP),
-            (self.gcpDelete, 'grGrGcpDelete', Icons["grGcpDelete"].GetBitmap(),
-             wx.ITEM_NORMAL, Icons["grGcpDelete"].GetLabel(), Icons["grGcpDelete"].GetDesc(), 
-             self.parent.DeleteGCP),
-            (self.gcpClear, 'grGcpClear', Icons["grGcpClear"].GetBitmap(),
-             wx.ITEM_NORMAL, Icons["grGcpClear"].GetLabel(), Icons["grGcpClear"].GetDesc(), 
-             self.parent.ClearGCP),
-            ("", "", "", "", "", "", ""),
-            (self.rms, 'grGcpRms', Icons["grGcpRms"].GetBitmap(),
-             wx.ITEM_NORMAL, Icons["grGcpRms"].GetLabel(), Icons["grGcpRms"].GetDesc(),
-             self.parent.OnRMS),
-            (self.georect, 'grGeorect', Icons["grGeorect"].GetBitmap(), 
-             wx.ITEM_NORMAL, Icons["grGeorect"].GetLabel(), Icons["grGeorect"].GetDesc(),
-             self.parent.OnGeorect),
-            )
+        icons = Icons['georectify']
+        return self._getToolbarData(((self.gcpSave, 'gcpSave', icons["gcpSave"],
+                                      self.parent.SaveGCPs),
+                                     (self.gcpReload, 'gcpReload', icons["gcpReload"],
+                                      self.parent.ReloadGCPs),
+                                     (None, ),
+                                     (self.gcpAdd, 'gcpAdd', icons["gcpAdd"],
+                                      self.parent.AddGCP),
+                                     (self.gcpDelete, 'gcpDelete', icons["gcpDelete"],
+                                      self.parent.DeleteGCP),
+                                     (self.gcpClear, 'gcpClear', icons["gcpClear"],
+                                      self.parent.ClearGCP),
+                                     (None, ),
+                                     (self.rms, 'gcpRms', icons["gcpRms"],
+                                      self.parent.OnRMS),
+                                     (self.georect, 'georectify', icons["georectify"],
+                                      self.parent.OnGeorect))
+                                    )
     
 class GCPDisplayToolbar(AbstractToolbar):
     """
@@ -404,7 +408,7 @@ class GCPDisplayToolbar(AbstractToolbar):
         """
         AbstractToolbar.__init__(self, parent)
         
-        self.InitToolbar(self.ToolbarData())
+        self.InitToolbar(self._toolbarData())
         
         # add tool to toggle active map window
         self.togglemapid = wx.NewId()
@@ -415,7 +419,7 @@ class GCPDisplayToolbar(AbstractToolbar):
         self.InsertControl(10, self.togglemap)
 
         self.SetToolShortHelp(self.togglemapid, '%s %s %s' % (_('Set map canvas for '),
-                                                              Icons["zoom_back"].GetLabel(),
+                                                              Icons['displayWindow']["zoomBack"].GetLabel(),
                                                               _(' / Zoom to map')))
 
         # realize the toolbar
@@ -429,7 +433,7 @@ class GCPDisplayToolbar(AbstractToolbar):
         
         self.EnableTool(self.zoomback, False)
         
-    def ToolbarData(self):
+    def _toolbarData(self):
         """!Toolbar data"""
         self.displaymap = wx.NewId()
         self.rendermap = wx.NewId()
@@ -445,123 +449,38 @@ class GCPDisplayToolbar(AbstractToolbar):
         self.helpid = wx.NewId()
         self.quit = wx.NewId()
         
-        # tool, label, bitmap, kind, shortHelp, longHelp, handler
-        return (
-            (self.displaymap, "displaymap", Icons["displaymap"].GetBitmap(),
-             wx.ITEM_NORMAL, Icons["displaymap"].GetLabel(), Icons["displaymap"].GetDesc(),
-             self.parent.OnDraw),
-            (self.rendermap, "rendermap", Icons["rendermap"].GetBitmap(),
-             wx.ITEM_NORMAL, Icons["rendermap"].GetLabel(), Icons["rendermap"].GetDesc(),
-             self.parent.OnRender),
-            (self.erase, "erase", Icons["erase"].GetBitmap(),
-             wx.ITEM_NORMAL, Icons["erase"].GetLabel(), Icons["erase"].GetDesc(),
-             self.parent.OnErase),
-            ("", "", "", "", "", "", ""),
-            (self.gcpset, "grGcpSet", Icons["grGcpSet"].GetBitmap(),
-             wx.ITEM_RADIO, Icons["grGcpSet"].GetLabel(), Icons["grGcpSet"].GetDesc(),
-             self.parent.OnPointer),
-            (self.pan, "pan", Icons["pan"].GetBitmap(),
-             wx.ITEM_RADIO, Icons["pan"].GetLabel(), Icons["pan"].GetDesc(),
-             self.parent.OnPan),
-            (self.zoomin, "zoom_in", Icons["zoom_in"].GetBitmap(),
-             wx.ITEM_RADIO, Icons["zoom_in"].GetLabel(), Icons["zoom_in"].GetDesc(),
-             self.parent.OnZoomIn),
-            (self.zoomout, "zoom_out", Icons["zoom_out"].GetBitmap(),
-             wx.ITEM_RADIO, Icons["zoom_out"].GetLabel(), Icons["zoom_out"].GetDesc(),
-             self.parent.OnZoomOut),
-            (self.zoommenu, "zoommenu", Icons["zoommenu"].GetBitmap(),
-             wx.ITEM_NORMAL, _("Adjust display zoom"), Icons["zoommenu"].GetDesc(),
-             self.parent.OnZoomMenuGCP),
-            ("", "", "", "", "", "", ""),
-            (self.zoomback, "zoom_back", Icons["zoom_back"].GetBitmap(),
-             wx.ITEM_NORMAL, Icons["zoom_back"].GetLabel(), Icons["zoom_back"].GetDesc(),
-             self.parent.OnZoomBack),
-            (self.zoomtomap, "zoomtomap", Icons["zoom_extent"].GetBitmap(),
-             wx.ITEM_NORMAL, _("Zoom to map"), _("Zoom to displayed map"),
-             self.parent.OnZoomToMap),
-            ("", "", "", "", "", "", ""),
-            (self.settings, 'grSettings', Icons["grSettings"].GetBitmap(), 
-             wx.ITEM_NORMAL, Icons["grSettings"].GetLabel(), Icons["grSettings"].GetDesc(),
-             self.parent.OnSettings),
-            (self.helpid, 'grHelp', wx.ArtProvider.GetBitmap(id=wx.ART_HELP, client=wx.ART_TOOLBAR, size=globalvar.toolbarSize), 
-             wx.ITEM_NORMAL, _('Show Help'), _('Show Help for GCP Manager'),
-             self.parent.OnHelp),
-            ("", "", "", "", "", "", ""),
-            (self.quit, 'grGcpQuit', Icons["grGcpQuit"].GetBitmap(), 
-             wx.ITEM_NORMAL, Icons["grGcpQuit"].GetLabel(), Icons["grGcpQuit"].GetDesc(),
-             self.parent.OnQuit)
-            )
-    
-class GRToolbar(AbstractToolbar):
-    """
-    Georectification toolbar
-    """
-    def __init__(self, parent, mapcontent):
-        """!
-        Georectification toolbar constructor
-
-        @param parent reference to MapFrame
-        @param mapcontent reference to render.Map (registred by MapFrame)
-        """
-        self.mapcontent = mapcontent
-        AbstractToolbar.__init__(self, parent)
-        
-        self.InitToolbar(self.ToolbarData())
-        
-        # realize the toolbar
-        self.Realize()
-        
-        self.action = { 'id' : self.gcpset }
-        self.defaultAction = { 'id' : self.gcpset,
-                               'bind' : self.parent.OnPointer }
-        
-        self.OnTool(None)
-        
-        self.EnableTool(self.zoomback, False)
-        
-    def ToolbarData(self):
-        """!Toolbar data"""
-        self.displaymap = wx.NewId()
-        self.rendermap = wx.NewId()
-        self.erase = wx.NewId()
-        self.gcpset = wx.NewId()
-        self.pan = wx.NewId()
-        self.zoomin = wx.NewId()
-        self.zoomout = wx.NewId()
-        self.zoomback = wx.NewId()
-        self.zoomtomap = wx.NewId()
-        
-        # tool, label, bitmap, kind, shortHelp, longHelp, handler
-        return (
-            (self.displaymap, "displaymap", Icons["displaymap"].GetBitmap(),
-             wx.ITEM_NORMAL, Icons["displaymap"].GetLabel(), Icons["displaymap"].GetDesc(),
-             self.parent.OnDraw),
-            (self.rendermap, "rendermap", Icons["rendermap"].GetBitmap(),
-             wx.ITEM_NORMAL, Icons["rendermap"].GetLabel(), Icons["rendermap"].GetDesc(),
-             self.parent.OnRender),
-            (self.erase, "erase", Icons["erase"].GetBitmap(),
-             wx.ITEM_NORMAL, Icons["erase"].GetLabel(), Icons["erase"].GetDesc(),
-             self.parent.OnErase),
-            ("", "", "", "", "", "", ""),
-            (self.gcpset, "grGcpSet", Icons["grGcpSet"].GetBitmap(),
-             wx.ITEM_RADIO, Icons["grGcpSet"].GetLabel(), Icons["grGcpSet"].GetDesc(),
-             self.parent.OnPointer),
-            (self.pan, "pan", Icons["pan"].GetBitmap(),
-             wx.ITEM_RADIO, Icons["pan"].GetLabel(), Icons["pan"].GetDesc(),
-             self.parent.OnPan),
-            (self.zoomin, "zoom_in", Icons["zoom_in"].GetBitmap(),
-             wx.ITEM_RADIO, Icons["zoom_in"].GetLabel(), Icons["zoom_in"].GetDesc(),
-             self.parent.OnZoomIn),
-            (self.zoomout, "zoom_out", Icons["zoom_out"].GetBitmap(),
-             wx.ITEM_RADIO, Icons["zoom_out"].GetLabel(), Icons["zoom_out"].GetDesc(),
-             self.parent.OnZoomOut),
-            (self.zoomback, "zoom_back", Icons["zoom_back"].GetBitmap(),
-             wx.ITEM_NORMAL, Icons["zoom_back"].GetLabel(), Icons["zoom_back"].GetDesc(),
-             self.parent.OnZoomBack),
-            (self.zoomtomap, "zoomtomap", Icons["zoommenu"].GetBitmap(),
-             wx.ITEM_NORMAL, _("Zoom to map"), _("Zoom to displayed map"),
-             self.OnZoomMap),
-            )
+        icons = Icons['displayWindow']
+        return self._getToolbarData(((self.displaymap, "display", icons["display"],
+                                      self.parent.OnDraw),
+                                     (self.rendermap, "render", icons["render"],
+                                      self.parent.OnRender),
+                                     (self.erase, "erase", icons["erase"],
+                                      self.parent.OnErase),
+                                     (None, ),
+                                     (self.gcpset, "gcpSet", Icons["georectify"]["gcpSet"],
+                                      self.parent.OnPointer),
+                                     (self.pan, "pan", icons["pan"],
+                                      self.parent.OnPan),
+                                     (self.zoomin, "zoomIn", icons["zoomIn"],
+                                      self.parent.OnZoomIn),
+                                     (self.zoomout, "zoomOut", icons["zoomOut"],
+                                      self.parent.OnZoomOut),
+                                     (self.zoommenu, "zoomMenu", icons["zoomMenu"],
+                                      self.parent.OnZoomMenuGCP),
+                                     (None, ),
+                                     (self.zoomback, "zoomBack", icons["zoomBack"],
+                                      self.parent.OnZoomBack),
+                                     (self.zoomtomap, "zoomtomap", icons["zoomExtent"],
+                                      self.parent.OnZoomToMap),
+                                     (None, ),
+                                     (self.settings, 'settings', Icons["georectify"]["settings"],
+                                      self.parent.OnSettings),
+                                     (self.helpid, 'help', Icons["misc"]["help"],
+                                      self.parent.OnHelp),
+                                     (None, ),
+                                     (self.quit, 'gcpQuit', Icons["georectify"]["quit"],
+                                      self.parent.OnQuit))
+                                    )
     
     def OnZoomMap(self, event):
         """!Zoom to selected map"""
@@ -569,74 +488,16 @@ class GRToolbar(AbstractToolbar):
         if event:
             event.Skip()
         
-class GCPToolbar(AbstractToolbar):
-    """!
-    Toolbar for managing ground control points during georectification
-
-    @param parent reference to GCP widget
-    """
-    def __init__(self, parent):
-        AbstractToolbar.__init__(self, parent)
-        
-        self.InitToolbar(self.ToolbarData())
-        
-        # realize the toolbar
-        self.Realize()
-
-    def ToolbarData(self):
-        self.gcpSave = wx.NewId()
-        self.gcpAdd = wx.NewId()
-        self.gcpDelete = wx.NewId()
-        self.gcpClear = wx.NewId()
-        self.gcpReload = wx.NewId()
-        self.rms = wx.NewId()
-        self.georect = wx.NewId()
-        self.settings = wx.NewId()
-        self.quit = wx.NewId()
-
-        return (
-            (self.gcpSave, 'grGcpSave', Icons["grGcpSave"].GetBitmap(),
-             wx.ITEM_NORMAL, Icons["grGcpSave"].GetLabel(), Icons["grGcpSave"].GetDesc(),
-             self.parent.SaveGCPs),
-            (self.gcpAdd, 'grGrGcpAdd', Icons["grGcpAdd"].GetBitmap(),
-             wx.ITEM_NORMAL, Icons["grGcpAdd"].GetLabel(), Icons["grGcpAdd"].GetDesc(),
-             self.parent.AddGCP),
-            (self.gcpDelete, 'grGrGcpDelete', Icons["grGcpDelete"].GetBitmap(),
-             wx.ITEM_NORMAL, Icons["grGcpDelete"].GetLabel(), Icons["grGcpDelete"].GetDesc(), 
-             self.parent.DeleteGCP),
-            (self.gcpClear, 'grGcpClear', Icons["grGcpClear"].GetBitmap(),
-             wx.ITEM_NORMAL, Icons["grGcpClear"].GetLabel(), Icons["grGcpClear"].GetDesc(), 
-             self.parent.ClearGCP),
-            (self.gcpReload, 'grGcpReload', Icons["grGcpReload"].GetBitmap(),
-             wx.ITEM_NORMAL, Icons["grGcpReload"].GetLabel(), Icons["grGcpReload"].GetDesc(), 
-             self.parent.ReloadGCPs),
-
-            ("", "", "", "", "", "", ""),
-            (self.rms, 'grGcpRms', Icons["grGcpRms"].GetBitmap(),
-             wx.ITEM_NORMAL, Icons["grGcpRms"].GetLabel(), Icons["grGcpRms"].GetDesc(),
-             self.parent.OnRMS),
-            (self.georect, 'grGeorect', Icons["grGeorect"].GetBitmap(), 
-             wx.ITEM_NORMAL, Icons["grGeorect"].GetLabel(), Icons["grGeorect"].GetDesc(),
-             self.parent.OnGeorect),
-            ("", "", "", "", "", "", ""),
-            (self.settings, 'grSettings', Icons["grSettings"].GetBitmap(), 
-             wx.ITEM_NORMAL, Icons["grSettings"].GetLabel(), Icons["grSettings"].GetDesc(),
-             self.parent.OnSettings),
-            (self.quit, 'grGcpQuit', Icons["grGcpQuit"].GetBitmap(), 
-             wx.ITEM_NORMAL, Icons["grGcpQuit"].GetLabel(), Icons["grGcpQuit"].GetDesc(),
-             self.parent.OnQuit)
-            )
-    
 class VDigitToolbar(AbstractToolbar):
-    """
-    Toolbar for digitization
+    """!Toolbar for digitization
     """
     def __init__(self, parent, mapcontent, layerTree = None, log = None):
         self.mapcontent    = mapcontent # Map class instance
         self.layerTree     = layerTree  # reference to layer tree associated to map display
         self.log           = log        # log area
         AbstractToolbar.__init__(self, parent)
-        
+        self.digit         = self.parent.MapWindow.digit
+
         # currently selected map layer for editing (reference to MapLayer instance)
         self.mapLayer = None
         # list of vector layers from Layer Manager (only in the current mapset)
@@ -648,7 +509,7 @@ class VDigitToolbar(AbstractToolbar):
         self.settingsDialog   = None
         
         # create toolbars (two rows optionally)
-        self.InitToolbar(self.ToolbarData())
+        self.InitToolbar(self._toolbarData())
         self.Bind(wx.EVT_TOOL, self.OnTool)
         
         # default action (digitize new point, line, etc.)
@@ -673,9 +534,8 @@ class VDigitToolbar(AbstractToolbar):
         
         self.FixSize(width = 105)
         
-    def ToolbarData(self):
-        """!
-        Toolbar data
+    def _toolbarData(self):
+        """!Toolbar data
         """
         data = []
         
@@ -683,6 +543,7 @@ class VDigitToolbar(AbstractToolbar):
         self.addLine = wx.NewId()
         self.addBoundary = wx.NewId()
         self.addCentroid = wx.NewId()
+        self.addArea = wx.NewId()
         self.moveVertex = wx.NewId()
         self.addVertex = wx.NewId()
         self.removeVertex = wx.NewId()
@@ -698,68 +559,63 @@ class VDigitToolbar(AbstractToolbar):
         self.settings = wx.NewId()
         self.exit = wx.NewId()
         
-        data = [("", "", "", "", "", "", ""),
-                (self.addPoint, "digAddPoint", Icons["digAddPoint"].GetBitmap(),
-                 wx.ITEM_CHECK, Icons["digAddPoint"].GetLabel(), Icons["digAddPoint"].GetDesc(),
-                 self.OnAddPoint),
-                (self.addLine, "digAddLine", Icons["digAddLine"].GetBitmap(),
-                 wx.ITEM_CHECK, Icons["digAddLine"].GetLabel(), Icons["digAddLine"].GetDesc(),
-                 self.OnAddLine),
-                (self.addBoundary, "digAddBoundary", Icons["digAddBoundary"].GetBitmap(),
-                 wx.ITEM_CHECK, Icons["digAddBoundary"].GetLabel(), Icons["digAddBoundary"].GetDesc(),
-                 self.OnAddBoundary),
-                (self.addCentroid, "digAddCentroid", Icons["digAddCentroid"].GetBitmap(),
-                 wx.ITEM_CHECK, Icons["digAddCentroid"].GetLabel(), Icons["digAddCentroid"].GetDesc(),
-                 self.OnAddCentroid),
-                (self.moveVertex, "digMoveVertex", Icons["digMoveVertex"].GetBitmap(),
-                 wx.ITEM_CHECK, Icons["digMoveVertex"].GetLabel(), Icons["digMoveVertex"].GetDesc(),
-                 self.OnMoveVertex),
-                (self.addVertex, "digAddVertex", Icons["digAddVertex"].GetBitmap(),
-                 wx.ITEM_CHECK, Icons["digAddVertex"].GetLabel(), Icons["digAddVertex"].GetDesc(),
-                 self.OnAddVertex),
-                (self.removeVertex, "digRemoveVertex", Icons["digRemoveVertex"].GetBitmap(),
-                 wx.ITEM_CHECK, Icons["digRemoveVertex"].GetLabel(), Icons["digRemoveVertex"].GetDesc(),
-                 self.OnRemoveVertex),
-                (self.splitLine, "digSplitLine", Icons["digSplitLine"].GetBitmap(),
-                 wx.ITEM_CHECK, Icons["digSplitLine"].GetLabel(), Icons["digSplitLine"].GetDesc(),
-                 self.OnSplitLine),
-                (self.editLine, "digEditLine", Icons["digEditLine"].GetBitmap(),
-                 wx.ITEM_CHECK, Icons["digEditLine"].GetLabel(), Icons["digEditLine"].GetDesc(),
-                 self.OnEditLine),
-                (self.moveLine, "digMoveLine", Icons["digMoveLine"].GetBitmap(),
-                 wx.ITEM_CHECK, Icons["digMoveLine"].GetLabel(), Icons["digMoveLine"].GetDesc(),
-                 self.OnMoveLine),
-                (self.deleteLine, "digDeleteLine", Icons["digDeleteLine"].GetBitmap(),
-                 wx.ITEM_CHECK, Icons["digDeleteLine"].GetLabel(), Icons["digDeleteLine"].GetDesc(),
-                 self.OnDeleteLine),
-                (self.displayCats, "digDispCats", Icons["digDispCats"].GetBitmap(),
-                 wx.ITEM_CHECK, Icons["digDispCats"].GetLabel(), Icons["digDispCats"].GetDesc(),
-                 self.OnDisplayCats),
-                (self.copyCats, "digCopyCats", Icons["digCopyCats"].GetBitmap(),
-                 wx.ITEM_CHECK, Icons["digCopyCats"].GetLabel(), Icons["digCopyCats"].GetDesc(),
-                 self.OnCopyCA),
-                (self.displayAttr, "digDispAttr", Icons["digDispAttr"].GetBitmap(),
-                 wx.ITEM_CHECK, Icons["digDispAttr"].GetLabel(), Icons["digDispAttr"].GetDesc(),
-                 self.OnDisplayAttr),
-                (self.additionalTools, "digAdditionalTools", Icons["digAdditionalTools"].GetBitmap(),
-                 wx.ITEM_CHECK, Icons["digAdditionalTools"].GetLabel(),
-                 Icons["digAdditionalTools"].GetDesc(),
-                 self.OnAdditionalToolMenu),
-                ("", "", "", "", "", "", ""),
-                (self.undo, "digUndo", Icons["digUndo"].GetBitmap(),
-                 wx.ITEM_NORMAL, Icons["digUndo"].GetLabel(), Icons["digUndo"].GetDesc(),
-                 self.OnUndo),
-                # data.append((self.undo, "digRedo", Icons["digRedo"].GetBitmap(),
-                #             wx.ITEM_NORMAL, Icons["digRedo"].GetLabel(), Icons["digRedo"].GetDesc(),
-                #             self.OnRedo))
-                (self.settings, "digSettings", Icons["digSettings"].GetBitmap(),
-                 wx.ITEM_NORMAL, Icons["digSettings"].GetLabel(), Icons["digSettings"].GetDesc(),
-                 self.OnSettings),
-                (self.exit, "digExit", Icons["quit"].GetBitmap(),
-                 wx.ITEM_NORMAL, Icons["digExit"].GetLabel(), Icons["digExit"].GetDesc(),
-                 self.OnExit)]
-        
-        return data
+        icons = Icons['vdigit']
+        return self._getToolbarData(((None, ),
+                                     (self.addPoint, "addPoint", icons["addPoint"],
+                                      self.OnAddPoint),
+                                     (self.addLine, "addLine", icons["addLine"],
+                                      self.OnAddLine,
+                                      wx.ITEM_CHECK),
+                                     (self.addBoundary, "addBoundary", icons["addBoundary"],
+                                      self.OnAddBoundary,
+                                      wx.ITEM_CHECK),
+                                     (self.addCentroid, "addCentroid", icons["addCentroid"],
+                                      self.OnAddCentroid,
+                                      wx.ITEM_CHECK),
+                                     (self.addArea, "addArea", icons["addArea"],
+                                      self.OnAddArea,
+                                      wx.ITEM_CHECK),
+                                     (self.moveVertex, "moveVertex", icons["moveVertex"],
+                                      self.OnMoveVertex,
+                                      wx.ITEM_CHECK),
+                                     (self.addVertex, "addVertex", icons["addVertex"],
+                                      self.OnAddVertex,
+                                      wx.ITEM_CHECK),
+                                     (self.removeVertex, "removeVertex", icons["removeVertex"],
+                                      self.OnRemoveVertex,
+                                      wx.ITEM_CHECK),
+                                     (self.splitLine, "splitLine", icons["splitLine"],
+                                      self.OnSplitLine,
+                                      wx.ITEM_CHECK),
+                                     (self.editLine, "editLine", icons["editLine"],
+                                      self.OnEditLine,
+                                      wx.ITEM_CHECK),
+                                     (self.moveLine, "moveLine", icons["moveLine"],
+                                      self.OnMoveLine,
+                                      wx.ITEM_CHECK),
+                                     (self.deleteLine, "deleteLine", icons["deleteLine"],
+                                      self.OnDeleteLine,
+                                      wx.ITEM_CHECK),
+                                     (self.displayCats, "displayCats", icons["displayCats"],
+                                      self.OnDisplayCats,
+                                      wx.ITEM_CHECK),
+                                     (self.copyCats, "copyCats", icons["copyCats"],
+                                      self.OnCopyCA,
+                                      wx.ITEM_CHECK),
+                                     (self.displayAttr, "displayAttr", icons["displayAttr"],
+                                      self.OnDisplayAttr,
+                                      wx.ITEM_CHECK),
+                                     (self.additionalTools, "additionalTools", icons["additionalTools"],
+                                      self.OnAdditionalToolMenu,
+                                      wx.ITEM_CHECK),                                      
+                                     (None, ),
+                                     (self.undo, "undo", icons["undo"],
+                                      self.OnUndo),
+                                     (self.settings, "settings", icons["settings"],
+                                      self.OnSettings),
+                                     (self.exit, "quit", icons["quit"],
+                                      self.OnExit))
+                                    )
     
     def OnTool(self, event):
         """!Tool selected -> disable selected tool in map toolbar"""
@@ -790,8 +646,8 @@ class VDigitToolbar(AbstractToolbar):
         # clear tmp canvas
         if self.action['id'] != id:
             self.parent.MapWindow.ClearLines(pdc = self.parent.MapWindow.pdcTmp)
-            if self.parent.digit and \
-                    len(self.parent.digit.driver.GetSelected()) > 0:
+            if self.parent.MapWindow.digit and \
+                    len(self.parent.MapWindow.digit.GetDisplay().GetSelected()) > 0:
                 # cancel action
                 self.parent.MapWindow.OnMiddleDown(None)
         
@@ -833,6 +689,14 @@ class VDigitToolbar(AbstractToolbar):
                         'type' : "centroid",
                         'id'   : self.addCentroid }
         self.parent.MapWindow.mouse['box'] = 'point'
+
+    def OnAddArea(self, event):
+        """!Add area to the vector map layer"""
+        Debug.msg (2, "VDigitToolbar.OnAddCentroid()")
+        self.action = { 'desc' : "addLine",
+                        'type' : "area",
+                        'id'   : self.addArea }
+        self.parent.MapWindow.mouse['box'] = 'line'
 
     def OnExit (self, event=None):
         """!Quit digitization tool"""
@@ -971,7 +835,7 @@ class VDigitToolbar(AbstractToolbar):
         
     def OnUndo(self, event):
         """!Undo previous changes"""
-        self.parent.digit.Undo()
+        self.digit.Undo()
         
         event.Skip()
 
@@ -989,13 +853,11 @@ class VDigitToolbar(AbstractToolbar):
         
     def OnSettings(self, event):
         """!Show settings dialog"""
-        if self.parent.digit is None:
-            reload(vdigit)
-            from vdigit import VDigit as VDigit
+        if self.digit is None:
             try:
-                self.parent.digit = VDigit(mapwindow=self.parent.MapWindow)
+                self.digit = self.parent.MapWindow.digit = VDigit(mapwindow = self.parent.MapWindow)
             except SystemExit:
-                self.parent.digit = None
+                self.digit = self.parent.MapWindow.digit = None
         
         if not self.settingsDialog:
             self.settingsDialog = VDigitSettingsDialog(parent = self.parent, title = _("Digitization settings"),
@@ -1181,10 +1043,9 @@ class VDigitToolbar(AbstractToolbar):
 
     def OnZBulk(self, event):
         """!Z bulk-labeling selected lines/boundaries"""
-        if not self.parent.digit.driver.Is3D():
-            wx.MessageBox(parent = self.parent,
-                          message = _("Vector map is not 3D. Operation canceled."),
-                          caption = _("Error"), style = wx.OK | wx.ICON_ERROR | wx.CENTRE)
+        if not self.digit.IsVector3D():
+            gcmd.GError(parent = self.parent,
+                        message = _("Vector map is not 3D. Operation canceled."))
             return
         
         if self.action['desc'] == 'zbulkLine': # select previous action
@@ -1272,10 +1133,13 @@ class VDigitToolbar(AbstractToolbar):
     def StartEditing (self, mapLayer):
         """!Start editing selected vector map layer.
         
-        @param mapLayer reference to MapLayer instance
+        @param mapLayer MapLayer to be edited
         """
         # deactive layer
         self.mapcontent.ChangeLayerActive(mapLayer, False)
+        
+        # clean map canvas
+        self.parent.MapWindow.EraseMap()
         
         # unset background map if needed
         if mapLayer:
@@ -1285,35 +1149,26 @@ class VDigitToolbar(AbstractToolbar):
                                  subkey = 'value', value = '', internal = True)
             
             self.parent.statusbar.SetStatusText(_("Please wait, "
-                                                  "opening vector map <%s> for editing...") % \
-                                                    mapLayer.GetName(),
+                                                  "opening vector map <%s> for editing...") % mapLayer.GetName(),
                                                 0)
         
-        # reload vdigit module
-        reload(vdigit)
-        from vdigit import VDigit as VDigit
-        # use vdigit's PseudoDC
-        self.parent.MapWindow.DefinePseudoDC(vdigit = True)
-        self.parent.digit = VDigit(mapwindow = self.parent.MapWindow)
+        self.parent.MapWindow.pdcVector = wx.PseudoDC()
+        self.digit = self.parent.MapWindow.digit = VDigit(mapwindow = self.parent.MapWindow)
         
         self.mapLayer = mapLayer
         
         # open vector map
-        try:
-            if not self.parent.MapWindow.CheckPseudoDC():
-                raise gcmd.GException(_("Unable to initialize display driver of vector "
-                                        "digitizer. See 'Command output' for details."))
-            self.parent.digit.SetMapName(mapLayer.GetName())
-        except gcmd.GException, e:
+        if self.digit.OpenMap(mapLayer.GetName()) is None:
             self.mapLayer = None
             self.StopEditing()
-            gcmd.GError(parent = self.parent,
-                        message = str(e))
             return False
         
         # update toolbar
         self.combo.SetValue(mapLayer.GetName())
         self.parent.toolbars['map'].combo.SetValue (_('Digitize'))
+        lmgr = self.parent.GetLayerManager()
+        if lmgr:
+            lmgr.toolbar.Enable('vdigit', enable = False)
         
         Debug.msg (4, "VDigitToolbar.StartEditing(): layer=%s" % mapLayer.GetName())
         
@@ -1321,17 +1176,13 @@ class VDigitToolbar(AbstractToolbar):
         if self.parent.MapWindow.mouse['use'] == 'pointer':
             self.parent.MapWindow.SetCursor(self.parent.cursors["cross"])
         
-        # create pseudoDC for drawing the map
-        self.parent.MapWindow.pdcVector = vdigit.PseudoDC()
-        self.parent.digit.driver.SetDevice(self.parent.MapWindow.pdcVector)
-        
         if not self.parent.MapWindow.resize:
             self.parent.MapWindow.UpdateMap(render = True)
         
         opacity = mapLayer.GetOpacity(float = True)
         if opacity < 1.0:
             alpha = int(opacity * 255)
-            self.parent.digit.driver.UpdateSettings(alpha)
+            self.digit.UpdateSettings(alpha)
         
         return True
 
@@ -1341,16 +1192,13 @@ class VDigitToolbar(AbstractToolbar):
         @return True on success
         @return False on failure
         """
-        # use wx's PseudoDC
-        self.parent.MapWindow.DefinePseudoDC(vdigit = False)
-        
         self.combo.SetValue (_('Select vector map'))
         
         # save changes
         if self.mapLayer:
             Debug.msg (4, "VDigitToolbar.StopEditing(): layer=%s" % self.mapLayer.GetName())
             if UserSettings.Get(group = 'vdigit', key = 'saveOnExit', subkey = 'enabled') is False:
-                if self.parent.digit.GetUndoLevel() > -1:
+                if self.digit.GetUndoLevel() > -1:
                     dlg = wx.MessageDialog(parent = self.parent,
                                            message = _("Do you want to save changes "
                                                      "in vector map <%s>?") % self.mapLayer.GetName(),
@@ -1358,16 +1206,22 @@ class VDigitToolbar(AbstractToolbar):
                                            style = wx.YES_NO | wx.YES_DEFAULT | wx.ICON_QUESTION)
                     if dlg.ShowModal() == wx.ID_NO:
                         # revert changes
-                        self.parent.digit.Undo(0)
+                        self.digit.Undo(0)
                     dlg.Destroy()
             
             self.parent.statusbar.SetStatusText(_("Please wait, "
                                                   "closing and rebuilding topology of "
                                                   "vector map <%s>...") % self.mapLayer.GetName(),
                                                 0)
-        
-            self.parent.digit.SetMapName(None) # -> close map
-        
+            lmgr = self.parent.GetLayerManager()
+            if lmgr:
+                lmgr.toolbar.Enable('vdigit', enable = True)
+                lmgr.notebook.SetSelection(1)
+            self.digit.CloseMap()
+            if lmgr:
+                lmgr.GetLogWindow().GetProgressBar().SetValue(0)
+                lmgr.GetLogWindow().WriteCmdLog(_("Editing of vector map <%s> successfully finished") % \
+                                                    self.mapLayer.GetName())
             # re-active layer 
             item = self.parent.tree.FindItemByData('maplayer', self.mapLayer)
             if item and self.parent.tree.IsItemChecked(item):
@@ -1375,10 +1229,7 @@ class VDigitToolbar(AbstractToolbar):
         
         # change cursor
         self.parent.MapWindow.SetCursor(self.parent.cursors["default"])
-        
-        # disable pseudodc for vector map layer
         self.parent.MapWindow.pdcVector = None
-        self.parent.digit.driver.SetDevice(None)
         
         # close dialogs
         for dialog in ('attributes', 'category'):
@@ -1386,8 +1237,8 @@ class VDigitToolbar(AbstractToolbar):
                 self.parent.dialogs[dialog].Close()
                 self.parent.dialogs[dialog] = None
         
-        self.parent.digit.__del__() # FIXME: destructor is not called here (del)
-        self.parent.digit = None
+        self.digit.__del__() # FIXME: destructor is not called here (del)
+        self.digit = self.parent.MapWindow.digit = None
         
         self.mapLayer = None
         
@@ -1447,12 +1298,12 @@ class ProfileToolbar(AbstractToolbar):
     def __init__(self, parent):
         AbstractToolbar.__init__(self, parent)
         
-        self.InitToolbar(self.ToolbarData())
+        self.InitToolbar(self._toolbarData())
         
         # realize the toolbar
         self.Realize()
         
-    def ToolbarData(self):
+    def _toolbarData(self):
         """!Toolbar data"""
         self.transect = wx.NewId()
         self.addraster = wx.NewId()
@@ -1467,48 +1318,35 @@ class ProfileToolbar(AbstractToolbar):
         self.printer = wx.NewId()
         self.quit = wx.NewId()
                 
-        # tool, label, bitmap, kind, shortHelp, longHelp, handler
-        return   (
-            (self.addraster, 'raster', Icons["addrast"].GetBitmap(),
-             wx.ITEM_NORMAL, Icons["addrast"].GetLabel(), Icons["addrast"].GetDesc(),
-             self.parent.OnSelectRaster),
-            (self.transect, 'transect', Icons["transect"].GetBitmap(),
-             wx.ITEM_NORMAL, Icons["transect"].GetLabel(), Icons["transect"].GetDesc(),
-             self.parent.OnDrawTransect),
-            ("", "", "", "", "", "", ""),
-            (self.draw, 'profiledraw', Icons["profiledraw"].GetBitmap(),
-             wx.ITEM_NORMAL, Icons["profiledraw"].GetLabel(), Icons["profiledraw"].GetDesc(),
-             self.parent.OnCreateProfile),
-            (self.erase, 'erase', Icons["erase"].GetBitmap(),
-             wx.ITEM_NORMAL, Icons["erase"].GetLabel(), Icons["erase"].GetDesc(),
-             self.parent.OnErase),
-            (self.drag, 'drag', Icons['pan'].GetBitmap(),
-             wx.ITEM_NORMAL, Icons["pan"].GetLabel(), Icons["pan"].GetDesc(),
-             self.parent.OnDrag),
-            (self.zoom, 'zoom', Icons['zoom_in'].GetBitmap(),
-             wx.ITEM_NORMAL, Icons["zoom_in"].GetLabel(), Icons["zoom_in"].GetDesc(),
-             self.parent.OnZoom),
-            (self.unzoom, 'unzoom', Icons['zoom_back'].GetBitmap(),
-             wx.ITEM_NORMAL, Icons["zoom_back"].GetLabel(), Icons["zoom_back"].GetDesc(),
-             self.parent.OnRedraw),
-            ("", "", "", "", "", "", ""),
-            (self.datasave, 'save data', Icons["datasave"].GetBitmap(),
-             wx.ITEM_NORMAL, Icons["datasave"].GetLabel(), Icons["datasave"].GetDesc(),
-             self.parent.SaveProfileToFile),
-            (self.save, 'save image', Icons["savefile"].GetBitmap(),
-             wx.ITEM_NORMAL, Icons["savefile"].GetLabel(), Icons["savefile"].GetDesc(),
-             self.parent.SaveToFile),
-            (self.printer, 'print', Icons["printmap"].GetBitmap(),
-             wx.ITEM_NORMAL, Icons["printmap"].GetLabel(), Icons["printmap"].GetDesc(),
-             self.parent.PrintMenu),
-            ("", "", "", "", "", "", ""),
-            (self.options, 'options', Icons["profileopt"].GetBitmap(),
-             wx.ITEM_NORMAL, Icons["profileopt"].GetLabel(), Icons["profileopt"].GetDesc(),
-             self.parent.ProfileOptionsMenu),
-            (self.quit, 'quit', Icons["quit"].GetBitmap(),
-             wx.ITEM_NORMAL, Icons["quit"].GetLabel(), Icons["quit"].GetDesc(),
-             self.parent.OnQuit),
-            )
+        icons = Icons['profile']
+        return self._getToolbarData(((self.addraster, 'raster', Icons['layerManager']["addRast"],
+                                      self.parent.OnSelectRaster),
+                                     (self.transect, 'transect', icons["transect"],
+                                      self.parent.OnDrawTransect),
+                                     (None, ),
+                                     (self.draw, 'draw', icons["draw"],
+                                      self.parent.OnCreateProfile),
+                                     (self.erase, 'erase', Icons['displayWindow']["erase"],
+                                      self.parent.OnErase),
+                                     (self.drag, 'drag', Icons['displayWindow']['pan'],
+                                      self.parent.OnDrag),
+                                     (self.zoom, 'zoom', Icons['displayWindow']['zoomIn'],
+                                      self.parent.OnZoom),
+                                     (self.unzoom, 'unzoom', Icons['displayWindow']['zoomBack'],
+                                      self.parent.OnRedraw),
+                                     (None, ),
+                                     (self.datasave, 'save', icons["save"],
+                                      self.parent.SaveProfileToFile),
+                                     (self.save, 'image', Icons['displayWindow']["saveFile"],
+                                      self.parent.SaveToFile),
+                                     (self.printer, 'print', Icons['displayWindow']["print"],
+                                      self.parent.PrintMenu),
+                                     (None, ),
+                                     (self.options, 'options', icons["options"],
+                                      self.parent.ProfileOptionsMenu),
+                                     (self.quit, 'quit', icons["quit"],
+                                      self.parent.OnQuit),
+                                     ))
     
 class NvizToolbar(AbstractToolbar):
     """!Nviz toolbar
@@ -1522,12 +1360,12 @@ class NvizToolbar(AbstractToolbar):
         # only one dialog can be open
         self.settingsDialog   = None
         
-        self.InitToolbar(self.ToolbarData())
+        self.InitToolbar(self._toolbarData())
         
         # realize the toolbar
         self.Realize()
         
-    def ToolbarData(self):
+    def _toolbarData(self):
         """!Toolbar data"""
         self.view = wx.NewId()
         self.surface = wx.NewId()
@@ -1539,40 +1377,30 @@ class NvizToolbar(AbstractToolbar):
         self.help = wx.NewId()
         self.quit = wx.NewId()
         
-        # tool, label, bitmap, kind, shortHelp, longHelp, handler
-        return   (
-            (self.view, "view", Icons["nvizView"].GetBitmap(),
-             wx.ITEM_NORMAL, Icons["nvizView"].GetLabel(), Icons["nvizView"].GetDesc(),
-             self.OnShowPage),
-            ("", "", "", "", "", "", ""),
-            (self.surface, "surface", Icons["nvizSurface"].GetBitmap(),
-             wx.ITEM_NORMAL, Icons["nvizSurface"].GetLabel(), Icons["nvizSurface"].GetDesc(),
-             self.OnShowPage),
-            (self.vector, "vector", Icons["nvizVector"].GetBitmap(),
-             wx.ITEM_NORMAL, Icons["nvizVector"].GetLabel(), Icons["nvizVector"].GetDesc(),
-             self.OnShowPage),
-            (self.volume, "volume", Icons["nvizVolume"].GetBitmap(),
-             wx.ITEM_NORMAL, Icons["nvizVolume"].GetLabel(), Icons["nvizVolume"].GetDesc(),
-             self.OnShowPage),
-            ("", "", "", "", "", "", ""),
-            (self.light, "light", Icons["nvizLight"].GetBitmap(),
-             wx.ITEM_NORMAL, Icons["nvizLight"].GetLabel(), Icons["nvizLight"].GetDesc(),
-             self.OnShowPage),
-            (self.fringe, "fringe", Icons["nvizFringe"].GetBitmap(),
-             wx.ITEM_NORMAL, Icons["nvizFringe"].GetLabel(), Icons["nvizFringe"].GetDesc(),
-             self.OnShowPage),
-            ("", "", "", "", "", "", ""),
-            (self.settings, "settings", Icons["nvizSettings"].GetBitmap(),
-             wx.ITEM_NORMAL, Icons["nvizSettings"].GetLabel(), Icons["nvizSettings"].GetDesc(),
-             self.OnSettings),
-            (self.help, "help", Icons["nvizHelp"].GetBitmap(),
-             wx.ITEM_NORMAL, Icons["nvizHelp"].GetLabel(), Icons["nvizHelp"].GetDesc(),
-             self.OnHelp),
-            ("", "", "", "", "", "", ""),
-            (self.quit, 'quit', Icons["nvizQuit"].GetBitmap(),
-             wx.ITEM_NORMAL, Icons["nvizQuit"].GetLabel(), Icons["nvizQuit"].GetDesc(),
-             self.OnExit),
-            )
+        icons = Icons['nviz']
+        return self._getToolbarData(((self.view, "view", icons["view"],
+                                      self.OnShowPage),
+                                     (None, ),
+                                     (self.surface, "surface", icons["surface"],
+                                      self.OnShowPage),
+                                     (self.vector, "vector", icons["vector"],
+                                      self.OnShowPage),
+                                     (self.volume, "volume", icons["volume"],
+                                      self.OnShowPage),
+                                     (None, ),
+                                     (self.light, "light", icons["light"],
+                                      self.OnShowPage),
+                                     (self.fringe, "fringe", icons["fringe"],
+                                      self.OnShowPage),
+                                     (None, ),
+                                     (self.settings, "settings", icons["settings"],
+                                      self.OnSettings),
+                                     (self.help, "help", Icons['misc']["help"],
+                                      self.OnHelp),
+                                     (None, ),
+                                     (self.quit, 'quit', icons["quit"],
+                                      self.OnExit))
+                                    )
     
     def OnShowPage(self, event):
         """!Go to the selected page"""
@@ -1622,6 +1450,9 @@ class NvizToolbar(AbstractToolbar):
         self.parent.MapWindow.mouse['box'] = "point"
         self.parent.MapWindow.polycoords = []
         
+        # return to map layer page (gets rid of ugly exit bug)
+        self.lmgr.notebook.SetSelection(0)
+
         # disable the toolbar
         self.parent.RemoveToolbar("nviz")
         
@@ -1631,12 +1462,12 @@ class ModelToolbar(AbstractToolbar):
     def __init__(self, parent):
         AbstractToolbar.__init__(self, parent)
         
-        self.InitToolbar(self.ToolbarData())
+        self.InitToolbar(self._toolbarData())
         
         # realize the toolbar
         self.Realize()
         
-    def ToolbarData(self):
+    def _toolbarData(self):
         """!Toolbar data"""
         self.new = wx.NewId()
         self.open = wx.NewId()
@@ -1654,58 +1485,42 @@ class ModelToolbar(AbstractToolbar):
         self.redraw = wx.NewId()
         self.help = wx.NewId()
         
-        # tool, label, bitmap, kind, shortHelp, longHelp, handler
-        return (
-            (self.new, 'new', Icons['modelNew'].GetBitmap(),
-             wx.ITEM_NORMAL, Icons['modelNew'].GetLabel(), Icons['modelNew'].GetDesc(),
-             self.parent.OnModelNew),
-            (self.open, 'open', Icons['modelOpen'].GetBitmap(),
-             wx.ITEM_NORMAL, Icons['modelOpen'].GetLabel(), Icons['modelOpen'].GetDesc(),
-             self.parent.OnModelOpen),
-            (self.save, 'save', Icons['modelSave'].GetBitmap(),
-             wx.ITEM_NORMAL, Icons['modelSave'].GetLabel(), Icons['modelSave'].GetDesc(),
-             self.parent.OnModelSave),
-            (self.image, 'image', Icons['modelToImage'].GetBitmap(),
-             wx.ITEM_NORMAL, Icons['modelToImage'].GetLabel(), Icons['modelToImage'].GetDesc(),
-             self.parent.OnExportImage),
-            (self.python, 'python', Icons['modelToPython'].GetBitmap(),
-             wx.ITEM_NORMAL, Icons['modelToPython'].GetLabel(), Icons['modelToPython'].GetDesc(),
-             self.parent.OnExportPython),
-            ('', '', '', '', '', '', ''),
-            (self.action, 'action', Icons['modelActionAdd'].GetBitmap(),
-             wx.ITEM_NORMAL, Icons['modelActionAdd'].GetLabel(), Icons['modelActionAdd'].GetDesc(),
-             self.parent.OnAddAction),
-            (self.data, 'data', Icons['modelDataAdd'].GetBitmap(),
-             wx.ITEM_NORMAL, Icons['modelDataAdd'].GetLabel(), Icons['modelDataAdd'].GetDesc(),
-             self.parent.OnAddData),
-            (self.relation, 'relation', Icons['modelRelation'].GetBitmap(),
-             wx.ITEM_NORMAL, Icons['modelRelation'].GetLabel(), Icons['modelRelation'].GetDesc(),
-             self.parent.OnDefineRelation),
-            ('', '', '', '', '', '', ''),
-            (self.redraw, 'redraw', Icons['modelRedraw'].GetBitmap(),
-             wx.ITEM_NORMAL, Icons['modelRedraw'].GetLabel(), Icons['modelRedraw'].GetDesc(),
-             self.parent.OnCanvasRefresh),
-            (self.validate, 'validate', Icons['modelValidate'].GetBitmap(),
-             wx.ITEM_NORMAL, Icons['modelValidate'].GetLabel(), Icons['modelValidate'].GetDesc(),
-             self.parent.OnValidateModel),
-            (self.run, 'run', Icons['modelRun'].GetBitmap(),
-             wx.ITEM_NORMAL, Icons['modelRun'].GetLabel(), Icons['modelRun'].GetDesc(),
-             self.parent.OnRunModel),
-            ('', '', '', '', '', '', ''),
-            (self.variables, "variables", Icons["modelVariables"].GetBitmap(),
-             wx.ITEM_NORMAL, Icons["modelVariables"].GetLabel(), Icons["modelVariables"].GetDesc(),
-             self.parent.OnVariables),
-            (self.settings, "settings", Icons["modelSettings"].GetBitmap(),
-             wx.ITEM_NORMAL, Icons["modelSettings"].GetLabel(), Icons["modelSettings"].GetDesc(),
-             self.parent.OnPreferences),
-            (self.help, "help", Icons["modelHelp"].GetBitmap(),
-             wx.ITEM_NORMAL, Icons["modelHelp"].GetLabel(), Icons["modelHelp"].GetDesc(),
-             self.parent.OnHelp),
-            ('', '', '', '', '', '', ''),
-            (self.quit, 'quit', Icons['quit'].GetBitmap(),
-             wx.ITEM_NORMAL, Icons['quit'].GetLabel(), Icons['quit'].GetDesc(),
-             self.parent.OnCloseWindow),
-            )
+        icons = Icons['modeler']
+        return self._getToolbarData(((self.new, 'new', icons['new'],
+                                      self.parent.OnModelNew),
+                                     (self.open, 'open', icons['open'],
+                                      self.parent.OnModelOpen),
+                                     (self.save, 'save', icons['save'],
+                                      self.parent.OnModelSave),
+                                     (self.image, 'image', icons['toImage'],
+                                      self.parent.OnExportImage),
+                                     (self.python, 'python', icons['toPython'],
+                                      self.parent.OnExportPython),
+                                     (None, ),
+                                     (self.action, 'action', icons['actionAdd'],
+                                      self.parent.OnAddAction),
+                                     (self.data, 'data', icons['dataAdd'],
+                                      self.parent.OnAddData),
+                                     (self.relation, 'relation', icons['relation'],
+                                      self.parent.OnDefineRelation),
+                                     (None, ),
+                                     (self.redraw, 'redraw', icons['redraw'],
+                                      self.parent.OnCanvasRefresh),
+                                     (self.validate, 'validate', icons['validate'],
+                                      self.parent.OnValidateModel),
+                                     (self.run, 'run', icons['run'],
+                                      self.parent.OnRunModel),
+                                     (None, ),
+                                     (self.variables, "variables", icons['variables'],
+                                      self.parent.OnVariables),
+                                     (self.settings, "settings", icons['settings'],
+                                      self.parent.OnPreferences),
+                                     (self.help, "help", Icons['misc']['help'],
+                                      self.parent.OnHelp),
+                                     (None, ),
+                                     (self.quit, 'quit', icons['quit'],
+                                      self.parent.OnCloseWindow))
+                                    )
     
 class HistogramToolbar(AbstractToolbar):
     """!Histogram toolbar (see histogram.py)
@@ -1713,12 +1528,12 @@ class HistogramToolbar(AbstractToolbar):
     def __init__(self, parent):
         AbstractToolbar.__init__(self, parent)
         
-        self.InitToolbar(self.ToolbarData())
+        self.InitToolbar(self._toolbarData())
         
         # realize the toolbar
         self.Realize()
         
-    def ToolbarData(self):
+    def _toolbarData(self):
         """!Toolbar data"""
         self.histogram = wx.NewId()
         self.rendermap = wx.NewId()
@@ -1728,32 +1543,24 @@ class HistogramToolbar(AbstractToolbar):
         self.hprint = wx.NewId()
         self.quit = wx.NewId()
         
-        # tool, label, bitmap, kind, shortHelp, longHelp, handler
-        return (
-            (self.histogram, 'histogram', Icons["histogram"].GetBitmap(),
-             wx.ITEM_NORMAL, Icons["histogram"].GetLabel(), Icons["histogram"].GetDesc(),
-             self.parent.OnOptions),
-            (self.rendermap, 'rendermap', Icons["displaymap"].GetBitmap(),
-             wx.ITEM_NORMAL, Icons["displaymap"].GetLabel(), Icons["displaymap"].GetDesc(),
-             self.parent.OnRender),
-            (self.erase, 'erase', Icons["erase"].GetBitmap(),
-             wx.ITEM_NORMAL, Icons["erase"].GetLabel(), Icons["erase"].GetDesc(),
-             self.parent.OnErase),
-            (self.font, 'font', Icons["font"].GetBitmap(),
-             wx.ITEM_NORMAL, Icons["font"].GetLabel(), Icons["font"].GetDesc(),
-             self.parent.SetHistFont),
-            ('', '', '', '', '', '', ''),
-            (self.save, 'save', Icons["savefile"].GetBitmap(),
-             wx.ITEM_NORMAL, Icons["savefile"].GetLabel(), Icons["savefile"].GetDesc(),
-             self.parent.SaveToFile),
-            (self.hprint, 'print', Icons["printmap"].GetBitmap(),
-             wx.ITEM_NORMAL, Icons["printmap"].GetLabel(), Icons["printmap"].GetDesc(),
-             self.parent.PrintMenu),
-            ('', '', '', '', '', '', ''),
-            (self.quit, 'quit', Icons["quit"].GetBitmap(),
-             wx.ITEM_NORMAL, Icons["quit"].GetLabel(), Icons["quit"].GetDesc(),
-             self.parent.OnQuit)
-            )
+        icons = Icons['displayWindow']
+        return self._getToolbarData(((self.histogram, 'histogram', icons["histogram"],
+                                      self.parent.OnOptions),
+                                     (self.rendermap, 'render', icons["display"],
+                                      self.parent.OnRender),
+                                     (self.erase, 'erase', icons["erase"],
+                                      self.parent.OnErase),
+                                     (self.font, 'font', Icons['misc']["font"],
+                                      self.parent.SetHistFont),
+                                     (None, ),
+                                     (self.save, 'save', icons["saveFile"],
+                                      self.parent.SaveToFile),
+                                     (self.hprint, 'print', icons["print"],
+                                      self.parent.PrintMenu),
+                                     (None, ),
+                                     (self.quit, 'quit', Icons['misc']["quit"],
+                                      self.parent.OnQuit))
+                                    )
 
 class LayerManagerToolbar(AbstractToolbar):
     """!Layer Manager toolbar (see wxgui.py)
@@ -1761,13 +1568,14 @@ class LayerManagerToolbar(AbstractToolbar):
     def __init__(self, parent):
         AbstractToolbar.__init__(self, parent)
         
-        self.InitToolbar(self.ToolbarData())
+        self.InitToolbar(self._toolbarData())
         
         # realize the toolbar
         self.Realize()
 
-    def ToolbarData(self):
-        """!Toolbar data"""
+    def _toolbarData(self):
+        """!Toolbar data
+        """
         self.newdisplay = wx.NewId()
         self.workspaceLoad = wx.NewId()
         self.workspaceOpen = wx.NewId()
@@ -1780,56 +1588,28 @@ class LayerManagerToolbar(AbstractToolbar):
         self.addovl = wx.NewId()
         self.delcmd = wx.NewId()
         self.attribute = wx.NewId()
+        self.vdigit = wx.NewId()
         self.preferences = wx.NewId()
         self.modeler = wx.NewId() 
         
-        # tool, label, bitmap, kind, shortHelp, longHelp, handler
-        return (
-            (self.newdisplay, 'newdisplay', Icons["newdisplay"].GetBitmap(),
-             wx.ITEM_NORMAL, Icons["newdisplay"].GetLabel(), Icons["newdisplay"].GetDesc(),
-             self.parent.OnNewDisplay),
-            ('', '', '', '', '', '', ''),
-            (self.workspaceLoad, 'workspaceLoad', Icons["workspaceLoad"].GetBitmap(),
-             wx.ITEM_NORMAL, Icons["workspaceLoad"].GetLabel(), Icons["workspaceLoad"].GetDesc(),
-             self.parent.OnWorkspace),
-            (self.workspaceOpen, 'workspaceOpen', Icons["workspaceOpen"].GetBitmap(),
-             wx.ITEM_NORMAL, Icons["workspaceOpen"].GetLabel(), Icons["workspaceOpen"].GetDesc(),
-             self.parent.OnWorkspaceOpen),
-            (self.workspaceSave, 'workspaceSave', Icons["workspaceSave"].GetBitmap(),
-             wx.ITEM_NORMAL, Icons["workspaceSave"].GetLabel(), Icons["workspaceSave"].GetDesc(),
-             self.parent.OnWorkspaceSave),
-            ('', '', '', '', '', '', ''),
-            (self.addrast, 'addrast', Icons["addrast"].GetBitmap(),
-             wx.ITEM_NORMAL, Icons["addrast"].GetLabel(), Icons["addrast"].GetDesc(),
-             self.parent.OnAddRaster),
-            (self.rastmisc, 'rastmisc', Icons["rastmisc"].GetBitmap(),
-             wx.ITEM_NORMAL, Icons["rastmisc"].GetLabel(), Icons["rastmisc"].GetDesc(),
-             self.parent.OnAddRasterMisc),
-            (self.addvect, 'addvect', Icons["addvect"].GetBitmap(),
-             wx.ITEM_NORMAL, Icons["addvect"].GetLabel(), Icons["addvect"].GetDesc(),
-             self.parent.OnAddVector),
-            (self.vectmisc, 'vectmisc', Icons["vectmisc"].GetBitmap(),
-             wx.ITEM_NORMAL, Icons["vectmisc"].GetLabel(), Icons["vectmisc"].GetDesc(),
-             self.parent.OnAddVectorMisc),
-            (self.addgrp, 'addgrp',  Icons["addgrp"].GetBitmap(),
-             wx.ITEM_NORMAL, Icons["addgrp"].GetLabel(), Icons["addgrp"].GetDesc(),
-             self.parent.OnAddGroup),
-            (self.addovl, 'addovl',  Icons["addovl"].GetBitmap(),
-             wx.ITEM_NORMAL, Icons["addovl"].GetLabel(), Icons["addovl"].GetDesc(),
-             self.parent.OnAddOverlay),
-            (self.delcmd, 'delcmd',  Icons["delcmd"].GetBitmap(),
-             wx.ITEM_NORMAL, Icons["delcmd"].GetLabel(), Icons["delcmd"].GetDesc(),
-             self.parent.OnDeleteLayer),
-            ('', '', '', '', '', '', ''),
-            (self.attribute, 'attrtable', Icons["attrtable"].GetBitmap(),
-             wx.ITEM_NORMAL, Icons["attrtable"].GetLabel(), Icons["attrtable"].GetDesc(),
-             self.parent.OnShowAttributeTable),
-            ('', '', '', '', '', '', ''),
-            (self.modeler, 'modeler', Icons["modeler"].GetBitmap(),
-             wx.ITEM_NORMAL, Icons["modeler"].GetLabel(), Icons["modeler"].GetDesc(),
-             self.parent.OnGModeler),
-            (self.preferences, 'preferences', Icons["settings"].GetBitmap(),
-             wx.ITEM_NORMAL, Icons["settings"].GetLabel(), Icons["settings"].GetDesc(),
-             self.parent.OnPreferences)
-            )
-    
+        icons = Icons['layerManager']
+        return self._getToolbarData(((self.newdisplay, 'newdisplay', icons["newdisplay"], self.parent.OnNewMenu),
+                                     (None, ),
+                                     (self.workspaceLoad, 'workspaceLoad', icons["workspaceLoad"], self.parent.OnLoadMenu),
+                                     (self.workspaceOpen, 'workspaceOpen', icons["workspaceOpen"], self.parent.OnWorkspaceOpen),
+                                     (self.workspaceSave, 'workspaceSave', icons["workspaceSave"], self.parent.OnWorkspaceSave),
+                                     (None, ),
+                                     (self.addrast, 'addRast', icons["addRast"], self.parent.OnAddRaster),
+                                     (self.rastmisc, 'rastMisc', icons["rastMisc"], self.parent.OnAddRasterMisc),
+                                     (self.addvect, 'addVect', icons["addVect"], self.parent.OnAddVector),
+                                     (self.vectmisc, 'vectMisc', icons["vectMisc"], self.parent.OnAddVectorMisc),
+                                     (self.addgrp, 'addGroup',  icons["addGroup"], self.parent.OnAddGroup),
+                                     (self.addovl, 'addOverlay',  icons["addOverlay"], self.parent.OnAddOverlay),
+                                     (self.delcmd, 'delCmd',  icons["delCmd"], self.parent.OnDeleteLayer),
+                                     (None, ),
+                                     (self.vdigit, 'vdigit', icons["vdigit"], self.parent.OnVDigit),
+                                     (self.attribute, 'attrTable', icons["attrTable"], self.parent.OnShowAttributeTable),
+                                     (None, ),
+                                     (self.modeler, 'modeler', icons["modeler"], self.parent.OnGModeler),
+                                     (self.preferences, 'preferences', icons["settings"], self.parent.OnPreferences))
+                                    )

@@ -15,7 +15,8 @@
 
 
 #%Module
-#%  description: r.recode.rules - Use ascii rules file to recode categories in raster map
+#%  description: r.recode.file - Use ascii rules file to recode categories in raster map
+#%  keywords: raster, recode
 #%End
 #%option
 #% key: input
