@@ -66,6 +66,14 @@ endif
 %.tab.h %.tab.c: %.y
 	$(YACC) -b$* -p$* $(YACCFLAGS) $<
 
+run_grass = \
+	GISRC=$(RUN_GISRC) \
+	GISBASE=$(RUN_GISBASE) \
+	PATH="$(GISBASE)/bin:$$PATH" \
+	PYTHONPATH="$(call mkpath,$(GISBASE)/etc/python,$$PYTHONPATH)" \
+	$(LD_LIBRARY_PATH_VAR)="$(BIN):$(ARCH_LIBDIR):$(BASE_LIBDIR):$($(LD_LIBRARY_PATH_VAR))" \
+	LC_ALL=C \
+	$(1)
 
 # default clean rules
 clean:
@@ -74,6 +82,14 @@ clean:
 	-if [ "$(CLEAN_SUBDIRS)" != "" ] ; then \
 		for dir in $(CLEAN_SUBDIRS) ; do \
 			$(MAKE) -C $$dir clean ; \
+		done ; \
+	fi
+
+# default install rules
+install:
+	-if [ "$(INSTALL_SUBDIRS)" != "" ] ; then \
+		for dir in $(INSTALL_SUBDIRS) ; do \
+			$(MAKE) -C $$dir install ; \
 		done ; \
 	fi
 
