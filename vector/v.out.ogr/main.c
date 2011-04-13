@@ -36,8 +36,9 @@
 int fout, fskip;		/* features written/ skip */
 int nocat, noatt, nocatskip;	/* number of features without cats/atts written/skip */
 
-int mk_att(int cat, struct field_info *Fi, dbDriver *Driver,
-	   int ncol, int doatt, int nocat, OGRFeatureH Ogr_feature, dbCursor cursor);
+int mk_att(int cat, struct field_info *Fi, dbDriver * Driver,
+	   int ncol, int doatt, int nocat, OGRFeatureH Ogr_feature,
+	   dbCursor cursor);
 
 char *OGR_list_write_drivers();
 char OGRdrivers[MAX_OGR_DRIVERS];
@@ -52,7 +53,8 @@ int main(int argc, char *argv[])
     struct GModule *module;
     struct Option *in_opt, *dsn_opt, *layer_opt, *type_opt, *frmt_opt,
 	*field_opt, *dsco, *lco;
-    struct Flag *cat_flag, *esristyle, *poly_flag, *update_flag, *nocat_flag, *shapez_flag;
+    struct Flag *cat_flag, *esristyle, *poly_flag, *update_flag, *nocat_flag,
+	*shapez_flag;
     char buf[SQL_BUFFER_SIZE];
     char key1[SQL_BUFFER_SIZE], key2[SQL_BUFFER_SIZE];
     struct Key_Value *projinfo, *projunits;
@@ -179,7 +181,7 @@ int main(int argc, char *argv[])
     shapez_flag = G_define_flag();
     shapez_flag->key = 'z';
     shapez_flag->description = _("Create 3D output if input is 3D "
-        			       "(applies to Shapefile output only)");
+				 "(applies to Shapefile output only)");
 
     poly_flag = G_define_flag();
     poly_flag->key = 'p';
@@ -391,7 +393,7 @@ int main(int argc, char *argv[])
     if (Vect_get_num_primitives(&In, GV_BOUNDARY) < 1 &&
 	(otype & GV_BOUNDARY)) {
 	G_warning(_("No boundaries found, but requested to be exported. "
-		   "Will skip this geometry type."));
+		    "Will skip this geometry type."));
     }
     else {
 	if (otype & GV_BOUNDARY)
@@ -410,7 +412,7 @@ int main(int argc, char *argv[])
     if (Vect_get_num_primitives(&In, GV_CENTROID) < 1 &&
 	(otype & GV_CENTROID)) {
 	G_warning(_("No centroids found, but requested to be exported. "
-		   "Will skip this geometry type."));
+		    "Will skip this geometry type."));
     }
     else {
 	if (otype & GV_CENTROID)
@@ -507,7 +509,7 @@ int main(int argc, char *argv[])
     if (Ogr_ds == NULL)
 	G_fatal_error(_("Unable to open OGR data source '%s'"),
 		      dsn_opt->answer);
-    
+
     /* check if OGR layer exists */
     overwrite = G_check_overwrite(argc, argv);
     found = FALSE;
@@ -516,7 +518,7 @@ int main(int argc, char *argv[])
 	Ogr_field = OGR_L_GetLayerDefn(Ogr_layer);
 	if (strcmp(OGR_FD_GetName(Ogr_field), layer_opt->answer))
 	    continue;
-	
+
 	found = TRUE;
 	if (!overwrite) {
 	    G_fatal_error(_("Layer <%s> already exists in OGR data source '%s'"),
@@ -529,7 +531,7 @@ int main(int argc, char *argv[])
 	    break;
 	}
     }
-    
+
     /* parse layer creation options */
     i = 0;
     while (lco->answers[i]) {
@@ -541,32 +543,34 @@ int main(int argc, char *argv[])
     }
 
     /* Automatically append driver options for 3D output to
-		layer creation options if 'z' is given.*/
-	if ( (shapez_flag->answer) && (Vect_is_3d(&In)) &&
-        (strcmp(frmt_opt->answer, "ESRI_Shapefile") == 0) )
-	{
-		/* find right option */
-    	char shape_geom[20];
-    	if ( (otype & GV_POINTS) || (otype & GV_KERNEL))
-    		sprintf (shape_geom, "POINTZ" );
-    	if ( (otype & GV_LINES) )
-    		sprintf (shape_geom, "ARCZ" );
-    	if ( (otype & GV_AREA) || (otype & GV_FACE) || (otype & GV_VOLUME) )
-    		sprintf (shape_geom, "POLYGONZ" );
-    	/* check if the right LCO is already present */
-    	const char *shpt;
-    	shpt = CSLFetchNameValue(papszLCO, "SHPT");
-    	if ( (!shpt) ) {
-    		/* Not set at all? Good! */
-    	papszLCO = CSLSetNameValue(papszLCO, "SHPT", shape_geom);
-    	} else {
-    		if (strcmp(shpt,shape_geom)!= 0) {
-    			/* Set but to a different value? Override! */
-    			G_warning(_("Overriding existing user-defined 'SHPT=' LCO."));
-    		}
-    		/* Set correct LCO for this geometry type */
-    		papszLCO = CSLSetNameValue(papszLCO, "SHPT", shape_geom);
-    	}
+       layer creation options if 'z' is given. */
+    if ((shapez_flag->answer) && (Vect_is_3d(&In)) &&
+	(strcmp(frmt_opt->answer, "ESRI_Shapefile") == 0)) {
+	/* find right option */
+	char shape_geom[20];
+
+	if ((otype & GV_POINTS) || (otype & GV_KERNEL))
+	    sprintf(shape_geom, "POINTZ");
+	if ((otype & GV_LINES))
+	    sprintf(shape_geom, "ARCZ");
+	if ((otype & GV_AREA) || (otype & GV_FACE) || (otype & GV_VOLUME))
+	    sprintf(shape_geom, "POLYGONZ");
+	/* check if the right LCO is already present */
+	const char *shpt;
+
+	shpt = CSLFetchNameValue(papszLCO, "SHPT");
+	if ((!shpt)) {
+	    /* Not set at all? Good! */
+	    papszLCO = CSLSetNameValue(papszLCO, "SHPT", shape_geom);
+	}
+	else {
+	    if (strcmp(shpt, shape_geom) != 0) {
+		/* Set but to a different value? Override! */
+		G_warning(_("Overriding existing user-defined 'SHPT=' LCO."));
+	    }
+	    /* Set correct LCO for this geometry type */
+	    papszLCO = CSLSetNameValue(papszLCO, "SHPT", shape_geom);
+	}
     }
 
 
@@ -599,7 +603,7 @@ int main(int argc, char *argv[])
     CSLDestroy(papszLCO);
     if (Ogr_layer == NULL)
 	G_fatal_error(_("Unable to create OGR layer"));
-    
+
     db_init_string(&dbstring);
 
     /* Vector attributes -> OGR fields */
@@ -699,19 +703,18 @@ int main(int argc, char *argv[])
 
     /* Fetch all attribute records */
     if (doatt) {
-    	sprintf(buf, "SELECT * FROM %s", Fi->table);
-    	G_debug(2, "SQL: %s", buf);
-    	db_set_string(&dbstring, buf);
-    	if (db_open_select_cursor
-    			(Driver, &dbstring, &cursor, DB_SEQUENTIAL) != DB_OK) {
-    		G_fatal_error(_("Cannot select attributes for cat = %d"),
-    	      cat);
-    	}
+	sprintf(buf, "SELECT * FROM %s", Fi->table);
+	G_debug(2, "SQL: %s", buf);
+	db_set_string(&dbstring, buf);
+	if (db_open_select_cursor
+	    (Driver, &dbstring, &cursor, DB_SEQUENTIAL) != DB_OK) {
+	    G_fatal_error(_("Cannot select attributes for cat = %d"), cat);
+	}
     }
-    
+
     if (OGR_L_TestCapability(Ogr_layer, OLCTransactions))
 	OGR_L_StartTransaction(Ogr_layer);
-    
+
     /* Lines (run always to count features of different type) */
     if ((otype & GV_POINTS) || (otype & GV_LINES)) {
 	G_message(_("Exporting %i geometries..."), Vect_get_num_lines(&In));
@@ -1005,7 +1008,7 @@ int main(int argc, char *argv[])
     Vect_close(&In);
 
     if (doatt) {
-    db_close_cursor(&cursor);
+	db_close_cursor(&cursor);
 	db_close_database(Driver);
 	db_shutdown_driver(Driver);
     }
@@ -1026,7 +1029,7 @@ int main(int argc, char *argv[])
        if (((otype & GV_POINTS) || (otype & GV_LINES)) && fskip > 0)
        G_warning ("%d features of different type skip", fskip);
      */
-    
+
     G_done_msg(_("%d features written to <%s> (%s)."), fout,
 	       layer_opt->answer, frmt_opt->answer);
 
@@ -1034,7 +1037,7 @@ int main(int argc, char *argv[])
 }
 
 
-int mk_att(int cat, struct field_info *Fi, dbDriver *Driver, int ncol,
+int mk_att(int cat, struct field_info *Fi, dbDriver * Driver, int ncol,
 	   int doatt, int nocat, OGRFeatureH Ogr_feature, dbCursor cursor)
 {
     int j, ogrfieldnum;
@@ -1059,57 +1062,60 @@ int mk_att(int cat, struct field_info *Fi, dbDriver *Driver, int ncol,
     /* Read & set attributes */
     if (cat >= 0) {		/* Line with category */
 	if (doatt) {
+	    if (db_fetch(&cursor, DB_NEXT, &more) != DB_OK)
+		G_fatal_error(_("Unable to fetch data from table"));
+	    if (!more) {
+		/* start from the beginning in case multiple grass vector features
+		 * share the same category */
 		if (db_fetch(&cursor, DB_NEXT, &more) != DB_OK)
 		    G_fatal_error(_("Unable to fetch data from table"));
-		if (!more) {
-		    /* start from the beginning in case multiple grass vector features
-		     * share the same category */
-		    if (db_fetch(&cursor, DB_NEXT, &more) != DB_OK)
-			G_fatal_error(_("Unable to fetch data from table"));
-		}
+	    }
 
-		if (!more) {
-		    /* G_warning ("No database record for cat = %d", cat); */
-		    /* Set at least key column to category */
-		    if (!nocat) {
-			ogrfieldnum =
-			    OGR_F_GetFieldIndex(Ogr_feature, Fi->key);
-			OGR_F_SetFieldInteger(Ogr_feature, ogrfieldnum, cat);
-			noatt++;
-		    }
-		    else {
-			G_fatal_error(_("No database record for cat = %d and export of 'cat' disabled"),
-				      cat);
-		    }
+	    if (!more) {
+		/* G_warning ("No database record for cat = %d", cat); */
+		/* Set at least key column to category */
+		if (!nocat) {
+		    ogrfieldnum = OGR_F_GetFieldIndex(Ogr_feature, Fi->key);
+		    OGR_F_SetFieldInteger(Ogr_feature, ogrfieldnum, cat);
+		    noatt++;
 		}
 		else {
-		    Table = db_get_cursor_table(&cursor);
-		    for (j = 0; j < ncol; j++) {
-			Column = db_get_table_column(Table, j);
-			Value = db_get_column_value(Column);
-			db_convert_column_value_to_string(Column, &dbstring);	/* for debug only */
-			G_debug(2, "col %d : val = %s", j,
-				db_get_string(&dbstring));
+		    G_fatal_error(_("No database record for cat = %d and export of 'cat' disabled"),
+				  cat);
+		}
+	    }
+	    else {
+		Table = db_get_cursor_table(&cursor);
+		for (j = 0; j < ncol; j++) {
+		    Column = db_get_table_column(Table, j);
+		    Value = db_get_column_value(Column);
+		    db_convert_column_value_to_string(Column, &dbstring);	/* for debug only */
+		    G_debug(2, "col %d : val = %s", j,
+			    db_get_string(&dbstring));
 
-			colsqltype = db_get_column_sqltype(Column);
-			colctype = db_sqltype_to_Ctype(colsqltype);
-			G_debug(2, "  colctype = %d", colctype);
+		    colsqltype = db_get_column_sqltype(Column);
+		    colctype = db_sqltype_to_Ctype(colsqltype);
+		    G_debug(2, "  colctype = %d", colctype);
 
-			ogrfieldnum = OGR_F_GetFieldIndex(Ogr_feature,
-							  db_get_column_name
-							  (Column));
+		    ogrfieldnum = OGR_F_GetFieldIndex(Ogr_feature,
+						      db_get_column_name
+						      (Column));
 
-			/* Reset */
-			if ( ( ( nocat ) && (strcmp(Fi->key, db_get_column_name(Column)) == 0) ) == 0 ) {
-				/* if this is 'cat', then execute the following only if the '-s' flag was NOT given*/
-				OGR_F_UnsetField(Ogr_feature, ogrfieldnum);
-			}
+		    /* Reset */
+		    if (((nocat) &&
+			 (strcmp(Fi->key, db_get_column_name(Column)) ==
+			  0)) == 0) {
+			/* if this is 'cat', then execute the following only if the '-s' flag was NOT given */
+			OGR_F_UnsetField(Ogr_feature, ogrfieldnum);
+		    }
 
-			/* prevent writing NULL values */
-			if (!db_test_value_isnull(Value)) {
-				if ( ( (nocat) && (strcmp(Fi->key, db_get_column_name(Column)) == 0) ) == 0 ) {
-				/* if this is 'cat', then execute the following only if the '-s' flag was NOT given*/
-				switch (colctype) {
+		    /* prevent writing NULL values */
+		    if (!db_test_value_isnull(Value)) {
+			if (((nocat) &&
+			     (strcmp(Fi->key, db_get_column_name(Column)) ==
+			      0)) == 0) {
+			    /* if this is 'cat', then execute the following only if the '-s' flag was NOT given */
+			    switch (colctype) {
 			    case DB_C_TYPE_INT:
 				OGR_F_SetFieldInteger(Ogr_feature,
 						      ogrfieldnum,
@@ -1135,9 +1141,9 @@ int mk_att(int cat, struct field_info *Fi, dbDriver *Driver, int ncol,
 				break;
 			    }
 			}
-			}
 		    }
 		}
+	    }
 	}
 	else {			/* Use cat only */
 	    ogrfieldnum = OGR_F_GetFieldIndex(Ogr_feature, "cat");
