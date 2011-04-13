@@ -372,6 +372,11 @@ int Vect_net_shortest_path_coor(struct Map_info *, double, double, double,
 				double *, struct line_pnts *, struct ilist *,
 				struct line_pnts *, struct line_pnts *,
 				double *, double *);
+int Vect_net_shortest_path_coor2(struct Map_info *, double, double, double,
+				double, double, double, double, double,
+				double *, struct line_pnts *, struct ilist *, struct ilist *,
+				struct line_pnts *, struct line_pnts *,
+				double *, double *);
 
 /* Miscellaneous */
 int Vect_topo_dump(struct Map_info *, FILE *);
