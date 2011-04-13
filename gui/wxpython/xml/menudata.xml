@@ -119,7 +119,7 @@
 	    <separator />
 	    <menuitem>
 	      <label>Binary file import</label>
-	      <help>Import a binary raster file into a GRASS raster map.</help>
+	      <help>Import a binary raster file into a GRASS raster map layer.</help>
 	      <keywords>raster,import</keywords>
 	      <handler>OnMenuCmd</handler>
 	      <command>r.in.bin</command>
@@ -267,7 +267,7 @@
 	    </menuitem>
 	    <menuitem>
 	      <label>Matlab array and MapGen import</label>
-	      <help>Import Mapgen or Matlab vector maps into GRASS.</help>
+	      <help>Import Mapgen or Matlab-ASCII vector maps into GRASS.</help>
 	      <keywords>vector,import</keywords>
 	      <handler>OnMenuCmd</handler>
 	      <command>v.in.mapgen</command>
@@ -356,16 +356,16 @@
 	    <separator />
 	    <menuitem>
 	      <label>Binary export</label>
-	      <help>Exports a GRASS raster map to a binary array.</help>
-	      <keywords>raster,export</keywords>
+	      <help>Exports a GRASS raster to a binary array.</help>
+	      <keywords>raster</keywords>
 	      <handler>OnMenuCmd</handler>
 	      <command>r.out.bin</command>
 	    </menuitem>
 	    <separator />
 	    <menuitem>
 	      <label>MPEG-1 export</label>
-	      <help>Raster File Series to MPEG Conversion.</help>
-	      <keywords>raster,animation</keywords>
+	      <help>Raster File Series to MPEG Conversion Program.</help>
+	      <keywords>raster</keywords>
 	      <handler>OnMenuCmd</handler>
 	      <command>r.out.mpeg</command>
 	    </menuitem>
@@ -589,7 +589,7 @@
 	  <items>
 	    <menuitem>
 	      <label>Raster to vector</label>
-	      <help>Converts a raster map into a vector map.</help>
+	      <help>Converts a raster map into a vector map layer.</help>
 	      <keywords>raster,conversion,vectorization</keywords>
 	      <handler>OnMenuCmd</handler>
 	      <command>r.to.vect</command>
@@ -697,7 +697,7 @@
 	</menuitem>
 	<menuitem>
 	  <label>Postscript plot</label>
-	  <help>Produces hardcopy PostScript map output.</help>
+	  <help>Hardcopy PostScript map output utility.</help>
 	  <keywords>postscript,map,printing</keywords>
 	  <handler>OnMenuCmd</handler>
 	  <command>ps.map</command>
@@ -778,14 +778,14 @@
 	    <menuitem>
 	      <label>Show settings</label>
 	      <help>Outputs and modifies the user's current GRASS variable settings.</help>
-	      <keywords>general,settings</keywords>
+	      <keywords>general</keywords>
               <handler>RunMenuCmd</handler>
 	      <command>g.gisenv -n</command>
 	    </menuitem>
 	    <menuitem>
 	      <label>Change settings</label>
 	      <help>Outputs and modifies the user's current GRASS variable settings.</help>
-	      <keywords>general,settings</keywords>
+	      <keywords>general</keywords>
               <handler>OnMenuCmd</handler>
 	      <command>g.gisenv</command>
 	    </menuitem>
@@ -800,7 +800,7 @@
 	    <menuitem>
 	      <label>Version</label>
 	      <help>Displays version and copyright information.</help>
-	      <keywords>general,version</keywords>
+	      <keywords>general</keywords>
               <handler>RunMenuCmd</handler>
 	      <command>g.version -c</command>
 	    </menuitem>
@@ -1063,7 +1063,7 @@
 	</menuitem>
 	<menuitem>
 	  <label>Mask</label>
-	  <help>Creates a mask for limiting raster operation.</help>
+	  <help>Create a MASK for limiting raster operation</help>
 	  <keywords>raster,mask</keywords>
 	  <handler>OnMenuCmd</handler>
 	  <command>r.mask</command>
@@ -1258,23 +1258,23 @@
 	  <items>
 	    <menuitem>
 	      <label>Carve stream channels</label>
-	      <help>Generates stream channels.</help>
-	      <keywords>raster,hydrology</keywords>
+	      <help>Takes vector stream data, transforms it to raster and subtracts depth from the output DEM.</help>
+	      <keywords>raster</keywords>
 	      <handler>OnMenuCmd</handler>
 	      <command>r.carve</command>
 	    </menuitem>
 	    <menuitem>
 	      <label>Fill lake</label>
 	      <help>Fills lake from seed at given level.</help>
-	      <keywords>raster,hydrology</keywords>
+	      <keywords>raster</keywords>
 	      <handler>OnMenuCmd</handler>
 	      <command>r.lake</command>
 	    </menuitem>
 	    <separator />
 	    <menuitem>
 	      <label>Depressionless map and flowlines</label>
-	      <help>Filters and generates a depressionless elevation map and a flow direction map from a given elevation raster map.</help>
-	      <keywords>raster,hydrology</keywords>
+	      <help>Filters and generates a depressionless elevation map and a flow direction map from a given elevation layer.</help>
+	      <keywords>raster</keywords>
 	      <handler>OnMenuCmd</handler>
 	      <command>r.fill.dir</command>
 	    </menuitem>
@@ -1287,22 +1287,22 @@
 	    </menuitem>
 	    <menuitem>
 	      <label>Flow lines</label>
-	      <help>Constructs flow lines.</help>
-	      <keywords>raster,hydrology</keywords>
+	      <help>Construction of slope curves (flowlines), flowpath lengths, and flowline densities (upslope areas) from a raster digital elevation model (DEM)</help>
+	      <keywords>raster</keywords>
 	      <handler>OnMenuCmd</handler>
 	      <command>r.flow</command>
 	    </menuitem>
 	    <separator />
 	    <menuitem>
 	      <label>SIMWE Overland flow modeling</label>
-	      <help>Overland flow hydrologic simulation using path sampling method (SIMWE).</help>
+	      <help>Overland flow hydrologic simulation using path sampling method (SIMWE)</help>
 	      <keywords>raster,flow,hydrology</keywords>
 	      <handler>OnMenuCmd</handler>
 	      <command>r.sim.water</command>
 	    </menuitem>
 	    <menuitem>
 	      <label>SIMWE Sediment flux modeling</label>
-	      <help>Sediment transport and erosion/deposition simulation using path sampling method (SIMWE).</help>
+	      <help>Sediment transport and erosion/deposition simulation using path sampling method (SIMWE)</help>
 	      <keywords>raster,sediment flow,erosion,deposition</keywords>
 	      <handler>OnMenuCmd</handler>
 	      <command>r.sim.sediment</command>
@@ -1310,15 +1310,15 @@
 	    <separator />
 	    <menuitem>
 	      <label>Topographic index map</label>
-	      <help>Creates topographic index map from elevation raster map.</help>
-	      <keywords>raster,hydrology</keywords>
+	      <help>Creates topographic index [ln(a/tan(beta))] map from elevation map.</help>
+	      <keywords>raster</keywords>
 	      <handler>OnMenuCmd</handler>
 	      <command>r.topidx</command>
 	    </menuitem>
 	    <menuitem>
 	      <label>TOPMODEL simulation</label>
 	      <help>Simulates TOPMODEL which is a physically based hydrologic model.</help>
-	      <keywords>raster,hydrology</keywords>
+	      <keywords>raster</keywords>
 	      <handler>OnMenuCmd</handler>
 	      <command>r.topmodel</command>
 	    </menuitem>
@@ -1332,15 +1332,15 @@
 	    </menuitem>
 	    <menuitem>
 	      <label>Watershed analysis</label>
-	      <help>Watershed basin analysis program</help>
-	      <keywords>raster,hydrology</keywords>
+	      <help>Watershed basin analysis program.</help>
+	      <keywords>raster</keywords>
 	      <handler>OnMenuCmd</handler>
 	      <command>r.watershed</command>
 	    </menuitem>
 	    <menuitem>
 	      <label>Watershed basin creation</label>
-	      <help>Creates watershed basins.</help>
-	      <keywords>raster,hydrology</keywords>
+	      <help>Watershed basin creation program.</help>
+	      <keywords>raster</keywords>
 	      <handler>OnMenuCmd</handler>
 	      <command>r.water.outlet</command>
 	    </menuitem>
@@ -1541,8 +1541,8 @@
 	    </menuitem>
 	    <menuitem>
 	      <label>Reclassify</label>
-	      <help>Reclassify raster map based on category values.</help>
-	      <keywords>raster,reclassification</keywords>
+	      <help>Creates a new map layer whose category values are based upon a reclassification of the categories in an existing raster map layer.</help>
+	      <keywords>raster</keywords>
 	      <handler>OnMenuCmd</handler>
 	      <command>r.reclass</command>
 	    </menuitem>
@@ -1611,7 +1611,7 @@
 	    <separator />
 	    <menuitem>
 	      <label>Gaussian kernel density surface</label>
-	      <help>Generates a raster density map from vector point data using a moving kernel or optionally generates a vector density map on a vector network.</help>
+	      <help>Generates a raster density map from vector points data using a moving 2D isotropic Gaussian kernel or optionally generates a vector density map on vector network with a 1D kernel.</help>
 	      <keywords>vector,kernel density</keywords>
 	      <handler>OnMenuCmd</handler>
 	      <command>v.kernel</command>
@@ -1827,7 +1827,7 @@
 	    </menuitem>
 	    <menuitem>
 	      <label>Linear regression</label>
-	      <help>Calculates linear regression from two raster maps: y = a + b*x.</help>
+	      <help>Calculates linear regression from two raster maps: y = a + b*x</help>
 	      <keywords>raster,statistics</keywords>
 	      <handler>OnMenuCmd</handler>
 	      <command>r.regression.line</command>
@@ -2875,7 +2875,7 @@
 	  <items>
 	    <menuitem>
 	      <label>Query any table</label>
-	      <help>Selects data from attribute table (performs SQL query statement(s)).</help>
+	      <help>Selects data from table.</help>
 	      <keywords>database,attribute table,SQL</keywords>
 	      <handler>OnMenuCmd</handler>
 	      <command>db.select</command>
