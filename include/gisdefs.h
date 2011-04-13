@@ -905,6 +905,8 @@ int G_stat(const char *, struct stat *);
 int G_percent(long, long, int);
 int G_percent2(long, long, int, FILE *);
 int G_percent_reset(void);
+void G_set_percent_routine(int (*) (int));
+void G_unset_percent_routine(void);
 
 /* plot.c */
 int G_setup_plot(double, double, double, double, int (*)(int, int),

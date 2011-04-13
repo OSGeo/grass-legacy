@@ -10,8 +10,6 @@
  * (>=v2). Read the file COPYING that comes with GRASS for details.
  *
  * \author GRASS GIS Development Team
- *
- * \date 1999-2008
  */
 
 #include <stdio.h>
@@ -21,6 +19,7 @@
 static int prev = -1;
 static int first = 1;
 
+static int (*ext_percent) (int);
 
 /**
  * \brief Print percent complete messages.
@@ -150,4 +149,26 @@ int G_percent_reset(void)
     first = 1;
 
     return 0;
+}
+
+/**
+ * \brief Establishes percent_routine as the routine that will handle
+ * the printing of percentage progress messages.
+ * 
+ * \param percent_routine routine will be called like this: percent_routine(x)
+ */
+void G_set_percent_routine(int (*percent_routine) (int))
+{
+    ext_percent = percent_routine;
+}
+
+/**
+ * \brief After this call subsequent percentage progress messages will
+ * be handled in the default method.
+ * 
+ * Percentage progress messages are printed directly to stderr.
+ */
+void G_unset_percent_routine(void)
+{
+    ext_percent = NULL;
 }
