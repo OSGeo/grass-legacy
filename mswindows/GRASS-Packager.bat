@@ -16,8 +16,8 @@ set OSGEO4W_DIR=c:\osgeo4w
 
 rem set PACKAGE_DIR=.\GRASS-64-Release-Package
 set PACKAGE_DIR=.\GRASS-64-Devel-Package
-rem set GRASS_PREFIX=%OSGEO4W_DIR%\apps\grass\grass-6.4.1
-set GRASS_PREFIX=%OSGEO4W_DIR%\apps\grass\grass-6.4.1svn
+rem set GRASS_PREFIX=%OSGEO4W_DIR%\apps\grass\grass-6.4.2
+set GRASS_PREFIX=%OSGEO4W_DIR%\apps\grass\grass-6.4.2svn
 
 set SVN_PATH=c:\Subversion
 
@@ -48,6 +48,7 @@ mkdir %PACKAGE_DIR%\extralib
 
 copy %OSGEO4W_DIR%\bin\*.dll %PACKAGE_DIR%\extralib
 del %PACKAGE_DIR%\extralib\libgrass_*6.4.0*.dll
+del %PACKAGE_DIR%\extralib\libgrass_*6.4.1*.dll
 del %PACKAGE_DIR%\extralib\libgrass_*6.5*.dll
 del %PACKAGE_DIR%\extralib\libgrass_*7.0*.dll
 del %PACKAGE_DIR%\extralib\Qt*4.dll
