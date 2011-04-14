@@ -1242,7 +1242,7 @@ class GdalImportDialog(ImportDialog):
     def OnCmdDialog(self, event):
         """!Show command dialog"""
         name = self._getCommand()
-        menuform.GUI(parentframe = self, modal = True).ParseCommand(cmd = [name])
+        menuform.GUI(parent = self, modal = True).ParseCommand(cmd = [name])
                 
 class DxfImportDialog(ImportDialog):
     """!Dialog for bulk import of DXF layers""" 
