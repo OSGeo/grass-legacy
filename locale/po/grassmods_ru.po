@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: grassmods_ru\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-01-06 22:57+0100\n"
+"POT-Creation-Date: 2011-04-18 22:47+0200\n"
 "PO-Revision-Date: 2009-05-15 00:23-0600\n"
 "Last-Translator: Maxim Dubinin <sim@gis-lab.info>\n"
 "Language-Team: Russian <grass-translations@lists.osgeo.org>\n"
@@ -253,18 +253,17 @@ msgstr "Невозможно записать растровый ряд"
 #: ../raster/r.sun2/main.c:1181 ../raster/r.sun2/main.c:1188
 #: ../raster/r.sun2/main.c:1195 ../raster/r.sun2/main.c:1202
 #: ../raster/r.in.gdal/main.c:744 ../raster/r.in.gdal/main.c:749
-#: ../raster/r.in.gdal/main.c:763 ../raster/r.in.bin/main.c:497
-#: ../raster/r.lake/main.c:229 ../raster/r.lake/main.c:318
-#: ../raster/r.surf.idw/main.c:147 ../raster/r.circle/dist.c:127
-#: ../raster/r.slope.aspect/opennew.c:19 ../raster/r.bilinear/main.c:104
-#: ../raster/r.patch/main.c:144 ../raster/r.random/random.c:55
-#: ../raster/r.los/main.c:203 ../raster/r.buffer/write_map.c:40
-#: ../raster/r.series/main.c:250 ../raster/r.surf.idw2/main.c:111
-#: ../raster/r.surf.fractal/write_rast.c:58 ../raster/r.grow2/main.c:209
-#: ../raster/r.resamp.interp/main.c:148 ../raster/r.cross/main.c:145
-#: ../raster/r.clump/main.c:98 ../raster/r.in.xyz/main.c:498
-#: ../raster/r.texture/main.c:309 ../raster/r.surf.random/randsurf.c:28
-#: ../raster/r.surf.random/randsurf.c:32
+#: ../raster/r.in.gdal/main.c:763 ../raster/r.lake/main.c:229
+#: ../raster/r.lake/main.c:318 ../raster/r.surf.idw/main.c:147
+#: ../raster/r.circle/dist.c:127 ../raster/r.slope.aspect/opennew.c:19
+#: ../raster/r.bilinear/main.c:104 ../raster/r.patch/main.c:144
+#: ../raster/r.random/random.c:55 ../raster/r.los/main.c:203
+#: ../raster/r.buffer/write_map.c:40 ../raster/r.series/main.c:250
+#: ../raster/r.surf.idw2/main.c:111 ../raster/r.surf.fractal/write_rast.c:58
+#: ../raster/r.grow2/main.c:209 ../raster/r.resamp.interp/main.c:148
+#: ../raster/r.cross/main.c:145 ../raster/r.clump/main.c:98
+#: ../raster/r.in.xyz/main.c:498 ../raster/r.texture/main.c:309
+#: ../raster/r.surf.random/randsurf.c:28 ../raster/r.surf.random/randsurf.c:32
 #: ../raster/r.li/r.li.daemon/daemon.c:127 ../raster/r.null/null.c:323
 #: ../raster/r.mapcalc/map3.c:580 ../raster/r.mapcalc/map.c:507
 #: ../raster/r.sunmask/main.c:450 ../raster/r.random.surface/save.c:23
@@ -273,7 +272,7 @@ msgstr "Невозможно записать растровый ряд"
 #: ../raster/r.flow/io.c:208 ../raster/r.in.ascii/main.c:206
 #: ../raster/r.resamp.stats/main.c:341 ../raster/r.in.mat/main.c:430
 #: ../raster/r.in.arc/main.c:154 ../raster/r.bitpattern/main.c:125
-#: ../vector/lidar/v.surf.bspline/main.c:319 ../vector/v.kernel/main.c:268
+#: ../vector/lidar/v.surf.bspline/main.c:319 ../vector/v.kernel/main.c:317
 #: ../vector/v.to.rast/vect2rast.c:125 ../vector/v.to.rast/vect2rast.c:129
 #: ../vector/v.surf.idw/main.c:264 ../vector/v.neighbors/main.c:96
 #: ../doc/raster/r.example/main.c:141 ../imagery/i.smap/shapiro/opencell.c:30
@@ -323,9 +322,17 @@ msgstr ""
 #: ../vector/v.generalize/simplification.c:317
 #: ../vector/v.generalize/simplification.c:341
 #: ../vector/v.generalize/matrix.c:144 ../vector/v.generalize/point.c:120
-#: ../vector/v.mkgrid/write_grid.c:131 ../vector/v.in.ascii/a2b.c:172
-#: ../vector/v.edit/a2b.c:198 ../vector/v.surf.rst/main.c:887
-#: ../vector/v.mapcalc/list.c:54 ../vector/v.mapcalc/list.c:501
+#: ../vector/v.net.distance/main.c:168 ../vector/v.net.allpairs/main.c:171
+#: ../vector/v.net.allpairs/main.c:175 ../vector/v.mkgrid/write_grid.c:131
+#: ../vector/v.net.timetable/main.c:353 ../vector/v.net.timetable/main.c:363
+#: ../vector/v.net.connectivity/main.c:165
+#: ../vector/v.net.connectivity/main.c:181 ../vector/v.net.flow/main.c:214
+#: ../vector/v.in.ascii/a2b.c:172 ../vector/v.edit/a2b.c:198
+#: ../vector/v.surf.rst/main.c:887 ../vector/v.mapcalc/list.c:54
+#: ../vector/v.mapcalc/list.c:501 ../vector/v.net.centrality/main.c:265
+#: ../vector/v.net.centrality/main.c:270 ../vector/v.net.centrality/main.c:276
+#: ../vector/v.net.centrality/main.c:282 ../vector/v.net.centrality/main.c:288
+#: ../vector/v.net.components/main.c:127
 #: ../imagery/i.smap/bouman/multialloc.c:115 ../imagery/i.ask/popup.c:174
 msgid "Out of memory"
 msgstr "Недостаточно памяти"
@@ -671,7 +678,8 @@ msgid "Unable to create and solve the linear equation system"
 msgstr "Невозможно создать и решить систему линейных уравнений"
 
 #: ../raster3d/r3.gwflow/main.c:371 ../raster3d/r3.stats/main.c:618
-#: ../raster/r.univar2/r3.univar_main.c:112
+#: ../raster/r.univar2/r3.univar_main.c:158
+#: ../raster/r.univar2/r3.univar_main.c:200
 #, c-format
 msgid "Error opening g3d map <%s>"
 msgstr "Ошибка открытия слоя g3d <%s>"
@@ -761,7 +769,7 @@ msgstr "Ошибка открытия файла предпросмотра [%s]
 msgid "Writing %s from %s..."
 msgstr "Записано %s из %s..."
 
-#: ../raster3d/r3.stats/main.c:568 ../raster/r.univar2/r3.univar_main.c:79
+#: ../raster3d/r3.stats/main.c:568 ../raster/r.univar2/r3.univar_main.c:104
 msgid "raster3d, statistics"
 msgstr "raster3d, статистика"
 
@@ -781,12 +789,13 @@ msgstr "Вычисление статистических данных на ос
 msgid "The number of subranges has to be equal or greater than 1"
 msgstr "Число поддиапазонов должна быть равна или больше, чем 1"
 
-#: ../raster3d/r3.stats/main.c:611 ../raster/r.univar2/r3.univar_main.c:104
+#: ../raster3d/r3.stats/main.c:611 ../raster/r.univar2/r3.univar_main.c:151
+#: ../raster/r.univar2/r3.univar_main.c:193
 #, c-format
 msgid "Requested g3d map <%s> not found"
 msgstr "Запрошенный g3d слой <%s> не найден"
 
-#: ../raster3d/r3.stats/main.c:664
+#: ../raster3d/r3.stats/main.c:665
 msgid "Sort non-null values"
 msgstr "Упорядочить ненулевые значения"
 
@@ -869,7 +878,7 @@ msgstr ""
 "Отобразить только временную метку 3D растрового слоя (день.месяц.год час:"
 "минута:секунда)"
 
-#: ../raster3d/base/r3.info.main.c:121 ../raster/r.out.bin/main.c:129
+#: ../raster3d/base/r3.info.main.c:121
 #: ../raster/r.out.gridatb/check_ready.c:12 ../raster/r.median/main.c:75
 #: ../raster/r.his/main.c:127 ../raster/r.his/main.c:164
 #: ../raster/r.his/main.c:189 ../raster/r.out.mat/main.c:103
@@ -936,7 +945,7 @@ msgstr ""
 #: ../raster/r.carve/main.c:178 ../raster/r.report/parse.c:243
 #: ../raster/r.composite/main.c:155 ../raster/r.flow/io.c:65
 #: ../raster/r.sum/main.c:62 ../raster/r.topidx/check_ready.c:11
-#: ../raster/r.univar2/r.univar_main.c:148 ../raster/r.resamp.stats/main.c:296
+#: ../raster/r.univar2/r.univar_main.c:216 ../raster/r.resamp.stats/main.c:296
 #: ../raster/r.region/main.c:166 ../raster/r.region/main.c:225
 #: ../raster/r.region/main.c:348 ../raster/r.param.scale/interface.c:172
 #: ../raster/r.support.stats/main.c:49 ../raster/r.neighbors/main.c:193
@@ -1097,21 +1106,191 @@ msgstr "Экспорт 3D растрового слоя GRASS в 3 Vis5D фай�
 msgid "Use map coordinates instead of xyz coordinates"
 msgstr "Использование координат карты вместо xyz"
 
-#: ../raster/r.out.bin/main.c:63 ../raster/r.out.gridatb/main.c:44
-#: ../raster/r.median/main.c:46 ../raster/r.his/main.c:63
-#: ../raster/r.out.pov/main.c:121 ../raster/r.describe/main.c:59
-#: ../raster/r.le/r.le.trace/main.c:57 ../raster/r.le/r.le.setup/main.c:61
-#: ../raster/r.le/r.le.patch/main.c:47 ../raster/r.le/r.le.pixel/main.c:45
-#: ../raster/r.surf.gauss/main.c:46 ../raster/r.walk/main.c:174
-#: ../raster/r.sun2/main.c:226 ../raster/r.rescale.eq/main.c:52
-#: ../raster/r.drain/main.c:94 ../raster/r.lake/main.c:148
-#: ../raster/r.compress/main.c:64 ../raster/r.circle/dist.c:51
-#: ../raster/r.sun/main.c:175 ../raster/r.out.vtk/main.c:148
-#: ../raster/r.quant/main.c:41 ../raster/r.bilinear/main.c:42
-#: ../raster/r.in.gridatb/main.c:41 ../raster/r.resample/main.c:54
-#: ../raster/r.patch/main.c:53 ../raster/r.out.ppm3/main.c:57
-#: ../raster/r.transect/main.c:54 ../raster/r.random/main.c:51
-#: ../raster/r.los/main.c:82 ../raster/wildfire/r.spread/main.c:101
+#: ../raster/r.out.bin/main.c:53 ../raster/r.out.bin/main.c:62
+#: ../raster/r.out.bin/main.c:461 ../raster/r.mapcalc/map3.c:124
+#: ../raster/r.mapcalc/map3.c:138 ../raster/r.mapcalc/map3.c:152
+msgid "Error writing data"
+msgstr "Ошибка записи данных"
+
+#: ../raster/r.out.bin/main.c:139
+#, c-format
+msgid "Header File = %s"
+msgstr "Файл заголовка = %s"
+
+#: ../raster/r.out.bin/main.c:144 ../raster/r.out.bin/main.c:228
+#: ../raster/r.out.bin/main.c:407
+#, c-format
+msgid "Unable to create file <%s>"
+msgstr "Невозможно создать файл <%s>"
+
+#: ../raster/r.out.bin/main.c:223
+#, c-format
+msgid "World File = %s"
+msgstr "Файл привязки = %s"
+
+#: ../raster/r.out.bin/main.c:279 ../raster/r.out.mat/main.c:64
+#: ../raster/r.out.ascii/main.c:59 ../raster/r.out.ppm/main.c:54
+#: ../raster/r.out.tiff/r.out.tiff.c:99 ../raster/r.out.gdal/main.c:128
+#: ../locale/scriptstrings/r.out.gdal.sh_to_translate.c:2
+#: ../locale/scriptstrings/r.out.xyz_to_translate.c:2
+msgid "raster, export"
+msgstr "растр, экспорт"
+
+#: ../raster/r.out.bin/main.c:280
+#, fuzzy
+msgid "Exports a GRASS raster map to a binary array."
+msgstr "Экспорт растра GRASS в бинарный массив."
+
+#: ../raster/r.out.bin/main.c:289 ../raster/r.random/main.c:57
+#: ../raster/r.water.outlet/main.c:55
+#: ../locale/scriptstrings/r.out.gdal.sh_to_translate.c:5
+#: ../locale/scriptstrings/r.reclass.area_to_translate.c:3
+#: ../locale/scriptstrings/r.out.xyz_to_translate.c:3
+#: ../locale/scriptstrings/r.colors.stddev_to_translate.c:3
+#: ../locale/scriptstrings/d.rast.edit_to_translate.c:3
+#: ../imagery/i.zc/main.c:69
+msgid "Name of input raster map"
+msgstr "Название вводного растрового слоя"
+
+#: ../raster/r.out.bin/main.c:296
+msgid "Name for output binary map (use output=- for stdout)"
+msgstr ""
+"Название для выходного бинарного слоя (используйте output=- для stdout)"
+
+#: ../raster/r.out.bin/main.c:303
+msgid "Value to write out for null"
+msgstr "Значение записываемое вместо null"
+
+#: ../raster/r.out.bin/main.c:310 ../raster/r.in.bin/main.c:284
+#, fuzzy
+msgid "Number of bytes per cell"
+msgstr "Неправильно количество байтов на ячейку"
+
+#: ../raster/r.out.bin/main.c:317 ../raster/r.in.bin/main.c:292
+#, fuzzy
+msgid "Output byte order"
+msgstr "Выходной world файл TIFF "
+
+#: ../raster/r.out.bin/main.c:322
+#, fuzzy
+msgid "Generate integer output"
+msgstr "Создать бинарный растровый слой"
+
+#: ../raster/r.out.bin/main.c:326
+#, fuzzy
+msgid "Generate floating-point output"
+msgstr "Округлить данные с плавающей точкой"
+
+#: ../raster/r.out.bin/main.c:330
+msgid "Export array with GMT compatible header"
+msgstr "Экспортировать массив с заголовком, совместимым с GMT"
+
+#: ../raster/r.out.bin/main.c:334
+msgid "Generate BIL world and header files"
+msgstr "Создать файлы заголовка и привязки для BIL"
+
+#: ../raster/r.out.bin/main.c:338
+#, fuzzy
+msgid "Byte swap output"
+msgstr "Замена байта результата"
+
+#: ../raster/r.out.bin/main.c:344
+msgid "Invalid value for null (integers only)"
+msgstr "Неправильное значение для null (должно быть целочисленное)"
+
+#: ../raster/r.out.bin/main.c:366
+#, fuzzy
+msgid "order= and -s are mutually exclusive"
+msgstr "-r и -e взаимоисключающиеся"
+
+#: ../raster/r.out.bin/main.c:375
+#, fuzzy
+msgid "-i and -f are mutually exclusive"
+msgstr "-r и -e взаимоисключающиеся"
+
+#: ../raster/r.out.bin/main.c:394
+msgid "Floating-point output requires bytes=4 or bytes=8"
+msgstr ""
+
+#: ../raster/r.out.bin/main.c:398
+msgid "Integer output doesn't support bytes=8 in this build"
+msgstr ""
+
+#: ../raster/r.out.bin/main.c:412
+msgid "GMT grid doesn't support 64-bit integers"
+msgstr ""
+
+#: ../raster/r.out.bin/main.c:418
+msgid "Creating BIL support files..."
+msgstr "Создание дополнительных файлов к BIL..."
+
+#: ../raster/r.out.bin/main.c:435
+#, c-format
+msgid "Exporting raster as floating values (bytes=%d)"
+msgstr " Экспортировать растр как с плавающей точкой (bytes=%d)"
+
+#: ../raster/r.out.bin/main.c:437
+msgid "Writing GMT float format ID=1"
+msgstr "Запись целочисленного формата GMT ID=1"
+
+#: ../raster/r.out.bin/main.c:440
+#, c-format
+msgid "Exporting raster as integer values (bytes=%d)"
+msgstr "Экспортировать растр как целочисленный (bytes=%d)"
+
+#: ../raster/r.out.bin/main.c:442
+msgid "Writing GMT integer format ID=2"
+msgstr "Запись целочисленного формата GMT ID=2"
+
+#: ../raster/r.out.bin/main.c:445
+msgid "Using the current region settings..."
+msgstr "Использовать настройки текущего региона..."
+
+#: ../raster/r.out.bin/main.c:446
+#, c-format
+msgid "north=%f"
+msgstr "север=%f"
+
+#: ../raster/r.out.bin/main.c:447
+#, c-format
+msgid "south=%f"
+msgstr "юг=%f"
+
+#: ../raster/r.out.bin/main.c:448
+#, c-format
+msgid "east=%f"
+msgstr "восток=%f"
+
+#: ../raster/r.out.bin/main.c:449
+#, c-format
+msgid "west=%f"
+msgstr "запад=%f"
+
+#: ../raster/r.out.bin/main.c:450
+#, c-format
+msgid "r=%d"
+msgstr "r=%d"
+
+#: ../raster/r.out.bin/main.c:451
+#, c-format
+msgid "c=%d"
+msgstr "c=%d"
+
+#: ../raster/r.out.gridatb/main.c:44 ../raster/r.median/main.c:46
+#: ../raster/r.his/main.c:63 ../raster/r.out.pov/main.c:121
+#: ../raster/r.describe/main.c:59 ../raster/r.le/r.le.trace/main.c:57
+#: ../raster/r.le/r.le.setup/main.c:61 ../raster/r.le/r.le.patch/main.c:47
+#: ../raster/r.le/r.le.pixel/main.c:45 ../raster/r.surf.gauss/main.c:46
+#: ../raster/r.walk/main.c:174 ../raster/r.sun2/main.c:226
+#: ../raster/r.rescale.eq/main.c:52 ../raster/r.drain/main.c:94
+#: ../raster/r.lake/main.c:148 ../raster/r.compress/main.c:64
+#: ../raster/r.circle/dist.c:51 ../raster/r.sun/main.c:175
+#: ../raster/r.out.vtk/main.c:148 ../raster/r.quant/main.c:41
+#: ../raster/r.bilinear/main.c:42 ../raster/r.in.gridatb/main.c:41
+#: ../raster/r.resample/main.c:54 ../raster/r.patch/main.c:53
+#: ../raster/r.out.ppm3/main.c:57 ../raster/r.transect/main.c:54
+#: ../raster/r.random/main.c:51 ../raster/r.los/main.c:82
+#: ../raster/wildfire/r.spread/main.c:101
 #: ../raster/wildfire/r.spreadpath/main.c:72
 #: ../raster/wildfire/r.ros/main.c:212 ../raster/r.gwflow/main.c:189
 #: ../raster/r.profile/main.c:53 ../raster/r.average/main.c:51
@@ -1136,203 +1315,6 @@ msgstr "Использование координат карты вместо xy
 #: ../locale/scriptstrings/r.blend_to_translate.c:2
 msgid "raster"
 msgstr "растр"
-
-#: ../raster/r.out.bin/main.c:64
-msgid "Exports a GRASS raster to a binary array."
-msgstr "Экспорт растра GRASS в бинарный массив."
-
-#: ../raster/r.out.bin/main.c:73 ../raster/r.random/main.c:57
-#: ../raster/r.water.outlet/main.c:55
-#: ../locale/scriptstrings/r.out.gdal.sh_to_translate.c:5
-#: ../locale/scriptstrings/r.reclass.area_to_translate.c:3
-#: ../locale/scriptstrings/r.out.xyz_to_translate.c:3
-#: ../locale/scriptstrings/r.colors.stddev_to_translate.c:3
-#: ../locale/scriptstrings/d.rast.edit_to_translate.c:3
-#: ../imagery/i.zc/main.c:69
-msgid "Name of input raster map"
-msgstr "Название вводного растрового слоя"
-
-#: ../raster/r.out.bin/main.c:80
-msgid "Name for output binary map (use output=- for stdout)"
-msgstr ""
-"Название для выходного бинарного слоя (используйте output=- для stdout)"
-
-#: ../raster/r.out.bin/main.c:87
-msgid "Value to write out for null"
-msgstr "Значение записываемое вместо null"
-
-#: ../raster/r.out.bin/main.c:92 ../raster/r.what/main.c:143
-msgid "Output integer category values, not cell values"
-msgstr "Выводить целочисленные значения категорий, а не значения ячеек"
-
-#: ../raster/r.out.bin/main.c:96
-msgid "Export array with GMT compatible header"
-msgstr "Экспортировать массив с заголовком, совместимым с GMT"
-
-#: ../raster/r.out.bin/main.c:100
-msgid "Generate BIL world and header files"
-msgstr "Создать файлы заголовка и привязки для BIL"
-
-#: ../raster/r.out.bin/main.c:104
-#, fuzzy
-msgid "Byte swap output"
-msgstr "Замена байта результата"
-
-#: ../raster/r.out.bin/main.c:110
-msgid "Invalid value for null (integers only)"
-msgstr "Неправильное значение для null (должно быть целочисленное)"
-
-#: ../raster/r.out.bin/main.c:133 ../raster/r.his/main.c:131
-#: ../raster/r.his/main.c:154 ../raster/r.his/main.c:179
-#: ../raster/r.out.mat/main.c:108 ../raster/r.contour/main.c:162
-#: ../raster/r.out.pov/main.c:178 ../raster/r.out.ascii/main.c:151
-#: ../raster/r.out.png/r.out.png.c:217 ../raster/r.walk/main.c:545
-#: ../raster/r.walk/main.c:548 ../raster/r.walk/main.c:854
-#: ../raster/r.support/front/front.c:227 ../raster/r.lake/main.c:258
-#: ../raster/r.lake/main.c:269 ../raster/r.surf.idw/main.c:135
-#: ../raster/r.out.vtk/main.c:222 ../raster/r.out.vtk/main.c:288
-#: ../raster/r.out.vtk/main.c:317 ../raster/r.out.vtk/main.c:364
-#: ../raster/r.cost/main.c:340 ../raster/r.cost/main.c:590
-#: ../raster/r.bilinear/main.c:94 ../raster/r.to.rast3elev/main.c:160
-#: ../raster/r.out.ppm/main.c:120 ../raster/r.out.ppm3/main.c:124
-#: ../raster/r.random/count.c:24 ../raster/r.random/count.c:30
-#: ../raster/r.random/random.c:41 ../raster/r.random/random.c:45
-#: ../raster/r.los/main.c:198 ../raster/r.los/main.c:209
-#: ../raster/wildfire/r.spread/main.c:411
-#: ../raster/wildfire/r.spread/main.c:415
-#: ../raster/wildfire/r.spread/main.c:419
-#: ../raster/wildfire/r.spread/main.c:425
-#: ../raster/wildfire/r.spread/main.c:430
-#: ../raster/wildfire/r.spread/main.c:434
-#: ../raster/wildfire/r.spread/main.c:503 ../raster/wildfire/r.ros/main.c:475
-#: ../raster/wildfire/r.ros/main.c:483 ../raster/wildfire/r.ros/main.c:491
-#: ../raster/wildfire/r.ros/main.c:499 ../raster/wildfire/r.ros/main.c:507
-#: ../raster/wildfire/r.ros/main.c:515 ../raster/wildfire/r.ros/main.c:523
-#: ../raster/wildfire/r.ros/main.c:532 ../raster/wildfire/r.ros/main.c:540
-#: ../raster/wildfire/r.ros/main.c:549 ../raster/r.profile/main.c:144
-#: ../raster/r.buffer/read_map.c:42 ../raster/r.buffer/write_map.c:45
-#: ../raster/r.surf.idw2/read_cell.c:34 ../raster/r.surf.area/main.c:123
-#: ../raster/r.covar/main.c:98 ../raster/r.grow2/main.c:203
-#: ../raster/r.resamp.interp/main.c:138 ../raster/r.cross/main.c:129
-#: ../raster/r.resamp.rst/main.c:402 ../raster/r.resamp.rst/main.c:434
-#: ../raster/r.clump/main.c:94 ../raster/r.out.tiff/r.out.tiff.c:188
-#: ../raster/r.texture/main.c:234 ../raster/r.out.arc/main.c:125
-#: ../raster/r.colors/stats.c:33 ../raster/r.out.gdal/export_band.c:48
-#: ../raster/r.out.gdal/export_band.c:251 ../raster/r.null/null.c:318
-#: ../raster/r.mapcalc/map3.c:510 ../raster/r.grow.distance/main.c:177
-#: ../raster/r.sunmask/main.c:448 ../raster/r.random.surface/main.c:54
-#: ../raster/r.random.surface/init.c:134 ../raster/r.thin/io.c:100
-#: ../raster/r.to.vect/main.c:116 ../raster/r.cats/main.c:150
-#: ../raster/r.recode/recode.c:48 ../raster/r.carve/main.c:181
-#: ../raster/r.composite/main.c:159 ../raster/r.to.rast3/main.c:366
-#: ../raster/r.sum/main.c:65 ../raster/r.random.cells/indep.c:134
-#: ../raster/r.random.cells/init.c:68 ../raster/r.univar2/r.univar_main.c:153
-#: ../raster/r.resamp.stats/main.c:329 ../raster/r.bitpattern/main.c:108
-#: ../raster/r.quantile/main.c:311 ../display/d.profile/ExtractProf.c:93
-#: ../display/d.profile/What.c:23 ../display/d.rast.arrow/arrow.c:380
-#: ../display/d.rast.edit/cell.c:92 ../display/d.rgb/main.c:99
-#: ../display/d.his/main.c:141 ../display/d.his/main.c:164
-#: ../display/d.what.rast/opencell.c:24 ../display/d.rast/display.c:79
-#: ../display/d.rast.num/number.c:153 ../display/d.nviz/main.c:186
-#: ../vector/v.sample/main.c:161 ../vector/v.vol.rst/main.c:609
-#: ../vector/v.to.rast/support.c:264 ../vector/v.to.rast/support.c:422
-#: ../vector/v.extrude/main.c:183 ../vector/v.drape/main.c:250
-#: ../vector/v.what.rast/main.c:141 ../visualization/xganim/main.c:370
-#: ../doc/raster/r.example/main.c:122 ../imagery/i.smap/shapiro/opencell.c:16
-#: ../imagery/i.pca/main.c:139 ../imagery/i.rgb.his/openfiles.c:21
-#: ../imagery/i.rgb.his/openfiles.c:23 ../imagery/i.rgb.his/openfiles.c:25
-#: ../imagery/i.his.rgb/openfiles.c:33 ../imagery/i.his.rgb/openfiles.c:38
-#: ../imagery/i.his.rgb/openfiles.c:43 ../imagery/i.gensigset/opencell.c:13
-#: ../imagery/i.gensig/opencell.c:12 ../imagery/i.cluster/open_files.c:56
-#: ../imagery/i.maxlik/open.c:41
-#, c-format
-msgid "Unable to open raster map <%s>"
-msgstr "Невозможно открыть растровый слой <%s>"
-
-#: ../raster/r.out.bin/main.c:145 ../raster/r.out.bin/main.c:231
-#: ../raster/r.out.bin/main.c:235
-#, c-format
-msgid "Unable to create file <%s>"
-msgstr "Невозможно создать файл <%s>"
-
-#: ../raster/r.out.bin/main.c:181
-msgid "Swapping header data"
-msgstr "Замена данных заголовка"
-
-#: ../raster/r.out.bin/main.c:238
-msgid "Creating BIL support files..."
-msgstr "Создание дополнительных файлов к BIL..."
-
-#: ../raster/r.out.bin/main.c:239
-#, c-format
-msgid "Header File = %s"
-msgstr "Файл заголовка = %s"
-
-#: ../raster/r.out.bin/main.c:240
-#, c-format
-msgid "World File = %s"
-msgstr "Файл привязки = %s"
-
-#: ../raster/r.out.bin/main.c:316
-#, c-format
-msgid "Exporting raster as integer values (bytes=%d)"
-msgstr "Экспортировать растр как целочисленный (bytes=%d)"
-
-#: ../raster/r.out.bin/main.c:319
-msgid "Writing GMT integer format ID=2"
-msgstr "Запись целочисленного формата GMT ID=2"
-
-#: ../raster/r.out.bin/main.c:322
-#, c-format
-msgid "Exporting raster as floating values (bytes=%d)"
-msgstr " Экспортировать растр как с плавающей точкой (bytes=%d)"
-
-#: ../raster/r.out.bin/main.c:325
-msgid "Writing GMT float format ID=1"
-msgstr "Запись целочисленного формата GMT ID=1"
-
-#: ../raster/r.out.bin/main.c:328
-#, c-format
-msgid "Exporting raster as double values (bytes=%d)"
-msgstr "Экспортировать растр как double (bytes=%d)"
-
-#: ../raster/r.out.bin/main.c:331
-msgid "Using the current region settings..."
-msgstr "Использовать настройки текущего региона..."
-
-#: ../raster/r.out.bin/main.c:332
-#, c-format
-msgid "north=%f"
-msgstr "север=%f"
-
-#: ../raster/r.out.bin/main.c:333
-#, c-format
-msgid "south=%f"
-msgstr "юг=%f"
-
-#: ../raster/r.out.bin/main.c:334
-#, c-format
-msgid "east=%f"
-msgstr "восток=%f"
-
-#: ../raster/r.out.bin/main.c:335
-#, c-format
-msgid "west=%f"
-msgstr "запад=%f"
-
-#: ../raster/r.out.bin/main.c:336
-#, c-format
-msgid "r=%d"
-msgstr "r=%d"
-
-#: ../raster/r.out.bin/main.c:337
-#, c-format
-msgid "c=%d"
-msgstr "c=%d"
-
-#: ../raster/r.out.bin/main.c:341
-msgid "Reading map"
-msgstr "Чтение слоя"
 
 #: ../raster/r.out.gridatb/main.c:46
 msgid "Exports GRASS raster map to GRIDATB.FOR map file (TOPMODEL)"
@@ -1401,7 +1383,7 @@ msgstr "Базовый растровый слой <%s> не найден"
 #: ../raster/r.in.mat/main.c:388 ../raster/r.neighbors/main.c:197
 #: ../raster/r.bitpattern/main.c:104 ../general/manage/cmd/copy.c:88
 #: ../general/manage/cmd/rename.c:84 ../vector/v.in.ogr/main.c:328
-#: ../vector/v.to.rast3/main.c:69 ../vector/v.kernel/main.c:263
+#: ../vector/v.to.rast3/main.c:69 ../vector/v.kernel/main.c:312
 #: ../vector/v.surf.idw/main.c:137 ../vector/v.edit/main.c:86
 #: ../doc/raster/r.example/main.c:114 ../imagery/i.zc/main.c:119
 #: ../imagery/i.ifft/ifftmain.c:116
@@ -1461,6 +1443,72 @@ msgstr "Имя выходного слоя используемого для С�
 msgid "Respect NULL values while drawing"
 msgstr "Учитывать значения NULL при отрисовке"
 
+#: ../raster/r.his/main.c:131 ../raster/r.his/main.c:154
+#: ../raster/r.his/main.c:179 ../raster/r.out.mat/main.c:108
+#: ../raster/r.contour/main.c:162 ../raster/r.out.pov/main.c:178
+#: ../raster/r.out.ascii/main.c:151 ../raster/r.out.png/r.out.png.c:217
+#: ../raster/r.walk/main.c:545 ../raster/r.walk/main.c:548
+#: ../raster/r.walk/main.c:854 ../raster/r.support/front/front.c:227
+#: ../raster/r.lake/main.c:258 ../raster/r.lake/main.c:269
+#: ../raster/r.surf.idw/main.c:135 ../raster/r.out.vtk/main.c:222
+#: ../raster/r.out.vtk/main.c:288 ../raster/r.out.vtk/main.c:317
+#: ../raster/r.out.vtk/main.c:364 ../raster/r.cost/main.c:340
+#: ../raster/r.cost/main.c:590 ../raster/r.bilinear/main.c:94
+#: ../raster/r.to.rast3elev/main.c:160 ../raster/r.out.ppm/main.c:120
+#: ../raster/r.out.ppm3/main.c:124 ../raster/r.random/count.c:24
+#: ../raster/r.random/count.c:30 ../raster/r.random/random.c:41
+#: ../raster/r.random/random.c:45 ../raster/r.los/main.c:198
+#: ../raster/r.los/main.c:209 ../raster/wildfire/r.spread/main.c:411
+#: ../raster/wildfire/r.spread/main.c:415
+#: ../raster/wildfire/r.spread/main.c:419
+#: ../raster/wildfire/r.spread/main.c:425
+#: ../raster/wildfire/r.spread/main.c:430
+#: ../raster/wildfire/r.spread/main.c:434
+#: ../raster/wildfire/r.spread/main.c:503 ../raster/wildfire/r.ros/main.c:475
+#: ../raster/wildfire/r.ros/main.c:483 ../raster/wildfire/r.ros/main.c:491
+#: ../raster/wildfire/r.ros/main.c:499 ../raster/wildfire/r.ros/main.c:507
+#: ../raster/wildfire/r.ros/main.c:515 ../raster/wildfire/r.ros/main.c:523
+#: ../raster/wildfire/r.ros/main.c:532 ../raster/wildfire/r.ros/main.c:540
+#: ../raster/wildfire/r.ros/main.c:549 ../raster/r.profile/main.c:144
+#: ../raster/r.buffer/read_map.c:42 ../raster/r.buffer/write_map.c:45
+#: ../raster/r.surf.idw2/read_cell.c:34 ../raster/r.surf.area/main.c:123
+#: ../raster/r.covar/main.c:98 ../raster/r.grow2/main.c:203
+#: ../raster/r.resamp.interp/main.c:138 ../raster/r.cross/main.c:129
+#: ../raster/r.resamp.rst/main.c:402 ../raster/r.resamp.rst/main.c:434
+#: ../raster/r.clump/main.c:94 ../raster/r.out.tiff/r.out.tiff.c:188
+#: ../raster/r.texture/main.c:234 ../raster/r.out.arc/main.c:125
+#: ../raster/r.colors/stats.c:33 ../raster/r.out.gdal/export_band.c:48
+#: ../raster/r.out.gdal/export_band.c:251 ../raster/r.null/null.c:318
+#: ../raster/r.mapcalc/map3.c:510 ../raster/r.grow.distance/main.c:177
+#: ../raster/r.sunmask/main.c:448 ../raster/r.random.surface/main.c:54
+#: ../raster/r.random.surface/init.c:134 ../raster/r.thin/io.c:100
+#: ../raster/r.to.vect/main.c:116 ../raster/r.cats/main.c:150
+#: ../raster/r.recode/recode.c:48 ../raster/r.carve/main.c:181
+#: ../raster/r.composite/main.c:159 ../raster/r.to.rast3/main.c:366
+#: ../raster/r.sum/main.c:65 ../raster/r.random.cells/indep.c:134
+#: ../raster/r.random.cells/init.c:68 ../raster/r.univar2/r.univar_main.c:221
+#: ../raster/r.resamp.stats/main.c:329 ../raster/r.bitpattern/main.c:108
+#: ../raster/r.quantile/main.c:311 ../display/d.profile/ExtractProf.c:93
+#: ../display/d.profile/What.c:23 ../display/d.rast.arrow/arrow.c:380
+#: ../display/d.rast.edit/cell.c:92 ../display/d.rgb/main.c:99
+#: ../display/d.his/main.c:141 ../display/d.his/main.c:164
+#: ../display/d.what.rast/opencell.c:24 ../display/d.rast/display.c:79
+#: ../display/d.rast.num/number.c:153 ../display/d.nviz/main.c:186
+#: ../vector/v.sample/main.c:161 ../vector/v.vol.rst/main.c:609
+#: ../vector/v.to.rast/support.c:264 ../vector/v.to.rast/support.c:422
+#: ../vector/v.extrude/main.c:183 ../vector/v.drape/main.c:250
+#: ../vector/v.what.rast/main.c:141 ../visualization/xganim/main.c:370
+#: ../doc/raster/r.example/main.c:122 ../imagery/i.smap/shapiro/opencell.c:16
+#: ../imagery/i.pca/main.c:139 ../imagery/i.rgb.his/openfiles.c:21
+#: ../imagery/i.rgb.his/openfiles.c:23 ../imagery/i.rgb.his/openfiles.c:25
+#: ../imagery/i.his.rgb/openfiles.c:33 ../imagery/i.his.rgb/openfiles.c:38
+#: ../imagery/i.his.rgb/openfiles.c:43 ../imagery/i.gensigset/opencell.c:13
+#: ../imagery/i.gensig/opencell.c:12 ../imagery/i.cluster/open_files.c:56
+#: ../imagery/i.maxlik/open.c:41
+#, c-format
+msgid "Unable to open raster map <%s>"
+msgstr "Невозможно открыть растровый слой <%s>"
+
 #: ../raster/r.his/main.c:142 ../raster/r.his/main.c:161
 #: ../raster/r.his/main.c:186 ../raster/r.out.ppm3/main.c:131
 #: ../display/d.rast.edit/cell.c:51 ../display/d.legend/main.c:259
@@ -1484,14 +1532,6 @@ msgstr "Ошибка чтения слоя 'intensity'"
 msgid "Error reading 'saturation' map"
 msgstr "Ошибка чтения слоя 'saturation'"
 
-#: ../raster/r.out.mat/main.c:64 ../raster/r.out.ascii/main.c:59
-#: ../raster/r.out.ppm/main.c:54 ../raster/r.out.tiff/r.out.tiff.c:99
-#: ../raster/r.out.gdal/main.c:128
-#: ../locale/scriptstrings/r.out.gdal.sh_to_translate.c:2
-#: ../locale/scriptstrings/r.out.xyz_to_translate.c:2
-msgid "raster, export"
-msgstr "растр, экспорт"
-
 #: ../raster/r.out.mat/main.c:65
 msgid "Exports a GRASS raster to a binary MAT-File."
 msgstr "Экспорт растра GRASS в бинарный файл MAT."
@@ -1512,7 +1552,7 @@ msgstr "Режим расширенной информации"
 #: ../raster/wildfire/r.spread/main.c:255 ../raster/wildfire/r.ros/main.c:314
 #: ../raster/r.out.tiff/r.out.tiff.c:144 ../raster/r.in.mat/main.c:125
 #: ../display/d.mon/pgms/release.c:36 ../display/d.vect/main.c:411
-#: ../vector/v.kernel/main.c:191 ../visualization/nviz/src/nviz_init.c:157
+#: ../visualization/nviz/src/nviz_init.c:157
 msgid ""
 "The '-v' flag is superseded and will be removed in future. Please use '--"
 "verbose' instead."
@@ -1600,7 +1640,7 @@ msgid "%ld bytes written to '%s'"
 msgstr "%ld байтов записано в '%s'"
 
 #: ../raster/r.in.poly/main.c:29 ../raster/r.in.gdal/main.c:79
-#: ../raster/r.in.bin/main.c:122 ../raster/r.external/main.c:506
+#: ../raster/r.in.bin/main.c:234 ../raster/r.external/main.c:506
 #: ../locale/scriptstrings/r.in.srtm_to_translate.c:2
 msgid "raster, import"
 msgstr "растр, импорт"
@@ -1615,7 +1655,7 @@ msgid "Name of input file; or \"-\" to read from stdin"
 msgstr "Имя исходного файла; или \"-\" для чтения правил из stdin"
 
 #: ../raster/r.in.poly/main.c:44 ../raster/r.in.gdal/main.c:120
-#: ../raster/r.in.bin/main.c:166 ../raster/r.external/main.c:536
+#: ../raster/r.in.bin/main.c:277 ../raster/r.external/main.c:536
 #: ../raster/r.in.ascii/main.c:85 ../raster/r.in.arc/main.c:87
 msgid "Title for resultant raster map"
 msgstr "Название результирующего растрового слоя"
@@ -1729,28 +1769,31 @@ msgstr "Невозможно прочитать fp диапазон растро
 #: ../vector/lidar/v.surf.bspline/main.c:334
 #: ../vector/lidar/v.surf.bspline/crosscorr.c:123
 #: ../vector/v.to.rast3/main.c:86 ../vector/v.extract/main.c:291
-#: ../vector/v.in.db/main.c:119 ../vector/v.distance/main.c:360
-#: ../vector/v.distance/main.c:397 ../vector/v.in.sites/main.c:163
-#: ../vector/v.random/main.c:168 ../vector/v.out.vtk/writeVTK.c:639
-#: ../vector/v.out.ascii/b2a.c:50 ../vector/v.label.sa/labels.c:83
+#: ../vector/v.in.db/main.c:119 ../vector/v.net.distance/main.c:196
+#: ../vector/v.distance/main.c:360 ../vector/v.distance/main.c:397
+#: ../vector/v.in.sites/main.c:163 ../vector/v.random/main.c:168
+#: ../vector/v.out.vtk/writeVTK.c:639 ../vector/v.out.ascii/b2a.c:50
+#: ../vector/v.net.allpairs/main.c:137 ../vector/v.label.sa/labels.c:83
 #: ../vector/v.in.dxf/write_vect.c:198 ../vector/v.mkgrid/main.c:237
 #: ../vector/v.lrs/v.lrs.create/main.c:286
 #: ../vector/v.lrs/v.lrs.create/main.c:294 ../vector/v.reclass/main.c:126
-#: ../vector/v.out.ogr/main.c:421 ../vector/v.in.dwg/main.c:194
+#: ../vector/v.out.ogr/main.c:636 ../vector/v.in.dwg/main.c:194
 #: ../vector/v.vol.rst/main.c:590 ../vector/v.vol.rst/user1.c:97
-#: ../vector/v.patch/main.c:132 ../vector/v.patch/main.c:162
-#: ../vector/v.patch/main.c:274 ../vector/v.patch/main.c:332
-#: ../vector/v.kcv/main.c:181 ../vector/v.buffer2/main.c:321
-#: ../vector/v.transform/trans_digit.c:58 ../vector/v.overlay/main.c:186
-#: ../vector/v.overlay/main.c:287 ../vector/v.normal/main.c:141
+#: ../vector/v.net.timetable/main.c:93 ../vector/v.patch/main.c:132
+#: ../vector/v.patch/main.c:162 ../vector/v.patch/main.c:274
+#: ../vector/v.patch/main.c:332 ../vector/v.kcv/main.c:181
+#: ../vector/v.buffer2/main.c:318 ../vector/v.transform/trans_digit.c:58
+#: ../vector/v.overlay/main.c:186 ../vector/v.overlay/main.c:295
+#: ../vector/v.net.flow/main.c:157 ../vector/v.normal/main.c:141
 #: ../vector/v.net.path/path.c:96 ../vector/v.label/main.c:282
 #: ../vector/v.to.rast/vect2rast.c:56 ../vector/v.to.rast/support.c:131
 #: ../vector/v.to.rast/support.c:283 ../vector/v.to.points/main.c:285
 #: ../vector/v.in.ascii/in.c:317 ../vector/v.surf.idw/read_sites.c:39
 #: ../vector/v.buffer/main.c:387 ../vector/v.edit/select.c:520
 #: ../vector/v.info/main.c:217 ../vector/v.extrude/main.c:167
-#: ../vector/v.surf.rst/main.c:607 ../vector/v.db.connect/main.c:214
-#: ../vector/v.db.connect/main.c:322 ../vector/v.drape/main.c:293
+#: ../vector/v.surf.rst/main.c:607 ../vector/v.net.centrality/main.c:220
+#: ../vector/v.db.connect/main.c:214 ../vector/v.db.connect/main.c:322
+#: ../vector/v.net.components/main.c:137 ../vector/v.drape/main.c:293
 #: ../vector/v.what.rast/main.c:132 ../vector/v.to.3d/trans3.c:53
 #: ../vector/v.to.3d/trans2.c:52 ../doc/vector/v.example/main.c:128
 #: ../ps/ps.map/catval.c:54 ../ps/ps.map/catval.c:116
@@ -1760,10 +1803,13 @@ msgid "Unable to open database <%s> by driver <%s>"
 msgstr "Невозможно открыть БД <%s> с помощью драйвера <%s>"
 
 #: ../raster/r.contour/main.c:196 ../vector/v.in.ogr/main.c:790
-#: ../vector/v.distance/main.c:818 ../vector/v.in.dwg/main.c:219
-#: ../vector/v.overlay/main.c:456 ../vector/v.convert/att.c:80
+#: ../vector/v.net.distance/main.c:208 ../vector/v.distance/main.c:818
+#: ../vector/v.net.allpairs/main.c:149 ../vector/v.in.dwg/main.c:219
+#: ../vector/v.net.timetable/main.c:103 ../vector/v.overlay/main.c:464
+#: ../vector/v.convert/att.c:80 ../vector/v.net.flow/main.c:168
 #: ../vector/v.net.path/path.c:109 ../vector/v.to.points/main.c:295
-#: ../vector/v.surf.rst/main.c:613
+#: ../vector/v.surf.rst/main.c:613 ../vector/v.net.centrality/main.c:240
+#: ../vector/v.net.components/main.c:147
 #, c-format
 msgid "Unable to create table: '%s'"
 msgstr "Невозможно создать таблицу: '%s'"
@@ -1782,7 +1828,7 @@ msgstr "Невозможно создать индекс для таблицы <
 #: ../vector/v.distance/main.c:823 ../vector/v.in.sites/main.c:179
 #: ../vector/v.random/main.c:204 ../vector/v.in.dxf/write_vect.c:223
 #: ../vector/v.mkgrid/main.c:263 ../vector/v.reclass/main.c:228
-#: ../vector/v.in.dwg/main.c:228 ../vector/v.overlay/main.c:466
+#: ../vector/v.in.dwg/main.c:228 ../vector/v.overlay/main.c:474
 #: ../vector/v.convert/att.c:90 ../vector/v.to.points/main.c:306
 #: ../vector/v.in.ascii/in.c:395
 #, c-format
@@ -2297,7 +2343,7 @@ msgstr "[%s]: Нет такого цвета"
 msgid "Converting <%s>..."
 msgstr "Преобразование %s..."
 
-#: ../raster/r.out.png/r.out.png.c:298 ../raster/r.univar2/r.univar_main.c:121
+#: ../raster/r.out.png/r.out.png.c:298 ../raster/r.univar2/r.univar_main.c:183
 #, c-format
 msgid "Raster <%s> type mismatch"
 msgstr "Растр <%s> несовпадение типа"
@@ -2983,15 +3029,15 @@ msgstr ""
 "широту через опцию 'lat' или 'latin'!"
 
 #: ../raster/r.sun2/main.c:744 ../raster/r.sun/main.c:477
-#: ../raster/r.horizon/main.c:484 ../general/g.region/printwindow.c:251
-#: ../general/g.region/printwindow.c:507 ../general/g.region/printwindow.c:626
+#: ../raster/r.horizon/main.c:484 ../general/g.region/printwindow.c:250
+#: ../general/g.region/printwindow.c:506 ../general/g.region/printwindow.c:625
 #: ../display/d.where/main.c:96
 msgid "Can't get projection units of current location"
 msgstr "Невозможно получить единицы проекции для текущей области"
 
 #: ../raster/r.sun2/main.c:747 ../raster/r.sun/main.c:481
-#: ../raster/r.horizon/main.c:488 ../general/g.region/printwindow.c:254
-#: ../general/g.region/printwindow.c:510 ../general/g.region/printwindow.c:629
+#: ../raster/r.horizon/main.c:488 ../general/g.region/printwindow.c:253
+#: ../general/g.region/printwindow.c:509 ../general/g.region/printwindow.c:628
 #: ../display/d.grid/plot.c:294 ../display/d.where/main.c:99
 #: ../ps/ps.map/do_geogrid.c:272
 msgid "Can't get projection key values of current location"
@@ -3311,26 +3357,35 @@ msgstr ""
 msgid "Raster map <%s> created."
 msgstr "Растровый слой <%s> создан."
 
-#: ../raster/r.in.bin/main.c:124
-msgid "Import a binary raster file into a GRASS raster map layer."
+#: ../raster/r.in.bin/main.c:49 ../raster/r.in.bin/main.c:58
+#: ../raster/r.in.bin/main.c:510
+#, fuzzy
+msgid "Error reading data"
+msgstr "Ошибка чтения слоя тона"
+
+#: ../raster/r.in.bin/main.c:236
+#, fuzzy
+msgid "Import a binary raster file into a GRASS raster map."
 msgstr "Импорт бинарного растрового файла в растровый слой GRASS."
 
-#: ../raster/r.in.bin/main.c:130
-msgid "Import as Floating Point Data (default: Integer)"
+#: ../raster/r.in.bin/main.c:241
+#, fuzzy
+msgid "Import as floating-point data (default: integer)"
 msgstr ""
 "Импортировать как данные с плавающей запятой (по умолчанию: целочисленное)"
 
-#: ../raster/r.in.bin/main.c:135
-msgid "Import as Double Precision Data (default: Integer)"
+#: ../raster/r.in.bin/main.c:246
+#, fuzzy
+msgid "Import as double-precision floating-point data (default: integer)"
 msgstr ""
 "Импорт как данные с плавающей запятой (double) (по умолчанию: целочисленное)"
 
-#: ../raster/r.in.bin/main.c:139
-msgid "Signed data (high bit means negative value)"
-msgstr "Данные с битом четности (бит 1 означает отрицательное значение)"
+#: ../raster/r.in.bin/main.c:250
+msgid "Signed data (two's complement)"
+msgstr ""
 
-#: ../raster/r.in.bin/main.c:140 ../raster/r.in.bin/main.c:145
-#: ../raster/r.in.bin/main.c:174 ../raster/r.in.bin/main.c:227
+#: ../raster/r.in.bin/main.c:251 ../raster/r.in.bin/main.c:256
+#: ../raster/r.in.bin/main.c:285 ../raster/r.in.bin/main.c:346
 #: ../raster/r.slope.aspect/main.c:179 ../raster/r.slope.aspect/main.c:189
 #: ../raster/r.slope.aspect/main.c:247 ../raster/r.slope.aspect/main.c:256
 #: ../raster/r.slope.aspect/main.c:267 ../raster/r.resamp.rst/main.c:231
@@ -3365,18 +3420,18 @@ msgstr "Данные с битом четности (бит 1 означает �
 msgid "Settings"
 msgstr "Параметры"
 
-#: ../raster/r.in.bin/main.c:144
+#: ../raster/r.in.bin/main.c:255
 msgid "Byte Swap the Data During Import"
 msgstr "Перестановка байтов в процессе импорта"
 
-#: ../raster/r.in.bin/main.c:149
+#: ../raster/r.in.bin/main.c:260
 msgid "Get region info from GMT style header"
 msgstr "Получение информации о регионе из заголовка в стиле GMT"
 
-#: ../raster/r.in.bin/main.c:150 ../raster/r.in.bin/main.c:182
-#: ../raster/r.in.bin/main.c:190 ../raster/r.in.bin/main.c:198
-#: ../raster/r.in.bin/main.c:206 ../raster/r.in.bin/main.c:213
-#: ../raster/r.in.bin/main.c:220 ../general/g.region/main.c:155
+#: ../raster/r.in.bin/main.c:261 ../raster/r.in.bin/main.c:301
+#: ../raster/r.in.bin/main.c:309 ../raster/r.in.bin/main.c:317
+#: ../raster/r.in.bin/main.c:325 ../raster/r.in.bin/main.c:332
+#: ../raster/r.in.bin/main.c:339 ../general/g.region/main.c:155
 #: ../general/g.region/main.c:215 ../general/g.region/main.c:225
 #: ../general/g.region/main.c:235 ../general/g.region/main.c:245
 #: ../general/g.region/main.c:254 ../general/g.region/main.c:263
@@ -3384,126 +3439,106 @@ msgstr "Получение информации о регионе из заго�
 msgid "Bounds"
 msgstr "Границы"
 
-#: ../raster/r.in.bin/main.c:156
+#: ../raster/r.in.bin/main.c:267
 msgid "Binary raster file to be imported"
 msgstr "Импортируемый бинарный растровый файл"
 
-#: ../raster/r.in.bin/main.c:173
-msgid "Number of bytes per cell (1, 2, 4)"
-msgstr "Количество байтов на ячейку (1, 2, 4)"
-
-#: ../raster/r.in.bin/main.c:181
+#: ../raster/r.in.bin/main.c:300
 msgid "Northern limit of geographic region (outer edge)"
 msgstr "Северная граница географического региона (внешний край)"
 
-#: ../raster/r.in.bin/main.c:189
+#: ../raster/r.in.bin/main.c:308
 msgid "Southern limit of geographic region (outer edge)"
 msgstr "Южная граница географического региона (внешний край)"
 
-#: ../raster/r.in.bin/main.c:197
+#: ../raster/r.in.bin/main.c:316
 msgid "Eastern limit of geographic region (outer edge)"
 msgstr "Восточная граница географического региона (внешний край)"
 
-#: ../raster/r.in.bin/main.c:205
+#: ../raster/r.in.bin/main.c:324
 msgid "Western limit of geographic region (outer edge)"
 msgstr "Западная граница географического региона (внешний край)"
 
-#: ../raster/r.in.bin/main.c:212
+#: ../raster/r.in.bin/main.c:331
 msgid "Number of rows"
 msgstr "Количество строк"
 
-#: ../raster/r.in.bin/main.c:219
+#: ../raster/r.in.bin/main.c:338
 msgid "Number of columns"
 msgstr "Количество столбцов"
 
-#: ../raster/r.in.bin/main.c:226
+#: ../raster/r.in.bin/main.c:345
 msgid "Set Value to NULL"
 msgstr "Установить значение в NULL"
 
-#: ../raster/r.in.bin/main.c:242
-msgid "Parsing bytes per cell"
-msgstr "Обработка байтов на ячейку"
+#: ../raster/r.in.bin/main.c:366
+#, fuzzy
+msgid "order= and -b are mutually exclusive"
+msgstr "-r и -e взаимоисключающиеся"
 
-#: ../raster/r.in.bin/main.c:244
-msgid "Bad number of bytes per cell"
-msgstr "Неправильно количество байтов на ячейку"
+#: ../raster/r.in.bin/main.c:381
+#, fuzzy
+msgid "-f and -d are mutually exclusive"
+msgstr "-r и -e взаимоисключающиеся"
 
-#: ../raster/r.in.bin/main.c:250
-msgid "Byte Swapping Turned On."
-msgstr "Включение перестановки байтов."
-
-#: ../raster/r.in.bin/main.c:286
-msgid ""
-"Missing parameters ...\n"
-"Must provide at least[north= south= east= west=] OR [r=\tc=]"
+#: ../raster/r.in.bin/main.c:385
+#, c-format
+msgid "-f incompatible with bytes=%d; must be 4 or 8"
 msgstr ""
-"Отсутствуют параметры ...\n"
-"Необходимо указать, по крайней мере [north= south= east= west=] или [r=\tc=]"
 
-#: ../raster/r.in.bin/main.c:293 ../raster/r.in.bin/main.c:333
-msgid "You have to provide all limits of geographic region (n,s,e,w)"
-msgstr "Вы должны определить все границы географического региона (n,s,e,w)"
+#: ../raster/r.in.bin/main.c:393
+#, c-format
+msgid "-d incompatible with bytes=%d; must be 8"
+msgstr ""
 
-#: ../raster/r.in.bin/main.c:295 ../raster/r.in.bin/main.c:335
-#: ../display/d.grid/main.c:181
+#: ../raster/r.in.bin/main.c:400
+msgid "bytes= required for integer data"
+msgstr ""
+
+#: ../raster/r.in.bin/main.c:404
+msgid "Integer input doesn't support size=8 in this build"
+msgstr ""
+
+#: ../raster/r.in.bin/main.c:408
+msgid "bytes= must be 1, 2, 4 or 8"
+msgstr ""
+
+#: ../raster/r.in.bin/main.c:421
+#, fuzzy
+msgid "Either -h or rows= and cols= must be given"
+msgstr "Должно быть указано либо  \"-i\" либо \"value=\""
+
+#: ../raster/r.in.bin/main.c:426
+#, fuzzy
+msgid "Either all or none of north=, south=, east= and west= must be given"
+msgstr "Должны быть указаны как минимум одни distance= и value="
+
+#: ../raster/r.in.bin/main.c:433 ../display/d.grid/main.c:181
 #, c-format
 msgid "Illegal north coordinate <%s>"
 msgstr "Неверная северная координата <%s>"
 
-#: ../raster/r.in.bin/main.c:297 ../raster/r.in.bin/main.c:337
+#: ../raster/r.in.bin/main.c:435
 #, c-format
 msgid "Illegal south coordinate <%s>"
 msgstr "Неверная южная координата <%s>"
 
-#: ../raster/r.in.bin/main.c:299 ../raster/r.in.bin/main.c:339
-#: ../display/d.grid/main.c:175
+#: ../raster/r.in.bin/main.c:437 ../display/d.grid/main.c:175
 #, c-format
 msgid "Illegal east coordinate <%s>"
 msgstr "Неверная восточная координата <%s>"
 
-#: ../raster/r.in.bin/main.c:301 ../raster/r.in.bin/main.c:341
+#: ../raster/r.in.bin/main.c:439
 #, c-format
 msgid "Illegal west coordinate <%s>"
 msgstr "Неверная западная координата <%s>"
 
-#: ../raster/r.in.bin/main.c:303 ../raster/r.in.bin/main.c:313
-#, c-format
-msgid "Illegal number of rows <%s>"
-msgstr "Неправильное количество строк <%s>"
+#: ../raster/r.in.bin/main.c:445
+#, fuzzy, c-format
+msgid "Unable to open <%s>"
+msgstr "Не могу открыть файл <%s>"
 
-#: ../raster/r.in.bin/main.c:305 ../raster/r.in.bin/main.c:316
-#, c-format
-msgid "Illegal number of columns <%s>"
-msgstr "Неправильное количество столбцов <%s>"
-
-#: ../raster/r.in.bin/main.c:321
-#, c-format
-msgid "Using N=%f S=%f E=%f W=%f"
-msgstr "Используются N=%f S=%f E=%f W=%f"
-
-#: ../raster/r.in.bin/main.c:346
-#, c-format
-msgid "Using rows=%d cols=%d\n"
-msgstr "Используются строки=%d столбцы=%d\n"
-
-#: ../raster/r.in.bin/main.c:451 ../raster/r.in.bin/main.c:461
-#: ../raster/r.in.bin/main.c:473
-msgid "Bytes do not match File size"
-msgstr "Байты не соответствуют размеру файла"
-
-#: ../raster/r.in.bin/main.c:452 ../raster/r.in.bin/main.c:462
-#: ../raster/r.in.bin/main.c:474
-#, c-format
-msgid "File Size %d ... Total Bytes %d"
-msgstr "Размер файла %d ... Всего байт %d"
-
-#: ../raster/r.in.bin/main.c:454 ../raster/r.in.bin/main.c:464
-#: ../raster/r.in.bin/main.c:476
-#, c-format
-msgid "Try bytes=%d or adjusting input parameters"
-msgstr "Очистите bytes=%d или настройте параметры ввода"
-
-#: ../raster/r.in.bin/main.c:510
+#: ../raster/r.in.bin/main.c:464
 #, c-format
 msgid ""
 "East-West (ewres: %f) and North-South (nwres: %f) resolution differ "
@@ -3512,10 +3547,15 @@ msgstr ""
 "Разрешения Восток-Запад (ewres: %f) и Север-Юг (nwres: %f) значительно "
 "различаются. Правильно ли назначены east= и west= ?"
 
-#: ../raster/r.in.bin/main.c:518
-#, c-format
-msgid "Conversion failed at row %d"
-msgstr "Ошибка преобразования в строке %d"
+#: ../raster/r.in.bin/main.c:487
+#, fuzzy
+msgid "File Size %"
+msgstr "Тип файла"
+
+#: ../raster/r.in.bin/main.c:489
+#, fuzzy
+msgid "Bytes do not match file size"
+msgstr "Байты не соответствуют размеру файла"
 
 #: ../raster/r.rescale.eq/main.c:54
 msgid ""
@@ -3630,12 +3670,12 @@ msgstr "Слишком много начальных точек"
 #: ../vector/v.lrs/v.lrs.create/main.c:256
 #: ../vector/v.lrs/v.lrs.label/main.c:286
 #: ../vector/v.lrs/v.lrs.segment/main.c:138 ../vector/v.reclass/main.c:107
-#: ../vector/v.kernel/main.c:214 ../vector/v.out.ogr/main.c:183
+#: ../vector/v.kernel/main.c:264 ../vector/v.out.ogr/main.c:198
 #: ../vector/v.hull/main.c:300 ../vector/v.kcv/main.c:132
-#: ../vector/v.select/main.c:103 ../vector/v.buffer2/main.c:298
+#: ../vector/v.select/main.c:103 ../vector/v.buffer2/main.c:295
 #: ../vector/v.voronoi/vo_main.c:156 ../vector/v.voronoi/dt_main.c:77
 #: ../vector/v.net.steiner/main.c:428 ../vector/v.what/main.c:151
-#: ../vector/v.transform/main.c:237 ../vector/v.overlay/main.c:204
+#: ../vector/v.transform/main.c:242 ../vector/v.overlay/main.c:204
 #: ../vector/v.class/main.c:95 ../vector/v.build.polylines/main.c:139
 #: ../vector/v.convert/old2new.c:26 ../vector/v.convert/att.c:30
 #: ../vector/v.segment/main.c:99 ../vector/v.normal/main.c:128
@@ -4248,7 +4288,7 @@ msgid "Unable to read color table for raster map <%s>"
 msgstr "Невозможно прочитать таблицу цветов для растрового слоя <%s>"
 
 #: ../raster/r.stats/main.c:103 ../raster/r.statistics/main.c:42
-#: ../raster/r.report/main.c:64 ../raster/r.univar2/r.univar_main.c:75
+#: ../raster/r.report/main.c:64 ../raster/r.univar2/r.univar_main.c:97
 #: ../raster/r.support.stats/main.c:39 ../raster/r.quantile/main.c:254
 #: ../locale/scriptstrings/r.regression.line_to_translate.c:2
 #: ../locale/scriptstrings/r.univar.sh_to_translate.c:2
@@ -4259,7 +4299,8 @@ msgstr "растр, статистика"
 msgid "Generates area statistics for raster map layers."
 msgstr "Генерация статистики по площади для растровых слоев."
 
-#: ../raster/r.stats/main.c:114 ../vector/v.db.select/main.c:84
+#: ../raster/r.stats/main.c:114 ../raster/r.univar2/r.univar_main.c:42
+#: ../raster/r.univar2/r3.univar_main.c:43 ../vector/v.db.select/main.c:84
 #: ../locale/scriptstrings/r.out.xyz_to_translate.c:4
 msgid "Name for output file (if omitted or \"-\" output to stdout)"
 msgstr "Имя выходного файла (если не указано или '-' вывод в stdout)"
@@ -4324,7 +4365,8 @@ msgstr "Отчёт по диапазону категорий fp (только �
 msgid "Read fp map as integer (use map's quant rules)"
 msgstr "Читать слой fp как целое (использовать правила квантования слоя)"
 
-#: ../raster/r.stats/main.c:208 ../vector/v.db.select/main.c:111
+#: ../raster/r.stats/main.c:208 ../raster/r.univar2/r.univar_main.c:110
+#: ../raster/r.univar2/r3.univar_main.c:127 ../vector/v.db.select/main.c:111
 #, c-format
 msgid "Unable to open file <%s> for writing"
 msgstr "Невозможно открыть файл <%s> для записи "
@@ -5055,7 +5097,6 @@ msgstr "Сохранять null-значения в выходном растр�
 
 #: ../raster/r.cost/main.c:217 ../raster/wildfire/r.spreadpath/main.c:110
 #: ../raster/wildfire/r.ros/main.c:301 ../display/d.vect/main.c:358
-#: ../vector/v.kernel/main.c:176
 msgid "Run verbosely"
 msgstr "Запустить с детальным отчетом"
 
@@ -5290,8 +5331,8 @@ msgstr "Имя растрового слоя высот [m]"
 #: ../raster/r.in.xyz/main.c:197 ../raster/r.in.xyz/main.c:205
 #: ../raster/r.in.xyz/main.c:213 ../general/g.proj/main.c:102
 #: ../general/g.proj/main.c:111 ../general/g.proj/main.c:120
-#: ../general/g.proj/main.c:128 ../vector/v.out.ogr/main.c:100
-#: ../vector/v.out.ogr/main.c:120 ../vector/v.edit/args.c:103
+#: ../general/g.proj/main.c:128 ../vector/v.out.ogr/main.c:110
+#: ../vector/v.out.ogr/main.c:130 ../vector/v.edit/args.c:103
 #: ../vector/v.edit/args.c:212
 msgid "Input"
 msgstr "Вход"
@@ -5766,11 +5807,12 @@ msgstr "Не строить топологию в точечном режиме"
 
 #: ../raster/r.random/main.c:95 ../vector/v.out.ascii/out.c:67
 #: ../vector/v.out.ascii/out.c:77 ../vector/v.out.ascii/out.c:84
-#: ../vector/v.out.ascii/out.c:97 ../vector/v.in.ascii/in.c:84
-#: ../vector/v.in.ascii/in.c:91 ../vector/v.in.ascii/in.c:103
-#: ../vector/v.in.ascii/in.c:113 ../vector/v.in.ascii/in.c:123
-#: ../vector/v.in.ascii/in.c:133 ../vector/v.in.ascii/in.c:157
-#: ../vector/v.in.ascii/in.c:162 ../vector/v.in.ascii/in.c:168
+#: ../vector/v.out.ascii/out.c:97 ../vector/v.transform/main.c:114
+#: ../vector/v.in.ascii/in.c:84 ../vector/v.in.ascii/in.c:91
+#: ../vector/v.in.ascii/in.c:103 ../vector/v.in.ascii/in.c:113
+#: ../vector/v.in.ascii/in.c:123 ../vector/v.in.ascii/in.c:133
+#: ../vector/v.in.ascii/in.c:157 ../vector/v.in.ascii/in.c:162
+#: ../vector/v.in.ascii/in.c:168
 #: ../locale/scriptstrings/d.vect.thematic_to_translate.c:18
 #: ../locale/scriptstrings/d.vect.thematic_to_translate.c:20
 #: ../locale/scriptstrings/d.vect.thematic_to_translate.c:23
@@ -5854,7 +5896,11 @@ msgstr "Невозможно чтение строки растра [%d] с ра
 msgid "Cannot read raster row [%d] from cover raster map <%s>"
 msgstr "Невозможно чтение строки растра [%d] с растрового слоя оверлея <%s>"
 
-#: ../raster/r.random/random.c:194 ../vector/v.net.path/path.c:309
+#: ../raster/r.random/random.c:194 ../vector/v.net.distance/main.c:256
+#: ../vector/v.net.allpairs/main.c:228 ../vector/v.net.timetable/main.c:134
+#: ../vector/v.net.timetable/main.c:156 ../vector/v.net.flow/main.c:244
+#: ../vector/v.net.path/path.c:309 ../vector/v.net.centrality/main.c:69
+#: ../vector/v.net.components/main.c:38
 #, c-format
 msgid "Cannot insert new record: %s"
 msgstr "Невозможно вставить новую запись: %s"
@@ -5920,7 +5966,7 @@ msgstr ""
 "Используемое максимальное расстояние от наблюдаемой точки (в метрах): %f"
 
 #: ../raster/r.los/main.c:380 ../raster/r.buffer/write_map.c:78
-#: ../raster/r.proj/main.c:444 ../raster/r.texture/main.c:356
+#: ../raster/r.proj/main.c:445 ../raster/r.texture/main.c:356
 #: ../raster/r.texture/main.c:360 ../raster/r.texture/main.c:367
 #: ../raster/r.null/null.c:342 ../raster/r.proj.seg/main.c:513
 #: ../imagery/i.rectify/write.c:56
@@ -7611,7 +7657,8 @@ msgstr "Имя перепроецируемого растрового слоя"
 #: ../raster/r.proj/main.c:163 ../raster/r.proj.seg/main.c:146
 #: ../raster/r.proj.seg/main.c:163 ../raster/r.proj.seg/main.c:172
 #: ../vector/v.proj/main.c:70 ../vector/v.proj/main.c:87
-#: ../vector/v.proj/main.c:96
+#: ../vector/v.proj/main.c:96 ../vector/v.net.flow/main.c:87
+#: ../vector/v.net.flow/main.c:92 ../vector/v.net.flow/main.c:98
 #, fuzzy
 msgid "Source"
 msgstr "Поверхность"
@@ -7719,67 +7766,67 @@ msgstr "Невозможно получить единицы проекции и
 msgid "Unable to get projection key values of input map"
 msgstr "Невозможно получить параметры проекции исходного растрового слоя"
 
-#: ../raster/r.proj/main.c:295 ../raster/r.proj.seg/main.c:330
+#: ../raster/r.proj/main.c:296 ../raster/r.proj.seg/main.c:330
 msgid "Unable to work with unprojected data (xy location)"
 msgstr "Невозможно работать с неспроецированными данными (область xy)"
 
-#: ../raster/r.proj/main.c:369 ../raster/r.proj.seg/main.c:438
+#: ../raster/r.proj/main.c:370 ../raster/r.proj.seg/main.c:438
 msgid "Input:"
 msgstr "Вход:"
 
-#: ../raster/r.proj/main.c:370 ../raster/r.proj/main.c:381
+#: ../raster/r.proj/main.c:371 ../raster/r.proj/main.c:382
 #: ../raster/r.proj.seg/main.c:439 ../raster/r.proj.seg/main.c:450
 #, c-format
 msgid "Cols: %d (%d)"
 msgstr "Столбцы: %d (%d)"
 
-#: ../raster/r.proj/main.c:371 ../raster/r.proj/main.c:382
+#: ../raster/r.proj/main.c:372 ../raster/r.proj/main.c:383
 #: ../raster/r.proj.seg/main.c:440 ../raster/r.proj.seg/main.c:451
 #, c-format
 msgid "Rows: %d (%d)"
 msgstr "Строки: %d (%d)"
 
-#: ../raster/r.proj/main.c:372 ../raster/r.proj/main.c:383
+#: ../raster/r.proj/main.c:373 ../raster/r.proj/main.c:384
 #: ../raster/r.proj.seg/main.c:441 ../raster/r.proj.seg/main.c:452
 #, c-format
 msgid "North: %f (%f)"
 msgstr "Север: %f (%f)"
 
-#: ../raster/r.proj/main.c:373 ../raster/r.proj/main.c:384
+#: ../raster/r.proj/main.c:374 ../raster/r.proj/main.c:385
 #: ../raster/r.proj.seg/main.c:442 ../raster/r.proj.seg/main.c:453
 #, c-format
 msgid "South: %f (%f)"
 msgstr "Юг: %f (%f)"
 
-#: ../raster/r.proj/main.c:374 ../raster/r.proj/main.c:385
+#: ../raster/r.proj/main.c:375 ../raster/r.proj/main.c:386
 #: ../raster/r.proj.seg/main.c:443 ../raster/r.proj.seg/main.c:454
 #, c-format
 msgid "West: %f (%f)"
 msgstr "Запад: %f (%f)"
 
-#: ../raster/r.proj/main.c:375 ../raster/r.proj/main.c:386
+#: ../raster/r.proj/main.c:376 ../raster/r.proj/main.c:387
 #: ../raster/r.proj.seg/main.c:444 ../raster/r.proj.seg/main.c:455
 #, c-format
 msgid "East: %f (%f)"
 msgstr "Восток: %f (%f)"
 
-#: ../raster/r.proj/main.c:376 ../raster/r.proj/main.c:387
+#: ../raster/r.proj/main.c:377 ../raster/r.proj/main.c:388
 #: ../raster/r.proj.seg/main.c:445 ../raster/r.proj.seg/main.c:456
 #, c-format
 msgid "EW-res: %f"
 msgstr "разрешение EW: %f"
 
-#: ../raster/r.proj/main.c:377 ../raster/r.proj/main.c:388
+#: ../raster/r.proj/main.c:378 ../raster/r.proj/main.c:389
 #: ../raster/r.proj.seg/main.c:446 ../raster/r.proj.seg/main.c:457
 #, c-format
 msgid "NS-res: %f"
 msgstr "разрешение NS: %f"
 
-#: ../raster/r.proj/main.c:380 ../raster/r.proj.seg/main.c:449
+#: ../raster/r.proj/main.c:381 ../raster/r.proj.seg/main.c:449
 msgid "Output:"
 msgstr "Выход:"
 
-#: ../raster/r.proj/main.c:416 ../raster/r.proj.seg/main.c:485
+#: ../raster/r.proj/main.c:417 ../raster/r.proj.seg/main.c:485
 msgid "Projecting..."
 msgstr "Проектирование..."
 
@@ -9844,11 +9891,6 @@ msgstr "Неверное количество аргументов (%d) для �
 msgid "Format_expression_prec: unknown type: %d"
 msgstr "Format_expression_prec: неизвестный тип: %d"
 
-#: ../raster/r.mapcalc/map3.c:124 ../raster/r.mapcalc/map3.c:138
-#: ../raster/r.mapcalc/map3.c:152
-msgid "Error writing data"
-msgstr "Ошибка записи данных"
-
 #: ../raster/r.mapcalc/map3.c:177 ../raster/r.mapcalc/map.c:83
 #, c-format
 msgid "Unable to read color file for raster map <%s@%s>"
@@ -10360,13 +10402,13 @@ msgid "Unable to get projection key values of current location"
 msgstr "Невозможно получить параметры проекции целевой области"
 
 #: ../raster/r.sunmask/g_solposition.c:127 ../raster/r.proj.seg/main.c:353
-#: ../raster/r.proj.seg/main.c:355 ../general/g.region/printwindow.c:282
-#: ../general/g.region/printwindow.c:290 ../general/g.region/printwindow.c:298
-#: ../general/g.region/printwindow.c:306 ../general/g.region/printwindow.c:535
-#: ../general/g.region/printwindow.c:543 ../general/g.region/printwindow.c:551
-#: ../general/g.region/printwindow.c:559 ../general/g.region/printwindow.c:677
-#: ../general/g.region/printwindow.c:685 ../general/g.region/printwindow.c:693
-#: ../general/g.region/printwindow.c:701
+#: ../raster/r.proj.seg/main.c:355 ../general/g.region/printwindow.c:281
+#: ../general/g.region/printwindow.c:289 ../general/g.region/printwindow.c:297
+#: ../general/g.region/printwindow.c:305 ../general/g.region/printwindow.c:534
+#: ../general/g.region/printwindow.c:542 ../general/g.region/printwindow.c:550
+#: ../general/g.region/printwindow.c:558 ../general/g.region/printwindow.c:676
+#: ../general/g.region/printwindow.c:684 ../general/g.region/printwindow.c:692
+#: ../general/g.region/printwindow.c:700
 msgid "Error in pj_do_proj (projection of input coordinate pair)"
 msgstr "Ошибка в pj_do_proj (проекция исходной пары координат)"
 
@@ -10709,6 +10751,7 @@ msgid "Converts a raster map into a vector map layer."
 msgstr "Конвертировать растровый слой в векторный слой."
 
 #: ../raster/r.to.vect/main.c:64 ../vector/v.to.db/parse.c:36
+#: ../vector/v.net.bridge/main.c:63
 #: ../locale/scriptstrings/d.vect.thematic_to_translate.c:6
 msgid "Feature type"
 msgstr "Тип объекта"
@@ -10725,7 +10768,8 @@ msgstr ""
 
 #: ../raster/r.to.vect/main.c:74 ../raster/r.to.vect/main.c:81
 #: ../vector/v.in.ogr/main.c:193 ../vector/v.in.ogr/main.c:216
-#: ../vector/v.in.ogr/main.c:237 ../vector/v.to.rast/main.c:71
+#: ../vector/v.in.ogr/main.c:237 ../vector/v.transform/main.c:183
+#: ../vector/v.transform/main.c:194 ../vector/v.to.rast/main.c:71
 #: ../vector/v.to.rast/main.c:77 ../vector/v.to.rast/main.c:83
 msgid "Attributes"
 msgstr "Атрибуты"
@@ -10769,7 +10813,7 @@ msgid "Unable to create table: %s"
 msgstr "Невозможно создать таблицу: %s"
 
 #: ../raster/r.to.vect/main.c:198 ../vector/v.mkgrid/main.c:259
-#: ../vector/v.overlay/main.c:461
+#: ../vector/v.overlay/main.c:469
 msgid "Unable to create index"
 msgstr "Невозможно создать индекс"
 
@@ -12134,13 +12178,18 @@ msgstr "Невозможно открыть файл сегмента %s"
 #: ../vector/lidar/v.lidar.edgedetection/main.c:245
 #: ../vector/lidar/v.lidar.correction/main.c:209
 #: ../vector/lidar/v.lidar.correction/main.c:215
-#: ../vector/v.generalize/main.c:312 ../vector/v.in.dxf/main.c:168
+#: ../vector/v.generalize/main.c:312 ../vector/v.net.distance/main.c:146
+#: ../vector/v.net.allpairs/main.c:112 ../vector/v.in.dxf/main.c:168
 #: ../vector/v.mkgrid/main.c:223 ../vector/v.hull/main.c:334
-#: ../vector/v.buffer2/main.c:307 ../vector/v.voronoi/vo_main.c:163
-#: ../vector/v.voronoi/dt_main.c:92 ../vector/v.voronoi/dt_main.c:98
-#: ../vector/v.net.path/main.c:139 ../vector/v.delaunay2/main.c:126
-#: ../vector/v.edit/main.c:105 ../vector/v.drape/main.c:339
-#: ../vector/v.drape/main.c:380 ../vector/v.to.3d/main.c:88
+#: ../vector/v.net.timetable/main.c:323 ../vector/v.net.bridge/main.c:86
+#: ../vector/v.net.connectivity/main.c:121 ../vector/v.buffer2/main.c:304
+#: ../vector/v.voronoi/vo_main.c:163 ../vector/v.voronoi/dt_main.c:92
+#: ../vector/v.voronoi/dt_main.c:98 ../vector/v.net.flow/main.c:138
+#: ../vector/v.net.flow/main.c:144 ../vector/v.net.path/main.c:139
+#: ../vector/v.delaunay2/main.c:126 ../vector/v.edit/main.c:105
+#: ../vector/v.net.centrality/main.c:194 ../vector/v.net.components/main.c:114
+#: ../vector/v.drape/main.c:339 ../vector/v.drape/main.c:380
+#: ../vector/v.to.3d/main.c:88 ../vector/v.net.spanningtree/main.c:87
 #: ../doc/vector/v.example/main.c:96
 #, c-format
 msgid "Unable to create vector map <%s>"
@@ -12405,6 +12454,10 @@ msgstr "Показать подпись категории для ячейки(�
 msgid "Output color values as RRR:GGG:BBB"
 msgstr "Выводить цвета как RRR:GGG:BBB"
 
+#: ../raster/r.what/main.c:143
+msgid "Output integer category values, not cell values"
+msgstr "Выводить целочисленные значения категорий, а не значения ячеек"
+
 #: ../raster/r.what/main.c:147
 msgid "Turn on cache reporting"
 msgstr "Включить кэш отчета"
@@ -12485,37 +12538,58 @@ msgstr "Чтение слоя высот..."
 msgid "Writing topographic index map..."
 msgstr "Запись топографического индексного слоя..."
 
-#: ../raster/r.univar2/r.univar_main.c:40
-#: ../raster/r.univar2/r3.univar_main.c:39 ../vector/v.univar/main.c:99
+#: ../raster/r.univar2/r.univar_main.c:37
+msgid "Raster map used for zoning, must be of type CELL"
+msgstr ""
+
+#: ../raster/r.univar2/r.univar_main.c:52
+#: ../raster/r.univar2/r3.univar_main.c:53 ../vector/v.univar/main.c:99
 #: ../locale/scriptstrings/v.rast.stats_to_translate.c:10
 msgid "Percentile to calculate (requires extended statistics flag)"
 msgstr ""
 "Вычисляемый процентиль (требует установки флага расширенной статистики)"
 
-#: ../raster/r.univar2/r.univar_main.c:45
-#: ../raster/r.univar2/r3.univar_main.c:44 ../vector/v.what/main.c:89
+#: ../raster/r.univar2/r.univar_main.c:55
+#: ../raster/r.univar2/r3.univar_main.c:56
+#, fuzzy
+msgid "Special characters: space, comma, tab"
+msgstr ""
+"Разделитель вывода, один символ, новая строка, запятая, пробел или табуляция"
+
+#: ../raster/r.univar2/r.univar_main.c:60
+#: ../raster/r.univar2/r3.univar_main.c:61 ../vector/v.what/main.c:89
 #: ../vector/v.univar/main.c:103
 msgid "Print the stats in shell script style"
 msgstr "Вывести статистику в стиле shell"
 
-#: ../raster/r.univar2/r.univar_main.c:49
-#: ../raster/r.univar2/r3.univar_main.c:48 ../vector/v.univar/main.c:107
+#: ../raster/r.univar2/r.univar_main.c:64
+#: ../raster/r.univar2/r3.univar_main.c:65 ../vector/v.univar/main.c:107
 #: ../locale/scriptstrings/v.rast.stats_to_translate.c:4
 msgid "Calculate extended statistics"
 msgstr "Рассчитать дополнительную статистику"
 
-#: ../raster/r.univar2/r.univar_main.c:77
+#: ../raster/r.univar2/r.univar_main.c:68
+#: ../raster/r.univar2/r3.univar_main.c:69
+msgid "Table output format instead of standard output format"
+msgstr ""
+
+#: ../raster/r.univar2/r.univar_main.c:99
 msgid ""
 "Calculates univariate statistics from the non-null cells of a raster map."
 msgstr ""
 "Рассчитать одномерную статистику используя не-нулевые ячейки растрового слоя"
 
-#: ../raster/r.univar2/r.univar_main.c:201
+#: ../raster/r.univar2/r.univar_main.c:274
+#: ../raster/r.univar2/r.univar_main.c:277
 #, c-format
 msgid "Reading row %d"
 msgstr "Чтение ряда %d"
 
-#: ../raster/r.univar2/r3.univar_main.c:81
+#: ../raster/r.univar2/r3.univar_main.c:38
+msgid "3D Raster map used for zoning, must be of type CELL"
+msgstr ""
+
+#: ../raster/r.univar2/r3.univar_main.c:106
 msgid ""
 "Calculates univariate statistics from the non-null 3d cells of a raster3d "
 "map."
@@ -12998,29 +13072,33 @@ msgstr "Количество используемых разделов"
 msgid "Generate recode rules based on quantile-defined intervals."
 msgstr "Создать правила перекодирования на основе квантильных интервалов."
 
-#: ../general/g.version/main.c:42 ../general/g.access/main.c:37
-#: ../general/g.pnmcomp/main.c:281 ../general/g.tempfile/main.c:36
-#: ../general/g.ask/main.c:40 ../general/g.findetc/main.c:28
-#: ../general/g.gisenv/main.c:38 ../general/g.filename/main.c:39
-#: ../general/g.region/main.c:70 ../general/g.findfile/main.c:35
-msgid "general"
-msgstr "Общие"
+#: ../general/g.version/main.c:41
+#, fuzzy
+msgid "general, version"
+msgstr "общее, настройки"
 
-#: ../general/g.version/main.c:43
+#: ../general/g.version/main.c:42
 msgid "Displays version and copyright information."
 msgstr "Показать версию и информацию об авторских правах."
 
-#: ../general/g.version/main.c:47
-msgid "Print the copyright message"
+#: ../general/g.version/main.c:46
+#, fuzzy
+msgid "Print also the copyright message"
 msgstr "Вывести сообщение об авторских правах"
 
-#: ../general/g.version/main.c:51
-msgid "Print the GRASS build information"
+#: ../general/g.version/main.c:50
+#, fuzzy
+msgid "Print also the GRASS build information"
 msgstr "Вывести информацию о сборке GRASS"
 
-#: ../general/g.version/main.c:56
-msgid "Print the GIS library revision number and time"
+#: ../general/g.version/main.c:55
+msgid "Print also the GIS library revision number and time"
 msgstr ""
+
+#: ../general/g.version/main.c:59
+#, fuzzy
+msgid "Print info in shell script style"
+msgstr "Вывести статистику в стиле shell"
 
 #: ../general/manage/cmd/copy.c:39 ../general/manage/cmd/remove.c:99
 #: ../general/manage/cmd/list.c:41 ../general/manage/cmd/rename.c:40
@@ -13132,6 +13210,14 @@ msgstr "%s=%s,%s: файлы совпадают - переименование �
 #: ../general/manage/cmd/rename.c:99
 msgid "Renaming reclass maps"
 msgstr "Переименование слоев переклассификации"
+
+#: ../general/g.access/main.c:37 ../general/g.pnmcomp/main.c:281
+#: ../general/g.tempfile/main.c:36 ../general/g.ask/main.c:40
+#: ../general/g.findetc/main.c:28 ../general/g.gisenv/main.c:38
+#: ../general/g.filename/main.c:39 ../general/g.region/main.c:70
+#: ../general/g.findfile/main.c:35
+msgid "general"
+msgstr "Общие"
 
 #: ../general/g.access/main.c:39
 msgid "Controls access to the current mapset for other users on the system."
@@ -14462,21 +14548,21 @@ msgstr "Невозможно открыть растровый слой <%s> в 
 msgid "Could not read from <%s>"
 msgstr "Невозможно прочесть из <%s>"
 
-#: ../general/g.region/printwindow.c:248 ../general/g.region/printwindow.c:504
-#: ../general/g.region/printwindow.c:623 ../display/d.where/main.c:93
+#: ../general/g.region/printwindow.c:247 ../general/g.region/printwindow.c:503
+#: ../general/g.region/printwindow.c:622 ../display/d.where/main.c:93
 msgid "Can't get projection info of current location"
 msgstr "Невозможно получить проекцию текущей области"
 
-#: ../general/g.region/printwindow.c:264 ../general/g.region/printwindow.c:517
-#: ../general/g.region/printwindow.c:648
+#: ../general/g.region/printwindow.c:263 ../general/g.region/printwindow.c:516
+#: ../general/g.region/printwindow.c:647
 msgid "Unable to update lat/long projection parameters"
 msgstr "Невозможно обновить параметры географической проекции"
 
-#: ../general/g.region/printwindow.c:411
+#: ../general/g.region/printwindow.c:410
 msgid "You are already in Lat/Long. Use the -p flag instead."
 msgstr "Вы уже в Lat/Long. Используйте вместо этого параметр -p."
 
-#: ../general/g.region/printwindow.c:413
+#: ../general/g.region/printwindow.c:412
 msgid ""
 "You are in a simple XY location, projection to Lat/Lon is not possible. Use "
 "the -p flag instead."
@@ -14484,7 +14570,7 @@ msgstr ""
 "Вы в простой области XY, проектирование в Lat/Lon невозможно. Используйте "
 "параметр -p."
 
-#: ../general/g.region/printwindow.c:638
+#: ../general/g.region/printwindow.c:637
 msgid ""
 "WGS84 output not possible as this location does not contain datum "
 "transformation parameters. Try running g.setproj."
@@ -14492,7 +14578,7 @@ msgstr ""
 "Вывод в WGS84 невозможен, так как эта область не содержит параметров "
 "трансформации. Попробуйте запустить g.setproj."
 
-#: ../general/g.region/printwindow.c:784
+#: ../general/g.region/printwindow.c:783
 msgid "Lat/Long calculations are not possible from a simple XY system"
 msgstr "Вычисления в Lat/Long невозможны в системе XY"
 
@@ -15413,11 +15499,13 @@ msgstr "Слой кривых"
 msgid "Node layer"
 msgstr "Слой узлов"
 
-#: ../display/d.path/main.c:82 ../vector/v.net.path/main.c:73
+#: ../display/d.path/main.c:82 ../vector/v.net.distance/main.c:113
+#: ../vector/v.net.path/main.c:73
 msgid "Arc forward/both direction(s) cost column"
 msgstr "Столбец стоимостных дуг в прямом/обоих направлениях"
 
-#: ../display/d.path/main.c:88 ../vector/v.net.path/main.c:79
+#: ../display/d.path/main.c:88 ../vector/v.net.distance/main.c:118
+#: ../vector/v.net.path/main.c:79
 msgid "Arc backward direction cost column"
 msgstr "Столбец стоимостных дуг в обратном направлении"
 
@@ -15440,7 +15528,10 @@ msgstr "Цвет выделения"
 
 #: ../display/d.path/main.c:123 ../vector/v.net.alloc/main.c:117
 #: ../vector/v.net.iso/main.c:127 ../vector/v.net.salesman/main.c:136
+#: ../vector/v.net.distance/main.c:123 ../vector/v.net.allpairs/main.c:85
 #: ../vector/v.net.steiner/main.c:394 ../vector/v.net.path/main.c:102
+#: ../vector/v.net.centrality/main.c:167
+#: ../vector/v.net.spanningtree/main.c:64
 msgid "Use geodesic calculation for longitude-latitude locations"
 msgstr "Используйте геодезический калькулятор для точек с широтой-долготой"
 
@@ -15458,7 +15549,10 @@ msgstr "%s - неверное значение x"
 msgid "%s - illegal y value"
 msgstr "%s - неверное значение y"
 
-#: ../display/d.path/main.c:185 ../vector/v.net.path/main.c:120
+#: ../display/d.path/main.c:185 ../vector/v.net.distance/main.c:153
+#: ../vector/v.net.allpairs/main.c:118 ../vector/v.net.path/main.c:120
+#: ../vector/v.net.centrality/main.c:201
+#: ../vector/v.net.spanningtree/main.c:93
 msgid "The current projection is not longitude-latitude"
 msgstr "Текущая проекция не широта-долгота"
 
@@ -15760,7 +15854,7 @@ msgstr "Создать информацию о легенде и отправи�
 #: ../vector/v.generalize/misc.c:160 ../vector/v.extract/main.c:278
 #: ../vector/v.distance/main.c:355 ../vector/v.distance/main.c:391
 #: ../vector/v.out.ascii/b2a.c:38 ../vector/v.reclass/main.c:121
-#: ../vector/v.buffer2/main.c:316 ../vector/v.overlay/main.c:279
+#: ../vector/v.buffer2/main.c:313 ../vector/v.overlay/main.c:287
 #: ../vector/v.univar/main.c:176 ../vector/v.to.rast/vect2rast.c:51
 #: ../vector/v.to.rast/support.c:126 ../vector/v.to.rast/support.c:277
 #: ../vector/v.surf.idw/read_sites.c:34 ../vector/v.edit/select.c:506
@@ -16175,20 +16269,22 @@ msgstr "Номер слоя. Если -1, показываются все сло
 #: ../vector/v.extract/main.c:127 ../vector/v.extract/main.c:130
 #: ../vector/v.extract/main.c:138 ../vector/v.extract/main.c:148
 #: ../vector/v.out.ascii/out.c:80 ../vector/v.out.ascii/out.c:87
-#: ../vector/v.reclass/main.c:75 ../vector/v.reclass/main.c:78
-#: ../vector/v.select/args.c:16 ../vector/v.select/args.c:21
-#: ../vector/v.select/args.c:30 ../vector/v.select/args.c:35
-#: ../vector/v.select/args.c:89 ../vector/v.buffer2/main.c:156
-#: ../vector/v.buffer2/main.c:159 ../vector/v.to.rast/main.c:44
-#: ../vector/v.to.rast/main.c:49 ../vector/v.edit/args.c:42
-#: ../vector/v.edit/args.c:47 ../vector/v.edit/args.c:125
-#: ../vector/v.edit/args.c:129 ../vector/v.edit/args.c:138
-#: ../vector/v.edit/args.c:147 ../vector/v.edit/args.c:156
-#: ../vector/v.edit/args.c:159 ../vector/v.edit/args.c:173
-#: ../vector/v.edit/args.c:202 ../vector/v.category/main.c:92
-#: ../vector/v.category/main.c:97 ../vector/v.category/main.c:101
-#: ../vector/v.surf.rst/main.c:193 ../vector/v.surf.rst/main.c:219
-#: ../vector/v.surf.rst/main.c:222
+#: ../vector/v.net.allpairs/main.c:63 ../vector/v.net.allpairs/main.c:65
+#: ../vector/v.net.allpairs/main.c:67 ../vector/v.reclass/main.c:75
+#: ../vector/v.reclass/main.c:78 ../vector/v.select/args.c:16
+#: ../vector/v.select/args.c:21 ../vector/v.select/args.c:30
+#: ../vector/v.select/args.c:35 ../vector/v.select/args.c:89
+#: ../vector/v.buffer2/main.c:144 ../vector/v.buffer2/main.c:147
+#: ../vector/v.to.rast/main.c:44 ../vector/v.to.rast/main.c:49
+#: ../vector/v.edit/args.c:42 ../vector/v.edit/args.c:47
+#: ../vector/v.edit/args.c:125 ../vector/v.edit/args.c:129
+#: ../vector/v.edit/args.c:138 ../vector/v.edit/args.c:147
+#: ../vector/v.edit/args.c:156 ../vector/v.edit/args.c:159
+#: ../vector/v.edit/args.c:173 ../vector/v.edit/args.c:202
+#: ../vector/v.category/main.c:92 ../vector/v.category/main.c:97
+#: ../vector/v.category/main.c:101 ../vector/v.surf.rst/main.c:193
+#: ../vector/v.surf.rst/main.c:219 ../vector/v.surf.rst/main.c:222
+#: ../vector/v.net.centrality/main.c:107 ../vector/v.net.centrality/main.c:109
 msgid "Selection"
 msgstr "Выбор"
 
@@ -16259,7 +16355,7 @@ msgstr "Не определено соединение с базой данны�
 #: ../display/d.thematic.area/main.c:231 ../display/d.vect/main.c:514
 #: ../vector/v.out.svg/main.c:141 ../vector/v.extract/main.c:286
 #: ../vector/v.in.sites/main.c:158 ../vector/v.out.vtk/writeVTK.c:634
-#: ../vector/v.out.ascii/b2a.c:44 ../vector/v.out.ogr/main.c:416
+#: ../vector/v.out.ascii/b2a.c:44 ../vector/v.out.ogr/main.c:631
 #: ../vector/v.edit/select.c:513 ../vector/v.db.connect/main.c:208
 #: ../vector/v.db.connect/main.c:274 ../vector/v.drape/main.c:288
 #: ../doc/vector/v.example/main.c:123 ../db/base/columns.c:45
@@ -16939,12 +17035,17 @@ msgstr "Открыть форму в режиме редактирования"
 #: ../vector/lidar/v.lidar.growing/main.c:141
 #: ../vector/lidar/v.lidar.growing/main.c:145
 #: ../vector/lidar/v.lidar.correction/main.c:186
-#: ../vector/v.generalize/main.c:305 ../vector/v.out.ascii/out.c:146
-#: ../vector/v.hull/main.c:307 ../vector/v.support/main.c:135
-#: ../vector/v.buffer2/main.c:303 ../vector/v.edit/main.c:165
+#: ../vector/v.generalize/main.c:305 ../vector/v.net.distance/main.c:140
+#: ../vector/v.out.ascii/out.c:146 ../vector/v.net.allpairs/main.c:106
+#: ../vector/v.hull/main.c:307 ../vector/v.net.timetable/main.c:317
+#: ../vector/v.net.bridge/main.c:80 ../vector/v.net.connectivity/main.c:115
+#: ../vector/v.support/main.c:135 ../vector/v.buffer2/main.c:300
+#: ../vector/v.net.flow/main.c:132 ../vector/v.edit/main.c:165
 #: ../vector/v.info/main.c:113 ../vector/v.surf.rst/main.c:569
 #: ../vector/v.surf.rst/main.c:724 ../vector/v.surf.rst/main.c:813
-#: ../vector/v.to.3d/main.c:72 ../doc/vector/v.example/main.c:85
+#: ../vector/v.net.centrality/main.c:188 ../vector/v.net.components/main.c:108
+#: ../vector/v.to.3d/main.c:72 ../vector/v.net.spanningtree/main.c:81
+#: ../doc/vector/v.example/main.c:85
 #, c-format
 msgid "Unable to open vector map <%s>"
 msgstr "Невозможно открыть векторный слой <%s>"
@@ -17814,8 +17915,10 @@ msgstr "из таблицы выбрано %d строк "
 msgid "Unable to create table <%s>"
 msgstr "Невозможно создать таблицу: <%s>"
 
-#: ../vector/v.sample/main.c:219 ../vector/v.net.path/path.c:113
-#: ../vector/v.db.connect/main.c:327
+#: ../vector/v.sample/main.c:219 ../vector/v.net.distance/main.c:212
+#: ../vector/v.net.timetable/main.c:107 ../vector/v.net.flow/main.c:172
+#: ../vector/v.net.path/path.c:113 ../vector/v.net.centrality/main.c:244
+#: ../vector/v.db.connect/main.c:327 ../vector/v.net.components/main.c:151
 msgid "Cannot create index"
 msgstr "Невозможно создать индекс"
 
@@ -17825,7 +17928,7 @@ msgstr "Проверка векторных точек..."
 
 #: ../vector/v.sample/main.c:252 ../vector/v.sample/main.c:260
 #: ../vector/v.label.sa/labels.c:178 ../vector/v.vol.rst/user1.c:170
-#: ../vector/v.buffer2/main.c:388 ../vector/v.buffer2/main.c:454
+#: ../vector/v.buffer2/main.c:388 ../vector/v.buffer2/main.c:459
 #: ../vector/v.label/main.c:329 ../vector/v.buffer/main.c:454
 #: ../vector/v.buffer/main.c:466 ../vector/v.buffer/main.c:531
 #: ../vector/v.buffer/main.c:543 ../vector/v.what.rast/main.c:313
@@ -17835,7 +17938,7 @@ msgstr "Нет ни одной записи для категории %d в та
 
 #: ../vector/v.sample/main.c:266 ../vector/lidar/v.surf.bspline/main.c:344
 #: ../vector/lidar/v.surf.bspline/crosscorr.c:133
-#: ../vector/v.to.rast3/main.c:100 ../vector/v.buffer2/main.c:337
+#: ../vector/v.to.rast3/main.c:100 ../vector/v.buffer2/main.c:334
 #: ../vector/v.class/main.c:123 ../vector/v.univar/main.c:273
 #: ../vector/v.surf.idw/read_sites.c:49 ../vector/v.buffer/main.c:402
 #: ../vector/v.what.rast/main.c:158
@@ -18056,7 +18159,7 @@ msgstr "%d дуг добавленых к сети (nlayer: %d)"
 
 #: ../vector/v.net/main.c:197 ../vector/v.type/main.c:234
 #: ../vector/v.proj/main.c:296 ../vector/v.kcv/main.c:161
-#: ../vector/v.transform/main.c:332 ../vector/v.build.polylines/main.c:214
+#: ../vector/v.transform/main.c:339 ../vector/v.build.polylines/main.c:214
 #: ../vector/v.clean/main.c:281 ../vector/v.category/main.c:527
 msgid "Failed to copy attribute table to output map"
 msgstr "Невозможно скопировать атрибутивную таблицу в выходной слой"
@@ -18086,7 +18189,7 @@ msgid "Exports a GRASS vector map to SVG."
 msgstr "Экспорт векторного слоя GRASS в SVG."
 
 #: ../vector/v.out.svg/main.c:73 ../vector/v.out.ascii/out.c:45
-#: ../vector/v.out.ogr/main.c:88 ../vector/v.out.pov/main.c:43
+#: ../vector/v.out.ogr/main.c:98 ../vector/v.out.pov/main.c:43
 #: ../vector/v.out.dxf/main.c:48
 msgid "vector, export"
 msgstr "векторный слой, экспорт"
@@ -18120,7 +18223,7 @@ msgid "Precision must not be higher than 15"
 msgstr "Точность не должна быть больше 15"
 
 #: ../vector/v.out.svg/main.c:154 ../vector/v.random/main.c:214
-#: ../vector/v.out.vtk/writeVTK.c:643 ../vector/v.out.ogr/main.c:426
+#: ../vector/v.out.vtk/writeVTK.c:643 ../vector/v.out.ogr/main.c:641
 #: ../vector/v.patch/main.c:139 ../vector/v.patch/main.c:177
 #: ../vector/v.in.ascii/in.c:408 ../vector/v.info/main.c:222
 #: ../vector/v.db.connect/main.c:219 ../vector/v.drape/main.c:299
@@ -18172,8 +18275,8 @@ msgid "Cannot select attributes for cat=%d"
 msgstr "Невозможно выбрать атрибуты для cat=%d"
 
 #: ../vector/v.out.svg/main.c:370 ../vector/v.out.vtk/writeVTK.c:579
-#: ../vector/v.lrs/v.lrs.label/main.c:347 ../vector/v.out.ogr/main.c:958
-#: ../vector/v.overlay/main.c:357
+#: ../vector/v.lrs/v.lrs.label/main.c:347 ../vector/v.out.ogr/main.c:1066
+#: ../vector/v.out.ogr/main.c:1071 ../vector/v.overlay/main.c:365
 msgid "Unable to fetch data from table"
 msgstr "Невозможно выбрать данные из таблицы"
 
@@ -19583,8 +19686,8 @@ msgstr "Удалить мосты:"
 msgid "Merge boundaries:"
 msgstr "Разрыв границ:"
 
-#: ../vector/v.in.ogr/main.c:1053 ../vector/v.buffer2/main.c:535
-#: ../vector/v.buffer2/main.c:606 ../vector/v.voronoi/dt_main.c:142
+#: ../vector/v.in.ogr/main.c:1053 ../vector/v.buffer2/main.c:551
+#: ../vector/v.buffer2/main.c:627 ../vector/v.voronoi/dt_main.c:142
 #: ../vector/v.overlay/area_area.c:68 ../vector/v.buffer/main.c:663
 #: ../vector/v.buffer/main.c:750
 msgid "Cannot calculate area centroid"
@@ -20122,6 +20225,80 @@ msgstr "Создать новый векторный слой из текуще�
 msgid "Select type: line or area"
 msgstr "Выбрать тип: линия или полигон"
 
+#: ../vector/v.net.distance/main.c:60 ../vector/v.net.allpairs/main.c:54
+#: ../vector/v.net.timetable/main.c:254
+#, fuzzy
+msgid "vector, network, shortest path"
+msgstr "вектор, импорт, сайты"
+
+#: ../vector/v.net.distance/main.c:61
+msgid ""
+"Computes shortest distance via the network between the given sets of "
+"features."
+msgstr ""
+
+#: ../vector/v.net.distance/main.c:64
+msgid ""
+"Finds the shortest paths from a feature 'to' to every feature 'from' and "
+"various information about this realtion are uploaded to the attribute table."
+msgstr ""
+
+#: ../vector/v.net.distance/main.c:73
+#, fuzzy
+msgid "From layer number or name"
+msgstr "Номер слоя выборки (для чтения)"
+
+#: ../vector/v.net.distance/main.c:74 ../vector/v.net.distance/main.c:79
+#: ../vector/v.net.distance/main.c:85 ../vector/v.distance/main.c:122
+#: ../vector/v.distance/main.c:134 ../vector/v.distance/main.c:146
+msgid "From"
+msgstr "Из"
+
+#: ../vector/v.net.distance/main.c:78
+#, fuzzy
+msgid "From category values"
+msgstr "Проблемы при загрузке значений категорий"
+
+#: ../vector/v.net.distance/main.c:84
+#, fuzzy
+msgid "From WHERE conditions of SQL statement without 'where' keyword"
+msgstr "WHERE условия SQL команды не имеют ключевого слова 'where'"
+
+#: ../vector/v.net.distance/main.c:89
+#, fuzzy
+msgid "To layer number or name"
+msgstr "Номер слоя (из)"
+
+#: ../vector/v.net.distance/main.c:90 ../vector/v.net.distance/main.c:95
+#: ../vector/v.net.distance/main.c:101 ../vector/v.net.distance/main.c:108
+#: ../vector/v.distance/main.c:127 ../vector/v.distance/main.c:141
+#: ../vector/v.distance/main.c:151 ../vector/v.distance/main.c:207
+msgid "To"
+msgstr "В"
+
+#: ../vector/v.net.distance/main.c:94
+#, fuzzy
+msgid "To category values"
+msgstr "Проблемы при загрузке значений категорий"
+
+#: ../vector/v.net.distance/main.c:100
+#, fuzzy
+msgid "To WHERE conditions of SQL statement without 'where' keyword"
+msgstr "WHERE условия SQL команды не имеют ключевого слова 'where'"
+
+#: ../vector/v.net.distance/main.c:107
+#, fuzzy
+msgid "To feature type"
+msgstr "Тип объекта"
+
+#: ../vector/v.net.distance/main.c:216 ../vector/v.net.allpairs/main.c:157
+#: ../vector/v.net.timetable/main.c:112 ../vector/v.net.flow/main.c:176
+#: ../vector/v.net.path/path.c:117 ../vector/v.net.centrality/main.c:248
+#: ../vector/v.net.components/main.c:155
+#, c-format
+msgid "Cannot grant privileges on table <%s>"
+msgstr "Невозможно выделить привилегии таблице <%s>"
+
 #: ../vector/v.distance/main.c:117
 msgid ""
 "Finds the nearest element in vector map 'to' for elements in vector map "
@@ -20134,19 +20311,9 @@ msgstr ""
 msgid "Name of existing vector map (from)"
 msgstr "Имя существующего векторного слоя (из)"
 
-#: ../vector/v.distance/main.c:122 ../vector/v.distance/main.c:134
-#: ../vector/v.distance/main.c:146
-msgid "From"
-msgstr "Из"
-
 #: ../vector/v.distance/main.c:126
 msgid "Name of existing vector map (to)"
 msgstr "Имя существующего векторного слоя (в)"
-
-#: ../vector/v.distance/main.c:127 ../vector/v.distance/main.c:141
-#: ../vector/v.distance/main.c:151 ../vector/v.distance/main.c:207
-msgid "To"
-msgstr "В"
 
 #: ../vector/v.distance/main.c:133
 msgid "Feature type (from)"
@@ -20521,7 +20688,7 @@ msgid ""
 "No coordinates to generate the output! Maybe an empty vector type chosen?"
 msgstr "Нет координат для вывода! Возможно, указан отсутствуещий тип вектора."
 
-#: ../vector/v.out.vtk/writeVTK.c:575 ../vector/v.out.ogr/main.c:953
+#: ../vector/v.out.vtk/writeVTK.c:575 ../vector/v.out.ogr/main.c:711
 #, c-format
 msgid "Cannot select attributes for cat = %d"
 msgstr "Невозможно выбрать атрибуты для cat=%d"
@@ -20618,6 +20785,35 @@ msgstr "Невозможно выбрать записи из таблицы <%s
 msgid "Column <%s>: unsupported data type"
 msgstr "Поле <%s>: неверный тип данных"
 
+#: ../vector/v.net.allpairs/main.c:56
+msgid "Computes the shortest path between all pairs of nodes in the network."
+msgstr ""
+
+#: ../vector/v.net.allpairs/main.c:73 ../vector/v.net.centrality/main.c:115
+#, fuzzy
+msgid "Name of arc forward/both direction(s) cost column"
+msgstr "Столбец стоимостных дуг в прямом/обоих направлениях"
+
+#: ../vector/v.net.allpairs/main.c:74 ../vector/v.net.allpairs/main.c:80
+#: ../vector/v.net.centrality/main.c:116 ../vector/v.net.centrality/main.c:122
+#, fuzzy
+msgid "Cost"
+msgstr "Контраст"
+
+#: ../vector/v.net.allpairs/main.c:79 ../vector/v.net.centrality/main.c:121
+#, fuzzy
+msgid "Name of arc backward direction cost column"
+msgstr "Столбец стоимостных дуг в обратном направлении"
+
+#: ../vector/v.net.allpairs/main.c:89
+msgid "Add points on nodes without points"
+msgstr ""
+
+#: ../vector/v.net.allpairs/main.c:213 ../vector/v.net.centrality/main.c:311
+#, fuzzy
+msgid "Writing data into the table..."
+msgstr "Запись трансформированных данных в файл..."
+
 #: ../vector/v.label.sa/main.c:54 ../vector/v.label/main.c:61
 msgid "vector, paint labels"
 msgstr "вектор, создать подписи"
@@ -20710,7 +20906,7 @@ msgstr "Невозможно задать размер шрифта"
 msgid "Cannot allocate more memory"
 msgstr "Невозможно выделить дополнительную память"
 
-#: ../vector/v.label.sa/labels.c:174 ../vector/v.overlay/main.c:296
+#: ../vector/v.label.sa/labels.c:174 ../vector/v.overlay/main.c:304
 #: ../vector/v.label/main.c:323
 msgid "Unable to select attributes"
 msgstr "Невозможно выбрать атрибуты"
@@ -21557,59 +21753,75 @@ msgstr "Неполное правило"
 msgid "%d features reclassed."
 msgstr "переклассифицировано %d объектов."
 
-#: ../vector/v.kernel/main.c:72
+#: ../vector/v.kernel/main.c:66
 #, c-format
 msgid "\tScore Value=%f\tsmoothing parameter (standard deviation)=%f"
 msgstr ""
 "\tСуммарное значение=%f\tпараметр сглаживания (стандартное отклонение)=%f"
 
-#: ../vector/v.kernel/main.c:109
+#: ../vector/v.kernel/main.c:105
 msgid "vector, kernel density"
 msgstr "вектор, плотность ядра"
 
-#: ../vector/v.kernel/main.c:111
+#: ../vector/v.kernel/main.c:107
+#, fuzzy
 msgid ""
-"Generates a raster density map from vector points data using a moving 2D "
-"isotropic Gaussian kernel or optionally generates a vector density map on "
-"vector network with a 1D kernel."
+"Generates a raster density map from vector point data using a moving kernel "
+"or optionally generates a vector density map on a vector network."
 msgstr ""
 "Создать растровый слой плотности из векторных точек используя плавающую "
 "двумерную изотропическую функцию гаусса или по выбору создать векторный слой "
 "плотности для векторной сети с помощью одномерного ядра."
 
-#: ../vector/v.kernel/main.c:115
+#: ../vector/v.kernel/main.c:111
 msgid "Input vector with training points"
 msgstr "Исходный векторный слой с тренировочными точками"
 
-#: ../vector/v.kernel/main.c:119
+#: ../vector/v.kernel/main.c:115
 msgid "Input network vector map"
 msgstr "Исходный векторный сетевой слой"
 
-#: ../vector/v.kernel/main.c:127
+#: ../vector/v.kernel/main.c:123
 msgid "Output raster/vector map"
 msgstr "Выходной растровый/векторный слой"
 
-#: ../vector/v.kernel/main.c:133
+#: ../vector/v.kernel/main.c:129
 msgid "Standard deviation in map units"
 msgstr "Стандартное отклонение в единицах слоя"
 
-#: ../vector/v.kernel/main.c:139
+#: ../vector/v.kernel/main.c:135
 msgid "Discretization error in map units"
 msgstr "Ошибка дискретизации в единицах слоя"
 
-#: ../vector/v.kernel/main.c:146
+#: ../vector/v.kernel/main.c:142
 msgid "Maximum length of segment on network"
 msgstr "Максимальная длина сегмента сети"
 
-#: ../vector/v.kernel/main.c:153
+#: ../vector/v.kernel/main.c:149
 msgid "Maximum distance from point to network"
 msgstr "Максимальное расстояние от точки до сети"
 
-#: ../vector/v.kernel/main.c:160
+#: ../vector/v.kernel/main.c:156
 msgid "Multiply the density result by this number"
 msgstr "Умножить результирующую плотность на это число"
 
-#: ../vector/v.kernel/main.c:166
+#: ../vector/v.kernel/main.c:163
+#, fuzzy
+msgid "Node method"
+msgstr "Неизвестный метод"
+
+#: ../vector/v.kernel/main.c:167
+msgid ""
+"none;No method applied at nodes with more than 2 arcs;split;Equal split "
+"(Okabe 2009) applied at nodes;"
+msgstr ""
+
+#: ../vector/v.kernel/main.c:174
+#, fuzzy
+msgid "Kernel function"
+msgstr "Известные функции:"
+
+#: ../vector/v.kernel/main.c:182
 msgid ""
 "Try to calculate an optimal standard deviation with 'stddeviation' taken as "
 "maximum (experimental)"
@@ -21617,47 +21829,79 @@ msgstr ""
 "Попытаться рассчитать оптимальное стандартное отклонение используя "
 "''stddeviation', принятое за максимум (экспериментальная возможность)"
 
-#: ../vector/v.kernel/main.c:171
+#: ../vector/v.kernel/main.c:187
 msgid "Only calculate optimal standard deviation and exit (no map is written)"
 msgstr ""
 "Только рассчитать оптимальное стандартное отклонение и выйти (ни один слой "
 "не записывается)"
 
-#: ../vector/v.kernel/main.c:230
+#: ../vector/v.kernel/main.c:192
+msgid ""
+"In network mode, normalize values by sum of density multiplied by length of "
+"each segment. Integral over the output map then gives 1.0 * mult"
+msgstr ""
+
+#: ../vector/v.kernel/main.c:197
+msgid "In network mode, multiply the result by number of input points."
+msgstr ""
+
+#: ../vector/v.kernel/main.c:214
+#, fuzzy
+msgid "Unknown node method"
+msgstr "Неизвестный метод"
+
+#: ../vector/v.kernel/main.c:232
+#, fuzzy
+msgid "Unknown kernel function"
+msgstr "Неизвестная проекция"
+
+#: ../vector/v.kernel/main.c:238
+msgid ""
+"Optimal standard deviation calculation is supported only for node method "
+"'none' and kernel function 'gaussian'."
+msgstr ""
+
+#: ../vector/v.kernel/main.c:242
+msgid ""
+"Optimal standard deviation calculation is supported only for kernel function "
+"'gaussian'."
+msgstr ""
+
+#: ../vector/v.kernel/main.c:279
 #, c-format
 msgid "Network input map <%s> not found"
 msgstr "Исходный сетевой слой <%s> не найден"
 
-#: ../vector/v.kernel/main.c:257
+#: ../vector/v.kernel/main.c:306
 #, c-format
 msgid "%d points outside threshold"
 msgstr "%d точек вне порога"
 
-#: ../vector/v.kernel/main.c:285
-#, c-format
+#: ../vector/v.kernel/main.c:334
+#, fuzzy, c-format
 msgid ""
-"Automatic choose of smoothing parameter (standard deviation), maximum "
-"possible value of standard deviation is was set to %f"
+"Automatic choice of smoothing parameter (standard deviation), maximum "
+"possible value of standard deviation is set to %f"
 msgstr ""
 "Автоматически выбрать параметр сглаживания (стандартное отклонение), "
 "максимально возможное значение стандартного отклонения установлено равным %f"
 
-#: ../vector/v.kernel/main.c:292
+#: ../vector/v.kernel/main.c:341
 #, c-format
 msgid "Using maximum distance between points: %f"
 msgstr "Используемое максимальное расстояние между точками: %f"
 
-#: ../vector/v.kernel/main.c:306
+#: ../vector/v.kernel/main.c:355
 #, c-format
 msgid "Number of input points: %d."
 msgstr "Количество исходных точек: %d."
 
-#: ../vector/v.kernel/main.c:307
+#: ../vector/v.kernel/main.c:356
 #, c-format
 msgid "%d distances read from the map."
 msgstr "из слоя считано %d расстояний."
 
-#: ../vector/v.kernel/main.c:310
+#: ../vector/v.kernel/main.c:359
 #, c-format
 msgid ""
 "Distances between all points are beyond %e (4 * standard deviation), unable "
@@ -21666,12 +21910,12 @@ msgstr ""
 "Расстояния между всеми точками больше %e (4 * стандартное отклонение), "
 "невозможно рассчитать оптимальное значение "
 
-#: ../vector/v.kernel/main.c:321
+#: ../vector/v.kernel/main.c:370
 #, c-format
 msgid "Optimal smoothing parameter (standard deviation): %f."
 msgstr "Оптимальный параметр сглаживания (стандартное отклонение): %f."
 
-#: ../vector/v.kernel/main.c:344
+#: ../vector/v.kernel/main.c:397
 #, c-format
 msgid ""
 "\n"
@@ -21680,7 +21924,7 @@ msgstr ""
 "\n"
 "Записать выходной векторный слой используя параметр сглаживания=%f."
 
-#: ../vector/v.kernel/main.c:346 ../vector/v.kernel/main.c:419
+#: ../vector/v.kernel/main.c:399 ../vector/v.kernel/main.c:506
 #, c-format
 msgid ""
 "\n"
@@ -21689,7 +21933,7 @@ msgstr ""
 "\n"
 "Фактор нормализации=%f."
 
-#: ../vector/v.kernel/main.c:417
+#: ../vector/v.kernel/main.c:504
 #, c-format
 msgid ""
 "\n"
@@ -21698,66 +21942,74 @@ msgstr ""
 "\n"
 "Записать выходной растровый слой, используя параметр сглаживания=%f."
 
-#: ../vector/v.kernel/main.c:426
+#: ../vector/v.kernel/main.c:513
 msgid "Unable to read MASK"
 msgstr "Невозможно прочитать MASK"
 
-#: ../vector/v.kernel/main.c:450
+#: ../vector/v.kernel/main.c:540
 #, c-format
 msgid "Maximum value in output: %e."
 msgstr "Максимальное значение на выходе: %e."
 
-#: ../vector/v.out.ogr/main.c:90
-msgid "Converts to one of the supported OGR vector formats."
+#: ../vector/v.kernel/function.c:220
+msgid "Dimension > 2 supported only by gaussian function"
+msgstr ""
+
+#: ../vector/v.out.ogr/main.c:100
+#, fuzzy
+msgid "Converts GRASS vector map to one of the supported OGR vector formats."
 msgstr "Конвертировать в один из поддерживаемых форматов OGR."
 
-#: ../vector/v.out.ogr/main.c:98
-msgid "Feature type. Combination of types is not supported by all formats."
+#: ../vector/v.out.ogr/main.c:108
+#, fuzzy
+msgid ""
+"Feature type(s). Combinations not supported by all output formats. Default: "
+"first type found in input."
 msgstr "Тип объекта. Комбинация типов не поддерживается никакими форматами."
 
-#: ../vector/v.out.ogr/main.c:106
+#: ../vector/v.out.ogr/main.c:116
 msgid "OGR output datasource name"
 msgstr "Имя выходного набора данных OGR"
 
-#: ../vector/v.out.ogr/main.c:108
+#: ../vector/v.out.ogr/main.c:118
 msgid "For example: ESRI Shapefile: filename or directory for storage"
 msgstr "Например: Shape-файл ESRI: имя файла или папка для хранения"
 
-#: ../vector/v.out.ogr/main.c:115
+#: ../vector/v.out.ogr/main.c:125
 msgid "OGR layer name. If not specified, input name is used."
 msgstr " Имя слоя OGR. Если не задано, используется исходное имя."
 
-#: ../vector/v.out.ogr/main.c:116
+#: ../vector/v.out.ogr/main.c:126
 msgid "For example: ESRI Shapefile: shapefile name"
 msgstr "Например: Shape-файл ESRI: имя shape-файла"
 
-#: ../vector/v.out.ogr/main.c:117 ../vector/v.out.ogr/main.c:130
-#: ../vector/v.out.ogr/main.c:140 ../vector/v.out.ogr/main.c:150
+#: ../vector/v.out.ogr/main.c:127 ../vector/v.out.ogr/main.c:140
+#: ../vector/v.out.ogr/main.c:150 ../vector/v.out.ogr/main.c:160
 msgid "Creation"
 msgstr "Создание"
 
-#: ../vector/v.out.ogr/main.c:129
+#: ../vector/v.out.ogr/main.c:139
 msgid "OGR format"
 msgstr "формат OGR"
 
-#: ../vector/v.out.ogr/main.c:139
+#: ../vector/v.out.ogr/main.c:149
 msgid "OGR dataset creation option (format specific, NAME=VALUE)"
 msgstr "Опция создания набора данных OGR (зависит от формата, NAME=VALUE)"
 
-#: ../vector/v.out.ogr/main.c:149
+#: ../vector/v.out.ogr/main.c:159
 msgid "OGR layer creation option (format specific, NAME=VALUE)"
 msgstr "Опция создания слоя OGR (зависит от формата, NAME=VALUE)"
 
-#: ../vector/v.out.ogr/main.c:154
+#: ../vector/v.out.ogr/main.c:164
 #, fuzzy
 msgid "Open an existing datasource for update"
 msgstr "Очистить существующие данные из папки загрузки"
 
-#: ../vector/v.out.ogr/main.c:159
+#: ../vector/v.out.ogr/main.c:169
 msgid "Skip export of GRASS category ID ('cat') attribute"
 msgstr ""
 
-#: ../vector/v.out.ogr/main.c:163
+#: ../vector/v.out.ogr/main.c:173
 msgid ""
 "Export features with category (labeled) only. Otherwise all features are "
 "exported"
@@ -21765,87 +22017,60 @@ msgstr ""
 "Экспортировать объекты только с категориями (подписанными). Иначе "
 "экспортируются все объекты"
 
-#: ../vector/v.out.ogr/main.c:168
+#: ../vector/v.out.ogr/main.c:178
 msgid "Use ESRI-style .prj file format (applies to Shapefile output only)"
 msgstr ""
 "Использовать формат файл .prj в стиле ESRI (применимо только к выводу в "
 "формате Shape)"
 
-#: ../vector/v.out.ogr/main.c:173
+#: ../vector/v.out.ogr/main.c:183
+#, fuzzy
+msgid "Create 3D output if input is 3D (applies to Shapefile output only)"
+msgstr ""
+"Использовать формат файл .prj в стиле ESRI (применимо только к выводу в "
+"формате Shape)"
+
+#: ../vector/v.out.ogr/main.c:188
 msgid "Export lines as polygons"
 msgstr "Экспортировать линии как полигоны"
 
-#: ../vector/v.out.ogr/main.c:217
+#: ../vector/v.out.ogr/main.c:232
 msgid "Skipping all boundaries that are not part of an area."
 msgstr ""
 
-#: ../vector/v.out.ogr/main.c:236
+#: ../vector/v.out.ogr/main.c:251
+msgid "Volumes will be exported as sets of faces."
+msgstr ""
+
+#: ../vector/v.out.ogr/main.c:269
 #, fuzzy
 msgid "Could not determine input map's feature type(s)."
 msgstr " "
 
-#: ../vector/v.out.ogr/main.c:280
+#: ../vector/v.out.ogr/main.c:314
 msgid "The combination of types is not supported by all formats."
 msgstr "Комбинация типов не поддерживается никакими форматами."
 
-#: ../vector/v.out.ogr/main.c:294
+#: ../vector/v.out.ogr/main.c:328
 msgid ""
 "The map contains islands. To preserve them in the output map, use the -c flag"
 msgstr ""
 
-#: ../vector/v.out.ogr/main.c:324
-#, c-format
-msgid "OGR driver <%s> not found"
-msgstr "Драйвер OGR <%s> не найден"
-
-#: ../vector/v.out.ogr/main.c:349
-#, c-format
-msgid "Unable to open OGR data source '%s'"
-msgstr "Невозможно открыть источник данных OGR '%s'"
-
-#: ../vector/v.out.ogr/main.c:370 ../vector/v.out.ogr/main.c:377
-#, c-format
-msgid ""
-"Vector map <%s> is 3D. Use format specific layer creation options (parameter "
-"'lco') to export in 3D rather than 2D (default)"
-msgstr ""
-"Векторный слой <%s> 3D. Используйте опции создания специально для формата "
-"(параметр  'lco') для экспорта в 3D а не 2D (по умолчанию)"
-
-#: ../vector/v.out.ogr/main.c:390
-msgid "Unable to create OGR layer"
-msgstr "Невозможно создать слой OGR"
-
-#: ../vector/v.out.ogr/main.c:400
-msgid "No attribute table found -> using only category numbers as attributes"
-msgstr ""
-"Атрибутивная таблица не найдена  -> используются только номера категорий как "
-"атрибуты"
-
-#: ../vector/v.out.ogr/main.c:404
-msgid "Exporting 'cat' anyway, as it is the only attribute table field"
-msgstr ""
-
-#: ../vector/v.out.ogr/main.c:481
-#, c-format
-msgid "Key column '%s' not found"
-msgstr "Ключевое поле  '%s' не найдено"
-
-#: ../vector/v.out.ogr/main.c:491
+#: ../vector/v.out.ogr/main.c:333
 #, c-format
 msgid ""
 "%d point(s) found, but not requested to be exported. Verify 'type' parameter."
 msgstr ""
 "%d точек найдено, но запрошено для экспорта. Проверьте параметр 'type'."
 
-#: ../vector/v.out.ogr/main.c:496
+#: ../vector/v.out.ogr/main.c:338
 #, c-format
 msgid ""
 "%d line(s) found, but not requested to be exported. Verify 'type' parameter."
 msgstr ""
 "%d линий найдено, но не запрошено для экспорта. Проверьте параметр 'type'."
 
-#: ../vector/v.out.ogr/main.c:502
+#: ../vector/v.out.ogr/main.c:344
 #, c-format
 msgid ""
 "%d boundary(ies) found, but not requested to be exported. Verify 'type' "
@@ -21853,7 +22078,7 @@ msgid ""
 msgstr ""
 "%d границ найдено, но не запрошено для экспорта. Проверьте параметр 'type'."
 
-#: ../vector/v.out.ogr/main.c:508
+#: ../vector/v.out.ogr/main.c:350
 #, c-format
 msgid ""
 "%d centroid(s) found, but not requested to be exported. Verify 'type' "
@@ -21862,7 +22087,7 @@ msgstr ""
 "%d центроидов найдено, но не запрошено для экспорта. Проверьте параметр "
 "'type'."
 
-#: ../vector/v.out.ogr/main.c:513
+#: ../vector/v.out.ogr/main.c:355
 #, c-format
 msgid ""
 "%d areas found, but not requested to be exported. Verify 'type' parameter."
@@ -21870,14 +22095,14 @@ msgstr ""
 "%d полигонов найдено, но не запрошено для экспорта. Проверьте параметр "
 "'type'."
 
-#: ../vector/v.out.ogr/main.c:517
-#, c-format
+#: ../vector/v.out.ogr/main.c:359
+#, fuzzy, c-format
 msgid ""
-"%d faces found, but not requested to be exported. Verify 'type' parameter."
+"%d face(s) found, but not requested to be exported. Verify 'type' parameter."
 msgstr ""
 "%d faces найдено, но не запрошено для экспорта. Проверьте параметр 'type'."
 
-#: ../vector/v.out.ogr/main.c:523
+#: ../vector/v.out.ogr/main.c:365
 #, fuzzy, c-format
 msgid ""
 "%d kernel(s) found, but not requested to be exported. Verify 'type' "
@@ -21885,21 +22110,29 @@ msgid ""
 msgstr ""
 "%d линий найдено, но не запрошено для экспорта. Проверьте параметр 'type'."
 
-#: ../vector/v.out.ogr/main.c:530
+#: ../vector/v.out.ogr/main.c:370
+#, fuzzy, c-format
+msgid ""
+"%d volume(s) found, but not requested to be exported. Verify 'type' "
+"parameter."
+msgstr ""
+"%d линий найдено, но не запрошено для экспорта. Проверьте параметр 'type'."
+
+#: ../vector/v.out.ogr/main.c:376
 #, fuzzy
 msgid ""
 "No points found, but requested to be exported. Will skip this geometry type."
 msgstr ""
 "%d точек найдено, но запрошено для экспорта. Проверьте параметр 'type'."
 
-#: ../vector/v.out.ogr/main.c:540
+#: ../vector/v.out.ogr/main.c:385
 #, fuzzy
 msgid ""
 "No lines found, but requested to be exported. Will skip this geometry type."
 msgstr ""
 "%d линий найдено, но не запрошено для экспорта. Проверьте параметр 'type'."
 
-#: ../vector/v.out.ogr/main.c:551
+#: ../vector/v.out.ogr/main.c:395
 #, fuzzy
 msgid ""
 "No boundaries found, but requested to be exported. Will skip this geometry "
@@ -21907,7 +22140,7 @@ msgid ""
 msgstr ""
 "%d границ найдено, но не запрошено для экспорта. Проверьте параметр 'type'."
 
-#: ../vector/v.out.ogr/main.c:561
+#: ../vector/v.out.ogr/main.c:404
 #, fuzzy
 msgid ""
 "No areas found, but requested to be exported. Will skip this geometry type."
@@ -21915,7 +22148,7 @@ msgstr ""
 "%d полигонов найдено, но не запрошено для экспорта. Проверьте параметр "
 "'type'."
 
-#: ../vector/v.out.ogr/main.c:571
+#: ../vector/v.out.ogr/main.c:414
 #, fuzzy
 msgid ""
 "No centroids found, but requested to be exported. Will skip this geometry "
@@ -21924,14 +22157,14 @@ msgstr ""
 "%d центроидов найдено, но не запрошено для экспорта. Проверьте параметр "
 "'type'."
 
-#: ../vector/v.out.ogr/main.c:581
+#: ../vector/v.out.ogr/main.c:423
 #, fuzzy
 msgid ""
 "No faces found, but requested to be exported. Will skip this geometry type."
 msgstr ""
 "%d faces найдено, но не запрошено для экспорта. Проверьте параметр 'type'."
 
-#: ../vector/v.out.ogr/main.c:591
+#: ../vector/v.out.ogr/main.c:432
 #, fuzzy
 msgid ""
 "No kernels found, but requested to be exported. Will skip this geometry type."
@@ -21939,52 +22172,129 @@ msgstr ""
 "%d полигонов найдено, но не запрошено для экспорта. Проверьте параметр "
 "'type'."
 
-#: ../vector/v.out.ogr/main.c:603
+#: ../vector/v.out.ogr/main.c:441
+#, fuzzy
+msgid ""
+"No volumes found, but requested to be exported. Will skip this geometry type."
+msgstr ""
+"%d линий найдено, но не запрошено для экспорта. Проверьте параметр 'type'."
+
+#: ../vector/v.out.ogr/main.c:452
 #, fuzzy
 msgid "Nothing to export"
 msgstr "Нет заданий"
 
-#: ../vector/v.out.ogr/main.c:609
+#: ../vector/v.out.ogr/main.c:485
 #, c-format
-msgid "Exporting %i points/lines..."
+msgid "OGR driver <%s> not found"
+msgstr "Драйвер OGR <%s> не найден"
+
+#: ../vector/v.out.ogr/main.c:510
+#, c-format
+msgid "Unable to open OGR data source '%s'"
+msgstr "Невозможно открыть источник данных OGR '%s'"
+
+#: ../vector/v.out.ogr/main.c:524
+#, fuzzy, c-format
+msgid "Layer <%s> already exists in OGR data source '%s'"
+msgstr "<%s> уже существует в наборе слоев <%s>"
+
+#: ../vector/v.out.ogr/main.c:528
+#, fuzzy, c-format
+msgid "OGR layer <%s> already exists and will be overwritten"
+msgstr "Растровый слой <%s> уже существует и будет перезаписан"
+
+#: ../vector/v.out.ogr/main.c:569
+msgid "Overriding existing user-defined 'SHPT=' LCO."
+msgstr ""
+
+#: ../vector/v.out.ogr/main.c:585
+#, fuzzy, c-format
+msgid ""
+"Vector map <%s> is 3D. Use format specific layer creation options (parameter "
+"'lco') or '-z' flag to export in 3D rather than 2D (default)"
+msgstr ""
+"Векторный слой <%s> 3D. Используйте опции создания специально для формата "
+"(параметр  'lco') для экспорта в 3D а не 2D (по умолчанию)"
+
+#: ../vector/v.out.ogr/main.c:592
+#, c-format
+msgid ""
+"Vector map <%s> is 3D. Use format specific layer creation options (parameter "
+"'lco') to export in 3D rather than 2D (default)"
+msgstr ""
+"Векторный слой <%s> 3D. Используйте опции создания специально для формата "
+"(параметр  'lco') для экспорта в 3D а не 2D (по умолчанию)"
+
+#: ../vector/v.out.ogr/main.c:605
+msgid "Unable to create OGR layer"
+msgstr "Невозможно создать слой OGR"
+
+#: ../vector/v.out.ogr/main.c:615
+msgid "No attribute table found -> using only category numbers as attributes"
+msgstr ""
+"Атрибутивная таблица не найдена  -> используются только номера категорий как "
+"атрибуты"
+
+#: ../vector/v.out.ogr/main.c:619
+msgid "Exporting 'cat' anyway, as it is the only attribute table field"
+msgstr ""
+
+#: ../vector/v.out.ogr/main.c:696
+#, c-format
+msgid "Key column '%s' not found"
+msgstr "Ключевое поле  '%s' не найдено"
+
+#: ../vector/v.out.ogr/main.c:720
+#, fuzzy, c-format
+msgid "Exporting %i geometries..."
 msgstr "Экспорт %i точек/линий..."
 
-#: ../vector/v.out.ogr/main.c:691
+#: ../vector/v.out.ogr/main.c:802
 #, c-format
 msgid "Exporting %i areas (may take some time)..."
 msgstr "Экспорт %i полигонов (может занять время)..."
 
-#: ../vector/v.out.ogr/main.c:766
+#: ../vector/v.out.ogr/main.c:877
 #, c-format
 msgid "Exporting %i faces (may take some time) ..."
 msgstr "Экспорт %i faces (может занять время) ..."
 
-#: ../vector/v.out.ogr/main.c:829
+#: ../vector/v.out.ogr/main.c:940
 #, fuzzy, c-format
 msgid "Exporting %i kernels..."
 msgstr "Экспорт %i точек/линий..."
 
-#: ../vector/v.out.ogr/main.c:899 ../vector/v.out.pov/main.c:207
-#, c-format
-msgid "%d features written"
-msgstr "Задано %d объектов"
+#: ../vector/v.out.ogr/main.c:999
+#, fuzzy, c-format
+msgid "Exporting %i volumes..."
+msgstr "Экспорт %i точек/линий..."
 
-#: ../vector/v.out.ogr/main.c:901
+#: ../vector/v.out.ogr/main.c:1000
+msgid "Export of volumes not implemented yet. Skipping."
+msgstr ""
+
+#: ../vector/v.out.ogr/main.c:1018
 #, c-format
 msgid "%d features without category were written"
 msgstr "записано %d объектов без категорий"
 
-#: ../vector/v.out.ogr/main.c:903
+#: ../vector/v.out.ogr/main.c:1020
 #, c-format
 msgid "%d features without attributes were written"
 msgstr "записано %d объектов без атрибутов"
 
-#: ../vector/v.out.ogr/main.c:905
+#: ../vector/v.out.ogr/main.c:1022
 #, c-format
 msgid "%d features found without category were skipped"
 msgstr "пропущено %d объектов без категорий"
 
-#: ../vector/v.out.ogr/main.c:969
+#: ../vector/v.out.ogr/main.c:1033
+#, fuzzy, c-format
+msgid "%d features written to <%s> (%s)."
+msgstr "%d объектов записано в '%s'."
+
+#: ../vector/v.out.ogr/main.c:1083
 #, fuzzy, c-format
 msgid "No database record for cat = %d and export of 'cat' disabled"
 msgstr " "
@@ -22294,6 +22604,83 @@ msgstr ""
 "Тип поля столбца smooth не поддерживается (должно быть целочисленное или "
 "double)"
 
+#: ../vector/v.net.timetable/main.c:218
+#, fuzzy, c-format
+msgid "Could not find a path between stops %d and %d"
+msgstr "вектор  "
+
+#: ../vector/v.net.timetable/main.c:255
+#, fuzzy
+msgid "Finds shortest path using timetables."
+msgstr "Найти кратчайший путь по векторной сети"
+
+#: ../vector/v.net.timetable/main.c:267
+msgid "Layer number or name with walking connections or -1"
+msgstr ""
+
+#: ../vector/v.net.timetable/main.c:272
+#, fuzzy
+msgid "Layer number or name with route paths or -1"
+msgstr "Номер слоя (для записи)"
+
+#: ../vector/v.net.timetable/main.c:278
+#, fuzzy
+msgid "Name of column name with route ids"
+msgstr "Имя показываемого поля"
+
+#: ../vector/v.net.timetable/main.c:285
+#, fuzzy
+msgid "Name of column name with stop timestamps"
+msgstr "Имя поля с параметрами сглаживания"
+
+#: ../vector/v.net.timetable/main.c:291
+#, fuzzy
+msgid "Name of column name with stop ids"
+msgstr "Имя показываемого поля"
+
+#: ../vector/v.net.timetable/main.c:297
+#, fuzzy
+msgid "Name of column name with walk lengths"
+msgstr "Число столбцов в новой области"
+
+#: ../vector/v.net.timetable/main.c:345
+#, fuzzy
+msgid "Could not initialize the timetables"
+msgstr "Невозможно закрыть слой"
+
+#: ../vector/v.net.timetable/main.c:421 ../vector/v.net.timetable/main.c:452
+#: ../vector/v.net.timetable/main.c:460
+#, fuzzy, c-format
+msgid "No stop with category: %d"
+msgstr "Нет точек категории [%d]"
+
+#: ../vector/v.net.timetable/main.c:444 ../vector/v.net.path/path.c:149
+#, c-format
+msgid "Wrong input format: %s"
+msgstr "Неверный исходный формат: %s"
+
+#: ../vector/v.net.timetable/main.c:467
+#, fuzzy
+msgid "'From' and 'To' stops are the same"
+msgstr "Исходная и выходная области могут не совпадать"
+
+#: ../vector/v.net.timetable/main.c:476
+msgid "No path between the stops"
+msgstr ""
+
+#: ../vector/v.net.bridge/main.c:45
+#, fuzzy
+msgid "vector, network, articulation points"
+msgstr "вектор, импорт, база данных, точки"
+
+#: ../vector/v.net.bridge/main.c:47
+msgid "Computes bridges and articulation points in the network."
+msgstr ""
+
+#: ../vector/v.net.bridge/main.c:61
+msgid "bridge;Finds bridges;articulation;Finds articulation points;"
+msgstr ""
+
 #: ../vector/v.patch/main.c:69
 msgid "Create a new vector map layer by combining other vector map layers."
 msgstr ""
@@ -22405,6 +22792,75 @@ msgstr "Неизвестный тип поля"
 #, c-format
 msgid "Cannot insert new record: '%s'"
 msgstr "Невозможно вставить новую запись: %s"
+
+#: ../vector/v.net.connectivity/main.c:53
+#, fuzzy
+msgid "vector, network, connectivity"
+msgstr "вектор, создание сети."
+
+#: ../vector/v.net.connectivity/main.c:55
+msgid "Computes vertex connectivity between two sets of nodes in the network."
+msgstr ""
+
+#: ../vector/v.net.connectivity/main.c:66
+#, fuzzy
+msgid "Name of node capacity column"
+msgstr "Имя столбца"
+
+#: ../vector/v.net.connectivity/main.c:70
+#, fuzzy
+msgid "Set1 layer number or name"
+msgstr "Номер слоя выборки (для чтения)"
+
+#: ../vector/v.net.connectivity/main.c:71
+#: ../vector/v.net.connectivity/main.c:76
+#: ../vector/v.net.connectivity/main.c:82
+msgid "Set1"
+msgstr ""
+
+#: ../vector/v.net.connectivity/main.c:75
+#, fuzzy
+msgid "Set1 category values"
+msgstr "Печатать подписи категорий"
+
+#: ../vector/v.net.connectivity/main.c:81
+#, fuzzy
+msgid "Set1 WHERE conditions of SQL statement without 'where' keyword"
+msgstr "WHERE условия SQL команды не имеют ключевого слова 'where'"
+
+#: ../vector/v.net.connectivity/main.c:86
+#, fuzzy
+msgid "Set2 layer number or name"
+msgstr "Номер слоя выборки (для чтения)"
+
+#: ../vector/v.net.connectivity/main.c:87
+#: ../vector/v.net.connectivity/main.c:92
+#: ../vector/v.net.connectivity/main.c:98
+msgid "Set2"
+msgstr ""
+
+#: ../vector/v.net.connectivity/main.c:91
+#, fuzzy
+msgid "Set2 category values"
+msgstr "Печатать подписи категорий"
+
+#: ../vector/v.net.connectivity/main.c:97
+#, fuzzy
+msgid "Set2 WHERE conditions of SQL statement without 'where' keyword"
+msgstr "WHERE условия SQL команды не имеют ключевого слова 'where'"
+
+#: ../vector/v.net.connectivity/main.c:130
+#: ../vector/v.net.connectivity/main.c:135 ../vector/v.net.flow/main.c:186
+#: ../vector/v.net.flow/main.c:191
+#, fuzzy, c-format
+msgid "Neither %s nor %s was given"
+msgstr "Должен быть указан либо  текст, либо -c"
+
+#: ../vector/v.net.connectivity/main.c:148
+#: ../vector/v.net.connectivity/main.c:151
+#, fuzzy, c-format
+msgid "%s is empty"
+msgstr "Диапазон данных пуст"
 
 #: ../vector/v.kcv/main.c:78
 msgid "Randomly partition points into test/train sets."
@@ -22623,46 +23079,46 @@ msgstr ""
 msgid "Do not skip features without category"
 msgstr "Пропуск объекта без категории"
 
-#: ../vector/v.buffer2/main.c:146
+#: ../vector/v.buffer2/main.c:134
 msgid "vector, buffer"
 msgstr "вектор, буфер"
 
-#: ../vector/v.buffer2/main.c:148 ../vector/v.buffer/main.c:256
+#: ../vector/v.buffer2/main.c:136 ../vector/v.buffer/main.c:256
 msgid ""
 "Creates a buffer around features of given type (areas must contain centroid)."
 msgstr ""
 "Создать буфер вокруг объектов данного типа (площадные объекты должны "
 "содержать центроиды)."
 
-#: ../vector/v.buffer2/main.c:166
+#: ../vector/v.buffer2/main.c:154
 msgid "Buffer distance along major axis in map units"
 msgstr "Расстояние буферизации по большой полуоси в единицах слоя"
 
-#: ../vector/v.buffer2/main.c:167 ../vector/v.buffer2/main.c:175
-#: ../vector/v.buffer2/main.c:183 ../vector/v.buffer2/main.c:189
-#: ../vector/v.buffer2/main.c:197 ../vector/v.buffer2/main.c:206
+#: ../vector/v.buffer2/main.c:155 ../vector/v.buffer2/main.c:163
+#: ../vector/v.buffer2/main.c:171 ../vector/v.buffer2/main.c:177
+#: ../vector/v.buffer2/main.c:185 ../vector/v.buffer2/main.c:194
 #, fuzzy
 msgid "Distance"
 msgstr "Отключить"
 
-#: ../vector/v.buffer2/main.c:174
+#: ../vector/v.buffer2/main.c:162
 msgid "Buffer distance along minor axis in map units"
 msgstr "Расстояние буферизации по малой полуоси в единицах слоя"
 
-#: ../vector/v.buffer2/main.c:182 ../vector/v.parallel2/main.c:73
+#: ../vector/v.buffer2/main.c:170 ../vector/v.parallel2/main.c:73
 msgid "Angle of major axis in degrees"
 msgstr "Углов главной оси в градусах"
 
-#: ../vector/v.buffer2/main.c:188
+#: ../vector/v.buffer2/main.c:176
 #, fuzzy
 msgid "Name of column to use for buffer distances"
 msgstr "Атрибутивное поле используемое для расстояния буферизации"
 
-#: ../vector/v.buffer2/main.c:196 ../vector/v.buffer/main.c:286
+#: ../vector/v.buffer2/main.c:184 ../vector/v.buffer/main.c:286
 msgid "Scaling factor for attribute column values"
 msgstr "Фактор масштабирования для значений атрибутивного поля"
 
-#: ../vector/v.buffer2/main.c:205 ../vector/v.buffer/main.c:296
+#: ../vector/v.buffer2/main.c:193 ../vector/v.buffer/main.c:296
 msgid ""
 "Maximum distance between theoretical arc and polygon segments as multiple of "
 "buffer"
@@ -22670,38 +23126,38 @@ msgstr ""
 "Максимальное расстояние между теоретической дугой и буферизованными "
 "сегментами полигона"
 
-#: ../vector/v.buffer2/main.c:212 ../vector/v.buffer2/main.c:224
+#: ../vector/v.buffer2/main.c:200 ../vector/v.buffer2/main.c:212
 #: ../vector/v.build.polylines/main.c:128
 msgid "Unused"
 msgstr "Не используется"
 
-#: ../vector/v.buffer2/main.c:214
+#: ../vector/v.buffer2/main.c:202
 msgid "This does nothing. It is retained for backwards compatibility"
 msgstr ""
 
-#: ../vector/v.buffer2/main.c:221
+#: ../vector/v.buffer2/main.c:209
 msgid ""
 "This is an alias to the distance option. It is retained for backwards "
 "compatibility"
 msgstr ""
 
-#: ../vector/v.buffer2/main.c:223 ../vector/v.buffer/main.c:271
+#: ../vector/v.buffer2/main.c:211 ../vector/v.buffer/main.c:271
 msgid "Buffer distance in map units"
 msgstr "Расстояние буферизации в единицах карты"
 
-#: ../vector/v.buffer2/main.c:228
+#: ../vector/v.buffer2/main.c:216
 msgid "Make outside corners straight"
 msgstr "Выпрямить внешние углы"
 
-#: ../vector/v.buffer2/main.c:232
+#: ../vector/v.buffer2/main.c:220
 msgid "Don't make caps at the ends of polylines"
 msgstr ""
 
-#: ../vector/v.buffer2/main.c:245
+#: ../vector/v.buffer2/main.c:231
 msgid "Select a buffer distance/minordistance/angle or column, but not both."
 msgstr ""
 
-#: ../vector/v.buffer2/main.c:249 ../vector/v.buffer/main.c:319
+#: ../vector/v.buffer2/main.c:235 ../vector/v.buffer/main.c:319
 msgid ""
 "The bufcol option may contain bugs during the cleaning step. If you "
 "encounter problems, use the debug option or clean manually with v.clean "
@@ -22711,43 +23167,53 @@ msgstr ""
 "используйте опцию debug или запустите вручную v.clean tool=break; v.category "
 "step=0; v.extract -d type=area"
 
-#: ../vector/v.buffer2/main.c:255
+#: ../vector/v.buffer2/main.c:246
+#, fuzzy
+msgid "The bufcol option requires a valid layer."
+msgstr "Опция масштаба требует magnitude_map"
+
+#: ../vector/v.buffer2/main.c:249
 msgid ""
 "The buffer option has been replaced by the distance option and will be "
 "removed in future."
 msgstr ""
 
-#: ../vector/v.buffer2/main.c:258
+#: ../vector/v.buffer2/main.c:252
 #, fuzzy
 msgid "Use the distance option instead of the buffer option."
 msgstr "Использовать для поворота радианы вместо градусов"
 
-#: ../vector/v.buffer2/main.c:262
+#: ../vector/v.buffer2/main.c:256
+#, fuzzy
+msgid "The tolerance must be > 0."
+msgstr "'layer' должен быть > 0"
+
+#: ../vector/v.buffer2/main.c:259
 #, c-format
 msgid "The tolerance was reset to %g"
 msgstr "Порог был сброшен в %g"
 
-#: ../vector/v.buffer2/main.c:286
+#: ../vector/v.buffer2/main.c:283
 #, c-format
 msgid "The tolerance in map units = %g"
 msgstr "Порог в единицах слоя = %g"
 
-#: ../vector/v.buffer2/main.c:331
+#: ../vector/v.buffer2/main.c:328
 #, c-format
 msgid "Unable to select data from table <%s>"
 msgstr "Невозможно выбрать данные из таблицы <%s>"
 
-#: ../vector/v.buffer2/main.c:371
+#: ../vector/v.buffer2/main.c:368
 msgid "Buffering lines..."
 msgstr "Буферизация линий..."
 
-#: ../vector/v.buffer2/main.c:394 ../vector/v.buffer2/main.c:460
+#: ../vector/v.buffer2/main.c:394 ../vector/v.buffer2/main.c:465
 #: ../vector/v.buffer/main.c:473 ../vector/v.buffer/main.c:550
 #, c-format
 msgid "Attribute is of invalid size (%.3f) for category %d"
 msgstr "Неправильный размер атрибута (%.3f) для категории %d"
 
-#: ../vector/v.buffer2/main.c:408 ../vector/v.buffer2/main.c:474
+#: ../vector/v.buffer2/main.c:408 ../vector/v.buffer2/main.c:479
 #: ../vector/v.buffer/main.c:335 ../vector/v.buffer/main.c:485
 #: ../vector/v.buffer/main.c:562
 #, c-format
@@ -22758,32 +23224,32 @@ msgstr "Порог в единицах слоя: %g"
 msgid "Buffering areas..."
 msgstr "Буферизация полигонов..."
 
-#: ../vector/v.buffer2/main.c:498 ../vector/v.buffer/main.c:607
+#: ../vector/v.buffer2/main.c:505 ../vector/v.buffer/main.c:607
 msgid "Building parts of topology..."
 msgstr "Построение частей топологии..."
 
-#: ../vector/v.buffer2/main.c:501 ../vector/v.buffer/main.c:619
+#: ../vector/v.buffer2/main.c:508 ../vector/v.buffer/main.c:619
 msgid "Snapping boundaries..."
 msgstr "Прилипание границ..."
 
-#: ../vector/v.buffer2/main.c:504 ../vector/v.buffer/main.c:622
-msgid "Breaking boundaries..."
-msgstr "Разрыв границ..."
+#: ../vector/v.buffer2/main.c:511
+#, fuzzy
+msgid "Breaking polygons..."
+msgstr "Разрыв полигонов"
 
-#: ../vector/v.buffer2/main.c:507 ../vector/v.overlay/area_area.c:43
-#: ../vector/v.buffer/main.c:625
+#: ../vector/v.buffer2/main.c:514 ../vector/v.buffer2/main.c:520
+#: ../vector/v.overlay/area_area.c:43 ../vector/v.buffer/main.c:625
 msgid "Removing duplicates..."
 msgstr "Удаление дубликатов..."
 
-#: ../vector/v.buffer2/main.c:519 ../vector/v.overlay/area_area.c:55
+#: ../vector/v.buffer2/main.c:517 ../vector/v.buffer/main.c:622
+msgid "Breaking boundaries..."
+msgstr "Разрыв границ..."
+
+#: ../vector/v.buffer2/main.c:532 ../vector/v.overlay/area_area.c:55
 #: ../vector/v.buffer/main.c:637
 msgid "Attaching islands..."
 msgstr "Назначение островов..."
-
-#: ../vector/v.buffer2/main.c:628 ../vector/v.overlay/area_area.c:264
-#: ../vector/v.buffer/main.c:760
-msgid "Attaching centroids..."
-msgstr "Назначаются центроиды..."
 
 #: ../vector/v.voronoi/vo_main.c:119
 msgid ""
@@ -23097,11 +23563,19 @@ msgstr "Скрывать отображение невязок или друго
 msgid "Shift all z values to bottom=0"
 msgstr "Сдвинуть все величины z к уровню=0"
 
-#: ../vector/v.transform/main.c:89
+#: ../vector/v.transform/main.c:85 ../vector/v.transform/main.c:98
+#: ../vector/v.transform/main.c:123 ../vector/v.transform/main.c:132
+#: ../vector/v.transform/main.c:141 ../vector/v.transform/main.c:150
+#: ../vector/v.transform/main.c:159 ../vector/v.transform/main.c:168
+#: ../vector/v.transform/main.c:178
+msgid "Custom"
+msgstr "Пользовательский"
+
+#: ../vector/v.transform/main.c:90
 msgid "Print the transformation matrix to stdout"
 msgstr "Вывести матрицу трансформации в stdout"
 
-#: ../vector/v.transform/main.c:95
+#: ../vector/v.transform/main.c:96
 msgid ""
 "Instead of points use transformation parameters (xshift, yshift, zshift, "
 "xscale, yscale, zscale, zrot)"
@@ -23109,20 +23583,11 @@ msgstr ""
 "Вместо точек использовать параметры трансформации (xshift, yshift, zshift, "
 "xscale, yscale, zscale, zrot)"
 
-#: ../vector/v.transform/main.c:97 ../vector/v.transform/main.c:119
-#: ../vector/v.transform/main.c:128 ../vector/v.transform/main.c:137
-#: ../vector/v.transform/main.c:146 ../vector/v.transform/main.c:155
-#: ../vector/v.transform/main.c:164 ../vector/v.transform/main.c:174
-#: ../vector/v.transform/main.c:179 ../vector/v.transform/main.c:186
-#: ../vector/v.transform/main.c:189
-msgid "Custom"
-msgstr "Пользовательский"
-
-#: ../vector/v.transform/main.c:106
+#: ../vector/v.transform/main.c:109
 msgid "ASCII file holding transform coordinates"
 msgstr "Файл ASCII, содержащий координаты трансформации"
 
-#: ../vector/v.transform/main.c:107
+#: ../vector/v.transform/main.c:110
 msgid ""
 "If not given, transformation parameters (xshift, yshift, zshift, xscale, "
 "yscale, zscale, zrot) are used instead"
@@ -23130,48 +23595,48 @@ msgstr ""
 "Если не заданы, вместо используются  параметры трансформации (xshift, "
 "yshift, zshift, xscale, yscale, zscale, zrot) "
 
-#: ../vector/v.transform/main.c:117
+#: ../vector/v.transform/main.c:121
 msgid "Shifting value for x coordinates"
 msgstr "Смещение значения координат x"
 
-#: ../vector/v.transform/main.c:126
+#: ../vector/v.transform/main.c:130
 msgid "Shifting value for y coordinates"
 msgstr "Смещение значения координат y"
 
-#: ../vector/v.transform/main.c:135 ../vector/v.extrude/main.c:84
+#: ../vector/v.transform/main.c:139 ../vector/v.extrude/main.c:84
 msgid "Shifting value for z coordinates"
 msgstr "Изменение значения для координаты z"
 
-#: ../vector/v.transform/main.c:144
+#: ../vector/v.transform/main.c:148
 msgid "Scaling factor for x coordinates"
 msgstr "Фактор масштабирования для координат x"
 
-#: ../vector/v.transform/main.c:153
+#: ../vector/v.transform/main.c:157
 msgid "Scaling factor for y coordinates"
 msgstr "Фактор масштабирования для координат y"
 
-#: ../vector/v.transform/main.c:162
+#: ../vector/v.transform/main.c:166
 msgid "Scaling factor for z coordinates"
 msgstr "Фактор масштабирования для координат z"
 
-#: ../vector/v.transform/main.c:172
+#: ../vector/v.transform/main.c:176
 msgid "Rotation around z axis in degrees counterclockwise"
 msgstr "Поворот вокруг оси z в градусах против часовой стрелки"
 
-#: ../vector/v.transform/main.c:178
+#: ../vector/v.transform/main.c:182
 msgid "Name of table containing transformation parameters"
 msgstr "Имя таблицы, содержащей параметры трасформации"
 
-#: ../vector/v.transform/main.c:183
+#: ../vector/v.transform/main.c:191
 msgid "Name of attribute column(s) used as transformation parameters"
 msgstr ""
 "Имя атрибута поля (полей), используемого источник параметров трансформации"
 
-#: ../vector/v.transform/main.c:185
+#: ../vector/v.transform/main.c:193
 msgid "Format: parameter:column, e.g. xshift:xs,yshift:ys,zrot:zr"
 msgstr "Формат: параметр: поле, например, xshift:xs,yshift:ys,zrot:zr"
 
-#: ../vector/v.transform/main.c:201
+#: ../vector/v.transform/main.c:206
 #, c-format
 msgid ""
 "The '%c' flag is deprecated and will be removed in future. Transformation "
@@ -23181,7 +23646,7 @@ msgstr ""
 "автоматически используются в том случае, когда не задано ни одного точечного "
 "файла."
 
-#: ../vector/v.transform/main.c:206
+#: ../vector/v.transform/main.c:211
 #, c-format
 msgid ""
 "The '%c' flag is deprecated and will be removed in future. Please use '--"
@@ -23190,12 +23655,12 @@ msgstr ""
 "Параметр '%c' устарел и в будущем будет удален. Пожалуйста, используйте "
 "вместо него параметр '--quiet'."
 
-#: ../vector/v.transform/main.c:212
+#: ../vector/v.transform/main.c:217
 #, c-format
 msgid "Table name is not defined. Please use '%s' parameter."
 msgstr "Имя таблицы не определено. Пожалуйста, используйте параметр '%s'."
 
-#: ../vector/v.transform/main.c:217
+#: ../vector/v.transform/main.c:222
 msgid ""
 "Name of table and name for output vector map must be different. Otherwise "
 "the table is overwritten."
@@ -23203,17 +23668,17 @@ msgstr ""
 "Имя таблицы и имя выходного векторного слоя должны отличаться. Иначе таблица "
 "будет перезаписана."
 
-#: ../vector/v.transform/main.c:231
+#: ../vector/v.transform/main.c:236
 #, c-format
 msgid "Unable to open file with coordinates <%s>"
 msgstr "Невозможно открыть файл с координатами <%s>"
 
-#: ../vector/v.transform/main.c:311
+#: ../vector/v.transform/main.c:318
 #, fuzzy, c-format
 msgid "Unable to tokenize column string: [%s]"
 msgstr "Невозможно разбить строку %s"
 
-#: ../vector/v.transform/main.c:338
+#: ../vector/v.transform/main.c:345
 #, c-format
 msgid ""
 "\n"
@@ -23222,17 +23687,17 @@ msgstr ""
 "\n"
 "Новый векторный слой <%s> координаты границ:"
 
-#: ../vector/v.transform/main.c:340
+#: ../vector/v.transform/main.c:347
 #, c-format
 msgid " N: %-10.3f    S: %-10.3f"
 msgstr "С: %-10.3f    Ю: %-10.3f"
 
-#: ../vector/v.transform/main.c:341
+#: ../vector/v.transform/main.c:348
 #, c-format
 msgid " E: %-10.3f    W: %-10.3f"
 msgstr "В: %-10.3f    З: %-10.3f"
 
-#: ../vector/v.transform/main.c:342
+#: ../vector/v.transform/main.c:349
 #, c-format
 msgid " B: %6.3f    T: %6.3f"
 msgstr "Низ: %6.3f    Верх: %6.3f"
@@ -23340,25 +23805,32 @@ msgstr "Оператор '%s' не поддерживается для этог�
 msgid "Copying vector objects from vector map <%s>..."
 msgstr "Копирование векторных объектов из векторного слоя <%s>..."
 
-#: ../vector/v.overlay/main.c:261
+#: ../vector/v.overlay/main.c:235
+#, fuzzy, c-format
+msgid "No %s features found in vector map <%s>. Verify '%s' parameter."
+msgstr ""
+"%d полигонов найдено, но не запрошено для экспорта. Проверьте параметр "
+"'type'."
+
+#: ../vector/v.overlay/main.c:269
 msgid "Collecting input attributes..."
 msgstr "Сбор входных атрибутов..."
 
-#: ../vector/v.overlay/main.c:344
+#: ../vector/v.overlay/main.c:352
 #, c-format
 msgid "Unknown column type '%s'"
 msgstr "Неизвестный тип столбца '%s'"
 
-#: ../vector/v.overlay/main.c:409
+#: ../vector/v.overlay/main.c:417
 #, c-format
 msgid "Unknown column type '%s' values lost"
 msgstr "Неизвестный тип столбца, '%s' значений потеряно"
 
-#: ../vector/v.overlay/main.c:474
+#: ../vector/v.overlay/main.c:482
 msgid "Building partial topology..."
 msgstr "Построение частичной топологии..."
 
-#: ../vector/v.overlay/main.c:486 ../vector/v.buffer/main.c:223
+#: ../vector/v.overlay/main.c:494 ../vector/v.buffer/main.c:223
 msgid "Rebuilding topology..."
 msgstr "Перестройка топологии..."
 
@@ -23384,6 +23856,10 @@ msgstr "Запрос к векторному слою <%s>..."
 #: ../vector/v.overlay/area_area.c:114
 msgid "Writing centroids..."
 msgstr "Запись центроидов..."
+
+#: ../vector/v.overlay/area_area.c:264 ../vector/v.buffer/main.c:760
+msgid "Attaching centroids..."
+msgstr "Назначаются центроиды..."
 
 #: ../vector/v.class/main.c:47
 msgid "Classifies attribute data, e.g. for thematic mapping"
@@ -23678,6 +24154,80 @@ msgstr "пропущено [%d] категорий неизвестного ти
 msgid "[%d] categories read into memory"
 msgstr "в память прочитано [%d] категорий "
 
+#: ../vector/v.net.flow/main.c:58
+#, fuzzy
+msgid "vector, network, flow"
+msgstr "вектор, создание сети."
+
+#: ../vector/v.net.flow/main.c:60
+msgid "Computes the maximum flow between two sets of nodes in the network."
+msgstr ""
+
+#: ../vector/v.net.flow/main.c:71
+#, fuzzy
+msgid "Name for output vector map containing a minimum cut"
+msgstr "Название исходного векторного слоя, содержащего линии"
+
+#: ../vector/v.net.flow/main.c:77
+#, fuzzy
+msgid "Name of arc forward/both direction(s) capacity column"
+msgstr "Столбец стоимостных дуг в прямом/обоих направлениях"
+
+#: ../vector/v.net.flow/main.c:82
+#, fuzzy
+msgid "Name of arc backward direction capacity column"
+msgstr "Столбец стоимостных дуг в обратном направлении"
+
+#: ../vector/v.net.flow/main.c:86
+#, fuzzy
+msgid "Source layer number or name"
+msgstr "Номер слоя выборки (для чтения)"
+
+#: ../vector/v.net.flow/main.c:91
+#, fuzzy
+msgid "Source category values"
+msgstr " Источник значений растра"
+
+#: ../vector/v.net.flow/main.c:97
+#, fuzzy
+msgid "Source WHERE conditions of SQL statement without 'where' keyword"
+msgstr "WHERE условия SQL команды не имеют ключевого слова 'where'"
+
+#: ../vector/v.net.flow/main.c:102
+#, fuzzy
+msgid "Sink layer number or name"
+msgstr "Номер слоя (из)"
+
+#: ../vector/v.net.flow/main.c:103 ../vector/v.net.flow/main.c:108
+#: ../vector/v.net.flow/main.c:114
+msgid "Sink"
+msgstr ""
+
+#: ../vector/v.net.flow/main.c:107
+#, fuzzy
+msgid "Sink category values"
+msgstr "Печатать подписи категорий"
+
+#: ../vector/v.net.flow/main.c:113
+#, fuzzy
+msgid "Sink WHERE conditions of SQL statement without 'where' keyword"
+msgstr "WHERE условия SQL команды не имеют ключевого слова 'where'"
+
+#: ../vector/v.net.flow/main.c:199
+#, fuzzy
+msgid "No sources"
+msgstr "Поверхность"
+
+#: ../vector/v.net.flow/main.c:202
+#, fuzzy
+msgid "No sinks"
+msgstr "Нет начальных точек"
+
+#: ../vector/v.net.flow/main.c:224
+#, fuzzy
+msgid "Writing the output..."
+msgstr "Запись слоя..."
+
 #: ../vector/v.segment/main.c:54
 msgid "Creates points/segments from input vector lines and positions."
 msgstr "Создает точки/отрезки из исходного линейного слоя и местоположений."
@@ -23787,16 +24337,6 @@ msgstr ""
 #, c-format
 msgid "[%d] points without category (nfield: [%d])"
 msgstr "[%d] точек без категорий (nfield: [%d])"
-
-#: ../vector/v.net.path/path.c:117
-#, c-format
-msgid "Cannot grant privileges on table <%s>"
-msgstr "Невозможно выделить привилегии таблице <%s>"
-
-#: ../vector/v.net.path/path.c:149
-#, c-format
-msgid "Wrong input format: %s"
-msgstr "Неверный исходный формат: %s"
 
 #: ../vector/v.net.path/path.c:168 ../vector/v.net.path/path.c:186
 #, c-format
@@ -25882,6 +26422,70 @@ msgstr ""
 msgid "Region restored to original extent."
 msgstr "Регион возвращен к первоначальным размерам."
 
+#: ../vector/v.net.centrality/main.c:95
+#, fuzzy
+msgid "vector, network, centrality measures"
+msgstr "Расчет центральных положений..."
+
+#: ../vector/v.net.centrality/main.c:97
+msgid ""
+"Computes degree, centrality, betweeness, closeness and eigenvector "
+"centrality measures in the network."
+msgstr ""
+
+#: ../vector/v.net.centrality/main.c:127
+#, fuzzy
+msgid "Name of degree centrality column"
+msgstr "Имя столбца"
+
+#: ../vector/v.net.centrality/main.c:128 ../vector/v.net.centrality/main.c:134
+#: ../vector/v.net.centrality/main.c:140 ../vector/v.net.centrality/main.c:146
+msgid "Columns"
+msgstr "Столбцы"
+
+#: ../vector/v.net.centrality/main.c:133
+#, fuzzy
+msgid "Name of closeness centrality column"
+msgstr "Имя столбца"
+
+#: ../vector/v.net.centrality/main.c:139
+#, fuzzy
+msgid "Name of betweenness centrality column"
+msgstr "Имя столбца"
+
+#: ../vector/v.net.centrality/main.c:145
+#, fuzzy
+msgid "Name of eigenvector centrality column"
+msgstr "Имя векторных линейных слоев"
+
+#: ../vector/v.net.centrality/main.c:154
+#, fuzzy
+msgid "Maximum number of iterations to compute eigenvector centrality"
+msgstr "Максимальное количество итераций"
+
+#: ../vector/v.net.centrality/main.c:162
+msgid "Cummulative error tolerance for eigenvector centrality"
+msgstr ""
+
+#: ../vector/v.net.centrality/main.c:171 ../vector/v.net.components/main.c:91
+#, fuzzy
+msgid "Add points on nodes"
+msgstr "Загружено %d точек"
+
+#: ../vector/v.net.centrality/main.c:293
+#, fuzzy
+msgid "Computing degree centrality measure"
+msgstr "Расчет центральных положений..."
+
+#: ../vector/v.net.centrality/main.c:297
+msgid "Computing betweenness and/or closeness centrality measure"
+msgstr ""
+
+#: ../vector/v.net.centrality/main.c:304
+#, fuzzy
+msgid "Computing eigenvector centrality measure"
+msgstr "Расчет центральных положений..."
+
 #: ../vector/v.db.connect/main.c:52
 msgid "Prints/sets DB connection for a vector map to attribute table."
 msgstr ""
@@ -25977,6 +26581,29 @@ msgid ""
 msgstr ""
 "Для определения нового соединения Вы должны указать параметры: драйвер, база "
 "данных, таблица [, ключ [, слой]]"
+
+#: ../vector/v.out.pov/main.c:207
+#, c-format
+msgid "%d features written"
+msgstr "Задано %d объектов"
+
+#: ../vector/v.net.components/main.c:69
+#, fuzzy
+msgid "vector, network, components"
+msgstr "вектор, создание сети."
+
+#: ../vector/v.net.components/main.c:71
+msgid "Computes strongly and weakly connected components in the network."
+msgstr ""
+
+#: ../vector/v.net.components/main.c:85
+msgid "weak;Weakly connected components;strong;Strongly connected components;"
+msgstr ""
+
+#: ../vector/v.net.components/main.c:87
+#, fuzzy
+msgid "Type of components"
+msgstr "Тип элементов"
 
 #: ../vector/v.drape/main.c:166
 msgid "vector, geometry, sampling"
@@ -26225,6 +26852,20 @@ msgstr "Файл '%s' уже существует и будет перезапи
 #, c-format
 msgid "%s: Cannot write dxf file."
 msgstr "%s: Невозможно записать файл dxf."
+
+#: ../vector/v.net.spanningtree/main.c:46
+#, fuzzy
+msgid "vector, network, spanning tree"
+msgstr "вектор, создание сети."
+
+#: ../vector/v.net.spanningtree/main.c:48
+msgid "Computes minimum spanning tree for the network."
+msgstr ""
+
+#: ../vector/v.net.spanningtree/main.c:59
+#, fuzzy
+msgid "Name of Arc cost column"
+msgstr "Имя столбца"
 
 #: ../misc/m.cogo/main.c:225
 msgid "miscellaneous"
@@ -32151,6 +32792,59 @@ msgstr "Ошибка удаления старого слоя MASK."
 msgid "Can't mark another point.  Only %d points allowed.  Sorry."
 msgstr "Нельзя отметить еще одну точку. Разрешено только %d точек."
 
+#~ msgid "Swapping header data"
+#~ msgstr "Замена данных заголовка"
+
+#~ msgid "Exporting raster as double values (bytes=%d)"
+#~ msgstr "Экспортировать растр как double (bytes=%d)"
+
+#~ msgid "Reading map"
+#~ msgstr "Чтение слоя"
+
+#~ msgid "Signed data (high bit means negative value)"
+#~ msgstr "Данные с битом четности (бит 1 означает отрицательное значение)"
+
+#~ msgid "Number of bytes per cell (1, 2, 4)"
+#~ msgstr "Количество байтов на ячейку (1, 2, 4)"
+
+#~ msgid "Parsing bytes per cell"
+#~ msgstr "Обработка байтов на ячейку"
+
+#~ msgid "Byte Swapping Turned On."
+#~ msgstr "Включение перестановки байтов."
+
+#~ msgid ""
+#~ "Missing parameters ...\n"
+#~ "Must provide at least[north= south= east= west=] OR [r=\tc=]"
+#~ msgstr ""
+#~ "Отсутствуют параметры ...\n"
+#~ "Необходимо указать, по крайней мере [north= south= east= west=] или [r="
+#~ "\tc=]"
+
+#~ msgid "You have to provide all limits of geographic region (n,s,e,w)"
+#~ msgstr "Вы должны определить все границы географического региона (n,s,e,w)"
+
+#~ msgid "Illegal number of rows <%s>"
+#~ msgstr "Неправильное количество строк <%s>"
+
+#~ msgid "Illegal number of columns <%s>"
+#~ msgstr "Неправильное количество столбцов <%s>"
+
+#~ msgid "Using N=%f S=%f E=%f W=%f"
+#~ msgstr "Используются N=%f S=%f E=%f W=%f"
+
+#~ msgid "Using rows=%d cols=%d\n"
+#~ msgstr "Используются строки=%d столбцы=%d\n"
+
+#~ msgid "File Size %d ... Total Bytes %d"
+#~ msgstr "Размер файла %d ... Всего байт %d"
+
+#~ msgid "Try bytes=%d or adjusting input parameters"
+#~ msgstr "Очистите bytes=%d или настройте параметры ввода"
+
+#~ msgid "Conversion failed at row %d"
+#~ msgstr "Ошибка преобразования в строке %d"
+
 #~ msgid "<%s> created"
 #~ msgstr "<%s> создан"
 
@@ -32361,9 +33055,6 @@ msgstr "Нельзя отметить еще одну точку. Разреше
 #~ msgstr ""
 #~ "точка; простой список x,y[,z], стандарт, векторный формат GRASS для ASCII "
 #~ "текстового файла."
-
-#~ msgid "Columns"
-#~ msgstr "Столбцы"
 
 #~ msgid ""
 #~ "Number of column used as x coordinate (first column is 1) for points mode"
@@ -32687,10 +33378,6 @@ msgstr "Нельзя отметить еще одну точку. Разреше
 
 #~ msgid "Output more comments (default=quiet)"
 #~ msgstr "Выводить больше комментариев (по умолчанию=quiet)"
-
-#, fuzzy
-#~ msgid "Writing data to file..."
-#~ msgstr "Запись трансформированных данных в файл..."
 
 #, fuzzy
 #~ msgid "Cannot allocate memory for raster row"
@@ -33019,9 +33706,6 @@ msgstr "Нельзя отметить еще одну точку. Разреше
 
 #~ msgid "Reading data from the map..."
 #~ msgstr "Чтение данных слоя..."
-
-#~ msgid "Type of elements"
-#~ msgstr "Тип элементов"
 
 #~ msgid "Query layer (used by 'query' option)"
 #~ msgstr "Запросить слой (используется опцией 'query')"
@@ -34579,10 +35263,6 @@ msgstr "Нельзя отметить еще одну точку. Разреше
 #, fuzzy
 #~ msgid "Cannot open driver <%s>"
 #~ msgstr " "
-
-#, fuzzy
-#~ msgid "Could not find input vector map %s"
-#~ msgstr "вектор  "
 
 #, fuzzy
 #~ msgid ""

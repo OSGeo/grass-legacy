@@ -14,7 +14,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: grasslibs_cs\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-01-06 22:57+0100\n"
+"POT-Creation-Date: 2011-04-18 22:47+0200\n"
 "PO-Revision-Date: 2010-03-07 15:47+0100\n"
 "Last-Translator: \n"
 "Language-Team:  <cs@li.org>\n"
@@ -788,12 +788,12 @@ msgstr "Id prvkù"
 
 #: ../lib/gis/parser.c:637
 #, fuzzy
-msgid "Path to input file"
+msgid "Name to input file"
 msgstr "Název vstupního souboru %s"
 
 #: ../lib/gis/parser.c:645
 #, fuzzy
-msgid "Path for output file"
+msgid "Name for output file"
 msgstr "Název výstupního souboru"
 
 #: ../lib/gis/parser.c:653
@@ -821,21 +821,21 @@ msgstr "Buï standardní GRASS barva, R:G:B triplet nebo \"none\""
 msgid "BUG in descriptions, option '%s' in <%s> does not exist"
 msgstr "BUG v popisu, volba %s v <%s> neexistuje"
 
-#: ../lib/gis/parser.c:919
+#: ../lib/gis/parser.c:925
 msgid "Use either --quiet or --verbose flag, not both. Assuming --verbose."
 msgstr ""
 "Pou¾ijte buï --quiet nebo --verbose indikátor ne oba. Pou¾iji --verbose."
 
-#: ../lib/gis/parser.c:933
+#: ../lib/gis/parser.c:939
 msgid "Use either --quiet or --verbose flag, not both. Assuming --quiet."
 msgstr "Pou¾ijte buï --quiet nebo --verbose indikátor ne oba. Pou¾iji --quiet."
 
-#: ../lib/gis/parser.c:963
+#: ../lib/gis/parser.c:969
 #, c-format
 msgid "Sorry <%s> is not a valid option\n"
 msgstr "Promiòte, ale <%s> není platná volba\n"
 
-#: ../lib/gis/parser.c:1067
+#: ../lib/gis/parser.c:1073
 #, c-format
 msgid ""
 "\n"
@@ -844,7 +844,7 @@ msgstr ""
 "\n"
 "Popis:\n"
 
-#: ../lib/gis/parser.c:1074
+#: ../lib/gis/parser.c:1080
 #, c-format
 msgid ""
 "\n"
@@ -853,7 +853,7 @@ msgstr ""
 "\n"
 "Klíèová slova:\n"
 
-#: ../lib/gis/parser.c:1078
+#: ../lib/gis/parser.c:1084
 #, c-format
 msgid ""
 "\n"
@@ -864,7 +864,7 @@ msgstr ""
 "Pou¾ití:\n"
 " "
 
-#: ../lib/gis/parser.c:1146
+#: ../lib/gis/parser.c:1152
 #, c-format
 msgid ""
 "\n"
@@ -873,20 +873,20 @@ msgstr ""
 "\n"
 "Pøepínaèe:\n"
 
-#: ../lib/gis/parser.c:1169 ../lib/gis/parser.c:1493 ../lib/gis/parser.c:1653
-#: ../lib/gis/parser.c:1941
+#: ../lib/gis/parser.c:1175 ../lib/gis/parser.c:1499 ../lib/gis/parser.c:1659
+#: ../lib/gis/parser.c:1947
 msgid "Allow output files to overwrite existing files"
 msgstr "Povolit výstupním souborùm pøepsat existující soubory"
 
-#: ../lib/gis/parser.c:1171 ../lib/gis/parser.c:1501 ../lib/gis/parser.c:1657
+#: ../lib/gis/parser.c:1177 ../lib/gis/parser.c:1507 ../lib/gis/parser.c:1663
 msgid "Verbose module output"
 msgstr "Roz¹íøený výpis"
 
-#: ../lib/gis/parser.c:1172 ../lib/gis/parser.c:1508 ../lib/gis/parser.c:1660
+#: ../lib/gis/parser.c:1178 ../lib/gis/parser.c:1514 ../lib/gis/parser.c:1666
 msgid "Quiet module output"
 msgstr "Redukovaný výpis"
 
-#: ../lib/gis/parser.c:1177
+#: ../lib/gis/parser.c:1183
 #, c-format
 msgid ""
 "\n"
@@ -895,80 +895,80 @@ msgstr ""
 "\n"
 "Parametry:\n"
 
-#: ../lib/gis/parser.c:1200
+#: ../lib/gis/parser.c:1206
 #, c-format
 msgid "  %*s   default: %s\n"
 msgstr "  %*s   výchozí: %s\n"
 
-#: ../lib/gis/parser.c:1544
+#: ../lib/gis/parser.c:1550
 msgid "NAME"
 msgstr "Název"
 
-#: ../lib/gis/parser.c:1557
+#: ../lib/gis/parser.c:1563
 msgid "KEYWORDS"
 msgstr "Klíèová slova"
 
-#: ../lib/gis/parser.c:1562
+#: ../lib/gis/parser.c:1568
 msgid "SYNOPSIS"
 msgstr "Synopse"
 
-#: ../lib/gis/parser.c:1630
+#: ../lib/gis/parser.c:1636
 msgid "Flags"
 msgstr "Pøepínaèe"
 
-#: ../lib/gis/parser.c:1668
+#: ../lib/gis/parser.c:1674
 msgid "Parameters"
 msgstr "Parametry"
 
-#: ../lib/gis/parser.c:1708
+#: ../lib/gis/parser.c:1714
 msgid "Options"
 msgstr "Volby"
 
-#: ../lib/gis/parser.c:1714
+#: ../lib/gis/parser.c:1720
 msgid "Default"
 msgstr "Výchozí"
 
-#: ../lib/gis/parser.c:1943
+#: ../lib/gis/parser.c:1949
 msgid "Allow overwrite"
 msgstr "Povolit pøepsání"
 
-#: ../lib/gis/parser.c:1951
+#: ../lib/gis/parser.c:1957
 msgid "Run with minimal output messages"
 msgstr "Spustit s minimálním mno¾ství výstupních správ"
 
-#: ../lib/gis/parser.c:1953
+#: ../lib/gis/parser.c:1959
 msgid "Run quietly"
 msgstr "Spustit v tichém módu"
 
-#: ../lib/gis/parser.c:1986
+#: ../lib/gis/parser.c:1992
 msgid "Unable to spawn the 'wish' program"
 msgstr "Nelze vytvoøit ¾ádaný program"
 
-#: ../lib/gis/parser.c:2005
+#: ../lib/gis/parser.c:2011
 msgid "Unable to determine program name"
 msgstr "nelze urèit jméno programu"
 
-#: ../lib/gis/parser.c:2062
+#: ../lib/gis/parser.c:2068
 #, c-format
 msgid "  %*s   options: "
 msgstr "  %*s   volby:"
 
-#: ../lib/gis/parser.c:2107 ../lib/gis/parser.c:2122
+#: ../lib/gis/parser.c:2113 ../lib/gis/parser.c:2128
 #, c-format
 msgid "Sorry, <%c> is not a valid flag\n"
 msgstr "Promiòte, ale <%c> není platný pøepínaè\n"
 
-#: ../lib/gis/parser.c:2188
+#: ../lib/gis/parser.c:2194
 #, c-format
 msgid "Sorry, <%s=> is ambiguous\n"
 msgstr "Promiòte, ale <%s=> je dvojznaèný\n"
 
-#: ../lib/gis/parser.c:2194
+#: ../lib/gis/parser.c:2200
 #, c-format
 msgid "Sorry, <%s> is not a valid parameter\n"
 msgstr "Promiòte, ale <%s> není platný parametr\n"
 
-#: ../lib/gis/parser.c:2275
+#: ../lib/gis/parser.c:2281
 #, c-format
 msgid ""
 "\n"
@@ -977,12 +977,12 @@ msgstr ""
 "\n"
 "CHYBA: neplatná syntaxe rozsahu pro parametr <%s>\n"
 
-#: ../lib/gis/parser.c:2276
+#: ../lib/gis/parser.c:2282
 #, c-format
 msgid "       Presented as: %s\n"
 msgstr "       Zadáno: %s\n"
 
-#: ../lib/gis/parser.c:2280
+#: ../lib/gis/parser.c:2286
 #, c-format
 msgid ""
 "\n"
@@ -991,12 +991,12 @@ msgstr ""
 "\n"
 "CHYBA: hodnota <%s> mimo rozsah parametru <%s>\n"
 
-#: ../lib/gis/parser.c:2282
+#: ../lib/gis/parser.c:2288
 #, c-format
 msgid "       Legal range: %s\n"
 msgstr "       Povolený rozsah: %s\n"
 
-#: ../lib/gis/parser.c:2285
+#: ../lib/gis/parser.c:2291
 #, c-format
 msgid ""
 "\n"
@@ -1005,7 +1005,7 @@ msgstr ""
 "\n"
 "CHYBA: Chybí hodnota pro parametr <%s>\n"
 
-#: ../lib/gis/parser.c:2433
+#: ../lib/gis/parser.c:2439
 #, fuzzy, c-format
 msgid ""
 "ERROR: Required parameter <%s> not set:\n"
@@ -1015,7 +1015,7 @@ msgstr ""
 "CHYBA: Povinný parametr <%s> nebyl zadán:\n"
 "    (%s).\n"
 
-#: ../lib/gis/parser.c:2528
+#: ../lib/gis/parser.c:2534
 #, c-format
 msgid ""
 "\n"
@@ -1024,17 +1024,17 @@ msgstr ""
 "\n"
 "CHYBA: volba <%s> musí být zadána jako násobek %d\n"
 
-#: ../lib/gis/parser.c:2530
+#: ../lib/gis/parser.c:2536
 #, c-format
 msgid "       You provided %d items:\n"
 msgstr "       Bylo zadáno %d polo¾ek:\n"
 
-#: ../lib/gis/parser.c:2586
+#: ../lib/gis/parser.c:2592
 #, c-format
 msgid "ERROR: option <%s>: <%s> exists.\n"
 msgstr "CHYBA: volba <%s>: <%s> existuje.\n"
 
-#: ../lib/gis/parser.c:2641
+#: ../lib/gis/parser.c:2647
 #, c-format
 msgid ""
 "\n"
@@ -1043,7 +1043,7 @@ msgstr ""
 "\n"
 "PØEPÍNAÈ: Nastavit následující pøepínaè?\n"
 
-#: ../lib/gis/parser.c:2655
+#: ../lib/gis/parser.c:2661
 #, c-format
 msgid ""
 "\n"
@@ -1052,51 +1052,51 @@ msgstr ""
 "\n"
 "VOLBY:   %s\n"
 
-#: ../lib/gis/parser.c:2656
+#: ../lib/gis/parser.c:2662
 #, c-format
 msgid "     key: %s\n"
 msgstr "     klíè: %s\n"
 
-#: ../lib/gis/parser.c:2658
+#: ../lib/gis/parser.c:2664
 #, c-format
 msgid "  format: %s\n"
 msgstr "  formát: %s\n"
 
-#: ../lib/gis/parser.c:2660
+#: ../lib/gis/parser.c:2666
 #, c-format
 msgid " default: %s\n"
 msgstr " výchozí: %s\n"
 
-#: ../lib/gis/parser.c:2661
+#: ../lib/gis/parser.c:2667
 #, c-format
 msgid "required: %s\n"
 msgstr "povinný: %s\n"
 
-#: ../lib/gis/parser.c:2663
+#: ../lib/gis/parser.c:2669
 #, c-format
 msgid "multiple: %s\n"
 msgstr "vícenásobný: %s\n"
 
-#: ../lib/gis/parser.c:2665
+#: ../lib/gis/parser.c:2671
 #, c-format
 msgid " options: %s\n"
 msgstr " volby: %s\n"
 
-#: ../lib/gis/parser.c:2678
+#: ../lib/gis/parser.c:2684
 #, c-format
 msgid "enter option > "
 msgstr "zadejte volbu > "
 
-#: ../lib/gis/parser.c:2695 ../lib/gis/parser.c:2705
+#: ../lib/gis/parser.c:2701 ../lib/gis/parser.c:2711
 msgid "   Try again? "
 msgstr "   Zkusit znovu? "
 
-#: ../lib/gis/parser.c:2703
+#: ../lib/gis/parser.c:2709
 #, c-format
 msgid "Sorry, %s is not accepted.\n"
 msgstr "Promiòte, ale %s není akceptován.\n"
 
-#: ../lib/gis/parser.c:2713
+#: ../lib/gis/parser.c:2719
 #, c-format
 msgid ""
 "\n"
@@ -1107,11 +1107,11 @@ msgstr ""
 "Bylo vybráno:\n"
 "  %s\n"
 
-#: ../lib/gis/parser.c:2714
+#: ../lib/gis/parser.c:2720
 msgid "Is this correct? "
 msgstr "Je to správnì? "
 
-#: ../lib/gis/parser.c:2779
+#: ../lib/gis/parser.c:2785
 msgid "to accept the default"
 msgstr "pou¾ít výchozí"
 
@@ -1501,30 +1501,30 @@ msgstr "Rastrová mapa <%s> nebyla nalezena"
 msgid "Output raster map <%s> is used as input"
 msgstr "Výstupní mapa <%s> je pou¾ita jako vstup"
 
-#: ../lib/gis/reclass.c:143
+#: ../lib/gis/reclass.c:145
 #, c-format
 msgid "Too many reclass categories for [%s in %s]"
 msgstr "Pøíli¹ mnoho reklasifikovaných kategorií z [%s v %s]"
 
-#: ../lib/gis/reclass.c:146
+#: ../lib/gis/reclass.c:148
 #, c-format
 msgid "Illegal reclass format in header file for [%s in %s]"
 msgstr "Neplatný formát reklasifikace v hlavièkovém souboru z [%s v %s]"
 
-#: ../lib/gis/reclass.c:235
+#: ../lib/gis/reclass.c:238
 msgid "Illegal reclass request"
 msgstr "Neplatný po¾adavek pro reklasifikaci"
 
-#: ../lib/gis/reclass.c:240
+#: ../lib/gis/reclass.c:243
 msgid "Illegal reclass type"
 msgstr "Neplatný typ reklasifikace"
 
-#: ../lib/gis/reclass.c:246
+#: ../lib/gis/reclass.c:249
 #, c-format
 msgid "Unable to create header file for [%s in %s]"
 msgstr "Nelze vytvoøit hlavièkový soubor pro [%s v %s]"
 
-#: ../lib/gis/reclass.c:294
+#: ../lib/gis/reclass.c:297
 #, c-format
 msgid "Unable to create dependency file in [%s in %s]"
 msgstr "Nelze vytvoøit soubor závislostí v [%s v %s]"
@@ -1627,6 +1627,16 @@ msgid ""
 msgstr ""
 "G_distance_point_to_line_segment: Nemìlo se stát: code=%d P=(%f,%f) S=(%f,%f)"
 "(%f,%f)"
+
+#: ../lib/gis/seek.c:52 ../lib/gis/seek.c:58
+#, fuzzy
+msgid "Unable to seek"
+msgstr "Nelze nastavit zaostøení"
+
+#: ../lib/gis/seek.c:56
+#, fuzzy
+msgid "Seek offset out of range"
+msgstr "Index vrstev je mimo rozsah"
 
 #: ../lib/gis/alloc.c:43
 #, c-format
@@ -2508,6 +2518,7 @@ msgstr "Pro vrstvu %d nebylo definováno databázové pøipojení"
 #: ../lib/vector/Vlib/array.c:284 ../lib/vector/Vlib/map.c:271
 #: ../lib/vector/Vlib/map.c:405 ../lib/vector/Vlib/map.c:621
 #: ../lib/vector/Vlib/net.c:185 ../lib/vector/Vlib/net.c:355
+#: ../lib/vector/neta/utils.c:116 ../lib/vector/neta/timetables.c:133
 #: ../lib/rst/interp_float/vinput2d.c:88 ../lib/db/dbmi_client/copy_tab.c:105
 #: ../lib/db/dbmi_client/copy_tab.c:126 ../lib/db/dbmi_client/db.c:46
 #: ../lib/db/dbmi_client/delete_tab.c:49 ../lib/sites/sites.c:372
@@ -2576,6 +2587,7 @@ msgid "Requested format is not compiled in this version"
 msgstr "Po¾adovaný formát není zkompilován v této verzi"
 
 #: ../lib/vector/Vlib/graph.c:110 ../lib/vector/Vlib/net.c:432
+#: ../lib/vector/neta/flow.c:309
 msgid "GngFlatten error"
 msgstr "Chyba GngFlatten"
 
@@ -2765,7 +2777,7 @@ msgstr "Chyba v pravidlu na øádku %d v %s"
 msgid "Unable to open vector database definition file '%s'"
 msgstr "Nelze otevøít soubor s definicí vektorové databáze '%s'"
 
-#: ../lib/vector/Vlib/field.c:797
+#: ../lib/vector/Vlib/field.c:804
 msgid "Bug: attempt to update map which is not in current mapset"
 msgstr "Bug: pokus o aktualizaci mapy, která není v aktuálním mapsetu."
 
@@ -2879,20 +2891,20 @@ msgstr ""
 msgid "%d new boundaries"
 msgstr ""
 
-#: ../lib/vector/Vlib/buffer2.c:376
+#: ../lib/vector/Vlib/buffer2.c:364
 msgid "Line is not looped"
 msgstr "Linie není ukonèena smyèkou"
 
-#: ../lib/vector/Vlib/buffer2.c:611 ../lib/vector/Vlib/buffer2.c:622
+#: ../lib/vector/Vlib/buffer2.c:594 ../lib/vector/Vlib/buffer2.c:605
 msgid "Next edge was visited but it is not the first one !!! breaking loop"
 msgstr ""
 "Dal¹í hrana byla zpracována, ale nejedná se o první hranu. Pøeru¹ení cyklu."
 
-#: ../lib/vector/Vlib/buffer2.c:674
+#: ../lib/vector/Vlib/buffer2.c:652
 msgid "side != 0 feature not implemented"
 msgstr "prvek strana !=0 není implementován"
 
-#: ../lib/vector/Vlib/buffer2.c:924 ../lib/vector/Vlib/buffer2.c:957
+#: ../lib/vector/Vlib/buffer2.c:891 ../lib/vector/Vlib/buffer2.c:924
 msgid "Vect_get_point_in_poly() failed"
 msgstr "Vect_get_point_in_poly() selhal"
 
@@ -3157,9 +3169,9 @@ msgstr ""
 "'zápis'"
 
 #: ../lib/vector/Vlib/write.c:239
-#, c-format
-msgid "Unable to feature %d from vector map <%s>"
-msgstr "Nelze smazat prvek %d z vektorové vrstvy <%s>"
+#, fuzzy, c-format
+msgid "Unable to delete feature %d from vector map <%s>"
+msgstr "Nelze obnovit prvek %d z vektorové vrstvy <%s>"
 
 #: ../lib/vector/Vlib/write.c:265
 #, c-format
@@ -3292,9 +3304,9 @@ msgstr ""
 "Va¹e verze GRASS plnì nepodporuje formát indexování prvkù %d. %d vektorové "
 "mapy. Zva¾te pøebudování topologie nebo upgrade GRASS."
 
-#: ../lib/vector/Vlib/level_two.c:210 ../lib/vector/Vlib/level_two.c:235
-#: ../lib/vector/Vlib/level_two.c:259 ../lib/vector/Vlib/level_two.c:278
-#: ../lib/vector/Vlib/level_two.c:296 ../lib/vector/Vlib/level_two.c:315
+#: ../lib/vector/Vlib/level_two.c:234 ../lib/vector/Vlib/level_two.c:259
+#: ../lib/vector/Vlib/level_two.c:283 ../lib/vector/Vlib/level_two.c:302
+#: ../lib/vector/Vlib/level_two.c:320 ../lib/vector/Vlib/level_two.c:339
 #, c-format
 msgid "Vector map <%s> is not open on level >= 2"
 msgstr "Vektorová mapa <%s> není otevøena na úrovni >= 2"
@@ -3363,7 +3375,16 @@ msgstr "Prvek %d bez geometrie je ignorován"
 msgid "OGR feature without ID ignored"
 msgstr "Prvek OGR bez ID je ignorován"
 
-#: ../lib/vector/Vlib/line.c:60 ../lib/rst/interp_float/segmen2d.c:175
+#: ../lib/vector/Vlib/line.c:60 ../lib/vector/neta/articulation_point.c:60
+#: ../lib/vector/neta/centrality.c:63 ../lib/vector/neta/centrality.c:145
+#: ../lib/vector/neta/components.c:46 ../lib/vector/neta/components.c:113
+#: ../lib/vector/neta/spanningtree.c:99 ../lib/vector/neta/bridge.c:59
+#: ../lib/vector/neta/allpairs.c:50 ../lib/vector/neta/timetables.c:69
+#: ../lib/vector/neta/timetables.c:168 ../lib/vector/neta/timetables.c:178
+#: ../lib/vector/neta/timetables.c:191 ../lib/vector/neta/timetables.c:278
+#: ../lib/vector/neta/timetables.c:413 ../lib/vector/neta/timetables.c:425
+#: ../lib/vector/neta/path.c:134 ../lib/vector/neta/flow.c:64
+#: ../lib/vector/neta/flow.c:178 ../lib/rst/interp_float/segmen2d.c:175
 #: ../lib/rst/interp_float/segmen2d.c:181
 #: ../lib/rst/interp_float/segmen2d.c:187
 #: ../lib/rst/interp_float/segmen2d.c:197
@@ -3388,6 +3409,39 @@ msgstr "Nelze nastavit kategorii %d pro (prvek id %d)"
 #: ../lib/vector/vedit/select.c:233
 msgid "Unknown query tool"
 msgstr "Neznámý dotazovací nástroj"
+
+#: ../lib/vector/neta/spanningtree.c:104
+msgid "Computing minimum spanning tree..."
+msgstr ""
+
+#: ../lib/vector/neta/utils.c:219 ../lib/vector/neta/utils.c:232
+#, c-format
+msgid "'%s' must be > 0 for '%s'"
+msgstr ""
+
+#: ../lib/vector/neta/utils.c:221
+msgid "'where' and 'cats' parameters were supplied, cat will be ignored"
+msgstr ""
+
+#: ../lib/vector/neta/utils.c:225
+#, fuzzy
+msgid "Unable to load data from database"
+msgstr "Nelze pøidat spojení s databází."
+
+#: ../lib/vector/neta/utils.c:236
+#, fuzzy
+msgid "Problem loading category values"
+msgstr "Potí¾e pøi ètení rastrové mapy"
+
+#: ../lib/vector/neta/allpairs.c:53
+msgid "Computing all pairs shortest paths..."
+msgstr ""
+
+#: ../lib/vector/neta/timetables.c:46 ../lib/vector/neta/timetables.c:203
+#: ../lib/vector/neta/timetables.c:244 ../lib/vector/neta/timetables.c:286
+#, fuzzy, c-format
+msgid "Unable to open select cursor: %s"
+msgstr "Nelze otevøít vybrat kurzor: '%s'"
 
 #: ../lib/nviz/render.c:104
 msgid "Bad server connection"
@@ -4855,6 +4909,9 @@ msgstr "Podskupina<%s> skupiny <%s> je prázdná\n"
 #, c-format
 msgid "subgroup <%s> of group <%s> references the following raster maps\n"
 msgstr "Podskupina <%s>skupiny <%s> okazuja na následující rastrové mapy\n"
+
+#~ msgid "Unable to feature %d from vector map <%s>"
+#~ msgstr "Nelze smazat prvek %d z vektorové vrstvy <%s>"
 
 #~ msgid "Invalid view position coordinates, using %f,%f"
 #~ msgstr "Neplatné souøadnice bodu rozhledu, pou¾iji %f,%f"

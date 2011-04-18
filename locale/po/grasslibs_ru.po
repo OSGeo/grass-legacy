@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: grasslibs_ru\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-01-06 22:57+0100\n"
+"POT-Creation-Date: 2011-04-18 22:47+0200\n"
 "PO-Revision-Date: 2009-01-27 22:58-0600\n"
 "Last-Translator: Maxim Dubinin <sim@gis-lab.info>\n"
 "Language-Team: Russian <grass-translations@lists.osgeo.org>\n"
@@ -773,12 +773,12 @@ msgstr "Id объектов"
 
 #: ../lib/gis/parser.c:637
 #, fuzzy
-msgid "Path to input file"
+msgid "Name to input file"
 msgstr "Имя исходного файла"
 
 #: ../lib/gis/parser.c:645
 #, fuzzy
-msgid "Path for output file"
+msgid "Name for output file"
 msgstr "Имя выходного файла"
 
 #: ../lib/gis/parser.c:653
@@ -806,24 +806,24 @@ msgstr "Либо стандартный цвет GRASS, либо триплет 
 msgid "BUG in descriptions, option '%s' in <%s> does not exist"
 msgstr "Ошибка в описаниях, опция %s в <%s> не существует"
 
-#: ../lib/gis/parser.c:919
+#: ../lib/gis/parser.c:925
 msgid "Use either --quiet or --verbose flag, not both. Assuming --verbose."
 msgstr ""
 "Используйте либо флаг --quiet либо --verbose, но не оба вместе. "
 "Предполагается --verbose."
 
-#: ../lib/gis/parser.c:933
+#: ../lib/gis/parser.c:939
 msgid "Use either --quiet or --verbose flag, not both. Assuming --quiet."
 msgstr ""
 "Используйте либо флаг --quiet либо --verbose, но не оба вместе. "
 "Предполагается --quiet."
 
-#: ../lib/gis/parser.c:963
+#: ../lib/gis/parser.c:969
 #, c-format
 msgid "Sorry <%s> is not a valid option\n"
 msgstr "Извините, опция <%s> неверна\n"
 
-#: ../lib/gis/parser.c:1067
+#: ../lib/gis/parser.c:1073
 #, c-format
 msgid ""
 "\n"
@@ -832,7 +832,7 @@ msgstr ""
 "\n"
 "Описание:\n"
 
-#: ../lib/gis/parser.c:1074
+#: ../lib/gis/parser.c:1080
 #, c-format
 msgid ""
 "\n"
@@ -841,7 +841,7 @@ msgstr ""
 "\n"
 "Ключевые слова:\n"
 
-#: ../lib/gis/parser.c:1078
+#: ../lib/gis/parser.c:1084
 #, c-format
 msgid ""
 "\n"
@@ -852,7 +852,7 @@ msgstr ""
 "Использование:\n"
 " "
 
-#: ../lib/gis/parser.c:1146
+#: ../lib/gis/parser.c:1152
 #, c-format
 msgid ""
 "\n"
@@ -861,20 +861,20 @@ msgstr ""
 "\n"
 "Флаги:\n"
 
-#: ../lib/gis/parser.c:1169 ../lib/gis/parser.c:1493 ../lib/gis/parser.c:1653
-#: ../lib/gis/parser.c:1941
+#: ../lib/gis/parser.c:1175 ../lib/gis/parser.c:1499 ../lib/gis/parser.c:1659
+#: ../lib/gis/parser.c:1947
 msgid "Allow output files to overwrite existing files"
 msgstr "Разрешить выходным файлам перезаписывать существующие файлы"
 
-#: ../lib/gis/parser.c:1171 ../lib/gis/parser.c:1501 ../lib/gis/parser.c:1657
+#: ../lib/gis/parser.c:1177 ../lib/gis/parser.c:1507 ../lib/gis/parser.c:1663
 msgid "Verbose module output"
 msgstr "Многословное описание работы модуля"
 
-#: ../lib/gis/parser.c:1172 ../lib/gis/parser.c:1508 ../lib/gis/parser.c:1660
+#: ../lib/gis/parser.c:1178 ../lib/gis/parser.c:1514 ../lib/gis/parser.c:1666
 msgid "Quiet module output"
 msgstr "Краткое описание работы модуля"
 
-#: ../lib/gis/parser.c:1177
+#: ../lib/gis/parser.c:1183
 #, c-format
 msgid ""
 "\n"
@@ -883,80 +883,80 @@ msgstr ""
 "\n"
 "Параметры:\n"
 
-#: ../lib/gis/parser.c:1200
+#: ../lib/gis/parser.c:1206
 #, c-format
 msgid "  %*s   default: %s\n"
 msgstr "  %*s   по умолчанию: %s\n"
 
-#: ../lib/gis/parser.c:1544
+#: ../lib/gis/parser.c:1550
 msgid "NAME"
 msgstr "ИМЯ"
 
-#: ../lib/gis/parser.c:1557
+#: ../lib/gis/parser.c:1563
 msgid "KEYWORDS"
 msgstr "КЛЮЧИ"
 
-#: ../lib/gis/parser.c:1562
+#: ../lib/gis/parser.c:1568
 msgid "SYNOPSIS"
 msgstr "Синопсис"
 
-#: ../lib/gis/parser.c:1630
+#: ../lib/gis/parser.c:1636
 msgid "Flags"
 msgstr "Флаги"
 
-#: ../lib/gis/parser.c:1668
+#: ../lib/gis/parser.c:1674
 msgid "Parameters"
 msgstr "Параметры"
 
-#: ../lib/gis/parser.c:1708
+#: ../lib/gis/parser.c:1714
 msgid "Options"
 msgstr "Опции"
 
-#: ../lib/gis/parser.c:1714
+#: ../lib/gis/parser.c:1720
 msgid "Default"
 msgstr "По умолчанию"
 
-#: ../lib/gis/parser.c:1943
+#: ../lib/gis/parser.c:1949
 msgid "Allow overwrite"
 msgstr "Разрешить перезапись"
 
-#: ../lib/gis/parser.c:1951
+#: ../lib/gis/parser.c:1957
 msgid "Run with minimal output messages"
 msgstr "Выполнять с минимальным количеством сообщений"
 
-#: ../lib/gis/parser.c:1953
+#: ../lib/gis/parser.c:1959
 msgid "Run quietly"
 msgstr "Запускать без сообщений"
 
-#: ../lib/gis/parser.c:1986
+#: ../lib/gis/parser.c:1992
 msgid "Unable to spawn the 'wish' program"
 msgstr "Неудается запустить программу 'wish'"
 
-#: ../lib/gis/parser.c:2005
+#: ../lib/gis/parser.c:2011
 msgid "Unable to determine program name"
 msgstr "Невозможно определить имя программы"
 
-#: ../lib/gis/parser.c:2062
+#: ../lib/gis/parser.c:2068
 #, c-format
 msgid "  %*s   options: "
 msgstr "  %*s   опции: "
 
-#: ../lib/gis/parser.c:2107 ../lib/gis/parser.c:2122
+#: ../lib/gis/parser.c:2113 ../lib/gis/parser.c:2128
 #, c-format
 msgid "Sorry, <%c> is not a valid flag\n"
 msgstr "Извините, флаг <%c> неверен\n"
 
-#: ../lib/gis/parser.c:2188
+#: ../lib/gis/parser.c:2194
 #, c-format
 msgid "Sorry, <%s=> is ambiguous\n"
 msgstr "Извините, параметр <%s=> неоднозначен\n"
 
-#: ../lib/gis/parser.c:2194
+#: ../lib/gis/parser.c:2200
 #, c-format
 msgid "Sorry, <%s> is not a valid parameter\n"
 msgstr "Извините, параметр <%s> неверен\n"
 
-#: ../lib/gis/parser.c:2275
+#: ../lib/gis/parser.c:2281
 #, c-format
 msgid ""
 "\n"
@@ -965,12 +965,12 @@ msgstr ""
 "\n"
 "Ошибка: неверный синтаксис диапазона для параметра <%s>\n"
 
-#: ../lib/gis/parser.c:2276
+#: ../lib/gis/parser.c:2282
 #, c-format
 msgid "       Presented as: %s\n"
 msgstr "       Представленного как: %s\n"
 
-#: ../lib/gis/parser.c:2280
+#: ../lib/gis/parser.c:2286
 #, c-format
 msgid ""
 "\n"
@@ -979,12 +979,12 @@ msgstr ""
 "\n"
 "Ошибка: значение <%s> выходит за диапазон параметра <%s>\n"
 
-#: ../lib/gis/parser.c:2282
+#: ../lib/gis/parser.c:2288
 #, c-format
 msgid "       Legal range: %s\n"
 msgstr "       Возможный диапазон: %s\n"
 
-#: ../lib/gis/parser.c:2285
+#: ../lib/gis/parser.c:2291
 #, c-format
 msgid ""
 "\n"
@@ -993,7 +993,7 @@ msgstr ""
 "\n"
 "Ошибка: Отсутвует значение для параметра <%s>\n"
 
-#: ../lib/gis/parser.c:2433
+#: ../lib/gis/parser.c:2439
 #, fuzzy, c-format
 msgid ""
 "ERROR: Required parameter <%s> not set:\n"
@@ -1003,7 +1003,7 @@ msgstr ""
 "Ошибка: Требуемый параметр <%s> не установлен:\n"
 "    (%s).\n"
 
-#: ../lib/gis/parser.c:2528
+#: ../lib/gis/parser.c:2534
 #, c-format
 msgid ""
 "\n"
@@ -1012,17 +1012,17 @@ msgstr ""
 "\n"
 "Ошибка: опция <%s> должна задаваться в множественных значениях %d\n"
 
-#: ../lib/gis/parser.c:2530
+#: ../lib/gis/parser.c:2536
 #, c-format
 msgid "       You provided %d items:\n"
 msgstr "       Вы задали %d раз:\n"
 
-#: ../lib/gis/parser.c:2586
+#: ../lib/gis/parser.c:2592
 #, c-format
 msgid "ERROR: option <%s>: <%s> exists.\n"
 msgstr "Ошибка: опция <%s>: <%s> существует.\n"
 
-#: ../lib/gis/parser.c:2641
+#: ../lib/gis/parser.c:2647
 #, c-format
 msgid ""
 "\n"
@@ -1031,7 +1031,7 @@ msgstr ""
 "\n"
 "Флаг: Задать следующий флаг?\n"
 
-#: ../lib/gis/parser.c:2655
+#: ../lib/gis/parser.c:2661
 #, c-format
 msgid ""
 "\n"
@@ -1040,51 +1040,51 @@ msgstr ""
 "\n"
 "Опция:   %s\n"
 
-#: ../lib/gis/parser.c:2656
+#: ../lib/gis/parser.c:2662
 #, c-format
 msgid "     key: %s\n"
 msgstr "     ключ: %s\n"
 
-#: ../lib/gis/parser.c:2658
+#: ../lib/gis/parser.c:2664
 #, c-format
 msgid "  format: %s\n"
 msgstr "  формат: %s\n"
 
-#: ../lib/gis/parser.c:2660
+#: ../lib/gis/parser.c:2666
 #, c-format
 msgid " default: %s\n"
 msgstr " по умолчанию: %s\n"
 
-#: ../lib/gis/parser.c:2661
+#: ../lib/gis/parser.c:2667
 #, c-format
 msgid "required: %s\n"
 msgstr "необходимо: %s\n"
 
-#: ../lib/gis/parser.c:2663
+#: ../lib/gis/parser.c:2669
 #, c-format
 msgid "multiple: %s\n"
 msgstr "множ.: %s\n"
 
-#: ../lib/gis/parser.c:2665
+#: ../lib/gis/parser.c:2671
 #, c-format
 msgid " options: %s\n"
 msgstr " опции: %s\n"
 
-#: ../lib/gis/parser.c:2678
+#: ../lib/gis/parser.c:2684
 #, c-format
 msgid "enter option > "
 msgstr "введите опцию > "
 
-#: ../lib/gis/parser.c:2695 ../lib/gis/parser.c:2705
+#: ../lib/gis/parser.c:2701 ../lib/gis/parser.c:2711
 msgid "   Try again? "
 msgstr "   Попробовать снова? "
 
-#: ../lib/gis/parser.c:2703
+#: ../lib/gis/parser.c:2709
 #, c-format
 msgid "Sorry, %s is not accepted.\n"
 msgstr "Извините, %s недопустимо.\n"
 
-#: ../lib/gis/parser.c:2713
+#: ../lib/gis/parser.c:2719
 #, c-format
 msgid ""
 "\n"
@@ -1095,11 +1095,11 @@ msgstr ""
 "Вы выбрали:\n"
 "  %s\n"
 
-#: ../lib/gis/parser.c:2714
+#: ../lib/gis/parser.c:2720
 msgid "Is this correct? "
 msgstr "Правильно?"
 
-#: ../lib/gis/parser.c:2779
+#: ../lib/gis/parser.c:2785
 msgid "to accept the default"
 msgstr "чтобы установить по умолчанию"
 
@@ -1488,30 +1488,30 @@ msgstr "Растровый слой <%s> не найден"
 msgid "Output raster map <%s> is used as input"
 msgstr "Выходной растровый слой <%s> используется как исходный"
 
-#: ../lib/gis/reclass.c:143
+#: ../lib/gis/reclass.c:145
 #, c-format
 msgid "Too many reclass categories for [%s in %s]"
 msgstr "Слишком много категорий для реклассификации [%s в %s]"
 
-#: ../lib/gis/reclass.c:146
+#: ../lib/gis/reclass.c:148
 #, c-format
 msgid "Illegal reclass format in header file for [%s in %s]"
 msgstr "Неправильный формат реклассификации в файле заголовка для [%s в %s]"
 
-#: ../lib/gis/reclass.c:235
+#: ../lib/gis/reclass.c:238
 msgid "Illegal reclass request"
 msgstr "Данная реклассификация невозможна"
 
-#: ../lib/gis/reclass.c:240
+#: ../lib/gis/reclass.c:243
 msgid "Illegal reclass type"
 msgstr "Неправильно задан тип реклассификации"
 
-#: ../lib/gis/reclass.c:246
+#: ../lib/gis/reclass.c:249
 #, c-format
 msgid "Unable to create header file for [%s in %s]"
 msgstr "Невозможно создать файл заголовка для [%s в %s]"
 
-#: ../lib/gis/reclass.c:294
+#: ../lib/gis/reclass.c:297
 #, c-format
 msgid "Unable to create dependency file in [%s in %s]"
 msgstr "Невозможно создать файл зависимости для [%s в %s]"
@@ -1613,6 +1613,16 @@ msgid ""
 msgstr ""
 "G_distance_point_to_line_segment: не должно быть: code=%d P=(%f,%f) S=(%f,%f)"
 "(%f,%f)"
+
+#: ../lib/gis/seek.c:52 ../lib/gis/seek.c:58
+#, fuzzy
+msgid "Unable to seek"
+msgstr "Невозможно установить фокус"
+
+#: ../lib/gis/seek.c:56
+#, fuzzy
+msgid "Seek offset out of range"
+msgstr "Индекс слоя вне диапазона"
 
 #: ../lib/gis/alloc.c:43
 #, c-format
@@ -2499,6 +2509,7 @@ msgstr "Для слоя %d не определено соединение с б�
 #: ../lib/vector/Vlib/array.c:284 ../lib/vector/Vlib/map.c:271
 #: ../lib/vector/Vlib/map.c:405 ../lib/vector/Vlib/map.c:621
 #: ../lib/vector/Vlib/net.c:185 ../lib/vector/Vlib/net.c:355
+#: ../lib/vector/neta/utils.c:116 ../lib/vector/neta/timetables.c:133
 #: ../lib/rst/interp_float/vinput2d.c:88 ../lib/db/dbmi_client/copy_tab.c:105
 #: ../lib/db/dbmi_client/copy_tab.c:126 ../lib/db/dbmi_client/db.c:46
 #: ../lib/db/dbmi_client/delete_tab.c:49 ../lib/sites/sites.c:372
@@ -2567,6 +2578,7 @@ msgid "Requested format is not compiled in this version"
 msgstr "Запрашиваемый формат для этой версии не скомпилирован."
 
 #: ../lib/vector/Vlib/graph.c:110 ../lib/vector/Vlib/net.c:432
+#: ../lib/vector/neta/flow.c:309
 msgid "GngFlatten error"
 msgstr "ошибка GngFlatten"
 
@@ -2757,7 +2769,7 @@ msgstr "Ошибка в правиле для ряда %d в %s"
 msgid "Unable to open vector database definition file '%s'"
 msgstr "Невозможно открыть файл определений векторной базы данных '%s'"
 
-#: ../lib/vector/Vlib/field.c:797
+#: ../lib/vector/Vlib/field.c:804
 msgid "Bug: attempt to update map which is not in current mapset"
 msgstr "Ошибка: попытка обновить слой не содержащийся в текущем наборе ."
 
@@ -2871,22 +2883,22 @@ msgstr ""
 msgid "%d new boundaries"
 msgstr ""
 
-#: ../lib/vector/Vlib/buffer2.c:376
+#: ../lib/vector/Vlib/buffer2.c:364
 #, fuzzy
 msgid "Line is not looped"
 msgstr "Линия не зациклена"
 
-#: ../lib/vector/Vlib/buffer2.c:611 ../lib/vector/Vlib/buffer2.c:622
+#: ../lib/vector/Vlib/buffer2.c:594 ../lib/vector/Vlib/buffer2.c:605
 #, fuzzy
 msgid "Next edge was visited but it is not the first one !!! breaking loop"
 msgstr "Следующая грань была проверена, но она не первая !!! выход из цикла"
 
-#: ../lib/vector/Vlib/buffer2.c:674
+#: ../lib/vector/Vlib/buffer2.c:652
 #, fuzzy
 msgid "side != 0 feature not implemented"
 msgstr "сторона != 0 возможность непредусмотрена"
 
-#: ../lib/vector/Vlib/buffer2.c:924 ../lib/vector/Vlib/buffer2.c:957
+#: ../lib/vector/Vlib/buffer2.c:891 ../lib/vector/Vlib/buffer2.c:924
 msgid "Vect_get_point_in_poly() failed"
 msgstr "Vect_get_point_in_poly() не выполнен"
 
@@ -3149,9 +3161,9 @@ msgstr ""
 "Невозможно удалить объект %d, векторный слой <%s> не открыт в режиме записи"
 
 #: ../lib/vector/Vlib/write.c:239
-#, c-format
-msgid "Unable to feature %d from vector map <%s>"
-msgstr "Невозможно удалить объект %d из векторного слоя <%s>"
+#, fuzzy, c-format
+msgid "Unable to delete feature %d from vector map <%s>"
+msgstr "Невозможно восстановить объект %d из векторного слоя <%s>"
 
 #: ../lib/vector/Vlib/write.c:265
 #, c-format
@@ -3287,9 +3299,9 @@ msgstr ""
 "Ваша версия GRASS полностью не поддерживает формат объектного индекса %d.%d "
 "вектора. Попробуйте перестроить топологию или обновить GRASS"
 
-#: ../lib/vector/Vlib/level_two.c:210 ../lib/vector/Vlib/level_two.c:235
-#: ../lib/vector/Vlib/level_two.c:259 ../lib/vector/Vlib/level_two.c:278
-#: ../lib/vector/Vlib/level_two.c:296 ../lib/vector/Vlib/level_two.c:315
+#: ../lib/vector/Vlib/level_two.c:234 ../lib/vector/Vlib/level_two.c:259
+#: ../lib/vector/Vlib/level_two.c:283 ../lib/vector/Vlib/level_two.c:302
+#: ../lib/vector/Vlib/level_two.c:320 ../lib/vector/Vlib/level_two.c:339
 #, c-format
 msgid "Vector map <%s> is not open on level >= 2"
 msgstr "Векторный слой <%s> не открыт на уровне >= 2"
@@ -3357,7 +3369,16 @@ msgstr "Объект %d без геометрии проигнорирован"
 msgid "OGR feature without ID ignored"
 msgstr "OGR объект без ID проигнорирован"
 
-#: ../lib/vector/Vlib/line.c:60 ../lib/rst/interp_float/segmen2d.c:175
+#: ../lib/vector/Vlib/line.c:60 ../lib/vector/neta/articulation_point.c:60
+#: ../lib/vector/neta/centrality.c:63 ../lib/vector/neta/centrality.c:145
+#: ../lib/vector/neta/components.c:46 ../lib/vector/neta/components.c:113
+#: ../lib/vector/neta/spanningtree.c:99 ../lib/vector/neta/bridge.c:59
+#: ../lib/vector/neta/allpairs.c:50 ../lib/vector/neta/timetables.c:69
+#: ../lib/vector/neta/timetables.c:168 ../lib/vector/neta/timetables.c:178
+#: ../lib/vector/neta/timetables.c:191 ../lib/vector/neta/timetables.c:278
+#: ../lib/vector/neta/timetables.c:413 ../lib/vector/neta/timetables.c:425
+#: ../lib/vector/neta/path.c:134 ../lib/vector/neta/flow.c:64
+#: ../lib/vector/neta/flow.c:178 ../lib/rst/interp_float/segmen2d.c:175
 #: ../lib/rst/interp_float/segmen2d.c:181
 #: ../lib/rst/interp_float/segmen2d.c:187
 #: ../lib/rst/interp_float/segmen2d.c:197
@@ -3382,6 +3403,39 @@ msgstr "Невозможно установить категорию %d для (
 #: ../lib/vector/vedit/select.c:233
 msgid "Unknown query tool"
 msgstr "Неизвестный инструмент запроса"
+
+#: ../lib/vector/neta/spanningtree.c:104
+msgid "Computing minimum spanning tree..."
+msgstr ""
+
+#: ../lib/vector/neta/utils.c:219 ../lib/vector/neta/utils.c:232
+#, c-format
+msgid "'%s' must be > 0 for '%s'"
+msgstr ""
+
+#: ../lib/vector/neta/utils.c:221
+msgid "'where' and 'cats' parameters were supplied, cat will be ignored"
+msgstr ""
+
+#: ../lib/vector/neta/utils.c:225
+#, fuzzy
+msgid "Unable to load data from database"
+msgstr "Невозможно связь с базой данных"
+
+#: ../lib/vector/neta/utils.c:236
+#, fuzzy
+msgid "Problem loading category values"
+msgstr "Ошибка чтения растрового слоя"
+
+#: ../lib/vector/neta/allpairs.c:53
+msgid "Computing all pairs shortest paths..."
+msgstr ""
+
+#: ../lib/vector/neta/timetables.c:46 ../lib/vector/neta/timetables.c:203
+#: ../lib/vector/neta/timetables.c:244 ../lib/vector/neta/timetables.c:286
+#, fuzzy, c-format
+msgid "Unable to open select cursor: %s"
+msgstr "Невозможно открыть выбранный курсор: '%s'"
 
 #: ../lib/nviz/render.c:104
 msgid "Bad server connection"
@@ -4863,6 +4917,9 @@ msgstr "подгруппа <%s> группы <%s> пуста\n"
 #, c-format
 msgid "subgroup <%s> of group <%s> references the following raster maps\n"
 msgstr "подгруппа <%s> группы <%s> ссылается на следующие растровые слои\n"
+
+#~ msgid "Unable to feature %d from vector map <%s>"
+#~ msgstr "Невозможно удалить объект %d из векторного слоя <%s>"
 
 #~ msgid "Invalid view position coordinates, using %f,%f"
 #~ msgstr "Неправильные координаты позиции вида, используется %f,%f"

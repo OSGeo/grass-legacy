@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: grasslibs_tr\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-01-06 22:57+0100\n"
+"POT-Creation-Date: 2011-04-18 22:47+0200\n"
 "PO-Revision-Date: 2010-11-08 15:14+0200\n"
 "Last-Translator: Saban Safak <ssafak@cvm.com.tr>\n"
 "Language-Team: Türkçe <grass-translations@lists.osgeo.org>\n"
@@ -773,12 +773,11 @@ msgstr "Obje: "
 
 #: ../lib/gis/parser.c:637
 #, fuzzy
-msgid "Path to input file"
+msgid "Name to input file"
 msgstr "Girdi dosyasının adı"
 
 #: ../lib/gis/parser.c:645
-#, fuzzy
-msgid "Path for output file"
+msgid "Name for output file"
 msgstr "Çıktı dosya adı"
 
 #: ../lib/gis/parser.c:653
@@ -806,20 +805,20 @@ msgstr "Ya standart GRASS rengi,K:Y:M üçlemesi, yada \"hiçbiri\""
 msgid "BUG in descriptions, option '%s' in <%s> does not exist"
 msgstr ""
 
-#: ../lib/gis/parser.c:919
+#: ../lib/gis/parser.c:925
 msgid "Use either --quiet or --verbose flag, not both. Assuming --verbose."
 msgstr ""
 
-#: ../lib/gis/parser.c:933
+#: ../lib/gis/parser.c:939
 msgid "Use either --quiet or --verbose flag, not both. Assuming --quiet."
 msgstr ""
 
-#: ../lib/gis/parser.c:963
+#: ../lib/gis/parser.c:969
 #, c-format
 msgid "Sorry <%s> is not a valid option\n"
 msgstr "Üzgünüm <%s> geçerli bir seçenek değil\n"
 
-#: ../lib/gis/parser.c:1067
+#: ../lib/gis/parser.c:1073
 #, c-format
 msgid ""
 "\n"
@@ -828,7 +827,7 @@ msgstr ""
 "\n"
 "Tanım:\n"
 
-#: ../lib/gis/parser.c:1074
+#: ../lib/gis/parser.c:1080
 #, c-format
 msgid ""
 "\n"
@@ -837,7 +836,7 @@ msgstr ""
 "\n"
 "Anahtar kelimeler:\n"
 
-#: ../lib/gis/parser.c:1078
+#: ../lib/gis/parser.c:1084
 #, c-format
 msgid ""
 "\n"
@@ -848,7 +847,7 @@ msgstr ""
 "Kullanım:\n"
 " "
 
-#: ../lib/gis/parser.c:1146
+#: ../lib/gis/parser.c:1152
 #, c-format
 msgid ""
 "\n"
@@ -857,20 +856,20 @@ msgstr ""
 "\n"
 "Flamalar:\n"
 
-#: ../lib/gis/parser.c:1169 ../lib/gis/parser.c:1493 ../lib/gis/parser.c:1653
-#: ../lib/gis/parser.c:1941
+#: ../lib/gis/parser.c:1175 ../lib/gis/parser.c:1499 ../lib/gis/parser.c:1659
+#: ../lib/gis/parser.c:1947
 msgid "Allow output files to overwrite existing files"
 msgstr ""
 
-#: ../lib/gis/parser.c:1171 ../lib/gis/parser.c:1501 ../lib/gis/parser.c:1657
+#: ../lib/gis/parser.c:1177 ../lib/gis/parser.c:1507 ../lib/gis/parser.c:1663
 msgid "Verbose module output"
 msgstr ""
 
-#: ../lib/gis/parser.c:1172 ../lib/gis/parser.c:1508 ../lib/gis/parser.c:1660
+#: ../lib/gis/parser.c:1178 ../lib/gis/parser.c:1514 ../lib/gis/parser.c:1666
 msgid "Quiet module output"
 msgstr ""
 
-#: ../lib/gis/parser.c:1177
+#: ../lib/gis/parser.c:1183
 #, c-format
 msgid ""
 "\n"
@@ -879,80 +878,80 @@ msgstr ""
 "\n"
 "Parametreler:\n"
 
-#: ../lib/gis/parser.c:1200
+#: ../lib/gis/parser.c:1206
 #, c-format
 msgid "  %*s   default: %s\n"
 msgstr "  %*s   varsayılan: %s\n"
 
-#: ../lib/gis/parser.c:1544
+#: ../lib/gis/parser.c:1550
 msgid "NAME"
 msgstr "AD"
 
-#: ../lib/gis/parser.c:1557
+#: ../lib/gis/parser.c:1563
 msgid "KEYWORDS"
 msgstr "ANAHTAR KELİMELER"
 
-#: ../lib/gis/parser.c:1562
+#: ../lib/gis/parser.c:1568
 msgid "SYNOPSIS"
 msgstr ""
 
-#: ../lib/gis/parser.c:1630
+#: ../lib/gis/parser.c:1636
 msgid "Flags"
 msgstr "Flamalar"
 
-#: ../lib/gis/parser.c:1668
+#: ../lib/gis/parser.c:1674
 msgid "Parameters"
 msgstr "Parametreler"
 
-#: ../lib/gis/parser.c:1708
+#: ../lib/gis/parser.c:1714
 msgid "Options"
 msgstr "Seçenekler"
 
-#: ../lib/gis/parser.c:1714
+#: ../lib/gis/parser.c:1720
 msgid "Default"
 msgstr "Varsayılan"
 
-#: ../lib/gis/parser.c:1943
+#: ../lib/gis/parser.c:1949
 msgid "Allow overwrite"
 msgstr "Üzerine yaz"
 
-#: ../lib/gis/parser.c:1951
+#: ../lib/gis/parser.c:1957
 msgid "Run with minimal output messages"
 msgstr ""
 
-#: ../lib/gis/parser.c:1953
+#: ../lib/gis/parser.c:1959
 msgid "Run quietly"
 msgstr "Yavaşça çalıştır"
 
-#: ../lib/gis/parser.c:1986
+#: ../lib/gis/parser.c:1992
 msgid "Unable to spawn the 'wish' program"
 msgstr ""
 
-#: ../lib/gis/parser.c:2005
+#: ../lib/gis/parser.c:2011
 msgid "Unable to determine program name"
 msgstr ""
 
-#: ../lib/gis/parser.c:2062
+#: ../lib/gis/parser.c:2068
 #, c-format
 msgid "  %*s   options: "
 msgstr "  %*s   seçenekler: "
 
-#: ../lib/gis/parser.c:2107 ../lib/gis/parser.c:2122
+#: ../lib/gis/parser.c:2113 ../lib/gis/parser.c:2128
 #, c-format
 msgid "Sorry, <%c> is not a valid flag\n"
 msgstr "Üzgünüm, <%c> geçerli bir flama değil\n"
 
-#: ../lib/gis/parser.c:2188
+#: ../lib/gis/parser.c:2194
 #, c-format
 msgid "Sorry, <%s=> is ambiguous\n"
 msgstr "Üzgünüm, <%s=> belirsizdir\n"
 
-#: ../lib/gis/parser.c:2194
+#: ../lib/gis/parser.c:2200
 #, c-format
 msgid "Sorry, <%s> is not a valid parameter\n"
 msgstr "Üzgünüm <%s> geçerli bir parametre değil\n"
 
-#: ../lib/gis/parser.c:2275
+#: ../lib/gis/parser.c:2281
 #, c-format
 msgid ""
 "\n"
@@ -961,12 +960,12 @@ msgstr ""
 "\n"
 "Hata: <%s> parametresi için geçersiz aralık \n"
 
-#: ../lib/gis/parser.c:2276
+#: ../lib/gis/parser.c:2282
 #, c-format
 msgid "       Presented as: %s\n"
 msgstr ""
 
-#: ../lib/gis/parser.c:2280
+#: ../lib/gis/parser.c:2286
 #, c-format
 msgid ""
 "\n"
@@ -975,12 +974,12 @@ msgstr ""
 "\n"
 "Hata: <%s> parametresi için <%s> değeri aralık dışında\n"
 
-#: ../lib/gis/parser.c:2282
+#: ../lib/gis/parser.c:2288
 #, c-format
 msgid "       Legal range: %s\n"
 msgstr "         Uygun aralık: %s\n"
 
-#: ../lib/gis/parser.c:2285
+#: ../lib/gis/parser.c:2291
 #, c-format
 msgid ""
 "\n"
@@ -989,7 +988,7 @@ msgstr ""
 "\n"
 "Hata: <%s> parametresi için kayıp değer\n"
 
-#: ../lib/gis/parser.c:2433
+#: ../lib/gis/parser.c:2439
 #, fuzzy, c-format
 msgid ""
 "ERROR: Required parameter <%s> not set:\n"
@@ -999,24 +998,24 @@ msgstr ""
 "HATA: Gerekli <%s> parametresi ayarlanmadı:\n"
 "    (%s).\n"
 
-#: ../lib/gis/parser.c:2528
+#: ../lib/gis/parser.c:2534
 #, c-format
 msgid ""
 "\n"
 "ERROR: option <%s> must be provided in multiples of %d\n"
 msgstr ""
 
-#: ../lib/gis/parser.c:2530
+#: ../lib/gis/parser.c:2536
 #, c-format
 msgid "       You provided %d items:\n"
 msgstr "        %d öğe sağladınız:\n"
 
-#: ../lib/gis/parser.c:2586
+#: ../lib/gis/parser.c:2592
 #, c-format
 msgid "ERROR: option <%s>: <%s> exists.\n"
 msgstr "Hata: seçenek <%s>: <%s> mevcut.\n"
 
-#: ../lib/gis/parser.c:2641
+#: ../lib/gis/parser.c:2647
 #, c-format
 msgid ""
 "\n"
@@ -1025,7 +1024,7 @@ msgstr ""
 "\n"
 "FLAMA: tkip eden flamayı seçeyim mi?\n"
 
-#: ../lib/gis/parser.c:2655
+#: ../lib/gis/parser.c:2661
 #, c-format
 msgid ""
 "\n"
@@ -1034,51 +1033,51 @@ msgstr ""
 "\n"
 "SEÇENEK:   %s\n"
 
-#: ../lib/gis/parser.c:2656
+#: ../lib/gis/parser.c:2662
 #, c-format
 msgid "     key: %s\n"
 msgstr "    anahtar: %s\n"
 
-#: ../lib/gis/parser.c:2658
+#: ../lib/gis/parser.c:2664
 #, c-format
 msgid "  format: %s\n"
 msgstr "  biçim: %s\n"
 
-#: ../lib/gis/parser.c:2660
+#: ../lib/gis/parser.c:2666
 #, c-format
 msgid " default: %s\n"
 msgstr " varsayılan: %s\n"
 
-#: ../lib/gis/parser.c:2661
+#: ../lib/gis/parser.c:2667
 #, c-format
 msgid "required: %s\n"
 msgstr "gereken: %s\n"
 
-#: ../lib/gis/parser.c:2663
+#: ../lib/gis/parser.c:2669
 #, c-format
 msgid "multiple: %s\n"
 msgstr "çoklu: %s\n"
 
-#: ../lib/gis/parser.c:2665
+#: ../lib/gis/parser.c:2671
 #, fuzzy, c-format
 msgid " options: %s\n"
 msgstr "       geçerli seçenekler: %s\n"
 
-#: ../lib/gis/parser.c:2678
+#: ../lib/gis/parser.c:2684
 #, c-format
 msgid "enter option > "
 msgstr "seçeneği girin >"
 
-#: ../lib/gis/parser.c:2695 ../lib/gis/parser.c:2705
+#: ../lib/gis/parser.c:2701 ../lib/gis/parser.c:2711
 msgid "   Try again? "
 msgstr "   Tekrar deneyeyim mi? "
 
-#: ../lib/gis/parser.c:2703
+#: ../lib/gis/parser.c:2709
 #, c-format
 msgid "Sorry, %s is not accepted.\n"
 msgstr "Üzgünüm, %s kabul edilmedi.\n"
 
-#: ../lib/gis/parser.c:2713
+#: ../lib/gis/parser.c:2719
 #, c-format
 msgid ""
 "\n"
@@ -1089,11 +1088,11 @@ msgstr ""
 "Seçtiniz:\n"
 "  %s\n"
 
-#: ../lib/gis/parser.c:2714
+#: ../lib/gis/parser.c:2720
 msgid "Is this correct? "
 msgstr "Bu doğru mu?"
 
-#: ../lib/gis/parser.c:2779
+#: ../lib/gis/parser.c:2785
 msgid "to accept the default"
 msgstr "varsayılanı kabul et"
 
@@ -1488,30 +1487,30 @@ msgstr "<%s> raster haritası bulunamadı"
 msgid "Output raster map <%s> is used as input"
 msgstr ""
 
-#: ../lib/gis/reclass.c:143
+#: ../lib/gis/reclass.c:145
 #, c-format
 msgid "Too many reclass categories for [%s in %s]"
 msgstr "[%s in %s] için çok fazla yeniden sınıflandırma kategorisi"
 
-#: ../lib/gis/reclass.c:146
+#: ../lib/gis/reclass.c:148
 #, c-format
 msgid "Illegal reclass format in header file for [%s in %s]"
 msgstr ""
 
-#: ../lib/gis/reclass.c:235
+#: ../lib/gis/reclass.c:238
 msgid "Illegal reclass request"
 msgstr "Uygun olmayan yeniden sınıflandırmaisteği"
 
-#: ../lib/gis/reclass.c:240
+#: ../lib/gis/reclass.c:243
 msgid "Illegal reclass type"
 msgstr "Uygun olmayan yeniden sınıflandırma tipi"
 
-#: ../lib/gis/reclass.c:246
+#: ../lib/gis/reclass.c:249
 #, c-format
 msgid "Unable to create header file for [%s in %s]"
 msgstr "[%s deki %s] için üst bilgi dosyası oluşturulamıyor"
 
-#: ../lib/gis/reclass.c:294
+#: ../lib/gis/reclass.c:297
 #, c-format
 msgid "Unable to create dependency file in [%s in %s]"
 msgstr "[%s deki %s] için bağımlılık dosyası oluşturulamıyor"
@@ -1607,6 +1606,16 @@ msgid ""
 "G_distance_point_to_line_segment: shouldn't happen: code=%d P=(%f,%f) S=(%f,%"
 "f)(%f,%f)"
 msgstr ""
+
+#: ../lib/gis/seek.c:52 ../lib/gis/seek.c:58
+#, fuzzy
+msgid "Unable to seek"
+msgstr "<%s> vektörü kapatılamıyor"
+
+#: ../lib/gis/seek.c:56
+#, fuzzy
+msgid "Seek offset out of range"
+msgstr "İndeks aralık dışında"
 
 #: ../lib/gis/alloc.c:43
 #, c-format
@@ -2467,6 +2476,7 @@ msgstr "%d katmanının veritabanı bağlantısı belirlenmedi"
 #: ../lib/vector/Vlib/array.c:284 ../lib/vector/Vlib/map.c:271
 #: ../lib/vector/Vlib/map.c:405 ../lib/vector/Vlib/map.c:621
 #: ../lib/vector/Vlib/net.c:185 ../lib/vector/Vlib/net.c:355
+#: ../lib/vector/neta/utils.c:116 ../lib/vector/neta/timetables.c:133
 #: ../lib/rst/interp_float/vinput2d.c:88 ../lib/db/dbmi_client/copy_tab.c:105
 #: ../lib/db/dbmi_client/copy_tab.c:126 ../lib/db/dbmi_client/db.c:46
 #: ../lib/db/dbmi_client/delete_tab.c:49 ../lib/sites/sites.c:372
@@ -2532,6 +2542,7 @@ msgid "Requested format is not compiled in this version"
 msgstr "İstenen format bu sürümde derlenmedi."
 
 #: ../lib/vector/Vlib/graph.c:110 ../lib/vector/Vlib/net.c:432
+#: ../lib/vector/neta/flow.c:309
 msgid "GngFlatten error"
 msgstr ""
 
@@ -2719,7 +2730,7 @@ msgstr ""
 msgid "Unable to open vector database definition file '%s'"
 msgstr ""
 
-#: ../lib/vector/Vlib/field.c:797
+#: ../lib/vector/Vlib/field.c:804
 msgid "Bug: attempt to update map which is not in current mapset"
 msgstr ""
 
@@ -2835,20 +2846,20 @@ msgstr ""
 msgid "%d new boundaries"
 msgstr ""
 
-#: ../lib/vector/Vlib/buffer2.c:376
+#: ../lib/vector/Vlib/buffer2.c:364
 #, fuzzy
 msgid "Line is not looped"
 msgstr "Matris olanağı yok"
 
-#: ../lib/vector/Vlib/buffer2.c:611 ../lib/vector/Vlib/buffer2.c:622
+#: ../lib/vector/Vlib/buffer2.c:594 ../lib/vector/Vlib/buffer2.c:605
 msgid "Next edge was visited but it is not the first one !!! breaking loop"
 msgstr ""
 
-#: ../lib/vector/Vlib/buffer2.c:674
+#: ../lib/vector/Vlib/buffer2.c:652
 msgid "side != 0 feature not implemented"
 msgstr ""
 
-#: ../lib/vector/Vlib/buffer2.c:924 ../lib/vector/Vlib/buffer2.c:957
+#: ../lib/vector/Vlib/buffer2.c:891 ../lib/vector/Vlib/buffer2.c:924
 msgid "Vect_get_point_in_poly() failed"
 msgstr ""
 
@@ -3104,7 +3115,7 @@ msgstr "Veritabanı bağlantısı eklenemiyor, harita WRITE modunda açılmadı"
 
 #: ../lib/vector/Vlib/write.c:239
 #, fuzzy, c-format
-msgid "Unable to feature %d from vector map <%s>"
+msgid "Unable to delete feature %d from vector map <%s>"
 msgstr "<%s> vektör haritası silinemiyor"
 
 #: ../lib/vector/Vlib/write.c:265
@@ -3228,9 +3239,9 @@ msgid ""
 "vector. Consider to rebuild topology or upgrade GRASS."
 msgstr ""
 
-#: ../lib/vector/Vlib/level_two.c:210 ../lib/vector/Vlib/level_two.c:235
-#: ../lib/vector/Vlib/level_two.c:259 ../lib/vector/Vlib/level_two.c:278
-#: ../lib/vector/Vlib/level_two.c:296 ../lib/vector/Vlib/level_two.c:315
+#: ../lib/vector/Vlib/level_two.c:234 ../lib/vector/Vlib/level_two.c:259
+#: ../lib/vector/Vlib/level_two.c:283 ../lib/vector/Vlib/level_two.c:302
+#: ../lib/vector/Vlib/level_two.c:320 ../lib/vector/Vlib/level_two.c:339
 #, c-format
 msgid "Vector map <%s> is not open on level >= 2"
 msgstr ""
@@ -3298,7 +3309,16 @@ msgstr "geometrisi olmayan %d obje yok sayıldı"
 msgid "OGR feature without ID ignored"
 msgstr "ID'si olmayan OGR objesi görmezden gelindi"
 
-#: ../lib/vector/Vlib/line.c:60 ../lib/rst/interp_float/segmen2d.c:175
+#: ../lib/vector/Vlib/line.c:60 ../lib/vector/neta/articulation_point.c:60
+#: ../lib/vector/neta/centrality.c:63 ../lib/vector/neta/centrality.c:145
+#: ../lib/vector/neta/components.c:46 ../lib/vector/neta/components.c:113
+#: ../lib/vector/neta/spanningtree.c:99 ../lib/vector/neta/bridge.c:59
+#: ../lib/vector/neta/allpairs.c:50 ../lib/vector/neta/timetables.c:69
+#: ../lib/vector/neta/timetables.c:168 ../lib/vector/neta/timetables.c:178
+#: ../lib/vector/neta/timetables.c:191 ../lib/vector/neta/timetables.c:278
+#: ../lib/vector/neta/timetables.c:413 ../lib/vector/neta/timetables.c:425
+#: ../lib/vector/neta/path.c:134 ../lib/vector/neta/flow.c:64
+#: ../lib/vector/neta/flow.c:178 ../lib/rst/interp_float/segmen2d.c:175
 #: ../lib/rst/interp_float/segmen2d.c:181
 #: ../lib/rst/interp_float/segmen2d.c:187
 #: ../lib/rst/interp_float/segmen2d.c:197
@@ -3323,6 +3343,39 @@ msgstr "<%s> raster haritasının kategori dosyası okunamıyor"
 #: ../lib/vector/vedit/select.c:233
 msgid "Unknown query tool"
 msgstr "bilinmeyen sorgu aracı"
+
+#: ../lib/vector/neta/spanningtree.c:104
+msgid "Computing minimum spanning tree..."
+msgstr ""
+
+#: ../lib/vector/neta/utils.c:219 ../lib/vector/neta/utils.c:232
+#, c-format
+msgid "'%s' must be > 0 for '%s'"
+msgstr ""
+
+#: ../lib/vector/neta/utils.c:221
+msgid "'where' and 'cats' parameters were supplied, cat will be ignored"
+msgstr ""
+
+#: ../lib/vector/neta/utils.c:225
+#, fuzzy
+msgid "Unable to load data from database"
+msgstr "<%s> tablosundan veri alınamadı"
+
+#: ../lib/vector/neta/utils.c:236
+#, fuzzy
+msgid "Problem loading category values"
+msgstr "Kategori değerleri"
+
+#: ../lib/vector/neta/allpairs.c:53
+msgid "Computing all pairs shortest paths..."
+msgstr ""
+
+#: ../lib/vector/neta/timetables.c:46 ../lib/vector/neta/timetables.c:203
+#: ../lib/vector/neta/timetables.c:244 ../lib/vector/neta/timetables.c:286
+#, fuzzy, c-format
+msgid "Unable to open select cursor: %s"
+msgstr "Seçme imleci açılamıyor: '%s'"
 
 #: ../lib/nviz/render.c:104
 msgid "Bad server connection"
@@ -4723,6 +4776,18 @@ msgstr ""
 msgid "subgroup <%s> of group <%s> references the following raster maps\n"
 msgstr ""
 
+#, fuzzy
+#~ msgid "Path to input file"
+#~ msgstr "Girdi dosyasının adı"
+
+#, fuzzy
+#~ msgid "Path for output file"
+#~ msgstr "Çıktı dosya adı"
+
+#, fuzzy
+#~ msgid "Unable to feature %d from vector map <%s>"
+#~ msgstr "<%s> vektör haritası silinemiyor"
+
 #~ msgid "Vector is not 3D"
 #~ msgstr "Vektör 3B değil"
 
@@ -5353,12 +5418,6 @@ msgstr ""
 #~ msgid "Layer number or name ('-1' for all layers)"
 #~ msgstr "Katman numarası"
 
-#~ msgid "Name of input file"
-#~ msgstr "Girdi dosyasının adı"
-
-#~ msgid "Name for output file"
-#~ msgstr "Çıktı dosya adı"
-
 #, fuzzy
 #~ msgid "Illegal filename <%s>. Cannot be '.' or 'NULL'."
 #~ msgstr "Uygun olmayan dosya adı. '.' veya 'NULL' olmamalı\n"
@@ -5382,14 +5441,6 @@ msgstr ""
 #, fuzzy
 #~ msgid "Error closing input file <%s>"
 #~ msgstr "g3b dosyasını kapatmada hata"
-
-#, fuzzy
-#~ msgid "Unable to seek"
-#~ msgstr "<%s> vektörü kapatılamıyor"
-
-#, fuzzy
-#~ msgid "Seek offset out of range"
-#~ msgstr "İndeks aralık dışında"
 
 #, fuzzy
 #~ msgid "Description:"
@@ -5500,10 +5551,6 @@ msgstr ""
 #~ msgstr "Kesişimler: %d"
 
 #, fuzzy
-#~ msgid "Unable to delete feature id %d from vector map <%s>"
-#~ msgstr "<%s> vektör haritası silinemiyor"
-
-#, fuzzy
 #~ msgid "Unable to read header file of vector map <%s>"
 #~ msgstr "<%s> raster haritasının kategori dosyası okunamıyor"
 
@@ -5594,18 +5641,6 @@ msgstr ""
 #, fuzzy
 #~ msgid "Uknown column <%s>"
 #~ msgstr "Bilinmeyen sütun tipi (sütun <%s>)"
-
-#, fuzzy
-#~ msgid "Unable to load data from database"
-#~ msgstr "<%s> tablosundan veri alınamadı"
-
-#, fuzzy
-#~ msgid "Problem loading category values"
-#~ msgstr "Kategori değerleri"
-
-#, fuzzy
-#~ msgid "Unable to open select cursor: %s"
-#~ msgstr "Seçme imleci açılamıyor: '%s'"
 
 #, fuzzy
 #~ msgid "Usage"
