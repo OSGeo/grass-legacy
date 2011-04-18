@@ -272,8 +272,8 @@ class GMFrame(wx.Frame):
             import psmap
         except:
             gcmd.GError(parent = self.parent,
-                        message = _("Hardcopy Map Output Utility is not available. You can install it by "
-                                    "'g.extension -s svnurl=https://svn.osgeo.org/grass/grass-addons extension=psmap'"))
+                        message = _("Hardcopy Map Output Utility is not available. You can install it by %s") % \
+                            'g.extension.py -s svnurl=https://svn.osgeo.org/grass/grass-addons extension=wx.psmap')
             return
         
         win = psmap.PsMapFrame(parent = self)
