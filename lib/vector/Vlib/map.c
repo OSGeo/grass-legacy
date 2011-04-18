@@ -23,6 +23,7 @@
 #include <dirent.h>
 #include <string.h>
 #include <unistd.h>
+#include <errno.h>
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <fcntl.h>
@@ -522,7 +523,7 @@ int Vect_delete(const char *map)
 	G_debug(3, "delete file '%s'", buf);
 	ret = unlink(buf);
 	if (ret == -1) {
-	    G_warning(_("Unable to delete file '%s'"), buf);
+	    G_warning(_("Unable to delete file '%s'. Reason: %s"), buf, strerror(errno));
 	    closedir(dir);
 	    return -1;
 	}
@@ -539,7 +540,7 @@ int Vect_delete(const char *map)
     ret = rename(buf, tmp);
 
     if (ret == -1) {
-	G_warning(_("Unable to rename directory '%s' to '%s'"), buf, tmp);
+	G_warning(_("Unable to rename directory '%s' to '%s'. Reason: %s"), buf, tmp, strerror(errno));
 	return -1;
     }
 
@@ -547,7 +548,7 @@ int Vect_delete(const char *map)
     /* Warning: remove() fails on Windows */
     ret = rmdir(tmp);
     if (ret == -1) {
-	G_warning(_("Unable to remove directory '%s'"), tmp);
+	G_warning(_("Unable to remove directory '%s'. Reason: %s"), tmp, strerror(errno));
 	return -1;
     }
 
