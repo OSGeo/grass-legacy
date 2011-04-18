@@ -96,7 +96,7 @@
 	    </menuitem>
 	    <separator />
 	    <menuitem>
-	      <label>Aggregate ASCII xyz import</label>
+	      <label>ASCII x,y,z point import and gridding</label>
 	      <help>Create a raster map from an assemblage of many coordinates using univariate statistics.</help>
 	      <keywords>raster,import,LIDAR</keywords>
 	      <handler>OnMenuCmd</handler>
@@ -208,8 +208,8 @@
 	    </menuitem>
 	    <menuitem>
 	      <label>Historical GRASS vector import (all maps)</label>
-	      <help>Convert all old GRASS &lt; Ver5.7 vector maps in current mapset to current format</help>
-	      <keywords>vector,import</keywords>
+	      <help>Converts all older versions of GRASS vector maps in current mapset to current format.</help>
+	      <keywords>vector,import,conversion</keywords>
 	      <handler>OnMenuCmd</handler>
 	      <command>v.convert.all</command>
 	    </menuitem>
@@ -325,7 +325,7 @@
 	      <command>r.out.ascii</command>
 	    </menuitem>
 	    <menuitem>
-	      <label>ASCII x,y,z export</label>
+	      <label>ASCII x,y,z points export</label>
 	      <help>Export a raster map to a text file as x,y,z values based on cell centers.</help>
 	      <keywords>raster,export</keywords>
 	      <handler>OnMenuCmd</handler>
@@ -355,9 +355,9 @@
 	    </menuitem>
 	    <separator />
 	    <menuitem>
-	      <label>Binary export</label>
-	      <help>Exports a GRASS raster map to a binary array.</help>
-	      <keywords>raster,export</keywords>
+	      <label>Raw binary array export</label>
+	      <help>Exports a GRASS raster to a binary array.</help>
+	      <keywords>raster</keywords>
 	      <handler>OnMenuCmd</handler>
 	      <command>r.out.bin</command>
 	    </menuitem>
@@ -425,8 +425,8 @@
 	  <items>
 	    <menuitem>
 	      <label>Common export formats</label>
-	      <help>Converts to one of the supported OGR vector formats.</help>
-	      <keywords>vector,export</keywords>
+	      <help>Converts a vector map to any of the supported OGR vector formats.</help>
+	      <keywords>vector,export,ogr</keywords>
 	      <handler>OnMenuCmd</handler>
 	      <command>v.out.ogr</command>
 	    </menuitem>
@@ -505,7 +505,7 @@
 	  <label>Export database table</label>
 	  <items>
 	    <menuitem>
-	      <label>Multiple export formats using OGR</label>
+	      <label>Common export formats using OGR</label>
 	      <help>Exports attribute tables into various formats.</help>
 	      <keywords>database,attribute table</keywords>
 	      <handler>OnMenuCmd</handler>
@@ -539,23 +539,23 @@
 	  <items>
 	    <menuitem>
 	      <label>Copy</label>
-	      <help>Copies available data files in the user's current mapset search path and location to the appropriate element directories under the user's current mapset.</help>
-	      <keywords>general,map management</keywords>
+	      <help>Copies available data files in the current mapset search path to the user's current mapset.</help>
+	      <keywords>general,map management,copy</keywords>
 	      <handler>OnMenuCmd</handler>
 	      <command>g.copy</command>
 	    </menuitem>
 	    <separator />
 	    <menuitem>
 	      <label>List</label>
-	      <help>Lists available GRASS data base files of the user-specified data type to standard output.</help>
-	      <keywords>general,map management</keywords>
+	      <help>Lists available GIS elements of the user-specified data type.</help>
+	      <keywords>general,map management,list</keywords>
 	      <handler>OnMenuCmd</handler>
 	      <command>g.list</command>
 	    </menuitem>
 	    <menuitem>
 	      <label>List filtered</label>
 	      <help>Lists available GRASS data base files of the user-specified data type to standard output.</help>
-	      <keywords>general,map management</keywords>
+	      <keywords>general,map management,list</keywords>
 	      <handler>OnMenuCmd</handler>
 	      <command>g.mlist</command>
 	    </menuitem>
@@ -563,7 +563,7 @@
 	    <menuitem>
 	      <label>Rename</label>
 	      <help>Renames data base element files in the user's current mapset.</help>
-	      <keywords>general,map management</keywords>
+	      <keywords>general,map management,rename</keywords>
 	      <handler>OnMenuCmd</handler>
 	      <command>g.rename</command>
 	    </menuitem>
@@ -571,14 +571,14 @@
 	    <menuitem>
 	      <label>Delete</label>
 	      <help>Removes data base element files from the user's current mapset.</help>
-	      <keywords>general,map management</keywords>
+	      <keywords>general,map management,remove</keywords>
 	      <handler>OnMenuCmd</handler>
 	      <command>g.remove</command>
 	    </menuitem>
 	    <menuitem>
 	      <label>Delete filtered</label>
 	      <help>Removes data base element files from the user's current mapset.</help>
-	      <keywords>general,map management</keywords>
+	      <keywords>general,map management,remove,multi</keywords>
 	      <handler>OnMenuCmd</handler>
 	      <command>g.mremove</command>
 	    </menuitem>
@@ -810,13 +810,13 @@
 	  <label>Map projections</label>
 	  <items>
 	    <menuitem>
-	      <label>Display map projection</label>
-	      <help>Print projection information (in conventional GRASS format).</help>
-	      <keywords>general,projection</keywords>
-	      <handler>RunMenuCmd</handler>
-	      <command>g.proj -p</command>
-	    </menuitem>
-	    <menuitem>
+	     <label>Display map projection</label>
+	     <help>Print projection information (in conventional GRASS format).</help>
+	     <keywords>general,projection</keywords>
+	     <handler>RunMenuCmd</handler>
+	     <command>g.proj -p</command>
+	   </menuitem>
+	   <menuitem>
 	      <label>Manage projections</label>
 	      <help>Converts co-ordinate system descriptions (i.e. projection information) between various formats (including GRASS format).</help>
 	      <keywords>general,projection</keywords>
@@ -1153,7 +1153,7 @@
 	    <menuitem>
 	      <label>Cumulative movement costs</label>
 	      <help>Outputs a raster map layer showing the anisotropic cumulative cost of moving between different geographic locations on an input elevation raster map layer whose cell category values represent elevation combined with an input raster map layer whose cell values represent friction cost.</help>
-	      <keywords>raster</keywords>
+	      <keywords>raster,cost surface,cumulative costs</keywords>
 	      <handler>OnMenuCmd</handler>
 	      <command>r.walk</command>
 	    </menuitem>
@@ -1212,7 +1212,7 @@
 	    <menuitem>
 	      <label>Distance to features</label>
 	      <help>Generates a raster map layer of distance to features in input layer.</help>
-	      <keywords>raster</keywords>
+	      <keywords>raster,distance</keywords>
 	      <handler>OnMenuCmd</handler>
 	      <command>r.grow.distance</command>
 	    </menuitem>
@@ -1303,7 +1303,7 @@
 	    <menuitem>
 	      <label>SIMWE Sediment flux modeling</label>
 	      <help>Sediment transport and erosion/deposition simulation using path sampling method (SIMWE).</help>
-	      <keywords>raster,sediment flow,erosion,deposition</keywords>
+	      <keywords>raster,flow,hydrology,erosion,deposition</keywords>
 	      <handler>OnMenuCmd</handler>
 	      <command>r.sim.sediment</command>
 	    </menuitem>
@@ -1619,7 +1619,7 @@
 	    <menuitem>
 	      <label>Gaussian deviates surface</label>
 	      <help>GRASS module to produce a raster map layer of gaussian deviates whose mean and standard deviation can be expressed by the user. It uses a gaussian random number generator.</help>
-	      <keywords>raster</keywords>
+	      <keywords>raster,random</keywords>
 	      <handler>OnMenuCmd</handler>
 	      <command>r.surf.gauss</command>
 	    </menuitem>
@@ -1683,7 +1683,7 @@
 	    <menuitem>
 	      <label>IDW from raster points (alternate method for sparse points)</label>
 	      <help>Surface generation program.</help>
-	      <keywords>raster</keywords>
+	      <keywords>raster,interpolation</keywords>
 	      <handler>OnMenuCmd</handler>
 	      <command>r.surf.idw2</command>
 	    </menuitem>
@@ -1698,14 +1698,14 @@
 	    <menuitem>
 	      <label>Raster contours</label>
 	      <help>Surface generation program from rasterized contours.</help>
-	      <keywords>raster</keywords>
+	      <keywords>raster,interpolation</keywords>
 	      <handler>OnMenuCmd</handler>
 	      <command>r.surf.contour</command>
 	    </menuitem>
 	    <menuitem>
 	      <label>Regularized spline tension</label>
 	      <help>Spatial approximation and topographic analysis from given point or isoline data in vector format to floating point raster format using regularized spline with tension.</help>
-	      <keywords>vector</keywords>
+	      <keywords>vector,interpolation</keywords>
 	      <handler>OnMenuCmd</handler>
 	      <command>v.surf.rst</command>
 	    </menuitem>
@@ -1714,7 +1714,7 @@
 	      <label>Ordinary or block kriging</label>
 	      <help>Performs ordinary or block kriging.</help>
 	      <keywords>vector,interpolation,kriging</keywords>
-              <handler>RunMenuCmd</handler>
+	      <handler>RunMenuCmd</handler>
 	      <command>v.krige.py</command>
 	    </menuitem>
 	    <separator />
@@ -1734,7 +1734,7 @@
 	    <menuitem>
 	      <label>Basic raster metadata</label>
 	      <help>Output basic information about a raster map layer.</help>
-	      <keywords>raster</keywords>
+	      <keywords>raster,metadata</keywords>
 	      <handler>OnMenuCmd</handler>
 	      <command>r.info</command>
 	    </menuitem>
@@ -1791,7 +1791,7 @@
 	    <menuitem>
 	      <label>Total corrected area</label>
 	      <help>Surface area estimation for rasters.</help>
-	      <keywords>raster</keywords>
+	      <keywords>raster,surface,interpolation</keywords>
 	      <handler>OnMenuCmd</handler>
 	      <command>r.surf.area</command>
 	    </menuitem>
@@ -1879,7 +1879,7 @@
 	    <menuitem>
 	      <label>Rebuild topology on all vector maps</label>
 	      <help>Rebuilds topology on all vector maps in the current mapset.</help>
-	      <keywords>vector</keywords>
+	      <keywords>vector,topology</keywords>
 	      <handler>OnMenuCmd</handler>
 	      <command>v.build.all</command>
 	    </menuitem>
@@ -1968,17 +1968,17 @@
 	    <separator />
 	    <menuitem>
 	      <label>Create labels</label>
-	      <help>Create optimally placed labels for vector map(s)</help>
-	      <keywords>vector,paint labels</keywords>
-	      <handler>OnMenuCmd</handler>
-	      <command>v.label.sa</command>
-	    </menuitem>
-	    <menuitem>
-	      <label>Create optimally placed labels</label>
 	      <help>Creates paint labels for a vector map from attached attributes.</help>
 	      <keywords>vector,paint labels</keywords>
 	      <handler>OnMenuCmd</handler>
 	      <command>v.label</command>
+	    </menuitem>
+	    <menuitem>
+	      <label>Create optimally placed labels</label>
+	      <help>Create optimally placed labels for vector map(s)</help>
+	      <keywords>vector,paint labels</keywords>
+	      <handler>OnMenuCmd</handler>
+	      <command>v.label.sa</command>
 	    </menuitem>
 	    <separator />
 	    <menuitem>
@@ -2254,7 +2254,7 @@
 	    <menuitem>
 	      <label>Patch vector maps</label>
 	      <help>Create a new vector map layer by combining other vector map layers.</help>
-	      <keywords>vector</keywords>
+	      <keywords>vector,geometry</keywords>
 	      <handler>OnMenuCmd</handler>
 	      <command>v.patch</command>
 	    </menuitem>
@@ -2301,7 +2301,7 @@
 	    <menuitem>
 	      <label>Delaunay triangles</label>
 	      <help>Creates a Delaunay triangulation from an input vector map containing points or centroids.</help>
-	      <keywords>vector</keywords>
+	      <keywords>vector,geometry</keywords>
 	      <handler>OnMenuCmd</handler>
 	      <command>v.delaunay</command>
 	    </menuitem>
@@ -2317,7 +2317,7 @@
 	<menuitem>
 	  <label>Generate grid</label>
 	  <help>Creates a GRASS vector map of a user-defined grid.</help>
-	  <keywords>vector</keywords>
+	  <keywords>vector,geometry</keywords>
 	  <handler>OnMenuCmd</handler>
 	  <command>v.mkgrid</command>
 	</menuitem>
@@ -2859,6 +2859,14 @@
 	      <keywords>database,attribute table,SQL</keywords>
 	      <handler>OnMenuCmd</handler>
 	      <command>db.copy</command>
+	    </menuitem>
+	    <separator />
+	    <menuitem>
+	      <label>Drop column</label>
+	      <help>Drops a column from selected attribute table</help>
+	      <keywords>database,attribute table</keywords>
+	      <handler>OnMenuCmd</handler>
+	      <command>db.dropcol</command>
 	    </menuitem>
 	    <separator />
 	    <menuitem>
