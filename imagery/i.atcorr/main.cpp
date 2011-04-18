@@ -29,7 +29,9 @@
 
 * Addition of IRS-1C LISS, Feb 2009: Markus Neteler
 
-TODO: use dynamic allocation for TiCache 
+* input elevation/visibility map: efficient cache with dynamic memory 
+* allocation: Markus Metz, Apr 2011
+
 ***************************************************************************/
 
 #include <cstdlib>
@@ -42,6 +44,14 @@ extern "C" {
 
 #include "Transform.h"
 #include "6s.h"
+#include "rbtree.h"
+
+/* TICache: create 1 meter bins for altitude in km */
+/* 10m bins are also ok */
+/* BIN_ALT = 1000 / <bin size in meters> */
+#define BIN_ALT 1000.
+/* TICache: create 1 km bins for visibility */
+#define BIN_VIS 1.
 
 /* Input options and flags */
 struct Options
@@ -49,7 +59,7 @@ struct Options
     /* options */
     struct Option *iimg;    /* input satellite image */
     struct Option *iscl;    /* input data is scaled to this range */
-    struct Option *ialt;    /* an input elevation map in km used to increase */
+    struct Option *ialt;    /* an input elevation map in meters used to increase */
                             /* atmospheric correction accuracy, including this */
                             /* will make computations take much, much longer */
     struct Option *ivis;    /* an input visibility map in km (same purpose and effect as ialt) */
@@ -71,9 +81,12 @@ struct ScaleRange
     int max;
 };
 
-
-int hit = 0;
-int mis = 0;
+struct RBitem
+{
+    int alt;		/* elevation */
+    int vis;		/* visibility */
+    TransformInput ti;	/* transformation parameters */
+};
 
 /* function prototypes */
 static void adjust_region(char *, const char *);
@@ -126,138 +139,88 @@ static void write_fp_to_cell(int ofd, FCELL* buf)
     G_put_raster_row(ofd, cbuf, CELL_TYPE);
 }
 
+/* compare function for RB tree */
+static int compare_hv(const void *ti_a, const void *ti_b)
+{
+    struct RBitem *a, *b;
 
-/* See also Cache note below */
+    a = (struct RBitem *)ti_a;
+    b = (struct RBitem *)ti_b;
+
+    /* check most common case first
+     * also faster if either an altitude or a visibility map is given,
+     * but not both */
+    if (a->alt == b->alt) {
+	if (a->vis == b->vis)
+	    return 0;
+	if (a->vis > b->vis)
+	    return 1;
+	else if (a->vis < b->vis)
+	    return -1;
+    }
+    else if (a->alt > b->alt)
+	return 1;
+    else if (a->alt < b->alt)
+	return -1;
+
+    /* should not be reached */
+    return 0;
+}
+
+/* Cache for transformation input parameters */
 class TICache
 {
-    enum TICacheSize
-    {
-        MAX_TIs = 4096 /* this value is a guess, increase it if in general 
-                        * more categories are used. TODO: use dynamic allocation
-                        * since 4096 is the limit on 32bit */
-    };
-    TransformInput tis[MAX_TIs];
-    float alts[MAX_TIs];
-    int p;
+    struct RB_TREE *RBTree;
+    unsigned int tree_size;
 
-public:
-    TICache() { p = 0; for(int i = 0; i < MAX_TIs; i++) alts[i] = -1; }
-    int search(float alt) { 
-	for(int i = 0; i < MAX_TIs; i++) 
-	    if(alt == alts[i]) 
-	    {
-		hit++;
-		return i;
-	    } 
-	mis++;
-	return -1; 
+  private:
+    struct RBitem set_alt_vis(float alt, float vis)
+    {
+	struct RBitem rbitem;
+
+	/* although alt and vis are already rounded,
+	 * the + 0.5 is needed for fp representation errors */
+	/* alt has been converted to kilometers */
+	rbitem.alt = (int) (alt * BIN_ALT + 0.5);
+	/* vis should be kilometers */
+	rbitem.vis = (int) (vis + 0.5);
+	
+	return rbitem;
     }
 
-    TransformInput get(int i) { return tis[i]; }
-    void add(TransformInput ti, float alt) { 
-	tis[p] = ti; 
-	alts[p] = alt; 
-	p++; 
-	if(p >= MAX_TIs) p = 0; 
+  public:
+      TICache()
+    {
+	RBTree = rbtree_create(compare_hv, sizeof(struct RBitem));
+	tree_size = 0;
+    }
+    int search(float alt, float vis, TransformInput *ti)
+    {
+	struct RBitem search_ti = set_alt_vis(alt, vis);
+	struct RBitem *found_ti;
+
+	found_ti = (struct RBitem *)rbtree_find(RBTree, &search_ti);
+	if (found_ti) {
+	    *ti = found_ti->ti;
+	    return 1;
+	}
+	else
+	    return 0;
+
+    }
+
+    void add(TransformInput ti, float alt, float vis)
+    {
+	struct RBitem insert_ti = set_alt_vis(alt, vis);
+
+	/* add safety check here */
+	tree_size++;
+
+	insert_ti.ti = ti;
+
+	rbtree_insert(RBTree, &insert_ti);
     }
 };
-
-
-/* the transform input map, is a array of ticaches.
-   The first key is the visibility which matches to a TICache for the altitudes.
-   This code is horrible, i just spent 20min writing and 5min debugging it. */
-
-/* Cache note:
-   The DEM cases are in range 0 < DEM < 8888 for the World in case of using an 
-   integer DEM values in meters. So the cache should ideally store 8888 different
-   cases for the World-type conditions if all happen in the same image. */
-
-class TIMap
-{
-    enum TIMapSize
-    {
-	MAX_TICs = 4096  /* this value is a guess. It means that <size> TI's will be 
-                          * the max combinations of vis/alt pairs. TODO: use dynamic allocation
-                          * since 4096 is the limit on 32bit */
-    };
-
-    TICache tic[MAX_TICs]; /* array of TICaches */
-    float visi[MAX_TICs];
-    int p;
-
-public:
-    struct Position
-    {
-	int i, j;
-	Position() : i(-1), j(-1) {}
-	Position(int x, int y) : i(x), j(y) {}
-	bool valid() { return i != -1 && j != -1; }
-    };	
-	
-    TIMap() { p = 0; for(int i = 0; i < MAX_TICs; i++) visi[i] = -1; }
-    Position search(float vis, float alt) { 
-	for(int i = 0; i < MAX_TICs; i++)
-	    if(vis == visi[i]) {
-		Position pos;
-		pos.i = i;
-		pos.j = tic[i].search(alt);
-		return pos;
-	    } 
-	return Position();
-    }
-
-    TransformInput get(Position pos) { return tic[pos.i].get(pos.j); }
-
-    void add(TransformInput ti, float vis, float alt) {
-	tic[p].add(ti, alt);
-	visi[p] = vis;
-	p++;
-	if(p >= MAX_TICs) p = 0;
-    }
-};
-
-
-struct IntPair
-{
-    FCELL x;
-    FCELL y;
-	
-    IntPair(FCELL i, FCELL j) : x(i), y(j) {}
-	
-    bool operator<(const IntPair& b) const
-	{
-	    if(x < b.x) return true;
-	    else if(x > b.x) return false;
-	    else if(y < b.y) return true;
-	    return false;
-	}	
-};
-
-
-typedef std::map<IntPair, TransformInput> CacheMap;
-
-
-const TransformInput& optimize_va(const FCELL& vis, const FCELL& alt)
-{
-    static CacheMap timap;
-    static TransformInput ti;
-
-    IntPair key(vis, alt);
-    CacheMap::iterator it = timap.find(key);
-
-    if(it != timap.end()) /* search found key */
-    {
-	ti = (*it).second;
-    }
-    else
-    {
-	pre_compute_hv(alt, vis);
-	ti = compute();
-	timap.insert(std::make_pair(key, ti));
-    }
-	
-    return ti;
-}	
 
 
 /* Process the raster and do atmospheric corrections.
@@ -289,8 +252,10 @@ static void process_raster(int ifd, InputMask imask, ScaleRange iscale,
     TransformInput ti;
     ti = compute();
 
-    TICache ticache;    /* use this to increase computation speed when an elevation map with categories are given */
-	
+    /* use a cache to increase computation speed when an elevation map 
+     * and/or a visibility map is given */
+    TICache ticache;
+
     /* allocate memory for buffers */
     buf = (FCELL*)G_allocate_raster_buf(FCELL_TYPE);
     if(ialt_fd >= 0) alt = (FCELL*)G_allocate_raster_buf(FCELL_TYPE);
@@ -330,15 +295,40 @@ static void process_raster(int ifd, InputMask imask, ScaleRange iscale,
 	        G_set_f_null_value(&buf[col], 1);
 	        continue;
 	    }
-	    if (ialt_fd >= 0)
-		alt[col] /= 1000.0f; /* converting to km from input which should be in meter */
+	    if (ialt_fd >= 0) {
+		if (alt[col] < 0)
+		    alt[col] = 0; /* on or below sea level, all the same for 6S */
+		else
+		    alt[col] /= 1000.0f;	/* converting to km from input which should be in meter */
+
+		/* round to nearest altitude bin */
+		/* rounding result: watch out for fp representation error */
+		alt[col] = ((int) (alt[col] * BIN_ALT + 0.5)) / BIN_ALT;
+	    }
+	    if (ivis_fd >= 0) {
+		if (vis[col] < 0)
+		    vis[col] = 0; /* negative visibility is invalid, print a WARNING ? */
+
+		/* round to nearest visibility bin */
+		/* rounding result: watch out for fp representation error */
+		vis[col] = ((int) (vis[col] + 0.5));
+	    }
 
             /* check if both maps are active and if whether any value has changed */
             if((ialt_fd >= 0) && (ivis_fd >= 0) && ((prev_vis != vis[col]) || (prev_alt != alt[col])))
             {
                	prev_alt = alt[col]; /* update new values */
                	prev_vis = vis[col];
- 		if(optimize) ti = optimize_va(vis[col], alt[col]); /* try to optimize? */
+		if (optimize) {
+		    int in_cache = ticache.search(alt[col], vis[col], &ti);
+
+		    if (!in_cache) {
+			pre_compute_hv(alt[col], vis[col]);	/* re-compute transformation inputs */
+			ti = compute();	/* ... */
+
+			ticache.add(ti, alt[col], vis[col]);
+		    }
+		}
 		else { /* no optimizations */
 		    pre_compute_hv(alt[col], vis[col]);
 		    ti = compute();
@@ -350,18 +340,16 @@ static void process_raster(int ifd, InputMask imask, ScaleRange iscale,
                 {
                     prev_vis = vis[col];        /* keep track of previous visibility */
                     
-                    if(optimize)
-                    {
-                        int p = ticache.search(vis[col]);
-                        if(p >= 0) ti = ticache.get(p);
-                        else
-                        {
-                            pre_compute_v(vis[col]);    /* re-compute transformation inputs */
-                            ti = compute();             /* ... */
+		    if (optimize) {
+			int in_cache = ticache.search(0, vis[col], &ti);
 
-                            ticache.add(ti, vis[col]);                        
-                        }
-                    }
+			if (!in_cache) {
+			    pre_compute_v(vis[col]);	/* re-compute transformation inputs */
+			    ti = compute();	/* ... */
+
+			    ticache.add(ti, 0, vis[col]);
+			}
+		    }
                     else
                     {
                         pre_compute_v(vis[col]);    /* re-compute transformation inputs */
@@ -373,18 +361,16 @@ static void process_raster(int ifd, InputMask imask, ScaleRange iscale,
                 {
                     prev_alt = alt[col];        /* keep track of previous altitude */
 
-                    if(optimize)
-                    {
-                        int p = ticache.search(alt[col]);
-                        if(p >= 0) ti = ticache.get(p);
-                        else
-                        {
-                            pre_compute_h(alt[col]);    /* re-compute transformation inputs */
-                            ti = compute();             /* ... */
+		    if (optimize) {
+			int in_cache = ticache.search(alt[col], 0, &ti);
 
-                            ticache.add(ti, alt[col]);
-                        }
-                    }
+			if (!in_cache) {
+			    pre_compute_h(alt[col]);	/* re-compute transformation inputs */
+			    ti = compute();	/* ... */
+
+			    ticache.add(ti, alt[col], 0);
+			}
+		    }
                     else
                     {
                         pre_compute_h(alt[col]);    /* re-compute transformation inputs */
@@ -525,7 +511,8 @@ static struct Options define_options(void)
 
     opts.optimize = G_define_flag();
     opts.optimize->key = 'o';
-    opts.optimize->description = _("Try to increase computation speed when categorized altitude or/and visibility map is used");
+    opts.optimize->description =
+	_("Try to increase computation speed when altitude and/or visibility map is used");
 
     return opts;
 }
@@ -573,6 +560,7 @@ int main(int argc, char* argv[])
     int ivis_fd = -1;       /* input visibility map's file descriptor */
     const char *iimg_mapset, *ialt_mapset, *iviz_mapset;
     struct History hist;
+    struct Cell_head orig_window;
     
     /* Define module */
     define_module();
@@ -592,6 +580,7 @@ int main(int argc, char* argv[])
 	G_fatal_error(_("Unable to open raster map <%s>"),
 		       G_fully_qualified_name(opts.iimg->answer, iimg_mapset));
 
+    G_get_set_window(&orig_window);
     adjust_region(opts.iimg->answer, iimg_mapset);
         
     if(opts.ialt->answer) {
@@ -638,7 +627,15 @@ int main(int argc, char* argv[])
     if(opts.etmbefore->answer) imask = (InputMask)(imask | ETM_BEFORE);
     if(opts.etmafter->answer) imask = (InputMask)(imask | ETM_AFTER);
 
+    if ((ialt_fd >= 0 || ivis_fd >= 0) && !opts.optimize->answer) {
+	G_message(_("An elevation and/or visibility map is given, but the optimization flag is not set."));
+	G_message(_("This can take some time."));
+    }
+
+    /* switch on optimization automatically if elevation and/or visibility map is given? */
+
     /* process the input raster and produce our atmospheric corrected output raster. */
+    G_message(_("Atmospheric correction..."));
     process_raster(iimg_fd, imask, iscale, ialt_fd, ivis_fd,
                    oimg_fd, opts.oflt->answer, oscale, opts.optimize->answer);
 
@@ -656,6 +653,9 @@ int main(int argc, char* argv[])
     /* Copy the colors of the input raster to the output raster.
        Scaling is ignored and color ranges might not be correct. */
     copy_colors(opts.iimg->answer, iimg_mapset, opts.oimg->answer);
+
+    G_set_window(&orig_window);
+    G_message(_("Atmospheric correction complete."));
 
     exit(EXIT_SUCCESS);
 }
