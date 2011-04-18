@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: grasstcl_ja\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-01-03 15:46+0100\n"
+"POT-Creation-Date: 2011-04-19 00:30+0200\n"
 "PO-Revision-Date: 2010-02-15 14:06+0900\n"
 "Last-Translator: ueda <nao@locapoint.com>\n"
 "Language-Team: Japanese <grass-translations@lists.osgeo.org>\n"
@@ -193,7 +193,7 @@ msgstr "設定は既にオープンしています"
 
 #: ../vector/v.digit/settings.tcl:174 ../lib/init/epsg_option.tcl:311
 #: ../lib/init/file_option.tcl:264 ../gui/tcltk/gis.m/rules.tcl:170
-#: ../gui/tcltk/gis.m/gm.tcl:459 ../gui/tcltk/gis.m/dnviz.tcl:228
+#: ../gui/tcltk/gis.m/gm.tcl:465 ../gui/tcltk/gis.m/dnviz.tcl:228
 #: ../gui/tcltk/gis.m/animate.tcl:536
 msgid "OK"
 msgstr "OK"
@@ -285,8 +285,8 @@ msgstr "OK"
 #: ../lib/gtcltk/select.tcl:210 ../lib/init/epsg_option.tcl:167
 #: ../lib/init/epsg_option.tcl:314 ../lib/init/file_option.tcl:115
 #: ../lib/init/file_option.tcl:267 ../gui/tcltk/gis.m/rules.tcl:172
-#: ../gui/tcltk/gis.m/georect.tcl:703 ../gui/tcltk/gis.m/gm.tcl:462
-#: ../gui/tcltk/gis.m/gm.tcl:537 ../gui/tcltk/gis.m/dnviz.tcl:230
+#: ../gui/tcltk/gis.m/georect.tcl:703 ../gui/tcltk/gis.m/gm.tcl:468
+#: ../gui/tcltk/gis.m/gm.tcl:543 ../gui/tcltk/gis.m/dnviz.tcl:230
 #: ../gui/tcltk/gis.m/animate.tcl:538 ../gui/tcltk/gis.m/mapcanvas.tcl:921
 msgid "Cancel"
 msgstr "キャンセル"
@@ -329,7 +329,7 @@ msgid "Run"
 msgstr "実行"
 
 #: ../lib/gis/gui.tcl:509 ../lib/init/gis_set.tcl:531
-#: ../gui/tcltk/gis.m/rastnums.tcl:163 ../gui/tcltk/gis.m/rastnums.tcl:166
+#: ../gui/tcltk/gis.m/rastnums.tcl:165 ../gui/tcltk/gis.m/rastnums.tcl:168
 #: ../gui/tcltk/gis.m/raster.tcl:209 ../gui/tcltk/gis.m/raster.tcl:213
 #: ../gui/tcltk/gis.m/runandoutput.tcl:47 ../gui/tcltk/gis.m/histogram.tcl:163
 #: ../gui/tcltk/gis.m/histogram.tcl:166 ../gui/tcltk/gis.m/barscale.tcl:180
@@ -337,19 +337,19 @@ msgstr "実行"
 #: ../gui/tcltk/gis.m/rules.tcl:143 ../gui/tcltk/gis.m/georect.tcl:708
 #: ../gui/tcltk/gis.m/georect.tcl:712 ../gui/tcltk/gis.m/georect.tcl:1142
 #: ../gui/tcltk/gis.m/georect.tcl:1146 ../gui/tcltk/gis.m/dnviz.tcl:208
-#: ../gui/tcltk/gis.m/dnviz.tcl:212 ../gui/tcltk/gis.m/dtext.tcl:177
-#: ../gui/tcltk/gis.m/dtext.tcl:181 ../gui/tcltk/gis.m/thematic.tcl:265
-#: ../gui/tcltk/gis.m/thematic.tcl:269 ../gui/tcltk/gis.m/legend.tcl:219
+#: ../gui/tcltk/gis.m/dnviz.tcl:212 ../gui/tcltk/gis.m/dtext.tcl:179
+#: ../gui/tcltk/gis.m/dtext.tcl:183 ../gui/tcltk/gis.m/thematic.tcl:269
+#: ../gui/tcltk/gis.m/thematic.tcl:273 ../gui/tcltk/gis.m/legend.tcl:219
 #: ../gui/tcltk/gis.m/legend.tcl:222 ../gui/tcltk/gis.m/profile.tcl:131
-#: ../gui/tcltk/gis.m/profile.tcl:135 ../gui/tcltk/gis.m/gridline.tcl:162
-#: ../gui/tcltk/gis.m/gridline.tcl:214 ../gui/tcltk/gis.m/gridline.tcl:241
+#: ../gui/tcltk/gis.m/profile.tcl:135 ../gui/tcltk/gis.m/gridline.tcl:166
+#: ../gui/tcltk/gis.m/gridline.tcl:218 ../gui/tcltk/gis.m/gridline.tcl:249
 #: ../gui/tcltk/gis.m/frames.tcl:118 ../gui/tcltk/gis.m/frames.tcl:122
-#: ../gui/tcltk/gis.m/chart.tcl:208 ../gui/tcltk/gis.m/chart.tcl:212
+#: ../gui/tcltk/gis.m/chart.tcl:210 ../gui/tcltk/gis.m/chart.tcl:214
 #: ../gui/tcltk/gis.m/labels.tcl:136 ../gui/tcltk/gis.m/labels.tcl:140
 #: ../gui/tcltk/gis.m/vector.tcl:368 ../gui/tcltk/gis.m/vector.tcl:372
 #: ../gui/tcltk/gis.m/animate.tcl:408 ../gui/tcltk/gis.m/animate.tcl:412
 #: ../gui/tcltk/gis.m/animate.tcl:481 ../gui/tcltk/gis.m/animate.tcl:484
-#: ../gui/tcltk/gis.m/rastarrows.tcl:164 ../gui/tcltk/gis.m/rastarrows.tcl:167
+#: ../gui/tcltk/gis.m/rastarrows.tcl:169 ../gui/tcltk/gis.m/rastarrows.tcl:172
 #: ../gui/tcltk/gis.m/rgbhis.tcl:156 ../gui/tcltk/gis.m/rgbhis.tcl:165
 #: ../gui/tcltk/d.m/raster.tcl:90 ../gui/tcltk/d.m/raster.tcl:94
 #: ../gui/tcltk/d.m/barscale.tcl:74 ../gui/tcltk/d.m/barscale.tcl:78
@@ -373,7 +373,7 @@ msgstr "クリア"
 
 #: ../lib/gis/gui.tcl:511 ../lib/init/epsg_option.tcl:394
 #: ../lib/init/epsg_option.tcl:438 ../gui/tcltk/gis.m/runandoutput.tcl:48
-#: ../gui/tcltk/gis.m/mapprint.tcl:366 ../gui/tcltk/gis.m/gmmenu.tcl:90
+#: ../gui/tcltk/gis.m/mapprint.tcl:372 ../gui/tcltk/gis.m/gmmenu.tcl:90
 #: ../gui/tcltk/d.m/print.tcl:281 ../gui/tcltk/d.m/menu.tcl:176
 msgid "Close"
 msgstr "閉じる"
@@ -764,6 +764,17 @@ msgstr ""
 "警告: ディレクトリの変更ができません <%s>.\n"
 "ディレクトリの権限をチェックしてください"
 
+#: ../lib/init/gis_set.tcl:936
+msgid "ERROR: unable to read GISRC"
+msgstr ""
+
+#: ../lib/init/gis_set.tcl:937
+#, tcl-format
+msgid ""
+"Something went wrong while processing GISRC file named \"%s\".\n"
+"It's a fatal error. GRASS will not start till issue with GISRC file is fixed."
+msgstr ""
+
 #: ../lib/init/file_option.tcl:73
 msgid "Define location using projection information in georeferenced file"
 msgstr "地理参照ファイルの投影法情報を使用したロケーションの定義"
@@ -797,43 +808,43 @@ msgstr ""
 "ファイルを指定してください"
 
 #: ../gui/tcltk/gis.m/cmd.tcl:75 ../gui/tcltk/gis.m/cmd.tcl:206
-#: ../gui/tcltk/gis.m/rastnums.tcl:79 ../gui/tcltk/gis.m/rastnums.tcl:369
+#: ../gui/tcltk/gis.m/rastnums.tcl:81 ../gui/tcltk/gis.m/rastnums.tcl:375
 #: ../gui/tcltk/gis.m/raster.tcl:87 ../gui/tcltk/gis.m/raster.tcl:480
 #: ../gui/tcltk/gis.m/histogram.tcl:85 ../gui/tcltk/gis.m/histogram.tcl:370
 #: ../gui/tcltk/gis.m/barscale.tcl:91 ../gui/tcltk/gis.m/barscale.tcl:401
 #: ../gui/tcltk/gis.m/rules.tcl:207 ../gui/tcltk/gis.m/georect.tcl:409
-#: ../gui/tcltk/gis.m/dtext.tcl:92 ../gui/tcltk/gis.m/dtext.tcl:401
-#: ../gui/tcltk/gis.m/thematic.tcl:107 ../gui/tcltk/gis.m/thematic.tcl:631
-#: ../gui/tcltk/gis.m/thematic.tcl:704 ../gui/tcltk/gis.m/legend.tcl:95
-#: ../gui/tcltk/gis.m/legend.tcl:505 ../gui/tcltk/gis.m/mapprint.tcl:194
-#: ../gui/tcltk/gis.m/mapprint.tcl:201 ../gui/tcltk/gis.m/gridline.tcl:99
-#: ../gui/tcltk/gis.m/gridline.tcl:406 ../gui/tcltk/gis.m/frames.tcl:78
-#: ../gui/tcltk/gis.m/frames.tcl:275 ../gui/tcltk/gis.m/chart.tcl:89
-#: ../gui/tcltk/gis.m/chart.tcl:465 ../gui/tcltk/gis.m/labels.tcl:78
+#: ../gui/tcltk/gis.m/dtext.tcl:94 ../gui/tcltk/gis.m/dtext.tcl:407
+#: ../gui/tcltk/gis.m/thematic.tcl:111 ../gui/tcltk/gis.m/thematic.tcl:640
+#: ../gui/tcltk/gis.m/thematic.tcl:713 ../gui/tcltk/gis.m/legend.tcl:95
+#: ../gui/tcltk/gis.m/legend.tcl:505 ../gui/tcltk/gis.m/mapprint.tcl:197
+#: ../gui/tcltk/gis.m/mapprint.tcl:204 ../gui/tcltk/gis.m/gridline.tcl:103
+#: ../gui/tcltk/gis.m/gridline.tcl:416 ../gui/tcltk/gis.m/frames.tcl:78
+#: ../gui/tcltk/gis.m/frames.tcl:275 ../gui/tcltk/gis.m/chart.tcl:91
+#: ../gui/tcltk/gis.m/chart.tcl:468 ../gui/tcltk/gis.m/labels.tcl:78
 #: ../gui/tcltk/gis.m/labels.tcl:279 ../gui/tcltk/gis.m/vector.tcl:196
 #: ../gui/tcltk/gis.m/vector.tcl:876 ../gui/tcltk/gis.m/animate.tcl:91
-#: ../gui/tcltk/gis.m/rastarrows.tcl:83 ../gui/tcltk/gis.m/rastarrows.tcl:357
+#: ../gui/tcltk/gis.m/rastarrows.tcl:88 ../gui/tcltk/gis.m/rastarrows.tcl:372
 #: ../gui/tcltk/gis.m/rgbhis.tcl:83 ../gui/tcltk/gis.m/rgbhis.tcl:362
 #: ../gui/tcltk/gis.m/mapcanvas.tcl:228 ../gui/tcltk/gis.m/mapcanvas.tcl:238
 msgid "Error creating tempfile"
 msgstr "テンポラリファイル作成エラー"
 
-#: ../gui/tcltk/gis.m/cmd.tcl:105 ../gui/tcltk/gis.m/rastnums.tcl:146
+#: ../gui/tcltk/gis.m/cmd.tcl:105 ../gui/tcltk/gis.m/rastnums.tcl:148
 #: ../gui/tcltk/gis.m/raster.tcl:185 ../gui/tcltk/gis.m/histogram.tcl:146
-#: ../gui/tcltk/gis.m/barscale.tcl:160 ../gui/tcltk/gis.m/dtext.tcl:166
-#: ../gui/tcltk/gis.m/thematic.tcl:247 ../gui/tcltk/gis.m/legend.tcl:200
-#: ../gui/tcltk/gis.m/gridline.tcl:147 ../gui/tcltk/gis.m/chart.tcl:190
+#: ../gui/tcltk/gis.m/barscale.tcl:160 ../gui/tcltk/gis.m/dtext.tcl:168
+#: ../gui/tcltk/gis.m/thematic.tcl:251 ../gui/tcltk/gis.m/legend.tcl:200
+#: ../gui/tcltk/gis.m/gridline.tcl:151 ../gui/tcltk/gis.m/chart.tcl:192
 #: ../gui/tcltk/gis.m/labels.tcl:118 ../gui/tcltk/gis.m/vector.tcl:344
-#: ../gui/tcltk/gis.m/rastarrows.tcl:147 ../gui/tcltk/gis.m/rgbhis.tcl:143
+#: ../gui/tcltk/gis.m/rastarrows.tcl:152 ../gui/tcltk/gis.m/rgbhis.tcl:143
 msgid "Opaque "
 msgstr "不透明"
 
-#: ../gui/tcltk/gis.m/cmd.tcl:109 ../gui/tcltk/gis.m/rastnums.tcl:150
+#: ../gui/tcltk/gis.m/cmd.tcl:109 ../gui/tcltk/gis.m/rastnums.tcl:152
 #: ../gui/tcltk/gis.m/raster.tcl:189 ../gui/tcltk/gis.m/histogram.tcl:150
-#: ../gui/tcltk/gis.m/barscale.tcl:164 ../gui/tcltk/gis.m/dtext.tcl:170
-#: ../gui/tcltk/gis.m/thematic.tcl:251 ../gui/tcltk/gis.m/legend.tcl:204
-#: ../gui/tcltk/gis.m/gridline.tcl:151 ../gui/tcltk/gis.m/chart.tcl:194
-#: ../gui/tcltk/gis.m/labels.tcl:122 ../gui/tcltk/gis.m/rastarrows.tcl:151
+#: ../gui/tcltk/gis.m/barscale.tcl:164 ../gui/tcltk/gis.m/dtext.tcl:172
+#: ../gui/tcltk/gis.m/thematic.tcl:255 ../gui/tcltk/gis.m/legend.tcl:204
+#: ../gui/tcltk/gis.m/gridline.tcl:155 ../gui/tcltk/gis.m/chart.tcl:196
+#: ../gui/tcltk/gis.m/labels.tcl:122 ../gui/tcltk/gis.m/rastarrows.tcl:156
 #: ../gui/tcltk/gis.m/rgbhis.tcl:147
 msgid " Transparent"
 msgstr " 透過"
@@ -842,52 +853,201 @@ msgstr " 透過"
 msgid "Command:"
 msgstr "コマンド："
 
-#: ../gui/tcltk/gis.m/rastnums.tcl:103 ../gui/tcltk/gis.m/raster.tcl:115
+#: ../gui/tcltk/gis.m/rastnums.tcl:105 ../gui/tcltk/gis.m/raster.tcl:115
 #: ../gui/tcltk/d.m/menu.tcl:77 ../gui/tcltk/d.m/menu.tcl:113
 msgid "Raster map"
 msgstr "ラスターマップ"
 
-#: ../gui/tcltk/gis.m/rastnums.tcl:106
+#: ../gui/tcltk/gis.m/rastnums.tcl:108
 #, tcl-format
 msgid "cell values for %s"
 msgstr "セル値 %s "
 
-#: ../gui/tcltk/gis.m/rastnums.tcl:134
+#: ../gui/tcltk/gis.m/rastnums.tcl:136
 msgid "Display cell values from raster map or image"
 msgstr "ラスターマップまたは画像のセル値を表示"
 
-#: ../gui/tcltk/gis.m/rastnums.tcl:140
+#: ../gui/tcltk/gis.m/rastnums.tcl:142
 msgid "  (resolution must be 100x100 or less)"
 msgstr "  (解像度は100x100以下で無ければなりません) "
 
-#: ../gui/tcltk/gis.m/rastnums.tcl:156
+#: ../gui/tcltk/gis.m/rastnums.tcl:158
 msgid "Raster to display: "
 msgstr "表示するラスター："
 
-#: ../gui/tcltk/gis.m/rastnums.tcl:172
+#: ../gui/tcltk/gis.m/rastnums.tcl:174
 msgid "Color for cell grid:       "
 msgstr "セルグリッド色:       "
 
-#: ../gui/tcltk/gis.m/rastnums.tcl:177
+#: ../gui/tcltk/gis.m/rastnums.tcl:179 ../gui/tcltk/gis.m/rastnums.tcl:196
+#: ../gui/tcltk/gis.m/raster.tcl:273 ../gui/tcltk/gis.m/legend.tcl:262
+#: ../gui/tcltk/gis.m/gridline.tcl:227 ../gui/tcltk/gis.m/gridline.tcl:233
+#: ../gui/tcltk/gis.m/gridline.tcl:258 ../gui/tcltk/gis.m/chart.tcl:292
+#: ../gui/tcltk/gis.m/rastarrows.tcl:201 ../gui/tcltk/gis.m/rastarrows.tcl:208
+#: ../gui/tcltk/gis.m/rastarrows.tcl:220 ../gui/tcltk/gis.m/rastarrows.tcl:227
+#, fuzzy
+msgid "white"
+msgstr "サイト"
+
+#: ../gui/tcltk/gis.m/rastnums.tcl:179 ../gui/tcltk/gis.m/rastnums.tcl:196
+#: ../gui/tcltk/gis.m/raster.tcl:273 ../gui/tcltk/gis.m/legend.tcl:262
+#: ../gui/tcltk/gis.m/gridline.tcl:227 ../gui/tcltk/gis.m/gridline.tcl:233
+#: ../gui/tcltk/gis.m/gridline.tcl:258 ../gui/tcltk/gis.m/chart.tcl:292
+#: ../gui/tcltk/gis.m/rastarrows.tcl:201 ../gui/tcltk/gis.m/rastarrows.tcl:208
+#: ../gui/tcltk/gis.m/rastarrows.tcl:220 ../gui/tcltk/gis.m/rastarrows.tcl:227
+msgid "grey"
+msgstr ""
+
+#: ../gui/tcltk/gis.m/rastnums.tcl:179 ../gui/tcltk/gis.m/rastnums.tcl:196
+#: ../gui/tcltk/gis.m/raster.tcl:273 ../gui/tcltk/gis.m/legend.tcl:262
+#: ../gui/tcltk/gis.m/gridline.tcl:227 ../gui/tcltk/gis.m/gridline.tcl:233
+#: ../gui/tcltk/gis.m/gridline.tcl:258 ../gui/tcltk/gis.m/chart.tcl:292
+#: ../gui/tcltk/gis.m/rastarrows.tcl:201 ../gui/tcltk/gis.m/rastarrows.tcl:208
+#: ../gui/tcltk/gis.m/rastarrows.tcl:220 ../gui/tcltk/gis.m/rastarrows.tcl:227
+msgid "gray"
+msgstr ""
+
+#: ../gui/tcltk/gis.m/rastnums.tcl:179 ../gui/tcltk/gis.m/rastnums.tcl:196
+#: ../gui/tcltk/gis.m/raster.tcl:273 ../gui/tcltk/gis.m/legend.tcl:262
+#: ../gui/tcltk/gis.m/gridline.tcl:227 ../gui/tcltk/gis.m/gridline.tcl:233
+#: ../gui/tcltk/gis.m/gridline.tcl:258 ../gui/tcltk/gis.m/chart.tcl:292
+#: ../gui/tcltk/gis.m/rastarrows.tcl:201 ../gui/tcltk/gis.m/rastarrows.tcl:208
+#: ../gui/tcltk/gis.m/rastarrows.tcl:220 ../gui/tcltk/gis.m/rastarrows.tcl:227
+msgid "black"
+msgstr ""
+
+#: ../gui/tcltk/gis.m/rastnums.tcl:179 ../gui/tcltk/gis.m/rastnums.tcl:196
+#: ../gui/tcltk/gis.m/raster.tcl:273 ../gui/tcltk/gis.m/legend.tcl:262
+#: ../gui/tcltk/gis.m/gridline.tcl:227 ../gui/tcltk/gis.m/gridline.tcl:233
+#: ../gui/tcltk/gis.m/gridline.tcl:258 ../gui/tcltk/gis.m/chart.tcl:292
+#: ../gui/tcltk/gis.m/rastarrows.tcl:201 ../gui/tcltk/gis.m/rastarrows.tcl:208
+#: ../gui/tcltk/gis.m/rastarrows.tcl:220 ../gui/tcltk/gis.m/rastarrows.tcl:227
+#, fuzzy
+msgid "brown"
+msgstr "増加"
+
+#: ../gui/tcltk/gis.m/rastnums.tcl:179 ../gui/tcltk/gis.m/rastnums.tcl:196
+#: ../gui/tcltk/gis.m/raster.tcl:273 ../gui/tcltk/gis.m/legend.tcl:262
+#: ../gui/tcltk/gis.m/gridline.tcl:227 ../gui/tcltk/gis.m/gridline.tcl:233
+#: ../gui/tcltk/gis.m/gridline.tcl:258 ../gui/tcltk/gis.m/chart.tcl:292
+#: ../gui/tcltk/gis.m/rastarrows.tcl:201 ../gui/tcltk/gis.m/rastarrows.tcl:208
+#: ../gui/tcltk/gis.m/rastarrows.tcl:220 ../gui/tcltk/gis.m/rastarrows.tcl:227
+msgid "red"
+msgstr ""
+
+#: ../gui/tcltk/gis.m/rastnums.tcl:179 ../gui/tcltk/gis.m/rastnums.tcl:196
+#: ../gui/tcltk/gis.m/raster.tcl:273 ../gui/tcltk/gis.m/legend.tcl:262
+#: ../gui/tcltk/gis.m/gridline.tcl:227 ../gui/tcltk/gis.m/gridline.tcl:233
+#: ../gui/tcltk/gis.m/gridline.tcl:258 ../gui/tcltk/gis.m/chart.tcl:292
+#: ../gui/tcltk/gis.m/rastarrows.tcl:201 ../gui/tcltk/gis.m/rastarrows.tcl:208
+#: ../gui/tcltk/gis.m/rastarrows.tcl:220 ../gui/tcltk/gis.m/rastarrows.tcl:227
+#, fuzzy
+msgid "orange"
+msgstr "完了"
+
+#: ../gui/tcltk/gis.m/rastnums.tcl:179 ../gui/tcltk/gis.m/rastnums.tcl:196
+#: ../gui/tcltk/gis.m/raster.tcl:273 ../gui/tcltk/gis.m/legend.tcl:262
+#: ../gui/tcltk/gis.m/gridline.tcl:227 ../gui/tcltk/gis.m/gridline.tcl:233
+#: ../gui/tcltk/gis.m/gridline.tcl:258 ../gui/tcltk/gis.m/chart.tcl:292
+#: ../gui/tcltk/gis.m/rastarrows.tcl:201 ../gui/tcltk/gis.m/rastarrows.tcl:208
+#: ../gui/tcltk/gis.m/rastarrows.tcl:220 ../gui/tcltk/gis.m/rastarrows.tcl:227
+msgid "yellow"
+msgstr ""
+
+#: ../gui/tcltk/gis.m/rastnums.tcl:179 ../gui/tcltk/gis.m/rastnums.tcl:196
+#: ../gui/tcltk/gis.m/raster.tcl:273 ../gui/tcltk/gis.m/legend.tcl:262
+#: ../gui/tcltk/gis.m/gridline.tcl:227 ../gui/tcltk/gis.m/gridline.tcl:233
+#: ../gui/tcltk/gis.m/gridline.tcl:258 ../gui/tcltk/gis.m/chart.tcl:292
+#: ../gui/tcltk/gis.m/rastarrows.tcl:201 ../gui/tcltk/gis.m/rastarrows.tcl:208
+#: ../gui/tcltk/gis.m/rastarrows.tcl:220 ../gui/tcltk/gis.m/rastarrows.tcl:227
+msgid "green"
+msgstr ""
+
+#: ../gui/tcltk/gis.m/rastnums.tcl:179 ../gui/tcltk/gis.m/rastnums.tcl:196
+#: ../gui/tcltk/gis.m/raster.tcl:273 ../gui/tcltk/gis.m/legend.tcl:262
+#: ../gui/tcltk/gis.m/gridline.tcl:227 ../gui/tcltk/gis.m/gridline.tcl:233
+#: ../gui/tcltk/gis.m/gridline.tcl:258 ../gui/tcltk/gis.m/chart.tcl:292
+#: ../gui/tcltk/gis.m/rastarrows.tcl:201 ../gui/tcltk/gis.m/rastarrows.tcl:208
+#: ../gui/tcltk/gis.m/rastarrows.tcl:220 ../gui/tcltk/gis.m/rastarrows.tcl:227
+#, fuzzy
+msgid "aqua"
+msgstr "不透明"
+
+#: ../gui/tcltk/gis.m/rastnums.tcl:179 ../gui/tcltk/gis.m/rastnums.tcl:196
+#: ../gui/tcltk/gis.m/raster.tcl:273 ../gui/tcltk/gis.m/legend.tcl:262
+#: ../gui/tcltk/gis.m/gridline.tcl:227 ../gui/tcltk/gis.m/gridline.tcl:233
+#: ../gui/tcltk/gis.m/gridline.tcl:258 ../gui/tcltk/gis.m/chart.tcl:292
+#: ../gui/tcltk/gis.m/rastarrows.tcl:201 ../gui/tcltk/gis.m/rastarrows.tcl:208
+#: ../gui/tcltk/gis.m/rastarrows.tcl:220 ../gui/tcltk/gis.m/rastarrows.tcl:227
+msgid "cyan"
+msgstr ""
+
+#: ../gui/tcltk/gis.m/rastnums.tcl:179 ../gui/tcltk/gis.m/rastnums.tcl:196
+#: ../gui/tcltk/gis.m/raster.tcl:273 ../gui/tcltk/gis.m/legend.tcl:262
+#: ../gui/tcltk/gis.m/gridline.tcl:227 ../gui/tcltk/gis.m/gridline.tcl:233
+#: ../gui/tcltk/gis.m/gridline.tcl:258 ../gui/tcltk/gis.m/chart.tcl:292
+#: ../gui/tcltk/gis.m/rastarrows.tcl:201 ../gui/tcltk/gis.m/rastarrows.tcl:208
+#: ../gui/tcltk/gis.m/rastarrows.tcl:220 ../gui/tcltk/gis.m/rastarrows.tcl:227
+msgid "indigo"
+msgstr ""
+
+#: ../gui/tcltk/gis.m/rastnums.tcl:179 ../gui/tcltk/gis.m/rastnums.tcl:196
+#: ../gui/tcltk/gis.m/raster.tcl:273 ../gui/tcltk/gis.m/legend.tcl:262
+#: ../gui/tcltk/gis.m/gridline.tcl:227 ../gui/tcltk/gis.m/gridline.tcl:233
+#: ../gui/tcltk/gis.m/gridline.tcl:258 ../gui/tcltk/gis.m/chart.tcl:292
+#: ../gui/tcltk/gis.m/rastarrows.tcl:201 ../gui/tcltk/gis.m/rastarrows.tcl:208
+#: ../gui/tcltk/gis.m/rastarrows.tcl:220 ../gui/tcltk/gis.m/rastarrows.tcl:227
+#, fuzzy
+msgid "blue"
+msgstr "テーブル"
+
+#: ../gui/tcltk/gis.m/rastnums.tcl:179 ../gui/tcltk/gis.m/rastnums.tcl:196
+#: ../gui/tcltk/gis.m/raster.tcl:273 ../gui/tcltk/gis.m/legend.tcl:262
+#: ../gui/tcltk/gis.m/gridline.tcl:227 ../gui/tcltk/gis.m/gridline.tcl:233
+#: ../gui/tcltk/gis.m/gridline.tcl:258 ../gui/tcltk/gis.m/chart.tcl:292
+#: ../gui/tcltk/gis.m/rastarrows.tcl:201 ../gui/tcltk/gis.m/rastarrows.tcl:208
+#: ../gui/tcltk/gis.m/rastarrows.tcl:220 ../gui/tcltk/gis.m/rastarrows.tcl:227
+msgid "purple"
+msgstr ""
+
+#: ../gui/tcltk/gis.m/rastnums.tcl:179 ../gui/tcltk/gis.m/rastnums.tcl:196
+#: ../gui/tcltk/gis.m/raster.tcl:273 ../gui/tcltk/gis.m/legend.tcl:262
+#: ../gui/tcltk/gis.m/gridline.tcl:227 ../gui/tcltk/gis.m/gridline.tcl:233
+#: ../gui/tcltk/gis.m/gridline.tcl:258 ../gui/tcltk/gis.m/chart.tcl:292
+#: ../gui/tcltk/gis.m/rastarrows.tcl:201 ../gui/tcltk/gis.m/rastarrows.tcl:208
+#: ../gui/tcltk/gis.m/rastarrows.tcl:220 ../gui/tcltk/gis.m/rastarrows.tcl:227
+msgid "violet"
+msgstr ""
+
+#: ../gui/tcltk/gis.m/rastnums.tcl:179 ../gui/tcltk/gis.m/rastnums.tcl:196
+#: ../gui/tcltk/gis.m/raster.tcl:273 ../gui/tcltk/gis.m/legend.tcl:262
+#: ../gui/tcltk/gis.m/gridline.tcl:227 ../gui/tcltk/gis.m/gridline.tcl:233
+#: ../gui/tcltk/gis.m/gridline.tcl:258 ../gui/tcltk/gis.m/chart.tcl:292
+#: ../gui/tcltk/gis.m/rastarrows.tcl:201 ../gui/tcltk/gis.m/rastarrows.tcl:208
+#: ../gui/tcltk/gis.m/rastarrows.tcl:220 ../gui/tcltk/gis.m/rastarrows.tcl:227
+msgid "magenta"
+msgstr ""
+
+#: ../gui/tcltk/gis.m/rastnums.tcl:181
 msgid "  cell values font "
 msgstr "  セル値のフォント "
 
-#: ../gui/tcltk/gis.m/rastnums.tcl:180 ../gui/tcltk/gis.m/histogram.tcl:179
+#: ../gui/tcltk/gis.m/rastnums.tcl:184 ../gui/tcltk/gis.m/histogram.tcl:179
 #: ../gui/tcltk/gis.m/barscale.tcl:204 ../gui/tcltk/gis.m/maptext.tcl:186
-#: ../gui/tcltk/gis.m/dtext.tcl:226 ../gui/tcltk/gis.m/legend.tcl:265
-#: ../gui/tcltk/gis.m/gridline.tcl:187
+#: ../gui/tcltk/gis.m/dtext.tcl:232 ../gui/tcltk/gis.m/legend.tcl:265
+#: ../gui/tcltk/gis.m/gridline.tcl:191
 msgid "select font for text"
 msgstr "テキストのフォント選択"
 
-#: ../gui/tcltk/gis.m/rastnums.tcl:187
+#: ../gui/tcltk/gis.m/rastnums.tcl:191
 msgid "Color for cell values:   "
 msgstr "セル値の色："
 
-#: ../gui/tcltk/gis.m/rastnums.tcl:192
+#: ../gui/tcltk/gis.m/rastnums.tcl:198
 msgid "use raster colors for cell values"
 msgstr "セル値にラスターカラーを使用"
 
-#: ../gui/tcltk/gis.m/rastnums.tcl:274
+#: ../gui/tcltk/gis.m/rastnums.tcl:280
 msgid ""
 "Cell values can only be displayed\n"
 "for regions of < 10,000 cells"
@@ -895,11 +1055,11 @@ msgstr ""
 "セル値を表示できるのは\n"
 "領域内で最大10,000までです"
 
-#: ../gui/tcltk/gis.m/rastnums.tcl:279
+#: ../gui/tcltk/gis.m/rastnums.tcl:285
 msgid "Constrain map to region geometry?"
 msgstr "ジオメトリをマップに割り当てますか？"
 
-#: ../gui/tcltk/gis.m/rastnums.tcl:280
+#: ../gui/tcltk/gis.m/rastnums.tcl:286
 msgid ""
 "Cell values can only be displayed for \n"
 "regions of < 10,000 cells. Map in explore mode may contain more than 10,000 "
@@ -912,11 +1072,11 @@ msgstr ""
 "\n"
 "セルの値を表示するため領域のジオメトリを制約することを提案します"
 
-#: ../gui/tcltk/gis.m/rastnums.tcl:282 ../gui/tcltk/gis.m/maptool.tcl:327
+#: ../gui/tcltk/gis.m/rastnums.tcl:288 ../gui/tcltk/gis.m/maptool.tcl:327
 msgid "Constrain map to region geometry"
 msgstr "ジオメトリをマップに割り当てます"
 
-#: ../gui/tcltk/gis.m/rastnums.tcl:282
+#: ../gui/tcltk/gis.m/rastnums.tcl:288
 msgid "Leave in explore mode"
 msgstr "エクスプローラーモードを終わる"
 
@@ -925,8 +1085,8 @@ msgid "Raster drape map"
 msgstr "ラスター ドレープ マップ"
 
 #: ../gui/tcltk/gis.m/raster.tcl:145 ../gui/tcltk/gis.m/raster.tcl:161
-#: ../gui/tcltk/gis.m/thematic.tcl:169 ../gui/tcltk/gis.m/thematic.tcl:190
-#: ../gui/tcltk/gis.m/chart.tcl:128 ../gui/tcltk/gis.m/chart.tcl:149
+#: ../gui/tcltk/gis.m/thematic.tcl:173 ../gui/tcltk/gis.m/thematic.tcl:194
+#: ../gui/tcltk/gis.m/chart.tcl:130 ../gui/tcltk/gis.m/chart.tcl:151
 #: ../gui/tcltk/gis.m/vector.tcl:247 ../gui/tcltk/gis.m/vector.tcl:269
 #: ../gui/tcltk/gis.m/vector.tcl:302
 msgid "This action requires map name to be set"
@@ -989,75 +1149,6 @@ msgstr "別のレイヤーからマップを重ね合せ (NULL値のセルを透
 msgid " Set background color (colored null value cells)"
 msgstr " 背景色設定 (NULL値セルの色設定) "
 
-#: ../gui/tcltk/gis.m/raster.tcl:273 ../gui/tcltk/gis.m/legend.tcl:262
-#, fuzzy
-msgid "white"
-msgstr "サイト"
-
-#: ../gui/tcltk/gis.m/raster.tcl:273 ../gui/tcltk/gis.m/legend.tcl:262
-msgid "grey"
-msgstr ""
-
-#: ../gui/tcltk/gis.m/raster.tcl:273 ../gui/tcltk/gis.m/legend.tcl:262
-msgid "gray"
-msgstr ""
-
-#: ../gui/tcltk/gis.m/raster.tcl:273 ../gui/tcltk/gis.m/legend.tcl:262
-msgid "black"
-msgstr ""
-
-#: ../gui/tcltk/gis.m/raster.tcl:273 ../gui/tcltk/gis.m/legend.tcl:262
-#, fuzzy
-msgid "brown"
-msgstr "増加"
-
-#: ../gui/tcltk/gis.m/raster.tcl:273 ../gui/tcltk/gis.m/legend.tcl:262
-msgid "red"
-msgstr ""
-
-#: ../gui/tcltk/gis.m/raster.tcl:273 ../gui/tcltk/gis.m/legend.tcl:262
-#, fuzzy
-msgid "orange"
-msgstr "完了"
-
-#: ../gui/tcltk/gis.m/raster.tcl:273 ../gui/tcltk/gis.m/legend.tcl:262
-msgid "yellow"
-msgstr ""
-
-#: ../gui/tcltk/gis.m/raster.tcl:273 ../gui/tcltk/gis.m/legend.tcl:262
-msgid "green"
-msgstr ""
-
-#: ../gui/tcltk/gis.m/raster.tcl:273 ../gui/tcltk/gis.m/legend.tcl:262
-#, fuzzy
-msgid "aqua"
-msgstr "不透明"
-
-#: ../gui/tcltk/gis.m/raster.tcl:273 ../gui/tcltk/gis.m/legend.tcl:262
-msgid "cyan"
-msgstr ""
-
-#: ../gui/tcltk/gis.m/raster.tcl:273 ../gui/tcltk/gis.m/legend.tcl:262
-msgid "indigo"
-msgstr ""
-
-#: ../gui/tcltk/gis.m/raster.tcl:273 ../gui/tcltk/gis.m/legend.tcl:262
-#, fuzzy
-msgid "blue"
-msgstr "テーブル"
-
-#: ../gui/tcltk/gis.m/raster.tcl:273 ../gui/tcltk/gis.m/legend.tcl:262
-msgid "purple"
-msgstr ""
-
-#: ../gui/tcltk/gis.m/raster.tcl:273 ../gui/tcltk/gis.m/legend.tcl:262
-msgid "violet"
-msgstr ""
-
-#: ../gui/tcltk/gis.m/raster.tcl:273 ../gui/tcltk/gis.m/legend.tcl:262
-msgid "magenta"
-msgstr ""
-
 #: ../gui/tcltk/gis.m/runandoutput.tcl:121
 msgid "Run (background)"
 msgstr "実行（バックグランド）"
@@ -1111,11 +1202,11 @@ msgstr "ラスターのヒストグラム："
 msgid "Graph style"
 msgstr "グラフスタイル"
 
-#: ../gui/tcltk/gis.m/histogram.tcl:175
+#: ../gui/tcltk/gis.m/histogram.tcl:175 ../gui/tcltk/gis.m/chart.tcl:280
 msgid "bar"
 msgstr ""
 
-#: ../gui/tcltk/gis.m/histogram.tcl:175
+#: ../gui/tcltk/gis.m/histogram.tcl:175 ../gui/tcltk/gis.m/chart.tcl:280
 msgid "pie"
 msgstr ""
 
@@ -1169,7 +1260,7 @@ msgid "\t "
 msgstr "\t "
 
 #: ../gui/tcltk/gis.m/barscale.tcl:191 ../gui/tcltk/gis.m/maptext.tcl:154
-#: ../gui/tcltk/gis.m/dtext.tcl:197 ../gui/tcltk/gis.m/legend.tcl:238
+#: ../gui/tcltk/gis.m/dtext.tcl:201 ../gui/tcltk/gis.m/legend.tcl:238
 msgid "place with mouse"
 msgstr "マウスを使って位置指定"
 
@@ -1664,49 +1755,55 @@ msgstr "マウスのドラッグで縮小表示"
 msgid "Drag with mouse to pan"
 msgstr "マウスのドラッグでパン"
 
-#: ../gui/tcltk/gis.m/gm.tcl:213 ../gui/tcltk/d.m/d.m.tcl:314
+#: ../gui/tcltk/gis.m/gm.tcl:75
+msgid ""
+"GISDBASE or LOCATION_NAME or MAPSET is empty.  This is a fatal error. gis.m "
+"can not work without proper settings."
+msgstr ""
+
+#: ../gui/tcltk/gis.m/gm.tcl:219 ../gui/tcltk/d.m/d.m.tcl:314
 msgid "Loading GIS Manager"
 msgstr "GISマネージャーロード"
 
-#: ../gui/tcltk/gis.m/gm.tcl:220
+#: ../gui/tcltk/gis.m/gm.tcl:226
 msgid "Creating MainFrame..."
 msgstr "メインフレーム作成中...."
 
-#: ../gui/tcltk/gis.m/gm.tcl:260 ../gui/tcltk/d.m/d.m.tcl:404
+#: ../gui/tcltk/gis.m/gm.tcl:266 ../gui/tcltk/d.m/d.m.tcl:404
 msgid "Done"
 msgstr "完了"
 
-#: ../gui/tcltk/gis.m/gm.tcl:262
+#: ../gui/tcltk/gis.m/gm.tcl:268
 msgid "Welcome to GRASS GIS"
 msgstr "GRASS GIS へようこそ"
 
-#: ../gui/tcltk/gis.m/gm.tcl:299
+#: ../gui/tcltk/gis.m/gm.tcl:305
 #, tcl-format
 msgid "Map Display %d"
 msgstr "マップ表示 %d"
 
-#: ../gui/tcltk/gis.m/gm.tcl:324
+#: ../gui/tcltk/gis.m/gm.tcl:330
 #, tcl-format
 msgid "GRASS%s GIS Manager - %s"
 msgstr "GRASS%s GISマネージャー%s"
 
-#: ../gui/tcltk/gis.m/gm.tcl:399
+#: ../gui/tcltk/gis.m/gm.tcl:405
 msgid "Select GRASS display font"
 msgstr "表示フォント選択"
 
-#: ../gui/tcltk/gis.m/gm.tcl:413
+#: ../gui/tcltk/gis.m/gm.tcl:419
 msgid "Font: "
 msgstr "フォント："
 
-#: ../gui/tcltk/gis.m/gm.tcl:452
+#: ../gui/tcltk/gis.m/gm.tcl:458
 msgid "Character encoding: "
 msgstr "文字エンコード："
 
-#: ../gui/tcltk/gis.m/gm.tcl:533
+#: ../gui/tcltk/gis.m/gm.tcl:539
 msgid "End current GRASS session"
 msgstr ""
 
-#: ../gui/tcltk/gis.m/gm.tcl:534
+#: ../gui/tcltk/gis.m/gm.tcl:540
 msgid ""
 "Do You really want to terminate current GRASS session?\n"
 "\n"
@@ -1716,21 +1813,21 @@ msgid ""
 "after it finishes to run."
 msgstr ""
 
-#: ../gui/tcltk/gis.m/gm.tcl:537
+#: ../gui/tcltk/gis.m/gm.tcl:543
 msgid "Terminate current GRASS sesion"
 msgstr ""
 
-#: ../gui/tcltk/gis.m/gm.tcl:544
+#: ../gui/tcltk/gis.m/gm.tcl:550
 msgid "Not supported"
 msgstr ""
 
-#: ../gui/tcltk/gis.m/gm.tcl:545
+#: ../gui/tcltk/gis.m/gm.tcl:551
 msgid ""
 "We sorry. Your shell does not support this feature. \n"
 " You have to type 'exit' in terminal manualy."
 msgstr ""
 
-#: ../gui/tcltk/gis.m/gm.tcl:567
+#: ../gui/tcltk/gis.m/gm.tcl:573
 #, tcl-format
 msgid "GRASS%s GIS Manager - %s %s"
 msgstr "GRASS%s GIS マネージャー %s %s"
@@ -1847,8 +1944,8 @@ msgstr "４点以上指定する必要があります (x,y 座標のセット) "
 msgid "Insufficient coordinates specified"
 msgstr "指定された座標が不足しています"
 
-#: ../gui/tcltk/gis.m/maptext.tcl:83 ../gui/tcltk/gis.m/thematic.tcl:141
-#: ../gui/tcltk/gis.m/thematic.tcl:148 ../gui/tcltk/gis.m/thematic.tcl:154
+#: ../gui/tcltk/gis.m/maptext.tcl:83 ../gui/tcltk/gis.m/thematic.tcl:145
+#: ../gui/tcltk/gis.m/thematic.tcl:152 ../gui/tcltk/gis.m/thematic.tcl:158
 #: ../gui/tcltk/gis.m/maplabels.tcl:140
 msgid "This is font sample text."
 msgstr "フォントのサンプルテキスト"
@@ -1869,73 +1966,80 @@ msgstr ""
 msgid "Text to display:"
 msgstr "表示テキスト："
 
-#: ../gui/tcltk/gis.m/maptext.tcl:143 ../gui/tcltk/gis.m/dtext.tcl:188
+#: ../gui/tcltk/gis.m/maptext.tcl:143 ../gui/tcltk/gis.m/dtext.tcl:190
 msgid "Text placement: x,y coordinates (from upper left) "
 msgstr "テキスト位置: XY座標値 (左上から)  "
 
-#: ../gui/tcltk/gis.m/maptext.tcl:150 ../gui/tcltk/gis.m/dtext.tcl:194
+#: ../gui/tcltk/gis.m/maptext.tcl:150 ../gui/tcltk/gis.m/dtext.tcl:196
 msgid "     coordinate type for text placement "
 msgstr "     テキスト表示位置の座標タイプ"
 
-#: ../gui/tcltk/gis.m/maptext.tcl:153
+#: ../gui/tcltk/gis.m/maptext.tcl:153 ../gui/tcltk/gis.m/dtext.tcl:199
 #, fuzzy
 msgid "pixels"
 msgstr "(ピクセル)  "
 
-#: ../gui/tcltk/gis.m/maptext.tcl:153
+#: ../gui/tcltk/gis.m/maptext.tcl:153 ../gui/tcltk/gis.m/dtext.tcl:199
 #, fuzzy
 msgid "percent"
 msgstr "印刷"
 
-#: ../gui/tcltk/gis.m/maptext.tcl:153
+#: ../gui/tcltk/gis.m/maptext.tcl:153 ../gui/tcltk/gis.m/dtext.tcl:199
 #, fuzzy
 msgid "geographic"
 msgstr "地理座標"
 
-#: ../gui/tcltk/gis.m/maptext.tcl:162 ../gui/tcltk/gis.m/dtext.tcl:205
+#: ../gui/tcltk/gis.m/maptext.tcl:162 ../gui/tcltk/gis.m/dtext.tcl:209
 msgid "     align text with coordinate point  "
 msgstr "     テキスト座標値位置調整"
 
-#: ../gui/tcltk/gis.m/maptext.tcl:166 ../gui/tcltk/gis.m/maplabels.tcl:200
+#: ../gui/tcltk/gis.m/maptext.tcl:166 ../gui/tcltk/gis.m/dtext.tcl:213
+#: ../gui/tcltk/gis.m/maplabels.tcl:200
 #, fuzzy
 msgid "lower left"
 msgstr "流線"
 
-#: ../gui/tcltk/gis.m/maptext.tcl:166
+#: ../gui/tcltk/gis.m/maptext.tcl:166 ../gui/tcltk/gis.m/dtext.tcl:213
 #, fuzzy
 msgid "bottom center"
 msgstr "下："
 
-#: ../gui/tcltk/gis.m/maptext.tcl:166 ../gui/tcltk/gis.m/maplabels.tcl:200
+#: ../gui/tcltk/gis.m/maptext.tcl:166 ../gui/tcltk/gis.m/dtext.tcl:213
+#: ../gui/tcltk/gis.m/maplabels.tcl:200
 #, fuzzy
 msgid "lower right"
 msgstr " 右："
 
-#: ../gui/tcltk/gis.m/maptext.tcl:166 ../gui/tcltk/gis.m/maplabels.tcl:200
+#: ../gui/tcltk/gis.m/maptext.tcl:166 ../gui/tcltk/gis.m/dtext.tcl:213
+#: ../gui/tcltk/gis.m/maplabels.tcl:200
 msgid "center left"
 msgstr ""
 
 #: ../gui/tcltk/gis.m/maptext.tcl:166 ../gui/tcltk/gis.m/maptext.tcl:175
-#: ../gui/tcltk/gis.m/vector.tcl:483 ../gui/tcltk/gis.m/vector.tcl:488
-#: ../gui/tcltk/gis.m/maplabels.tcl:200 ../gui/tcltk/gis.m/maplabels.tcl:221
+#: ../gui/tcltk/gis.m/dtext.tcl:213 ../gui/tcltk/gis.m/vector.tcl:483
+#: ../gui/tcltk/gis.m/vector.tcl:488 ../gui/tcltk/gis.m/maplabels.tcl:200
+#: ../gui/tcltk/gis.m/maplabels.tcl:221
 #, fuzzy
 msgid "center"
 msgstr "セントロイド"
 
-#: ../gui/tcltk/gis.m/maptext.tcl:166 ../gui/tcltk/gis.m/maplabels.tcl:200
+#: ../gui/tcltk/gis.m/maptext.tcl:166 ../gui/tcltk/gis.m/dtext.tcl:213
+#: ../gui/tcltk/gis.m/maplabels.tcl:200
 #, fuzzy
 msgid "center right"
 msgstr " 右："
 
-#: ../gui/tcltk/gis.m/maptext.tcl:166 ../gui/tcltk/gis.m/maplabels.tcl:200
+#: ../gui/tcltk/gis.m/maptext.tcl:166 ../gui/tcltk/gis.m/dtext.tcl:213
+#: ../gui/tcltk/gis.m/maplabels.tcl:200
 msgid "upper left"
 msgstr ""
 
-#: ../gui/tcltk/gis.m/maptext.tcl:166
+#: ../gui/tcltk/gis.m/maptext.tcl:166 ../gui/tcltk/gis.m/dtext.tcl:213
 msgid "top center"
 msgstr ""
 
-#: ../gui/tcltk/gis.m/maptext.tcl:166 ../gui/tcltk/gis.m/maplabels.tcl:200
+#: ../gui/tcltk/gis.m/maptext.tcl:166 ../gui/tcltk/gis.m/dtext.tcl:213
+#: ../gui/tcltk/gis.m/maplabels.tcl:200
 #, fuzzy
 msgid "upper right"
 msgstr " 右："
@@ -1964,255 +2068,359 @@ msgstr "  線幅"
 msgid "Font:"
 msgstr "フォント:"
 
-#: ../gui/tcltk/gis.m/maptext.tcl:190 ../gui/tcltk/gis.m/dtext.tcl:228
+#: ../gui/tcltk/gis.m/maptext.tcl:190 ../gui/tcltk/gis.m/dtext.tcl:234
 #: ../gui/tcltk/gis.m/maplabels.tcl:274 ../gui/tcltk/d.m/fttext.tcl:149
 msgid "  color"
 msgstr "  カラー"
 
-#: ../gui/tcltk/gis.m/dtext.tcl:159
+#: ../gui/tcltk/gis.m/dtext.tcl:161
 msgid "Display text"
 msgstr "テキスト表示"
 
-#: ../gui/tcltk/gis.m/dtext.tcl:176
+#: ../gui/tcltk/gis.m/dtext.tcl:178
 msgid "Text to display: "
 msgstr "表示テキスト："
 
-#: ../gui/tcltk/gis.m/dtext.tcl:214
+#: ../gui/tcltk/gis.m/dtext.tcl:220
 msgid "     text rotation (degrees)"
 msgstr "     テキスト回転 (度) "
 
-#: ../gui/tcltk/gis.m/dtext.tcl:223
+#: ../gui/tcltk/gis.m/dtext.tcl:229
 msgid "Text options: font "
 msgstr "テキストオプション：フォント"
 
-#: ../gui/tcltk/gis.m/dtext.tcl:230 ../gui/tcltk/d.m/dtext.tcl:106
+#: ../gui/tcltk/gis.m/dtext.tcl:236 ../gui/tcltk/d.m/dtext.tcl:106
 #: ../gui/tcltk/d.m/fttext.tcl:151
 msgid "bold text"
 msgstr "太字 "
 
-#: ../gui/tcltk/gis.m/dtext.tcl:237
+#: ../gui/tcltk/gis.m/dtext.tcl:243
 msgid "     text height in pixels "
 msgstr "     ピクセルでのテキスト高さ"
 
-#: ../gui/tcltk/gis.m/dtext.tcl:239
+#: ../gui/tcltk/gis.m/dtext.tcl:245
 msgid "  line spacing"
 msgstr "  線間隔"
 
-#: ../gui/tcltk/gis.m/thematic.tcl:129 ../gui/tcltk/gis.m/vector.tcl:222
+#: ../gui/tcltk/gis.m/thematic.tcl:133 ../gui/tcltk/gis.m/vector.tcl:222
 #: ../gui/tcltk/d.m/menu.tcl:94 ../gui/tcltk/d.m/menu.tcl:134
 msgid "Vector map"
 msgstr "ベクトルマップ"
 
-#: ../gui/tcltk/gis.m/thematic.tcl:132
+#: ../gui/tcltk/gis.m/thematic.tcl:136
 #, tcl-format
 msgid "thematic map for %s"
 msgstr "%s の主題図"
 
-#: ../gui/tcltk/gis.m/thematic.tcl:141 ../gui/tcltk/gis.m/thematic.tcl:148
-#: ../gui/tcltk/gis.m/thematic.tcl:154
+#: ../gui/tcltk/gis.m/thematic.tcl:145 ../gui/tcltk/gis.m/thematic.tcl:152
+#: ../gui/tcltk/gis.m/thematic.tcl:158
 msgid "Select font"
 msgstr "フォントの選択"
 
-#: ../gui/tcltk/gis.m/thematic.tcl:175 ../gui/tcltk/gis.m/thematic.tcl:196
-#: ../gui/tcltk/gis.m/chart.tcl:134 ../gui/tcltk/gis.m/chart.tcl:155
+#: ../gui/tcltk/gis.m/thematic.tcl:179 ../gui/tcltk/gis.m/thematic.tcl:200
+#: ../gui/tcltk/gis.m/chart.tcl:136 ../gui/tcltk/gis.m/chart.tcl:157
 #: ../gui/tcltk/gis.m/vector.tcl:253 ../gui/tcltk/gis.m/vector.tcl:275
 #: ../gui/tcltk/gis.m/vector.tcl:308
 msgid "You must provide valid vector layer number"
 msgstr "有効なベクトルレイヤー番号を定義する必要があります"
 
-#: ../gui/tcltk/gis.m/thematic.tcl:218 ../gui/tcltk/gis.m/vector.tcl:319
+#: ../gui/tcltk/gis.m/thematic.tcl:222 ../gui/tcltk/gis.m/vector.tcl:319
 msgid "Vector point symbol"
 msgstr "ベクトルポイントシンボル"
 
-#: ../gui/tcltk/gis.m/thematic.tcl:234
+#: ../gui/tcltk/gis.m/thematic.tcl:238
 msgid "Display vector maps thematically by graduate colors (all types)"
 msgstr "階調色でベクトルの主題表示 (全タイプ) "
 
-#: ../gui/tcltk/gis.m/thematic.tcl:240
+#: ../gui/tcltk/gis.m/thematic.tcl:244
 msgid "  or by graduated sizes (points and lines)"
 msgstr "  または サイズの目盛 (ポイントとライン) による"
 
-#: ../gui/tcltk/gis.m/thematic.tcl:257 ../gui/tcltk/gis.m/vector.tcl:354
+#: ../gui/tcltk/gis.m/thematic.tcl:261 ../gui/tcltk/gis.m/vector.tcl:354
 #: ../gui/tcltk/d.m/thematic.tcl:116
 msgid "Vector map:"
 msgstr "ベクトルマップ："
 
-#: ../gui/tcltk/gis.m/thematic.tcl:260
+#: ../gui/tcltk/gis.m/thematic.tcl:264
 msgid "vector for thematic mapping"
 msgstr "主題図のベクトル"
 
-#: ../gui/tcltk/gis.m/thematic.tcl:275 ../gui/tcltk/d.m/thematic.tcl:131
+#: ../gui/tcltk/gis.m/thematic.tcl:279 ../gui/tcltk/d.m/thematic.tcl:131
 msgid "    vector type"
 msgstr "    ベクトルタイプ"
 
-#: ../gui/tcltk/gis.m/thematic.tcl:278
+#: ../gui/tcltk/gis.m/thematic.tcl:282
+#, fuzzy
+msgid "area"
+msgstr "エリア"
+
+#: ../gui/tcltk/gis.m/thematic.tcl:282
+#, fuzzy
+msgid "point"
+msgstr "ポイント"
+
+#: ../gui/tcltk/gis.m/thematic.tcl:282
+#, fuzzy
+msgid "centroid"
+msgstr "セントロイド"
+
+#: ../gui/tcltk/gis.m/thematic.tcl:282
+#, fuzzy
+msgid "line"
+msgstr "ライン"
+
+#: ../gui/tcltk/gis.m/thematic.tcl:282
+#, fuzzy
+msgid "boundary"
+msgstr "境界"
+
+#: ../gui/tcltk/gis.m/thematic.tcl:284
 msgid " attribute layer"
 msgstr " 属性レイヤー"
 
-#: ../gui/tcltk/gis.m/thematic.tcl:285
+#: ../gui/tcltk/gis.m/thematic.tcl:291
 msgid "    NUMERIC attribute column to use for thematic map"
 msgstr "    主題図で使用する数値属性の列"
 
-#: ../gui/tcltk/gis.m/thematic.tcl:292 ../gui/tcltk/d.m/thematic.tcl:150
+#: ../gui/tcltk/gis.m/thematic.tcl:298 ../gui/tcltk/d.m/thematic.tcl:150
 #: ../gui/tcltk/d.m/vector.tcl:348
 msgid "    show attribute columns"
 msgstr "    属性列表示"
 
-#: ../gui/tcltk/gis.m/thematic.tcl:293 ../gui/tcltk/gis.m/chart.tcl:237
+#: ../gui/tcltk/gis.m/thematic.tcl:299 ../gui/tcltk/gis.m/chart.tcl:239
 #: ../gui/tcltk/gis.m/vector.tcl:533 ../gui/tcltk/d.m/thematic.tcl:151
 #: ../gui/tcltk/d.m/chart.tcl:121 ../gui/tcltk/d.m/vector.tcl:349
 msgid "columns"
 msgstr "列"
 
-#: ../gui/tcltk/gis.m/thematic.tcl:297 ../gui/tcltk/gis.m/chart.tcl:241
+#: ../gui/tcltk/gis.m/thematic.tcl:303 ../gui/tcltk/gis.m/chart.tcl:243
 #: ../gui/tcltk/gis.m/vector.tcl:537 ../gui/tcltk/d.m/thematic.tcl:155
 #: ../gui/tcltk/d.m/chart.tcl:125 ../gui/tcltk/d.m/vector.tcl:353
 msgid "Show columns"
 msgstr "列表示"
 
-#: ../gui/tcltk/gis.m/thematic.tcl:298
+#: ../gui/tcltk/gis.m/thematic.tcl:304
 msgid "   show data"
 msgstr "   データ表示"
 
-#: ../gui/tcltk/gis.m/thematic.tcl:299 ../gui/tcltk/gis.m/chart.tcl:243
+#: ../gui/tcltk/gis.m/thematic.tcl:305 ../gui/tcltk/gis.m/chart.tcl:245
 #: ../gui/tcltk/gis.m/vector.tcl:539 ../gui/tcltk/d.m/thematic.tcl:157
 #: ../gui/tcltk/d.m/vector.tcl:355
 msgid "data"
 msgstr "データ"
 
-#: ../gui/tcltk/gis.m/thematic.tcl:303 ../gui/tcltk/gis.m/chart.tcl:247
+#: ../gui/tcltk/gis.m/thematic.tcl:309 ../gui/tcltk/gis.m/chart.tcl:249
 #: ../gui/tcltk/gis.m/vector.tcl:543 ../gui/tcltk/d.m/thematic.tcl:161
 #: ../gui/tcltk/d.m/vector.tcl:359
 msgid "Show data"
 msgstr "データ表示"
 
-#: ../gui/tcltk/gis.m/thematic.tcl:309 ../gui/tcltk/d.m/thematic.tcl:168
+#: ../gui/tcltk/gis.m/thematic.tcl:315 ../gui/tcltk/d.m/thematic.tcl:168
 msgid "Thematic map: type"
 msgstr "主題図：タイプ"
 
-#: ../gui/tcltk/gis.m/thematic.tcl:312 ../gui/tcltk/d.m/thematic.tcl:171
+#: ../gui/tcltk/gis.m/thematic.tcl:318
+#, fuzzy
+msgid "graduated colors"
+msgstr "ランダムカラー"
+
+#: ../gui/tcltk/gis.m/thematic.tcl:318
+#, fuzzy
+msgid "graduated points"
+msgstr "ポイントとラインの目盛："
+
+#: ../gui/tcltk/gis.m/thematic.tcl:318
+#, fuzzy
+msgid "graduated lines"
+msgstr "ポイントとラインの目盛："
+
+#: ../gui/tcltk/gis.m/thematic.tcl:320 ../gui/tcltk/d.m/thematic.tcl:171
 msgid " map by"
 msgstr " マップ－"
 
-#: ../gui/tcltk/gis.m/thematic.tcl:321
+#: ../gui/tcltk/gis.m/thematic.tcl:323
+#, fuzzy
+msgid "interval"
+msgstr "ポインタ"
+
+#: ../gui/tcltk/gis.m/thematic.tcl:323
+#, fuzzy
+msgid "std deviation"
+msgstr "早送り"
+
+#: ../gui/tcltk/gis.m/thematic.tcl:323
+#, fuzzy
+msgid "quartiles"
+msgstr "境界"
+
+#: ../gui/tcltk/gis.m/thematic.tcl:323
+msgid "custom breaks"
+msgstr ""
+
+#: ../gui/tcltk/gis.m/thematic.tcl:330
 msgid "    number of intervals to map (interval themes):"
 msgstr "    マップの間隔数(インターバルテーマ)："
 
-#: ../gui/tcltk/gis.m/thematic.tcl:329
+#: ../gui/tcltk/gis.m/thematic.tcl:338
 msgid "    custom breakpoints (val val ...)  "
 msgstr "    独自分割点 (val val ...)   "
 
-#: ../gui/tcltk/gis.m/thematic.tcl:336
+#: ../gui/tcltk/gis.m/thematic.tcl:345
 msgid "    query with SQL where clause   "
 msgstr "    SQL where句でクエリ"
 
-#: ../gui/tcltk/gis.m/thematic.tcl:343
+#: ../gui/tcltk/gis.m/thematic.tcl:352
 msgid "Graduated points & lines: "
 msgstr "ポイントとラインの目盛："
 
-#: ../gui/tcltk/gis.m/thematic.tcl:344 ../gui/tcltk/d.m/thematic.tcl:205
+#: ../gui/tcltk/gis.m/thematic.tcl:353 ../gui/tcltk/d.m/thematic.tcl:205
 #: ../gui/tcltk/d.m/vector.tcl:245
 msgid "icon"
 msgstr "アイコン"
 
-#: ../gui/tcltk/gis.m/thematic.tcl:348 ../gui/tcltk/d.m/thematic.tcl:210
+#: ../gui/tcltk/gis.m/thematic.tcl:357 ../gui/tcltk/d.m/thematic.tcl:210
 msgid "point color"
 msgstr "ポイントカラー"
 
-#: ../gui/tcltk/gis.m/thematic.tcl:350 ../gui/tcltk/d.m/thematic.tcl:212
+#: ../gui/tcltk/gis.m/thematic.tcl:359 ../gui/tcltk/d.m/thematic.tcl:212
 msgid "line color"
 msgstr "ラインカラー"
 
-#: ../gui/tcltk/gis.m/thematic.tcl:357
+#: ../gui/tcltk/gis.m/thematic.tcl:366
 msgid "    size/min size (graduated pts/lines)"
 msgstr "   サイズ/最小値 (ポイント/ラインで階調) "
 
-#: ../gui/tcltk/gis.m/thematic.tcl:359
+#: ../gui/tcltk/gis.m/thematic.tcl:368
 msgid "icon size/min size (graduated pts/lines)"
 msgstr "アイコンサイズ/最小値 (ポイント/ラインで階調) "
 
-#: ../gui/tcltk/gis.m/thematic.tcl:360
+#: ../gui/tcltk/gis.m/thematic.tcl:369
 msgid "max size (graduated pts)"
 msgstr "最大値 (ポイントで階調) "
 
-#: ../gui/tcltk/gis.m/thematic.tcl:362
+#: ../gui/tcltk/gis.m/thematic.tcl:371
 msgid " max size (graduated pts/lines)"
 msgstr "最大値 (ポイント/ラインで階調) "
 
-#: ../gui/tcltk/gis.m/thematic.tcl:368
+#: ../gui/tcltk/gis.m/thematic.tcl:377
 msgid "Graduated colors: preset color schemes"
 msgstr "階調色：カラースキーマでプリセット"
 
-#: ../gui/tcltk/gis.m/thematic.tcl:378
+#: ../gui/tcltk/gis.m/thematic.tcl:380
+#, fuzzy
+msgid "blue red"
+msgstr "テーブル"
+
+#: ../gui/tcltk/gis.m/thematic.tcl:380
+#, fuzzy
+msgid "red blue"
+msgstr "テーブル"
+
+#: ../gui/tcltk/gis.m/thematic.tcl:380
+msgid "green red"
+msgstr ""
+
+#: ../gui/tcltk/gis.m/thematic.tcl:380
+msgid "red green"
+msgstr ""
+
+#: ../gui/tcltk/gis.m/thematic.tcl:380
+msgid "blue green"
+msgstr ""
+
+#: ../gui/tcltk/gis.m/thematic.tcl:380
+#, fuzzy
+msgid "green blue"
+msgstr "テーブル作成"
+
+#: ../gui/tcltk/gis.m/thematic.tcl:380
+msgid "cyan yellow"
+msgstr ""
+
+#: ../gui/tcltk/gis.m/thematic.tcl:380
+msgid "yellow cyan"
+msgstr ""
+
+#: ../gui/tcltk/gis.m/thematic.tcl:380
+#, fuzzy
+msgid "custom gradient"
+msgstr "スムーズグラデーション描画"
+
+#: ../gui/tcltk/gis.m/thematic.tcl:380
+#, fuzzy
+msgid "single color"
+msgstr "ラインカラー"
+
+#: ../gui/tcltk/gis.m/thematic.tcl:387
 msgid "    custom color scheme - start color"
 msgstr "    カスタムカラースキーマ - スタートカラー"
 
-#: ../gui/tcltk/gis.m/thematic.tcl:380
+#: ../gui/tcltk/gis.m/thematic.tcl:389
 msgid " end color"
 msgstr "エンドカラー"
 
-#: ../gui/tcltk/gis.m/thematic.tcl:382 ../gui/tcltk/d.m/thematic.tcl:243
+#: ../gui/tcltk/gis.m/thematic.tcl:391 ../gui/tcltk/d.m/thematic.tcl:243
 msgid "draw border"
 msgstr "境界描画"
 
-#: ../gui/tcltk/gis.m/thematic.tcl:389 ../gui/tcltk/d.m/thematic.tcl:250
+#: ../gui/tcltk/gis.m/thematic.tcl:398 ../gui/tcltk/d.m/thematic.tcl:250
 msgid "save thematic colors to GRASSRGB column of vector file"
 msgstr "ベクトルファイルのGRASS RGB列に主題色を保存"
 
-#: ../gui/tcltk/gis.m/thematic.tcl:396
+#: ../gui/tcltk/gis.m/thematic.tcl:405
 msgid "Legend: title font "
 msgstr "凡例：タイトルフォント"
 
-#: ../gui/tcltk/gis.m/thematic.tcl:399
+#: ../gui/tcltk/gis.m/thematic.tcl:408
 msgid "title font for legend"
 msgstr "凡例タイトルのフォント"
 
-#: ../gui/tcltk/gis.m/thematic.tcl:403 ../gui/tcltk/gis.m/thematic.tcl:429
+#: ../gui/tcltk/gis.m/thematic.tcl:412 ../gui/tcltk/gis.m/thematic.tcl:438
 msgid " font color"
 msgstr "フォントカラー"
 
-#: ../gui/tcltk/gis.m/thematic.tcl:410
+#: ../gui/tcltk/gis.m/thematic.tcl:419
 msgid "    subtitle font    "
 msgstr "   サブタイトルフォント"
 
-#: ../gui/tcltk/gis.m/thematic.tcl:413
+#: ../gui/tcltk/gis.m/thematic.tcl:422
 msgid "subtitle font for legend"
 msgstr "凡例のサブタイトルフォント"
 
-#: ../gui/tcltk/gis.m/thematic.tcl:422
+#: ../gui/tcltk/gis.m/thematic.tcl:431
 msgid "    label font       "
 msgstr "    ラベルフォント"
 
-#: ../gui/tcltk/gis.m/thematic.tcl:425
+#: ../gui/tcltk/gis.m/thematic.tcl:434
 msgid "label font for legend"
 msgstr "凡例のラベルフォント"
 
-#: ../gui/tcltk/gis.m/thematic.tcl:437 ../gui/tcltk/d.m/thematic.tcl:260
+#: ../gui/tcltk/gis.m/thematic.tcl:446 ../gui/tcltk/d.m/thematic.tcl:260
 msgid "use math notation in legend"
 msgstr "凡例で使用する数学の表記法"
 
-#: ../gui/tcltk/gis.m/thematic.tcl:444
+#: ../gui/tcltk/gis.m/thematic.tcl:453
 msgid "Name for ps.map instruction files"
 msgstr "ps.map命令ファイル名"
 
-#: ../gui/tcltk/gis.m/thematic.tcl:654
+#: ../gui/tcltk/gis.m/thematic.tcl:663
 #, tcl-format
 msgid "Legend for Map %d, %s"
 msgstr "マップの凡例 %d, %s "
 
-#: ../gui/tcltk/gis.m/thematic.tcl:677
+#: ../gui/tcltk/gis.m/thematic.tcl:686
 msgid "clear"
 msgstr "クリア"
 
-#: ../gui/tcltk/gis.m/thematic.tcl:679
+#: ../gui/tcltk/gis.m/thematic.tcl:688
 msgid "Clear legend"
 msgstr "凡例クリア"
 
-#: ../gui/tcltk/gis.m/thematic.tcl:680
+#: ../gui/tcltk/gis.m/thematic.tcl:689
 msgid "save"
 msgstr "保存"
 
-#: ../gui/tcltk/gis.m/thematic.tcl:682
+#: ../gui/tcltk/gis.m/thematic.tcl:691
 msgid "Save legend to EPS file"
 msgstr "EPSファイルに凡例保存"
 
@@ -2353,7 +2561,7 @@ msgstr "最大値"
 msgid "Maximum lines to display for gradient"
 msgstr "階調表示を行う区分の最大値"
 
-#: ../gui/tcltk/gis.m/legend.tcl:308 ../gui/tcltk/gis.m/chart.tcl:220
+#: ../gui/tcltk/gis.m/legend.tcl:308 ../gui/tcltk/gis.m/chart.tcl:222
 #: ../gui/tcltk/d.m/chart.tcl:108 ../gui/tcltk/d.m/vector.tcl:229
 msgid "lines"
 msgstr "ライン"
@@ -2390,77 +2598,115 @@ msgstr "ファイルを開く"
 msgid "DM Resource File"
 msgstr "DMリソースファイル"
 
-#: ../gui/tcltk/gis.m/mapprint.tcl:109
+#: ../gui/tcltk/gis.m/mapprint.tcl:112
 msgid "Ghostscript not available"
 msgstr "ゴーストスクリプトは利用出来ません"
 
-#: ../gui/tcltk/gis.m/mapprint.tcl:250
+#: ../gui/tcltk/gis.m/mapprint.tcl:254
 msgid "Postscript and LPR printing of map display"
 msgstr "マップのポストスクリプトとLPR出力"
 
-#: ../gui/tcltk/gis.m/mapprint.tcl:264
+#: ../gui/tcltk/gis.m/mapprint.tcl:268
 msgid "Preset paper type"
 msgstr "プリセットの用紙の種類"
 
-#: ../gui/tcltk/gis.m/mapprint.tcl:275
+#: ../gui/tcltk/gis.m/mapprint.tcl:272
+#, fuzzy
+msgid "letter"
+msgstr "削除"
+
+#: ../gui/tcltk/gis.m/mapprint.tcl:272
+msgid "A4"
+msgstr ""
+
+#: ../gui/tcltk/gis.m/mapprint.tcl:272
+#, fuzzy
+msgid "legal"
+msgstr "クリア"
+
+#: ../gui/tcltk/gis.m/mapprint.tcl:272
+msgid "11x17"
+msgstr ""
+
+#: ../gui/tcltk/gis.m/mapprint.tcl:272
+msgid "A3"
+msgstr ""
+
+#: ../gui/tcltk/gis.m/mapprint.tcl:272
+msgid "ledger"
+msgstr ""
+
+#: ../gui/tcltk/gis.m/mapprint.tcl:272
+msgid "A0"
+msgstr ""
+
+#: ../gui/tcltk/gis.m/mapprint.tcl:272
+msgid "A1"
+msgstr ""
+
+#: ../gui/tcltk/gis.m/mapprint.tcl:272
+msgid "A2"
+msgstr ""
+
+#: ../gui/tcltk/gis.m/mapprint.tcl:281
 msgid "Custom paper size"
 msgstr "独自用紙サイズ"
 
-#: ../gui/tcltk/gis.m/mapprint.tcl:276 ../gui/tcltk/d.m/print.tcl:181
+#: ../gui/tcltk/gis.m/mapprint.tcl:282 ../gui/tcltk/d.m/print.tcl:181
 msgid "width:"
 msgstr "幅："
 
-#: ../gui/tcltk/gis.m/mapprint.tcl:278
+#: ../gui/tcltk/gis.m/mapprint.tcl:284
 msgid "  height:"
 msgstr "  高さ："
 
-#: ../gui/tcltk/gis.m/mapprint.tcl:285
+#: ../gui/tcltk/gis.m/mapprint.tcl:291
 msgid "Margins  left:"
 msgstr "左マージン: "
 
-#: ../gui/tcltk/gis.m/mapprint.tcl:287
+#: ../gui/tcltk/gis.m/mapprint.tcl:293
 msgid " right:"
 msgstr " 右："
 
-#: ../gui/tcltk/gis.m/mapprint.tcl:289
+#: ../gui/tcltk/gis.m/mapprint.tcl:295
 msgid " top:"
 msgstr " 上："
 
-#: ../gui/tcltk/gis.m/mapprint.tcl:291
+#: ../gui/tcltk/gis.m/mapprint.tcl:297
 msgid " bottom:"
 msgstr " 下："
 
-#: ../gui/tcltk/gis.m/mapprint.tcl:299
+#: ../gui/tcltk/gis.m/mapprint.tcl:305
 msgid "Resolution (dpi) for printing and PDF "
 msgstr "プリントとPDFの解像度(dpi)"
 
-#: ../gui/tcltk/gis.m/mapprint.tcl:317
+#: ../gui/tcltk/gis.m/mapprint.tcl:323
 msgid "Print on LPR printer"
 msgstr "LPRプリンタで出力"
 
-#: ../gui/tcltk/gis.m/mapprint.tcl:325
+#: ../gui/tcltk/gis.m/mapprint.tcl:331
 msgid "Print on postscript device* "
 msgstr "ポストスクリプトデバイス*で出力"
 
-#: ../gui/tcltk/gis.m/mapprint.tcl:336
+#: ../gui/tcltk/gis.m/mapprint.tcl:342
 msgid "Save to PDF file*              "
 msgstr "PDFファイル*で保存"
 
-#: ../gui/tcltk/gis.m/mapprint.tcl:339 ../gui/tcltk/gis.m/mapprint.tcl:351
+#: ../gui/tcltk/gis.m/mapprint.tcl:345 ../gui/tcltk/gis.m/mapprint.tcl:357
 #: ../gui/tcltk/d.m/print.tcl:212 ../gui/tcltk/d.m/print.tcl:223
 #: ../gui/tcltk/d.m/print.tcl:234 ../gui/tcltk/d.m/print.tcl:261
 msgid "Browse"
 msgstr "参照"
 
-#: ../gui/tcltk/gis.m/mapprint.tcl:349
+#: ../gui/tcltk/gis.m/mapprint.tcl:355
 msgid "Save to EPS file               "
 msgstr "EPSファイルに保存"
 
-#: ../gui/tcltk/gis.m/mapprint.tcl:357
+#: ../gui/tcltk/gis.m/mapprint.tcl:363
 msgid "*requires ghostscript to be installed and in path"
 msgstr "*ゴーストスクリプトをインストールする必要があります"
 
-#: ../gui/tcltk/gis.m/mapprint.tcl:365 ../gui/tcltk/d.m/print.tcl:279
+#: ../gui/tcltk/gis.m/mapprint.tcl:371 ../gui/tcltk/d.m/print.tcl:279
 msgid "Print"
 msgstr "プリント"
 
@@ -2544,95 +2790,95 @@ msgstr "領域値読み込みエラー"
 msgid "r.profile error"
 msgstr "r.profile エラー"
 
-#: ../gui/tcltk/gis.m/gridline.tcl:140
+#: ../gui/tcltk/gis.m/gridline.tcl:144
 msgid "Display grid lines, and geodesic lines or rhumblines"
 msgstr "グリッド線と測地線や航程線を表示"
 
-#: ../gui/tcltk/gis.m/gridline.tcl:157
+#: ../gui/tcltk/gis.m/gridline.tcl:161
 msgid "Grid options: "
 msgstr "グリッドオプション："
 
-#: ../gui/tcltk/gis.m/gridline.tcl:158 ../gui/tcltk/d.m/gridline.tcl:77
+#: ../gui/tcltk/gis.m/gridline.tcl:162 ../gui/tcltk/d.m/gridline.tcl:77
 msgid "draw grid"
 msgstr "グリッド表示"
 
-#: ../gui/tcltk/gis.m/gridline.tcl:159
+#: ../gui/tcltk/gis.m/gridline.tcl:163
 msgid "geodetic grid  "
 msgstr "測地系グリッド"
 
-#: ../gui/tcltk/gis.m/gridline.tcl:161
+#: ../gui/tcltk/gis.m/gridline.tcl:165
 msgid "grid color "
 msgstr "グリッドカラー"
 
-#: ../gui/tcltk/gis.m/gridline.tcl:166 ../gui/tcltk/d.m/gridline.tcl:85
+#: ../gui/tcltk/gis.m/gridline.tcl:170 ../gui/tcltk/d.m/gridline.tcl:85
 msgid "Help for grids"
 msgstr "グリッドのヘルプ"
 
-#: ../gui/tcltk/gis.m/gridline.tcl:172
+#: ../gui/tcltk/gis.m/gridline.tcl:176
 msgid "    grid size (map units)"
 msgstr "    グリッドサイズ (マップユニット) "
 
-#: ../gui/tcltk/gis.m/gridline.tcl:174
+#: ../gui/tcltk/gis.m/gridline.tcl:178
 msgid " grid origin (east, north)"
 msgstr " グリッド原点 (東、北) "
 
-#: ../gui/tcltk/gis.m/gridline.tcl:182
+#: ../gui/tcltk/gis.m/gridline.tcl:186
 msgid "draw border text "
 msgstr "境界テキスト描画"
 
-#: ../gui/tcltk/gis.m/gridline.tcl:184
+#: ../gui/tcltk/gis.m/gridline.tcl:188
 msgid "text color "
 msgstr "テキストカラー"
 
-#: ../gui/tcltk/gis.m/gridline.tcl:189
+#: ../gui/tcltk/gis.m/gridline.tcl:193
 msgid "text font "
 msgstr "テキストフォント"
 
-#: ../gui/tcltk/gis.m/gridline.tcl:190
+#: ../gui/tcltk/gis.m/gridline.tcl:194
 msgid "  text size"
 msgstr "  テキストサイズ"
 
-#: ../gui/tcltk/gis.m/gridline.tcl:192
+#: ../gui/tcltk/gis.m/gridline.tcl:196
 msgid "Grid text size in points"
 msgstr "ポイントによるグリッドテキストサイズ"
 
-#: ../gui/tcltk/gis.m/gridline.tcl:199
+#: ../gui/tcltk/gis.m/gridline.tcl:203
 msgid "draw grid border "
 msgstr "グリッド境界描画"
 
-#: ../gui/tcltk/gis.m/gridline.tcl:201
+#: ../gui/tcltk/gis.m/gridline.tcl:205
 msgid "border color "
 msgstr "境界色"
 
-#: ../gui/tcltk/gis.m/gridline.tcl:206
+#: ../gui/tcltk/gis.m/gridline.tcl:210
 msgid "Geodesic and rhumblines for latlong locations only"
 msgstr "緯経度地点による測地線と航程線"
 
-#: ../gui/tcltk/gis.m/gridline.tcl:213 ../gui/tcltk/d.m/gridline.tcl:119
+#: ../gui/tcltk/gis.m/gridline.tcl:217 ../gui/tcltk/d.m/gridline.tcl:119
 msgid "draw geodesic line"
 msgstr "測地線描画"
 
-#: ../gui/tcltk/gis.m/gridline.tcl:218 ../gui/tcltk/d.m/gridline.tcl:124
+#: ../gui/tcltk/gis.m/gridline.tcl:222 ../gui/tcltk/d.m/gridline.tcl:124
 msgid "Help for geodesic lines"
 msgstr "測地線のヘルプ"
 
-#: ../gui/tcltk/gis.m/gridline.tcl:219 ../gui/tcltk/gis.m/gridline.tcl:246
+#: ../gui/tcltk/gis.m/gridline.tcl:223 ../gui/tcltk/gis.m/gridline.tcl:254
 msgid " line color"
 msgstr " ラインカラー"
 
-#: ../gui/tcltk/gis.m/gridline.tcl:223
+#: ../gui/tcltk/gis.m/gridline.tcl:229
 msgid " text color"
 msgstr "テキストカラー"
 
-#: ../gui/tcltk/gis.m/gridline.tcl:232 ../gui/tcltk/gis.m/gridline.tcl:255
+#: ../gui/tcltk/gis.m/gridline.tcl:240 ../gui/tcltk/gis.m/gridline.tcl:265
 msgid "     line endpoints (x1,y1,x2,y2)"
 msgstr "     ライン始終点 (x1,y1,x2,y2) "
 
-#: ../gui/tcltk/gis.m/gridline.tcl:240 ../gui/tcltk/d.m/gridline.tcl:149
+#: ../gui/tcltk/gis.m/gridline.tcl:248 ../gui/tcltk/d.m/gridline.tcl:149
 msgid "draw rhumbline"
 msgstr "航程線描画"
 
-#: ../gui/tcltk/gis.m/gridline.tcl:245 ../gui/tcltk/d.m/gridline.tcl:154
+#: ../gui/tcltk/gis.m/gridline.tcl:253 ../gui/tcltk/d.m/gridline.tcl:154
 msgid "Help for rhumblines"
 msgstr "航程線のヘルプ"
 
@@ -3377,7 +3623,8 @@ msgid "Simpson's diversity"
 msgstr "シンプソン多様性"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:359
-msgid "Ricness"
+#, fuzzy
+msgid "Richness"
 msgstr "濃厚"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:360
@@ -4175,91 +4422,96 @@ msgstr "システム情報 "
 msgid "&Xtns"
 msgstr "&Xtns "
 
-#: ../gui/tcltk/gis.m/chart.tcl:111
+#: ../gui/tcltk/gis.m/chart.tcl:113
 msgid "Vector map for chart"
 msgstr "主題図のためのベクトルマップ"
 
-#: ../gui/tcltk/gis.m/chart.tcl:114
+#: ../gui/tcltk/gis.m/chart.tcl:116
 #, tcl-format
 msgid "chart for %s"
 msgstr " %s のグラフ"
 
-#: ../gui/tcltk/gis.m/chart.tcl:183
+#: ../gui/tcltk/gis.m/chart.tcl:185
 msgid ""
 "Display pie and bar charts of attribute values at vector object locations"
 msgstr "ベクトルオブジェクトの位置に属性の円グラフと棒グラフを表示"
 
-#: ../gui/tcltk/gis.m/chart.tcl:200 ../gui/tcltk/d.m/chart.tcl:91
+#: ../gui/tcltk/gis.m/chart.tcl:202 ../gui/tcltk/d.m/chart.tcl:91
 msgid "Vector map to chart:"
 msgstr "グラフにするベクトルマップ："
 
-#: ../gui/tcltk/gis.m/chart.tcl:203
+#: ../gui/tcltk/gis.m/chart.tcl:205
 msgid "vector map to chart"
 msgstr "グラフにするベクトルマップ"
 
-#: ../gui/tcltk/gis.m/chart.tcl:218 ../gui/tcltk/d.m/chart.tcl:106
+#: ../gui/tcltk/gis.m/chart.tcl:220 ../gui/tcltk/d.m/chart.tcl:106
 msgid "Vector type:"
 msgstr "ベクトル タイプ："
 
-#: ../gui/tcltk/gis.m/chart.tcl:219 ../gui/tcltk/d.m/chart.tcl:107
+#: ../gui/tcltk/gis.m/chart.tcl:221 ../gui/tcltk/d.m/chart.tcl:107
 #: ../gui/tcltk/d.m/vector.tcl:227
 msgid "points"
 msgstr "ポイント"
 
-#: ../gui/tcltk/gis.m/chart.tcl:221 ../gui/tcltk/d.m/chart.tcl:109
+#: ../gui/tcltk/gis.m/chart.tcl:223 ../gui/tcltk/d.m/chart.tcl:109
 #: ../gui/tcltk/d.m/vector.tcl:231
 msgid "boundaries"
 msgstr "境界"
 
-#: ../gui/tcltk/gis.m/chart.tcl:222 ../gui/tcltk/d.m/chart.tcl:110
+#: ../gui/tcltk/gis.m/chart.tcl:224 ../gui/tcltk/d.m/chart.tcl:110
 #: ../gui/tcltk/d.m/vector.tcl:233
 msgid "centroids"
 msgstr "セントロイド"
 
-#: ../gui/tcltk/gis.m/chart.tcl:223 ../gui/tcltk/d.m/chart.tcl:111
+#: ../gui/tcltk/gis.m/chart.tcl:225 ../gui/tcltk/d.m/chart.tcl:111
 #: ../gui/tcltk/d.m/vector.tcl:235
 msgid "areas"
 msgstr "エリア"
 
-#: ../gui/tcltk/gis.m/chart.tcl:229
+#: ../gui/tcltk/gis.m/chart.tcl:231
 msgid "Attributes to chart: attribute layer"
 msgstr "グラフにする属性：属性レイヤー"
 
-#: ../gui/tcltk/gis.m/chart.tcl:236
+#: ../gui/tcltk/gis.m/chart.tcl:238
 msgid "     show attribute columns"
 msgstr "     属性列表示"
 
-#: ../gui/tcltk/gis.m/chart.tcl:242
+#: ../gui/tcltk/gis.m/chart.tcl:244
 msgid "   show attribute data"
 msgstr "   属性データ表示 "
 
-#: ../gui/tcltk/gis.m/chart.tcl:253
+#: ../gui/tcltk/gis.m/chart.tcl:255
 msgid "\tcolumns to chart (col1,col2,...)  "
 msgstr "\tグラフにする列 (列1,列2,...)"
 
-#: ../gui/tcltk/gis.m/chart.tcl:260
+#: ../gui/tcltk/gis.m/chart.tcl:262
 msgid "\tcolors for columns (clr1,clr2,...)"
 msgstr "\t列の色 (色1,色2,...)"
 
-#: ../gui/tcltk/gis.m/chart.tcl:267
+#: ../gui/tcltk/gis.m/chart.tcl:269
 msgid "\tcolumn for variable chart size"
 msgstr "\t可変グラフサイズの列"
 
-#: ../gui/tcltk/gis.m/chart.tcl:269
+#: ../gui/tcltk/gis.m/chart.tcl:271
 msgid "  scale factor"
 msgstr "  縮尺要素"
 
-#: ../gui/tcltk/gis.m/chart.tcl:276 ../gui/tcltk/d.m/chart.tcl:158
+#: ../gui/tcltk/gis.m/chart.tcl:278 ../gui/tcltk/d.m/chart.tcl:158
 msgid "Chart type:"
 msgstr "グラフタイプ："
 
-#: ../gui/tcltk/gis.m/chart.tcl:279
+#: ../gui/tcltk/gis.m/chart.tcl:281
 msgid "\tfixed chart size (if size column not used)"
 msgstr "\t固定グラフサイズ (iサイズ用の列は使用しない)"
 
-#: ../gui/tcltk/gis.m/chart.tcl:286
+#: ../gui/tcltk/gis.m/chart.tcl:288
 msgid "\tchart outline color:"
 msgstr "\tグラフ外枠線の色："
+
+#: ../gui/tcltk/gis.m/chart.tcl:292
+#, fuzzy
+msgid "none"
+msgstr "完了"
 
 #: ../gui/tcltk/gis.m/labels.tcl:96
 msgid "Labels for vectors"
@@ -4716,56 +4968,74 @@ msgstr "サイズ："
 msgid "Could not open labels file "
 msgstr "ラベルファイルをオープン出来ません"
 
-#: ../gui/tcltk/gis.m/rastarrows.tcl:106
+#: ../gui/tcltk/gis.m/rastarrows.tcl:111
 msgid "Aspect map"
 msgstr "方位マップ"
 
-#: ../gui/tcltk/gis.m/rastarrows.tcl:109 ../gui/tcltk/gis.m/rastarrows.tcl:121
+#: ../gui/tcltk/gis.m/rastarrows.tcl:114 ../gui/tcltk/gis.m/rastarrows.tcl:126
 #, tcl-format
 msgid "arrows for %s"
 msgstr " %s の矢印"
 
-#: ../gui/tcltk/gis.m/rastarrows.tcl:118
+#: ../gui/tcltk/gis.m/rastarrows.tcl:123
 msgid "Slope/intensity map"
 msgstr "傾斜/照度マップ"
 
-#: ../gui/tcltk/gis.m/rastarrows.tcl:134
+#: ../gui/tcltk/gis.m/rastarrows.tcl:139
 msgid "Display arrows whose orientations are based on raster aspect map"
 msgstr "ラスター方位マップに基づいて矢印を表示"
 
-#: ../gui/tcltk/gis.m/rastarrows.tcl:140
+#: ../gui/tcltk/gis.m/rastarrows.tcl:145
 msgid "  (optionally, arrow lengths are based on slope or intensity map)"
 msgstr "  (オプション 矢印の長さは傾斜または照度に比例) "
 
-#: ../gui/tcltk/gis.m/rastarrows.tcl:157
+#: ../gui/tcltk/gis.m/rastarrows.tcl:162
 msgid "Aspect map: "
 msgstr "方位図："
 
-#: ../gui/tcltk/gis.m/rastarrows.tcl:173
+#: ../gui/tcltk/gis.m/rastarrows.tcl:178
 msgid "    aspect value type"
 msgstr "    方位値のタイプ"
 
 #: ../gui/tcltk/gis.m/rastarrows.tcl:181
+#, fuzzy
+msgid "grass"
+msgstr "エリア"
+
+#: ../gui/tcltk/gis.m/rastarrows.tcl:181
+msgid "compass"
+msgstr ""
+
+#: ../gui/tcltk/gis.m/rastarrows.tcl:181
+msgid "agnps"
+msgstr ""
+
+#: ../gui/tcltk/gis.m/rastarrows.tcl:181
+#, fuzzy
+msgid "answers"
+msgstr "ラスター"
+
+#: ../gui/tcltk/gis.m/rastarrows.tcl:188
 msgid "    draw arrows every Nth grid cell"
 msgstr "    N番のグリッド毎に矢印を描画"
 
-#: ../gui/tcltk/gis.m/rastarrows.tcl:189
+#: ../gui/tcltk/gis.m/rastarrows.tcl:196
 msgid "    arrow color      "
 msgstr "    矢印の色"
 
-#: ../gui/tcltk/gis.m/rastarrows.tcl:194
+#: ../gui/tcltk/gis.m/rastarrows.tcl:203
 msgid "     cell grid color"
 msgstr "     セルのグリッドの色"
 
-#: ../gui/tcltk/gis.m/rastarrows.tcl:204
+#: ../gui/tcltk/gis.m/rastarrows.tcl:215
 msgid "    null value color"
 msgstr "    NULL値の色"
 
-#: ../gui/tcltk/gis.m/rastarrows.tcl:219
+#: ../gui/tcltk/gis.m/rastarrows.tcl:234
 msgid "Slope/intensity map: "
 msgstr "傾斜/照度マップ："
 
-#: ../gui/tcltk/gis.m/rastarrows.tcl:230
+#: ../gui/tcltk/gis.m/rastarrows.tcl:245
 msgid "    scale factor for computing arrow length"
 msgstr "    矢印の長さを計算する要素"
 
@@ -6836,10 +7106,6 @@ msgstr "青 (RGB) または 彩度 (HIS)："
 #~ msgstr "ファイル"
 
 #, fuzzy
-#~ msgid "Raster"
-#~ msgstr "ラスター"
-
-#, fuzzy
 #~ msgid "Color Panel"
 #~ msgstr "色"
 
@@ -7063,9 +7329,6 @@ msgstr "青 (RGB) または 彩度 (HIS)："
 
 #~ msgid "    query with SQL where clause  "
 #~ msgstr "    SQL where句でクエリ"
-
-#~ msgid "Graduated points & lines:"
-#~ msgstr "ポイントとラインの目盛："
 
 #~ msgid "    legend for only these categories    "
 #~ msgstr "    カテゴリー値のみの凡例"
