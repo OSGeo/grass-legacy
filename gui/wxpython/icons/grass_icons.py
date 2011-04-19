@@ -4,9 +4,7 @@ Original GRASS icon set from old TCL/TK GUI
 
 import os
 
-import wx
-
-import globalvar
+from gui_modules import globalvar
 
 iconPath = os.path.join(globalvar.ETCDIR, "gui", "icons", "grass")
 iconPathVDigit  = os.path.join(globalvar.ETCDIR, "gui", "icons", "grass", "edit")
