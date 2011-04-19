@@ -521,7 +521,7 @@ int Vect_delete(const char *map)
 	sprintf(buf, "%s/%s/vector/%s/%s", G_location_path(), G_mapset(), map,
 		ent->d_name);
 	G_debug(3, "delete file '%s'", buf);
-	ret = unlink(buf);
+	ret = remove(buf);
 	if (ret == -1) {
 	    G_warning(_("Unable to delete file '%s'. Reason: %s"), buf, strerror(errno));
 	    closedir(dir);
