@@ -88,7 +88,7 @@ awk_tac()
 
 eval `g.gisenv`
 : ${GISBASE?} ${GISDBASE?} ${LOCATION_NAME?} ${MAPSET?}
-LOCATION=$GISDBASE/$LOCATION_NAME/$MAPSET
+LOCATION="$GISDBASE/$LOCATION_NAME/$MAPSET"
 
 OPTS=""
 
@@ -178,7 +178,7 @@ EOF
 cat "${TMPFILE}" >> "${TMPFILE}.dig"
 
 #### if no name for vector file given, cat to stdout
-if [ "$NAME" = "" ] ; then
+if [ -z "$NAME" ] ; then
     g.message "Output to stdout" 
     cat "${TMPFILE}.dig" 2>/dev/null
 else
