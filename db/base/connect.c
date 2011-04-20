@@ -42,7 +42,7 @@ int main(int argc, char *argv[])
 
     /* Set description */
     module = G_define_module();
-    module->keywords = _("database, attribute table");
+    module->keywords = _("database, attribute table, connection settings");
     module->description =
 	_("Prints/sets general DB connection for current mapset and exits.");
 

@@ -40,7 +40,7 @@ int main(int argc, char *argv[])
     G_gisinit(argv[0]);
 
     module = G_define_module();
-    module->keywords = _("database, SQL");
+    module->keywords = _("database, connection settings");
     module->description = _("Sets user/password for driver/database.");
 
     driver = G_define_standard_option(G_OPT_DRIVER);

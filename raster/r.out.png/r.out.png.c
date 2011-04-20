@@ -107,7 +107,7 @@ int main(int argc, char *argv[])
     G_gisinit(argv[0]);
 
     module = G_define_module();
-    module->keywords = _("raster, png");
+    module->keywords = _("raster, export, png");
     module->description =
 	_("Export GRASS raster as non-georeferenced PNG image.");
 
