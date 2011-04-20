@@ -54,7 +54,7 @@ int main(int argc, char **argv)
     G_gisinit(argv[0]);
 
     module = G_define_module();
-    module->keywords = _("raster");
+    module->keywords = _("raster, export");
     module->description =
 	_("Converts 3 GRASS raster layers (R,G,B) to a PPM image file "
 	  "at the pixel resolution of the CURRENTLY DEFINED REGION.");
