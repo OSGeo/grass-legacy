@@ -12,7 +12,7 @@
  *               Hamish Bowman <hamish_nospam yahoo.com>, 
  *               Jan-Oliver Wagner <jan intevation.de>
  * PURPOSE:      displays a barscale on graphics monitor
- * COPYRIGHT:    (C) 1999-2007 by the GRASS Development Team
+ * COPYRIGHT:    (C) 1999-2011 by the GRASS Development Team
  *
  *               This program is free software under the GNU General Public
  *               License (>=v2). Read the file COPYING that comes with GRASS
@@ -43,9 +43,9 @@ int main(int argc, char **argv)
 {
     char window_name[64];
     struct Cell_head window;
-    int t, b, l, r;
+    int t, b, l, r, fontsize;
     struct GModule *module;
-    struct Option *opt1, *opt2, *opt3;
+    struct Option *opt1, *opt2, *opt3, *fsize;
     struct Flag *mouse, *feet, *top, *linescale, *northarrow, *scalebar;
     struct Cell_head W;
 
@@ -97,6 +97,14 @@ int main(int argc, char **argv)
     opt3->description =
 	_("The screen coordinates for top-left corner of label ([0,0] is top-left of frame)");
 
+    fsize = G_define_option();
+    fsize->key = "fontsize";
+    fsize->type = TYPE_INTEGER;
+    fsize->required = NO;
+    fsize->answer = "14";
+    fsize->options = "1-72";
+    fsize->description = _("Font size for gridline coordinate labels");
+
     if (G_parser(argc, argv))
 	exit(EXIT_FAILURE);
 
@@ -120,7 +128,7 @@ int main(int argc, char **argv)
 
     sscanf(opt3->answers[0], "%lf", &east);
     sscanf(opt3->answers[1], "%lf", &north);
-
+    fontsize = atoi(fsize->answer);
 
     if (R_open_driver() != 0)
 	G_fatal_error(_("No graphics device selected"));
@@ -158,12 +166,12 @@ int main(int argc, char **argv)
 
     if (!mouse->answer) {
 	/* Draw the scale */
-	draw_scale(NULL, top->answer);
+	draw_scale(NULL, top->answer, fontsize);
 
 	/* Add this command to list */
 	D_add_to_list(G_recreate_command());
     }
-    else if (mouse_query(top->answer)) {
+    else if (mouse_query(top->answer, fontsize)) {
 	char cmdbuf[255];
 
 	sprintf(cmdbuf, "%s at=%f,%f", argv[0], east, north);

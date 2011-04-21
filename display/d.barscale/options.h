@@ -9,7 +9,7 @@ extern int do_bar;
 extern int draw;
 
 /* draw_scale.c */
-int draw_scale(char *save, int toptext);
+int draw_scale(char *save, int toptext, int fontsize);
 
 /* mouse.c */
-int mouse_query(int toptext);
+int mouse_query(int toptext, int fontsize);
