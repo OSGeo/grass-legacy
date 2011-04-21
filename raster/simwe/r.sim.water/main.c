@@ -118,7 +118,7 @@ int main(int argc, char *argv[])
     module->keywords = _("raster, flow, hydrology");
     module->description =
 	_("Overland flow hydrologic simulation using "
-	  "path sampling method (SIMWE)");
+	  "path sampling method (SIMWE).");
 
     parm.elevin = G_define_standard_option(G_OPT_R_INPUT);
     parm.elevin->key = "elevin";

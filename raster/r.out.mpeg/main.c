@@ -382,7 +382,7 @@ static void parse_command(int argc, char *argv[],
 
     module = G_define_module();
     module->keywords = _("raster, export");
-    module->description = _("Raster File Series to MPEG Conversion Program.");
+    module->description = _("Raster File Series to MPEG Conversion.");
 
     *numviews = *numframes = 0;
     for (i = 0; i < MAXVIEWS; i++) {
