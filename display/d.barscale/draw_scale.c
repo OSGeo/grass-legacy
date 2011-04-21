@@ -59,7 +59,7 @@ static const struct scale
     "5000 miles", 8046720.000, 20000000., 5},}
 };
 
-int draw_scale(char *save, int toptext)
+int draw_scale(char *save, int toptext, int size)
 {
     double meters;
     double line_len;
@@ -68,7 +68,6 @@ int draw_scale(char *save, int toptext)
     int t, b, l, r;
     int pt, pb, pl, pr;
     int i;
-    int size;
     int xarr[5], yarr[5];
     double seg_len;
     const struct scale *scales = all_scales[use_feet];
@@ -76,7 +75,6 @@ int draw_scale(char *save, int toptext)
     /* Establish text size */
     D_get_screen_window(&t, &b, &l, &r);
     R_set_window(t, b, l, r);
-    size = 14;
     R_text_size(size, size);
 
     x_pos = (int)(east * (r - l) / 100.);
