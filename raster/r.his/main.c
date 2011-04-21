@@ -60,7 +60,7 @@ int main(int argc, char **argv)
     G_gisinit(argv[0]);
 
     module = G_define_module();
-    module->keywords = _("raster");
+    module->keywords = _("raster, color transformation");
     module->description =
 	_("Generates red, green and blue raster map layers "
 	  "combining hue, intensity and saturation (HIS) "

@@ -93,7 +93,7 @@ int main(int argc, char *argv[])
     G_gisinit(argv[0]);
 
     module = G_define_module();
-    module->keywords = _("imagery");
+    module->keywords = _("imagery, geometry");
     module->description =
 	_("Mark ground control points on image to be rectified.");
 

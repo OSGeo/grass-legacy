@@ -278,7 +278,7 @@ int main(int argc, char *argv[])
     G_gisinit(argv[0]);
 
     module = G_define_module();
-    module->keywords = _("general");
+    module->keywords = _("general, gui");
     module->description = "Overlays multiple PPM image files";
 
     opt.in = G_define_option();

@@ -63,7 +63,7 @@ int main(int argc, char **argv)
     G_gisinit(argv[0]);
 
     module = G_define_module();
-    module->keywords = _("display");
+    module->keywords = _("display, menu");
     module->description =
 	_("Creates and displays a menu within the active "
 	  "frame on the graphics monitor.");

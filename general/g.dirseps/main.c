@@ -31,7 +31,7 @@ int main(int argc, char *argv[])
     G_set_gisrc_mode(G_GISRC_MODE_MEMORY);
 
     module = G_define_module();
-    module->keywords = "general";
+    module->keywords = "general, map management";
     module->label =
 	_("Internal GRASS utility for converting directory separator characters.");
     module->description =

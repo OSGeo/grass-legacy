@@ -42,7 +42,7 @@ int main(int argc, char *argv[])
     G_gisinit(argv[0]);
 
     module = G_define_module();
-    module->keywords = _("display");
+    module->keywords = _("display, distance");
     module->description =
 	_("Displays the rhumbline joining two user-specified "
 	"points, in the active frame on the user's graphics monitor.");

@@ -110,7 +110,7 @@ int main(int argc, char **argv)
 
     /* Set description */
     module = G_define_module();
-    module->keywords = _("display");
+    module->keywords = _("display, cartography");
     module->description =
 	_("Generates and displays simple line graphs in the active graphics monitor display frame.");
 

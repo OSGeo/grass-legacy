@@ -33,7 +33,7 @@ int main(int argc, char *argv[])
     G_gisinit(argv[0]);
 
     module = G_define_module();
-    module->keywords = _("display");
+    module->keywords = _("display, map management");
     module->description =
 	_("Prompts the user to select a GRASS data base file from among "
 	  "files displayed in a menu on the graphics monitor.");

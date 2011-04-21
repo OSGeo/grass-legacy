@@ -38,7 +38,7 @@ int main(int argc, char **argv)
     G_gisinit(argv[0]);
 
     module = G_define_module();
-    module->keywords = _("vector, networking");
+    module->keywords = _("vector, network, shortest path");
     module->description = _("Finds shortest path on vector network.");
 
     input_opt = G_define_standard_option(G_OPT_V_INPUT);

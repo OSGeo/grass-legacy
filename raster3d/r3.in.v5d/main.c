@@ -190,7 +190,7 @@ int main(int argc, char *argv[])
 
     G_gisinit(argv[0]);
     module = G_define_module();
-    module->keywords = _("raster3d, voxel");
+    module->keywords = _("raster3d, voxel, import");
     module->description =
 	"  import of 3-dimensional Vis5D files (i.e. the v5d file with 1 variable and 1 time step)";
 
