@@ -408,7 +408,7 @@ int main(int argc, char *argv[])
 	G_fatal_error(_("Unable to get current region"));
 
     module = G_define_module();
-    module->keywords = "raster";
+    module->keywords = _("raster, hydrology");
     module->description =
 	_("Construction of slope curves (flowlines), flowpath lengths, "
 	  "and flowline densities (upslope areas) from a raster "

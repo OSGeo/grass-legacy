@@ -145,7 +145,7 @@ int main(int argc, char *argv[])
     struct History history;
 
     module = G_define_module();
-    module->keywords = _("raster");
+    module->keywords = _("raster, hydrology");
     module->description = _("Fills lake from seed at given level.");
 
     tmap_opt = G_define_option();

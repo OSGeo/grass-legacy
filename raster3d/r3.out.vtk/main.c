@@ -373,7 +373,7 @@ int main(int argc, char *argv[])
     G_gisinit(argv[0]);
 
     module = G_define_module();
-    module->keywords = _("raster3d, voxel");
+    module->keywords = _("raster3d, voxel, export");
     module->description =
 	_("Converts 3D raster maps (G3D) into the VTK-Ascii format");
 

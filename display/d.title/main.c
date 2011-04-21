@@ -42,7 +42,7 @@ int main(int argc, char **argv)
     G_gisinit(argv[0]);
 
     module = G_define_module();
-    module->keywords = _("display");
+    module->keywords = _("display, cartography");
     module->description =
 	_("Create a TITLE for a raster map in a form suitable "
 	  "for display with d.text.");

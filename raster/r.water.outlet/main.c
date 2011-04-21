@@ -44,8 +44,8 @@ int main(int argc, char *argv[])
     G_gisinit(argv[0]);
 
     module = G_define_module();
+    module->keywords = _("raster, hydrology");
     module->description = _("Watershed basin creation program.");
-    module->keywords = _("raster");
     
     opt1 = G_define_option();
     opt1->key = "drainage";

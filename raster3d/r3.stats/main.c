@@ -565,7 +565,7 @@ int main(int argc, char *argv[])
     G_gisinit(argv[0]);
 
     module = G_define_module();
-    module->keywords = _("raster3d, statistics");
+    module->keywords = _("raster3d, voxel, statistics");
     module->description = _("Generates volume statistics for raster3d maps.");
 
     /* Define the different options */

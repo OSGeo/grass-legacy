@@ -43,7 +43,7 @@ int main(int argc, char *argv[])
 				   recalled using G_program_name(). */
 
     module = G_define_module();
-    module->keywords = _("raster");
+    module->keywords = _("raster, statistics");
     module->description =
 	_("GRASS module to produce a raster map layer of "
 	  "gaussian deviates whose mean and standard deviation "

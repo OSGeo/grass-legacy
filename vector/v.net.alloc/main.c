@@ -58,7 +58,7 @@ int main(int argc, char **argv)
     G_gisinit(argv[0]);
 
     module = G_define_module();
-    module->keywords = _("vector, networking");
+    module->keywords = _("vector, network, allocation");
     module->label =
 	_("Allocate subnets for nearest centres (direction from centre).");
     module->description =

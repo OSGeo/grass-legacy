@@ -115,7 +115,7 @@ int main(int argc, char **argv)
     G_gisinit(argv[0]);
 
     module = G_define_module();
-    module->keywords = _("vector");
+    module->keywords = _("vector, geometry, triangulation");
     module->description = _("Creates a Voronoi diagram from an input vector "
 			    "map containing points or centroids.");
 

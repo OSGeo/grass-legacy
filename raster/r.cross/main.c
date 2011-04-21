@@ -72,7 +72,7 @@ int main(int argc, char *argv[])
     /* Define the different options */
 
     module = G_define_module();
-    module->keywords = _("raster");
+    module->keywords = _("raster, statistics");
     module->description =
 	_("Creates a cross product of the category values from "
 	  "multiple raster map layers.");

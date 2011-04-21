@@ -67,7 +67,7 @@ int main(int argc, char *argv[])
     G_get_default_window(&window);
 
     module = G_define_module();
-    module->keywords = _("general");
+    module->keywords = _("general, settings");
     module->description =
 	_("Manages the boundary definitions for the " "geographic region.");
 

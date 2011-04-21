@@ -58,7 +58,7 @@ int main(int argc, char *argv[])
     G_putenv("GRASS_UI_TERM", "1");
 
     module = G_define_module();
-    module->keywords = _("raster");
+    module->keywords = _("raster, landscape structure analysis, patch index");
     module->description =
 	_("Interactive tool used to setup the sampling and analysis framework "
 	 "that will be used by the other r.le programs.");

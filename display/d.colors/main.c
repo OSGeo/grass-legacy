@@ -8,7 +8,7 @@
  *               Eric G. Miller <egm2 jps.net>, 
  *               Glynn Clements <glynn gclements.plus.com>, 
  *               Hamish Bowman <hamish_nospam yahoo.com>
- * PURPOSE:      user changes color table for raster map layers
+ * PURPOSE:      Enables user to change color table of raster map layers
  * COPYRIGHT:    (C) 1999-2007 by the GRASS Development Team
  *
  *               This program is free software under the GNU General Public
@@ -47,7 +47,7 @@ int main(int argc, char **argv)
     }
 
     module = G_define_module();
-    module->keywords = _("display");
+    module->keywords = _("display, raster");
     module->description =
 	"Allows the user to interactively change the color table "
 	"of a raster map layer displayed on the graphics monitor.";

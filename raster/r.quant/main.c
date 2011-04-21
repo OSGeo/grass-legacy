@@ -38,7 +38,7 @@ int main(int argc, char *argv[])
     G_gisinit(argv[0]);
 
     module = G_define_module();
-    module->keywords = _("raster");
+    module->keywords = _("raster, quantization");
     module->description =
 	_("Produces the quantization file for a floating-point map.");
 
