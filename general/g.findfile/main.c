@@ -7,7 +7,7 @@
  *               Bernhard Reiter <bernhard intevation.de>, 
  *               Glynn Clements <glynn gclements.plus.com>,
  *               Jan-Oliver Wagner <jan intevation.de>
- * PURPOSE:      
+ * PURPOSE:      Searches for GRASS data base files
  * COPYRIGHT:    (C) 1999-2008 by the GRASS Development Team
  *
  *               This program is free software under the GNU General Public
@@ -32,7 +32,7 @@ int main(int argc, char *argv[])
     struct Flag *n_flag;
 
     module = G_define_module();
-    module->keywords = _("general");
+    module->keywords = _("general, map management");
     module->description =
 	_("Searches for GRASS data base files "
 	  "and sets variables for the shell.");

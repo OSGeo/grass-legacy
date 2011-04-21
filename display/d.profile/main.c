@@ -58,7 +58,7 @@ int main(int argc, char **argv)
 
     /* Set description */
     module = G_define_module();
-    module->keywords = _("display");
+    module->keywords = _("display, raster, profile");
     module->description =
 	_("Interactive profile plotting utility with optional output.");
 

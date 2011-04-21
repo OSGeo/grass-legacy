@@ -43,7 +43,7 @@ int main(int argc, char **argv)
 
     /* Set description */
     module = G_define_module();
-    module->keywords = _("display");
+    module->keywords = _("display, paint labels");
     module->description =
 	_("Displays text labels (created with v.label) "
 	  "to the active frame on the graphics monitor.");

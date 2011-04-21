@@ -45,7 +45,7 @@ int main(int argc, char **argv)
     G_gisinit(argv[0]);
 
     module = G_define_module();
-    module->keywords = _("display");
+    module->keywords = _("display, cartography");
     module->description =
 	_("Generates and displays simple graphics on map "
 	  "layers drawn in the active graphics monitor display frame.");

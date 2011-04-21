@@ -1,7 +1,7 @@
 
 /****************************************************************************
  *
- * MODULE:       r.what
+ * MODULE:       r.what.color
  * AUTHOR(S):    Michael Shapiro, CERL (original contributor)
  *               Markus Neteler <neteler itc.it>,Brad Douglas <rez touchofmadness.com>,
  *               Huidae Cho <grass4u gmail.com>, Glynn Clements <glynn gclements.plus.com>,
@@ -85,7 +85,7 @@ int main(int argc, char **argv)
     G_gisinit(argv[0]);
 
     module = G_define_module();
-    module->keywords = _("raster");
+    module->keywords = _("raster, querying");
     module->description = _("Queries colors for a raster map layer.");
 
     opt.input = G_define_option();

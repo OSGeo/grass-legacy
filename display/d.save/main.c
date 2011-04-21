@@ -76,7 +76,7 @@ int main(int argc, char **argv)
     G_gisinit(argv[0]);
 
     module = G_define_module();
-    module->keywords = _("display");
+    module->keywords = _("display, metadata");
     module->description =
 	_("Creates a list of commands for recreating screen graphics.");
 

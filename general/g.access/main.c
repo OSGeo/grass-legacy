@@ -34,7 +34,7 @@ int main(int argc, char *argv[])
     G_gisinit(argv[0]);
 
     module = G_define_module();
-    module->keywords = _("general");
+    module->keywords = _("general, map management");
     module->description =
 	_("Controls access to the current mapset for other users on the system.");
 

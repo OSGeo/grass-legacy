@@ -56,7 +56,7 @@ int main(int argc, char **argv)
     G_gisinit(argv[0]);
 
     module = G_define_module();
-    module->keywords = _("display");
+    module->keywords = _("display, setup");
     module->description =
 	_("Selects the font in which text will be displayed "
 	  "on the user's graphics monitor.");

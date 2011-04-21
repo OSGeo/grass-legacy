@@ -50,7 +50,7 @@ int main(int argc, char *argv[])
     G_gisinit(argv[0]);
 
     module = G_define_module();
-    module->keywords = _("imagery");
+    module->keywords = _("imagery, classification");
     module->label =
 	_("Generates spectral signatures for an image by allowing the user "
 	  "to outline regions of interest.");
