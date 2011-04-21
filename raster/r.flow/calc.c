@@ -412,7 +412,7 @@ int main(int argc, char *argv[])
     module->description =
 	_("Construction of slope curves (flowlines), flowpath lengths, "
 	  "and flowline densities (upslope areas) from a raster "
-	  "digital elevation model (DEM)");
+	  "digital elevation model (DEM).");
 
     larger = ((region.cols < region.rows) ? region.rows : region.cols);
     default_skip = (larger < 50) ? 1 : (int)(larger / 50);

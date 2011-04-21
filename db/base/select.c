@@ -236,7 +236,7 @@ static void parse_command_line(int argc, char **argv)
     /* Set description */
     module = G_define_module();
     module->keywords = _("database, attribute table, SQL");
-    module->description = _("Selects data from table.");
+    module->description = _("Selects data from attribute table (performs SQL query statement(s)).");
 
     if (G_parser(argc, argv))
 	exit(EXIT_SUCCESS);

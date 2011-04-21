@@ -111,7 +111,7 @@ int main(int argc, char *argv[])
     module->keywords = _("raster, sediment flow, erosion, deposition");
     module->description =
 	_("Sediment transport and erosion/deposition simulation "
-	  "using path sampling method (SIMWE)");
+	  "using path sampling method (SIMWE).");
 
     parm.elevin = G_define_standard_option(G_OPT_R_INPUT);
     parm.elevin->key = "elevin";
