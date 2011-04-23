@@ -13,9 +13,9 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Language: lv\n"
 "X-Generator: KBabel 1.11.4\n"
-"Plural-Forms:  nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n != 0 ? 1 : "
-"2);\n"
+"Plural-Forms:  nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n != 0 ? 1 : 2);\n"
 
 #: ../vector/v.digit/cats.tcl:20 ../gui/tcltk/gis.m/gmmenu.tcl:178
 msgid "Delete"
@@ -397,8 +397,7 @@ msgstr ""
 msgid ""
 "Warning: Unable to get enviromental variable GRASS_PROJSHARE. \n"
 "This is a GRASS installation error. \n"
-"Set enviromental variable GRASS_PROJSHARE to point to directory with Proj4 "
-"EPSG file. "
+"Set enviromental variable GRASS_PROJSHARE to point to directory with Proj4 EPSG file. "
 msgstr ""
 
 #: ../lib/init/epsg_option.tcl:103
@@ -500,10 +499,7 @@ msgid "Select datum transformation parameters:"
 msgstr ""
 
 #: ../lib/init/epsg_option.tcl:292 ../lib/init/file_option.tcl:245
-msgid ""
-"Continue without specifying parameters - if used when creating a location, "
-"other GRASS modules will use the \"default\" (likely non-optimum) parameters "
-"for this datum if necessary in the future."
+msgid "Continue without specifying parameters - if used when creating a location, other GRASS modules will use the \"default\" (likely non-optimum) parameters for this datum if necessary in the future."
 msgstr ""
 
 #: ../lib/init/epsg_option.tcl:344
@@ -559,8 +555,7 @@ msgstr ""
 
 #: ../lib/init/gis_set.tcl:132
 #, tcl-format
-msgid ""
-"Warning: location <%s> at GISDBASE <%s> is not a directory or does not exist."
+msgid "Warning: location <%s> at GISDBASE <%s> is not a directory or does not exist."
 msgstr ""
 
 #: ../lib/init/gis_set.tcl:183
@@ -690,10 +685,7 @@ msgid "Starting GRASS for the first time"
 msgstr ""
 
 #: ../lib/init/gis_set.tcl:584
-msgid ""
-"GRASS needs a directory in which to store its data.  Create one now if you "
-"have not already done so.  A popular choice is \"grassdata\", located in "
-"your home directory."
+msgid "GRASS needs a directory in which to store its data.  Create one now if you have not already done so.  A popular choice is \"grassdata\", located in your home directory."
 msgstr ""
 
 #: ../lib/init/gis_set.tcl:589
@@ -1024,8 +1016,7 @@ msgstr ""
 #: ../gui/tcltk/gis.m/rastnums.tcl:286
 msgid ""
 "Cell values can only be displayed for \n"
-"regions of < 10,000 cells. Map in explore mode may contain more than 10,000 "
-"cells.\n"
+"regions of < 10,000 cells. Map in explore mode may contain more than 10,000 cells.\n"
 "\n"
 " It's suggested to constrain map to region geometry to display cell values."
 msgstr ""
@@ -1484,15 +1475,11 @@ msgid "Could not create TIF"
 msgstr ""
 
 #: ../gui/tcltk/gis.m/georect.tcl:285
-msgid ""
-"There is no raster group file (REF). You must select the 'create/edit group' "
-"option to create a group file."
+msgid "There is no raster group file (REF). You must select the 'create/edit group' option to create a group file."
 msgstr ""
 
 #: ../gui/tcltk/gis.m/georect.tcl:307
-msgid ""
-"There is no vector group file (VREF). You must select the 'create/edit "
-"group' option to create a group file."
+msgid "There is no vector group file (VREF). You must select the 'create/edit group' option to create a group file."
 msgstr ""
 
 #: ../gui/tcltk/gis.m/georect.tcl:388
@@ -1578,9 +1565,7 @@ msgstr ""
 
 #: ../gui/tcltk/gis.m/georect.tcl:683
 #, fuzzy
-msgid ""
-"Select non-georectified raster or vector to display for marking ground "
-"control points"
+msgid "Select non-georectified raster or vector to display for marking ground control points"
 msgstr "vektors"
 
 #: ../gui/tcltk/gis.m/georect.tcl:693
@@ -1680,22 +1665,15 @@ msgid "Exit georectifier"
 msgstr ""
 
 #: ../gui/tcltk/gis.m/georect.tcl:1323
-msgid ""
-"There is no POINTS file of ground control points for group. You must create "
-"ground control points before georectifying map."
+msgid "There is no POINTS file of ground control points for group. You must create ground control points before georectifying map."
 msgstr ""
 
 #: ../gui/tcltk/gis.m/georect.tcl:1353
-msgid ""
-"Insufficient ground control points for georectification method. You need at "
-"least 3 points for 1st order, 6 points for 2nd order and 10 points for 3rd "
-"order."
+msgid "Insufficient ground control points for georectification method. You need at least 3 points for 1st order, 6 points for 2nd order and 10 points for 3rd order."
 msgstr ""
 
 #: ../gui/tcltk/gis.m/georect.tcl:1384
-msgid ""
-"No valid ground control points in GCP file. You must create valid ground "
-"control points before georectifying map."
+msgid "No valid ground control points in GCP file. You must create valid ground control points before georectifying map."
 msgstr ""
 
 #: ../gui/tcltk/gis.m/georect.tcl:1587
@@ -1719,9 +1697,7 @@ msgid "Drag with mouse to pan"
 msgstr ""
 
 #: ../gui/tcltk/gis.m/gm.tcl:75
-msgid ""
-"GISDBASE or LOCATION_NAME or MAPSET is empty.  This is a fatal error. gis.m "
-"can not work without proper settings."
+msgid "GISDBASE or LOCATION_NAME or MAPSET is empty.  This is a fatal error. gis.m can not work without proper settings."
 msgstr ""
 
 #: ../gui/tcltk/gis.m/gm.tcl:219 ../gui/tcltk/d.m/d.m.tcl:314
@@ -1773,8 +1749,7 @@ msgid ""
 "\n"
 "This action will colse all sessions gis.m instances.\n"
 "\n"
-"If You have running some  GRASS module from comandline, GRASS will terminate "
-"after it finishes to run."
+"If You have running some  GRASS module from comandline, GRASS will terminate after it finishes to run."
 msgstr ""
 
 #: ../gui/tcltk/gis.m/gm.tcl:543
@@ -1921,9 +1896,7 @@ msgid "Select label font"
 msgstr ""
 
 #: ../gui/tcltk/gis.m/maptext.tcl:129
-msgid ""
-"Create postscript text object (for postscript eps, pdf, and print output "
-"only)"
+msgid "Create postscript text object (for postscript eps, pdf, and print output only)"
 msgstr ""
 
 #: ../gui/tcltk/gis.m/maptext.tcl:136
@@ -2559,9 +2532,8 @@ msgid "Preset paper type"
 msgstr ""
 
 #: ../gui/tcltk/gis.m/mapprint.tcl:272
-#, fuzzy
 msgid "letter"
-msgstr "%-5d centroīdi nolasīti\n"
+msgstr ""
 
 #: ../gui/tcltk/gis.m/mapprint.tcl:272
 msgid "A4"
@@ -4415,8 +4387,7 @@ msgid "chart for %s"
 msgstr ""
 
 #: ../gui/tcltk/gis.m/chart.tcl:185
-msgid ""
-"Display pie and bar charts of attribute values at vector object locations"
+msgid "Display pie and bar charts of attribute values at vector object locations"
 msgstr ""
 
 #: ../gui/tcltk/gis.m/chart.tcl:202 ../gui/tcltk/d.m/chart.tcl:91
@@ -5050,8 +5021,7 @@ msgid "Raster map for blue or saturation channel"
 msgstr ""
 
 #: ../gui/tcltk/gis.m/rgbhis.tcl:136
-msgid ""
-"Display 3 raster maps as Red/Green/Blue or Hue/Intensity/Saturation channels"
+msgid "Display 3 raster maps as Red/Green/Blue or Hue/Intensity/Saturation channels"
 msgstr ""
 
 #: ../gui/tcltk/gis.m/rgbhis.tcl:155 ../gui/tcltk/d.m/rgbhis.tcl:128
@@ -6082,9 +6052,7 @@ msgid "Create color image from RGB files"
 msgstr ""
 
 #: ../gui/tcltk/d.m/menu.tcl:250
-msgid ""
-"Create 3 RGB (red, green, blue) maps from 3 HIS (hue, intensity, saturation) "
-"maps"
+msgid "Create 3 RGB (red, green, blue) maps from 3 HIS (hue, intensity, saturation) maps"
 msgstr ""
 
 #: ../gui/tcltk/d.m/menu.tcl:255
@@ -6433,16 +6401,12 @@ msgid "Create stationing from imput lines, and linear reference system"
 msgstr ""
 
 #: ../gui/tcltk/d.m/menu.tcl:416
-msgid ""
-"Create points/segments from input lines, linear reference system and "
-"positions read from stdin"
+msgid "Create points/segments from input lines, linear reference system and positions read from stdin"
 msgstr ""
 
 #: ../gui/tcltk/d.m/menu.tcl:417
 #, fuzzy
-msgid ""
-"Find line id and real km+offset for given points in vector map using linear "
-"reference system"
+msgid "Find line id and real km+offset for given points in vector map using linear reference system"
 msgstr "vektors"
 
 #: ../gui/tcltk/d.m/menu.tcl:420
@@ -6571,18 +6535,15 @@ msgid "Mosaic up to 4 adjacent images"
 msgstr ""
 
 #: ../gui/tcltk/d.m/menu.tcl:484
-msgid ""
-"Color balance and enhance color tables of multiband imagery for rgb display"
+msgid "Color balance and enhance color tables of multiband imagery for rgb display"
 msgstr ""
 
 #: ../gui/tcltk/d.m/menu.tcl:485
-msgid ""
-"Transform HIS (Hue/Intensity/Saturation) color image to RGB (Red/Green/Blue)"
+msgid "Transform HIS (Hue/Intensity/Saturation) color image to RGB (Red/Green/Blue)"
 msgstr ""
 
 #: ../gui/tcltk/d.m/menu.tcl:486
-msgid ""
-"Transform RGB (Red/Green/Blue) color image to HIS (Hue/Intensity/Saturation)"
+msgid "Transform RGB (Red/Green/Blue) color image to HIS (Hue/Intensity/Saturation)"
 msgstr ""
 
 #: ../gui/tcltk/d.m/menu.tcl:488
@@ -6709,9 +6670,7 @@ msgstr ""
 
 #: ../gui/tcltk/d.m/fttext.tcl:120
 #, tcl-format
-msgid ""
-"     (for coordinates, % is from bottom left of display, pixels from top "
-"left)"
+msgid "     (for coordinates, % is from bottom left of display, pixels from top left)"
 msgstr ""
 
 #: ../gui/tcltk/d.m/fttext.tcl:126
@@ -6743,9 +6702,7 @@ msgstr ""
 #~ msgstr "vektors"
 
 #, fuzzy
-#~ msgid ""
-#~ "Find line ID and real km+offset for given points in vector map using "
-#~ "linear reference system"
+#~ msgid "Find line ID and real km+offset for given points in vector map using linear reference system"
 #~ msgstr "vektors"
 
 #, fuzzy

@@ -89,9 +89,7 @@ msgstr "<%s> vektör haritasındaki değişiklikleri kaydetmek istiyor musun?"
 #: ../gui/wxpython/wxgui.py:370 ../gui/wxpython/wxgui.py:1505
 #, fuzzy
 msgid "Do you want to store current settings to workspace file?"
-msgstr ""
-"Çalışma alanı boş değil. Geçerli ayarlarınçalışma alanı dosyasına "
-"saklanmasını istermisin?"
+msgstr "Çalışma alanı boş değil. Geçerli ayarlarınçalışma alanı dosyasına saklanmasını istermisin?"
 
 #: ../gui/wxpython/wxgui.py:377
 #, fuzzy, python-format
@@ -103,13 +101,14 @@ msgid "Selected map layer is not vector."
 msgstr ""
 
 #: ../gui/wxpython/wxgui.py:481
+#, fuzzy
 msgid "Editing is allowed only for vector maps from the current mapset."
-msgstr ""
+msgstr "GRASS vektör haritası için topoloji oluşturur."
 
 #: ../gui/wxpython/wxgui.py:496
 #, fuzzy
 msgid "Choose script file to run"
-msgstr "çalışma alanı dosyasını seç"
+msgstr "Girdi dizinini seç"
 
 #: ../gui/wxpython/wxgui.py:498
 msgid "Python script (*.py)|*.py|Bash script (*.sh)|*.sh"
@@ -128,9 +127,7 @@ msgstr "Kod başlatılıyor '%s'..."
 #: ../gui/wxpython/wxgui.py:528
 #, python-format
 msgid "Unable to switch to location <%(loc)s> mapset <%(mapset)s>."
-msgstr ""
-"Unable to switch to location <%(loc)s> mapset <%(mapset)"
-"s>.                         ???????????????????"
+msgstr "Unable to switch to location <%(loc)s> mapset <%(mapset)s>.                         ???????????????????"
 
 #: ../gui/wxpython/wxgui.py:530 ../gui/wxpython/wxgui.py:551
 #: ../gui/wxpython/gui_modules/gcpmanager.py:1038
@@ -207,12 +204,8 @@ msgstr "Geçerli harita takımını değiştir"
 
 #: ../gui/wxpython/wxgui.py:631
 #, fuzzy
-msgid ""
-"Current workspace is not empty. Do you want to store current settings to "
-"workspace file?"
-msgstr ""
-"Çalışma alanı boş değil. Geçerli ayarlarınçalışma alanı dosyasına "
-"saklanmasını istermisin?"
+msgid "Current workspace is not empty. Do you want to store current settings to workspace file?"
+msgstr "Çalışma alanı boş değil. Geçerli ayarlarınçalışma alanı dosyasına saklanmasını istermisin?"
 
 #: ../gui/wxpython/wxgui.py:634
 #, fuzzy
@@ -260,9 +253,7 @@ msgstr "Geçerli çalışma alanının kaydedileceği dosyayı seç"
 #: ../gui/wxpython/wxgui.py:882 ../gui/wxpython/wxgui.py:898
 #, python-format
 msgid "Workspace file <%s> already exists. Do you want to overwrite this file?"
-msgstr ""
-"<%s> çalışma alanı dosyası zaten var? Bu dosyanın üzerine yazılımasını ister "
-"misin?"
+msgstr "<%s> çalışma alanı dosyası zaten var? Bu dosyanın üzerine yazılımasını ister misin?"
 
 #: ../gui/wxpython/wxgui.py:884 ../gui/wxpython/wxgui.py:901
 #: ../gui/wxpython/menustrings.py:9
@@ -407,7 +398,7 @@ msgstr "Yaklaştırma seçenekleri"
 #: ../gui/wxpython/icons/icon.py:174
 #, fuzzy
 msgid "Zoom to computational, default, saved region, ..."
-msgstr "Varsayılan bölgeyi yakınlaştır"
+msgstr "Varsayılan bölgeye göre göster"
 
 #: ../gui/wxpython/icons/icon.py:176
 #, fuzzy
@@ -622,8 +613,7 @@ msgstr "3B raster harita ekle"
 
 #: ../gui/wxpython/icons/icon.py:265
 msgid "Note that 3D raster data are rendered only in 3D view mode"
-msgstr ""
-"3B raster verinin sadece 3B görünüm modunda oluşturulduğuna dikkat edin."
+msgstr "3B raster verinin sadece 3B görünüm modunda oluşturulduğuna dikkat edin."
 
 #: ../gui/wxpython/icons/icon.py:267
 #, fuzzy
@@ -668,9 +658,7 @@ msgid "Digitize new centroid"
 msgstr "Yeni alan merkezi sayısallaştır"
 
 #: ../gui/wxpython/icons/icon.py:287
-msgid ""
-"Digitize new area (composition of bondaries without category and one "
-"centroid with category)"
+msgid "Digitize new area (composition of bondaries without category and one centroid with category)"
 msgstr ""
 
 #: ../gui/wxpython/icons/icon.py:290
@@ -1215,12 +1203,8 @@ msgid "ASCII x,y,z point import and gridding"
 msgstr "ASCII x,y,z noktalarını içe aktar ve ızgarala"
 
 #: ../gui/wxpython/menustrings.py:33
-msgid ""
-"Create a raster map from an assemblage of many coordinates using univariate "
-"statistics."
-msgstr ""
-"Tek değişkenli istatistikler kullanan birçok koordinatın bir kümesinden "
-"raster bir harita oluştur.       **************assemblage"
+msgid "Create a raster map from an assemblage of many coordinates using univariate statistics."
+msgstr "Tek değişkenli istatistikler kullanan birçok koordinatın bir kümesinden raster bir harita oluştur.       **************assemblage"
 
 #: ../gui/wxpython/menustrings.py:34
 msgid "ASCII grid import"
@@ -1236,8 +1220,7 @@ msgstr "ASCII poligon ve çizgileri içe aktar"
 
 #: ../gui/wxpython/menustrings.py:37
 msgid "Creates raster maps from ASCII polygon/line/point data files."
-msgstr ""
-"ASCII poligon/çizgi/nokta veri dosyalarından raster haritalar oluşturur."
+msgstr "ASCII poligon/çizgi/nokta veri dosyalarından raster haritalar oluşturur."
 
 #: ../gui/wxpython/menustrings.py:38
 msgid "Binary file import"
@@ -1253,12 +1236,8 @@ msgid "ESRI ASCII grid import"
 msgstr "ESRI ASCII gridi içe aktar"
 
 #: ../gui/wxpython/menustrings.py:41
-msgid ""
-"Converts an ESRI ARC/INFO ascii raster file (GRID) into a (binary) raster "
-"map layer."
-msgstr ""
-"ESRI ARC/INFO ascii raster dosyasını(GRID) ikili raster hairta katmanına "
-"dönüştür."
+msgid "Converts an ESRI ARC/INFO ascii raster file (GRID) into a (binary) raster map layer."
+msgstr "ESRI ARC/INFO ascii raster dosyasını(GRID) ikili raster hairta katmanına dönüştür."
 
 #: ../gui/wxpython/menustrings.py:42
 msgid "GRIDATB.FOR import"
@@ -1266,9 +1245,7 @@ msgstr "GRIDATB.FOR içe aktar"
 
 #: ../gui/wxpython/menustrings.py:43
 msgid "Imports GRIDATB.FOR map file (TOPMODEL) into GRASS raster map"
-msgstr ""
-"GRIDATB.FOR harita dosyasını (TOPMODEL) GRASS raster haritası olarak içe "
-"aktar"
+msgstr "GRIDATB.FOR harita dosyasını (TOPMODEL) GRASS raster haritası olarak içe aktar"
 
 #: ../gui/wxpython/menustrings.py:44
 #, fuzzy
@@ -1300,9 +1277,7 @@ msgid "Terra ASTER HDF import"
 msgstr "Terra ASTER HDF içe aktar"
 
 #: ../gui/wxpython/menustrings.py:51
-msgid ""
-"Georeference, rectify and import Terra-ASTER imagery and relative DEM's "
-"using gdalwarp."
+msgid "Georeference, rectify and import Terra-ASTER imagery and relative DEM's using gdalwarp."
 msgstr ""
 
 #: ../gui/wxpython/menustrings.py:52
@@ -1325,8 +1300,7 @@ msgstr "ASCII noktalar/GRASS ASCII vektörü içe aktar"
 
 #: ../gui/wxpython/menustrings.py:58
 msgid "Creates a vector map from ASCII points file or ASCII vector file."
-msgstr ""
-"ASCII nokta dosyasından veya ASCII vektör dosyadan vektör harita oluşturur."
+msgstr "ASCII nokta dosyasından veya ASCII vektör dosyadan vektör harita oluşturur."
 
 #: ../gui/wxpython/menustrings.py:59
 #, fuzzy
@@ -1353,9 +1327,7 @@ msgstr "Eski GRASS vektör haritasını içe aktar"
 
 #: ../gui/wxpython/menustrings.py:64
 #, fuzzy
-msgid ""
-"Converts all older versions of GRASS vector maps in current mapset to "
-"current format."
+msgid "Converts all older versions of GRASS vector maps in current mapset to current format."
 msgstr "Eski GRASS vektör haritasını içe aktarır."
 
 #: ../gui/wxpython/menustrings.py:65
@@ -1388,9 +1360,7 @@ msgid "Garmin GPS import"
 msgstr "Garmin KKS verisini içe aktar"
 
 #: ../gui/wxpython/menustrings.py:72
-msgid ""
-"Download waypoints, routes, and tracks from a Garmin GPS receiver into a "
-"vector map."
+msgid "Download waypoints, routes, and tracks from a Garmin GPS receiver into a vector map."
 msgstr "GARMİN KKS alıcısından vektör haritaya nokta, rota ve izleri aktar."
 
 #: ../gui/wxpython/menustrings.py:73
@@ -1398,9 +1368,7 @@ msgid "GPSBabel GPS import"
 msgstr ""
 
 #: ../gui/wxpython/menustrings.py:74
-msgid ""
-"Import waypoints, routes, and tracks from a GPS receiver or GPS download "
-"file into a vector map."
+msgid "Import waypoints, routes, and tracks from a GPS receiver or GPS download file into a vector map."
 msgstr ""
 
 #: ../gui/wxpython/menustrings.py:75
@@ -1418,12 +1386,8 @@ msgid "GEOnet import"
 msgstr "GEOnet içe aktar"
 
 #: ../gui/wxpython/menustrings.py:78
-msgid ""
-"Imports US-NGA GEOnet Names Server (GNS) country files into a GRASS vector "
-"points map."
-msgstr ""
-"GRASS vektör noktalar haritasına US-NGA GEOnet Names Server (GNS) ülke "
-"dosyalarını aktar."
+msgid "Imports US-NGA GEOnet Names Server (GNS) country files into a GRASS vector points map."
+msgstr "GRASS vektör noktalar haritasına US-NGA GEOnet Names Server (GNS) ülke dosyalarını aktar."
 
 #: ../gui/wxpython/menustrings.py:79
 #, fuzzy
@@ -1431,6 +1395,7 @@ msgid "Matlab array and MapGen import"
 msgstr "Matlab and MapGen içe aktar"
 
 #: ../gui/wxpython/menustrings.py:80
+#, fuzzy
 msgid "Import Mapgen or Matlab vector maps into GRASS."
 msgstr "Matlab and MapGenvektör haritalarını GRASS'a içe aktar"
 
@@ -1445,17 +1410,14 @@ msgstr "ASCII 3B dosyayı içe aktar"
 
 #: ../gui/wxpython/menustrings.py:83
 msgid "Convert a 3D ASCII raster text file into a (binary) 3D raster map layer"
-msgstr ""
-"3B ASCII raster metin dosyasını 3B raster (ikili)harita katmanına dönüştür"
+msgstr "3B ASCII raster metin dosyasını 3B raster (ikili)harita katmanına dönüştür"
 
 #: ../gui/wxpython/menustrings.py:84
 msgid "Vis5D import"
 msgstr "Vis5D içe aktar"
 
 #: ../gui/wxpython/menustrings.py:85
-msgid ""
-"import of 3-dimensional Vis5D files (i.e. the v5d file with 1 variable and 1 "
-"time step)"
+msgid "import of 3-dimensional Vis5D files (i.e. the v5d file with 1 variable and 1 time step)"
 msgstr ""
 
 #: ../gui/wxpython/menustrings.py:86
@@ -1498,11 +1460,8 @@ msgid "ASCII x,y,z points export"
 msgstr "ASCII x,y,z dışa aktar"
 
 #: ../gui/wxpython/menustrings.py:95
-msgid ""
-"Export a raster map to a text file as x,y,z values based on cell centers."
-msgstr ""
-"Hücre merkezlerine dayanan x, y, z değerleri olduğu için raster haritayı, "
-"text dosyasına ver.         ******************"
+msgid "Export a raster map to a text file as x,y,z values based on cell centers."
+msgstr "Hücre merkezlerine dayanan x, y, z değerleri olduğu için raster haritayı, text dosyasına ver.         ******************"
 
 #: ../gui/wxpython/menustrings.py:96
 msgid "ESRI ASCII grid export"
@@ -1518,9 +1477,7 @@ msgstr "GRIDATB.FOR dışa aktar"
 
 #: ../gui/wxpython/menustrings.py:99
 msgid "Exports GRASS raster map to GRIDATB.FOR map file (TOPMODEL)"
-msgstr ""
-"GRASS raster haritasını GRIDATB.FOR harita dosyası (TOPMODEL) olarak dışa "
-"aktar"
+msgstr "GRASS raster haritasını GRIDATB.FOR harita dosyası (TOPMODEL) olarak dışa aktar"
 
 #: ../gui/wxpython/menustrings.py:100
 #, fuzzy
@@ -1547,9 +1504,7 @@ msgstr "MPEG-1 dışa aktar"
 #: ../gui/wxpython/menustrings.py:105
 #, fuzzy
 msgid "Raster File Series to MPEG Conversion."
-msgstr ""
-"Raster dosya dizilerini MPEG videoya dönüştürme "
-"programı.                                ***************************"
+msgstr "Raster dosya dizilerini MPEG videoya dönüştürme programı.                                ***************************"
 
 #: ../gui/wxpython/menustrings.py:106
 msgid "PNG export"
@@ -1558,29 +1513,22 @@ msgstr "PNG olarak dışa aktar"
 #: ../gui/wxpython/menustrings.py:107
 #, fuzzy
 msgid "Export GRASS raster as non-georeferenced PNG image."
-msgstr ""
-"GRASS rasterı coğrafi referanssız PNG görüntü biçimi olarak dışa aktar."
+msgstr "GRASS rasterı coğrafi referanssız PNG görüntü biçimi olarak dışa aktar."
 
 #: ../gui/wxpython/menustrings.py:108
 msgid "PPM export"
 msgstr "PPM olarak dışa aktar"
 
 #: ../gui/wxpython/menustrings.py:109
-msgid ""
-"Converts a GRASS raster map to a PPM image file at the pixel resolution of "
-"the currently defined region."
-msgstr ""
-"GRASS raster haritasınıgeçerli belirlenmiş bölge piksel çözünürlüğünde PPM "
-"görüntü dosyasına dönüştürür."
+msgid "Converts a GRASS raster map to a PPM image file at the pixel resolution of the currently defined region."
+msgstr "GRASS raster haritasınıgeçerli belirlenmiş bölge piksel çözünürlüğünde PPM görüntü dosyasına dönüştürür."
 
 #: ../gui/wxpython/menustrings.py:110
 msgid "PPM from RGB export"
 msgstr "RGB den PPM'e ver   **************"
 
 #: ../gui/wxpython/menustrings.py:111
-msgid ""
-"Converts 3 GRASS raster layers (R,G,B) to a PPM image file at the pixel "
-"resolution of the CURRENTLY DEFINED REGION."
+msgid "Converts 3 GRASS raster layers (R,G,B) to a PPM image file at the pixel resolution of the CURRENTLY DEFINED REGION."
 msgstr ""
 
 #: ../gui/wxpython/menustrings.py:112 ../gui/wxpython/menustrings.py:129
@@ -1596,9 +1544,7 @@ msgid "TIFF export"
 msgstr "TIFF olarak dışa aktar"
 
 #: ../gui/wxpython/menustrings.py:115
-msgid ""
-"Exports a GRASS raster map to a 8/24bit TIFF image file at the pixel "
-"resolution of the currently defined region."
+msgid "Exports a GRASS raster map to a 8/24bit TIFF image file at the pixel resolution of the currently defined region."
 msgstr ""
 
 #: ../gui/wxpython/menustrings.py:116
@@ -1633,8 +1579,7 @@ msgstr "ASCII nokta /GRASS ASCII vektör dosyasını dışa aktar"
 
 #: ../gui/wxpython/menustrings.py:124
 msgid "Converts a GRASS binary vector map to a GRASS ASCII vector map."
-msgstr ""
-"İkili GRASS vektör harita katmanını GRASS ASCII vektör haritasına dönüştürür."
+msgstr "İkili GRASS vektör harita katmanını GRASS ASCII vektör haritasına dönüştürür."
 
 #: ../gui/wxpython/menustrings.py:125
 msgid "DXF export"
@@ -1650,11 +1595,8 @@ msgid "Multiple GPS export formats using GPSBabel"
 msgstr "OGR kullanan çeşitli dışa aktarma biçimleri"
 
 #: ../gui/wxpython/menustrings.py:128
-msgid ""
-"Exports a vector map to a GPS receiver or file format supported by GpsBabel."
-msgstr ""
-"Vektör haritayı, GPS alıcıya veya GpsBabel tarafından desteklenen dosya "
-"formatına ver."
+msgid "Exports a vector map to a GPS receiver or file format supported by GpsBabel."
+msgstr "Vektör haritayı, GPS alıcıya veya GpsBabel tarafından desteklenen dosya formatına ver."
 
 #: ../gui/wxpython/menustrings.py:130
 msgid "Converts to POV-Ray format, GRASS x,y,z -> POV-Ray x,z,y"
@@ -1720,15 +1662,12 @@ msgstr "Koordinatları dönüştür"
 #: ../gui/wxpython/menustrings.py:147
 #, fuzzy
 msgid "Link GDAL supported raster data as a pseudo GRASS raster map layer."
-msgstr ""
-"GDAL desteğindeki raster dosyayı ikili raster harita katmanı olarak içe aktar"
+msgstr "GDAL desteğindeki raster dosyayı ikili raster harita katmanı olarak içe aktar"
 
 #: ../gui/wxpython/menustrings.py:149
 #, fuzzy
 msgid "Creates a new pseudo-vector map as a link to an OGR-supported layer."
-msgstr ""
-"Diğer vektör harita katmanlarını birleştirirek yeni vektör harita katmanı "
-"oluştur"
+msgstr "Diğer vektör harita katmanlarını birleştirirek yeni vektör harita katmanı oluştur"
 
 #: ../gui/wxpython/menustrings.py:150
 msgid "Manage maps and volumes"
@@ -1740,13 +1679,8 @@ msgstr "Kopyala"
 
 #: ../gui/wxpython/menustrings.py:152
 #, fuzzy
-msgid ""
-"Copies available data files in the current mapset search path to the user's "
-"current mapset."
-msgstr ""
-"****************       Kullanıcının şu anki harita takımındaki arama yolunda "
-"ulaşılabilir veri dosyalarını ve konumunu, kullanıcının şu anki harita "
-"takımı altında bulunan uygun element dizinlerine kopyalar.  "
+msgid "Copies available data files in the current mapset search path to the user's current mapset."
+msgstr "****************       Kullanıcının şu anki harita takımındaki arama yolunda ulaşılabilir veri dosyalarını ve konumunu, kullanıcının şu anki harita takımı altında bulunan uygun element dizinlerine kopyalar.  "
 
 #: ../gui/wxpython/menustrings.py:153
 msgid "List"
@@ -1754,20 +1688,15 @@ msgstr "Listele"
 
 #: ../gui/wxpython/menustrings.py:154
 msgid "Lists available GIS elements of the user-specified data type."
-msgstr ""
-"Kullanıcı tanımlı veri tiplerinin ulaşılabilir GIS elementlerini listeler."
+msgstr "Kullanıcı tanımlı veri tiplerinin ulaşılabilir GIS elementlerini listeler."
 
 #: ../gui/wxpython/menustrings.py:155
 msgid "List filtered"
 msgstr "Süzgeçleneni listele"
 
 #: ../gui/wxpython/menustrings.py:156
-msgid ""
-"Lists available GRASS data base files of the user-specified data type to "
-"standard output."
-msgstr ""
-"Kullanıcıların ulaşılabilir grass veritabanı dosyalarını standart çıktı "
-"şeklinde listeler."
+msgid "Lists available GRASS data base files of the user-specified data type to standard output."
+msgstr "Kullanıcıların ulaşılabilir grass veritabanı dosyalarını standart çıktı şeklinde listeler."
 
 #: ../gui/wxpython/menustrings.py:157
 #: ../gui/wxpython/gui_modules/layertree.py:280
@@ -1776,9 +1705,7 @@ msgstr "Yeniden adlandır"
 
 #: ../gui/wxpython/menustrings.py:158
 msgid "Renames data base element files in the user's current mapset."
-msgstr ""
-"Kullanıcının geçerli harita takımındaki veritabanı elemanı dosyalarını "
-"yeniden adlandırır."
+msgstr "Kullanıcının geçerli harita takımındaki veritabanı elemanı dosyalarını yeniden adlandırır."
 
 #: ../gui/wxpython/menustrings.py:159
 msgid "Delete"
@@ -1786,9 +1713,7 @@ msgstr "Sil"
 
 #: ../gui/wxpython/menustrings.py:160 ../gui/wxpython/menustrings.py:162
 msgid "Removes data base element files from the user's current mapset."
-msgstr ""
-"Kullanıcının şu anki harita takımından veritabanı element dosyalarını "
-"kaldırır."
+msgstr "Kullanıcının şu anki harita takımından veritabanı element dosyalarını kaldırır."
 
 #: ../gui/wxpython/menustrings.py:161
 msgid "Delete filtered"
@@ -1830,20 +1755,15 @@ msgstr "Vektörden raster'e"
 #: ../gui/wxpython/menustrings.py:171
 #, fuzzy
 msgid "Converts (rasterize) a vector map into a raster map."
-msgstr ""
-"İkili GRASS vektör harita katmanını GRASS raster harita katmanına dönüştürür."
+msgstr "İkili GRASS vektör harita katmanını GRASS raster harita katmanına dönüştürür."
 
 #: ../gui/wxpython/menustrings.py:172
 msgid "Vector to volume"
 msgstr "Vektörden hacime"
 
 #: ../gui/wxpython/menustrings.py:173
-msgid ""
-"Converts a binary GRASS vector map (only points) layer into a 3D GRASS "
-"raster map layer."
-msgstr ""
-"İkili GRASS vektör harita (sadece noktalar) katmanını 3B GRASS raster harita "
-"katmanına dönüştürür."
+msgid "Converts a binary GRASS vector map (only points) layer into a 3D GRASS raster map layer."
+msgstr "İkili GRASS vektör harita (sadece noktalar) katmanını 3B GRASS raster harita katmanına dönüştürür."
 
 #: ../gui/wxpython/menustrings.py:174
 #, fuzzy
@@ -1910,9 +1830,7 @@ msgid "Bearing/distance to coordinates"
 msgstr "Açı/mesafeden koordinatlara"
 
 #: ../gui/wxpython/menustrings.py:191
-msgid ""
-"A simple utility for converting bearing and distance measurements to "
-"coordinates and vice versa."
+msgid "A simple utility for converting bearing and distance measurements to coordinates and vice versa."
 msgstr ""
 
 #: ../gui/wxpython/menustrings.py:192
@@ -1989,9 +1907,7 @@ msgstr "Kullanıcı erişimi"
 
 #: ../gui/wxpython/menustrings.py:210
 msgid "Controls access to the current mapset for other users on the system."
-msgstr ""
-"Sistemdeki diğer kullanıcıların geçerli harita takımına erişimini kontrol "
-"eder."
+msgstr "Sistemdeki diğer kullanıcıların geçerli harita takımına erişimini kontrol eder."
 
 #: ../gui/wxpython/menustrings.py:211
 msgid "Change working environment"
@@ -2070,12 +1986,8 @@ msgid "Manage projections"
 msgstr "Projeksiyonları yönet"
 
 #: ../gui/wxpython/menustrings.py:229
-msgid ""
-"Converts co-ordinate system descriptions (i.e. projection information) "
-"between various formats (including GRASS format)."
-msgstr ""
-"Çeşitli formatlar arasında (GRASS formatı dahil) koordinat sistemi "
-"tanımlarını (projeksiyon bilgisi) dönüştür."
+msgid "Converts co-ordinate system descriptions (i.e. projection information) between various formats (including GRASS format)."
+msgstr "Çeşitli formatlar arasında (GRASS formatı dahil) koordinat sistemi tanımlarını (projeksiyon bilgisi) dönüştür."
 
 #: ../gui/wxpython/menustrings.py:230
 #, fuzzy
@@ -2134,9 +2046,7 @@ msgid "Digitize raster (requires XTerm)"
 msgstr "Raster sayısallaştır (XTerm gereklidir)"
 
 #: ../gui/wxpython/menustrings.py:243
-msgid ""
-"Interactive tool used to draw and save vector features on a graphics monitor "
-"using a pointing device (mouse) and save to a raster map."
+msgid "Interactive tool used to draw and save vector features on a graphics monitor using a pointing device (mouse) and save to a raster map."
 msgstr ""
 
 #: ../gui/wxpython/menustrings.py:244
@@ -2196,8 +2106,7 @@ msgstr "Çeşitli yöntemler kullanarak yeniden örnekle"
 #: ../gui/wxpython/menustrings.py:257
 #, fuzzy
 msgid "Resamples raster map layers to a finer grid using interpolation."
-msgstr ""
-"Raster harita katmanlarını ara değerleri hesaplayarak yeniden örnekler."
+msgstr "Raster harita katmanlarını ara değerleri hesaplayarak yeniden örnekler."
 
 #: ../gui/wxpython/menustrings.py:258
 msgid "Resample using nearest neighbor"
@@ -2212,10 +2121,7 @@ msgid "Resample using spline tension"
 msgstr "Resampeln mit der Spline-Tension-Methode (RST)"
 
 #: ../gui/wxpython/menustrings.py:261
-msgid ""
-"Reinterpolates and optionally computes topographic analysis from input "
-"raster map to a new raster map (possibly with different resolution) using "
-"regularized spline with tension and smoothing."
+msgid "Reinterpolates and optionally computes topographic analysis from input raster map to a new raster map (possibly with different resolution) using regularized spline with tension and smoothing."
 msgstr ""
 
 #: ../gui/wxpython/menustrings.py:262 ../gui/wxpython/menustrings.py:544
@@ -2224,9 +2130,7 @@ msgstr "Destek dosyası bakımı"
 
 #: ../gui/wxpython/menustrings.py:263
 msgid "Allows creation and/or modification of raster map layer support files."
-msgstr ""
-"Raster harita katmanı destek dosyalarının oluşturulması ve/veya "
-"değiştirilmesine olanak tanır"
+msgstr "Raster harita katmanı destek dosyalarının oluşturulması ve/veya değiştirilmesine olanak tanır"
 
 #: ../gui/wxpython/menustrings.py:264
 msgid "Update map statistics"
@@ -2243,18 +2147,14 @@ msgstr "Rasterı yeniden projeksiyonlandır"
 
 #: ../gui/wxpython/menustrings.py:267
 msgid "Re-projects a raster map from one location to the current location."
-msgstr ""
-"Raster haritayı başka bir mevkiden geçerli mevkiye yeniden "
-"projeksiyonlandırır."
+msgstr "Raster haritayı başka bir mevkiden geçerli mevkiye yeniden projeksiyonlandırır."
 
 #: ../gui/wxpython/menustrings.py:268
 msgid "Tiling"
 msgstr "***********           Döşeme"
 
 #: ../gui/wxpython/menustrings.py:269
-msgid ""
-"Produces tilings of the source projection for use in the destination region "
-"and projection."
+msgid "Produces tilings of the source projection for use in the destination region and projection."
 msgstr ""
 
 #: ../gui/wxpython/menustrings.py:270 ../gui/wxpython/menustrings.py:546
@@ -2303,8 +2203,7 @@ msgstr ""
 
 #: ../gui/wxpython/menustrings.py:280
 msgid "Blends color components of two raster maps by a given ratio."
-msgstr ""
-"İki raster haritaya ait renk bileşenlerini verilen oranlarda karıştırır."
+msgstr "İki raster haritaya ait renk bileşenlerini verilen oranlarda karıştırır."
 
 #: ../gui/wxpython/menustrings.py:281
 msgid "Create RGB"
@@ -2312,24 +2211,16 @@ msgstr "KYM oluştur"
 
 #: ../gui/wxpython/menustrings.py:282
 #, fuzzy
-msgid ""
-"Combines red, green and blue raster maps into a single composite raster map."
-msgstr ""
-"Kırmızı, yeşil ve mavi harita katmanlarını tek bir karma harita katmanına "
-"dönüştür."
+msgid "Combines red, green and blue raster maps into a single composite raster map."
+msgstr "Kırmızı, yeşil ve mavi harita katmanlarını tek bir karma harita katmanına dönüştür."
 
 #: ../gui/wxpython/menustrings.py:283 ../gui/wxpython/menustrings.py:683
 msgid "RGB to HIS"
 msgstr ""
 
 #: ../gui/wxpython/menustrings.py:284
-msgid ""
-"Generates red, green and blue raster map layers combining hue, intensity and "
-"saturation (HIS) values from user-specified input raster map layers."
-msgstr ""
-"***********           Kullanıcı tanımlı girdi raster harita katmanlarından "
-"ton, yoğunluk ve doygunluk değerlerini birleştiren; kırmızı, yeşil ve mavi "
-"raster harita katmanları üretir.     "
+msgid "Generates red, green and blue raster map layers combining hue, intensity and saturation (HIS) values from user-specified input raster map layers."
+msgstr "***********           Kullanıcı tanımlı girdi raster harita katmanlarından ton, yoğunluk ve doygunluk değerlerini birleştiren; kırmızı, yeşil ve mavi raster harita katmanları üretir.     "
 
 #: ../gui/wxpython/menustrings.py:285
 #, fuzzy
@@ -2343,9 +2234,7 @@ msgstr "koordinatlara göre sorgula"
 
 #: ../gui/wxpython/menustrings.py:287
 msgid "Queries raster map layers on their category values and category labels."
-msgstr ""
-"*******      Raster harita katmanlarını kendi kategori değerlerinde ve "
-"kategori etiketlerinde sorgular."
+msgstr "*******      Raster harita katmanlarını kendi kategori değerlerinde ve kategori etiketlerinde sorgular."
 
 #: ../gui/wxpython/menustrings.py:288
 #, fuzzy
@@ -2362,9 +2251,7 @@ msgid "Buffer rasters"
 msgstr "Raster tampon"
 
 #: ../gui/wxpython/menustrings.py:291
-msgid ""
-"Creates a raster map layer showing buffer zones surrounding cells that "
-"contain non-NULL category values."
+msgid "Creates a raster map layer showing buffer zones surrounding cells that contain non-NULL category values."
 msgstr ""
 
 #: ../gui/wxpython/menustrings.py:292
@@ -2406,10 +2293,7 @@ msgid "Moving window"
 msgstr "Kayar pencere"
 
 #: ../gui/wxpython/menustrings.py:300
-msgid ""
-"Makes each cell category value a function of the category values assigned to "
-"the cells around it, and stores new cell values in an output raster map "
-"layer."
+msgid "Makes each cell category value a function of the category values assigned to the cells around it, and stores new cell values in an output raster map layer."
 msgstr ""
 
 #: ../gui/wxpython/menustrings.py:301
@@ -2417,10 +2301,7 @@ msgid "Neighborhood points"
 msgstr "Komşu noktalar"
 
 #: ../gui/wxpython/menustrings.py:302
-msgid ""
-"Makes each cell value a function of the attribute values assigned to the "
-"vector points or centroids around it, and stores new cell values in an "
-"output raster map layer."
+msgid "Makes each cell value a function of the attribute values assigned to the vector points or centroids around it, and stores new cell values in an output raster map layer."
 msgstr ""
 
 #: ../gui/wxpython/menustrings.py:303
@@ -2429,14 +2310,10 @@ msgstr "rasterları çakıştır"
 
 #: ../gui/wxpython/menustrings.py:304
 msgid "Cross product"
-msgstr ""
-"***********           Çapraz çarpım                                 Vektörel "
-"çarpım"
+msgstr "***********           Çapraz çarpım                                 Vektörel çarpım"
 
 #: ../gui/wxpython/menustrings.py:305
-msgid ""
-"Creates a cross product of the category values from multiple raster map "
-"layers."
+msgid "Creates a cross product of the category values from multiple raster map layers."
 msgstr ""
 
 #: ../gui/wxpython/menustrings.py:306
@@ -2444,9 +2321,7 @@ msgid "Raster series"
 msgstr "Raster serisi"
 
 #: ../gui/wxpython/menustrings.py:307
-msgid ""
-"Makes each output cell value a function of the values assigned to the "
-"corresponding cells in the input raster map layers."
+msgid "Makes each output cell value a function of the values assigned to the corresponding cells in the input raster map layers."
 msgstr ""
 
 #: ../gui/wxpython/menustrings.py:308
@@ -2454,9 +2329,7 @@ msgid "Patch raster maps"
 msgstr "Raster haritaları kümele"
 
 #: ../gui/wxpython/menustrings.py:309
-msgid ""
-"Creates a composite raster map layer by using known category values from one "
-"(or more) map layer(s) to fill in areas of \"no data\" in another map layer."
+msgid "Creates a composite raster map layer by using known category values from one (or more) map layer(s) to fill in areas of \"no data\" in another map layer."
 msgstr ""
 
 #: ../gui/wxpython/menustrings.py:310
@@ -2486,8 +2359,7 @@ msgstr "Gölgelenme haritası"
 
 #: ../gui/wxpython/menustrings.py:316
 #, fuzzy
-msgid ""
-"Calculates cast shadow areas from sun position and elevation raster map."
+msgid "Calculates cast shadow areas from sun position and elevation raster map."
 msgstr "Raster haritada Shannon'un çeşitlilik indeksini hesaplar."
 
 #: ../gui/wxpython/menustrings.py:317
@@ -2499,11 +2371,7 @@ msgid "Cumulative movement costs"
 msgstr ""
 
 #: ../gui/wxpython/menustrings.py:319
-msgid ""
-"Outputs a raster map layer showing the anisotropic cumulative cost of moving "
-"between different geographic locations on an input elevation raster map "
-"layer whose cell category values represent elevation combined with an input "
-"raster map layer whose cell values represent friction cost."
+msgid "Outputs a raster map layer showing the anisotropic cumulative cost of moving between different geographic locations on an input elevation raster map layer whose cell category values represent elevation combined with an input raster map layer whose cell values represent friction cost."
 msgstr ""
 
 #: ../gui/wxpython/menustrings.py:320
@@ -2511,10 +2379,7 @@ msgid "Cost surface"
 msgstr ""
 
 #: ../gui/wxpython/menustrings.py:321
-msgid ""
-"Creates a raster map showing the cumulative cost of moving between different "
-"geographic locations on an input raster map whose cell category values "
-"represent cost."
+msgid "Creates a raster map showing the cumulative cost of moving between different geographic locations on an input raster map whose cell category values represent cost."
 msgstr ""
 
 #: ../gui/wxpython/menustrings.py:322
@@ -2540,9 +2405,7 @@ msgid "Slope and aspect"
 msgstr "Eğim ve bakı"
 
 #: ../gui/wxpython/menustrings.py:327
-msgid ""
-"Generates raster maps of slope, aspect, curvatures and partial derivatives "
-"from a elevation raster map."
+msgid "Generates raster maps of slope, aspect, curvatures and partial derivatives from a elevation raster map."
 msgstr ""
 
 #: ../gui/wxpython/menustrings.py:328
@@ -2597,9 +2460,7 @@ msgid "Clump"
 msgstr "************             Küme                      Çalılık"
 
 #: ../gui/wxpython/menustrings.py:340
-msgid ""
-"Recategorizes data in a raster map by grouping cells that form physically "
-"discrete areas into unique categories."
+msgid "Recategorizes data in a raster map by grouping cells that form physically discrete areas into unique categories."
 msgstr ""
 
 #: ../gui/wxpython/menustrings.py:341
@@ -2644,9 +2505,7 @@ msgid "Depressionless map and flowlines"
 msgstr "Çukurlukları giderilmiş harita ve akış hatları"
 
 #: ../gui/wxpython/menustrings.py:351
-msgid ""
-"Filters and generates a depressionless elevation map and a flow direction "
-"map from a given elevation raster map."
+msgid "Filters and generates a depressionless elevation map and a flow direction map from a given elevation raster map."
 msgstr ""
 
 #: ../gui/wxpython/menustrings.py:352
@@ -2678,9 +2537,7 @@ msgid "SIMWE Sediment flux modeling"
 msgstr "SIMWE sediment erozyon modelleme"
 
 #: ../gui/wxpython/menustrings.py:359
-msgid ""
-"Sediment transport and erosion/deposition simulation using path sampling "
-"method (SIMWE)."
+msgid "Sediment transport and erosion/deposition simulation using path sampling method (SIMWE)."
 msgstr ""
 
 #: ../gui/wxpython/menustrings.py:360
@@ -2733,9 +2590,7 @@ msgid "Groundwater modeling"
 msgstr "Yer Kontrol Noktası"
 
 #: ../gui/wxpython/menustrings.py:371
-msgid ""
-"Numerical calculation program for transient, confined and unconfined "
-"groundwater flow in two dimensions."
+msgid "Numerical calculation program for transient, confined and unconfined groundwater flow in two dimensions."
 msgstr ""
 
 #: ../gui/wxpython/menustrings.py:372
@@ -2747,9 +2602,7 @@ msgid "Set up (requires XTerm)"
 msgstr "Ayarlar (XTerm gereklidir)"
 
 #: ../gui/wxpython/menustrings.py:374
-msgid ""
-"Interactive tool used to setup the sampling and analysis framework that will "
-"be used by the other r.le programs."
+msgid "Interactive tool used to setup the sampling and analysis framework that will be used by the other r.le programs."
 msgstr ""
 
 #: ../gui/wxpython/menustrings.py:375
@@ -2757,28 +2610,19 @@ msgid "Analyze landscape"
 msgstr "Peyzaj analizi"
 
 #: ../gui/wxpython/menustrings.py:376
-msgid ""
-"Contains a set of measures for attributes, diversity, texture, "
-"juxtaposition, and edge."
-msgstr ""
-"***********                Öznitelik, çeşitlilik, doku, bitişiklik ve kenar "
-"için bir takım önlemler içerir."
+msgid "Contains a set of measures for attributes, diversity, texture, juxtaposition, and edge."
+msgstr "***********                Öznitelik, çeşitlilik, doku, bitişiklik ve kenar için bir takım önlemler içerir."
 
 #: ../gui/wxpython/menustrings.py:377
 msgid "Analyze patches"
 msgstr "Küme analizi"
 
 #: ../gui/wxpython/menustrings.py:378
-msgid ""
-"Calculates attribute, patch size, core (interior) size, shape, fractal "
-"dimension, and perimeter measures for sets of patches in a landscape."
+msgid "Calculates attribute, patch size, core (interior) size, shape, fractal dimension, and perimeter measures for sets of patches in a landscape."
 msgstr ""
 
 #: ../gui/wxpython/menustrings.py:380
-msgid ""
-"Displays the boundary of each r.le patch and shows how the boundary is "
-"traced, displays the attribute, size, perimeter and shape indices for each "
-"patch and saves the data in an output file."
+msgid "Displays the boundary of each r.le patch and shows how the boundary is traced, displays the attribute, size, perimeter and shape indices for each patch and saves the data in an output file."
 msgstr ""
 
 #: ../gui/wxpython/menustrings.py:381
@@ -2798,8 +2642,7 @@ msgid "Edge density"
 msgstr "Kenar yoğunluğu"
 
 #: ../gui/wxpython/menustrings.py:385
-msgid ""
-"Calculates edge density index on a raster map, using a 4 neighbour algorithm"
+msgid "Calculates edge density index on a raster map, using a 4 neighbour algorithm"
 msgstr ""
 
 #: ../gui/wxpython/menustrings.py:386
@@ -2815,9 +2658,7 @@ msgid "Patch area mean"
 msgstr "Leke alanı ortalaması"
 
 #: ../gui/wxpython/menustrings.py:389
-msgid ""
-"Calculates mean patch size index on a raster map, using a 4 neighbour "
-"algorithm"
+msgid "Calculates mean patch size index on a raster map, using a 4 neighbour algorithm"
 msgstr ""
 
 #: ../gui/wxpython/menustrings.py:390
@@ -2849,8 +2690,7 @@ msgid "Patch density"
 msgstr "Leke yoğunluğu"
 
 #: ../gui/wxpython/menustrings.py:397
-msgid ""
-"Calculates patch density index on a raster map, using a 4 neighbour algorithm"
+msgid "Calculates patch density index on a raster map, using a 4 neighbour algorithm"
 msgstr ""
 
 #: ../gui/wxpython/menustrings.py:398
@@ -2858,8 +2698,7 @@ msgid "Patch number"
 msgstr "Leke sayısı"
 
 #: ../gui/wxpython/menustrings.py:399
-msgid ""
-"Calculates patch number index on a raster map, using a 4 neighbour algorithm."
+msgid "Calculates patch number index on a raster map, using a 4 neighbour algorithm."
 msgstr ""
 
 #: ../gui/wxpython/menustrings.py:400
@@ -2888,9 +2727,7 @@ msgstr "Raster haritada Simpson'un çeşitlilik indeksini hesaplar."
 
 #: ../gui/wxpython/menustrings.py:406
 msgid "Richness"
-msgstr ""
-"Verim                                                                  "
-"************************** zenginlik / canlılık"
+msgstr "Verim                                                                  ************************** zenginlik / canlılık"
 
 #: ../gui/wxpython/menustrings.py:408
 msgid "Shape index"
@@ -2909,11 +2746,7 @@ msgid "Rate of spread"
 msgstr "Yayılma oranı"
 
 #: ../gui/wxpython/menustrings.py:412
-msgid ""
-"Generates three, or four raster map layers showing 1) the base "
-"(perpendicular) rate of spread (ROS), 2) the maximum (forward) ROS, 3) the "
-"direction of the maximum ROS, and optionally 4) the maximum potential "
-"spotting distance."
+msgid "Generates three, or four raster map layers showing 1) the base (perpendicular) rate of spread (ROS), 2) the maximum (forward) ROS, 3) the direction of the maximum ROS, and optionally 4) the maximum potential spotting distance."
 msgstr ""
 
 #: ../gui/wxpython/menustrings.py:413
@@ -2921,9 +2754,7 @@ msgid "Least-cost spread paths"
 msgstr ""
 
 #: ../gui/wxpython/menustrings.py:414
-msgid ""
-"Recursively traces the least cost path backwards to cells from which the "
-"cumulative cost was determined."
+msgid "Recursively traces the least cost path backwards to cells from which the cumulative cost was determined."
 msgstr ""
 
 #: ../gui/wxpython/menustrings.py:415
@@ -2931,10 +2762,7 @@ msgid "Anisotropic spread simulation"
 msgstr ""
 
 #: ../gui/wxpython/menustrings.py:416
-msgid ""
-"Simulates elliptically anisotropic spread on a graphics window and generates "
-"a raster map of the cumulative time of spread, given raster maps containing "
-"the rates of spread (ROS), the ROS directions and the spread origins."
+msgid "Simulates elliptically anisotropic spread on a graphics window and generates a raster map of the cumulative time of spread, given raster maps containing the rates of spread (ROS), the ROS directions and the spread origins."
 msgstr ""
 
 #: ../gui/wxpython/menustrings.py:417
@@ -2954,9 +2782,7 @@ msgid "Reclassify by size"
 msgstr "Boyutuna göre yeniden sınıflandır"
 
 #: ../gui/wxpython/menustrings.py:421
-msgid ""
-"Reclasses a raster map greater or less than user specified area size (in "
-"hectares)."
+msgid "Reclasses a raster map greater or less than user specified area size (in hectares)."
 msgstr ""
 
 #: ../gui/wxpython/menustrings.py:422 ../gui/wxpython/menustrings.py:618
@@ -2972,7 +2798,7 @@ msgstr "Kuralları kullanarak raster haritayı yeniden sınıflandır"
 #: ../gui/wxpython/menustrings.py:424
 #, fuzzy
 msgid "Recode"
-msgstr "Render"
+msgstr "Yeniden yükle"
 
 #: ../gui/wxpython/menustrings.py:425
 #, fuzzy
@@ -2992,9 +2818,7 @@ msgid "Rescale with histogram"
 msgstr "Histogram ile yeniden ölçekle"
 
 #: ../gui/wxpython/menustrings.py:429
-msgid ""
-"Rescales histogram equalized the range of category values in a raster map "
-"layer."
+msgid "Rescales histogram equalized the range of category values in a raster map layer."
 msgstr ""
 
 #: ../gui/wxpython/menustrings.py:430
@@ -3003,9 +2827,7 @@ msgstr "Eş merkezli çemberler"
 
 #: ../gui/wxpython/menustrings.py:431
 msgid "Creates a raster map containing concentric rings around a given point."
-msgstr ""
-"Verilen bir nokta etrafında eş merkezli halkalar içeren raster harita "
-"oluşturur."
+msgstr "Verilen bir nokta etrafında eş merkezli halkalar içeren raster harita oluşturur."
 
 #: ../gui/wxpython/menustrings.py:432
 msgid "Generate random cells"
@@ -3025,12 +2847,8 @@ msgstr "Rasgele hücreler ve vektör noktalar"
 
 #: ../gui/wxpython/menustrings.py:436
 #, fuzzy
-msgid ""
-"Creates a raster map layer and vector point map containing randomly located "
-"points."
-msgstr ""
-"Rasgele dağıtılmış noktaları içeren vektör nokta haritası ve raster harita "
-"katmanı oluşturur."
+msgid "Creates a raster map layer and vector point map containing randomly located points."
+msgstr "Rasgele dağıtılmış noktaları içeren vektör nokta haritası ve raster harita katmanı oluşturur."
 
 #: ../gui/wxpython/menustrings.py:437
 msgid "Generate surfaces"
@@ -3049,9 +2867,7 @@ msgid "Gaussian kernel density surface"
 msgstr ""
 
 #: ../gui/wxpython/menustrings.py:441
-msgid ""
-"Generates a raster density map from vector point data using a moving kernel "
-"or optionally generates a vector density map on a vector network."
+msgid "Generates a raster density map from vector point data using a moving kernel or optionally generates a vector density map on a vector network."
 msgstr ""
 
 #: ../gui/wxpython/menustrings.py:442
@@ -3059,10 +2875,7 @@ msgid "Gaussian deviates surface"
 msgstr ""
 
 #: ../gui/wxpython/menustrings.py:443
-msgid ""
-"GRASS module to produce a raster map layer of gaussian deviates whose mean "
-"and standard deviation can be expressed by the user. It uses a gaussian "
-"random number generator."
+msgid "GRASS module to produce a raster map layer of gaussian deviates whose mean and standard deviation can be expressed by the user. It uses a gaussian random number generator."
 msgstr "-"
 
 #: ../gui/wxpython/menustrings.py:444
@@ -3070,9 +2883,7 @@ msgid "Plane"
 msgstr "Düzlem"
 
 #: ../gui/wxpython/menustrings.py:445
-msgid ""
-"Creates raster plane map given dip (inclination), aspect (azimuth) and one "
-"point."
+msgid "Creates raster plane map given dip (inclination), aspect (azimuth) and one point."
 msgstr ""
 
 #: ../gui/wxpython/menustrings.py:446
@@ -3080,9 +2891,7 @@ msgid "Random deviates surface"
 msgstr ""
 
 #: ../gui/wxpython/menustrings.py:447
-msgid ""
-"Produces a raster map of uniform random deviates whose range can be "
-"expressed by the user."
+msgid "Produces a raster map of uniform random deviates whose range can be expressed by the user."
 msgstr ""
 
 #: ../gui/wxpython/menustrings.py:448
@@ -3144,9 +2953,7 @@ msgid "IDW from vector points"
 msgstr "Vektör noktalardan IDW "
 
 #: ../gui/wxpython/menustrings.py:462
-msgid ""
-"Surface interpolation from vector point data by Inverse Distance Squared "
-"Weighting."
+msgid "Surface interpolation from vector point data by Inverse Distance Squared Weighting."
 msgstr ""
 
 #: ../gui/wxpython/menustrings.py:463
@@ -3162,10 +2969,7 @@ msgid "Regularized spline tension"
 msgstr ""
 
 #: ../gui/wxpython/menustrings.py:466
-msgid ""
-"Spatial approximation and topographic analysis from given point or isoline "
-"data in vector format to floating point raster format using regularized "
-"spline with tension."
+msgid "Spatial approximation and topographic analysis from given point or isoline data in vector format to floating point raster format using regularized spline with tension."
 msgstr ""
 
 #: ../gui/wxpython/menustrings.py:467
@@ -3181,8 +2985,7 @@ msgid "Fill NULL cells"
 msgstr "BOŞ hücreleri doldur"
 
 #: ../gui/wxpython/menustrings.py:470
-msgid ""
-"Fills no-data areas in raster maps using v.surf.rst splines interpolation"
+msgid "Fills no-data areas in raster maps using v.surf.rst splines interpolation"
 msgstr ""
 
 #: ../gui/wxpython/menustrings.py:471 ../gui/wxpython/menustrings.py:726
@@ -3202,12 +3005,8 @@ msgid "Manage category information"
 msgstr "Kategori bilgisini yönet"
 
 #: ../gui/wxpython/menustrings.py:475
-msgid ""
-"Manages category values and labels associated with user-specified raster map "
-"layers."
-msgstr ""
-"Kullanıcı tanımlı raster harita katmanlarının kategori değerleri ve "
-"etiketleri yönetir."
+msgid "Manages category values and labels associated with user-specified raster map layers."
+msgstr "Kullanıcı tanımlı raster harita katmanlarının kategori değerleri ve etiketleri yönetir."
 
 #: ../gui/wxpython/menustrings.py:476
 msgid "General statistics"
@@ -3254,9 +3053,7 @@ msgid "Statistics for clumped cells"
 msgstr ""
 
 #: ../gui/wxpython/menustrings.py:487
-msgid ""
-"Calculates the volume of data \"clumps\", and (optionally) produces a GRASS "
-"vector points map containing the calculated centroids of these clumps."
+msgid "Calculates the volume of data \"clumps\", and (optionally) produces a GRASS vector points map containing the calculated centroids of these clumps."
 msgstr ""
 
 #: ../gui/wxpython/menustrings.py:488
@@ -3272,11 +3069,8 @@ msgid "Univariate raster statistics"
 msgstr "Tek değişkenli raster istatistikleri "
 
 #: ../gui/wxpython/menustrings.py:491
-msgid ""
-"Calculates univariate statistics from the non-null cells of a raster map."
-msgstr ""
-"Raster haritanın boş değer içermeyen hücrelerinden tek değişkenli "
-"istatistikler hesaplar."
+msgid "Calculates univariate statistics from the non-null cells of a raster map."
+msgstr "Raster haritanın boş değer içermeyen hücrelerinden tek değişkenli istatistikler hesaplar."
 
 #: ../gui/wxpython/menustrings.py:492
 msgid "Sample transects"
@@ -3291,8 +3085,7 @@ msgid "Sample transects (bearing/distance)"
 msgstr ""
 
 #: ../gui/wxpython/menustrings.py:495
-msgid ""
-"Outputs raster map layer values lying along user defined transect line(s)."
+msgid "Outputs raster map layer values lying along user defined transect line(s)."
 msgstr ""
 
 #: ../gui/wxpython/menustrings.py:496
@@ -3300,9 +3093,7 @@ msgid "Covariance/correlation"
 msgstr "Kovariyans/Korelasyon  "
 
 #: ../gui/wxpython/menustrings.py:497
-msgid ""
-"Outputs a covariance/correlation matrix for user-specified raster map layer"
-"(s)."
+msgid "Outputs a covariance/correlation matrix for user-specified raster map layer(s)."
 msgstr ""
 
 #: ../gui/wxpython/menustrings.py:498
@@ -3318,9 +3109,7 @@ msgid "Mutual category occurrences"
 msgstr ""
 
 #: ../gui/wxpython/menustrings.py:501
-msgid ""
-"Tabulates the mutual occurrence (coincidence) of categories for two raster "
-"map layers."
+msgid "Tabulates the mutual occurrence (coincidence) of categories for two raster map layers."
 msgstr ""
 
 #: ../gui/wxpython/menustrings.py:502
@@ -3357,9 +3146,7 @@ msgid "Edit vector map (non-interactively)"
 msgstr "Etkileşimli olarak yeniden kodla"
 
 #: ../gui/wxpython/menustrings.py:509
-msgid ""
-"Edits a vector map, allows adding, deleting and modifying selected vector "
-"features."
+msgid "Edits a vector map, allows adding, deleting and modifying selected vector features."
 msgstr ""
 
 #: ../gui/wxpython/menustrings.py:510
@@ -3377,8 +3164,9 @@ msgid "Rebuild topology on all vector maps"
 msgstr "GRASS vektör haritası için topoloji oluşturur."
 
 #: ../gui/wxpython/menustrings.py:513
+#, fuzzy
 msgid "Rebuilds topology on all vector maps in the current mapset."
-msgstr ""
+msgstr "GRASS vektör haritası için topoloji oluşturur."
 
 #: ../gui/wxpython/menustrings.py:514
 msgid "Clean vector map"
@@ -3452,12 +3240,8 @@ msgid "Dissolve boundaries"
 msgstr "Sınırları çöz"
 
 #: ../gui/wxpython/menustrings.py:531
-msgid ""
-"Dissolves boundaries between adjacent areas sharing a common category number "
-"or attribute."
-msgstr ""
-"Ortak kategori numarası veya özniteliği paylaşan komşu alanlar arasındaki "
-"sınırları çözer. "
+msgid "Dissolves boundaries between adjacent areas sharing a common category number or attribute."
+msgstr "Ortak kategori numarası veya özniteliği paylaşan komşu alanlar arasındaki sınırları çözer. "
 
 #: ../gui/wxpython/menustrings.py:532
 msgid "Create 3D vector over raster"
@@ -3465,9 +3249,7 @@ msgstr "Raster üzerinde 3B vektör oluştur"
 
 #: ../gui/wxpython/menustrings.py:533
 msgid "Converts vector map to 3D by sampling of elevation raster map."
-msgstr ""
-"Vektör haritayı yükseklik raster haritasına göre örnekleyerek 3B'ye "
-"dönüştürür."
+msgstr "Vektör haritayı yükseklik raster haritasına göre örnekleyerek 3B'ye dönüştürür."
 
 #: ../gui/wxpython/menustrings.py:534
 msgid "Extrude 3D vector map"
@@ -3483,9 +3265,7 @@ msgstr "Etiketleri oluştur"
 
 #: ../gui/wxpython/menustrings.py:537
 msgid "Creates paint labels for a vector map from attached attributes."
-msgstr ""
-"Bağlı özniteliklerden vektör harita için etiketler "
-"oluşturur.                      "
+msgstr "Bağlı özniteliklerden vektör harita için etiketler oluşturur.                      "
 
 #: ../gui/wxpython/menustrings.py:538
 #, fuzzy
@@ -3502,9 +3282,7 @@ msgid "Reposition vector map"
 msgstr "Vektör haritayı yeniden konumlandır"
 
 #: ../gui/wxpython/menustrings.py:541
-msgid ""
-"Performs an affine transformation (shift, scale and rotate, or GPCs) on "
-"vector map."
+msgid "Performs an affine transformation (shift, scale and rotate, or GPCs) on vector map."
 msgstr ""
 
 #: ../gui/wxpython/menustrings.py:542
@@ -3514,9 +3292,7 @@ msgstr "Vektör haritayı yeniden oluşturur."
 #: ../gui/wxpython/menustrings.py:543
 #, fuzzy
 msgid "Re-projects a vector map from one location to the current location."
-msgstr ""
-"Raster haritayı başka bir mevkiden geçerli mevkiye yeniden "
-"projeksiyonlandırır."
+msgstr "Raster haritayı başka bir mevkiden geçerli mevkiye yeniden projeksiyonlandırır."
 
 #: ../gui/wxpython/menustrings.py:545
 #, fuzzy
@@ -3524,8 +3300,7 @@ msgid "Updates vector map metadata."
 msgstr "Temel vektör değişim verisi"
 
 #: ../gui/wxpython/menustrings.py:548
-msgid ""
-"Set color rules for features in a vector using a numeric attribute column."
+msgid "Set color rules for features in a vector using a numeric attribute column."
 msgstr ""
 
 #: ../gui/wxpython/menustrings.py:550
@@ -3537,9 +3312,7 @@ msgid "Query with attributes"
 msgstr "Özniteliklere göre sorgula"
 
 #: ../gui/wxpython/menustrings.py:552
-msgid ""
-"Selects vector objects from an existing vector map and creates a new map "
-"containing only the selected objects."
+msgid "Selects vector objects from an existing vector map and creates a new map containing only the selected objects."
 msgstr ""
 
 #: ../gui/wxpython/menustrings.py:553
@@ -3555,8 +3328,7 @@ msgid "Query with another vector map"
 msgstr "Başka bir vektör haritayla sorgula"
 
 #: ../gui/wxpython/menustrings.py:556
-msgid ""
-"Selects features from vector map (A) by features from other vector map (B)."
+msgid "Selects features from vector map (A) by features from other vector map (B)."
 msgstr ""
 
 #: ../gui/wxpython/menustrings.py:557
@@ -3564,11 +3336,8 @@ msgid "Buffer vectors"
 msgstr "Vektör tampon"
 
 #: ../gui/wxpython/menustrings.py:558
-msgid ""
-"Creates a buffer around features of given type (areas must contain centroid)."
-msgstr ""
-"Verilen obje tipi etrafında tampon oluşturur (alanların alan merkezi "
-"olmalıdır)."
+msgid "Creates a buffer around features of given type (areas must contain centroid)."
+msgstr "Verilen obje tipi etrafında tampon oluşturur (alanların alan merkezi olmalıdır)."
 
 #: ../gui/wxpython/menustrings.py:559
 msgid "Lidar analysis"
@@ -3587,9 +3356,7 @@ msgid "Detect interiors"
 msgstr ""
 
 #: ../gui/wxpython/menustrings.py:563
-msgid ""
-"Building contour determination and Region Growing algorithm for determining "
-"the building inside"
+msgid "Building contour determination and Region Growing algorithm for determining the building inside"
 msgstr ""
 
 #: ../gui/wxpython/menustrings.py:564
@@ -3597,9 +3364,7 @@ msgid "Correct and reclassify objects"
 msgstr "Objeleri düzelt ve tekrar sınıflandır"
 
 #: ../gui/wxpython/menustrings.py:565
-msgid ""
-"Correction of the v.lidar.growing output. It is the last of the three "
-"algorithms for LIDAR filtering."
+msgid "Correction of the v.lidar.growing output. It is the last of the three algorithms for LIDAR filtering."
 msgstr ""
 
 #: ../gui/wxpython/menustrings.py:566
@@ -3627,9 +3392,7 @@ msgid "Create points/segments"
 msgstr "Nokta/parça oluştur"
 
 #: ../gui/wxpython/menustrings.py:572
-msgid ""
-"Creates points/segments from input lines, linear reference system and "
-"positions read from stdin or a file."
+msgid "Creates points/segments from input lines, linear reference system and positions read from stdin or a file."
 msgstr ""
 
 #: ../gui/wxpython/menustrings.py:573
@@ -3637,9 +3400,7 @@ msgid "Find line id and offset"
 msgstr ""
 
 #: ../gui/wxpython/menustrings.py:574
-msgid ""
-"Finds line id and real km+offset for given points in vector map using linear "
-"reference system."
+msgid "Finds line id and real km+offset for given points in vector map using linear reference system."
 msgstr ""
 
 #: ../gui/wxpython/menustrings.py:575
@@ -3647,9 +3408,7 @@ msgid "Nearest features"
 msgstr "En yakın elemanlar"
 
 #: ../gui/wxpython/menustrings.py:576
-msgid ""
-"Finds the nearest element in vector map 'to' for elements in vector map "
-"'from'."
+msgid "Finds the nearest element in vector map 'to' for elements in vector map 'from'."
 msgstr ""
 
 #: ../gui/wxpython/menustrings.py:577
@@ -3695,9 +3454,7 @@ msgid "Shortest path for sets of features"
 msgstr "Vektör şebekede en kısa yolu bulur."
 
 #: ../gui/wxpython/menustrings.py:587
-msgid ""
-"Computes shortest distance via the network between the given sets of "
-"features."
+msgid "Computes shortest distance via the network between the given sets of features."
 msgstr ""
 
 #: ../gui/wxpython/menustrings.py:588
@@ -3767,9 +3524,7 @@ msgid "Centrality"
 msgstr "Normalliği sına"
 
 #: ../gui/wxpython/menustrings.py:603
-msgid ""
-"Computes degree, centrality, betweeness, closeness and eigenvector "
-"centrality measures in the network."
+msgid "Computes degree, centrality, betweeness, closeness and eigenvector centrality measures in the network."
 msgstr ""
 
 #: ../gui/wxpython/menustrings.py:604
@@ -3810,9 +3565,7 @@ msgstr "Vektör haritaları yamala"
 
 #: ../gui/wxpython/menustrings.py:614
 msgid "Create a new vector map layer by combining other vector map layers."
-msgstr ""
-"Diğer vektör harita katmanlarını birleştirirek yeni vektör harita katmanı "
-"oluştur"
+msgstr "Diğer vektör harita katmanlarını birleştirirek yeni vektör harita katmanı oluştur"
 
 #: ../gui/wxpython/menustrings.py:615
 msgid "Change attributes"
@@ -3827,12 +3580,8 @@ msgid "Attach, delete or report vector categories to map geometry."
 msgstr "vektör kategorilerini harita geometrisine ekle, sil veya raporla"
 
 #: ../gui/wxpython/menustrings.py:619
-msgid ""
-"Changes vector category values for an existing vector map according to "
-"results of SQL queries or a value in attribute table column."
-msgstr ""
-"Varolan vektör haritanın vektör kategori değerlerini SQL sorgularına veya "
-"öznitelik tablosundaki bir değere göre değiştirir."
+msgid "Changes vector category values for an existing vector map according to results of SQL queries or a value in attribute table column."
+msgstr "Varolan vektör haritanın vektör kategori değerlerini SQL sorgularına veya öznitelik tablosundaki bir değere göre değiştirir."
 
 #: ../gui/wxpython/menustrings.py:620
 msgid "Generate area for current region"
@@ -3860,24 +3609,16 @@ msgid "Delaunay triangles"
 msgstr "Delaunay üçgenleri"
 
 #: ../gui/wxpython/menustrings.py:626
-msgid ""
-"Creates a Delaunay triangulation from an input vector map containing points "
-"or centroids."
-msgstr ""
-"Nokta veya ağırlık merkezlerini içeren girdi vektör haritadan Delaunay "
-"üçgenlemesi oluşturur.           "
+msgid "Creates a Delaunay triangulation from an input vector map containing points or centroids."
+msgstr "Nokta veya ağırlık merkezlerini içeren girdi vektör haritadan Delaunay üçgenlemesi oluşturur.           "
 
 #: ../gui/wxpython/menustrings.py:627
 msgid "Voronoi diagram/Thiessen polygons"
 msgstr "Voronoi diyagramı/Thiessen poligonları"
 
 #: ../gui/wxpython/menustrings.py:628
-msgid ""
-"Creates a Voronoi diagram from an input vector map containing points or "
-"centroids."
-msgstr ""
-"Nokta veya ağırlık merkezlerini içeren girdi vektör haritadan Voronoi "
-"diyagramı oluşturur.          "
+msgid "Creates a Voronoi diagram from an input vector map containing points or centroids."
+msgstr "Nokta veya ağırlık merkezlerini içeren girdi vektör haritadan Voronoi diyagramı oluşturur.          "
 
 #: ../gui/wxpython/menustrings.py:629
 msgid "Generate grid"
@@ -3896,11 +3637,8 @@ msgid "Generate from database"
 msgstr "Veritabanından üret"
 
 #: ../gui/wxpython/menustrings.py:633
-msgid ""
-"Creates new vector (points) map from database table containing coordinates."
-msgstr ""
-"Koordinatlar içeren veritabanı tablosundan yeni vektör (nokta) harita "
-"oluşturur."
+msgid "Creates new vector (points) map from database table containing coordinates."
+msgstr "Koordinatlar içeren veritabanı tablosundan yeni vektör (nokta) harita oluşturur."
 
 #: ../gui/wxpython/menustrings.py:634
 msgid "Generate points along lines"
@@ -3948,12 +3686,8 @@ msgstr "Alan özniteliklerini rasterdan güncelle"
 
 #: ../gui/wxpython/menustrings.py:645
 #, fuzzy
-msgid ""
-"Calculates univariate statistics from a raster map based on vector polygons "
-"and uploads statistics to new attribute columns."
-msgstr ""
-"GRASS raster haritasından vektör poligonlara göre tek değişkenli "
-"istatistikleri hesaplar ve yeni öznitelik sütunlarına yükler."
+msgid "Calculates univariate statistics from a raster map based on vector polygons and uploads statistics to new attribute columns."
+msgstr "GRASS raster haritasından vektör poligonlara göre tek değişkenli istatistikleri hesaplar ve yeni öznitelik sütunlarına yükler."
 
 #: ../gui/wxpython/menustrings.py:646
 msgid "Update point attributes from areas"
@@ -4028,9 +3762,7 @@ msgid "Univariate attribute statistics for points"
 msgstr "Tekil öznitelik istataistikleri"
 
 #: ../gui/wxpython/menustrings.py:663
-msgid ""
-"Calculates univariate statistics for attribute. Variance and standard "
-"deviation is calculated only for points if specified."
+msgid "Calculates univariate statistics for attribute. Variance and standard deviation is calculated only for points if specified."
 msgstr ""
 
 #: ../gui/wxpython/menustrings.py:664
@@ -4040,12 +3772,8 @@ msgstr "Tekil öznitelik istataistikleri"
 
 #: ../gui/wxpython/menustrings.py:665
 #, fuzzy
-msgid ""
-"Calculates univariate statistics on selected table column for a GRASS vector "
-"map."
-msgstr ""
-"Raster haritanın boş değer içermeyen hücrelerinden tek değişkenli "
-"istatistikler hesaplar."
+msgid "Calculates univariate statistics on selected table column for a GRASS vector map."
+msgstr "Raster haritanın boş değer içermeyen hücrelerinden tek değişkenli istatistikler hesaplar."
 
 #: ../gui/wxpython/menustrings.py:666
 msgid "Quadrat indices"
@@ -4078,8 +3806,7 @@ msgstr "Grup oluştur/düzenle"
 
 #: ../gui/wxpython/menustrings.py:673
 msgid "Creates, edits, and lists groups and subgroups of imagery files."
-msgstr ""
-"Görüntü dosyalarının grup ve altgruplarını oluşturur, düzenler ve listeler."
+msgstr "Görüntü dosyalarının grup ve altgruplarını oluşturur, düzenler ve listeler."
 
 #: ../gui/wxpython/menustrings.py:674
 msgid "Target group"
@@ -4114,15 +3841,11 @@ msgid "HIS to RGB"
 msgstr ""
 
 #: ../gui/wxpython/menustrings.py:682
-msgid ""
-"Transforms raster maps from HIS (Hue-Intensity-Saturation) color space to "
-"RGB (Red-Green-Blue) color space."
+msgid "Transforms raster maps from HIS (Hue-Intensity-Saturation) color space to RGB (Red-Green-Blue) color space."
 msgstr ""
 
 #: ../gui/wxpython/menustrings.py:684
-msgid ""
-"Transforms raster maps from RGB (Red-Green-Blue) color space to HIS (Hue-"
-"Intensity-Saturation) color space."
+msgid "Transforms raster maps from RGB (Red-Green-Blue) color space to HIS (Hue-Intensity-Saturation) color space."
 msgstr ""
 
 #: ../gui/wxpython/menustrings.py:685
@@ -4130,9 +3853,7 @@ msgid "Rectify image or raster"
 msgstr "Görüntü veya raster konumlandırma"
 
 #: ../gui/wxpython/menustrings.py:686
-msgid ""
-"Rectifies an image by computing a coordinate transformation for each pixel "
-"in the image based on the control points."
+msgid "Rectifies an image by computing a coordinate transformation for each pixel in the image based on the control points."
 msgstr ""
 
 #: ../gui/wxpython/menustrings.py:687
@@ -4148,8 +3869,7 @@ msgid "Brovey sharpening"
 msgstr "Brovey keskinleştirme"
 
 #: ../gui/wxpython/menustrings.py:690
-msgid ""
-"Brovey transform to merge multispectral and high-res panchromatic channels"
+msgid "Brovey transform to merge multispectral and high-res panchromatic channels"
 msgstr ""
 
 #: ../gui/wxpython/menustrings.py:691
@@ -4161,9 +3881,7 @@ msgid "Clustering input for unsupervised classification"
 msgstr "Girdileri eğitimsiz sınıflandırma için kümeleme         "
 
 #: ../gui/wxpython/menustrings.py:693
-msgid ""
-"Generates spectral signatures for land cover types in an image using a "
-"clustering algorithm."
+msgid "Generates spectral signatures for land cover types in an image using a clustering algorithm."
 msgstr ""
 
 #: ../gui/wxpython/menustrings.py:694
@@ -4179,9 +3897,7 @@ msgid "Sequential maximum a posteriori classification (SMAP)"
 msgstr ""
 
 #: ../gui/wxpython/menustrings.py:697
-msgid ""
-"Performs contextual image classification using sequential maximum a "
-"posteriori (SMAP) estimation."
+msgid "Performs contextual image classification using sequential maximum a posteriori (SMAP) estimation."
 msgstr ""
 
 #: ../gui/wxpython/menustrings.py:698
@@ -4189,9 +3905,7 @@ msgid "Interactive input for supervised classification (requires Xterm)"
 msgstr "Kontrollü sınıflandırma için etkileşimli girdi(XTerm gerekir)"
 
 #: ../gui/wxpython/menustrings.py:699
-msgid ""
-"Generates spectral signatures for an image by allowing the user to outline "
-"regions of interest."
+msgid "Generates spectral signatures for an image by allowing the user to outline regions of interest."
 msgstr ""
 
 #: ../gui/wxpython/menustrings.py:700
@@ -4248,11 +3962,8 @@ msgstr "Spektral yanıt"
 
 #: ../gui/wxpython/menustrings.py:712
 #, fuzzy
-msgid ""
-"Displays spectral response at user specified locations in group or images."
-msgstr ""
-"Grup veya görüntülerde kullanıcı tarafından belirlenmiş konumlardaki "
-"spektral yanıtı gösterir"
+msgid "Displays spectral response at user specified locations in group or images."
+msgstr "Grup veya görüntülerde kullanıcı tarafından belirlenmiş konumlardaki spektral yanıtı gösterir"
 
 #: ../gui/wxpython/menustrings.py:713
 msgid "Tasseled cap vegetation index"
@@ -4320,9 +4031,7 @@ msgid "Kappa analysis"
 msgstr "Kappa analizi"
 
 #: ../gui/wxpython/menustrings.py:730
-msgid ""
-"Calculate error matrix and kappa parameter for accuracy assessment of "
-"classification result."
+msgid "Calculate error matrix and kappa parameter for accuracy assessment of classification result."
 msgstr ""
 
 #: ../gui/wxpython/menustrings.py:731
@@ -4381,15 +4090,11 @@ msgid "Cross section"
 msgstr ""
 
 #: ../gui/wxpython/menustrings.py:744
-msgid ""
-"Creates cross section 2D raster map from 3d raster map based on 2D elevation "
-"map"
+msgid "Creates cross section 2D raster map from 3d raster map based on 2D elevation map"
 msgstr ""
 
 #: ../gui/wxpython/menustrings.py:746
-msgid ""
-"Numerical calculation program for transient, confined groundwater flow in "
-"three dimensions"
+msgid "Numerical calculation program for transient, confined groundwater flow in three dimensions"
 msgstr ""
 
 #: ../gui/wxpython/menustrings.py:747
@@ -4397,9 +4102,7 @@ msgid "Interpolate volume from points"
 msgstr "Noktalardan hacim interpole etme               "
 
 #: ../gui/wxpython/menustrings.py:748
-msgid ""
-"Interpolates point data to a G3D grid volume using regularized spline with "
-"tension (RST) algorithm."
+msgid "Interpolates point data to a G3D grid volume using regularized spline with tension (RST) algorithm."
 msgstr ""
 
 #: ../gui/wxpython/menustrings.py:749
@@ -4408,9 +4111,7 @@ msgstr "Rapor ve istatistikler"
 
 #: ../gui/wxpython/menustrings.py:750
 msgid "Basic volume metadata"
-msgstr ""
-"Temel hacim metadatası       ******************** metadata = her yerde "
-"değiştir"
+msgstr "Temel hacim metadatası       ******************** metadata = her yerde değiştir"
 
 #: ../gui/wxpython/menustrings.py:751
 msgid "Outputs basic information about a user-specified 3D raster map layer."
@@ -4433,12 +4134,8 @@ msgstr "Tekil raster istataistikleri"
 
 #: ../gui/wxpython/menustrings.py:755
 #, fuzzy
-msgid ""
-"Calculates univariate statistics from the non-null 3d cells of a raster3d "
-"map."
-msgstr ""
-"Raster haritanın boş değer içermeyen hücrelerinden tek değişkenli "
-"istatistikler hesaplar."
+msgid "Calculates univariate statistics from the non-null 3d cells of a raster3d map."
+msgstr "Raster haritanın boş değer içermeyen hücrelerinden tek değişkenli istatistikler hesaplar."
 
 #: ../gui/wxpython/menustrings.py:756
 #, fuzzy
@@ -4491,8 +4188,7 @@ msgstr "Bağlan"
 
 #: ../gui/wxpython/menustrings.py:768
 msgid "Prints/sets general DB connection for current mapset and exits."
-msgstr ""
-"Geçerli harita takımının veritabanı bağlantısını yazdırır/ayarlar ve çıkar."
+msgstr "Geçerli harita takımının veritabanı bağlantısını yazdırır/ayarlar ve çıkar."
 
 #: ../gui/wxpython/menustrings.py:769
 msgid "Login"
@@ -4577,12 +4273,8 @@ msgstr "Yeni tablo"
 
 #: ../gui/wxpython/menustrings.py:788
 #, fuzzy
-msgid ""
-"Creates and connects a new attribute table to a given layer of an existing "
-"vector map."
-msgstr ""
-"Varolan vektör haritanın verilen katmanına yeni öznitelik tablosu oluşturur "
-"ve ekler."
+msgid "Creates and connects a new attribute table to a given layer of an existing vector map."
+msgstr "Varolan vektör haritanın verilen katmanına yeni öznitelik tablosu oluşturur ve ekler."
 
 #: ../gui/wxpython/menustrings.py:789
 msgid "Remove table"
@@ -4591,9 +4283,7 @@ msgstr "Tabloyu kaldır"
 #: ../gui/wxpython/menustrings.py:790
 #, fuzzy
 msgid "Removes existing attribute table of a vector map."
-msgstr ""
-"Verilen vektör haritaya bağlı öznitelik tablosundaki sütunu yeniden "
-"adlandırır."
+msgstr "Verilen vektör haritaya bağlı öznitelik tablosundaki sütunu yeniden adlandırır."
 
 #: ../gui/wxpython/menustrings.py:791
 #, fuzzy
@@ -4610,39 +4300,28 @@ msgid "Add columns"
 msgstr "Sütun ekle"
 
 #: ../gui/wxpython/menustrings.py:794
-msgid ""
-"Adds one or more columns to the attribute table connected to a given vector "
-"map."
-msgstr ""
-"Verilen vektör haritaya bağlı öznitelik tablosuna bir veya daha fazla sütun "
-"ekler."
+msgid "Adds one or more columns to the attribute table connected to a given vector map."
+msgstr "Verilen vektör haritaya bağlı öznitelik tablosuna bir veya daha fazla sütun ekler."
 
 #: ../gui/wxpython/menustrings.py:796
 #, fuzzy
-msgid ""
-"Drops a column from the attribute table connected to a given vector map."
-msgstr ""
-"Verilen vektör haritaya bağlı öznitelik tablosundaki sütunu yeniden "
-"adlandırır."
+msgid "Drops a column from the attribute table connected to a given vector map."
+msgstr "Verilen vektör haritaya bağlı öznitelik tablosundaki sütunu yeniden adlandırır."
 
 #: ../gui/wxpython/menustrings.py:797 ../gui/wxpython/gui_modules/dbm.py:932
 msgid "Rename column"
 msgstr "Sütunu yeniden adlandır"
 
 #: ../gui/wxpython/menustrings.py:798
-msgid ""
-"Renames a column in the attribute table connected to a given vector map."
-msgstr ""
-"Verilen vektör haritaya bağlı öznitelik tablosundaki sütunu yeniden "
-"adlandırır."
+msgid "Renames a column in the attribute table connected to a given vector map."
+msgstr "Verilen vektör haritaya bağlı öznitelik tablosundaki sütunu yeniden adlandırır."
 
 #: ../gui/wxpython/menustrings.py:799
 msgid "Change values"
 msgstr "Değerleri değiştir"
 
 #: ../gui/wxpython/menustrings.py:800
-msgid ""
-"Allows to update a column in the attribute table connected to a vector map."
+msgid "Allows to update a column in the attribute table connected to a vector map."
 msgstr "Vektör haritaya bağlı öznitelik tablosundaki bir sütunu günceller."
 
 #: ../gui/wxpython/menustrings.py:801
@@ -4660,9 +4339,7 @@ msgstr "Vektör harita - veritabanı bağlantısı ayarla"
 
 #: ../gui/wxpython/menustrings.py:804
 msgid "Prints/sets DB connection for a vector map to attribute table."
-msgstr ""
-"Vektör haritanın veritabanı bağlantısını öznitelik tablosuna yazdırır/"
-"ayarlar."
+msgstr "Vektör haritanın veritabanı bağlantısını öznitelik tablosuna yazdırır/ayarlar."
 
 #: ../gui/wxpython/menustrings.py:805 ../gui/wxpython/menustrings.py:855
 #, fuzzy
@@ -4892,7 +4569,7 @@ msgstr "Önizleme"
 #: ../gui/wxpython/gui_modules/colorrules.py:394
 #, fuzzy
 msgid "range"
-msgstr "hassas:"
+msgstr "Yönet"
 
 #: ../gui/wxpython/gui_modules/colorrules.py:396
 #, fuzzy
@@ -4906,8 +4583,7 @@ msgstr "Raster categori değerleri veya yüzdeleri gir (aralık = %d-%d)"
 
 #: ../gui/wxpython/gui_modules/colorrules.py:465
 msgid "Please select attribute column and RGB color column first"
-msgstr ""
-"Lütfen ilk olarak KYM renk sütunlarını ve öznitelik sütunlarını seçiniz"
+msgstr "Lütfen ilk olarak KYM renk sütunlarını ve öznitelik sütunlarını seçiniz"
 
 #: ../gui/wxpython/gui_modules/colorrules.py:539
 #, fuzzy
@@ -4921,9 +4597,7 @@ msgstr ""
 
 #: ../gui/wxpython/gui_modules/colorrules.py:701
 #, fuzzy
-msgid ""
-"Color table already exists. Check out 'replace existing color table' to "
-"overwrite it."
+msgid "Color table already exists. Check out 'replace existing color table' to overwrite it."
 msgstr "<%s> bölge dosyası zaten var. Üzerine yazılmasını istermisin?"
 
 #: ../gui/wxpython/gui_modules/histogram.py:176
@@ -4953,8 +4627,7 @@ msgstr "Histogram metni için font seçin"
 #: ../gui/wxpython/gui_modules/gcpmapdisp.py:907
 #: ../gui/wxpython/gui_modules/gmodeler.py:1044
 msgid "Choose a file name to save the image (no need to add extension)"
-msgstr ""
-"Görüntüyü kaydetmek için bir dosya ismi seçin (uzantı eklemeye gerek yok)"
+msgstr "Görüntüyü kaydetmek için bir dosya ismi seçin (uzantı eklemeye gerek yok)"
 
 #: ../gui/wxpython/gui_modules/histogram.py:432
 #: ../gui/wxpython/gui_modules/mapdisp.py:1170
@@ -5146,7 +4819,7 @@ msgstr ""
 #: ../gui/wxpython/gui_modules/mcalc_builder.py:223
 #, fuzzy
 msgid "Add created raster map into layer tree"
-msgstr "Oluşturulan haritaları katman ağacına ekle"
+msgstr "Oluşturulan haritaları katman ağacına yükle"
 
 #: ../gui/wxpython/gui_modules/mcalc_builder.py:430
 msgid "You must enter the name of a new map to create"
@@ -5159,20 +4832,16 @@ msgstr ""
 #: ../gui/wxpython/gui_modules/mcalc_builder.py:472
 #, fuzzy
 msgid "Choose a file name to save the expression"
-msgstr ""
-"Görüntüyü kaydetmek için bir dosya ismi seçin (uzantı eklemeye gerek yok)"
+msgstr "DXF dosyasını Seç:"
 
 #: ../gui/wxpython/gui_modules/mcalc_builder.py:473
 #: ../gui/wxpython/gui_modules/mcalc_builder.py:494
-#, fuzzy
 msgid "Expression file (*)|*"
-msgstr "İfade"
+msgstr ""
 
 #: ../gui/wxpython/gui_modules/mcalc_builder.py:493
-#, fuzzy
 msgid "Choose a file name to load the expression"
 msgstr ""
-"Görüntüyü kaydetmek için bir dosya ismi seçin (uzantı eklemeye gerek yok)"
 
 #: ../gui/wxpython/gui_modules/menudata.py:79
 #, fuzzy
@@ -5187,8 +4856,7 @@ msgstr "DB dosyasında veritabanı bağlantısı belirlenmedi."
 #, python-format
 msgid ""
 "No attribute table linked to vector map <%(vector)s> found. %(msg)s\n"
-"You can disable this message from digitization settings. Or you can create "
-"and link attribute table to the vector map using Attribute Table Manager."
+"You can disable this message from digitization settings. Or you can create and link attribute table to the vector map using Attribute Table Manager."
 msgstr ""
 
 #: ../gui/wxpython/gui_modules/dbm_dialogs.py:93
@@ -5350,9 +5018,8 @@ msgid "Select target map to display:"
 msgstr "Kesiti alınacak raster haritayı seç:"
 
 #: ../gui/wxpython/gui_modules/gcpmanager.py:676
-#, fuzzy
 msgid "You must select a source map in order to continue"
-msgstr "Devam etmek için geçerli bir görüntü/harita seçmelisin"
+msgstr ""
 
 #: ../gui/wxpython/gui_modules/gcpmanager.py:698
 #, fuzzy
@@ -5380,9 +5047,8 @@ msgid "Delete GCP"
 msgstr "YKN Sil"
 
 #: ../gui/wxpython/gui_modules/gcpmanager.py:1036
-#, fuzzy
 msgid "mapwin not defined for "
-msgstr "Durum: tanımlanmadı"
+msgstr ""
 
 #: ../gui/wxpython/gui_modules/gcpmanager.py:1107
 #: ../gui/wxpython/gui_modules/toolbars.py:416
@@ -5419,14 +5085,12 @@ msgid "POINTS file saved for group <%s>"
 msgstr "NOKTA dosyası kaydedildi"
 
 #: ../gui/wxpython/gui_modules/gcpmanager.py:1202
-#, fuzzy
 msgid "source mapwin not defined"
-msgstr "Durum: tanımlanmadı"
+msgstr ""
 
 #: ../gui/wxpython/gui_modules/gcpmanager.py:1208
-#, fuzzy
 msgid "target mapwin not defined"
-msgstr "Durum: tanımlanmadı"
+msgstr ""
 
 #: ../gui/wxpython/gui_modules/gcpmanager.py:1237
 msgid "Reading POINTS file failed"
@@ -5439,8 +5103,7 @@ msgstr "RMS hatası"
 
 #: ../gui/wxpython/gui_modules/gcpmanager.py:1310
 msgid ""
-"Insufficient points defined and active (checked) for selected rectification "
-"method.\n"
+"Insufficient points defined and active (checked) for selected rectification method.\n"
 "3+ points needed for 1st order,\n"
 "6+ points for 2nd order, and\n"
 "10+ points for 3rd order."
@@ -5449,7 +5112,7 @@ msgstr ""
 #: ../gui/wxpython/gui_modules/gcpmanager.py:1338
 #, fuzzy
 msgid "Rectifying images, please wait..."
-msgstr "Görüntü veya raster konumlandırma"
+msgstr "Görüntü veya raster koordinatlandırma"
 
 #: ../gui/wxpython/gui_modules/gcpmanager.py:1390
 #, fuzzy, python-format
@@ -5464,11 +5127,8 @@ msgstr "<%s> vektör haritasına yeni obje eklemede hata."
 
 #: ../gui/wxpython/gui_modules/gcpmanager.py:1449
 #, fuzzy, python-format
-msgid ""
-"Vector map <%s> already exists. Change extension name and georectify again."
-msgstr ""
-"<%s> bölge dosyası geçerli harita takımında zaten var. Üzerine yazılmasını "
-"istermisin?"
+msgid "Vector map <%s> already exists. Change extension name and georectify again."
+msgstr "<%s> bölge dosyası geçerli harita takımında zaten var. Üzerine yazılmasını istermisin?"
 
 #: ../gui/wxpython/gui_modules/gcpmanager.py:1483
 #, fuzzy
@@ -5491,9 +5151,8 @@ msgid ""
 msgstr ""
 
 #: ../gui/wxpython/gui_modules/gcpmanager.py:1736
-#, fuzzy
 msgid "Adjust GCP Displays "
-msgstr "Harita görüntüle"
+msgstr ""
 
 #: ../gui/wxpython/gui_modules/gcpmanager.py:1737
 msgid ""
@@ -5502,14 +5161,12 @@ msgid ""
 msgstr ""
 
 #: ../gui/wxpython/gui_modules/gcpmanager.py:1869
-#, fuzzy
 msgid "Adjust source display to target display"
-msgstr "Kaynak harita takımını seç:"
+msgstr ""
 
 #: ../gui/wxpython/gui_modules/gcpmanager.py:1873
-#, fuzzy
 msgid "Adjust target display to source display"
-msgstr "Kesiti alınacak raster haritayı seç:"
+msgstr ""
 
 #: ../gui/wxpython/gui_modules/gcpmanager.py:1934
 #: ../gui/wxpython/gui_modules/gcpmanager.py:1951
@@ -5603,11 +5260,8 @@ msgstr "Bu oturum için değişiklikleri uygula"
 #: ../gui/wxpython/gui_modules/profile.py:1038
 #: ../gui/wxpython/gui_modules/profile.py:1390
 #: ../gui/wxpython/gui_modules/preferences.py:967
-msgid ""
-"Apply and save changes to user settings file (default for next sessions)"
-msgstr ""
-"Değişiklikleri kullanıcı ayar dosyasına uygula ve kaydet (varsayılan sonraki "
-"oturum için)"
+msgid "Apply and save changes to user settings file (default for next sessions)"
+msgstr "Değişiklikleri kullanıcı ayar dosyasına uygula ve kaydet (varsayılan sonraki oturum için)"
 
 #: ../gui/wxpython/gui_modules/gcpmanager.py:2382
 #: ../gui/wxpython/gui_modules/ogc_services.py:77
@@ -5813,10 +5467,7 @@ msgstr ""
 
 #: ../gui/wxpython/gui_modules/mapdisp.py:173
 #: ../gui/wxpython/gui_modules/gcpmapdisp.py:178
-msgid ""
-"Show/hide computational region extent (set with g.region). Display region "
-"drawn as a blue box inside the computational region, computational region "
-"inside a display region as a red box)."
+msgid "Show/hide computational region extent (set with g.region). Display region drawn as a blue box inside the computational region, computational region inside a display region as a red box)."
 msgstr ""
 
 #: ../gui/wxpython/gui_modules/mapdisp.py:181
@@ -5827,13 +5478,8 @@ msgstr "Görüntü çözünürlüğünü hesaplama ayarlarına göre sınırland
 
 #: ../gui/wxpython/gui_modules/mapdisp.py:185
 #: ../gui/wxpython/gui_modules/gcpmapdisp.py:190
-msgid ""
-"Constrain display resolution to computational region settings. Default value "
-"for new map displays can be set up in 'User GUI settings' dialog."
-msgstr ""
-"Görüntü çözünürlüğünü hesaplama bölgesi ayarlarına göre sınırlandır. Yeni "
-"harita görüntüsü için varsayılan değer 'Kullanıcı Arayüzü Ayarları' "
-"penceresinden ayarlanabilir."
+msgid "Constrain display resolution to computational region settings. Default value for new map displays can be set up in 'User GUI settings' dialog."
+msgstr "Görüntü çözünürlüğünü hesaplama bölgesi ayarlarına göre sınırlandır. Yeni harita görüntüsü için varsayılan değer 'Kullanıcı Arayüzü Ayarları' penceresinden ayarlanabilir."
 
 #: ../gui/wxpython/gui_modules/mapdisp.py:213
 #: ../gui/wxpython/gui_modules/mapdisp.py:1061
@@ -5845,9 +5491,7 @@ msgstr "Projeksiyonu Seç"
 
 #: ../gui/wxpython/gui_modules/mapdisp.py:217
 #: ../gui/wxpython/gui_modules/gcpmapdisp.py:222
-msgid ""
-"Reproject coordinates displayed in the statusbar. Projection can be defined "
-"in GUI preferences dialog (tab 'Display')"
+msgid "Reproject coordinates displayed in the statusbar. Projection can be defined in GUI preferences dialog (tab 'Display')"
 msgstr ""
 
 #: ../gui/wxpython/gui_modules/mapdisp.py:300
@@ -5966,12 +5610,8 @@ msgstr "Vektör haritayı sorgula (düzeltme modunda)"
 
 #: ../gui/wxpython/gui_modules/mapdisp.py:1632
 #, python-format
-msgid ""
-"Click and drag with left mouse button to measure.%sDouble click with left "
-"button to clear."
-msgstr ""
-"Ölçmek için farenin sol tuşuna basın ve sürükleyin.%sTemizlemek için sol "
-"tuşa çift tıklayın."
+msgid "Click and drag with left mouse button to measure.%sDouble click with left button to clear."
+msgstr "Ölçmek için farenin sol tuşuna basın ve sürükleyin.%sTemizlemek için sol tuşa çift tıklayın."
 
 #: ../gui/wxpython/gui_modules/mapdisp.py:1638
 msgid "Measuring distance"
@@ -6130,10 +5770,7 @@ msgstr "Çizgiler boyunca noktalar üret"
 
 #: ../gui/wxpython/gui_modules/wxvdriver.py:835
 #, python-format
-msgid ""
-"Topology for vector map <%s> is not available. Topology is required by "
-"digitizer. Do you want to rebuild topology (takes some time) and open the "
-"vector map for editing?"
+msgid "Topology for vector map <%s> is not available. Topology is required by digitizer. Do you want to rebuild topology (takes some time) and open the vector map for editing?"
 msgstr ""
 
 #: ../gui/wxpython/gui_modules/wxvdriver.py:839
@@ -6283,9 +5920,7 @@ msgstr "Kategori listesi"
 
 #: ../gui/wxpython/gui_modules/ghelp.py:804
 msgid "Fetch full info including description and keywords (takes time)"
-msgstr ""
-"Tanım ve anahtar kelimeler dahil tamamını getir (zaman alır)              "
-"***********"
+msgstr "Tanım ve anahtar kelimeler dahil tamamını getir (zaman alır)              ***********"
 
 #: ../gui/wxpython/gui_modules/ghelp.py:813
 #: ../gui/wxpython/gui_modules/gdialogs.py:957
@@ -6379,9 +6014,7 @@ msgid "Unable to create location"
 msgstr "Mevki oluşturulamıyor"
 
 #: ../gui/wxpython/gui_modules/location_wizard.py:228
-msgid ""
-"Title of the location is limited only to one line and 256 characters. The "
-"rest of the text will be ignored."
+msgid "Title of the location is limited only to one line and 256 characters. The rest of the text will be ignored."
 msgstr ""
 
 #: ../gui/wxpython/gui_modules/location_wizard.py:235
@@ -6611,8 +6244,7 @@ msgstr "Yeni GRASS konumu belirle"
 
 #: ../gui/wxpython/gui_modules/location_wizard.py:1835
 msgid "Do you want to set the default region extents and resolution now?"
-msgstr ""
-"Varsayılan bölge sınırları ve çözünürlüğünü şimdi ayarlamak istermisin?"
+msgstr "Varsayılan bölge sınırları ve çözünürlüğünü şimdi ayarlamak istermisin?"
 
 #: ../gui/wxpython/gui_modules/location_wizard.py:1837
 #, python-format
@@ -6637,12 +6269,8 @@ msgstr "Yeni mevki oluşturulamıyor"
 
 #: ../gui/wxpython/gui_modules/location_wizard.py:1984
 #, fuzzy, python-format
-msgid ""
-"Location <%(loc)s> will be created in GIS data directory <%(dir)s>. You will "
-"need to change the default GIS data directory in the GRASS startup screen."
-msgstr ""
-"Konum <%(loc)s> GIS veri dizininde<%(dir)s> yaratılacak. GIS başlangıç "
-"ekranında varsayılan GIS veri dizinini değiştirmek zorunda kalacaksınız."
+msgid "Location <%(loc)s> will be created in GIS data directory <%(dir)s>. You will need to change the default GIS data directory in the GRASS startup screen."
+msgstr "Konum <%(loc)s> GIS veri dizininde<%(dir)s> yaratılacak. GIS başlangıç ekranında varsayılan GIS veri dizinini değiştirmek zorunda kalacaksınız."
 
 #: ../gui/wxpython/gui_modules/location_wizard.py:1989
 #, fuzzy
@@ -7654,7 +7282,7 @@ msgstr "Değişiklikleri kaydet"
 #: ../gui/wxpython/gui_modules/gselect.py:1244
 #, fuzzy
 msgid "Save settings"
-msgstr "Metin ayarları"
+msgstr "Sunucu ayarları"
 
 #: ../gui/wxpython/gui_modules/gselect.py:1250
 msgid "Name not given, settings is not saved."
@@ -7663,7 +7291,7 @@ msgstr ""
 #: ../gui/wxpython/gui_modules/gselect.py:1262
 #, fuzzy
 msgid "Unable to save settings."
-msgstr "Ayarlanamıyor"
+msgstr "%s komutu ayrıştırılamıyor"
 
 #: ../gui/wxpython/gui_modules/nviz_preferences.py:472
 #, fuzzy, python-format
@@ -7757,8 +7385,7 @@ msgid "Select only features inside of selection bounding box"
 msgstr ""
 
 #: ../gui/wxpython/gui_modules/vdigit.py:252
-msgid ""
-"By default are selected all features overlapping selection bounding box "
+msgid "By default are selected all features overlapping selection bounding box "
 msgstr ""
 
 #: ../gui/wxpython/gui_modules/vdigit.py:255
@@ -7878,9 +7505,7 @@ msgid "perimeter"
 msgstr "Parametreler"
 
 #: ../gui/wxpython/gui_modules/vdigit.py:516
-msgid ""
-"Note: These settings are stored in the workspace not in the vector digitizer "
-"preferences."
+msgid "Note: These settings are stored in the workspace not in the vector digitizer preferences."
 msgstr ""
 
 #: ../gui/wxpython/gui_modules/vdigit.py:545
@@ -8194,9 +7819,7 @@ msgstr "<%s> vektör haritasındaki değişiklikleri kaydetmek istiyor musun?"
 #: ../gui/wxpython/gui_modules/gmodeler.py:673
 #, fuzzy
 msgid "Do you want to store current model settings to model file?"
-msgstr ""
-"Çalışma alanı boş değil. Geçerli ayarlarınçalışma alanı dosyasına "
-"saklanmasını istermisin?"
+msgstr "Çalışma alanı boş değil. Geçerli ayarlarınçalışma alanı dosyasına saklanmasını istermisin?"
 
 #: ../gui/wxpython/gui_modules/gmodeler.py:740
 #: ../gui/wxpython/gui_modules/dbm.py:2087
@@ -8217,19 +7840,13 @@ msgstr "Süzgeçleneni sil"
 #: ../gui/wxpython/gui_modules/gmodeler.py:759
 #, fuzzy, python-format
 msgid "%d maps deleted from current mapset"
-msgstr ""
-"Kullanıcının geçerli harita takımındaki veritabanı elemanı dosyalarını "
-"yeniden adlandırır."
+msgstr "Kullanıcının geçerli harita takımındaki veritabanı elemanı dosyalarını yeniden adlandırır."
 
 #: ../gui/wxpython/gui_modules/gmodeler.py:774
 #: ../gui/wxpython/gui_modules/gmodeler.py:887
 #, fuzzy
-msgid ""
-"Current model is not empty. Do you want to store current settings to model "
-"file?"
-msgstr ""
-"Çalışma alanı boş değil. Geçerli ayarlarınçalışma alanı dosyasına "
-"saklanmasını istermisin?"
+msgid "Current model is not empty. Do you want to store current settings to model file?"
+msgstr "Çalışma alanı boş değil. Geçerli ayarlarınçalışma alanı dosyasına saklanmasını istermisin?"
 
 #: ../gui/wxpython/gui_modules/gmodeler.py:777
 #: ../gui/wxpython/gui_modules/gmodeler.py:890
@@ -8251,9 +7868,7 @@ msgstr ""
 #: ../gui/wxpython/gui_modules/gmodeler.py:864
 #, fuzzy, python-format
 msgid "Model file <%s> already exists. Do you want to overwrite this file?"
-msgstr ""
-"<%s> çalışma alanı dosyası zaten var? Bu dosyanın üzerine yazılımasını ister "
-"misin?"
+msgstr "<%s> çalışma alanı dosyası zaten var? Bu dosyanın üzerine yazılımasını ister misin?"
 
 #: ../gui/wxpython/gui_modules/gmodeler.py:837
 #: ../gui/wxpython/gui_modules/gmodeler.py:877
@@ -8311,9 +7926,7 @@ msgstr "Python kodu (*.py)|*.py"
 #: ../gui/wxpython/gui_modules/gmodeler.py:1096
 #, fuzzy, python-format
 msgid "File <%s> already exists. Do you want to overwrite this file?"
-msgstr ""
-"<%s> çalışma alanı dosyası zaten var? Bu dosyanın üzerine yazılımasını ister "
-"misin?"
+msgstr "<%s> çalışma alanı dosyası zaten var? Bu dosyanın üzerine yazılımasını ister misin?"
 
 #: ../gui/wxpython/gui_modules/gmodeler.py:1098
 #, fuzzy
@@ -8321,8 +7934,7 @@ msgid "Save file"
 msgstr "Farklı Kaydet..."
 
 #: ../gui/wxpython/gui_modules/gmodeler.py:1184
-msgid ""
-"Module r.mapcalc cannot be used in the model. Use r.mapcalculator instead."
+msgid "Module r.mapcalc cannot be used in the model. Use r.mapcalculator instead."
 msgstr ""
 
 #: ../gui/wxpython/gui_modules/gmodeler.py:1241
@@ -8338,12 +7950,8 @@ msgstr ""
 "\n"
 
 #: ../gui/wxpython/gui_modules/gmodeler.py:1244
-msgid ""
-"This program is free software under the GNU General Public License(>=v2). "
-"Read the file COPYING that comes with GRASS for details."
-msgstr ""
-"Bu program GNU Genel Kamu Lisansı(>=v2) altında özgür yazılımdır. Ayrıntılar "
-"için GRASS ile gelen COPYING dosyasını okuyunuz."
+msgid "This program is free software under the GNU General Public License(>=v2). Read the file COPYING that comes with GRASS for details."
+msgstr "Bu program GNU Genel Kamu Lisansı(>=v2) altında özgür yazılımdır. Ayrıntılar için GRASS ile gelen COPYING dosyasını okuyunuz."
 
 #: ../gui/wxpython/gui_modules/gmodeler.py:1374
 #, python-format
@@ -8370,9 +7978,8 @@ msgid "unknown"
 msgstr "bilinmeyen"
 
 #: ../gui/wxpython/gui_modules/gmodeler.py:2018
-#, fuzzy
 msgid "<not defined>"
-msgstr "Durum: tanımlanmadı"
+msgstr ""
 
 #: ../gui/wxpython/gui_modules/gmodeler.py:2028
 #, fuzzy
@@ -8656,9 +8263,7 @@ msgstr "Komut diyalog ayarları"
 #: ../gui/wxpython/gui_modules/gmodeler.py:4100
 #: ../gui/wxpython/gui_modules/dbm.py:1181
 #, python-format
-msgid ""
-"Selected data records (%d) will permanently deleted from table. Do you want "
-"to delete them?"
+msgid "Selected data records (%d) will permanently deleted from table. Do you want to delete them?"
 msgstr ""
 
 #: ../gui/wxpython/gui_modules/gmodeler.py:4103
@@ -8849,9 +8454,7 @@ msgstr "Komutu çalıştırmayı durdur"
 
 #: ../gui/wxpython/gui_modules/goutput.py:494
 #, python-format
-msgid ""
-"Command '%s' not yet implemented in the WxGUI. Try adding it as a command "
-"layer instead."
+msgid "Command '%s' not yet implemented in the WxGUI. Try adding it as a command layer instead."
 msgstr ""
 
 #: ../gui/wxpython/gui_modules/goutput.py:605
@@ -8859,8 +8462,7 @@ msgid "Save file as..."
 msgstr "Farklı Kaydet..."
 
 #: ../gui/wxpython/gui_modules/goutput.py:720
-msgid ""
-"Please note that the data are left in inconsistent state and may be corrupted"
+msgid "Please note that the data are left in inconsistent state and may be corrupted"
 msgstr ""
 
 #: ../gui/wxpython/gui_modules/goutput.py:723
@@ -8893,10 +8495,7 @@ msgid "Reason: %s"
 msgstr "Sebep: %s"
 
 #: ../gui/wxpython/gui_modules/toolbars.py:211
-msgid ""
-"Note that the wxGUI's 3D view mode is currently disabled on MS Windows "
-"(hopefully this will be fixed soon). Please keep an eye out for updated "
-"versions of GRASS. In the meantime you can use \"NVIZ\" from the File menu."
+msgid "Note that the wxGUI's 3D view mode is currently disabled on MS Windows (hopefully this will be fixed soon). Please keep an eye out for updated versions of GRASS. In the meantime you can use \"NVIZ\" from the File menu."
 msgstr ""
 
 #: ../gui/wxpython/gui_modules/toolbars.py:219
@@ -8910,10 +8509,7 @@ msgid "Vector digitizer not available"
 msgstr "Vektör sayısallaştırma aracı"
 
 #: ../gui/wxpython/gui_modules/toolbars.py:228
-msgid ""
-"Note that the wxGUI's vector digitizer is currently disabled (hopefully this "
-"will be fixed soon). Please keep an eye out for updated versions of GRASS. "
-"In the meantime you can use \"v.digit\" from the Develop Vector menu."
+msgid "Note that the wxGUI's vector digitizer is currently disabled (hopefully this will be fixed soon). Please keep an eye out for updated versions of GRASS. In the meantime you can use \"v.digit\" from the Develop Vector menu."
 msgstr ""
 
 #: ../gui/wxpython/gui_modules/toolbars.py:421
@@ -8993,9 +8589,7 @@ msgstr "Değişiklikler kaydedilsin mi?"
 #: ../gui/wxpython/gui_modules/toolbars.py:1212
 #, python-format
 msgid "Please wait, closing and rebuilding topology of vector map <%s>..."
-msgstr ""
-"Lütfen bekleyin, <%s> vektör haritasının topolojisi kapatılıyor ve yeniden "
-"oluşturuluyor..."
+msgstr "Lütfen bekleyin, <%s> vektör haritasının topolojisi kapatılıyor ve yeniden oluşturuluyor..."
 
 #: ../gui/wxpython/gui_modules/toolbars.py:1223
 #, fuzzy, python-format
@@ -9048,9 +8642,7 @@ msgid ""
 msgstr "<%s> vektör haritası büyütülemiyor."
 
 #: ../gui/wxpython/gui_modules/render.py:661
-msgid ""
-"Unable to get current geographic extent. Force quiting wxGUI. Please run "
-"manually g.region to fix the problem."
+msgid "Unable to get current geographic extent. Force quiting wxGUI. Please run manually g.region to fix the problem."
 msgstr ""
 
 #: ../gui/wxpython/gui_modules/render.py:945
@@ -9079,9 +8671,7 @@ msgstr "Veri yükleniyor..."
 
 #: ../gui/wxpython/gui_modules/dbm.py:154
 #, python-format
-msgid ""
-"Attribute table <%s> not found. For creating the table switch to 'Manage "
-"layers' tab."
+msgid "Attribute table <%s> not found. For creating the table switch to 'Manage layers' tab."
 msgstr ""
 
 #: ../gui/wxpython/gui_modules/dbm.py:165
@@ -9115,8 +8705,7 @@ msgstr "Bilinmeyen"
 #: ../gui/wxpython/gui_modules/dbm.py:307
 #, python-format
 msgid ""
-"Error loading attribute data. Record number: %(rec)d. Unable to convert "
-"value '%(val)s' in key column (%(key)s) to integer.\n"
+"Error loading attribute data. Record number: %(rec)d. Unable to convert value '%(val)s' in key column (%(key)s) to integer.\n"
 "\n"
 "Details: %(detail)s"
 msgstr ""
@@ -9181,12 +8770,8 @@ msgstr "GRASS CBS Öznitelik Tablo Yöneticisi"
 
 #: ../gui/wxpython/gui_modules/dbm.py:590
 #, python-format
-msgid ""
-"Database connection for vector map <%s> is not defined in DB file. You can "
-"define new connection in 'Manage layers' tab."
-msgstr ""
-"VT dosyasında <%s> vektör haritası için veritabanı bağlantısı belirlenemedi. "
-"Katmanları yönetme sekmesinde yeni bir bağlantı belirleyebilirsiniz."
+msgid "Database connection for vector map <%s> is not defined in DB file. You can define new connection in 'Manage layers' tab."
+msgstr "VT dosyasında <%s> vektör haritası için veritabanı bağlantısı belirlenemedi. Katmanları yönetme sekmesinde yeni bir bağlantı belirleyebilirsiniz."
 
 #: ../gui/wxpython/gui_modules/dbm.py:594
 msgid "Attribute Table Manager"
@@ -9334,12 +8919,8 @@ msgstr "Seçileni katmanı sil"
 
 #: ../gui/wxpython/gui_modules/dbm.py:1227
 #, python-format
-msgid ""
-"All data records (%d) will permanently deleted from table. Do you want to "
-"delete them?"
-msgstr ""
-"Tüm (%d) veri kayıtları tablodan kalıcı olarak silinecek. Onları silmek "
-"istiyormusunuz?"
+msgid "All data records (%d) will permanently deleted from table. Do you want to delete them?"
+msgstr "Tüm (%d) veri kayıtları tablodan kalıcı olarak silinecek. Onları silmek istiyormusunuz?"
 
 #: ../gui/wxpython/gui_modules/dbm.py:1373
 #, python-format
@@ -9375,16 +8956,12 @@ msgstr ""
 
 #: ../gui/wxpython/gui_modules/dbm.py:1612
 #, python-format
-msgid ""
-"Unable to rename column <%(column)s> to <%(columnTo)s>. Column already "
-"exists in the table <%(table)s>."
+msgid "Unable to rename column <%(column)s> to <%(columnTo)s>. Column already exists in the table <%(table)s>."
 msgstr ""
 
 #: ../gui/wxpython/gui_modules/dbm.py:1629
 #, python-format
-msgid ""
-"Unable to rename column. Column <%(column)s> doesn't exist in the table <%"
-"(table)s>."
+msgid "Unable to rename column. Column <%(column)s> doesn't exist in the table <%(table)s>."
 msgstr ""
 
 #: ../gui/wxpython/gui_modules/dbm.py:1657
@@ -9397,9 +8974,7 @@ msgstr "Tüm sütunları kaldır"
 
 #: ../gui/wxpython/gui_modules/dbm.py:1675
 #, python-format
-msgid ""
-"Selected column '%s' will PERMANENTLY removed from table. Do you want to "
-"drop the column?"
+msgid "Selected column '%s' will PERMANENTLY removed from table. Do you want to drop the column?"
 msgstr ""
 
 #: ../gui/wxpython/gui_modules/dbm.py:1678
@@ -9471,9 +9046,7 @@ msgid "Key"
 msgstr "Anahtar"
 
 #: ../gui/wxpython/gui_modules/dbm.py:2358
-msgid ""
-"Unknown default DB connection. Please define DB connection using db.connect "
-"module."
+msgid "Unknown default DB connection. Please define DB connection using db.connect module."
 msgstr ""
 
 #: ../gui/wxpython/gui_modules/dbm.py:2379
@@ -9559,9 +9132,7 @@ msgstr ""
 
 #: ../gui/wxpython/gui_modules/dbm.py:2901
 #, python-format
-msgid ""
-"Unable to add new layer to vector map <%(vector)s>. Layer %(layer)d already "
-"exists."
+msgid "Unable to add new layer to vector map <%(vector)s>. Layer %(layer)d already exists."
 msgstr ""
 
 #: ../gui/wxpython/gui_modules/gdialogs.py:108
@@ -9605,12 +9176,8 @@ msgstr "<%s> vektör haritası oluşturulamıyor."
 
 #: ../gui/wxpython/gui_modules/gdialogs.py:272
 #, python-format
-msgid ""
-"Vector map <%s> already exists in the current mapset. Do you want to "
-"overwrite it?"
-msgstr ""
-"<%s> vektör harita geçerli harita takımında zaten var. Üzerine yazmak "
-"istermisin?"
+msgid "Vector map <%s> already exists in the current mapset. Do you want to overwrite it?"
+msgstr "<%s> vektör harita geçerli harita takımında zaten var. Üzerine yazmak istermisin?"
 
 #: ../gui/wxpython/gui_modules/gdialogs.py:275
 msgid "Overwrite?"
@@ -9775,11 +9342,7 @@ msgid "Template:"
 msgstr ""
 
 #: ../gui/wxpython/gui_modules/profile.py:34
-msgid ""
-"This module requires the NumPy module, which could not be imported. It "
-"probably is not installed (it's not part of the standard Python "
-"distribution). See the Numeric Python site (http://numpy.scipy.org) for "
-"information on downloading source or binaries."
+msgid "This module requires the NumPy module, which could not be imported. It probably is not installed (it's not part of the standard Python distribution). See the Numeric Python site (http://numpy.scipy.org) for information on downloading source or binaries."
 msgstr ""
 
 #: ../gui/wxpython/gui_modules/profile.py:56
@@ -10203,9 +9766,7 @@ msgid "Close dialog on finish"
 msgstr "Bittiğinde diyaloğu kapat"
 
 #: ../gui/wxpython/gui_modules/menuform.py:835
-msgid ""
-"Close dialog when command is successfully finished. Change this settings in "
-"Preferences dialog ('Command' tab)."
+msgid "Close dialog when command is successfully finished. Change this settings in Preferences dialog ('Command' tab)."
 msgstr ""
 
 #: ../gui/wxpython/gui_modules/menuform.py:1003
@@ -10552,9 +10113,7 @@ msgid "Save current window layout as default"
 msgstr "Geçerli pencere düzenini varsayılan olarak kaydet"
 
 #: ../gui/wxpython/gui_modules/preferences.py:1140
-msgid ""
-"Save current position and size of Layer Manager window and opened Map "
-"Display window(s) and use as default for next sessions."
+msgid "Save current position and size of Layer Manager window and opened Map Display window(s) and use as default for next sessions."
 msgstr ""
 
 #: ../gui/wxpython/gui_modules/preferences.py:1153
@@ -10687,12 +10246,8 @@ msgid "EPSG file:"
 msgstr "EPSG Kodu:"
 
 #: ../gui/wxpython/gui_modules/preferences.py:1711
-msgid ""
-"Load EPSG codes (be patient), enter EPSG code or insert Proj.4 string "
-"directly."
-msgstr ""
-"EPSG kodlarını yükle (sabırlı ol), EPSG kodunu gir veya doğrudan Proj.4'ü "
-"ekle.         "
+msgid "Load EPSG codes (be patient), enter EPSG code or insert Proj.4 string directly."
+msgstr "EPSG kodlarını yükle (sabırlı ol), EPSG kodunu gir veya doğrudan Proj.4'ü ekle.         "
 
 #: ../gui/wxpython/gui_modules/preferences.py:1719
 #, fuzzy
@@ -10739,12 +10294,8 @@ msgid "Icon theme:"
 msgstr "Simge teması:"
 
 #: ../gui/wxpython/gui_modules/preferences.py:1880
-msgid ""
-"Note: For changing the icon theme, you must save the settings and restart "
-"this GUI."
-msgstr ""
-"Not: İkon temasını değiştirmek için, ayarları kaydetmelisin ve grafik "
-"kullanıcı arayüzünü yeniden başlatmalısın. "
+msgid "Note: For changing the icon theme, you must save the settings and restart this GUI."
+msgstr "Not: İkon temasını değiştirmek için, ayarları kaydetmelisin ve grafik kullanıcı arayüzünü yeniden başlatmalısın. "
 
 #: ../gui/wxpython/gui_modules/preferences.py:1909
 #, fuzzy, python-format
@@ -10786,7 +10337,6 @@ msgid "Manage access to mapsets"
 msgstr "Geçerli harita takımını değiştir"
 
 #: ../gui/wxpython/gui_modules/preferences.py:2240
-#, fuzzy
 msgid ""
 "Check a mapset to make it accessible, uncheck it to hide it.\n"
 "  Notes:\n"
@@ -10794,10 +10344,6 @@ msgid ""
 "    - You may only write to the current mapset.\n"
 "    - You may only write to mapsets which you own."
 msgstr ""
-"Harita takımına erişebilmek için onayla, gizlemek için onayı kaldır.%s "
-"Notlar:%s    - Güncel harita takımına daima ulaşılabilir.%s    - Sadece "
-"güncel harita takımına yazabilirsin.%s    - Sadece kendi harita takımlarına "
-"yazabilirsin."
 
 #: ../gui/wxpython/gui_modules/preferences.py:2314
 msgid "Mapset"
@@ -11002,13 +10548,11 @@ msgstr ""
 #: ../gui/wxpython/gis_set.py:524
 #, python-format
 msgid ""
-"Do you want to continue with deleting mapset <%(mapset)s> from location <%"
-"(location)s>?\n"
+"Do you want to continue with deleting mapset <%(mapset)s> from location <%(location)s>?\n"
 "\n"
 "ALL MAPS included in this mapset will be PERMANENTLY DELETED!"
 msgstr ""
-"Harita takımını <%(mapset)s> mevkisinden <%(location)s>silmeye devam etmek "
-"istiyormusun?\n"
+"Harita takımını <%(mapset)s> mevkisinden <%(location)s>silmeye devam etmek istiyormusun?\n"
 "\n"
 "Bu harita takımındaki TÜM HARİTALAR KALICI OLARAK silinecektir!"
 
@@ -11070,14 +10614,245 @@ msgid "Starting GRASS for the first time"
 msgstr "GRASS ilk kez başlatılıyor"
 
 #: ../gui/wxpython/gis_set.py:839
-msgid ""
-"GRASS needs a directory in which to store its data. Create one now if you "
-"have not already done so. A popular choice is \"grassdata\", located in your "
-"home directory."
-msgstr ""
-"GRASS'ın verilerini depolamak için bir dizine ihtiyacı vardır. Halihazırda "
-"böyle bir dizin yoksa şimdi oluştur. Uygun seçim \"grassdata\" , ana "
-"dizininde yerleşmiştir."
+msgid "GRASS needs a directory in which to store its data. Create one now if you have not already done so. A popular choice is \"grassdata\", located in your home directory."
+msgstr "GRASS'ın verilerini depolamak için bir dizine ihtiyacı vardır. Halihazırda böyle bir dizin yoksa şimdi oluştur. Uygun seçim \"grassdata\" , ana dizininde yerleşmiştir."
+
+msgid "Convert OGR vector layers to GRASS vector map."
+msgstr "OGR vektör katmanlarını GRASS vektör haritasına dönüştür."
+
+msgid "Old GRASS vector import"
+msgstr "Eski GRASS vektör haritasını içe aktar"
+
+#, fuzzy
+msgid "Converts a binary GRASS vector map into a GRASS raster map ."
+msgstr "İkili GRASS vektör harita katmanını GRASS raster harita katmanına dönüştürür."
+
+#, fuzzy
+msgid "GRASS GIS Map Calculator (3D raster)"
+msgstr "GRASS %s Harita Hesaplayıcı"
+
+msgid "Import raster map"
+msgstr "Raster haritayı içe aktar"
+
+msgid "Import vector map"
+msgstr "Vektör haritayı içe aktar"
+
+#, fuzzy
+msgid "C&onfig"
+msgstr "Yapılandırma"
+
+#, fuzzy
+msgid "3D Raster map"
+msgstr "Raster harita"
+
+#, fuzzy
+msgid "Error in command execution '%s'"
+msgstr "%s komutu çalıştırılmasında hata"
+
+#, fuzzy
+msgid "module"
+msgstr "Kod"
+
+#, fuzzy
+msgid "Select GRASS module"
+msgstr "Proje mevkisi ve harita takımını seç"
+
+#, fuzzy
+msgid "Color settings"
+msgstr "Vektör ayarlar"
+
+#, fuzzy
+msgid "Unable to get list of available mapsets."
+msgstr "harita takımı silinemiyor"
+
+#, fuzzy
+msgid "Unable to get list of accessible mapsets."
+msgstr "harita takımı silinemiyor"
+
+#, fuzzy
+msgid "Menu tree window"
+msgstr "Kayar pencere"
+
+#, fuzzy
+msgid "label"
+msgstr "Etiket ekle"
+
+#, fuzzy
+msgid "help"
+msgstr "Yardım"
+
+#, fuzzy
+msgid "Run"
+msgstr "Çalıştı&r"
+
+#, fuzzy
+msgid "Saved NVIZ Settings"
+msgstr "Geçerli ayarları kaydet?"
+
+#, fuzzy
+msgid "Load and apply settings from user settings file"
+msgstr "Diyaloğu kapat ve ayarları kullanıcı ayar dosyasına kaydet"
+
+#, fuzzy
+msgid "Creates a lines vector map from an ASCII x,y points file."
+msgstr "ASCII nokta dosyasından veya ASCII vektör dosyadan vektör harita oluşturur."
+
+msgid "GRASS SQL Builder: %s"
+msgstr "GRASS SQL Oluşturucu. %s"
+
+msgid "Import raster data using GDAL"
+msgstr "Raster haritayı GDAL kullanarak içe aktar"
+
+#, fuzzy
+msgid "Creates a new vectors as a read-only link to OGR layers"
+msgstr "Diğer vektör harita katmanlarını birleştirirek yeni vektör harita katmanı oluştur"
+
+msgid "Vector digitizer error"
+msgstr "Vektör sayısallaştırma hatası"
+
+msgid "Load"
+msgstr "Yükle"
+
+msgid "Writing current settings to workspace file failed (%s)."
+msgstr "Geçerli ayarların çalışma alanı dosyasına kaydında hata (%s)."
+
+#, fuzzy
+msgid "Add various vector-based map layer"
+msgstr "Vektör harita katmanı ekle"
+
+#, fuzzy
+msgid "COPYING file missing"
+msgstr "EPSG kodu kayıp."
+
+msgid "Create new workspace file"
+msgstr "Yeni çalışma alanı dosyası oluştur"
+
+msgid "Load map layers into workspace"
+msgstr "Harita katmanlarını çalışma alanına yükle"
+
+msgid "Open existing workspace file"
+msgstr "Varolan çalışma alanı dosyasını aç"
+
+msgid "Save current workspace to file"
+msgstr "Geçerli çalışma alanını dosyaya kaydet"
+
+msgid "Add raster map layer"
+msgstr "Raster harita katmanı ekle"
+
+msgid "Add vector map layer"
+msgstr "Vektör harita katmanı ekle"
+
+msgid "Add layer group"
+msgstr "Katman grubu ekle"
+
+msgid "Delete selected layer"
+msgstr "Seçileni katmanı sil"
+
+msgid "Add RGB layer"
+msgstr "KYM katman ekle"
+
+msgid "Add HIS layer"
+msgstr "HIS katman ekle"
+
+msgid "Reload GCPs from selected POINTS file"
+msgstr "YKN'nı seçilen NOKTA dosyasından yeniden yükle"
+
+msgid "Show Nviz settings dialog"
+msgstr "Nviz ayarları diyaloğunu göster"
+
+msgid "Downloads and imports data from WMS servers."
+msgstr "WMS sunucularından veriyi indirir ve içe aktarır."
+
+#, fuzzy
+msgid "Matlab-ASCII or Mapgen import"
+msgstr "Matlab and MapGen içe aktar"
+
+#, fuzzy
+msgid "Import Mapgen or Matlab-ASCII vector maps into GRASS."
+msgstr "Matlab and MapGenvektör haritalarını GRASS'a içe aktar"
+
+msgid "Export GRASS raster as non-georeferenced PNG image format."
+msgstr "GRASS rasterı coğrafi referanssız PNG görüntü biçimi olarak dışa aktar."
+
+msgid "Raster"
+msgstr "Raster"
+
+msgid "Create a MASK for limiting raster operation"
+msgstr "Raster işlemleri sınırlandırmak için MASKE oluştur"
+
+msgid "Imagery"
+msgstr "Görüntü"
+
+msgid "Volumes"
+msgstr "Hacimler"
+
+msgid "GRASS GIS help"
+msgstr "GRASS CBS Yardım"
+
+msgid "Nviz properties"
+msgstr "Nviz özellikleri"
+
+#, fuzzy
+msgid "3D View Tools"
+msgstr "Nviz araçları"
+
+msgid "fine:"
+msgstr "hassas:"
+
+msgid "Icon size:"
+msgstr "Simge boyutu:"
+
+msgid "width:"
+msgstr "genişlik:"
+
+msgid "symbol:"
+msgstr "sembol:"
+
+msgid "color:"
+msgstr "renk:"
+
+msgid "Layer properties"
+msgstr "Katman özellikleri"
+
+msgid "Vector map <%s> is 3D"
+msgstr "<%s> vektör haritası 3B"
+
+msgid "Vector map <%s> is 2D"
+msgstr "<%s> vektör haritası 2B"
+
+msgid "Unable to open file"
+msgstr "Dosya açılamıyor"
+
+msgid "Parameter not found: %s"
+msgstr "Parametre bulunmadı: %s"
+
+msgid "Close this window without executing the command"
+msgstr "Komutu çalıştırmadan bu pencereyi kapat"
+
+msgid "Show manual page of the command"
+msgstr "Komut kılavuz sayfasını göster"
+
+msgid "Run the command"
+msgstr "Komutu çalıştır"
+
+msgid "Copy the current command string to the clipboard"
+msgstr "Geçerli komut dizesini panoya kopyala"
+
+msgid "Valid range"
+msgstr "Geçerli aralık"
+
+msgid "User GUI settings"
+msgstr "Kullanıcı Arayüz ayarları"
+
+msgid "Create mapset"
+msgstr "Harita takımı oluştur"
+
+msgid "List of categories"
+msgstr "Kategori listesi"
+
+#, fuzzy
+msgid "Imports Mapgen or Matlab vector maps into GRASS."
+msgstr "Matlab and MapGenvektör haritalarını GRASS'a içe aktar"
 
 #~ msgid "Attribute management is available only for vector maps."
 #~ msgstr "Öznitelik yönetimi sadece vektör haritalar için olanaklıdır."
@@ -11142,7 +10917,7 @@ msgstr ""
 
 #, fuzzy
 #~ msgid "Show Help"
-#~ msgstr "GRASS CBS Yardım"
+#~ msgstr "Çizgileri göster"
 
 #, fuzzy
 #~ msgid "Delete layer"
@@ -11152,9 +10927,7 @@ msgstr ""
 #~ msgstr "&Katmanı sil"
 
 #~ msgid "Import GDAL supported raster file into a binary raster map layer."
-#~ msgstr ""
-#~ "GDAL desteğindeki raster dosyayı ikili raster harita katmanı olarak içe "
-#~ "aktar"
+#~ msgstr "GDAL desteğindeki raster dosyayı ikili raster harita katmanı olarak içe aktar"
 
 #, fuzzy
 #~ msgid "Bulk import of raster data"
@@ -11162,30 +10935,19 @@ msgstr ""
 
 #, fuzzy
 #~ msgid "Converts multiple GDAL supported layers to GRASS raster maps."
-#~ msgstr ""
-#~ "Seçilen GDAL katmanlarını r.in.gdal kullanarak GRASS raster haritasına "
-#~ "dönüştürür."
+#~ msgstr "Seçilen GDAL katmanlarını r.in.gdal kullanarak GRASS raster haritasına dönüştürür."
 
 #, fuzzy
 #~ msgid "Link GDAL supported raster file to a binary raster map layer."
-#~ msgstr ""
-#~ "GDAL desteğindeki raster dosyayı ikili raster harita katmanı olarak içe "
-#~ "aktar"
+#~ msgstr "GDAL desteğindeki raster dosyayı ikili raster harita katmanı olarak içe aktar"
 
 #, fuzzy
 #~ msgid "Bulk link of raster data"
 #~ msgstr "Temel raster değişim verisi"
 
 #, fuzzy
-#~ msgid ""
-#~ "Link multiple GDAL supported raster maps as pseudo GRASS raster map "
-#~ "layers."
-#~ msgstr ""
-#~ "GDAL desteğindeki raster dosyayı ikili raster harita katmanı olarak içe "
-#~ "aktar"
-
-#~ msgid "Convert OGR vector layers to GRASS vector map."
-#~ msgstr "OGR vektör katmanlarını GRASS vektör haritasına dönüştür."
+#~ msgid "Link multiple GDAL supported raster maps as pseudo GRASS raster map layers."
+#~ msgstr "GDAL desteğindeki raster dosyayı ikili raster harita katmanı olarak içe aktar"
 
 #, fuzzy
 #~ msgid "Bulk import of vector data"
@@ -11193,44 +10955,26 @@ msgstr ""
 
 #, fuzzy
 #~ msgid "Converts selected OGR layers to GRASS vector maps using v.in.ogr"
-#~ msgstr ""
-#~ "Seçilen OGR katmanlarını v.in.ogr kullanarak GRASS vektör haritasına "
-#~ "dönüştürür."
+#~ msgstr "Seçilen OGR katmanlarını v.in.ogr kullanarak GRASS vektör haritasına dönüştürür."
 
 #, fuzzy
 #~ msgid "Creates a new vector as a read-only link to OGR layer."
-#~ msgstr ""
-#~ "Diğer vektör harita katmanlarını birleştirirek yeni vektör harita katmanı "
-#~ "oluştur"
+#~ msgstr "Diğer vektör harita katmanlarını birleştirirek yeni vektör harita katmanı oluştur"
 
 #, fuzzy
 #~ msgid "Bulk link of vector data"
 #~ msgstr "Temel vektör değişim verisi"
 
 #, fuzzy
-#~ msgid ""
-#~ "Creates multiple new pseduo-vector maps as a read-only links using OGR."
-#~ msgstr ""
-#~ "Diğer vektör harita katmanlarını birleştirirek yeni vektör harita katmanı "
-#~ "oluştur"
-
-#~ msgid "Old GRASS vector import"
-#~ msgstr "Eski GRASS vektör haritasını içe aktar"
+#~ msgid "Creates multiple new pseduo-vector maps as a read-only links using OGR."
+#~ msgstr "Diğer vektör harita katmanlarını birleştirirek yeni vektör harita katmanı oluştur"
 
 #~ msgid "Bulk import of DXF"
 #~ msgstr "DXF'i toplu olarak içe aktar."
 
 #, fuzzy
 #~ msgid "Converts multiple DXF layers to GRASS vector maps."
-#~ msgstr ""
-#~ "Seçilen DXF katmanlarını GRASS vektör haritasına dönüştürür (using v.in."
-#~ "dxf)."
-
-#, fuzzy
-#~ msgid "Converts a binary GRASS vector map into a GRASS raster map ."
-#~ msgstr ""
-#~ "İkili GRASS vektör harita katmanını GRASS raster harita katmanına "
-#~ "dönüştürür."
+#~ msgstr "Seçilen DXF katmanlarını GRASS vektör haritasına dönüştürür (using v.in.dxf)."
 
 #~ msgid "Georectify raster and vector maps"
 #~ msgstr "Raster ve vektör haritaları coğrafi referanslama"
@@ -11245,13 +10989,8 @@ msgstr ""
 #~ msgid "Reclassify interactively"
 #~ msgstr "Etkileşimli olarak yeniden sınıflandır"
 
-#~ msgid ""
-#~ "Creates a new map layer whose category values are based upon a "
-#~ "reclassification of the categories in an existing raster map layer."
-#~ msgstr ""
-#~ "Varolan raster harita katmanı kategori değerlerinin yeniden "
-#~ "sınıflandırılmasına dayanan kategori değerleri içeren harita katmanı "
-#~ "oluşturur."
+#~ msgid "Creates a new map layer whose category values are based upon a reclassification of the categories in an existing raster map layer."
+#~ msgstr "Varolan raster harita katmanı kategori değerlerinin yeniden sınıflandırılmasına dayanan kategori değerleri içeren harita katmanı oluşturur."
 
 #~ msgid "Reclassify using rules file"
 #~ msgstr "Kural dosyasına göre yeniden sınıflandır"
@@ -11383,89 +11122,11 @@ msgstr ""
 #~ msgstr "Konum düzeltme ayarları '%s' dosyasına kaydedildi. "
 
 #, fuzzy
-#~ msgid "GRASS GIS Map Calculator (3D raster)"
-#~ msgstr "GRASS %s Harita Hesaplayıcı"
-
-#~ msgid "Import raster map"
-#~ msgstr "Raster haritayı içe aktar"
-
-#~ msgid "Import vector map"
-#~ msgstr "Vektör haritayı içe aktar"
-
-#, fuzzy
-#~ msgid "C&onfig"
-#~ msgstr "Yapılandırma"
-
-#, fuzzy
 #~ msgid "Removes a table from database."
 #~ msgstr "Veritabanından üret"
 
-#, fuzzy
-#~ msgid "3D Raster map"
-#~ msgstr "Raster harita"
-
-#, fuzzy
-#~ msgid "Error in command execution '%s'"
-#~ msgstr "%s komutu çalıştırılmasında hata"
-
-#, fuzzy
-#~ msgid "module"
-#~ msgstr "Kod"
-
-#, fuzzy
-#~ msgid "Select GRASS module"
-#~ msgstr "Proje mevkisi ve harita takımını seç"
-
-#, fuzzy
-#~ msgid "Color settings"
-#~ msgstr "Vektör ayarlar"
-
-#, fuzzy
-#~ msgid "Unable to get list of available mapsets."
-#~ msgstr "harita takımı silinemiyor"
-
-#, fuzzy
-#~ msgid "Unable to get list of accessible mapsets."
-#~ msgstr "harita takımı silinemiyor"
-
-#, fuzzy
-#~ msgid "Menu tree window"
-#~ msgstr "Kayar pencere"
-
-#, fuzzy
-#~ msgid "label"
-#~ msgstr "Etiket ekle"
-
-#, fuzzy
-#~ msgid "help"
-#~ msgstr "Yardım"
-
-#, fuzzy
-#~ msgid "Run"
-#~ msgstr "Çalıştı&r"
-
-#, fuzzy
-#~ msgid "Saved NVIZ Settings"
-#~ msgstr "Geçerli ayarları kaydet?"
-
-#, fuzzy
-#~ msgid "Load and apply settings from user settings file"
-#~ msgstr "Diyaloğu kapat ve ayarları kullanıcı ayar dosyasına kaydet"
-
-#, fuzzy
-#~ msgid "Creates a lines vector map from an ASCII x,y points file."
-#~ msgstr ""
-#~ "ASCII nokta dosyasından veya ASCII vektör dosyadan vektör harita "
-#~ "oluşturur."
-
-#~ msgid "GRASS SQL Builder: %s"
-#~ msgstr "GRASS SQL Oluşturucu. %s"
-
 #~ msgid "Redraw GCP markers in map displays"
 #~ msgstr "Harita görüntüsündeki YKN işaretlerini yeniden çiz"
-
-#~ msgid "Import raster data using GDAL"
-#~ msgstr "Raster haritayı GDAL kullanarak içe aktar"
 
 #~ msgid "Multiple raster data import using GDAL"
 #~ msgstr "GDAL kullanarak çeşitli raster veriyi içe aktar"
@@ -11491,12 +11152,6 @@ msgstr ""
 #~ msgid "Multiple link to OGR"
 #~ msgstr "OGR'ye bağlantı"
 
-#, fuzzy
-#~ msgid "Creates a new vectors as a read-only link to OGR layers"
-#~ msgstr ""
-#~ "Diğer vektör harita katmanlarını birleştirirek yeni vektör harita katmanı "
-#~ "oluştur"
-
 #~ msgid "Multiple DXF layers import"
 #~ msgstr "Çoklu DXF katmanı içe aktar"
 
@@ -11519,9 +11174,6 @@ msgstr ""
 #~ msgid "Preferences error"
 #~ msgstr "Tercih hatası"
 
-#~ msgid "Vector digitizer error"
-#~ msgstr "Vektör sayısallaştırma hatası"
-
 #~ msgid "Attribute table manager error"
 #~ msgstr "Öznitelik tablo yönetici hatası"
 
@@ -11543,9 +11195,6 @@ msgstr ""
 
 #~ msgid "Set ground control points (GCPs)"
 #~ msgstr "Yer kontrol noktalarını (YKN) ayarla"
-
-#~ msgid "Load"
-#~ msgstr "Yükle"
 
 #~ msgid "Default"
 #~ msgstr "Varsayılan"
@@ -11661,24 +11310,16 @@ msgstr ""
 #~ msgstr "g.remove için düzenli ifade veya joker karakter kullan"
 
 #~ msgid "Reclassify raster categories interactively by entering reclass rules"
-#~ msgstr ""
-#~ "Raster kategorilerini yeniden sınıflandırma kurallarını etkileşimli "
-#~ "olarak girerek yeniden sınıflandır"
+#~ msgstr "Raster kategorilerini yeniden sınıflandırma kurallarını etkileşimli olarak girerek yeniden sınıflandır"
 
-#~ msgid ""
-#~ "Recode raster categories interactively by entering recode rules (create "
-#~ "new raster map)"
-#~ msgstr ""
-#~ "Raster kategorilerini yeniden kodlama kurallarını etkileşimli olarak "
-#~ "girerek yeniden kodla (yeni raster harita oluştur)"
+#~ msgid "Recode raster categories interactively by entering recode rules (create new raster map)"
+#~ msgstr "Raster kategorilerini yeniden kodlama kurallarını etkileşimli olarak girerek yeniden kodla (yeni raster harita oluştur)"
 
 #~ msgid "Generalization"
 #~ msgstr "Genelleştirme"
 
 #~ msgid "Reclassify vector objects interactively by entering SQL rules"
-#~ msgstr ""
-#~ "Vektör objeleri SQL kurallarını kullanarak etkileşimli olarak yeniden "
-#~ "sınıflandır"
+#~ msgstr "Vektör objeleri SQL kurallarını kullanarak etkileşimli olarak yeniden sınıflandır"
 
 #~ msgid "Basic RS processing"
 #~ msgstr "Temel UA işlemleri"
@@ -11689,12 +11330,8 @@ msgstr ""
 #~ msgid "14 types of vegetation Indices."
 #~ msgstr "14 vejetasyon indis tipi"
 
-#~ msgid ""
-#~ "Classification is based on the spectral signature information generated "
-#~ "by either i.cluster, i.class, or i.gensig."
-#~ msgstr ""
-#~ "Sınıflandırma i.cluster, i.class veya i.gensig ile oluşturulan spektral "
-#~ "doku bilgisine dayanır."
+#~ msgid "Classification is based on the spectral signature information generated by either i.cluster, i.class, or i.gensig."
+#~ msgstr "Sınıflandırma i.cluster, i.class veya i.gensig ile oluşturulan spektral doku bilgisine dayanır."
 
 #~ msgid "Selects data from table."
 #~ msgstr "Tablodan veri seç."
@@ -11709,8 +11346,7 @@ msgstr ""
 #~ msgstr "Yeni çalışma alanı"
 
 #~ msgid "Create new workspace file (erase current workspace settings first)"
-#~ msgstr ""
-#~ "Yeni çalışma alanı dosyası oluştur (önce geçerli çalışma ayarlarını sil)"
+#~ msgstr "Yeni çalışma alanı dosyası oluştur (önce geçerli çalışma ayarlarını sil)"
 
 #~ msgid "Open existing workspace"
 #~ msgstr "Varolan çalışma alanını aç"
@@ -11731,14 +11367,8 @@ msgstr ""
 #~ msgid "Digitize raster map"
 #~ msgstr "Raster harita sayısallaştır"
 
-#~ msgid ""
-#~ "Available drivers: ESRI Shapefile,MapInfo File,UK .NTF,SDTS,TIGER,S57,DGN,"
-#~ "VRT,REC,Memory,BNA,CSV,GML,GPX,KML,GeoJSON,GMT,SQLite,ODBC,PGeo,"
-#~ "PostgreSQL,AVCBin"
-#~ msgstr ""
-#~ "Varolan sürücüler: ESRI Shapefile,MapInfo File,UK .NTF,SDTS,TIGER,S57,DGN,"
-#~ "VRT,REC,Memory,BNA,CSV,GML,GPX,KML,GeoJSON,GMT,SQLite,ODBC,PGeo,"
-#~ "PostgreSQL,AVCBin"
+#~ msgid "Available drivers: ESRI Shapefile,MapInfo File,UK .NTF,SDTS,TIGER,S57,DGN,VRT,REC,Memory,BNA,CSV,GML,GPX,KML,GeoJSON,GMT,SQLite,ODBC,PGeo,PostgreSQL,AVCBin"
+#~ msgstr "Varolan sürücüler: ESRI Shapefile,MapInfo File,UK .NTF,SDTS,TIGER,S57,DGN,VRT,REC,Memory,BNA,CSV,GML,GPX,KML,GeoJSON,GMT,SQLite,ODBC,PGeo,PostgreSQL,AVCBin"
 
 #~ msgid "Ortho Photo rectification"
 #~ msgstr "Orto  Foto Düzeltme"
@@ -11788,75 +11418,14 @@ msgstr ""
 #~ msgid "Witdh:"
 #~ msgstr "Genişlik:"
 
-#~ msgid "Writing current settings to workspace file failed (%s)."
-#~ msgstr "Geçerli ayarların çalışma alanı dosyasına kaydında hata (%s)."
-
 #, fuzzy
 #~ msgid "GRASS GIS Raster Map Calculator (3D raster)"
 #~ msgstr "GRASS %s Harita Hesaplayıcı"
 
-#, fuzzy
-#~ msgid "Add various vector-based map layer"
-#~ msgstr "Vektör harita katmanı ekle"
-
-#, fuzzy
-#~ msgid "COPYING file missing"
-#~ msgstr "EPSG kodu kayıp."
-
-#~ msgid "Create new workspace file"
-#~ msgstr "Yeni çalışma alanı dosyası oluştur"
-
-#~ msgid "Load map layers into workspace"
-#~ msgstr "Harita katmanlarını çalışma alanına yükle"
-
-#~ msgid "Open existing workspace file"
-#~ msgstr "Varolan çalışma alanı dosyasını aç"
-
-#~ msgid "Save current workspace to file"
-#~ msgstr "Geçerli çalışma alanını dosyaya kaydet"
-
-#~ msgid "Add raster map layer"
-#~ msgstr "Raster harita katmanı ekle"
-
-#~ msgid "Add vector map layer"
-#~ msgstr "Vektör harita katmanı ekle"
-
-#~ msgid "Add layer group"
-#~ msgstr "Katman grubu ekle"
-
-#~ msgid "Delete selected layer"
-#~ msgstr "Seçileni katmanı sil"
-
-#~ msgid "Add RGB layer"
-#~ msgstr "KYM katman ekle"
-
-#~ msgid "Add HIS layer"
-#~ msgstr "HIS katman ekle"
-
 #~ msgid "Add 3D raster map"
 #~ msgstr "3B raster harita ekle"
 
-#~ msgid "Reload GCPs from selected POINTS file"
-#~ msgstr "YKN'nı seçilen NOKTA dosyasından yeniden yükle"
-
-#~ msgid "Show Nviz settings dialog"
-#~ msgstr "Nviz ayarları diyaloğunu göster"
-
-#~ msgid "Downloads and imports data from WMS servers."
-#~ msgstr "WMS sunucularından veriyi indirir ve içe aktarır."
-
 #, fuzzy
-#~ msgid "Matlab-ASCII or Mapgen import"
-#~ msgstr "Matlab and MapGen içe aktar"
-
-#, fuzzy
-#~ msgid "Import Mapgen or Matlab-ASCII vector maps into GRASS."
-#~ msgstr "Matlab and MapGenvektör haritalarını GRASS'a içe aktar"
-
-#~ msgid "Export GRASS raster as non-georeferenced PNG image format."
-#~ msgstr ""
-#~ "GRASS rasterı coğrafi referanssız PNG görüntü biçimi olarak dışa aktar."
-
 #~ msgid "Converts a raster map into a vector map layer."
 #~ msgstr "Raster vektör haritayı vektör harita katmanına dönüştürür."
 
@@ -11866,29 +11435,11 @@ msgstr ""
 #~ msgid "Config"
 #~ msgstr "Yapılandırma"
 
-#~ msgid "Raster"
-#~ msgstr "Raster"
-
-#~ msgid "Create a MASK for limiting raster operation"
-#~ msgstr "Raster işlemleri sınırlandırmak için MASKE oluştur"
-
-#~ msgid "Imagery"
-#~ msgstr "Görüntü"
-
-#~ msgid "Volumes"
-#~ msgstr "Hacimler"
-
-#~ msgid "GRASS GIS help"
-#~ msgstr "GRASS CBS Yardım"
-
 #~ msgid "GRASS GIS GUI help"
 #~ msgstr "GRASS CBS Arayüz yardımı"
 
 #~ msgid "Map calculator"
 #~ msgstr "Harita hesaplayıcı"
-
-#~ msgid "Nviz properties"
-#~ msgstr "Nviz özellikleri"
 
 #, fuzzy
 #~ msgid "Unable to read EPGS file: '%s'"
@@ -11899,67 +11450,12 @@ msgstr ""
 #~ msgstr "Çözünürlük:"
 
 #, fuzzy
-#~ msgid "3D View Tools"
-#~ msgstr "Nviz araçları"
-
-#~ msgid "fine:"
-#~ msgstr "hassas:"
-
-#~ msgid "Icon size:"
-#~ msgstr "Simge boyutu:"
-
-#~ msgid "width:"
-#~ msgstr "genişlik:"
-
-#~ msgid "symbol:"
-#~ msgstr "sembol:"
-
-#~ msgid "color:"
-#~ msgstr "renk:"
-
-#~ msgid "Layer properties"
-#~ msgstr "Katman özellikleri"
-
-#~ msgid "Vector map <%s> is 3D"
-#~ msgstr "<%s> vektör haritası 3B"
-
-#~ msgid "Vector map <%s> is 2D"
-#~ msgstr "<%s> vektör haritası 2B"
-
-#, fuzzy
 #~ msgid "Error in command execution %s"
 #~ msgstr "%s komutu çalıştırılmasında hata"
-
-#~ msgid "Unable to open file"
-#~ msgstr "Dosya açılamıyor"
 
 #, fuzzy
 #~ msgid "DXF file:"
 #~ msgstr "DXF dosyasını Seç:"
-
-#~ msgid "Parameter not found: %s"
-#~ msgstr "Parametre bulunmadı: %s"
-
-#~ msgid "Close this window without executing the command"
-#~ msgstr "Komutu çalıştırmadan bu pencereyi kapat"
-
-#~ msgid "Show manual page of the command"
-#~ msgstr "Komut kılavuz sayfasını göster"
-
-#~ msgid "Run the command"
-#~ msgstr "Komutu çalıştır"
-
-#~ msgid "Copy the current command string to the clipboard"
-#~ msgstr "Geçerli komut dizesini panoya kopyala"
-
-#~ msgid "Valid range"
-#~ msgstr "Geçerli aralık"
-
-#~ msgid "User GUI settings"
-#~ msgstr "Kullanıcı Arayüz ayarları"
-
-#~ msgid "Create mapset"
-#~ msgstr "Harita takımı oluştur"
 
 #, fuzzy
 #~ msgid "Command %s could not be run"
@@ -11972,9 +11468,6 @@ msgstr ""
 #~ msgid "Save current settings?"
 #~ msgstr "Geçerli ayarları kaydet?"
 
-#~ msgid "List of categories"
-#~ msgstr "Kategori listesi"
-
 #~ msgid "Make null cells opaque"
 #~ msgstr "Boş hücreleri geçirimsiz yap"
 
@@ -11985,12 +11478,8 @@ msgstr ""
 #~ msgid "Emissivity"
 #~ msgstr "Görünürlük"
 
-#~ msgid ""
-#~ "Calculates univariate statistics from a GRASS raster map based on vector "
-#~ "polygons and uploads statistics to new attribute columns."
-#~ msgstr ""
-#~ "GRASS raster haritasından vektör poligonlara göre tek değişkenli "
-#~ "istatistikleri hesaplar ve yeni öznitelik sütunlarına yükler."
+#~ msgid "Calculates univariate statistics from a GRASS raster map based on vector polygons and uploads statistics to new attribute columns."
+#~ msgstr "GRASS raster haritasından vektör poligonlara göre tek değişkenli istatistikleri hesaplar ve yeni öznitelik sütunlarına yükler."
 
 #~ msgid "Nviz toolbar"
 #~ msgstr "Nviz araç çubuğu"
@@ -12017,12 +11506,8 @@ msgstr ""
 #~ msgstr "Matlab and MapGen içe aktar"
 
 #, fuzzy
-#~ msgid ""
-#~ "Converts an ESRI ARC/INFO ascii raster file (GRID) into a GRASS raster "
-#~ "map."
-#~ msgstr ""
-#~ "ESRI ARC/INFO ascii raster dosyasını(GRID) ikili raster hairta katmanına "
-#~ "dönüştür."
+#~ msgid "Converts an ESRI ARC/INFO ascii raster file (GRID) into a GRASS raster map."
+#~ msgstr "ESRI ARC/INFO ascii raster dosyasını(GRID) ikili raster hairta katmanına dönüştür."
 
 #~ msgid "Imports SPOT VGT NDVI data into a raster map."
 #~ msgstr "Raster haritaya SPOT VGT NDVI verisini aktar."
@@ -12045,18 +11530,14 @@ msgstr ""
 
 #, fuzzy
 #~ msgid "Creates a vector map from an ASCII points file or ASCII vector file."
-#~ msgstr ""
-#~ "ASCII nokta dosyasından veya ASCII vektör dosyadan vektör harita "
-#~ "oluşturur."
+#~ msgstr "ASCII nokta dosyasından veya ASCII vektör dosyadan vektör harita oluşturur."
 
 #, fuzzy
 #~ msgid "GPS data import"
 #~ msgstr "GEOnet içe aktar"
 
 #, fuzzy
-#~ msgid ""
-#~ "Import waypoints, routes, and tracks from a GPS receiver or many common "
-#~ "GPS file formats."
+#~ msgid "Import waypoints, routes, and tracks from a GPS receiver or many common GPS file formats."
 #~ msgstr "GARMİN KKS alıcısından vektör haritaya nokta, rota ve izleri aktar."
 
 #, fuzzy
@@ -12064,13 +11545,8 @@ msgstr ""
 #~ msgstr "Matlab and MapGen içe aktar"
 
 #, fuzzy
-#~ msgid "Imports Mapgen or Matlab vector maps into GRASS."
-#~ msgstr "Matlab and MapGenvektör haritalarını GRASS'a içe aktar"
-
-#, fuzzy
 #~ msgid "Converts a 3D ASCII raster text file into a (binary) 3D raster map."
-#~ msgstr ""
-#~ "3B ASCII raster metin dosyasını 3B raster (ikili)harita katmanına dönüştür"
+#~ msgstr "3B ASCII raster metin dosyasını 3B raster (ikili)harita katmanına dönüştür"
 
 #~ msgid "Import 3-dimensional Vis5D files."
 #~ msgstr "3 boyutlu Vis5D dosyalarını içe aktar."
@@ -12081,14 +11557,11 @@ msgstr ""
 
 #, fuzzy
 #~ msgid "Exports GRASS raster map to GRIDATB.FOR map file (TOPMODEL)."
-#~ msgstr ""
-#~ "GRASS raster haritasını GRIDATB.FOR harita dosyası (TOPMODEL) olarak dışa "
-#~ "aktar"
+#~ msgstr "GRASS raster haritasını GRIDATB.FOR harita dosyası (TOPMODEL) olarak dışa aktar"
 
 #, fuzzy
 #~ msgid "Export a GRASS raster map as a non-georeferenced PNG image."
-#~ msgstr ""
-#~ "GRASS rasterı coğrafi referanssız PNG görüntü biçimi olarak dışa aktar."
+#~ msgstr "GRASS rasterı coğrafi referanssız PNG görüntü biçimi olarak dışa aktar."
 
 #, fuzzy
 #~ msgid "Converts a GRASS raster map to a PPM image file."
@@ -12106,11 +11579,8 @@ msgstr ""
 #~ msgid "Exports a GRASS raster map to a 8/24bit TIFF image file."
 #~ msgstr "GRASS raster dosyasını ikili MAT-dosyasına aktar."
 
-#~ msgid ""
-#~ "Exports a raster map to the Virtual Reality Modeling Language (VRML)."
-#~ msgstr ""
-#~ "Raster haritayı Virtual Reality Modeling Language (VRML) e "
-#~ "ver.  ???????????????????????"
+#~ msgid "Exports a raster map to the Virtual Reality Modeling Language (VRML)."
+#~ msgstr "Raster haritayı Virtual Reality Modeling Language (VRML) e ver.  ???????????????????????"
 
 #, fuzzy
 #~ msgid "Converts raster maps into the VTK-ASCII format."
@@ -12122,9 +11592,7 @@ msgstr ""
 
 #, fuzzy
 #~ msgid "Exports a vector map to a GRASS ASCII vector representation."
-#~ msgstr ""
-#~ "İkili GRASS vektör harita katmanını GRASS ASCII vektör haritasına "
-#~ "dönüştürür."
+#~ msgstr "İkili GRASS vektör harita katmanını GRASS ASCII vektör haritasına dönüştürür."
 
 #, fuzzy
 #~ msgid "Exports vector map to DXF file format."
@@ -12155,18 +11623,14 @@ msgstr ""
 
 #, fuzzy
 #~ msgid "Converts a vector map (only points) into a 3D raster map."
-#~ msgstr ""
-#~ "İkili GRASS vektör harita (sadece noktalar) katmanını 3B GRASS raster "
-#~ "harita katmanına dönüştürür."
+#~ msgstr "İkili GRASS vektör harita (sadece noktalar) katmanını 3B GRASS raster harita katmanına dönüştürür."
 
 #, fuzzy
-#~ msgid ""
-#~ "Converts coordinates from one projection to another (cs2cs frontend)."
+#~ msgid "Converts coordinates from one projection to another (cs2cs frontend)."
 #~ msgstr "Koordinatları bir projeksiyondan diğerine dönüştür (cs2cs arayüzü)."
 
 #~ msgid "Tool to maintain the extensions in local GRASS installation."
-#~ msgstr ""
-#~ "***********         GRASS kurulumunda genişletmeleri korumak için araç"
+#~ msgstr "***********         GRASS kurulumunda genişletmeleri korumak için araç"
 
 #, fuzzy
 #~ msgid "Resample using bspline"
@@ -12185,9 +11649,7 @@ msgstr ""
 #~ msgstr "Komşuluk analizi"
 
 #, fuzzy
-#~ msgid ""
-#~ "Calculates category or object oriented statistics (accumulator-based "
-#~ "statistics)."
+#~ msgid "Calculates category or object oriented statistics (accumulator-based statistics)."
 #~ msgstr "Kategori veya objeye yönelik istatistikleri hesaplar"
 
 #, fuzzy
@@ -12233,15 +11695,11 @@ msgstr ""
 
 #, fuzzy
 #~ msgid "Creates a buffer around vector features of given type."
-#~ msgstr ""
-#~ "Verilen obje tipi etrafında tampon oluşturur (alanların alan merkezi "
-#~ "olmalıdır)."
+#~ msgstr "Verilen obje tipi etrafında tampon oluşturur (alanların alan merkezi olmalıdır)."
 
 #, fuzzy
 #~ msgid "Creates a new vector map by combining other vector maps."
-#~ msgstr ""
-#~ "Diğer vektör harita katmanlarını birleştirirek yeni vektör harita katmanı "
-#~ "oluştur"
+#~ msgstr "Diğer vektör harita katmanlarını birleştirirek yeni vektör harita katmanı oluştur"
 
 #, fuzzy
 #~ msgid "Attaches, deletes or reports vector categories to map geometry."
@@ -12273,9 +11731,7 @@ msgstr ""
 
 #, fuzzy
 #~ msgid "Calculates univariate statistics for attribute."
-#~ msgstr ""
-#~ "Raster haritanın boş değer içermeyen hücrelerinden tek değişkenli "
-#~ "istatistikler hesaplar."
+#~ msgstr "Raster haritanın boş değer içermeyen hücrelerinden tek değişkenli istatistikler hesaplar."
 
 #, fuzzy
 #~ msgid "Tests for normality for vector points."
@@ -12342,3 +11798,76 @@ msgstr ""
 
 #~ msgid "Error saving preferences"
 #~ msgstr "Tercihleri kaydetme hatası"
+
+#, fuzzy
+#~ msgid "Imports Mapgen or Matlab-ASCII vector maps into GRASS."
+#~ msgstr "Matlab and MapGenvektör haritalarını GRASS'a içe aktar"
+
+#, fuzzy
+#~ msgid "Exports a GRASS raster map to a binary array."
+#~ msgstr "GRASS raster dosyasını ikili diziye aktar."
+
+#, fuzzy
+#~ msgid "Converts GRASS vector map to one of the supported OGR vector formats."
+#~ msgstr "Desteklenen OGR vektör biçimlerinden birine dönüştürür."
+
+#, fuzzy
+#~ msgid "Copies available data files in the user's current mapset search path and location to the appropriate element directories under the user's current mapset."
+#~ msgstr "****************       Kullanıcının şu anki harita takımındaki arama yolunda ulaşılabilir veri dosyalarını ve konumunu, kullanıcının şu anki harita takımı altında bulunan uygun element dizinlerine kopyalar.  "
+
+#, fuzzy
+#~ msgid "Creates a MASK for limiting raster operation."
+#~ msgstr "Raster işlemleri sınırlandırmak için MASKE oluştur"
+
+#, fuzzy
+#~ msgid "Watershed basin analysis program."
+#~ msgstr "Havza analizi"
+
+#, fuzzy
+#~ msgid "Watershed basin creation program."
+#~ msgstr "Havza analizi"
+
+#, fuzzy
+#~ msgid "Creates topographic index [ln(a/tan(beta))] map from elevation map."
+#~ msgstr "Yükselti haritasından (SYM) gölgeli kabartma haritası oluşturur."
+
+#, fuzzy
+#~ msgid "Choose script file"
+#~ msgstr "çalışma alanı dosyasını seç"
+
+#, fuzzy
+#~ msgid "Converts a vector map into a raster map."
+#~ msgstr "İkili GRASS vektör harita katmanını GRASS raster harita katmanına dönüştürür."
+
+#~ msgid "Print/add/remove a timestamp for a raster map."
+#~ msgstr "Raster haritanın tarih damgasını yazdır/ekle/kaldır"
+
+#~ msgid "Reproject raster"
+#~ msgstr "Rasterı yeniden projeksiyonlandır"
+
+#~ msgid "Recode interactively"
+#~ msgstr "Etkileşimli olarak yeniden kodla"
+
+#, fuzzy
+#~ msgid "Creates topology for vector map."
+#~ msgstr "GRASS vektör haritası için topoloji oluşturur."
+
+#~ msgid "Raster map matrix filter."
+#~ msgstr "Raster harita matris filtresi."
+
+#~ msgid "Enter raster cat values or percents"
+#~ msgstr "Raster categori değerleri veya yüzdeleri gir"
+
+#, fuzzy
+#~ msgid "Enter raster cat values or percents (range = %(min)d-%(max)d)"
+#~ msgstr "Raster categori değerleri veya yüzdeleri gir (aralık = %d-%d)"
+
+#, fuzzy
+#~ msgid "Unable to parse settings '%s' (%s:%s:%s)"
+#~ msgstr "%s komutu ayrıştırılamıyor"
+
+#~ msgid "Check a mapset to make it accessible, uncheck it to hide it.%s  Notes:%s    - The current mapset is always accessible.%s    - You may only write to the current mapset.%s    - You may only write to mapsets which you own."
+#~ msgstr "Harita takımına erişebilmek için onayla, gizlemek için onayı kaldır.%s Notlar:%s    - Güncel harita takımına daima ulaşılabilir.%s    - Sadece güncel harita takımına yazabilirsin.%s    - Sadece kendi harita takımlarına yazabilirsin."
+
+#~ msgid "You must select a valid image/map in order to continue"
+#~ msgstr "Devam etmek için geçerli bir görüntü/harita seçmelisin"

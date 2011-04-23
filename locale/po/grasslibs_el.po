@@ -15,6 +15,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=ISO-8859-7\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Language: \n"
 "X-Generator: KBabel 1.11.4\n"
 
 #: ../lib/raster/rem_io.c:40
@@ -53,8 +54,7 @@ msgstr "Δεν έχει επιλογή καμία οθόνη γραφικών ως έξοδος."
 
 #: ../lib/raster/io_sock.c:64
 msgid "Please run \"d.mon\" to select a graphics monitor."
-msgstr ""
-"Παρακαλώ εκτελέστε την εντολή \"d.mon\" για να επιλέξετε οθόνη γραφικών."
+msgstr "Παρακαλώ εκτελέστε την εντολή \"d.mon\" για να επιλέξετε οθόνη γραφικών."
 
 #: ../lib/raster/io_sock.c:72
 #, c-format
@@ -106,11 +106,8 @@ msgstr "Δεν είναι δυνατή η ανάγνωση των συντεταγμένων των συμβόλων γραμμής: %s"
 
 #: ../lib/symbol/read.c:259
 #, c-format
-msgid ""
-"Incorrect symbol name: '%s' (should be: group/name or group/name@mapset)"
-msgstr ""
-"Εσφαλμένο όνομα συμβόλου: '%s' (θα έπρεπε να είναι: group/name or group/"
-"name@mapset)"
+msgid "Incorrect symbol name: '%s' (should be: group/name or group/name@mapset)"
+msgstr "Εσφαλμένο όνομα συμβόλου: '%s' (θα έπρεπε να είναι: group/name or group/name@mapset)"
 
 #: ../lib/symbol/read.c:283
 #, c-format
@@ -233,49 +230,32 @@ msgstr "Αδυναμία λήψης PROJ.4-στυλ παραμέτρου"
 
 #: ../lib/proj/convert.c:127
 #, c-format
-msgid ""
-"OGR can't parse PROJ.4-style parameter string: %s (OGR Error code was %d)"
-msgstr ""
-"OGR δεν μπορεί να αναλύσει PROJ.4-το στυλ παραμέτρου string: %s (OGR κώδικας "
-"σφάλματος ήταν %d)"
+msgid "OGR can't parse PROJ.4-style parameter string: %s (OGR Error code was %d)"
+msgstr "OGR δεν μπορεί να αναλύσει PROJ.4-το στυλ παραμέτρου string: %s (OGR κώδικας σφάλματος ήταν %d)"
 
 #: ../lib/proj/convert.c:133
 #, c-format
 msgid "OGR can't get WKT-style parameter string (OGR Error code was %d)"
-msgstr ""
-"OGR δεν μπορεί να πάρεις WKT-το στυλ παραμέτρου string (OGR κωδικός "
-"σφάλματος ήταν %d)"
+msgstr "OGR δεν μπορεί να πάρεις WKT-το στυλ παραμέτρου string (OGR κωδικός σφάλματος ήταν %d)"
 
 #: ../lib/proj/convert.c:390
 msgid "No projection name! Projection parameters likely to be meaningless."
-msgstr ""
-"Δεν υπάρχει όνομα προβολής! Οι παράμετροι προβολής προφανώς είναι άνευ "
-"νοήματος."
+msgstr "Δεν υπάρχει όνομα προβολής! Οι παράμετροι προβολής προφανώς είναι άνευ νοήματος."
 
 #: ../lib/proj/convert.c:426
 #, c-format
 msgid "Datum <%s> not recognised by GRASS and no parameters found"
-msgstr ""
-"Datum <%s> δεν αναγνωρίζεται από το GRASS και οι παράμετροι δεν μπορούν να "
-"βρεθούν."
+msgstr "Datum <%s> δεν αναγνωρίζεται από το GRASS και οι παράμετροι δεν μπορούν να βρεθούν."
 
 #: ../lib/proj/convert.c:442
 #, c-format
-msgid ""
-"Datum <%s> apparently recognised by GRASS but no parameters found. You may "
-"want to look into this."
-msgstr ""
-"Datum <%s> προφανώς αναγνωρίζεται από το GRASS αλλά δεν μπορούν να βρεθούν "
-"οι παράμετροι. Μάλλον θα πρέπει να το ξαναδείτε."
+msgid "Datum <%s> apparently recognised by GRASS but no parameters found. You may want to look into this."
+msgstr "Datum <%s> προφανώς αναγνωρίζεται από το GRASS αλλά δεν μπορούν να βρεθούν οι παράμετροι. Μάλλον θα πρέπει να το ξαναδείτε."
 
 #: ../lib/proj/convert.c:446
 #, c-format
-msgid ""
-"Invalid transformation number %d; valid range is 1 to %d. Leaving datum "
-"transform parameters unspecified."
-msgstr ""
-"Μη αποδεκτός αριθμός μετασχηματισμού %d; αποδεκτό εύρος 1 με %d. Οι "
-"παράμετροι datum αφήνονται απροσδιόριστοι."
+msgid "Invalid transformation number %d; valid range is 1 to %d. Leaving datum transform parameters unspecified."
+msgstr "Μη αποδεκτός αριθμός μετασχηματισμού %d; αποδεκτό εύρος 1 με %d. Οι παράμετροι datum αφήνονται απροσδιόριστοι."
 
 #: ../lib/gis/sample.c:71
 msgid "Unknown interpolation type"
@@ -389,12 +369,8 @@ msgid "Cannot write quant rules for map %s"
 msgstr "Δεν μπορούν να εγγραφούν quant κανόνες γιατον χάρτη %s"
 
 #: ../lib/gis/set_window.c:76
-msgid ""
-"G_set_window(): projection/zone differs from that of currently open raster "
-"maps"
-msgstr ""
-"G_set_window(): η προβολή/ζώνη διαφέρεις από τους υφιστάμενα ανοιχτου ραστερ "
-"χάρτες"
+msgid "G_set_window(): projection/zone differs from that of currently open raster maps"
+msgstr "G_set_window(): η προβολή/ζώνη διαφέρεις από τους υφιστάμενα ανοιχτου ραστερ χάρτες"
 
 #: ../lib/gis/quant_io.c:89
 #, c-format
@@ -414,9 +390,7 @@ msgstr "quantization file [%s] in mapset [%s] %s"
 #: ../lib/gis/put_row.c:215
 #, c-format
 msgid "G_put_map_row: %s is not integer! Use G_put_[f/d]_raster_row()!"
-msgstr ""
-"G_put_map_row: %s δεν είναι ακέραιος! Χρησιμοποιήστε G_put_[f/d]_raster_row"
-"()!"
+msgstr "G_put_map_row: %s δεν είναι ακέραιος! Χρησιμοποιήστε G_put_[f/d]_raster_row()!"
 
 #: ../lib/gis/put_row.c:251
 #, c-format
@@ -426,14 +400,12 @@ msgstr "%s:χάρτης [%s] δεν είναι ανοιχτός για εγγραφή - η εντολή αγνοείται"
 #: ../lib/gis/put_row.c:259
 #, c-format
 msgid "%s: map [%s] not open for random write - request ignored"
-msgstr ""
-"%s: χάρτης [%s] δεν είναι ανοιχτός για τυχαία εγγραφή - η εντολή αγνοείται"
+msgstr "%s: χάρτης [%s] δεν είναι ανοιχτός για τυχαία εγγραφή - η εντολή αγνοείται"
 
 #: ../lib/gis/put_row.c:266
 #, c-format
 msgid "%s: map [%s] not open for sequential write - request ignored"
-msgstr ""
-"%s: χάρτης [%s] δεν είναι ανοιχτός για συνεχής εγγραφή - η εντολή αγνοείται"
+msgstr "%s: χάρτης [%s] δεν είναι ανοιχτός για συνεχής εγγραφή - η εντολή αγνοείται"
 
 #: ../lib/gis/put_row.c:270
 #, c-format
@@ -493,16 +465,12 @@ msgstr "Το παράθυρο του GRASS όταν είχε σωθεί η όψη:\n"
 #: ../lib/gis/view.c:546
 #, c-format
 msgid " Window saved in \"%s\" is completely outside of current GRASS window."
-msgstr ""
-"Το παράθυρο το οποίο σώθηκε \"%s\" είναι εντελώς έξω από το τρέχων GRASS "
-"παράθυρο."
+msgstr "Το παράθυρο το οποίο σώθηκε \"%s\" είναι εντελώς έξω από το τρέχων GRASS παράθυρο."
 
 #: ../lib/gis/view.c:550
 #, c-format
-msgid ""
-" Only %d%% of window saved in \"%s\" overlaps with current GRASS window."
-msgstr ""
-" Μόνο %d%% του παραθύρου σώθηκς \"%s\" επικαλύπτει το τρέχον GRASS παράθυρο."
+msgid " Only %d%% of window saved in \"%s\" overlaps with current GRASS window."
+msgstr " Μόνο %d%% του παραθύρου σώθηκς \"%s\" επικαλύπτει το τρέχον GRASS παράθυρο."
 
 #: ../lib/gis/get_projname.c:31
 #, c-format
@@ -748,12 +716,8 @@ msgid "Layer number"
 msgstr "Νούμερο επιπέδου"
 
 #: ../lib/gis/parser.c:596
-msgid ""
-"A single vector map can be connected to multiple database tables. This "
-"number determines which table to use."
-msgstr ""
-"Ένας διανυσματικός χάρτης είναι δυνατόν να συνδεθεί με πολλαπλούς πίνακες. "
-"Αυτός αριθμός καθορίζει ποιος πίνακας θα χρησιμοποιηθεί."
+msgid "A single vector map can be connected to multiple database tables. This number determines which table to use."
+msgstr "Ένας διανυσματικός χάρτης είναι δυνατόν να συνδεθεί με πολλαπλούς πίνακες. Αυτός αριθμός καθορίζει ποιος πίνακας θα χρησιμοποιηθεί."
 
 #: ../lib/gis/parser.c:605
 msgid "Category value"
@@ -814,13 +778,11 @@ msgstr "BUG στις περιγραφές, επιλογή '%s' στο <%s> δεν υπάρχει"
 
 #: ../lib/gis/parser.c:925
 msgid "Use either --quiet or --verbose flag, not both. Assuming --verbose."
-msgstr ""
-"Χρησιμοποιήστε  --quiet ή --verbose flag, όχι και τα δύο. Υποθέτω --verbose."
+msgstr "Χρησιμοποιήστε  --quiet ή --verbose flag, όχι και τα δύο. Υποθέτω --verbose."
 
 #: ../lib/gis/parser.c:939
 msgid "Use either --quiet or --verbose flag, not both. Assuming --quiet."
-msgstr ""
-"Χρησιμοποιήστε  --quiet ή --verbose flag, όχι και τα δύο. Υποθέτω --quiet."
+msgstr "Χρησιμοποιήστε  --quiet ή --verbose flag, όχι και τα δύο. Υποθέτω --quiet."
 
 #: ../lib/gis/parser.c:969
 #, c-format
@@ -1118,8 +1080,7 @@ msgstr "χρωματική υποστήριξη για [%s] στο mapset [%s] %s"
 #: ../lib/gis/timestamp.c:282
 #, c-format
 msgid "Can't create timestamp file for %s map %s in mapset %s"
-msgstr ""
-"Δεν μπορεί να δημιουργηεί timestamp αρχείο για %s χάρτη %s στο mapset %s"
+msgstr "Δεν μπορεί να δημιουργηεί timestamp αρχείο για %s χάρτη %s στο mapset %s"
 
 #: ../lib/gis/timestamp.c:291
 #, c-format
@@ -1143,9 +1104,7 @@ msgstr "Αδυναμία δημιουργίας νέας επεξεργασίας - διαδικασίας!"
 #: ../lib/gis/get_row.c:46 ../lib/gis/get_row.c:1049
 #, c-format
 msgid "Reading raster map <%s@%s> request for row %d is outside region"
-msgstr ""
-"Το διάβασμα του ράστερ χάρτη <%s@%s> κλήση για γραμμή %d είναι έξω από την "
-"περιοχή"
+msgstr "Το διάβασμα του ράστερ χάρτη <%s@%s> κλήση για γραμμή %d είναι έξω από την περιοχή"
 
 #: ../lib/gis/get_row.c:324
 #, c-format
@@ -1496,9 +1455,7 @@ msgstr "Ο χάρτης raster  <%s> δεν βρέθηκε"
 #: ../lib/gis/legal_name.c:118 ../lib/gis/legal_name.c:122
 #, c-format
 msgid "Output raster map <%s> is used as input"
-msgstr ""
-"Ο εξαγόμενος διανυσματικός χάρτης <%s> χρησιμοποιείται για εισαγωγή "
-"δεδομένων."
+msgstr "Ο εξαγόμενος διανυσματικός χάρτης <%s> χρησιμοποιείται για εισαγωγή δεδομένων."
 
 #: ../lib/gis/reclass.c:145
 #, c-format
@@ -1594,9 +1551,7 @@ msgstr ""
 #: ../lib/gis/closecell.c:250
 #, c-format
 msgid "Error writing floating point format file for map %s"
-msgstr ""
-"Σφάλμα κατά την εγγραφή σημείου κινητής υποδιαστολής στο αρχείο για τον "
-"χάρτη %s"
+msgstr "Σφάλμα κατά την εγγραφή σημείου κινητής υποδιαστολής στο αρχείο για τον χάρτη %s"
 
 #: ../lib/gis/closecell.c:300
 #, c-format
@@ -1621,12 +1576,8 @@ msgstr "Αδυναμία λήψης GIS_LOCK τιμής περιβάλλοντος"
 
 #: ../lib/gis/distance.c:160
 #, c-format
-msgid ""
-"G_distance_point_to_line_segment: shouldn't happen: code=%d P=(%f,%f) S=(%f,%"
-"f)(%f,%f)"
-msgstr ""
-"G_distance_point_to_line_segment: δεν θα έπρεπε να γίνει: code=%d P=(%f,%f) "
-"S=(%f,%f)(%f,%f)"
+msgid "G_distance_point_to_line_segment: shouldn't happen: code=%d P=(%f,%f) S=(%f,%f)(%f,%f)"
+msgstr "G_distance_point_to_line_segment: δεν θα έπρεπε να γίνει: code=%d P=(%f,%f) S=(%f,%f)(%f,%f)"
 
 #: ../lib/gis/seek.c:52 ../lib/gis/seek.c:58
 #, fuzzy
@@ -1665,35 +1616,23 @@ msgstr "Αδυναμία εύρεσης <%s@%s>"
 
 #: ../lib/gis/opencell.c:188
 #, c-format
-msgid ""
-"Unable to open raster map <%s@%s> since it is a reclass of raster map <%s@%"
-"s> which does not exist"
-msgstr ""
-"Αδυναμία ανοίγματος ραστερ χάρτη <%s@%s> αφού είναι ένα reclass του ραστερ "
-"χάρτη <%s@%s> , ο οποίος δεν υπάρχει"
+msgid "Unable to open raster map <%s@%s> since it is a reclass of raster map <%s@%s> which does not exist"
+msgstr "Αδυναμία ανοίγματος ραστερ χάρτη <%s@%s> αφού είναι ένα reclass του ραστερ χάρτη <%s@%s> , ο οποίος δεν υπάρχει"
 
 #: ../lib/gis/opencell.c:212
 #, c-format
 msgid "Raster map <%s@%s>: format field in header file invalid"
-msgstr ""
-"Το φορμά του ράστερ χάρτη <%s@%s>: στο κεφαλικό αρχείο (header) είναι "
-"λανθασμένο"
+msgstr "Το φορμά του ράστερ χάρτη <%s@%s>: στο κεφαλικό αρχείο (header) είναι λανθασμένο"
 
 #: ../lib/gis/opencell.c:219
 #, c-format
-msgid ""
-"Raster map <%s@%s> is in different projection than current region. Found "
-"raster map <%s@%s>, should be <%s>."
-msgstr ""
-"Ο ράστερ χάρτης <%s@%s> έχει διαφορετική προβολή από την τρέχουσα περιοχή. Ο "
-"χάρτης <%s@%s>, θα έπρεπε να ήταν <%s>."
+msgid "Raster map <%s@%s> is in different projection than current region. Found raster map <%s@%s>, should be <%s>."
+msgstr "Ο ράστερ χάρτης <%s@%s> έχει διαφορετική προβολή από την τρέχουσα περιοχή. Ο χάρτης <%s@%s>, θα έπρεπε να ήταν <%s>."
 
 #: ../lib/gis/opencell.c:226
 #, c-format
 msgid "Raster map <%s@%s> is in different zone (%d) than current region (%d)"
-msgstr ""
-"Ο ράστερ χάρτης <%s@%s> έχει διαφορετική ζώνη (%d) από την τρέχουσα περιοχή "
-"(%d)"
+msgstr "Ο ράστερ χάρτης <%s@%s> έχει διαφορετική ζώνη (%d) από την τρέχουσα περιοχή (%d)"
 
 #: ../lib/gis/opencell.c:233
 #, c-format
@@ -1703,9 +1642,7 @@ msgstr "Ο ράστερ χάρτης <%s@%s>: έχει bytes per cell (%d) πολύ μεγάλο"
 #: ../lib/gis/opencell.c:262
 #, c-format
 msgid "map <%s@%s> is a GDAL link but GRASS is compiled without GDAL support"
-msgstr ""
-"Ο χάρτης <%s@%s> είναι ένας σύνδεσμος GDAL αλλά το  GRASS έχει γίνει "
-"compiled χωρίς GDAL υποστήριξη"
+msgstr "Ο χάρτης <%s@%s> είναι ένας σύνδεσμος GDAL αλλά το  GRASS έχει γίνει compiled χωρίς GDAL υποστήριξη"
 
 #: ../lib/gis/opencell.c:642
 #, c-format
@@ -1727,11 +1664,8 @@ msgid "G__open_raster_new(): no temp files available"
 msgstr "G__open_raster_new(): δεν υπάρχουν προσωρινά αρχεία, μη διαθέσιμα"
 
 #: ../lib/gis/opencell.c:736
-msgid ""
-"Unable to write embedded null values for raster map open for random access"
-msgstr ""
-"Αδυναμία εγγραφής των εμπεριεχόμενων μηδενικών τιμών για τον ραστερ χάρτη "
-"που είναι ανοικτός για τυχαία προσπέλαση"
+msgid "Unable to write embedded null values for raster map open for random access"
+msgstr "Αδυναμία εγγραφής των εμπεριεχόμενων μηδενικών τιμών για τον ραστερ χάρτη που είναι ανοικτός για τυχαία προσπέλαση"
 
 #: ../lib/gis/opencell.c:941
 msgid "G_set_fp_type(): can only be called with FCELL_TYPE or DCELL_TYPE"
@@ -1768,11 +1702,8 @@ msgid "Raster map <%s> is not xdr: byte_order: %s"
 msgstr "Ο χάρτης raster  <%s> δεν είναι xdr: byte_order: %s"
 
 #: ../lib/gis/opencell.c:1179
-msgid ""
-"G_set_quant_rules() can be called only for raster maps opened for reading"
-msgstr ""
-"G_set_quant_rules() μπορεί να κληθεί μόνο για ράστερ χάρτες ανοικτούς για "
-"ανάγνωση"
+msgid "G_set_quant_rules() can be called only for raster maps opened for reading"
+msgstr "G_set_quant_rules() μπορεί να κληθεί μόνο για ράστερ χάρτες ανοικτούς για ανάγνωση"
 
 #: ../lib/gis/mask_info.c:40
 #, c-format
@@ -2132,15 +2063,12 @@ msgstr "του οποίου το κεφαλικό (header) αρχείο δεν μπορεί να ανοίξει"
 #: ../lib/gis/get_cellhd.c:88
 #, c-format
 msgid "Unable to open header file for raster map <%s@%s>"
-msgstr ""
-"Αδυναμία ανοίγματος κεφαλικού (header) αρχείου για τον ράστερ χάρτη <%s@%s>"
+msgstr "Αδυναμία ανοίγματος κεφαλικού (header) αρχείου για τον ράστερ χάρτη <%s@%s>"
 
 #: ../lib/gis/get_cellhd.c:105
 #, c-format
 msgid " It is a reclass of raster map <%s@%s> whose header file is invalid."
-msgstr ""
-"Είναι μία αναδιάταξη του ράστερ χάρτη <%s@%s> του οποίου το κεφαλικό αρχείο "
-"είναι εσφαλμένο."
+msgstr "Είναι μία αναδιάταξη του ράστερ χάρτη <%s@%s> του οποίου το κεφαλικό αρχείο είναι εσφαλμένο."
 
 #: ../lib/gis/get_cellhd.c:109
 #, c-format
@@ -2148,9 +2076,7 @@ msgid " Invalid format."
 msgstr "Λάθος διάταξη (φορματ)"
 
 #: ../lib/gis/gisinit.c:54 ../lib/gis/gisinit.c:90
-msgid ""
-"Incompatible library version for module. You need to rebuild GRASS or "
-"untangle multiple installations."
+msgid "Incompatible library version for module. You need to rebuild GRASS or untangle multiple installations."
 msgstr ""
 
 #: ../lib/gis/gisinit.c:63
@@ -2160,16 +2086,12 @@ msgstr "MAPSET %s - δεν επιτρέπεται η πρόσβαση"
 
 #: ../lib/gis/gisinit.c:110
 msgid "System not initialized. Programmer forgot to call G_gisinit()."
-msgstr ""
-"Το σύστημα δεν έχει αρχικοποιηθεί. Ο προγραμματιστής ξέχασει να καλέσει "
-"G_gisinit()."
+msgstr "Το σύστημα δεν έχει αρχικοποιηθεί. Ο προγραμματιστής ξέχασει να καλέσει G_gisinit()."
 
 #: ../lib/gis/history.c:132 ../lib/g3d/g3dhistory.c:42
 #, c-format
 msgid "can't get history information for [%s] in mapset [%s]"
-msgstr ""
-"δεν μπορεί να πάρει πληροφορίες για το ιστορικό του [%s] στα χαρτογραφικά "
-"δεδομένα[%s]"
+msgstr "δεν μπορεί να πάρει πληροφορίες για το ιστορικό του [%s] στα χαρτογραφικά δεδομένα[%s]"
 
 #: ../lib/gis/history.c:180
 #, c-format
@@ -2178,8 +2100,7 @@ msgstr "δεν είναι δυνατή η εγγραφή του ιστορικού για [%s]"
 
 #: ../lib/gis/history.c:263
 msgid "Not enough room in history file to record command line."
-msgstr ""
-"Δεν υπάρχει αρκετός χώρος στο αρχείο ιστορικού για εγγραφή εντολής γραμμής"
+msgstr "Δεν υπάρχει αρκετός χώρος στο αρχείο ιστορικού για εγγραφή εντολής γραμμής"
 
 #: ../lib/gis/history.c:285
 msgid "Not enough room in history file for command line (truncated)."
@@ -2202,9 +2123,7 @@ msgstr "Monitor: get_command: Premature EOF"
 #: ../lib/driver/parse_ftcap.c:32
 #, c-format
 msgid "%s: Unable to read font definition file; use the default"
-msgstr ""
-"%s: Αδυναμία ανάγνωσης του αρχείου γραμματοσειράς, χρησιμοποιήστε το "
-"προεπιλεγμένο"
+msgstr "%s: Αδυναμία ανάγνωσης του αρχείου γραμματοσειράς, χρησιμοποιήστε το προεπιλεγμένο"
 
 #: ../lib/driver/parse_ftcap.c:38
 #, c-format
@@ -2218,9 +2137,7 @@ msgstr "[%s]: Δεν υπάρχει τέτοιο χρώμα"
 
 #: ../lib/vector/diglib/plus_node.c:217
 #, c-format
-msgid ""
-"Attempt to read line angle for the line which is not connected to the node: "
-"node %d, line %d"
+msgid "Attempt to read line angle for the line which is not connected to the node: node %d, line %d"
 msgstr ""
 
 #: ../lib/vector/diglib/plus.c:288
@@ -2371,30 +2288,22 @@ msgstr "Προσπάθεια αποκατάστασης σωστών στοιχείων"
 #: ../lib/vector/Vlib/legal_vname.c:48
 #, c-format
 msgid "Illegal vector map name <%s>. May not contain '.' or 'NULL'."
-msgstr ""
-"Μη επιτρεπτό όνομα διανυσματικόυ χάρτη <%s>. δεν πρέπει να περιέχει '.' ή  "
-"'NULL'."
+msgstr "Μη επιτρεπτό όνομα διανυσματικόυ χάρτη <%s>. δεν πρέπει να περιέχει '.' ή  'NULL'."
 
 #: ../lib/vector/Vlib/legal_vname.c:55
 #, c-format
 msgid "Illegal vector map name <%s>. Must start with a letter."
-msgstr ""
-"Μη επιτρεπτό όνομα διανυσματικόυ χάρτη <%s>. Πρέπει να ξεκινά με γράμμα."
+msgstr "Μη επιτρεπτό όνομα διανυσματικόυ χάρτη <%s>. Πρέπει να ξεκινά με γράμμα."
 
 #: ../lib/vector/Vlib/legal_vname.c:63
 #, c-format
 msgid "Illegal vector map name <%s>. Character '%c' not allowed."
-msgstr ""
-"Μη επιτρεπτό όνομα διανυσματικόυ χάρτη <%s>. Ο χαρακτήρας '%c' δεν "
-"επιτρέπεται."
+msgstr "Μη επιτρεπτό όνομα διανυσματικόυ χάρτη <%s>. Ο χαρακτήρας '%c' δεν επιτρέπεται."
 
 #: ../lib/vector/Vlib/legal_vname.c:70
 #, c-format
-msgid ""
-"Illegal vector map name <%s>. SQL keyword cannot be used as vector map name."
-msgstr ""
-"Μη επιτρεπτό όνομα διανυσματικόυ χάρτη  <%s>. Η λέξη κλειδί SQL δεν μπορεί "
-"να χρησιμοποιηθεί ώς όνομα του χάρτη."
+msgid "Illegal vector map name <%s>. SQL keyword cannot be used as vector map name."
+msgstr "Μη επιτρεπτό όνομα διανυσματικόυ χάρτη  <%s>. Η λέξη κλειδί SQL δεν μπορεί να χρησιμοποιηθεί ώς όνομα του χάρτη."
 
 #: ../lib/vector/Vlib/legal_vname.c:101 ../lib/vector/Vlib/legal_vname.c:105
 #, c-format
@@ -2411,9 +2320,7 @@ msgstr "Ο διανυσματικός χάρτης <%s> δεν βρέθηκε"
 #: ../lib/vector/Vlib/legal_vname.c:142 ../lib/vector/Vlib/legal_vname.c:146
 #, c-format
 msgid "Output vector map <%s> is used as input"
-msgstr ""
-"Ο εξαγόμενος διανυσματικός χάρτης <%s> χρησιμοποιείται για εισαγωγή "
-"δεδομένων."
+msgstr "Ο εξαγόμενος διανυσματικός χάρτης <%s> χρησιμοποιείται για εισαγωγή δεδομένων."
 
 #: ../lib/vector/Vlib/read_ogr.c:120 ../lib/vector/Vlib/read_ogr.c:306
 #: ../lib/vector/Vlib/build_ogr.c:309
@@ -2454,12 +2361,8 @@ msgid "Unable to delete item %d from spatial index"
 msgstr "Δεν γίνεται η διαγραφή του αντικειμένου %d από το χωρικό πίνακα"
 
 #: ../lib/vector/Vlib/sindex.c:127
-msgid ""
-"Unable to build spatial index from topology, vector map is not opened at "
-"topo level 2"
-msgstr ""
-"Αδυναμία δημιοργίας χωρικού πίνακα από την τοπολογία, ο διανυσματικός χάρτης "
-"δεν είναι ανοικτός στο topo level 2"
+msgid "Unable to build spatial index from topology, vector map is not opened at topo level 2"
+msgstr "Αδυναμία δημιοργίας χωρικού πίνακα από την τοπολογία, ο διανυσματικός χάρτης δεν είναι ανοικτός στο topo level 2"
 
 #: ../lib/vector/Vlib/sindex.c:168
 msgid "BUG (Vect_build_sidx_from_topo): node does not exist"
@@ -2487,8 +2390,7 @@ msgstr ""
 
 #: ../lib/vector/Vlib/intersect.c:127
 msgid "3D not supported by Vect_segment_intersection()"
-msgstr ""
-"Η 3διάστατη απεικόνιση δεν υποστηρίζεται από το Vect_segment_intersection()"
+msgstr "Η 3διάστατη απεικόνιση δεν υποστηρίζεται από το Vect_segment_intersection()"
 
 #: ../lib/vector/Vlib/intersect.c:322
 msgid "Vect_segment_intersection() ERROR (collinear vertical segments)"
@@ -2534,8 +2436,7 @@ msgstr ""
 #: ../lib/rst/interp_float/vinput2d.c:79
 #, c-format
 msgid "Database connection not defined for layer %d"
-msgstr ""
-"Δεν έχει καθοριστεί η σύνδεση με τη βάση δεδομένων για το επίπεδο (layer) %d"
+msgstr "Δεν έχει καθοριστεί η σύνδεση με τη βάση δεδομένων για το επίπεδο (layer) %d"
 
 #: ../lib/vector/Vlib/array.c:284 ../lib/vector/Vlib/map.c:272
 #: ../lib/vector/Vlib/map.c:406 ../lib/vector/Vlib/map.c:622
@@ -2559,12 +2460,8 @@ msgstr "Ο διανυσματικός χάρτης δεν είναι ανοικτός"
 
 #: ../lib/vector/Vlib/geos.c:56
 #, fuzzy, c-format
-msgid ""
-"Vect_read_line_geos(): feature id %d is not reasonable (max features in "
-"vector map <%s>: %d)"
-msgstr ""
-"Vect_read_line():γραμμή %d δεν έχει λογική (max γραμμή στον διανυσματικό "
-"χάρτη: <%s>: %d)"
+msgid "Vect_read_line_geos(): feature id %d is not reasonable (max features in vector map <%s>: %d)"
+msgstr "Vect_read_line():γραμμή %d δεν έχει λογική (max γραμμή στον διανυσματικό χάρτη: <%s>: %d)"
 
 #: ../lib/vector/Vlib/geos.c:61
 msgid "only native format supported"
@@ -2757,9 +2654,7 @@ msgstr "Το νούμερο του επιπέδου πρέπει να είναι μεγαλύτερο ή ίσο με 1"
 
 #: ../lib/vector/Vlib/field.c:98
 msgid "Unable to add database link, map is not opened in WRITE mode"
-msgstr ""
-"Αδυναμία σύνδεσης βάσης δεδομένων, ο χάρτης δεν είναι ανοικτός σε κατάσταση "
-"εγγραφής (WRITE mode)"
+msgstr "Αδυναμία σύνδεσης βάσης δεδομένων, ο χάρτης δεν είναι ανοικτός σε κατάσταση εγγραφής (WRITE mode)"
 
 #: ../lib/vector/Vlib/field.c:104
 msgid "Unable to add database link"
@@ -2803,9 +2698,7 @@ msgid "Unable to open OGR DBMI driver"
 msgstr ""
 
 #: ../lib/vector/Vlib/field.c:551
-msgid ""
-"All FID tests failed. Neither 'FID' nor 'ogc_fid' nor 'ogr_fid' nor 'gid' "
-"available in OGR DB table"
+msgid "All FID tests failed. Neither 'FID' nor 'ogc_fid' nor 'ogr_fid' nor 'gid' available in OGR DB table"
 msgstr ""
 
 #: ../lib/vector/Vlib/field.c:606
@@ -2864,12 +2757,8 @@ msgstr ""
 
 #: ../lib/vector/Vlib/read.c:102
 #, c-format
-msgid ""
-"Vect_read_line(): feature id %d is not reasonable (max features in vector "
-"map <%s>: %d)"
-msgstr ""
-"Vect_read_line():γραμμή %d δεν έχει λογική (max γραμμή στον διανυσματικό "
-"χάρτη: <%s>: %d)"
+msgid "Vect_read_line(): feature id %d is not reasonable (max features in vector map <%s>: %d)"
+msgstr "Vect_read_line():γραμμή %d δεν έχει λογική (max γραμμή στον διανυσματικό χάρτη: <%s>: %d)"
 
 #: ../lib/vector/Vlib/build_nat.c:93
 msgid "Unable to add area (map closed, topo saved)"
@@ -2991,8 +2880,7 @@ msgstr "Αδυναμία αντιγραφής διανυσματικού χάρτη <%s> σε <%s>"
 #: ../lib/vector/Vlib/open.c:547
 #, c-format
 msgid "Vector map <%s> already exists and will be overwritten"
-msgstr ""
-"Ο διανυσματικός χάρτης <%s> υπάρχει ήδη και θα αντικατασταθεί (overwritten)"
+msgstr "Ο διανυσματικός χάρτης <%s> υπάρχει ήδη και θα αντικατασταθεί (overwritten)"
 
 #: ../lib/vector/Vlib/map.c:194 ../lib/vector/Vlib/open.c:552
 #, c-format
@@ -3034,16 +2922,12 @@ msgstr "Αδυναμία ανοίγματος header αρχείου διανυσματικού χάρτη <%s>"
 #: ../lib/vector/Vlib/map.c:481
 #, c-format
 msgid "Unable to find table <%s> linked to vector map <%s>"
-msgstr ""
-"Αδυναμία εύρεσης του πίνακα <%s> που είναι συνδεδεμένος με τον διανυσματικό "
-"χάρτη <%s>"
+msgstr "Αδυναμία εύρεσης του πίνακα <%s> που είναι συνδεδεμένος με τον διανυσματικό χάρτη <%s>"
 
 #: ../lib/vector/Vlib/map.c:498
 #, c-format
 msgid "Table <%s> linked to vector map <%s> does not exist"
-msgstr ""
-"Ο πίνακας <%s> που είναι συνδεδεμένος με τον διανυσματικό χάρτη <%s> δεν "
-"υπάρχει"
+msgstr "Ο πίνακας <%s> που είναι συνδεδεμένος με τον διανυσματικό χάρτη <%s> δεν υπάρχει"
 
 #: ../lib/vector/Vlib/map.c:512
 #, c-format
@@ -3068,26 +2952,17 @@ msgstr "Αδυναμία μεταφοράς καταλόγου συστήματος '%s'"
 #: ../lib/vector/Vlib/map.c:605 ../lib/vector/Vlib/map.c:706
 #, c-format
 msgid "Unable to add database link for vector map <%s>"
-msgstr ""
-"Αδυναμία προσθήκης σύνδεσης με βάση δεδομένων για τον διανυσματικό χάρτη <%s>"
+msgstr "Αδυναμία προσθήκης σύνδεσης με βάση δεδομένων για τον διανυσματικό χάρτη <%s>"
 
 #: ../lib/vector/Vlib/open_nat.c:145
 #, c-format
-msgid ""
-"Coor files of vector map <%s@%s> is larger than it should be (%ld bytes "
-"excess)"
-msgstr ""
-"Τα αρχεία συντεταγμένων (coor) των διανυσματικών χαρτών <%s@%s> είναι "
-"μεγαλύτερα από όσο θα έπρεπε (%ld bytes excess)"
+msgid "Coor files of vector map <%s@%s> is larger than it should be (%ld bytes excess)"
+msgstr "Τα αρχεία συντεταγμένων (coor) των διανυσματικών χαρτών <%s@%s> είναι μεγαλύτερα από όσο θα έπρεπε (%ld bytes excess)"
 
 #: ../lib/vector/Vlib/open_nat.c:149
 #, c-format
-msgid ""
-"Coor files of vector <%s@%s> is shorter than it should be (%ld bytes "
-"missing)."
-msgstr ""
-"Τα αρχεία συντεταγμένων (coor) των διανυσματικών χαρτών <%s@%s> είναι "
-"μικρότερα από όσο θα έπρεπε (%ld bytes missing)."
+msgid "Coor files of vector <%s@%s> is shorter than it should be (%ld bytes missing)."
+msgstr "Τα αρχεία συντεταγμένων (coor) των διανυσματικών χαρτών <%s@%s> είναι μικρότερα από όσο θα έπρεπε (%ld bytes missing)."
 
 #: ../lib/vector/Vlib/net.c:121
 msgid "Building graph..."
@@ -3123,16 +2998,12 @@ msgstr ""
 
 #: ../lib/vector/Vlib/net.c:254
 #, c-format
-msgid ""
-"Database record for line %d (cat = %d, forward/both direction(s)) not found "
-"(forward/both direction(s) of line skipped)"
+msgid "Database record for line %d (cat = %d, forward/both direction(s)) not found (forward/both direction(s) of line skipped)"
 msgstr ""
 
 #: ../lib/vector/Vlib/net.c:273
 #, c-format
-msgid ""
-"Database record for line %d (cat = %d, backword direction) not found"
-"(direction of line skipped)"
+msgid "Database record for line %d (cat = %d, backword direction) not found(direction of line skipped)"
 msgstr ""
 
 #: ../lib/vector/Vlib/net.c:322
@@ -3170,8 +3041,7 @@ msgstr "Overlay: γραμμές/όρια τύποι δεν υποστηρίζονται από AND τελεστή"
 
 #: ../lib/vector/Vlib/overlay.c:126
 msgid "Overlay: area x area types not supported by AND operator"
-msgstr ""
-"Overlay: επιφάνεια x επιφάνεια τύποι δεν υποστηρίζονται από AND τελεστή"
+msgstr "Overlay: επιφάνεια x επιφάνεια τύποι δεν υποστηρίζονται από AND τελεστή"
 
 #: ../lib/vector/Vlib/poly.c:235
 msgid "Unable to find point in polygon"
@@ -3197,8 +3067,7 @@ msgstr ""
 
 #: ../lib/vector/Vlib/write.c:135
 msgid "Unable to write feature, vector map is not opened"
-msgstr ""
-"Αδυναμία δημιουργίας στοιχείου, ο διανυσματικός χάρτης δεν είναι ανοικτός"
+msgstr "Αδυναμία δημιουργίας στοιχείου, ο διανυσματικός χάρτης δεν είναι ανοικτός"
 
 #: ../lib/vector/Vlib/write.c:148
 msgid "Unable to write feature (negative offset)"
@@ -3206,8 +3075,7 @@ msgstr "Αδυναμία εγγραφή feature (αρνητικό offset)"
 
 #: ../lib/vector/Vlib/write.c:181
 msgid "Unable to rewrite feature, vector map is not opened"
-msgstr ""
-"Αδυναμία επανεγγραφής feature, ο διανυσματικός χάρτης δεν είναι ανοικτός"
+msgstr "Αδυναμία επανεγγραφής feature, ο διανυσματικός χάρτης δεν είναι ανοικτός"
 
 #: ../lib/vector/Vlib/write.c:194
 #, c-format
@@ -3216,19 +3084,13 @@ msgstr "Αδυναμία επανεγγραφής feature %d"
 
 #: ../lib/vector/Vlib/write.c:219
 #, c-format
-msgid ""
-"Unable to delete feature %d, vector map <%s> is not opened on topology level"
-msgstr ""
-"Αδυναμία διαγραφής  feature %d, ο διανυσματικός χάρτης <%s> δεν είναι "
-"ανοικτός σε τοπολογικό επίπεδο"
+msgid "Unable to delete feature %d, vector map <%s> is not opened on topology level"
+msgstr "Αδυναμία διαγραφής  feature %d, ο διανυσματικός χάρτης <%s> δεν είναι ανοικτός σε τοπολογικό επίπεδο"
 
 #: ../lib/vector/Vlib/write.c:225
 #, c-format
-msgid ""
-"Unable to delete feature %d, vector map <%s> is not opened in 'write' mode"
-msgstr ""
-"Αδυναμία διαγραφής feature %d, ο διανυσματικός χάρτης <%s> δεν είναι "
-"ανοικτός σε 'write' mode"
+msgid "Unable to delete feature %d, vector map <%s> is not opened in 'write' mode"
+msgstr "Αδυναμία διαγραφής feature %d, ο διανυσματικός χάρτης <%s> δεν είναι ανοικτός σε 'write' mode"
 
 #: ../lib/vector/Vlib/write.c:239
 #, fuzzy, c-format
@@ -3237,19 +3099,13 @@ msgstr "Unable to restore feature %d from vector map <%s>"
 
 #: ../lib/vector/Vlib/write.c:265
 #, c-format
-msgid ""
-"Unable to restore feature %d, vector map <%s> is not opened on topology level"
-msgstr ""
-"Αδυναμία απόκατάστασης feature %d, διανυσματικός χάρτης <%s> δεν είναι "
-"ανοικτός σε τοπολογικό επίπεδο"
+msgid "Unable to restore feature %d, vector map <%s> is not opened on topology level"
+msgstr "Αδυναμία απόκατάστασης feature %d, διανυσματικός χάρτης <%s> δεν είναι ανοικτός σε τοπολογικό επίπεδο"
 
 #: ../lib/vector/Vlib/write.c:271
 #, c-format
-msgid ""
-"Unable to restore feature %d, vector map <%s> is not opened in 'write' mode"
-msgstr ""
-"Αδυναμία αποκατάστασης feature %d, διανυσματικός χάρτης <%s> δεν είναι "
-"ανοικτός σε 'write' mode"
+msgid "Unable to restore feature %d, vector map <%s> is not opened in 'write' mode"
+msgstr "Αδυναμία αποκατάστασης feature %d, διανυσματικός χάρτης <%s> δεν είναι ανοικτός σε 'write' mode"
 
 #: ../lib/vector/Vlib/write.c:285
 #, c-format
@@ -3267,11 +3123,8 @@ msgid "Programmer requested unknown open level %d"
 msgstr ""
 
 #: ../lib/vector/Vlib/open.c:179
-msgid ""
-"Vector map which is not in the current mapset cannot be opened for update"
-msgstr ""
-"Ο διανυσματικός χάρτης που δεν ανήκει στο τρέχον mapset δεν μπορεί να "
-"ανοίξει για ενημέρωση"
+msgid "Vector map which is not in the current mapset cannot be opened for update"
+msgstr "Ο διανυσματικός χάρτης που δεν ανήκει στο τρέχον mapset δεν μπορεί να ανοίξει για ενημέρωση"
 
 #: ../lib/vector/Vlib/open.c:199 ../lib/ogsf/Gv3.c:63 ../lib/ogsf/Gp3.c:115
 #, c-format
@@ -3281,12 +3134,8 @@ msgstr "Αδυναμία ανοίγματος διανυσματικού χάρτη <%s>"
 #: ../lib/vector/Vlib/open.c:211 ../lib/vector/Vlib/open.c:279
 #: ../lib/vector/Vlib/open.c:299
 #, c-format
-msgid ""
-"Unable to open vector map <%s> on level %d. Try to rebuild vector topology "
-"by v.build."
-msgstr ""
-"Αδυναμία ανοίγματος διανυσματικού χάρτη <%s> στο τοπολογικό επίπεδο %d. "
-"Δοκιμάστε να ξαναφτιάξετε την τοπολογία με v.build."
+msgid "Unable to open vector map <%s> on level %d. Try to rebuild vector topology by v.build."
+msgstr "Αδυναμία ανοίγματος διανυσματικού χάρτη <%s> στο τοπολογικό επίπεδο %d. Δοκιμάστε να ξαναφτιάξετε την τοπολογία με v.build."
 
 #: ../lib/vector/Vlib/open.c:214
 msgid "Unable to read head file"
@@ -3295,8 +3144,7 @@ msgstr "Αδυναμία ανάγνωσης head αρχείου"
 #: ../lib/vector/Vlib/open.c:236
 #, c-format
 msgid "Unable to open topology file for vector map <%s>"
-msgstr ""
-"Αδυναμία ανοίγματος τοπολογικού αρχείου για τον διανυσματικό χάρτη <%s>"
+msgstr "Αδυναμία ανοίγματος τοπολογικού αρχείου για τον διανυσματικό χάρτη <%s>"
 
 #: ../lib/vector/Vlib/open.c:262
 #, c-format
@@ -3353,16 +3201,12 @@ msgstr "Αδυναμία ανοίγματος αρχείου fidx για τον διανυσματικό χάρτη <%s@%s>"
 
 #: ../lib/vector/Vlib/open_ogr.c:147
 #, c-format
-msgid ""
-"Feature index format version %d.%d is not supported by this release. Try to "
-"rebuild topology or upgrade GRASS."
+msgid "Feature index format version %d.%d is not supported by this release. Try to rebuild topology or upgrade GRASS."
 msgstr ""
 
 #: ../lib/vector/Vlib/open_ogr.c:152
 #, c-format
-msgid ""
-"Your GRASS version does not fully support feature index format %d.%d of the "
-"vector. Consider to rebuild topology or upgrade GRASS."
+msgid "Your GRASS version does not fully support feature index format %d.%d of the vector. Consider to rebuild topology or upgrade GRASS."
 msgstr ""
 
 #: ../lib/vector/Vlib/level_two.c:251 ../lib/vector/Vlib/level_two.c:276
@@ -3418,8 +3262,7 @@ msgid "Partial build for OGR is not supported"
 msgstr ""
 
 #: ../lib/vector/Vlib/build_ogr.c:342
-msgid ""
-"Random read is not supported by OGR for this layer, cannot build support"
+msgid "Random read is not supported by OGR for this layer, cannot build support"
 msgstr ""
 
 #: ../lib/vector/Vlib/build_ogr.c:349
@@ -3618,8 +3461,7 @@ msgid "Write 3d array to g3d map <%s>"
 msgstr "Εγγραφή πίνακα 3 διαστάσεων στον g3d χάρτη <%s>"
 
 #: ../lib/gpde/N_parse_options.c:59
-msgid ""
-"The type of solver which should solve the symmetric linear equation system"
+msgid "The type of solver which should solve the symmetric linear equation system"
 msgstr "Ο τύπος του επιλύτη που πιθανά λύνει το συμμετρικό γραμμικό σύστημα"
 
 #: ../lib/gpde/N_parse_options.c:71
@@ -3628,19 +3470,14 @@ msgstr "Ο τύπος του επιλύτη που πιθανά λύνει το γραμμικό σύστημα"
 
 #: ../lib/gpde/N_parse_options.c:80
 msgid "Maximum number of iteration used to solver the linear equation system"
-msgstr ""
-"Μέγιστος αριθμός επαναλήψεων που χρησιμοποιήθηκαν στον επιλύτη για το "
-"γραμμικό σύστημα"
+msgstr "Μέγιστος αριθμός επαναλήψεων που χρησιμοποιήθηκαν στον επιλύτη για το γραμμικό σύστημα"
 
 #: ../lib/gpde/N_parse_options.c:89
-msgid ""
-"Error break criteria for iterative solvers (jacobi, sor, cg or bicgstab)"
+msgid "Error break criteria for iterative solvers (jacobi, sor, cg or bicgstab)"
 msgstr ""
 
 #: ../lib/gpde/N_parse_options.c:98
-msgid ""
-"The relaxation parameter used by the jacobi and sor solver for speedup or "
-"stabilizing"
+msgid "The relaxation parameter used by the jacobi and sor solver for speedup or stabilizing"
 msgstr ""
 
 #: ../lib/gpde/N_parse_options.c:106
@@ -3954,19 +3791,12 @@ msgstr ""
 
 #: ../lib/rst/interp_float/segmen2d.c:111
 #, fuzzy
-msgid ""
-"Taking too long to find points for interpolation - please change the region "
-"to area where your points are. Continuing calculations..."
-msgstr ""
-"Παίρνει πάρα πολύ χρόνο να βρω τα σημεία για παρεμβολή -- παρακαλώ αλλάξτε "
-"την περιοχή σε μία άλλη που να βρίσκονται τα σημεία σας. Συνεχίζω τους "
-"υπολογισμούς..."
+msgid "Taking too long to find points for interpolation - please change the region to area where your points are. Continuing calculations..."
+msgstr "Παίρνει πάρα πολύ χρόνο να βρω τα σημεία για παρεμβολή -- παρακαλώ αλλάξτε την περιοχή σε μία άλλη που να βρίσκονται τα σημεία σας. Συνεχίζω τους υπολογισμούς..."
 
 #: ../lib/rst/interp_float/interp2d.c:212
 #, c-format
-msgid ""
-"Overshoot - increase in tension suggested. Overshoot occures at (%d,%d) "
-"cell. Z-value %f, zmin %f, zmax %f."
+msgid "Overshoot - increase in tension suggested. Overshoot occures at (%d,%d) cell. Z-value %f, zmin %f, zmax %f."
 msgstr ""
 
 #: ../lib/rst/interp_float/input2d.c:47
@@ -4028,8 +3858,7 @@ msgstr "strip υπάρχει με ανεπαρκή δεδομένα"
 #: ../lib/rst/interp_float/vinput2d.c:328
 #, fuzzy, c-format
 msgid "There are points outside specified 2D/3D region - %d points ignored"
-msgstr ""
-"υπάρχουν σημεία έξω από την καθορισμένη 2Δ/3Δ περιοχή --αγνοούνται %d σημεία"
+msgstr "υπάρχουν σημεία έξω από την καθορισμένη 2Δ/3Δ περιοχή --αγνοούνται %d σημεία"
 
 #: ../lib/rst/interp_float/vinput2d.c:331
 #, fuzzy, c-format
@@ -4038,12 +3867,8 @@ msgstr "αγνοούνται %d σημεία -- πολύ πυκνά"
 
 #: ../lib/rst/interp_float/vinput2d.c:335
 #, c-format
-msgid ""
-"%d points given for interpolation (after thinning) is less than given NPMIN=%"
-"d"
-msgstr ""
-"%d τα σημεία που δώθηκαν για παρεμβολή (after thinning) είναι μικρότερα από "
-"το δωσμένο NPMIN=%d"
+msgid "%d points given for interpolation (after thinning) is less than given NPMIN=%d"
+msgstr "%d τα σημεία που δώθηκαν για παρεμβολή (after thinning) είναι μικρότερα από το δωσμένο NPMIN=%d"
 
 #: ../lib/rst/interp_float/vinput2d.c:340
 msgid "Zero points in the given region"
@@ -4051,20 +3876,13 @@ msgstr ""
 
 #: ../lib/rst/interp_float/vinput2d.c:345
 #, c-format
-msgid ""
-"Segmentation parameters set to invalid values: npmin= %d, segmax= %d for "
-"smooth connection of segments, npmin > segmax (see manual)"
+msgid "Segmentation parameters set to invalid values: npmin= %d, segmax= %d for smooth connection of segments, npmin > segmax (see manual)"
 msgstr ""
 
 #: ../lib/rst/interp_float/vinput2d.c:351
 #, c-format
-msgid ""
-"There are less than %d points for interpolation. No segmentation is "
-"necessary, to run the program faster set segmax=%d (see manual)"
-msgstr ""
-"Υπάρχουν λιγότερα από %d σημεία για παρεμβολή. Δεν είναι απαραίτητος ο "
-"διαμελισμός , για να τρέξετε το πρόγραμμα γρηγορότερα δώστε segmax=%d (δείτε "
-"οδηγίες)"
+msgid "There are less than %d points for interpolation. No segmentation is necessary, to run the program faster set segmax=%d (see manual)"
+msgstr "Υπάρχουν λιγότερα από %d σημεία για παρεμβολή. Δεν είναι απαραίτητος ο διαμελισμός , για να τρέξετε το πρόγραμμα γρηγορότερα δώστε segmax=%d (δείτε οδηγίες)"
 
 #: ../lib/rst/interp_float/vinput2d.c:355
 #, fuzzy, c-format
@@ -4102,9 +3920,7 @@ msgstr "Τύπος δεδομένων που χρησιμοποιήθηκε στο αρχείο εξαγωγής"
 
 #: ../lib/g3d/g3dparam.c:61
 msgid "Precision used in the output file (default, max, or 0 to 52)"
-msgstr ""
-"Ακρίβεια που χρησιμοποιήθηκε στο αρχείο εξαγωγής (προεπιλεγμένο, max, ή 0 με "
-"52)"
+msgstr "Ακρίβεια που χρησιμοποιήθηκε στο αρχείο εξαγωγής (προεπιλεγμένο, max, ή 0 με 52)"
 
 #: ../lib/g3d/g3dparam.c:71
 msgid "The compression method used in the output file"
@@ -4160,8 +3976,7 @@ msgstr "G3d_openCellOld: η ζώνη δεν ταιριάζει με τη ζώνη του παραθύρου"
 
 #: ../lib/g3d/g3dopen.c:140 ../lib/g3d/g3dopen.c:157
 msgid "G3d_openCellOld: can't read header"
-msgstr ""
-"G3d_openCellOld: δεν είναι δυνατή η ανάγνωση της κεφαλίδας αρχείου (header)"
+msgstr "G3d_openCellOld: δεν είναι δυνατή η ανάγνωση της κεφαλίδας αρχείου (header)"
 
 #: ../lib/g3d/g3dopen.c:146
 msgid "G3d_openCellOld: index does not fit into long"
@@ -4211,9 +4026,7 @@ msgstr ""
 
 #: ../lib/arraystats/class.c:221
 #, c-format
-msgid ""
-"There are classbreaks outside the range min-max. Number of classes reduced "
-"to %i, but using probabilities for %i classes."
+msgid "There are classbreaks outside the range min-max. Number of classes reduced to %i, but using probabilities for %i classes."
 msgstr ""
 
 #: ../lib/ogsf/GVL2.c:248
@@ -4300,12 +4113,8 @@ msgstr "Color Material: %d"
 
 #: ../lib/ogsf/gsd_prim.c:630
 #, c-format
-msgid ""
-"gsd_rot(): %c is an invalid axis specification. Rotation ignored. Please "
-"advise GRASS developers of this error"
-msgstr ""
-"gsd_rot(): %c είναι ένας εσφαλμένος άξονας. Η στρέψη αγνοείται. Παρακαλώ "
-"ενημερώστε τους προγραμματιστές του GRASS για το λάθος αυτό"
+msgid "gsd_rot(): %c is an invalid axis specification. Rotation ignored. Please advise GRASS developers of this error"
+msgstr "gsd_rot(): %c είναι ένας εσφαλμένος άξονας. Η στρέψη αγνοείται. Παρακαλώ ενημερώστε τους προγραμματιστές του GRASS για το λάθος αυτό"
 
 #: ../lib/ogsf/gsd_img_tif.c:64 ../lib/ogsf/gsd_img_ppm.c:53
 #: ../lib/ogsf/gsd_img_ppm.c:96 ../lib/ogsf/GK2.c:219
@@ -4331,9 +4140,7 @@ msgstr "Φόρτωση του raster χάρτη <%s>..."
 #: ../lib/ogsf/Gs3.c:647
 #, c-format
 msgid "Color table range doesn't match data (mincol=%d, maxcol=%d"
-msgstr ""
-"Το εύρος του χρωματικού πίνακα δεν ταιριάζει με τα δεδομένα (mincol=%d, "
-"maxcol=%d"
+msgstr "Το εύρος του χρωματικού πίνακα δεν ταιριάζει με τα δεδομένα (mincol=%d, maxcol=%d"
 
 #: ../lib/ogsf/Gs3.c:709 ../lib/ogsf/Gs3.c:781
 #, c-format
@@ -4342,8 +4149,7 @@ msgstr "Μεταφράζονταις χρώματα για τον ράστερ χάρτη <%s>..."
 
 #: ../lib/ogsf/Gs3.c:1020
 msgid "View not saved by this program,there may be some inconsistancies"
-msgstr ""
-"Η όψη δεν έχει σωθεί από το πρόγραμμα, μάλλον υπάρχουν κάποιες ασυνέχειες"
+msgstr "Η όψη δεν έχει σωθεί από το πρόγραμμα, μάλλον υπάρχουν κάποιες ασυνέχειες"
 
 #: ../lib/ogsf/gsds.c:109
 msgid "Maximum number of datasets exceeded"
@@ -4352,9 +4158,7 @@ msgstr "Το μέγιστων των datasets ξεπεράστηκε"
 #: ../lib/ogsf/Gv3.c:249
 #, c-format
 msgid "No features from vector map <%s> fall within current region"
-msgstr ""
-"Δεν υπάρχουν δεδομένα για τον διανυσματικό χάρτη <%s> που να βρίσκονται στην "
-"τρέχουσα περιοχή"
+msgstr "Δεν υπάρχουν δεδομένα για τον διανυσματικό χάρτη <%s> που να βρίσκονται στην τρέχουσα περιοχή"
 
 #: ../lib/ogsf/Gv3.c:254
 #, c-format
@@ -4378,8 +4182,7 @@ msgstr ""
 #: ../lib/ogsf/GS2.c:1635
 #, c-format
 msgid "Raster map <%s> is outside of current region. Load failed."
-msgstr ""
-"Ο ράστερ χάρτης <%s> είναι έξω από την τρέχουσα περιοχή. Η φόρτωση απέτυχε."
+msgstr "Ο ράστερ χάρτης <%s> είναι έξω από την τρέχουσα περιοχή. Η φόρτωση απέτυχε."
 
 #: ../lib/ogsf/GS2.c:1713 ../lib/ogsf/GS2.c:1719 ../lib/ogsf/GS2.c:1727
 #: ../lib/ogsf/GS2.c:1736 ../lib/ogsf/GS2.c:1744 ../lib/ogsf/GS2.c:1754
@@ -4402,8 +4205,7 @@ msgstr "Μέγιστος αριθμός ταμπελών!"
 #: ../lib/ogsf/Gp3.c:204
 #, c-format
 msgid "No points from vector map <%s> fall within current region"
-msgstr ""
-"Δεν υπάρχουν σημεία στον διανυσματικό χάρτη <%s> που να πέφτουν στην περιοχή"
+msgstr "Δεν υπάρχουν σημεία στον διανυσματικό χάρτη <%s> που να πέφτουν στην περιοχή"
 
 #: ../lib/ogsf/Gp3.c:209
 #, c-format
@@ -4449,9 +4251,7 @@ msgstr "Ανοίγω MPEG stream <%s>..."
 
 #: ../lib/ogsf/gsd_img_mpeg.c:306
 msgid "Unable to deduce output format from file extension: using MPEG"
-msgstr ""
-"Δεν μπορώ να καταλάνω τον τύπο εξαγώμενου αρχείου από την κατάληξη: "
-"χρησιμοποιώ MPEG"
+msgstr "Δεν μπορώ να καταλάνω τον τύπο εξαγώμενου αρχείου από την κατάληξη: χρησιμοποιώ MPEG"
 
 #: ../lib/ogsf/gsd_img_mpeg.c:310
 msgid "Unable to find suitable output format"
@@ -4477,9 +4277,7 @@ msgstr "Αδυναμία ανάγνωσης διανυσματικού χάρτη - εξτός μνήμης"
 #: ../lib/db/dbmi_base/legal_dbname.c:25
 #, c-format
 msgid "Illegal table map name <%s>. May not contain '.' or 'NULL'.\n"
-msgstr ""
-"Μη επιτρεπτή ονομασία πίνακα <%s>. Δεν πρέπει να περιέχει  '.'  ή 'να είναι "
-"κενός'.\n"
+msgstr "Μη επιτρεπτή ονομασία πίνακα <%s>. Δεν πρέπει να περιέχει  '.'  ή 'να είναι κενός'.\n"
 
 #: ../lib/db/dbmi_base/legal_dbname.c:33
 #, c-format
@@ -4489,9 +4287,7 @@ msgstr "Μη επιτρεπτή ονομασία πίνακα <%s>. Πρέπει να ξεκινά με γράμμα.\n"
 #: ../lib/db/dbmi_base/legal_dbname.c:43
 #, c-format
 msgid "Illegal table map name <%s>. Character <%c> not allowed.\n"
-msgstr ""
-"Μη επιτρεπτή ονομασία πίνακα <%s>. Ο χαρακτήρας <%c> δεν πρέπει να "
-"χρησιμοποιηθεί.\n"
+msgstr "Μη επιτρεπτή ονομασία πίνακα <%s>. Ο χαρακτήρας <%c> δεν πρέπει να χρησιμοποιηθεί.\n"
 
 #: ../lib/db/dbmi_base/login.c:98
 msgid "Login file corrupted"
@@ -4600,9 +4396,7 @@ msgid "Memory error in allocating timestamp"
 msgstr ""
 
 #: ../lib/sites/sites.c:348 ../lib/sites/sites.c:478
-msgid ""
-"Dev note: Adapted sites library used for vector points. (module should be "
-"updated to GRASS 6 vector library)"
+msgid "Dev note: Adapted sites library used for vector points. (module should be updated to GRASS 6 vector library)"
 msgstr ""
 
 #: ../lib/sites/sites.c:397
@@ -4934,8 +4728,7 @@ msgstr "Η διαδικασία δεν είναι ακόμη διαθέσιμη για το επιλεγμένο τύπο πίνακα"
 
 #: ../lib/gmath/la.c:576
 msgid "Matrix is not square. Cannot determine inverse"
-msgstr ""
-"Ο πίνακας δεν είναι τετράγωνικός. Δεν μπορεί να καθοριστεί ο αντίστροφος"
+msgstr "Ο πίνακας δεν είναι τετράγωνικός. Δεν μπορεί να καθοριστεί ο αντίστροφος"
 
 #: ../lib/gmath/la.c:581
 msgid "Unable to allocate space for matrix"
@@ -4980,8 +4773,7 @@ msgstr "Η γραμμή του καθορισμένου πίνακα είναι έξω από τα όρια"
 
 #: ../lib/gmath/la.c:836
 msgid "Specified column index is outside range"
-msgstr ""
-"Ο δείκτης γραμμή της στήλης του καθορισμένου πίνακα είναι έξω από τα όρια"
+msgstr "Ο δείκτης γραμμή της στήλης του καθορισμένου πίνακα είναι έξω από τα όρια"
 
 #: ../lib/gmath/la.c:856
 msgid "Unknown vector type."
@@ -5092,8 +4884,7 @@ msgstr "Αδυναμία εύρεσης αρχείων [%s] του γρουπ [%s in %s]"
 #: ../lib/imagery/fopen.c:79
 #, c-format
 msgid "Unable to create file [%s] for subgroup [%s] of group [%s in %s]"
-msgstr ""
-"Αδυναμία δημιουργίας αρχείου [%s] για το subgroup [%s] του group [%s in %s]"
+msgstr "Αδυναμία δημιουργίας αρχείου [%s] για το subgroup [%s] του group [%s in %s]"
 
 #: ../lib/imagery/fopen.c:101 ../lib/imagery/fopen.c:127
 #, c-format
@@ -5130,6 +4921,27 @@ msgstr ""
 msgid "subgroup <%s> of group <%s> references the following raster maps\n"
 msgstr ""
 
+msgid "taking too long to find points for interpolation--please change the region to area where your points are. Continuing calculations..."
+msgstr "Παίρνει πάρα πολύ χρόνο να βρω τα σημεία για παρεμβολή -- παρακαλώ αλλάξτε την περιοχή σε μία άλλη που να βρίσκονται τα σημεία σας. Συνεχίζω τους υπολογισμούς..."
+
+msgid "Reading lines from vector map ... "
+msgstr "Διαβάζω γραμμές από τον διανυσματικό χάρτη..."
+
+msgid "Reading nodes from vector map ... "
+msgstr "Διαβάζω τους κόμβους από τον διανυσματικό χάρτη..."
+
+msgid "strip exists with insufficient data"
+msgstr "strip υπάρχει με ανεπαρκή δεδομένα"
+
+msgid "there are points outside specified 2D/3D region--ignored %d points"
+msgstr "υπάρχουν σημεία έξω από την καθορισμένη 2Δ/3Δ περιοχή --αγνοούνται %d σημεία"
+
+msgid "ignoring %d points -- too dense"
+msgstr "αγνοούνται %d σημεία -- πολύ πυκνά"
+
+msgid "some points outside of region -- will ignore..."
+msgstr "κάποια σημεία έξω από την περιοχή -- θα αγνοηθούν..."
+
 #~ msgid "Unable to feature %d from vector map <%s>"
 #~ msgstr "Αδυναμία σε feature %d από τον διανυσματικό χάρτη <%s>"
 
@@ -5146,13 +4958,10 @@ msgstr ""
 #~ msgstr "Το διάνυσμα δεν είναι 3Δ"
 
 #~ msgid "Cannot find z column <%s> (please verify name, e.g. with v.info)"
-#~ msgstr ""
-#~ "Δεν μπορώ να βρώ την στήλη z <%s> (παρακαλώ επιβεβαιώστε το όνομα, e.g. "
-#~ "with v.info)"
+#~ msgstr "Δεν μπορώ να βρώ την στήλη z <%s> (παρακαλώ επιβεβαιώστε το όνομα, e.g. with v.info)"
 
 #~ msgid "Column type of z column is not supported (must be integer or double)"
-#~ msgstr ""
-#~ "Ο τύπος στήλης z δεν υποστηρίζεται (πρέπει να είναι ακέραιος ή διπλός)"
+#~ msgstr "Ο τύπος στήλης z δεν υποστηρίζεται (πρέπει να είναι ακέραιος ή διπλός)"
 
 #~ msgid "Cannot read column type of smooth column"
 #~ msgstr "Δεν είναι δυνατή η ανάγνωση του τύπου στήλης της smooth στήλης"
@@ -5161,9 +4970,7 @@ msgstr ""
 #~ msgstr "Ο τύπος στήλης ή smooth στήλη (datetime) δεν υποστηρίζεται"
 
 #~ msgid "Column type of s column is not supported (must be integer or double)"
-#~ msgstr ""
-#~ "Ο τύπος στήλης της s στήλης δεν υποστηρίζεται (πρέπει να είναι ακέραιος ή "
-#~ "διπλός)"
+#~ msgstr "Ο τύπος στήλης της s στήλης δεν υποστηρίζεται (πρέπει να είναι ακέραιος ή διπλός)"
 
 #~ msgid "The linear equation system is not quadratic"
 #~ msgstr "Η γραμμική συνάρτηση δεν είναι 2ου βαθμού"
@@ -5181,9 +4988,7 @@ msgstr ""
 #~ msgstr "G_gisinit() πρέπει να κληθεί πρώτη. "
 
 #~ msgid "Please advise GRASS developers of this error.\n"
-#~ msgstr ""
-#~ "Παρακαλώ ενημερώστε τους προγραμματιστές του GRASS για αυτό το μήνυμα "
-#~ "λάθους.\n"
+#~ msgstr "Παρακαλώ ενημερώστε τους προγραμματιστές του GRASS για αυτό το μήνυμα λάθους.\n"
 
 #~ msgid "Unable to delete layer/category %d/%d line %d"
 #~ msgstr "Αδυναμία διαγραφής στρώμα/κατηγορία %d/%d γραμμή %d"
@@ -5233,34 +5038,6 @@ msgstr ""
 #~ msgid "Cannot open database %s"
 #~ msgstr "Δεν μπορώ να ανοίξω την βάση δεδομένων %s"
 
-#~ msgid ""
-#~ "taking too long to find points for interpolation--please change the "
-#~ "region to area where your points are. Continuing calculations..."
-#~ msgstr ""
-#~ "Παίρνει πάρα πολύ χρόνο να βρω τα σημεία για παρεμβολή -- παρακαλώ "
-#~ "αλλάξτε την περιοχή σε μία άλλη που να βρίσκονται τα σημεία σας. Συνεχίζω "
-#~ "τους υπολογισμούς..."
-
-#~ msgid "Reading lines from vector map ... "
-#~ msgstr "Διαβάζω γραμμές από τον διανυσματικό χάρτη..."
-
-#~ msgid "Reading nodes from vector map ... "
-#~ msgstr "Διαβάζω τους κόμβους από τον διανυσματικό χάρτη..."
-
-#~ msgid "strip exists with insufficient data"
-#~ msgstr "strip υπάρχει με ανεπαρκή δεδομένα"
-
-#~ msgid "there are points outside specified 2D/3D region--ignored %d points"
-#~ msgstr ""
-#~ "υπάρχουν σημεία έξω από την καθορισμένη 2Δ/3Δ περιοχή --αγνοούνται %d "
-#~ "σημεία"
-
-#~ msgid "ignoring %d points -- too dense"
-#~ msgstr "αγνοούνται %d σημεία -- πολύ πυκνά"
-
-#~ msgid "some points outside of region -- will ignore..."
-#~ msgstr "κάποια σημεία έξω από την περιοχή -- θα αγνοηθούν..."
-
 #, fuzzy
 #~ msgid "Nodes marked to be snapped"
 #~ msgstr "Σημεία \"σημαδεμένα\" για σπάσιμο (break)"
@@ -5268,3 +5045,16 @@ msgstr ""
 #, fuzzy
 #~ msgid "Removed bridges"
 #~ msgstr "Περιοχές που αφαιρέθηκαν"
+
+#~ msgid "Unable to delete file '%s'"
+#~ msgstr "Αδυναμία διαγραφής αρχείου '%s'"
+
+#~ msgid "Unable to rename directory '%s' to '%s'"
+#~ msgstr "Αδυναμία μετονομασίας καταλόγου συστήματος '%s' σε '%s'"
+
+#~ msgid "Unable to remove directory '%s'"
+#~ msgstr "Αδυναμία μεταφοράς καταλόγου συστήματος '%s'"
+
+#, fuzzy
+#~ msgid "All vertices"
+#~ msgstr "Όλα τα σημεία (vertices)"

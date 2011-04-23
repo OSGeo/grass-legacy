@@ -14,6 +14,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Language: \n"
 "X-Generator: KBabel 1.11.4\n"
 
 #: ../vector/v.digit/cats.tcl:20 ../gui/tcltk/gis.m/gmmenu.tcl:178
@@ -397,8 +398,7 @@ msgstr "UYARI: ortam değişkenleri belirlenemiyor"
 msgid ""
 "Warning: Unable to get enviromental variable GRASS_PROJSHARE. \n"
 "This is a GRASS installation error. \n"
-"Set enviromental variable GRASS_PROJSHARE to point to directory with Proj4 "
-"EPSG file. "
+"Set enviromental variable GRASS_PROJSHARE to point to directory with Proj4 EPSG file. "
 msgstr ""
 
 #: ../lib/init/epsg_option.tcl:103
@@ -503,10 +503,7 @@ msgid "Select datum transformation parameters:"
 msgstr "Datum dönüşüm parametrelerini seçin:"
 
 #: ../lib/init/epsg_option.tcl:292 ../lib/init/file_option.tcl:245
-msgid ""
-"Continue without specifying parameters - if used when creating a location, "
-"other GRASS modules will use the \"default\" (likely non-optimum) parameters "
-"for this datum if necessary in the future."
+msgid "Continue without specifying parameters - if used when creating a location, other GRASS modules will use the \"default\" (likely non-optimum) parameters for this datum if necessary in the future."
 msgstr ""
 
 #: ../lib/init/epsg_option.tcl:344
@@ -564,8 +561,7 @@ msgstr "UYARI: geçersiz mevki"
 
 #: ../lib/init/gis_set.tcl:132
 #, tcl-format
-msgid ""
-"Warning: location <%s> at GISDBASE <%s> is not a directory or does not exist."
+msgid "Warning: location <%s> at GISDBASE <%s> is not a directory or does not exist."
 msgstr "Uyarı: <%s>GISDBASE deki <%s> mevkisi dizin değil veya mevcut değil."
 
 #: ../lib/init/gis_set.tcl:183
@@ -716,10 +712,7 @@ msgid "Starting GRASS for the first time"
 msgstr ""
 
 #: ../lib/init/gis_set.tcl:584
-msgid ""
-"GRASS needs a directory in which to store its data.  Create one now if you "
-"have not already done so.  A popular choice is \"grassdata\", located in "
-"your home directory."
+msgid "GRASS needs a directory in which to store its data.  Create one now if you have not already done so.  A popular choice is \"grassdata\", located in your home directory."
 msgstr ""
 
 #: ../lib/init/gis_set.tcl:589
@@ -776,8 +769,7 @@ msgstr ""
 
 #: ../lib/init/file_option.tcl:73
 msgid "Define location using projection information in georeferenced file"
-msgstr ""
-"Coğrafi referanslı dosyadaki projeksiyon bilgilerini kullanarak mevki belirle"
+msgstr "Coğrafi referanslı dosyadaki projeksiyon bilgilerini kullanarak mevki belirle"
 
 #: ../lib/init/file_option.tcl:96
 msgid "Enter name of location to be created"
@@ -789,9 +781,7 @@ msgstr "Coğrafi referanslı dosya yolu"
 
 #: ../lib/init/file_option.tcl:103
 msgid "Path to georeferenced file (format must be readable by GDAL/OGR)"
-msgstr ""
-"Coğrafi referanslı dosya yolu (GDAL/OGR tarafından okunabilir biçimde "
-"olmalıdır)"
+msgstr "Coğrafi referanslı dosya yolu (GDAL/OGR tarafından okunabilir biçimde olmalıdır)"
 
 #: ../lib/init/file_option.tcl:107
 msgid "Browse to locate georeferenced file"
@@ -1062,8 +1052,7 @@ msgstr "Bölge geometrisi için sınır haritası"
 #: ../gui/tcltk/gis.m/rastnums.tcl:286
 msgid ""
 "Cell values can only be displayed for \n"
-"regions of < 10,000 cells. Map in explore mode may contain more than 10,000 "
-"cells.\n"
+"regions of < 10,000 cells. Map in explore mode may contain more than 10,000 cells.\n"
 "\n"
 " It's suggested to constrain map to region geometry to display cell values."
 msgstr ""
@@ -1520,15 +1509,11 @@ msgid "Could not create TIF"
 msgstr "TIF oluşturulamıyor"
 
 #: ../gui/tcltk/gis.m/georect.tcl:285
-msgid ""
-"There is no raster group file (REF). You must select the 'create/edit group' "
-"option to create a group file."
+msgid "There is no raster group file (REF). You must select the 'create/edit group' option to create a group file."
 msgstr ""
 
 #: ../gui/tcltk/gis.m/georect.tcl:307
-msgid ""
-"There is no vector group file (VREF). You must select the 'create/edit "
-"group' option to create a group file."
+msgid "There is no vector group file (VREF). You must select the 'create/edit group' option to create a group file."
 msgstr ""
 
 #: ../gui/tcltk/gis.m/georect.tcl:388
@@ -1608,9 +1593,7 @@ msgid "4. Select map"
 msgstr "4. Haritayı seç"
 
 #: ../gui/tcltk/gis.m/georect.tcl:683
-msgid ""
-"Select non-georectified raster or vector to display for marking ground "
-"control points"
+msgid "Select non-georectified raster or vector to display for marking ground control points"
 msgstr ""
 
 #: ../gui/tcltk/gis.m/georect.tcl:693
@@ -1639,8 +1622,7 @@ msgstr "1. derece"
 
 #: ../gui/tcltk/gis.m/georect.tcl:1014
 msgid "affine transformation  (rasters & vectors). Requires 3+ GCPs."
-msgstr ""
-"Affin dönüşümü (raster veya vektör). 3 ve üzeri yer kontrol noktası gerekir."
+msgstr "Affin dönüşümü (raster veya vektör). 3 ve üzeri yer kontrol noktası gerekir."
 
 #: ../gui/tcltk/gis.m/georect.tcl:1019
 msgid "2nd order"
@@ -1649,8 +1631,7 @@ msgstr "2. derece"
 #: ../gui/tcltk/gis.m/georect.tcl:1020
 #, fuzzy
 msgid "polynomial transformation  (rasters only). Requires 6+ GCPs."
-msgstr ""
-"Affin dönüşümü (raster veya vektör). 3 ve üzeri yer kontrol noktası gerekir."
+msgstr "Affin dönüşümü (raster veya vektör). 3 ve üzeri yer kontrol noktası gerekir."
 
 #: ../gui/tcltk/gis.m/georect.tcl:1024
 msgid "3rd order"
@@ -1713,22 +1694,15 @@ msgid "Exit georectifier"
 msgstr "Yer uyumlandırıcıdan çık"
 
 #: ../gui/tcltk/gis.m/georect.tcl:1323
-msgid ""
-"There is no POINTS file of ground control points for group. You must create "
-"ground control points before georectifying map."
+msgid "There is no POINTS file of ground control points for group. You must create ground control points before georectifying map."
 msgstr ""
 
 #: ../gui/tcltk/gis.m/georect.tcl:1353
-msgid ""
-"Insufficient ground control points for georectification method. You need at "
-"least 3 points for 1st order, 6 points for 2nd order and 10 points for 3rd "
-"order."
+msgid "Insufficient ground control points for georectification method. You need at least 3 points for 1st order, 6 points for 2nd order and 10 points for 3rd order."
 msgstr ""
 
 #: ../gui/tcltk/gis.m/georect.tcl:1384
-msgid ""
-"No valid ground control points in GCP file. You must create valid ground "
-"control points before georectifying map."
+msgid "No valid ground control points in GCP file. You must create valid ground control points before georectifying map."
 msgstr ""
 
 #: ../gui/tcltk/gis.m/georect.tcl:1587
@@ -1752,9 +1726,7 @@ msgid "Drag with mouse to pan"
 msgstr "Kaydırma için fareyi tıkla yada sürükle"
 
 #: ../gui/tcltk/gis.m/gm.tcl:75
-msgid ""
-"GISDBASE or LOCATION_NAME or MAPSET is empty.  This is a fatal error. gis.m "
-"can not work without proper settings."
+msgid "GISDBASE or LOCATION_NAME or MAPSET is empty.  This is a fatal error. gis.m can not work without proper settings."
 msgstr ""
 
 #: ../gui/tcltk/gis.m/gm.tcl:219 ../gui/tcltk/d.m/d.m.tcl:314
@@ -1806,8 +1778,7 @@ msgid ""
 "\n"
 "This action will colse all sessions gis.m instances.\n"
 "\n"
-"If You have running some  GRASS module from comandline, GRASS will terminate "
-"after it finishes to run."
+"If You have running some  GRASS module from comandline, GRASS will terminate after it finishes to run."
 msgstr ""
 
 #: ../gui/tcltk/gis.m/gm.tcl:543
@@ -1954,9 +1925,7 @@ msgid "Select label font"
 msgstr "Etiket yazıtipini seç"
 
 #: ../gui/tcltk/gis.m/maptext.tcl:129
-msgid ""
-"Create postscript text object (for postscript eps, pdf, and print output "
-"only)"
+msgid "Create postscript text object (for postscript eps, pdf, and print output only)"
 msgstr ""
 
 #: ../gui/tcltk/gis.m/maptext.tcl:136
@@ -2303,14 +2272,13 @@ msgid "Graduated colors: preset color schemes"
 msgstr ""
 
 #: ../gui/tcltk/gis.m/thematic.tcl:380
-#, fuzzy
 msgid "blue red"
-msgstr "Tablo"
+msgstr ""
 
 #: ../gui/tcltk/gis.m/thematic.tcl:380
 #, fuzzy
 msgid "red blue"
-msgstr "Tablo"
+msgstr "Tablo oluştur"
 
 #: ../gui/tcltk/gis.m/thematic.tcl:380
 msgid "green red"
@@ -2445,8 +2413,7 @@ msgstr "Katman sil"
 
 #: ../gui/tcltk/gis.m/gmtool2.tcl:84 ../gui/tcltk/d.m/tool1.tcl:121
 msgid "Create new workspace file (erase current workspace settings first)"
-msgstr ""
-"Yeni çalışma alanı dosyası oluştur (önce geçerli çalışma ayarlarını sil)"
+msgstr "Yeni çalışma alanı dosyası oluştur (önce geçerli çalışma ayarlarını sil)"
 
 #: ../gui/tcltk/gis.m/gmtool2.tcl:90 ../gui/tcltk/d.m/tool1.tcl:124
 msgid "Open existing workspace file"
@@ -2475,8 +2442,7 @@ msgstr "%s için lejand"
 
 #: ../gui/tcltk/gis.m/legend.tcl:193
 msgid "Display legend for raster map using cat values and labels"
-msgstr ""
-"kategori değerleri ve etiketleri kullanarak raster haritanın lejandını göster"
+msgstr "kategori değerleri ve etiketleri kullanarak raster haritanın lejandını göster"
 
 #: ../gui/tcltk/gis.m/legend.tcl:210
 msgid "Raster map: "
@@ -4135,9 +4101,8 @@ msgid "Univariate attribute statistics"
 msgstr ""
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:542
-#, fuzzy
 msgid "Attribute classification"
-msgstr "   Etiket için öznitelik sütunu"
+msgstr ""
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:544
 msgid "Quadrat indices"
@@ -4442,8 +4407,7 @@ msgid "chart for %s"
 msgstr "%s in çizelgesi"
 
 #: ../gui/tcltk/gis.m/chart.tcl:185
-msgid ""
-"Display pie and bar charts of attribute values at vector object locations"
+msgid "Display pie and bar charts of attribute values at vector object locations"
 msgstr ""
 
 #: ../gui/tcltk/gis.m/chart.tcl:202 ../gui/tcltk/d.m/chart.tcl:91
@@ -5066,8 +5030,7 @@ msgid "Raster map for blue or saturation channel"
 msgstr ""
 
 #: ../gui/tcltk/gis.m/rgbhis.tcl:136
-msgid ""
-"Display 3 raster maps as Red/Green/Blue or Hue/Intensity/Saturation channels"
+msgid "Display 3 raster maps as Red/Green/Blue or Hue/Intensity/Saturation channels"
 msgstr ""
 
 #: ../gui/tcltk/gis.m/rgbhis.tcl:155 ../gui/tcltk/d.m/rgbhis.tcl:128
@@ -5966,8 +5929,7 @@ msgstr "Güncel mevkideki diğer harita takımlarına erişim"
 
 #: ../gui/tcltk/d.m/menu.tcl:196
 msgid "Change current working session to new mapset, location, or GISDBASE"
-msgstr ""
-"Geçerli çalışma oturumunu yeni harita takımı, mevki, veya GISDBASE'e değiştir"
+msgstr "Geçerli çalışma oturumunu yeni harita takımı, mevki, veya GISDBASE'e değiştir"
 
 #: ../gui/tcltk/d.m/menu.tcl:197
 msgid "Modify access by other users to current mapset"
@@ -6098,9 +6060,7 @@ msgid "Create color image from RGB files"
 msgstr ""
 
 #: ../gui/tcltk/d.m/menu.tcl:250
-msgid ""
-"Create 3 RGB (red, green, blue) maps from 3 HIS (hue, intensity, saturation) "
-"maps"
+msgid "Create 3 RGB (red, green, blue) maps from 3 HIS (hue, intensity, saturation) maps"
 msgstr ""
 
 #: ../gui/tcltk/d.m/menu.tcl:255
@@ -6217,9 +6177,7 @@ msgstr ""
 
 #: ../gui/tcltk/d.m/menu.tcl:320
 msgid "Edit category values of individual cells for displayed raster map"
-msgstr ""
-"Görüntülenen raster haritanın hücrelerinin kategori değerlerini tek tek "
-"düzelt"
+msgstr "Görüntülenen raster haritanın hücrelerinin kategori değerlerini tek tek düzelt"
 
 #: ../gui/tcltk/d.m/menu.tcl:323
 msgid "Reclassify categories for areas of specified sizes"
@@ -6247,9 +6205,7 @@ msgstr "Kategorileri yeniden ölçeklendir (yeni harita oluştur)"
 
 #: ../gui/tcltk/d.m/menu.tcl:331
 msgid "Rescale categories with equalized histogram (create new map)"
-msgstr ""
-"Kategorileri eşitlenmiş histograma göre yeniden ölçeklendir (yeni harita "
-"oluştur)"
+msgstr "Kategorileri eşitlenmiş histograma göre yeniden ölçeklendir (yeni harita oluştur)"
 
 #: ../gui/tcltk/d.m/menu.tcl:334
 msgid "Generate concentric circles around points"
@@ -6437,15 +6393,11 @@ msgid "Create stationing from imput lines, and linear reference system"
 msgstr ""
 
 #: ../gui/tcltk/d.m/menu.tcl:416
-msgid ""
-"Create points/segments from input lines, linear reference system and "
-"positions read from stdin"
+msgid "Create points/segments from input lines, linear reference system and positions read from stdin"
 msgstr ""
 
 #: ../gui/tcltk/d.m/menu.tcl:417
-msgid ""
-"Find line id and real km+offset for given points in vector map using linear "
-"reference system"
+msgid "Find line id and real km+offset for given points in vector map using linear reference system"
 msgstr ""
 
 #: ../gui/tcltk/d.m/menu.tcl:420
@@ -6565,18 +6517,15 @@ msgid "Mosaic up to 4 adjacent images"
 msgstr "4 komşu görüntüye kadar yanyana birleştirme"
 
 #: ../gui/tcltk/d.m/menu.tcl:484
-msgid ""
-"Color balance and enhance color tables of multiband imagery for rgb display"
+msgid "Color balance and enhance color tables of multiband imagery for rgb display"
 msgstr ""
 
 #: ../gui/tcltk/d.m/menu.tcl:485
-msgid ""
-"Transform HIS (Hue/Intensity/Saturation) color image to RGB (Red/Green/Blue)"
+msgid "Transform HIS (Hue/Intensity/Saturation) color image to RGB (Red/Green/Blue)"
 msgstr ""
 
 #: ../gui/tcltk/d.m/menu.tcl:486
-msgid ""
-"Transform RGB (Red/Green/Blue) color image to HIS (Hue/Intensity/Saturation)"
+msgid "Transform RGB (Red/Green/Blue) color image to HIS (Hue/Intensity/Saturation)"
 msgstr ""
 
 #: ../gui/tcltk/d.m/menu.tcl:488
@@ -6585,15 +6534,11 @@ msgstr "Görüntü grubunu düzeltme ve yer uyumlandırma"
 
 #: ../gui/tcltk/d.m/menu.tcl:489
 msgid "Set ground control points (GCP's) from raster map or keyboard entry"
-msgstr ""
-"Yer kontrol noktalarını (GCP's) raster haritadan veya klavye ile girerek "
-"ayarla"
+msgstr "Yer kontrol noktalarını (GCP's) raster haritadan veya klavye ile girerek ayarla"
 
 #: ../gui/tcltk/d.m/menu.tcl:491
 msgid "Set ground control points (GCP's) from vector map or keyboard entry"
-msgstr ""
-"Yer kontrol noktalarını (GCP's) vektör haritadan veya klavye ile girerek "
-"ayarla"
+msgstr "Yer kontrol noktalarını (GCP's) vektör haritadan veya klavye ile girerek ayarla"
 
 #: ../gui/tcltk/d.m/menu.tcl:493
 msgid "Affine and Polynomial rectification (rubber sheet)"
@@ -6705,9 +6650,7 @@ msgstr "  metni koordinat notası ile hizala"
 
 #: ../gui/tcltk/d.m/fttext.tcl:120
 #, tcl-format
-msgid ""
-"     (for coordinates, % is from bottom left of display, pixels from top "
-"left)"
+msgid "     (for coordinates, % is from bottom left of display, pixels from top left)"
 msgstr ""
 
 #: ../gui/tcltk/d.m/fttext.tcl:126
@@ -6756,12 +6699,10 @@ msgstr ""
 #~ msgstr "UYARI: Yeni mevki oluşturmada hata"
 
 #~ msgid ""
-#~ "Error creating new location from georeferenced file.  g.proj returned "
-#~ "following message:\n"
+#~ "Error creating new location from georeferenced file.  g.proj returned following message:\n"
 #~ "\n"
 #~ "%s"
 #~ msgstr ""
-#~ "coğrafi referanslı dosyadan yeni mevki oluşturmada hata. g.proj komutu "
-#~ "takip eden mesajı verdi:\n"
+#~ "coğrafi referanslı dosyadan yeni mevki oluşturmada hata. g.proj komutu takip eden mesajı verdi:\n"
 #~ "\n"
 #~ "%s"
