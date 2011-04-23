@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: grassmods_vi\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-04-18 22:47+0200\n"
+"POT-Creation-Date: 2011-04-23 15:34+0200\n"
 "PO-Revision-Date: 2010-08-27 14:37+0700\n"
 "Last-Translator: \n"
 "Language-Team: American English <kde-i18n-doc@kde.org>\n"
@@ -53,7 +53,8 @@ msgstr "Chặn in ra thông tin header"
 msgid "Use G3D mask (if exists) with input map"
 msgstr "Dùng mặt nạ G3D (nếu có) với bản đồ đầu vào"
 
-#: ../raster3d/r3.out.ascii/main.c:244
+#: ../raster3d/r3.out.ascii/main.c:244 ../raster3d/r3.out.vtk/main.c:376
+#: ../raster3d/r3.out.v5d/main.c:289
 msgid "raster3d, voxel, export"
 msgstr "raster 3D, voxel, xuất"
 
@@ -103,7 +104,7 @@ msgstr ""
 "Dữ liệu tồn tại trong tập tin đầu vào sau khi nhập toàn bộ dữ liệu mong "
 "đợi.  [%.4f ...]"
 
-#: ../raster3d/r3.in.ascii/main.c:240
+#: ../raster3d/r3.in.ascii/main.c:240 ../raster3d/r3.in.v5d/main.c:193
 msgid "raster3d, voxel, import"
 msgstr "raster 3D, voxel, nhập"
 
@@ -155,11 +156,9 @@ msgid "Could not write raster row"
 msgstr "Không thể ghi hàng raster"
 
 #: ../raster3d/r3.cross.rast/main.c:270 ../raster3d/r3.to.rast/main.c:215
-#: ../raster3d/r3.out.vtk/main.c:376 ../raster3d/r3.gwflow/main.c:168
-#: ../raster3d/r3.mkdspf/main.c:75 ../raster3d/r3.in.v5d/main.c:193
+#: ../raster3d/r3.gwflow/main.c:168 ../raster3d/r3.mkdspf/main.c:75
 #: ../raster3d/base/r3.null.main.c:205 ../raster3d/base/r3.info.main.c:78
 #: ../raster3d/base/r3.timestamp.main.c:43 ../raster3d/base/r3.mask.main.c:153
-#: ../raster3d/r3.out.v5d/main.c:289
 msgid "raster3d, voxel"
 msgstr "raster 3D, thể tích voxel"
 
@@ -764,7 +763,8 @@ msgid "Writing %s from %s..."
 msgstr "Đang ghi %s từ %s..."
 
 #: ../raster3d/r3.stats/main.c:568 ../raster/r.univar2/r3.univar_main.c:104
-msgid "raster3d, statistics"
+#, fuzzy
+msgid "raster3d, voxel, statistics"
 msgstr "raster3d, thống kê"
 
 #: ../raster3d/r3.stats/main.c:569
@@ -937,26 +937,27 @@ msgstr "Chỉ in ra đánh dấu thời gian của bản đồ raster 3D (ng.th.
 #: ../raster/r.carve/main.c:178 ../raster/r.report/parse.c:243
 #: ../raster/r.composite/main.c:155 ../raster/r.flow/io.c:65
 #: ../raster/r.sum/main.c:62 ../raster/r.topidx/check_ready.c:11
-#: ../raster/r.univar2/r.univar_main.c:216 ../raster/r.resamp.stats/main.c:296
-#: ../raster/r.region/main.c:166 ../raster/r.region/main.c:225
-#: ../raster/r.region/main.c:348 ../raster/r.param.scale/interface.c:172
-#: ../raster/r.support.stats/main.c:49 ../raster/r.neighbors/main.c:193
-#: ../raster/r.bitpattern/main.c:101 ../general/g.mremove/do_remove.c:50
-#: ../general/g.region/main.c:477 ../general/g.region/main.c:820
-#: ../general/g.region/main.c:828 ../display/d.profile/main.c:94
-#: ../display/d.rast.arrow/arrow.c:195 ../display/d.rast.arrow/arrow.c:237
-#: ../display/d.rast.arrow/arrow.c:372 ../display/d.extend/main.c:60
-#: ../display/d.legend/main.c:256 ../display/d.rgb/main.c:95
-#: ../display/d.his/main.c:137 ../display/d.his/main.c:174
-#: ../display/d.his/main.c:199 ../display/d.what.rast/main.c:155
-#: ../display/d.what.rast/opencell.c:13 ../display/d.colortable/main.c:95
-#: ../display/d.histogram/main.c:162 ../display/d.title/main.c:105
-#: ../display/d.rast/main.c:111 ../display/d.rast.num/number.c:149
-#: ../display/d.nviz/main.c:184 ../display/d.zoom/main.c:208
-#: ../vector/v.sample/main.c:158 ../vector/v.vol.rst/main.c:606
-#: ../vector/v.extrude/main.c:179 ../vector/v.drape/main.c:245
-#: ../vector/v.what.rast/main.c:138 ../visualization/xganim/main.c:366
-#: ../visualization/nviz2/cmd/surface.c:54
+#: ../raster/r.univar2/r.univar_main.c:216
+#: ../raster/r.regression.line/main.c:86 ../raster/r.regression.line/main.c:95
+#: ../raster/r.resamp.stats/main.c:296 ../raster/r.region/main.c:166
+#: ../raster/r.region/main.c:225 ../raster/r.region/main.c:348
+#: ../raster/r.param.scale/interface.c:172 ../raster/r.support.stats/main.c:49
+#: ../raster/r.neighbors/main.c:193 ../raster/r.bitpattern/main.c:101
+#: ../general/g.mremove/do_remove.c:50 ../general/g.region/main.c:477
+#: ../general/g.region/main.c:820 ../general/g.region/main.c:828
+#: ../display/d.profile/main.c:94 ../display/d.rast.arrow/arrow.c:195
+#: ../display/d.rast.arrow/arrow.c:237 ../display/d.rast.arrow/arrow.c:372
+#: ../display/d.extend/main.c:60 ../display/d.legend/main.c:256
+#: ../display/d.rgb/main.c:95 ../display/d.his/main.c:137
+#: ../display/d.his/main.c:174 ../display/d.his/main.c:199
+#: ../display/d.what.rast/main.c:155 ../display/d.what.rast/opencell.c:13
+#: ../display/d.colortable/main.c:95 ../display/d.histogram/main.c:162
+#: ../display/d.title/main.c:105 ../display/d.rast/main.c:111
+#: ../display/d.rast.num/number.c:149 ../display/d.nviz/main.c:185
+#: ../display/d.zoom/main.c:208 ../vector/v.sample/main.c:158
+#: ../vector/v.vol.rst/main.c:606 ../vector/v.extrude/main.c:179
+#: ../vector/v.drape/main.c:245 ../vector/v.what.rast/main.c:138
+#: ../visualization/xganim/main.c:366 ../visualization/nviz2/cmd/surface.c:54
 #: ../visualization/nviz2/cmd/surface.c:104 ../doc/raster/r.example/main.c:111
 #: ../ps/ps.map/outl_io.c:68 ../imagery/i.pca/main.c:136
 #: ../imagery/i.zc/main.c:111 ../imagery/i.rgb.his/openfiles.c:14
@@ -1120,9 +1121,12 @@ msgstr "Không thể tạo tập tin <%s>"
 msgid "World File = %s"
 msgstr "Tập tin World = %s"
 
-#: ../raster/r.out.bin/main.c:279 ../raster/r.out.mat/main.c:64
-#: ../raster/r.out.ascii/main.c:59 ../raster/r.out.ppm/main.c:54
-#: ../raster/r.out.tiff/r.out.tiff.c:99 ../raster/r.out.gdal/main.c:128
+#: ../raster/r.out.bin/main.c:279 ../raster/r.out.gridatb/main.c:44
+#: ../raster/r.out.mat/main.c:64 ../raster/r.out.pov/main.c:121
+#: ../raster/r.out.ascii/main.c:59 ../raster/r.out.vtk/main.c:148
+#: ../raster/r.out.ppm/main.c:54 ../raster/r.out.ppm3/main.c:57
+#: ../raster/r.out.mpeg/main.c:384 ../raster/r.out.tiff/r.out.tiff.c:99
+#: ../raster/r.out.arc/main.c:60 ../raster/r.out.gdal/main.c:128
 #: ../locale/scriptstrings/r.out.gdal.sh_to_translate.c:2
 #: ../locale/scriptstrings/r.out.xyz_to_translate.c:2
 msgid "raster, export"
@@ -1266,46 +1270,6 @@ msgstr "r=%d"
 msgid "c=%d"
 msgstr "c=%d"
 
-#: ../raster/r.out.gridatb/main.c:44 ../raster/r.median/main.c:46
-#: ../raster/r.his/main.c:63 ../raster/r.out.pov/main.c:121
-#: ../raster/r.describe/main.c:59 ../raster/r.le/r.le.trace/main.c:57
-#: ../raster/r.le/r.le.setup/main.c:61 ../raster/r.le/r.le.patch/main.c:47
-#: ../raster/r.le/r.le.pixel/main.c:45 ../raster/r.surf.gauss/main.c:46
-#: ../raster/r.walk/main.c:174 ../raster/r.sun2/main.c:226
-#: ../raster/r.rescale.eq/main.c:52 ../raster/r.drain/main.c:94
-#: ../raster/r.lake/main.c:148 ../raster/r.compress/main.c:64
-#: ../raster/r.circle/dist.c:51 ../raster/r.sun/main.c:175
-#: ../raster/r.out.vtk/main.c:148 ../raster/r.quant/main.c:41
-#: ../raster/r.bilinear/main.c:42 ../raster/r.in.gridatb/main.c:41
-#: ../raster/r.resample/main.c:54 ../raster/r.patch/main.c:53
-#: ../raster/r.out.ppm3/main.c:57 ../raster/r.transect/main.c:54
-#: ../raster/r.random/main.c:51 ../raster/r.los/main.c:82
-#: ../raster/wildfire/r.spread/main.c:101
-#: ../raster/wildfire/r.spreadpath/main.c:72
-#: ../raster/wildfire/r.ros/main.c:212 ../raster/r.gwflow/main.c:189
-#: ../raster/r.profile/main.c:53 ../raster/r.average/main.c:51
-#: ../raster/r.surf.idw2/main.c:60 ../raster/r.watershed/front/main.c:56
-#: ../raster/r.info/main.c:69 ../raster/r.surf.area/main.c:88
-#: ../raster/r.covar/main.c:53 ../raster/r.rescale/main.c:50
-#: ../raster/r.grow2/main.c:128 ../raster/r.out.mpeg/main.c:384
-#: ../raster/r.fill.dir/main.c:84 ../raster/r.cross/main.c:75
-#: ../raster/r.resamp.rst/main.c:156 ../raster/r.texture/main.c:74
-#: ../raster/r.out.arc/main.c:60 ../raster/r.surf.contour/main.c:52
-#: ../raster/r.grow.distance/main.c:130 ../raster/r.topmodel/main.c:55
-#: ../raster/r.reclass/main.c:49 ../raster/r.cats/main.c:51
-#: ../raster/r.kappa/main.c:67 ../raster/r.coin/main.c:66
-#: ../raster/r.digit/main.c:45 ../raster/r.water.outlet/main.c:48
-#: ../raster/r.horizon/main.c:179 ../raster/r.volume/main.c:57
-#: ../raster/r.distance/main.c:38 ../raster/r.carve/main.c:77
-#: ../raster/r.mode/main.c:50 ../raster/r.what.color/main.c:88
-#: ../raster/r.what/main.c:91 ../raster/r.sum/main.c:46
-#: ../raster/r.topidx/main.c:37 ../raster/r.region/main.c:54
-#: ../raster/r.in.mat/main.c:92 ../raster/r.in.arc/main.c:59
-#: ../raster/r.neighbors/main.c:108 ../raster/r.bitpattern/main.c:62
-#: ../locale/scriptstrings/r.blend_to_translate.c:2
-msgid "raster"
-msgstr "raster"
-
 #: ../raster/r.out.gridatb/main.c:46
 msgid "Exports GRASS raster map to GRIDATB.FOR map file (TOPMODEL)"
 msgstr ""
@@ -1334,6 +1298,20 @@ msgstr "Các hàng bị thay đổi"
 #: ../raster/r.out.gridatb/file_io.c:44 ../raster/r.in.gridatb/file_io.c:39
 msgid "Cols changed"
 msgstr "Các cột bị thay đổi"
+
+#: ../raster/r.median/main.c:46 ../raster/r.surf.gauss/main.c:46
+#: ../raster/r.stats/main.c:103 ../raster/r.average/main.c:51
+#: ../raster/r.surf.area/main.c:88 ../raster/r.covar/main.c:53
+#: ../raster/r.cross/main.c:75 ../raster/r.texture/main.c:74
+#: ../raster/r.statistics/main.c:42 ../raster/r.kappa/main.c:67
+#: ../raster/r.coin/main.c:66 ../raster/r.mode/main.c:50
+#: ../raster/r.report/main.c:64 ../raster/r.sum/main.c:46
+#: ../raster/r.univar2/r.univar_main.c:97
+#: ../raster/r.regression.line/main.c:42 ../raster/r.support.stats/main.c:39
+#: ../raster/r.neighbors/main.c:108 ../raster/r.quantile/main.c:254
+#: ../locale/scriptstrings/r.univar.sh_to_translate.c:2
+msgid "raster, statistics"
+msgstr "raster, thống kê"
 
 #: ../raster/r.median/main.c:48
 msgid ""
@@ -1398,6 +1376,11 @@ msgstr "Không thể đọc các nhãn phạm trù của bản đồ raster <%s>
 #: ../raster/r.median/read_stats.c:14 ../raster/r.statistics/read_stats.c:20
 msgid "Reading r.stats output"
 msgstr "Đang đọc đầu ra r.stats"
+
+#: ../raster/r.his/main.c:63
+#, fuzzy
+msgid "raster, color transformation"
+msgstr "Lỗi tạo phép chuyển đổi"
 
 #: ../raster/r.his/main.c:65
 msgid ""
@@ -1480,13 +1463,14 @@ msgstr "Không can thiệp các giá trị NULL khi vẽ"
 #: ../raster/r.composite/main.c:159 ../raster/r.to.rast3/main.c:366
 #: ../raster/r.sum/main.c:65 ../raster/r.random.cells/indep.c:134
 #: ../raster/r.random.cells/init.c:68 ../raster/r.univar2/r.univar_main.c:221
+#: ../raster/r.regression.line/main.c:90 ../raster/r.regression.line/main.c:99
 #: ../raster/r.resamp.stats/main.c:329 ../raster/r.bitpattern/main.c:108
 #: ../raster/r.quantile/main.c:311 ../display/d.profile/ExtractProf.c:93
 #: ../display/d.profile/What.c:23 ../display/d.rast.arrow/arrow.c:380
 #: ../display/d.rast.edit/cell.c:92 ../display/d.rgb/main.c:99
 #: ../display/d.his/main.c:141 ../display/d.his/main.c:164
 #: ../display/d.what.rast/opencell.c:24 ../display/d.rast/display.c:79
-#: ../display/d.rast.num/number.c:153 ../display/d.nviz/main.c:186
+#: ../display/d.rast.num/number.c:153 ../display/d.nviz/main.c:187
 #: ../vector/v.sample/main.c:161 ../vector/v.vol.rst/main.c:609
 #: ../vector/v.to.rast/support.c:264 ../vector/v.to.rast/support.c:422
 #: ../vector/v.extrude/main.c:183 ../vector/v.drape/main.c:250
@@ -1634,7 +1618,9 @@ msgid "%ld bytes written to '%s'"
 msgstr "%ld byte được ghi vào '%s'"
 
 #: ../raster/r.in.poly/main.c:29 ../raster/r.in.gdal/main.c:79
-#: ../raster/r.in.bin/main.c:234 ../raster/r.external/main.c:506
+#: ../raster/r.in.bin/main.c:234 ../raster/r.in.gridatb/main.c:41
+#: ../raster/r.external/main.c:506 ../raster/r.in.mat/main.c:92
+#: ../raster/r.in.arc/main.c:59
 #: ../locale/scriptstrings/r.in.srtm_to_translate.c:2
 msgid "raster, import"
 msgstr "raster, nhập"
@@ -1778,7 +1764,7 @@ msgstr "Không thể đọc miền fp của bản đồ raster <%s>"
 #: ../vector/v.net.timetable/main.c:93 ../vector/v.patch/main.c:132
 #: ../vector/v.patch/main.c:162 ../vector/v.patch/main.c:274
 #: ../vector/v.patch/main.c:332 ../vector/v.kcv/main.c:181
-#: ../vector/v.buffer2/main.c:318 ../vector/v.transform/trans_digit.c:58
+#: ../vector/v.buffer2/main.c:333 ../vector/v.transform/trans_digit.c:58
 #: ../vector/v.overlay/main.c:186 ../vector/v.overlay/main.c:295
 #: ../vector/v.net.flow/main.c:157 ../vector/v.normal/main.c:141
 #: ../vector/v.net.path/path.c:96 ../vector/v.label/main.c:282
@@ -1920,7 +1906,12 @@ msgstr "Bản đồ raster quá lớn! Vượt quá %d cột hoặc %d dòng"
 msgid "Negative elevation values in input"
 msgstr "Các giá trị độ cao âm ở đầu vào"
 
-#: ../raster/r.basins.fill/main.c:53
+#: ../raster/r.basins.fill/main.c:53 ../raster/r.drain/main.c:94
+#: ../raster/r.lake/main.c:148 ../raster/r.gwflow/main.c:189
+#: ../raster/r.watershed/front/main.c:56 ../raster/r.fill.dir/main.c:84
+#: ../raster/r.topmodel/main.c:55 ../raster/r.water.outlet/main.c:47
+#: ../raster/r.carve/main.c:77 ../raster/r.flow/calc.c:411
+#: ../raster/r.topidx/main.c:37
 #, fuzzy
 msgid "raster, hydrology"
 msgstr "raster, dòng chảy, thủy văn"
@@ -1962,6 +1953,11 @@ msgstr "Việc quét lui hoàn tất"
 #, c-format
 msgid "Creating support files for <%s>..."
 msgstr "Đang tạo các tập tin hỗ trợ cho <%s>..."
+
+#: ../raster/r.describe/main.c:59 ../raster/r.support/front/front.c:54
+#: ../raster/r.info/main.c:69 ../raster/r.region/main.c:54
+msgid "raster, metadata"
+msgstr "raster, mô tả dữ liệu"
 
 #: ../raster/r.describe/main.c:61
 msgid "Prints terse list of category values found in a raster map layer."
@@ -2026,6 +2022,18 @@ msgstr "%s = %s - phải lớn hơn 0"
 msgid "%s: [%s] not found"
 msgstr "%s: không tìm thấy [%s]"
 
+#: ../raster/r.le/r.le.trace/main.c:57 ../raster/r.le/r.le.setup/main.c:61
+#: ../raster/r.le/r.le.patch/main.c:47 ../raster/r.le/r.le.pixel/main.c:45
+#: ../raster/r.li/r.li.padcv/padcv.c:38 ../raster/r.li/r.li.mpa/mpa.c:40
+#: ../raster/r.li/r.li.patchnum/main.c:35 ../raster/r.li/r.li.mps/mps.c:41
+#: ../raster/r.li/r.li.edgedensity/edgedensity.c:39
+#: ../raster/r.li/r.li.cwed/cwed.c:47 ../raster/r.li/r.li.padsd/padsd.c:38
+#: ../raster/r.li/r.li.shape/main.c:34
+#: ../raster/r.li/r.li.patchdensity/main.c:34
+#: ../raster/r.li/r.li.padrange/padrange.c:40
+msgid "raster, landscape structure analysis, patch index"
+msgstr "raster, phân tích cấu trúc cảnh quan, chỉ mục vá"
+
 #: ../raster/r.le/r.le.trace/main.c:59
 msgid ""
 "Displays the boundary of each r.le patch and shows how the boundary is "
@@ -2074,6 +2082,7 @@ msgstr ""
 "nhau và gờ."
 
 #: ../raster/r.mfilter.fp/main.c:58 ../raster/r.mfilter/main.c:51
+#: ../raster/r.bitpattern/main.c:62
 msgid "raster, map algebra"
 msgstr "raster, đại số bản đồ"
 
@@ -2259,7 +2268,7 @@ msgstr "Dùng -M hoặc -s, không được dùng cả hai"
 #: ../raster/r.profile/main.c:157 ../raster/r.out.arc/main.c:142
 #: ../raster/r.cats/main.c:177 ../raster/r.recode/main.c:94
 #: ../general/g.pnmcomp/main.c:241 ../general/g.pnmcomp/main.c:258
-#: ../general/g.transform/main.c:281 ../display/d.nviz/main.c:203
+#: ../general/g.transform/main.c:281 ../display/d.nviz/main.c:204
 #: ../vector/v.out.vtk/main.c:176 ../vector/v.out.ascii/out.c:161
 #, c-format
 msgid "Unable to open file <%s>"
@@ -2299,8 +2308,8 @@ msgstr "Độ lệch chuẩn"
 
 #: ../raster/r.out.png/r.out.png.c:110
 #, fuzzy
-msgid "raster, png"
-msgstr "raster, xếp chồng"
+msgid "raster, export, png"
+msgstr "raster, xuất"
 
 #: ../raster/r.out.png/r.out.png.c:112
 #, fuzzy
@@ -2378,6 +2387,10 @@ msgstr "Nhận được cấu trúc vùng rỗng"
 #, fuzzy
 msgid "Unable to open world file for writing"
 msgstr "Không thể mở tập tin world TIFF để ghi"
+
+#: ../raster/r.walk/main.c:174 ../raster/r.cost/main.c:124
+msgid "raster, cost surface, cumulative costs"
+msgstr "raster, bề mặt chi phí, chi phí tích lũy"
 
 #: ../raster/r.walk/main.c:176
 msgid ""
@@ -2720,6 +2733,11 @@ msgstr "Tọa độ y không hợp lệ <%s>"
 #, c-format
 msgid "Warning, ignoring point outside window: %.4f,%.4f"
 msgstr "Cảnh báo, bỏ qua các điểm nằm ngoài cửa sổ: %.4f,%.4f"
+
+#: ../raster/r.sun2/main.c:226 ../raster/r.sun/main.c:175
+#, fuzzy
+msgid "raster, sun energy"
+msgstr "raster, xếp chồng"
 
 #: ../raster/r.sun2/main.c:227 ../raster/r.sun/main.c:176
 msgid "Solar irradiance and irradiation model."
@@ -3550,6 +3568,11 @@ msgstr "Kiểu tập tin"
 msgid "Bytes do not match file size"
 msgstr "Số byte không khớp với kích thước tập tin"
 
+#: ../raster/r.rescale.eq/main.c:52 ../raster/r.rescale/main.c:50
+#, fuzzy
+msgid "raster, rescale"
+msgstr "raster, lấy mẫu lại"
+
 #: ../raster/r.rescale.eq/main.c:54
 msgid ""
 "Rescales histogram equalized the range of category values in a raster map "
@@ -3665,7 +3688,7 @@ msgstr "Quá nhiều điểm bắt đầu"
 #: ../vector/v.lrs/v.lrs.segment/main.c:138 ../vector/v.reclass/main.c:107
 #: ../vector/v.kernel/main.c:264 ../vector/v.out.ogr/main.c:198
 #: ../vector/v.hull/main.c:300 ../vector/v.kcv/main.c:132
-#: ../vector/v.select/main.c:103 ../vector/v.buffer2/main.c:295
+#: ../vector/v.select/main.c:103 ../vector/v.buffer2/main.c:310
 #: ../vector/v.voronoi/vo_main.c:156 ../vector/v.voronoi/dt_main.c:77
 #: ../vector/v.net.steiner/main.c:428 ../vector/v.what/main.c:151
 #: ../vector/v.transform/main.c:242 ../vector/v.overlay/main.c:204
@@ -3741,10 +3764,6 @@ msgid ""
 msgstr ""
 "   Đang cập nhất số phạm trù cho [%s]\n"
 "\n"
-
-#: ../raster/r.support/front/front.c:54
-msgid "raster, metadata"
-msgstr "raster, mô tả dữ liệu"
 
 #: ../raster/r.support/front/front.c:55
 msgid "Allows creation and/or modification of raster map layer support files."
@@ -4207,7 +4226,8 @@ msgstr "Thể tích chỉ đúng nếu độ sâu hồ (bản đồ raster đị
 msgid "Unable to read color file of raster map <%s>"
 msgstr "Không thể đọc tập tin màu của bản đồ raster <%s>"
 
-#: ../raster/r.surf.idw/main.c:69
+#: ../raster/r.surf.idw/main.c:69 ../raster/r.surf.idw2/main.c:60
+#: ../raster/r.surf.contour/main.c:52
 msgid "raster, interpolation"
 msgstr "raster, nội suy"
 
@@ -4276,14 +4296,6 @@ msgstr "Tên tập tin hướng đầu ra"
 #, c-format
 msgid "Unable to read color table for raster map <%s>"
 msgstr "Không thể đọc bảng màu cho bản đồ raster <%s>"
-
-#: ../raster/r.stats/main.c:103 ../raster/r.statistics/main.c:42
-#: ../raster/r.report/main.c:64 ../raster/r.univar2/r.univar_main.c:97
-#: ../raster/r.support.stats/main.c:39 ../raster/r.quantile/main.c:254
-#: ../locale/scriptstrings/r.regression.line_to_translate.c:2
-#: ../locale/scriptstrings/r.univar.sh_to_translate.c:2
-msgid "raster, statistics"
-msgstr "raster, thống kê"
 
 #: ../raster/r.stats/main.c:105
 msgid "Generates area statistics for raster map layers."
@@ -4357,7 +4369,8 @@ msgstr ""
 "phân vị của bản đồ)"
 
 #: ../raster/r.stats/main.c:208 ../raster/r.univar2/r.univar_main.c:110
-#: ../raster/r.univar2/r3.univar_main.c:127 ../vector/v.db.select/main.c:111
+#: ../raster/r.univar2/r3.univar_main.c:127
+#: ../raster/r.regression.line/main.c:75 ../vector/v.db.select/main.c:111
 #, c-format
 msgid "Unable to open file <%s> for writing"
 msgstr "Không thể mở tập tin <%s> để ghi"
@@ -4407,6 +4420,11 @@ msgstr "Không thể đọc miền giá trị cho bản đồ <%s>"
 #, c-format
 msgid "Unable to read raster <map %d of %d> row %d"
 msgstr "Không thể đọc <bản đồ raster %d của %d> hàng %d"
+
+#: ../raster/r.compress/main.c:64
+#, fuzzy
+msgid "raster, map management"
+msgstr "tổng quát, quản lý bản đồ"
 
 #: ../raster/r.compress/main.c:65
 msgid "Compresses and decompresses raster maps."
@@ -4477,6 +4495,13 @@ msgid ""
 msgstr ""
 "\n"
 " %sNÉN [%s]"
+
+#: ../raster/r.circle/dist.c:51 ../raster/r.patch/main.c:53
+#: ../raster/r.grow2/main.c:128 ../raster/r.grow.distance/main.c:130
+#: ../raster/r.digit/main.c:45
+#, fuzzy
+msgid "raster, geometry"
+msgstr "raster, ảnh"
 
 #: ../raster/r.circle/dist.c:53
 msgid "Creates a raster map containing concentric rings around a given point."
@@ -4758,6 +4783,11 @@ msgstr ""
 msgid "write_vtk_vector_data: Writing VTK-vector data"
 msgstr "write_vtk_vector_data: Đang ghi dữ liệu VTK-vector"
 
+#: ../raster/r.quant/main.c:41
+#, fuzzy
+msgid "raster, quantization"
+msgstr "raster, phép chiếu"
+
 #: ../raster/r.quant/main.c:43
 msgid "Produces the quantization file for a floating-point map."
 msgstr "Tạo tập tin lượng tử hóa cho một bản đồ dấu chấm động."
@@ -5016,10 +5046,6 @@ msgstr "Bản đồ raster dyy <%s> hoàn tất"
 msgid "Dxy raster map <%s> complete"
 msgstr "Bản đồ raster dxy <%s> hoàn tất"
 
-#: ../raster/r.cost/main.c:124
-msgid "raster, cost surface, cumulative costs"
-msgstr "raster, bề mặt chi phí, chi phí tích lũy"
-
 #: ../raster/r.cost/main.c:126
 msgid ""
 "Creates a raster map showing the cumulative cost of moving between different "
@@ -5148,6 +5174,12 @@ msgstr "%s %f-%f cao hơn chi phí thấp hơn"
 msgid "%s higher above pointer wrong"
 msgstr "%s cao hơn phía trên con trỏ sai"
 
+#: ../raster/r.bilinear/main.c:42 ../raster/r.resample/main.c:54
+#: ../raster/r.resamp.interp/main.c:72 ../raster/r.resamp.rst/main.c:156
+#: ../raster/r.resamp.stats/main.c:259
+msgid "raster, resample"
+msgstr "raster, lấy mẫu lại"
+
 #: ../raster/r.bilinear/main.c:44
 msgid "Bilinear interpolation utility for raster map layers."
 msgstr "Tiện ích nội suy song tuyến tính các lớp bản đồ raster."
@@ -5268,9 +5300,10 @@ msgid "raster, sediment flow, erosion, deposition"
 msgstr "raster, dòng chảy trầm tích, xói mòn, sự lắng tụ"
 
 #: ../raster/simwe/r.sim.sediment/main.c:113
+#, fuzzy
 msgid ""
 "Sediment transport and erosion/deposition simulation using path sampling "
-"method (SIMWE)"
+"method (SIMWE)."
 msgstr ""
 "Giả lập sự vận chuyển trầm tích và xói mòn/lắng tụ bằng cách dùng phương "
 "pháp thu mẫu đường dẫn (SIMWE)"
@@ -5452,7 +5485,8 @@ msgid "raster, flow, hydrology"
 msgstr "raster, dòng chảy, thủy văn"
 
 #: ../raster/simwe/r.sim.water/main.c:120
-msgid "Overland flow hydrologic simulation using path sampling method (SIMWE)"
+#, fuzzy
+msgid "Overland flow hydrologic simulation using path sampling method (SIMWE)."
 msgstr ""
 "Giả lập thuỷ văn dòng chảy trên đất liền bằng phương pháp thu mẫu đường dẫn "
 "(SIMWE)"
@@ -5723,6 +5757,11 @@ msgstr "Thêm chú thích để mô tả vùng"
 msgid "Converting ... "
 msgstr "Đang chuyển đổi..."
 
+#: ../raster/r.transect/main.c:54
+#, fuzzy
+msgid "raster, transect"
+msgstr "raster, địa hình"
+
 #: ../raster/r.transect/main.c:56
 msgid ""
 "Outputs raster map layer values lying along user defined transect line(s)."
@@ -5748,6 +5787,11 @@ msgstr ""
 #, c-format
 msgid "End coordinate: %.15g, %.15g"
 msgstr "Tọa độ kết thúc: %.15g, %.15g"
+
+#: ../raster/r.random/main.c:51 ../raster/r.surf.random/main.c:44
+#, fuzzy
+msgid "raster, random"
+msgstr "raster, xuất dữ liệu."
 
 #: ../raster/r.random/main.c:53
 msgid ""
@@ -5881,6 +5925,11 @@ msgstr "Không thể chèn bản ghi mới: %s"
 msgid "Only [%ld] random points created"
 msgstr "Chỉ có [%ld] điểm ngẫu nhiên được tạo ra"
 
+#: ../raster/r.los/main.c:82
+#, fuzzy
+msgid "raster, viewshed"
+msgstr "raster, loạt"
+
 #: ../raster/r.los/main.c:83
 msgid "Line-of-sight raster analysis program."
 msgstr "Chương trình phân tích raster đường-nhìn-thấy"
@@ -5944,6 +5993,13 @@ msgstr "Dùng khoảng cách tối đa từ điểm quan sát (mét): %f"
 #, c-format
 msgid "Failed writing raster map <%s> row %d"
 msgstr "Thất bại khi đang ghi bản đồ raster <%s> hàng %d"
+
+#: ../raster/wildfire/r.spread/main.c:101
+#: ../raster/wildfire/r.spreadpath/main.c:72
+#: ../raster/wildfire/r.ros/main.c:212
+#, fuzzy
+msgid "raster, fire"
+msgstr "raster, nhập"
 
 #: ../raster/wildfire/r.spread/main.c:103
 msgid ""
@@ -6281,6 +6337,11 @@ msgstr "Sai biệt lớn nhất giữa vòng lặp này và số gia sau cùng: 
 #: ../raster/r.profile/input.c:59
 msgid "One coordinate pair per line, please"
 msgstr "Vui lòng nhập một cặp tọa độ/dòng"
+
+#: ../raster/r.profile/main.c:53
+#, fuzzy
+msgid "raster, profile"
+msgstr "raster, loạt"
 
 #: ../raster/r.profile/main.c:55
 msgid "Outputs the raster map layer values lying on user-defined line(s)."
@@ -7810,7 +7871,8 @@ msgid "Error reading wildcard"
 msgstr "Lỗi khi đang đọc ký tự đại diện"
 
 #: ../raster/r.out.mpeg/main.c:385
-msgid "Raster File Series to MPEG Conversion Program."
+#, fuzzy
+msgid "Raster File Series to MPEG Conversion."
 msgstr "Chương trình chuyển đổi chuỗi tập tin raster thành MPEG."
 
 #: ../raster/r.out.mpeg/main.c:396 ../visualization/xganim/main.c:600
@@ -7852,9 +7914,10 @@ msgid "Unable to create temporary files."
 msgstr "Không thể tạo các tập tin tạm."
 
 #: ../raster/r.fill.dir/main.c:86
+#, fuzzy
 msgid ""
 "Filters and generates a depressionless elevation map and a flow direction "
-"map from a given elevation layer."
+"map from a given elevation raster map."
 msgstr ""
 "Lọc và tạo một bản đồ độ cao không giảm cấp và bản đồ hướng dòng chảy từ lớp "
 "độ cao được cung cấp."
@@ -7918,10 +7981,6 @@ msgstr "Chạy qua wtrshed (đường chia nước) %d"
 #, c-format
 msgid "Found %d unresolved areas"
 msgstr "Tìm thấy %d vùng không giải quyết được"
-
-#: ../raster/r.resamp.interp/main.c:72 ../raster/r.resamp.stats/main.c:259
-msgid "raster, resample"
-msgstr "raster, lấy mẫu lại"
 
 #: ../raster/r.resamp.interp/main.c:74
 msgid "Resamples raster map layers to a finer grid using interpolation."
@@ -8219,7 +8278,7 @@ msgstr "Không thể mở tập tin tạm <%s>"
 msgid "Not enough disk space -- cannot write files"
 msgstr "Không đủ không gian trên đĩa -- không thể ghi các tập tin"
 
-#: ../raster/r.clump/main.c:49
+#: ../raster/r.clump/main.c:49 ../raster/r.reclass/main.c:49
 msgid "raster, statistics, reclass"
 msgstr "raster, thống kê, phân loại lại"
 
@@ -8616,11 +8675,6 @@ msgstr ""
 msgid "Too many iterations to required to find %s - giving up"
 msgstr "Cần quá nhiều lần lặp để tìm %s - bỏ cuộc"
 
-#: ../raster/r.surf.random/main.c:44
-#, fuzzy
-msgid "raster, random"
-msgstr "raster, xuất dữ liệu."
-
 #: ../raster/r.surf.random/main.c:46
 #, fuzzy
 msgid ""
@@ -8978,16 +9032,6 @@ msgstr "o_adev: Không có dữ liệu trong mảng"
 #: ../raster/r.li/r.li.padcv/padcv.c:37
 msgid "Calculates coefficient of variation of patch area on a raster map"
 msgstr "Tính toán hệ số biến thiên của vùng vá trên một bản đồ raster"
-
-#: ../raster/r.li/r.li.padcv/padcv.c:38 ../raster/r.li/r.li.mpa/mpa.c:40
-#: ../raster/r.li/r.li.patchnum/main.c:35 ../raster/r.li/r.li.mps/mps.c:41
-#: ../raster/r.li/r.li.edgedensity/edgedensity.c:39
-#: ../raster/r.li/r.li.cwed/cwed.c:47 ../raster/r.li/r.li.padsd/padsd.c:38
-#: ../raster/r.li/r.li.shape/main.c:34
-#: ../raster/r.li/r.li.patchdensity/main.c:34
-#: ../raster/r.li/r.li.padrange/padrange.c:40
-msgid "raster, landscape structure analysis, patch index"
-msgstr "raster, phân tích cấu trúc cảnh quan, chỉ mục vá"
 
 #: ../raster/r.li/r.li.padcv/padcv.c:44 ../raster/r.li/r.li.mpa/mpa.c:47
 #: ../raster/r.li/r.li.patchnum/main.c:43 ../raster/r.li/r.li.mps/mps.c:48
@@ -10052,7 +10096,7 @@ msgstr "(i)     Đầu ra cho nhóm chỉ mục địa hình được cung cấp
 msgid "Input data given for (o/i)"
 msgstr "Dữ liệu đầu vào cung cấp cho (o/i)"
 
-#: ../raster/r.sunmask/main.c:115
+#: ../raster/r.sunmask/main.c:115 ../raster/r.horizon/main.c:179
 #, fuzzy
 msgid "raster, sun position"
 msgstr "raster, phép chiếu"
@@ -10859,6 +10903,11 @@ msgstr "extend_lines: có trỏ trước p có giá trị NULL!"
 msgid "extend_lines: q back pointer not NULL!"
 msgstr "extend_lines: con trỏ sau q không NULL!"
 
+#: ../raster/r.cats/main.c:51
+#, fuzzy
+msgid "raster, category"
+msgstr "raster, mã hoá lại phạm trù"
+
 #: ../raster/r.cats/main.c:53
 msgid ""
 "Manages category values and labels associated with user-specified raster map "
@@ -11227,7 +11276,7 @@ msgstr "Nhập một nhãn cho phạm trù %ld [%s] "
 msgid "Look ok? "
 msgstr "Trông ổn chứ? "
 
-#: ../raster/r.water.outlet/main.c:47
+#: ../raster/r.water.outlet/main.c:48
 msgid "Watershed basin creation program."
 msgstr "Chương trình tạo lưu vực đường chia nước."
 
@@ -11673,6 +11722,11 @@ msgstr "Khi kết thúc gõ lệnh \"end\"."
 msgid "'%s' is not a valid rule"
 msgstr "'%s' không phải là một quy tắc hợp lệ"
 
+#: ../raster/r.volume/main.c:57
+#, fuzzy
+msgid "raster, volume"
+msgstr "Giá trị raster"
+
 #: ../raster/r.volume/main.c:59
 msgid ""
 "Calculates the volume of data \"clumps\", and (optionally) produces a GRASS "
@@ -11721,6 +11775,11 @@ msgstr "Không thể mở bản đồ điểm vec-tơ trọng tâm"
 #: ../raster/r.volume/main.c:171
 msgid "Data or Clump file not open"
 msgstr "Tập tin Dữ liệu hoặc tập tin Khối không mở"
+
+#: ../raster/r.distance/main.c:38
+#, fuzzy
+msgid "raster, distance"
+msgstr "raster, xếp chồng"
 
 #: ../raster/r.distance/main.c:40
 msgid "Locates the closest points between objects in two raster maps."
@@ -12039,9 +12098,10 @@ msgid "Unable to get current region"
 msgstr "Không thể lấy vùng hiện tại"
 
 #: ../raster/r.flow/calc.c:413
+#, fuzzy
 msgid ""
 "Construction of slope curves (flowlines), flowpath lengths, and flowline "
-"densities (upslope areas) from a raster digital elevation model (DEM)"
+"densities (upslope areas) from a raster digital elevation model (DEM)."
 msgstr ""
 "Xây dựng các đường cong độ dốc (dòng chảy), độ dài dòng chảy, mật độ dòng "
 "chảy (các vùng trên dốc) từ một mô hình độ cao số (DEM)"
@@ -12155,7 +12215,7 @@ msgstr "Không thể mở tập tin phân đoạn %s"
 #: ../vector/v.net.allpairs/main.c:112 ../vector/v.in.dxf/main.c:168
 #: ../vector/v.mkgrid/main.c:223 ../vector/v.hull/main.c:334
 #: ../vector/v.net.timetable/main.c:323 ../vector/v.net.bridge/main.c:86
-#: ../vector/v.net.connectivity/main.c:121 ../vector/v.buffer2/main.c:304
+#: ../vector/v.net.connectivity/main.c:121 ../vector/v.buffer2/main.c:319
 #: ../vector/v.voronoi/vo_main.c:163 ../vector/v.voronoi/dt_main.c:92
 #: ../vector/v.voronoi/dt_main.c:98 ../vector/v.net.flow/main.c:138
 #: ../vector/v.net.flow/main.c:144 ../vector/v.net.path/main.c:139
@@ -12226,6 +12286,11 @@ msgstr ""
 msgid "Resolution too unbalanced (%f x %f); please resample input map"
 msgstr ""
 "Độ phân giải rất không cân đối (%f x %f); vui lòng lấy mẫu lại bản đồ đầu vào"
+
+#: ../raster/r.what.color/main.c:88 ../raster/r.what/main.c:91
+#, fuzzy
+msgid "raster, querying"
+msgstr "raster, địa hình"
 
 #: ../raster/r.what.color/main.c:89
 msgid "Queries colors for a raster map layer."
@@ -12481,7 +12546,8 @@ msgid "<%s> is an illegal name"
 msgstr "[%s] là tên không hợp lệ"
 
 #: ../raster/r.topidx/main.c:39
-msgid "Creates topographic index [ln(a/tan(beta))] map from elevation map."
+#, fuzzy
+msgid "Creates topographic index map from elevation raster map."
 msgstr "Tạo bản đồ chỉ mục địa hình (ln(a/tan(beta))) từ bản đồ độ cao."
 
 #: ../raster/r.topidx/main.c:42
@@ -12567,6 +12633,36 @@ msgid ""
 "map."
 msgstr ""
 "Tính toán thống kê một biến từ các ô không rỗng của một bản đồ raster 3d."
+
+#: ../raster/r.regression.line/main.c:44
+#, fuzzy
+msgid "Calculates linear regression from two raster maps: y = a + b*x."
+msgstr "Tính toán hồi quy tuyến tính từ hai bản đồ raster: y = a + b*x"
+
+#: ../raster/r.regression.line/main.c:49
+msgid "Map for x coefficient"
+msgstr "Bản đồ dùng làm hệ số x"
+
+#: ../raster/r.regression.line/main.c:53
+msgid "Map for y coefficient"
+msgstr "Bản đồ dùng làm hệ số y"
+
+#: ../raster/r.regression.line/main.c:59
+msgid ""
+"ASCII file for storing regression coefficients (output to screen if file not "
+"specified)."
+msgstr ""
+"Tập tin ASCII để lưu các hệ số hồi quy (xuất ra màn hình nếu tên tập tin "
+"không được chỉ định)."
+
+#: ../raster/r.regression.line/main.c:63 ../general/g.region/main.c:147
+#: ../locale/scriptstrings/i.oif_to_translate.c:9
+msgid "Print in shell script style"
+msgstr "In ra ở dạng tập lệnh shell"
+
+#: ../raster/r.regression.line/main.c:67
+msgid "Slower but accurate (applies to FP maps only"
+msgstr ""
 
 #: ../raster/r.resamp.stats/main.c:261
 msgid "Resamples raster map layers to a coarser grid using aggregation."
@@ -13078,7 +13174,10 @@ msgstr "In ra ở dạng tập lệnh shell"
 
 #: ../general/manage/cmd/copy.c:39 ../general/manage/cmd/remove.c:99
 #: ../general/manage/cmd/list.c:41 ../general/manage/cmd/rename.c:40
-#: ../general/g.mremove/main.c:58 ../general/g.mlist/main.c:65
+#: ../general/g.access/main.c:37 ../general/g.tempfile/main.c:36
+#: ../general/g.ask/main.c:40 ../general/g.mremove/main.c:58
+#: ../general/g.findetc/main.c:28 ../general/g.filename/main.c:39
+#: ../general/g.mlist/main.c:65 ../general/g.findfile/main.c:35
 msgid "general, map management"
 msgstr "tổng quát, quản lý bản đồ"
 
@@ -13189,14 +13288,6 @@ msgstr "%s=%s,%s: các tập tin có vẻ giống nhau, không cần đổi tên
 #: ../general/manage/cmd/rename.c:99
 msgid "Renaming reclass maps"
 msgstr "Đang đặt lại tên các bản đồ phân loại lại"
-
-#: ../general/g.access/main.c:37 ../general/g.pnmcomp/main.c:281
-#: ../general/g.tempfile/main.c:36 ../general/g.ask/main.c:40
-#: ../general/g.findetc/main.c:28 ../general/g.gisenv/main.c:38
-#: ../general/g.filename/main.c:39 ../general/g.region/main.c:70
-#: ../general/g.findfile/main.c:35
-msgid "general"
-msgstr "tổng quát"
 
 #: ../general/g.access/main.c:39
 msgid "Controls access to the current mapset for other users on the system."
@@ -13545,6 +13636,10 @@ msgstr "Lỗi khi đang ghi tập tin PPM"
 #: ../general/g.pnmcomp/main.c:263
 msgid "Error writing PGM file"
 msgstr "Lỗi khi đang ghi tập tin PGM"
+
+#: ../general/g.pnmcomp/main.c:281 ../general/g.gui/main.c:36
+msgid "general, gui"
+msgstr "tổng quát, giao diện người dùng đồ họa"
 
 #: ../general/g.pnmcomp/main.c:289
 msgid "Names of input files"
@@ -13943,7 +14038,8 @@ msgstr "Tọa độ easting và northing cho góc dưới trái của bản đ�
 msgid "Display transform matrix coefficients"
 msgstr "Bản đồ dùng làm hệ số x"
 
-#: ../general/g.mapset/main.c:48
+#: ../general/g.mapset/main.c:48 ../general/g.gisenv/main.c:38
+#: ../general/g.region/main.c:70
 msgid "general, settings"
 msgstr "tổng quát, thiết lập"
 
@@ -14375,12 +14471,6 @@ msgstr "In ra cả các thiết lập 3D"
 msgid "Print the maximum bounding box in lat/long on WGS84"
 msgstr "In ra khung bao lớn nhất theo kinh/vĩ trong WGS84"
 
-#: ../general/g.region/main.c:147
-#: ../locale/scriptstrings/r.regression.line_to_translate.c:3
-#: ../locale/scriptstrings/i.oif_to_translate.c:9
-msgid "Print in shell script style"
-msgstr "In ra ở dạng tập lệnh shell"
-
 #: ../general/g.region/main.c:153
 msgid ""
 "Align region to resolution (default = align to bounds, works only for 2D "
@@ -14553,10 +14643,6 @@ msgid "Lat/Long calculations are not possible from a simple XY system"
 msgstr ""
 "Các tính toán Vĩ/Kinh độ không thể thực hiện được từ một hệ XY đơn giản"
 
-#: ../general/g.gui/main.c:36
-msgid "general, gui"
-msgstr "tổng quát, giao diện người dùng đồ họa"
-
 #: ../general/g.gui/main.c:38
 msgid "Launches a GRASS graphical user interface (GUI) session."
 msgstr ""
@@ -14627,27 +14713,10 @@ msgstr ""
 "Tham số 'file' chứa tham chiếu đến bộ bản đồ <%s>, nhưng tham số bộ bản đồ <%"
 "s> không tương ứng"
 
-#: ../display/d.profile/main.c:61 ../display/d.font/main.c:46
-#: ../display/d.rast.arrow/arrow.c:110 ../display/d.text.new/main.c:142
-#: ../display/d.frame/frame.c:60 ../display/d.erase/main.c:32
-#: ../display/d.geodesic/main.c:45 ../display/d.menu/main.c:66
-#: ../display/d.font.freetype/main.c:59 ../display/d.ask/main.c:36
-#: ../display/d.colorlist/main.c:35 ../display/d.info/main.c:34
-#: ../display/d.where/main.c:42 ../display/d.rhumbline/main.c:45
-#: ../display/d.mapgraph/main.c:48 ../display/d.measure/main.c:49
-#: ../display/d.colors/main.c:50 ../display/d.text.freetype/main.c:138
-#: ../display/d.his/main.c:65 ../display/d.what.rast/main.c:52
-#: ../display/d.thematic.area/main.c:78 ../display/d.save/main.c:79
-#: ../display/d.extract/main.c:50 ../display/d.histogram/main.c:71
-#: ../display/d.linegraph/linegraph.c:113 ../display/d.title/main.c:45
-#: ../display/d.mon/cmd/main.c:49 ../display/d.paint.labels/main.c:46
-#: ../display/d.what.vect/main.c:54 ../display/d.text/main.c:66
-#: ../display/d.rast.num/number.c:84 ../display/d.nviz/main.c:68
-#: ../display/d.zoom/main.c:57 ../visualization/ximgview/main.c:270
-#: ../locale/scriptstrings/d.rast.leg_to_translate.c:2
-#: ../locale/scriptstrings/d.redraw_to_translate.c:2
-msgid "display"
-msgstr "trình bày"
+#: ../display/d.profile/main.c:61
+#, fuzzy
+msgid "display, raster, profile"
+msgstr "trình bày, raster"
 
 #: ../display/d.profile/main.c:63
 msgid "Interactive profile plotting utility with optional output."
@@ -14692,7 +14761,7 @@ msgstr ""
 #: ../display/d.extend/main.c:41 ../display/d.info/main.c:74
 #: ../display/d.legend/main.c:274 ../display/d.vect.chart/main.c:257
 #: ../display/d.rgb/main.c:83 ../display/d.where/main.c:144
-#: ../display/d.rhumbline/main.c:108 ../display/d.barscale/main.c:126
+#: ../display/d.rhumbline/main.c:108 ../display/d.barscale/main.c:134
 #: ../display/d.measure/main.c:87 ../display/d.text.freetype/main.c:310
 #: ../display/d.his/main.c:117 ../display/d.what.rast/main.c:116
 #: ../display/d.thematic.area/main.c:397 ../display/d.colortable/main.c:138
@@ -14700,7 +14769,7 @@ msgstr ""
 #: ../display/d.linegraph/linegraph.c:251 ../display/d.graph/main.c:96
 #: ../display/d.paint.labels/main.c:90 ../display/d.what.vect/main.c:160
 #: ../display/d.text/main.c:132 ../display/d.rast/main.c:114
-#: ../display/d.rast.num/number.c:128 ../display/d.nviz/main.c:249
+#: ../display/d.rast.num/number.c:128 ../display/d.nviz/main.c:250
 #: ../display/d.zoom/main.c:158 ../display/d.zoom/main.c:293
 #: ../display/d.zoom/redraw.c:39 ../display/d.vect/main.c:421
 #: ../vector/v.label/main.c:234 ../imagery/i.points/main.c:123
@@ -14759,6 +14828,16 @@ msgstr "%s: 'is_null_value()' nhận được chỉ mục cột âm"
 msgid "%s: 'is_null_value()' Unknown RASTER_MAP_TYPE '%d'"
 msgstr "%s: 'is_null_value()' Không biết RASTER_MAP_TYPE '%d'"
 
+#: ../display/d.font/main.c:46 ../display/d.frame/frame.c:60
+#: ../display/d.erase/main.c:32 ../display/d.font.freetype/main.c:59
+#: ../display/d.extend/main.c:31 ../display/d.colorlist/main.c:35
+#: ../locale/scriptstrings/d.split_to_translate.c:2
+#: ../locale/scriptstrings/d.resize_to_translate.c:2
+#: ../locale/scriptstrings/d.monsize_to_translate.c:2
+#: ../locale/scriptstrings/d.mvmon_to_translate.c:2
+msgid "display, setup"
+msgstr "trình bày, cài đặt"
+
 #: ../display/d.font/main.c:48 ../display/d.font.freetype/main.c:61
 msgid ""
 "Selects the font in which text will be displayed on the user's graphics "
@@ -14803,6 +14882,14 @@ msgid ""
 msgstr ""
 "Tên phông <%s> không hợp lệ. Kiểm tra tên phông hoặc cân nhắc việc chạy 'g."
 "mkfontcap'"
+
+#: ../display/d.rast.arrow/arrow.c:110 ../display/d.rast.edit/main.c:59
+#: ../display/d.colors/main.c:50 ../display/d.what.rast/main.c:52
+#: ../display/d.colortable/main.c:60 ../display/d.rast/main.c:51
+#: ../display/d.rast.num/number.c:84
+#: ../locale/scriptstrings/d.rast.edit_to_translate.c:2
+msgid "display, raster"
+msgstr "trình bày, raster"
 
 #: ../display/d.rast.arrow/arrow.c:112
 msgid ""
@@ -14865,7 +14952,7 @@ msgstr "Tùy chọn tỷ lệ đòi hỏi phải có magnitude_map"
 
 #: ../display/d.rast.arrow/arrow.c:248 ../display/d.text.new/main.c:309
 #: ../display/d.info/main.c:103 ../display/d.info/main.c:129
-#: ../display/d.legend/main.c:277 ../display/d.barscale/main.c:129
+#: ../display/d.legend/main.c:277 ../display/d.barscale/main.c:137
 #: ../display/d.text.freetype/main.c:316 ../display/d.graph/main.c:119
 #: ../display/d.paint.labels/main.c:124 ../display/d.text/main.c:152
 #: ../display/d.rast.num/number.c:162
@@ -14874,7 +14961,7 @@ msgstr "Không có cửa sổ hiện tại"
 
 #: ../display/d.rast.arrow/arrow.c:251 ../display/d.text.new/main.c:312
 #: ../display/d.info/main.c:105 ../display/d.info/main.c:131
-#: ../display/d.legend/main.c:280 ../display/d.barscale/main.c:132
+#: ../display/d.legend/main.c:280 ../display/d.barscale/main.c:140
 #: ../display/d.text.freetype/main.c:318 ../display/d.graph/main.c:122
 #: ../display/d.paint.labels/main.c:127 ../display/d.text/main.c:155
 #: ../display/d.rast.num/number.c:165
@@ -14883,26 +14970,26 @@ msgstr "Cửa sổ hiện tại không dùng được"
 
 #: ../display/d.rast.arrow/arrow.c:257 ../display/d.rast.edit/cell.c:35
 #: ../display/d.info/main.c:111 ../display/d.info/main.c:136
-#: ../display/d.barscale/main.c:148 ../display/d.paint.labels/main.c:130
+#: ../display/d.barscale/main.c:156 ../display/d.paint.labels/main.c:130
 #: ../display/d.rast.num/number.c:172
 msgid "Setting map window"
 msgstr "Thiết lập cửa sổ bản đồ"
 
 #: ../display/d.rast.arrow/arrow.c:260 ../display/d.rast.edit/cell.c:38
-#: ../display/d.barscale/main.c:151 ../display/d.paint.labels/main.c:133
+#: ../display/d.barscale/main.c:159 ../display/d.paint.labels/main.c:133
 #: ../display/d.rast.num/number.c:175
 msgid "Current window not settable"
 msgstr "Cửa sổ hiện tại không thể điều chỉnh được"
 
 #: ../display/d.rast.arrow/arrow.c:264 ../display/d.info/main.c:113
-#: ../display/d.info/main.c:138 ../display/d.barscale/main.c:155
+#: ../display/d.info/main.c:138 ../display/d.barscale/main.c:163
 #: ../display/d.graph/main.c:125 ../display/d.paint.labels/main.c:137
 #: ../display/d.rast.num/number.c:180
 msgid "Getting screen window"
 msgstr "Lấy cửa sổ màn hình"
 
 #: ../display/d.rast.arrow/arrow.c:266 ../display/d.info/main.c:115
-#: ../display/d.info/main.c:140 ../display/d.barscale/main.c:157
+#: ../display/d.info/main.c:140 ../display/d.barscale/main.c:165
 #: ../display/d.what.rast/main.c:137 ../display/d.paint.labels/main.c:139
 #: ../display/d.rast.num/number.c:182
 msgid "Error in calculating conversions"
@@ -14915,6 +15002,15 @@ msgstr "Trục trặc khi đọc tập tin miền"
 #: ../display/d.rast.arrow/arrow.c:368
 msgid "No raster map exists in the current window"
 msgstr "Bản đồ raster không có trong cửa sổ hiện tại"
+
+#: ../display/d.text.new/main.c:142 ../display/d.grid/main.c:51
+#: ../display/d.legend/main.c:86 ../display/d.vect.chart/main.c:63
+#: ../display/d.mapgraph/main.c:48 ../display/d.barscale/main.c:56
+#: ../display/d.text.freetype/main.c:138 ../display/d.thematic.area/main.c:78
+#: ../display/d.linegraph/linegraph.c:113 ../display/d.title/main.c:45
+#: ../display/d.graph/main.c:54 ../display/d.text/main.c:66
+msgid "display, cartography"
+msgstr "trình bày, vẽ bản đồ"
 
 #: ../display/d.text.new/main.c:144 ../display/d.text/main.c:68
 msgid ""
@@ -15046,12 +15142,6 @@ msgstr "Trái:  Đặt chữ ở đây\n"
 msgid " Right:   Quit\n"
 msgstr " Phải:  Thoát\n"
 
-#: ../display/d.grid/main.c:51 ../display/d.legend/main.c:86
-#: ../display/d.vect.chart/main.c:63 ../display/d.barscale/main.c:56
-#: ../display/d.graph/main.c:54
-msgid "display, cartography"
-msgstr "trình bày, vẽ bản đồ"
-
 #: ../display/d.grid/main.c:53
 msgid ""
 "Overlays a user-specified grid in the active display frame on the graphics "
@@ -15101,7 +15191,7 @@ msgstr "Màu biên"
 msgid "Text color"
 msgstr "Màu chữ"
 
-#: ../display/d.grid/main.c:95
+#: ../display/d.grid/main.c:95 ../display/d.barscale/main.c:106
 msgid "Font size for gridline coordinate labels"
 msgstr "Kích thước phông dùng cho các nhãn toạ độ của đường lưới"
 
@@ -15299,6 +15389,11 @@ msgstr "Không có khung hiện tại"
 msgid "Current frame not available"
 msgstr "Khung hiện tại không dùng được"
 
+#: ../display/d.geodesic/main.c:45 ../display/d.rhumbline/main.c:45
+#, fuzzy
+msgid "display, distance"
+msgstr "trình bày, raster"
+
 #: ../display/d.geodesic/main.c:47
 msgid ""
 "Displays a geodesic line, tracing the shortest distance between two "
@@ -15338,6 +15433,11 @@ msgstr "Toạ độ không được cung cấp"
 #, c-format
 msgid "%s - illegal longitude"
 msgstr "%s - kinh độ không hợp lệ"
+
+#: ../display/d.menu/main.c:66
+#, fuzzy
+msgid "display, menu"
+msgstr "trình bày, cài đặt"
 
 #: ../display/d.menu/main.c:68
 msgid ""
@@ -15416,6 +15516,11 @@ msgstr "Tên phông hoặc tên đường dẫn của tập tin TIFF"
 #: ../display/d.font.freetype/main.c:173
 msgid "Setting release of FreeType"
 msgstr "Thiết lập giải phóng phông FreeType"
+
+#: ../display/d.ask/main.c:36
+#, fuzzy
+msgid "display, map management"
+msgstr "tổng quát, quản lý bản đồ"
 
 #: ../display/d.ask/main.c:38
 msgid ""
@@ -15579,23 +15684,9 @@ msgstr ""
 "  Khoảng cách đến mạng lưới = %f, khoảng cách từ mạng = %f\n"
 " \n"
 
-#: ../display/d.extend/main.c:31
-#: ../locale/scriptstrings/d.split_to_translate.c:2
-#: ../locale/scriptstrings/d.resize_to_translate.c:2
-#: ../locale/scriptstrings/d.monsize_to_translate.c:2
-#: ../locale/scriptstrings/d.mvmon_to_translate.c:2
-msgid "display, setup"
-msgstr "trình bày, cài đặt"
-
 #: ../display/d.extend/main.c:52
 msgid "No raster or vector map displayed"
 msgstr "Không có bản đồ raster hoặc vec-tơ nào được trình bày"
-
-#: ../display/d.rast.edit/main.c:59 ../display/d.colortable/main.c:60
-#: ../display/d.rast/main.c:51
-#: ../locale/scriptstrings/d.rast.edit_to_translate.c:2
-msgid "display, raster"
-msgstr "trình bày, raster"
 
 #: ../display/d.rast.edit/main.c:61
 #: ../locale/scriptstrings/d.rast.edit_to_translate.c:1
@@ -15609,6 +15700,11 @@ msgstr "Không thể làm sạch cửa sổ đồ họa hiện tại"
 #: ../display/d.rast.edit/cell.c:86 ../display/d.rast/display.c:75
 msgid "Cannot use current window"
 msgstr "Không thể dùng cửa sổ hiện tại"
+
+#: ../display/d.info/main.c:34 ../display/d.save/main.c:79
+#, fuzzy
+msgid "display, metadata"
+msgstr "trình bày, biểu đồ"
 
 #: ../display/d.info/main.c:36
 msgid "Display information about the active display monitor"
@@ -15826,7 +15922,7 @@ msgstr "Tạo thông tin chú giải và gửi đến đầu ra tiêu chuẩn"
 #: ../vector/v.generalize/misc.c:160 ../vector/v.extract/main.c:278
 #: ../vector/v.distance/main.c:355 ../vector/v.distance/main.c:391
 #: ../vector/v.out.ascii/b2a.c:38 ../vector/v.reclass/main.c:121
-#: ../vector/v.buffer2/main.c:313 ../vector/v.overlay/main.c:287
+#: ../vector/v.buffer2/main.c:328 ../vector/v.overlay/main.c:287
 #: ../vector/v.univar/main.c:176 ../vector/v.to.rast/vect2rast.c:51
 #: ../vector/v.to.rast/support.c:126 ../vector/v.to.rast/support.c:277
 #: ../vector/v.surf.idw/read_sites.c:34 ../vector/v.edit/select.c:506
@@ -15870,6 +15966,11 @@ msgstr "Tên của bản đồ raster cần dùng cho <%s>"
 #: ../display/d.rgb/main.c:119
 msgid "Error reading row of data"
 msgstr "Lỗi khi đọc hàng của dữ liệu"
+
+#: ../display/d.where/main.c:42
+#, fuzzy
+msgid "display, position, querying"
+msgstr "trình bày, mạng lưới"
 
 #: ../display/d.where/main.c:44
 msgid ""
@@ -15987,14 +16088,19 @@ msgid ""
 msgstr ""
 "Tọa độ màn hình cho góc trên trái của nhãn ([0,0] là góc trên trái của khung)"
 
-#: ../display/d.barscale/main.c:106
+#: ../display/d.barscale/main.c:114
 #, c-format
 msgid "%s does not work with a latitude-longitude location"
 msgstr "%s không chạy với vị trí kiểu kinh/vĩ độ"
 
-#: ../display/d.barscale/main.c:114
+#: ../display/d.barscale/main.c:122
 msgid "Choose either -n or -s flag"
 msgstr "Chọn hoặc cờ -n, hoặc cờ -s"
+
+#: ../display/d.measure/main.c:49
+#, fuzzy
+msgid "display, geometry"
+msgstr "trình bày, vec-tơ"
 
 #: ../display/d.measure/main.c:51
 msgid ""
@@ -16114,6 +16220,11 @@ msgstr "%s: Không có tập tin định nghĩa Freetype"
 #, c-format
 msgid "%s: Unable to read FreeType definition file"
 msgstr "%s: Không thể đọc tập tin định nghĩa FreeType"
+
+#: ../display/d.his/main.c:65
+#, fuzzy
+msgid "display, color transformation"
+msgstr "ảnh, chuyển đổi màu, RGB, HIS"
 
 #: ../display/d.his/main.c:67
 msgid ""
@@ -16245,7 +16356,7 @@ msgstr "Lớp số. Nếu là -1, tất cả các lớp được trình bày."
 #: ../vector/v.reclass/main.c:78 ../vector/v.select/args.c:16
 #: ../vector/v.select/args.c:21 ../vector/v.select/args.c:30
 #: ../vector/v.select/args.c:35 ../vector/v.select/args.c:89
-#: ../vector/v.buffer2/main.c:144 ../vector/v.buffer2/main.c:147
+#: ../vector/v.buffer2/main.c:159 ../vector/v.buffer2/main.c:162
 #: ../vector/v.to.rast/main.c:44 ../vector/v.to.rast/main.c:49
 #: ../vector/v.edit/args.c:42 ../vector/v.edit/args.c:47
 #: ../vector/v.edit/args.c:125 ../vector/v.edit/args.c:129
@@ -16583,6 +16694,11 @@ msgstr "Không có tập tin miền cho [%s]"
 msgid "Data range is empty"
 msgstr "Miền dữ liệu bị rỗng"
 
+#: ../display/d.extract/main.c:50 ../display/d.what.vect/main.c:54
+#: ../display/d.vect/main.c:122
+msgid "display, vector"
+msgstr "trình bày, vec-tơ"
+
 #: ../display/d.extract/main.c:52
 msgid "Selects and extracts vectors with mouse into new vector map."
 msgstr "Chọn và trích xuất các vec-tơ bằng chuột để tạo bản đồ vec-tơ mới."
@@ -16614,6 +16730,11 @@ msgstr " - R: thoát và lưu các vec-tơ đã chọn thành bản đồ mới\
 #: ../display/d.extract/extract.c:49
 msgid "L: add  M: remove  R: quit and save\n"
 msgstr "L: thêm M: loại bỏ R: thoát và lưu\n"
+
+#: ../display/d.histogram/main.c:71
+#, fuzzy
+msgid "display, histogram, statistics"
+msgstr "raster, thống kê"
 
 #: ../display/d.histogram/main.c:73
 msgid ""
@@ -16879,6 +17000,12 @@ msgstr "Thất bại khi kiểm tra cơ chế khoá"
 msgid "Usage:  %s [-fv] [name]"
 msgstr "Cách dùng: %s [-fv] [tên]"
 
+#: ../display/d.mon/cmd/main.c:49 ../visualization/ximgview/main.c:270
+#: ../locale/scriptstrings/d.rast.leg_to_translate.c:2
+#: ../locale/scriptstrings/d.redraw_to_translate.c:2
+msgid "display"
+msgstr "trình bày"
+
 #: ../display/d.mon/cmd/main.c:51
 msgid "To establish and control use of a graphics display monitor."
 msgstr "Để thiết lập và kiểm soát việc sử dụng màn hình hiển thị đồ họa."
@@ -16923,6 +17050,11 @@ msgstr "Không chọn tự động khi khởi động"
 #, c-format
 msgid "Problem selecting %s. Will try once more"
 msgstr "Trục trặc khi chọn %s. Sẽ thử lại lần nữa"
+
+#: ../display/d.paint.labels/main.c:46
+#, fuzzy
+msgid "display, paint labels"
+msgstr "vec-tơ, nhãn vẽ"
 
 #: ../display/d.paint.labels/main.c:48
 msgid ""
@@ -17010,7 +17142,7 @@ msgstr "Mở biểu mẫu ở chế độ chỉnh sửa"
 #: ../vector/v.out.ascii/out.c:146 ../vector/v.net.allpairs/main.c:106
 #: ../vector/v.hull/main.c:307 ../vector/v.net.timetable/main.c:317
 #: ../vector/v.net.bridge/main.c:80 ../vector/v.net.connectivity/main.c:115
-#: ../vector/v.support/main.c:135 ../vector/v.buffer2/main.c:300
+#: ../vector/v.support/main.c:135 ../vector/v.buffer2/main.c:315
 #: ../vector/v.net.flow/main.c:132 ../vector/v.edit/main.c:165
 #: ../vector/v.info/main.c:113 ../vector/v.surf.rst/main.c:569
 #: ../vector/v.surf.rst/main.c:724 ../vector/v.surf.rst/main.c:813
@@ -17276,94 +17408,104 @@ msgid "Aborting."
 msgstr "Đang bỏ lệnh."
 
 #: ../display/d.nviz/main.c:69
+#, fuzzy
+msgid "display, visualization, raster, vector, raster3d"
+msgstr "xem, raster, vec-tơ, raster 3D"
+
+#: ../display/d.nviz/main.c:70
 msgid "Creates fly-through script to run in NVIZ."
 msgstr "Tạo tập lệnh bay-ngang để chạy trong NVIZ."
 
-#: ../display/d.nviz/main.c:74
+#: ../display/d.nviz/main.c:75
 msgid "Name of output script"
 msgstr "Tên của tập lệnh đầu ra"
 
-#: ../display/d.nviz/main.c:80
+#: ../display/d.nviz/main.c:81
 msgid "Prefix of output images (default = NVIZ)"
 msgstr "Tiền tố của các ảnh đầu ra (mặc định = NVIZ)"
 
-#: ../display/d.nviz/main.c:88
+#: ../display/d.nviz/main.c:89
 msgid "Route coordinates (east,north)"
 msgstr "Các tọa độ lộ trình (đông,bắc)"
 
-#: ../display/d.nviz/main.c:94
+#: ../display/d.nviz/main.c:95
 msgid "Camera layback distance (in map units)"
 msgstr "Khoảng cách đặt máy quay (theo đơn vị bản đồ)"
 
-#: ../display/d.nviz/main.c:100
+#: ../display/d.nviz/main.c:101
 msgid "Camera height above terrain"
 msgstr "Chiều cao máy quay trên mặt địa hình"
 
-#: ../display/d.nviz/main.c:106
+#: ../display/d.nviz/main.c:107
 msgid "Number of frames"
 msgstr "Số khung ảnh"
 
-#: ../display/d.nviz/main.c:112
+#: ../display/d.nviz/main.c:113
 msgid "Start frame number (default=0)"
 msgstr "Số khung bắt đầu (mặc định=0)"
 
-#: ../display/d.nviz/main.c:117
+#: ../display/d.nviz/main.c:118
 msgid "Interactively select route"
 msgstr "Chọn lộ trình ở chế độ tương tác"
 
-#: ../display/d.nviz/main.c:121
+#: ../display/d.nviz/main.c:122
 msgid "Full render -- Save images"
 msgstr "Kết xuất hoàn chỉnh -- Lưu các ảnh"
 
-#: ../display/d.nviz/main.c:125
+#: ../display/d.nviz/main.c:126
 msgid "Fly at constant elevation (ht)"
 msgstr "Bay ở độ cao không đổi (ht)"
 
-#: ../display/d.nviz/main.c:130
+#: ../display/d.nviz/main.c:131
 msgid "Include command in the script to output a KeyFrame file"
 msgstr "Đưa vào tập lệnh một lệnh để xuất ra tập tin KeyFrame"
 
-#: ../display/d.nviz/main.c:134
+#: ../display/d.nviz/main.c:135
 msgid "Render images off-screen"
 msgstr "Kết xuất các ảnh ngoài màn hình (off-screen)"
 
-#: ../display/d.nviz/main.c:138
+#: ../display/d.nviz/main.c:139
 msgid "Enable vector and sites drawing"
 msgstr "Bật chức năng vẽ vec-tơ và địa điểm"
 
-#: ../display/d.nviz/main.c:146
+#: ../display/d.nviz/main.c:147
 msgid "Either -i flag and/or route parameter must be used"
 msgstr "Hoặc cờ -i và/hoặc tham số lộ trình phải được sử dụng"
 
-#: ../display/d.nviz/main.c:170
+#: ../display/d.nviz/main.c:171
 msgid "Off-screen only available with full render mode"
 msgstr "Ngoài màn hình chỉ áp dụng được ở chế độ kết xuất đầy đủ"
 
-#: ../display/d.nviz/main.c:281
+#: ../display/d.nviz/main.c:282
 msgid "You must select more than one point"
 msgstr "Bạn phải chọn nhiều hơn một điểm"
 
-#: ../display/d.nviz/main.c:299
+#: ../display/d.nviz/main.c:300
 msgid "You must select at least four points"
 msgstr "Bạn phải chọn ít nhất bốn điểm"
 
-#: ../display/d.nviz/main.c:316
+#: ../display/d.nviz/main.c:317
 #, c-format
 msgid "You must provide at least four points %d"
 msgstr "Bạn phải cung cấp ít nhất bốn điểm %d"
 
-#: ../display/d.nviz/main.c:390
+#: ../display/d.nviz/main.c:391
 #, c-format
 msgid "Created NVIZ script <%s>."
 msgstr "Tập lệnh NVIZ <%s> được tạo ra."
 
-#: ../display/d.nviz/main.c:537
+#: ../display/d.nviz/main.c:538
 msgid ""
 "Skipping this point, selected point is outside region. Perhaps the camera "
 "setback distance puts it beyond the edge?"
 msgstr ""
 "Bỏ qua điểm này, điểm được chọn nằm ngoài vùng. Có lẽ khoảng cách đặt máy "
 "quay đã để nó ở ngoài mép?"
+
+#: ../display/d.zoom/main.c:57
+#, fuzzy
+msgid "display, zoom"
+msgstr "trình bày, vec-tơ"
 
 #: ../display/d.zoom/main.c:59
 msgid ""
@@ -17489,10 +17631,6 @@ msgstr " Phải:  Thoát\n"
 #: ../display/d.vect/attr.c:54
 msgid "Can't read vector map"
 msgstr "Không thể đọc bản đồ vec-tơ"
-
-#: ../display/d.vect/main.c:122
-msgid "display, vector"
-msgstr "trình bày, vec-tơ"
 
 #: ../display/d.vect/main.c:123
 #, fuzzy
@@ -17806,17 +17944,10 @@ msgstr "attrcol không được chỉ định, không thể trình bày các thu
 msgid "No attribute found for cat %d: %s"
 msgstr "Không tìm thấy thuộc tính cho cat %d: %s"
 
-#: ../vector/v.sample/main.c:86 ../vector/v.perturb/main.c:73
-#: ../vector/v.in.region/main.c:38 ../vector/v.out.vtk/main.c:46
-#: ../vector/v.mkgrid/main.c:63 ../vector/v.vol.rst/main.c:202
-#: ../vector/v.patch/main.c:68 ../vector/v.voronoi/vo_main.c:118
-#: ../vector/v.voronoi/dt_main.c:46 ../vector/v.delaunay2/main.c:86
-#: ../vector/v.external/main.c:58 ../vector/v.clean/test/topocheck.c:42
-#: ../vector/v.buffer/main.c:254 ../vector/v.info/main.c:265
-#: ../vector/v.surf.rst/main.c:164
-#: ../locale/scriptstrings/v.build.all_to_translate.c:2
-msgid "vector"
-msgstr "vector"
+#: ../vector/v.sample/main.c:86
+#, fuzzy
+msgid "vector, raster, resample"
+msgstr "raster, lấy mẫu lại"
 
 #: ../vector/v.sample/main.c:88
 msgid "Samples a raster map at vector point locations."
@@ -17898,7 +18029,7 @@ msgstr "Đang kiểm tra các điểm vector..."
 
 #: ../vector/v.sample/main.c:252 ../vector/v.sample/main.c:260
 #: ../vector/v.label.sa/labels.c:178 ../vector/v.vol.rst/user1.c:170
-#: ../vector/v.buffer2/main.c:388 ../vector/v.buffer2/main.c:459
+#: ../vector/v.buffer2/main.c:414 ../vector/v.buffer2/main.c:486
 #: ../vector/v.label/main.c:329 ../vector/v.buffer/main.c:454
 #: ../vector/v.buffer/main.c:466 ../vector/v.buffer/main.c:531
 #: ../vector/v.buffer/main.c:543 ../vector/v.what.rast/main.c:313
@@ -17908,7 +18039,7 @@ msgstr "Không có bản ghi của phạm trù %d trong bảng <%s>"
 
 #: ../vector/v.sample/main.c:266 ../vector/lidar/v.surf.bspline/main.c:344
 #: ../vector/lidar/v.surf.bspline/crosscorr.c:133
-#: ../vector/v.to.rast3/main.c:100 ../vector/v.buffer2/main.c:334
+#: ../vector/v.to.rast3/main.c:100 ../vector/v.buffer2/main.c:349
 #: ../vector/v.class/main.c:123 ../vector/v.univar/main.c:273
 #: ../vector/v.surf.idw/read_sites.c:49 ../vector/v.buffer/main.c:402
 #: ../vector/v.what.rast/main.c:158
@@ -17995,10 +18126,9 @@ msgstr "Không thể lấy khung bao quanh của vùng %d"
 msgid "Unable to get bounding box of line %d"
 msgstr "Không thể lấy khung bao quanh của đường %d"
 
-#: ../vector/v.net.alloc/main.c:61 ../vector/v.net/main.c:47
-#: ../vector/v.net.iso/main.c:73 ../vector/v.net.salesman/main.c:97
-#: ../vector/v.net.steiner/main.c:345 ../vector/v.net.path/main.c:41
-msgid "vector, networking"
+#: ../vector/v.net.alloc/main.c:61
+#, fuzzy
+msgid "vector, network, allocation"
 msgstr "vector, mạng lưới"
 
 #: ../vector/v.net.alloc/main.c:63
@@ -18050,6 +18180,11 @@ msgstr "Đang tính các chi phí từ các tâm ..."
 #: ../vector/v.net.iso/main.c:508
 msgid "Cannot get line segment, segment out of line"
 msgstr "Không thể lấy đoạn của đường, đoạn nằm ngoài đường"
+
+#: ../vector/v.net/main.c:47
+#, fuzzy
+msgid "vector, networking, maintenance"
+msgstr "Thực hiện phép bảo trì mạng lưới."
 
 #: ../vector/v.net/main.c:48
 msgid "Performs network maintenance."
@@ -18157,9 +18292,9 @@ msgstr "tìm thấy %d điểm: %.3lf %.3lf %.3lf phạm trù đường: %d"
 msgid "Exports a GRASS vector map to SVG."
 msgstr "Xuất một bản đồ vec-tơ GRASS ra SVG."
 
-#: ../vector/v.out.svg/main.c:73 ../vector/v.out.ascii/out.c:45
-#: ../vector/v.out.ogr/main.c:98 ../vector/v.out.pov/main.c:43
-#: ../vector/v.out.dxf/main.c:48
+#: ../vector/v.out.svg/main.c:73 ../vector/v.out.vtk/main.c:46
+#: ../vector/v.out.ascii/out.c:45 ../vector/v.out.ogr/main.c:98
+#: ../vector/v.out.pov/main.c:43 ../vector/v.out.dxf/main.c:48
 msgid "vector, export"
 msgstr "vector, xuất"
 
@@ -18653,7 +18788,8 @@ msgstr ""
 msgid "Auxiliar table could not be dropped"
 msgstr "Không thể bỏ bảng phụ (auxiliar table)"
 
-#: ../vector/lidar/v.surf.bspline/main.c:83 ../vector/v.surf.idw/main.c:84
+#: ../vector/lidar/v.surf.bspline/main.c:83 ../vector/v.vol.rst/main.c:202
+#: ../vector/v.surf.idw/main.c:84 ../vector/v.surf.rst/main.c:164
 msgid "vector, interpolation"
 msgstr "vector, nội suy"
 
@@ -19628,8 +19764,8 @@ msgstr "Loại bỏ các cầu:"
 msgid "Merge boundaries:"
 msgstr "Ngắt các ranh giới:"
 
-#: ../vector/v.in.ogr/main.c:1053 ../vector/v.buffer2/main.c:551
-#: ../vector/v.buffer2/main.c:627 ../vector/v.voronoi/dt_main.c:142
+#: ../vector/v.in.ogr/main.c:1053 ../vector/v.buffer2/main.c:591
+#: ../vector/v.buffer2/main.c:683 ../vector/v.voronoi/dt_main.c:142
 #: ../vector/v.overlay/area_area.c:68 ../vector/v.buffer/main.c:663
 #: ../vector/v.buffer/main.c:750
 msgid "Cannot calculate area centroid"
@@ -20007,6 +20143,11 @@ msgstr "%d điểm được ghi vào bản đồ vec-tơ."
 msgid "Splits net by cost isolines."
 msgstr "Tách mạng lưới bằng các đường cùng giá trị."
 
+#: ../vector/v.net.iso/main.c:73
+#, fuzzy
+msgid "vector, network, isolines"
+msgstr "vector, mạng lưới"
+
 #: ../vector/v.net.iso/main.c:75
 msgid ""
 "Splits net to bands between cost isolines (direction from centre). Centre "
@@ -20062,6 +20203,11 @@ msgstr "Số lượng ta6m: %d (nlayer %d)"
 msgid "Calculating costs from centre %d..."
 msgstr "Đang tính các chi phí từ tâm %d...."
 
+#: ../vector/v.net.salesman/main.c:97
+#, fuzzy
+msgid "vector, network, salesman"
+msgstr "vector, mạng lưới"
+
 #: ../vector/v.net.salesman/main.c:99
 msgid "Creates a cycle connecting given nodes (Traveling salesman problem)."
 msgstr ""
@@ -20103,6 +20249,11 @@ msgstr "Không đủ số thành phố (< 2)"
 #, c-format
 msgid "Destination node [%d] is unreachable from node [%d]"
 msgstr "Nốt đích [%d] không thể chạm đến được tính từ nốt [%d]"
+
+#: ../vector/v.perturb/main.c:73
+#, fuzzy
+msgid "vector, geometry, statistics"
+msgstr "vector, báo cáo, thống kê"
 
 #: ../vector/v.perturb/main.c:75
 msgid "Random location perturbations of GRASS vector points"
@@ -20158,6 +20309,15 @@ msgstr "normalsv: lưu các khối không được khởi tạo"
 msgid "normalsv: restoration of unitialized block"
 msgstr "normalsv: phục hồi các khối không được khởi tạo"
 
+#: ../vector/v.in.region/main.c:38 ../vector/v.type/main.c:47
+#: ../vector/v.mkgrid/main.c:63 ../vector/v.hull/main.c:273
+#: ../vector/v.patch/main.c:68 ../vector/v.overlay/main.c:55
+#: ../vector/v.segment/main.c:52 ../vector/v.to.points/main.c:173
+#: ../vector/v.parallel/main.c:39 ../vector/v.parallel2/main.c:44
+#: ../vector/v.split/main.c:42
+msgid "vector, geometry"
+msgstr "vector, hình học"
+
 #: ../vector/v.in.region/main.c:39
 msgid "Create a new vector from the current region."
 msgstr "Tạo vec-tơ mới từ vùng hiện tại."
@@ -20167,7 +20327,7 @@ msgid "Select type: line or area"
 msgstr "Chọn kiểu: đường hoặc vùng"
 
 #: ../vector/v.net.distance/main.c:60 ../vector/v.net.allpairs/main.c:54
-#: ../vector/v.net.timetable/main.c:254
+#: ../vector/v.net.timetable/main.c:254 ../vector/v.net.path/main.c:41
 #, fuzzy
 msgid "vector, network, shortest path"
 msgstr "vector, nhập, các đia điểm"
@@ -20870,13 +21030,6 @@ msgstr "%s: Không thể đọc tập tin định nghĩa phông; dùng mặc đ�
 #, c-format
 msgid "%s: No font definition file"
 msgstr "%s: Không có tập tin định nghĩa phông"
-
-#: ../vector/v.type/main.c:47 ../vector/v.hull/main.c:273
-#: ../vector/v.overlay/main.c:55 ../vector/v.segment/main.c:52
-#: ../vector/v.to.points/main.c:173 ../vector/v.parallel/main.c:39
-#: ../vector/v.parallel2/main.c:44 ../vector/v.split/main.c:42
-msgid "vector, geometry"
-msgstr "vector, hình học"
 
 #: ../vector/v.type/main.c:48
 msgid "Change the type of geometry elements."
@@ -23020,44 +23173,44 @@ msgstr ""
 msgid "Do not skip features without category"
 msgstr "Bỏ đối tượng không có phạm trù"
 
-#: ../vector/v.buffer2/main.c:134
+#: ../vector/v.buffer2/main.c:149
 msgid "vector, buffer"
 msgstr "vector, đệm"
 
-#: ../vector/v.buffer2/main.c:136 ../vector/v.buffer/main.c:256
+#: ../vector/v.buffer2/main.c:151 ../vector/v.buffer/main.c:256
 msgid ""
 "Creates a buffer around features of given type (areas must contain centroid)."
 msgstr ""
 "Tạo một vùng đệm xung quanh các đối tượng có kiểu nhất định (vùng phải có "
 "trọng tâm)."
 
-#: ../vector/v.buffer2/main.c:154
+#: ../vector/v.buffer2/main.c:169
 msgid "Buffer distance along major axis in map units"
 msgstr "Đệm khoảng cách dọc theo trục lớn tính theo đơn vị bản đồ"
 
-#: ../vector/v.buffer2/main.c:155 ../vector/v.buffer2/main.c:163
-#: ../vector/v.buffer2/main.c:171 ../vector/v.buffer2/main.c:177
-#: ../vector/v.buffer2/main.c:185 ../vector/v.buffer2/main.c:194
+#: ../vector/v.buffer2/main.c:170 ../vector/v.buffer2/main.c:178
+#: ../vector/v.buffer2/main.c:186 ../vector/v.buffer2/main.c:192
+#: ../vector/v.buffer2/main.c:200 ../vector/v.buffer2/main.c:209
 msgid "Distance"
 msgstr "Khoảng cách"
 
-#: ../vector/v.buffer2/main.c:162
+#: ../vector/v.buffer2/main.c:177
 msgid "Buffer distance along minor axis in map units"
 msgstr "Đệm khoảng cách dọc theo trục nhỏ tính theo đơn vị bản đồ"
 
-#: ../vector/v.buffer2/main.c:170 ../vector/v.parallel2/main.c:73
+#: ../vector/v.buffer2/main.c:185 ../vector/v.parallel2/main.c:73
 msgid "Angle of major axis in degrees"
 msgstr "Góc trục lớn tính theo độ"
 
-#: ../vector/v.buffer2/main.c:176
+#: ../vector/v.buffer2/main.c:191
 msgid "Name of column to use for buffer distances"
 msgstr "Tên cột dùng làm khoảng cách đệm"
 
-#: ../vector/v.buffer2/main.c:184 ../vector/v.buffer/main.c:286
+#: ../vector/v.buffer2/main.c:199 ../vector/v.buffer/main.c:286
 msgid "Scaling factor for attribute column values"
 msgstr "Hệ số tỷ lệ dùng cho các giá trị của cột thuộc tính"
 
-#: ../vector/v.buffer2/main.c:193 ../vector/v.buffer/main.c:296
+#: ../vector/v.buffer2/main.c:208 ../vector/v.buffer/main.c:296
 msgid ""
 "Maximum distance between theoretical arc and polygon segments as multiple of "
 "buffer"
@@ -23065,18 +23218,18 @@ msgstr ""
 "Khoảng cách tối đa giữa cung lý thuyết và các đoạn đa giác ở dạng bội số của "
 "đệm"
 
-#: ../vector/v.buffer2/main.c:200 ../vector/v.buffer2/main.c:212
+#: ../vector/v.buffer2/main.c:215 ../vector/v.buffer2/main.c:227
 #: ../vector/v.build.polylines/main.c:128
 msgid "Unused"
 msgstr "Không dùng"
 
-#: ../vector/v.buffer2/main.c:202
+#: ../vector/v.buffer2/main.c:217
 msgid "This does nothing. It is retained for backwards compatibility"
 msgstr ""
 "Lệnh này không làm gì hết. Nó được giữ lại chỉ nhằm mục đích tương thích "
 "ngược"
 
-#: ../vector/v.buffer2/main.c:209
+#: ../vector/v.buffer2/main.c:224
 msgid ""
 "This is an alias to the distance option. It is retained for backwards "
 "compatibility"
@@ -23084,24 +23237,24 @@ msgstr ""
 "Đây là một tên khác (alias) của tuỳ chọn khoảng cách. Nó được giữ lại chỉ "
 "nhằm mục đích tương thích ngược"
 
-#: ../vector/v.buffer2/main.c:211 ../vector/v.buffer/main.c:271
+#: ../vector/v.buffer2/main.c:226 ../vector/v.buffer/main.c:271
 msgid "Buffer distance in map units"
 msgstr "Khoảng cách đệm tính theo đơn vị bản đồ"
 
-#: ../vector/v.buffer2/main.c:216
+#: ../vector/v.buffer2/main.c:231
 msgid "Make outside corners straight"
 msgstr "Làm cho các góc ngoài cùng thẳng"
 
-#: ../vector/v.buffer2/main.c:220
+#: ../vector/v.buffer2/main.c:235
 msgid "Don't make caps at the ends of polylines"
 msgstr "Không tạo chóp (cap) ở đầu các đường"
 
-#: ../vector/v.buffer2/main.c:231
+#: ../vector/v.buffer2/main.c:246
 msgid "Select a buffer distance/minordistance/angle or column, but not both."
 msgstr ""
 "Chọn khoảng cách đệm/khoảng cách nhỏ/góc hoặc cột, không được chọn cả hai."
 
-#: ../vector/v.buffer2/main.c:235 ../vector/v.buffer/main.c:319
+#: ../vector/v.buffer2/main.c:250 ../vector/v.buffer/main.c:319
 msgid ""
 "The bufcol option may contain bugs during the cleaning step. If you "
 "encounter problems, use the debug option or clean manually with v.clean "
@@ -23111,12 +23264,12 @@ msgstr ""
 "dùng tùy chọn gỡ lỗi hoặc làm sạch thủ công bằng v.clean tool=break; v."
 "category step=0; v.extract -d type=area"
 
-#: ../vector/v.buffer2/main.c:246
+#: ../vector/v.buffer2/main.c:261
 #, fuzzy
 msgid "The bufcol option requires a valid layer."
 msgstr "Tùy chọn tỷ lệ đòi hỏi phải có magnitude_map"
 
-#: ../vector/v.buffer2/main.c:249
+#: ../vector/v.buffer2/main.c:264
 msgid ""
 "The buffer option has been replaced by the distance option and will be "
 "removed in future."
@@ -23124,77 +23277,112 @@ msgstr ""
 "Tuỳ chọn đệm đã được thay thế bằng tuỳ chọn khoảng cách và sau này sẽ được "
 "loại bỏ."
 
-#: ../vector/v.buffer2/main.c:252
+#: ../vector/v.buffer2/main.c:267
 msgid "Use the distance option instead of the buffer option."
 msgstr "Dùng tuỳ chọn khoảng cách thay vì tuỳ chọn đệm."
 
-#: ../vector/v.buffer2/main.c:256
+#: ../vector/v.buffer2/main.c:271
 #, fuzzy
 msgid "The tolerance must be > 0."
 msgstr "'layer' phải > 0 đối với 'cats'."
 
-#: ../vector/v.buffer2/main.c:259
+#: ../vector/v.buffer2/main.c:274
 #, c-format
 msgid "The tolerance was reset to %g"
 msgstr "Dung sai được thiết lập lại thành %g"
 
-#: ../vector/v.buffer2/main.c:283
+#: ../vector/v.buffer2/main.c:298
 #, c-format
 msgid "The tolerance in map units = %g"
 msgstr "Dung sai tính theo đơn vị bản đồ = %g"
 
-#: ../vector/v.buffer2/main.c:328
+#: ../vector/v.buffer2/main.c:343
 #, c-format
 msgid "Unable to select data from table <%s>"
 msgstr "Không thể chọn dữ liệu từ bảng <%s>"
 
-#: ../vector/v.buffer2/main.c:368
+#: ../vector/v.buffer2/main.c:379
+msgid ""
+"No features available for buffering. Check type option and features "
+"available in the input vector."
+msgstr ""
+
+#: ../vector/v.buffer2/main.c:394
 msgid "Buffering lines..."
 msgstr "Đang đệm các đường..."
 
-#: ../vector/v.buffer2/main.c:394 ../vector/v.buffer2/main.c:465
+#: ../vector/v.buffer2/main.c:420 ../vector/v.buffer2/main.c:492
 #: ../vector/v.buffer/main.c:473 ../vector/v.buffer/main.c:550
 #, c-format
 msgid "Attribute is of invalid size (%.3f) for category %d"
 msgstr "Thuộc tính có kích cỡ không hợp lệ (%.3f) đối với phạm trù %d"
 
-#: ../vector/v.buffer2/main.c:408 ../vector/v.buffer2/main.c:479
+#: ../vector/v.buffer2/main.c:434 ../vector/v.buffer2/main.c:506
 #: ../vector/v.buffer/main.c:335 ../vector/v.buffer/main.c:485
 #: ../vector/v.buffer/main.c:562
 #, c-format
 msgid "The tolerance in map units: %g"
 msgstr "Dung sai tính theo đơn vị bản đồ: %g"
 
-#: ../vector/v.buffer2/main.c:438
+#: ../vector/v.buffer2/main.c:465
 msgid "Buffering areas..."
 msgstr "Đang đệm các vùng..."
 
-#: ../vector/v.buffer2/main.c:505 ../vector/v.buffer/main.c:607
+#: ../vector/v.buffer2/main.c:521
+#, fuzzy
+msgid "Writting buffers..."
+msgstr "Đang ghi các đối tượng..."
+
+#: ../vector/v.buffer2/main.c:537 ../vector/v.buffer/main.c:607
 msgid "Building parts of topology..."
 msgstr "Đang xây dựng lại các phần của tôpô..."
 
-#: ../vector/v.buffer2/main.c:508 ../vector/v.buffer/main.c:619
+#: ../vector/v.buffer2/main.c:540 ../vector/v.buffer/main.c:619
 msgid "Snapping boundaries..."
 msgstr "Đang bắt dính các ranh giới..."
 
-#: ../vector/v.buffer2/main.c:511
+#: ../vector/v.buffer2/main.c:543
 #, fuzzy
 msgid "Breaking polygons..."
 msgstr "Ngắt các vùng"
 
-#: ../vector/v.buffer2/main.c:514 ../vector/v.buffer2/main.c:520
+#: ../vector/v.buffer2/main.c:546 ../vector/v.buffer2/main.c:553
 #: ../vector/v.overlay/area_area.c:43 ../vector/v.buffer/main.c:625
 msgid "Removing duplicates..."
 msgstr "Loại bỏ các đối tượng lặp..."
 
-#: ../vector/v.buffer2/main.c:517 ../vector/v.buffer/main.c:622
+#: ../vector/v.buffer2/main.c:550 ../vector/v.buffer/main.c:622
 msgid "Breaking boundaries..."
 msgstr "Đang ngắt các ranh giới..."
 
-#: ../vector/v.buffer2/main.c:532 ../vector/v.overlay/area_area.c:55
+#: ../vector/v.buffer2/main.c:556
+#, fuzzy
+msgid "Cleaning boundaries at nodes"
+msgstr "Đang làm sạch ranh giới tại các nốt..."
+
+#: ../vector/v.buffer2/main.c:571 ../vector/v.overlay/area_area.c:55
 #: ../vector/v.buffer/main.c:637
 msgid "Attaching islands..."
 msgstr "Đang gắn các đảo..."
+
+#: ../vector/v.buffer2/main.c:577 ../vector/v.buffer2/main.c:670
+#: ../vector/v.buffer/main.c:644 ../vector/v.buffer/main.c:734
+msgid "Calculating centroids for areas..."
+msgstr "Đang tính trong tâm cho các vùng..."
+
+#: ../vector/v.buffer2/main.c:608 ../vector/v.buffer/main.c:686
+msgid "Generating list of boundaries to be deleted..."
+msgstr "Đang tạo danh sách các ranh giới cần xoá..."
+
+#: ../vector/v.buffer2/main.c:641 ../vector/v.buffer/main.c:718
+msgid "Deleting boundaries..."
+msgstr "Đang xoá các ranh giới..."
+
+#: ../vector/v.voronoi/vo_main.c:118 ../vector/v.voronoi/dt_main.c:46
+#: ../vector/v.delaunay2/main.c:86
+#, fuzzy
+msgid "vector, geometry, triangulation"
+msgstr "vector, hình học, thu mẫu"
 
 #: ../vector/v.voronoi/vo_main.c:119
 msgid ""
@@ -23251,6 +23439,11 @@ msgstr "Không thể tính toán trọng tâm vùng tọa độ z"
 #, c-format
 msgid "Init costs from node %d"
 msgstr "Chi phí init (khởi tạo) từ nốt %d"
+
+#: ../vector/v.net.steiner/main.c:345
+#, fuzzy
+msgid "vector, network, steiner tree"
+msgstr "vector, mạng lưới"
 
 #: ../vector/v.net.steiner/main.c:347
 msgid "Create Steiner tree for the network and given terminals"
@@ -25008,6 +25201,11 @@ msgstr ""
 "Không thể đóng bảng thuộc tính. Trình điều khiển DBMI không chấp nhận tất cả "
 "các thuộc tính"
 
+#: ../vector/v.external/main.c:58
+#, fuzzy
+msgid "vector, external, import"
+msgstr "vector, xuất"
+
 #: ../vector/v.external/main.c:60
 msgid "Creates a new vector as a read-only link to OGR layer."
 msgstr "Tạo một vec-tơ mới dưới dạng liên kết chỉ-đọc vào lớp OGR."
@@ -25252,6 +25450,11 @@ msgstr "Đang xây dựng lại tôpô cho bản đồ vector chứa lỗi..."
 msgid "Duplicate area centroids: %d"
 msgstr "Các trọng tâm vùng bị lặp: %5d"
 
+#: ../vector/v.clean/test/topocheck.c:42 ../vector/v.info/main.c:265
+#: ../locale/scriptstrings/v.build.all_to_translate.c:2
+msgid "vector"
+msgstr "vector"
+
 #: ../vector/v.clean/prune.c:214
 #, c-format
 msgid ""
@@ -25343,6 +25546,11 @@ msgstr "tạo đường song song với các đường đầu vào"
 msgid "Offset in map units, positive for right side, negative for left side."
 msgstr "Căn lệch theo đơn vị bản đồ, dương là về bên phải, âm là về bên trái."
 
+#: ../vector/v.buffer/main.c:254
+#, fuzzy
+msgid "vector, geometry, buffer"
+msgstr "vector, hình học, 3D"
+
 #: ../vector/v.buffer/main.c:278
 msgid "Attribute column to use for buffer distances"
 msgstr "Cột thuộc tính dùng làm khoảng cách đệm"
@@ -25368,18 +25576,6 @@ msgstr "Dung sai được thiết lập lại thành %g (đ.vị bản đồ). [
 #: ../vector/v.buffer/main.c:509
 msgid "Areas buffers... "
 msgstr "Đệm vùng..."
-
-#: ../vector/v.buffer/main.c:644 ../vector/v.buffer/main.c:734
-msgid "Calculating centroids for areas..."
-msgstr "Đang tính trong tâm cho các vùng..."
-
-#: ../vector/v.buffer/main.c:686
-msgid "Generating list of boundaries to be deleted..."
-msgstr "Đang tạo danh sách các ranh giới cần xoá..."
-
-#: ../vector/v.buffer/main.c:718
-msgid "Deleting boundaries..."
-msgstr "Đang xoá các ranh giới..."
 
 #: ../vector/v.edit/main.c:55
 msgid "vector, editing, geometry"
@@ -26793,7 +26989,8 @@ msgid "Name of Arc cost column"
 msgstr "Số cột"
 
 #: ../misc/m.cogo/main.c:225
-msgid "miscellaneous"
+#, fuzzy
+msgid "miscellaneous, distance"
 msgstr "linh_tinh"
 
 #: ../misc/m.cogo/main.c:226
@@ -26884,8 +27081,9 @@ msgid "Using private colormap for DirectColor visual."
 msgstr "Dùng bản đồ màu riêng cho việc xem DirectColor."
 
 #: ../visualization/nviz/src/nviz_init.c:53
-msgid "raster, vector, visualization"
-msgstr "raster, vec-tơ, xem"
+#: ../visualization/nviz2/cmd/main.c:48
+msgid "visualization, raster, vector, raster3d"
+msgstr "xem, raster, vec-tơ, raster 3D"
 
 #: ../visualization/nviz/src/nviz_init.c:55
 msgid "nviz - Visualization and animation tool for GRASS data."
@@ -26962,10 +27160,6 @@ msgstr "Việc nạp dữ liệu thất bại"
 #: ../visualization/nviz/src/nviz_init.c:411
 msgid "Entering script mode ..."
 msgstr ""
-
-#: ../visualization/nviz2/cmd/main.c:48
-msgid "visualization, raster, vector, raster3d"
-msgstr "xem, raster, vec-tơ, raster 3D"
 
 #: ../visualization/nviz2/cmd/main.c:49
 msgid "Allows rendering GIS data is a 3D space."
@@ -27443,7 +27637,8 @@ msgid "postscript, map, printing"
 msgstr "postscript, bản đồ, in ấn"
 
 #: ../ps/ps.map/main.c:101
-msgid "Hardcopy PostScript map output utility."
+#, fuzzy
+msgid "Produces hardcopy PostScript map output."
 msgstr "Tiện ích tạo đầu ra bản đồ PostScript bản in."
 
 #: ../ps/ps.map/main.c:105
@@ -27858,9 +28053,8 @@ msgstr "Trình điều khiển SQLite: cột '%s', kiểu SQLite %d không đư�
 msgid "Unable to open database: "
 msgstr "Không thể mở csdl:"
 
-#: ../db/base/columns.c:92 ../db/base/drivers.c:74 ../db/base/connect.c:45
-#: ../db/base/describe.c:125 ../db/base/tables.c:95
-#: ../locale/scriptstrings/db.test_to_translate.c:2
+#: ../db/base/columns.c:92 ../db/base/drivers.c:74 ../db/base/describe.c:125
+#: ../db/base/tables.c:95 ../locale/scriptstrings/db.test_to_translate.c:2
 #: ../locale/scriptstrings/db.out.ogr_to_translate.c:2
 #: ../locale/scriptstrings/db.droptable_to_translate.c:2
 #: ../locale/scriptstrings/db.dropcol_to_translate.c:2
@@ -27951,6 +28145,11 @@ msgstr "Không thể phối hợp các tùy chọn 'select' và 'where'"
 #: ../db/base/copy.c:124
 msgid "Copy table failed"
 msgstr "Sao chép bảng thất bại"
+
+#: ../db/base/connect.c:45
+#, fuzzy
+msgid "database, attribute table, connection settings"
+msgstr "CSDL, bảng thuộc tính, SQL"
 
 #: ../db/base/connect.c:47
 msgid "Prints/sets general DB connection for current mapset and exits."
@@ -28046,7 +28245,7 @@ msgid "Lists all tables for a given database."
 msgstr "Liệt kê tất cả các bảng trong một CSDL cho trước."
 
 #: ../db/base/createdb.c:71 ../db/base/droptable.c:78
-#: ../db/base/databases.c:90 ../db/base/dropdb.c:71 ../db/db.login/main.c:43
+#: ../db/base/databases.c:90 ../db/base/dropdb.c:71
 msgid "database, SQL"
 msgstr "CSDL, SQL"
 
@@ -28107,12 +28306,17 @@ msgid "Only test query, do not execute"
 msgstr "Chỉ thử phép truy vấn, đừng thực thi"
 
 #: ../db/base/select.c:239
-msgid "Selects data from table."
-msgstr "Chọn dữ liệu từ bảng."
+msgid "Selects data from attribute table (performs SQL query statement(s))."
+msgstr ""
 
 #: ../db/base/dropdb.c:72
 msgid "Removes a database."
 msgstr "Loại bỏ một CSDL."
+
+#: ../db/db.login/main.c:43
+#, fuzzy
+msgid "database, connection settings"
+msgstr "Kết nối CSDL không được định nghĩa"
 
 #: ../db/db.login/main.c:44
 msgid "Sets user/password for driver/database."
@@ -28229,8 +28433,8 @@ msgstr "nhãn bằng tọa độ thay vì đánh số"
 #: ../locale/scriptstrings/v.convert.all_to_translate.c:1
 #, fuzzy
 msgid ""
-"Convert all old GRASS < Ver5.7 vector maps in current mapset to current "
-"format"
+"Converts all older versions of GRASS vector maps in current mapset to "
+"current format."
 msgstr ""
 "đổi tất cả các bản đồ vector GRASS kiểu cũ < 5.7 trong bộ bản đồ hiện tại "
 "thành định dạng hiện tại"
@@ -28261,30 +28465,6 @@ msgstr ""
 #, fuzzy
 msgid "Metadata key passed on the output dataset if possible"
 msgstr "truyền khóa metadata đến bộ dữ liệu đầu ra nếu được"
-
-#: ../locale/scriptstrings/r.regression.line_to_translate.c:1
-msgid "Calculates linear regression from two raster maps: y = a + b*x"
-msgstr "Tính toán hồi quy tuyến tính từ hai bản đồ raster: y = a + b*x"
-
-#: ../locale/scriptstrings/r.regression.line_to_translate.c:4
-msgid "Slower but accurate (applies to FP maps only)"
-msgstr ""
-
-#: ../locale/scriptstrings/r.regression.line_to_translate.c:5
-msgid "Map for x coefficient"
-msgstr "Bản đồ dùng làm hệ số x"
-
-#: ../locale/scriptstrings/r.regression.line_to_translate.c:6
-msgid "Map for y coefficient"
-msgstr "Bản đồ dùng làm hệ số y"
-
-#: ../locale/scriptstrings/r.regression.line_to_translate.c:7
-msgid ""
-"ASCII file for storing regression coefficients (output to screen if file not "
-"specified)."
-msgstr ""
-"Tập tin ASCII để lưu các hệ số hồi quy (xuất ra màn hình nếu tên tập tin "
-"không được chỉ định)."
 
 #: ../locale/scriptstrings/v.in.e00_to_translate.c:1
 #, fuzzy
@@ -28758,6 +28938,10 @@ msgstr "bản đồ thứ tư để ghép khảm."
 msgid "Blends color components of two raster maps by a given ratio."
 msgstr "Trộn các thành phần màu của hai bản đồ raster theo một tỷ lệ cho trước"
 
+#: ../locale/scriptstrings/r.blend_to_translate.c:2
+msgid "raster"
+msgstr "raster"
+
 #: ../locale/scriptstrings/r.blend_to_translate.c:3
 msgid "Name of first raster map for blending"
 msgstr "Tên của bản đồ raster đầu tiên để trộn"
@@ -29086,7 +29270,8 @@ msgid "Old and new name of the column (old,new)"
 msgstr ""
 
 #: ../locale/scriptstrings/r.mask_to_translate.c:1
-msgid "Create a MASK for limiting raster operation"
+#, fuzzy
+msgid "Creates a MASK for limiting raster operation."
 msgstr "Tạo một MẶT NẠ để giới hạn lệnh raster"
 
 #: ../locale/scriptstrings/r.mask_to_translate.c:2
@@ -29775,7 +29960,7 @@ msgstr "Chiều cao mới cho cửa sổ"
 
 #: ../locale/scriptstrings/v.in.mapgen_to_translate.c:1
 #, fuzzy
-msgid "Import Mapgen or Matlab-ASCII vector maps into GRASS."
+msgid "Imports Mapgen or Matlab-ASCII vector maps into GRASS."
 msgstr "Nhập các bản đồ vector Mapgen hoặc Matlab vào GRASS"
 
 #: ../locale/scriptstrings/v.in.mapgen_to_translate.c:3
@@ -30839,12 +31024,10 @@ msgstr "Đang lấy lại tỷ lệ dữ liệu <%s> thành miền %d,%d..."
 msgid "Eigen values, (vectors), and [percent importance]:"
 msgstr ""
 
-#: ../imagery/i.zc/main.c:57 ../imagery/i.vpoints/main.c:94
-#: ../imagery/i.cca/main.c:84 ../imagery/i.points/main.c:96
-#: ../imagery/i.group/main.c:52 ../imagery/i.target/main.c:45
-#: ../imagery/i.class/main.c:53
-msgid "imagery"
-msgstr "ảnh"
+#: ../imagery/i.zc/main.c:57
+#, fuzzy
+msgid "imagery, edges"
+msgstr "Đang ghi các gờ..."
 
 #: ../imagery/i.zc/main.c:59
 msgid "Zero-crossing \"edge detection\" raster function for image processing."
@@ -31077,6 +31260,11 @@ msgstr "Bản đồ raster <%s@%s>: phép chiếu không khớp với thiết l�
 #, c-format
 msgid "Raster map <%s@%s>: zone don't match current settings"
 msgstr "Bản đồ raster <%s@%s>: múi không khớp với thiết lập hiện tại"
+
+#: ../imagery/i.vpoints/main.c:94 ../imagery/i.points/main.c:96
+#, fuzzy
+msgid "imagery, geometry"
+msgstr "vector, hình học"
 
 #: ../imagery/i.vpoints/main.c:96
 msgid ""
@@ -31374,6 +31562,11 @@ msgstr "cách dùng: tập tin thành phần của bộ bản đồ trong locati
 msgid "Unable to open temp file."
 msgstr "Không thể mở tập tin tạm"
 
+#: ../imagery/i.cca/main.c:84
+#, fuzzy
+msgid "imagery, statistics"
+msgstr "raster, ảnh, thống kê"
+
 #: ../imagery/i.cca/main.c:86
 msgid "Canonical components analysis (cca) program for image processing."
 msgstr "Chương trình phân tích thành phần chính tắc (cca) dùng trong xử lý ảnh"
@@ -31383,7 +31576,8 @@ msgid "Name of input imagery subgroup"
 msgstr "Tên của nhóm ảnh phụ đầu vào"
 
 #: ../imagery/i.cca/main.c:99
-msgid "Ascii file containing spectral signatures"
+#, fuzzy
+msgid "File containing spectral signatures"
 msgstr "Tập tin ascii chứa các chữ ký phổ"
 
 #: ../imagery/i.cca/main.c:102
@@ -32489,6 +32683,11 @@ msgstr "trị tr.bình"
 msgid "  stddev"
 msgstr "độ lệch chuẩn"
 
+#: ../imagery/i.group/main.c:52 ../imagery/i.target/main.c:45
+#, fuzzy
+msgid "imagery, map management"
+msgstr "tổng quát, quản lý bản đồ"
+
 #: ../imagery/i.group/main.c:54
 msgid "Creates, edits, and lists groups and subgroups of imagery files."
 msgstr "Tạo, chỉnh sửa và liệt kê các nhóm và nhóm phụ của các tập tin ảnh."
@@ -32682,6 +32881,11 @@ msgstr "Chữ ký %d không hợp lệ (đặt đ.kiện kém) - bỏ qua"
 #, c-format
 msgid "Signature %d is not valid (singular) - ignored"
 msgstr "Chữ ký %d không hợp lệ (số ít) - bỏ qua."
+
+#: ../imagery/i.class/main.c:53
+#, fuzzy
+msgid "imagery, classification"
+msgstr "ảnh, phân loại, MLC"
 
 #: ../imagery/i.class/main.c:55
 msgid ""
@@ -32879,6 +33083,21 @@ msgid "Can't mark another point.  Only %d points allowed.  Sorry."
 msgstr ""
 "Không thể đánh dấu một điểm khác. Chỉ có %d điểm được chấp nhận. Xin lỗi."
 
+#~ msgid "general"
+#~ msgstr "tổng quát"
+
+#~ msgid "vector, networking"
+#~ msgstr "vector, mạng lưới"
+
+#~ msgid "raster, vector, visualization"
+#~ msgstr "raster, vec-tơ, xem"
+
+#~ msgid "Selects data from table."
+#~ msgstr "Chọn dữ liệu từ bảng."
+
+#~ msgid "imagery"
+#~ msgstr "ảnh"
+
 #~ msgid "Swapping header data"
 #~ msgstr "Đang hoán đổi dữ liệu header"
 
@@ -32984,9 +33203,6 @@ msgstr ""
 
 #~ msgid "Allows projection conversion of vector maps."
 #~ msgstr "Cho phép chuyển đổi phép chiếu của các bản đồ vec-tơ."
-
-#~ msgid "Raster value"
-#~ msgstr "Giá trị raster"
 
 #, fuzzy
 #~ msgid "Vector output map"

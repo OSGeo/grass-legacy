@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: grassmods_ar\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-04-18 22:47+0200\n"
+"POT-Creation-Date: 2011-04-23 15:34+0200\n"
 "PO-Revision-Date: 2005-03-09 12:50+0100\n"
 "Last-Translator: Dr. Alaa Masoud <alaamasoud@hotmail.com>\n"
 "Language-Team: Arabic <grass-translations@lists.osgeo.org>\n"
@@ -2873,15 +2873,24 @@ msgstr ""
 msgid "Line is not looped"
 msgstr "غير موجود'%s' الفيكتور"
 
-#: ../lib/vector/Vlib/buffer2.c:594 ../lib/vector/Vlib/buffer2.c:605
+#: ../lib/vector/Vlib/buffer2.c:598 ../lib/vector/Vlib/buffer2.c:609
 msgid "Next edge was visited but it is not the first one !!! breaking loop"
 msgstr ""
 
-#: ../lib/vector/Vlib/buffer2.c:652
+#: ../lib/vector/Vlib/buffer2.c:657
 msgid "side != 0 feature not implemented"
 msgstr ""
 
-#: ../lib/vector/Vlib/buffer2.c:891 ../lib/vector/Vlib/buffer2.c:924
+#: ../lib/vector/Vlib/buffer2.c:899 ../lib/vector/Vlib/buffer2.c:946
+msgid "zero area size"
+msgstr ""
+
+#: ../lib/vector/Vlib/buffer2.c:905 ../lib/vector/Vlib/buffer2.c:952
+#, fuzzy
+msgid "Line was not closed"
+msgstr "غير موجود'%s' الفيكتور"
+
+#: ../lib/vector/Vlib/buffer2.c:918 ../lib/vector/Vlib/buffer2.c:969
 msgid "Vect_get_point_in_poly() failed"
 msgstr ""
 
