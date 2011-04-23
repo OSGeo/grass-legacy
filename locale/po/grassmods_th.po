@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: grassmods_th\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-04-18 22:47+0200\n"
+"POT-Creation-Date: 2011-04-23 15:34+0200\n"
 "PO-Revision-Date: 2008-01-05 15:19+0700\n"
 "Last-Translator: man <mansv68@yahoo.co.th>\n"
 "Language-Team: Thai <grass-translations@lists.osgeo.org>\n"
@@ -53,7 +53,8 @@ msgstr "หยุดพิมพ์ ข้อมูลส่วนหัว"
 msgid "Use G3D mask (if exists) with input map"
 msgstr "ใช้  G3D mask (ถ้ามี) กับแผนที่นำเข้า"
 
-#: ../raster3d/r3.out.ascii/main.c:244
+#: ../raster3d/r3.out.ascii/main.c:244 ../raster3d/r3.out.vtk/main.c:376
+#: ../raster3d/r3.out.v5d/main.c:289
 msgid "raster3d, voxel, export"
 msgstr "แผนที่เชิงภาพ 3 มิติ, voxel, การส่งออก"
 
@@ -99,7 +100,7 @@ msgid ""
 "Data exists in input file after fully importing expected data.  [%.4f ...]"
 msgstr "ข้อมูลมีอยู่ในไฟล์นำเข้า หลังจาก นำเข้าทั้งหมด ยกเว้น ข้อมูล .  [%.4f ...]"
 
-#: ../raster3d/r3.in.ascii/main.c:240
+#: ../raster3d/r3.in.ascii/main.c:240 ../raster3d/r3.in.v5d/main.c:193
 msgid "raster3d, voxel, import"
 msgstr "แผนที่เชิงภาพ 3 มิติ, voxel, การนำเข้า"
 
@@ -149,11 +150,9 @@ msgid "Could not write raster row"
 msgstr "ไม่สามารถเขียน row ของแผนที่เชิงภาพ"
 
 #: ../raster3d/r3.cross.rast/main.c:270 ../raster3d/r3.to.rast/main.c:215
-#: ../raster3d/r3.out.vtk/main.c:376 ../raster3d/r3.gwflow/main.c:168
-#: ../raster3d/r3.mkdspf/main.c:75 ../raster3d/r3.in.v5d/main.c:193
+#: ../raster3d/r3.gwflow/main.c:168 ../raster3d/r3.mkdspf/main.c:75
 #: ../raster3d/base/r3.null.main.c:205 ../raster3d/base/r3.info.main.c:78
 #: ../raster3d/base/r3.timestamp.main.c:43 ../raster3d/base/r3.mask.main.c:153
-#: ../raster3d/r3.out.v5d/main.c:289
 msgid "raster3d, voxel"
 msgstr "แผนที่เชิงภาพ 3 มิติ, voxel"
 
@@ -743,7 +742,8 @@ msgid "Writing %s from %s..."
 msgstr "กำลังเขียน  %s จาก %s..."
 
 #: ../raster3d/r3.stats/main.c:568 ../raster/r.univar2/r3.univar_main.c:104
-msgid "raster3d, statistics"
+#, fuzzy
+msgid "raster3d, voxel, statistics"
 msgstr "แผนที่เชิงภาพ3d, statistics"
 
 #: ../raster3d/r3.stats/main.c:569
@@ -916,26 +916,27 @@ msgstr ""
 #: ../raster/r.carve/main.c:178 ../raster/r.report/parse.c:243
 #: ../raster/r.composite/main.c:155 ../raster/r.flow/io.c:65
 #: ../raster/r.sum/main.c:62 ../raster/r.topidx/check_ready.c:11
-#: ../raster/r.univar2/r.univar_main.c:216 ../raster/r.resamp.stats/main.c:296
-#: ../raster/r.region/main.c:166 ../raster/r.region/main.c:225
-#: ../raster/r.region/main.c:348 ../raster/r.param.scale/interface.c:172
-#: ../raster/r.support.stats/main.c:49 ../raster/r.neighbors/main.c:193
-#: ../raster/r.bitpattern/main.c:101 ../general/g.mremove/do_remove.c:50
-#: ../general/g.region/main.c:477 ../general/g.region/main.c:820
-#: ../general/g.region/main.c:828 ../display/d.profile/main.c:94
-#: ../display/d.rast.arrow/arrow.c:195 ../display/d.rast.arrow/arrow.c:237
-#: ../display/d.rast.arrow/arrow.c:372 ../display/d.extend/main.c:60
-#: ../display/d.legend/main.c:256 ../display/d.rgb/main.c:95
-#: ../display/d.his/main.c:137 ../display/d.his/main.c:174
-#: ../display/d.his/main.c:199 ../display/d.what.rast/main.c:155
-#: ../display/d.what.rast/opencell.c:13 ../display/d.colortable/main.c:95
-#: ../display/d.histogram/main.c:162 ../display/d.title/main.c:105
-#: ../display/d.rast/main.c:111 ../display/d.rast.num/number.c:149
-#: ../display/d.nviz/main.c:184 ../display/d.zoom/main.c:208
-#: ../vector/v.sample/main.c:158 ../vector/v.vol.rst/main.c:606
-#: ../vector/v.extrude/main.c:179 ../vector/v.drape/main.c:245
-#: ../vector/v.what.rast/main.c:138 ../visualization/xganim/main.c:366
-#: ../visualization/nviz2/cmd/surface.c:54
+#: ../raster/r.univar2/r.univar_main.c:216
+#: ../raster/r.regression.line/main.c:86 ../raster/r.regression.line/main.c:95
+#: ../raster/r.resamp.stats/main.c:296 ../raster/r.region/main.c:166
+#: ../raster/r.region/main.c:225 ../raster/r.region/main.c:348
+#: ../raster/r.param.scale/interface.c:172 ../raster/r.support.stats/main.c:49
+#: ../raster/r.neighbors/main.c:193 ../raster/r.bitpattern/main.c:101
+#: ../general/g.mremove/do_remove.c:50 ../general/g.region/main.c:477
+#: ../general/g.region/main.c:820 ../general/g.region/main.c:828
+#: ../display/d.profile/main.c:94 ../display/d.rast.arrow/arrow.c:195
+#: ../display/d.rast.arrow/arrow.c:237 ../display/d.rast.arrow/arrow.c:372
+#: ../display/d.extend/main.c:60 ../display/d.legend/main.c:256
+#: ../display/d.rgb/main.c:95 ../display/d.his/main.c:137
+#: ../display/d.his/main.c:174 ../display/d.his/main.c:199
+#: ../display/d.what.rast/main.c:155 ../display/d.what.rast/opencell.c:13
+#: ../display/d.colortable/main.c:95 ../display/d.histogram/main.c:162
+#: ../display/d.title/main.c:105 ../display/d.rast/main.c:111
+#: ../display/d.rast.num/number.c:149 ../display/d.nviz/main.c:185
+#: ../display/d.zoom/main.c:208 ../vector/v.sample/main.c:158
+#: ../vector/v.vol.rst/main.c:606 ../vector/v.extrude/main.c:179
+#: ../vector/v.drape/main.c:245 ../vector/v.what.rast/main.c:138
+#: ../visualization/xganim/main.c:366 ../visualization/nviz2/cmd/surface.c:54
 #: ../visualization/nviz2/cmd/surface.c:104 ../doc/raster/r.example/main.c:111
 #: ../ps/ps.map/outl_io.c:68 ../imagery/i.pca/main.c:136
 #: ../imagery/i.zc/main.c:111 ../imagery/i.rgb.his/openfiles.c:14
@@ -1099,9 +1100,12 @@ msgstr "ไม่สามารถสร้างไฟล์ <%s>"
 msgid "World File = %s"
 msgstr "World File = %s"
 
-#: ../raster/r.out.bin/main.c:279 ../raster/r.out.mat/main.c:64
-#: ../raster/r.out.ascii/main.c:59 ../raster/r.out.ppm/main.c:54
-#: ../raster/r.out.tiff/r.out.tiff.c:99 ../raster/r.out.gdal/main.c:128
+#: ../raster/r.out.bin/main.c:279 ../raster/r.out.gridatb/main.c:44
+#: ../raster/r.out.mat/main.c:64 ../raster/r.out.pov/main.c:121
+#: ../raster/r.out.ascii/main.c:59 ../raster/r.out.vtk/main.c:148
+#: ../raster/r.out.ppm/main.c:54 ../raster/r.out.ppm3/main.c:57
+#: ../raster/r.out.mpeg/main.c:384 ../raster/r.out.tiff/r.out.tiff.c:99
+#: ../raster/r.out.arc/main.c:60 ../raster/r.out.gdal/main.c:128
 #: ../locale/scriptstrings/r.out.gdal.sh_to_translate.c:2
 #: ../locale/scriptstrings/r.out.xyz_to_translate.c:2
 msgid "raster, export"
@@ -1245,46 +1249,6 @@ msgstr "r=%d"
 msgid "c=%d"
 msgstr "c=%d"
 
-#: ../raster/r.out.gridatb/main.c:44 ../raster/r.median/main.c:46
-#: ../raster/r.his/main.c:63 ../raster/r.out.pov/main.c:121
-#: ../raster/r.describe/main.c:59 ../raster/r.le/r.le.trace/main.c:57
-#: ../raster/r.le/r.le.setup/main.c:61 ../raster/r.le/r.le.patch/main.c:47
-#: ../raster/r.le/r.le.pixel/main.c:45 ../raster/r.surf.gauss/main.c:46
-#: ../raster/r.walk/main.c:174 ../raster/r.sun2/main.c:226
-#: ../raster/r.rescale.eq/main.c:52 ../raster/r.drain/main.c:94
-#: ../raster/r.lake/main.c:148 ../raster/r.compress/main.c:64
-#: ../raster/r.circle/dist.c:51 ../raster/r.sun/main.c:175
-#: ../raster/r.out.vtk/main.c:148 ../raster/r.quant/main.c:41
-#: ../raster/r.bilinear/main.c:42 ../raster/r.in.gridatb/main.c:41
-#: ../raster/r.resample/main.c:54 ../raster/r.patch/main.c:53
-#: ../raster/r.out.ppm3/main.c:57 ../raster/r.transect/main.c:54
-#: ../raster/r.random/main.c:51 ../raster/r.los/main.c:82
-#: ../raster/wildfire/r.spread/main.c:101
-#: ../raster/wildfire/r.spreadpath/main.c:72
-#: ../raster/wildfire/r.ros/main.c:212 ../raster/r.gwflow/main.c:189
-#: ../raster/r.profile/main.c:53 ../raster/r.average/main.c:51
-#: ../raster/r.surf.idw2/main.c:60 ../raster/r.watershed/front/main.c:56
-#: ../raster/r.info/main.c:69 ../raster/r.surf.area/main.c:88
-#: ../raster/r.covar/main.c:53 ../raster/r.rescale/main.c:50
-#: ../raster/r.grow2/main.c:128 ../raster/r.out.mpeg/main.c:384
-#: ../raster/r.fill.dir/main.c:84 ../raster/r.cross/main.c:75
-#: ../raster/r.resamp.rst/main.c:156 ../raster/r.texture/main.c:74
-#: ../raster/r.out.arc/main.c:60 ../raster/r.surf.contour/main.c:52
-#: ../raster/r.grow.distance/main.c:130 ../raster/r.topmodel/main.c:55
-#: ../raster/r.reclass/main.c:49 ../raster/r.cats/main.c:51
-#: ../raster/r.kappa/main.c:67 ../raster/r.coin/main.c:66
-#: ../raster/r.digit/main.c:45 ../raster/r.water.outlet/main.c:48
-#: ../raster/r.horizon/main.c:179 ../raster/r.volume/main.c:57
-#: ../raster/r.distance/main.c:38 ../raster/r.carve/main.c:77
-#: ../raster/r.mode/main.c:50 ../raster/r.what.color/main.c:88
-#: ../raster/r.what/main.c:91 ../raster/r.sum/main.c:46
-#: ../raster/r.topidx/main.c:37 ../raster/r.region/main.c:54
-#: ../raster/r.in.mat/main.c:92 ../raster/r.in.arc/main.c:59
-#: ../raster/r.neighbors/main.c:108 ../raster/r.bitpattern/main.c:62
-#: ../locale/scriptstrings/r.blend_to_translate.c:2
-msgid "raster"
-msgstr "แผนที่เชิงภาพ"
-
 #: ../raster/r.out.gridatb/main.c:46
 msgid "Exports GRASS raster map to GRIDATB.FOR map file (TOPMODEL)"
 msgstr "ส่งออกแผนที่เชิงภาพ GRASSไปเป็น ไฟล์แผนที่ GRIDATB.FOR (TOPMODEL)"
@@ -1312,6 +1276,20 @@ msgstr "Rows เปลี่ยนแปลง"
 #: ../raster/r.out.gridatb/file_io.c:44 ../raster/r.in.gridatb/file_io.c:39
 msgid "Cols changed"
 msgstr "Cols เปลี่ยนแปลง"
+
+#: ../raster/r.median/main.c:46 ../raster/r.surf.gauss/main.c:46
+#: ../raster/r.stats/main.c:103 ../raster/r.average/main.c:51
+#: ../raster/r.surf.area/main.c:88 ../raster/r.covar/main.c:53
+#: ../raster/r.cross/main.c:75 ../raster/r.texture/main.c:74
+#: ../raster/r.statistics/main.c:42 ../raster/r.kappa/main.c:67
+#: ../raster/r.coin/main.c:66 ../raster/r.mode/main.c:50
+#: ../raster/r.report/main.c:64 ../raster/r.sum/main.c:46
+#: ../raster/r.univar2/r.univar_main.c:97
+#: ../raster/r.regression.line/main.c:42 ../raster/r.support.stats/main.c:39
+#: ../raster/r.neighbors/main.c:108 ../raster/r.quantile/main.c:254
+#: ../locale/scriptstrings/r.univar.sh_to_translate.c:2
+msgid "raster, statistics"
+msgstr "แผนที่เชิงภาพ, สถิติ"
 
 #: ../raster/r.median/main.c:48
 msgid ""
@@ -1374,6 +1352,11 @@ msgstr "ไม่สามารถอ่าน หมวดหมู่ แถ�
 #: ../raster/r.median/read_stats.c:14 ../raster/r.statistics/read_stats.c:20
 msgid "Reading r.stats output"
 msgstr "กำลังอ่าน  r.stats ผลลัพธ์"
+
+#: ../raster/r.his/main.c:63
+#, fuzzy
+msgid "raster, color transformation"
+msgstr "กำลัง log transformation"
 
 #: ../raster/r.his/main.c:65
 msgid ""
@@ -1455,13 +1438,14 @@ msgstr "ค่า NULL ขณะวาด"
 #: ../raster/r.composite/main.c:159 ../raster/r.to.rast3/main.c:366
 #: ../raster/r.sum/main.c:65 ../raster/r.random.cells/indep.c:134
 #: ../raster/r.random.cells/init.c:68 ../raster/r.univar2/r.univar_main.c:221
+#: ../raster/r.regression.line/main.c:90 ../raster/r.regression.line/main.c:99
 #: ../raster/r.resamp.stats/main.c:329 ../raster/r.bitpattern/main.c:108
 #: ../raster/r.quantile/main.c:311 ../display/d.profile/ExtractProf.c:93
 #: ../display/d.profile/What.c:23 ../display/d.rast.arrow/arrow.c:380
 #: ../display/d.rast.edit/cell.c:92 ../display/d.rgb/main.c:99
 #: ../display/d.his/main.c:141 ../display/d.his/main.c:164
 #: ../display/d.what.rast/opencell.c:24 ../display/d.rast/display.c:79
-#: ../display/d.rast.num/number.c:153 ../display/d.nviz/main.c:186
+#: ../display/d.rast.num/number.c:153 ../display/d.nviz/main.c:187
 #: ../vector/v.sample/main.c:161 ../vector/v.vol.rst/main.c:609
 #: ../vector/v.to.rast/support.c:264 ../vector/v.to.rast/support.c:422
 #: ../vector/v.extrude/main.c:183 ../vector/v.drape/main.c:250
@@ -1607,7 +1591,9 @@ msgid "%ld bytes written to '%s'"
 msgstr "%ld bytes ไดเขียนไปที่ '%s'"
 
 #: ../raster/r.in.poly/main.c:29 ../raster/r.in.gdal/main.c:79
-#: ../raster/r.in.bin/main.c:234 ../raster/r.external/main.c:506
+#: ../raster/r.in.bin/main.c:234 ../raster/r.in.gridatb/main.c:41
+#: ../raster/r.external/main.c:506 ../raster/r.in.mat/main.c:92
+#: ../raster/r.in.arc/main.c:59
 #: ../locale/scriptstrings/r.in.srtm_to_translate.c:2
 msgid "raster, import"
 msgstr "แผนที่เชิงภาพ, การนำเข้า"
@@ -1750,7 +1736,7 @@ msgstr "ไม่สามารถอ่าน ช่วง fp สำหรั�
 #: ../vector/v.net.timetable/main.c:93 ../vector/v.patch/main.c:132
 #: ../vector/v.patch/main.c:162 ../vector/v.patch/main.c:274
 #: ../vector/v.patch/main.c:332 ../vector/v.kcv/main.c:181
-#: ../vector/v.buffer2/main.c:318 ../vector/v.transform/trans_digit.c:58
+#: ../vector/v.buffer2/main.c:333 ../vector/v.transform/trans_digit.c:58
 #: ../vector/v.overlay/main.c:186 ../vector/v.overlay/main.c:295
 #: ../vector/v.net.flow/main.c:157 ../vector/v.normal/main.c:141
 #: ../vector/v.net.path/path.c:96 ../vector/v.label/main.c:282
@@ -1895,7 +1881,12 @@ msgstr "แผนที่เชิงภาพใหญ่เกินไป   
 msgid "Negative elevation values in input"
 msgstr "ค่าระดับที่ใส่เป็น ลบ"
 
-#: ../raster/r.basins.fill/main.c:53
+#: ../raster/r.basins.fill/main.c:53 ../raster/r.drain/main.c:94
+#: ../raster/r.lake/main.c:148 ../raster/r.gwflow/main.c:189
+#: ../raster/r.watershed/front/main.c:56 ../raster/r.fill.dir/main.c:84
+#: ../raster/r.topmodel/main.c:55 ../raster/r.water.outlet/main.c:47
+#: ../raster/r.carve/main.c:77 ../raster/r.flow/calc.c:411
+#: ../raster/r.topidx/main.c:37
 #, fuzzy
 msgid "raster, hydrology"
 msgstr "แผนที่เชิงภาพ, geomorphology"
@@ -1937,6 +1928,12 @@ msgstr "Reverse sweep เสร็จเรียบร้อย"
 #, c-format
 msgid "Creating support files for <%s>..."
 msgstr "สร้าง support ไฟล์สำหรับ <%s>..."
+
+#: ../raster/r.describe/main.c:59 ../raster/r.support/front/front.c:54
+#: ../raster/r.info/main.c:69 ../raster/r.region/main.c:54
+#, fuzzy
+msgid "raster, metadata"
+msgstr "แผนที่เชิงเส้น, metadata"
 
 #: ../raster/r.describe/main.c:61
 msgid "Prints terse list of category values found in a raster map layer."
@@ -1997,6 +1994,18 @@ msgstr "%s = %s -- ต้องมากกว่า 0"
 msgid "%s: [%s] not found"
 msgstr "ไม่พบ %s: [%s]"
 
+#: ../raster/r.le/r.le.trace/main.c:57 ../raster/r.le/r.le.setup/main.c:61
+#: ../raster/r.le/r.le.patch/main.c:47 ../raster/r.le/r.le.pixel/main.c:45
+#: ../raster/r.li/r.li.padcv/padcv.c:38 ../raster/r.li/r.li.mpa/mpa.c:40
+#: ../raster/r.li/r.li.patchnum/main.c:35 ../raster/r.li/r.li.mps/mps.c:41
+#: ../raster/r.li/r.li.edgedensity/edgedensity.c:39
+#: ../raster/r.li/r.li.cwed/cwed.c:47 ../raster/r.li/r.li.padsd/padsd.c:38
+#: ../raster/r.li/r.li.shape/main.c:34
+#: ../raster/r.li/r.li.patchdensity/main.c:34
+#: ../raster/r.li/r.li.padrange/padrange.c:40
+msgid "raster, landscape structure analysis, patch index"
+msgstr "แผนที่เชิงภาพ, landscape structure analysis, ดัชนี patch"
+
 #: ../raster/r.le/r.le.trace/main.c:59
 msgid ""
 "Displays the boundary of each r.le patch and shows how the boundary is "
@@ -2044,6 +2053,7 @@ msgstr ""
 "edge."
 
 #: ../raster/r.mfilter.fp/main.c:58 ../raster/r.mfilter/main.c:51
+#: ../raster/r.bitpattern/main.c:62
 msgid "raster, map algebra"
 msgstr "แผนที่เชิงภาพ, แผนที่ algebra"
 
@@ -2228,7 +2238,7 @@ msgstr "ใช้ -n หรือ -v อันใดอันหนึ่ง , �
 #: ../raster/r.profile/main.c:157 ../raster/r.out.arc/main.c:142
 #: ../raster/r.cats/main.c:177 ../raster/r.recode/main.c:94
 #: ../general/g.pnmcomp/main.c:241 ../general/g.pnmcomp/main.c:258
-#: ../general/g.transform/main.c:281 ../display/d.nviz/main.c:203
+#: ../general/g.transform/main.c:281 ../display/d.nviz/main.c:204
 #: ../vector/v.out.vtk/main.c:176 ../vector/v.out.ascii/out.c:161
 #, c-format
 msgid "Unable to open file <%s>"
@@ -2267,8 +2277,8 @@ msgstr "ค่าเบี่ยงเบน มาตรฐาน"
 
 #: ../raster/r.out.png/r.out.png.c:110
 #, fuzzy
-msgid "raster, png"
-msgstr "แผนที่เชิงภาพ, tiling"
+msgid "raster, export, png"
+msgstr "แผนที่เชิงภาพ, ส่งออก"
 
 #: ../raster/r.out.png/r.out.png.c:112
 #, fuzzy
@@ -2346,6 +2356,10 @@ msgstr "ได้รับ null region struct"
 #, fuzzy
 msgid "Unable to open world file for writing"
 msgstr "ไม่สามารถเปิดTIFF world file เพื่อเขียน"
+
+#: ../raster/r.walk/main.c:174 ../raster/r.cost/main.c:124
+msgid "raster, cost surface, cumulative costs"
+msgstr "แผนที่เชิงภาพ, cost surface, cumulative costs"
 
 #: ../raster/r.walk/main.c:176
 msgid ""
@@ -2684,6 +2698,11 @@ msgstr "ค่าพิกัด y ไม่ถูกต้อง <%s>"
 #, c-format
 msgid "Warning, ignoring point outside window: %.4f,%.4f"
 msgstr "คำเตือน, ข้ามจุดที่อยู่นอกหน้าต่าง: %.4f,%.4f"
+
+#: ../raster/r.sun2/main.c:226 ../raster/r.sun/main.c:175
+#, fuzzy
+msgid "raster, sun energy"
+msgstr "แผนที่เชิงภาพ, tiling"
 
 #: ../raster/r.sun2/main.c:227 ../raster/r.sun/main.c:176
 msgid "Solar irradiance and irradiation model."
@@ -3509,6 +3528,11 @@ msgstr "ชนิดไฟล์"
 msgid "Bytes do not match file size"
 msgstr "Bytesไม่สอดคล้องกับขนาดของ ไฟล์"
 
+#: ../raster/r.rescale.eq/main.c:52 ../raster/r.rescale/main.c:50
+#, fuzzy
+msgid "raster, rescale"
+msgstr "แผนที่เชิงภาพ, resample"
+
 #: ../raster/r.rescale.eq/main.c:54
 msgid ""
 "Rescales histogram equalized the range of category values in a raster map "
@@ -3623,7 +3647,7 @@ msgstr "จุดเริ่มต้น มากเกินไป"
 #: ../vector/v.lrs/v.lrs.segment/main.c:138 ../vector/v.reclass/main.c:107
 #: ../vector/v.kernel/main.c:264 ../vector/v.out.ogr/main.c:198
 #: ../vector/v.hull/main.c:300 ../vector/v.kcv/main.c:132
-#: ../vector/v.select/main.c:103 ../vector/v.buffer2/main.c:295
+#: ../vector/v.select/main.c:103 ../vector/v.buffer2/main.c:310
 #: ../vector/v.voronoi/vo_main.c:156 ../vector/v.voronoi/dt_main.c:77
 #: ../vector/v.net.steiner/main.c:428 ../vector/v.what/main.c:151
 #: ../vector/v.transform/main.c:242 ../vector/v.overlay/main.c:204
@@ -3700,11 +3724,6 @@ msgid ""
 msgstr ""
 "  กำลังปรับปรุง จำนวนของหมวดหมู่ สำหรับ [%s]\n"
 "\n"
-
-#: ../raster/r.support/front/front.c:54
-#, fuzzy
-msgid "raster, metadata"
-msgstr "แผนที่เชิงเส้น, metadata"
 
 #: ../raster/r.support/front/front.c:55
 msgid "Allows creation and/or modification of raster map layer support files."
@@ -4171,7 +4190,8 @@ msgstr "ค่าจะใช้ได้ถ้า ความลึกขอ�
 msgid "Unable to read color file of raster map <%s>"
 msgstr "ไม่สามารถอ่าน ไฟล์สีสำหรับแผนที่เชิงภาพ <%s@%s>"
 
-#: ../raster/r.surf.idw/main.c:69
+#: ../raster/r.surf.idw/main.c:69 ../raster/r.surf.idw2/main.c:60
+#: ../raster/r.surf.contour/main.c:52
 #, fuzzy
 msgid "raster, interpolation"
 msgstr "vector, interpolation"
@@ -4243,14 +4263,6 @@ msgstr "ชื่อไฟล์ผลลัพธ์ aspect"
 msgid "Unable to read color table for raster map <%s>"
 msgstr "ไม่สามารถอ่าน ไฟล์สีสำหรับแผนที่เชิงภาพ <%s@%s>"
 
-#: ../raster/r.stats/main.c:103 ../raster/r.statistics/main.c:42
-#: ../raster/r.report/main.c:64 ../raster/r.univar2/r.univar_main.c:97
-#: ../raster/r.support.stats/main.c:39 ../raster/r.quantile/main.c:254
-#: ../locale/scriptstrings/r.regression.line_to_translate.c:2
-#: ../locale/scriptstrings/r.univar.sh_to_translate.c:2
-msgid "raster, statistics"
-msgstr "แผนที่เชิงภาพ, สถิติ"
-
 #: ../raster/r.stats/main.c:105
 msgid "Generates area statistics for raster map layers."
 msgstr "สร้าง Area statistics สำหรับ ชั้นข้อมูลแผนที่เชิงภาพ"
@@ -4320,7 +4332,8 @@ msgid "Read fp map as integer (use map's quant rules)"
 msgstr "อ่านแผนที่ fp แบบ  integer (ใช้ quant rules ของแผนที่)"
 
 #: ../raster/r.stats/main.c:208 ../raster/r.univar2/r.univar_main.c:110
-#: ../raster/r.univar2/r3.univar_main.c:127 ../vector/v.db.select/main.c:111
+#: ../raster/r.univar2/r3.univar_main.c:127
+#: ../raster/r.regression.line/main.c:75 ../vector/v.db.select/main.c:111
 #, fuzzy, c-format
 msgid "Unable to open file <%s> for writing"
 msgstr "ไม่สามารถเปิดไฟล์ <%s> เพื่อเขียน"
@@ -4364,6 +4377,11 @@ msgstr "ไม่สามารถ อ่าน ช่วง ของ แผ�
 #, fuzzy, c-format
 msgid "Unable to read raster <map %d of %d> row %d"
 msgstr "ไม่สามารถ อ่าน แผนที่เชิงภาพ <%s> แถว %d"
+
+#: ../raster/r.compress/main.c:64
+#, fuzzy
+msgid "raster, map management"
+msgstr "สร้าง, การจัดการแผนที่"
 
 #: ../raster/r.compress/main.c:65
 msgid "Compresses and decompresses raster maps."
@@ -4430,6 +4448,13 @@ msgid ""
 msgstr ""
 "\n"
 "%sCOMPRESS [%s]"
+
+#: ../raster/r.circle/dist.c:51 ../raster/r.patch/main.c:53
+#: ../raster/r.grow2/main.c:128 ../raster/r.grow.distance/main.c:130
+#: ../raster/r.digit/main.c:45
+#, fuzzy
+msgid "raster, geometry"
+msgstr " แผนที่เชิงภาพ, ภาพ"
 
 #: ../raster/r.circle/dist.c:53
 msgid "Creates a raster map containing concentric rings around a given point."
@@ -4697,6 +4722,11 @@ msgstr "ค่าแผนที่ ผิด! ค่าจะต้องอย
 msgid "write_vtk_vector_data: Writing VTK-vector data"
 msgstr "write_vtk_vector_data: กำลังเขียน  VTK-vector data"
 
+#: ../raster/r.quant/main.c:41
+#, fuzzy
+msgid "raster, quantization"
+msgstr "แผนที่เชิงภาพ, projection"
+
 #: ../raster/r.quant/main.c:43
 msgid "Produces the quantization file for a floating-point map."
 msgstr "สร้าง ไฟล์quantization สำหรับ  floating-point map."
@@ -4963,10 +4993,6 @@ msgstr "ไม่พบแผนที่เชิงภาพ 3D <%s>"
 msgid "Dxy raster map <%s> complete"
 msgstr "ไม่พบแผนที่เชิงภาพ 3D <%s>"
 
-#: ../raster/r.cost/main.c:124
-msgid "raster, cost surface, cumulative costs"
-msgstr "แผนที่เชิงภาพ, cost surface, cumulative costs"
-
 #: ../raster/r.cost/main.c:126
 #, fuzzy
 msgid ""
@@ -5108,6 +5134,12 @@ msgstr "%s %f-%f ค่าสูงกว่า ต่ำเกินไป"
 msgid "%s higher above pointer wrong"
 msgstr "%s ผิด สูงกว่าค่าบน"
 
+#: ../raster/r.bilinear/main.c:42 ../raster/r.resample/main.c:54
+#: ../raster/r.resamp.interp/main.c:72 ../raster/r.resamp.rst/main.c:156
+#: ../raster/r.resamp.stats/main.c:259
+msgid "raster, resample"
+msgstr "แผนที่เชิงภาพ, resample"
+
 #: ../raster/r.bilinear/main.c:44
 msgid "Bilinear interpolation utility for raster map layers."
 msgstr "เครื่องมือ Bilinear interpolation สำหรับ ชั้นข้อมูลแผนที่เชิงภาพ"
@@ -5228,10 +5260,13 @@ msgid "raster, sediment flow, erosion, deposition"
 msgstr "แผนที่เชิงภาพ, ค่าระดับ, interpolation"
 
 #: ../raster/simwe/r.sim.sediment/main.c:113
+#, fuzzy
 msgid ""
 "Sediment transport and erosion/deposition simulation using path sampling "
-"method (SIMWE)"
+"method (SIMWE)."
 msgstr ""
+"แบบจำลอง Overland flow hydrologic ขึ้นอยู่กับ  duality particle-field concept "
+"(SIMWE)"
 
 #: ../raster/simwe/r.sim.sediment/main.c:118
 #: ../raster/simwe/r.sim.water/main.c:125
@@ -5428,7 +5463,7 @@ msgstr "แผนที่เชิงภาพ, geomorphology"
 
 #: ../raster/simwe/r.sim.water/main.c:120
 #, fuzzy
-msgid "Overland flow hydrologic simulation using path sampling method (SIMWE)"
+msgid "Overland flow hydrologic simulation using path sampling method (SIMWE)."
 msgstr ""
 "แบบจำลอง Overland flow hydrologic ขึ้นอยู่กับ  duality particle-field concept "
 "(SIMWE)"
@@ -5695,6 +5730,11 @@ msgstr "เพิ่ม คำอธิบาย ขอบเขต"
 msgid "Converting ... "
 msgstr "กำลังแปลง ... "
 
+#: ../raster/r.transect/main.c:54
+#, fuzzy
+msgid "raster, transect"
+msgstr "vector, interpolation"
+
 #: ../raster/r.transect/main.c:56
 msgid ""
 "Outputs raster map layer values lying along user defined transect line(s)."
@@ -5716,6 +5756,11 @@ msgstr "ผลลัพธ์ค่า ตะวันออก และ เห
 #, fuzzy, c-format
 msgid "End coordinate: %.15g, %.15g"
 msgstr "ค่าพิกัด ไม่ถูกต้อง %s %s"
+
+#: ../raster/r.random/main.c:51 ../raster/r.surf.random/main.c:44
+#, fuzzy
+msgid "raster, random"
+msgstr "แผนที่เชิงภาพ, resample"
 
 #: ../raster/r.random/main.c:53
 #, fuzzy
@@ -5849,6 +5894,11 @@ msgstr "ไม่สามารถ แทรก ข้อมูล ใหม่
 msgid "Only [%ld] random points created"
 msgstr "สร้างเพียง [%ld] random points"
 
+#: ../raster/r.los/main.c:82
+#, fuzzy
+msgid "raster, viewshed"
+msgstr "แผนที่เชิงภาพ, series"
+
 #: ../raster/r.los/main.c:83
 msgid "Line-of-sight raster analysis program."
 msgstr "โปรแกรม วิเคราะห์ Line-of-sight ของภาพ"
@@ -5909,6 +5959,13 @@ msgstr "ระยะมากสุด จาก จุดviewing (เมตร)
 #, c-format
 msgid "Failed writing raster map <%s> row %d"
 msgstr "การเขียน แผนที่เชิงภาพ ล้มเหลว <%s> row %d"
+
+#: ../raster/wildfire/r.spread/main.c:101
+#: ../raster/wildfire/r.spreadpath/main.c:72
+#: ../raster/wildfire/r.ros/main.c:212
+#, fuzzy
+msgid "raster, fire"
+msgstr "แผนที่เชิงภาพ, การนำเข้า"
 
 #: ../raster/wildfire/r.spread/main.c:103
 msgid ""
@@ -6239,6 +6296,11 @@ msgstr "ค่าแตกต่าง มากสุด ระหว่าง 
 #: ../raster/r.profile/input.c:59
 msgid "One coordinate pair per line, please"
 msgstr "ค่าพิกัด 1 คู่ ต่อ บรรทัด,ได้โปรด"
+
+#: ../raster/r.profile/main.c:53
+#, fuzzy
+msgid "raster, profile"
+msgstr "แผนที่เชิงภาพ, series"
 
 #: ../raster/r.profile/main.c:55
 msgid "Outputs the raster map layer values lying on user-defined line(s)."
@@ -7715,7 +7777,8 @@ msgid "Error reading wildcard"
 msgstr "การอ่าน wildcard ผิดพลาด"
 
 #: ../raster/r.out.mpeg/main.c:385
-msgid "Raster File Series to MPEG Conversion Program."
+#, fuzzy
+msgid "Raster File Series to MPEG Conversion."
 msgstr "Series ไฟล์แผนที่เชิงภาพ ที่จะส่งไปให้ โปรแกรม MPEG Conversion"
 
 #: ../raster/r.out.mpeg/main.c:396 ../visualization/xganim/main.c:600
@@ -7757,9 +7820,10 @@ msgid "Unable to create temporary files."
 msgstr "ไม่สามารถสร้าง ไฟล์ชั่วคราว"
 
 #: ../raster/r.fill.dir/main.c:86
+#, fuzzy
 msgid ""
 "Filters and generates a depressionless elevation map and a flow direction "
-"map from a given elevation layer."
+"map from a given elevation raster map."
 msgstr ""
 "กรอง และ สร้างแผนที่ depressionless elevation และ flow direction จาก ชั้นข้อมูล "
 "elevation"
@@ -7823,10 +7887,6 @@ msgstr "wtrshed ผ่าน %d"
 #, c-format
 msgid "Found %d unresolved areas"
 msgstr "พบ %d unresolved areas"
-
-#: ../raster/r.resamp.interp/main.c:72 ../raster/r.resamp.stats/main.c:259
-msgid "raster, resample"
-msgstr "แผนที่เชิงภาพ, resample"
 
 #: ../raster/r.resamp.interp/main.c:74
 #, fuzzy
@@ -8121,7 +8181,7 @@ msgstr "ไม่สามารถเปิดไฟล์ ชั่วคร�
 msgid "Not enough disk space -- cannot write files"
 msgstr "หน่วยความจำ ไม่พอ -- ไม่สามารถเขียนไฟล์ได้"
 
-#: ../raster/r.clump/main.c:49
+#: ../raster/r.clump/main.c:49 ../raster/r.reclass/main.c:49
 #, fuzzy
 msgid "raster, statistics, reclass"
 msgstr "แผนที่เชิงภาพ, สถิติ"
@@ -8507,11 +8567,6 @@ msgstr "หมวดหมู่มากเกินไป(พบ: %i, มา�
 msgid "Too many iterations to required to find %s - giving up"
 msgstr "iteration มากเกิน ที่จะหา  %s - ยกเลิก"
 
-#: ../raster/r.surf.random/main.c:44
-#, fuzzy
-msgid "raster, random"
-msgstr "แผนที่เชิงภาพ, resample"
-
 #: ../raster/r.surf.random/main.c:46
 #, fuzzy
 msgid ""
@@ -8867,16 +8922,6 @@ msgstr "o_adev: ไม่มีข้อมูลใน กลุ่มข้อ
 #: ../raster/r.li/r.li.padcv/padcv.c:37
 msgid "Calculates coefficient of variation of patch area on a raster map"
 msgstr "คำนวน coefficient of variation ของ patch area บนแผนที่เชิงภาพ"
-
-#: ../raster/r.li/r.li.padcv/padcv.c:38 ../raster/r.li/r.li.mpa/mpa.c:40
-#: ../raster/r.li/r.li.patchnum/main.c:35 ../raster/r.li/r.li.mps/mps.c:41
-#: ../raster/r.li/r.li.edgedensity/edgedensity.c:39
-#: ../raster/r.li/r.li.cwed/cwed.c:47 ../raster/r.li/r.li.padsd/padsd.c:38
-#: ../raster/r.li/r.li.shape/main.c:34
-#: ../raster/r.li/r.li.patchdensity/main.c:34
-#: ../raster/r.li/r.li.padrange/padrange.c:40
-msgid "raster, landscape structure analysis, patch index"
-msgstr "แผนที่เชิงภาพ, landscape structure analysis, ดัชนี patch"
 
 #: ../raster/r.li/r.li.padcv/padcv.c:44 ../raster/r.li/r.li.mpa/mpa.c:47
 #: ../raster/r.li/r.li.patchnum/main.c:43 ../raster/r.li/r.li.mps/mps.c:48
@@ -9914,7 +9959,7 @@ msgstr "(i)   OPTIONAL Output สำหรับให้ topographic index clas
 msgid "Input data given for (o/i)"
 msgstr "นำเข้าข้อมูลสำหรับ (o/i)"
 
-#: ../raster/r.sunmask/main.c:115
+#: ../raster/r.sunmask/main.c:115 ../raster/r.horizon/main.c:179
 #, fuzzy
 msgid "raster, sun position"
 msgstr "แผนที่เชิงภาพ, projection"
@@ -10700,6 +10745,11 @@ msgstr "extend_lines: p front pointer ไม่ใช่  NULL!"
 msgid "extend_lines: q back pointer not NULL!"
 msgstr "extend_lines: q back pointer ไม่ใช่  NULL!"
 
+#: ../raster/r.cats/main.c:51
+#, fuzzy
+msgid "raster, category"
+msgstr "แผนที่เชิงภาพ, projection"
+
 #: ../raster/r.cats/main.c:53
 msgid ""
 "Manages category values and labels associated with user-specified raster map "
@@ -11056,7 +11106,7 @@ msgstr "ใส่ แถบข้อความ ของหมวดหมู�
 msgid "Look ok? "
 msgstr "ใช้ได้ไหม? "
 
-#: ../raster/r.water.outlet/main.c:47
+#: ../raster/r.water.outlet/main.c:48
 msgid "Watershed basin creation program."
 msgstr "โปรแกรมที่ใช้สร้าง Watershed basin"
 
@@ -11502,6 +11552,11 @@ msgstr ""
 msgid "'%s' is not a valid rule"
 msgstr "%s ไม่ใช่ rule ที่ถูกต้อง"
 
+#: ../raster/r.volume/main.c:57
+#, fuzzy
+msgid "raster, volume"
+msgstr "ค่า แผนที่เชิงภาพ"
+
 #: ../raster/r.volume/main.c:59
 msgid ""
 "Calculates the volume of data \"clumps\", and (optionally) produces a GRASS "
@@ -11549,6 +11604,11 @@ msgstr "ไม่สามารถ เปิดแผนที่ จุดศ�
 #: ../raster/r.volume/main.c:171
 msgid "Data or Clump file not open"
 msgstr "ข้อมูล หรือ Clump ไฟล์ ไม่ได้เปิด"
+
+#: ../raster/r.distance/main.c:38
+#, fuzzy
+msgid "raster, distance"
+msgstr "แผนที่เชิงภาพ, tiling"
 
 #: ../raster/r.distance/main.c:40
 msgid "Locates the closest points between objects in two raster maps."
@@ -11866,9 +11926,10 @@ msgid "Unable to get current region"
 msgstr "ไม่สามารถอ่านขอบขเตได้"
 
 #: ../raster/r.flow/calc.c:413
+#, fuzzy
 msgid ""
 "Construction of slope curves (flowlines), flowpath lengths, and flowline "
-"densities (upslope areas) from a raster digital elevation model (DEM)"
+"densities (upslope areas) from a raster digital elevation model (DEM)."
 msgstr ""
 "สร้าง slope curves (flowlines), flowpath lengths, และ flowline densities "
 "(upslope areas) จากแบบจำลองความสูงเชิงภาพ (DEM)"
@@ -11980,7 +12041,7 @@ msgstr "ไม่สามารถ เปิด  segment ไฟล์ %s"
 #: ../vector/v.net.allpairs/main.c:112 ../vector/v.in.dxf/main.c:168
 #: ../vector/v.mkgrid/main.c:223 ../vector/v.hull/main.c:334
 #: ../vector/v.net.timetable/main.c:323 ../vector/v.net.bridge/main.c:86
-#: ../vector/v.net.connectivity/main.c:121 ../vector/v.buffer2/main.c:304
+#: ../vector/v.net.connectivity/main.c:121 ../vector/v.buffer2/main.c:319
 #: ../vector/v.voronoi/vo_main.c:163 ../vector/v.voronoi/dt_main.c:92
 #: ../vector/v.voronoi/dt_main.c:98 ../vector/v.net.flow/main.c:138
 #: ../vector/v.net.flow/main.c:144 ../vector/v.net.path/main.c:139
@@ -12050,6 +12111,11 @@ msgstr ""
 #, c-format
 msgid "Resolution too unbalanced (%f x %f); please resample input map"
 msgstr "ความละเอียด ม่สมดุล (%f x %f); โปรด resample แผนที่ตั้งต้น"
+
+#: ../raster/r.what.color/main.c:88 ../raster/r.what/main.c:91
+#, fuzzy
+msgid "raster, querying"
+msgstr "vector, interpolation"
 
 #: ../raster/r.what.color/main.c:89
 msgid "Queries colors for a raster map layer."
@@ -12298,7 +12364,8 @@ msgid "<%s> is an illegal name"
 msgstr "<%s> ชื่อไม่ถูกต้อง"
 
 #: ../raster/r.topidx/main.c:39
-msgid "Creates topographic index [ln(a/tan(beta))] map from elevation map."
+#, fuzzy
+msgid "Creates topographic index map from elevation raster map."
 msgstr "สร้าง ดัชนี topographic [ln(a/tan(beta))] แผนที่สำหรับ แผนที่ความสูง"
 
 #: ../raster/r.topidx/main.c:42
@@ -12378,6 +12445,35 @@ msgid ""
 "Calculates univariate statistics from the non-null 3d cells of a raster3d "
 "map."
 msgstr "คำนวน univariate statistics จาก non-null 3d cells ของแผนที่เชิงภาพ3d"
+
+#: ../raster/r.regression.line/main.c:44
+#, fuzzy
+msgid "Calculates linear regression from two raster maps: y = a + b*x."
+msgstr "คำนวน  linear regression จาก แผนที่เชิงภาพ 2 แผนที่: y = a + b*x"
+
+#: ../raster/r.regression.line/main.c:49
+msgid "Map for x coefficient"
+msgstr "แผนที่สำหรับ x coefficient"
+
+#: ../raster/r.regression.line/main.c:53
+msgid "Map for y coefficient"
+msgstr "แผนที่สำหรับ y coefficient"
+
+#: ../raster/r.regression.line/main.c:59
+msgid ""
+"ASCII file for storing regression coefficients (output to screen if file not "
+"specified)."
+msgstr ""
+"ไฟล์ ASCIIสำหรับเก็บ regression coefficients (ส่งออกหน้าจอ ถ้าไม่มีการระบุ ไฟล์)."
+
+#: ../raster/r.regression.line/main.c:63 ../general/g.region/main.c:147
+#: ../locale/scriptstrings/i.oif_to_translate.c:9
+msgid "Print in shell script style"
+msgstr "แสดงแบบ shell script"
+
+#: ../raster/r.regression.line/main.c:67
+msgid "Slower but accurate (applies to FP maps only"
+msgstr ""
 
 #: ../raster/r.resamp.stats/main.c:261
 #, fuzzy
@@ -12894,7 +12990,10 @@ msgstr "แสดงแบบ shell script"
 
 #: ../general/manage/cmd/copy.c:39 ../general/manage/cmd/remove.c:99
 #: ../general/manage/cmd/list.c:41 ../general/manage/cmd/rename.c:40
-#: ../general/g.mremove/main.c:58 ../general/g.mlist/main.c:65
+#: ../general/g.access/main.c:37 ../general/g.tempfile/main.c:36
+#: ../general/g.ask/main.c:40 ../general/g.mremove/main.c:58
+#: ../general/g.findetc/main.c:28 ../general/g.filename/main.c:39
+#: ../general/g.mlist/main.c:65 ../general/g.findfile/main.c:35
 msgid "general, map management"
 msgstr "สร้าง, การจัดการแผนที่"
 
@@ -12998,14 +13097,6 @@ msgstr "%s=%s,%s: ไฟล์เหมือนกัน, ไม่ต้อง
 #: ../general/manage/cmd/rename.c:99
 msgid "Renaming reclass maps"
 msgstr "กำลังเปลี่ยนชื่อ  reclass maps"
-
-#: ../general/g.access/main.c:37 ../general/g.pnmcomp/main.c:281
-#: ../general/g.tempfile/main.c:36 ../general/g.ask/main.c:40
-#: ../general/g.findetc/main.c:28 ../general/g.gisenv/main.c:38
-#: ../general/g.filename/main.c:39 ../general/g.region/main.c:70
-#: ../general/g.findfile/main.c:35
-msgid "general"
-msgstr "ทั่วไป"
 
 #: ../general/g.access/main.c:39
 msgid "Controls access to the current mapset for other users on the system."
@@ -13354,6 +13445,11 @@ msgstr "ข้อผิดพลาดขณะอ่านไฟล์ PPM"
 #: ../general/g.pnmcomp/main.c:263
 msgid "Error writing PGM file"
 msgstr "ข้อผิดพลาดขณะอ่านไฟล์ PGM"
+
+#: ../general/g.pnmcomp/main.c:281 ../general/g.gui/main.c:36
+#, fuzzy
+msgid "general, gui"
+msgstr "ทั่วไป"
 
 #: ../general/g.pnmcomp/main.c:289
 msgid "Names of input files"
@@ -13771,7 +13867,8 @@ msgstr "ซ้ายล่าง ค่าพิกัด ตะวันออ�
 msgid "Display transform matrix coefficients"
 msgstr "แผนที่สำหรับ x coefficient"
 
-#: ../general/g.mapset/main.c:48
+#: ../general/g.mapset/main.c:48 ../general/g.gisenv/main.c:38
+#: ../general/g.region/main.c:70
 #, fuzzy
 msgid "general, settings"
 msgstr "แผนที่เชิงภาพ, projection"
@@ -14210,12 +14307,6 @@ msgstr "แสดงการกำหนดค่า 3D"
 msgid "Print the maximum bounding box in lat/long on WGS84"
 msgstr "แสดงค่าขอบเขตสูงสุด แบบ แลต/ลอง บน WGS84"
 
-#: ../general/g.region/main.c:147
-#: ../locale/scriptstrings/r.regression.line_to_translate.c:3
-#: ../locale/scriptstrings/i.oif_to_translate.c:9
-msgid "Print in shell script style"
-msgstr "แสดงแบบ shell script"
-
 #: ../general/g.region/main.c:153
 msgid ""
 "Align region to resolution (default = align to bounds, works only for 2D "
@@ -14384,11 +14475,6 @@ msgstr ""
 msgid "Lat/Long calculations are not possible from a simple XY system"
 msgstr ""
 
-#: ../general/g.gui/main.c:36
-#, fuzzy
-msgid "general, gui"
-msgstr "ทั่วไป"
-
 #: ../general/g.gui/main.c:38
 msgid "Launches a GRASS graphical user interface (GUI) session."
 msgstr ""
@@ -14457,27 +14543,10 @@ msgid ""
 msgstr ""
 "'file' ตัวแปรประกอบด้วยการอ้างอิง <%s> ชุดแผนที่, แต่ตัวแปรชุดแผนที่ <%s> ไม่ตอบสนอง"
 
-#: ../display/d.profile/main.c:61 ../display/d.font/main.c:46
-#: ../display/d.rast.arrow/arrow.c:110 ../display/d.text.new/main.c:142
-#: ../display/d.frame/frame.c:60 ../display/d.erase/main.c:32
-#: ../display/d.geodesic/main.c:45 ../display/d.menu/main.c:66
-#: ../display/d.font.freetype/main.c:59 ../display/d.ask/main.c:36
-#: ../display/d.colorlist/main.c:35 ../display/d.info/main.c:34
-#: ../display/d.where/main.c:42 ../display/d.rhumbline/main.c:45
-#: ../display/d.mapgraph/main.c:48 ../display/d.measure/main.c:49
-#: ../display/d.colors/main.c:50 ../display/d.text.freetype/main.c:138
-#: ../display/d.his/main.c:65 ../display/d.what.rast/main.c:52
-#: ../display/d.thematic.area/main.c:78 ../display/d.save/main.c:79
-#: ../display/d.extract/main.c:50 ../display/d.histogram/main.c:71
-#: ../display/d.linegraph/linegraph.c:113 ../display/d.title/main.c:45
-#: ../display/d.mon/cmd/main.c:49 ../display/d.paint.labels/main.c:46
-#: ../display/d.what.vect/main.c:54 ../display/d.text/main.c:66
-#: ../display/d.rast.num/number.c:84 ../display/d.nviz/main.c:68
-#: ../display/d.zoom/main.c:57 ../visualization/ximgview/main.c:270
-#: ../locale/scriptstrings/d.rast.leg_to_translate.c:2
-#: ../locale/scriptstrings/d.redraw_to_translate.c:2
-msgid "display"
-msgstr "แสดงผล"
+#: ../display/d.profile/main.c:61
+#, fuzzy
+msgid "display, raster, profile"
+msgstr "แสดง , ภาพ"
 
 #: ../display/d.profile/main.c:63
 msgid "Interactive profile plotting utility with optional output."
@@ -14521,7 +14590,7 @@ msgstr ""
 #: ../display/d.extend/main.c:41 ../display/d.info/main.c:74
 #: ../display/d.legend/main.c:274 ../display/d.vect.chart/main.c:257
 #: ../display/d.rgb/main.c:83 ../display/d.where/main.c:144
-#: ../display/d.rhumbline/main.c:108 ../display/d.barscale/main.c:126
+#: ../display/d.rhumbline/main.c:108 ../display/d.barscale/main.c:134
 #: ../display/d.measure/main.c:87 ../display/d.text.freetype/main.c:310
 #: ../display/d.his/main.c:117 ../display/d.what.rast/main.c:116
 #: ../display/d.thematic.area/main.c:397 ../display/d.colortable/main.c:138
@@ -14529,7 +14598,7 @@ msgstr ""
 #: ../display/d.linegraph/linegraph.c:251 ../display/d.graph/main.c:96
 #: ../display/d.paint.labels/main.c:90 ../display/d.what.vect/main.c:160
 #: ../display/d.text/main.c:132 ../display/d.rast/main.c:114
-#: ../display/d.rast.num/number.c:128 ../display/d.nviz/main.c:249
+#: ../display/d.rast.num/number.c:128 ../display/d.nviz/main.c:250
 #: ../display/d.zoom/main.c:158 ../display/d.zoom/main.c:293
 #: ../display/d.zoom/redraw.c:39 ../display/d.vect/main.c:421
 #: ../vector/v.label/main.c:234 ../imagery/i.points/main.c:123
@@ -14588,6 +14657,16 @@ msgstr "%s: 'is_null_value()' ผลลัพธ์ของ column index เป
 msgid "%s: 'is_null_value()' Unknown RASTER_MAP_TYPE '%d'"
 msgstr "%s: 'is_null_value()' ไม่ทราบ RASTER_MAP_TYPE '%d'"
 
+#: ../display/d.font/main.c:46 ../display/d.frame/frame.c:60
+#: ../display/d.erase/main.c:32 ../display/d.font.freetype/main.c:59
+#: ../display/d.extend/main.c:31 ../display/d.colorlist/main.c:35
+#: ../locale/scriptstrings/d.split_to_translate.c:2
+#: ../locale/scriptstrings/d.resize_to_translate.c:2
+#: ../locale/scriptstrings/d.monsize_to_translate.c:2
+#: ../locale/scriptstrings/d.mvmon_to_translate.c:2
+msgid "display, setup"
+msgstr "แสดงผล , กำหนด"
+
 #: ../display/d.font/main.c:48 ../display/d.font.freetype/main.c:61
 msgid ""
 "Selects the font in which text will be displayed on the user's graphics "
@@ -14629,6 +14708,14 @@ msgstr "%s ไม่ใช่ rule ที่ถูกต้อง"
 msgid ""
 "Font name <%s> is invalid. Check font name or consider running 'g.mkfontcap'"
 msgstr ""
+
+#: ../display/d.rast.arrow/arrow.c:110 ../display/d.rast.edit/main.c:59
+#: ../display/d.colors/main.c:50 ../display/d.what.rast/main.c:52
+#: ../display/d.colortable/main.c:60 ../display/d.rast/main.c:51
+#: ../display/d.rast.num/number.c:84
+#: ../locale/scriptstrings/d.rast.edit_to_translate.c:2
+msgid "display, raster"
+msgstr "แสดง , ภาพ"
 
 #: ../display/d.rast.arrow/arrow.c:112
 msgid ""
@@ -14690,7 +14777,7 @@ msgstr "magnitude_map ต้องการ  Scale "
 
 #: ../display/d.rast.arrow/arrow.c:248 ../display/d.text.new/main.c:309
 #: ../display/d.info/main.c:103 ../display/d.info/main.c:129
-#: ../display/d.legend/main.c:277 ../display/d.barscale/main.c:129
+#: ../display/d.legend/main.c:277 ../display/d.barscale/main.c:137
 #: ../display/d.text.freetype/main.c:316 ../display/d.graph/main.c:119
 #: ../display/d.paint.labels/main.c:124 ../display/d.text/main.c:152
 #: ../display/d.rast.num/number.c:162
@@ -14699,7 +14786,7 @@ msgstr "ไม่มี หน้าต่าง ที่กำลังทำ�
 
 #: ../display/d.rast.arrow/arrow.c:251 ../display/d.text.new/main.c:312
 #: ../display/d.info/main.c:105 ../display/d.info/main.c:131
-#: ../display/d.legend/main.c:280 ../display/d.barscale/main.c:132
+#: ../display/d.legend/main.c:280 ../display/d.barscale/main.c:140
 #: ../display/d.text.freetype/main.c:318 ../display/d.graph/main.c:122
 #: ../display/d.paint.labels/main.c:127 ../display/d.text/main.c:155
 #: ../display/d.rast.num/number.c:165
@@ -14708,26 +14795,26 @@ msgstr "ไม่สามารถใช้ หน้าต่างนี้�
 
 #: ../display/d.rast.arrow/arrow.c:257 ../display/d.rast.edit/cell.c:35
 #: ../display/d.info/main.c:111 ../display/d.info/main.c:136
-#: ../display/d.barscale/main.c:148 ../display/d.paint.labels/main.c:130
+#: ../display/d.barscale/main.c:156 ../display/d.paint.labels/main.c:130
 #: ../display/d.rast.num/number.c:172
 msgid "Setting map window"
 msgstr "การกำหนด หน้าต่างแผนที่"
 
 #: ../display/d.rast.arrow/arrow.c:260 ../display/d.rast.edit/cell.c:38
-#: ../display/d.barscale/main.c:151 ../display/d.paint.labels/main.c:133
+#: ../display/d.barscale/main.c:159 ../display/d.paint.labels/main.c:133
 #: ../display/d.rast.num/number.c:175
 msgid "Current window not settable"
 msgstr "กำหนดหน้าต่างไม่ได้"
 
 #: ../display/d.rast.arrow/arrow.c:264 ../display/d.info/main.c:113
-#: ../display/d.info/main.c:138 ../display/d.barscale/main.c:155
+#: ../display/d.info/main.c:138 ../display/d.barscale/main.c:163
 #: ../display/d.graph/main.c:125 ../display/d.paint.labels/main.c:137
 #: ../display/d.rast.num/number.c:180
 msgid "Getting screen window"
 msgstr "อ่าน หน้าต่างแสดงผล"
 
 #: ../display/d.rast.arrow/arrow.c:266 ../display/d.info/main.c:115
-#: ../display/d.info/main.c:140 ../display/d.barscale/main.c:157
+#: ../display/d.info/main.c:140 ../display/d.barscale/main.c:165
 #: ../display/d.what.rast/main.c:137 ../display/d.paint.labels/main.c:139
 #: ../display/d.rast.num/number.c:182
 msgid "Error in calculating conversions"
@@ -14740,6 +14827,15 @@ msgstr "มีปัญหาในการอ่าน ไฟล์  range"
 #: ../display/d.rast.arrow/arrow.c:368
 msgid "No raster map exists in the current window"
 msgstr "ไม่มีแผนที่เชิงภาพ ในหน้าต่างที่กำลังทำงาน"
+
+#: ../display/d.text.new/main.c:142 ../display/d.grid/main.c:51
+#: ../display/d.legend/main.c:86 ../display/d.vect.chart/main.c:63
+#: ../display/d.mapgraph/main.c:48 ../display/d.barscale/main.c:56
+#: ../display/d.text.freetype/main.c:138 ../display/d.thematic.area/main.c:78
+#: ../display/d.linegraph/linegraph.c:113 ../display/d.title/main.c:45
+#: ../display/d.graph/main.c:54 ../display/d.text/main.c:66
+msgid "display, cartography"
+msgstr "แสดงผล, สร้างแผนที่"
 
 #: ../display/d.text.new/main.c:144 ../display/d.text/main.c:68
 msgid ""
@@ -14867,12 +14963,6 @@ msgstr "ซ้าย:    วางตัวอักษรที่นี่\n"
 msgid " Right:   Quit\n"
 msgstr "ขวา:   ออก\n"
 
-#: ../display/d.grid/main.c:51 ../display/d.legend/main.c:86
-#: ../display/d.vect.chart/main.c:63 ../display/d.barscale/main.c:56
-#: ../display/d.graph/main.c:54
-msgid "display, cartography"
-msgstr "แสดงผล, สร้างแผนที่"
-
 #: ../display/d.grid/main.c:53
 msgid ""
 "Overlays a user-specified grid in the active display frame on the graphics "
@@ -14918,7 +15008,7 @@ msgstr "สีเส้นขอบ"
 msgid "Text color"
 msgstr "สีตัวอักษร"
 
-#: ../display/d.grid/main.c:95
+#: ../display/d.grid/main.c:95 ../display/d.barscale/main.c:106
 msgid "Font size for gridline coordinate labels"
 msgstr "ขนาดแบบตัวอักษร สำหรับ  แถบข้อความ ค่าพิกัดประจำ เส้นกริด"
 
@@ -15118,6 +15208,11 @@ msgstr "ไม่มีกรอบปัจจุบัน"
 msgid "Current frame not available"
 msgstr "กรอบปัจจุบัน ยังใช้ไม่ได้"
 
+#: ../display/d.geodesic/main.c:45 ../display/d.rhumbline/main.c:45
+#, fuzzy
+msgid "display, distance"
+msgstr "แสดง , ภาพ"
+
 #: ../display/d.geodesic/main.c:47
 msgid ""
 "Displays a geodesic line, tracing the shortest distance between two "
@@ -15156,6 +15251,11 @@ msgstr "ไม่มีการให้ค่าพิกัด"
 #, fuzzy, c-format
 msgid "%s - illegal longitude"
 msgstr "%s - ค่า x ไม่ถูกต้อง"
+
+#: ../display/d.menu/main.c:66
+#, fuzzy
+msgid "display, menu"
+msgstr "แสดงผล , กำหนด"
 
 #: ../display/d.menu/main.c:68
 msgid ""
@@ -15233,6 +15333,11 @@ msgstr "ชื่อ หรือ ของแบบตัวอักษร ข
 #: ../display/d.font.freetype/main.c:173
 msgid "Setting release of FreeType"
 msgstr "กำหนด รุ่นของ FreeType"
+
+#: ../display/d.ask/main.c:36
+#, fuzzy
+msgid "display, map management"
+msgstr "สร้าง, การจัดการแผนที่"
 
 #: ../display/d.ask/main.c:38
 msgid ""
@@ -15395,23 +15500,9 @@ msgstr ""
 "ระยะถึงโครงข่าย = %f, ระยะจากโครงข่าย = %f\n"
 "\n"
 
-#: ../display/d.extend/main.c:31
-#: ../locale/scriptstrings/d.split_to_translate.c:2
-#: ../locale/scriptstrings/d.resize_to_translate.c:2
-#: ../locale/scriptstrings/d.monsize_to_translate.c:2
-#: ../locale/scriptstrings/d.mvmon_to_translate.c:2
-msgid "display, setup"
-msgstr "แสดงผล , กำหนด"
-
 #: ../display/d.extend/main.c:52
 msgid "No raster or vector map displayed"
 msgstr "ไม่มีแผนที่ ทั้งเชิงภาพและเส้น แสดง"
-
-#: ../display/d.rast.edit/main.c:59 ../display/d.colortable/main.c:60
-#: ../display/d.rast/main.c:51
-#: ../locale/scriptstrings/d.rast.edit_to_translate.c:2
-msgid "display, raster"
-msgstr "แสดง , ภาพ"
 
 #: ../display/d.rast.edit/main.c:61
 #: ../locale/scriptstrings/d.rast.edit_to_translate.c:1
@@ -15425,6 +15516,11 @@ msgstr "ไม่สามารถ ล้าง หน้าต่างที�
 #: ../display/d.rast.edit/cell.c:86 ../display/d.rast/display.c:75
 msgid "Cannot use current window"
 msgstr "ไม่สามารถใช้หน้าต่างที่กำลังทำงานอยู่ได้"
+
+#: ../display/d.info/main.c:34 ../display/d.save/main.c:79
+#, fuzzy
+msgid "display, metadata"
+msgstr "แสดง , diagram"
 
 #: ../display/d.info/main.c:36
 msgid "Display information about the active display monitor"
@@ -15640,7 +15736,7 @@ msgstr "สร้างรายละเอียดสัญลักษณ์
 #: ../vector/v.generalize/misc.c:160 ../vector/v.extract/main.c:278
 #: ../vector/v.distance/main.c:355 ../vector/v.distance/main.c:391
 #: ../vector/v.out.ascii/b2a.c:38 ../vector/v.reclass/main.c:121
-#: ../vector/v.buffer2/main.c:313 ../vector/v.overlay/main.c:287
+#: ../vector/v.buffer2/main.c:328 ../vector/v.overlay/main.c:287
 #: ../vector/v.univar/main.c:176 ../vector/v.to.rast/vect2rast.c:51
 #: ../vector/v.to.rast/support.c:126 ../vector/v.to.rast/support.c:277
 #: ../vector/v.surf.idw/read_sites.c:34 ../vector/v.edit/select.c:506
@@ -15684,6 +15780,11 @@ msgstr "ชื่อชั้นข้อมูลเชิงภาพที่
 #: ../display/d.rgb/main.c:119
 msgid "Error reading row of data"
 msgstr "ข้อผิดพลาดขณะอ่านแถวข้อมูล"
+
+#: ../display/d.where/main.c:42
+#, fuzzy
+msgid "display, position, querying"
+msgstr "แสดง, โครงข่าย"
 
 #: ../display/d.where/main.c:44
 msgid ""
@@ -15790,14 +15891,19 @@ msgid ""
 "frame)"
 msgstr "ค่าพิกัดจอ สำหรับมุมซ้ายบน แถบข้อความ ([0,0] ซ้ายบนของกรอบ)"
 
-#: ../display/d.barscale/main.c:106
+#: ../display/d.barscale/main.c:114
 #, c-format
 msgid "%s does not work with a latitude-longitude location"
 msgstr "%s ไม่ทำงานกับ ค่าตำแหน่ง แลตติจูด-ลองติจูด"
 
-#: ../display/d.barscale/main.c:114
+#: ../display/d.barscale/main.c:122
 msgid "Choose either -n or -s flag"
 msgstr "เลือก -n หรือ -s "
+
+#: ../display/d.measure/main.c:49
+#, fuzzy
+msgid "display, geometry"
+msgstr "แสดง, ส่งออก"
 
 #: ../display/d.measure/main.c:51
 msgid ""
@@ -15913,6 +16019,11 @@ msgstr "%s: ไมมีไฟล์ นิยามของ FreeType "
 #, c-format
 msgid "%s: Unable to read FreeType definition file"
 msgstr "%s: ไม่สามารถอ่านไฟล์ นิยามของ แบบตัวอักษร  FreeType"
+
+#: ../display/d.his/main.c:65
+#, fuzzy
+msgid "display, color transformation"
+msgstr "การแปลง, transformation"
 
 #: ../display/d.his/main.c:67
 msgid ""
@@ -16042,7 +16153,7 @@ msgstr "จำนวนของชั้นข้อมูล ถ้าเป�
 #: ../vector/v.reclass/main.c:78 ../vector/v.select/args.c:16
 #: ../vector/v.select/args.c:21 ../vector/v.select/args.c:30
 #: ../vector/v.select/args.c:35 ../vector/v.select/args.c:89
-#: ../vector/v.buffer2/main.c:144 ../vector/v.buffer2/main.c:147
+#: ../vector/v.buffer2/main.c:159 ../vector/v.buffer2/main.c:162
 #: ../vector/v.to.rast/main.c:44 ../vector/v.to.rast/main.c:49
 #: ../vector/v.edit/args.c:42 ../vector/v.edit/args.c:47
 #: ../vector/v.edit/args.c:125 ../vector/v.edit/args.c:129
@@ -16376,6 +16487,12 @@ msgstr "ไฟล์ หมวด ของ <%s> ใช้ไม่ได้"
 msgid "Data range is empty"
 msgstr "ช่วงข้อมูล ว่างเปล่า"
 
+#: ../display/d.extract/main.c:50 ../display/d.what.vect/main.c:54
+#: ../display/d.vect/main.c:122
+#, fuzzy
+msgid "display, vector"
+msgstr "แสดง, ส่งออก"
+
 #: ../display/d.extract/main.c:52
 msgid "Selects and extracts vectors with mouse into new vector map."
 msgstr "แลือก และ คัดลอก แผนที่เชิงเส้น   ด้วยเม้าส์ ไปที่แผนที่ตัวใหม่"
@@ -16407,6 +16524,11 @@ msgstr "- R: ออก และ บันทึก แผนที่เชิ�
 #: ../display/d.extract/extract.c:49
 msgid "L: add  M: remove  R: quit and save\n"
 msgstr "L: เพิ่ม  M: เอาออก  R: ออกและบันทึก\n"
+
+#: ../display/d.histogram/main.c:71
+#, fuzzy
+msgid "display, histogram, statistics"
+msgstr "แผนที่เชิงภาพ, สถิติ"
 
 #: ../display/d.histogram/main.c:73
 msgid ""
@@ -16659,6 +16781,12 @@ msgstr "การปลดกลไก ล้มเหลว"
 msgid "Usage:  %s [-fv] [name]"
 msgstr "วิธีใช้:  %s [-fv] [ชื่อ]"
 
+#: ../display/d.mon/cmd/main.c:49 ../visualization/ximgview/main.c:270
+#: ../locale/scriptstrings/d.rast.leg_to_translate.c:2
+#: ../locale/scriptstrings/d.redraw_to_translate.c:2
+msgid "display"
+msgstr "แสดงผล"
+
 #: ../display/d.mon/cmd/main.c:51
 msgid "To establish and control use of a graphics display monitor."
 msgstr "เพื่อ สร้างและควบคุม การใช้จอแสดงผล"
@@ -16703,6 +16831,11 @@ msgstr "อย่าเลือกแบบ อัตโนมัติ เม�
 #, c-format
 msgid "Problem selecting %s. Will try once more"
 msgstr "เกิดปัญหาในการกำหนดค่า %s. จะลองใหม่อีกครั้ง"
+
+#: ../display/d.paint.labels/main.c:46
+#, fuzzy
+msgid "display, paint labels"
+msgstr "แผนที่เชิงเส้น, paint labels"
 
 #: ../display/d.paint.labels/main.c:48
 msgid ""
@@ -16787,7 +16920,7 @@ msgstr "เปิด ฟอร์ม ในการแก้ไข"
 #: ../vector/v.out.ascii/out.c:146 ../vector/v.net.allpairs/main.c:106
 #: ../vector/v.hull/main.c:307 ../vector/v.net.timetable/main.c:317
 #: ../vector/v.net.bridge/main.c:80 ../vector/v.net.connectivity/main.c:115
-#: ../vector/v.support/main.c:135 ../vector/v.buffer2/main.c:300
+#: ../vector/v.support/main.c:135 ../vector/v.buffer2/main.c:315
 #: ../vector/v.net.flow/main.c:132 ../vector/v.edit/main.c:165
 #: ../vector/v.info/main.c:113 ../vector/v.surf.rst/main.c:569
 #: ../vector/v.surf.rst/main.c:724 ../vector/v.surf.rst/main.c:813
@@ -17047,93 +17180,103 @@ msgid "Aborting."
 msgstr "ออก."
 
 #: ../display/d.nviz/main.c:69
+#, fuzzy
+msgid "display, visualization, raster, vector, raster3d"
+msgstr "องค์กร ที่สร้างแผนที่เชิงเส้น"
+
+#: ../display/d.nviz/main.c:70
 msgid "Creates fly-through script to run in NVIZ."
 msgstr "สร้าง fly-through script เพื่อทำงานใน NVIZ."
 
-#: ../display/d.nviz/main.c:74
+#: ../display/d.nviz/main.c:75
 msgid "Name of output script"
 msgstr "ชื่อของ  script ผลลัพธ์"
 
-#: ../display/d.nviz/main.c:80
+#: ../display/d.nviz/main.c:81
 msgid "Prefix of output images (default = NVIZ)"
 msgstr "คำนำหน้าของ ภาพผลลัพธ์ (default = NVIZ)"
 
-#: ../display/d.nviz/main.c:88
+#: ../display/d.nviz/main.c:89
 msgid "Route coordinates (east,north)"
 msgstr "ค่าพิกัดของเส้นทาง (ออก,เหนือ)"
 
-#: ../display/d.nviz/main.c:94
+#: ../display/d.nviz/main.c:95
 msgid "Camera layback distance (in map units)"
 msgstr "ระยะ layback ของกล้อง (หน่วยแผนที่)"
 
-#: ../display/d.nviz/main.c:100
+#: ../display/d.nviz/main.c:101
 msgid "Camera height above terrain"
 msgstr "ความสูงของกล้อง เหนือพื้นผิว"
 
-#: ../display/d.nviz/main.c:106
+#: ../display/d.nviz/main.c:107
 msgid "Number of frames"
 msgstr "จำนวนฉาก"
 
-#: ../display/d.nviz/main.c:112
+#: ../display/d.nviz/main.c:113
 msgid "Start frame number (default=0)"
 msgstr "เริ่มต้นที่ฉาก (default=0)"
 
-#: ../display/d.nviz/main.c:117
+#: ../display/d.nviz/main.c:118
 msgid "Interactively select route"
 msgstr "ให้เลือกเส้นทาง"
 
-#: ../display/d.nviz/main.c:121
+#: ../display/d.nviz/main.c:122
 msgid "Full render -- Save images"
 msgstr "การสร้างภาพแบบเต็ม -- บันทึกภาพ"
 
-#: ../display/d.nviz/main.c:125
+#: ../display/d.nviz/main.c:126
 msgid "Fly at constant elevation (ht)"
 msgstr "เพดานบิน ระดับคงที่ (ht)"
 
-#: ../display/d.nviz/main.c:130
+#: ../display/d.nviz/main.c:131
 msgid "Include command in the script to output a KeyFrame file"
 msgstr "รวมคำสั่งใน script ไปที่ ไฟล์ KeyFrame ผลลัพธ์"
 
-#: ../display/d.nviz/main.c:134
+#: ../display/d.nviz/main.c:135
 msgid "Render images off-screen"
 msgstr "การสร้างภาพ แบบไม่แสดง"
 
-#: ../display/d.nviz/main.c:138
+#: ../display/d.nviz/main.c:139
 msgid "Enable vector and sites drawing"
 msgstr "ให้แสดง แผนที่เชิงเส้น และ จุด"
 
-#: ../display/d.nviz/main.c:146
+#: ../display/d.nviz/main.c:147
 msgid "Either -i flag and/or route parameter must be used"
 msgstr "ใช้  -i และ/หรือ ตัวแปรเส้นทาง"
 
-#: ../display/d.nviz/main.c:170
+#: ../display/d.nviz/main.c:171
 msgid "Off-screen only available with full render mode"
 msgstr "การสร้างภาพ แบบไม่แสดง ใช้ได้กับ การสร้างภาพแบบเต็ม"
 
-#: ../display/d.nviz/main.c:281
+#: ../display/d.nviz/main.c:282
 msgid "You must select more than one point"
 msgstr "คุณต้องเลือกมากกว่า 1จุด"
 
-#: ../display/d.nviz/main.c:299
+#: ../display/d.nviz/main.c:300
 msgid "You must select at least four points"
 msgstr "คุณต้องเลือกอย่างน้อย 4 จุด"
 
-#: ../display/d.nviz/main.c:316
+#: ../display/d.nviz/main.c:317
 #, c-format
 msgid "You must provide at least four points %d"
 msgstr "คุณต้องเลือกอย่างน้อย 4 จุด  %d"
 
-#: ../display/d.nviz/main.c:390
+#: ../display/d.nviz/main.c:391
 #, c-format
 msgid "Created NVIZ script <%s>."
 msgstr "สร้าง NVIZ script แล้ว <%s>."
 
-#: ../display/d.nviz/main.c:537
+#: ../display/d.nviz/main.c:538
 msgid ""
 "Skipping this point, selected point is outside region. Perhaps the camera "
 "setback distance puts it beyond the edge?"
 msgstr ""
 "ข้ามจุดนี้, จุดที่เลือกอยู่นอกขอบเขต. บางทีค่าระยะ setback ของกล้อง กำหนดให้อยู่หลังขอบ?"
+
+#: ../display/d.zoom/main.c:57
+#, fuzzy
+msgid "display, zoom"
+msgstr "แสดง, ส่งออก"
 
 #: ../display/d.zoom/main.c:59
 msgid ""
@@ -17258,11 +17401,6 @@ msgstr "ขวา:  ออก\n"
 #: ../display/d.vect/attr.c:54
 msgid "Can't read vector map"
 msgstr "ไม่สามารถอ่านชั้นข้อมูลเชิงเส้น"
-
-#: ../display/d.vect/main.c:122
-#, fuzzy
-msgid "display, vector"
-msgstr "แสดง, ส่งออก"
 
 #: ../display/d.vect/main.c:123
 #, fuzzy
@@ -17577,17 +17715,10 @@ msgstr "ไม่ได้ระบุ attrcol, ไม่สามารถแ�
 msgid "No attribute found for cat %d: %s"
 msgstr "ไม่มีรายละเอียดสำหรับ cat %d: %s"
 
-#: ../vector/v.sample/main.c:86 ../vector/v.perturb/main.c:73
-#: ../vector/v.in.region/main.c:38 ../vector/v.out.vtk/main.c:46
-#: ../vector/v.mkgrid/main.c:63 ../vector/v.vol.rst/main.c:202
-#: ../vector/v.patch/main.c:68 ../vector/v.voronoi/vo_main.c:118
-#: ../vector/v.voronoi/dt_main.c:46 ../vector/v.delaunay2/main.c:86
-#: ../vector/v.external/main.c:58 ../vector/v.clean/test/topocheck.c:42
-#: ../vector/v.buffer/main.c:254 ../vector/v.info/main.c:265
-#: ../vector/v.surf.rst/main.c:164
-#: ../locale/scriptstrings/v.build.all_to_translate.c:2
-msgid "vector"
-msgstr "แผนที่เชิงเส้น"
+#: ../vector/v.sample/main.c:86
+#, fuzzy
+msgid "vector, raster, resample"
+msgstr "แผนที่เชิงภาพ, resample"
 
 #: ../vector/v.sample/main.c:88
 msgid "Samples a raster map at vector point locations."
@@ -17666,7 +17797,7 @@ msgstr "กำลังตรวจสอบ จุด ..."
 
 #: ../vector/v.sample/main.c:252 ../vector/v.sample/main.c:260
 #: ../vector/v.label.sa/labels.c:178 ../vector/v.vol.rst/user1.c:170
-#: ../vector/v.buffer2/main.c:388 ../vector/v.buffer2/main.c:459
+#: ../vector/v.buffer2/main.c:414 ../vector/v.buffer2/main.c:486
 #: ../vector/v.label/main.c:329 ../vector/v.buffer/main.c:454
 #: ../vector/v.buffer/main.c:466 ../vector/v.buffer/main.c:531
 #: ../vector/v.buffer/main.c:543 ../vector/v.what.rast/main.c:313
@@ -17676,7 +17807,7 @@ msgstr "ไม่มีข้อมูลสำหรับ หมวดหม�
 
 #: ../vector/v.sample/main.c:266 ../vector/lidar/v.surf.bspline/main.c:344
 #: ../vector/lidar/v.surf.bspline/crosscorr.c:133
-#: ../vector/v.to.rast3/main.c:100 ../vector/v.buffer2/main.c:334
+#: ../vector/v.to.rast3/main.c:100 ../vector/v.buffer2/main.c:349
 #: ../vector/v.class/main.c:123 ../vector/v.univar/main.c:273
 #: ../vector/v.surf.idw/read_sites.c:49 ../vector/v.buffer/main.c:402
 #: ../vector/v.what.rast/main.c:158
@@ -17762,10 +17893,9 @@ msgstr "%s: ไม่สามารถหา ขอบเขต สำหรั
 msgid "Unable to get bounding box of line %d"
 msgstr "%s: ไม่สามารถหา ขอบเขต สำหรับเส้น"
 
-#: ../vector/v.net.alloc/main.c:61 ../vector/v.net/main.c:47
-#: ../vector/v.net.iso/main.c:73 ../vector/v.net.salesman/main.c:97
-#: ../vector/v.net.steiner/main.c:345 ../vector/v.net.path/main.c:41
-msgid "vector, networking"
+#: ../vector/v.net.alloc/main.c:61
+#, fuzzy
+msgid "vector, network, allocation"
 msgstr "แผนที่เชิงเส้น, networking"
 
 #: ../vector/v.net.alloc/main.c:63
@@ -17815,6 +17945,11 @@ msgstr "การคำนวน costs จาก centres ..."
 #: ../vector/v.net.iso/main.c:508
 msgid "Cannot get line segment, segment out of line"
 msgstr "ไม่สามารถอ่าน ชิ้นส่วน, ชิ้นส่วนไม่มีเส้น"
+
+#: ../vector/v.net/main.c:47
+#, fuzzy
+msgid "vector, networking, maintenance"
+msgstr "การบำรุงรักษา Network."
 
 #: ../vector/v.net/main.c:48
 #, fuzzy
@@ -17922,9 +18057,9 @@ msgstr "%d จุดที่พบ: %.3lf %.3lf %.3lf หมวดหมู่�
 msgid "Exports a GRASS vector map to SVG."
 msgstr "ส่งออก แผนที่เชิงเส้น GRASS เป็น SVG."
 
-#: ../vector/v.out.svg/main.c:73 ../vector/v.out.ascii/out.c:45
-#: ../vector/v.out.ogr/main.c:98 ../vector/v.out.pov/main.c:43
-#: ../vector/v.out.dxf/main.c:48
+#: ../vector/v.out.svg/main.c:73 ../vector/v.out.vtk/main.c:46
+#: ../vector/v.out.ascii/out.c:45 ../vector/v.out.ogr/main.c:98
+#: ../vector/v.out.pov/main.c:43 ../vector/v.out.dxf/main.c:48
 msgid "vector, export"
 msgstr "แผนที่เชิงภาพ, ส่งออก"
 
@@ -18418,7 +18553,8 @@ msgstr ""
 msgid "Auxiliar table could not be dropped"
 msgstr "ตาราง Auxiliar ไม่สามารถ dropped"
 
-#: ../vector/lidar/v.surf.bspline/main.c:83 ../vector/v.surf.idw/main.c:84
+#: ../vector/lidar/v.surf.bspline/main.c:83 ../vector/v.vol.rst/main.c:202
+#: ../vector/v.surf.idw/main.c:84 ../vector/v.surf.rst/main.c:164
 msgid "vector, interpolation"
 msgstr "vector, interpolation"
 
@@ -19390,8 +19526,8 @@ msgstr "เอา  bridges ออก:"
 msgid "Merge boundaries:"
 msgstr "ตัด boundaries:"
 
-#: ../vector/v.in.ogr/main.c:1053 ../vector/v.buffer2/main.c:551
-#: ../vector/v.buffer2/main.c:627 ../vector/v.voronoi/dt_main.c:142
+#: ../vector/v.in.ogr/main.c:1053 ../vector/v.buffer2/main.c:591
+#: ../vector/v.buffer2/main.c:683 ../vector/v.voronoi/dt_main.c:142
 #: ../vector/v.overlay/area_area.c:68 ../vector/v.buffer/main.c:663
 #: ../vector/v.buffer/main.c:750
 msgid "Cannot calculate area centroid"
@@ -19764,6 +19900,11 @@ msgstr "%d จุด เขียนไปที่ แผนที่เชิ�
 msgid "Splits net by cost isolines."
 msgstr "ตัด net โดย cost isolines"
 
+#: ../vector/v.net.iso/main.c:73
+#, fuzzy
+msgid "vector, network, isolines"
+msgstr "แผนที่เชิงเส้น, networking"
+
 #: ../vector/v.net.iso/main.c:75
 msgid ""
 "Splits net to bands between cost isolines (direction from centre). Centre "
@@ -19818,6 +19959,11 @@ msgstr "จำนวนของ centres: [%d] (nlayer: [%d])"
 msgid "Calculating costs from centre %d..."
 msgstr "การคำนวน costs จาก centres ..."
 
+#: ../vector/v.net.salesman/main.c:97
+#, fuzzy
+msgid "vector, network, salesman"
+msgstr "แผนที่เชิงเส้น, networking"
+
 #: ../vector/v.net.salesman/main.c:99
 msgid "Creates a cycle connecting given nodes (Traveling salesman problem)."
 msgstr "สร้าง วงกลมเชื่อมกับ node (ปัญหาการเดินทางของ salesman)."
@@ -19855,6 +20001,11 @@ msgstr "เมืองไม่พอ (< 2)"
 #, c-format
 msgid "Destination node [%d] is unreachable from node [%d]"
 msgstr "Node สิ้นสุด [%d] ไม่สามารถเข้าถึงได้จาก node [%d]"
+
+#: ../vector/v.perturb/main.c:73
+#, fuzzy
+msgid "vector, geometry, statistics"
+msgstr "แผนที่เชิงเส้น, รายงาน, สถิติ"
 
 #: ../vector/v.perturb/main.c:75
 msgid "Random location perturbations of GRASS vector points"
@@ -19910,6 +20061,15 @@ msgstr "normalsv: save of unitialized block"
 msgid "normalsv: restoration of unitialized block"
 msgstr "normalsv: restoration of unitialized block"
 
+#: ../vector/v.in.region/main.c:38 ../vector/v.type/main.c:47
+#: ../vector/v.mkgrid/main.c:63 ../vector/v.hull/main.c:273
+#: ../vector/v.patch/main.c:68 ../vector/v.overlay/main.c:55
+#: ../vector/v.segment/main.c:52 ../vector/v.to.points/main.c:173
+#: ../vector/v.parallel/main.c:39 ../vector/v.parallel2/main.c:44
+#: ../vector/v.split/main.c:42
+msgid "vector, geometry"
+msgstr "แผนที่เชิงเส้น, geometry"
+
 #: ../vector/v.in.region/main.c:39
 msgid "Create a new vector from the current region."
 msgstr "สร้างแผนที่เชิงเส้นใหม่จากขอบเขตปัจจุบัน"
@@ -19919,7 +20079,7 @@ msgid "Select type: line or area"
 msgstr "เลือกชนิด: เส้น หรือ area"
 
 #: ../vector/v.net.distance/main.c:60 ../vector/v.net.allpairs/main.c:54
-#: ../vector/v.net.timetable/main.c:254
+#: ../vector/v.net.timetable/main.c:254 ../vector/v.net.path/main.c:41
 #, fuzzy
 msgid "vector, network, shortest path"
 msgstr "แผนที่เชิงเส้น, การนำเข้า"
@@ -20624,13 +20784,6 @@ msgstr "%s: ไม่สามารถอ่าน ไฟล์การกำ�
 #, c-format
 msgid "%s: No font definition file"
 msgstr "%s:ไม่มี ไฟล์การกำหนดรูปแบบตัวอักษร"
-
-#: ../vector/v.type/main.c:47 ../vector/v.hull/main.c:273
-#: ../vector/v.overlay/main.c:55 ../vector/v.segment/main.c:52
-#: ../vector/v.to.points/main.c:173 ../vector/v.parallel/main.c:39
-#: ../vector/v.parallel2/main.c:44 ../vector/v.split/main.c:42
-msgid "vector, geometry"
-msgstr "แผนที่เชิงเส้น, geometry"
 
 #: ../vector/v.type/main.c:48
 msgid "Change the type of geometry elements."
@@ -22731,84 +22884,84 @@ msgstr ""
 msgid "Do not skip features without category"
 msgstr "ข้าม area %d ที่ไม่มี จุดศูนย์ถ่วง"
 
-#: ../vector/v.buffer2/main.c:134
+#: ../vector/v.buffer2/main.c:149
 #, fuzzy
 msgid "vector, buffer"
 msgstr "แผนที่เชิงเส้น, การค้นหา"
 
-#: ../vector/v.buffer2/main.c:136 ../vector/v.buffer/main.c:256
+#: ../vector/v.buffer2/main.c:151 ../vector/v.buffer/main.c:256
 msgid ""
 "Creates a buffer around features of given type (areas must contain centroid)."
 msgstr "สร้าง  buffer รอบๆ ข้อมูล ตามชนิดที่กำหนด (areas must จะต้องมีจุดศูนย์ถ่วง)."
 
-#: ../vector/v.buffer2/main.c:154
+#: ../vector/v.buffer2/main.c:169
 #, fuzzy
 msgid "Buffer distance along major axis in map units"
 msgstr "ระยะ Bufferในหน่วย ของแผนที่"
 
-#: ../vector/v.buffer2/main.c:155 ../vector/v.buffer2/main.c:163
-#: ../vector/v.buffer2/main.c:171 ../vector/v.buffer2/main.c:177
-#: ../vector/v.buffer2/main.c:185 ../vector/v.buffer2/main.c:194
+#: ../vector/v.buffer2/main.c:170 ../vector/v.buffer2/main.c:178
+#: ../vector/v.buffer2/main.c:186 ../vector/v.buffer2/main.c:192
+#: ../vector/v.buffer2/main.c:200 ../vector/v.buffer2/main.c:209
 #, fuzzy
 msgid "Distance"
 msgstr "ตารางหายไป"
 
-#: ../vector/v.buffer2/main.c:162
+#: ../vector/v.buffer2/main.c:177
 #, fuzzy
 msgid "Buffer distance along minor axis in map units"
 msgstr "ระยะ Bufferในหน่วย ของแผนที่"
 
-#: ../vector/v.buffer2/main.c:170 ../vector/v.parallel2/main.c:73
+#: ../vector/v.buffer2/main.c:185 ../vector/v.parallel2/main.c:73
 msgid "Angle of major axis in degrees"
 msgstr ""
 
-#: ../vector/v.buffer2/main.c:176
+#: ../vector/v.buffer2/main.c:191
 #, fuzzy
 msgid "Name of column to use for buffer distances"
 msgstr "Column รายละเอียด ที่ใช้สำหรับ ระยะ buffer"
 
-#: ../vector/v.buffer2/main.c:184 ../vector/v.buffer/main.c:286
+#: ../vector/v.buffer2/main.c:199 ../vector/v.buffer/main.c:286
 msgid "Scaling factor for attribute column values"
 msgstr "ตัวคูณมาตราส่วน สำหรับ ค่า ใน Column รายละเอียด"
 
-#: ../vector/v.buffer2/main.c:193 ../vector/v.buffer/main.c:296
+#: ../vector/v.buffer2/main.c:208 ../vector/v.buffer/main.c:296
 msgid ""
 "Maximum distance between theoretical arc and polygon segments as multiple of "
 "buffer"
 msgstr "ระยะมากสุด ระหว่าง theoretical arc และ polygon segments แบบ หลาย  buffer"
 
-#: ../vector/v.buffer2/main.c:200 ../vector/v.buffer2/main.c:212
+#: ../vector/v.buffer2/main.c:215 ../vector/v.buffer2/main.c:227
 #: ../vector/v.build.polylines/main.c:128
 msgid "Unused"
 msgstr ""
 
-#: ../vector/v.buffer2/main.c:202
+#: ../vector/v.buffer2/main.c:217
 msgid "This does nothing. It is retained for backwards compatibility"
 msgstr ""
 
-#: ../vector/v.buffer2/main.c:209
+#: ../vector/v.buffer2/main.c:224
 msgid ""
 "This is an alias to the distance option. It is retained for backwards "
 "compatibility"
 msgstr ""
 
-#: ../vector/v.buffer2/main.c:211 ../vector/v.buffer/main.c:271
+#: ../vector/v.buffer2/main.c:226 ../vector/v.buffer/main.c:271
 msgid "Buffer distance in map units"
 msgstr "ระยะ Bufferในหน่วย ของแผนที่"
 
-#: ../vector/v.buffer2/main.c:216
+#: ../vector/v.buffer2/main.c:231
 msgid "Make outside corners straight"
 msgstr ""
 
-#: ../vector/v.buffer2/main.c:220
+#: ../vector/v.buffer2/main.c:235
 msgid "Don't make caps at the ends of polylines"
 msgstr ""
 
-#: ../vector/v.buffer2/main.c:231
+#: ../vector/v.buffer2/main.c:246
 msgid "Select a buffer distance/minordistance/angle or column, but not both."
 msgstr ""
 
-#: ../vector/v.buffer2/main.c:235 ../vector/v.buffer/main.c:319
+#: ../vector/v.buffer2/main.c:250 ../vector/v.buffer/main.c:319
 msgid ""
 "The bufcol option may contain bugs during the cleaning step. If you "
 "encounter problems, use the debug option or clean manually with v.clean "
@@ -22818,91 +22971,129 @@ msgstr ""
 "หรือ clean แบบ manual ด้วย  v.clean tool=break; v.category step=0; v.extract -"
 "d type=area"
 
-#: ../vector/v.buffer2/main.c:246
+#: ../vector/v.buffer2/main.c:261
 #, fuzzy
 msgid "The bufcol option requires a valid layer."
 msgstr "magnitude_map ต้องการ  Scale "
 
-#: ../vector/v.buffer2/main.c:249
+#: ../vector/v.buffer2/main.c:264
 msgid ""
 "The buffer option has been replaced by the distance option and will be "
 "removed in future."
 msgstr ""
 
-#: ../vector/v.buffer2/main.c:252
+#: ../vector/v.buffer2/main.c:267
 #, fuzzy
 msgid "Use the distance option instead of the buffer option."
 msgstr "ใช้ หน่วย radian แทน องศา ของการหมุน"
 
-#: ../vector/v.buffer2/main.c:256
+#: ../vector/v.buffer2/main.c:271
 #, fuzzy
 msgid "The tolerance must be > 0."
 msgstr "'layer' ต้อง > 0 สำหรับ 'cats'."
 
-#: ../vector/v.buffer2/main.c:259
+#: ../vector/v.buffer2/main.c:274
 #, fuzzy, c-format
 msgid "The tolerance was reset to %g"
 msgstr "Toleranc ถูกกำหนดใหม่เป็น %g (หน่วยแผนที่)"
 
-#: ../vector/v.buffer2/main.c:283
+#: ../vector/v.buffer2/main.c:298
 #, fuzzy, c-format
 msgid "The tolerance in map units = %g"
 msgstr "Tolerance ในหน่วยแผนที่: %g"
 
-#: ../vector/v.buffer2/main.c:328
+#: ../vector/v.buffer2/main.c:343
 #, fuzzy, c-format
 msgid "Unable to select data from table <%s>"
 msgstr "ไม่สามารถเลือกข้อมูลจากตารางได้"
 
-#: ../vector/v.buffer2/main.c:368
+#: ../vector/v.buffer2/main.c:379
+msgid ""
+"No features available for buffering. Check type option and features "
+"available in the input vector."
+msgstr ""
+
+#: ../vector/v.buffer2/main.c:394
 #, fuzzy
 msgid "Buffering lines..."
 msgstr "กำลังตัดเส้น ..."
 
-#: ../vector/v.buffer2/main.c:394 ../vector/v.buffer2/main.c:465
+#: ../vector/v.buffer2/main.c:420 ../vector/v.buffer2/main.c:492
 #: ../vector/v.buffer/main.c:473 ../vector/v.buffer/main.c:550
 #, c-format
 msgid "Attribute is of invalid size (%.3f) for category %d"
 msgstr "รายละเอียด ผิด ขนาด(%.3f) สำหรับหมวดหมู่ %d"
 
-#: ../vector/v.buffer2/main.c:408 ../vector/v.buffer2/main.c:479
+#: ../vector/v.buffer2/main.c:434 ../vector/v.buffer2/main.c:506
 #: ../vector/v.buffer/main.c:335 ../vector/v.buffer/main.c:485
 #: ../vector/v.buffer/main.c:562
 #, c-format
 msgid "The tolerance in map units: %g"
 msgstr "Tolerance ในหน่วยแผนที่: %g"
 
-#: ../vector/v.buffer2/main.c:438
+#: ../vector/v.buffer2/main.c:465
 #, fuzzy
 msgid "Buffering areas..."
 msgstr "Extruding areas..."
 
-#: ../vector/v.buffer2/main.c:505 ../vector/v.buffer/main.c:607
+#: ../vector/v.buffer2/main.c:521
+#, fuzzy
+msgid "Writting buffers..."
+msgstr "พื้นที่ Extracting ..."
+
+#: ../vector/v.buffer2/main.c:537 ../vector/v.buffer/main.c:607
 msgid "Building parts of topology..."
 msgstr "กำลังสร้าง ส่วนของ topology ..."
 
-#: ../vector/v.buffer2/main.c:508 ../vector/v.buffer/main.c:619
+#: ../vector/v.buffer2/main.c:540 ../vector/v.buffer/main.c:619
 msgid "Snapping boundaries..."
 msgstr "ดูดเข้าหา ขอบเขต ..."
 
-#: ../vector/v.buffer2/main.c:511
+#: ../vector/v.buffer2/main.c:543
 #, fuzzy
 msgid "Breaking polygons..."
 msgstr "ตัด polygons"
 
-#: ../vector/v.buffer2/main.c:514 ../vector/v.buffer2/main.c:520
+#: ../vector/v.buffer2/main.c:546 ../vector/v.buffer2/main.c:553
 #: ../vector/v.overlay/area_area.c:43 ../vector/v.buffer/main.c:625
 msgid "Removing duplicates..."
 msgstr "กำลัง เอาที่ซ้ำออก"
 
-#: ../vector/v.buffer2/main.c:517 ../vector/v.buffer/main.c:622
+#: ../vector/v.buffer2/main.c:550 ../vector/v.buffer/main.c:622
 msgid "Breaking boundaries..."
 msgstr "Breaking boundaries..."
 
-#: ../vector/v.buffer2/main.c:532 ../vector/v.overlay/area_area.c:55
+#: ../vector/v.buffer2/main.c:556
+#, fuzzy
+msgid "Cleaning boundaries at nodes"
+msgstr "กำลังสร้าง boundaries ที่ nodes ..."
+
+#: ../vector/v.buffer2/main.c:571 ../vector/v.overlay/area_area.c:55
 #: ../vector/v.buffer/main.c:637
 msgid "Attaching islands..."
 msgstr "กำลังแนบ  islands ..."
+
+#: ../vector/v.buffer2/main.c:577 ../vector/v.buffer2/main.c:670
+#: ../vector/v.buffer/main.c:644 ../vector/v.buffer/main.c:734
+#, fuzzy
+msgid "Calculating centroids for areas..."
+msgstr "กำลังคำนวน Centrality measures ..."
+
+#: ../vector/v.buffer2/main.c:608 ../vector/v.buffer/main.c:686
+#, fuzzy
+msgid "Generating list of boundaries to be deleted..."
+msgstr "กำลังสร้าง boundaries ที่ nodes ..."
+
+#: ../vector/v.buffer2/main.c:641 ../vector/v.buffer/main.c:718
+#, fuzzy
+msgid "Deleting boundaries..."
+msgstr "Breaking boundaries..."
+
+#: ../vector/v.voronoi/vo_main.c:118 ../vector/v.voronoi/dt_main.c:46
+#: ../vector/v.delaunay2/main.c:86
+#, fuzzy
+msgid "vector, geometry, triangulation"
+msgstr "vector, geometry, topology"
 
 #: ../vector/v.voronoi/vo_main.c:119
 msgid ""
@@ -22956,6 +23147,11 @@ msgstr "ไม่สามารถ คำนวน จุดศูนย์ถ�
 #, c-format
 msgid "Init costs from node %d"
 msgstr "Init costs จาก node %d"
+
+#: ../vector/v.net.steiner/main.c:345
+#, fuzzy
+msgid "vector, network, steiner tree"
+msgstr "แผนที่เชิงเส้น, networking"
 
 #: ../vector/v.net.steiner/main.c:347
 msgid "Create Steiner tree for the network and given terminals"
@@ -24677,6 +24873,11 @@ msgid ""
 "attributes"
 msgstr ""
 
+#: ../vector/v.external/main.c:58
+#, fuzzy
+msgid "vector, external, import"
+msgstr "แผนที่เชิงภาพ, ส่งออก"
+
 #: ../vector/v.external/main.c:60
 msgid "Creates a new vector as a read-only link to OGR layer."
 msgstr "สร้างแผนที่เชิงเส้นใหม่ แบบ อ่านอย่างเดียว เชื่อมกับ ชั้นข้อมูล OGR"
@@ -24916,6 +25117,11 @@ msgstr "กำลังสร้าง topology สำหรับ แผนท�
 msgid "Duplicate area centroids: %d"
 msgstr "จุดศูนย์ถ่วง ของ area ที่ซ้ำ: %5d"
 
+#: ../vector/v.clean/test/topocheck.c:42 ../vector/v.info/main.c:265
+#: ../locale/scriptstrings/v.build.all_to_translate.c:2
+msgid "vector"
+msgstr "แผนที่เชิงเส้น"
+
 #: ../vector/v.clean/prune.c:214
 #, c-format
 msgid ""
@@ -25000,6 +25206,11 @@ msgstr "สร้างเส้นขนาน ไปที่ เส้นผ�
 msgid "Offset in map units, positive for right side, negative for left side."
 msgstr "ระยะร่นในหน่วยแผนที่, ค่าบวก สำหรับทางขวามือ, ค่าลบ สำหรับทางซ้ายมือ."
 
+#: ../vector/v.buffer/main.c:254
+#, fuzzy
+msgid "vector, geometry, buffer"
+msgstr "แผนที่เชิงเส้น, geometry, 3มิติ"
+
 #: ../vector/v.buffer/main.c:278
 msgid "Attribute column to use for buffer distances"
 msgstr "Column รายละเอียด ที่ใช้สำหรับ ระยะ buffer"
@@ -25025,21 +25236,6 @@ msgstr "Tolerance ถูกกำหนดใหม่เป็น %g (หน่
 #: ../vector/v.buffer/main.c:509
 msgid "Areas buffers... "
 msgstr "buffers พื้นที่ ... "
-
-#: ../vector/v.buffer/main.c:644 ../vector/v.buffer/main.c:734
-#, fuzzy
-msgid "Calculating centroids for areas..."
-msgstr "กำลังคำนวน Centrality measures ..."
-
-#: ../vector/v.buffer/main.c:686
-#, fuzzy
-msgid "Generating list of boundaries to be deleted..."
-msgstr "กำลังสร้าง boundaries ที่ nodes ..."
-
-#: ../vector/v.buffer/main.c:718
-#, fuzzy
-msgid "Deleting boundaries..."
-msgstr "Breaking boundaries..."
 
 #: ../vector/v.edit/main.c:55
 msgid "vector, editing, geometry"
@@ -26447,7 +26643,8 @@ msgid "Name of Arc cost column"
 msgstr "ชื่อของ column"
 
 #: ../misc/m.cogo/main.c:225
-msgid "miscellaneous"
+#, fuzzy
+msgid "miscellaneous, distance"
 msgstr "อื่นๆ"
 
 #: ../misc/m.cogo/main.c:226
@@ -26536,9 +26733,10 @@ msgid "Using private colormap for DirectColor visual."
 msgstr "การใช้ private colormap สำหรับ DirectColor visual."
 
 #: ../visualization/nviz/src/nviz_init.c:53
+#: ../visualization/nviz2/cmd/main.c:48
 #, fuzzy
-msgid "raster, vector, visualization"
-msgstr "แผนที่เชิงภาพ, ค่าระดับ, interpolation"
+msgid "visualization, raster, vector, raster3d"
+msgstr "องค์กร ที่สร้างแผนที่เชิงเส้น"
 
 #: ../visualization/nviz/src/nviz_init.c:55
 #, fuzzy
@@ -26624,11 +26822,6 @@ msgstr "กำลังอ่านข้อมูล: "
 #: ../visualization/nviz/src/nviz_init.c:411
 msgid "Entering script mode ..."
 msgstr ""
-
-#: ../visualization/nviz2/cmd/main.c:48
-#, fuzzy
-msgid "visualization, raster, vector, raster3d"
-msgstr "องค์กร ที่สร้างแผนที่เชิงเส้น"
 
 #: ../visualization/nviz2/cmd/main.c:49
 msgid "Allows rendering GIS data is a 3D space."
@@ -27137,7 +27330,8 @@ msgid "postscript, map, printing"
 msgstr "postscript, แผนที, การพิมพ์"
 
 #: ../ps/ps.map/main.c:101
-msgid "Hardcopy PostScript map output utility."
+#, fuzzy
+msgid "Produces hardcopy PostScript map output."
 msgstr "เครื่องมือสร้างแผนที่ ผลลัพธ์ แบบ Hardcopy PostScript"
 
 #: ../ps/ps.map/main.c:105
@@ -27535,9 +27729,8 @@ msgstr "SQLite driver: column '%s', SQLite type %d  ไม่รองรับ"
 msgid "Unable to open database: "
 msgstr "ไม่สามารถเปิดฐานข้อมูล <%s> ได้"
 
-#: ../db/base/columns.c:92 ../db/base/drivers.c:74 ../db/base/connect.c:45
-#: ../db/base/describe.c:125 ../db/base/tables.c:95
-#: ../locale/scriptstrings/db.test_to_translate.c:2
+#: ../db/base/columns.c:92 ../db/base/drivers.c:74 ../db/base/describe.c:125
+#: ../db/base/tables.c:95 ../locale/scriptstrings/db.test_to_translate.c:2
 #: ../locale/scriptstrings/db.out.ogr_to_translate.c:2
 #: ../locale/scriptstrings/db.droptable_to_translate.c:2
 #: ../locale/scriptstrings/db.dropcol_to_translate.c:2
@@ -27635,6 +27828,11 @@ msgstr "ไม่สามารถรวมเงื่อนไข 'select' �
 msgid "Copy table failed"
 msgstr "คัดลอกตารางล้มเหลว"
 
+#: ../db/base/connect.c:45
+#, fuzzy
+msgid "database, attribute table, connection settings"
+msgstr "ฐานข้อมูล, ตารางรายละเอียด"
+
 #: ../db/base/connect.c:47
 msgid "Prints/sets general DB connection for current mapset and exits."
 msgstr "แสดง/กำหนด general DB connection สำหรับชุดแผนที่ และ ออก."
@@ -27724,7 +27922,7 @@ msgid "Lists all tables for a given database."
 msgstr "แสดงตารางทั้งหมดในฐานข้อมูล"
 
 #: ../db/base/createdb.c:71 ../db/base/droptable.c:78
-#: ../db/base/databases.c:90 ../db/base/dropdb.c:71 ../db/db.login/main.c:43
+#: ../db/base/databases.c:90 ../db/base/dropdb.c:71
 msgid "database, SQL"
 msgstr "ฐานข้อมูล, SQL"
 
@@ -27785,12 +27983,17 @@ msgid "Only test query, do not execute"
 msgstr "ทดสอบการค้นหา, ไม่ต้องทำงาน"
 
 #: ../db/base/select.c:239
-msgid "Selects data from table."
-msgstr "เลือกข้อมูลจากตาราง"
+msgid "Selects data from attribute table (performs SQL query statement(s))."
+msgstr ""
 
 #: ../db/base/dropdb.c:72
 msgid "Removes a database."
 msgstr "เอา ฐานข้อมูลออก"
+
+#: ../db/db.login/main.c:43
+#, fuzzy
+msgid "database, connection settings"
+msgstr "การติดต่อกับฐานข้อมูล ไม่ถูกกำหนด"
 
 #: ../db/db.login/main.c:44
 msgid "Sets user/password for driver/database."
@@ -27901,9 +28104,10 @@ msgid "Label with coordinates instead of numbering"
 msgstr "แถบข้อความ ของค่าพิกัด แทนที่จะเป็นตัวเลข"
 
 #: ../locale/scriptstrings/v.convert.all_to_translate.c:1
+#, fuzzy
 msgid ""
-"Convert all old GRASS < Ver5.7 vector maps in current mapset to current "
-"format"
+"Converts all older versions of GRASS vector maps in current mapset to "
+"current format."
 msgstr "แปลง แผนที่เชิงเส้นทั้งหมดของ GRASS < Ver5.7 ในชุดแผนที่ที่ใช้งานไปเป็น รูปแบบปัจจุบัน"
 
 #: ../locale/scriptstrings/v.convert.all_to_translate.c:3
@@ -27926,29 +28130,6 @@ msgstr "สร้างเงื่อนไขสำหรับ ตัวข�
 #: ../locale/scriptstrings/r.out.gdal.sh_to_translate.c:10
 msgid "Metadata key passed on the output dataset if possible"
 msgstr "ถ้าเป็นไปได้ ให้ใส่ Metadata key passed ไปในชุดข้อมูลผลลัพธ์"
-
-#: ../locale/scriptstrings/r.regression.line_to_translate.c:1
-msgid "Calculates linear regression from two raster maps: y = a + b*x"
-msgstr "คำนวน  linear regression จาก แผนที่เชิงภาพ 2 แผนที่: y = a + b*x"
-
-#: ../locale/scriptstrings/r.regression.line_to_translate.c:4
-msgid "Slower but accurate (applies to FP maps only)"
-msgstr ""
-
-#: ../locale/scriptstrings/r.regression.line_to_translate.c:5
-msgid "Map for x coefficient"
-msgstr "แผนที่สำหรับ x coefficient"
-
-#: ../locale/scriptstrings/r.regression.line_to_translate.c:6
-msgid "Map for y coefficient"
-msgstr "แผนที่สำหรับ y coefficient"
-
-#: ../locale/scriptstrings/r.regression.line_to_translate.c:7
-msgid ""
-"ASCII file for storing regression coefficients (output to screen if file not "
-"specified)."
-msgstr ""
-"ไฟล์ ASCIIสำหรับเก็บ regression coefficients (ส่งออกหน้าจอ ถ้าไม่มีการระบุ ไฟล์)."
 
 #: ../locale/scriptstrings/v.in.e00_to_translate.c:1
 msgid "Import E00 file into a vector map."
@@ -28381,6 +28562,10 @@ msgstr "แผนที่ 4th สำหรับการต่อภาพ"
 msgid "Blends color components of two raster maps by a given ratio."
 msgstr "บิดสีของ แผนทีที่เชิงภาพ 2 แผนที่ ด้วยอัตราส่วนที่กำหนด"
 
+#: ../locale/scriptstrings/r.blend_to_translate.c:2
+msgid "raster"
+msgstr "แผนที่เชิงภาพ"
+
 #: ../locale/scriptstrings/r.blend_to_translate.c:3
 msgid "Name of first raster map for blending"
 msgstr "ชื่อของแผนที่เชิงภาพ ที่ 1 ที่จะ บิดสี "
@@ -28670,7 +28855,8 @@ msgid "Old and new name of the column (old,new)"
 msgstr "ชื่อ เก่าและใหม่ของ  column (เก่า,ใหม่)"
 
 #: ../locale/scriptstrings/r.mask_to_translate.c:1
-msgid "Create a MASK for limiting raster operation"
+#, fuzzy
+msgid "Creates a MASK for limiting raster operation."
 msgstr "สร้าง MASK สำหรับจำกัดการกระทำกับแผนที่เชิงภาพ"
 
 #: ../locale/scriptstrings/r.mask_to_translate.c:2
@@ -29299,7 +29485,7 @@ msgstr "ความสูง ใหม่ ของหน้าต่าง"
 
 #: ../locale/scriptstrings/v.in.mapgen_to_translate.c:1
 #, fuzzy
-msgid "Import Mapgen or Matlab-ASCII vector maps into GRASS."
+msgid "Imports Mapgen or Matlab-ASCII vector maps into GRASS."
 msgstr "นำเข้าแผนที่เชิงเส้น Mapgen หรือ Matlab ไปที่ GRASS."
 
 #: ../locale/scriptstrings/v.in.mapgen_to_translate.c:3
@@ -30284,12 +30470,10 @@ msgstr "%s: การปรับมาตราส่วนไปที่ [%d,
 msgid "Eigen values, (vectors), and [percent importance]:"
 msgstr ""
 
-#: ../imagery/i.zc/main.c:57 ../imagery/i.vpoints/main.c:94
-#: ../imagery/i.cca/main.c:84 ../imagery/i.points/main.c:96
-#: ../imagery/i.group/main.c:52 ../imagery/i.target/main.c:45
-#: ../imagery/i.class/main.c:53
-msgid "imagery"
-msgstr "ภาพ"
+#: ../imagery/i.zc/main.c:57
+#, fuzzy
+msgid "imagery, edges"
+msgstr "กำลังเขียน vertices..."
 
 #: ../imagery/i.zc/main.c:59
 msgid "Zero-crossing \"edge detection\" raster function for image processing."
@@ -30529,6 +30713,11 @@ msgstr "ไม่พบ แผนที่เชิงภาพ <%s> ในช�
 #, fuzzy, c-format
 msgid "Raster map <%s@%s>: zone don't match current settings"
 msgstr "ไม่พบ แผนที่เชิงภาพ <%s> ในชุดแผนที่"
+
+#: ../imagery/i.vpoints/main.c:94 ../imagery/i.points/main.c:96
+#, fuzzy
+msgid "imagery, geometry"
+msgstr "แผนที่เชิงเส้น, geometry"
 
 #: ../imagery/i.vpoints/main.c:96
 msgid ""
@@ -30847,6 +31036,11 @@ msgstr "วิธีใช้: %s ไฟล์ ตำแหน่ง ของ �
 msgid "Unable to open temp file."
 msgstr "ไม่สามารถเปิดไฟล์ชั่วคราวได้"
 
+#: ../imagery/i.cca/main.c:84
+#, fuzzy
+msgid "imagery, statistics"
+msgstr "แผนที่เชิงภาพ, ภาพ, สถิติ"
+
 #: ../imagery/i.cca/main.c:86
 msgid "Canonical components analysis (cca) program for image processing."
 msgstr "Canonical components analysis (cca) โปรแกรมสำหรับ image processing."
@@ -30856,7 +31050,8 @@ msgid "Name of input imagery subgroup"
 msgstr "ชื่อของ กลุ่มย่อย ของ ภาพ"
 
 #: ../imagery/i.cca/main.c:99
-msgid "Ascii file containing spectral signatures"
+#, fuzzy
+msgid "File containing spectral signatures"
 msgstr "Ascii ไฟล์ ประกอบด้วย spectral signatures"
 
 #: ../imagery/i.cca/main.c:102
@@ -31990,6 +32185,11 @@ msgstr "ค่าเฉลี่ย"
 msgid "  stddev"
 msgstr "ค่าเบี่ยงเบน มาตรฐาน"
 
+#: ../imagery/i.group/main.c:52 ../imagery/i.target/main.c:45
+#, fuzzy
+msgid "imagery, map management"
+msgstr "สร้าง, การจัดการแผนที่"
+
 #: ../imagery/i.group/main.c:54
 msgid "Creates, edits, and lists groups and subgroups of imagery files."
 msgstr "สร้าง, แก้ไข,และแสดง กลุ่ม และ กลุ่มย่อย ของไฟล์ภาพ"
@@ -32196,6 +32396,11 @@ msgstr "signature %d ไม่ถูกต้อง (เงื่อนไขไ
 msgid "Signature %d is not valid (singular) - ignored"
 msgstr "signature %d ไม่ถูกต้อง (singular) - ยกเลิก"
 
+#: ../imagery/i.class/main.c:53
+#, fuzzy
+msgid "imagery, classification"
+msgstr "การจำแนก จุด"
+
 #: ../imagery/i.class/main.c:55
 msgid ""
 "Generates spectral signatures for an image by allowing the user to outline "
@@ -32389,6 +32594,22 @@ msgstr "ข้อผิดพลาดขณะ เอา แผนที่ old
 msgid "Can't mark another point.  Only %d points allowed.  Sorry."
 msgstr "ไม่สามารถ mark จุดอื่น  ยอมรับเพียง %d จุด เสียใจ"
 
+#~ msgid "general"
+#~ msgstr "ทั่วไป"
+
+#~ msgid "vector, networking"
+#~ msgstr "แผนที่เชิงเส้น, networking"
+
+#, fuzzy
+#~ msgid "raster, vector, visualization"
+#~ msgstr "แผนที่เชิงภาพ, ค่าระดับ, interpolation"
+
+#~ msgid "Selects data from table."
+#~ msgstr "เลือกข้อมูลจากตาราง"
+
+#~ msgid "imagery"
+#~ msgstr "ภาพ"
+
 #~ msgid "Swapping header data"
 #~ msgstr "การแลกเปลี่ยน ข้อมูล header"
 
@@ -32488,9 +32709,6 @@ msgstr "ไม่สามารถ mark จุดอื่น  ยอมรั�
 
 #~ msgid "Allows projection conversion of vector maps."
 #~ msgstr "ยอมให้การแปลง projection ของ แผนที่เชิงเส้น"
-
-#~ msgid "Raster value"
-#~ msgstr "ค่า แผนที่เชิงภาพ"
 
 #~ msgid "Vector output map"
 #~ msgstr "แผนที่เชิงเส้นผลลัพธ์"

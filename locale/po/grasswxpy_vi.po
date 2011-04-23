@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: grasswxpy_vi\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-04-18 22:47+0200\n"
+"POT-Creation-Date: 2011-04-23 15:34+0200\n"
 "PO-Revision-Date: 2010-08-27 16:40+0700\n"
 "Last-Translator: \n"
 "Language-Team: American English <kde-i18n-doc@kde.org>\n"
@@ -19,49 +19,49 @@ msgstr ""
 "X-Generator: Lokalize 1.0\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: ../gui/wxpython/wxgui.py:103
+#: ../gui/wxpython/wxgui.py:95
 msgid "GRASS GIS Layer Manager"
 msgstr "Bộ Quản lý Lớp của GRASS GIS"
 
-#: ../gui/wxpython/wxgui.py:216
+#: ../gui/wxpython/wxgui.py:208
 #, fuzzy
 msgid "Map layers"
 msgstr "Các Lớp Bản Đồ"
 
-#: ../gui/wxpython/wxgui.py:220 ../gui/wxpython/wxgui.py:354
+#: ../gui/wxpython/wxgui.py:212 ../gui/wxpython/wxgui.py:346
 #, fuzzy
 msgid "Command console"
 msgstr "Lệnh đã kết thúc"
 
-#: ../gui/wxpython/wxgui.py:224
+#: ../gui/wxpython/wxgui.py:216
 msgid "Search module"
 msgstr ""
 
-#: ../gui/wxpython/wxgui.py:237 ../gui/wxpython/gui_modules/toolbars.py:205
+#: ../gui/wxpython/wxgui.py:229 ../gui/wxpython/gui_modules/toolbars.py:205
 msgid "3D view"
 msgstr "Xem 3D"
 
-#: ../gui/wxpython/wxgui.py:275
+#: ../gui/wxpython/wxgui.py:267
 #, python-format
 msgid "Hardcopy Map Output Utility is not available. You can install it by %s"
 msgstr ""
 
-#: ../gui/wxpython/wxgui.py:294
+#: ../gui/wxpython/wxgui.py:286
 #, fuzzy
 msgid "Choose model to run"
 msgstr "Chọn phép chiếu"
 
-#: ../gui/wxpython/wxgui.py:296 ../gui/wxpython/gui_modules/gmodeler.py:804
-#: ../gui/wxpython/gui_modules/gmodeler.py:848
+#: ../gui/wxpython/wxgui.py:288 ../gui/wxpython/gui_modules/gmodeler.py:802
+#: ../gui/wxpython/gui_modules/gmodeler.py:846
 msgid "GRASS Model File (*.gxm)|*.gxm"
 msgstr ""
 
-#: ../gui/wxpython/wxgui.py:305 ../gui/wxpython/gui_modules/gmodeler.py:1119
+#: ../gui/wxpython/wxgui.py:297 ../gui/wxpython/gui_modules/gmodeler.py:1117
 #, fuzzy
 msgid "Validating model..."
 msgstr "Miền hợp lệ"
 
-#: ../gui/wxpython/wxgui.py:309 ../gui/wxpython/gui_modules/gmodeler.py:921
+#: ../gui/wxpython/wxgui.py:301 ../gui/wxpython/gui_modules/gmodeler.py:919
 #, python-format
 msgid ""
 "Model is not valid. Do you want to run the model anyway?\n"
@@ -69,56 +69,56 @@ msgid ""
 "%s"
 msgstr ""
 
-#: ../gui/wxpython/wxgui.py:311 ../gui/wxpython/gui_modules/gmodeler.py:923
+#: ../gui/wxpython/wxgui.py:303 ../gui/wxpython/gui_modules/gmodeler.py:921
 msgid "Run model?"
 msgstr ""
 
-#: ../gui/wxpython/wxgui.py:318 ../gui/wxpython/gui_modules/gmodeler.py:986
+#: ../gui/wxpython/wxgui.py:310 ../gui/wxpython/gui_modules/gmodeler.py:984
 msgid "Running model..."
 msgstr ""
 
-#: ../gui/wxpython/wxgui.py:368 ../gui/wxpython/wxgui.py:1503
+#: ../gui/wxpython/wxgui.py:360 ../gui/wxpython/wxgui.py:1495
 msgid "Do you want to save changes in the workspace?"
 msgstr "Bạn có muốn lưu các thay đổi trong không gian làm việc?"
 
-#: ../gui/wxpython/wxgui.py:370 ../gui/wxpython/wxgui.py:1505
+#: ../gui/wxpython/wxgui.py:362 ../gui/wxpython/wxgui.py:1497
 msgid "Do you want to store current settings to workspace file?"
 msgstr "Bạn có muốn lưu thiết lập hiện tại vào tệp không gian làm việc?"
 
-#: ../gui/wxpython/wxgui.py:377
+#: ../gui/wxpython/wxgui.py:369
 #, python-format
 msgid "Close Map Display %d"
 msgstr "Đóng trình bày màn hình %d"
 
-#: ../gui/wxpython/wxgui.py:476 ../gui/wxpython/wxgui.py:1186
+#: ../gui/wxpython/wxgui.py:468 ../gui/wxpython/wxgui.py:1178
 msgid "Selected map layer is not vector."
 msgstr ""
 
-#: ../gui/wxpython/wxgui.py:481
+#: ../gui/wxpython/wxgui.py:473
 #, fuzzy
 msgid "Editing is allowed only for vector maps from the current mapset."
 msgstr "Tạo tôpô cho bản đồ véc tơ của GRASS."
 
-#: ../gui/wxpython/wxgui.py:496
+#: ../gui/wxpython/wxgui.py:488
 #, fuzzy
 msgid "Choose script file to run"
 msgstr "Chọn tập tin đầu vào"
 
-#: ../gui/wxpython/wxgui.py:498
+#: ../gui/wxpython/wxgui.py:490
 msgid "Python script (*.py)|*.py|Bash script (*.sh)|*.sh"
 msgstr ""
 
-#: ../gui/wxpython/wxgui.py:509
+#: ../gui/wxpython/wxgui.py:501
 #, fuzzy, python-format
 msgid "Script file '%s' doesn't exist. Operation cancelled."
 msgstr "Cần ít nhất %d GCP. Đã hủy thao tác."
 
-#: ../gui/wxpython/wxgui.py:513
+#: ../gui/wxpython/wxgui.py:505
 #, python-format
 msgid "Launching script '%s'..."
 msgstr ""
 
-#: ../gui/wxpython/wxgui.py:528
+#: ../gui/wxpython/wxgui.py:520
 #, fuzzy, python-format
 msgid "Unable to switch to location <%(loc)s> mapset <%(mapset)s>."
 msgstr ""
@@ -126,14 +126,14 @@ msgstr ""
 "\n"
 "Chi tiết: %(err)s"
 
-#: ../gui/wxpython/wxgui.py:530 ../gui/wxpython/wxgui.py:551
+#: ../gui/wxpython/wxgui.py:522 ../gui/wxpython/wxgui.py:543
 #: ../gui/wxpython/gui_modules/gcpmanager.py:1038
 #: ../gui/wxpython/gui_modules/gcpmanager.py:1178
 #: ../gui/wxpython/gui_modules/gcpmanager.py:1204
 #: ../gui/wxpython/gui_modules/gcpmanager.py:1210
 #: ../gui/wxpython/gui_modules/gcpmanager.py:1239
 #: ../gui/wxpython/gui_modules/mapdisp_window.py:1686
-#: ../gui/wxpython/gui_modules/mapdisp.py:370
+#: ../gui/wxpython/gui_modules/mapdisp.py:368
 #: ../gui/wxpython/gui_modules/location_wizard.py:561
 #: ../gui/wxpython/gui_modules/location_wizard.py:746
 #: ../gui/wxpython/gui_modules/location_wizard.py:1468
@@ -145,59 +145,59 @@ msgstr ""
 #: ../gui/wxpython/gui_modules/vdigit.py:1028
 #: ../gui/wxpython/gui_modules/vdigit.py:1220
 #: ../gui/wxpython/gui_modules/vdigit.py:1246
-#: ../gui/wxpython/gui_modules/gmodeler.py:1446
+#: ../gui/wxpython/gui_modules/gmodeler.py:1444
 #: ../gui/wxpython/gui_modules/workspace.py:984
-#: ../gui/wxpython/gui_modules/dbm.py:168
-#: ../gui/wxpython/gui_modules/dbm.py:1410
-#: ../gui/wxpython/gui_modules/dbm.py:1519
-#: ../gui/wxpython/gui_modules/dbm.py:1605
-#: ../gui/wxpython/gui_modules/dbm.py:1617
-#: ../gui/wxpython/gui_modules/dbm.py:1632
-#: ../gui/wxpython/gui_modules/dbm.py:1752
-#: ../gui/wxpython/gui_modules/dbm.py:1774
-#: ../gui/wxpython/gui_modules/dbm.py:1944
-#: ../gui/wxpython/gui_modules/dbm.py:2760
-#: ../gui/wxpython/gui_modules/dbm.py:2858
-#: ../gui/wxpython/gui_modules/dbm.py:2865
-#: ../gui/wxpython/gui_modules/dbm.py:2904
+#: ../gui/wxpython/gui_modules/dbm.py:165
+#: ../gui/wxpython/gui_modules/dbm.py:1407
+#: ../gui/wxpython/gui_modules/dbm.py:1516
+#: ../gui/wxpython/gui_modules/dbm.py:1602
+#: ../gui/wxpython/gui_modules/dbm.py:1614
+#: ../gui/wxpython/gui_modules/dbm.py:1629
+#: ../gui/wxpython/gui_modules/dbm.py:1749
+#: ../gui/wxpython/gui_modules/dbm.py:1771
+#: ../gui/wxpython/gui_modules/dbm.py:1941
+#: ../gui/wxpython/gui_modules/dbm.py:2757
+#: ../gui/wxpython/gui_modules/dbm.py:2855
+#: ../gui/wxpython/gui_modules/dbm.py:2862
+#: ../gui/wxpython/gui_modules/dbm.py:2901
 #: ../gui/wxpython/gui_modules/gdialogs.py:255
 #: ../gui/wxpython/gui_modules/profile.py:598
-#: ../gui/wxpython/gui_modules/layertree.py:487
-#: ../gui/wxpython/gui_modules/layertree.py:518
+#: ../gui/wxpython/gui_modules/layertree.py:482
+#: ../gui/wxpython/gui_modules/layertree.py:513
 #: ../gui/wxpython/gui_modules/preferences.py:1067
 #: ../gui/wxpython/gui_modules/preferences.py:1910
 #: ../gui/wxpython/gui_modules/preferences.py:1939
 #: ../gui/wxpython/gui_modules/preferences.py:1948
 #: ../gui/wxpython/gui_modules/preferences.py:1958
-#: ../gui/wxpython/gis_set.py:211 ../gui/wxpython/gis_set.py:471
-#: ../gui/wxpython/gis_set.py:507 ../gui/wxpython/gis_set.py:573
-#: ../gui/wxpython/gis_set.py:730
+#: ../gui/wxpython/gis_set.py:208 ../gui/wxpython/gis_set.py:468
+#: ../gui/wxpython/gis_set.py:504 ../gui/wxpython/gis_set.py:570
+#: ../gui/wxpython/gis_set.py:727
 msgid "Error"
 msgstr "Lỗi"
 
-#: ../gui/wxpython/wxgui.py:536
+#: ../gui/wxpython/wxgui.py:528
 #, python-format
 msgid ""
 "Current location is <%(loc)s>.\n"
 "Current mapset is <%(mapset)s>."
 msgstr ""
 
-#: ../gui/wxpython/wxgui.py:539 ../gui/wxpython/wxgui.py:555
+#: ../gui/wxpython/wxgui.py:531 ../gui/wxpython/wxgui.py:547
 #: ../gui/wxpython/gui_modules/ghelp.py:563
 msgid "Info"
 msgstr "T.tin"
 
-#: ../gui/wxpython/wxgui.py:550
+#: ../gui/wxpython/wxgui.py:542
 #, fuzzy, python-format
 msgid "Unable to switch to mapset <%s>."
 msgstr "Không thể tạo bản đồ véc tơ <%s>."
 
-#: ../gui/wxpython/wxgui.py:554
+#: ../gui/wxpython/wxgui.py:546
 #, fuzzy, python-format
 msgid "Current mapset is <%s>."
 msgstr "Thay đổi bộ bản đồ hiện tại."
 
-#: ../gui/wxpython/wxgui.py:631
+#: ../gui/wxpython/wxgui.py:623
 msgid ""
 "Current workspace is not empty. Do you want to store current settings to "
 "workspace file?"
@@ -205,19 +205,19 @@ msgstr ""
 "Không gian làm việc hiện tại chưa trống. Bạn có muốn lưu thiết lập hiện tại "
 "vào tệp không gian làm việc?"
 
-#: ../gui/wxpython/wxgui.py:634
+#: ../gui/wxpython/wxgui.py:626
 msgid "Create new workspace?"
 msgstr "Tạo không gian làm việc mới"
 
-#: ../gui/wxpython/wxgui.py:660
+#: ../gui/wxpython/wxgui.py:652
 msgid "Choose workspace file"
 msgstr "Chọn tập tin không gian làm việc"
 
-#: ../gui/wxpython/wxgui.py:661 ../gui/wxpython/wxgui.py:868
+#: ../gui/wxpython/wxgui.py:653 ../gui/wxpython/wxgui.py:860
 msgid "GRASS Workspace File (*.gxw)|*.gxw"
 msgstr ""
 
-#: ../gui/wxpython/wxgui.py:696
+#: ../gui/wxpython/wxgui.py:688
 #, fuzzy, python-format
 msgid ""
 "Reading workspace file <%s> failed.\n"
@@ -226,62 +226,62 @@ msgstr ""
 "Thất bại khi đọc tập tin không gian làm việc <%s>. Tập tin không hợp lệ, "
 "không thể phân giải tài liệu XML."
 
-#: ../gui/wxpython/wxgui.py:700 ../gui/wxpython/wxgui.py:809
-#: ../gui/wxpython/wxgui.py:845
+#: ../gui/wxpython/wxgui.py:692 ../gui/wxpython/wxgui.py:801
+#: ../gui/wxpython/wxgui.py:837
 msgid "Please wait, loading workspace..."
 msgstr "Xin chờ, đang nạp không gian làm việc..."
 
-#: ../gui/wxpython/wxgui.py:801 ../gui/wxpython/menustrings.py:15
+#: ../gui/wxpython/wxgui.py:793 ../gui/wxpython/menustrings.py:15
 msgid "Load map layers into layer tree"
 msgstr "Nạp các lớp bản đồ vào sơ đồ lớp hình cây"
 
-#: ../gui/wxpython/wxgui.py:829
+#: ../gui/wxpython/wxgui.py:821
 msgid "Choose GRC file to load"
 msgstr "Chọn tập tin GRC để nạp"
 
-#: ../gui/wxpython/wxgui.py:830
+#: ../gui/wxpython/wxgui.py:822
 msgid "Old GRASS Workspace File (*.grc)|*.grc"
 msgstr ""
 
-#: ../gui/wxpython/wxgui.py:867
+#: ../gui/wxpython/wxgui.py:859
 msgid "Choose file to save current workspace"
 msgstr "Chọn tập tin để lưu không gian làm việc hiện tại"
 
-#: ../gui/wxpython/wxgui.py:882 ../gui/wxpython/wxgui.py:898
+#: ../gui/wxpython/wxgui.py:874 ../gui/wxpython/wxgui.py:890
 #, python-format
 msgid "Workspace file <%s> already exists. Do you want to overwrite this file?"
 msgstr ""
 "Tập tin không gian làm việc <%s> đã tồn tại. Bạn có muốn ghi đè tập tin này "
 "không?"
 
-#: ../gui/wxpython/wxgui.py:884 ../gui/wxpython/wxgui.py:901
+#: ../gui/wxpython/wxgui.py:876 ../gui/wxpython/wxgui.py:893
 #: ../gui/wxpython/menustrings.py:9
 msgid "Save workspace"
 msgstr "Lưu không gian làm việc"
 
-#: ../gui/wxpython/wxgui.py:922
+#: ../gui/wxpython/wxgui.py:914
 #, fuzzy
 msgid "Writing current settings to workspace file failed."
 msgstr ""
 "Thất bại khi đang ghi thiết lập hiện tại vào tập tin không gian làm việc (%"
 "s)."
 
-#: ../gui/wxpython/wxgui.py:933 ../gui/wxpython/gui_modules/gmodeler.py:1445
+#: ../gui/wxpython/wxgui.py:925 ../gui/wxpython/gui_modules/gmodeler.py:1443
 #: ../gui/wxpython/gui_modules/profile.py:597
 #, fuzzy, python-format
 msgid "Unable to open file <%s> for writing."
 msgstr "Không thể mở tập tin <%s> để đọc."
 
-#: ../gui/wxpython/wxgui.py:1159
+#: ../gui/wxpython/wxgui.py:1151
 #, fuzzy
 msgid "Nothing to import. No WMS layer selected."
 msgstr "Không có lớp bản đồ nào được chọn"
 
-#: ../gui/wxpython/wxgui.py:1195
+#: ../gui/wxpython/wxgui.py:1187
 msgid "Please wait, loading attribute data..."
 msgstr "Xin hãy chờ, đang nạp dữ liệu về thuộc tính..."
 
-#: ../gui/wxpython/wxgui.py:1445
+#: ../gui/wxpython/wxgui.py:1437
 #, python-format
 msgid ""
 "Do you want to remove map layer(s)\n"
@@ -291,676 +291,676 @@ msgstr ""
 "Bạn có muốn loại bỏ (các) lớp bản đồ %s \n"
 " khỏi sơ đồ lớp hình cây không?"
 
-#: ../gui/wxpython/wxgui.py:1448
+#: ../gui/wxpython/wxgui.py:1440
 msgid "Do you want to remove selected map layer(s) from layer tree?"
 msgstr ""
 "Bạn muốn loại bỏ (các) lớp bản đồ được chọn khỏi sơ đồ lớp hình cây không?"
 
-#: ../gui/wxpython/wxgui.py:1452
+#: ../gui/wxpython/wxgui.py:1444
 msgid "Remove map layer"
 msgstr "Gỡ bỏ lớp bản đồ"
 
-#: ../gui/wxpython/wxgui.py:1512
+#: ../gui/wxpython/wxgui.py:1504
 msgid "Quit GRASS GUI"
 msgstr "Thoát giao diện đồ họa GRASS"
 
-#: ../gui/wxpython/wxgui.py:1541
+#: ../gui/wxpython/wxgui.py:1533
 msgid "No map layer selected. Operation cancelled."
 msgstr "Không có lớp bản đồ nào được chọn. Thao tác bị hủy."
 
-#: ../gui/wxpython/wxgui.py:1542 ../gui/wxpython/gui_modules/dbm_dialogs.py:80
+#: ../gui/wxpython/wxgui.py:1534 ../gui/wxpython/gui_modules/dbm_dialogs.py:77
 #: ../gui/wxpython/gui_modules/ghelp.py:287
 #: ../gui/wxpython/gui_modules/gcmd.py:98
-#: ../gui/wxpython/gui_modules/dbm.py:2059
-#: ../gui/wxpython/gui_modules/dbm.py:2088 ../gui/wxpython/gis_set.py:459
-#: ../gui/wxpython/gis_set.py:494
+#: ../gui/wxpython/gui_modules/dbm.py:2056
+#: ../gui/wxpython/gui_modules/dbm.py:2085 ../gui/wxpython/gis_set.py:456
+#: ../gui/wxpython/gis_set.py:491
 msgid "Message"
 msgstr "Thông điệp"
 
-#: ../gui/wxpython/wxgui.py:1572
+#: ../gui/wxpython/wxgui.py:1564
 #, fuzzy
 msgid "Starting GRASS GUI..."
 msgstr "Khởi động GRASS"
 
-#: ../gui/wxpython/icons/icon.py:90
+#: ../gui/wxpython/icons/icon.py:87
 #, fuzzy, python-format
 msgid "Unable to load icon theme. Reason: %s"
 msgstr "Không thể nạp sắc thái biểu tượng..."
 
-#: ../gui/wxpython/icons/icon.py:148
+#: ../gui/wxpython/icons/icon.py:145
 msgid "Display map"
 msgstr "Trình bày bản đồ"
 
-#: ../gui/wxpython/icons/icon.py:149
+#: ../gui/wxpython/icons/icon.py:146
 #, fuzzy
 msgid "Re-render modified map layers only"
 msgstr "Gỡ bỏ lớp bản đồ"
 
-#: ../gui/wxpython/icons/icon.py:151
+#: ../gui/wxpython/icons/icon.py:148
 #, fuzzy
 msgid "Render map"
 msgstr "Vẽ lại bản đồ"
 
-#: ../gui/wxpython/icons/icon.py:152
+#: ../gui/wxpython/icons/icon.py:149
 #, fuzzy
 msgid "Force re-rendering all map layers"
 msgstr "Buộc vẽ lại tất cả các lớp"
 
-#: ../gui/wxpython/icons/icon.py:154
+#: ../gui/wxpython/icons/icon.py:151
 msgid "Erase display"
 msgstr "Xóa màn hình"
 
-#: ../gui/wxpython/icons/icon.py:155
+#: ../gui/wxpython/icons/icon.py:152
 msgid "Erase display canvas with given background color"
 msgstr ""
 
-#: ../gui/wxpython/icons/icon.py:157
+#: ../gui/wxpython/icons/icon.py:154
 msgid "Pointer"
 msgstr "Con trỏ"
 
-#: ../gui/wxpython/icons/icon.py:159
+#: ../gui/wxpython/icons/icon.py:156
 msgid "Zoom in"
 msgstr "Phóng to"
 
-#: ../gui/wxpython/icons/icon.py:160
+#: ../gui/wxpython/icons/icon.py:157
 msgid "Drag or click mouse to zoom"
 msgstr "Kéo hoặc bấm chuột để phóng"
 
-#: ../gui/wxpython/icons/icon.py:162
+#: ../gui/wxpython/icons/icon.py:159
 msgid "Zoom out"
 msgstr "Thu nhỏ"
 
-#: ../gui/wxpython/icons/icon.py:163
+#: ../gui/wxpython/icons/icon.py:160
 msgid "Drag or click mouse to unzoom"
 msgstr "Kéo hoặc bấm chuột để hủy lệnh phóng"
 
-#: ../gui/wxpython/icons/icon.py:165
+#: ../gui/wxpython/icons/icon.py:162
 msgid "Pan"
 msgstr "Di chuyển"
 
-#: ../gui/wxpython/icons/icon.py:166
+#: ../gui/wxpython/icons/icon.py:163
 msgid "Drag with mouse to pan"
 msgstr "Kéo chuột để di chuyển"
 
-#: ../gui/wxpython/icons/icon.py:168
+#: ../gui/wxpython/icons/icon.py:165
 msgid "Query raster/vector map(s)"
 msgstr "Truy vấn (các) bản đồ raster/véc tơ"
 
-#: ../gui/wxpython/icons/icon.py:169
+#: ../gui/wxpython/icons/icon.py:166
 msgid "Query selected raster/vector map(s)"
 msgstr "Truy vấn (các) bản đồ raster/véc tơ đã chọn"
 
-#: ../gui/wxpython/icons/icon.py:171
+#: ../gui/wxpython/icons/icon.py:168
 msgid "Return to previous zoom"
 msgstr "Trở về lần thu/phóng trước"
 
-#: ../gui/wxpython/icons/icon.py:173
+#: ../gui/wxpython/icons/icon.py:170
 #, fuzzy
 msgid "Various zoom options"
 msgstr "Tuỳ chọn phóng đại"
 
-#: ../gui/wxpython/icons/icon.py:174
+#: ../gui/wxpython/icons/icon.py:171
 #, fuzzy
 msgid "Zoom to computational, default, saved region, ..."
 msgstr "Phóng đến vùng tính toán (thiết lập bằng g.region)"
 
-#: ../gui/wxpython/icons/icon.py:176
+#: ../gui/wxpython/icons/icon.py:173
 #, fuzzy
 msgid "Zoom to selected map layer(s)"
 msgstr "Phóng đến (các) bản đồ đã chọn"
 
-#: ../gui/wxpython/icons/icon.py:178
+#: ../gui/wxpython/icons/icon.py:175
 msgid "Add map elements"
 msgstr "Thêm thành phần bản đồ"
 
-#: ../gui/wxpython/icons/icon.py:179
+#: ../gui/wxpython/icons/icon.py:176
 msgid "Overlay elements like scale and legend onto map"
 msgstr "Chồng các thành phần như tỷ lệ và chú giải lên bản đồ"
 
-#: ../gui/wxpython/icons/icon.py:181
+#: ../gui/wxpython/icons/icon.py:178
 msgid "Add scalebar and north arrow"
 msgstr "Thêm thước tỷ lệ và mũi tên chỉ hướng bắc"
 
-#: ../gui/wxpython/icons/icon.py:183
+#: ../gui/wxpython/icons/icon.py:180
 msgid "Add legend"
 msgstr "Thêm chú giải"
 
-#: ../gui/wxpython/icons/icon.py:185
+#: ../gui/wxpython/icons/icon.py:182
 msgid "Save display to graphic file"
 msgstr "Lưu trình bày ra tập tin đồ hoạ"
 
-#: ../gui/wxpython/icons/icon.py:187
+#: ../gui/wxpython/icons/icon.py:184
 #: ../gui/wxpython/gui_modules/histogram.py:440
-#: ../gui/wxpython/gui_modules/mapdisp.py:1178
-#: ../gui/wxpython/gui_modules/gcpmapdisp.py:944
+#: ../gui/wxpython/gui_modules/mapdisp.py:1176
+#: ../gui/wxpython/gui_modules/gcpmapdisp.py:942
 msgid "Print display"
 msgstr "Trình bày in ấn"
 
-#: ../gui/wxpython/icons/icon.py:189
+#: ../gui/wxpython/icons/icon.py:186
 msgid "Analyze map"
 msgstr "Phân tích bản đồ"
 
-#: ../gui/wxpython/icons/icon.py:190
+#: ../gui/wxpython/icons/icon.py:187
 msgid "Measuring, profiling, histogramming, ..."
 msgstr ""
 
-#: ../gui/wxpython/icons/icon.py:192
+#: ../gui/wxpython/icons/icon.py:189
 msgid "Measure distance"
 msgstr "Đo khoảng cách"
 
-#: ../gui/wxpython/icons/icon.py:194
+#: ../gui/wxpython/icons/icon.py:191
 msgid "Profile surface map"
 msgstr "Mặt cắt bản đồ bề mặt"
 
-#: ../gui/wxpython/icons/icon.py:196
-#: ../gui/wxpython/gui_modules/mapdisp.py:1876
+#: ../gui/wxpython/icons/icon.py:193
+#: ../gui/wxpython/gui_modules/mapdisp.py:1874
 msgid "Add text layer"
 msgstr "Thêm lớp văn bản"
 
-#: ../gui/wxpython/icons/icon.py:198
+#: ../gui/wxpython/icons/icon.py:195
 msgid "Create histogram of image or raster file"
 msgstr "Tạo biểu đồ tần số của ảnh hoặc tập tin raster"
 
-#: ../gui/wxpython/icons/icon.py:202
+#: ../gui/wxpython/icons/icon.py:199
 #, fuzzy
 msgid "Start new map display"
 msgstr "Khởi động trình bày mới"
 
-#: ../gui/wxpython/icons/icon.py:204
+#: ../gui/wxpython/icons/icon.py:201
 #, fuzzy
 msgid "Create new workspace (Ctrl+N)"
 msgstr "Tạo tập tin không gian làm việc mới"
 
-#: ../gui/wxpython/icons/icon.py:206
+#: ../gui/wxpython/icons/icon.py:203
 #, fuzzy
 msgid "Load map layers into workspace (Ctrl+L)"
 msgstr "Nạp các lớp của bản đồ vào không gian làm việc"
 
-#: ../gui/wxpython/icons/icon.py:208
+#: ../gui/wxpython/icons/icon.py:205
 #, fuzzy
 msgid "Open existing workspace file (Ctrl+O)"
 msgstr "Mở tập tin không gian làm việc đang có"
 
-#: ../gui/wxpython/icons/icon.py:210
+#: ../gui/wxpython/icons/icon.py:207
 #, fuzzy
 msgid "Save current workspace to file (Ctrl+S)"
 msgstr "Lưu không gian làm việc hiện tại vào tập tin "
 
-#: ../gui/wxpython/icons/icon.py:212 ../gui/wxpython/menustrings.py:29
+#: ../gui/wxpython/icons/icon.py:209 ../gui/wxpython/menustrings.py:29
 #: ../gui/wxpython/gui_modules/gdialogs.py:1144
 msgid "Import raster data"
 msgstr "Nhập dữ liệu raster"
 
-#: ../gui/wxpython/icons/icon.py:214 ../gui/wxpython/menustrings.py:146
+#: ../gui/wxpython/icons/icon.py:211 ../gui/wxpython/menustrings.py:146
 #: ../gui/wxpython/gui_modules/gdialogs.py:1142
 #, fuzzy
 msgid "Link external raster data"
 msgstr "Liên kết dữ liệu raster"
 
-#: ../gui/wxpython/icons/icon.py:216 ../gui/wxpython/menustrings.py:54
+#: ../gui/wxpython/icons/icon.py:213 ../gui/wxpython/menustrings.py:54
 #: ../gui/wxpython/gui_modules/gdialogs.py:1138
 msgid "Import vector data"
 msgstr "Nhập dữ liệu véc-tơ"
 
-#: ../gui/wxpython/icons/icon.py:218 ../gui/wxpython/menustrings.py:148
+#: ../gui/wxpython/icons/icon.py:215 ../gui/wxpython/menustrings.py:148
 #: ../gui/wxpython/gui_modules/gdialogs.py:1136
 #, fuzzy
 msgid "Link external vector data"
 msgstr "Liên kết dữ liệu vec-tơ"
 
-#: ../gui/wxpython/icons/icon.py:220
+#: ../gui/wxpython/icons/icon.py:217
 #, fuzzy
 msgid "Add raster map layer (Ctrl+R)"
 msgstr "Thêm lớp bản đồ raster"
 
-#: ../gui/wxpython/icons/icon.py:222
+#: ../gui/wxpython/icons/icon.py:219
 #, fuzzy
 msgid "Add various raster map layers (RGB, HIS, shaded relief...)"
 msgstr "Thêm các lớp bản đồ gốc raster khác nhau"
 
-#: ../gui/wxpython/icons/icon.py:224
+#: ../gui/wxpython/icons/icon.py:221
 #, fuzzy
 msgid "Add vector map layer (Ctrl+V)"
 msgstr "Thêm lớp bản đồ véc tơ"
 
-#: ../gui/wxpython/icons/icon.py:226
+#: ../gui/wxpython/icons/icon.py:223
 #, fuzzy
 msgid "Add various vector map layers (thematic, chart...)"
 msgstr "Thêm các lớp bản đồ gốc véc-tơ khác nhau"
 
-#: ../gui/wxpython/icons/icon.py:228
+#: ../gui/wxpython/icons/icon.py:225
 msgid "Add command layer"
 msgstr "Thêm lớp lệnh"
 
-#: ../gui/wxpython/icons/icon.py:230
+#: ../gui/wxpython/icons/icon.py:227
 #, fuzzy
 msgid "Add group"
 msgstr "Thêm nhóm lớp"
 
-#: ../gui/wxpython/icons/icon.py:232
+#: ../gui/wxpython/icons/icon.py:229
 msgid "Add grid or vector labels overlay"
 msgstr "Thêm lưới hoặc các nhãn véc tơ chồng lên "
 
-#: ../gui/wxpython/icons/icon.py:234
+#: ../gui/wxpython/icons/icon.py:231
 #, fuzzy
 msgid "Delete selected map layer"
 msgstr "Xóa lớp đã chọn"
 
-#: ../gui/wxpython/icons/icon.py:236 ../gui/wxpython/icons/icon.py:432
+#: ../gui/wxpython/icons/icon.py:233 ../gui/wxpython/icons/icon.py:429
 msgid "Quit"
 msgstr "Thoát"
 
-#: ../gui/wxpython/icons/icon.py:238
+#: ../gui/wxpython/icons/icon.py:235
 msgid "Show attribute table"
 msgstr "Hiện bảng thuộc tính"
 
-#: ../gui/wxpython/icons/icon.py:240
+#: ../gui/wxpython/icons/icon.py:237
 #, fuzzy
 msgid "Edit vector maps"
 msgstr "Xuất bản đồ véc tơ"
 
-#: ../gui/wxpython/icons/icon.py:242
+#: ../gui/wxpython/icons/icon.py:239
 #, fuzzy
 msgid "Add RGB map layer"
 msgstr "Thêm lớp RGB"
 
-#: ../gui/wxpython/icons/icon.py:244
+#: ../gui/wxpython/icons/icon.py:241
 #, fuzzy
 msgid "Add HIS map layer"
 msgstr "Thêm lớp HIS"
 
-#: ../gui/wxpython/icons/icon.py:246
+#: ../gui/wxpython/icons/icon.py:243
 msgid "Add shaded relief map layer"
 msgstr "Thêm lớp bản đồ đổ bóng"
 
-#: ../gui/wxpython/icons/icon.py:248
+#: ../gui/wxpython/icons/icon.py:245
 msgid "Add raster flow arrows"
 msgstr "Thêm mũi tên dòng chảy raster"
 
-#: ../gui/wxpython/icons/icon.py:250
+#: ../gui/wxpython/icons/icon.py:247
 msgid "Add raster cell numbers"
 msgstr "Thêm các chỉ số ô raster"
 
-#: ../gui/wxpython/icons/icon.py:252
+#: ../gui/wxpython/icons/icon.py:249
 #, fuzzy
 msgid "Add thematic area (choropleth) map layer"
 msgstr "Thêm lớp biểu đồ chủ đề"
 
-#: ../gui/wxpython/icons/icon.py:254
+#: ../gui/wxpython/icons/icon.py:251
 msgid "Add thematic chart layer"
 msgstr "Thêm lớp biểu đồ chủ đề"
 
-#: ../gui/wxpython/icons/icon.py:256
+#: ../gui/wxpython/icons/icon.py:253
 msgid "Add grid layer"
 msgstr "Thêm lớp lưới"
 
-#: ../gui/wxpython/icons/icon.py:258
+#: ../gui/wxpython/icons/icon.py:255
 msgid "Add geodesic line layer"
 msgstr "Thêm lớp đường đo đạc"
 
-#: ../gui/wxpython/icons/icon.py:260
+#: ../gui/wxpython/icons/icon.py:257
 msgid "Add rhumbline layer"
 msgstr "Thêm lớp đường rhumb"
 
-#: ../gui/wxpython/icons/icon.py:262
+#: ../gui/wxpython/icons/icon.py:259
 msgid "Add labels"
 msgstr "Thêm nhãn"
 
-#: ../gui/wxpython/icons/icon.py:264
+#: ../gui/wxpython/icons/icon.py:261
 #, fuzzy
 msgid "Add 3D raster map layer"
 msgstr "Thêm lớp bản đồ raster"
 
-#: ../gui/wxpython/icons/icon.py:265
+#: ../gui/wxpython/icons/icon.py:262
 msgid "Note that 3D raster data are rendered only in 3D view mode"
 msgstr ""
 
-#: ../gui/wxpython/icons/icon.py:267
+#: ../gui/wxpython/icons/icon.py:264
 #, fuzzy
 msgid "Show GUI settings"
 msgstr "Hiện các thiết lập"
 
-#: ../gui/wxpython/icons/icon.py:269
+#: ../gui/wxpython/icons/icon.py:266
 msgid "Start Graphical Modeler"
 msgstr ""
 
-#: ../gui/wxpython/icons/icon.py:271
+#: ../gui/wxpython/icons/icon.py:268
 #: ../gui/wxpython/gui_modules/gdialogs.py:414
 msgid "Set options"
 msgstr "Thiết lập lựa chọn"
 
-#: ../gui/wxpython/icons/icon.py:275
+#: ../gui/wxpython/icons/icon.py:272
 msgid "Digitize new point"
 msgstr "Số hóa điểm mới"
 
-#: ../gui/wxpython/icons/icon.py:276 ../gui/wxpython/icons/icon.py:285
-#: ../gui/wxpython/icons/icon.py:288
+#: ../gui/wxpython/icons/icon.py:273 ../gui/wxpython/icons/icon.py:282
+#: ../gui/wxpython/icons/icon.py:285
 msgid "Left: new point"
 msgstr "Trái: điểm mới"
 
-#: ../gui/wxpython/icons/icon.py:278
+#: ../gui/wxpython/icons/icon.py:275
 msgid "Digitize new line"
 msgstr "Số hóa đường mới"
 
-#: ../gui/wxpython/icons/icon.py:279 ../gui/wxpython/icons/icon.py:282
-#: ../gui/wxpython/icons/icon.py:306
+#: ../gui/wxpython/icons/icon.py:276 ../gui/wxpython/icons/icon.py:279
+#: ../gui/wxpython/icons/icon.py:303
 #, fuzzy
 msgid "Left: new point; Ctrl+Left: undo last point; Right: close line"
 msgstr "Trái: điểm mới; Giữa: quay lại điểm sau cùng; Phải: đóng đường"
 
-#: ../gui/wxpython/icons/icon.py:281
+#: ../gui/wxpython/icons/icon.py:278
 msgid "Digitize new boundary"
 msgstr "Số hóa ranh giới mới"
 
-#: ../gui/wxpython/icons/icon.py:284
+#: ../gui/wxpython/icons/icon.py:281
 msgid "Digitize new centroid"
 msgstr "Số hóa trọng tâm mới"
 
-#: ../gui/wxpython/icons/icon.py:287
+#: ../gui/wxpython/icons/icon.py:284
 msgid ""
 "Digitize new area (composition of boundaries without category and one "
 "centroid with category)"
 msgstr ""
 
-#: ../gui/wxpython/icons/icon.py:290
+#: ../gui/wxpython/icons/icon.py:287
 msgid "Add new vertex"
 msgstr "Thêm đỉnh mới"
 
-#: ../gui/wxpython/icons/icon.py:291 ../gui/wxpython/icons/icon.py:294
-#: ../gui/wxpython/icons/icon.py:297 ../gui/wxpython/icons/icon.py:309
-#: ../gui/wxpython/icons/icon.py:312 ../gui/wxpython/icons/icon.py:315
-#: ../gui/wxpython/icons/icon.py:320 ../gui/wxpython/icons/icon.py:327
+#: ../gui/wxpython/icons/icon.py:288 ../gui/wxpython/icons/icon.py:291
+#: ../gui/wxpython/icons/icon.py:294 ../gui/wxpython/icons/icon.py:306
+#: ../gui/wxpython/icons/icon.py:309 ../gui/wxpython/icons/icon.py:312
+#: ../gui/wxpython/icons/icon.py:317 ../gui/wxpython/icons/icon.py:324
 #, fuzzy
 msgid "Left: Select; Ctrl+Left: Unselect; Right: Confirm"
 msgstr "Trái: Chọn; Giữa: Hủy chọn; Phải: Xác nhận"
 
-#: ../gui/wxpython/icons/icon.py:293
+#: ../gui/wxpython/icons/icon.py:290
 #: ../gui/wxpython/gui_modules/toolbars.py:788
 msgid "Copy categories"
 msgstr "Sao chép các phạm trù"
 
-#: ../gui/wxpython/icons/icon.py:296
+#: ../gui/wxpython/icons/icon.py:293
 msgid "Delete feature(s)"
 msgstr "Xóa (các) đối tượng"
 
-#: ../gui/wxpython/icons/icon.py:299
+#: ../gui/wxpython/icons/icon.py:296
 msgid "Display/update attributes"
 msgstr "Trình bày/cập nhật các thuộc tính"
 
-#: ../gui/wxpython/icons/icon.py:300 ../gui/wxpython/icons/icon.py:303
+#: ../gui/wxpython/icons/icon.py:297 ../gui/wxpython/icons/icon.py:300
 msgid "Left: Select"
 msgstr "Trái: Chọn"
 
-#: ../gui/wxpython/icons/icon.py:302
+#: ../gui/wxpython/icons/icon.py:299
 msgid "Display/update categories"
 msgstr "Trình bày/cập nhật các phạm trù"
 
-#: ../gui/wxpython/icons/icon.py:305
+#: ../gui/wxpython/icons/icon.py:302
 msgid "Edit line/boundary"
 msgstr "Chỉnh sửa đường/ranh giới"
 
-#: ../gui/wxpython/icons/icon.py:308
+#: ../gui/wxpython/icons/icon.py:305
 msgid "Move feature(s)"
 msgstr "Di chuyển (các) đối tượng"
 
-#: ../gui/wxpython/icons/icon.py:311
+#: ../gui/wxpython/icons/icon.py:308
 msgid "Move vertex"
 msgstr "Di chuyển đỉnh"
 
-#: ../gui/wxpython/icons/icon.py:314
+#: ../gui/wxpython/icons/icon.py:311
 msgid "Remove vertex"
 msgstr "Loại bỏ đỉnh"
 
-#: ../gui/wxpython/icons/icon.py:317
+#: ../gui/wxpython/icons/icon.py:314
 #: ../gui/wxpython/gui_modules/toolbars.py:863
 msgid "Digitization settings"
 msgstr "Các thiết lập số hóa"
 
-#: ../gui/wxpython/icons/icon.py:319
+#: ../gui/wxpython/icons/icon.py:316
 msgid "Split line/boundary"
 msgstr "Ngắt đường/ranh giới"
 
-#: ../gui/wxpython/icons/icon.py:322
+#: ../gui/wxpython/icons/icon.py:319
 #, fuzzy
 msgid "Quit digitizer"
 msgstr "Lỗi trình số hóa vec-tơ"
 
-#: ../gui/wxpython/icons/icon.py:323
+#: ../gui/wxpython/icons/icon.py:320
 msgid "Quit digitizer and save changes"
 msgstr ""
 
-#: ../gui/wxpython/icons/icon.py:325
+#: ../gui/wxpython/icons/icon.py:322
 msgid "Additional tools (copy, flip, connect, etc.)"
 msgstr "Các công cụ bổ sung (sao chép, lật, kết nối, v.v..)"
 
-#: ../gui/wxpython/icons/icon.py:329
+#: ../gui/wxpython/icons/icon.py:326
 msgid "Undo"
 msgstr "Hủy thao tác cuối"
 
-#: ../gui/wxpython/icons/icon.py:330
+#: ../gui/wxpython/icons/icon.py:327
 msgid "Undo previous changes"
 msgstr "Phục hồi các thay đổi trước đây"
 
-#: ../gui/wxpython/icons/icon.py:334
+#: ../gui/wxpython/icons/icon.py:331
 msgid "Draw/re-draw profile"
 msgstr "Vẽ/vẽ lại mặt cắt"
 
-#: ../gui/wxpython/icons/icon.py:336
+#: ../gui/wxpython/icons/icon.py:333
 msgid "Draw transect in map display window to profile"
 msgstr "Vẽ tuyến trong cửa sổ màn hình bản đồ để tạo mặt cắt"
 
-#: ../gui/wxpython/icons/icon.py:338
+#: ../gui/wxpython/icons/icon.py:335
 msgid "Profile options"
 msgstr "Các tùy chọn cho mặt cắt"
 
-#: ../gui/wxpython/icons/icon.py:340
+#: ../gui/wxpython/icons/icon.py:337
 #, fuzzy
 msgid "Save profile data to CSV file"
 msgstr "Lưu trình bày ra tập tin đồ hoạ"
 
-#: ../gui/wxpython/icons/icon.py:342
+#: ../gui/wxpython/icons/icon.py:339
 #, fuzzy
 msgid "Quit Profile Analysis Tool"
 msgstr "Phân Tích Mặt Cắt"
 
-#: ../gui/wxpython/icons/icon.py:346
+#: ../gui/wxpython/icons/icon.py:343
 msgid "Set GCP"
 msgstr "Đặt GCP"
 
-#: ../gui/wxpython/icons/icon.py:347
+#: ../gui/wxpython/icons/icon.py:344
 msgid "Define GCP (Ground Control Points)"
 msgstr "Định nghĩa GCP (Điểm khống chế)"
 
-#: ../gui/wxpython/icons/icon.py:349 ../gui/wxpython/menustrings.py:180
+#: ../gui/wxpython/icons/icon.py:346 ../gui/wxpython/menustrings.py:180
 #: ../gui/wxpython/gui_modules/gcpmanager.py:177
 #: ../gui/wxpython/gui_modules/gcpmanager.py:183
 msgid "Georectify"
 msgstr "Nắn chỉnh địa lý"
 
-#: ../gui/wxpython/icons/icon.py:351
+#: ../gui/wxpython/icons/icon.py:348
 msgid "Recalculate RMS error"
 msgstr "Tính lại lỗi RMS"
 
-#: ../gui/wxpython/icons/icon.py:353
+#: ../gui/wxpython/icons/icon.py:350
 msgid "Save GCPs to POINTS file"
 msgstr "Lưu các GCP vào tập tin POINTS"
 
-#: ../gui/wxpython/icons/icon.py:355
+#: ../gui/wxpython/icons/icon.py:352
 msgid "Add new GCP"
 msgstr "Thêm GCP mới"
 
-#: ../gui/wxpython/icons/icon.py:357
+#: ../gui/wxpython/icons/icon.py:354
 msgid "Delete selected GCP"
 msgstr "Xóa GCP đã chọn"
 
-#: ../gui/wxpython/icons/icon.py:359
+#: ../gui/wxpython/icons/icon.py:356
 msgid "Clear selected GCP"
 msgstr "Khử chọn GCP đã chọn"
 
-#: ../gui/wxpython/icons/icon.py:361
+#: ../gui/wxpython/icons/icon.py:358
 #, fuzzy
 msgid "Reload GCPs from POINTS file"
 msgstr "Nạp lại các GCP từ tập tin POINTS đã chọn"
 
-#: ../gui/wxpython/icons/icon.py:363
+#: ../gui/wxpython/icons/icon.py:360
 #, fuzzy
 msgid "Quit georectification"
 msgstr "Thoát mô-đun nắn chỉnh địa lý"
 
-#: ../gui/wxpython/icons/icon.py:365
+#: ../gui/wxpython/icons/icon.py:362
 #: ../gui/wxpython/gui_modules/nviz_tools.py:1289
 #: ../gui/wxpython/gui_modules/gselect.py:1028
 msgid "Settings"
 msgstr "Các thiết lập"
 
-#: ../gui/wxpython/icons/icon.py:366
+#: ../gui/wxpython/icons/icon.py:363
 msgid "Settings dialog for georectification tool"
 msgstr "Hộp thoại thiết lập cho công cụ nắn chỉnh địa lý"
 
-#: ../gui/wxpython/icons/icon.py:370
+#: ../gui/wxpython/icons/icon.py:367
 msgid "Switch to view control page"
 msgstr ""
 
-#: ../gui/wxpython/icons/icon.py:371
+#: ../gui/wxpython/icons/icon.py:368
 #, fuzzy
 msgid "Change view settings"
 msgstr "Thay đổi các thiết lập"
 
-#: ../gui/wxpython/icons/icon.py:373
+#: ../gui/wxpython/icons/icon.py:370
 msgid "Switch to surface (raster) control page"
 msgstr ""
 
-#: ../gui/wxpython/icons/icon.py:374
+#: ../gui/wxpython/icons/icon.py:371
 #, fuzzy
 msgid "Change surface (loaded raster maps) settings"
 msgstr "Mã hóa lại bản đồ raster bằng cách dùng quy tắc"
 
-#: ../gui/wxpython/icons/icon.py:376
+#: ../gui/wxpython/icons/icon.py:373
 msgid "Switch to vector (2D/3D) control page"
 msgstr ""
 
-#: ../gui/wxpython/icons/icon.py:377
+#: ../gui/wxpython/icons/icon.py:374
 #, fuzzy
 msgid "Change 2D/3D vector settings"
 msgstr "Thay đổi các thiết lập"
 
-#: ../gui/wxpython/icons/icon.py:379
+#: ../gui/wxpython/icons/icon.py:376
 msgid "Switch to volume (3D raster) control page"
 msgstr ""
 
-#: ../gui/wxpython/icons/icon.py:380
+#: ../gui/wxpython/icons/icon.py:377
 msgid "Change volume (loaded 3D raster maps) settings"
 msgstr ""
 
-#: ../gui/wxpython/icons/icon.py:382
+#: ../gui/wxpython/icons/icon.py:379
 msgid "Switch to lighting control page"
 msgstr ""
 
-#: ../gui/wxpython/icons/icon.py:383
+#: ../gui/wxpython/icons/icon.py:380
 #, fuzzy
 msgid "Change lighting settings"
 msgstr "Thay đổi các thiết lập"
 
-#: ../gui/wxpython/icons/icon.py:385
+#: ../gui/wxpython/icons/icon.py:382
 msgid "Switch to fringe control page"
 msgstr ""
 
-#: ../gui/wxpython/icons/icon.py:386
+#: ../gui/wxpython/icons/icon.py:383
 msgid "Switch on/off fringes"
 msgstr ""
 
-#: ../gui/wxpython/icons/icon.py:388
+#: ../gui/wxpython/icons/icon.py:385
 #, fuzzy
 msgid "3D view mode tools"
 msgstr "Các công cụ xem 3D"
 
-#: ../gui/wxpython/icons/icon.py:389
+#: ../gui/wxpython/icons/icon.py:386
 #, fuzzy
 msgid "Show/hide 3D view mode settings dialog"
 msgstr "Hiện hộp thoại thiết lập Nviz"
 
-#: ../gui/wxpython/icons/icon.py:391
+#: ../gui/wxpython/icons/icon.py:388
 msgid "Quit 3D view mode"
 msgstr ""
 
-#: ../gui/wxpython/icons/icon.py:392
+#: ../gui/wxpython/icons/icon.py:389
 msgid "Switch back to 2D view mode"
 msgstr ""
 
-#: ../gui/wxpython/icons/icon.py:396
+#: ../gui/wxpython/icons/icon.py:393
 #, fuzzy
 msgid "Create new model (Ctrl+N)"
 msgstr "Tạo tập bản đồ mới"
 
-#: ../gui/wxpython/icons/icon.py:398
+#: ../gui/wxpython/icons/icon.py:395
 #, fuzzy
 msgid "Load model from file (Ctrl+O)"
 msgstr "Nạp không gian làm việc từ tập tin"
 
-#: ../gui/wxpython/icons/icon.py:400
+#: ../gui/wxpython/icons/icon.py:397
 #, fuzzy
 msgid "Save current model to file (Ctrl+S)"
 msgstr "Lưu không gian làm việc hiện tại vào tập tin "
 
-#: ../gui/wxpython/icons/icon.py:402 ../gui/wxpython/menustrings.py:826
+#: ../gui/wxpython/icons/icon.py:399 ../gui/wxpython/menustrings.py:826
 #, fuzzy
 msgid "Export model to image"
 msgstr "Xuất bản đồ véc tơ"
 
-#: ../gui/wxpython/icons/icon.py:404 ../gui/wxpython/menustrings.py:828
+#: ../gui/wxpython/icons/icon.py:401 ../gui/wxpython/menustrings.py:828
 msgid "Export model to Python script"
 msgstr ""
 
-#: ../gui/wxpython/icons/icon.py:406 ../gui/wxpython/menustrings.py:836
+#: ../gui/wxpython/icons/icon.py:403 ../gui/wxpython/menustrings.py:836
 msgid "Add action (GRASS module) to model"
 msgstr ""
 
-#: ../gui/wxpython/icons/icon.py:408 ../gui/wxpython/menustrings.py:838
+#: ../gui/wxpython/icons/icon.py:405 ../gui/wxpython/menustrings.py:838
 msgid "Add data item to model"
 msgstr ""
 
-#: ../gui/wxpython/icons/icon.py:410 ../gui/wxpython/menustrings.py:840
+#: ../gui/wxpython/icons/icon.py:407 ../gui/wxpython/menustrings.py:840
 msgid "Define relation between data and action items"
 msgstr ""
 
-#: ../gui/wxpython/icons/icon.py:412 ../gui/wxpython/menustrings.py:184
+#: ../gui/wxpython/icons/icon.py:409 ../gui/wxpython/menustrings.py:184
 #: ../gui/wxpython/menustrings.py:851
 msgid "Run model"
 msgstr ""
 
-#: ../gui/wxpython/icons/icon.py:414 ../gui/wxpython/menustrings.py:853
+#: ../gui/wxpython/icons/icon.py:411 ../gui/wxpython/menustrings.py:853
 msgid "Validate model"
 msgstr ""
 
-#: ../gui/wxpython/icons/icon.py:416
+#: ../gui/wxpython/icons/icon.py:413
 #, fuzzy
 msgid "Show modeler settings"
 msgstr "Hiện các thiết lập"
 
-#: ../gui/wxpython/icons/icon.py:418
+#: ../gui/wxpython/icons/icon.py:415
 #, fuzzy
 msgid "Show model properties"
 msgstr "Các thuộc tính của lớp"
 
-#: ../gui/wxpython/icons/icon.py:420
+#: ../gui/wxpython/icons/icon.py:417
 #, fuzzy
 msgid "Manage model variables"
 msgstr "Quản lý bảng"
 
-#: ../gui/wxpython/icons/icon.py:422
+#: ../gui/wxpython/icons/icon.py:419
 msgid "Redraw model canvas"
 msgstr ""
 
-#: ../gui/wxpython/icons/icon.py:424
-#: ../gui/wxpython/gui_modules/gmodeler.py:679
+#: ../gui/wxpython/icons/icon.py:421
+#: ../gui/wxpython/gui_modules/gmodeler.py:677
 msgid "Quit Graphical Modeler"
 msgstr ""
 
-#: ../gui/wxpython/icons/icon.py:428
+#: ../gui/wxpython/icons/icon.py:425
 msgid "Select font"
 msgstr "Chọn phông"
 
-#: ../gui/wxpython/icons/icon.py:430
+#: ../gui/wxpython/icons/icon.py:427
 #, fuzzy
 msgid "Show help page"
 msgstr "Hiện các đường"
@@ -974,100 +974,100 @@ msgstr ""
 msgid "No GRASS-python library found."
 msgstr ""
 
-#: ../gui/wxpython/scripts/vkrige.py:67
+#: ../gui/wxpython/scripts/vkrige.py:65
 msgid "Input Data"
 msgstr ""
 
-#: ../gui/wxpython/scripts/vkrige.py:73
+#: ../gui/wxpython/scripts/vkrige.py:71
 msgid "Point dataset:"
 msgstr ""
 
-#: ../gui/wxpython/scripts/vkrige.py:85
+#: ../gui/wxpython/scripts/vkrige.py:83
 #, fuzzy
 msgid "Numeric column:"
 msgstr "Cột khóa:"
 
-#: ../gui/wxpython/scripts/vkrige.py:96
+#: ../gui/wxpython/scripts/vkrige.py:94
 msgid "Kriging"
 msgstr ""
 
-#: ../gui/wxpython/scripts/vkrige.py:111
-#: ../gui/wxpython/gui_modules/gmodeler.py:577
-#: ../gui/wxpython/gui_modules/menuform.py:1109
+#: ../gui/wxpython/scripts/vkrige.py:109
+#: ../gui/wxpython/gui_modules/gmodeler.py:575
+#: ../gui/wxpython/gui_modules/menuform.py:1106
 msgid "Command output"
 msgstr "Đầu ra của lệnh"
 
-#: ../gui/wxpython/scripts/vkrige.py:117 ../gui/wxpython/menustrings.py:379
+#: ../gui/wxpython/scripts/vkrige.py:115 ../gui/wxpython/menustrings.py:379
 msgid "Output"
 msgstr "Đầu ra"
 
-#: ../gui/wxpython/scripts/vkrige.py:121
+#: ../gui/wxpython/scripts/vkrige.py:119
 #, fuzzy
 msgid "Name for the output raster map:"
 msgstr "Tên cho bản đồ véc tơ mới"
 
-#: ../gui/wxpython/scripts/vkrige.py:129
+#: ../gui/wxpython/scripts/vkrige.py:127
 #, fuzzy
 msgid "Export variance map as well: "
 msgstr "Xuất bản đồ raster"
 
-#: ../gui/wxpython/scripts/vkrige.py:142
+#: ../gui/wxpython/scripts/vkrige.py:140
 #: ../gui/wxpython/gui_modules/vclean.py:144
-#: ../gui/wxpython/gui_modules/gmodeler.py:3317
+#: ../gui/wxpython/gui_modules/gmodeler.py:3315
 #: ../gui/wxpython/gui_modules/gdialogs.py:983
 #: ../gui/wxpython/gui_modules/preferences.py:1382
 msgid "Allow output files to overwrite existing files"
 msgstr "Cho phép các tập tin đầu ra ghi đè lên các tập tin đã có"
 
-#: ../gui/wxpython/scripts/vkrige.py:155
-#: ../gui/wxpython/gui_modules/mcalc_builder.py:136
+#: ../gui/wxpython/scripts/vkrige.py:153
+#: ../gui/wxpython/gui_modules/mcalc_builder.py:134
 #: ../gui/wxpython/gui_modules/ghelp.py:223
 #: ../gui/wxpython/gui_modules/vclean.py:165
-#: ../gui/wxpython/gui_modules/gmodeler.py:3434
-#: ../gui/wxpython/gui_modules/menuform.py:778
+#: ../gui/wxpython/gui_modules/gmodeler.py:3432
+#: ../gui/wxpython/gui_modules/menuform.py:775
 msgid "&Run"
 msgstr "&Chạy"
 
-#: ../gui/wxpython/scripts/vkrige.py:270
+#: ../gui/wxpython/scripts/vkrige.py:268
 msgid "Kriging Module"
 msgstr ""
 
-#: ../gui/wxpython/scripts/vkrige.py:274
+#: ../gui/wxpython/scripts/vkrige.py:272
 msgid "Ready."
 msgstr ""
 
-#: ../gui/wxpython/scripts/vkrige.py:298
+#: ../gui/wxpython/scripts/vkrige.py:296
 msgid "Variogram fitting"
 msgstr ""
 
-#: ../gui/wxpython/scripts/vkrige.py:308
+#: ../gui/wxpython/scripts/vkrige.py:306
 msgid "Plot/refresh variogram"
 msgstr ""
 
-#: ../gui/wxpython/scripts/vkrige.py:319
+#: ../gui/wxpython/scripts/vkrige.py:317
 #, fuzzy
 msgid ":"
 msgstr "X:"
 
-#: ../gui/wxpython/scripts/vkrige.py:344
+#: ../gui/wxpython/scripts/vkrige.py:342
 msgid "Kriging techniques"
 msgstr ""
 
-#: ../gui/wxpython/scripts/vkrige.py:358
+#: ../gui/wxpython/scripts/vkrige.py:356
 #, fuzzy
 msgid "Block size:"
 msgstr "Kích thước biểu tượng:"
 
-#: ../gui/wxpython/scripts/vkrige.py:391
+#: ../gui/wxpython/scripts/vkrige.py:389
 msgid "Auto-fit variogram"
 msgstr ""
 
-#: ../gui/wxpython/scripts/vkrige.py:415
+#: ../gui/wxpython/scripts/vkrige.py:413
 #, fuzzy
 msgid "Model: "
 msgstr "Chế độ:"
 
-#: ../gui/wxpython/scripts/vkrige.py:499
+#: ../gui/wxpython/scripts/vkrige.py:497
 msgid "Work in progress! No functionality provided."
 msgstr ""
 
@@ -1415,12 +1415,12 @@ msgstr ""
 
 #: ../gui/wxpython/menustrings.py:79
 #, fuzzy
-msgid "Matlab array and MapGen import"
+msgid "Matlab array or Mapgen format import"
 msgstr "Nhập dữ liệu Matlab-ASCII và Mapgen"
 
 #: ../gui/wxpython/menustrings.py:80
 #, fuzzy
-msgid "Import Mapgen or Matlab vector maps into GRASS."
+msgid "Imports Mapgen or Matlab-ASCII vector maps into GRASS."
 msgstr "Nhập các bản đồ vec-tơ Mapgen và Matlab-ASCII vào GRASS."
 
 #: ../gui/wxpython/menustrings.py:81
@@ -1524,7 +1524,8 @@ msgid "Raw binary array export"
 msgstr "Xuất ra dạng nhị phân"
 
 #: ../gui/wxpython/menustrings.py:103
-msgid "Exports a GRASS raster to a binary array."
+#, fuzzy
+msgid "Exports a GRASS raster map to a binary array."
 msgstr "Xuât dữ liệu raster GRASS ra một mảng nhị phân."
 
 #: ../gui/wxpython/menustrings.py:104
@@ -1614,7 +1615,7 @@ msgstr "Xuất bản đồ véc tơ"
 
 #: ../gui/wxpython/menustrings.py:122
 #, fuzzy
-msgid "Converts a vector map to any of the supported OGR vector formats."
+msgid "Converts GRASS vector map to one of the supported OGR vector formats."
 msgstr "Chuyển đổi một trong những định dạng vec-tơ được OGR hỗ trợ."
 
 #: ../gui/wxpython/menustrings.py:123
@@ -1725,8 +1726,9 @@ msgstr "Sao chép"
 #: ../gui/wxpython/menustrings.py:152
 #, fuzzy
 msgid ""
-"Copies available data files in the current mapset search path to the user's "
-"current mapset."
+"Copies available data files in the user's current mapset search path and "
+"location to the appropriate element directories under the user's current "
+"mapset."
 msgstr ""
 "Chép các tập tin dữ liệu hiện có trong đường dẫn tìm kiếm vị trí và bộ bản "
 "đồ hiện tại của người dùng vào các thư mục thành phần trong bộ bản đồ hiện "
@@ -1736,9 +1738,10 @@ msgstr ""
 msgid "List"
 msgstr "Danh sách"
 
-#: ../gui/wxpython/menustrings.py:154
-#, fuzzy
-msgid "Lists available GIS elements of the user-specified data type."
+#: ../gui/wxpython/menustrings.py:154 ../gui/wxpython/menustrings.py:156
+msgid ""
+"Lists available GRASS data base files of the user-specified data type to "
+"standard output."
 msgstr ""
 "Liệt kê các tập tin CSDL GRASS hiện có theo kiểu dữ liệu do người dùng chỉ "
 "định ra đầu ra tiêu chuẩn."
@@ -1747,16 +1750,8 @@ msgstr ""
 msgid "List filtered"
 msgstr "Danh sách đã lọc"
 
-#: ../gui/wxpython/menustrings.py:156
-msgid ""
-"Lists available GRASS data base files of the user-specified data type to "
-"standard output."
-msgstr ""
-"Liệt kê các tập tin CSDL GRASS hiện có theo kiểu dữ liệu do người dùng chỉ "
-"định ra đầu ra tiêu chuẩn."
-
 #: ../gui/wxpython/menustrings.py:157
-#: ../gui/wxpython/gui_modules/layertree.py:280
+#: ../gui/wxpython/gui_modules/layertree.py:275
 msgid "Rename"
 msgstr "Đổi tên"
 
@@ -1790,7 +1785,7 @@ msgstr "Raster thành vec-tơ"
 
 #: ../gui/wxpython/menustrings.py:165
 #, fuzzy
-msgid "Converts a raster map into a vector map."
+msgid "Converts a raster map into a vector map layer."
 msgstr "Chuyển đổi một bản đồ raster thành một lớp bản đồ véc tơ."
 
 #: ../gui/wxpython/menustrings.py:166
@@ -2381,7 +2376,7 @@ msgstr "Mặt nạ"
 
 #: ../gui/wxpython/menustrings.py:295
 #, fuzzy
-msgid "Creates a mask for limiting raster operation."
+msgid "Creates a MASK for limiting raster operation."
 msgstr "Tạo một MẶT NẠ để giới hạn lệnh raster"
 
 #: ../gui/wxpython/menustrings.py:296
@@ -2540,7 +2535,7 @@ msgstr ""
 "Truy ra dòng chảy thông qua một mô hình độ cao trên một lớp bản đồ raster."
 
 #: ../gui/wxpython/menustrings.py:324
-#: ../gui/wxpython/gui_modules/layertree.py:760
+#: ../gui/wxpython/gui_modules/layertree.py:755
 msgid "Shaded relief"
 msgstr "Nổi có đổ bóng"
 
@@ -2649,9 +2644,12 @@ msgid "Carve stream channels"
 msgstr "'Khắc' đường chảy suối"
 
 #: ../gui/wxpython/menustrings.py:347
-#, fuzzy
-msgid "Generates stream channels."
-msgstr "'Khắc' đường chảy suối"
+msgid ""
+"Takes vector stream data, transforms it to raster and subtracts depth from "
+"the output DEM."
+msgstr ""
+"Lấy dữ liệu suối vec-tơ, chuyển đổi nó thành raster và trừ bớt độ sâu ra "
+"khỏi lớp DEM đầu ra."
 
 #: ../gui/wxpython/menustrings.py:348
 msgid "Fill lake"
@@ -2688,8 +2686,14 @@ msgid "Flow lines"
 msgstr "Các đường chỉ dòng chảy"
 
 #: ../gui/wxpython/menustrings.py:355
-msgid "Constructs flow lines."
+#, fuzzy
+msgid ""
+"Construction of slope curves (flowlines), flowpath lengths, and flowline "
+"densities (upslope areas) from a raster digital elevation model (DEM)."
 msgstr ""
+"Xây dựng các đường cong độ dốc (đường dòng chảy), chiều dài hướng đường dòng "
+"chảy, và mật độ đường dòng chảy (các vùng lên dốc) từ một mô hình độ cao số "
+"raster (DEM)"
 
 #: ../gui/wxpython/menustrings.py:356
 msgid "SIMWE Overland flow modeling"
@@ -2747,7 +2751,7 @@ msgstr "Phân tích đường chia nước"
 
 #: ../gui/wxpython/menustrings.py:367
 #, fuzzy
-msgid "Watershed basin analysis program"
+msgid "Watershed basin analysis program."
 msgstr "Chương trình phân tích lưu vực đường chia nước."
 
 #: ../gui/wxpython/menustrings.py:368
@@ -2755,9 +2759,8 @@ msgid "Watershed basin creation"
 msgstr "Tạo lưu vực đường chia nước"
 
 #: ../gui/wxpython/menustrings.py:369
-#, fuzzy
-msgid "Creates watershed basins."
-msgstr "Lưu vực phụ của đường chia nước"
+msgid "Watershed basin creation program."
+msgstr "Chương trình tạo lưu vực đường chia nước."
 
 #: ../gui/wxpython/menustrings.py:370 ../gui/wxpython/menustrings.py:745
 msgid "Groundwater modeling"
@@ -3022,9 +3025,12 @@ msgid "Reclassify"
 msgstr "Phân loại lại theo cỡ"
 
 #: ../gui/wxpython/menustrings.py:423
-#, fuzzy
-msgid "Reclassify raster map based on category values."
-msgstr "Phân loại lại bản đồ raster sử dụng quy tắc"
+msgid ""
+"Creates a new map layer whose category values are based upon a "
+"reclassification of the categories in an existing raster map layer."
+msgstr ""
+"Tạo một lớp bản đồ mới mà các giá trị phạm trù dựa vào phép phân loại lại "
+"các phạm trù trong một lớp bản đồ raster hiện có."
 
 #: ../gui/wxpython/menustrings.py:424
 #, fuzzy
@@ -3395,7 +3401,7 @@ msgstr "Hồi quy tuyến tính"
 
 #: ../gui/wxpython/menustrings.py:499
 #, fuzzy
-msgid "Calculates linear regression from two raster maps: y = a + b*x."
+msgid "Calculates linear regression from two raster maps: y = a + b*x"
 msgstr "Tính hồi quy tuyến tính từ hai bản đồ raster: y = a + b*x"
 
 #: ../gui/wxpython/menustrings.py:500
@@ -4333,7 +4339,7 @@ msgid "Performs raster map matrix filter."
 msgstr "Lọc ma trên bản đồ raster."
 
 #: ../gui/wxpython/menustrings.py:709
-#: ../gui/wxpython/gui_modules/layertree.py:393
+#: ../gui/wxpython/gui_modules/layertree.py:388
 msgid "Histogram"
 msgstr "Biểu đồ tần số"
 
@@ -4639,7 +4645,7 @@ msgstr ""
 "connect."
 
 #: ../gui/wxpython/menustrings.py:779
-#: ../gui/wxpython/gui_modules/sqlbuilder.py:193
+#: ../gui/wxpython/gui_modules/sqlbuilder.py:190
 msgid "Query"
 msgstr "Truy vấn"
 
@@ -4717,7 +4723,7 @@ msgid ""
 msgstr ""
 "Bỏ một cột khỏi bảng thuộc tính có kết nối với một bản đồ véc-tơ đã cho."
 
-#: ../gui/wxpython/menustrings.py:797 ../gui/wxpython/gui_modules/dbm.py:932
+#: ../gui/wxpython/menustrings.py:797 ../gui/wxpython/gui_modules/dbm.py:929
 msgid "Rename column"
 msgstr "Đổi tên cột"
 
@@ -4790,7 +4796,7 @@ msgid "Load model from file"
 msgstr "Nạp không gian làm việc từ tập tin"
 
 #: ../gui/wxpython/menustrings.py:820
-#: ../gui/wxpython/gui_modules/gmodeler.py:830
+#: ../gui/wxpython/gui_modules/gmodeler.py:828
 #, fuzzy
 msgid "Save model"
 msgstr "Chế độ phạm trù"
@@ -4824,7 +4830,7 @@ msgid "Close modeler window"
 msgstr ""
 
 #: ../gui/wxpython/menustrings.py:833
-#: ../gui/wxpython/gui_modules/gmodeler.py:3011
+#: ../gui/wxpython/gui_modules/gmodeler.py:3009
 #, fuzzy
 msgid "Modeler settings"
 msgstr "Các thiết lập tổng quát"
@@ -4876,7 +4882,7 @@ msgid "Remove action/data from model"
 msgstr ""
 
 #: ../gui/wxpython/menustrings.py:847
-#: ../gui/wxpython/gui_modules/gmodeler.py:3296
+#: ../gui/wxpython/gui_modules/gmodeler.py:3294
 #, fuzzy
 msgid "Model properties"
 msgstr "Các thuộc tính của lớp"
@@ -4921,7 +4927,7 @@ msgid "Display information about Graphical Modeler"
 msgstr "Xuất ra thông tin cơ bản về một lớp bản đồ raster."
 
 #: ../gui/wxpython/gui_modules/colorrules.py:40
-#: ../gui/wxpython/gui_modules/layertree.py:391
+#: ../gui/wxpython/gui_modules/layertree.py:386
 msgid "Set color table"
 msgstr "Đặt bảng màu"
 
@@ -5036,214 +5042,214 @@ msgid "Select font for histogram text"
 msgstr "Chọn phông chữ cho biểu đồ tần số"
 
 #: ../gui/wxpython/gui_modules/histogram.py:403
-#: ../gui/wxpython/gui_modules/mapdisp.py:1141
-#: ../gui/wxpython/gui_modules/gcpmapdisp.py:907
-#: ../gui/wxpython/gui_modules/gmodeler.py:1044
+#: ../gui/wxpython/gui_modules/mapdisp.py:1139
+#: ../gui/wxpython/gui_modules/gcpmapdisp.py:905
+#: ../gui/wxpython/gui_modules/gmodeler.py:1042
 msgid "Choose a file name to save the image (no need to add extension)"
 msgstr ""
 
 #: ../gui/wxpython/gui_modules/histogram.py:432
-#: ../gui/wxpython/gui_modules/mapdisp.py:1170
-#: ../gui/wxpython/gui_modules/gcpmapdisp.py:936
+#: ../gui/wxpython/gui_modules/mapdisp.py:1168
+#: ../gui/wxpython/gui_modules/gcpmapdisp.py:934
 msgid "Page setup"
 msgstr "Thiết lập trang"
 
 #: ../gui/wxpython/gui_modules/histogram.py:436
-#: ../gui/wxpython/gui_modules/mapdisp.py:1174
-#: ../gui/wxpython/gui_modules/gcpmapdisp.py:940
+#: ../gui/wxpython/gui_modules/mapdisp.py:1172
+#: ../gui/wxpython/gui_modules/gcpmapdisp.py:938
 msgid "Print preview"
 msgstr "Xem trước khi in"
 
-#: ../gui/wxpython/gui_modules/mcalc_builder.py:56
+#: ../gui/wxpython/gui_modules/mcalc_builder.py:54
 #, fuzzy
 msgid "GRASS GIS Raster Map Calculator"
 msgstr "Trình tính toán Bản đồ %s của GRASS"
 
-#: ../gui/wxpython/gui_modules/mcalc_builder.py:59
+#: ../gui/wxpython/gui_modules/mcalc_builder.py:57
 #, fuzzy
 msgid "GRASS GIS 3D Raster Map Calculator"
 msgstr "Trình tính toán Bản đồ %s của GRASS"
 
-#: ../gui/wxpython/gui_modules/mcalc_builder.py:70
+#: ../gui/wxpython/gui_modules/mcalc_builder.py:68
 msgid "mapcalc statement"
 msgstr "Câu lệnh mapcalc"
 
-#: ../gui/wxpython/gui_modules/mcalc_builder.py:118
+#: ../gui/wxpython/gui_modules/mcalc_builder.py:116
 #: ../gui/wxpython/gui_modules/nviz_tools.py:893
 msgid "3D raster map"
 msgstr "Bản đồ raster 3D"
 
-#: ../gui/wxpython/gui_modules/mcalc_builder.py:121
+#: ../gui/wxpython/gui_modules/mcalc_builder.py:119
 msgid "raster map"
 msgstr "bản đồ raster"
 
-#: ../gui/wxpython/gui_modules/mcalc_builder.py:125
+#: ../gui/wxpython/gui_modules/mcalc_builder.py:123
 msgid "Operators"
 msgstr "Các toán tử"
 
-#: ../gui/wxpython/gui_modules/mcalc_builder.py:127
+#: ../gui/wxpython/gui_modules/mcalc_builder.py:125
 msgid "Operands"
 msgstr "Các toán hạng"
 
-#: ../gui/wxpython/gui_modules/mcalc_builder.py:129
+#: ../gui/wxpython/gui_modules/mcalc_builder.py:127
 msgid "Expression"
 msgstr "Biểu thức"
 
-#: ../gui/wxpython/gui_modules/mcalc_builder.py:134
+#: ../gui/wxpython/gui_modules/mcalc_builder.py:132
 msgid "Cl&ear"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/mcalc_builder.py:140
+#: ../gui/wxpython/gui_modules/mcalc_builder.py:138
 #, fuzzy
 msgid "Save expression to file"
 msgstr "Lưu không gian làm việc vào tập tin"
 
-#: ../gui/wxpython/gui_modules/mcalc_builder.py:142
+#: ../gui/wxpython/gui_modules/mcalc_builder.py:140
 #: ../gui/wxpython/gui_modules/gdialogs.py:737
 #, fuzzy
 msgid "&Load"
 msgstr "Nạp"
 
-#: ../gui/wxpython/gui_modules/mcalc_builder.py:143
+#: ../gui/wxpython/gui_modules/mcalc_builder.py:141
 #, fuzzy
 msgid "Load expression from file"
 msgstr "Nạp không gian làm việc từ tập tin"
 
-#: ../gui/wxpython/gui_modules/mcalc_builder.py:147
+#: ../gui/wxpython/gui_modules/mcalc_builder.py:145
 msgid "exponent"
 msgstr "luỹ thừa"
 
-#: ../gui/wxpython/gui_modules/mcalc_builder.py:149
+#: ../gui/wxpython/gui_modules/mcalc_builder.py:147
 msgid "divide"
 msgstr "chia"
 
-#: ../gui/wxpython/gui_modules/mcalc_builder.py:151
+#: ../gui/wxpython/gui_modules/mcalc_builder.py:149
 msgid "add"
 msgstr "cộng"
 
-#: ../gui/wxpython/gui_modules/mcalc_builder.py:153
+#: ../gui/wxpython/gui_modules/mcalc_builder.py:151
 msgid "subtract"
 msgstr "trừ"
 
-#: ../gui/wxpython/gui_modules/mcalc_builder.py:155
+#: ../gui/wxpython/gui_modules/mcalc_builder.py:153
 msgid "modulus"
 msgstr "trị tuyệt đối"
 
-#: ../gui/wxpython/gui_modules/mcalc_builder.py:157
+#: ../gui/wxpython/gui_modules/mcalc_builder.py:155
 msgid "multiply"
 msgstr "nhân"
 
-#: ../gui/wxpython/gui_modules/mcalc_builder.py:162
+#: ../gui/wxpython/gui_modules/mcalc_builder.py:160
 msgid "left shift"
 msgstr "shift trái"
 
-#: ../gui/wxpython/gui_modules/mcalc_builder.py:164
+#: ../gui/wxpython/gui_modules/mcalc_builder.py:162
 msgid "right shift"
 msgstr "shift phải"
 
-#: ../gui/wxpython/gui_modules/mcalc_builder.py:166
+#: ../gui/wxpython/gui_modules/mcalc_builder.py:164
 msgid "right shift (unsigned)"
 msgstr "shift phải (không dấu)"
 
-#: ../gui/wxpython/gui_modules/mcalc_builder.py:168
+#: ../gui/wxpython/gui_modules/mcalc_builder.py:166
 msgid "greater than"
 msgstr "lớn hơn"
 
-#: ../gui/wxpython/gui_modules/mcalc_builder.py:170
+#: ../gui/wxpython/gui_modules/mcalc_builder.py:168
 msgid "greater than or equal to"
 msgstr "lớn hơn hoặc bằng"
 
-#: ../gui/wxpython/gui_modules/mcalc_builder.py:172
+#: ../gui/wxpython/gui_modules/mcalc_builder.py:170
 msgid "less than"
 msgstr "nhỏ hơn"
 
-#: ../gui/wxpython/gui_modules/mcalc_builder.py:174
+#: ../gui/wxpython/gui_modules/mcalc_builder.py:172
 msgid "less than or equal to"
 msgstr "nhỏ hơn hoặc bằng"
 
-#: ../gui/wxpython/gui_modules/mcalc_builder.py:176
+#: ../gui/wxpython/gui_modules/mcalc_builder.py:174
 msgid "equal to"
 msgstr "bằng"
 
-#: ../gui/wxpython/gui_modules/mcalc_builder.py:178
+#: ../gui/wxpython/gui_modules/mcalc_builder.py:176
 msgid "not equal to"
 msgstr "không bằng"
 
-#: ../gui/wxpython/gui_modules/mcalc_builder.py:181
+#: ../gui/wxpython/gui_modules/mcalc_builder.py:179
 msgid "one's complement"
 msgstr "phần bù của một"
 
-#: ../gui/wxpython/gui_modules/mcalc_builder.py:183
+#: ../gui/wxpython/gui_modules/mcalc_builder.py:181
 msgid "NOT"
 msgstr "KHÔNG"
 
-#: ../gui/wxpython/gui_modules/mcalc_builder.py:185
+#: ../gui/wxpython/gui_modules/mcalc_builder.py:183
 msgid "bitwise AND"
 msgstr "đảo bit VÀ"
 
-#: ../gui/wxpython/gui_modules/mcalc_builder.py:187
+#: ../gui/wxpython/gui_modules/mcalc_builder.py:185
 msgid "bitwise OR"
 msgstr "đảo bit HOẶC"
 
-#: ../gui/wxpython/gui_modules/mcalc_builder.py:189
+#: ../gui/wxpython/gui_modules/mcalc_builder.py:187
 msgid "logical AND"
 msgstr "luân lý VÀ"
 
-#: ../gui/wxpython/gui_modules/mcalc_builder.py:191
+#: ../gui/wxpython/gui_modules/mcalc_builder.py:189
 msgid "logical AND (ignores NULLs)"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/mcalc_builder.py:193
+#: ../gui/wxpython/gui_modules/mcalc_builder.py:191
 msgid "logical OR"
 msgstr "luân lý HOẶC"
 
-#: ../gui/wxpython/gui_modules/mcalc_builder.py:195
+#: ../gui/wxpython/gui_modules/mcalc_builder.py:193
 msgid "logical OR (ignores NULLs)"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/mcalc_builder.py:197
+#: ../gui/wxpython/gui_modules/mcalc_builder.py:195
 msgid "conditional"
 msgstr "điều kiện"
 
-#: ../gui/wxpython/gui_modules/mcalc_builder.py:209
+#: ../gui/wxpython/gui_modules/mcalc_builder.py:207
 #, python-format
 msgid "Name for new %s to create"
 msgstr "Tên cho %s mới cần tạo"
 
-#: ../gui/wxpython/gui_modules/mcalc_builder.py:212
+#: ../gui/wxpython/gui_modules/mcalc_builder.py:210
 #, python-format
 msgid "Insert existing %s"
 msgstr "Chèn %s hiện có"
 
-#: ../gui/wxpython/gui_modules/mcalc_builder.py:216
+#: ../gui/wxpython/gui_modules/mcalc_builder.py:214
 msgid "Insert mapcalc function"
 msgstr "Chèn hàm số mapcalc"
 
-#: ../gui/wxpython/gui_modules/mcalc_builder.py:223
+#: ../gui/wxpython/gui_modules/mcalc_builder.py:221
 #, fuzzy
 msgid "Add created raster map into layer tree"
 msgstr "Thêm bản đồ đã tạo vào sơ đồ lớp hình cây"
 
-#: ../gui/wxpython/gui_modules/mcalc_builder.py:430
+#: ../gui/wxpython/gui_modules/mcalc_builder.py:428
 msgid "You must enter the name of a new map to create"
 msgstr "Bạn phải nhập tên của bản đồ mới cần tạo"
 
-#: ../gui/wxpython/gui_modules/mcalc_builder.py:435
+#: ../gui/wxpython/gui_modules/mcalc_builder.py:433
 msgid "You must enter a mapcalc statement to create a new map"
 msgstr "Bạn phải nhập câu lệnh mapcalc để tạo bản đồ mới"
 
-#: ../gui/wxpython/gui_modules/mcalc_builder.py:472
+#: ../gui/wxpython/gui_modules/mcalc_builder.py:470
 #, fuzzy
 msgid "Choose a file name to save the expression"
 msgstr "Chọn tập tin GRC để nạp"
 
-#: ../gui/wxpython/gui_modules/mcalc_builder.py:473
-#: ../gui/wxpython/gui_modules/mcalc_builder.py:494
+#: ../gui/wxpython/gui_modules/mcalc_builder.py:471
+#: ../gui/wxpython/gui_modules/mcalc_builder.py:492
 #, fuzzy
 msgid "Expression file (*)|*"
 msgstr "Biểu thức"
 
-#: ../gui/wxpython/gui_modules/mcalc_builder.py:493
+#: ../gui/wxpython/gui_modules/mcalc_builder.py:491
 #, fuzzy
 msgid "Choose a file name to load the expression"
 msgstr "Chọn tập tin GRC để nạp"
@@ -5253,11 +5259,11 @@ msgstr "Chọn tập tin GRC để nạp"
 msgid "Unknow tag"
 msgstr "Không biết"
 
-#: ../gui/wxpython/gui_modules/dbm_dialogs.py:70
+#: ../gui/wxpython/gui_modules/dbm_dialogs.py:67
 msgid "Database connection is not defined in DB file."
 msgstr "Trong tệp DB không có định nghĩa kết nối CSDL"
 
-#: ../gui/wxpython/gui_modules/dbm_dialogs.py:74
+#: ../gui/wxpython/gui_modules/dbm_dialogs.py:71
 #, python-format
 msgid ""
 "No attribute table linked to vector map <%(vector)s> found. %(msg)s\n"
@@ -5269,65 +5275,65 @@ msgstr ""
 " Bạn có thể bất hoạt thông báo này khỏi thiết lập số hoá, hoặc bạn có thể tạo "
 "và liên kết bảng thuộc tính vào bản đồ vec-tơ bằng cách dùng Bộ Quản lý Bảng."
 
-#: ../gui/wxpython/gui_modules/dbm_dialogs.py:93
+#: ../gui/wxpython/gui_modules/dbm_dialogs.py:90
 msgid "Close dialog on submit"
 msgstr "Đóng hộp thoại khi gửi đi"
 
-#: ../gui/wxpython/gui_modules/dbm_dialogs.py:103
+#: ../gui/wxpython/gui_modules/dbm_dialogs.py:100
 msgid "No attributes found"
 msgstr "Không thấy thuộc tính nào"
 
-#: ../gui/wxpython/gui_modules/dbm_dialogs.py:109
+#: ../gui/wxpython/gui_modules/dbm_dialogs.py:106
 msgid "Update attributes"
 msgstr "Cập nhật thuộc tính"
 
-#: ../gui/wxpython/gui_modules/dbm_dialogs.py:111
+#: ../gui/wxpython/gui_modules/dbm_dialogs.py:108
 #, fuzzy
 msgid "Define attributes"
 msgstr "Thay đổi thuộc tính"
 
-#: ../gui/wxpython/gui_modules/dbm_dialogs.py:113
+#: ../gui/wxpython/gui_modules/dbm_dialogs.py:110
 msgid "Display attributes"
 msgstr "Trình bày các thuộc tính"
 
-#: ../gui/wxpython/gui_modules/dbm_dialogs.py:117
+#: ../gui/wxpython/gui_modules/dbm_dialogs.py:114
 msgid "&Reload"
 msgstr "&Nạp lại"
 
-#: ../gui/wxpython/gui_modules/dbm_dialogs.py:118
+#: ../gui/wxpython/gui_modules/dbm_dialogs.py:115
 msgid "&Submit"
 msgstr "&Gửi đi"
 
-#: ../gui/wxpython/gui_modules/dbm_dialogs.py:134
+#: ../gui/wxpython/gui_modules/dbm_dialogs.py:131
 #: ../gui/wxpython/gui_modules/vdigit.py:953
 msgid "Feature id:"
 msgstr "Chỉ số nhận diện đối tượng:"
 
-#: ../gui/wxpython/gui_modules/dbm_dialogs.py:368
+#: ../gui/wxpython/gui_modules/dbm_dialogs.py:365
 msgid "Unknown"
 msgstr "Không biết"
 
-#: ../gui/wxpython/gui_modules/dbm_dialogs.py:425
+#: ../gui/wxpython/gui_modules/dbm_dialogs.py:422
 #: ../gui/wxpython/gui_modules/vdigit.py:394
 #: ../gui/wxpython/gui_modules/vdigit.py:396
 #: ../gui/wxpython/gui_modules/vdigit.py:898
 #: ../gui/wxpython/gui_modules/vdigit.py:1344
-#: ../gui/wxpython/gui_modules/dbm.py:2282
-#: ../gui/wxpython/gui_modules/dbm.py:2390
-#: ../gui/wxpython/gui_modules/dbm.py:2645
+#: ../gui/wxpython/gui_modules/dbm.py:2279
+#: ../gui/wxpython/gui_modules/dbm.py:2387
+#: ../gui/wxpython/gui_modules/dbm.py:2642
 #: ../gui/wxpython/gui_modules/gdialogs.py:1350
 msgid "Layer"
 msgstr "Lớp"
 
-#: ../gui/wxpython/gui_modules/dbm_dialogs.py:426
-#: ../gui/wxpython/gui_modules/dbm_dialogs.py:546
+#: ../gui/wxpython/gui_modules/dbm_dialogs.py:423
+#: ../gui/wxpython/gui_modules/dbm_dialogs.py:543
 #: ../gui/wxpython/gui_modules/vdigit.py:394
 #: ../gui/wxpython/gui_modules/vdigit.py:905
 #: ../gui/wxpython/gui_modules/vdigit.py:1345
 msgid "Category"
 msgstr "Phạm trù"
 
-#: ../gui/wxpython/gui_modules/dbm_dialogs.py:531
+#: ../gui/wxpython/gui_modules/dbm_dialogs.py:528
 msgid "Submit"
 msgstr "Gửi đi"
 
@@ -5349,14 +5355,14 @@ msgid "Map type to georectify"
 msgstr "Kiểu bản đồ để nắn chỉnh địa lý"
 
 #: ../gui/wxpython/gui_modules/gcpmanager.py:332
-#: ../gui/wxpython/gui_modules/gmodeler.py:3568
-#: ../gui/wxpython/gui_modules/layertree.py:748
+#: ../gui/wxpython/gui_modules/gmodeler.py:3566
+#: ../gui/wxpython/gui_modules/layertree.py:743
 msgid "raster"
 msgstr "raster"
 
 #: ../gui/wxpython/gui_modules/gcpmanager.py:332
-#: ../gui/wxpython/gui_modules/gmodeler.py:3569
-#: ../gui/wxpython/gui_modules/layertree.py:769
+#: ../gui/wxpython/gui_modules/gmodeler.py:3567
+#: ../gui/wxpython/gui_modules/layertree.py:764
 msgid "vector"
 msgstr "véc tơ"
 
@@ -5803,16 +5809,16 @@ msgid "GCP Manager settings saved to file '%s'."
 msgstr "Các thiết lập mặt cắt được lưu vào tập tin '%s'."
 
 #: ../gui/wxpython/gui_modules/mapdisp_window.py:90
-#: ../gui/wxpython/gui_modules/mapdisp.py:770
-#: ../gui/wxpython/gui_modules/mapdisp.py:802
-#: ../gui/wxpython/gui_modules/mapdisp.py:873
-#: ../gui/wxpython/gui_modules/mapdisp.py:1026
+#: ../gui/wxpython/gui_modules/mapdisp.py:768
+#: ../gui/wxpython/gui_modules/mapdisp.py:800
+#: ../gui/wxpython/gui_modules/mapdisp.py:871
+#: ../gui/wxpython/gui_modules/mapdisp.py:1024
 msgid "Projection not defined (check the settings)"
 msgstr ""
 
 #: ../gui/wxpython/gui_modules/mapdisp_window.py:107
-#: ../gui/wxpython/gui_modules/mapdisp.py:917
-#: ../gui/wxpython/gui_modules/mapdisp.py:1043
+#: ../gui/wxpython/gui_modules/mapdisp.py:915
+#: ../gui/wxpython/gui_modules/mapdisp.py:1041
 msgid "Error in projection (check the settings)"
 msgstr ""
 
@@ -5841,8 +5847,8 @@ msgstr "Tập tin vùng <%s> đã có. Bạn có muốn ghi đè không?"
 #: ../gui/wxpython/gui_modules/mapdisp_window.py:1718
 #: ../gui/wxpython/gui_modules/gcmd.py:89
 #: ../gui/wxpython/gui_modules/workspace.py:1000
-#: ../gui/wxpython/gui_modules/sqlbuilder.py:427
-#: ../gui/wxpython/gui_modules/dbm.py:2360
+#: ../gui/wxpython/gui_modules/sqlbuilder.py:424
+#: ../gui/wxpython/gui_modules/dbm.py:2357
 msgid "Warning"
 msgstr "Cảnh báo"
 
@@ -5864,27 +5870,27 @@ msgstr "Lỗi trình số hóa vec-tơ"
 msgid "Z bulk-labeling dialog"
 msgstr "Hộp thoại Z bulk-labeling"
 
-#: ../gui/wxpython/gui_modules/mapdisp.py:83
+#: ../gui/wxpython/gui_modules/mapdisp.py:81
 msgid "GRASS GIS - Map display"
 msgstr "GRASS GIS - Trình bày bản đồ"
 
-#: ../gui/wxpython/gui_modules/mapdisp.py:160
-#: ../gui/wxpython/gui_modules/gcpmapdisp.py:165
+#: ../gui/wxpython/gui_modules/mapdisp.py:158
+#: ../gui/wxpython/gui_modules/gcpmapdisp.py:163
 msgid "Render"
 msgstr "Vẽ"
 
-#: ../gui/wxpython/gui_modules/mapdisp.py:165
-#: ../gui/wxpython/gui_modules/gcpmapdisp.py:170
+#: ../gui/wxpython/gui_modules/mapdisp.py:163
+#: ../gui/wxpython/gui_modules/gcpmapdisp.py:168
 msgid "Enable/disable auto-rendering"
 msgstr "Bật/tắt chế độ vẽ tự động"
 
-#: ../gui/wxpython/gui_modules/mapdisp.py:168
-#: ../gui/wxpython/gui_modules/gcpmapdisp.py:173
+#: ../gui/wxpython/gui_modules/mapdisp.py:166
+#: ../gui/wxpython/gui_modules/gcpmapdisp.py:171
 msgid "Show computational extent"
 msgstr "Hiển thị phạm vi tính toán"
 
-#: ../gui/wxpython/gui_modules/mapdisp.py:173
-#: ../gui/wxpython/gui_modules/gcpmapdisp.py:178
+#: ../gui/wxpython/gui_modules/mapdisp.py:171
+#: ../gui/wxpython/gui_modules/gcpmapdisp.py:176
 msgid ""
 "Show/hide computational region extent (set with g.region). Display region "
 "drawn as a blue box inside the computational region, computational region "
@@ -5894,14 +5900,14 @@ msgstr ""
 "được vẽ bằng một khung màu xanh ở trong vùng tính toán, vùng tính toán ở "
 "trong vùng trình bày thì ở dạng khung màu đỏ)."
 
-#: ../gui/wxpython/gui_modules/mapdisp.py:181
-#: ../gui/wxpython/gui_modules/gcpmapdisp.py:186
+#: ../gui/wxpython/gui_modules/mapdisp.py:179
+#: ../gui/wxpython/gui_modules/gcpmapdisp.py:184
 #: ../gui/wxpython/gui_modules/preferences.py:1319
 msgid "Constrain display resolution to computational settings"
 msgstr "Giới hạn độ phân giải trình bày theo các thiết lập tính toán"
 
-#: ../gui/wxpython/gui_modules/mapdisp.py:185
-#: ../gui/wxpython/gui_modules/gcpmapdisp.py:190
+#: ../gui/wxpython/gui_modules/mapdisp.py:183
+#: ../gui/wxpython/gui_modules/gcpmapdisp.py:188
 msgid ""
 "Constrain display resolution to computational region settings. Default value "
 "for new map displays can be set up in 'User GUI settings' dialog."
@@ -5910,22 +5916,22 @@ msgstr ""
 "mặc định cho việc trình bày bản đồ mới có thể được thiết lập trong hộp thoại "
 "'Các thiết lập GUI của người dùng'."
 
-#: ../gui/wxpython/gui_modules/mapdisp.py:213
-#: ../gui/wxpython/gui_modules/mapdisp.py:1061
-#: ../gui/wxpython/gui_modules/mapdisp.py:1064
-#: ../gui/wxpython/gui_modules/gcpmapdisp.py:218
+#: ../gui/wxpython/gui_modules/mapdisp.py:211
+#: ../gui/wxpython/gui_modules/mapdisp.py:1059
+#: ../gui/wxpython/gui_modules/mapdisp.py:1062
+#: ../gui/wxpython/gui_modules/gcpmapdisp.py:216
 #, fuzzy
 msgid "Use defined projection"
 msgstr "Chọn phép chiếu"
 
-#: ../gui/wxpython/gui_modules/mapdisp.py:217
-#: ../gui/wxpython/gui_modules/gcpmapdisp.py:222
+#: ../gui/wxpython/gui_modules/mapdisp.py:215
+#: ../gui/wxpython/gui_modules/gcpmapdisp.py:220
 msgid ""
 "Reproject coordinates displayed in the statusbar. Projection can be defined "
 "in GUI preferences dialog (tab 'Display')"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/mapdisp.py:300
+#: ../gui/wxpython/gui_modules/mapdisp.py:298
 #, python-format
 msgid ""
 "Unable to start wxGUI vector digitizer.\n"
@@ -5938,23 +5944,23 @@ msgstr ""
 "\n"
 "Chi tiết: %s"
 
-#: ../gui/wxpython/gui_modules/mapdisp.py:304
-#: ../gui/wxpython/gui_modules/mapdisp.py:315
-#: ../gui/wxpython/gui_modules/mapdisp.py:365
-#: ../gui/wxpython/gui_modules/mapdisp.py:506
+#: ../gui/wxpython/gui_modules/mapdisp.py:302
+#: ../gui/wxpython/gui_modules/mapdisp.py:313
+#: ../gui/wxpython/gui_modules/mapdisp.py:363
+#: ../gui/wxpython/gui_modules/mapdisp.py:504
 #: ../gui/wxpython/gui_modules/toolbars.py:199
 msgid "2D view"
 msgstr "Xem 2D"
 
-#: ../gui/wxpython/gui_modules/mapdisp.py:307
+#: ../gui/wxpython/gui_modules/mapdisp.py:305
 msgid "Vector digitizer failed"
 msgstr "Trình số hóa vec-tơ thất bại"
 
-#: ../gui/wxpython/gui_modules/mapdisp.py:346
+#: ../gui/wxpython/gui_modules/mapdisp.py:344
 msgid "Vector digitizer toolbar"
 msgstr "Thanh công cụ của trình số hoá bản đồ"
 
-#: ../gui/wxpython/gui_modules/mapdisp.py:367
+#: ../gui/wxpython/gui_modules/mapdisp.py:365
 #, python-format
 msgid ""
 "Unable to switch to 3D display mode.\n"
@@ -5969,81 +5975,81 @@ msgstr ""
 "\n"
 "Chi tiết: %s"
 
-#: ../gui/wxpython/gui_modules/mapdisp.py:384
+#: ../gui/wxpython/gui_modules/mapdisp.py:382
 msgid "Starting 3D view mode..."
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/mapdisp.py:385
+#: ../gui/wxpython/gui_modules/mapdisp.py:383
 msgid "Please wait, loading data..."
 msgstr "Xin hãy chờ, đang nạp dữ liệu..."
 
-#: ../gui/wxpython/gui_modules/mapdisp.py:415
+#: ../gui/wxpython/gui_modules/mapdisp.py:413
 #, fuzzy
 msgid "3D view toolbar"
 msgstr "Thanh công cụ Nviz"
 
-#: ../gui/wxpython/gui_modules/mapdisp.py:439
+#: ../gui/wxpython/gui_modules/mapdisp.py:437
 #, fuzzy
 msgid "Map toolbar"
 msgstr "Thanh công cụ Bản đồ"
 
-#: ../gui/wxpython/gui_modules/mapdisp.py:455
+#: ../gui/wxpython/gui_modules/mapdisp.py:453
 msgid "Georectification toolbar"
 msgstr "Thanh công cụ nắn chỉnh địa lý"
 
-#: ../gui/wxpython/gui_modules/mapdisp.py:516
+#: ../gui/wxpython/gui_modules/mapdisp.py:514
 #: ../gui/wxpython/gui_modules/render.py:451
 #, python-format
 msgid "GRASS module '%s' not found. Unable to start map display window."
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/mapdisp.py:1126
-#: ../gui/wxpython/gui_modules/gcpmapdisp.py:892
+#: ../gui/wxpython/gui_modules/mapdisp.py:1124
+#: ../gui/wxpython/gui_modules/gcpmapdisp.py:890
 #, fuzzy
 msgid "Nothing to render (empty map). Operation canceled."
 msgstr "Không có lớp bản đồ nào được chọn. Thao tác bị hủy."
 
-#: ../gui/wxpython/gui_modules/mapdisp.py:1299
+#: ../gui/wxpython/gui_modules/mapdisp.py:1297
 msgid "No raster or vector map layer selected for querying."
 msgstr "Không có bản đồ raster hoặc véc-tơ nào được chọn để truy vấn."
 
-#: ../gui/wxpython/gui_modules/mapdisp.py:1300
+#: ../gui/wxpython/gui_modules/mapdisp.py:1298
 msgid "No map layer selected"
 msgstr "Không có lớp bản đồ nào được chọn"
 
-#: ../gui/wxpython/gui_modules/mapdisp.py:1395
+#: ../gui/wxpython/gui_modules/mapdisp.py:1393
 msgid "No vector map selected for querying."
 msgstr "Không có bản đồ véc tơ nào được chọn để truy vấn."
 
-#: ../gui/wxpython/gui_modules/mapdisp.py:1396
-#: ../gui/wxpython/gui_modules/mapdisp.py:1404
+#: ../gui/wxpython/gui_modules/mapdisp.py:1394
+#: ../gui/wxpython/gui_modules/mapdisp.py:1402
 msgid "Vector querying"
 msgstr "Truy vấn véc-tơ"
 
-#: ../gui/wxpython/gui_modules/mapdisp.py:1403
+#: ../gui/wxpython/gui_modules/mapdisp.py:1401
 msgid "Only vector map from the current mapset can be modified."
 msgstr ""
 "Chỉ có bản đồ véc-tơ trong bộ bản đồ hiện tại mới có thể được chỉnh sửa."
 
-#: ../gui/wxpython/gui_modules/mapdisp.py:1475
+#: ../gui/wxpython/gui_modules/mapdisp.py:1473
 #, fuzzy
 msgid "Query surface (raster map)"
 msgstr "Truy vấn các bản đồ raster"
 
-#: ../gui/wxpython/gui_modules/mapdisp.py:1482
+#: ../gui/wxpython/gui_modules/mapdisp.py:1480
 #, fuzzy
 msgid "Query vector map"
 msgstr "Chồng các bản đồ véc tơ"
 
-#: ../gui/wxpython/gui_modules/mapdisp.py:1490
+#: ../gui/wxpython/gui_modules/mapdisp.py:1488
 msgid "Query raster/vector map(s) (display mode)"
 msgstr "Truy vấn (các) bản đồ raster/véc tơ (chế độ trình bày)"
 
-#: ../gui/wxpython/gui_modules/mapdisp.py:1506
+#: ../gui/wxpython/gui_modules/mapdisp.py:1504
 msgid "Query vector map (edit mode)"
 msgstr "Truy vấn bản đồ véc tơ (chế độ biên tập)"
 
-#: ../gui/wxpython/gui_modules/mapdisp.py:1632
+#: ../gui/wxpython/gui_modules/mapdisp.py:1630
 #, python-format
 msgid ""
 "Click and drag with left mouse button to measure.%sDouble click with left "
@@ -6052,88 +6058,88 @@ msgstr ""
 "Nhắp và rê bằng phím chuột  trái để đo. %sNhắp chuột đúp bằng phím trái để "
 "xoá."
 
-#: ../gui/wxpython/gui_modules/mapdisp.py:1638
+#: ../gui/wxpython/gui_modules/mapdisp.py:1636
 msgid "Measuring distance"
 msgstr "Đo khoảng cách"
 
-#: ../gui/wxpython/gui_modules/mapdisp.py:1641
+#: ../gui/wxpython/gui_modules/mapdisp.py:1639
 msgid "Measuring distance:"
 msgstr "Đang đo khoảng cách:"
 
-#: ../gui/wxpython/gui_modules/mapdisp.py:1651
+#: ../gui/wxpython/gui_modules/mapdisp.py:1649
 #, python-format
 msgid ""
 "Geodesic distance is not yet supported by this tool.\n"
 "Reason: %s"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/mapdisp.py:1680
-#: ../gui/wxpython/gui_modules/mapdisp.py:1686
+#: ../gui/wxpython/gui_modules/mapdisp.py:1678
+#: ../gui/wxpython/gui_modules/mapdisp.py:1684
 #, fuzzy
 msgid "segment"
 msgstr "Chú giải"
 
-#: ../gui/wxpython/gui_modules/mapdisp.py:1681
-#: ../gui/wxpython/gui_modules/mapdisp.py:1687
+#: ../gui/wxpython/gui_modules/mapdisp.py:1679
+#: ../gui/wxpython/gui_modules/mapdisp.py:1685
 #, fuzzy
 msgid "total distance"
 msgstr "Đo khoảng cách"
 
-#: ../gui/wxpython/gui_modules/mapdisp.py:1682
+#: ../gui/wxpython/gui_modules/mapdisp.py:1680
 #, fuzzy
 msgid "bearing"
 msgstr "Cảnh báo"
 
-#: ../gui/wxpython/gui_modules/mapdisp.py:1682
+#: ../gui/wxpython/gui_modules/mapdisp.py:1680
 msgid "deg"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/mapdisp.py:1818
+#: ../gui/wxpython/gui_modules/mapdisp.py:1816
 msgid "Scale and North arrow"
 msgstr "Thước tỉ lệ và mũi tên chỉ hướng Bắc"
 
-#: ../gui/wxpython/gui_modules/mapdisp.py:1824
+#: ../gui/wxpython/gui_modules/mapdisp.py:1822
 msgid "Show/hide scale and North arrow"
 msgstr "Hiện/giấu thước tỉ lệ và mũi tên hướng Bắc"
 
-#: ../gui/wxpython/gui_modules/mapdisp.py:1825
+#: ../gui/wxpython/gui_modules/mapdisp.py:1823
 msgid "scale object"
 msgstr "đối tượng tỉ lệ"
 
-#: ../gui/wxpython/gui_modules/mapdisp.py:1854
+#: ../gui/wxpython/gui_modules/mapdisp.py:1852
 msgid "Show/hide legend"
 msgstr "Hiện/giấu chú giải"
 
-#: ../gui/wxpython/gui_modules/mapdisp.py:1855
+#: ../gui/wxpython/gui_modules/mapdisp.py:1853
 msgid "legend object"
 msgstr "đối tượng chú giải"
 
-#: ../gui/wxpython/gui_modules/mapdisp.py:1964
-#: ../gui/wxpython/gui_modules/gcpmapdisp.py:1056
+#: ../gui/wxpython/gui_modules/mapdisp.py:1962
+#: ../gui/wxpython/gui_modules/gcpmapdisp.py:1054
 msgid "Zoom to computational region (set with g.region)"
 msgstr "Phóng đến vùng tính toán (thiết lập bằng g.region)"
 
-#: ../gui/wxpython/gui_modules/mapdisp.py:1968
-#: ../gui/wxpython/gui_modules/gcpmapdisp.py:1060
+#: ../gui/wxpython/gui_modules/mapdisp.py:1966
+#: ../gui/wxpython/gui_modules/gcpmapdisp.py:1058
 msgid "Zoom to default region"
 msgstr "Phóng đến vùng mặc định"
 
-#: ../gui/wxpython/gui_modules/mapdisp.py:1972
-#: ../gui/wxpython/gui_modules/gcpmapdisp.py:1064
+#: ../gui/wxpython/gui_modules/mapdisp.py:1970
+#: ../gui/wxpython/gui_modules/gcpmapdisp.py:1062
 msgid "Zoom to saved region"
 msgstr "Phóng đến vùng đã lưu"
 
-#: ../gui/wxpython/gui_modules/mapdisp.py:1976
-#: ../gui/wxpython/gui_modules/gcpmapdisp.py:1068
+#: ../gui/wxpython/gui_modules/mapdisp.py:1974
+#: ../gui/wxpython/gui_modules/gcpmapdisp.py:1066
 msgid "Set computational region from display"
 msgstr "Thiết lập vùng tính toán theo phần trình bày"
 
-#: ../gui/wxpython/gui_modules/mapdisp.py:1980
-#: ../gui/wxpython/gui_modules/gcpmapdisp.py:1072
+#: ../gui/wxpython/gui_modules/mapdisp.py:1978
+#: ../gui/wxpython/gui_modules/gcpmapdisp.py:1070
 msgid "Save display geometry to named region"
 msgstr "Lưu hình học trình bày vào vùng có đặt tên"
 
-#: ../gui/wxpython/gui_modules/mapdisp.py:2074
+#: ../gui/wxpython/gui_modules/mapdisp.py:2072
 msgid "GRASS GIS Map Display: "
 msgstr "Màn Hình Bản Đồ GRASS GIS:"
 
@@ -6323,11 +6329,11 @@ msgstr ""
 
 #: ../gui/wxpython/gui_modules/ghelp.py:701
 #: ../gui/wxpython/gui_modules/ghelp.py:759
-#: ../gui/wxpython/gui_modules/gmodeler.py:3556
-#: ../gui/wxpython/gui_modules/gmodeler.py:3596
-#: ../gui/wxpython/gui_modules/gmodeler.py:3864
-#: ../gui/wxpython/gui_modules/gmodeler.py:3972
-#: ../gui/wxpython/gui_modules/gmodeler.py:4290
+#: ../gui/wxpython/gui_modules/gmodeler.py:3554
+#: ../gui/wxpython/gui_modules/gmodeler.py:3594
+#: ../gui/wxpython/gui_modules/gmodeler.py:3862
+#: ../gui/wxpython/gui_modules/gmodeler.py:3970
+#: ../gui/wxpython/gui_modules/gmodeler.py:4288
 msgid "Name"
 msgstr ""
 
@@ -6424,12 +6430,12 @@ msgstr "Xác định CSDL GRASS và Tên Vị trí"
 #: ../gui/wxpython/gui_modules/gselect.py:1319
 #: ../gui/wxpython/gui_modules/gselect.py:1465
 #: ../gui/wxpython/gui_modules/gdialogs.py:1256
-#: ../gui/wxpython/gui_modules/menuform.py:1583
+#: ../gui/wxpython/gui_modules/menuform.py:1580
 msgid "Browse"
 msgstr "Duyệt"
 
 #: ../gui/wxpython/gui_modules/location_wizard.py:143
-#: ../gui/wxpython/gis_set.py:112
+#: ../gui/wxpython/gis_set.py:109
 msgid "GIS Data Directory:"
 msgstr "Thư mục dữ liệu GIS"
 
@@ -6510,8 +6516,8 @@ msgstr "Mã"
 #: ../gui/wxpython/gui_modules/location_wizard.py:874
 #: ../gui/wxpython/gui_modules/location_wizard.py:1037
 #: ../gui/wxpython/gui_modules/location_wizard.py:1302
-#: ../gui/wxpython/gui_modules/gmodeler.py:3557
-#: ../gui/wxpython/gui_modules/gmodeler.py:3616
+#: ../gui/wxpython/gui_modules/gmodeler.py:3555
+#: ../gui/wxpython/gui_modules/gmodeler.py:3614
 msgid "Description"
 msgstr "Mô tả"
 
@@ -6932,7 +6938,7 @@ msgid "Select output vector map:"
 msgstr "Chọn bản đồ véc tơ:"
 
 #: ../gui/wxpython/gui_modules/vclean.py:168
-#: ../gui/wxpython/gui_modules/menuform.py:783
+#: ../gui/wxpython/gui_modules/menuform.py:780
 #, fuzzy
 msgid "Copy the current command string to the clipboard (Ctrl+C)"
 msgstr "Chép chuỗi lệnh hiện tại vào bộ nhớ"
@@ -7031,7 +7037,7 @@ msgid "View"
 msgstr "Xem"
 
 #: ../gui/wxpython/gui_modules/nviz_tools.py:75
-#: ../gui/wxpython/gui_modules/gmodeler.py:3162
+#: ../gui/wxpython/gui_modules/gmodeler.py:3160
 #, fuzzy
 msgid "Data"
 msgstr "CSDL"
@@ -7080,8 +7086,8 @@ msgstr "Xoắn:"
 #: ../gui/wxpython/gui_modules/nviz_tools.py:1168
 #: ../gui/wxpython/gui_modules/nviz_tools.py:3031
 #: ../gui/wxpython/gui_modules/nviz_preferences.py:124
-#: ../gui/wxpython/gui_modules/gmodeler.py:3136
-#: ../gui/wxpython/gui_modules/gmodeler.py:3255
+#: ../gui/wxpython/gui_modules/gmodeler.py:3134
+#: ../gui/wxpython/gui_modules/gmodeler.py:3253
 #: ../gui/wxpython/gui_modules/gdialogs.py:1632
 msgid "Height:"
 msgstr "Cao:"
@@ -7540,8 +7546,8 @@ msgstr "Cỡ:"
 
 #: ../gui/wxpython/gui_modules/nviz_tools.py:3206
 #: ../gui/wxpython/gui_modules/nviz_preferences.py:298
-#: ../gui/wxpython/gui_modules/gmodeler.py:3118
-#: ../gui/wxpython/gui_modules/gmodeler.py:3237
+#: ../gui/wxpython/gui_modules/gmodeler.py:3116
+#: ../gui/wxpython/gui_modules/gmodeler.py:3235
 #: ../gui/wxpython/gui_modules/gdialogs.py:1628
 msgid "Width:"
 msgstr "Rộng"
@@ -7652,7 +7658,7 @@ msgid "Source name"
 msgstr "Tên nguồn"
 
 #: ../gui/wxpython/gui_modules/gselect.py:1041
-#: ../gui/wxpython/gui_modules/menuform.py:1582
+#: ../gui/wxpython/gui_modules/menuform.py:1579
 msgid "File"
 msgstr "Tập tin"
 
@@ -7661,9 +7667,9 @@ msgid "Directory"
 msgstr "Thư mục"
 
 #: ../gui/wxpython/gui_modules/gselect.py:1049
-#: ../gui/wxpython/gui_modules/dbm.py:2282
-#: ../gui/wxpython/gui_modules/dbm.py:2401
-#: ../gui/wxpython/gui_modules/dbm.py:2659
+#: ../gui/wxpython/gui_modules/dbm.py:2279
+#: ../gui/wxpython/gui_modules/dbm.py:2398
+#: ../gui/wxpython/gui_modules/dbm.py:2656
 msgid "Database"
 msgstr "CSDL"
 
@@ -7731,7 +7737,7 @@ msgid "Settings named '%s' not found"
 msgstr "Không tìm thấy bản đồ <%s>."
 
 #: ../gui/wxpython/gui_modules/gselect.py:1243
-#: ../gui/wxpython/gui_modules/gmodeler.py:3339
+#: ../gui/wxpython/gui_modules/gmodeler.py:3337
 msgid "Name:"
 msgstr ""
 
@@ -7786,7 +7792,7 @@ msgid "Close dialog and save changes to user settings file"
 msgstr "Đóng hộp thoại và lưu thay đổi vào tập tin cấu hình của người dùng"
 
 #: ../gui/wxpython/gui_modules/vdigit.py:91
-#: ../gui/wxpython/gui_modules/gmodeler.py:3327
+#: ../gui/wxpython/gui_modules/gmodeler.py:3325
 #: ../gui/wxpython/gui_modules/profile.py:1040
 #: ../gui/wxpython/gui_modules/profile.py:1393
 #: ../gui/wxpython/gui_modules/preferences.py:970
@@ -8075,22 +8081,22 @@ msgstr ""
 " Số lớp phải lớn hơn 0"
 
 #: ../gui/wxpython/gui_modules/vdigit.py:1059
-#: ../gui/wxpython/gui_modules/gmodeler.py:3793
-#: ../gui/wxpython/gui_modules/gmodeler.py:4150
+#: ../gui/wxpython/gui_modules/gmodeler.py:3791
+#: ../gui/wxpython/gui_modules/gmodeler.py:4148
 msgid "Delete selected"
 msgstr "Xóa phần chọn"
 
 #: ../gui/wxpython/gui_modules/vdigit.py:1063
-#: ../gui/wxpython/gui_modules/gmodeler.py:3794
-#: ../gui/wxpython/gui_modules/gmodeler.py:4151
+#: ../gui/wxpython/gui_modules/gmodeler.py:3792
+#: ../gui/wxpython/gui_modules/gmodeler.py:4149
 msgid "Delete all"
 msgstr "Xóa tất cả"
 
 #: ../gui/wxpython/gui_modules/vdigit.py:1065
-#: ../gui/wxpython/gui_modules/gmodeler.py:3800
-#: ../gui/wxpython/gui_modules/gmodeler.py:4158
-#: ../gui/wxpython/gui_modules/dbm.py:1149
-#: ../gui/wxpython/gui_modules/dbm.py:1662
+#: ../gui/wxpython/gui_modules/gmodeler.py:3798
+#: ../gui/wxpython/gui_modules/gmodeler.py:4156
+#: ../gui/wxpython/gui_modules/dbm.py:1146
+#: ../gui/wxpython/gui_modules/dbm.py:1659
 msgid "Reload"
 msgstr "Nạp lại"
 
@@ -8127,168 +8133,168 @@ msgstr "Chỉ số nhận diện đối tượng"
 msgid "Layer (Categories)"
 msgstr "Lớp (Các phạm trù)"
 
-#: ../gui/wxpython/gui_modules/gcpmapdisp.py:73
+#: ../gui/wxpython/gui_modules/gcpmapdisp.py:71
 #, fuzzy
 msgid "GRASS GIS Manage Ground Control Points"
 msgstr "Điểm khống chế"
 
-#: ../gui/wxpython/gui_modules/gcpmapdisp.py:150
-#: ../gui/wxpython/gui_modules/globalvar.py:115
+#: ../gui/wxpython/gui_modules/gcpmapdisp.py:148
+#: ../gui/wxpython/gui_modules/globalvar.py:116
 msgid "Coordinates"
 msgstr "Tọa độ"
 
-#: ../gui/wxpython/gui_modules/gcpmapdisp.py:151
-#: ../gui/wxpython/gui_modules/globalvar.py:116
+#: ../gui/wxpython/gui_modules/gcpmapdisp.py:149
+#: ../gui/wxpython/gui_modules/globalvar.py:117
 msgid "Extent"
 msgstr "Phạm vi"
 
-#: ../gui/wxpython/gui_modules/gcpmapdisp.py:152
-#: ../gui/wxpython/gui_modules/globalvar.py:117
+#: ../gui/wxpython/gui_modules/gcpmapdisp.py:150
+#: ../gui/wxpython/gui_modules/globalvar.py:118
 msgid "Comp. region"
 msgstr "Vùng tính toán"
 
-#: ../gui/wxpython/gui_modules/gcpmapdisp.py:153
-#: ../gui/wxpython/gui_modules/globalvar.py:118
+#: ../gui/wxpython/gui_modules/gcpmapdisp.py:151
+#: ../gui/wxpython/gui_modules/globalvar.py:119
 msgid "Show comp. extent"
 msgstr "Hiển thị phạm vi tính toán"
 
-#: ../gui/wxpython/gui_modules/gcpmapdisp.py:154
-#: ../gui/wxpython/gui_modules/globalvar.py:119
+#: ../gui/wxpython/gui_modules/gcpmapdisp.py:152
+#: ../gui/wxpython/gui_modules/globalvar.py:120
 msgid "Display mode"
 msgstr "Chế độ trình bày"
 
-#: ../gui/wxpython/gui_modules/gcpmapdisp.py:155
-#: ../gui/wxpython/gui_modules/globalvar.py:120
+#: ../gui/wxpython/gui_modules/gcpmapdisp.py:153
+#: ../gui/wxpython/gui_modules/globalvar.py:121
 msgid "Display geometry"
 msgstr "Dạng hình học hiển thị"
 
-#: ../gui/wxpython/gui_modules/gcpmapdisp.py:156
-#: ../gui/wxpython/gui_modules/globalvar.py:121
+#: ../gui/wxpython/gui_modules/gcpmapdisp.py:154
+#: ../gui/wxpython/gui_modules/globalvar.py:122
 msgid "Map scale"
 msgstr "Tỉ lệ bản đồ"
 
-#: ../gui/wxpython/gui_modules/gcpmapdisp.py:157
+#: ../gui/wxpython/gui_modules/gcpmapdisp.py:155
 msgid "Go to GCP No."
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/gcpmapdisp.py:158
+#: ../gui/wxpython/gui_modules/gcpmapdisp.py:156
 #, fuzzy
 msgid "RMS error"
 msgstr "Lỗi RMS"
 
-#: ../gui/wxpython/gui_modules/gcpmapdisp.py:278
+#: ../gui/wxpython/gui_modules/gcpmapdisp.py:276
 #, fuzzy
 msgid "GCP List"
 msgstr "Danh sách"
 
-#: ../gui/wxpython/gui_modules/gcpmapdisp.py:283
+#: ../gui/wxpython/gui_modules/gcpmapdisp.py:281
 #, fuzzy
 msgid "Source Display"
 msgstr "Trình bày"
 
-#: ../gui/wxpython/gui_modules/gcpmapdisp.py:287
+#: ../gui/wxpython/gui_modules/gcpmapdisp.py:285
 #, fuzzy
 msgid "Target Display"
 msgstr "Trình bày"
 
-#: ../gui/wxpython/gui_modules/gcpmapdisp.py:350
+#: ../gui/wxpython/gui_modules/gcpmapdisp.py:348
 msgid "Map Toolbar"
 msgstr "Thanh công cụ Bản đồ"
 
-#: ../gui/wxpython/gui_modules/gcpmapdisp.py:363
+#: ../gui/wxpython/gui_modules/gcpmapdisp.py:361
 #, fuzzy
 msgid "GCP Display toolbar"
 msgstr "Trình bày bản đồ"
 
-#: ../gui/wxpython/gui_modules/gcpmapdisp.py:376
+#: ../gui/wxpython/gui_modules/gcpmapdisp.py:374
 #, fuzzy
 msgid "GCP Manager toolbar"
 msgstr "Quản lý màu"
 
-#: ../gui/wxpython/gui_modules/gcpmapdisp.py:658
+#: ../gui/wxpython/gui_modules/gcpmapdisp.py:656
 #, fuzzy
 msgid "Valid Range:"
 msgstr "Miền hợp lệ"
 
-#: ../gui/wxpython/gui_modules/gcpmapdisp.py:660
+#: ../gui/wxpython/gui_modules/gcpmapdisp.py:658
 msgid "Invalid GCP Number"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/gcpmapdisp.py:832
+#: ../gui/wxpython/gui_modules/gcpmapdisp.py:830
 #, python-format
 msgid "Forward: %(forw)s, Backward: %(back)s"
 msgstr ""
 
 #: ../gui/wxpython/gui_modules/dbm_base.py:40
-#: ../gui/wxpython/gui_modules/dbm.py:298
+#: ../gui/wxpython/gui_modules/dbm.py:295
 msgid "Unable to decode value. Set encoding in GUI preferences ('Attributes')."
 msgstr ""
 "Không thể giải mã giá trị. Thiết lập mã hóa theo tùy thích của giao diện đồ "
 "họa (‘Các thuộc tính’)"
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:89
+#: ../gui/wxpython/gui_modules/gmodeler.py:87
 msgid "model"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:90
+#: ../gui/wxpython/gui_modules/gmodeler.py:88
 msgid "Script generated by wxGUI Graphical Modeler."
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:424
+#: ../gui/wxpython/gui_modules/gmodeler.py:422
 #, fuzzy
 msgid "Raster maps"
 msgstr "Bản đồ raster"
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:427
+#: ../gui/wxpython/gui_modules/gmodeler.py:425
 #, fuzzy
 msgid "3D raster maps"
 msgstr "Bản đồ raster 3D"
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:430
+#: ../gui/wxpython/gui_modules/gmodeler.py:428
 #, fuzzy
 msgid "Vector maps"
 msgstr "Các điểm véc tơ"
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:453
-#: ../gui/wxpython/gui_modules/gmodeler.py:576
+#: ../gui/wxpython/gui_modules/gmodeler.py:451
+#: ../gui/wxpython/gui_modules/gmodeler.py:574
 #, fuzzy
 msgid "Variables"
 msgstr "Liệt kê các bảng"
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:519
+#: ../gui/wxpython/gui_modules/gmodeler.py:517
 #, fuzzy
 msgid "GRASS GIS Graphical Modeler"
 msgstr "Trợ giúp GRASS GIS"
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:574
+#: ../gui/wxpython/gui_modules/gmodeler.py:572
 #, fuzzy
 msgid "Model"
 msgstr "Chế độ"
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:575
+#: ../gui/wxpython/gui_modules/gmodeler.py:573
 msgid "Items"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:644
+#: ../gui/wxpython/gui_modules/gmodeler.py:642
 msgid "Redrawing model..."
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:671
+#: ../gui/wxpython/gui_modules/gmodeler.py:669
 #, fuzzy
 msgid "Do you want to save changes in the model?"
 msgstr "Bạn có muốn lưu các thay đổi trong không gian làm việc?"
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:673
+#: ../gui/wxpython/gui_modules/gmodeler.py:671
 #, fuzzy
 msgid "Do you want to store current model settings to model file?"
 msgstr "Bạn có muốn lưu thiết lập hiện tại vào tệp không gian làm việc?"
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:740
-#: ../gui/wxpython/gui_modules/dbm.py:2087
+#: ../gui/wxpython/gui_modules/gmodeler.py:738
+#: ../gui/wxpython/gui_modules/dbm.py:2084
 msgid "Nothing to delete."
 msgstr "Không có gì để xóa."
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:744
+#: ../gui/wxpython/gui_modules/gmodeler.py:742
 #, fuzzy, python-format
 msgid "Do you want to permanently delete data?%s"
 msgstr ""
@@ -8296,20 +8302,20 @@ msgstr ""
 "\n"
 "%s"
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:745
+#: ../gui/wxpython/gui_modules/gmodeler.py:743
 #, fuzzy
 msgid "Delete intermediate data?"
 msgstr "Xoá phần đã được lọc"
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:759
+#: ../gui/wxpython/gui_modules/gmodeler.py:757
 #, fuzzy, python-format
 msgid "%d maps deleted from current mapset"
 msgstr ""
 "Loại bỏ các tập tin thành phần CSDL ra khỏi bộ bản đồ hiện tại của người "
 "dùng."
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:774
-#: ../gui/wxpython/gui_modules/gmodeler.py:887
+#: ../gui/wxpython/gui_modules/gmodeler.py:772
+#: ../gui/wxpython/gui_modules/gmodeler.py:885
 #, fuzzy
 msgid ""
 "Current model is not empty. Do you want to store current settings to model "
@@ -8318,54 +8324,54 @@ msgstr ""
 "Không gian làm việc hiện tại chưa trống. Bạn có muốn lưu thiết lập hiện tại "
 "vào tệp không gian làm việc?"
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:777
-#: ../gui/wxpython/gui_modules/gmodeler.py:890
+#: ../gui/wxpython/gui_modules/gmodeler.py:775
+#: ../gui/wxpython/gui_modules/gmodeler.py:888
 #, fuzzy
 msgid "Create new model?"
 msgstr "Tạo tập bản đồ mới"
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:802
+#: ../gui/wxpython/gui_modules/gmodeler.py:800
 #, fuzzy
 msgid "Choose model file"
 msgstr "Chọn tập tin"
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:820
+#: ../gui/wxpython/gui_modules/gmodeler.py:818
 #, python-format
 msgid "%(items)d items (%(actions)d actions) loaded into model"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:827
-#: ../gui/wxpython/gui_modules/gmodeler.py:864
+#: ../gui/wxpython/gui_modules/gmodeler.py:825
+#: ../gui/wxpython/gui_modules/gmodeler.py:862
 #, fuzzy, python-format
 msgid "Model file <%s> already exists. Do you want to overwrite this file?"
 msgstr ""
 "Tập tin không gian làm việc <%s> đã tồn tại. Bạn có muốn ghi đè tập tin này "
 "không?"
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:837
-#: ../gui/wxpython/gui_modules/gmodeler.py:877
+#: ../gui/wxpython/gui_modules/gmodeler.py:835
+#: ../gui/wxpython/gui_modules/gmodeler.py:875
 #, fuzzy, python-format
 msgid "File <%s> saved"
 msgstr "Tập tin POINTS <%s> đã được lưu"
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:846
+#: ../gui/wxpython/gui_modules/gmodeler.py:844
 #, fuzzy
 msgid "Choose file to save current model"
 msgstr "Chọn tập tin để lưu không gian làm việc hiện tại"
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:866
+#: ../gui/wxpython/gui_modules/gmodeler.py:864
 msgid "File already exists"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:914
+#: ../gui/wxpython/gui_modules/gmodeler.py:912
 msgid "Model is empty. Nothing to run."
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:1001
+#: ../gui/wxpython/gui_modules/gmodeler.py:999
 msgid "Model is empty. Nothing to validate."
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:1008
+#: ../gui/wxpython/gui_modules/gmodeler.py:1006
 #, fuzzy, python-format
 msgid ""
 "Model is not valid.\n"
@@ -8376,59 +8382,59 @@ msgstr ""
 "\n"
 "%s"
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:1011
+#: ../gui/wxpython/gui_modules/gmodeler.py:1009
 msgid "Model is valid."
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:1072
-#: ../gui/wxpython/gui_modules/gmodeler.py:1115
+#: ../gui/wxpython/gui_modules/gmodeler.py:1070
+#: ../gui/wxpython/gui_modules/gmodeler.py:1113
 #, python-format
 msgid "Model exported to <%s>"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:1080
+#: ../gui/wxpython/gui_modules/gmodeler.py:1078
 #, fuzzy
 msgid "Choose file to save"
 msgstr "Chọn tập tin GRC để nạp"
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:1082
+#: ../gui/wxpython/gui_modules/gmodeler.py:1080
 msgid "Python script (*.py)|*.py"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:1096
+#: ../gui/wxpython/gui_modules/gmodeler.py:1094
 #, fuzzy, python-format
 msgid "File <%s> already exists. Do you want to overwrite this file?"
 msgstr ""
 "Tập tin không gian làm việc <%s> đã tồn tại. Bạn có muốn ghi đè tập tin này "
 "không?"
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:1098
+#: ../gui/wxpython/gui_modules/gmodeler.py:1096
 #, fuzzy
 msgid "Save file"
 msgstr "Lưu tập tin thành..."
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:1184
+#: ../gui/wxpython/gui_modules/gmodeler.py:1182
 msgid ""
 "Module r.mapcalc cannot be used in the model. Use r.mapcalculator instead."
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:1241
+#: ../gui/wxpython/gui_modules/gmodeler.py:1239
 msgid "wxGUI Graphical Modeler"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:1243
+#: ../gui/wxpython/gui_modules/gmodeler.py:1241
 msgid ""
 "(C) 2010 by the GRASS Development Team\n"
 "\n"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:1244
+#: ../gui/wxpython/gui_modules/gmodeler.py:1242
 msgid ""
 "This program is free software under the GNU General Public License(>=v2). "
 "Read the file COPYING that comes with GRASS for details."
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:1374
+#: ../gui/wxpython/gui_modules/gmodeler.py:1372
 #, fuzzy, python-format
 msgid ""
 "Reading model file <%s> failed.\n"
@@ -8437,106 +8443,106 @@ msgstr ""
 "Thất bại khi đọc tập tin không gian làm việc <%s>. Tập tin không hợp lệ, "
 "không thể phân giải tài liệu XML."
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:1380
+#: ../gui/wxpython/gui_modules/gmodeler.py:1378
 #, fuzzy
 msgid "Please wait, loading model..."
 msgstr "Xin hãy chờ, đang nạp dữ liệu..."
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:1435
+#: ../gui/wxpython/gui_modules/gmodeler.py:1433
 #, fuzzy
 msgid "Writing current settings to model file failed."
 msgstr ""
 "Thất bại khi đang ghi thiết lập hiện tại vào tập tin không gian làm việc (%"
 "s)."
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:1736
-#: ../gui/wxpython/gui_modules/gmodeler.py:1793
-#: ../gui/wxpython/gui_modules/gmodeler.py:1920
-#: ../gui/wxpython/gui_modules/menuform.py:349
+#: ../gui/wxpython/gui_modules/gmodeler.py:1734
+#: ../gui/wxpython/gui_modules/gmodeler.py:1791
+#: ../gui/wxpython/gui_modules/gmodeler.py:1918
+#: ../gui/wxpython/gui_modules/menuform.py:346
 msgid "unknown"
 msgstr "không biết"
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:2018
+#: ../gui/wxpython/gui_modules/gmodeler.py:2016
 msgid "<not defined>"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:2028
+#: ../gui/wxpython/gui_modules/gmodeler.py:2026
 #, fuzzy
 msgid "Data properties"
 msgstr "Các thuộc tính của lớp"
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:2035
+#: ../gui/wxpython/gui_modules/gmodeler.py:2033
 #, fuzzy
 msgid "Name of raster map:"
 msgstr "Bản đồ raster đã được mã hóa lại:"
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:2037
+#: ../gui/wxpython/gui_modules/gmodeler.py:2035
 #, fuzzy
 msgid "Name of vector map:"
 msgstr "Tên cho bản đồ véc tơ mới"
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:2039
+#: ../gui/wxpython/gui_modules/gmodeler.py:2037
 msgid "Name of element:"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:2232
-#: ../gui/wxpython/gui_modules/layertree.py:276
+#: ../gui/wxpython/gui_modules/gmodeler.py:2230
+#: ../gui/wxpython/gui_modules/layertree.py:271
 msgid "Remove"
 msgstr "Loại bỏ"
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:2236
+#: ../gui/wxpython/gui_modules/gmodeler.py:2234
 #, fuzzy
 msgid "Disable"
 msgstr "Liệt kê các bảng"
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:2239
+#: ../gui/wxpython/gui_modules/gmodeler.py:2237
 #, fuzzy
 msgid "Enable"
 msgstr "Bảng"
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:2244
+#: ../gui/wxpython/gui_modules/gmodeler.py:2242
 #, fuzzy
 msgid "Add control point"
 msgstr "Điểm khống chế"
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:2246
+#: ../gui/wxpython/gui_modules/gmodeler.py:2244
 #, fuzzy
 msgid "Remove control point"
 msgstr "Thiết lập các điểm khống chế (GCP)"
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:2253
+#: ../gui/wxpython/gui_modules/gmodeler.py:2251
 msgid "Intermediate"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:2264
-#: ../gui/wxpython/gui_modules/layertree.py:290
+#: ../gui/wxpython/gui_modules/gmodeler.py:2262
+#: ../gui/wxpython/gui_modules/layertree.py:285
 msgid "Properties"
 msgstr "Các thuộc tính"
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:2268
+#: ../gui/wxpython/gui_modules/gmodeler.py:2266
 #, fuzzy
 msgid "Change ID"
 msgstr "Thay đổi các giá trị"
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:2324
+#: ../gui/wxpython/gui_modules/gmodeler.py:2322
 msgid "Add new GRASS module to the model"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:2342
-#: ../gui/wxpython/gui_modules/gmodeler.py:3865
-#: ../gui/wxpython/gui_modules/gmodeler.py:4291
+#: ../gui/wxpython/gui_modules/gmodeler.py:2340
+#: ../gui/wxpython/gui_modules/gmodeler.py:3863
+#: ../gui/wxpython/gui_modules/gmodeler.py:4289
 #: ../gui/wxpython/gui_modules/preferences.py:1367
 msgid "Command"
 msgstr "Lệnh"
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:2410
+#: ../gui/wxpython/gui_modules/gmodeler.py:2408
 msgid ""
 "Command not defined.\n"
 "\n"
 "Unable to add new action to the model."
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:2416
+#: ../gui/wxpython/gui_modules/gmodeler.py:2414
 #, python-format
 msgid ""
 "'%s' is not a GRASS module.\n"
@@ -8544,197 +8550,197 @@ msgid ""
 "Unable to add new action to the model."
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:3026
+#: ../gui/wxpython/gui_modules/gmodeler.py:3024
 #, fuzzy
 msgid "Action"
 msgstr "Hướng"
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:3031
+#: ../gui/wxpython/gui_modules/gmodeler.py:3029
 msgid "Validity"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:3039
+#: ../gui/wxpython/gui_modules/gmodeler.py:3037
 #, fuzzy
 msgid "Valid:"
 msgstr "Miền hợp lệ"
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:3056
+#: ../gui/wxpython/gui_modules/gmodeler.py:3054
 #, fuzzy
 msgid "Invalid:"
 msgstr "Giá trị không hợp lệ: %s"
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:3073
+#: ../gui/wxpython/gui_modules/gmodeler.py:3071
 msgid "Running:"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:3090
+#: ../gui/wxpython/gui_modules/gmodeler.py:3088
 #, fuzzy
 msgid "Disabled:"
 msgstr "Liệt kê các bảng"
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:3110
-#: ../gui/wxpython/gui_modules/gmodeler.py:3229
+#: ../gui/wxpython/gui_modules/gmodeler.py:3108
+#: ../gui/wxpython/gui_modules/gmodeler.py:3227
 #, fuzzy
 msgid "Shape size"
 msgstr "Chỉ mục hình dạng"
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:3167
+#: ../gui/wxpython/gui_modules/gmodeler.py:3165
 #: ../gui/wxpython/gui_modules/profile.py:1252
 msgid "Type"
 msgstr "Loại"
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:3175
+#: ../gui/wxpython/gui_modules/gmodeler.py:3173
 #, fuzzy
 msgid "Raster:"
 msgstr "Raster"
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:3192
+#: ../gui/wxpython/gui_modules/gmodeler.py:3190
 #, fuzzy
 msgid "3D raster:"
 msgstr "raster 3D"
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:3209
+#: ../gui/wxpython/gui_modules/gmodeler.py:3207
 #, fuzzy
 msgid "Vector:"
 msgstr "Vec-tơ"
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:3303
-#: ../gui/wxpython/gui_modules/layertree.py:366
-#: ../gui/wxpython/gui_modules/layertree.py:397
+#: ../gui/wxpython/gui_modules/gmodeler.py:3301
+#: ../gui/wxpython/gui_modules/layertree.py:361
+#: ../gui/wxpython/gui_modules/layertree.py:392
 msgid "Metadata"
 msgstr "Đặc tả dữ liệu"
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:3305
+#: ../gui/wxpython/gui_modules/gmodeler.py:3303
 #, fuzzy
 msgid "Commands"
 msgstr "Lệnh"
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:3325
+#: ../gui/wxpython/gui_modules/gmodeler.py:3323
 #, fuzzy
 msgid "Apply properties"
 msgstr "Các thuộc tính của lớp"
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:3348
+#: ../gui/wxpython/gui_modules/gmodeler.py:3346
 #, fuzzy
 msgid "Description:"
 msgstr "Mô tả"
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:3357
+#: ../gui/wxpython/gui_modules/gmodeler.py:3355
 #, fuzzy
 msgid "Author(s):"
 msgstr "Tác giả"
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:3406
+#: ../gui/wxpython/gui_modules/gmodeler.py:3404
 #, fuzzy
 msgid "Model parameters"
 msgstr "Các tham số địa hình"
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:3553
+#: ../gui/wxpython/gui_modules/gmodeler.py:3551
 #, fuzzy
 msgid "List of variables - right-click to delete"
 msgstr "Danh sách các phạm trù - bấm chuột phải để xóa"
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:3556
-#: ../gui/wxpython/gui_modules/gmodeler.py:3603
-#: ../gui/wxpython/gui_modules/dbm.py:888
-#: ../gui/wxpython/gui_modules/dbm.py:2229
+#: ../gui/wxpython/gui_modules/gmodeler.py:3554
+#: ../gui/wxpython/gui_modules/gmodeler.py:3601
+#: ../gui/wxpython/gui_modules/dbm.py:885
+#: ../gui/wxpython/gui_modules/dbm.py:2226
 msgid "Data type"
 msgstr "Kiểu dữ liệu"
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:3557
-#: ../gui/wxpython/gui_modules/gmodeler.py:3609
+#: ../gui/wxpython/gui_modules/gmodeler.py:3555
+#: ../gui/wxpython/gui_modules/gmodeler.py:3607
 #, fuzzy
 msgid "Default value"
 msgstr "Thiết lập giá trị"
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:3561
+#: ../gui/wxpython/gui_modules/gmodeler.py:3559
 #, fuzzy
 msgid "Add new variable"
 msgstr "Thêm đỉnh mới"
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:3565
+#: ../gui/wxpython/gui_modules/gmodeler.py:3563
 #, fuzzy
 msgid "integer"
 msgstr "Con trỏ"
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:3566
+#: ../gui/wxpython/gui_modules/gmodeler.py:3564
 msgid "float"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:3567
+#: ../gui/wxpython/gui_modules/gmodeler.py:3565
 msgid "string"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:3575
+#: ../gui/wxpython/gui_modules/gmodeler.py:3573
 msgid "Add new variable to the model"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:3723
+#: ../gui/wxpython/gui_modules/gmodeler.py:3721
 #, fuzzy, python-format
 msgid "Variable <%s> already exists in the model. Adding variable failed."
 msgstr "Không thể tạo bảng mới. Bảng <%s> đã có trong CSDL."
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:3752
+#: ../gui/wxpython/gui_modules/gmodeler.py:3750
 #, fuzzy
 msgid "Do you want to delete all variables from the model?"
 msgstr ""
 "Bạn muốn loại bỏ (các) lớp bản đồ được chọn khỏi sơ đồ lớp hình cây không?"
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:3754
+#: ../gui/wxpython/gui_modules/gmodeler.py:3752
 #, fuzzy
 msgid "Delete variables"
 msgstr "Xóa tất cả"
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:3834
+#: ../gui/wxpython/gui_modules/gmodeler.py:3832
 #, fuzzy
 msgid "Condition: "
 msgstr "điều kiện"
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:3836
+#: ../gui/wxpython/gui_modules/gmodeler.py:3834
 msgid "Condition: not defined"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:3858
+#: ../gui/wxpython/gui_modules/gmodeler.py:3856
 #, fuzzy
 msgid "Condition"
 msgstr "điều kiện"
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:3864
-#: ../gui/wxpython/gui_modules/gmodeler.py:3972
-#: ../gui/wxpython/gui_modules/gmodeler.py:4290
+#: ../gui/wxpython/gui_modules/gmodeler.py:3862
+#: ../gui/wxpython/gui_modules/gmodeler.py:3970
+#: ../gui/wxpython/gui_modules/gmodeler.py:4288
 msgid "ID"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:3906
+#: ../gui/wxpython/gui_modules/gmodeler.py:3904
 msgid "loop"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:3914
+#: ../gui/wxpython/gui_modules/gmodeler.py:3912
 #, fuzzy
 msgid "Loop properties"
 msgstr "Các thuộc tính của lớp"
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:3920
+#: ../gui/wxpython/gui_modules/gmodeler.py:3918
 #, fuzzy
 msgid "List of items in loop"
 msgstr "Danh sách các đối tượng bị trùng"
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:3969
+#: ../gui/wxpython/gui_modules/gmodeler.py:3967
 #, fuzzy
 msgid "List of items - right-click to delete"
 msgstr "Danh sách các phạm trù - bấm chuột phải để xóa"
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:3972
+#: ../gui/wxpython/gui_modules/gmodeler.py:3970
 msgid "In block"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:3973
+#: ../gui/wxpython/gui_modules/gmodeler.py:3971
 #, fuzzy
 msgid "Command / Condition"
 msgstr "Thiết lập cho hộp thoại lệnh"
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:4100
-#: ../gui/wxpython/gui_modules/dbm.py:1181
+#: ../gui/wxpython/gui_modules/gmodeler.py:4098
+#: ../gui/wxpython/gui_modules/dbm.py:1178
 #, python-format
 msgid ""
 "Selected data records (%d) will permanently deleted from table. Do you want "
@@ -8743,30 +8749,30 @@ msgstr ""
 "Các bản ghi dữ liệu đã được chọn (%d) sẽ bị xóa bỏ hoàn toàn khỏi bảng. Bạn "
 "có muốn xóa chúng không?"
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:4103
-#: ../gui/wxpython/gui_modules/dbm.py:1184
-#: ../gui/wxpython/gui_modules/dbm.py:1230
+#: ../gui/wxpython/gui_modules/gmodeler.py:4101
+#: ../gui/wxpython/gui_modules/dbm.py:1181
+#: ../gui/wxpython/gui_modules/dbm.py:1227
 msgid "Delete records"
 msgstr "Xóa bản ghi"
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:4157
+#: ../gui/wxpython/gui_modules/gmodeler.py:4155
 msgid "Normalize"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:4255
+#: ../gui/wxpython/gui_modules/gmodeler.py:4253
 msgid "if-else"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:4276
+#: ../gui/wxpython/gui_modules/gmodeler.py:4274
 #, fuzzy
 msgid "If-else properties"
 msgstr "Các thuộc tính của lớp"
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:4282
+#: ../gui/wxpython/gui_modules/gmodeler.py:4280
 msgid "List of items in 'if' block"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:4287
+#: ../gui/wxpython/gui_modules/gmodeler.py:4285
 msgid "List of items in 'else' block"
 msgstr ""
 
@@ -8793,77 +8799,77 @@ msgstr ""
 msgid " row %d:"
 msgstr "hàng %d:"
 
-#: ../gui/wxpython/gui_modules/sqlbuilder.py:77
+#: ../gui/wxpython/gui_modules/sqlbuilder.py:74
 #, python-format
 msgid "GRASS SQL Builder (%(type)s): vector map <%(map)s>"
 msgstr "Trình xây dựng SQL của GRASS (%(type)s): bản đồ véc-tơ <%(map)s>"
 
-#: ../gui/wxpython/gui_modules/sqlbuilder.py:84
+#: ../gui/wxpython/gui_modules/sqlbuilder.py:81
 msgid "SQL statement not verified"
 msgstr "Câu lệnh SQL không được kiểm chứng"
 
-#: ../gui/wxpython/gui_modules/sqlbuilder.py:90
+#: ../gui/wxpython/gui_modules/sqlbuilder.py:87
 msgid "Set SQL statement to default"
 msgstr "Đặt câu lệnh SQL về mặc định"
 
-#: ../gui/wxpython/gui_modules/sqlbuilder.py:92
+#: ../gui/wxpython/gui_modules/sqlbuilder.py:89
 msgid "Verify"
 msgstr "Kiểm chứng"
 
-#: ../gui/wxpython/gui_modules/sqlbuilder.py:93
+#: ../gui/wxpython/gui_modules/sqlbuilder.py:90
 msgid "Verify SQL statement"
 msgstr "Kiển chứng câu lệnh SQL"
 
-#: ../gui/wxpython/gui_modules/sqlbuilder.py:98
+#: ../gui/wxpython/gui_modules/sqlbuilder.py:95
 msgid "Apply SQL statement and close the dialog"
 msgstr "Áp dụng câu lệnh SQL và đóng hộp thoại"
 
-#: ../gui/wxpython/gui_modules/sqlbuilder.py:100
+#: ../gui/wxpython/gui_modules/sqlbuilder.py:97
 msgid "Close the dialog"
 msgstr "Đóng hộp thoại"
 
-#: ../gui/wxpython/gui_modules/sqlbuilder.py:102
+#: ../gui/wxpython/gui_modules/sqlbuilder.py:99
 msgid "Get all values"
 msgstr "Lấy tất cả các giá trị"
 
-#: ../gui/wxpython/gui_modules/sqlbuilder.py:105
+#: ../gui/wxpython/gui_modules/sqlbuilder.py:102
 msgid "Get sample"
 msgstr "Lấy mẫu"
 
-#: ../gui/wxpython/gui_modules/sqlbuilder.py:148
+#: ../gui/wxpython/gui_modules/sqlbuilder.py:145
 msgid "Add on double-click"
 msgstr "Bấm đúp chuột để thêm vào"
 
-#: ../gui/wxpython/gui_modules/sqlbuilder.py:149
+#: ../gui/wxpython/gui_modules/sqlbuilder.py:146
 msgid "columns"
 msgstr "cột"
 
-#: ../gui/wxpython/gui_modules/sqlbuilder.py:149
+#: ../gui/wxpython/gui_modules/sqlbuilder.py:146
 msgid "values"
 msgstr "giá trị"
 
-#: ../gui/wxpython/gui_modules/sqlbuilder.py:153
+#: ../gui/wxpython/gui_modules/sqlbuilder.py:150
 msgid "Close dialog on apply"
 msgstr "Đóng hộp thoại khi áp dụng"
 
-#: ../gui/wxpython/gui_modules/sqlbuilder.py:184
-#: ../gui/wxpython/gui_modules/dbm.py:845
+#: ../gui/wxpython/gui_modules/sqlbuilder.py:181
+#: ../gui/wxpython/gui_modules/dbm.py:842
 msgid "Database connection"
 msgstr "Kết nối CSDL"
 
-#: ../gui/wxpython/gui_modules/sqlbuilder.py:239
+#: ../gui/wxpython/gui_modules/sqlbuilder.py:236
 msgid "Columns"
 msgstr "cột"
 
-#: ../gui/wxpython/gui_modules/sqlbuilder.py:241
+#: ../gui/wxpython/gui_modules/sqlbuilder.py:238
 msgid "Values"
 msgstr "giá trị"
 
-#: ../gui/wxpython/gui_modules/sqlbuilder.py:424
+#: ../gui/wxpython/gui_modules/sqlbuilder.py:421
 msgid "SQL statement is not valid"
 msgstr "Câu lệnh SQL không hợp lệ"
 
-#: ../gui/wxpython/gui_modules/sqlbuilder.py:426
+#: ../gui/wxpython/gui_modules/sqlbuilder.py:423
 #, python-format
 msgid ""
 "SQL statement is not valid.\n"
@@ -8874,13 +8880,13 @@ msgstr ""
 "\n"
 "%s"
 
-#: ../gui/wxpython/gui_modules/sqlbuilder.py:429
+#: ../gui/wxpython/gui_modules/sqlbuilder.py:426
 msgid "SQL statement is valid"
 msgstr "Câu lệnh SQL hợp lệ"
 
-#: ../gui/wxpython/gui_modules/sqlbuilder.py:452
-#: ../gui/wxpython/gui_modules/dbm.py:736
-#: ../gui/wxpython/gui_modules/dbm.py:2023
+#: ../gui/wxpython/gui_modules/sqlbuilder.py:449
+#: ../gui/wxpython/gui_modules/dbm.py:733
+#: ../gui/wxpython/gui_modules/dbm.py:2020
 msgid "SQL Builder"
 msgstr "Trình xây dựng câu lệnh SQL"
 
@@ -9151,11 +9157,11 @@ msgstr "Không thể vẽ chồng <%s>."
 msgid "Unable render overlay <%s>"
 msgstr "Không thể vẽ chồng <%s>"
 
-#: ../gui/wxpython/gui_modules/dbm.py:147
+#: ../gui/wxpython/gui_modules/dbm.py:144
 msgid "Loading data..."
 msgstr "Đang nạp dữ liệu..."
 
-#: ../gui/wxpython/gui_modules/dbm.py:154
+#: ../gui/wxpython/gui_modules/dbm.py:151
 #, python-format
 msgid ""
 "Attribute table <%s> not found. For creating the table switch to 'Manage "
@@ -9164,34 +9170,34 @@ msgstr ""
 "Không tìm thấy bảng thuộc tính <%s>. Để tạo bảo, chuyển qua thẻ 'Quản lý "
 "lớp'."
 
-#: ../gui/wxpython/gui_modules/dbm.py:165
+#: ../gui/wxpython/gui_modules/dbm.py:162
 #, python-format
 msgid "Column <%(column)s> not found in in the table <%(table)s>."
 msgstr "Không thấy cột <%(column)s> trong bảng <%(table)s>."
 
-#: ../gui/wxpython/gui_modules/dbm.py:235
+#: ../gui/wxpython/gui_modules/dbm.py:232
 msgid "Can display only 256 columns."
 msgstr "Chỉ có thể trình bày 256 cột."
 
-#: ../gui/wxpython/gui_modules/dbm.py:251
+#: ../gui/wxpython/gui_modules/dbm.py:248
 msgid "Limit 100000 records."
 msgstr "Giới hạn 10000 bản ghi."
 
-#: ../gui/wxpython/gui_modules/dbm.py:268
-#: ../gui/wxpython/gui_modules/dbm.py:818
-#: ../gui/wxpython/gui_modules/dbm.py:1155
-#: ../gui/wxpython/gui_modules/dbm.py:1812
-#: ../gui/wxpython/gui_modules/dbm.py:1834
-#: ../gui/wxpython/gui_modules/dbm.py:1968
+#: ../gui/wxpython/gui_modules/dbm.py:265
+#: ../gui/wxpython/gui_modules/dbm.py:815
+#: ../gui/wxpython/gui_modules/dbm.py:1152
+#: ../gui/wxpython/gui_modules/dbm.py:1809
+#: ../gui/wxpython/gui_modules/dbm.py:1831
+#: ../gui/wxpython/gui_modules/dbm.py:1965
 #, python-format
 msgid "Number of loaded records: %d"
 msgstr "Số bản ghi đã nạp: %d"
 
-#: ../gui/wxpython/gui_modules/dbm.py:292
+#: ../gui/wxpython/gui_modules/dbm.py:289
 msgid "Unknown value"
 msgstr "Giá trị không biết"
 
-#: ../gui/wxpython/gui_modules/dbm.py:307
+#: ../gui/wxpython/gui_modules/dbm.py:304
 #, python-format
 msgid ""
 "Error loading attribute data. Record number: %(rec)d. Unable to convert "
@@ -9204,63 +9210,63 @@ msgstr ""
 "\n"
 "Chi tiết: %(detail)s"
 
-#: ../gui/wxpython/gui_modules/dbm.py:390
+#: ../gui/wxpython/gui_modules/dbm.py:387
 msgid "Sort ascending"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/dbm.py:391
+#: ../gui/wxpython/gui_modules/dbm.py:388
 msgid "Sort descending"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/dbm.py:394
+#: ../gui/wxpython/gui_modules/dbm.py:391
 msgid "Calculate (only numeric columns)"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/dbm.py:400
+#: ../gui/wxpython/gui_modules/dbm.py:397
 msgid "Area size"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/dbm.py:401
+#: ../gui/wxpython/gui_modules/dbm.py:398
 #, fuzzy
 msgid "Line length"
 msgstr "dài"
 
-#: ../gui/wxpython/gui_modules/dbm.py:402
+#: ../gui/wxpython/gui_modules/dbm.py:399
 msgid "Compactness of an area"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/dbm.py:403
+#: ../gui/wxpython/gui_modules/dbm.py:400
 msgid "Fractal dimension of boundary defining a polygon"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/dbm.py:404
+#: ../gui/wxpython/gui_modules/dbm.py:401
 msgid "Perimeter length of an area"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/dbm.py:405
+#: ../gui/wxpython/gui_modules/dbm.py:402
 msgid "Number of features for each category"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/dbm.py:406
+#: ../gui/wxpython/gui_modules/dbm.py:403
 msgid "Slope steepness of 3D line"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/dbm.py:407
+#: ../gui/wxpython/gui_modules/dbm.py:404
 #, fuzzy
 msgid "Line sinuousity"
 msgstr "Kiểu đường"
 
-#: ../gui/wxpython/gui_modules/dbm.py:408
+#: ../gui/wxpython/gui_modules/dbm.py:405
 #, fuzzy
 msgid "Line azimuth"
 msgstr "Độ rộng đường"
 
-#: ../gui/wxpython/gui_modules/dbm.py:560
-#: ../gui/wxpython/gui_modules/dbm.py:3076
+#: ../gui/wxpython/gui_modules/dbm.py:557
+#: ../gui/wxpython/gui_modules/dbm.py:3073
 msgid "GRASS GIS Attribute Table Manager"
 msgstr "Bộ Quản Lý Bảng Thuộc Tính của GRASS GIS"
 
-#: ../gui/wxpython/gui_modules/dbm.py:590
+#: ../gui/wxpython/gui_modules/dbm.py:587
 #, python-format
 msgid ""
 "Database connection for vector map <%s> is not defined in DB file. You can "
@@ -9269,146 +9275,146 @@ msgstr ""
 "Kết nối CSDL cho bản đồ véc tơ <%s> không được định nghĩa trong tệp DB. Bạn "
 "có thể định nghĩa kết nối mới trong thẻ 'Quản lý lớp'."
 
-#: ../gui/wxpython/gui_modules/dbm.py:594
+#: ../gui/wxpython/gui_modules/dbm.py:591
 msgid "Attribute Table Manager"
 msgstr "Bộ Quản Lý Bảng Thuộc Tính"
 
-#: ../gui/wxpython/gui_modules/dbm.py:634
+#: ../gui/wxpython/gui_modules/dbm.py:631
 msgid "Browse data"
 msgstr "Duyệt dữ liệu"
 
-#: ../gui/wxpython/gui_modules/dbm.py:640
+#: ../gui/wxpython/gui_modules/dbm.py:637
 msgid "Manage tables"
 msgstr "Quản lý bảng"
 
-#: ../gui/wxpython/gui_modules/dbm.py:648
+#: ../gui/wxpython/gui_modules/dbm.py:645
 msgid "Manage layers"
 msgstr "Quản lý lớp"
 
-#: ../gui/wxpython/gui_modules/dbm.py:663
+#: ../gui/wxpython/gui_modules/dbm.py:660
 msgid "Close Attribute Table Manager"
 msgstr "Đóng Trình Quản lý Bảng Thuộc tính"
 
-#: ../gui/wxpython/gui_modules/dbm.py:665
+#: ../gui/wxpython/gui_modules/dbm.py:662
 msgid "Reload attribute data (selected layer only)"
 msgstr "Nạp lại dữ liệu thuộc tính (chỉ của lớp được chọn)"
 
-#: ../gui/wxpython/gui_modules/dbm.py:694
+#: ../gui/wxpython/gui_modules/dbm.py:691
 msgid "Attribute data - right-click to edit/manage records"
 msgstr "Dữ liệu thuộc tính -chuột phải để biên tập/quản lý bản ghi"
 
-#: ../gui/wxpython/gui_modules/dbm.py:708
-#: ../gui/wxpython/gui_modules/dbm.py:836
-#: ../gui/wxpython/gui_modules/dbm.py:2282
-#: ../gui/wxpython/gui_modules/dbm.py:2407
-#: ../gui/wxpython/gui_modules/dbm.py:2665
+#: ../gui/wxpython/gui_modules/dbm.py:705
+#: ../gui/wxpython/gui_modules/dbm.py:833
+#: ../gui/wxpython/gui_modules/dbm.py:2279
+#: ../gui/wxpython/gui_modules/dbm.py:2404
+#: ../gui/wxpython/gui_modules/dbm.py:2662
 msgid "Table"
 msgstr "Bảng"
 
-#: ../gui/wxpython/gui_modules/dbm.py:714
+#: ../gui/wxpython/gui_modules/dbm.py:711
 msgid "SQL Query"
 msgstr "Câu truy vấn SQL"
 
-#: ../gui/wxpython/gui_modules/dbm.py:734
+#: ../gui/wxpython/gui_modules/dbm.py:731
 msgid "Apply SELECT statement and reload data records"
 msgstr "Áp dụng câu lệnh SELECT và nạp lại các bản ghi dữ liệu"
 
-#: ../gui/wxpython/gui_modules/dbm.py:740
+#: ../gui/wxpython/gui_modules/dbm.py:737
 msgid "Simple"
 msgstr "Đơn giản"
 
-#: ../gui/wxpython/gui_modules/dbm.py:743
+#: ../gui/wxpython/gui_modules/dbm.py:740
 #: ../gui/wxpython/gui_modules/preferences.py:1826
 msgid "Advanced"
 msgstr "Nâng cao"
 
-#: ../gui/wxpython/gui_modules/dbm.py:857
+#: ../gui/wxpython/gui_modules/dbm.py:854
 #, python-format
 msgid "Table <%s> - right-click to delete column(s)"
 msgstr "Bảng <%s> - bấm chuột phải để xóa (các) cột"
 
-#: ../gui/wxpython/gui_modules/dbm.py:870
+#: ../gui/wxpython/gui_modules/dbm.py:867
 msgid "Manage columns"
 msgstr "Quản lý cột"
 
-#: ../gui/wxpython/gui_modules/dbm.py:877
-#: ../gui/wxpython/gui_modules/dbm.py:2229
+#: ../gui/wxpython/gui_modules/dbm.py:874
+#: ../gui/wxpython/gui_modules/dbm.py:2226
 msgid "Column name"
 msgstr "Tên cột"
 
-#: ../gui/wxpython/gui_modules/dbm.py:905
-#: ../gui/wxpython/gui_modules/dbm.py:2229
+#: ../gui/wxpython/gui_modules/dbm.py:902
+#: ../gui/wxpython/gui_modules/dbm.py:2226
 msgid "Data length"
 msgstr "Độ dài dữ liệu"
 
-#: ../gui/wxpython/gui_modules/dbm.py:922
+#: ../gui/wxpython/gui_modules/dbm.py:919
 msgid "Add"
 msgstr "Thêm"
 
-#: ../gui/wxpython/gui_modules/dbm.py:942
+#: ../gui/wxpython/gui_modules/dbm.py:939
 msgid "To"
 msgstr "Thành"
 
-#: ../gui/wxpython/gui_modules/dbm.py:952
+#: ../gui/wxpython/gui_modules/dbm.py:949
 msgid "&Rename"
 msgstr "Đổ&i tên"
 
-#: ../gui/wxpython/gui_modules/dbm.py:1011
+#: ../gui/wxpython/gui_modules/dbm.py:1008
 msgid "Layers of vector map"
 msgstr "Các lớp của bản đồ véc tơ"
 
-#: ../gui/wxpython/gui_modules/dbm.py:1020
+#: ../gui/wxpython/gui_modules/dbm.py:1017
 msgid "List of layers"
 msgstr "Danh sách lớp"
 
-#: ../gui/wxpython/gui_modules/dbm.py:1120
+#: ../gui/wxpython/gui_modules/dbm.py:1117
 #: ../gui/wxpython/gui_modules/preferences.py:625
 msgid "Edit selected record"
 msgstr "Biên tập bản ghi đã chọn"
 
-#: ../gui/wxpython/gui_modules/dbm.py:1124
-#: ../gui/wxpython/gui_modules/dbm.py:1362
+#: ../gui/wxpython/gui_modules/dbm.py:1121
+#: ../gui/wxpython/gui_modules/dbm.py:1359
 msgid "Insert new record"
 msgstr "Chèn bản ghi mới"
 
-#: ../gui/wxpython/gui_modules/dbm.py:1125
+#: ../gui/wxpython/gui_modules/dbm.py:1122
 msgid "Delete selected record(s)"
 msgstr "Xóa (các) bản ghi đã chọn"
 
-#: ../gui/wxpython/gui_modules/dbm.py:1126
+#: ../gui/wxpython/gui_modules/dbm.py:1123
 msgid "Delete all records"
 msgstr "Xóa tất cả bản ghi "
 
-#: ../gui/wxpython/gui_modules/dbm.py:1132
+#: ../gui/wxpython/gui_modules/dbm.py:1129
 #: ../gui/wxpython/gui_modules/gdialogs.py:859
 #: ../gui/wxpython/gui_modules/gdialogs.py:1387
 msgid "Select all"
 msgstr "Chọn hết"
 
-#: ../gui/wxpython/gui_modules/dbm.py:1133
+#: ../gui/wxpython/gui_modules/dbm.py:1130
 #: ../gui/wxpython/gui_modules/gdialogs.py:861
 #: ../gui/wxpython/gui_modules/gdialogs.py:1388
 msgid "Deselect all"
 msgstr "Hủy chọn tất cả"
 
-#: ../gui/wxpython/gui_modules/dbm.py:1135
+#: ../gui/wxpython/gui_modules/dbm.py:1132
 msgid "Highlight selected features"
 msgstr "Làm nổi bật các đối tượng đã chọn"
 
-#: ../gui/wxpython/gui_modules/dbm.py:1136
+#: ../gui/wxpython/gui_modules/dbm.py:1133
 msgid "Highlight selected features and zoom"
 msgstr "Làm nổi bật các đối tượng đã chọn rồi phóng đến chúng"
 
-#: ../gui/wxpython/gui_modules/dbm.py:1140
-#: ../gui/wxpython/gui_modules/dbm.py:2063
+#: ../gui/wxpython/gui_modules/dbm.py:1137
+#: ../gui/wxpython/gui_modules/dbm.py:2060
 msgid "Extract selected features"
 msgstr "Trích ra các đối tượng đã chọn"
 
-#: ../gui/wxpython/gui_modules/dbm.py:1141
+#: ../gui/wxpython/gui_modules/dbm.py:1138
 msgid "Delete selected features"
 msgstr "Xóa các đối tượng đã chọn"
 
-#: ../gui/wxpython/gui_modules/dbm.py:1227
+#: ../gui/wxpython/gui_modules/dbm.py:1224
 #, python-format
 msgid ""
 "All data records (%d) will permanently deleted from table. Do you want to "
@@ -9417,39 +9423,39 @@ msgstr ""
 "Tất cả các bản ghi dữ liệu (%d) sẽ bị xóa bỏ hoàn toàn khỏi bảng. Bạn có "
 "muốn xóa chúng không?"
 
-#: ../gui/wxpython/gui_modules/dbm.py:1373
+#: ../gui/wxpython/gui_modules/dbm.py:1370
 #, python-format
 msgid "Record with category number %d already exists in the table."
 msgstr "Bản ghi với số hiệu phạm trù %d đã có trong bảng."
 
-#: ../gui/wxpython/gui_modules/dbm.py:1383
+#: ../gui/wxpython/gui_modules/dbm.py:1380
 #, python-format
 msgid "Category number (column %s) is missing."
 msgstr "Số hiệu phạm trù (cột %s) bị thiếu."
 
-#: ../gui/wxpython/gui_modules/dbm.py:1397
-#: ../gui/wxpython/gui_modules/dbm.py:1504
+#: ../gui/wxpython/gui_modules/dbm.py:1394
+#: ../gui/wxpython/gui_modules/dbm.py:1501
 #, python-format
 msgid "Value '%(value)s' needs to be entered as %(type)s."
 msgstr "Giá trị '%(value)s' cần phải được nhập vào dưới dạng %(type)s."
 
-#: ../gui/wxpython/gui_modules/dbm.py:1408
+#: ../gui/wxpython/gui_modules/dbm.py:1405
 msgid "Unable to insert new record."
 msgstr "Không thể chèn bản ghi mới."
 
-#: ../gui/wxpython/gui_modules/dbm.py:1477
+#: ../gui/wxpython/gui_modules/dbm.py:1474
 msgid "Update existing record"
 msgstr "Cập nhật bản ghi hiện có."
 
-#: ../gui/wxpython/gui_modules/dbm.py:1517
+#: ../gui/wxpython/gui_modules/dbm.py:1514
 msgid "Unable to update existing record."
 msgstr "Không thể cập nhật bản ghi hiện có."
 
-#: ../gui/wxpython/gui_modules/dbm.py:1603
+#: ../gui/wxpython/gui_modules/dbm.py:1600
 msgid "Unable to rename column. No column name defined."
 msgstr "Không thể đổi tên cột. Tên cột không được định nghĩa."
 
-#: ../gui/wxpython/gui_modules/dbm.py:1612
+#: ../gui/wxpython/gui_modules/dbm.py:1609
 #, python-format
 msgid ""
 "Unable to rename column <%(column)s> to <%(columnTo)s>. Column already "
@@ -9458,7 +9464,7 @@ msgstr ""
 "Không thể đổi tên cột <%(column)s> thành <%(columnTo)s>. Cột này đã có trong "
 "bảng <%(table)s>."
 
-#: ../gui/wxpython/gui_modules/dbm.py:1629
+#: ../gui/wxpython/gui_modules/dbm.py:1626
 #, python-format
 msgid ""
 "Unable to rename column. Column <%(column)s> doesn't exist in the table <%"
@@ -9466,15 +9472,15 @@ msgid ""
 msgstr ""
 "Không thể đổi tên cột. Cột <%(column)s> không có trong bảng <%(table)s>."
 
-#: ../gui/wxpython/gui_modules/dbm.py:1657
+#: ../gui/wxpython/gui_modules/dbm.py:1654
 msgid "Drop selected column"
 msgstr "Bỏ cột đã chọn"
 
-#: ../gui/wxpython/gui_modules/dbm.py:1660
+#: ../gui/wxpython/gui_modules/dbm.py:1657
 msgid "Drop all columns"
 msgstr "Bỏ tất cả cột"
 
-#: ../gui/wxpython/gui_modules/dbm.py:1675
+#: ../gui/wxpython/gui_modules/dbm.py:1672
 #, python-format
 msgid ""
 "Selected column '%s' will PERMANENTLY removed from table. Do you want to "
@@ -9483,12 +9489,12 @@ msgstr ""
 "Cột được chọn '%s' sẽ bị xóa bỏ HOÀN TOÀN khỏi bảng. Bạn có muốn xóa nó "
 "không?"
 
-#: ../gui/wxpython/gui_modules/dbm.py:1678
-#: ../gui/wxpython/gui_modules/dbm.py:1715
+#: ../gui/wxpython/gui_modules/dbm.py:1675
+#: ../gui/wxpython/gui_modules/dbm.py:1712
 msgid "Drop column(s)"
 msgstr "Bỏ (các) cột"
 
-#: ../gui/wxpython/gui_modules/dbm.py:1712
+#: ../gui/wxpython/gui_modules/dbm.py:1709
 #, python-format
 msgid ""
 "Selected columns\n"
@@ -9499,17 +9505,17 @@ msgstr ""
 "%s\n"
 "sẽ bị loại bỏ HOÀN TOÀN khỏi bảng. Bạn có muốn bỏ các cột không?"
 
-#: ../gui/wxpython/gui_modules/dbm.py:1750
+#: ../gui/wxpython/gui_modules/dbm.py:1747
 msgid "Unable to add column to the table. No column name defined."
 msgstr "Không thể thêm cột vào bảng. Chưa định nghĩa tên cột."
 
-#: ../gui/wxpython/gui_modules/dbm.py:1772
+#: ../gui/wxpython/gui_modules/dbm.py:1769
 #, python-format
 msgid "Column <%(column)s> already exists in table <%(table)s>."
 msgstr "Cột <%(column)s> đã có trong bảng <%(table)s>."
 
-#: ../gui/wxpython/gui_modules/dbm.py:1931
-#: ../gui/wxpython/gui_modules/dbm.py:1955
+#: ../gui/wxpython/gui_modules/dbm.py:1928
+#: ../gui/wxpython/gui_modules/dbm.py:1952
 #, python-format
 msgid ""
 "Loading attribute data failed.\n"
@@ -9520,7 +9526,7 @@ msgstr ""
 "\n"
 "%s"
 
-#: ../gui/wxpython/gui_modules/dbm.py:1942
+#: ../gui/wxpython/gui_modules/dbm.py:1939
 #, python-format
 msgid ""
 "Loading attribute data failed.\n"
@@ -9533,28 +9539,28 @@ msgstr ""
 " \n"
 "%s"
 
-#: ../gui/wxpython/gui_modules/dbm.py:2058
+#: ../gui/wxpython/gui_modules/dbm.py:2055
 msgid "Nothing to extract."
 msgstr "Không có gì để trích ra."
 
-#: ../gui/wxpython/gui_modules/dbm.py:2174
-#: ../gui/wxpython/gui_modules/dbm.py:2587
-#: ../gui/wxpython/gui_modules/dbm.py:3011
+#: ../gui/wxpython/gui_modules/dbm.py:2171
+#: ../gui/wxpython/gui_modules/dbm.py:2584
+#: ../gui/wxpython/gui_modules/dbm.py:3008
 #, python-format
 msgid "Drop also linked attribute table (%s)"
 msgstr "Bỏ cả bảng thuộc tính liên kết (%s)"
 
-#: ../gui/wxpython/gui_modules/dbm.py:2282
-#: ../gui/wxpython/gui_modules/dbm.py:2396
-#: ../gui/wxpython/gui_modules/dbm.py:2653
+#: ../gui/wxpython/gui_modules/dbm.py:2279
+#: ../gui/wxpython/gui_modules/dbm.py:2393
+#: ../gui/wxpython/gui_modules/dbm.py:2650
 msgid "Driver"
 msgstr "Trình điều khiển"
 
-#: ../gui/wxpython/gui_modules/dbm.py:2282
+#: ../gui/wxpython/gui_modules/dbm.py:2279
 msgid "Key"
 msgstr "Khóa"
 
-#: ../gui/wxpython/gui_modules/dbm.py:2358
+#: ../gui/wxpython/gui_modules/dbm.py:2355
 msgid ""
 "Unknown default DB connection. Please define DB connection using db.connect "
 "module."
@@ -9562,72 +9568,72 @@ msgstr ""
 "Kết nối CSDL mặc định không rõ. Xin hãy định nghĩa kết nối CSDL bằng cách "
 "dùng mô-đun db.connect."
 
-#: ../gui/wxpython/gui_modules/dbm.py:2379
+#: ../gui/wxpython/gui_modules/dbm.py:2376
 msgid "Add layer"
 msgstr "Thêm lớp"
 
-#: ../gui/wxpython/gui_modules/dbm.py:2412
-#: ../gui/wxpython/gui_modules/dbm.py:2444
-#: ../gui/wxpython/gui_modules/dbm.py:2671
+#: ../gui/wxpython/gui_modules/dbm.py:2409
+#: ../gui/wxpython/gui_modules/dbm.py:2441
+#: ../gui/wxpython/gui_modules/dbm.py:2668
 msgid "Key column"
 msgstr "Cột khóa"
 
-#: ../gui/wxpython/gui_modules/dbm.py:2417
+#: ../gui/wxpython/gui_modules/dbm.py:2414
 msgid "Insert record for each category into table"
 msgstr "Chèn bản ghi cho mỗi phạm trù vào bảng"
 
-#: ../gui/wxpython/gui_modules/dbm.py:2432
+#: ../gui/wxpython/gui_modules/dbm.py:2429
 msgid "You need to add categories by v.category module."
 msgstr "Bạn cần thêm các phạm trù bằng mô-đun v.category"
 
-#: ../gui/wxpython/gui_modules/dbm.py:2439
+#: ../gui/wxpython/gui_modules/dbm.py:2436
 msgid "Table name"
 msgstr "Tên bảng"
 
-#: ../gui/wxpython/gui_modules/dbm.py:2452
+#: ../gui/wxpython/gui_modules/dbm.py:2449
 msgid "&Create table"
 msgstr "&Tạo bảng"
 
-#: ../gui/wxpython/gui_modules/dbm.py:2456
+#: ../gui/wxpython/gui_modules/dbm.py:2453
 msgid "&Add layer"
 msgstr "Thê&m lớp"
 
-#: ../gui/wxpython/gui_modules/dbm.py:2460
+#: ../gui/wxpython/gui_modules/dbm.py:2457
 msgid "&Set default"
 msgstr "Thiết lập làm &mặc định"
 
-#: ../gui/wxpython/gui_modules/dbm.py:2471
+#: ../gui/wxpython/gui_modules/dbm.py:2468
 msgid "Layer description"
 msgstr "Mô tả lớp"
 
-#: ../gui/wxpython/gui_modules/dbm.py:2530
+#: ../gui/wxpython/gui_modules/dbm.py:2527
 msgid "Table description"
 msgstr "Mô tả bảng"
 
-#: ../gui/wxpython/gui_modules/dbm.py:2570
+#: ../gui/wxpython/gui_modules/dbm.py:2567
 #, fuzzy
 msgid "Remove layer"
 msgstr "Gỡ bỏ lớp bản đồ"
 
-#: ../gui/wxpython/gui_modules/dbm.py:2573
+#: ../gui/wxpython/gui_modules/dbm.py:2570
 #, fuzzy
 msgid "Layer to remove"
 msgstr "Lớp cần xóa"
 
-#: ../gui/wxpython/gui_modules/dbm.py:2594
+#: ../gui/wxpython/gui_modules/dbm.py:2591
 #, fuzzy
 msgid "&Remove layer"
 msgstr "Gỡ bỏ lớp bản đồ"
 
-#: ../gui/wxpython/gui_modules/dbm.py:2638
+#: ../gui/wxpython/gui_modules/dbm.py:2635
 msgid "Modify layer"
 msgstr "Sửa lớp"
 
-#: ../gui/wxpython/gui_modules/dbm.py:2710
+#: ../gui/wxpython/gui_modules/dbm.py:2707
 msgid "&Modify layer"
 msgstr "&Sửa lớp"
 
-#: ../gui/wxpython/gui_modules/dbm.py:2758
+#: ../gui/wxpython/gui_modules/dbm.py:2755
 msgid ""
 "Unable to get list of tables.\n"
 "Please use db.connect to set database parameters."
@@ -9635,16 +9641,16 @@ msgstr ""
 "Không thể lấy danh sách bảng.\n"
 "Xin hãy dùng db.connect để đặt các tham số cho CSDL."
 
-#: ../gui/wxpython/gui_modules/dbm.py:2856
+#: ../gui/wxpython/gui_modules/dbm.py:2853
 msgid "Unable to create new table. Table name or key column name is missing."
 msgstr "Không thể tạo bảng mới. Thiếu tên bảng hoặc tên cột khóa."
 
-#: ../gui/wxpython/gui_modules/dbm.py:2863
+#: ../gui/wxpython/gui_modules/dbm.py:2860
 #, python-format
 msgid "Unable to create new table. Table <%s> already exists in the database."
 msgstr "Không thể tạo bảng mới. Bảng <%s> đã có trong CSDL."
 
-#: ../gui/wxpython/gui_modules/dbm.py:2901
+#: ../gui/wxpython/gui_modules/dbm.py:2898
 #, python-format
 msgid ""
 "Unable to add new layer to vector map <%(vector)s>. Layer %(layer)d already "
@@ -10008,7 +10014,7 @@ msgid "Profile line settings"
 msgstr "Các thiết lập đường mặt cắt"
 
 #: ../gui/wxpython/gui_modules/profile.py:1162
-#: ../gui/wxpython/gui_modules/layertree.py:395
+#: ../gui/wxpython/gui_modules/layertree.py:390
 msgid "Profile"
 msgstr "Mặt cắt"
 
@@ -10082,295 +10088,295 @@ msgstr "Cỡ phông của chú giải"
 msgid "Show legend"
 msgstr "Hiển thị chú giải"
 
-#: ../gui/wxpython/gui_modules/layertree.py:126
+#: ../gui/wxpython/gui_modules/layertree.py:121
 #, fuzzy, python-format
 msgid "GRASS GIS Map Display: %(id)d  - Location: %(loc)s"
 msgstr "Màn Hình Bản Đồ GRASS GIS:"
 
-#: ../gui/wxpython/gui_modules/layertree.py:136
+#: ../gui/wxpython/gui_modules/layertree.py:131
 msgid "Map Layers"
 msgstr "Các Lớp Bản Đồ"
 
-#: ../gui/wxpython/gui_modules/layertree.py:288
+#: ../gui/wxpython/gui_modules/layertree.py:283
 msgid "Change opacity level"
 msgstr "Đổi mức độ đục"
 
-#: ../gui/wxpython/gui_modules/layertree.py:298
+#: ../gui/wxpython/gui_modules/layertree.py:293
 #, fuzzy
 msgid "3D view properties"
 msgstr "Các thuộc tính Nviz"
 
-#: ../gui/wxpython/gui_modules/layertree.py:302
+#: ../gui/wxpython/gui_modules/layertree.py:297
 msgid "Zoom to selected map(s)"
 msgstr "Phóng đến (các) bản đồ đã chọn"
 
-#: ../gui/wxpython/gui_modules/layertree.py:304
+#: ../gui/wxpython/gui_modules/layertree.py:299
 msgid "Set computational region from selected map(s)"
 msgstr "Thiết lập vùng tính toán từ (các) bản đồ đã chọn"
 
-#: ../gui/wxpython/gui_modules/layertree.py:316
-#: ../gui/wxpython/gui_modules/layertree.py:385
+#: ../gui/wxpython/gui_modules/layertree.py:311
+#: ../gui/wxpython/gui_modules/layertree.py:380
 #, fuzzy
 msgid "Export"
 msgstr "Xuất ra MPEG-1"
 
-#: ../gui/wxpython/gui_modules/layertree.py:322
+#: ../gui/wxpython/gui_modules/layertree.py:317
 msgid "Show attribute data"
 msgstr "Hiện dữ liệu thuộc tính"
 
-#: ../gui/wxpython/gui_modules/layertree.py:325
+#: ../gui/wxpython/gui_modules/layertree.py:320
 msgid "Start editing"
 msgstr "Bắt đầu biên tập"
 
-#: ../gui/wxpython/gui_modules/layertree.py:326
+#: ../gui/wxpython/gui_modules/layertree.py:321
 msgid "Stop editing"
 msgstr "Ngừng biên tập"
 
-#: ../gui/wxpython/gui_modules/layertree.py:337
+#: ../gui/wxpython/gui_modules/layertree.py:332
 #, fuzzy
 msgid "Use as background vector map for digitizer"
 msgstr "Dùng như bản đồ véc tơ nền"
 
-#: ../gui/wxpython/gui_modules/layertree.py:344
+#: ../gui/wxpython/gui_modules/layertree.py:339
 #, fuzzy
 msgid "Rebuild topology"
 msgstr "Tạo hoặc dựng lại tôpô"
 
-#: ../gui/wxpython/gui_modules/layertree.py:379
+#: ../gui/wxpython/gui_modules/layertree.py:374
 msgid "Zoom to selected map(s) (ignore NULLs)"
 msgstr "Phóng đến (các) bản đồ đã chọn (bỏ qua các giá trị RỖNG)"
 
-#: ../gui/wxpython/gui_modules/layertree.py:381
+#: ../gui/wxpython/gui_modules/layertree.py:376
 msgid "Set computational region from selected map(s) (ignore NULLs)"
 msgstr ""
 "Thiết lập vùng tính toán theo (các) bản đồ được chọn (bỏ qua các giá trị "
 "RỖNG)"
 
-#: ../gui/wxpython/gui_modules/layertree.py:485
+#: ../gui/wxpython/gui_modules/layertree.py:480
 msgid "Unable to create profile of raster map."
 msgstr "Không thể tạo mặt cắt của bản đồ raster."
 
-#: ../gui/wxpython/gui_modules/layertree.py:516
+#: ../gui/wxpython/gui_modules/layertree.py:511
 msgid "Unable to display histogram of raster map."
 msgstr "Không thể hiển thị biểu đồ tần số của bản đồ raster."
 
-#: ../gui/wxpython/gui_modules/layertree.py:603
+#: ../gui/wxpython/gui_modules/layertree.py:598
 #, python-format
 msgid "Set opacity <%s>"
 msgstr "Đặt độ mờ <%s>"
 
-#: ../gui/wxpython/gui_modules/layertree.py:695
+#: ../gui/wxpython/gui_modules/layertree.py:690
 msgid "Layer group:"
 msgstr "Nhóm lớp:"
 
-#: ../gui/wxpython/gui_modules/layertree.py:700
-#: ../gui/wxpython/gui_modules/layertree.py:1266
+#: ../gui/wxpython/gui_modules/layertree.py:695
+#: ../gui/wxpython/gui_modules/layertree.py:1261
 msgid "Click to edit layer settings"
 msgstr "Nhắp chuột để chỉnh sửa các thiết lập lớp"
 
-#: ../gui/wxpython/gui_modules/layertree.py:745
+#: ../gui/wxpython/gui_modules/layertree.py:740
 msgid "(double click to set properties)"
 msgstr "(bấm đúp để thiết lập các tính chất)"
 
-#: ../gui/wxpython/gui_modules/layertree.py:751
+#: ../gui/wxpython/gui_modules/layertree.py:746
 msgid "3d raster"
 msgstr "raster 3D"
 
-#: ../gui/wxpython/gui_modules/layertree.py:754
+#: ../gui/wxpython/gui_modules/layertree.py:749
 msgid "RGB"
 msgstr "RGB (Đỏ-Lục-Xanh)"
 
-#: ../gui/wxpython/gui_modules/layertree.py:757
+#: ../gui/wxpython/gui_modules/layertree.py:752
 msgid "HIS"
 msgstr "HIS (Màu-Cường độ-độ Bão hoà)"
 
-#: ../gui/wxpython/gui_modules/layertree.py:763
+#: ../gui/wxpython/gui_modules/layertree.py:758
 msgid "raster cell numbers"
 msgstr "số lượng ô raster"
 
-#: ../gui/wxpython/gui_modules/layertree.py:766
+#: ../gui/wxpython/gui_modules/layertree.py:761
 msgid "raster flow arrows"
 msgstr "mũi tên dòng chảy raster"
 
-#: ../gui/wxpython/gui_modules/layertree.py:772
+#: ../gui/wxpython/gui_modules/layertree.py:767
 msgid "thematic map"
 msgstr "bản đồ chủ đề"
 
-#: ../gui/wxpython/gui_modules/layertree.py:775
+#: ../gui/wxpython/gui_modules/layertree.py:770
 msgid "thematic charts"
 msgstr "các biểu đồ chủ đề"
 
-#: ../gui/wxpython/gui_modules/layertree.py:778
+#: ../gui/wxpython/gui_modules/layertree.py:773
 msgid "grid"
 msgstr "lưới"
 
-#: ../gui/wxpython/gui_modules/layertree.py:781
+#: ../gui/wxpython/gui_modules/layertree.py:776
 msgid "geodesic line"
 msgstr "đường đo đạc"
 
-#: ../gui/wxpython/gui_modules/layertree.py:784
+#: ../gui/wxpython/gui_modules/layertree.py:779
 msgid "rhumbline"
 msgstr "đường rhumb"
 
-#: ../gui/wxpython/gui_modules/layertree.py:787
+#: ../gui/wxpython/gui_modules/layertree.py:782
 msgid "vector labels"
 msgstr "nhãn vec-tơ"
 
-#: ../gui/wxpython/gui_modules/layertree.py:1071
+#: ../gui/wxpython/gui_modules/layertree.py:1066
 msgid "Please wait, updating data..."
 msgstr "Xin chờ, đang cập nhật dữ liệu..."
 
-#: ../gui/wxpython/gui_modules/layertree.py:1345
+#: ../gui/wxpython/gui_modules/layertree.py:1340
 msgid "opacity:"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/layertree.py:1361
+#: ../gui/wxpython/gui_modules/layertree.py:1356
 #, python-format
 msgid "Map <%s> not found."
 msgstr "Không tìm thấy bản đồ <%s>."
 
-#: ../gui/wxpython/gui_modules/menuform.py:148
-#: ../gui/wxpython/gui_modules/menuform.py:1546
+#: ../gui/wxpython/gui_modules/menuform.py:145
+#: ../gui/wxpython/gui_modules/menuform.py:1543
 msgid "Select Color"
 msgstr "Chọn Màu"
 
-#: ../gui/wxpython/gui_modules/menuform.py:416
+#: ../gui/wxpython/gui_modules/menuform.py:413
 #, python-format
 msgid "Parameter element '%(element)s' not found: '%(value)s'"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menuform.py:437
+#: ../gui/wxpython/gui_modules/menuform.py:434
 #, python-format
 msgid "Flag not found: %s"
 msgstr "Không thấy cờ: %s"
 
-#: ../gui/wxpython/gui_modules/menuform.py:462
+#: ../gui/wxpython/gui_modules/menuform.py:459
 #, fuzzy, python-format
 msgid "Parameter '%(name)s' (%(desc)s) is missing."
 msgstr "Đang thiếu tham số %(name)s (%(desc)s).\n"
 
-#: ../gui/wxpython/gui_modules/menuform.py:488
+#: ../gui/wxpython/gui_modules/menuform.py:485
 msgid "<required>"
 msgstr "<bắt buộc>"
 
-#: ../gui/wxpython/gui_modules/menuform.py:748
+#: ../gui/wxpython/gui_modules/menuform.py:745
 msgid "Enter parameters for '"
 msgstr "Nhập các tham số cho '"
 
-#: ../gui/wxpython/gui_modules/menuform.py:759
+#: ../gui/wxpython/gui_modules/menuform.py:756
 #, fuzzy
 msgid "Close this window without executing the command (Ctrl+Q)"
 msgstr "Đóng cửa sổ này mà không thi hành lệnh"
 
-#: ../gui/wxpython/gui_modules/menuform.py:779
+#: ../gui/wxpython/gui_modules/menuform.py:776
 #, fuzzy
 msgid "Run the command (Ctrl+R)"
 msgstr "Chạy lệnh"
 
-#: ../gui/wxpython/gui_modules/menuform.py:782
+#: ../gui/wxpython/gui_modules/menuform.py:779
 #, fuzzy
 msgid "C&opy"
 msgstr "Sao chép"
 
-#: ../gui/wxpython/gui_modules/menuform.py:797
+#: ../gui/wxpython/gui_modules/menuform.py:794
 #, fuzzy
 msgid "Show manual page of the command (Ctrl+H)"
 msgstr "Hiện trang hướng dẫn về lệnh"
 
-#: ../gui/wxpython/gui_modules/menuform.py:818
+#: ../gui/wxpython/gui_modules/menuform.py:815
 #, fuzzy
 msgid "Add created map(s) into layer tree"
 msgstr "Thêm bản đồ đã tạo vào sơ đồ lớp hình cây"
 
-#: ../gui/wxpython/gui_modules/menuform.py:833
+#: ../gui/wxpython/gui_modules/menuform.py:830
 msgid "Close dialog on finish"
 msgstr "Đóng hộp thoại khi kết thúc"
 
-#: ../gui/wxpython/gui_modules/menuform.py:835
+#: ../gui/wxpython/gui_modules/menuform.py:832
 msgid ""
 "Close dialog when command is successfully finished. Change this settings in "
 "Preferences dialog ('Command' tab)."
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menuform.py:1003
+#: ../gui/wxpython/gui_modules/menuform.py:1000
 #, python-format
 msgid "'%s' copied to clipboard"
 msgstr "'%s' được chép vào bộ nhớ"
 
-#: ../gui/wxpython/gui_modules/menuform.py:1065
-#: ../gui/wxpython/gui_modules/menuform.py:1078
+#: ../gui/wxpython/gui_modules/menuform.py:1062
+#: ../gui/wxpython/gui_modules/menuform.py:1075
 msgid "Required"
 msgstr "Bắt buộc"
 
-#: ../gui/wxpython/gui_modules/menuform.py:1068
-#: ../gui/wxpython/gui_modules/menuform.py:1078
+#: ../gui/wxpython/gui_modules/menuform.py:1065
+#: ../gui/wxpython/gui_modules/menuform.py:1075
 msgid "Optional"
 msgstr "Tùy chọn"
 
-#: ../gui/wxpython/gui_modules/menuform.py:1118
+#: ../gui/wxpython/gui_modules/menuform.py:1115
 msgid "Manual"
 msgstr "Sổ tay tra cứu"
 
-#: ../gui/wxpython/gui_modules/menuform.py:1159
-#: ../gui/wxpython/gui_modules/menuform.py:1618
+#: ../gui/wxpython/gui_modules/menuform.py:1156
+#: ../gui/wxpython/gui_modules/menuform.py:1615
 #, fuzzy
 msgid "Parameterized in model"
 msgstr "Không thấy tham số: %s"
 
-#: ../gui/wxpython/gui_modules/menuform.py:1234
+#: ../gui/wxpython/gui_modules/menuform.py:1231
 msgid "[multiple]"
 msgstr "[nhiều]"
 
-#: ../gui/wxpython/gui_modules/menuform.py:1281
+#: ../gui/wxpython/gui_modules/menuform.py:1278
 #, fuzzy
 msgid "valid range"
 msgstr "Miền hợp lệ"
 
-#: ../gui/wxpython/gui_modules/menuform.py:1565
+#: ../gui/wxpython/gui_modules/menuform.py:1562
 msgid "Transparent"
 msgstr "Trong suốt"
 
-#: ../gui/wxpython/gui_modules/menuform.py:1581
+#: ../gui/wxpython/gui_modules/menuform.py:1578
 #, python-format
 msgid "Choose %s"
 msgstr "Chọn %s"
 
-#: ../gui/wxpython/gui_modules/menuform.py:1609
+#: ../gui/wxpython/gui_modules/menuform.py:1606
 #, fuzzy
 msgid "or enter values interactively"
 msgstr "Mã hoá lại tương tác"
 
-#: ../gui/wxpython/gui_modules/menuform.py:1953
+#: ../gui/wxpython/gui_modules/menuform.py:1950
 #, python-format
 msgid "Error in %s"
 msgstr "Lỗi trong %s"
 
+#: ../gui/wxpython/gui_modules/menuform.py:1983
 #: ../gui/wxpython/gui_modules/menuform.py:1986
-#: ../gui/wxpython/gui_modules/menuform.py:1989
 #, fuzzy, python-format
 msgid "Unable to fetch interface description for command '%s'. Details: %s"
 msgstr "Không thể lấy mô tả giao diện để dùng cho lệnh '%s'."
 
-#: ../gui/wxpython/gui_modules/menuform.py:2100
+#: ../gui/wxpython/gui_modules/menuform.py:2097
 #, fuzzy, python-format
 msgid "Unable to parse command '%s'"
 msgstr "Không thể phân giải lệnh %s"
 
-#: ../gui/wxpython/gui_modules/menuform.py:2104
+#: ../gui/wxpython/gui_modules/menuform.py:2101
 #, python-format
 msgid "%(cmd)s: parameter '%(key)s' not available"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/menuform.py:2227
+#: ../gui/wxpython/gui_modules/menuform.py:2224
 #, python-format
 msgid "usage: %s <grass command>"
 msgstr "cách dùng: %s <grass command>"
 
-#: ../gui/wxpython/gui_modules/globalvar.py:122
+#: ../gui/wxpython/gui_modules/globalvar.py:123
 msgid "Go to"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/globalvar.py:123
+#: ../gui/wxpython/gui_modules/globalvar.py:124
 #: ../gui/wxpython/gui_modules/preferences.py:1647
 #, fuzzy
 msgid "Projection"
@@ -10892,15 +10898,15 @@ msgstr "Tập bản đồ"
 msgid "Owner"
 msgstr "Người sở hữu"
 
-#: ../gui/wxpython/gis_set.py:99
+#: ../gui/wxpython/gis_set.py:96
 msgid "Choose project location and mapset"
 msgstr "Chọn vị trí dự án và tập bản đồ"
 
-#: ../gui/wxpython/gis_set.py:102
+#: ../gui/wxpython/gis_set.py:99
 msgid "Manage"
 msgstr "Quản lý"
 
-#: ../gui/wxpython/gis_set.py:104
+#: ../gui/wxpython/gis_set.py:101
 #, python-format
 msgid ""
 "Welcome to GRASS GIS %s\n"
@@ -10909,7 +10915,7 @@ msgstr ""
 "Chào mừng bạn đã đến với GRASS GIS %s\n"
 "Hệ Thông Tin Địa Lý mã nguồn mở hàng đầu thế giới"
 
-#: ../gui/wxpython/gis_set.py:108
+#: ../gui/wxpython/gis_set.py:105
 msgid ""
 "Select an existing project location and mapset\n"
 "or define a new location"
@@ -10917,7 +10923,7 @@ msgstr ""
 "Chọn một vị trí dự án đang tồn tại và tập bản đồ\n"
 "hoặc xác định một vị trí mới"
 
-#: ../gui/wxpython/gis_set.py:114
+#: ../gui/wxpython/gis_set.py:111
 msgid ""
 "Project location\n"
 "(projection/coordinate system)"
@@ -10925,7 +10931,7 @@ msgstr ""
 "Vị trí Dự án\n"
 "(phép chiếu/tọa độ)"
 
-#: ../gui/wxpython/gis_set.py:117
+#: ../gui/wxpython/gis_set.py:114
 msgid ""
 "Accessible mapsets\n"
 "(directories of GIS files)"
@@ -10933,7 +10939,7 @@ msgstr ""
 "Các tập bản đồ có thể truy xuất được\n"
 "(các thư mục tệp tin GIS)"
 
-#: ../gui/wxpython/gis_set.py:120
+#: ../gui/wxpython/gis_set.py:117
 msgid ""
 "Create new mapset\n"
 "in selected location"
@@ -10941,11 +10947,11 @@ msgstr ""
 "Tạo tập bản đồ mới\n"
 "trong vị trí đã chọn"
 
-#: ../gui/wxpython/gis_set.py:123
+#: ../gui/wxpython/gis_set.py:120
 msgid "Define new location"
 msgstr "Định nghĩa vị trí mới"
 
-#: ../gui/wxpython/gis_set.py:126
+#: ../gui/wxpython/gis_set.py:123
 msgid ""
 "Rename/delete selected\n"
 "mapset or location"
@@ -10953,66 +10959,66 @@ msgstr ""
 "Đổi tên/xóa tập bản đồ\n"
 "hoặc vị trí đã chọn"
 
-#: ../gui/wxpython/gis_set.py:131
+#: ../gui/wxpython/gis_set.py:128
 #, fuzzy
 msgid "Start &GRASS"
 msgstr "Khởi động GRASS"
 
-#: ../gui/wxpython/gis_set.py:137
+#: ../gui/wxpython/gis_set.py:134
 #, fuzzy
 msgid "&Browse"
 msgstr "Duyệt"
 
-#: ../gui/wxpython/gis_set.py:139
+#: ../gui/wxpython/gis_set.py:136
 #, fuzzy
 msgid "&Create mapset"
 msgstr "Tạo tập bản đồ"
 
-#: ../gui/wxpython/gis_set.py:141
+#: ../gui/wxpython/gis_set.py:138
 #, fuzzy
 msgid "&Location wizard"
 msgstr "Hướng dẫn tạo Vị trí"
 
-#: ../gui/wxpython/gis_set.py:143
+#: ../gui/wxpython/gis_set.py:140
 msgid "Rename mapset"
 msgstr "Đổi tên tập bản đồ"
 
-#: ../gui/wxpython/gis_set.py:143
+#: ../gui/wxpython/gis_set.py:140
 msgid "Rename location"
 msgstr "Đổi tên vị trí"
 
-#: ../gui/wxpython/gis_set.py:144
+#: ../gui/wxpython/gis_set.py:141
 msgid "Delete mapset"
 msgstr "Xóa tập bản đồ"
 
-#: ../gui/wxpython/gis_set.py:144
+#: ../gui/wxpython/gis_set.py:141
 msgid "Delete location"
 msgstr "Xóa vị trí "
 
-#: ../gui/wxpython/gis_set.py:188
+#: ../gui/wxpython/gis_set.py:185
 msgid "Welcome to GRASS GIS"
 msgstr "Chào mừng bạn đã đến với GRASS GIS"
 
-#: ../gui/wxpython/gis_set.py:196
+#: ../gui/wxpython/gis_set.py:193
 msgid "Enter GRASS session"
 msgstr "Vào phiên làm việc của GRASS"
 
-#: ../gui/wxpython/gis_set.py:212 ../gui/wxpython/gis_set.py:574
+#: ../gui/wxpython/gis_set.py:209 ../gui/wxpython/gis_set.py:571
 msgid "Unable to set GRASS database. Check your locale settings."
 msgstr ""
 "Không thể thiết lập CSDL GRASS. Kiểm tra các thiết lập bản địa của bạn."
 
-#: ../gui/wxpython/gis_set.py:230
+#: ../gui/wxpython/gis_set.py:227
 #, python-format
 msgid "ERROR: Location <%s> not found"
 msgstr "LỖI: Không tìm thấy vị trí <%s>"
 
-#: ../gui/wxpython/gis_set.py:243
+#: ../gui/wxpython/gis_set.py:240
 #, python-format
 msgid "ERROR: Mapset <%s> not found"
 msgstr "LỖI: Không tìm thấy tập bản đồ <%s>"
 
-#: ../gui/wxpython/gis_set.py:443
+#: ../gui/wxpython/gis_set.py:440
 msgid ""
 "Mapset <PERMANENT> is required for valid GRASS location.\n"
 "\n"
@@ -11022,7 +11028,7 @@ msgstr ""
 "\n"
 "Không thể đổi tên bộ bản đồ này."
 
-#: ../gui/wxpython/gis_set.py:448 ../gui/wxpython/gis_set.py:483
+#: ../gui/wxpython/gis_set.py:445 ../gui/wxpython/gis_set.py:480
 #, python-format
 msgid ""
 "Current name: %s\n"
@@ -11033,11 +11039,11 @@ msgstr ""
 "\n"
 "Nhập tên mới:"
 
-#: ../gui/wxpython/gis_set.py:449
+#: ../gui/wxpython/gis_set.py:446
 msgid "Rename selected mapset"
 msgstr "Đổi tên tập bản đồ đã chọn"
 
-#: ../gui/wxpython/gis_set.py:460
+#: ../gui/wxpython/gis_set.py:457
 #, python-format
 msgid ""
 "Unable to rename mapset.\n"
@@ -11048,7 +11054,7 @@ msgstr ""
 "\n"
 "Bộ bản đồ <%s> đã có trong location."
 
-#: ../gui/wxpython/gis_set.py:472
+#: ../gui/wxpython/gis_set.py:469
 #, python-format
 msgid ""
 "Unable to rename mapset.\n"
@@ -11059,11 +11065,11 @@ msgstr ""
 "\n"
 "%s"
 
-#: ../gui/wxpython/gis_set.py:484
+#: ../gui/wxpython/gis_set.py:481
 msgid "Rename selected location"
 msgstr "Đổi tên vị trí đã chọn"
 
-#: ../gui/wxpython/gis_set.py:495
+#: ../gui/wxpython/gis_set.py:492
 #, python-format
 msgid ""
 "Unable to rename location.\n"
@@ -11074,7 +11080,7 @@ msgstr ""
 "\n"
 "Location <%s> đã có trong CSDL GRASS."
 
-#: ../gui/wxpython/gis_set.py:508
+#: ../gui/wxpython/gis_set.py:505
 #, python-format
 msgid ""
 "Unable to rename location.\n"
@@ -11085,7 +11091,7 @@ msgstr ""
 "\n"
 "%s"
 
-#: ../gui/wxpython/gis_set.py:520
+#: ../gui/wxpython/gis_set.py:517
 msgid ""
 "Mapset <PERMANENT> is required for valid GRASS location.\n"
 "\n"
@@ -11095,7 +11101,7 @@ msgstr ""
 "\n"
 "Không thể đổi tên bộ bản đồ này."
 
-#: ../gui/wxpython/gis_set.py:524
+#: ../gui/wxpython/gis_set.py:521
 #, python-format
 msgid ""
 "Do you want to continue with deleting mapset <%(mapset)s> from location <%"
@@ -11108,15 +11114,15 @@ msgstr ""
 "\n"
 "TẤT CẢ BẢN ĐỒ trong đó sẽ bị XÓA VĨNH VIỄN!"
 
-#: ../gui/wxpython/gis_set.py:529
+#: ../gui/wxpython/gis_set.py:526
 msgid "Delete selected mapset"
 msgstr "Xóa tập bản đồ đã chọn"
 
-#: ../gui/wxpython/gis_set.py:538
+#: ../gui/wxpython/gis_set.py:535
 msgid "Unable to delete mapset"
 msgstr "Không thể xóa tập bản đồ"
 
-#: ../gui/wxpython/gis_set.py:549
+#: ../gui/wxpython/gis_set.py:546
 #, python-format
 msgid ""
 "Do you want to continue with deleting location <%s>?\n"
@@ -11127,45 +11133,45 @@ msgstr ""
 "\n"
 "TẤT CẢ BẢN ĐỒ có trong vị trí đó sẽ bị XÓA VĨNH VIỄN!"
 
-#: ../gui/wxpython/gis_set.py:553
+#: ../gui/wxpython/gis_set.py:550
 msgid "Delete selected location"
 msgstr "Xóa vị trí đã chọn"
 
-#: ../gui/wxpython/gis_set.py:564
+#: ../gui/wxpython/gis_set.py:561
 msgid "Unable to delete location"
 msgstr "Không thể xóa vị trí"
 
-#: ../gui/wxpython/gis_set.py:608
+#: ../gui/wxpython/gis_set.py:605
 #, python-format
 msgid "No mapsets available in location <%s>"
 msgstr ""
 
-#: ../gui/wxpython/gis_set.py:700
+#: ../gui/wxpython/gis_set.py:697
 msgid "Choose GIS Data Directory:"
 msgstr "Chọn Thư mục Dữ liệu GIS"
 
-#: ../gui/wxpython/gis_set.py:715
+#: ../gui/wxpython/gis_set.py:712
 msgid "Enter name for new mapset:"
 msgstr "Nhập tên cho tập bản đồ mới:"
 
-#: ../gui/wxpython/gis_set.py:716
+#: ../gui/wxpython/gis_set.py:713
 msgid "Create new mapset"
 msgstr "Tạo tập bản đồ mới"
 
-#: ../gui/wxpython/gis_set.py:729
+#: ../gui/wxpython/gis_set.py:726
 #, python-format
 msgid "Unable to create new mapset: %s"
 msgstr "Không thể tạo tập bản đồ mới: %s"
 
-#: ../gui/wxpython/gis_set.py:765
+#: ../gui/wxpython/gis_set.py:762
 msgid "GRASS Quickstart"
 msgstr "Khởi động nhanh GRASS"
 
-#: ../gui/wxpython/gis_set.py:838
+#: ../gui/wxpython/gis_set.py:835
 msgid "Starting GRASS for the first time"
 msgstr "Khởi động GRASS lần đầu tiên"
 
-#: ../gui/wxpython/gis_set.py:839
+#: ../gui/wxpython/gis_set.py:836
 msgid ""
 "GRASS needs a directory in which to store its data. Create one now if you "
 "have not already done so. A popular choice is \"grassdata\", located in your "
@@ -11174,6 +11180,24 @@ msgstr ""
 "GRASS cần một thư mục để lưu trữ dữ liệu của nó. Tạo một thư mục ngay nếu "
 "bạn chưa làm. Tên thư mục thường được dùng là \"grassdata\", nằm trong thư "
 "mục nhà của bạn."
+
+#, fuzzy
+#~ msgid "Lists available GIS elements of the user-specified data type."
+#~ msgstr ""
+#~ "Liệt kê các tập tin CSDL GRASS hiện có theo kiểu dữ liệu do người dùng "
+#~ "chỉ định ra đầu ra tiêu chuẩn."
+
+#, fuzzy
+#~ msgid "Generates stream channels."
+#~ msgstr "'Khắc' đường chảy suối"
+
+#, fuzzy
+#~ msgid "Creates watershed basins."
+#~ msgstr "Lưu vực phụ của đường chia nước"
+
+#, fuzzy
+#~ msgid "Reclassify raster map based on category values."
+#~ msgstr "Phân loại lại bản đồ raster sử dụng quy tắc"
 
 #~ msgid "Attribute management is available only for vector maps."
 #~ msgstr "Phần quản lý thuộc tính chỉ dành cho các bản đồ véc tơ."
@@ -11205,31 +11229,6 @@ msgstr ""
 
 #~ msgid "Multiple export formats using OGR"
 #~ msgstr "Xuất nhiều loại định dạng bằng cách dùng OGR"
-
-#~ msgid ""
-#~ "Takes vector stream data, transforms it to raster and subtracts depth "
-#~ "from the output DEM."
-#~ msgstr ""
-#~ "Lấy dữ liệu suối vec-tơ, chuyển đổi nó thành raster và trừ bớt độ sâu ra "
-#~ "khỏi lớp DEM đầu ra."
-
-#~ msgid ""
-#~ "Construction of slope curves (flowlines), flowpath lengths, and flowline "
-#~ "densities (upslope areas) from a raster digital elevation model (DEM)"
-#~ msgstr ""
-#~ "Xây dựng các đường cong độ dốc (đường dòng chảy), chiều dài hướng đường "
-#~ "dòng chảy, và mật độ đường dòng chảy (các vùng lên dốc) từ một mô hình độ "
-#~ "cao số raster (DEM)"
-
-#~ msgid "Watershed basin creation program."
-#~ msgstr "Chương trình tạo lưu vực đường chia nước."
-
-#~ msgid ""
-#~ "Creates a new map layer whose category values are based upon a "
-#~ "reclassification of the categories in an existing raster map layer."
-#~ msgstr ""
-#~ "Tạo một lớp bản đồ mới mà các giá trị phạm trù dựa vào phép phân loại lại "
-#~ "các phạm trù trong một lớp bản đồ raster hiện có."
 
 #~ msgid "Selects data from table."
 #~ msgstr "Chọn dữ liệu từ bảng"
