@@ -45,10 +45,10 @@ class Popen(subprocess.Popen):
                  preexec_fn = None, close_fds = False, shell = None,
                  cwd = None, env = None, universal_newlines = False,
                  startupinfo = None, creationflags = 0):
-        
+
 	if shell == None:
 	    shell = (sys.platform == "win32")
-        
+
 	subprocess.Popen.__init__(self, args, bufsize, executable,
                                   stdin, stdout, stderr,
                                   preexec_fn, close_fds, shell,
@@ -93,12 +93,6 @@ def _make_val(val):
     if isinstance(val, types.TupleType):
 	return _make_val(list(val))
     return str(val)
-
-def _get_error(string):
-    try:
-        return string.split('\n')[-2]
-    except:
-        return ''
 
 def make_command(prog, flags = "", overwrite = False, quiet = False, verbose = False, **options):
     """!Return a list of strings suitable for use as the args parameter to
@@ -187,23 +181,9 @@ def run_command(*args, **kwargs):
 
     @return exit code (0 for success)
     """
-    if get_raise_on_error():
-        kwargs['stderr'] = PIPE
-        env = os.getenv('GRASS_MESSAGE_FORMAT')
-        os.environ['GRASS_MESSAGE_FORMAT'] = 'plain'
-
     ps = start_command(*args, **kwargs)
-    
-    if get_raise_on_error():
-        err = ps.communicate()[1]
-        if env:
-            os.environ['GRASS_MESSAGE_FORMAT'] = env
-        if ps.returncode != 0:
-            raise ScriptError(_("Error in %s(%s): %s") % ('run_command', args[0], _get_error(err)))
-        return ps.returncode
-    else:
-        return ps.wait()
-    
+    return ps.wait()
+
 def pipe_command(*args, **kwargs):
     """!Passes all arguments to start_command(), but also adds
     "stdout = PIPE". Returns the Popen object.
@@ -250,22 +230,8 @@ def read_command(*args, **kwargs):
     
     @return stdout
     """
-    if get_raise_on_error():
-        kwargs['stderr'] = PIPE
-        env = os.getenv('GRASS_MESSAGE_FORMAT')
-        os.environ['GRASS_MESSAGE_FORMAT'] = 'plain'
-    
     ps = pipe_command(*args, **kwargs)
-    
-    if get_raise_on_error():
-        out, err = ps.communicate()
-        if env:
-            os.environ['GRASS_MESSAGE_FORMAT'] = env
-        if ps.returncode != 0:
-            raise ScriptError(_("Error in %s(%s): %s") % ('read_command', args[0], _get_error(err)))
-        return _decode(out)
-    else:
-        return _decode(ps.communicate()[0])
+    return _decode(ps.communicate()[0])
 
 def parse_command(*args, **kwargs):
     """!Passes all arguments to read_command, then parses the output by
@@ -308,26 +274,11 @@ def write_command(*args, **kwargs):
     @return return code
     """
     stdin = kwargs['stdin']
-    if get_raise_on_error():
-        kwargs['stderr'] = PIPE
-        env = os.getenv('GRASS_MESSAGE_FORMAT')
-        os.environ['GRASS_MESSAGE_FORMAT'] = 'plain'
-    
     p = feed_command(*args, **kwargs)
     p.stdin.write(stdin)
-    
-    if get_raise_on_error():
-        err = p.communicate()[1]
-        if env:
-            os.environ['GRASS_MESSAGE_FORMAT'] = env
-        p.stdin.close()
-        if p.returncode != 0:
-            raise ScriptError(_("Error in %s(%s): %s") % ('write_command', args[0], _get_error(err)))
-        return p.returncode
-    else:
-        p.stdin.close()
-        return p.wait()
-    
+    p.stdin.close()
+    return p.wait()
+
 def exec_command(prog, flags = "", overwrite = False, quiet = False, verbose = False, env = None, **kwargs):
     """!Interface to os.execvpe(), but with the make_command() interface.
 
@@ -433,16 +384,6 @@ def set_raise_on_error(raise_exp = True):
     global raise_on_error
     tmp_raise = raise_on_error
     raise_on_error = raise_exp
-    
-    return tmp_raise
-
-def get_raise_on_error():
-    """!Get raise_on_error status
-
-    @return True to raise exception
-    """
-    global raise_on_error
-    return raise_on_error
 
 # interface to g.parser
 
@@ -1143,8 +1084,8 @@ def version():
     @code
     version()
 
-    {'date': '2011', 'libgis_revision': '38990', 'version': '6.5.svn',
-     'libgis_date': '2009-09-05 19:01:13 +0200 (Sat, 05 Sep 2009)'}
+    {'date': '2011', 'libgis_revision': '45093 ', 'version': '6.5.svn',
+     'libgis_date': '2011-01-20 13:10:50 +0100 (Thu, 20 Jan 2011) ', 'revision': '45136'}
     @endcode
     """
     return parse_command('g.version',
