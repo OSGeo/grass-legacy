@@ -153,13 +153,19 @@ the ascendant node at equator</td>
 <td>enter month,day,hh.ddd,long.,lat. *</td>
 </tr>
 
+<tr>
+<td>13</td>
+<td><b>RapidEye</b></td>
+<td>enter month,day,hh.ddd,long.,lat. *</td>
+</tr>
+
 </table>
 
 <blockquote>
 * <em>NOTE</em>: for HRV, TM, ETM+, LISS and ASTER experiments,
 longitude and latitude are the coordinates of the scene
-center. Latitude must be &gt;0 for northern hemisphere and &lt;0 for
-southern. Longitude must be &gt;0 for eastern hemisphere and &lt;0 for
+center. Latitude must be &gt; 0 for northern hemisphere and &lt; 0 for
+southern. Longitude must be &gt; 0 for eastern hemisphere and &lt; 0 for
 western.
 </blockquote>
 
@@ -351,7 +357,7 @@ and 'aer' for aerosol).
 <h3>E. Target altitude (xps), sensor platform (xpp)</h3>
 
 Target altitude (xps, in negative [km]):
-<blockquote>xps &lt;= 0 means the target is at the sea level.
+<blockquote>xps &gt;= 0 means the target is at the sea level.
 <br>otherwise xps expresses the altitude of the target (e.g., mean elevation)
 in [km], given as negative value
 </blockquote>
@@ -532,6 +538,12 @@ Pre-defined satellite bands:
 <tr><td>86</td><td>ikonos Red band (0.350-1.035)</td></tr>
 <tr><td>87</td><td>ikonos NIR band (0.350-1.035)</td></tr>
 
+<tr><td>88</td><td><b>RapidEye</b> Blue band (0.438-0.513)</td></tr>
+<tr><td>89</td><td>RapidEye Green band (0.463-0.594)</td></tr>
+<tr><td>90</td><td>RapidEye Red band (0.624-0.690)</td></tr>
+<tr><td>91</td><td>RapidEye RedEdge band (0.500-0.737)</td></tr>
+<tr><td>92</td><td>RapidEye NIR band (0.520-0.862)</td></tr>
+
 </table>
 
 <h2>EXAMPLES</h2>
@@ -571,20 +583,20 @@ If the overpass time is unknown, use the <a href="http://www-air.larc.nasa.gov/t
 Convert DN (digital number = pixel values) to Radiance at top-of-atmosphere (TOA), using the
 formula
 <div class="code"><pre>
-   L&#955; = ((LMAX&#955; - LMIN&#955;)/(QCALMAX-QCALMIN)) * (QCAL-QCALMIN) + LMIN&#955;
+   L&lambda; = ((LMAX&lambda; - LMIN&lambda;)/(QCALMAX-QCALMIN)) * (QCAL-QCALMIN) + LMIN&lambda;
 </pre></div>
 Where:
 <ul>
-<li> L&#955; = Spectral Radiance at the sensor's aperture in Watt/(meter squared * ster * &#956;m), the
+<li> L&lambda; = Spectral Radiance at the sensor's aperture in Watt/(meter squared * ster * &micro;m), the
       apparent radiance as seen by the satellite sensor;</li>
 <li> QCAL = the quantized calibrated pixel value in DN;</li>
-<li> LMIN&#955; = the spectral radiance that is scaled to QCALMIN in watts/(meter squared * ster * &#956;m);</li>
-<li> LMAX&#955; = the spectral radiance that is scaled to QCALMAX in watts/(meter squared * ster * &#956;m);</li>
-<li> QCALMIN = the minimum quantized calibrated pixel value (corresponding to LMIN&#955;) in DN;</li>
-<li> QCALMAX = the maximum quantized calibrated pixel value (corresponding to LMAX&#955;) in DN=255.</li>
+<li> LMIN&lambda; = the spectral radiance that is scaled to QCALMIN in watts/(meter squared * ster * &micro;m);</li>
+<li> LMAX&lambda; = the spectral radiance that is scaled to QCALMAX in watts/(meter squared * ster * &micro;m);</li>
+<li> QCALMIN = the minimum quantized calibrated pixel value (corresponding to LMIN&lambda;) in DN;</li>
+<li> QCALMAX = the maximum quantized calibrated pixel value (corresponding to LMAX&lambda;) in DN=255.</li>
 </ul>
 
-LMIN&#955; and LMAX&#955; are the radiances related to the minimal and maximal DN value, and are reported
+LMIN&lambda; and LMAX&lambda; are the radiances related to the minimal and maximal DN value, and are reported
 in the metadata file for each image, or in the table 1. High gain or low gain is also reported
 in the metadata file of each Landsat image. The minimal DN value (QCALMIN) is 1 for Landsat ETM+
 images (see
@@ -678,7 +690,11 @@ Not Found
 -->
 
 <li>Mauro A. Homem Antunes <a href="http://www.ltid.inpe.br/dsr/mauro/6s/download_6s.html">website about his 6S version</a>
+
+<li>RapidEye sensors have been provided by <a href="http://www.rapideye.de/">RapidEye AG, Germany</a>
+
 </ul>
+
 
 <h2>AUTHORS</h2>
 
@@ -696,6 +712,9 @@ Not Found
 
 <p><em>AVNIR, IKONOS sensors addition 7/2010:</em>
 <br>Daniel Victoria, Anne Ghisla
+
+<p><em>RapidEye sensors addition 11/2010:</em>
+<br>Peter L&ouml;we, Anne Ghisla
 
 <p>
 <i>Last changed: $Date$</i>
