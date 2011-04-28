@@ -37,8 +37,7 @@ int fout, fskip;		/* features written/ skip */
 int nocat, noatt, nocatskip;	/* number of features without cats/atts written/skip */
 
 int mk_att(int cat, struct field_info *Fi, dbDriver * Driver,
-	   int ncol, int doatt, int nocat, OGRFeatureH Ogr_feature,
-	   dbCursor cursor);
+	   int ncol, int doatt, int nocat, OGRFeatureH Ogr_feature);
 
 char *OGR_list_write_drivers();
 char OGRdrivers[MAX_OGR_DRIVERS];
@@ -75,7 +74,6 @@ int main(int argc, char *argv[])
     dbTable *Table;
     dbString dbstring;
     dbColumn *Column;
-    dbCursor cursor;
 
     /* OGR */
     int drn, ogr_ftype = OFTInteger;
@@ -701,17 +699,6 @@ int main(int argc, char *argv[])
 
     fout = fskip = nocat = noatt = nocatskip = 0;
 
-    /* Fetch all attribute records */
-    if (doatt) {
-	sprintf(buf, "SELECT * FROM %s", Fi->table);
-	G_debug(2, "SQL: %s", buf);
-	db_set_string(&dbstring, buf);
-	if (db_open_select_cursor
-	    (Driver, &dbstring, &cursor, DB_SEQUENTIAL) != DB_OK) {
-	    G_fatal_error(_("Cannot select attributes for cat = %d"), cat);
-	}
-    }
-
     if (OGR_L_TestCapability(Ogr_layer, OLCTransactions))
 	OGR_L_StartTransaction(Ogr_layer);
 
@@ -789,7 +776,7 @@ int main(int argc, char *argv[])
 		}
 
 		mk_att(cat, Fi, Driver, ncol, doatt, nocat_flag->answer,
-		       Ogr_feature, cursor);
+		       Ogr_feature);
 		OGR_L_CreateFeature(Ogr_layer, Ogr_feature);
 	    }
 	    OGR_G_DestroyGeometry(Ogr_geometry);
@@ -864,7 +851,7 @@ int main(int argc, char *argv[])
 		}
 
 		mk_att(cat, Fi, Driver, ncol, doatt, nocat_flag->answer,
-		       Ogr_feature, cursor);
+		       Ogr_feature);
 		OGR_L_CreateFeature(Ogr_layer, Ogr_feature);
 	    }
 	    OGR_G_DestroyGeometry(Ogr_geometry);
@@ -925,7 +912,7 @@ int main(int argc, char *argv[])
 		    }
 
 		    mk_att(cat, Fi, Driver, ncol, doatt, nocat_flag->answer,
-			   Ogr_feature, cursor);
+			   Ogr_feature);
 		    OGR_L_CreateFeature(Ogr_layer, Ogr_feature);
 		}
 
@@ -980,7 +967,7 @@ int main(int argc, char *argv[])
 		    }
 
 		    mk_att(cat, Fi, Driver, ncol, doatt, nocat_flag->answer,
-			   Ogr_feature, cursor);
+			   Ogr_feature);
 		    OGR_L_CreateFeature(Ogr_layer, Ogr_feature);
 		}
 		OGR_G_DestroyGeometry(Ogr_geometry);
@@ -1008,7 +995,6 @@ int main(int argc, char *argv[])
     Vect_close(&In);
 
     if (doatt) {
-	db_close_cursor(&cursor);
 	db_close_database(Driver);
 	db_shutdown_driver(Driver);
     }
@@ -1038,7 +1024,7 @@ int main(int argc, char *argv[])
 
 
 int mk_att(int cat, struct field_info *Fi, dbDriver * Driver, int ncol,
-	   int doatt, int nocat, OGRFeatureH Ogr_feature, dbCursor cursor)
+	   int doatt, int nocat, OGRFeatureH Ogr_feature)
 {
     int j, ogrfieldnum;
     int colsqltype, colctype, more;
@@ -1046,6 +1032,8 @@ int mk_att(int cat, struct field_info *Fi, dbDriver * Driver, int ncol,
     dbString dbstring;
     dbColumn *Column;
     dbValue *Value;
+    dbCursor cursor;
+    char buf[SQL_BUFFER_SIZE];
 
     G_debug(2, "mk_att() cat = %d, doatt = %d", cat, doatt);
     db_init_string(&dbstring);
@@ -1062,6 +1050,18 @@ int mk_att(int cat, struct field_info *Fi, dbDriver * Driver, int ncol,
     /* Read & set attributes */
     if (cat >= 0) {		/* Line with category */
 	if (doatt) {
+	    /* Fetch all attribute records for cat <cat> */ 
+	    /* opening and closing the cursor is slow, 
+	     * but the cursor really needs to be opened for each cat separately */
+	    sprintf(buf, "SELECT * FROM %s WHERE %s = %d", Fi->table, Fi->key, cat);
+	    G_debug(2, "SQL: %s", buf);
+	    db_set_string(&dbstring, buf);
+	    if (db_open_select_cursor
+			    (Driver, &dbstring, &cursor, DB_SEQUENTIAL) != DB_OK) {
+		    G_fatal_error(_("Cannot select attributes for cat = %d"),
+		  cat);
+	    }
+
 	    if (db_fetch(&cursor, DB_NEXT, &more) != DB_OK)
 		G_fatal_error(_("Unable to fetch data from table"));
 	    if (!more) {
@@ -1097,23 +1097,35 @@ int mk_att(int cat, struct field_info *Fi, dbDriver * Driver, int ncol,
 		    colctype = db_sqltype_to_Ctype(colsqltype);
 		    G_debug(2, "  colctype = %d", colctype);
 
+		    if (nocat && strcmp(Fi->key, db_get_column_name(Column)) == 0)
+			continue;
+
 		    ogrfieldnum = OGR_F_GetFieldIndex(Ogr_feature,
 						      db_get_column_name
 						      (Column));
 
+		    G_debug(2, "  column = %s -> fieldnum = %d",
+			    db_get_column_name(Column), ogrfieldnum);
+
+		    if (ogrfieldnum < 0) {
+			G_debug(4, "Could not get OGR field number for column %s",
+				                         db_get_column_name(Column));
+			continue;
+		    }
+
 		    /* Reset */
-		    if (((nocat) &&
-			 (strcmp(Fi->key, db_get_column_name(Column)) ==
-			  0)) == 0) {
+		    if ((nocat &&
+			 strcmp(Fi->key, db_get_column_name(Column)) ==
+			  0) == 0) {
 			/* if this is 'cat', then execute the following only if the '-s' flag was NOT given */
 			OGR_F_UnsetField(Ogr_feature, ogrfieldnum);
 		    }
 
 		    /* prevent writing NULL values */
 		    if (!db_test_value_isnull(Value)) {
-			if (((nocat) &&
-			     (strcmp(Fi->key, db_get_column_name(Column)) ==
-			      0)) == 0) {
+			if ((nocat &&
+			     strcmp(Fi->key, db_get_column_name(Column)) ==
+			      0) == 0) {
 			    /* if this is 'cat', then execute the following only if the '-s' flag was NOT given */
 			    switch (colctype) {
 			    case DB_C_TYPE_INT:
@@ -1144,6 +1156,7 @@ int mk_att(int cat, struct field_info *Fi, dbDriver * Driver, int ncol,
 		    }
 		}
 	    }
+	    db_close_cursor(&cursor);
 	}
 	else {			/* Use cat only */
 	    ogrfieldnum = OGR_F_GetFieldIndex(Ogr_feature, "cat");
