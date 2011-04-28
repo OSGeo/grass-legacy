@@ -53,6 +53,9 @@ extern "C" {
 /* TICache: create 1 km bins for visibility */
 #define BIN_VIS 1.
 
+/* uncomment to disable cache usage */
+/* #define _NO_OPTIMIZE_ */
+
 /* Input options and flags */
 struct Options
 {
@@ -92,7 +95,7 @@ struct RBitem
 static void adjust_region(char *, const char *);
 static CELL round_c(FCELL);
 static void write_fp_to_cell(int, FCELL *);
-static void process_raster(int, InputMask, ScaleRange, int, int, int, bool, ScaleRange, bool);
+static void process_raster(int, InputMask, ScaleRange, int, int, int, bool, ScaleRange);
 static void copy_colors(char *, const char *, char *);
 static void define_module(void);
 static struct Options define_options(void);
@@ -239,7 +242,7 @@ class TICache
 */
 static void process_raster(int ifd, InputMask imask, ScaleRange iscale,
 			    int ialt_fd, int ivis_fd, int ofd, bool oflt,
-			    ScaleRange oscale, bool optimize)
+			    ScaleRange oscale)
 {
     FCELL* buf;         /* buffer for the input values */
     FCELL* alt = NULL;         /* buffer for the elevation values */
@@ -247,6 +250,12 @@ static void process_raster(int ifd, InputMask imask, ScaleRange iscale,
     FCELL  prev_alt = -1.f;
     FCELL  prev_vis = -1.f;
     int row, col, nrows, ncols;
+    /* switch on optimization automatically if elevation and/or visibility map is given */
+    bool optimize = (ialt_fd >= 0 || ivis_fd >= 0);
+    
+#ifdef _NO_OPTIMIZE_
+    optimize = false;
+#endif
 
     /* do initial computation with global elevation and visibility values */
     TransformInput ti;
@@ -288,8 +297,8 @@ static void process_raster(int ifd, InputMask imask, ScaleRange iscale,
         /* loop over all the values in the row */
 	for(col = 0; col < ncols; col++)
 	{
-	    if(vis && G_is_f_null_value(&vis[col]) || 
-	       alt && G_is_f_null_value(&alt[col]) || 
+	    if((vis && G_is_f_null_value(&vis[col])) || 
+	       (alt && G_is_f_null_value(&alt[col])) || 
 	              G_is_f_null_value(&buf[col]))
 	    {
 	        G_set_f_null_value(&buf[col], 1);
@@ -627,17 +636,14 @@ int main(int argc, char* argv[])
     if(opts.etmbefore->answer) imask = (InputMask)(imask | ETM_BEFORE);
     if(opts.etmafter->answer) imask = (InputMask)(imask | ETM_AFTER);
 
-    if ((ialt_fd >= 0 || ivis_fd >= 0) && !opts.optimize->answer) {
-	G_message(_("An elevation and/or visibility map is given, but the optimization flag is not set."));
-	G_message(_("This can take some time."));
-    }
-
-    /* switch on optimization automatically if elevation and/or visibility map is given? */
+    /* switch on optimization automatically if elevation and/or visibility map is given */
+    if (opts.optimize->answer)
+	G_important_message(_("Optimization is switched on automatically, the -o flag has no effect"));
 
     /* process the input raster and produce our atmospheric corrected output raster. */
     G_message(_("Atmospheric correction..."));
     process_raster(iimg_fd, imask, iscale, ialt_fd, ivis_fd,
-                   oimg_fd, opts.oflt->answer, oscale, opts.optimize->answer);
+                   oimg_fd, opts.oflt->answer, oscale);
 
 
     /* Close the input and output file descriptors */
