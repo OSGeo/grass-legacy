@@ -82,8 +82,8 @@ update-po:
 
 verify:
 	@cd ./po/ ; for po in `ls *_*.po 2>/dev/null` ; do \
-	msgfmt -c $$po; \
-	echo ""; \
+		echo "----- $$po:" ; \
+		msgfmt -c $$po; \
 	done
 
 libs_FILES := $(patsubst po/grasslibs_%.po,$(MO_DIR)/%/LC_MESSAGES/grasslibs.mo,$(wildcard po/grasslibs_*.po)) 

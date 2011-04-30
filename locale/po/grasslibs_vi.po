@@ -2092,7 +2092,7 @@ msgstr "lỗi không rõ"
 #: ../lib/gis/color_rules.c:151
 #, c-format
 msgid "bad rule (%s): [%s]"
-msgstr "quy tắc tồi (%s): [%d]"
+msgstr "quy tắc tồi (%s): [%s]"
 
 #: ../lib/gis/color_rules.c:265
 #, c-format

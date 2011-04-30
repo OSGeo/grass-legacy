@@ -4016,7 +4016,7 @@ msgstr "SOR -- powtórzenie %i błąd %g\n"
 #: ../lib/rst/interp_float/output2d.c:125
 #, c-format
 msgid "First change your cols number to nsizc %d %d"
-msgstr "Najpierw ustaw liczbę kolumn zgodnie z 'nsizc'"
+msgstr "Najpierw ustaw liczbę kolumn zgodnie z 'nsizc' %d %d"
 
 #: ../lib/rst/interp_float/segmen2d.c:111
 msgid ""
