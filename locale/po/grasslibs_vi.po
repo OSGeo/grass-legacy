@@ -2028,7 +2028,7 @@ msgstr "lỗi không rõ"
 #: ../lib/gis/color_rules.c:151
 #, c-format
 msgid "bad rule (%s): [%s]"
-msgstr "quy tắc tồi (%s): [%d]"
+msgstr "quy tắc tồi (%s): [%s]"
 
 #: ../lib/gis/color_rules.c:265
 #, c-format
@@ -3861,7 +3861,7 @@ msgstr "bỏ qua %d điểm--quá dày"
 #: ../lib/rst/interp_float/vinput2d.c:335
 #, c-format
 msgid "%d points given for interpolation (after thinning) is less than given NPMIN=%d"
-msgstr "%d điểm được cung cấp để nội suy (sau khi làm mảnh) ít hơn NPMIN=% được cung cấp"
+msgstr "%d điểm được cung cấp để nội suy (sau khi làm mảnh) ít hơn NPMIN=%d được cung cấp"
 
 #: ../lib/rst/interp_float/vinput2d.c:340
 msgid "Zero points in the given region"

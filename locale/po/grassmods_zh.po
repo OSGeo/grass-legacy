@@ -27428,7 +27428,7 @@ msgstr "类别 [%d] 没有相关的记录"
 #: ../ps/ps.map/ps_vareas.c:106
 #, c-format
 msgid "Invalid RGB color definition in column <%s> for category [%d]"
-msgstr "类别[%d]的行[%s]无效的RGB颜色定义"
+msgstr "类别[%d]的行<%s>无效的RGB颜色定义"
 
 #: ../ps/ps.map/main.c:77
 msgid "postscript, map, printing"

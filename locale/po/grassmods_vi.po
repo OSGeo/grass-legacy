@@ -21092,7 +21092,7 @@ msgstr "Việc tính toán bao lồi cần có ít nhất ba điểm. Thoát l�
 #: ../vector/v.hull/main.c:320
 #, c-format
 msgid "%d points read from vector map <%s>"
-msgstr "Đọc %d điểm từ bản đồ vec-tơ <%>"
+msgstr "Đọc %d điểm từ bản đồ vec-tơ <%s>"
 
 #: ../vector/v.in.dwg/main.c:66
 msgid "Converts DWG/DXF to GRASS vector map"

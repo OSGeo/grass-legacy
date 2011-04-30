@@ -21342,7 +21342,7 @@ msgstr ""
 #: ../vector/v.proj/main.c:188
 #, c-format
 msgid "Vector map <%s> in location <%s> mapset <%s> not found"
-msgstr "Mappa vettoriale <%s>"
+msgstr "Mappa vettoriale <%s> nella location <%s> mapset <%s> non trovata"
 
 #: ../vector/v.proj/main.c:211
 #, c-format
