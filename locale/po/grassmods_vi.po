@@ -19364,7 +19364,7 @@ msgstr "Tổng quát hoá (%s) ..."
 #: ../vector/v.generalize/main.c:453
 #, c-format
 msgid "%d boundaries were deleted, input areas are not preserved"
-msgstr "% ranh giới bị xoá, các vùng đầu vào không được bảo toàn"
+msgstr "%d ranh giới bị xoá, các vùng đầu vào không được bảo toàn"
 
 #: ../vector/v.generalize/main.c:476
 #, c-format

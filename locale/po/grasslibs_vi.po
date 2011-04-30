@@ -4101,7 +4101,7 @@ msgid ""
 "%d points given for interpolation (after thinning) is less than given NPMIN=%"
 "d"
 msgstr ""
-"%d điểm được cung cấp để nội suy (sau khi làm mảnh) ít hơn NPMIN=% được cung "
+"%d điểm được cung cấp để nội suy (sau khi làm mảnh) ít hơn NPMIN=%d được cung "
 "cấp"
 
 #: ../lib/rst/interp_float/vinput2d.c:340

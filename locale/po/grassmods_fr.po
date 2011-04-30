@@ -4250,7 +4250,7 @@ msgstr ""
 #: ../raster/r.support/modhead/modhead.c:90
 #, c-format
 msgid "[%s] is a reclass of [%s in %s] - cannot edit header!"
-msgstr "[%s] est une reclassification de [%s] - impossible d'éditer l'en-tête!"
+msgstr "[%s] est une reclassification de [%s in %s] - impossible d'éditer l'en-tête!"
 
 # c-format
 #: ../raster/r.support/modhead/modhead.c:96
@@ -33833,7 +33833,7 @@ msgid ""
 "Subgroup too large.  Maximum number of bands is %d\n"
 "."
 msgstr ""
-"Sous-groupe trop grand. Le nombre maximum de bandes est %\n"
+"Sous-groupe trop grand. Le nombre maximum de bandes est %d\n"
 "."
 
 #: ../imagery/i.cca/main.c:207
