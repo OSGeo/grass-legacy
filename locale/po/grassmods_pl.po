@@ -5784,7 +5784,7 @@ msgstr "Maksymalna odległość od punktu widokowego (metry): %f"
 #: ../raster/r.null/null.c:342 ../raster/r.proj.seg/main.c:515
 #, c-format
 msgid "Failed writing raster map <%s> row %d"
-msgstr "Nie można zapisać wiersza %d mapy rastrowej <%s>"
+msgstr "Nie można zapisać wiersza <%s> mapy rastrowej %d"
 
 #: ../raster/wildfire/r.spread/main.c:103
 msgid "Simulates elliptically anisotropic spread on a graphics window and generates a raster map of the cumulative time of spread, given raster maps containing the rates of spread (ROS), the ROS directions and the spread origins."

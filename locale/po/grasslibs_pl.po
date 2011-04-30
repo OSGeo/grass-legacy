@@ -1080,7 +1080,7 @@ msgstr "obsługa koloru dla [%s] w mapsecie [%s] %s"
 #: ../lib/gis/timestamp.c:282
 #, c-format
 msgid "Can't create timestamp file for %s map %s in mapset %s"
-msgstr "Nie można utworzyć pliku znacznika czasu dla mapy %s w mapsecie %s"
+msgstr "Nie można utworzyć pliku znacznika czasu dla %s mapy %s w mapsecie %s"
 
 #: ../lib/gis/timestamp.c:291
 #, c-format

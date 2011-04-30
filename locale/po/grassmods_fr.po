@@ -4072,7 +4072,7 @@ msgstr "[%s] est une reclassification de [%s] - impossible d'éditer l'en-tête! E
 #: ../raster/r.support/modhead/modhead.c:90
 #, c-format
 msgid "[%s] is a reclass of [%s in %s] - cannot edit header!"
-msgstr "[%s] est une reclassification de [%s] - impossible d'éditer l'en-tête!"
+msgstr "[%s] est une reclassification de [%s in %s] - impossible d'éditer l'en-tête!"
 
 # c-format
 #: ../raster/r.support/modhead/modhead.c:96
