@@ -80,6 +80,12 @@ update-po:
 		done
 	@echo "Be careful with SVN commits as .po file updates must be syncronized with the individual translators."
 
+verify:
+	@cd ./po/ ; for po in `ls *_*.po 2>/dev/null` ; do \
+	msgfmt -c $$po; \
+	echo ""; \
+	done
+
 libs_FILES := $(patsubst po/grasslibs_%.po,$(MO_DIR)/%/LC_MESSAGES/grasslibs.mo,$(wildcard po/grasslibs_*.po)) 
 $(MO_DIR)/%/LC_MESSAGES/grasslibs.mo: po/grasslibs_%.po 
 	@ [ -d $(MO_DIR)/$*/LC_MESSAGES ] || $(MKDIR) $(MO_DIR)/$*/LC_MESSAGES 
