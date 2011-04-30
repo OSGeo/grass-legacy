@@ -2106,7 +2106,7 @@ msgstr "Impossível mudar de diretório para %s"
 #: ../lib/gis/done_msg.c:38
 #, c-format
 msgid "%s complete. %s"
-msgstr "%s completo. %"
+msgstr "%s completo. %s"
 
 #: ../lib/gis/get_cellhd.c:71 ../lib/gis/get_cellhd.c:100
 #, fuzzy, c-format
