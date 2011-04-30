@@ -1613,7 +1613,7 @@ msgid ""
 "to null file %s"
 msgstr ""
 "closecell: 无法将 %s\n"
-"移动到空文件 $s"
+"移动到空文件 %s"
 
 #: ../lib/gis/closecell.c:250
 #, c-format

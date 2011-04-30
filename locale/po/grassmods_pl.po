@@ -6027,7 +6027,7 @@ msgstr "Maksymalna odległość od punktu widokowego (metry): %f"
 #: ../imagery/i.rectify/write.c:56
 #, c-format
 msgid "Failed writing raster map <%s> row %d"
-msgstr "Nie można zapisać wiersza %d mapy rastrowej <%s>"
+msgstr "Nie można zapisać wiersza <%s> mapy rastrowej %d"
 
 #: ../raster/wildfire/r.spread/main.c:101
 #: ../raster/wildfire/r.spreadpath/main.c:72

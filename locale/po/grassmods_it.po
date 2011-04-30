@@ -25670,7 +25670,7 @@ msgstr "  Numero di confini:       %-9ld       Numero di facce:      %-9ld"
 #: ../vector/v.info/main.c:287
 #, c-format
 msgid "  Number of centroids:    %-9ld       Number of kernels:    %-9ld"
-msgstr "  Numero di centroidi:       %-9ld     "
+msgstr "  Numero di centroidi:       %-9ld      Numero di facce:      %-9ld"
 
 #: ../vector/v.info/main.c:292
 #, fuzzy, c-format
