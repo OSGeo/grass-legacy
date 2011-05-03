@@ -11828,12 +11828,11 @@ msgstr "Wenn fertig geben Sie \"end\" ein."
 #: ../raster/r.recode/read_rules.c:134
 #, c-format
 msgid "'%s' is not a valid rule"
-msgstr "'%s' ist keine gültige Regel."
+msgstr "'%s' ist keine gültige Regel"
 
 #: ../raster/r.volume/main.c:57
-#, fuzzy
 msgid "raster, volume"
-msgstr "Rasterwert"
+msgstr "Raster, Volumen"
 
 #: ../raster/r.volume/main.c:59
 msgid ""
@@ -26651,7 +26650,7 @@ msgstr "Anisotropie-Winkel (in Grad gegen den Uhrzeigersinn von Osten)."
 #: ../vector/v.surf.rst/main.c:418 ../vector/v.surf.rst/main.c:423
 #, c-format
 msgid "Output vector map name <%s> is not valid map name"
-msgstr "Name der Ausgabe-Vektorkarte <%s> ist keine gültiger Kartenname."
+msgstr "Name der Ausgabe-Vektorkarte <%s> ist kein gültiger Kartenname."
 
 #: ../vector/v.surf.rst/main.c:436
 msgid "You are not outputting any raster or vector maps"
