@@ -14,7 +14,7 @@ MODULES = date gis gmath proj imagery vector display stats \
 	dbmi g3d arraystats cluster trans vedit ogsf nviz
 
 date_LIBS       = -l$(DATETIME_LIBNAME)
-grass_LIBS      = -l$(GIS_LIBNAME)
+gis_LIBS        = -l$(GIS_LIBNAME)
 gmath_LIBS      = -l$(GMATH_LIBNAME)
 proj_LIBS       = -l$(GPROJ_LIBNAME) -l$(GIS_LIBNAME)
 imagery_LIBS    = -l$(IMAGERY_LIBNAME)
