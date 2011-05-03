@@ -916,7 +916,7 @@ msgstr "  %*s   Optionen: "
 #: ../lib/gis/parser.c:2113 ../lib/gis/parser.c:2128
 #, c-format
 msgid "Sorry, <%c> is not a valid flag\n"
-msgstr "Tut mir leid, <%c> ist keine gültiges Flag.\n"
+msgstr "Tut mir leid, <%c> ist kein gültiges Flag.\n"
 
 #: ../lib/gis/parser.c:2194
 #, c-format
@@ -1442,7 +1442,7 @@ msgstr "Ungültiger Dateiname. Das Zeichen <%c> ist nicht erlaubt.\n"
 #: ../lib/gis/legal_name.c:77 ../lib/gis/legal_name.c:81
 #, c-format
 msgid "Output raster map name <%s> is not valid map name"
-msgstr "Name der Ausgabe-Rasterkarte <%s> ist keine gültiger Kartenname."
+msgstr "Name der Ausgabe-Rasterkarte <%s> ist kein gültiger Kartenname."
 
 #: ../lib/gis/legal_name.c:94 ../lib/gis/legal_name.c:97
 #: ../lib/gis/opencell.c:1011 ../lib/gpde/N_arrays_io.c:55
@@ -2309,7 +2309,7 @@ msgstr "Ungültiger Name der Vektorkarte <%s>. SQL-Schlüsselwort darf nicht als V
 #: ../lib/vector/Vlib/legal_vname.c:101 ../lib/vector/Vlib/legal_vname.c:105
 #, c-format
 msgid "Output vector map name <%s> is not valid map name"
-msgstr "Name der Ausgabe-Vektorkarte <%s> ist keine gültiger Kartenname."
+msgstr "Name der Ausgabe-Vektorkarte <%s> ist kein gültiger Kartenname."
 
 #: ../lib/vector/Vlib/legal_vname.c:118 ../lib/vector/Vlib/legal_vname.c:121
 #: ../lib/vector/Vlib/map.c:328 ../lib/vector/Vlib/open.c:168
