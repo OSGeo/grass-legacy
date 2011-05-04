@@ -53,7 +53,7 @@ EXCLUDEHTML="`echo "$EXCLUDEMODS" | tr ' ' '|' | sed -e 's+\.+\\\\.+g' -e 's+|+\
 ARCH="`cat ../include/Make/Platform.make | grep '^ARCH'  | sed 's+ ++g' | cut -d'=' -f2`"
 GEMDIR="../gem"
 HTMLDIR="../dist.$ARCH/docs/html"
-GRASSVERSION=`cat ../dist.$ARCH/etc/VERSIONNUMBER`
+GRASSVERSION=`cut -d' ' -f1 ../dist.$ARCH/etc/VERSIONNUMBER`
 GRASS_MMVER=`cut -d . -f 1-2 ../dist.$ARCH/etc/VERSIONNUMBER`
 MACOSX=`echo $ARCH | grep -i darwin`
 
