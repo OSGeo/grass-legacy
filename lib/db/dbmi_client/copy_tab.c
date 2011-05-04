@@ -103,7 +103,7 @@ int db__copy_table(const char *from_drvname, const char *from_dbname,
     db_set_handle(&from_handle, from_dbname, NULL);
     if (db_open_database(from_driver, &from_handle) != DB_OK) {
 	G_warning(_("Unable to open database <%s> by driver <%s>"),
-		  from_drvname, from_dbname);
+		  from_dbname, from_drvname);
 	db_close_database_shutdown_driver(from_driver);
 	return DB_FAILED;
     }
