@@ -8,13 +8,14 @@
 # Markus Neteler <neteler osgeo.org>, 2008.
 # Robert Nuske <rnuske gwdg.de>, 2009, 2010.
 # Robert Nuske <robert.nuske nw-fva.de>, 2011.
+# Helmut Kudrnovsky <hellik web.de>, 2011.
 msgid ""
 msgstr ""
 "Project-Id-Version: grasslibs_de\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2011-04-19 00:30+0200\n"
-"PO-Revision-Date: 2011-02-09 21:17+0100\n"
-"Last-Translator: Helmut Kudrnovsky <hellik@web.de>\n"
+"PO-Revision-Date: 2011-05-08 20:58+0100\n"
+"Last-Translator: Markus Neteler <neteler osgeo.org>\n"
 "Language-Team: Deutsch <grass-translations@lists.osgeo.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=ISO-8859-15\n"
@@ -743,14 +744,12 @@ msgid "Feature ids"
 msgstr "Objekt IDs"
 
 #: ../lib/gis/parser.c:637
-#, fuzzy
 msgid "Name to input file"
-msgstr "Pfad zur Eingabedatei"
+msgstr "Name der  Eingabedatei"
 
 #: ../lib/gis/parser.c:645
-#, fuzzy
 msgid "Name for output file"
-msgstr "Pfad zur Ausgabedatei"
+msgstr "Name der Ausgabedatei"
 
 #: ../lib/gis/parser.c:653
 msgid "Field separator"
@@ -1582,14 +1581,12 @@ msgid "G_distance_point_to_line_segment: shouldn't happen: code=%d P=(%f,%f) S=(
 msgstr "G_distance_point_to_line_segment: sollte nicht vorkommen: Code=%d P=(%f,%f) S=(%f,%f)(%f,%f)"
 
 #: ../lib/gis/seek.c:52 ../lib/gis/seek.c:58
-#, fuzzy
 msgid "Unable to seek"
-msgstr "Kann Focus nicht setzten."
+msgstr "Suchen unmöglich"
 
 #: ../lib/gis/seek.c:56
-#, fuzzy
 msgid "Seek offset out of range"
-msgstr "Layerindex außerhalb des Wertebereichs."
+msgstr "Suchabstand außerhalb des Wertebereichs"
 
 #: ../lib/gis/alloc.c:43
 #, c-format
@@ -2838,12 +2835,11 @@ msgstr "side != 0 Feature nicht implementiert"
 
 #: ../lib/vector/Vlib/buffer2.c:899 ../lib/vector/Vlib/buffer2.c:946
 msgid "zero area size"
-msgstr ""
+msgstr "Flächengröße Null"
 
 #: ../lib/vector/Vlib/buffer2.c:905 ../lib/vector/Vlib/buffer2.c:952
-#, fuzzy
 msgid "Line was not closed"
-msgstr "Linie ist nicht gelooped."
+msgstr "Linie wurde nicht geschlossen"
 
 #: ../lib/vector/Vlib/buffer2.c:918 ../lib/vector/Vlib/buffer2.c:969
 msgid "Vect_get_point_in_poly() failed"
@@ -3087,9 +3083,9 @@ msgid "Unable to delete feature %d, vector map <%s> is not opened in 'write' mod
 msgstr "Kann Objekt %d nicht löschen. Vektorkarte <%s> ist nicht im Schreibmodus geöffnet."
 
 #: ../lib/vector/Vlib/write.c:239
-#, fuzzy, c-format
+#, c-format
 msgid "Unable to delete feature %d from vector map <%s>"
-msgstr "Kann Objekt %d der Vektorkarte <%s> nicht wiederherstellen."
+msgstr "Kann Objekt %d der Vektorkarte <%s> nicht löschen"
 
 #: ../lib/vector/Vlib/write.c:265
 #, c-format
@@ -3308,35 +3304,36 @@ msgid "Unknown query tool"
 msgstr "Unbekanntes Abfragewerkzeug"
 
 #: ../lib/vector/neta/spanningtree.c:104
+#, fuzzy
 msgid "Computing minimum spanning tree..."
-msgstr ""
+msgstr "Berechne Minimum spanning tree..."
 
 #: ../lib/vector/neta/utils.c:219 ../lib/vector/neta/utils.c:232
 #, c-format
 msgid "'%s' must be > 0 for '%s'"
-msgstr ""
+msgstr "'%s' muss > 0 für '%s' sein"
 
 #: ../lib/vector/neta/utils.c:221
+#, fuzzy
 msgid "'where' and 'cats' parameters were supplied, cat will be ignored"
-msgstr ""
+msgstr "'where' und 'cats' Parameter werden unterstützt, cat wird ignoriert"
 
 #: ../lib/vector/neta/utils.c:225
-#, fuzzy
 msgid "Unable to load data from database"
-msgstr "Kann Datenbankverknüpfung nicht hinzufügen."
+msgstr "Kann Daten der Datenbank nicht laden"
 
 #: ../lib/vector/neta/utils.c:236
-#, fuzzy
 msgid "Problem loading category values"
-msgstr "Probleme beim Lesen der Rasterkarte."
+msgstr "Problem, Kategorie-Werte zu laden"
 
 #: ../lib/vector/neta/allpairs.c:53
+#, fuzzy
 msgid "Computing all pairs shortest paths..."
-msgstr ""
+msgstr "Berechne alle Paare der kürzesten Wege..."
 
 #: ../lib/vector/neta/timetables.c:46 ../lib/vector/neta/timetables.c:203
 #: ../lib/vector/neta/timetables.c:244 ../lib/vector/neta/timetables.c:286
-#, fuzzy, c-format
+#, c-format
 msgid "Unable to open select cursor: %s"
 msgstr "Kann den Select-Cursor '%s' nicht öffnen."
 
