@@ -116,6 +116,9 @@ class GLWindow(MapWindow, glcanvas.GLCanvas):
         
         self.img = wx.Image(self.Map.mapfile, wx.BITMAP_TYPE_ANY)
         
+        # size of MapWindow, to avoid resizing if size is the same
+        self.size = (0,0)
+        
         #
         # default values
         #
@@ -147,13 +150,14 @@ class GLWindow(MapWindow, glcanvas.GLCanvas):
     
     def OnSize(self, event):
         size = self.GetClientSize()
-        if self.GetContext():
+        if self.size != size \
+            and self.GetContext():
             Debug.msg(3, "GLCanvas.OnSize(): w = %d, h = %d" % \
                       (size.width, size.height))
             self.SetCurrent()
             self._display.ResizeWindow(size.width,
                                        size.height)
-        
+        self.size = size
         event.Skip()
         
     def OnPaint(self, event):
@@ -311,7 +315,7 @@ class GLWindow(MapWindow, glcanvas.GLCanvas):
         """!Change light settings"""
         data = self.light
         self._display.SetLight(x = data['position']['x'], y = data['position']['y'],
-                               z = data['position']['z'], color = data['color'],
+                               z = data['position']['z'] / 100., color = data['color'],
                                bright = data['bright'] / 100.,
                                ambient = data['ambient'] / 100.)
         self._display.DrawLightingModel()
@@ -469,12 +473,6 @@ class GLWindow(MapWindow, glcanvas.GLCanvas):
                     elif ltype ==  '3d-raster':
                         self.UnloadRaster3d(layer) 
                     elif ltype ==  'vector':
-                        data = self.tree.GetPyData(layer)[0]['nviz']
-                        vecType = []
-                        if data and 'vector' in data:
-                            for v in ('lines', 'points'):
-                                if data['vector'][v]:
-                                    vecType.append(v)
                         self.UnloadVector(layer, True)
                         self.UnloadVector(layer, False)
                     
@@ -946,6 +944,7 @@ class GLWindow(MapWindow, glcanvas.GLCanvas):
             z = data['position']['z']
             self._display.SetSurfacePosition(id, x, y, z)
             data['position'].pop('update')
+        data['draw']['all'] = False
         
     def UpdateVolumeProperties(self, id, data, isosurfId = None):
         """!Update volume (isosurface/slice) map object properties"""

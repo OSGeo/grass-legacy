@@ -1594,15 +1594,16 @@ int GS_load_att_map(int id, const char *filename, int att)
     unsigned int atty;
     const char *mapset;
     struct Cell_head rast_head;
-    int reuse = 0, begin, hdata, ret, neg = 0, has_null = 0;
+    int reuse, begin, hdata, ret, neg, has_null;
     typbuff *tbuff;
 
     G_debug(3, "GS_load_att_map(): map=%s", filename);
 
+    reuse = ret = neg = has_null = 0;
     gs = gs_get_surf(id);
 
     if (NULL == gs) {
-	return (-1);
+	return -1;
     }
 
     gs->mask_needupdate = (ATT_MASK == att || ATT_TOPO == att ||
@@ -1762,7 +1763,7 @@ int GS_load_att_map(int id, const char *filename, int att)
 
 	if (ret == -1) {
 	    gsds_free_data_buff(gs->att[att].hdata, ATTY_NULL);
-	    return (-1);
+	    return -1;
 	}
 
 	G_debug(4, "  has_null=%d", has_null);
@@ -1834,7 +1835,7 @@ int GS_load_att_map(int id, const char *filename, int att)
 	G_warning(_("Error finding range"));
     }
 
-    return (ret);
+    return ret;
 }
 
 /*!
