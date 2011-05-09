@@ -271,7 +271,7 @@ fi
 
 cd "$TMPDIR/$MODULE"
 g.message message="Compiling <$MODULE>..."
-make MODULE_TOPDIR="$GISBASE"
+make MODULE_TOPDIR="$GISBASE" ARCH_INC="-I$GISBASE/include -I${MYINST_DIR}/include -I$TMPDIR/dist/include" ARCH_LIBPATH="-L$GISBASE/lib -L${MYINST_DIR}/lib -L$TMPDIR/dist/lib" ARCH_LIBDIR="$GISBASE/lib" ARCH_DISTDIR="$TMPDIR/dist"
 if [ $? -ne 0 ] ; then
    g.message -e message="Compilation failed, sorry. Please check above error messages."
    cleanup
@@ -305,12 +305,12 @@ else
          su -c "rm -f \"${MYINST_DIR}/$PROGTYPE/${MODULE}\""
       fi
       g.message "You need to enter the root password next to install ${MODULE}:"
-      su -c "make MODULE_TOPDIR="$GISBASE" INST_DIR="$MYINST_DIR" install"
+      su -c "make MODULE_TOPDIR="$GISBASE" ARCH_DISTDIR="$TMPDIR/dist" INST_DIR="$MYINST_DIR" install"
    else
       if test -f "${MYINST_DIR}/$PROGTYPE/${MODULE}" ; then
          rm -f "${MYINST_DIR}/$PROGTYPE/${MODULE}"
       fi
-      make MODULE_TOPDIR="$GISBASE" INST_DIR="$MYINST_DIR" install
+      make MODULE_TOPDIR="$GISBASE" ARCH_DISTDIR="$TMPDIR/dist" INST_DIR="$MYINST_DIR" install
    fi
 
    if [ $? -ne 0 ] ; then
