@@ -7,10 +7,10 @@ points identified in
 or
 <EM><A HREF="i.vpoints.html">i.vpoints</A></EM>
 
-to calculate a transformation matrix based on a  first,
+to calculate a transformation matrix based on a first,
 second, or third order polynomial and then converts x,y
 cell coordinates to standard map coordinates for each pixel
-in the image.  The result is a planimetric image with a
+in the image. The result is a planimetric image with a
 transformed coordinate system (i.e., a different coordinate
 system than before it was rectified).
 
@@ -21,12 +21,12 @@ or
 <EM><A HREF="i.vpoints.html">i.vpoints</A></EM>
 
 must be run before <EM>i.rectify</EM>, and both programs
-are required to rectify an image.  An image must be
+are required to rectify an image. An image must be
 rectified before it can reside in a standard coordinate
 LOCATION, and therefore be analyzed with the other map
-layers in the standard coordinate LOCATION.  Upon
+layers in the standard coordinate LOCATION. Upon
 completion of <EM>i.rectify</EM>, the rectified image is
-deposited in the target standard coordinate LOCATION.  This
+deposited in the target standard coordinate LOCATION. This
 LOCATION is selected using
 
 <EM><A HREF="i.target.html">i.target</A></EM>.
@@ -163,6 +163,39 @@ included control points are immediately recalculated when
 the user selects a different transformation order from the
 menu bar.  The polynomial equations are performed using a 
 modified Gaussian elimination method.
+
+<h3>Resampling method</h3>
+<p>
+The rectified data is resampled with one of five different methods: 
+<em>nearest</em>, <em>bilinear</em>, <em>cubic</em>, <em>bilinear_f</em>
+or <em>cubic_f</em>.
+<p>
+The <em>method=nearest</em> method, which performs a nearest neighbor assignment,
+is the fastest of the three resampling methods. It is primarily used for
+categorical data such as a land use classification, since it will not change
+the values of the data cells. The <em>method=bilinear</em> method determines the new
+value of the cell based on a weighted distance average of the 4 surrounding
+cells in the input map. The <em>method=cubic</em> method determines the new value of
+the cell based on a weighted distance average of the 16 surrounding cells in
+the input map. The <em>method=lanczos</em> method determines the new value of
+the cell based on a weighted distance average of the 25 surrounding cells in
+the input map.
+<p>
+The bilinear, cubic and lanczos interpolation methods are most appropriate for
+continuous data and cause some smoothing. These options should not be used
+with categorical data, since the cell values will be altered.
+<p>
+In the bilinear, cubic and lanczos methods, if any of the surrounding cells used to
+interpolate the new cell value are NULL, the resulting cell will be NULL, even if
+the nearest cell is not NULL. This will cause some thinning along NULL borders,
+such as the coasts of land areas in a DEM. The bilinear_f, cubic_f and lanczos_f
+interpolation methods can be used if thinning along NULL edges is not desired.
+These methods "fall back" to simpler interpolation methods along NULL borders.
+That is, from lanczos to cubic to bilinear to nearest.
+<p>
+If nearest neighbor assignment is used, the output map has the same raster
+format as the input map. If any of the other interpolations is used, the
+output map is written as floating point.
 
 <H3>Program Execution</H3>
 
