@@ -95,6 +95,7 @@ install-basic-macosx:
 	-cd ${GISBASE} ; tar cBf - fonts | (cd ${INST_DIR_TARGET} ; tar xBf - ) 2>/dev/null
 	-cd ${GISBASE} ; tar cBf - man | (cd ${INST_DIR_TARGET} ; tar xBf - ) 2>/dev/null
 	-cd ${GISBASE} ; tar cBf - scripts | (cd ${INST_DIR_TARGET} ; tar xBf - ) 2>/dev/null
+	-cd ${GISBASE} ; tar cBf - tools | (cd ${INST_DIR_TARGET} ; tar xBf - ) 2>/dev/null
 	if [ ${LOCALE} -eq 1 ] ; then cd ${GISBASE} ; tar cBf - locale | (cd ${INST_DIR_TARGET} ; tar xBf - ) 2>/dev/null ; fi
 	-cd ${GISBASE} ; tar cBf - include | (cd ${INST_DIR_TARGET} ; tar xBf - ) 2>/dev/null
 	-cd ${GISBASE} ; tar cBf - lib | (cd ${INST_DIR_TARGET} ; tar xBf - ) 2>/dev/null
