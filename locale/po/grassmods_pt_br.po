@@ -12,7 +12,7 @@ msgstr ""
 "Project-Id-Version: grassmods_pt_br\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2011-04-23 15:34+0200\n"
-"PO-Revision-Date: 2011-04-30 20:23-0300\n"
+"PO-Revision-Date: 2011-05-09 21:38-0300\n"
 "Last-Translator: Fred Ulisses Maranhão <fred.maranhao@gmail.com>\n"
 "Language-Team: Brasilian Portuguese <grass-translations@lists.osgeo.org>\n"
 "MIME-Version: 1.0\n"
@@ -1887,7 +1887,6 @@ msgid "String representing no data cell value"
 msgstr "Texto representando células sem valores de dados"
 
 #: ../raster/r.describe/main.c:80
-#, fuzzy
 msgid "Number of quantization steps"
 msgstr "Número de níveis de quantização"
 
@@ -1985,7 +1984,7 @@ msgstr "raster, álgebra de mapas"
 #: ../raster/r.mfilter.fp/main.c:59
 #, fuzzy
 msgid "Raster map matrix filter."
-msgstr "Filtro de matriz de mapa raster"
+msgstr "Filtro de matriz de mapa raster."
 
 #: ../raster/r.mfilter.fp/main.c:70
 msgid "Name of filter file"
@@ -2011,9 +2010,8 @@ msgid "Quiet"
 msgstr "Silencioso"
 
 #: ../raster/r.mfilter.fp/main.c:101
-#, fuzzy
 msgid "Apply filter only to null data values"
-msgstr "Aplicar filtro somente para valores zerados"
+msgstr "Aplicar filtro somente para valores de dados null"
 
 #: ../raster/r.mfilter.fp/main.c:109 ../raster/r.mfilter/main.c:104
 #: ../raster/r.out.ppm/main.c:81 ../raster/r.kappa/main.c:133
@@ -2030,9 +2028,8 @@ msgid "Cannot open filter file '%s'"
 msgstr "Não consegui abrir o arquivo de filtro '%s'"
 
 #: ../raster/r.mfilter.fp/getfilt.c:47 ../raster/r.mfilter/getfilt.c:46
-#, fuzzy
 msgid "Illegal filter matrix size specified"
-msgstr "Duas camadas devem ser especificadas"
+msgstr "Tamanho especificado para a matriz de filtro é ilegal"
 
 #: ../raster/r.mfilter.fp/getfilt.c:50 ../raster/r.mfilter/getfilt.c:49
 #, fuzzy
@@ -2040,16 +2037,14 @@ msgid "Even filter matrix size specified"
 msgstr "Duas camadas devem ser especificadas"
 
 #: ../raster/r.mfilter.fp/getfilt.c:72 ../raster/r.mfilter/getfilt.c:71
-#, fuzzy
 msgid "Illegal filter matrix"
-msgstr "nome de arquivo ilegal [%s]."
+msgstr "Matriz de filtro ilegal"
 
 #: ../raster/r.mfilter.fp/getfilt.c:80 ../raster/r.mfilter.fp/getfilt.c:107
 #: ../raster/r.mfilter.fp/getfilt.c:124 ../raster/r.mfilter/getfilt.c:79
 #: ../raster/r.mfilter/getfilt.c:105 ../raster/r.mfilter/getfilt.c:122
-#, fuzzy
 msgid "Filter file format error"
-msgstr "Arquivo de entrada"
+msgstr "Erro no formato do arquivo de filtro"
 
 #: ../raster/r.mfilter.fp/getfilt.c:83 ../raster/r.mfilter/getfilt.c:82
 msgid "Duplicate filter divisor specified"
@@ -2064,9 +2059,8 @@ msgid "Duplicate filter type specified"
 msgstr ""
 
 #: ../raster/r.mfilter.fp/getfilt.c:117 ../raster/r.mfilter/getfilt.c:115
-#, fuzzy
 msgid "Illegal filter type specified"
-msgstr "Duas camadas devem ser especificadas"
+msgstr "tipo de filtro especificado é ilegal"
 
 #: ../raster/r.mfilter.fp/getfilt.c:127 ../raster/r.mfilter/getfilt.c:125
 msgid "Duplicate filter start specified"
@@ -2078,54 +2072,50 @@ msgid "Filter start %s ignored, using UL"
 msgstr ""
 
 #: ../raster/r.mfilter.fp/getfilt.c:157 ../raster/r.mfilter/getfilt.c:155
-#, fuzzy
 msgid "Illegal filter file format"
-msgstr "para site"
+msgstr "Formato de arquivo de filtro ilegal"
 
 #: ../raster/r.mfilter.fp/getrow.c:12 ../raster/r.mfilter/getrow.c:12
-#, fuzzy, c-format
+#, c-format
 msgid "Cannot read raster row %d"
-msgstr "Não consegui ler arquivo raster agora."
+msgstr "Não consegui ler linha de raster %d"
 
 #: ../raster/r.mfilter.fp/getrow.c:23 ../raster/r.mfilter/getrow.c:23
-#, fuzzy
 msgid "Error reading temporary file"
-msgstr "Erro tentando ler o arquivo dbmscap\n"
+msgstr "Erro ao ler arquivo temporário"
 
 #: ../raster/r.mfilter.fp/perform.c:38 ../raster/r.mfilter/perform.c:38
 #: ../raster/r.topidx/file_io.c:16 ../raster/r.param.scale/open_files.c:26
 #: ../imagery/i.cca/main.c:185
-#, fuzzy, c-format
+#, c-format
 msgid "Cannot open raster map <%s>"
-msgstr "Não consegui abrir arquivo de células <%s>"
+msgstr "Não consegui abrir mapa raster <%s>"
 
 #: ../raster/r.mfilter.fp/perform.c:43 ../raster/r.mfilter.fp/perform.c:54
 #: ../raster/r.mfilter/perform.c:43 ../raster/r.mfilter/perform.c:54
-#, fuzzy
 msgid "Unable to create temporary file"
-msgstr "Não consegui escrever o arquivo temporário."
+msgstr "Não consegui criar arquivo temporário"
 
 #: ../raster/r.mfilter.fp/perform.c:84 ../raster/r.mfilter/perform.c:84
 #: ../raster/r.reclass/reclass.c:235 ../raster/r.topidx/file_io.c:88
 #: ../raster/r.param.scale/open_files.c:32
 #: ../raster/r.param.scale/open_files.c:36 ../imagery/i.cca/main.c:191
-#, fuzzy, c-format
+#, c-format
 msgid "Cannot create raster map <%s>"
-msgstr "Não consegui criar arquivo raster <%s>."
+msgstr "Não consegui criar mapa raster <%s>"
 
 #: ../raster/r.mfilter.fp/perform.c:87 ../raster/r.mfilter/perform.c:87
-#, fuzzy, c-format
+#, c-format
 msgid "Writing raster map <%s>"
-msgstr "Escrevendo arquivo raster %i\n"
+msgstr "Escrevendo arquivo raster <%s>"
 
 #: ../raster/r.out.ascii/main.c:61
 msgid "Converts a raster map layer into an ASCII text file."
 msgstr "Converte uma camada raster para um arquivo de texto ASCII"
 
 #: ../raster/r.out.ascii/main.c:78
-#, fuzzy
 msgid "Name for output ASCII grid map (use out=- for stdout)"
-msgstr "Nome do mapa ASCII de saída (use 'out=-' para saída padrão)"
+msgstr "Nome do mapa de grid ASCII de saída (use out=- para a saída padrão)"
 
 #: ../raster/r.out.ascii/main.c:92
 msgid "Number of values printed before wrapping a line (only SURFER or MODFLOW format)"
@@ -2148,23 +2138,20 @@ msgid "Force output of integer values"
 msgstr "Forçar saída de valores inteiros"
 
 #: ../raster/r.out.ascii/main.c:123
-#, fuzzy
 msgid "Failed to interpret dp as an integer"
-msgstr "falha interpretando dp como inteiro"
+msgstr "Falha interpretando dp como inteiro"
 
 #: ../raster/r.out.ascii/main.c:131
-#, fuzzy
 msgid "Failed to interpret width as an integer"
-msgstr "falha interpretando dp como inteiro"
+msgstr "falha interpretando a largura como inteiro"
 
 #: ../raster/r.out.ascii/main.c:137
 msgid "Both -s and -h doesn't make sense"
 msgstr ""
 
 #: ../raster/r.out.ascii/main.c:140
-#, fuzzy
 msgid "Use -M or -s, not both"
-msgstr "Escolha apenas uma opção -n ou -s"
+msgstr "Escolha -M ou -s, não ambos"
 
 #: ../raster/r.out.ascii/main.c:172 ../raster/r.out.ppm3/main.c:149
 #: ../raster/r.profile/main.c:157 ../raster/r.out.arc/main.c:142
