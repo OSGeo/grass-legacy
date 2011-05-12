@@ -2,7 +2,7 @@
 SECT = 1
 MANDIR  = $(ARCH_DISTDIR)/man/man$(SECT)
 HTMLDIR = $(ARCH_DISTDIR)/docs/html
-HTML2MAN = GRASS_PERL=${PERL} VERSION_NUMBER=${GRASS_VERSION_NUMBER} sh $(GRASS_HOME)/tools/g.html2man/g.html2man
+HTML2MAN = GRASS_PERL=${PERL} VERSION_NUMBER=${GRASS_VERSION_NUMBER} sh $(INSTALL_DATA)/tools/g.html2man/g.html2man
 
 # generic man rules for all commands
 
