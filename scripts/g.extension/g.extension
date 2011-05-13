@@ -213,9 +213,11 @@ if [ "$PREFIX" = '$GRASS_ADDON_PATH' ] ; then
 	## will GRASS_ADDON_ETC help for man/ and docs/ ?
 	## maybe have g.manual search in GRASS_ADDON_ETC/../ ?  :-/
 	mkdir -p ~/.grass6/addons
-	GRASS_ADDON_PATH=~/.grass6/addons
+	GRASS_ADDON_PATH1=~/.grass6/addons
+    else
+	GRASS_ADDON_PATH1=`echo "$GRASS_ADDON_PATH" | cut -f1 -d:`
     fi
-    PREFIX="$GRASS_ADDON_PATH"
+    PREFIX="$GRASS_ADDON_PATH1"
 elif [ "$PREFIX" = '$GISBASE' ] || [ $GIS_FLAG_S -eq 1 ] ; then
    SYSADMIN=1
    PREFIX="$GISBASE"
@@ -325,7 +327,7 @@ else
      exit 1
    fi
 
-   if [ "$MYINST_DIR" = "$GRASS_ADDON_PATH" ] ; then
+   if [ "$MYINST_DIR" = "$GRASS_ADDON_PATH1" ] ; then
       # symlink into path which is actually in the $PATH
       ln -s "$MYINST_DIR/$PROGTYPE/$MODULE" "$MYINST_DIR/"
    fi
