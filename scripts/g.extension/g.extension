@@ -305,7 +305,7 @@ else
          su -c "rm -f \"${MYINST_DIR}/$PROGTYPE/${MODULE}\""
       fi
       g.message "You need to enter the root password next to install ${MODULE}:"
-      su -c "make MODULE_TOPDIR="$GISBASE" ARCH_DISTDIR="$TMPDIR/dist" INST_DIR="$MYINST_DIR" install"
+      su -c "make MODULE_TOPDIR=\"$GISBASE\" ARCH_DISTDIR=\"$TMPDIR/dist\" INST_DIR=\"$MYINST_DIR\" install"
    else
       if test -f "${MYINST_DIR}/$PROGTYPE/${MODULE}" ; then
          rm -f "${MYINST_DIR}/$PROGTYPE/${MODULE}"
