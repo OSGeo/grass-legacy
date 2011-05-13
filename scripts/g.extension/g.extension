@@ -327,7 +327,7 @@ else
 
    if [ "$MYINST_DIR" = "$GRASS_ADDON_PATH" ] ; then
       # symlink into path which is actually in the $PATH
-      ln -sf "$MYINST_DIR/$PROGTYPE/$MODULE" "$MYINST_DIR/"
+      ln -s "$MYINST_DIR/$PROGTYPE/$MODULE" "$MYINST_DIR/"
    fi
 fi
 
