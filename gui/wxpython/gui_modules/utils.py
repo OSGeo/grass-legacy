@@ -272,7 +272,7 @@ def ListSortLower(list):
     """!Sort list items (not case-sensitive)"""
     list.sort(cmp=lambda x, y: cmp(x.lower(), y.lower()))
 
-def GetVectorNumberOfLayers(vector):
+def GetVectorNumberOfLayers(parent, vector):
     """!Get list of vector layers"""
     layers = []
     if not vector:
@@ -284,6 +284,7 @@ def GetVectorNumberOfLayers(vector):
         return layers
     
     ret = gcmd.RunCommand('v.db.connect',
+                          parent = parent,
                           flags = 'g',
                           read = True,
                           map = fullname,
@@ -291,6 +292,8 @@ def GetVectorNumberOfLayers(vector):
         
     if not ret:
         return layers
+    else:
+        Debug.msg(1, "GetVectorNumberOfLayers(): ret %s" % ret)
     
     for line in ret.splitlines():
         try:
