@@ -660,11 +660,10 @@ class LayerSelect(wx.Choice):
         
         if len(layerchoices) == 0:
             layerchoices.insert(0, '-1')
-        if len(layerchoices) > 1:
+        elif len(layerchoices) > 1:
             self.SetItems(layerchoices)
             self.SetStringSelection('1')
         elif len(layerchoices) == 1:
-            print layerchoices[0]
             self.SetItems(layerchoices)
             self.SetStringSelection(layerchoices[0])
         
