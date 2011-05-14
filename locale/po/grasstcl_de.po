@@ -12,7 +12,7 @@ msgstr ""
 "Project-Id-Version: grasstcl_de\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2011-04-19 00:30+0200\n"
-"PO-Revision-Date: 2011-02-09 21:45+0100\n"
+"PO-Revision-Date: 2011-05-14 22:32+0100\n"
 "Last-Translator: Helmut Kudrnovsky <hellik@web.de>\n"
 "Language-Team: Deutsch <grass-translations@lists.osgeo.org>\n"
 "MIME-Version: 1.0\n"
@@ -754,14 +754,16 @@ msgstr ""
 
 #: ../lib/init/gis_set.tcl:936
 msgid "ERROR: unable to read GISRC"
-msgstr ""
+msgstr "ERROR: GISRC kann nicht gelesen werden"
 
 #: ../lib/init/gis_set.tcl:937
-#, tcl-format
+#, fuzzy, tcl-format
 msgid ""
 "Something went wrong while processing GISRC file named \"%s\".\n"
 "It's a fatal error. GRASS will not start till issue with GISRC file is fixed."
 msgstr ""
+"Ein Fehler in der Bearbeitung der GISRC-Datei \"%s\".\n"
+"Dies ist ein unbehebbarer Fehler. GRASS kann erst starten, wenn das GISRC-Problem gelöst ist."
 
 #: ../lib/init/file_option.tcl:73
 msgid "Define location using projection information in georeferenced file"
@@ -1715,8 +1717,9 @@ msgid "Drag with mouse to pan"
 msgstr "Mit der Maus verschieben"
 
 #: ../gui/tcltk/gis.m/gm.tcl:75
+#, fuzzy
 msgid "GISDBASE or LOCATION_NAME or MAPSET is empty.  This is a fatal error. gis.m can not work without proper settings."
-msgstr ""
+msgstr "GISDBASE oder LOCATION_NAME oder MAPSET ist leer.  Dies ist ein unbehebbarer Fehler. gis.m kann ohne diese Angaben nicht gestartet werden."
 
 #: ../gui/tcltk/gis.m/gm.tcl:219 ../gui/tcltk/d.m/d.m.tcl:314
 msgid "Loading GIS Manager"
@@ -1759,9 +1762,10 @@ msgstr "Zeichenkodierung: "
 #: ../gui/tcltk/gis.m/gm.tcl:539
 #, fuzzy
 msgid "End current GRASS session"
-msgstr "Aktuelle GRASS-Version anzeigen"
+msgstr "Beende aktuelle GRASS-Bearbeitung"
 
 #: ../gui/tcltk/gis.m/gm.tcl:540
+#, fuzzy
 msgid ""
 "Do You really want to terminate current GRASS session?\n"
 "\n"
@@ -1769,22 +1773,29 @@ msgid ""
 "\n"
 "If You have running some  GRASS module from comandline, GRASS will terminate after it finishes to run."
 msgstr ""
+"Wollen Sie wirklich die aktuelle GRASS-Bearbeitung beenden?\n"
+"\n"
+"Dies wird alle gis.m-Instanzen schließen.\n"
+"\n"
+"Wenn GRASS-Module in der Kommandozeile laufen, GRASS wird nach Beendigung der Module geschlossen."
 
 #: ../gui/tcltk/gis.m/gm.tcl:543
 #, fuzzy
 msgid "Terminate current GRASS sesion"
-msgstr "Aktuelle GRASS-Version anzeigen"
+msgstr "Beende aktuelle GRASS-Bearbeitung"
 
 #: ../gui/tcltk/gis.m/gm.tcl:550
-#, fuzzy
 msgid "Not supported"
-msgstr "Abfrage nicht unterstützt"
+msgstr "Nicht unterstützt"
 
 #: ../gui/tcltk/gis.m/gm.tcl:551
+#, fuzzy
 msgid ""
 "We sorry. Your shell does not support this feature. \n"
 " You have to type 'exit' in terminal manualy."
 msgstr ""
+"Ihre Shell unterstützt dieses leider nicht. \n"
+"Sie müssen 'exit' im Terminal eingeben."
 
 #: ../gui/tcltk/gis.m/gm.tcl:573
 #, tcl-format
@@ -2430,7 +2441,7 @@ msgstr "    Höhe der Legende "
 #: ../gui/tcltk/gis.m/legend.tcl:248
 #, fuzzy, tcl-format
 msgid "Legend height (% of display)"
-msgstr "Höhe der Legende (% des Grafikfensters)"
+msgstr "Höhe der Legende (% des Anzeigefensters)"
 
 #: ../gui/tcltk/gis.m/legend.tcl:249
 msgid "%  width"
@@ -2439,7 +2450,7 @@ msgstr "%  Breite"
 #: ../gui/tcltk/gis.m/legend.tcl:251
 #, fuzzy, tcl-format
 msgid "Legend width (% of display)"
-msgstr "Legendenbreite (% des Fensters)"
+msgstr "Legend width (% of display)"
 
 #: ../gui/tcltk/gis.m/legend.tcl:258
 msgid "Legend appearance: text color"
@@ -3125,9 +3136,8 @@ msgid "PostScript plot"
 msgstr "PostScript Grafik"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:205
-#, fuzzy
 msgid "Exit &GRASS"
-msgstr "GRASS starten"
+msgstr "Verlasse &GRASS"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:206
 msgid "&Quit GIS Manager"
@@ -4557,14 +4567,12 @@ msgid "Icon size"
 msgstr "Symbolgröße"
 
 #: ../gui/tcltk/gis.m/vector.tcl:423
-#, fuzzy
 msgid "Attribute column for size"
-msgstr "   Attributspalte für Beschriftungen"
+msgstr "Attributspalte für Größe"
 
 #: ../gui/tcltk/gis.m/vector.tcl:425
-#, fuzzy
 msgid "Attribute column for rotation"
-msgstr "   Attributspalte für Beschriftungen"
+msgstr "Attributspalte für Rotation"
 
 #: ../gui/tcltk/gis.m/vector.tcl:433 ../gui/tcltk/d.m/vector.tcl:259
 msgid "Draw lines:"
