@@ -537,10 +537,10 @@ proc Gm::quit { {full_exit false} } {
 	if { $full_exit } {
 		if { [catch {set spid $env(GRASS_SHELL_PID)}] == 0 } {
 			set leave [tk_dialog .leave [G_msg "End current GRASS session"] \
-			[G_msg "Do You really want to terminate current\
-GRASS session?\n\nThis action will colse all sessions gis.m instances.\n\nIf You have running some \
+			[G_msg "Do you really want to terminate current\
+GRASS session?\n\nThis action will close all sessions gis.m instances.\n\nIf You have running some \
 GRASS module from comandline, GRASS will terminate after it\
-finishes to run."] warning 1 [G_msg "Terminate current GRASS sesion"] [G_msg "Cancel"]]
+finishes to run."] warning 1 [G_msg "Terminate current GRASS session"] [G_msg "Cancel"]]
 			if { $leave == 0 } { 
 				exec kill -SIGQUIT $env(GRASS_SHELL_PID)
 			} else { 
@@ -549,7 +549,7 @@ finishes to run."] warning 1 [G_msg "Terminate current GRASS sesion"] [G_msg "Ca
 		} else {
 			tk_messageBox -type ok -title [G_msg "Not supported"] -message \
 			[G_msg "We sorry. Your shell does not support this feature. \n\
-You have to type 'exit' in terminal manualy."]
+You have to type 'exit' in terminal manually."]
 		}
 	}
 
