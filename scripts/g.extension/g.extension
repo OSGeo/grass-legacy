@@ -50,7 +50,7 @@
 #% type: string
 #% key_desc: path
 #% description: Prefix where to install extension
-#% answer: $GISBASE
+#% answer: $GRASS_ADDON_PATH
 #% required: no
 #%end
 #%flag
