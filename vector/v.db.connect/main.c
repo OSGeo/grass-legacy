@@ -160,6 +160,7 @@ int main(int argc, char **argv)
 	    /* it is ok if a vector map is not connected o an attribute table */
 	    G_message(_("Database connection for map <%s> is not defined in DB file"),
 			  input);
+	    Vect_close(&Map);
 	    exit(EXIT_SUCCESS);
 	}
 	else {			/* num_dblinks > 0 */
