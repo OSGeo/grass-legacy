@@ -9,7 +9,7 @@
 # GRASS binary package installation tool
 # platform independent
 #
-# 1999-2000 by Markus Neteler, neteler@itc.it
+# 1999-2000, 2011 by Markus Neteler, GRASS Development Team
 #
 ##########################################################################
 
@@ -344,6 +344,17 @@ echo "Generating display font configuration file..."
 GISBASE="$DESTDIR" GISRC=junk LD_LIBRARY_PATH_VAR="${DESTDIR}/lib:$LD_LIBRARY_PATH_VAR" "${DESTDIR}/bin/g.mkfontcap" -o
 
 echo""
+
+# fix include/Make/Platform.make file for g.extension
+mv ${DESTDIR}/include/Make/Platform.make ${DESTDIR}/include/Make/Platform.make.orig
+cat ${DESTDIR}/include/Make/Platform.make.orig | \
+        sed "s+prefix              = /usr/local+prefix              = $DESTDIR+g" | \
+        sed "s+INST_DIR            = $prefix/grass-$NAME_VER+INST_DIR            = $prefix+g" | \
+        sed "s+^.*GRASS_HOME.*$+GRASS_HOME          = $DESTDIR+"  | \
+        sed "s+^.*RUN_GISBASE.*$+RUN_GISBASE         = $DESTDIR+" | \
+        sed "s+^.*RUN_GISRC.*$+RUN_GISRC           = +" > ${DESTDIR}/include/Make/Platform.make
+
+# rm -f ${DESTDIR}/include/Make/Platform.make.orig
 
 # Print out some messages
 echo "Installation finished. Start GRASS $NAME_VER with"
