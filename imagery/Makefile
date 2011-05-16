@@ -13,6 +13,7 @@ SUBDIRS = \
 	i.rgb.his \
 	i.smap \
 	i.target \
+	i.topo.corr \
 	i.pca \
 	i.cca
 
