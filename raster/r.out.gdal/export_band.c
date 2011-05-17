@@ -67,12 +67,8 @@ int exact_checks(GDALDataType export_datatype,
 	G_warning(_("Unable to allocate buffer for reading raster map"));
 	return -1;
     }
-    char *nulls = (char *)G_malloc(cols);
 
-    if (nulls == NULL) {
-	G_warning(_("Unable to allocate buffer for reading raster map"));
-	return -1;
-    }
+    /* the following routine must be kept identical to export_band */
 
     /* Copy data form GRASS raster to GDAL raster */
     int row, col;
@@ -97,9 +93,8 @@ int exact_checks(GDALDataType export_datatype,
 			  name, row);
 		return -1;
 	    }
-	    G_get_null_value_row(fd, nulls, row);
 	    for (col = 0; col < cols; col++) {
-		if (nulls[col]) {
+		if (G_is_f_null_value(&(((FCELL *) bufer)[col]))) {
 		    ((FCELL *) bufer)[col] = fnullval;
 		    n_nulls++;
 		}
@@ -129,9 +124,8 @@ int exact_checks(GDALDataType export_datatype,
 			  name, row);
 		return -1;
 	    }
-	    G_get_null_value_row(fd, nulls, row);
 	    for (col = 0; col < cols; col++) {
-		if (nulls[col]) {
+		if (G_is_d_null_value(&(((DCELL *) bufer)[col]))) {
 		    ((DCELL *) bufer)[col] = dnullval;
 		    n_nulls++;
 		}
@@ -161,9 +155,8 @@ int exact_checks(GDALDataType export_datatype,
 			  name, row);
 		return -1;
 	    }
-	    G_get_null_value_row(fd, nulls, row);
 	    for (col = 0; col < cols; col++) {
-		if (nulls[col]) {
+		if (G_is_c_null_value(&(((CELL *) bufer)[col]))) {
 		    ((CELL *) bufer)[col] = inullval;
 		    n_nulls++;
 		}
@@ -221,6 +214,8 @@ int exact_checks(GDALDataType export_datatype,
 	}
 	ret = -1;
     }
+
+    G_free(bufer);
 
     return ret;
 }
@@ -380,12 +375,8 @@ int export_band(GDALDatasetH hMEMDS, GDALDataType export_datatype, int band,
 	G_warning(_("Unable to allocate buffer for reading raster map"));
 	return -1;
     }
-    char *nulls = (char *)G_malloc(cols);
 
-    if (nulls == NULL) {
-	G_warning(_("Unable to allocate buffer for reading raster map"));
-	return -1;
-    }
+    /* the following routine must be kept identical to export_band */
 
     /* Copy data form GRASS raster to GDAL raster */
     int row, col;
@@ -409,9 +400,8 @@ int export_band(GDALDatasetH hMEMDS, GDALDataType export_datatype, int band,
 			  name, row);
 		return -1;
 	    }
-	    G_get_null_value_row(fd, nulls, row);
 	    for (col = 0; col < cols; col++) {
-		if (nulls[col]) {
+		if (G_is_f_null_value(&(((FCELL *) bufer)[col]))) {
 		    ((FCELL *) bufer)[col] = fnullval;
 		    if (n_nulls == 0) {
 			GDALSetRasterNoDataValue(hBand, nodataval);
@@ -443,9 +433,8 @@ int export_band(GDALDatasetH hMEMDS, GDALDataType export_datatype, int band,
 			  name, row);
 		return -1;
 	    }
-	    G_get_null_value_row(fd, nulls, row);
 	    for (col = 0; col < cols; col++) {
-		if (nulls[col]) {
+		if (G_is_d_null_value(&(((DCELL *) bufer)[col]))) {
 		    ((DCELL *) bufer)[col] = dnullval;
 		    if (n_nulls == 0) {
 			GDALSetRasterNoDataValue(hBand, nodataval);
@@ -477,9 +466,8 @@ int export_band(GDALDatasetH hMEMDS, GDALDataType export_datatype, int band,
 			  name, row);
 		return -1;
 	    }
-	    G_get_null_value_row(fd, nulls, row);
 	    for (col = 0; col < cols; col++) {
-		if (nulls[col]) {
+		if (G_is_c_null_value(&(((CELL *) bufer)[col]))) {
 		    ((CELL *) bufer)[col] = inullval;
 		    if (n_nulls == 0) {
 			GDALSetRasterNoDataValue(hBand, nodataval);
@@ -497,6 +485,8 @@ int export_band(GDALDatasetH hMEMDS, GDALDataType export_datatype, int band,
 	    G_percent(row + 1, rows, 2);
 	}
     }
+
+    G_free(bufer);
 
     return ret;
 }
