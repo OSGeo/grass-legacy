@@ -36,19 +36,6 @@ set BGColor #FFFFFF
 global DEBUG
 set DEBUG 0
 
-# Overloading internationalization procedures
-# gui.tcl is not used to have separate translation file for NVIZ
-if [catch {package require msgcat}] {
-	proc G_msg {message} {
-		return $message
-	}
-} else {
-	::msgcat::mcload $env(GISBASE)/etc/nviz2.2/msgs
-	proc G_msg {message} {
-		return [::msgcat::mc $message]
-	}
-}
-
 #Initialize ProcessName variable
 set env(NV_processname) NVIZ
 

@@ -74,6 +74,20 @@ if { $mingw == "1" } {
 # Override bindings for tk widgets
 source $src_boot/etc/nviz2.2/scripts/extra_bindings.tcl
 
+# Overloading internationalization procedures
+# gui.tcl is not used to have separate translation file for NVIZ
+if [catch {package require msgcat}] {
+	proc G_msg {message} {
+		return $message
+	}
+} else {
+	::msgcat::mcload $env(GISBASE)/etc/nviz2.2/msgs
+	proc G_msg {message} {
+		return [::msgcat::mc $message]
+	}
+}
+
+
 ##########################################################################
 #  Resources
 ##########################################################################
