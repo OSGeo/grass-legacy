@@ -18,11 +18,6 @@ int Nlight_obj_cmd(Nv_data * data, Tcl_Interp * interp,	/* Current interpreter. 
 		   char **argv	/* Argument strings. */
     )
 {
-  int i;
-  for (i = 0; i < argc; i++) {
-    fprintf(stderr, "%s ", argv[i]);
-  }
-  fprintf(stderr, "\n");
     if (!strcmp(argv[1], "set_ambient"))
 	return (setlgt_ambient(data, interp, argc, argv));
     else if (!strcmp(argv[1], "get_ambient"))
