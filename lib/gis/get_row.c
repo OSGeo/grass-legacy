@@ -1242,7 +1242,20 @@ static int embed_nulls(int fd, void *buf, int row, RASTER_MAP_TYPE map_type,
  */
 int G_get_null_value_row(int fd, char *flags, int row)
 {
-    get_null_value_row(fd, flags, row, 1);
+    struct fileinfo *fcb = &G__.fileinfo[fd];
+
+    if (!fcb->reclass_flag)
+	get_null_value_row(fd, flags, row, 1);
+    else {
+	CELL *buf = G_allocate_c_raster_buf();
+	int i;
+
+	G_get_c_raster_row(fd, buf, row);
+	for (i = 0; i < G__.window.cols; i++)
+	    flags[i] = G_is_c_null_value(&buf[i]) ? 1 : 0;
+
+	G_free(buf);
+    }
 
     return 1;
 }
