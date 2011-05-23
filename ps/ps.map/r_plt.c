@@ -1,5 +1,6 @@
 #include <string.h>
 #include "ps_info.h"
+#include <grass/glocale.h>
 #include "local_proto.h"
 
 #define KEY(x)(strcmp(key,x)==0)
@@ -106,7 +107,7 @@ int read_point(double e, double n)
 
 int read_eps(double e, double n)
 {
-    char buf[1024];
+    char buf[1024], eps_file[GPATH_MAX];
     char *eps;
     double scale, rotate;
     int have_eps;
@@ -140,10 +141,21 @@ int read_eps(double e, double n)
 
 	if (KEY("epsfile")) {
 	    G_chop(data);
-	    eps = G_store(data);
+
+	    /* expand "$GISBASE" if present */
+	    if (strncmp(data, "$GISBASE", 8) != 0)
+		strcpy(eps_file, data);
+	    else {
+		strcpy(eps_file, G_gisbase());
+		data += 8;
+		strcat(eps_file, data);
+	    }
+
+	    eps = G_store(eps_file);
+
 	    /* test if file is accessible */
 	    if ((fp = fopen(eps, "r")) == NULL)
-		error(key, data, "Can't open eps file");
+		error(key, data, _("Can't open eps file"));
 
 	    have_eps = 1;
 	    fclose(fp);

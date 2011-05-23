@@ -1,5 +1,6 @@
 #include <math.h>
 #include <string.h>
+#include <grass/glocale.h>
 #include "ps_info.h"
 #include "local_proto.h"
 
@@ -15,7 +16,7 @@ int eps_bbox(char *eps, double *llx, double *lly, double *urx, double *ury)
 
     /* test if file is realy eps and find bbox */
     if ((fp = fopen(eps, "r")) == NULL) {
-	fprintf(stderr, "can't open eps file <%s>\n", eps);
+	G_warning(_("Can't open eps file <%s>"), eps);
 	return (0);
     }
     /* test if first row contains '%!PS-Adobe-m.n EPSF-m.n' string */
@@ -34,7 +35,7 @@ int eps_bbox(char *eps, double *llx, double *lly, double *urx, double *ury)
 	    return (1);
 	}
     }
-    fprintf(stderr, "Bounding box in eps file <%s> was not found\n", eps);
+    G_warning(_("Bounding box in eps file <%s> was not found"), eps);
     fclose(fp);
     return (0);
 }
