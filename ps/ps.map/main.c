@@ -179,8 +179,6 @@ int main(int argc, char *argv[])
     vector.x = vector.y = -1.0;
     ct.x = ct.y = -1.0;
     ct.width = -1.0;
-    m_info.color = BLACK;
-    m_info.bgcolor = WHITE;
     hdr.color = BLACK;
     cmt.color = BLACK;
     PS.grid_color = BLACK;
