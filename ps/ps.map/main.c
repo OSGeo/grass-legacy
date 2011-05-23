@@ -265,7 +265,7 @@ int main(int argc, char *argv[])
 			  output_file->answer, strerror(errno));
     }
     else {
-	G_message(_("\nERROR: Required parameter <%s> not set:\n    (%s).\n"),
+	G_important_message(_("\nERROR: Required parameter <%s> not set:\n    (%s).\n"),
 		  output_file->key, output_file->description);
 	usage(1);
     }
