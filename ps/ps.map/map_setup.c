@@ -105,6 +105,11 @@ int map_setup(void)
        PS.map_bot, PS.map_left, PS.map_right);
      */
 
+    /* no need to go on if we're just here for a look-see. (-b flag) */
+    if (!PS.fp)
+	return 0;
+
+
     /* save original graphics state */
     fprintf(PS.fp, "gsave ");
 
