@@ -924,7 +924,9 @@ option, or a set of three raster layers selected with the
 <EM>rgb</EM> option, count as a raster map layer for the
 purposes of the preceding paragraph.
 <P>
-
+The PostScript file's internal title will be set to the raster map's
+title, which in turn may be set with the <em>r.suppport</em> module.
+<P>
 This example would paint a map of the raster map layer <EM>soils</EM>.
 
 <PRE>
@@ -1614,7 +1616,7 @@ USAGE:	<B>end</B>
 
 The following are examples of <EM>ps.map</EM> script files.
 <P>
-<h3>Simple example</h3>
+<h4>Simple example</h4>
 The file has been named <EM>spear.basic</EM>:
 
 <PRE>
@@ -1634,7 +1636,7 @@ Generate map as Postsript file:
 </PRE>
 
 
-<h3>More complicated example</h3>
+<h4>More complicated example</h4>
 The file has been named <EM>spear.soils</EM>:
 
 <PRE>
