@@ -33,7 +33,7 @@ import grass2_icons # default icon set
 iconPathDefault = grass2_icons.iconPath
 iconSetDefault  = grass2_icons.iconSet
 
-iconTheme = UserSettings.Get(group='advanced', key='iconTheme', subkey='type')
+iconTheme = UserSettings.Get(group='appearance', key='iconTheme', subkey='type')
 if iconTheme == 'silk':
     import silk_icons
     iconPath = silk_icons.iconPath
