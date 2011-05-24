@@ -4,6 +4,9 @@
 @brief User preferences dialog
 
 Sets default display font, etc.
+If you want to add some value to settings you have to add default value 
+to defaultSettings and set constraints in internalSettings in Settings class.
+Everything can be used in PreferencesDialog.
 
 Classes:
  - Settings
@@ -20,6 +23,7 @@ for details.
 
 @author Michael Barton (Arizona State University)
 @author Martin Landa <landa.martin gmail.com>
+@author Vaclav Petras <wenzeslaus gmail.com> (menu customization)
 """
 
 import os
@@ -48,6 +52,10 @@ import gcmd
 import utils
 import globalvar
 from debug import Debug as Debug
+
+from wx.lib.newevent import NewEvent
+
+wxSettingsChanged, EVT_SETTINGS_CHANGED = NewEvent()
 
 class Settings:
     """!Generic class where to store settings"""
@@ -106,16 +114,30 @@ class Settings:
                     },
                 },
             #
+            # appearance
+            #
+            'appearance': {
+                'outputfont' : {
+                    'type' : 'Courier New',
+                    'size': '10',
+                    },
+                'menustyle' : {
+                    'selection' : 1
+                    },
+                'gSelectPopupHeight' : {
+                    'value' : 200
+                    },
+                'iconTheme' : {
+                    'type' : 'grass2'
+                    }, # grass2, grass, silk
+                },
+            #
             # display
             #
             'display': {
                 'font' : {
                     'type' : '',
                     'encoding': 'ISO-8859-1',
-                    },
-                'outputfont' : {
-                    'type' : 'Courier New',
-                    'size': '10',
                     },
                 'driver': {
                     'type': 'default'
@@ -149,17 +171,6 @@ class Settings:
                     'll'  : 'DMS',
                     'precision' : 2,
                     },
-                },
-            #
-            # advanced
-            #
-            'advanced' : {
-                'settingsFile' : {
-                    'type' : 'home'
-                    }, # home, gisdbase, location, mapset
-                'iconTheme' : {
-                    'type' : 'grass2'
-                    }, # grass2, grass, silk
                 },
             #
             # Attribute Table Manager
@@ -624,16 +635,22 @@ class Settings:
              _("Expand all"))
         self.internalSettings['atm']['leftDbClick']['choices'] = (_('Edit selected record'),
                                                                   _('Display selected'))
-        self.internalSettings['advanced']['settingsFile']['choices'] = ('home',
-                                                                        'gisdbase',
-                                                                        'location',
-                                                                        'mapset')
-        self.internalSettings['advanced']['iconTheme']['choices'] = ('grass',
-                                                                     'grass2',
-                                                                     'silk')
+        
         self.internalSettings['cmd']['verbosity']['choices'] = ('grassenv',
                                                                 'verbose',
                                                                 'quiet')
+        
+        self.internalSettings['appearance']['iconTheme']['choices'] = ('grass',
+                                                                       'grass2',
+                                                                       'silk')
+        self.internalSettings['appearance']['menustyle']['choices'] = \
+                   (_("Classic (labels only)"),
+                    _("Combined (labels and module names)"),
+                    _("Professional (module names only)"))
+        self.internalSettings['appearance']['gSelectPopupHeight']['min'] = 50
+        # there is also maxHeight given to TreeCtrlComboPopup.GetAdjustedSize
+        self.internalSettings['appearance']['gSelectPopupHeight']['max'] = 1000
+        
         self.internalSettings['display']['driver']['choices'] = ['default']
         self.internalSettings['display']['statusbarMode']['choices'] = globalvar.MAP_DISPLAY_STATUSBAR_MODE
 
@@ -736,26 +753,10 @@ class Settings:
         if settings is None:
             settings = self.userSettings
         
-        loc = self.Get(group='advanced', key='settingsFile', subkey='type')
         home = os.path.expanduser("~") # MS Windows fix ?
         
-        gisenv = grass.gisenv()
-        gisdbase = gisenv['GISDBASE']
-        location_name = gisenv['LOCATION_NAME']
-        mapset_name = gisenv['MAPSET']
-        filePath = None
-        if loc == 'home':
-            filePath = os.path.join(home, self.fileName)
-        elif loc == 'gisdbase':
-            filePath = os.path.join(gisdbase, self.fileName)
-        elif loc == 'location':
-            filePath = os.path.join(gisdbase, location_name, self.fileName)
-        elif loc == 'mapset':
-            filePath = os.path.join(gisdbase, location_name, mapset_name, self.fileName)
+        filePath = os.path.join(home, self.fileName)
         
-        if filePath is None:
-            raise gcmd.SettingsError(_('Uknown settings file location.'))
-
         try:
             file = open(filePath, "w")
             for group in settings.keys():
@@ -1018,9 +1019,13 @@ class PreferencesBaseDialog(wx.Dialog):
                 value = win.SetValue(value)
         
     def OnApply(self, event):
-        """!Button 'Apply' pressed"""
+        """!Button 'Apply' pressed
+        Posts event EVT_SETTINGS_CHANGED.
+        """
         if self._updateSettings():
             self.parent.goutput.WriteLog(_('Settings applied to current session but not saved'))
+            event = wxSettingsChanged()
+            wx.PostEvent(self, event)
             self.Close()
 
     def OnCloseWindow(self, event):
@@ -1031,10 +1036,14 @@ class PreferencesBaseDialog(wx.Dialog):
         self.Close()
         
     def OnSave(self, event):
-        """!Button 'Save' pressed"""
+        """!Button 'Save' pressed
+        Posts event EVT_SETTINGS_CHANGED.
+        """
         if self._updateSettings():
             file = self.settings.SaveToFile()
             self.parent.goutput.WriteLog(_('Settings saved to file \'%s\'.') % file)
+            event = wxSettingsChanged()
+            wx.PostEvent(self, event)
             self.Close()
 
     def _updateSettings(self):
@@ -1077,7 +1086,7 @@ class PreferencesBaseDialog(wx.Dialog):
 
 class PreferencesDialog(PreferencesBaseDialog):
     """!User preferences dialog"""
-    def __init__(self, parent, title = _("GUI settings"),
+    def __init__(self, parent, title = _("GUI Settings"),
                  settings = globalSettings):
         
         PreferencesBaseDialog.__init__(self, parent = parent, title = title,
@@ -1085,12 +1094,12 @@ class PreferencesDialog(PreferencesBaseDialog):
         
         # create notebook pages
         self._CreateGeneralPage(self.notebook)
+        self._CreateAppearancePage(self.notebook)
         self._CreateDisplayPage(self.notebook)
         self._CreateCmdPage(self.notebook)
         self._CreateAttributeManagerPage(self.notebook)
         self._CreateProjectionPage(self.notebook)
         self._CreateWorkspacePage(self.notebook)
-        self._CreateAdvancedPage(self.notebook)
         
         self.SetMinSize(self.GetBestSize())
         self.SetSize(self.size)
@@ -1180,6 +1189,7 @@ class PreferencesDialog(PreferencesBaseDialog):
         gridSizer.Add(item=askOnQuit,
                       pos=(row, 0), span=(1, 2))
         
+        
         sizer.Add(item=gridSizer, proportion=1, flag=wx.ALL | wx.EXPAND, border=5)
         border.Add(item=sizer, proportion=0, flag=wx.LEFT | wx.RIGHT | wx.BOTTOM | wx.EXPAND, border=3)
 
@@ -1187,11 +1197,143 @@ class PreferencesDialog(PreferencesBaseDialog):
         
         return panel
 
+    def _CreateAppearancePage(self, notebook):
+        """!Create notebook page for display settings"""
+   
+        panel = wx.Panel(parent=notebook, id=wx.ID_ANY)
+        notebook.AddPage(page=panel, text=_("Appearance"))
+
+        border = wx.BoxSizer(wx.VERTICAL)
+
+        box   = wx.StaticBox (parent=panel, id=wx.ID_ANY, label=" %s " % _("Font settings"))
+        sizer = wx.StaticBoxSizer(box, wx.VERTICAL)
+
+        gridSizer = wx.GridBagSizer (hgap=3, vgap=3)
+        gridSizer.AddGrowableCol(0)
+
+        #
+        # font settings
+        #
+        sizer.Add(item=gridSizer, proportion=1, flag=wx.ALL | wx.EXPAND, border=5)
+        border.Add(item=sizer, proportion=0, flag=wx.ALL | wx.EXPAND, border=3)
+
+        row = 0
+        gridSizer.Add(item=wx.StaticText(parent=panel, id=wx.ID_ANY,
+                                         label=_("Font for command output:")),
+                      flag=wx.ALIGN_LEFT |
+                      wx.ALIGN_CENTER_VERTICAL,
+                      pos=(row, 0))
+        outfontButton = wx.Button(parent=panel, id=wx.ID_ANY,
+                               label=_("Set font"), size=(100, -1))
+        gridSizer.Add(item=outfontButton,
+                      flag=wx.ALIGN_RIGHT |
+                      wx.ALIGN_CENTER_VERTICAL,
+                      pos=(row, 1))
+
+        #
+        # appearence
+        #
+        box   = wx.StaticBox (parent=panel, id=wx.ID_ANY, label=" %s " % _("Appearance settings"))
+        sizer = wx.StaticBoxSizer(box, wx.VERTICAL)
+
+        gridSizer = wx.GridBagSizer (hgap=3, vgap=3)
+        gridSizer.AddGrowableCol(0)
+
+        #
+        # menu style
+        #
+        row = 0
+        
+        gridSizer.Add(item = wx.StaticText(parent = panel, id = wx.ID_ANY,
+                                         label = _("Menu style:")),
+                      flag = wx.ALIGN_LEFT |
+                      wx.ALIGN_CENTER_VERTICAL,
+                      pos = (row, 0))
+        listOfStyles = self.settings.Get(group = 'appearance', key = 'menustyle',
+                                         subkey = 'choices', internal = True)
+        
+        menuItemText = wx.Choice(parent = panel, id = wx.ID_ANY, size = (300, -1),
+                                 choices = listOfStyles,
+                                 name = "GetSelection")
+        menuItemText.SetSelection(self.settings.Get(group='appearance', key='menustyle', subkey='selection'))
+        
+        self.winId['appearance:menustyle:selection'] = menuItemText.GetId()
+        
+        gridSizer.Add(item=menuItemText,
+                      flag=wx.ALIGN_RIGHT,
+                      pos=(row, 1))
+        
+        #
+        # gselect.TreeCtrlComboPopup height
+        #
+        row += 1
+        
+        gridSizer.Add(item=wx.StaticText(parent=panel, id=wx.ID_ANY,
+                                         label=_("Height of map selection popup window (in pixels):")),
+                      flag=wx.ALIGN_LEFT |
+                      wx.ALIGN_CENTER_VERTICAL,
+                      pos=(row, 0))
+        min = self.settings.Get(group='appearance', key='gSelectPopupHeight', subkey='min', internal=True)
+        max = self.settings.Get(group='appearance', key='gSelectPopupHeight', subkey='max', internal=True)
+        value = self.settings.Get(group='appearance', key='gSelectPopupHeight', subkey='value')
+        
+        popupHeightSpin = wx.SpinCtrl(parent=panel, id=wx.ID_ANY, size=(100, -1))
+        popupHeightSpin.SetRange(min,max)
+        popupHeightSpin.SetValue(value)
+        
+        self.winId['appearance:gSelectPopupHeight:value'] = popupHeightSpin.GetId()
+        
+        gridSizer.Add(item=popupHeightSpin,
+                      flag=wx.ALIGN_RIGHT,
+                      pos=(row, 1))
+        
+        
+        #
+        # icon theme
+        #
+        row += 1
+        gridSizer.Add(item=wx.StaticText(parent=panel, id=wx.ID_ANY,
+                                         label=_("Icon theme:")),
+                       flag=wx.ALIGN_LEFT |
+                       wx.ALIGN_CENTER_VERTICAL,
+                       pos=(row, 0))
+        iconTheme = wx.Choice(parent=panel, id=wx.ID_ANY, size=(100, -1),
+                              choices=self.settings.Get(group='appearance', key='iconTheme',
+                                                        subkey='choices', internal=True),
+                              name="GetStringSelection")
+        iconTheme.SetStringSelection(self.settings.Get(group='appearance', key='iconTheme', subkey='type'))
+        self.winId['appearance:iconTheme:type'] = iconTheme.GetId()
+
+        gridSizer.Add(item=iconTheme,
+                      flag=wx.ALIGN_RIGHT |
+                      wx.ALIGN_CENTER_VERTICAL,
+                      pos=(row, 1))
+        
+        row += 1
+        gridSizer.Add(item=wx.StaticText(parent=panel, id=wx.ID_ANY,
+                                         label=_("Note: For changing the icon theme, "
+                                                 "you must save the settings and restart this GUI.")),
+                      flag=wx.ALIGN_CENTER_VERTICAL,
+                      pos=(row, 0), span=(1, 2))
+                              
+
+        sizer.Add(item=gridSizer, proportion=1, flag=wx.ALL | wx.EXPAND, border=5)
+        border.Add(item=sizer, proportion=0, flag=wx.LEFT | wx.RIGHT | wx.BOTTOM | wx.EXPAND, border=3)
+        
+        panel.SetSizer(border)
+                
+        # bindings
+        outfontButton.Bind(wx.EVT_BUTTON, self.OnSetOutputFont)
+        
+        return panel
+
+
+
     def _CreateDisplayPage(self, notebook):
         """!Create notebook page for display settings"""
    
         panel = wx.Panel(parent=notebook, id=wx.ID_ANY)
-        notebook.AddPage(page=panel, text=_("Display"))
+        notebook.AddPage(page=panel, text=_("Map Display"))
 
         border = wx.BoxSizer(wx.VERTICAL)
 
@@ -1220,19 +1362,6 @@ class PreferencesDialog(PreferencesBaseDialog):
         sizer.Add(item=gridSizer, proportion=1, flag=wx.ALL | wx.EXPAND, border=5)
         border.Add(item=sizer, proportion=0, flag=wx.ALL | wx.EXPAND, border=3)
 
-        row = 1
-        gridSizer.Add(item=wx.StaticText(parent=panel, id=wx.ID_ANY,
-                                         label=_("Font for command output:")),
-                      flag=wx.ALIGN_LEFT |
-                      wx.ALIGN_CENTER_VERTICAL,
-                      pos=(row, 0))
-        outfontButton = wx.Button(parent=panel, id=wx.ID_ANY,
-                               label=_("Set font"), size=(100, -1))
-        gridSizer.Add(item=outfontButton,
-                      flag=wx.ALIGN_RIGHT |
-                      wx.ALIGN_CENTER_VERTICAL,
-                      pos=(row, 1))
-
         #
         # display settings
         #
@@ -1242,6 +1371,7 @@ class PreferencesDialog(PreferencesBaseDialog):
         gridSizer = wx.GridBagSizer (hgap=3, vgap=3)
         gridSizer.AddGrowableCol(0)
 
+        
         #
         # display driver
         #
@@ -1357,7 +1487,6 @@ class PreferencesDialog(PreferencesBaseDialog):
                 
         # bindings
         fontButton.Bind(wx.EVT_BUTTON, self.OnSetFont)
-        outfontButton.Bind(wx.EVT_BUTTON, self.OnSetOutputFont)
         
         return panel
 
@@ -1819,76 +1948,7 @@ class PreferencesDialog(PreferencesBaseDialog):
         panel.SetSizer(border)
         
         return panel
-
-    def _CreateAdvancedPage(self, notebook):
-        """!Create notebook page for advanced settings"""
-        panel = wx.Panel(parent=notebook, id=wx.ID_ANY)
-        notebook.AddPage(page=panel, text=_("Advanced"))
-
-        border = wx.BoxSizer(wx.VERTICAL)
-        box   = wx.StaticBox (parent=panel, id=wx.ID_ANY, label=" %s " % _("Advanced settings"))
-        sizer = wx.StaticBoxSizer(box, wx.VERTICAL)
-
-        gridSizer = wx.GridBagSizer (hgap=3, vgap=3)
-        gridSizer.AddGrowableCol(0)
-
-        row = 0
-
-        #
-        # place where to store settings
-        #
-        gridSizer.Add(item=wx.StaticText(parent=panel, id=wx.ID_ANY,
-                                         label=_("Place where to store settings:")),
-                       flag=wx.ALIGN_LEFT |
-                       wx.ALIGN_CENTER_VERTICAL,
-                       pos=(row, 0))
-        settingsFile = wx.Choice(parent=panel, id=wx.ID_ANY, size=(125, -1),
-                                 choices=self.settings.Get(group='advanced', key='settingsFile',
-                                                           subkey='choices', internal=True),
-                                 name='GetStringSelection')
-        settingsFile.SetStringSelection(self.settings.Get(group='advanced', key='settingsFile', subkey='type'))
-        self.winId['advanced:settingsFile:type'] = settingsFile.GetId()
-
-        gridSizer.Add(item=settingsFile,
-                      flag=wx.ALIGN_RIGHT |
-                      wx.ALIGN_CENTER_VERTICAL,
-                      pos=(row, 1))
-        row += 1
-
-        #
-        # icon theme
-        #
-        gridSizer.Add(item=wx.StaticText(parent=panel, id=wx.ID_ANY,
-                                         label=_("Icon theme:")),
-                       flag=wx.ALIGN_LEFT |
-                       wx.ALIGN_CENTER_VERTICAL,
-                       pos=(row, 0))
-        iconTheme = wx.Choice(parent=panel, id=wx.ID_ANY, size=(125, -1),
-                              choices=self.settings.Get(group='advanced', key='iconTheme',
-                                                        subkey='choices', internal=True),
-                              name="GetStringSelection")
-        iconTheme.SetStringSelection(self.settings.Get(group='advanced', key='iconTheme', subkey='type'))
-        self.winId['advanced:iconTheme:type'] = iconTheme.GetId()
-
-        gridSizer.Add(item=iconTheme,
-                      flag=wx.ALIGN_RIGHT |
-                      wx.ALIGN_CENTER_VERTICAL,
-                      pos=(row, 1))
-        
-        row += 1
-        gridSizer.Add(item=wx.StaticText(parent=panel, id=wx.ID_ANY,
-                                         label=_("Note: For changing the icon theme, "
-                                                 "you must save the settings and restart this GUI.")),
-                      flag=wx.ALIGN_CENTER_VERTICAL,
-                      pos=(row, 0), span=(1, 2))
-                      
-        sizer.Add(item=gridSizer, proportion=1, flag=wx.ALL | wx.EXPAND, border=5)
-        border.Add(item=sizer, proportion=1, flag=wx.ALL | wx.EXPAND, border=3)
-
-        panel.SetSizer(border)
-        
-        return panel
-
+    
     def OnCheckColorTable(self, event):
         """!Set/unset default color table"""
         win = self.FindWindowById(self.winId['cmd:rasterColorTable:selection'])
@@ -1994,10 +2054,10 @@ class PreferencesDialog(PreferencesBaseDialog):
         if dlg.ShowModal() == wx.ID_OK:
             # set output font and font size variables
             if dlg.font:
-                self.settings.Set(group='display', value=dlg.font,
+                self.settings.Set(group='appearance', value=dlg.font,
                                   key='outputfont', subkey='type')
 
-                self.settings.Set(group='display', value=dlg.fontsize,
+                self.settings.Set(group='appearance', value=dlg.fontsize,
                                   key='outputfont', subkey='size')
 
 # Standard font dialog broken for Mac in OS X 10.6
