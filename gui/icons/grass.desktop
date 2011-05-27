@@ -4,6 +4,6 @@ Encoding=UTF-8
 Name=GRASS GIS
 Comment=
 Categories=Application;Education;Geography;
-Exec=grass65
+Exec=grass64
 Icon=/usr/share/icons/grass-48x48.png
 Terminal=true
