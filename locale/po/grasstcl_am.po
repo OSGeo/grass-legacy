@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: grasstcl_am\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-04-19 00:30+0200\n"
+"POT-Creation-Date: 2011-05-29 11:20+0200\n"
 "PO-Revision-Date: 2007-06-07 18:17-0500\n"
 "Last-Translator: Solomon Gizaw <solohavi@yahoo.com>\n"
 "Language-Team:  <grass-translations@lists.osgeo.org>\n"
@@ -1767,16 +1767,16 @@ msgstr ""
 
 #: ../gui/tcltk/gis.m/gm.tcl:540
 msgid ""
-"Do You really want to terminate current GRASS session?\n"
+"Do you really want to terminate current GRASS session?\n"
 "\n"
-"This action will colse all sessions gis.m instances.\n"
+"This action will close all sessions gis.m instances.\n"
 "\n"
 "If You have running some  GRASS module from comandline, GRASS will terminate "
 "after it finishes to run."
 msgstr ""
 
 #: ../gui/tcltk/gis.m/gm.tcl:543
-msgid "Terminate current GRASS sesion"
+msgid "Terminate current GRASS session"
 msgstr ""
 
 #: ../gui/tcltk/gis.m/gm.tcl:550
@@ -1786,7 +1786,7 @@ msgstr ""
 #: ../gui/tcltk/gis.m/gm.tcl:551
 msgid ""
 "We sorry. Your shell does not support this feature. \n"
-" You have to type 'exit' in terminal manualy."
+" You have to type 'exit' in terminal manually."
 msgstr ""
 
 #: ../gui/tcltk/gis.m/gm.tcl:573

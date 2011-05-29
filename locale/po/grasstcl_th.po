@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: grasstcl_th\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-04-19 00:30+0200\n"
+"POT-Creation-Date: 2011-05-29 11:20+0200\n"
 "PO-Revision-Date: 2008-01-05 15:05+0700\n"
 "Last-Translator: man <mansv68@yahoo.co.th>\n"
 "Language-Team: Thai <grass-translations@lists.osgeo.org>\n"
@@ -400,7 +400,8 @@ msgstr "คำเตือน: ไม่สามารถอ่านตัว�
 msgid ""
 "Warning: Unable to get enviromental variable GRASS_PROJSHARE. \n"
 "This is a GRASS installation error. \n"
-"Set enviromental variable GRASS_PROJSHARE to point to directory with Proj4 EPSG file. "
+"Set enviromental variable GRASS_PROJSHARE to point to directory with Proj4 "
+"EPSG file. "
 msgstr ""
 "คำเตือน: ไม่สามารถอ่านตัวแปรสภาวะแวดล้อม GRASS_PROJSHARE. \n"
 "แสดงว่าการติดตั้ง GRASS ผิดพลาด. \n"
@@ -508,8 +509,13 @@ msgid "Select datum transformation parameters:"
 msgstr "เลือกตัวแปร Datum Transformation:"
 
 #: ../lib/init/epsg_option.tcl:292 ../lib/init/file_option.tcl:245
-msgid "Continue without specifying parameters - if used when creating a location, other GRASS modules will use the \"default\" (likely non-optimum) parameters for this datum if necessary in the future."
-msgstr "ทำต่อโดยไม่ต้องระบุตัวแปร - ถ้าใช้เมื่อสร้างตำแหน่ง, คำสั่ง GRASS อื่นจะถูกใช้  \"default\" (เหมือนกับ non-optimum) ตัวแปรสำหรับ Datum นี้ ถ้าจำเป็นในอนาคต."
+msgid ""
+"Continue without specifying parameters - if used when creating a location, "
+"other GRASS modules will use the \"default\" (likely non-optimum) parameters "
+"for this datum if necessary in the future."
+msgstr ""
+"ทำต่อโดยไม่ต้องระบุตัวแปร - ถ้าใช้เมื่อสร้างตำแหน่ง, คำสั่ง GRASS อื่นจะถูกใช้  \"default"
+"\" (เหมือนกับ non-optimum) ตัวแปรสำหรับ Datum นี้ ถ้าจำเป็นในอนาคต."
 
 #: ../lib/init/epsg_option.tcl:344
 msgid "You can select EPSG code (in <braces>) and copy it for later use."
@@ -566,7 +572,8 @@ msgstr "คำเตือน: location ไม่ถูกต้อง"
 
 #: ../lib/init/gis_set.tcl:132
 #, tcl-format
-msgid "Warning: location <%s> at GISDBASE <%s> is not a directory or does not exist."
+msgid ""
+"Warning: location <%s> at GISDBASE <%s> is not a directory or does not exist."
 msgstr "คำเตือน: ตำแหน่ง <%s> ที่ GISDBASE <%s> ไม่ใช่ directory หรือไม่มีอยู่."
 
 #: ../lib/init/gis_set.tcl:183
@@ -717,7 +724,10 @@ msgid "Starting GRASS for the first time"
 msgstr ""
 
 #: ../lib/init/gis_set.tcl:584
-msgid "GRASS needs a directory in which to store its data.  Create one now if you have not already done so.  A popular choice is \"grassdata\", located in your home directory."
+msgid ""
+"GRASS needs a directory in which to store its data.  Create one now if you "
+"have not already done so.  A popular choice is \"grassdata\", located in "
+"your home directory."
 msgstr ""
 
 #: ../lib/init/gis_set.tcl:589
@@ -1058,7 +1068,8 @@ msgstr "แผนที่ Constrain ไปเป็น Region Geometry"
 #: ../gui/tcltk/gis.m/rastnums.tcl:286
 msgid ""
 "Cell values can only be displayed for \n"
-"regions of < 10,000 cells. Map in explore mode may contain more than 10,000 cells.\n"
+"regions of < 10,000 cells. Map in explore mode may contain more than 10,000 "
+"cells.\n"
 "\n"
 " It's suggested to constrain map to region geometry to display cell values."
 msgstr ""
@@ -1517,12 +1528,20 @@ msgid "Could not create TIF"
 msgstr "ไม่สามารถสร้างแฟ้ม TIF"
 
 #: ../gui/tcltk/gis.m/georect.tcl:285
-msgid "There is no raster group file (REF). You must select the 'create/edit group' option to create a group file."
-msgstr "ไม่มีกลุ่มของไฟล์ แผนที่เชิงภาพ(REF). คุณต้องเลือกเงื่อนไข  'สร้าง/แก้ไข กลุ่ม' เพื่อสร้าง กลุ่มไฟล์."
+msgid ""
+"There is no raster group file (REF). You must select the 'create/edit group' "
+"option to create a group file."
+msgstr ""
+"ไม่มีกลุ่มของไฟล์ แผนที่เชิงภาพ(REF). คุณต้องเลือกเงื่อนไข  'สร้าง/แก้ไข กลุ่ม' เพื่อสร้าง "
+"กลุ่มไฟล์."
 
 #: ../gui/tcltk/gis.m/georect.tcl:307
-msgid "There is no vector group file (VREF). You must select the 'create/edit group' option to create a group file."
-msgstr "ไม่มีกลุ่มของไฟล์ แผนที่เชิงเส้น(VREF). คุณต้องเลือกเงื่อนไข  'สร้าง/แก้ไข กลุ่ม' เพื่อสร้าง กลุ่มไฟล์."
+msgid ""
+"There is no vector group file (VREF). You must select the 'create/edit "
+"group' option to create a group file."
+msgstr ""
+"ไม่มีกลุ่มของไฟล์ แผนที่เชิงเส้น(VREF). คุณต้องเลือกเงื่อนไข  'สร้าง/แก้ไข กลุ่ม' เพื่อสร้าง "
+"กลุ่มไฟล์."
 
 #: ../gui/tcltk/gis.m/georect.tcl:388
 msgid "Select mapset of raster to georectify"
@@ -1601,8 +1620,11 @@ msgid "4. Select map"
 msgstr "4. เลือกแผนที่"
 
 #: ../gui/tcltk/gis.m/georect.tcl:683
-msgid "Select non-georectified raster or vector to display for marking ground control points"
-msgstr "เลือก  non-georectified เชิงภาพ หรือ เชิงเส้น เพื่อแสดง สำหรับ หมาย จุดควบคุมภาคพื้นดิน"
+msgid ""
+"Select non-georectified raster or vector to display for marking ground "
+"control points"
+msgstr ""
+"เลือก  non-georectified เชิงภาพ หรือ เชิงเส้น เพื่อแสดง สำหรับ หมาย จุดควบคุมภาคพื้นดิน"
 
 #: ../gui/tcltk/gis.m/georect.tcl:693
 msgid "5. Start georectifying"
@@ -1702,16 +1724,29 @@ msgid "Exit georectifier"
 msgstr "ออกจาก Georectifier"
 
 #: ../gui/tcltk/gis.m/georect.tcl:1323
-msgid "There is no POINTS file of ground control points for group. You must create ground control points before georectifying map."
-msgstr "ไม่มีไฟล์ POINTS ของ จุดควบคุมภาคพื้นดิน สำหรับ กลุ่ม. คุณต้องสร้าง จุดควบคุมภาคพื้นดิน ก่อนที่จะทำ  georectifying แผนที่."
+msgid ""
+"There is no POINTS file of ground control points for group. You must create "
+"ground control points before georectifying map."
+msgstr ""
+"ไม่มีไฟล์ POINTS ของ จุดควบคุมภาคพื้นดิน สำหรับ กลุ่ม. คุณต้องสร้าง จุดควบคุมภาคพื้นดิน "
+"ก่อนที่จะทำ  georectifying แผนที่."
 
 #: ../gui/tcltk/gis.m/georect.tcl:1353
-msgid "Insufficient ground control points for georectification method. You need at least 3 points for 1st order, 6 points for 2nd order and 10 points for 3rd order."
-msgstr "จุดควบคุมภาคพื้นดิน ไม่พอสำหรับวิธี georectification. ต้องการ 3 จุดสำหรับ 1st order, 6 จุดสำหรับ  2nd orderและ 10 สำหรับ 3rd order."
+msgid ""
+"Insufficient ground control points for georectification method. You need at "
+"least 3 points for 1st order, 6 points for 2nd order and 10 points for 3rd "
+"order."
+msgstr ""
+"จุดควบคุมภาคพื้นดิน ไม่พอสำหรับวิธี georectification. ต้องการ 3 จุดสำหรับ 1st order, 6 "
+"จุดสำหรับ  2nd orderและ 10 สำหรับ 3rd order."
 
 #: ../gui/tcltk/gis.m/georect.tcl:1384
-msgid "No valid ground control points in GCP file. You must create valid ground control points before georectifying map."
-msgstr "ไม่มี จุดควบคุมภาคพื้นดิน ใน GCP ไฟล์. คุณต้องสร้าง จุดควบคุมภาคพื้นดิน ก่อน georectifying แผนที่."
+msgid ""
+"No valid ground control points in GCP file. You must create valid ground "
+"control points before georectifying map."
+msgstr ""
+"ไม่มี จุดควบคุมภาคพื้นดิน ใน GCP ไฟล์. คุณต้องสร้าง จุดควบคุมภาคพื้นดิน ก่อน georectifying "
+"แผนที่."
 
 #: ../gui/tcltk/gis.m/georect.tcl:1587
 msgid "Error setting region"
@@ -1734,7 +1769,9 @@ msgid "Drag with mouse to pan"
 msgstr "ลาก เม้าส์ เพิ่อเลื่อน"
 
 #: ../gui/tcltk/gis.m/gm.tcl:75
-msgid "GISDBASE or LOCATION_NAME or MAPSET is empty.  This is a fatal error. gis.m can not work without proper settings."
+msgid ""
+"GISDBASE or LOCATION_NAME or MAPSET is empty.  This is a fatal error. gis.m "
+"can not work without proper settings."
 msgstr ""
 
 #: ../gui/tcltk/gis.m/gm.tcl:219 ../gui/tcltk/d.m/d.m.tcl:314
@@ -1782,16 +1819,17 @@ msgstr "แสดง รุ่น GRASS ปัจจุบัน"
 
 #: ../gui/tcltk/gis.m/gm.tcl:540
 msgid ""
-"Do You really want to terminate current GRASS session?\n"
+"Do you really want to terminate current GRASS session?\n"
 "\n"
-"This action will colse all sessions gis.m instances.\n"
+"This action will close all sessions gis.m instances.\n"
 "\n"
-"If You have running some  GRASS module from comandline, GRASS will terminate after it finishes to run."
+"If You have running some  GRASS module from comandline, GRASS will terminate "
+"after it finishes to run."
 msgstr ""
 
 #: ../gui/tcltk/gis.m/gm.tcl:543
 #, fuzzy
-msgid "Terminate current GRASS sesion"
+msgid "Terminate current GRASS session"
 msgstr "แสดง รุ่น GRASS ปัจจุบัน"
 
 #: ../gui/tcltk/gis.m/gm.tcl:550
@@ -1802,7 +1840,7 @@ msgstr "การร้องขอข้อมูลไม่สนับสน
 #: ../gui/tcltk/gis.m/gm.tcl:551
 msgid ""
 "We sorry. Your shell does not support this feature. \n"
-" You have to type 'exit' in terminal manualy."
+" You have to type 'exit' in terminal manually."
 msgstr ""
 
 #: ../gui/tcltk/gis.m/gm.tcl:573
@@ -1933,7 +1971,9 @@ msgid "Select label font"
 msgstr "เลือกแบบอักษร แถบข้อความ"
 
 #: ../gui/tcltk/gis.m/maptext.tcl:129
-msgid "Create postscript text object (for postscript eps, pdf, and print output only)"
+msgid ""
+"Create postscript text object (for postscript eps, pdf, and print output "
+"only)"
 msgstr "สร้างวัตถุข้อความ postscript (สำหรับ postscript eps, pdf และพิมพ์ส่งออกเท่านั้น)"
 
 #: ../gui/tcltk/gis.m/maptext.tcl:136
@@ -4418,7 +4458,8 @@ msgid "chart for %s"
 msgstr "แผนภูมิสำหรับ %s"
 
 #: ../gui/tcltk/gis.m/chart.tcl:185
-msgid "Display pie and bar charts of attribute values at vector object locations"
+msgid ""
+"Display pie and bar charts of attribute values at vector object locations"
 msgstr "แสดง  pie และ bar charts ของค่ารายละเอียดที่ตำแหน่งวัตถุเชิงเส้น"
 
 #: ../gui/tcltk/gis.m/chart.tcl:202 ../gui/tcltk/d.m/chart.tcl:91
@@ -5041,8 +5082,10 @@ msgid "Raster map for blue or saturation channel"
 msgstr "แผนที่เชิงภาพสำหรับ Blue หรือ Saturation channel"
 
 #: ../gui/tcltk/gis.m/rgbhis.tcl:136
-msgid "Display 3 raster maps as Red/Green/Blue or Hue/Intensity/Saturation channels"
-msgstr "แสดง 3 แผนที่เชิงภาพ แบบ Red/Green/Blue หรือ Hue/Intensity/Saturation channels"
+msgid ""
+"Display 3 raster maps as Red/Green/Blue or Hue/Intensity/Saturation channels"
+msgstr ""
+"แสดง 3 แผนที่เชิงภาพ แบบ Red/Green/Blue หรือ Hue/Intensity/Saturation channels"
 
 #: ../gui/tcltk/gis.m/rgbhis.tcl:155 ../gui/tcltk/d.m/rgbhis.tcl:128
 msgid "display maps as RGB"
@@ -6072,8 +6115,11 @@ msgid "Create color image from RGB files"
 msgstr "สร้างแฟ้มข้อมูลภาพสีจากแฟ้มข้อมูล RGB "
 
 #: ../gui/tcltk/d.m/menu.tcl:250
-msgid "Create 3 RGB (red, green, blue) maps from 3 HIS (hue, intensity, saturation) maps"
-msgstr "สร้างแผนที่ 3 RGB (red, green, blue) จากแผนที่ 3 HIS (hue, intensity, saturation)"
+msgid ""
+"Create 3 RGB (red, green, blue) maps from 3 HIS (hue, intensity, saturation) "
+"maps"
+msgstr ""
+"สร้างแผนที่ 3 RGB (red, green, blue) จากแผนที่ 3 HIS (hue, intensity, saturation)"
 
 #: ../gui/tcltk/d.m/menu.tcl:255
 msgid "Create raster buffers"
@@ -6277,7 +6323,8 @@ msgstr "Inverse distance weighted interpolation จากแผนที่เ�
 
 #: ../gui/tcltk/d.m/menu.tcl:354
 msgid "Regularized spline tension interpolation from vector points or contours"
-msgstr "Regularized spline tension interpolation จากแผนที่เชิงเส้น จุด หรือ เส้นชั้นความสูง"
+msgstr ""
+"Regularized spline tension interpolation จากแผนที่เชิงเส้น จุด หรือ เส้นชั้นความสูง"
 
 #: ../gui/tcltk/d.m/menu.tcl:356
 msgid "Fill NULL cells by interpolation using regularized spline tension"
@@ -6405,11 +6452,16 @@ msgid "Create stationing from imput lines, and linear reference system"
 msgstr "สร้าง  Stationing จากเส้นที่นำเข้า, และระบบอ้างอิงตำแหน่งเชิงเส้น"
 
 #: ../gui/tcltk/d.m/menu.tcl:416
-msgid "Create points/segments from input lines, linear reference system and positions read from stdin"
-msgstr "สร้าง จุด/ชิ้นส่วน จากเส้นที่นำเข้า, ระบบอ้างอิงตำแหน่งเชิงเส้น และ ตำแหน่ง โดยอ่านจาก stdin"
+msgid ""
+"Create points/segments from input lines, linear reference system and "
+"positions read from stdin"
+msgstr ""
+"สร้าง จุด/ชิ้นส่วน จากเส้นที่นำเข้า, ระบบอ้างอิงตำแหน่งเชิงเส้น และ ตำแหน่ง โดยอ่านจาก stdin"
 
 #: ../gui/tcltk/d.m/menu.tcl:417
-msgid "Find line id and real km+offset for given points in vector map using linear reference system"
+msgid ""
+"Find line id and real km+offset for given points in vector map using linear "
+"reference system"
 msgstr "ค้น"
 
 #: ../gui/tcltk/d.m/menu.tcl:420
@@ -6490,7 +6542,8 @@ msgstr "คำนวน Statistics สำหรับ แผนที่เช�
 
 #: ../gui/tcltk/d.m/menu.tcl:461
 msgid "Partition points into test/training sets for k-fold cross validatation"
-msgstr "แบ่งส่วน ชุดของจุด ไปเป็น  ชุดของ test/training สำหรับ k-fold cross validatation"
+msgstr ""
+"แบ่งส่วน ชุดของจุด ไปเป็น  ชุดของ test/training สำหรับ k-fold cross validatation"
 
 #: ../gui/tcltk/d.m/menu.tcl:462
 msgid "Transfer attribute data from queried vector map to points"
@@ -6529,16 +6582,23 @@ msgid "Mosaic up to 4 adjacent images"
 msgstr "ต่อภาพ 4 ภาพที่อยู่ติดกัน"
 
 #: ../gui/tcltk/d.m/menu.tcl:484
-msgid "Color balance and enhance color tables of multiband imagery for rgb display"
+msgid ""
+"Color balance and enhance color tables of multiband imagery for rgb display"
 msgstr "การปรับสี และ  ตาราง Enhance สี ของ ภาพ Multiband สำหรับแสดงแบบ RGB"
 
 #: ../gui/tcltk/d.m/menu.tcl:485
-msgid "Transform HIS (Hue/Intensity/Saturation) color image to RGB (Red/Green/Blue)"
-msgstr "แปลงข้อมูลแบบผสมสีแบบความอิ่มสี HIS (Hue/Intensity/Saturation) เป็น RGB (Red/Green/Blue)"
+msgid ""
+"Transform HIS (Hue/Intensity/Saturation) color image to RGB (Red/Green/Blue)"
+msgstr ""
+"แปลงข้อมูลแบบผสมสีแบบความอิ่มสี HIS (Hue/Intensity/Saturation) เป็น RGB (Red/Green/"
+"Blue)"
 
 #: ../gui/tcltk/d.m/menu.tcl:486
-msgid "Transform RGB (Red/Green/Blue) color image to HIS (Hue/Intensity/Saturation)"
-msgstr "แปลงข้อมูลแบบผสมสีRGB (Red/Green/Blue) เป็น นแบบความอิ่มสี HIS (Hue/Intensity/Saturation)"
+msgid ""
+"Transform RGB (Red/Green/Blue) color image to HIS (Hue/Intensity/Saturation)"
+msgstr ""
+"แปลงข้อมูลแบบผสมสีRGB (Red/Green/Blue) เป็น นแบบความอิ่มสี HIS (Hue/Intensity/"
+"Saturation)"
 
 #: ../gui/tcltk/d.m/menu.tcl:488
 msgid "Rectify and georeference image group"
@@ -6662,7 +6722,9 @@ msgstr "  จัดตำแหน่งข้อความด้วยจุ�
 
 #: ../gui/tcltk/d.m/fttext.tcl:120
 #, tcl-format
-msgid "     (for coordinates, % is from bottom left of display, pixels from top left)"
+msgid ""
+"     (for coordinates, % is from bottom left of display, pixels from top "
+"left)"
 msgstr "     (สำหรับพิกัด, % จากงซ้ายล่างของจอ, พิกเซล จากซ้ายบน)"
 
 #: ../gui/tcltk/d.m/fttext.tcl:126
@@ -6711,11 +6773,13 @@ msgstr "blue (RGB) หรือ saturation (HIS):"
 #~ msgstr "คำเตือน: ข้อผิดพลาดในการสร้างตำแหน่งใหม่"
 
 #~ msgid ""
-#~ "Error creating new location from georeferenced file.  g.proj returned following message:\n"
+#~ "Error creating new location from georeferenced file.  g.proj returned "
+#~ "following message:\n"
 #~ "\n"
 #~ "%s"
 #~ msgstr ""
-#~ "ข้อผิดพลาดในการสร้างตำแหน่งใหม่จาก Georeferenced ไฟล์.  g.proj ส่งข้อความกลับตามนี้:\n"
+#~ "ข้อผิดพลาดในการสร้างตำแหน่งใหม่จาก Georeferenced ไฟล์.  g.proj "
+#~ "ส่งข้อความกลับตามนี้:\n"
 #~ "\n"
 #~ "%s"
 

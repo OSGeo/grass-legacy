@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: grasstcl_vi\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-04-19 00:30+0200\n"
+"POT-Creation-Date: 2011-05-29 11:20+0200\n"
 "PO-Revision-Date: 2010-08-27 14:37+0700\n"
 "Last-Translator: \n"
 "Language-Team: American English <kde-i18n-doc@kde.org>\n"
@@ -399,11 +399,13 @@ msgstr "CẢNH BÁO: không thể lấy các biến môi trường"
 msgid ""
 "Warning: Unable to get enviromental variable GRASS_PROJSHARE. \n"
 "This is a GRASS installation error. \n"
-"Set enviromental variable GRASS_PROJSHARE to point to directory with Proj4 EPSG file. "
+"Set enviromental variable GRASS_PROJSHARE to point to directory with Proj4 "
+"EPSG file. "
 msgstr ""
 "Cảnh báo: không thể lấy biến môi trường GRASS_PROJSHARE. \n"
 " Đây là lỗi cài đặt GRASS. \n"
-" Thiết lập biến môi trường GRASS_PROJSHARE để trỏ đến thư mục có tập tin Proj4 EPSG."
+" Thiết lập biến môi trường GRASS_PROJSHARE để trỏ đến thư mục có tập tin "
+"Proj4 EPSG."
 
 #: ../lib/init/epsg_option.tcl:103
 msgid "Define location using EPSG projection codes"
@@ -507,7 +509,10 @@ msgid "Select datum transformation parameters:"
 msgstr "chọn các tham số chuyển đổi mốc tọa độ:"
 
 #: ../lib/init/epsg_option.tcl:292 ../lib/init/file_option.tcl:245
-msgid "Continue without specifying parameters - if used when creating a location, other GRASS modules will use the \"default\" (likely non-optimum) parameters for this datum if necessary in the future."
+msgid ""
+"Continue without specifying parameters - if used when creating a location, "
+"other GRASS modules will use the \"default\" (likely non-optimum) parameters "
+"for this datum if necessary in the future."
 msgstr "Tiếp tục mà không chỉ định các tham số - nếu áp dụng khi tạo vị trí,  các mô-đun khác của GRASS sẽ dùng các tham số \"mặc_định\" (rất  có thể là không tối ưu) cho mốc tọa độ này nếu cần thiết sau này."
 
 #: ../lib/init/epsg_option.tcl:344
@@ -565,8 +570,11 @@ msgstr "CẢNH BÁO: vị trí không hợp lệ"
 
 #: ../lib/init/gis_set.tcl:132
 #, tcl-format
-msgid "Warning: location <%s> at GISDBASE <%s> is not a directory or does not exist."
-msgstr "Cảnh báo: vị trí <%s> tại CSDL GIS <%s> không phải là một thư mục hoặc không có."
+msgid ""
+"Warning: location <%s> at GISDBASE <%s> is not a directory or does not exist."
+msgstr ""
+"Cảnh báo: vị trí <%s> tại CSDL GIS <%s> không phải là một thư mục hoặc không "
+"có."
 
 #: ../lib/init/gis_set.tcl:183
 #, tcl-format
@@ -707,8 +715,13 @@ msgid "Starting GRASS for the first time"
 msgstr "Đang khởi động GRASS lần đầu tiên"
 
 #: ../lib/init/gis_set.tcl:584
-msgid "GRASS needs a directory in which to store its data.  Create one now if you have not already done so.  A popular choice is \"grassdata\", located in your home directory."
-msgstr "GRASS cần một thư mục để lưu trữ dữ liệu. Tạo một thư mục ngay nếu bạn chưa làm. Tên thường được dùng là \"grassdata\", nằm trong thư mục nhà của bạn."
+msgid ""
+"GRASS needs a directory in which to store its data.  Create one now if you "
+"have not already done so.  A popular choice is \"grassdata\", located in "
+"your home directory."
+msgstr ""
+"GRASS cần một thư mục để lưu trữ dữ liệu. Tạo một thư mục ngay nếu bạn chưa "
+"làm. Tên thường được dùng là \"grassdata\", nằm trong thư mục nhà của bạn."
 
 #: ../lib/init/gis_set.tcl:589
 msgid "Select GIS data directory"
@@ -720,7 +733,8 @@ msgstr "CẢNH BÁO: CSDL không hợp lệ"
 
 #: ../lib/init/gis_set.tcl:595
 msgid "WARNING: Invalid database. Finding first valid directory in parent tree"
-msgstr "CẢNH BÁO: CSDL không hợp lệ. Tìm thư mục hợp lệ đầu tiên trong cây thư mục"
+msgstr ""
+"CẢNH BÁO: CSDL không hợp lệ. Tìm thư mục hợp lệ đầu tiên trong cây thư mục"
 
 #: ../lib/init/gis_set.tcl:642 ../lib/init/gis_set.tcl:663
 #: ../lib/init/gis_set.tcl:681 ../lib/init/gis_set.tcl:709
@@ -763,7 +777,9 @@ msgstr ""
 
 #: ../lib/init/file_option.tcl:73
 msgid "Define location using projection information in georeferenced file"
-msgstr "Định nghĩa vị trí bằng cách dùng thông tin phép chiếu trong tập tin tham chiếu địa lý"
+msgstr ""
+"Định nghĩa vị trí bằng cách dùng thông tin phép chiếu trong tập tin tham "
+"chiếu địa lý"
 
 #: ../lib/init/file_option.tcl:96
 msgid "Enter name of location to be created"
@@ -1048,7 +1064,8 @@ msgstr "Giới hạn bản đồ theo hình học của vùng?"
 #: ../gui/tcltk/gis.m/rastnums.tcl:286
 msgid ""
 "Cell values can only be displayed for \n"
-"regions of < 10,000 cells. Map in explore mode may contain more than 10,000 cells.\n"
+"regions of < 10,000 cells. Map in explore mode may contain more than 10,000 "
+"cells.\n"
 "\n"
 " It's suggested to constrain map to region geometry to display cell values."
 msgstr ""
@@ -1502,11 +1519,15 @@ msgid "Could not create TIF"
 msgstr "Không thể tạo TIF"
 
 #: ../gui/tcltk/gis.m/georect.tcl:285
-msgid "There is no raster group file (REF). You must select the 'create/edit group' option to create a group file."
+msgid ""
+"There is no raster group file (REF). You must select the 'create/edit group' "
+"option to create a group file."
 msgstr "Không có tập tin nhóm raster (REF). Bạn phải chọn tùy chọn  'tạo/chỉnh sửa nhóm' để tạo tập tin nhóm."
 
 #: ../gui/tcltk/gis.m/georect.tcl:307
-msgid "There is no vector group file (VREF). You must select the 'create/edit group' option to create a group file."
+msgid ""
+"There is no vector group file (VREF). You must select the 'create/edit "
+"group' option to create a group file."
 msgstr "Không có tập tin nhóm vector VREF). Bạn phải chọn tùy chọn  'tạo/chỉnh sửa nhóm' để tạo tập tin nhóm."
 
 #: ../gui/tcltk/gis.m/georect.tcl:388
@@ -1586,8 +1607,11 @@ msgid "4. Select map"
 msgstr "4. Chọn bản đồ"
 
 #: ../gui/tcltk/gis.m/georect.tcl:683
-msgid "Select non-georectified raster or vector to display for marking ground control points"
-msgstr "Chọn raster hoặc vector chưa nắn chỉnh địa lý để trình bày dùng đánh dấu  các điểm khống chế"
+msgid ""
+"Select non-georectified raster or vector to display for marking ground "
+"control points"
+msgstr ""
+"Chọn raster hoặc vector chưa nắn chỉnh địa lý để trình bày dùng đánh dấu  các điểm khống chế"
 
 #: ../gui/tcltk/gis.m/georect.tcl:693
 msgid "5. Start georectifying"
@@ -1686,16 +1710,24 @@ msgid "Exit georectifier"
 msgstr "Thoát trình nắn chỉnh địa lý"
 
 #: ../gui/tcltk/gis.m/georect.tcl:1323
-msgid "There is no POINTS file of ground control points for group. You must create ground control points before georectifying map."
+msgid ""
+"There is no POINTS file of ground control points for group. You must create "
+"ground control points before georectifying map."
 msgstr "Không có tập tin ĐIỂM chứa các điểm khống chế cho nhóm. Bạn phải tạo  các điểm khống chế trước khi nắn chỉnh bản đồ."
 
 #: ../gui/tcltk/gis.m/georect.tcl:1353
-msgid "Insufficient ground control points for georectification method. You need at least 3 points for 1st order, 6 points for 2nd order and 10 points for 3rd order."
+msgid ""
+"Insufficient ground control points for georectification method. You need at "
+"least 3 points for 1st order, 6 points for 2nd order and 10 points for 3rd "
+"order."
 msgstr "Không đủ số điểm khống chế cần cho phương pháp nắn chỉnh này. Bạn cần  ít nhất 3 điểm cho bậc 1, 6 điểm cho bậc 2 và 10 điểm cho bậc 3."
 
 #: ../gui/tcltk/gis.m/georect.tcl:1384
-msgid "No valid ground control points in GCP file. You must create valid ground control points before georectifying map."
-msgstr "Không có các điểm khống chế hợp lệ trong tập tin GCP. Bạn phải tạo các  điểm khống chế hợp lệ trước khi nắn chỉnh bản đồ."
+msgid ""
+"No valid ground control points in GCP file. You must create valid ground "
+"control points before georectifying map."
+msgstr ""
+"Không có các điểm khống chế hợp lệ trong tập tin GCP. Bạn phải tạo các  điểm khống chế hợp lệ trước khi nắn chỉnh bản đồ."
 
 #: ../gui/tcltk/gis.m/georect.tcl:1587
 msgid "Error setting region"
@@ -1718,7 +1750,9 @@ msgid "Drag with mouse to pan"
 msgstr "Rê bằng chuột để di chuyển"
 
 #: ../gui/tcltk/gis.m/gm.tcl:75
-msgid "GISDBASE or LOCATION_NAME or MAPSET is empty.  This is a fatal error. gis.m can not work without proper settings."
+msgid ""
+"GISDBASE or LOCATION_NAME or MAPSET is empty.  This is a fatal error. gis.m "
+"can not work without proper settings."
 msgstr ""
 
 #: ../gui/tcltk/gis.m/gm.tcl:219 ../gui/tcltk/d.m/d.m.tcl:314
@@ -1766,16 +1800,17 @@ msgstr "Hiển thị phiên bản GRASS hiện tại"
 
 #: ../gui/tcltk/gis.m/gm.tcl:540
 msgid ""
-"Do You really want to terminate current GRASS session?\n"
+"Do you really want to terminate current GRASS session?\n"
 "\n"
-"This action will colse all sessions gis.m instances.\n"
+"This action will close all sessions gis.m instances.\n"
 "\n"
-"If You have running some  GRASS module from comandline, GRASS will terminate after it finishes to run."
+"If You have running some  GRASS module from comandline, GRASS will terminate "
+"after it finishes to run."
 msgstr ""
 
 #: ../gui/tcltk/gis.m/gm.tcl:543
 #, fuzzy
-msgid "Terminate current GRASS sesion"
+msgid "Terminate current GRASS session"
 msgstr "Hiển thị phiên bản GRASS hiện tại"
 
 #: ../gui/tcltk/gis.m/gm.tcl:550
@@ -1786,7 +1821,7 @@ msgstr "Quy vấn không được hỗ trợ"
 #: ../gui/tcltk/gis.m/gm.tcl:551
 msgid ""
 "We sorry. Your shell does not support this feature. \n"
-" You have to type 'exit' in terminal manualy."
+" You have to type 'exit' in terminal manually."
 msgstr ""
 
 #: ../gui/tcltk/gis.m/gm.tcl:573
@@ -1917,8 +1952,11 @@ msgid "Select label font"
 msgstr "Chọn phông chữ cho nhãn"
 
 #: ../gui/tcltk/gis.m/maptext.tcl:129
-msgid "Create postscript text object (for postscript eps, pdf, and print output only)"
-msgstr "Tạo đối tượng chữ postscript (hoặc postscript eps, pdf và chỉ in đầu ra)"
+msgid ""
+"Create postscript text object (for postscript eps, pdf, and print output "
+"only)"
+msgstr ""
+"Tạo đối tượng chữ postscript (hoặc postscript eps, pdf và chỉ in đầu ra)"
 
 #: ../gui/tcltk/gis.m/maptext.tcl:136
 msgid "Text to display:"
@@ -2088,7 +2126,8 @@ msgstr "Biểu tượng điểm vector"
 
 #: ../gui/tcltk/gis.m/thematic.tcl:238
 msgid "Display vector maps thematically by graduate colors (all types)"
-msgstr "Trình bày bản đồ vector theo chủ đề bằng màu phân cấp (tất cả các kiểu)"
+msgstr ""
+"Trình bày bản đồ vector theo chủ đề bằng màu phân cấp (tất cả các kiểu)"
 
 #: ../gui/tcltk/gis.m/thematic.tcl:244
 msgid "  or by graduated sizes (points and lines)"
@@ -2407,7 +2446,8 @@ msgstr "Xóa lớp"
 
 #: ../gui/tcltk/gis.m/gmtool2.tcl:84 ../gui/tcltk/d.m/tool1.tcl:121
 msgid "Create new workspace file (erase current workspace settings first)"
-msgstr "Tạo tập tin vùng làm việc mới (xóa thiết lập vùng làm việc hiện tại trước)"
+msgstr ""
+"Tạo tập tin vùng làm việc mới (xóa thiết lập vùng làm việc hiện tại trước)"
 
 #: ../gui/tcltk/gis.m/gmtool2.tcl:90 ../gui/tcltk/d.m/tool1.tcl:124
 msgid "Open existing workspace file"
@@ -2436,7 +2476,8 @@ msgstr "chú giải cho %s"
 
 #: ../gui/tcltk/gis.m/legend.tcl:193
 msgid "Display legend for raster map using cat values and labels"
-msgstr "Trình bày chú giải cho bản đồ raster  bằng cách dùng giá trị phạm trù và nhãn"
+msgstr ""
+"Trình bày chú giải cho bản đồ raster  bằng cách dùng giá trị phạm trù và nhãn"
 
 #: ../gui/tcltk/gis.m/legend.tcl:210
 msgid "Raster map: "
@@ -2863,7 +2904,8 @@ msgstr "Tên khung (tuỳ chọn):"
 #: ../gui/tcltk/gis.m/frames.tcl:135
 #, tcl-format
 msgid "Set frame borders at 0-100% from lower left corner of display "
-msgstr "Thiết lập viền khung trong khoảng 0-100% tính từ góc dưới trái của trình bày"
+msgstr ""
+"Thiết lập viền khung trong khoảng 0-100% tính từ góc dưới trái của trình bày"
 
 #: ../gui/tcltk/gis.m/frames.tcl:141
 msgid "     set borders (bottom,top,left,right): "
@@ -4390,8 +4432,11 @@ msgid "chart for %s"
 msgstr "biểu đồ cho %s"
 
 #: ../gui/tcltk/gis.m/chart.tcl:185
-msgid "Display pie and bar charts of attribute values at vector object locations"
-msgstr "Trình bày các biểu đồ tròn và cột cho các giá trị thuộc tính tại vị trí đối tượng vector"
+msgid ""
+"Display pie and bar charts of attribute values at vector object locations"
+msgstr ""
+"Trình bày các biểu đồ tròn và cột cho các giá trị thuộc tính tại vị trí đối "
+"tượng vector"
 
 #: ../gui/tcltk/gis.m/chart.tcl:202 ../gui/tcltk/d.m/chart.tcl:91
 msgid "Vector map to chart:"
@@ -4793,7 +4838,8 @@ msgstr "Bản đồ dùng làm ảnh động"
 
 #: ../gui/tcltk/gis.m/animate.tcl:479
 msgid "Select maps to animate in one or more frames (1 frame required)"
-msgstr "Chọn bản đồ để tạo ảnh động theo 1 hoặc nhiều khung (1 khung là bắt buộc)"
+msgstr ""
+"Chọn bản đồ để tạo ảnh động theo 1 hoặc nhiều khung (1 khung là bắt buộc)"
 
 #: ../gui/tcltk/gis.m/animate.tcl:492
 msgid "Maps for frame 1 (required): "
@@ -5012,8 +5058,11 @@ msgid "Raster map for blue or saturation channel"
 msgstr "Bản đồ raster dùng cho kênh xanh hoặc độ  bão hòa"
 
 #: ../gui/tcltk/gis.m/rgbhis.tcl:136
-msgid "Display 3 raster maps as Red/Green/Blue or Hue/Intensity/Saturation channels"
-msgstr "Trình bày 3 bản đồ raster thành các kênh Đỏ/Lục/Xanh hoặc Màu sắc/Cường độ/Độ bão hòa"
+msgid ""
+"Display 3 raster maps as Red/Green/Blue or Hue/Intensity/Saturation channels"
+msgstr ""
+"Trình bày 3 bản đồ raster thành các kênh Đỏ/Lục/Xanh hoặc Màu sắc/Cường độ/"
+"Độ bão hòa"
 
 #: ../gui/tcltk/gis.m/rgbhis.tcl:155 ../gui/tcltk/d.m/rgbhis.tcl:128
 msgid "display maps as RGB"
@@ -5868,7 +5917,8 @@ msgstr "Lưu trình bày thành tập tin ảnh"
 
 #: ../gui/tcltk/d.m/menu.tcl:180
 msgid "XWD (Save display, selected with mouse, to map.xwd in home directory )"
-msgstr "XWD (Lưu trình bày, được chọn bằng chuột, thành map.xwd trong thư mục nhà)"
+msgstr ""
+"XWD (Lưu trình bày, được chọn bằng chuột, thành map.xwd trong thư mục nhà)"
 
 #: ../gui/tcltk/d.m/menu.tcl:181
 msgid "Save displays to multiple graphic file formats"
@@ -5904,7 +5954,8 @@ msgstr "Truy cập các bộ bản đồ khác trong vị trí hiện tại"
 
 #: ../gui/tcltk/d.m/menu.tcl:196
 msgid "Change current working session to new mapset, location, or GISDBASE"
-msgstr "Thay đổi phiên làm việc hiện tại thành bộ bản đồ, vị trí hoặc CSDL GIS mới"
+msgstr ""
+"Thay đổi phiên làm việc hiện tại thành bộ bản đồ, vị trí hoặc CSDL GIS mới"
 
 #: ../gui/tcltk/d.m/menu.tcl:197
 msgid "Modify access by other users to current mapset"
@@ -6000,7 +6051,8 @@ msgstr "Thu mẫu lại bằng các phương pháp nội suy"
 
 #: ../gui/tcltk/d.m/menu.tcl:235
 msgid "Resample using regularized spline with tension method"
-msgstr "Thu mẫu lại bằng cách dùng phường pháp đường spline chính quy có sức căng"
+msgstr ""
+"Thu mẫu lại bằng cách dùng phường pháp đường spline chính quy có sức căng"
 
 #: ../gui/tcltk/d.m/menu.tcl:238
 msgid "Support file creation and maintenance"
@@ -6035,8 +6087,12 @@ msgid "Create color image from RGB files"
 msgstr "Tạo ảnh màu từ các tập tin RGB"
 
 #: ../gui/tcltk/d.m/menu.tcl:250
-msgid "Create 3 RGB (red, green, blue) maps from 3 HIS (hue, intensity, saturation) maps"
-msgstr "Tạo 3 bản đồ RGB (đỏ, lục, xanh) từ 3 bản đồ HIS (màu sắc, cường độ, độ bão hoà"
+msgid ""
+"Create 3 RGB (red, green, blue) maps from 3 HIS (hue, intensity, saturation) "
+"maps"
+msgstr ""
+"Tạo 3 bản đồ RGB (đỏ, lục, xanh) từ 3 bản đồ HIS (màu sắc, cường độ, độ bão "
+"hoà"
 
 #: ../gui/tcltk/d.m/menu.tcl:255
 msgid "Create raster buffers"
@@ -6104,7 +6160,8 @@ msgstr "Làm mảnh các đối tượng tuyến tính"
 
 #: ../gui/tcltk/d.m/menu.tcl:293
 msgid "Carve stream channels into elevation map using vector streams map"
-msgstr "Khắc các đường suối vào một bản đồ độ cao bằng cách dùng bản đồ suối vector"
+msgstr ""
+"Khắc các đường suối vào một bản đồ độ cao bằng cách dùng bản đồ suối vector"
 
 #: ../gui/tcltk/d.m/menu.tcl:294
 msgid "Depressionless elevation map and flowline map"
@@ -6180,7 +6237,9 @@ msgstr "Lấy lại tỷ lệ các phạm trù (tạo bản đồ mới)"
 
 #: ../gui/tcltk/d.m/menu.tcl:331
 msgid "Rescale categories with equalized histogram (create new map)"
-msgstr "Lấy lại tỷ lệ các phạm trù với biểu đồ tần xuất được cân bằng (tạo bản đồ mới)"
+msgstr ""
+"Lấy lại tỷ lệ các phạm trù với biểu đồ tần xuất được cân bằng (tạo bản đồ "
+"mới)"
 
 #: ../gui/tcltk/d.m/menu.tcl:334
 msgid "Generate concentric circles around points"
@@ -6240,11 +6299,13 @@ msgstr "Nội suy trọng số theo nghịch đảo k.cách (IDW) từ các đi�
 
 #: ../gui/tcltk/d.m/menu.tcl:354
 msgid "Regularized spline tension interpolation from vector points or contours"
-msgstr "Nội suy đường spline chính quy có sức căng từ các điểm/đường bình độ vector"
+msgstr ""
+"Nội suy đường spline chính quy có sức căng từ các điểm/đường bình độ vector"
 
 #: ../gui/tcltk/d.m/menu.tcl:356
 msgid "Fill NULL cells by interpolation using regularized spline tension"
-msgstr "Lấp đầy các ô rỗng bằng cách nội suy dùng đường spline chính quy có sức căng"
+msgstr ""
+"Lấp đầy các ô rỗng bằng cách nội suy dùng đường spline chính quy có sức căng"
 
 #: ../gui/tcltk/d.m/menu.tcl:361
 msgid "Manage category labels and values"
@@ -6364,15 +6425,25 @@ msgstr "Tạo hệ thống tham chiếu tuyến tính (LRS)"
 
 #: ../gui/tcltk/d.m/menu.tcl:415
 msgid "Create stationing from imput lines, and linear reference system"
-msgstr "Tạo các trạm (stationing) từ các đường đầu vào và hệ thống tham chiếu tuyến tính"
+msgstr ""
+"Tạo các trạm (stationing) từ các đường đầu vào và hệ thống tham chiếu tuyến "
+"tính"
 
 #: ../gui/tcltk/d.m/menu.tcl:416
-msgid "Create points/segments from input lines, linear reference system and positions read from stdin"
-msgstr "Tạo các điểm/đoạn từ các đường đầu vào, hệ thống tham chiếu tuyến tính và đọc vị trí từ đầu vào chuẩn (stdin)"
+msgid ""
+"Create points/segments from input lines, linear reference system and "
+"positions read from stdin"
+msgstr ""
+"Tạo các điểm/đoạn từ các đường đầu vào, hệ thống tham chiếu tuyến tính và "
+"đọc vị trí từ đầu vào chuẩn (stdin)"
 
 #: ../gui/tcltk/d.m/menu.tcl:417
-msgid "Find line id and real km+offset for given points in vector map using linear reference system"
-msgstr "Tìm id đường và km+độ dịch thực cho các điểm cho trước trong một bản đồ vector bằng cách dùng hệ thống tham chiếu tuyến tính"
+msgid ""
+"Find line id and real km+offset for given points in vector map using linear "
+"reference system"
+msgstr ""
+"Tìm id đường và km+độ dịch thực cho các điểm cho trước trong một bản đồ "
+"vector bằng cách dùng hệ thống tham chiếu tuyến tính"
 
 #: ../gui/tcltk/d.m/menu.tcl:420
 msgid "Locate nearest features to points or centroids"
@@ -6452,7 +6523,9 @@ msgstr "Tính toán thống kê cho bản đồ raster chồng lên với bản 
 
 #: ../gui/tcltk/d.m/menu.tcl:461
 msgid "Partition points into test/training sets for k-fold cross validatation"
-msgstr "Phân chia các điểm thành các bộ/tập hợp 'huấn luyện' dùng cho kiểm chứng chéo k-fold"
+msgstr ""
+"Phân chia các điểm thành các bộ/tập hợp 'huấn luyện' dùng cho kiểm chứng "
+"chéo k-fold"
 
 #: ../gui/tcltk/d.m/menu.tcl:462
 msgid "Transfer attribute data from queried vector map to points"
@@ -6472,7 +6545,8 @@ msgstr "Kiểm tra độ chuẩn của phân bố điểm"
 
 #: ../gui/tcltk/d.m/menu.tcl:472
 msgid "Calculate stats for raster map underlying vector objects"
-msgstr "Tính toán các thống kê cho lớp bản đồ raster ở dưới các đối tượng vector"
+msgstr ""
+"Tính toán các thống kê cho lớp bản đồ raster ở dưới các đối tượng vector"
 
 #: ../gui/tcltk/d.m/menu.tcl:473
 msgid "Indices of point counts in quadrats"
@@ -6491,16 +6565,21 @@ msgid "Mosaic up to 4 adjacent images"
 msgstr "Khảm tối đa 4 ảnh kề nhau"
 
 #: ../gui/tcltk/d.m/menu.tcl:484
-msgid "Color balance and enhance color tables of multiband imagery for rgb display"
+msgid ""
+"Color balance and enhance color tables of multiband imagery for rgb display"
 msgstr "Cân bằng màu và cải thiện bảng màu của ảnh nhiều băng để hiển thị rgb"
 
 #: ../gui/tcltk/d.m/menu.tcl:485
-msgid "Transform HIS (Hue/Intensity/Saturation) color image to RGB (Red/Green/Blue)"
-msgstr "Chuyển đổi ảnh màu HIS (màu sắc/cường độ/độ bão hòa) thành RGB (đỏ/lục/xanh)"
+msgid ""
+"Transform HIS (Hue/Intensity/Saturation) color image to RGB (Red/Green/Blue)"
+msgstr ""
+"Chuyển đổi ảnh màu HIS (màu sắc/cường độ/độ bão hòa) thành RGB (đỏ/lục/xanh)"
 
 #: ../gui/tcltk/d.m/menu.tcl:486
-msgid "Transform RGB (Red/Green/Blue) color image to HIS (Hue/Intensity/Saturation)"
-msgstr "Chuyển đổi ảnh màu RGB (đỏ/lục/xanh) thành HIS (màu sắc/cường độ/độ bão hòa)"
+msgid ""
+"Transform RGB (Red/Green/Blue) color image to HIS (Hue/Intensity/Saturation)"
+msgstr ""
+"Chuyển đổi ảnh màu RGB (đỏ/lục/xanh) thành HIS (màu sắc/cường độ/độ bão hòa)"
 
 #: ../gui/tcltk/d.m/menu.tcl:488
 msgid "Rectify and georeference image group"
@@ -6508,11 +6587,13 @@ msgstr "Nắn chỉnh và tham chiếu địa lý nhóm ảnh"
 
 #: ../gui/tcltk/d.m/menu.tcl:489
 msgid "Set ground control points (GCP's) from raster map or keyboard entry"
-msgstr "Thiết lập các điểm khống chế (GCP) từ ảnh raster hoặc nhập vào từ bàn phím"
+msgstr ""
+"Thiết lập các điểm khống chế (GCP) từ ảnh raster hoặc nhập vào từ bàn phím"
 
 #: ../gui/tcltk/d.m/menu.tcl:491
 msgid "Set ground control points (GCP's) from vector map or keyboard entry"
-msgstr "Thiết lập các điểm khống chế (GCP) từ bản đồ vector hoặc nhập vào từ bàn phím"
+msgstr ""
+"Thiết lập các điểm khống chế (GCP) từ bản đồ vector hoặc nhập vào từ bàn phím"
 
 #: ../gui/tcltk/d.m/menu.tcl:493
 msgid "Affine and Polynomial rectification (rubber sheet)"
@@ -6624,8 +6705,12 @@ msgstr "  canh thằng chữ với điểm tọa độ"
 
 #: ../gui/tcltk/d.m/fttext.tcl:120
 #, tcl-format
-msgid "     (for coordinates, % is from bottom left of display, pixels from top left)"
-msgstr "(đối với tọa độ, % tính từ góc dưới trái của phần trình bày, điểm ảnh tính từ góc trên trái)"
+msgid ""
+"     (for coordinates, % is from bottom left of display, pixels from top "
+"left)"
+msgstr ""
+"(đối với tọa độ, % tính từ góc dưới trái của phần trình bày, điểm ảnh tính "
+"từ góc trên trái)"
 
 #: ../gui/tcltk/d.m/fttext.tcl:126
 msgid "     text rotation (degrees counterclockwise)"
@@ -6717,15 +6802,23 @@ msgstr "xanh (RGB) hoặc độ bão hòa (HIS):"
 
 #, fuzzy
 #~ msgid "Create stationing from input lines and a linear reference system"
-#~ msgstr "Tạo các trạm (stationing) từ các đường đầu vào và hệ thống tham chiếu tuyến tính"
+#~ msgstr ""
+#~ "Tạo các trạm (stationing) từ các đường đầu vào và hệ thống tham chiếu "
+#~ "tuyến tính"
 
 #, fuzzy
 #~ msgid "Create points and line segments along a linear reference system"
-#~ msgstr "Tạo các trạm (stationing) từ các đường đầu vào và hệ thống tham chiếu tuyến tính"
+#~ msgstr ""
+#~ "Tạo các trạm (stationing) từ các đường đầu vào và hệ thống tham chiếu "
+#~ "tuyến tính"
 
 #, fuzzy
-#~ msgid "Find line ID and real km+offset for given points in vector map using linear reference system"
-#~ msgstr "Tìm id đường và km+độ dịch thực sự đối với các điểm cho trước trong một bản đồ vector, dùng hệ thống tham chiếu tuyến tính"
+#~ msgid ""
+#~ "Find line ID and real km+offset for given points in vector map using "
+#~ "linear reference system"
+#~ msgstr ""
+#~ "Tìm id đường và km+độ dịch thực sự đối với các điểm cho trước trong một "
+#~ "bản đồ vector, dùng hệ thống tham chiếu tuyến tính"
 
 #, fuzzy
 #~ msgid "Select font file"
@@ -6756,7 +6849,9 @@ msgstr "xanh (RGB) hoặc độ bão hòa (HIS):"
 #~ msgstr "tập tin PS:"
 
 #, fuzzy
-#~ msgid "Bicubic and bilinear interpolation with Tykhonov regularization from vector points"
+#~ msgid ""
+#~ "Bicubic and bilinear interpolation with Tykhonov regularization from "
+#~ "vector points"
 #~ msgstr "Nội suy song tuyến tính từ các điểm raster"
 
 #, fuzzy
