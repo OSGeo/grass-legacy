@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: grassmods_vi\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-04-23 15:34+0200\n"
+"POT-Creation-Date: 2011-05-29 11:07+0200\n"
 "PO-Revision-Date: 2010-08-27 14:37+0700\n"
 "Last-Translator: \n"
 "Language-Team: American English <kde-i18n-doc@kde.org>\n"
@@ -278,11 +278,11 @@ msgstr "Không thể ghi hàng raster."
 #: ../vector/v.to.rast/vect2rast.c:125 ../vector/v.to.rast/vect2rast.c:129
 #: ../vector/v.surf.idw/main.c:264 ../vector/v.neighbors/main.c:96
 #: ../doc/raster/r.example/main.c:141 ../imagery/i.smap/shapiro/opencell.c:30
-#: ../imagery/i.pca/main.c:406 ../imagery/i.rectify/write.c:49
-#: ../imagery/i.rgb.his/openfiles.c:29 ../imagery/i.rgb.his/openfiles.c:31
-#: ../imagery/i.rgb.his/openfiles.c:33 ../imagery/i.his.rgb/openfiles.c:15
-#: ../imagery/i.his.rgb/openfiles.c:17 ../imagery/i.his.rgb/openfiles.c:19
-#: ../imagery/i.ifft/ifftmain.c:219 ../imagery/i.maxlik/open.c:74
+#: ../imagery/i.pca/main.c:406 ../imagery/i.rgb.his/openfiles.c:29
+#: ../imagery/i.rgb.his/openfiles.c:31 ../imagery/i.rgb.his/openfiles.c:33
+#: ../imagery/i.his.rgb/openfiles.c:15 ../imagery/i.his.rgb/openfiles.c:17
+#: ../imagery/i.his.rgb/openfiles.c:19 ../imagery/i.ifft/ifftmain.c:219
+#: ../imagery/i.maxlik/open.c:74
 #, c-format
 msgid "Unable to create raster map <%s>"
 msgstr "Không thể tạo bản đồ raster <%s>"
@@ -1454,7 +1454,7 @@ msgstr "Không can thiệp các giá trị NULL khi vẽ"
 #: ../raster/r.clump/main.c:94 ../raster/r.out.tiff/r.out.tiff.c:188
 #: ../raster/r.texture/main.c:234 ../raster/r.out.arc/main.c:125
 #: ../raster/r.colors/stats.c:33 ../raster/r.out.gdal/export_band.c:48
-#: ../raster/r.out.gdal/export_band.c:251 ../raster/r.null/null.c:318
+#: ../raster/r.out.gdal/export_band.c:246 ../raster/r.null/null.c:318
 #: ../raster/r.mapcalc/map3.c:510 ../raster/r.grow.distance/main.c:177
 #: ../raster/r.sunmask/main.c:448 ../raster/r.random.surface/main.c:54
 #: ../raster/r.random.surface/init.c:134 ../raster/r.thin/io.c:100
@@ -1774,7 +1774,7 @@ msgstr "Không thể đọc miền fp của bản đồ raster <%s>"
 #: ../vector/v.buffer/main.c:387 ../vector/v.edit/select.c:520
 #: ../vector/v.info/main.c:217 ../vector/v.extrude/main.c:167
 #: ../vector/v.surf.rst/main.c:607 ../vector/v.net.centrality/main.c:220
-#: ../vector/v.db.connect/main.c:214 ../vector/v.db.connect/main.c:322
+#: ../vector/v.db.connect/main.c:218 ../vector/v.db.connect/main.c:326
 #: ../vector/v.net.components/main.c:137 ../vector/v.drape/main.c:293
 #: ../vector/v.what.rast/main.c:132 ../vector/v.to.3d/trans3.c:53
 #: ../vector/v.to.3d/trans2.c:52 ../doc/vector/v.example/main.c:128
@@ -2625,12 +2625,12 @@ msgstr "Đang đọc %s..."
 #: ../raster/r.profile/read_rast.c:45 ../raster/r.profile/read_rast.c:73
 #: ../raster/r.profile/read_rast.c:101 ../raster/r.buffer/read_map.c:63
 #: ../raster/r.buffer/write_map.c:61 ../raster/r.colors/stats.c:46
-#: ../raster/r.colors/stats.c:113 ../raster/r.out.gdal/export_band.c:94
-#: ../raster/r.out.gdal/export_band.c:126
-#: ../raster/r.out.gdal/export_band.c:158
-#: ../raster/r.out.gdal/export_band.c:406
-#: ../raster/r.out.gdal/export_band.c:440
-#: ../raster/r.out.gdal/export_band.c:474 ../raster/r.null/null.c:334
+#: ../raster/r.colors/stats.c:113 ../raster/r.out.gdal/export_band.c:90
+#: ../raster/r.out.gdal/export_band.c:121
+#: ../raster/r.out.gdal/export_band.c:152
+#: ../raster/r.out.gdal/export_band.c:397
+#: ../raster/r.out.gdal/export_band.c:430
+#: ../raster/r.out.gdal/export_band.c:463 ../raster/r.null/null.c:334
 #: ../raster/r.sunmask/main.c:481 ../raster/r.topidx/file_io.c:69
 #: ../raster/r.bitpattern/main.c:135 ../vector/v.to.rast/support.c:436
 #: ../vector/v.what.rast/main.c:271 ../vector/v.what.rast/main.c:276
@@ -4624,9 +4624,9 @@ msgstr "các cột bị thay đổi từ %d thành %d"
 #: ../ps/ps.map/do_geogrid.c:121 ../ps/ps.map/do_geogrid.c:191
 #: ../ps/ps.map/do_geogrid.c:230 ../ps/ps.map/do_geogrid.c:306
 #: ../ps/ps.map/do_geogrid.c:322 ../ps/ps.map/do_geogrid.c:339
-#: ../ps/ps.map/do_geogrid.c:356 ../ps/ps.map/do_geogrid.c:409
-#: ../ps/ps.map/do_geogrid.c:415 ../ps/ps.map/do_geogrid.c:419
-#: ../ps/ps.map/do_geogrid.c:427 ../ps/ps.map/do_geogrid.c:431
+#: ../ps/ps.map/do_geogrid.c:356 ../ps/ps.map/do_geogrid.c:412
+#: ../ps/ps.map/do_geogrid.c:418 ../ps/ps.map/do_geogrid.c:422
+#: ../ps/ps.map/do_geogrid.c:430 ../ps/ps.map/do_geogrid.c:434
 msgid "Error in pj_do_proj"
 msgstr "Lỗi trong pj_do-proj"
 
@@ -5989,7 +5989,6 @@ msgstr "Dùng khoảng cách tối đa từ điểm quan sát (mét): %f"
 #: ../raster/r.proj/main.c:445 ../raster/r.texture/main.c:356
 #: ../raster/r.texture/main.c:360 ../raster/r.texture/main.c:367
 #: ../raster/r.null/null.c:342 ../raster/r.proj.seg/main.c:513
-#: ../imagery/i.rectify/write.c:56
 #, c-format
 msgid "Failed writing raster map <%s> row %d"
 msgstr "Thất bại khi đang ghi bản đồ raster <%s> hàng %d"
@@ -7705,6 +7704,7 @@ msgid "Target"
 msgstr "vùng"
 
 #: ../raster/r.proj/main.c:178 ../raster/r.proj.seg/main.c:187
+#: ../imagery/i.rectify/main.c:136
 #: ../imagery/i.ortho.photo/i.photo.rectify/main.c:124
 msgid "Interpolation method to use"
 msgstr "Phương pháp nội suy sử dụng"
@@ -7723,6 +7723,7 @@ msgstr "Không thực hiện việc tối ưu hóa kiểu xén vùng"
 
 #: ../raster/r.proj/main.c:210 ../raster/r.statistics/main.c:100
 #: ../raster/r.proj.seg/main.c:238 ../raster/r.neighbors/main.c:226
+#: ../imagery/i.rectify/main.c:156
 #: ../imagery/i.ortho.photo/i.photo.rectify/main.c:149
 #, c-format
 msgid "<%s=%s> unknown %s"
@@ -7850,6 +7851,7 @@ msgid "Input raster map is outside current region"
 msgstr "Bản đồ raster đầu vào nằm ngoài vùng hiện tại"
 
 #: ../raster/r.proj/readcell.c:22 ../raster/r.proj.seg/readcell.c:62
+#: ../imagery/i.rectify/readcell.c:61
 #: ../imagery/i.ortho.photo/i.photo.rectify/readcell.c:70
 msgid "Allocating memory and reading input map..."
 msgstr "Đang cấp phát bộ nhớ và đọc bản đồ đầu vào..."
@@ -7992,7 +7994,7 @@ msgstr ""
 msgid "Interpolation method"
 msgstr "Phương pháp nội suy"
 
-#: ../raster/r.resamp.interp/main.c:97
+#: ../raster/r.resamp.interp/main.c:97 ../imagery/i.topo.corr/main.c:212
 #, c-format
 msgid "Invalid method: %s"
 msgstr "Phương pháp không hợp lệ: %s"
@@ -8344,8 +8346,8 @@ msgstr "Xuất ra TIFF dạng xếp kề (tiled)"
 
 #: ../raster/r.out.tiff/r.out.tiff.c:169 ../raster/r.texture/main.c:240
 #: ../raster/r.null/null.c:157 ../raster/r.topidx/file_io.c:20
-#: ../raster/r.bitpattern/main.c:114 ../imagery/i.rectify/main.c:193
-#: ../imagery/i.rectify/main.c:199
+#: ../raster/r.bitpattern/main.c:114 ../imagery/i.rectify/main.c:294
+#: ../imagery/i.rectify/main.c:300
 #, c-format
 msgid "Unable to read header of raster map <%s>"
 msgstr "Không thể đọc header của bản đồ raster <%s>"
@@ -9556,22 +9558,22 @@ msgstr "Không thể tạo bản đồ raster <%s> bằng trình điều khiển
 #: ../raster/r.out.gdal/main.c:631 ../raster/r.out.gdal/main.c:643
 #: ../raster/r.out.gdal/main.c:656 ../raster/r.out.gdal/main.c:669
 #: ../raster/r.out.gdal/main.c:681 ../raster/r.out.gdal/main.c:694
-#: ../raster/r.out.gdal/export_band.c:508
-#: ../raster/r.out.gdal/export_band.c:520
-#: ../raster/r.out.gdal/export_band.c:533
-#: ../raster/r.out.gdal/export_band.c:546
-#: ../raster/r.out.gdal/export_band.c:558
-#: ../raster/r.out.gdal/export_band.c:571
-#: ../raster/r.out.gdal/export_band.c:585
+#: ../raster/r.out.gdal/export_band.c:498
+#: ../raster/r.out.gdal/export_band.c:510
+#: ../raster/r.out.gdal/export_band.c:523
+#: ../raster/r.out.gdal/export_band.c:536
+#: ../raster/r.out.gdal/export_band.c:548
+#: ../raster/r.out.gdal/export_band.c:561
+#: ../raster/r.out.gdal/export_band.c:575
 msgid "Selected GDAL datatype does not cover data range."
 msgstr "Kiểu dữ liệu GDAL được chọn không bao trùm hết miền dữ liệu."
 
 #: ../raster/r.out.gdal/main.c:632 ../raster/r.out.gdal/main.c:644
 #: ../raster/r.out.gdal/main.c:657 ../raster/r.out.gdal/main.c:670
-#: ../raster/r.out.gdal/export_band.c:509
-#: ../raster/r.out.gdal/export_band.c:521
-#: ../raster/r.out.gdal/export_band.c:534
-#: ../raster/r.out.gdal/export_band.c:547
+#: ../raster/r.out.gdal/export_band.c:499
+#: ../raster/r.out.gdal/export_band.c:511
+#: ../raster/r.out.gdal/export_band.c:524
+#: ../raster/r.out.gdal/export_band.c:537
 #, c-format
 msgid "GDAL datatype: %s, range: %d - %d"
 msgstr "Kiểu dữ liệu GDAL: %s, miền: %d - %d"
@@ -9583,13 +9585,13 @@ msgstr "Kiểu dữ liệu GDAL: %s, miền: %d - %d"
 msgid "Range to be exported: %f - %f"
 msgstr "Miền cần xuất: %f - %f"
 
-#: ../raster/r.out.gdal/main.c:682 ../raster/r.out.gdal/export_band.c:559
+#: ../raster/r.out.gdal/main.c:682 ../raster/r.out.gdal/export_band.c:549
 #, c-format
 msgid "GDAL datatype: %s, range: %u - %u"
 msgstr "Kiểu dữ liệu GDAL: %s, miền: %u - %u"
 
-#: ../raster/r.out.gdal/main.c:695 ../raster/r.out.gdal/export_band.c:572
-#: ../raster/r.out.gdal/export_band.c:586
+#: ../raster/r.out.gdal/main.c:695 ../raster/r.out.gdal/export_band.c:562
+#: ../raster/r.out.gdal/export_band.c:576
 #, c-format
 msgid "GDAL datatype: %s, range: %g - %g"
 msgstr "Kiểu dữ liệu GDAL : %s, miền: %g - %g"
@@ -9639,13 +9641,12 @@ msgstr ""
 msgid "GDAL datatype: %s, valid range: %g - %g"
 msgstr "Kiểu dữ liệu GDAL: %s, miền hợp lệ: %g - %g"
 
-#: ../raster/r.out.gdal/export_band.c:65 ../raster/r.out.gdal/export_band.c:71
-#: ../raster/r.out.gdal/export_band.c:378
-#: ../raster/r.out.gdal/export_band.c:384
+#: ../raster/r.out.gdal/export_band.c:65
+#: ../raster/r.out.gdal/export_band.c:373
 msgid "Unable to allocate buffer for reading raster map"
 msgstr "Không thể cấp phát đệm để đọc bản đồ raster"
 
-#: ../raster/r.out.gdal/export_band.c:193
+#: ../raster/r.out.gdal/export_band.c:186
 #, c-format
 msgid ""
 "Input raster map contains cells with NULL-value (no-data). The value %d will "
@@ -9656,7 +9657,7 @@ msgstr ""
 "d được dùng để biểu thị các giá trị không-dữ-liệu trong bản đồ đầu vào. Bạn "
 "có thể chỉ định giá trị không-dữ-liệu bằng tuỳ chọn %s."
 
-#: ../raster/r.out.gdal/export_band.c:198
+#: ../raster/r.out.gdal/export_band.c:191
 #, c-format
 msgid ""
 "Input raster map contains cells with NULL-value (no-data). The value %f will "
@@ -9667,7 +9668,7 @@ msgstr ""
 "f được dùng để biểu thị các giá trị không có dữ liệu trong bản đồ đầu vào. "
 "Bạn có thể chỉ định giá trị không dữ liệu bằng tuỳ chọn %s."
 
-#: ../raster/r.out.gdal/export_band.c:208
+#: ../raster/r.out.gdal/export_band.c:201
 #, c-format
 msgid ""
 "The default nodata value is present in rasterband <%s> and would lead to "
@@ -9677,7 +9678,7 @@ msgstr ""
 "mất dữ liệu. Vui lòng chỉ định một giá trị không-dữ-liệu tuỳ chọn bằng tham "
 "số %s."
 
-#: ../raster/r.out.gdal/export_band.c:215
+#: ../raster/r.out.gdal/export_band.c:208
 #, c-format
 msgid ""
 "The user given nodata value %g is present in rasterband <%s> and would lead "
@@ -9687,23 +9688,23 @@ msgstr ""
 "sẽ dẫn đến mất dữ liệu. Vui lòng chỉ định một giá trị không-dữ-liệu khác "
 "bằng tham số %s."
 
-#: ../raster/r.out.gdal/export_band.c:259
+#: ../raster/r.out.gdal/export_band.c:254
 msgid "Unable to get raster band"
 msgstr "Không thể lấy bằng raster"
 
-#: ../raster/r.out.gdal/export_band.c:424
-#: ../raster/r.out.gdal/export_band.c:458
-#: ../raster/r.out.gdal/export_band.c:492
+#: ../raster/r.out.gdal/export_band.c:414
+#: ../raster/r.out.gdal/export_band.c:447
+#: ../raster/r.out.gdal/export_band.c:480
 msgid "Unable to write GDAL raster file"
 msgstr "Không thể ghi tập tin raster GDAL"
 
-#: ../raster/r.out.gdal/export_band.c:512
-#: ../raster/r.out.gdal/export_band.c:524
-#: ../raster/r.out.gdal/export_band.c:537
-#: ../raster/r.out.gdal/export_band.c:550
-#: ../raster/r.out.gdal/export_band.c:562
-#: ../raster/r.out.gdal/export_band.c:575
-#: ../raster/r.out.gdal/export_band.c:589
+#: ../raster/r.out.gdal/export_band.c:502
+#: ../raster/r.out.gdal/export_band.c:514
+#: ../raster/r.out.gdal/export_band.c:527
+#: ../raster/r.out.gdal/export_band.c:540
+#: ../raster/r.out.gdal/export_band.c:552
+#: ../raster/r.out.gdal/export_band.c:565
+#: ../raster/r.out.gdal/export_band.c:579
 #, c-format
 msgid "Raster map <%s> range: %g - %g"
 msgstr "Bản đồ raster <%s> miền: %g - %g"
@@ -9825,7 +9826,7 @@ msgstr "Tên của bản đồ độ cao"
 msgid "Name of color file"
 msgstr "Tên của tập tin màu"
 
-#: ../raster/r.out.vrml/main.c:70 ../visualization/nviz2/cmd/args.c:498
+#: ../raster/r.out.vrml/main.c:70 ../visualization/nviz2/cmd/args.c:486
 msgid "Vertical exaggeration"
 msgstr "Độ phóng đại chiều đứng"
 
@@ -10125,8 +10126,6 @@ msgstr "A: Độ cao mặt trời trên đường chân trời, độ"
 
 #: ../raster/r.sunmask/main.c:132 ../raster/r.sunmask/main.c:141
 #: ../raster/r.sunmask/main.c:208 ../raster/r.sunmask/main.c:218
-#: ../visualization/nviz2/cmd/args.c:299 ../visualization/nviz2/cmd/args.c:367
-#: ../visualization/nviz2/cmd/args.c:436
 msgid "Position"
 msgstr "Vị trí"
 
@@ -11596,7 +11595,7 @@ msgstr "Vị trí đầu vào và đầu ra không thể giống nhau"
 msgid "Input map <%s@%s> in location <%s>:"
 msgstr "vào <%s@%s> (vị trí <%s>) ... %s"
 
-#: ../raster/r.proj.seg/readcell.c:56
+#: ../raster/r.proj.seg/readcell.c:56 ../imagery/i.rectify/readcell.c:55
 #: ../imagery/i.ortho.photo/i.photo.rectify/readcell.c:62
 msgid "Unable to open temporary file"
 msgstr "Không thể mở tập tin tạm"
@@ -11606,16 +11605,17 @@ msgid "Error reading input"
 msgstr "Lỗi đọc đầu vào"
 
 #: ../raster/r.proj.seg/readcell.c:89 ../raster/r.proj.seg/readcell.c:128
+#: ../imagery/i.rectify/readcell.c:87 ../imagery/i.rectify/readcell.c:126
 #: ../imagery/i.ortho.photo/i.photo.rectify/readcell.c:98
 msgid "Error writing segment file"
 msgstr "Lỗi ghi tập tin phân đoạn (segment)"
 
-#: ../raster/r.proj.seg/readcell.c:116
+#: ../raster/r.proj.seg/readcell.c:116 ../imagery/i.rectify/readcell.c:114
 #: ../imagery/i.ortho.photo/i.photo.rectify/readcell.c:128
 msgid "Internal error: cache miss on fully-cached map"
 msgstr "Lỗi nội tại: thiếu bộ nhớ đệm cache trong bản đồ được đệm hoàn chỉnh"
 
-#: ../raster/r.proj.seg/readcell.c:125
+#: ../raster/r.proj.seg/readcell.c:125 ../imagery/i.rectify/readcell.c:123
 #: ../imagery/i.ortho.photo/i.photo.rectify/readcell.c:137
 msgid "Error seeking on segment file"
 msgstr "Lỗi khi tìm tập tin phân đoạn"
@@ -12540,7 +12540,7 @@ msgstr ""
 msgid "Distance must be >= 0.0"
 msgstr "'layer' phải > 0 đối với 'cats'."
 
-#: ../raster/r.random.cells/init.c:156
+#: ../raster/r.random.cells/init.c:156 ../imagery/i.topo.corr/main.c:51
 #, fuzzy, c-format
 msgid "<%s> is an illegal name"
 msgstr "[%s] là tên không hợp lệ"
@@ -15801,7 +15801,7 @@ msgid "Flip legend"
 msgstr "Lật chú giải"
 
 #: ../display/d.legend/main.c:269 ../display/d.histogram/main.c:168
-#: ../ps/ps.map/ps_clrtbl.c:35
+#: ../ps/ps.map/ps_clrtbl.c:39
 #, c-format
 msgid "Category file for <%s> not available"
 msgstr "Tập tin phạm trù của <%s> không dùng được"
@@ -15855,7 +15855,7 @@ msgstr "Thông tin miền của <%s> không có"
 msgid "use=%s out of range [%.3f, %.3f] (extend with range= ?)"
 msgstr "use=%s ngoài miền [%.3f,%.3f] (mở rộng với miền= ?)"
 
-#: ../display/d.legend/main.c:890
+#: ../display/d.legend/main.c:901
 msgid "Nothing to draw! (no categories with labels?)"
 msgstr "Không có gì để vẽ! (không có các phạm trù có nhãn?)"
 
@@ -15927,7 +15927,7 @@ msgstr "Tạo thông tin chú giải và gửi đến đầu ra tiêu chuẩn"
 #: ../vector/v.to.rast/support.c:126 ../vector/v.to.rast/support.c:277
 #: ../vector/v.surf.idw/read_sites.c:34 ../vector/v.edit/select.c:506
 #: ../vector/v.info/main.c:208 ../vector/v.extrude/main.c:162
-#: ../vector/v.db.connect/main.c:204 ../vector/v.drape/main.c:271
+#: ../vector/v.db.connect/main.c:208 ../vector/v.drape/main.c:271
 #: ../vector/v.what.rast/main.c:126 ../vector/v.to.3d/trans3.c:46
 #: ../vector/v.to.3d/trans2.c:45 ../doc/vector/v.example/main.c:103
 #, c-format
@@ -16427,7 +16427,7 @@ msgid "'layer' must be > 0"
 msgstr "'layer' phải > 0"
 
 #: ../display/d.thematic.area/main.c:227 ../display/d.what.vect/what.c:446
-#: ../display/d.vect/main.c:510 ../vector/v.db.connect/main.c:171
+#: ../display/d.vect/main.c:510 ../vector/v.db.connect/main.c:175
 #, c-format
 msgid "Database connection not defined"
 msgstr "Kết nối CSDL không được định nghĩa"
@@ -16436,8 +16436,8 @@ msgstr "Kết nối CSDL không được định nghĩa"
 #: ../vector/v.out.svg/main.c:141 ../vector/v.extract/main.c:286
 #: ../vector/v.in.sites/main.c:158 ../vector/v.out.vtk/writeVTK.c:634
 #: ../vector/v.out.ascii/b2a.c:44 ../vector/v.out.ogr/main.c:631
-#: ../vector/v.edit/select.c:513 ../vector/v.db.connect/main.c:208
-#: ../vector/v.db.connect/main.c:274 ../vector/v.drape/main.c:288
+#: ../vector/v.edit/select.c:513 ../vector/v.db.connect/main.c:212
+#: ../vector/v.db.connect/main.c:278 ../vector/v.drape/main.c:288
 #: ../doc/vector/v.example/main.c:123 ../db/base/columns.c:45
 #: ../db/base/describe.c:52 ../db/base/execute.c:61 ../db/base/tables.c:46
 #: ../db/base/createdb.c:43 ../db/base/droptable.c:44
@@ -18019,7 +18019,7 @@ msgstr "Không thể tạo bảng <%s>"
 #: ../vector/v.sample/main.c:219 ../vector/v.net.distance/main.c:212
 #: ../vector/v.net.timetable/main.c:107 ../vector/v.net.flow/main.c:172
 #: ../vector/v.net.path/path.c:113 ../vector/v.net.centrality/main.c:244
-#: ../vector/v.db.connect/main.c:327 ../vector/v.net.components/main.c:151
+#: ../vector/v.db.connect/main.c:331 ../vector/v.net.components/main.c:151
 msgid "Cannot create index"
 msgstr "Không thể tạo chỉ mục"
 
@@ -18330,7 +18330,7 @@ msgstr "Độ chính xác không được lớn hơn 15"
 #: ../vector/v.out.vtk/writeVTK.c:643 ../vector/v.out.ogr/main.c:641
 #: ../vector/v.patch/main.c:139 ../vector/v.patch/main.c:177
 #: ../vector/v.in.ascii/in.c:408 ../vector/v.info/main.c:222
-#: ../vector/v.db.connect/main.c:219 ../vector/v.drape/main.c:299
+#: ../vector/v.db.connect/main.c:223 ../vector/v.drape/main.c:299
 #: ../doc/vector/v.example/main.c:134 ../db/base/describe.c:63
 #, c-format
 msgid "Unable to describe table <%s>"
@@ -20108,12 +20108,12 @@ msgid ""
 msgstr "Bản đồ vec-tơ đầu ra <%s> (trình đ.khiển: <%s>, CSDL: <%s>) đã có"
 
 #: ../vector/v.in.db/main.c:138 ../vector/v.transform/trans_digit.c:93
-#: ../vector/v.db.connect/main.c:280
+#: ../vector/v.db.connect/main.c:284
 #, c-format
 msgid "Missing column <%s> in table <%s>"
 msgstr "Cột <%s> bị thiếu trong bảng <%s>"
 
-#: ../vector/v.in.db/main.c:141 ../vector/v.db.connect/main.c:286
+#: ../vector/v.in.db/main.c:141 ../vector/v.db.connect/main.c:290
 msgid "Data type of key column must be integer"
 msgstr "Kiểu dữ liệu của cột khoá phải là số nguyên"
 
@@ -25948,7 +25948,7 @@ msgstr ""
 msgid "Print topology information only"
 msgstr "Chỉ in ra thông tin tôpô"
 
-#: ../vector/v.info/main.c:199 ../vector/v.db.connect/main.c:160
+#: ../vector/v.info/main.c:199 ../vector/v.db.connect/main.c:161
 #, c-format
 msgid "Database connection for map <%s> is not defined in DB file"
 msgstr "Kết nối CSDL cho bản đồ <%s> không được định nghĩa trong tập tin CSDL"
@@ -26660,12 +26660,12 @@ msgstr "Xóa kết nối cho một lớp nào đó (không xóa bảng)"
 msgid "Unable to modify vector map stored in other mapset"
 msgstr "Không thể chỉnh sửa bản đồ vector lưu trữ trong bộ bản đồ khác"
 
-#: ../vector/v.db.connect/main.c:166
+#: ../vector/v.db.connect/main.c:170
 #, c-format
 msgid "Vector map <%s> is connected by:"
 msgstr "Bản đồ vector <%s> được kết nối bởi:"
 
-#: ../vector/v.db.connect/main.c:194
+#: ../vector/v.db.connect/main.c:198
 #, c-format
 msgid ""
 "layer <%d> table <%s> in database <%s> through driver <%s> with key <%s>\n"
@@ -26673,17 +26673,17 @@ msgstr ""
 "lớp <%d> bảng <%s> trong CSDL <%s> thông qua trình điều khiển <%s> với khoá <"
 "%s>\n"
 
-#: ../vector/v.db.connect/main.c:257
+#: ../vector/v.db.connect/main.c:261
 #, c-format
 msgid "Use -o to overwrite existing link for layer <%d>"
 msgstr "Dùng cờ -o để ghi đè liên kết hiện có cho lớp <%d>"
 
-#: ../vector/v.db.connect/main.c:265 ../vector/v.db.connect/main.c:305
+#: ../vector/v.db.connect/main.c:269 ../vector/v.db.connect/main.c:309
 #, c-format
 msgid "Table <%s> does not exist in database <%s>"
 msgstr "Bảng <%s> không có trong CSDL <%s>"
 
-#: ../vector/v.db.connect/main.c:293 ../vector/v.db.connect/main.c:311
+#: ../vector/v.db.connect/main.c:297 ../vector/v.db.connect/main.c:315
 #, c-format
 msgid ""
 "The table <%s> is now part of vector map <%s> and may be deleted or "
@@ -26692,16 +26692,16 @@ msgstr ""
 "Bảng <%s> bây giờ là một phần của bản đồ vector <%s> và có thể được xóa hoặc "
 "ghi đè bằng các module của GRASS"
 
-#: ../vector/v.db.connect/main.c:332
+#: ../vector/v.db.connect/main.c:336
 #, c-format
 msgid "Cannot grant privileges on table %s"
 msgstr "Không thể cấp các quyền ưu tiên cho bảng %s"
 
-#: ../vector/v.db.connect/main.c:335
+#: ../vector/v.db.connect/main.c:339
 msgid "Select privileges were granted on the table"
 msgstr "Chọn các quyền ưu tiên cấp cho bảng"
 
-#: ../vector/v.db.connect/main.c:342
+#: ../vector/v.db.connect/main.c:346
 msgid ""
 "For defining a new connection you have to specify these parameters: driver, "
 "database, table [, key [, layer]]"
@@ -27278,8 +27278,8 @@ msgstr "Chế độ vẽ"
 #: ../visualization/nviz2/cmd/args.c:223 ../visualization/nviz2/cmd/args.c:234
 #: ../visualization/nviz2/cmd/args.c:245 ../visualization/nviz2/cmd/args.c:257
 #: ../visualization/nviz2/cmd/args.c:269 ../visualization/nviz2/cmd/args.c:278
-#: ../visualization/nviz2/cmd/args.c:290 ../visualization/nviz2/cmd/args.c:300
-#: ../visualization/nviz2/cmd/args.c:520 ../visualization/nviz2/cmd/args.c:532
+#: ../visualization/nviz2/cmd/args.c:288 ../visualization/nviz2/cmd/args.c:508
+#: ../visualization/nviz2/cmd/args.c:520
 msgid "Draw"
 msgstr "Vẽ"
 
@@ -27295,7 +27295,7 @@ msgstr "Độ phân giải thô"
 msgid "Draw style"
 msgstr "Kiểu vẽ"
 
-#: ../visualization/nviz2/cmd/args.c:266 ../visualization/nviz2/cmd/args.c:287
+#: ../visualization/nviz2/cmd/args.c:266
 msgid "Shading"
 msgstr "Đổ bóng"
 
@@ -27303,184 +27303,199 @@ msgstr "Đổ bóng"
 msgid "Wire color"
 msgstr "Màu mắt lưới"
 
-#: ../visualization/nviz2/cmd/args.c:311
+#: ../visualization/nviz2/cmd/args.c:287
+#, fuzzy
+msgid "Surface position"
+msgstr "Phép chiếu nguồn"
+
+#: ../visualization/nviz2/cmd/args.c:299
 msgid "Name of line vector overlay map(s)"
 msgstr "Tên (các) bản đồ chồng vec-tơ kiểu đường"
 
-#: ../visualization/nviz2/cmd/args.c:312 ../visualization/nviz2/cmd/args.c:323
-#: ../visualization/nviz2/cmd/args.c:334 ../visualization/nviz2/cmd/args.c:346
-#: ../visualization/nviz2/cmd/args.c:356 ../visualization/nviz2/cmd/args.c:368
+#: ../visualization/nviz2/cmd/args.c:300 ../visualization/nviz2/cmd/args.c:311
+#: ../visualization/nviz2/cmd/args.c:322 ../visualization/nviz2/cmd/args.c:334
+#: ../visualization/nviz2/cmd/args.c:344 ../visualization/nviz2/cmd/args.c:356
 msgid "Vector lines"
 msgstr "Các đường vec-tơ"
 
-#: ../visualization/nviz2/cmd/args.c:322
+#: ../visualization/nviz2/cmd/args.c:310
 msgid "Vector line width"
 msgstr "Chiều dày đường vec-tơ"
 
-#: ../visualization/nviz2/cmd/args.c:331
+#: ../visualization/nviz2/cmd/args.c:319
 msgid "Vector line color"
 msgstr "Màu đường vec-tơ"
 
-#: ../visualization/nviz2/cmd/args.c:343
+#: ../visualization/nviz2/cmd/args.c:331
 msgid "Vector line display mode"
 msgstr "Chế độ trình bày đường vec-tơ"
 
-#: ../visualization/nviz2/cmd/args.c:355
+#: ../visualization/nviz2/cmd/args.c:343
 msgid "Vector line height"
 msgstr "Độ cao đường vec-tơ"
 
-#: ../visualization/nviz2/cmd/args.c:379
+#: ../visualization/nviz2/cmd/args.c:355
+#, fuzzy
+msgid "Vector lines position"
+msgstr "Chiều dày đường vec-tơ"
+
+#: ../visualization/nviz2/cmd/args.c:367
 msgid "Name of point vector overlay map(s)"
 msgstr "Tên của (các) bản đồ chồng vec-tơ kiểu điểm"
 
-#: ../visualization/nviz2/cmd/args.c:380 ../visualization/nviz2/cmd/args.c:391
-#: ../visualization/nviz2/cmd/args.c:403 ../visualization/nviz2/cmd/args.c:414
-#: ../visualization/nviz2/cmd/args.c:427 ../visualization/nviz2/cmd/args.c:437
+#: ../visualization/nviz2/cmd/args.c:368 ../visualization/nviz2/cmd/args.c:379
+#: ../visualization/nviz2/cmd/args.c:391 ../visualization/nviz2/cmd/args.c:402
+#: ../visualization/nviz2/cmd/args.c:415 ../visualization/nviz2/cmd/args.c:425
 msgid "Vector points"
 msgstr "Các điểm vec-tơ"
 
-#: ../visualization/nviz2/cmd/args.c:390
+#: ../visualization/nviz2/cmd/args.c:378
 msgid "Icon size"
 msgstr "K.thước biểu tượng"
 
-#: ../visualization/nviz2/cmd/args.c:402
+#: ../visualization/nviz2/cmd/args.c:390
 msgid "Icon width"
 msgstr "Chiều rộng biểu tượng"
 
-#: ../visualization/nviz2/cmd/args.c:411
+#: ../visualization/nviz2/cmd/args.c:399
 msgid "Icon color"
 msgstr "Màu biểu tượng"
 
-#: ../visualization/nviz2/cmd/args.c:423
+#: ../visualization/nviz2/cmd/args.c:411
 msgid "Icon marker"
 msgstr "Ký hiệu đánh dấu biểu tượng"
 
-#: ../visualization/nviz2/cmd/args.c:453
+#: ../visualization/nviz2/cmd/args.c:424
+#, fuzzy
+msgid "Vector points position"
+msgstr "Các điểm vec-tơ"
+
+#: ../visualization/nviz2/cmd/args.c:441
 msgid "Viewpoint position (x,y model coordinates)"
 msgstr "Vị trí điểm quan sát (các tọa độ mô hình x,y)"
 
-#: ../visualization/nviz2/cmd/args.c:454 ../visualization/nviz2/cmd/args.c:465
-#: ../visualization/nviz2/cmd/args.c:475 ../visualization/nviz2/cmd/args.c:487
+#: ../visualization/nviz2/cmd/args.c:442 ../visualization/nviz2/cmd/args.c:453
+#: ../visualization/nviz2/cmd/args.c:463 ../visualization/nviz2/cmd/args.c:475
 msgid "Viewpoint"
 msgstr "Điểm quan sát"
 
-#: ../visualization/nviz2/cmd/args.c:464
+#: ../visualization/nviz2/cmd/args.c:452
 msgid "Viewpoint height (in map units)"
 msgstr "Độ cao điểm q.sát (theo đ.vị b.đồ)"
 
-#: ../visualization/nviz2/cmd/args.c:474
+#: ../visualization/nviz2/cmd/args.c:462
 msgid "Viewpoint field of view (in degrees)"
 msgstr "Tầm nhìn của điểm quan sát (độ)"
 
-#: ../visualization/nviz2/cmd/args.c:486
+#: ../visualization/nviz2/cmd/args.c:474
 msgid "Viewpoint twist angle (in degrees)"
 msgstr "Góc xoắn của điểm quan sát (độ)"
 
-#: ../visualization/nviz2/cmd/args.c:507 ../visualization/nviz2/cmd/args.c:542
-#: ../visualization/nviz2/cmd/args.c:554 ../visualization/nviz2/cmd/args.c:564
+#: ../visualization/nviz2/cmd/args.c:495 ../visualization/nviz2/cmd/args.c:530
+#: ../visualization/nviz2/cmd/args.c:542 ../visualization/nviz2/cmd/args.c:552
 #, fuzzy
 msgid "Volumes"
 msgstr "Thể tích"
 
-#: ../visualization/nviz2/cmd/args.c:517
+#: ../visualization/nviz2/cmd/args.c:505
 msgid "Volume draw mode"
 msgstr "Chế độ vẽ thể tích"
 
-#: ../visualization/nviz2/cmd/args.c:529
+#: ../visualization/nviz2/cmd/args.c:517
 msgid "Volume shading"
 msgstr "Đổ bóng thể tích"
 
-#: ../visualization/nviz2/cmd/args.c:541
+#: ../visualization/nviz2/cmd/args.c:529
 msgid "Volume position"
 msgstr "Vị trí thể tích"
 
-#: ../visualization/nviz2/cmd/args.c:552
+#: ../visualization/nviz2/cmd/args.c:540
 msgid "Volume resolution"
 msgstr "Độ phân giải thể tích"
 
-#: ../visualization/nviz2/cmd/args.c:563
+#: ../visualization/nviz2/cmd/args.c:551
 msgid "Isosurface level"
 msgstr "Cấp bề mặt đồng giá trị"
 
-#: ../visualization/nviz2/cmd/args.c:578
+#: ../visualization/nviz2/cmd/args.c:566
 #, fuzzy
 msgid "Light position (x,y,z model coordinates)"
 msgstr "Vị trí điểm quan sát (các tọa độ mô hình x,y)"
 
-#: ../visualization/nviz2/cmd/args.c:579 ../visualization/nviz2/cmd/args.c:585
-#: ../visualization/nviz2/cmd/args.c:594 ../visualization/nviz2/cmd/args.c:604
+#: ../visualization/nviz2/cmd/args.c:567 ../visualization/nviz2/cmd/args.c:573
+#: ../visualization/nviz2/cmd/args.c:582 ../visualization/nviz2/cmd/args.c:592
 #, fuzzy
 msgid "Lighting"
 msgstr "Hiện có"
 
-#: ../visualization/nviz2/cmd/args.c:584
+#: ../visualization/nviz2/cmd/args.c:572
 #, fuzzy
 msgid "Light color"
 msgstr "Màu khi được chọn"
 
-#: ../visualization/nviz2/cmd/args.c:593
+#: ../visualization/nviz2/cmd/args.c:581
 msgid "Light brightness"
 msgstr ""
 
-#: ../visualization/nviz2/cmd/args.c:603
+#: ../visualization/nviz2/cmd/args.c:591
 msgid "Light ambient"
 msgstr ""
 
-#: ../visualization/nviz2/cmd/args.c:615
+#: ../visualization/nviz2/cmd/args.c:603
 msgid ""
 "nw;North-West edge;ne;North-East edge;sw;South-West edge;se;South-East edge"
 msgstr ""
 
-#: ../visualization/nviz2/cmd/args.c:619
+#: ../visualization/nviz2/cmd/args.c:607
 #, fuzzy
 msgid "Fringe edges"
 msgstr "Đang ghi các gờ..."
 
-#: ../visualization/nviz2/cmd/args.c:620 ../visualization/nviz2/cmd/args.c:626
-#: ../visualization/nviz2/cmd/args.c:635
+#: ../visualization/nviz2/cmd/args.c:608 ../visualization/nviz2/cmd/args.c:614
+#: ../visualization/nviz2/cmd/args.c:623
 #, fuzzy
 msgid "Fringe"
 msgstr "Đang định dạng"
 
-#: ../visualization/nviz2/cmd/args.c:625
+#: ../visualization/nviz2/cmd/args.c:613
 #, fuzzy
 msgid "Fringe color"
 msgstr "Màu đường"
 
-#: ../visualization/nviz2/cmd/args.c:634
+#: ../visualization/nviz2/cmd/args.c:622
 #, fuzzy
 msgid "Fringe elevation"
 msgstr "Truy theo độ cao"
 
-#: ../visualization/nviz2/cmd/args.c:679
+#: ../visualization/nviz2/cmd/args.c:667
 #, c-format
 msgid "At least one <%s> or <%s> required"
 msgstr "Cần có ít nhất <%s> hoặc <%s>"
 
-#: ../visualization/nviz2/cmd/args.c:693 ../visualization/nviz2/cmd/args.c:723
+#: ../visualization/nviz2/cmd/args.c:681 ../visualization/nviz2/cmd/args.c:711
+#: ../visualization/nviz2/cmd/args.c:723 ../visualization/nviz2/cmd/args.c:729
 #: ../visualization/nviz2/cmd/args.c:735 ../visualization/nviz2/cmd/args.c:741
-#: ../visualization/nviz2/cmd/args.c:747 ../visualization/nviz2/cmd/args.c:753
 #, c-format
 msgid "Inconsistent number of attributes (<%s/%s> %d: <%s> %d)"
 msgstr "Số lượng thuộc tính không nhất quán (<%s/%s> %d: <%s> %d)"
 
-#: ../visualization/nviz2/cmd/args.c:729
+#: ../visualization/nviz2/cmd/args.c:717
 #, c-format
 msgid "Inconsistent number of attributes (<%s/%s> %d: <%s> %d"
 msgstr "Số lượng thuộc tính không nhất quán (<%s/%s> %d: <%s> %d"
 
-#: ../visualization/nviz2/cmd/args.c:766 ../visualization/nviz2/cmd/args.c:780
-#: ../visualization/nviz2/cmd/args.c:787
+#: ../visualization/nviz2/cmd/args.c:754 ../visualization/nviz2/cmd/args.c:768
+#: ../visualization/nviz2/cmd/args.c:775
 #, c-format
 msgid "Inconsistent number of attributes (<%s> %d: <%s> %d)"
 msgstr "Số lượng thuộc tính không nhất quán (<%s> %d: <%s> %d)"
 
-#: ../visualization/nviz2/cmd/args.c:773
+#: ../visualization/nviz2/cmd/args.c:761
 #, c-format
 msgid "Inconsistent number of attributes (<%s> %d: <%s> %d"
 msgstr "Số lượng thuộc tính không nhất quán (<%s> %d: <%s> %d"
 
-#: ../visualization/nviz2/cmd/args.c:799
+#: ../visualization/nviz2/cmd/args.c:787
 #, c-format
 msgid "Inconsistent number of attributes (<%s/%s> %d: <%s> %d, <%s> %d"
 msgstr "Số lượng thuộc tính không nhất quán (<%s/%s> %d: <%s> %d, <%s> %d"
@@ -27653,28 +27668,34 @@ msgstr "Liệt kệ các định dạng giấy (tên rộng cao trái phải tr�
 msgid "Create EPS (Encapsulated PostScript) instead of PostScript file"
 msgstr "Tạo EPS (Encapsulated PostScript) thay vì tập tin PostScript"
 
-#: ../ps/ps.map/main.c:121
+#: ../ps/ps.map/main.c:120
+msgid ""
+"Describe map-box's position on the page and exit (inches from top-left of "
+"paper)"
+msgstr ""
+
+#: ../ps/ps.map/main.c:126
 msgid ""
 "File containing mapping instructions (or use input=- to enter from keyboard)"
 msgstr ""
 "Tập tin chứa hướng dẫn thành lập bản đồ (hoặc dùng input=- để nhập từ bàn "
 "phím)"
 
-#: ../ps/ps.map/main.c:129
+#: ../ps/ps.map/main.c:134
 msgid "PostScript output file"
 msgstr "Tập tin đầu ra PostScript"
 
-#: ../ps/ps.map/main.c:137
+#: ../ps/ps.map/main.c:142
 msgid "Scale of the output map, e.g. 1:25000 (default: Auto-sized to fit page)"
 msgstr ""
 "Tỷ lệ của bản đồ đầu ra, v.d: 1:25000 (mặc định: Tự động chỉnh k.thước để "
 "khớp vào trang)"
 
-#: ../ps/ps.map/main.c:143
+#: ../ps/ps.map/main.c:148
 msgid "Number of copies to print"
 msgstr "Số lượng bản in"
 
-#: ../ps/ps.map/main.c:238
+#: ../ps/ps.map/main.c:241
 #, c-format
 msgid ""
 "Using <%s> from the command line is depreciated. Please use the <%s> mapping "
@@ -27685,26 +27706,25 @@ msgstr ""
 "hướng dẫn tạo bản đồ. Tham số <%s> sẽ bị loại bỏ trong các phiên bản GRASS "
 "sau này."
 
-#: ../ps/ps.map/main.c:263
-#, c-format
+#: ../ps/ps.map/main.c:267
+#, fuzzy, c-format
 msgid ""
-"\n"
 "ERROR: Required parameter <%s> not set:\n"
-"    (%s).\n"
+"\t(%s)\n"
 msgstr ""
 "\n"
 " LỖI: Tham số cần thiết <%s> không được thiết lập:\n"
 "    (%s).\n"
 
-#: ../ps/ps.map/main.c:274
+#: ../ps/ps.map/main.c:282
 msgid "Current region cannot be set."
 msgstr "Không thể thiết lập vùng hiện tại."
 
-#: ../ps/ps.map/main.c:283
+#: ../ps/ps.map/main.c:291
 msgid "Data exists after final 'end' instruction!"
 msgstr "Dữ liệu vẫn còn sau hướng dẫn 'end' cuối cùng!"
 
-#: ../ps/ps.map/main.c:316
+#: ../ps/ps.map/main.c:324
 msgid ""
 "GRASS environment variable GRASS_VERBOSE is overwritten by VERBOSE mapping "
 "instruction. This mapping instruction is superseded and will be removed in "
@@ -27714,14 +27734,59 @@ msgstr ""
 "VERBOSE. Hướng dẫn tạo bản đồ này đã không còn được dùng và sẽ bị loại bỏ "
 "trong các phiên bản GRASS sau này. Thay vào đó vui lòng dùng --verbose."
 
-#: ../ps/ps.map/main.c:323
+#: ../ps/ps.map/main.c:331
 msgid "Cannot set GRASS_VERBOSE variable."
 msgstr "Không thể thiết lập biến GRASS_VERBOSE."
 
-#: ../ps/ps.map/main.c:725
+#: ../ps/ps.map/main.c:742
 #, c-format
 msgid "PostScript file [%s] successfully written."
 msgstr "Tập tin PostScript [%s] được ghi thành công."
+
+#: ../ps/ps.map/r_colortable.c:61 ../ps/ps.map/r_info.c:48
+#: ../ps/ps.map/r_vlegend.c:49
+#, fuzzy
+msgid "illegal where request"
+msgstr "Yêu cầu xoá không hợp lệ"
+
+#: ../ps/ps.map/r_colortable.c:69
+#, fuzzy
+msgid "illegal width request"
+msgstr "Yêu cầu xoá không hợp lệ"
+
+#: ../ps/ps.map/r_colortable.c:77
+#, fuzzy
+msgid "illegal height request"
+msgstr "Yêu cầu xoá không hợp lệ"
+
+#: ../ps/ps.map/r_colortable.c:94
+#, fuzzy
+msgid "illegal range request"
+msgstr "Yêu cầu xoá không hợp lệ"
+
+#: ../ps/ps.map/r_colortable.c:110
+#, fuzzy
+msgid "illegal columns request"
+msgstr "Yêu cầu xoá không hợp lệ"
+
+#: ../ps/ps.map/r_colortable.c:129
+#, fuzzy
+msgid "Unsupported color request (colortable)"
+msgstr "Định dạng đầu ra không được hỗ trợ"
+
+#: ../ps/ps.map/r_colortable.c:131
+msgid "illegal color request (colortable)"
+msgstr ""
+
+#: ../ps/ps.map/r_colortable.c:158
+#, fuzzy
+msgid "illegal colortabe sub-request"
+msgstr "Yêu cầu xoá không hợp lệ"
+
+#: ../ps/ps.map/r_colortable.c:169
+#, fuzzy
+msgid "No raster selected for colortable!"
+msgstr "Không có bản ghi nào được chọn từ bảng <%s>"
 
 #: ../ps/ps.map/r_vpoints.c:244
 #, c-format
@@ -27741,7 +27806,7 @@ msgstr "Không thể lấy thông tin nhóm"
 msgid "Reading PostScript include file <%s> ..."
 msgstr "Đang đọc tập tin chứa PostScript <%s> ..."
 
-#: ../ps/ps.map/ps_fclrtbl.c:46 ../ps/ps.map/ps_clrtbl.c:31
+#: ../ps/ps.map/ps_fclrtbl.c:46 ../ps/ps.map/ps_clrtbl.c:35
 #, c-format
 msgid "Creating color table for <%s in %s>..."
 msgstr "Đang tạo bảng màu cho <%s trong %s>..."
@@ -27754,17 +27819,17 @@ msgstr "Thông tin miền không có (chạy r.support)"
 msgid "A floating point colortable must contain a range of values"
 msgstr "Một bảng màu kiểu dấu chấm động phải chứa một miền giá trị"
 
-#: ../ps/ps.map/ps_fclrtbl.c:69 ../ps/ps.map/ps_clrtbl.c:40
+#: ../ps/ps.map/ps_fclrtbl.c:69 ../ps/ps.map/ps_clrtbl.c:44
 msgid "Unable to read colors for colorbar"
 msgstr "Không thể đọc màu cho colorbar (cột màu)"
 
 #: ../ps/ps.map/ps_fclrtbl.c:92 ../ps/ps.map/ps_fclrtbl.c:97
-#: ../ps/ps.map/ps_clrtbl.c:65
+#: ../ps/ps.map/ps_clrtbl.c:69
 msgid "Colorbar y location beyond page margins. Adjusting."
 msgstr "Vị trí y của colorbar (cột màu) ở ngoài mép trang. Đang điều chỉnh."
 
 #: ../ps/ps.map/ps_fclrtbl.c:103 ../ps/ps.map/ps_fclrtbl.c:108
-#: ../ps/ps.map/ps_clrtbl.c:71
+#: ../ps/ps.map/ps_clrtbl.c:75
 msgid "Colorbar x location beyond page margins. Adjusting."
 msgstr "Vị trí x của colorbar (cột màu) ở ngoài mép trang. Đang điều chỉnh."
 
@@ -27794,7 +27859,7 @@ msgstr "Đang đọc bản đồ raster <%s trong %s>... "
 msgid "Reading raster maps in group <%s> ..."
 msgstr "Đang đọc bản đồ raster trong nhóm <%s>... "
 
-#: ../ps/ps.map/ps_clrtbl.c:50
+#: ../ps/ps.map/ps_clrtbl.c:54
 #, fuzzy
 msgid ""
 "Your cats/ file is invalid. A cats/ file with categories and labels is "
@@ -27866,10 +27931,50 @@ msgstr "Không thể đọc biểu tượng, dùng biểu tượng mặc định
 msgid "Attribute is of invalid size [%.3f] for category [%d]"
 msgstr "Thuộc tính có kích cỡ không hợp lệ [%.3f] đối với phạm trù [%d]"
 
+#: ../ps/ps.map/r_info.c:67
+#, fuzzy
+msgid "Unsupported color request"
+msgstr "Yêu cầu màu không biết '%s'"
+
+#: ../ps/ps.map/r_info.c:69
+#, fuzzy
+msgid "illegal color request"
+msgstr "Yêu cầu xoá không hợp lệ"
+
+#: ../ps/ps.map/r_info.c:81
+#, fuzzy
+msgid "illegal bgcolor request"
+msgstr "Yêu cầu xoá không hợp lệ"
+
+#: ../ps/ps.map/r_info.c:93 ../ps/ps.map/r_vlegend.c:86
+#, fuzzy
+msgid "illegal border color request"
+msgstr "Yêu cầu xoá không hợp lệ"
+
+#: ../ps/ps.map/r_info.c:103
+#, fuzzy
+msgid "illegal mapinfo sub-request"
+msgstr "Yêu cầu xoá không hợp lệ"
+
+#: ../ps/ps.map/eps.c:19
+#, fuzzy, c-format
+msgid "Can't open eps file <%s>"
+msgstr "Không thể mở tập tin tạm [%s]"
+
+#: ../ps/ps.map/eps.c:38
+#, fuzzy, c-format
+msgid "Bounding box in eps file <%s> was not found"
+msgstr "Không tìm thấy tập tin 3dview <%s>"
+
 #: ../ps/ps.map/ps_outline.c:41
 #, c-format
 msgid "Outlining areas in raster map <%s in %s> ..."
 msgstr "Đang phác thảo các vùng trong bản đồ raster <%s trong %s> ... "
+
+#: ../ps/ps.map/r_vlegend.c:97
+#, fuzzy
+msgid "illegal vlegend sub-request"
+msgstr "Yêu cầu xoá không hợp lệ"
 
 #: ../ps/ps.map/do_vectors.c:34
 #, c-format
@@ -27880,6 +27985,11 @@ msgstr "Đang đọc bản đồ vec-tơ <%s trong %s>..."
 #, c-format
 msgid "Reading vector points file <%s in %s> ..."
 msgstr "Đang đọc tập tin điểm vec-tơ <%s trong %s> ..."
+
+#: ../ps/ps.map/r_plt.c:158
+#, fuzzy
+msgid "Can't open eps file"
+msgstr "Không thể mở tập tin tạm [%s]"
 
 #: ../db/drivers/postgres/fetch.c:172
 msgid "Cannot recognize boolean value"
@@ -28275,7 +28385,7 @@ msgstr ""
 msgid "Test %s."
 msgstr "Kiểu: %s"
 
-#: ../db/base/select.c:88 ../imagery/i.rectify/report.c:16
+#: ../db/base/select.c:88 ../imagery/i.rectify/report.c:10
 #: ../imagery/i.ortho.photo/i.photo.rectify/report.c:10
 msgid "failed"
 msgstr "thất bại"
@@ -31082,11 +31192,11 @@ msgstr "Đang ghi dữ liệu đã chuyển đổi vào tập tin..."
 msgid "Transform successful"
 msgstr "Chuyển đổi thành công"
 
-#: ../imagery/i.rectify/main.c:84
+#: ../imagery/i.rectify/main.c:90
 msgid "imagery, rectify"
 msgstr "ảnh, nắn chỉnh"
 
-#: ../imagery/i.rectify/main.c:86
+#: ../imagery/i.rectify/main.c:92
 msgid ""
 "Rectifies an image by computing a coordinate transformation for each pixel "
 "in the image based on the control points."
@@ -31094,16 +31204,27 @@ msgstr ""
 "Nắn chỉnh một ảnh bằng cách tính toán phép chuyển đổi tọa độ cho từng điểm "
 "ảnh trong ảnh dựa trên các điểm khống chế."
 
-#: ../imagery/i.rectify/main.c:100
+#: ../imagery/i.rectify/main.c:106
 #: ../imagery/i.ortho.photo/i.photo.rectify/main.c:100
 msgid "Output raster map(s) suffix"
 msgstr "Tên đuôi cho (các) bản đồ raster đầu ra"
 
-#: ../imagery/i.rectify/main.c:106
+#: ../imagery/i.rectify/main.c:112
 msgid "Rectification polynom order (1-3)"
 msgstr "Bậc đa thức nắn chỉnh (1-3)"
 
-#: ../imagery/i.rectify/main.c:111
+#: ../imagery/i.rectify/main.c:118
+#: ../imagery/i.ortho.photo/i.photo.rectify/main.c:106
+msgid "Target resolution (ignored if -c flag used)"
+msgstr ""
+
+#: ../imagery/i.rectify/main.c:126
+#: ../imagery/i.ortho.photo/i.photo.rectify/main.c:114
+#, fuzzy
+msgid "Amount of memory to use in MB"
+msgstr "hết bộ nhớ!"
+
+#: ../imagery/i.rectify/main.c:141
 #: ../imagery/i.ortho.photo/i.photo.rectify/main.c:134
 msgid ""
 "Use current region settings in target location (def.=calculate smallest area)"
@@ -31111,53 +31232,92 @@ msgstr ""
 "Dùng các thiết lập vùng hiện tại trong vị trí đích (mặc định=tính diện tích "
 "nhỏ nhất)"
 
-#: ../imagery/i.rectify/main.c:115
+#: ../imagery/i.rectify/main.c:145
 #: ../imagery/i.ortho.photo/i.photo.rectify/main.c:138
 msgid "Rectify all raster maps in group"
 msgstr "Nắn chỉnh tất cả các ảnh trong nhóm"
 
-#: ../imagery/i.rectify/main.c:138
+#: ../imagery/i.rectify/main.c:183
 #, c-format
 msgid "Invalid order (%d); please enter 1 to %d"
 msgstr "Bậc không hợp lệ (%d); vui lòng nhập 1 vào %d"
 
-#: ../imagery/i.rectify/main.c:143
+#: ../imagery/i.rectify/main.c:188
 #, c-format
 msgid "Group <%s> does not exist"
 msgstr "Nhóm <%s> không tồn tại"
 
-#: ../imagery/i.rectify/main.c:146
+#: ../imagery/i.rectify/main.c:191
 #: ../imagery/i.ortho.photo/i.photo.rectify/main.c:184
 #, c-format
 msgid "Group <%s> contains no raster maps; run i.group"
 msgstr "Nhóm <%s> không có bản đồ bản đồ raster; hãy chạy i.group"
 
-#: ../imagery/i.rectify/main.c:205
+#: ../imagery/i.rectify/main.c:266
+#: ../imagery/i.ortho.photo/i.photo.rectify/main.c:278
+#: ../imagery/i.ortho.photo/menu/i.photo.rectify.c:109
+#, fuzzy, c-format
+msgid "Extension <%s> is illegal"
+msgstr "[%s] là tên không hợp lệ"
+
+#: ../imagery/i.rectify/main.c:269
+#: ../imagery/i.ortho.photo/i.photo.rectify/main.c:281
+#: ../imagery/i.ortho.photo/i.photo.rectify/main.c:290
+#, fuzzy
+msgid "The following raster map already exists in"
+msgstr "Bản đồ raster <%s> đã có"
+
+#: ../imagery/i.rectify/main.c:270
+#: ../imagery/i.ortho.photo/i.photo.rectify/main.c:282
+#: ../imagery/i.ortho.photo/i.photo.rectify/main.c:291
+#, c-format
+msgid "target LOCATION %s, MAPSET %s:"
+msgstr ""
+
+#: ../imagery/i.rectify/main.c:273
+#: ../imagery/i.ortho.photo/i.photo.rectify/main.c:285
+#: ../imagery/i.ortho.photo/i.photo.rectify/main.c:294
+#: ../imagery/i.ortho.photo/menu/i.photo.rectify.c:112
+#: ../imagery/i.ortho.photo/menu/i.photo.rectify.c:144
+#, c-format
+msgid "Orthorectification cancelled."
+msgstr ""
+
+#: ../imagery/i.rectify/main.c:288
+#: ../imagery/i.ortho.photo/i.photo.rectify/main.c:309
+msgid "Target resolution must be > 0, ignored"
+msgstr ""
+
+#: ../imagery/i.rectify/main.c:306
 #: ../imagery/i.ortho.photo/i.photo.rectify/main.c:316
 #, c-format
 msgid "Using region: N=%f S=%f, E=%f W=%f"
 msgstr "Sử dụng vùng B=%f N=%f, Đ=%f T=%f"
 
-#: ../imagery/i.rectify/main.c:219
-#, c-format
-msgid ""
-"Input raster map <%s> does not exist in group <%s>.\n"
-" Try:\n"
+#: ../imagery/i.rectify/main.c:321
+#: ../imagery/i.ortho.photo/i.photo.rectify/main.c:381
+#, fuzzy, c-format
+msgid "Input raster map <%s> does not exist in group <%s>."
 msgstr ""
 "Bản đồ raster đầu vào <%s> không có trong nhóm <%s>.\n"
 " Hãy thử:\n"
 
-#: ../imagery/i.rectify/main.c:225
+#: ../imagery/i.rectify/main.c:323
+#: ../imagery/i.ortho.photo/i.photo.rectify/main.c:383
+msgid "Try:"
+msgstr ""
+
+#: ../imagery/i.rectify/main.c:328
 #: ../imagery/i.ortho.photo/i.photo.rectify/main.c:388
 msgid "Exit!"
 msgstr "Thoát!"
 
-#: ../imagery/i.rectify/get_wind.c:46
+#: ../imagery/i.rectify/get_wind.c:113
 #, c-format
 msgid "Region N=%f S=%f E=%f W=%f"
 msgstr "Vùng B=%f N=%f Đ=%f T=%f"
 
-#: ../imagery/i.rectify/get_wind.c:48
+#: ../imagery/i.rectify/get_wind.c:115
 #, c-format
 msgid "Resolution EW=%f NS=%f"
 msgstr "Độ phân giải ĐT=%f BN=%f"
@@ -31203,59 +31363,50 @@ msgstr "Không tìm thấy vị trí đích <%s>"
 msgid "Please run i.target for group."
 msgstr "Vui lòng chạy i.target cho nhóm."
 
-#: ../imagery/i.rectify/report.c:12
+#: ../imagery/i.rectify/report.c:10
+#: ../imagery/i.ortho.photo/i.photo.rectify/report.c:10
+msgid "complete"
+msgstr "hoàn tất"
+
+#: ../imagery/i.rectify/report.c:20
+#, c-format
+msgid "%d rows, %d cols (%ld cells) completed in"
+msgstr "%d hàng, %d cột (%ld ô) hoàn tất trong"
+
+#: ../imagery/i.rectify/report.c:23
+#, c-format
+msgid "%d:%02d:%02ld hours"
+msgstr ""
+
+#: ../imagery/i.rectify/report.c:25
+#, c-format
+msgid "%d:%02ld minutes"
+msgstr ""
+
+#: ../imagery/i.rectify/report.c:27
+#, c-format
+msgid "%.1f cells per minute"
+msgstr "%.1f ô trên phút"
+
+#: ../imagery/i.rectify/rectify.c:43
 #: ../imagery/i.ortho.photo/i.photo.rectify/rectify.c:46
 #, c-format
 msgid "Rectify <%s@%s> (location <%s>)"
 msgstr "Nắn chỉnh <%s@%s> (vị trí <%s>)"
 
-#: ../imagery/i.rectify/report.c:15
-#, c-format
-msgid "into  <%s@%s> (location <%s>) ... %s"
+#: ../imagery/i.rectify/rectify.c:47
+#: ../imagery/i.ortho.photo/i.photo.rectify/rectify.c:50
+#, fuzzy, c-format
+msgid "into  <%s@%s> (location <%s>) ..."
 msgstr "vào <%s@%s> (vị trí <%s>) ... %s"
 
-#: ../imagery/i.rectify/report.c:16
-#: ../imagery/i.ortho.photo/i.photo.rectify/report.c:10
-msgid "complete"
-msgstr "hoàn tất"
-
-#: ../imagery/i.rectify/report.c:27
-#, c-format
-msgid "%d rows, %d cols (%ld cells) completed in"
-msgstr "%d hàng, %d cột (%ld ô) hoàn tất trong"
-
-#: ../imagery/i.rectify/report.c:34
-#, c-format
-msgid "%.1f cells per minute"
-msgstr "%.1f ô trên phút"
-
-#: ../imagery/i.rectify/report.c:47
-#, fuzzy
-msgid "data compression required an additional"
-msgstr "việc nén dữ liệu cần một"
-
-#: ../imagery/i.rectify/write.c:27
-msgid "Error while writing to temp file"
-msgstr "Lỗi khi đang ghi tập tin tạm"
-
-#: ../imagery/i.rectify/write.c:54
-#, c-format
-msgid "Error writing row %d"
-msgstr "Lỗi khi đang ghi hàng thứ %d"
-
-#: ../imagery/i.rectify/exec.c:54
-#: ../imagery/i.ortho.photo/i.photo.rectify/exec.c:72
-#, c-format
-msgid "Rectified input raster map <%s> will be saved as <%s>"
-msgstr "Bản đồ raster đầu vào đã được nắn chỉnh <%s> sẽ được lưu thành <%s>"
-
-#: ../imagery/i.rectify/rectify.c:94
+#: ../imagery/i.rectify/rectify.c:109
 #: ../imagery/i.ortho.photo/i.photo.rectify/rectify.c:131
 #, c-format
 msgid "Raster map <%s@%s>: projection don't match current settings"
 msgstr "Bản đồ raster <%s@%s>: phép chiếu không khớp với thiết lập hiện tại"
 
-#: ../imagery/i.rectify/rectify.c:100
+#: ../imagery/i.rectify/rectify.c:115
 #: ../imagery/i.ortho.photo/i.photo.rectify/rectify.c:137
 #, c-format
 msgid "Raster map <%s@%s>: zone don't match current settings"
@@ -31745,15 +31896,6 @@ msgid ""
 "transformation matrix."
 msgstr ""
 
-#: ../imagery/i.ortho.photo/i.photo.rectify/main.c:106
-msgid "Target resolution (ignored if -c flag used)"
-msgstr ""
-
-#: ../imagery/i.ortho.photo/i.photo.rectify/main.c:114
-#, fuzzy
-msgid "Amount of memory to use in MB"
-msgstr "hết bộ nhớ!"
-
 #: ../imagery/i.ortho.photo/i.photo.rectify/main.c:129
 msgid "Raster map with camera angle relative to ground surface"
 msgstr ""
@@ -31778,51 +31920,10 @@ msgstr "Định dạng tồi trong tập tin camera dùng cho nhóm [%s]"
 msgid "Bad format in initial exposure station file for group <%s>"
 msgstr "Định dạng tồi trong tập tin trạm phơi ban đầu dùng cho nhóm [%s]"
 
-#: ../imagery/i.ortho.photo/i.photo.rectify/main.c:278
-#: ../imagery/i.ortho.photo/menu/i.photo.rectify.c:109
-#, fuzzy, c-format
-msgid "Extension <%s> is illegal"
-msgstr "[%s] là tên không hợp lệ"
-
-#: ../imagery/i.ortho.photo/i.photo.rectify/main.c:281
-#: ../imagery/i.ortho.photo/i.photo.rectify/main.c:290
-#, fuzzy
-msgid "The following raster map already exists in"
-msgstr "Bản đồ raster <%s> đã có"
-
-#: ../imagery/i.ortho.photo/i.photo.rectify/main.c:282
-#: ../imagery/i.ortho.photo/i.photo.rectify/main.c:291
-#, c-format
-msgid "target LOCATION %s, MAPSET %s:"
-msgstr ""
-
-#: ../imagery/i.ortho.photo/i.photo.rectify/main.c:285
-#: ../imagery/i.ortho.photo/i.photo.rectify/main.c:294
-#: ../imagery/i.ortho.photo/menu/i.photo.rectify.c:112
-#: ../imagery/i.ortho.photo/menu/i.photo.rectify.c:144
-#, c-format
-msgid "Orthorectification cancelled."
-msgstr ""
-
-#: ../imagery/i.ortho.photo/i.photo.rectify/main.c:309
-msgid "Target resolution must be > 0, ignored"
-msgstr ""
-
 #: ../imagery/i.ortho.photo/i.photo.rectify/main.c:324
 #, fuzzy, c-format
 msgid "No target elevation model selected for group <%s>"
 msgstr "Không có tập tin tham chiếu camera được chọn cho nhóm [%s]"
-
-#: ../imagery/i.ortho.photo/i.photo.rectify/main.c:381
-#, fuzzy, c-format
-msgid "Input raster map <%s> does not exist in group <%s>."
-msgstr ""
-"Bản đồ raster đầu vào <%s> không có trong nhóm <%s>.\n"
-" Hãy thử:\n"
-
-#: ../imagery/i.ortho.photo/i.photo.rectify/main.c:383
-msgid "Try:"
-msgstr ""
 
 #: ../imagery/i.ortho.photo/i.photo.rectify/readcell.c:140
 #, fuzzy
@@ -31922,10 +32023,10 @@ msgstr "%d hàng, %d cột (%ld ô) hoàn tất trong"
 msgid " %.1f cells per minute\n"
 msgstr "%.1f ô trên phút"
 
-#: ../imagery/i.ortho.photo/i.photo.rectify/rectify.c:50
-#, fuzzy, c-format
-msgid "into  <%s@%s> (location <%s>) ..."
-msgstr "vào <%s@%s> (vị trí <%s>) ... %s"
+#: ../imagery/i.ortho.photo/i.photo.rectify/exec.c:72
+#, c-format
+msgid "Rectified input raster map <%s> will be saved as <%s>"
+msgstr "Bản đồ raster đầu vào đã được nắn chỉnh <%s> sẽ được lưu thành <%s>"
 
 #: ../imagery/i.ortho.photo/i.photo.rectify/rectify.c:84
 #, fuzzy, c-format
@@ -32821,6 +32922,130 @@ msgstr ""
 "  HOẶC\n"
 " nhập thủ công các biến vào"
 
+#: ../imagery/i.topo.corr/main.c:37
+#, fuzzy, c-format
+msgid "Cannot open file [%s] in mapset [%s]"
+msgstr "Không thể mở tập tin nhãn <%s> trong bộ bản đồ <%s>"
+
+#: ../imagery/i.topo.corr/main.c:57
+#, fuzzy, c-format
+msgid "Cannot create file <%s> in mapset <%s>"
+msgstr "Không thể mở tập tin nhãn <%s> trong bộ bản đồ <%s>"
+
+#: ../imagery/i.topo.corr/main.c:84
+msgid "Topografic correction of reflectance"
+msgstr ""
+
+#: ../imagery/i.topo.corr/main.c:86
+msgid "Topographic correction, Cosine, Minnaert, C-Factor, Percent"
+msgstr ""
+
+#: ../imagery/i.topo.corr/main.c:91
+#, fuzzy
+msgid "input"
+msgstr "Đầu vào"
+
+#: ../imagery/i.topo.corr/main.c:95
+#, fuzzy
+msgid "input,cell,raster"
+msgstr "Bản đồ raster đầu vào"
+
+#: ../imagery/i.topo.corr/main.c:97
+msgid "List of reflectance band maps to correct topographically"
+msgstr ""
+
+#: ../imagery/i.topo.corr/main.c:100
+#, fuzzy
+msgid "output"
+msgstr "Đầu ra"
+
+#: ../imagery/i.topo.corr/main.c:103
+#, fuzzy
+msgid "output,cell,raster"
+msgstr "Bản đồ raster đầu ra"
+
+#: ../imagery/i.topo.corr/main.c:105
+msgid "File name of output (flag -i) or prefix of output files"
+msgstr ""
+
+#: ../imagery/i.topo.corr/main.c:108
+#, fuzzy
+msgid "basemap"
+msgstr "Loại bỏ các bản đồ cơ sở"
+
+#: ../imagery/i.topo.corr/main.c:111
+msgid "base,cell,raster"
+msgstr ""
+
+#: ../imagery/i.topo.corr/main.c:112
+msgid "Base map for analysis (elevation or ilumination)"
+msgstr ""
+
+#: ../imagery/i.topo.corr/main.c:115
+msgid "zenith"
+msgstr ""
+
+#: ../imagery/i.topo.corr/main.c:118
+msgid "zenith,float"
+msgstr ""
+
+#: ../imagery/i.topo.corr/main.c:119
+#, fuzzy
+msgid "Solar zenith in degrees"
+msgstr "Góc trục lớn tính theo độ"
+
+#: ../imagery/i.topo.corr/main.c:122
+msgid "azimuth"
+msgstr ""
+
+#: ../imagery/i.topo.corr/main.c:125
+msgid "azimuth,float"
+msgstr ""
+
+#: ../imagery/i.topo.corr/main.c:126
+msgid "Solar azimuth in degrees (only if flag -i)"
+msgstr ""
+
+#: ../imagery/i.topo.corr/main.c:129
+#, fuzzy
+msgid "method"
+msgstr "Phương pháp không biết"
+
+#: ../imagery/i.topo.corr/main.c:133
+#, fuzzy
+msgid "topographic correction method"
+msgstr "Phương pháp nội suy"
+
+#: ../imagery/i.topo.corr/main.c:134
+msgid "Topographic correction method"
+msgstr ""
+
+#: ../imagery/i.topo.corr/main.c:139
+msgid "To output sun ilumination terrain model"
+msgstr ""
+
+#: ../imagery/i.topo.corr/main.c:146
+msgid "Solar azimuth is necessary to calculate ilumination terrain model"
+msgstr ""
+
+#: ../imagery/i.topo.corr/main.c:150
+msgid "Reflectance maps are necessary to make topographic correction"
+msgstr ""
+
+#: ../imagery/i.topo.corr/main.c:182
+#, fuzzy
+msgid "Elevation file of unknown type"
+msgstr "Tọa độ độ cao của một điểm trên mặt."
+
+#: ../imagery/i.topo.corr/main.c:216
+msgid "Illumination model is of CELL type"
+msgstr ""
+
+#: ../imagery/i.topo.corr/main.c:223
+#, c-format
+msgid "Reflectance of <%s> is not of DCELL type - ignored."
+msgstr ""
+
 #: ../imagery/i.maxlik/main.c:63
 msgid "imagery, classification, MLC"
 msgstr "ảnh, phân loại, MLC"
@@ -33082,6 +33307,26 @@ msgstr "Lỗi khi đang loại bỏ bản đồ cell MASK cũ."
 msgid "Can't mark another point.  Only %d points allowed.  Sorry."
 msgstr ""
 "Không thể đánh dấu một điểm khác. Chỉ có %d điểm được chấp nhận. Xin lỗi."
+
+#~ msgid ""
+#~ "Input raster map <%s> does not exist in group <%s>.\n"
+#~ " Try:\n"
+#~ msgstr ""
+#~ "Bản đồ raster đầu vào <%s> không có trong nhóm <%s>.\n"
+#~ " Hãy thử:\n"
+
+#~ msgid "into  <%s@%s> (location <%s>) ... %s"
+#~ msgstr "vào <%s@%s> (vị trí <%s>) ... %s"
+
+#, fuzzy
+#~ msgid "data compression required an additional"
+#~ msgstr "việc nén dữ liệu cần một"
+
+#~ msgid "Error while writing to temp file"
+#~ msgstr "Lỗi khi đang ghi tập tin tạm"
+
+#~ msgid "Error writing row %d"
+#~ msgstr "Lỗi khi đang ghi hàng thứ %d"
 
 #~ msgid "general"
 #~ msgstr "tổng quát"
@@ -34486,9 +34731,6 @@ msgstr ""
 #~ msgid "imagery subgroup"
 #~ msgstr "Nhóm ảnh phụ"
 
-#~ msgid "output raster map"
-#~ msgstr "Bản đồ raster đầu ra"
-
 #, fuzzy
 #~ msgid "Name of input raster map(s)"
 #~ msgstr "Tên bản đồ raster đầu vào"
@@ -34903,10 +35145,6 @@ msgstr ""
 
 #~ msgid "cannot read head of %s"
 #~ msgstr "không thể đọc header của %s"
-
-#, fuzzy
-#~ msgid "input raster map"
-#~ msgstr "Bản đồ raster đầu vào"
 
 #, fuzzy
 #~ msgid "Illegal file name: %s"
@@ -36249,9 +36487,6 @@ msgstr ""
 #~ msgstr ""
 #~ "Cột (số thứ tự) dùng làm tọa độ z (cột đầu tiên là 1) cho chế độ các "
 #~ "điểm. Nếu là 0, cột z không được dùng."
-
-#~ msgid "Can't open temp file %s"
-#~ msgstr "Không thể mở tập tin tạm [%s]"
 
 #~ msgid "Unknown keyword [%s] in vector head."
 #~ msgstr "Từ khóa [%s] không biết trong header của vector."

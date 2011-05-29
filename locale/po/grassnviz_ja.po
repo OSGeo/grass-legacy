@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: grassnviz_ja\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-04-23 15:34+0200\n"
+"POT-Creation-Date: 2011-05-29 11:07+0200\n"
 "PO-Revision-Date: 2011-01-06 23:39+0100\n"
 "Last-Translator: Markus Neteler <neteler osgeo.org>\n"
 "Language-Team: Japanese <grass-translations@lists.osgeo.org>\n"
@@ -66,7 +66,7 @@ msgstr "削除"
 #: ../visualization/nviz/scripts/panel_tst.tcl:53
 #: ../visualization/nviz/scripts/panel_pos.tcl:125
 #: ../visualization/nviz/scripts/panel_scale.tcl:94
-#: ../visualization/nviz/scripts/nviz2.2_script:832
+#: ../visualization/nviz/scripts/nviz2.2_script:819
 #: ../visualization/nviz/scripts/panel_site.tcl:114
 #: ../visualization/nviz/scripts/panel_lights.tcl:83
 #: ../visualization/nviz/scripts/panel_label.tcl:96
@@ -224,7 +224,7 @@ msgstr "完了"
 #: ../visualization/nviz/scripts/attIsosurfPopup.tcl:410
 #: ../visualization/nviz/scripts/attIsosurfPopup.tcl:456
 #: ../visualization/nviz/scripts/wirecolorPopup.tcl:83
-#: ../visualization/nviz/scripts/nviz2.2_script:937
+#: ../visualization/nviz/scripts/nviz2.2_script:924
 #: ../visualization/nviz/scripts/mapBrowser.tcl:229
 #: ../visualization/nviz/scripts/script_get_line:19
 msgid "Cancel"
@@ -256,8 +256,8 @@ msgstr ""
 #: ../visualization/nviz/scripts/panel_rquery.tcl:64
 #: ../visualization/nviz/scripts/panel_surf.tcl:725
 #: ../visualization/nviz/scripts/panel_vol.tcl:1169
-#: ../visualization/nviz/scripts/nviz2.2_script:390
-#: ../visualization/nviz/scripts/nviz2.2_script:936
+#: ../visualization/nviz/scripts/nviz2.2_script:377
+#: ../visualization/nviz/scripts/nviz2.2_script:923
 #: ../visualization/nviz/scripts/panel_lights.tcl:81
 #: ../visualization/nviz/scripts/site_attr.tcl:483
 #: ../visualization/nviz/scripts/panel_cutplane.tcl:182
@@ -612,7 +612,7 @@ msgstr ""
 
 #: ../visualization/nviz/scripts/panel_kanimator.tcl:230
 #: ../visualization/nviz/scripts/panel_kanimator.tcl:1249
-#: ../visualization/nviz/scripts/nviz2.2_script:427
+#: ../visualization/nviz/scripts/nviz2.2_script:414
 msgid "On"
 msgstr ""
 
@@ -643,7 +643,7 @@ msgstr ""
 #: ../visualization/nviz/scripts/panel_animation.tcl:577
 #: ../visualization/nviz/scripts/panel_animation.tcl:755
 #: ../visualization/nviz/scripts/panel_animation.tcl:801
-#: ../visualization/nviz/scripts/nviz2.2_script:937
+#: ../visualization/nviz/scripts/nviz2.2_script:924
 #: ../visualization/nviz/scripts/script_get_line:18
 msgid "Ok"
 msgstr "OK"
@@ -672,7 +672,7 @@ msgstr ""
 #: ../visualization/nviz/scripts/panel_animation.tcl:644
 #: ../visualization/nviz/scripts/panel_animation.tcl:755
 #: ../visualization/nviz/scripts/panel_animation.tcl:801
-#: ../visualization/nviz/scripts/nviz2.2_script:1067
+#: ../visualization/nviz/scripts/nviz2.2_script:1054
 #: ../visualization/nviz/scripts/script_play:32
 msgid "Dismiss"
 msgstr ""
@@ -796,7 +796,7 @@ msgid "Warning - Current animation has not been saved, continue?"
 msgstr ""
 
 #: ../visualization/nviz/scripts/panel_kanimator.tcl:1923
-#: ../visualization/nviz/scripts/nviz2.2_script:1066
+#: ../visualization/nviz/scripts/nviz2.2_script:1053
 #: ../visualization/nviz/scripts/script_play:30
 msgid "File Error"
 msgstr ""
@@ -847,8 +847,8 @@ msgid "Current fields have not been saved, really load new fields?"
 msgstr ""
 
 #: ../visualization/nviz/scripts/script_file_tools:126
-#: ../visualization/nviz/scripts/nviz2.2_script:884
-#: ../visualization/nviz/scripts/nviz2.2_script:1038
+#: ../visualization/nviz/scripts/nviz2.2_script:871
+#: ../visualization/nviz/scripts/nviz2.2_script:1025
 #, tcl-format
 msgid "Error while opening file: %s"
 msgstr ""
@@ -1594,41 +1594,41 @@ msgstr ""
 msgid "Position Volume"
 msgstr ""
 
-#: ../visualization/nviz/scripts/config.tcl:111
+#: ../visualization/nviz/scripts/config.tcl:125
 msgid "x"
 msgstr ""
 
-#: ../visualization/nviz/scripts/config.tcl:111
+#: ../visualization/nviz/scripts/config.tcl:125
 #: ../visualization/nviz/scripts/site_attr.tcl:77
 msgid "sphere"
 msgstr ""
 
-#: ../visualization/nviz/scripts/config.tcl:111
+#: ../visualization/nviz/scripts/config.tcl:125
 #: ../visualization/nviz/scripts/site_attr.tcl:77
 msgid "diamond"
 msgstr ""
 
-#: ../visualization/nviz/scripts/config.tcl:111
+#: ../visualization/nviz/scripts/config.tcl:125
 #: ../visualization/nviz/scripts/site_attr.tcl:77
 msgid "cube"
 msgstr ""
 
-#: ../visualization/nviz/scripts/config.tcl:111
+#: ../visualization/nviz/scripts/config.tcl:125
 #: ../visualization/nviz/scripts/site_attr.tcl:77
 msgid "box"
 msgstr ""
 
-#: ../visualization/nviz/scripts/config.tcl:111
+#: ../visualization/nviz/scripts/config.tcl:125
 #: ../visualization/nviz/scripts/site_attr.tcl:77
 msgid "gyro"
 msgstr ""
 
-#: ../visualization/nviz/scripts/config.tcl:111
+#: ../visualization/nviz/scripts/config.tcl:125
 #: ../visualization/nviz/scripts/site_attr.tcl:77
 msgid "aster"
 msgstr ""
 
-#: ../visualization/nviz/scripts/config.tcl:111
+#: ../visualization/nviz/scripts/config.tcl:125
 #: ../visualization/nviz/scripts/site_attr.tcl:77
 msgid "histogram"
 msgstr ""
@@ -1835,7 +1835,7 @@ msgid "Bearing"
 msgstr ""
 
 #: ../visualization/nviz/scripts/panel_pos.tcl:68
-#: ../visualization/nviz/scripts/nviz2.2_script:816
+#: ../visualization/nviz/scripts/nviz2.2_script:803
 msgid "Height"
 msgstr ""
 
@@ -1888,133 +1888,133 @@ msgstr ""
 msgid "Place scale"
 msgstr ""
 
-#: ../visualization/nviz/scripts/nviz2.2_script:210
+#: ../visualization/nviz/scripts/nviz2.2_script:197
 msgid "Show Panels"
 msgstr ""
 
-#: ../visualization/nviz/scripts/nviz2.2_script:217
-#: ../visualization/nviz/scripts/nviz2.2_script:340
-#: ../visualization/nviz/scripts/nviz2.2_script:699
+#: ../visualization/nviz/scripts/nviz2.2_script:204
+#: ../visualization/nviz/scripts/nviz2.2_script:327
+#: ../visualization/nviz/scripts/nviz2.2_script:686
 msgid "Hide Panels"
 msgstr ""
 
-#: ../visualization/nviz/scripts/nviz2.2_script:259
+#: ../visualization/nviz/scripts/nviz2.2_script:246
 msgid "Start"
 msgstr ""
 
-#: ../visualization/nviz/scripts/nviz2.2_script:280
-#: ../visualization/nviz/scripts/nviz2.2_script:287
-#: ../visualization/nviz/scripts/nviz2.2_script:294
-#: ../visualization/nviz/scripts/nviz2.2_script:302
+#: ../visualization/nviz/scripts/nviz2.2_script:267
+#: ../visualization/nviz/scripts/nviz2.2_script:274
+#: ../visualization/nviz/scripts/nviz2.2_script:281
+#: ../visualization/nviz/scripts/nviz2.2_script:289
 msgid "Togl canvas initialization failed. Is Your OpenGL working fine?"
 msgstr ""
 
-#: ../visualization/nviz/scripts/nviz2.2_script:362
+#: ../visualization/nviz/scripts/nviz2.2_script:349
 msgid "Please Wait..."
 msgstr ""
 
-#: ../visualization/nviz/scripts/nviz2.2_script:368
+#: ../visualization/nviz/scripts/nviz2.2_script:355
 msgid "Help"
 msgstr "ヘルプ"
 
-#: ../visualization/nviz/scripts/nviz2.2_script:369
+#: ../visualization/nviz/scripts/nviz2.2_script:356
 msgid "NVIZ Help"
 msgstr ""
 
-#: ../visualization/nviz/scripts/nviz2.2_script:369
+#: ../visualization/nviz/scripts/nviz2.2_script:356
 msgid "About NVIZ"
 msgstr ""
 
-#: ../visualization/nviz/scripts/nviz2.2_script:369
+#: ../visualization/nviz/scripts/nviz2.2_script:356
 msgid "NVIZ - Bugs / ToDo"
 msgstr ""
 
-#: ../visualization/nviz/scripts/nviz2.2_script:381
+#: ../visualization/nviz/scripts/nviz2.2_script:368
 msgid "File"
 msgstr ""
 
-#: ../visualization/nviz/scripts/nviz2.2_script:382
+#: ../visualization/nviz/scripts/nviz2.2_script:369
 msgid "Load State"
 msgstr ""
 
-#: ../visualization/nviz/scripts/nviz2.2_script:382
+#: ../visualization/nviz/scripts/nviz2.2_script:369
 msgid "Save State"
 msgstr ""
 
-#: ../visualization/nviz/scripts/nviz2.2_script:384
+#: ../visualization/nviz/scripts/nviz2.2_script:371
 msgid "Set Canvas Size"
 msgstr ""
 
-#: ../visualization/nviz/scripts/nviz2.2_script:386
+#: ../visualization/nviz/scripts/nviz2.2_script:373
 msgid "Load 3d Settings"
 msgstr ""
 
-#: ../visualization/nviz/scripts/nviz2.2_script:386
+#: ../visualization/nviz/scripts/nviz2.2_script:373
 msgid "Save 3d Settings"
 msgstr ""
 
-#: ../visualization/nviz/scripts/nviz2.2_script:388
+#: ../visualization/nviz/scripts/nviz2.2_script:375
 msgid "Save image as..."
 msgstr ""
 
-#: ../visualization/nviz/scripts/nviz2.2_script:390
+#: ../visualization/nviz/scripts/nviz2.2_script:377
 msgid "Quit"
 msgstr "終了"
 
-#: ../visualization/nviz/scripts/nviz2.2_script:423
+#: ../visualization/nviz/scripts/nviz2.2_script:410
 msgid "Scripting"
 msgstr ""
 
-#: ../visualization/nviz/scripts/nviz2.2_script:433
+#: ../visualization/nviz/scripts/nviz2.2_script:420
 msgid "Create New Scriptfile"
 msgstr ""
 
-#: ../visualization/nviz/scripts/nviz2.2_script:436
+#: ../visualization/nviz/scripts/nviz2.2_script:423
 msgid "Open and Play Script"
 msgstr ""
 
-#: ../visualization/nviz/scripts/nviz2.2_script:439
+#: ../visualization/nviz/scripts/nviz2.2_script:426
 msgid "Close Script"
 msgstr ""
 
-#: ../visualization/nviz/scripts/nviz2.2_script:444
+#: ../visualization/nviz/scripts/nviz2.2_script:431
 #: ../visualization/nviz/scripts/script_get_line:15
 msgid "Add Script Line"
 msgstr ""
 
-#: ../visualization/nviz/scripts/nviz2.2_script:447
+#: ../visualization/nviz/scripts/nviz2.2_script:434
 msgid "Add Script Command"
 msgstr ""
 
-#: ../visualization/nviz/scripts/nviz2.2_script:452
+#: ../visualization/nviz/scripts/nviz2.2_script:439
 msgid "Script Tools"
 msgstr ""
 
-#: ../visualization/nviz/scripts/nviz2.2_script:497
+#: ../visualization/nviz/scripts/nviz2.2_script:484
 msgid "PPM Image"
 msgstr ""
 
-#: ../visualization/nviz/scripts/nviz2.2_script:499
+#: ../visualization/nviz/scripts/nviz2.2_script:486
 msgid "TIFF Image"
 msgstr ""
 
-#: ../visualization/nviz/scripts/nviz2.2_script:513
+#: ../visualization/nviz/scripts/nviz2.2_script:500
 msgid "Maximum Resolution PPM"
 msgstr ""
 
-#: ../visualization/nviz/scripts/nviz2.2_script:811
+#: ../visualization/nviz/scripts/nviz2.2_script:798
 msgid "Set Size of Display Canvas"
 msgstr ""
 
-#: ../visualization/nviz/scripts/nviz2.2_script:814
+#: ../visualization/nviz/scripts/nviz2.2_script:801
 msgid "Width"
 msgstr ""
 
-#: ../visualization/nviz/scripts/nviz2.2_script:822
+#: ../visualization/nviz/scripts/nviz2.2_script:809
 msgid "Unconstrained"
 msgstr ""
 
-#: ../visualization/nviz/scripts/nviz2.2_script:937
+#: ../visualization/nviz/scripts/nviz2.2_script:924
 msgid "Really reset Nviz?"
 msgstr ""
 
