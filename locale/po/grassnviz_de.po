@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: grassnviz_de\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-04-23 15:34+0200\n"
+"POT-Creation-Date: 2011-05-29 11:07+0200\n"
 "PO-Revision-Date: 2011-05-14 22:47+0100\n"
 "Last-Translator: Helmut Kudrnovsky <hellik@web.de>\n"
 "Language-Team: Deutsch <grass-translations@lists.osgeo.org>\n"
@@ -66,7 +66,7 @@ msgstr "Löschen"
 #: ../visualization/nviz/scripts/panel_tst.tcl:53
 #: ../visualization/nviz/scripts/panel_pos.tcl:125
 #: ../visualization/nviz/scripts/panel_scale.tcl:94
-#: ../visualization/nviz/scripts/nviz2.2_script:832
+#: ../visualization/nviz/scripts/nviz2.2_script:819
 #: ../visualization/nviz/scripts/panel_site.tcl:114
 #: ../visualization/nviz/scripts/panel_lights.tcl:83
 #: ../visualization/nviz/scripts/panel_label.tcl:96
@@ -233,7 +233,7 @@ msgstr "Fertig"
 #: ../visualization/nviz/scripts/attIsosurfPopup.tcl:410
 #: ../visualization/nviz/scripts/attIsosurfPopup.tcl:456
 #: ../visualization/nviz/scripts/wirecolorPopup.tcl:83
-#: ../visualization/nviz/scripts/nviz2.2_script:937
+#: ../visualization/nviz/scripts/nviz2.2_script:924
 #: ../visualization/nviz/scripts/mapBrowser.tcl:229
 #: ../visualization/nviz/scripts/script_get_line:19
 msgid "Cancel"
@@ -268,8 +268,8 @@ msgstr "Abfrage an/aus"
 #: ../visualization/nviz/scripts/panel_rquery.tcl:64
 #: ../visualization/nviz/scripts/panel_surf.tcl:725
 #: ../visualization/nviz/scripts/panel_vol.tcl:1169
-#: ../visualization/nviz/scripts/nviz2.2_script:390
-#: ../visualization/nviz/scripts/nviz2.2_script:936
+#: ../visualization/nviz/scripts/nviz2.2_script:377
+#: ../visualization/nviz/scripts/nviz2.2_script:923
 #: ../visualization/nviz/scripts/panel_lights.tcl:81
 #: ../visualization/nviz/scripts/site_attr.tcl:483
 #: ../visualization/nviz/scripts/panel_cutplane.tcl:182
@@ -640,7 +640,7 @@ msgstr "Spannung (Tension) Parameter"
 
 #: ../visualization/nviz/scripts/panel_kanimator.tcl:230
 #: ../visualization/nviz/scripts/panel_kanimator.tcl:1249
-#: ../visualization/nviz/scripts/nviz2.2_script:427
+#: ../visualization/nviz/scripts/nviz2.2_script:414
 #, fuzzy
 msgid "On"
 msgstr "an"
@@ -672,7 +672,7 @@ msgstr "Frame:"
 #: ../visualization/nviz/scripts/panel_animation.tcl:577
 #: ../visualization/nviz/scripts/panel_animation.tcl:755
 #: ../visualization/nviz/scripts/panel_animation.tcl:801
-#: ../visualization/nviz/scripts/nviz2.2_script:937
+#: ../visualization/nviz/scripts/nviz2.2_script:924
 #: ../visualization/nviz/scripts/script_get_line:18
 msgid "Ok"
 msgstr "Ok"
@@ -701,7 +701,7 @@ msgstr "Fehler - Alle Werte müssen zumindest 0 sein."
 #: ../visualization/nviz/scripts/panel_animation.tcl:644
 #: ../visualization/nviz/scripts/panel_animation.tcl:755
 #: ../visualization/nviz/scripts/panel_animation.tcl:801
-#: ../visualization/nviz/scripts/nviz2.2_script:1067
+#: ../visualization/nviz/scripts/nviz2.2_script:1054
 #: ../visualization/nviz/scripts/script_play:32
 msgid "Dismiss"
 msgstr "Verwerfe"
@@ -753,13 +753,15 @@ msgstr "Selektierte Keys löschen?"
 #: ../visualization/nviz/scripts/panel_animation.tcl:602
 #, fuzzy
 msgid "Internal Error - Failed to delete keyframe in GK key list"
-msgstr "Interner Fehler - Löschen des Keyframes in GK-Key-Liste nicht erfolgreich"
+msgstr ""
+"Interner Fehler - Löschen des Keyframes in GK-Key-Liste nicht erfolgreich"
 
 #: ../visualization/nviz/scripts/panel_kanimator.tcl:1006
 #: ../visualization/nviz/scripts/panel_animation.tcl:643
 #, fuzzy
 msgid "Internal Error - Failed to move keyframe in GK key list"
-msgstr "Interner Fehler - Verschieben des Keyframes in GK-Key-Liste nicht erfolgreich"
+msgstr ""
+"Interner Fehler - Verschieben des Keyframes in GK-Key-Liste nicht erfolgreich"
 
 #: ../visualization/nviz/scripts/panel_kanimator.tcl:1124
 #: ../visualization/nviz/scripts/panel_animation.tcl:753
@@ -831,7 +833,7 @@ msgid "Warning - Current animation has not been saved, continue?"
 msgstr "Warnung - Aktuelle Animation wurde noch nicht gespeichert, fortfahren?"
 
 #: ../visualization/nviz/scripts/panel_kanimator.tcl:1923
-#: ../visualization/nviz/scripts/nviz2.2_script:1066
+#: ../visualization/nviz/scripts/nviz2.2_script:1053
 #: ../visualization/nviz/scripts/script_play:30
 msgid "File Error"
 msgstr "Datei-Fehler"
@@ -882,11 +884,13 @@ msgstr "Frame"
 
 #: ../visualization/nviz/scripts/script_file_tools:111
 msgid "Current fields have not been saved, really load new fields?"
-msgstr "Aktuelle Felder wurden noch nicht gespeichert,  wollen sie wirklich neue Felder laden?"
+msgstr ""
+"Aktuelle Felder wurden noch nicht gespeichert,  wollen sie wirklich neue "
+"Felder laden?"
 
 #: ../visualization/nviz/scripts/script_file_tools:126
-#: ../visualization/nviz/scripts/nviz2.2_script:884
-#: ../visualization/nviz/scripts/nviz2.2_script:1038
+#: ../visualization/nviz/scripts/nviz2.2_script:871
+#: ../visualization/nviz/scripts/nviz2.2_script:1025
 #, fuzzy, tcl-format
 msgid "Error while opening file: %s"
 msgstr "Fehler bei Öffnen der Datei: %s"
@@ -1212,7 +1216,9 @@ msgstr "Symbolgröße X"
 
 #: ../visualization/nviz/scripts/panel_vquery.tcl:130
 msgid "Choose size in multiples of default to indicate point queried"
-msgstr "Wähle Größe ein Vielfaches der Grundeinstellung, um abgefragten Punkt anzuzeigen"
+msgstr ""
+"Wähle Größe ein Vielfaches der Grundeinstellung, um abgefragten Punkt "
+"anzuzeigen"
 
 #: ../visualization/nviz/scripts/panel_vquery.tcl:137
 msgid "specific icon"
@@ -1301,8 +1307,12 @@ msgid "Place legend"
 msgstr "Platziere Legende"
 
 #: ../visualization/nviz/scripts/panel_legend.tcl:133
-msgid "Use mouse to place legend; left button defines first corner,  right button defines opposite corner."
-msgstr "Bewege Maus um Legende zu platzieren; Linker Button legt erste Ecke fest, rechter Button legt gegenüberliegende Ecke fest."
+msgid ""
+"Use mouse to place legend; left button defines first corner,  right button "
+"defines opposite corner."
+msgstr ""
+"Bewege Maus um Legende zu platzieren; Linker Button legt erste Ecke fest, "
+"rechter Button legt gegenüberliegende Ecke fest."
 
 #: ../visualization/nviz/scripts/panel_legend.tcl:135
 msgid "Erase legend"
@@ -1681,47 +1691,47 @@ msgstr "Bewege Isosurface in Liste abwärts"
 msgid "Position Volume"
 msgstr "Position des Volumen"
 
-#: ../visualization/nviz/scripts/config.tcl:111
+#: ../visualization/nviz/scripts/config.tcl:125
 msgid "x"
 msgstr "x"
 
-#: ../visualization/nviz/scripts/config.tcl:111
+#: ../visualization/nviz/scripts/config.tcl:125
 #: ../visualization/nviz/scripts/site_attr.tcl:77
 #, fuzzy
 msgid "sphere"
 msgstr "Kugel"
 
-#: ../visualization/nviz/scripts/config.tcl:111
+#: ../visualization/nviz/scripts/config.tcl:125
 #: ../visualization/nviz/scripts/site_attr.tcl:77
 #, fuzzy
 msgid "diamond"
 msgstr "Raute"
 
-#: ../visualization/nviz/scripts/config.tcl:111
+#: ../visualization/nviz/scripts/config.tcl:125
 #: ../visualization/nviz/scripts/site_attr.tcl:77
 #, fuzzy
 msgid "cube"
 msgstr "Würfel"
 
-#: ../visualization/nviz/scripts/config.tcl:111
+#: ../visualization/nviz/scripts/config.tcl:125
 #: ../visualization/nviz/scripts/site_attr.tcl:77
 #, fuzzy
 msgid "box"
 msgstr "Box"
 
-#: ../visualization/nviz/scripts/config.tcl:111
+#: ../visualization/nviz/scripts/config.tcl:125
 #: ../visualization/nviz/scripts/site_attr.tcl:77
 #, fuzzy
 msgid "gyro"
 msgstr "Kreisel"
 
-#: ../visualization/nviz/scripts/config.tcl:111
+#: ../visualization/nviz/scripts/config.tcl:125
 #: ../visualization/nviz/scripts/site_attr.tcl:77
 #, fuzzy
 msgid "aster"
 msgstr "Aster"
 
-#: ../visualization/nviz/scripts/config.tcl:111
+#: ../visualization/nviz/scripts/config.tcl:125
 #: ../visualization/nviz/scripts/site_attr.tcl:77
 #, fuzzy
 msgid "histogram"
@@ -1872,7 +1882,8 @@ msgstr "Präfix der Ausgabebilder:"
 
 #: ../visualization/nviz/scripts/panel_animation.tcl:935
 msgid "Enter a prefix name for images to be created from animation frames"
-msgstr "Gebe ein Prefix für die von den Animation-Frames erzeugten  Bildernamen an"
+msgstr ""
+"Gebe ein Prefix für die von den Animation-Frames erzeugten  Bildernamen an"
 
 #: ../visualization/nviz/scripts/panel_animation.tcl:940
 msgid "Output format: "
@@ -1941,7 +1952,7 @@ msgid "Bearing"
 msgstr "Bearing"
 
 #: ../visualization/nviz/scripts/panel_pos.tcl:68
-#: ../visualization/nviz/scripts/nviz2.2_script:816
+#: ../visualization/nviz/scripts/nviz2.2_script:803
 msgid "Height"
 msgstr "Höhe"
 
@@ -1998,136 +2009,136 @@ msgstr "Größe"
 msgid "Place scale"
 msgstr "Platziere Maßstab"
 
-#: ../visualization/nviz/scripts/nviz2.2_script:210
+#: ../visualization/nviz/scripts/nviz2.2_script:197
 msgid "Show Panels"
 msgstr "Zeige Einstellungen"
 
-#: ../visualization/nviz/scripts/nviz2.2_script:217
-#: ../visualization/nviz/scripts/nviz2.2_script:340
-#: ../visualization/nviz/scripts/nviz2.2_script:699
+#: ../visualization/nviz/scripts/nviz2.2_script:204
+#: ../visualization/nviz/scripts/nviz2.2_script:327
+#: ../visualization/nviz/scripts/nviz2.2_script:686
 msgid "Hide Panels"
 msgstr "Blende Einstellungen aus"
 
-#: ../visualization/nviz/scripts/nviz2.2_script:259
+#: ../visualization/nviz/scripts/nviz2.2_script:246
 msgid "Start"
 msgstr "Start"
 
-#: ../visualization/nviz/scripts/nviz2.2_script:280
-#: ../visualization/nviz/scripts/nviz2.2_script:287
-#: ../visualization/nviz/scripts/nviz2.2_script:294
-#: ../visualization/nviz/scripts/nviz2.2_script:302
+#: ../visualization/nviz/scripts/nviz2.2_script:267
+#: ../visualization/nviz/scripts/nviz2.2_script:274
+#: ../visualization/nviz/scripts/nviz2.2_script:281
+#: ../visualization/nviz/scripts/nviz2.2_script:289
 msgid "Togl canvas initialization failed. Is Your OpenGL working fine?"
 msgstr "Togl canvas-Initialisierung erfloglos. Arbeitet OpenGL korrekt?"
 
-#: ../visualization/nviz/scripts/nviz2.2_script:362
+#: ../visualization/nviz/scripts/nviz2.2_script:349
 msgid "Please Wait..."
 msgstr "Bitte warten..."
 
-#: ../visualization/nviz/scripts/nviz2.2_script:368
+#: ../visualization/nviz/scripts/nviz2.2_script:355
 msgid "Help"
 msgstr "Hilfe"
 
-#: ../visualization/nviz/scripts/nviz2.2_script:369
+#: ../visualization/nviz/scripts/nviz2.2_script:356
 msgid "NVIZ Help"
 msgstr "NVIZ Hilfe"
 
-#: ../visualization/nviz/scripts/nviz2.2_script:369
+#: ../visualization/nviz/scripts/nviz2.2_script:356
 msgid "About NVIZ"
 msgstr "Über NVIZ"
 
-#: ../visualization/nviz/scripts/nviz2.2_script:369
+#: ../visualization/nviz/scripts/nviz2.2_script:356
 msgid "NVIZ - Bugs / ToDo"
 msgstr "NVIZ - Bugs / ToDo"
 
-#: ../visualization/nviz/scripts/nviz2.2_script:381
+#: ../visualization/nviz/scripts/nviz2.2_script:368
 msgid "File"
 msgstr "Datei"
 
-#: ../visualization/nviz/scripts/nviz2.2_script:382
+#: ../visualization/nviz/scripts/nviz2.2_script:369
 msgid "Load State"
 msgstr "Lade Status"
 
-#: ../visualization/nviz/scripts/nviz2.2_script:382
+#: ../visualization/nviz/scripts/nviz2.2_script:369
 msgid "Save State"
 msgstr "Speichere Status"
 
-#: ../visualization/nviz/scripts/nviz2.2_script:384
+#: ../visualization/nviz/scripts/nviz2.2_script:371
 msgid "Set Canvas Size"
 msgstr "Stelle Größe des Darstellungsfensters ein"
 
-#: ../visualization/nviz/scripts/nviz2.2_script:386
+#: ../visualization/nviz/scripts/nviz2.2_script:373
 msgid "Load 3d Settings"
 msgstr "Lade 3D-Einstellungen"
 
-#: ../visualization/nviz/scripts/nviz2.2_script:386
+#: ../visualization/nviz/scripts/nviz2.2_script:373
 msgid "Save 3d Settings"
 msgstr "Speichere 3D-Einstellungen"
 
-#: ../visualization/nviz/scripts/nviz2.2_script:388
+#: ../visualization/nviz/scripts/nviz2.2_script:375
 msgid "Save image as..."
 msgstr "Speichere Bild als..."
 
-#: ../visualization/nviz/scripts/nviz2.2_script:390
+#: ../visualization/nviz/scripts/nviz2.2_script:377
 msgid "Quit"
 msgstr "Beenden"
 
-#: ../visualization/nviz/scripts/nviz2.2_script:423
+#: ../visualization/nviz/scripts/nviz2.2_script:410
 msgid "Scripting"
 msgstr "Scripting"
 
-#: ../visualization/nviz/scripts/nviz2.2_script:433
+#: ../visualization/nviz/scripts/nviz2.2_script:420
 msgid "Create New Scriptfile"
 msgstr "Erzeuge ein neue Skriptdatei"
 
-#: ../visualization/nviz/scripts/nviz2.2_script:436
+#: ../visualization/nviz/scripts/nviz2.2_script:423
 msgid "Open and Play Script"
 msgstr "Öffne und starte Skript"
 
-#: ../visualization/nviz/scripts/nviz2.2_script:439
+#: ../visualization/nviz/scripts/nviz2.2_script:426
 msgid "Close Script"
 msgstr "Schließe Skript"
 
-#: ../visualization/nviz/scripts/nviz2.2_script:444
+#: ../visualization/nviz/scripts/nviz2.2_script:431
 #: ../visualization/nviz/scripts/script_get_line:15
 #, fuzzy
 msgid "Add Script Line"
 msgstr "Kommandozeile hinzufügen"
 
-#: ../visualization/nviz/scripts/nviz2.2_script:447
+#: ../visualization/nviz/scripts/nviz2.2_script:434
 #, fuzzy
 msgid "Add Script Command"
 msgstr "Kommando hinzufügen"
 
-#: ../visualization/nviz/scripts/nviz2.2_script:452
+#: ../visualization/nviz/scripts/nviz2.2_script:439
 msgid "Script Tools"
 msgstr "Script Tools"
 
-#: ../visualization/nviz/scripts/nviz2.2_script:497
+#: ../visualization/nviz/scripts/nviz2.2_script:484
 msgid "PPM Image"
 msgstr "PPM-Bild"
 
-#: ../visualization/nviz/scripts/nviz2.2_script:499
+#: ../visualization/nviz/scripts/nviz2.2_script:486
 msgid "TIFF Image"
 msgstr "TIFF-Bild"
 
-#: ../visualization/nviz/scripts/nviz2.2_script:513
+#: ../visualization/nviz/scripts/nviz2.2_script:500
 msgid "Maximum Resolution PPM"
 msgstr "Maximale Auflösung PPM"
 
-#: ../visualization/nviz/scripts/nviz2.2_script:811
+#: ../visualization/nviz/scripts/nviz2.2_script:798
 #, fuzzy
 msgid "Set Size of Display Canvas"
 msgstr "Stelle Größe des Darstellungsfensters ein"
 
-#: ../visualization/nviz/scripts/nviz2.2_script:814
+#: ../visualization/nviz/scripts/nviz2.2_script:801
 msgid "Width"
 msgstr "Breite"
 
-#: ../visualization/nviz/scripts/nviz2.2_script:822
+#: ../visualization/nviz/scripts/nviz2.2_script:809
 msgid "Unconstrained"
 msgstr "Zwanglos"
 
-#: ../visualization/nviz/scripts/nviz2.2_script:937
+#: ../visualization/nviz/scripts/nviz2.2_script:924
 #, fuzzy
 msgid "Really reset Nviz?"
 msgstr "Nviz wirklich zurückstellen?"
@@ -2231,12 +2242,21 @@ msgid "Erase all labels"
 msgstr "Lösche alle Labels"
 
 #: ../visualization/nviz/scripts/site_attr.tcl:411
-msgid "Fill 2 or more entry fields with  desired min and max values, then press [Apply].  Or press [Auto] to automatically  generate a range of symbol sizes."
-msgstr "Fülle 2 oder mehrere Eingabefelder mit den gewünschten min- und max-Werten, dann drücke [Apply].  Oder drücke [Auto] für einen automatisch erzeugten Wertebereich der Symbolgröße."
+msgid ""
+"Fill 2 or more entry fields with  desired min and max values, then press "
+"[Apply].  Or press [Auto] to automatically  generate a range of symbol sizes."
+msgstr ""
+"Fülle 2 oder mehrere Eingabefelder mit den gewünschten min- und max-Werten, "
+"dann drücke [Apply].  Oder drücke [Auto] für einen automatisch erzeugten "
+"Wertebereich der Symbolgröße."
 
 #: ../visualization/nviz/scripts/site_attr.tcl:422
-msgid "Fill 2 or more entry fields with desired colors, then press [Apply]. Or press [Auto] to automatically generate a color table."
-msgstr "Fülle 2 oder mehrere Eingabefelder mit der gewünschten Farbe, dann drücke [Apply]. Oder drücke [Auto] für eine automatisch erzeugte Farbtabelle."
+msgid ""
+"Fill 2 or more entry fields with desired colors, then press [Apply]. Or "
+"press [Auto] to automatically generate a color table."
+msgstr ""
+"Fülle 2 oder mehrere Eingabefelder mit der gewünschten Farbe, dann drücke "
+"[Apply]. Oder drücke [Auto] für eine automatisch erzeugte Farbtabelle."
 
 #: ../visualization/nviz/scripts/site_attr.tcl:428
 #, tcl-format
@@ -2267,8 +2287,12 @@ msgid "Auto"
 msgstr "Auto"
 
 #: ../visualization/nviz/scripts/site_attr.tcl:479
-msgid "Automatically generate a color  table distributed across range of attribute values"
-msgstr "Generiere automatisch eine über den Wertebereich der Attribute verteilte Farbtabelle"
+msgid ""
+"Automatically generate a color  table distributed across range of attribute "
+"values"
+msgstr ""
+"Generiere automatisch eine über den Wertebereich der Attribute verteilte "
+"Farbtabelle"
 
 #: ../visualization/nviz/scripts/site_attr.tcl:485
 msgid "Clear all thematic settings"
@@ -2343,11 +2367,13 @@ msgstr "Keine Einstellungen"
 
 #: ../visualization/nviz/scripts/site_attr.tcl:1146
 msgid "Thematic prefs and attribute have different types"
-msgstr "Thematische Einstellung und Attribute besitzen unterschiedliche Eigenschaft"
+msgstr ""
+"Thematische Einstellung und Attribute besitzen unterschiedliche Eigenschaft"
 
 #: ../visualization/nviz/scripts/site_attr.tcl:1207
 msgid "Thematic prefs and attributes have different types"
-msgstr "Thematische Einstellungen und Attribute besitzen unterschiedliche Eigenschaft"
+msgstr ""
+"Thematische Einstellungen und Attribute besitzen unterschiedliche Eigenschaft"
 
 #: ../visualization/nviz/scripts/site_attr.tcl:1408
 #, fuzzy, tcl-format
@@ -2416,7 +2442,8 @@ msgstr "*** WARNUNG *** Datei \"%s\" ist nicht verfügbar"
 #: ../visualization/nviz/scripts/site_attr.tcl:1627
 #, fuzzy, tcl-format
 msgid "*** ERROR *** Some thematic pref component are missing in file \"%s\""
-msgstr "*** FEHLER *** Einige thematische Einstellungen fehlen in der Datei \"%s\""
+msgstr ""
+"*** FEHLER *** Einige thematische Einstellungen fehlen in der Datei \"%s\""
 
 #: ../visualization/nviz/scripts/site_attr.tcl:1700
 #, tcl-format
@@ -2582,4 +2609,3 @@ msgstr "Untere Höhe der Randzone:"
 #: ../visualization/nviz/scripts/panel_fringe.tcl:80
 msgid "Draw Fringe"
 msgstr "Zeichne Randzone"
-

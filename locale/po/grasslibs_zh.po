@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: grasslibs_zh\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-04-23 15:34+0200\n"
+"POT-Creation-Date: 2011-05-29 11:07+0200\n"
 "PO-Revision-Date: 2007-12-13 16:42+0100\n"
 "Last-Translator: Su Yongheng <night2008@gmail.com>\n"
 "Language-Team: Simplified Chinese <translations@grass.itc.it>\n"
@@ -4470,23 +4470,23 @@ msgstr ""
 msgid "no data"
 msgstr ""
 
-#: ../lib/ogsf/GS2.c:1635
+#: ../lib/ogsf/GS2.c:1636
 #, fuzzy, c-format
 msgid "Raster map <%s> is outside of current region. Load failed."
 msgstr "[%s]在地图集[%s]中 - 区域[%d]与当前的范围[%d]不同"
 
-#: ../lib/ogsf/GS2.c:1713 ../lib/ogsf/GS2.c:1719 ../lib/ogsf/GS2.c:1727
-#: ../lib/ogsf/GS2.c:1736 ../lib/ogsf/GS2.c:1744 ../lib/ogsf/GS2.c:1754
-#: ../lib/ogsf/GS2.c:1802
+#: ../lib/ogsf/GS2.c:1714 ../lib/ogsf/GS2.c:1720 ../lib/ogsf/GS2.c:1728
+#: ../lib/ogsf/GS2.c:1737 ../lib/ogsf/GS2.c:1745 ../lib/ogsf/GS2.c:1755
+#: ../lib/ogsf/GS2.c:1803
 msgid "GS_load_att_map(): Out of memory. Unable to load map"
 msgstr ""
 
-#: ../lib/ogsf/GS2.c:1830
+#: ../lib/ogsf/GS2.c:1831
 #, fuzzy
 msgid "Loading failed"
 msgstr "连接失败。\n"
 
-#: ../lib/ogsf/GS2.c:1834
+#: ../lib/ogsf/GS2.c:1835
 #, fuzzy
 msgid "Error finding range"
 msgstr "已有栅格地图 %d"

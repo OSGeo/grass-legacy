@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: grasslibs_pt\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-04-23 15:34+0200\n"
+"POT-Creation-Date: 2011-05-29 11:07+0200\n"
 "PO-Revision-Date: 2007-06-18 22:26-0300\n"
 "Last-Translator: Paulo E. P. Marcondes <paulomarcondes at gmail dot com>\n"
 "Language-Team: Portuguese <grass-translations@lists.osgeo.org>\n"
@@ -4414,24 +4414,24 @@ msgstr ""
 msgid "no data"
 msgstr ""
 
-#: ../lib/ogsf/GS2.c:1635
+#: ../lib/ogsf/GS2.c:1636
 #, fuzzy, c-format
 msgid "Raster map <%s> is outside of current region. Load failed."
 msgstr ""
 "[%s] no mapset [%s] - está em uma zona diferente [%d] da região atual [%d]"
 
-#: ../lib/ogsf/GS2.c:1713 ../lib/ogsf/GS2.c:1719 ../lib/ogsf/GS2.c:1727
-#: ../lib/ogsf/GS2.c:1736 ../lib/ogsf/GS2.c:1744 ../lib/ogsf/GS2.c:1754
-#: ../lib/ogsf/GS2.c:1802
+#: ../lib/ogsf/GS2.c:1714 ../lib/ogsf/GS2.c:1720 ../lib/ogsf/GS2.c:1728
+#: ../lib/ogsf/GS2.c:1737 ../lib/ogsf/GS2.c:1745 ../lib/ogsf/GS2.c:1755
+#: ../lib/ogsf/GS2.c:1803
 msgid "GS_load_att_map(): Out of memory. Unable to load map"
 msgstr ""
 
-#: ../lib/ogsf/GS2.c:1830
+#: ../lib/ogsf/GS2.c:1831
 #, fuzzy
 msgid "Loading failed"
 msgstr "Falha na conexão."
 
-#: ../lib/ogsf/GS2.c:1834
+#: ../lib/ogsf/GS2.c:1835
 #, fuzzy
 msgid "Error finding range"
 msgstr "ERRO abrindo mapa raster %s"

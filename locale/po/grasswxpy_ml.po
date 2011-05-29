@@ -3,11 +3,13 @@
 # Copyright (C) 2010 GRASS Development Team
 #
 # Mohammed Rashad <rashadkm@gmail.com>, 2010
+#: ../gui/wxpython/gui_modules/psmap.py:1097
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:2211
 msgid ""
 msgstr ""
 "Project-Id-Version: grasswxpy_ml\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-04-23 15:34+0200\n"
+"POT-Creation-Date: 2011-05-29 11:07+0200\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Mohammed Rashad <rashadkm@gmail.com>\n"
 "Language-Team: Malayalam <grass-translations@lists.osgeo.org>\n"
@@ -18,46 +20,55 @@ msgstr ""
 "X-Poedit-Language: Malayalam\n"
 "X-Poedit-Country: INDIA\n"
 
-#: ../gui/wxpython/wxgui.py:95
+#: ../gui/wxpython/wxgui.py:96
 msgid "GRASS GIS Layer Manager"
 msgstr "ലയെർ നടത്തിപ്പുകാരൻ"
 
-#: ../gui/wxpython/wxgui.py:208
+#: ../gui/wxpython/wxgui.py:136
+#, fuzzy
+msgid "Main Toolbar"
+msgstr "മാപ്പ് ലയെറുകൾ"
+
+#: ../gui/wxpython/wxgui.py:144
+msgid "Tools Toolbar"
+msgstr ""
+
+#: ../gui/wxpython/wxgui.py:231
 #, fuzzy
 msgid "Map layers"
 msgstr "മാപ്പ് ലയെറുകൾ"
 
-#: ../gui/wxpython/wxgui.py:212 ../gui/wxpython/wxgui.py:346
+#: ../gui/wxpython/wxgui.py:235 ../gui/wxpython/wxgui.py:375
 msgid "Command console"
 msgstr "ആജ്നയുടെ ഉത്തരം വരുന്ന സ്ഥലം"
 
-#: ../gui/wxpython/wxgui.py:216
+#: ../gui/wxpython/wxgui.py:239
 msgid "Search module"
 msgstr "മൊട്യൂൾ തിരയുക"
 
-#: ../gui/wxpython/wxgui.py:229 ../gui/wxpython/gui_modules/toolbars.py:205
+#: ../gui/wxpython/wxgui.py:252 ../gui/wxpython/gui_modules/toolbars.py:208
 msgid "3D view"
 msgstr ""
 
-#: ../gui/wxpython/wxgui.py:267
+#: ../gui/wxpython/wxgui.py:296
 #, python-format
 msgid "Hardcopy Map Output Utility is not available. You can install it by %s"
 msgstr ""
 
-#: ../gui/wxpython/wxgui.py:286
+#: ../gui/wxpython/wxgui.py:315
 msgid "Choose model to run"
 msgstr "തുടാങ്ങാനുള്ള മാത്രിക തിരഞെടുക്കുക"
 
-#: ../gui/wxpython/wxgui.py:288 ../gui/wxpython/gui_modules/gmodeler.py:802
+#: ../gui/wxpython/wxgui.py:317 ../gui/wxpython/gui_modules/gmodeler.py:802
 #: ../gui/wxpython/gui_modules/gmodeler.py:846
 msgid "GRASS Model File (*.gxm)|*.gxm"
 msgstr "ഗ്രാസ്സ് മൊഡൽ ഫയൽ (*.gxm)|*.gxm"
 
-#: ../gui/wxpython/wxgui.py:297 ../gui/wxpython/gui_modules/gmodeler.py:1117
+#: ../gui/wxpython/wxgui.py:326 ../gui/wxpython/gui_modules/gmodeler.py:1117
 msgid "Validating model..."
 msgstr "മാത്രിക പരിശൊദിക്കുന്നു.."
 
-#: ../gui/wxpython/wxgui.py:301 ../gui/wxpython/gui_modules/gmodeler.py:919
+#: ../gui/wxpython/wxgui.py:330 ../gui/wxpython/gui_modules/gmodeler.py:919
 #, python-format
 msgid ""
 "Model is not valid. Do you want to run the model anyway?\n"
@@ -68,67 +79,62 @@ msgstr ""
 "\n"
 "%s"
 
-#: ../gui/wxpython/wxgui.py:303 ../gui/wxpython/gui_modules/gmodeler.py:921
+#: ../gui/wxpython/wxgui.py:332 ../gui/wxpython/gui_modules/gmodeler.py:921
 msgid "Run model?"
 msgstr "മാത്രിക തുടങ്ങണൊ?"
 
-#: ../gui/wxpython/wxgui.py:310 ../gui/wxpython/gui_modules/gmodeler.py:984
+#: ../gui/wxpython/wxgui.py:339 ../gui/wxpython/gui_modules/gmodeler.py:984
 msgid "Running model..."
 msgstr "ഓടുന്ന മാത്രിക..."
 
-#: ../gui/wxpython/wxgui.py:360 ../gui/wxpython/wxgui.py:1495
+#: ../gui/wxpython/wxgui.py:389 ../gui/wxpython/wxgui.py:1535
 msgid "Do you want to save changes in the workspace?"
 msgstr "വർക്സ്പേസിലെ വിവരങ്ങൾ സംഭരിച്ചുവെക്കുക വെക്കണമൊ ?"
 
-#: ../gui/wxpython/wxgui.py:362 ../gui/wxpython/wxgui.py:1497
+#: ../gui/wxpython/wxgui.py:391 ../gui/wxpython/wxgui.py:1537
 msgid "Do you want to store current settings to workspace file?"
 msgstr "വർക്സ്പേസിലെ രംഗസജ്ജീകരണം ഫയലിൽ സംഭരിച്ചുവെക്കുക വെക്കണമൊ ?"
 
-#: ../gui/wxpython/wxgui.py:369
+#: ../gui/wxpython/wxgui.py:398
 #, python-format
 msgid "Close Map Display %d"
 msgstr "മാപ്പ് പ്രദർശിപിച്ചിരിക്കുന്ന സ്ഥലം അടയ്ക്കുക %d"
 
-#: ../gui/wxpython/wxgui.py:468 ../gui/wxpython/wxgui.py:1178
+#: ../gui/wxpython/wxgui.py:497 ../gui/wxpython/wxgui.py:1218
 msgid "Selected map layer is not vector."
 msgstr ""
 
-#: ../gui/wxpython/wxgui.py:473
+#: ../gui/wxpython/wxgui.py:502
 msgid "Editing is allowed only for vector maps from the current mapset."
 msgstr ""
 
-#: ../gui/wxpython/wxgui.py:488
+#: ../gui/wxpython/wxgui.py:517
 #, fuzzy
 msgid "Choose script file to run"
 msgstr "സ്ക്രിപ്റ്റ് ഫയൽ തിരഞെടുക്കുക"
 
-#: ../gui/wxpython/wxgui.py:490
+#: ../gui/wxpython/wxgui.py:519
 msgid "Python script (*.py)|*.py|Bash script (*.sh)|*.sh"
 msgstr ""
 
-#: ../gui/wxpython/wxgui.py:501
+#: ../gui/wxpython/wxgui.py:530
 #, python-format
 msgid "Script file '%s' doesn't exist. Operation cancelled."
 msgstr "സ്ക്രിപ്റ്റ് ഫയൽ '%s' കണ്മാനില്ല. ആജ്ഞ തിരസ്കരിക്കപെട്ടു."
 
-#: ../gui/wxpython/wxgui.py:505
+#: ../gui/wxpython/wxgui.py:534
 #, python-format
 msgid "Launching script '%s'..."
 msgstr "സ്ക്രിപ്റ്റ് ഫയൽ തുടങ്ങുന്നു '%s'..."
 
-#: ../gui/wxpython/wxgui.py:520
+#: ../gui/wxpython/wxgui.py:549
 #, python-format
 msgid "Unable to switch to location <%(loc)s> mapset <%(mapset)s>."
 msgstr "ലൊക്കെഷനിലെക്ക് മാറാൻ പറ്റുന്നില്ല <%(loc)s മാപ്പ്സെറ്റ് <%(mapset)s>."
 
-#: ../gui/wxpython/wxgui.py:522 ../gui/wxpython/wxgui.py:543
-#: ../gui/wxpython/gui_modules/gcpmanager.py:1038
-#: ../gui/wxpython/gui_modules/gcpmanager.py:1178
-#: ../gui/wxpython/gui_modules/gcpmanager.py:1204
-#: ../gui/wxpython/gui_modules/gcpmanager.py:1210
-#: ../gui/wxpython/gui_modules/gcpmanager.py:1239
+#: ../gui/wxpython/wxgui.py:551 ../gui/wxpython/wxgui.py:572
 #: ../gui/wxpython/gui_modules/mapdisp_window.py:1686
-#: ../gui/wxpython/gui_modules/mapdisp.py:368
+#: ../gui/wxpython/gui_modules/mapdisp.py:367
 #: ../gui/wxpython/gui_modules/location_wizard.py:561
 #: ../gui/wxpython/gui_modules/location_wizard.py:746
 #: ../gui/wxpython/gui_modules/location_wizard.py:1468
@@ -137,11 +143,12 @@ msgstr "ലൊക്കെഷനിലെക്ക് മാറാൻ പറ്�
 #: ../gui/wxpython/gui_modules/location_wizard.py:2187
 #: ../gui/wxpython/gui_modules/location_wizard.py:2494
 #: ../gui/wxpython/gui_modules/gcmd.py:64
-#: ../gui/wxpython/gui_modules/vdigit.py:1028
-#: ../gui/wxpython/gui_modules/vdigit.py:1220
-#: ../gui/wxpython/gui_modules/vdigit.py:1246
+#: ../gui/wxpython/gui_modules/vdigit.py:1029
+#: ../gui/wxpython/gui_modules/vdigit.py:1221
+#: ../gui/wxpython/gui_modules/vdigit.py:1247
 #: ../gui/wxpython/gui_modules/gmodeler.py:1444
 #: ../gui/wxpython/gui_modules/workspace.py:984
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:5365
 #: ../gui/wxpython/gui_modules/dbm.py:165
 #: ../gui/wxpython/gui_modules/dbm.py:1407
 #: ../gui/wxpython/gui_modules/dbm.py:1516
@@ -157,20 +164,20 @@ msgstr "ലൊക്കെഷനിലെക്ക് മാറാൻ പറ്�
 #: ../gui/wxpython/gui_modules/dbm.py:2901
 #: ../gui/wxpython/gui_modules/gdialogs.py:255
 #: ../gui/wxpython/gui_modules/profile.py:598
-#: ../gui/wxpython/gui_modules/layertree.py:482
-#: ../gui/wxpython/gui_modules/layertree.py:513
-#: ../gui/wxpython/gui_modules/preferences.py:1067
-#: ../gui/wxpython/gui_modules/preferences.py:1910
-#: ../gui/wxpython/gui_modules/preferences.py:1939
-#: ../gui/wxpython/gui_modules/preferences.py:1948
-#: ../gui/wxpython/gui_modules/preferences.py:1958
+#: ../gui/wxpython/gui_modules/layertree.py:486
+#: ../gui/wxpython/gui_modules/layertree.py:517
+#: ../gui/wxpython/gui_modules/preferences.py:1076
+#: ../gui/wxpython/gui_modules/preferences.py:1970
+#: ../gui/wxpython/gui_modules/preferences.py:1999
+#: ../gui/wxpython/gui_modules/preferences.py:2008
+#: ../gui/wxpython/gui_modules/preferences.py:2018
 #: ../gui/wxpython/gis_set.py:208 ../gui/wxpython/gis_set.py:468
 #: ../gui/wxpython/gis_set.py:504 ../gui/wxpython/gis_set.py:570
 #: ../gui/wxpython/gis_set.py:727
 msgid "Error"
 msgstr "തെറ്റ്"
 
-#: ../gui/wxpython/wxgui.py:528
+#: ../gui/wxpython/wxgui.py:557
 #, python-format
 msgid ""
 "Current location is <%(loc)s>.\n"
@@ -179,22 +186,22 @@ msgstr ""
 "എപ്പൊളത്തെ ലൊക്കെഷൻ <%(loc)s.\n"
 " എപ്പൊളത്തെ മാപ്പ്സെറ്റ് <%(mapset)s>."
 
-#: ../gui/wxpython/wxgui.py:531 ../gui/wxpython/wxgui.py:547
+#: ../gui/wxpython/wxgui.py:560 ../gui/wxpython/wxgui.py:576
 #: ../gui/wxpython/gui_modules/ghelp.py:563
 msgid "Info"
 msgstr "അറിയിപ്പ്"
 
-#: ../gui/wxpython/wxgui.py:542
+#: ../gui/wxpython/wxgui.py:571
 #, python-format
 msgid "Unable to switch to mapset <%s>."
 msgstr "മാപ്പ്സെറ്റിലെക്ക് മാറാൻ കഴിയുനില്ല <%s>."
 
-#: ../gui/wxpython/wxgui.py:546
+#: ../gui/wxpython/wxgui.py:575
 #, python-format
 msgid "Current mapset is <%s>."
 msgstr "നിലവിലുള്ള മാപ്പ്സെറ്റാൺ <%s>"
 
-#: ../gui/wxpython/wxgui.py:623
+#: ../gui/wxpython/wxgui.py:652
 msgid ""
 "Current workspace is not empty. Do you want to store current settings to "
 "workspace file?"
@@ -202,20 +209,20 @@ msgstr ""
 "നിലവിലുള്ള വർക്സ്പേസിൽ ഒന്നുമില്ല. വർക്സ്പേസിലെ രംഗസജ്ജീകരണം മറ്റൊരു ഫയലിൽ സംഭരിച്ചുവെക്കുക "
 "വെക്കണമൊ?"
 
-#: ../gui/wxpython/wxgui.py:626
+#: ../gui/wxpython/wxgui.py:655
 msgid "Create new workspace?"
 msgstr "പുതിയ വർക്സ്പേസ് ഉണ്ടാക്കണമൊ?"
 
-#: ../gui/wxpython/wxgui.py:652
+#: ../gui/wxpython/wxgui.py:681
 msgid "Choose workspace file"
 msgstr "വർക്സ്പേസ് തിരഞെടുക്കുക"
 
-#: ../gui/wxpython/wxgui.py:653 ../gui/wxpython/wxgui.py:860
+#: ../gui/wxpython/wxgui.py:682 ../gui/wxpython/wxgui.py:889
 #, fuzzy
 msgid "GRASS Workspace File (*.gxw)|*.gxw"
 msgstr "പഴയ ഗ്രാസ്സ് വർക്ക്സ്പെസ് ഫയൽ (*.grc)|*.grc"
 
-#: ../gui/wxpython/wxgui.py:688
+#: ../gui/wxpython/wxgui.py:717
 #, fuzzy, python-format
 msgid ""
 "Reading workspace file <%s> failed.\n"
@@ -226,57 +233,57 @@ msgstr ""
 "\n"
 "%(err)s"
 
-#: ../gui/wxpython/wxgui.py:692 ../gui/wxpython/wxgui.py:801
-#: ../gui/wxpython/wxgui.py:837
+#: ../gui/wxpython/wxgui.py:721 ../gui/wxpython/wxgui.py:830
+#: ../gui/wxpython/wxgui.py:866
 msgid "Please wait, loading workspace..."
 msgstr "ദയവായി ക്ഷമിക്കുക. വർക്സ്പേസ് തുടങ്ങുന്നു..."
 
-#: ../gui/wxpython/wxgui.py:793 ../gui/wxpython/menustrings.py:15
+#: ../gui/wxpython/wxgui.py:822 ../gui/wxpython/menustrings.py:15
 msgid "Load map layers into layer tree"
 msgstr "ലയറുകൾ ലയെർ മാനെജരിലെക്കു വരുത്തുക"
 
-#: ../gui/wxpython/wxgui.py:821
+#: ../gui/wxpython/wxgui.py:850
 msgid "Choose GRC file to load"
 msgstr "തുറക്കെണ്ട GRC ഫയൽ തിരഞെടുക്കുക"
 
-#: ../gui/wxpython/wxgui.py:822
+#: ../gui/wxpython/wxgui.py:851
 msgid "Old GRASS Workspace File (*.grc)|*.grc"
 msgstr "പഴയ ഗ്രാസ്സ് വർക്ക്സ്പെസ് ഫയൽ (*.grc)|*.grc"
 
-#: ../gui/wxpython/wxgui.py:859
+#: ../gui/wxpython/wxgui.py:888
 msgid "Choose file to save current workspace"
 msgstr "നിലവിലുള്ള വർക്സ്പേസ് സംഭരിച്ചുവെക്കുകുവനുള്ള ഫയൽ തിരഞെടുക്കുക"
 
-#: ../gui/wxpython/wxgui.py:874 ../gui/wxpython/wxgui.py:890
+#: ../gui/wxpython/wxgui.py:903 ../gui/wxpython/wxgui.py:919
 #, python-format
 msgid "Workspace file <%s> already exists. Do you want to overwrite this file?"
 msgstr "ഈ പേരിലുള്ള വർക്സ്പേസ്<%s> നിലവുണ്ട്. നിങ്ങൾക്ക് ഇതിൽ തന്നെ സംഭരിച്ചു വെക്കണമൊ?"
 
-#: ../gui/wxpython/wxgui.py:876 ../gui/wxpython/wxgui.py:893
+#: ../gui/wxpython/wxgui.py:905 ../gui/wxpython/wxgui.py:922
 #: ../gui/wxpython/menustrings.py:9
 msgid "Save workspace"
 msgstr "വർക്സ്പേസ് സംഭരിച്ചു വെക്കുക"
 
-#: ../gui/wxpython/wxgui.py:914
+#: ../gui/wxpython/wxgui.py:943
 #, fuzzy
 msgid "Writing current settings to workspace file failed."
 msgstr "വർക്സ്പേസിലെ രംഗസജ്ജീകരണം മറ്റുനതിൽ പിശക് (%s)"
 
-#: ../gui/wxpython/wxgui.py:925 ../gui/wxpython/gui_modules/gmodeler.py:1443
+#: ../gui/wxpython/wxgui.py:954 ../gui/wxpython/gui_modules/gmodeler.py:1443
 #: ../gui/wxpython/gui_modules/profile.py:597
 #, fuzzy, python-format
 msgid "Unable to open file <%s> for writing."
 msgstr "വർക്സ്പേസ് ഫയൽ തുറക്കാൻ പറ്റുനില്ല <%s>"
 
-#: ../gui/wxpython/wxgui.py:1151
+#: ../gui/wxpython/wxgui.py:1191
 msgid "Nothing to import. No WMS layer selected."
 msgstr "തുറക്കാൻ ഒന്നുമില്ല. ഒരു WMS പോലും തിരഞ്ഞെടുത്തിട്ടില്ല"
 
-#: ../gui/wxpython/wxgui.py:1187
+#: ../gui/wxpython/wxgui.py:1227
 msgid "Please wait, loading attribute data..."
 msgstr "ദയവായി കാത്ത് നിൽക്കുക."
 
-#: ../gui/wxpython/wxgui.py:1437
+#: ../gui/wxpython/wxgui.py:1477
 #, python-format
 msgid ""
 "Do you want to remove map layer(s)\n"
@@ -287,23 +294,23 @@ msgstr ""
 "%s \n"
 "മാപ്പ് ട്രീയിൽ നിന്നും മാറ്റണമൊ?"
 
-#: ../gui/wxpython/wxgui.py:1440
+#: ../gui/wxpython/wxgui.py:1480
 msgid "Do you want to remove selected map layer(s) from layer tree?"
 msgstr "തിരഞ്ഞെടുക്കപെട്ട മാപ്പ് ലയെറുകൾ കളയണമൊ?"
 
-#: ../gui/wxpython/wxgui.py:1444
+#: ../gui/wxpython/wxgui.py:1484
 msgid "Remove map layer"
 msgstr "മാപ്പ് ലയെർ കളയുക"
 
-#: ../gui/wxpython/wxgui.py:1504
+#: ../gui/wxpython/wxgui.py:1544
 msgid "Quit GRASS GUI"
 msgstr "പുറത്ത് കടക്കുക"
 
-#: ../gui/wxpython/wxgui.py:1533
+#: ../gui/wxpython/wxgui.py:1573
 msgid "No map layer selected. Operation cancelled."
 msgstr "മപ്പ് ലയരുകളൊന്നും തിരഞ്ഞെടുക്കപ്പെട്ടിട്ടില്ല. ആജ്ഞ തിരസ്കരിക്കപെട്ടു."
 
-#: ../gui/wxpython/wxgui.py:1534 ../gui/wxpython/gui_modules/dbm_dialogs.py:77
+#: ../gui/wxpython/wxgui.py:1574 ../gui/wxpython/gui_modules/dbm_dialogs.py:77
 #: ../gui/wxpython/gui_modules/ghelp.py:287
 #: ../gui/wxpython/gui_modules/gcmd.py:98
 #: ../gui/wxpython/gui_modules/dbm.py:2056
@@ -312,641 +319,748 @@ msgstr "മപ്പ് ലയരുകളൊന്നും തിരഞ്ഞ�
 msgid "Message"
 msgstr "സന്ദേശം"
 
-#: ../gui/wxpython/wxgui.py:1564
+#: ../gui/wxpython/wxgui.py:1604
 #, fuzzy
 msgid "Starting GRASS GUI..."
 msgstr "തുടങ്ങുക"
 
-#: ../gui/wxpython/icons/icon.py:87
+#: ../gui/wxpython/icons/icon.py:88
 #, fuzzy, python-format
 msgid "Unable to load icon theme. Reason: %s"
 msgstr "പുതിയ മാപ്പ്സെറ്റ് ഉണ്ടാക്കാൻ പറ്റുനില്ല: %s"
 
-#: ../gui/wxpython/icons/icon.py:145
+#: ../gui/wxpython/icons/icon.py:146
 msgid "Display map"
 msgstr "മാപ്പ് അവതരിപിച്ചിരിക്കുന്ന സ്ഥലം"
 
-#: ../gui/wxpython/icons/icon.py:146
+#: ../gui/wxpython/icons/icon.py:147
 #, fuzzy
 msgid "Re-render modified map layers only"
 msgstr "മാപ്പ് ലയെർ കളയുക"
 
-#: ../gui/wxpython/icons/icon.py:148
+#: ../gui/wxpython/icons/icon.py:149
 #, fuzzy
 msgid "Render map"
 msgstr "മാപ്പ് വീണ്ടും പ്രദർശിപിക്കുക"
 
-#: ../gui/wxpython/icons/icon.py:149
+#: ../gui/wxpython/icons/icon.py:150
 msgid "Force re-rendering all map layers"
 msgstr "മാപ്പുകൾ വീണ്ടും പ്രദർശിപിക്കുന്നത് ബലപ്പെടുത്തുക"
 
-#: ../gui/wxpython/icons/icon.py:151
+#: ../gui/wxpython/icons/icon.py:152
 msgid "Erase display"
 msgstr "മാപ്പ് മായിച്ചു കളയുക"
 
-#: ../gui/wxpython/icons/icon.py:152
+#: ../gui/wxpython/icons/icon.py:153
 msgid "Erase display canvas with given background color"
 msgstr ""
 
-#: ../gui/wxpython/icons/icon.py:154
+#: ../gui/wxpython/icons/icon.py:155
 msgid "Pointer"
 msgstr ""
 
-#: ../gui/wxpython/icons/icon.py:156
+#: ../gui/wxpython/icons/icon.py:157
 msgid "Zoom in"
 msgstr "ഒരുഭാഗം മാത്രം വലുതക്കുക"
 
-#: ../gui/wxpython/icons/icon.py:157
+#: ../gui/wxpython/icons/icon.py:158
 msgid "Drag or click mouse to zoom"
 msgstr "വലുതക്കുവാൻ വേണ്ടി മൗസിന്‍റെ ഒരു ബട്ടണ്‍ അമര്‍ത്തിപ്പിടിച്ചുകൊണ്ട് ചലിപ്പിക്കുക "
 
-#: ../gui/wxpython/icons/icon.py:159
+#: ../gui/wxpython/icons/icon.py:160
 msgid "Zoom out"
 msgstr "ഒരുഭാഗം മാത്രം ചെറുതാക്കുക"
 
-#: ../gui/wxpython/icons/icon.py:160
+#: ../gui/wxpython/icons/icon.py:161
 msgid "Drag or click mouse to unzoom"
 msgstr "ചെറുതാക്കുവാൻ വേണ്ടി മൗസിന്‍റെ ഒരു ബട്ടണ്‍ അമര്‍ത്തിപ്പിടിച്ചുകൊണ്ട് ചലിപ്പിക്കുക"
 
-#: ../gui/wxpython/icons/icon.py:162
+#: ../gui/wxpython/icons/icon.py:163
 msgid "Pan"
 msgstr "മാപ്പുകൾ മറ്റുക"
 
-#: ../gui/wxpython/icons/icon.py:163
+#: ../gui/wxpython/icons/icon.py:164
 msgid "Drag with mouse to pan"
 msgstr "മറ്റുവാൻ വേണ്ടി മൗസിന്‍റെ ഒരു ബട്ടണ്‍ അമര്‍ത്തിപ്പിടിച്ചുകൊണ്ട് ചലിപ്പിക്കുക"
 
-#: ../gui/wxpython/icons/icon.py:165
+#: ../gui/wxpython/icons/icon.py:166
 msgid "Query raster/vector map(s)"
 msgstr "രസറ്ററൊ വെക്റ്ററൊ മപ്പുകളുടെ വിവരങ്ങള്‍ക്കായി ഒരു ഡേറ്റാബേസില്‍ അന്വേഷണം നടത്തുന്നത് "
 
-#: ../gui/wxpython/icons/icon.py:166
+#: ../gui/wxpython/icons/icon.py:167
 msgid "Query selected raster/vector map(s)"
 msgstr ""
 "തിരഞ്ഞെടുത്ത രസറ്ററൊ വെക്റ്ററൊ മപ്പുകളുടെ വിവരങ്ങള്‍ക്കായി ഒരു ഡേറ്റാബേസില്‍ അന്വേഷണം നടത്തുന്നത് "
 
-#: ../gui/wxpython/icons/icon.py:168
+#: ../gui/wxpython/icons/icon.py:169
 msgid "Return to previous zoom"
 msgstr "മുൻപത്തെ അവസ്തയിലെക്കു മടങുക"
 
-#: ../gui/wxpython/icons/icon.py:170
+#: ../gui/wxpython/icons/icon.py:171
 #, fuzzy
 msgid "Various zoom options"
 msgstr "മാപ്പ് വലുത്താക്കുന്നതിനു തിരഞ്ഞെടുക്കവുന്ന വഴികൾ"
 
-#: ../gui/wxpython/icons/icon.py:171
+#: ../gui/wxpython/icons/icon.py:172
 msgid "Zoom to computational, default, saved region, ..."
 msgstr ""
 
-#: ../gui/wxpython/icons/icon.py:173
+#: ../gui/wxpython/icons/icon.py:174
 #, fuzzy
 msgid "Zoom to selected map layer(s)"
 msgstr "തിരഞ്ഞെടുക്കപെട്ട ലയെറുകളെ ഇറക്കുമതി ചെയ്യുക"
 
-#: ../gui/wxpython/icons/icon.py:175
+#: ../gui/wxpython/icons/icon.py:176
 msgid "Add map elements"
 msgstr "മാപ്പിലെക്ക് കാര്യങൾ ചെർക്കുക"
 
-#: ../gui/wxpython/icons/icon.py:176
+#: ../gui/wxpython/icons/icon.py:177
 msgid "Overlay elements like scale and legend onto map"
 msgstr ""
 
-#: ../gui/wxpython/icons/icon.py:178
+#: ../gui/wxpython/icons/icon.py:179
 msgid "Add scalebar and north arrow"
 msgstr ""
 
-#: ../gui/wxpython/icons/icon.py:180
+#: ../gui/wxpython/icons/icon.py:181 ../gui/wxpython/icons/icon.py:471
 msgid "Add legend"
 msgstr "പുരാവ്രിത്തം ചേർക്കുക"
 
-#: ../gui/wxpython/icons/icon.py:182
+#: ../gui/wxpython/icons/icon.py:183
 msgid "Save display to graphic file"
 msgstr "ഡിസ്പ്ലേ ഗ്രഫിക്സ് ഫയലിൽ ശേഖരിച്ച് വയ്ക്കുക"
 
-#: ../gui/wxpython/icons/icon.py:184
+#: ../gui/wxpython/icons/icon.py:185
 #: ../gui/wxpython/gui_modules/histogram.py:440
-#: ../gui/wxpython/gui_modules/mapdisp.py:1176
+#: ../gui/wxpython/gui_modules/mapdisp.py:1177
 #: ../gui/wxpython/gui_modules/gcpmapdisp.py:942
 msgid "Print display"
 msgstr " പ്രദർശന സ്ഥലം കടലാസിലേക്ക് അച്ചടിക്കുക"
 
-#: ../gui/wxpython/icons/icon.py:186
+#: ../gui/wxpython/icons/icon.py:187
 msgid "Analyze map"
 msgstr "മാപ്പ് അപഗ്രഥിക്കുക"
 
-#: ../gui/wxpython/icons/icon.py:187
+#: ../gui/wxpython/icons/icon.py:188
 msgid "Measuring, profiling, histogramming, ..."
 msgstr ""
 
-#: ../gui/wxpython/icons/icon.py:189
+#: ../gui/wxpython/icons/icon.py:190
 msgid "Measure distance"
 msgstr "ദൂരം അളക്കുക"
 
-#: ../gui/wxpython/icons/icon.py:191
+#: ../gui/wxpython/icons/icon.py:192
 msgid "Profile surface map"
 msgstr "ഉപരിത്തില മാപ്പ് അപഗ്രഥനം ചെയ്യുക"
 
-#: ../gui/wxpython/icons/icon.py:193
-#: ../gui/wxpython/gui_modules/mapdisp.py:1874
+#: ../gui/wxpython/icons/icon.py:194
+#: ../gui/wxpython/gui_modules/mapdisp.py:1875
 msgid "Add text layer"
 msgstr "റ്റെക്സ്റ്റ് ലയെർ ചേർക്കുക"
 
-#: ../gui/wxpython/icons/icon.py:195
+#: ../gui/wxpython/icons/icon.py:196
 msgid "Create histogram of image or raster file"
 msgstr ""
 
-#: ../gui/wxpython/icons/icon.py:199
+#: ../gui/wxpython/icons/icon.py:200
 #, fuzzy
 msgid "Start new map display"
 msgstr "പുതിയ പ്രദർശന സ്ഥലം ഉണ്ടാക്കുക"
 
-#: ../gui/wxpython/icons/icon.py:201
+#: ../gui/wxpython/icons/icon.py:202
 #, fuzzy
 msgid "Create new workspace (Ctrl+N)"
 msgstr "പുതിയ വർക്സ്പേസ് ഉണ്ടാക്കുക(Ctrl+N)"
 
-#: ../gui/wxpython/icons/icon.py:203
+#: ../gui/wxpython/icons/icon.py:204
 msgid "Load map layers into workspace (Ctrl+L)"
 msgstr "മാപ്പ് ലയെരുകൾ വർക്സ്പേസിലെക്ക് കൊണ്ടു വരിക(Ctrl+L)"
 
-#: ../gui/wxpython/icons/icon.py:205
+#: ../gui/wxpython/icons/icon.py:206
 msgid "Open existing workspace file (Ctrl+O)"
 msgstr "നിലവിലുള്ള വർക്സ്പേസ് തുറക്കുക(Ctrl+O)"
 
-#: ../gui/wxpython/icons/icon.py:207
+#: ../gui/wxpython/icons/icon.py:208
 msgid "Save current workspace to file (Ctrl+S)"
 msgstr "എപ്പെളത്തെ വർക്സ്പേസ് ശേഖരിച്ച് വയ്ക്കുക(Ctrl+S)"
 
-#: ../gui/wxpython/icons/icon.py:209 ../gui/wxpython/menustrings.py:29
+#: ../gui/wxpython/icons/icon.py:210 ../gui/wxpython/menustrings.py:29
 #: ../gui/wxpython/gui_modules/gdialogs.py:1144
 msgid "Import raster data"
 msgstr "തിരഞ്ഞെടുക്കപെട്ട raster ലയെറുകളെ ഇറക്കുമതി ചെയ്യുക"
 
-#: ../gui/wxpython/icons/icon.py:211 ../gui/wxpython/menustrings.py:146
+#: ../gui/wxpython/icons/icon.py:212 ../gui/wxpython/menustrings.py:146
 #: ../gui/wxpython/gui_modules/gdialogs.py:1142
 #, fuzzy
 msgid "Link external raster data"
 msgstr "തിരഞ്ഞെടുക്കപെട്ട raster ലയെറുകളെ ഇറക്കുമതി ചെയ്യുക"
 
-#: ../gui/wxpython/icons/icon.py:213 ../gui/wxpython/menustrings.py:54
+#: ../gui/wxpython/icons/icon.py:214 ../gui/wxpython/menustrings.py:54
 #: ../gui/wxpython/gui_modules/gdialogs.py:1138
 msgid "Import vector data"
 msgstr "തിരഞ്ഞെടുക്കപെട്ട vector ലയെറുകളെ ഇറക്കുമതി ചെയ്യുക"
 
-#: ../gui/wxpython/icons/icon.py:215 ../gui/wxpython/menustrings.py:148
+#: ../gui/wxpython/icons/icon.py:216 ../gui/wxpython/menustrings.py:148
 #: ../gui/wxpython/gui_modules/gdialogs.py:1136
 #, fuzzy
 msgid "Link external vector data"
 msgstr "തിരഞ്ഞെടുക്കപെട്ട vector ലയെറുകളെ ഇറക്കുമതി ചെയ്യുക"
 
-#: ../gui/wxpython/icons/icon.py:217
+#: ../gui/wxpython/icons/icon.py:218
 msgid "Add raster map layer (Ctrl+R)"
 msgstr "രാസ്റ്റെർ മാപ്പ് ലെയെർ ചേർക്കുക"
 
-#: ../gui/wxpython/icons/icon.py:219
+#: ../gui/wxpython/icons/icon.py:220
 msgid "Add various raster map layers (RGB, HIS, shaded relief...)"
 msgstr ""
 
-#: ../gui/wxpython/icons/icon.py:221
+#: ../gui/wxpython/icons/icon.py:222
 msgid "Add vector map layer (Ctrl+V)"
 msgstr "വെക്റ്റർ മാപ്പ് ലെയെർ ചേർക്കുക"
 
-#: ../gui/wxpython/icons/icon.py:223
+#: ../gui/wxpython/icons/icon.py:224
 #, fuzzy
 msgid "Add various vector map layers (thematic, chart...)"
 msgstr "വെക്റ്റർ മാപ്പ് ലെയെർ ചേർക്കുക"
 
-#: ../gui/wxpython/icons/icon.py:225
+#: ../gui/wxpython/icons/icon.py:226
 msgid "Add command layer"
 msgstr "കമ്മാൺട് ലെയെർ ചേർക്കുക"
 
-#: ../gui/wxpython/icons/icon.py:227
+#: ../gui/wxpython/icons/icon.py:228
 #, fuzzy
 msgid "Add group"
 msgstr "ലെയെർ ഗ്രൂപ്പ് ചേർക്കുക"
 
-#: ../gui/wxpython/icons/icon.py:229
+#: ../gui/wxpython/icons/icon.py:230
 msgid "Add grid or vector labels overlay"
 msgstr "ഗ്രിഡ് അല്ലെങ്കിൽ മേലെ വയ്ക്കുന്ന വെക്റ്റർ ലേബെൽ ചേർക്കുക"
 
-#: ../gui/wxpython/icons/icon.py:231
+#: ../gui/wxpython/icons/icon.py:232
 #, fuzzy
 msgid "Delete selected map layer"
 msgstr "തിരഞ്ഞെടുത്ത ലെയെർ എടുത്തു കളയുക"
 
-#: ../gui/wxpython/icons/icon.py:233 ../gui/wxpython/icons/icon.py:429
+#: ../gui/wxpython/icons/icon.py:234 ../gui/wxpython/icons/icon.py:434
 msgid "Quit"
 msgstr "പുറത്തു കടക്കുക"
 
-#: ../gui/wxpython/icons/icon.py:235
+#: ../gui/wxpython/icons/icon.py:236
 msgid "Show attribute table"
 msgstr "ആട്രിബൂട്ട് പട്ടിക കാണിക്കുക"
 
-#: ../gui/wxpython/icons/icon.py:237
+#: ../gui/wxpython/icons/icon.py:238
 #, fuzzy
 msgid "Edit vector maps"
 msgstr "തിരഞ്ഞെടുക്കപെട്ട vector ലയെറുകളെ ഇറക്കുമതി ചെയ്യുക"
 
-#: ../gui/wxpython/icons/icon.py:239
+#: ../gui/wxpython/icons/icon.py:240
 #, fuzzy
 msgid "Add RGB map layer"
 msgstr "RGB ലയെർ ചേർക്കുക"
 
-#: ../gui/wxpython/icons/icon.py:241
+#: ../gui/wxpython/icons/icon.py:242
 #, fuzzy
 msgid "Add HIS map layer"
 msgstr "HIS ലയെർ ചേർക്കുക"
 
-#: ../gui/wxpython/icons/icon.py:243
+#: ../gui/wxpython/icons/icon.py:244
 msgid "Add shaded relief map layer"
 msgstr "ഷേഡട് റിലീഫ് മാപ്പ് ലയെർ ചേർക്കുക"
 
-#: ../gui/wxpython/icons/icon.py:245
+#: ../gui/wxpython/icons/icon.py:246
 msgid "Add raster flow arrows"
 msgstr "റസ്റ്റർ ഫ്ലോ ആരൊകൾ ചേർക്കുക"
 
-#: ../gui/wxpython/icons/icon.py:247
+#: ../gui/wxpython/icons/icon.py:248
 msgid "Add raster cell numbers"
 msgstr "റസ്റ്റർ സെലിന്റെ എണം ചേർക്കുക"
 
-#: ../gui/wxpython/icons/icon.py:249
+#: ../gui/wxpython/icons/icon.py:250
 #, fuzzy
 msgid "Add thematic area (choropleth) map layer"
 msgstr "തീമാറ്റിക് ചാർട്ട് ലയെർ ചേർക്കുക"
 
-#: ../gui/wxpython/icons/icon.py:251
+#: ../gui/wxpython/icons/icon.py:252
 msgid "Add thematic chart layer"
 msgstr "തീമാറ്റിക് ചാർട്ട് ലയെർ ചേർക്കുക"
 
-#: ../gui/wxpython/icons/icon.py:253
+#: ../gui/wxpython/icons/icon.py:254
 msgid "Add grid layer"
 msgstr "ഗ്രിഡ് ലയെർ ചേർക്കുക"
 
-#: ../gui/wxpython/icons/icon.py:255
+#: ../gui/wxpython/icons/icon.py:256
 msgid "Add geodesic line layer"
 msgstr "ജിയൊഡെസിക്ക് ലൈൻ ലയെർ ചേർക്കുക"
 
-#: ../gui/wxpython/icons/icon.py:257
+#: ../gui/wxpython/icons/icon.py:258
 msgid "Add rhumbline layer"
 msgstr "റമ്പ് ലൈൻ ലയെർ ചേർക്കുക"
 
-#: ../gui/wxpython/icons/icon.py:259
+#: ../gui/wxpython/icons/icon.py:260
 msgid "Add labels"
 msgstr ""
 "ഒരു പ്രവൃത്തിയെയോ ഒരു പ്രസ്താവനയെയോ സൂചിപ്പിക്കാന്‍ ഉപയോഗിക്കുന്ന വാക്കോ ചിഹ്നങ്ങളോ ചേർക്കുക"
 
-#: ../gui/wxpython/icons/icon.py:261
+#: ../gui/wxpython/icons/icon.py:262
 #, fuzzy
 msgid "Add 3D raster map layer"
 msgstr "രാസ്റ്റെർ മാപ്പ് ലെയെർ ചേർക്കുക"
 
-#: ../gui/wxpython/icons/icon.py:262
+#: ../gui/wxpython/icons/icon.py:263
 msgid "Note that 3D raster data are rendered only in 3D view mode"
 msgstr ""
 
-#: ../gui/wxpython/icons/icon.py:264
+#: ../gui/wxpython/icons/icon.py:265
 #, fuzzy
 msgid "Show GUI settings"
 msgstr "സജ്ജീകരണം കാണിക്കുക"
 
-#: ../gui/wxpython/icons/icon.py:266
-msgid "Start Graphical Modeler"
-msgstr ""
+#: ../gui/wxpython/icons/icon.py:267
+#, fuzzy
+msgid "Graphical Modeler"
+msgstr "പുറത്ത് കടക്കുക"
 
-#: ../gui/wxpython/icons/icon.py:268
+#: ../gui/wxpython/icons/icon.py:269
 #: ../gui/wxpython/gui_modules/gdialogs.py:414
 msgid "Set options"
 msgstr ""
 
-#: ../gui/wxpython/icons/icon.py:272
+#: ../gui/wxpython/icons/icon.py:271
+msgid "Hardcopy Map Ouput Utility"
+msgstr ""
+
+#: ../gui/wxpython/icons/icon.py:273
+#, fuzzy
+msgid "Raster Map Calculator"
+msgstr "രാസ്റ്റെർ മാപ്പ് ലെയെർ ചേർക്കുക"
+
+#: ../gui/wxpython/icons/icon.py:277
 msgid "Digitize new point"
 msgstr "പുതിയ ബിന്ധു ഡിജിറ്റൈസ് ചെയ്യുക"
 
-#: ../gui/wxpython/icons/icon.py:273 ../gui/wxpython/icons/icon.py:282
-#: ../gui/wxpython/icons/icon.py:285
+#: ../gui/wxpython/icons/icon.py:278 ../gui/wxpython/icons/icon.py:287
+#: ../gui/wxpython/icons/icon.py:290
 msgid "Left: new point"
 msgstr "എടത്: പുതിയ ബിന്ദു"
 
-#: ../gui/wxpython/icons/icon.py:275
+#: ../gui/wxpython/icons/icon.py:280
 msgid "Digitize new line"
 msgstr "പുതിയ വര ഡിജിറ്റൈസ് ചെയ്യുക"
 
-#: ../gui/wxpython/icons/icon.py:276 ../gui/wxpython/icons/icon.py:279
-#: ../gui/wxpython/icons/icon.py:303
+#: ../gui/wxpython/icons/icon.py:281 ../gui/wxpython/icons/icon.py:284
+#: ../gui/wxpython/icons/icon.py:308
 #, fuzzy
 msgid "Left: new point; Ctrl+Left: undo last point; Right: close line"
 msgstr "എടത്: പുതിയ ബിന്ധു; നടുക്ക്: മുമ്പ് വരച്ച ബിന്ധു മയിച്ചു കളയുക; വലത്: വര നിറുത്തുക"
 
-#: ../gui/wxpython/icons/icon.py:278
+#: ../gui/wxpython/icons/icon.py:283
 msgid "Digitize new boundary"
 msgstr "പുതിയ അതിർത്തി ഡിജിറ്റൈസ് ചെയ്യുക"
 
-#: ../gui/wxpython/icons/icon.py:281
+#: ../gui/wxpython/icons/icon.py:286
 msgid "Digitize new centroid"
 msgstr "പുതിയ നടു ബിന്ധു ഡിജിറ്റൈസ് ചെയ്യുക"
 
-#: ../gui/wxpython/icons/icon.py:284
+#: ../gui/wxpython/icons/icon.py:289
 msgid ""
 "Digitize new area (composition of boundaries without category and one "
 "centroid with category)"
 msgstr ""
 
-#: ../gui/wxpython/icons/icon.py:287
+#: ../gui/wxpython/icons/icon.py:292
 msgid "Add new vertex"
 msgstr "പുതിയ അഗ്രം ചേർക്കുക"
 
-#: ../gui/wxpython/icons/icon.py:288 ../gui/wxpython/icons/icon.py:291
-#: ../gui/wxpython/icons/icon.py:294 ../gui/wxpython/icons/icon.py:306
-#: ../gui/wxpython/icons/icon.py:309 ../gui/wxpython/icons/icon.py:312
-#: ../gui/wxpython/icons/icon.py:317 ../gui/wxpython/icons/icon.py:324
+#: ../gui/wxpython/icons/icon.py:293 ../gui/wxpython/icons/icon.py:296
+#: ../gui/wxpython/icons/icon.py:299 ../gui/wxpython/icons/icon.py:311
+#: ../gui/wxpython/icons/icon.py:314 ../gui/wxpython/icons/icon.py:317
+#: ../gui/wxpython/icons/icon.py:322 ../gui/wxpython/icons/icon.py:329
 #, fuzzy
 msgid "Left: Select; Ctrl+Left: Unselect; Right: Confirm"
 msgstr "എടത്: തിരഞ്ഞെടുക്കുക; നടുക്ക്: തിരഞ്ഞെടുത്തത് മാറ്റുക; വലത്: ഉറപ്പ് വരുത്തുക"
 
-#: ../gui/wxpython/icons/icon.py:290
-#: ../gui/wxpython/gui_modules/toolbars.py:788
+#: ../gui/wxpython/icons/icon.py:295
+#: ../gui/wxpython/gui_modules/toolbars.py:791
 msgid "Copy categories"
 msgstr "കാറ്റഗറിയുടെ പതിപ്പ് ഉണ്ടാക്കുക"
 
-#: ../gui/wxpython/icons/icon.py:293
+#: ../gui/wxpython/icons/icon.py:298
 msgid "Delete feature(s)"
 msgstr "ഫീച്ചറുകൾ കളയുക"
 
-#: ../gui/wxpython/icons/icon.py:296
+#: ../gui/wxpython/icons/icon.py:301
 msgid "Display/update attributes"
 msgstr "ഫീച്ചറുകൾ കാണിക്കുകയൊ/മാറ്റം വരുത്തുകയൊ ചെയ്യുക"
 
-#: ../gui/wxpython/icons/icon.py:297 ../gui/wxpython/icons/icon.py:300
+#: ../gui/wxpython/icons/icon.py:302 ../gui/wxpython/icons/icon.py:305
 msgid "Left: Select"
 msgstr "എടത്: തിരഞ്ഞെടുക്കുക"
 
-#: ../gui/wxpython/icons/icon.py:299
+#: ../gui/wxpython/icons/icon.py:304
 msgid "Display/update categories"
 msgstr "കാറ്റഗറികൾ കാണിക്കുകയൊ/മാറ്റം വരുത്തുകയൊ ചെയ്യുക"
 
-#: ../gui/wxpython/icons/icon.py:302
+#: ../gui/wxpython/icons/icon.py:307
 msgid "Edit line/boundary"
 msgstr "ലൈനൊ/അതിർത്തിയൊ മാറ്റം വരുത്തുക"
 
-#: ../gui/wxpython/icons/icon.py:305
+#: ../gui/wxpython/icons/icon.py:310
 msgid "Move feature(s)"
 msgstr "ഫീച്ചറുകൾ നീക്കുക"
 
-#: ../gui/wxpython/icons/icon.py:308
+#: ../gui/wxpython/icons/icon.py:313
 msgid "Move vertex"
 msgstr "അഗ്രം നീക്കുക"
 
-#: ../gui/wxpython/icons/icon.py:311
+#: ../gui/wxpython/icons/icon.py:316
 msgid "Remove vertex"
 msgstr "അഗ്രം എടുത്തു കളയുക"
 
-#: ../gui/wxpython/icons/icon.py:314
-#: ../gui/wxpython/gui_modules/toolbars.py:863
+#: ../gui/wxpython/icons/icon.py:319
+#: ../gui/wxpython/gui_modules/toolbars.py:866
 msgid "Digitization settings"
 msgstr ""
 
-#: ../gui/wxpython/icons/icon.py:316
+#: ../gui/wxpython/icons/icon.py:321
 msgid "Split line/boundary"
 msgstr "ലൈനൊ/അതിർത്തിയൊ വിഘടിപിക്കുക"
 
-#: ../gui/wxpython/icons/icon.py:319
+#: ../gui/wxpython/icons/icon.py:324
 #, fuzzy
 msgid "Quit digitizer"
 msgstr "ഡിജിറ്റൈസേഷനിൽ നിന്നും പുറത്ത് വരിക"
 
-#: ../gui/wxpython/icons/icon.py:320
+#: ../gui/wxpython/icons/icon.py:325
 msgid "Quit digitizer and save changes"
 msgstr ""
 
-#: ../gui/wxpython/icons/icon.py:322
+#: ../gui/wxpython/icons/icon.py:327
 msgid "Additional tools (copy, flip, connect, etc.)"
 msgstr "കൂടുതൽ ഉള്ള വഴികൾ (പകർത്തുക,ഞൊട്ടുക,യോജിപ്പിക്കുക,മുതലായവ.)"
 
-#: ../gui/wxpython/icons/icon.py:326
+#: ../gui/wxpython/icons/icon.py:331
 msgid "Undo"
 msgstr "പഴയ അവസ്ഥയിലേക്ക് വരിക"
 
-#: ../gui/wxpython/icons/icon.py:327
+#: ../gui/wxpython/icons/icon.py:332
 msgid "Undo previous changes"
 msgstr "മുൻപ് വരുത്തിയ മാറ്റങ്ങൾ ഇല്ലാതാക്കുക"
 
-#: ../gui/wxpython/icons/icon.py:331
+#: ../gui/wxpython/icons/icon.py:336
 msgid "Draw/re-draw profile"
 msgstr "അപഗ്രഥനം വരക്കുകയൊ/വീണ്ടും വരക്കുകയൊ ചെയ്യുക."
 
-#: ../gui/wxpython/icons/icon.py:333
+#: ../gui/wxpython/icons/icon.py:338
 msgid "Draw transect in map display window to profile"
 msgstr ""
 
-#: ../gui/wxpython/icons/icon.py:335
+#: ../gui/wxpython/icons/icon.py:340
 msgid "Profile options"
 msgstr "അപഗ്രഥനത്തിൻമേലുള്ള വഴികൾ"
 
-#: ../gui/wxpython/icons/icon.py:337
+#: ../gui/wxpython/icons/icon.py:342
 #, fuzzy
 msgid "Save profile data to CSV file"
 msgstr "ഡിസ്പ്ലേ ഗ്രഫിക്സ് ഫയലിൽ ശേഖരിച്ച് വയ്ക്കുക"
 
-#: ../gui/wxpython/icons/icon.py:339
+#: ../gui/wxpython/icons/icon.py:344
 msgid "Quit Profile Analysis Tool"
 msgstr ""
 
-#: ../gui/wxpython/icons/icon.py:343
+#: ../gui/wxpython/icons/icon.py:348
 msgid "Set GCP"
 msgstr ""
 
-#: ../gui/wxpython/icons/icon.py:344
+#: ../gui/wxpython/icons/icon.py:349
 msgid "Define GCP (Ground Control Points)"
 msgstr ""
 
-#: ../gui/wxpython/icons/icon.py:346 ../gui/wxpython/menustrings.py:180
-#: ../gui/wxpython/gui_modules/gcpmanager.py:177
-#: ../gui/wxpython/gui_modules/gcpmanager.py:183
+#: ../gui/wxpython/icons/icon.py:351 ../gui/wxpython/menustrings.py:180
 msgid "Georectify"
 msgstr ""
 
-#: ../gui/wxpython/icons/icon.py:348
+#: ../gui/wxpython/icons/icon.py:353
 msgid "Recalculate RMS error"
 msgstr ""
 
-#: ../gui/wxpython/icons/icon.py:350
+#: ../gui/wxpython/icons/icon.py:355
 msgid "Save GCPs to POINTS file"
 msgstr ""
 
-#: ../gui/wxpython/icons/icon.py:352
+#: ../gui/wxpython/icons/icon.py:357
 msgid "Add new GCP"
 msgstr ""
 
-#: ../gui/wxpython/icons/icon.py:354
+#: ../gui/wxpython/icons/icon.py:359
 msgid "Delete selected GCP"
 msgstr ""
 
-#: ../gui/wxpython/icons/icon.py:356
+#: ../gui/wxpython/icons/icon.py:361
 msgid "Clear selected GCP"
 msgstr ""
 
-#: ../gui/wxpython/icons/icon.py:358
+#: ../gui/wxpython/icons/icon.py:363
 msgid "Reload GCPs from POINTS file"
 msgstr ""
 
-#: ../gui/wxpython/icons/icon.py:360
+#: ../gui/wxpython/icons/icon.py:365
 msgid "Quit georectification"
 msgstr ""
 
-#: ../gui/wxpython/icons/icon.py:362
-#: ../gui/wxpython/gui_modules/nviz_tools.py:1289
-#: ../gui/wxpython/gui_modules/gselect.py:1028
+#: ../gui/wxpython/icons/icon.py:367
+#: ../gui/wxpython/gui_modules/nviz_tools.py:1290
+#: ../gui/wxpython/gui_modules/gselect.py:1031
 msgid "Settings"
 msgstr "സജ്ജീകരണം"
 
-#: ../gui/wxpython/icons/icon.py:363
+#: ../gui/wxpython/icons/icon.py:368
 msgid "Settings dialog for georectification tool"
 msgstr ""
 
-#: ../gui/wxpython/icons/icon.py:367
+#: ../gui/wxpython/icons/icon.py:372
 msgid "Switch to view control page"
 msgstr ""
 
-#: ../gui/wxpython/icons/icon.py:368
+#: ../gui/wxpython/icons/icon.py:373
 #, fuzzy
 msgid "Change view settings"
 msgstr "സജ്ജീകരണം മാറ്റുക"
 
-#: ../gui/wxpython/icons/icon.py:370
+#: ../gui/wxpython/icons/icon.py:375
 msgid "Switch to surface (raster) control page"
 msgstr ""
 
-#: ../gui/wxpython/icons/icon.py:371
+#: ../gui/wxpython/icons/icon.py:376
 msgid "Change surface (loaded raster maps) settings"
 msgstr ""
 
-#: ../gui/wxpython/icons/icon.py:373
+#: ../gui/wxpython/icons/icon.py:378
 msgid "Switch to vector (2D/3D) control page"
 msgstr ""
 
-#: ../gui/wxpython/icons/icon.py:374
+#: ../gui/wxpython/icons/icon.py:379
 #, fuzzy
 msgid "Change 2D/3D vector settings"
 msgstr "സജ്ജീകരണം മാറ്റുക"
 
-#: ../gui/wxpython/icons/icon.py:376
+#: ../gui/wxpython/icons/icon.py:381
 msgid "Switch to volume (3D raster) control page"
 msgstr ""
 
-#: ../gui/wxpython/icons/icon.py:377
+#: ../gui/wxpython/icons/icon.py:382
 msgid "Change volume (loaded 3D raster maps) settings"
 msgstr ""
 
-#: ../gui/wxpython/icons/icon.py:379
+#: ../gui/wxpython/icons/icon.py:384
 msgid "Switch to lighting control page"
-msgstr ""
-
-#: ../gui/wxpython/icons/icon.py:380
-#, fuzzy
-msgid "Change lighting settings"
-msgstr "സജ്ജീകരണം മാറ്റുക"
-
-#: ../gui/wxpython/icons/icon.py:382
-msgid "Switch to fringe control page"
-msgstr ""
-
-#: ../gui/wxpython/icons/icon.py:383
-msgid "Switch on/off fringes"
 msgstr ""
 
 #: ../gui/wxpython/icons/icon.py:385
 #, fuzzy
+msgid "Change lighting settings"
+msgstr "സജ്ജീകരണം മാറ്റുക"
+
+#: ../gui/wxpython/icons/icon.py:387
+msgid "Switch to fringe control page"
+msgstr ""
+
+#: ../gui/wxpython/icons/icon.py:388
+msgid "Switch on/off fringes"
+msgstr ""
+
+#: ../gui/wxpython/icons/icon.py:390
+#, fuzzy
 msgid "3D view mode tools"
 msgstr "സജ്ജീകരണം കാണിക്കുക"
 
-#: ../gui/wxpython/icons/icon.py:386
+#: ../gui/wxpython/icons/icon.py:391
 #, fuzzy
 msgid "Show/hide 3D view mode settings dialog"
 msgstr "സജ്ജീകരണം കാണിക്കുക"
 
-#: ../gui/wxpython/icons/icon.py:388
+#: ../gui/wxpython/icons/icon.py:393
 msgid "Quit 3D view mode"
 msgstr ""
 
-#: ../gui/wxpython/icons/icon.py:389
+#: ../gui/wxpython/icons/icon.py:394
 msgid "Switch back to 2D view mode"
 msgstr ""
 
-#: ../gui/wxpython/icons/icon.py:393
+#: ../gui/wxpython/icons/icon.py:398
 #, fuzzy
 msgid "Create new model (Ctrl+N)"
 msgstr "പുതിയ വർക്സ്പേസ് ഉണ്ടാക്കുക(Ctrl+N)"
 
-#: ../gui/wxpython/icons/icon.py:395
+#: ../gui/wxpython/icons/icon.py:400
 msgid "Load model from file (Ctrl+O)"
 msgstr ""
 
-#: ../gui/wxpython/icons/icon.py:397
+#: ../gui/wxpython/icons/icon.py:402
 #, fuzzy
 msgid "Save current model to file (Ctrl+S)"
 msgstr "എപ്പെളത്തെ വർക്സ്പേസ് ശേഖരിച്ച് വയ്ക്കുക(Ctrl+S)"
 
-#: ../gui/wxpython/icons/icon.py:399 ../gui/wxpython/menustrings.py:826
+#: ../gui/wxpython/icons/icon.py:404 ../gui/wxpython/menustrings.py:826
 msgid "Export model to image"
 msgstr ""
 
-#: ../gui/wxpython/icons/icon.py:401 ../gui/wxpython/menustrings.py:828
+#: ../gui/wxpython/icons/icon.py:406 ../gui/wxpython/menustrings.py:828
 msgid "Export model to Python script"
 msgstr ""
 
-#: ../gui/wxpython/icons/icon.py:403 ../gui/wxpython/menustrings.py:836
+#: ../gui/wxpython/icons/icon.py:408 ../gui/wxpython/menustrings.py:836
 msgid "Add action (GRASS module) to model"
 msgstr ""
 
-#: ../gui/wxpython/icons/icon.py:405 ../gui/wxpython/menustrings.py:838
+#: ../gui/wxpython/icons/icon.py:410 ../gui/wxpython/menustrings.py:838
 msgid "Add data item to model"
 msgstr ""
 
-#: ../gui/wxpython/icons/icon.py:407 ../gui/wxpython/menustrings.py:840
+#: ../gui/wxpython/icons/icon.py:412 ../gui/wxpython/menustrings.py:840
 msgid "Define relation between data and action items"
 msgstr ""
 
-#: ../gui/wxpython/icons/icon.py:409 ../gui/wxpython/menustrings.py:184
+#: ../gui/wxpython/icons/icon.py:414 ../gui/wxpython/menustrings.py:184
 #: ../gui/wxpython/menustrings.py:851
 msgid "Run model"
 msgstr "മാത്രിക തുടങ്ങുക"
 
-#: ../gui/wxpython/icons/icon.py:411 ../gui/wxpython/menustrings.py:853
+#: ../gui/wxpython/icons/icon.py:416 ../gui/wxpython/menustrings.py:853
 #, fuzzy
 msgid "Validate model"
 msgstr "മാത്രിക പരിശൊദിക്കുന്നു.."
 
-#: ../gui/wxpython/icons/icon.py:413
+#: ../gui/wxpython/icons/icon.py:418
 #, fuzzy
 msgid "Show modeler settings"
 msgstr "സജ്ജീകരണം കാണിക്കുക"
 
-#: ../gui/wxpython/icons/icon.py:415
+#: ../gui/wxpython/icons/icon.py:420
 #, fuzzy
 msgid "Show model properties"
 msgstr "സജ്ജീകരണം കാണിക്കുക"
 
-#: ../gui/wxpython/icons/icon.py:417
+#: ../gui/wxpython/icons/icon.py:422
 msgid "Manage model variables"
 msgstr ""
 
-#: ../gui/wxpython/icons/icon.py:419
+#: ../gui/wxpython/icons/icon.py:424
 msgid "Redraw model canvas"
 msgstr ""
 
-#: ../gui/wxpython/icons/icon.py:421
+#: ../gui/wxpython/icons/icon.py:426
 #: ../gui/wxpython/gui_modules/gmodeler.py:677
 msgid "Quit Graphical Modeler"
 msgstr ""
 
-#: ../gui/wxpython/icons/icon.py:425
+#: ../gui/wxpython/icons/icon.py:430
 msgid "Select font"
 msgstr "അക്ഷരം തിരഞ്ഞെടുക്കുക"
 
-#: ../gui/wxpython/icons/icon.py:427
+#: ../gui/wxpython/icons/icon.py:432
 #, fuzzy
-msgid "Show help page"
+msgid "Show manual"
 msgstr "സജ്ജീകരണം കാണിക്കുക"
+
+#: ../gui/wxpython/icons/icon.py:438
+msgid "Generate text file with mapping instructions"
+msgstr ""
+
+#: ../gui/wxpython/icons/icon.py:440
+msgid "Load text file with mapping instructions"
+msgstr ""
+
+#: ../gui/wxpython/icons/icon.py:442
+msgid "Generate PostScript output"
+msgstr ""
+
+#: ../gui/wxpython/icons/icon.py:444
+msgid "Generate PDF output"
+msgstr ""
+
+#: ../gui/wxpython/icons/icon.py:446
+#: ../gui/wxpython/gui_modules/histogram.py:432
+#: ../gui/wxpython/gui_modules/mapdisp.py:1169
+#: ../gui/wxpython/gui_modules/gcpmapdisp.py:934
+msgid "Page setup"
+msgstr ""
+
+#: ../gui/wxpython/icons/icon.py:447
+msgid "Specify paper size, margins and orientation"
+msgstr ""
+
+#: ../gui/wxpython/icons/icon.py:449
+msgid "Full extent"
+msgstr ""
+
+#: ../gui/wxpython/icons/icon.py:450
+msgid "Zoom to full extent"
+msgstr ""
+
+#: ../gui/wxpython/icons/icon.py:452
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:1951
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:2006
+#, fuzzy
+msgid "Map frame"
+msgstr "മാപ്പ് ലയെറുകൾ"
+
+#: ../gui/wxpython/icons/icon.py:453
+msgid "Click and drag to place map frame"
+msgstr ""
+
+#: ../gui/wxpython/icons/icon.py:455
+#: ../gui/wxpython/gui_modules/nviz_tools.py:321
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:2476
+#: ../gui/wxpython/gui_modules/nviz_mapdisp.py:665
+msgid "Raster map"
+msgstr ""
+
+#: ../gui/wxpython/icons/icon.py:456
+#, fuzzy
+msgid "Add raster map"
+msgstr "3D റസ്റ്റർ മാപ്പ് ചേർക്കുക"
+
+#: ../gui/wxpython/icons/icon.py:458
+#: ../gui/wxpython/gui_modules/nviz_tools.py:630
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3920
+#, fuzzy
+msgid "Vector map"
+msgstr "തിരഞ്ഞെടുക്കപെട്ട vector ലയെറുകളെ ഇറക്കുമതി ചെയ്യുക"
+
+#: ../gui/wxpython/icons/icon.py:459
+#, fuzzy
+msgid "Add vector map"
+msgstr "വെക്റ്റർ മാപ്പ് ലെയെർ ചേർക്കുക"
+
+#: ../gui/wxpython/icons/icon.py:461
+#, fuzzy
+msgid "Delete selected object"
+msgstr "തിരഞ്ഞെടുത്ത ലൊക്കെഷൻ എടുത്തുകളയുക"
+
+#: ../gui/wxpython/icons/icon.py:463
+#, fuzzy
+msgid "Show preview"
+msgstr "ഗ്രിഡ് കാണിക്കുക"
+
+#: ../gui/wxpython/icons/icon.py:465
+msgid "Quit Hardcopy Map Utility"
+msgstr ""
+
+#: ../gui/wxpython/icons/icon.py:467
+#, fuzzy
+msgid "Add text"
+msgstr "റ്റെക്സ്റ്റ് ലയെർ ചേർക്കുക"
+
+#: ../gui/wxpython/icons/icon.py:469
+#, fuzzy
+msgid "Add map info"
+msgstr "മാപ്പിലെക്ക് കാര്യങൾ ചെർക്കുക"
+
+#: ../gui/wxpython/icons/icon.py:473
+#, fuzzy
+msgid "Add scale bar"
+msgstr "ജിയൊഡെസിക്ക് ലൈൻ ലയെർ ചേർക്കുക"
 
 #: ../gui/wxpython/scripts/p.cmd.py:53 ../gui/wxpython/scripts/p.rast.py:99
 #: ../gui/wxpython/scripts/p.vect.py:356
@@ -997,12 +1111,12 @@ msgstr "തിരഞ്ഞെടുക്കപെട്ട raster ലയെറ�
 #: ../gui/wxpython/gui_modules/vclean.py:144
 #: ../gui/wxpython/gui_modules/gmodeler.py:3315
 #: ../gui/wxpython/gui_modules/gdialogs.py:983
-#: ../gui/wxpython/gui_modules/preferences.py:1382
+#: ../gui/wxpython/gui_modules/preferences.py:1511
 msgid "Allow output files to overwrite existing files"
 msgstr ""
 
 #: ../gui/wxpython/scripts/vkrige.py:153
-#: ../gui/wxpython/gui_modules/mcalc_builder.py:134
+#: ../gui/wxpython/gui_modules/mcalc_builder.py:132
 #: ../gui/wxpython/gui_modules/ghelp.py:223
 #: ../gui/wxpython/gui_modules/vclean.py:165
 #: ../gui/wxpython/gui_modules/gmodeler.py:3432
@@ -1056,7 +1170,7 @@ msgid "&File"
 msgstr "ഫയൽ"
 
 #: ../gui/wxpython/menustrings.py:3
-#: ../gui/wxpython/gui_modules/preferences.py:1782
+#: ../gui/wxpython/gui_modules/preferences.py:1911
 msgid "Workspace"
 msgstr "വർക്സ്പേസ്"
 
@@ -1665,7 +1779,7 @@ msgid "List filtered"
 msgstr ""
 
 #: ../gui/wxpython/menustrings.py:157
-#: ../gui/wxpython/gui_modules/layertree.py:275
+#: ../gui/wxpython/gui_modules/layertree.py:276
 msgid "Rename"
 msgstr ""
 
@@ -1674,6 +1788,7 @@ msgid "Renames data base element files in the user's current mapset."
 msgstr ""
 
 #: ../gui/wxpython/menustrings.py:159
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:2640
 msgid "Delete"
 msgstr ""
 
@@ -2226,6 +2341,7 @@ msgstr ""
 #: ../gui/wxpython/gui_modules/nviz_tools.py:352
 #: ../gui/wxpython/gui_modules/nviz_tools.py:550
 #: ../gui/wxpython/gui_modules/nviz_tools.py:1028
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3049
 msgid "Mask"
 msgstr ""
 
@@ -2368,7 +2484,7 @@ msgid "Traces a flow through an elevation model on a raster map."
 msgstr ""
 
 #: ../gui/wxpython/menustrings.py:324
-#: ../gui/wxpython/gui_modules/layertree.py:755
+#: ../gui/wxpython/gui_modules/layertree.py:765
 msgid "Shaded relief"
 msgstr ""
 
@@ -3089,6 +3205,7 @@ msgid "Surface area estimation for rasters."
 msgstr ""
 
 #: ../gui/wxpython/menustrings.py:490
+#: ../gui/wxpython/gui_modules/layertree.py:391
 msgid "Univariate raster statistics"
 msgstr ""
 
@@ -3995,7 +4112,7 @@ msgid "Performs raster map matrix filter."
 msgstr ""
 
 #: ../gui/wxpython/menustrings.py:709
-#: ../gui/wxpython/gui_modules/layertree.py:388
+#: ../gui/wxpython/gui_modules/layertree.py:389
 msgid "Histogram"
 msgstr ""
 
@@ -4550,7 +4667,7 @@ msgid "Display information about Graphical Modeler"
 msgstr ""
 
 #: ../gui/wxpython/gui_modules/colorrules.py:40
-#: ../gui/wxpython/gui_modules/layertree.py:386
+#: ../gui/wxpython/gui_modules/layertree.py:387
 msgid "Set color table"
 msgstr ""
 
@@ -4606,6 +4723,7 @@ msgid "Preview"
 msgstr ""
 
 #: ../gui/wxpython/gui_modules/colorrules.py:394
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3865
 #, fuzzy
 msgid "range"
 msgstr "നടത്തിപ്പ് "
@@ -4661,20 +4779,14 @@ msgid "Select font for histogram text"
 msgstr ""
 
 #: ../gui/wxpython/gui_modules/histogram.py:403
-#: ../gui/wxpython/gui_modules/mapdisp.py:1139
+#: ../gui/wxpython/gui_modules/mapdisp.py:1140
 #: ../gui/wxpython/gui_modules/gcpmapdisp.py:905
 #: ../gui/wxpython/gui_modules/gmodeler.py:1042
 msgid "Choose a file name to save the image (no need to add extension)"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/histogram.py:432
-#: ../gui/wxpython/gui_modules/mapdisp.py:1168
-#: ../gui/wxpython/gui_modules/gcpmapdisp.py:934
-msgid "Page setup"
-msgstr ""
-
 #: ../gui/wxpython/gui_modules/histogram.py:436
-#: ../gui/wxpython/gui_modules/mapdisp.py:1172
+#: ../gui/wxpython/gui_modules/mapdisp.py:1173
 #: ../gui/wxpython/gui_modules/gcpmapdisp.py:938
 msgid "Print preview"
 msgstr ""
@@ -4693,194 +4805,194 @@ msgstr "ഗ്രാസ്സ് മാപ്പ് ഗണനയന്ത്ര�
 msgid "mapcalc statement"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/mcalc_builder.py:116
-#: ../gui/wxpython/gui_modules/nviz_tools.py:893
-#, fuzzy
-msgid "3D raster map"
-msgstr "മാപ്പ്സെറ്റ് ഉണ്ടാക്കുക"
-
-#: ../gui/wxpython/gui_modules/mcalc_builder.py:119
-#, fuzzy
-msgid "raster map"
-msgstr "മാപ്പ്സെറ്റ് ഉണ്ടാക്കുക"
-
-#: ../gui/wxpython/gui_modules/mcalc_builder.py:123
+#: ../gui/wxpython/gui_modules/mcalc_builder.py:121
 msgid "Operators"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/mcalc_builder.py:125
+#: ../gui/wxpython/gui_modules/mcalc_builder.py:123
 #, fuzzy
 msgid "Operands"
 msgstr "തുറക്കുക"
 
-#: ../gui/wxpython/gui_modules/mcalc_builder.py:127
+#: ../gui/wxpython/gui_modules/mcalc_builder.py:125
 msgid "Expression"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/mcalc_builder.py:132
+#: ../gui/wxpython/gui_modules/mcalc_builder.py:130
 msgid "Cl&ear"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/mcalc_builder.py:138
+#: ../gui/wxpython/gui_modules/mcalc_builder.py:136
 #, fuzzy
 msgid "Save expression to file"
 msgstr "വർക്സ്പേസ് സംഭരിച്ചു വെക്കുക"
 
-#: ../gui/wxpython/gui_modules/mcalc_builder.py:140
+#: ../gui/wxpython/gui_modules/mcalc_builder.py:138
 #: ../gui/wxpython/gui_modules/gdialogs.py:737
 msgid "&Load"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/mcalc_builder.py:141
+#: ../gui/wxpython/gui_modules/mcalc_builder.py:139
 msgid "Load expression from file"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/mcalc_builder.py:145
+#: ../gui/wxpython/gui_modules/mcalc_builder.py:143
 msgid "exponent"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/mcalc_builder.py:147
+#: ../gui/wxpython/gui_modules/mcalc_builder.py:145
 msgid "divide"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/mcalc_builder.py:149
+#: ../gui/wxpython/gui_modules/mcalc_builder.py:147
 #, fuzzy
 msgid "add"
 msgstr "ചേർക്കുക"
 
-#: ../gui/wxpython/gui_modules/mcalc_builder.py:151
+#: ../gui/wxpython/gui_modules/mcalc_builder.py:149
 msgid "subtract"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/mcalc_builder.py:153
+#: ../gui/wxpython/gui_modules/mcalc_builder.py:151
 msgid "modulus"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/mcalc_builder.py:155
+#: ../gui/wxpython/gui_modules/mcalc_builder.py:153
 #, fuzzy
 msgid "multiply"
 msgstr "[അനേകം]"
 
-#: ../gui/wxpython/gui_modules/mcalc_builder.py:160
+#: ../gui/wxpython/gui_modules/mcalc_builder.py:158
 msgid "left shift"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/mcalc_builder.py:162
+#: ../gui/wxpython/gui_modules/mcalc_builder.py:160
 msgid "right shift"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/mcalc_builder.py:164
+#: ../gui/wxpython/gui_modules/mcalc_builder.py:162
 msgid "right shift (unsigned)"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/mcalc_builder.py:166
+#: ../gui/wxpython/gui_modules/mcalc_builder.py:164
 msgid "greater than"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/mcalc_builder.py:168
+#: ../gui/wxpython/gui_modules/mcalc_builder.py:166
 msgid "greater than or equal to"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/mcalc_builder.py:170
+#: ../gui/wxpython/gui_modules/mcalc_builder.py:168
 msgid "less than"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/mcalc_builder.py:172
+#: ../gui/wxpython/gui_modules/mcalc_builder.py:170
 msgid "less than or equal to"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/mcalc_builder.py:174
+#: ../gui/wxpython/gui_modules/mcalc_builder.py:172
 msgid "equal to"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/mcalc_builder.py:176
+#: ../gui/wxpython/gui_modules/mcalc_builder.py:174
 msgid "not equal to"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/mcalc_builder.py:179
+#: ../gui/wxpython/gui_modules/mcalc_builder.py:177
 msgid "one's complement"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/mcalc_builder.py:181
+#: ../gui/wxpython/gui_modules/mcalc_builder.py:179
 msgid "NOT"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/mcalc_builder.py:183
+#: ../gui/wxpython/gui_modules/mcalc_builder.py:181
 msgid "bitwise AND"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/mcalc_builder.py:185
+#: ../gui/wxpython/gui_modules/mcalc_builder.py:183
 msgid "bitwise OR"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/mcalc_builder.py:187
+#: ../gui/wxpython/gui_modules/mcalc_builder.py:185
 msgid "logical AND"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/mcalc_builder.py:189
+#: ../gui/wxpython/gui_modules/mcalc_builder.py:187
 msgid "logical AND (ignores NULLs)"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/mcalc_builder.py:191
+#: ../gui/wxpython/gui_modules/mcalc_builder.py:189
 msgid "logical OR"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/mcalc_builder.py:193
+#: ../gui/wxpython/gui_modules/mcalc_builder.py:191
 msgid "logical OR (ignores NULLs)"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/mcalc_builder.py:195
+#: ../gui/wxpython/gui_modules/mcalc_builder.py:193
 #, fuzzy
 msgid "conditional"
 msgstr "ഐച്ഛിക"
 
-#: ../gui/wxpython/gui_modules/mcalc_builder.py:207
-#, python-format
-msgid "Name for new %s to create"
-msgstr ""
+#: ../gui/wxpython/gui_modules/mcalc_builder.py:206
+#, fuzzy
+msgid "Name for new 3D raster map to create"
+msgstr "തിരഞ്ഞെടുക്കപെട്ട raster ലയെറുകളെ ഇറക്കുമതി ചെയ്യുക"
 
-#: ../gui/wxpython/gui_modules/mcalc_builder.py:210
-#, fuzzy, python-format
-msgid "Insert existing %s"
+#: ../gui/wxpython/gui_modules/mcalc_builder.py:208
+#, fuzzy
+msgid "Name for new raster map to create"
+msgstr "തിരഞ്ഞെടുക്കപെട്ട raster ലയെറുകളെ ഇറക്കുമതി ചെയ്യുക"
+
+#: ../gui/wxpython/gui_modules/mcalc_builder.py:212
+#, fuzzy
+msgid "Insert existing 3D raster map"
 msgstr "ഉപയോഗിക്കുന്ന ആളുടെ സജ്ജീകരണം"
 
 #: ../gui/wxpython/gui_modules/mcalc_builder.py:214
+#, fuzzy
+msgid "Insert existing raster map"
+msgstr "ഉപയോഗിക്കുന്ന ആളുടെ സജ്ജീകരണം"
+
+#: ../gui/wxpython/gui_modules/mcalc_builder.py:218
 msgid "Insert mapcalc function"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/mcalc_builder.py:221
+#: ../gui/wxpython/gui_modules/mcalc_builder.py:225
 #, fuzzy
 msgid "Add created raster map into layer tree"
 msgstr "രാസ്റ്റെർ മാപ്പ് ലെയെർ ചേർക്കുക"
 
-#: ../gui/wxpython/gui_modules/mcalc_builder.py:428
+#: ../gui/wxpython/gui_modules/mcalc_builder.py:432
 msgid "You must enter the name of a new map to create"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/mcalc_builder.py:433
+#: ../gui/wxpython/gui_modules/mcalc_builder.py:437
 msgid "You must enter a mapcalc statement to create a new map"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/mcalc_builder.py:470
+#: ../gui/wxpython/gui_modules/mcalc_builder.py:474
 #, fuzzy
 msgid "Choose a file name to save the expression"
 msgstr "തുറക്കെണ്ട GRC ഫയൽ തിരഞെടുക്കുക"
 
-#: ../gui/wxpython/gui_modules/mcalc_builder.py:471
-#: ../gui/wxpython/gui_modules/mcalc_builder.py:492
+#: ../gui/wxpython/gui_modules/mcalc_builder.py:475
+#: ../gui/wxpython/gui_modules/mcalc_builder.py:496
 msgid "Expression file (*)|*"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/mcalc_builder.py:491
+#: ../gui/wxpython/gui_modules/mcalc_builder.py:495
 #, fuzzy
 msgid "Choose a file name to load the expression"
 msgstr "തുറക്കെണ്ട GRC ഫയൽ തിരഞെടുക്കുക"
 
-#: ../gui/wxpython/gui_modules/menudata.py:79
+#: ../gui/wxpython/gui_modules/menudata.py:81
 msgid "Unknow tag"
 msgstr ""
 
 #: ../gui/wxpython/gui_modules/dbm_dialogs.py:67
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:2998
 msgid "Database connection is not defined in DB file."
 msgstr ""
 
@@ -4922,7 +5034,7 @@ msgid "&Submit"
 msgstr ""
 
 #: ../gui/wxpython/gui_modules/dbm_dialogs.py:131
-#: ../gui/wxpython/gui_modules/vdigit.py:953
+#: ../gui/wxpython/gui_modules/vdigit.py:954
 msgid "Feature id:"
 msgstr ""
 
@@ -4931,10 +5043,10 @@ msgid "Unknown"
 msgstr ""
 
 #: ../gui/wxpython/gui_modules/dbm_dialogs.py:422
-#: ../gui/wxpython/gui_modules/vdigit.py:394
-#: ../gui/wxpython/gui_modules/vdigit.py:396
-#: ../gui/wxpython/gui_modules/vdigit.py:898
-#: ../gui/wxpython/gui_modules/vdigit.py:1344
+#: ../gui/wxpython/gui_modules/vdigit.py:395
+#: ../gui/wxpython/gui_modules/vdigit.py:397
+#: ../gui/wxpython/gui_modules/vdigit.py:899
+#: ../gui/wxpython/gui_modules/vdigit.py:1345
 #: ../gui/wxpython/gui_modules/dbm.py:2279
 #: ../gui/wxpython/gui_modules/dbm.py:2387
 #: ../gui/wxpython/gui_modules/dbm.py:2642
@@ -4944,9 +5056,9 @@ msgstr ""
 
 #: ../gui/wxpython/gui_modules/dbm_dialogs.py:423
 #: ../gui/wxpython/gui_modules/dbm_dialogs.py:543
-#: ../gui/wxpython/gui_modules/vdigit.py:394
-#: ../gui/wxpython/gui_modules/vdigit.py:905
-#: ../gui/wxpython/gui_modules/vdigit.py:1345
+#: ../gui/wxpython/gui_modules/vdigit.py:395
+#: ../gui/wxpython/gui_modules/vdigit.py:906
+#: ../gui/wxpython/gui_modules/vdigit.py:1346
 msgid "Category"
 msgstr ""
 
@@ -4959,43 +5071,45 @@ msgid "Setup for georectification"
 msgstr ""
 
 #: ../gui/wxpython/gui_modules/gcpmanager.py:176
-#: ../gui/wxpython/gui_modules/gcpmanager.py:182
+#: ../gui/wxpython/gui_modules/gcpmanager.py:180
 msgid "Georectifying setup canceled."
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/gcpmanager.py:317
+#: ../gui/wxpython/gui_modules/gcpmanager.py:313
 msgid "Select map type and location/mapset"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/gcpmanager.py:331
+#: ../gui/wxpython/gui_modules/gcpmanager.py:327
 msgid "Map type to georectify"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/gcpmanager.py:332
+#: ../gui/wxpython/gui_modules/gcpmanager.py:328
 #: ../gui/wxpython/gui_modules/gmodeler.py:3566
-#: ../gui/wxpython/gui_modules/layertree.py:743
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:2028
+#: ../gui/wxpython/gui_modules/layertree.py:753
 msgid "raster"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/gcpmanager.py:332
+#: ../gui/wxpython/gui_modules/gcpmanager.py:328
 #: ../gui/wxpython/gui_modules/gmodeler.py:3567
-#: ../gui/wxpython/gui_modules/layertree.py:764
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:2029
+#: ../gui/wxpython/gui_modules/layertree.py:774
 msgid "vector"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/gcpmanager.py:339
+#: ../gui/wxpython/gui_modules/gcpmanager.py:335
 msgid "Select source location:"
 msgstr "ലൊക്കെഷന്റ്റെ ഉറവിടം തിരഞെടുക്കുക"
 
-#: ../gui/wxpython/gui_modules/gcpmanager.py:348
+#: ../gui/wxpython/gui_modules/gcpmanager.py:344
 msgid "Select source mapset:"
 msgstr "മാപ്പ്സെറ്റിന്റ്റെ ഉറവിടം തിരഞെടുക്കുക"
 
-#: ../gui/wxpython/gui_modules/gcpmanager.py:401
+#: ../gui/wxpython/gui_modules/gcpmanager.py:397
 msgid "You must select a valid location before selecting a mapset"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/gcpmanager.py:412
+#: ../gui/wxpython/gui_modules/gcpmanager.py:410
 msgid "You must select a valid location and mapset in order to continue"
 msgstr ""
 
@@ -5020,7 +5134,7 @@ msgid "Add vector map to group..."
 msgstr ""
 
 #: ../gui/wxpython/gui_modules/gcpmanager.py:476
-#: ../gui/wxpython/gui_modules/gcpmanager.py:2626
+#: ../gui/wxpython/gui_modules/gcpmanager.py:2617
 msgid "Extension for output maps:"
 msgstr ""
 
@@ -5028,74 +5142,65 @@ msgstr ""
 msgid "You must select a valid image/map group in order to continue"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/gcpmanager.py:539
+#: ../gui/wxpython/gui_modules/gcpmanager.py:541
 msgid "You must enter an map name extension in order to continue"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/gcpmanager.py:601
+#: ../gui/wxpython/gui_modules/gcpmanager.py:605
 msgid "Select maps to display for ground control point (GCP) creation"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/gcpmanager.py:609
-#: ../gui/wxpython/gui_modules/gcpmanager.py:2568
+#: ../gui/wxpython/gui_modules/gcpmanager.py:613
+#: ../gui/wxpython/gui_modules/gcpmanager.py:2559
 #, fuzzy
 msgid "Select source map to display:"
 msgstr "മാപ്പ്സെറ്റിന്റ്റെ ഉറവിടം തിരഞെടുക്കുക"
 
-#: ../gui/wxpython/gui_modules/gcpmanager.py:620
-#: ../gui/wxpython/gui_modules/gcpmanager.py:2573
+#: ../gui/wxpython/gui_modules/gcpmanager.py:624
+#: ../gui/wxpython/gui_modules/gcpmanager.py:2564
 #, fuzzy
 msgid "Select target map to display:"
 msgstr "പുതിയ പ്രദർശന സ്ഥലം ഉണ്ടാക്കുക"
 
-#: ../gui/wxpython/gui_modules/gcpmanager.py:676
+#: ../gui/wxpython/gui_modules/gcpmanager.py:680
 msgid "You must select a source map in order to continue"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/gcpmanager.py:698
-#, fuzzy
-msgid "Select maps to display"
-msgstr "പുതിയ പ്രദർശന സ്ഥലം ഉണ്ടാക്കുക"
-
-#: ../gui/wxpython/gui_modules/gcpmanager.py:699
+#: ../gui/wxpython/gui_modules/gcpmanager.py:704
 #, python-format
 msgid ""
-"No maps in selected group <%s>. \n"
+"No maps in selected group <%s>.\n"
 "Please edit group or select another group."
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/gcpmanager.py:726
+#: ../gui/wxpython/gui_modules/gcpmanager.py:730
 msgid "Manage Ground Control Points"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/gcpmanager.py:947
+#: ../gui/wxpython/gui_modules/gcpmanager.py:952
 #, python-format
 msgid "At least %d GCPs required. Operation cancelled."
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/gcpmanager.py:948
-msgid "Delete GCP"
-msgstr ""
-
-#: ../gui/wxpython/gui_modules/gcpmanager.py:1036
+#: ../gui/wxpython/gui_modules/gcpmanager.py:1040
 msgid "mapwin not defined for "
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/gcpmanager.py:1107
-#: ../gui/wxpython/gui_modules/toolbars.py:416
+#: ../gui/wxpython/gui_modules/gcpmanager.py:1110
+#: ../gui/wxpython/gui_modules/toolbars.py:419
 msgid "source"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/gcpmanager.py:1109
-#: ../gui/wxpython/gui_modules/toolbars.py:416
+#: ../gui/wxpython/gui_modules/gcpmanager.py:1112
+#: ../gui/wxpython/gui_modules/toolbars.py:419
 msgid "target"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/gcpmanager.py:1111
+#: ../gui/wxpython/gui_modules/gcpmanager.py:1114
 msgid "Set GCP coordinates"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/gcpmanager.py:1112
+#: ../gui/wxpython/gui_modules/gcpmanager.py:1115
 #, python-format
 msgid ""
 "Set %(coor)s coordinates for GCP No. %(key)s? \n"
@@ -5104,20 +5209,20 @@ msgid ""
 "North: %(coor1)s"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/gcpmanager.py:1176
+#: ../gui/wxpython/gui_modules/gcpmanager.py:1179
 msgid "Writing POINTS file failed"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/gcpmanager.py:1186
+#: ../gui/wxpython/gui_modules/gcpmanager.py:1188
 #, python-format
 msgid "POINTS file saved for group <%s>"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/gcpmanager.py:1202
+#: ../gui/wxpython/gui_modules/gcpmanager.py:1204
 msgid "source mapwin not defined"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/gcpmanager.py:1208
+#: ../gui/wxpython/gui_modules/gcpmanager.py:1209
 msgid "target mapwin not defined"
 msgstr ""
 
@@ -5125,12 +5230,7 @@ msgstr ""
 msgid "Reading POINTS file failed"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/gcpmanager.py:1309
-#: ../gui/wxpython/gui_modules/gcpmanager.py:1609
-msgid "RMS Error"
-msgstr "RMS തെറ്റ്"
-
-#: ../gui/wxpython/gui_modules/gcpmanager.py:1310
+#: ../gui/wxpython/gui_modules/gcpmanager.py:1308
 msgid ""
 "Insufficient points defined and active (checked) for selected rectification "
 "method.\n"
@@ -5139,278 +5239,282 @@ msgid ""
 "10+ points for 3rd order."
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/gcpmanager.py:1338
+#: ../gui/wxpython/gui_modules/gcpmanager.py:1335
 msgid "Rectifying images, please wait..."
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/gcpmanager.py:1390
+#: ../gui/wxpython/gui_modules/gcpmanager.py:1387
 #, python-format
 msgid "Transforming <%s>..."
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/gcpmanager.py:1407
-#: ../gui/wxpython/gui_modules/gcpmanager.py:1477
+#: ../gui/wxpython/gui_modules/gcpmanager.py:1404
+#: ../gui/wxpython/gui_modules/gcpmanager.py:1475
 #, python-format
 msgid "Georectification of vector map <%s> failed"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/gcpmanager.py:1449
+#: ../gui/wxpython/gui_modules/gcpmanager.py:1446
 #, python-format
 msgid ""
 "Vector map <%s> already exists. Change extension name and georectify again."
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/gcpmanager.py:1483
+#: ../gui/wxpython/gui_modules/gcpmanager.py:1456
+msgid "For all vector maps georectified successfully,"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/gcpmanager.py:1457
+msgid "you will need to copy any attribute tables"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/gcpmanager.py:1458
+msgid "and reconnect them to the georectified vectors"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/gcpmanager.py:1481
 #, fuzzy
 msgid "GCP Manager settings"
 msgstr "സജ്ജീകരണം മാറ്റുക"
 
-#: ../gui/wxpython/gui_modules/gcpmanager.py:1529
+#: ../gui/wxpython/gui_modules/gcpmanager.py:1526
 msgid "Quit GCP Manager"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/gcpmanager.py:1530
+#: ../gui/wxpython/gui_modules/gcpmanager.py:1527
 msgid "Save ground control points?"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/gcpmanager.py:1610
+#: ../gui/wxpython/gui_modules/gcpmanager.py:1606
 msgid ""
-"Could not calculate RMS Error. \n"
+"Could not calculate RMS Error.\n"
 "Possible error with g.transform."
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/gcpmanager.py:1736
-msgid "Adjust GCP Displays "
-msgstr ""
-
-#: ../gui/wxpython/gui_modules/gcpmanager.py:1737
+#: ../gui/wxpython/gui_modules/gcpmanager.py:1731
 msgid ""
-"Could not calculate new extends. \n"
+"Could not calculate new extends.\n"
 "Possible error with g.transform."
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/gcpmanager.py:1869
+#: ../gui/wxpython/gui_modules/gcpmanager.py:1862
 msgid "Adjust source display to target display"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/gcpmanager.py:1873
+#: ../gui/wxpython/gui_modules/gcpmanager.py:1866
 msgid "Adjust target display to source display"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/gcpmanager.py:1934
-#: ../gui/wxpython/gui_modules/gcpmanager.py:1951
+#: ../gui/wxpython/gui_modules/gcpmanager.py:1927
+#: ../gui/wxpython/gui_modules/gcpmanager.py:1944
 msgid "use"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/gcpmanager.py:1935
-#: ../gui/wxpython/gui_modules/gcpmanager.py:1952
+#: ../gui/wxpython/gui_modules/gcpmanager.py:1928
+#: ../gui/wxpython/gui_modules/gcpmanager.py:1945
 msgid "source E"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/gcpmanager.py:1936
-#: ../gui/wxpython/gui_modules/gcpmanager.py:1953
+#: ../gui/wxpython/gui_modules/gcpmanager.py:1929
+#: ../gui/wxpython/gui_modules/gcpmanager.py:1946
 msgid "source N"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/gcpmanager.py:1937
-#: ../gui/wxpython/gui_modules/gcpmanager.py:1954
+#: ../gui/wxpython/gui_modules/gcpmanager.py:1930
+#: ../gui/wxpython/gui_modules/gcpmanager.py:1947
 msgid "target E"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/gcpmanager.py:1938
-#: ../gui/wxpython/gui_modules/gcpmanager.py:1955
+#: ../gui/wxpython/gui_modules/gcpmanager.py:1931
+#: ../gui/wxpython/gui_modules/gcpmanager.py:1948
 msgid "target N"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/gcpmanager.py:1939
-#: ../gui/wxpython/gui_modules/gcpmanager.py:1956
+#: ../gui/wxpython/gui_modules/gcpmanager.py:1932
+#: ../gui/wxpython/gui_modules/gcpmanager.py:1949
 msgid "Forward error"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/gcpmanager.py:1940
-#: ../gui/wxpython/gui_modules/gcpmanager.py:1957
+#: ../gui/wxpython/gui_modules/gcpmanager.py:1933
+#: ../gui/wxpython/gui_modules/gcpmanager.py:1950
 msgid "Backward error"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/gcpmanager.py:2084
-#: ../gui/wxpython/gui_modules/gcpmanager.py:2245
-msgid "Edit GCP"
-msgstr ""
-
-#: ../gui/wxpython/gui_modules/gcpmanager.py:2085
+#: ../gui/wxpython/gui_modules/gcpmanager.py:2077
 msgid "Invalid coordinate value. Operation cancelled."
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/gcpmanager.py:2125
+#: ../gui/wxpython/gui_modules/gcpmanager.py:2116
 msgid "Create vector map group"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/gcpmanager.py:2198
+#: ../gui/wxpython/gui_modules/gcpmanager.py:2189
 msgid "Select vector map(s) to add to group:"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/gcpmanager.py:2256
+#: ../gui/wxpython/gui_modules/gcpmanager.py:2236
+msgid "Edit GCP"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/gcpmanager.py:2247
 msgid "Ground Control Point No."
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/gcpmanager.py:2275
+#: ../gui/wxpython/gui_modules/gcpmanager.py:2266
 msgid "source E:"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/gcpmanager.py:2276
+#: ../gui/wxpython/gui_modules/gcpmanager.py:2267
 msgid "target E:"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/gcpmanager.py:2277
+#: ../gui/wxpython/gui_modules/gcpmanager.py:2268
 msgid "source N:"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/gcpmanager.py:2278
+#: ../gui/wxpython/gui_modules/gcpmanager.py:2269
 msgid "target N:"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/gcpmanager.py:2378
+#: ../gui/wxpython/gui_modules/gcpmanager.py:2369
 #: ../gui/wxpython/gui_modules/profile.py:1033
 #: ../gui/wxpython/gui_modules/profile.py:1388
-#: ../gui/wxpython/gui_modules/preferences.py:965
+#: ../gui/wxpython/gui_modules/preferences.py:966
 msgid "Apply changes for the current session"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/gcpmanager.py:2380
+#: ../gui/wxpython/gui_modules/gcpmanager.py:2371
 #: ../gui/wxpython/gui_modules/profile.py:1038
 #: ../gui/wxpython/gui_modules/profile.py:1390
-#: ../gui/wxpython/gui_modules/preferences.py:967
+#: ../gui/wxpython/gui_modules/preferences.py:968
 msgid ""
 "Apply and save changes to user settings file (default for next sessions)"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/gcpmanager.py:2382
+#: ../gui/wxpython/gui_modules/gcpmanager.py:2373
 #: ../gui/wxpython/gui_modules/ogc_services.py:77
 #: ../gui/wxpython/gui_modules/gdialogs.py:993
 msgid "Close dialog"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/gcpmanager.py:2404
-#: ../gui/wxpython/gui_modules/vdigit.py:113
+#: ../gui/wxpython/gui_modules/gcpmanager.py:2395
+#: ../gui/wxpython/gui_modules/vdigit.py:114
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3280
 msgid "Symbology"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/gcpmanager.py:2413
+#: ../gui/wxpython/gui_modules/gcpmanager.py:2404
 msgid "Highlight highest RMS error only"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/gcpmanager.py:2419
+#: ../gui/wxpython/gui_modules/gcpmanager.py:2410
 msgid "Highlight RMS error > M + SD * factor:"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/gcpmanager.py:2420
+#: ../gui/wxpython/gui_modules/gcpmanager.py:2411
 msgid ""
 "Highlight GCPs with an RMS error larger than \n"
 "mean + standard deviation * given factor. \n"
 "Recommended values for this factor are between 1 and 2."
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/gcpmanager.py:2436
+#: ../gui/wxpython/gui_modules/gcpmanager.py:2427
 msgid "Symbol settings"
 msgstr "അടയാളത്തിന്റ്റെ സജ്ജീകരണം"
 
-#: ../gui/wxpython/gui_modules/gcpmanager.py:2445
+#: ../gui/wxpython/gui_modules/gcpmanager.py:2436
 #: ../gui/wxpython/gui_modules/nviz_tools.py:1190
-#: ../gui/wxpython/gui_modules/nviz_tools.py:1307
-#: ../gui/wxpython/gui_modules/nviz_tools.py:3235
+#: ../gui/wxpython/gui_modules/nviz_tools.py:1308
+#: ../gui/wxpython/gui_modules/nviz_tools.py:3239
 #: ../gui/wxpython/gui_modules/nviz_preferences.py:327
-#: ../gui/wxpython/gui_modules/preferences.py:1532
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3098
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3203
+#: ../gui/wxpython/gui_modules/preferences.py:1661
 msgid "Color:"
 msgstr "നിറം:"
 
-#: ../gui/wxpython/gui_modules/gcpmanager.py:2462
+#: ../gui/wxpython/gui_modules/gcpmanager.py:2453
 msgid "Color for high RMS error:"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/gcpmanager.py:2479
+#: ../gui/wxpython/gui_modules/gcpmanager.py:2470
 msgid "Color for selected GCP:"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/gcpmanager.py:2496
+#: ../gui/wxpython/gui_modules/gcpmanager.py:2487
 msgid "Color for unused GCPs:"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/gcpmanager.py:2512
+#: ../gui/wxpython/gui_modules/gcpmanager.py:2503
 #, fuzzy
 msgid "Show unused GCPs"
 msgstr "സജ്ജീകരണം കാണിക്കുക"
 
-#: ../gui/wxpython/gui_modules/gcpmanager.py:2521
+#: ../gui/wxpython/gui_modules/gcpmanager.py:2512
 #, fuzzy
 msgid "Symbol size:"
 msgstr "അടയാളത്തിന്റ്റെ സജ്ജീകരണം"
 
-#: ../gui/wxpython/gui_modules/gcpmanager.py:2536
+#: ../gui/wxpython/gui_modules/gcpmanager.py:2527
 msgid "Line width:"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/gcpmanager.py:2593
+#: ../gui/wxpython/gui_modules/gcpmanager.py:2584
 msgid "Rectification"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/gcpmanager.py:2599
+#: ../gui/wxpython/gui_modules/gcpmanager.py:2590
 #, fuzzy
 msgid "Select rectification order"
 msgstr "ലൊക്കെഷന്റ്റെ ഉറവിടം തിരഞെടുക്കുക"
 
-#: ../gui/wxpython/gui_modules/gcpmanager.py:2600
+#: ../gui/wxpython/gui_modules/gcpmanager.py:2591
 msgid "1st order"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/gcpmanager.py:2600
+#: ../gui/wxpython/gui_modules/gcpmanager.py:2591
 msgid "2nd order"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/gcpmanager.py:2600
+#: ../gui/wxpython/gui_modules/gcpmanager.py:2591
 msgid "3rd order"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/gcpmanager.py:2609
+#: ../gui/wxpython/gui_modules/gcpmanager.py:2600
 #, fuzzy
 msgid "Select interpolation method:"
 msgstr "മാപ്പ്സെറ്റിന്റ്റെ ഉറവിടം തിരഞെടുക്കുക"
 
-#: ../gui/wxpython/gui_modules/gcpmanager.py:2620
+#: ../gui/wxpython/gui_modules/gcpmanager.py:2611
 msgid "clip to computational region in target location"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/gcpmanager.py:2659
-#: ../gui/wxpython/gui_modules/gcpmanager.py:2664
-#, fuzzy
-msgid "Update settings"
-msgstr "ഉപയോഗിക്കുന്ന ആളുടെ സജ്ജീകരണം"
-
-#: ../gui/wxpython/gui_modules/gcpmanager.py:2660
+#: ../gui/wxpython/gui_modules/gcpmanager.py:2650
 msgid "RMS threshold factor must be > 0"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/gcpmanager.py:2665
+#: ../gui/wxpython/gui_modules/gcpmanager.py:2653
 msgid ""
 "RMS threshold factor is < 1\n"
 "Too many points might be highlighted"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/gcpmanager.py:2785
+#: ../gui/wxpython/gui_modules/gcpmanager.py:2772
 #, fuzzy, python-format
 msgid "GCP Manager settings saved to file '%s'."
 msgstr "ജിയൊരെക്റ്റിഫയരിന്റ് സജ്ജീകരണം ഫയലിലേക്ക് ശേഖരിച്ചു '%s'."
 
 #: ../gui/wxpython/gui_modules/mapdisp_window.py:90
-#: ../gui/wxpython/gui_modules/mapdisp.py:768
-#: ../gui/wxpython/gui_modules/mapdisp.py:800
-#: ../gui/wxpython/gui_modules/mapdisp.py:871
-#: ../gui/wxpython/gui_modules/mapdisp.py:1024
+#: ../gui/wxpython/gui_modules/mapdisp.py:769
+#: ../gui/wxpython/gui_modules/mapdisp.py:801
+#: ../gui/wxpython/gui_modules/mapdisp.py:872
+#: ../gui/wxpython/gui_modules/mapdisp.py:1025
 msgid "Projection not defined (check the settings)"
 msgstr ""
 
 #: ../gui/wxpython/gui_modules/mapdisp_window.py:107
-#: ../gui/wxpython/gui_modules/mapdisp.py:915
-#: ../gui/wxpython/gui_modules/mapdisp.py:1041
+#: ../gui/wxpython/gui_modules/mapdisp.py:916
+#: ../gui/wxpython/gui_modules/mapdisp.py:1042
 msgid "Error in projection (check the settings)"
 msgstr ""
 
@@ -5465,22 +5569,22 @@ msgstr ""
 msgid "GRASS GIS - Map display"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/mapdisp.py:158
+#: ../gui/wxpython/gui_modules/mapdisp.py:157
 #: ../gui/wxpython/gui_modules/gcpmapdisp.py:163
 msgid "Render"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/mapdisp.py:163
+#: ../gui/wxpython/gui_modules/mapdisp.py:162
 #: ../gui/wxpython/gui_modules/gcpmapdisp.py:168
 msgid "Enable/disable auto-rendering"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/mapdisp.py:166
+#: ../gui/wxpython/gui_modules/mapdisp.py:165
 #: ../gui/wxpython/gui_modules/gcpmapdisp.py:171
 msgid "Show computational extent"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/mapdisp.py:171
+#: ../gui/wxpython/gui_modules/mapdisp.py:170
 #: ../gui/wxpython/gui_modules/gcpmapdisp.py:176
 msgid ""
 "Show/hide computational region extent (set with g.region). Display region "
@@ -5488,34 +5592,34 @@ msgid ""
 "inside a display region as a red box)."
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/mapdisp.py:179
+#: ../gui/wxpython/gui_modules/mapdisp.py:178
 #: ../gui/wxpython/gui_modules/gcpmapdisp.py:184
-#: ../gui/wxpython/gui_modules/preferences.py:1319
+#: ../gui/wxpython/gui_modules/preferences.py:1449
 msgid "Constrain display resolution to computational settings"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/mapdisp.py:183
+#: ../gui/wxpython/gui_modules/mapdisp.py:182
 #: ../gui/wxpython/gui_modules/gcpmapdisp.py:188
 msgid ""
 "Constrain display resolution to computational region settings. Default value "
 "for new map displays can be set up in 'User GUI settings' dialog."
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/mapdisp.py:211
-#: ../gui/wxpython/gui_modules/mapdisp.py:1059
-#: ../gui/wxpython/gui_modules/mapdisp.py:1062
+#: ../gui/wxpython/gui_modules/mapdisp.py:210
+#: ../gui/wxpython/gui_modules/mapdisp.py:1060
+#: ../gui/wxpython/gui_modules/mapdisp.py:1063
 #: ../gui/wxpython/gui_modules/gcpmapdisp.py:216
 msgid "Use defined projection"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/mapdisp.py:215
+#: ../gui/wxpython/gui_modules/mapdisp.py:214
 #: ../gui/wxpython/gui_modules/gcpmapdisp.py:220
 msgid ""
 "Reproject coordinates displayed in the statusbar. Projection can be defined "
 "in GUI preferences dialog (tab 'Display')"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/mapdisp.py:298
+#: ../gui/wxpython/gui_modules/mapdisp.py:297
 #, python-format
 msgid ""
 "Unable to start wxGUI vector digitizer.\n"
@@ -5524,23 +5628,23 @@ msgid ""
 "Details: %s"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/mapdisp.py:302
-#: ../gui/wxpython/gui_modules/mapdisp.py:313
-#: ../gui/wxpython/gui_modules/mapdisp.py:363
-#: ../gui/wxpython/gui_modules/mapdisp.py:504
-#: ../gui/wxpython/gui_modules/toolbars.py:199
+#: ../gui/wxpython/gui_modules/mapdisp.py:301
+#: ../gui/wxpython/gui_modules/mapdisp.py:312
+#: ../gui/wxpython/gui_modules/mapdisp.py:362
+#: ../gui/wxpython/gui_modules/mapdisp.py:505
+#: ../gui/wxpython/gui_modules/toolbars.py:202
 msgid "2D view"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/mapdisp.py:305
+#: ../gui/wxpython/gui_modules/mapdisp.py:304
 msgid "Vector digitizer failed"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/mapdisp.py:344
-msgid "Vector digitizer toolbar"
+#: ../gui/wxpython/gui_modules/mapdisp.py:343
+msgid "Vector Digitizer Toolbar"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/mapdisp.py:365
+#: ../gui/wxpython/gui_modules/mapdisp.py:364
 #, python-format
 msgid ""
 "Unable to switch to 3D display mode.\n"
@@ -5550,168 +5654,170 @@ msgid ""
 "Details: %s"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/mapdisp.py:382
+#: ../gui/wxpython/gui_modules/mapdisp.py:381
 #, fuzzy
 msgid "Starting 3D view mode..."
 msgstr "മാത്രിക പരിശൊദിക്കുന്നു.."
 
-#: ../gui/wxpython/gui_modules/mapdisp.py:383
+#: ../gui/wxpython/gui_modules/mapdisp.py:382
 msgid "Please wait, loading data..."
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/mapdisp.py:413
-msgid "3D view toolbar"
-msgstr ""
-
-#: ../gui/wxpython/gui_modules/mapdisp.py:437
+#: ../gui/wxpython/gui_modules/mapdisp.py:414
 #, fuzzy
-msgid "Map toolbar"
-msgstr "മാപ്പ് ലയെറുകൾ"
+msgid "3D View Toolbar"
+msgstr "സജ്ജീകരണം കാണിക്കുക"
 
-#: ../gui/wxpython/gui_modules/mapdisp.py:453
-msgid "Georectification toolbar"
+#: ../gui/wxpython/gui_modules/mapdisp.py:438
+#: ../gui/wxpython/gui_modules/gcpmapdisp.py:348
+msgid "Map Toolbar"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/mapdisp.py:514
+#: ../gui/wxpython/gui_modules/mapdisp.py:454
+#, fuzzy
+msgid "Georectification Toolbar"
+msgstr "ലൊക്കെഷന്റ്റെ ഉറവിടം തിരഞെടുക്കുക"
+
+#: ../gui/wxpython/gui_modules/mapdisp.py:515
 #: ../gui/wxpython/gui_modules/render.py:451
 #, python-format
 msgid "GRASS module '%s' not found. Unable to start map display window."
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/mapdisp.py:1124
+#: ../gui/wxpython/gui_modules/mapdisp.py:1125
 #: ../gui/wxpython/gui_modules/gcpmapdisp.py:890
 #, fuzzy
 msgid "Nothing to render (empty map). Operation canceled."
 msgstr "മപ്പ് ലയരുകളൊന്നും തിരഞ്ഞെടുക്കപ്പെട്ടിട്ടില്ല. ആജ്ഞ തിരസ്കരിക്കപെട്ടു."
 
-#: ../gui/wxpython/gui_modules/mapdisp.py:1297
+#: ../gui/wxpython/gui_modules/mapdisp.py:1298
 msgid "No raster or vector map layer selected for querying."
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/mapdisp.py:1298
+#: ../gui/wxpython/gui_modules/mapdisp.py:1299
 msgid "No map layer selected"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/mapdisp.py:1393
+#: ../gui/wxpython/gui_modules/mapdisp.py:1394
 msgid "No vector map selected for querying."
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/mapdisp.py:1394
-#: ../gui/wxpython/gui_modules/mapdisp.py:1402
+#: ../gui/wxpython/gui_modules/mapdisp.py:1395
+#: ../gui/wxpython/gui_modules/mapdisp.py:1403
 msgid "Vector querying"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/mapdisp.py:1401
+#: ../gui/wxpython/gui_modules/mapdisp.py:1402
 msgid "Only vector map from the current mapset can be modified."
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/mapdisp.py:1473
+#: ../gui/wxpython/gui_modules/mapdisp.py:1474
 #, fuzzy
 msgid "Query surface (raster map)"
 msgstr ""
 "തിരഞ്ഞെടുത്ത രസറ്ററൊ വെക്റ്ററൊ മപ്പുകളുടെ വിവരങ്ങള്‍ക്കായി ഒരു ഡേറ്റാബേസില്‍ അന്വേഷണം നടത്തുന്നത് "
 
-#: ../gui/wxpython/gui_modules/mapdisp.py:1480
+#: ../gui/wxpython/gui_modules/mapdisp.py:1481
 #, fuzzy
 msgid "Query vector map"
 msgstr "രസറ്ററൊ വെക്റ്ററൊ മപ്പുകളുടെ വിവരങ്ങള്‍ക്കായി ഒരു ഡേറ്റാബേസില്‍ അന്വേഷണം നടത്തുന്നത് "
 
-#: ../gui/wxpython/gui_modules/mapdisp.py:1488
+#: ../gui/wxpython/gui_modules/mapdisp.py:1489
 msgid "Query raster/vector map(s) (display mode)"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/mapdisp.py:1504
+#: ../gui/wxpython/gui_modules/mapdisp.py:1505
 msgid "Query vector map (edit mode)"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/mapdisp.py:1630
+#: ../gui/wxpython/gui_modules/mapdisp.py:1631
 #, python-format
 msgid ""
 "Click and drag with left mouse button to measure.%sDouble click with left "
 "button to clear."
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/mapdisp.py:1636
+#: ../gui/wxpython/gui_modules/mapdisp.py:1637
 msgid "Measuring distance"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/mapdisp.py:1639
+#: ../gui/wxpython/gui_modules/mapdisp.py:1640
 msgid "Measuring distance:"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/mapdisp.py:1649
+#: ../gui/wxpython/gui_modules/mapdisp.py:1650
 #, python-format
 msgid ""
 "Geodesic distance is not yet supported by this tool.\n"
 "Reason: %s"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/mapdisp.py:1678
-#: ../gui/wxpython/gui_modules/mapdisp.py:1684
+#: ../gui/wxpython/gui_modules/mapdisp.py:1679
+#: ../gui/wxpython/gui_modules/mapdisp.py:1685
 #, fuzzy
 msgid "segment"
 msgstr "പുരാവ്രിത്തം"
 
-#: ../gui/wxpython/gui_modules/mapdisp.py:1679
-#: ../gui/wxpython/gui_modules/mapdisp.py:1685
+#: ../gui/wxpython/gui_modules/mapdisp.py:1680
+#: ../gui/wxpython/gui_modules/mapdisp.py:1686
 #, fuzzy
 msgid "total distance"
 msgstr "ദൂരം അളക്കുക"
 
-#: ../gui/wxpython/gui_modules/mapdisp.py:1680
+#: ../gui/wxpython/gui_modules/mapdisp.py:1681
 msgid "bearing"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/mapdisp.py:1680
+#: ../gui/wxpython/gui_modules/mapdisp.py:1681
 msgid "deg"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/mapdisp.py:1816
+#: ../gui/wxpython/gui_modules/mapdisp.py:1817
 msgid "Scale and North arrow"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/mapdisp.py:1822
+#: ../gui/wxpython/gui_modules/mapdisp.py:1823
 msgid "Show/hide scale and North arrow"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/mapdisp.py:1823
+#: ../gui/wxpython/gui_modules/mapdisp.py:1824
 msgid "scale object"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/mapdisp.py:1852
+#: ../gui/wxpython/gui_modules/mapdisp.py:1853
 msgid "Show/hide legend"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/mapdisp.py:1853
+#: ../gui/wxpython/gui_modules/mapdisp.py:1854
 msgid "legend object"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/mapdisp.py:1962
+#: ../gui/wxpython/gui_modules/mapdisp.py:1963
 #: ../gui/wxpython/gui_modules/gcpmapdisp.py:1054
 msgid "Zoom to computational region (set with g.region)"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/mapdisp.py:1966
+#: ../gui/wxpython/gui_modules/mapdisp.py:1967
 #: ../gui/wxpython/gui_modules/gcpmapdisp.py:1058
 msgid "Zoom to default region"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/mapdisp.py:1970
+#: ../gui/wxpython/gui_modules/mapdisp.py:1971
 #: ../gui/wxpython/gui_modules/gcpmapdisp.py:1062
 msgid "Zoom to saved region"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/mapdisp.py:1974
+#: ../gui/wxpython/gui_modules/mapdisp.py:1975
 #: ../gui/wxpython/gui_modules/gcpmapdisp.py:1066
 msgid "Set computational region from display"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/mapdisp.py:1978
+#: ../gui/wxpython/gui_modules/mapdisp.py:1979
 #: ../gui/wxpython/gui_modules/gcpmapdisp.py:1070
 msgid "Save display geometry to named region"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/mapdisp.py:2072
+#: ../gui/wxpython/gui_modules/mapdisp.py:2073
 msgid "GRASS GIS Map Display: "
 msgstr ""
 
@@ -5754,9 +5860,10 @@ msgid "Unable to start database driver <%s>. Operation cancelled."
 msgstr "മപ്പ് ലയരുകളൊന്നും തിരഞ്ഞെടുക്കപ്പെട്ടിട്ടില്ല. ആജ്ഞ തിരസ്കരിക്കപെട്ടു."
 
 #: ../gui/wxpython/gui_modules/wxvdigit.py:86
-#, python-format
-msgid "Unable to open database <%s> by driver <%s>. Operation cancelled."
-msgstr ""
+#, fuzzy, python-format
+msgid ""
+"Unable to open database <%(db)s> by driver <%(driver)s>. Operation cancelled."
+msgstr "മപ്പ് ലയരുകളൊന്നും തിരഞ്ഞെടുക്കപ്പെട്ടിട്ടില്ല. ആജ്ഞ തിരസ്കരിക്കപെട്ടു."
 
 #: ../gui/wxpython/gui_modules/wxvdigit.py:94
 #, fuzzy, python-format
@@ -5840,7 +5947,7 @@ msgid "%d modules match"
 msgstr ""
 
 #: ../gui/wxpython/gui_modules/ghelp.py:355
-#: ../gui/wxpython/gui_modules/ghelp.py:1023
+#: ../gui/wxpython/gui_modules/ghelp.py:1025
 msgid "Menu tree"
 msgstr ""
 
@@ -5876,23 +5983,25 @@ msgstr "പ്രസന്നമായ "
 #: ../gui/wxpython/gui_modules/ghelp.py:601
 #: ../gui/wxpython/gui_modules/ghelp.py:626
 #: ../gui/wxpython/gui_modules/ghelp.py:650
-#: ../gui/wxpython/gui_modules/ghelp.py:696
-#: ../gui/wxpython/gui_modules/ghelp.py:751
+#: ../gui/wxpython/gui_modules/ghelp.py:697
+#: ../gui/wxpython/gui_modules/ghelp.py:753
 #, python-format
 msgid "%s file missing"
 msgstr ""
 
 #: ../gui/wxpython/gui_modules/ghelp.py:683
-#: ../gui/wxpython/gui_modules/ghelp.py:738
+#: ../gui/wxpython/gui_modules/ghelp.py:739
 #, python-format
-msgid ""
-"Error when reading file '%s'.\n"
-"\n"
-"Lines: %s"
+msgid "Error when reading file '%s'."
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/ghelp.py:701
-#: ../gui/wxpython/gui_modules/ghelp.py:759
+#: ../gui/wxpython/gui_modules/ghelp.py:684
+#: ../gui/wxpython/gui_modules/ghelp.py:740
+msgid "Lines:"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/ghelp.py:702
+#: ../gui/wxpython/gui_modules/ghelp.py:761
 #: ../gui/wxpython/gui_modules/gmodeler.py:3554
 #: ../gui/wxpython/gui_modules/gmodeler.py:3594
 #: ../gui/wxpython/gui_modules/gmodeler.py:3862
@@ -5901,80 +6010,80 @@ msgstr ""
 msgid "Name"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/ghelp.py:701
-#: ../gui/wxpython/gui_modules/ghelp.py:761
+#: ../gui/wxpython/gui_modules/ghelp.py:702
+#: ../gui/wxpython/gui_modules/ghelp.py:763
 msgid "E-mail"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/ghelp.py:701
+#: ../gui/wxpython/gui_modules/ghelp.py:702
 msgid "Country"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/ghelp.py:701
+#: ../gui/wxpython/gui_modules/ghelp.py:702
 msgid "OSGeo_ID"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/ghelp.py:763
+#: ../gui/wxpython/gui_modules/ghelp.py:765
 msgid "Language"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/ghelp.py:788
+#: ../gui/wxpython/gui_modules/ghelp.py:790
 msgid "Fetch & install extension from GRASS Addons"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/ghelp.py:797
+#: ../gui/wxpython/gui_modules/ghelp.py:799
 msgid "Repository"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/ghelp.py:799
+#: ../gui/wxpython/gui_modules/ghelp.py:801
 #, fuzzy
 msgid "List of extensions"
 msgstr "ലെയറുകളുടെ പട്ടിക"
 
-#: ../gui/wxpython/gui_modules/ghelp.py:804
+#: ../gui/wxpython/gui_modules/ghelp.py:806
 msgid "Fetch full info including description and keywords (takes time)"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/ghelp.py:813
+#: ../gui/wxpython/gui_modules/ghelp.py:815
 #: ../gui/wxpython/gui_modules/gdialogs.py:957
 #, fuzzy
 msgid "Options"
 msgstr "ഐച്ഛിക"
 
-#: ../gui/wxpython/gui_modules/ghelp.py:830
+#: ../gui/wxpython/gui_modules/ghelp.py:832
 msgid "&Fetch"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/ghelp.py:831
+#: ../gui/wxpython/gui_modules/ghelp.py:833
 msgid "Fetch list of available modules from GRASS Addons SVN repository"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/ghelp.py:834
+#: ../gui/wxpython/gui_modules/ghelp.py:836
 msgid "&Install"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/ghelp.py:835
+#: ../gui/wxpython/gui_modules/ghelp.py:837
 msgid "Install selected add-ons GRASS module"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/ghelp.py:911
+#: ../gui/wxpython/gui_modules/ghelp.py:913
 msgid "Fetch list of available extensions by clicking on 'Fetch' button"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/ghelp.py:919
+#: ../gui/wxpython/gui_modules/ghelp.py:921
 #, python-format
 msgid "%d items match"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/ghelp.py:931
+#: ../gui/wxpython/gui_modules/ghelp.py:933
 msgid "Fetching list of modules from GRASS-Addons SVN (be patient)..."
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/ghelp.py:1182
+#: ../gui/wxpython/gui_modules/ghelp.py:1184
 msgid "&Next"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/ghelp.py:1185
+#: ../gui/wxpython/gui_modules/ghelp.py:1187
 msgid "&Previous"
 msgstr ""
 
@@ -5986,12 +6095,14 @@ msgstr ""
 #: ../gui/wxpython/gui_modules/location_wizard.py:1138
 #: ../gui/wxpython/gui_modules/location_wizard.py:1212
 #: ../gui/wxpython/gui_modules/location_wizard.py:1295
-#: ../gui/wxpython/gui_modules/gselect.py:826
-#: ../gui/wxpython/gui_modules/gselect.py:1086
-#: ../gui/wxpython/gui_modules/gselect.py:1095
-#: ../gui/wxpython/gui_modules/gselect.py:1104
-#: ../gui/wxpython/gui_modules/gselect.py:1319
-#: ../gui/wxpython/gui_modules/gselect.py:1465
+#: ../gui/wxpython/gui_modules/gselect.py:829
+#: ../gui/wxpython/gui_modules/gselect.py:1089
+#: ../gui/wxpython/gui_modules/gselect.py:1098
+#: ../gui/wxpython/gui_modules/gselect.py:1107
+#: ../gui/wxpython/gui_modules/gselect.py:1322
+#: ../gui/wxpython/gui_modules/gselect.py:1468
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3295
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3480
 #: ../gui/wxpython/gui_modules/gdialogs.py:1256
 #: ../gui/wxpython/gui_modules/menuform.py:1580
 msgid "Browse"
@@ -6174,7 +6285,7 @@ msgid "Path to the EPSG-codes file:"
 msgstr ""
 
 #: ../gui/wxpython/gui_modules/location_wizard.py:1286
-#: ../gui/wxpython/gui_modules/preferences.py:1663
+#: ../gui/wxpython/gui_modules/preferences.py:1792
 msgid "EPSG code:"
 msgstr ""
 
@@ -6506,7 +6617,7 @@ msgid "centroid"
 msgstr ""
 
 #: ../gui/wxpython/gui_modules/vclean.py:208
-#: ../gui/wxpython/gui_modules/vdigit.py:449
+#: ../gui/wxpython/gui_modules/vdigit.py:450
 msgid "area"
 msgstr ""
 
@@ -6568,8 +6679,8 @@ msgid "Vector cleaning command copied to clipboard"
 msgstr ""
 
 #: ../gui/wxpython/gui_modules/nviz_tools.py:71
-#: ../gui/wxpython/gui_modules/nviz_tools.py:2955
-#: ../gui/wxpython/gui_modules/nviz_tools.py:2962
+#: ../gui/wxpython/gui_modules/nviz_tools.py:2959
+#: ../gui/wxpython/gui_modules/nviz_tools.py:2966
 #: ../gui/wxpython/gui_modules/nviz_preferences.py:48
 #: ../gui/wxpython/gui_modules/nviz_preferences.py:55
 msgid "View"
@@ -6581,6 +6692,7 @@ msgid "Data"
 msgstr ""
 
 #: ../gui/wxpython/gui_modules/nviz_tools.py:79
+#: ../gui/wxpython/gui_modules/preferences.py:1204
 msgid "Appearance"
 msgstr ""
 
@@ -6609,29 +6721,32 @@ msgid "E"
 msgstr ""
 
 #: ../gui/wxpython/gui_modules/nviz_tools.py:141
-#: ../gui/wxpython/gui_modules/nviz_tools.py:2971
+#: ../gui/wxpython/gui_modules/nviz_tools.py:2975
 #: ../gui/wxpython/gui_modules/nviz_preferences.py:64
 msgid "Perspective:"
 msgstr ""
 
 #: ../gui/wxpython/gui_modules/nviz_tools.py:151
-#: ../gui/wxpython/gui_modules/nviz_tools.py:3050
+#: ../gui/wxpython/gui_modules/nviz_tools.py:3054
 #: ../gui/wxpython/gui_modules/nviz_preferences.py:143
 msgid "Twist:"
 msgstr ""
 
 #: ../gui/wxpython/gui_modules/nviz_tools.py:169
 #: ../gui/wxpython/gui_modules/nviz_tools.py:1168
-#: ../gui/wxpython/gui_modules/nviz_tools.py:3031
+#: ../gui/wxpython/gui_modules/nviz_tools.py:3035
 #: ../gui/wxpython/gui_modules/nviz_preferences.py:124
 #: ../gui/wxpython/gui_modules/gmodeler.py:3134
 #: ../gui/wxpython/gui_modules/gmodeler.py:3253
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:4038
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:4181
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:4829
 #: ../gui/wxpython/gui_modules/gdialogs.py:1632
 msgid "Height:"
 msgstr ""
 
 #: ../gui/wxpython/gui_modules/nviz_tools.py:176
-#: ../gui/wxpython/gui_modules/nviz_tools.py:3080
+#: ../gui/wxpython/gui_modules/nviz_tools.py:3084
 #: ../gui/wxpython/gui_modules/nviz_preferences.py:173
 msgid "Z-exag:"
 msgstr ""
@@ -6685,25 +6800,25 @@ msgid "Reset to default view"
 msgstr ""
 
 #: ../gui/wxpython/gui_modules/nviz_tools.py:234
-#: ../gui/wxpython/gui_modules/nviz_tools.py:3113
+#: ../gui/wxpython/gui_modules/nviz_tools.py:3117
 #: ../gui/wxpython/gui_modules/nviz_preferences.py:205
 msgid "Image Appearance"
 msgstr ""
 
 #: ../gui/wxpython/gui_modules/nviz_tools.py:241
-#: ../gui/wxpython/gui_modules/nviz_tools.py:3120
+#: ../gui/wxpython/gui_modules/nviz_tools.py:3124
 #: ../gui/wxpython/gui_modules/nviz_preferences.py:212
-#: ../gui/wxpython/gui_modules/preferences.py:1300
+#: ../gui/wxpython/gui_modules/preferences.py:1430
 msgid "Background color:"
 msgstr ""
 
 #: ../gui/wxpython/gui_modules/nviz_tools.py:273
-#: ../gui/wxpython/gui_modules/nviz_tools.py:1256
+#: ../gui/wxpython/gui_modules/nviz_tools.py:1257
 msgid "Surface"
 msgstr ""
 
 #: ../gui/wxpython/gui_modules/nviz_tools.py:278
-#: ../gui/wxpython/gui_modules/nviz_tools.py:3145
+#: ../gui/wxpython/gui_modules/nviz_tools.py:3149
 #: ../gui/wxpython/gui_modules/nviz_preferences.py:237
 msgid "Vector"
 msgstr ""
@@ -6718,11 +6833,6 @@ msgstr ""
 
 #: ../gui/wxpython/gui_modules/nviz_tools.py:303
 msgid "Fringe"
-msgstr ""
-
-#: ../gui/wxpython/gui_modules/nviz_tools.py:321
-#: ../gui/wxpython/gui_modules/nviz_mapdisp.py:667
-msgid "Raster map"
 msgstr ""
 
 #: ../gui/wxpython/gui_modules/nviz_tools.py:343
@@ -6858,20 +6968,20 @@ msgid "by color"
 msgstr ""
 
 #: ../gui/wxpython/gui_modules/nviz_tools.py:579
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:4008
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:4577
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:4793
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:5176
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:5181
 msgid "Position"
 msgstr ""
-
-#: ../gui/wxpython/gui_modules/nviz_tools.py:630
-#, fuzzy
-msgid "Vector map"
-msgstr "തിരഞ്ഞെടുക്കപെട്ട vector ലയെറുകളെ ഇറക്കുമതി ചെയ്യുക"
 
 #: ../gui/wxpython/gui_modules/nviz_tools.py:654
 msgid "Show vector lines"
 msgstr ""
 
 #: ../gui/wxpython/gui_modules/nviz_tools.py:664
-#: ../gui/wxpython/gui_modules/nviz_tools.py:3153
+#: ../gui/wxpython/gui_modules/nviz_tools.py:3157
 #: ../gui/wxpython/gui_modules/nviz_preferences.py:245
 msgid "Vector lines"
 msgstr ""
@@ -6910,7 +7020,7 @@ msgid "Show vector points"
 msgstr ""
 
 #: ../gui/wxpython/gui_modules/nviz_tools.py:764
-#: ../gui/wxpython/gui_modules/nviz_tools.py:3175
+#: ../gui/wxpython/gui_modules/nviz_tools.py:3179
 #: ../gui/wxpython/gui_modules/nviz_preferences.py:267
 msgid "Vector points"
 msgstr ""
@@ -6926,6 +7036,11 @@ msgstr ""
 #: ../gui/wxpython/gui_modules/nviz_tools.py:824
 msgid "symbol"
 msgstr ""
+
+#: ../gui/wxpython/gui_modules/nviz_tools.py:893
+#, fuzzy
+msgid "3D raster map"
+msgstr "മാപ്പ്സെറ്റ് ഉണ്ടാക്കുക"
 
 #: ../gui/wxpython/gui_modules/nviz_tools.py:926
 msgid "isosurfaces"
@@ -6969,77 +7084,77 @@ msgstr "ലൊക്കെഷന്റ്റെ ഉറവിടം തിരഞ�
 msgid "Light color and intensity"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/nviz_tools.py:1199
+#: ../gui/wxpython/gui_modules/nviz_tools.py:1200
 msgid "Brightness:"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/nviz_tools.py:1209
+#: ../gui/wxpython/gui_modules/nviz_tools.py:1210
 msgid "Ambient:"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/nviz_tools.py:1270
+#: ../gui/wxpython/gui_modules/nviz_tools.py:1271
 msgid "Edges with fringe"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/nviz_tools.py:1272
+#: ../gui/wxpython/gui_modules/nviz_tools.py:1273
 msgid "N && W"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/nviz_tools.py:1273
+#: ../gui/wxpython/gui_modules/nviz_tools.py:1274
 msgid "N && E"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/nviz_tools.py:1274
+#: ../gui/wxpython/gui_modules/nviz_tools.py:1275
 msgid "S && W"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/nviz_tools.py:1275
+#: ../gui/wxpython/gui_modules/nviz_tools.py:1276
 msgid "S && E"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/nviz_tools.py:1295
+#: ../gui/wxpython/gui_modules/nviz_tools.py:1296
 msgid "Elevation of fringe from bottom:"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/nviz_tools.py:2309
-#: ../gui/wxpython/gui_modules/nviz_tools.py:2311
+#: ../gui/wxpython/gui_modules/nviz_tools.py:2310
+#: ../gui/wxpython/gui_modules/nviz_tools.py:2312
 msgid "Level"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/nviz_tools.py:2629
+#: ../gui/wxpython/gui_modules/nviz_tools.py:2633
 #, fuzzy
 msgid "Vector map is 3D"
 msgstr "മാപ്പ് <%s> കണ്മനില്ല"
 
-#: ../gui/wxpython/gui_modules/nviz_tools.py:2632
+#: ../gui/wxpython/gui_modules/nviz_tools.py:2636
 #, fuzzy
 msgid "Vector map is 2D"
 msgstr "മാപ്പ് <%s> കണ്മനില്ല"
 
-#: ../gui/wxpython/gui_modules/nviz_tools.py:2634
+#: ../gui/wxpython/gui_modules/nviz_tools.py:2638
 #, python-format
 msgid "%(features)d features (%(points)d points)"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/nviz_tools.py:2936
+#: ../gui/wxpython/gui_modules/nviz_tools.py:2940
 #: ../gui/wxpython/gui_modules/nviz_preferences.py:29
 #, fuzzy
 msgid "3D view settings"
 msgstr "സജ്ജീകരണം കാണിക്കുക"
 
-#: ../gui/wxpython/gui_modules/nviz_tools.py:2974
-#: ../gui/wxpython/gui_modules/nviz_tools.py:3053
-#: ../gui/wxpython/gui_modules/nviz_tools.py:3083
+#: ../gui/wxpython/gui_modules/nviz_tools.py:2978
+#: ../gui/wxpython/gui_modules/nviz_tools.py:3057
+#: ../gui/wxpython/gui_modules/nviz_tools.py:3087
 #: ../gui/wxpython/gui_modules/nviz_preferences.py:67
 #: ../gui/wxpython/gui_modules/nviz_preferences.py:146
 #: ../gui/wxpython/gui_modules/nviz_preferences.py:176
 msgid "(value)"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/nviz_tools.py:2986
-#: ../gui/wxpython/gui_modules/nviz_tools.py:3034
-#: ../gui/wxpython/gui_modules/nviz_tools.py:3065
-#: ../gui/wxpython/gui_modules/nviz_tools.py:3095
+#: ../gui/wxpython/gui_modules/nviz_tools.py:2990
+#: ../gui/wxpython/gui_modules/nviz_tools.py:3038
+#: ../gui/wxpython/gui_modules/nviz_tools.py:3069
+#: ../gui/wxpython/gui_modules/nviz_tools.py:3099
 #: ../gui/wxpython/gui_modules/nviz_preferences.py:79
 #: ../gui/wxpython/gui_modules/nviz_preferences.py:127
 #: ../gui/wxpython/gui_modules/nviz_preferences.py:158
@@ -7047,49 +7162,50 @@ msgstr ""
 msgid "(step)"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/nviz_tools.py:3001
+#: ../gui/wxpython/gui_modules/nviz_tools.py:3005
 #: ../gui/wxpython/gui_modules/nviz_preferences.py:94
 msgid "Position:"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/nviz_tools.py:3004
+#: ../gui/wxpython/gui_modules/nviz_tools.py:3008
 #: ../gui/wxpython/gui_modules/nviz_preferences.py:97
 msgid "(x)"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/nviz_tools.py:3160
+#: ../gui/wxpython/gui_modules/nviz_tools.py:3164
 #: ../gui/wxpython/gui_modules/nviz_preferences.py:252
 #, fuzzy
 msgid "Show lines"
 msgstr "സജ്ജീകരണം കാണിക്കുക"
 
-#: ../gui/wxpython/gui_modules/nviz_tools.py:3182
+#: ../gui/wxpython/gui_modules/nviz_tools.py:3186
 #: ../gui/wxpython/gui_modules/nviz_preferences.py:274
 #, fuzzy
 msgid "Show points"
 msgstr "സജ്ജീകരണം കാണിക്കുക"
 
-#: ../gui/wxpython/gui_modules/nviz_tools.py:3191
+#: ../gui/wxpython/gui_modules/nviz_tools.py:3195
 #: ../gui/wxpython/gui_modules/nviz_preferences.py:283
 #, fuzzy
 msgid "Size:"
 msgstr "വലുപ്പം"
 
-#: ../gui/wxpython/gui_modules/nviz_tools.py:3206
+#: ../gui/wxpython/gui_modules/nviz_tools.py:3210
 #: ../gui/wxpython/gui_modules/nviz_preferences.py:298
 #: ../gui/wxpython/gui_modules/gmodeler.py:3116
 #: ../gui/wxpython/gui_modules/gmodeler.py:3235
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:4026
 #: ../gui/wxpython/gui_modules/gdialogs.py:1628
 msgid "Width:"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/nviz_tools.py:3221
+#: ../gui/wxpython/gui_modules/nviz_tools.py:3225
 #: ../gui/wxpython/gui_modules/nviz_preferences.py:313
 msgid "Marker:"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/nviz_tools.py:3310
-#: ../gui/wxpython/gui_modules/nviz_tools.py:3441
+#: ../gui/wxpython/gui_modules/nviz_tools.py:3314
+#: ../gui/wxpython/gui_modules/nviz_tools.py:3445
 #: ../gui/wxpython/gui_modules/nviz_preferences.py:403
 #, python-format
 msgid "Nviz settings saved to file <%s>."
@@ -7165,117 +7281,117 @@ msgstr ""
 msgid "Type GRASS command and run by pressing ENTER"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/gselect.py:305
+#: ../gui/wxpython/gui_modules/gselect.py:309
 msgid "Not selectable element"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/gselect.py:346
+#: ../gui/wxpython/gui_modules/gselect.py:350
 #, python-format
 msgid "GSelect: invalid item: %s"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/gselect.py:825
+#: ../gui/wxpython/gui_modules/gselect.py:828
 #, fuzzy
 msgid "Choose GIS Data Directory"
 msgstr "ജിസ് ഡാറ്റാ അടങ്ങിയിരിക്കുന്ന സ്ഥലം തിരഞെടുക്കുക"
 
-#: ../gui/wxpython/gui_modules/gselect.py:1031
+#: ../gui/wxpython/gui_modules/gselect.py:1034
 msgid "Source name"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/gselect.py:1041
+#: ../gui/wxpython/gui_modules/gselect.py:1044
 #: ../gui/wxpython/gui_modules/menuform.py:1579
 msgid "File"
 msgstr "ഫയൽ"
 
-#: ../gui/wxpython/gui_modules/gselect.py:1045
+#: ../gui/wxpython/gui_modules/gselect.py:1048
 msgid "Directory"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/gselect.py:1049
+#: ../gui/wxpython/gui_modules/gselect.py:1052
 #: ../gui/wxpython/gui_modules/dbm.py:2279
 #: ../gui/wxpython/gui_modules/dbm.py:2398
 #: ../gui/wxpython/gui_modules/dbm.py:2656
 msgid "Database"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/gselect.py:1053
+#: ../gui/wxpython/gui_modules/gselect.py:1056
 msgid "Protocol"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/gselect.py:1069
+#: ../gui/wxpython/gui_modules/gselect.py:1072
 msgid "Source type"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/gselect.py:1078
 #: ../gui/wxpython/gui_modules/gselect.py:1081
-#: ../gui/wxpython/gui_modules/gselect.py:1312
-#: ../gui/wxpython/gui_modules/gselect.py:1314
-#: ../gui/wxpython/gui_modules/gselect.py:1458
-#: ../gui/wxpython/gui_modules/gselect.py:1460
+#: ../gui/wxpython/gui_modules/gselect.py:1084
+#: ../gui/wxpython/gui_modules/gselect.py:1315
+#: ../gui/wxpython/gui_modules/gselect.py:1317
+#: ../gui/wxpython/gui_modules/gselect.py:1461
+#: ../gui/wxpython/gui_modules/gselect.py:1463
 msgid "All files"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/gselect.py:1085
-#: ../gui/wxpython/gui_modules/gselect.py:1318
+#: ../gui/wxpython/gui_modules/gselect.py:1088
+#: ../gui/wxpython/gui_modules/gselect.py:1321
 #, fuzzy
 msgid "Choose file to import"
 msgstr "തുറക്കെണ്ട GRC ഫയൽ തിരഞെടുക്കുക"
 
-#: ../gui/wxpython/gui_modules/gselect.py:1094
+#: ../gui/wxpython/gui_modules/gselect.py:1097
 msgid "Choose input directory"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/gselect.py:1103
-#: ../gui/wxpython/gui_modules/gselect.py:1464
+#: ../gui/wxpython/gui_modules/gselect.py:1106
+#: ../gui/wxpython/gui_modules/gselect.py:1467
 msgid "Choose file"
 msgstr "ഫയൽ തിരഞ്ഞെടുക്കുക"
 
-#: ../gui/wxpython/gui_modules/gselect.py:1134
+#: ../gui/wxpython/gui_modules/gselect.py:1137
 msgid "File:"
 msgstr "ഫയൽ:"
 
-#: ../gui/wxpython/gui_modules/gselect.py:1137
+#: ../gui/wxpython/gui_modules/gselect.py:1140
 msgid "Directory:"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/gselect.py:1140
+#: ../gui/wxpython/gui_modules/gselect.py:1143
 msgid "Database:"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/gselect.py:1143
+#: ../gui/wxpython/gui_modules/gselect.py:1146
 msgid "Protocol:"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/gselect.py:1164
+#: ../gui/wxpython/gui_modules/gselect.py:1167
 msgid "Format:"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/gselect.py:1174
+#: ../gui/wxpython/gui_modules/gselect.py:1177
 #, fuzzy
 msgid "Load settings:"
 msgstr "സജ്ജീകരണം കാണിക്കുക"
 
-#: ../gui/wxpython/gui_modules/gselect.py:1233
+#: ../gui/wxpython/gui_modules/gselect.py:1236
 #, fuzzy, python-format
 msgid "Settings named '%s' not found"
 msgstr "മാപ്പ് <%s> കണ്മനില്ല"
 
-#: ../gui/wxpython/gui_modules/gselect.py:1243
+#: ../gui/wxpython/gui_modules/gselect.py:1246
 #: ../gui/wxpython/gui_modules/gmodeler.py:3337
 msgid "Name:"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/gselect.py:1244
+#: ../gui/wxpython/gui_modules/gselect.py:1247
 #, fuzzy
 msgid "Save settings"
 msgstr "പൊതുവായ സജ്ജീകരണം"
 
-#: ../gui/wxpython/gui_modules/gselect.py:1250
+#: ../gui/wxpython/gui_modules/gselect.py:1253
 msgid "Name not given, settings is not saved."
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/gselect.py:1262
+#: ../gui/wxpython/gui_modules/gselect.py:1265
 #, fuzzy
 msgid "Unable to save settings."
 msgstr "ആജ്ഞ നടപ്പാക്കുന്നതിൽ പാളിച: '%s'"
@@ -7294,6 +7410,10 @@ msgid "Execution failed:"
 msgstr ""
 
 #: ../gui/wxpython/gui_modules/gcmd.py:348
+#: ../gui/wxpython/gui_modules/render.py:658
+#: ../gui/wxpython/gui_modules/render.py:661
+#: ../gui/wxpython/gui_modules/menuform.py:1984
+#: ../gui/wxpython/gui_modules/menuform.py:1987
 msgid "Details:"
 msgstr "വിശദ വിവരങ്ങൾ:"
 
@@ -7307,289 +7427,298 @@ msgstr "തെറ്റ്:"
 msgid "Unable to exectute command: '%s'"
 msgstr "ആജ്ഞ നടപ്പാക്കുന്നതിൽ പാളിച: '%s'"
 
-#: ../gui/wxpython/gui_modules/vdigit.py:86
+#: ../gui/wxpython/gui_modules/vdigit.py:87
 msgid "Apply changes for this session"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/vdigit.py:89
+#: ../gui/wxpython/gui_modules/vdigit.py:90
 msgid "Close dialog and save changes to user settings file"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/vdigit.py:91
+#: ../gui/wxpython/gui_modules/vdigit.py:92
 #: ../gui/wxpython/gui_modules/gmodeler.py:3325
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:1703
 #: ../gui/wxpython/gui_modules/profile.py:1040
 #: ../gui/wxpython/gui_modules/profile.py:1393
-#: ../gui/wxpython/gui_modules/preferences.py:970
+#: ../gui/wxpython/gui_modules/preferences.py:971
 msgid "Close dialog and ignore changes"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/vdigit.py:150
-#: ../gui/wxpython/gui_modules/preferences.py:1101
+#: ../gui/wxpython/gui_modules/vdigit.py:151
+#: ../gui/wxpython/gui_modules/preferences.py:1110
 msgid "General"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/vdigit.py:157
-#: ../gui/wxpython/gui_modules/preferences.py:1194
+#: ../gui/wxpython/gui_modules/vdigit.py:158
 msgid "Display"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/vdigit.py:162
+#: ../gui/wxpython/gui_modules/vdigit.py:163
 #: ../gui/wxpython/gui_modules/profile.py:1174
 msgid "Line width"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/vdigit.py:180
+#: ../gui/wxpython/gui_modules/vdigit.py:181
 msgid "Snapping"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/vdigit.py:186
+#: ../gui/wxpython/gui_modules/vdigit.py:187
 msgid "Snapping threshold"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/vdigit.py:202
+#: ../gui/wxpython/gui_modules/vdigit.py:194
+msgid "screen pixels"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/vdigit.py:194
+msgid "map units"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/vdigit.py:203
 msgid "Snap also to vertex"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/vdigit.py:207
-#: ../gui/wxpython/gui_modules/vdigit.py:633
-#: ../gui/wxpython/gui_modules/vdigit.py:647
-#: ../gui/wxpython/gui_modules/vdigit.py:651
+#: ../gui/wxpython/gui_modules/vdigit.py:208
+#: ../gui/wxpython/gui_modules/vdigit.py:634
+#: ../gui/wxpython/gui_modules/vdigit.py:648
+#: ../gui/wxpython/gui_modules/vdigit.py:652
 #, python-format
 msgid "Snapping threshold is %(value).1f %(units)s"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/vdigit.py:220
+#: ../gui/wxpython/gui_modules/vdigit.py:221
 msgid "Select vector features"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/vdigit.py:237
+#: ../gui/wxpython/gui_modules/vdigit.py:238
 msgid "Select threshold"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/vdigit.py:250
+#: ../gui/wxpython/gui_modules/vdigit.py:251
 msgid "Select only features inside of selection bounding box"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/vdigit.py:252
+#: ../gui/wxpython/gui_modules/vdigit.py:253
 msgid ""
 "By default are selected all features overlapping selection bounding box "
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/vdigit.py:255
+#: ../gui/wxpython/gui_modules/vdigit.py:256
 msgid "Check for duplicates"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/vdigit.py:267
+#: ../gui/wxpython/gui_modules/vdigit.py:268
 msgid "Digitize line features"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/vdigit.py:270
+#: ../gui/wxpython/gui_modules/vdigit.py:271
 msgid "Break lines at intersection"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/vdigit.py:280
+#: ../gui/wxpython/gui_modules/vdigit.py:281
 msgid "Save changes"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/vdigit.py:283
+#: ../gui/wxpython/gui_modules/vdigit.py:284
 msgid "Save changes on exit"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/vdigit.py:295
+#: ../gui/wxpython/gui_modules/vdigit.py:296
 msgid "Query tool"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/vdigit.py:302
+#: ../gui/wxpython/gui_modules/vdigit.py:303
 msgid "Choose query tool"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/vdigit.py:307
+#: ../gui/wxpython/gui_modules/vdigit.py:308
 msgid "Select by box"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/vdigit.py:316
-#: ../gui/wxpython/gui_modules/vdigit.py:448
+#: ../gui/wxpython/gui_modules/vdigit.py:317
+#: ../gui/wxpython/gui_modules/vdigit.py:449
 msgid "length"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/vdigit.py:321
+#: ../gui/wxpython/gui_modules/vdigit.py:322
 msgid "Select lines"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/vdigit.py:323
-#: ../gui/wxpython/gui_modules/vdigit.py:346
+#: ../gui/wxpython/gui_modules/vdigit.py:324
+#: ../gui/wxpython/gui_modules/vdigit.py:347
 msgid "shorter than"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/vdigit.py:323
-#: ../gui/wxpython/gui_modules/vdigit.py:346
+#: ../gui/wxpython/gui_modules/vdigit.py:324
+#: ../gui/wxpython/gui_modules/vdigit.py:347
 msgid "longer than"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/vdigit.py:339
+#: ../gui/wxpython/gui_modules/vdigit.py:340
 msgid "dangle"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/vdigit.py:344
+#: ../gui/wxpython/gui_modules/vdigit.py:345
 msgid "Select dangles"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/vdigit.py:376
-#: ../gui/wxpython/gui_modules/preferences.py:1518
+#: ../gui/wxpython/gui_modules/vdigit.py:377
+#: ../gui/wxpython/gui_modules/preferences.py:1647
 msgid "Attributes"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/vdigit.py:383
+#: ../gui/wxpython/gui_modules/vdigit.py:384
 msgid "Digitize new feature"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/vdigit.py:388
+#: ../gui/wxpython/gui_modules/vdigit.py:389
 msgid "Add new record into table"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/vdigit.py:394
+#: ../gui/wxpython/gui_modules/vdigit.py:395
 msgid "Mode"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/vdigit.py:394
-#: ../gui/wxpython/gui_modules/vdigit.py:416
+#: ../gui/wxpython/gui_modules/vdigit.py:395
+#: ../gui/wxpython/gui_modules/vdigit.py:417
 msgid "Next to use"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/vdigit.py:404
+#: ../gui/wxpython/gui_modules/vdigit.py:405
 msgid "Category number"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/vdigit.py:414
+#: ../gui/wxpython/gui_modules/vdigit.py:415
 msgid "Category mode"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/vdigit.py:416
+#: ../gui/wxpython/gui_modules/vdigit.py:417
 msgid "Manual entry"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/vdigit.py:416
+#: ../gui/wxpython/gui_modules/vdigit.py:417
 msgid "No category"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/vdigit.py:429
+#: ../gui/wxpython/gui_modules/vdigit.py:430
 msgid "Delete existing feature(s)"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/vdigit.py:434
+#: ../gui/wxpython/gui_modules/vdigit.py:435
 msgid "Delete record from table"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/vdigit.py:444
+#: ../gui/wxpython/gui_modules/vdigit.py:445
 msgid "Geometry attributes"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/vdigit.py:450
+#: ../gui/wxpython/gui_modules/vdigit.py:451
 msgid "perimeter"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/vdigit.py:516
+#: ../gui/wxpython/gui_modules/vdigit.py:517
 msgid ""
 "Note: These settings are stored in the workspace not in the vector digitizer "
 "preferences."
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/vdigit.py:545
+#: ../gui/wxpython/gui_modules/vdigit.py:546
 msgid "Highlight"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/vdigit.py:546
+#: ../gui/wxpython/gui_modules/vdigit.py:547
 msgid "Highlight (duplicates)"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/vdigit.py:547
+#: ../gui/wxpython/gui_modules/vdigit.py:548
 msgid "Point"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/vdigit.py:548
+#: ../gui/wxpython/gui_modules/vdigit.py:549
 msgid "Line"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/vdigit.py:549
+#: ../gui/wxpython/gui_modules/vdigit.py:550
 msgid "Boundary (no area)"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/vdigit.py:550
+#: ../gui/wxpython/gui_modules/vdigit.py:551
 msgid "Boundary (one area)"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/vdigit.py:551
+#: ../gui/wxpython/gui_modules/vdigit.py:552
 msgid "Boundary (two areas)"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/vdigit.py:552
+#: ../gui/wxpython/gui_modules/vdigit.py:553
 msgid "Centroid (in area)"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/vdigit.py:553
+#: ../gui/wxpython/gui_modules/vdigit.py:554
 msgid "Centroid (outside area)"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/vdigit.py:554
+#: ../gui/wxpython/gui_modules/vdigit.py:555
 msgid "Centroid (duplicate in area)"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/vdigit.py:555
+#: ../gui/wxpython/gui_modules/vdigit.py:556
 msgid "Node (one line)"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/vdigit.py:556
+#: ../gui/wxpython/gui_modules/vdigit.py:557
 msgid "Node (two lines)"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/vdigit.py:557
+#: ../gui/wxpython/gui_modules/vdigit.py:558
 msgid "Vertex"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/vdigit.py:558
+#: ../gui/wxpython/gui_modules/vdigit.py:559
 msgid "Area (closed boundary + centroid)"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/vdigit.py:559
+#: ../gui/wxpython/gui_modules/vdigit.py:560
 msgid "Direction"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/vdigit.py:626
+#: ../gui/wxpython/gui_modules/vdigit.py:627
 msgid "Snapping disabled"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/vdigit.py:628
+#: ../gui/wxpython/gui_modules/vdigit.py:629
 #, python-format
 msgid "Snapping threshold is %(value).1f %(units)s (based on comp. resolution)"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/vdigit.py:684
+#: ../gui/wxpython/gui_modules/vdigit.py:685
 #, python-format
 msgid "Vector digitizer settings saved to file <%s>."
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/vdigit.py:861
+#: ../gui/wxpython/gui_modules/vdigit.py:862
 msgid "List of categories - right-click to delete"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/vdigit.py:892
+#: ../gui/wxpython/gui_modules/vdigit.py:893
 msgid "Add new category"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/vdigit.py:929
+#: ../gui/wxpython/gui_modules/vdigit.py:930
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:1707
 msgid "Apply changes"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/vdigit.py:931
+#: ../gui/wxpython/gui_modules/vdigit.py:932
 msgid "Ignore changes and close dialog"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/vdigit.py:933
+#: ../gui/wxpython/gui_modules/vdigit.py:934
 msgid "Apply changes and close dialog"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/vdigit.py:1023
-#: ../gui/wxpython/gui_modules/vdigit.py:1241
+#: ../gui/wxpython/gui_modules/vdigit.py:1024
+#: ../gui/wxpython/gui_modules/vdigit.py:1242
 #, python-format
 msgid ""
 "Unable to add new layer/category <%(layer)s/%(category)s>.\n"
@@ -7597,19 +7726,19 @@ msgid ""
 "Layer number must be greater then zero."
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/vdigit.py:1059
+#: ../gui/wxpython/gui_modules/vdigit.py:1060
 #: ../gui/wxpython/gui_modules/gmodeler.py:3791
 #: ../gui/wxpython/gui_modules/gmodeler.py:4148
 msgid "Delete selected"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/vdigit.py:1063
+#: ../gui/wxpython/gui_modules/vdigit.py:1064
 #: ../gui/wxpython/gui_modules/gmodeler.py:3792
 #: ../gui/wxpython/gui_modules/gmodeler.py:4149
 msgid "Delete all"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/vdigit.py:1065
+#: ../gui/wxpython/gui_modules/vdigit.py:1066
 #: ../gui/wxpython/gui_modules/gmodeler.py:3798
 #: ../gui/wxpython/gui_modules/gmodeler.py:4156
 #: ../gui/wxpython/gui_modules/dbm.py:1146
@@ -7617,37 +7746,129 @@ msgstr ""
 msgid "Reload"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/vdigit.py:1219
+#: ../gui/wxpython/gui_modules/vdigit.py:1220
 msgid "Unable to update vector map."
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/vdigit.py:1381
+#: ../gui/wxpython/gui_modules/vdigit.py:1382
 #, python-format
 msgid "%d lines selected for z bulk-labeling"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/vdigit.py:1384
+#: ../gui/wxpython/gui_modules/vdigit.py:1385
 msgid "Set value"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/vdigit.py:1391
+#: ../gui/wxpython/gui_modules/vdigit.py:1392
 msgid "Starting value"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/vdigit.py:1400
+#: ../gui/wxpython/gui_modules/vdigit.py:1401
 msgid "Step"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/vdigit.py:1430
+#: ../gui/wxpython/gui_modules/vdigit.py:1431
 msgid "List of duplicates"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/vdigit.py:1526
+#: ../gui/wxpython/gui_modules/vdigit.py:1527
 msgid "Feature id"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/vdigit.py:1527
+#: ../gui/wxpython/gui_modules/vdigit.py:1528
 msgid "Layer (Categories)"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/psmap.py:54
+msgid "GRASS GIS Hardcopy Map Output Utility"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/psmap.py:175
+msgid ""
+"Python Imaging Library is not available.\n"
+"'Preview' functionality won't work."
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/psmap.py:222
+msgid "Program ps2pdf is not available. Please install it first to create PDF."
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/psmap.py:266
+#, fuzzy
+msgid "Generating PDF..."
+msgstr "പൊതുവായ സജ്ജീകരണം"
+
+#: ../gui/wxpython/gui_modules/psmap.py:268
+msgid "Generating PostScript..."
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/psmap.py:270
+msgid "Generating preview..."
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/psmap.py:280
+#, python-format
+msgid "Ps.map exited with return code %s"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/psmap.py:295
+#, python-format
+msgid "ps2pdf exited with return code %s"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/psmap.py:299
+#, python-format
+msgid ""
+"Program ps2pdf is not available. Please install it to create PDF.\n"
+"\n"
+" %s"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/psmap.py:316
+#, fuzzy, python-format
+msgid "Unable to generate preview. %s"
+msgstr ""
+"മാപ്പ്സെറ്റ് പേർ മാറ്റാൻ പറ്റുനില്ല\n"
+"\n"
+"%s"
+
+#: ../gui/wxpython/gui_modules/psmap.py:325
+msgid "Preview generated"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/psmap.py:392
+#, fuzzy, python-format
+msgid "Failed to read file %s."
+msgstr "പുതിയ മാപ്പ്സെറ്റ് ഉണ്ടാക്കാൻ പറ്റുനില്ല: %s"
+
+#: ../gui/wxpython/gui_modules/psmap.py:538
+#: ../gui/wxpython/gui_modules/psmap.py:561
+msgid "Please, create map frame first."
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/psmap.py:606
+msgid "Scalebar is not appropriate for this projection"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/psmap.py:861
+msgid "wxGUI Hardcopy Map Utility"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/psmap.py:863
+msgid ""
+"(C) 2011 by the GRASS Development Team\n"
+"\n"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/psmap.py:864
+#: ../gui/wxpython/gui_modules/gmodeler.py:1242
+msgid ""
+"This program is free software under the GNU General Public License(>=v2). "
+"Read the file COPYING that comes with GRASS for details."
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/psmap.py:1095
+msgid "Click and drag to resize object"
 msgstr ""
 
 #: ../gui/wxpython/gui_modules/gcpmapdisp.py:71
@@ -7655,37 +7876,37 @@ msgid "GRASS GIS Manage Ground Control Points"
 msgstr ""
 
 #: ../gui/wxpython/gui_modules/gcpmapdisp.py:148
-#: ../gui/wxpython/gui_modules/globalvar.py:116
+#: ../gui/wxpython/gui_modules/globalvar.py:111
 msgid "Coordinates"
 msgstr ""
 
 #: ../gui/wxpython/gui_modules/gcpmapdisp.py:149
-#: ../gui/wxpython/gui_modules/globalvar.py:117
+#: ../gui/wxpython/gui_modules/globalvar.py:112
 msgid "Extent"
 msgstr "വിപുലത"
 
 #: ../gui/wxpython/gui_modules/gcpmapdisp.py:150
-#: ../gui/wxpython/gui_modules/globalvar.py:118
+#: ../gui/wxpython/gui_modules/globalvar.py:113
 msgid "Comp. region"
 msgstr ""
 
 #: ../gui/wxpython/gui_modules/gcpmapdisp.py:151
-#: ../gui/wxpython/gui_modules/globalvar.py:119
+#: ../gui/wxpython/gui_modules/globalvar.py:114
 msgid "Show comp. extent"
 msgstr ""
 
 #: ../gui/wxpython/gui_modules/gcpmapdisp.py:152
-#: ../gui/wxpython/gui_modules/globalvar.py:120
+#: ../gui/wxpython/gui_modules/globalvar.py:115
 msgid "Display mode"
 msgstr ""
 
 #: ../gui/wxpython/gui_modules/gcpmapdisp.py:153
-#: ../gui/wxpython/gui_modules/globalvar.py:121
+#: ../gui/wxpython/gui_modules/globalvar.py:116
 msgid "Display geometry"
 msgstr ""
 
 #: ../gui/wxpython/gui_modules/gcpmapdisp.py:154
-#: ../gui/wxpython/gui_modules/globalvar.py:122
+#: ../gui/wxpython/gui_modules/globalvar.py:117
 msgid "Map scale"
 msgstr ""
 
@@ -7711,10 +7932,6 @@ msgstr "മാപ്പ് മായിച്ചു കളയുക"
 #, fuzzy
 msgid "Target Display"
 msgstr "മാപ്പ് മായിച്ചു കളയുക"
-
-#: ../gui/wxpython/gui_modules/gcpmapdisp.py:348
-msgid "Map Toolbar"
-msgstr ""
 
 #: ../gui/wxpython/gui_modules/gcpmapdisp.py:361
 #, fuzzy
@@ -7764,6 +7981,7 @@ msgid "3D raster maps"
 msgstr "മാപ്പ്സെറ്റ് ഉണ്ടാക്കുക"
 
 #: ../gui/wxpython/gui_modules/gmodeler.py:428
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:2596
 #, fuzzy
 msgid "Vector maps"
 msgstr "തിരഞ്ഞെടുക്കപെട്ട vector ലയെറുകളെ ഇറക്കുമതി ചെയ്യുക"
@@ -7928,12 +8146,6 @@ msgid ""
 "\n"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/gmodeler.py:1242
-msgid ""
-"This program is free software under the GNU General Public License(>=v2). "
-"Read the file COPYING that comes with GRASS for details."
-msgstr ""
-
 #: ../gui/wxpython/gui_modules/gmodeler.py:1372
 #, fuzzy, python-format
 msgid ""
@@ -7985,7 +8197,7 @@ msgid "Name of element:"
 msgstr "മാപ്പ്സെറ്റിന്റെ പേർ:"
 
 #: ../gui/wxpython/gui_modules/gmodeler.py:2230
-#: ../gui/wxpython/gui_modules/layertree.py:271
+#: ../gui/wxpython/gui_modules/layertree.py:272
 msgid "Remove"
 msgstr ""
 
@@ -8010,7 +8222,7 @@ msgid "Intermediate"
 msgstr ""
 
 #: ../gui/wxpython/gui_modules/gmodeler.py:2262
-#: ../gui/wxpython/gui_modules/layertree.py:285
+#: ../gui/wxpython/gui_modules/layertree.py:286
 msgid "Properties"
 msgstr ""
 
@@ -8025,7 +8237,7 @@ msgstr ""
 #: ../gui/wxpython/gui_modules/gmodeler.py:2340
 #: ../gui/wxpython/gui_modules/gmodeler.py:3863
 #: ../gui/wxpython/gui_modules/gmodeler.py:4289
-#: ../gui/wxpython/gui_modules/preferences.py:1367
+#: ../gui/wxpython/gui_modules/preferences.py:1496
 msgid "Command"
 msgstr ""
 
@@ -8093,8 +8305,8 @@ msgid "Vector:"
 msgstr ""
 
 #: ../gui/wxpython/gui_modules/gmodeler.py:3301
-#: ../gui/wxpython/gui_modules/layertree.py:361
-#: ../gui/wxpython/gui_modules/layertree.py:392
+#: ../gui/wxpython/gui_modules/layertree.py:362
+#: ../gui/wxpython/gui_modules/layertree.py:395
 msgid "Metadata"
 msgstr ""
 
@@ -8270,6 +8482,823 @@ msgstr ""
 msgid " row %d:"
 msgstr ""
 
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:312
+#, fuzzy, python-format
+msgid ""
+"Unable to open file\n"
+"%s"
+msgstr "വർക്സ്പേസ് ഫയൽ തുറക്കാൻ പറ്റുനില്ല <%s>"
+
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:591
+#, python-format
+msgid "Instruction file will be loaded with following region: %s\n"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:596
+#, python-format
+msgid ""
+"Region cannot be set\n"
+"%s"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:727
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:872
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:967
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:1038
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:1144
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:1269
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:1320
+#, fuzzy, python-format
+msgid "Failed to read instruction %s"
+msgstr "ആജ്ഞ നടപ്പാക്കുന്നതിൽ പാളിച: '%s'"
+
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:741
+#, python-format
+msgid ""
+"Scale has changed, old value: %s\n"
+"new value: %s"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:743
+#, python-format
+msgid ""
+"Failed to read instruction %s.\n"
+"Use 1:25000 notation."
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:751
+#, python-format
+msgid ""
+"Map frame position changed, old value: %s %s\n"
+"new value: %s %s"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:758
+#, python-format
+msgid ""
+"Map frame size changed, old value: %s %s\n"
+"new value: %s %s"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:804
+#, python-format
+msgid ""
+"Failed to read instruction %s.\n"
+"Unknown format %s"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:817
+#, fuzzy, python-format
+msgid "Failed to read instruction %s."
+msgstr "ആജ്ഞ നടപ്പാക്കുന്നതിൽ പാളിച: '%s'"
+
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:1604
+msgid "Units:"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:1612
+msgid ""
+"Position of the top left corner\n"
+"from the top left edge of the paper"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:1613
+msgid "X:"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:1614
+msgid "Y:"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:1639
+#, fuzzy
+msgid "Font:"
+msgstr "അടയാളത്തിന്റ്റെ സജ്ജീകരണം"
+
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:1640
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:4906
+#: ../gui/wxpython/gui_modules/preferences.py:2186
+#, fuzzy
+msgid "Font size:"
+msgstr "അടയാളത്തിന്റ്റെ സജ്ജീകരണം"
+
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:1653
+#, fuzzy
+msgid "Choose color:"
+msgstr "തുടാങ്ങാനുള്ള മാത്രിക തിരഞെടുക്കുക"
+
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:1701
+msgid "Close dialog and apply changes"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:1772
+msgid "Literal is not allowed!"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:1772
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:2367
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:2389
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:2439
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:4991
+msgid "Invalid input"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:1889
+#, fuzzy
+msgid "Map settings"
+msgstr "പൊതുവായ സജ്ജീകരണം"
+
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:1895
+#, fuzzy
+msgid "Map frame settings"
+msgstr "ഉപയോഗിക്കുന്ന ആളുടെ സജ്ജീകരണം"
+
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:2012
+#, fuzzy
+msgid "Map frame options:"
+msgstr "അപഗ്രഥനത്തിൻമേലുള്ള വഴികൾ"
+
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:2013
+#, fuzzy
+msgid "fit frame to match selected map"
+msgstr "തിരഞ്ഞെടുത്ത മാപ്പ്സെറ്റ് പേർ മാറ്റുക"
+
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:2014
+msgid "fit frame to match saved region"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:2015
+msgid "fit frame to match current computational region"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:2016
+msgid "fixed scale and map center"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:2024
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:2192
+#, fuzzy
+msgid "Map selection"
+msgstr "ലൊക്കെഷൻ പേർ മാറ്റുക"
+
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:2032
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:2609
+#, fuzzy
+msgid "Map:"
+msgstr "മാപ്പ്സെറ്റ്:"
+
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:2032
+msgid "Region:"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:2051
+msgid "Map scale and center"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:2056
+msgid "Center:"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:2057
+msgid "E:"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:2058
+msgid "N:"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:2061
+#, fuzzy
+msgid "Scale:"
+msgstr "തന്നിരിക്കുന്ന വിവരങ്ങൾ ഹാര്‍ഡ് ഡിസ്കിൽ രേഖപ്പെടുത്തി സംഭരിച്ചുവെക്കുക"
+
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:2062
+msgid "1 :"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:2082
+msgid "Map max resolution (dpi):"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:2095
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3956
+msgid "Border"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:2099
+msgid "draw border around map frame"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:2105
+#, fuzzy
+msgid "border color:"
+msgstr "ഗ്രിഡിന്റെ നിറം"
+
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:2106
+msgid "border width (pts):"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:2200
+msgid ""
+"Region is set to match this map,\n"
+"raster or vector map must be added later"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:2207
+#, fuzzy
+msgid "Region selection"
+msgstr "ലൊക്കെഷൻ പേർ മാറ്റുക"
+
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:2366
+msgid "No map selected!"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:2388
+msgid "No region selected!"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:2438
+msgid "Invalid scale or map center!"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:2498
+#, fuzzy
+msgid "Choose raster map"
+msgstr "മാപ്പ്സെറ്റ് ഉണ്ടാക്കുക"
+
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:2502
+#, fuzzy
+msgid "no raster map"
+msgstr "മാപ്പ്സെറ്റ് ഉണ്ടാക്കുക"
+
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:2503
+#, fuzzy
+msgid "raster:"
+msgstr "മാപ്പ്സെറ്റ് ഉണ്ടാക്കുക"
+
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:2605
+#, fuzzy
+msgid "Add map"
+msgstr "ലെയെർ ഗ്രൂപ്പ് ചേർക്കുക"
+
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:2613
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:2973
+#, fuzzy
+msgid "points"
+msgstr "സജ്ജീകരണം കാണിക്കുക"
+
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:2613
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:2975
+#, fuzzy
+msgid "lines"
+msgstr "സജ്ജീകരണം കാണിക്കുക"
+
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:2613
+msgid "areas"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:2614
+#, fuzzy
+msgid "Data Type"
+msgstr "മാത്രിക"
+
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:2616
+#: ../gui/wxpython/gui_modules/dbm.py:919
+msgid "Add"
+msgstr "ചേർക്കുക"
+
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:2628
+#, fuzzy
+msgid "Manage vector maps"
+msgstr "പ്രൊജക്റ്റിന്റെ ലൊക്കെഷനും മാപ്പ്സെറ്റും തിരഞ്ഞെടുക്കുക"
+
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:2636
+msgid "The topmost vector map overlaps the others"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:2638
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3938
+msgid "Up"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:2639
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3939
+msgid "Down"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:2641
+msgid "Properties..."
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:2840
+#, fuzzy
+msgid "Raster map settings"
+msgstr "GUI സജ്ജീകരണം"
+
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:2877
+#, fuzzy
+msgid "Vector maps settings"
+msgstr "മാപ്പ് <%s> കണ്മനില്ല"
+
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:2912
+#, fuzzy
+msgid "properties"
+msgstr "സജ്ജീകരണം കാണിക്കുക"
+
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:2962
+#, fuzzy
+msgid "Data selection"
+msgstr "ലൊക്കെഷൻ പേർ മാറ്റുക"
+
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:2969
+msgid "Feature type"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:2973
+msgid "centroids"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:2975
+#, fuzzy
+msgid "boundaries"
+msgstr "ലൈനൊ/അതിർത്തിയൊ മാറ്റം വരുത്തുക"
+
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:2991
+#, fuzzy
+msgid "Layer selection"
+msgstr "ലൊക്കെഷൻ പേർ മാറ്റുക"
+
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:2999
+#, fuzzy
+msgid "Select layer:"
+msgstr "നിറം തിരഞ്ഞെടുക്കുക"
+
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3022
+msgid "list of categories (e.g. 1,3,5-7)"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3052
+#, fuzzy
+msgid "Use current mask"
+msgstr "പ്രൊജക്റ്റിന്റെ ലൊക്കെഷനും മാപ്പ്സെറ്റും തിരഞ്ഞെടുക്കുക"
+
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3069
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3173
+#, fuzzy
+msgid "Colors"
+msgstr "നിറം:"
+
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3074
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3178
+msgid "Outline"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3079
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3183
+msgid "draw outline"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3082
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3187
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:5111
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:5116
+msgid "Width (pts):"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3120
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3225
+#, fuzzy
+msgid "Fill"
+msgstr "ഫയൽ"
+
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3124
+#, fuzzy
+msgid "fill color"
+msgstr "ഗ്രിഡിന്റെ നിറം"
+
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3128
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3232
+#, fuzzy
+msgid "choose color:"
+msgstr "തുടാങ്ങാനുള്ള മാത്രിക തിരഞെടുക്കുക"
+
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3142
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3246
+msgid "color from map table column:"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3185
+msgid "No effect for fill color from table column"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3229
+msgid "Color of lines:"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3275
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3399
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3468
+msgid "Size and style"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3285
+#, fuzzy
+msgid "symbol:"
+msgstr "അടയാളത്തിന്റ്റെ സജ്ജീകരണം"
+
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3291
+#, fuzzy
+msgid "eps file:"
+msgstr "തന്നിരിക്കുന്ന വിവരങ്ങൾ ഹാര്‍ഡ് ഡിസ്കിൽ രേഖപ്പെടുത്തി സംഭരിച്ചുവെക്കുക"
+
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3295
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3480
+msgid "Type filename or click browse to choose file"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3296
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3481
+#, fuzzy
+msgid "Choose a file"
+msgstr "ഫയൽ തിരഞ്ഞെടുക്കുക"
+
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3315
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:4010
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:4823
+#: ../gui/wxpython/gui_modules/profile.py:1228
+msgid "Size"
+msgstr "വലുപ്പം"
+
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3320
+#, fuzzy
+msgid "size:"
+msgstr "വലുപ്പം"
+
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3322
+msgid "size from map table column:"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3324
+msgid "scale:"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3356
+#, fuzzy
+msgid "Rotation"
+msgstr "ലൊക്കെഷൻ പേർ മാറ്റാൻ മാറ്റുക"
+
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3362
+msgid "rotate symbols:"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3363
+msgid "counterclockwise in degrees:"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3365
+msgid "from map table column:"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3404
+msgid "Width"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3408
+msgid "Set width (pts):"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3417
+msgid "multiply width by category value"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3434
+#: ../gui/wxpython/gui_modules/profile.py:1184
+msgid "Line style"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3438
+#, fuzzy
+msgid "Choose line style:"
+msgstr "ഫയൽ തിരഞ്ഞെടുക്കുക"
+
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3448
+#, fuzzy
+msgid "Choose linecap:"
+msgstr "ഫയൽ തിരഞ്ഞെടുക്കുക"
+
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3473
+#, fuzzy
+msgid "Pattern"
+msgstr "മാപ്പുകൾ മറ്റുക"
+
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3478
+msgid "use pattern:"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3479
+#, fuzzy
+msgid "Choose pattern file:"
+msgstr "സ്ക്രിപ്റ്റ് ഫയൽ തിരഞെടുക്കുക"
+
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3483
+msgid "pattern line width (pts):"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3485
+msgid "pattern scale factor:"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3785
+#, fuzzy
+msgid "Raster legend"
+msgstr "പുരാവ്രിത്തം ചേർക്കുക"
+
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3789
+#, fuzzy
+msgid "Show raster legend"
+msgstr "പുരാവ്രിത്തം കാണിക്കുക"
+
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3795
+#, fuzzy
+msgid "Source raster"
+msgstr "3D റസ്റ്റർ മാപ്പ് ചേർക്കുക"
+
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3800
+msgid "current raster"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3801
+#, fuzzy
+msgid "select raster"
+msgstr "തിരഞ്ഞെടുക്കപെട്ട raster ലയെറുകളെ ഇറക്കുമതി ചെയ്യുക"
+
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3808
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:4516
+#, python-format
+msgid "%s: type %s"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3826
+#, fuzzy
+msgid "Type of legend"
+msgstr "പുരാവ്രിത്തം കാണിക്കുക"
+
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3830
+msgid "discrete legend (categorical maps)"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3832
+msgid "continuous color gradient legend (floating point map)"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3844
+#, fuzzy
+msgid "Advanced legend settings"
+msgstr "പുരാവ്രിത്തിന്റെയും ഗ്രിഡിന്റെയും സജ്ജീകരണം"
+
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3848
+msgid "draw \"no data\" box"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3854
+msgid "draw ticks across color table"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3901
+#, fuzzy
+msgid "Vector legend"
+msgstr "പുരാവ്രിത്തം കാണിക്കുക"
+
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3905
+#, fuzzy
+msgid "Show vector legend"
+msgstr "പുരാവ്രിത്തം കാണിക്കുക"
+
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3910
+#, fuzzy
+msgid "Source vector maps"
+msgstr "രസറ്ററൊ വെക്റ്ററൊ മപ്പുകളുടെ വിവരങ്ങള്‍ക്കായി ഒരു ഡേറ്റാബേസില്‍ അന്വേഷണം നടത്തുന്നത് "
+
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3916
+msgid "Choose vector maps and their order in legend"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3921
+msgid "Label"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3940
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:4254
+#, fuzzy
+msgid "Edit label"
+msgstr ""
+"ഒരു പ്രവൃത്തിയെയോ ഒരു പ്രസ്താവനയെയോ സൂചിപ്പിക്കാന്‍ ഉപയോഗിക്കുന്ന വാക്കോ ചിഹ്നങ്ങളോ ചേർക്കുക"
+
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3960
+msgid "draw border around legend"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:3998
+msgid "Size and position"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:4032
+msgid "Leave the edit field empty, to use default values."
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:4054
+msgid ""
+"Width of the color symbol (for lines)\n"
+"in front of the legend text"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:4060
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:4170
+#, fuzzy
+msgid "Columns:"
+msgstr "ആജ്ഞയുടെ ഉത്പന്നം"
+
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:4064
+msgid "column span:"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:4066
+msgid ""
+"Column separation distance between the left edges\n"
+"of two columns in a multicolumn legend"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:4093
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:4596
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:5081
+#: ../gui/wxpython/gui_modules/profile.py:967
+#: ../gui/wxpython/gui_modules/preferences.py:1208
+#: ../gui/wxpython/gui_modules/preferences.py:1340
+#: ../gui/wxpython/gui_modules/preferences.py:2137
+msgid "Font settings"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:4254
+msgid "Edit legend label:"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:4295
+#, fuzzy
+msgid "No raster map selected!"
+msgstr "മാപ്പ്സെറ്റ് ഉണ്ടാക്കുക"
+
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:4296
+#, fuzzy
+msgid "No raster"
+msgstr "3D റസ്റ്റർ മാപ്പ് ചേർക്കുക"
+
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:4619
+#, fuzzy
+msgid "Color settings"
+msgstr "സജ്ജീകരണം കാണിക്കുക"
+
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:4625
+msgid "use border color:"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:4626
+msgid "use background color:"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:4782
+msgid ""
+"Units of current projection are not supported,\n"
+" meters will be used!"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:4783
+msgid "Unsupported units"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:4828
+msgid "Length:"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:4832
+msgid "Scalebar length is given in map units"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:4835
+msgid "Scalebar height is real height on paper"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:4875
+#: ../gui/wxpython/gui_modules/profile.py:1237
+#: ../gui/wxpython/gui_modules/profile.py:1283
+msgid "Style"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:4880
+#, fuzzy
+msgid "Type:"
+msgstr "മാത്രിക"
+
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:4896
+#, fuzzy
+msgid "Number of segments:"
+msgstr "മാപ്പ്സെറ്റിന്റെ പേർ:"
+
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:4900
+msgid "Label every "
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:4901
+#, fuzzy
+msgid "segments"
+msgstr "പുരാവ്രിത്തം"
+
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:4910
+msgid "transparent text background"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:4990
+msgid "Length of scale bar is not defined"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:5062
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:5068
+msgid "Text"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:5071
+#: ../gui/wxpython/gui_modules/gdialogs.py:600
+msgid "Enter text:"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:5100
+msgid "Text effects"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:5105
+msgid "text background"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:5108
+msgid "highlight"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:5113
+msgid "text border"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:5187
+msgid "Position is given:"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:5188
+msgid "relatively to paper"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:5189
+msgid "by map coordinates"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:5205
+msgid ""
+"Position from the top left\n"
+"edge of the paper"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:5245
+msgid "Offset"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:5248
+msgid "horizontal (pts):"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:5249
+msgid "vertical (pts):"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:5262
+#, fuzzy
+msgid " Reference point"
+msgstr "എടത്: പുതിയ ബിന്ദു"
+
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:5289
+#, fuzzy
+msgid "Text rotation"
+msgstr "ലൊക്കെഷൻ എടുത്തുകളയുക"
+
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:5292
+msgid "rotate text (counterclockwise)"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:5365
+msgid "No text entered!"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/psmap_dialogs.py:5703
+#, fuzzy
+msgid "Unable to run `ps.map -b`"
+msgstr "പുതിയ മാപ്പ്സെറ്റ് ഉണ്ടാക്കാൻ പറ്റുനില്ല: %s"
+
 #: ../gui/wxpython/gui_modules/sqlbuilder.py:74
 #, python-format
 msgid "GRASS SQL Builder (%(type)s): vector map <%(map)s>"
@@ -8425,127 +9454,127 @@ msgstr "മാപ്പ് <%s> കണ്മനില്ല"
 msgid "3d raster map <%s> not found"
 msgstr "മാപ്പ് <%s> കണ്മനില്ല"
 
-#: ../gui/wxpython/gui_modules/toolbars.py:209
+#: ../gui/wxpython/gui_modules/toolbars.py:212
 msgid "3D view mode not available"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/toolbars.py:210
-#: ../gui/wxpython/gui_modules/toolbars.py:227
+#: ../gui/wxpython/gui_modules/toolbars.py:213
+#: ../gui/wxpython/gui_modules/toolbars.py:230
 #, python-format
 msgid "Reason: %s"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/toolbars.py:211
+#: ../gui/wxpython/gui_modules/toolbars.py:214
 msgid ""
 "Note that the wxGUI's 3D view mode is currently disabled on MS Windows "
 "(hopefully this will be fixed soon). Please keep an eye out for updated "
 "versions of GRASS. In the meantime you can use \"NVIZ\" from the File menu."
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/toolbars.py:219
-#: ../gui/wxpython/gui_modules/toolbars.py:1168
+#: ../gui/wxpython/gui_modules/toolbars.py:222
+#: ../gui/wxpython/gui_modules/toolbars.py:1171
 msgid "Digitize"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/toolbars.py:226
+#: ../gui/wxpython/gui_modules/toolbars.py:229
 msgid "Vector digitizer not available"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/toolbars.py:228
+#: ../gui/wxpython/gui_modules/toolbars.py:231
 msgid ""
 "Note that the wxGUI's vector digitizer is currently disabled (hopefully this "
 "will be fixed soon). Please keep an eye out for updated versions of GRASS. "
 "In the meantime you can use \"v.digit\" from the Develop Vector menu."
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/toolbars.py:421
+#: ../gui/wxpython/gui_modules/toolbars.py:424
 msgid "Set map canvas for "
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/toolbars.py:423
+#: ../gui/wxpython/gui_modules/toolbars.py:426
 msgid " / Zoom to map"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/toolbars.py:796
+#: ../gui/wxpython/gui_modules/toolbars.py:799
 msgid "Duplicate attributes"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/toolbars.py:873
+#: ../gui/wxpython/gui_modules/toolbars.py:876
 msgid "Copy features from (background) vector map"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/toolbars.py:881
+#: ../gui/wxpython/gui_modules/toolbars.py:884
 msgid "Flip selected lines/boundaries"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/toolbars.py:889
+#: ../gui/wxpython/gui_modules/toolbars.py:892
 msgid "Merge selected lines/boundaries"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/toolbars.py:897
+#: ../gui/wxpython/gui_modules/toolbars.py:900
 msgid "Break selected lines/boundaries at intersection"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/toolbars.py:905
+#: ../gui/wxpython/gui_modules/toolbars.py:908
 msgid "Snap selected lines/boundaries (only to nodes)"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/toolbars.py:913
+#: ../gui/wxpython/gui_modules/toolbars.py:916
 msgid "Connect selected lines/boundaries"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/toolbars.py:921
+#: ../gui/wxpython/gui_modules/toolbars.py:924
 msgid "Query features"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/toolbars.py:929
+#: ../gui/wxpython/gui_modules/toolbars.py:932
 msgid "Z bulk-labeling of 3D lines"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/toolbars.py:937
+#: ../gui/wxpython/gui_modules/toolbars.py:940
 msgid "Feature type conversion"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/toolbars.py:1048
+#: ../gui/wxpython/gui_modules/toolbars.py:1051
 msgid "Vector map is not 3D. Operation canceled."
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/toolbars.py:1113
-#: ../gui/wxpython/gui_modules/toolbars.py:1195
-#: ../gui/wxpython/gui_modules/toolbars.py:1274
+#: ../gui/wxpython/gui_modules/toolbars.py:1116
+#: ../gui/wxpython/gui_modules/toolbars.py:1198
+#: ../gui/wxpython/gui_modules/toolbars.py:1277
 msgid "Select vector map"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/toolbars.py:1151
+#: ../gui/wxpython/gui_modules/toolbars.py:1154
 #, python-format
 msgid "Please wait, opening vector map <%s> for editing..."
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/toolbars.py:1203
+#: ../gui/wxpython/gui_modules/toolbars.py:1206
 #, python-format
 msgid "Do you want to save changes in vector map <%s>?"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/toolbars.py:1205
+#: ../gui/wxpython/gui_modules/toolbars.py:1208
 msgid "Save changes?"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/toolbars.py:1212
+#: ../gui/wxpython/gui_modules/toolbars.py:1215
 #, python-format
 msgid "Please wait, closing and rebuilding topology of vector map <%s>..."
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/toolbars.py:1223
+#: ../gui/wxpython/gui_modules/toolbars.py:1226
 #, python-format
 msgid "Editing of vector map <%s> successfully finished"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/toolbars.py:1280
-#: ../gui/wxpython/gui_modules/toolbars.py:1285
+#: ../gui/wxpython/gui_modules/toolbars.py:1283
+#: ../gui/wxpython/gui_modules/toolbars.py:1288
 msgid "New vector map"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/utils.py:513
+#: ../gui/wxpython/gui_modules/utils.py:516
 #, python-format
 msgid "failed to open '%s'"
 msgstr ""
@@ -8571,42 +9600,36 @@ msgstr ""
 
 #: ../gui/wxpython/gui_modules/render.py:657
 #, fuzzy, python-format
-msgid ""
-"Unable to zoom to raster map <%s>.\n"
-"\n"
-"Details: %s"
+msgid "Unable to zoom to raster map <%s>."
 msgstr "പുതിയ മാപ്പ്സെറ്റ് ഉണ്ടാക്കാൻ പറ്റുനില്ല: %s"
 
-#: ../gui/wxpython/gui_modules/render.py:659
+#: ../gui/wxpython/gui_modules/render.py:660
 #, fuzzy, python-format
-msgid ""
-"Unable to zoom to vector map <%s>.\n"
-"\n"
-"Details: %s"
-msgstr "പുതിയ മാപ്പ്സെറ്റ് ഉണ്ടാക്കാൻ പറ്റുനില്ല: %s"
+msgid "Unable to zoom to vector map <%s>."
+msgstr "മാപ്പ്സെറ്റിലെക്ക് മാറാൻ കഴിയുനില്ല <%s>."
 
-#: ../gui/wxpython/gui_modules/render.py:661
+#: ../gui/wxpython/gui_modules/render.py:663
 msgid ""
 "Unable to get current geographic extent. Force quiting wxGUI. Please run "
 "manually g.region to fix the problem."
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/render.py:945
+#: ../gui/wxpython/gui_modules/render.py:947
 msgid "ERROR: Rendering failed"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/render.py:991
-#: ../gui/wxpython/gui_modules/render.py:1073
+#: ../gui/wxpython/gui_modules/render.py:993
+#: ../gui/wxpython/gui_modules/render.py:1075
 #, python-format
 msgid "Unable to render map layer <%s>."
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/render.py:1182
+#: ../gui/wxpython/gui_modules/render.py:1184
 #, python-format
 msgid "Unable render overlay <%s>."
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/render.py:1221
+#: ../gui/wxpython/gui_modules/render.py:1223
 #, python-format
 msgid "Unable render overlay <%s>"
 msgstr ""
@@ -8767,7 +9790,6 @@ msgid "Simple"
 msgstr ""
 
 #: ../gui/wxpython/gui_modules/dbm.py:740
-#: ../gui/wxpython/gui_modules/preferences.py:1826
 msgid "Advanced"
 msgstr ""
 
@@ -8790,10 +9812,6 @@ msgstr ""
 msgid "Data length"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/dbm.py:919
-msgid "Add"
-msgstr "ചേർക്കുക"
-
 #: ../gui/wxpython/gui_modules/dbm.py:939
 msgid "To"
 msgstr ""
@@ -8811,7 +9829,7 @@ msgid "List of layers"
 msgstr "ലെയറുകളുടെ പട്ടിക"
 
 #: ../gui/wxpython/gui_modules/dbm.py:1117
-#: ../gui/wxpython/gui_modules/preferences.py:625
+#: ../gui/wxpython/gui_modules/preferences.py:636
 msgid "Edit selected record"
 msgstr ""
 
@@ -9108,7 +10126,7 @@ msgid "Create attribute table"
 msgstr ""
 
 #: ../gui/wxpython/gui_modules/gdialogs.py:203
-#: ../gui/wxpython/gui_modules/preferences.py:1402
+#: ../gui/wxpython/gui_modules/preferences.py:1531
 msgid "Add created map into layer tree"
 msgstr ""
 
@@ -9159,17 +10177,13 @@ msgstr ""
 msgid "Legend of raster map <%s>"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/gdialogs.py:600
-msgid "Enter text:"
-msgstr ""
-
 #: ../gui/wxpython/gui_modules/gdialogs.py:616
 msgid "Rotation:"
 msgstr ""
 
 #: ../gui/wxpython/gui_modules/gdialogs.py:629
-#: ../gui/wxpython/gui_modules/preferences.py:1214
-#: ../gui/wxpython/gui_modules/preferences.py:1230
+#: ../gui/wxpython/gui_modules/preferences.py:1227
+#: ../gui/wxpython/gui_modules/preferences.py:1356
 msgid "Set font"
 msgstr ""
 
@@ -9390,12 +10404,6 @@ msgstr ""
 msgid "Label font size (pts):"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/profile.py:967
-#: ../gui/wxpython/gui_modules/preferences.py:1198
-#: ../gui/wxpython/gui_modules/preferences.py:2077
-msgid "Font settings"
-msgstr ""
-
 #: ../gui/wxpython/gui_modules/profile.py:975
 msgid "Font family:"
 msgstr ""
@@ -9423,16 +10431,12 @@ msgid "Profile line settings"
 msgstr ""
 
 #: ../gui/wxpython/gui_modules/profile.py:1162
-#: ../gui/wxpython/gui_modules/layertree.py:390
+#: ../gui/wxpython/gui_modules/layertree.py:393
 msgid "Profile"
 msgstr ""
 
 #: ../gui/wxpython/gui_modules/profile.py:1167
 msgid "Line color"
-msgstr ""
-
-#: ../gui/wxpython/gui_modules/profile.py:1184
-msgid "Line style"
 msgstr ""
 
 #: ../gui/wxpython/gui_modules/profile.py:1193
@@ -9442,15 +10446,6 @@ msgstr "പുരാവ്രിത്തം"
 
 #: ../gui/wxpython/gui_modules/profile.py:1217
 msgid "Transect segment marker settings"
-msgstr ""
-
-#: ../gui/wxpython/gui_modules/profile.py:1228
-msgid "Size"
-msgstr "വലുപ്പം"
-
-#: ../gui/wxpython/gui_modules/profile.py:1237
-#: ../gui/wxpython/gui_modules/profile.py:1283
-msgid "Style"
 msgstr ""
 
 #: ../gui/wxpython/gui_modules/profile.py:1267
@@ -9506,135 +10501,135 @@ msgstr ""
 msgid "Map Layers"
 msgstr "മാപ്പ് ലയെറുകൾ"
 
-#: ../gui/wxpython/gui_modules/layertree.py:283
+#: ../gui/wxpython/gui_modules/layertree.py:284
 msgid "Change opacity level"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/layertree.py:293
+#: ../gui/wxpython/gui_modules/layertree.py:294
 #, fuzzy
 msgid "3D view properties"
 msgstr "സജ്ജീകരണം കാണിക്കുക"
 
-#: ../gui/wxpython/gui_modules/layertree.py:297
+#: ../gui/wxpython/gui_modules/layertree.py:298
 msgid "Zoom to selected map(s)"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/layertree.py:299
+#: ../gui/wxpython/gui_modules/layertree.py:300
 msgid "Set computational region from selected map(s)"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/layertree.py:311
-#: ../gui/wxpython/gui_modules/layertree.py:380
+#: ../gui/wxpython/gui_modules/layertree.py:312
+#: ../gui/wxpython/gui_modules/layertree.py:381
 msgid "Export"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/layertree.py:317
+#: ../gui/wxpython/gui_modules/layertree.py:318
 msgid "Show attribute data"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/layertree.py:320
+#: ../gui/wxpython/gui_modules/layertree.py:321
 msgid "Start editing"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/layertree.py:321
+#: ../gui/wxpython/gui_modules/layertree.py:322
 msgid "Stop editing"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/layertree.py:332
+#: ../gui/wxpython/gui_modules/layertree.py:333
 msgid "Use as background vector map for digitizer"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/layertree.py:339
+#: ../gui/wxpython/gui_modules/layertree.py:340
 msgid "Rebuild topology"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/layertree.py:374
+#: ../gui/wxpython/gui_modules/layertree.py:375
 msgid "Zoom to selected map(s) (ignore NULLs)"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/layertree.py:376
+#: ../gui/wxpython/gui_modules/layertree.py:377
 msgid "Set computational region from selected map(s) (ignore NULLs)"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/layertree.py:480
+#: ../gui/wxpython/gui_modules/layertree.py:484
 msgid "Unable to create profile of raster map."
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/layertree.py:511
+#: ../gui/wxpython/gui_modules/layertree.py:515
 msgid "Unable to display histogram of raster map."
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/layertree.py:598
+#: ../gui/wxpython/gui_modules/layertree.py:608
 #, python-format
 msgid "Set opacity <%s>"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/layertree.py:690
+#: ../gui/wxpython/gui_modules/layertree.py:700
 msgid "Layer group:"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/layertree.py:695
-#: ../gui/wxpython/gui_modules/layertree.py:1261
+#: ../gui/wxpython/gui_modules/layertree.py:705
+#: ../gui/wxpython/gui_modules/layertree.py:1273
 msgid "Click to edit layer settings"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/layertree.py:740
+#: ../gui/wxpython/gui_modules/layertree.py:750
 msgid "(double click to set properties)"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/layertree.py:746
+#: ../gui/wxpython/gui_modules/layertree.py:756
 msgid "3d raster"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/layertree.py:749
+#: ../gui/wxpython/gui_modules/layertree.py:759
 msgid "RGB"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/layertree.py:752
+#: ../gui/wxpython/gui_modules/layertree.py:762
 msgid "HIS"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/layertree.py:758
+#: ../gui/wxpython/gui_modules/layertree.py:768
 msgid "raster cell numbers"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/layertree.py:761
+#: ../gui/wxpython/gui_modules/layertree.py:771
 msgid "raster flow arrows"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/layertree.py:767
+#: ../gui/wxpython/gui_modules/layertree.py:777
 msgid "thematic map"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/layertree.py:770
+#: ../gui/wxpython/gui_modules/layertree.py:780
 msgid "thematic charts"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/layertree.py:773
+#: ../gui/wxpython/gui_modules/layertree.py:783
 msgid "grid"
 msgstr "ഗ്രിഡ്"
 
-#: ../gui/wxpython/gui_modules/layertree.py:776
+#: ../gui/wxpython/gui_modules/layertree.py:786
 msgid "geodesic line"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/layertree.py:779
+#: ../gui/wxpython/gui_modules/layertree.py:789
 msgid "rhumbline"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/layertree.py:782
+#: ../gui/wxpython/gui_modules/layertree.py:792
 msgid "vector labels"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/layertree.py:1066
+#: ../gui/wxpython/gui_modules/layertree.py:1076
 msgid "Please wait, updating data..."
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/layertree.py:1340
+#: ../gui/wxpython/gui_modules/layertree.py:1352
 msgid "opacity:"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/layertree.py:1356
+#: ../gui/wxpython/gui_modules/layertree.py:1368
 #, python-format
 msgid "Map <%s> not found."
 msgstr "മാപ്പ് <%s> കണ്മനില്ല"
@@ -9752,9 +10747,9 @@ msgstr "തെറ്റ് %s"
 
 #: ../gui/wxpython/gui_modules/menuform.py:1983
 #: ../gui/wxpython/gui_modules/menuform.py:1986
-#, python-format
-msgid "Unable to fetch interface description for command '%s'. Details: %s"
-msgstr ""
+#, fuzzy, python-format
+msgid "Unable to fetch interface description for command '%s'."
+msgstr "ആജ്ഞ നടപ്പാക്കുന്നതിൽ പാളിച: '%s'"
 
 #: ../gui/wxpython/gui_modules/menuform.py:2097
 #, fuzzy, python-format
@@ -9771,119 +10766,119 @@ msgstr ""
 msgid "usage: %s <grass command>"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/globalvar.py:123
+#: ../gui/wxpython/gui_modules/globalvar.py:118
 msgid "Go to"
 msgstr "പൊകുക"
 
-#: ../gui/wxpython/gui_modules/globalvar.py:124
-#: ../gui/wxpython/gui_modules/preferences.py:1647
+#: ../gui/wxpython/gui_modules/globalvar.py:119
+#: ../gui/wxpython/gui_modules/preferences.py:1776
 #, fuzzy
 msgid "Projection"
 msgstr "അപഗ്രഥനത്തിൻമേലുള്ള വഴികൾ"
 
-#: ../gui/wxpython/gui_modules/nviz_mapdisp.py:261
+#: ../gui/wxpython/gui_modules/nviz_mapdisp.py:265
 msgid "Easting"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/nviz_mapdisp.py:262
+#: ../gui/wxpython/gui_modules/nviz_mapdisp.py:266
 msgid "Northing"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/nviz_mapdisp.py:263
+#: ../gui/wxpython/gui_modules/nviz_mapdisp.py:267
 msgid "Elevation"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/nviz_mapdisp.py:264
+#: ../gui/wxpython/gui_modules/nviz_mapdisp.py:268
 msgid "Surface map elevation"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/nviz_mapdisp.py:265
+#: ../gui/wxpython/gui_modules/nviz_mapdisp.py:269
 msgid "Surface map color"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/nviz_mapdisp.py:274
+#: ../gui/wxpython/gui_modules/nviz_mapdisp.py:278
 msgid "XY distance from previous"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/nviz_mapdisp.py:275
+#: ../gui/wxpython/gui_modules/nviz_mapdisp.py:279
 msgid "XYZ distance from previous"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/nviz_mapdisp.py:276
+#: ../gui/wxpython/gui_modules/nviz_mapdisp.py:280
 msgid "Distance along surface"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/nviz_mapdisp.py:281
+#: ../gui/wxpython/gui_modules/nviz_mapdisp.py:285
 msgid "Distance along exag. surface"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/nviz_mapdisp.py:288
+#: ../gui/wxpython/gui_modules/nviz_mapdisp.py:292
 msgid "No point on surface"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/nviz_mapdisp.py:293
+#: ../gui/wxpython/gui_modules/nviz_mapdisp.py:297
 msgid "Function not implemented yet"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/nviz_mapdisp.py:600
+#: ../gui/wxpython/gui_modules/nviz_mapdisp.py:598
 msgid "Loading raster map"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/nviz_mapdisp.py:604
+#: ../gui/wxpython/gui_modules/nviz_mapdisp.py:602
 msgid "Loading 3d raster map"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/nviz_mapdisp.py:610
+#: ../gui/wxpython/gui_modules/nviz_mapdisp.py:608
 msgid "failed"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/nviz_mapdisp.py:612
+#: ../gui/wxpython/gui_modules/nviz_mapdisp.py:610
 #, python-format
 msgid "Unsupported layer type '%s'"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/nviz_mapdisp.py:666
+#: ../gui/wxpython/gui_modules/nviz_mapdisp.py:664
 msgid "Unable to unload raster map"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/nviz_mapdisp.py:671
+#: ../gui/wxpython/gui_modules/nviz_mapdisp.py:669
 msgid "Unable to unload 3d raster map"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/nviz_mapdisp.py:672
+#: ../gui/wxpython/gui_modules/nviz_mapdisp.py:670
 msgid "3d raster map"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/nviz_mapdisp.py:679
+#: ../gui/wxpython/gui_modules/nviz_mapdisp.py:677
 msgid "unloaded successfully"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/nviz_mapdisp.py:723
+#: ../gui/wxpython/gui_modules/nviz_mapdisp.py:721
 #, python-format
 msgid "Loading vector map <%(name)s> (%(type)s) failed"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/nviz_mapdisp.py:779
+#: ../gui/wxpython/gui_modules/nviz_mapdisp.py:777
 #, python-format
 msgid "Unable to unload vector map <%(name)s> (%(type)s)"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/nviz_mapdisp.py:782
+#: ../gui/wxpython/gui_modules/nviz_mapdisp.py:780
 #, python-format
 msgid "Vector map <%(name)s> (%(type)s) unloaded successfully"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/nviz_mapdisp.py:1068
+#: ../gui/wxpython/gui_modules/nviz_mapdisp.py:1067
 #, fuzzy, python-format
 msgid "Vector point layer not found (id = %d)"
 msgstr "മാപ്പ് <%s> കണ്മനില്ല"
 
-#: ../gui/wxpython/gui_modules/nviz_mapdisp.py:1070
+#: ../gui/wxpython/gui_modules/nviz_mapdisp.py:1069
 #, python-format
 msgid "Unable to set data layer properties (id = %d)"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/nviz_mapdisp.py:1073
+#: ../gui/wxpython/gui_modules/nviz_mapdisp.py:1072
 #, python-format
 msgid ""
 "Setting data layer properties failed.\n"
@@ -9891,71 +10886,83 @@ msgid ""
 "%s"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/preferences.py:415
+#: ../gui/wxpython/gui_modules/preferences.py:426
 msgid "Segment break"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/preferences.py:620
+#: ../gui/wxpython/gui_modules/preferences.py:631
 msgid "Collapse all except PERMANENT and current"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/preferences.py:621
+#: ../gui/wxpython/gui_modules/preferences.py:632
 msgid "Collapse all except PERMANENT"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/preferences.py:622
+#: ../gui/wxpython/gui_modules/preferences.py:633
 msgid "Collapse all except current"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/preferences.py:623
+#: ../gui/wxpython/gui_modules/preferences.py:634
 msgid "Collapse all"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/preferences.py:624
+#: ../gui/wxpython/gui_modules/preferences.py:635
 msgid "Expand all"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/preferences.py:626
+#: ../gui/wxpython/gui_modules/preferences.py:637
 msgid "Display selected"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/preferences.py:652
+#: ../gui/wxpython/gui_modules/preferences.py:647
+msgid "Classic (labels only)"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/preferences.py:648
+msgid "Combined (labels and module names)"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/preferences.py:649
+msgid "Professional (module names only)"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/preferences.py:669
 msgid "box"
 msgstr "പെട്ടി"
 
-#: ../gui/wxpython/gui_modules/preferences.py:653
+#: ../gui/wxpython/gui_modules/preferences.py:670
 msgid "sphere"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/preferences.py:654
+#: ../gui/wxpython/gui_modules/preferences.py:671
 msgid "cube"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/preferences.py:655
+#: ../gui/wxpython/gui_modules/preferences.py:672
 msgid "diamond"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/preferences.py:656
+#: ../gui/wxpython/gui_modules/preferences.py:673
 msgid "dtree"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/preferences.py:657
+#: ../gui/wxpython/gui_modules/preferences.py:674
 msgid "ctree"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/preferences.py:658
+#: ../gui/wxpython/gui_modules/preferences.py:675
 msgid "aster"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/preferences.py:659
+#: ../gui/wxpython/gui_modules/preferences.py:676
 msgid "gyro"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/preferences.py:660
+#: ../gui/wxpython/gui_modules/preferences.py:677
 msgid "histogram"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/preferences.py:725
+#: ../gui/wxpython/gui_modules/preferences.py:742
 #, python-format
 msgid ""
 "Error: Reading settings from file <%(file)s> failed.\n"
@@ -9963,11 +10970,7 @@ msgid ""
 "       Line: '%(line)s'"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/preferences.py:757
-msgid "Uknown settings file location."
-msgstr ""
-
-#: ../gui/wxpython/gui_modules/preferences.py:791
+#: ../gui/wxpython/gui_modules/preferences.py:792
 #, python-format
 msgid ""
 "Writing settings to file <%(file)s> failed.\n"
@@ -9975,280 +10978,286 @@ msgid ""
 "Details: %(detail)s"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/preferences.py:892
+#: ../gui/wxpython/gui_modules/preferences.py:893
 msgid "Unable to set "
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/preferences.py:918
-#: ../gui/wxpython/gui_modules/preferences.py:924
+#: ../gui/wxpython/gui_modules/preferences.py:919
+#: ../gui/wxpython/gui_modules/preferences.py:925
 #, fuzzy, python-format
 msgid "Unable to parse settings '%s'"
 msgstr "ആജ്ഞ നടപ്പാക്കുന്നതിൽ പാളിച: '%s'"
 
-#: ../gui/wxpython/gui_modules/preferences.py:935
+#: ../gui/wxpython/gui_modules/preferences.py:936
 #, fuzzy
 msgid "User settings"
 msgstr "GUI സജ്ജീകരണം"
 
-#: ../gui/wxpython/gui_modules/preferences.py:955
+#: ../gui/wxpython/gui_modules/preferences.py:956
 msgid "Set to default"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/preferences.py:963
+#: ../gui/wxpython/gui_modules/preferences.py:964
 msgid "Revert settings to default and apply changes"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/preferences.py:1023
+#: ../gui/wxpython/gui_modules/preferences.py:1026
 msgid "Settings applied to current session but not saved"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/preferences.py:1037
+#: ../gui/wxpython/gui_modules/preferences.py:1044
 #, python-format
 msgid "Settings saved to file '%s'."
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/preferences.py:1066
+#: ../gui/wxpython/gui_modules/preferences.py:1075
 msgid "Key column cannot be empty string."
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/preferences.py:1080
-msgid "GUI settings"
+#: ../gui/wxpython/gui_modules/preferences.py:1089
+#, fuzzy
+msgid "GUI Settings"
 msgstr "GUI സജ്ജീകരണം"
 
-#: ../gui/wxpython/gui_modules/preferences.py:1104
+#: ../gui/wxpython/gui_modules/preferences.py:1113
 msgid "General settings"
 msgstr "പൊതുവായ സജ്ജീകരണം"
 
-#: ../gui/wxpython/gui_modules/preferences.py:1115
+#: ../gui/wxpython/gui_modules/preferences.py:1124
 msgid "Element list:"
 msgstr "മൂലകത്തിന്റെ പട്ടിക"
 
-#: ../gui/wxpython/gui_modules/preferences.py:1137
+#: ../gui/wxpython/gui_modules/preferences.py:1146
 msgid "Save current window layout as default"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/preferences.py:1140
+#: ../gui/wxpython/gui_modules/preferences.py:1149
 msgid ""
 "Save current position and size of Layer Manager window and opened Map "
 "Display window(s) and use as default for next sessions."
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/preferences.py:1153
+#: ../gui/wxpython/gui_modules/preferences.py:1162
 msgid "Layer Manager settings"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/preferences.py:1165
+#: ../gui/wxpython/gui_modules/preferences.py:1174
 msgid "Ask when removing map layer from layer tree"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/preferences.py:1175
+#: ../gui/wxpython/gui_modules/preferences.py:1184
 msgid "Ask when quiting wxGUI or closing display"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/preferences.py:1209
-msgid "Default font for GRASS displays:"
-msgstr ""
-
-#: ../gui/wxpython/gui_modules/preferences.py:1225
+#: ../gui/wxpython/gui_modules/preferences.py:1222
 #, fuzzy
 msgid "Font for command output:"
 msgstr "ആജ്ഞയുടെ ഉത്പന്നം"
 
-#: ../gui/wxpython/gui_modules/preferences.py:1239
-msgid "Default display settings"
-msgstr ""
-
-#: ../gui/wxpython/gui_modules/preferences.py:1250
-msgid "Display driver:"
-msgstr ""
-
-#: ../gui/wxpython/gui_modules/preferences.py:1280
-msgid "Statusbar mode:"
-msgstr ""
-
-#: ../gui/wxpython/gui_modules/preferences.py:1332
-msgid "Enable auto-rendering"
-msgstr ""
-
-#: ../gui/wxpython/gui_modules/preferences.py:1345
+#: ../gui/wxpython/gui_modules/preferences.py:1236
 #, fuzzy
-msgid "Enable auto-zooming to selected map layer"
-msgstr "തിരഞ്ഞെടുക്കപെട്ട ലയെറുകളെ ഇറക്കുമതി ചെയ്യുക"
+msgid "Appearance settings"
+msgstr "സജ്ജീകരണം മാറ്റുക"
 
-#: ../gui/wxpython/gui_modules/preferences.py:1370
-msgid "Command dialog settings"
+#: ../gui/wxpython/gui_modules/preferences.py:1248
+msgid "Menu style:"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/preferences.py:1392
-msgid "Close dialog when command is successfully finished"
+#: ../gui/wxpython/gui_modules/preferences.py:1272
+msgid "Height of map selection popup window (in pixels):"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/preferences.py:1413
-msgid "Allow interactive input"
-msgstr ""
-
-#: ../gui/wxpython/gui_modules/preferences.py:1423
-msgid "Verbosity level:"
-msgstr ""
-
-#: ../gui/wxpython/gui_modules/preferences.py:1442
-msgid "Raster settings"
-msgstr ""
-
-#: ../gui/wxpython/gui_modules/preferences.py:1453
-msgid "Overlay raster maps"
-msgstr ""
-
-#: ../gui/wxpython/gui_modules/preferences.py:1464
-msgid "Default color table"
-msgstr ""
-
-#: ../gui/wxpython/gui_modules/preferences.py:1490
-msgid "Vector settings"
-msgstr ""
-
-#: ../gui/wxpython/gui_modules/preferences.py:1496
-msgid "Display:"
-msgstr ""
-
-#: ../gui/wxpython/gui_modules/preferences.py:1526
-msgid "Highlighting"
-msgstr ""
-
-#: ../gui/wxpython/gui_modules/preferences.py:1542
-msgid "Line width (in pixels):"
-msgstr ""
-
-#: ../gui/wxpython/gui_modules/preferences.py:1565
-msgid "Data browser"
-msgstr ""
-
-#: ../gui/wxpython/gui_modules/preferences.py:1570
-msgid "Left mouse double click:"
-msgstr ""
-
-#: ../gui/wxpython/gui_modules/preferences.py:1582
-msgid "Encoding (e.g. utf-8, ascii, iso8859-1, koi8-r):"
-msgstr ""
-
-#: ../gui/wxpython/gui_modules/preferences.py:1593
-msgid "Ask when deleting data record(s) from table"
-msgstr ""
-
-#: ../gui/wxpython/gui_modules/preferences.py:1614
-msgid "Create table"
-msgstr ""
-
-#: ../gui/wxpython/gui_modules/preferences.py:1621
-msgid "Key column:"
-msgstr ""
-
-#: ../gui/wxpython/gui_modules/preferences.py:1654
-msgid "Projection statusbar settings"
-msgstr ""
-
-#: ../gui/wxpython/gui_modules/preferences.py:1680
-msgid "Proj.4 string (required):"
-msgstr ""
-
-#: ../gui/wxpython/gui_modules/preferences.py:1696
-#, fuzzy
-msgid "EPSG file:"
-msgstr "ഫയൽ:"
-
-#: ../gui/wxpython/gui_modules/preferences.py:1711
-msgid ""
-"Load EPSG codes (be patient), enter EPSG code or insert Proj.4 string "
-"directly."
-msgstr ""
-
-#: ../gui/wxpython/gui_modules/preferences.py:1719
-msgid "&Load EPSG codes"
-msgstr ""
-
-#: ../gui/wxpython/gui_modules/preferences.py:1730
-msgid "Coordinates format"
-msgstr ""
-
-#: ../gui/wxpython/gui_modules/preferences.py:1739
-#, fuzzy
-msgid "LL projections"
-msgstr "മാപ്പ് അവതരിപിച്ചിരിക്കുന്ന സ്ഥലം"
-
-#: ../gui/wxpython/gui_modules/preferences.py:1758
-msgid "Precision:"
-msgstr ""
-
-#: ../gui/wxpython/gui_modules/preferences.py:1785
-msgid "Loading workspace"
-msgstr ""
-
-#: ../gui/wxpython/gui_modules/preferences.py:1797
-msgid "Suppress positioning Map Display Window(s)"
-msgstr ""
-
-#: ../gui/wxpython/gui_modules/preferences.py:1808
-msgid "Suppress positioning Layer Manager window"
-msgstr ""
-
-#: ../gui/wxpython/gui_modules/preferences.py:1829
-msgid "Advanced settings"
-msgstr ""
-
-#: ../gui/wxpython/gui_modules/preferences.py:1841
-msgid "Place where to store settings:"
-msgstr ""
-
-#: ../gui/wxpython/gui_modules/preferences.py:1862
+#: ../gui/wxpython/gui_modules/preferences.py:1296
 msgid "Icon theme:"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/preferences.py:1880
+#: ../gui/wxpython/gui_modules/preferences.py:1314
 msgid ""
 "Note: For changing the icon theme, you must save the settings and restart "
 "this GUI."
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/preferences.py:1909
+#: ../gui/wxpython/gui_modules/preferences.py:1336
+#, fuzzy
+msgid "Map Display"
+msgstr "മാപ്പ് മായിച്ചു കളയുക"
+
+#: ../gui/wxpython/gui_modules/preferences.py:1351
+msgid "Default font for GRASS displays:"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/preferences.py:1368
+msgid "Default display settings"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/preferences.py:1380
+msgid "Display driver:"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/preferences.py:1410
+msgid "Statusbar mode:"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/preferences.py:1462
+msgid "Enable auto-rendering"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/preferences.py:1475
+#, fuzzy
+msgid "Enable auto-zooming to selected map layer"
+msgstr "തിരഞ്ഞെടുക്കപെട്ട ലയെറുകളെ ഇറക്കുമതി ചെയ്യുക"
+
+#: ../gui/wxpython/gui_modules/preferences.py:1499
+msgid "Command dialog settings"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/preferences.py:1521
+msgid "Close dialog when command is successfully finished"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/preferences.py:1542
+msgid "Allow interactive input"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/preferences.py:1552
+msgid "Verbosity level:"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/preferences.py:1571
+msgid "Raster settings"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/preferences.py:1582
+msgid "Overlay raster maps"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/preferences.py:1593
+msgid "Default color table"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/preferences.py:1619
+msgid "Vector settings"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/preferences.py:1625
+msgid "Display:"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/preferences.py:1655
+msgid "Highlighting"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/preferences.py:1671
+msgid "Line width (in pixels):"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/preferences.py:1694
+msgid "Data browser"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/preferences.py:1699
+msgid "Left mouse double click:"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/preferences.py:1711
+msgid "Encoding (e.g. utf-8, ascii, iso8859-1, koi8-r):"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/preferences.py:1722
+msgid "Ask when deleting data record(s) from table"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/preferences.py:1743
+msgid "Create table"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/preferences.py:1750
+msgid "Key column:"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/preferences.py:1783
+msgid "Projection statusbar settings"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/preferences.py:1809
+msgid "Proj.4 string (required):"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/preferences.py:1825
+#, fuzzy
+msgid "EPSG file:"
+msgstr "ഫയൽ:"
+
+#: ../gui/wxpython/gui_modules/preferences.py:1840
+msgid ""
+"Load EPSG codes (be patient), enter EPSG code or insert Proj.4 string "
+"directly."
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/preferences.py:1848
+msgid "&Load EPSG codes"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/preferences.py:1859
+msgid "Coordinates format"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/preferences.py:1868
+#, fuzzy
+msgid "LL projections"
+msgstr "മാപ്പ് അവതരിപിച്ചിരിക്കുന്ന സ്ഥലം"
+
+#: ../gui/wxpython/gui_modules/preferences.py:1887
+msgid "Precision:"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/preferences.py:1914
+msgid "Loading workspace"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/preferences.py:1926
+msgid "Suppress positioning Map Display Window(s)"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/preferences.py:1937
+msgid "Suppress positioning Layer Manager window"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/preferences.py:1969
 #, fuzzy, python-format
 msgid "Unable to read EPSG codes: %s"
 msgstr "പുതിയ മാപ്പ്സെറ്റ് ഉണ്ടാക്കാൻ പറ്റുനില്ല: %s"
 
-#: ../gui/wxpython/gui_modules/preferences.py:1938
-#: ../gui/wxpython/gui_modules/preferences.py:1947
-#: ../gui/wxpython/gui_modules/preferences.py:1957
+#: ../gui/wxpython/gui_modules/preferences.py:1998
+#: ../gui/wxpython/gui_modules/preferences.py:2007
+#: ../gui/wxpython/gui_modules/preferences.py:2017
 #, fuzzy, python-format
 msgid "EPSG code %s not found"
 msgstr "തെറ്റ്: ലൊക്കെഷൻ <%s> കണ്മാനില്ല"
 
-#: ../gui/wxpython/gui_modules/preferences.py:1965
+#: ../gui/wxpython/gui_modules/preferences.py:2025
 msgid "Select default display font"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/preferences.py:1990
+#: ../gui/wxpython/gui_modules/preferences.py:2050
 #, fuzzy
 msgid "Select output font"
 msgstr "അക്ഷരം തിരഞ്ഞെടുക്കുക"
 
-#: ../gui/wxpython/gui_modules/preferences.py:2084
+#: ../gui/wxpython/gui_modules/preferences.py:2144
 msgid "Select font:"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/preferences.py:2108
+#: ../gui/wxpython/gui_modules/preferences.py:2168
 msgid "Character encoding:"
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/preferences.py:2126
-#, fuzzy
-msgid "Font size:"
-msgstr "അടയാളത്തിന്റ്റെ സജ്ജീകരണം"
-
-#: ../gui/wxpython/gui_modules/preferences.py:2226
+#: ../gui/wxpython/gui_modules/preferences.py:2286
 #, fuzzy
 msgid "Manage access to mapsets"
 msgstr "പ്രൊജക്റ്റിന്റെ ലൊക്കെഷനും മാപ്പ്സെറ്റും തിരഞ്ഞെടുക്കുക"
 
-#: ../gui/wxpython/gui_modules/preferences.py:2240
+#: ../gui/wxpython/gui_modules/preferences.py:2300
 msgid ""
 "Check a mapset to make it accessible, uncheck it to hide it.\n"
 "  Notes:\n"
@@ -10257,11 +11266,11 @@ msgid ""
 "    - You may only write to mapsets which you own."
 msgstr ""
 
-#: ../gui/wxpython/gui_modules/preferences.py:2314
+#: ../gui/wxpython/gui_modules/preferences.py:2374
 msgid "Mapset"
 msgstr "മാപ്പ്സെറ്റ്"
 
-#: ../gui/wxpython/gui_modules/preferences.py:2315
+#: ../gui/wxpython/gui_modules/preferences.py:2375
 msgid "Owner"
 msgstr "ഉടമസ്ഥൻ"
 
@@ -10536,6 +11545,24 @@ msgid ""
 "home directory."
 msgstr "ഗ്രാസ്സിനു ഡാറ്റ ശെഖരിക്കാൻ ഒരു സ്ഥലം ആവശ്യമാണ്. ദയവയി ഒരു ഡയറക്ട്ടറി ഉണ്ടാക്കുക."
 
+#, fuzzy
+#~ msgid "Show help page"
+#~ msgstr "സജ്ജീകരണം കാണിക്കുക"
+
+#, fuzzy
+#~ msgid "Select maps to display"
+#~ msgstr "പുതിയ പ്രദർശന സ്ഥലം ഉണ്ടാക്കുക"
+
+#~ msgid "RMS Error"
+#~ msgstr "RMS തെറ്റ്"
+
+#, fuzzy
+#~ msgid ""
+#~ "Unable to zoom to vector map <%s>.\n"
+#~ "\n"
+#~ "Details: %s"
+#~ msgstr "പുതിയ മാപ്പ്സെറ്റ് ഉണ്ടാക്കാൻ പറ്റുനില്ല: %s"
+
 #~ msgid "Attribute management is available only for vector maps."
 #~ msgstr "ആട്രിബൂട്ട് മാനെജ്മെന്റ് വെക്റ്റർ മാപ്പുകൾക്ക് മാത്രം"
 
@@ -10554,14 +11581,6 @@ msgstr "ഗ്രാസ്സിനു ഡാറ്റ ശെഖരിക്ക�
 #, fuzzy
 #~ msgid "Digitize new area"
 #~ msgstr "പുതിയ വര ഡിജിറ്റൈസ് ചെയ്യുക"
-
-#, fuzzy
-#~ msgid "Show Help"
-#~ msgstr "സജ്ജീകരണം കാണിക്കുക"
-
-#, fuzzy
-#~ msgid "Choose input file"
-#~ msgstr "സ്ക്രിപ്റ്റ് ഫയൽ തിരഞെടുക്കുക"
 
 #, fuzzy
 #~ msgid "Bulk import of raster data"

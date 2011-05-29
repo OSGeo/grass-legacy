@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: grassmods_ja\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-04-23 15:34+0200\n"
+"POT-Creation-Date: 2011-05-29 11:07+0200\n"
 "PO-Revision-Date: 2010-03-03 14:00+0900\n"
 "Last-Translator: AkiraTaniguchi <taniguti@apptec.co.jp>\n"
 "Language-Team: Japanese <grass-translations@lists.osgeo.org>\n"
@@ -278,11 +278,11 @@ msgstr "ラスター行を書き込めません"
 #: ../vector/v.to.rast/vect2rast.c:125 ../vector/v.to.rast/vect2rast.c:129
 #: ../vector/v.surf.idw/main.c:264 ../vector/v.neighbors/main.c:96
 #: ../doc/raster/r.example/main.c:141 ../imagery/i.smap/shapiro/opencell.c:30
-#: ../imagery/i.pca/main.c:406 ../imagery/i.rectify/write.c:49
-#: ../imagery/i.rgb.his/openfiles.c:29 ../imagery/i.rgb.his/openfiles.c:31
-#: ../imagery/i.rgb.his/openfiles.c:33 ../imagery/i.his.rgb/openfiles.c:15
-#: ../imagery/i.his.rgb/openfiles.c:17 ../imagery/i.his.rgb/openfiles.c:19
-#: ../imagery/i.ifft/ifftmain.c:219 ../imagery/i.maxlik/open.c:74
+#: ../imagery/i.pca/main.c:406 ../imagery/i.rgb.his/openfiles.c:29
+#: ../imagery/i.rgb.his/openfiles.c:31 ../imagery/i.rgb.his/openfiles.c:33
+#: ../imagery/i.his.rgb/openfiles.c:15 ../imagery/i.his.rgb/openfiles.c:17
+#: ../imagery/i.his.rgb/openfiles.c:19 ../imagery/i.ifft/ifftmain.c:219
+#: ../imagery/i.maxlik/open.c:74
 #, c-format
 msgid "Unable to create raster map <%s>"
 msgstr "ラスターマップ <%s> が作成できません"
@@ -1446,7 +1446,7 @@ msgstr "表示時にNULL値を優先する"
 #: ../raster/r.clump/main.c:94 ../raster/r.out.tiff/r.out.tiff.c:188
 #: ../raster/r.texture/main.c:234 ../raster/r.out.arc/main.c:125
 #: ../raster/r.colors/stats.c:33 ../raster/r.out.gdal/export_band.c:48
-#: ../raster/r.out.gdal/export_band.c:251 ../raster/r.null/null.c:318
+#: ../raster/r.out.gdal/export_band.c:246 ../raster/r.null/null.c:318
 #: ../raster/r.mapcalc/map3.c:510 ../raster/r.grow.distance/main.c:177
 #: ../raster/r.sunmask/main.c:448 ../raster/r.random.surface/main.c:54
 #: ../raster/r.random.surface/init.c:134 ../raster/r.thin/io.c:100
@@ -1763,7 +1763,7 @@ msgstr "ラスターマップ <%s> から浮動小数点レンジが読み取れ
 #: ../vector/v.buffer/main.c:387 ../vector/v.edit/select.c:520
 #: ../vector/v.info/main.c:217 ../vector/v.extrude/main.c:167
 #: ../vector/v.surf.rst/main.c:607 ../vector/v.net.centrality/main.c:220
-#: ../vector/v.db.connect/main.c:214 ../vector/v.db.connect/main.c:322
+#: ../vector/v.db.connect/main.c:218 ../vector/v.db.connect/main.c:326
 #: ../vector/v.net.components/main.c:137 ../vector/v.drape/main.c:293
 #: ../vector/v.what.rast/main.c:132 ../vector/v.to.3d/trans3.c:53
 #: ../vector/v.to.3d/trans2.c:52 ../doc/vector/v.example/main.c:128
@@ -2599,12 +2599,12 @@ msgstr "読取中 %s ... "
 #: ../raster/r.profile/read_rast.c:45 ../raster/r.profile/read_rast.c:73
 #: ../raster/r.profile/read_rast.c:101 ../raster/r.buffer/read_map.c:63
 #: ../raster/r.buffer/write_map.c:61 ../raster/r.colors/stats.c:46
-#: ../raster/r.colors/stats.c:113 ../raster/r.out.gdal/export_band.c:94
-#: ../raster/r.out.gdal/export_band.c:126
-#: ../raster/r.out.gdal/export_band.c:158
-#: ../raster/r.out.gdal/export_band.c:406
-#: ../raster/r.out.gdal/export_band.c:440
-#: ../raster/r.out.gdal/export_band.c:474 ../raster/r.null/null.c:334
+#: ../raster/r.colors/stats.c:113 ../raster/r.out.gdal/export_band.c:90
+#: ../raster/r.out.gdal/export_band.c:121
+#: ../raster/r.out.gdal/export_band.c:152
+#: ../raster/r.out.gdal/export_band.c:397
+#: ../raster/r.out.gdal/export_band.c:430
+#: ../raster/r.out.gdal/export_band.c:463 ../raster/r.null/null.c:334
 #: ../raster/r.sunmask/main.c:481 ../raster/r.topidx/file_io.c:69
 #: ../raster/r.bitpattern/main.c:135 ../vector/v.to.rast/support.c:436
 #: ../vector/v.what.rast/main.c:271 ../vector/v.what.rast/main.c:276
@@ -4556,9 +4556,9 @@ msgstr "列を %d から %d へ変更"
 #: ../ps/ps.map/do_geogrid.c:121 ../ps/ps.map/do_geogrid.c:191
 #: ../ps/ps.map/do_geogrid.c:230 ../ps/ps.map/do_geogrid.c:306
 #: ../ps/ps.map/do_geogrid.c:322 ../ps/ps.map/do_geogrid.c:339
-#: ../ps/ps.map/do_geogrid.c:356 ../ps/ps.map/do_geogrid.c:409
-#: ../ps/ps.map/do_geogrid.c:415 ../ps/ps.map/do_geogrid.c:419
-#: ../ps/ps.map/do_geogrid.c:427 ../ps/ps.map/do_geogrid.c:431
+#: ../ps/ps.map/do_geogrid.c:356 ../ps/ps.map/do_geogrid.c:412
+#: ../ps/ps.map/do_geogrid.c:418 ../ps/ps.map/do_geogrid.c:422
+#: ../ps/ps.map/do_geogrid.c:430 ../ps/ps.map/do_geogrid.c:434
 msgid "Error in pj_do_proj"
 msgstr "pj_do_proj の誤差 "
 
@@ -5897,7 +5897,6 @@ msgstr "視点からの最大距離を使う（メートル）: %f"
 #: ../raster/r.proj/main.c:445 ../raster/r.texture/main.c:356
 #: ../raster/r.texture/main.c:360 ../raster/r.texture/main.c:367
 #: ../raster/r.null/null.c:342 ../raster/r.proj.seg/main.c:513
-#: ../imagery/i.rectify/write.c:56
 #, c-format
 msgid "Failed writing raster map <%s> row %d"
 msgstr "ラスターマップ <%s> 行 %d を書き込めません"
@@ -7497,6 +7496,7 @@ msgid "Target"
 msgstr "エリア"
 
 #: ../raster/r.proj/main.c:178 ../raster/r.proj.seg/main.c:187
+#: ../imagery/i.rectify/main.c:136
 #: ../imagery/i.ortho.photo/i.photo.rectify/main.c:124
 msgid "Interpolation method to use"
 msgstr "補間方法 "
@@ -7515,6 +7515,7 @@ msgstr "領域のトリミング最適化を行わない"
 
 #: ../raster/r.proj/main.c:210 ../raster/r.statistics/main.c:100
 #: ../raster/r.proj.seg/main.c:238 ../raster/r.neighbors/main.c:226
+#: ../imagery/i.rectify/main.c:156
 #: ../imagery/i.ortho.photo/i.photo.rectify/main.c:149
 #, c-format
 msgid "<%s=%s> unknown %s"
@@ -7641,6 +7642,7 @@ msgid "Input raster map is outside current region"
 msgstr "入力したラスターマップは現在の領域外です"
 
 #: ../raster/r.proj/readcell.c:22 ../raster/r.proj.seg/readcell.c:62
+#: ../imagery/i.rectify/readcell.c:61
 #: ../imagery/i.ortho.photo/i.photo.rectify/readcell.c:70
 msgid "Allocating memory and reading input map..."
 msgstr "メモリを割り当ててマップを読込中..."
@@ -7783,7 +7785,7 @@ msgstr ""
 msgid "Interpolation method"
 msgstr "補間方法 "
 
-#: ../raster/r.resamp.interp/main.c:97
+#: ../raster/r.resamp.interp/main.c:97 ../imagery/i.topo.corr/main.c:212
 #, c-format
 msgid "Invalid method: %s"
 msgstr "無効なメソッドです: %s"
@@ -8132,8 +8134,8 @@ msgstr "Tiled TIFFファイルを出力 "
 
 #: ../raster/r.out.tiff/r.out.tiff.c:169 ../raster/r.texture/main.c:240
 #: ../raster/r.null/null.c:157 ../raster/r.topidx/file_io.c:20
-#: ../raster/r.bitpattern/main.c:114 ../imagery/i.rectify/main.c:193
-#: ../imagery/i.rectify/main.c:199
+#: ../raster/r.bitpattern/main.c:114 ../imagery/i.rectify/main.c:294
+#: ../imagery/i.rectify/main.c:300
 #, c-format
 msgid "Unable to read header of raster map <%s>"
 msgstr "ラスターマップ<%s>のヘッダーが読み込めません"
@@ -9318,22 +9320,22 @@ msgstr "<%s> ラスターマップが作成出来ません（<%s>ドライバ使
 #: ../raster/r.out.gdal/main.c:631 ../raster/r.out.gdal/main.c:643
 #: ../raster/r.out.gdal/main.c:656 ../raster/r.out.gdal/main.c:669
 #: ../raster/r.out.gdal/main.c:681 ../raster/r.out.gdal/main.c:694
-#: ../raster/r.out.gdal/export_band.c:508
-#: ../raster/r.out.gdal/export_band.c:520
-#: ../raster/r.out.gdal/export_band.c:533
-#: ../raster/r.out.gdal/export_band.c:546
-#: ../raster/r.out.gdal/export_band.c:558
-#: ../raster/r.out.gdal/export_band.c:571
-#: ../raster/r.out.gdal/export_band.c:585
+#: ../raster/r.out.gdal/export_band.c:498
+#: ../raster/r.out.gdal/export_band.c:510
+#: ../raster/r.out.gdal/export_band.c:523
+#: ../raster/r.out.gdal/export_band.c:536
+#: ../raster/r.out.gdal/export_band.c:548
+#: ../raster/r.out.gdal/export_band.c:561
+#: ../raster/r.out.gdal/export_band.c:575
 msgid "Selected GDAL datatype does not cover data range."
 msgstr ""
 
 #: ../raster/r.out.gdal/main.c:632 ../raster/r.out.gdal/main.c:644
 #: ../raster/r.out.gdal/main.c:657 ../raster/r.out.gdal/main.c:670
-#: ../raster/r.out.gdal/export_band.c:509
-#: ../raster/r.out.gdal/export_band.c:521
-#: ../raster/r.out.gdal/export_band.c:534
-#: ../raster/r.out.gdal/export_band.c:547
+#: ../raster/r.out.gdal/export_band.c:499
+#: ../raster/r.out.gdal/export_band.c:511
+#: ../raster/r.out.gdal/export_band.c:524
+#: ../raster/r.out.gdal/export_band.c:537
 #, c-format
 msgid "GDAL datatype: %s, range: %d - %d"
 msgstr ""
@@ -9345,13 +9347,13 @@ msgstr ""
 msgid "Range to be exported: %f - %f"
 msgstr ""
 
-#: ../raster/r.out.gdal/main.c:682 ../raster/r.out.gdal/export_band.c:559
+#: ../raster/r.out.gdal/main.c:682 ../raster/r.out.gdal/export_band.c:549
 #, c-format
 msgid "GDAL datatype: %s, range: %u - %u"
 msgstr ""
 
-#: ../raster/r.out.gdal/main.c:695 ../raster/r.out.gdal/export_band.c:572
-#: ../raster/r.out.gdal/export_band.c:586
+#: ../raster/r.out.gdal/main.c:695 ../raster/r.out.gdal/export_band.c:562
+#: ../raster/r.out.gdal/export_band.c:576
 #, c-format
 msgid "GDAL datatype: %s, range: %g - %g"
 msgstr ""
@@ -9395,13 +9397,12 @@ msgstr ""
 msgid "GDAL datatype: %s, valid range: %g - %g"
 msgstr ""
 
-#: ../raster/r.out.gdal/export_band.c:65 ../raster/r.out.gdal/export_band.c:71
-#: ../raster/r.out.gdal/export_band.c:378
-#: ../raster/r.out.gdal/export_band.c:384
+#: ../raster/r.out.gdal/export_band.c:65
+#: ../raster/r.out.gdal/export_band.c:373
 msgid "Unable to allocate buffer for reading raster map"
 msgstr "ラスターバンドマップを読み込むためのバッファが割り当てられません"
 
-#: ../raster/r.out.gdal/export_band.c:193
+#: ../raster/r.out.gdal/export_band.c:186
 #, fuzzy, c-format
 msgid ""
 "Input raster map contains cells with NULL-value (no-data). The value %d will "
@@ -9412,7 +9413,7 @@ msgstr ""
 "たマップで値 %d はデータ無し値を示します．%s パラメーターでデータ無し値を指定"
 "できます"
 
-#: ../raster/r.out.gdal/export_band.c:198
+#: ../raster/r.out.gdal/export_band.c:191
 #, fuzzy, c-format
 msgid ""
 "Input raster map contains cells with NULL-value (no-data). The value %f will "
@@ -9423,37 +9424,37 @@ msgstr ""
 "たマップで値 %d はデータ無し値を示します．%s パラメーターでデータ無し値を指定"
 "できます"
 
-#: ../raster/r.out.gdal/export_band.c:208
+#: ../raster/r.out.gdal/export_band.c:201
 #, c-format
 msgid ""
 "The default nodata value is present in rasterband <%s> and would lead to "
 "data loss. Please specify a custom nodata value with the %s parameter."
 msgstr ""
 
-#: ../raster/r.out.gdal/export_band.c:215
+#: ../raster/r.out.gdal/export_band.c:208
 #, c-format
 msgid ""
 "The user given nodata value %g is present in rasterband <%s> and would lead "
 "to data loss. Please specify a different nodata value with the %s parameter."
 msgstr ""
 
-#: ../raster/r.out.gdal/export_band.c:259
+#: ../raster/r.out.gdal/export_band.c:254
 msgid "Unable to get raster band"
 msgstr "ラスターバンドを取得出来ません"
 
-#: ../raster/r.out.gdal/export_band.c:424
-#: ../raster/r.out.gdal/export_band.c:458
-#: ../raster/r.out.gdal/export_band.c:492
+#: ../raster/r.out.gdal/export_band.c:414
+#: ../raster/r.out.gdal/export_band.c:447
+#: ../raster/r.out.gdal/export_band.c:480
 msgid "Unable to write GDAL raster file"
 msgstr "GDALラスターファイルを書き込めません"
 
-#: ../raster/r.out.gdal/export_band.c:512
-#: ../raster/r.out.gdal/export_band.c:524
-#: ../raster/r.out.gdal/export_band.c:537
-#: ../raster/r.out.gdal/export_band.c:550
-#: ../raster/r.out.gdal/export_band.c:562
-#: ../raster/r.out.gdal/export_band.c:575
-#: ../raster/r.out.gdal/export_band.c:589
+#: ../raster/r.out.gdal/export_band.c:502
+#: ../raster/r.out.gdal/export_band.c:514
+#: ../raster/r.out.gdal/export_band.c:527
+#: ../raster/r.out.gdal/export_band.c:540
+#: ../raster/r.out.gdal/export_band.c:552
+#: ../raster/r.out.gdal/export_band.c:565
+#: ../raster/r.out.gdal/export_band.c:579
 #, fuzzy, c-format
 msgid "Raster map <%s> range: %g - %g"
 msgstr "ラスターマップ <%s> が作成されました"
@@ -9575,7 +9576,7 @@ msgstr "標高マップ名"
 msgid "Name of color file"
 msgstr "色ファイル名"
 
-#: ../raster/r.out.vrml/main.c:70 ../visualization/nviz2/cmd/args.c:498
+#: ../raster/r.out.vrml/main.c:70 ../visualization/nviz2/cmd/args.c:486
 msgid "Vertical exaggeration"
 msgstr "高さの強調 "
 
@@ -9871,8 +9872,6 @@ msgstr "A: 水平からの太陽の高度、単位は度"
 
 #: ../raster/r.sunmask/main.c:132 ../raster/r.sunmask/main.c:141
 #: ../raster/r.sunmask/main.c:208 ../raster/r.sunmask/main.c:218
-#: ../visualization/nviz2/cmd/args.c:299 ../visualization/nviz2/cmd/args.c:367
-#: ../visualization/nviz2/cmd/args.c:436
 msgid "Position"
 msgstr "位置"
 
@@ -11318,7 +11317,7 @@ msgstr "入力と出力で同一のロケーションは指定出来ません"
 msgid "Input map <%s@%s> in location <%s>:"
 msgstr "へ  <%s@%s> (ロケーション <%s>) ... %s"
 
-#: ../raster/r.proj.seg/readcell.c:56
+#: ../raster/r.proj.seg/readcell.c:56 ../imagery/i.rectify/readcell.c:55
 #: ../imagery/i.ortho.photo/i.photo.rectify/readcell.c:62
 msgid "Unable to open temporary file"
 msgstr "一時ファイルを開けません"
@@ -11328,16 +11327,17 @@ msgid "Error reading input"
 msgstr "入力読み込みのエラー"
 
 #: ../raster/r.proj.seg/readcell.c:89 ../raster/r.proj.seg/readcell.c:128
+#: ../imagery/i.rectify/readcell.c:87 ../imagery/i.rectify/readcell.c:126
 #: ../imagery/i.ortho.photo/i.photo.rectify/readcell.c:98
 msgid "Error writing segment file"
 msgstr "セグメントファイル書き込みのエラー"
 
-#: ../raster/r.proj.seg/readcell.c:116
+#: ../raster/r.proj.seg/readcell.c:116 ../imagery/i.rectify/readcell.c:114
 #: ../imagery/i.ortho.photo/i.photo.rectify/readcell.c:128
 msgid "Internal error: cache miss on fully-cached map"
 msgstr "内蔵エラー: キャッシュは完全にキャッシュされているマップを見逃します"
 
-#: ../raster/r.proj.seg/readcell.c:125
+#: ../raster/r.proj.seg/readcell.c:125 ../imagery/i.rectify/readcell.c:123
 #: ../imagery/i.ortho.photo/i.photo.rectify/readcell.c:137
 msgid "Error seeking on segment file"
 msgstr "セグメントファイルの検索におけるエラー"
@@ -12259,7 +12259,7 @@ msgstr ""
 msgid "Distance must be >= 0.0"
 msgstr "'レイヤー' は > 0 でなければなりません"
 
-#: ../raster/r.random.cells/init.c:156
+#: ../raster/r.random.cells/init.c:156 ../imagery/i.topo.corr/main.c:51
 #, fuzzy, c-format
 msgid "<%s> is an illegal name"
 msgstr "<%s> は不正なファイル名です"
@@ -15508,7 +15508,7 @@ msgid "Flip legend"
 msgstr "凡例の反転 "
 
 #: ../display/d.legend/main.c:269 ../display/d.histogram/main.c:168
-#: ../ps/ps.map/ps_clrtbl.c:35
+#: ../ps/ps.map/ps_clrtbl.c:39
 #, c-format
 msgid "Category file for <%s> not available"
 msgstr " <%s> のカテゴリーファイルは利用不可です"
@@ -15565,7 +15565,7 @@ msgstr "<%s> の範囲情報は利用不可です"
 msgid "use=%s out of range [%.3f, %.3f] (extend with range= ?)"
 msgstr "使用=%s 範囲外 [%.3f, %.3f] (範囲で拡張= ?)  "
 
-#: ../display/d.legend/main.c:890
+#: ../display/d.legend/main.c:901
 msgid "Nothing to draw! (no categories with labels?)"
 msgstr "描くものがありませｎ! (ラベルのあるカテゴリーなし?) "
 
@@ -15635,7 +15635,7 @@ msgstr "legend情報を作成し標準出力に送ります"
 #: ../vector/v.to.rast/support.c:126 ../vector/v.to.rast/support.c:277
 #: ../vector/v.surf.idw/read_sites.c:34 ../vector/v.edit/select.c:506
 #: ../vector/v.info/main.c:208 ../vector/v.extrude/main.c:162
-#: ../vector/v.db.connect/main.c:204 ../vector/v.drape/main.c:271
+#: ../vector/v.db.connect/main.c:208 ../vector/v.drape/main.c:271
 #: ../vector/v.what.rast/main.c:126 ../vector/v.to.3d/trans3.c:46
 #: ../vector/v.to.3d/trans2.c:45 ../doc/vector/v.example/main.c:103
 #, c-format
@@ -16126,7 +16126,7 @@ msgid "'layer' must be > 0"
 msgstr "'レイヤー' は > 0 でなければなりません"
 
 #: ../display/d.thematic.area/main.c:227 ../display/d.what.vect/what.c:446
-#: ../display/d.vect/main.c:510 ../vector/v.db.connect/main.c:171
+#: ../display/d.vect/main.c:510 ../vector/v.db.connect/main.c:175
 #, c-format
 msgid "Database connection not defined"
 msgstr "データベース接続は定義されていません"
@@ -16135,8 +16135,8 @@ msgstr "データベース接続は定義されていません"
 #: ../vector/v.out.svg/main.c:141 ../vector/v.extract/main.c:286
 #: ../vector/v.in.sites/main.c:158 ../vector/v.out.vtk/writeVTK.c:634
 #: ../vector/v.out.ascii/b2a.c:44 ../vector/v.out.ogr/main.c:631
-#: ../vector/v.edit/select.c:513 ../vector/v.db.connect/main.c:208
-#: ../vector/v.db.connect/main.c:274 ../vector/v.drape/main.c:288
+#: ../vector/v.edit/select.c:513 ../vector/v.db.connect/main.c:212
+#: ../vector/v.db.connect/main.c:278 ../vector/v.drape/main.c:288
 #: ../doc/vector/v.example/main.c:123 ../db/base/columns.c:45
 #: ../db/base/describe.c:52 ../db/base/execute.c:61 ../db/base/tables.c:46
 #: ../db/base/createdb.c:43 ../db/base/droptable.c:44
@@ -17698,7 +17698,7 @@ msgstr "表 <%s> を作成できません"
 #: ../vector/v.sample/main.c:219 ../vector/v.net.distance/main.c:212
 #: ../vector/v.net.timetable/main.c:107 ../vector/v.net.flow/main.c:172
 #: ../vector/v.net.path/path.c:113 ../vector/v.net.centrality/main.c:244
-#: ../vector/v.db.connect/main.c:327 ../vector/v.net.components/main.c:151
+#: ../vector/v.db.connect/main.c:331 ../vector/v.net.components/main.c:151
 msgid "Cannot create index"
 msgstr "インデックスを作成できません  "
 
@@ -18007,7 +18007,7 @@ msgstr "精度は15以上でなければなりません  "
 #: ../vector/v.out.vtk/writeVTK.c:643 ../vector/v.out.ogr/main.c:641
 #: ../vector/v.patch/main.c:139 ../vector/v.patch/main.c:177
 #: ../vector/v.in.ascii/in.c:408 ../vector/v.info/main.c:222
-#: ../vector/v.db.connect/main.c:219 ../vector/v.drape/main.c:299
+#: ../vector/v.db.connect/main.c:223 ../vector/v.drape/main.c:299
 #: ../doc/vector/v.example/main.c:134 ../db/base/describe.c:63
 #, c-format
 msgid "Unable to describe table <%s>"
@@ -19767,12 +19767,12 @@ msgstr ""
 "ます  "
 
 #: ../vector/v.in.db/main.c:138 ../vector/v.transform/trans_digit.c:93
-#: ../vector/v.db.connect/main.c:280
+#: ../vector/v.db.connect/main.c:284
 #, c-format
 msgid "Missing column <%s> in table <%s>"
 msgstr "表 <%s> の紛失した列 <%s>"
 
-#: ../vector/v.in.db/main.c:141 ../vector/v.db.connect/main.c:286
+#: ../vector/v.in.db/main.c:141 ../vector/v.db.connect/main.c:290
 msgid "Data type of key column must be integer"
 msgstr "キー列のデータタイプは整数でなければなりません"
 
@@ -25529,7 +25529,7 @@ msgstr "情報の代わりに，指定したレイヤーのタイプ/名前の�
 msgid "Print topology information only"
 msgstr "地形情報のみ出力"
 
-#: ../vector/v.info/main.c:199 ../vector/v.db.connect/main.c:160
+#: ../vector/v.info/main.c:199 ../vector/v.db.connect/main.c:161
 #, c-format
 msgid "Database connection for map <%s> is not defined in DB file"
 msgstr "マップ <%s> のデータベース接続がDBファイル内で指定されていません"
@@ -26225,12 +26225,12 @@ msgstr "指定したレイヤー (テーブルではない) の接続を削除"
 msgid "Unable to modify vector map stored in other mapset"
 msgstr "他のマップセットに保管されているベクトルマップ修正できません"
 
-#: ../vector/v.db.connect/main.c:166
+#: ../vector/v.db.connect/main.c:170
 #, c-format
 msgid "Vector map <%s> is connected by:"
 msgstr "ベクトルマップ <%s> 連結されています：  "
 
-#: ../vector/v.db.connect/main.c:194
+#: ../vector/v.db.connect/main.c:198
 #, c-format
 msgid ""
 "layer <%d> table <%s> in database <%s> through driver <%s> with key <%s>\n"
@@ -26238,17 +26238,17 @@ msgstr ""
 "レイヤー <%d> テーブル <%s> はデータベース <%s> からドライバー <%s> にkey <%"
 "s> と一緒に\n"
 
-#: ../vector/v.db.connect/main.c:257
+#: ../vector/v.db.connect/main.c:261
 #, c-format
 msgid "Use -o to overwrite existing link for layer <%d>"
 msgstr "今あるレイヤー <%d> のリンクを上書きには -o を使用して下さい"
 
-#: ../vector/v.db.connect/main.c:265 ../vector/v.db.connect/main.c:305
+#: ../vector/v.db.connect/main.c:269 ../vector/v.db.connect/main.c:309
 #, c-format
 msgid "Table <%s> does not exist in database <%s>"
 msgstr "テーブル <%s> はデータベース <%s> 中にありません"
 
-#: ../vector/v.db.connect/main.c:293 ../vector/v.db.connect/main.c:311
+#: ../vector/v.db.connect/main.c:297 ../vector/v.db.connect/main.c:315
 #, c-format
 msgid ""
 "The table <%s> is now part of vector map <%s> and may be deleted or "
@@ -26257,16 +26257,16 @@ msgstr ""
 "テーブル <%s> はベクトルマップ <%s> の一部であり，GRASS モジュールによって削"
 "除または上書きされます"
 
-#: ../vector/v.db.connect/main.c:332
+#: ../vector/v.db.connect/main.c:336
 #, c-format
 msgid "Cannot grant privileges on table %s"
 msgstr "テーブル %s に許可がありません"
 
-#: ../vector/v.db.connect/main.c:335
+#: ../vector/v.db.connect/main.c:339
 msgid "Select privileges were granted on the table"
 msgstr "テーブルに許可を与えられました"
 
-#: ../vector/v.db.connect/main.c:342
+#: ../vector/v.db.connect/main.c:346
 msgid ""
 "For defining a new connection you have to specify these parameters: driver, "
 "database, table [, key [, layer]]"
@@ -26838,8 +26838,8 @@ msgstr "ドローモード"
 #: ../visualization/nviz2/cmd/args.c:223 ../visualization/nviz2/cmd/args.c:234
 #: ../visualization/nviz2/cmd/args.c:245 ../visualization/nviz2/cmd/args.c:257
 #: ../visualization/nviz2/cmd/args.c:269 ../visualization/nviz2/cmd/args.c:278
-#: ../visualization/nviz2/cmd/args.c:290 ../visualization/nviz2/cmd/args.c:300
-#: ../visualization/nviz2/cmd/args.c:520 ../visualization/nviz2/cmd/args.c:532
+#: ../visualization/nviz2/cmd/args.c:288 ../visualization/nviz2/cmd/args.c:508
+#: ../visualization/nviz2/cmd/args.c:520
 msgid "Draw"
 msgstr "描画"
 
@@ -26855,7 +26855,7 @@ msgstr "低解像度"
 msgid "Draw style"
 msgstr "ドロースタイル"
 
-#: ../visualization/nviz2/cmd/args.c:266 ../visualization/nviz2/cmd/args.c:287
+#: ../visualization/nviz2/cmd/args.c:266
 msgid "Shading"
 msgstr "陰影"
 
@@ -26863,184 +26863,199 @@ msgstr "陰影"
 msgid "Wire color"
 msgstr "ワイヤーカラー"
 
-#: ../visualization/nviz2/cmd/args.c:311
+#: ../visualization/nviz2/cmd/args.c:287
+#, fuzzy
+msgid "Surface position"
+msgstr "ソース投影"
+
+#: ../visualization/nviz2/cmd/args.c:299
 msgid "Name of line vector overlay map(s)"
 msgstr "ライン ベクトル オーバーレイ マップ名"
 
-#: ../visualization/nviz2/cmd/args.c:312 ../visualization/nviz2/cmd/args.c:323
-#: ../visualization/nviz2/cmd/args.c:334 ../visualization/nviz2/cmd/args.c:346
-#: ../visualization/nviz2/cmd/args.c:356 ../visualization/nviz2/cmd/args.c:368
+#: ../visualization/nviz2/cmd/args.c:300 ../visualization/nviz2/cmd/args.c:311
+#: ../visualization/nviz2/cmd/args.c:322 ../visualization/nviz2/cmd/args.c:334
+#: ../visualization/nviz2/cmd/args.c:344 ../visualization/nviz2/cmd/args.c:356
 msgid "Vector lines"
 msgstr "ベクトルライン"
 
-#: ../visualization/nviz2/cmd/args.c:322
+#: ../visualization/nviz2/cmd/args.c:310
 msgid "Vector line width"
 msgstr "ベクトルライン幅"
 
-#: ../visualization/nviz2/cmd/args.c:331
+#: ../visualization/nviz2/cmd/args.c:319
 msgid "Vector line color"
 msgstr "ベクトルライン カラー"
 
-#: ../visualization/nviz2/cmd/args.c:343
+#: ../visualization/nviz2/cmd/args.c:331
 msgid "Vector line display mode"
 msgstr "ベクトルライン ディスプレイ モード"
 
-#: ../visualization/nviz2/cmd/args.c:355
+#: ../visualization/nviz2/cmd/args.c:343
 msgid "Vector line height"
 msgstr "ベクトルライン高"
 
-#: ../visualization/nviz2/cmd/args.c:379
+#: ../visualization/nviz2/cmd/args.c:355
+#, fuzzy
+msgid "Vector lines position"
+msgstr "ベクトルライン幅"
+
+#: ../visualization/nviz2/cmd/args.c:367
 msgid "Name of point vector overlay map(s)"
 msgstr "ポイントベクトル オーバーレイ マップ名"
 
-#: ../visualization/nviz2/cmd/args.c:380 ../visualization/nviz2/cmd/args.c:391
-#: ../visualization/nviz2/cmd/args.c:403 ../visualization/nviz2/cmd/args.c:414
-#: ../visualization/nviz2/cmd/args.c:427 ../visualization/nviz2/cmd/args.c:437
+#: ../visualization/nviz2/cmd/args.c:368 ../visualization/nviz2/cmd/args.c:379
+#: ../visualization/nviz2/cmd/args.c:391 ../visualization/nviz2/cmd/args.c:402
+#: ../visualization/nviz2/cmd/args.c:415 ../visualization/nviz2/cmd/args.c:425
 msgid "Vector points"
 msgstr "ベクトルポイント"
 
-#: ../visualization/nviz2/cmd/args.c:390
+#: ../visualization/nviz2/cmd/args.c:378
 msgid "Icon size"
 msgstr "アイコンサイズ"
 
-#: ../visualization/nviz2/cmd/args.c:402
+#: ../visualization/nviz2/cmd/args.c:390
 msgid "Icon width"
 msgstr "アイコン幅"
 
-#: ../visualization/nviz2/cmd/args.c:411
+#: ../visualization/nviz2/cmd/args.c:399
 msgid "Icon color"
 msgstr "アイコン カラー"
 
-#: ../visualization/nviz2/cmd/args.c:423
+#: ../visualization/nviz2/cmd/args.c:411
 msgid "Icon marker"
 msgstr "アイコン マーカー"
 
-#: ../visualization/nviz2/cmd/args.c:453
+#: ../visualization/nviz2/cmd/args.c:424
+#, fuzzy
+msgid "Vector points position"
+msgstr "ベクトルポイント"
+
+#: ../visualization/nviz2/cmd/args.c:441
 msgid "Viewpoint position (x,y model coordinates)"
 msgstr "視点位置（x,y モデル座標）"
 
-#: ../visualization/nviz2/cmd/args.c:454 ../visualization/nviz2/cmd/args.c:465
-#: ../visualization/nviz2/cmd/args.c:475 ../visualization/nviz2/cmd/args.c:487
+#: ../visualization/nviz2/cmd/args.c:442 ../visualization/nviz2/cmd/args.c:453
+#: ../visualization/nviz2/cmd/args.c:463 ../visualization/nviz2/cmd/args.c:475
 msgid "Viewpoint"
 msgstr "視点"
 
-#: ../visualization/nviz2/cmd/args.c:464
+#: ../visualization/nviz2/cmd/args.c:452
 msgid "Viewpoint height (in map units)"
 msgstr "視点の高さ(マップユニット内で)"
 
-#: ../visualization/nviz2/cmd/args.c:474
+#: ../visualization/nviz2/cmd/args.c:462
 msgid "Viewpoint field of view (in degrees)"
 msgstr "視野 [度]"
 
-#: ../visualization/nviz2/cmd/args.c:486
+#: ../visualization/nviz2/cmd/args.c:474
 msgid "Viewpoint twist angle (in degrees)"
 msgstr "視点のねじれ角[度]"
 
-#: ../visualization/nviz2/cmd/args.c:507 ../visualization/nviz2/cmd/args.c:542
-#: ../visualization/nviz2/cmd/args.c:554 ../visualization/nviz2/cmd/args.c:564
+#: ../visualization/nviz2/cmd/args.c:495 ../visualization/nviz2/cmd/args.c:530
+#: ../visualization/nviz2/cmd/args.c:542 ../visualization/nviz2/cmd/args.c:552
 #, fuzzy
 msgid "Volumes"
 msgstr "ボリューム"
 
-#: ../visualization/nviz2/cmd/args.c:517
+#: ../visualization/nviz2/cmd/args.c:505
 msgid "Volume draw mode"
 msgstr "ボリューム ドロー モード  "
 
-#: ../visualization/nviz2/cmd/args.c:529
+#: ../visualization/nviz2/cmd/args.c:517
 msgid "Volume shading"
 msgstr "ボリューム陰影"
 
-#: ../visualization/nviz2/cmd/args.c:541
+#: ../visualization/nviz2/cmd/args.c:529
 msgid "Volume position"
 msgstr "ボリューム位置"
 
-#: ../visualization/nviz2/cmd/args.c:552
+#: ../visualization/nviz2/cmd/args.c:540
 msgid "Volume resolution"
 msgstr "ボリューム解像度"
 
-#: ../visualization/nviz2/cmd/args.c:563
+#: ../visualization/nviz2/cmd/args.c:551
 msgid "Isosurface level"
 msgstr "異性曲面レベル"
 
-#: ../visualization/nviz2/cmd/args.c:578
+#: ../visualization/nviz2/cmd/args.c:566
 #, fuzzy
 msgid "Light position (x,y,z model coordinates)"
 msgstr "視点位置（x,y モデル座標）"
 
-#: ../visualization/nviz2/cmd/args.c:579 ../visualization/nviz2/cmd/args.c:585
-#: ../visualization/nviz2/cmd/args.c:594 ../visualization/nviz2/cmd/args.c:604
+#: ../visualization/nviz2/cmd/args.c:567 ../visualization/nviz2/cmd/args.c:573
+#: ../visualization/nviz2/cmd/args.c:582 ../visualization/nviz2/cmd/args.c:592
 #, fuzzy
 msgid "Lighting"
 msgstr "既存領域"
 
-#: ../visualization/nviz2/cmd/args.c:584
+#: ../visualization/nviz2/cmd/args.c:572
 #, fuzzy
 msgid "Light color"
 msgstr "ハイライトカラー"
 
-#: ../visualization/nviz2/cmd/args.c:593
+#: ../visualization/nviz2/cmd/args.c:581
 msgid "Light brightness"
 msgstr ""
 
-#: ../visualization/nviz2/cmd/args.c:603
+#: ../visualization/nviz2/cmd/args.c:591
 msgid "Light ambient"
 msgstr ""
 
-#: ../visualization/nviz2/cmd/args.c:615
+#: ../visualization/nviz2/cmd/args.c:603
 msgid ""
 "nw;North-West edge;ne;North-East edge;sw;South-West edge;se;South-East edge"
 msgstr ""
 
-#: ../visualization/nviz2/cmd/args.c:619
+#: ../visualization/nviz2/cmd/args.c:607
 #, fuzzy
 msgid "Fringe edges"
 msgstr "エッジを書き込み中、、、"
 
-#: ../visualization/nviz2/cmd/args.c:620 ../visualization/nviz2/cmd/args.c:626
-#: ../visualization/nviz2/cmd/args.c:635
+#: ../visualization/nviz2/cmd/args.c:608 ../visualization/nviz2/cmd/args.c:614
+#: ../visualization/nviz2/cmd/args.c:623
 #, fuzzy
 msgid "Fringe"
 msgstr "フォーマットしています"
 
-#: ../visualization/nviz2/cmd/args.c:625
+#: ../visualization/nviz2/cmd/args.c:613
 #, fuzzy
 msgid "Fringe color"
 msgstr "ラインの色 "
 
-#: ../visualization/nviz2/cmd/args.c:634
+#: ../visualization/nviz2/cmd/args.c:622
 #, fuzzy
 msgid "Fringe elevation"
 msgstr "標高をトレースする"
 
-#: ../visualization/nviz2/cmd/args.c:679
+#: ../visualization/nviz2/cmd/args.c:667
 #, c-format
 msgid "At least one <%s> or <%s> required"
 msgstr "少なくとも一つの <%s> か <%s> が必要です"
 
-#: ../visualization/nviz2/cmd/args.c:693 ../visualization/nviz2/cmd/args.c:723
+#: ../visualization/nviz2/cmd/args.c:681 ../visualization/nviz2/cmd/args.c:711
+#: ../visualization/nviz2/cmd/args.c:723 ../visualization/nviz2/cmd/args.c:729
 #: ../visualization/nviz2/cmd/args.c:735 ../visualization/nviz2/cmd/args.c:741
-#: ../visualization/nviz2/cmd/args.c:747 ../visualization/nviz2/cmd/args.c:753
 #, c-format
 msgid "Inconsistent number of attributes (<%s/%s> %d: <%s> %d)"
 msgstr "属性数の不一致 (<%s/%s> %d: <%s> %d)  "
 
-#: ../visualization/nviz2/cmd/args.c:729
+#: ../visualization/nviz2/cmd/args.c:717
 #, c-format
 msgid "Inconsistent number of attributes (<%s/%s> %d: <%s> %d"
 msgstr "属性数の不一致 (<%s/%s> %d: <%s> %d  "
 
-#: ../visualization/nviz2/cmd/args.c:766 ../visualization/nviz2/cmd/args.c:780
-#: ../visualization/nviz2/cmd/args.c:787
+#: ../visualization/nviz2/cmd/args.c:754 ../visualization/nviz2/cmd/args.c:768
+#: ../visualization/nviz2/cmd/args.c:775
 #, c-format
 msgid "Inconsistent number of attributes (<%s> %d: <%s> %d)"
 msgstr "属性数の不一致 (<%s> %d: <%s> %d)  "
 
-#: ../visualization/nviz2/cmd/args.c:773
+#: ../visualization/nviz2/cmd/args.c:761
 #, c-format
 msgid "Inconsistent number of attributes (<%s> %d: <%s> %d"
 msgstr "属性数の不一致 (<%s> %d: <%s> %d  "
 
-#: ../visualization/nviz2/cmd/args.c:799
+#: ../visualization/nviz2/cmd/args.c:787
 #, c-format
 msgid "Inconsistent number of attributes (<%s/%s> %d: <%s> %d, <%s> %d"
 msgstr "属性数が一致していません (<%s/%s> %d: <%s> %d, <%s> %d  "
@@ -27213,25 +27228,31 @@ msgid "Create EPS (Encapsulated PostScript) instead of PostScript file"
 msgstr ""
 "ポストスクリプトファイルの代わりに EPS (Encapsulated PostScript) を作成"
 
-#: ../ps/ps.map/main.c:121
+#: ../ps/ps.map/main.c:120
+msgid ""
+"Describe map-box's position on the page and exit (inches from top-left of "
+"paper)"
+msgstr ""
+
+#: ../ps/ps.map/main.c:126
 msgid ""
 "File containing mapping instructions (or use input=- to enter from keyboard)"
 msgstr ""
 "マッピング命令に関するファイル （またはキーボード入力には input=- を使用）"
 
-#: ../ps/ps.map/main.c:129
+#: ../ps/ps.map/main.c:134
 msgid "PostScript output file"
 msgstr "ポストスクリプトの出力ファイル"
 
-#: ../ps/ps.map/main.c:137
+#: ../ps/ps.map/main.c:142
 msgid "Scale of the output map, e.g. 1:25000 (default: Auto-sized to fit page)"
 msgstr "出力マップの縮尺，例: 1:25000 （デフォルト：ページサイズに合わせる）"
 
-#: ../ps/ps.map/main.c:143
+#: ../ps/ps.map/main.c:148
 msgid "Number of copies to print"
 msgstr "印刷枚数"
 
-#: ../ps/ps.map/main.c:238
+#: ../ps/ps.map/main.c:241
 #, c-format
 msgid ""
 "Using <%s> from the command line is depreciated. Please use the <%s> mapping "
@@ -27241,26 +27262,25 @@ msgstr ""
 "コマンドラインでの <%s> の使用は無くなる予定です．代わりに <%s> マッピング命"
 "令を使用して下さい．変数 <%s> はGRASSの新しいバージョンから削除されます"
 
-#: ../ps/ps.map/main.c:263
-#, c-format
+#: ../ps/ps.map/main.c:267
+#, fuzzy, c-format
 msgid ""
-"\n"
 "ERROR: Required parameter <%s> not set:\n"
-"    (%s).\n"
+"\t(%s)\n"
 msgstr ""
 "\n"
 "エラー： 要求されたパラメーター <%s> は設定されません：\n"
 "    (%s).\n"
 
-#: ../ps/ps.map/main.c:274
+#: ../ps/ps.map/main.c:282
 msgid "Current region cannot be set."
 msgstr "現在の領域を設定できません"
 
-#: ../ps/ps.map/main.c:283
+#: ../ps/ps.map/main.c:291
 msgid "Data exists after final 'end' instruction!"
 msgstr "最後の 'end' 命令の後ろにデータがあります！  "
 
-#: ../ps/ps.map/main.c:316
+#: ../ps/ps.map/main.c:324
 msgid ""
 "GRASS environment variable GRASS_VERBOSE is overwritten by VERBOSE mapping "
 "instruction. This mapping instruction is superseded and will be removed in "
@@ -27270,14 +27290,59 @@ msgstr ""
 "マッピング命令は新しい GRASS のバージョンから削除されます．かわりに --"
 "verbose を使用して下さい"
 
-#: ../ps/ps.map/main.c:323
+#: ../ps/ps.map/main.c:331
 msgid "Cannot set GRASS_VERBOSE variable."
 msgstr "GRASS_VERBOSE 値を設定できません"
 
-#: ../ps/ps.map/main.c:725
+#: ../ps/ps.map/main.c:742
 #, c-format
 msgid "PostScript file [%s] successfully written."
 msgstr "ポストスクリプト ファイル [%s] は正常に出力されました"
+
+#: ../ps/ps.map/r_colortable.c:61 ../ps/ps.map/r_info.c:48
+#: ../ps/ps.map/r_vlegend.c:49
+#, fuzzy
+msgid "illegal where request"
+msgstr "不正な削除要求です"
+
+#: ../ps/ps.map/r_colortable.c:69
+#, fuzzy
+msgid "illegal width request"
+msgstr "不正な削除要求です"
+
+#: ../ps/ps.map/r_colortable.c:77
+#, fuzzy
+msgid "illegal height request"
+msgstr "不正な削除要求です"
+
+#: ../ps/ps.map/r_colortable.c:94
+#, fuzzy
+msgid "illegal range request"
+msgstr "不正な削除要求です"
+
+#: ../ps/ps.map/r_colortable.c:110
+#, fuzzy
+msgid "illegal columns request"
+msgstr "不正な削除要求です"
+
+#: ../ps/ps.map/r_colortable.c:129
+#, fuzzy
+msgid "Unsupported color request (colortable)"
+msgstr "出力する形式はサポートされていません"
+
+#: ../ps/ps.map/r_colortable.c:131
+msgid "illegal color request (colortable)"
+msgstr ""
+
+#: ../ps/ps.map/r_colortable.c:158
+#, fuzzy
+msgid "illegal colortabe sub-request"
+msgstr "不正な削除要求です"
+
+#: ../ps/ps.map/r_colortable.c:169
+#, fuzzy
+msgid "No raster selected for colortable!"
+msgstr "テーブル <%s> から記録が選択されていません"
 
 #: ../ps/ps.map/r_vpoints.c:244
 #, c-format
@@ -27297,7 +27362,7 @@ msgstr "グループ情報を取得できません"
 msgid "Reading PostScript include file <%s> ..."
 msgstr "ポストスクリプトのインクルードファイル <%s> を読み込み中、、、"
 
-#: ../ps/ps.map/ps_fclrtbl.c:46 ../ps/ps.map/ps_clrtbl.c:31
+#: ../ps/ps.map/ps_fclrtbl.c:46 ../ps/ps.map/ps_clrtbl.c:35
 #, c-format
 msgid "Creating color table for <%s in %s>..."
 msgstr "<%s (%s 内)> のカラーテーブルを作成中..."
@@ -27310,17 +27375,17 @@ msgstr "レンジ情報を利用できません (r.support を実行)  "
 msgid "A floating point colortable must contain a range of values"
 msgstr "浮動小数のカラーテーブルはレンジの値を含む必要があります"
 
-#: ../ps/ps.map/ps_fclrtbl.c:69 ../ps/ps.map/ps_clrtbl.c:40
+#: ../ps/ps.map/ps_fclrtbl.c:69 ../ps/ps.map/ps_clrtbl.c:44
 msgid "Unable to read colors for colorbar"
 msgstr "カラーバーの色を読み込めません"
 
 #: ../ps/ps.map/ps_fclrtbl.c:92 ../ps/ps.map/ps_fclrtbl.c:97
-#: ../ps/ps.map/ps_clrtbl.c:65
+#: ../ps/ps.map/ps_clrtbl.c:69
 msgid "Colorbar y location beyond page margins. Adjusting."
 msgstr "カラーバー y ロケーション はページのマージン外です．調整中、、、"
 
 #: ../ps/ps.map/ps_fclrtbl.c:103 ../ps/ps.map/ps_fclrtbl.c:108
-#: ../ps/ps.map/ps_clrtbl.c:71
+#: ../ps/ps.map/ps_clrtbl.c:75
 msgid "Colorbar x location beyond page margins. Adjusting."
 msgstr "カラーバー x ロケーション はページのマージン外です．調整中、、、"
 
@@ -27350,7 +27415,7 @@ msgstr "ラスターマップ <%s (%s 内の)> を読み込み中"
 msgid "Reading raster maps in group <%s> ..."
 msgstr "グループ <%s>　内のラスターマップを読み込み中、、、"
 
-#: ../ps/ps.map/ps_clrtbl.c:50
+#: ../ps/ps.map/ps_clrtbl.c:54
 msgid ""
 "Your cats/ file is invalid. A cats/ file with categories and labels is "
 "required for 'colortable' when using categorical legends; see the r.category "
@@ -27420,10 +27485,50 @@ msgstr "デフォルトのアイコンからシンボルを読めません"
 msgid "Attribute is of invalid size [%.3f] for category [%d]"
 msgstr "属性は不正なサイズ [%.3f] です（カテゴリー [%d]）"
 
+#: ../ps/ps.map/r_info.c:67
+#, fuzzy
+msgid "Unsupported color request"
+msgstr "不明な色指定 '%s'"
+
+#: ../ps/ps.map/r_info.c:69
+#, fuzzy
+msgid "illegal color request"
+msgstr "不正な削除要求です"
+
+#: ../ps/ps.map/r_info.c:81
+#, fuzzy
+msgid "illegal bgcolor request"
+msgstr "不正な削除要求です"
+
+#: ../ps/ps.map/r_info.c:93 ../ps/ps.map/r_vlegend.c:86
+#, fuzzy
+msgid "illegal border color request"
+msgstr "不正な削除要求です"
+
+#: ../ps/ps.map/r_info.c:103
+#, fuzzy
+msgid "illegal mapinfo sub-request"
+msgstr "不正な削除要求です"
+
+#: ../ps/ps.map/eps.c:19
+#, fuzzy, c-format
+msgid "Can't open eps file <%s>"
+msgstr "ルールファイル <%s> を開けません"
+
+#: ../ps/ps.map/eps.c:38
+#, fuzzy, c-format
+msgid "Bounding box in eps file <%s> was not found"
+msgstr "3Dビューファイル <%s> は見つかりませんでした"
+
 #: ../ps/ps.map/ps_outline.c:41
 #, c-format
 msgid "Outlining areas in raster map <%s in %s> ..."
 msgstr "ラスターマップ <%s (%s の)> エリアの輪郭を処理中、、、"
+
+#: ../ps/ps.map/r_vlegend.c:97
+#, fuzzy
+msgid "illegal vlegend sub-request"
+msgstr "不正な削除要求です"
 
 #: ../ps/ps.map/do_vectors.c:34
 #, c-format
@@ -27434,6 +27539,11 @@ msgstr "ベクトルマップ <%s (%s 内の)> を読み込み中、、、"
 #, c-format
 msgid "Reading vector points file <%s in %s> ..."
 msgstr "ベクトルポイント ファイル <%s (%s 内の)> を読み込み中、、、"
+
+#: ../ps/ps.map/r_plt.c:158
+#, fuzzy
+msgid "Can't open eps file"
+msgstr "ルールファイル <%s> を開けません"
 
 #: ../db/drivers/postgres/fetch.c:172
 msgid "Cannot recognize boolean value"
@@ -27823,7 +27933,7 @@ msgstr "所定のドライバーとロケーションの全データベースの
 msgid "Test %s."
 msgstr "テスト %s.  "
 
-#: ../db/base/select.c:88 ../imagery/i.rectify/report.c:16
+#: ../db/base/select.c:88 ../imagery/i.rectify/report.c:10
 #: ../imagery/i.ortho.photo/i.photo.rectify/report.c:10
 msgid "failed"
 msgstr "失敗しました"
@@ -30329,11 +30439,11 @@ msgstr "変換データをファイルへ書き込み中"
 msgid "Transform successful"
 msgstr "変換に成功しました"
 
-#: ../imagery/i.rectify/main.c:84
+#: ../imagery/i.rectify/main.c:90
 msgid "imagery, rectify"
 msgstr "画像、修正"
 
-#: ../imagery/i.rectify/main.c:86
+#: ../imagery/i.rectify/main.c:92
 msgid ""
 "Rectifies an image by computing a coordinate transformation for each pixel "
 "in the image based on the control points."
@@ -30341,68 +30451,117 @@ msgstr ""
 "コントロールポイントをベースとする画像の各ピクセルの座標計算によって画像を修"
 "正する"
 
-#: ../imagery/i.rectify/main.c:100
+#: ../imagery/i.rectify/main.c:106
 #: ../imagery/i.ortho.photo/i.photo.rectify/main.c:100
 msgid "Output raster map(s) suffix"
 msgstr "出力するラスターマップサフィックス"
 
-#: ../imagery/i.rectify/main.c:106
+#: ../imagery/i.rectify/main.c:112
 msgid "Rectification polynom order (1-3)"
 msgstr "多項式次数の修正 (1-3)  "
 
-#: ../imagery/i.rectify/main.c:111
+#: ../imagery/i.rectify/main.c:118
+#: ../imagery/i.ortho.photo/i.photo.rectify/main.c:106
+msgid "Target resolution (ignored if -c flag used)"
+msgstr ""
+
+#: ../imagery/i.rectify/main.c:126
+#: ../imagery/i.ortho.photo/i.photo.rectify/main.c:114
+msgid "Amount of memory to use in MB"
+msgstr ""
+
+#: ../imagery/i.rectify/main.c:141
 #: ../imagery/i.ortho.photo/i.photo.rectify/main.c:134
 msgid ""
 "Use current region settings in target location (def.=calculate smallest area)"
 msgstr "ターゲットロケーションに現在の領域設定を使用 (def.=最小エリアを計算)"
 
-#: ../imagery/i.rectify/main.c:115
+#: ../imagery/i.rectify/main.c:145
 #: ../imagery/i.ortho.photo/i.photo.rectify/main.c:138
 msgid "Rectify all raster maps in group"
 msgstr "グループの全ラスターマップを修正する"
 
-#: ../imagery/i.rectify/main.c:138
+#: ../imagery/i.rectify/main.c:183
 #, c-format
 msgid "Invalid order (%d); please enter 1 to %d"
 msgstr "無効な順 (%d);  1を入力%d  "
 
-#: ../imagery/i.rectify/main.c:143
+#: ../imagery/i.rectify/main.c:188
 #, c-format
 msgid "Group <%s> does not exist"
 msgstr "グループ <%s> は存在しません"
 
-#: ../imagery/i.rectify/main.c:146
+#: ../imagery/i.rectify/main.c:191
 #: ../imagery/i.ortho.photo/i.photo.rectify/main.c:184
 #, c-format
 msgid "Group <%s> contains no raster maps; run i.group"
 msgstr "グループ <%s>にラスターマップはありません; i.groupを実行"
 
-#: ../imagery/i.rectify/main.c:205
+#: ../imagery/i.rectify/main.c:266
+#: ../imagery/i.ortho.photo/i.photo.rectify/main.c:278
+#: ../imagery/i.ortho.photo/menu/i.photo.rectify.c:109
+#, fuzzy, c-format
+msgid "Extension <%s> is illegal"
+msgstr "<%s> は不正なファイル名です"
+
+#: ../imagery/i.rectify/main.c:269
+#: ../imagery/i.ortho.photo/i.photo.rectify/main.c:281
+#: ../imagery/i.ortho.photo/i.photo.rectify/main.c:290
+#, fuzzy
+msgid "The following raster map already exists in"
+msgstr "ラスターマップ <%s> は既に存在します"
+
+#: ../imagery/i.rectify/main.c:270
+#: ../imagery/i.ortho.photo/i.photo.rectify/main.c:282
+#: ../imagery/i.ortho.photo/i.photo.rectify/main.c:291
+#, c-format
+msgid "target LOCATION %s, MAPSET %s:"
+msgstr ""
+
+#: ../imagery/i.rectify/main.c:273
+#: ../imagery/i.ortho.photo/i.photo.rectify/main.c:285
+#: ../imagery/i.ortho.photo/i.photo.rectify/main.c:294
+#: ../imagery/i.ortho.photo/menu/i.photo.rectify.c:112
+#: ../imagery/i.ortho.photo/menu/i.photo.rectify.c:144
+#, c-format
+msgid "Orthorectification cancelled."
+msgstr ""
+
+#: ../imagery/i.rectify/main.c:288
+#: ../imagery/i.ortho.photo/i.photo.rectify/main.c:309
+msgid "Target resolution must be > 0, ignored"
+msgstr ""
+
+#: ../imagery/i.rectify/main.c:306
 #: ../imagery/i.ortho.photo/i.photo.rectify/main.c:316
 #, c-format
 msgid "Using region: N=%f S=%f, E=%f W=%f"
 msgstr "領域の使用: 北=%f 南=%f, 東=%f 西=%f  "
 
-#: ../imagery/i.rectify/main.c:219
-#, c-format
-msgid ""
-"Input raster map <%s> does not exist in group <%s>.\n"
-" Try:\n"
+#: ../imagery/i.rectify/main.c:321
+#: ../imagery/i.ortho.photo/i.photo.rectify/main.c:381
+#, fuzzy, c-format
+msgid "Input raster map <%s> does not exist in group <%s>."
 msgstr ""
 "入力するラスターマップ <%s> はグループ <%s>にありません\n"
 " 再試行:\n"
 
-#: ../imagery/i.rectify/main.c:225
+#: ../imagery/i.rectify/main.c:323
+#: ../imagery/i.ortho.photo/i.photo.rectify/main.c:383
+msgid "Try:"
+msgstr ""
+
+#: ../imagery/i.rectify/main.c:328
 #: ../imagery/i.ortho.photo/i.photo.rectify/main.c:388
 msgid "Exit!"
 msgstr "終了!"
 
-#: ../imagery/i.rectify/get_wind.c:46
+#: ../imagery/i.rectify/get_wind.c:113
 #, c-format
 msgid "Region N=%f S=%f E=%f W=%f"
 msgstr "領域 北=%f 南=%f 東=%f 西=%f  "
 
-#: ../imagery/i.rectify/get_wind.c:48
+#: ../imagery/i.rectify/get_wind.c:115
 #, c-format
 msgid "Resolution EW=%f NS=%f"
 msgstr "解像度 東西=%f 南北=%f  "
@@ -30449,58 +30608,50 @@ msgstr "ターゲットロケーション <%s> は見つかりません"
 msgid "Please run i.target for group."
 msgstr "グループに i.targetを実行してください"
 
-#: ../imagery/i.rectify/report.c:12
+#: ../imagery/i.rectify/report.c:10
+#: ../imagery/i.ortho.photo/i.photo.rectify/report.c:10
+msgid "complete"
+msgstr "完了"
+
+#: ../imagery/i.rectify/report.c:20
+#, c-format
+msgid "%d rows, %d cols (%ld cells) completed in"
+msgstr "%d 行, %d 列 (%ld セル) は完成しました "
+
+#: ../imagery/i.rectify/report.c:23
+#, c-format
+msgid "%d:%02d:%02ld hours"
+msgstr ""
+
+#: ../imagery/i.rectify/report.c:25
+#, c-format
+msgid "%d:%02ld minutes"
+msgstr ""
+
+#: ../imagery/i.rectify/report.c:27
+#, c-format
+msgid "%.1f cells per minute"
+msgstr "1分ごとの%.1f セル"
+
+#: ../imagery/i.rectify/rectify.c:43
 #: ../imagery/i.ortho.photo/i.photo.rectify/rectify.c:46
 #, c-format
 msgid "Rectify <%s@%s> (location <%s>)"
 msgstr "修正 <%s@%s> (ロケーション <%s>)"
 
-#: ../imagery/i.rectify/report.c:15
-#, c-format
-msgid "into  <%s@%s> (location <%s>) ... %s"
+#: ../imagery/i.rectify/rectify.c:47
+#: ../imagery/i.ortho.photo/i.photo.rectify/rectify.c:50
+#, fuzzy, c-format
+msgid "into  <%s@%s> (location <%s>) ..."
 msgstr "へ  <%s@%s> (ロケーション <%s>) ... %s"
 
-#: ../imagery/i.rectify/report.c:16
-#: ../imagery/i.ortho.photo/i.photo.rectify/report.c:10
-msgid "complete"
-msgstr "完了"
-
-#: ../imagery/i.rectify/report.c:27
-#, c-format
-msgid "%d rows, %d cols (%ld cells) completed in"
-msgstr "%d 行, %d 列 (%ld セル) は完成しました "
-
-#: ../imagery/i.rectify/report.c:34
-#, c-format
-msgid "%.1f cells per minute"
-msgstr "1分ごとの%.1f セル"
-
-#: ../imagery/i.rectify/report.c:47
-msgid "data compression required an additional"
-msgstr "追加を要求されたデータ圧縮"
-
-#: ../imagery/i.rectify/write.c:27
-msgid "Error while writing to temp file"
-msgstr "一時ファイルに書き込み中のエラー"
-
-#: ../imagery/i.rectify/write.c:54
-#, c-format
-msgid "Error writing row %d"
-msgstr "行の書き込みエラー %d"
-
-#: ../imagery/i.rectify/exec.c:54
-#: ../imagery/i.ortho.photo/i.photo.rectify/exec.c:72
-#, c-format
-msgid "Rectified input raster map <%s> will be saved as <%s>"
-msgstr "修正されたラスターマップ <%s>は <%s>として保存されます"
-
-#: ../imagery/i.rectify/rectify.c:94
+#: ../imagery/i.rectify/rectify.c:109
 #: ../imagery/i.ortho.photo/i.photo.rectify/rectify.c:131
 #, c-format
 msgid "Raster map <%s@%s>: projection don't match current settings"
 msgstr "ラスターマップ <%s@%s>: 投影は現在の設定と一致しません"
 
-#: ../imagery/i.rectify/rectify.c:100
+#: ../imagery/i.rectify/rectify.c:115
 #: ../imagery/i.ortho.photo/i.photo.rectify/rectify.c:137
 #, c-format
 msgid "Raster map <%s@%s>: zone don't match current settings"
@@ -30986,14 +31137,6 @@ msgid ""
 "transformation matrix."
 msgstr ""
 
-#: ../imagery/i.ortho.photo/i.photo.rectify/main.c:106
-msgid "Target resolution (ignored if -c flag used)"
-msgstr ""
-
-#: ../imagery/i.ortho.photo/i.photo.rectify/main.c:114
-msgid "Amount of memory to use in MB"
-msgstr ""
-
 #: ../imagery/i.ortho.photo/i.photo.rectify/main.c:129
 msgid "Raster map with camera angle relative to ground surface"
 msgstr ""
@@ -31018,51 +31161,10 @@ msgstr "グループ[%s]のカメラファイルにある不正なフォーマ�
 msgid "Bad format in initial exposure station file for group <%s>"
 msgstr "グループ [%s]の初期風雨ステーションファイルの不正なフォーマット"
 
-#: ../imagery/i.ortho.photo/i.photo.rectify/main.c:278
-#: ../imagery/i.ortho.photo/menu/i.photo.rectify.c:109
-#, fuzzy, c-format
-msgid "Extension <%s> is illegal"
-msgstr "<%s> は不正なファイル名です"
-
-#: ../imagery/i.ortho.photo/i.photo.rectify/main.c:281
-#: ../imagery/i.ortho.photo/i.photo.rectify/main.c:290
-#, fuzzy
-msgid "The following raster map already exists in"
-msgstr "ラスターマップ <%s> は既に存在します"
-
-#: ../imagery/i.ortho.photo/i.photo.rectify/main.c:282
-#: ../imagery/i.ortho.photo/i.photo.rectify/main.c:291
-#, c-format
-msgid "target LOCATION %s, MAPSET %s:"
-msgstr ""
-
-#: ../imagery/i.ortho.photo/i.photo.rectify/main.c:285
-#: ../imagery/i.ortho.photo/i.photo.rectify/main.c:294
-#: ../imagery/i.ortho.photo/menu/i.photo.rectify.c:112
-#: ../imagery/i.ortho.photo/menu/i.photo.rectify.c:144
-#, c-format
-msgid "Orthorectification cancelled."
-msgstr ""
-
-#: ../imagery/i.ortho.photo/i.photo.rectify/main.c:309
-msgid "Target resolution must be > 0, ignored"
-msgstr ""
-
 #: ../imagery/i.ortho.photo/i.photo.rectify/main.c:324
 #, c-format
 msgid "No target elevation model selected for group <%s>"
 msgstr "グループを選択するために指定された標高モデルが存在しません [%s]"
-
-#: ../imagery/i.ortho.photo/i.photo.rectify/main.c:381
-#, fuzzy, c-format
-msgid "Input raster map <%s> does not exist in group <%s>."
-msgstr ""
-"入力するラスターマップ <%s> はグループ <%s>にありません\n"
-" 再試行:\n"
-
-#: ../imagery/i.ortho.photo/i.photo.rectify/main.c:383
-msgid "Try:"
-msgstr ""
 
 #: ../imagery/i.ortho.photo/i.photo.rectify/readcell.c:140
 #, fuzzy
@@ -31162,10 +31264,10 @@ msgstr "%d 行, %d 列 (%ld セル) は完成しました "
 msgid " %.1f cells per minute\n"
 msgstr "1分ごとの%.1f セル"
 
-#: ../imagery/i.ortho.photo/i.photo.rectify/rectify.c:50
-#, fuzzy, c-format
-msgid "into  <%s@%s> (location <%s>) ..."
-msgstr "へ  <%s@%s> (ロケーション <%s>) ... %s"
+#: ../imagery/i.ortho.photo/i.photo.rectify/exec.c:72
+#, c-format
+msgid "Rectified input raster map <%s> will be saved as <%s>"
+msgstr "修正されたラスターマップ <%s>は <%s>として保存されます"
 
 #: ../imagery/i.ortho.photo/i.photo.rectify/rectify.c:84
 #, fuzzy, c-format
@@ -32066,6 +32168,129 @@ msgstr ""
 " あるいは\n"
 " 手で変数を入力する"
 
+#: ../imagery/i.topo.corr/main.c:37
+#, fuzzy, c-format
+msgid "Cannot open file [%s] in mapset [%s]"
+msgstr "ラベル ファイル <%s> を開けません（マップセット <%s>）"
+
+#: ../imagery/i.topo.corr/main.c:57
+#, fuzzy, c-format
+msgid "Cannot create file <%s> in mapset <%s>"
+msgstr "ラベル ファイル <%s> を開けません（マップセット <%s>）"
+
+#: ../imagery/i.topo.corr/main.c:84
+msgid "Topografic correction of reflectance"
+msgstr ""
+
+#: ../imagery/i.topo.corr/main.c:86
+msgid "Topographic correction, Cosine, Minnaert, C-Factor, Percent"
+msgstr ""
+
+#: ../imagery/i.topo.corr/main.c:91
+#, fuzzy
+msgid "input"
+msgstr "入力 "
+
+#: ../imagery/i.topo.corr/main.c:95
+#, fuzzy
+msgid "input,cell,raster"
+msgstr "表示、ラスター"
+
+#: ../imagery/i.topo.corr/main.c:97
+msgid "List of reflectance band maps to correct topographically"
+msgstr ""
+
+#: ../imagery/i.topo.corr/main.c:100
+#, fuzzy
+msgid "output"
+msgstr "出力"
+
+#: ../imagery/i.topo.corr/main.c:103
+msgid "output,cell,raster"
+msgstr ""
+
+#: ../imagery/i.topo.corr/main.c:105
+msgid "File name of output (flag -i) or prefix of output files"
+msgstr ""
+
+#: ../imagery/i.topo.corr/main.c:108
+#, fuzzy
+msgid "basemap"
+msgstr "ベースマップを取り除きます"
+
+#: ../imagery/i.topo.corr/main.c:111
+msgid "base,cell,raster"
+msgstr ""
+
+#: ../imagery/i.topo.corr/main.c:112
+msgid "Base map for analysis (elevation or ilumination)"
+msgstr ""
+
+#: ../imagery/i.topo.corr/main.c:115
+msgid "zenith"
+msgstr ""
+
+#: ../imagery/i.topo.corr/main.c:118
+msgid "zenith,float"
+msgstr ""
+
+#: ../imagery/i.topo.corr/main.c:119
+#, fuzzy
+msgid "Solar zenith in degrees"
+msgstr "長軸の角度 [度]"
+
+#: ../imagery/i.topo.corr/main.c:122
+msgid "azimuth"
+msgstr ""
+
+#: ../imagery/i.topo.corr/main.c:125
+msgid "azimuth,float"
+msgstr ""
+
+#: ../imagery/i.topo.corr/main.c:126
+msgid "Solar azimuth in degrees (only if flag -i)"
+msgstr ""
+
+#: ../imagery/i.topo.corr/main.c:129
+#, fuzzy
+msgid "method"
+msgstr "未詳のメソッド"
+
+#: ../imagery/i.topo.corr/main.c:133
+#, fuzzy
+msgid "topographic correction method"
+msgstr "補間方法 "
+
+#: ../imagery/i.topo.corr/main.c:134
+msgid "Topographic correction method"
+msgstr ""
+
+#: ../imagery/i.topo.corr/main.c:139
+msgid "To output sun ilumination terrain model"
+msgstr ""
+
+#: ../imagery/i.topo.corr/main.c:146
+msgid "Solar azimuth is necessary to calculate ilumination terrain model"
+msgstr ""
+
+#: ../imagery/i.topo.corr/main.c:150
+msgid "Reflectance maps are necessary to make topographic correction"
+msgstr ""
+
+#: ../imagery/i.topo.corr/main.c:182
+#, fuzzy
+msgid "Elevation file of unknown type"
+msgstr "平面上のポイントの標高座標"
+
+#: ../imagery/i.topo.corr/main.c:216
+msgid "Illumination model is of CELL type"
+msgstr ""
+
+#: ../imagery/i.topo.corr/main.c:223
+#, c-format
+msgid "Reflectance of <%s> is not of DCELL type - ignored."
+msgstr ""
+
 #: ../imagery/i.maxlik/main.c:63
 msgid "imagery, classification, MLC"
 msgstr "画像, 分類, MLC"
@@ -32326,6 +32551,25 @@ msgstr "古いMASKセルマップの削除中のエラー"
 #, c-format
 msgid "Can't mark another point.  Only %d points allowed.  Sorry."
 msgstr "他のポイントを示すことができません。 %d ポイントのみ可能です。"
+
+#~ msgid ""
+#~ "Input raster map <%s> does not exist in group <%s>.\n"
+#~ " Try:\n"
+#~ msgstr ""
+#~ "入力するラスターマップ <%s> はグループ <%s>にありません\n"
+#~ " 再試行:\n"
+
+#~ msgid "into  <%s@%s> (location <%s>) ... %s"
+#~ msgstr "へ  <%s@%s> (ロケーション <%s>) ... %s"
+
+#~ msgid "data compression required an additional"
+#~ msgstr "追加を要求されたデータ圧縮"
+
+#~ msgid "Error while writing to temp file"
+#~ msgstr "一時ファイルに書き込み中のエラー"
+
+#~ msgid "Error writing row %d"
+#~ msgstr "行の書き込みエラー %d"
 
 #~ msgid "general"
 #~ msgstr "一般の"

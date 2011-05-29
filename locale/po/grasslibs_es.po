@@ -14,7 +14,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: grasslibs_es\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-04-23 15:34+0200\n"
+"POT-Creation-Date: 2011-05-29 11:07+0200\n"
 "PO-Revision-Date: 2011-04-15 14:03+0100\n"
 "Last-Translator: Joana Palahí <joana@sigte.udg.edu>\n"
 "Language-Team: Español <grass-translations@lists.osgeo.org>\n"
@@ -4653,25 +4653,25 @@ msgstr "no hay información de la categoría"
 msgid "no data"
 msgstr "no hay datos"
 
-#: ../lib/ogsf/GS2.c:1635
+#: ../lib/ogsf/GS2.c:1636
 #, c-format
 msgid "Raster map <%s> is outside of current region. Load failed."
 msgstr ""
 "La carga del mapa raster <%s> ha fallado, por que este se encuentra fuera de "
 "la región actual."
 
-#: ../lib/ogsf/GS2.c:1713 ../lib/ogsf/GS2.c:1719 ../lib/ogsf/GS2.c:1727
-#: ../lib/ogsf/GS2.c:1736 ../lib/ogsf/GS2.c:1744 ../lib/ogsf/GS2.c:1754
-#: ../lib/ogsf/GS2.c:1802
+#: ../lib/ogsf/GS2.c:1714 ../lib/ogsf/GS2.c:1720 ../lib/ogsf/GS2.c:1728
+#: ../lib/ogsf/GS2.c:1737 ../lib/ogsf/GS2.c:1745 ../lib/ogsf/GS2.c:1755
+#: ../lib/ogsf/GS2.c:1803
 msgid "GS_load_att_map(): Out of memory. Unable to load map"
 msgstr ""
 "GS_load_att_map(): Sin memoria disponible. No es posible cargar el mapa."
 
-#: ../lib/ogsf/GS2.c:1830
+#: ../lib/ogsf/GS2.c:1831
 msgid "Loading failed"
 msgstr "La carga ha fallado."
 
-#: ../lib/ogsf/GS2.c:1834
+#: ../lib/ogsf/GS2.c:1835
 msgid "Error finding range"
 msgstr "Error al encontrar el rango."
 
