@@ -569,7 +569,7 @@ class MapFrame(wx.Frame):
         
         # deselect features in vdigit
         if self.toolbars['vdigit']:
-            self.MapWindow.display.SetSelected([])
+            self.MapWindow.digit.GetDisplay().SetSelected([])
             self.MapWindow.UpdateMap(render = True, renderVector = True)
         else:
             self.MapWindow.UpdateMap(render = True)
