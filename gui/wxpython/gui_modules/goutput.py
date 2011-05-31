@@ -999,13 +999,15 @@ class GMStc(wx.stc.StyledTextCtrl):
 
         settings = preferences.Settings()
         
-        typeface = settings.Get(group='appearance', key='outputfont', subkey='type')   
-        if typeface == "": typeface = "Courier New"
-                           
-        typesize = settings.Get(group='appearance', key='outputfont', subkey='size')
-        if typesize == None or typesize <= 0: typesize = 10
+        typeface = settings.Get(group = 'appearance', key = 'outputfont', subkey = 'type')   
+        if typeface == "":
+            typeface = "Courier New"
+        
+        typesize = settings.Get(group = 'appearance', key = 'outputfont', subkey = 'size')
+        if typesize == None or typesize <= 0:
+            typesize = 10
         typesize = float(typesize)
-
+        
         self.StyleDefault     = 0
         self.StyleDefaultSpec = "face:%s,size:%d,fore:#000000,back:#FFFFFF" % (typeface, typesize)
         self.StyleCommand     = 1
