@@ -97,12 +97,12 @@ void eval_tcor(int method, Gfile * out, Gfile * cosi, Gfile * band,
     case MINNAERT:
 	cka = ckb = 0.;
 	kk = m;
-	G_message("Minnaert constant = %lf", kk);
+	G_message(_("Minnaert constant = %lf"), kk);
 	break;
     case C_CORRECT:
 	cka = ckb = a / m; /* Richter changes to m/a */
 	kk = 1.;
-	G_message("C-factor constant = %lf (a=%.4f; m=%.4f)", cka, a, m);
+	G_message(_("C-factor constant = %lf (a=%.4f; m=%.4f)"), cka, a, m);
 	break;
     case PERCENT:
 	cka = 2. - cos_z;
