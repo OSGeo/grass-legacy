@@ -126,11 +126,10 @@ class GMFrame(wx.Frame):
         
         # creating widgets
         self._createMenuBar()
-        self.statusbar = self.CreateStatusBar(number=1)
-        self.notebookPages = {}
+        self.statusbar = self.CreateStatusBar(number = 1)
         self.notebook  = self._createNoteBook()
-        self.toolbars = { 'main'  : LayerManagerToolbar(parent = self),
-                          'tools' : ToolsToolbar(parent = self) }
+        self.toolbars  = { 'main'  : LayerManagerToolbar(parent = self),
+                           'tools' : ToolsToolbar(parent = self) }
         
         # self.SetToolBar(self.toolbar)
         self._auimgr.AddPane(self.toolbars['main'],
@@ -164,7 +163,7 @@ class GMFrame(wx.Frame):
 
         self._auimgr.Update()
 
-        wx.CallAfter(self.SetNBPage, 'layers')
+        wx.CallAfter(self.notebook.SetSelectionByName, 'layers')
         
         # use default window layout ?
         if UserSettings.Get(group = 'general', key = 'defWindowPos', subkey = 'enabled'):
@@ -218,10 +217,7 @@ class GMFrame(wx.Frame):
         
     def _createNoteBook(self):
         """!Creates notebook widgets"""
-        if globalvar.hasAgw:
-            self.notebook = FN.FlatNotebook(parent = self, id = wx.ID_ANY, agwStyle = globalvar.FNPageDStyle)
-        else:
-            self.notebook = FN.FlatNotebook(parent = self, id = wx.ID_ANY, style = globalvar.FNPageDStyle)
+        self.notebook = menuform.GNotebook(parent = self, style = globalvar.FNPageDStyle)
         # create displays notebook widget and add it to main notebook page
         cbStyle = globalvar.FNPageStyle
         if globalvar.hasAgw:
@@ -229,23 +225,25 @@ class GMFrame(wx.Frame):
         else:
             self.gm_cb = FN.FlatNotebook(self, id = wx.ID_ANY, style = cbStyle)
         self.gm_cb.SetTabAreaColour(globalvar.FNPageColor)
-        self.notebook.AddPage(self.gm_cb, text = _("Map layers"))
-        self.notebookPages['layers'] = self.gm_cb
+        self.notebook.AddPage(page = self.gm_cb, text = _("Map layers"), name = 'layers')
         
         # create 'command output' text area
-        self.goutput = goutput.GMConsole(self, pageid = 1)
-        self.notebook.AddPage(self.goutput, text = _("Command console"))
-        self.notebookPages['console'] = self.goutput
+        self.goutput = goutput.GMConsole(self)
+        self.notebook.AddPage(page = self.goutput, text = _("Command console"), name = 'console')
         
         # create 'search module' notebook page
-        self.search = MenuTreeWindow(parent = self)
-        self.notebook.AddPage(self.search, text = _("Search module"))
-        self.notebookPages['search'] = self.search
+        if not UserSettings.Get(group = 'manager', key = 'hideTabs', subkey = 'search'):
+            self.search = MenuTreeWindow(parent = self)
+            self.notebook.AddPage(page = self.search, text = _("Search module"), name = 'search')
+        else:
+            self.search = None
         
         # create 'python shell' notebook page
-        self.pyshell = PyShellWindow(parent = self)
-        self.notebook.AddPage(self.pyshell, text = _("Python shell"))
-        self.notebookPages['pyshell'] = self.pyshell
+        if not UserSettings.Get(group = 'manager', key = 'hideTabs', subkey = 'pyshell'):
+            self.pyshell = PyShellWindow(parent = self)
+            self.notebook.AddPage(page = self.pyshell, text = _("Python shell"), name = 'pyshell')
+        else:
+            self.pyshell = None
         
         # bindings
         self.gm_cb.Bind(FN.EVT_FLATNOTEBOOK_PAGE_CHANGED,    self.OnCBPageChanged)
@@ -253,29 +251,20 @@ class GMFrame(wx.Frame):
         self.gm_cb.Bind(FN.EVT_FLATNOTEBOOK_PAGE_CLOSING,    self.OnCBPageClosed)
         
         return self.notebook
-    
-    def SetNBPage(self, page):
-        """!Set notebook page - 'layers', 'console', 'search', 'pyshell', 'nviz'"""
-        self.notebook.SetSelection(self.GetNBPageIndex(page))
-        
-    def GetNBPageIndex(self, page):
-        """!Get notebook page index"""
-        return self.notebook.GetPageIndex(self.notebookPages[page])
-        
+            
     def AddNviz(self):
         """!Add nviz notebook page"""
         self.nviz = nviz_tools.NvizToolWindow(parent = self,
                                               display = self.curr_page.maptree.GetMapDisplay()) 
-        self.notebook.AddPage(self.nviz, text = _("3D view"))
-        self.notebookPages['nviz'] = self.nviz
-        self.SetNBPage('nviz')
+        self.notebook.AddPage(page = self.nviz, text = _("3D view"), name = 'nviz')
+        self.notebook.SetSelectionByName('nviz')
         
     def RemoveNviz(self):
         """!Remove nviz notebook page"""
         # print self.notebook.GetPage(1)
-        self.notebook.RemovePage(self.GetNBPageIndex('nviz'))
+        self.notebook.RemovePage(self.notebook.GetPageIndexByName('nviz'))
         del self.nviz
-        self.SetNBPage('layers')
+        self.notebook.SetSelectionByName('layers')
         
     def WorkspaceChanged(self):
         """!Update window title"""
@@ -388,7 +377,7 @@ class GMFrame(wx.Frame):
     def OnPageChanged(self, event):
         """!Page in notebook changed"""
         page = event.GetSelection()
-        if page == self.goutput.pageid:
+        if page == self.notebook.GetPageIndexByName('console'):
             # remove '(...)'
             self.notebook.SetPageText(page, _("Command console"))
             wx.CallAfter(self.goutput.cmd_prompt.SetFocus)
@@ -1315,7 +1304,7 @@ class GMFrame(wx.Frame):
         if not self.curr_page:
             self.NewDisplay(show = True)
         
-        self.SetNBPage('layers')
+        self.notebook.SetSelectionByName('layers')
         self.curr_page.maptree.AddLayer('raster')
         
     def OnAddRaster3D(self, event):
@@ -1351,7 +1340,7 @@ class GMFrame(wx.Frame):
         if not self.curr_page:
             self.NewDisplay(show = True)
         
-        self.SetNBPage('layers')
+        self.notebook.SetSelectionByName('layers')
         self.curr_page.maptree.AddLayer('vector')
 
     def OnAddVectorMisc(self, event):
@@ -1368,12 +1357,12 @@ class GMFrame(wx.Frame):
 
     def OnAddVectorTheme(self, event):
         """!Add thematic vector map to the current layer tree"""
-        self.SetNBPage('layers')
+        self.notebook.SetSelectionByName('layers')
         self.curr_page.maptree.AddLayer('thememap')
 
     def OnAddVectorChart(self, event):
         """!Add chart vector map to the current layer tree"""
-        self.SetNBPage('layers')
+        self.notebook.SetSelectionByName('layers')
         self.curr_page.maptree.AddLayer('themechart')
 
     def OnAddOverlay(self, event):
@@ -1394,32 +1383,32 @@ class GMFrame(wx.Frame):
         
     def OnAddRaster3D(self, event):
         """!Add 3D raster map to the current layer tree"""
-        self.SetNBPage('layers')
+        self.notebook.SetSelectionByName('layers')
         self.curr_page.maptree.AddLayer('3d-raster')
 
     def OnAddRasterRGB(self, event):
         """!Add RGB raster map to the current layer tree"""
-        self.SetNBPage('layers')
+        self.notebook.SetSelectionByName('layers')
         self.curr_page.maptree.AddLayer('rgb')
 
     def OnAddRasterHIS(self, event):
         """!Add HIS raster map to the current layer tree"""
-        self.SetNBPage('layers')
+        self.notebook.SetSelectionByName('layers')
         self.curr_page.maptree.AddLayer('his')
 
     def OnAddRasterShaded(self, event):
         """!Add shaded relief raster map to the current layer tree"""
-        self.SetNBPage('layers')
+        self.notebook.SetSelectionByName('layers')
         self.curr_page.maptree.AddLayer('shaded')
 
     def OnAddRasterArrow(self, event):
         """!Add flow arrows raster map to the current layer tree"""
-        self.SetNBPage('layers')
+        self.notebook.SetSelectionByName('layers')
         self.curr_page.maptree.AddLayer('rastarrow')
 
     def OnAddRasterNum(self, event):
         """!Add cell number raster map to the current layer tree"""
-        self.SetNBPage('layers')
+        self.notebook.SetSelectionByName('layers')
         self.curr_page.maptree.AddLayer('rastnum')
 
     def OnAddCommand(self, event):
@@ -1428,7 +1417,7 @@ class GMFrame(wx.Frame):
         if not self.curr_page:
             self.NewDisplay(show = True)
 
-        self.SetNBPage('layers')
+        self.notebook.SetSelectionByName('layers')
         self.curr_page.maptree.AddLayer('command')
 
         # show map display
@@ -1440,7 +1429,7 @@ class GMFrame(wx.Frame):
         if not self.curr_page:
             self.NewDisplay(show = True)
 
-        self.SetNBPage('layers')
+        self.notebook.SetSelectionByName('layers')
         self.curr_page.maptree.AddLayer('group')
 
         # show map display
@@ -1448,17 +1437,17 @@ class GMFrame(wx.Frame):
 
     def OnAddGrid(self, event):
         """!Add grid map layer to the current layer tree"""
-        self.SetNBPage('layers')
+        self.notebook.SetSelectionByName('layers')
         self.curr_page.maptree.AddLayer('grid')
 
     def OnAddGeodesic(self, event):
         """!Add geodesic line map layer to the current layer tree"""
-        self.SetNBPage('layers')
+        self.notebook.SetSelectionByName('layers')
         self.curr_page.maptree.AddLayer('geodesic')
 
     def OnAddRhumb(self, event):
         """!Add rhumb map layer to the current layer tree"""
-        self.SetNBPage('layers')
+        self.notebook.SetSelectionByName('layers')
         self.curr_page.maptree.AddLayer('rhumb')
 
     def OnAddLabels(self, event):
@@ -1467,7 +1456,7 @@ class GMFrame(wx.Frame):
         if not self.curr_page:
             self.NewDisplay(show = True)
 
-        self.SetNBPage('layers')
+        self.notebook.SetSelectionByName('layers')
         self.curr_page.maptree.AddLayer('labels')
 
         # show map display
@@ -1520,10 +1509,10 @@ class GMFrame(wx.Frame):
         if event.ControlDown():
             if kc == wx.WXK_TAB:
                 # switch layer list / command output
-                if self.notebook.GetSelection() == self.GetNBPageIndex('layers'):
-                    self.SetNBPage('console')
+                if self.notebook.GetSelection() == self.notebook.GetPageIndexByName('layers'):
+                    self.notebook.SetSelectionByName('console')
                 else:
-                    self.SetNBPage('layers')
+                    self.notebook.SetSelectionByName('layers')
         
         try:
             ckc = chr(kc)
