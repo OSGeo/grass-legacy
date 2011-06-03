@@ -13,12 +13,11 @@ to cover the input raster map before the atmospheric correction is
 performed. The previous settings are restored afterwards.
 
 <p>
-Because using a continuous <b>elevation</b> or <b>visibility</b>
+Because using a <b>elevation</b> and/or <b>visibility</b>
 raster map makes execution time much longer, it is advised to use
-categorized raster maps instead, in conjuction with flag <b>-o</b>.
-This flag tells <em>i.atcorr</em> to try and speedup
-calculations. However, this option under certain conditions can make
-execution time longer.
+the optimization flag <b>-o</b>.
+This flag tells <em>i.atcorr</em> to try and speedup calculations. 
+However, this option will increase memory requirements.
 
 <p>
 If flag <b>-r</b> is used, the input raster data are treated as
@@ -626,11 +625,8 @@ r.mapcalc "lsat7_2002_40_rad=((241.1 - (-5.1)) / (255.0 - 1.0)) * (lsat7_2002_40
 
 
 <div class="code"><pre>
-# using an integer DEM greatly accelerates the i.atcorr computations
-r.mapcalc "elev_int = round(elevation)"
-
 # find mean elevation (target above sea level, used as initialization value in control file)
-r.univar elev_int
+r.univar elevation
 </pre></div>
 
 Create a control file 'icnd.txt' for channel 4 (NIR), based on metadata. For the overpass time,
@@ -653,21 +649,21 @@ we need to define decimal hours:<br>
 Finally, run the atmospheric correction (-r for reflectance input map; -a for date &gt;July 2000;
 -o to use cache acceleration):
 <div class="code"><pre>
-i.atcorr -r -a -o lsat7_2002_40_rad ialt=elev_int icnd=icnd_lsat4.txt oimg=lsat7_2002_40_atcorr
+i.atcorr -r -a -o lsat7_2002_40_rad ialt=elevation icnd=icnd_lsat4.txt oimg=lsat7_2002_40_atcorr
 </pre></div>
 
 Note that the altitude value from 'icnd_lsat4.txt' file is read at the beginning
 to compute the initial transform. It is necessary to give a value which could
-the the mean value of the elevation model. For the atmospheric correction then
+be the mean value of the elevation model. For the atmospheric correction then
 the raster elevation values are used from the map.
 <p>
 Note that the process is computationally intensive.<br>
 Note also, that <em>i.atcorr</em> reports solar elevation angle above horizon rather than solar zenith angle.
 
 <h2><font color="red">REMAINING DOCUMENTATION ISSUES</font></h2>
-1. It should be explained under what circumstances the use of categorized maps
-in conjuction with flag <em>-o</em> can slow down the calculations instead of
-speeding them up.
+1. The influence and importance of the visibility value or map should be 
+explained, also how to obtain an estimate for either visibility or aerosol 
+optical depth at 550nm.
 
 <h2>SEE ALSO</h2>
 
