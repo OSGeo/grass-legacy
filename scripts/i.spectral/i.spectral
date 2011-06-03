@@ -245,10 +245,10 @@ echo "set ylabel 'DN Value'" >> spectrum.gnuplot
 ## if more then 2 points we can draw an interpolated spline:
 #if [ $PARAM_NUM -gt 2 ]
 #then
-#   echo "set data style linespoints" >> spectrum.gnuplot
+#   echo "set style data linespoints" >> spectrum.gnuplot
 #   echo "plot 'data' with points pt 779, '' smooth csplines t 'spline interpolated'" >> spectrum.gnuplot
 #else
-   echo "set data style lines" >> spectrum.gnuplot
+   echo "set style data lines" >> spectrum.gnuplot
   
 
  rm -f data.dum
