@@ -123,7 +123,7 @@ static void adjust_region(char *name, const char *mapset)
 /* Rounds a floating point cell value */
 static CELL round_c(FCELL x)
 {
-    if(x >= 0.0)
+    if (x >= 0.0)
 	return (CELL)(x + .5);
 
     return (CELL)(-(-x + .5));
@@ -297,7 +297,7 @@ static void process_raster(int ifd, InputMask imask, ScaleRange iscale,
         /* loop over all the values in the row */
 	for(col = 0; col < ncols; col++)
 	{
-	    if((vis && G_is_f_null_value(&vis[col])) || 
+	    if ((vis && G_is_f_null_value(&vis[col])) || 
 	       (alt && G_is_f_null_value(&alt[col])) || 
 	              G_is_f_null_value(&buf[col]))
 	    {
@@ -579,7 +579,7 @@ int main(int argc, char* argv[])
 
     /**** Start ****/
     G_gisinit(argv[0]);
-    if(G_parser(argc, argv) < 0)
+    if (G_parser(argc, argv) < 0)
 	exit(EXIT_FAILURE);
 
     /* open input raster */
