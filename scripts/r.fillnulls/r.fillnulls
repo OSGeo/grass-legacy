@@ -83,32 +83,30 @@ export LC_NUMERIC
 # what to do in case of user break:
 exitprocedure()
 {
- g.message -e 'User break!'
- #delete internal mask and any TMP files:
- g.remove rast=$TMP1,$TMP1.buf,${TMP1}_filled > /dev/null
- g.remove vect=${VECTTMP} > /dev/null
- 
- #restore user mask if present:
- eval `g.findfile element=cell file=$USERMASK`
- if [ "$file" ] ; then
-  g.remove rast=MASK > /dev/null
-  g.rename $USERMASK,MASK > /dev/null
- fi
- exit 1
+   g.message -e 'User break!'
+   #delete internal mask and any TMP files:
+   g.remove rast="$TMP1","$TMP1.buf","${TMP1}_filled" --quiet > /dev/null
+   g.remove vect="$VECTTMP" --quiet > /dev/null
+
+   #restore user mask if present:
+   eval `g.findfile element=cell file=$USERMASK`
+   if [ "$file" ] ; then
+      g.remove rast=MASK --quiet > /dev/null
+      g.rename "$USERMASK",MASK --quiet > /dev/null
+   fi
+   exit 1
 }
 # shell check for user break (signal list: trap -l)
 trap "exitprocedure" 2 3 15
 
 #test:
-if [ ! $GIS_OPT_INPUT ]
-then
- g.message "Please provide an input map name."
- exit 1
+if [ -z "$GIS_OPT_INPUT" ] ; then
+   g.message "Please provide an input map name."
+   exit 1
 fi
-if [ ! $GIS_OPT_OUTPUT ]
-then
- g.message "Please provide an output name."
- exit 1
+if [ -z "$GIS_OPT_OUTPUT" ] ; then
+   g.message "Please provide an output name."
+   exit 1
 fi
 
 #check if input file exists
@@ -120,11 +118,11 @@ fi
 
 #check if a MASK is already present:
 MASKTMP=mask.$$
-USERMASK=usermask_${MASKTMP}
+USERMASK="usermask_$MASKTMP"
 eval `g.findfile element=cell file=MASK`
 if [ "$file" ] ; then
  g.message "A user raster mask (MASK) is present. Saving it..."
- g.rename MASK,$USERMASK > /dev/null
+ g.rename MASK,"$USERMASK" --quiet > /dev/null
 fi
 
 #make a mask of NULL cells
@@ -136,7 +134,7 @@ TMP1=r_fillnulls_$$
 
 g.message "Locating and isolating NULL areas..."
 #creating 0/1 map:
-r.mapcalc $TMP1="if(isnull($GIS_OPT_INPUT),1,null())"
+r.mapcalc "$TMP1 = if(isnull($GIS_OPT_INPUT),1,null())"
 
 #generate a ring:
 # the buffer is set to three times the map resolution so you get nominally
@@ -146,38 +144,40 @@ r.mapcalc $TMP1="if(isnull($GIS_OPT_INPUT),1,null())"
 # around the edges when distance > mean (.5 of the time? diagonals? worse 
 # when ewres!=nsres).
 eval `g.region -gm | grep res`
+# check-me: quoting ok?
 RES="`echo $nsres $ewres | awk '{printf "%f", ($1+$2) * 3. / 2.}'`"  # avg*3
 
-r.buffer input=$TMP1 dist=$RES out=$TMP1.buf
+r.buffer input="$TMP1" dist="$RES" out="$TMP1.buf"
 if [ $? -ne 0 ] ; then
     g.message -e "$0 abandoned. Removing temporary map, restoring user mask if needed:"
-    g.remove rast=MASK,$TMP1,$TMP1.buf,${TMP1}_filled > /dev/null
-    g.remove vect=${VECTTMP} > /dev/null
-    g.rename $USERMASK,MASK > /dev/null
+    g.remove rast=MASK,"$TMP1","$TMP1.buf","${TMP1}_filled" --quiet > /dev/null
+    g.remove vect="$VECTTMP" --quiet > /dev/null
+    g.rename "$USERMASK",MASK --quiet > /dev/null
     exit 1
 fi
 
-r.mapcalc "MASK=if($TMP1.buf==2,1,null())"
+r.mapcalc "MASK = if($TMP1.buf==2,1,null())"
 
 # now we only see the outlines of the NULL areas if looking at INPUT.
 # Use this outline (raster border) for interpolating the fill data:
 VECTTMP=vecttmp_fillnulls_$$
 g.message "Creating interpolation points..."
-r.to.vect input=$GIS_OPT_INPUT output=${VECTTMP} feature=point
+r.to.vect input="$GIS_OPT_INPUT" output="$VECTTMP" feature=point
 if [ $? -ne 0 ] ; then
     g.message -e "$0 abandoned. Removing temporary maps, restoring user mask if needed:"
-    g.remove rast=MASK,$TMP1,$TMP1.buf,${TMP1}_filled > /dev/null
-    g.remove vect=${VECTTMP} > /dev/null
-    g.rename $USERMASK,MASK > /dev/null
+    g.remove rast=MASK,"$TMP1","$TMP1.buf","${TMP1}_filled" --quiet > /dev/null
+    g.remove vect="$VECTTMP" --quiet > /dev/null
+    g.rename "$USERMASK",MASK --quiet > /dev/null
     exit 1
 fi
 
 #count number of points to control segmax parameter for interpolation:
-POINTSNUMBER="`v.info -t map=${VECTTMP} | grep points | cut -d'=' -f2`"
+# check-me: quoting?
+POINTSNUMBER="`v.info -t map="$VECTTMP" | grep points | cut -d'=' -f2`"
 
 g.message "Interpolating $POINTSNUMBER points"
 
-if [ $POINTSNUMBER -lt 2 ] ; then
+if [ "$POINTSNUMBER" -lt 2 ] ; then
   g.message -w "Not sufficient points to interpolate. Maybe no hole(s) to fill in the current map region?"
   #remove internal MASK first
   g.remove MASK > /dev/null
@@ -186,12 +186,12 @@ if [ $POINTSNUMBER -lt 2 ] ; then
   eval `g.findfile element=cell file=$USERMASK`
   if [ "$file" ] ; then
    g.message "Restoring user mask (MASK)..."
-   g.rename $USERMASK,MASK > /dev/null
+   g.rename "$USERMASK",MASK --quiet > /dev/null
   fi
   
   #cleanup
-  g.remove rast=$TMP1,$TMP1.buf,${TMP1}_filled > /dev/null
-  g.remove vect=${VECTTMP} > /dev/null
+  g.remove rast="$TMP1","$TMP1.buf","${TMP1}_filled" --quiet > /dev/null
+  g.remove vect="$VECTTMP" --quiet > /dev/null
   exit 1
 fi
 
@@ -209,13 +209,13 @@ else
 fi
 
 SEGMAX=600
-if [ $POINTSNUMBER  -ge $SEGMAX ] ; then
+if [ "$POINTSNUMBER" -ge "$SEGMAX" ] ; then
   g.message "Using segmentation for interpolation..."
-  $RST_CMD input=${VECTTMP} elev=${TMP1}_filled #2> /dev/null
+  $RST_CMD input="$VECTTMP" elev="${TMP1}_filled" #2> /dev/null
 else
   #if less than $SEGMAX points, use no segmentation for speedup:
   g.message "Using no segmentation for interpolation as not needed..."
-  $RST_CMD input=${VECTTMP} elev=${TMP1}_filled segmax=$SEGMAX #2> /dev/null
+  $RST_CMD input="$VECTTMP" elev="${TMP1}_filled" segmax="$SEGMAX" #2> /dev/null
 fi
 
 g.message "Note: Above warnings may be ignored."
@@ -223,22 +223,22 @@ g.message "Note: Above warnings may be ignored."
 #restoring user's mask, if present:
 eval `g.findfile element=cell file=$USERMASK`
 if [ "$file" ] ; then
- g.message "Restoring user mask (MASK)..."
- g.rename $USERMASK,MASK > /dev/null
+   g.message "Restoring user mask (MASK)..."
+   g.rename "$USERMASK",MASK --quiet > /dev/null
 fi
 
 #patch orig and fill map
 g.message "Patching fill data into NULL areas..."
 # we can use --o here as g.parser already checks on startup
-r.patch in=$GIS_OPT_INPUT,${TMP1}_filled out=$GIS_OPT_OUTPUT --o
+r.patch in="$GIS_OPT_INPUT","${TMP1}_filled" out="$GIS_OPT_OUTPUT" --o
 
 #cleanup
-g.remove rast=$TMP1,$TMP1.buf,${TMP1}_filled > /dev/null
-g.remove vect=${VECTTMP} > /dev/null
+g.remove rast="$TMP1","$TMP1.buf","${TMP1}_filled" --quiet > /dev/null
+g.remove vect="$VECTTMP" --quiet > /dev/null
 
 g.message "Filled raster map is: $GIS_OPT_OUTPUT"
 
 # write cmd history:
-r.support $GIS_OPT_OUTPUT history="${CMDLINE}"
+r.support "$GIS_OPT_OUTPUT" history="${CMDLINE}"
 
 g.message "Done."
