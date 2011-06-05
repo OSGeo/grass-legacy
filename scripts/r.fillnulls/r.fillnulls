@@ -80,10 +80,6 @@ unset LC_ALL
 LC_NUMERIC=C
 export LC_NUMERIC
 
-eval `g.gisenv`
-: ${GISBASE?} ${GISDBASE?} ${LOCATION_NAME?} ${MAPSET?}
-LOCATION=$GISDBASE/$LOCATION_NAME/$MAPSET
-
 # what to do in case of user break:
 exitprocedure()
 {
@@ -93,7 +89,8 @@ exitprocedure()
  g.remove vect=${VECTTMP} > /dev/null
  
  #restore user mask if present:
- if test -f $LOCATION/cell/$USERMASK ; then
+ eval `g.findfile element=cell file=$USERMASK`
+ if [ "$file" ] ; then
   g.remove rast=MASK > /dev/null
   g.rename $USERMASK,MASK > /dev/null
  fi
@@ -115,8 +112,8 @@ then
 fi
 
 #check if input file exists
-#if test -f $LOCATION/cell/$GIS_OPT_INPUT
-if [ -z `g.findfile elem=cell file="$GIS_OPT_INPUT" | grep ^file | cut -f2 -d=` ] ; then
+eval `g.findfile element=cell file="$GIS_OPT_INPUT"`
+if [ ! "$file" ] ; then
     g.message -e "<$GIS_OPT_INPUT> does not exist! Aborting."
     exit 1
 fi
@@ -124,8 +121,8 @@ fi
 #check if a MASK is already present:
 MASKTMP=mask.$$
 USERMASK=usermask_${MASKTMP}
-if test -f $LOCATION/cell/MASK
-then
+eval `g.findfile element=cell file=MASK`
+if [ "$file" ] ; then
  g.message "A user raster mask (MASK) is present. Saving it..."
  g.rename MASK,$USERMASK > /dev/null
 fi
@@ -186,8 +183,8 @@ if [ $POINTSNUMBER -lt 2 ] ; then
   g.remove MASK > /dev/null
 
   #restoring user's mask, if present:
-  if test -f $LOCATION/cell/$USERMASK
-  then
+  eval `g.findfile element=cell file=$USERMASK`
+  if [ "$file" ] ; then
    g.message "Restoring user mask (MASK)..."
    g.rename $USERMASK,MASK > /dev/null
   fi
@@ -203,8 +200,8 @@ g.message "Note: The following warnings may be ignored."
 #remove internal MASK first -- WHY???? MN 10/2005
 g.remove MASK > /dev/null
 
-if test -f $LOCATION/cell/$USERMASK
-then
+eval `g.findfile element=cell file=$USERMASK`
+if [ "$file" ] ; then
   g.message "Using user mask while interpolating"
   RST_CMD="v.surf.rst zcol=value tension=$GIS_OPT_TENSION smooth=$GIS_OPT_SMOOTH maskmap=$USERMASK"
 else
@@ -224,8 +221,8 @@ fi
 g.message "Note: Above warnings may be ignored."
 
 #restoring user's mask, if present:
-if test -f $LOCATION/cell/$USERMASK
-then
+eval `g.findfile element=cell file=$USERMASK`
+if [ "$file" ] ; then
  g.message "Restoring user mask (MASK)..."
  g.rename $USERMASK,MASK > /dev/null
 fi
