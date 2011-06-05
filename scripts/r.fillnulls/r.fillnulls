@@ -88,6 +88,7 @@ exitprocedure()
    g.remove rast="$TMP1","$TMP1.buf","${TMP1}_filled" --quiet > /dev/null
    g.remove vect="$VECTTMP" --quiet > /dev/null
 
+   #restore user mask if present:
    eval `g.findfile element=cell file=$USERMASK`
    if [ "$file" ] ; then
       g.remove rast=MASK --quiet > /dev/null
