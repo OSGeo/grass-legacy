@@ -690,7 +690,11 @@ class Settings:
                                                 key = 'font', subkey = 'encoding')
         
     def _readFile(self, filename, settings = None):
-        """!Read settings from file to dict"""
+        """!Read settings from file to dict
+
+        @param filename settings file path
+        @param settings dict where to store settings (None for self.userSettings)
+        """
         if settings is None:
             settings = self.userSettings
         
@@ -732,7 +736,7 @@ class Settings:
             fd.close()
         
         fd.close()
-
+        
     def SaveToFile(self, settings = None):
         """!Save settings to the file"""
         if settings is None:
