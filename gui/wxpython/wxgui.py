@@ -639,12 +639,6 @@ class GMFrame(wx.Frame):
         self.PopupMenu(menu)
         menu.Destroy()
 
-    def OnNewMenu(self, event):
-        """!New display/workspace menu
-        """
-        self._popupMenu((('newdisplay', self.OnNewDisplay),
-                         ('workspaceNew',  self.OnWorkspaceNew)))
-
     def OnImportMenu(self, event):
         """!Import maps menu (import, link)
         """
