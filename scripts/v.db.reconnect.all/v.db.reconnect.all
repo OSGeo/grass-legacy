@@ -49,16 +49,16 @@ fi
 
 eval `g.gisenv`
 : ${GISBASE?} ${GISDBASE?} ${LOCATION_NAME?} ${MAPSET?}
-LOCATION=$GISDBASE/$LOCATION_NAME/$MAPSET
+LOCATION="$GISDBASE/$LOCATION_NAME/$MAPSET"
 
 if [ "$1" != "@ARGS_PARSED@" ] ; then
    exec g.parser "$0" "$@"
 fi
 
-OLD_DATABASE=$GIS_OPT_OLD_DATABASE
-NEW_DATABASE=$GIS_OPT_NEW_DATABASE
-OLD_SCHEMA=$GIS_OPT_OLD_SCHEMA
-NEW_SCHEMA=$GIS_OPT_NEW_SCHEMA
+OLD_DATABASE="$GIS_OPT_OLD_DATABASE"
+NEW_DATABASE="$GIS_OPT_NEW_DATABASE"
+OLD_SCHEMA="$GIS_OPT_OLD_SCHEMA"
+NEW_SCHEMA="$GIS_OPT_NEW_SCHEMA"
 
 if [ -z "$OLD_DATABASE" ] ; then
   g.message -e "Old database not specified"
@@ -70,19 +70,19 @@ if [ -z "$NEW_DATABASE" ] ; then
   exit 1
 fi
 
-for VECT in `g.list type=vect mapset=${MAPSET} | sed 1,2d | grep -v '^-*$'`
+for VECT in `g.list type=vect mapset="$MAPSET" | sed 1,2d | grep -v '^-*$'`
 do
     g.message message="Reconnecting vector '${VECT}@${MAPSET}'"
     for LINK in `v.db.connect -g fs="|" map=${VECT}@${MAPSET}` ; do
-        eval `echo $LINK | sed 's$\([^\|]*\)|\([^\|]*\)|\([^\|]*\)|\([^\|]*\)|\([^\|]*\)$LAYER=\1 SCHEMA_TABLE=\2 KEY=\3 DATABASE=\4 DRIVER=\5$'`
+        eval `echo "$LINK" | sed 's$\([^\|]*\)|\([^\|]*\)|\([^\|]*\)|\([^\|]*\)|\([^\|]*\)$LAYER=\1 SCHEMA_TABLE=\2 KEY=\3 DATABASE=\4 DRIVER=\5$'`
 
-        SCHEMA=`echo $SCHEMA_TABLE | grep '\.' | sed 's/\([^.]*\)\..*/\1/'`
-        TABLE=`echo $SCHEMA_TABLE | sed 's/.*\.//'`
+        SCHEMA=`echo "$SCHEMA_TABLE" | grep '\.' | sed 's/\([^.]*\)\..*/\1/'`
+        TABLE=`echo "$SCHEMA_TABLE" | sed 's/.*\.//'`
 
         if [ -n "$NEW_SCHEMA" ] ; then
             NEW_SCHEMA_TABLE="${NEW_SCHEMA}.${TABLE}"
         else
-            NEW_SCHEMA_TABLE="${TABLE}"
+            NEW_SCHEMA_TABLE="$TABLE"
         fi
 
         g.message message="SCHEMA = $SCHEMA TABLE = $TABLE NEW_SCHEMA_TABLE=$NEW_SCHEMA_TABLE"

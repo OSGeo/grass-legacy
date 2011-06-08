@@ -68,7 +68,7 @@ TEMPRAST="r_mask_$$"
 
 cleanup()
 {
- g.remove --q rast=$TEMPRAST
+ g.remove --q rast="$TEMPRAST"
 }
 
 # what to do in case of user break:
