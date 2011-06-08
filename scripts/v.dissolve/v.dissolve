@@ -85,7 +85,7 @@ exitprocedure()
 trap "exitprocedure" 2 3 15
 
 # does map exist?
-eval `g.findfile element=vector file=$GIS_OPT_INPUT`
+eval `g.findfile element=vector file="$GIS_OPT_INPUT"`
 if [ ! "$file" ] ; then
    g.message -e "Vector map <$GIS_OPT_INPUT> not found"
    exit 1
@@ -102,7 +102,7 @@ else
        exit 1
     fi
 
-   table=`v.db.connect $GIS_OPT_INPUT -g fs=";" | grep -w "^$GIS_OPT_LAYER" | awk -F ";" '{print $2}'`
+   table=`v.db.connect "$GIS_OPT_INPUT" -gl fs="|" layer="$GIS_OPT_LAYER" | cut -f2 -d'|'`
    if [ -z "$table" ] ; then
       g.message -e "Database connection not defined for layer $GIS_OPT_LAYER"
       exit 1
@@ -116,7 +116,7 @@ fi
 
 
 # write cmd history:
-v.support ${GIS_OPT_OUTPUT} cmdhist="${CMDLINE}"
+v.support "$GIS_OPT_OUTPUT" cmdhist="${CMDLINE}"
 
 exit 0
 
