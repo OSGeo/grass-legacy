@@ -25,8 +25,8 @@ SUBDIRS = \
 	db.in.ogr \
 	db.out.ogr \
 	db.test \
-	g.manual \
 	g.extension \
+	g.manual \
 	i.fusion.brovey \
 	i.image.mosaic \
 	i.in.spotvgt \
