@@ -9380,7 +9380,7 @@ msgid "Raster export aborted."
 msgstr "แผนที่เชิงภาพ, ส่งออก"
 
 #: ../raster/r.out.gdal/main.c:492
-msgid "Checking GDAl data type and nodata value"
+msgid "Checking GDAL data type and nodata value"
 msgstr ""
 
 #: ../raster/r.out.gdal/main.c:495

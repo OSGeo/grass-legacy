@@ -9541,7 +9541,7 @@ msgid "Raster export aborted."
 msgstr "Импортируемый растровый файл"
 
 #: ../raster/r.out.gdal/main.c:492
-msgid "Checking GDAl data type and nodata value"
+msgid "Checking GDAL data type and nodata value"
 msgstr ""
 
 #: ../raster/r.out.gdal/main.c:495

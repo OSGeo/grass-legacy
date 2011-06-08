@@ -9616,8 +9616,8 @@ msgid "Raster export aborted."
 msgstr "Exportación de raster abortada."
 
 #: ../raster/r.out.gdal/main.c:492
-msgid "Checking GDAl data type and nodata value"
-msgstr "Comprobando tipos de datos GDAl y valores sin datos"
+msgid "Checking GDAL data type and nodata value"
+msgstr "Comprobando tipos de datos GDAL y valores sin datos"
 
 #: ../raster/r.out.gdal/main.c:495
 #, c-format

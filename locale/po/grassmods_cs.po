@@ -9485,7 +9485,7 @@ msgid "Raster export aborted."
 msgstr "rastr, export"
 
 #: ../raster/r.out.gdal/main.c:492
-msgid "Checking GDAl data type and nodata value"
+msgid "Checking GDAL data type and nodata value"
 msgstr ""
 
 #: ../raster/r.out.gdal/main.c:495

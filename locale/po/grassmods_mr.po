@@ -9150,7 +9150,7 @@ msgid "Raster export aborted."
 msgstr "'%s'. ड्राइवर चालू होत नाही"
 
 #: ../raster/r.out.gdal/main.c:492
-msgid "Checking GDAl data type and nodata value"
+msgid "Checking GDAL data type and nodata value"
 msgstr ""
 
 #: ../raster/r.out.gdal/main.c:495

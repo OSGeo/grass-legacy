@@ -9737,18 +9737,18 @@ msgid "Raster export aborted."
 msgstr "नहीं"
 
 #: ../raster/r.out.gdal/main.c:492
-msgid "Checking GDAl data type and nodata value"
+msgid "Checking GDAL data type and nodata value"
 msgstr ""
 
 #: ../raster/r.out.gdal/main.c:495
 #, fuzzy, c-format
 msgid "Checking options for raster map <%s> (band %d)..."
-msgstr "i n"
+msgstr ""
 
 #: ../raster/r.out.gdal/main.c:509
 #, fuzzy
 msgid "Forcing raster export."
-msgstr "n"
+msgstr ""
 
 #: ../raster/r.out.gdal/main.c:536
 #, fuzzy
