@@ -9503,7 +9503,7 @@ msgid "Raster export aborted."
 msgstr "Việc xuất raster bị huỷ."
 
 #: ../raster/r.out.gdal/main.c:492
-msgid "Checking GDAl data type and nodata value"
+msgid "Checking GDAL data type and nodata value"
 msgstr "Kiểm tra kiểu dữ liệu GDAL và giá trị không-dữ-liệu"
 
 #: ../raster/r.out.gdal/main.c:495
