@@ -3,6 +3,7 @@
 #include <grass/gis.h>
 #include <grass/dbmi.h>
 #include <grass/form.h>
+#include <grass/glocale.h>
 
 /* Escape string for use in TCL */
 char *escape_tcl_string(char *input)
@@ -73,8 +74,8 @@ F_generate(char *drvname, char *dbname, char *tblname, char *key, int keyval,
     G_debug(2, "Open driver");
     driver = db_start_driver(drvname);
     if (driver == NULL) {
-	G_warning("Cannot open driver");
-	sprintf(buf, "Cannot open driver '%s'<BR>",
+	G_warning("%s", _("Cannot open driver"));
+	sprintf(buf, _("Cannot open driver '%s'<BR>"),
 		escape_tcl_string(drvname));
 	*form = G_store(buf);
 	return -1;
@@ -85,9 +86,9 @@ F_generate(char *drvname, char *dbname, char *tblname, char *key, int keyval,
     db_set_handle(&handle, dbname, NULL);
     G_debug(2, "Open database");
     if (db_open_database(driver, &handle) != DB_OK) {
-	G_warning("Cannot open database");
+	G_warning("%s", _("Cannot open database"));
 	db_shutdown_driver(driver);
-	sprintf(buf, "Cannot open database '%s' by driver '%s'<BR>",
+	sprintf(buf, _("Cannot open database '%s' by driver '%s'<BR>"),
 		escape_tcl_string(dbname), escape_tcl_string(drvname));
 	*form = G_store(buf);
 	return -1;
@@ -102,11 +103,11 @@ F_generate(char *drvname, char *dbname, char *tblname, char *key, int keyval,
     G_debug(2, "%s", buf);
     db_set_string(&sql, buf);
     if (db_open_select_cursor(driver, &sql, &cursor, DB_SEQUENTIAL) != DB_OK) {
-	G_warning("Cannot open select cursor");
+	G_warning("%s", _("Cannot open select cursor"));
 	db_close_database(driver);
 	db_shutdown_driver(driver);
 	sprintf(buf,
-		"Cannot open select cursor:<BR>'%s'<BR>on database '%s' by driver '%s'<BR>",
+		_("Cannot open select cursor:<BR>'%s'<BR>on database '%s' by driver '%s'<BR>"),
 		escape_tcl_string(db_get_string(&sql)),
 		escape_tcl_string(dbname), escape_tcl_string(drvname));
 	*form = G_store(buf);
@@ -117,7 +118,7 @@ F_generate(char *drvname, char *dbname, char *tblname, char *key, int keyval,
     table = db_get_cursor_table(&cursor);
 
     if (db_fetch(&cursor, DB_NEXT, &more) != DB_OK) {
-	G_warning("Cannot fetch next record");
+	G_warning("%s", _("Cannot fetch next record"));
 	db_close_cursor(&cursor);
 	db_close_database(driver);
 	db_shutdown_driver(driver);
@@ -126,7 +127,7 @@ F_generate(char *drvname, char *dbname, char *tblname, char *key, int keyval,
     }
 
     if (!more) {
-	G_warning("No database record");
+	G_warning("%s", _("No database record"));
 	if (format == F_HTML) {
 	    *form = G_store("No record selected.<BR>");
 	}
@@ -219,7 +220,7 @@ F_generate(char *drvname, char *dbname, char *tblname, char *key, int keyval,
 
 	    if (edit_mode == F_EDIT) {
 		sprintf(buf,
-			"<HR>   Assume data encoding as:<BR><BR><SELECT NAME=%s SIZE=4><HR><BR>",
+			_("<HR>   Assume data encoding as:<BR><BR><SELECT NAME=%s SIZE=4><HR><BR>"),
 			F_ENCODING);
 		db_append_string(&html, buf);
 

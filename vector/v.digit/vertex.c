@@ -8,6 +8,7 @@
 #include <grass/display.h>
 #include <grass/colors.h>
 #include <grass/form.h>
+#include <grass/glocale.h>
 #include "global.h"
 #include "proto.h"
 
@@ -31,8 +32,8 @@ int split_line_begin(void *closure)
     sl->NPoints = Vect_new_line_struct();
     sl->Cats = Vect_new_cats_struct();
 
-    i_prompt("Split line:");
-    i_prompt_buttons("Select", "", "Quit tool");
+    i_prompt(_("Split line:"));
+    i_prompt_buttons(_("Select"), "", _("Quit tool"));
 
     sl->thresh = get_thresh();
     G_debug(2, "thresh = %f", sl->thresh);
@@ -52,7 +53,7 @@ int split_line_update(void *closure, int sxn, int syn, int button)
     double y = D_d_to_u_row(syn);
 
     if (sl->last_line == 0) {
-	i_prompt_buttons("Select", "", "Quit tool");
+	i_prompt_buttons(_("Select"), "", _("Quit tool"));
     }
 
     if (sl->last_line > 0) {
@@ -126,8 +127,8 @@ int split_line_update(void *closure, int sxn, int syn, int button)
 	    symb_set_driver_color(SYMB_HIGHLIGHT);
 	    display_icon(sl->xo, sl->yo, G_ICON_CROSS, 0, 10, 1);
 
-	    i_prompt_buttons("Confirm and select next", "Unselect",
-			     "Quit tool");
+	    i_prompt_buttons(_("Confirm and select next"), _("Unselect"),
+			     _("Quit tool"));
 	    sl->last_line = line;
 	    sl->last_seg = seg;
 	}
@@ -148,7 +149,7 @@ int split_line_end(void *closure)
     struct split_line *sl = closure;
 
     if (sl->last_line == 0) {
-	i_prompt_buttons("Select", "", "Quit tool");
+	i_prompt_buttons(_("Select"), "", _("Quit tool"));
     }
 
     if (sl->last_line > 0) {
@@ -195,8 +196,8 @@ int rm_vertex_begin(void *closure)
     rv->Points = Vect_new_line_struct();
     rv->Cats = Vect_new_cats_struct();
 
-    i_prompt("Remove vertex:");
-    i_prompt_buttons("Select vertex", "", "Quit tool");
+    i_prompt(_("Remove vertex:"));
+    i_prompt_buttons(_("Select vertex"), "", _("Quit tool"));
 
     rv->thresh = get_thresh();
     G_debug(2, "thresh = %f", rv->thresh);
@@ -216,7 +217,7 @@ int rm_vertex_update(void *closure, int sxn, int syn, int button)
     double y = D_d_to_u_row(syn);
 
     if (rv->last_line == 0) {
-	i_prompt_buttons("Select vertex", "", "Quit tool");
+	i_prompt_buttons(_("Select vertex"), "", _("Quit tool"));
     }
 
     if (rv->last_line > 0) {
@@ -299,8 +300,8 @@ int rm_vertex_update(void *closure, int sxn, int syn, int button)
 	    symb_set_driver_color(SYMB_HIGHLIGHT);
 	    display_icon(rv->xo, rv->yo, G_ICON_BOX, 0, 10, 1);
 
-	    i_prompt_buttons("Confirm and select next", "Unselect",
-			     "Quit tool");
+	    i_prompt_buttons(_("Confirm and select next"), _("Unselect"),
+			     _("Quit tool"));
 	    rv->last_line = line;
 	    rv->last_seg = seg;
 	}
@@ -321,7 +322,7 @@ int rm_vertex_end(void *closure)
     struct rm_vertex *rv = closure;
 
     if (rv->last_line == 0) {
-	i_prompt_buttons("Select vertex", "", "Quit tool");
+	i_prompt_buttons(_("Select vertex"), "", _("Quit tool"));
     }
 
     if (rv->last_line > 0) {
@@ -368,8 +369,8 @@ int add_vertex_begin(void *closure)
     av->Points = Vect_new_line_struct();
     av->Cats = Vect_new_cats_struct();
 
-    i_prompt("Add vertex:");
-    i_prompt_buttons("Select", "", "Quit tool");
+    i_prompt(_("Add vertex:"));
+    i_prompt_buttons(_("Select"), "", _("Quit tool"));
 
     av->thresh = get_thresh();
     G_debug(2, "thresh = %f", av->thresh);
@@ -467,7 +468,7 @@ int add_vertex_update(void *closure, int sxn, int syn, int button)
 
 		set_location(D_u_to_d_col(xo), D_u_to_d_row(yo));
 
-		i_prompt_buttons("New vertex", "Unselect", "Quit tool");
+		i_prompt_buttons(_("New vertex"), _("Unselect"), _("Quit tool"));
 		av->last_line = line;
 		av->last_seg = seg;
 	    }
@@ -512,7 +513,7 @@ int add_vertex_update(void *closure, int sxn, int syn, int button)
     }
 
     if (av->last_line == 0) {
-	i_prompt_buttons("Select", "", "Quit tool");
+	i_prompt_buttons(_("Select"), "", _("Quit tool"));
 	set_mode(MOUSE_POINT);
     }
     else
@@ -565,8 +566,8 @@ int move_vertex_begin(void *closure)
     mv->Points = Vect_new_line_struct();
     mv->Cats = Vect_new_cats_struct();
 
-    i_prompt("Move vertex:");
-    i_prompt_buttons("Select", "", "Quit tool");
+    i_prompt(_("Move vertex:"));
+    i_prompt_buttons(_("Select"), "", _("Quit tool"));
 
     mv->thresh = get_thresh();
     G_debug(2, "thresh = %f", mv->thresh);
@@ -629,7 +630,7 @@ int move_vertex_update(void *closure, int sxn, int syn, int button)
 		set_location(D_u_to_d_col(mv->xo), D_u_to_d_row(mv->yo));
 
 
-		i_prompt_buttons("New location", "Unselect", "Quit tool");
+		i_prompt_buttons(_("New location"), _("Unselect"), _("Quit tool"));
 		mv->last_line = line;
 		mv->last_seg = seg;
 	    }
@@ -665,7 +666,7 @@ int move_vertex_update(void *closure, int sxn, int syn, int button)
 
 
     if (mv->last_line == 0) {
-	i_prompt_buttons("Select", "", "Quit tool");
+	i_prompt_buttons(_("Select"), "", _("Quit tool"));
 	set_mode(MOUSE_POINT);
     }
     else

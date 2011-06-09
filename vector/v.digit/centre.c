@@ -53,7 +53,7 @@ void tool_centre(void)
     driver_close();
 
     symb_init_gui();
-    i_prompt("Select tool");
+    i_prompt(_("Select tool"));
 }
 
 void next_tool(void)
@@ -175,7 +175,7 @@ void end(void)
     Vect_close(&Map);
 
     if (1 == G_put_window(&GRegion))
-	G_message(_("Region restored to original extent."));
+	G_message("%s", _("Region restored to original extent."));
 
     /* clear the screen */
     Tcl_Eval(Toolbox, ".screen.canvas delete all");
