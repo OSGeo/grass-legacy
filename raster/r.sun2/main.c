@@ -40,6 +40,7 @@ email: hofierka@geomodel.sk,marcel.suri@jrc.it,suri@geomodel.sk Thomas.Huld@jrc.
 #include "local_proto.h"
 #include "rsunglobals.h"
 
+/* default values */
 #define NUM_PARTITIONS "1"
 #define SKIP    "1"
 #define BIG      1.e20
@@ -179,6 +180,8 @@ double TOLER;
 int ll_correction = 0;
 double coslatsq;
 
+/* why not use G_distance() here which switches to geodesic/great
+  circle distace as needed? */
 double distance(double x1, double x2, double y1, double y2)
 {
     if (ll_correction) {
@@ -2076,6 +2079,9 @@ double com_declin(int no_of_day)
 {
     double d1, decl;
 
+    /* stretch day number in the following calculation for siderial effect? */
+    /*   ? double siderial_day = no_of_day + ((no_of_day * 0.25) / 365.) ? */
+    /* or just change d1 to : d1 = pi2 * no_of_day / 365.0;  ? */
     d1 = pi2 * no_of_day / 365.25;
     decl = asin(0.3978 * sin(d1 - 1.4 + 0.0355 * sin(d1 - 0.0489)));
     decl = -decl;
