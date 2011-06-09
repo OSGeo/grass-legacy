@@ -39,11 +39,11 @@
 # 	grass=> SELECT object FROM obj_imp WHERE symbol = 'I_get_target' ;
 # 	                               object                               
 # 	--------------------------------------------------------------------
-# 	 imagery/i.ortho.photo/photo.2image/OBJ.i686-pc-linux-gnu/target.o
-# 	 imagery/i.ortho.photo/photo.2target/OBJ.i686-pc-linux-gnu/target.o
-# 	 imagery/i.ortho.photo/photo.elev/OBJ.i686-pc-linux-gnu/main.o
-# 	 imagery/i.ortho.photo/photo.rectify/OBJ.i686-pc-linux-gnu/target.o
-# 	 imagery/i.ortho.photo/photo.target/OBJ.i686-pc-linux-gnu/main.o
+# 	 imagery/i.ortho.photo/i.photo.2image/OBJ.i686-pc-linux-gnu/target.o
+# 	 imagery/i.ortho.photo/i.photo.2target/OBJ.i686-pc-linux-gnu/target.o
+# 	 imagery/i.ortho.photo/i.photo.elev/OBJ.i686-pc-linux-gnu/main.o
+# 	 imagery/i.ortho.photo/i.photo.rectify/OBJ.i686-pc-linux-gnu/target.o
+# 	 imagery/i.ortho.photo/i.photo.target/OBJ.i686-pc-linux-gnu/main.o
 # 	 imagery/i.points/OBJ.i686-pc-linux-gnu/target.o
 # 	 imagery/i.rectify/OBJ.i686-pc-linux-gnu/target.o
 # 	 imagery/i.vpoints/OBJ.i686-pc-linux-gnu/target.o
