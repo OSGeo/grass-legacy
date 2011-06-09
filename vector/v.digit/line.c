@@ -8,6 +8,7 @@
 #include <grass/display.h>
 #include <grass/colors.h>
 #include <grass/form.h>
+#include <grass/glocale.h>
 #include "global.h"
 #include "proto.h"
 
@@ -50,7 +51,9 @@ int write_line(struct Map_info *Map, int type, struct line_pnts *Points)
     if (var_geti(VAR_CAT_MODE) != CAT_MODE_NO && var_geti(VAR_INSERT) &&
 	cat > 0) {
 	G_debug(2, "Insert new record");
-	db_set_string(&html, "<HTML><HEAD><TITLE>Form</TITLE><BODY>");
+	db_set_string(&html, "<HTML><HEAD><TITLE>");
+	db_append_string(&html, _("Form"));
+	db_append_string(&html, "</TITLE><BODY>");
 
 	field = var_geti(VAR_FIELD);
 	ret = new_record(field, cat);
@@ -58,11 +61,11 @@ int write_line(struct Map_info *Map, int type, struct line_pnts *Points)
 	    return -1;
 	}
 	else if (ret == 0) {
-	    db_append_string(&html, "New record was created.<BR>");
+	    db_append_string(&html, _("New record was created.<BR>"));
 	}
 	else {			/* record already existed */
 	    db_append_string(&html,
-			     "Record for this category already existed.<BR>");
+			     _("Record for this category already existed.<BR>"));
 	}
 
 	/* Open form */
@@ -80,7 +83,7 @@ int write_line(struct Map_info *Map, int type, struct line_pnts *Points)
 	if (first_form)
 	    driver_close();
 	F_clear();
-	F_open("Attributes", db_get_string(&html));
+	F_open(_("Attributes"), db_get_string(&html));
 	if (first_form) {
 	    driver_open();
 	    first_form = 0;
@@ -132,9 +135,9 @@ int new_line_begin(void *closure)
     nl->Points = Vect_new_line_struct();
     nl->Cats = Vect_new_cats_struct();
 
-    sprintf(buf, "Digitize new %s:", get_line_type_name(nl->type));
+    sprintf(buf, _("Digitize new %s:"), get_line_type_name(nl->type));
     i_prompt(buf);
-    i_prompt_buttons("New point", "", "Quit tool");
+    i_prompt_buttons(_("New point"), "", _("Quit tool"));
 
     i_new_line_options(1);
 
@@ -159,8 +162,8 @@ int new_line_update(void *closure, int sxn, int syn, int button)
 	return 1;
     }
     
-    if (button > 3) /* Do nothing on mouse scroll */
-	return 0;
+    if (button > 3) /* Do nothing on mouse scroll */ 
+        return 0; 
 
     if (nl->type & GV_POINTS && (button == 1 ||  button == 2)) {
 	snap(&x, &y);
@@ -185,7 +188,7 @@ int new_line_update(void *closure, int sxn, int syn, int button)
 		}
 	    }
 	    if (Vect_append_point(nl->Points, x, y, 0) == -1) {
-		G_warning("Out of memory! Point not added.");
+		G_warning("%s", _("Out of memory! Point not added."));
 		return 0;
 	    }
 
@@ -218,7 +221,7 @@ int new_line_update(void *closure, int sxn, int syn, int button)
 		    );
 	    }
 	    if (nl->Points->n_points == 0) {
-		i_prompt_buttons("New point", "", "Quit tool");
+		i_prompt_buttons(_("New point"), "", _("Quit tool"));
 		nl->first = 1;
 		set_mode(MOUSE_POINT);
 	    }
@@ -240,14 +243,14 @@ int new_line_update(void *closure, int sxn, int syn, int button)
 		updated_lines_and_nodes_erase_refresh_display();
 	    }
 	    else
-		G_warning("Less than 2 points for line -> nothing written");
+		G_warning("%s", _("Less than 2 points for line -> nothing written"));
 
 	    return 1;
 	}
 	G_debug(2, "n_points = %d", nl->Points->n_points);
     }
 
-    i_prompt_buttons("New point", "Undo last point", "Close line");
+    i_prompt_buttons(_("New point"), _("Undo last point"), _("Close line"));
     return 0;
 }
 
@@ -331,7 +334,7 @@ void edit_line_phase2(struct edit_line *el, double x, double y)
 
     display_node(node1, SYMB_BACKGROUND, 1);
     display_node(node2, SYMB_BACKGROUND, 1);
-    i_prompt_buttons("New Point", "Undo Last Point", "Close line");
+    i_prompt_buttons(_("New Point"), _("Undo Last Point"), _("Close line"));
 
     set_location(D_u_to_d_col(el->Points->x[el->Points->n_points - 1]),
 		 D_u_to_d_row(el->Points->y[el->Points->n_points - 1])
@@ -380,7 +383,7 @@ int edit_line_update(void *closure, int sxn, int syn, int button)
 
 	    display_points(el->Points, 1);
 	    set_location(sxn, syn);
-	    i_prompt_buttons("New Point", "Undo Last Point", "Close line");
+	    i_prompt_buttons(_("New Point"), _("Undo Last Point"), _("Close line"));
 	}
 	else if (button == 2) {	/* Undo last point */
 	    if (el->Points->n_points > 1) {
@@ -401,7 +404,7 @@ int edit_line_update(void *closure, int sxn, int syn, int button)
 					  y[el->Points->n_points - 1])
 		    );
 		if (el->Points->n_points == 1)
-		    i_prompt_buttons("New Point", "", "Delete line and exit");
+		    i_prompt_buttons(_("New Point"), "", _("Delete line and exit"));
 	    }
 	}
 	break;
@@ -474,8 +477,8 @@ int delete_line_begin(void *closure)
     dl->Points = Vect_new_line_struct();
     dl->Cats = Vect_new_cats_struct();
 
-    i_prompt("Delete point, line, boundary, or centroid:");
-    i_prompt_buttons("Select", "Unselect", "Quit tool");
+    i_prompt(_("Delete point, line, boundary, or centroid:"));
+    i_prompt_buttons(_("Select"), _("Unselect"), _("Quit tool"));
 
     dl->thresh = get_thresh();
     G_debug(2, "thresh = %f", dl->thresh);
@@ -558,9 +561,9 @@ int delete_line_update(void *closure, int sxn, int syn, int button)
     }
 
     if (dl->line > 0)
-	i_prompt_buttons("Confirm and select next", "Unselect", "Quit tool");
+	i_prompt_buttons(_("Confirm and select next"), _("Unselect"), _("Quit tool"));
     else
-	i_prompt_buttons("Select", "Unselect", "Quit tool");
+	i_prompt_buttons(_("Select"), _("Unselect"), _("Quit tool"));
 
     dl->last_line = dl->line;
     dl->first = 0;
@@ -613,8 +616,8 @@ int move_line_begin(void *closure)
     ml->Points = Vect_new_line_struct();
     ml->Cats = Vect_new_cats_struct();
 
-    i_prompt("Move point, line, boundary, or centroid:");
-    i_prompt_buttons("Select", "", "Quit tool");
+    i_prompt(_("Move point, line, boundary, or centroid:"));
+    i_prompt_buttons(_("Select"), "", _("Quit tool"));
 
     ml->thresh = get_thresh();
     G_debug(2, "thresh = %f", ml->thresh);
@@ -665,7 +668,7 @@ int move_line_update(void *closure, int sxn, int syn, int button)
 				   NULL, NULL, NULL, NULL);
 		set_location(D_u_to_d_col(ml->xo), D_u_to_d_row(ml->yo));
 
-		i_prompt_buttons("New location", "Unselect", "Quit tool");
+		i_prompt_buttons(_("New location"), _("Unselect"), _("Quit tool"));
 	    }
 	    ml->last_line = ml->line;
 	}
@@ -699,7 +702,7 @@ int move_line_update(void *closure, int sxn, int syn, int button)
     }
 
     if (ml->last_line == 0) {
-	i_prompt_buttons("Select", "", "Quit tool");
+	i_prompt_buttons(_("Select"), "", _("Quit tool"));
 	set_mode(MOUSE_POINT);
     }
     else

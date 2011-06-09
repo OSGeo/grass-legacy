@@ -234,8 +234,11 @@ void display_bg(void)
 
     for (i = 0; i < nbgcmd; i++) {
 	putenv((i > 0) ? "GRASS_PNG_READ=TRUE" : "GRASS_PNG_READ=FALSE");
-	if (Bgcmd[i].on)
-	    system(Bgcmd[i].cmd);
+	if (Bgcmd[i].on) {
+	    if (system(Bgcmd[i].cmd) == -1) {
+		G_warning("System call has failed");
+	    }
+	}
     }
 
     sprintf(cmd_buf, "image create photo bgimage -file {%s.ppm}", ppmfile);
