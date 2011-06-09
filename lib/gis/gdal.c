@@ -1,3 +1,15 @@
+/*!
+  \file lib/gis/gdal.c
+  
+  \brief GIS Library - Utilization of GDAL library.
+  
+  (C) 2010 by the GRASS Development Team
+  
+  This program is free software under the GNU General Public License
+  (>=v2). Read the file COPYING that comes with GRASS for details.
+  
+  \author Glynn Clements
+*/
 
 #include <stdlib.h>
 #include <string.h>
@@ -21,18 +33,16 @@
 # endif
 #endif
 
-static void CPL_STDCALL(*pGDALAllRegister) (void);
-static void CPL_STDCALL(*pGDALClose) (GDALDatasetH);
-static GDALRasterBandH CPL_STDCALL(*pGDALGetRasterBand) (GDALDatasetH, int);
-static GDALDatasetH CPL_STDCALL(*pGDALOpen) (const char *pszFilename,
-					     GDALAccess eAccess);
-static CPLErr CPL_STDCALL(*pGDALRasterIO) (GDALRasterBandH hRBand,
-					   GDALRWFlag eRWFlag, int nDSXOff,
-					   int nDSYOff, int nDSXSize,
-					   int nDSYSize, void *pBuffer,
-					   int nBXSize, int nBYSize,
-					   GDALDataType eBDataType,
-					   int nPixelSpace, int nLineSpace);
+static void CPL_STDCALL (*pGDALAllRegister)(void);
+static void CPL_STDCALL (*pGDALClose)(GDALDatasetH);
+static GDALRasterBandH CPL_STDCALL (*pGDALGetRasterBand)(GDALDatasetH, int);
+static GDALDatasetH CPL_STDCALL (*pGDALOpen)(
+    const char *pszFilename, GDALAccess eAccess);
+static CPLErr CPL_STDCALL (*pGDALRasterIO)(
+    GDALRasterBandH hRBand, GDALRWFlag eRWFlag,
+    int nDSXOff, int nDSYOff, int nDSXSize, int nDSYSize,
+    void * pBuffer, int nBXSize, int nBYSize,GDALDataType eBDataType,
+    int nPixelSpace, int nLineSpace);
 
 #if GDAL_DYNAMIC
 # if defined(__unix) && !defined(__unix__)
@@ -70,7 +80,7 @@ static void try_load_library(const char *name)
 
 static void load_library(void)
 {
-    static const char *const candidates[] = {
+    static const char * const candidates[] = {
 # ifdef __unix__
 	"libgdal.1.1.so",
 	"gdal.1.0.so",
@@ -79,6 +89,9 @@ static void load_library(void)
 	"libgdal.so",
 # endif
 # ifdef _WIN32
+	"gdal19.dll",
+	"gdal18.dll",
+	"gdal17.dll",
 	"gdal16.dll",
 	"gdal15.dll",
 	"gdal11.dll",
@@ -103,18 +116,18 @@ static void init_gdal(void)
 {
     load_library();
 
-#ifdef _WIN32
+# ifdef _WIN32
     pGDALAllRegister   = get_symbol("_GDALAllRegister@0");
     pGDALOpen          = get_symbol("_GDALOpen@8");
     pGDALClose         = get_symbol("_GDALClose@4");
     pGDALGetRasterBand = get_symbol("_GDALGetRasterBand@8");
     pGDALRasterIO      = get_symbol("_GDALRasterIO@48");
 #else
-    pGDALAllRegister = get_symbol("GDALAllRegister");
-    pGDALOpen = get_symbol("GDALOpen");
-    pGDALClose = get_symbol("GDALClose");
+    pGDALAllRegister   = get_symbol("GDALAllRegister");
+    pGDALOpen          = get_symbol("GDALOpen");
+    pGDALClose         = get_symbol("GDALClose");
     pGDALGetRasterBand = get_symbol("GDALGetRasterBand");
-    pGDALRasterIO = get_symbol("GDALRasterIO");
+    pGDALRasterIO      = get_symbol("GDALRasterIO");
 #endif
 }
 
@@ -122,11 +135,11 @@ static void init_gdal(void)
 
 static void init_gdal(void)
 {
-    pGDALAllRegister = &GDALAllRegister;
-    pGDALOpen = &GDALOpen;
-    pGDALClose = &GDALClose;
+    pGDALAllRegister   = &GDALAllRegister;
+    pGDALOpen          = &GDALOpen;
+    pGDALClose         = &GDALClose;
     pGDALGetRasterBand = &GDALGetRasterBand;
-    pGDALRasterIO = &GDALRasterIO;
+    pGDALRasterIO      = &GDALRasterIO;
 }
 
 #endif /* GDAL_DYNAMIC */
@@ -215,17 +228,17 @@ struct GDAL_link *G_get_gdal_link(const char *name, const char *mapset)
 
     if (!initialized) {
 	init_gdal();
-	(*pGDALAllRegister) ();
+	(*pGDALAllRegister)();
 	initialized = 1;
     }
 
-    data = (*pGDALOpen) (filename, GA_ReadOnly);
+    data = (*pGDALOpen)(filename, GA_ReadOnly);
     if (!data)
 	return NULL;
 
-    band = (*pGDALGetRasterBand) (data, band_num);
+    band = (*pGDALGetRasterBand)(data, band_num);
     if (!band) {
-	(*pGDALClose) (data);
+	(*pGDALClose)(data);
 	return NULL;
     }
 #endif
@@ -247,20 +260,22 @@ struct GDAL_link *G_get_gdal_link(const char *name, const char *mapset)
 void G_close_gdal_link(struct GDAL_link *gdal)
 {
 #ifdef GDAL_LINK
-    (*pGDALClose) (gdal->data);
+    (*pGDALClose)(gdal->data);
 #endif
     G_free(gdal->filename);
     G_free(gdal);
 }
 
 #ifdef GDAL_LINK
-CPLErr G_gdal_raster_IO(GDALRasterBandH band, GDALRWFlag rw_flag,
-			int x_off, int y_off, int x_size, int y_size,
-			void *buffer, int buf_x_size, int buf_y_size,
-			GDALDataType buf_type, int pixel_size, int line_size)
+CPLErr G_gdal_raster_IO(
+    GDALRasterBandH band, GDALRWFlag rw_flag,
+    int x_off, int y_off, int x_size, int y_size,
+    void *buffer, int buf_x_size, int buf_y_size, GDALDataType buf_type,
+    int pixel_size, int line_size)
 {
-    return (*pGDALRasterIO) (band, rw_flag, x_off, y_off, x_size, y_size,
-			     buffer, buf_x_size, buf_y_size, buf_type,
-			     pixel_size, line_size);
+    return (*pGDALRasterIO)(
+	band, rw_flag, x_off, y_off, x_size, y_size,
+	buffer, buf_x_size, buf_y_size, buf_type,
+	pixel_size, line_size);
 }
 #endif
