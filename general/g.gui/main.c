@@ -8,7 +8,7 @@
  *
  * PURPOSE:      Start GRASS GUI from command line.
  *
- * COPYRIGHT:    (C) 2008, 2010 by the GRASS Development Team
+ * COPYRIGHT:    (C) 2008 by the GRASS Development Team
  *
  *               This program is free software under the GNU General Public
  *               License (>=v2). Read the file COPYING that comes with GRASS
@@ -100,7 +100,7 @@ int main(int argc, char *argv[])
     if(nolaunch->answer)
 	exit(EXIT_SUCCESS);
 
-    G_debug(1, "Attempting to start '%s' GUI ...", type->answer);
+    G_message(_("Launching '%s' GUI in the background, please wait ..."), type->answer);
 
     if (strcmp(type->answer, "oldtcltk") == 0) {
 #ifdef __MINGW32__
@@ -108,35 +108,40 @@ int main(int argc, char *argv[])
 #endif
 	sprintf(progname, "%s/etc/dm/d.m.tcl", G_gisbase());
 	if (rc_file->answer) {
-	    G_spawn(getenv("GRASS_WISH"), "d.m", progname, "-name", "d_m_tcl",
-		    rc_file->answer, NULL);
+	    G_spawn_ex(getenv("GRASS_WISH"), "d.m", progname, "-name", "d_m_tcl",
+		    rc_file->answer, SF_BACKGROUND, NULL);
 	}
 	else {
-	    G_spawn(getenv("GRASS_WISH"), "d.m", progname, "-name", "d_m_tcl",
-		    NULL);
+	    G_spawn_ex(getenv("GRASS_WISH"), "d.m", progname, "-name", "d_m_tcl",
+		    SF_BACKGROUND, NULL);
 	}
     }
     else if (strcmp(type->answer, "tcltk") == 0) {
 	sprintf(progname, "%s/etc/gm/gm.tcl", G_gisbase());
 	if (rc_file->answer) {
-	    G_spawn(getenv("GRASS_WISH"), "gis.m", progname, "-name",
-		    "gm_tcl", rc_file->answer, NULL);
+	    G_spawn_ex(getenv("GRASS_WISH"), "gis.m", progname, "-name",
+		    "gm_tcl", rc_file->answer, SF_BACKGROUND, NULL);
 	}
 	else {
-	    G_spawn(getenv("GRASS_WISH"), "gis.m", progname, "-name",
-		    "gm_tcl", NULL);
+	    G_spawn_ex(getenv("GRASS_WISH"), "gis.m", progname, "-name",
+		    "gm_tcl", SF_BACKGROUND, NULL);
 	}
     }
     else if (strcmp(type->answer, "wxpython") == 0) {
 	sprintf(progname, "%s/etc/wxpython/wxgui.py", G_gisbase());
 	if (rc_file->answer) {
-	    G_spawn(getenv("GRASS_PYTHON"), "wxgui", progname, "--workspace",
-		    rc_file->answer, NULL);
+	    G_spawn_ex(getenv("GRASS_PYTHON"), "wxgui", progname,
+		    "--workspace", rc_file->answer, SF_BACKGROUND, NULL);
 	}
 	else {
-	    G_spawn(getenv("GRASS_PYTHON"), "wxgui", progname, NULL);
+	    G_spawn_ex(getenv("GRASS_PYTHON"), "wxgui", progname,
+		    SF_BACKGROUND, NULL);
 	}
     }
+
+    /* stop the impatient from starting it again before the
+       splash screen comes up */
+    G_sleep(3);
 
     exit(EXIT_SUCCESS);
 }
