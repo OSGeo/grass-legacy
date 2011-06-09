@@ -1,3 +1,15 @@
+/*!
+  \file lib/gis/gdal.c
+  
+  \brief GIS Library - Utilization of GDAL library.
+  
+  (C) 2010 by the GRASS Development Team
+  
+  This program is free software under the GNU General Public License
+  (>=v2). Read the file COPYING that comes with GRASS for details.
+  
+  \author Glynn Clements
+*/
 
 #include <stdlib.h>
 #include <string.h>
@@ -77,6 +89,9 @@ static void load_library(void)
 	"libgdal.so",
 # endif
 # ifdef _WIN32
+	"gdal19.dll",
+	"gdal18.dll",
+	"gdal17.dll",
 	"gdal16.dll",
 	"gdal15.dll",
 	"gdal11.dll",
