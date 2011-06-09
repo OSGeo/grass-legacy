@@ -1,9 +1,9 @@
-lappend auto_path $env(GISBASE)/bwidget
+lappend auto_path "$env(GISBASE)/bwidget"
 package require -exact BWidget 1.2.1 
 #package require http
 
-set formpath $env(GISBASE)/etc/form
-source $formpath/html_library.tcl
+set formpath [file normalize "$env(GISBASE)/etc/form"]
+source "$formpath/html_library.tcl"
 
 proc create_submit_msg { formid  }  {
     global submit_result submit_msg formf
