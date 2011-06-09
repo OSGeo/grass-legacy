@@ -193,8 +193,13 @@ void read_coor(FILE * fp, SYMBEL * e)
 
     G_debug(5, "    read_coor()");
 
-    while (fgets(buf, 500, fp) != NULL) {
+    while (G_getl2(buf, 500, fp) != 0) {
 	G_chop(buf);
+
+	/* skip empty and comment lines */
+	if ((buf[0] == '#') || (buf[0] == '\0'))
+	    continue;
+
 	get_key_data(buf);
 
 	if (strcmp(key, "END") == 0) {
@@ -216,7 +221,7 @@ SYMBOL *err(FILE * fp, SYMBOL * s, char *msg)
 {
     fclose(fp);
     G_free(s);			/* TODO: free all */
-    G_warning("%s", msg);
+    G_warning(msg);
     return NULL;
 }
 
@@ -231,7 +236,7 @@ SYMBOL *S_read(char *sname)
 {
     int i, j, k, l;
     FILE *fp;
-    char group[500], name[500], buf[2001], temp_buf[2001];
+    char group[500], name[500], buf[2001];
     char *ms, *c;
     double x, y, x2, y2, rad, ang1, ang2;
     int r, g, b;
@@ -285,9 +290,14 @@ SYMBOL *S_read(char *sname)
     current = OBJ_NONE;		/* no part */
 
     /* read file */
-    while (fgets(buf, 2000, fp) != NULL) {
+    while (G_getl2(buf, 2000, fp) != 0) {
 	G_chop(buf);
-	G_debug(3, "  BUF: %s", buf);
+	G_debug(3, "  BUF: [%s]", buf);
+
+	/* skip empty and comment lines */
+	if ((buf[0] == '#') || (buf[0] == '\0'))
+	    continue;
+
 	get_key_data(buf);
 
 	if (strcmp(key, "VERSION") == 0) {
@@ -342,8 +352,8 @@ SYMBOL *S_read(char *sname)
 		sscanf(data, "%lf %lf %lf %lf %lf %c", &x, &y, &rad, &ang1,
 		       &ang2, &clock);
 	    if (ret < 5) {
-		sprintf(temp_buf, "Incorrect arc definition: '%s'", buf);
-		return (err(fp, symb, temp_buf));
+		sprintf(buf, "Incorrect arc definition: '%s'", buf);
+		return (err(fp, symb, buf));
 	    }
 	    if (ret == 6 && (clock == 'c' || clock == 'C'))
 		i = 1;
@@ -426,8 +436,8 @@ SYMBOL *S_read(char *sname)
 	    }
 	}
 	else {
-	    sprintf(temp_buf, "Unknown keyword in symbol: '%s'", buf);
-	    return (err(fp, symb, temp_buf));
+	    sprintf(buf, "Unknown keyword in symbol: '%s'", buf);
+	    return (err(fp, symb, buf));
 	    break;
 	}
     }
