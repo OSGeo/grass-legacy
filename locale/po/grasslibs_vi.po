@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: grasslibs_vi\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-05-29 11:07+0200\n"
+"POT-Creation-Date: 2011-06-09 20:10+0200\n"
 "PO-Revision-Date: 2010-08-27 11:18+0700\n"
 "Last-Translator: \n"
 "Language-Team: American English <kde-i18n-doc@kde.org>\n"
@@ -100,25 +100,25 @@ msgstr "Kết nối thất bại."
 msgid "Unable to open file %s"
 msgstr "Không thể mở tập tin %s"
 
-#: ../lib/symbol/read.c:206
+#: ../lib/symbol/read.c:211
 #, c-format
 msgid "Cannot read symbol line coordinates: %s"
 msgstr "Không thể đọc các tọa độ dòng của biểu tượng: %s"
 
-#: ../lib/symbol/read.c:254
+#: ../lib/symbol/read.c:259
 #, c-format
 msgid ""
 "Incorrect symbol name: '%s' (should be: group/name or group/name@mapset)"
 msgstr ""
 "Tên biểu tượng không đúng: '%s' (phải là: nhóm/tên hoặc nhóm/tên@bộ_bản_đồ)"
 
-#: ../lib/symbol/read.c:278
+#: ../lib/symbol/read.c:283
 #, c-format
 msgid "Cannot find/open symbol: '%s'"
 msgstr "Không thể tìm/mở biểu tượng: '%s' "
 
-#: ../lib/symbol/read.c:378 ../lib/symbol/read.c:396 ../lib/symbol/read.c:406
-#: ../lib/symbol/read.c:424
+#: ../lib/symbol/read.c:388 ../lib/symbol/read.c:406 ../lib/symbol/read.c:416
+#: ../lib/symbol/read.c:434
 #, c-format
 msgid "Incorrect symbol color: '%s', using default."
 msgstr "Màu biểu tượng không đúng: '%s', dùng mặc định."
@@ -1571,12 +1571,12 @@ msgstr "Không tìm thấy tập tin <%s> cho vị trí <%s>"
 msgid "ERROR in reading <%s> file for location <%s>"
 msgstr "LỖI khi đang đọc tập tin <%s> cho vị trí <%s>"
 
-#: ../lib/gis/gdal.c:56
+#: ../lib/gis/gdal.c:66
 #, c-format
 msgid "Unable to locate symbol <%s>"
 msgstr "Không thể định vị biểu tượng <%s>"
 
-#: ../lib/gis/gdal.c:99
+#: ../lib/gis/gdal.c:112
 msgid "Unable to load GDAL library"
 msgstr "Không thể nạp thư viện GDAL"
 
@@ -3122,7 +3122,7 @@ msgstr "Không thể tìm thấy điểm trong vùng"
 msgid "conditions failed"
 msgstr "các điều kiện thất bại"
 
-#: ../lib/vector/Vlib/break_lines.c:370
+#: ../lib/vector/Vlib/break_lines.c:374
 #, c-format
 msgid "Intersections: %5d"
 msgstr "Các giao điểm: %5d"
@@ -4007,6 +4007,20 @@ msgstr "Jacobi -- lần lặp %5i lỗi %g\n"
 #, c-format
 msgid "SOR -- iteration %5i error %g\n"
 msgstr "SOR -- lần lặp %5i lỗi %g\n"
+
+#: ../lib/init/lock.c:38
+#, c-format
+msgid "Usage: %s file pid"
+msgstr ""
+
+#: ../lib/init/lock.c:42
+msgid "Concurrent mapset locking is not supported on Windows"
+msgstr ""
+
+#: ../lib/init/lock.c:60
+#, c-format
+msgid "Unable to write lockfile %s (disk full? Permissions?)"
+msgstr ""
 
 #: ../lib/rst/interp_float/output2d.c:125
 #, c-format

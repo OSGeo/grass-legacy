@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: grasslibs_ja\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-05-29 11:07+0200\n"
+"POT-Creation-Date: 2011-06-09 20:10+0200\n"
 "PO-Revision-Date: 2010-09-08 17:33+0100\n"
 "Last-Translator: Akira Taniguchi <taniguti@apptec.co.jp>\n"
 "Language-Team: Japanese <grass-translations@lists.osgeo.org>\n"
@@ -103,12 +103,12 @@ msgstr "接続に失敗しました"
 msgid "Unable to open file %s"
 msgstr "ファイルが開けません %s"
 
-#: ../lib/symbol/read.c:206
+#: ../lib/symbol/read.c:211
 #, c-format
 msgid "Cannot read symbol line coordinates: %s"
 msgstr "シンボルライン座標値を読み取れません: %s"
 
-#: ../lib/symbol/read.c:254
+#: ../lib/symbol/read.c:259
 #, c-format
 msgid ""
 "Incorrect symbol name: '%s' (should be: group/name or group/name@mapset)"
@@ -116,13 +116,13 @@ msgstr ""
 "不適当なシンボル名です: '%s' (group/name または group/name@mapsetにしてくださ"
 "い)"
 
-#: ../lib/symbol/read.c:278
+#: ../lib/symbol/read.c:283
 #, c-format
 msgid "Cannot find/open symbol: '%s'"
 msgstr "シンボルを見つける/開くことができません '%s'"
 
-#: ../lib/symbol/read.c:378 ../lib/symbol/read.c:396 ../lib/symbol/read.c:406
-#: ../lib/symbol/read.c:424
+#: ../lib/symbol/read.c:388 ../lib/symbol/read.c:406 ../lib/symbol/read.c:416
+#: ../lib/symbol/read.c:434
 #, c-format
 msgid "Incorrect symbol color: '%s', using default."
 msgstr "不適当なシンボルカラーです: '%s', デフォルト値を使用してください."
@@ -1566,12 +1566,12 @@ msgstr "<%s> 指定された場所にファイルがありません <%s>"
 msgid "ERROR in reading <%s> file for location <%s>"
 msgstr "読み取りエラー <%s> ファイルの場所 <%s>"
 
-#: ../lib/gis/gdal.c:56
+#: ../lib/gis/gdal.c:66
 #, c-format
 msgid "Unable to locate symbol <%s>"
 msgstr "シンボルを検索できません <%s>"
 
-#: ../lib/gis/gdal.c:99
+#: ../lib/gis/gdal.c:112
 msgid "Unable to load GDAL library"
 msgstr "GDALライブラリを読み込めません"
 
@@ -3131,7 +3131,7 @@ msgstr "ポリゴンにポイントを見つけられません"
 msgid "conditions failed"
 msgstr "条件は失敗しました"
 
-#: ../lib/vector/Vlib/break_lines.c:370
+#: ../lib/vector/Vlib/break_lines.c:374
 #, c-format
 msgid "Intersections: %5d"
 msgstr "交差: %5d"
@@ -4014,6 +4014,20 @@ msgstr "ヤコビ -- 反復 %5i エラー %g\n"
 #, c-format
 msgid "SOR -- iteration %5i error %g\n"
 msgstr "SOR -- イテレーション %5i エラー %g\n"
+
+#: ../lib/init/lock.c:38
+#, c-format
+msgid "Usage: %s file pid"
+msgstr ""
+
+#: ../lib/init/lock.c:42
+msgid "Concurrent mapset locking is not supported on Windows"
+msgstr ""
+
+#: ../lib/init/lock.c:60
+#, c-format
+msgid "Unable to write lockfile %s (disk full? Permissions?)"
+msgstr ""
 
 #: ../lib/rst/interp_float/output2d.c:125
 #, c-format

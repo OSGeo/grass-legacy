@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: grasslibs_zh\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-05-29 11:07+0200\n"
+"POT-Creation-Date: 2011-06-09 20:10+0200\n"
 "PO-Revision-Date: 2007-12-13 16:42+0100\n"
 "Last-Translator: Su Yongheng <night2008@gmail.com>\n"
 "Language-Team: Simplified Chinese <translations@grass.itc.it>\n"
@@ -112,24 +112,24 @@ msgstr "连接失败。\n"
 msgid "Unable to open file %s"
 msgstr "无法打开文件 %s 在 %s 中"
 
-#: ../lib/symbol/read.c:206
+#: ../lib/symbol/read.c:211
 #, fuzzy, c-format
 msgid "Cannot read symbol line coordinates: %s"
 msgstr "无法读取符号线的坐标"
 
-#: ../lib/symbol/read.c:254
+#: ../lib/symbol/read.c:259
 #, c-format
 msgid ""
 "Incorrect symbol name: '%s' (should be: group/name or group/name@mapset)"
 msgstr "不正确的符号名称： '%s' (应该是：group/name 或者 group/name@mapset)"
 
-#: ../lib/symbol/read.c:278
+#: ../lib/symbol/read.c:283
 #, c-format
 msgid "Cannot find/open symbol: '%s'"
 msgstr "无法找到/打开符号：'%s'"
 
-#: ../lib/symbol/read.c:378 ../lib/symbol/read.c:396 ../lib/symbol/read.c:406
-#: ../lib/symbol/read.c:424
+#: ../lib/symbol/read.c:388 ../lib/symbol/read.c:406 ../lib/symbol/read.c:416
+#: ../lib/symbol/read.c:434
 #, c-format
 msgid "Incorrect symbol color: '%s', using default."
 msgstr "不正确的符号颜色：'%s'，使用默认值。"
@@ -1592,12 +1592,12 @@ msgstr "%s 文件未找到，用于区域 %s \n"
 msgid "ERROR in reading <%s> file for location <%s>"
 msgstr "读取 %s 文件错误，用于区域 %s\n"
 
-#: ../lib/gis/gdal.c:56
+#: ../lib/gis/gdal.c:66
 #, fuzzy, c-format
 msgid "Unable to locate symbol <%s>"
 msgstr "无法打开文件 %s 在 %s 中"
 
-#: ../lib/gis/gdal.c:99
+#: ../lib/gis/gdal.c:112
 #, fuzzy
 msgid "Unable to load GDAL library"
 msgstr "无法为区域 %d 计算质心"
@@ -3170,7 +3170,7 @@ msgstr "无法找到[%s]在[%s]中"
 msgid "conditions failed"
 msgstr "连接失败。\n"
 
-#: ../lib/vector/Vlib/break_lines.c:370
+#: ../lib/vector/Vlib/break_lines.c:374
 #, fuzzy, c-format
 msgid "Intersections: %5d"
 msgstr "其它投影"
@@ -4053,6 +4053,20 @@ msgstr ""
 #: ../lib/gpde/N_solvers_classic_iter.c:235
 #, c-format
 msgid "SOR -- iteration %5i error %g\n"
+msgstr ""
+
+#: ../lib/init/lock.c:38
+#, c-format
+msgid "Usage: %s file pid"
+msgstr ""
+
+#: ../lib/init/lock.c:42
+msgid "Concurrent mapset locking is not supported on Windows"
+msgstr ""
+
+#: ../lib/init/lock.c:60
+#, c-format
+msgid "Unable to write lockfile %s (disk full? Permissions?)"
 msgstr ""
 
 #: ../lib/rst/interp_float/output2d.c:125

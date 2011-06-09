@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: grasslibs_tr\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-05-29 11:07+0200\n"
+"POT-Creation-Date: 2011-06-09 20:10+0200\n"
 "PO-Revision-Date: 2010-11-08 15:14+0200\n"
 "Last-Translator: Saban Safak <ssafak@cvm.com.tr>\n"
 "Language-Team: Türkçe <grass-translations@lists.osgeo.org>\n"
@@ -99,12 +99,12 @@ msgstr "Bağlantıda hata oldu."
 msgid "Unable to open file %s"
 msgstr "<%s> katmanı açılamıyor"
 
-#: ../lib/symbol/read.c:206
+#: ../lib/symbol/read.c:211
 #, c-format
 msgid "Cannot read symbol line coordinates: %s"
 msgstr "Sembol satırı koordinatları okunamıyor: %s"
 
-#: ../lib/symbol/read.c:254
+#: ../lib/symbol/read.c:259
 #, c-format
 msgid ""
 "Incorrect symbol name: '%s' (should be: group/name or group/name@mapset)"
@@ -112,13 +112,13 @@ msgstr ""
 "Yanlış sembol adı: '%s' ( group/name veya group/name@mapset şeklinde "
 "olmalıdır)"
 
-#: ../lib/symbol/read.c:278
+#: ../lib/symbol/read.c:283
 #, c-format
 msgid "Cannot find/open symbol: '%s'"
 msgstr "Sembol bulunamıyor/açılamıyor: '%s'"
 
-#: ../lib/symbol/read.c:378 ../lib/symbol/read.c:396 ../lib/symbol/read.c:406
-#: ../lib/symbol/read.c:424
+#: ../lib/symbol/read.c:388 ../lib/symbol/read.c:406 ../lib/symbol/read.c:416
+#: ../lib/symbol/read.c:434
 #, c-format
 msgid "Incorrect symbol color: '%s', using default."
 msgstr "Yanlış sembol rengi: '%s', varsayılan kullanılıyor."
@@ -1556,12 +1556,12 @@ msgstr "<%s> mevkisinde <%s> dosyası bulunamadı"
 msgid "ERROR in reading <%s> file for location <%s>"
 msgstr "<%s> mevkisinde <%s> dosyasını okumada HATA"
 
-#: ../lib/gis/gdal.c:56
+#: ../lib/gis/gdal.c:66
 #, c-format
 msgid "Unable to locate symbol <%s>"
 msgstr "<%s> simgesi yüklenemedi"
 
-#: ../lib/gis/gdal.c:99
+#: ../lib/gis/gdal.c:112
 msgid "Unable to load GDAL library"
 msgstr "GDAL kütüphanesi yüklenemedi"
 
@@ -3076,7 +3076,7 @@ msgstr "Poligon içinde nokta bulunamadı"
 msgid "conditions failed"
 msgstr ""
 
-#: ../lib/vector/Vlib/break_lines.c:370
+#: ../lib/vector/Vlib/break_lines.c:374
 #, fuzzy, c-format
 msgid "Intersections: %5d"
 msgstr "Kesişimler:"
@@ -3882,6 +3882,20 @@ msgstr ""
 #: ../lib/gpde/N_solvers_classic_iter.c:235
 #, c-format
 msgid "SOR -- iteration %5i error %g\n"
+msgstr ""
+
+#: ../lib/init/lock.c:38
+#, c-format
+msgid "Usage: %s file pid"
+msgstr ""
+
+#: ../lib/init/lock.c:42
+msgid "Concurrent mapset locking is not supported on Windows"
+msgstr ""
+
+#: ../lib/init/lock.c:60
+#, c-format
+msgid "Unable to write lockfile %s (disk full? Permissions?)"
 msgstr ""
 
 #: ../lib/rst/interp_float/output2d.c:125

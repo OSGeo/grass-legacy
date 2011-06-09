@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: grasslibs_de\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-05-29 11:07+0200\n"
+"POT-Creation-Date: 2011-06-09 20:10+0200\n"
 "PO-Revision-Date: 2011-05-08 20:58+0100\n"
 "Last-Translator: Markus Neteler <neteler osgeo.org>\n"
 "Language-Team: Deutsch <grass-translations@lists.osgeo.org>\n"
@@ -104,25 +104,25 @@ msgstr "Verbindung fehlgeschlagen."
 msgid "Unable to open file %s"
 msgstr "Kann Datei %s nicht öffnen."
 
-#: ../lib/symbol/read.c:206
+#: ../lib/symbol/read.c:211
 #, c-format
 msgid "Cannot read symbol line coordinates: %s"
 msgstr "Kann die Symbol-Linien-Koordinaten %s nicht lesen."
 
-#: ../lib/symbol/read.c:254
+#: ../lib/symbol/read.c:259
 #, c-format
 msgid ""
 "Incorrect symbol name: '%s' (should be: group/name or group/name@mapset)"
 msgstr ""
 "Falscher Symbolname: '%s' (sollte sein: Gruppe/Name oder Gruppe/Name@Mapset)."
 
-#: ../lib/symbol/read.c:278
+#: ../lib/symbol/read.c:283
 #, c-format
 msgid "Cannot find/open symbol: '%s'"
 msgstr "Kann Symbol '%s' nicht finden/öffnen."
 
-#: ../lib/symbol/read.c:378 ../lib/symbol/read.c:396 ../lib/symbol/read.c:406
-#: ../lib/symbol/read.c:424
+#: ../lib/symbol/read.c:388 ../lib/symbol/read.c:406 ../lib/symbol/read.c:416
+#: ../lib/symbol/read.c:434
 #, c-format
 msgid "Incorrect symbol color: '%s', using default."
 msgstr "Falsche Symbolfarbe: '%s', benutze Standardfarbe."
@@ -1577,12 +1577,12 @@ msgstr "Datei <%s> ist nicht in der Location <%s> zu finden"
 msgid "ERROR in reading <%s> file for location <%s>"
 msgstr "FEHLER beim Lesen der Datei <%s> für die Location <%s>."
 
-#: ../lib/gis/gdal.c:56
+#: ../lib/gis/gdal.c:66
 #, c-format
 msgid "Unable to locate symbol <%s>"
 msgstr "Kann das Symbol <%s> nicht lokalisieren."
 
-#: ../lib/gis/gdal.c:99
+#: ../lib/gis/gdal.c:112
 msgid "Unable to load GDAL library"
 msgstr "Kann die GDAL-Bibliothek nicht laden."
 
@@ -3155,7 +3155,7 @@ msgstr "Kann Punkt in Polygon nicht finden."
 msgid "conditions failed"
 msgstr "Bedingungen fehlgeschlagen"
 
-#: ../lib/vector/Vlib/break_lines.c:370
+#: ../lib/vector/Vlib/break_lines.c:374
 #, c-format
 msgid "Intersections: %5d"
 msgstr "Überschneidungen: %5d"
@@ -4047,6 +4047,20 @@ msgstr "Jacobi -- Iteration %5i Fehler %g\n"
 #, c-format
 msgid "SOR -- iteration %5i error %g\n"
 msgstr "SOR -- Iteration %5i Fehler %g\n"
+
+#: ../lib/init/lock.c:38
+#, c-format
+msgid "Usage: %s file pid"
+msgstr ""
+
+#: ../lib/init/lock.c:42
+msgid "Concurrent mapset locking is not supported on Windows"
+msgstr ""
+
+#: ../lib/init/lock.c:60
+#, c-format
+msgid "Unable to write lockfile %s (disk full? Permissions?)"
+msgstr ""
 
 #: ../lib/rst/interp_float/output2d.c:125
 #, c-format

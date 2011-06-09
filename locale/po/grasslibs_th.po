@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: grasslibs_th\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-05-29 11:07+0200\n"
+"POT-Creation-Date: 2011-06-09 20:10+0200\n"
 "PO-Revision-Date: 2008-01-05 15:19+0700\n"
 "Last-Translator: man <mansv68@yahoo.co.th>\n"
 "Language-Team: Thai <grass-translations@lists.osgeo.org>\n"
@@ -100,24 +100,24 @@ msgstr "การเชื่อมต่อล้มเหลว"
 msgid "Unable to open file %s"
 msgstr "ไม่สามารถเปิดไฟล์ %s ได้"
 
-#: ../lib/symbol/read.c:206
+#: ../lib/symbol/read.c:211
 #, c-format
 msgid "Cannot read symbol line coordinates: %s"
 msgstr "ไม่สามารถอ่านค่าพิกัด: %s"
 
-#: ../lib/symbol/read.c:254
+#: ../lib/symbol/read.c:259
 #, c-format
 msgid ""
 "Incorrect symbol name: '%s' (should be: group/name or group/name@mapset)"
 msgstr "ชื่อผิด: '%s' (ควรจะเป็น: group/name หรือ group/name@mapset)"
 
-#: ../lib/symbol/read.c:278
+#: ../lib/symbol/read.c:283
 #, c-format
 msgid "Cannot find/open symbol: '%s'"
 msgstr "ไม่สามารถ หา/เปิด สัญลักษณ์: '%s'"
 
-#: ../lib/symbol/read.c:378 ../lib/symbol/read.c:396 ../lib/symbol/read.c:406
-#: ../lib/symbol/read.c:424
+#: ../lib/symbol/read.c:388 ../lib/symbol/read.c:406 ../lib/symbol/read.c:416
+#: ../lib/symbol/read.c:434
 #, c-format
 msgid "Incorrect symbol color: '%s', using default."
 msgstr "สีสัญลักษณ์ผิด: '%s', ใช้ค่าตั้งต้น"
@@ -1563,12 +1563,12 @@ msgstr "<%s> ไม่พบไฟล์สำหรับตำแหน่ง 
 msgid "ERROR in reading <%s> file for location <%s>"
 msgstr "เกิดข้อผิดพลาดในการอ่าน <%s> ไฟล์สำหรับตำแหน่ง <%s>"
 
-#: ../lib/gis/gdal.c:56
+#: ../lib/gis/gdal.c:66
 #, fuzzy, c-format
 msgid "Unable to locate symbol <%s>"
 msgstr "ไม่สามารถลบตารางได้ <%s>"
 
-#: ../lib/gis/gdal.c:99
+#: ../lib/gis/gdal.c:112
 #, fuzzy
 msgid "Unable to load GDAL library"
 msgstr "ไม่สามารถเพิ่ม network arc"
@@ -3136,7 +3136,7 @@ msgstr "ไม่สามารถค้นหา [%s] ใน [%s]"
 msgid "conditions failed"
 msgstr "การเชื่อมต่อล้มเหลว"
 
-#: ../lib/vector/Vlib/break_lines.c:370
+#: ../lib/vector/Vlib/break_lines.c:374
 #, fuzzy, c-format
 msgid "Intersections: %5d"
 msgstr "การฉายแบบอื่น"
@@ -4012,6 +4012,20 @@ msgstr "Jacobi -- การวนซ้ำ %5i ผิดพลาด %g\n"
 #, c-format
 msgid "SOR -- iteration %5i error %g\n"
 msgstr "SOR -- การวนซ้ำ %5i ผิดพลาด %g\n"
+
+#: ../lib/init/lock.c:38
+#, c-format
+msgid "Usage: %s file pid"
+msgstr ""
+
+#: ../lib/init/lock.c:42
+msgid "Concurrent mapset locking is not supported on Windows"
+msgstr ""
+
+#: ../lib/init/lock.c:60
+#, c-format
+msgid "Unable to write lockfile %s (disk full? Permissions?)"
+msgstr ""
 
 #: ../lib/rst/interp_float/output2d.c:125
 #, c-format

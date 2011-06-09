@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: grasslibs_pt_br\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-05-29 11:07+0200\n"
+"POT-Creation-Date: 2011-06-09 20:10+0200\n"
 "PO-Revision-Date: 2007-05-20 10:44-0300\n"
 "Last-Translator: Paulo E. P. Marcondes <paulomarcondes@gmail.com>\n"
 "Language-Team: Brazilian Portuguese <grass-translations@lists.osgeo.org>\n"
@@ -114,24 +114,24 @@ msgstr "Falha na conexão.\n"
 msgid "Unable to open file %s"
 msgstr "não foi possível abrir o arquivo %s em %s"
 
-#: ../lib/symbol/read.c:206
+#: ../lib/symbol/read.c:211
 #, c-format
 msgid "Cannot read symbol line coordinates: %s"
 msgstr "Não consegui ler coordenadas da linha de símbolos: %s"
 
-#: ../lib/symbol/read.c:254
+#: ../lib/symbol/read.c:259
 #, c-format
 msgid ""
 "Incorrect symbol name: '%s' (should be: group/name or group/name@mapset)"
 msgstr "Nome de símbolo incorreto: '%s' (deveria ser: grupo/"
 
-#: ../lib/symbol/read.c:278
+#: ../lib/symbol/read.c:283
 #, c-format
 msgid "Cannot find/open symbol: '%s'"
 msgstr "não consegui encontrar/abrir símbolo: '%s'"
 
-#: ../lib/symbol/read.c:378 ../lib/symbol/read.c:396 ../lib/symbol/read.c:406
-#: ../lib/symbol/read.c:424
+#: ../lib/symbol/read.c:388 ../lib/symbol/read.c:406 ../lib/symbol/read.c:416
+#: ../lib/symbol/read.c:434
 #, c-format
 msgid "Incorrect symbol color: '%s', using default."
 msgstr "Símbolo de cor incorreto: '%s', usando padrão"
@@ -1578,12 +1578,12 @@ msgstr "Arquivo <%s> não encontrado para locação <%s>"
 msgid "ERROR in reading <%s> file for location <%s>"
 msgstr "ERRO lendo arquivo <%s> para o locação <%s>"
 
-#: ../lib/gis/gdal.c:56
+#: ../lib/gis/gdal.c:66
 #, fuzzy, c-format
 msgid "Unable to locate symbol <%s>"
 msgstr "não foi possível abrir o arquivo %s em %s"
 
-#: ../lib/gis/gdal.c:99
+#: ../lib/gis/gdal.c:112
 #, fuzzy
 msgid "Unable to load GDAL library"
 msgstr "não consegui calcular centróide para área %d"
@@ -3161,7 +3161,7 @@ msgstr "não consegui encontrar [%s] em [%s]"
 msgid "conditions failed"
 msgstr "Falha na conexão.\n"
 
-#: ../lib/vector/Vlib/break_lines.c:370
+#: ../lib/vector/Vlib/break_lines.c:374
 #, fuzzy, c-format
 msgid "Intersections: %5d"
 msgstr "Outra projeção"
@@ -3993,6 +3993,20 @@ msgstr ""
 #: ../lib/gpde/N_solvers_classic_iter.c:235
 #, c-format
 msgid "SOR -- iteration %5i error %g\n"
+msgstr ""
+
+#: ../lib/init/lock.c:38
+#, c-format
+msgid "Usage: %s file pid"
+msgstr ""
+
+#: ../lib/init/lock.c:42
+msgid "Concurrent mapset locking is not supported on Windows"
+msgstr ""
+
+#: ../lib/init/lock.c:60
+#, c-format
+msgid "Unable to write lockfile %s (disk full? Permissions?)"
 msgstr ""
 
 #: ../lib/rst/interp_float/output2d.c:125
