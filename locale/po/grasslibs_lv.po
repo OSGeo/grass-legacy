@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: grasslibs_lv\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-05-29 11:20+0200\n"
+"POT-Creation-Date: 2011-06-09 20:20+0200\n"
 "PO-Revision-Date: 2006-12-09 01:00+0200\n"
 "Last-Translator: Maris Nartiss <maris.kde@gmail.com>\n"
 "Language-Team: Latvian <grass-translations@lists.osgeo.org>\n"
@@ -1589,12 +1589,12 @@ msgstr "%s pēc adreses nav atrasts fails %s\n"
 msgid "ERROR in reading <%s> file for location <%s>"
 msgstr "KĻŪDA nolasot failu %s pēc atrašanās vietas %s\n"
 
-#: ../lib/gis/gdal.c:54
+#: ../lib/gis/gdal.c:66
 #, fuzzy, c-format
 msgid "Unable to locate symbol <%s>"
 msgstr "Neiespējami atvērt failu %s iekš %s"
 
-#: ../lib/gis/gdal.c:97
+#: ../lib/gis/gdal.c:112
 #, fuzzy
 msgid "Unable to load GDAL library"
 msgstr "Nevar atvērt topo failu rakstīšanai: %s\n"
@@ -3195,7 +3195,7 @@ msgstr "neiespējami atrast [%s] iekš [%s]"
 msgid "conditions failed"
 msgstr "Pieslēgšanās izgāzusies\n"
 
-#: ../lib/vector/Vlib/break_lines.c:370
+#: ../lib/vector/Vlib/break_lines.c:374
 #, fuzzy, c-format
 msgid "Intersections: %5d"
 msgstr "Cita Projekcija"
@@ -3922,6 +3922,20 @@ msgstr "nezināns interpolācijas tips"
 msgid ""
 "\n"
 "-- math tool unit tests finished successfully --"
+msgstr ""
+
+#: ../lib/init/lock.c:38
+#, c-format
+msgid "Usage: %s file pid"
+msgstr ""
+
+#: ../lib/init/lock.c:42
+msgid "Concurrent mapset locking is not supported on Windows"
+msgstr ""
+
+#: ../lib/init/lock.c:60
+#, c-format
+msgid "Unable to write lockfile %s (disk full? Permissions?)"
 msgstr ""
 
 #: ../lib/rst/interp_float/output2d.c:125

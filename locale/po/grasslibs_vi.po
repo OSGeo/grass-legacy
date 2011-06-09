@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: grasslibs_vi\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-05-29 11:20+0200\n"
+"POT-Creation-Date: 2011-06-09 20:20+0200\n"
 "PO-Revision-Date: 2010-08-27 11:18+0700\n"
 "Last-Translator: \n"
 "Language-Team: American English <kde-i18n-doc@kde.org>\n"
@@ -1564,12 +1564,12 @@ msgstr "Không tìm thấy tập tin <%s> cho vị trí <%s>"
 msgid "ERROR in reading <%s> file for location <%s>"
 msgstr "LỖI khi đang đọc tập tin <%s> cho vị trí <%s>"
 
-#: ../lib/gis/gdal.c:54
+#: ../lib/gis/gdal.c:66
 #, c-format
 msgid "Unable to locate symbol <%s>"
 msgstr "Không thể định vị biểu tượng <%s>"
 
-#: ../lib/gis/gdal.c:97
+#: ../lib/gis/gdal.c:112
 msgid "Unable to load GDAL library"
 msgstr "Không thể nạp thư viện GDAL"
 
@@ -3145,7 +3145,7 @@ msgstr "Không thể tìm thấy điểm trong vùng"
 msgid "conditions failed"
 msgstr "các điều kiện thất bại"
 
-#: ../lib/vector/Vlib/break_lines.c:370
+#: ../lib/vector/Vlib/break_lines.c:374
 #, c-format
 msgid "Intersections: %5d"
 msgstr "Các giao điểm: %5d"
@@ -3914,6 +3914,20 @@ msgid ""
 msgstr ""
 "\n"
 " -- các phép thử đơn vị công cụ toán học kết thúc thành công --"
+
+#: ../lib/init/lock.c:38
+#, c-format
+msgid "Usage: %s file pid"
+msgstr ""
+
+#: ../lib/init/lock.c:42
+msgid "Concurrent mapset locking is not supported on Windows"
+msgstr ""
+
+#: ../lib/init/lock.c:60
+#, c-format
+msgid "Unable to write lockfile %s (disk full? Permissions?)"
+msgstr ""
 
 #: ../lib/rst/interp_float/output2d.c:125
 #, c-format

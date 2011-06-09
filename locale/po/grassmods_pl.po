@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: grassmodes_pl\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-05-29 11:20+0200\n"
+"POT-Creation-Date: 2011-06-09 20:20+0200\n"
 "PO-Revision-Date: 2010-09-19 00:34+0100\n"
 "Last-Translator: Maciej Sieczka <msieczka at msieczka dot org>\n"
 "Language-Team: Polish <grass-translations@lists.osgeo.org>\n"
@@ -286,7 +286,8 @@ msgstr "Nie można zapisać wiersza mapy rastrowej"
 #: ../imagery/i.rgb.his/openfiles.c:29 ../imagery/i.rgb.his/openfiles.c:31
 #: ../imagery/i.rgb.his/openfiles.c:33 ../imagery/i.his.rgb/openfiles.c:15
 #: ../imagery/i.his.rgb/openfiles.c:17 ../imagery/i.his.rgb/openfiles.c:19
-#: ../imagery/i.ifft/ifftmain.c:219 ../imagery/i.maxlik/open.c:74
+#: ../imagery/i.ifft/ifftmain.c:219 ../imagery/i.topo.corr/main.c:57
+#: ../imagery/i.maxlik/open.c:74
 #, c-format
 msgid "Unable to create raster map <%s>"
 msgstr "Nie można utworzyć mapy rastrowej <%s>"
@@ -967,7 +968,7 @@ msgstr ""
 #: ../imagery/i.ortho.photo/i.photo.2target/main.c:227
 #: ../imagery/i.fft/fftmain.c:108 ../imagery/i.gensig/parse.c:36
 #: ../imagery/i.group/main.c:201 ../imagery/i.group/main.c:240
-#: ../imagery/i.class/main.c:127
+#: ../imagery/i.topo.corr/main.c:33 ../imagery/i.class/main.c:127
 #, c-format
 msgid "Raster map <%s> not found"
 msgstr "Mapy rastrowa <%s> nie została znaleziona"
@@ -8122,7 +8123,7 @@ msgstr "Generuje warstwę mapy rastrowej pokazującą działy wodne zlewni."
 msgid "Interpolation method"
 msgstr "Metoda interpolacji która ma być użyta"
 
-#: ../raster/r.resamp.interp/main.c:97 ../imagery/i.topo.corr/main.c:212
+#: ../raster/r.resamp.interp/main.c:97 ../imagery/i.topo.corr/main.c:196
 #, c-format
 msgid "Invalid method: %s"
 msgstr "Nieprawidłowa metoda: %s"
@@ -10017,7 +10018,7 @@ msgstr "Zamykanie nie powiodło się."
 msgid "Rowio_get failed"
 msgstr "Zamykanie nie powiodło się."
 
-#: ../raster/r.mapcalc/map.c:442
+#: ../raster/r.mapcalc/map.c:442 ../imagery/i.topo.corr/main.c:37
 #, c-format
 msgid "Unable to open raster map <%s@%s>"
 msgstr "Nie można otworzyć mapy rastrowej <%s@%s>"
@@ -18532,7 +18533,7 @@ msgstr "Nir można wybrać atrybutów dla pola #%d"
 
 #: ../vector/v.out.svg/main.c:370 ../vector/v.out.vtk/writeVTK.c:579
 #: ../vector/v.lrs/v.lrs.label/main.c:347 ../vector/v.out.ogr/main.c:1066
-#: ../vector/v.out.ogr/main.c:1071 ../vector/v.overlay/main.c:365
+#: ../vector/v.overlay/main.c:365
 msgid "Unable to fetch data from table"
 msgstr "Nie można odczytać danych z tabeli "
 
@@ -19902,26 +19903,26 @@ msgid "Clean boundaries at nodes:"
 msgstr ""
 
 #: ../vector/v.in.ogr/main.c:1015
-msgid "Change boundary dangles to lines:"
-msgstr ""
-
-#: ../vector/v.in.ogr/main.c:1019
-msgid "Change dangles to lines:"
-msgstr ""
-
-#: ../vector/v.in.ogr/main.c:1025
-msgid "Change boundary bridges to lines:"
-msgstr ""
-
-#: ../vector/v.in.ogr/main.c:1029
-#, fuzzy
-msgid "Remove bridges:"
-msgstr "%5d usuniętych wierzchołków"
-
-#: ../vector/v.in.ogr/main.c:1035
 #, fuzzy
 msgid "Merge boundaries:"
 msgstr "Nie można otworzyć pliku wejściowego"
+
+#: ../vector/v.in.ogr/main.c:1020
+msgid "Change boundary dangles to lines:"
+msgstr ""
+
+#: ../vector/v.in.ogr/main.c:1024
+msgid "Change dangles to lines:"
+msgstr ""
+
+#: ../vector/v.in.ogr/main.c:1030
+msgid "Change boundary bridges to lines:"
+msgstr ""
+
+#: ../vector/v.in.ogr/main.c:1034
+#, fuzzy
+msgid "Remove bridges:"
+msgstr "%5d usuniętych wierzchołków"
 
 #: ../vector/v.in.ogr/main.c:1053 ../vector/v.buffer2/main.c:598
 #: ../vector/v.buffer2/main.c:690 ../vector/v.voronoi/dt_main.c:142
@@ -22478,7 +22479,7 @@ msgstr "Edytować plik kategorii dla [%s]? "
 msgid "%d features written to <%s> (%s)."
 msgstr "Edytować plik kategorii dla [%s]? "
 
-#: ../vector/v.out.ogr/main.c:1083
+#: ../vector/v.out.ogr/main.c:1077
 #, c-format
 msgid "No database record for cat = %d and export of 'cat' disabled"
 msgstr ""
@@ -24679,7 +24680,7 @@ msgstr ""
 
 #: ../vector/v.delaunay2/main.c:152
 #, fuzzy
-msgid "writing edges..."
+msgid "Writing edges..."
 msgstr "Zapisywanie atrybutów ..."
 
 #: ../vector/v.delaunay2/main.c:162
@@ -33681,127 +33682,76 @@ msgstr ""
 "lub\n"
 " ręcznie wprowadź zmienne."
 
-#: ../imagery/i.topo.corr/main.c:37
-#, fuzzy, c-format
-msgid "Cannot open file [%s] in mapset [%s]"
-msgstr "Nie mozna otworzyć pliku etyiet <%s> w mapsecie <%s>"
+#: ../imagery/i.topo.corr/main.c:83
+#, fuzzy
+msgid "Computes topografic correction of reflectance."
+msgstr "Metoda interpolacji która ma być użyta"
 
-#: ../imagery/i.topo.corr/main.c:57
-#, fuzzy, c-format
-msgid "Cannot create file <%s> in mapset <%s>"
-msgstr "Nie mozna otworzyć pliku etyiet <%s> w mapsecie <%s>"
-
-#: ../imagery/i.topo.corr/main.c:84
-msgid "Topografic correction of reflectance"
+#: ../imagery/i.topo.corr/main.c:85
+msgid "imagery, topographic correction, Cosine, Minnaert, C-Factor, Percent"
 msgstr ""
 
-#: ../imagery/i.topo.corr/main.c:86
-msgid "Topographic correction, Cosine, Minnaert, C-Factor, Percent"
-msgstr ""
-
-#: ../imagery/i.topo.corr/main.c:91
+#: ../imagery/i.topo.corr/main.c:93
 #, fuzzy
-msgid "input"
-msgstr "Wejście"
-
-#: ../imagery/i.topo.corr/main.c:95
-#, fuzzy
-msgid "input,cell,raster"
-msgstr "Wejściowa mapa rastrowa"
+msgid "Name of reflectance raster maps to correct topographically"
+msgstr "Wyświetl tylko region mapy rastrowej"
 
 #: ../imagery/i.topo.corr/main.c:97
-msgid "List of reflectance band maps to correct topographically"
-msgstr ""
-
-#: ../imagery/i.topo.corr/main.c:100
 #, fuzzy
-msgid "output"
-msgstr "Wyjście"
+msgid "Name (flag -i) or prefix for output raster maps"
+msgstr "Prefix dla wejściowej mapy(map) rastrowej"
 
-#: ../imagery/i.topo.corr/main.c:103
+#: ../imagery/i.topo.corr/main.c:101
 #, fuzzy
-msgid "output,cell,raster"
-msgstr "wyjściowa mapa rastrowa"
+msgid "Name of input base raster map (elevation or ilumination)"
+msgstr "Nazwa wejściowej mapy rastrowej"
 
-#: ../imagery/i.topo.corr/main.c:105
-msgid "File name of output (flag -i) or prefix of output files"
-msgstr ""
-
-#: ../imagery/i.topo.corr/main.c:108
-#, fuzzy
-msgid "basemap"
-msgstr "Wierzchnia mapa rastrowa"
-
-#: ../imagery/i.topo.corr/main.c:111
-msgid "base,cell,raster"
-msgstr ""
-
-#: ../imagery/i.topo.corr/main.c:112
-msgid "Base map for analysis (elevation or ilumination)"
-msgstr ""
-
-#: ../imagery/i.topo.corr/main.c:115
-msgid "zenith"
-msgstr ""
-
-#: ../imagery/i.topo.corr/main.c:118
-msgid "zenith,float"
-msgstr ""
-
-#: ../imagery/i.topo.corr/main.c:119
+#: ../imagery/i.topo.corr/main.c:107
 msgid "Solar zenith in degrees"
 msgstr ""
 
-#: ../imagery/i.topo.corr/main.c:122
-msgid "azimuth"
-msgstr ""
-
-#: ../imagery/i.topo.corr/main.c:125
-msgid "azimuth,float"
-msgstr ""
-
-#: ../imagery/i.topo.corr/main.c:126
+#: ../imagery/i.topo.corr/main.c:113
 msgid "Solar azimuth in degrees (only if flag -i)"
 msgstr ""
 
-#: ../imagery/i.topo.corr/main.c:129
-#, fuzzy
-msgid "method"
-msgstr "Nieznana metoda"
-
-#: ../imagery/i.topo.corr/main.c:133
-#, fuzzy
-msgid "topographic correction method"
-msgstr "Metoda interpolacji która ma być użyta"
-
-#: ../imagery/i.topo.corr/main.c:134
+#: ../imagery/i.topo.corr/main.c:120
 msgid "Topographic correction method"
 msgstr ""
 
-#: ../imagery/i.topo.corr/main.c:139
+#: ../imagery/i.topo.corr/main.c:125
 msgid "To output sun ilumination terrain model"
 msgstr ""
 
-#: ../imagery/i.topo.corr/main.c:146
+#: ../imagery/i.topo.corr/main.c:131
 msgid "Solar azimuth is necessary to calculate ilumination terrain model"
 msgstr ""
 
-#: ../imagery/i.topo.corr/main.c:150
+#: ../imagery/i.topo.corr/main.c:134
 msgid "Reflectance maps are necessary to make topographic correction"
 msgstr ""
 
-#: ../imagery/i.topo.corr/main.c:182
+#: ../imagery/i.topo.corr/main.c:166
 #, fuzzy
-msgid "Elevation file of unknown type"
+msgid "Elevation raster map of unknown type"
 msgstr "Współrzędne E i N punktu końcowego 'grida' mapy (E,N)"
 
-#: ../imagery/i.topo.corr/main.c:216
+#: ../imagery/i.topo.corr/main.c:200
 msgid "Illumination model is of CELL type"
 msgstr ""
 
-#: ../imagery/i.topo.corr/main.c:223
+#: ../imagery/i.topo.corr/main.c:207
+#, fuzzy, c-format
+msgid "Reflectance of raster map <%s> is not of DCELL type - ignored"
+msgstr "nie znaleziono mapy rastrowej <%s>"
+
+#: ../imagery/i.topo.corr/correction.c:100
 #, c-format
-msgid "Reflectance of <%s> is not of DCELL type - ignored."
+msgid "Minnaert constant = %lf"
+msgstr ""
+
+#: ../imagery/i.topo.corr/correction.c:105
+#, c-format
+msgid "C-factor constant = %lf (a=%.4f; m=%.4f)"
 msgstr ""
 
 #: ../imagery/i.maxlik/main.c:63
@@ -34084,6 +34034,42 @@ msgstr "Błąd podczas usuwania mapy rastrowej starej maski."
 #, c-format
 msgid "Can't mark another point.  Only %d points allowed.  Sorry."
 msgstr "Nie można zaznaczyć innego punktu. Dozwolone jest tylko %d punktów."
+
+#, fuzzy
+#~ msgid "writing edges..."
+#~ msgstr "Zapisywanie atrybutów ..."
+
+#, fuzzy
+#~ msgid "Cannot open file [%s] in mapset [%s]"
+#~ msgstr "Nie mozna otworzyć pliku etyiet <%s> w mapsecie <%s>"
+
+#, fuzzy
+#~ msgid "Cannot create file <%s> in mapset <%s>"
+#~ msgstr "Nie mozna otworzyć pliku etyiet <%s> w mapsecie <%s>"
+
+#, fuzzy
+#~ msgid "input"
+#~ msgstr "Wejście"
+
+#, fuzzy
+#~ msgid "input,cell,raster"
+#~ msgstr "Wejściowa mapa rastrowa"
+
+#, fuzzy
+#~ msgid "output"
+#~ msgstr "Wyjście"
+
+#, fuzzy
+#~ msgid "output,cell,raster"
+#~ msgstr "wyjściowa mapa rastrowa"
+
+#, fuzzy
+#~ msgid "basemap"
+#~ msgstr "Wierzchnia mapa rastrowa"
+
+#, fuzzy
+#~ msgid "method"
+#~ msgstr "Nieznana metoda"
 
 #~ msgid "raster3d, statistics"
 #~ msgstr "raster3d, statystyki"
@@ -37641,10 +37627,6 @@ msgstr "Nie można zaznaczyć innego punktu. Dozwolone jest tylko %d punktów."
 #, fuzzy
 #~ msgid "Cannot allocate %d bytes of memory"
 #~ msgstr "Nie można wyznaczyć położenia kursora."
-
-#, fuzzy
-#~ msgid "Writing edges..."
-#~ msgstr "Zapisywanie atrybutów ..."
 
 #~ msgid "The output cell map <%s.%d> has values outside the 0-255 range."
 #~ msgstr ""

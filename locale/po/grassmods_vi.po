@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: grassmods_vi\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-05-29 11:20+0200\n"
+"POT-Creation-Date: 2011-06-09 20:20+0200\n"
 "PO-Revision-Date: 2010-08-27 14:37+0700\n"
 "Last-Translator: \n"
 "Language-Team: American English <kde-i18n-doc@kde.org>\n"
@@ -283,7 +283,8 @@ msgstr "Không thể ghi hàng raster."
 #: ../imagery/i.rgb.his/openfiles.c:29 ../imagery/i.rgb.his/openfiles.c:31
 #: ../imagery/i.rgb.his/openfiles.c:33 ../imagery/i.his.rgb/openfiles.c:15
 #: ../imagery/i.his.rgb/openfiles.c:17 ../imagery/i.his.rgb/openfiles.c:19
-#: ../imagery/i.ifft/ifftmain.c:219 ../imagery/i.maxlik/open.c:74
+#: ../imagery/i.ifft/ifftmain.c:219 ../imagery/i.topo.corr/main.c:57
+#: ../imagery/i.maxlik/open.c:74
 #, c-format
 msgid "Unable to create raster map <%s>"
 msgstr "Không thể tạo bản đồ raster <%s>"
@@ -966,7 +967,7 @@ msgstr "Chỉ in ra đánh dấu thời gian của bản đồ raster 3D (ng.th.
 #: ../imagery/i.ortho.photo/i.photo.2target/main.c:227
 #: ../imagery/i.fft/fftmain.c:108 ../imagery/i.gensig/parse.c:36
 #: ../imagery/i.group/main.c:201 ../imagery/i.group/main.c:240
-#: ../imagery/i.class/main.c:127
+#: ../imagery/i.topo.corr/main.c:33 ../imagery/i.class/main.c:127
 #, c-format
 msgid "Raster map <%s> not found"
 msgstr "Không tìm thấy bản đồ raster <%s>"
@@ -8231,7 +8232,7 @@ msgstr ""
 msgid "Interpolation method"
 msgstr "Phương pháp nội suy"
 
-#: ../raster/r.resamp.interp/main.c:97 ../imagery/i.topo.corr/main.c:212
+#: ../raster/r.resamp.interp/main.c:97 ../imagery/i.topo.corr/main.c:196
 #, c-format
 msgid "Invalid method: %s"
 msgstr "Phương pháp không hợp lệ: %s"
@@ -10165,7 +10166,7 @@ msgstr "Rowio_setup thất bại"
 msgid "Rowio_get failed"
 msgstr "Rowio_get thất bại"
 
-#: ../raster/r.mapcalc/map.c:442
+#: ../raster/r.mapcalc/map.c:442 ../imagery/i.topo.corr/main.c:37
 #, c-format
 msgid "Unable to open raster map <%s@%s>"
 msgstr "Không thể mở bản đồ raster <%s@%s>"
@@ -18690,7 +18691,7 @@ msgstr "Không thể chọn các thuộc tính cho phạm trù cat=%d"
 
 #: ../vector/v.out.svg/main.c:370 ../vector/v.out.vtk/writeVTK.c:579
 #: ../vector/v.lrs/v.lrs.label/main.c:347 ../vector/v.out.ogr/main.c:1066
-#: ../vector/v.out.ogr/main.c:1071 ../vector/v.overlay/main.c:365
+#: ../vector/v.overlay/main.c:365
 msgid "Unable to fetch data from table"
 msgstr "Không thể lấy dữ liệu từ bảng"
 
@@ -20074,25 +20075,25 @@ msgid "Clean boundaries at nodes:"
 msgstr "Làm sạch các ranh giới tại các nốt:"
 
 #: ../vector/v.in.ogr/main.c:1015
-msgid "Change boundary dangles to lines:"
-msgstr "Thay đổi các đoạn thừa của ranh giới thành đường:"
-
-#: ../vector/v.in.ogr/main.c:1019
-msgid "Change dangles to lines:"
-msgstr "Thay đổi các đoạn thừa thành đường:"
-
-#: ../vector/v.in.ogr/main.c:1025
-msgid "Change boundary bridges to lines:"
-msgstr "Thay đổi các cầu ranh giới thành đường:"
-
-#: ../vector/v.in.ogr/main.c:1029
-msgid "Remove bridges:"
-msgstr "Loại bỏ các cầu:"
-
-#: ../vector/v.in.ogr/main.c:1035
 #, fuzzy
 msgid "Merge boundaries:"
 msgstr "Ngắt các ranh giới:"
+
+#: ../vector/v.in.ogr/main.c:1020
+msgid "Change boundary dangles to lines:"
+msgstr "Thay đổi các đoạn thừa của ranh giới thành đường:"
+
+#: ../vector/v.in.ogr/main.c:1024
+msgid "Change dangles to lines:"
+msgstr "Thay đổi các đoạn thừa thành đường:"
+
+#: ../vector/v.in.ogr/main.c:1030
+msgid "Change boundary bridges to lines:"
+msgstr "Thay đổi các cầu ranh giới thành đường:"
+
+#: ../vector/v.in.ogr/main.c:1034
+msgid "Remove bridges:"
+msgstr "Loại bỏ các cầu:"
 
 #: ../vector/v.in.ogr/main.c:1053 ../vector/v.buffer2/main.c:598
 #: ../vector/v.buffer2/main.c:690 ../vector/v.voronoi/dt_main.c:142
@@ -22732,7 +22733,7 @@ msgstr "%d đối tượng không có phạm trù đã bị bỏ qua"
 msgid "%d features written to <%s> (%s)."
 msgstr "%d đối tượng được ghi vào '%s'."
 
-#: ../vector/v.out.ogr/main.c:1083
+#: ../vector/v.out.ogr/main.c:1077
 #, fuzzy, c-format
 msgid "No database record for cat = %d and export of 'cat' disabled"
 msgstr "Không có bản ghi CSDL cho phạm trù %d"
@@ -24956,9 +24957,8 @@ msgid "Delaunay triangulation..."
 msgstr "Phép tam giác Delaunay..."
 
 #: ../vector/v.delaunay2/main.c:152
-#, fuzzy
-msgid "writing edges..."
-msgstr "Đang ghi các đỉnh..."
+msgid "Writing edges..."
+msgstr "Đang ghi các gờ..."
 
 #: ../vector/v.delaunay2/main.c:162
 msgid "Calculate area centroids..."
@@ -34047,128 +34047,77 @@ msgstr ""
 "  HOẶC\n"
 " nhập thủ công các biến vào"
 
-#: ../imagery/i.topo.corr/main.c:37
-#, fuzzy, c-format
-msgid "Cannot open file [%s] in mapset [%s]"
-msgstr "Không thể mở tập tin nhãn <%s> trong bộ bản đồ <%s>"
+#: ../imagery/i.topo.corr/main.c:83
+#, fuzzy
+msgid "Computes topografic correction of reflectance."
+msgstr "Phương pháp nội suy"
 
-#: ../imagery/i.topo.corr/main.c:57
-#, fuzzy, c-format
-msgid "Cannot create file <%s> in mapset <%s>"
-msgstr "Không thể mở tập tin nhãn <%s> trong bộ bản đồ <%s>"
-
-#: ../imagery/i.topo.corr/main.c:84
-msgid "Topografic correction of reflectance"
+#: ../imagery/i.topo.corr/main.c:85
+msgid "imagery, topographic correction, Cosine, Minnaert, C-Factor, Percent"
 msgstr ""
 
-#: ../imagery/i.topo.corr/main.c:86
-msgid "Topographic correction, Cosine, Minnaert, C-Factor, Percent"
-msgstr ""
-
-#: ../imagery/i.topo.corr/main.c:91
+#: ../imagery/i.topo.corr/main.c:93
 #, fuzzy
-msgid "input"
-msgstr "Đầu vào"
-
-#: ../imagery/i.topo.corr/main.c:95
-#, fuzzy
-msgid "input,cell,raster"
-msgstr "Bản đồ raster đầu vào"
+msgid "Name of reflectance raster maps to correct topographically"
+msgstr "Tên của bản đồ raster bề mặt dùng cho lát cắt"
 
 #: ../imagery/i.topo.corr/main.c:97
-msgid "List of reflectance band maps to correct topographically"
-msgstr ""
-
-#: ../imagery/i.topo.corr/main.c:100
 #, fuzzy
-msgid "output"
-msgstr "Đầu ra"
+msgid "Name (flag -i) or prefix for output raster maps"
+msgstr "Tiền tố dùng cho (các) bản đồ raster đầu ra"
 
-#: ../imagery/i.topo.corr/main.c:103
+#: ../imagery/i.topo.corr/main.c:101
 #, fuzzy
-msgid "output,cell,raster"
-msgstr "Bản đồ raster đầu ra"
+msgid "Name of input base raster map (elevation or ilumination)"
+msgstr "Tên của bản đồ raster đầu vào (độ bão hoà)"
 
-#: ../imagery/i.topo.corr/main.c:105
-msgid "File name of output (flag -i) or prefix of output files"
-msgstr ""
-
-#: ../imagery/i.topo.corr/main.c:108
-#, fuzzy
-msgid "basemap"
-msgstr "Loại bỏ các bản đồ cơ sở"
-
-#: ../imagery/i.topo.corr/main.c:111
-msgid "base,cell,raster"
-msgstr ""
-
-#: ../imagery/i.topo.corr/main.c:112
-msgid "Base map for analysis (elevation or ilumination)"
-msgstr ""
-
-#: ../imagery/i.topo.corr/main.c:115
-msgid "zenith"
-msgstr ""
-
-#: ../imagery/i.topo.corr/main.c:118
-msgid "zenith,float"
-msgstr ""
-
-#: ../imagery/i.topo.corr/main.c:119
+#: ../imagery/i.topo.corr/main.c:107
 #, fuzzy
 msgid "Solar zenith in degrees"
 msgstr "Góc trục lớn tính theo độ"
 
-#: ../imagery/i.topo.corr/main.c:122
-msgid "azimuth"
-msgstr ""
-
-#: ../imagery/i.topo.corr/main.c:125
-msgid "azimuth,float"
-msgstr ""
-
-#: ../imagery/i.topo.corr/main.c:126
+#: ../imagery/i.topo.corr/main.c:113
 msgid "Solar azimuth in degrees (only if flag -i)"
 msgstr ""
 
-#: ../imagery/i.topo.corr/main.c:129
-#, fuzzy
-msgid "method"
-msgstr "Phương pháp không biết"
-
-#: ../imagery/i.topo.corr/main.c:133
-#, fuzzy
-msgid "topographic correction method"
-msgstr "Phương pháp nội suy"
-
-#: ../imagery/i.topo.corr/main.c:134
+#: ../imagery/i.topo.corr/main.c:120
 msgid "Topographic correction method"
 msgstr ""
 
-#: ../imagery/i.topo.corr/main.c:139
+#: ../imagery/i.topo.corr/main.c:125
 msgid "To output sun ilumination terrain model"
 msgstr ""
 
-#: ../imagery/i.topo.corr/main.c:146
+#: ../imagery/i.topo.corr/main.c:131
 msgid "Solar azimuth is necessary to calculate ilumination terrain model"
 msgstr ""
 
-#: ../imagery/i.topo.corr/main.c:150
+#: ../imagery/i.topo.corr/main.c:134
 msgid "Reflectance maps are necessary to make topographic correction"
 msgstr ""
 
-#: ../imagery/i.topo.corr/main.c:182
+#: ../imagery/i.topo.corr/main.c:166
 #, fuzzy
-msgid "Elevation file of unknown type"
+msgid "Elevation raster map of unknown type"
 msgstr "Tọa độ độ cao của một điểm trên mặt."
 
-#: ../imagery/i.topo.corr/main.c:216
+#: ../imagery/i.topo.corr/main.c:200
 msgid "Illumination model is of CELL type"
 msgstr ""
 
-#: ../imagery/i.topo.corr/main.c:223
+#: ../imagery/i.topo.corr/main.c:207
+#, fuzzy, c-format
+msgid "Reflectance of raster map <%s> is not of DCELL type - ignored"
+msgstr "Không tìm thấy bảng màu của bản đồ raster <%s>"
+
+#: ../imagery/i.topo.corr/correction.c:100
 #, c-format
-msgid "Reflectance of <%s> is not of DCELL type - ignored."
+msgid "Minnaert constant = %lf"
+msgstr ""
+
+#: ../imagery/i.topo.corr/correction.c:105
+#, c-format
+msgid "C-factor constant = %lf (a=%.4f; m=%.4f)"
 msgstr ""
 
 #: ../imagery/i.maxlik/main.c:63
@@ -34432,6 +34381,42 @@ msgstr "Lỗi khi đang loại bỏ bản đồ cell MASK cũ."
 msgid "Can't mark another point.  Only %d points allowed.  Sorry."
 msgstr ""
 "Không thể đánh dấu một điểm khác. Chỉ có %d điểm được chấp nhận. Xin lỗi."
+
+#, fuzzy
+#~ msgid "writing edges..."
+#~ msgstr "Đang ghi các đỉnh..."
+
+#, fuzzy
+#~ msgid "Cannot open file [%s] in mapset [%s]"
+#~ msgstr "Không thể mở tập tin nhãn <%s> trong bộ bản đồ <%s>"
+
+#, fuzzy
+#~ msgid "Cannot create file <%s> in mapset <%s>"
+#~ msgstr "Không thể mở tập tin nhãn <%s> trong bộ bản đồ <%s>"
+
+#, fuzzy
+#~ msgid "input"
+#~ msgstr "Đầu vào"
+
+#, fuzzy
+#~ msgid "input,cell,raster"
+#~ msgstr "Bản đồ raster đầu vào"
+
+#, fuzzy
+#~ msgid "output"
+#~ msgstr "Đầu ra"
+
+#, fuzzy
+#~ msgid "output,cell,raster"
+#~ msgstr "Bản đồ raster đầu ra"
+
+#, fuzzy
+#~ msgid "basemap"
+#~ msgstr "Loại bỏ các bản đồ cơ sở"
+
+#, fuzzy
+#~ msgid "method"
+#~ msgstr "Phương pháp không biết"
 
 #~ msgid "raster3d, statistics"
 #~ msgstr "raster3d, thống kê"
@@ -38835,9 +38820,6 @@ msgstr ""
 
 #~ msgid "Cannot allocate %d bytes of memory"
 #~ msgstr "Không thể cấp phát %d byte bộ nhớ"
-
-#~ msgid "Writing edges..."
-#~ msgstr "Đang ghi các gờ..."
 
 #~ msgid "Name of file with sql statement"
 #~ msgstr "Tên tập tin chứa câu lệnh sql"

@@ -14,7 +14,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: grasslibs_cs\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-05-29 11:20+0200\n"
+"POT-Creation-Date: 2011-06-09 20:20+0200\n"
 "PO-Revision-Date: 2010-03-07 15:47+0100\n"
 "Last-Translator: \n"
 "Language-Team:  <cs@li.org>\n"
@@ -1563,12 +1563,12 @@ msgstr "soubor <%s> nebyl nalezen v location <%s>"
 msgid "ERROR in reading <%s> file for location <%s>"
 msgstr "CHYBA pøi ètení souboru <%s> v location <%s>"
 
-#: ../lib/gis/gdal.c:54
+#: ../lib/gis/gdal.c:66
 #, c-format
 msgid "Unable to locate symbol <%s>"
 msgstr "Nelze nalézt symbol <%s>"
 
-#: ../lib/gis/gdal.c:97
+#: ../lib/gis/gdal.c:112
 msgid "Unable to load GDAL library"
 msgstr "Nelze naèíst GDAL knihovnu"
 
@@ -3153,7 +3153,7 @@ msgstr "Nelze nalézt bod v polygonu"
 msgid "conditions failed"
 msgstr "Podmínka selhala"
 
-#: ../lib/vector/Vlib/break_lines.c:370
+#: ../lib/vector/Vlib/break_lines.c:374
 #, c-format
 msgid "Intersections: %5d"
 msgstr "Prùseèíky:%5d"
@@ -3918,6 +3918,20 @@ msgid ""
 msgstr ""
 "\n"
 "-- Math tool test skonèil úspì¹nì --"
+
+#: ../lib/init/lock.c:38
+#, c-format
+msgid "Usage: %s file pid"
+msgstr ""
+
+#: ../lib/init/lock.c:42
+msgid "Concurrent mapset locking is not supported on Windows"
+msgstr ""
+
+#: ../lib/init/lock.c:60
+#, c-format
+msgid "Unable to write lockfile %s (disk full? Permissions?)"
+msgstr ""
 
 #: ../lib/rst/interp_float/output2d.c:125
 #, c-format

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: grasslibs_zh\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-05-29 11:20+0200\n"
+"POT-Creation-Date: 2011-06-09 20:20+0200\n"
 "PO-Revision-Date: 2007-12-13 16:42+0100\n"
 "Last-Translator: Su Yongheng <night2008@gmail.com>\n"
 "Language-Team: Simplified Chinese <translations@grass.itc.it>\n"
@@ -1585,12 +1585,12 @@ msgstr "%s 文件未找到，用于区域 %s \n"
 msgid "ERROR in reading <%s> file for location <%s>"
 msgstr "读取 %s 文件错误，用于区域 %s\n"
 
-#: ../lib/gis/gdal.c:54
+#: ../lib/gis/gdal.c:66
 #, fuzzy, c-format
 msgid "Unable to locate symbol <%s>"
 msgstr "无法打开文件 %s 在 %s 中"
 
-#: ../lib/gis/gdal.c:97
+#: ../lib/gis/gdal.c:112
 #, fuzzy
 msgid "Unable to load GDAL library"
 msgstr "无法为区域 %d 计算质心"
@@ -3193,7 +3193,7 @@ msgstr "无法找到[%s]在[%s]中"
 msgid "conditions failed"
 msgstr "连接失败。\n"
 
-#: ../lib/vector/Vlib/break_lines.c:370
+#: ../lib/vector/Vlib/break_lines.c:374
 #, fuzzy, c-format
 msgid "Intersections: %5d"
 msgstr "其它投影"
@@ -3961,6 +3961,20 @@ msgid ""
 msgstr ""
 "\n"
 "-- 数学工具单元测试成功完成 --"
+
+#: ../lib/init/lock.c:38
+#, c-format
+msgid "Usage: %s file pid"
+msgstr ""
+
+#: ../lib/init/lock.c:42
+msgid "Concurrent mapset locking is not supported on Windows"
+msgstr ""
+
+#: ../lib/init/lock.c:60
+#, c-format
+msgid "Unable to write lockfile %s (disk full? Permissions?)"
+msgstr ""
 
 #: ../lib/rst/interp_float/output2d.c:125
 #, c-format

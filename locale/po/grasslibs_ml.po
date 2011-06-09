@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: grasslibs_ml\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-05-29 11:20+0200\n"
+"POT-Creation-Date: 2011-06-09 20:20+0200\n"
 "PO-Revision-Date: 2010-08-24 11:31+0530\n"
 "Last-Translator: Mohammed Rashad <rashadkm@gmail.com>\n"
 "Language-Team: GRASS Malayalam Translation Team <rashadkm@gmail.com>\n"
@@ -1485,12 +1485,12 @@ msgstr ""
 msgid "ERROR in reading <%s> file for location <%s>"
 msgstr ""
 
-#: ../lib/gis/gdal.c:54
+#: ../lib/gis/gdal.c:66
 #, c-format
 msgid "Unable to locate symbol <%s>"
 msgstr ""
 
-#: ../lib/gis/gdal.c:97
+#: ../lib/gis/gdal.c:112
 msgid "Unable to load GDAL library"
 msgstr ""
 
@@ -3018,7 +3018,7 @@ msgstr "ബഹുഭുജക്ഷേത്രത്തിൽ ബിന്ദ�
 msgid "conditions failed"
 msgstr "നിബന്ദനകളിൽ പാളിച്ച"
 
-#: ../lib/vector/Vlib/break_lines.c:370
+#: ../lib/vector/Vlib/break_lines.c:374
 #, c-format
 msgid "Intersections: %5d"
 msgstr ""
@@ -3711,6 +3711,20 @@ msgstr ""
 msgid ""
 "\n"
 "-- math tool unit tests finished successfully --"
+msgstr ""
+
+#: ../lib/init/lock.c:38
+#, c-format
+msgid "Usage: %s file pid"
+msgstr ""
+
+#: ../lib/init/lock.c:42
+msgid "Concurrent mapset locking is not supported on Windows"
+msgstr ""
+
+#: ../lib/init/lock.c:60
+#, c-format
+msgid "Unable to write lockfile %s (disk full? Permissions?)"
 msgstr ""
 
 #: ../lib/rst/interp_float/output2d.c:125

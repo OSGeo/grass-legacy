@@ -14,7 +14,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: grasslibs_es\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-05-29 11:20+0200\n"
+"POT-Creation-Date: 2011-06-09 20:20+0200\n"
 "PO-Revision-Date: 2011-04-15 14:03+0100\n"
 "Last-Translator: Joana Palahí <joana@sigte.udg.edu>\n"
 "Language-Team: Español <grass-translations@lists.osgeo.org>\n"
@@ -1631,13 +1631,13 @@ msgstr "<%s> No se ha encontrado el archivo para la locación <%s>."
 msgid "ERROR in reading <%s> file for location <%s>"
 msgstr "Error durante la lectura del archivo <%s> para la locación <%s>."
 
-#: ../lib/gis/gdal.c:54
+#: ../lib/gis/gdal.c:66
 #, c-format
 msgid "Unable to locate symbol <%s>"
 msgstr "No es posible localizar el símbolo <%s>."
 
 #
-#: ../lib/gis/gdal.c:97
+#: ../lib/gis/gdal.c:112
 msgid "Unable to load GDAL library"
 msgstr "No ha sido posible cargar la librería GDAL."
 
@@ -3304,7 +3304,7 @@ msgstr "No ha sido posible encontrar el punto en el polígono."
 msgid "conditions failed"
 msgstr "Fallaron las condiciones."
 
-#: ../lib/vector/Vlib/break_lines.c:370
+#: ../lib/vector/Vlib/break_lines.c:374
 #, c-format
 msgid "Intersections: %5d"
 msgstr "Intersecciones: %5d."
@@ -4114,6 +4114,20 @@ msgstr ""
 "\n"
 "-- Las pruebas de la unidad de herramientas matemáticas han finalizado con "
 "exito. --"
+
+#: ../lib/init/lock.c:38
+#, c-format
+msgid "Usage: %s file pid"
+msgstr ""
+
+#: ../lib/init/lock.c:42
+msgid "Concurrent mapset locking is not supported on Windows"
+msgstr ""
+
+#: ../lib/init/lock.c:60
+#, c-format
+msgid "Unable to write lockfile %s (disk full? Permissions?)"
+msgstr ""
 
 # almost translated, 
 # as I am not an advanced user I do not understand the meaning of "nsizc" so this word remains the same in the translation

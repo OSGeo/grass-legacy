@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: grasslibs_el\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-05-29 11:20+0200\n"
+"POT-Creation-Date: 2011-06-09 20:20+0200\n"
 "PO-Revision-Date: 2008-10-16 11:25+0300\n"
 "Last-Translator: Vasilios Antoniou <antoniou_v@yahoo.gr>\n"
 "Language-Team: Bασίλειος Αντωνίου <grass-translations@lists.osgeo.org>\n"
@@ -1570,12 +1570,12 @@ msgstr "<%s> το αρχείο δεν βρέθηκε στην τοποθεσία <%s>"
 msgid "ERROR in reading <%s> file for location <%s>"
 msgstr "ΣΦΑΛΜΑ κατά την ανάγνωση <%s> αρχείου από την τοποθεσία <%s>"
 
-#: ../lib/gis/gdal.c:54
+#: ../lib/gis/gdal.c:66
 #, c-format
 msgid "Unable to locate symbol <%s>"
 msgstr "Αδυναμία εντοπισμού συμβόλου <%s>"
 
-#: ../lib/gis/gdal.c:97
+#: ../lib/gis/gdal.c:112
 msgid "Unable to load GDAL library"
 msgstr "Αδυναμία φόρτωσης βιβλιοθήκης GDAL "
 
@@ -3182,7 +3182,7 @@ msgstr "Αδυναμία εύρεσης σημείου στο πολύγωνο"
 msgid "conditions failed"
 msgstr "Οι συνθήκες απέτυχαν"
 
-#: ../lib/vector/Vlib/break_lines.c:370
+#: ../lib/vector/Vlib/break_lines.c:374
 #, fuzzy, c-format
 msgid "Intersections: %5d"
 msgstr "¶λλη προβολή"
@@ -3947,6 +3947,20 @@ msgid ""
 msgstr ""
 "\n"
 "++ Επιτυχής εκτέλεση τεστ μαθηματικής μονάδας ++"
+
+#: ../lib/init/lock.c:38
+#, c-format
+msgid "Usage: %s file pid"
+msgstr ""
+
+#: ../lib/init/lock.c:42
+msgid "Concurrent mapset locking is not supported on Windows"
+msgstr ""
+
+#: ../lib/init/lock.c:60
+#, c-format
+msgid "Unable to write lockfile %s (disk full? Permissions?)"
+msgstr ""
 
 #: ../lib/rst/interp_float/output2d.c:125
 #, c-format

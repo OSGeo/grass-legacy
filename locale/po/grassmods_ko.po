@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: grassmods_ko\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-05-29 11:20+0200\n"
+"POT-Creation-Date: 2011-06-09 20:20+0200\n"
 "PO-Revision-Date: 2005-08-09 22:53-0500\n"
 "Last-Translator: Huidae Cho\n"
 "Language-Team: Korean <grass-translations@lists.osgeo.org>\n"
@@ -273,7 +273,8 @@ msgstr "출력할 래스터맵"
 #: ../imagery/i.rgb.his/openfiles.c:29 ../imagery/i.rgb.his/openfiles.c:31
 #: ../imagery/i.rgb.his/openfiles.c:33 ../imagery/i.his.rgb/openfiles.c:15
 #: ../imagery/i.his.rgb/openfiles.c:17 ../imagery/i.his.rgb/openfiles.c:19
-#: ../imagery/i.ifft/ifftmain.c:219 ../imagery/i.maxlik/open.c:74
+#: ../imagery/i.ifft/ifftmain.c:219 ../imagery/i.topo.corr/main.c:57
+#: ../imagery/i.maxlik/open.c:74
 #, c-format
 msgid "Unable to create raster map <%s>"
 msgstr ""
@@ -933,7 +934,7 @@ msgstr ""
 #: ../imagery/i.ortho.photo/i.photo.2target/main.c:227
 #: ../imagery/i.fft/fftmain.c:108 ../imagery/i.gensig/parse.c:36
 #: ../imagery/i.group/main.c:201 ../imagery/i.group/main.c:240
-#: ../imagery/i.class/main.c:127
+#: ../imagery/i.topo.corr/main.c:33 ../imagery/i.class/main.c:127
 #, c-format
 msgid "Raster map <%s> not found"
 msgstr ""
@@ -7869,7 +7870,7 @@ msgstr "출력할 래스터맵"
 msgid "Interpolation method"
 msgstr ""
 
-#: ../raster/r.resamp.interp/main.c:97 ../imagery/i.topo.corr/main.c:212
+#: ../raster/r.resamp.interp/main.c:97 ../imagery/i.topo.corr/main.c:196
 #, c-format
 msgid "Invalid method: %s"
 msgstr ""
@@ -9714,7 +9715,7 @@ msgstr ""
 msgid "Rowio_get failed"
 msgstr ""
 
-#: ../raster/r.mapcalc/map.c:442
+#: ../raster/r.mapcalc/map.c:442 ../imagery/i.topo.corr/main.c:37
 #, fuzzy, c-format
 msgid "Unable to open raster map <%s@%s>"
 msgstr "출력할 래스터맵"
@@ -17877,7 +17878,7 @@ msgstr ""
 
 #: ../vector/v.out.svg/main.c:370 ../vector/v.out.vtk/writeVTK.c:579
 #: ../vector/v.lrs/v.lrs.label/main.c:347 ../vector/v.out.ogr/main.c:1066
-#: ../vector/v.out.ogr/main.c:1071 ../vector/v.overlay/main.c:365
+#: ../vector/v.overlay/main.c:365
 #, fuzzy
 msgid "Unable to fetch data from table"
 msgstr "출력할 래스터맵"
@@ -19216,25 +19217,25 @@ msgid "Clean boundaries at nodes:"
 msgstr ""
 
 #: ../vector/v.in.ogr/main.c:1015
-msgid "Change boundary dangles to lines:"
-msgstr ""
-
-#: ../vector/v.in.ogr/main.c:1019
-msgid "Change dangles to lines:"
-msgstr ""
-
-#: ../vector/v.in.ogr/main.c:1025
-msgid "Change boundary bridges to lines:"
-msgstr ""
-
-#: ../vector/v.in.ogr/main.c:1029
-msgid "Remove bridges:"
-msgstr ""
-
-#: ../vector/v.in.ogr/main.c:1035
 #, fuzzy
 msgid "Merge boundaries:"
 msgstr "출력할 래스터맵"
+
+#: ../vector/v.in.ogr/main.c:1020
+msgid "Change boundary dangles to lines:"
+msgstr ""
+
+#: ../vector/v.in.ogr/main.c:1024
+msgid "Change dangles to lines:"
+msgstr ""
+
+#: ../vector/v.in.ogr/main.c:1030
+msgid "Change boundary bridges to lines:"
+msgstr ""
+
+#: ../vector/v.in.ogr/main.c:1034
+msgid "Remove bridges:"
+msgstr ""
 
 #: ../vector/v.in.ogr/main.c:1053 ../vector/v.buffer2/main.c:598
 #: ../vector/v.buffer2/main.c:690 ../vector/v.voronoi/dt_main.c:142
@@ -21727,7 +21728,7 @@ msgstr "출력할 래스터맵"
 msgid "%d features written to <%s> (%s)."
 msgstr "출력할 래스터맵"
 
-#: ../vector/v.out.ogr/main.c:1083
+#: ../vector/v.out.ogr/main.c:1077
 #, c-format
 msgid "No database record for cat = %d and export of 'cat' disabled"
 msgstr ""
@@ -23857,7 +23858,7 @@ msgstr ""
 
 #: ../vector/v.delaunay2/main.c:152
 #, fuzzy
-msgid "writing edges..."
+msgid "Writing edges..."
 msgstr "출력할 래스터맵"
 
 #: ../vector/v.delaunay2/main.c:162
@@ -32549,121 +32550,75 @@ msgid ""
 " manually enter the variables"
 msgstr ""
 
-#: ../imagery/i.topo.corr/main.c:37
-#, fuzzy, c-format
-msgid "Cannot open file [%s] in mapset [%s]"
-msgstr "출력할 래스터맵"
-
-#: ../imagery/i.topo.corr/main.c:57
-#, fuzzy, c-format
-msgid "Cannot create file <%s> in mapset <%s>"
-msgstr "출력할 래스터맵"
-
-#: ../imagery/i.topo.corr/main.c:84
-msgid "Topografic correction of reflectance"
+#: ../imagery/i.topo.corr/main.c:83
+msgid "Computes topografic correction of reflectance."
 msgstr ""
 
-#: ../imagery/i.topo.corr/main.c:86
-msgid "Topographic correction, Cosine, Minnaert, C-Factor, Percent"
+#: ../imagery/i.topo.corr/main.c:85
+msgid "imagery, topographic correction, Cosine, Minnaert, C-Factor, Percent"
 msgstr ""
 
-#: ../imagery/i.topo.corr/main.c:91
-msgid "input"
-msgstr ""
-
-#: ../imagery/i.topo.corr/main.c:95
+#: ../imagery/i.topo.corr/main.c:93
 #, fuzzy
-msgid "input,cell,raster"
+msgid "Name of reflectance raster maps to correct topographically"
 msgstr "출력할 래스터맵"
 
 #: ../imagery/i.topo.corr/main.c:97
-msgid "List of reflectance band maps to correct topographically"
-msgstr ""
-
-#: ../imagery/i.topo.corr/main.c:100
-msgid "output"
-msgstr ""
-
-#: ../imagery/i.topo.corr/main.c:103
-msgid "output,cell,raster"
-msgstr ""
-
-#: ../imagery/i.topo.corr/main.c:105
-msgid "File name of output (flag -i) or prefix of output files"
-msgstr ""
-
-#: ../imagery/i.topo.corr/main.c:108
 #, fuzzy
-msgid "basemap"
+msgid "Name (flag -i) or prefix for output raster maps"
 msgstr "출력할 래스터맵"
 
-#: ../imagery/i.topo.corr/main.c:111
-msgid "base,cell,raster"
-msgstr ""
+#: ../imagery/i.topo.corr/main.c:101
+#, fuzzy
+msgid "Name of input base raster map (elevation or ilumination)"
+msgstr "출력할 래스터맵"
 
-#: ../imagery/i.topo.corr/main.c:112
-msgid "Base map for analysis (elevation or ilumination)"
-msgstr ""
-
-#: ../imagery/i.topo.corr/main.c:115
-msgid "zenith"
-msgstr ""
-
-#: ../imagery/i.topo.corr/main.c:118
-msgid "zenith,float"
-msgstr ""
-
-#: ../imagery/i.topo.corr/main.c:119
+#: ../imagery/i.topo.corr/main.c:107
 msgid "Solar zenith in degrees"
 msgstr ""
 
-#: ../imagery/i.topo.corr/main.c:122
-msgid "azimuth"
-msgstr ""
-
-#: ../imagery/i.topo.corr/main.c:125
-msgid "azimuth,float"
-msgstr ""
-
-#: ../imagery/i.topo.corr/main.c:126
+#: ../imagery/i.topo.corr/main.c:113
 msgid "Solar azimuth in degrees (only if flag -i)"
 msgstr ""
 
-#: ../imagery/i.topo.corr/main.c:129
-msgid "method"
-msgstr ""
-
-#: ../imagery/i.topo.corr/main.c:133
-msgid "topographic correction method"
-msgstr ""
-
-#: ../imagery/i.topo.corr/main.c:134
+#: ../imagery/i.topo.corr/main.c:120
 msgid "Topographic correction method"
 msgstr ""
 
-#: ../imagery/i.topo.corr/main.c:139
+#: ../imagery/i.topo.corr/main.c:125
 msgid "To output sun ilumination terrain model"
 msgstr ""
 
-#: ../imagery/i.topo.corr/main.c:146
+#: ../imagery/i.topo.corr/main.c:131
 msgid "Solar azimuth is necessary to calculate ilumination terrain model"
 msgstr ""
 
-#: ../imagery/i.topo.corr/main.c:150
+#: ../imagery/i.topo.corr/main.c:134
 msgid "Reflectance maps are necessary to make topographic correction"
 msgstr ""
 
-#: ../imagery/i.topo.corr/main.c:182
-msgid "Elevation file of unknown type"
-msgstr ""
+#: ../imagery/i.topo.corr/main.c:166
+#, fuzzy
+msgid "Elevation raster map of unknown type"
+msgstr "출력할 래스터맵"
 
-#: ../imagery/i.topo.corr/main.c:216
+#: ../imagery/i.topo.corr/main.c:200
 msgid "Illumination model is of CELL type"
 msgstr ""
 
-#: ../imagery/i.topo.corr/main.c:223
+#: ../imagery/i.topo.corr/main.c:207
+#, fuzzy, c-format
+msgid "Reflectance of raster map <%s> is not of DCELL type - ignored"
+msgstr "출력할 래스터맵"
+
+#: ../imagery/i.topo.corr/correction.c:100
 #, c-format
-msgid "Reflectance of <%s> is not of DCELL type - ignored."
+msgid "Minnaert constant = %lf"
+msgstr ""
+
+#: ../imagery/i.topo.corr/correction.c:105
+#, c-format
+msgid "C-factor constant = %lf (a=%.4f; m=%.4f)"
 msgstr ""
 
 #: ../imagery/i.maxlik/main.c:63
@@ -32912,6 +32867,26 @@ msgstr ""
 #, c-format
 msgid "Can't mark another point.  Only %d points allowed.  Sorry."
 msgstr ""
+
+#, fuzzy
+#~ msgid "writing edges..."
+#~ msgstr "출력할 래스터맵"
+
+#, fuzzy
+#~ msgid "Cannot open file [%s] in mapset [%s]"
+#~ msgstr "출력할 래스터맵"
+
+#, fuzzy
+#~ msgid "Cannot create file <%s> in mapset <%s>"
+#~ msgstr "출력할 래스터맵"
+
+#, fuzzy
+#~ msgid "input,cell,raster"
+#~ msgstr "출력할 래스터맵"
+
+#, fuzzy
+#~ msgid "basemap"
+#~ msgstr "출력할 래스터맵"
 
 #, fuzzy
 #~ msgid "raster3d, statistics"
@@ -33352,10 +33327,6 @@ msgstr ""
 
 #, fuzzy
 #~ msgid "Output topographic index map"
-#~ msgstr "출력할 래스터맵"
-
-#, fuzzy
-#~ msgid "Writing edges..."
 #~ msgstr "출력할 래스터맵"
 
 #, fuzzy

@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: grasslibs_fr\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-05-29 11:20+0200\n"
+"POT-Creation-Date: 2011-06-09 20:20+0200\n"
 "PO-Revision-Date: 2008-07-19 22:40+0100\n"
 "Last-Translator: Pascal Obstétar <pascal.obstetar@wanadoo.fr>\n"
 "Language-Team: French <grass-translations@lists.osgeo.org>\n"
@@ -1602,12 +1602,12 @@ msgstr "fichier <%s> introuvable pour le secteur <%s>"
 msgid "ERROR in reading <%s> file for location <%s>"
 msgstr "ERREUR en lisant le fichier <%s> du secteur <%s>"
 
-#: ../lib/gis/gdal.c:54
+#: ../lib/gis/gdal.c:66
 #, fuzzy, c-format
 msgid "Unable to locate symbol <%s>"
 msgstr "Impossible de supprimer la table <%s>"
 
-#: ../lib/gis/gdal.c:97
+#: ../lib/gis/gdal.c:112
 #, fuzzy
 msgid "Unable to load GDAL library"
 msgstr "Allocation mémoire impossible\n"
@@ -3255,7 +3255,7 @@ msgstr "impossible de trouver [%s] dans [%s]"
 msgid "conditions failed"
 msgstr "Echec de la connexion."
 
-#: ../lib/vector/Vlib/break_lines.c:370
+#: ../lib/vector/Vlib/break_lines.c:374
 #, fuzzy, c-format
 msgid "Intersections: %5d"
 msgstr "Autre projection"
@@ -4048,6 +4048,20 @@ msgid ""
 msgstr ""
 "\n"
 "-- tests unitaires des outils mathématiques terminés avec succés --"
+
+#: ../lib/init/lock.c:38
+#, c-format
+msgid "Usage: %s file pid"
+msgstr ""
+
+#: ../lib/init/lock.c:42
+msgid "Concurrent mapset locking is not supported on Windows"
+msgstr ""
+
+#: ../lib/init/lock.c:60
+#, c-format
+msgid "Unable to write lockfile %s (disk full? Permissions?)"
+msgstr ""
 
 #: ../lib/rst/interp_float/output2d.c:125
 #, c-format

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: grasslibs_th\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-05-29 11:20+0200\n"
+"POT-Creation-Date: 2011-06-09 20:20+0200\n"
 "PO-Revision-Date: 2008-01-05 15:19+0700\n"
 "Last-Translator: man <mansv68@yahoo.co.th>\n"
 "Language-Team: Thai <grass-translations@lists.osgeo.org>\n"
@@ -1556,12 +1556,12 @@ msgstr "<%s> ไม่พบไฟล์สำหรับตำแหน่ง 
 msgid "ERROR in reading <%s> file for location <%s>"
 msgstr "เกิดข้อผิดพลาดในการอ่าน <%s> ไฟล์สำหรับตำแหน่ง <%s>"
 
-#: ../lib/gis/gdal.c:54
+#: ../lib/gis/gdal.c:66
 #, fuzzy, c-format
 msgid "Unable to locate symbol <%s>"
 msgstr "ไม่สามารถลบตารางได้ <%s>"
 
-#: ../lib/gis/gdal.c:97
+#: ../lib/gis/gdal.c:112
 #, fuzzy
 msgid "Unable to load GDAL library"
 msgstr "ไม่สามารถเพิ่ม network arc"
@@ -3159,7 +3159,7 @@ msgstr "ไม่สามารถค้นหา [%s] ใน [%s]"
 msgid "conditions failed"
 msgstr "การเชื่อมต่อล้มเหลว"
 
-#: ../lib/vector/Vlib/break_lines.c:370
+#: ../lib/vector/Vlib/break_lines.c:374
 #, fuzzy, c-format
 msgid "Intersections: %5d"
 msgstr "การฉายแบบอื่น"
@@ -3919,6 +3919,20 @@ msgid ""
 msgstr ""
 "\n"
 "-- ทดสอบหน่วย  math tool เสร็จสมบูรณ์ --"
+
+#: ../lib/init/lock.c:38
+#, c-format
+msgid "Usage: %s file pid"
+msgstr ""
+
+#: ../lib/init/lock.c:42
+msgid "Concurrent mapset locking is not supported on Windows"
+msgstr ""
+
+#: ../lib/init/lock.c:60
+#, c-format
+msgid "Unable to write lockfile %s (disk full? Permissions?)"
+msgstr ""
 
 #: ../lib/rst/interp_float/output2d.c:125
 #, c-format

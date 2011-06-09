@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: grasslibs_pl\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-05-29 11:20+0200\n"
+"POT-Creation-Date: 2011-06-09 20:20+0200\n"
 "PO-Revision-Date: 2010-09-17 23:56+0100\n"
 "Last-Translator: Maciej Sieczka <msieczka at msieczka dot org>\n"
 "Language-Team: GRASS Translation Team\n"
@@ -1562,12 +1562,12 @@ msgstr "<%s> nie znaleziono pliku w lokacji <%s>"
 msgid "ERROR in reading <%s> file for location <%s>"
 msgstr "BŁĄD podczas odczytu pliku <%s> w lokacji <%s>"
 
-#: ../lib/gis/gdal.c:54
+#: ../lib/gis/gdal.c:66
 #, c-format
 msgid "Unable to locate symbol <%s>"
 msgstr "Nie znaleziono symbolu <%s>"
 
-#: ../lib/gis/gdal.c:97
+#: ../lib/gis/gdal.c:112
 msgid "Unable to load GDAL library"
 msgstr "Nie można załadować biblioteki GDAL"
 
@@ -3155,7 +3155,7 @@ msgstr "Nie można znaleźć punktu w obszarze"
 msgid "conditions failed"
 msgstr "warunki zawiodły"
 
-#: ../lib/vector/Vlib/break_lines.c:370
+#: ../lib/vector/Vlib/break_lines.c:374
 #, c-format
 msgid "Intersections: %5d"
 msgstr "Przecięcia: %5d"
@@ -3920,6 +3920,20 @@ msgid ""
 msgstr ""
 "\n"
 "-- Testy jednostkowe narzędzi matematycznych powiodły się --"
+
+#: ../lib/init/lock.c:38
+#, c-format
+msgid "Usage: %s file pid"
+msgstr ""
+
+#: ../lib/init/lock.c:42
+msgid "Concurrent mapset locking is not supported on Windows"
+msgstr ""
+
+#: ../lib/init/lock.c:60
+#, c-format
+msgid "Unable to write lockfile %s (disk full? Permissions?)"
+msgstr ""
 
 #: ../lib/rst/interp_float/output2d.c:125
 #, c-format
