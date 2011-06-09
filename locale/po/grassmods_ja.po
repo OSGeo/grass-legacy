@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: grassmods_ja\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-05-29 11:07+0200\n"
+"POT-Creation-Date: 2011-06-09 20:10+0200\n"
 "PO-Revision-Date: 2010-03-03 14:00+0900\n"
 "Last-Translator: AkiraTaniguchi <taniguti@apptec.co.jp>\n"
 "Language-Team: Japanese <grass-translations@lists.osgeo.org>\n"
@@ -251,9 +251,9 @@ msgid "Unable to write raster row"
 msgstr "ラスター行を書き込めません"
 
 #: ../raster3d/r3.to.rast/main.c:183 ../raster/r.basins.fill/main.c:106
-#: ../raster/r.sun2/main.c:1167 ../raster/r.sun2/main.c:1174
-#: ../raster/r.sun2/main.c:1181 ../raster/r.sun2/main.c:1188
-#: ../raster/r.sun2/main.c:1195 ../raster/r.sun2/main.c:1202
+#: ../raster/r.sun2/main.c:1170 ../raster/r.sun2/main.c:1177
+#: ../raster/r.sun2/main.c:1184 ../raster/r.sun2/main.c:1191
+#: ../raster/r.sun2/main.c:1198 ../raster/r.sun2/main.c:1205
 #: ../raster/r.in.gdal/main.c:744 ../raster/r.in.gdal/main.c:749
 #: ../raster/r.in.gdal/main.c:763 ../raster/r.lake/main.c:229
 #: ../raster/r.lake/main.c:318 ../raster/r.surf.idw/main.c:147
@@ -282,7 +282,7 @@ msgstr "ラスター行を書き込めません"
 #: ../imagery/i.rgb.his/openfiles.c:31 ../imagery/i.rgb.his/openfiles.c:33
 #: ../imagery/i.his.rgb/openfiles.c:15 ../imagery/i.his.rgb/openfiles.c:17
 #: ../imagery/i.his.rgb/openfiles.c:19 ../imagery/i.ifft/ifftmain.c:219
-#: ../imagery/i.maxlik/open.c:74
+#: ../imagery/i.topo.corr/main.c:57 ../imagery/i.maxlik/open.c:74
 #, c-format
 msgid "Unable to create raster map <%s>"
 msgstr "ラスターマップ <%s> が作成できません"
@@ -876,11 +876,11 @@ msgstr "3Dラスターマップ日時 (日,月,年 時:分:秒) の出力のみ 
 #: ../raster/r.basins.fill/main.c:82 ../raster/r.basins.fill/main.c:94
 #: ../raster/r.mfilter.fp/main.c:126 ../raster/r.out.ascii/main.c:146
 #: ../raster/r.out.png/r.out.png.c:214 ../raster/r.walk/main.c:523
-#: ../raster/r.walk/main.c:526 ../raster/r.sun2/main.c:814
-#: ../raster/r.sun2/main.c:829 ../raster/r.sun2/main.c:846
-#: ../raster/r.sun2/main.c:860 ../raster/r.sun2/main.c:872
-#: ../raster/r.sun2/main.c:884 ../raster/r.sun2/main.c:895
-#: ../raster/r.sun2/main.c:907 ../raster/r.sun2/main.c:919
+#: ../raster/r.walk/main.c:526 ../raster/r.sun2/main.c:817
+#: ../raster/r.sun2/main.c:832 ../raster/r.sun2/main.c:849
+#: ../raster/r.sun2/main.c:863 ../raster/r.sun2/main.c:875
+#: ../raster/r.sun2/main.c:887 ../raster/r.sun2/main.c:898
+#: ../raster/r.sun2/main.c:910 ../raster/r.sun2/main.c:922
 #: ../raster/r.drain/main.c:140 ../raster/r.support/front/front.c:224
 #: ../raster/r.support/modcolr/modcolr.c:45 ../raster/r.lake/main.c:254
 #: ../raster/r.lake/main.c:265 ../raster/r.surf.idw/main.c:108
@@ -967,7 +967,7 @@ msgstr "3Dラスターマップ日時 (日,月,年 時:分:秒) の出力のみ 
 #: ../imagery/i.ortho.photo/i.photo.2target/main.c:227
 #: ../imagery/i.fft/fftmain.c:108 ../imagery/i.gensig/parse.c:36
 #: ../imagery/i.group/main.c:201 ../imagery/i.group/main.c:240
-#: ../imagery/i.class/main.c:127
+#: ../imagery/i.topo.corr/main.c:33 ../imagery/i.class/main.c:127
 #, c-format
 msgid "Raster map <%s> not found"
 msgstr "ラスタマップ <%s> が見つかりません"
@@ -1748,7 +1748,7 @@ msgstr "ラスターマップ <%s> から浮動小数点レンジが読み取れ
 #: ../vector/v.in.dxf/write_vect.c:198 ../vector/v.mkgrid/main.c:237
 #: ../vector/v.lrs/v.lrs.create/main.c:286
 #: ../vector/v.lrs/v.lrs.create/main.c:294 ../vector/v.reclass/main.c:126
-#: ../vector/v.out.ogr/main.c:636 ../vector/v.in.dwg/main.c:194
+#: ../vector/v.out.ogr/main.c:634 ../vector/v.in.dwg/main.c:194
 #: ../vector/v.vol.rst/main.c:590 ../vector/v.vol.rst/user1.c:97
 #: ../vector/v.net.timetable/main.c:93 ../vector/v.patch/main.c:132
 #: ../vector/v.patch/main.c:162 ../vector/v.patch/main.c:274
@@ -2706,16 +2706,16 @@ msgstr "不正なY座標 <%s> "
 msgid "Warning, ignoring point outside window: %.4f,%.4f"
 msgstr "警告：ウィンドウ外のポイントを無視しました: %.4f,%.4f  "
 
-#: ../raster/r.sun2/main.c:226 ../raster/r.sun/main.c:175
+#: ../raster/r.sun2/main.c:229 ../raster/r.sun/main.c:175
 #, fuzzy
 msgid "raster, sun energy"
 msgstr "ラスター、タイル表示"
 
-#: ../raster/r.sun2/main.c:227 ../raster/r.sun/main.c:176
+#: ../raster/r.sun2/main.c:230 ../raster/r.sun/main.c:176
 msgid "Solar irradiance and irradiation model."
 msgstr "太陽放射輝度と照射モデル"
 
-#: ../raster/r.sun2/main.c:229 ../raster/r.sun/main.c:178
+#: ../raster/r.sun2/main.c:232 ../raster/r.sun/main.c:178
 msgid ""
 "Computes direct (beam), diffuse and reflected solar irradiation raster maps "
 "for given day, latitude, surface and atmospheric conditions. Solar "
@@ -2731,19 +2731,19 @@ msgstr ""
 "す。また、太陽の入射角や照度ラスターマップを計算する為にローカル時間を指定す"
 "ることもできます。地形の陰影効果はオプションとして組み込まれています。"
 
-#: ../raster/r.sun2/main.c:243 ../raster/r.sun/main.c:208
+#: ../raster/r.sun2/main.c:246 ../raster/r.sun/main.c:208
 #: ../raster/r.horizon/main.c:227
 msgid "Name of the input elevation raster map [meters]"
 msgstr "入力する標高ラスターマップ名 "
 
-#: ../raster/r.sun2/main.c:244 ../raster/r.sun2/main.c:253
-#: ../raster/r.sun2/main.c:262 ../raster/r.sun2/main.c:271
-#: ../raster/r.sun2/main.c:279 ../raster/r.sun2/main.c:288
-#: ../raster/r.sun2/main.c:298 ../raster/r.sun2/main.c:308
-#: ../raster/r.sun2/main.c:318 ../raster/r.sun2/main.c:328
-#: ../raster/r.sun2/main.c:337 ../raster/r.sun2/main.c:347
-#: ../raster/r.sun2/main.c:356 ../raster/r.sun2/main.c:365
-#: ../raster/r.sun2/main.c:373 ../raster/r.sun2/main.c:381
+#: ../raster/r.sun2/main.c:247 ../raster/r.sun2/main.c:256
+#: ../raster/r.sun2/main.c:265 ../raster/r.sun2/main.c:274
+#: ../raster/r.sun2/main.c:282 ../raster/r.sun2/main.c:291
+#: ../raster/r.sun2/main.c:301 ../raster/r.sun2/main.c:311
+#: ../raster/r.sun2/main.c:321 ../raster/r.sun2/main.c:331
+#: ../raster/r.sun2/main.c:340 ../raster/r.sun2/main.c:350
+#: ../raster/r.sun2/main.c:359 ../raster/r.sun2/main.c:368
+#: ../raster/r.sun2/main.c:376 ../raster/r.sun2/main.c:384
 #: ../raster/r.sun/main.c:209 ../raster/r.sun/main.c:218
 #: ../raster/r.sun/main.c:228 ../raster/r.sun/main.c:237
 #: ../raster/r.sun/main.c:245 ../raster/r.sun/main.c:257
@@ -2761,78 +2761,78 @@ msgstr "入力する標高ラスターマップ名 "
 msgid "Input_options"
 msgstr "入力オプション "
 
-#: ../raster/r.sun2/main.c:252 ../raster/r.sun/main.c:217
+#: ../raster/r.sun2/main.c:255 ../raster/r.sun/main.c:217
 msgid ""
 "Name of the input aspect map (terrain aspect or azimuth of the solar panel) "
 "[decimal degrees]"
 msgstr "入力方位マップ名"
 
-#: ../raster/r.sun2/main.c:261
+#: ../raster/r.sun2/main.c:264
 msgid "A single value of the orientation (aspect), 270 is south"
 msgstr "オリエンテーション、南は270"
 
-#: ../raster/r.sun2/main.c:270 ../raster/r.sun/main.c:227
+#: ../raster/r.sun2/main.c:273 ../raster/r.sun/main.c:227
 msgid ""
 "Name of the input slope raster map (terrain slope or solar panel "
 "inclination) [decimal degrees]"
 msgstr "入力する傾斜ラスターマップ(地形傾斜またはソーラーパネル傾斜)[単位(°)]"
 
-#: ../raster/r.sun2/main.c:278
+#: ../raster/r.sun2/main.c:281
 msgid "A single value of inclination (slope)"
 msgstr "傾斜（スロープ）の単一値 "
 
-#: ../raster/r.sun2/main.c:287 ../raster/r.sun/main.c:236
+#: ../raster/r.sun2/main.c:290 ../raster/r.sun/main.c:236
 msgid ""
 "Name of the Linke atmospheric turbidity coefficient input raster map [-]"
 msgstr "リンケ大気混濁度係数入力用のラスターマップ名 [-]"
 
-#: ../raster/r.sun2/main.c:297 ../raster/r.sun/main.c:247
+#: ../raster/r.sun2/main.c:300 ../raster/r.sun/main.c:247
 msgid "A single value of the Linke atmospheric turbidity coefficient [-]"
 msgstr "リンケ大気混濁度係数の単体値 [-]"
 
-#: ../raster/r.sun2/main.c:307 ../raster/r.sun/main.c:256
+#: ../raster/r.sun2/main.c:310 ../raster/r.sun/main.c:256
 msgid "Name of the ground albedo coefficient input raster map [-]"
 msgstr "地表反射係数入力用ラスターマップ名 [-]"
 
-#: ../raster/r.sun2/main.c:317 ../raster/r.sun/main.c:267
+#: ../raster/r.sun2/main.c:320 ../raster/r.sun/main.c:267
 msgid "A single value of the ground albedo coefficient [-]"
 msgstr "地表反射係数の単一値 [-]"
 
-#: ../raster/r.sun2/main.c:327 ../raster/r.sun/main.c:276
+#: ../raster/r.sun2/main.c:330 ../raster/r.sun/main.c:276
 msgid "Name of the latitudes input raster map [decimal degrees]"
 msgstr "緯度入力ラスターマップ名（小数点付の度） "
 
-#: ../raster/r.sun2/main.c:336 ../raster/r.sun/main.c:286
+#: ../raster/r.sun2/main.c:339 ../raster/r.sun/main.c:286
 msgid "A single value of latitude [decimal degrees]"
 msgstr "緯度の単体値 (単位は小数点付きの度) "
 
-#: ../raster/r.sun2/main.c:346
+#: ../raster/r.sun2/main.c:349
 msgid "Name of the longitude input raster map [decimal degrees]"
 msgstr "経度入力ラスターマップ名（小数点付の度） "
 
-#: ../raster/r.sun2/main.c:355
+#: ../raster/r.sun2/main.c:358
 msgid "Name of real-sky beam radiation coefficient input raster map [-]"
 msgstr "リアルスカイ・ビーム放射係数入力用のラスターマップ名 [-]"
 
-#: ../raster/r.sun2/main.c:364
+#: ../raster/r.sun2/main.c:367
 msgid "Name of real-sky diffuse radiation coefficient input raster map [-]"
 msgstr "リアルスカイ・拡散放射係数入力用ラスターマップ名 [-]"
 
-#: ../raster/r.sun2/main.c:372
+#: ../raster/r.sun2/main.c:375
 msgid "The horizon information input map prefix"
 msgstr "入力マップ・プレフィックスのホライズン情報"
 
-#: ../raster/r.sun2/main.c:380 ../raster/r.horizon/main.c:244
+#: ../raster/r.sun2/main.c:383 ../raster/r.horizon/main.c:244
 msgid "Angle step size for multidirectional horizon [degrees]"
 msgstr "多方向ホライズンに用いる角度ステップサイズ[度]"
 
-#: ../raster/r.sun2/main.c:389 ../raster/r.sun/main.c:313
+#: ../raster/r.sun2/main.c:392 ../raster/r.sun/main.c:313
 msgid "Output incidence angle raster map (mode 1 only)"
 msgstr "入射角ラスターマップを出力(モード１のみ)"
 
-#: ../raster/r.sun2/main.c:390 ../raster/r.sun2/main.c:399
-#: ../raster/r.sun2/main.c:408 ../raster/r.sun2/main.c:417
-#: ../raster/r.sun2/main.c:426 ../raster/r.sun2/main.c:435
+#: ../raster/r.sun2/main.c:393 ../raster/r.sun2/main.c:402
+#: ../raster/r.sun2/main.c:411 ../raster/r.sun2/main.c:420
+#: ../raster/r.sun2/main.c:429 ../raster/r.sun2/main.c:438
 #: ../raster/r.sun/main.c:314 ../raster/r.sun/main.c:323
 #: ../raster/r.sun/main.c:332 ../raster/r.sun/main.c:341
 #: ../raster/r.sun/main.c:350 ../raster/r.watershed/front/main.c:97
@@ -2854,7 +2854,7 @@ msgstr "入射角ラスターマップを出力(モード１のみ)"
 msgid "Output_options"
 msgstr "出力オプション "
 
-#: ../raster/r.sun2/main.c:398 ../raster/r.sun/main.c:322
+#: ../raster/r.sun2/main.c:401 ../raster/r.sun/main.c:322
 msgid ""
 "Output beam irradiance [W.m-2] (mode 1) or irradiation raster map [Wh.m-2."
 "day-1] (mode 2)"
@@ -2862,11 +2862,11 @@ msgstr ""
 "ビーム放射輝度 [W.m-2] (モード 1) または 照射ラスタ-マップ [Wh.m-2.day-1] "
 "(モード 2) を出力"
 
-#: ../raster/r.sun2/main.c:407 ../raster/r.sun/main.c:331
+#: ../raster/r.sun2/main.c:410 ../raster/r.sun/main.c:331
 msgid "Output insolation time raster map [h] (mode 2 only)"
 msgstr "隔離タイムラスターマップを出力"
 
-#: ../raster/r.sun2/main.c:416 ../raster/r.sun/main.c:340
+#: ../raster/r.sun2/main.c:419 ../raster/r.sun/main.c:340
 msgid ""
 "Output diffuse irradiance [W.m-2] (mode 1) or irradiation raster map [Wh.m-2."
 "day-1] (mode 2)"
@@ -2874,7 +2874,7 @@ msgstr ""
 "拡散放射輝度 [W.m-2] (モード 1) または 照射ラスタ-マップ [Wh.m-2.day-1] (モー"
 "ド 2) を出力"
 
-#: ../raster/r.sun2/main.c:425 ../raster/r.sun/main.c:349
+#: ../raster/r.sun2/main.c:428 ../raster/r.sun/main.c:349
 msgid ""
 "Output ground reflected irradiance [W.m-2] (mode 1) or irradiation raster "
 "map [Wh.m-2.day-1] (mode 2)"
@@ -2882,7 +2882,7 @@ msgstr ""
 "地表反射放射輝度 [W.m-2] (モード 1) または 照射ラスタ-マップ [Wh.m-2.day-1] "
 "(モード 2) を出力"
 
-#: ../raster/r.sun2/main.c:434
+#: ../raster/r.sun2/main.c:437
 msgid ""
 "Output global (total) irradiance/irradiation [W.m-2] (mode 1) or irradiance/"
 "irradiation raster map [Wh.m-2.day-1] (mode 2)"
@@ -2890,92 +2890,92 @@ msgstr ""
 "合計放射輝度 [W.m-2] (モード 1)または放射輝度/照射ラスタ-マップ [Wh.m-2.day-"
 "1] (モード 2) を出力"
 
-#: ../raster/r.sun2/main.c:442 ../raster/r.sun/main.c:356
+#: ../raster/r.sun2/main.c:445 ../raster/r.sun/main.c:356
 msgid "No. of day of the year (1-365)"
 msgstr "一年の日数 (1-365)  "
 
-#: ../raster/r.sun2/main.c:451 ../raster/r.sun/main.c:364
+#: ../raster/r.sun2/main.c:454 ../raster/r.sun/main.c:364
 msgid "Time step when computing all-day radiation sums [decimal hours]"
 msgstr "全日放射合計計算時の時間ステップ[時]  "
 
-#: ../raster/r.sun2/main.c:458 ../raster/r.sun/main.c:371
+#: ../raster/r.sun2/main.c:461 ../raster/r.sun/main.c:371
 msgid "Declination value (overriding the internally computed value) [radians]"
 msgstr "偏角値(計算値を上書きします) [ラジアン]  "
 
-#: ../raster/r.sun2/main.c:466 ../raster/r.sun/main.c:379
+#: ../raster/r.sun2/main.c:469 ../raster/r.sun/main.c:379
 msgid "Local (solar) time (to be set for mode 1 only) [decimal hours]"
 msgstr "ローカル時間（太陽時）(モード 1 の時のみ設定) [単位は時]  "
 
-#: ../raster/r.sun2/main.c:489 ../raster/r.horizon/main.c:319
+#: ../raster/r.sun2/main.c:492 ../raster/r.horizon/main.c:319
 msgid "Sampling distance step coefficient (0.5-1.5)"
 msgstr "サンプリング距離ステップ係数 (0.5-1.5)  "
 
-#: ../raster/r.sun2/main.c:497
+#: ../raster/r.sun2/main.c:500
 msgid "Read the input files in this number of chunks"
 msgstr "このチャンク数内の入力ファイルを読取ります"
 
-#: ../raster/r.sun2/main.c:504
+#: ../raster/r.sun2/main.c:507
 msgid "Civil time zone value, if none, the time will be local solar time"
 msgstr "常用時刻帯の値。指定の無いときは地方太陽時が使われます"
 
-#: ../raster/r.sun2/main.c:510 ../raster/r.sun/main.c:384
+#: ../raster/r.sun2/main.c:513 ../raster/r.sun/main.c:384
 msgid "Incorporate the shadowing effect of terrain"
 msgstr "地表に陰影効果をつける"
 
-#: ../raster/r.sun2/main.c:515
+#: ../raster/r.sun2/main.c:518
 msgid "Use the low-memory version of the program"
 msgstr "低容量メモリバージョンのプログラムを使う"
 
-#: ../raster/r.sun2/main.c:562
+#: ../raster/r.sun2/main.c:565
 msgid "You must give the longitude raster if you use civil time"
 msgstr "常用時を使うには、経度ラスターが必要です"
 
-#: ../raster/r.sun2/main.c:594 ../raster/r.sun/main.c:410
+#: ../raster/r.sun2/main.c:597 ../raster/r.sun/main.c:410
 msgid "insol_time and incidout are incompatible options"
 msgstr "insol_time' と 'incidout' のオプションは同時に使えません"
 
-#: ../raster/r.sun2/main.c:601
+#: ../raster/r.sun2/main.c:604
 msgid "Error reading time step size"
 msgstr "時間ステップサイズの読取エラー "
 
-#: ../raster/r.sun2/main.c:605
+#: ../raster/r.sun2/main.c:608
 msgid "Error reading horizon step size"
 msgstr "水平ステップサイズの読取エラー "
 
-#: ../raster/r.sun2/main.c:609
+#: ../raster/r.sun2/main.c:612
 msgid "The horizon step size must be greater than 0."
 msgstr "水平ステップサイズは0以上です。 "
 
-#: ../raster/r.sun2/main.c:612
+#: ../raster/r.sun2/main.c:615
 msgid ""
 "If you use the horizon option you must also set the 'horizonstep' parameter."
 msgstr "ホライズンオプションを使うには、 'horizonstep' の指定が必要です"
 
-#: ../raster/r.sun2/main.c:619
+#: ../raster/r.sun2/main.c:622
 msgid "Time and insol_time are incompatible options"
 msgstr "'Time' と 'insol_time' は併用できません"
 
-#: ../raster/r.sun2/main.c:620
+#: ../raster/r.sun2/main.c:623
 msgid ""
 "Mode 1: instantaneous solar incidence angle & irradiance using a set local "
 "time"
 msgstr "モード 1: 地方時を使った瞬間太陽入射角と照射"
 
-#: ../raster/r.sun2/main.c:625 ../raster/r.sun/main.c:424
+#: ../raster/r.sun2/main.c:628 ../raster/r.sun/main.c:424
 msgid "incidout requires time parameter to be set"
 msgstr "'incidout' を使うには time パラメータの設定が必要です"
 
-#: ../raster/r.sun2/main.c:626 ../raster/r.sun/main.c:425
+#: ../raster/r.sun2/main.c:629 ../raster/r.sun/main.c:425
 msgid "Mode 2: integrated daily irradiation for a given day of the year"
 msgstr "モード 2: 年間の指定日における統合デイリー照射"
 
-#: ../raster/r.sun2/main.c:681
+#: ../raster/r.sun2/main.c:684
 msgid "If you use -s and no horizon rasters, numpartitions must be =1"
 msgstr ""
 "-s をホライズンラスターを用いずに使用するには、数値パーティション は１でなけ"
 "ればなりません"
 
-#: ../raster/r.sun2/main.c:693
+#: ../raster/r.sun2/main.c:696
 msgid ""
 "If you want to save memory and to use shadows, you must use pre-calculated "
 "horizons."
@@ -2983,7 +2983,7 @@ msgstr ""
 "メモリを節約しながら陰影を使用するときは、予め計算済みのホライズンを使う必要"
 "があります"
 
-#: ../raster/r.sun2/main.c:741 ../raster/r.sun/main.c:474
+#: ../raster/r.sun2/main.c:744 ../raster/r.sun/main.c:474
 #: ../raster/r.horizon/main.c:481
 msgid ""
 "Can't get projection info of current location: please set latitude via 'lat' "
@@ -2992,14 +2992,14 @@ msgstr ""
 "現在地の投影情報が取得できません。'lat' または 'latin' オプションで緯度を指定"
 "してください"
 
-#: ../raster/r.sun2/main.c:744 ../raster/r.sun/main.c:477
+#: ../raster/r.sun2/main.c:747 ../raster/r.sun/main.c:477
 #: ../raster/r.horizon/main.c:484 ../general/g.region/printwindow.c:250
 #: ../general/g.region/printwindow.c:506 ../general/g.region/printwindow.c:625
 #: ../display/d.where/main.c:96
 msgid "Can't get projection units of current location"
 msgstr "現在のロケーションの投影ユニットを取得できません"
 
-#: ../raster/r.sun2/main.c:747 ../raster/r.sun/main.c:481
+#: ../raster/r.sun2/main.c:750 ../raster/r.sun/main.c:481
 #: ../raster/r.horizon/main.c:488 ../general/g.region/printwindow.c:253
 #: ../general/g.region/printwindow.c:509 ../general/g.region/printwindow.c:628
 #: ../display/d.grid/plot.c:294 ../display/d.where/main.c:99
@@ -3007,14 +3007,14 @@ msgstr "現在のロケーションの投影ユニットを取得できません
 msgid "Can't get projection key values of current location"
 msgstr "現在のロケーションの投影キー値を取得できません"
 
-#: ../raster/r.sun2/main.c:757 ../raster/r.sun/main.c:491
+#: ../raster/r.sun2/main.c:760 ../raster/r.sun/main.c:491
 #: ../raster/r.horizon/main.c:498 ../display/d.grid/plot.c:301
 #: ../display/d.grid/plot.c:328 ../display/d.where/main.c:106
 #: ../display/d.where/main.c:132 ../ps/ps.map/do_geogrid.c:278
 msgid "Unable to set up lat/long projection parameters"
 msgstr "緯度経度の投影パラメータが設定できません "
 
-#: ../raster/r.sun2/main.c:952
+#: ../raster/r.sun2/main.c:955
 #, c-format
 msgid "Horizon file no. %d <%s> not found"
 msgstr "水平ファイル%d 番 <%s> が見つかりません "
@@ -3633,7 +3633,7 @@ msgstr "多すぎる始点の数 "
 #: ../vector/v.lrs/v.lrs.create/main.c:256
 #: ../vector/v.lrs/v.lrs.label/main.c:286
 #: ../vector/v.lrs/v.lrs.segment/main.c:138 ../vector/v.reclass/main.c:107
-#: ../vector/v.kernel/main.c:264 ../vector/v.out.ogr/main.c:198
+#: ../vector/v.kernel/main.c:264 ../vector/v.out.ogr/main.c:196
 #: ../vector/v.hull/main.c:300 ../vector/v.kcv/main.c:132
 #: ../vector/v.select/main.c:103 ../vector/v.buffer2/main.c:310
 #: ../vector/v.voronoi/vo_main.c:156 ../vector/v.voronoi/dt_main.c:77
@@ -5259,8 +5259,8 @@ msgstr "標高ラスターマップ名 [m]"
 #: ../raster/r.in.xyz/main.c:197 ../raster/r.in.xyz/main.c:205
 #: ../raster/r.in.xyz/main.c:213 ../general/g.proj/main.c:102
 #: ../general/g.proj/main.c:111 ../general/g.proj/main.c:120
-#: ../general/g.proj/main.c:128 ../vector/v.out.ogr/main.c:110
-#: ../vector/v.out.ogr/main.c:130 ../vector/v.edit/args.c:103
+#: ../general/g.proj/main.c:128 ../vector/v.out.ogr/main.c:108
+#: ../vector/v.out.ogr/main.c:128 ../vector/v.edit/args.c:103
 #: ../vector/v.edit/args.c:212
 msgid "Input"
 msgstr "入力 "
@@ -5824,8 +5824,8 @@ msgstr "ラスター行 [%d] （カバーラスターマップ <%s> ）が読み
 #: ../raster/r.random/random.c:194 ../vector/v.net.distance/main.c:256
 #: ../vector/v.net.allpairs/main.c:228 ../vector/v.net.timetable/main.c:134
 #: ../vector/v.net.timetable/main.c:156 ../vector/v.net.flow/main.c:244
-#: ../vector/v.net.path/path.c:309 ../vector/v.net.centrality/main.c:69
-#: ../vector/v.net.components/main.c:38
+#: ../vector/v.net.path/path.c:309 ../vector/v.digit/attr.c:157
+#: ../vector/v.net.centrality/main.c:69 ../vector/v.net.components/main.c:38
 #, c-format
 msgid "Cannot insert new record: %s"
 msgstr "新規レコードがインサートできません: %s"
@@ -7785,7 +7785,7 @@ msgstr ""
 msgid "Interpolation method"
 msgstr "補間方法 "
 
-#: ../raster/r.resamp.interp/main.c:97 ../imagery/i.topo.corr/main.c:212
+#: ../raster/r.resamp.interp/main.c:97 ../imagery/i.topo.corr/main.c:196
 #, c-format
 msgid "Invalid method: %s"
 msgstr "無効なメソッドです: %s"
@@ -9692,7 +9692,7 @@ msgstr "Rowio_setup に失敗しました"
 msgid "Rowio_get failed"
 msgstr "Rowio_get に失敗しました"
 
-#: ../raster/r.mapcalc/map.c:442
+#: ../raster/r.mapcalc/map.c:442 ../imagery/i.topo.corr/main.c:37
 #, c-format
 msgid "Unable to open raster map <%s@%s>"
 msgstr "ラスターマップ <%s@%s>　を開けません"
@@ -10523,6 +10523,8 @@ msgstr ""
 #: ../vector/v.in.ogr/main.c:237 ../vector/v.transform/main.c:183
 #: ../vector/v.transform/main.c:194 ../vector/v.to.rast/main.c:71
 #: ../vector/v.to.rast/main.c:77 ../vector/v.to.rast/main.c:83
+#: ../vector/v.digit/line.c:86 ../vector/v.digit/attr.c:539
+#: ../vector/v.digit/attr.c:575
 msgid "Attributes"
 msgstr "属性"
 
@@ -14389,6 +14391,11 @@ msgstr "デフォルトのGUI設定のアップデート後にGUIを起動しな
 msgid "<%s> is now the default GUI"
 msgstr "<%s> は現在デフォルトGUIです  "
 
+#: ../general/g.gui/main.c:103
+#, c-format
+msgid "Launching '%s' GUI in the background, please wait ..."
+msgstr ""
+
 #: ../general/g.gui/main.c:107
 msgid "The old d.m GUI is not available for WinGRASS"
 msgstr "旧 d.m GUI は WinGRASS に利用不可 "
@@ -16134,7 +16141,7 @@ msgstr "データベース接続は定義されていません"
 #: ../display/d.thematic.area/main.c:231 ../display/d.vect/main.c:514
 #: ../vector/v.out.svg/main.c:141 ../vector/v.extract/main.c:286
 #: ../vector/v.in.sites/main.c:158 ../vector/v.out.vtk/writeVTK.c:634
-#: ../vector/v.out.ascii/b2a.c:44 ../vector/v.out.ogr/main.c:631
+#: ../vector/v.out.ascii/b2a.c:44 ../vector/v.out.ogr/main.c:629
 #: ../vector/v.edit/select.c:513 ../vector/v.db.connect/main.c:212
 #: ../vector/v.db.connect/main.c:278 ../vector/v.drape/main.c:288
 #: ../doc/vector/v.example/main.c:123 ../db/base/columns.c:45
@@ -17697,8 +17704,9 @@ msgstr "表 <%s> を作成できません"
 
 #: ../vector/v.sample/main.c:219 ../vector/v.net.distance/main.c:212
 #: ../vector/v.net.timetable/main.c:107 ../vector/v.net.flow/main.c:172
-#: ../vector/v.net.path/path.c:113 ../vector/v.net.centrality/main.c:244
-#: ../vector/v.db.connect/main.c:331 ../vector/v.net.components/main.c:151
+#: ../vector/v.net.path/path.c:113 ../vector/v.digit/c_face.c:282
+#: ../vector/v.net.centrality/main.c:244 ../vector/v.db.connect/main.c:331
+#: ../vector/v.net.components/main.c:151
 msgid "Cannot create index"
 msgstr "インデックスを作成できません  "
 
@@ -17970,7 +17978,7 @@ msgid "Exports a GRASS vector map to SVG."
 msgstr "ベクトルマップをSVGにエクスポートします."
 
 #: ../vector/v.out.svg/main.c:73 ../vector/v.out.vtk/main.c:46
-#: ../vector/v.out.ascii/out.c:45 ../vector/v.out.ogr/main.c:98
+#: ../vector/v.out.ascii/out.c:45 ../vector/v.out.ogr/main.c:96
 #: ../vector/v.out.pov/main.c:43 ../vector/v.out.dxf/main.c:48
 msgid "vector, export"
 msgstr "ベクトル、エクスポート "
@@ -18004,7 +18012,7 @@ msgid "Precision must not be higher than 15"
 msgstr "精度は15以上でなければなりません  "
 
 #: ../vector/v.out.svg/main.c:154 ../vector/v.random/main.c:214
-#: ../vector/v.out.vtk/writeVTK.c:643 ../vector/v.out.ogr/main.c:641
+#: ../vector/v.out.vtk/writeVTK.c:643 ../vector/v.out.ogr/main.c:639
 #: ../vector/v.patch/main.c:139 ../vector/v.patch/main.c:177
 #: ../vector/v.in.ascii/in.c:408 ../vector/v.info/main.c:222
 #: ../vector/v.db.connect/main.c:223 ../vector/v.drape/main.c:299
@@ -18130,6 +18138,7 @@ msgid "Query layer number (read from)"
 msgstr "検索レイヤー数 (から読み込み)"
 
 #: ../vector/v.to.db/parse.c:47 ../vector/v.to.db/parse.c:99
+#: ../db/base/execute.c:114
 msgid "Query"
 msgstr "検索"
 
@@ -18894,7 +18903,7 @@ msgid "Writing attributes..."
 msgstr "属性を書き込んでいます"
 
 #: ../vector/v.generalize/misc.c:156 ../vector/v.extract/main.c:461
-#: ../vector/v.voronoi/vo_main.c:334
+#: ../vector/v.voronoi/vo_main.c:334 ../vector/v.digit/attr.c:536
 #, c-format
 msgid "Layer %d"
 msgstr "レイヤー %d  "
@@ -19735,6 +19744,7 @@ msgid "Input table name"
 msgstr "表名をインプットします"
 
 #: ../vector/v.in.db/main.c:63 ../vector/v.in.db/main.c:67
+#: ../db/base/execute.c:118 ../db/base/execute.c:123
 msgid "Connection"
 msgstr "接続"
 
@@ -20445,7 +20455,7 @@ msgid ""
 msgstr ""
 "出力を作成する座標がありません! 空のベクトルタイプが選択されていませんか?  "
 
-#: ../vector/v.out.vtk/writeVTK.c:575 ../vector/v.out.ogr/main.c:711
+#: ../vector/v.out.vtk/writeVTK.c:575 ../vector/v.out.ogr/main.c:1061
 #, c-format
 msgid "Cannot select attributes for cat = %d"
 msgstr " cat = %d の属性を選択できません"
@@ -21686,61 +21696,61 @@ msgstr "出力値中の最大値：%e"
 msgid "Dimension > 2 supported only by gaussian function"
 msgstr ""
 
-#: ../vector/v.out.ogr/main.c:100
+#: ../vector/v.out.ogr/main.c:98
 #, fuzzy
 msgid "Converts GRASS vector map to one of the supported OGR vector formats."
 msgstr "サポートするOGRベクトルフォーマットのひとつに変換"
 
-#: ../vector/v.out.ogr/main.c:108
+#: ../vector/v.out.ogr/main.c:106
 #, fuzzy
 msgid ""
 "Feature type(s). Combinations not supported by all output formats. Default: "
 "first type found in input."
 msgstr "地物の型． 複合型は全てのフォーマットでサポートされる訳ではありません"
 
-#: ../vector/v.out.ogr/main.c:116
+#: ../vector/v.out.ogr/main.c:114
 msgid "OGR output datasource name"
 msgstr "OGR出力のデータソース名"
 
-#: ../vector/v.out.ogr/main.c:118
+#: ../vector/v.out.ogr/main.c:116
 msgid "For example: ESRI Shapefile: filename or directory for storage"
 msgstr "例： ESRI シェープファイル： ファイル名またはディレクトリ（保管場所）"
 
-#: ../vector/v.out.ogr/main.c:125
+#: ../vector/v.out.ogr/main.c:123
 msgid "OGR layer name. If not specified, input name is used."
 msgstr "OGRレイヤー名．指定しない場合は入力ファイル名"
 
-#: ../vector/v.out.ogr/main.c:126
+#: ../vector/v.out.ogr/main.c:124
 msgid "For example: ESRI Shapefile: shapefile name"
 msgstr "例： ESRIシェープファイル： シェープファイル名"
 
-#: ../vector/v.out.ogr/main.c:127 ../vector/v.out.ogr/main.c:140
-#: ../vector/v.out.ogr/main.c:150 ../vector/v.out.ogr/main.c:160
+#: ../vector/v.out.ogr/main.c:125 ../vector/v.out.ogr/main.c:138
+#: ../vector/v.out.ogr/main.c:148 ../vector/v.out.ogr/main.c:158
 msgid "Creation"
 msgstr "作成"
 
-#: ../vector/v.out.ogr/main.c:139
+#: ../vector/v.out.ogr/main.c:137
 msgid "OGR format"
 msgstr "OGR フォーマット"
 
-#: ../vector/v.out.ogr/main.c:149
+#: ../vector/v.out.ogr/main.c:147
 msgid "OGR dataset creation option (format specific, NAME=VALUE)"
 msgstr "OGRデータセット作成オプション （フォーマット，使用，名前 = VALUE）"
 
-#: ../vector/v.out.ogr/main.c:159
+#: ../vector/v.out.ogr/main.c:157
 msgid "OGR layer creation option (format specific, NAME=VALUE)"
 msgstr "OGRレイヤー作成オプション（フォーマット，仕様，名前 = VALUE ）"
 
-#: ../vector/v.out.ogr/main.c:164
+#: ../vector/v.out.ogr/main.c:162
 #, fuzzy
 msgid "Open an existing datasource for update"
 msgstr "ダウンロードディレクトリから既存のデータを削除"
 
-#: ../vector/v.out.ogr/main.c:169
+#: ../vector/v.out.ogr/main.c:167
 msgid "Skip export of GRASS category ID ('cat') attribute"
 msgstr ""
 
-#: ../vector/v.out.ogr/main.c:173
+#: ../vector/v.out.ogr/main.c:171
 msgid ""
 "Export features with category (labeled) only. Otherwise all features are "
 "exported"
@@ -21748,45 +21758,45 @@ msgstr ""
 "地物をカテゴリー（ラベル付）だけを付けてエクスポート チェックしないと全ての地"
 "物をエクスポート"
 
-#: ../vector/v.out.ogr/main.c:178
+#: ../vector/v.out.ogr/main.c:176
 msgid "Use ESRI-style .prj file format (applies to Shapefile output only)"
 msgstr ""
 "ESRIスタイルの .prj フォーマットを使用 (シェープファイルの出力のみを要求)  "
 
-#: ../vector/v.out.ogr/main.c:183
+#: ../vector/v.out.ogr/main.c:181
 #, fuzzy
 msgid "Create 3D output if input is 3D (applies to Shapefile output only)"
 msgstr ""
 "ESRIスタイルの .prj フォーマットを使用 (シェープファイルの出力のみを要求)  "
 
-#: ../vector/v.out.ogr/main.c:188
+#: ../vector/v.out.ogr/main.c:186
 msgid "Export lines as polygons"
 msgstr "ラインをポリゴンとしてエクスポート"
 
-#: ../vector/v.out.ogr/main.c:232
+#: ../vector/v.out.ogr/main.c:230
 msgid "Skipping all boundaries that are not part of an area."
 msgstr ""
 
-#: ../vector/v.out.ogr/main.c:251
+#: ../vector/v.out.ogr/main.c:249
 msgid "Volumes will be exported as sets of faces."
 msgstr ""
 
-#: ../vector/v.out.ogr/main.c:269
+#: ../vector/v.out.ogr/main.c:267
 msgid "Could not determine input map's feature type(s)."
 msgstr ""
 
-#: ../vector/v.out.ogr/main.c:314
+#: ../vector/v.out.ogr/main.c:312
 msgid "The combination of types is not supported by all formats."
 msgstr "複合型は全てのフォーマットでサポートされていません"
 
-#: ../vector/v.out.ogr/main.c:328
+#: ../vector/v.out.ogr/main.c:326
 msgid ""
 "The map contains islands. To preserve them in the output map, use the -c flag"
 msgstr ""
 "マップ中に島があります．これらを出力マップに保存するために -c フラッグを使用"
 "してください"
 
-#: ../vector/v.out.ogr/main.c:333
+#: ../vector/v.out.ogr/main.c:331
 #, c-format
 msgid ""
 "%d point(s) found, but not requested to be exported. Verify 'type' parameter."
@@ -21794,7 +21804,7 @@ msgstr ""
 "%d のポイントがありますがエクスポートの指定がありません．'type' パラメーター"
 "を確認して下さい"
 
-#: ../vector/v.out.ogr/main.c:338
+#: ../vector/v.out.ogr/main.c:336
 #, c-format
 msgid ""
 "%d line(s) found, but not requested to be exported. Verify 'type' parameter."
@@ -21802,7 +21812,7 @@ msgstr ""
 "%d のラインがありますがエクスポートの指定がありません．'type' パラメーターを"
 "確認して下さい"
 
-#: ../vector/v.out.ogr/main.c:344
+#: ../vector/v.out.ogr/main.c:342
 #, c-format
 msgid ""
 "%d boundary(ies) found, but not requested to be exported. Verify 'type' "
@@ -21811,7 +21821,7 @@ msgstr ""
 "%d の境界がありますがエクスポートの指定がありません．'type' パラメーターを確"
 "認して下さい"
 
-#: ../vector/v.out.ogr/main.c:350
+#: ../vector/v.out.ogr/main.c:348
 #, c-format
 msgid ""
 "%d centroid(s) found, but not requested to be exported. Verify 'type' "
@@ -21820,7 +21830,7 @@ msgstr ""
 "%d のセントロイドがありますがエクスポートの指定がありません．'type' パラメー"
 "ターを確認して下さい"
 
-#: ../vector/v.out.ogr/main.c:355
+#: ../vector/v.out.ogr/main.c:353
 #, c-format
 msgid ""
 "%d areas found, but not requested to be exported. Verify 'type' parameter."
@@ -21828,7 +21838,7 @@ msgstr ""
 "%d のエリアがありますがエクスポートの指定がありません．'type' パラメーターを"
 "確認して下さい"
 
-#: ../vector/v.out.ogr/main.c:359
+#: ../vector/v.out.ogr/main.c:357
 #, fuzzy, c-format
 msgid ""
 "%d face(s) found, but not requested to be exported. Verify 'type' parameter."
@@ -21836,7 +21846,7 @@ msgstr ""
 "%d の面がありますがエクスポートの指定がありません．'type' パラメーターを確認"
 "して下さい"
 
-#: ../vector/v.out.ogr/main.c:365
+#: ../vector/v.out.ogr/main.c:363
 #, fuzzy, c-format
 msgid ""
 "%d kernel(s) found, but not requested to be exported. Verify 'type' "
@@ -21845,7 +21855,7 @@ msgstr ""
 "%d のラインがありますがエクスポートの指定がありません．'type' パラメーターを"
 "確認して下さい"
 
-#: ../vector/v.out.ogr/main.c:370
+#: ../vector/v.out.ogr/main.c:368
 #, fuzzy, c-format
 msgid ""
 "%d volume(s) found, but not requested to be exported. Verify 'type' "
@@ -21854,7 +21864,7 @@ msgstr ""
 "%d のラインがありますがエクスポートの指定がありません．'type' パラメーターを"
 "確認して下さい"
 
-#: ../vector/v.out.ogr/main.c:376
+#: ../vector/v.out.ogr/main.c:374
 #, fuzzy
 msgid ""
 "No points found, but requested to be exported. Will skip this geometry type."
@@ -21862,7 +21872,7 @@ msgstr ""
 "%d のポイントがありますがエクスポートの指定がありません．'type' パラメーター"
 "を確認して下さい"
 
-#: ../vector/v.out.ogr/main.c:385
+#: ../vector/v.out.ogr/main.c:383
 #, fuzzy
 msgid ""
 "No lines found, but requested to be exported. Will skip this geometry type."
@@ -21870,7 +21880,7 @@ msgstr ""
 "%d のラインがありますがエクスポートの指定がありません．'type' パラメーターを"
 "確認して下さい"
 
-#: ../vector/v.out.ogr/main.c:395
+#: ../vector/v.out.ogr/main.c:393
 #, fuzzy
 msgid ""
 "No boundaries found, but requested to be exported. Will skip this geometry "
@@ -21879,7 +21889,7 @@ msgstr ""
 "%d の境界がありますがエクスポートの指定がありません．'type' パラメーターを確"
 "認して下さい"
 
-#: ../vector/v.out.ogr/main.c:404
+#: ../vector/v.out.ogr/main.c:402
 #, fuzzy
 msgid ""
 "No areas found, but requested to be exported. Will skip this geometry type."
@@ -21887,7 +21897,7 @@ msgstr ""
 "%d のエリアがありますがエクスポートの指定がありません．'type' パラメーターを"
 "確認して下さい"
 
-#: ../vector/v.out.ogr/main.c:414
+#: ../vector/v.out.ogr/main.c:412
 #, fuzzy
 msgid ""
 "No centroids found, but requested to be exported. Will skip this geometry "
@@ -21896,7 +21906,7 @@ msgstr ""
 "%d のセントロイドがありますがエクスポートの指定がありません．'type' パラメー"
 "ターを確認して下さい"
 
-#: ../vector/v.out.ogr/main.c:423
+#: ../vector/v.out.ogr/main.c:421
 #, fuzzy
 msgid ""
 "No faces found, but requested to be exported. Will skip this geometry type."
@@ -21904,7 +21914,7 @@ msgstr ""
 "%d の面がありますがエクスポートの指定がありません．'type' パラメーターを確認"
 "して下さい"
 
-#: ../vector/v.out.ogr/main.c:432
+#: ../vector/v.out.ogr/main.c:430
 #, fuzzy
 msgid ""
 "No kernels found, but requested to be exported. Will skip this geometry type."
@@ -21912,7 +21922,7 @@ msgstr ""
 "%d のエリアがありますがエクスポートの指定がありません．'type' パラメーターを"
 "確認して下さい"
 
-#: ../vector/v.out.ogr/main.c:441
+#: ../vector/v.out.ogr/main.c:439
 #, fuzzy
 msgid ""
 "No volumes found, but requested to be exported. Will skip this geometry type."
@@ -21920,36 +21930,36 @@ msgstr ""
 "%d のラインがありますがエクスポートの指定がありません．'type' パラメーターを"
 "確認して下さい"
 
-#: ../vector/v.out.ogr/main.c:452
+#: ../vector/v.out.ogr/main.c:450
 #, fuzzy
 msgid "Nothing to export"
 msgstr "することがありません"
 
-#: ../vector/v.out.ogr/main.c:485
+#: ../vector/v.out.ogr/main.c:483
 #, c-format
 msgid "OGR driver <%s> not found"
 msgstr "OGRドライバー <%s> がありません"
 
-#: ../vector/v.out.ogr/main.c:510
+#: ../vector/v.out.ogr/main.c:508
 #, c-format
 msgid "Unable to open OGR data source '%s'"
 msgstr "OGRデータソースを開けません '%s'"
 
-#: ../vector/v.out.ogr/main.c:524
+#: ../vector/v.out.ogr/main.c:522
 #, fuzzy, c-format
 msgid "Layer <%s> already exists in OGR data source '%s'"
 msgstr "<%s> はマップセット <%s> に既に存在します"
 
-#: ../vector/v.out.ogr/main.c:528
+#: ../vector/v.out.ogr/main.c:526
 #, fuzzy, c-format
 msgid "OGR layer <%s> already exists and will be overwritten"
 msgstr "ラスターマップ <%s> は存在します。上書きされます"
 
-#: ../vector/v.out.ogr/main.c:569
+#: ../vector/v.out.ogr/main.c:567
 msgid "Overriding existing user-defined 'SHPT=' LCO."
 msgstr ""
 
-#: ../vector/v.out.ogr/main.c:585
+#: ../vector/v.out.ogr/main.c:583
 #, fuzzy, c-format
 msgid ""
 "Vector map <%s> is 3D. Use format specific layer creation options (parameter "
@@ -21958,7 +21968,7 @@ msgstr ""
 "ベクトルマップ <%s> は3D．エクスポートするために2Dではなく3Dでフォーマット指"
 "定レイヤー作成オプション (パラメーター 'lco') を使用して下さい (標準設定)"
 
-#: ../vector/v.out.ogr/main.c:592
+#: ../vector/v.out.ogr/main.c:590
 #, c-format
 msgid ""
 "Vector map <%s> is 3D. Use format specific layer creation options (parameter "
@@ -21967,68 +21977,68 @@ msgstr ""
 "ベクトルマップ <%s> は3D．エクスポートするために2Dではなく3Dでフォーマット指"
 "定レイヤー作成オプション (パラメーター 'lco') を使用して下さい (標準設定)"
 
-#: ../vector/v.out.ogr/main.c:605
+#: ../vector/v.out.ogr/main.c:603
 msgid "Unable to create OGR layer"
 msgstr "OGRレイヤーを作成できません"
 
-#: ../vector/v.out.ogr/main.c:615
+#: ../vector/v.out.ogr/main.c:613
 msgid "No attribute table found -> using only category numbers as attributes"
 msgstr "属性表がありません -> カテゴリー番号だけを属性として使用"
 
-#: ../vector/v.out.ogr/main.c:619
+#: ../vector/v.out.ogr/main.c:617
 msgid "Exporting 'cat' anyway, as it is the only attribute table field"
 msgstr ""
 
-#: ../vector/v.out.ogr/main.c:696
+#: ../vector/v.out.ogr/main.c:694
 #, c-format
 msgid "Key column '%s' not found"
 msgstr "キー列 '%s' がありません"
 
-#: ../vector/v.out.ogr/main.c:720
+#: ../vector/v.out.ogr/main.c:707
 #, fuzzy, c-format
 msgid "Exporting %i geometries..."
 msgstr "%i のポイント/ラインをエクスポート中、、、"
 
-#: ../vector/v.out.ogr/main.c:802
+#: ../vector/v.out.ogr/main.c:789
 #, c-format
 msgid "Exporting %i areas (may take some time)..."
 msgstr "%i のエリアをエクスポート中 (少し時間がかかります)、、、"
 
-#: ../vector/v.out.ogr/main.c:877
+#: ../vector/v.out.ogr/main.c:864
 #, c-format
 msgid "Exporting %i faces (may take some time) ..."
 msgstr "%i の面をエクスポート中（少し時間がかかります）、、、"
 
-#: ../vector/v.out.ogr/main.c:940
+#: ../vector/v.out.ogr/main.c:927
 #, fuzzy, c-format
 msgid "Exporting %i kernels..."
 msgstr "%i のポイント/ラインをエクスポート中、、、"
 
-#: ../vector/v.out.ogr/main.c:999
+#: ../vector/v.out.ogr/main.c:986
 #, fuzzy, c-format
 msgid "Exporting %i volumes..."
 msgstr "%i のポイント/ラインをエクスポート中、、、"
 
-#: ../vector/v.out.ogr/main.c:1000
+#: ../vector/v.out.ogr/main.c:987
 msgid "Export of volumes not implemented yet. Skipping."
 msgstr ""
 
-#: ../vector/v.out.ogr/main.c:1018
+#: ../vector/v.out.ogr/main.c:1004
 #, c-format
 msgid "%d features without category were written"
 msgstr "%d 個の地物（カテゴリー無し）が書き込まれました"
 
-#: ../vector/v.out.ogr/main.c:1020
+#: ../vector/v.out.ogr/main.c:1006
 #, c-format
 msgid "%d features without attributes were written"
 msgstr "%d 個の地物（属性無し）が書き込まれました"
 
-#: ../vector/v.out.ogr/main.c:1022
+#: ../vector/v.out.ogr/main.c:1008
 #, c-format
 msgid "%d features found without category were skipped"
 msgstr "%d 個の地物（カテゴリー無し）がスキップされました"
 
-#: ../vector/v.out.ogr/main.c:1033
+#: ../vector/v.out.ogr/main.c:1019
 #, fuzzy, c-format
 msgid "%d features written to <%s> (%s)."
 msgstr "%d のフィーチャーが '%s' へ書き込まれました"
@@ -22317,7 +22327,7 @@ msgstr "相互検証と偏差値の両方のファイルを指定"
 msgid "Vector is not 3D"
 msgstr "ベクトルが3Dではありません"
 
-#: ../vector/v.vol.rst/main.c:596
+#: ../vector/v.vol.rst/main.c:596 ../vector/v.digit/c_face.c:269
 #, c-format
 msgid "Cannot create table: %s"
 msgstr "表を作成できません： %s  "
@@ -26111,9 +26121,449 @@ msgstr ""
 "マップ <%s> は現在のマップセット中に存在しません． -n フラッグを追加して新規"
 "にマップを作成して下さい"
 
+#: ../vector/v.digit/zoom.c:26
+msgid "Zoom by window"
+msgstr ""
+
+#: ../vector/v.digit/zoom.c:27 ../vector/v.digit/zoom.c:44
+#: ../vector/v.digit/zoom.c:75
+msgid "1. corner"
+msgstr ""
+
+#: ../vector/v.digit/zoom.c:27 ../vector/v.digit/zoom.c:44
+#: ../vector/v.digit/zoom.c:75 ../vector/v.digit/zoom.c:158
+#, fuzzy
+msgid "Quit"
+msgstr "説明なし "
+
+#: ../vector/v.digit/zoom.c:44
+msgid "2. corner"
+msgstr ""
+
+#: ../vector/v.digit/zoom.c:157
+msgid "Pan"
+msgstr ""
+
+#: ../vector/v.digit/zoom.c:158
+#, fuzzy
+msgid "New center"
+msgstr "新しいスキーマ"
+
+#: ../vector/v.digit/zoom.c:247
+#, fuzzy, c-format
+msgid "Cannot find window '%s'"
+msgstr "新しい行: %s を挿入できません"
+
+#: ../vector/v.digit/var.c:80 ../vector/v.digit/var.c:101
+#: ../vector/v.digit/var.c:122
+#, fuzzy, c-format
+msgid "Cannot set variable code = %d"
+msgstr " cat = %d の属性を選択できません"
+
+#: ../vector/v.digit/var.c:143
+#, fuzzy, c-format
+msgid "Cannot get type of variable %s"
+msgstr "テーブルのリストが得られません:\n"
+
+#: ../vector/v.digit/var.c:164
+#, fuzzy, c-format
+msgid "Cannot get code of variable %s"
+msgstr "テーブルのリストが得られません:\n"
+
+#: ../vector/v.digit/var.c:184
+#, fuzzy, c-format
+msgid "Cannot get name of variable %d"
+msgstr "テーブルのリストが得られません:\n"
+
+#: ../vector/v.digit/var.c:199 ../vector/v.digit/var.c:215
+#: ../vector/v.digit/var.c:231
+#, fuzzy, c-format
+msgid "Cannot get value of variable code = %d"
+msgstr "テーブルのリストが得られません:\n"
+
+#: ../vector/v.digit/centre.c:56
+#, fuzzy
+msgid "Select tool"
+msgstr "選択"
+
 #: ../vector/v.digit/centre.c:178
 msgid "Region restored to original extent."
 msgstr "領域restored to original extent.  "
+
+#: ../vector/v.digit/c_face.c:183 ../vector/v.digit/c_face.c:241
+#, fuzzy, c-format
+msgid "Cannot open driver %s"
+msgstr "%s を開けません"
+
+#: ../vector/v.digit/c_face.c:189 ../vector/v.digit/c_face.c:251
+#, fuzzy, c-format
+msgid "Cannot open database %s"
+msgstr "データソースを開けません"
+
+#: ../vector/v.digit/c_face.c:242
+#, fuzzy
+msgid "Cannot open driver "
+msgstr "%s を開けません"
+
+#: ../vector/v.digit/c_face.c:252 ../vector/v.digit/attr.c:137
+#: ../vector/v.digit/attr.c:650
+#, fuzzy, c-format
+msgid "Cannot open database %s by driver %s"
+msgstr "ドライバー <%s> でデータベース <%s> を開けません"
+
+#: ../vector/v.digit/c_face.c:270
+#, fuzzy
+msgid "Cannot create table: "
+msgstr "表を作成できません： %s  "
+
+#: ../vector/v.digit/c_face.c:283
+#, fuzzy
+msgid "Cannot create index:\n"
+msgstr "インデックスを作成できません  "
+
+#: ../vector/v.digit/c_face.c:294 ../vector/v.db.connect/main.c:336
+#, c-format
+msgid "Cannot grant privileges on table %s"
+msgstr "テーブル %s に許可がありません"
+
+#: ../vector/v.digit/c_face.c:295
+#, fuzzy
+msgid "Cannot grant privileges on table:\n"
+msgstr "テーブル %s に許可がありません"
+
+#: ../vector/v.digit/c_face.c:312
+msgid ""
+"Cannot add database link to vector, link for given field probably already "
+"exists."
+msgstr ""
+
+#: ../vector/v.digit/generate.c:77
+#, fuzzy
+msgid "Cannot open driver"
+msgstr "%s を開けません"
+
+#: ../vector/v.digit/generate.c:78
+#, fuzzy, c-format
+msgid "Cannot open driver '%s'<BR>"
+msgstr "フィルターファイル '%s' が開けません "
+
+#: ../vector/v.digit/generate.c:89
+#, fuzzy
+msgid "Cannot open database"
+msgstr "データソースを開けません"
+
+#: ../vector/v.digit/generate.c:91
+#, fuzzy, c-format
+msgid "Cannot open database '%s' by driver '%s'<BR>"
+msgstr "ドライバー <%s> でデータベース <%s> を開けません"
+
+#: ../vector/v.digit/generate.c:106
+#, fuzzy
+msgid "Cannot open select cursor"
+msgstr "選択したカーソルを開けません： '%s'"
+
+#: ../vector/v.digit/generate.c:110
+#, c-format
+msgid ""
+"Cannot open select cursor:<BR>'%s'<BR>on database '%s' by driver '%s'<BR>"
+msgstr ""
+
+#: ../vector/v.digit/generate.c:121
+#, fuzzy
+msgid "Cannot fetch next record"
+msgstr "行を取得できません"
+
+#: ../vector/v.digit/generate.c:130
+#, fuzzy
+msgid "No database record"
+msgstr "データベースドライバー"
+
+#: ../vector/v.digit/generate.c:223
+#, c-format
+msgid "<HR>   Assume data encoding as:<BR><BR><SELECT NAME=%s SIZE=4><HR><BR>"
+msgstr ""
+
+#: ../vector/v.digit/vertex.c:35
+msgid "Split line:"
+msgstr ""
+
+#: ../vector/v.digit/vertex.c:36 ../vector/v.digit/vertex.c:56
+#: ../vector/v.digit/vertex.c:152 ../vector/v.digit/vertex.c:373
+#: ../vector/v.digit/vertex.c:516 ../vector/v.digit/vertex.c:570
+#: ../vector/v.digit/vertex.c:669 ../vector/v.digit/line.c:481
+#: ../vector/v.digit/line.c:566 ../vector/v.digit/line.c:620
+#: ../vector/v.digit/line.c:705 ../vector/v.digit/attr.c:403
+#, fuzzy
+msgid "Select"
+msgstr "選択"
+
+#: ../vector/v.digit/vertex.c:36 ../vector/v.digit/vertex.c:56
+#: ../vector/v.digit/vertex.c:131 ../vector/v.digit/vertex.c:152
+#: ../vector/v.digit/vertex.c:200 ../vector/v.digit/vertex.c:220
+#: ../vector/v.digit/vertex.c:304 ../vector/v.digit/vertex.c:325
+#: ../vector/v.digit/vertex.c:373 ../vector/v.digit/vertex.c:471
+#: ../vector/v.digit/vertex.c:516 ../vector/v.digit/vertex.c:570
+#: ../vector/v.digit/vertex.c:633 ../vector/v.digit/vertex.c:669
+#: ../vector/v.digit/line.c:140 ../vector/v.digit/line.c:224
+#: ../vector/v.digit/line.c:481 ../vector/v.digit/line.c:564
+#: ../vector/v.digit/line.c:566 ../vector/v.digit/line.c:620
+#: ../vector/v.digit/line.c:671 ../vector/v.digit/line.c:705
+#: ../vector/v.digit/attr.c:192 ../vector/v.digit/attr.c:302
+#: ../vector/v.digit/attr.c:398 ../vector/v.digit/attr.c:403
+#: ../vector/v.digit/attr.c:407 ../vector/v.digit/attr.c:463
+#, fuzzy
+msgid "Quit tool"
+msgstr "検索ツール"
+
+#: ../vector/v.digit/vertex.c:130 ../vector/v.digit/vertex.c:303
+#: ../vector/v.digit/line.c:564
+msgid "Confirm and select next"
+msgstr ""
+
+#: ../vector/v.digit/vertex.c:130 ../vector/v.digit/vertex.c:303
+#: ../vector/v.digit/vertex.c:471 ../vector/v.digit/vertex.c:633
+#: ../vector/v.digit/line.c:481 ../vector/v.digit/line.c:564
+#: ../vector/v.digit/line.c:566 ../vector/v.digit/line.c:671
+#, fuzzy
+msgid "Unselect"
+msgstr "選択するバンド"
+
+#: ../vector/v.digit/vertex.c:199
+#, fuzzy
+msgid "Remove vertex:"
+msgstr "ブリッジを除去します:"
+
+#: ../vector/v.digit/vertex.c:200 ../vector/v.digit/vertex.c:220
+#: ../vector/v.digit/vertex.c:325
+#, fuzzy
+msgid "Select vertex"
+msgstr "フレームの選択 "
+
+#: ../vector/v.digit/vertex.c:372
+msgid "Add vertex:"
+msgstr ""
+
+#: ../vector/v.digit/vertex.c:471
+msgid "New vertex"
+msgstr ""
+
+#: ../vector/v.digit/vertex.c:569
+msgid "Move vertex:"
+msgstr ""
+
+#: ../vector/v.digit/vertex.c:633 ../vector/v.digit/line.c:671
+#, fuzzy
+msgid "New location"
+msgstr "メトリックロケーション "
+
+#: ../vector/v.digit/form.c:97
+msgid "db connection was not set by form\n"
+msgstr ""
+
+#: ../vector/v.digit/form.c:108
+#, fuzzy
+msgid "Cannot open driver\n"
+msgstr "%s を開けません"
+
+#: ../vector/v.digit/form.c:120
+#, fuzzy
+msgid "Cannot open database\n"
+msgstr "データソースを開けません"
+
+#: ../vector/v.digit/form.c:133
+#, fuzzy
+msgid "Cannot describe table\n"
+msgstr "表をコピーできません"
+
+#: ../vector/v.digit/form.c:162
+#, fuzzy
+msgid "Cannot find column type"
+msgstr "不明な列の型  "
+
+#: ../vector/v.digit/form.c:199
+#, c-format
+msgid "Could not set Tcl system encoding to '%s' (%s)"
+msgstr ""
+
+#: ../vector/v.digit/form.c:228
+msgid "Could not convert UTF to external."
+msgstr ""
+
+#: ../vector/v.digit/form.c:256
+#, fuzzy
+msgid "Cannot update table"
+msgstr "表を変更できません： %s"
+
+#: ../vector/v.digit/line.c:55
+#, fuzzy
+msgid "Form"
+msgstr "フォーマット "
+
+#: ../vector/v.digit/line.c:64
+#, fuzzy
+msgid "New record was created.<BR>"
+msgstr "中身のない新しいマップを作成しました"
+
+#: ../vector/v.digit/line.c:68
+#, fuzzy
+msgid "Record for this category already existed.<BR>"
+msgstr "No record for category %d in 表 <%s> におけるカテゴリーの-"
+
+#: ../vector/v.digit/line.c:138
+#, c-format
+msgid "Digitize new %s:"
+msgstr ""
+
+#: ../vector/v.digit/line.c:140 ../vector/v.digit/line.c:224
+#: ../vector/v.digit/line.c:253
+#, fuzzy
+msgid "New point"
+msgstr "視点"
+
+#: ../vector/v.digit/line.c:191
+msgid "Out of memory! Point not added."
+msgstr ""
+
+#: ../vector/v.digit/line.c:246
+msgid "Less than 2 points for line -> nothing written"
+msgstr ""
+
+#: ../vector/v.digit/line.c:253
+#, fuzzy
+msgid "Undo last point"
+msgstr "開始点がありません"
+
+#: ../vector/v.digit/line.c:253 ../vector/v.digit/line.c:337
+#: ../vector/v.digit/line.c:386
+#, fuzzy
+msgid "Close line"
+msgstr "閉じれません"
+
+#: ../vector/v.digit/line.c:337 ../vector/v.digit/line.c:386
+#: ../vector/v.digit/line.c:407
+#, fuzzy
+msgid "New Point"
+msgstr "ポイント"
+
+#: ../vector/v.digit/line.c:337 ../vector/v.digit/line.c:386
+#, fuzzy
+msgid "Undo Last Point"
+msgstr "開始点がありません"
+
+#: ../vector/v.digit/line.c:407
+#, fuzzy
+msgid "Delete line and exit"
+msgstr "テーブルを出力して終了"
+
+#: ../vector/v.digit/line.c:480
+msgid "Delete point, line, boundary, or centroid:"
+msgstr ""
+
+#: ../vector/v.digit/line.c:619
+msgid "Move point, line, boundary, or centroid:"
+msgstr ""
+
+#: ../vector/v.digit/attr.c:94
+#, fuzzy
+msgid "Cannot create new record."
+msgstr "新規テーブルを作成できません"
+
+#: ../vector/v.digit/attr.c:127
+#, fuzzy
+msgid "Database table for this layer is not defined"
+msgstr "データベース接続は定義されていません"
+
+#: ../vector/v.digit/attr.c:145 ../vector/v.digit/attr.c:659
+#, fuzzy, c-format
+msgid "Cannot select record from table %s"
+msgstr "表 <%s> から記録を選択できません"
+
+#: ../vector/v.digit/attr.c:191
+#, fuzzy
+msgid "Display categories:"
+msgstr "%ld カテゴリー"
+
+#: ../vector/v.digit/attr.c:192 ../vector/v.digit/attr.c:463
+#, fuzzy
+msgid "Select line"
+msgstr "選択"
+
+#: ../vector/v.digit/attr.c:301 ../vector/v.digit/attr.c:406
+#, fuzzy
+msgid "Copy attributes:"
+msgstr "属性をコピーします"
+
+#: ../vector/v.digit/attr.c:302 ../vector/v.digit/attr.c:407
+#, fuzzy
+msgid "Select source object"
+msgstr "ソース投影"
+
+#: ../vector/v.digit/attr.c:396 ../vector/v.digit/attr.c:402
+#, fuzzy
+msgid "Select the target object"
+msgstr "テキストの色を設定します"
+
+#: ../vector/v.digit/attr.c:397
+#, fuzzy
+msgid "Conform and select next"
+msgstr "フォントは選択されていません"
+
+#: ../vector/v.digit/attr.c:397
+#, fuzzy
+msgid "Deselect Target"
+msgstr "フレームの選択 "
+
+#: ../vector/v.digit/attr.c:403
+msgid "Deselect Source"
+msgstr ""
+
+#: ../vector/v.digit/attr.c:462
+#, fuzzy
+msgid "Display attributes:"
+msgstr "属性をコピーします"
+
+#: ../vector/v.digit/attr.c:542
+#, fuzzy, c-format
+msgid "layer: %d<BR>category: %d<BR>"
+msgstr ""
+"レイヤー: %d\n"
+"カテゴリー: %d\n"
+
+#: ../vector/v.digit/attr.c:549
+#, fuzzy
+msgid "Database connection not defined<BR>"
+msgstr "データベース接続は定義されていません"
+
+#: ../vector/v.digit/attr.c:553
+#, fuzzy, c-format
+msgid "driver: %s<BR>database: %s<BR>table: %s<BR>key column: %s<BR>"
+msgstr ""
+"ドライバー: %s\n"
+"データベース: %s\n"
+"テーブル: %s\n"
+"キー列: %s\n"
+
+#: ../vector/v.digit/attr.c:571
+#, fuzzy, c-format
+msgid "Line %d"
+msgstr "線幅"
+
+#: ../vector/v.digit/attr.c:577
+#, fuzzy
+msgid "No categories"
+msgstr "%ld カテゴリー"
+
+#: ../vector/v.digit/attr.c:668
+#, c-format
+msgid ""
+"There are no more features with category %d (layer %d) in the map, but there "
+"is record in the table. Delete this record?"
+msgstr ""
+
+#: ../vector/v.digit/attr.c:680
+#, fuzzy, c-format
+msgid "Cannot delete record: %s"
+msgstr "新規レコードがインサートできません: %s"
 
 #: ../vector/v.net.centrality/main.c:95
 #, fuzzy
@@ -26256,11 +26706,6 @@ msgid ""
 msgstr ""
 "テーブル <%s> はベクトルマップ <%s> の一部であり，GRASS モジュールによって削"
 "除または上書きされます"
-
-#: ../vector/v.db.connect/main.c:336
-#, c-format
-msgid "Cannot grant privileges on table %s"
-msgstr "テーブル %s に許可がありません"
 
 #: ../vector/v.db.connect/main.c:339
 msgid "Select privileges were granted on the table"
@@ -27887,7 +28332,7 @@ msgstr "SQL文を実行"
 msgid "Name of file containing SQL statements"
 msgstr "SQL文を含むファイル名"
 
-#: ../db/base/execute.c:126
+#: ../db/base/execute.c:129
 msgid "Ignore SQL errors and continue"
 msgstr "SQLのエラーを無視し、続行  "
 
@@ -32168,127 +32613,77 @@ msgstr ""
 " あるいは\n"
 " 手で変数を入力する"
 
-#: ../imagery/i.topo.corr/main.c:37
-#, fuzzy, c-format
-msgid "Cannot open file [%s] in mapset [%s]"
-msgstr "ラベル ファイル <%s> を開けません（マップセット <%s>）"
+#: ../imagery/i.topo.corr/main.c:83
+#, fuzzy
+msgid "Computes topografic correction of reflectance."
+msgstr "補間方法 "
 
-#: ../imagery/i.topo.corr/main.c:57
-#, fuzzy, c-format
-msgid "Cannot create file <%s> in mapset <%s>"
-msgstr "ラベル ファイル <%s> を開けません（マップセット <%s>）"
-
-#: ../imagery/i.topo.corr/main.c:84
-msgid "Topografic correction of reflectance"
+#: ../imagery/i.topo.corr/main.c:85
+msgid "imagery, topographic correction, Cosine, Minnaert, C-Factor, Percent"
 msgstr ""
 
-#: ../imagery/i.topo.corr/main.c:86
-msgid "Topographic correction, Cosine, Minnaert, C-Factor, Percent"
-msgstr ""
-
-#: ../imagery/i.topo.corr/main.c:91
+#: ../imagery/i.topo.corr/main.c:93
 #, fuzzy
-msgid "input"
-msgstr "入力 "
-
-#: ../imagery/i.topo.corr/main.c:95
-#, fuzzy
-msgid "input,cell,raster"
-msgstr "表示、ラスター"
+msgid "Name of reflectance raster maps to correct topographically"
+msgstr "断面の曲面ラスターマップ名"
 
 #: ../imagery/i.topo.corr/main.c:97
-msgid "List of reflectance band maps to correct topographically"
-msgstr ""
-
-#: ../imagery/i.topo.corr/main.c:100
 #, fuzzy
-msgid "output"
-msgstr "出力"
+msgid "Name (flag -i) or prefix for output raster maps"
+msgstr "出力するラスターマップ のプレフィックス"
 
-#: ../imagery/i.topo.corr/main.c:103
-msgid "output,cell,raster"
-msgstr ""
-
-#: ../imagery/i.topo.corr/main.c:105
-msgid "File name of output (flag -i) or prefix of output files"
-msgstr ""
-
-#: ../imagery/i.topo.corr/main.c:108
+#: ../imagery/i.topo.corr/main.c:101
 #, fuzzy
-msgid "basemap"
-msgstr "ベースマップを取り除きます"
+msgid "Name of input base raster map (elevation or ilumination)"
+msgstr "入力するラスターマップ名（彩度）"
 
-#: ../imagery/i.topo.corr/main.c:111
-msgid "base,cell,raster"
-msgstr ""
-
-#: ../imagery/i.topo.corr/main.c:112
-msgid "Base map for analysis (elevation or ilumination)"
-msgstr ""
-
-#: ../imagery/i.topo.corr/main.c:115
-msgid "zenith"
-msgstr ""
-
-#: ../imagery/i.topo.corr/main.c:118
-msgid "zenith,float"
-msgstr ""
-
-#: ../imagery/i.topo.corr/main.c:119
+#: ../imagery/i.topo.corr/main.c:107
 #, fuzzy
 msgid "Solar zenith in degrees"
 msgstr "長軸の角度 [度]"
 
-#: ../imagery/i.topo.corr/main.c:122
-msgid "azimuth"
-msgstr ""
-
-#: ../imagery/i.topo.corr/main.c:125
-msgid "azimuth,float"
-msgstr ""
-
-#: ../imagery/i.topo.corr/main.c:126
+#: ../imagery/i.topo.corr/main.c:113
 msgid "Solar azimuth in degrees (only if flag -i)"
 msgstr ""
 
-#: ../imagery/i.topo.corr/main.c:129
-#, fuzzy
-msgid "method"
-msgstr "未詳のメソッド"
-
-#: ../imagery/i.topo.corr/main.c:133
-#, fuzzy
-msgid "topographic correction method"
-msgstr "補間方法 "
-
-#: ../imagery/i.topo.corr/main.c:134
+#: ../imagery/i.topo.corr/main.c:120
 msgid "Topographic correction method"
 msgstr ""
 
-#: ../imagery/i.topo.corr/main.c:139
+#: ../imagery/i.topo.corr/main.c:125
 msgid "To output sun ilumination terrain model"
 msgstr ""
 
-#: ../imagery/i.topo.corr/main.c:146
+#: ../imagery/i.topo.corr/main.c:131
 msgid "Solar azimuth is necessary to calculate ilumination terrain model"
 msgstr ""
 
-#: ../imagery/i.topo.corr/main.c:150
+#: ../imagery/i.topo.corr/main.c:134
 msgid "Reflectance maps are necessary to make topographic correction"
 msgstr ""
 
-#: ../imagery/i.topo.corr/main.c:182
+#: ../imagery/i.topo.corr/main.c:166
 #, fuzzy
-msgid "Elevation file of unknown type"
+msgid "Elevation raster map of unknown type"
 msgstr "平面上のポイントの標高座標"
 
-#: ../imagery/i.topo.corr/main.c:216
+#: ../imagery/i.topo.corr/main.c:200
 msgid "Illumination model is of CELL type"
 msgstr ""
 
-#: ../imagery/i.topo.corr/main.c:223
+#: ../imagery/i.topo.corr/main.c:207
+#, fuzzy, c-format
+msgid "Reflectance of raster map <%s> is not of DCELL type - ignored"
+msgstr "ラスターマップ <%s> のカラーテーブルが見つかりません"
+
+#: ../imagery/i.topo.corr/correction.c:100
 #, c-format
-msgid "Reflectance of <%s> is not of DCELL type - ignored."
+msgid "Minnaert constant = %lf"
+msgstr ""
+
+#: ../imagery/i.topo.corr/correction.c:105
+#, c-format
+msgid "C-factor constant = %lf (a=%.4f; m=%.4f)"
 msgstr ""
 
 #: ../imagery/i.maxlik/main.c:63
@@ -32551,6 +32946,34 @@ msgstr "古いMASKセルマップの削除中のエラー"
 #, c-format
 msgid "Can't mark another point.  Only %d points allowed.  Sorry."
 msgstr "他のポイントを示すことができません。 %d ポイントのみ可能です。"
+
+#, fuzzy
+#~ msgid "Cannot open file [%s] in mapset [%s]"
+#~ msgstr "ラベル ファイル <%s> を開けません（マップセット <%s>）"
+
+#, fuzzy
+#~ msgid "Cannot create file <%s> in mapset <%s>"
+#~ msgstr "ラベル ファイル <%s> を開けません（マップセット <%s>）"
+
+#, fuzzy
+#~ msgid "input"
+#~ msgstr "入力 "
+
+#, fuzzy
+#~ msgid "input,cell,raster"
+#~ msgstr "表示、ラスター"
+
+#, fuzzy
+#~ msgid "output"
+#~ msgstr "出力"
+
+#, fuzzy
+#~ msgid "basemap"
+#~ msgstr "ベースマップを取り除きます"
+
+#, fuzzy
+#~ msgid "method"
+#~ msgstr "未詳のメソッド"
 
 #~ msgid ""
 #~ "Input raster map <%s> does not exist in group <%s>.\n"
@@ -32940,9 +33363,6 @@ msgstr "他のポイントを示すことができません。 %d ポイント�
 
 #~ msgid "%s' must be greater than zero; using %s=255"
 #~ msgstr "%s はゼロ以上が条件; %s=255 を使用中 "
-
-#~ msgid "Band to select"
-#~ msgstr "選択するバンド"
 
 #~ msgid "It was impossible to create <Auxiliar_outlier_table>."
 #~ msgstr "<Auxiliar_outlier_table>は作成できませんでひた.  "

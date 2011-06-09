@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: grassmods_es\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-05-29 11:07+0200\n"
+"POT-Creation-Date: 2011-06-09 20:10+0200\n"
 "PO-Revision-Date: 2011-05-17 16:53+0100\n"
 "Last-Translator: Joana Palahí <joana@sigte.udg.edu>\n"
 "Language-Team: Español <grass-translations@lists.osgeo.org>\n"
@@ -257,9 +257,9 @@ msgid "Unable to write raster row"
 msgstr "No se puede escribir la fila ráster"
 
 #: ../raster3d/r3.to.rast/main.c:183 ../raster/r.basins.fill/main.c:106
-#: ../raster/r.sun2/main.c:1167 ../raster/r.sun2/main.c:1174
-#: ../raster/r.sun2/main.c:1181 ../raster/r.sun2/main.c:1188
-#: ../raster/r.sun2/main.c:1195 ../raster/r.sun2/main.c:1202
+#: ../raster/r.sun2/main.c:1170 ../raster/r.sun2/main.c:1177
+#: ../raster/r.sun2/main.c:1184 ../raster/r.sun2/main.c:1191
+#: ../raster/r.sun2/main.c:1198 ../raster/r.sun2/main.c:1205
 #: ../raster/r.in.gdal/main.c:744 ../raster/r.in.gdal/main.c:749
 #: ../raster/r.in.gdal/main.c:763 ../raster/r.lake/main.c:229
 #: ../raster/r.lake/main.c:318 ../raster/r.surf.idw/main.c:147
@@ -288,7 +288,7 @@ msgstr "No se puede escribir la fila ráster"
 #: ../imagery/i.rgb.his/openfiles.c:31 ../imagery/i.rgb.his/openfiles.c:33
 #: ../imagery/i.his.rgb/openfiles.c:15 ../imagery/i.his.rgb/openfiles.c:17
 #: ../imagery/i.his.rgb/openfiles.c:19 ../imagery/i.ifft/ifftmain.c:219
-#: ../imagery/i.maxlik/open.c:74
+#: ../imagery/i.topo.corr/main.c:57 ../imagery/i.maxlik/open.c:74
 #, c-format
 msgid "Unable to create raster map <%s>"
 msgstr "No se puede crear el mapa ráster <%s>"
@@ -898,11 +898,11 @@ msgstr ""
 #: ../raster/r.basins.fill/main.c:82 ../raster/r.basins.fill/main.c:94
 #: ../raster/r.mfilter.fp/main.c:126 ../raster/r.out.ascii/main.c:146
 #: ../raster/r.out.png/r.out.png.c:214 ../raster/r.walk/main.c:523
-#: ../raster/r.walk/main.c:526 ../raster/r.sun2/main.c:814
-#: ../raster/r.sun2/main.c:829 ../raster/r.sun2/main.c:846
-#: ../raster/r.sun2/main.c:860 ../raster/r.sun2/main.c:872
-#: ../raster/r.sun2/main.c:884 ../raster/r.sun2/main.c:895
-#: ../raster/r.sun2/main.c:907 ../raster/r.sun2/main.c:919
+#: ../raster/r.walk/main.c:526 ../raster/r.sun2/main.c:817
+#: ../raster/r.sun2/main.c:832 ../raster/r.sun2/main.c:849
+#: ../raster/r.sun2/main.c:863 ../raster/r.sun2/main.c:875
+#: ../raster/r.sun2/main.c:887 ../raster/r.sun2/main.c:898
+#: ../raster/r.sun2/main.c:910 ../raster/r.sun2/main.c:922
 #: ../raster/r.drain/main.c:140 ../raster/r.support/front/front.c:224
 #: ../raster/r.support/modcolr/modcolr.c:45 ../raster/r.lake/main.c:254
 #: ../raster/r.lake/main.c:265 ../raster/r.surf.idw/main.c:108
@@ -989,7 +989,7 @@ msgstr ""
 #: ../imagery/i.ortho.photo/i.photo.2target/main.c:227
 #: ../imagery/i.fft/fftmain.c:108 ../imagery/i.gensig/parse.c:36
 #: ../imagery/i.group/main.c:201 ../imagery/i.group/main.c:240
-#: ../imagery/i.class/main.c:127
+#: ../imagery/i.topo.corr/main.c:33 ../imagery/i.class/main.c:127
 #, c-format
 msgid "Raster map <%s> not found"
 msgstr "Mapa ráster <%s> no encontrado"
@@ -1774,7 +1774,7 @@ msgstr "No se puede leer el intervalo fp del mapa raster <%s>"
 #: ../vector/v.in.dxf/write_vect.c:198 ../vector/v.mkgrid/main.c:237
 #: ../vector/v.lrs/v.lrs.create/main.c:286
 #: ../vector/v.lrs/v.lrs.create/main.c:294 ../vector/v.reclass/main.c:126
-#: ../vector/v.out.ogr/main.c:636 ../vector/v.in.dwg/main.c:194
+#: ../vector/v.out.ogr/main.c:634 ../vector/v.in.dwg/main.c:194
 #: ../vector/v.vol.rst/main.c:590 ../vector/v.vol.rst/user1.c:97
 #: ../vector/v.net.timetable/main.c:93 ../vector/v.patch/main.c:132
 #: ../vector/v.patch/main.c:162 ../vector/v.patch/main.c:274
@@ -2753,16 +2753,16 @@ msgstr "Coordenada Y no admitida <%s>"
 msgid "Warning, ignoring point outside window: %.4f,%.4f"
 msgstr "Aviso, se ignoran los puntos fuera de la ventana: %.4f,%.4f"
 
-#: ../raster/r.sun2/main.c:226 ../raster/r.sun/main.c:175
+#: ../raster/r.sun2/main.c:229 ../raster/r.sun/main.c:175
 #, fuzzy
 msgid "raster, sun energy"
 msgstr "ráster, teselado"
 
-#: ../raster/r.sun2/main.c:227 ../raster/r.sun/main.c:176
+#: ../raster/r.sun2/main.c:230 ../raster/r.sun/main.c:176
 msgid "Solar irradiance and irradiation model."
 msgstr "Modelo de irradiancia e irradiación solar."
 
-#: ../raster/r.sun2/main.c:229 ../raster/r.sun/main.c:178
+#: ../raster/r.sun2/main.c:232 ../raster/r.sun/main.c:178
 msgid ""
 "Computes direct (beam), diffuse and reflected solar irradiation raster maps "
 "for given day, latitude, surface and atmospheric conditions. Solar "
@@ -2781,19 +2781,19 @@ msgstr ""
 "irradiancia. El efecto de sombreo de la topografía se puede incorporar "
 "opcionalmente."
 
-#: ../raster/r.sun2/main.c:243 ../raster/r.sun/main.c:208
+#: ../raster/r.sun2/main.c:246 ../raster/r.sun/main.c:208
 #: ../raster/r.horizon/main.c:227
 msgid "Name of the input elevation raster map [meters]"
 msgstr "Nombre del mapa ráster de elevación de entrada [metros]"
 
-#: ../raster/r.sun2/main.c:244 ../raster/r.sun2/main.c:253
-#: ../raster/r.sun2/main.c:262 ../raster/r.sun2/main.c:271
-#: ../raster/r.sun2/main.c:279 ../raster/r.sun2/main.c:288
-#: ../raster/r.sun2/main.c:298 ../raster/r.sun2/main.c:308
-#: ../raster/r.sun2/main.c:318 ../raster/r.sun2/main.c:328
-#: ../raster/r.sun2/main.c:337 ../raster/r.sun2/main.c:347
-#: ../raster/r.sun2/main.c:356 ../raster/r.sun2/main.c:365
-#: ../raster/r.sun2/main.c:373 ../raster/r.sun2/main.c:381
+#: ../raster/r.sun2/main.c:247 ../raster/r.sun2/main.c:256
+#: ../raster/r.sun2/main.c:265 ../raster/r.sun2/main.c:274
+#: ../raster/r.sun2/main.c:282 ../raster/r.sun2/main.c:291
+#: ../raster/r.sun2/main.c:301 ../raster/r.sun2/main.c:311
+#: ../raster/r.sun2/main.c:321 ../raster/r.sun2/main.c:331
+#: ../raster/r.sun2/main.c:340 ../raster/r.sun2/main.c:350
+#: ../raster/r.sun2/main.c:359 ../raster/r.sun2/main.c:368
+#: ../raster/r.sun2/main.c:376 ../raster/r.sun2/main.c:384
 #: ../raster/r.sun/main.c:209 ../raster/r.sun/main.c:218
 #: ../raster/r.sun/main.c:228 ../raster/r.sun/main.c:237
 #: ../raster/r.sun/main.c:245 ../raster/r.sun/main.c:257
@@ -2811,7 +2811,7 @@ msgstr "Nombre del mapa ráster de elevación de entrada [metros]"
 msgid "Input_options"
 msgstr "Opciones de entrada"
 
-#: ../raster/r.sun2/main.c:252 ../raster/r.sun/main.c:217
+#: ../raster/r.sun2/main.c:255 ../raster/r.sun/main.c:217
 msgid ""
 "Name of the input aspect map (terrain aspect or azimuth of the solar panel) "
 "[decimal degrees]"
@@ -2819,11 +2819,11 @@ msgstr ""
 "Nombre del mapa ráster de orientación (orientación del terreno o azimut del "
 "panel solar) [grados decimales]"
 
-#: ../raster/r.sun2/main.c:261
+#: ../raster/r.sun2/main.c:264
 msgid "A single value of the orientation (aspect), 270 is south"
 msgstr "Un único valor de orientación, 270 es el sur"
 
-#: ../raster/r.sun2/main.c:270 ../raster/r.sun/main.c:227
+#: ../raster/r.sun2/main.c:273 ../raster/r.sun/main.c:227
 msgid ""
 "Name of the input slope raster map (terrain slope or solar panel "
 "inclination) [decimal degrees]"
@@ -2831,67 +2831,67 @@ msgstr ""
 "Nombre del mapa ráster de pendiente de entrada (pendiente del terreno o "
 "inclinación del panel solar) [grados decimales]"
 
-#: ../raster/r.sun2/main.c:278
+#: ../raster/r.sun2/main.c:281
 msgid "A single value of inclination (slope)"
 msgstr "Un valor único de inclinación (pendiente)"
 
-#: ../raster/r.sun2/main.c:287 ../raster/r.sun/main.c:236
+#: ../raster/r.sun2/main.c:290 ../raster/r.sun/main.c:236
 msgid ""
 "Name of the Linke atmospheric turbidity coefficient input raster map [-]"
 msgstr ""
 "Nombre del mapa ráster de coeficiente de turbidez atmosférica Linke de "
 "entrada [-]"
 
-#: ../raster/r.sun2/main.c:297 ../raster/r.sun/main.c:247
+#: ../raster/r.sun2/main.c:300 ../raster/r.sun/main.c:247
 msgid "A single value of the Linke atmospheric turbidity coefficient [-]"
 msgstr "Un valor único del coeficiente de turbidez atmosférica Linke [-]"
 
-#: ../raster/r.sun2/main.c:307 ../raster/r.sun/main.c:256
+#: ../raster/r.sun2/main.c:310 ../raster/r.sun/main.c:256
 msgid "Name of the ground albedo coefficient input raster map [-]"
 msgstr ""
 "Nombre del mapa ráster de entrada de coeficiente albedo del terreno [-]"
 
-#: ../raster/r.sun2/main.c:317 ../raster/r.sun/main.c:267
+#: ../raster/r.sun2/main.c:320 ../raster/r.sun/main.c:267
 msgid "A single value of the ground albedo coefficient [-]"
 msgstr "Un solo valor del coeficiente albedo del terreno [-]"
 
-#: ../raster/r.sun2/main.c:327 ../raster/r.sun/main.c:276
+#: ../raster/r.sun2/main.c:330 ../raster/r.sun/main.c:276
 msgid "Name of the latitudes input raster map [decimal degrees]"
 msgstr "Nombre del mapa ráster de latitudes de entrada [grados decimales]"
 
-#: ../raster/r.sun2/main.c:336 ../raster/r.sun/main.c:286
+#: ../raster/r.sun2/main.c:339 ../raster/r.sun/main.c:286
 msgid "A single value of latitude [decimal degrees]"
 msgstr "Un valor único de latitud [grados decimales]"
 
-#: ../raster/r.sun2/main.c:346
+#: ../raster/r.sun2/main.c:349
 msgid "Name of the longitude input raster map [decimal degrees]"
 msgstr "Nombre del mapa ráster de longitudes de entrada [grados decimales]"
 
-#: ../raster/r.sun2/main.c:355
+#: ../raster/r.sun2/main.c:358
 #, fuzzy
 msgid "Name of real-sky beam radiation coefficient input raster map [-]"
 msgstr "Nombre ráster"
 
-#: ../raster/r.sun2/main.c:364
+#: ../raster/r.sun2/main.c:367
 #, fuzzy
 msgid "Name of real-sky diffuse radiation coefficient input raster map [-]"
 msgstr "Nombre ráster"
 
-#: ../raster/r.sun2/main.c:372
+#: ../raster/r.sun2/main.c:375
 msgid "The horizon information input map prefix"
 msgstr "El prefijo del mapa de entrada de información del horizonte"
 
-#: ../raster/r.sun2/main.c:380 ../raster/r.horizon/main.c:244
+#: ../raster/r.sun2/main.c:383 ../raster/r.horizon/main.c:244
 msgid "Angle step size for multidirectional horizon [degrees]"
 msgstr ""
 
-#: ../raster/r.sun2/main.c:389 ../raster/r.sun/main.c:313
+#: ../raster/r.sun2/main.c:392 ../raster/r.sun/main.c:313
 msgid "Output incidence angle raster map (mode 1 only)"
 msgstr "Mapa ráster de ángulo de incidencia de salida (modo 1 solamente)"
 
-#: ../raster/r.sun2/main.c:390 ../raster/r.sun2/main.c:399
-#: ../raster/r.sun2/main.c:408 ../raster/r.sun2/main.c:417
-#: ../raster/r.sun2/main.c:426 ../raster/r.sun2/main.c:435
+#: ../raster/r.sun2/main.c:393 ../raster/r.sun2/main.c:402
+#: ../raster/r.sun2/main.c:411 ../raster/r.sun2/main.c:420
+#: ../raster/r.sun2/main.c:429 ../raster/r.sun2/main.c:438
 #: ../raster/r.sun/main.c:314 ../raster/r.sun/main.c:323
 #: ../raster/r.sun/main.c:332 ../raster/r.sun/main.c:341
 #: ../raster/r.sun/main.c:350 ../raster/r.watershed/front/main.c:97
@@ -2913,7 +2913,7 @@ msgstr "Mapa ráster de ángulo de incidencia de salida (modo 1 solamente)"
 msgid "Output_options"
 msgstr "Opciones de salida"
 
-#: ../raster/r.sun2/main.c:398 ../raster/r.sun/main.c:322
+#: ../raster/r.sun2/main.c:401 ../raster/r.sun/main.c:322
 msgid ""
 "Output beam irradiance [W.m-2] (mode 1) or irradiation raster map [Wh.m-2."
 "day-1] (mode 2)"
@@ -2921,11 +2921,11 @@ msgstr ""
 "Producir mapa ráster de irradiancia [W.m-2] (modo 1) o irradiación [Wh.m-2."
 "día-1] (modo 2) de los rayos"
 
-#: ../raster/r.sun2/main.c:407 ../raster/r.sun/main.c:331
+#: ../raster/r.sun2/main.c:410 ../raster/r.sun/main.c:331
 msgid "Output insolation time raster map [h] (mode 2 only)"
 msgstr "Producir mapa ráster de tiempo de insolación [h] (modo 2 solamente)"
 
-#: ../raster/r.sun2/main.c:416 ../raster/r.sun/main.c:340
+#: ../raster/r.sun2/main.c:419 ../raster/r.sun/main.c:340
 msgid ""
 "Output diffuse irradiance [W.m-2] (mode 1) or irradiation raster map [Wh.m-2."
 "day-1] (mode 2)"
@@ -2933,7 +2933,7 @@ msgstr ""
 "Producir mapa ráster de irradiancia [W.m-2] (modo 1) o irradiación [Wh.m-2."
 "día-1] (modo 2) difusas"
 
-#: ../raster/r.sun2/main.c:425 ../raster/r.sun/main.c:349
+#: ../raster/r.sun2/main.c:428 ../raster/r.sun/main.c:349
 msgid ""
 "Output ground reflected irradiance [W.m-2] (mode 1) or irradiation raster "
 "map [Wh.m-2.day-1] (mode 2)"
@@ -2941,7 +2941,7 @@ msgstr ""
 "Producir mapa ráster de irradiancia [W.m-2] (modo 1) o irradiación [Wh.m-2."
 "día-1] (modo 2) reflejadas del terreno"
 
-#: ../raster/r.sun2/main.c:434
+#: ../raster/r.sun2/main.c:437
 #, fuzzy
 msgid ""
 "Output global (total) irradiance/irradiation [W.m-2] (mode 1) or irradiance/"
@@ -2950,77 +2950,77 @@ msgstr ""
 "Producir mapa ráster de irradiancia [W.m-2] (modo 1) o irradiación [Wh.m-2."
 "día-1] (modo 2) de los rayos"
 
-#: ../raster/r.sun2/main.c:442 ../raster/r.sun/main.c:356
+#: ../raster/r.sun2/main.c:445 ../raster/r.sun/main.c:356
 msgid "No. of day of the year (1-365)"
 msgstr "Número de día del año (1-365)"
 
-#: ../raster/r.sun2/main.c:451 ../raster/r.sun/main.c:364
+#: ../raster/r.sun2/main.c:454 ../raster/r.sun/main.c:364
 msgid "Time step when computing all-day radiation sums [decimal hours]"
 msgstr ""
 "Intervalo de tiempo cuando se procesan sumas de radiación de todo el día "
 "[horas decimales]"
 
-#: ../raster/r.sun2/main.c:458 ../raster/r.sun/main.c:371
+#: ../raster/r.sun2/main.c:461 ../raster/r.sun/main.c:371
 msgid "Declination value (overriding the internally computed value) [radians]"
 msgstr ""
 "Valor de declinación (ignorando el valor procesado internamente) [radianes]"
 
-#: ../raster/r.sun2/main.c:466 ../raster/r.sun/main.c:379
+#: ../raster/r.sun2/main.c:469 ../raster/r.sun/main.c:379
 msgid "Local (solar) time (to be set for mode 1 only) [decimal hours]"
 msgstr "Hora local (solar) (a establecer sólo para modo 1) [horas decimales]"
 
-#: ../raster/r.sun2/main.c:489 ../raster/r.horizon/main.c:319
+#: ../raster/r.sun2/main.c:492 ../raster/r.horizon/main.c:319
 msgid "Sampling distance step coefficient (0.5-1.5)"
 msgstr ""
 
-#: ../raster/r.sun2/main.c:497
+#: ../raster/r.sun2/main.c:500
 msgid "Read the input files in this number of chunks"
 msgstr ""
 
-#: ../raster/r.sun2/main.c:504
+#: ../raster/r.sun2/main.c:507
 msgid "Civil time zone value, if none, the time will be local solar time"
 msgstr ""
 "Valor de la hora local de la zona, si no hay, la hora será la hora local "
 "solar"
 
-#: ../raster/r.sun2/main.c:510 ../raster/r.sun/main.c:384
+#: ../raster/r.sun2/main.c:513 ../raster/r.sun/main.c:384
 msgid "Incorporate the shadowing effect of terrain"
 msgstr "Incorporar el efecto de sombreo del terreno"
 
-#: ../raster/r.sun2/main.c:515
+#: ../raster/r.sun2/main.c:518
 msgid "Use the low-memory version of the program"
 msgstr "Utilizar la versión de baja-memoria del programa"
 
-#: ../raster/r.sun2/main.c:562
+#: ../raster/r.sun2/main.c:565
 msgid "You must give the longitude raster if you use civil time"
 msgstr "Debes utilizar la longitud raster si utilizas la hora local"
 
-#: ../raster/r.sun2/main.c:594 ../raster/r.sun/main.c:410
+#: ../raster/r.sun2/main.c:597 ../raster/r.sun/main.c:410
 msgid "insol_time and incidout are incompatible options"
 msgstr "insol_time e incidout son opciones incompatibles"
 
-#: ../raster/r.sun2/main.c:601
+#: ../raster/r.sun2/main.c:604
 msgid "Error reading time step size"
 msgstr ""
 
-#: ../raster/r.sun2/main.c:605
+#: ../raster/r.sun2/main.c:608
 msgid "Error reading horizon step size"
 msgstr "Error leyendo el tamaño de paso del horizonte"
 
-#: ../raster/r.sun2/main.c:609
+#: ../raster/r.sun2/main.c:612
 msgid "The horizon step size must be greater than 0."
 msgstr "El tamaño de paso del horizonte tiene que ser mayor que 0."
 
-#: ../raster/r.sun2/main.c:612
+#: ../raster/r.sun2/main.c:615
 msgid ""
 "If you use the horizon option you must also set the 'horizonstep' parameter."
 msgstr ""
 
-#: ../raster/r.sun2/main.c:619
+#: ../raster/r.sun2/main.c:622
 msgid "Time and insol_time are incompatible options"
 msgstr "El timpo e insol_tiempo son opciones incompatibles"
 
-#: ../raster/r.sun2/main.c:620
+#: ../raster/r.sun2/main.c:623
 msgid ""
 "Mode 1: instantaneous solar incidence angle & irradiance using a set local "
 "time"
@@ -3028,21 +3028,21 @@ msgstr ""
 "Modo 1: ángulo de incidencia solar instantáneo e irradiancia utilizando una "
 "hora local establecida"
 
-#: ../raster/r.sun2/main.c:625 ../raster/r.sun/main.c:424
+#: ../raster/r.sun2/main.c:628 ../raster/r.sun/main.c:424
 msgid "incidout requires time parameter to be set"
 msgstr "incidout requiere que se establezca el parámetro hora local (time)"
 
-#: ../raster/r.sun2/main.c:626 ../raster/r.sun/main.c:425
+#: ../raster/r.sun2/main.c:629 ../raster/r.sun/main.c:425
 msgid "Mode 2: integrated daily irradiation for a given day of the year"
 msgstr "Modo 2: irradiación diaria integrada para un día determinado del año"
 
-#: ../raster/r.sun2/main.c:681
+#: ../raster/r.sun2/main.c:684
 msgid "If you use -s and no horizon rasters, numpartitions must be =1"
 msgstr ""
 "Si se utiliza -s y no se usan horizontes raster, les particiones numéricas "
 "deben ser = 1"
 
-#: ../raster/r.sun2/main.c:693
+#: ../raster/r.sun2/main.c:696
 msgid ""
 "If you want to save memory and to use shadows, you must use pre-calculated "
 "horizons."
@@ -3050,7 +3050,7 @@ msgstr ""
 "Si quieres guardar memoria y usar sombras, tienes que utilizar horizontes "
 "pre-calculados."
 
-#: ../raster/r.sun2/main.c:741 ../raster/r.sun/main.c:474
+#: ../raster/r.sun2/main.c:744 ../raster/r.sun/main.c:474
 #: ../raster/r.horizon/main.c:481
 msgid ""
 "Can't get projection info of current location: please set latitude via 'lat' "
@@ -3059,7 +3059,7 @@ msgstr ""
 "No se puede obtener información de proyección de la localización actual: "
 "¡por favor establezca la latitud via opción 'lat' o 'latin'!"
 
-#: ../raster/r.sun2/main.c:744 ../raster/r.sun/main.c:477
+#: ../raster/r.sun2/main.c:747 ../raster/r.sun/main.c:477
 #: ../raster/r.horizon/main.c:484 ../general/g.region/printwindow.c:250
 #: ../general/g.region/printwindow.c:506 ../general/g.region/printwindow.c:625
 #: ../display/d.where/main.c:96
@@ -3067,7 +3067,7 @@ msgid "Can't get projection units of current location"
 msgstr ""
 "No se pueden obtener unidades de la proyección de la localización actual"
 
-#: ../raster/r.sun2/main.c:747 ../raster/r.sun/main.c:481
+#: ../raster/r.sun2/main.c:750 ../raster/r.sun/main.c:481
 #: ../raster/r.horizon/main.c:488 ../general/g.region/printwindow.c:253
 #: ../general/g.region/printwindow.c:509 ../general/g.region/printwindow.c:628
 #: ../display/d.grid/plot.c:294 ../display/d.where/main.c:99
@@ -3077,7 +3077,7 @@ msgstr ""
 "No se pueden obtener los valores clave de la proyección de la localización "
 "actual"
 
-#: ../raster/r.sun2/main.c:757 ../raster/r.sun/main.c:491
+#: ../raster/r.sun2/main.c:760 ../raster/r.sun/main.c:491
 #: ../raster/r.horizon/main.c:498 ../display/d.grid/plot.c:301
 #: ../display/d.grid/plot.c:328 ../display/d.where/main.c:106
 #: ../display/d.where/main.c:132 ../ps/ps.map/do_geogrid.c:278
@@ -3085,7 +3085,7 @@ msgid "Unable to set up lat/long projection parameters"
 msgstr ""
 "No se pueden establecer los parámetros de la proyección latitud/longitud"
 
-#: ../raster/r.sun2/main.c:952
+#: ../raster/r.sun2/main.c:955
 #, c-format
 msgid "Horizon file no. %d <%s> not found"
 msgstr "Archivo Horizon no. %d  <%s> no encontrado"
@@ -3717,7 +3717,7 @@ msgstr "Demasiados puntos de inicio"
 #: ../vector/v.lrs/v.lrs.create/main.c:256
 #: ../vector/v.lrs/v.lrs.label/main.c:286
 #: ../vector/v.lrs/v.lrs.segment/main.c:138 ../vector/v.reclass/main.c:107
-#: ../vector/v.kernel/main.c:264 ../vector/v.out.ogr/main.c:198
+#: ../vector/v.kernel/main.c:264 ../vector/v.out.ogr/main.c:196
 #: ../vector/v.hull/main.c:300 ../vector/v.kcv/main.c:132
 #: ../vector/v.select/main.c:103 ../vector/v.buffer2/main.c:310
 #: ../vector/v.voronoi/vo_main.c:156 ../vector/v.voronoi/dt_main.c:77
@@ -5401,8 +5401,8 @@ msgstr "Nombre del mapa raster de elevación [m]"
 #: ../raster/r.in.xyz/main.c:197 ../raster/r.in.xyz/main.c:205
 #: ../raster/r.in.xyz/main.c:213 ../general/g.proj/main.c:102
 #: ../general/g.proj/main.c:111 ../general/g.proj/main.c:120
-#: ../general/g.proj/main.c:128 ../vector/v.out.ogr/main.c:110
-#: ../vector/v.out.ogr/main.c:130 ../vector/v.edit/args.c:103
+#: ../general/g.proj/main.c:128 ../vector/v.out.ogr/main.c:108
+#: ../vector/v.out.ogr/main.c:128 ../vector/v.edit/args.c:103
 #: ../vector/v.edit/args.c:212
 msgid "Input"
 msgstr "Entrada"
@@ -5985,8 +5985,8 @@ msgstr "No se puede leer la fila ráster [%d]del mapa ráster de cobertura <%s>"
 #: ../raster/r.random/random.c:194 ../vector/v.net.distance/main.c:256
 #: ../vector/v.net.allpairs/main.c:228 ../vector/v.net.timetable/main.c:134
 #: ../vector/v.net.timetable/main.c:156 ../vector/v.net.flow/main.c:244
-#: ../vector/v.net.path/path.c:309 ../vector/v.net.centrality/main.c:69
-#: ../vector/v.net.components/main.c:38
+#: ../vector/v.net.path/path.c:309 ../vector/v.digit/attr.c:157
+#: ../vector/v.net.centrality/main.c:69 ../vector/v.net.components/main.c:38
 #, c-format
 msgid "Cannot insert new record: %s"
 msgstr "No se puede insertar el nuevo registro: %s"
@@ -8096,7 +8096,7 @@ msgstr ""
 msgid "Interpolation method"
 msgstr "Método de interpolación"
 
-#: ../raster/r.resamp.interp/main.c:97 ../imagery/i.topo.corr/main.c:212
+#: ../raster/r.resamp.interp/main.c:97 ../imagery/i.topo.corr/main.c:196
 #, c-format
 msgid "Invalid method: %s"
 msgstr "Método no válido: %s"
@@ -10049,7 +10049,7 @@ msgstr "Falló rowio_setup"
 msgid "Rowio_get failed"
 msgstr "Falló rowio_get"
 
-#: ../raster/r.mapcalc/map.c:442
+#: ../raster/r.mapcalc/map.c:442 ../imagery/i.topo.corr/main.c:37
 #, c-format
 msgid "Unable to open raster map <%s@%s>"
 msgstr "No se puede abrir el mapa ráster <%s@%s>"
@@ -10873,6 +10873,8 @@ msgstr ""
 #: ../vector/v.in.ogr/main.c:237 ../vector/v.transform/main.c:183
 #: ../vector/v.transform/main.c:194 ../vector/v.to.rast/main.c:71
 #: ../vector/v.to.rast/main.c:77 ../vector/v.to.rast/main.c:83
+#: ../vector/v.digit/line.c:86 ../vector/v.digit/attr.c:539
+#: ../vector/v.digit/attr.c:575
 msgid "Attributes"
 msgstr "Atributos"
 
@@ -14790,6 +14792,11 @@ msgstr "No lanzar la GUI después de actualizar el ajuste GUI por defecto"
 msgid "<%s> is now the default GUI"
 msgstr "<%s> es ahora la GUI por defecto"
 
+#: ../general/g.gui/main.c:103
+#, c-format
+msgid "Launching '%s' GUI in the background, please wait ..."
+msgstr ""
+
 #: ../general/g.gui/main.c:107
 msgid "The old d.m GUI is not available for WinGRASS"
 msgstr "La antigua d.m GUI no está disponible para WinGRASS"
@@ -16562,7 +16569,7 @@ msgstr "Conexión a la base de datos no definida"
 #: ../display/d.thematic.area/main.c:231 ../display/d.vect/main.c:514
 #: ../vector/v.out.svg/main.c:141 ../vector/v.extract/main.c:286
 #: ../vector/v.in.sites/main.c:158 ../vector/v.out.vtk/writeVTK.c:634
-#: ../vector/v.out.ascii/b2a.c:44 ../vector/v.out.ogr/main.c:631
+#: ../vector/v.out.ascii/b2a.c:44 ../vector/v.out.ogr/main.c:629
 #: ../vector/v.edit/select.c:513 ../vector/v.db.connect/main.c:212
 #: ../vector/v.db.connect/main.c:278 ../vector/v.drape/main.c:288
 #: ../doc/vector/v.example/main.c:123 ../db/base/columns.c:45
@@ -18171,8 +18178,9 @@ msgstr "No se puede crear la tabla <%s>"
 
 #: ../vector/v.sample/main.c:219 ../vector/v.net.distance/main.c:212
 #: ../vector/v.net.timetable/main.c:107 ../vector/v.net.flow/main.c:172
-#: ../vector/v.net.path/path.c:113 ../vector/v.net.centrality/main.c:244
-#: ../vector/v.db.connect/main.c:331 ../vector/v.net.components/main.c:151
+#: ../vector/v.net.path/path.c:113 ../vector/v.digit/c_face.c:282
+#: ../vector/v.net.centrality/main.c:244 ../vector/v.db.connect/main.c:331
+#: ../vector/v.net.components/main.c:151
 msgid "Cannot create index"
 msgstr "No se puede crear el índice"
 
@@ -18447,7 +18455,7 @@ msgid "Exports a GRASS vector map to SVG."
 msgstr "Exporta un mapa vectorial de GRASS a SVG."
 
 #: ../vector/v.out.svg/main.c:73 ../vector/v.out.vtk/main.c:46
-#: ../vector/v.out.ascii/out.c:45 ../vector/v.out.ogr/main.c:98
+#: ../vector/v.out.ascii/out.c:45 ../vector/v.out.ogr/main.c:96
 #: ../vector/v.out.pov/main.c:43 ../vector/v.out.dxf/main.c:48
 msgid "vector, export"
 msgstr "vectorial, exportar"
@@ -18481,7 +18489,7 @@ msgid "Precision must not be higher than 15"
 msgstr "La precisión no debe ser superior a 15"
 
 #: ../vector/v.out.svg/main.c:154 ../vector/v.random/main.c:214
-#: ../vector/v.out.vtk/writeVTK.c:643 ../vector/v.out.ogr/main.c:641
+#: ../vector/v.out.vtk/writeVTK.c:643 ../vector/v.out.ogr/main.c:639
 #: ../vector/v.patch/main.c:139 ../vector/v.patch/main.c:177
 #: ../vector/v.in.ascii/in.c:408 ../vector/v.info/main.c:222
 #: ../vector/v.db.connect/main.c:223 ../vector/v.drape/main.c:299
@@ -18611,6 +18619,7 @@ msgid "Query layer number (read from)"
 msgstr "Número de capa de consulta (leer de)"
 
 #: ../vector/v.to.db/parse.c:47 ../vector/v.to.db/parse.c:99
+#: ../db/base/execute.c:114
 msgid "Query"
 msgstr "Consulta"
 
@@ -19402,7 +19411,7 @@ msgid "Writing attributes..."
 msgstr "Escribiendo atributos..."
 
 #: ../vector/v.generalize/misc.c:156 ../vector/v.extract/main.c:461
-#: ../vector/v.voronoi/vo_main.c:334
+#: ../vector/v.voronoi/vo_main.c:334 ../vector/v.digit/attr.c:536
 #, c-format
 msgid "Layer %d"
 msgstr "Capa %d"
@@ -20255,6 +20264,7 @@ msgid "Input table name"
 msgstr "Nombre de tabla de entrada"
 
 #: ../vector/v.in.db/main.c:63 ../vector/v.in.db/main.c:67
+#: ../db/base/execute.c:118 ../db/base/execute.c:123
 msgid "Connection"
 msgstr "Conexión"
 
@@ -20975,7 +20985,7 @@ msgstr ""
 "No hay coordenadas para generar la salida! ¿Quizás se han encontrado un tipo "
 "de vector vacío?"
 
-#: ../vector/v.out.vtk/writeVTK.c:575 ../vector/v.out.ogr/main.c:711
+#: ../vector/v.out.vtk/writeVTK.c:575 ../vector/v.out.ogr/main.c:1061
 #, c-format
 msgid "Cannot select attributes for cat = %d"
 msgstr "No se pueden seleccionar atributos para la categoría = %d"
@@ -22259,13 +22269,13 @@ msgstr "Valor máximo en la salida: %e."
 msgid "Dimension > 2 supported only by gaussian function"
 msgstr "Dimensión > 2 soportados sólo por la función de Gauss"
 
-#: ../vector/v.out.ogr/main.c:100
+#: ../vector/v.out.ogr/main.c:98
 msgid "Converts GRASS vector map to one of the supported OGR vector formats."
 msgstr ""
 "Convierte un mapa vectorial de GRASS a uno de los formatos vectoriales "
 "soportados por OGR."
 
-#: ../vector/v.out.ogr/main.c:108
+#: ../vector/v.out.ogr/main.c:106
 msgid ""
 "Feature type(s). Combinations not supported by all output formats. Default: "
 "first type found in input."
@@ -22273,52 +22283,52 @@ msgstr ""
 "Tipo(s) de elemento. Las combinaciones no están soportadas para todos los "
 "formatos de salida. Por defecto: Primer tipo encontrado en entrada. "
 
-#: ../vector/v.out.ogr/main.c:116
+#: ../vector/v.out.ogr/main.c:114
 msgid "OGR output datasource name"
 msgstr "Nombre del origen de datos de la salida OGR"
 
-#: ../vector/v.out.ogr/main.c:118
+#: ../vector/v.out.ogr/main.c:116
 msgid "For example: ESRI Shapefile: filename or directory for storage"
 msgstr ""
 "Por ejemplo: Shapefile de ESRI: nombre o directorio para almacenamiento"
 
-#: ../vector/v.out.ogr/main.c:125
+#: ../vector/v.out.ogr/main.c:123
 msgid "OGR layer name. If not specified, input name is used."
 msgstr ""
 "Nombre de capa OGR. Si no se especifica, se usará en nombre de entrado."
 
-#: ../vector/v.out.ogr/main.c:126
+#: ../vector/v.out.ogr/main.c:124
 msgid "For example: ESRI Shapefile: shapefile name"
 msgstr "Por ejemplo: Shapefile de ESRI: nombre del shapefile"
 
-#: ../vector/v.out.ogr/main.c:127 ../vector/v.out.ogr/main.c:140
-#: ../vector/v.out.ogr/main.c:150 ../vector/v.out.ogr/main.c:160
+#: ../vector/v.out.ogr/main.c:125 ../vector/v.out.ogr/main.c:138
+#: ../vector/v.out.ogr/main.c:148 ../vector/v.out.ogr/main.c:158
 msgid "Creation"
 msgstr "Creación"
 
-#: ../vector/v.out.ogr/main.c:139
+#: ../vector/v.out.ogr/main.c:137
 msgid "OGR format"
 msgstr "Formato OGR"
 
-#: ../vector/v.out.ogr/main.c:149
+#: ../vector/v.out.ogr/main.c:147
 msgid "OGR dataset creation option (format specific, NAME=VALUE)"
 msgstr ""
 "Opción de creación de conjunto de datos OGR (específica de formato, "
 "NOMBRE=VALOR)"
 
-#: ../vector/v.out.ogr/main.c:159
+#: ../vector/v.out.ogr/main.c:157
 msgid "OGR layer creation option (format specific, NAME=VALUE)"
 msgstr "Opción de creación de capa OGR (específica de formato, NOMBRE=VALOR)"
 
-#: ../vector/v.out.ogr/main.c:164
+#: ../vector/v.out.ogr/main.c:162
 msgid "Open an existing datasource for update"
 msgstr "Abrir una fuente de datos existentes para actualizar"
 
-#: ../vector/v.out.ogr/main.c:169
+#: ../vector/v.out.ogr/main.c:167
 msgid "Skip export of GRASS category ID ('cat') attribute"
 msgstr ""
 
-#: ../vector/v.out.ogr/main.c:173
+#: ../vector/v.out.ogr/main.c:171
 msgid ""
 "Export features with category (labeled) only. Otherwise all features are "
 "exported"
@@ -22326,46 +22336,46 @@ msgstr ""
 "Exportar sólo elementos con categoría (etiquetados). En caso contrario se "
 "exportarán todos."
 
-#: ../vector/v.out.ogr/main.c:178
+#: ../vector/v.out.ogr/main.c:176
 msgid "Use ESRI-style .prj file format (applies to Shapefile output only)"
 msgstr ""
 "Usar formato de archivo .prj tipo ESRI (sólo se aplica al Shapefile de "
 "salida)"
 
-#: ../vector/v.out.ogr/main.c:183
+#: ../vector/v.out.ogr/main.c:181
 msgid "Create 3D output if input is 3D (applies to Shapefile output only)"
 msgstr ""
 "Crear salida 3D si la entrada es 3D (sólo se aplica a Shapefile de salida)"
 
-#: ../vector/v.out.ogr/main.c:188
+#: ../vector/v.out.ogr/main.c:186
 msgid "Export lines as polygons"
 msgstr "Exportar líneas como polígonos"
 
-#: ../vector/v.out.ogr/main.c:232
+#: ../vector/v.out.ogr/main.c:230
 msgid "Skipping all boundaries that are not part of an area."
 msgstr "Obviando todos los límites que no son parte de un área."
 
-#: ../vector/v.out.ogr/main.c:251
+#: ../vector/v.out.ogr/main.c:249
 msgid "Volumes will be exported as sets of faces."
 msgstr "Los volúmenes se exportarán como conjuntos de caras."
 
-#: ../vector/v.out.ogr/main.c:269
+#: ../vector/v.out.ogr/main.c:267
 msgid "Could not determine input map's feature type(s)."
 msgstr ""
 "No se ha podido determinar el tipo(s) de elemento(s) del mapa de entrada."
 
-#: ../vector/v.out.ogr/main.c:314
+#: ../vector/v.out.ogr/main.c:312
 msgid "The combination of types is not supported by all formats."
 msgstr "La combinación de tipos no está soportada por todos lo formatos."
 
-#: ../vector/v.out.ogr/main.c:328
+#: ../vector/v.out.ogr/main.c:326
 msgid ""
 "The map contains islands. To preserve them in the output map, use the -c flag"
 msgstr ""
 "El mapa tiene islas. Para mantenerlas en el mapa de salida, utilizar la -c "
 "flag"
 
-#: ../vector/v.out.ogr/main.c:333
+#: ../vector/v.out.ogr/main.c:331
 #, c-format
 msgid ""
 "%d point(s) found, but not requested to be exported. Verify 'type' parameter."
@@ -22373,7 +22383,7 @@ msgstr ""
 "%d punto(s) encontrado, pero no se ha solicitado exportarlos. Verificar el "
 "parámetro 'tipo'."
 
-#: ../vector/v.out.ogr/main.c:338
+#: ../vector/v.out.ogr/main.c:336
 #, c-format
 msgid ""
 "%d line(s) found, but not requested to be exported. Verify 'type' parameter."
@@ -22381,7 +22391,7 @@ msgstr ""
 "%d línea(s) encontrada, pero no se ha solicitado exportarlas. Verificar el "
 "parámetro 'tipo'."
 
-#: ../vector/v.out.ogr/main.c:344
+#: ../vector/v.out.ogr/main.c:342
 #, c-format
 msgid ""
 "%d boundary(ies) found, but not requested to be exported. Verify 'type' "
@@ -22390,7 +22400,7 @@ msgstr ""
 "%d contorno(s) encontrado, pero no se ha solicitado exportarlos. Verificar "
 "el parámetro 'tipo'."
 
-#: ../vector/v.out.ogr/main.c:350
+#: ../vector/v.out.ogr/main.c:348
 #, c-format
 msgid ""
 "%d centroid(s) found, but not requested to be exported. Verify 'type' "
@@ -22399,7 +22409,7 @@ msgstr ""
 "%d centroide(s) encontrado, pero no se ha solicitado exportarlos. Verificar "
 "el parámetro 'tipo'."
 
-#: ../vector/v.out.ogr/main.c:355
+#: ../vector/v.out.ogr/main.c:353
 #, c-format
 msgid ""
 "%d areas found, but not requested to be exported. Verify 'type' parameter."
@@ -22407,7 +22417,7 @@ msgstr ""
 "%d area(s) encontrada, pero no se ha solicitado exportarlas. Verificar el "
 "parámetro 'tipo'."
 
-#: ../vector/v.out.ogr/main.c:359
+#: ../vector/v.out.ogr/main.c:357
 #, c-format
 msgid ""
 "%d face(s) found, but not requested to be exported. Verify 'type' parameter."
@@ -22415,7 +22425,7 @@ msgstr ""
 "%d cara(s) encontrada, pero no se ha solicitado exportarlas. Verificar el "
 "parámetro 'tipo'."
 
-#: ../vector/v.out.ogr/main.c:365
+#: ../vector/v.out.ogr/main.c:363
 #, c-format
 msgid ""
 "%d kernel(s) found, but not requested to be exported. Verify 'type' "
@@ -22424,7 +22434,7 @@ msgstr ""
 "%d kernel(s) encontrado, pero no se ha solicitado exportarlos. Verificar el "
 "parámetro 'tipo'."
 
-#: ../vector/v.out.ogr/main.c:370
+#: ../vector/v.out.ogr/main.c:368
 #, c-format
 msgid ""
 "%d volume(s) found, but not requested to be exported. Verify 'type' "
@@ -22433,21 +22443,21 @@ msgstr ""
 "%d volumen(es) encontrado, pero no se ha solicitado exportarlos. Verificar "
 "el parámetro 'tipo'."
 
-#: ../vector/v.out.ogr/main.c:376
+#: ../vector/v.out.ogr/main.c:374
 msgid ""
 "No points found, but requested to be exported. Will skip this geometry type."
 msgstr ""
 "%d punto(s) encontrado, pero se ha solicitado exportarlos. Se omitirá este "
 "tipo de geometría."
 
-#: ../vector/v.out.ogr/main.c:385
+#: ../vector/v.out.ogr/main.c:383
 msgid ""
 "No lines found, but requested to be exported. Will skip this geometry type."
 msgstr ""
 "%d línea(s) encontrada, pero se ha solicitado exportarlas. Se omitirá este "
 "tipo de geometría."
 
-#: ../vector/v.out.ogr/main.c:395
+#: ../vector/v.out.ogr/main.c:393
 msgid ""
 "No boundaries found, but requested to be exported. Will skip this geometry "
 "type."
@@ -22455,14 +22465,14 @@ msgstr ""
 "No se han encontrado contornos, pero se ha solicitado exportarlos. Se "
 "omitirá este tipo de geometría."
 
-#: ../vector/v.out.ogr/main.c:404
+#: ../vector/v.out.ogr/main.c:402
 msgid ""
 "No areas found, but requested to be exported. Will skip this geometry type."
 msgstr ""
 "No se han encontrado áreas, pero se ha solicitado exportarlas. Se omitirá "
 "este tipo de geometría."
 
-#: ../vector/v.out.ogr/main.c:414
+#: ../vector/v.out.ogr/main.c:412
 msgid ""
 "No centroids found, but requested to be exported. Will skip this geometry "
 "type."
@@ -22470,56 +22480,56 @@ msgstr ""
 "No se han encontrado centroides, pero se ha solicitado exportarlos. Se "
 "omitirá esta geometría."
 
-#: ../vector/v.out.ogr/main.c:423
+#: ../vector/v.out.ogr/main.c:421
 msgid ""
 "No faces found, but requested to be exported. Will skip this geometry type."
 msgstr ""
 "No se han encontrado caras, pero se ha solicitado exportarlas. Se omitirá "
 "este tipo de geometría."
 
-#: ../vector/v.out.ogr/main.c:432
+#: ../vector/v.out.ogr/main.c:430
 msgid ""
 "No kernels found, but requested to be exported. Will skip this geometry type."
 msgstr ""
 "No se han encontrado kernels, pero se ha solicitado exportarlos. Se omitirá "
 "este tipo de geometría."
 
-#: ../vector/v.out.ogr/main.c:441
+#: ../vector/v.out.ogr/main.c:439
 msgid ""
 "No volumes found, but requested to be exported. Will skip this geometry type."
 msgstr ""
 "No se han encontrado volúmenes, pero se ha solicitado exportarlos. Se "
 "omitirá este tipo de geometría."
 
-#: ../vector/v.out.ogr/main.c:452
+#: ../vector/v.out.ogr/main.c:450
 msgid "Nothing to export"
 msgstr "Nada que exportar"
 
-#: ../vector/v.out.ogr/main.c:485
+#: ../vector/v.out.ogr/main.c:483
 #, c-format
 msgid "OGR driver <%s> not found"
 msgstr "El driver OGR <%s> no encontrado"
 
-#: ../vector/v.out.ogr/main.c:510
+#: ../vector/v.out.ogr/main.c:508
 #, c-format
 msgid "Unable to open OGR data source '%s'"
 msgstr "No se puede abrir entrada de datos OGR '%s'"
 
-#: ../vector/v.out.ogr/main.c:524
+#: ../vector/v.out.ogr/main.c:522
 #, c-format
 msgid "Layer <%s> already exists in OGR data source '%s'"
 msgstr "Capa <%s> ya existe en la entrada de datos OGR '%s'"
 
-#: ../vector/v.out.ogr/main.c:528
+#: ../vector/v.out.ogr/main.c:526
 #, c-format
 msgid "OGR layer <%s> already exists and will be overwritten"
 msgstr "La capa OGR <%s> ya existe y será sobrescrita"
 
-#: ../vector/v.out.ogr/main.c:569
+#: ../vector/v.out.ogr/main.c:567
 msgid "Overriding existing user-defined 'SHPT=' LCO."
 msgstr ""
 
-#: ../vector/v.out.ogr/main.c:585
+#: ../vector/v.out.ogr/main.c:583
 #, c-format
 msgid ""
 "Vector map <%s> is 3D. Use format specific layer creation options (parameter "
@@ -22529,7 +22539,7 @@ msgstr ""
 "para el formato (parámetro 'Ico') o etiqueta '-z' para exportar en 3D en vez "
 "de 2D (predeterminado)"
 
-#: ../vector/v.out.ogr/main.c:592
+#: ../vector/v.out.ogr/main.c:590
 #, c-format
 msgid ""
 "Vector map <%s> is 3D. Use format specific layer creation options (parameter "
@@ -22539,72 +22549,72 @@ msgstr ""
 "para el formato (parámetro 'Ico') para exportar en 3D en vez de 2D "
 "(predeterminado)."
 
-#: ../vector/v.out.ogr/main.c:605
+#: ../vector/v.out.ogr/main.c:603
 msgid "Unable to create OGR layer"
 msgstr "Imposible crear capa OGR"
 
-#: ../vector/v.out.ogr/main.c:615
+#: ../vector/v.out.ogr/main.c:613
 msgid "No attribute table found -> using only category numbers as attributes"
 msgstr ""
 "No se encontró ninguna tabla de atributos -> sólo se usan los números de "
 "categoría como atributos"
 
-#: ../vector/v.out.ogr/main.c:619
+#: ../vector/v.out.ogr/main.c:617
 msgid "Exporting 'cat' anyway, as it is the only attribute table field"
 msgstr ""
 "Exportando 'cat' de todas formas, ya que es el único campo la tabla de "
 "atributos"
 
-#: ../vector/v.out.ogr/main.c:696
+#: ../vector/v.out.ogr/main.c:694
 #, c-format
 msgid "Key column '%s' not found"
 msgstr "Columna clave '%s' no encontrada"
 
-#: ../vector/v.out.ogr/main.c:720
+#: ../vector/v.out.ogr/main.c:707
 #, c-format
 msgid "Exporting %i geometries..."
 msgstr "Exportando %i geometrías..."
 
-#: ../vector/v.out.ogr/main.c:802
+#: ../vector/v.out.ogr/main.c:789
 #, c-format
 msgid "Exporting %i areas (may take some time)..."
 msgstr "Exportando %i áreas (puede llevar algún tiempo) ..."
 
-#: ../vector/v.out.ogr/main.c:877
+#: ../vector/v.out.ogr/main.c:864
 #, c-format
 msgid "Exporting %i faces (may take some time) ..."
 msgstr "Exportando %i caras (puede llevar algún tiempo) ..."
 
-#: ../vector/v.out.ogr/main.c:940
+#: ../vector/v.out.ogr/main.c:927
 #, c-format
 msgid "Exporting %i kernels..."
 msgstr "Exportando %i puntos/líneas..."
 
-#: ../vector/v.out.ogr/main.c:999
+#: ../vector/v.out.ogr/main.c:986
 #, c-format
 msgid "Exporting %i volumes..."
 msgstr "Exportando %i volúmenes..."
 
-#: ../vector/v.out.ogr/main.c:1000
+#: ../vector/v.out.ogr/main.c:987
 msgid "Export of volumes not implemented yet. Skipping."
 msgstr "Exportación de volúmenes todavía no implementados. Saliendo."
 
-#: ../vector/v.out.ogr/main.c:1018
+#: ../vector/v.out.ogr/main.c:1004
 #, c-format
 msgid "%d features without category were written"
 msgstr "%d elementos sin categoría escritos"
 
-#: ../vector/v.out.ogr/main.c:1020
+#: ../vector/v.out.ogr/main.c:1006
 #, c-format
 msgid "%d features without attributes were written"
 msgstr "%d elementos sin atributos escritos"
 
-#: ../vector/v.out.ogr/main.c:1022
+#: ../vector/v.out.ogr/main.c:1008
 #, c-format
 msgid "%d features found without category were skipped"
 msgstr "Se han saltado %d elementos encontrados sin categoría "
 
-#: ../vector/v.out.ogr/main.c:1033
+#: ../vector/v.out.ogr/main.c:1019
 #, c-format
 msgid "%d features written to <%s> (%s)."
 msgstr "%d elementos escritos a <%s> (%s)."
@@ -22900,7 +22910,7 @@ msgstr "Especificadas tanto validación cruzada como archivo de desviaciones"
 msgid "Vector is not 3D"
 msgstr "El vectorial no es 3D"
 
-#: ../vector/v.vol.rst/main.c:596
+#: ../vector/v.vol.rst/main.c:596 ../vector/v.digit/c_face.c:269
 #, c-format
 msgid "Cannot create table: %s"
 msgstr "No se puede crear la tabla: %s"
@@ -26787,9 +26797,450 @@ msgstr ""
 "El mapa <%s> no existe en el directorio de mapas actual. Añada el opción -n "
 "para crear un nuevo mapa."
 
+#: ../vector/v.digit/zoom.c:26
+msgid "Zoom by window"
+msgstr ""
+
+#: ../vector/v.digit/zoom.c:27 ../vector/v.digit/zoom.c:44
+#: ../vector/v.digit/zoom.c:75
+msgid "1. corner"
+msgstr ""
+
+#: ../vector/v.digit/zoom.c:27 ../vector/v.digit/zoom.c:44
+#: ../vector/v.digit/zoom.c:75 ../vector/v.digit/zoom.c:158
+#, fuzzy
+msgid "Quit"
+msgstr "Silencioso"
+
+#: ../vector/v.digit/zoom.c:44
+msgid "2. corner"
+msgstr ""
+
+#: ../vector/v.digit/zoom.c:157
+msgid "Pan"
+msgstr ""
+
+#: ../vector/v.digit/zoom.c:158
+#, fuzzy
+msgid "New center"
+msgstr "Esquema nuevo"
+
+#: ../vector/v.digit/zoom.c:247
+#, fuzzy, c-format
+msgid "Cannot find window '%s'"
+msgstr "No se puede insertar nueva línea: %s"
+
+#: ../vector/v.digit/var.c:80 ../vector/v.digit/var.c:101
+#: ../vector/v.digit/var.c:122
+#, fuzzy, c-format
+msgid "Cannot set variable code = %d"
+msgstr "No se pueden seleccionar atributos para la categoría = %d"
+
+#: ../vector/v.digit/var.c:143
+#, fuzzy, c-format
+msgid "Cannot get type of variable %s"
+msgstr "No se puede obtener la lista de tablas:\n"
+
+#: ../vector/v.digit/var.c:164
+#, fuzzy, c-format
+msgid "Cannot get code of variable %s"
+msgstr "No se puede obtener la lista de tablas:\n"
+
+#: ../vector/v.digit/var.c:184
+#, fuzzy, c-format
+msgid "Cannot get name of variable %d"
+msgstr "No se puede obtener la lista de tablas:\n"
+
+#: ../vector/v.digit/var.c:199 ../vector/v.digit/var.c:215
+#: ../vector/v.digit/var.c:231
+#, fuzzy, c-format
+msgid "Cannot get value of variable code = %d"
+msgstr "No se puede obtener la lista de tablas:\n"
+
+#: ../vector/v.digit/centre.c:56
+#, fuzzy
+msgid "Select tool"
+msgstr "Tipo de archivo"
+
 #: ../vector/v.digit/centre.c:178
 msgid "Region restored to original extent."
 msgstr "Región restaurada a la extensión original."
+
+#: ../vector/v.digit/c_face.c:183 ../vector/v.digit/c_face.c:241
+#, fuzzy, c-format
+msgid "Cannot open driver %s"
+msgstr "No se puede abrir %s"
+
+#: ../vector/v.digit/c_face.c:189 ../vector/v.digit/c_face.c:251
+#, c-format
+msgid "Cannot open database %s"
+msgstr "No se puede abrir la base de datos %s"
+
+#: ../vector/v.digit/c_face.c:242
+#, fuzzy
+msgid "Cannot open driver "
+msgstr "No se puede abrir %s"
+
+#: ../vector/v.digit/c_face.c:252 ../vector/v.digit/attr.c:137
+#: ../vector/v.digit/attr.c:650
+#, c-format
+msgid "Cannot open database %s by driver %s"
+msgstr "No se puede abrir la base de datos %s por el controlador %s"
+
+#: ../vector/v.digit/c_face.c:270
+#, fuzzy
+msgid "Cannot create table: "
+msgstr "No se puede crear la tabla: %s"
+
+#: ../vector/v.digit/c_face.c:283
+#, fuzzy
+msgid "Cannot create index:\n"
+msgstr "No se puede crear el índice"
+
+#: ../vector/v.digit/c_face.c:294 ../vector/v.db.connect/main.c:336
+#, c-format
+msgid "Cannot grant privileges on table %s"
+msgstr "No se pueden otorgar privilegios sobre la tabla %s"
+
+#: ../vector/v.digit/c_face.c:295
+#, fuzzy
+msgid "Cannot grant privileges on table:\n"
+msgstr "No se pueden otorgar privilegios sobre la tabla %s"
+
+#: ../vector/v.digit/c_face.c:312
+msgid ""
+"Cannot add database link to vector, link for given field probably already "
+"exists."
+msgstr ""
+
+#: ../vector/v.digit/generate.c:77
+#, fuzzy
+msgid "Cannot open driver"
+msgstr "No se puede abrir %s"
+
+#: ../vector/v.digit/generate.c:78
+#, fuzzy, c-format
+msgid "Cannot open driver '%s'<BR>"
+msgstr "No se puede abrir el archivo dxf <%s>"
+
+#: ../vector/v.digit/generate.c:89
+#, fuzzy
+msgid "Cannot open database"
+msgstr "No se puede abrir la base de datos %s"
+
+#: ../vector/v.digit/generate.c:91
+#, fuzzy, c-format
+msgid "Cannot open database '%s' by driver '%s'<BR>"
+msgstr "No se puede abrir la base de datos %s por el controlador %s"
+
+#: ../vector/v.digit/generate.c:106
+#, fuzzy
+msgid "Cannot open select cursor"
+msgstr "No se puede abrir el cursor de selección: '%s'"
+
+#: ../vector/v.digit/generate.c:110
+#, fuzzy, c-format
+msgid ""
+"Cannot open select cursor:<BR>'%s'<BR>on database '%s' by driver '%s'<BR>"
+msgstr "No se puede abrir la base de datos %s por el controlador %s"
+
+#: ../vector/v.digit/generate.c:121
+#, fuzzy
+msgid "Cannot fetch next record"
+msgstr "No se puede recuperar la fila"
+
+#: ../vector/v.digit/generate.c:130
+#, fuzzy
+msgid "No database record"
+msgstr "Controlador de base de datos"
+
+#: ../vector/v.digit/generate.c:223
+#, c-format
+msgid "<HR>   Assume data encoding as:<BR><BR><SELECT NAME=%s SIZE=4><HR><BR>"
+msgstr ""
+
+#: ../vector/v.digit/vertex.c:35
+msgid "Split line:"
+msgstr ""
+
+#: ../vector/v.digit/vertex.c:36 ../vector/v.digit/vertex.c:56
+#: ../vector/v.digit/vertex.c:152 ../vector/v.digit/vertex.c:373
+#: ../vector/v.digit/vertex.c:516 ../vector/v.digit/vertex.c:570
+#: ../vector/v.digit/vertex.c:669 ../vector/v.digit/line.c:481
+#: ../vector/v.digit/line.c:566 ../vector/v.digit/line.c:620
+#: ../vector/v.digit/line.c:705 ../vector/v.digit/attr.c:403
+#, fuzzy
+msgid "Select"
+msgstr "Selección"
+
+#: ../vector/v.digit/vertex.c:36 ../vector/v.digit/vertex.c:56
+#: ../vector/v.digit/vertex.c:131 ../vector/v.digit/vertex.c:152
+#: ../vector/v.digit/vertex.c:200 ../vector/v.digit/vertex.c:220
+#: ../vector/v.digit/vertex.c:304 ../vector/v.digit/vertex.c:325
+#: ../vector/v.digit/vertex.c:373 ../vector/v.digit/vertex.c:471
+#: ../vector/v.digit/vertex.c:516 ../vector/v.digit/vertex.c:570
+#: ../vector/v.digit/vertex.c:633 ../vector/v.digit/vertex.c:669
+#: ../vector/v.digit/line.c:140 ../vector/v.digit/line.c:224
+#: ../vector/v.digit/line.c:481 ../vector/v.digit/line.c:564
+#: ../vector/v.digit/line.c:566 ../vector/v.digit/line.c:620
+#: ../vector/v.digit/line.c:671 ../vector/v.digit/line.c:705
+#: ../vector/v.digit/attr.c:192 ../vector/v.digit/attr.c:302
+#: ../vector/v.digit/attr.c:398 ../vector/v.digit/attr.c:403
+#: ../vector/v.digit/attr.c:407 ../vector/v.digit/attr.c:463
+#, fuzzy
+msgid "Quit tool"
+msgstr "Herramienta consulta"
+
+#: ../vector/v.digit/vertex.c:130 ../vector/v.digit/vertex.c:303
+#: ../vector/v.digit/line.c:564
+msgid "Confirm and select next"
+msgstr ""
+
+#: ../vector/v.digit/vertex.c:130 ../vector/v.digit/vertex.c:303
+#: ../vector/v.digit/vertex.c:471 ../vector/v.digit/vertex.c:633
+#: ../vector/v.digit/line.c:481 ../vector/v.digit/line.c:564
+#: ../vector/v.digit/line.c:566 ../vector/v.digit/line.c:671
+#, fuzzy
+msgid "Unselect"
+msgstr " Ningún monitor seleccionado"
+
+#: ../vector/v.digit/vertex.c:199
+#, fuzzy
+msgid "Remove vertex:"
+msgstr "Vértices eliminados %5d"
+
+#: ../vector/v.digit/vertex.c:200 ../vector/v.digit/vertex.c:220
+#: ../vector/v.digit/vertex.c:325
+#, fuzzy
+msgid "Select vertex"
+msgstr "Tipo de archivo"
+
+#: ../vector/v.digit/vertex.c:372
+msgid "Add vertex:"
+msgstr ""
+
+#: ../vector/v.digit/vertex.c:471
+msgid "New vertex"
+msgstr ""
+
+#: ../vector/v.digit/vertex.c:569
+#, fuzzy
+msgid "Move vertex:"
+msgstr "Vértices eliminados %5d"
+
+#: ../vector/v.digit/vertex.c:633 ../vector/v.digit/line.c:671
+#, fuzzy
+msgid "New location"
+msgstr "Asignación de métricas"
+
+#: ../vector/v.digit/form.c:97
+msgid "db connection was not set by form\n"
+msgstr ""
+
+#: ../vector/v.digit/form.c:108
+#, fuzzy
+msgid "Cannot open driver\n"
+msgstr "No se puede abrir %s"
+
+#: ../vector/v.digit/form.c:120
+#, fuzzy
+msgid "Cannot open database\n"
+msgstr "No se puede abrir la base de datos %s"
+
+#: ../vector/v.digit/form.c:133
+#, fuzzy
+msgid "Cannot describe table\n"
+msgstr "Imposible copiar la tabla"
+
+#: ../vector/v.digit/form.c:162
+#, fuzzy
+msgid "Cannot find column type"
+msgstr "Tipo de columna desconocido"
+
+#: ../vector/v.digit/form.c:199
+#, c-format
+msgid "Could not set Tcl system encoding to '%s' (%s)"
+msgstr ""
+
+#: ../vector/v.digit/form.c:228
+msgid "Could not convert UTF to external."
+msgstr ""
+
+#: ../vector/v.digit/form.c:256
+#, fuzzy
+msgid "Cannot update table"
+msgstr "No se puede modificar la tabla: %s"
+
+#: ../vector/v.digit/line.c:55
+#, fuzzy
+msgid "Form"
+msgstr "Formato"
+
+#: ../vector/v.digit/line.c:64
+#, fuzzy
+msgid "New record was created.<BR>"
+msgstr "Nuevo mapa vacío creado."
+
+#: ../vector/v.digit/line.c:68
+#, fuzzy
+msgid "Record for this category already existed.<BR>"
+msgstr "No hay registro para la categoría %d en la tabla <%s>"
+
+#: ../vector/v.digit/line.c:138
+#, c-format
+msgid "Digitize new %s:"
+msgstr ""
+
+#: ../vector/v.digit/line.c:140 ../vector/v.digit/line.c:224
+#: ../vector/v.digit/line.c:253
+#, fuzzy
+msgid "New point"
+msgstr "Punto de vista"
+
+#: ../vector/v.digit/line.c:191
+msgid "Out of memory! Point not added."
+msgstr ""
+
+#: ../vector/v.digit/line.c:246
+msgid "Less than 2 points for line -> nothing written"
+msgstr ""
+
+#: ../vector/v.digit/line.c:253
+#, fuzzy
+msgid "Undo last point"
+msgstr "Ningún punto de inicio"
+
+#: ../vector/v.digit/line.c:253 ../vector/v.digit/line.c:337
+#: ../vector/v.digit/line.c:386
+#, fuzzy
+msgid "Close line"
+msgstr "Fallo al cerrar."
+
+#: ../vector/v.digit/line.c:337 ../vector/v.digit/line.c:386
+#: ../vector/v.digit/line.c:407
+#, fuzzy
+msgid "New Point"
+msgstr "Puntos"
+
+#: ../vector/v.digit/line.c:337 ../vector/v.digit/line.c:386
+#, fuzzy
+msgid "Undo Last Point"
+msgstr "Ningún punto de inicio"
+
+#: ../vector/v.digit/line.c:407
+#, fuzzy
+msgid "Delete line and exit"
+msgstr "Imprimir tablas y salir"
+
+#: ../vector/v.digit/line.c:480
+msgid "Delete point, line, boundary, or centroid:"
+msgstr ""
+
+#: ../vector/v.digit/line.c:619
+msgid "Move point, line, boundary, or centroid:"
+msgstr ""
+
+#: ../vector/v.digit/attr.c:94
+#, fuzzy
+msgid "Cannot create new record."
+msgstr "No se puede crear la nueva tabla"
+
+#: ../vector/v.digit/attr.c:127
+#, fuzzy
+msgid "Database table for this layer is not defined"
+msgstr "Conexión a la base de datos no definida"
+
+#: ../vector/v.digit/attr.c:145 ../vector/v.digit/attr.c:659
+#, fuzzy, c-format
+msgid "Cannot select record from table %s"
+msgstr "Imposible seleccionar datos de la tabla"
+
+#: ../vector/v.digit/attr.c:191
+#, fuzzy
+msgid "Display categories:"
+msgstr "%ld categorías"
+
+#: ../vector/v.digit/attr.c:192 ../vector/v.digit/attr.c:463
+#, fuzzy
+msgid "Select line"
+msgstr "Selección"
+
+#: ../vector/v.digit/attr.c:301 ../vector/v.digit/attr.c:406
+#, fuzzy
+msgid "Copy attributes:"
+msgstr "Copiar atributos"
+
+#: ../vector/v.digit/attr.c:302 ../vector/v.digit/attr.c:407
+#, fuzzy
+msgid "Select source object"
+msgstr "Proyeccion del origen"
+
+#: ../vector/v.digit/attr.c:396 ../vector/v.digit/attr.c:402
+#, fuzzy
+msgid "Select the target object"
+msgstr "Establece el color de texto"
+
+#: ../vector/v.digit/attr.c:397
+#, fuzzy
+msgid "Conform and select next"
+msgstr "Ninguna fuente seleccionada"
+
+#: ../vector/v.digit/attr.c:397
+#, fuzzy
+msgid "Deselect Target"
+msgstr "Seleccionar un marco"
+
+#: ../vector/v.digit/attr.c:403
+msgid "Deselect Source"
+msgstr ""
+
+#: ../vector/v.digit/attr.c:462
+#, fuzzy
+msgid "Display attributes:"
+msgstr "Copiar atributos"
+
+#: ../vector/v.digit/attr.c:542
+#, fuzzy, c-format
+msgid "layer: %d<BR>category: %d<BR>"
+msgstr ""
+"Capa: %d\n"
+"categoría: %d\n"
+
+#: ../vector/v.digit/attr.c:549
+#, fuzzy
+msgid "Database connection not defined<BR>"
+msgstr "Conexión a la base de datos no definida"
+
+#: ../vector/v.digit/attr.c:553
+#, fuzzy, c-format
+msgid "driver: %s<BR>database: %s<BR>table: %s<BR>key column: %s<BR>"
+msgstr ""
+"controlador: %s\n"
+"base de datos: %s\n"
+"tabla: %s\n"
+"columna de clave: %s\n"
+
+#: ../vector/v.digit/attr.c:571
+#, fuzzy, c-format
+msgid "Line %d"
+msgstr "Línea: %d\n"
+
+#: ../vector/v.digit/attr.c:577
+#, fuzzy
+msgid "No categories"
+msgstr "%ld categorías"
+
+#: ../vector/v.digit/attr.c:668
+#, c-format
+msgid ""
+"There are no more features with category %d (layer %d) in the map, but there "
+"is record in the table. Delete this record?"
+msgstr ""
+
+#: ../vector/v.digit/attr.c:680
+#, fuzzy, c-format
+msgid "Cannot delete record: %s"
+msgstr "No se puede insertar el nuevo registro: %s"
 
 #: ../vector/v.net.centrality/main.c:95
 msgid "vector, network, centrality measures"
@@ -26938,11 +27389,6 @@ msgid ""
 msgstr ""
 "La tabla <%s> ahora es parte del mapa vectorial <%s> y se puede borrar o "
 "sobrescribir por los módulos de GRASS"
-
-#: ../vector/v.db.connect/main.c:336
-#, c-format
-msgid "Cannot grant privileges on table %s"
-msgstr "No se pueden otorgar privilegios sobre la tabla %s"
 
 #: ../vector/v.db.connect/main.c:339
 msgid "Select privileges were granted on the table"
@@ -28610,7 +29056,7 @@ msgstr "Ejecuta cualquier sentencia SQL."
 msgid "Name of file containing SQL statements"
 msgstr "Nombre del archivo que contiene sentencias SQL"
 
-#: ../db/base/execute.c:126
+#: ../db/base/execute.c:129
 msgid "Ignore SQL errors and continue"
 msgstr "Ignorar errores SQL y continuar"
 
@@ -33001,130 +33447,77 @@ msgstr ""
 " O\n"
 " introducir las variables manualmente"
 
-#: ../imagery/i.topo.corr/main.c:37
-#, fuzzy, c-format
-msgid "Cannot open file [%s] in mapset [%s]"
-msgstr ""
-"No se puede abrir el archivo de etiquetas <%s> en el directorio de mapas <%s>"
-
-#: ../imagery/i.topo.corr/main.c:57
-#, fuzzy, c-format
-msgid "Cannot create file <%s> in mapset <%s>"
-msgstr ""
-"No se puede abrir el archivo de etiquetas <%s> en el directorio de mapas <%s>"
-
-#: ../imagery/i.topo.corr/main.c:84
-msgid "Topografic correction of reflectance"
-msgstr ""
-
-#: ../imagery/i.topo.corr/main.c:86
-msgid "Topographic correction, Cosine, Minnaert, C-Factor, Percent"
-msgstr ""
-
-#: ../imagery/i.topo.corr/main.c:91
+#: ../imagery/i.topo.corr/main.c:83
 #, fuzzy
-msgid "input"
-msgstr "Entrada"
+msgid "Computes topografic correction of reflectance."
+msgstr "Método de interpolación"
 
-#: ../imagery/i.topo.corr/main.c:95
+#: ../imagery/i.topo.corr/main.c:85
+msgid "imagery, topographic correction, Cosine, Minnaert, C-Factor, Percent"
+msgstr ""
+
+#: ../imagery/i.topo.corr/main.c:93
 #, fuzzy
-msgid "input,cell,raster"
-msgstr "mostrar ráster"
+msgid "Name of reflectance raster maps to correct topographically"
+msgstr "Nombre del mapa ráster de superficie para sección cruzada"
 
 #: ../imagery/i.topo.corr/main.c:97
-msgid "List of reflectance band maps to correct topographically"
-msgstr ""
-
-#: ../imagery/i.topo.corr/main.c:100
 #, fuzzy
-msgid "output"
-msgstr "Salida"
+msgid "Name (flag -i) or prefix for output raster maps"
+msgstr "Prefijo para el mapa(s) raster de salida"
 
-#: ../imagery/i.topo.corr/main.c:103
+#: ../imagery/i.topo.corr/main.c:101
 #, fuzzy
-msgid "output,cell,raster"
-msgstr "mapa de salida ráster"
+msgid "Name of input base raster map (elevation or ilumination)"
+msgstr "Nombre del mapa raster de entrada (saturación)"
 
-#: ../imagery/i.topo.corr/main.c:105
-msgid "File name of output (flag -i) or prefix of output files"
-msgstr ""
-
-#: ../imagery/i.topo.corr/main.c:108
-#, fuzzy
-msgid "basemap"
-msgstr "Eliminar mapas base"
-
-#: ../imagery/i.topo.corr/main.c:111
-msgid "base,cell,raster"
-msgstr ""
-
-#: ../imagery/i.topo.corr/main.c:112
-msgid "Base map for analysis (elevation or ilumination)"
-msgstr ""
-
-#: ../imagery/i.topo.corr/main.c:115
-msgid "zenith"
-msgstr ""
-
-#: ../imagery/i.topo.corr/main.c:118
-msgid "zenith,float"
-msgstr ""
-
-#: ../imagery/i.topo.corr/main.c:119
+#: ../imagery/i.topo.corr/main.c:107
 #, fuzzy
 msgid "Solar zenith in degrees"
 msgstr "Ángulo del eje mayor en grados"
 
-#: ../imagery/i.topo.corr/main.c:122
-msgid "azimuth"
-msgstr ""
-
-#: ../imagery/i.topo.corr/main.c:125
-msgid "azimuth,float"
-msgstr ""
-
-#: ../imagery/i.topo.corr/main.c:126
+#: ../imagery/i.topo.corr/main.c:113
 msgid "Solar azimuth in degrees (only if flag -i)"
 msgstr ""
 
-#: ../imagery/i.topo.corr/main.c:129
-#, fuzzy
-msgid "method"
-msgstr "Métodode los nodos"
-
-#: ../imagery/i.topo.corr/main.c:133
-#, fuzzy
-msgid "topographic correction method"
-msgstr "Método de interpolación"
-
-#: ../imagery/i.topo.corr/main.c:134
+#: ../imagery/i.topo.corr/main.c:120
 msgid "Topographic correction method"
 msgstr ""
 
-#: ../imagery/i.topo.corr/main.c:139
+#: ../imagery/i.topo.corr/main.c:125
 msgid "To output sun ilumination terrain model"
 msgstr ""
 
-#: ../imagery/i.topo.corr/main.c:146
+#: ../imagery/i.topo.corr/main.c:131
 msgid "Solar azimuth is necessary to calculate ilumination terrain model"
 msgstr ""
 
-#: ../imagery/i.topo.corr/main.c:150
+#: ../imagery/i.topo.corr/main.c:134
 msgid "Reflectance maps are necessary to make topographic correction"
 msgstr ""
 
-#: ../imagery/i.topo.corr/main.c:182
+#: ../imagery/i.topo.corr/main.c:166
 #, fuzzy
-msgid "Elevation file of unknown type"
+msgid "Elevation raster map of unknown type"
 msgstr "Coordenada de elevación de un punto en el plano"
 
-#: ../imagery/i.topo.corr/main.c:216
+#: ../imagery/i.topo.corr/main.c:200
 msgid "Illumination model is of CELL type"
 msgstr ""
 
-#: ../imagery/i.topo.corr/main.c:223
+#: ../imagery/i.topo.corr/main.c:207
+#, fuzzy, c-format
+msgid "Reflectance of raster map <%s> is not of DCELL type - ignored"
+msgstr "No se encuentra la tabla de color del mapa raster <%s>"
+
+#: ../imagery/i.topo.corr/correction.c:100
 #, c-format
-msgid "Reflectance of <%s> is not of DCELL type - ignored."
+msgid "Minnaert constant = %lf"
+msgstr ""
+
+#: ../imagery/i.topo.corr/correction.c:105
+#, c-format
+msgid "C-factor constant = %lf (a=%.4f; m=%.4f)"
 msgstr ""
 
 #: ../imagery/i.maxlik/main.c:63
@@ -33393,6 +33786,42 @@ msgstr "Error al eliminar el mapa de celdas de MÁSCARA antiguo."
 msgid "Can't mark another point.  Only %d points allowed.  Sorry."
 msgstr ""
 "No se puede marcar otro punto. Sólo se permiten puntos %d. Lo sentimos."
+
+#, fuzzy
+#~ msgid "Cannot open file [%s] in mapset [%s]"
+#~ msgstr ""
+#~ "No se puede abrir el archivo de etiquetas <%s> en el directorio de mapas <"
+#~ "%s>"
+
+#, fuzzy
+#~ msgid "Cannot create file <%s> in mapset <%s>"
+#~ msgstr ""
+#~ "No se puede abrir el archivo de etiquetas <%s> en el directorio de mapas <"
+#~ "%s>"
+
+#, fuzzy
+#~ msgid "input"
+#~ msgstr "Entrada"
+
+#, fuzzy
+#~ msgid "input,cell,raster"
+#~ msgstr "mostrar ráster"
+
+#, fuzzy
+#~ msgid "output"
+#~ msgstr "Salida"
+
+#, fuzzy
+#~ msgid "output,cell,raster"
+#~ msgstr "mapa de salida ráster"
+
+#, fuzzy
+#~ msgid "basemap"
+#~ msgstr "Eliminar mapas base"
+
+#, fuzzy
+#~ msgid "method"
+#~ msgstr "Métodode los nodos"
 
 #~ msgid ""
 #~ "Input raster map <%s> does not exist in group <%s>.\n"
@@ -33865,10 +34294,6 @@ msgstr ""
 #~ msgid "Cannot open vector map <%s>"
 #~ msgstr "No se puede abrir el nuevo mapa vectorial <%s>"
 
-#, fuzzy
-#~ msgid "Band to select"
-#~ msgstr " Ningún monitor seleccionado"
-
 #~ msgid "It was impossible to create <Auxiliar_outlier_table>."
 #~ msgstr "Fue imposible crear <Auxiliar_outlier_table>."
 
@@ -34324,22 +34749,11 @@ msgstr ""
 #~ msgstr "vectorial, tabla de atributos"
 
 #, fuzzy
-#~ msgid "Select type"
-#~ msgstr "Tipo de archivo"
-
-#, fuzzy
-#~ msgid "Cannot select records from database"
-#~ msgstr "Imposible seleccionar datos de la tabla"
-
-#, fuzzy
 #~ msgid "Cannot fetch data"
 #~ msgstr "No se puede recuperar la fila"
 
 #~ msgid "Calculating costs from centres..."
 #~ msgstr "Calculando costes desde centros..."
-
-#~ msgid "Cannot open database %s by driver %s"
-#~ msgstr "No se puede abrir la base de datos %s por el controlador %s"
 
 #, fuzzy
 #~ msgid "Feature id(s)"
@@ -34350,9 +34764,6 @@ msgstr ""
 
 #~ msgid "Cannot open dig_cats file."
 #~ msgstr "No fue posible encontrar el archivo dig_cats."
-
-#~ msgid "Cannot open database %s"
-#~ msgstr "No se puede abrir la base de datos %s"
 
 #~ msgid "Cannot insert into table: %s"
 #~ msgstr "No se puede insertar en la tabla: %s"
@@ -34614,10 +35025,6 @@ msgstr ""
 #~ msgid "Removed vertices: %5d"
 #~ msgstr "Vértices eliminados %5d"
 
-#, fuzzy
-#~ msgid "Removed vertices"
-#~ msgstr "Vértices eliminados %5d"
-
 #~ msgid ""
 #~ "Operator defines required relation between features. A feature is written "
 #~ "to output if the result of operation 'ainput operator binput' is true. An "
@@ -34768,9 +35175,6 @@ msgstr ""
 #~ msgid "Do not print polyline info"
 #~ msgstr "No imprimir información de polilíneas"
 
-#~ msgid "Line: %d\n"
-#~ msgstr "Línea: %d\n"
-
 #~ msgid ""
 #~ "Optional where condition (without WHERE key word), e.g.:\n"
 #~ "\t\tobec = 'Liptakov'"
@@ -34917,9 +35321,6 @@ msgstr ""
 
 #~ msgid "DXF input file"
 #~ msgstr "Archivo DXF de entrada"
-
-#~ msgid "Cannot open dxf file <%s>"
-#~ msgstr "No se puede abrir el archivo dxf <%s>"
 
 #~ msgid "Cannot open new vector map <%s>"
 #~ msgstr "No se puede abrir el nuevo mapa vectorial <%s>"
