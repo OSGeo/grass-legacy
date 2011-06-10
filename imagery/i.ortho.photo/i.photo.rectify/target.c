@@ -2,21 +2,21 @@
 #include <string.h>
 #include "global.h"
 
-int get_target(char *name)
+int get_target(char *group)
 {
-    char location[40];
-    char mapset[40];
+    char location[GMAPSET_MAX];
+    char mapset[GMAPSET_MAX];
     char buf[1024];
     int stat;
 
-    if (!I_get_target(name, location, mapset)) {
-	sprintf(buf, _("Target information for group <%s> missing.\n"), name);
+    if (!I_get_target(group, location, mapset)) {
+	sprintf(buf, _("Target information for group <%s> missing"), group);
 	goto error;
     }
 
     sprintf(buf, "%s/%s", G_gisdbase(), location);
     if (access(buf, 0) != 0) {
-	sprintf(buf, _("Target location <%s> not found\n"), location);
+	sprintf(buf, _("Target location <%s> not found"), location);
 	goto error;
     }
     select_target_env();
@@ -29,7 +29,7 @@ int get_target(char *name)
 	return 1;
     }
     sprintf(buf, _("Mapset <%s> in target location <%s> - "), mapset, location);
-    strcat(buf, stat == 0 ? _("permission denied\n") : _("not found\n"));
+    strcat(buf, stat == 0 ? _("permission denied") : _("not found"));
   error:
     G_fatal_error(buf);
 }
