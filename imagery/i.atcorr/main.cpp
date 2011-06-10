@@ -469,25 +469,24 @@ static struct Options define_options(void)
     opts.iscl->description  = _("Input imagery range [0,255]");
     opts.iscl->guisection = _("Input");
 
-    opts.ialt = G_define_standard_option (G_OPT_R_INPUT);
+    opts.ialt = G_define_standard_option(G_OPT_R_INPUT);
     opts.ialt->key		= "ialt";
     opts.ialt->required	        = NO;
-    opts.ialt->answer	        = "dem_float";
     opts.ialt->description	= _("Input altitude raster map in m (optional)");
     opts.ialt->guisection       = _("Input");
 
-    opts.ivis = G_define_standard_option (G_OPT_R_INPUT);
+    opts.ivis = G_define_standard_option(G_OPT_R_INPUT);
     opts.ivis->key		= "ivis";
     opts.ivis->required	        = NO;
     opts.ivis->description	= _("Input visibility raster map in km (optional)");
     opts.ivis->guisection       = _("Input");
 
-    opts.icnd = G_define_standard_option (G_OPT_F_INPUT);
+    opts.icnd = G_define_standard_option(G_OPT_F_INPUT);
     opts.icnd->key		= "icnd";
     opts.icnd->required	        = YES;
     opts.icnd->description	= _("Name of input text file");
 
-    opts.oimg = G_define_standard_option (G_OPT_R_OUTPUT);
+    opts.oimg = G_define_standard_option(G_OPT_R_OUTPUT);
     opts.oimg->key		= "oimg";
 
     opts.oscl = G_define_option();
@@ -581,7 +580,7 @@ int main(int argc, char* argv[])
     /**** Start ****/
     G_gisinit(argv[0]);
     if (G_parser(argc, argv) < 0)
-	exit (EXIT_FAILURE);
+	exit(EXIT_FAILURE);
 
     /* open input raster */
     if ( (iimg_mapset = G_find_cell2 ( opts.iimg->answer, "") ) == NULL )
