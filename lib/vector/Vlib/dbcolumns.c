@@ -45,7 +45,7 @@ const char *Vect_get_column_names(struct Map_info *Map, int field)
     dbHandle handle;
     dbString table_name;
     dbTable *table;
-    char buf[2000];
+    char buf[2000], temp_buf[2000];
 
 
     num_dblinks = Vect_get_num_dblinks(Map);
@@ -75,9 +75,11 @@ const char *Vect_get_column_names(struct Map_info *Map, int field)
 	if (col == 0)
 	    sprintf(buf, "%s",
 		    db_get_column_name(db_get_table_column(table, col)));
-	else
-	    sprintf(buf, "%s,%s", buf,
+	else {
+	    sprintf(temp_buf, ",%s",
 		    db_get_column_name(db_get_table_column(table, col)));
+	    strcat(buf, temp_buf);
+	}
     }
     G_debug(3, "%s", buf);
 
@@ -104,7 +106,7 @@ const char *Vect_get_column_types(struct Map_info *Map, int field)
     dbHandle handle;
     dbString table_name;
     dbTable *table;
-    char buf[2000];
+    char buf[2000], temp_buf[2000];
 
 
     num_dblinks = Vect_get_num_dblinks(Map);
@@ -135,10 +137,12 @@ const char *Vect_get_column_types(struct Map_info *Map, int field)
 	    sprintf(buf, "%s",
 		    db_sqltype_name(db_get_column_sqltype
 				    (db_get_table_column(table, col))));
-	else
-	    sprintf(buf, "%s,%s", buf,
+	else {
+	    sprintf(temp_buf, ",%s",
 		    db_sqltype_name(db_get_column_sqltype
 				    (db_get_table_column(table, col))));
+	    strcat(buf, temp_buf);
+	}
     }
     G_debug(3, "%s", buf);
 
@@ -166,7 +170,7 @@ const char *Vect_get_column_names_types(struct Map_info *Map, int field)
     dbHandle handle;
     dbString table_name;
     dbTable *table;
-    char buf[2000];
+    char buf[2000], temp_buf[2000];
 
 
     num_dblinks = Vect_get_num_dblinks(Map);
@@ -198,11 +202,13 @@ const char *Vect_get_column_names_types(struct Map_info *Map, int field)
 		    db_get_column_name(db_get_table_column(table, col)),
 		    db_sqltype_name(db_get_column_sqltype
 				    (db_get_table_column(table, col))));
-	else
-	    sprintf(buf, "%s,%s(%s)", buf,
+	else {
+	    sprintf(temp_buf, ",%s(%s)",
 		    db_get_column_name(db_get_table_column(table, col)),
 		    db_sqltype_name(db_get_column_sqltype
 				    (db_get_table_column(table, col))));
+	    strcat(buf, temp_buf);
+	}
     }
     G_debug(3, "%s", buf);
 
