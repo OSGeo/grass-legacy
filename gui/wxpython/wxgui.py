@@ -250,7 +250,7 @@ class GMFrame(wx.Frame):
         
         # create 'command output' text area
         self.goutput = goutput.GMConsole(self)
-        self.notebook.AddPage(page = self.goutput, text = _("Command console"), name = 'console')
+        self.notebook.AddPage(page = self.goutput, text = _("Command console"), name = 'output')
         self._setCopyingOfSelectedText()
         
         # create 'search module' notebook page
@@ -400,7 +400,7 @@ class GMFrame(wx.Frame):
     def OnPageChanged(self, event):
         """!Page in notebook changed"""
         page = event.GetSelection()
-        if page == self.notebook.GetPageIndexByName('console'):
+        if page == self.notebook.GetPageIndexByName('output'):
             # remove '(...)'
             self.notebook.SetPageText(page, _("Command console"))
             wx.CallAfter(self.goutput.cmd_prompt.SetFocus)
@@ -1522,7 +1522,7 @@ class GMFrame(wx.Frame):
             if kc == wx.WXK_TAB:
                 # switch layer list / command output
                 if self.notebook.GetSelection() == self.notebook.GetPageIndexByName('layers'):
-                    self.notebook.SetSelectionByName('console')
+                    self.notebook.SetSelectionByName('output')
                 else:
                     self.notebook.SetSelectionByName('layers')
         
