@@ -39,7 +39,7 @@ int
 Vect_clean_small_angles_at_nodes(struct Map_info *Map, int otype,
 				 struct Map_info *Err)
 {
-    int node;
+    int node, nnodes;
     int nmodif = 0;
     struct line_pnts *Points;
     struct line_cats *SCats, *LCats, *OCats;
@@ -49,9 +49,11 @@ Vect_clean_small_angles_at_nodes(struct Map_info *Map, int otype,
     LCats = Vect_new_cats_struct();
     OCats = Vect_new_cats_struct();
 
-    for (node = 1; node <= Vect_get_num_nodes(Map); node++) {
+    nnodes = Vect_get_num_nodes(Map);
+    for (node = 1; node <= nnodes; node++) {
 	int i, nlines;
 
+	G_percent(node, nnodes, 1);
 	G_debug(3, "node = %d", node);
 	if (!Vect_node_alive(Map, node))
 	    continue;
@@ -246,6 +248,7 @@ Vect_clean_small_angles_at_nodes(struct Map_info *Map, int otype,
 	    if (clean || !Vect_node_alive(Map, node))
 		break;
 	}
+	nnodes = Vect_get_num_nodes(Map);
     }
 
     return (nmodif);
