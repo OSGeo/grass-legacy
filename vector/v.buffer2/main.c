@@ -527,17 +527,9 @@ int main(int argc, char *argv[])
 	
 	for (j = 0; j < arr_bc[i].inner_count; j++)
 	    Vect_write_line(&Out, GV_BOUNDARY, arr_bc[i].iPoints[j], BCats);
-	    
     }
     G_percent(1, 1, 1);
 
-/*
-    Vect_close(&In);
-
-    Vect_build_partial(&Out, GV_BUILD_NONE);
-    Vect_build(&Out);
-    Vect_close(&Out);
-*/
     /* Create areas */
 
     /* Break lines */
