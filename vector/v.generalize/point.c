@@ -17,10 +17,11 @@
  *
  ****************************************************************/
 
-#include "point.h"
+#include <math.h>
 #include <grass/gis.h>
 #include <grass/Vect.h>
 #include <grass/glocale.h>
+#include "point.h"
 
 inline void point_subtract(POINT a, POINT b, POINT * res)
 {
