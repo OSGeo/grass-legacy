@@ -77,11 +77,8 @@ void set_params()
 /* *************************************************************** */
 int main(int argc, char *argv[])
 {
-
-    float val_f;		/* for misc use */
-    double val_d;		/* for misc use */
-    int first = TRUE;		/* min/max init flag */
-
+    FCELL val_f;		/* for misc use */
+    DCELL val_d;		/* for misc use */
     int map_type, zmap_type;
     univar_stat *stats;
 
@@ -92,9 +89,8 @@ int main(int argc, char *argv[])
     unsigned int rows, cols, depths;
     unsigned int x, y, z;
     double dmin, dmax;
-    int zone, use_zone = 0;
+    int zone, n_zones, use_zone = 0;
     char *mapset, *name;
-    struct FPRange zone_range;
 
     struct GModule *module;
 
@@ -157,19 +153,15 @@ int main(int argc, char *argv[])
 	if (zmap == NULL)
 	    G3d_fatalError(_("Error opening g3d map <%s>"), zonemap);
 
-	if (G3d_tileTypeMap(zmap) != CELL_TYPE)
-	    G_fatal_error("Zoning raster must be of type CELL");
-
 	zmap_type = G3d_tileTypeMap(zmap);
 	
-	if (zmap_type != CELL_TYPE)
-	    G_fatal_error("Zoning raster must be of type CELL");
-
-	if (G3d_readRange(zonemap, mapset, &zone_range) == -1)
-	    G_fatal_error("Can not read range for zoning raster");
-	G3d_range_min_max(zmap, &dmin, &dmax);
 	if (G3d_readCats(zonemap, mapset, &(zone_info.cats)))
 	    G_warning("no category support for zoning raster");
+	    
+	G3d_range_init(zmap);
+	if (!G3d_range_load(zmap))
+	    G_fatal_error(_("Unable it load G3d range"));
+	G3d_range_min_max(zmap, &dmin, &dmax);
 
 	/* properly round dmin and dmax */
 	if (dmin < 0)
@@ -180,7 +172,8 @@ int main(int argc, char *argv[])
 	    zone_info.max = dmax - 0.5;
 	else
 	    zone_info.max = dmax + 0.5;
-	    
+
+	G_debug(1, "min: %d, max: %d", zone_info.min, zone_info.max);
 	zone_info.n_zones = zone_info.max - zone_info.min + 1;
 
 	use_zone = 1;
@@ -204,8 +197,14 @@ int main(int argc, char *argv[])
     i = 0;
     while (param.percentile->answers[i])
 	i++;
+ 
+    n_zones = zone_info.n_zones;
+
+    if (n_zones == 0)
+        n_zones = 1;
+
     stats = create_univar_stat_struct(map_type, i);
-    for (i = 0; i < zone_info.n_zones; i++) {
+    for (i = 0; i < n_zones; i++) {
 	unsigned int j;
 	for (j = 0; j < stats[i].n_perc; j++) {
 	    sscanf(param.percentile->answers[j], "%lf", &(stats[i].perc[j]));
@@ -218,8 +217,27 @@ int main(int argc, char *argv[])
 	for (y = 0; y < rows; y++) {
 	    for (x = 0; x < cols; x++) {
 		zone = 0;
-		if (zone_info.n_zones)
-		    G3d_getValue(zmap, x, y, z, &zone, CELL_TYPE);
+		if (zone_info.n_zones) {
+		    if (zmap_type == FCELL_TYPE) {
+			G3d_getValue(zmap, x, y, z, &val_f, FCELL_TYPE);
+			if (G3d_isNullValueNum(&val_f, FCELL_TYPE))
+			    continue;
+			if (val_f < 0)
+			    zone = val_f - 0.5;
+			else
+			    zone = val_f + 0.5;
+		    }
+		    else if (zmap_type == DCELL_TYPE) {
+			G3d_getValue(zmap, x, y, z, &val_d, DCELL_TYPE);
+			if (G3d_isNullValueNum(&val_d, DCELL_TYPE))
+			    continue;
+			if (val_d < 0)
+			    zone = val_d - 0.5;
+			else
+			    zone = val_d + 0.5;
+		    }
+                    zone -= zone_info.min;
+                }
 		if (map_type == FCELL_TYPE) {
 		    G3d_getValue(map, x, y, z, &val_f, map_type);
 		    if (!G3d_isNullValueNum(&val_f, map_type)) {
@@ -252,6 +270,7 @@ int main(int argc, char *argv[])
 			}
 			stats[zone].n++;
 		    }
+		    stats[zone].size++;
 		}
 		else if (map_type == DCELL_TYPE) {
 		    G3d_getValue(map, x, y, z, &val_d, map_type);
@@ -272,7 +291,7 @@ int main(int argc, char *argv[])
 			stats[zone].sumsq += val_d * val_d;
 			stats[zone].sum_abs += fabs(val_d);
 
-			if (first) {
+			if (stats[zone].first) {
 			    stats[zone].max = val_d;
 			    stats[zone].min = val_d;
 			    stats[zone].first = FALSE;
@@ -285,6 +304,7 @@ int main(int argc, char *argv[])
 			}
 			stats[zone].n++;
 		    }
+		    stats[zone].size++;
 		}
 	    }
 	}
