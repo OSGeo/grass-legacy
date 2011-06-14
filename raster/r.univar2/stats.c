@@ -30,8 +30,8 @@ univar_stat *create_univar_stat_struct(int map_type, int n_perc)
     for (i = 0; i < n_zones; i++) {
 	stats[i].sum = 0.0;
 	stats[i].sumsq = 0.0;
-	stats[i].min = 0.0 / 0.0;	/*set to nan as default */
-	stats[i].max = 0.0 / 0.0;	/*set to nan as default */
+	stats[i].min = 0.0 / 0.0;	/* set to nan as default */
+	stats[i].max = 0.0 / 0.0;	/* set to nan as default */
 	stats[i].n_perc = n_perc;
 	if (n_perc > 0)
 	    stats[i].perc = (double *)G_malloc(n_perc * sizeof(double));
@@ -372,7 +372,7 @@ int print_stats_table(univar_stat * stats)
 	    fprintf(stdout,"%s%s", G_get_cat(z + zone_info.min, &(zone_info.cats)), zone_info.sep);
 	}
 
-	/* total cells */
+	/* non-null cells cells */
 	fprintf(stdout, "%d%s", stats[z].n, zone_info.sep);
 	/* null cells */
 	fprintf(stdout, "%d%s", stats[z].size - stats[z].n, zone_info.sep);
