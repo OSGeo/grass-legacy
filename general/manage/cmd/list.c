@@ -41,8 +41,8 @@ int main(int argc, char *argv[])
     module->keywords = _("general, map management");
     module->description =
 	_("Lists available GRASS data base files "
-	  "of the user-specified data type to standard output.");
-
+	  "of the user-specified data type.");
+    
     element = G_define_option();
     element->key = "type";
     element->key_desc = "datatype";
