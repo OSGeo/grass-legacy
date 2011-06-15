@@ -204,7 +204,6 @@ int main(int argc, char **argv)
     }
 
     costs = (COST **) G_malloc(ncities * sizeof(COST *));
-    costs = (COST **) G_malloc((ncities - 1) * sizeof(COST *));
     for (i = 0; i < ncities; i++) {
 	costs[i] = (COST *) G_malloc(ncities * sizeof(COST));
     }
