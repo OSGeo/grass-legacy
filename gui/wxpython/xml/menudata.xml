@@ -546,14 +546,14 @@
 	    <separator />
 	    <menuitem>
 	      <label>List</label>
-	      <help>Lists available GRASS data base files of the user-specified data type to standard output.</help>
+	      <help>Lists available GRASS data base files of the user-specified data type.</help>
 	      <keywords>general,map management</keywords>
 	      <handler>OnMenuCmd</handler>
 	      <command>g.list</command>
 	    </menuitem>
 	    <menuitem>
 	      <label>List filtered</label>
-	      <help>Lists available GRASS data base files of the user-specified data type to standard output.</help>
+	      <help>Lists available GRASS data base files of the user-specified data type optionally using the search pattern.</help>
 	      <keywords>general,map management</keywords>
 	      <handler>OnMenuCmd</handler>
 	      <command>g.mlist</command>
@@ -843,13 +843,8 @@
 	    <menuitem>
 	      <label>Install extension from add-ons</label>
 	      <help>Install new extension from GRASS AddOns SVN repository.</help>
-	      <handler>OnInstallExtension</handler>
-	    </menuitem>
-	    <menuitem>
-	      <label>Manage add-ons extensions</label>
-	      <help>Tool to maintain GRASS extensions in local GRASS installation.</help>
 	      <keywords>general,extensions</keywords>
-	      <handler>OnMenuCmd</handler>
+	      <handler>OnInstallExtension</handler>
 	      <command>g.extension</command>
 	    </menuitem>
 	<separator />
