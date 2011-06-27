@@ -1,15 +1,13 @@
-# translation of grasstcl_fr.po to french
+# translation of grasswxpy_fr.po to french
 # This file is distributed under the same license as the GRASS package.
 # Copyright (C) 2006-2011 GRASS Development Team
 #
 # Eve (alias 'phyto') <dendrosociology[a]yahoo.co.uk>, 2006.
 # BAIN <bain toraval.fr>, 2007.
 # Sylvain Maillard <sylvain.maillard gmail.com>, 2011.
-#: ../gui/wxpython/gui_modules/psmap.py:1096
-#: ../gui/wxpython/gui_modules/psmap_dialogs.py:2211
 msgid ""
 msgstr ""
-"Project-Id-Version: grass\n"
+"Project-Id-Version: grasswxpy_fr\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2011-06-09 20:10+0200\n"
 "PO-Revision-Date: 2011-06-22 17:49+0100\n"
