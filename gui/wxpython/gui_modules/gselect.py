@@ -623,56 +623,47 @@ class VectorDBInfo:
         """
         return self.tables[table]
 
-class LayerSelect(wx.Choice):
+class LayerSelect(wx.ComboBox):
     """!Creates combo box for selecting data layers defined for vector.
     The 'layer' terminology is likely to change for GRASS 7
     """
     def __init__(self, parent,
                  id=wx.ID_ANY, pos=wx.DefaultPosition,
                  size=globalvar.DIALOG_LAYER_SIZE,
-                 vector=None, choices=[], initial=['1'], default=None):
+                 vector=None, choices=[], initial=[], default=None):
 
         super(LayerSelect, self).__init__(parent, id, pos=pos, size=size,
                                           choices=choices)
 
-        # initial choices (force '1' to be included)
         self.initial = initial
-        if '1' not in self.initial:
-            self.initial.append('1')
-        
-        # default value
-        self.default = default
         
         self.SetName("LayerSelect")
-        
-        if len(choices) > 1:
-            return
-        
-        if vector:
-            self.InsertLayers(vector)
-        else:
-            self.SetItems(self.initial)
-            self.SetStringSelection('1')
+
+        # default value
+        self.default = default
+
+        self.InsertLayers(vector = vector)
         
     def InsertLayers(self, vector):
         """!Insert layers for a vector into the layer combobox"""
-        layerchoices = utils.GetVectorNumberOfLayers(self, vector)
+        if vector:
+            layers = utils.GetVectorNumberOfLayers(self, vector)
+        else:
+            layers = list()
+
         for layer in self.initial:
-            if layer in layerchoices:
+            if layer in layers:
                 continue
-            layerchoices.append(layer)
-        
-        if len(layerchoices) == 0:
-            layerchoices.insert(0, '-1')
-        elif len(layerchoices) > 1:
-            self.SetItems(layerchoices)
-            self.SetStringSelection('1')
-        elif len(layerchoices) == 1:
-            self.SetItems(layerchoices)
-            self.SetStringSelection(layerchoices[0])
-        
+            layers.append(layer)
+
         if self.default:
-            self.SetStringSelection(str(self.default))
+            if len(layers) == 0:
+                layers.insert(0, str(self.default))
+            elif self.default not in layers:
+                layers.append(self.default)
+
+        if len(layers) >= 1:
+            self.SetItems(layers)
         
 class DriverSelect(wx.ComboBox):
     """!Creates combo box for selecting database driver.
