@@ -238,9 +238,9 @@ class UpdateThread(Thread):
                 pLayer = self.task.get_param('layer', element='element', raiseError=False)
                 if pLayer:
                     if pLayer.get('value', '') != '':
-                        layer = int(pLayer.get('value', 1))
+                        layer = pLayer.get('value', '')
                     else:
-                        layer = int(pLayer.get('default', 1))
+                        layer = pLayer.get('default', '')
                 else:
                     layer = 1
                 
@@ -652,7 +652,7 @@ class mainFrame(wx.Frame):
                 
                 self.goutput.RunCmd(cmd, onDone = self.OnDone)
             except AttributeError, e:
-                print >> sys.stderr, "%s: Propably not running in wxgui.py session?" % (e)
+                print >> sys.stderr, "%s: Probably not running in wxgui.py session?" % (e)
                 print >> sys.stderr, "parent window is: %s" % (str(self.parent))
         else:
             gcmd.Command(cmd)
@@ -1128,31 +1128,40 @@ class cmdPanel(wx.Panel):
                                           size = globalvar.DIALOG_TEXTCTRL_SIZE)
                         win.Bind(wx.EVT_TEXT, self.OnSetValue)
                     else:
-                        value = p.get('value', '')
-                        if not value:
-                            value = p.get('default', '')
+                        value = self._getValue(p)
                         
                         if p.get('prompt', '') in ('layer',
                                                    'layer_all',
                                                    'layer_zero'):
-                            initial = ['1']
-                            if p.get('prompt', '') ==  'layer_all':
-                                initial.insert(0, '-1')
-                            if p.get('prompt', '') == 'layer_zero':
-                                initial.insert(0, '0')
                             
                             if p.get('age', 'old_layer') == 'old_layer':
+                                initial = list()
+                                if p.get('prompt', '') ==  'layer_all':
+                                    initial.insert(0, '-1')
+                                elif p.get('prompt', '') == 'layer_zero':
+                                    initial.insert(0, '0')
+                                lyrvalue = p.get('default')
+                                if lyrvalue != '':
+                                    if lyrvalue not in initial:
+                                        initial.append(str(lyrvalue))
+                                lyrvalue = p.get('value')
+                                if lyrvalue != '':
+                                    if lyrvalue not in initial:
+                                        initial.append(str(lyrvalue))
+
                                 win = gselect.LayerSelect(parent=which_panel,
                                                           initial=initial,
                                                           default=p['default'])
                                 p['wxGetValue'] = win.GetStringSelection
-                                win.Bind(wx.EVT_CHOICE, self.OnUpdateSelection)
-                                win.Bind(wx.EVT_CHOICE, self.OnSetValue)
+                                win.Bind(wx.EVT_TEXT, self.OnUpdateSelection)
+                                win.Bind(wx.EVT_TEXT, self.OnSetValue)
+                                win.SetValue(str(value))    # default or previously set value
                             else:
                                 win = wx.SpinCtrl(parent=which_panel, id=wx.ID_ANY,
                                                   min=1, max=100, initial=int(p['default']))
                                 win.Bind(wx.EVT_SPINCTRL, self.OnSetValue)
-                        
+                                win.SetValue(int(value))    # default or previously set value
+
                         elif p.get('prompt', '') ==  'dbdriver':
                             win = gselect.DriverSelect(parent = which_panel,
                                                        choices = p.get('values', []),
@@ -1575,13 +1584,15 @@ class cmdPanel(wx.Panel):
         if not found:
             return
         
-        if name in ('LayerSelect', 'DriverSelect', 'TableSelect',
+        if name in ('DriverSelect', 'TableSelect',
                     'LocationSelect', 'MapsetSelect', 'ProjSelect'):
             porf['value'] = me.GetStringSelection()
         elif name ==  'GdalSelect':
             porf['value'] = event.dsn
         elif name ==  'ModelParam':
             porf['parameterized'] = me.IsChecked()
+        elif name ==  'LayerSelect':
+            porf['value'] = me.GetValue()
         else:
             porf['value'] = me.GetValue()
         
