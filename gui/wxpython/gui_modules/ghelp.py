@@ -34,6 +34,8 @@ except ImportError:
 import wx.lib.flatnotebook as FN
 import  wx.lib.scrolledpanel as scrolled
 
+from grass.script import task as gtask
+
 import menudata
 import gcmd
 import globalvar
@@ -813,7 +815,9 @@ class InstallExtensionWindow(wx.Frame):
         
         self.optionBox = wx.StaticBox(parent = self.panel, id = wx.ID_ANY,
                                       label = " %s " % _("Options"))
-        task = menuform.GUI().ParseInterface(cmd = ['g.extension.py'])
+        
+        task = gtask.parse_interface('g.extension.py')
+        
         for f in task.get_options()['flags']:
             name = f.get('name', '')
             desc = f.get('label', '')
