@@ -1,13 +1,18 @@
-/*
- **  Written by Dave Gerdes  5/1988
- **  US Army Construction Engineering Research Lab
- */
+/*!
+  \file include/vect/dig_structs.h
+
+  \brief Data structures for \ref vectorlib
+
+  \author Written by Dave Gerdes (CERL)  5/1988
+  \author Updated to GRASS 5.7 by Radim Blazek (2001)
+  \author Doxygenized by Martin Landa <landa.martin gmail.com> (2011)
+*/
 #include <grass/config.h>
 
 #ifndef  DIG___STRUCTS___
 #define DIG___STRUCTS___
 
-/*  this file depends on  <stdio.h> */
+/*  this file depends on <stdio.h> */
 #ifndef _STDIO_H
 #include <stdio.h>
 #endif
@@ -17,22 +22,18 @@
 #include <grass/btree.h>
 #include <grass/rtree.h>
 
-
 #ifdef HAVE_OGR
 #include "ogr_api.h"
 #endif
 
-#define HEADSTR	50
+/*!
+  \brief plus_t size
 
-/*
- **  NOTE: 3.10 changes plus_t to  ints.
- **    This assumes that any reasonable machine will use 4 bytes to
- **    store an int.  The mapdev code is not guaranteed to work if
- **    plus_t is changed to a type that is larger than an int.
- */
-/*
-   typedef short plus_t;
- */
+  3.10 changes plus_t to ints. This assumes that any reasonable
+  machine will use 4 bytes to store an int. The diglib code is not
+  guaranteed to work if plus_t is changed to a type that is larger
+  than an int.
+*/
 typedef int plus_t;
 
 typedef struct bound_box BOUND_BOX;
@@ -42,141 +43,372 @@ typedef struct P_area P_AREA;
 typedef struct P_line P_LINE;
 typedef struct P_isle P_ISLE;
 
-/* Used by sites lib */
+/*!
+  \brief Used by sites lib
+*/
 struct site_att
 {
-    int cat;			/* category */
-    double *dbl;		/* double attributes */
-    char **str;			/* string attributes */
+    /*!
+      \brief Category number
+    */
+    int cat;
+    /*!
+      \brief Array of double attributes
+    */
+    double *dbl;
+    /*!
+      \brief Array of string attributes
+    */
+    char **str;
 };
 
 typedef struct site_att SITE_ATT;
 
-struct bound_box		/* Bounding Box */
+/*!
+  \brief Bounding box
+*/
+struct bound_box
 {
-    double N;			/* north */
-    double S;			/* south */
-    double E;			/* east */
-    double W;			/* west */
-    double T;			/* top */
-    double B;			/* bottom */
+    /*!
+      \brief North
+    */
+    double N;
+    /*!
+      \brief South
+    */
+    double S;
+    /*!
+      \brief East
+    */
+    double E;
+    /*!
+      \brief West
+    */
+    double W;
+    /*!
+      \brief Top
+    */
+    double T;
+    /*!
+      \brief Bottom
+    */
+    double B;
 };
 
+/*!
+  \brief File definition
+*/
 struct gvfile
 {
+    /*!
+      \brief File descriptor
+    */
     FILE *file;
-    char *start;		/* pointer to beginnig of the file in the memory */
-    char *current;		/* current position set by dig_seek */
-    char *end;			/* end of file in the memory (pointer to first byte after) */
-    long size;			/* size of the file loaded to memory */
-    long alloc;			/* allocated space */
-    int loaded;			/* 0 - not loaded, 1 - loaded */
+    /*!
+      \brief Pointer to beginnig of the file in the memory
+    */
+    char *start;
+    /*!
+      \brief Current position set by dig_seek()
+    */
+    char *current;
+    /*!
+      \brief End of file in the memory (pointer to first byte after)
+    */
+    char *end;
+    /*!
+      \brief Size of the file loaded to memory
+    */
+    long size;
+    /*!
+      \brief Allocated space
+    */
+    long alloc;
+    /*!
+      \brief Is file loaded?
+
+      - 0 - not loaded
+      - 1 - loaded
+    */
+    int loaded;
 };
 
 typedef struct gvfile GVFILE;
 
 /* category field information */
+/*!
+  \brief Field (layer) information
+*/
 struct field_info
 {
-    int number;			/* field number */
-    char *name;			/* field name */
+    /*!
+      \brief Field number
+    */
+    int number;
+    /*!
+      \brief Field name (optional)
+    */
+    char *name;
+    /*!
+      \brief Name of DB driver ('sqlite', 'dbf', ...)
+    */
     char *driver;
-    char *database;
+    /*!
+      brief Name of database
+    */
+    char *database;             
+    /*!
+      \brief Name of DB table
+    */
     char *table;
+    /*!
+      \brief Name of key column (usually 'cat')
+    */
     char *key;
 };
 
+/*!
+  \brief Database links
+*/
 struct dblinks
 {
-    struct field_info *field;
-    int alloc_fields, n_fields;
+    /*!
+      \brief Pointer to the first field_info structure
+    */
+    struct field_info *field;   
+    /*!
+      \brief Number of allocated slots
+    */
+    int alloc_fields;
+    /*!
+      \brief Number of available fields (layers)
+    */
+    int n_fields;
 };
 
-/* Portability info */
+/*!
+  \brief Portability info
+  
+  Set by V1_open_new() or V1_open_old()
+*/
 struct Port_info
 {
-    /* portability stuff, set in V1_open_new/old() */
-    /* file byte order */
+    /*!
+      \brief File byte order
+    */
     int byte_order;
 
-    /* conversion matrices between file and native byte order */
+    /*!
+      \brief Conversion matrices between file and native byte order (double)
+    */
     unsigned char dbl_cnvrt[PORT_DOUBLE];
+    /*!
+      \brief Conversion matrices between file and native byte order (float)
+    */
     unsigned char flt_cnvrt[PORT_FLOAT];
+    /*!
+      \brief Conversion matrices between file and native byte order (long)
+    */
     unsigned char lng_cnvrt[PORT_LONG];
+    /*!
+      \brief Conversion matrices between file and native byte order (int)
+    */
     unsigned char int_cnvrt[PORT_INT];
+    /*!
+      \brief Conversion matrices between file and native byte order (short)
+    */
     unsigned char shrt_cnvrt[PORT_SHORT];
 
-    /* *_quick specify if native byte order of that type 
-     * is the same as byte order of vector file (TRUE) 
-     * or not (FALSE);*/
+    /*!
+      \brief Byte order for dbl
+      
+      Specify if native byte order of that type is the same
+      as byte order of vector file (TRUE) or not (FALSE)
+    */
     int dbl_quick;
+    /*!
+      \brief Byte order for dbl
+      
+      Specify if native byte order of that type is the same
+      as byte order of vector file (TRUE) or not (FALSE)
+    */
     int flt_quick;
+    /*!
+      \brief Byte order for lng
+      
+      Specify if native byte order of that type is the same
+      as byte order of vector file (TRUE) or not (FALSE)
+    */
     int lng_quick;
+    /*!
+      \brief Byte order for int
+      
+      Specify if native byte order of that type is the same
+      as byte order of vector file (TRUE) or not (FALSE)
+    */
     int int_quick;
+    /*!
+      \brief Byte order for shrt
+      
+      Specify if native byte order of that type is the same
+      as byte order of vector file (TRUE) or not (FALSE)
+    */
     int shrt_quick;
 };
 
-/* List of dead lines in the file, the space can be reused, not yet used */
+/*!
+  \brief List of dead lines in the file
+
+  \todo Implement it
+
+  The space can be reused, not yet used
+*/
 struct recycle
 {
-    /* TODO */
     char dummy;
 };
 
+/*!
+  \brief Vector map header data
+
+  Holds header data of vector map (see \ref vlibMap_info)
+*/
 struct dig_head
 {
-
-    /*** HEAD_ELEMENT ***/
+    /*!
+      \brief Organization name
+    */
     char *organization;
+    /*!
+      \brief Map date
+    */
     char *date;
+    /*!
+      \brief User name
+    */
     char *your_name;
+    /*!
+      \brief Map name
+    */
     char *map_name;
+    /*!
+      \brief Source date
+    */
     char *source_date;
+    /*!
+      \brief Original scale
+    */
     long orig_scale;
+    /*!
+      \brief Comments
+    */
     char *line_3;
+    /*!
+      \brief Zone (UTM only)
+    */
     int plani_zone;
-    /* double W, E, S, N; */
+    /*!
+      \brief Threshold for digitization
+    */
     double digit_thresh;
     /* double map_thresh; *//* not used in g57 */
 
     /* Programmers should NOT touch any thing below here */
     /* Library takes care of everything for you          */
 
-    /*** COOR_ELEMENT ***/
+    /* coor elements */
+    /*!
+      \brief Backward compatibility info - major version
+    */
     int Version_Major;
+    /*!
+      \brief Backward compatibility info - minor version
+    */
     int Version_Minor;
+    /*!
+      \brief Backward compatibility info - back major version
+    */
     int Back_Major;
+    /*!
+      \brief Backward compatibility info - back minor version
+    */
     int Back_Minor;
+    /*!
+      \brief 2D/3D vector data
+
+      - zero for 2D data
+      - non-zero for 3D data
+    */
     int with_z;
 
-    long size;			/* coor file size */
-    long head_size;		/* coor header size */
+    /*!
+      \brief Coor file size
+    */
+    long size;
+    /*!
+      \brief Coor header size
+    */
+    long head_size;
 
-    struct Port_info port;	/* Portability information */
+    /*!
+      \brief Portability information
+    */
+    struct Port_info port;
 
-    long last_offset;		/* offset of last read line */
+    /*!
+      \brief Offset of last read line
+    */
+    long last_offset;
 
+    /*!
+      \brief Recycle dead line
+
+      \todo Not implemented yet
+    */
     struct recycle *recycle;
 
     struct Map_info *Map;	/* X-ref to Map_info struct ?? */
 };
 
-/* Coor info */
+/*!
+  \brief Coor file info
+*/
 struct Coor_info
 {
-    long size;			/* total size, in bytes */
-    long mtime;			/* time of last modification */
+    /*!
+      \brief Total size (in bytes)
+    */
+    long size;
+    /*!
+      \brief Time of last modification
+    */
+    long mtime;			
 };
 
-/* Non-native format inforamtion */
-/* TODO: structure size should not change depending on compilation I think, do it better */
-/* OGR */
+/*!
+  \brief Non-native format info (OGR)
+
+  \todo Structure size should not change depending on compilation I
+        think, do it better
+*/
 struct Format_info_ogr
 {
+    /*!
+      \brief OGR datasource name
+    */
     char *dsn;
+    /*!
+      \brief OGR layer name
+    */
     char *layer_name;
 #ifdef HAVE_OGR
+    /*!
+      \brief Pointer to OGRDataSource
+    */
     OGRDataSourceH ds;
+    /*!
+      \brief Pointer to OGRLayer
+     */
     OGRLayerH layer;
 #else
     void *ds;
@@ -184,234 +416,736 @@ struct Format_info_ogr
 #endif
 
     /* Level 1 (used by V*_read_next_line_ogr) */
-    struct line_pnts **lines;	/* points cache */
+    
+    /*!
+      \brief Points cache (level 1)
+    */
+    struct line_pnts **lines;	
+    /*!
+      \brief List of line types (level 1)
+    */
     int *lines_types;
+    /*!
+      \brief Number of allocated lines (level 1)
+    */
     int lines_alloc;
-    int lines_num;		/* number of lines in cache */
-    int lines_next;		/* next line to be read from cache */
+    /*!
+      \brief Number of lines in cache (level 1)
+    */
+    int lines_num;
+    /*!
+      \brief Next line to be read from cache (level 1)
+    */
+    int lines_next;
 
     /* Level 2 */
+    /*!
+      \brief Cache to avoid repeated reading (level 2)
+
+      NULL if no feature is in cache
+    */
 #ifdef HAVE_OGR
-    OGRFeatureH feature_cache;	/* cache to avoid repeated reading,  NULL if no feature is in cache */
+    OGRFeatureH feature_cache;
 #else
     void *feature_cache;
 #endif
-    int feature_cache_id;	/* id of feature read in feature_cache */
+    /*!
+      \brief Feature id read in feature_cache (level 2)
+    */
+    int feature_cache_id;
 
-    /* Array where OGR feature/part info is stored for each line in GRASS.
-     * This is not used for GV_CENTROID.
-     * Because one feature may contain more elements (geometry collection also recursively),
-     * offset for one line may be stored in more records. 
-     * First record is FID, next records are part indexes if necessary.
-     * Example:
-     * 5. ring in 3. polygon in 7. feature (multipolygon) of geometry collection which has FID = 123
-     * 123 (feature 123: geometry colletion)
-     *   6 (7. feature in geometry collection: multiPolygon)
-     *   2 (3. polygon)
-     *   4 (5. ring in the polygon)
-     */
+    /*!
+      \brief Offset list
+
+      Array where OGR feature/part info is stored for each line in
+      GRASS. This is not used for GV_CENTROID. Because one feature
+      may contain more elements (geometry collection also
+      recursively), offset for one line may be stored in more
+      records. First record is FID, next records are part indexes if
+      necessary. Example: 5. ring in 3. polygon in 7. feature
+      (multipolygon) of geometry collection which has FID = 123 123
+      (feature 123: geometry colletion) 6 (7. feature in geometry
+      collection: multiPolygon) 2 (3. polygon) 4 (5. ring in the
+      polygon)
+    */
     int *offset;
-    int offset_num;		/* number of items in offset */
-    int offset_alloc;		/* space allocated for offset */
+    /*!
+      \brief Number of items in offset
+    */
+    int offset_num;
+    /*!
+      \brief Space allocated for offset
+    */
+    int offset_alloc;
+    /*!					      
+      \brief Next line to be read
 
-    int next_line;		/* used by V2_read_next_line_ogr */
+      Used by V2_read_next_line_ogr()
+    */
+    int next_line;
 };
 
+/*!
+  \brief Non-native format info (currently only OGR is implemented)
+*/
 struct Format_info
 {
-    int i;
+    /*!
+      \brief id?
+    */
+    int i;                 
+    /*!
+      \brief OGR info
+    */
     struct Format_info_ogr ogr;
 };
 
-/* Category index */
+/*!
+  \brief Category index
+*/
 struct Cat_index
 {
-    int field;			/* field number */
-    int n_cats;			/* number of items in cat array */
-    int a_cats;			/* allocated space in cat array */
-    int (*cat)[3];		/* array of cats (cat,type, lines/area) */
-    int n_ucats;		/* number of unique cats (not updated) */
-    int n_types;		/* number of types in type */
-    int type[7][2];		/* number of elements for each type (point, line, boundary, centroid, area, face, kernel) */
-    long offset;		/* offset of the beginning of this index in cidx file */
+    /*!
+      \brief Field (layer) number
+    */
+    int field;			
+    /*!
+      \brief Number of items in cat array
+    */
+    int n_cats;			
+    /*!
+      \brief Allocated space in cat array
+    */
+    int a_cats;
+    /*!
+      \brief Array of cats (cat, type, lines/area)
+    */
+    int (*cat)[3];		
+    /*!
+      \brief Number of unique cats (not updated)
+    */
+    int n_ucats;
+    /*!
+      \brief Number of types in type
+    */
+    int n_types;		
+    /*!
+      \brief Number of elements for each type
+
+      - GV_POINT
+      - GV_LINE
+      - GV_BOUNDARY
+      - GV_CENTROID
+      - GV_FACE
+      - GV_KERNEL
+      - GV_AREA
+    */
+    int type[7][2];		
+    /*!
+      \brief Offset of the beginning of this index in cidx file
+    */
+    long offset;
 };
 
+/*!
+  \brief Basic topology-related info
+
+  Holds basic topology-related information about vector map
+*/
 struct Plus_head
 {
-    int Version_Major;		/* version codes */
+    /*!
+      \brief Version info (major)
+    */
+    int Version_Major;
+    /*!
+      \brief Version info (minor)
+    */
     int Version_Minor;
-    int Back_Major;		/* earliest version that can use this data format */
+    /*!
+      \brief Earliest version that can use this data format (major)
+    */
+    int Back_Major;		 
+    /*!
+      \brief Earliest version that can use this data format (minor)
+    */
     int Back_Minor;
-
-    int spidx_Version_Major;	/* version codes for spatial index */
+    /*!
+      \brief Version codes for spatial index (major)
+    */
+    int spidx_Version_Major;
+    /*!
+      \brief Version codes for spatial index (minor)
+    */
     int spidx_Version_Minor;
-    int spidx_Back_Major;	/* earliest version that can use this data format */
+    /*!
+      \brief Earliest version that can use this data format (major)
+    */
+    int spidx_Back_Major;
+     /*!
+       \brief Earliest version that can use this data format (minor)
+    */
     int spidx_Back_Minor;
 
-    int cidx_Version_Major;	/* version codes for category index */
+    /*!
+      \brief Version codes for category index (major)
+    */
+    int cidx_Version_Major;
+    /*!
+      \brief Version codes for category index (minor)
+    */
     int cidx_Version_Minor;
-    int cidx_Back_Major;	/* earliest version that can use this data format */
+    /*!
+      \brief Earliest version that can use this data format (major)
+    */
+    int cidx_Back_Major;
+    /*!
+      \brief Earliest version that can use this data format (minor)
+    */
     int cidx_Back_Minor;
 
+    /*!
+      \brief 2D/3D vector data
+
+      - WITH_Z
+      - WITHOUT_Z
+    */
     int with_z;
+    /*!
+      \brief 2D/3D spatial index
+
+      - WITH_Z
+      - WITHOUT_Z
+    */
     int spidx_with_z;
 
-    long head_size;		/* topo header size */
-    long spidx_head_size;	/* spatial index header size */
-    long cidx_head_size;	/* category index header size */
+    /*** file header size ***/
+    
+    /*!
+      \brief Topo header size 
+    */
+    long head_size;
+    /*!
+      \brief Spatial index header size
+    */
+    long spidx_head_size;
+    /*!
+      \brief Category index header size
+    */
+    long cidx_head_size;
 
-    int release_support;	/* release memory occupied by support (topo, spatial, category) */
+    /*!
+      \brief Release memory occupied by support
+      (topo, spatial, category)
+    */
+    int release_support;
 
-    struct Port_info port;	/* Portability information */
-    struct Port_info spidx_port;	/* Portability information for spatial index */
-    struct Port_info cidx_port;	/* Portability information for category index */
-    int mode;			/* Read, Write, RW */
+    /*** portability info */
 
-    int built;			/* the highest level of topology currently available (GV_BUILD_*) */
+    /*!
+      \brief Portability information
+    */
+    struct Port_info port;
+    /*!
+      \brief Portability information for spatial index
+    */
+    struct Port_info spidx_port;
+    /*!
+      \brief Portability information for
+      category index
+    */
+    struct Port_info cidx_port;
+    /*!
+      \brief Access mode
+      
+      - GV_MODE_READ
+      - GV_MODE_WRITE
+      - GV_MODE_RW
+    */
+    int mode;
 
-    struct bound_box box;	/* box */
+    /*!
+      \brief Highest level of topology currently available
 
-    P_NODE **Node;		/* P_NODE array of pointers *//* 1st item is 1 for  */
-    P_LINE **Line;		/* P_LINE array of pointers *//* all these (not 0) */
+      - GV_BUILD_NONE
+      - GV_BUILD_BASE
+      - GV_BUILD_AREAS
+      - GV_BUILD_ATTACH_ISLES
+      - GV_BUILD_CENTROIDS
+      - GV_BUILD_ALL
+    */
+    int built;
+    /*!
+      \brief Bounding box of features
+    */
+    struct bound_box box;
+
+    /*** topology ***/
+   /*!
+     \brief Array topo nodes
+   */
+    struct P_node **Node;
+   /*!
+     \brief Array topo lines/edges
+   */
+    P_NODE **Node;
+   /*!
+     \brief Array topo lines/edges
+   */
+    P_LINE **Line;
+   /*!
+     \brief Array topo areas
+   */
     P_AREA **Area;
+    /*!
+      \brief Array topo isles
+    */
     P_ISLE **Isle;
 
-    plus_t n_nodes;		/* Current Number of nodes */
-    plus_t n_edges;		/* Current Number of edges */
-    plus_t n_lines;		/* Current Number of lines */
-    plus_t n_areas;		/* Current Number of areas */
+    
+    /*!
+      \brief Current number of nodes
+    */
+    plus_t n_nodes;
+    /*!
+      \brief Current number of edges
+    */
+    plus_t n_edges;
+    /*!
+      \brief Current number of lines
+    */
+    plus_t n_lines;
+    /*!
+      \brief Current number of areas
+    */
+    plus_t n_areas;
+    /*!
+      \brief Current number of isles
+    */
     plus_t n_isles;
-    plus_t n_volumes;		/* Current Number of volumes */
-    plus_t n_holes;		/* Current Number of holes */
+    /*!
+      \brief Current number of faces
+    */
+    plus_t n_faces;
+    /*!
+      \brief Current number of volumes
+    */
+    plus_t n_volumes;
+    /*!
+      \brief Current number of holes
+    */
+    plus_t n_holes;
 
-    plus_t n_plines;		/* Current Number of point    lines */
-    plus_t n_llines;		/* Current Number of line     lines */
-    plus_t n_blines;		/* Current Number of boundary lines */
-    plus_t n_clines;		/* Current Number of centroid lines */
-    plus_t n_flines;		/* Current Number of face lines */
-    plus_t n_klines;		/* Current Number of kernel lines */
+    /*!
+      \brief Current number of points
+    */
+    plus_t n_plines;
+    /*!
+      \brief Current number of lines
+    */
+    plus_t n_llines;
+    /*!
+      \brief Current number of boundaries
+    */
+    plus_t n_blines;
+    /*!
+      \brief Current number of centroids
+    */
+    plus_t n_clines;
+    /*!
+      \brief Current number of faces
+    */
+    plus_t n_flines;
+    /*!
+      \brief Current number of kernels
+    */
+    plus_t n_klines;
 
-    plus_t alloc_nodes;		/* # of nodes we have alloc'ed space for 
-				   i.e. array size - 1 */
+   /*!
+     \brief Number of allocated nodes
+
+     i.e. array size - 1
+   */
+    plus_t alloc_nodes;
+   /*!
+     \brief Number of allocated edges
+
+     i.e. array size - 1
+   */
     plus_t alloc_edges;
-    plus_t alloc_lines;		/* # of lines we have alloc'ed space for */
-    plus_t alloc_areas;		/* # of areas we have alloc'ed space for */
-    plus_t alloc_isles;		/* # of isles we have alloc'ed space for */
+   /*!
+     \brief Number of allocated lines
+
+     i.e. array size - 1
+   */
+    plus_t alloc_lines;
+   /*!
+     \brief Number of allocated areas
+
+     i.e. array size - 1
+   */
+    plus_t alloc_areas;
+   /*!
+     \brief Number of allocated isles
+
+     i.e. array size - 1
+   */
+    plus_t alloc_isles;
     plus_t alloc_volumes;
+   /*!
+     \brief Number of allocated holes
+
+     i.e. array size - 1
+   */
     plus_t alloc_holes;
 
-    long Node_offset;		/* offset of array of nodes in topo file */
+    /*!
+      \brief Offset of array of nodes in topo file
+    */
+    long Node_offset;
+    /*!
+      \brief Offset of array of edges in topo file
+    */
     long Edge_offset;
+    /*!
+      \brief Offset of array of lines in topo file
+    */
     long Line_offset;
+    /*!
+      \brief Offset of array of areas in topo file
+    */
     long Area_offset;
+    /*!
+      \brief Offset of array of isles in topo file
+    */
     long Isle_offset;
+    /*!
+      \brief Offset of array of volumes in topo file
+    */
     long Volume_offset;
+    /*!
+      \brief Offset of array of holes in topo file
+    */
     long Hole_offset;
 
-    /* Spatial index */
-    /* Spatial index is never saved, it is built automaticaly for new and updated vectors.
-     * It is not built for old vectors until it is needed, i.e. until Vect_select is called. 
-     * or until Vect_build is called */
+    /*** spatial index ***/
+    /* Spatial index is never saved, it is built automatically for new and updated vectors.
+     * It is not built for old vectors until it is needed, i.e. until Vect_select() is called. 
+     * or until Vect_build() is called */
 
-    int Spidx_built;		/* set to 1 if spatial index is available and to 0 if it is not */
+    /*!
+      \brief Spatial index built?
 
-    long Node_spidx_offset;	/* offset of spindex */
+      Set to 1 if spatial index is available
+    */
+    int Spidx_built;
+    /*!
+      \brief Offset of nodes in sidx file
+    */
+    long Node_spidx_offset;
+    /*!
+      \brief Offset of edges in sidx file
+    */
     long Edge_spidx_offset;
+    /*!
+      \brief Offset of lines in sidx file
+    */
     long Line_spidx_offset;
+    /*!
+      \brief Offset of areas in sidx file
+    */
     long Area_spidx_offset;
+    /*!
+      \brief Offset of isles in sidx file
+    */
     long Isle_spidx_offset;
+    /*!
+      \brief Offset of volumes in sidx file
+    */
     long Volume_spidx_offset;
+    /*!
+      \brief Offset of holes in sidx file
+    */
     long Hole_spidx_offset;
 
+    /*!
+      \brief Node spatial index
+    */
     struct Node *Node_spidx;
+    /*!
+      \brief Line spatial index
+    */
     struct Node *Line_spidx;
+    /*!
+      \brief Area spatial index
+    */
     struct Node *Area_spidx;
+    /*!
+      \brief Isles spatial index
+    */
     struct Node *Isle_spidx;
 
-    /* Category index */
-    /* By default, category index is not updated */
-    int update_cidx;		/* update category index if vector is modified */
+    /*** category index ***/
+    /*!
+      \brief Update category index if vector is modified 
 
-    int n_cidx;			/* number of cat indexes (one for each field) */
-    int a_cidx;			/* allocated space for cat indexes */
-    struct Cat_index *cidx;	/* Array of category indexes */
-    int cidx_up_to_date;	/* set to 1 when cidx is created and reset to 0 whenever any line is changed */
+      By default, category index is not updated 
+    */
+    int update_cidx;
 
-    long coor_size;		/* size of coor file */
-    long coor_mtime;		/* time of last coor modification */
+    /*!
+      \brief Number of category indexes (one for each field/layer)
+    */
+    int n_cidx;
+    /*!
+      \brief Allocated space for category indexes
+    */
+    int a_cidx;
+    /*!
+      \brief Array of category indexes
+    */
+    struct Cat_index *cidx;
+    /*!
+      \brief Category index to be updated
+
+      Set to 1 when cidx is created
+      and reset to 0 whenever any line is changed
+    */
+    int cidx_up_to_date;
+    /*!
+      \brief Size of coor file
+    */
+    long coor_size;
+    /*!
+      \brief Time of last coor modification
+    */
+    long coor_mtime;
 
     /* Level2 update: list of lines and nodes updated (topo info for the line was changed) 
      *                 by last write/rewrite/delete operation.
      *                 Lines/nodes in the list may be deleted (e.g. delete boundary: first added for
      *                 delete area and then delete */
-    int do_uplist;		/* used internaly in diglib to know if list is maintained */
+    int do_uplist;
 
-    int *uplines;		/* array of updated lines */
-    int alloc_uplines;		/* allocated array */
-    int n_uplines;		/* number of updated lines */
-    int *upnodes;		/* array of updated nodes */
-    int alloc_upnodes;		/* allocated array */
-    int n_upnodes;		/* number of updated nodes */
+    /*!
+      \brief Array of updated lines
+
+      List of lines and nodes updated (topo info for the line was
+      changed) by last write/rewrite/delete operation.  Lines/nodes in
+      the list may be deleted (e.g. delete boundary: first added for
+      delete area and then delete
+    */
+    int *uplines;
+    /*!
+      \brief Allocated array (level 2)
+    */
+    int alloc_uplines;
+    /*!
+      \brief Number of updated lines (level 2)
+    */
+    int n_uplines;
+    /*!
+      \brief Array of updated nodes (level 2)
+    */
+    int *upnodes;
+    /*!
+      \brief Allocated array (level 2)
+    */
+    int alloc_upnodes;
+    /*!
+      \brief number of updated nodes (level 2)
+    */
+    int n_upnodes;
 };
 
+/*! \brief
+  Vector map info
+
+  Maintains all information about an individual open vector map. The
+structure must be passed to the mosy vector library routines.
+*/
 struct Map_info
 {
-    /* Common info for all formats */
-    int format;			/* format */
-    int temporary;		/* temporary file flag, not yet used */
+    /* common info for all formats */
+    /*!
+      \brief Format (native, ogr)
+      
+      - GV_FORMAT_NATIVE
+      - GV_FORMAT_OGR
+      - GV_FORMAT_DIRECT
+    */
+    int format;
+    /*!
+      \brief Temporary file flag, not yet used
+    */
+    int temporary;
 
-    struct dblinks *dblnk;	/* info about tables */
+    /*!
+      \brief DB links
+    */
+    struct dblinks *dblnk;
 
-    struct Plus_head plus;	/* topo file *head; */
+    /*!
+      \brief Header info
+    */
+    struct Plus_head plus;
 
-    int graph_line_type;	/* line type used to build the graph */
-    dglGraph_s graph;		/* graph structure */
-    dglSPCache_s spCache;	/* Shortest path cache */
-    double *edge_fcosts;	/* costs used for graph, (dglGetEdge() is not supported for _DGL_V1) */
-    double *edge_bcosts;
-    double *node_costs;		/* node costs */
-    int cost_multip;		/* edge and node costs multiplicator */
-
-    /*  All of these apply only to runtime, and none get written out
-     **  to the dig_plus file 
+    /* graph-related section */
+    /*!
+      \brief Graph-related section - line type used to build the graph
      */
-    int open;			/* should be 0x5522AA22 if opened correctly */
-    /* or        0x22AA2255 if closed           */
-    /* anything else implies that structure has */
-    /* never been initialized                   */
-    int mode;			/*  Read, Write, RW                         */
-    int level;			/*  1, 2, (3)                               */
-    int head_only;		/* Only header is opened */
-    int support_updated;	/* Support files were updated */
-    plus_t next_line;		/* for Level II sequential reads */
+    int graph_line_type;
+    /*!
+      \brief Graph-related section - graph structure
+    */
+    dglGraph_s graph;
+    /*!
+      \brief Graph-related section - shortest path cache
+    */
+    dglSPCache_s spCache;
+    /*!
+      \brief Graph-related section - forward costs used for graph
 
-    char *name;			/* for 4.0  just name, and mapset */
+      dglGetEdge() is not supported for _DGL_V1)
+    */
+    double *edge_fcosts;
+    /*!
+      \brief Graph-related section - backward costs used for graph
+    */
+    double *edge_bcosts;
+    /*!
+      \brief Graph-related section - node costs used for graph
+    */
+    double *node_costs;
+    /*!
+      \brief Graph-related section - edge and node costs multiplicator
+    */
+    int cost_multip;
+
+    /*!
+      \brief Open indicator
+
+      Should be 0x5522AA22 (VECT_OPEN_CODE) if opened correctly
+      or        0x22AA2255 (VECT_CLOSED_CODE) if closed
+      anything else implies that structure has
+      never been initialized
+    */
+    int open;
+    /* Open mode
+       - read (GV_MODE_READ),
+       - write (GV_MODE_WRITE),
+       - rw (GV_MODE_RW)
+    */
+    int mode;
+    /*!
+      \brief Topology level
+      - 1 (without topo)
+      - 2 (with topo)
+      - 3 (with 3D topo) - not yet implemented
+    */
+    int level;
+    /*!
+      \brief Open only header
+
+      Non-zero code to open only header of vector map
+    */
+    int head_only;
+    /*!
+      \brief Support files were updated
+
+      Non-zero code to indicate that supoort file were updated
+    */
+    int support_updated;
+    /*!
+      \brief Sequential read (level 1)
+    */
+    plus_t next_line;
+
+    /*!
+      \brief Map name (for 4.0)
+    */
+    char *name;
+    /*!
+      \brief Mapset name
+    */
     char *mapset;
     /* location and gisdbase is usefull if changed (v.proj or external apps) */
-    char *location;		/* location name */
-    char *gisdbase;		/* gisdbase path */
+    /*!
+      \brief Location name
+    */
+    char *location;
+    /*!
+      \brief GISDBASE path
+    */
+    char *gisdbase;
 
-    /* Constraints for reading in lines  (not polys yet) */
+    /* constraints for reading in lines  (not polys yet) */
+
+    /*!
+      \brief Constrainys for reading features (region)
+
+      Non-zero code to enable this constraint
+    */
     int Constraint_region_flag;
+    /*!
+      \brief Constraints for reading features (type)
+
+      Non-zero code to enable this constraint
+    */
     int Constraint_type_flag;
+    /*!
+      \brief Constraints for reading features (north)
+    */
     double Constraint_N;
+    /*!
+      \brief Constraints for reading features (south)
+    */
     double Constraint_S;
+    /*!
+      \brief Constraints for reading features (east)
+    */
     double Constraint_E;
+    /*!
+      \brief Constraints for reading features (west)
+    */
     double Constraint_W;
+    /*!
+      \brief Constraints for reading features (top)
+    */
     double Constraint_T;
+    /*!
+      \brief Constraints for reading features (bottom)
+    */
     double Constraint_B;
+    /*!
+      \brief Constraints for reading features (type)
+    */
     int Constraint_type;
+    /*!
+      \brief ???
+    */
     int proj;
 
     /* format specific */
-    /* native */
-    GVFILE dig_fp;		/* Dig file pointer */
-    struct dig_head head;	/* coor file head */
+
+    /*!
+      \brief GV file pointer (native format only)
+    */
+    GVFILE dig_fp;
+    /*!
+      \brief Coor file header info (native format only)
+    */
+    struct dig_head head;
 
     /* non native */
-    struct Format_info fInfo;	/* format information */
+    /*!
+      \brief Format info for non-native formats
+    */
+    struct Format_info fInfo;
 
-    /* history file */
+    /*!
+      \brief History file
+    */
     FILE *hist_fp;
 
     /* Temporary solution for sites */
@@ -421,124 +1155,355 @@ struct Map_info
     int n_site_str;		/* number of string attributes for one site */
 };
 
+/*!
+  \brief Topological primitive - node
+*/
 struct P_node
 {
+    /*!
+      \brief X coordinate
+    */
     double x;			/* X coordinate */
-    double y;			/* Y coordinate */
-    double z;			/* Z coordinate */
+    /*!
+      \brief Y coordinate
+    */
+    double y;
+    /*!
+      \brief Z coordinate (used only for 3D data)
+    */
+    double z;
+    /*!
+      \brief Allocated space for lines
+    */
     plus_t alloc_lines;
-    plus_t n_lines;		/* Number of attached lines (size of lines, angle) */
-    /*  If 0, then is degenerate node, for snappingi ??? */
-    plus_t *lines;		/* Connected lines */
-    float *angles;		/* Respected angles. Angles for lines/boundaries are in radians between
-				 * -PI and PI. Value for points or lines with identical points (degenerated)
-				 * is set to -9. */
+    /*!
+      \brief Number of attached lines (size of
+      lines, angle)
+
+      If 0, then is degenerate node, for snappingi ???
+    */
+    plus_t n_lines;
+    /*!
+      \brief List of connected lines
+    */
+    plus_t *lines;
+    /*!
+      \brief List of respected angles
+
+      Angles for lines/boundaries are in radians between -PI and
+      PI. Value for points or lines with identical points
+      (degenerated) is set to -9.
+    */
+    float *angles;
 };
 
+/*!
+  \brief Topological primitive - line (edge)
+*/
 struct P_line
 {
-    plus_t N1;			/* start node */
-    plus_t N2;			/* end node   */
-    plus_t left;		/* area/isle number to left, negative for isle  */
-    /* !!! area number for centroid, negative for   */
-    /* duplicate centroid                           */
-    plus_t right;		/* area/isle number to right, negative for isle */
+    /*!
+      \brief Start node
+    */
+    plus_t N1;
+    /*!
+      \brief End node
+    */
+    plus_t N2;
+    /*!
+      \brief Area/isle number to left
 
-    double N;			/* Bounding Box */
+      - negative for isle
+      - area number for centroid (negative for duplicate centroid)
+    */
+    plus_t left;
+    /*!
+      \brief Area/isle number to right
+
+      - negative for isle
+    */
+    plus_t right;
+    /*!
+      \brief Line bounding box - north
+    */
+    double N;
+    /*!
+      \brief Line bounding box - south
+    */
     double S;
+    /*!
+      \brief Line bounding box - east
+    */
     double E;
+    /*!
+      \brief Line bounding box - west
+    */
     double W;
-    double T;			/* top */
-    double B;			/* bottom */
+    /*!
+      \brief Line bounding box - top (3D data only)
+    */
+    double T;
+    /*!
+      \brief Line bounding box - bottom (3D data only)
+    */
+    double B;
 
-    long offset;		/* offset in coor file for line */
+    /*!
+      \brief Offset in coor file for line
+    */
+    long offset;
+    /*!
+      \brief Line type
+
+      - GV_POINT
+      - GV_LINE
+      - GV_BOUNDARY
+      - GV_CENTROID
+      - GV_FACE
+      - GV_KERNEL
+      - GV_AREA
+      - GV_VOLUME
+    */
     int type;
 };
 
+/*!
+  \brief Topological primitive - area
+*/
 struct P_area
 {
-    double N;			/* Bounding Box */
+    /*!
+      \brief Area bounding box - north
+    */
+    double N;
+    /*!
+      \brief Area bounding box - south
+    */
     double S;
+    /*!
+      \brief Area bounding box - east
+    */
     double E;
+    /*!
+      \brief Area bounding box - west
+    */
     double W;
-    double T;			/* top */
-    double B;			/* bottom */
-    plus_t n_lines;		/* Number of boundary lines */
+    /*!
+      \brief Area bounding box - top
+    */
+    double T;
+    /*!
+      \brief Area bounding box - bottom
+    */
+    double B;
+    /*!
+      \brief Number of boundary lines
+    */
+    plus_t n_lines;
+    /*!
+      \brief Allocated space for lines
+    */
     plus_t alloc_lines;
-    plus_t *lines;		/* Boundary Lines, negative means direction N2 to N1,
-				   lines are in  clockwise order */
+    /*!
+      \brief List of boundary lines
+
+      - negative means direction N2 to N1
+      - lines are in clockwise order
+    */
+    plus_t *lines;
 
     /*********  Above this line is compatible with P_isle **********/
 
-    plus_t centroid;		/* Number of first centroid within area */
-
-    plus_t n_isles;		/* Number of islands inside */
+    /*!
+      \brief Number of first centroid within area
+    */
+    plus_t centroid;
+    /*!
+      \brief Number of islands inside
+    */
+    plus_t n_isles;
+    /*!
+      \brief Allocated space for isles
+    */
     plus_t alloc_isles;
-    plus_t *isles;		/* 1st generation interior islands */
+    /*!
+      \brief 1st generation interior islands
+    */
+    plus_t *isles;
 };
 
+/*!
+  \brief Topological primitive - isle
+*/
 struct P_isle
 {
-    double N;			/* Bounding Box */
+    /*!
+      \brief Isle bounding box - north
+    */
+    double N;			
+    /*!
+      \brief Isle bounding box - south
+    */
     double S;
+    /*!
+      \brief Isle bounding box - east
+    */
     double E;
+    /*!
+      \brief Isle bounding box - west
+    */
     double W;
-    double T;			/* top */
-    double B;			/* bottom */
-    plus_t n_lines;		/* Number of boundary lines */
+    /*!
+      \brief Isle bounding box - top
+    */
+    double T;			
+    /*!
+      \brief Isle bounding box - bottom
+    */
+    double B;
+    /*!
+      \brief Number of boundary lines
+    */
+    plus_t n_lines;
+    /*!
+      \brief Allocated space for lines
+    */
     plus_t alloc_lines;
-    plus_t *lines;		/* Boundary Lines, negative means direction N2 to N1,
-				   lines are in counter clockwise order */
+    /*!
+      \brief List of boundary lines
 
+      - negative means direction N2 to N1
+      - lines are in counter clockwise order
+    */
+    plus_t *lines;
+ 
     /*********  Above this line is compatible with P_area **********/
-
-    plus_t area;		/* area it exists w/in, if any */
+    
+    /*!
+      \brief Area it exists w/in, if any
+    */
+    plus_t area;
 };
 
+/*!
+  \brief Feature geometry info
+*/
 struct line_pnts
 {
+    /*!
+      \brief Array of X coordinates
+    */
     double *x;
+    /*!
+      \brief Array of Y coordinates
+    */
     double *y;
+    /*!
+      \brief Array of Z coordinates
+    */
     double *z;
+    /*!
+      \brief Number of points
+    */
     int n_points;
+    /*!
+      \brief Allocated space for points
+    */
     int alloc_points;
 };
 
+/*!
+  \brief Feature category info
+*/
 struct line_cats
 {
-    int *field;			/* pointer to array of fields */
-    int *cat;			/* pointer to array of categories */
-    int n_cats;			/* number of vector categories attached to element */
-    int alloc_cats;		/* allocated space */
+    /*!
+      \brief Array of fields (layers)
+    */
+    int *field;
+    /*!
+      \brief Array of categories
+    */
+    int *cat;
+    /*!
+      \brief Number of categories attached to element
+    */
+    int n_cats;
+    /*!
+      \brief Allocated space for categories
+    */
+    int alloc_cats;
 };
 
+/*! \brief Category list */
 struct cat_list
 {
-    int field;			/* category field */
-    int *min;			/* pointer to array of minimun values */
-    int *max;			/* pointer to array of maximum values */
-    int n_ranges;		/* number ranges */
-    int alloc_ranges;		/* allocated space */
+    /*!
+      \brief Category field (layer)
+    */
+    int field;
+    /*!
+      \brief Array of minimun values
+    */
+    int *min;
+    /*!
+      \brief Array of maximum values
+    */
+    int *max;
+    /*!
+      \brie Number of ranges
+    */
+    int n_ranges;
+    /*!
+      \brief Allocated space for ranges
+    */
+    int alloc_ranges;
 };
 
 /* list of integers */
 struct ilist
 {
-    int *value;			/* items */
-    int n_values;		/* number of values */
-    int alloc_values;		/* allocated space */
+    /*!
+      \brief Array of values
+    */
+    int *value;
+    /*!
+      \brief Number of values in the array
+    */
+    int n_values;
+    /*!
+      \brief Allocated space for values
+    */
+    int alloc_values;
 };
 
-/* Vector array. Space allocated is size + 1. */
+/*!
+  \brief Vector array
+
+  Space allocated is size + 1
+*/
 struct varray
 {
-    int size;			/* array size */
-    int *c;			/* array where 'class' or new category or something like that is stored */
+    /*!
+      \brief Array size
+    */
+    int size;	
+    /*!
+      \brief Array
+
+      Where 'class' or new category
+      or something like that is stored
+    */
+    int *c;	
 };
 
 typedef struct varray VARRAY;
 
-/* Spatial index for use in modules. */
+/*!
+  \brief Spatial index info
+
+  For use in modules
+*/
 struct spatial_index
 {
     struct Node *root;
