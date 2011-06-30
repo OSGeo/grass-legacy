@@ -21,10 +21,12 @@
 #include <grass/shapefil.h>
 #include <grass/btree.h>
 #include <grass/rtree.h>
-
+	
 #ifdef HAVE_OGR
 #include "ogr_api.h"
 #endif
+
+#define HEADSTR	50
 
 /*!
   \brief plus_t size
@@ -156,7 +158,7 @@ struct field_info
     /*!
       brief Name of database
     */
-    char *database;             
+    char *database;
     /*!
       \brief Name of DB table
     */
@@ -175,7 +177,7 @@ struct dblinks
     /*!
       \brief Pointer to the first field_info structure
     */
-    struct field_info *field;   
+    struct field_info *field;
     /*!
       \brief Number of allocated slots
     */
@@ -493,7 +495,7 @@ struct Format_info
     /*!
       \brief id?
     */
-    int i;                 
+    int i;
     /*!
       \brief OGR info
     */
@@ -651,8 +653,7 @@ struct Plus_head
     */
     struct Port_info spidx_port;
     /*!
-      \brief Portability information for
-      category index
+      \brief Portability information for category index
     */
     struct Port_info cidx_port;
     /*!
@@ -1049,7 +1050,7 @@ struct Map_info
     /*!
       \brief Support files were updated
 
-      Non-zero code to indicate that supoort file were updated
+      Non-zero code to indicate that support file were updated
     */
     int support_updated;
     /*!
@@ -1078,7 +1079,7 @@ struct Map_info
     /* constraints for reading in lines  (not polys yet) */
 
     /*!
-      \brief Constrainys for reading features (region)
+      \brief Constraints for reading features (region)
 
       Non-zero code to enable this constraint
     */
