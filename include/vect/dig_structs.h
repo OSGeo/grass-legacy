@@ -684,10 +684,6 @@ struct Plus_head
    /*!
      \brief Array topo nodes
    */
-    struct P_node **Node;
-   /*!
-     \brief Array topo lines/edges
-   */
     P_NODE **Node;
    /*!
      \brief Array topo lines/edges
