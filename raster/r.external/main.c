@@ -445,6 +445,7 @@ static void create_map(const char *input, int band, const char *output,
 		       const char *title)
 {
     struct History history;
+    struct Categories cats;
 
     G_put_cellhd(output, cellhd);
 
@@ -473,6 +474,9 @@ static void create_map(const char *input, int band, const char *output,
     G_short_history(output, "raster", &history);
     G_command_history(&history);
     G_write_history(output, &history);
+
+    G_init_cats(255, NULL, &cats);
+    G_write_raster_cats((char *)output, &cats);
 
     G_write_colors(output, G_mapset(), &info->colors);
 
