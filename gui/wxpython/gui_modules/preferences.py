@@ -61,7 +61,7 @@ class Settings:
     """!Generic class where to store settings"""
     def __init__(self):
         # settings file
-        self.filePath = os.path.join(os.path.expanduser("~"), '.grasswx6')
+        self.filePath = os.path.join(utils.GetSettingsPath(), 'wx')
         
         # key/value separator
         self.sep = ';'
@@ -702,7 +702,10 @@ class Settings:
             settings = self.userSettings
         
         if not os.path.exists(filename):
-            return
+            # try alternative path
+            filename = os.path.join(os.path.expanduser("~"), '.grasswx6')
+            if not os.path.exists(filename):
+                return
         
         try:
             fd = open(filename, "r")
@@ -744,7 +747,15 @@ class Settings:
         """!Save settings to the file"""
         if settings is None:
             settings = self.userSettings
-                
+        
+        dirPath = utils.GetSettingsPath()
+        if not os.path.exists(dirPath):
+            try:
+                os.mkdir(dirPath)
+            except:
+                gcmd.GError(_('Unable to create settings directory'))
+                return
+        
         try:
             file = open(self.filePath, "w")
             for group in settings.keys():
