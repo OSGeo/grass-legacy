@@ -61,7 +61,7 @@ class Settings:
     """!Generic class where to store settings"""
     def __init__(self):
         # settings file
-        self.filePath = os.path.join(utils.GetSettingsPath(), '.wx')
+        self.filePath = os.path.join(utils.GetSettingsPath(), 'wx')
         
         # key/value separator
         self.sep = ';'
